@@ -4,102 +4,120 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02AD5CA5FC4
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Oct 2026 12:25:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56F52CA5FD4
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Oct 2026 13:00:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xCcJa-0003ev-Mv; Fri, 02 Oct 2026 08:24:38 -0400
+	id 1xCcrF-0008QF-FB; Fri, 02 Oct 2026 08:59:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xCcJZ-0003eh-7e
- for qemu-devel@nongnu.org; Fri, 02 Oct 2026 08:24:37 -0400
-Received: from mail-yx2-x2a.google.com ([2607:f8b0:4864:41::2a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xCcJX-0002tq-IE
- for qemu-devel@nongnu.org; Fri, 02 Oct 2026 08:24:36 -0400
-Received: by mail-yx2-x2a.google.com with SMTP id
- 00721157ae682-8ab402b4716so33779277b3.2
- for <qemu-devel@nongnu.org>; Fri, 02 Oct 2026 05:24:34 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1790943874; cv=none;
- d=google.com; s=arc-20260327;
- b=UgPVTvAAqJDmegJwPxYAM7kU3qBznUAu8Cl9tK6Iq772V1synR7DUeuvG6QTjNIu18
- tAOnCD0M5HMEarhzLyUD5XNsLehMOI/YJP/qdLmh/+uozm1t5+4qmd+uzhZ193a/BffC
- i8zln8aGkjnXIWzCpVunT0fgTIh9YfchnYqOPO+Qva1pDa6UgSHdcf7vBu1Rfjldvb6A
- AJZpdc0kOnuTs+uZCgOjIgVeiH8DMPWBPKKJIAjLikDHRYBGuGXycizLh1pdM/qAtnri
- PLy++WMguh+lH0mn3Kfpiy9R8EdXYmFmpeOgv74kGp8kQpS/nrg1Lj7wpc3qYV8XcHQ8
- sGkg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=2NDUa73QpbsUE5V1wllXFwlFydoxfElGloz4pPOptRw=;
- fh=PbRjv5tYea0s8pzu68CJJSWeonCRJ/BmoFu++GPo9Uw=;
- b=Zq71gbXWaB7QB4eKoJwMxNO4RV1hQpPVaP8U9wws4LM/TTeRmVtunPtEs6Y/i+RSKU
- TE9BKGmc0NcaqY/jZs1afLpBhOYoV1vuJtDn+rl7F62/VNsiv3CcqZmkIwYACe41TCO9
- P8u+ke/vokvta3SVlJ0LMWnFv1ODYWDlnMorpv5Y21XR1Rgc6h6MR94oiAUKS+D1Ur7g
- IBs2T4iV9/nQlkKkyJHHRVswDboszKas5oq6qw/2BYQub6bsPQwPry/cvM8asyMe6cZB
- XeZ/hxllocY8Ht26wyLoPjBoiaFjFgVyHPdZVu5QgOI7uio6erohnTK4WS2j1VP2hssC
- YN0w==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1790943874; x=1791548674; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=2NDUa73QpbsUE5V1wllXFwlFydoxfElGloz4pPOptRw=;
- b=o18EV2p9GOhy/zdwcYUwyD5MkH55PuGzY/W4a8zsM3pgZpHHRHhOi1lRWcG7heIzl+
- Mfn2ZwB53sgba6LrIPpzlxsk/ur+PacrzHeiiarUvq3nuQ+DORkg4AjsFrT0aDfQ2pCu
- G0euGPsTO8kI/xbK2dQM4yDabSYSeTmk7utVCapqo9ydY0y40AYyFhbduaqG4uso5JD6
- d2sohEl5s4/cQUZo1OQYOIGY+fWhJNHwyI3LlAMU/jHgQ1Puc/nOshSJh5KF82lLIoeq
- ZeD7seVYVtcqS5wR1jEiQzkBglp0KCYPFqcUMZ7eMQ/8EmYprSEGoNdlZLD4EK8aIawg
- cWXA==
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1xCcrD-0008Pt-Pu
+ for qemu-devel@nongnu.org; Fri, 02 Oct 2026 08:59:24 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1xCcrB-0006wy-N6
+ for qemu-devel@nongnu.org; Fri, 02 Oct 2026 08:59:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1790945959;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=VFoEE0U1Hp5KQT1ZPGx/a8maOhy1unI7O+5gpZ1vOHI=;
+ b=JvCYjYcttWA40rH35ETUHK2v940k6pVWwT/hfJDs7u9JO4G9KZekIOV8Xfm3UKSYmE9chP
+ TDZBDsuRgiwU5HLNnkEUwQ0ek0P5HPyahRqm3SBzK2sVyoH6ToaE1pvNhnYr448CNFGy34
+ wDNSgs/5BpASt8Ni9KiPl0L2GyTa+4k=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-443-YJxRwVJMPFiwoYIZMleOYw-1; Fri, 02 Oct 2026 08:59:18 -0400
+X-MC-Unique: YJxRwVJMPFiwoYIZMleOYw-1
+X-Mimecast-MFC-AGG-ID: YJxRwVJMPFiwoYIZMleOYw_1790945958
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-48b026b8133so2328093f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 02 Oct 2026 05:59:18 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790943874; x=1791548674;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=2NDUa73QpbsUE5V1wllXFwlFydoxfElGloz4pPOptRw=;
- b=hAgV+SKdoXHgFV3xhD/SxFSipjXg00Jlg5G5BLU9gwAyBd783soMdDr5Q1pNeU4P2A
- vtzDSULcocJWsVZKNAbxiIeaeaOD3KcE+s2xu1iOcv5VNQoIa/RCURRnzKgkDDuhyiE3
- HXHDP6TGpzjyi3IBPkVmw+kQ6JaRh4e6xItJwjOsEuFj74GpKjWUMX1AGQfsgUyc89aw
- 6VICIag24VGD4nqqHhEQq6lP78yIuW/AlY4FgukMsEE7QlMvkW/+S2HwJdv01HoLQqXY
- rgzAUV9KQAkaPLkE2uVZz3wd4xv/X8kZcLzVdZll+0Dj0i1K0XqWEX0vIQyDKr8PWENp
- 0ChA==
-X-Gm-Message-State: AFq9FYKQ/Ojlhf013Dx/4cx5vrEYv0kGNMo40DFO0vO/bu47kV5p6n8j
- Ca6L8vMXmH3nqAhOyYITojDwqxDkq6+348ziqSsGpNczZu2b75to/t7It3jV5QW+rOYMERMxy7n
- Kfq49YMfB6fXGHwewXD9LqkdRb5F7STXCDBsHTepTew==
-X-Gm-Gg: AYBFou1iDOAJa9jYiRvqUoEEqUXOBqNMepJ6McoWLCP5vcGdi3Fk/6clcdmQg87e+6D
- 15TQb1SDNnBMr6yVGaZpF0OT5BtwsyPt3c+QyVe+6myiIcwSfzATw0Zf3SSBJSjEi6lCUDVLmye
- v11v6dA2vjueQgDgBYWlmNbb9ouNEar9HOhYaYnsySX+seS1JCAS2VuFENlMeGmGrV432+NPBwf
- T9x2uIJvazlqHdmEulNCVLdzMWUNboTjSqIB4EmJ0/+RUyae8HwY4hsyft6IkEUQ6tSoyXYCWOE
- gfFxsTQW330fH4QTd8cPGwzYD7T3FtTXrkmrSDGHJ1XxqvXa9FS3uEgdGY943nOYsmmlIahbl5k
- 7Y8aIw4FG9BOVdz4/W0qfLUNG/mLTe1ku4PDpx1OKd1JbkpwwiA==
-X-Received: by 2002:a05:690c:6604:b0:8ab:400f:75ca with SMTP id
- 00721157ae682-8ae3afdc1a2mr8856337b3.89.1790943873826; Fri, 02 Oct 2026
- 05:24:33 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1790945957; x=1791550757;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :references:cc:to:reply-to:subject:from:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=VFoEE0U1Hp5KQT1ZPGx/a8maOhy1unI7O+5gpZ1vOHI=;
+ b=0mhreKXrGrC97uXLEQsfp88d/CDmzAA3HJl+oViWC9a9kBV0xkgoRj0hkq4Sr//L+c
+ 3HZTFvwJeD2s+ZR4FZrnC+AwIgbrFzNcqtVXysx8tB5H0bqLe3EVwj+e7UDABdnm+SP1
+ dKREyYojmMz/pi8/02NVgNKu59ZZHaHzxbwiRq2kB9wGCozwXPRqKTCLw0V9CaaK/esP
+ Zm51pWx4NDCOjU/BD6sNCtKKEt8mni1K0Hfi5VEXFO7CNGjtaLBmYzcjR2RZE4UKlSrN
+ JR/hfKHolQokBtADWlz3I0o8ggk7pgtBMKT8+FcOi2kmxJP/DbJ4/pQV/pSWW2B/R8Qj
+ P3xQ==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBxz/grhw1c7ZIKksWxrzISgxF6wcRrGsl+3R54nzw/McxJiXv5srxap8ygQFe0CgT6Z1PTVeTnWEuvy@nongnu.org
+X-Gm-Message-State: AFq9FYKpnQtngtBsUU/rA6pC1raZrIQZkk3S8ZLAOBYOpfvpNayIjxb9
+ Fn2DzGlvBy1Bwp91iQEOvON4gtrpvsyu30UmagK9L6zE1v7KFpmxsv0qYOY8C5ejFkRU3o4rbt/
+ Xbh9gUQiyvaoCYrmomk9Dj1Gwc3iM5oyaC9QQhORkEprQU1zOm2wCCWNH
+X-Gm-Gg: AYBFou1vzMBxSENr6X2UFTClUyixeRi9UVUsVY8IsVSI9hMAjaPlkkp8wRGbign4NrC
+ oMRwuy/wJYKUcVolGZfDwRXj9RcrVfQN3wWsYkpe9xusJIL4thSo9iaa1G0goS0yMzl+mxUv+xR
+ nLDs03UQjHOgpPEWTEGg0814Pcy8pfG+dwu6tfk0e2pNxudRabiHpv8AvW7gjzmYvbvPDwCLgoD
+ R0G+L1VqhDh779HN5n9FJJeB2KIJ1Co+LHyWdA06zJiCg0xR000TRBzGvNFYQGtI58mp225JPTD
+ 9jBt3yoQ6EA2VNsITF3V/PdX+LkmNuYzfP6PRuCre3+pr+QIwU7AsTVzQo9+DYMhcyMVRBwZYwJ
+ LeJhYmzyy9zkPC7COG6s53Om2W53W0uAlqO/sh0qGkm0snYL2
+X-Received: by 2002:a05:6000:2c04:b0:487:27f9:841 with SMTP id
+ ffacd0b85a97d-48b12727a3bmr4930961f8f.54.1790945957454; 
+ Fri, 02 Oct 2026 05:59:17 -0700 (PDT)
+X-Received: by 2002:a05:6000:2c04:b0:487:27f9:841 with SMTP id
+ ffacd0b85a97d-48b12727a3bmr4930906f8f.54.1790945957040; 
+ Fri, 02 Oct 2026 05:59:17 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-48b382f98ffsm5713867f8f.38.2026.10.02.05.59.15
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 02 Oct 2026 05:59:16 -0700 (PDT)
+Message-ID: <14d8af0e-eb1f-43ba-87ce-5f52ac280543@redhat.com>
+Date: Fri, 2 Oct 2026 14:59:14 +0200
 MIME-Version: 1.0
-References: <20261002114100.3714102-1-berrange@redhat.com>
-In-Reply-To: <20261002114100.3714102-1-berrange@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 2 Oct 2026 13:24:21 +0100
-X-Gm-Features: AclHuK_o3toH1Eky3PV9qNwYzr7rULOoRiNLOX788EKwuYZ4-O4WTa03hcBujcY
-Message-ID: <CAFEAcA80+Vu6wFcH6KSbmdO3U=F0PvvTU2gV9a1n-M-19f+cfg@mail.gmail.com>
-Subject: Re: [PATCH v2] .claude: delete obsolete/redundant link to AGENTS.md
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:41::2a;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx2-x2a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+From: Eric Auger <eric.auger@redhat.com>
+Subject: Re: [PATCH v9 06/26] scripts: Introduce
+ scripts/update-aarch64-cpu-sysreg-properties.py
+To: Khushit Shah <khushit.shah@nutanix.com>
+Cc: "eric.auger.pro@gmail.com" <eric.auger.pro@gmail.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
+ "kvmarm@lists.linux.dev" <kvmarm@lists.linux.dev>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
+ Shaju Abraham <shaju.abraham@nutanix.com>,
+ "yangjinqian1@huawei.com" <yangjinqian1@huawei.com>,
+ "cohuck@redhat.com" <cohuck@redhat.com>,
+ "richard.henderson@linaro.org" <richard.henderson@linaro.org>,
+ "sebott@redhat.com" <sebott@redhat.com>,
+ "skolothumtho@nvidia.com" <skolothumtho@nvidia.com>,
+ "philmd@oss.qualcomm.com" <philmd@oss.qualcomm.com>,
+ "maz@kernel.org" <maz@kernel.org>,
+ "oliver.upton@linux.dev" <oliver.upton@linux.dev>,
+ "pbonzini@redhat.com" <pbonzini@redhat.com>,
+ "armbru@redhat.com" <armbru@redhat.com>,
+ "berrange@redhat.com" <berrange@redhat.com>,
+ "abologna@redhat.com" <abologna@redhat.com>,
+ "jdenemar@redhat.com" <jdenemar@redhat.com>
+References: <20260916144721.751810-1-eric.auger@redhat.com>
+ <20260916144721.751810-7-eric.auger@redhat.com>
+ <DFC38BF2-5E6F-4683-B030-C07656EC19BB@nutanix.com>
+Content-Language: en-US
+In-Reply-To: <DFC38BF2-5E6F-4683-B030-C07656EC19BB@nutanix.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.336,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -113,33 +131,244 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 2 Oct 2026 at 12:41, Daniel P. Berrang=C3=A9 <berrange@redhat.com> =
-wrote:
+Hi Khushit,
+
+On 9/25/26 11:29 AM, Khushit Shah wrote:
+>> On 16 Sep 2026, at 8:15 PM, Eric Auger <eric.auger@redhat.com> wrote:
+>>
+>> !-------------------------------------------------------------------|
+>>  CAUTION: External Email
+>>
+>> |-------------------------------------------------------------------!
+>>
+>> Introduce a script that takes as input the Registers.json file
+>> delivered in the AARCHMRS Features Model downloadable from the
+>> Arm Developer A-Profile Architecture Exploration Tools page:
+>> https://urldefense.proofpoint.com/v2/url?u=https-3A__developer.arm.com_Architectures_A-2DProfile-2520Architecture-23Downloads&d=DwIDAg&c=s883GpUCOChKOHiocYtGcg&r=PGWMyignA0NiDmTlyP7vOTHozBws_VN86yrVmSMkBp0&m=2NOLVUk59YPHssYi5AgGX0z_LkZPQXfTkiD33Ti_D8RYfowBwp7XuMOfw-dMDkDE&s=Qs3ro5t6_dDfdQDLUGX7pJ43SvM2axfOShUzqbv90EQ&e= 
+>> and automates the generation of system register properties definitions.
+>>
+>> generates target/arm/cpu-idregs.h.inc containing definitions for
+>> feature ID registers.
+>>
+>> We only care about IDregs with opcodes satisfying:
+>> op0 = 3, op1 = {0,1,3}, crn = 0, crm within [0, 7], op2 within [0, 7]
+>>
+>> Signed-off-by: Eric Auger <eric.auger@redhat.com>
+>>
+>> ---
+>>
+>> v5 -> v6
+>> - add ident
+>> ---
+>> .../update-aarch64-cpu-sysreg-properties.py   | 166 ++++++++++++++++++
+>> 1 file changed, 166 insertions(+)
+>> create mode 100644 scripts/update-aarch64-cpu-sysreg-properties.py
+>>
+>> diff --git a/scripts/update-aarch64-cpu-sysreg-properties.py b/scripts/update-aarch64-cpu-sysreg-properties.py
+>> new file mode 100644
+>> index 0000000000..6f5edb88d2
+>> --- /dev/null
+>> +++ b/scripts/update-aarch64-cpu-sysreg-properties.py
+>> @@ -0,0 +1,166 @@
+>> +#!/usr/bin/env python3
+>> +
+>> +# This script takes as input the Registers.json file delivered in
+>> +# the AARCHMRS Features Model downloadable from the Arm Developer
+>> +# A-Profile Architecture Exploration Tools page:
+>> +# https://urldefense.proofpoint.com/v2/url?u=https-3A__developer.arm.com_Architectures_A-2DProfile-2520Architecture-23Downloads&d=DwIDAg&c=s883GpUCOChKOHiocYtGcg&r=PGWMyignA0NiDmTlyP7vOTHozBws_VN86yrVmSMkBp0&m=2NOLVUk59YPHssYi5AgGX0z_LkZPQXfTkiD33Ti_D8RYfowBwp7XuMOfw-dMDkDE&s=Qs3ro5t6_dDfdQDLUGX7pJ43SvM2axfOShUzqbv90EQ&e= 
+>> +# and outputs target/arm/cpu-idregs.h.inc content.
+>> +# ID regs are defined using this pattern:
+>> +#
+>> +# IDREG_START(REG)
+>> +#    IDREG_FIELD(REG, FIELD, SHIFT, LENGTH)
+> Nit: Add Enum Macro
+This is done later in "target/arm/cpu-idregs.h.inc: Generate enum values"
+>> +# ...
+>> +# IDREG_END(REG)
+>> +#
+>> +# Copyright (C) 2026 Red Hat, Inc.
+>> +#
+>> +# Authors: Eric Auger <eric.auger@redhat.com>
+>> +#
+>> +# SPDX-License-Identifier: GPL-2.0-or-later
+>> +
+>> +
+>> +import json
+>> +import os
+>> +import sys
+>> +from aarch64_sysreg_helpers import extract_idregs_from_registers_json
+>> +
+>> +def collect_fields(item, bit_offset=0):
+>> +    """
+>> +    Recursively finds all field-like objects, handling Fields.Array,
+>> +    Fields.ArrayField, and ConditionalField structures.
+>> +    Applies bit_offset from containers to child fields.
+>> +    """
+>> +    fields = []
+>> +    if not isinstance(item, dict):
+>> +        return fields
+>> +
+>> +    _type = item.get('_type', '')
+>> +
+>> +    # Array types (for example CLIDR_EL1 Ctype<n>, Ttype<n>)
+>> +    if _type == 'Fields.Array':
+>> +        name_template = item.get('name') or item.get('label', '')
+>> +        index_info = item.get('indexes', [{}])[0]
+>> +        start_idx = index_info.get('start', 0)
+>> +        count = index_info.get('width', 0)
+>> +
+>> +        full_range = item.get('rangeset', [{}])[0]
+>> +        bit_start = full_range.get('start', 0) + bit_offset
+>> +        elem_width = full_range.get('width', 0) // count if count else 0
+>> +
+>> +        for i in range(count):
+>> +            idx = start_idx + i
+>> +            # Correctly handle indexed names like Ctype1, Ctype2
+>> +            field_name = name_template.replace('<n>', str(idx))
+>> +            fields.append({
+>> +                'name': field_name,
+>> +                'rangeset': [{
+>> +                    'start': bit_start + (i * elem_width),
+>> +                    'width': elem_width
+>> +                }],
+>> +                '_type': 'Fields.Field'
+>> +            })
+>> +        return fields
+>> +
+>> +    # ConditionalFields
+> Can you please explain what are conditional fields and should we always include them?
+If we don't you will miss plenty of named fields which depend on a
+specific FEAT implementation.
+Few examples: 
+<     IDREG_FIELD_START(ID_AA64MMFR4_EL1, E2H0, 24, 4)
+<     IDREG_FIELD_START(ID_AA64SMFR0_EL1, SMEver, 56, 4)
+<     IDREG_FIELD_START(ID_AA64ZFR0_EL1, SVEver, 0, 4)
+../..
+
+All of those are defined in linux sysreg too
 >
-> From the release notes for Claude Code 2.1.77:
+>> +    elif _type == 'Fields.ConditionalField':
+>> +        inner_offset = bit_offset
+>> +        if item.get('rangeset'):
+>> +            # Parent container defines the absolute start bit
+>> +            inner_offset = item['rangeset'][0].get('start', bit_offset)
+>> +
+>> +        for entry in item.get('fields', []):
+>> +            inner = entry.get('field')
+>> +            if inner:
+>> +                fields.extend(collect_fields(inner, inner_offset))
+>> +        return fields
+>> +
+>> +    # Normal Field Types
+>> +    leaf_types = ['Fields.Field', 'Fields.ConstantField',
+>> +                  'Fields.EnumeratedField', 'Fields.Bitfield']
+>> +    if _type in leaf_types:
+>> +        field_copy = item.copy()
+>> +        if field_copy.get('rangeset'):
+>> +            new_ranges = []
+>> +            for r in field_copy['rangeset']:
+>> +                nr = r.copy()
+>> +                # Apply the cumulative offset to the field's start bit
+>> +                nr['start'] = r.get('start', 0) + bit_offset
+>> +                new_ranges.append(nr)
+>> +            field_copy['rangeset'] = new_ranges
+>> +        fields.append(field_copy)
+>> +        return fields
+>> +
+>> +    # Traverse the hierarchy for other cases
+>> +    for key in ['fields', 'values', 'fieldsets']:
+>> +        for nested in item.get(key, []):
+>> +            fields.extend(collect_fields(nested, bit_offset))
+>> +
+>> +    return fields
+>> +
+>> +
+>> +def generate_sysreg_properties_from_registers_json(id_reg_names, raw_json_path):
+>> +    with open(raw_json_path, 'r') as f:
+>> +        register_data = json.load(f)
+>> +
+>> +    regs = {r.get('name'): r for r in register_data if r.get('_type') == 'Register'}
+>> +
+>> +    final_output = ""
+>> +
+>> +    for reg_name in id_reg_names:
+>> +        register = regs.get(reg_name)
+>> +        if not register:
+> we should error out here.
+agreed
+>> +            continue
+>> +
+>> +        final_output += f"IDREG_START({reg_name})\n"
+>> +
+>> +        unique_fields = {}
+>> +        for fieldset in register.get('fieldsets', []):
+>> +            candidates = collect_fields(fieldset)
+>> +            for val in candidates:
+>> +                name = (val.get('name') or val.get('label', '')).strip()
+>> +                if not name or "RESERVED" in name.upper():
+>> +                    continue
+>> +                for r in val.get('rangeset', []):
+>> +                    lsb = int(r.get('start'))
+>> +                    width = r.get('width')
+>> +                    msb = lsb + int(width) - 1
+>> +
+>> +                    # Only keep the fields with the highest MSB
+>> +                    # needed fir CCSIDR_EL1
+> does not apply now, we ignore CCSIDR_EL1
+yeah but I feel it still makes sense to record the highest msb in case
+different fieldsets exist for the same name (32b versus 64b for instance)
+>> +                    if name not in unique_fields or msb > unique_fields[name]['msb']:
+>> +                        unique_fields[name] = {'lsb': lsb, 'msb': msb, 'width': width}
+>> +
+>> +        # Sort decreasing lsbs
+>> +        sorted_fields = sorted(unique_fields.items(),
+>> +                               key=lambda x: x[1]['lsb'], reverse=True)
+>> +
+>> +        for name, bits in sorted_fields:
+>> +            line = (f"    IDREG_FIELD({reg_name}, "
+>> +                    f"{name}, {bits['lsb']}, {bits['width']})\n")
+>> +            final_output += line
+>> +        final_output += f"IDREG_END({reg_name})\n"
+>> +        final_output += "\n"
+>> +
+>> +    os.makedirs("target/arm", exist_ok=True)
+>> +    with open("target/arm/cpu-idregs.h.inc", 'w') as f:
+>> +        f.write("/* AUTOMATICALLY GENERATED, DO NOT MODIFY */\n\n")
+>> +        f.write("/* SPDX-License-Identifier: GPL-2.0-or-later */\n\n")
+>> +        f.write("/* IDREG_START(REG) */\n")
+>> +        f.write("/*     IDREG_FIELD(REG, FIELD, SHIFT, LENGTH) */\n”)
+> Same enum macro …
+see above
 
-2.1.277
+Thanks!
 
->   https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md
+Eric
 >
->   "Added AGENTS.md support: in a project with no CLAUDE.md,
->    Claude Code reads AGENTS.md instead"
->
-> If we assume people will keep their Claude Code updated, then the
-> .claude rules we added to link to AGENTS.md are now redundant, or
-> very soon will be.
+> Warm Regards,
+> Khushit
+>> +        f.write("/* ... */\n")
+>> +        f.write("/* IDREG_END(REG) */\n\n")
+>> +        f.write(final_output)
+>> +
+>> +if __name__ == "__main__":
+>> +    if len(sys.argv) < 2:
+>> +        print("Usage: python scripts/update-aarch64-cpu-sysreg-properties.py "
+>> +              "<path_to_registers_json>")
+>> +    else:
+>> +        json_path = sys.argv[1]
+>> +
+>> +        id_regs_dict = extract_idregs_from_registers_json(json_path)
+>> +        sorted_names = sorted(id_regs_dict.keys())
+>> +
+>> +        if sorted_names:
+>> +            generate_sysreg_properties_from_registers_json(sorted_names, json_path)
+>> +            print("Generated target/arm/cpu-idregs.h.inc")
+>> -- 
+>> 2.53.0
+>>
 
-It also took them until 2.1.281 to make AGENTS.md work in
-sessions with telemetry disabled:
-
-    "Changed AGENTS.md support to also work on Amazon Bedrock,
-     Google Vertex AI, Microsoft Foundry, LLM gateways, and sessions
-     with telemetry disabled"
-
-Still, I guess we're OK to clean up this wrinkle now.
-
--- PMM
 
