@@ -4,105 +4,136 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41647CA5FE0
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Oct 2026 10:37:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1947CA5FD4
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Oct 2026 10:38:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xCadK-00023I-Qh; Fri, 02 Oct 2026 06:36:54 -0400
+	id 1xCaes-0002QX-EC; Fri, 02 Oct 2026 06:38:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xCadJ-000237-Nh
- for qemu-devel@nongnu.org; Fri, 02 Oct 2026 06:36:53 -0400
-Received: from mail-yx2-x29.google.com ([2607:f8b0:4864:41::29])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xCadI-0005Gk-Ag
- for qemu-devel@nongnu.org; Fri, 02 Oct 2026 06:36:53 -0400
-Received: by mail-yx2-x29.google.com with SMTP id
- 00721157ae682-8adb500dc50so8507797b3.1
- for <qemu-devel@nongnu.org>; Fri, 02 Oct 2026 03:36:51 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1790937411; cv=none;
- d=google.com; s=arc-20260327;
- b=BLnw8J7+EwU/RrN9W+0ON+uimdVn3K1z5DVcicxueBU7Q/8uXftexrUOVgp9RAqb1T
- tpkJJNeCB6IyrmhhiEZexcQXGK4A9ZjuVM2c8RDJIw11X8mol3RghtN4heYhNpGeezYy
- aRE7NjBH1iLk8TT/bFupZUGzsmavEx/Qq4zZnbioAabXuY1BYdUCzHE4DK5XOMKcZPEw
- eSohYhjFHL1+S4euAotdrCOw9Ey9924OeYTVBeaYZO0Wit+PrvlKUzST2+vvuH+Q/s6A
- tOV6b8B/1NSLhau4dBD6a+/C1950t7eH/wBys/snSmSuRsEug4grDa+kWo5f+C3Ukx8B
- VbdQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=oUCEYwkNux/SM3FpLbGhHlzWx0ByOriSAUEBeLMtcjU=;
- fh=BrDbiuabHust4eYX2NJNSsVgLOQNM/UF9WmiiykNrt8=;
- b=PM7p3nuoVserGTJlhVqOz7I6RHBLjASRzKj5KZIJ/dKLlMaPW+EJbVCBQ7iZLUVhG8
- kz/0Zd/jK5zVQhGgTRyXsofNuWd8CMHfQYphBO+Q2ZcNAdWuQen1AwajW3/9MzCJsNKT
- DuEQsjMyn92zt2yXkadFfF8dN7LKAJtnQ3/pEsV8X0wca1eAOZMeHchLRTwCBSgowRtr
- 3ooDPaZ94rIhoID2hV0tUc7P490SOdlicaCwnHEYiW3kFre6n6iboNkyFO2BX5MRV22D
- AZgG9BRTrkosSNJxWVaGs/ueggo6CRK97X+yKaWusGKII08/mq9u6jSA0jj4bB2sYtrD
- 18tQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1790937411; x=1791542211; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=oUCEYwkNux/SM3FpLbGhHlzWx0ByOriSAUEBeLMtcjU=;
- b=NahGg6V5wQk1tXjjzdTd4LaP6eODt/a+4p1dH1oc8ujOI4Z1V0TZu4xbY8S3vLlN/C
- cI8ARwXQhR51KIBK6jJ/d2T/1ri2WKjdQ9GneG2hlWuJdfCT8M7emCRB72FFpNMu8b7v
- Fjqk5+UqqOg6/tExhcNn/1FmvFmXAkxD9J/hw5ZfLskoPyG975K95PFS+mzF/Ge+vsvp
- 12fqhS44CWeeOOYsgUYwn7u2g1VwZBwV5qjPYuD9JDSkNLAUa6Q95TIbrBvsXJ03XiwS
- 7x4BZxNh8X2zMGpvsERQQ3xo1xadRodS5BVFiGhxyWeyIFJ92X1RT88u+m7LEYB1n3GB
- xRdw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790937411; x=1791542211;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=oUCEYwkNux/SM3FpLbGhHlzWx0ByOriSAUEBeLMtcjU=;
- b=mR35ArgBG3kDWrhtJWqGqNR7DRVGavNPUu5xhjOaKP6yX/g5c/0bMnU5tDuiNxA+Ec
- o3T070XYR/tvkk/oX2VQR9cRO8xpNzRJLsn+5Zs9dVpI/472XVeMRQoS8yV68MH/Ri65
- XhcSLbG7+cuVezXbyt3SicVR5hvZBf6wix781xqd28hrWKvqLOZKwcPwyXAnHbZS26lI
- zCMYGP/inqur6ghDWzmbyBXR7IqncNY9mWeKdSBfX9rmhoVrBe9gD4Qi1ttHXiBSlnFJ
- wI8G0prJw8oLOGUb3NPNXZ+5lpuAThTN19WUxz5zdxgwDdrOHZe3KsXhmRY/4qu3CLrn
- L3vg==
-X-Gm-Message-State: AFq9FYI/B/K31Eua8e49koGUqJrro3kVhR5VaNxor1O1mZycx1L1vQev
- m309Aurw1mRQjAJbnctcraC+aiCFBzGpo6ifSghNO+XFxeCEgxfQF8N40FScpIEgUOp5OD11Sos
- bhWk+J8hPmy0fJEeM6RZ4Y88HtACjLrmnO9IWfhancQ==
-X-Gm-Gg: AYBFou0/F6qTVvmm+h5dP3WszGJST8DNBX/3v7BndkqS0l7i6dCS4Q3lyC5apIp9uus
- kJtDse16ihhH08V9Ts1iYebkaNvJPgpEO3V5taJBBwwtVCaJmpL59gdbYGc90Ir6hdjMTVeV4tx
- TaEz1vefROyusg30P6/RSOSVyfu0iV6VWd9XeCiqhaW2Dn9BKQxEwb1+PRLiIB1hyQodGY68CTq
- H/3i4eS/Of5h6OBsRp2UhrIa7RIRdtS62DySKROIy5Vi2Le+TeeA5g8thI/eMvb4iVWEfZBAPE5
- OwCHyDQiPtdQk6+EuXN8cabncJlrRfZwt+ZV4cWKw3r0pksg16MVBS0cWWndu+EcdQzueFlM8Ag
- 5p4WrCzcsV7NGX7F3kDTwqpTk3EfBQF66/tTbzyU=
-X-Received: by 2002:a05:690c:9988:b0:89a:63da:cbe7 with SMTP id
- 00721157ae682-8ae3a5ed914mr9513357b3.45.1790937410556; Fri, 02 Oct 2026
- 03:36:50 -0700 (PDT)
-MIME-Version: 1.0
-References: <20261001194756.3003085-1-peter.maydell@linaro.org>
- <b9019487-979f-4b37-9c30-3fc43c308d06@oss.qualcomm.com>
-In-Reply-To: <b9019487-979f-4b37-9c30-3fc43c308d06@oss.qualcomm.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 2 Oct 2026 11:36:39 +0100
-X-Gm-Features: AclHuK-yfFOg3f1SJlcsG5E9lczz6Vu3ns3dzELweMEJY18IwBcr4_vA9gJtXPo
-Message-ID: <CAFEAcA_mTJiq-hn-_h=p6Ksi5GS62nqG9i9af4QK5Qc8QWm4VA@mail.gmail.com>
-Subject: Re: [PATCH] hw/usb/hcd-ohci: Fail iso packets sent to non-iso
- endpoints and vice-versa
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
+ (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
+ id 1xCaer-0002QB-9y
+ for qemu-devel@nongnu.org; Fri, 02 Oct 2026 06:38:29 -0400
+Received: from mail-southcentralusazlp170120001.outbound.protection.outlook.com
+ ([2a01:111:f403:c10d::1] helo=SN4PR2101CU001.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
+ id 1xCaeo-0005Kj-Rz
+ for qemu-devel@nongnu.org; Fri, 02 Oct 2026 06:38:28 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=W0MfRz++38ssTXonv1Z7hX5nZBO5rYxE/IA1AHHaIDcc8cc7FUbsO8fsj2k+Ym6Ht+MIhjsjrX4Gq44RUxhztKVfRwC0MwKsJ2ywl/B4vfBKrUnlnb9f5d1T24kS7TsehBxf07AS0K4ruuxuXPP4pgk5NBHtTGkmUp1tqkh9YZKngrJ5cRc76NizNV2t9ok6q0jVr++hQyuDTrHFYPd8Ni5Mw0l1ois0S4Ffab3NqQh2frAC3hM7F5NXqBu0UKs/eCffUK5/aS9XhmJyMe8KEhSpOVDJbbfsFOnB7zMm+KwKbk2olHg0pb5m3x1nEIQtVL9BkRlGZwNKmwzsFqfs9A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=GqiE/4s+0ZR6sWV4yMHXNyLRp+RVyQgWIBWN46dVsMQ=;
+ b=Ad30fbbmBTATsrSJgzA3hpXZX7PiFddHPc3uecdtq5RcHD0HQsDR6aQzEbU3d/c7/NuyhR2VWcUeEjQDeMoEaz0hs2Rjeo2boatt/EJdm2vGh2wJ5StcD/Lpw+xyUEHBxwNDb1nw0j9X42Ov08YKeV2VvP6W8oNjL5JpJLtNlaQqbFZ2F57GDBruCPXzaXII0JavfmjL/TaP1Uil/v6muIEFoBYuEjb6/5CFXKgqnHSGFuKg9KPmtK2svPjDHBoXex0etQvMXQgTC7Co7hfL38C/4pOUQ1oiLEDIFQzRttHAY19IOJKX1e/nVUp4Oxbj/4tmE5XFquZjJ70880PAqQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=GqiE/4s+0ZR6sWV4yMHXNyLRp+RVyQgWIBWN46dVsMQ=;
+ b=E3OoiUssbVoKf5T736u542BJ6TwuSuPxBTGnOqChgaGe8l3CtGJU2n3onNwA15XEhpaxv3+Ogw+auC9PCUKjRTCasc++pTyXq4VZFY/6TXjaAX1FOhbShuMfw9ekT9CrNhJWSlZKjdcVhwTpgW19cWLqKA0dck6nJEGlOYFNo83msj/393WW76GmSZgIlD0+YG7p9OOx0D6f9BDJuZ5T53ZrViC9mHbSOJsyQajL0HT3TtcbwjcdSt/UhoFpZf2SS7ZTyxYaxVF1MbL7VHdfxpn2pwqJFQOa0Rohrfzc8zAhw8db7fb0LVv+sdRODHePDCm9Gym7OMdw4H2YOgQpfA==
+Received: from SJ0PR12MB8614.namprd12.prod.outlook.com (2603:10b6:a03:47d::17)
+ by LV3PR12MB9120.namprd12.prod.outlook.com (2603:10b6:408:1a3::5)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.472.18; Fri, 2 Oct
+ 2026 10:38:20 +0000
+Received: from SJ0PR12MB8614.namprd12.prod.outlook.com
+ ([fe80::fe0a:6e6a:fe60:a43b]) by SJ0PR12MB8614.namprd12.prod.outlook.com
+ ([fe80::fe0a:6e6a:fe60:a43b%5]) with mapi id 15.21.0472.016; Fri, 2 Oct 2026
+ 10:38:20 +0000
+From: Shameer Kolothum Thodi <skolothumtho@nvidia.com>
+To: Tushar Dave <tdave@nvidia.com>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>
+CC: "mst@redhat.com" <mst@redhat.com>, "philmd@oss.qualcomm.com"
+ <philmd@oss.qualcomm.com>, "zhao1.liu@intel.com" <zhao1.liu@intel.com>,
+ Yishai Hadas <yishaih@nvidia.com>, Alex Williamson <alwilliamson@nvidia.com>, 
+ Jason Gunthorpe <jgg@nvidia.com>
+Subject: RE: [PATCH 1/3] xio3130_downstream: Add ACS support for downstream
+ PCIe ports
+Thread-Topic: [PATCH 1/3] xio3130_downstream: Add ACS support for downstream
+ PCIe ports
+Thread-Index: AQHdStxellRdKy3FjkOoMiDPN/tyMrbqGt4w
+Date: Fri, 2 Oct 2026 10:38:20 +0000
+Message-ID: <SJ0PR12MB8614AB65D581542D1D9B3CA4AB892@SJ0PR12MB8614.namprd12.prod.outlook.com>
+References: <20260922215008.2554402-1-tdave@nvidia.com>
+ <20260922215008.2554402-2-tdave@nvidia.com>
+In-Reply-To: <20260922215008.2554402-2-tdave@nvidia.com>
+Accept-Language: en-US, en-GB
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SJ0PR12MB8614:EE_|LV3PR12MB9120:EE_
+x-ms-office365-filtering-correlation-id: df47b721-2729-4c28-89e8-08df2071470a
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|366016|23010399003|1800799024|376014|56012099006|38070700021|10067099003|5023799004|11063799006|6133799003|4143699003|22082099003|18002099003;
+x-microsoft-antispam-message-info: lLia+GSSjSEGjuwsdNcARk5wWO9opOgu4ShIbbNV6a3vq2QeJecHo1+B2CshNaEsAiT6UpCnRIx9+Pu5YwoPZhJKjEVS/vPbbi8KGmXmqggbWJxpdQaUcLmGQHfU7Lhg7eg10osLGuOb6IW+mm3EOhrP6Y6qEeNQ3sZrKFkOfMBoycb6ycc8y/QUFgV9bgebwVJHEsmiDtjCUyYTYmaOIPay4y4nzx9+oyfV+GsuPIlii3DdzNPLY+ClE1pwdSkkZkzHrbjptAgRqxW0AaFyDP+TQKE+0iMo2XLLfx5wmb41q1zSRYjPhmu1J8FF2/Du0e5gR41LA6i0JX3yn6Ks7VHIZ0fWd4vVei2inHi5+y7RzJWHYqvQ0tvODArqrDIwxaYTeYfIV4z6ljSmNANsCmL4IIViIMb2nfAmXLIYuvTa0xgIFhtBf9677yv4IcjQ3E3818EiY+gRqAOKmMZSub8bLDecBtbk4Ts2w5BoaodhsOYnc+LT+3D1SF2gLdwdLNh78fJARALflKELZVYsFU4q7zWZtPyjf3cp6ZZcY2sRrhApXeHZVbbYIG0FrhuPxAyPcWyetOth4xytji7lEDxfBtK8Yh/i/DwW72AYk2J3V1E/b9BBLzzqyJv33YWE54M6S2F6CsOa6Y+EhK3Ti2tEXxvSxH/c7H7mwSoh2kCI3mYzYczF2Oo1RdDyszesGHuOzk5vbaGCju+NpCROoVNMfVsCwsCHP2Tlr9qt92k=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SJ0PR12MB8614.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(23010399003)(1800799024)(376014)(56012099006)(38070700021)(10067099003)(5023799004)(11063799006)(6133799003)(4143699003)(22082099003)(18002099003);
+ DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?n7H5xjlaQGXse9zcu8aJ0YNCr9o7gX7Pw4nJuTXTaGITIz4lNE9fOHgaa6uS?=
+ =?us-ascii?Q?K+QA2goSsRt2TFfFo8nP3Y5jOIeTUVWyeUM1OdhKrhsq33USibaTxY/2M5Tm?=
+ =?us-ascii?Q?HgIZAYQXam9UUQU//G91Fs6/co2Zx8czl0RPBBwMFVbIGS13qTZmlBU5u2mf?=
+ =?us-ascii?Q?g3z5OIUQkAO1coDCKrWbtY136WmZGVlBapYRohbnscdwO2ADoECj+4GebSuO?=
+ =?us-ascii?Q?lTrKFFxT//JOIthCEUuIbnqcNs2sh0ni5SPAr8za3ChTEUy4Z+on3qWYHVQS?=
+ =?us-ascii?Q?OMjHP5RL8UnBcThVps0AqYu6U6Q7OkeVdzx1MrhdAxIUUNLnaVbduyzalPWW?=
+ =?us-ascii?Q?iCK1tcKEk1iHXJ/WNRdjF1sBMxPnbL5cHpbb+FCi6M2Jc0pSWr/8VV/7PePd?=
+ =?us-ascii?Q?m1ieiideE8evbuahIjMcuHglVe8hMKa69clRv2wPX43dEVtSfXzwpIJrlPhC?=
+ =?us-ascii?Q?b1uUCwAcETcPyP0D273FcWJCHvF38jdHkHlLmdkUNRkSZa+5bZi0GLlxGShm?=
+ =?us-ascii?Q?p0d8BORJ6AAg+dBWDvJ+4JUknfF0M/kRpJbH9XwykEoo4woj7+ropuRIzfWL?=
+ =?us-ascii?Q?VBSvhmJcZTN3IbaJz1H2LiuxwaGFHRvUOhNq6UyPe3oEIzPCXxoWMS+eAmf8?=
+ =?us-ascii?Q?LNju39juRJWeOV9U4jKxopy65CKTlqoRVtd4oMKYj5N2xHYGpl6bNQNgT4TN?=
+ =?us-ascii?Q?gjRfjS7k35Zc1g1t31pv87+krJsUxwVWSJL/2TtxqGoFAUch1B7eWLzTTcNx?=
+ =?us-ascii?Q?MAzQdTL3WyTZBjWBrdbkklExpt5Cpq2VT3Ubl3FCif3auiyY/STRA+VPgRcC?=
+ =?us-ascii?Q?z01H8oU5PQ61qwr2RfGFTYBN9qG8oTBWqRrVFOc1rAStVPTJD7XJSvQZ5dUW?=
+ =?us-ascii?Q?Zzxqta+2hACM5bG7GnWS1VwLoN8FqGNg3XM13Fr/FfrPvBFfEBRrBl9s4nHt?=
+ =?us-ascii?Q?qac+uWgLbn/qbE9oDdSxmjGqjyGZxhYxV3t0BnziEw1/HrgO3UdqKBMcCmek?=
+ =?us-ascii?Q?PD/czT7eqihZykE6Ci5/av0hc5Gg/5DgXNQY2ATi01CSgot6HjtWRJ3PY8HY?=
+ =?us-ascii?Q?5rW0MkImrv0I5kKw9GpGRTHpjCSXlIBNPZyJh9SO0Nm8vllnZ/QaQZWS7UPI?=
+ =?us-ascii?Q?/Y+9w5T24TOeb+aXGXSvM1ae+O6PCi1y+KRvUBDW/t295ESPJxemW/QcTyU7?=
+ =?us-ascii?Q?fparvKNgKYSoyUvUs5x6ruTuXHqHdwx3gNuJklGGpVID4Hb6nJywpapqSE7G?=
+ =?us-ascii?Q?ym3Uy2+TYplU3eIz+N5A0WxWBNyxsK8QN8iTn87WxfxCJe6ETMcwGcNWUCC4?=
+ =?us-ascii?Q?aybZAH5IA3kLPLXBtg5li9Tb825ccOyUYMHBERYrY6wmhk5F1B1I6C05EmtH?=
+ =?us-ascii?Q?cBdnvHvLWJVJApkD5hmQUfwRHP1RGNXUIDLbjXUOktgPnE1bblAUkONlWqrm?=
+ =?us-ascii?Q?+PTumSpEZs4PQiFEYJRpXQDTWcFfSetY23/sAQHI1nG9wgPfkTKfCE3xTV1P?=
+ =?us-ascii?Q?BX2VX3w8CBHdu3LvKYysdfTlfxc0Hau1W/iHD4j39JNUBTMQK4GPNyxNKBO4?=
+ =?us-ascii?Q?zEI1ZvcPIKJJ0imMW0JNYlrN9QKCVWyP6QYsGf37+ilm9GCrtW7TkC3gOeYu?=
+ =?us-ascii?Q?QgA7X5E0bez7kn9r9lwH2YND18GzYhrew0ol1ePH3jOa2kcfjxmwMY1dewRP?=
+ =?us-ascii?Q?i3YynX83N3kogncTtKvEnE+wE3RCxjn4k6Kv6J+YEYpENCU8m8NSzDzZPW2E?=
+ =?us-ascii?Q?a8v20KynYg=3D=3D?=
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:41::29;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx2-x29.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+MIME-Version: 1.0
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SJ0PR12MB8614.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: df47b721-2729-4c28-89e8-08df2071470a
+X-MS-Exchange-CrossTenant-originalarrivaltime: 02 Oct 2026 10:38:20.4757 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: kkzIFJnYM5v8G2eLDMPhNiDGFagzmykiO1hFSN/OFW2RuBzpM8McApC7x/myqxk8xtF+VZY7XEc4uJxBuBV+MA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV3PR12MB9120
+Received-SPF: permerror client-ip=2a01:111:f403:c10d::1;
+ envelope-from=skolothumtho@nvidia.com;
+ helo=SN4PR2101CU001.outbound.protection.outlook.com
+X-Spam_score_int: -13
+X-Spam_score: -1.4
+X-Spam_bar: -
+X-Spam_report: (-1.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.331,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FORGED_SPF_HELO=1, SPF_HELO_PASS=-0.001,
+ SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,15 +149,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 2 Oct 2026 at 11:31, Philippe Mathieu-Daud=C3=A9
-<philmd@oss.qualcomm.com> wrote:
-> Side note, I don't get why we copy packet data *then* return
-> error if device not found (trace_usb_ohci_td_dev_error), this
-> is sub-optimal.
 
-Yeah, that's a bit silly, but it will never happen in normal
-operation, because a guest is never going to set up a transfer
-to a non-existent endpoint.
 
--- PMM
+> -----Original Message-----
+> From: Tushar Dave <tdave@nvidia.com>
+> Sent: 22 September 2026 22:50
+> To: qemu-devel@nongnu.org
+> Cc: mst@redhat.com; philmd@oss.qualcomm.com; zhao1.liu@intel.com;
+> Yishai Hadas <yishaih@nvidia.com>; Alex Williamson
+> <alwilliamson@nvidia.com>; Jason Gunthorpe <jgg@nvidia.com>; Shameer
+> Kolothum Thodi <skolothumtho@nvidia.com>
+> Subject: [PATCH 1/3] xio3130_downstream: Add ACS support for
+> downstream PCIe ports
+>=20
+> When a PASID-capable device is added behind the PCIe downstream port,
+> for example, an Nvidia GPU, the PCIe downstream ports must expose ACS
+> capability otherwise PASID won't get enabled.
+>=20
+> In addition, the other use case is GPUDirect RDMA using Data Direct
+> that must require special ACS controls at the PCIe downstream ports
+> for P2P communication.
+>=20
+> Gate it behind a new x-pcie-acs property (default on), following the
+
+Why default on? It only matters for the use cases above. With it on,
+a guest with a vIOMMU behind an xio3130 downstream port may see its
+IOMMU groups change. Is that intended? If so, please mention it in the
+commit message.
+
+> x-pcie-* compat-bit convention (x-pcie-ext-tag/x-pcie-err-unc-mask/
+> x-pcie-ari-nextfn-1), so older machine types can disable it via
+> hw_compat to preserve migration compatibility.
+>=20
+> Signed-off-by: Tushar Dave <tdave@nvidia.com>
+> ---
+>  hw/core/machine.c                  | 1 +
+>  hw/pci-bridge/xio3130_downstream.c | 7 +++++++
+>  hw/pci/pci.c                       | 2 ++
+>  include/hw/pci/pci.h               | 3 +++
+>  4 files changed, 13 insertions(+)
+>=20
+> diff --git a/hw/core/machine.c b/hw/core/machine.c
+> index 92f7be52a1..4fd48f594f 100644
+> --- a/hw/core/machine.c
+> +++ b/hw/core/machine.c
+> @@ -43,6 +43,7 @@
+>  GlobalProperty hw_compat_11_1[] =3D {
+>      { "sysbus-ehci-usb", "x-migrate-fetch-addr-64bit", "off" },
+>      { "pci-ehci-usb", "x-migrate-fetch-addr-64bit", "off" },
+> +    { TYPE_PCI_DEVICE, "x-pcie-acs", "off" }, /* Added in 11.2 */
+>  };
+>  const size_t hw_compat_11_1_len =3D G_N_ELEMENTS(hw_compat_11_1);
+>=20
+> diff --git a/hw/pci-bridge/xio3130_downstream.c b/hw/pci-
+> bridge/xio3130_downstream.c
+> index 0c3fed3053..87ba30eb36 100644
+> --- a/hw/pci-bridge/xio3130_downstream.c
+> +++ b/hw/pci-bridge/xio3130_downstream.c
+> @@ -40,6 +40,8 @@
+>  #define XIO3130_SSVID_SSID              0
+>  #define XIO3130_EXP_OFFSET              0x90
+>  #define XIO3130_AER_OFFSET              0x100
+> +#define XIO3130_ACS_OFFSET \
+> +    (XIO3130_AER_OFFSET + PCI_ERR_SIZEOF)
+>=20
+>  static void xio3130_downstream_write_config(PCIDevice *d, uint32_t
+> address,
+>                                           uint32_t val, int len)
+> @@ -60,6 +62,7 @@ static void xio3130_downstream_reset(DeviceState
+> *qdev)
+>      pcie_cap_deverr_reset(d);
+>      pcie_cap_slot_reset(d);
+>      pcie_cap_arifwd_reset(d);
+> +    pcie_acs_reset(d);
+>      pci_bridge_reset(qdev);
+>  }
+>=20
+> @@ -111,6 +114,10 @@ static void xio3130_downstream_realize(PCIDevice
+> *d, Error **errp)
+>          goto err;
+>      }
+>=20
+> +    if (d->cap_present & QEMU_PCIE_CAP_ACS) {
+> +        pcie_acs_init(d, XIO3130_ACS_OFFSET);
+> +    }
+> +
+>      return;
+>=20
+>  err:
+> diff --git a/hw/pci/pci.c b/hw/pci/pci.c
+> index 0efb4eb4bb..807729ca75 100644
+> --- a/hw/pci/pci.c
+> +++ b/hw/pci/pci.c
+> @@ -105,6 +105,8 @@ static const Property pci_props[] =3D {
+>      DEFINE_PROP_STRING("sriov-pf", PCIDevice, sriov_pf),
+>      DEFINE_PROP_BIT("x-pcie-ext-tag", PCIDevice, cap_present,
+>                      QEMU_PCIE_EXT_TAG_BITNR, true),
+> +    DEFINE_PROP_BIT("x-pcie-acs", PCIDevice, cap_present,
+> +                    QEMU_PCIE_ACS_BITNR, true),
+
+This is defined on every PCI device but only xio3130 downstream reads
+it.  I think it is better to limit the scope.
+
+Thanks,
+Shameer
 
