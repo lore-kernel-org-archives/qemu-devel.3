@@ -4,142 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D561CA5FC4
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Oct 2026 04:51:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3000CA5FC4
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Oct 2026 05:28:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xCVEW-0002fZ-4j; Fri, 02 Oct 2026 00:50:56 -0400
+	id 1xCVnk-0008Dr-Pa; Fri, 02 Oct 2026 01:27:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xCVET-0002fO-Kq
- for qemu-devel@nongnu.org; Fri, 02 Oct 2026 00:50:53 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <uverma@linux.ibm.com>)
+ id 1xCVng-0008DL-UK; Fri, 02 Oct 2026 01:27:17 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xCVEK-0004kI-1W
- for qemu-devel@nongnu.org; Fri, 02 Oct 2026 00:50:46 -0400
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6923xQxj1324581
- for <qemu-devel@nongnu.org>; Fri, 2 Oct 2026 04:50:41 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- XA91vJjceZ/84GwM2ygNkb9YNETfGF7tBnnntXdg6Qk=; b=igGWz4lTI55GXHlh
- cJd6+JyNdNlfwbKAXAQnLlsjNYNkOFW1H8XffFfMh+ENCeSr70g/y2GamkZRwfXb
- yGyuUzvEC8TPJCGXcRp5fX4Ql+Ga2YVQx9f27eIBIyanJiHvKGSGxShOfDxcP1nW
- xkZZyPqwB5PGt4CCbWh4l9Xw4dOsYnOoz+WnUVKOZHDJ4u4+m8GIVZXvgyp++rwQ
- 295u87yFbqS0bvW/UNoI5vCXt3EL4cRDu3LZh+deH31kACJvqmjedyrSqIeWgXXU
- WaTKqnlYv/O4qxwmnHXYQolaNSx5A5sk/8i1IuDNffsZEQk5AnpjyIhdjH9SLphi
- qVCd+A==
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h256mr422-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 02 Oct 2026 04:50:41 +0000 (GMT)
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-93ce7a85f04so82521585a.0
- for <qemu-devel@nongnu.org>; Thu, 01 Oct 2026 21:50:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1790916640; x=1791521440; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:cc:from
- :references:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=XA91vJjceZ/84GwM2ygNkb9YNETfGF7tBnnntXdg6Qk=;
- b=XWyylG2GzyC+NvkgvBYHPVHSNDg+ZvdbJipYlMV3MhaINJUbegLg6C0XFj99078oDR
- uVEmuSvTxV67ZCPH8YG1ot/eMK9vmZ4FQuTL+lWi2oKFgC0eulcFnPtlpqLAslT+cL0l
- EltIYMalbDorq0nuBhKpYjJ1JD6VBQBS5a/j1vXFkHZJj70UhZkVfSor/etyQEVikppA
- r/fxN4kKL9UBGj0Ck4Y8gZ5WWxcN9KmVmZFdJ8046WZOW7IQQoazN9zmV6Bcnr8YmRFh
- M4qG9PxypfhbKI1uCZ0xtVU2szdiQiyt3T+kQHpHyqO2TA6r9pZFLZ/lWjc0PIJKqjhA
- Qkkg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790916640; x=1791521440;
- h=content-transfer-encoding:content-type:in-reply-to:cc:from
- :references:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=XA91vJjceZ/84GwM2ygNkb9YNETfGF7tBnnntXdg6Qk=;
- b=u1dqgLm1Q35U2GVPPq7U6w5JoqIDKLzL/olBvUcclupPDvmacsSn8VcW4ZWukmkjKL
- oXqREq2uxPE4UHGOfYted9NLzDvWIDARs0pw/2zbHNmXPI/WjGjjxklMubeLvEBIBtHv
- L1/Ia/YfIbq3iRwcsibW1mwhhP0tIyhaK3GOkxmIYhrMKtyh5KGfcVsSJi9jGlnV8/TV
- ZXCBYNscezwDdqbNvy2gbSpQbuPBewFZOIXYeWFYkEpfWCS3XPfv4jpkMN85HGQ19jvZ
- sFh07508DrPuaT6/IrmVDOSQllgODyj8q9+dImbN5dw567GpOOpIS3ftVZq7motMkM4O
- unhw==
-X-Forwarded-Encrypted: i=1;
- AKwUvBzJystORSyVKXE/t5NH3IweqqmWCmEF74HHmN0ygeC5T6IWNlDk8B5P3VumyhnaktHMnqf4tjShnKVl@nongnu.org
-X-Gm-Message-State: AFuF++mQJjnzVWggACB344P6OvdA7LnHDXSPOeJc8+V0IsR3n5LYTa7h
- sN4yMpWxCj5gqyX4GrOfxNo1AJ7B9z1ZTxvGaiqUb0ZnPMGdYOZtyvQ894SYSWtZrEIxhQXGdEd
- mqWaa+ZsmpoPmD1D5AxaanqFCmkotgP3WnQI8+k/MeoPKxWX3jhrTuGbHyg==
-X-Gm-Gg: AYBFou0eavoAHHYZdSBnixNOrW5xvfB517jGCbIMYk1iRbmYFIKd83bvYjj1z6WMe+M
- TCfv+6RC1RF1+T6/jJRy+7+Z2O6huod23kVxEWrxzdShp67FyeRpTboKEJHCmtgpZnyqHNc0ydr
- 0KKVa2dr029e8g5Dd7Ij3zljdHp798966Of7/VCZs4nLBkxmLWlSSKjEwJAbbEjjXH0J87SEnaa
- BMKQVjjkuKDh+YDPNn3c8d3Gy+XylUHtywIz/W+BG1ymWCcM0gh1LaUvHSkSY8Xz12ZFnfcpmkp
- Ya+TOmOJocY+ONj1GzpYGdePQ3RwXyUzDYk1QuPp+vUDITKAnmay6ws5OLwzVrh78MMZqKo7FQv
- HR7OB45Slh0AukzD2Fgh+Etm9NPIB4nG9rQ==
-X-Received: by 2002:a05:620a:84ca:b0:93b:d7a0:d9de with SMTP id
- af79cd13be357-93cf18b0df3mr279932185a.56.1790916640287; 
- Thu, 01 Oct 2026 21:50:40 -0700 (PDT)
-X-Received: by 2002:a05:620a:84ca:b0:93b:d7a0:d9de with SMTP id
- af79cd13be357-93cf18b0df3mr279930085a.56.1790916639656; 
- Thu, 01 Oct 2026 21:50:39 -0700 (PDT)
-Received: from [192.168.69.225] (pmd666.hd.free.fr. [88.187.86.199])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a02783af28sm45594925e9.15.2026.10.01.21.50.37
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 01 Oct 2026 21:50:38 -0700 (PDT)
-Message-ID: <003b6c73-91cf-4ef3-8943-6b8068cb2a64@oss.qualcomm.com>
-Date: Fri, 2 Oct 2026 06:50:37 +0200
+ (Exim 4.90_1) (envelope-from <uverma@linux.ibm.com>)
+ id 1xCVne-00080Z-7z; Fri, 02 Oct 2026 01:27:16 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6922ZPlj2274297; Fri, 2 Oct 2026 05:26:58 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=pp1; bh=xqZj3x7/fvM9ItXf1GQykpCKO0h6Nnojn4lzjznF9
+ Sk=; b=gTj5wzFHhwPYT5kJksC2Jx12bYgFQTmlUQtJYLmDw7k6pRSre+2+u8Lyo
+ lCEpx+CsGtZ3eqOXzwuObzNaYWbRdVYPqTuHRLC57UWc+qZhMc059y/VgNmPSTTS
+ IJyi6Tg7IgPEpQQbKMMJ5yqvjlT4mEdX9LpW2230I6kUMqNuFgGxWseOyGjfriyR
+ Lkzt48iCypOi9d21yDRI1F/QNOXH6NydIpEqN0kSo1/6X9YxaijNkMXayKXUAldw
+ fMZ/6TKlmO49TSQn9x4xXq3EoONa/N4AZKLCzBRefKVI5fVnTc+JiSs6GyaYkzjw
+ Uc8LlwhtA2CNUAaFQI1H+kgIhB/BA==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gx4fepacj-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Fri, 02 Oct 2026 05:26:57 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6922Z6Vp1855158; Fri, 2 Oct 2026 05:26:57 GMT
+Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4h0xcshhkv-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 02 Oct 2026 05:26:57 +0000 (GMT)
+Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
+ [10.241.53.103])
+ by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 6925QtlI24511050
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 2 Oct 2026 05:26:56 GMT
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id DD5175805A;
+ Fri,  2 Oct 2026 05:26:55 +0000 (GMT)
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 3EFB258056;
+ Fri,  2 Oct 2026 05:26:47 +0000 (GMT)
+Received: from li-bd0dea4c-2912-11b2-a85c-e84940f94d2e.ibmuc.com (unknown
+ [9.43.111.176]) by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Fri,  2 Oct 2026 05:26:46 +0000 (GMT)
+From: uverma@linux.ibm.com
+To: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, aik@amd.com,
+ nnmlinux@linux.ibm.com, avnish@linux.ibm.com
+Cc: pbonzini@redhat.com, th.huth@posteo.eu, sbhat@linux.ibm.com,
+ harshpb@linux.ibm.com, amachhiw@linux.ibm.com, rathc@linux.ibm.com,
+ balaton@eik.bme.hu, philmd@linaro.org, npiggin@gmail.com,
+ marcandre.lureau@redhat.com, fam@euphon.net, alex.bennee@linaro.org,
+ richard.henderson@linaro.org, Utkarsh Verma <uverma@linux.ibm.com>
+Subject: [RFC PATCH v2 0/8] ppc/spapr: VOF disk image (qcow2) boot support
+Date: Fri,  2 Oct 2026 10:55:39 +0530
+Message-ID: <20261002052605.605858-1-uverma@linux.ibm.com>
+X-Mailer: git-send-email 2.55.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/audio/virtio-sound: Report bytes written in used length
-Content-Language: en-US
-To: Anatol Belski <anbelski@linux.microsoft.com>, qemu-devel@nongnu.org
-References: <20261001224501.1952113-1-anbelski@linux.microsoft.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>, 
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-In-Reply-To: <20261001224501.1952113-1-anbelski@linux.microsoft.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDAyMDAxOSBTYWx0ZWRfX3T+CwRSPVZor
- 5f0Rm2gGkVVTW8kLdiSeiZbXaV7SLcAi+/kyHGBYs8YgHW8KwQRea5E99ioOSd+4MDfvt3IMQfO
- 2jEVbTeCD4nWfEqn48IJpMXeiflXDtc=
-X-Proofpoint-ORIG-GUID: Er-JRufr2o9e4FDrjyWRFw1q7EWqmBfG
-X-Authority-Analysis: v=2.4 cv=b80ncdGx c=1 sm=1 tr=0 ts=6abf3821 cx=c_pps
- a=qKBjSQ1v91RyAK45QCPf5w==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
- a=zUlDYHpKAAAA:20 a=20KFwNOVAAAA:8 a=KKAkSRfTAAAA:8 a=69wJf7TsAAAA:8
- a=yMhMjlubAAAA:8 a=r4Q81FmrULDuP0b7pxEA:9 a=QEXdDO2ut3YA:10
- a=NFOGd7dJGGMPyQGDc5-O:22 a=cvBusfyB2V15izCimMoJ:22 a=Fg1AiH1G6rFz08G2ETeA:22
- a=bA3UWDv6hWIuX7UZL3qL:22
-X-Proofpoint-GUID: Er-JRufr2o9e4FDrjyWRFw1q7EWqmBfG
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDAyMDAxOSBTYWx0ZWRfX/UPm8qhr3rJ9
- fBCks5jB7VlF4l4seITVAtpgyLJpKaWaIBaeWUjidcTRgzGkvddVVhvt9fkr7U7bgTGWbn8aq2U
- qcTBhOz+iFAEpOxuauMUsD59H74VpygpwM96zyWVwpuoPg9RyTyj8UzqMc9BDAI87kh2oeky3Tv
- DB2GVbONC9HtslXnpG8VmSQ8CtXFV4gFOq3/EdM6VPDQwlZmNbV1BHu3ai7Ex4ltPrHt98Jlx/L
- NsA15iKviVnWBwyN71ISgjrX/bSX4NiWQ+oFoKqjhLJObTNBiqdMcYwfPIigZ9VJqFYS+lBcZMn
- CTEVbyO/rmTOUP8sKoS8UDXBh4hfDiIxqsqNDY9+yaRTUzDv0Dp/zq4Tyv71gEWIuOReD8t5kKM
- cePnLYr3ZCQ6geItyBR+5DLQyZEf15+NLCCPWQNzUEyqeG8vwuehk95MfjlsezQn2e4N8cPSvLK
- rMMHNlimYE5y3L3/WtQ==
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Authority-Analysis: v=2.4 cv=FYWiV5+6 c=1 sm=1 tr=0 ts=6abf40a2 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=V8glGbnc2Ofi9Qvn3v5h:22 a=VwQbUJbxAAAA:8 a=EGYj-OwPAAAA:8 a=20KFwNOVAAAA:8
+ a=VnNF1IyMAAAA:8 a=ZfLK-i7ypDUqPDFCLj4A:9 a=xQyHFheebwQZ3wMG2Lhb:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDAyMDAyMCBTYWx0ZWRfXwPA3etuz73ks
+ CsXCljga3psVFNZ2TvFJSs4XVnCnIxQqMyc8SnfaN/gGVqxlA7QW/wvTetbfZ3xOSmXWJU/kEG6
+ VsTBVKL0RltwaNs58TYJMHD5V3gGlXw=
+X-Proofpoint-ORIG-GUID: YaBTnE681iVLsMuZOoI8NUVEfz-Ov8y4
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDAyMDAyMCBTYWx0ZWRfX3Sta+4xFPTZd
+ rQrOAIhWUkK6YtJp8pKOYluVGqpfJkuzuLy5ek9LdMJEgl6/9DNiJC3KCDBtXGCY6xZq8ITHEwR
+ DXex4E7maSMTF/cvi6JfcyBLGOZg3xSIeE1SSBCCj/3tCV6fka6AQ3wMZyv+aOPhI5vdr6Ds9ES
+ oIQ0MGnm4GoGKDdiFaZp3RmOcmuZntJbJ+4gEegZ5NQo3qzqb72+XXg7B9VRyx5Yz0ZqZ5pqavy
+ 7KskOMGQOODeDuAWtArXsCmxR/ODb081NV0UtCgoEfNZIxENrY63uAGSy0pQPXqbmkiQyrmYiLk
+ XTB5ODIYiD/OgzXF/UWAEwOffLgg/M1eD4gGZ0X2xEu7Sh95eVN57D6gHfOGDhUxMAon4NQ/VAw
+ 8/pCXq54QiYUeDt4pm7naQwQctbIDSFYY8UJxHWbjYyUxK07jguCEW+RsK9u6QRqXYmV1IIa0fk
+ szM3ZBlxpe1eKzIzlxQ==
+X-Proofpoint-GUID: LfPbCvGt3Ep5Arcgez-8haVRkv5Oly3D
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-10-02_01,2026-10-01_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 priorityscore=1501 spamscore=0 bulkscore=0 adultscore=0
- phishscore=0 lowpriorityscore=0 clxscore=1015 impostorscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2610020019
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+ adultscore=0 clxscore=1011 impostorscore=0 spamscore=0 phishscore=0
+ priorityscore=1501 malwarescore=0 bulkscore=0 lowpriorityscore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
+ definitions=main-2610020020
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=uverma@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -156,192 +124,168 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Cc'ing maintainers otherwise your patch won't be reviewed:
+From: Utkarsh Verma <uverma@linux.ibm.com>
 
-$ ./scripts/get_maintainer.pl -f hw/audio/virtio-snd.c
-"Michael S. Tsirkin" <mst@redhat.com> (supporter:virtio, gitlab:@mstredhat)
-Gerd Hoffmann <kraxel@redhat.com> (supporter:virtio-snd, gitlab:@kraxel)
-Manos Pitsidianakis <manos.pitsidianakis@linaro.org> 
-(supporter:virtio-snd, gitlab:@epilys)
-qemu-devel@nongnu.org (open list:All patches CC here)
+This series adds support for booting from a disk image under the Virtual Open
+Firmware (VOF) path for sPAPR/pseries machines in QEMU.
 
-On 2/10/26 00:30, Anatol Belski wrote:
-> The control, invalid PCM, TX and RX completion paths pass fixed response
-> sizes to virtqueue_push() after copying into the guest's writable iovecs.
-> iov_from_buf() truncates the copy when those iovecs are undersized, so
-> the used length can exceed the writable descriptor capacity.
-> 
-> Use the byte count returned by iov_from_buf() for every completion.  For
-> PCM_INFO, retain the actual payload byte count so the control completion
-> also remains bounded when the requested element size is smaller than the
-> native structure.
-> 
-> Signed-off-by: Anatol Belski <anbelski@linux.microsoft.com>
-> ---
-> Tested with the following virtio-villain reproducers:
-> 
-> SND0005:
-> https://github.com/weltling/virtio-villain/blob/e0c649562cf2e836a0a305e19fb72323e6543d10/tests/sound/snd0005_info_size_short.c
-> 
-> SND0012:
-> https://github.com/weltling/virtio-villain/blob/e0c649562cf2e836a0a305e19fb72323e6543d10/tests/sound/snd0012_pcm_info_size_zero.c
-> 
-> SND0015:
-> https://github.com/weltling/virtio-villain/blob/e0c649562cf2e836a0a305e19fb72323e6543d10/tests/sound/snd0015_pcm_info_status_short.c
-> 
-> SND0065:
-> https://github.com/weltling/virtio-villain/blob/e0c649562cf2e836a0a305e19fb72323e6543d10/tests/sound/snd0065_tx_missing_status.c
-> 
-> SND0066:
-> https://github.com/weltling/virtio-villain/blob/e0c649562cf2e836a0a305e19fb72323e6543d10/tests/sound/snd0066_tx_status_short.c
-> 
-> Before this change all five tests fail because the used length exceeds
-> the writable descriptor capacity. With this change all five pass.
-> 
->   hw/audio/virtio-snd.c | 82 +++++++++++++++++++++----------------------
->   1 file changed, 40 insertions(+), 42 deletions(-)
-> 
-> diff --git a/hw/audio/virtio-snd.c b/hw/audio/virtio-snd.c
-> index 6df7ea0eb0..52e12603dd 100644
-> --- a/hw/audio/virtio-snd.c
-> +++ b/hw/audio/virtio-snd.c
-> @@ -271,13 +271,12 @@ static void virtio_snd_handle_pcm_info(VirtIOSound *s,
->           memset(&pcm_info[i].padding, 0, 5);
->       }
->   
-> -    cmd->payload_size = sizeof(virtio_snd_pcm_info) * count;
->       cmd->resp.code = cpu_to_le32(VIRTIO_SND_S_OK);
-> -    iov_from_buf(cmd->elem->in_sg,
-> -                 cmd->elem->in_num,
-> -                 sizeof(virtio_snd_hdr),
-> -                 pcm_info,
-> -                 cmd->payload_size);
-> +    cmd->payload_size = iov_from_buf(cmd->elem->in_sg,
-> +                                     cmd->elem->in_num,
-> +                                     sizeof(virtio_snd_hdr),
-> +                                     pcm_info,
-> +                                     sizeof(virtio_snd_pcm_info) * count);
->   }
->   
->   /*
-> @@ -774,6 +773,7 @@ static inline void
->   process_cmd(VirtIOSound *s, virtio_snd_ctrl_command *cmd)
->   {
->       uint32_t code;
-> +    size_t written;
->       size_t msg_sz = iov_to_buf(cmd->elem->out_sg,
->                                  cmd->elem->out_num,
->                                  0,
-> @@ -828,13 +828,12 @@ process_cmd(VirtIOSound *s, virtio_snd_ctrl_command *cmd)
->           cmd->resp.code = cpu_to_le32(VIRTIO_SND_S_BAD_MSG);
->       }
->   
-> -    iov_from_buf(cmd->elem->in_sg,
-> -                 cmd->elem->in_num,
-> -                 0,
-> -                 &cmd->resp,
-> -                 sizeof(virtio_snd_hdr));
-> -    virtqueue_push(cmd->vq, cmd->elem,
-> -                   sizeof(virtio_snd_hdr) + cmd->payload_size);
-> +    written = iov_from_buf(cmd->elem->in_sg,
-> +                           cmd->elem->in_num,
-> +                           0,
-> +                           &cmd->resp,
-> +                           sizeof(virtio_snd_hdr));
-> +    virtqueue_push(cmd->vq, cmd->elem, written + cmd->payload_size);
->       g_assert(s->queue_inuse[VIRTIO_SND_VQ_CONTROL] > 0);
->       s->queue_inuse[VIRTIO_SND_VQ_CONTROL] -= 1;
->       virtio_notify(VIRTIO_DEVICE(s), cmd->vq);
-> @@ -917,6 +916,7 @@ static inline void empty_invalid_queue(VirtIODevice *vdev, VirtQueue *vq)
->       VirtIOSoundPCMBuffer *buffer = NULL;
->       virtio_snd_pcm_status resp = { 0 };
->       VirtIOSound *vsnd = VIRTIO_SND(vdev);
-> +    size_t written;
->   
->       g_assert(!QSIMPLEQ_EMPTY(&vsnd->invalid));
->   
-> @@ -926,14 +926,12 @@ static inline void empty_invalid_queue(VirtIODevice *vdev, VirtQueue *vq)
->           g_assert(buffer->vq == vq);
->   
->           resp.status = cpu_to_le32(VIRTIO_SND_S_BAD_MSG);
-> -        iov_from_buf(buffer->elem->in_sg,
-> -                     buffer->elem->in_num,
-> -                     0,
-> -                     &resp,
-> -                     sizeof(virtio_snd_pcm_status));
-> -        virtqueue_push(vq,
-> -                       buffer->elem,
-> -                       sizeof(virtio_snd_pcm_status));
-> +        written = iov_from_buf(buffer->elem->in_sg,
-> +                               buffer->elem->in_num,
-> +                               0,
-> +                               &resp,
-> +                               sizeof(virtio_snd_pcm_status));
-> +        virtqueue_push(vq, buffer->elem, written);
->           QSIMPLEQ_REMOVE_HEAD(&vsnd->invalid, entry);
->           virtio_snd_pcm_buffer_free(buffer);
->       }
-> @@ -1216,17 +1214,17 @@ static inline void return_tx_buffer(VirtIOSoundPCMStream *stream,
->                                       VirtIOSoundPCMBuffer *buffer)
->   {
->       virtio_snd_pcm_status resp = { 0 };
-> +    size_t written;
-> +
->       resp.status = cpu_to_le32(VIRTIO_SND_S_OK);
->       update_latency(stream, buffer->size);
->       resp.latency_bytes = cpu_to_le32(stream->latency_bytes);
-> -    iov_from_buf(buffer->elem->in_sg,
-> -                 buffer->elem->in_num,
-> -                 0,
-> -                 &resp,
-> -                 sizeof(virtio_snd_pcm_status));
-> -    virtqueue_push(buffer->vq,
-> -                   buffer->elem,
-> -                   sizeof(virtio_snd_pcm_status));
-> +    written = iov_from_buf(buffer->elem->in_sg,
-> +                           buffer->elem->in_num,
-> +                           0,
-> +                           &resp,
-> +                           sizeof(virtio_snd_pcm_status));
-> +    virtqueue_push(buffer->vq, buffer->elem, written);
->       g_assert(stream->s->queue_inuse[VIRTIO_SND_VQ_TX] > 0);
->       stream->s->queue_inuse[VIRTIO_SND_VQ_TX] -= 1;
->       virtio_notify(VIRTIO_DEVICE(stream->s), buffer->vq);
-> @@ -1306,22 +1304,22 @@ static inline void return_rx_buffer(VirtIOSoundPCMStream *stream,
->                                       VirtIOSoundPCMBuffer *buffer)
->   {
->       virtio_snd_pcm_status resp = { 0 };
-> +    size_t written;
-> +
->       resp.status = cpu_to_le32(VIRTIO_SND_S_OK);
->       resp.latency_bytes = 0;
->       /* Copy data -if any- to guest */
-> -    iov_from_buf(buffer->elem->in_sg,
-> -                 buffer->elem->in_num,
-> -                 0,
-> -                 buffer->data,
-> -                 buffer->size);
-> -    iov_from_buf(buffer->elem->in_sg,
-> -                 buffer->elem->in_num,
-> -                 buffer->size,
-> -                 &resp,
-> -                 sizeof(virtio_snd_pcm_status));
-> -    virtqueue_push(buffer->vq,
-> -                   buffer->elem,
-> -                   sizeof(virtio_snd_pcm_status) + buffer->size);
-> +    written = iov_from_buf(buffer->elem->in_sg,
-> +                           buffer->elem->in_num,
-> +                           0,
-> +                           buffer->data,
-> +                           buffer->size);
-> +    written += iov_from_buf(buffer->elem->in_sg,
-> +                            buffer->elem->in_num,
-> +                            buffer->size,
-> +                            &resp,
-> +                            sizeof(virtio_snd_pcm_status));
-> +    virtqueue_push(buffer->vq, buffer->elem, written);
->       g_assert(stream->s->queue_inuse[VIRTIO_SND_VQ_RX] > 0);
->       stream->s->queue_inuse[VIRTIO_SND_VQ_RX] -= 1;
->       virtio_notify(VIRTIO_DEVICE(stream->s), buffer->vq);
+The most common use case for pseries VMs is booting from a distro qcow2 disk
+image. These images carry a PReP boot partition containing GRUB2, which in turn
+loads the kernel and initrd via IEEE 1275 client interface calls.
+VOF currently only supports direct -kernel/-initrd boot; there is no
+firmware-mediated path to hand off to a bootloader on disk. This series
+implements that missing path, making VOF capable of handling the standard
+distro qcow2 boot flow without requiring SLOF.
+
+This series takes reference from an earlier implementation by Alexey
+Kardashevskiy [1] which explored the same concept but was not carried forward at
+the time.
+
+The existing load_elf function works on a file, whereas in the VOF the PReP
+partition (GRUB) is read from the disk image and loaded in the memory, also
+on loading the PReP partition in the guest memory the /memory@0/available FDT
+needs to be properly updated for each PT_LOAD segment of the core.elf file
+of the GRUB (PReP partition).
+
+Implemented a new public elf loader API load_elf_ram_sym_buf() to resolve both
+these issues.
+- load_elf_ram_sym_buf() accepts a caller-supplied memory buffer instead of a
+  filename, using g_file_open_tmp() to obtain an anonymous file descriptor for
+  the caller-supplied buffer. This means the ELF image has 2 copies, the
+  caller's heap buffer and the temporary file. For typical PReP partition sizes
+  (~4 MB) this is acceptable, but if a more memory-efficient approach is
+  preferred we are open to alternatives. Feedback on the preferred direction is
+  welcome.
+- Also, added optional segment_fn_t callback in load_elf_ram_sym_buf() through
+  the internal elf_ops.h.inc template; it is invoked once per PT_LOAD segment
+  after the load address is resolved, allowing callers to perform per-segment
+  work such as VOF memory claims.
+
+When no -kernel is given, spapr_vof_reset() calls a newly implemented function
+spapr_vof_try_prep_boot() which iterates attached block backends, scans
+partitions for a PReP boot partition, reads the partition contents into a
+host buffer, calls load_elf_ram_sym_buf() to load the GRUB in the guest memory,
+and on success stores the ELF entry point in spapr->kernel_addr.
+spapr_vof_client_dt_finalize() then writes the entry point into
+/chosen/qemu,boot-kernel so VOF then transfers control to GRUB.
+
+- Partition scanner (spapr_vof_partition.c): scans MBR and GPT partition tables
+  on a BlockBackend to locate the PReP boot partition.
+
+- Core loader extension (hw/core/loader.c): new load_elf_ram_sym_buf() API loads
+  a 32/64-bit ELF binary from a caller-supplied memory buffer, reusing the
+  existing load_elf32/load_elf64 paths. A new segment_fn_t callback in
+  elf_ops.h.inc lets callers act on each PT_LOAD segment as it is resolved.
+
+- read, seek OF services: two previously unimplemented IEEE 1275 client
+  services, covering block device I/O needed by GRUB.
+
+- vscsi-report-luns method: walks the SCSIBus and builds the LUN report table
+  in guest memory in the format expected by GRUB's ofdisk driver, matching
+  SLOF's dev-generate-srplun encoding.
+
+- VTY write/read routing: routes console I/O through the VTY chardev backend;
+  promotes vty_getchars to external linkage. Also opens a stdin ihandle in
+  addition to stdout so GRUB can read from the console.
+
+- FDT "disk" wildcard child node (spapr_vscsi.c): emits a single generic "disk"
+  child FDT node under the vSCSI adapter (without a per-LUN suffix), matching
+  the actual Open Firmware behaviour. The path_offset() wildcard fallback
+  resolves any "disk@<srp-lun>" open request to this shared node; the LUN is
+  extracted from the path string at runtime in vof_do_open().
+
+We used AI to build prototype with manual changes incorporated as identified
+during debugging multiple issues faced while making it work, hence using below
+tag as being discussed in the ongoing AI policy patch:
+[PATCH v4 0/4] docs/devel, AGENTS.md: a completely new policy on AI-generated contributions
+Link to the patch [2].
+AI-used-for: Code
+
+Testing:
+
+The series has been tested end-to-end by booting a RHEL9.7 qcow2 image on a
+pseries machine with VOF enabled (no SLOF).
+
+build$ ./qemu-system-ppc64 -M pseries,x-vof=on -cpu power9 -m 2G \
+-hda ../../rhel-guest-image-9.7-20251021.0.ppc64le.qcow2 -nographic
+qemu-system-ppc64: warning: TCG doesn't support requested feature, cap-cfpc=workaround
+qemu-system-ppc64: warning: TCG doesn't support requested feature, cap-ibs=workaround
+qemu-system-ppc64: warning: TCG doesn't support requested feature, cap-ccf-assist=on
+Welcome to GRUB!
+<snip>
+                               GRUB version 2.06
+
+ +----------------------------------------------------------------------------+
+ |*Red Hat Enterprise Linux (5.14.0-611.5.1.el9_7.ppc64le) 9.7 (Plow)         | 
+ |                                                                            |
+ |                                                                            |
+ |                                                                            |
+ |                                                                            |
+ |                                                                            |
+ |                                                                            |
+ |                                                                            |
+ |                                                                            |
+ |                                                                            |
+ |                                                                            |
+ |                                                                            | 
+ +----------------------------------------------------------------------------+
+
+      Use the ^ and v keys to select which entry is highlighted.          
+      Press enter to boot the selected OS, `e' to edit the commands       
+      before booting or `c' for a command-line.                           
+
+<snip>
+
+Red Hat Enterprise Linux 9.7 (Plow)
+Kernel 5.14.0-611.5.1.el9_7.ppc64le on an ppc64le
+
+Activate the web console with: systemctl enable --now cockpit.socket
+
+localhost login: root
+Password: 
+Last login: Fri Jul 10 01:45:44 on hvc0
+[root@localhost ~]# 
+[root@localhost ~]# ls /
+afs  boot  etc	 lib	media  opt   root  sbin  sys  usr
+bin  dev   home  lib64	mnt    proc  run   srv	 tmp  var
+[root@localhost ~]# 
+[root@localhost ~]# echo "Hello, World!" > hello.txt
+[root@localhost ~]# cat hello.txt 
+Hello, World!
+[root@localhost ~]# 
+
+[1] https://lore.kernel.org/qemu-devel/20200203032943.121178-1-aik@ozlabs.ru/#t
+[2] https://lore.kernel.org/qemu-devel/20260930085433.830743-1-pbonzini@redhat.com/
+
+Utkarsh Verma (8):
+  ppc/spapr: add PReP boot partition detection
+  hw/loader: add load_elf_ram_sym_buf() for in-memory ELF loading
+  ppc/spapr: add baseline VOF disk boot support
+  ppc/spapr: add VTY backend support to OF read/write/open services
+  ppc/spapr: add block device backend to VOF open/read/write/seek
+    services
+  spapr_vscsi: add VOF disk nodes to the device tree
+  ppc/spapr: strip OF path argument suffix in path_offset
+  ppc/spapr: implement vscsi-report-luns call-method for PAPR vSCSI
+
+ hw/char/spapr_vty.c          |   2 +-
+ hw/core/loader.c             |  81 +++++-
+ hw/ppc/meson.build           |   5 +-
+ hw/ppc/spapr_vof.c           | 164 +++++++++++-
+ hw/ppc/spapr_vof_partition.c | 272 ++++++++++++++++++++
+ hw/ppc/trace-events          |   4 +
+ hw/ppc/vof.c                 | 475 ++++++++++++++++++++++++++++++++++-
+ hw/scsi/spapr_vscsi.c        |  23 ++
+ include/hw/core/loader.h     |  30 +++
+ include/hw/elf_ops.h.inc     |  12 +-
+ include/hw/ppc/spapr_vio.h   |   1 +
+ include/hw/ppc/spapr_vof.h   |  14 ++
+ include/hw/ppc/vof.h         |   2 +
+ 13 files changed, 1070 insertions(+), 15 deletions(-)
+ create mode 100644 hw/ppc/spapr_vof_partition.c
+ create mode 100644 include/hw/ppc/spapr_vof.h
+
+-- 
+2.55.0
 
 
