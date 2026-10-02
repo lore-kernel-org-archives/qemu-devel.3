@@ -4,64 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D465CA5FD4
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Oct 2026 09:54:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1B2DCA5FC4
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Oct 2026 09:54:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xCZwf-0003O6-Fz; Fri, 02 Oct 2026 05:52:49 -0400
+	id 1xCZwc-0003Me-Mu; Fri, 02 Oct 2026 05:52:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xCZwd-0003N1-IZ
- for qemu-devel@nongnu.org; Fri, 02 Oct 2026 05:52:47 -0400
+ id 1xCZwa-0003Lr-On
+ for qemu-devel@nongnu.org; Fri, 02 Oct 2026 05:52:44 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xCZwb-0000td-RS
- for qemu-devel@nongnu.org; Fri, 02 Oct 2026 05:52:47 -0400
+ id 1xCZwY-0000t1-4l
+ for qemu-devel@nongnu.org; Fri, 02 Oct 2026 05:52:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790934765;
+ s=mimecast20190719; t=1790934760;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Vyu3AFg/uvFZq9zBba9+zCX/AMwxMobcoxANLVof+PQ=;
- b=KwVOs5qmClm33H7HwpehaQtGsbAvJOyESFZLKz4rjCk3lYAGPfghlN+n+psMI4JHYGmxOz
- liH4a4YNvV52rLDSob9gZrv1BJ84l++m4z5XN4iqgWhaxDLZh88iWAavEwagB5yLiARMkv
- 2MDt6Tt4SxeFFBceF/zQYdkQUQmhGT4=
+ content-transfer-encoding:content-transfer-encoding;
+ bh=S3GAJpfZ57SquHRNXIAYOzPxaT7RfkChdaM0IvBe59w=;
+ b=ZaL/lBDnQs+/tvIKGDAsgEh0f27wovR6I6WwnHZl286hBdoZskDeL75GQlzpT3VkBdSXqS
+ eKGU4Ys1cBrP47gbkArloXIln3cOZGMfelCQYPNC1z7d4jS/H62VfrrMvwTyZYdK/ffh+G
+ fY/5XeWJxo1UOqOXqmQuvzRV8uqN4MM=
 Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-680-r-9O6CBtNcu3Omd4h_quCg-1; Fri,
- 02 Oct 2026 05:52:43 -0400
-X-MC-Unique: r-9O6CBtNcu3Omd4h_quCg-1
-X-Mimecast-MFC-AGG-ID: r-9O6CBtNcu3Omd4h_quCg_1790934763
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-442-eQHPJpSfNz-OE2FqsyIzrg-1; Fri,
+ 02 Oct 2026 05:52:36 -0400
+X-MC-Unique: eQHPJpSfNz-OE2FqsyIzrg-1
+X-Mimecast-MFC-AGG-ID: eQHPJpSfNz-OE2FqsyIzrg_1790934755
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E5894180131B; Fri,  2 Oct 2026 09:52:42 +0000 (UTC)
+ id B35951800756; Fri,  2 Oct 2026 09:52:35 +0000 (UTC)
 Received: from berrange.csb (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id A854C1800348; Fri,  2 Oct 2026 09:52:41 +0000 (UTC)
+ id 1FB4D180049F; Fri,  2 Oct 2026 09:52:33 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Stefan Hajnoczi <stefanha@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v2 04/20] hw/xen: replace "long unsigned int" with "unsigned
- long " for dtrace
-Date: Fri,  2 Oct 2026 10:52:16 +0100
-Message-ID: <20261002095232.3605567-5-berrange@redhat.com>
-In-Reply-To: <20261002095232.3605567-1-berrange@redhat.com>
-References: <20261002095232.3605567-1-berrange@redhat.com>
+Subject: [PATCH v2 00/20] trace: bugfixes, cleanups and optimizations
+Date: Fri,  2 Oct 2026 10:52:12 +0100
+Message-ID: <20261002095232.3605567-1-berrange@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
@@ -88,32 +84,166 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-dtrace (or at least systemtap's fake "dtrace" binary) doesn't like to
-see "int" and "long" together in the typename, it just wants the
-bare "long".
+This series started off with fixing some compile failures seen
+with dtrace and ust backends, and got somewhat out of hand as
+I looked more deeply at the trace code. So it ended up doing
+various bits of code cleanup and memory usage optimizations.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
----
- hw/xen/trace-events | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+The optimizations aren't huge against each individual binaries.
+There are too many scenarios to show the full set, but here
+are some binary size examples
 
-diff --git a/hw/xen/trace-events b/hw/xen/trace-events
-index b67942d07b4..a31983ce1d3 100644
---- a/hw/xen/trace-events
-+++ b/hw/xen/trace-events
-@@ -57,8 +57,8 @@ cpu_ioreq_config_read(void *req, uint32_t sbdf, uint32_t reg, uint32_t size, uin
- cpu_ioreq_config_write(void *req, uint32_t sbdf, uint32_t reg, uint32_t size, uint32_t data) "I/O=%p sbdf=0x%x reg=%u size=%u data=0x%x"
- cpu_get_ioreq_from_shared_memory_req_not_ready(int state, int data_is_ptr, uint64_t addr, uint64_t data, uint32_t count, uint32_t size) "I/O request not ready: 0x%x, ptr: 0x%x, port: 0x%"PRIx64", data: 0x%"PRIx64", count: %u, size: %u"
- xen_main_loop_prepare_init_cpu(int id, void *cpu) "cpu_by_vcpu_id[%d]=%p"
--xen_map_ioreq_server_shared_page(long unsigned int ioreq_pfn) "shared page at pfn 0x%lx"
--xen_map_ioreq_server_buffered_io_page(long unsigned int ioreq_pfn) "buffered io page at pfn 0x%lx"
-+xen_map_ioreq_server_shared_page(unsigned long ioreq_pfn) "shared page at pfn 0x%lx"
-+xen_map_ioreq_server_buffered_io_page(unsigned long ioreq_pfn) "buffered io page at pfn 0x%lx"
- xen_map_ioreq_server_buffered_io_evtchn(int bufioreq_evtchn) "buffered io evtchn is 0x%x"
- destroy_hvm_domain_cannot_acquire_handle(void) "Cannot acquire xenctrl handle"
- destroy_hvm_domain_failed_action(const char *action, int sts, char *errno_s) "xc_domain_shutdown failed to issue %s, sts %d, %s"
+The current git master baseline for different enabled
+backends  on the x86_64 emulator:
+
+  nop 88546360
+  dtrace 90604496
+  ftrace 93265944
+  log 93799528
+  syslog 93962704
+  simple 97064528
+  ust 162999944
+  dtrace,ftrace,log,syslog,simple,ust 174438088
+
+'ust' has insanely high overhead in terms of binary sizes,
+inexplicably insane.
+
+'ftrace/log/syslog' are all similar because their overhead
+is dominated by the printf() format strings which are
+identical in all.
+
+'simple' is a bit worse because of the helper functions we
+must generated for each probe
+
+After this series is applied the results for x86_64 are
+
+  nop 88510248
+  dtrace 90576160
+  ftrace 93156320
+  log 93735064
+  syslog 93853480
+  simple 97050856
+  ust 162957256
+  dtrace,ftrace,log,syslog,simple,ust 174431128
+
+IOW, for 'dtrace', we save 28k, for 'log' we save 62k
+
+For the aarch64 binary, we see bigger saving in some
+cases:
+
+  baseline dtrace 127610144
+  baseline log 131050320
+     trace dtrace 127459264
+     trace log  130998872
+
+IOW, for 'dtrace' we save 150k, for 'log' we only save
+50k. No clue why the saving is not so significant for
+the 'log' backend but not a big deal.
+
+Changed in v2:
+
+ * Improve some commit messages
+ * Updated tracing.rst docs
+
+Daniel P. Berrangé (20):
+  osdep: add 'ignore_value(x)' macro
+  trace: use 'ignore_value()' instead of a dummy variable
+  trace: fix handling of char** in UST backend
+  hw/xen: replace "long unsigned int" with "unsigned long " for dtrace
+  trace: block use of "long int" for dtrace
+  trace: drop unused trace_event_set_state_dynamic_init()
+  trace: remove obsolete references to vcpu property
+  trace: drop 'id' from TraceEvent struct when not required
+  trace: change "DSTATE" variables from uint16_t to uint8_t
+  trace: add testing of 'nop' trace backend
+  trace: don't emit TraceEvent structs when 'nop' backend is used
+  trace: add test of generation with all backends enabled
+  trace: remove redundant headers from simple trace backend code
+  audio: remove mistaken use of trace_event_get_state()
+  hw/ppc: remove mistaken use of trace_event_get_state()
+  trace: include qemu_loglevel_mask(LOG_TRACE) in guard
+  trace: remove "disable" property from trace files
+  trace: stop tracking static disabled state
+  trace: remove parsing of "disable" event property
+  trace: remove 'trace_event_get_state' wrapper
+
+ audio/audio-mixeng-be.c                      |   2 +-
+ docs/devel/tracing.rst                       |  24 +----
+ hw/display/trace-events                      |   2 +-
+ hw/ppc/vof.c                                 |  13 +--
+ hw/xen/trace-events                          |   4 +-
+ include/qemu/osdep.h                         |   8 ++
+ monitor/qmp.c                                |   4 +-
+ qapi/trace.json                              |   5 +-
+ scripts/tracetool/__init__.py                |  32 ++----
+ scripts/tracetool/backend/__init__.py        |   3 +-
+ scripts/tracetool/backend/dtrace.py          |   2 -
+ scripts/tracetool/backend/log.py             |   3 +-
+ scripts/tracetool/backend/simple.py          |   4 +-
+ scripts/tracetool/format/c.py                |  74 +++++++-------
+ scripts/tracetool/format/d.py                |   3 -
+ scripts/tracetool/format/h.py                |  42 ++++----
+ scripts/tracetool/format/log_stap.py         |   3 -
+ scripts/tracetool/format/rs.py               |  30 +++---
+ scripts/tracetool/format/simpletrace_stap.py |   3 -
+ scripts/tracetool/format/stap.py             |   3 -
+ scripts/tracetool/format/ust_events_c.py     |   3 -
+ scripts/tracetool/format/ust_events_h.py     |   7 +-
+ stubs/trace-control.c                        |   6 --
+ target/hppa/trace-events                     |  28 ++---
+ tests/tracetool/all.c                        |  61 +++++++++++
+ tests/tracetool/all.d                        |  10 ++
+ tests/tracetool/all.h                        | 102 +++++++++++++++++++
+ tests/tracetool/all.log-stap                 |  15 +++
+ tests/tracetool/all.rs                       |  90 ++++++++++++++++
+ tests/tracetool/all.simpletrace-stap         |  16 +++
+ tests/tracetool/all.stap                     |  14 +++
+ tests/tracetool/all.ust-events-c             |  14 +++
+ tests/tracetool/all.ust-events-h             |  56 ++++++++++
+ tests/tracetool/dtrace.c                     |  10 +-
+ tests/tracetool/dtrace.h                     |   6 +-
+ tests/tracetool/dtrace.rs                    |   6 +-
+ tests/tracetool/ftrace.c                     |  10 +-
+ tests/tracetool/ftrace.h                     |  14 ++-
+ tests/tracetool/ftrace.rs                    |   6 +-
+ tests/tracetool/log.c                        |  10 +-
+ tests/tracetool/log.h                        |  20 ++--
+ tests/tracetool/log.rs                       |   6 +-
+ tests/tracetool/meson.build                  |   4 +-
+ tests/tracetool/nop.c                        |   7 ++
+ tests/tracetool/nop.h                        |  25 +++++
+ tests/tracetool/nop.rs                       |  51 ++++++++++
+ tests/tracetool/simple.c                     |  12 +--
+ tests/tracetool/simple.h                     |  10 +-
+ tests/tracetool/simple.rs                    |   6 +-
+ tests/tracetool/syslog.c                     |  10 +-
+ tests/tracetool/syslog.h                     |  14 ++-
+ tests/tracetool/syslog.rs                    |   6 +-
+ tests/tracetool/tracetool-test.py            |  12 ++-
+ tests/tracetool/ust.c                        |  10 +-
+ tests/tracetool/ust.h                        |   6 +-
+ trace/control-internal.h                     |   8 +-
+ trace/control-target.c                       |  29 ------
+ trace/control.c                              |  19 +---
+ trace/control.h                              |  43 +-------
+ trace/event-internal.h                       |  19 +---
+ trace/ftrace.c                               |   3 +-
+ trace/qmp.c                                  |  47 +++------
+ trace/simple.c                               |   9 +-
+ 63 files changed, 708 insertions(+), 416 deletions(-)
+ create mode 100644 tests/tracetool/all.c
+ create mode 100644 tests/tracetool/all.d
+ create mode 100644 tests/tracetool/all.h
+ create mode 100644 tests/tracetool/all.log-stap
+ create mode 100644 tests/tracetool/all.rs
+ create mode 100644 tests/tracetool/all.simpletrace-stap
+ create mode 100644 tests/tracetool/all.stap
+ create mode 100644 tests/tracetool/all.ust-events-c
+ create mode 100644 tests/tracetool/all.ust-events-h
+ create mode 100644 tests/tracetool/nop.c
+ create mode 100644 tests/tracetool/nop.h
+ create mode 100644 tests/tracetool/nop.rs
+
 -- 
 2.55.0
 
