@@ -4,150 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D983ECA5FD4
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Oct 2026 10:23:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7441CA5FC4
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Oct 2026 10:24:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xCaPq-0006A4-Dj; Fri, 02 Oct 2026 06:22:58 -0400
+	id 1xCaQt-0006Z2-0L; Fri, 02 Oct 2026 06:24:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1xCaPo-00069H-J5
- for qemu-devel@nongnu.org; Fri, 02 Oct 2026 06:22:56 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1xCaQn-0006VE-M3
+ for qemu-devel@nongnu.org; Fri, 02 Oct 2026 06:23:58 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1xCaPm-0003l6-Ij
- for qemu-devel@nongnu.org; Fri, 02 Oct 2026 06:22:56 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1xCaQl-0003pU-As
+ for qemu-devel@nongnu.org; Fri, 02 Oct 2026 06:23:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790936572;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=vzCGSbOPHwGPcue7zOnS4TZOOV71o7lrVJu+YeHWZnA=;
- b=ECkavjLcGdsonzOUKQUd4VuWjM+9/Pb4HpaOLlh6n0NjQRUSFLf0YclBB6Vkx9Gf9FNNJC
- EFHu68LX/Q3pyUEXAM5CdKeABrVldRTzlMVnScMjHAt2ExHBiprEFqO0s3P3WzRrrnIUos
- 1EC9Qixi51EOde/qhV3wuUCRnVPTXRs=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-473-MP0wZIieNyOW3twHxcEHBQ-1; Fri, 02 Oct 2026 06:22:49 -0400
-X-MC-Unique: MP0wZIieNyOW3twHxcEHBQ-1
-X-Mimecast-MFC-AGG-ID: MP0wZIieNyOW3twHxcEHBQ_1790936568
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-48b01a74792so2000725f8f.0
- for <qemu-devel@nongnu.org>; Fri, 02 Oct 2026 03:22:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1790936568; x=1791541368; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:cc:autocrypt
- :from:content-language:references:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=vzCGSbOPHwGPcue7zOnS4TZOOV71o7lrVJu+YeHWZnA=;
- b=n0fULK3k/xKc2O/wATEnO1JF5G0hwu9AUjpIFp9qqqDRWpLhotKov3xeScF8WtEFQe
- K/C7/5T7JtY6J79MO8tGdaVPSdafaRe3EVxOdpjOget9YEBgXp2U+6jy77C7g/gM/NKP
- Pb3aT2nB8UFfifNVw8Z43t/vtkCxt2LOxQteTgIOqX6FI9mz6Ug68zreq9wjuKuWrBZb
- byStmuriB6lcjXrAv1yYm8bTicRxE8n/7dPa2QeAapKB7e8PIAQ9duxoG2IGPaoZg5cC
- VnBmip7oJYLurhP892UQnlma01/P+sQ+YAz18GnbHgrIfXlcFv2IrHlVeuqUJQzaFISX
- djcg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790936568; x=1791541368;
- h=content-transfer-encoding:content-type:in-reply-to:cc:autocrypt
- :from:content-language:references:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=vzCGSbOPHwGPcue7zOnS4TZOOV71o7lrVJu+YeHWZnA=;
- b=Q+S1Z52arqAazB1Mz3psM0F3BO883tiJlQTFUwR9HJcplc5kQuKKE/LH2GrwvQGqmy
- 05hYBTdJcHJWgNVywF3gaLV8gkx3bXpA/Ipsdv/zBzXktyjD8NjWlNLtnW1x8EH6392V
- 03kQcV3nQcRxsJgjYcO93ajbA85/5KI8J4UdaoS1svzTui7qCmgFTAeg+o1SFNeP+Gda
- PBw6WGCLxxh3sUzI+CeZ6A7GgOZCMGVFyL+gFtwIsBx0b0/7/V9duQ5l1xVqi5F4cxj3
- ppS0OcobE3/hOepyj1OFvjFn7ehkMQVmq+DSWV7aszArvBZEXODAN96wKCU0CeP0c4j7
- RVyw==
-X-Forwarded-Encrypted: i=1;
- AKwUvBx3yeQOy4oaxRyZZxAbIbFIG+xxX50P+GAk6iLm2lKZ3EaPJtjnrPwAZrYUXZikyvvbINYrR9dUe6R0@nongnu.org
-X-Gm-Message-State: AFq9FYKjDpTi4utyxYRGOa/yEySSXoLIC0qjQHzyYm/Os2XZdYCkNhvo
- 4TC8X4skLIZSn1FgX5U9c46kG3uxOZyV1/hy+m0+1i9RP/VctVHOLWuv869mesBu86Y4rlLVEcZ
- ck1tOerVSOUb3WoemxWdUCXRHGvIC1CPxcFaX7PGRY9KG5OJWFrSP9H/+
-X-Gm-Gg: AYBFou1SlVt6owKRV46wBU5+3D49d/lleRvHrM6fIQkfvLvHORPcrcoAyYcljaqyMCR
- Q6f3zL5u7ec87lww8BEgtj7HtV/12zLUmxyLbLYa6I8cKh8kVaCOAmKCx7+CmWQe4yKIq9kJVnp
- HiCCcXmliJxpuehHdXaf44FCaqcWxdtoTHPBdndwlwx7kQV0Y2lVpzQUGOlTPV2Api2iaBMcyOr
- tdgii0FZV96AsDrO04WcK+ZKUk4JWil9WM7wLtbn6HUSfefb3aJzcFCN9qdCMnOjnooRUQSOAFv
- 7ZqHg1XLPJR2ql9tUAJYsEDFMlAwO9sd5PtTd7vC7PzYbaaURYN6DD5sSp8kiZLfRxDbH5rk
-X-Received: by 2002:adf:f98a:0:b0:48b:26b:7f8b with SMTP id
- ffacd0b85a97d-48b12755b99mr3018484f8f.57.1790936568381; 
- Fri, 02 Oct 2026 03:22:48 -0700 (PDT)
-X-Received: by 2002:adf:f98a:0:b0:48b:26b:7f8b with SMTP id
- ffacd0b85a97d-48b12755b99mr3018458f8f.57.1790936567947; 
- Fri, 02 Oct 2026 03:22:47 -0700 (PDT)
-Received: from [192.168.0.9] ([47.64.115.216])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48b82253e8dsm4099872f8f.4.2026.10.02.03.22.45
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 02 Oct 2026 03:22:45 -0700 (PDT)
-Message-ID: <a3dd935a-0e15-411f-837b-3cfdc1c5bf63@redhat.com>
-Date: Fri, 2 Oct 2026 12:22:44 +0200
+ s=mimecast20190719; t=1790936634;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=GB2Lk5Uje/lT+zs14oyAOXXr/0vSNRRtjRKcbmLUuUQ=;
+ b=TQfJRgrHWaYSG+7A6nUVl193l8KUrF3ZWjVAkLU/RXMHDIWdOArvLWLN+led2Lj6J3doui
+ y5zoptRCyoJMWX7GJKKPRKx7nVbwq/Yz7TOrEP5Yb46pL+MNZjWu0JGseA/OB0YhWLWUlr
+ 6cwdFgNG374BYrRdpb7sj1GcXqOhh6c=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-330-y0NuN1qyP0W6dQrG6GmSXw-1; Fri,
+ 02 Oct 2026 06:23:51 -0400
+X-MC-Unique: y0NuN1qyP0W6dQrG6GmSXw-1
+X-Mimecast-MFC-AGG-ID: y0NuN1qyP0W6dQrG6GmSXw_1790936630
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 11103195BDE8; Fri,  2 Oct 2026 10:23:50 +0000 (UTC)
+Received: from redhat.com (headnet04.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.116])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4ED10180049F; Fri,  2 Oct 2026 10:23:47 +0000 (UTC)
+Date: Fri, 2 Oct 2026 11:23:45 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>, Tanish Desai <tanishdesai37@gmail.com>
+Subject: Re: [PULL 15/16] tracetool/ftrace: add Rust support
+Message-ID: <ar-GMXSnnVFzV59f@redhat.com>
+References: <20251001153059.194991-1-stefanha@redhat.com>
+ <20251001153059.194991-16-stefanha@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/usb/hcd-ohci: Fail iso packets sent to non-iso
- endpoints and vice-versa
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-References: <20261001194756.3003085-1-peter.maydell@linaro.org>
-Content-Language: en-US
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-Cc: "Daniel P. Berrange" <berrange@redhat.com>
-In-Reply-To: <20261001194756.3003085-1-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20251001153059.194991-16-stefanha@redhat.com>
+User-Agent: Mutt/2.4.2 (2026-08-30)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
-X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.331,
+X-Spam_score_int: 9
+X-Spam_score: 0.9
+X-Spam_bar: /
+X-Spam_report: (0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.331,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -160,46 +84,145 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 01/10/2026 21.47, Peter Maydell wrote:
-> The OHCI USB controller requires software to set up an Endpoint
-> Descriptor data structure.  This specifies (among other things) both
-> an EndpointNumber telling the controller which USB endpoint to talk
-> to, and a Format (F) bit which is 1 for Isochronous transfers and 0
-> for General transfers.
-> 
-> The specification requires that software matches the F bit with the
-> endpoint it's setting up the descriptor for, so that Control, Bulk
-> and Interrupt endpoints use F=0, and Isochronous endpoints use F=1.
-> It doesn't require the controller to check whether software gets this
-> right.
-> 
-> The spec isn't totally clear about what happens if software creates
-> an ED with a mismatch, but I believe that the controller just trusts
-> the F bit, and tries to talk to the endpoint with the wrong sequence
-> of USB tokens (notably, isochronous transactions have no handshaking
-> and the others do). This probably results in the transfer failing.
-> 
-> In hcd-ehci.c we check for the "iso transfer to non-iso endpoint" and
-> make it fail, but we don't do this in hcd-ohci.c.  The result is that
-> a guest that deliberately sets up this situation can cause us to hit
-> the assertion added in commit 7b1eba96aeca, where the endpoint is not
-> isochronous and returns USB_RET_ASYNC to an iso TD handling function
-> that isn't prepared to deal with that.
-> 
-> Add checks for both "iso transfer to non-iso endpoint" and "non-iso
-> transfer to iso endpoint" and make those TDs fail rather than blindly
-> sending them to the endpoint.
-> 
-> Cc: qemu-stable@nongnu.org
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3729
-Looks like this issue got assigned with a CVE number, so please add:
+AFAICT, this support for ftrace is incomplete.
 
-CVE: CVE-2026-7180
+Building with:
 
-With that:
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+  ./configure --enable-trace-backends=ftrace  --enable-rust --target-list=x86_64-softmmu
+
+results in Rust build failures
+
+error[E0425]: cannot find function `ftrace_write` in module `bindings`
+   --> /home/berrange/src/virt/qemu/build/trace/trace-hw_char.rs:130:27
+    |
+130 | ...   unsafe {bindings::ftrace_write(format_string.as_ptr() as *const c_char, _desc.as_ptr(), _addr as std::ffi::c_int, _value as std::ff...
+    |                         ^^^^^^^^^^^^ not found in `bindings`
+
+error[E0425]: cannot find function `ftrace_write` in module `bindings`
+   --> /home/berrange/src/virt/qemu/build/trace/trace-hw_char.rs:140:27
+    |
+140 | ...   unsafe {bindings::ftrace_write(format_string.as_ptr() as *const c_char, _desc.as_ptr(), _addr as std::ffi::c_int, _value as std::ff...
+    |                         ^^^^^^^^^^^^ not found in `bindings`
+
+
+and these errors occur on both today's git master HEAD, and all
+the way back to this first patch that claimed to support ftrace
+with Rust.
+
+Did some piece of supporting code go missing in the final
+pull request here ? 
+
+On Wed, Oct 01, 2025 at 11:30:58AM -0400, Stefan Hajnoczi wrote:
+> From: Tanish Desai <tanishdesai37@gmail.com>
+> 
+> Signed-off-by: Tanish Desai <tanishdesai37@gmail.com>
+> Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> Message-ID: <20250929154938.594389-16-pbonzini@redhat.com>
+> Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+> ---
+>  scripts/tracetool/backend/ftrace.py |  8 +++++-
+>  tests/tracetool/ftrace.rs           | 40 +++++++++++++++++++++++++++++
+>  tests/tracetool/tracetool-test.py   |  2 +-
+>  3 files changed, 48 insertions(+), 2 deletions(-)
+>  create mode 100644 tests/tracetool/ftrace.rs
+> 
+> diff --git a/scripts/tracetool/backend/ftrace.py b/scripts/tracetool/backend/ftrace.py
+> index 7ddd5d11a6..e03698a2ed 100644
+> --- a/scripts/tracetool/backend/ftrace.py
+> +++ b/scripts/tracetool/backend/ftrace.py
+> @@ -12,7 +12,7 @@
+>  __email__      = "stefanha@redhat.com"
+>  
+>  
+> -from tracetool import out
+> +from tracetool import out, expand_format_string
+>  
+>  
+>  PUBLIC = True
+> @@ -43,3 +43,9 @@ def generate_h(event, group):
+>  def generate_h_backend_dstate(event, group):
+>      out('    trace_event_get_state_dynamic_by_id(%(event_id)s) || \\',
+>          event_id="TRACE_" + event.name.upper())
+> +
+> +def generate_rs(event, group):
+> +    out('        let format_string = c"%(fmt)s";',
+> +        '        unsafe {bindings::ftrace_write(format_string.as_ptr() as *const c_char, %(args)s);}',
+> +        fmt=expand_format_string(event.fmt),
+> +        args=event.args.rust_call_varargs())
+> diff --git a/tests/tracetool/ftrace.rs b/tests/tracetool/ftrace.rs
+> new file mode 100644
+> index 0000000000..07b9259cf2
+> --- /dev/null
+> +++ b/tests/tracetool/ftrace.rs
+> @@ -0,0 +1,40 @@
+> +// SPDX-License-Identifier: GPL-2.0-or-later
+> +// This file is @generated by tracetool, do not edit.
+> +
+> +#[allow(unused_imports)]
+> +use std::ffi::c_char;
+> +#[allow(unused_imports)]
+> +use util::bindings;
+> +
+> +#[inline(always)]
+> +fn trace_event_state_is_enabled(dstate: u16) -> bool {
+> +    (unsafe { trace_events_enabled_count }) != 0 && dstate != 0
+> +}
+> +
+> +extern "C" {
+> +    static mut trace_events_enabled_count: u32;
+> +}
+> +extern "C" {
+> +    static mut _TRACE_TEST_BLAH_DSTATE: u16;
+> +    static mut _TRACE_TEST_WIBBLE_DSTATE: u16;
+> +}
+> +
+> +#[inline(always)]
+> +#[allow(dead_code)]
+> +pub fn trace_test_blah(_context: *mut (), _filename: &std::ffi::CStr)
+> +{
+> +    if trace_event_state_is_enabled(unsafe { _TRACE_TEST_BLAH_DSTATE}) {
+> +        let format_string = c"Blah context=%p filename=%s";
+> +        unsafe {bindings::ftrace_write(format_string.as_ptr() as *const c_char, _context /* as *mut () */, _filename.as_ptr());}
+> +    }
+> +}
+> +
+> +#[inline(always)]
+> +#[allow(dead_code)]
+> +pub fn trace_test_wibble(_context: *mut (), _value: std::ffi::c_int)
+> +{
+> +    if trace_event_state_is_enabled(unsafe { _TRACE_TEST_WIBBLE_DSTATE}) {
+> +        let format_string = c"Wibble context=%p value=%d";
+> +        unsafe {bindings::ftrace_write(format_string.as_ptr() as *const c_char, _context /* as *mut () */, _value /* as std::ffi::c_int */);}
+> +    }
+> +}
+> diff --git a/tests/tracetool/tracetool-test.py b/tests/tracetool/tracetool-test.py
+> index f58f3b795e..3341fb18f9 100755
+> --- a/tests/tracetool/tracetool-test.py
+> +++ b/tests/tracetool/tracetool-test.py
+> @@ -14,7 +14,7 @@ def get_formats(backend):
+>          "c",
+>          "h",
+>      ]
+> -    if backend in {"log", "simple"}:
+> +    if backend in {"ftrace", "log", "simple"}:
+>          formats += ["rs"]
+>      if backend == "dtrace":
+>          formats += [
+> -- 
+> 2.51.0
+> 
+> 
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
 
