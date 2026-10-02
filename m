@@ -4,99 +4,140 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CCE96CA5FC4
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Oct 2026 16:15:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A46DCA5FC4
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Oct 2026 16:18:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xCfu7-0006yn-Fh; Fri, 02 Oct 2026 12:14:35 -0400
+	id 1xCfxN-0007lN-PI; Fri, 02 Oct 2026 12:17:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xCfu5-0006yE-JU
- for qemu-devel@nongnu.org; Fri, 02 Oct 2026 12:14:33 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
+ id 1xCfx0-0007hU-Ig; Fri, 02 Oct 2026 12:17:34 -0400
+Received: from mail-northeuropeazlp170100001.outbound.protection.outlook.com
+ ([2a01:111:f403:c200::1] helo=DB3PR0202CU003.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xCfu3-0004Yz-Jx
- for qemu-devel@nongnu.org; Fri, 02 Oct 2026 12:14:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790957670;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=7tVCrDWpvdv8yfT6dzfUYvjDZG9i+PuV3LjaZqFbCwk=;
- b=eDcxQf6HCO+U+YNYjV3hjIPwd3QlPq6a4kYc1yoKXC8JUTSYNtu5cNq8ULEs6Ylk2xbrRV
- DV/SzDmHY2HklrZif1rZo6sGwI7h6uNgEfDkF0LicWpZ5924i3I3dMYUAZ046AdM/QpYGh
- /8/PmhjwlNj8D11QJpGeDtov0cqFC7A=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-369-dhxD-1HQP-WXQeWrTdPe7Q-1; Fri,
- 02 Oct 2026 12:14:25 -0400
-X-MC-Unique: dhxD-1HQP-WXQeWrTdPe7Q-1
-X-Mimecast-MFC-AGG-ID: dhxD-1HQP-WXQeWrTdPe7Q_1790957663
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7B73018005AA; Fri,  2 Oct 2026 16:14:22 +0000 (UTC)
-Received: from redhat.com (headnet04.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.116])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 582F4214; Fri,  2 Oct 2026 16:14:16 +0000 (UTC)
-Date: Fri, 2 Oct 2026 17:14:13 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Cc: luoyonggang@gmail.com,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- qemu-devel@nongnu.org, Chao Liu <chao.liu@processmission.com>,
- Eric Blake <eblake@redhat.com>, qemu-arm@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Brian Cain <brian.cain@oss.qualcomm.com>,
- Stafford Horne <shorne@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Fabiano Rosas <farosas@suse.de>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- qemu-riscv@nongnu.org, Laurent Vivier <lvivier@redhat.com>,
- Max Filippov <jcmvbkbc@gmail.com>, Song Gao <17746591750@163.com>,
- Philippe Mathieu-Daude <philmd@mailo.com>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Laurent Vivier <laurent@vivier.eu>, Weiwei Li <liwei1518@gmail.com>,
- Zhao Liu <zhao1.liu@intel.com>
-Subject: Re: [PATCH v3 01/10] machine: allow -M name to differ from QOM type
-Message-ID: <ar_YVfWv9EWHKVD6@redhat.com>
-References: <74853ef8-7315-466a-99ac-41c8182f9b13@oss.qualcomm.com>
- <ar4TQtKqfXX5Ul9O@redhat.com>
- <CAE2XoE8q3LYJ-JCTbRBk4iPdUQdRE8zzmOgiZ=HEXDL78iw8UQ@mail.gmail.com>
- <26b0d44d-0322-4ceb-a47b-747fc52c61b7@oss.qualcomm.com>
- <CAE2XoE8VyCpPCqRVFArBn_dDsyMw8vrSJxWMhKq17btZvO2n6A@mail.gmail.com>
- <b02db9e2-b348-4011-a98d-122e9d9f17e5@oss.qualcomm.com>
- <ar6a_uDw9OeLng6c@redhat.com>
- <6bf4dad5-4fa2-4df1-b6b8-d594dbd3842c@oss.qualcomm.com>
- <ar6lw3jAcnVej6vK@redhat.com>
- <557262df-b8e7-49b5-a245-ae46b8885b30@oss.qualcomm.com>
+ (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
+ id 1xCfwu-00050E-Or; Fri, 02 Oct 2026 12:17:31 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=IZATHsBFVYRF1NXQUJsrqcej6tmPI2TUfm+8mU4SjQ46QdNkoqyAJJAyjfqefkLx0rzUqAycDJNRbeozu2ZaGGH0rYwAj/oyMRrWPbl4E8oLdu2OKRvJL2ldL94JDNENsz5ysDZHLf62efwvcyAeBuVavt/ojBRx7VpBw0WiZpd77zlqYcXly0/kdgYabxnabikOR9j7y9sRGMFDvawf7hXa/hnFV7BqdZA7F2S9fiOqEMPqROkydr089ryDeF99zdjjGZyYwjV6ybgWhM6Js6RXCfv2FwL3LgKv0AIkGPomug0I3PIVZ0vG5oziHxTzV+MSahDB1LaPl1x55JPByw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=HsqdR8SUH1X3AWHhNAtMSBSNvWVaXMx5vPKT5dq1rO4=;
+ b=FIk3d9MhscS/bnqSedeyLtaBn/vcs+U+hrei0ZaTbXFH3NJ5lmXug5pmug6rsYBdkrZ2VFf65M7b+ExlzGwLlLwkf0kyr9R39kGci5xTlQ9s5AKQ74R69RYxc8th8VcIdH+mfYFTwYtuIxh3dQ0Bnion/LZmZ3OHvfTJqlZn9MX1q4HsiPjagmg9ECJxnhLh7o3HukWKsdQOFCnz20ykpmW63qEgLjY5kgW+Fqod8Pi1tjbQc57gT9ttg165H6MtrHCjY2dXNrHG+2EkzUPJFWYgKzzbOSwe1UXnbDUa9kX/c6VowXrwuWedQ/ME+uPGXrSIWzvrwKtvCx0rmmUztg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
+ header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=HsqdR8SUH1X3AWHhNAtMSBSNvWVaXMx5vPKT5dq1rO4=;
+ b=w17qf+F4DZ3Ice0VLumnnbHdUc7HS1UovlDCU9K+zCpL4eiwrp1LKkmWdsMK2ee3nzRjtgtpANJxeGNG1e5BwJFWuaUvFJWqRmJRNMMhRnr3DhnyJ69cIvytbc0wDhDobFIDGGE6bIiio01EnL4wtLCr1pqwO0e6jqo3KO9aC1jAeD5F9dpilM44QgTpSMs8JXYeib1Hm9+tM0cpoHp0CMReH2l6DJO004FZigapvemtNTJS57USgJZAV0pcIa8KaOSV/zwcBbIKc0Aq879ZcqqjoN/SHjKtdXCa3oVA1E3xU04R5qlC3xfltAwXr4b4/dYI8L908Bh0uCAXU4lUUw==
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=virtuozzo.com;
+Received: from GVXPR08MB10667.eurprd08.prod.outlook.com
+ (2603:10a6:150:15a::13) by PAXPR08MB7396.eurprd08.prod.outlook.com
+ (2603:10a6:102:2ba::18) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.472.18; Fri, 2 Oct
+ 2026 16:17:17 +0000
+Received: from GVXPR08MB10667.eurprd08.prod.outlook.com
+ ([fe80::d70a:96e3:8888:668d]) by GVXPR08MB10667.eurprd08.prod.outlook.com
+ ([fe80::d70a:96e3:8888:668d%5]) with mapi id 15.21.0496.010; Fri, 2 Oct 2026
+ 16:17:03 +0000
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Subject: Re: [PATCH 01/13] block/file-posix: drop the XFS workaround for
+ post-EOF fallocate
+From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+To: "Denis V. Lunev" <den@openvz.org>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, qemu-stable@nongnu.org, 
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>, 
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>, 
+ Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+In-Reply-To: <20260930165000.303236-2-den@openvz.org>
+References: <20260930165000.303236-1-den@openvz.org>
+ <20260930165000.303236-2-den@openvz.org>
+Date: Fri, 02 Oct 2026 19:16:59 +0300
+Message-Id: <179095781936.643598.18150676887613934143.b4-review@b4>
+X-Mailer: b4 0.16.0
+X-ClientProxiedBy: VI1PR09CA0091.eurprd09.prod.outlook.com
+ (2603:10a6:803:78::14) To GVXPR08MB10667.eurprd08.prod.outlook.com
+ (2603:10a6:150:15a::13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <557262df-b8e7-49b5-a245-ae46b8885b30@oss.qualcomm.com>
-User-Agent: Mutt/2.4.2 (2026-08-30)
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: GVXPR08MB10667:EE_|PAXPR08MB7396:EE_
+X-MS-Office365-Filtering-Correlation-Id: 139715d2-d72e-4425-8e85-08df20a0986a
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|23010399003|1800799024|52116014|366016|376014|56012099006|38350700014|4143699003|10067099003|22082099003|18002099003;
+X-Microsoft-Antispam-Message-Info: vy8MvKkaQ4ZI32IIr4VxxtwuU2T1kKhsX11JCiU1YgiMDZCCh9W6Zxa06ipYb974ZcigWga79rFJPJI47HzxdOMtb7Nl5kSZVCV7HsPgecfGg08X12NYLrM0b9BWYcBvseCkITxRqnL+4BueL/BVvkqYSF417QQ0ZwYY6OIlOmUUygpbOqdAGEAV8GlqJCUTA8MncJExztaztLyatuNVqPs7oKUX4fuMr6QDdW9pZ5E8qCkAOl81TNZylpCkMEj3znS/MqjuW/PTTMBtwhogjRFc6kNJn9inBVfbQYYrNp2ZBSahkLYy1LZrGmeFPqzAjoz3hX/p2sTV2fuy+nzfqgkqbo5s/dpxAcl6VhQMUJrM6T+zpwzkrN/Wb42dqWaXH/oj2ZKNtzNxuhNO8dIaw0LXALVpGeCKMT7S2xxv5lP6KEGn8VSdOpPNG4e71uzXo+ph1bLcZbkH+C37HYlYgals45LqSssecZ2Fj9mNtXF2fQ4Is6fQV7isfRJnB3D9O15/z8ROl8UlDKaJFprA0bAPNQooLvTvz5tVFo9fMZn5IR6mtIqRsOheCj1d/6dwEKUkOWjbGce/mfmYZevdEZQpILCmWMCkTCG9po85YLoIEdy7iR5GLetJAfPaUP27uxT1tkG3MkYVlRGfCgofZmjMRsmWFFZxTbYIHQhAvF1xVielmgxiz5yuNx6dw6gXPpNhHhkRZjmBXhSH9adUGe1nMp3ZwYsRo8/ipJ0HJ/E=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:GVXPR08MB10667.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(23010399003)(1800799024)(52116014)(366016)(376014)(56012099006)(38350700014)(4143699003)(10067099003)(22082099003)(18002099003);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?MllvTHdRNTVEeEh3SW8yRjhJRVBoOHZaV1F6S1h2THNkK0ZBNGtpL01EVlo5?=
+ =?utf-8?B?S0V0VXFYcC9HQ2NSNmJxWFRYR1BabnhnMit4RWNVSWI5cWhCRjBFVFUyYWh4?=
+ =?utf-8?B?cjhiOXdIVEd1UXVWUTZneWNvY2RRZ1FHa0ZLSHZzQzcwOFJGMGt2S2IrZHZP?=
+ =?utf-8?B?UFRBNEd1REVZQUtwNEhsVm9FZk9NWEo4SUoyNGFIY3QzbWpBeVo1Tm5IbDNs?=
+ =?utf-8?B?RVd4MHFHR20yOGZwMjZ0YklmcnEzS1FlOWZEOTRlOEthb2o3dWVKNW1lNEhh?=
+ =?utf-8?B?SWJqN0NpZnl0NmRCaWNyL2RoL3RWcXk0dlNEU212Um10S0ZQdWFNM1pQZHdC?=
+ =?utf-8?B?ZmNZckhKNk1qNElPWU8xcnZrcGtjN1BFN0VqdEFEWkZGbnZ6R3EyOGNodXkw?=
+ =?utf-8?B?ZUwzTnNFTis2dERCc1hodkRuZDU0K1NvUTE2S3V3bnIwMTJPVCtLdGdEQzdl?=
+ =?utf-8?B?UlNxSk5vdEJXTzNySWtGTWc1TFVvMjhSUDZBMVZXU0wzYWJBUlZFY0RDT0Vr?=
+ =?utf-8?B?ZzVTQjBXWXpRWUVOL01GWnZQTnh0VHA1b1FLUU0vQ01JVGxXS0RsTzAvL2ty?=
+ =?utf-8?B?anBUNFpleGxwSjRnK2J4NzZtN2dTZUp3UGpHeitHQitjTERHNTlWS1MzOUd4?=
+ =?utf-8?B?a3FXT3lkM0RDM2ZOTTczdHBSc0lqdHJWbG1HeDlBdzJwVmlteXBlZlpqQkRn?=
+ =?utf-8?B?UDArcXlFOTVlWGtCOHJvVEUvbCtsQndkcGNQckRYbkRlb1czVlZnRDZ5WE5k?=
+ =?utf-8?B?R3JLbXdRL081NWJUQWZNSnptV2dqUDJydS9CZHB6SlRLcDQwSGlzdTJQMTJN?=
+ =?utf-8?B?TEpFbVNKMzgzZ3l1eW01M2NxMG9qSlI4MGFnSXR0ZStuc3ZjOGQwSisxbTV6?=
+ =?utf-8?B?ODRQZFp4REdqaHlLUUVNZk53OSs5ZElVNXVVQWZRZmkycXhrMmtTdHgzWVdw?=
+ =?utf-8?B?Q2s4RVNSMHZKaEhYOUJtcVlCdnhjRUpwb2xlWmU4Tit0MElVWjk0QlZFNDdr?=
+ =?utf-8?B?TFB1eDFuYXpzSWtsTHE1aFBNZ3laMlhiTGtLOUxWT3Y1cjE1TE1BaUxwYUQ3?=
+ =?utf-8?B?TnhBWkIyVE1EZW1FRXhXSTRIbXRKK3JWcnRnUnFnL2k2dzNEY1VzZUdTdU56?=
+ =?utf-8?B?aE1lckgrakFLS0QvMzBMOTdVTlhFS1NObVNnNmc4WmpvRjF4dEtwZ3d4S2lp?=
+ =?utf-8?B?b3QyS1h5Mmk1WStndHc0aG83N1dxai9Ec2lDZXF4QUlzeUNmSFQ0RmswVnNX?=
+ =?utf-8?B?dFQzMjlGenJ2QVRhREpxRHBRSmRuOE81d0hLTWhnalFoYXhMelptNi9wMS9W?=
+ =?utf-8?B?US9vUzBhRXdXdjZIYnp5MUlDUEJUQkZkR3djRmxXTGpzUHZzUys2QlB6NjlL?=
+ =?utf-8?B?bThxVHMrN3ZNeEZxR0JlZXFTRitPUXV0WGNzdFlybXp4eWRxZjMyQjBlaGhm?=
+ =?utf-8?B?VHIzR25yOWU4cy96bEtnL2VOcmFTTjJWcFJNSnp1Qy9xa2VTd0gzMGtLYTlS?=
+ =?utf-8?B?Nnp1ZU5PMm50VFMxTW9PZFMyZG5QWFlaOXlDbExpcWdSUGlHcUx0ajczU2Jh?=
+ =?utf-8?B?OGlrVVlyQnd2a3Q4RzFoQ2ZMMTlHVzJ2eisxd0ZMT24vandCbHRwWk5BV0lT?=
+ =?utf-8?B?dWRvUUU3U1ppSkpXNnBzQkJwWVpaMG9sV0M1VkFGeU8rRHZUMU1JLzZVSnJN?=
+ =?utf-8?B?dFZjeGRFSzRVQ1pDaXlTNkpUSUJaMHNDdnNrZVViVE41SXVja1VVSFpmdVFN?=
+ =?utf-8?B?c0s0OHcrTmJiSU14aDl0T2RhNzdRaGNzSGh3VDhuOE1BTlZkd1BEUE1wRGlk?=
+ =?utf-8?B?RjE4Z2N5WDZVQ3hhZjFvbGphZ2hUckdoblVtU1YxYVNkRk5uMlU2dFVGSGJh?=
+ =?utf-8?B?dVNVR1diYUsxSm9kUy9QUmZNWVp0MDNqR3RKRXJBWktVaE9vaU1JZXpFMU04?=
+ =?utf-8?B?ekNJTTFtemgrSTRrYnZaNzlQKzJscnlSNVJOV1o1L3ZGbDZNTmpRZ3JjSWFG?=
+ =?utf-8?B?SjZYckVIVWZhbEF0Yklrc1FOSnQxUE90V0ZtYlpzdzRsQyt3R2JYSW9IMFVa?=
+ =?utf-8?B?UWc3WTBhQktZRm9pY1JBTVY5a3ZyRVdCWlVlVFA4STVwRmZsY2JiemJiWnNu?=
+ =?utf-8?B?NWJWa1JaTFoxUC9VTzJIc1hya2RySjZqVHhuMGFadHdFMm0yZHpqYmRsY20r?=
+ =?utf-8?B?c0lidHVvQXBPamNZODVHdk9YWGxScjA1YVMwV01STi93cFNRTjZ4VEdQTTB0?=
+ =?utf-8?B?MjlTeHVpUFhQYUJ6dHYxUmNJM0RDVUMvcDJrMlFobVJpUVY1RG4yUkJjZjJQ?=
+ =?utf-8?B?TS9XUExjcGZTWEwyY24ySUZObVRiNWE1MXhOdXFJZjB0cElEMzdtMzl3NDB2?=
+ =?utf-8?Q?IrQEEc1Hm6hW2iII=3D?=
+X-OriginatorOrg: virtuozzo.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 139715d2-d72e-4425-8e85-08df20a0986a
+X-MS-Exchange-CrossTenant-AuthSource: GVXPR08MB10667.eurprd08.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Oct 2026 16:17:03.5645 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: rELKXsZy52K9qeBzMH7a8Q7o6U74IZiiP2j9XxEHMobnTPg1Yi4IvILfMMwpD/2HneFsxnquWU2azgnjfeMunf2ceA6ivwDACuwXhDXhWT8=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PAXPR08MB7396
+Received-SPF: pass client-ip=2a01:111:f403:c200::1;
+ envelope-from=andrey.drobyshev@virtuozzo.com;
+ helo=DB3PR0202CU003.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.336,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,141 +150,29 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Oct 01, 2026 at 11:56:13AM -0700, Pierrick Bouvier wrote:
-> On 10/1/2026 11:26 AM, Daniel P. Berrangé wrote:
-> > On Thu, Oct 01, 2026 at 11:08:17AM -0700, Pierrick Bouvier wrote:
-> >> On 10/1/2026 10:40 AM, Daniel P. Berrangé wrote:
-> >>> Even with the current per-target binaries there are countless
-> >>> devices linked in which are incompatible / not usable with
-> >>> certain machine types. A new multi-target binary with a union
-> >>> of all devices will just be a bigger example of a scenario that
-> >>> already has to be dealt with for today's binaries.
-> >>>
-> >>> So if we have that assumption that we don't need to do device
-> >>> filtering, at that point, a --target option doesn't have as
-> >>> big of a role to play. The machine type code knows what target(s)
-> >>> it wants (1 or 2 targets depending on if there are 32 + 64 bit
-> >>> varaints. The CPU model the user requests (if the CPU is not
-> >>> hardcoded by the machine), determines 32 bit vs 64 bit.
-> >>>
-> >>
-> >> How can we deduce this information (bitness or target for existing
-> >> machines/cpus)?
-> > 
-> > It would require that we introduce a new field in MachineClass
-> > that returned that information about what target a machine is
-> > associated with.
-> > 
-> > I note the SysEmuTarget covers both 32-bit and 64-bit variants.
-> > 
-> > It might be better use QEMU_ARCH which correlates directly to
-> > the TCG targets, rather than the traditional binary target
-> > names ?
-> > 
-> > Likely the CPU class would also want to declare its list of
-> > supported targets.
-> >
+> 292d06b925b extended the tracked request of a post-EOF write zeroes to
+> infinity and made it serialising, to work around an XFS bug where AIO
+> writes past EOF were discarded by a concurrently extending fallocate().
 > 
-> QEMU_ARCH only represents base architectures, and not variant, so
-> SysEmuTarget is the right choice.
+> The kernel bug was fixed by 249bd9087a52 ("xfs: properly serialise
+> fallocate against AIO+DIO"), which moves inode_dio_wait() up under
+> IOLOCK_EXCL so fallocate cannot run alongside in-flight AIO. That
+> landed in v5.5, three days before the workaround was committed here,
+> and predates every stable series still maintained.
 > 
-> So, we would need a list of SysEmuTarget for every cpu/machine that is
-> target specific, since one could be available for variants of base arch?
+> [...]
 
-Ok
+Reviewed-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 
-> @Daniel: how do we deal with machines available for all targets like
-> null? We would need a way to ensure all machines/cpus are tagged
-> correctly, in an independent way from "available for all", without
-> having to repeat all existing SysEmuTarget.
+One nit: looks like after this patch no more callers exist for
+bdrv_co_get_self_request().  Maybe we can remove it from this or
+subsequent patch?
 
-Or could the 'none' machine simply report '0xffffffff' for the
-list of targets so it includes everything today & in the future,
-or specialize "0" to mean everything ?
+Andrey
 
-
-> > eg this example from x86 world:
-> > 
-> >   $ qemu-system-x86_64 -M microvm -device xen-disk
-> >   qemu-system-x86_64: -device xen-disk: No 'xen-bus' bus found for device 'xen-disk'
-> > 
-> >   $ qemu-system-x86_64 -M isapc -device virtio-net-pci
-> >   qemu-system-x86_64: -device virtio-net-pci: No 'PCI' bus found for device 'virtio-net-pci'
-> > 
-> > Hopefully most devices have sane error reporting when they
-> > find a dependancy they have is not satisfied by the machine,
-> > but if some end up asserting with crashes that's not a
-> > blocker. Those asserts can be turned into pretty error
-> > messages at our leisure by whomever cares about improving
-> > error diagnosis.
-> >
-> 
-> Fine for me. I am a bit skeptical this will be possible to catch all
-> issues, but let's try!
-
-I'm confident that we will find badly behaviour devices,
-but we don't need to fix it all upfront, and they would
-arguably be considered buggy already today.
-
-> >>> A --target option (or similar -machine name,target=xxx) could
-> >>> be used to dis-ambiguate between 'virt' machines if keeping
-> >>> their user facing machine names as-is, or it could be used as
-> >>> a way to be more explicit about the 32-bit vs 64-bit choice
-> >>> and sanity checked against the CPU model choice.
-> >>>
-> >>
-> >> We could also not register them as virt if more than one target is
-> >> detected, so people have to call explicitly aarch64-virt.
-> >> Would that be a possible way to move forward?
-> > 
-> > Yes, we could diverge in the naming of the machines for the
-> > existing binary, vs the new multi-binary, and that could well
-> > be the sanest & simplest option in fact.
-> >
-> 
-> So, for existing binary: -M virt works as before.
-
-Yes.
-
-
-> For new multi binary:
-> $ qemu-system -M virt:
-> Multiple machines were found, select one among:
-> - aarch64-virt
-> - riscv64-virt
-> 
-> Does it matches what you would expect?
-
-
-One idea I had was that when define the 'virt' class type we could
-have a way to identify whether it is linked into the traditional
-binaries, or linked into the multi-target binary, and from
-that choose what name to register it under. eg
-
-  "extern bool multi_target;"
-
-and have two .c files, one setting it 'true' and one 'false',
-and link each to the respective binaries. So we know statically
-before main() has even run, what mode this binary is intended
-to operate in.
-
-> Also, for compatibility with existing binaries, should we accept -M
-> $arch-virt also? I feel like it does not hurt and would make thing
-> simpler to switch between existing and new binary.
-
-Yes, that's another viable option. Always register '$arch-virt' and
-only register 'virt' for traditional binaries.
-
-
-With regards,
-Daniel
 -- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
-
+Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 
