@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3300CA5FC4
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Oct 2026 15:47:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80B57CA5FDD
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Oct 2026 15:50:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xCfTA-0007Ot-Fq; Fri, 02 Oct 2026 11:46:44 -0400
+	id 1xCfWQ-0008GJ-FR; Fri, 02 Oct 2026 11:50:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xCfT3-0007OJ-2t
- for qemu-devel@nongnu.org; Fri, 02 Oct 2026 11:46:38 -0400
-Received: from mail-ed2-x0e.google.com ([2a00:1450:4864:33::e])
+ id 1xCfWG-0008Fe-TT
+ for qemu-devel@nongnu.org; Fri, 02 Oct 2026 11:49:57 -0400
+Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xCfT0-0001bL-PS
- for qemu-devel@nongnu.org; Fri, 02 Oct 2026 11:46:36 -0400
-Received: by mail-ed2-x0e.google.com with SMTP id
- 4fb4d7f45d1cf-6aae359e2c0so12174269a12.3
- for <qemu-devel@nongnu.org>; Fri, 02 Oct 2026 08:46:33 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1790955992; cv=none;
+ id 1xCfWF-0001pH-00
+ for qemu-devel@nongnu.org; Fri, 02 Oct 2026 11:49:56 -0400
+Received: by mail-ed1-x52e.google.com with SMTP id
+ 4fb4d7f45d1cf-6a9bd4db6ccso1971649a12.0
+ for <qemu-devel@nongnu.org>; Fri, 02 Oct 2026 08:49:54 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1790956193; cv=none;
  d=google.com; s=arc-20260327;
- b=GA2MkQh1mFCrkm2rVXMj66A0WGS2vCA7R0fgxfpm4cjYpYU1cB40XseZyA6TmBfnMF
- ilmyl0D3BRc0ubSpKKTbUGZgWRzwXw727N6Bd+c6Zr/YQpG+DIkUF1daPXwcaw3l3Mgh
- P6teuAPcmFKgpPEjP2dQj1kyuMQgHbCeYqlzKp06pS3HpQFW1/t+Ft3pet0hhJfT/WCR
- 3q92tKZYA3GQxxRogQJcUlGKJ+UocQ70GQkLPZ3Pya5putll+w3v4CPTN9b2MKdGt8T1
- SnP/nq5JL/+5L4EmhNaFP2iPbO+jwBG5vSr5QkQmYNMgEVuJBRlwlXQakZbp6EqIekM3
- r9rQ==
+ b=pnFFvSgcsmQJ8VniVFstUm7iCmU0h/LOlv0iC1ZaB1kSznpQKOF2D3ErBNA7yy4cWu
+ MHA2VE511xTSf8jnyO4uSFjzDRL/QoVG13EhudjA8Ivhq++Ck1h3W3UKJ9AXyDc2eZUZ
+ AQrRvO9cjhU9BRLB0hS0Pdli2YV+cypdXBHnbL5XuV+hpgAWxksK+Bouh1YgkMlO5ChX
+ lLj/DHdEmI9b/5WrFTjTzi/o6VfuNjQPOtTfdIgIEwhrQeHfNSADFgOht7kC8GzR8BNg
+ bb3DxFecm6WmIrG/8W1YL83fSx8vr1KdtgTnufBjGksgaLuT79CDbBylARAxXwcK+Kx4
+ qyPA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :reply-to:in-reply-to:references:mime-version:dkim-signature;
- bh=DcmBuQgOQuAEhXZY1VVxRnodJZmxTBNA4BXr+UWH02Q=;
- fh=42ltMDgnRgkLbX9DkVvAuanKsU3ZhnYXVgwti90xs7Q=;
- b=mlRNX8x8j+KOqIPbDVRCyQSmxQYvolDEepSRXG2P+ZKnIsPGv3U4bps6bFEhsnXpcQ
- XM+GH7YUqD+rxyJtvF0UmTRsGDeKoipK4X64UTkc0wWan5t/V3O1Q1KxZbvevYlaoyNC
- AtzNntn4u6KnWk3D7oDSIWuBYisor8ZpBM3RBj/0mTlyrv7EBAdhG2BH7nocpomXVmDH
- G7gmGcvGjHPwljk2DNMa7yYhY3Riy+6tb0siIVP9AxjTFYD6GHT7KXL47OrT7msQ12W0
- A54V7L4SgJlxwVww8jKwz0a+rzWnZ7vZf6dUf1QmIu2ja1oLUmape2kiqQ1xhcWIZxxF
- ynNA==; darn=nongnu.org
+ bh=hgX3GQtTU23oI8pNSxCO4WEcw3pufykvm6TGinRAB1g=;
+ fh=hkc8OPPa11x5ivs07gMDsWQzRaRS8yqyKOiel3xrIHc=;
+ b=fxfQqkV2fFmgR5XlVYoUcLxW9XlNE8MY+HKh7VzJO0Lob8/vGxrGzDVJcUm4b28M9z
+ NU21u5Plru6hRi13QeeRhOt1Tqu6ISsQ4a2x8cHKmIG1GByx5NZpdADwArpIKhrUR4/D
+ SwBQ182Ht+RHPQE0bM60HDe3xxw1HANqgc2bJn78rpV8Y3LJNntJLejurikcy7neidMG
+ eG6/JT8jscG2ufCpJ9/REM8AUBPsuw8yO6z4jxcQGgwWM4elPxr02JgRgEYY9u+lHUQw
+ zB3CFFPVvwQ9sqQCiZJn3GRnHmS/kO3gB6pfnxkPcMJGIC0j2bOsRgyRhFS1Dk2lB/ld
+ i+5g==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1790955992; x=1791560792; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1790956193; x=1791560993; darn=nongnu.org;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:reply-to:in-reply-to:references:mime-version:from:to:cc
  :subject:date:message-id:reply-to:content-type;
- bh=DcmBuQgOQuAEhXZY1VVxRnodJZmxTBNA4BXr+UWH02Q=;
- b=E7hr1CfvuxgmW8LmKkJJ2vAm10ywO/jHeMQ5xoz8/wrIKUALYVITke73sObuuU74X8
- osH01ZG5UXZ73dg07hi8tLo+eI0981ZFZj8/WUwP+Fe67++BdFoAfAlMJwGKcMRQCngL
- xac/K1asdnp3X+y57r47SzITVHhv870zKCy7Bbc8s5YIXaTQ2shKYLxPkVtQ/+rbQRRQ
- hA7xNnIaYp4ioWNrvskru9oNUW3orPCxJvEwWa9R2mxsbHjjdRxqu5frvWV2a8xXH66L
- 9bMk1PRlqbYZSR/MTwuvgBtE9G5yyL2whOJ3UkuushPdTBlAwGaNtI7X4yZ9sqnYsZXd
- 8NcQ==
+ bh=hgX3GQtTU23oI8pNSxCO4WEcw3pufykvm6TGinRAB1g=;
+ b=k0R4mmWIG5LT/Q28xavprBIo1/IOEef5ZaUHdqgKs78tS0Xj8+gfnvxifX45EoeGFD
+ fKqAbl4pvZ4BAI5/QIoFj5o/Xz6jGjcHpqlVAivMbL4iM6W+9wdYw1Y4Tq6z8uIpQgl2
+ 542s+qw6LtYKq3UKBno+muQGpMKKfTfdyt1pA+iMxHMNflp+EXOuzEe5fsGNipKLS3eX
+ RUkYh1hSMOuJL/2MnVFsJXuIdeOpuCQOAHNUpS7TW0K/dt09oQc+KSVEuCNKK0p01zh3
+ rM21GOU3vMaAVdguOlkW4Sejjk+Kitcq8GaP7NkYebK9aELuf/RvXdn1D9ielVWDJeeg
+ p4Mg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790955992; x=1791560792;
+ d=1e100.net; s=20260707; t=1790956193; x=1791560993;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:reply-to:in-reply-to:references:mime-version:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=DcmBuQgOQuAEhXZY1VVxRnodJZmxTBNA4BXr+UWH02Q=;
- b=2jQb0SLprm5c0O2UHroebxiuMrJ0cRanCt4SeV+7hI7p51yQ3dYFUrXcDo5nq3LUQa
- 6AHyV/rn2J8p+Qr9LvIvMSesnuSYDddYS0n1e/JZhvikFcRUcyZ+N5OBnyZyU7pvN6ED
- mhv5AvcbiEjGpBrNwgvKFRl/wfvMxMngLMIkT6t19yrBbckrsnhZuDN2sqXlXB/iXmzV
- pkyMcEMHMffXz/e1LlrS7Vk5cEij5bRcPmKcPBJs70WVcoY7eR/PEKjxyIki4IL3cLB3
- rnEtCOv30jdqHkXJaQPzrjtFlw1jG0XjthrX/3Y0JmeqkUw7vWMgrCsDYcexWVfihEMj
- /XLw==
+ bh=hgX3GQtTU23oI8pNSxCO4WEcw3pufykvm6TGinRAB1g=;
+ b=G97F6SKwFipTvtTWUDCtVaOiwWKFQ/XMUpE4dgzfOCCVNgieP9pL06mfK/DN4HJQ5R
+ JnK540Bn5xpYxSgvTx0Q3gjnAbOiRPFnKEOBs3uGPKOGq2R+z3R/g9+xL95ayDLm9/ix
+ PWbpOFzZm8sAFrO/8V4xFCEHsFPS6eImcxL3PDvZWMOtmryx/aH7UJj6aBGab6TWgOi2
+ Z9jihqcBnSl0z3aAwA/k8yjemCguDq0MPgr2RY43lM7csIxph6cSciigonYFwlnTB6fL
+ NVkVI2kay+1yd5MBR0oM7OwAR2GTioyX6KyeNOJ0qNJ3j4bnGHIhnPK09+XvivNAl+eH
+ QJew==
 X-Forwarded-Encrypted: i=1;
- AKwUvByucYGEaHRMoiNpBkSW5CUEqfl0kdHmBu3d7mxUtnjcoH4II7jTikyq+4SyX0Rymi9ca9PCM1f/XCLS@nongnu.org
-X-Gm-Message-State: AFq9FYIkxrxWpVHfBwr5UykYbc+4y0tYjlIcouiS5r8V9bpCHJst1AB9
- WKYht7wgwy3MEMfL5cB6e5twq9WOj9GNtRoIFHYj2bd7U9KgOL1zyylCMJbzQOsJNITue1W0vWc
- IYCHy6MXPf7/g5vxoAELLWdOGav8kFxI=
-X-Gm-Gg: AYBFou3fRFH8JfS2rzC2h0XyyC67BCLELxJJaSKkb3mm5iJF81owqFdZJKvFLdTVMTk
- AQnggN31a3EN5Y/jHPxiVID11X7Y1FRMsGvRcJGxdgMFqluLAj7MVa+IlZmeXeKqLDL760US8P3
- ccB5DjnHMP/yxtwpNvzNCOcmbdzp8mXeESwk9lULymKPxHSVBfAPHFNoVEsD2vTjsABKWHxh3Qi
- Y7Ih5ueseCzxTbdO3runECj424Rerj9Rd9PIj6KFxlmHQKm2klVXQ4TluC/e7wqB3HTPrffJ/AB
- IYYVD2uCSyhVU53fhwnI8DFYZXOXKKLw9I8yasUNlPmywTRi36+TW2A=
-X-Received: by 2002:a05:6402:1ec7:b0:6ab:81e:e812 with SMTP id
- 4fb4d7f45d1cf-6af9e36ca95mr2181563a12.34.1790955992041; Fri, 02 Oct 2026
- 08:46:32 -0700 (PDT)
+ AKwUvBwHQDSeU4oX8ZX5aGZ7TmkPdIgikLiu/Wz9LktV9B4LLRkJfDXKsOLUvHUwWffNQd6pAaE4GvLaTzv8@nongnu.org
+X-Gm-Message-State: AFq9FYI7K6DoVY2qf6JgNnSDB1bTLleDdUoVE2CfzoBq4eqel7GwZgSa
+ X0o7M7AOv/jzfwVATEuEhRQstY8XscutIPacCNZckV/c4nvPaNO7NfaCawQbIENG92H3AoL5Wix
+ JCNJrA78N1lJ64w5GUTxMpYgk3crtQXk=
+X-Gm-Gg: AYBFou0wefJijCw1eeEj69Qc8ArwOeP6O+GkGsWfMFq4+0Yq0+niD3ruLq86yI0mehG
+ 2ZEkzPBNWLbxVHvePgccIDkwe/1cs5vaTLn11IJH7G8l/5kuf7PEzei+B4xwg7+Q976acAgIZYj
+ yrdcUQPx50DLIbAlgUvJCcejVaN28aHjkV5K0kV/PfyE5LjdOJJQpSlaSN1PUvWNM/dXBI3MFbP
+ 1ftZhhr5z8k8sbHQTQW8wG3o41yhjpqo+SAPtxX6zJhacowvEwTDC61yyWfYgaFYHl/JnCTlelr
+ 0KVZeMjrZwKspQKE53gfupTNaeQ04p0HS4psDPAt7+CqnF/yHyaPfpo=
+X-Received: by 2002:a05:6402:4557:b0:6ac:7868:b681 with SMTP id
+ 4fb4d7f45d1cf-6afad46bd76mr1667a12.0.1790956193313; Fri, 02 Oct 2026 08:49:53
+ -0700 (PDT)
 MIME-Version: 1.0
 References: <20261001-rv-dedup-v1-0-ea69b07afd31@rev.ng>
  <20261001-rv-dedup-v1-7-ea69b07afd31@rev.ng>
@@ -90,9 +90,9 @@ References: <20261001-rv-dedup-v1-0-ea69b07afd31@rev.ng>
  <ar_AzEWpF9XDGNdg@hive.localdomain>
 In-Reply-To: <ar_AzEWpF9XDGNdg@hive.localdomain>
 From: Yonggang Luo <luoyonggang@gmail.com>
-Date: Fri, 2 Oct 2026 23:46:19 +0800
-X-Gm-Features: AclHuK8D0gFkig897zC0TtaIrSv_CPgbUV-lanFSIxvUTjdMTlOY2kU-ZaeUwcI
-Message-ID: <CAE2XoE-ove_cvoSZ8h_A8yw4d6YE9BS0VHc4SQ-mQ7JM1uqMvg@mail.gmail.com>
+Date: Fri, 2 Oct 2026 23:49:41 +0800
+X-Gm-Features: AclHuK-vV4_b85qC2NwtEF2w63F-R1HXPxCF6BXwNlh7rP5kCXKi83A8mSyw8AM
+Message-ID: <CAE2XoE-yh-1wiwSOO-OjxM43P9xHEr38hb-ccMxOrhuFNn3RNg@mail.gmail.com>
 Subject: Re: [PATCH 07/18] target/riscv: Runtime register MAX and BARE CPUs
 To: Anton Johansson <anjo@rev.ng>
 Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org,
@@ -100,14 +100,15 @@ Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org,
  philmd@oss.qualcomm.com, palmer@dabbelt.com, alistair.francis@wdc.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:33::e;
- envelope-from=luoyonggang@gmail.com; helo=mail-ed2-x0e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
+ envelope-from=luoyonggang@gmail.com; helo=mail-ed1-x52e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -163,33 +164,14 @@ n
 >   riscv_cpu_validate_misa_mxl(mcc);
 >   env->misa_mxl =3D mcc->def->misa_mxl_max;
 >
-
-Yeap I also tried instance_init but it's too generic, that needs if else in
-riscv_cpu_init guard which CPU name from(that's not explicitly related).
-
-    if (target_riscv32()) {
-        if (mcc->def->misa_mxl_max > MXL_RV32) {
-            mcc->def->misa_mxl_max =3D MXL_RV32;
-            mcc->def->cfg.max_satp_mode =3D VM_1_10_SV32;
-        }
-        if (mcc->def->bare) {
-            mcc->def->cfg.max_satp_mode =3D VM_1_10_SV32;
-        }
-#ifndef CONFIG_USER_ONLY
-        if (mcc->def->misa_mxl_max =3D=3D MXL_RV32 &&
-            !valid_vm_1_10_32[mcc->def->cfg.max_satp_mode]) {
-            mcc->def->cfg.max_satp_mode =3D VM_1_10_SV32;
-        }
-#endif
-    }
-That would be something like this.
-Maybe another option is get max_satp_mode to be a function instead?
-Indeed "max_satp_mode" depends on the chosen target.
-
 > misa_mxl_max would be verified only during instance rather than
 > class initialization, which seems like a decent tradeoff for a simpler
 > solution.
 >
+
+For example, we can add a max_satp_mode_choose callback, when provided
+then misa_mxl_max is computed from max_satp_mode_choose
+inside riscv_cpu_init(that is instance_init).
 > --
 > Anton Johansson
 > rev.ng Labs Srl.
