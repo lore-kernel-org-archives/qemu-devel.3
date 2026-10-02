@@ -4,76 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEE16CA5FC4
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Oct 2026 09:23:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A7F8CA5FD4
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Oct 2026 09:28:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xCZTh-0004To-Jq; Fri, 02 Oct 2026 05:22:53 -0400
+	id 1xCZYW-0006F3-4q; Fri, 02 Oct 2026 05:27:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xCZTf-0004TN-E1
- for qemu-devel@nongnu.org; Fri, 02 Oct 2026 05:22:51 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <lpieralisi@kernel.org>)
+ id 1xCZYR-0006ED-Pk; Fri, 02 Oct 2026 05:27:47 -0400
+Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xCZTc-000612-Pu
- for qemu-devel@nongnu.org; Fri, 02 Oct 2026 05:22:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790932967;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=AqB2LOZkrCwbmpkKwKjjoZBMftnU9w2l3FL1sB8d2WI=;
- b=Htg1G6hyj+T+oSyLajseWFSFZIo+uBQjtRZwLzcmwbUIgeMHKMTp/V3bxT09gt6KBx0WtB
- Z8RNOc1rQTMEmsgIExJ/YugVA0vDMS+XmEvVSvgpa1Yi7lzmq3Axy8bCQ4f4KKWyrL26TO
- Gz1+9/sjSLNm1ANpfkaKw3s+dUnGRaU=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-427-x5_rz-A3Pn62RAAI4PY8iw-1; Fri,
- 02 Oct 2026 05:22:45 -0400
-X-MC-Unique: x5_rz-A3Pn62RAAI4PY8iw-1
-X-Mimecast-MFC-AGG-ID: x5_rz-A3Pn62RAAI4PY8iw_1790932965
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D3ACB184AE52
- for <qemu-devel@nongnu.org>; Fri,  2 Oct 2026 09:22:44 +0000 (UTC)
-Received: from redhat.com (headnet04.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.116])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 88E09756; Fri,  2 Oct 2026 09:22:43 +0000 (UTC)
-Date: Fri, 2 Oct 2026 10:22:40 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: marcandre.lureau@redhat.com
-Cc: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>
-Subject: Re: [PATCH 18/20] trace: stop tracking static disabled state
-Message-ID: <ar934CPHs5HlIo4P@redhat.com>
-References: <20261001151228.3373747-1-berrange@redhat.com>
- <20261001151228.3373747-19-berrange@redhat.com>
- <179088207684.2348671.5166153170222056421.b4-review@b4>
+ (Exim 4.90_1) (envelope-from <lpieralisi@kernel.org>)
+ id 1xCZYP-0006iK-2e; Fri, 02 Oct 2026 05:27:47 -0400
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+ by tor.source.kernel.org (Postfix) with ESMTP id 2D6C960A6F;
+ Fri,  2 Oct 2026 09:27:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12E621F000FF;
+ Fri,  2 Oct 2026 09:27:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+ s=k20260515; t=1790933254;
+ bh=sdF92FcaRvybcpGC5UwGt2780kuiZGnx+sDD25qOGeQ=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To;
+ b=Y6YhVy0SuLIVscc1LTUdXoJ4kUXBDjI2mPhYHrfPwLjnhYJx3EjmhlMXu+5aExt0b
+ 6fCHoaFCbDamh5Kz60WQWicwHXUcAA0aSOwa4TLRzGD5jEvNQiFxoynp8mTo5gs9C5
+ ue1dpD77T6Puvyszkrc15XJn5f0Zkjk29OQ5yPS6Dk4n3b66XjuV9myBvIOxmT1G7f
+ yPFHiQDfWHrUifvosGjgt7JnXXqA1rNqzb8Uv4S1U9/2HpIn7pI/ktFWj2I/L6Y3X/
+ pv5GzoZ0cs5DKM2q0osqzNZ8jPtSXwBzThk2UYUgGqBgjklqDYdh4xFlcvlVZzrpiF
+ YML82Vi1Gn6Pw==
+Date: Fri, 2 Oct 2026 11:27:28 +0200
+From: Lorenzo Pieralisi <lpieralisi@kernel.org>
+To: Gavin Shan <gshan@redhat.com>
+Cc: Mathieu Poirier <mathieu.poirier@linaro.org>, berrange@redhat.com,
+ kchamart@redhat.com, pierrick.bouvier@oss.qualcomm.com,
+ peter.maydell@linaro.org, mst@redhat.com, cohuck@redhat.com,
+ pbonzini@redhat.com, eblake@redhat.com, armbru@redhat.com,
+ lorenzo.pieralisi@linaro.org, enju.kohei@fujitsu.com,
+ qemu-devel@nongnu.org, qemu-arm@nongnu.org, kvm@vger.kernel.org
+Subject: Re: [RFC v4 11/24] target/arm/kvm-rme: Populate Realm with runtime
+ images
+Message-ID: <ar95ADk4pEL2K4hd@lpieralisi>
+References: <20260903193611.1058589-1-mathieu.poirier@linaro.org>
+ <20260903193611.1058589-12-mathieu.poirier@linaro.org>
+ <3257a387-490f-44bb-bd44-dbe06036fd52@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <179088207684.2348671.5166153170222056421.b4-review@b4>
-User-Agent: Mutt/2.4.2 (2026-08-30)
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
-X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.331,
+In-Reply-To: <3257a387-490f-44bb-bd44-dbe06036fd52@redhat.com>
+Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
+ envelope-from=lpieralisi@kernel.org; helo=tor.source.kernel.org
+X-Spam_score_int: -46
+X-Spam_score: -4.7
+X-Spam_bar: ----
+X-Spam_report: (-4.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.331,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -87,41 +73,153 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Oct 01, 2026 at 11:14:36PM +0400, marcandre.lureau@redhat.com wrote:
-> > The TraceEvent struct contains a "bool sstate" field which track whether
-> > a trace event was disabled statically. i.e. at build time via the
-> > "disable" property annotation in trace-events.
+On Fri, Oct 02, 2026 at 01:45:40PM +1000, Gavin Shan wrote:
+> On 9/4/26 5:35 AM, Mathieu Poirier wrote:
+> > From: Jean-Philippe Brucker <jean-philippe@linaro.org>
 > > 
-> > The only runtime use of this field is to let "trace-event-get-state"
-> > report that an event is "unavailable" instead of reporting an error for
-> > an unknown trace event.
+> > Once the Realm descriptor has been created, tell KVM to transfer runtime
+> > images (kernel, DT, and rootfs) from guest memory to Realm memory.
 > > 
-> > Trace events are not ABI so their names can change and the event can
-> > come and go at any time. Thus there is little utility in reporting the
-> > existence of a disabled event that cannot ever be used at runtime.
+> > Signed-off-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
+> > Signed-off-by: Lorenzo Pieralisi <lorenzo.pieralisi@linaro.org>
+> > Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+> > ---
+> >   target/arm/kvm-rme.c | 76 ++++++++++++++++++++++++++++++++++++++++++++
+> >   1 file changed, 76 insertions(+)
 > > 
-> > Removing the "bool sstate" field from TraceEvent saves 8 bytes of
-> > space in the struct, adding up to approx 64 KB across all current
-> > events.
-> > 
-> > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> > Message-ID: <20261001151228.3373747-19-berrange@redhat.com>
+> > diff --git a/target/arm/kvm-rme.c b/target/arm/kvm-rme.c
+> > index 9985f5daba89..c082a5d8f3d1 100644
+> > --- a/target/arm/kvm-rme.c
+> > +++ b/target/arm/kvm-rme.c
+> > @@ -15,6 +15,7 @@
+> >   #include "migration/blocker.h"
+> >   #include "qapi/error.h"
+> >   #include "qemu/error-report.h"
+> > +#include "qemu/memalign.h"
+> >   #include "qom/object_interfaces.h"
+> >   #include "system/confidential-guest-support.h"
+> >   #include "system/kvm.h"
+> > @@ -43,12 +44,87 @@ OBJECT_DEFINE_SIMPLE_TYPE_WITH_INTERFACES(RmeGuest, rme_guest, RME_GUEST,
+> >   static RmeGuest *rme_guest;
+> > +static int rme_populate_range(const RmeRamRegion *region, bool measure,
+> > +                              Error **errp)
+> > +{
+> > +    int ret;
+> > +    void *buffer;
+> > +    hwaddr size = region->size;
+> > +    hwaddr base = region->base;
+> > +    hwaddr start = QEMU_ALIGN_DOWN(base, RME_PAGE_SIZE);
+> > +    hwaddr end = QEMU_ALIGN_UP(base + size, RME_PAGE_SIZE);
+> > +    struct kvm_arm_rmi_populate populate_args;
+> > +    size_t aligned_size = ROUND_UP(region->size, qemu_real_host_page_size());
 > 
-> Need a tracing.rst documentation update too.
+> s/qemu_real_host_page_size()/RME_PAGE_SIZE
 
-I'll do that docs in the next patch, since that is the
-one that actually removes the functional part of the
-feature.
+I think that IPA base and source_uaddr should be host page size aligned.
 
-With regards,
-Daniel
--- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+> > +    if (!region->data) {
+> > +        return -ENODEV;
+> > +    }
+> > +
+> > +    ret = kvm_set_memory_attributes_private(start, end - start);
+> > +    if (ret) {
+> > +        error_report("RME: failed to configure initial"
+> > +                     "private guest memory");
+> > +        return ret;
+> > +    }
+> > +
+> > +    /* Allocate page-aligned memory */
+> > +    buffer = qemu_memalign(qemu_real_host_page_size(), aligned_size);
+> > +
+> > +    if (!buffer) {
+> > +        return -ENOMEM;
+> > +    }
+> > +
+> > +    memset(buffer, 0, aligned_size);
+> > +    memcpy(buffer, region->data, region->size);
+> > +
+> > +    populate_args = (struct kvm_arm_rmi_populate) {
+> > +        .base = start,
+> > +        .size = end - start,
+> > +        .source_uaddr = (uintptr_t)buffer,
+> > +        .flags = measure ? KVM_ARM_RMI_POPULATE_FLAGS_MEASURE : 0,
+> > +    };
+> > +
+> > +    while (populate_args.size > 0) {
+> > +        ret = kvm_vm_ioctl(kvm_state, KVM_ARM_RMI_POPULATE, &populate_args, 0);
+> > +        if (ret) {
+> > +            error_setg_errno(errp, -ret,
+> > +                "failed to populate realm [0x%"HWADDR_PRIx", 0x%"HWADDR_PRIx")",
+> > +                start, end);
+> > +            break;
+> > +        }
+> > +    }
+> > +
+> > +    qemu_vfree(buffer);
+> > +
+> > +    return ret;
+> > +}
+> > +
+> 
+> I doubt that the unaligned regions (RmeRamRegion) are allowed. For example,
 
+I don't think they should be allowed either.
+
+> the region [4KB 64KB+4KB] is turned to the aligned range [0 128KB] when RME_PAGE_SIZE
+> is 64KB. The question is how do we know the added regions due to the alignment
+> ([0 4KB] and [64KB+4KB 128KB]) are safe for kvm_vm_ioctl(KVM_ARM_RMI_POPULATE).
+> I guess we probably just reject unaligned regions if they're not expected.
+> 
+> Even if the unaligned regions are allowed, they seem not well handled.
+> 
+> - @aligned_size is still 64KB instead of the 128KB ?
+
+Yes, given how current code is written this is wrong.
+
+> - In "memcpy(buffer, region->data, region->size);", the blob data would be copied to
+>   [4KB, 4KB+64KB]. However, we're copying the data to [0 64KB] now.
+
+I can't follow you here. We are filling a temporary buffer so that KVM can
+populate from it ?
+
+Anyway - we should refactor the code to discard regions unaligned to host page
+size.
+
+Thanks,
+Lorenzo
+
+> > +static void rme_populate_ram_region(gpointer data, gpointer err)
+> > +{
+> > +    Error **errp = err;
+> > +    const RmeRamRegion *region = data;
+> > +
+> > +    if (*errp) {
+> > +        return;
+> > +    }
+> > +
+> > +    rme_populate_range(region, /* measure */ true, errp);
+> > +}
+> > +
+> >   static void rme_vm_state_change(void *opaque, bool running, RunState state)
+> >   {
+> > +    Error *errp = NULL;
+> > +
+> >       if (!running) {
+> >           return;
+> >       }
+> > +    g_slist_foreach(rme_guest->ram_regions, rme_populate_ram_region, &errp);
+> > +    g_slist_free_full(g_steal_pointer(&rme_guest->ram_regions), g_free);
+> > +    if (errp) {
+> > +        return;
+> > +    }
+> > +
+> >       kvm_mark_guest_state_protected();
+> >   }
+> 
+> Thanks,
+> Gavin
+> 
 
