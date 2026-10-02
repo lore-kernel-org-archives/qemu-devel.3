@@ -4,122 +4,141 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A83F7CA5FC4
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Oct 2026 14:50:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0126BCA5FD4
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Oct 2026 14:50:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xCea8-0000bq-Db; Fri, 02 Oct 2026 10:49:53 -0400
+	id 1xCeb4-00017z-VA; Fri, 02 Oct 2026 10:50:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1xCeZy-0000Yh-FL
- for qemu-devel@nongnu.org; Fri, 02 Oct 2026 10:49:42 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xCeb1-00017G-VL
+ for qemu-devel@nongnu.org; Fri, 02 Oct 2026 10:50:47 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1xCeZu-0003zq-Qe
- for qemu-devel@nongnu.org; Fri, 02 Oct 2026 10:49:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790952577;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=4KHM/RuCJxu9UrIlExAHIQ+Sfp0WosKpaiyk+2mSfGE=;
- b=PMwHRr2Jki00m47YzIKq1uElKuZKWnWhYJO0l7UlO9pw93ZHEkuk94/RDPSPiNR3Z5C/2C
- 8je/A7l1FFM0kpFv7vO2VWvk5aAItRy/6+Q1uZMNXxUCgO3iycd9pgSYa5z+gcXSFGmzAI
- C3XOrmqP2Ve6bH3Sk4/0nsTvNvBDhpA=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-304-50txgIsIPCu2QYmNQpOWcw-1; Fri, 02 Oct 2026 10:49:32 -0400
-X-MC-Unique: 50txgIsIPCu2QYmNQpOWcw-1
-X-Mimecast-MFC-AGG-ID: 50txgIsIPCu2QYmNQpOWcw_1790952571
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-4887f71b1baso6444862f8f.2
- for <qemu-devel@nongnu.org>; Fri, 02 Oct 2026 07:49:32 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1790952571; cv=none;
- d=google.com; s=arc-20260327;
- b=l+OJxtDXe2erBqUFSwydPfHOvIziuJd7Wyqb14JlKk5llZV3qFfrw2kx5fUP2PU+0e
- O0Bn00q8KYYH9IGLg6Axoi6tObGRxFb/njCCWxXc05zdeMoxi2JEe78LsUpnhn9Mng6f
- Z5XJcX3EPfA5YHSq9s7/pkQbgBmgpnwYuUkhbvBfwi9cFCQlDQV46hiG3fCoBR9Yirml
- vsk2yOIzp4N6z4MKUKAbY43j3nEwTsGo1U5O5eRVEM/Lpj25FBRckOR6xrkSkrll47c4
- yfESKiam6T5UgUZ9a/lYEHBIMFyK3K7+MbkVl1NzHykwvbprAA8/zD9OTPm7ZIV9jbjE
- QYqA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=4KHM/RuCJxu9UrIlExAHIQ+Sfp0WosKpaiyk+2mSfGE=;
- fh=7ZnccY8InAwc+MILNNrPYXm7f5gO4HGpH9rE296jmSE=;
- b=aJ7R1EWpw5aGhTLOcueeI6BxHm5LYofFJoezOn9stqDaDMX+g3HB2PFWSHGe8MPniI
- YRSbRUuBPz3dkWztXToDTLEuXnum7lTBQLJ2CgcgfFF65g/Eke8+1yWs8tg4vAzpyKUx
- N9XQgJ23ODyvQb2BGFkxgnX7OzsH6Rp/ts3N3WidiBmuqRZacQsC6NWbQEluCJIuN69J
- OxArlcKBjgIFEynAJvix/psRh9TD17T5EbHHu9K2IaGcRbxWhYfJtyWF3gy/4c4yw9qt
- 2aa7BZSnJjljm+pp2dH+eCp7tQEZtfl7VAJwtz+rGq9fhGx51s/penEHCNw+0oB+w5Aj
- wnVA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xCeaz-0004GU-3I
+ for qemu-devel@nongnu.org; Fri, 02 Oct 2026 10:50:47 -0400
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 692Du8hW858429
+ for <qemu-devel@nongnu.org>; Fri, 2 Oct 2026 14:50:42 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ 6CT+55PBDK5dwkwCTxhO/f97Qd0xR83gew2znxSpzxE=; b=Ec+pMUOCcMYszObL
+ TPIQnehPGJnnF9H0rbm3auNJTmMvimwyf7xPGjiTfYh4V2OTf4MCYPW0pAH74U7c
+ 0V5BYBTqegAS99XBQh1+xUCKXsQgKw85tF0fT0SQGfC2XC0TmuxZXVsqH6nwPRzO
+ MDca5oIyOHnjx6gZXp777GE+Sq5cjdGMoXqSWONaBdZx6Sej87279qCV4zuFAqep
+ 7+js5DOBy5EAlBNhsacKJBgfNffslg492w8a2anaf6CCpi6R5gZMeT3JOCivfCDa
+ vMpd+qvzW3gNhws+O7j7KxBpq1ADaqfRlUqQFDCJ0divyVH4OllQD0dXvbyRzN0V
+ q5n78A==
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h2dxdg7cw-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Fri, 02 Oct 2026 14:50:42 +0000 (GMT)
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-93909014c85so1518518085a.0
+ for <qemu-devel@nongnu.org>; Fri, 02 Oct 2026 07:50:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1790952571; x=1791557371; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=4KHM/RuCJxu9UrIlExAHIQ+Sfp0WosKpaiyk+2mSfGE=;
- b=A9C1J+tpFclkNwAKYqIHK7Vt+PHv99A1j5tmr64GPa39oDzu9N4zqBnmyu0R4wK0x5
- vXNSDVGW+V3dBNAzG4K+86hQgj83KnW4YNOXHxpDEJsiDKSrFwiEdfUILJSSzwMRtCSP
- gp6IO9K00VrySLthyjlqIfaAgbhKfmEU3IEJkl1DAxl6DMW5it5YeZMVC+jp0To14L30
- wpkcym9UEBFCV7mn4C7ysKP0kuvPhCe4Yrrt0eZSyF8BQ0nhepwDrpjduPhKJYqyq09V
- 83vEzj1Kp6vtdNYlyy9UPXZHCkNSzylT+HBEJguwsol6q7/q3iKoWzgMnlD71fJNL7wv
- 3tiQ==
+ d=oss.qualcomm.com; s=google; t=1790952642; x=1791557442; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=6CT+55PBDK5dwkwCTxhO/f97Qd0xR83gew2znxSpzxE=;
+ b=Co4R8whwsO4N0Q6adzGGb7T0tPqv901k4AuJKUgeNC6VWfs+Hx4MQmoC/hL3wU+GD1
+ FMndYbYEk64is7CYBSJyNtPexMVJoaBDv1zlNu2r4njzjrI5/SQappwStxJUWDluty5n
+ +tdVxZn4unNFSrYlu4X6yjFxsQ/lQlN88KBljp+fEFEADkR98Kq6KC0xY/TNbRiX94PS
+ fR3XrM7HvEP2FEeM07r0dXSmai42rCOq0vGSa8LHreHrgWyPR8bYrj5Zw3Zp6+TZuNsZ
+ 1Rzr9AyKZwZJ1CdeckCzsd1WMc04wDzyU0UBOPey5iOSbNIXS68qaPnG6u8/Z6VxUc1f
+ WwkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790952571; x=1791557371;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=4KHM/RuCJxu9UrIlExAHIQ+Sfp0WosKpaiyk+2mSfGE=;
- b=y3GRnk1WNM60bRoii+NwKfBSfoELp2Dke1Jk4/NykW62qy3xKO/v0eQhVwT2CEhFZi
- zFpPDliG0mvUKrZJyO4MMtdBWrmgvZziYI76qYKkT2ztdf3HovuNA0giWbqbyb+8A/ad
- 1kJbDSnpP6fCFJ26nkuSjDcaiqOJO6VskLvc0xv/RgiF35jK22rCDVbLyE8MkGX5LPBy
- RyvvjXjgIZK9UwW7qRZyILKV2tKfXgXeA6LkFTRh1p6hupEts/PjOjdzSUvnIunokt5u
- aPBUheM+Ak9wIxT9rQMzrle4JmGO+briTvPJPIwktkTGXrZAV8f+WVxOSSfj7d61LCp5
- lkYw==
-X-Gm-Message-State: AFq9FYKWzRpVF3O+jdUCSj2NWvKhXRVJnGALgawaXhJhDOoLQ0LsBP8j
- q7nLMqyQOFvc55bO/8xTaQtmfB8srcf+JM+HgK1abbQCk3QlYCETHU4JNlr73bSoXisymPhjpf/
- I8ss6enrla+kIc5bdBqdpa8c66dumbF+yXGOmX63agnBFhdnfbgXPqk2wXMKdpSH5cvkiqKK6px
- 652Y/q0a3ChoK/EYDOvfgi2lZJ+VWfkgA=
-X-Gm-Gg: AYBFou3qNXY/6moKK812tFC3SX4v+kTGSxmjE/obnY9wE55y52TnCvGUOfGFdGQxJwX
- XS1r57OwxnBsY+XBMdBxavnw5fIQj5qhUkK26UVHIW2fjdjeWjZWCR+XQ/+zwbZHnNsw3c5gSjP
- caPrv908z9u9aTPzSbOEJqf9bcLzQOT/sDOPqVyCbXVRo9O37IPizP0EcpQHkPd8M2S3NFyqpLr
- Ivnjk4DE03fv/0b2dJ8D68yHIkOix5Wi8lSPdtTqVts7ugHdRc8MIOfWL9TIw==
-X-Received: by 2002:a05:6000:d8d:b0:488:8a5d:ffbe with SMTP id
- ffacd0b85a97d-48b1275c46emr4538982f8f.33.1790952571371; 
- Fri, 02 Oct 2026 07:49:31 -0700 (PDT)
-X-Received: by 2002:a05:6000:d8d:b0:488:8a5d:ffbe with SMTP id
- ffacd0b85a97d-48b1275c46emr4538945f8f.33.1790952570765; Fri, 02 Oct 2026
- 07:49:30 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1790952642; x=1791557442;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=6CT+55PBDK5dwkwCTxhO/f97Qd0xR83gew2znxSpzxE=;
+ b=p6q5A8+5KwdCbkRohWc461p3B/J6kw6biHIMPbH+F3M087Oiz3/u2TE0/4NM7faO8w
+ MrIVKAZ58+ayYpHxqXu24dXQXfW2bSy37ocz3FyHp0lHBkGmJ5cPn1TdzKVh3vijMMGE
+ tDzTNsLaGGUMHw3LDh9auD7YTiVIfIVA159AqxLELFOvf7MXO/WVtlJIiEFckc0oL7t6
+ 14SFmq7U1jsS0acfGs7+Aa3SW01OsPtak1HsY9I/J1aXktG4Tm3Dfi74Bpqpwr47gD1n
+ 39J3FQ6HNdHTSOn6ZYRt7PkWUxpE0Ga6+YEV8OyvkdMIXRSGjXTm69oXMwT/0mKhPzvz
+ iMiQ==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBzZSUvLQffuzKBsZgEp7zCT61rX/k2X4OV5KrKdQoCUUqjWW0x/CR2j9AysOo+6YiP9Jv5EIXnQPvUb@nongnu.org
+X-Gm-Message-State: AFuF++kNE/elgSLQIuaFFr5lPSZPu44Cojmte2VUdbwRG5XgkbBemXE9
+ /5OVMeKJQfhz8c8vrZr0ijlFxzBbZskbTm2MdxM6Ji9djnlNP8qIAuG9HVXs8d2l87/IK8CB1V0
+ +Ty8m1rUXqqs9qzEw1QGljMuYm/vW7/OytI+gYI7WIgD4BNnLKdvQp6/1Ew==
+X-Gm-Gg: AYBFou2k5VmFWhGSf0A0a2PFlvlB0ROp3zo/226bG+vocQzFwhVedEH/AIHKqmgZI9/
+ M0Jl6J//k2N4bp4LnVaJduQDtMRuFFtXF4zOPZR96/vNSrSWjJ+7xFP8fWe6H13tk7bmH6E7ayf
+ zcRw1Y8qI4LaPhUAoisgJYJZU1cqYWviJjkmzxa8kbWFs4//vSHBljquxn9oZ/y1hwKwa0ui2Fn
+ tFI+6gGdZfT+Qxh0tFba1kMUCFaGnZGSzipGAk8MidXAvZduEObg8eiHOXGZU8uKOKDkNYy5kmu
+ p/D/UWRJx+3zN+HDYXdueJt4PZ75guWYQ5TCjzH/bJYWISJ3smNutWFvd2Lc1FTcMUjFKzFMKfU
+ wiTC0X1pztIkHYIKrSYwd5A==
+X-Received: by 2002:a05:620a:1723:b0:93c:b6db:8c with SMTP id
+ af79cd13be357-93cda7e7639mr550685985a.0.1790952641287; 
+ Fri, 02 Oct 2026 07:50:41 -0700 (PDT)
+X-Received: by 2002:a05:620a:1723:b0:93c:b6db:8c with SMTP id
+ af79cd13be357-93cda7e7639mr550679185a.0.1790952640772; 
+ Fri, 02 Oct 2026 07:50:40 -0700 (PDT)
+Received: from [10.111.137.66] ([212.136.9.21])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-48b38104f89sm6751669f8f.30.2026.10.02.07.50.39
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 02 Oct 2026 07:50:39 -0700 (PDT)
+Message-ID: <2becf449-a3aa-47b0-8329-04c8c5f64229@oss.qualcomm.com>
+Date: Fri, 2 Oct 2026 16:50:38 +0200
 MIME-Version: 1.0
-References: <20261001151228.3373747-1-berrange@redhat.com>
- <20261001151228.3373747-17-berrange@redhat.com>
- <75ae2444-0ac9-4aee-8881-fb3431c639e8@redhat.com>
- <ar-Pm3jf4q4gyj0W@redhat.com>
-In-Reply-To: <ar-Pm3jf4q4gyj0W@redhat.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Fri, 2 Oct 2026 16:49:19 +0200
-X-Gm-Features: AclHuK-Ae7sHGgqA_XuvD7AtXsg0aRXfUsxnRUOg2Kzbnxw0VoFc7tKBE_DlnyU
-Message-ID: <CABgObfbXqUA1JHikLqCqrvbaxtVAq7QsP7+f987dS+tc_OrQsQ@mail.gmail.com>
-Subject: Re: [PATCH 16/20] trace: include qemu_loglevel_mask(LOG_TRACE) in
- guard
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>, Stefan Hajnoczi <stefanha@redhat.com>
-Content-Type: multipart/alternative; boundary="000000000000ca5a95065cdca3f4"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v3 09/11] targets: Move interrupt handlers to
+ do_interrupt()
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+References: <20260902152044.31291-1-philmd@oss.qualcomm.com>
+ <20260902152044.31291-10-philmd@oss.qualcomm.com>
+ <afa4d292-7292-4feb-8559-fb9186a4163a@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <afa4d292-7292-4feb-8559-fb9186a4163a@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDAyMDA1OSBTYWx0ZWRfXz+GqLgoHVop3
+ fpCO20M1w4ncCCzfnCxSm0t2Bm4Ysfw7r/HOLy4zSmQqJm1l5JDEwLx0/9spdlAAQz+L6+jGY4H
+ kMmXwvXl1nbmpZu0psbgYRilnToDA1c=
+X-Authority-Analysis: v=2.4 cv=Ko/YSmWN c=1 sm=1 tr=0 ts=6abfc4c2 cx=c_pps
+ a=qKBjSQ1v91RyAK45QCPf5w==:117 a=/bviTfK1dmy+WGcHzWQ0gg==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
+ a=EUspDBNiAAAA:8 a=fO3KdxxCRahBnyrE_4YA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=NFOGd7dJGGMPyQGDc5-O:22
+X-Proofpoint-ORIG-GUID: ro-KEWj4xsQemlhyySCej50VPKHnikbr
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDAyMDA1OSBTYWx0ZWRfX57aQaRm9pBLj
+ M8u29PHUwpkzEWBBdJf3HmhSPqMiawYkGRmit8HXmu+MTaNi7SAWSXqmqM2qtufomoiyIsaTQGl
+ V/9J/dwqo2nzbX0VG99Q0sD1oKgYBKGURdmYwoA9PyF1nlYqzJlcaXZ+pn/McR4vq5Sb6SvTsfl
+ V+qbF4QbKMmSYK4E8EHNH/4UQMDAAbMei/skxak860Yj3jhTv/Tke3/rq7B17bSAOgJkNqvvwzy
+ zZiOMKebPiITqzEWdTQ5O/u3Hvbj27bMKU6tUveIM0Gxv33YZiWNsi0h3oyyrwswFueigRDplDj
+ AdLBR+6TQNrHNEqxYZJVcm/1oiRXQ2AutklPfkR7S3j3VQqh+9O7FMTmDCZyNJO/PvOY4O3kWIY
+ jlIVnJ9Jr+Q8ktM759v9SWp4dFm1EADPrCjezgNU5RaqUVLkHd5eRebMFcw9SaKl+zEsX0dpNaW
+ CoxmiHEiLeOQxxgpeog==
+X-Proofpoint-GUID: ro-KEWj4xsQemlhyySCej50VPKHnikbr
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-10-02_04,2026-10-01_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 spamscore=0 clxscore=1015 priorityscore=1501 adultscore=0
+ lowpriorityscore=0 phishscore=0 bulkscore=0 suspectscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2610020059
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.336,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -136,149 +155,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000ca5a95065cdca3f4
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-Il ven 2 ott 2026, 13:04 Daniel P. Berrang=C3=A9 <berrange@redhat.com> ha
-scritto:
-
-> On Fri, Oct 02, 2026 at 12:45:49PM +0200, Paolo Bonzini wrote:
-> > On 10/1/26 17:12, Daniel P. Berrang=C3=A9 wrote:
-> > > If emitting a trace event requires computation for the parameters
-> > > passed to the probe, the callers should guard that computation
-> > > with trace_event_by_state_backends(), which is a macro expanding
-> > > to the a check of the "TRACE_...._DSTATE()" expression. For the
-> > > log backend this should include a check for LOG_TRACE being
-> > > present in the configured log level.
-> > This also needs something for Rust (apologies for the mailer damage):
->
-> Ok, I'll test that and include it in a future v3, since I already
-> sent out v2 before seeing this.
->
-
-No hurry, it's just an optimization.
-
-Paolo
-
-> --- a/scripts/tracetool/backend/log.py
-> > +++ b/scripts/tracetool/backend/log.py
-> > @@ -16,7 +16,6 @@
-> >
-> >
-> >  PUBLIC =3D True
-> > -CHECK_TRACE_EVENT_GET_STATE =3D True
-> >
-> >
-> >  def generate_h_begin(events, group):
-> > @@ -52,3 +51,9 @@ def generate_rs(event, group):
-> >          '        }',
-> >          fmt=3Dexpand_format_string(event.fmt, event.name + " "),
-> >          args=3Devent.args.rust_call_varargs())
-> > +
-> > +def generate_rs_backend_dstate(event, group):
-> > +    out('    unsafe { (bindings::qemu_loglevel & bindings::LOG_TRACE)
-> !=3D 0
-> > && '
-> > +        + 'trace_event_state_is_enabled(_%(event_id)s_DSTATE) } ||',
-> > +        event_id =3D 'TRACE_' + e.name.upper())
-> > +
-> >
-> > Paolo
-> >
->
-> With regards,
-> Daniel
-> --
-> |: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-> |: https://libvirt.org          ~~          https://entangle-photo.org :|
-> |: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
->
->
-
---000000000000ca5a95065cdca3f4
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
-ner"><div dir=3D"ltr" class=3D"gmail_attr">Il ven 2 ott 2026, 13:04 Daniel =
-P. Berrang=C3=A9 &lt;<a href=3D"mailto:berrange@redhat.com">berrange@redhat=
-.com</a>&gt; ha scritto:<br></div><blockquote class=3D"gmail_quote" style=
-=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding=
--left:1ex">On Fri, Oct 02, 2026 at 12:45:49PM +0200, Paolo Bonzini wrote:<b=
-r>
-&gt; On 10/1/26 17:12, Daniel P. Berrang=C3=A9 wrote:<br>
-&gt; &gt; If emitting a trace event requires computation for the parameters=
-<br>
-&gt; &gt; passed to the probe, the callers should guard that computation<br=
->
-&gt; &gt; with trace_event_by_state_backends(), which is a macro expanding<=
-br>
-&gt; &gt; to the a check of the &quot;TRACE_...._DSTATE()&quot; expression.=
- For the<br>
-&gt; &gt; log backend this should include a check for LOG_TRACE being<br>
-&gt; &gt; present in the configured log level.<br>
-&gt; This also needs something for Rust (apologies for the mailer damage):<=
-br>
-<br>
-Ok, I&#39;ll test that and include it in a future v3, since I already<br>
-sent out v2 before seeing this.<br></blockquote></div></div><div dir=3D"aut=
-o"><br></div><div dir=3D"auto">No hurry, it&#39;s just an optimization.</di=
-v><div dir=3D"auto"><br></div><div dir=3D"auto">Paolo</div><div dir=3D"auto=
-"><br></div><div dir=3D"auto"><div class=3D"gmail_quote gmail_quote_contain=
-er"><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;bor=
-der-left:1px solid rgb(204,204,204);padding-left:1ex">
-&gt; --- a/scripts/tracetool/backend/log.py<br>
-&gt; +++ b/scripts/tracetool/backend/log.py<br>
-&gt; @@ -16,7 +16,6 @@<br>
-&gt; <br>
-&gt; <br>
-&gt;=C2=A0 PUBLIC =3D True<br>
-&gt; -CHECK_TRACE_EVENT_GET_STATE =3D True<br>
-&gt; <br>
-&gt; <br>
-&gt;=C2=A0 def generate_h_begin(events, group):<br>
-&gt; @@ -52,3 +51,9 @@ def generate_rs(event, group):<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &#39;=C2=A0 =C2=A0 =C2=A0 =C2=A0 }&#=
-39;,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 fmt=3Dexpand_format_string(event.fmt=
-, <a href=3D"http://event.name" rel=3D"noreferrer noreferrer" target=3D"_bl=
-ank">event.name</a> + &quot; &quot;),<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 args=3Devent.args.rust_call_varargs(=
-))<br>
-&gt; +<br>
-&gt; +def generate_rs_backend_dstate(event, group):<br>
-&gt; +=C2=A0 =C2=A0 out(&#39;=C2=A0 =C2=A0 unsafe { (bindings::qemu_logleve=
-l &amp; bindings::LOG_TRACE) !=3D 0<br>
-&gt; &amp;&amp; &#39;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 + &#39;trace_event_state_is_enabled(_%(ev=
-ent_id)s_DSTATE) } ||&#39;,<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 event_id =3D &#39;TRACE_&#39; + e.name.up=
-per())<br>
-&gt; +<br>
-&gt; <br>
-&gt; Paolo<br>
-&gt; <br>
-<br>
-With regards,<br>
-Daniel<br>
--- <br>
-|: <a href=3D"https://berrange.com" rel=3D"noreferrer noreferrer" target=3D=
-"_blank">https://berrange.com</a>=C2=A0 =C2=A0 =C2=A0 =C2=A0~~=C2=A0 =C2=A0=
- =C2=A0 =C2=A0 <a href=3D"https://hachyderm.io/@berrange" rel=3D"noreferrer=
- noreferrer" target=3D"_blank">https://hachyderm.io/@berrange</a> :|<br>
-|: <a href=3D"https://libvirt.org" rel=3D"noreferrer noreferrer" target=3D"=
-_blank">https://libvirt.org</a>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ~~=C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 <a href=3D"https://entangle-photo.org" rel=3D"n=
-oreferrer noreferrer" target=3D"_blank">https://entangle-photo.org</a> :|<b=
-r>
-|: <a href=3D"https://pixelfed.art/berrange" rel=3D"noreferrer noreferrer" =
-target=3D"_blank">https://pixelfed.art/berrange</a>=C2=A0 =C2=A0~~=C2=A0 =
-=C2=A0 <a href=3D"https://fstop138.berrange.com" rel=3D"noreferrer noreferr=
-er" target=3D"_blank">https://fstop138.berrange.com</a> :|<br>
-<br>
-</blockquote></div></div></div>
-
---000000000000ca5a95065cdca3f4--
-
+On 2026-09-13 6:00, Richard Henderson wrote:
+> On 9/2/26 05:20, Philippe Mathieu-Daudé wrote:
+>> LoongArch, M68K, MicroBlaze, and OpenRISC interrupt handlers
+>> don't require external BQL protection, so move them from
+>> do_interrupt_locked() to do_interrupt().
+>>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+>> ---
+>>   target/loongarch/tcg/tcg_cpu.c | 2 +-
+>>   target/m68k/cpu.c              | 2 +-
+>>   target/microblaze/cpu.c        | 2 +-
+>>   target/or1k/cpu.c              | 2 +-
+>>   4 files changed, 4 insertions(+), 4 deletions(-)
+> 
+> How did you determine that these do not require locking?
+> E.g. why does alpha require locking when loongarch does not?
+I couldn't find explicit BQL use in these, but now I see why this
+poor audit isn't good enough. Better to convert all targets to use
+explicit BQL locking (next patch), then remove unnecessary locking
+one target at a time, with good justification in commit description.
 
