@@ -4,101 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13310CA5FD4
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Oct 2026 09:53:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDEFDCA5FE0
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Oct 2026 09:53:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xCZwF-0003Fk-QG; Fri, 02 Oct 2026 05:52:23 -0400
+	id 1xCZwc-0003Mc-Af; Fri, 02 Oct 2026 05:52:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xCZwE-0003FO-MM
- for qemu-devel@nongnu.org; Fri, 02 Oct 2026 05:52:22 -0400
-Received: from mail-yx2-x0e.google.com ([2607:f8b0:4864:41::e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xCZwC-0000py-6b
- for qemu-devel@nongnu.org; Fri, 02 Oct 2026 05:52:22 -0400
-Received: by mail-yx2-x0e.google.com with SMTP id
- 00721157ae682-8a7411012b1so72369787b3.2
- for <qemu-devel@nongnu.org>; Fri, 02 Oct 2026 02:52:19 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1790934738; cv=none;
- d=google.com; s=arc-20260327;
- b=eOiSKokCsdQxU9AHMqRDOjjFMMqg7cVE4+Zkcpa3hRkGTvUKz6rLdTicvz/WiIOEcn
- 1JxzffZRwsoB1ZB4oI5iC3Au5ISQ3Dmhw842Rw7gQuVSc+F1giUXKSLMBDZODKqf1DA3
- KmyVvJz+xwrN1DBd4+LJSiHaD1DMiS4ThYmWpuUkMCetFFZBd3Ou7u7QjE5maiLRzVpt
- N3dAaK5hfBZV05EC+XAH6v90+m+/nxiyd5XrlAUdxgEn49VoQmMC1tRYrugzIyE6OX+9
- rWZxp8SZQEQcr1lDke4BcI0/b234KvvOo/G0eLbME3Fl41Gp0aTolCehG5BzfAZqLHOG
- ScrA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=kS48AqODLblVpccntfewHU6RKnpje2GovfdoIqGkUZ8=;
- fh=LX+cLgtw9TJIDgDgLWvTr3l2mLDE8DLsNMKbDBRfU58=;
- b=WHB1iGN5pzFpItWTg8PPLRxSsFFqYfR3KuQrT868blwBV5I1lb0gbKFfe4EoV4vFlO
- DRhqMsVlifLVIUr1zrfbWLG4tITynWje8Rw6pzPwnGSm9A8ubZ5qMNI/CAB61fP7m2le
- m8mkYmYStyDJLeEJuY3z4EoeYuKbOCF0DWQ9mSqbzrTVJyW5hlPpYv9c2SuEchey5jIX
- gqtu+cZy1gSgz5I9Lc9HOoHrF0jVPVx25IhztAngGSAq69rD0T4nnU0mvBWameUSr0YI
- ccyIrjreSp2GhcDSnT2uTb0hz1c0x2di/2swi8H/5qsgit06nX6oaq5S+pd9ihyI6sl/
- j9aA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1790934738; x=1791539538; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=kS48AqODLblVpccntfewHU6RKnpje2GovfdoIqGkUZ8=;
- b=z8y0stPCi5oNCiUjjwlqUuU58zb6d+KOh83erOUY3dH5ZYX8Hw5n5Nc+7Qq6RbO/ZW
- 2pdgVK6IO9JQcvbUZn89nSBSOjts/M3oTy9SlUse91Htrdx3WX6Qb914JTTmJJoNOfHT
- b0ltsfqLyqCLuSyRM482rZaZm53Dh2+ceCbGYKkU60A2t5ORIskR1HBYnm1Xate4VXaa
- 99FlFkuMtAmU9p/5sgL+zKzvrZpeHczZ1qhN123LVUUOPjEoWE7jKKt7aaIQNZyULMry
- xqeqJt/byN6yVn0w5qy3ZDBcHpY0kMiO/yutkVv1NVjnWUUzTBwCdsbqLJjPmZsQAITE
- NLvA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790934738; x=1791539538;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=kS48AqODLblVpccntfewHU6RKnpje2GovfdoIqGkUZ8=;
- b=pI4eu+vOilrAo4ouJbI4Pox+sCGvJ7jn0EiYGV09uUspmZVTP+XSrz5JlTROnPTbUR
- cHWHcpLB67/CUa7tat5TPnHyinhDpQXnX8TCqMorEzlonLRgzPioTiH5dHpXIE8ftJyI
- UsdulI8QFnRVv3u1q4TCGkdGIudPWP49Ps182bJEwNyuKKHYtATLByhrsn9Bq8Xk7APD
- xcP/VPpnAjCONMA8BZW5q0qvnv56/3Vv1GWE+mMiOvQ11JKo+qKdRGIV8zJqubFztDfK
- +NC+mEJZwwFnDRz7wZoyrbzp8W2GjpbMQ06nTYqL104e2Pf3uCNApYjqykL/61bxAct2
- NqLQ==
-X-Gm-Message-State: AFq9FYLd7cPGgw7/XwlOJXpySS8m6B9dhggJEY2zmRUNx4IXhHCCqYRu
- E5CqYPEZoU5zCG2j3m4yvGJrE9b322HP7Y6DVENTQVjjIQ9V0+Ve0HzCwEgNhTrvzMgriIQnh3/
- 5fdBEZH36TsrPRXEO9PxAcL55bRSs1GhbqQAm0JIBWT1QtgcNK3fbxICYbg==
-X-Gm-Gg: AYBFou3gsuQCxmzGYPnCEXEkw/OIvdwJ8bCJEK+HNUH/pDQ/hcgiagjD7vupcWqYlaR
- /C8Y8vl6HVxj3XauU6nG778GgPcL0ohEX/VPd0iVckJxfhGsyH/8aGndcEtzbWa2MBbL6opZvNY
- 0CWzEkqGz7HX1pYJzwi9SqsG5cvzzRsifyKZfUcw0Mt68b8YoK6XOaMK0NQFiFtr+YXGNbErqlB
- ftjLIRu28t/4KjPEZdILIkpSvXd1F3T6SFjYNUL7b2RtA9ctVbs1kAqdqIBdJRSZXgJJhbPJt79
- BO1Lq4zNWW6O579CTW8UejK6Jm3OEWtrU5hY4U8lDm082QIVF+ODJUyODxhBvSiq7DblSGRcJ07
- hij4iq3YXv24Rx4JVEvu1GJHr2J2oKBNh0vjVoUk=
-X-Received: by 2002:a05:690c:9990:b0:8ae:17ba:df03 with SMTP id
- 00721157ae682-8ae3add6500mr6171777b3.64.1790934737739; Fri, 02 Oct 2026
- 02:52:17 -0700 (PDT)
-MIME-Version: 1.0
-References: <20261001194756.3003085-1-peter.maydell@linaro.org>
-In-Reply-To: <20261001194756.3003085-1-peter.maydell@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 2 Oct 2026 10:52:06 +0100
-X-Gm-Features: AclHuK_ru2qMh2_WCME-arx3t5cGRc8dpSTGROJCSAVr3zEsjGrXSYYVRpuJPNc
-Message-ID: <CAFEAcA8jcNzVT9QuFfog4GZRWt8ZpysKbOy9R-SxmtTrAZ67JQ@mail.gmail.com>
-Subject: Re: [PATCH] hw/usb/hcd-ohci: Fail iso packets sent to non-iso
- endpoints and vice-versa
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1xCZwa-0003Lm-IR
+ for qemu-devel@nongnu.org; Fri, 02 Oct 2026 05:52:44 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1xCZwY-0000t5-L0
+ for qemu-devel@nongnu.org; Fri, 02 Oct 2026 05:52:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1790934761;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=+EzJ63IWCEjUDJJ0JofGxaKMn0NKslhNMwRNUD9khjU=;
+ b=b5R7FcbOi4x1ZHcgz+hRa+oC1N+CJKXT696GaGj3uE/V2WtNvyv+GNRoBcZHrymZ/dTRJV
+ 9yRsiAmWyGKw/Z/A1ssaQA70iE2uwpaFuOCbdzXs+lZkgS1RI9qCFD6IBD0i2JjDkNlWqC
+ R/qiD/igHPcFPmNp+TsFNR1fSlCAp7A=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-141-fJrX_JuEOQOfCa3p7ugNSg-1; Fri,
+ 02 Oct 2026 05:52:38 -0400
+X-MC-Unique: fJrX_JuEOQOfCa3p7ugNSg-1
+X-Mimecast-MFC-AGG-ID: fJrX_JuEOQOfCa3p7ugNSg_1790934757
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6819B1955DE0; Fri,  2 Oct 2026 09:52:37 +0000 (UTC)
+Received: from berrange.csb (headnet04.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.116])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 2A2B4180049F; Fri,  2 Oct 2026 09:52:35 +0000 (UTC)
+From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:41::e;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx2-x0e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH v2 01/20] osdep: add 'ignore_value(x)' macro
+Date: Fri,  2 Oct 2026 10:52:13 +0100
+Message-ID: <20261002095232.3605567-2-berrange@redhat.com>
+In-Reply-To: <20261002095232.3605567-1-berrange@redhat.com>
+References: <20261002095232.3605567-1-berrange@redhat.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 9
+X-Spam_score: 0.9
+X-Spam_bar: /
+X-Spam_report: (0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.331,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,46 +87,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 1 Oct 2026 at 20:47, Peter Maydell <peter.maydell@linaro.org> wrote:
->
-> The OHCI USB controller requires software to set up an Endpoint
-> Descriptor data structure.  This specifies (among other things) both
-> an EndpointNumber telling the controller which USB endpoint to talk
-> to, and a Format (F) bit which is 1 for Isochronous transfers and 0
-> for General transfers.
->
-> The specification requires that software matches the F bit with the
-> endpoint it's setting up the descriptor for, so that Control, Bulk
-> and Interrupt endpoints use F=0, and Isochronous endpoints use F=1.
-> It doesn't require the controller to check whether software gets this
-> right.
->
-> The spec isn't totally clear about what happens if software creates
-> an ED with a mismatch, but I believe that the controller just trusts
-> the F bit, and tries to talk to the endpoint with the wrong sequence
-> of USB tokens (notably, isochronous transactions have no handshaking
-> and the others do). This probably results in the transfer failing.
->
-> In hcd-ehci.c we check for the "iso transfer to non-iso endpoint" and
-> make it fail, but we don't do this in hcd-ohci.c.  The result is that
-> a guest that deliberately sets up this situation can cause us to hit
-> the assertion added in commit 7b1eba96aeca, where the endpoint is not
-> isochronous and returns USB_RET_ASYNC to an iso TD handling function
-> that isn't prepared to deal with that.
+Functions annotated with 'warn_unused_result' cannot be cast
+to (void) to silence the compiler. Add the ignore_vaule()
+macro which tricks the compiler into thinking the result is
+genuinely used, avoiding the need for manual workarounds where
+the return value is intentionally ignored.
 
-Side note -- compare 45684127cd which fixes an assert we hit
-in hcd-xhci when the guest configures an isoch transfer on a
-non-isoch endpoint, and the code in the hcd-ehci model which
-catches a similar case. An alternative approach here would be
-to add an argument to usb_handle_packet() which was a bool for
-"is isochronous transfer" (or some enum, for better ergonomics),
-and have usb_handle_packet() complete the packet with an error
-response in the case of an endpoint mismatch. That would allow
-us to deal with this in one place and make it harder for the
-controller models to forget about it, but it would also be more
-invasive as a change, which is a bit unappealing given USB's
-current unmaintained status and a lack of tests for it.
+This clever macro is derived from one originating with the
+GNULIB project:
 
-thanks
--- PMM
+  https://gitweb.git.savannah.gnu.org/gitweb/?p=gnulib.git;a=blob;f=lib/ignore-value.h;hb=HEAD
+
+but simplified since we don't need compat with old GCC and
+optimizing on clang is overkill.
+
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+---
+ include/qemu/osdep.h | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/include/qemu/osdep.h b/include/qemu/osdep.h
+index 1ec5b42230b..c1ca2c127b6 100644
+--- a/include/qemu/osdep.h
++++ b/include/qemu/osdep.h
+@@ -251,6 +251,14 @@ extern "C" {
+ #endif
+ 
+ 
++/*
++ * Merely casting to (void) is not sufficient for functions
++ * annotated with the "warn_unused_result" attribute
++ */
++#define ignore_value(x) \
++    (__extension__ ({ __typeof__(x) __x = (x); (void) __x; }))
++
++
+ /*
+  * For mingw, as of v6.0.0, the function implementing the assert macro is
+  * not marked as noreturn, so the compiler cannot delete code following an
+-- 
+2.55.0
+
 
