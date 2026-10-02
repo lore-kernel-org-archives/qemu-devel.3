@@ -4,143 +4,141 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51D47CA5FD4
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Oct 2026 10:28:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BEEACA5FC4
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Oct 2026 10:32:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xCaUZ-0007UW-MN; Fri, 02 Oct 2026 06:27:52 -0400
+	id 1xCaYM-0000cl-1v; Fri, 02 Oct 2026 06:31:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1xCaUW-0007UD-BO
- for qemu-devel@nongnu.org; Fri, 02 Oct 2026 06:27:49 -0400
-Received: from mail-northeuropeazlp170100001.outbound.protection.outlook.com
- ([2a01:111:f403:c200::1] helo=DB3PR0202CU003.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xCaYI-0000cO-3l
+ for qemu-devel@nongnu.org; Fri, 02 Oct 2026 06:31:42 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1xCaUU-0004Kh-7o
- for qemu-devel@nongnu.org; Fri, 02 Oct 2026 06:27:48 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=hceELEJOJLB8r+Yw32gJPuoJ4vaT4rqnWqGCZtR6pRYhheTPC4bGvV2WZkPiFw8fNR5Qgn3DD7QERtG2ghvYUWDHoU0tvuQBJk7eqhtB+l7+XcBesub6RWtsZCXz49iRYChQpv8N2nOPUqcdt+oQzso+xM/NyWZXIw72JXnKVtw9aeXk7iBpFV6r5ESnrpXMqwoxgwBz4Fc6mwtZI9UQbLt1hLeXieTVsOtlPZyN7sYy6/Go8rBdP7qLgVtFEDdPbke654kEZMOWBCiD0cUHytH22fqQa8uUA1xG9InIQAt+efHiHFImgwTzgL/Bo3z0Pt0ORoH/j8VO16/7Wgd1Eg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Dg7ngdfT/RzmVBgNg5e0P83/28X8bRsfnoWI7DgnLjo=;
- b=QD2FsuYHj5RL4q+E/q63eccmsQxFWtC8VxSKPWDF7P6nug0kegqrHUL87U69jq08Q0wQPQeOlt9TjFYn/c2wnweZTxgNyu+Mt0WzD8EhLqBJodeWDAqLRyDjtdl0fL2vtgp3oSZOqOow6DGBY1yX7hyHxCUJB6U7fCjeA1oZHoBimGkiY6L6HHpo47ePzz8VYVJGxIQ6dzx1KMdELoFE2I6mS3zYxXtjfDPj+d9cjB0qFu17dMP57QQrLoY2gt1y4EogSdfCC5w3VdkkMlHSGLoTdPnM22aiTSWb/t6yRGAGG8bwJpAVj2zO1yUBppO4zOROpiPvOLXOpi6aULjWjg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
- header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Dg7ngdfT/RzmVBgNg5e0P83/28X8bRsfnoWI7DgnLjo=;
- b=tyJjKR6I/Wrw3WSkOQfUBdmfZADtYat+yB/4gZ48iTt1sCD47UIGwEiZJR2DdLiYAdMZHjHpt5CjFlNMWt4OxL+0LAoRPu/gzl79c5Nmp3iOgSq6y0t6Frc1nSFIgd9crWe8cl63j7tR6gyf+MpDcrez2x7beRepDjZ0qCRbH71LHWzZT0pJPISW8FvhCBlci8T8Wk65xbO8KhVjdMCOLtpRJ6ok+mi7cGsbBlgCkLP5+VHNKXHCTts3b1U5Uo1p7VGBFDrYNKfRn4cHs75Cx6+ujOgsqN0DY/DTypEmV92kh0SvjNLgOFa4msf/Ny39/CyiFPV8NBJSBqCZr+orYg==
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=virtuozzo.com;
-Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
- (2603:10a6:800:20a::12) by AS1PR08MB7585.eurprd08.prod.outlook.com
- (2603:10a6:20b:471::11) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.472.14; Fri, 2 Oct
- 2026 10:27:06 +0000
-Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
- ([fe80::4e37:b189:ddcd:3dd8]) by VI0PR08MB10656.eurprd08.prod.outlook.com
- ([fe80::4e37:b189:ddcd:3dd8%7]) with mapi id 15.21.0472.012; Fri, 2 Oct 2026
- 10:27:06 +0000
-Message-ID: <806532f4-5240-4683-9a65-68fab6fd6d58@virtuozzo.com>
-Date: Fri, 2 Oct 2026 13:27:05 +0300
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v10 16/18] vhost-vsock: hand off device ownership across
- CPR
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org
-Cc: den@openvz.org, dwmw2@infradead.org, peterx@redhat.com, mst@redhat.com,
- sgarzare@redhat.com, vsementsov@yandex-team.ru, farosas@suse.de,
- mark.kanda@oracle.com, dongli.zhang@oracle.com, maciej.szmigiero@oracle.com,
- philmd@oss.qualcomm.com, bchaney@akamai.com, clg@redhat.com
-References: <20261001-up-vsock-vhost-v5-v10-0-8c094843e98b@virtuozzo.com>
- <20261001-up-vsock-vhost-v5-v10-16-8c094843e98b@virtuozzo.com>
- <8599ac70-7443-4dc9-975c-ee59166354ac@rsg.ci.i.u-tokyo.ac.jp>
-Content-Language: en-US
-From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-In-Reply-To: <8599ac70-7443-4dc9-975c-ee59166354ac@rsg.ci.i.u-tokyo.ac.jp>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: ZR2P278CA0039.CHEP278.PROD.OUTLOOK.COM
- (2603:10a6:910:47::16) To VI0PR08MB10656.eurprd08.prod.outlook.com
- (2603:10a6:800:20a::12)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xCaYF-0004lp-W9
+ for qemu-devel@nongnu.org; Fri, 02 Oct 2026 06:31:41 -0400
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6929nm2L558019
+ for <qemu-devel@nongnu.org>; Fri, 2 Oct 2026 10:31:38 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ sHLJ+fmCh2DFHdbGxS4WwWNa/1Q9CcDIgvkeHb4bHPY=; b=gpaLOFjuu3sBhWLZ
+ A66jHELife/uFv8oRn+N3XGO8ksrMNuwDub/3cIHyKNDDhbKmuK1KD5WA4eFPi9s
+ t64v7+o+c0CEUi3Ce0tCIbiTuqYShElBgXIU3f705GriAxtnhEJ/RughtNrrpRtB
+ G/phpg853SnyErHpvdEG/Suy67VZXRJklD79rrUxEMCO8c4IY4i6syZtUlbnQFDY
+ X/xyEx+2JKSyOJvjYj3PFo9M6VCciJSmRh09tpU6fmwsWArl8wq/nCyihvHnJ8NZ
+ KzvQ44JLgKe9D1qCmhBWUh4HvJFgNcCehNC/oS/EGriKIyuJqX7N00POVt4zOyrR
+ +5oQyw==
+Received: from mail-vs1-f71.google.com (mail-vs1-f71.google.com
+ [209.85.217.71])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h1tbgbkt5-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Fri, 02 Oct 2026 10:31:37 +0000 (GMT)
+Received: by mail-vs1-f71.google.com with SMTP id
+ ada2fe7eead31-7bfee69e500so1382715137.2
+ for <qemu-devel@nongnu.org>; Fri, 02 Oct 2026 03:31:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1790937096; x=1791541896; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=sHLJ+fmCh2DFHdbGxS4WwWNa/1Q9CcDIgvkeHb4bHPY=;
+ b=I5FAkmEagEytsP4oaxAG6df9j2VxGmdHZBF6MwI/XdJ6ruwdDUC3QLyeqQpV2qP25q
+ DLKQD79JEnZVZAPfqInuEBfnxwi24hBoE2KBD1qmzn1S/xbDrnrlv60jlFYxOrpYWFBm
+ to8GIml5TUdmEQttTb6TPA+/vZfDafWp4KyP8NHtndxZ5kIBL/jopnlmtKBMC7woUqro
+ MTuz4ggUnAZUel2p5JyfNJvbzzEnNoZuymdzmkQmtcZlBzn7bYDvZ1Eh1pbBg/RVVNYd
+ qLYuRVCNCO9WI/FKa3w619k0+XSVO3CzOZIwEcnefGZjvU4eYezHG1Oa74pLVsvNTgyo
+ M+jQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1790937096; x=1791541896;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=sHLJ+fmCh2DFHdbGxS4WwWNa/1Q9CcDIgvkeHb4bHPY=;
+ b=J648mBwP7ZNculnsbeGGWv8aB+vvRlrzqbqfM3xe8WLSYP3OhLW0kmRx20Uj//Uf3j
+ JDKWsXI2nAfpBUfztT7ZbZxQK0qVnDvPFtRqhsVYQ3WKBLPzpnP6uZhcKf4Rsb6VdeHC
+ 84oUmvTQVpTfhSI2alV2eG44qe5ET9NqJtB2oAQendr+rTjf9LzYYB1C52pegJVlukn7
+ 205RxLCIeY0E/reNnJkChLb2+iB1CVWSgw96mAHgjSR8sZTspuGnsxIK1lZ7eTfJvFR3
+ lzLeYH1kAsleYyGkg+DTFAjRcWXqZJ2AYUwzKDHtovnStHsq7GdY0v8rzZiiQrVlJaO8
+ Qz5w==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBzGkr6aM4+7KbYo/YQe5KOrjpstv8R0+voQP74QGvNcrO9THLmHYksE+iuiQ+AIuhuEbtgkWYm2XOjq@nongnu.org
+X-Gm-Message-State: AFq9FYIKM6kSQyHmt5BG98E8WINDY813rXL9hV5aMbuMJvWweTBfYih6
+ Fu3yFwuWkcdnygaVGO3fL0OzAV4zCjwFz17YX9b5bvXR9C2amCsMsB5TMsD6UJTgSwh6Wwj0Scr
+ /UpCW0pEqRTXjQWmuhGTjIJwkyUSjNug8hS5s4mdxucDptZN+mCgO06JNbA==
+X-Gm-Gg: AYBFou1FKbi6KeFW6vpFoBfFOsLoappXld4Iz0yculEAhF2sobXfj35Eonoqlfhzri+
+ L2MNxpeml4NdkmtwS/TQLDoysMY3st8NLhvXUV9uw9/cl4u0HAPyH7oJPPMyGwoz5nYJ4l5wXdI
+ CBz8Kop1KVBVZ3L+IM0nQQf+yYLgdzgSVurHzfF1ix3yZP0pYlhW93zfR/Dv7Pt/cXO16Af+rub
+ vsEce7p9zxBu0XaZ+3HL4i1cMUwIBcT4bYJGI3TtLkcqAO/yVMJMluxGY7UcoGf57sUDx/ludFh
+ Hq9yxDRc3GVuFAVstVgsNV3+9wxNRMS6GhLlSlQ9hqhRrfQcgoJSno6yUZEjOxPS4CVg47JrmTZ
+ Lb69rwwfx1/8oNzuufTe+jg==
+X-Received: by 2002:a05:6102:5111:b0:7a0:eb10:79b5 with SMTP id
+ ada2fe7eead31-7c0f487cc53mr664551137.10.1790937095985; 
+ Fri, 02 Oct 2026 03:31:35 -0700 (PDT)
+X-Received: by 2002:a05:6102:5111:b0:7a0:eb10:79b5 with SMTP id
+ ada2fe7eead31-7c0f487cc53mr664545137.10.1790937095424; 
+ Fri, 02 Oct 2026 03:31:35 -0700 (PDT)
+Received: from [10.111.137.66] ([212.136.9.21])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4a0280c6597sm73235655e9.9.2026.10.02.03.31.34
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 02 Oct 2026 03:31:34 -0700 (PDT)
+Message-ID: <b9019487-979f-4b37-9c30-3fc43c308d06@oss.qualcomm.com>
+Date: Fri, 2 Oct 2026 12:31:33 +0200
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: VI0PR08MB10656:EE_|AS1PR08MB7585:EE_
-X-MS-Office365-Filtering-Correlation-Id: 6dbb54dc-0b89-4884-cd9a-08df206fb547
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|7416014|23010399003|376014|1800799024|366016|4143699003|10067099003|56012099006|18002099003|22082099003;
-X-Microsoft-Antispam-Message-Info: QCD1NfMPcuy7PWYS5xZWw6PtoKdo3zWMOgUROryqJeyTMekYLT8L1qpoKb8PKsK6mwwjFFL04rqfDSu407NNXS1gz0DV9MzL8TCfU5nlfCOciO6ct1qm28XwPBRjrf5/zyzGyHrazzBnaFhvdMy9FaBhv0m54KkMYk9tonyPjlpXsW/clBLwkIkM4JGTVjuxRdfD4B8UFGXa0gr2WB9RekPJWC6HXXZ5XcyvGzuPTUoZgtyvI/rMZgqnRB6Mh0aOUiWXZq1ITjbLRG4h5IyMdOplCXgIZ2hn6b+IJWKq24E0UTGZpdK5abhmJWvkSVrev62x2WWAXLenoneXyguUkRnUFD5o+/FFkZgAbfU4waeB1VxfVSNt8qYgbow5HIuWQEU7tVIvpjeL/jp4JHt1CmKRjqXU9wRNn4JB232YkEdqo91Gu7AVM/8YMtrWJopoF/FXVRghfQh/oalWcCYJYxDfcgJoWBPFXpb5TCoschljPYazbjb9qqhTnzaea8PnTTylGua5HNajxRvE3G1T8YBGshVVVqvnRXnFOrlaV/dK1X373Gx2WFbI+D5wEK9Ox+Gp5F6z0Lt3qubGzeqNYAatQ3o8GBuorkuwj4jmzVyQ49ho/3SHBr18MLMQYayKsO+o0grRdAHcv4SJucp18+oJDUHIj+YFgnsA9goozNU=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:VI0PR08MB10656.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(7416014)(23010399003)(376014)(1800799024)(366016)(4143699003)(10067099003)(56012099006)(18002099003)(22082099003);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?T2NWZ1hua3hEV2lveGNJMGY2NHpKblMxOVdXM05DKzllY0JxclkzcWFrWSs1?=
- =?utf-8?B?a1dMUEdndk1aSVNlRjJLQ1RKd2dFYXMzMFQxV0RpN0J1blpwZ3BpclhRT0Z6?=
- =?utf-8?B?YkR5S0lQVHdpcWY1SXdaWCsxN3FHekJyQVNYQnZVSGoxb1JKSFVVS203VC9J?=
- =?utf-8?B?WGZtL0NJZWdDbWRMcWhROVl5R3hydjlXeDZBMWhZVE1uWHo0cjh1cUI4S1ZX?=
- =?utf-8?B?WFBDcEhaZk1RVktVUmFzQmRuZXppVExxQmxBemN2SUN2T2tCY1lnUHlRd2Yz?=
- =?utf-8?B?bjBBZVNYMWRETFhJV0MrQ0NwNEFyVjY5R1JLR2p3VlhNR3U3cU4yRCtXUStr?=
- =?utf-8?B?eDl0RmRUbWtPczZteWEycHBFcExaNkJHaG5sRFBaUnlDSUtqYXBONURKVVVK?=
- =?utf-8?B?S2RQSURjaXR2aFA0dkUveFdtaFZqZmRzL0ZkNlVZK2REbktMMkd6VDlKeEc4?=
- =?utf-8?B?WVdCSXNvRU5YTHA2OVpIVzRDOU1lbVFkVkE1U1V3dnBRZWIwWXYrdEhDQ0Mw?=
- =?utf-8?B?OGllQ3ZLZ2pBSEZ5Sy93TExhc2p1aExMSGl4ZVBFRlRtTXZiUE0rTEowckh0?=
- =?utf-8?B?KzErWUtBckF3NTd5dkMvTXRBSmZEdnV0dCtSSnBXUlZyUzhvRG9JNDlWNjRJ?=
- =?utf-8?B?OHd3b2ZOeVlkWEkvNXAwY0R3MDhJbEpwcUMrZzl1dmdXYmt2SmF3cktnb0pU?=
- =?utf-8?B?eUpoSnV6b1UzakVMaG90Q0MyeFBBUG1nb0ExM3ZsOUcrcitxRWNRYVc4OVEr?=
- =?utf-8?B?Q3h6RHpCM0RFaTlHM21GbnJ5elFyWUh2dTRib21pOUVVUzY2U2tPbG9saUN3?=
- =?utf-8?B?T0ZDVzNMb3lsYmlLZStTVXh1cmR2d045bjZFaEFveCs2bTlNdlZoUU9yRytj?=
- =?utf-8?B?RnRsYm9DUWRObDRnU3VibGVCbHVTOGdCNjJlSGxoVVlzUFlZc2o3MkZ5WUtm?=
- =?utf-8?B?TkkwSGNybnMvYXFrSDJQb1pQMklOTGZIK3oyY2U4cFZSUk9PWEVpVk85ZFhy?=
- =?utf-8?B?TlZPWUZleDFTWE5kdit3RG5uT05vZlVoTXlSY2E1bkVkZGt6RW9maWNSOXl5?=
- =?utf-8?B?anJDNExjOFYzbzQ0eURlS3p1OTdYcG8rVkhZUnU5aUY5Y1Joelh3ZkwyS2lp?=
- =?utf-8?B?c2JUOEQ3NUVLdXlUR3V6OWp5cEh5Q090bGluZWw0andzUDU5TkVNTW5KLzlQ?=
- =?utf-8?B?azBONjBZRmt0OGpXQ0tNNzdSZFJwUnJpdTZqOXJOWTdqMjhNbno3RVhuUkFj?=
- =?utf-8?B?ZUZ3QUt0KzlpcDJ2ZVdzTzluVk1XUFQ2MUIyd2tZTW5aUDd3MS9HbjNESU9G?=
- =?utf-8?B?djRWV3RjY2o1WTZ3eE83YXU5S2x6M1lQUzNHS2FXV1hyNk1RMGpNdVkyUkNZ?=
- =?utf-8?B?bHFmQjVmNVVyci9Mc2RDQzRXL01vQnBtKzNYenFjaHVpV0FhSjN1MFlSaVJq?=
- =?utf-8?B?QVJZOVpuWmFDRjZ1YUVzczFGQmVKc29oeGZaN1JSQXhYMHJrb0dBREVqUSs3?=
- =?utf-8?B?TkNmTDkvQ2crWE9hZk85TUlkblk0STZvVURhMEp3MWs1Q05SRFUxaU5GT0M5?=
- =?utf-8?B?NngyZU5Oc2IvSHZITGFvSGRveEREdnJTQUZqZTh2UHcrREhKajhQSnF2UW5i?=
- =?utf-8?B?MElielVlcDZmczRaTXFmY0V5OEFndW5xRUp0dFRHa2VhT3lIUno2WkdvSnB0?=
- =?utf-8?B?WnNKd0hVbXdnVHl6VnlERlFramJ3RFcyQVZaWHJlZmRQWHpLdVZWRGxQZGhv?=
- =?utf-8?B?Q1IyZlU4SmhKL1RLcC9hMnJRVzhpc21WcVQwRnB6Wk5RZ0xGaEtjenNhQVJW?=
- =?utf-8?B?cVJFbXZUbitVb2lEVEViSVc3VHprQmV4WUY3TXlDbU1nK01DZzA5SktEVkRY?=
- =?utf-8?B?OTNFOTZnTk9oQVE5dmNSSHdjNGZscWRINHVFRXNTUUJOUU1qM0hKMEtqWVdh?=
- =?utf-8?B?VlRDWC8ydGNpdG9pSGNyaEhaaEt2a0c0OWtLVmJFVW5DOW5meVJibko1Y1c4?=
- =?utf-8?B?Nlg5WDlpcXBCS0ZpVjc5VDl3bWNLVEZGbHA1UE44TnNjUW4ybU56cGZ0OFVH?=
- =?utf-8?B?dEtQS1RtRmc1dkxqY21kWndvR0NlZ09iTWxTbFcxd0k1aXdtOG8zU20xa1Fp?=
- =?utf-8?B?Q1BhdWtQVllYUUQyazliSWxpRmxpZWc1OHFDYWZkVUZyWGlnU0xNa0s3TmIv?=
- =?utf-8?B?eXVrL1ZIbmc3Mlo3azRjUFVWdGVxRjB5SkQ3SmpOWjhqSU9XYnVtSTB1S1Nz?=
- =?utf-8?B?T3gwcFUzcGUwYzhZVDl3Z1Z0cENFRlRrVG5TUDQzc0FxbzlldnljTmZjaGd6?=
- =?utf-8?B?SE91MlBUZ3B4N0FYZmtnVW5BNG9jMVFQN0RBY1MwWFpYNEh3NTNIaGhKNWww?=
- =?utf-8?Q?dn9BJR5iaSA2U3uQ=3D?=
-X-OriginatorOrg: virtuozzo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 6dbb54dc-0b89-4884-cd9a-08df206fb547
-X-MS-Exchange-CrossTenant-AuthSource: VI0PR08MB10656.eurprd08.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Oct 2026 10:27:06.5833 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 7Bh2RU4vRG70kME/z82eu0yE0FFPIEjrnaTI3n3LuG8Tu6lxlSciYaGmCOYnO/y1OwIK7iuR28ts2dT/YQPHNlk/SuZikAHq06hYQuN436M=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS1PR08MB7585
-Received-SPF: pass client-ip=2a01:111:f403:c200::1;
- envelope-from=andrey.drobyshev@virtuozzo.com;
- helo=DB3PR0202CU003.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/usb/hcd-ohci: Fail iso packets sent to non-iso
+ endpoints and vice-versa
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: Thomas Huth <thuth@redhat.com>
+References: <20261001194756.3003085-1-peter.maydell@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <20261001194756.3003085-1-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDAyMDA0MSBTYWx0ZWRfX1MvJAfTi1xLc
+ o2oJS49YZ4AQrJlQMFNdARPXi3WZRAfFRSOGEqeVa+wWh/ZnCyTivhHN80Gvq9hKm21IzvzNBOw
+ UZCW0fWiNn8OOmvwQvXQtmihL+6q2z4=
+X-Authority-Analysis: v=2.4 cv=QY7zLcbv c=1 sm=1 tr=0 ts=6abf8809 cx=c_pps
+ a=P2rfLEam3zuxRRdjJWA2cw==:117 a=/bviTfK1dmy+WGcHzWQ0gg==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
+ a=p0WdMEafAAAA:8 a=69wJf7TsAAAA:8 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8
+ a=mVuZ1GJhL4F-jNGdb7sA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=ODZdjJIeia2B_SHc_B0f:22 a=Fg1AiH1G6rFz08G2ETeA:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDAyMDA0MSBTYWx0ZWRfX/0LCjIhL9OnL
+ +74wUHkb9ycYgyuRpixnWxsJcHjcs3t3jPPpuxoYsxB1kcKLbZ0z4LWjb9/dZsa58FOCnA2bg20
+ b6ApzUTbT64oFgXp4XxhkyU/vjleNa3YeQi+TwXLN8/g0a/+X3spIWEm5KLjaKycaoC3+ijvORL
+ 3wACmkK+NP0RpUA5f/Q1mUW90uj2FHaSENXcpXrJP/Px9qe3evgO+CbPEMWhXp/fsCvEVMuKB2a
+ EW7CDYvXW8z1FuwFVkreOtrTMwxxcFtkSuGMStmKDEpCagPirT2cPJ5q2yQiELZxDEH3ZI86a/f
+ +GlvMieutoTJiYlKVIgVzR5fqlyLVxmBsnewDucBS1AbSinjLqNay7uvfpr77iyF4euT9rF2E6g
+ 6Mu+oKjUe40SyafZ3ZbNKwNeK/znG9dbQ/n43xq1AT6puBpJKMUM7F6JmhVn2Hjvd6EQuqPShA6
+ lfhD8B9ssFRCjEvyoVA==
+X-Proofpoint-ORIG-GUID: dD4JWtMdwZWEpCcuJgPZ9rw60N613knc
+X-Proofpoint-GUID: dD4JWtMdwZWEpCcuJgPZ9rw60N613knc
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-10-02_03,2026-10-01_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 adultscore=0 lowpriorityscore=0 clxscore=1015 phishscore=0
+ bulkscore=0 spamscore=0 suspectscore=0 impostorscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2610020041
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -157,125 +155,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/2/26 6:33 AM, Akihiko Odaki wrote:
-> On 2026/10/01 17:25, Andrey Drobyshev wrote:
->> The previous patches reuse the source vhost FD on the destination,
->> however both source and target still call vhost_dev_init() (VHOST_SET_OWNER)
->> in realize().  For cpr-transfer the destination realizes while the source
->> still owns the shared FD, so its SET_OWNER would fail - ownership has to be
->> handed over explicitly.
->>
->> Do this through the device's CPR vmstate hooks.  Namely, release device
->> ownership in pre_save, reclaim in post_load, re-acquire on restart:
->>
->>    - .pre_save() releases ownership on the source (VHOST_RESET_OWNER) once
->>      the VM is stopped, for the FD-preserving CPR modes (cpr-transfer and
->>      cpr-exec).
->>
->>    - .realize(), for an incoming CPR, only sets up the virtio device and
->>      queries the backend features by calling vhost_dev_init_backend().
->>      It doesn't take device ownership and doesn't touch the VQs which
->>      still-running source might use.  The full init is deferred to
->>      .post_load().
->>
->>    - .post_load() reclaims it on the destination: the full vhost_dev_init()
->>      (VHOST_SET_OWNER) on the preserved FD, plus sets the guest cid, before
->>      the device is started at vm_start.
->>
->>    - .set_status() refuses to start a device whose init hasn't completed
->>      yet (incoming CPR before post_load).
->>
->>    - .set_status() re-acquires ownership before starting the device if
->>      pre_save released it and this QEMU is about to run the guest again:
->>      the migration failed, or it completed and the management resumed the
->>      source (e.g. cpr-transfer target died).
->>
->> With the handoff in place, lift the CPR blocker.
->>
->> Note: this requires kernel side support of VHOST_RESET_OWNER operation
->> for vhost-vsock.  Otherwise CPR attempt fails in .pre_save().
->>
->> Suggested-by: Dongli Zhang <dongli.zhang@oracle.com>
->> Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
->> Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
->> ---
->>   hw/virtio/vhost-vsock.c         | 157 ++++++++++++++++++++++++++++++++--------
->>   include/hw/virtio/vhost-vsock.h |   2 +-
->>   2 files changed, 128 insertions(+), 31 deletions(-)
->>
->> diff --git a/hw/virtio/vhost-vsock.c b/hw/virtio/vhost-vsock.c
->> index 6e89007b2ce..65ba573da4d 100644
->> --- a/hw/virtio/vhost-vsock.c
->> +++ b/hw/virtio/vhost-vsock.c
->> @@ -21,7 +21,6 @@
->>   #include "hw/virtio/vhost-vsock.h"
->>   #include "monitor/monitor.h"
->>   #include "migration/cpr.h"
->> -#include "migration/blocker.h"
->>   #include "migration/misc.h"
->>   
->>   static void vhost_vsock_get_config(VirtIODevice *vdev, uint8_t *config)
->> @@ -85,14 +84,46 @@ static char *vhost_vsock_cpr_name(DeviceState *dev)
->>   static int vhost_vsock_set_status(VirtIODevice *vdev, uint8_t status)
->>   {
->>       VHostVSockCommon *vvc = VHOST_VSOCK_COMMON(vdev);
->> +    VHostVSock *vsock = VHOST_VSOCK(vdev);
->>       bool should_start = virtio_device_should_start(vdev, status);
->>       int ret;
->>   
->> +    /*
->> +     * During CPR, on target the full vhost_dev_init() is deferred to
->> +     * post_load.  Refuse to start a half-initialised device rather than
->> +     * issue vhost ioctls on it.
->> +     */
->> +    if (should_start && !vhost_dev_is_initialized(&vvc->vhost_dev)) {
->> +        error_report("vhost-vsock: refusing to start, device init incomplete");
->> +        return 0;
->> +    }
->> +
->>       if (vhost_dev_is_started(&vvc->vhost_dev) == should_start) {
->>           return 0;
->>       }
->>   
->>       if (should_start) {
->> +        /*
->> +         * vsock->owner_reset is only set in .pre_save() on CPR migration
->> +         * source, after a successful RESET_OWNER op.  If we end up here
->> +         * with this flag set - that means that either CPR migration failed,
->> +         * or we got 'cont' cmd from the management (e.g. cpr-transfer
->> +         * target died).  In either case, we need to re-acquire device
->> +         * ownership.
+On 2026-10-01 21:47, Peter Maydell wrote:
+> The OHCI USB controller requires software to set up an Endpoint
+> Descriptor data structure.  This specifies (among other things) both
+> an EndpointNumber telling the controller which USB endpoint to talk
+> to, and a Format (F) bit which is 1 for Isochronous transfers and 0
+> for General transfers.
 > 
-> I'm not requesting changes to this patch, but there is a case where
-> the source cannot reacquire ownership:
+> The specification requires that software matches the F bit with the
+> endpoint it's setting up the descriptor for, so that Control, Bulk
+> and Interrupt endpoints use F=0, and Isochronous endpoints use F=1.
+> It doesn't require the controller to check whether software gets this
+> right.
 > 
-> 1. The destination successfully completes vhost_vsock_post_load().
+> The spec isn't totally clear about what happens if software creates
+> an ED with a mismatch, but I believe that the controller just trusts
+> the F bit, and tries to talk to the endpoint with the wrong sequence
+> of USB tokens (notably, isochronous transactions have no handshaking
+> and the others do). This probably results in the transfer failing.
 > 
-> 2. A subsequent load error, such as a truncated VMState section
->     footer, causes the destination to call exit() without reaching
->     vhost_dev_cleanup().
+> In hcd-ehci.c we check for the "iso transfer to non-iso endpoint" and
+> make it fail, but we don't do this in hcd-ohci.c.  The result is that
+> a guest that deliberately sets up this situation can cause us to hit
+> the assertion added in commit 7b1eba96aeca, where the endpoint is not
+> isochronous and returns USB_RET_ASYNC to an iso TD handling function
+> that isn't prepared to deal with that.
 > 
-> 3. The source still holds an FD for the same open file, so closing
->     the destination's FD does not destroy the kernel backend or
->     release its retained owner.
+> Add checks for both "iso transfer to non-iso endpoint" and "non-iso
+> transfer to iso endpoint" and make those TDs fail rather than blindly
+> sending them to the endpoint.
 > 
-> 4. Resuming the source with cont calls VHOST_SET_OWNER, which fails
->     with -EBUSY. Repeated attempts do not resolve the stale ownership.
+> Cc: qemu-stable@nongnu.org
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3729
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+> The diff looks a little complex because of the re-indenting;
+> looking at an "ignore whitespace changes" diff might be clearer
 > 
-> An atexit() hook could cover this exit() path, but would not run after 
-> SIGKILL or abort(). This appears to be a broader limitation of the 
-> kernel vhost UAPI when sharing an open file between processes: recovery 
-> cannot rely solely on the destination releasing ownership before it exits.
+> Only testing here has been running the repro in the bug tracker
+> plus "make check-functional", which probably doesn't exercise
+> USB very much.
 > 
-> Regards,
-> Akihiko Odaki
-That's an interesting finding.  True that we can't do much for SIGKILL
-or abort().  However a truncated migstream footer with a subsequent
-exit() is a legitimate case which we should cover.  So if I add the
-ownership flag into 'struct vhost_dev' as discussed under the previous
-patch - this should become really easy: we just loop over the vhost_dev
-instances and issue RESET_OWNER for those which hold the ownership.
+> ---
+>   hw/usb/hcd-ohci.c   | 61 +++++++++++++++++++++++++++------------------
+>   hw/usb/trace-events |  2 ++
+>   2 files changed, 39 insertions(+), 24 deletions(-)
 
-Thanks,
-Andrey
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+
+These functions are huge...
+
+Side note, I don't get why we copy packet data *then* return
+error if device not found (trace_usb_ohci_td_dev_error), this
+is sub-optimal.
 
