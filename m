@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AA80CA5FD4
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Oct 2026 11:04:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 214D6CA5FC4
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Oct 2026 11:04:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xCb3Q-0001XY-G2; Fri, 02 Oct 2026 07:03:52 -0400
+	id 1xCb3N-0001VE-5P; Fri, 02 Oct 2026 07:03:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1xCb3O-0001WD-Lz
- for qemu-devel@nongnu.org; Fri, 02 Oct 2026 07:03:50 -0400
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1xCb3K-0001Ts-H7
+ for qemu-devel@nongnu.org; Fri, 02 Oct 2026 07:03:46 -0400
 Received: from mail-wm2-x11.google.com ([2a00:1450:4864:31::11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1xCb3M-0008VT-RP
- for qemu-devel@nongnu.org; Fri, 02 Oct 2026 07:03:50 -0400
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1xCb3I-0008UQ-K5
+ for qemu-devel@nongnu.org; Fri, 02 Oct 2026 07:03:45 -0400
 Received: by mail-wm2-x11.google.com with SMTP id
- 5b1f17b1804b1-4a00d8bec5aso24683405e9.2
- for <qemu-devel@nongnu.org>; Fri, 02 Oct 2026 04:03:48 -0700 (PDT)
+ 5b1f17b1804b1-49e7bcb94d3so57160885e9.2
+ for <qemu-devel@nongnu.org>; Fri, 02 Oct 2026 04:03:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1790939027; x=1791543827; darn=nongnu.org;
+ d=openvz.org; s=google; t=1790939023; x=1791543823; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=9tN+AxFYSB1fAa8V08Lpm1ZM27JAKqWIOqROhNIAGb8=;
- b=hMSDut8FjMGKUJAPtqLdAB6DFT5wrVnPgOfi+rCb65Sc5iIS+52Fw3dadfh3beL9Sy
- b4CcIajodwsKqH4V6TvqCoP8eK2npm1cUQhHSLA9HtGD9TGii9hTmJuXDJC/LQoMjyfr
- Iq3BoUSrKwYa95L8KrwTX89usUxE8VElxaRPVftg6KPG2hh5E3BJRL+fncdqTHwbI/vE
- dWPV05/s8QjUxG2y6zeDLBO90DxBRjDd5w3c4kGjf9EoluX8s+UPlr4koarOXE8hE9Vp
- 5pwerpXm/IYBQ003rRdE3AQ62L30CNDKMVIyrm7gADRjwIYJhxSEdXMZ4Zm+KEELyikZ
- 2vnQ==
+ bh=AkIWwe4jZm6YDp2pbP9DnlPuFTMr8x6zTE3n3Ll2UnA=;
+ b=BnGDyp8KmZmxE18Aunz11CucttW47mzo4gc/tTBTccdYOTSGBUVLzb8NEJLQ6nar6Z
+ UFInBrfi6l9GrMCoQ6N6vmBPC9MjyokfE1nJztRhkxnUm2cce0Jx6Oz4iyMf58goodK8
+ pckRrkTCuqhqERtIITIqCErBUs5A40gnM6M88DITpbl12VdxEqMZetJRgdsbl3mt+bPe
+ 7wzXfqh+0nph+N+eR8BKCJ0pJ0hG7zlsAC0CuzdLaFDYWNXBRbnkB/SwESgprcoYCVns
+ sYjPDegeQuCqM/f9Hblg3uYi9PLnZLtV/4AhA1AuaFqBxHATKctIJ8d1AeNhpWwkLRnh
+ xXPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790939027; x=1791543827;
+ d=1e100.net; s=20260707; t=1790939023; x=1791543823;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=9tN+AxFYSB1fAa8V08Lpm1ZM27JAKqWIOqROhNIAGb8=;
- b=ysSPyNHRLwHn5smu5rQZ2DCgcyq/YkWbz1ouXpO9NZNAuNZYKpppVJQEo17cdAndAB
- hyOxDv8xU+bjCiJpDB3vo1sa4IIW84LWw5wy7WDnY5uQG04tqmDAQ6VKZv1yli2q/uVj
- s34Lv0Auc464xyAffUlTq35nKyOnCsvhhlXt482TFc1FUW4ylz64Ovn+8TqFXB1bVCE3
- ot1v7dPf7Aem9y6UOtN02cSOby1XRb43PYdrmOpPs9QknomLSQlc3/f9Xx1uaHRIz08+
- Xszw9vfXYMHNnPl4bkZhEOgY0Q3PDfUERfKASg01CQcw0GSB0fvKhJpUKFyD+LsrCp1n
- e8AA==
-X-Gm-Message-State: AFuF++n6Sh+DKHBNNtzfbbVyA3+deNKdoCx+7yWanNud86zKWmEICRUk
- lcqNV033U4RqY7vkkNGlXTldtpiiPeaPpQiWE8JTc8j+/rjxkjf2GmY9rVTV1QspNvqstNRdj/f
- Q7Bp5
-X-Gm-Gg: AYBFou36KNPSuUZPUeyZz3HR7smVl5Vl6JCtd9cWERnrfs9o2xP62Zs91MOc2L57IJO
- X7qJF4AQjCIemhldJtIGcY3sIjPSVoKlGDi1ag8HrHWeHF7FQbTvyFUBTc7pPNbLaMdQQMtWr2E
- PKcG5rlfT81HoLrPRYZmsahjVek6tCAlU2KZonUOc28tTVrrn8AlHlS29HgjHgvNOy7aXkArcZ2
- rr+D14y9BG0bTE4EbEOUTISHX8Fobe7o4ve90iez3TFzoxqcIqbiTzBNbCEkvCeR6RhVaq+0Pzo
- c35SHpVTpWIJ6r1RM1AU0LswIrrTdxTPnfAmPOIGa2mlxhj1n/r4UH1imfdpgil2e8mCcRq7m0R
- LXYnuKxwu0UBWdcbO8WPfstUE0iwPQnfHrhvYD3GU1FkaXExS+ka1GcelmXNQR3AhOicuv6kmiN
- cfc+WyTe8WrbxykN/711cjtRFoDsgEDPxBqZPXY0SfyN3sR+xlSefJ87IemwC5U0VwOvw=
-X-Received: by 2002:a05:600c:1d09:b0:4a0:37d:9e21 with SMTP id
- 5b1f17b1804b1-4a0276ed19amr41398095e9.29.1790939027268; 
- Fri, 02 Oct 2026 04:03:47 -0700 (PDT)
+ bh=AkIWwe4jZm6YDp2pbP9DnlPuFTMr8x6zTE3n3Ll2UnA=;
+ b=Xow4ouUJ8jhuNuSq0lsyhmMvlEfbDZJozWH1vRCDXeCW0euUtR+/IkE5H0Sqjl6RJV
+ zWv848rH63xPsgXCCEwbp0+FPDAnCL8CwlYXU4tI0COSEYK0fMZySZVmXbyqClJUDQ5r
+ 7VDVmbTgGd7QgGWWBx8IzlJwJqOZDuYAr78YqoU4fJ6CKmkb1HcOUmRQFQgU29g7ucGH
+ +QJ8Fixij7c3I2ZtF44kI2WBP0e07fe4Mxps0Jp0DlHbXtUXgY8eO2jzgN5yQ6JeSOPu
+ 4mv0YqbtWn22+spVxLF/qLPc9vxHs4Zm3AuY7/p83egTjGIr5jVdMLWmSgEzQQSkLv4D
+ v0RA==
+X-Gm-Message-State: AFuF++kMNEVnZvrGirLEIoyM1+cK16YEtAcvQnSN+FUIqzRPj6cqCCdl
+ hTRZD6FohbjDmth+Pa2gC6Ph19KoUKLAOZqkrn0HGOQGf52x14tbhrSA7ctxfeX+cxedOUHrv0p
+ cX6JQ
+X-Gm-Gg: AYBFou2ElTlVzVl0A0XHe0s+jCU3A6xTc8Q6s8zkXw/vZYcU2C5SKCgr6WTybCh01Hp
+ Ra+2gF0+g6QUkvqGit7ac4YwBAukjGVAQLKZ0M9ni5WTFgb3XlwAVASGIo0Y55j6wn9USmMyoXz
+ 1Nj5I5C2pCuHjjUTcCGr++dEsfnHvNx4lXFTJdHSh49isX8wUUvVqJf3KvrQzsy1PmcM/6/VuQY
+ foIvG+rnpbhUIAajnVnPwitf5p+XqUWoiCNb0uG4FzylewjmWGJBGfKKky+WB4PuhZbgdcUUdKT
+ eo443Ic1c9q0h1IprAnPiAM4+gS7sE99MZ9R/CpPmuSXU8EU5pIkxmu2wpcOq6z/cSYxhi4aeeh
+ VYWHDmdOGU9H5HZ49TUMvSRQ4GvFuXo3VFnk5D290cbCjekFGZONHDaAX5O2Ptn/PtmxCgof3oD
+ Ecgc2gq3le1N4Ve6Hbdo2vcy4lZlTPtH5i7E85tnuB3uM0nM58e5YVaFWBFE38XLdwg7U=
+X-Received: by 2002:a05:600c:3103:b0:49d:1842:f001 with SMTP id
+ 5b1f17b1804b1-4a027559c92mr43524285e9.14.1790939023073; 
+ Fri, 02 Oct 2026 04:03:43 -0700 (PDT)
 Received: from athena.sw.ru ([2a06:5b06:b600:300:9f21:a362:21c8:d9a1])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a03ff3cab2sm24533785e9.2.2026.10.02.04.03.45
+ 5b1f17b1804b1-4a03ff3cab2sm24533785e9.2.2026.10.02.04.03.41
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 02 Oct 2026 04:03:46 -0700 (PDT)
+ Fri, 02 Oct 2026 04:03:42 -0700 (PDT)
 From: "Denis V. Lunev" <den@openvz.org>
 To: qemu-devel@nongnu.org
 Cc: den@openvz.org, Peter Xu <peterx@redhat.com>,
  Fabiano Rosas <farosas@suse.de>, Juraj Marcin <jmarcin@redhat.com>
-Subject: [PATCH 4/4] migration/postcopy: answer the package-loaded ping from
+Subject: [PATCH 2/4] migration/postcopy: set destination postcopy-active in
  the run BH
-Date: Fri,  2 Oct 2026 13:02:58 +0200
-Message-ID: <20261002110258.1835979-5-den@openvz.org>
+Date: Fri,  2 Oct 2026 13:02:56 +0200
+Message-ID: <20261002110258.1835979-3-den@openvz.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261002110258.1835979-1-den@openvz.org>
 References: <20261002110258.1835979-1-den@openvz.org>
@@ -102,86 +102,55 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Denis V. Lunev <den@openvz.org>
 
-Commit 7b842fe354c ("migration: Introduce POSTCOPY_DEVICE state") keeps
-the source in POSTCOPY_DEVICE until the destination answers the
-QEMU_VM_PING_PACKAGED_LOADED ping packaged right before
-CMD_POSTCOPY_RUN. The destination answers it from the generic
-MIG_CMD_PING handler as soon as it reads it, so the source's
-postcopy-active means the device state is loaded, not that the
-destination has left RUN_STATE_INMIGRATE. Management acting on the
-destination once the source reports postcopy-active can still race
-with loadvm_postcopy_handle_run_bh().
+Commit 7b842fe354c ("migration: Introduce POSTCOPY_DEVICE state") made
+the destination enter POSTCOPY_ACTIVE in loadvm_postcopy_handle_run(),
+before it schedules loadvm_postcopy_handle_run_bh(), and only the BH
+starts the VM or moves it to RUN_STATE_PAUSED. Management reacting to
+the destination's postcopy-active event can therefore still find the
+VM in RUN_STATE_INMIGRATE, where blockdev-add creates inactive nodes
+and attaching a device to them fails with "Block node is read-only".
 
-Record the ping in the MIG_CMD_PING handler instead of answering it,
-and send the pong at the end of the run BH, after the run state change.
+Move the transition to the end of the run BH, after vm_start() or
+runstate_set(), as process_incoming_migration_bh() does for precopy
+COMPLETED. Without a return path the listen thread enters
+POSTCOPY_ACTIVE directly, and the fast snapshot load path switches
+right after scheduling the BH; in both cases the state is no longer
+POSTCOPY_DEVICE when the BH runs and the transition is a no-op.
 
-The wire format is unchanged: the pong only arrives later, and an
-older destination keeps answering at once, so mixed versions
-interoperate. The cost is that the source stays in POSTCOPY_DEVICE for
-the duration of the run BH, including block layer activation when the
-destination autostarts.
-
-Suggested-by: Peter Xu <peterx@redhat.com>
 Signed-off-by: Denis V. Lunev <den@openvz.org>
 Cc: Peter Xu <peterx@redhat.com>
 Cc: Fabiano Rosas <farosas@suse.de>
 Cc: Juraj Marcin <jmarcin@redhat.com>
 ---
- migration/migration.c | 1 +
- migration/migration.h | 2 ++
- migration/savevm.c    | 8 ++++++++
- 3 files changed, 11 insertions(+)
+ migration/savevm.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/migration/migration.c b/migration/migration.c
-index 8944acf3cd..f93f99f30e 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -495,6 +495,7 @@ void migration_incoming_state_destroy(void)
-     migration_incoming_transport_cleanup(mis);
-     qemu_event_reset(&mis->main_thread_load_event);
-     qemu_event_reset(&mis->postcopy_run_event);
-+    mis->postcopy_package_loaded_ping = false;
- 
-     if (mis->page_requested) {
-         g_tree_destroy(mis->page_requested);
-diff --git a/migration/migration.h b/migration/migration.h
-index c65212ff63..80401391f8 100644
---- a/migration/migration.h
-+++ b/migration/migration.h
-@@ -110,6 +110,8 @@ struct MigrationIncomingState {
-     QemuEvent main_thread_load_event;
-     /* Set once the postcopy run BH has changed the run state */
-     QemuEvent postcopy_run_event;
-+    /* QEMU_VM_PING_PACKAGED_LOADED received, answered by the run BH */
-+    bool postcopy_package_loaded_ping;
- 
-     /* For network announces */
-     AnnounceTimer  announce_timer;
 diff --git a/migration/savevm.c b/migration/savevm.c
-index bc1bc98a0e..e20471892f 100644
+index 5ec09d4889..bc1bc98a0e 100644
 --- a/migration/savevm.c
 +++ b/migration/savevm.c
-@@ -2267,6 +2267,10 @@ static void loadvm_postcopy_handle_run_bh(void *opaque)
-     /* Already POSTCOPY_ACTIVE without a return path or in fast snapshot load */
-     migrate_set_state(&mis->state, MIGRATION_STATUS_POSTCOPY_DEVICE,
-                       MIGRATION_STATUS_POSTCOPY_ACTIVE);
-+    if (mis->postcopy_package_loaded_ping) {
-+        mis->postcopy_package_loaded_ping = false;
-+        migrate_send_rp_pong(mis, QEMU_VM_PING_PACKAGED_LOADED);
-+    }
+@@ -2263,6 +2263,10 @@ static void loadvm_postcopy_handle_run_bh(void *opaque)
+     }
+ 
+     trace_vmstate_downtime_checkpoint("dst-postcopy-bh-vm-started");
++
++    /* Already POSTCOPY_ACTIVE without a return path or in fast snapshot load */
++    migrate_set_state(&mis->state, MIGRATION_STATUS_POSTCOPY_DEVICE,
++                      MIGRATION_STATUS_POSTCOPY_ACTIVE);
      qemu_event_set(&mis->postcopy_run_event);
  }
  
-@@ -2618,6 +2622,10 @@ static int loadvm_process_command(QEMUFile *f, Error **errp)
-                        tmp32);
-             return -1;
-         }
-+        if (tmp32 == QEMU_VM_PING_PACKAGED_LOADED) {
-+            mis->postcopy_package_loaded_ping = true;
-+            return 0;
-+        }
-         migrate_send_rp_pong(mis, tmp32);
-         return 0;
+@@ -2277,11 +2281,6 @@ static int loadvm_postcopy_handle_run(MigrationIncomingState *mis, Error **errp)
+         return -1;
+     }
+ 
+-    /* We might be already in POSTCOPY_ACTIVE if there is no return path */
+-    if (mis->state == MIGRATION_STATUS_POSTCOPY_DEVICE) {
+-        migrate_set_state(&mis->state, MIGRATION_STATUS_POSTCOPY_DEVICE,
+-                          MIGRATION_STATUS_POSTCOPY_ACTIVE);
+-    }
+     postcopy_state_set(POSTCOPY_INCOMING_RUNNING);
+     migration_bh_schedule(loadvm_postcopy_handle_run_bh, mis);
  
 -- 
 2.53.0
