@@ -4,131 +4,135 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1314CA5FC4
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Oct 2026 05:56:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 571C6CA5FC4
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Oct 2026 06:00:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xCWFn-0007Um-QA; Fri, 02 Oct 2026 01:56:19 -0400
+	id 1xCWJ9-00088g-U9; Fri, 02 Oct 2026 01:59:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xCWFj-0007UO-7P
- for qemu-devel@nongnu.org; Fri, 02 Oct 2026 01:56:15 -0400
+ id 1xCWJ7-00088K-QO
+ for qemu-devel@nongnu.org; Fri, 02 Oct 2026 01:59:45 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xCWFh-00026e-9E
- for qemu-devel@nongnu.org; Fri, 02 Oct 2026 01:56:14 -0400
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+ id 1xCWJ5-0002EC-Tw
+ for qemu-devel@nongnu.org; Fri, 02 Oct 2026 01:59:45 -0400
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6925jMRw658478
- for <qemu-devel@nongnu.org>; Fri, 2 Oct 2026 05:56:11 GMT
+ 6925jCiR911663
+ for <qemu-devel@nongnu.org>; Fri, 2 Oct 2026 05:59:42 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 8E2FcrWFtQzoHqmHUGBOry/IEuIMn1Gr9r+T8CUUpDk=; b=eBBvWawl7B5Wma2c
- lmEpaL9ecuBJ4OJYCQPoCsHEie2B3OzqpqMdwfgZd5cWUqPqYgCmJOP21p88D+Jg
- HxG1PRqOcMUSAOT8YBloFZJTFQIYs0CDUfNvefS+OgSp8YvP2UzWYY1DzkRs8P22
- fixmX4lRO2KsIJB3hwHndm3HQu+gTeenUHcSSPyi9YurdlSY4CYIbyKLsg4OTpYv
- /jBcaKcsqraT2umenXI/iNzpi/zoWphDdbu+Y6e8GW9nITYXInv7WJRW3J5j3+ws
- VGZILM4G+JLIHn4J/YPMIZGmBuNun5gfs4hE4OmYHa0dF/xDXuQ1lCdwNFg4/o1F
- YC6vUA==
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h20nfs1m9-1
+ kfPzDCBfi73ipu2PZKtV57VPClv9ctHdwGyFkwUuZFs=; b=P3Q+dDdEpuXRsJ1b
+ VJlVw+9cUKDszKpf4rKn/zC6zsVnkNEhbKYqNtyR3Dz0tUCd0zjbbJ6me4KcfuPG
+ gYNimpDIxg3MCzRvl0FMsEW8QUgGs02RIOCnJJZMUeNCdhX803RwN/lqTvWoitPn
+ qhKhNkpLjXi3KW0N9EycHcBOVLSWwyHeuJNKkzSdmjdyC7XECvDFR7yACjl2ZSPZ
+ tdEpxd+skUJbGSxld8F70X4drOhUFJccIrUPbyj7MvKRbqATQdPq/WEiwg9t/gH1
+ RXMzYEIxzEUii2fN+q/IBWUuQs5KrNWPPpOxWU8OAE1jGrco9tT59FjfiRuVEyUY
+ qODGGQ==
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h20sh124j-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 02 Oct 2026 05:56:10 +0000 (GMT)
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-93cbacbb996so211778485a.2
- for <qemu-devel@nongnu.org>; Thu, 01 Oct 2026 22:56:10 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Fri, 02 Oct 2026 05:59:42 +0000 (GMT)
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-93cb71b1443so368048085a.2
+ for <qemu-devel@nongnu.org>; Thu, 01 Oct 2026 22:59:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1790920570; x=1791525370; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
+ d=oss.qualcomm.com; s=google; t=1790920782; x=1791525582; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:references:to
+ :from:content-language:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=8E2FcrWFtQzoHqmHUGBOry/IEuIMn1Gr9r+T8CUUpDk=;
- b=IHX9EPN+6OtV2y/ehQ5G4U74Cg6U4MRBNyAn+v/Xe34pwh8FsPt3QbEcC4h5IwQwwj
- XtJv7q7m13gKoKWU9izSZPfrgikYLkH1YQVmO6sp3MmE6I7CV27Me/jjjbWYhn09qFGM
- uNSZhMkFpMx+V1GdsKXDqoOcjsLKOpdn4EDiddlyRe34+kqBi2wcrNkZP1tod2tuIEaf
- E5LO8q16RknKcCnDPYlcCGuU/u/o1i6FNyXdlnVJHvYr1xYAm4CwZ15TdLyb97mm0zni
- VU/YjuwTuHlBzK4tPLDz6+iShmRSjx+6RK1Opb8n14fn2gypcv0UrDXJNNFpdSyC2qNr
- HqFw==
+ bh=kfPzDCBfi73ipu2PZKtV57VPClv9ctHdwGyFkwUuZFs=;
+ b=dqp9lCe9GmCSzN1VXkYgB6RMFMeh8q4NIz0XL7SPb78ZD16TFRlUUmPnpPrmARsSFn
+ JFPXeNUiC7JcPSu8L9EBxAHpooY7fs+Qi4By7uHMdI+Oc6AwxeN0h0NFjfFoHoLMIte7
+ Ti+EITxmK4fnPCfwIcjYLRmlPkNacnC7y0xowxEzxNPEeGLUjMwjGZ3CAvJ8yc6ik57f
+ xTf84E+dFUlcFZwX/3Y4vDEzM0+o4abFIhgehYiZE1deon+vdP+6+zrlyZOqQkZJeY33
+ cg3ItUKaDoY6GxpxlPHS/bQYt/DQ08i25ixeG4HMKxc29MNtgW4w9u0X7PodtHjKafs7
+ z/Tw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790920570; x=1791525370;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
+ d=1e100.net; s=20260707; t=1790920782; x=1791525582;
+ h=content-transfer-encoding:content-type:in-reply-to:references:to
+ :from:content-language:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=8E2FcrWFtQzoHqmHUGBOry/IEuIMn1Gr9r+T8CUUpDk=;
- b=oUxVk+z5iWcnufi5Ft1HdirqItUnzFckGNS4/H3I877mk3xeFpI8y05O+dSOydaX2W
- 4TdOld4n8ujb5UpFVLOBnA9juoDuahXTODnntBcFpJr5WjUAK135lIlFRha3JDvk/Gri
- zLeEelekxAU7hksatr8JdmHdTBf2pXO0jS2V1wktYoIy/juy+OwCiO82b4g9yv5qohPn
- 1N7mB0ABeAY4H9ymqtT73kWh5uAs0KoDjS2c6BJ0Ex4EEb87+H6TFx+tqBiUWnw0Iida
- XEg+J4lUz2S6g5Gv+d30rlslJcmdyjVrjq4iYdyxw3eiQbXveylh4cwsOtNY1XxMu7OS
- F10w==
+ bh=kfPzDCBfi73ipu2PZKtV57VPClv9ctHdwGyFkwUuZFs=;
+ b=rQ/+/xRrUCAbE+IiyTCnBwiJLiaShXotDdywkminAdg5zNE0YpSoxlXui1kR5RgfGw
+ h43QslcNEv8cAEcU5W+y+xSaldQLXoKfqUmOoUtZOmmTJALKH05REQMFcYxKUS2ND/DV
+ B3N8EB4r77H2aAaojuqJAMu9jsnChLSsA4n6XMOKCmb9hcgRLMIPj1u6clICT0cfpvmQ
+ Pkq1S83mmnHiTYQk8mjA4U0spTZYq9zfx/+YfUwxP0U8x3uhhJH8T1DWT7MrLBsJNPU+
+ 7BEmhqS2OlbsxuZNJvoVJJh/A2OFHwENrGVg2x92eoKFuQu5eB4qebfZFYn5HLx1tXLq
+ aPNw==
 X-Forwarded-Encrypted: i=1;
- AKwUvBxbPDlX0WwmAbmQ7TLGDhVa7RT9smYoxEkn2JOtfgc9mBOtjUZySqPFyaNF/2GIv+P9Utv5JBNXr0Ik@nongnu.org
-X-Gm-Message-State: AFuF++nKp4IwGhrCbd9Bppew2GZAvcGv1DHMZGrSjMQ7lKPb3bISqjpT
- hn25I+t7kKtnOanzRxLMp/C8KBvsQP5fDAs+Vlqd35TpE3HJElXFLCpbKaGtWOnOhpgipIZCvx6
- xQ1++YFYB/UYCpAFuCfN4TAYd4TUuM3hQY/brLp3iZ6d4Qqp9KDP/9w5MHg==
-X-Gm-Gg: AYBFou2jwa+UlDXO1Ci9H2CpmSpb2P/nZ+TDBSrno+R28bldkxTF4gulI5/Oijhc+51
- +AEYeFctmuLLh5MrVHu5VzcGWzG/xWk+PatLXiNwVdDIPGubPeMOP+IkYKYDQNFMeNFFIn69qck
- 6lKyWVKRsJgVX1jKVUSMonj4zibByYaxtdoPUORtowIdYtHZ5aW50v807PQkSp9JpGFA2dKUUex
- 7/4/9i6arENstJ6VsCJlakebbwmbeShtA8tnKKkhI5Fb7oCmDaP9zh9gVaEJCFNUwCbK15ZKYv6
- nmy1vDrRhUV+nJ6uev+xglLlFDtEwxDBhu3x5LNnJjEhI3KjhIzotnkOBToVeAcl04hPU4YhAN6
- nJBAFmIJ1neNmnEMDxlqPp5MRDy1OgjM3Kw==
-X-Received: by 2002:a05:620a:271c:b0:939:6de6:9518 with SMTP id
- af79cd13be357-93cf1763839mr237442685a.47.1790920570354; 
- Thu, 01 Oct 2026 22:56:10 -0700 (PDT)
-X-Received: by 2002:a05:620a:271c:b0:939:6de6:9518 with SMTP id
- af79cd13be357-93cf1763839mr237440185a.47.1790920569904; 
- Thu, 01 Oct 2026 22:56:09 -0700 (PDT)
+ AKwUvBzI+XOkmAnkTqkk+tD5IuGEJLoT2wb9q2GJmErvITFrgxg2dApAdBE3fmoNEiV+Pvok4f4WWRxpf8AO@nongnu.org
+X-Gm-Message-State: AFuF++lkjx1v7XUnIVFEebfnmqVdDBbbgIQ8eAg27Rk7QQdEoMJTH6vc
+ pp7hwXlQQuPsmHAWyLENVMtHiVdP1j+0lCurS/8c4P44TUpDipXjqwHkKjwq9FGFH6Qfed8b+wo
+ hnc7Q6xeKnl0XgTLgAyOoOSfjogLExUPx3TSPJOoamUIHfccBCxugb467wA==
+X-Gm-Gg: AYBFou2dNDUWw65o1baZ1oaHZQqk225mZ7vwMfItn4mCrUsN3VVIIKtrlVoNwjLOluF
+ MJaLJyr8zT9l6XxGCnEXPRfQTKQO6z9wNrboydruGl/K3w5xMBbaatuJgm7jMf4Ts9pJLMhOivW
+ hoUWmSMSbuicK3w90yvNCYe/SbFJyy9K3UJpnxpC7ciGkcFcgEUDhLbS4hjhVBbGRd38MCoOZv6
+ Jjz6wPOP5BVpGy+V+L6D+uUEsvhTHda6DKxmbH8e7b4IlDnl+RznXDwmntBzUL340iIBwEldmT/
+ +oHMhew5saih1MRObm1GrfkpRcPCzRjhesXWTbwtANDa0HxoFyFa4YQU1QyNgnOeo/LZURWuAjO
+ 5wHiRf9a1I74jBEYMR4NuzXPETaRF/lvlqg==
+X-Received: by 2002:a05:620a:7087:b0:93b:d79e:18ff with SMTP id
+ af79cd13be357-93cf19fbceamr285012785a.66.1790920781930; 
+ Thu, 01 Oct 2026 22:59:41 -0700 (PDT)
+X-Received: by 2002:a05:620a:7087:b0:93b:d79e:18ff with SMTP id
+ af79cd13be357-93cf19fbceamr285010685a.66.1790920781436; 
+ Thu, 01 Oct 2026 22:59:41 -0700 (PDT)
 Received: from [192.168.69.225] (pmd666.hd.free.fr. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48b38307190sm3074601f8f.45.2026.10.01.22.56.07
+ 5b1f17b1804b1-4a02770e8f2sm45789225e9.6.2026.10.01.22.59.40
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 01 Oct 2026 22:56:09 -0700 (PDT)
-Message-ID: <496e9e78-1def-4877-9312-8d6764b63639@oss.qualcomm.com>
-Date: Fri, 2 Oct 2026 07:56:07 +0200
+ Thu, 01 Oct 2026 22:59:40 -0700 (PDT)
+Message-ID: <661b07f7-2f85-43ee-8dbc-5e71400b8a16@oss.qualcomm.com>
+Date: Fri, 2 Oct 2026 07:59:39 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 01/18] target/riscv: Make internals.h target agnostic
+Subject: Re: [PATCH v3 0/5] mac99: Boot OpenBSD/macppc
 Content-Language: en-US
-To: Anton Johansson <anjo@rev.ng>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, daniel.barboza@oss.qualcomm.com,
- pierrick.bouvier@oss.qualcomm.com, palmer@dabbelt.com,
- alistair.francis@wdc.com
-References: <20261001-rv-dedup-v1-0-ea69b07afd31@rev.ng>
- <20261001-rv-dedup-v1-1-ea69b07afd31@rev.ng>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20261001-rv-dedup-v1-1-ea69b07afd31@rev.ng>
+To: "Kirill A. Korinsky" <kirill@korins.ky>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Chinmay Rath <rathc@linux.ibm.com>,
+ Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org,
+ qemu-ppc@nongnu.org, Anushree Mathur <anushree.mathur@linux.ibm.com>,
+ BALATON Zoltan <balaton@eik.bme.hu>, Miles Glenn <milesg@linux.ibm.com>
+References: <20261001230058.11465-1-kirill@korins.ky>
+ <5622c432-c2f2-4f1d-a8dd-c5c12ce91890@oss.qualcomm.com>
+In-Reply-To: <5622c432-c2f2-4f1d-a8dd-c5c12ce91890@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: WxHoFxK4gwvIO0q1Zr3Wo2Hp6gRY3k1f
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDAyMDAyMyBTYWx0ZWRfX/LTqWnhA2LNd
- jYVVqA75i2hupFyyiGW2Hbxv5kn4UnudCEFigaiDd9hlU3PaP3VAYzsiHjAOFlB1lbZAlZTSSsG
- Npa+9vsLEY1csRZ80oyX/WNLUnAv3iI=
-X-Proofpoint-ORIG-GUID: WxHoFxK4gwvIO0q1Zr3Wo2Hp6gRY3k1f
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDAyMDAyMyBTYWx0ZWRfX2KJirkX8l0G8
- PekYPBhSW43YLlcJC3zdcukEsjppxq4zTp8XcWYsHi2aqrbhLTxlvn9g+LeTOj8F93sSGGrAvdT
- 6c1mEhMlR8wgq/RbVwZenWvloYVraqfsYB3ffrdKV5Tjvubjpkv0EInv8duIpqWq09nv3JFRJL7
- P+9OvxbYnILyfVI+qfTCgQmpCCOCTZ+iyEub9dscOFEXe71gBiKsZ35GOd3DL9eMJr8uOQ0gyO4
- lN3cs+21GWdXrRzYJHll3jED1OpgNFKDrEwxulChy7qup+MZzgWIjm9ohV+z1vNKpg1EQdLIg8k
- XTu9ku47dJwthV3NNBcxcVrxUwQFHKGLtaSIgjna4yA1SvXiQiMUeBJia3ppZfW/7+Ry9NaWum1
- 3M9o2JZNhZZQulHcy0ASgpFXkkH/B1IpWmgCHCiZ7n6HJithPnStUejp32mJZRBTXrsI4uEXc2K
- iEJJ192J5i9/Dr/cyIA==
-X-Authority-Analysis: v=2.4 cv=f+jdl+yM c=1 sm=1 tr=0 ts=6abf477b cx=c_pps
- a=HLyN3IcIa5EE8TELMZ618Q==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDAyMDAyMyBTYWx0ZWRfX0CjBLdmbXs38
+ lu8V0swieU2War4fxU/X4SUbgkWfuyIqCUd+GM6UPppRqyAFs/tS/Nc2luea98Rnf2VI11uOaR6
+ b7/wH5aARROf7edB0in70KxeIOAlwrQ=
+X-Authority-Analysis: v=2.4 cv=IpmL47/g c=1 sm=1 tr=0 ts=6abf484e cx=c_pps
+ a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
- a=MA8BGWbniLDi54e50OQA:9 a=QEXdDO2ut3YA:10 a=bTQJ7kPSJx9SKPbeHEYW:22
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
+ a=s4g3o2Fa_C1p9C2-3wMA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=PEH46H7Ffwr30OY-TuGO:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDAyMDAyMyBTYWx0ZWRfX6oh5nkIuy06Y
+ jR3ZlwQPH9JvE0sZnzdpc3Y0Fpd1k3AvgSy1p0Zm676Xtm6SujEzeJ91URCViohAlA7TkNb42hG
+ 4iX81fvniKVqTwqH6bjdYoWywetjmAJ68VBOuHextLdYbSxBmQJDVgdy/lv3GpfAkUztcN7V39I
+ 9YMcIeLQz7jHPMk3baq8AbKVruGlgidYycTkNWaF2j0cjS1sL0wdWNaA+Ty5KRe3/401WJV3lFe
+ 4wFMUX4xsFjQIjm5bl2sX+kg4hSvNNQksjbQtFj44I0qO/z6jMXXKnIJ8wzCLi1ppIGGNhSGNpX
+ XVVJfwQPOaf8Knbc1Xl1gKVP7SoROVQ062kwZCHOODPiZvfz1ym1elOVvfY5iJZHxrcAgxsJCWa
+ nsC+E+UYtjwmeMUXLZT+IixwYrAeTGm+pvfqW4TM0OxKnZyEMAKvC71w5F+nyqr4lJ+8V3fO2pI
+ NpBSr5MvsnrvpmpTmoA==
+X-Proofpoint-GUID: v7i02voRf0W2LTYy_52jnntn8J_I9Fxz
+X-Proofpoint-ORIG-GUID: v7i02voRf0W2LTYy_52jnntn8J_I9Fxz
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-10-02_02,2026-10-01_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 phishscore=0 priorityscore=1501 impostorscore=0 suspectscore=0
- clxscore=1015 malwarescore=0 bulkscore=0 spamscore=0 lowpriorityscore=0
+ priorityscore=1501 adultscore=0 suspectscore=0 impostorscore=0 spamscore=0
+ phishscore=0 malwarescore=0 bulkscore=0 lowpriorityscore=0 clxscore=1015
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2610020023
 Received-SPF: pass client-ip=205.220.180.131;
@@ -155,52 +159,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/10/26 17:59, Anton Johansson via qemu development wrote:
-> Replaces uses of target_ulong with fixed-size integers, this is a
-> prerequisite step to compiling cpu.c once for system-mode.
+On 2/10/26 06:49, Philippe Mathieu-DaudÃ© wrote:
+> Hi Kirill,
 > 
-> Note: the widening of target_long to int64_t in adjust_addr_body() is
-> safe as rv32 is ruled out earlier in the function via the check
+> On 2/10/26 00:58, Kirill A. Korinsky wrote:
+>> Greetings,
+>>
+>> This is the third version of patch series to boot OpenBSD/macppc.
+>>
+>> OpenBSD/macppc does not complete early boot on mac99: OpenPIC can
+>> reassert an interrupt still masked by CTPR; the edge triggered
+>> decrementer does not raise on zero; successful CUDA ADB replies omit the
+>> original command; and the fixed CUDA shift register delay can stretch
+>> packet delivery past the guest timeout on hosts with coarse timers.
+>>
+>> This series corrects these four behaviours and adds a functional test
+>> which boots the official OpenBSD 7.9 macppc CD to the installer prompt.
 > 
->    /* do nothing for rv32 mode */
->    if (riscv_cpu_mxl(env) == MXL_RV32) {
->        return addr;
->    }
-> 
-> meaning target_long must be equal to int64_t anyway.
-> 
-> Duplicate includes between vector_helper.c and vector_internals.h are
-> removed.
-> 
-> Signed-off-by: Anton Johansson <anjo@rev.ng>
-> ---
->   target/riscv/internals.h            | 31 +++++++++---------
->   target/riscv/tcg/vector_internals.h |  5 +--
->   target/riscv/tcg/vector_helper.c    | 64 +++++++++++++++++--------------------
->   3 files changed, 47 insertions(+), 53 deletions(-)
+> Can you add your testing as a functional test? As a follow-up
+> patch, not blocking this series. (See examples in tests/functional/ppc/).
 
+I didn't receive the last patch but can see on the mailing list that
+<20261001230058.11465-6-kirill@korins.ky> does exactly that :)
 
->   /* Zjpm addr masking routine */
-> -static inline target_ulong adjust_addr_body(CPURISCVState *env,
-> -                                            target_ulong addr,
-> -                                            bool is_virt_addr)
-> +static inline uint64_t adjust_addr_body(CPURISCVState *env,
-> +                                        uint64_t addr,
-> +                                        bool is_virt_addr)
->   {
->       RISCVPmPmm pmm = PMM_FIELD_DISABLED;
->       uint32_t pmlen = 0;
-> @@ -239,7 +238,7 @@ static inline target_ulong adjust_addr_body(CPURISCVState *env,
->   
->       /* sign/zero extend masked address by N-1 bit */
->       if (signext) {
-> -        addr = (target_long)addr >> pmlen;
-> +        addr = (int64_t)addr >> pmlen;
->       } else {
->           addr = addr >> pmlen;
->       }
-Maybe safer as (untested):
+(the usual cover letter list of patch + diff stat would have be helpful)
 
-         addr = (sign ? sextract64 : extract64)
-                (addr, 0, (riscv_cpu_mxl_bits(env) - pmlen);
+> 
+> IIUC this series will be merged via the ppc tree, is that right?
+> 
+> Regards,
+> 
+> Phil.
+> 
+
 
