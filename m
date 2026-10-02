@@ -4,68 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6172CA5FE5
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Oct 2026 20:23:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 403AFCA5FE5
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Oct 2026 20:23:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xCjke-0007T5-Ej; Fri, 02 Oct 2026 16:21:04 -0400
+	id 1xCjke-0007T4-Ez; Fri, 02 Oct 2026 16:21:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mathieu.poirier@linaro.org>)
- id 1xCjkY-0007N9-8M
- for qemu-devel@nongnu.org; Fri, 02 Oct 2026 16:20:58 -0400
-Received: from mail-pj2-x2a.google.com ([2607:f8b0:4864:39::2a])
+ id 1xCjkZ-0007O8-RS
+ for qemu-devel@nongnu.org; Fri, 02 Oct 2026 16:21:00 -0400
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <mathieu.poirier@linaro.org>)
- id 1xCjkW-0005oU-KU
- for qemu-devel@nongnu.org; Fri, 02 Oct 2026 16:20:58 -0400
-Received: by mail-pj2-x2a.google.com with SMTP id
- d9443c01a7336-2e2db9f927cso22118015ad.1
- for <qemu-devel@nongnu.org>; Fri, 02 Oct 2026 13:20:56 -0700 (PDT)
+ id 1xCjkX-0005of-CV
+ for qemu-devel@nongnu.org; Fri, 02 Oct 2026 16:20:59 -0400
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-2e4a341d177so1692715ad.0
+ for <qemu-devel@nongnu.org>; Fri, 02 Oct 2026 13:20:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1790972455; x=1791577255; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=xGwa4+kYIpnF7nSKCoYuD6ZjnEJjyPrjCuP1EkufKsg=;
- b=WarenS4NlqmlSJtJ5AyEdWsWvxgH/pnhU56fRmpiGaPZh8Po7AwpDEZuYuZ9KaHp+r
- dou8egoLJorvsDsoZD2/D4vdCxZzM/QF/2d24zIs2Gs2+hIzWzh3w9ECUOLWntUEzOCg
- tErQhd9sPLvSBL35i6wzd+QLX16y0/gCpKvMf5Hk5JU6ng+BGBSDV5WxuPWTyuuGh1YG
- z1hRfAJDaIZY1HwzJy7HzXSwXYoZecOMh2xNYgSpq8u+C+s4L1ScTa2gACO3Ja/NbiBv
- rcW9mSTf3siJS2iR7WrsvPo3BFtgQzqLfxhH8L9RJtJ713jDgGhTItg0inODjLFvTU3P
- 5CqQ==
+ d=linaro.org; s=google; t=1790972456; x=1791577256; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=ZF8fC0jHy96GLAa6nYvC5U705z1kSHOy/j/N3xBALMk=;
+ b=UIjgzjLhU5tq0fZp1qG+nYOGnxewgPhAKOrAd409SvUBJgI56jV7Yc4odxc97AEL1v
+ pknqOfDmUWyj3W0O+rsHO0ZWiN8/vkMmywE+a0loavSqn7bTXq3q/AmowZTZ+N4EQXCQ
+ 3O3kzATzLpAoDjsVC0TrVoXlpxE0GKGPPY0bd2kH7zEiABfj6fe8D/b59lCLqBJn61NA
+ wzZqp3yai2nlaUVUiozo9KEeQUOp3vpVVXnWQwYsTOnlRgKbYHVXE4GdGk/ZBbDneyqT
+ M44GeR2CEYc/gr7AaZN4QyyNZ6+YfsLFxH2BwxLJyizjQOvpdGduz0IDVEkDT6OJybxm
+ Q98w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790972455; x=1791577255;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=xGwa4+kYIpnF7nSKCoYuD6ZjnEJjyPrjCuP1EkufKsg=;
- b=RmFf0RHZqVdlbdHmk0v6BAos9qGVEW/gSHxHcpCCCHxt2KoqFYKonDDsfsynp0f68+
- AR0h0jJLkeE3XvlnI9hz7xZnTqdvijOJS5wd+dwHxtvMdUlevKtDh5NMiTjlzq0F37yW
- oOSWmLC0MgzhErw3x6zxU8MnWOs0Bch8iH9yMI86lDawUxZK9vHNK7bKsqYqdvjKPqbz
- 3xsl/5YwaVKNDpv0tOAk7KUoygdVlxEc8a7GTz3OrEMwgzTznZHEblmZAw2IaoWmV+bb
- 0NZy7530BPA5jf9MfdDwvcwACH72WjE2Uv8fYAoPQVQ07yCUThDSbxA8M4Ss2QCJpsl2
- SCBA==
-X-Gm-Message-State: AFq9FYIJmN/wKfaGs4Efp1MRbityOWMk/cGMLRbXpWK/oDUPAaxytt1i
- JUtbP0SkAU1qtjuRlCa3jmR0F5evmsEb5NBzDHFW+WHTBRwA+ZlMqs3bBNCGc/MzPDU=
-X-Gm-Gg: AYBFou3kz8QGIo9tShaKPTdtZIQnhvTchIFnjIVvG7BAs7gY2boFdQ4NPC6PHgzk1J9
- yhue2M9xc9OlGcP8FM8ZSP/j/SL2lkfF9Uad558CJNUpLMJin0yBuDj3p7yioJDhG/NqWW+mh7l
- ovy3A5nSNM8I7ei0pRTgmfIhuMsQkEYmim5NInYCMdzB219Cn/zf4VHkXSEYglumpMIuzR8yyRy
- 9g9MFnUfUpgXqzFN9GxATltgjgTe7dlU6X2FdD2lahnNycnS2h9Ww+k5c4dgey3z9amCgv+RsoR
- ksXjyU/oSGvr+KED0XGng8v6SuilyLvOXmUXlM6GE9YiaEnOrDZ8KtexYgpoeyglDFj07Nr1yhb
- wCWtFWqXA/aEhtEmEJ5OMjMCs+yXZfQG6kXVrKl3F3HJX+2HqOPPG4TB1l+lbukH/T5CizEg+3s
- 3IOfWoId70QRLXjOi0tZSx73FK6vqpOS+C3vouz02mTvx+hJzdHo0mXodAA/ietbAsQnnr9acpI
- kfLsUqJUOjbC1/cmETP4SKU91bv46E0wBU=
-X-Received: by 2002:a17:903:18e:b0:2e3:1bb4:6113 with SMTP id
- d9443c01a7336-2e49b648c41mr40464145ad.26.1790972455139; 
- Fri, 02 Oct 2026 13:20:55 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1790972456; x=1791577256;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=ZF8fC0jHy96GLAa6nYvC5U705z1kSHOy/j/N3xBALMk=;
+ b=UbaXocIYA1LK3jFAxLKn5lVqn/5sch4e7MhhFq54sqWcTFheEHz646YUnn3eZImKAe
+ coATmcziapvuUCO08cka2y/S/ZEn2q8o8EiDeiQ0HBqnX5nTqcvehazIZ8OCrmkxhUru
+ gAhUB6agZ2bXCNfKbYvPqokf0AG5uTosu+PMMIhqW2+GBy0DGmPRpkRA7Ysj1nWeF9zs
+ bf4MMV7op2Pz9kccW4DwpdsHepbworwmBntZ8C9RihmlGI22xoEXyQ2AXMSudqABvZKG
+ HbmFRXXoPs8svJ+YURXP9WcizfOkqhJTaYA3bJfE9B4lUIbMQxk7ifeWQkBSn/6dDb2G
+ y7xQ==
+X-Gm-Message-State: AFq9FYKMvqZxxo4mIMe7g+aeod/9rGtS7ZUS/E1/2r1k9HPP9+0r3cHt
+ VA3yYiTBH1hODlywJS6EMPe6IXoMsqNPsgKrbacyBHCKeABknFGVgq/XZ0eO2lCxKgc=
+X-Gm-Gg: AYBFou0Wdg3W6KXPpMQB2dGzHyiXAnqlMngSr9H6H3ex5/khU7opLQLUeOP3h5wtWni
+ 7Hm18UBYKQ8cmVM83bNY89eZXH6Pw3H2lmPb0NzYkGm3AnTOhxhimSOryOrHWG+EfAfzdqInFPo
+ hydeUFNh74YtymN5qUoUWnOomtbEspjo40f3GSsdK1ladW3zhH/35OtxlQBVmiabMSgPwIgmylo
+ NiBScKeSn+ulbAP2HiWfQnVzWrnMu1LxiBlzicdEKcY0GqI7KkM3uhY4xBuU91UrhCfbyZKrADP
+ gfj+yo4vG4x99FoKziHL+WmXOjhy8p4V3E7PIfZTrBtOBboRmEPZFvfP5s5t4C+cDPq5zMeoNgN
+ IOWyR4hzUL1wmUnGypXtPk3r+oyLGM6emAWmC4NleeUquDB3uJWdZFL6iSa/USM+/vDgfZRU5rn
+ dsk1hhb529kRsmIGoIKSFWFhlrdfFx/r96fd42GAaBoTTgtAPLfulONR7jV8B/kUtC1DhNpadwV
+ DyJlDAyOoAMoO3+73lxdlFeOIpSpLsnq30=
+X-Received: by 2002:a17:902:c947:b0:2dd:c053:e0f8 with SMTP id
+ d9443c01a7336-2e5106142d1mr5307805ad.39.1790972452627; 
+ Fri, 02 Oct 2026 13:20:52 -0700 (PDT)
 Received: from p14s.cg.shawcable.net
  ([2604:3d09:148c:c800:61ac:e744:6559:a357])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2e49f6a99acsm12399415ad.34.2026.10.02.13.20.53
+ d9443c01a7336-2e49f6a99acsm12399415ad.34.2026.10.02.13.20.51
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 02 Oct 2026 13:20:54 -0700 (PDT)
+ Fri, 02 Oct 2026 13:20:52 -0700 (PDT)
 From: Mathieu Poirier <mathieu.poirier@linaro.org>
 To: berrange@redhat.com, kchamart@redhat.com,
  pierrick.bouvier@oss.qualcomm.com, peter.maydell@linaro.org,
@@ -75,21 +76,23 @@ To: berrange@redhat.com, kchamart@redhat.com,
 Cc: qemu-devel@nongnu.org,
 	qemu-arm@nongnu.org,
 	kvm@vger.kernel.org
-Subject: [RFC v5 14/22] hw/arm/virt: Embed Realm VM type with IPA address space
-Date: Fri,  2 Oct 2026 14:20:18 -0600
-Message-ID: <20261002202026.1204110-15-mathieu.poirier@linaro.org>
+Subject: [RFC v5 13/22] hw/arm/virt: Set proper conduit method for Realms
+Date: Fri,  2 Oct 2026 14:20:17 -0600
+Message-ID: <20261002202026.1204110-14-mathieu.poirier@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261002202026.1204110-1-mathieu.poirier@linaro.org>
 References: <20261002202026.1204110-1-mathieu.poirier@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:39::2a;
- envelope-from=mathieu.poirier@linaro.org; helo=mail-pj2-x2a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=mathieu.poirier@linaro.org; helo=mail-pl1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -108,53 +111,45 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Jean-Philippe Brucker <jean-philippe@linaro.org>
 
-Set the Ream VM bit in the IPA address space size when needed.
+The HVC conduit for PSCI is not supported for Realms, so default
+to SMC.
 
 Signed-off-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
 ---
- hw/arm/virt.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ hw/arm/virt.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
 diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index 5ab4bb23ef2d..cdfb71ce97d3 100644
+index bdac33a1de86..5ab4bb23ef2d 100644
 --- a/hw/arm/virt.c
 +++ b/hw/arm/virt.c
-@@ -96,6 +96,8 @@
- #include "qemu/guest-random.h"
- #include "hw/watchdog/sbsa_gwdt.h"
- 
-+#include <linux/kvm.h>
-+
- static GlobalProperty arm_virt_compat_defaults[] = {
-     { TYPE_VIRTIO_IOMMU_PCI, "aw-bits", "48" },
+@@ -272,6 +272,11 @@ static const int a15irqmap[] = {
+     [VIRT_PLATFORM_BUS] = 112, /* ...to 112 + PLATFORM_BUS_NUM_IRQS -1 */
  };
-@@ -4047,9 +4049,12 @@ static int virt_kvm_type(MachineState *ms, const char *type_str)
-     VirtMachineState *vms = VIRT_MACHINE(ms);
-     int max_vm_pa_size, requested_pa_size;
-     bool fixed_ipa;
-+    int vm_type;
  
-     max_vm_pa_size = kvm_arm_get_max_vm_ipa_size(ms, &fixed_ipa);
- 
-+    vm_type = (ms->cgs ? KVM_VM_TYPE_ARM_REALM : KVM_VM_TYPE_ARM_NORMAL);
++static bool virt_machine_is_confidential(VirtMachineState *vms)
++{
++    return MACHINE(vms)->cgs;
++}
 +
-     /* we freeze the memory map to compute the highest gpa */
-     virt_set_memmap(vms, max_vm_pa_size);
- 
-@@ -4074,7 +4079,11 @@ static int virt_kvm_type(MachineState *ms, const char *type_str)
-      * the implicit legacy 40b IPA setting, in which case the kvm_type
-      * must be 0.
+ static void create_randomness(MachineState *ms, const char *node)
+ {
+     struct {
+@@ -2945,10 +2950,11 @@ static void machvirt_init(MachineState *machine)
+      * if the guest has EL2 then we will use SMC as the conduit,
+      * and otherwise we will use HVC (for backwards compatibility and
+      * because if we're using KVM then we must use HVC).
++     * Realm guests must also use SMC.
       */
--    return fixed_ipa ? 0 : requested_pa_size;
-+    if (fixed_ipa) {
-+        return 0;
-+    }
-+
-+    return requested_pa_size | vm_type;
- }
- 
- static int virt_get_physical_address_range(MachineState *ms,
+     if (vms->secure && firmware_loaded) {
+         vms->psci_conduit = QEMU_PSCI_CONDUIT_DISABLED;
+-    } else if (vms->virt) {
++    } else if (vms->virt || virt_machine_is_confidential(vms)) {
+         vms->psci_conduit = QEMU_PSCI_CONDUIT_SMC;
+     } else {
+         vms->psci_conduit = QEMU_PSCI_CONDUIT_HVC;
 -- 
 2.43.0
 
