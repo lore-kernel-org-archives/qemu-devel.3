@@ -4,77 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 707E2CA5FC4
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Oct 2026 10:46:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74249CA5FC4
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Oct 2026 10:53:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xCams-0004bx-RI; Fri, 02 Oct 2026 06:46:46 -0400
+	id 1xCasJ-0006z8-Fs; Fri, 02 Oct 2026 06:52:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xCamW-0004U7-Md
- for qemu-devel@nongnu.org; Fri, 02 Oct 2026 06:46:30 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <rick@sloservers.com>)
+ id 1xCasF-0006yp-J6
+ for qemu-devel@nongnu.org; Fri, 02 Oct 2026 06:52:19 -0400
+Received: from vps.sloservers.com ([204.109.61.218])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xCamV-0006bX-2f
- for qemu-devel@nongnu.org; Fri, 02 Oct 2026 06:46:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790937982;
+ (Exim 4.90_1) (envelope-from <rick@sloservers.com>)
+ id 1xCasD-0007Dd-RR
+ for qemu-devel@nongnu.org; Fri, 02 Oct 2026 06:52:19 -0400
+Received: from thinking.duckdns.org (unknown [192.168.11.4])
+ by vps.sloservers.com (Postfix) with ESMTPS id 7EEE7239C2;
+ Fri, 02 Oct 2026 10:52:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sloservers.com;
+ s=mail; t=1790938334;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=DuktG/lNxiTxF+gnr0j8iS+0I2kNk62bZlFjQxEAjAY=;
- b=MlLfkv4oqxZ1zJ2ItUwoOdm3+YDlC2e1/siHDB6Fzl9MzQxadtzHNFFHWnYHCriR1G4YJM
- SUZnayrc35nS4pyiof601SjrSxWj0ZhfByMesE+rvaBjkPS79aFLJs7KAtouFVji52sey6
- YC38WGWMPl+xd0sxZQhnID8RBQqjIUU=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-442-_wW23gmJMQWHOovQut4H7w-1; Fri,
- 02 Oct 2026 06:46:18 -0400
-X-MC-Unique: _wW23gmJMQWHOovQut4H7w-1
-X-Mimecast-MFC-AGG-ID: _wW23gmJMQWHOovQut4H7w_1790937977
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B48ED196C42D; Fri,  2 Oct 2026 10:46:17 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.5])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 555941800345; Fri,  2 Oct 2026 10:46:17 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 09AB021E6A04; Fri, 02 Oct 2026 12:46:15 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org,  Alex =?utf-8?Q?Benn=C3=A9e?=
- <alex.bennee@linaro.org>,  Paolo
- Bonzini <pbonzini@redhat.com>,  Thomas Huth <thuth@redhat.com>
-Subject: Re: [qemu-web PATCH] contribute: define clear limits on bug report
- volume
-In-Reply-To: <20260924135634.2626603-1-berrange@redhat.com> ("Daniel
- P. =?utf-8?Q?Berrang=C3=A9=22's?= message of "Thu, 24 Sep 2026 14:56:34
- +0100")
-References: <20260924135634.2626603-1-berrange@redhat.com>
-Date: Fri, 02 Oct 2026 12:46:15 +0200
-Message-ID: <87qzi82xe0.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ content-transfer-encoding:content-transfer-encoding;
+ bh=I+U74psbi8tCVpzeQ6OUMDODRtaL1+AvB1PgukSJWCc=;
+ b=fuL6Oalw3AW5+P4FR1PjfCBVtyRkImvTa4/FoCkNGlyGrbiOjgtUXV6pRQQ54BW8UnZt+K
+ UKdHOXGeHqW+RmFssfKVeD0Kp58w+iC8sJvzVoD7lQdcdH5MQq5MvvU3QH33GhCTm5x6XP
+ 8Qf+3SwEoqiZNJTaKCtLTCNINLRo8hoR5eN73JUITE2NZdVW1EgYiTYWI0RugQska+o6zC
+ zOTgVAxWzPrf5qtdT0ScG+EffzKwf1to9BNhTBwT78hW8Tmq39ctkLfO2Gsm4ewr0QappM
+ HcblWXQpniCeTethi/CSOLNB909Lt8mUD7WommtibzwL3FZAvBtiCDiQj4x6Rg==
+Received: from [192.168.1.131] (OPNsense.thinking.duckdns.org [192.168.1.5])
+ by thinking.duckdns.org (Postfix) with ESMTPSA id CF515CF5;
+ Fri, 02 Oct 2026 03:52:13 -0700 (PDT)
+Message-ID: <605bc800-4263-40af-b8d9-18305d25f3cf@sloservers.com>
+Date: Fri, 2 Oct 2026 03:52:12 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 9
-X-Spam_score: 0.9
-X-Spam_bar: /
-X-Spam_report: (0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.336,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Betterbird (Windows)
+From: Rick Richard <rick@sloservers.com>
+Subject: [PATCH] common-user: Skip the identity map when qemu is loaded low
+To: qemu-devel@nongnu.org
+Content-Language: en-US
+Cc: richard.henderson@linaro.org, laurent@vivier.eu, deller@gmx.de,
+ pierrick.bouvier@oss.qualcomm.com, imp@bsdimp.com, kevans@freebsd.org
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=204.109.61.218; envelope-from=rick@sloservers.com;
+ helo=vps.sloservers.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,56 +72,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+A non-PIE qemu is loaded below 4 GiB. That includes every static
+build on FreeBSD and Linux builds configured with --disable-pie.
+With the identity map (guest_base 0), a non-PIE guest program can
+be mapped over qemu.
 
-> Recently QEMU has received a denial of service attack on
-> its bug tracker in the form of 120 reports in 10 minutes,
-> and now repeated by another reporter in the form of 50
-> reports in the same day.
->
-> Prior to switching security disclosures to the bug tracker,
-> single reporters have submited 18, 22, and 114 bug reports.
->
-> None of this is sustainable. It is an effective denial of
-> service attack on the project maintainers' time. Every bug
-> report is a TODO item added to someone's workload.
->
-> It is time to put hard limits on how many bugs, discovered
-> with assitance of automated tools, we are willing to accept
-> in a givenm time frame.
->
-> This patch proposal suggests
->
->  * No more than 5 bugs per week, per reporter
->  * No more than 10 bugs are permitted to be open at any
->    time, per reporter.
->
-> This is explicitly scoped to bugs discovered with the assistance
-> of automated tools. Bugs where a human puts in exclusively
-> personal time / effort to discover a problem are not limited.
->
-> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
-> ---
->  contribute/report-a-bug.md | 37 +++++++++++++++++++++++++++++++++++++
->  1 file changed, 37 insertions(+)
->
-> diff --git a/contribute/report-a-bug.md b/contribute/report-a-bug.md
-> index b506f9f..8fb7b0b 100644
-> --- a/contribute/report-a-bug.md
-> +++ b/contribute/report-a-bug.md
-> @@ -32,6 +32,43 @@ on GitLab, taking into account the following guidance.
->    triage of their output to validate all findings and reproducer
->    scenarios prior to submitting a bug report.
->=20=20
-> +* QEMU policy forbids the bulk filing of large numbers of
-> +  bug disclosures that were generated with automated tools
-> +  (AI/LLM, static analysis, fuzers). Such actions are not
+Only use the identity map when qemu is loaded at 4 GiB or higher.
+Non-PIE programs are normally linked below 4 GiB, and PIE programs
+are loaded at or above it (ppc64 Linux loads them at exactly 4 GiB).
 
-fuzzers
+Signed-off-by: Rick Richard <rick@sloservers.com>
+---
+On FreeBSD a static qemu can't be PIE, so bsd-user is always loaded
+at 0x200000. pgb_dynamic() picks guest_base 0 because the initial
+image doesn't overlap qemu, but rtld later maps a non-PIE executable
+at its link address on top of qemu's own text.
 
-> +  a benefit to the project, placing an unsustainable burden
-> +  on maintainers.
+This isn't BSD specific, I was able to reproduce on Linux as well by
+disabling PIE.
 
-[...]
+I tested the fix on Linux with static-pie and --disable-pie builds,
+and on FreeBSD with aarch64, riscv64 and x86_64 guests. When qemu is
+loaded high it still uses the identity map. When it's loaded low it
+picks a non-zero guest_base and the guest runs normally.
 
+I couldn't find an existing way in qemu to get its own load address,
+so I used __executable_start, which both GNU ld and lld provide. If
+there's a better way I'm happy to change it.
+
+common-user/probe-guest-base.c | 9 +++++++--
+include/user/probe-guest-base.h | 3 +++
+2 files changed, 10 insertions(+), 2 deletions(-)
+
+diff --git a/common-user/probe-guest-base.c b/common-user/probe-guest-base.c
+index 6f1247cf..226fe7d4 100644
+--- a/common-user/probe-guest-base.c
++++ b/common-user/probe-guest-base.c
+@@ -269,8 +269,13 @@ static void pgb_dynamic(const char *image_name, const PGBRange *image_range,
+uintptr_t brk, ret;
+PGBAddrs ga;
+- /* Try the identity map first. */
+- if (pgb_addr_set(&ga, image_range, commpage_range, true)) {
++ /*
++ * Try the identity map first, but only if qemu is loaded high.
++ * A non-PIE qemu loads low, where a guest's non-PIE executable
++ * could be mapped over it.
++ */
++ if ((uintptr_t)__executable_start >= 4 * GiB &&
++ pgb_addr_set(&ga, image_range, commpage_range, true)) {
+brk = (uintptr_t)sbrk(0);
+if (pgb_try_mmap_set(&ga, 0, brk)) {
+guest_base = 0;
+diff --git a/include/user/probe-guest-base.h b/include/user/probe-guest-base.h
+index d7492ef4..fe7f971f 100644
+--- a/include/user/probe-guest-base.h
++++ b/include/user/probe-guest-base.h
+@@ -9,6 +9,9 @@
+#include "exec/vaddr.h"
++/* Defined by the linker: the start address of qemu's own executable image. */
++extern char __executable_start[];
++
+typedef struct PGBRange {
+vaddr lo;
+vaddr hi;
 
