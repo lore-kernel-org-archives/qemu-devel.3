@@ -4,99 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60F45CA5FC4
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Oct 2026 07:49:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9095ACA5FD9
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Oct 2026 08:52:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xCY0m-0003vU-Fb; Fri, 02 Oct 2026 03:48:56 -0400
+	id 1xCYz8-0004DU-UY; Fri, 02 Oct 2026 04:51:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dingtaodtdt@gmail.com>)
- id 1xCY0i-0003ui-5R
- for qemu-devel@nongnu.org; Fri, 02 Oct 2026 03:48:52 -0400
-Received: from mail-pj2-x0c.google.com ([2607:f8b0:4864:39::c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dingtaodtdt@gmail.com>)
- id 1xCY0g-0003t7-Fo
- for qemu-devel@nongnu.org; Fri, 02 Oct 2026 03:48:51 -0400
-Received: by mail-pj2-x0c.google.com with SMTP id
- 98e67ed59e1d1-3a0d31bda43so4816352a91.1
- for <qemu-devel@nongnu.org>; Fri, 02 Oct 2026 00:48:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1790927329; x=1791532129; darn=nongnu.org;
- h=in-reply-to:from:references:cc:to:subject:user-agent:mime-version
- :date:message-id:content-type:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=ZfPdg4X3nsFjeE/mDg76P8zumypw4P9E11GjXkN/2uY=;
- b=GAAFxQI3e2yO67OITmSoy13B5nneZToMpbXrX0+InArxnA7mQXHlA8eMtMrSTXYLaa
- DrIcgcGL9g38DxIdvFH+jsFvizrmFHs4pR61cGMP0rzuuehvYRZohvzRltz5xjWIuDG5
- uwU/h+tTszR5eul9xvkEfX6Qey5CC8Bys99dvnpmUY4Sp5Quamm+yOXtKvdlbMVzZM4e
- 7qjQqEZT5AnRubeFufn8NsXghwJPSqVVpSqmrxf5v8M3rgAR9mCifsk3M68zMzGe37I2
- eDj/K1O96LZP97DlzzteIIu062JLz9UYgblLChHSrNhddCQSUi6emzWfBS8/wUsccXdG
- pxIg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790927329; x=1791532129;
- h=in-reply-to:from:references:cc:to:subject:user-agent:mime-version
- :date:message-id:content-type:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=ZfPdg4X3nsFjeE/mDg76P8zumypw4P9E11GjXkN/2uY=;
- b=UhMvgO3grRhxcysVJntnaGaY2qOUTEjyP3YVmCZC9OaPTYLiGIZ94TockM3lLK+1U3
- N5EK0Fl+D9LwX9vXpUnqmnflUdDuyLzfREer6t6emqZAxjb2iy9HXKM4WAV1EIW89J5T
- OzustT4UoLzB0tRh8hkQSZVFfMBMqzf0AktDGKTo4YkYRyKxZe3C0vVvMHbN3bCd7ckg
- BPNyM4knSe2XXo3IgbiXQyqu08RBGyn38dnB1X4VHx/y4jop7nBICgxt+1mpP1P43h8C
- YYOSdwbswiGohv5jaQd7EayDTPV7S9vt/7XaNmrkx+/X9C0RxKtu8L8KMLgKDO3IO681
- oamQ==
-X-Forwarded-Encrypted: i=1;
- AKwUvBzLB6M/D+d8s3OZ9dzXeamcbiOsVHqxBPgH4YXho5bjo0hnRf7OLp7VjR7FVvqUr0hG1mv3jw83KD3x@nongnu.org
-X-Gm-Message-State: AFq9FYKGawMgTdkN8vvZPSYmxxfQByDVZmvt38qD3ooSwFVZZG895C8g
- hHkysX6Cp2in98InesgxzAp5rPV+sZgH63Copr90CFi6BvcKjyXPYwUS
-X-Gm-Gg: AYBFou0DFO9mFP2HzdxeugcHyehnCaXRnGIH19D8oC5NAVgJ1RBJXh8v4gXUSYBolC0
- nZlN9AXpAnL/H9W8lRY8Jse4WdXNgidQ1XuMqg+wRMragw+qfalqACwYLHbxmKawitdRjOvwGkO
- u/K4gHdn4CWVyYYMifeq94tR0I4uVDCl1uqG4C6JnViLZjvUx1Z3Y+HbYRT69/1dr6CDxtOLcLx
- jUHS/gmtPEx9P+mAJOyGhuYkxtzm+snNbbKIBqOFwzwA/ul15uwS9TWu2FcZoJ8dyNEA8QMsL1Z
- 2btrNZmrdBTWBEg+r7ZuWtFiJ6s29ohQxxs3xiD153V3uAhuqG5jte1gbhtUTodArjmx4z0cFDf
- o4r3bCRfsE4r7Ch58cNKek8nr9Az5vNbL9FAF0jpkUm1gvESBrXzeUAZy5pGEqPsSSWEc2ABFEe
- igY1bdIVXOT5lGkqFYpCsi4M6nZxhl/DkjkdP96q2/X+Ll0kxFwzP59HMSI4wMr/EFS7s79kEf0
- IGHc0ypxPSziWU=
-X-Received: by 2002:a17:90b:3809:b0:3a6:fe14:4790 with SMTP id
- 98e67ed59e1d1-3a6fe144812mr11964a91.28.1790927328958; 
- Fri, 02 Oct 2026 00:48:48 -0700 (PDT)
-Received: from [192.168.3.23] ([175.152.37.254])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3a6dd3962f0sm865085a91.3.2026.10.02.00.48.45
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 02 Oct 2026 00:48:47 -0700 (PDT)
-Content-Type: multipart/alternative;
- boundary="------------DTA1OiDyLbSWjkcFQDh3fJul"
-Message-ID: <50ab5588-97bd-4f6c-9f69-042dcc6363a6@gmail.com>
-Date: Fri, 2 Oct 2026 15:48:44 +0800
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xCYz7-0004D0-3Y
+ for qemu-devel@nongnu.org; Fri, 02 Oct 2026 04:51:17 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xCYz3-0002Xy-9n
+ for qemu-devel@nongnu.org; Fri, 02 Oct 2026 04:51:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1790931072;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Q0Mcxj5ui5vMFWjRllBR++NBf/pGsXyGgVVXmFh2CBA=;
+ b=XCA/H7MzJC0hlTs3LvxBT9JP7RwFxpjHSvSdEtXwIB/Kv58sX3Rhcy0IUAvC/5qHNJ4CNf
+ c95KCI8TKb0o3LGfyxL+jZ4JB/dTQeuU66Y0FUW2DTdQTOxWup3sQksr5HENjj1+b9zg+C
+ WMAdDBbTwMYovPBDbZ3CIkbA5IgKj1s=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-567-thIQ3x4ENKCRM7cgfxzujw-1; Fri,
+ 02 Oct 2026 04:51:08 -0400
+X-MC-Unique: thIQ3x4ENKCRM7cgfxzujw-1
+X-Mimecast-MFC-AGG-ID: thIQ3x4ENKCRM7cgfxzujw_1790931066
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 71D4818011EC; Fri,  2 Oct 2026 08:51:05 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.5])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B23DD30000E4; Fri,  2 Oct 2026 08:51:03 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 5AF1521E6A04; Fri, 02 Oct 2026 10:51:01 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: John Snow <jsnow@redhat.com>
+Cc: qemu-devel@nongnu.org,  Peter Xu <peterx@redhat.com>,  Daniel P.
+ =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Stefan Berger
+ <stefanb@linux.vnet.ibm.com>,  Fabiano Rosas <farosas@suse.de>,  Hanna
+ Reitz <hreitz@redhat.com>,  Paolo Bonzini <pbonzini@redhat.com>,  Zhao Liu
+ <zhao1.liu@intel.com>,  Kevin Wolf <kwolf@redhat.com>,  Ani Sinha
+ <anisinha@redhat.com>,  Pierrick Bouvier
+ <pierrick.bouvier@oss.qualcomm.com>,  Jiri Pirko <jiri@resnulli.us>,  Alex
+ Williamson <alex@shazbot.org>,  Kashyap Chamarthy <kchamart@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,  Kostiantyn Kostiuk
+ <kkostiuk@redhat.com>,  Stefan Hajnoczi <stefanha@redhat.com>,  Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,  Michael Roth
+ <michael.roth@amd.com>,  Mauro Carvalho Chehab
+ <mchehab+huawei@kernel.org>,  Vladimir Sementsov-Ogievskiy
+ <vsementsov@yandex-team.ru>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>,  qemu-block@nongnu.org,  =?utf-8?Q?C=C3=A9?=
+ =?utf-8?Q?dric?= Le Goater
+ <clg@redhat.com>,  Stefano Garzarella <sgarzare@redhat.com>,  Richard
+ Henderson <richard.henderson@linaro.org>,  "Michael S. Tsirkin"
+ <mst@redhat.com>,  Igor Mammedov <imammedo@redhat.com>,  Jason Wang
+ <jasowangio@gmail.com>,  Alex =?utf-8?Q?Benn=C3=A9e?=
+ <alex.bennee@linaro.org>,  Eric Blake <eblake@redhat.com>
+Subject: Re: [PATCH 11/14] qapi/parser: privatize "all_sections" field as
+ "_sections"
+In-Reply-To: <20260928223657.2303684-12-jsnow@redhat.com> (John Snow's message
+ of "Mon, 28 Sep 2026 18:36:54 -0400")
+References: <20260928223657.2303684-1-jsnow@redhat.com>
+ <20260928223657.2303684-12-jsnow@redhat.com>
+Date: Fri, 02 Oct 2026 10:51:01 +0200
+Message-ID: <87pkxs4hai.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] qtest: fix k230_decomp_gzip test integer handling
- issues
-To: Alistair Francis <Alistair.Francis@wdc.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Cc: "dingtao0430@163.com" <dingtao0430@163.com>,
- "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>,
- "pbonzini@redhat.com" <pbonzini@redhat.com>,
- "farosas@suse.de" <farosas@suse.de>,
- "chao.liu@processmission.com" <chao.liu@processmission.com>,
- "lvivier@redhat.com" <lvivier@redhat.com>
-References: <20261001022223.8633-1-dingtao0430@163.com>
- <20261001022223.8633-3-dingtao0430@163.com>
- <f75dc58c63d02fac89f3b4940ade9fe54d41ec15.camel@wdc.com>
-From: Tao Ding <dingtaodtdt@gmail.com>
-In-Reply-To: <f75dc58c63d02fac89f3b4940ade9fe54d41ec15.camel@wdc.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:39::c;
- envelope-from=dingtaodtdt@gmail.com; helo=mail-pj2-x0c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.331,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,117 +105,200 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is a multi-part message in MIME format.
---------------DTA1OiDyLbSWjkcFQDh3fJul
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+John Snow <jsnow@redhat.com> writes:
 
+> In preparation for switching QAPIDoc to a more complex data structure
+> for keeping track of sections, convert the "all_sections" property to
+> a private property.
 
-On 10/2/2026 7:28 AM, Alistair Francis wrote:
-> On Thu, 2026-10-01 at 10:22 +0800, Tao Ding wrote:
->> Cast slot to hwaddr before multiplication to prevent 32-bit overflow
->> when
->> calculating the SRAM input address.
->>
->> Resolves: Coverity CID 1685514
->>
->> Reported-by: Alistair Francis<Alistair.Francis@wdc.com>
->> Signed-off-by: Tao Ding<dingtao0430@163.com>
->> ---
->>   tests/qtest/k230-decomp-gzip-test.c | 2 +-
->>   1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/tests/qtest/k230-decomp-gzip-test.c b/tests/qtest/k230-
->> decomp-gzip-test.c
->> index e80113fd28..249c8ae82c 100644
->> --- a/tests/qtest/k230-decomp-gzip-test.c
->> +++ b/tests/qtest/k230-decomp-gzip-test.c
->> @@ -46,7 +46,7 @@ static inline hwaddr k230_sram_addr(hwaddr off)
->>   static inline hwaddr k230_sram_input_addr(unsigned int slot)
->>   {
->>       return k230_sram_addr(K230_DECOMP_GZIP_SRAM_IN_BASE +
->> -                          slot * K230_DECOMP_GZIP_BLOCK_SIZE);
->> +                          (hwaddr) slot *
->> K230_DECOMP_GZIP_BLOCK_SIZE);
-> What is the point of this function? It's only ever passed 0
+s/property/attribute/
 
-The hardware has two input SRAM slots (|K230_DECOMP_GZIP_INPUT_SLOTS| is 2).
-This helper is intended to calculate the address for either slot.
-The current test only uses slot 0 because its input in a single block.
-
-> Alistair
+> Rename it "_sections" to emphasize that there is not* some alternative
+> property that is somehow not all sections. This is what you get and
+> you're going to love it.
 >
->>   }
->>   
->>   /*
---------------DTA1OiDyLbSWjkcFQDh3fJul
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+> Implement the len() and iter() features for QAPIDoc as a replacement
+> for direct, public access to the all_sections property.
+>
+> (*OK, currently there are some, but spoilers, they're going away in
+> the next commits.)
+>
+> Signed-off-by: John Snow <jsnow@redhat.com>
 
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  </head>
-  <body>
-    <p><br>
-    </p>
-    <div class="moz-cite-prefix">On 10/2/2026 7:28 AM, Alistair Francis
-      wrote:<br>
-    </div>
-    <blockquote type="cite"
-      cite="mid:f75dc58c63d02fac89f3b4940ade9fe54d41ec15.camel@wdc.com">
-      <pre wrap="" class="moz-quote-pre">On Thu, 2026-10-01 at 10:22 +0800, Tao Ding wrote:
-</pre>
-      <blockquote type="cite">
-        <pre wrap="" class="moz-quote-pre">Cast slot to hwaddr before multiplication to prevent 32-bit overflow
-when 
-calculating the SRAM input address. 
+This took a bit of work for me to understand.
 
-Resolves: Coverity CID 1685514
+I figure "alternative that is somehow not all sections" refers to .args,
+._features, ._returns, ._errors, and .since.
 
-Reported-by: Alistair Francis <a class="moz-txt-link-rfc2396E" href="mailto:Alistair.Francis@wdc.com">&lt;Alistair.Francis@wdc.com&gt;</a>
-Signed-off-by: Tao Ding <a class="moz-txt-link-rfc2396E" href="mailto:dingtao0430@163.com">&lt;dingtao0430@163.com&gt;</a>
----
- tests/qtest/k230-decomp-gzip-test.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+You replace the latter three by properties in PATCH 14.  The former two
+stay.  "They're going away" is not entirely true.
 
-diff --git a/tests/qtest/k230-decomp-gzip-test.c b/tests/qtest/k230-
-decomp-gzip-test.c
-index e80113fd28..249c8ae82c 100644
---- a/tests/qtest/k230-decomp-gzip-test.c
-+++ b/tests/qtest/k230-decomp-gzip-test.c
-@@ -46,7 +46,7 @@ static inline hwaddr k230_sram_addr(hwaddr off)
- static inline hwaddr k230_sram_input_addr(unsigned int slot)
- {
-     return k230_sram_addr(K230_DECOMP_GZIP_SRAM_IN_BASE +
--                          slot * K230_DECOMP_GZIP_BLOCK_SIZE);
-+                          (hwaddr) slot *
-K230_DECOMP_GZIP_BLOCK_SIZE);
-</pre>
-      </blockquote>
-      <pre wrap="" class="moz-quote-pre">
-What is the point of this function? It's only ever passed 0
-</pre>
-    </blockquote>
-    <pre>The hardware has two input SRAM slots (<code dir="ltr">K230_DECOMP_GZIP_INPUT_SLOTS</code> is 2). 
-This helper is intended to calculate the address for either slot. 
-The current test only uses slot 0 because its input in a single block.</pre>
-    <blockquote type="cite"
-      cite="mid:f75dc58c63d02fac89f3b4940ade9fe54d41ec15.camel@wdc.com">
-      <pre wrap="" class="moz-quote-pre">
-Alistair
+Or am I confused?
 
-</pre>
-      <blockquote type="cite">
-        <pre wrap="" class="moz-quote-pre"> }
- 
- /*
-</pre>
-      </blockquote>
-    </blockquote>
-  </body>
-</html>
+Here'a another way to justify the renaming.  When I added .all_sections
+in commit 3d035cd2cca, there was also .sections, which held only the
+"sections other than .body, .args, .features".  You dropped .sections in
+commit d678c5aff31.  No real need for "all_" since.
 
---------------DTA1OiDyLbSWjkcFQDh3fJul--
+> ---
+>  docs/sphinx/qapidoc.py         |  7 ++++---
+>  scripts/qapi/parser.py         | 27 +++++++++++++++++----------
+>  tests/qapi-schema/test-qapi.py |  2 +-
+>  3 files changed, 22 insertions(+), 14 deletions(-)
+>
+> diff --git a/docs/sphinx/qapidoc.py b/docs/sphinx/qapidoc.py
+> index ae57056a393..fd666be131f 100644
+> --- a/docs/sphinx/qapidoc.py
+> +++ b/docs/sphinx/qapidoc.py
+> @@ -377,7 +377,7 @@ def visit_sections(self, ent: QAPISchemaDefinition) -> None:
+>                  )
+>              )
+>  
+> -        sections = ent.doc.all_sections if ent.doc else []
+> +        sections = list(ent.doc) if ent.doc else []
+
+Why listify?  All you need is an iterator as far as I can tell.
+
+>  
+>          # Add sections in source order:
+>          for section in sections:
+> @@ -416,8 +416,9 @@ def visit_module(self, path: str) -> None:
+>          self.ensure_blank_line()
+>  
+>      def visit_freeform(self, doc: QAPIDoc) -> None:
+> -        assert len(doc.all_sections) == 1, doc.all_sections
+> -        body = doc.all_sections[0]
+> +        sections = list(doc)
+> +        assert len(sections) == 1, sections
+> +        body = sections[0]
+>          self.add_lines(self.reformat_arobase(body.text), doc.info)
+>          self.ensure_blank_line()
+
+The code here checks "single section", then formats that section.
+
+Works because a free-form doc comment is a single DETAILS section.
+
+Aside: calling it DETAILS is a bit odd, but we'll live.
+
+Aside: if we recognized TODO: there, it could be several, but we don't.
+Maybe we should.
+
+Your patch looks fine to me, but I wonder whether we could instead do
+
+           for section in doc:
+               assert section.kind == QAPIDoc.Kind.DETAILS
+               self.add_lines(self.reformat_arobase(section.text), section.info)
+               self.ensure_blank_line()
+
+Separate cleanup patch, I guess.
+
+>  
+> diff --git a/scripts/qapi/parser.py b/scripts/qapi/parser.py
+> index 0dca1acba4c..bdd0f1ec3ff 100644
+> --- a/scripts/qapi/parser.py
+> +++ b/scripts/qapi/parser.py
+> @@ -19,6 +19,7 @@
+>      TYPE_CHECKING,
+>      Any,
+>      Dict,
+> +    Iterator,
+>      List,
+>      Mapping,
+>      Match,
+> @@ -758,7 +759,7 @@ def __init__(self, info: QAPISourceInfo, symbol: Optional[str] = None):
+>          # definition doc's symbol, None for free-form doc
+>          self.symbol: Optional[str] = symbol
+>          # the sections in textual order
+> -        self.all_sections: List[QAPIDoc.Section] = []
+> +        self._sections: List[QAPIDoc.Section] = []
+>          # dicts mapping parameter/feature names to their description
+>          self._args: Dict[str, QAPIDoc.ArgSection] = {}
+>          self._features: Dict[str, QAPIDoc.ArgSection] = {}
+> @@ -797,10 +798,16 @@ def _append(self, section: 'QAPIDoc.Section') -> None:
+>                  raise QAPISemError(
+>                      section.info, "duplicated '%s' section" % section.kind)
+>              self.since = section
+> -        self.all_sections.append(section)
+> +        self._sections.append(section)
+> +
+> +    def __iter__(self) -> Iterator['QAPIDoc.Section']:
+> +        return iter(self._sections)
+> +
+> +    def __len__(self) -> int:
+> +        return len(self._sections)
+>  
+>      def end(self) -> None:
+> -        for section in self.all_sections:
+> +        for section in self:
+>              section.text = section.text.strip('\n')
+>              if (
+>                      section.kind not in (
+> @@ -813,9 +820,9 @@ def end(self) -> None:
+>      def ensure_untagged_section(self, info: QAPISourceInfo) -> None:
+>          kind = QAPIDoc.Kind.DETAILS
+>  
+> -        if self.all_sections and self.all_sections[-1].kind == kind:
+> +        if self._sections and self._sections[-1].kind == kind:
+>              # extend current section
+> -            section = self.all_sections[-1]
+> +            section = self._sections[-1]
+>              if not section.text:
+>                  # Section is empty so far; update info to start *here*.
+>                  section.info = info
+> @@ -856,7 +863,7 @@ def new_feature(self, info: QAPISourceInfo, name: str) -> None:
+>          self._new_description(info, name, QAPIDoc.Kind.FEATURE, self._features)
+>  
+>      def append_line(self, line: str) -> None:
+> -        self.all_sections[-1].append_line(line)
+> +        self._sections[-1].append_line(line)
+>  
+>      def _insert_near_kind(
+>          self,
+> @@ -865,12 +872,12 @@ def _insert_near_kind(
+>          after: bool = False,
+>      ) -> bool:
+>          """Insert or append a new doc section at a specific point."""
+> -        for idx, sect in enumerate(reversed(self.all_sections)):
+> +        for idx, sect in enumerate(reversed(list(self))):
+
+Having to listify an iterator just to run it backwards is always sad.
+Fortunately, this code is about to go away.
+
+>              if sect.kind == kind:
+> -                pos = len(self.all_sections) - idx - 1
+> +                pos = len(self) - idx - 1
+>                  if after:
+>                      pos += 1
+> -                self.all_sections.insert(pos, new_sect)
+> +                self._sections.insert(pos, new_sect)
+>                  return True
+>          return False
+>  
+> @@ -915,7 +922,7 @@ def ensure_returns(self, info: QAPISourceInfo) -> None:
+>          # TODO: Take advantage of the new strict section ordering and
+>          # simplify this algorithm.
+>  
+> -        if any(s.kind == QAPIDoc.Kind.RETURNS for s in self.all_sections):
+> +        if self._returns:
+>              return
+
+Instead of translating the loop, you replace it.  I suspect the loop was
+always unnecessary.  Consider a separate commit.
+
+>  
+>          # Stub "Returns" section for undocumented returns value
+> diff --git a/tests/qapi-schema/test-qapi.py b/tests/qapi-schema/test-qapi.py
+> index 5beb96e894f..d5b4ac3a682 100755
+> --- a/tests/qapi-schema/test-qapi.py
+> +++ b/tests/qapi-schema/test-qapi.py
+> @@ -117,7 +117,7 @@ def test_frontend(fname):
+>              print('doc symbol=%s' % doc.symbol)
+>          else:
+>              print('doc freeform')
+> -        for section in doc.all_sections:
+> +        for section in doc:
+>              if isinstance(section, QAPIDoc.ArgSection):
+>                  print('    %s=%s' % (section.kind, section.name))
+>              else:
+
 
