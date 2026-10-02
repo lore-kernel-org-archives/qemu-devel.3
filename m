@@ -4,63 +4,117 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A7F8CA5FD4
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Oct 2026 09:28:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BAF3BCA5FC4
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Oct 2026 09:42:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xCZYW-0006F3-4q; Fri, 02 Oct 2026 05:27:52 -0400
+	id 1xCZmI-0000ZL-FG; Fri, 02 Oct 2026 05:42:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lpieralisi@kernel.org>)
- id 1xCZYR-0006ED-Pk; Fri, 02 Oct 2026 05:27:47 -0400
-Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1xCZmG-0000Yy-Ln
+ for qemu-devel@nongnu.org; Fri, 02 Oct 2026 05:42:04 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lpieralisi@kernel.org>)
- id 1xCZYP-0006iK-2e; Fri, 02 Oct 2026 05:27:47 -0400
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by tor.source.kernel.org (Postfix) with ESMTP id 2D6C960A6F;
- Fri,  2 Oct 2026 09:27:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12E621F000FF;
- Fri,  2 Oct 2026 09:27:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1790933254;
- bh=sdF92FcaRvybcpGC5UwGt2780kuiZGnx+sDD25qOGeQ=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To;
- b=Y6YhVy0SuLIVscc1LTUdXoJ4kUXBDjI2mPhYHrfPwLjnhYJx3EjmhlMXu+5aExt0b
- 6fCHoaFCbDamh5Kz60WQWicwHXUcAA0aSOwa4TLRzGD5jEvNQiFxoynp8mTo5gs9C5
- ue1dpD77T6Puvyszkrc15XJn5f0Zkjk29OQ5yPS6Dk4n3b66XjuV9myBvIOxmT1G7f
- yPFHiQDfWHrUifvosGjgt7JnXXqA1rNqzb8Uv4S1U9/2HpIn7pI/ktFWj2I/L6Y3X/
- pv5GzoZ0cs5DKM2q0osqzNZ8jPtSXwBzThk2UYUgGqBgjklqDYdh4xFlcvlVZzrpiF
- YML82Vi1Gn6Pw==
-Date: Fri, 2 Oct 2026 11:27:28 +0200
-From: Lorenzo Pieralisi <lpieralisi@kernel.org>
-To: Gavin Shan <gshan@redhat.com>
-Cc: Mathieu Poirier <mathieu.poirier@linaro.org>, berrange@redhat.com,
- kchamart@redhat.com, pierrick.bouvier@oss.qualcomm.com,
- peter.maydell@linaro.org, mst@redhat.com, cohuck@redhat.com,
- pbonzini@redhat.com, eblake@redhat.com, armbru@redhat.com,
- lorenzo.pieralisi@linaro.org, enju.kohei@fujitsu.com,
- qemu-devel@nongnu.org, qemu-arm@nongnu.org, kvm@vger.kernel.org
-Subject: Re: [RFC v4 11/24] target/arm/kvm-rme: Populate Realm with runtime
- images
-Message-ID: <ar95ADk4pEL2K4hd@lpieralisi>
-References: <20260903193611.1058589-1-mathieu.poirier@linaro.org>
- <20260903193611.1058589-12-mathieu.poirier@linaro.org>
- <3257a387-490f-44bb-bd44-dbe06036fd52@redhat.com>
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1xCZmE-0008J9-9C
+ for qemu-devel@nongnu.org; Fri, 02 Oct 2026 05:42:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1790934120;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=4CtC/SBr+WhTdke8jNTJ4zGFAIu3I9ldDfDhJGS/rVk=;
+ b=FNfKRpZWrX8+0BaLz1WqHYqZQQcGQj4AX1DvzDkbGarB8DyZOgLSsxdkGgIv9nqQyqaGDD
+ WxvFMyOep1juSZTPmgPJcnDpRDVatbzS0EF/uVf9kwFWYe0ikAfz+j4NU60LWk+KjUHk5y
+ jUIKYHli+7YRowq3m5XOSF/FErWzbB8=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-258-MDD4dQSOO0OZZIY96PwVZA-1; Fri,
+ 02 Oct 2026 05:41:57 -0400
+X-MC-Unique: MDD4dQSOO0OZZIY96PwVZA-1
+X-Mimecast-MFC-AGG-ID: MDD4dQSOO0OZZIY96PwVZA_1790934116
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 95EA618011EC; Fri,  2 Oct 2026 09:41:55 +0000 (UTC)
+Received: from [100.90.56.12] (headnet03.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.114])
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 1ECB541D; Fri,  2 Oct 2026 09:41:51 +0000 (UTC)
+Message-ID: <69164823-7271-4d59-9684-637bec454a1d@redhat.com>
+Date: Fri, 2 Oct 2026 11:41:47 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <3257a387-490f-44bb-bd44-dbe06036fd52@redhat.com>
-Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
- envelope-from=lpieralisi@kernel.org; helo=tor.source.kernel.org
-X-Spam_score_int: -46
-X-Spam_score: -4.7
-X-Spam_bar: ----
-X-Spam_report: (-4.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.331,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/4] docs/devel: relax policy on AI-generated contributions
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, "Michael S . Tsirkin" <mst@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ BALATON Zoltan <balaton@eik.bme.hu>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Kevin Wolf <kwolf@redhat.com>,
+ Warner Losh <imp@bsdimp.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>
+References: <20260930085433.830743-1-pbonzini@redhat.com>
+ <20260930085433.830743-2-pbonzini@redhat.com>
+ <CAFEAcA91XU=_hS3iB+0p7hXQ_nvf0YpgNZaKsd=b=fSVaTJDxw@mail.gmail.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ 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
+In-Reply-To: <CAFEAcA91XU=_hS3iB+0p7hXQ_nvf0YpgNZaKsd=b=fSVaTJDxw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
+X-Spam_bar: --
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.331,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -76,150 +130,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Oct 02, 2026 at 01:45:40PM +1000, Gavin Shan wrote:
-> On 9/4/26 5:35 AM, Mathieu Poirier wrote:
-> > From: Jean-Philippe Brucker <jean-philippe@linaro.org>
-> > 
-> > Once the Realm descriptor has been created, tell KVM to transfer runtime
-> > images (kernel, DT, and rootfs) from guest memory to Realm memory.
-> > 
-> > Signed-off-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
-> > Signed-off-by: Lorenzo Pieralisi <lorenzo.pieralisi@linaro.org>
-> > Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
-> > ---
-> >   target/arm/kvm-rme.c | 76 ++++++++++++++++++++++++++++++++++++++++++++
-> >   1 file changed, 76 insertions(+)
-> > 
-> > diff --git a/target/arm/kvm-rme.c b/target/arm/kvm-rme.c
-> > index 9985f5daba89..c082a5d8f3d1 100644
-> > --- a/target/arm/kvm-rme.c
-> > +++ b/target/arm/kvm-rme.c
-> > @@ -15,6 +15,7 @@
-> >   #include "migration/blocker.h"
-> >   #include "qapi/error.h"
-> >   #include "qemu/error-report.h"
-> > +#include "qemu/memalign.h"
-> >   #include "qom/object_interfaces.h"
-> >   #include "system/confidential-guest-support.h"
-> >   #include "system/kvm.h"
-> > @@ -43,12 +44,87 @@ OBJECT_DEFINE_SIMPLE_TYPE_WITH_INTERFACES(RmeGuest, rme_guest, RME_GUEST,
-> >   static RmeGuest *rme_guest;
-> > +static int rme_populate_range(const RmeRamRegion *region, bool measure,
-> > +                              Error **errp)
-> > +{
-> > +    int ret;
-> > +    void *buffer;
-> > +    hwaddr size = region->size;
-> > +    hwaddr base = region->base;
-> > +    hwaddr start = QEMU_ALIGN_DOWN(base, RME_PAGE_SIZE);
-> > +    hwaddr end = QEMU_ALIGN_UP(base + size, RME_PAGE_SIZE);
-> > +    struct kvm_arm_rmi_populate populate_args;
-> > +    size_t aligned_size = ROUND_UP(region->size, qemu_real_host_page_size());
+On 10/1/26 14:21, Peter Maydell wrote:
+> On Wed, 30 Sept 2026 at 09:54, Paolo Bonzini <pbonzini@redhat.com> wrote:
+>> +- large, heavily LLM-assisted contributions where LLMs write large parts
+>> +  of functional code.  These are only allowed if *pre-arranged*,
+>> +  *high-quality* and *well-tested*.
+>> +
+>> +The last case (*"LLM-created contribution"*) is the one that requires
+>> +a more careful approach.  In particular:
+>> +
+>> +- "Pre-arranged" means that a maintainer has communicated ahead of time,
+>> +  for example on `IRC or the QEMU mailing
+>> +  list <https://www.qemu.org/contribute/>`__, that they are willing
+>> +  to review an LLM-created contribution.
+>> +
+>> +- "High-quality" means that the contributor must apply the same judgment
+>> +  that would be applied to other code changes.  Contributors must invest
+>> +  substantial time reviewing their contributions, curating them, and
+>> +  understanding them in depth.
+>> +
+>> +- "Well-tested" means the LLM-created contributions will be held to a
+>> +  higher standard than human-created ones, because LLMs make it easier
+>> +  to write tests.  There are no exceptions for "writing the tests seems
+>> +  hard" or for `yak shaving <https://en.wiktionary.org/wiki/yak_shaving>`__.
 > 
-> s/qemu_real_host_page_size()/RME_PAGE_SIZE
-
-I think that IPA base and source_uaddr should be host page size aligned.
-
-> > +    if (!region->data) {
-> > +        return -ENODEV;
-> > +    }
-> > +
-> > +    ret = kvm_set_memory_attributes_private(start, end - start);
-> > +    if (ret) {
-> > +        error_report("RME: failed to configure initial"
-> > +                     "private guest memory");
-> > +        return ret;
-> > +    }
-> > +
-> > +    /* Allocate page-aligned memory */
-> > +    buffer = qemu_memalign(qemu_real_host_page_size(), aligned_size);
-> > +
-> > +    if (!buffer) {
-> > +        return -ENOMEM;
-> > +    }
-> > +
-> > +    memset(buffer, 0, aligned_size);
-> > +    memcpy(buffer, region->data, region->size);
-> > +
-> > +    populate_args = (struct kvm_arm_rmi_populate) {
-> > +        .base = start,
-> > +        .size = end - start,
-> > +        .source_uaddr = (uintptr_t)buffer,
-> > +        .flags = measure ? KVM_ARM_RMI_POPULATE_FLAGS_MEASURE : 0,
-> > +    };
-> > +
-> > +    while (populate_args.size > 0) {
-> > +        ret = kvm_vm_ioctl(kvm_state, KVM_ARM_RMI_POPULATE, &populate_args, 0);
-> > +        if (ret) {
-> > +            error_setg_errno(errp, -ret,
-> > +                "failed to populate realm [0x%"HWADDR_PRIx", 0x%"HWADDR_PRIx")",
-> > +                start, end);
-> > +            break;
-> > +        }
-> > +    }
-> > +
-> > +    qemu_vfree(buffer);
-> > +
-> > +    return ret;
-> > +}
-> > +
+> ...but I think fundamentally I am not in favour of having this
+> fourth category of permitted uses. It seems even to have lost the
+> idea of it being an "experimental" approach in this revision of the
+> series. The first three categories are fine, and I have no particular
+> problem with our relaxing our current policy to explicitly permit them.
 > 
-> I doubt that the unaligned regions (RmeRamRegion) are allowed. For example,
+> Our problem as a project does not seem to be on the "writing
+> code" side of things, but has always been on the "code review"
+> side. This policy relaxation makes it much easier to write more
+> code. Even when there's a "pre-arranged reviewer" that isn't
+> necessarily helpful -- if you're one of the primary maintainers
+> for an area of QEMU then the fact that somebody else is reviewing
+> it doesn't make a big AI-generated code infusion any more palatable.
 
-I don't think they should be allowed either.
+I understand where you're coming from.
 
-> the region [4KB 64KB+4KB] is turned to the aligned range [0 128KB] when RME_PAGE_SIZE
-> is 64KB. The question is how do we know the added regions due to the alignment
-> ([0 4KB] and [64KB+4KB 128KB]) are safe for kvm_vm_ioctl(KVM_ARM_RMI_POPULATE).
-> I guess we probably just reject unaligned regions if they're not expected.
+The purpose of the fourth category is norming contributions that are 
+already happening.  I apologize for the allegation in advance, but take 
+for example 
+https://lore.kernel.org/qemu-devel/20260817190038.580257-1-mattst88@gmail.com/; 
+on one hand it is very high quality, on the other hand I give it at 
+least a 70% likelihood of being heavily LLM-assisted for the 
+implementation and not just for the analysis.
+
+The question is: do we want contributions like that one?  If we decide 
+that their quality and usefulness are high enough to want them, what 
+process do we need around them?  I think we all agree that, if that kind 
+of contribution is desirable, we want the submitters to declare AI usage 
+and the reviewers to be aware of it.
+
+> Allowing large heavily LLM-assisted contributions seems to me:
+>   * the biggest risk legally speaking (though I think this is
+>     in practice not all that big a risk at this point)
+>   * the biggest risk of the codebase degenerating into
+>     unmaintainability
+>   * the biggest risk of finding ourselves reviewing contributions
+>     that are in practice much more vibe-coded than the policy text
+>     above is asking for
+
+I agree completely with how you phrased the first and third.  I agree 
+that the second bullet is a risk too, but it's mitigated by "LLM-created 
+contributions will be held to a higher standard than human-created ones, 
+because LLMs make it easier to write tests" (and by maintainers being 
+able to *refuse* specific contributions, which is the point of 
+pre-arrangement; note that pre-arrangement should exist today as a 
+matter of courtesy for any large change).
+
+The third risk is probably the biggest of these.  The heaviest toll that 
+AI has on maintainers may not be the review per se; if a contribution is 
+good and desirable, having to review it is all fine.  Rather, the 
+problem is that maintainers have to be ready to say no more often to the 
+free puppies, and that is not necessarily easy.  And dually, that 
+contributors may not realize it when they're not respecting the 
+maintainers' efforts.
+
+I add a fourth risk: that new contributors using AI will not be willing 
+to do the final stretch of the work that *has* to be manual, and makes a 
+difference between work worth reviewing and work worth including.  This 
+would be the biggest waste of time for the reviewer.
+
+> I look at our issue tracker where we see AI assisted contributions
+> that run the whole range from "an human making intelligent use of
+> the tool to provide high-quality bug reports with good analysis"
+> through to "absolute slop dumped on us with no apparent human
+> thought or intervention". I don't really want to expand that
+> from our issue tracker to our code review and codebase, please.
 > 
-> Even if the unaligned regions are allowed, they seem not well handled.
-> 
-> - @aligned_size is still 64KB instead of the 128KB ?
+> I would be much happier seeing the advocates of AI putting
+> effort into making the process of QEMU code review better and
+> less work, rather than in applying it to the code writing process.
+To clarify, my goal with this policy change is not to advocate for AI 
+usage, but to advocate for transparency when AI is involved.
 
-Yes, given how current code is written this is wrong.
+I agree that making QEMU code review better should be a goal. 
+Unfortunately it is an expensive goal (in real-world money).
 
-> - In "memcpy(buffer, region->data, region->size);", the blob data would be copied to
->   [4KB, 4KB+64KB]. However, we're copying the data to [0 64KB] now.
+Paolo
 
-I can't follow you here. We are filling a temporary buffer so that KVM can
-populate from it ?
-
-Anyway - we should refactor the code to discard regions unaligned to host page
-size.
-
-Thanks,
-Lorenzo
-
-> > +static void rme_populate_ram_region(gpointer data, gpointer err)
-> > +{
-> > +    Error **errp = err;
-> > +    const RmeRamRegion *region = data;
-> > +
-> > +    if (*errp) {
-> > +        return;
-> > +    }
-> > +
-> > +    rme_populate_range(region, /* measure */ true, errp);
-> > +}
-> > +
-> >   static void rme_vm_state_change(void *opaque, bool running, RunState state)
-> >   {
-> > +    Error *errp = NULL;
-> > +
-> >       if (!running) {
-> >           return;
-> >       }
-> > +    g_slist_foreach(rme_guest->ram_regions, rme_populate_ram_region, &errp);
-> > +    g_slist_free_full(g_steal_pointer(&rme_guest->ram_regions), g_free);
-> > +    if (errp) {
-> > +        return;
-> > +    }
-> > +
-> >       kvm_mark_guest_state_protected();
-> >   }
-> 
-> Thanks,
-> Gavin
-> 
 
