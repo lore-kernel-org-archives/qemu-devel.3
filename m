@@ -4,95 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72533CA6002
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 09:14:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8436CA5FF1
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 09:14:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xENMI-00075o-Fu; Wed, 07 Oct 2026 04:50:42 -0400
+	id 1xENfl-00082S-5h; Wed, 07 Oct 2026 05:10:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xEKL3-0006bt-16
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 01:37:31 -0400
-Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xEKL0-0007oO-B2
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 01:37:11 -0400
-Received: by mail-ej1-x631.google.com with SMTP id
- a640c23a62f3a-c169ae1cb26so255373666b.1
- for <qemu-devel@nongnu.org>; Tue, 06 Oct 2026 22:37:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1791351429; x=1791956229; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=BS+0+A7kr0tFImAK5onZ82iakCeBub9bNBk2830WfL0=;
- b=DRmw60Lvn1xr3mrsr3God8LAbVEQ1XaUFRW+G4Yn6jgVFN7ekJniiZ/cmifRMebOdJ
- z9/PAuhWyPeAofN2VWr9TaHLRjvYgWVvnDfjwqmWkDKQPpxPqV2te6z9PhPoZjKBgU0b
- KnJ1qZBoZbfU5VXtSpv2J3Ovpvy4WxaoxVW7auToA57pQywSJHga+LNt+9tIaW3dkRlZ
- pZRTOo8FcRf2jrjlBZq9pEvlE6UTMd00iLfxUypx89DIPvoflR0rXGNz1EqCVuS90pDm
- Hbt8TMmp8NHjNcooztxQ98kFBPR0SU8Hmofw9JXoNKdGWLl2aLBtz0egWZTPbV21lxAT
- vJ9Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791351429; x=1791956229;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=BS+0+A7kr0tFImAK5onZ82iakCeBub9bNBk2830WfL0=;
- b=SznP/9n8UEex+PlAH+5pNa1zZl8tMab1Nc9uVWjzqZTlbwx4BH9yEGqP4Odqrn5oxq
- CSZeEc16sv75VDQuq+6AqFi0NyuW+wvjKmqhBM5cchLTvlAQ1TPaVFxiwTahHdyLBqA4
- u+MgB1meSqAgE95HShM3wQJpUITbM4E/t9Q/b5vtCewNUKF1NaBs3FaJbWPwaab99gip
- 7Iq6oUSIR3sbz5VxnUj3UXtAsoCXj9s3w1w+ZBaYzJJnzOUevpBljePB/XLlUCp7zT+W
- vRo5yAL1eRYlaNQS3Y1AIY4dy8P5iZ45Uc0VWEGCciLxw0wy8FoU3ch5Hfa4ih1YsgRF
- Lm/A==
-X-Gm-Message-State: AFq9FYLSEYsvtYs/Mgd4ocFmCvehF9fw9Qd8XHlLchUNvdseI+Zu2PPr
- BbF8cTstagETxJ/eZJNpZ8T9heKdNwjP53Zs9sojDLiJMBPfc823n9dT+f+hFA==
-X-Gm-Gg: AYBFou1WhPtgfTQxKBSS/vCpP/s+4IrkShpQwrqzinzc1D9fDvE8WiMGvP9pogZTfVS
- 1AQFFhjaSSMafKQ96BmoZhxIBi5altJpu4SPAa3B2wdQqzQ34a+ODsIuTWUpy7AsUBN3jDRKjpL
- kHIpinGUBVw1kGdjBrYaLC7QXrzA5zVlEGsAOCNSCMinWhPvxeTsOXeMzItGkP5Otgc/OZR0KMP
- z5KUHXWFQ2/J55uOfjET2urS+rmqp2W5QZCmXbq0mjIvRyXzy7AAR73i/eaBPOvy2KlRY21kfhK
- wEB+6S4BqbLGwLoixTPuJ5XF/zkFy+JSg7mPUk5iTg0kxj347tqPYXVnLkPkoYgpwW/VOb1MWOM
- M+76Q+dVvOgislj5kZjemhz9exWXcyFj8el/kNkvc7dIvQEY+OX8tMHk34KfW45huRJ4lSN0H43
- E7XC8Zt7rcGLNRrHV9jgv3dXsDy87UiKdSWdUtZ40BVC7hRfuIwiE7R2cPH8BiCC/sm2aoI5mAO
- nbG+75GQT4qGG9vwsoZpygpa+i9mQ7z4UbK85okRSTO8aQt5w==
-X-Received: by 2002:a05:6000:4b11:b0:48c:511a:1f31 with SMTP id
- ffacd0b85a97d-48c6d1684f7mr1429663f8f.8.1791275724813; 
- Tue, 06 Oct 2026 01:35:24 -0700 (PDT)
-Received: from archlinux (pd95eda80.dip0.t-ipconnect.de. [217.94.218.128])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48c6cdb281csm1566764f8f.55.2026.10.06.01.35.23
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 06 Oct 2026 01:35:24 -0700 (PDT)
-From: Bernhard Beschow <shentey@gmail.com>
+ (Exim 4.90_1)
+ (envelope-from <19b11cf636abb031179a655166fbf4b0400eb643@kylie.crudebyte.com>)
+ id 1xELJM-0002IG-BK
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 02:39:40 -0400
+Received: from kylie.crudebyte.com ([5.189.157.229])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1)
+ (envelope-from <19b11cf636abb031179a655166fbf4b0400eb643@kylie.crudebyte.com>)
+ id 1xELJ5-0004C2-1U
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 02:39:19 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=crudebyte.com; s=kylie; h=Cc:To:Subject:Date:From:References:In-Reply-To:
+ Message-ID:Content-Type:Content-Transfer-Encoding:MIME-Version:Content-ID:
+ Content-Description; bh=RMFEv1H2qLG2LAoQXWPqfXPoLdZeJ4Fp7dc4nmeg7Hs=; b=nbV4s
+ 2orcog7eocx85T+imMZcnot0RsABzFfFWLjGFazs2SW8KdeLAkJWlIY24SWtBNJfLAZUWfa7sncvb
+ GACGr85e2I1oQs5bfw6xCwOxRXsKzf4vHJ8WRv6Gs5KMnJRNLRDDJIklfuFCNHUYrMm7Aua8Cie93
+ Bg6ht3H+pWMMzcX21zkC67OcSjw56BlaEoO9wF2KN7X9JxPnfvEmVQpZ1fLYVcPgILYTwld8qmTZa
+ Fbko8u4amBpQuhmFO9m7pI35zk2/5xM4QM6zadNB/zD4zm85P+ES7cv4sNGzaiyLW81xsD78wiOZh
+ KeAFksR4l3pJELcK1IKa9CzGRJ58SBqolffrnssQIiS8l7kbYAG9vdqeK6JKzOF7y+NaMOW8/MHUN
+ VidDH4VyrsMfQMv+5WGV6TP+zw0XNC8p2PYZo1UbIlY6yaLsJmldAp579cou3mtLWAmVJOLP46HQV
+ NueRK7QB2Fogh1GcFcRbjeNqKh2113rxzEXtvHsoB9eej027vt1h1dBihG5+cZ4WBCdkNASuA8Y5+
+ KsaKEfFgeSFL+ws17cCYD9EVqk7iLvJggiMvN3tWU0V0sz5/1ThsS3gftWLAIzLdPWOfUuwxrpMGD
+ 1F6Vl3rg47nxJkxiYT4ETSBv6MnaXHHTSTzbd/nF87RL8bMy/YyK5NIkQiJRro=;
+Message-ID: <19b11cf636abb031179a655166fbf4b0400eb643.1791291812.git.qemu_oss@crudebyte.com>
+In-Reply-To: <cover.1791291812.git.qemu_oss@crudebyte.com>
+References: <cover.1791291812.git.qemu_oss@crudebyte.com>
+From: Christian Schoenebeck <qemu_oss@crudebyte.com>
+Date: Sat, 3 Oct 2026 22:41:16 +0200
+Subject: [PATCH 5/9] tests/9p-race: add Treaddir race test
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Bin Meng <bin.meng@processmission.com>,
- Jean-Christophe Dubois <jcd@tribudubois.net>,
- Gaurav Sharma <gaurav.sharma_7@nxp.com>,
- Bernhard Beschow <shentey@gmail.com>, qemu-arm@nongnu.org,
- Jason Wang <jasowangio@gmail.com>,
- Alistair Francis <alistair@alistair23.me>
-Subject: [PATCH v4 04/31] hw/watchdog/wdt_imx2: Remove redundant attributes
-Date: Tue,  6 Oct 2026 10:34:16 +0200
-Message-ID: <20261006083445.30362-5-shentey@gmail.com>
-X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261006083445.30362-1-shentey@gmail.com>
-References: <20261006083445.30362-1-shentey@gmail.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::631;
- envelope-from=shentey@gmail.com; helo=mail-ej1-x631.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Cc: Greg Kurz <groug@kaod.org>
+Received-SPF: pass client-ip=5.189.157.229;
+ envelope-from=19b11cf636abb031179a655166fbf4b0400eb643@kylie.crudebyte.com;
+ helo=kylie.crudebyte.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_48_96=1,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,89 +67,126 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since WDT and WDE are write one once bits, their values always
-correspond with their respective locked attributes. Thus, the attributes
-are redundant. Take advantage of this observation to simplify the code.
+Add "race/readdir" test, a test racing Treaddir's directory stream.
 
-Note that removing the attributes changes the vmstate structure which
-constitutes a migration break. This is allowed since QEMU does not
-guarantee migration compatibility for i.MX devices between feature
-releases.
+In each round a Treaddir request is sent against another Treaddir
+request or Tstat request on the same FID.
 
-Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+This test is registered as slow test (i.e. skipped by default) and
+therefore requires -m slow to run.
+
+On my test machine a full run of 20000 rounds took around 1 minute
+to complete.
+
+Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
 ---
- include/hw/watchdog/wdt_imx2.h |  2 --
- hw/watchdog/wdt_imx2.c         | 20 ++++----------------
- 2 files changed, 4 insertions(+), 18 deletions(-)
+ tests/qtest/virtio-9p-race-test.c | 85 +++++++++++++++++++++++++++++++
+ 1 file changed, 85 insertions(+)
 
-diff --git a/include/hw/watchdog/wdt_imx2.h b/include/hw/watchdog/wdt_imx2.h
-index fc01fc46e7..0bf2903959 100644
---- a/include/hw/watchdog/wdt_imx2.h
-+++ b/include/hw/watchdog/wdt_imx2.h
-@@ -84,8 +84,6 @@ struct IMX2WdtState {
-     uint16_t wmcr;
+diff --git a/tests/qtest/virtio-9p-race-test.c b/tests/qtest/virtio-9p-race-test.c
+index d376565626..c01da69410 100644
+--- a/tests/qtest/virtio-9p-race-test.c
++++ b/tests/qtest/virtio-9p-race-test.c
+@@ -525,6 +525,90 @@ static void v9p_race_fid_path(void *obj, void *data, QGuestAllocator *t_alloc)
+     fflush(stdout);
+ }
  
-     bool wcr_locked;            /* affects WDZST, WDBG, and WDW */
--    bool wcr_wde_locked;        /* affects WDE */
--    bool wcr_wdt_locked;        /* affects WDT, cleared on POR */
- };
++/*
++ * Race 9p server's internal directory stream for Treaddir.
++ *
++ * Race Treaddir request against another Treaddir or Tstat request on the same
++ * FID.
++ */
++static void v9p_race_readdir(void *obj, void *data, QGuestAllocator *t_alloc)
++{
++    QVirtio9P *v9p = obj;
++    uint32_t rounds;
++    uint32_t i;
++
++    if (!g_test_slow()) {
++        g_test_skip("This is a slow test, run with -m slow");
++        return;
++    }
++    rounds = v9p_race_rounds();
++
++    v9fs_set_allocator(t_alloc);
++    v9p_race_prepare(v9p);
++
++    for (i = 0; i < rounds; i++) {
++        P9Req *req_a, *req_b;
++        uint16_t tag_a = v9p_race_new_tag();
++        uint16_t tag_b = v9p_race_new_tag();
++
++        if (i % 2000 == 0) {
++            g_print("race/readdir: %u/%u rounds\n", i, rounds);
++            fflush(stdout);
++        }
++
++        /*
++         * Reset the descriptor pool at the start of every round, where
++         * no request is in-flight anymore.
++         */
++        v9p_race_reset_pool(v9p);
++
++        /* initial Treaddir request */
++        req_a = v9fs_treaddir((TReadDirOpt) {
++            .client = v9p,
++            .fid = V9P_RACE_D2_FID,
++            .offset = 0,
++            .count = 64,
++            .tag = tag_a,
++            .requestOnly = true,
++        }).req;
++
++        /*
++         * On every 3rd round send a concurrent Tstat, otherwise a
++         * concurrent Treaddir request.
++         */
++        if (i % 3 == 0) {
++            /* a Tstat on the same directory FID */
++            req_b = v9fs_tstat((TStatOpt) {
++                .client = v9p,
++                .fid = V9P_RACE_D2_FID,
++                .tag = tag_b,
++                .requestOnly = true,
++            }).req;
++        } else {
++            /* a concurrent Treaddir on the same FID */
++            req_b = v9fs_treaddir((TReadDirOpt) {
++                .client = v9p,
++                .fid = V9P_RACE_D2_FID,
++                .offset = 0,
++                .count = 64,
++                .tag = tag_b,
++                .requestOnly = true,
++            }).req;
++        }
++
++        uint8_t resp_a, resp_b;
++
++        resp_a = v9p_race_resp_collect(v9p, req_a);
++        g_assert_cmpint(resp_a, ==, P9_RREADDIR);
++        resp_b = v9p_race_resp_collect(v9p, req_b);
++        g_assert_cmpint(resp_b, ==,
++                        (i % 3 == 0) ? P9_RSTAT : P9_RREADDIR);
++    }
++
++    g_print("race/readdir: %u rounds done\n", rounds);
++    fflush(stdout);
++}
++
+ /* setup and cleanup for race tests using the 9p 'local' fs driver */
+ static void *v9p_race_local_driver(GString *cmd_line, void *arg)
+ {
+@@ -549,6 +633,7 @@ static void v9p_race_register_tests(void)
+     };
  
- #endif /* WDT_IMX2_H */
-diff --git a/hw/watchdog/wdt_imx2.c b/hw/watchdog/wdt_imx2.c
-index a15f452d48..c19f0383ad 100644
---- a/hw/watchdog/wdt_imx2.c
-+++ b/hw/watchdog/wdt_imx2.c
-@@ -59,8 +59,6 @@ static void imx2_wdt_reset(DeviceState *dev)
+     qos_add_test("race/fid-path", "virtio-9p", v9p_race_fid_path, &opts);
++    qos_add_test("race/readdir", "virtio-9p", v9p_race_readdir, &opts);
+ }
  
-     s->wicr_locked = false;
-     s->wcr_locked = false;
--    s->wcr_wde_locked = false;
--    s->wcr_wdt_locked = false;
- 
-     s->wcr = IMX2_WDT_WCR_WDA | IMX2_WDT_WCR_SRS;
-     s->wsr = 0;
-@@ -156,22 +154,13 @@ static void imx2_wdt_write(void *opaque, hwaddr addr,
-     switch (addr) {
-     case IMX2_WDT_WCR:
-         if (s->wcr_locked) {
-+            /* WDZST, WDBG, and WDW are write-once bits */
-             value &= ~IMX2_WDT_WCR_LOCK_MASK;
-             value |= (s->wcr & IMX2_WDT_WCR_LOCK_MASK);
-         }
-         s->wcr_locked = true;
--        if (s->wcr_wde_locked) {
--            value &= ~IMX2_WDT_WCR_WDE;
--            value |= (s->wcr & IMX2_WDT_WCR_WDE);
--        } else if (value & IMX2_WDT_WCR_WDE) {
--            s->wcr_wde_locked = true;
--        }
--        if (s->wcr_wdt_locked) {
--            value &= ~IMX2_WDT_WCR_WDT;
--            value |= (s->wcr & IMX2_WDT_WCR_WDT);
--        } else if (value & IMX2_WDT_WCR_WDT) {
--            s->wcr_wdt_locked = true;
--        }
-+        /* WDT and WDE are write one once bits */
-+        value |= (s->wcr & (IMX2_WDT_WCR_WDT | IMX2_WDT_WCR_WDE));
- 
-         s->wcr = value;
-         if (!(value & IMX2_WDT_WCR_SRS)) {
-@@ -234,13 +223,12 @@ static const MemoryRegionOps imx2_wdt_ops = {
- 
- static const VMStateDescription vmstate_imx2_wdt = {
-     .name = "imx2.wdt",
-+    .version_id = 1,
-     .fields = (const VMStateField[]) {
-         VMSTATE_PTIMER(timer, IMX2WdtState),
-         VMSTATE_PTIMER(itimer, IMX2WdtState),
-         VMSTATE_BOOL(wicr_locked, IMX2WdtState),
-         VMSTATE_BOOL(wcr_locked, IMX2WdtState),
--        VMSTATE_BOOL(wcr_wde_locked, IMX2WdtState),
--        VMSTATE_BOOL(wcr_wdt_locked, IMX2WdtState),
-         VMSTATE_UINT16(wcr, IMX2WdtState),
-         VMSTATE_UINT16(wsr, IMX2WdtState),
-         VMSTATE_UINT16(wrsr, IMX2WdtState),
+ libqos_init(v9p_race_register_tests);
 -- 
-2.56.0
+2.47.3
 
 
