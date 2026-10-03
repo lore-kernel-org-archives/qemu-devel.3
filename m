@@ -4,28 +4,28 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10619CA5FEF
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D6CDCA5FED
 	for <qemu-devel@archiver.kernel.org>; Sat,  3 Oct 2026 17:04:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xD38e-000753-Sc; Sat, 03 Oct 2026 13:03:08 -0400
+	id 1xD395-0007Dp-Hk; Sat, 03 Oct 2026 13:03:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1xD38c-00074S-Qq; Sat, 03 Oct 2026 13:03:06 -0400
-Received: from mail-japanwestazlp170120003.outbound.protection.outlook.com
- ([2a01:111:f403:c406::3] helo=OS8PR02CU002.outbound.protection.outlook.com)
+ id 1xD392-0007CB-RJ; Sat, 03 Oct 2026 13:03:32 -0400
+Received: from mail-japaneastazlp170120005.outbound.protection.outlook.com
+ ([2a01:111:f403:c405::5] helo=TYPPR03CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1xD38b-00075o-Cl; Sat, 03 Oct 2026 13:03:06 -0400
+ id 1xD390-0007C3-KS; Sat, 03 Oct 2026 13:03:32 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=eEV49ZeyHQOnv/FPSL+c3rEFgRuM70kkISnNV0D4Wo8at/SnexaHEHlLqBkugnl4JC2H6VKCLJdwgHSpSTDEQC+x1vX+nWaM6xPT+yTuIaSuz6mrYtaymKdPEpZr73KusEpoDk47/ca8xFx0ZUPs7lh6nxWVPjTlYdhOcJCmFnAeNLF7lIJRb6TMWJX+WDxAh1eC1lVISVW2nkemL5xUWIOZJoAfiw2EspQOZoCSeiBdrckFUsRLwwTE8RAE5lWr/JqdymIr7FoBP3RyWdRwUocCTxwDxFG/DfSPTU03jEh0v27LMoQSRNN+2w2jPtCOUPHYUQeDERWnk2CA1vYp+w==
+ b=Ox20Hi6Nfwspw3mJzCVTBS4XbH/LAwlbZZVhqJUbAswLORfpdOpS78KwGb13/YFIIWJMGwGRqqLvDYz4KtdOSToAqLPf7rYXDvmrX1s4ToEZtNGpDMytaAiRTmav/zrswcNH6RyGPmo23iZKSMamWm7wjlQYSaZdS3e/bL5x9zaHe023hpFE9FXLRP7jduQCYbnR3kgmlOITxhp/++QBK9o+FMHxUFlnlr0n1Mkxer5PJm3Fns+BSSVyJMVRI9aFWLuzblAboGHgm2MW3YIAyFPv+wuIU2srYXY1sA4vIxRMFw4ZYZbsFHPEIhDxpioY24bacK3Za6ieucYNAIxsew==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=L0rhl7GY61g03mQTRcsJ8UabnJ+bj3IidlZgZGOwU+o=;
- b=yAbrOA3vXj8z36dgtUOWvYMptxCV/VB6+nQYZzMPncVA4ahXQXgiEQAEOy9kBlyrDKWJ7xvOzI3+jRRSyTCLs005PiJc5IIJz1eQVccVn9ylUP5+xcg/E5lESWKcvAO7RgNDNYOzr0p2s7D3DW5jHTiTPAAcGHBGIL5GlcPV2Mp4/cqFio4ygRqIq6Zu2LzYMamHKBD9y7EG4RpNgiJKKZphJQKqOuOHYoQKv3DvV685waaLIO9MxUcQ3NDK8p+3lRN03M/C6chTuNzJVvFubuEQIhRZTrSOtrzFTK7bIDzTC76waSuY5iig1TTC+Z1TmiYMfwMVvmBRSWNtUDvQLw==
+ bh=7cF/iFg+G6KhGDsFbCEr0inKuedS0e6jhOZQjejKnLA=;
+ b=ZxPv1bwWpvYGtxOZohcAvze9fdBAmbF3SMqY3rdANpMbXrhUIXLNI4t1ur9/IBLWo1R46gANgDPUj3X9LI9J2ih7VDXNhj3FDT7EGKDZ2m8BAiKPT5Q4k4NhMkAhO18MsQmDIfVGtLkN5w+Be3QJf4rC36oQhZZblr5uP4eWrpJoBaRftZRcAuAIlmSFR4FTqkCQqlMH3DpHh+tZpXsZr5oSmlqpdVB/09cDHKSja0AKK+pdSAFdehLfkU+B+CXttaO5JRP0yJZ5xofiynxbf3J9B+5VYSZCrelQPAW608JgBYhGMel/FIprak4yOMDixERJ+FNkjEoC2p8MiCSlbA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=processmission.com; dmarc=pass action=none
  header.from=processmission.com; dkim=pass header.d=processmission.com;
@@ -33,33 +33,27 @@ ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=L0rhl7GY61g03mQTRcsJ8UabnJ+bj3IidlZgZGOwU+o=;
- b=YTrAEegKJbByaG4A2ajJn+0zj8/jmlq8ETrvfbmQM8Qgybsozr9n682YajkTsb7vIm5g2jD9MDBjIhDNk3dQ2WAmshoT/FLA+cQMlwhu8VMy6ti5MAb9GKRJZBTc2umHsANbJp6O/W05/DSAtq95M/pzYi99ZGtxb5groJlst1tbW7BvhMFyoBMHlRsst370r+zBHpuC0RSdv1Gqmzb0O9rwltfy3rGDxv7oLvHQxmQLnJPSDhDP5jWK+vMsvhPQ7m3FVJ12c0kupjF1grioCUmweODA77Jm31pWBXYEJ97lNxaOf6pObYtA5JpCxwb27Fa60m7dfF0z9M8V8qhsmA==
+ bh=7cF/iFg+G6KhGDsFbCEr0inKuedS0e6jhOZQjejKnLA=;
+ b=CJjdCaBeUG23t6eIaci90SmVZ6tq6OspJDZ9APlZz+VOueLsrpxH6rwC+9ncde4/r1TjgkIfWn4zyHmzZMr7U7eSbCVRm0jCTSxVghXn+xQ2ZO+gqYSKNLzbmwhcEbW0IcO9PotydsQkiOExyBfwgaYdG12fZwG9p/6oMWD/w3TWo+IXmokEIHPBQBErSXnIG9zcy+wcLf64WUSy3Z2tPkEPar5nTyTwOirFQgOu8ijg8sLbfeyCTcsqWrQEp3ZRM/Sr6tOcIdJRw+fdINClrC17wrBluditeyQ2o6EmflNoqv5mXjCjJ4Cujk+uFV9OBM3jy9fvXSoPovTUGjaVQQ==
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=processmission.com;
 Received: from KL1PR02MB6257.apcprd02.prod.outlook.com (2603:1096:820:da::11)
  by TYSPR02MB7371.apcprd02.prod.outlook.com (2603:1096:405:39::13)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.472.20; Sat, 3 Oct
- 2026 17:02:56 +0000
+ 2026 17:03:18 +0000
 Received: from KL1PR02MB6257.apcprd02.prod.outlook.com
  ([fe80::ecf9:e832:8196:215]) by KL1PR02MB6257.apcprd02.prod.outlook.com
  ([fe80::ecf9:e832:8196:215%6]) with mapi id 15.21.0472.016; Sat, 3 Oct 2026
- 17:02:56 +0000
+ 17:03:18 +0000
 From: Bin Meng <bin.meng@processmission.com>
 To: QEMU <qemu-devel@nongnu.org>
-Cc: Chao Liu <chao.liu@processmission.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Conor Dooley <conor@kernel.org>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Sebastian Huber <sebastian.huber@embedded-brains.de>,
- Weiwei Li <liwei1518@gmail.com>, qemu-riscv@nongnu.org
-Subject: [PATCH v3 01/27] hw/riscv: pfsoc: Correct the L2LIM maximum mapped
- size
-Date: Sun,  4 Oct 2026 01:01:51 +0800
-Message-ID: <20261003170232.2450916-2-bin.meng@processmission.com>
+Cc: Bin Meng <bmeng.cn@gmail.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ qemu-block@nongnu.org
+Subject: [PATCH v3 09/27] hw/sd: sdhci: Run ADMA independently of MMIO
+Date: Sun,  4 Oct 2026 01:01:59 +0800
+Message-ID: <20261003170232.2450916-10-bin.meng@processmission.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261003170232.2450916-1-bin.meng@processmission.com>
 References: <20261003170232.2450916-1-bin.meng@processmission.com>
@@ -71,65 +65,66 @@ X-ClientProxiedBy: TY4P301CA0100.JPNP301.PROD.OUTLOOK.COM
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: KL1PR02MB6257:EE_|TYSPR02MB7371:EE_
-X-MS-Office365-Filtering-Correlation-Id: 4c31bb66-9431-46a6-b976-08df21702b5c
+X-MS-Office365-Filtering-Correlation-Id: 1ea86b12-79f4-4359-797c-08df21703901
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|376014|23010399003|366016|18002099003|22082099003|56012099006|10067099003;
-X-Microsoft-Antispam-Message-Info: PBPpuQDKNGkpI9DIwIytm8ApZNl5ha3FTC3iRftbsgvDG8V3mfoVcq0q6X6QEelZDoEz7s57oTaq16ZR3mHeV7cYNDIk+L3wkbaCuTPJ7HIxtsgx6il8Lz5Kl4PiNKFN3CWGj57bSUFqxlYlIduUeGXX71x0O1DGD+FK8e5lYplDbG87GIxsUEMG4zweFnhTzYELAk+StnMYf3ihZgUCB4jIw2EhtL70X1tdcsdB5j/dMM7dEYLCPQ1d0gKcy8RQXlXFG0H1Sgq/4IcaHzHQ/uLMyahb3EUZYtM7wSQD2cp2CjcWgbPXX47ILd6KQSeFnc2n8bckQiPGOpLNwfoVQEC4feHVp/eiKlG4mZjNgQfRXH7zSxLn60FsgzJu4PZdUfQTXctzFi37+OwaSwUVc9+w+uiYBrdWYXpAwMuJlb56l3Ns77CJoGSMT5QNVfRgR5CPHnw2pV6uN5k+2U3zRVhGna1uOyQx7I0iXuXxFiuqjN/t+2F61+NyVG+ZrvbVAnokOyvWSKwvRpE7JbsXmTcWeGZi90sQeb5d+evkeptIJ4fAXNGR8seTPpLFPq2ve/Lutoz12xqpvItRdf2L2Y0codneVg/MJbNWZz4Ci2zAF2fLS3qHbdEE3F1CNDllejUl26X2ztliWaydEi2E3SMqjha1bjaOPsn1htEgAIc=
+ ARA:13230040|1800799024|376014|23010399003|366016|6133799003|18002099003|22082099003|56012099006|10067099003;
+X-Microsoft-Antispam-Message-Info: OMVGGOAbUnG3JU0ZIB1QlpVzVRICAipHwZoPRNmZYw+7oq0hQIPUoiMnrXkSvv6s/ID8yE/Lw2Kmz0YKJKgOawLE4Ty4nqdqzJ8AOPAfIoz9H6B5zeIdZXFEOjzw9KxRWhSOaLgUAnOfBvs50NiUlIVOFb+Mng6AOrOdErL+h3yk0rDO/rKfrIlLSoYkVO4vVTm0iF316JbAoZGXZQtpRTW6hdRSy4hsIhKiYXf457l9cuwiMr/9geevAoS/ceHbCJss4oP+5rSvrSQ5ycnJCxO8MNFA05NzmgIcTcBnJmnPjpQP7Q6A1194d4qpoAsCcgT/5l8uFqtW6Ph73hsA2O1aSXgmJdXmrfRzUlYyWL7zl1LBmXwt5ganQ8SLElec67zVrDT/YcQhyRCUkfGzukJckyTqFGwVA/7U/cCIYIYRvpKYP+A583HrGRwvl453f7Y7WFxVeLkp4yXqtIn4s3W5GRp9XF6eA9IZBi3+OLynoo68HgdsSs8sfXJwE6+JFqVxNeIwJqZ4A69zwfxXHi3zFlio4C0lYdTIZh3K4wYZEY5/EG9I1+MEPCM3mbHkgK5aiKLeANQFSls7CaQLHY+6kFx8T3M6jv0IuTj+czvddYAlGGMnA3glivgFmUCjEqGJ3gHlOOCevoxBk6PUe/h3CWouX/YcCt2VKQAd6no=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:KL1PR02MB6257.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(376014)(23010399003)(366016)(18002099003)(22082099003)(56012099006)(10067099003);
+ SFS:(13230040)(1800799024)(376014)(23010399003)(366016)(6133799003)(18002099003)(22082099003)(56012099006)(10067099003);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?OjrGgYikiQPsYLs16l5mxdGk3ytD5CBH+2EBK8BHfbcOzTCVp6uYYLUwO1/X?=
- =?us-ascii?Q?LssuNmwF9LPKfYen3laDbCUjqfSXYQFxt0HlnOZtBGX/v6mmlc6UMX8SjSA0?=
- =?us-ascii?Q?6CwHMBvYfwk2ASy1vc7EbNEQnJEB5BPwfwA4RFckH9kF5Q34bswvKbdIQ7Ql?=
- =?us-ascii?Q?bLlO/1Qhk8oQZDqXhhFXzouPT588rXHuLCOPWGcfXcw5s5L1Wg9Fiw7aMq+Q?=
- =?us-ascii?Q?a94ZKzTM5eXRGMZ/1y4jVS4flei9D2ZfAzKy9G42oiK7yjejFU6Q54i+cDs8?=
- =?us-ascii?Q?RT3d9alFsWVG6roxoVAearPuOdEwKoND76ixNV353DleHiarhh+dSrjCegP4?=
- =?us-ascii?Q?Otgj++NJIca4cr5xrY1wy4SgI0nn6lCgtjF/5UoQMlWLRdi2pEtoM/oSWNzz?=
- =?us-ascii?Q?XMRLrwx7RZGVXHq7diAtVJJPeI6r7+RIPnywm/CekmdXkyx8xr1sHeEb2xNR?=
- =?us-ascii?Q?Z6onuuTl9/pjMXcikTlNKXE2SM3GZd2sNoVCFC129GG/d1Yv9qcw5CDAAr7D?=
- =?us-ascii?Q?EXC3p6rzY9giITt9ArCUtpjXyXCdJgYUQn2ZL1mF+DhjpQ+5fWlfz1wGwGTE?=
- =?us-ascii?Q?9EC6AxbhnvoEoTJtrhbnjJzP9slM3YeGJcoEeZ0FtWMp+V8wxW0nSEBzDip0?=
- =?us-ascii?Q?E2x0VlJr2eO0nRRpIyTxBBzhfQMcc+CWQf9F50Wmhln3W88k75Ssv+6dHixG?=
- =?us-ascii?Q?oBiHI+2Lw8EcjrYfhcX/CNaihfnnYlfrbWIrec6RznX4FpuYnr0xenlcnuvs?=
- =?us-ascii?Q?APWGqayMgrPvJDtqJiNLmVp0fu1XY4aCM95XNx7MCpuUvuIZZCZ5cHXfSHEq?=
- =?us-ascii?Q?F+jjDBsBN8tPm3Mxp5E/2Zo9A8rCC8yBlz1Zijz1cXMI6nHGPvmrcROKylP6?=
- =?us-ascii?Q?+YBsLbSE2QDcoDBLCPf20bSyrUqCjT27BQ+0akE1LQ86RhbLXUfYFdeALPdP?=
- =?us-ascii?Q?W+V/Ed2yj1OWH4fbQkD9TUYxv2Wyf8kgC18qo6TIKfIEOEGlgj/k4GeroSMC?=
- =?us-ascii?Q?rYmcE3k1JizYAMhsoaONflyq0ut7JZaLMLm1BrCiHh5YyLsTgdJ1fBFYl4t2?=
- =?us-ascii?Q?ra3s3m/Y8S5zcPgQvg88HazheorGQ4DGRFGduofuYIvZWj4PmCaMilZ4OXHG?=
- =?us-ascii?Q?vjkpADR63o/2hWNXFRXF4kllhE4ExQhqtrkfF4pqJj3L0aA1coOf9GppWNjA?=
- =?us-ascii?Q?zxs3s5mPKy5iWOYmBCfl5Y8ia0d2j7SrxOzNH9J5KS0taJP9qs+RHLljU/wt?=
- =?us-ascii?Q?fhYI2VEEiNlkts5/DDN8tDVduwM5fIEGhXyFv2zIijlyRZJLwGLbDjK/v5Ty?=
- =?us-ascii?Q?mKJ+NbIB9OcZzCiQKgG/GpJifrh6GQ0Wp6inYEH8iPvRy3Y0dk/a5e/RCtE+?=
- =?us-ascii?Q?rqD19N18652XAQ+xfD6pPrarlvNRUwPbUhQeIGBLI4HeIXwUA5hmv+K0SgDz?=
- =?us-ascii?Q?xPQqn83KGb9IeU7Di+EWTVc6rXz/UqHcW+QXpCh0224lLOm/Kb8YEGG4NNMH?=
- =?us-ascii?Q?6Aa4I7fUTcjdxCEp505DnPjT9fqjO7NkqwfnAynWSKBmNIYiPrrrj2I6w8SM?=
- =?us-ascii?Q?IqJLDh+Ghxow2NLB5DXOXBj9UPytuQjKbzJ+LhKZ0tBRngLZFUU/CuD+EWhz?=
- =?us-ascii?Q?CSQXl6hp7tZ4I+/AdsmtQXFNxL3SHQTe5bFC+h4yvZak31R0fDdelfWXnut7?=
- =?us-ascii?Q?BPQ2r9EsH43H9TyUmE+oJqNLjj30EqPyq5kI9e+tvJEEqT0jHc+ouKmYc/n8?=
- =?us-ascii?Q?FSe76Ef2GP0zz19q+0XkKoIcWcC6dFo=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?NOEUxhROG113HbGcUPQk1EiezC6EuhA5TJ3CHaBGWazCKL/vITnAKgbo8D55?=
+ =?us-ascii?Q?AUAx+dYu2bpFpKBGBtyj4vvV+QFGkyt5UK7P6JNCivhf/kwGeyTyFW9l/LfX?=
+ =?us-ascii?Q?512ig16IpueeDafyVSGOuKilswwMqpOR8ZgL9p3st2faEdipWH1xNJqxEaQO?=
+ =?us-ascii?Q?00MKqOFshTOGwzVYygJzZBDCT68fT8II83Z3MN7pZQEPmZjXMH3FJ2OUGvhr?=
+ =?us-ascii?Q?IrmnUOc9rDrGreAqrBJa3f/rWNj+Zt4PemBgR9u1MH5t7YF0AKDATjLXdl62?=
+ =?us-ascii?Q?Sdu+fj8p4mn2dzUvQrBv1P0kpxDloGZftmUsJo/KC3ujN4t2UBi21MT2+z4i?=
+ =?us-ascii?Q?TK5m6xBlWoxmrgD0bNURUZT1lPcxXFccqMtMJRYPTyFlQl8ezL4f0TiJvvJ9?=
+ =?us-ascii?Q?k55GgecW0tUCzTDxxJ9ZHVKEcn1/YrKppBi4Lzw8efB1E2jhZR2v1iYJAARg?=
+ =?us-ascii?Q?O9FaZI1wNLbk/kap9McHbd2c5SR4CHYZXauxOH3tKtU/hwsRquHqQhhmGggt?=
+ =?us-ascii?Q?t/pmTSOoOh2l9Evmq37XYRy0Y4tfw0hBjXhHoSyiX+qfEl5OtZIyVHW30rbe?=
+ =?us-ascii?Q?pBeoNPdFrhUhzqe6NAO2Zi6HUqx7m8ZM5VL8UkHLvA2jlyswj9xUCLCHEHKe?=
+ =?us-ascii?Q?+0myS1aDSNnrKOw97rjW+uJmpQg6IgyUpdDyDvuCeyrsrZ37J2xyn8b5MuhF?=
+ =?us-ascii?Q?O5BMu5GuP2M521Il9V+CjM5f54gV38mJr2zXgLGxcWBXmxbclNwuCLdGgcHL?=
+ =?us-ascii?Q?YCHD2pzFPZiHTKH/zyLSFLnUnbLm9OoC0fJrCzLXuI7/uIB3Iwg3XtPbra5N?=
+ =?us-ascii?Q?BjoYLvJVRY4MODhmuEnKz5r2+htpGhgqFj6FvROd7QGxqwleD/vahouaNl3g?=
+ =?us-ascii?Q?WK9D/ekXe0/1321SriPP+nzJOlREOMw4zccnypduS1Nv3u0UYLBbs4+UkPTy?=
+ =?us-ascii?Q?nxlUYAYoAd5vQfoTu6TeVaiegGWDUtT+cELSikI09hzilRDicn4FDT5ttLet?=
+ =?us-ascii?Q?N3SLfFHt2hXmY1n6ekZOMkkRaeUUkrwN5fHJuAsPF7kTtHY1c8AOvWfZDJ/e?=
+ =?us-ascii?Q?RRPOQN+a+IleOFtPDZPfv4sxfr0peQj/q4vheCRQjxNdeNfmqBzwuNV1rW/c?=
+ =?us-ascii?Q?/7xbVIE7iusiVcoPacQcn3Aag2j0wiA6lP6RlsNNJ20kMcKq8QTkPtGCAm5Y?=
+ =?us-ascii?Q?rFl/S5Fg5L+KWHXHVB7ca/Vcu9BT5oQxWya5k4aVDYmuYN/zL80YYJRZutHi?=
+ =?us-ascii?Q?jI5MBNwDkmQPWket8XsR2ad4UfiBR/Q+It7TVt9ZnZk4HBd5QICW15W1dJm2?=
+ =?us-ascii?Q?IbYjK2qEp5S6rZmHflflukLk/IUeyqxts7wXoXlFxaKsLON6fQTBZVPUAu0R?=
+ =?us-ascii?Q?6SsdXgcdrVNYijLvuHy0WSsJUYZKdWlZx2rsjU2W4BQlLioCoXOKCNqH2pjb?=
+ =?us-ascii?Q?fgcjvy3wbVHbeoYx0NKN/9MskzmrghnbixjXnwJYmTPk3HlrZ3IhVpCzIJ9X?=
+ =?us-ascii?Q?8nnGJpjhOmJ/74jHBSVEsd52m/9YOYn/0gAdB/nXkBW7lMtI1mP9WwOwJlC8?=
+ =?us-ascii?Q?+Wvee4MIokFGLhmhhtRGf8kiI3hBVer2vYq0XpZ7Bk9grGbAfHeukngRbHct?=
+ =?us-ascii?Q?bnj3+dTB7x2h/XWChghAfro+NbNRWqGDYncW/ynYoe1A5f/gUOlhF/gHd4S9?=
+ =?us-ascii?Q?HQTLmdlFk2+UCW/h1m7w0S57EpST9TNPTZvbrhYqj2pWwWtfTSKlvmTIq4iS?=
+ =?us-ascii?Q?33IOiuVu9bddzi2c7xON5B082euKWrM=3D?=
 X-OriginatorOrg: processmission.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 4c31bb66-9431-46a6-b976-08df21702b5c
+X-MS-Exchange-CrossTenant-Network-Message-Id: 1ea86b12-79f4-4359-797c-08df21703901
 X-MS-Exchange-CrossTenant-AuthSource: KL1PR02MB6257.apcprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Oct 2026 17:02:55.9189 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Oct 2026 17:03:18.7620 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: nKP58BeLBJnAv4SmrHU8FtgF7Qu5POqYowm+izAYy9mtFEwdKBCDolF5I173gL0PM1D8DzlgyUIOpdCOi9YIqLxZx3Qq4azlZtVmeLJzVeA=
+X-MS-Exchange-CrossTenant-UserPrincipalName: 4mmm910uYmzHH8eh/gwEMzguCM7xtG64knEd14vf7Ae/RkyAQ8HJnN8yTB/wMeSXkZBaN9ASV9RdvfOR6u9W1TlvreikDI0m46qtxHASifU=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYSPR02MB7371
-Received-SPF: pass client-ip=2a01:111:f403:c406::3;
+Received-SPF: pass client-ip=2a01:111:f403:c405::5;
  envelope-from=bin.meng@processmission.com;
- helo=OS8PR02CU002.outbound.protection.outlook.com
+ helo=TYPPR03CU001.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -146,32 +141,283 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-PolarFire SoC has a 2MiB L2 cache, so the maximum mapped size of
-L2LIM should be set to 2MiB too.
+The SDHCI model processes the first ADMA descriptor batch inside the
+command MMIO write, then resumes pending batches before every later
+SDHCI MMIO read or write. This makes register access perform bulk DMA
+work and can delay a status read even when completion bits are set.
+
+On the Icicle Kit, U-Boot uses ADMA2-64 and CMD18 to load a roughly
+19 MiB FIT image from SD. It can report:
+
+  Timeout for status update: 00000001 00000001
+  Timeout for status update: 00000003 00000001
+
+The status already contains the requested Command Complete bit, and may
+also contain Transfer Complete. However, reading the interrupt status
+first executes a pending ADMA batch. The MMIO read can therefore return
+after U-Boot has reached its one-second polling deadline.
+
+Turn the existing transfer timer into an ADMA-only engine. Starting an
+ADMA command arms the engine directly, and each timer callback runs one
+bounded batch before yielding. MMIO reads and writes no longer perform
+or schedule ADMA work. Keep PIO and SDMA synchronous.
+
+Cancel the engine and clear ADMA activity and error state on DATA or ALL
+reset.
 
 Signed-off-by: Bin Meng <bin.meng@processmission.com>
-Reviewed-by: Chao Liu <chao.liu@processmission.com>
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
 ---
 
 (no changes since v1)
 
- hw/riscv/microchip_pfsoc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/sd/sdhci.c | 143 ++++++++++++++++++++++++++++++--------------------
+ 1 file changed, 87 insertions(+), 56 deletions(-)
 
-diff --git a/hw/riscv/microchip_pfsoc.c b/hw/riscv/microchip_pfsoc.c
-index edd29626fa..cfba2990b6 100644
---- a/hw/riscv/microchip_pfsoc.c
-+++ b/hw/riscv/microchip_pfsoc.c
-@@ -95,7 +95,7 @@ static const MemMapEntry microchip_pfsoc_memmap[] = {
-     [MICROCHIP_PFSOC_CLINT] =           {  0x2000000,      0x10000 },
-     [MICROCHIP_PFSOC_L2CC] =            {  0x2010000,       0x1000 },
-     [MICROCHIP_PFSOC_DMA] =             {  0x3000000,     0x100000 },
--    [MICROCHIP_PFSOC_L2LIM] =           {  0x8000000,    0x2000000 },
-+    [MICROCHIP_PFSOC_L2LIM] =           {  0x8000000,     0x200000 },
-     [MICROCHIP_PFSOC_PLIC] =            {  0xc000000,    0x4000000 },
-     [MICROCHIP_PFSOC_MMUART0] =         { 0x20000000,       0x1000 },
-     [MICROCHIP_PFSOC_WDOG0] =           { 0x20001000,       0x1000 },
+diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
+index bd74c60f72..14c312a691 100644
+--- a/hw/sd/sdhci.c
++++ b/hw/sd/sdhci.c
+@@ -277,6 +277,7 @@ static void sdhci_set_inserted(DeviceState *dev, bool level)
+             }
+         } else {
+             s->prnsts = 0x1fa0000;
++            timer_del(s->transfer_timer);
+             s->pwrcon &= ~SDHC_POWER_ON;
+             s->clkcon &= ~SDHC_CLOCK_SDCLK_EN;
+             if (s->norintstsen & SDHC_NISEN_REMOVE) {
+@@ -348,7 +349,34 @@ static void sdhci_poweron_reset(DeviceState *dev)
+     }
+ }
+ 
+-static void sdhci_data_transfer(void *opaque);
++static void sdhci_data_transfer(SDHCIState *s);
++static void sdhci_adma_engine(void *opaque);
++
++static void sdhci_set_transfer_active(SDHCIState *s)
++{
++    s->prnsts |= SDHC_DATA_INHIBIT | SDHC_DAT_LINE_ACTIVE;
++    if (s->trnmod & SDHC_TRNS_READ) {
++        s->prnsts |= SDHC_DOING_READ;
++    } else {
++        s->prnsts |= SDHC_DOING_WRITE;
++    }
++}
++
++static void sdhci_schedule_adma(SDHCIState *s)
++{
++    timer_mod(s->transfer_timer,
++              qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) + SDHC_TRANSFER_DELAY);
++}
++
++static bool sdhci_adma_transfer_active(SDHCIState *s)
++{
++    return TRANSFERRING_DATA(s->prnsts) &&
++           (s->trnmod & SDHC_TRNS_DMA) &&
++           (s->cmdreg & SDHC_CMD_DATA_PRESENT) &&
++           sdhci_get_dma_type(s) != SDHC_CTRL_SDMA &&
++           !(s->admaerr & SDHC_ADMAERR_STATE_MASK) &&
++           !(s->errintsts & SDHC_EIS_ADMAERR);
++}
+ 
+ #define BLOCK_SIZE_MASK (4 * KiB - 1)
+ 
+@@ -405,7 +433,13 @@ static void sdhci_send_command(SDHCIState *s)
+     if (!timeout && (s->blksize & BLOCK_SIZE_MASK) &&
+         (s->cmdreg & SDHC_CMD_DATA_PRESENT)) {
+         s->data_count = 0;
+-        sdhci_data_transfer(s);
++        if ((s->trnmod & SDHC_TRNS_DMA) &&
++            sdhci_get_dma_type(s) != SDHC_CTRL_SDMA) {
++            sdhci_set_transfer_active(s);
++            sdhci_schedule_adma(s);
++        } else {
++            sdhci_data_transfer(s);
++        }
+     }
+ }
+ 
+@@ -850,7 +884,7 @@ static void get_adma_description(SDHCIState *s, ADMADescr *dscr)
+ 
+ /* Advanced DMA data transfer */
+ 
+-static void sdhci_do_adma(SDHCIState *s)
++static void sdhci_adma_run_batch(SDHCIState *s)
+ {
+     unsigned int begin, length;
+     const uint16_t block_size = s->blksize & BLOCK_SIZE_MASK;
+@@ -956,15 +990,17 @@ static void sdhci_do_adma(SDHCIState *s)
+             }
+             if (res != MEMTX_OK) {
+                 s->data_count = 0;
++                s->admaerr &= ~SDHC_ADMAERR_STATE_MASK;
++                s->admaerr |= SDHC_ADMAERR_STATE_ST_TFR;
+                 if (s->errintstsen & SDHC_EISEN_ADMAERR) {
+                     trace_sdhci_error("Set ADMA error flag");
+                     s->errintsts |= SDHC_EIS_ADMAERR;
+                     s->norintsts |= SDHC_NIS_ERR;
+                 }
+                 sdhci_update_irq(s);
+-            } else {
+-                s->admasysaddr += dscr.incr;
++                return;
+             }
++            s->admasysaddr += dscr.incr;
+             break;
+         case SDHC_ADMA_ATTR_ACT_LINK:   /* link to next descriptor table */
+             s->admasysaddr = dscr.addr;
+@@ -1012,50 +1048,52 @@ static void sdhci_do_adma(SDHCIState *s)
+     }
+ 
+     /* we have unfinished business - reschedule to continue ADMA */
+-    timer_mod(s->transfer_timer,
+-                   qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) + SDHC_TRANSFER_DELAY);
++    sdhci_schedule_adma(s);
+ }
+ 
+-/* Perform data transfer according to controller configuration */
+-
+-static void sdhci_data_transfer(void *opaque)
++/* Run one independently scheduled, quota-bounded ADMA batch */
++static void sdhci_adma_engine(void *opaque)
+ {
+     SDHCIState *s = (SDHCIState *)opaque;
+ 
+-    if (s->trnmod & SDHC_TRNS_DMA) {
+-        switch (sdhci_get_dma_type(s)) {
+-        case SDHC_CTRL_SDMA:
+-            sdhci_sdma_transfer(s);
+-            break;
+-        case SDHC_CTRL_ADMA1_32:
+-            if (!(s->capareg & R_SDHC_CAPAB_ADMA1_MASK)) {
+-                trace_sdhci_error("ADMA1 not supported");
+-                break;
+-            }
++    if (!sdhci_adma_transfer_active(s)) {
++        return;
++    }
+ 
+-            sdhci_do_adma(s);
+-            break;
+-        case SDHC_CTRL_ADMA2_32:
+-            if (!(s->capareg & R_SDHC_CAPAB_ADMA2_MASK)) {
+-                trace_sdhci_error("ADMA2 not supported");
+-                break;
+-            }
++    switch (sdhci_get_dma_type(s)) {
++    case SDHC_CTRL_ADMA1_32:
++        if (!(s->capareg & R_SDHC_CAPAB_ADMA1_MASK)) {
++            trace_sdhci_error("ADMA1 not supported");
++            return;
++        }
++        break;
++    case SDHC_CTRL_ADMA2_32:
++        if (!(s->capareg & R_SDHC_CAPAB_ADMA2_MASK)) {
++            trace_sdhci_error("ADMA2 not supported");
++            return;
++        }
++        break;
++    case SDHC_CTRL_ADMA2_64:
++        if (!(s->capareg & R_SDHC_CAPAB_ADMA2_MASK) ||
++            !(s->capareg & R_SDHC_CAPAB_BUS64BIT_MASK)) {
++            trace_sdhci_error("64 bit ADMA not supported");
++            return;
++        }
++        break;
++    default:
++        trace_sdhci_error("Unsupported ADMA type");
++        return;
++    }
+ 
+-            sdhci_do_adma(s);
+-            break;
+-        case SDHC_CTRL_ADMA2_64:
+-            if (!(s->capareg & R_SDHC_CAPAB_ADMA2_MASK) ||
+-                    !(s->capareg & R_SDHC_CAPAB_BUS64BIT_MASK)) {
+-                trace_sdhci_error("64 bit ADMA not supported");
+-                break;
+-            }
++    sdhci_adma_run_batch(s);
++}
+ 
+-            sdhci_do_adma(s);
+-            break;
+-        default:
+-            trace_sdhci_error("Unsupported DMA type");
+-            break;
+-        }
++/* Perform synchronous PIO or SDMA data transfer */
++static void sdhci_data_transfer(SDHCIState *s)
++{
++    if (s->trnmod & SDHC_TRNS_DMA) {
++        assert(sdhci_get_dma_type(s) == SDHC_CTRL_SDMA);
++        sdhci_sdma_transfer(s);
+     } else {
+         if ((s->trnmod & SDHC_TRNS_READ) && sdbus_data_ready(&s->sdbus)) {
+             s->prnsts |= SDHC_DOING_READ | SDHC_DATA_INHIBIT |
+@@ -1098,21 +1136,11 @@ sdhci_buff_access_is_sequential(SDHCIState *s, unsigned byte_num)
+     return true;
+ }
+ 
+-static void sdhci_resume_pending_transfer(SDHCIState *s)
+-{
+-    timer_del(s->transfer_timer);
+-    sdhci_data_transfer(s);
+-}
+-
+ static uint64_t sdhci_read(void *opaque, hwaddr offset, unsigned size)
+ {
+     SDHCIState *s = (SDHCIState *)opaque;
+     uint32_t ret = 0;
+ 
+-    if (timer_pending(s->transfer_timer)) {
+-        sdhci_resume_pending_transfer(s);
+-    }
+-
+     switch (offset & ~0x3) {
+     case SDHC_SYSAD:
+         ret = s->sdmasysad;
+@@ -1235,7 +1263,10 @@ static inline void sdhci_reset_write(SDHCIState *s, uint8_t value)
+         s->norintsts &= ~SDHC_NIS_CMDCMP;
+         break;
+     case SDHC_RESET_DATA:
++        timer_del(s->transfer_timer);
+         s->data_count = 0;
++        s->admaerr = 0;
++        s->errintsts &= ~SDHC_EIS_ADMAERR;
+         s->prnsts &= ~(SDHC_SPACE_AVAILABLE | SDHC_DATA_AVAILABLE |
+                 SDHC_DOING_READ | SDHC_DOING_WRITE |
+                 SDHC_DATA_INHIBIT | SDHC_DAT_LINE_ACTIVE);
+@@ -1244,6 +1275,10 @@ static inline void sdhci_reset_write(SDHCIState *s, uint8_t value)
+         s->sdma_boundary_paused = false;
+         s->norintsts &= ~(SDHC_NIS_WBUFRDY | SDHC_NIS_RBUFRDY |
+                 SDHC_NIS_DMA | SDHC_NIS_TRSCMP | SDHC_NIS_BLKGAP);
++        if (!s->errintsts) {
++            s->norintsts &= ~SDHC_NIS_ERR;
++        }
++        sdhci_update_irq(s);
+         break;
+     }
+ }
+@@ -1257,10 +1292,6 @@ sdhci_write(void *opaque, hwaddr offset, uint64_t val, unsigned size)
+     uint32_t value = val;
+     value <<= shift;
+ 
+-    if (timer_pending(s->transfer_timer)) {
+-        sdhci_resume_pending_transfer(s);
+-    }
+-
+     switch (offset & ~0x3) {
+     case SDHC_SYSAD:
+         if (!TRANSFERRING_DATA(s->prnsts) ||
+@@ -1521,7 +1552,7 @@ void sdhci_initfn(SDHCIState *s)
+     s->insert_timer = timer_new_ns(QEMU_CLOCK_VIRTUAL,
+                                    sdhci_raise_insertion_irq, s);
+     s->transfer_timer = timer_new_ns(QEMU_CLOCK_VIRTUAL,
+-                                     sdhci_data_transfer, s);
++                                     sdhci_adma_engine, s);
+ 
+     s->io_ops = &sdhci_mmio_ops;
+ }
 -- 
 2.53.0
 
