@@ -4,94 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6429CA5FDD
-	for <qemu-devel@archiver.kernel.org>; Sat,  3 Oct 2026 15:17:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7DD2CA5FEC
+	for <qemu-devel@archiver.kernel.org>; Sat,  3 Oct 2026 15:21:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xD1Tf-0003KZ-SU; Sat, 03 Oct 2026 11:16:43 -0400
+	id 1xD1YH-0005ww-11; Sat, 03 Oct 2026 11:21:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bmeng.cn@gmail.com>)
- id 1xD1Te-0003KA-7e
- for qemu-devel@nongnu.org; Sat, 03 Oct 2026 11:16:42 -0400
-Received: from mail-yx2-x2a.google.com ([2607:f8b0:4864:41::2a])
+ id 1xD1Xu-0005uh-3D
+ for qemu-devel@nongnu.org; Sat, 03 Oct 2026 11:21:06 -0400
+Received: from mail-yw1-x1133.google.com ([2607:f8b0:4864:20::1133])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <bmeng.cn@gmail.com>)
- id 1xD1Tc-0003UJ-Bv
- for qemu-devel@nongnu.org; Sat, 03 Oct 2026 11:16:41 -0400
-Received: by mail-yx2-x2a.google.com with SMTP id
- 00721157ae682-8ab408a38bdso886907b3.0
- for <qemu-devel@nongnu.org>; Sat, 03 Oct 2026 08:16:39 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1791040599; cv=none;
+ id 1xD1Xr-0004ZA-DR
+ for qemu-devel@nongnu.org; Sat, 03 Oct 2026 11:21:05 -0400
+Received: by mail-yw1-x1133.google.com with SMTP id
+ 00721157ae682-8ac9d666d4eso4066827b3.3
+ for <qemu-devel@nongnu.org>; Sat, 03 Oct 2026 08:21:02 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1791040862; cv=none;
  d=google.com; s=arc-20260327;
- b=C1leU8HdWrMyIQay6E8wJBEcFUpInTIEQExGN6UYiWn0C5MmPfdxrK4d8C+Man/lYS
- MzrGa+JpVg0VTbWsEKsKfzV09DMlQ1U2OOsc0XOamAHAof8Dg49ZoQpTIZ1aQryujNHA
- xKrvK4HFPVgiw1/PoiZ/C0xBsj35oVuvioJ2NLgqutFSiElrH2j+tfTEg3rxAtYbLXFT
- 85I4mTp0/lEaXvTKTQUKKVOf2l2ct/hfhwCcUxq6ciQHW4CRqhaKyPmjsxvSIeT5eshe
- 5Dv3C+sgJoQ/MXp3ENsMRgUMcKg6E3Gv4Q4rA33ifQJeWtCd+YujvgpUCSfIglyxHAje
- 4vZg==
+ b=m3icbn99A+XlSpOmfrw1J/i4gAME8+hpqyYjTkZFY/fC7MvF1eEufP6AcYqKsozo25
+ 3+Z0dLVUs9TllO86p3iCYZtmeq8+X48FM0+TQwlMKR62kvUI3UnfM9zHCo4eRyaxT3F6
+ b1d00uLZQxuBISNocO+T5HO1Kes87+ZWxQbeAFV//tOswlLFDsp4PNJsVIxnroAUqNLQ
+ xh3+7rctNZIbMn2gZSWahpy5oHnrnxBpfK2bzKF7hDO/Pl+JxYvORo4wnJMHMMXUv2Gk
+ 8QUeqPnpxPxxU5yp/WrSU7GJzy4p+SD+SwyD33mSe7CQhubycKePsf5OP41a8QFY3Q2C
+ oE8Q==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=jG4fP06KtCkVhnzP9ejS0PCQ44NXt8Tv98QfOTIYTE4=;
- fh=kr+At0rwfIt+O8kcbi72w4HUMWlTNouJf8zBIo/oh3w=;
- b=D9ZXGfGkS7oR5If3X2ffuy6n8Z36W5xQoKdFh7zs+rCuB51C2j0n7TJUsAo1TxoZsD
- u38dHgH7OChN09q7LnAnGB6u/PgQDxg+wlHcxevlt/Noah0qzwy1hgjwpfuOVMCUWFUf
- lVkWEaCn37VpmMUmKzao3RZ9bTkEkPKpzzPg0x4PYpaZRtn06MdANme56ru+/uw17mux
- PHFO76yWqH0lw4czb7QkRmjfQA7trGEYTIAC/y+22dEYF8BV2kzuofwHB1m8ofPZltwF
- LubMN8rXXbNhlsPhHQ+sSq3A6JoLFxWQ/LLQIiKrUeZiE1IgMu83pHV9d7PbmDF1nkfI
- gprA==; darn=nongnu.org
+ bh=aVqCcGVQqQIude+sAkq/xvQYLe7qn8fpvMdgD01ztIg=;
+ fh=dpm8Ep46uZiPvPQc2RA6ni/HVA73g6N6Xs6XUeiOVMo=;
+ b=RTuqP9BPdoSOIYATjr1OrbBH0X1jteAF7PwNI5XwouL3JdxvzPS5oFjMS8M01OeVaF
+ 1GOAUItfKMUxvyeuuYgsw78aJv33ErNx2BmnIwqLWqfctuXy3XGtw3gCxUiHu7JollSb
+ 1vxVTJMPVjKXsyvSywco1vb2XMQyCfXQnaDJ+Zw4inS0dGZLWafbuu6RfQOwWGQWMHwm
+ 21NcixG36G8Vf3uTSt1OwEtX0Iny9IldV/VNdSe7jUdM/dacx3OcT/84gbm/sOe7Iby3
+ dXwr6xBw4GCkeJmk5MEd6uMvxHpWA/rJYqCwWZ+GliMZlXA/Og284Cq+dYRMbKBuQsfk
+ xvXA==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1791040599; x=1791645399; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1791040862; x=1791645662; darn=nongnu.org;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=jG4fP06KtCkVhnzP9ejS0PCQ44NXt8Tv98QfOTIYTE4=;
- b=pYzo4kwU6bxyrO/tXOijI+9ZGFQcPmn7bwsBuAdihI9aAAqKQzak4u3LEl7AGT+z0n
- AdKsWROpxITREUqky5tFsdIO+R1tBQALhK/XPpDXgpFrCq6w2Sw7E/zhnoYw73QylgXh
- wSXMykqEKPke47scOCDQdQWm4OS3y1COG0RGDyKOPa/20byg1WhuF7uHabLrh4ilwagv
- ZkbIkeBn+/CCgGAv4wS12mrvNzOe+4AGgGcgB3MNhhBwjb9unVP/yee7rRP4Zx0w91B0
- NxW1/iMLNH5UVaoexAtgM1h3oS5E+PhFHmbUhx4hfIOf/0Frm1kvAAaNql3B0RQu97Di
- j8/w==
+ bh=aVqCcGVQqQIude+sAkq/xvQYLe7qn8fpvMdgD01ztIg=;
+ b=bP21ZpfijGzinaPCMGz1XT3swURUJRVmK5R5cZ4O1EbIL6V3jq8akrxNY5P7psQbQx
+ 0limuH0NqjuuiRm52IIipZDndw4E8dUfKkxeY0qu1ow9hZ9J1eOuivR3//RTIfYErD2V
+ xgEjun/nlML+re5Et2r5iuULls7AtgstTbmDQiLP5c2m9Gnzjdsy/ZTevXFV0U+GgrgL
+ RaQ1v8XDpA2u5Vg7kFXWskKwOLZvTnt7EnJMKf61myM8fHTbst7RcAG9voarLF57LVDS
+ aq1riP4EprXqZsbzaE1rytmIxMHpR4b0c72evfLxBKIFFDlSatyKlJgeE3rrwdHVbMgZ
+ st+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791040599; x=1791645399;
+ d=1e100.net; s=20260707; t=1791040862; x=1791645662;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=jG4fP06KtCkVhnzP9ejS0PCQ44NXt8Tv98QfOTIYTE4=;
- b=mBDyavgEOU7//vAaAVyiMMylkWyGUnFF0kcvROw4cXlI4AkL77ewwFfrLUY/wwq/uV
- PasDEMy9xBfWgygAFSelpzFRKkopZlNUoWcaQ9R6GvoJJCqMqg8+BMT992VYRN6drM07
- fyrx4e21qpoHIiqg84mml/5PERS7bqrxGOSvErguyvgtNaeYS6kiNOa7WsNphN8We2Hs
- Ns6X9nsVqUAt+HEJlla8nBFYBl80Vsbe2eXud5rj96OceKHaX1inXxRmn+PF9HMQSyoH
- vwEYBf+9lfFyomXQEmW+fjlgyVx/eLAQtt+zZQdjyTgTKV2yfupSHyftKYzvutWVwosJ
- YzAw==
+ bh=aVqCcGVQqQIude+sAkq/xvQYLe7qn8fpvMdgD01ztIg=;
+ b=GalLhFFnwU2wcDGWES4IP9uwg7IUFT7o2u6cvgOl+9MhY01cjjl1SQdLaHIdbh+B86
+ 9pHu5RmUj7UST/djhUJWZNfT73+74VbX4axQciATbb/f4LhXNWNAB6J9WClmXwMnUnhA
+ 2JAm0VFqsTpygyNxjWYIrbZoP5rac3ntFOcKRzJMGmd0wIns8hwg1UDN981dX31+YDwb
+ PC1ZCMoWHfDhkODC6/HcWiHwx/SmOsPCM/JPIPvBqi7TuDIzyu9cRXAzPQ8u7bH5CDEZ
+ 0xL/CgL6VpZ1XcdPi2mhG2Pl8lxQHIjFpdmEyPzgAXqmTA1E5U4VCNf5ijhkJtyyp2xB
+ KcCA==
 X-Forwarded-Encrypted: i=1;
- AKwUvByQP0gFfeu6hqiVH+DNFl8XnyY8wnzNr4aa6JbD6HSOg1FbwvVT95Fy9VNJ3/ttwToimiZ+qy+Szkfb@nongnu.org
-X-Gm-Message-State: AFq9FYL89pUpYIiaWmkQm5U4HCs08/qiVxRJrNIA++9iseJ4A65cuHNf
- L3wXmQbDn2xP7/DYUyl3HCRy0AVyWqzqeUHs+xeoNRtOnGvO4hp6vAWckmHgSi6XVHyiqtOP0fY
- USNWmoz+j3l5OaTnGkrhv7Wv8Ex129Ys=
-X-Gm-Gg: AYBFou3CBCULZyHMCYqVfxoIuwapPqyyaBB/1gY7SfSWInJLcX1YriezjQmsuPDigeg
- UecapEcQElWvPlgPOScGB8lTTABc0qU+/U+vp7g+Mu5STo1fIM+CnEKWyMNXVSL3GoCl1LELgzF
- JS/ITiSBH54Fz3Zl5rNwIN/n8tc9cvibj5xHo1RLubgTZZ+l5+BEzCFtUV6MepoI0inm84zteFn
- 5cJHTqA78EbVzJzifCSYdcMwJrqFJ81x5XJBvoPKztTpaC8X0RuDwoAN81bwM5C3DGnK/ow3zM6
- 642rc6Ku3qTH9dgr3rLa3VYfLQgRQ4G/Lq8SuIadeBnnzaA35oFyIKAE+38eW5dC9+Q66MuQmjE
- Cwxtw7GacmIzDW1k=
-X-Received: by 2002:a05:690c:386:b0:8a7:d69f:3c31 with SMTP id
- 00721157ae682-8ae39bbaa1cmr23747337b3.9.1791040598979; Sat, 03 Oct 2026
- 08:16:38 -0700 (PDT)
+ AKwUvBzMQ0QbTefUeq4/h5pOEmpyPzyaEZzGEIJjL2XE4MBy7MXZMkPOzR1m5+4wRTcdftAcXuKBGDrJIhVh@nongnu.org
+X-Gm-Message-State: AFq9FYLDkfFFmC4HOpGsGSnfeaQeKZgQYdCZH4xjuK+DOFO50KtOTjd/
+ JYsUCo96nZ9NPnCcksbTDqJuLmo6H9Bg5DCVcHQE9rN/Ifi3QDAn2E2/QQAGPHebinExr3yD7rF
+ I2uqXyp3+ZA1/HLr8Q4SJ9JVctgC+Oqc=
+X-Gm-Gg: AYBFou3+Y9XThld2FM91NbOaH9Y5ZJwPmGOFHc1wT84DcikW0vwyhMogXP7meHOfSc4
+ QIsrsSYNYyl86dUuL6sf/y6GWXyul0gxiop4TNnFGCNb/8cIjBykTZMUZYy5yH0whySE4A/Q2Rr
+ FuNM2MFHeG+X/Wr+OoLUslkbDy+Sd4eqAG2zpImMHDwJ3Xzze5Ro1/K0nLoWXGeixtKEZsgHnce
+ CZoaNozR8v501BjKahqejJmJr0jBIdAJMlprr/UUWBMDDZfsfevTN8MOcduFlLF/03zubl4iR0+
+ 6Cz2PL+Hski6CZTGCC24+ot8c0IEvL4mZPFu0F4033cEVjgHh7bJPeb+ojUZp7pAucZdNX8Akc1
+ kvtjmZZ2mHBRBOf0=
+X-Received: by 2002:a05:690c:386:b0:8ab:4a67:71a8 with SMTP id
+ 00721157ae682-8ae94ca2e24mr8982357b3.38.1791040861893; Sat, 03 Oct 2026
+ 08:21:01 -0700 (PDT)
 MIME-Version: 1.0
 References: <20260904155758.3833179-1-bin.meng@processmission.com>
  <20260904155758.3833179-21-bin.meng@processmission.com>
- <20260930-disparity-announcer-a6bc30a7084c@wendy>
-In-Reply-To: <20260930-disparity-announcer-a6bc30a7084c@wendy>
+ <20260930-railing-carving-18e0ea44025a@wendy>
+In-Reply-To: <20260930-railing-carving-18e0ea44025a@wendy>
 From: Bin Meng <bmeng.cn@gmail.com>
-Date: Sat, 3 Oct 2026 23:16:27 +0800
-X-Gm-Features: AclHuK_nMolFv8ZiMBiFcHxIAIwGGbH-0hM8MRlVFGGfzgv5fVD1BICvNqlNGbY
-Message-ID: <CAEUhbmXM_ZQSyRpjUmr83WBFLbasAQ410ybm=vR3TmpbP=4V0A@mail.gmail.com>
+Date: Sat, 3 Oct 2026 23:20:50 +0800
+X-Gm-Features: AclHuK-nJI7_eRZKujaT2bMOS_Ovew74g44AL9fpTrgJY-SLdsoheRewzShXmZ8
+Message-ID: <CAEUhbmVj6frnpHgddhhP8dZsW43cUrW-pDOhYB9na=N89WMtMw@mail.gmail.com>
 Subject: Re: [PATCH v2 20/24] docs/system/riscv: Document Icicle Kit HSS boot
 To: Conor Dooley <conor.dooley@microchip.com>
 Cc: Bin Meng <bin.meng@processmission.com>, QEMU <qemu-devel@nongnu.org>, 
@@ -100,14 +100,15 @@ Cc: Bin Meng <bin.meng@processmission.com>, QEMU <qemu-devel@nongnu.org>,
  Sebastian Huber <sebastian.huber@embedded-brains.de>, qemu-riscv@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:41::2a;
- envelope-from=bmeng.cn@gmail.com; helo=mail-yx2-x2a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1133;
+ envelope-from=bmeng.cn@gmail.com; helo=mail-yw1-x1133.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,9 +124,7 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Conor,
-
-On Wed, Sep 30, 2026 at 6:17=E2=80=AFPM Conor Dooley <conor.dooley@microchi=
+On Wed, Sep 30, 2026 at 5:46=E2=80=AFPM Conor Dooley <conor.dooley@microchi=
 p.com> wrote:
 >
 > On Fri, Sep 04, 2026 at 11:57:39PM +0800, Bin Meng wrote:
@@ -199,17 +198,6 @@ res
 > > +the RISC-V bare-metal toolchain supplied by Microchip SoftConsole to b=
 e
 > > +available in ``PATH``.  Build the tested HSS version with:
->
-> What's the reason that this is using 2024.06 by the way? Why not use the
-> most recent release of the HSS?
-
-This is because the Buildroot v2026.05 release's defconfig for Icicle
-Kit board refers to v2024.06 version of
-'microchip-hss-payload-generator' which is a tool from HSS, so I chose
-to use the same HSS source version to build the HSS to match the tools
-version.
-
->
 > > +
 > > +.. code-block:: bash
 > > +
@@ -238,6 +226,98 @@ o a raw
 > > +at eNVM offset 0x100 and does not contain the boot header with the ima=
 ge size
 > > +and per-hart reset vectors.
+> > +
+> > +Build the SD card image with the tested Buildroot version:
+> > +
+> > +.. code-block:: bash
+> > +
+> > +  $ git clone https://gitlab.com/buildroot.org/buildroot.git
+> > +  $ cd buildroot
+> > +  $ git checkout 2026.05
+> > +  $ make microchip_mpfs_icicle_defconfig
+> > +  $ make
+> > +
+> > +This produces ``output/images/sdcard.img`` with three GPT partitions:
+> > +
+> > +* An HSS ``payload.bin`` containing U-Boot.
+> > +* A FAT partition containing ``boot.scr`` and the kernel FIT image.
+> > +* An ext4 Linux root filesystem.
+> > +
+> > +The QEMU SD card model requires a power-of-two image size. Make a spar=
+se
+> > +4 GiB working copy and relocate its backup GPT to the new end of the i=
+mage:
+> > +
+> > +.. code-block:: bash
+> > +
+> > +  $ cp --reflink=3Dauto output/images/sdcard.img sdcard.img
+> > +  $ truncate -s 4G sdcard.img
+> > +  $ sgdisk -e sdcard.img
+> > +  $ sgdisk -v sdcard.img
+> > +
+> > +The Icicle Kit firmware device tree in the FIT image describes 2 GiB o=
+f RAM,
+> > +matching the machine's fixed RAM size. The command below keeps ``-m 2G=
+``
+> > +explicit.  Attach the image as an SD card and route both board serial =
+ports:
+> > +
+> > +.. code-block:: bash
+> > +
+> > +  $ qemu-system-riscv64 \
+> > +      -M microchip-icicle-kit -smp 5 -m 2G \
+> > +      -bios path/to/hss/build/hss.bin \
+> > +      -drive if=3Dsd,file=3Dpath/to/sdcard.img,format=3Draw \
+> > +      -display none \
+> > +      -serial file:hss.log \
+> > +      -serial stdio \
+> > +      -no-reboot
+> > +
+> > +HSS writes to MMUART0, which the command records in ``hss.log``. U-Boo=
+t and
+> > +Linux use MMUART1, which remains connected to the terminal. A successf=
+ul
+> > +boot proceeds through HSS payload loading, U-Boot, the Linux kernel, a=
+nd the
+> > +login prompt from the root filesystem on the third partition.
+> > +
+> > +Known limitations
+> > +-----------------
+> > +
+> > +* The tested HSS v2024.06 flow contains 2 separate multi-hart startup =
+races
+> > +  issues which is still not fixed as of the latest v2026.04 release. A=
+ boot
+> > +  may therefore stall at the very beginning or after successful DDR tr=
+aining
+> > +  during the OpenSBI/U-Boot handoff.
+>
+> Some symptoms would be nice, so as to differentiate between the known
+> issues and other potential problems.
+>
+
+Sure, will add in v3.
+
+> > +* The SD card model requires the raw image size to be a power of two. =
+Keep
+> > +  the backup GPT header at the end when resizing the image.
+> > +* The machine does not generate an Icicle Kit device tree. Firmware bo=
+ot must
+> > +  provide one in its payload or FIT image;
+>
+> There's 3 options actually. Either the HSS has one itself, there's one
+> in the HSS payload or the software brings it - be that in a fit
+> image or part of a U-Boot binary.
+>
+
+ditto
+
+>
+> > direct kernel boot must use
+> > +  ``-dtb`` as described above.
+> >
+> >  .. _HSS: https://github.com/polarfire-soc/hart-software-services
+> > --
 
 Regards,
 Bin
