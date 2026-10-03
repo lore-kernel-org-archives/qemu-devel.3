@@ -4,28 +4,28 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89C7ACA5FED
-	for <qemu-devel@archiver.kernel.org>; Sat,  3 Oct 2026 17:07:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 799CACA5FED
+	for <qemu-devel@archiver.kernel.org>; Sat,  3 Oct 2026 17:08:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xD3As-0000Me-6D; Sat, 03 Oct 2026 13:05:26 -0400
+	id 1xD3Bo-0002xV-Ok; Sat, 03 Oct 2026 13:06:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1xD39M-0007JD-BC; Sat, 03 Oct 2026 13:03:57 -0400
+ id 1xD39T-0007Lc-FE; Sat, 03 Oct 2026 13:04:01 -0400
 Received: from mail-japaneastazlp170130007.outbound.protection.outlook.com
  ([2a01:111:f403:c405::7] helo=TYDPR03CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1xD39K-0007Ds-Sy; Sat, 03 Oct 2026 13:03:52 -0400
+ id 1xD39Q-0007Ds-NH; Sat, 03 Oct 2026 13:03:58 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=RiAZgdldMcS32RB6dwWX2wcyi+9ijDFuP3PwUksq/WeznXFTWGR+7baDxfRiteV0tYh/sx/sV776isOQ2+DB0r6rax2sZP5Pj3w/60BYMdZsI/A/lP+sQDxdj7+yK7X84z9dFxMq4JMbs1HJq0cDvD8Etfk5pxpJOQdQLnIXk+/Xw2ETXeKUGNjqmozeVTZDRFmOqzP7lPnwfaNQQcIeefU472RFZXMZR0afMPxvqS8WoXzb1c4a2HAcEy2x+vpVKJSIJhQQwQqeZgrKFpvGQZGxdkTYFw2pAd2zxcfXszVIyTGX4+cSCtBR0j6HLbOZGklEzJVzklLtLYbRv33KUA==
+ b=HW4zFq3g+8u2u3CYGQQwKuc4dRUNshT2LrAz0Xfxuu8+3VQJVbH7HTog9cx8eFllTd66+C4sty8FPCeeYJsnNYMkNjWGYp4QJc23xQoPLeR6z58561N27zsXYokSM4gf2sj6hxXx+IUEqggFxvxmYekyzXL/rHAyMK/81MenDw1EcP/YwNUA95Flg3dhkYWMfpd6EzxmC+53HL8/uXknEKvAXCd/b/oAjnwMuzqkciLA/9qaEZha50Y8Y3eCkl61ssfH+wiWh5ILer3Bav8ivGrYFSeh6l6L/8jDbhEY4GqWuVotnthCgPzJHwIep/C9ybHwzqTgDH9yP7FmeXHeRw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=jhS/fFdjwqmRcQp0JDNHwkK4SiImM83ZLq1a+oQkVCg=;
- b=Y9dHS+w2Uppgqw+uVSpa7XNW6I66K7BBOCxPIzClWU1d2dxCRg4FhguMQschF/t+sVcN4msHv4cnZqHlh1oOajBFEp4M1Rw3qirkpqoCCUm+K0+nahPCl2pKeIPOTJP2u9D96gfGiy4VYGfIu0YmZet4flDDDQg7yYgQNypiKySUlbctCHshAT8hwH79TrneTuP20C/BEZLzToR1Xr8nJc4FQTxobtu5fxG92lO1kFYiQl+5foAj+KnqR8e/ERZOTRTtlEsx4cMOJHQit1H0X/RQQiRq4cpaiXNYmL3BeslghK4AnnMWwV6Uk7gllVyiyZMTM7RyquZOf2MTca7Qcw==
+ bh=7kU65P7L6y4LNJgp0wA8UCT8S23elaLvYcl/IHaX+DE=;
+ b=r6IvQYSFuKZ3b6XXyfG+6PhigQ+fHLok/SBLdpQhmuB2ti/zLAUN+44akAggzeHQuSo9YR9iAgtPrCw9if45IgqYZzZmNGFDrpuRYmjZi2yxs2AGNhaBs9s3u6I5bvWI0J5Vc8dkfj+X5NatnvIFBsw06xfubHyQIwJuJKYS5oQS1r0z/zAse4V/lXICzzfoszwV0mC/YAzjAAOIcKkZgYkLSdfMugUDUexxbJxnPp2rAIije+UhIb7AcZZbXdnTS7EqjGRxeU/4t3Wjqi/yitcZ7G5KdwobZKN3E/pCwXEAbrw0AzdO4D8kf+ju8ETfUQXiF0nH8odKl3Gbhibvww==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=processmission.com; dmarc=pass action=none
  header.from=processmission.com; dkim=pass header.d=processmission.com;
@@ -33,26 +33,32 @@ ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=jhS/fFdjwqmRcQp0JDNHwkK4SiImM83ZLq1a+oQkVCg=;
- b=qtVbU3eN321ma4EteI+/lfHrfxB6i9ywN6egFhjq3U3L1fhSt0cBb/P7nenjNlVgIUw0of6tef4444TvwnHPXP+X657kSipzjNxKXxAJRBEk1kEjMdTkT1+HaxdyLXWyNpTwIPb3+itt6OL8qT5jMqFOHIPxS6tjbKSTI7xsVte3Gcw9wT98bdeYqlYOoDqbjX8m37tRsNQz0IyCP82Fruf9NH5ND5hmUSmQGi3oQYGcn6Fe/CvhhbSh9wezuWugAJqDJiua6Hl659nCKl+YDGTvc2b2zW/xSf7yieR6bSMipKfU97rmY+1X9km3I7drqMvl7DcnOVSzyhrlme9oWg==
+ bh=7kU65P7L6y4LNJgp0wA8UCT8S23elaLvYcl/IHaX+DE=;
+ b=jl6kk18V+4HW4WwxVr2iNAI/FbwBFIEf78yEX8HOdAeaLQt/GeGFnqprvIozTaFTcosnYSCfiBn8EvjesUocRkZ3UaDu3n/vQFHlZ8mmRWjvvu54VnRhCcZR1ZY8PpgEF//Z1F683yf/cQ+IaoYVGGHSxugALSQkO8tmtOv+OFcxEB+BRQqARunW14ZxAzM/wV3RcH8kYz9gYZ3P+4GbBX9G+O8E3SgeAgCZVqKJU5fR/lBplf+e9A7eVkEpmwQVqliAfviGajSmNtakDMbvv3/q0FE6ku2dxfB1mTKOc6UiHP4A3q+VgmLp0b+iff+F3kVSwI/50xYEYNJBq28vLQ==
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=processmission.com;
 Received: from KL1PR02MB6257.apcprd02.prod.outlook.com (2603:1096:820:da::11)
  by TYZPR02MB6993.apcprd02.prod.outlook.com (2603:1096:405:29::11)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.472.20; Sat, 3 Oct
- 2026 17:03:43 +0000
+ 2026 17:03:50 +0000
 Received: from KL1PR02MB6257.apcprd02.prod.outlook.com
  ([fe80::ecf9:e832:8196:215]) by KL1PR02MB6257.apcprd02.prod.outlook.com
  ([fe80::ecf9:e832:8196:215%6]) with mapi id 15.21.0472.016; Sat, 3 Oct 2026
- 17:03:42 +0000
+ 17:03:50 +0000
 From: Bin Meng <bin.meng@processmission.com>
 To: QEMU <qemu-devel@nongnu.org>
-Cc: Conor Dooley <conor@kernel.org>,
- Sebastian Huber <sebastian.huber@embedded-brains.de>, qemu-riscv@nongnu.org
-Subject: [PATCH v3 18/27] hw/misc: pfsoc: Honor service notification requests
-Date: Sun,  4 Oct 2026 01:02:08 +0800
-Message-ID: <20261003170232.2450916-19-bin.meng@processmission.com>
+Cc: Chao Liu <chao.liu@processmission.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Conor Dooley <conor@kernel.org>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Sebastian Huber <sebastian.huber@embedded-brains.de>,
+ Weiwei Li <liwei1518@gmail.com>, qemu-riscv@nongnu.org
+Subject: [PATCH v3 20/27] hw/riscv: pfsoc: Correct PolarFire SoC DDR aliases
+Date: Sun,  4 Oct 2026 01:02:10 +0800
+Message-ID: <20261003170232.2450916-21-bin.meng@processmission.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261003170232.2450916-1-bin.meng@processmission.com>
 References: <20261003170232.2450916-1-bin.meng@processmission.com>
@@ -64,56 +70,56 @@ X-ClientProxiedBy: TY4P301CA0100.JPNP301.PROD.OUTLOOK.COM
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: KL1PR02MB6257:EE_|TYZPR02MB6993:EE_
-X-MS-Office365-Filtering-Correlation-Id: 93b77f93-af1a-42ab-204b-08df2170475f
+X-MS-Office365-Filtering-Correlation-Id: f648d47d-5bad-4a35-30c1-08df21704bb1
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|23010399003|366016|1800799024|376014|18002099003|22082099003|10067099003|56012099006;
-X-Microsoft-Antispam-Message-Info: P+wV2iRWH+aP7TSPLMSKifo05blcpphonio/H7ddJEefZHolvg6BP06NDpv9vYWJbX8EceY8EXbbu/3TzQaQBiI2BdS1KYfkQW1sUvZqxkowIC3cmgh8/tX9AkSM6Uxxscshr5nDe6+kJpH1w6ZJr1GpspXKYPOuTFtRsZaecxA89FdPlScNfa8boA+Xs/b03aL9hUv/h/ODv88l4k0uNDMvUVfKgk9BHiO+Yis3n84QBaEpijts+7wEHpPskkO3CfaXDVdjlBBnmdnYuglFswkWHH3sisuKu22DCR3mEPa3I9tA3RtLHj97YXdPWYMpnDwJO2JhnruDRy9GUJl/YiNe3YJYVS7d7li43VU9PQXqLj4EePwtn6mUhtCmsGdROseiD1DAeDCBPhFRW6GPaUrhFxIlUQw3d/NN1EblfU9tEbqDtc1tPeHpyWqraYi+WWhylGkMUKpnIV/Fo6ftz8pr8m6nFn1qVdo6CDLO/x2+evacGKkX/2pumdGUdeJWPbbJIk85uW6a733dVW1w/ccNR3kDCHfIDIuXAaYsiLTzAy+Rj9IOxZOeZlMR5tRHEB+hk2NNAAfAkJ1/7R1ihbY+0F9/WcNN+qvujU+uDXF6K0yAt3OXIcwqoRyMoyvY3RDmi0K1eOgSGQZ3VYyb+vadZnJhWF7i48gock7Dhs4=
+ ARA:13230040|23010399003|366016|1800799024|376014|18002099003|22082099003|6133799003|10067099003|260925022911599003|260925021911599003|260925021311599003|56012099006;
+X-Microsoft-Antispam-Message-Info: uM9/cMHDWL9Lz6BjxI7q9AOo52V5Y+3oWsOyE9Hns2+xMa7OVSQoGsMj/LhYc+x4SNRnSEDC3gk6TXueyjThOftiTKHeVTZDn0ty9jkKGSPuz7M8jVG7y7uBv1Ua89YMz0MyS7TGupqqciHcy7rJs+cfAik5yDBDfnQizLPTxS6RExmw76Cp8jL5L7ozZgcUywog4a5PaMrPNWqqowcA4buOnD3ACMN0NeXTYAp2f7XxnXb6ta96c+dEFhZJQMesge3phyW8CbvOjVGgQ0WYwBLAH4CqOe2XmHUISAI8jZHYw6cnllz+lUR/jYMLWxKKBbGURplgfK03wA5nt+DhXf0DWtM6RMOr7DHQpNPMmHL9ed2taOSKMlL++MdrLvg1lXHi4/K9w06J9KBd+hLtl6PoKZvnVz59fwkZDQ3EHRZgzajppntFzvj7VEv5azlqmj/FaxD2c+qZprnVakAym5cM6e76SZFHanmV7UO6PDMh292NGe3hYQ6sqEpWLhKO5DE4m8/EjEej/wmMAs4HsM4jBbYKSi7xOXgQPupz0IWWe9OxrFECas2vVVeCLWcCUHAO0Tj7wl1tQNUqrbf5Mtdj4jgafluJPlAATl/qyp3lBJ10mWQDq2O+tFm5bdSbFR1hHtuFCBpATEWTLYob0fnuec/ekcBmO0GDS/e8rK0=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:KL1PR02MB6257.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(23010399003)(366016)(1800799024)(376014)(18002099003)(22082099003)(10067099003)(56012099006);
+ SFS:(13230040)(23010399003)(366016)(1800799024)(376014)(18002099003)(22082099003)(6133799003)(10067099003)(260925022911599003)(260925021911599003)(260925021311599003)(56012099006);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?sfv2jUA/KmLneHUGy53iuqiCXIUbr5lqHtXPlNVkIvd3nCgv8vi8eUZlQxwv?=
- =?us-ascii?Q?hEkpn2VsKLazVCwVw8iqRk3p/36Lb8n8XaX+KkgzAWlAhIgVk83atTHwdCJw?=
- =?us-ascii?Q?oKOmAaWZFiSZ5nEKAQj3EhShNTZbhjknEYVlGeeGCVeH4RhfT8nKOlrCZEMa?=
- =?us-ascii?Q?plBAqa4wjFxM25Qo1dB9TMKekXT9c9qHy+2SGW0ulnwqI/Z1i83GVsv9Z+nK?=
- =?us-ascii?Q?fFwxYVQiGx/HHlpE/o1gXHOj+dGxCH1BGZbJfBvXdhmr3TlYOpTOpFkhFIpf?=
- =?us-ascii?Q?kXEvZ/15F/I44hcfa9IwxBxXLFmIQCSuqo6cYUBmyZOWkMx9IDIGa6F1Wa0T?=
- =?us-ascii?Q?W6V4Hz8tvkHtzL59l7f2u0akXylhWmaDyjAwrcVuuwpDwJEN7aRwYRHXk5tY?=
- =?us-ascii?Q?LkcaKK2gdn3GLl8RNtbIh6MIYnmyRPmr6WzKJaYL1qHcLw3die2H0YGKYis2?=
- =?us-ascii?Q?gbiVRULlDcHjM54vA5NDmuXKsKqSOy0I/uupbuy/irwbMvuYS5cad7S1elR8?=
- =?us-ascii?Q?snTlGs6X51hebDBPUbvVRe+UiLrC0l5s9/1GDnqlToUlcgFMrFKWYGNLqKbb?=
- =?us-ascii?Q?5gfKtK8xClosHy4o52Bm1nkSkIEiybWmCn550H1kp/p+oG8yTP24JicIJPb9?=
- =?us-ascii?Q?rRoQuScnXD3+KfAPF1GX/F5nDdzfYkRLCgkM000dOxl2UyWwLhyX3/deRz74?=
- =?us-ascii?Q?HwZLeCbsO75JEN4aFkzXl+1H6M+0XGcNOp/Notxw8ngic6cTwLjX35mlb08R?=
- =?us-ascii?Q?w0yt80g9hxIziW4ASdtG3Zv23pepzzDD3KrSDqcni/fAYlajtpD9uQmayzF5?=
- =?us-ascii?Q?BRBvruLS+hqUHSVBW9ZQ6gYbsMbPQljv1e+maglKaBFKTZWhH9f96efHtIjP?=
- =?us-ascii?Q?G4rxqRqZJDZPm+n8Ov+a31Moum5lPxzrX+uEYghwKBu4W6Eyg503pqbcaH6v?=
- =?us-ascii?Q?gOXfnRpsfZ4TV4JIGdHA1cxeab2KiEAlVxKuKrfHJyxP6RteBzhmLEFT6wPO?=
- =?us-ascii?Q?e2BhvzOP927jVDICawWLuoMFpRwLkY5qdg3d9mqH1A+Xp9SZtoX/jRFjDkhk?=
- =?us-ascii?Q?e3NnamhUZ56tnQ8YSMY0mQWgy25b/v1aUGDzH5SpX9sku5XKX7GlhUk+03oi?=
- =?us-ascii?Q?4UJ+x1eJP3qKpk+TalJ+V3e9X6vNogDZtJVrjS2Wzuf9hHqt3r3y1owTgakN?=
- =?us-ascii?Q?jX9+Mi7HbbmpGwRViJ299Vt1gDcozMVRYQX7jBOI096fOmOJZbPwcn0SzSiM?=
- =?us-ascii?Q?UDXZ/Yp4+aAIuyt2TKP8+7F2u2OuBYtWNwBUNTlzjS30rQqlDvIBedM4+UPQ?=
- =?us-ascii?Q?iR0HzmwYpNXv4hxp93Nm9Y0m8AUZRexerMitCamWorEnFmh2wOIrikhLbs5z?=
- =?us-ascii?Q?GAtTHbH7uXBKtVHGrT3SIuQDXSyrOmy/9u4cQsTH7KBdY9oQY4h0/lP337o5?=
- =?us-ascii?Q?EMj+3YbEclISZekgaT2yZpxEfBNiIm33vHyDTFox7a/Gz2tQWFC+aEcHpNeT?=
- =?us-ascii?Q?Ewu/YfqUmyfcr4+Cja5CmC2UIQHut22q23pc4Fm4hchVk2Kl69/LH2kWVmLS?=
- =?us-ascii?Q?WKNmw6i3TN+g7hxj7SZFJFWnpjfYXAOu5fGVmabWKPQ+tPO9Q6jDcydi9Jq/?=
- =?us-ascii?Q?8TVU+fFHkZON+XVkppCo1gcpsUXr3ZElOfwcdvQ3oN2hv8y8LZ28AdJNVUQ+?=
- =?us-ascii?Q?p4sGuirSUyWSm120Fe3cFQcrDCl0CuNwEjFR3+hmoZCHlmqAv/vW0/6dckRe?=
- =?us-ascii?Q?fS7bziKEN1UYkTRbYZghvBjlSURMcfw=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?innT41JqPhUl4XRij3SB/ql2lWaPc0i8lU2bl8RVMJk4WglgtfyJo7sLJ3Gv?=
+ =?us-ascii?Q?3yYG2pRYLpDWRgm44cYttiRPwQ6Fcm29qv5qj9Xa0lUExLDFwYhPQfVn+WZp?=
+ =?us-ascii?Q?GtC5+pjMcP2GmatnFc0AlutpXVw8UVtzVGHHAKu4DVb42MKVNLmny9kcAw6X?=
+ =?us-ascii?Q?JH4YNcRCR4b9c41VFwzrCRTkxcssCQV0PZ2cqQgQXkV2CBbTYRsTNxyTj/De?=
+ =?us-ascii?Q?B4xlVbHnJeNGlKuFNwfOkv61mfij+O9QkGEI/VxZ3vWEVLPTfAO7vCtoi+Tv?=
+ =?us-ascii?Q?MltVb0ZZf3xl7ENfmfVt/t5AXNun2mXbuAAopWGU9a68pfz53eD+XHq9RoCF?=
+ =?us-ascii?Q?ANicJm2g4YQdVpI7rHMc+qvIlrkP8O/QyE4e48q07QdcCFURWvzNarpTCizJ?=
+ =?us-ascii?Q?ExG/OVeqkC2A2wbxtu9jLs7fjRxCASo9FqDly2cs3LSp2Sg2H1qquDYK+J9n?=
+ =?us-ascii?Q?K6EG2vZwL5tsG6s7giaCGpKxseZxKdcb5G4K0OKjuv/Nyxh8nqZqvic1l76n?=
+ =?us-ascii?Q?pMfw2MY/bykf1n8KldeWJ1UtUQ4X/Dr8vvyJ1nhn3GPfmvGpxtOUh6OnY3d5?=
+ =?us-ascii?Q?fUEdXtzcslcLjasNnIy1BebK/GVOI9UFvK+uI2UcP0waVuvmMbN225lZgODN?=
+ =?us-ascii?Q?1E6EiWViKSmb37TBHia12xU3uj8YOwj8tbkcWHlFGXJRNEZO9+np1FOrRFaO?=
+ =?us-ascii?Q?hwd5p+Bj/+7GQ1nWV0HzcvWr+oFEzJyr7Le1+PctO2mJ53A7n1in07ntBuZU?=
+ =?us-ascii?Q?rkwcYWt5V1kxqbIokNBu0nQa8UCMVZzI12lw2oNg8iDsIVlBsk0J09ctFYx3?=
+ =?us-ascii?Q?hWV7KWaXP3jVXsFtVCtXujEz9EHF9tDHuIqpfaj1G5DvqzEwBdLII1RPHfV8?=
+ =?us-ascii?Q?r+rfXDtdb7lSUN63pOIfx/rYcc2D5uTD0TGDEi0ke0e0qrLAoiiN9WDo6zb8?=
+ =?us-ascii?Q?oFaTQmyTW4+ghHeZdIXPodj680gf5mvQ2HUIiCrsJsOI+6fL+gDYFKWAnJT/?=
+ =?us-ascii?Q?Qz/FUA8HuTnSO6CSVhMVzZ/UQyqAGN3ujX97VtT0War4ExYs/Y7e4lyRx3FK?=
+ =?us-ascii?Q?R08F2CPHY+UsIm3Xg3NEtX/+qnKkxYX2e3bZLJAQCZ0Z40hkgV612592q+Lz?=
+ =?us-ascii?Q?AKBnCMJC30mocYNHdmNVsCk3l99QuUZDo3Ph3Ta624Hdm3orOVxfwxO4f/AM?=
+ =?us-ascii?Q?jLE5e+vfSgJpshgdpZ1o1OM5AeMAQN/JD6emA02q35a/SpwZjs7DFlWU5xab?=
+ =?us-ascii?Q?t/sP1IXcFDW75w39AyYJLDLzn33ZHgIsqEu5a0WDRFeCB//GTV9VF5gzFL7q?=
+ =?us-ascii?Q?vyKhUK2sUkTNqPnXPPSV4sEABWzDwYS8lUfdQD0qGkpBoRDKfErls6xX6jWg?=
+ =?us-ascii?Q?6B+6xo/IzihdgILMZP4AXl3TKjQIC0p/6ipHA/8tDzCAdt6Rn5QU3+Crdg3b?=
+ =?us-ascii?Q?OAu12DDEoWYSo0bnKUKPNnuCrb0wa6NdtlKrEyLgSgw2L1FpMTYkNn4hmBfz?=
+ =?us-ascii?Q?ODGWiHA2/5L6CnWO4QrBmsb3o3LeaZaOdnC1gnqhblcqWDs0/chGZEUKc65r?=
+ =?us-ascii?Q?bMcbAinaXsUUpVyGu9+RfAO6NjQEe+YHZuSP957UXnpgL5YgRSQKydNM4QJN?=
+ =?us-ascii?Q?L55TuC9P3COsGVcm4QSxkwAZVf2QytzFTyRxUaCNdq4vi8I9UJJUjzMFYnph?=
+ =?us-ascii?Q?kW1P4hcC4fRdEGoYeSvwz/VLIX/gzlADh1l+KwIg7/ML0yzNHkpJd1XGrHa1?=
+ =?us-ascii?Q?jinScK+s8R+ZiTy3r5T2G8gUzrRCXKQ=3D?=
 X-OriginatorOrg: processmission.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 93b77f93-af1a-42ab-204b-08df2170475f
+X-MS-Exchange-CrossTenant-Network-Message-Id: f648d47d-5bad-4a35-30c1-08df21704bb1
 X-MS-Exchange-CrossTenant-AuthSource: KL1PR02MB6257.apcprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Oct 2026 17:03:42.9031 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Oct 2026 17:03:50.1177 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: BsLBLPym2//ZI9O/4S/IqxwergocOT7UWbHdEmx27HotwwUpEu1FqSfGVYc1YK6SJSKT544Y7icIDlLtonm1KUV5CjcP7PZ0h9X8czG1VXg=
+X-MS-Exchange-CrossTenant-UserPrincipalName: zt7Va613TKsoOVllT0U43j88QG7+qDOuiDcEzTfSvtWBTmw5/0SY4mchPN2ATl5GFJF41PiEI8QnD+JeQf0GwtiUhx0XuMAvEp9bM4/jEHc=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYZPR02MB6993
 Received-SPF: pass client-ip=2a01:111:f403:c405::7;
  envelope-from=bin.meng@processmission.com;
@@ -140,41 +146,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Polling firmware requests system services with REQUEST set and NOTIFY
-clear. Raising PLIC source 96 for those requests leaves an interrupt
-pending that Linux can receive before submitting its first request.
-The mailbox interrupt handler then has no response buffer to fill.
+The Icicle Kit reference design maps the 32-bit cached and non-cached
+windows and both 64-bit windows to the same physical DDR from offset
+zero. The MSS Configurator User Guide describes configurable physical
+DDR offsets, so other FPGA designs can instead arrange these regions
+sequentially when their device trees describe that layout.
 
-Raise the completion interrupt only for requests with NOTIFY set.
-The serial-number service already checks REQUEST before processing a
-command.
+QEMU models the reference design used by the tested HSS and Linux
+images. Treating the high windows as only the portion above 1 GiB
+leaves their valid memory nodes unbacked with the board's 2 GiB of DDR.
+Map both high windows over the full machine RAM and qualify the source
+comment to describe this reference-design configuration.
 
-Fixes: 592f0a9429b9 ("hw/{misc, riscv}: pfsoc: add system controller as unimplemented")
 Signed-off-by: Bin Meng <bin.meng@processmission.com>
+Reviewed-by: Chao Liu <chao.liu@processmission.com>
 
 ---
 
 Changes in v3:
-- Split the NOTIFY fix from interrupt acknowledgement wiring
+- Update commit message to mention the DDR aliases is modeled following
+  the Icicle Kit reference design
 
- hw/misc/mchp_pfsoc_ioscb.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ hw/riscv/microchip_pfsoc.c | 20 +++++++++++++++++---
+ 1 file changed, 17 insertions(+), 3 deletions(-)
 
-diff --git a/hw/misc/mchp_pfsoc_ioscb.c b/hw/misc/mchp_pfsoc_ioscb.c
-index 850125c8b4..bde1917c10 100644
---- a/hw/misc/mchp_pfsoc_ioscb.c
-+++ b/hw/misc/mchp_pfsoc_ioscb.c
-@@ -247,7 +247,9 @@ static void services_cr_write(MchpPfSoCIoscbState *s, uint32_t value)
-     }
+diff --git a/hw/riscv/microchip_pfsoc.c b/hw/riscv/microchip_pfsoc.c
+index 38f4e7d799..eea2895a0a 100644
+--- a/hw/riscv/microchip_pfsoc.c
++++ b/hw/riscv/microchip_pfsoc.c
+@@ -554,15 +554,29 @@ static void microchip_icicle_kit_machine_init(MachineState *machine)
+                             TYPE_MICROCHIP_PFSOC);
+     qdev_realize(DEVICE(&s->soc), NULL, &error_fatal);
  
-     s->services_sr = status << SERVICES_SR_STATUS_SHIFT;
--    qemu_irq_raise(s->irq);
-+    if (value & SERVICES_CR_NOTIFY) {
-+        qemu_irq_raise(s->irq);
-+    }
- }
+-    /* Split RAM into low and high regions using aliases to machine->ram */
++    /*
++     * Model the Icicle Kit reference design, whose four CPU-visible windows
++     * alias the same physical DDR from offset zero. With 2 GiB of DDR, they
++     * map as follows:
++     *
++     * CPU address     Attribute           Visible size   DDR range
++     * 0x0080000000    32-bit cached       1 GiB          [0, 1 GiB)
++     * 0x00c0000000    32-bit non-cached   1 GiB          [0, 1 GiB)
++     * 0x1000000000    64-bit cached       2 GiB          [0, 2 GiB)
++     * 0x1400000000    64-bit non-cached   2 GiB          [0, 2 GiB)
++     *
++     * "Low" and "high" describe the CPU address windows, not the lower and
++     * upper portions of physical DDR. Other FPGA designs can configure
++     * different physical offsets through the MSS segmentation registers.
++     */
+     mem_low_size = memmap[MICROCHIP_PFSOC_DRAM_LO].size;
+-    mem_high_size = machine->ram_size - mem_low_size;
++    mem_high_size = machine->ram_size;
+     memory_region_init_alias(mem_low, NULL,
+                              "microchip.icicle.kit.ram_low", machine->ram,
+                              0, mem_low_size);
+     memory_region_init_alias(mem_high, NULL,
+                              "microchip.icicle.kit.ram_high", machine->ram,
+-                             mem_low_size, mem_high_size);
++                             0, mem_high_size);
  
- static uint64_t mchp_pfsoc_ctrl_read(void *opaque, hwaddr offset,
+     /* Register RAM */
+     memory_region_add_subregion(system_memory,
 -- 
 2.53.0
 
