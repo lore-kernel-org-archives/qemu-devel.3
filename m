@@ -4,128 +4,130 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76315CA5FF0
-	for <qemu-devel@archiver.kernel.org>; Sat,  3 Oct 2026 17:08:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28814CA5FE6
+	for <qemu-devel@archiver.kernel.org>; Sat,  3 Oct 2026 18:30:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xD3As-0000Pm-Lj; Sat, 03 Oct 2026 13:05:26 -0400
+	id 1xD4Uh-0004lH-Vg; Sat, 03 Oct 2026 14:29:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1xD39G-0007GL-Dk; Sat, 03 Oct 2026 13:03:55 -0400
-Received: from mail-japaneastazlp170130007.outbound.protection.outlook.com
- ([2a01:111:f403:c405::7] helo=TYDPR03CU002.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1xD39C-0007Ds-AC; Sat, 03 Oct 2026 13:03:46 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Pth5xM0dm4o3AD1DqwLJHiKSQO1w/33qxbj9EiscigFekX5xWi++roiHc9SNJuEJ5cU4EqF8tr77SD/9xo/rNyZE6EdNZIbhfFhN4DYkZpYBFtJ88SjMv2cU2hny4KLNeMArP62IFEBB416DK0q4M7JNepaM6ARO9YWEnH9RnQsYxZQoSx6zQD//IAzENuc1KmEomgNbmA46wVEQsL4is5yPfGSwwPAkQ56VRrYhFxAvch4ZJfmdKMAZnD316wmRnCc+ruJp0S4r3uKPFuWfbd/t6ko9QkxpjQ76mekdqeOmsl28B2cCUOveGMk+/CbIzyx2x8WaxjPfejm6Y2Ta+w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=+ptKTNmPcNCKuxW70KmXI7j27gJCTxhu92faVWTurgo=;
- b=jdW69gcTPRt/u9qT3BatpoIMZ/74ZAqpo6PiAHic43GvoBSy4aWXIYAjjARrrvbgW0WEl0w5SushyAMYtBC7Y7HvZhcAB1NFuUaFAeDPiE8vA81YRImAeH6KxeMNZ2B/p/gEsyxHwf3a39lWK6ck3F2vJD41CSGHGWpJwabA7oun4TmamfPSHw9erySQeft95yH+bj/PCB/KeGv69XNluXDQw33pUGHYeyrArgWxYvLczpRzTRsJA7IphkMHQtDsge016oQ+THqts+26O/ivO410y8lV/Ky1Y7nkYYeKHSDEjKIlAXyr4F56D4Mf3tSBfHx6s7VCl32rxiXqJsz/3g==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=processmission.com; dmarc=pass action=none
- header.from=processmission.com; dkim=pass header.d=processmission.com;
- arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=+ptKTNmPcNCKuxW70KmXI7j27gJCTxhu92faVWTurgo=;
- b=rjGPQLAjRoovoCTa61zuxYE/oIPhsxyfWPR0XdwJgyJFGwQb/R7ADimEAhnrsXJ+2RN9MPr5BI+Ow/x6GaeS2Te/12r+SdnVP4mpqCph+nUtOQHMrxz2zW3wIIcnzeK7U7JDy6eWMH9yUhgrUdoQbMK4F2Pi8kDTkBTi1qMxO8Eq0XdpiRX5AkZIicajfE0+4vHMk4XVlMMB2OHccfEfY88j0CQtjDEHXh/UUECkG76RUBBXEJIi6TkRnIrRUqv/i+o5DwON+lCb8mF0eeX8Lr/PeR8LL9E9oAIFb9aExiO5tOEp11TAXeb9EdLIdkXJLxWrw90Xpc21AGAoSIboFg==
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=processmission.com;
-Received: from KL1PR02MB6257.apcprd02.prod.outlook.com (2603:1096:820:da::11)
- by TYZPR02MB6993.apcprd02.prod.outlook.com (2603:1096:405:29::11)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.472.20; Sat, 3 Oct
- 2026 17:03:38 +0000
-Received: from KL1PR02MB6257.apcprd02.prod.outlook.com
- ([fe80::ecf9:e832:8196:215]) by KL1PR02MB6257.apcprd02.prod.outlook.com
- ([fe80::ecf9:e832:8196:215%6]) with mapi id 15.21.0472.016; Sat, 3 Oct 2026
- 17:03:38 +0000
-From: Bin Meng <bin.meng@processmission.com>
-To: QEMU <qemu-devel@nongnu.org>
-Cc: Conor Dooley <conor@kernel.org>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Sebastian Huber <sebastian.huber@embedded-brains.de>, qemu-riscv@nongnu.org
-Subject: [PATCH v3 16/27] tests/qtest: Add PolarFire SoC RTC coverage
-Date: Sun,  4 Oct 2026 01:02:06 +0800
-Message-ID: <20261003170232.2450916-17-bin.meng@processmission.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20261003170232.2450916-1-bin.meng@processmission.com>
-References: <20261003170232.2450916-1-bin.meng@processmission.com>
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: TY4P301CA0100.JPNP301.PROD.OUTLOOK.COM
- (2603:1096:405:37b::14) To KL1PR02MB6257.apcprd02.prod.outlook.com
- (2603:1096:820:da::11)
+ (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
+ id 1xD4Uh-0004kl-7O
+ for qemu-devel@nongnu.org; Sat, 03 Oct 2026 14:29:59 -0400
+Received: from mail-ed2-x0c.google.com ([2a00:1450:4864:33::c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
+ id 1xD4Ue-0001sj-4Z
+ for qemu-devel@nongnu.org; Sat, 03 Oct 2026 14:29:58 -0400
+Received: by mail-ed2-x0c.google.com with SMTP id
+ 4fb4d7f45d1cf-6ad186afdf4so898549a12.0
+ for <qemu-devel@nongnu.org>; Sat, 03 Oct 2026 11:29:55 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1791052194; cv=none;
+ d=google.com; s=arc-20260327;
+ b=YSwjkwROJmwtLM4WBs+tMuWurie1nevb+/cLmvtz3zvwY26WpRNr/7zvpI3wAiVfDy
+ haD+6GZ0fpfRsHNeDSvd6icDjefj8AVin34ipo+QJ1JIhqStk+ITW1nwWQms0sj8MesA
+ R92jd2wDToYkWe2u3tgQ0CNbGR9BvVZcntTjSLe8lZ4dUCT3sU3+wzd3UB7idQ/XHqr8
+ kln4IJf591bHcg+JGr/PWZcY37tAZ4Vk0Mdkrc2prwpT6Z2TNbLsNd85O4AoREWP3RgJ
+ 9dS84V1D76Xb3EYMlkA1HM8OC9IAVTk2+JwOzWSvTJPuKcZK3OUpqpLTiuKkdaY5EY4z
+ Tnxw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :reply-to:in-reply-to:references:mime-version:dkim-signature;
+ bh=aavMZIbZWpGlKktOrSx9tqWfG1KAdeRoEj+9e7gT4kc=;
+ fh=yCn3svWm7dlgq8+uRF/4EBc2o8widAfGV1LJYBKhJFI=;
+ b=At5BQR7FlB9vQJ3pBjPAEZtxM/0S3zhcQ8ItmwbmqMqZOHKsbe4mmmO4YyIgQzuhdu
+ RD1PPrfWm5LqExpMLim/QUZSiIB2BKfn8QpLPbLWPwWrxPXTZiBz/G/iHNH+S35KBvAq
+ /y4EIRjUKZhsTyyhLlyfccClAqsqTnaCE6n2tavJ9CMHrNXUVXggBhQUREMigVx0Wj+g
+ yVmRyCRW6gL7JpSKlELOPmq81KpTn2mclGez/NSvOxTDITUCDzCkVwJIMNBAmesX9inZ
+ sjR8VSCWQFDm47aYLye3+e07vllfKLC6Hw/ADsL6XzTcqeL2NvhamhrXtR1H6oJaqXhh
+ K8Kg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1791052194; x=1791656994; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:reply-to:in-reply-to:references:mime-version:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=aavMZIbZWpGlKktOrSx9tqWfG1KAdeRoEj+9e7gT4kc=;
+ b=hRA57yCUfQ5DinjB09xrXylKb2snflMjTmnFKfuOCS4FadbkpATN7sxrJJcGIGAJpL
+ KsURgGU6HS/kVsORgok9bERE/QzATtEQffBM9IeUAuDGJfL6NC8xeq9OVdHa93Nrt8/a
+ QlMZsew7/LffVv7ljTNvxRmXn6XL6/SooYAaHs6sfy8amTGPRZ1YG9EoyJ60Gw+pVZ6J
+ 9IBDLty95/HbTgjiEYPyLWMY1lf1Hmpt7d05+1oh+eF6Y89MhLIAvT1CXhZb0/aqChH9
+ VmJM1Wf7uz+exLjfVRWQL+HqqTXtwm7ObglTbbZmwBytI40ZMr3aR1C6vaEnvxO9DStn
+ fLCg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1791052194; x=1791656994;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:reply-to:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=aavMZIbZWpGlKktOrSx9tqWfG1KAdeRoEj+9e7gT4kc=;
+ b=wt01P3PRqrrfR+repEww19o58NmO8uYuGElHoEfVEMdLZGegiURxUpZffhCT/VAtxX
+ OS8F5DAeX0LNzl5DEEoFOBysqbAt5H8ahuciLHUxuJ8ikeWH0xybyx1s+l8mYOuWa0wL
+ tZ7orJB/KJVCJTA6+4h469q8RzAs+9MVvYhfvhycx643L5tM8K/L5hnC/bfjFuNA7LLf
+ K55vEzrzR2vYB6CKPw/hWgPT3Qg7oxhqr5P4EAoL1rJ1CWTXV64DOlH+RFU9YawYAlAa
+ 6IsZP9Qc0DR/9lnXu7aRubkH0SisiFWKP7ACskRGfGL43rcBphkuUJHe0tlwtDqLugYB
+ ziMA==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBz4sURL4UTEcT0wMev8BjaFA3mC8SJbqBfdTC8P9p0q/TB8zDe1qWWfHzgVeoAhe2q+7JbdOcvAfm1L@nongnu.org
+X-Gm-Message-State: AFq9FYJ6BrpcJbvVFPvxTcvKvbEKQmtw4JpNhE4ovVv8bSiX8dNBXkVW
+ idWBxyWanS6Xvf2wreoHznTSZf4P0Oa/Ob4r7LHYbgFKI2F7lKLhrWaQGT0hSfqFw2hEd8S4IDg
+ KGjgM1kITFynnpmgfmGIkh4T0UVxTd1U=
+X-Gm-Gg: AYBFou2fFEuuyjsceaDENmrelc93Pl0xmJ3cU96BN1bbc5t0zTssn/SHEtaZzxRaaxb
+ oealIrRf5WcTf5EQMpEdWcQmENUp1I7gVQit2LCoM99IFWFCcsX103BJz8vUrtmEaOZ/FTzmA3E
+ WBUWvZdhWbcVCylMqJwMr0vGNJ/Qq6N1etGEWqMIxUt3drr2usAqS8g7E8GJWm8DChNJvnRRrTF
+ QKlziCg31Sdk8AJRDiKIDEal1hvwWFd5VlVVTntsvE+W2VJ2GY1660LEx0RmUXELQc0WjLflV6d
+ s0DgVhrYPXGwWlnP0cDSYXnSegDcQugevQ7Qn+8+EKBcVzs49ibHb0E=
+X-Received: by 2002:a05:6402:350e:b0:6a9:aff5:c6d3 with SMTP id
+ 4fb4d7f45d1cf-6af9e30ea8dmr4925328a12.34.1791052193702; Sat, 03 Oct 2026
+ 11:29:53 -0700 (PDT)
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: KL1PR02MB6257:EE_|TYZPR02MB6993:EE_
-X-MS-Office365-Filtering-Correlation-Id: 148b822b-8290-4c99-9865-08df217044ea
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|23010399003|366016|1800799024|376014|18002099003|22082099003|10067099003|260925022911599003|260925021911599003|260925021311599003|56012099006;
-X-Microsoft-Antispam-Message-Info: A+r/Wd8n5WLZKYwEbd0PnM2M41OOKWodfQEunEEu0FcffrB0ZBiLoDq0oU2OBBxdg+X1b+c/AeFTTuqmrJgBqG75VfHLd2WMu+BhtnEmEKaBCLrRjr2lHxuMQDN5v1mELTpoOCQ9dSnKpFCSEHMSlYb233xYeu/HHNtS0GlfGwjCL2Pb6+2bq1dogumF3SQEUL2avdNFCqnlITy81V8JDQFFwZKtm2HiMdPk/xyF5EHY5aMVxJZuwNf6RE57qAXVWclU9k6SCiQ68GtmQgegNIPNQkq+TtEiVVhZgrvXrp+k0MDGTn+F/fzAq529NdbTO3Gx0J5Dw6kQfasvQ00Ax7gQDzMBy1qhI0wSWTYg575v7izSOiQ2eWf1fhYIWmicLIEAMe4X0VYNk7aW+XAQxgxPBzGTcaTrjeSNKtWh62+6B9gLcKklIv5bTFQr792p5MFgklU5VJDV66zul9dviP0sFWSKIw7HCxnCEOCM2HwCBtD5kWqLDdchOaentJ7ltJYyhohadNoFXI8TEnwiTog0hytyTj4dknB31QnlM9zAP4/kXohvOQior1t9/tObkbFq4KJyI1yPxxBtxxVaCGz/O4aR4bR8IHZHFD60UKTPuBQbkPEC7mcycwQBgQOxdt7iugz3ckD2JpIWrDOAN07zQoKG5aCpcTivyyXAcdk=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:KL1PR02MB6257.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(23010399003)(366016)(1800799024)(376014)(18002099003)(22082099003)(10067099003)(260925022911599003)(260925021911599003)(260925021311599003)(56012099006);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?g7rBdIS6UhMvdjEhtH1aHHxN2IJBrRl8j3tuIIf/1bPa6Hva/uw7osnpPx4W?=
- =?us-ascii?Q?cm1A/C/uI/1Bcc2qjfhCrAwFY694a2ILRN7e3eWa5iH6plfdR9xNHPx+4tr1?=
- =?us-ascii?Q?GoQc0H+JLx5Zuw969v7Wnri1JsHE8BFIbNsbHN4K84D9Ee+TYzBZX1IXjRjC?=
- =?us-ascii?Q?NWuHlP7yHsPlRr6dVXoQ7IwMGFrOI8hGKWw237+0tsFyg2LwEt/0L+UiZens?=
- =?us-ascii?Q?CGlHnZPyGMAXLZH1h8NtG4mxQs2McEmko30Y7lnnNrqYtgX0EPAFI6DuY/9h?=
- =?us-ascii?Q?Gfo2amItjG3CDvY22rm8Is1QWkhj+v75XtQb1SshmdflHo7eLIKfoTNZVioe?=
- =?us-ascii?Q?AgRpRlnSgH0WxMiAHmfcaE8TUXGhMf+PbAvxNMZKFwgaN+l41WxaOVHZbuhm?=
- =?us-ascii?Q?pda1S0lLpwvqz/bTF4zu7Sa3+MXIUJAfEoWlO7LPjsf+/pTs+UqJ9MF8F0JS?=
- =?us-ascii?Q?0D4k5TlKcBC2hFLYOZQEGCSxUSZZ85/VsKYQGHJVBte1OcUmGS7k8I4IREl4?=
- =?us-ascii?Q?3qEAmrw6y8w8uhqv0M6NFseuwFiLjwex99E40Z5yaRl7iok/8gNJLRUetR7c?=
- =?us-ascii?Q?gQl1hn3u67nSnXF+jZiRCFSbUGQsxkjw8tpxVOQuP9/+l7RyCY7Heyz0j5Qi?=
- =?us-ascii?Q?y7uUIDNwrC/Z61vpzwWE+lvZwhm1vdFj2d8921Lz/XftYdwmbxY1dTQvbWNw?=
- =?us-ascii?Q?gHcsSfWn4H09a531AedfCCGcPP7/9QvTga3Ssf4Q4f7b3Xdn9EZNXroYd8FD?=
- =?us-ascii?Q?xn9/UUD5ApUcfKpk8RXkvmSHAMp0VVXCB/njX7XcpUQbudETVeuES1GpyGVW?=
- =?us-ascii?Q?knOifvi73cxAej/k+NgL5MKadxNR8pTvNwKCy3gZQuMOXH6smeP9VnQO3eZ5?=
- =?us-ascii?Q?c7wLLMBX/yu2sGHJ2c9sh2v8rYgIFfV/5/8xw1C8z/j2x3K63lx648PfA0Xn?=
- =?us-ascii?Q?SaIVJz71ZWVYv04A4D+OBH1Krshtcj+/kxaDT/ppFmAZBIXNFFOsmSK5Sfwp?=
- =?us-ascii?Q?0U2xI/f2Me6MJRPBCxmJ/bKy52Bt3kUnBkyfgJ0V9UPVmtMBq/H3HP/UB7m3?=
- =?us-ascii?Q?a/IKhT7KQMgPfU/Xjk0qZcW5nZVUulQyyKBAEYcB7p/iNNM0THnqLzkB2RQA?=
- =?us-ascii?Q?/IbSaVvoJSBF//Ry4OfnbQ8I9RCOu5XDZCN5JjeGDaUmJHNhFMIjJFaCtt9h?=
- =?us-ascii?Q?4QVLVWv5UFkWT4U7pkMQZa6BbRyB1NjSCG+pTcqD6agnnBOnUVSI3rRIXUkx?=
- =?us-ascii?Q?4sy8BoOqFYe9p/0GO3b2NC46bwA1lizkETR6/6G4+SQvcuRgguEWMLesdphs?=
- =?us-ascii?Q?CgBWC5daplXcNMKltdfpSx5nU9zj/h233A6zYWZx9DkyMXv/ZpplcG9JCR0Y?=
- =?us-ascii?Q?swTMJhjKnHasmZb9p/qm1JxEQV4rfqTYmZPaA98wGRq2O3aMuOfjM2BvadtO?=
- =?us-ascii?Q?R63gILiQurcpirQeDDZiYI+1BcMGGxnWD4nMhpj32lJEcx8wCuB6h57Acyhm?=
- =?us-ascii?Q?A1r41UP3S9FG/uS1EXnbYTrz1oLDro5v4UF+BdHy6Vh6DUF8V9CPb/EdZxet?=
- =?us-ascii?Q?jFL8EBjoTeLOkJSiSofHujgpf3x/Y1pJFN7+IflL7G1uaTm2YKvYkctlGGgH?=
- =?us-ascii?Q?vPCG2FWV0cB7H95C2/Lz84IpPWT+reFYQ6Ph7QQqTSqMHria7+SjsHNbyBDK?=
- =?us-ascii?Q?0dLwgsGrKss8Jz/LRoYW0EZK0+UeKJn2PmhfK2MXGtrd7pXrr4ewyd0mhXcH?=
- =?us-ascii?Q?d1iDoYZpl7i0ji0IFaoX9K+7h9/GuUA=3D?=
-X-OriginatorOrg: processmission.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 148b822b-8290-4c99-9865-08df217044ea
-X-MS-Exchange-CrossTenant-AuthSource: KL1PR02MB6257.apcprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Oct 2026 17:03:38.7447 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: WejiYc3bdqhUpHpefOLL/c0jb4wbvGPWA6OMkMkBD7cPCkvpY33tWv0iUiRkTVy+lmdEgtgDwXp61xzSMRVC0qLfEITxoiUj4UEtnogj0+E=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYZPR02MB6993
-Received-SPF: pass client-ip=2a01:111:f403:c405::7;
- envelope-from=bin.meng@processmission.com;
- helo=TYDPR03CU002.outbound.protection.outlook.com
+References: <CAE2XoE8q3LYJ-JCTbRBk4iPdUQdRE8zzmOgiZ=HEXDL78iw8UQ@mail.gmail.com>
+ <26b0d44d-0322-4ceb-a47b-747fc52c61b7@oss.qualcomm.com>
+ <CAE2XoE8VyCpPCqRVFArBn_dDsyMw8vrSJxWMhKq17btZvO2n6A@mail.gmail.com>
+ <b02db9e2-b348-4011-a98d-122e9d9f17e5@oss.qualcomm.com>
+ <ar6a_uDw9OeLng6c@redhat.com>
+ <6bf4dad5-4fa2-4df1-b6b8-d594dbd3842c@oss.qualcomm.com>
+ <ar6lw3jAcnVej6vK@redhat.com>
+ <557262df-b8e7-49b5-a245-ae46b8885b30@oss.qualcomm.com>
+ <ar_YVfWv9EWHKVD6@redhat.com>
+ <CAE2XoE9o3o6KUZyvBgSqEL14ahVp1SmFAVp1j_C5K8pVE9dRog@mail.gmail.com>
+ <ar_dK-_KUS3h2dkL@redhat.com>
+In-Reply-To: <ar_dK-_KUS3h2dkL@redhat.com>
+From: Yonggang Luo <luoyonggang@gmail.com>
+Date: Sun, 4 Oct 2026 02:29:41 +0800
+X-Gm-Features: AclHuK8Z7MbwXTglDsi4sJCplfH2M-0eQHDxRwJHWei-5kgnaGlr_fS09fPvkJk
+Message-ID: <CAE2XoE-+3o9pwx=fdc0MYVUb58K1kxh4USmVBYjinu5PAz+UAw@mail.gmail.com>
+Subject: Re: [PATCH v3 01/10] machine: allow -M name to differ from QOM type
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
+ qemu-devel@nongnu.org, Chao Liu <chao.liu@processmission.com>, 
+ Eric Blake <eblake@redhat.com>, qemu-arm@nongnu.org, 
+ Paolo Bonzini <pbonzini@redhat.com>, Markus Armbruster <armbru@redhat.com>, 
+ Alistair Francis <alistair.francis@wdc.com>,
+ Brian Cain <brian.cain@oss.qualcomm.com>, 
+ Stafford Horne <shorne@gmail.com>, Peter Maydell <peter.maydell@linaro.org>, 
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, Fabiano Rosas <farosas@suse.de>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ qemu-riscv@nongnu.org, 
+ Laurent Vivier <lvivier@redhat.com>, Max Filippov <jcmvbkbc@gmail.com>,
+ Song Gao <17746591750@163.com>, 
+ Philippe Mathieu-Daude <philmd@mailo.com>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Laurent Vivier <laurent@vivier.eu>, Weiwei Li <liwei1518@gmail.com>,
+ Zhao Liu <zhao1.liu@intel.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:33::c;
+ envelope-from=luoyonggang@gmail.com; helo=mail-ed2-x0c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -138,388 +140,153 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: luoyonggang@gmail.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Exercise RTC register masks, binary counter, upload and stop controls,
-alarm and wakeup interrupt behavior, reset state, and PLIC wiring on
-the Icicle Kit.
+On Sat, Oct 3, 2026 at 12:35=E2=80=AFAM Daniel P. Berrang=C3=A9 <berrange@r=
+edhat.com> wrote:
+>
+> On Sat, Oct 03, 2026 at 12:27:08AM +0800, Yonggang Luo wrote:
+> > On Sat, Oct 3, 2026 at 12:14=E2=80=AFAM Daniel P. Berrang=C3=A9 <berran=
+ge@redhat.com> wrote:
+> > >
+> > > On Thu, Oct 01, 2026 at 11:56:13AM -0700, Pierrick Bouvier wrote:
+> > > > On 10/1/2026 11:26 AM, Daniel P. Berrang=C3=A9 wrote:
+> > > > > On Thu, Oct 01, 2026 at 11:08:17AM -0700, Pierrick Bouvier wrote:
+> > > > >> On 10/1/2026 10:40 AM, Daniel P. Berrang=C3=A9 wrote:
+> > > > >>> Even with the current per-target binaries there are countless
+> > > > >>> devices linked in which are incompatible / not usable with
+> > > > >>> certain machine types. A new multi-target binary with a union
+> > > > >>> of all devices will just be a bigger example of a scenario that
+> > > > >>> already has to be dealt with for today's binaries.
+> > > > >>>
+> > > > >>> So if we have that assumption that we don't need to do device
+> > > > >>> filtering, at that point, a --target option doesn't have as
+> > > > >>> big of a role to play. The machine type code knows what target(=
+s)
+> > > > >>> it wants (1 or 2 targets depending on if there are 32 + 64 bit
+> > > > >>> varaints. The CPU model the user requests (if the CPU is not
+> > > > >>> hardcoded by the machine), determines 32 bit vs 64 bit.
+> > > > >>>
+> > > > >>
+> > > > >> How can we deduce this information (bitness or target for existi=
+ng
+> > > > >> machines/cpus)?
+> > > > >
+> > > > > It would require that we introduce a new field in MachineClass
+> > > > > that returned that information about what target a machine is
+> > > > > associated with.
+> > > > >
+> > > > > I note the SysEmuTarget covers both 32-bit and 64-bit variants.
+> > > > >
+> > > > > It might be better use QEMU_ARCH which correlates directly to
+> > > > > the TCG targets, rather than the traditional binary target
+> > > > > names ?
+> > > > >
+> > > > > Likely the CPU class would also want to declare its list of
+> > > > > supported targets.
+> > > > >
+> > > >
+> > > > QEMU_ARCH only represents base architectures, and not variant, so
+> > > > SysEmuTarget is the right choice.
+> > > >
+> > > > So, we would need a list of SysEmuTarget for every cpu/machine that=
+ is
+> > > > target specific, since one could be available for variants of base =
+arch?
+> > >
+> > > Ok
+> > >
+> > > > @Daniel: how do we deal with machines available for all targets lik=
+e
+> > > > null? We would need a way to ensure all machines/cpus are tagged
+> > > > correctly, in an independent way from "available for all", without
+> > > > having to repeat all existing SysEmuTarget.
+> > >
+> > > Or could the 'none' machine simply report '0xffffffff' for the
+> > > list of targets so it includes everything today & in the future,
+> > > or specialize "0" to mean everything ?
+> > I think for is_avaible give a
+> > bool target_is_any(const TargetInfo *ti)
+> > {
+> >     (void)ti;
+> >     return true;
+> > }
+> > is enough. then we iterate the target list we will found every target
+> > support for it.
+>
+> Yep, that would work.
+>
+>
+> > > One idea I had was that when define the 'virt' class type we could
+> > > have a way to identify whether it is linked into the traditional
+> > > binaries, or linked into the multi-target binary, and from
+> > > that choose what name to register it under. eg
+> > >
+> > >   "extern bool multi_target;"
+> >
+> > This idea already resolved,  see commit
+> > https://gitlab.com/lygstate-qemu/qemu/-/commit/3342c04451bb21174e6bd53a=
+7040e4929008b9d0
+> > The idea is
+> > bool target_combined_binary(void)
+> > {
+> >     return true;
+> > }
+> > for multi-target binary, and stub for single-target binary
+> > for single-target binary
+> > bool target_combined_binary(void)
+> > {
+> >     return false;
+> > }
+>
+> Ok, yes, that works, even if that feels a bit like overkill
+> vs a global variable !
 
-Also verify RTC state and pending interrupt migration, including streams
-from QEMU versions that predate the RTC device.
+Forget to tell, the overkill is intentionally,for multi-target binary
+is we want to compat the future that qemu-system-$arch is symlink to
+qemu-system,
+then we will need
 
-Signed-off-by: Bin Meng <bin.meng@processmission.com>
+bool target_combined_binary(void)
+{
+    return program_name.ends("$arch");
+}
 
----
+>
+> > > and have two .c files, one setting it 'true' and one 'false',
+> > > and link each to the respective binaries. So we know statically
+> > > before main() has even run, what mode this binary is intended
+> > > to operate in.
+> > >
+> > > > Also, for compatibility with existing binaries, should we accept -M
+> > > > $arch-virt also? I feel like it does not hurt and would make thing
+> > > > simpler to switch between existing and new binary.
+> > >
+> > > Yes, that's another viable option. Always register '$arch-virt' and
+> > > only register 'virt' for traditional binaries.
+> > Oh, I see, for single-target binary, the "virt" is QOM name, and for
+> > multi-target binary.
+> > "$arch-virt" is the QOM name? So this series needs to consider this. ma=
+de sense.
+>
+>
+>
+> With regards,
+> Daniel
+> --
+> |: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+> |: https://libvirt.org          ~~          https://entangle-photo.org :|
+> |: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+>
 
-(no changes since v2)
 
-Changes in v2:
-- Expect the documented hardware state after RTC reset
-
- MAINTAINERS                       |   1 +
- tests/qtest/mchp_pfsoc_rtc_test.c | 315 ++++++++++++++++++++++++++++++
- tests/qtest/meson.build           |   5 +-
- 3 files changed, 320 insertions(+), 1 deletion(-)
- create mode 100644 tests/qtest/mchp_pfsoc_rtc_test.c
-
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 2ea76ad1cd..12ffbd560e 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1810,6 +1810,7 @@ F: include/hw/misc/mchp_pfsoc_dmc.h
- F: include/hw/misc/mchp_pfsoc_ioscb.h
- F: include/hw/misc/mchp_pfsoc_sysreg.h
- F: include/hw/rtc/mchp_pfsoc_rtc.h
-+F: tests/qtest/mchp_pfsoc_rtc_test.c
- 
- Shakti C class SoC
- L: qemu-riscv@nongnu.org
-diff --git a/tests/qtest/mchp_pfsoc_rtc_test.c b/tests/qtest/mchp_pfsoc_rtc_test.c
-new file mode 100644
-index 0000000000..ed96c15faa
---- /dev/null
-+++ b/tests/qtest/mchp_pfsoc_rtc_test.c
-@@ -0,0 +1,315 @@
-+/*
-+ * QTest testcase for the Microchip PolarFire SoC RTC
-+ *
-+ * Copyright (c) 2026 Process Mission
-+ *
-+ * Author:
-+ *   Bin Meng <bin.meng@processmission.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qemu/bitops.h"
-+#include "qemu/bswap.h"
-+#include "qemu/timer.h"
-+#include "libqtest.h"
-+#include "migration/migration-qmp.h"
-+#include "migration/migration-util.h"
-+
-+#define RTC_BASE            0x20124000
-+#define RTC_CONTROL         0x00
-+#define RTC_MODE            0x04
-+#define RTC_PRESCALER       0x08
-+#define RTC_ALARM_LOWER     0x0c
-+#define RTC_ALARM_UPPER     0x10
-+#define RTC_COMPARE_LOWER   0x14
-+#define RTC_COMPARE_UPPER   0x18
-+#define RTC_DATETIME_LOWER  0x20
-+#define RTC_DATETIME_UPPER  0x24
-+#define RTC_RUNNING         BIT(0)
-+#define RTC_STOP            BIT(1)
-+#define RTC_ALARM_ON        BIT(2)
-+#define RTC_ALARM_OFF       BIT(3)
-+#define RTC_UPLOAD          BIT(5)
-+#define RTC_MATCH           BIT(7)
-+#define RTC_WAKEUP_CLEAR    BIT(8)
-+#define RTC_WAKEUP_SET      BIT(9)
-+#define RTC_UPDATED         BIT(10)
-+#define RTC_WAKEUP_ENABLE   BIT(1)
-+#define RTC_WAKEUP_RESET    BIT(2)
-+#define RTC_WAKEUP_CONTINUE BIT(3)
-+#define RTC_PRESCALER_MASK  0x03ffffff
-+#define RTC_UPPER_MASK      0x3fffffff
-+#define PLIC_BASE           0x0c000000
-+#define PLIC_PENDING        0x1000
-+#define PLIC_RTC_PENDING    (BIT(16) | BIT(17))
-+#define ENVM_BASE           0x20220000
-+#define HSS_HEADER_SIZE     0x100
-+#define HSS_HEADER_JUMP     0x1000006f
-+#define HSS_PAYLOAD_BASE    (ENVM_BASE + HSS_HEADER_SIZE)
-+#define HSS_PAYLOAD_SIZE    8
-+
-+static QTestState *microchip_icicle_kit_start_rtc(const char *firmware)
-+{
-+    return qtest_initf(
-+        "-machine microchip-icicle-kit -smp 5 -m 2G -bios \"%s\" "
-+        "-rtc clock=vm", firmware);
-+}
-+
-+static QTestState *microchip_icicle_kit_start_ext(const char *qemu_var,
-+                                                  const char *firmware)
-+{
-+    g_autofree char *args = g_strdup_printf(
-+        "-machine microchip-icicle-kit -smp 5 -m 2G -bios \"%s\"",
-+        firmware);
-+
-+    return qtest_init_ext(qemu_var, args, NULL, true);
-+}
-+
-+static char *create_firmware(void)
-+{
-+    uint8_t firmware[HSS_HEADER_SIZE + HSS_PAYLOAD_SIZE] = { 0 };
-+    static const uint8_t payload[] = {
-+        0x13, 0x00, 0x00, 0x00,
-+        0x6f, 0x00, 0x00, 0x00,
-+    };
-+    char *path;
-+    int fd;
-+    ssize_t written;
-+    unsigned int i;
-+
-+    stl_le_p(&firmware[0], HSS_HEADER_JUMP);
-+    stl_le_p(&firmware[4], HSS_PAYLOAD_SIZE);
-+    for (i = 0; i < 5; i++) {
-+        stl_le_p(&firmware[8 + i * sizeof(uint32_t)], HSS_PAYLOAD_BASE);
-+    }
-+    memcpy(&firmware[HSS_HEADER_SIZE], payload, sizeof(payload));
-+
-+    fd = g_file_open_tmp("microchip-icicle-kit-XXXXXX", &path, NULL);
-+    g_assert_cmpint(fd, >=, 0);
-+
-+    written = write(fd, firmware, sizeof(firmware));
-+    g_assert_cmpint(written, ==, sizeof(firmware));
-+    close(fd);
-+
-+    return path;
-+}
-+
-+static uint64_t rtc_read_binary_count(QTestState *qts)
-+{
-+    uint64_t count = qtest_readl(qts, RTC_BASE + RTC_DATETIME_LOWER);
-+
-+    count |= (uint64_t)qtest_readl(qts,
-+                                   RTC_BASE + RTC_DATETIME_UPPER) << 32;
-+    return count;
-+}
-+
-+static void test_rtc(void)
-+{
-+    g_autofree char *firmware = create_firmware();
-+    QTestState *qts = microchip_icicle_kit_start_rtc(firmware);
-+    uint32_t control;
-+
-+    unlink(firmware);
-+    qtest_irq_intercept_out_named(qts, "/machine/soc/rtc", "sysbus-irq");
-+
-+    g_assert_cmphex(qtest_readl(qts, RTC_BASE + RTC_CONTROL), ==, 0);
-+    g_assert_cmphex(rtc_read_binary_count(qts), ==, 0);
-+    qtest_clock_step(qts, 2 * NANOSECONDS_PER_SECOND);
-+    g_assert_cmphex(rtc_read_binary_count(qts), ==, 0);
-+
-+    qtest_writel(qts, RTC_BASE + RTC_MODE, UINT32_MAX);
-+    qtest_writel(qts, RTC_BASE + RTC_PRESCALER, UINT32_MAX);
-+    g_assert_cmphex(qtest_readl(qts, RTC_BASE + RTC_MODE), ==, 0xf);
-+    g_assert_cmphex(qtest_readl(qts, RTC_BASE + RTC_PRESCALER), ==,
-+                    RTC_PRESCALER_MASK);
-+    qtest_writel(qts, RTC_BASE + RTC_MODE, 0);
-+
-+    qtest_writel(qts, RTC_BASE + RTC_CONTROL, RTC_STOP);
-+    g_assert_cmphex(qtest_readl(qts, RTC_BASE + RTC_CONTROL) &
-+                    RTC_RUNNING, ==, 0);
-+    qtest_clock_step(qts, 2 * NANOSECONDS_PER_SECOND);
-+    g_assert_cmphex(rtc_read_binary_count(qts), ==, 0);
-+
-+    qtest_writel(qts, RTC_BASE + RTC_DATETIME_LOWER, 42);
-+    qtest_writel(qts, RTC_BASE + RTC_DATETIME_UPPER, 0);
-+    qtest_writel(qts, RTC_BASE + RTC_CONTROL, RTC_UPLOAD);
-+    g_assert_cmphex(rtc_read_binary_count(qts), ==, 42);
-+    g_assert_cmphex(qtest_readl(qts, RTC_BASE + RTC_CONTROL) &
-+                    (RTC_UPLOAD | RTC_UPDATED), ==, RTC_UPDATED);
-+
-+    qtest_writel(qts, RTC_BASE + RTC_CONTROL, RTC_RUNNING);
-+    qtest_clock_step(qts, NANOSECONDS_PER_SECOND);
-+    g_assert_cmphex(rtc_read_binary_count(qts), ==, 43);
-+    qtest_writel(qts, RTC_BASE + RTC_CONTROL, RTC_WAKEUP_SET);
-+    g_assert_true(qtest_get_irq(qts, 0));
-+    qtest_writel(qts, RTC_BASE + RTC_CONTROL, RTC_WAKEUP_CLEAR);
-+    g_assert_false(qtest_get_irq(qts, 0));
-+
-+    qtest_writel(qts, RTC_BASE + RTC_ALARM_LOWER, 45);
-+    qtest_writel(qts, RTC_BASE + RTC_ALARM_UPPER, 0);
-+    qtest_writel(qts, RTC_BASE + RTC_COMPARE_LOWER, UINT32_MAX);
-+    qtest_writel(qts, RTC_BASE + RTC_COMPARE_UPPER, RTC_UPPER_MASK);
-+    qtest_writel(qts, RTC_BASE + RTC_MODE,
-+                 RTC_WAKEUP_ENABLE | RTC_WAKEUP_CONTINUE);
-+    qtest_writel(qts, RTC_BASE + RTC_CONTROL, RTC_ALARM_ON);
-+    g_assert_false(qtest_get_irq(qts, 0));
-+    g_assert_false(qtest_get_irq(qts, 1));
-+    control = qtest_readl(qts, RTC_BASE + RTC_CONTROL);
-+    g_assert_cmphex(control & RTC_ALARM_ON, ==, RTC_ALARM_ON);
-+    qtest_writel(qts, RTC_BASE + RTC_CONTROL, control | RTC_ALARM_OFF);
-+    g_assert_cmphex(qtest_readl(qts, RTC_BASE + RTC_CONTROL) &
-+                    RTC_ALARM_ON, ==, 0);
-+    qtest_clock_step(qts, 2 * NANOSECONDS_PER_SECOND);
-+    g_assert_false(qtest_get_irq(qts, 0));
-+    g_assert_false(qtest_get_irq(qts, 1));
-+
-+    qtest_writel(qts, RTC_BASE + RTC_DATETIME_LOWER, 43);
-+    qtest_writel(qts, RTC_BASE + RTC_CONTROL, RTC_UPLOAD);
-+    qtest_writel(qts, RTC_BASE + RTC_CONTROL, RTC_ALARM_ON);
-+    qtest_clock_step(qts, 2 * NANOSECONDS_PER_SECOND);
-+    g_assert_true(qtest_get_irq(qts, 0));
-+    g_assert_true(qtest_get_irq(qts, 1));
-+    g_assert_cmphex(qtest_readl(qts, RTC_BASE + RTC_CONTROL) & RTC_MATCH,
-+                    ==, RTC_MATCH);
-+    qtest_writel(qts, RTC_BASE + RTC_CONTROL, RTC_ALARM_OFF);
-+    g_assert_false(qtest_get_irq(qts, 0));
-+    g_assert_false(qtest_get_irq(qts, 1));
-+
-+    qtest_writel(qts, RTC_BASE + RTC_DATETIME_LOWER, 0);
-+    qtest_writel(qts, RTC_BASE + RTC_DATETIME_UPPER, 0);
-+    qtest_writel(qts, RTC_BASE + RTC_CONTROL, RTC_UPLOAD);
-+    qtest_writel(qts, RTC_BASE + RTC_ALARM_LOWER, 2);
-+    qtest_writel(qts, RTC_BASE + RTC_MODE,
-+                 RTC_WAKEUP_ENABLE | RTC_WAKEUP_RESET |
-+                 RTC_WAKEUP_CONTINUE);
-+    qtest_writel(qts, RTC_BASE + RTC_CONTROL, RTC_ALARM_ON);
-+    qtest_clock_step(qts, 2 * NANOSECONDS_PER_SECOND);
-+    g_assert_true(qtest_get_irq(qts, 0));
-+    g_assert_cmphex(rtc_read_binary_count(qts), ==, 0);
-+    g_assert_cmphex(qtest_readl(qts, RTC_BASE + RTC_CONTROL) &
-+                    RTC_ALARM_ON, ==, RTC_ALARM_ON);
-+    qtest_writel(qts, RTC_BASE + RTC_CONTROL, RTC_WAKEUP_CLEAR);
-+    qtest_clock_step(qts, 2 * NANOSECONDS_PER_SECOND);
-+    g_assert_true(qtest_get_irq(qts, 0));
-+    g_assert_cmphex(rtc_read_binary_count(qts), ==, 0);
-+    qtest_writel(qts, RTC_BASE + RTC_CONTROL, RTC_ALARM_OFF);
-+    g_assert_false(qtest_get_irq(qts, 0));
-+    g_assert_false(qtest_get_irq(qts, 1));
-+
-+    qtest_system_reset(qts);
-+    g_assert_cmphex(qtest_readl(qts, RTC_BASE + RTC_CONTROL), ==, 0);
-+    g_assert_cmphex(qtest_readl(qts, RTC_BASE + RTC_MODE), ==, 0);
-+    g_assert_cmphex(qtest_readl(qts, RTC_BASE + RTC_PRESCALER), ==, 0);
-+    g_assert_false(qtest_get_irq(qts, 0));
-+    g_assert_false(qtest_get_irq(qts, 1));
-+
-+    qtest_quit(qts);
-+}
-+
-+static void test_rtc_plic(void)
-+{
-+    g_autofree char *firmware = create_firmware();
-+    QTestState *qts = microchip_icicle_kit_start_rtc(firmware);
-+
-+    unlink(firmware);
-+
-+    qtest_writel(qts, RTC_BASE + RTC_DATETIME_LOWER, 42);
-+    qtest_writel(qts, RTC_BASE + RTC_DATETIME_UPPER, 0);
-+    qtest_writel(qts, RTC_BASE + RTC_CONTROL, RTC_UPLOAD);
-+    qtest_writel(qts, RTC_BASE + RTC_CONTROL, RTC_RUNNING);
-+    qtest_writel(qts, RTC_BASE + RTC_ALARM_LOWER, 43);
-+    qtest_writel(qts, RTC_BASE + RTC_ALARM_UPPER, 0);
-+    qtest_writel(qts, RTC_BASE + RTC_COMPARE_LOWER, UINT32_MAX);
-+    qtest_writel(qts, RTC_BASE + RTC_COMPARE_UPPER, RTC_UPPER_MASK);
-+    qtest_writel(qts, RTC_BASE + RTC_MODE,
-+                 RTC_WAKEUP_ENABLE | RTC_WAKEUP_CONTINUE);
-+    qtest_writel(qts, RTC_BASE + RTC_CONTROL, RTC_ALARM_ON);
-+    qtest_clock_step(qts, NANOSECONDS_PER_SECOND);
-+
-+    g_assert_cmphex(qtest_readl(qts, PLIC_BASE + PLIC_PENDING + 8) &
-+                    PLIC_RTC_PENDING, ==, PLIC_RTC_PENDING);
-+
-+    qtest_quit(qts);
-+}
-+
-+static void test_machine_migration(void)
-+{
-+    g_autofree char *firmware = create_firmware();
-+    const char *old_qemu = g_getenv("QTEST_QEMU_BINARY_OLD");
-+    QTestState *from;
-+    QTestState *to = qtest_initf(
-+        "-machine microchip-icicle-kit -smp 5 -m 2G "
-+        "-bios \"%s\" -incoming defer "
-+        "-rtc clock=vm", firmware);
-+
-+    qtest_irq_intercept_out_named(to, "/machine/soc/rtc", "sysbus-irq");
-+
-+    /* Allow an older QEMU source to exercise migration compatibility */
-+    if (old_qemu) {
-+        from = microchip_icicle_kit_start_ext("QTEST_QEMU_BINARY_OLD",
-+                                              firmware);
-+    } else {
-+        from = microchip_icicle_kit_start_rtc(firmware);
-+        qtest_writel(from, RTC_BASE + RTC_DATETIME_LOWER, 0x23456789);
-+        qtest_writel(from, RTC_BASE + RTC_DATETIME_UPPER, 1);
-+        qtest_writel(from, RTC_BASE + RTC_CONTROL, RTC_UPLOAD);
-+        qtest_writel(from, RTC_BASE + RTC_CONTROL, RTC_RUNNING);
-+        qtest_writel(from, RTC_BASE + RTC_ALARM_LOWER, 0x2345678b);
-+        qtest_writel(from, RTC_BASE + RTC_ALARM_UPPER, 1);
-+        qtest_writel(from, RTC_BASE + RTC_COMPARE_LOWER, UINT32_MAX);
-+        qtest_writel(from, RTC_BASE + RTC_COMPARE_UPPER, RTC_UPPER_MASK);
-+        qtest_writel(from, RTC_BASE + RTC_MODE,
-+                     RTC_WAKEUP_ENABLE | RTC_WAKEUP_CONTINUE);
-+        qtest_writel(from, RTC_BASE + RTC_CONTROL, RTC_ALARM_ON);
-+        qtest_writel(from, RTC_BASE + RTC_CONTROL, RTC_WAKEUP_SET);
-+        qtest_writel(from, RTC_BASE + RTC_PRESCALER, 999999);
-+    }
-+
-+    unlink(firmware);
-+
-+    migrate_incoming_qmp(to, "tcp:127.0.0.1:0", NULL, "{}");
-+    migrate_qmp(from, to, NULL, NULL, "{}");
-+    wait_for_migration_complete(from);
-+
-+    if (old_qemu) {
-+        g_assert_cmphex(qtest_readl(to, RTC_BASE + RTC_CONTROL), ==, 0);
-+        g_assert_cmphex(qtest_readl(to, RTC_BASE + RTC_PRESCALER), ==, 0);
-+        g_assert_false(qtest_get_irq(to, 0));
-+        g_assert_false(qtest_get_irq(to, 1));
-+    } else {
-+        g_assert_cmphex(rtc_read_binary_count(to), ==, 0x123456789);
-+        g_assert_cmphex(qtest_readl(to, RTC_BASE + RTC_CONTROL) &
-+                        (RTC_RUNNING | RTC_ALARM_ON), ==,
-+                        RTC_RUNNING | RTC_ALARM_ON);
-+        g_assert_cmphex(qtest_readl(to, RTC_BASE + RTC_PRESCALER), ==,
-+                        999999);
-+        g_assert_true(qtest_get_irq(to, 0));
-+        g_assert_false(qtest_get_irq(to, 1));
-+        qtest_writel(to, RTC_BASE + RTC_CONTROL, RTC_WAKEUP_CLEAR);
-+        g_assert_false(qtest_get_irq(to, 0));
-+        qtest_clock_step(to, 2 * NANOSECONDS_PER_SECOND);
-+        g_assert_cmphex(rtc_read_binary_count(to), ==, 0x12345678b);
-+        g_assert_true(qtest_get_irq(to, 0));
-+        g_assert_true(qtest_get_irq(to, 1));
-+        qtest_writel(to, RTC_BASE + RTC_CONTROL, RTC_ALARM_OFF);
-+        g_assert_false(qtest_get_irq(to, 0));
-+        g_assert_false(qtest_get_irq(to, 1));
-+    }
-+
-+    qtest_quit(from);
-+    qtest_quit(to);
-+}
-+
-+int main(int argc, char **argv)
-+{
-+    g_test_init(&argc, &argv, NULL);
-+
-+    qtest_add_func("/mchp_pfsoc_rtc/registers", test_rtc);
-+    qtest_add_func("/mchp_pfsoc_rtc/plic", test_rtc_plic);
-+    qtest_add_func("/mchp_pfsoc_rtc/migration",
-+                   test_machine_migration);
-+
-+    return g_test_run();
-+}
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index 29457193ed..fb3dcb200b 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -312,7 +312,8 @@ qtests_riscv32 = \
- qtests_riscv64 = ['riscv-csr-test'] + \
-   (unpack_edk2_blobs ? ['bios-tables-test'] : []) + \
-   (config_all_devices.has_key('CONFIG_MICROCHIP_PFSOC') ?
--   ['cadence-sdhci-test'] : []) + \
-+   ['cadence-sdhci-test',
-+    'mchp_pfsoc_rtc_test'] : []) + \
-   (config_all_devices.has_key('CONFIG_SIFIVE_L2CC') ? ['sifive_l2cc_test'] : []) + \
-   (config_all_devices.has_key('CONFIG_IOMMU_TESTDEV') and
-    config_all_devices.has_key('CONFIG_RISCV_IOMMU') ?
-@@ -432,6 +433,8 @@ qtests = {
-   'migration-test': test_migration_files + migration_tls_files + migration_colo_files,
-   'sifive_l2cc_test': files('migration/migration-qmp.c',
-                            'migration/migration-util.c'),
-+  'mchp_pfsoc_rtc_test': files('migration/migration-qmp.c',
-+                               'migration/migration-util.c'),
-   'pxe-test': files('boot-sector.c'),
-   'pnv-xive2-test': files('pnv-xive2-common.c', 'pnv-xive2-flush-sync.c',
-                           'pnv-xive2-nvpg_bar.c'),
--- 
-2.53.0
-
+--=20
+         =E6=AD=A4=E8=87=B4
+=E7=A4=BC
+=E7=BD=97=E5=8B=87=E5=88=9A
+Yours
+    sincerely,
+Yonggang Luo
 
