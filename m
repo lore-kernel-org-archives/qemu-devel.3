@@ -4,98 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C670CA5FE3
-	for <qemu-devel@archiver.kernel.org>; Sat,  3 Oct 2026 08:08:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDBE9CA5FE3
+	for <qemu-devel@archiver.kernel.org>; Sat,  3 Oct 2026 08:13:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xCum8-000116-Ar; Sat, 03 Oct 2026 04:07:20 -0400
+	id 1xCurQ-0002U4-SH; Sat, 03 Oct 2026 04:12:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <scherer.simon89@gmail.com>)
- id 1xCum6-0000zi-Qj
- for qemu-devel@nongnu.org; Sat, 03 Oct 2026 04:07:18 -0400
-Received: from mail-yx1-xb12b.google.com ([2607:f8b0:4864:20::b12b])
+ id 1xCurP-0002Tk-S4
+ for qemu-devel@nongnu.org; Sat, 03 Oct 2026 04:12:48 -0400
+Received: from mail-yw1-x1132.google.com ([2607:f8b0:4864:20::1132])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <scherer.simon89@gmail.com>)
- id 1xCum5-0002g5-5Y
- for qemu-devel@nongnu.org; Sat, 03 Oct 2026 04:07:18 -0400
-Received: by mail-yx1-xb12b.google.com with SMTP id
- 956f58d0204a3-66c70f69d3fso142266d50.1
- for <qemu-devel@nongnu.org>; Sat, 03 Oct 2026 01:07:16 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1791014835; cv=none;
+ id 1xCurO-0003Ys-2d
+ for qemu-devel@nongnu.org; Sat, 03 Oct 2026 04:12:47 -0400
+Received: by mail-yw1-x1132.google.com with SMTP id
+ 00721157ae682-8ac8a2ac52bso1084877b3.0
+ for <qemu-devel@nongnu.org>; Sat, 03 Oct 2026 01:12:45 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1791015165; cv=none;
  d=google.com; s=arc-20260327;
- b=qf2ntRrc5TqgXF3zZVYvGgEbJOCpHb2sB699CYMbhwcW86XkgPYlzmO+I/LnzRVtW1
- T6uFk1EkRzbdd93M0ZL7xLz+9WtD58/6lYVV4pPXPhONH3NaRViEEX3hkebrirVcl9ki
- mk8l1a8d+vA/qIeH2pNzcK5vbbYZzAS42H7YjFe8blyOdp+ljoWhdcW2I6Ke4D9N6bxL
- NwVWFh0KWQr4AFoagLPfrjgT6wl140ghmLc9kHF9r+8BacaULBsWAhm5S/l95zn0Mlfw
- OAdpcEmNnbkz3TjoeJj8/okIycKCFonnE+lU7oTHxj7+w1Ia2Okh4Qr7aI0y6ip4gjVi
- BLMA==
+ b=R1eQlctyGbR1vtlrIZLFXtba2erBlsUt4Yz9nfYwOOAjDZFFvID6lYPhcgd3sjOmAL
+ cc8utnu2uXQqPQkVoDnXoaER2ty3XqW9jgajGEUXg90jXudQ7LXsomEvNM39rFWICn7V
+ bKKPTDT5xPYnYB7HJX/rpn3qVUg/qRnK39Y0ZlbVZS57EZ71Bba7K4NH8PtZxKlohgYA
+ 3uFJXfp1vICfVOx19AMQlcOqrvEVVMF1NutXKfs77QGaaPZCq33mIZr+wU8EtMt3qHzP
+ AYjCGLAmCEwpqk2gCartZuXO8aoyX8NWud/pwRn2oSMVKPNgULMU3XoOArsFpi6sP9Dl
+ OH+w==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=fc3SMgBbEm0kBjJyVGQOFt9KGLga3SNasNv7IG5tTJA=;
+ bh=e6e5XAw+jSpn8T0cpU8hyi77lDq561nw/gbdHPWoBj0=;
  fh=qUOFTwWG+G+YmxTz+HxoQUPJX6AFWbaPYrnquSe1BBk=;
- b=jAywWcuMb4GGnOKse7wZEtVgh260D74l3YnLacvxq9aV7tqGGKpb7vke8NS01KI5p1
- 6gg3NM1h6ze8SC8muqjkiToSE2gu5+rSc/TxuY4h5BFXNp2rDLew7xqMALkt5DnLeiZJ
- t/lWCGXLJnCT1vbwdzGoQqgI9AanilDd+M7rOz9dTMMc4mdN5mzbsG7uxA2KzdVkNg1Q
- qOmdRCmW/BdRxTa03Rddy/IFmuhxHp0Ls4HoS8CGhFYTI3tiBEjlVM8E0pi/DLl02lEq
- aGz99auKOoNGN8plo7ozYTQeikBwF3T4fR2JqceM+7Qo10nle5B3bEfsAJvbZtFOgPQG
- 1Lqw==; darn=nongnu.org
+ b=nOLWI8K1BAp5NmCKRTR+sEnXsYzvY3IWlWZrZEGj30euY+ZBJzh282iED/3cymZJB9
+ M5Lk+IzIOm4nxWedEd3KMvsGMxkPLRWLJeIpzNvsfkOG0Nl5t6jr2C+/KXiYQ+SM1Or5
+ wKb/GORSKmiXE0PHDLPoLXj8jzphPPTW/VNzFMIYNCp8lRSBvBODUP6ueJtVAEVBZiGy
+ FgDQYkdqDlLEf725FfbAaW5otBMxvYxHclO/l51yjCy7SjBac1aCybZfjIv59gI6NJ3b
+ q6a++XjeYmK/zJhIR24CijQI7CGKlYE100amsi1wmb8wvvtKDqGlLKGV6YN+1BRJTk8k
+ Qg1g==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1791014835; x=1791619635; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1791015165; x=1791619965; darn=nongnu.org;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=fc3SMgBbEm0kBjJyVGQOFt9KGLga3SNasNv7IG5tTJA=;
- b=ZsFUjBICaT3XNs2ZlHwVNpv0lxKSkdsdzKsmolCeiWel4O6vJvyG4tBaubTVthShAo
- PXnFltV/lJsuwjQhrqGKX78PR2f1sO09YVcSE1FVR+1mCDJNZtZjsb09IuiIaLnd4WzP
- LdIxHLilveOlbc1gBfUKu4rbeNCqCZi6HX/HuSDbtlaYAqVQ5TyEmH1PpPY/kOwBd+SG
- G7hEZiMbjv/vo1zzboOxEAF/zyqMBRxtmpCWC/3LjlaItLc40D+A8vds+E2IZRW3YqIh
- 5yxMsDv5ub+nep9BXUjV4V+uoJ+N6gAtFezrGl/Avj1dsejYpOkPypj1BwnFq4KTt03S
- KtNw==
+ bh=e6e5XAw+jSpn8T0cpU8hyi77lDq561nw/gbdHPWoBj0=;
+ b=dao7i1L4SPjyepYhUvg0OMbvve96FqxZ2MSV9MX6bIcC4oFSgdtEJ5EO1AShmRFm+x
+ VeGt3D9B+XY+h/IOD059/j3fyuSJ+Wq9U4Msa8u4m2UgQkLeJ5fPBUovcl7aMvDfm7uk
+ Te/sz+VUlxbQRjtEQwMfpupu1Rbc1YODYYAh+nYs/W5m5mpAwOhZhFT9yHQ0bUlKt1aS
+ x2QWXORPQfcmVfjcVqDlm6By2IpFR1tYD0paAG79tkhOM0Ll0h2bTL1DnimaQ3P2f0vr
+ EWiOQPUksFlW8jrkBI0IDcBbfiuUYtZ21dRfoC994E80yc4nk35UxEIQAMvuEOTIaSVR
+ R/mA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791014835; x=1791619635;
+ d=1e100.net; s=20260707; t=1791015165; x=1791619965;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=fc3SMgBbEm0kBjJyVGQOFt9KGLga3SNasNv7IG5tTJA=;
- b=GcZA1kerB0SBu27qlr52mi7P42cmu9o4nXQesJV77wlouw8Eg/iM3eKp1OLTyKN55E
- 3h1DHRoBszQnKUzc+asIwloli6R8sFl8M3vpH/VUOTlFVA0YD6fId9vmdVUUcGq6bplc
- d6++GnGirbEayF8yFZmsPRxlelXqUo6LBt+yVPs66GSkEb6oeCwJs0Op8cecoFcGneTZ
- 2di+NHNye+iBWKni3Q5KRtvUUPXXEtM5b0IYzZZlFXa0EgQ/peubvjZ6sdBMQZv1mKxM
- mGHRnx2BCgdwlKPEYu3TiLKmux4uDHZ0HhXL7Fppr+ny8jSKBAJqHd0lrYdorZMr6LaQ
- G3YQ==
-X-Gm-Message-State: AFq9FYJ900gytWInd3rSsAsYKPymCUn85Y9feH37j9LfDmcOrQQjaj9/
- ivPAS8jPUAXux8aRItrqTmJnQH9W0HOrg7jbT7KCX609OWvtiXHdiRmb98o35122lgcr0w0m+c7
- IVPzEzSzGxocKtmmX7FZulMkk/a9NW7BCYgF6ljo=
-X-Gm-Gg: AYBFou3E3JBo41XWUbc7RHHkF293Uk77XywbIf2sG5vQeebBtxJJr8+Cw+co2M+9vLt
- WdLo4hGQHDA6Py2Nw4h1JmD1szW3TIJj7cop/Bbj38BEPLq5x/PYIS3NNcZNqcTmOHgsnqACxM0
- QUNSMyty3qcQdAFvplClHhY/5S7cLYDB68GXOvQe7nipzBFO5wBOF4GskTd16qcKttBsi0xETvp
- gw+ZckXy+s1QqfSd+DHCbg5QmKNHHnz62Ak21MBNh0k0/Q6axCFLQGTzKZDYse732fSUqqn59Co
- q4RgiUUUxy92StZrycyXc3cGtilZSgVRZHgnpM8aG9XauDBqPwnaQN+7hYTB6C1cmSDJjma5qHC
- CTpseoPDTKoOY+js0qdEvViTB5LyGi1gxQ9uxLsr0
-X-Received: by 2002:a53:b4d2:0:b0:677:a8c5:6418 with SMTP id
- 956f58d0204a3-677bd428931mr388696d50.102.1791014835551; Sat, 03 Oct 2026
- 01:07:15 -0700 (PDT)
+ bh=e6e5XAw+jSpn8T0cpU8hyi77lDq561nw/gbdHPWoBj0=;
+ b=E2Fjjs2ngCbU24svIFatiQ86pKo1X6GBYN8yLgqfd40u4XoMxyk95GOn++mHKsl1xH
+ NJXvVg0x0OjXDcdwyc3560OV6cBl+ZN8j5h/IsECZNblkKfTX1G2uylSP43VsTtAfq7h
+ fKeYJo/o+lJJN2UTfsTXsTSWbdp/lJJlgeDoloqeFJbIyvZbm6PHjOoREU3azmAyemH9
+ BY5w7EFE73EhhhpfqFMqd01MBikgP3beBBDciCFbQ3K8cap9XronkmU/UF9ja89WqPbk
+ 2FLk2PmY98TSuu+gbTleaoqveNvS/c5pS6Nj1zbS58sAcfTWajYTRMYrVzpMmxToPEmr
+ KT7g==
+X-Gm-Message-State: AFq9FYIv09BK3E810ppAgVaTKbtqEYMwslQ3RDhirrzEgY9r5yGvCBvX
+ 0c6T3iv6q9pbCMbvvAy1ytiS2tMAyDjmMTvcbmEWA/J5oYhWDT+pZ3eqFsvriUb9VXEg68+WqSH
+ hgYJT04NWUU5hli/RUTX6+qfQnaqrFyXBa2CybJY=
+X-Gm-Gg: AYBFou3AFKqhmrIexkYZAA9xG5f8hOrwdNhduwPPP9GIF8I+ZVR4Eu1+iuUg1V2jkgN
+ H5br3YTvveumaVdqaWiQf5LQ9IK6qDvZbbsA0XAg0oUozP1ahEpbWslwh5X1++Ehj/gzDA3ATCk
+ sDAIemdiwv3FtpyI+xQKCMMdYJttuJXrPDukIQFnxH4jOXTuHXc4SU+2WQQoO0TUuadDHMRq4Me
+ NABNBRCehTfwck3pTGECvQgtIdtUzTTHS3zblnRQ40sp9hT+4WvR9nPeu2JshMXm2KoMU8kQV11
+ BxXriyxAYwb0NfqcgqFXVJY/S+D7wKXI5so3e81SCYbo+uIVWAHNgFTr9eoFSJ5Z79tcmzef8cE
+ /jyVd/zCnHWevRtU/aE5brF8dQNJSW99KvmpDVcf4fG47E8ItkYw=
+X-Received: by 2002:a05:690c:f06:b0:8ab:5f2a:3920 with SMTP id
+ 00721157ae682-8acdaeaa33amr43627887b3.17.1791015164851; Sat, 03 Oct 2026
+ 01:12:44 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260901063127.60866-1-scherer.simon89@gmail.com>
-In-Reply-To: <20260901063127.60866-1-scherer.simon89@gmail.com>
+References: <20260813052532.22833-1-scherer.simon89@gmail.com>
+In-Reply-To: <20260813052532.22833-1-scherer.simon89@gmail.com>
 From: Simon Scherer <scherer.simon89@gmail.com>
-Date: Sat, 3 Oct 2026 10:07:04 +0200
-X-Gm-Features: AclHuK_ul4u47JHIkuq3zqoH2L1d3WkhEzz2TrVsiwLA6QvTWRxPdZ8LqS1-DSk
-Message-ID: <CAEQwQtLFgbqDsvDbP08jq2pDrsphby5AccDkSExgjQfrF2WPYQ@mail.gmail.com>
-Subject: Re: [PATCH] target/i386: Do not switch to MMX mode for
- CVTPI2PS/CVTPI2PD with memory operand
+Date: Sat, 3 Oct 2026 10:12:34 +0200
+X-Gm-Features: AclHuK_ZNvlw9nnuvDfWq2a6r7VvCrT1aLpGdAf50gaOMB5J2yShXSRmBe2usnk
+Message-ID: <CAEQwQtLt8LoRyRXBaD_=gDYfKxrx9gYFrmwZJGTMxv9i5F6Xvw@mail.gmail.com>
+Subject: Re: [PATCH v2] target/i386: Set aliased x87 exponent bits to all 1s
+ for MMX register writes
 To: qemu-devel@nongnu.org
 Cc: pbonzini@redhat.com, richard.henderson@linaro.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12b;
- envelope-from=scherer.simon89@gmail.com; helo=mail-yx1-xb12b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1132;
+ envelope-from=scherer.simon89@gmail.com; helo=mail-yw1-x1132.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -119,58 +119,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Ping. Just checking if this patch might have been missed.
+Ping. Maybe the patch has been missed.
 
-On Tue, Sep 1, 2026 at 8:31=E2=80=AFAM Simon Scherer <scherer.simon89@gmail=
-.com> wrote:
+On Thu, Aug 13, 2026 at 7:25=E2=80=AFAM Simon Scherer <scherer.simon89@gmai=
+l.com> wrote:
 >
-> Per the Intel SDM, the CVTPI2PS and CVTPI2PD instructions
-> cause a transition from x87 FPU to MMX technology operation (the x87
-> top-of-stack pointer is set to 0 and the tag word is set to all
-> valid). CVTPI2PD's own description scopes this to the "xmm, mm"
-> operand form only, explicitly excluding "xmm, m64". But CVTPI2PS's
-> description states the transition unconditionally, without the same
-> operand-form distinction.
+> Per the Intel SDM (Vol 3, 15.2), writing an MMX register also sets bits
+> 64-79 of the aliased x87 register to all 1s. gen_writeback() never
+> does this for X86_OP_MMX destinations, so those bits keep whatever
+> the x87 side left there (e.g. 0 after finit/fldz). A later x87
+> instruction such as fucomi/fucomip can then read a stale finite
+> value where real hardware guarantees a NaN encoding, changing
+> comparison results and flags.
 >
-> Testing on real hardware shows CVTPI2PS actually behaves identically
-> to CVTPI2PD despite the SDM wording: neither instruction performs the
-> state transition when the source is a memory operand, only when it is
-> an actual MMX register. This matches a similar Valgrind bug report
-> and fix, see https://bugs.kde.org/show_bug.cgi?id=3D357059.
+> Set the high 16 bits to 0xffff when writing back to a MMX register (not
+> memory).
 >
-> gen_CVTPI2Px() currently calls gen_helper_enter_mmx() unconditionally,
-> regardless of the source operand's form. Only call it when the source
-> operand does not have an effective address, i.e. is a real MMX
-> register.
->
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4394
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4105
 > Signed-off-by: Simon Scherer <scherer.simon89@gmail.com>
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->  target/i386/tcg/emit.c.inc | 10 +++++++++-
->  1 file changed, 9 insertions(+), 1 deletion(-)
+> v2: use offsetof(CPUX86State, fpregs[op->n].d.high) directly instead of
+>     reusing MMX_OFFSET() + offsetof(floatx80, high), per Richard's review=
+.
+>
+>  target/i386/tcg/emit.c.inc | 4 ++++
+>  1 file changed, 4 insertions(+)
 >
 > diff --git a/target/i386/tcg/emit.c.inc b/target/i386/tcg/emit.c.inc
-> index c83ab80940..72c08beb2a 100644
+> index 473f415766..2c36e41303 100644
 > --- a/target/i386/tcg/emit.c.inc
 > +++ b/target/i386/tcg/emit.c.inc
-> @@ -1919,7 +1919,15 @@ static void gen_CRC32(DisasContext *s, X86DecodedI=
-nsn *decode)
->
->  static void gen_CVTPI2Px(DisasContext *s, X86DecodedInsn *decode)
->  {
-> -    gen_helper_enter_mmx(tcg_env);
-> +    /*
-> +     * The x87->MMX transition only happens when the source is an MMX
-> +     * register, not for the memory-operand form. Confirmed on real
-> +     * hardware, contradicting the SDM's CVTPI2PS text. See
-> +     * https://bugs.kde.org/show_bug.cgi?id=3D357059.
-> +     */
-> +    if (!decode->op[2].has_ea) {
-> +        gen_helper_enter_mmx(tcg_env);
-> +    }
->      if (s->prefix & PREFIX_DATA) {
->          gen_helper_cvtpi2pd(tcg_env, OP_PTR0, OP_PTR2);
->      } else {
+> @@ -352,6 +352,10 @@ static void gen_writeback(DisasContext *s, X86Decode=
+dInsn *decode, int opn, TCGv
+>          }
+>          break;
+>      case X86_OP_MMX:
+> +        if (!op->has_ea) {
+> +            tcg_gen_st16_i32(tcg_constant_i32(0xffff), tcg_env,
+> +                             offsetof(CPUX86State, fpregs[op->n].d.high)=
+);
+> +        }
+>          break;
+>      case X86_OP_SSE:
+>          if (!op->has_ea && (s->prefix & PREFIX_VEX) && op->ot <=3D MO_12=
+8) {
 > --
 > 2.53.0
 >
