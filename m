@@ -4,98 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDBE9CA5FE3
-	for <qemu-devel@archiver.kernel.org>; Sat,  3 Oct 2026 08:13:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CE1CCA5FDD
+	for <qemu-devel@archiver.kernel.org>; Sat,  3 Oct 2026 08:14:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xCurQ-0002U4-SH; Sat, 03 Oct 2026 04:12:48 -0400
+	id 1xCush-0002wc-OX; Sat, 03 Oct 2026 04:14:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <scherer.simon89@gmail.com>)
- id 1xCurP-0002Tk-S4
- for qemu-devel@nongnu.org; Sat, 03 Oct 2026 04:12:48 -0400
-Received: from mail-yw1-x1132.google.com ([2607:f8b0:4864:20::1132])
+ id 1xCusc-0002wA-5A
+ for qemu-devel@nongnu.org; Sat, 03 Oct 2026 04:14:03 -0400
+Received: from mail-yw1-x1130.google.com ([2607:f8b0:4864:20::1130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <scherer.simon89@gmail.com>)
- id 1xCurO-0003Ys-2d
- for qemu-devel@nongnu.org; Sat, 03 Oct 2026 04:12:47 -0400
-Received: by mail-yw1-x1132.google.com with SMTP id
- 00721157ae682-8ac8a2ac52bso1084877b3.0
- for <qemu-devel@nongnu.org>; Sat, 03 Oct 2026 01:12:45 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1791015165; cv=none;
+ id 1xCusa-0003e3-9j
+ for qemu-devel@nongnu.org; Sat, 03 Oct 2026 04:14:01 -0400
+Received: by mail-yw1-x1130.google.com with SMTP id
+ 00721157ae682-8abd68b3937so2618737b3.2
+ for <qemu-devel@nongnu.org>; Sat, 03 Oct 2026 01:13:59 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1791015239; cv=none;
  d=google.com; s=arc-20260327;
- b=R1eQlctyGbR1vtlrIZLFXtba2erBlsUt4Yz9nfYwOOAjDZFFvID6lYPhcgd3sjOmAL
- cc8utnu2uXQqPQkVoDnXoaER2ty3XqW9jgajGEUXg90jXudQ7LXsomEvNM39rFWICn7V
- bKKPTDT5xPYnYB7HJX/rpn3qVUg/qRnK39Y0ZlbVZS57EZ71Bba7K4NH8PtZxKlohgYA
- 3uFJXfp1vICfVOx19AMQlcOqrvEVVMF1NutXKfs77QGaaPZCq33mIZr+wU8EtMt3qHzP
- AYjCGLAmCEwpqk2gCartZuXO8aoyX8NWud/pwRn2oSMVKPNgULMU3XoOArsFpi6sP9Dl
- OH+w==
+ b=B3LT7+cK96/bsGZeVdQgZNJW6Jl+8yVFSjj8WcVOyuKVhWDP+Nqj9xv8yN6mszFiR5
+ I9kQgRMIzsl15HBs+11whcdl1+dPiZZrjTo0CzglMaCjHOiKFTIU+k2TEqR6ArzRTT6z
+ JCe2IFOfqF481fgtfLrH0JVq/YZqYQch0t/vPqmujU0/iZeiZMN4c9FrStSCyD8sntp+
+ OgsHP/qsUmnzd82ddZbu9NUU6mVGqiWrsqAetp2/veRCg8gOqzyFfp+Bj4VDu89R7KC3
+ pkqo9qbQ/Ng+yargmGKjVirzuHSsvJ8IRHiRadS0zhYr0pW5crhfT6OLHDL+7ydRzMJP
+ YcFg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=e6e5XAw+jSpn8T0cpU8hyi77lDq561nw/gbdHPWoBj0=;
+ bh=KymOpsceh2k9lu9WhgqcPhyC8Yo8s519n2MjusMGU8w=;
  fh=qUOFTwWG+G+YmxTz+HxoQUPJX6AFWbaPYrnquSe1BBk=;
- b=nOLWI8K1BAp5NmCKRTR+sEnXsYzvY3IWlWZrZEGj30euY+ZBJzh282iED/3cymZJB9
- M5Lk+IzIOm4nxWedEd3KMvsGMxkPLRWLJeIpzNvsfkOG0Nl5t6jr2C+/KXiYQ+SM1Or5
- wKb/GORSKmiXE0PHDLPoLXj8jzphPPTW/VNzFMIYNCp8lRSBvBODUP6ueJtVAEVBZiGy
- FgDQYkdqDlLEf725FfbAaW5otBMxvYxHclO/l51yjCy7SjBac1aCybZfjIv59gI6NJ3b
- q6a++XjeYmK/zJhIR24CijQI7CGKlYE100amsi1wmb8wvvtKDqGlLKGV6YN+1BRJTk8k
- Qg1g==; darn=nongnu.org
+ b=Ds2jQcKyIWMMGulEtMeFjqiKAW+H8dvUMwT+Yb/EiSIv6VWPocHbAbTiHllcj4ScSh
+ SkQaChkWbzvnqPx0sGwsVslKZwvZXp0Njafi7ufo1bKNU6BwzlQ3n2I5AXqztHViXFMx
+ 9IbnWVrmt0U8xVLToJdVyTRsKasbvlMAv3qQydigSD6UKof3wliZFv9FDM43rz+RESba
+ rwQSe0v/FbuVtNatX4bsAb/6MSbMeiO+cNHwBW1fA4lFVUhMKPa3W/++lU4il37az3bH
+ Z85SADN5VChkgz7a3EAgKpyTChK6SCyy8APgZpD66AhXu8t2HiS777rac4wdLPCgtjnz
+ 6xaA==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1791015165; x=1791619965; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1791015239; x=1791620039; darn=nongnu.org;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=e6e5XAw+jSpn8T0cpU8hyi77lDq561nw/gbdHPWoBj0=;
- b=dao7i1L4SPjyepYhUvg0OMbvve96FqxZ2MSV9MX6bIcC4oFSgdtEJ5EO1AShmRFm+x
- VeGt3D9B+XY+h/IOD059/j3fyuSJ+Wq9U4Msa8u4m2UgQkLeJ5fPBUovcl7aMvDfm7uk
- Te/sz+VUlxbQRjtEQwMfpupu1Rbc1YODYYAh+nYs/W5m5mpAwOhZhFT9yHQ0bUlKt1aS
- x2QWXORPQfcmVfjcVqDlm6By2IpFR1tYD0paAG79tkhOM0Ll0h2bTL1DnimaQ3P2f0vr
- EWiOQPUksFlW8jrkBI0IDcBbfiuUYtZ21dRfoC994E80yc4nk35UxEIQAMvuEOTIaSVR
- R/mA==
+ bh=KymOpsceh2k9lu9WhgqcPhyC8Yo8s519n2MjusMGU8w=;
+ b=BpZOj0eZKGL3/pma/UmWfmctpjQu6uTCkSEHs0h39gOYEtzvKPg7iZAxJ+30pFNQb4
+ T0x7YLGjokQecWb63Z7KQ6BcxOomDOjM5lD5I9pzriaonP9xtcsa0JT7zt3k4hDzcFZ1
+ y7YLgoClzcQ2gI5LyE+p0887xUbSSS9nY1ZAiB9oe7jmz+X0s6NpBN5tZNTrYB2K7l0u
+ 0scbF5FOo/ZNc1UldOe6eHuIGAAHv4PipK4AzK7LAbBzs6PlXEmGu91vTysTcN/MhDUD
+ 0KZ5s4VcWQkjXqEMdXfyvrhp9U5o8szqtubS8zabpReKXLyzJJ4z7iYHPbHjPwc4YVZE
+ pMJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791015165; x=1791619965;
+ d=1e100.net; s=20260707; t=1791015239; x=1791620039;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=e6e5XAw+jSpn8T0cpU8hyi77lDq561nw/gbdHPWoBj0=;
- b=E2Fjjs2ngCbU24svIFatiQ86pKo1X6GBYN8yLgqfd40u4XoMxyk95GOn++mHKsl1xH
- NJXvVg0x0OjXDcdwyc3560OV6cBl+ZN8j5h/IsECZNblkKfTX1G2uylSP43VsTtAfq7h
- fKeYJo/o+lJJN2UTfsTXsTSWbdp/lJJlgeDoloqeFJbIyvZbm6PHjOoREU3azmAyemH9
- BY5w7EFE73EhhhpfqFMqd01MBikgP3beBBDciCFbQ3K8cap9XronkmU/UF9ja89WqPbk
- 2FLk2PmY98TSuu+gbTleaoqveNvS/c5pS6Nj1zbS58sAcfTWajYTRMYrVzpMmxToPEmr
- KT7g==
-X-Gm-Message-State: AFq9FYIv09BK3E810ppAgVaTKbtqEYMwslQ3RDhirrzEgY9r5yGvCBvX
- 0c6T3iv6q9pbCMbvvAy1ytiS2tMAyDjmMTvcbmEWA/J5oYhWDT+pZ3eqFsvriUb9VXEg68+WqSH
- hgYJT04NWUU5hli/RUTX6+qfQnaqrFyXBa2CybJY=
-X-Gm-Gg: AYBFou3AFKqhmrIexkYZAA9xG5f8hOrwdNhduwPPP9GIF8I+ZVR4Eu1+iuUg1V2jkgN
- H5br3YTvveumaVdqaWiQf5LQ9IK6qDvZbbsA0XAg0oUozP1ahEpbWslwh5X1++Ehj/gzDA3ATCk
- sDAIemdiwv3FtpyI+xQKCMMdYJttuJXrPDukIQFnxH4jOXTuHXc4SU+2WQQoO0TUuadDHMRq4Me
- NABNBRCehTfwck3pTGECvQgtIdtUzTTHS3zblnRQ40sp9hT+4WvR9nPeu2JshMXm2KoMU8kQV11
- BxXriyxAYwb0NfqcgqFXVJY/S+D7wKXI5so3e81SCYbo+uIVWAHNgFTr9eoFSJ5Z79tcmzef8cE
- /jyVd/zCnHWevRtU/aE5brF8dQNJSW99KvmpDVcf4fG47E8ItkYw=
-X-Received: by 2002:a05:690c:f06:b0:8ab:5f2a:3920 with SMTP id
- 00721157ae682-8acdaeaa33amr43627887b3.17.1791015164851; Sat, 03 Oct 2026
- 01:12:44 -0700 (PDT)
+ bh=KymOpsceh2k9lu9WhgqcPhyC8Yo8s519n2MjusMGU8w=;
+ b=B6b5Bh1d7QwaJNv+I+9KeRaQYLkzdXWOU84DO36nrjenKB2UtvfExVMbIYGN9OqDdQ
+ I7bQjLZbrbKhlpuVpzOe4m2TnrUHOohZaDKx+izmpjxN2Rkv7FWkWsa1qKYhlLEc2rci
+ YnHVdOmzCQlGIjy8U0Hc5lbUsYrW/cr+F1PbozRb2TDWDC8db9wdbdzd6HBB4edpsG3+
+ kA1OvB0lHXUNwfWX9CmC13mkJpiANZhuEaq1ey+f62ceGMVnOyeZD749JIc01qAoZD/B
+ TAOwm/1tNAV7bMS56eZ9MZXt0qu+J978aUC3haW6eyeFIo0dkxWPdDjtx+giWFboR5yj
+ 9YtA==
+X-Gm-Message-State: AFq9FYJRCOhpltnHpQLhp9Rt2FgzyPu2xGU45+AyEklTGdyvojJ5CBfF
+ MOm+bzx/+1l3BnEpCCDNUzBmBiYiNQBs4+dMmLnxLAGuzJy2CX+N+H33NeoEEa0YafwChSLjwEJ
+ N2Z+ulUWLMgl/m76Eta2xjFBdEO8ZJRdV+qThTOw=
+X-Gm-Gg: AYBFou0lWMgaP4JI39wlXDP1tb4YM1CnIm4pUha1kSo/TFWIRXIVNUOKbqCDeBvHwnV
+ myOeSSY6/QQHmzavdYb4zXeRqeIaDkxjL4KtPgYGC4XORbRxavnCek9aWCri76IqoSp4RcHiHDw
+ nqUCtsXP+8P106BYERFE9TmDJdqGN8hXsbuTDFVPIXsKtPZuxbNrvF2SBhxRBS4tpvmEZLOlPwi
+ ccZL6IBScJmuhjmpEJb+AyTe4Y1dqNqi7iVj72/7Zy222I2h1daYA8DidKRd4lnhYcnPbcyZuuD
+ ZfJbM6DkhUBaQyunkFxbOaa6H4uPo1WxaU9g1DVX9I2lXFk2rrysfvj1miX77cvp4zBSskLaMOc
+ /aY0U/4LjMjCeQrr2czJ7EVQA1ZWEeGnTZgVmBS5r
+X-Received: by 2002:a05:690c:3481:b0:873:5bb2:6c0e with SMTP id
+ 00721157ae682-8ae957d5b61mr8406267b3.56.1791015238976; Sat, 03 Oct 2026
+ 01:13:58 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260813052532.22833-1-scherer.simon89@gmail.com>
-In-Reply-To: <20260813052532.22833-1-scherer.simon89@gmail.com>
+References: <20260807170751.390792-1-scherer.simon89@gmail.com>
+In-Reply-To: <20260807170751.390792-1-scherer.simon89@gmail.com>
 From: Simon Scherer <scherer.simon89@gmail.com>
-Date: Sat, 3 Oct 2026 10:12:34 +0200
-X-Gm-Features: AclHuK_ZNvlw9nnuvDfWq2a6r7VvCrT1aLpGdAf50gaOMB5J2yShXSRmBe2usnk
-Message-ID: <CAEQwQtLt8LoRyRXBaD_=gDYfKxrx9gYFrmwZJGTMxv9i5F6Xvw@mail.gmail.com>
-Subject: Re: [PATCH v2] target/i386: Set aliased x87 exponent bits to all 1s
- for MMX register writes
+Date: Sat, 3 Oct 2026 10:13:48 +0200
+X-Gm-Features: AclHuK9beSudgxf6ilQgBZd5BpAhWmxqePmDIZ9hG9B8aqs2MndoGW1QXtSsoKU
+Message-ID: <CAEQwQtKA5+fwE+DQg+rG_teBrH4f_Eb2yf4QiyUEkxPQcDnzPA@mail.gmail.com>
+Subject: Re: [PATCH v2] target/i386: do not zero-extend BSR/BSF dest when
+ source is zero
 To: qemu-devel@nongnu.org
 Cc: pbonzini@redhat.com, richard.henderson@linaro.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1132;
- envelope-from=scherer.simon89@gmail.com; helo=mail-yw1-x1132.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1130;
+ envelope-from=scherer.simon89@gmail.com; helo=mail-yw1-x1130.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -121,49 +121,104 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Ping. Maybe the patch has been missed.
 
-On Thu, Aug 13, 2026 at 7:25=E2=80=AFAM Simon Scherer <scherer.simon89@gmai=
-l.com> wrote:
+On Fri, Aug 7, 2026 at 7:08=E2=80=AFPM Simon Scherer <scherer.simon89@gmail=
+.com> wrote:
 >
-> Per the Intel SDM (Vol 3, 15.2), writing an MMX register also sets bits
-> 64-79 of the aliased x87 register to all 1s. gen_writeback() never
-> does this for X86_OP_MMX destinations, so those bits keep whatever
-> the x87 side left there (e.g. 0 after finit/fldz). A later x87
-> instruction such as fucomi/fucomip can then read a stale finite
-> value where real hardware guarantees a NaN encoding, changing
-> comparison results and flags.
+> For the bsr and bsf instructions per the Intel SDM: "If the content
+> of the source operand is 0, the content of the destination operand
+> is undefined." The AMD64 Architecture Programmer's Manual is more
+> specific: it states the destination operand remains unchanged when
+> the source is zero. Testing on real hardware (multiple Intel and
+> AMD systems) confirms that when the source operand is zero, the CPU
+> leaves the entire 64-bit destination register untouched, including
+> the upper 32 bits, even when executing the 32-bit form of the
+> instruction (e.g. "bsr edx, ecx") in 64-bit mode.
 >
-> Set the high 16 bits to 0xffff when writing back to a MMX register (not
-> memory).
+> gen_BSF()/gen_BSR() already encode this intent (see the existing
+> comment) by arranging for T0 to hold the correct full-width
+> passthrough value when the source is zero. However, that correct
+> value was then handed to the generic register writeback path
+> (gen_writeback), which for a 32-bit destination unconditionally
+> applies tcg_gen_ext32u_tl() and clears the upper 32 bits regardless
+> of what gen_BSF()/gen_BSR() had just computed.
 >
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4105
+> Fix this at the operand-decode level instead: give the destination
+> (G) and its 2op copy the d64 size class instead of v, so gen_writeback
+> treats the write as full-width in the one case that was buggy (64-bit
+> mode, 32-bit operand size), leaving every other case unchanged. The
+> source (E) must stay v, or the decoder would scan the full 64-bit
+> source register instead of just its low 32 bits. No changes to
+> gen_BSF()/gen_BSR() are needed.
+>
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4132
 > Signed-off-by: Simon Scherer <scherer.simon89@gmail.com>
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
-> v2: use offsetof(CPUX86State, fpregs[op->n].d.high) directly instead of
->     reusing MMX_OFFSET() + offsetof(floatx80, high), per Richard's review=
-.
+>  target/i386/tcg/decode-new.c.inc | 32 ++++++++++++++++++++++----------
+>  1 file changed, 22 insertions(+), 10 deletions(-)
 >
->  target/i386/tcg/emit.c.inc | 4 ++++
->  1 file changed, 4 insertions(+)
+> diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-ne=
+w.c.inc
+> index ac181308ca..85f9d27c56 100644
+> --- a/target/i386/tcg/decode-new.c.inc
+> +++ b/target/i386/tcg/decode-new.c.inc
+> @@ -659,12 +659,18 @@ static void decode_0FB8(DisasContext *s, CPUX86Stat=
+e *env, X86OpEntry *entry, ui
 >
-> diff --git a/target/i386/tcg/emit.c.inc b/target/i386/tcg/emit.c.inc
-> index 473f415766..2c36e41303 100644
-> --- a/target/i386/tcg/emit.c.inc
-> +++ b/target/i386/tcg/emit.c.inc
-> @@ -352,6 +352,10 @@ static void gen_writeback(DisasContext *s, X86Decode=
-dInsn *decode, int opn, TCGv
->          }
->          break;
->      case X86_OP_MMX:
-> +        if (!op->has_ea) {
-> +            tcg_gen_st16_i32(tcg_constant_i32(0xffff), tcg_env,
-> +                             offsetof(CPUX86State, fpregs[op->n].d.high)=
-);
-> +        }
->          break;
->      case X86_OP_SSE:
->          if (!op->has_ea && (s->prefix & PREFIX_VEX) && op->ot <=3D MO_12=
-8) {
+>  static void decode_0FBC(DisasContext *s, CPUX86State *env, X86OpEntry *e=
+ntry, uint8_t *b)
+>  {
+> -    /* For BSF, pass 2op as the third operand so that we can use zextT0 =
+*/
+> +    /*
+> +     * For BSF, pass 2op as the third operand so that we can use zextT0.
+> +     * G/2op use d64 because ctz already zero-extends the full 64-bit re=
+sult,
+> +     * and v would zero-extend the output register if the input is zero.
+> +     * E stays v: forcing it to d64 too would scan the full 64-bit regis=
+ter
+> +     * instead of just the 32-bit source.
+> +     */
+>      static const X86OpEntry opcodes_0FBC[4] =3D {
+> -        X86_OP_ENTRY3(BSF,    G,v, E,v, 2op,v, zextT0),
+> -        X86_OP_ENTRY3(BSF,    G,v, E,v, 2op,v, zextT0), /* 0x66 */
+> -        X86_OP_ENTRYwr(TZCNT, G,v, E,v,        zextT0), /* 0xf3 */
+> -        X86_OP_ENTRY3(BSF,    G,v, E,v, 2op,v, zextT0), /* 0xf2 */
+> +        X86_OP_ENTRY3(BSF,    G,d64, E,v, 2op,d64, zextT0),
+> +        X86_OP_ENTRY3(BSF,    G,d64, E,v, 2op,d64, zextT0), /* 0x66 */
+> +        X86_OP_ENTRYwr(TZCNT, G,v,   E,v,          zextT0), /* 0xf3 */
+> +        X86_OP_ENTRY3(BSF,    G,d64, E,v, 2op,d64, zextT0), /* 0xf2 */
+>      };
+>      if (!(s->cpuid_ext3_features & CPUID_EXT3_ABM)) {
+>          *entry =3D opcodes_0FBC[0];
+> @@ -675,12 +681,18 @@ static void decode_0FBC(DisasContext *s, CPUX86Stat=
+e *env, X86OpEntry *entry, ui
+>
+>  static void decode_0FBD(DisasContext *s, CPUX86State *env, X86OpEntry *e=
+ntry, uint8_t *b)
+>  {
+> -    /* For BSR, pass 2op as the third operand so that we can use zextT0 =
+*/
+> +    /*
+> +     * For BSR, pass 2op as the third operand so that we can use zextT0.
+> +     * G/2op use d64 because clz already zero-extends the full 64-bit re=
+sult,
+> +     * and v would zero-extend the output register if the input is zero.
+> +     * E stays v: forcing it to d64 too would scan the full 64-bit regis=
+ter
+> +     * instead of just the 32-bit source.
+> +     */
+>      static const X86OpEntry opcodes_0FBD[4] =3D {
+> -        X86_OP_ENTRY3(BSR,    G,v, E,v, 2op,v, zextT0),
+> -        X86_OP_ENTRY3(BSR,    G,v, E,v, 2op,v, zextT0), /* 0x66 */
+> -        X86_OP_ENTRYwr(LZCNT, G,v, E,v,        zextT0), /* 0xf3 */
+> -        X86_OP_ENTRY3(BSR,    G,v, E,v, 2op,v, zextT0), /* 0xf2 */
+> +        X86_OP_ENTRY3(BSR,    G,d64, E,v, 2op,d64, zextT0),
+> +        X86_OP_ENTRY3(BSR,    G,d64, E,v, 2op,d64, zextT0), /* 0x66 */
+> +        X86_OP_ENTRYwr(LZCNT, G,v,   E,v,          zextT0), /* 0xf3 */
+> +        X86_OP_ENTRY3(BSR,    G,d64, E,v, 2op,d64, zextT0), /* 0xf2 */
+>      };
+>      if (!(s->cpuid_7_0_ebx_features & CPUID_7_0_EBX_BMI1)) {
+>          *entry =3D opcodes_0FBD[0];
 > --
 > 2.53.0
 >
