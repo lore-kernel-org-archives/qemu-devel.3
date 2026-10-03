@@ -4,28 +4,28 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F258FCA5FEC
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F25D0CA5FEF
 	for <qemu-devel@archiver.kernel.org>; Sat,  3 Oct 2026 17:06:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xD3Au-0000dZ-Nc; Sat, 03 Oct 2026 13:05:29 -0400
+	id 1xD3BL-0002FJ-7d; Sat, 03 Oct 2026 13:05:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1xD39K-0007J1-26; Sat, 03 Oct 2026 13:03:55 -0400
-Received: from mail-japaneastazlp170130007.outbound.protection.outlook.com
- ([2a01:111:f403:c405::7] helo=TYDPR03CU002.outbound.protection.outlook.com)
+ id 1xD399-0007Fn-Q4; Sat, 03 Oct 2026 13:03:49 -0400
+Received: from mail-japaneastazlp170120005.outbound.protection.outlook.com
+ ([2a01:111:f403:c405::5] helo=TYPPR03CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1xD39H-0007Ds-3a; Sat, 03 Oct 2026 13:03:49 -0400
+ id 1xD396-0007C3-UX; Sat, 03 Oct 2026 13:03:39 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=lQVfVQwHUlyWbZQ6rX+ChuPo0V/Wqg7JCr4hDilrOny9X6jewFqduAGL61jJjXkvHwDismM7maNN1GhezdYceYfT7mtohl2QJdpSAd7VimKXTtgSfBJRcntf47INB9GNKHXdxF3VVoR7+ANz1Yky6dEIqim8IcybcAYf0z6x8rN19W2iJP/F8wewfixfvINYk3pxOdCtduSAzxqudpDLQMw0qtZqSVoaRkIIk2LYcQQy816M/3970n6PWlmPNIwhGHfnKnRIkmg3XsVktIS4zJMqLCEuErx3p/FvmlYzMd1hGvJ58r57aBdtnaWSZ4JqtA1k1+0wLVDt6BIJ3N5pLw==
+ b=IdmNQ1u5S5jBRWdn65X456tw2U09PavUAuS44212tMdkY+00L9CzJk73sGjYTzbL6bnN30/Y0iFzLMMv/3C2nNCUfKGnWVh1mvFRzV+Z7s7j7W39hNwcr47VbYVumMdTjTbvKzi4NYG1TvhrDcfFmhZhIKed2fIzT3gJGSoJp597asIrtccVzNcCcWnLgm7trhESDyL+fa6gbrIWTjrFGqIC5dx+9NNzikxdei8Bolh46yDA3cZoG9uGhs+7nX3Mu8gb9mylqgorI9XhaTFZBsKm6gifbcP45YGVFABD+g/cEx865HLvi6sQACpaas9DkpL7/Ryn1lZe10UQupHCMw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=KgTSjuotx5OAydQiFIgVXtnNwk9gtuVfKleNV4zPH1s=;
- b=yR+/cUPrFnRVKB6o4c6F9IL1o31IN3a+2X1y613NQVzqt4NLGJp9qu33CyESYkB07uYhVHOApAaOifpXLvKgZ/z3RTmOYjmBcdvN9YnsVzmCzmL/I9VmixbNGEHbTieDs+0TF1Xm9NZqarPR7PSj4a2abl12J+zsMTn0KuiLkB7QRR5CiOdpSIsYr7CM6RAitTZSTOJGWAQeD6beGLeuZ/kaGtE9DPk+FD9XCtK78cNVB426CpAvyrLVl6iebeLGUPFMD9PEpba3KoYa2YCVqtIkZO1l/SSdVXJirL/ei3UYW6pIrgkJYGhyRryEAxTHZPtFWiDCXGR5gvcJJfBO6A==
+ bh=8yu0LdoAlqBhQta1CtFFfSWkeZSBnOry6tXLCXpB+6s=;
+ b=W+NP5JGFnaHwYHf1AypojNaNYre5n23+3gQMFUzyjRvjxHbc8RUHUa5Cs26j7YI6LzXemfXLk8KKwl71q9jsj0wvS4T5FWYbneeWErByIPp++/q/eozuhf5aEIX+30QgXCwyJl3EQfcgjQxqMh460pHpM244nrBCE8NwRSChHq2ju9BwsnuYQUfbP2XeeOr7NoEHIWgjTxv26A7xOgoMKA973yPrSkleTBsJEwgdd3f2R6z+qhGhLVhJCj6ZhEMd0eVYHJuah5K8Eyt2TW+g/8wgjBBDXTL1niG9PSrOq12yO/KdGGjqSddKAc7aoRrZ+eIOmu4tVxdm42WoahAPvw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=processmission.com; dmarc=pass action=none
  header.from=processmission.com; dkim=pass header.d=processmission.com;
@@ -33,108 +33,99 @@ ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=KgTSjuotx5OAydQiFIgVXtnNwk9gtuVfKleNV4zPH1s=;
- b=MLMMRfENCtFzObVE7LPuBofiVRv1OrqkkSadhxf4CS2HRmfUgqCoSEpb620O3XHgB+LuX84vwv4ziYSFAWDA/hpdtSAq+QvfwPnyyT51A9X7VuGo4+tuPFFqaj2+TgPZvmXQ/T3kk9TxYco4ITXUwl4TekkZqjGY9dl/gq3qL110pJWQ0FS9gXN/vJcf5osfwb8+6nvLT5lkeuVaX6YqnGPzyepI3uMLIbUOlSW4NkUVw2EGHiY8Ng9PrQl8ZtHABJ5n5LLWZb5dMZtNfga5zg/qC9VGJyUhZNjly2/QUt6v2xL+7fjGKe8OLILvVVgeega2do3TdzzBnOE6a+qDNw==
+ bh=8yu0LdoAlqBhQta1CtFFfSWkeZSBnOry6tXLCXpB+6s=;
+ b=J8dvsyvrCIRPMZLwqMo5yzJTJRFeO7TZfEdmHPu+D06143SW9dIVD4jeM28XRBMRw4412QgiJ+QWuyhtWx0DMqrSCwWJsOJDINrRJoew5ybI2n4Nhuz5ZYRJezpPoZBZKg4zTFQ5/ZEY4YMJwcwt2JqKkQda8fdwKScN+372A7hRNu2uffjTfu3I/OANXH3Uj3yKMy99kz0Ef4bWf/D5Hb9553mIhUFZistAV9zvZefL+OLNcog36+N1n0OQVdsMExEf0dZ8yNLcOp5zmBTeShjiwtYf8/uqq9Z+OmHZNrf+O7oDaLYvOPvTn2tVj01QER1Vsu6tKySqUZvZuxUqwA==
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=processmission.com;
 Received: from KL1PR02MB6257.apcprd02.prod.outlook.com (2603:1096:820:da::11)
- by TYZPR02MB6993.apcprd02.prod.outlook.com (2603:1096:405:29::11)
+ by TYSPR02MB7371.apcprd02.prod.outlook.com (2603:1096:405:39::13)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.472.20; Sat, 3 Oct
- 2026 17:03:40 +0000
+ 2026 17:03:16 +0000
 Received: from KL1PR02MB6257.apcprd02.prod.outlook.com
  ([fe80::ecf9:e832:8196:215]) by KL1PR02MB6257.apcprd02.prod.outlook.com
  ([fe80::ecf9:e832:8196:215%6]) with mapi id 15.21.0472.016; Sat, 3 Oct 2026
- 17:03:40 +0000
+ 17:03:16 +0000
 From: Bin Meng <bin.meng@processmission.com>
 To: QEMU <qemu-devel@nongnu.org>
-Cc: Conor Dooley <conor@kernel.org>,
- Sebastian Huber <sebastian.huber@embedded-brains.de>, qemu-riscv@nongnu.org
-Subject: [PATCH v3 17/27] hw/misc: pfsoc: Model PolarFire SoC serial number
- service
-Date: Sun,  4 Oct 2026 01:02:07 +0800
-Message-ID: <20261003170232.2450916-18-bin.meng@processmission.com>
+Cc: Alistair Francis <Alistair.Francis@wdc.com>,
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ qemu-riscv@nongnu.org
+Subject: [PATCH v3 08/27] tests/qtest: Add SiFive L2 cache controller coverage
+Date: Sun,  4 Oct 2026 01:01:58 +0800
+Message-ID: <20261003170232.2450916-9-bin.meng@processmission.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261003170232.2450916-1-bin.meng@processmission.com>
 References: <20261003170232.2450916-1-bin.meng@processmission.com>
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 X-ClientProxiedBy: TY4P301CA0100.JPNP301.PROD.OUTLOOK.COM
  (2603:1096:405:37b::14) To KL1PR02MB6257.apcprd02.prod.outlook.com
  (2603:1096:820:da::11)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: KL1PR02MB6257:EE_|TYZPR02MB6993:EE_
-X-MS-Office365-Filtering-Correlation-Id: 7e118267-f1e0-423a-ed90-08df21704624
+X-MS-TrafficTypeDiagnostic: KL1PR02MB6257:EE_|TYSPR02MB7371:EE_
+X-MS-Office365-Filtering-Correlation-Id: 3b688c9d-137d-496a-a91a-08df21703796
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|23010399003|366016|1800799024|376014|18002099003|22082099003|6133799003|10067099003|260925022911599003|260925021911599003|260925021311599003|56012099006;
-X-Microsoft-Antispam-Message-Info: kVrFgZ7PHweLQbZ0kFkZJ6M46BeVkeJPvpjwk6P2lkxLp3JcKATLhfhME7mmU7KnpftsxlFYL2EeUeIJvwh4w1TO3B9fPvxvDQyFoW9tP9WIbZd52icpYBFjEkc9wXC1M6yES1IMHv2G0XAMGRI+Vm9fqPAP73ZjBLzAt0L2xTmhrx2Ge/sYPEQ7MrsuupCKUYKqwPAxhnP/VIu8Hz/LUmu8TxJFDKqNNadlQ/K09N71TbzjHlODiNQSyHKbaKXbwOgGTHYWqoWkHy0TmuuocRgBRIq2jfLvvEl0zK2muYNkktTItxB+TdyTI0WMN011wLGB0LI61XMksBhaSKbGEQ4TDQ/C1Y7pmrGwTxkdQ4YYurm9rgUDgAqUG8fJvfLjU6cPBV8Ax9KX7n7UTubQzX/IQ2EnMiDbwW+pX4LiFfkyWIOQBp7mn3SXKNMYJgaPt9+l7sB86Ckiy+/Kjh7Uj73Il8AoJLxayRdVDGEC/J0NSGONQoyhmWR7Ypuns8m7hLNPl7z0rwt+XERzomAcWu2T5iiODnmyPfeRaiOF35w73MoRRzqI6ikj93NDVjPlVVOqPj9DValuFzNpDK0x5JRXTC0C3r2IFWoBjlgrhAINKQKqhEjTH/ZEMpVHYXvu0cyzp3H86RftW5Trzg4tCjnSVG4kz/wJPoGz0oF1/T8=
+ ARA:13230040|1800799024|376014|23010399003|366016|6133799003|18002099003|22082099003|56012099006|5023799004|260925021311599003|260925022911599003|260925021911599003|10067099003;
+X-Microsoft-Antispam-Message-Info: Q3Rzq8UIcyaLc4FsVofEqZ/g7x8huN10bHxk76xdhYkPKQIfyDTCkTBqIfqTIbeQ7TramO4Lz8TAc92uXtGEcICXjOQzJK9XtZxgkwfJRR2rrDr25PiqGAEAJzKA6blsi9wQUkCDRp1ez9Mv7FoF6+RkkWhJBtepZFl2pAFwIOwhX0Z/6xoOcyq/oVDMkVTI+nXG+ddFRKyaIOgNS1qOazRQNH30paXeZKmu/rzgxWgiEorPnqBzPbrQxqsjQaefvjwk3AgtetHrQWA/Oai9AolyQ6uVHIC28cPCuFjR9W8w//KW5RsvH7gXZXqGYxh4Rg/NuhyKz7T7JciugXjb9biKbctqNjrJi07/GnQlRenhvDw88zRXg0tov+fEWqwnI0od2wVwVf0J6p0FvoRd2QYMXG33Y9TVsMvEjwwbaW5gQNxYTz/GUVGLJX63krxa+eroNzcX10rhbXje4vJ0q2TaP6EmVTDA1B9gF6j3eqnEIyosEHUNaaMfKGEITJm+OGrALW3dc0P3q1Exv3gKOR2W3pnaUmIXTtJS4j/WdXCBeohQYp83hLcQiiCnDuZrwIHxad2CfGBoUCwCg33QKuDL1Ak5NsWu/WvkSXzVAopZEubPqHo/p4gD/pfT4WWgj/o+GJCI5PKqwu8taDyB6W852iPhOffsB9CdT6knaQk=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:KL1PR02MB6257.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(23010399003)(366016)(1800799024)(376014)(18002099003)(22082099003)(6133799003)(10067099003)(260925022911599003)(260925021911599003)(260925021311599003)(56012099006);
+ SFS:(13230040)(1800799024)(376014)(23010399003)(366016)(6133799003)(18002099003)(22082099003)(56012099006)(5023799004)(260925021311599003)(260925022911599003)(260925021911599003)(10067099003);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?UzVocG1UVTJ5c3p1TXFTc3BWVDlNb003eElCYll1d2ZmcFZZS1hXMUxWWDJw?=
- =?utf-8?B?Y3FtRndRVGNpQlBld2lJZGRmTVhwaWJwcFlPTXdjYVlJMUthZkMyeFVEb2lo?=
- =?utf-8?B?RWJoby91eHE4UW5UUSs1WjNBdGk0R1RJUEFPV004WFE3VkJucjhuT1gvWURX?=
- =?utf-8?B?MkVjRGtHR3kvVU44L2JJNXlaL3NqeHk5bHltV1F6ZjZrUkdSelNMeXgzK2No?=
- =?utf-8?B?czAyVnFsVzhERXpUSkJDVUlQdkYrbzBFNG51aVVSb1ROeUFaaWZ0MjVOV0dY?=
- =?utf-8?B?eFdBWWJVVG5mM0VtUm8xN0EyNVk3MzZnSW1MR3VHVWYydGhuOE52N2ppc2Ez?=
- =?utf-8?B?RDFaRWZTRmpHajJkalpNMUlGMzhYVWhNM1BOQW5LU1k3azVJOU51WG1KVEw1?=
- =?utf-8?B?YTErNVVhamhLR0dWdGlkUzFjc0RZU3FRTzM3dFp4bHNwdGlDMEdJQy9hcHlP?=
- =?utf-8?B?QlBCbzBLMkE1VVA3dUU3TTdnSUx6M0JFbWhNK3JPOWx3RHp3TWY4NGQzZzd6?=
- =?utf-8?B?anRtSTBjdHJneW42NHVZZ2hxSnJrWTVEYUUrcnBvbWVzdFdNdThrc3p2YVIw?=
- =?utf-8?B?NFN3ZGdqeElqa0szcE8zU2lQbnNZWWVNQ2E1NHA1Q3VZcG5vSkV6VTF4M0lG?=
- =?utf-8?B?TWNQYUVnTlhoMXhhaXlPa1ZQL2tDR2FGV1RNMFJVN0EvQVg0N2ZwZ3FOT3pQ?=
- =?utf-8?B?R2s0YlUzTGZSNy9pOHBWWmNnalNmdGM2OGF0Vm1INUUzRkZVeGdLWHVQTlZR?=
- =?utf-8?B?YlplQS9nejlGdlFzT2xwc0ZlczNmSW1zTmVUL1p6U25IRzRaamhqdEJhbzl2?=
- =?utf-8?B?d0ZTU1JpM3V0UWpWanEweFE5UXdreWdTRml1MjJhbTdnNzkzc3UvT3o4ZmNw?=
- =?utf-8?B?RFhaTE8xTUl1SWF4Z2NhNmVONnpLeHVJTXhNaGlId1NPNzJ3bWR0RW9jMEIv?=
- =?utf-8?B?TWZDL1dTYnF4Zjd4WjhnU3Z6OExLWU5PaXp0UXdtNU0waWI4VFZ2ZVM0Vk5i?=
- =?utf-8?B?enhZWGVrVkJoSGpvOStzT0RWaU84bXVoSWE1aVVMZ0c5cldBK0dpUDFRM0pP?=
- =?utf-8?B?ZWJlZ3lQQ2V2eThFYjVCUFV3bERMRlF6K21NVEd2SHNOalE3OWY0cXk0anZC?=
- =?utf-8?B?cC9lSnNwY0dxZXVEbnNZZjVxdDAyS0xjS0xMaWlIUTBoN2RHM0hRUHdsbHFo?=
- =?utf-8?B?L1VDRG96eXBGSEIvZ3E0T3NIaWd3QUFGcnBBTysrVHh2Ym5pTXUyVFVRTXMv?=
- =?utf-8?B?RFJhNy9EZjFINDc4alpvbnQxVXNTbzlXdExmQmtJWkVDYWN3NU5YbmtseUdu?=
- =?utf-8?B?OURRNVFmZktIVWZ3c3Y0SWEzU0IvRUlGOTAvOVNYRzBTeXM5ckRFdzVGd2RM?=
- =?utf-8?B?Q0FnY2VJNEIvREYxK3J0UUNmUW81Sm93YWQ5ek1sd3IrNGZSdTVnTHYxeVhY?=
- =?utf-8?B?Z3lmU2ROSklFUXBBSm5rUkxucThQRXZRVUZFOXVsM1NCUXBaeS9EV1UyUHkx?=
- =?utf-8?B?NUlTNTlQVnVpRFp6TFRvK05LUHNrTkZhVkk4WThxck8zb0doQU0rZjhxNGN1?=
- =?utf-8?B?RzNIVW9qSytuVEVSMzh3K05tUmtZK3NjUjVERFAzeWVmSENWUWhZcUZpdGhF?=
- =?utf-8?B?RE1LN1UzNjBaZVBjODc5cDgxSW1XbjdCWUtVMkJtWlZ2bE9QU1laNDJZWmo3?=
- =?utf-8?B?bnpVOEtIY3B1SU00TENIN0x4Skp3ZlV4OGg5ZUZLUHNGeHFlOEZIaEx3NzJJ?=
- =?utf-8?B?NWNvNS9wTUFxNTFtaUZnR3dGRGpNdlhjQm9wOXFFZ0VTMTd2eGFhbmRMMGd0?=
- =?utf-8?B?ZVlVT2hMNlc2MXVpYTNGbmVqZ0dTZEFFcUxjdlh2WE90RWR1ajM1dUFBcTF0?=
- =?utf-8?B?Y1N3Q2VpK1BWYnRiRjlxWm5SeTZRQXJzbzJYVW52a0xVZG5Sa1hjQWxudjlF?=
- =?utf-8?B?dVM2bGNmMzA1d0VleW1Cb1ZLRzJSRUE4K2FWUFQwSlpxT0l4bDkrNC9ablZs?=
- =?utf-8?B?QWYxSUp6dnovWTV5VVl6OGRlSWFNNHZNcEpsRkErNUI2WGR2cGV3VVRlT2pt?=
- =?utf-8?B?NEk4T3VWajQ5Y3dUc2pacHh3bVFxQ3ROTGhsNnppWWFWT3dodTd1SUJIRHNS?=
- =?utf-8?B?ekFvU3hkVGp6bWRTL2pUQ3BzQWJpTm1xL2hudldOZC9TaGF2VjB6WGFCZVJX?=
- =?utf-8?B?bHBQVnJrUVFJTlFqeHRPSXZBd3VNakhKY1ozcEVVdmc4V2VGaXlRMmxoeVkv?=
- =?utf-8?B?QS9hN1lzdXBDSVNZM1FhblJQNmtWdFBSUm5pZDdwdUJTY1pSdWRNM0F6THo4?=
- =?utf-8?B?c1lrcDlkOEZpbmZSR1dwYnYzLzhlVjlEcC96L25tQUtjMW4wRDVWbC9JSC95?=
- =?utf-8?Q?NBeBz4/Vujwb0rQk=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?Uc8iRt0G6EJh4aPF0qhzoA6yNV2kgcrB/rwqe8tq1zzWR6MP/3XbkTEBoI2y?=
+ =?us-ascii?Q?KCK4p93XFZyhgYUxFSYiVSrKMcTxonv8TiV8OOlg1zeGL9Nzpddu0vT0xPgB?=
+ =?us-ascii?Q?gZu5RUwVjpTBh4qziDwJCzHgUnbmtQsgJzcrjBaOHTeWODFuEINORy8yhVjB?=
+ =?us-ascii?Q?+hZeVF/luR0rmu7sCIQTUR0cfMuwl5k5j/wHjTRE5AamYxXHDX6P4LlZ49TT?=
+ =?us-ascii?Q?gIikMPkpZYYcn2WdkUQ32GE74fefMvveSz28+cEv5Ur/Biu7OjpHdLsu+vkw?=
+ =?us-ascii?Q?bcLLHlJTwrqCKQwmoOckJC62GyxlON/G2OVPSXSPlkewMLt9INuO5fZDGN4l?=
+ =?us-ascii?Q?VGJqpOH56PeNDBnEgKR4t7kiZIHXpPcrcC4GLXDwFFKXBk7phG1VGStpv9p9?=
+ =?us-ascii?Q?aQdefBrObuP+hZXh9w3MppuSAK9HzrFX+DPI9AmZ4DjCYohIuU1sgjxxy8/B?=
+ =?us-ascii?Q?/yVXk2o1TI3x1MVFrp+qeI5pjoRs6fGK1yd42S/xcq0paR5W1MdSdG0vb2lc?=
+ =?us-ascii?Q?TVdY4O6eG0aC3id+wtmNaUp1UHZ1N6frknBzg9ZuD8Mlw8JepPwtyCQWlkZa?=
+ =?us-ascii?Q?ziF8zCfR9IhHn+Yno7DAwhKBHdNPLmeUcVAzmuf4cqpexIM5RCvG2LOpUUdv?=
+ =?us-ascii?Q?3Na3NncJHOnav6gwL6XwlFDT6kEt5mnd8Qytz4ckfE9I7D0oVOIyUFdfKKWA?=
+ =?us-ascii?Q?LVB+dDIaaqKr58t6wT+jEKPzCyEZAPx7m/nwJVXUPc3/YNmX2tZ+45nUkx23?=
+ =?us-ascii?Q?AXEB8P2MtEVSIy+HaM8srTmNDqzKgCU3bb2fyho+1o+0Y37X9UOBk7Y5BxHC?=
+ =?us-ascii?Q?zNIiEt91iNetLd2te6O8G5+J7KlqX2mZZWDIsiMBzR//kWK9PSVB/m3Yz9dJ?=
+ =?us-ascii?Q?HqY4C2M8zowT64m6F/FxqTp/n0vVA1zPaEJVVgfvAf6tmqmIUCheHcywajYS?=
+ =?us-ascii?Q?2xYE2I+jKC0NEUH5+hJ8ABMH88vvNwVpUGkwqaD1sBCk66OQmMX/tSpZ7x4t?=
+ =?us-ascii?Q?wEyZ7JI3HBtlE7ibPITaJhBJb/SDXrgsFuH5fDErAXsBcpysSPxvHCSTLUB9?=
+ =?us-ascii?Q?5qRbRY7osLZq25ZK2ZOtGmgTZWt6zmcBTZdXHVosfudK+8EuGB2dM2xhgJgU?=
+ =?us-ascii?Q?ntmNRzRHApoo+a4rzq6aqoRwZHvk0CQ8YRaNkl2GHmM33QecT/ewd08hB4n0?=
+ =?us-ascii?Q?EwGZJmuz7BLUdjfTAFrIUmSB0EPvcZ9IrApatFVRDrk/c+FVXLegGXp7Gcie?=
+ =?us-ascii?Q?w7urn2sECLo+JGsikEwB4QrsuF97SQhAbXiWQnrrb3V6kBbx1YjDkIhZQrey?=
+ =?us-ascii?Q?fUSahZZnQuKkAmHLEGe2e41Isna3OkviqGYj/8geKrjJaF9/lWgUDKZOg2K3?=
+ =?us-ascii?Q?HOKjfy4+Gka9Y5GIRXQxKzGyFFvYPGXA7/i4I1ihEevoZ/j3wukpTzVHxkYm?=
+ =?us-ascii?Q?xBz4vXAH4Y6j1Mo9UdHzsXwdNea51nRGZY8bbCvwMlHSVo200JjljSf+hOmb?=
+ =?us-ascii?Q?SJ3Oq84urHRl96cZatVa+Ft0/3AYjtYMgkIB99g5C1J+3MSDY2eZPntQtSON?=
+ =?us-ascii?Q?8g2TxqK8A8x9zcgOvYgkzpoF6j1YtKOuUlIpexhTqPZ5mWKXetoZeuntZvtn?=
+ =?us-ascii?Q?CXFaCKKOGl68WFKI0y1ZeyVd2RLEoKVS9af2ZMfW2cNaDBO6yQwqMhzfUjkj?=
+ =?us-ascii?Q?RPLdptuME/bCOzEVrEwCJiRGG8Cr5RqUj1g4Yb1AxQRZol7v6TqQ0KicdcmW?=
+ =?us-ascii?Q?bdkWsSnyiNk8sRjT8WjXo6VD0Tp3/cQ=3D?=
 X-OriginatorOrg: processmission.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 7e118267-f1e0-423a-ed90-08df21704624
+X-MS-Exchange-CrossTenant-Network-Message-Id: 3b688c9d-137d-496a-a91a-08df21703796
 X-MS-Exchange-CrossTenant-AuthSource: KL1PR02MB6257.apcprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Oct 2026 17:03:40.8011 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Oct 2026 17:03:16.3916 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: jAk61ymRCJOuvA5qpTL4pj8S4lz2D7RNEgPPa2Wm0P2TD86NPClEOAEScuWKCwYM6zN2JJMtr4aJNOCUjUvWNkPkZooR4TvdNpZxz/EUo0M=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYZPR02MB6993
-Received-SPF: pass client-ip=2a01:111:f403:c405::7;
+X-MS-Exchange-CrossTenant-UserPrincipalName: njER+xBMq5VavydenA9W2NrcL2RR+ASK6+fgZMOUWFT4cjMOuTg/sU9r/USEars9sHTSlZB0fGhuP2NdK4pyeVNIHM9MsOiJnN63uJRnqzs=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYSPR02MB7371
+Received-SPF: pass client-ip=2a01:111:f403:c405::5;
  envelope-from=bin.meng@processmission.com;
- helo=TYDPR03CU002.outbound.protection.outlook.com
+ helo=TYPPR03CU001.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -151,288 +142,377 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-U-Boot requests the PolarFire SoC device serial number during board
-late initialization. The IOSCB previously rejected every request, so
-board setup could not complete.
+Exercise Config, WayEnable, and indexed WayMask registers on the
+PolarFire and FU540 integrations, including their different master
+counts, reset, monotonic writes, and unimplemented-register logging.
 
-Model the System Services control registers and byte-addressable
-mailbox. Obtain the 128-bit serial number from an optional device
-property, using a deterministic value when it is not configured.
-Return an explicit failure for unsupported services and reset the
-new runtime state with the rest of the device.
+Verify that enabling cache ways hides the corresponding LIM range,
+while the controller's Zero window stays accessible. Check that reset
+restores hidden LIM data without clearing the Zero RAM stand-in.
+
+Migrate register state and both RAM backings, verify the destination
+LIM view, and confirm that writes to hidden addresses do not alter the
+data restored by a later reset.
 
 Signed-off-by: Bin Meng <bin.meng@processmission.com>
 
 ---
 
 Changes in v3:
-- Decode the seven-bit opcode and nine-bit mailbox word offset
-- Bound serial-number responses to the documented 2 KiB mailbox
-- Mirror the current control flags in the status register
-- Use default access sizing for the control and mailbox windows
+- Rename the test for the shared SiFive L2CC model
+- Exercise 15 masters on PolarFire and 21 masters on FU540
 
- include/hw/misc/mchp_pfsoc_ioscb.h |   6 ++
- hw/misc/mchp_pfsoc_ioscb.c         | 156 +++++++++++++++++++++++++----
- 2 files changed, 144 insertions(+), 18 deletions(-)
+ MAINTAINERS                    |   1 +
+ tests/qtest/sifive_l2cc_test.c | 306 +++++++++++++++++++++++++++++++++
+ tests/qtest/meson.build        |   3 +
+ 3 files changed, 310 insertions(+)
+ create mode 100644 tests/qtest/sifive_l2cc_test.c
 
-diff --git a/include/hw/misc/mchp_pfsoc_ioscb.h b/include/hw/misc/mchp_pfsoc_ioscb.h
-index 9687ea25b1..aa108d2d88 100644
---- a/include/hw/misc/mchp_pfsoc_ioscb.h
-+++ b/include/hw/misc/mchp_pfsoc_ioscb.h
-@@ -25,6 +25,8 @@
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 1312bbd1bd..acb79a7d61 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -1827,6 +1827,7 @@ F: docs/system/riscv/sifive_u.rst
+ F: hw/*/*sifive*.c
+ F: include/hw/*/*sifive*.h
+ F: tests/functional/riscv64/test_sifive_u.py
++F: tests/qtest/sifive_l2cc_test.c
  
- #include "hw/core/sysbus.h"
- 
-+#define MCHP_PFSOC_IOSCB_MAILBOX_SIZE 0x800
-+
- typedef struct MchpPfSoCIoscbState {
-     SysBusDevice parent;
-     MemoryRegion container;
-@@ -47,6 +49,10 @@ typedef struct MchpPfSoCIoscbState {
-     MemoryRegion cfm_sgmii;
-     MemoryRegion bc_sgmii;
-     MemoryRegion io_calib_sgmii;
-+    uint32_t services_cr;
-+    uint32_t services_sr;
-+    uint8_t mailbox_data[MCHP_PFSOC_IOSCB_MAILBOX_SIZE];
-+    char *serial_number;
-     qemu_irq irq;
- } MchpPfSoCIoscbState;
- 
-diff --git a/hw/misc/mchp_pfsoc_ioscb.c b/hw/misc/mchp_pfsoc_ioscb.c
-index 09b702e520..850125c8b4 100644
---- a/hw/misc/mchp_pfsoc_ioscb.c
-+++ b/hw/misc/mchp_pfsoc_ioscb.c
-@@ -25,6 +25,7 @@
- #include "qemu/log.h"
- #include "qapi/error.h"
- #include "hw/core/irq.h"
-+#include "hw/core/qdev-properties.h"
- #include "hw/core/sysbus.h"
- #include "hw/misc/mchp_pfsoc_ioscb.h"
- 
-@@ -37,6 +38,9 @@
- #define IOSCB_CCC_REG_SIZE          0x2000000
- #define IOSCB_CTRL_REG_SIZE         0x800
- #define IOSCB_QSPIXIP_REG_SIZE      0x200
-+#define IOSCB_SERIAL_NUMBER_SIZE    16U
-+#define IOSCB_DEFAULT_SERIAL_NUMBER "0123456789abcdef"
-+#define IOSCB_PROP_SERIAL_NUMBER    "serial-number"
- 
- 
- /*
-@@ -186,33 +190,88 @@ static const MemoryRegionOps mchp_pfsoc_io_calib_ddr_ops = {
-     .endianness = DEVICE_LITTLE_ENDIAN,
- };
- 
--#define SERVICES_CR             0x50
--#define SERVICES_SR             0x54
--#define SERVICES_STATUS_SHIFT   16
-+#define SERVICES_CR                         0x50
-+#define SERVICES_CR_REQUEST                 BIT(0)
-+#define SERVICES_CR_NOTIFY                  BIT(3)
-+#define SERVICES_CR_COMMAND_SHIFT           16
-+#define SERVICES_CR_COMMAND_WIDTH           16
-+#define SERVICES_CR_COMMAND_MASK            \
-+        MAKE_64BIT_MASK(SERVICES_CR_COMMAND_SHIFT, SERVICES_CR_COMMAND_WIDTH)
-+#define SERVICES_CR_MASK                    \
-+        (SERVICES_CR_REQUEST | SERVICES_CR_NOTIFY | SERVICES_CR_COMMAND_MASK)
-+#define SERVICES_SR                         0x54
-+#define SERVICES_SR_CONTROL_MASK            0xf
-+#define SERVICES_SR_STATUS_SHIFT            16
-+#define SERVICES_COMMAND_SERIAL_NUMBER      0
-+#define SERVICES_COMMAND_OPCODE_MASK        0x7f
-+#define SERVICES_COMMAND_MAILBOX_SHIFT      7
-+#define SERVICES_COMMAND_MAILBOX_MASK       0x1ff
-+#define SERVICES_STATUS_SUCCESS             0
-+#define SERVICES_STATUS_FAILED              1
-+
-+static void services_cr_write(MchpPfSoCIoscbState *s, uint32_t value)
-+{
-+    uint32_t command;
-+    uint32_t opcode;
-+    uint32_t response_offset;
-+    uint32_t status = SERVICES_STATUS_FAILED;
-+
-+    if (device_is_in_reset(DEVICE(s)) ||
-+        !(value & SERVICES_CR_REQUEST)) {
-+        return;
-+    }
-+
-+    /*
-+     * System services complete synchronously in this model, so clear the
-+     * request bit before exposing the response to the guest.
-+     */
-+    s->services_cr &= ~SERVICES_CR_REQUEST;
-+
-+    command = (value & SERVICES_CR_COMMAND_MASK) >>
-+              SERVICES_CR_COMMAND_SHIFT;
-+    opcode = command & SERVICES_COMMAND_OPCODE_MASK;
-+    response_offset = ((command >> SERVICES_COMMAND_MAILBOX_SHIFT) &
-+                       SERVICES_COMMAND_MAILBOX_MASK) * sizeof(uint32_t);
-+    if (opcode == SERVICES_COMMAND_SERIAL_NUMBER &&
-+        response_offset <= sizeof(s->mailbox_data) - IOSCB_SERIAL_NUMBER_SIZE) {
-+        /*
-+         * The descriptor contains a seven-bit opcode and a nine-bit mailbox
-+         * word offset. Return the 128-bit serial number at that address.
-+         * See section 3 of the PolarFire System Services User Guide.
-+         */
-+        memset(&s->mailbox_data[response_offset], 0,
-+               IOSCB_SERIAL_NUMBER_SIZE);
-+        memcpy(&s->mailbox_data[response_offset],
-+               s->serial_number, strlen(s->serial_number));
-+        status = SERVICES_STATUS_SUCCESS;
-+    }
-+
-+    s->services_sr = status << SERVICES_SR_STATUS_SHIFT;
-+    qemu_irq_raise(s->irq);
-+}
- 
- static uint64_t mchp_pfsoc_ctrl_read(void *opaque, hwaddr offset,
-                                      unsigned size)
- {
--    uint32_t val = 0;
-+    MchpPfSoCIoscbState *s = opaque;
-+    uint32_t value;
- 
--    switch (offset) {
-+    switch (offset & ~3ULL) {
-+    case SERVICES_CR:
-+        value = s->services_cr;
-+        break;
-     case SERVICES_SR:
--        /*
--         * Although some services have no error codes, most do. All services
--         * that do implement errors, begin their error codes at 1. Treat all
--         * service requests as failures & return 1.
--         * See the "PolarFire® FPGA and PolarFire SoC FPGA System Services"
--         * user guide for more information on service error codes.
--         */
--        val = 1u << SERVICES_STATUS_SHIFT;
-+        value = s->services_sr |
-+                (s->services_cr & SERVICES_SR_CONTROL_MASK);
-         break;
-     default:
-         qemu_log_mask(LOG_UNIMP, "%s: unimplemented device read "
-                       "(size %d, offset 0x%" HWADDR_PRIx ")\n",
-                       __func__, size, offset);
-+        return 0;
-     }
- 
--    return val;
-+    return extract32(value, (offset & 3) * 8, size * 8);
- }
- 
- static void mchp_pfsoc_ctrl_write(void *opaque, hwaddr offset,
-@@ -220,15 +279,22 @@ static void mchp_pfsoc_ctrl_write(void *opaque, hwaddr offset,
- {
-     MchpPfSoCIoscbState *s = opaque;
- 
--    switch (offset) {
-+    switch (offset & ~3ULL) {
-     case SERVICES_CR:
--        qemu_irq_raise(s->irq);
-+        s->services_cr = deposit32(s->services_cr, (offset & 3) * 8,
-+                                   size * 8, value) & SERVICES_CR_MASK;
-+        if (offset == SERVICES_CR) {
-+            services_cr_write(s, s->services_cr);
-+        }
-+        break;
-+    case SERVICES_SR:
-         break;
-     default:
-         qemu_log_mask(LOG_UNIMP, "%s: unimplemented device write "
-                       "(size %d, value 0x%" PRIx64
-                       ", offset 0x%" HWADDR_PRIx ")\n",
-                       __func__, size, value, offset);
-+        break;
-     }
- }
- 
-@@ -238,11 +304,62 @@ static const MemoryRegionOps mchp_pfsoc_ctrl_ops = {
-     .endianness = DEVICE_LITTLE_ENDIAN,
- };
- 
+ Tenstorrent Machines
+ M: Joel Stanley <joel@jms.id.au>
+diff --git a/tests/qtest/sifive_l2cc_test.c b/tests/qtest/sifive_l2cc_test.c
+new file mode 100644
+index 0000000000..fef80f3438
+--- /dev/null
++++ b/tests/qtest/sifive_l2cc_test.c
+@@ -0,0 +1,306 @@
 +/*
-+ * The System Controller uses the mailbox as a byte-addressable shared buffer
-+ * for service command payloads and responses.
++ * QTest testcase for the SiFive L2 cache controller
++ *
++ * Copyright (c) 2026 Process Mission
++ *
++ * Author:
++ *   Bin Meng <bin.meng@processmission.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
 + */
-+static uint64_t mchp_pfsoc_mailbox_read(void *opaque, hwaddr offset,
-+                                        unsigned size)
-+{
-+    MchpPfSoCIoscbState *s = opaque;
 +
-+    return ldn_le_p(&s->mailbox_data[offset], size);
++#include "qemu/osdep.h"
++#include "qemu/units.h"
++#include "libqtest.h"
++#include "migration/migration-qmp.h"
++#include "migration/migration-util.h"
++
++#define L2CC_BASE                       0x02010000
++#define L2CC_CONFIG                     0x000
++#define L2CC_CONFIG_VALUE               0x06091004
++#define L2CC_WAY_ENABLE                 0x008
++#define L2CC_ECC_INJECT                 0x040
++#define L2CC_FLUSH64                    0x200
++#define L2CC_WAY_MASK_BASE              0x800
++#define L2CC_WAY_MASK_COUNT             15
++#define L2CC_MAX_MASTERS                21
++#define L2CC_WAY_MASK(n)                (L2CC_WAY_MASK_BASE + 8 * (n))
++#define L2CC_MASTER15                   L2CC_WAY_MASK(L2CC_WAY_MASK_COUNT)
++#define L2CC_WAY_ENABLE_RESET           0
++#define L2CC_WAY_MASK_RESET             UINT64_MAX
++
++#define L2_LIM_BASE                     0x08000000
++#define L2_WAY_SIZE                     (128 * KiB)
++#define L2_LIM_RESET_WAYS               15
++#define L2_ZERO_BASE                    0x0a000000
++#define L2_ZERO_SIZE                    (2 * MiB)
++
++static QTestState *sifive_l2cc_start(const char *firmware)
++{
++    return qtest_initf("-machine microchip-icicle-kit -smp 5 -m 2G "
++                       "-bios \"%s\"", firmware);
 +}
 +
-+static void mchp_pfsoc_mailbox_write(void *opaque, hwaddr offset,
-+                                     uint64_t value, unsigned size)
++static char *sifive_l2cc_create_firmware(void)
 +{
-+    MchpPfSoCIoscbState *s = opaque;
++    static const uint8_t firmware[] = {
++        0x13, 0x00, 0x00, 0x00,
++        0x6f, 0x00, 0x00, 0x00,
++    };
++    char *path;
++    int fd;
++    ssize_t written;
 +
-+    stn_le_p(&s->mailbox_data[offset], size, value);
++    fd = g_file_open_tmp("sifive_l2cc_XXXXXX", &path, NULL);
++    g_assert_cmpint(fd, >=, 0);
++
++    written = write(fd, firmware, sizeof(firmware));
++    g_assert_cmpint(written, ==, sizeof(firmware));
++    close(fd);
++
++    return path;
 +}
 +
-+static const MemoryRegionOps mchp_pfsoc_mailbox_ops = {
-+    .read = mchp_pfsoc_mailbox_read,
-+    .write = mchp_pfsoc_mailbox_write,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
-+};
-+
-+static void mchp_pfsoc_ioscb_reset(DeviceState *dev)
++static uint64_t l2cc_way_mask_test_value(unsigned int master)
 +{
-+    MchpPfSoCIoscbState *s = MCHP_PFSOC_IOSCB(dev);
-+
-+    s->services_cr = 0;
-+    s->services_sr = 0;
-+    memset(s->mailbox_data, 0, sizeof(s->mailbox_data));
-+    qemu_irq_lower(s->irq);
++    return UINT64_C(0xfedcba9876543201) + master;
 +}
 +
-+static const Property mchp_pfsoc_ioscb_properties[] = {
-+    DEFINE_PROP_STRING(IOSCB_PROP_SERIAL_NUMBER,
-+                       MchpPfSoCIoscbState, serial_number),
-+};
++static void test_l2cc_registers(void)
++{
++    g_autofree char *firmware = sifive_l2cc_create_firmware();
++    QTestState *qts = sifive_l2cc_start(firmware);
++    unsigned int i;
 +
- static void mchp_pfsoc_ioscb_realize(DeviceState *dev, Error **errp)
- {
-     MchpPfSoCIoscbState *s = MCHP_PFSOC_IOSCB(dev);
-     SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
- 
-+    /* Use a deterministic identity when no serial number is configured */
-+    if (!s->serial_number) {
-+        s->serial_number = g_strdup(IOSCB_DEFAULT_SERIAL_NUMBER);
++    unlink(firmware);
++
++    g_assert_cmphex(qtest_readl(qts, L2CC_BASE + L2CC_CONFIG), ==,
++                    L2CC_CONFIG_VALUE);
++    qtest_writel(qts, L2CC_BASE + L2CC_CONFIG, UINT32_MAX);
++    g_assert_cmphex(qtest_readl(qts, L2CC_BASE + L2CC_CONFIG), ==,
++                    L2CC_CONFIG_VALUE);
++
++    g_assert_cmphex(qtest_readb(qts, L2CC_BASE + L2CC_WAY_ENABLE), ==,
++                    L2CC_WAY_ENABLE_RESET);
++    qtest_writeb(qts, L2CC_BASE + L2CC_WAY_ENABLE, 0xd);
++    g_assert_cmphex(qtest_readb(qts, L2CC_BASE + L2CC_WAY_ENABLE), ==, 0xd);
++    qtest_writeb(qts, L2CC_BASE + L2CC_WAY_ENABLE, 3);
++    g_assert_cmphex(qtest_readb(qts, L2CC_BASE + L2CC_WAY_ENABLE), ==, 0xd);
++    qtest_writeq(qts, L2CC_BASE + L2CC_WAY_ENABLE, 0xf);
++    g_assert_cmphex(qtest_readq(qts, L2CC_BASE + L2CC_WAY_ENABLE), ==, 0xf);
++    qtest_writeb(qts, L2CC_BASE + L2CC_WAY_ENABLE, 0xe);
++    g_assert_cmphex(qtest_readb(qts, L2CC_BASE + L2CC_WAY_ENABLE), ==, 0xf);
++
++    for (i = 0; i < L2CC_WAY_MASK_COUNT; i++) {
++        g_assert_cmphex(qtest_readq(qts, L2CC_BASE + L2CC_WAY_MASK(i)), ==,
++                        L2CC_WAY_MASK_RESET);
++        qtest_writeq(qts, L2CC_BASE + L2CC_WAY_MASK(i),
++                     l2cc_way_mask_test_value(i));
 +    }
-+    if (strlen(s->serial_number) > IOSCB_SERIAL_NUMBER_SIZE) {
-+        error_setg(errp, "The serial number can't be longer than %u bytes",
-+                   IOSCB_SERIAL_NUMBER_SIZE);
-+        return;
++    for (i = 0; i < L2CC_WAY_MASK_COUNT; i++) {
++        g_assert_cmphex(qtest_readq(qts, L2CC_BASE + L2CC_WAY_MASK(i)), ==,
++                        l2cc_way_mask_test_value(i));
 +    }
 +
-     memory_region_init(&s->container, OBJECT(s),
-                        "mchp.pfsoc.ioscb", IOSCB_WHOLE_REG_SIZE);
-     sysbus_init_mmio(sbd, &s->container);
-@@ -265,8 +382,9 @@ static void mchp_pfsoc_ioscb_realize(DeviceState *dev, Error **errp)
-                           "mchp.pfsoc.ioscb.qspixip", IOSCB_QSPIXIP_REG_SIZE);
-     memory_region_add_subregion(&s->container, IOSCB_QSPIXIP_BASE, &s->qspixip);
++    qtest_system_reset(qts);
++    g_assert_cmphex(qtest_readl(qts, L2CC_BASE + L2CC_CONFIG), ==,
++                    L2CC_CONFIG_VALUE);
++    g_assert_cmphex(qtest_readb(qts, L2CC_BASE + L2CC_WAY_ENABLE), ==,
++                    L2CC_WAY_ENABLE_RESET);
++    for (i = 0; i < L2CC_WAY_MASK_COUNT; i++) {
++        g_assert_cmphex(qtest_readq(qts, L2CC_BASE + L2CC_WAY_MASK(i)), ==,
++                        L2CC_WAY_MASK_RESET);
++    }
++
++    qtest_quit(qts);
++}
++
++static void test_l2lim_topology(void)
++{
++    g_autofree char *firmware = sifive_l2cc_create_firmware();
++    uint32_t original[L2_LIM_RESET_WAYS];
++    const uint32_t poison = 0xdeadc0de;
++    const uint64_t zero_last = L2_ZERO_BASE + L2_ZERO_SIZE - 4;
++    QTestState *qts = sifive_l2cc_start(firmware);
++    unsigned int i;
++
++    unlink(firmware);
++
++    /* Check the fixed aperture, not the RAM stand-in's eviction behavior */
++    qtest_writel(qts, zero_last, 0xa55a9669);
++    g_assert_cmphex(qtest_readl(qts, zero_last), ==, 0xa55a9669);
++
++    for (i = 1; i <= L2_LIM_RESET_WAYS; i++) {
++        uint64_t l2lim_size = (L2_LIM_RESET_WAYS - i) * L2_WAY_SIZE;
++        uint64_t hidden = L2_LIM_BASE + l2lim_size;
++        uint32_t tail = 0x96000000 | i;
++
++        original[i - 1] = 0x69000000 | i;
++        qtest_writel(qts, hidden, original[i - 1]);
++        g_assert_cmphex(qtest_readl(qts, hidden), ==, original[i - 1]);
++
++        if (l2lim_size) {
++            qtest_writel(qts, hidden - 4, tail);
++            g_assert_cmphex(qtest_readl(qts, hidden - 4), ==, tail);
++        }
++
++        qtest_writeb(qts, L2CC_BASE + L2CC_WAY_ENABLE, i);
++        g_assert_cmphex(qtest_readb(qts,
++                                   L2CC_BASE + L2CC_WAY_ENABLE), ==, i);
++        if (l2lim_size) {
++            g_assert_cmphex(qtest_readl(qts, hidden - 4), ==, tail);
++        }
++        g_assert_cmphex(qtest_readl(qts, hidden), ==, 0);
++        qtest_writel(qts, hidden, poison);
++        g_assert_cmphex(qtest_readl(qts, hidden), ==, 0);
++        g_assert_cmphex(qtest_readl(qts, zero_last), ==, 0xa55a9669);
++    }
++
++    qtest_writeb(qts, L2CC_BASE + L2CC_WAY_ENABLE, UINT8_MAX);
++    g_assert_cmphex(qtest_readb(qts, L2CC_BASE + L2CC_WAY_ENABLE), ==,
++                    UINT8_MAX);
++    g_assert_cmphex(qtest_readl(qts, L2_LIM_BASE), ==, 0);
++    qtest_writeb(qts, L2CC_BASE + L2CC_WAY_ENABLE, 3);
++    g_assert_cmphex(qtest_readb(qts, L2CC_BASE + L2CC_WAY_ENABLE), ==,
++                    UINT8_MAX);
++    g_assert_cmphex(qtest_readl(qts, L2_LIM_BASE), ==, 0);
++
++    qtest_system_reset(qts);
++    g_assert_cmphex(qtest_readb(qts, L2CC_BASE + L2CC_WAY_ENABLE), ==,
++                    L2CC_WAY_ENABLE_RESET);
++    for (i = 1; i <= L2_LIM_RESET_WAYS; i++) {
++        uint64_t restored = L2_LIM_BASE +
++                            (L2_LIM_RESET_WAYS - i) * L2_WAY_SIZE;
++
++        g_assert_cmphex(qtest_readl(qts, restored), ==, original[i - 1]);
++    }
++    g_assert_cmphex(qtest_readl(qts, zero_last), ==, 0xa55a9669);
++
++    qtest_quit(qts);
++}
++
++static void test_l2cc_master_count(void)
++{
++    g_autofree char *firmware = sifive_l2cc_create_firmware();
++    QTestState *qts = qtest_initf(
++        "-machine sifive_u -smp 5 -bios \"%s\"", firmware);
++    const uint64_t zero_last = L2_ZERO_BASE + L2_ZERO_SIZE - 4;
++    unsigned int i;
++
++    unlink(firmware);
++
++    for (i = 0; i < L2CC_MAX_MASTERS; i++) {
++        g_assert_cmphex(qtest_readq(qts, L2CC_BASE + L2CC_WAY_MASK(i)), ==,
++                        L2CC_WAY_MASK_RESET);
++        qtest_writeq(qts, L2CC_BASE + L2CC_WAY_MASK(i),
++                     l2cc_way_mask_test_value(i));
++    }
++    for (i = 0; i < L2CC_MAX_MASTERS; i++) {
++        g_assert_cmphex(qtest_readq(qts, L2CC_BASE + L2CC_WAY_MASK(i)), ==,
++                        l2cc_way_mask_test_value(i));
++    }
++    g_assert_cmphex(qtest_readq(qts,
++                                L2CC_BASE + L2CC_WAY_MASK(L2CC_MAX_MASTERS)),
++                    ==, 0);
++    qtest_writel(qts, zero_last, 0x12345678);
++    qtest_writel(qts, L2_ZERO_BASE + L2_ZERO_SIZE, 0xdeadc0de);
++    g_assert_cmphex(qtest_readl(qts, L2_ZERO_BASE + L2_ZERO_SIZE), ==, 0);
++    qtest_writeb(qts, L2CC_BASE + L2CC_WAY_ENABLE, 15);
++    g_assert_cmphex(qtest_readl(qts, zero_last), ==, 0x12345678);
++    g_assert_cmphex(qtest_readl(qts, L2_LIM_BASE), ==, 0);
++
++    qtest_system_reset(qts);
++    for (i = 0; i < L2CC_MAX_MASTERS; i++) {
++        g_assert_cmphex(qtest_readq(qts, L2CC_BASE + L2CC_WAY_MASK(i)), ==,
++                        L2CC_WAY_MASK_RESET);
++    }
++    qtest_quit(qts);
++}
++
++static void test_l2cc_migration(void)
++{
++    g_autofree char *firmware = sifive_l2cc_create_firmware();
++    QTestState *from = sifive_l2cc_start(firmware);
++    QTestState *to = qtest_initf(
++        "-machine microchip-icicle-kit -smp 5 -m 2G "
++        "-bios \"%s\" -incoming defer", firmware);
++    const uint64_t hidden = L2_LIM_BASE + 8 * L2_WAY_SIZE;
++    const uint64_t zero_last = L2_ZERO_BASE + L2_ZERO_SIZE - 4;
++
++    unlink(firmware);
++
++    qtest_writel(from, L2_LIM_BASE, 0x11223344);
++    qtest_writel(from, hidden, 0x55667788);
++    qtest_writel(from, zero_last, 0x99aabbcc);
++    qtest_writeb(from, L2CC_BASE + L2CC_WAY_ENABLE, 7);
++    qtest_writeq(from, L2CC_BASE + L2CC_WAY_MASK(14), 0x1234);
++    g_assert_cmphex(qtest_readl(from, hidden), ==, 0);
++
++    migrate_incoming_qmp(to, "tcp:127.0.0.1:0", NULL, "{}");
++    migrate_qmp(from, to, NULL, NULL, "{}");
++    wait_for_migration_complete(from);
++
++    g_assert_cmphex(qtest_readb(to, L2CC_BASE + L2CC_WAY_ENABLE), ==, 7);
++    g_assert_cmphex(qtest_readq(to, L2CC_BASE + L2CC_WAY_MASK(14)), ==, 0x1234);
++    g_assert_cmphex(qtest_readl(to, L2_LIM_BASE), ==, 0x11223344);
++    g_assert_cmphex(qtest_readl(to, hidden), ==, 0);
++    qtest_writel(to, hidden, 0xdeadc0de);
++    g_assert_cmphex(qtest_readl(to, zero_last), ==, 0x99aabbcc);
++
++    qtest_system_reset(to);
++    g_assert_cmphex(qtest_readb(to, L2CC_BASE + L2CC_WAY_ENABLE), ==, 0);
++    g_assert_cmphex(qtest_readl(to, hidden), ==, 0x55667788);
++    g_assert_cmphex(qtest_readl(to, zero_last), ==, 0x99aabbcc);
++
++    qtest_quit(from);
++    qtest_quit(to);
++}
++
++static void test_l2cc_unimplemented(void)
++{
++    g_autofree char *firmware = sifive_l2cc_create_firmware();
++    g_autofree char *log_path = NULL;
++    g_autofree char *log = NULL;
++    QTestState *qts;
++    int fd;
++
++    fd = g_file_open_tmp("sifive_l2cc_unimp_XXXXXX", &log_path, NULL);
++    g_assert_cmpint(fd, >=, 0);
++    close(fd);
++
++    qts = qtest_initf(
++        "-machine microchip-icicle-kit -smp 5 -m 2G -bios \"%s\" "
++        "-d unimp -D \"%s\"", firmware, log_path);
++    unlink(firmware);
++
++    g_assert_cmphex(qtest_readl(qts, L2CC_BASE + L2CC_ECC_INJECT), ==, 0);
++    qtest_writeq(qts, L2CC_BASE + L2CC_FLUSH64, 0x1234);
++    g_assert_cmphex(qtest_readq(qts, L2CC_BASE + L2CC_MASTER15), ==, 0);
++    qtest_quit(qts);
++
++    g_assert_true(g_file_get_contents(log_path, &log, NULL, NULL));
++    g_assert_nonnull(strstr(log,
++        "unimplemented device read (size 4, offset 0x40)"));
++    g_assert_nonnull(strstr(log,
++        "unimplemented device write (size 8, value 0x1234, offset 0x200)"));
++    g_assert_nonnull(strstr(log,
++        "unimplemented device read (size 8, offset 0x878)"));
++    unlink(log_path);
++}
++
++int main(int argc, char **argv)
++{
++    g_test_init(&argc, &argv, NULL);
++
++    if (qtest_has_machine("microchip-icicle-kit")) {
++        qtest_add_func("/sifive_l2cc/registers", test_l2cc_registers);
++        qtest_add_func("/sifive_l2cc/l2lim_topology", test_l2lim_topology);
++        qtest_add_func("/sifive_l2cc/unimplemented", test_l2cc_unimplemented);
++        qtest_add_func("/sifive_l2cc/migration", test_l2cc_migration);
++    }
++    if (qtest_has_machine("sifive_u")) {
++        qtest_add_func("/sifive_l2cc/master_count", test_l2cc_master_count);
++    }
++
++    return g_test_run();
++}
+diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+index 200abf6f36..1fe008c9ed 100644
+--- a/tests/qtest/meson.build
++++ b/tests/qtest/meson.build
+@@ -311,6 +311,7 @@ qtests_riscv32 = \
  
--    memory_region_init_io(&s->mailbox, OBJECT(s), &mchp_pfsoc_dummy_ops, s,
--                          "mchp.pfsoc.ioscb.mailbox", IOSCB_SUBMOD_REG_SIZE);
-+    memory_region_init_io(&s->mailbox, OBJECT(s), &mchp_pfsoc_mailbox_ops, s,
-+                          "mchp.pfsoc.ioscb.mailbox",
-+                          MCHP_PFSOC_IOSCB_MAILBOX_SIZE);
-     memory_region_add_subregion(&s->container, IOSCB_MAILBOX_BASE, &s->mailbox);
- 
-     memory_region_init_io(&s->cfg, OBJECT(s), &mchp_pfsoc_dummy_ops, s,
-@@ -343,6 +461,8 @@ static void mchp_pfsoc_ioscb_class_init(ObjectClass *klass, const void *data)
- 
-     dc->desc = "Microchip PolarFire SoC IOSCB modules";
-     dc->realize = mchp_pfsoc_ioscb_realize;
-+    device_class_set_legacy_reset(dc, mchp_pfsoc_ioscb_reset);
-+    device_class_set_props(dc, mchp_pfsoc_ioscb_properties);
- }
- 
- static const TypeInfo mchp_pfsoc_ioscb_info = {
+ qtests_riscv64 = ['riscv-csr-test'] + \
+   (unpack_edk2_blobs ? ['bios-tables-test'] : []) + \
++  (config_all_devices.has_key('CONFIG_SIFIVE_L2CC') ? ['sifive_l2cc_test'] : []) + \
+   (config_all_devices.has_key('CONFIG_IOMMU_TESTDEV') and
+    config_all_devices.has_key('CONFIG_RISCV_IOMMU') ?
+    ['iommu-riscv-test'] : []) + \
+@@ -427,6 +428,8 @@ qtests = {
+   'erst-test': files('erst-test.c'),
+   'ivshmem-test': [rt, '../../contrib/ivshmem-server/ivshmem-server.c'],
+   'migration-test': test_migration_files + migration_tls_files + migration_colo_files,
++  'sifive_l2cc_test': files('migration/migration-qmp.c',
++                           'migration/migration-util.c'),
+   'pxe-test': files('boot-sector.c'),
+   'pnv-xive2-test': files('pnv-xive2-common.c', 'pnv-xive2-flush-sync.c',
+                           'pnv-xive2-nvpg_bar.c'),
 -- 
 2.53.0
 
