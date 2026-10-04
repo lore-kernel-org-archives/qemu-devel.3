@@ -4,92 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C20A1CA5FEC
-	for <qemu-devel@archiver.kernel.org>; Sun,  4 Oct 2026 10:11:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 096C4CA5FCE
+	for <qemu-devel@archiver.kernel.org>; Sun,  4 Oct 2026 10:24:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xDJBW-0002SY-AA; Sun, 04 Oct 2026 06:11:14 -0400
+	id 1xDJO6-0004Vl-Tp; Sun, 04 Oct 2026 06:24:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xDJBQ-0002SI-68
- for qemu-devel@nongnu.org; Sun, 04 Oct 2026 06:11:04 -0400
-Received: from mail-wm2-x10.google.com ([2a00:1450:4864:31::10])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xDJBO-00024L-J1
- for qemu-devel@nongnu.org; Sun, 04 Oct 2026 06:11:03 -0400
-Received: by mail-wm2-x10.google.com with SMTP id
- 5b1f17b1804b1-4a1706a2b24so1079355e9.1
- for <qemu-devel@nongnu.org>; Sun, 04 Oct 2026 03:11:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1791108660; x=1791713460; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=YHryqTyf9XNcFGp/AMYKHxgM98QuaR14XphRGZqe/dI=;
- b=WDL2OsEScqfNjygR9LR4GnsdpaytoDheHIrzMVRELXtbIfd4I2wN+tbbDUff7WqiS4
- kqYU3v5ti7abf/sG9xIh5x86LielukKRDoazF0OO2peC6KoxMm/7WF+Y8cRxxVMO/GYJ
- GODkWxYBMtQ/vbuf9cKi2g/zxSuJoYy9m0Dd3grVsl+vYlC/yI8e+/hJod8Fk8upVggA
- KuAWMiVPWnyw7FL52O5jwvlEbSOAoRqHBPdCuCQhCASuYxknG2dJldkefa9R3947A1KJ
- chaXvzhu2HjdMnnzsxZPRpcnPgsPqojnvc+Vt/0lJw98wpBxhVSCI+rJ/HODUB7pnvaL
- mXFw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791108660; x=1791713460;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=YHryqTyf9XNcFGp/AMYKHxgM98QuaR14XphRGZqe/dI=;
- b=VbK0NsAclojtfyb8f3O77YGfF4+nFc0yF0hKOJve7UjXPRk6RP1hilW+/nrEqAnwjS
- ONWxAMCmwP6l7MXKh79eJQdjal06jaZ0Tb7e/0XvjQ/7aYyOv2ygbd9LBwPIY5o5Gq5o
- 0929sRATsecbxKJkd917Q3JdZhY3F2BAW0ccG4fLYWaHwa72UhFetSxm50NETVA88xNY
- qy5SDMjDXAKhGXeNBRpDOmT4k0nFhfOJRQeSX+rJjT7fsngXT7Mv1rKflAWujUnCR2BN
- 8Tb1rYUctyASx5gUwqoADAq00WNc9pNNnThwLXLKuoIv6HV1icAOiEEsvmoz7Mn78nRq
- JUEg==
-X-Forwarded-Encrypted: i=1;
- AKwUvBy7SGD16Ss6iFB0Ps8pGDyVbbXO8RWWdnSViVLyx3zPMR/ykgeJfOvf/SN2VLeTAXM3xnbRNKi0A17N@nongnu.org
-X-Gm-Message-State: AFuF++m51aCDDqyMB3XdSSSDmcpgwc+ulg/d52gjFe1Q0kNYE+XqVegl
- 4l3jArluGRdN3ATiGid8zXxAoWM8HHJCLc3g72C44FHye4PZSstPmzhO/a2Jm/7kv18=
-X-Gm-Gg: AYBFou2bc3+FDEAgMv2+Ly5rwYfXnd0vUIxGg3JLEuIe821CYr8xt6deGDRNuX/CeHN
- hXzChfET9OmPCHwkQL3k7J0PXP+WW995HRrq6eOWak23d/L9oef6q/NBEkfFr2ALR1ku1AwHY9W
- Jdq9HlTnt5V85DNx3tADKTAq58u/3K1WgJZ4hGyyivvDachgb2O7t7ogUjYaTe6K6xJlxOOulPI
- bBvktTvix0s9y4nnemuYmqraE5JyOfYKyGtzS+5siWkAiNMFKCWJWLOz0yTm5iVq1j4RkQyQrjE
- He9ACuOTNzwO6wXxeAO6OnL/+xrENQiPnUBHLeGGWoGBvJ2bR0fozeGn9NIP6f2iQUpcnanyWpq
- 05cAL6jVaH8g9dbrdowC97Kap7gWkkItDKJqlKfgdPon3Jh2wIHJbSPtnaw6IueNyBaw4RbtJVj
- lIZaRRpgJGqwxq/IWfC3Di+35QPNLTd40lnZ/jH1/Ed6B+sY+jn74M/r8Tvz1bgo3sZW55nRmi6
- tky9kqJOdSfO9MJaVfeZbOpm1FZFHEsWy/7RX+TJQ==
-X-Received: by 2002:a05:600c:1d05:b0:49c:c0d4:53d9 with SMTP id
- 5b1f17b1804b1-4a16c4772c5mr47954595e9.14.1791108660053; 
- Sun, 04 Oct 2026 03:11:00 -0700 (PDT)
-Received: from [10.9.5.233] (vpn-konference.ms.mff.cuni.cz. [195.113.20.101])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48b38105239sm22786083f8f.33.2026.10.04.03.10.59
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 04 Oct 2026 03:10:59 -0700 (PDT)
-Message-ID: <55e8f68b-10af-4bd3-9a23-cf21a826e2bf@linaro.org>
-Date: Sun, 4 Oct 2026 12:10:57 +0200
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1xDJO1-0004Ug-1z
+ for qemu-devel@nongnu.org; Sun, 04 Oct 2026 06:24:05 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1xDJNy-0002tT-LM
+ for qemu-devel@nongnu.org; Sun, 04 Oct 2026 06:24:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1791109441;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=sQS0+VEO0sVtBPeZRRVHikul6JzRVKKjdGKMjWsSehc=;
+ b=RDd8Do9Ff7IV0/Wk79x+eUXICPnaNL65UuGK+LQNi6zh12YRqxYiwqA7gHJ0kQK8nC5tk+
+ qrIRvmYbR19eEH1z994Vr1jgbRiq8Dwlmsuul4aH+320xCvQCWHO1HkhypidqcrPvMCRd+
+ eWvl3xUT8M9xthvSe2KF9OfoLdzfqjE=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-307-SR2Wm5j7OtueLCyR7oGjSA-1; Sun,
+ 04 Oct 2026 06:24:00 -0400
+X-MC-Unique: SR2Wm5j7OtueLCyR7oGjSA-1
+X-Mimecast-MFC-AGG-ID: SR2Wm5j7OtueLCyR7oGjSA_1791109439
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1A9EA1954AF9; Sun,  4 Oct 2026 10:23:59 +0000 (UTC)
+Received: from localhost (headnet03.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.114])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 4E7001800348; Sun,  4 Oct 2026 10:23:57 +0000 (UTC)
+From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+Date: Sun, 04 Oct 2026 14:23:20 +0400
+Subject: [PATCH 06/63] audio/pwaudio: fix capture buffer leak on early
+ return paths
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 0/4] HPPA A400 updates
-To: Helge Deller <deller@kernel.org>, qemu-devel@nongnu.org
-Cc: Craig Lalley <mr_lalley@yahoo.com>, Helge Deller <deller@gmx.de>
-References: <20261002215014.45371-1-deller@kernel.org>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20261002215014.45371-1-deller@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:31::10;
- envelope-from=richard.henderson@linaro.org; helo=mail-wm2-x10.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Message-Id: <20261004-issue-4560-v1-6-ccbef537cbeb@redhat.com>
+References: <20261004-issue-4560-v1-0-ccbef537cbeb@redhat.com>
+In-Reply-To: <20261004-issue-4560-v1-0-ccbef537cbeb@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
+ Pavee Hui <phui@google.com>, Gerd Hoffmann <kraxel@redhat.com>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1273;
+ i=marcandre.lureau@redhat.com; h=from:subject:message-id;
+ bh=S7KAAh7lIQSYjjZfx+F/PvPV+tYXhOd2jEBAX3pCVU0=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqwikhEWuo76c72d2qKJ+BmUtAZsNpxrIhzRZbY
+ YZFc50hfZOJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCasIpIQAKCRDa6OEJdZac
+ 5ZgeEACOBXBjQLFTAhdEkhBsatFWrPKhXUp0QpnpKFhVXSzDNOE0acHXYw6MVQAfxdSxkRjn1bR
+ w1TLOQuWA3wiTgsKRP5eUK4K5YRqh+TrhlYaFNC0QwaGD1rxaUGAGujqAQLf8yT47gl62LuseTp
+ tPi1Kkj6QFMB4g1WhI4zCJYIHdwTGf+i/Vof3IhE/FW3lhkvI0slV1e4P/Wdb+C0vMYHNqCMbnC
+ /P0US7Q+4JHjzxx6E95jimWgbYSp9TWSNNqrvBSNWXZhkgYOTwtR2esEK6d23O9wQylTeQYMsAB
+ Jsuhuro6gGu8YSFUjT3pyWyN0+oQmr3yxnqXYgCJs/MEcm0w1T0bMKsf5bBCg1R65sAk9vnQDCo
+ LmK88g4OjQ34EOXvuOEc44oSA3o2L5vPp4s1kzLrDQFnSe+j91Y6ufwmoIq5QEpAO4SEaOMKPFh
+ uhtsf9pfM1zBj9u3YlIliWSYy2f1zaO5LMxBr6Tk69taF/y6TxjMP0bzaxac6H1MADyysj7AYfA
+ vFMclVX86/lNZQg7PNnasn0fcp0chl/hTod+7GfDP7eSI5WIgwCf0KvPtNxG5ta3b+kSTlFBkdT
+ +b6od/PmtX8wBLDN0qw5B2bvT+dAq7CJ06c/Sz9u8fe9l0VP5YETqtSHdupiNJhmPzKDYau9HO6
+ sx7V9BNyUN4Etpg==
+X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
+ fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=marcandre.lureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 9
+X-Spam_score: 0.9
+X-Spam_bar: /
+X-Spam_report: (0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.337,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,29 +104,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/2/26 23:50, Helge Deller wrote:
-> From: Helge Deller<deller@gmx.de>
-> 
-> The following changes since commit efa3b9d5ac8024078225e1ab434411fdfe53b457:
-> 
->    Merge tag 'pbouvier/pr/tcg-tests-20260925' ofhttps://gitlab.com/p-b-o/qemu into staging (2026-09-25 11:52:47 -0700)
-> 
-> are available in the Git repository at:
-> 
->    https://github.com/hdeller/qemu-hppa.git tags/hppa-a400-updates-pull-request
-> 
-> for you to fetch changes up to 1f22bd961e7a512a59fb289daf218298e19ddf50:
-> 
->    hw/hppa: Place the CPU at HPA 0xfffa0000 and fw_cfg at 0xfffb0000 (2026-10-02 23:39:28 +0200)
-> 
-> ----------------------------------------------------------------
-> HPPA updates for A400 and new SeaBIOS
-> 
-> A new SeaBIOS-hppa version 26 with many fixes, and some updates
-> regarding the A400 machine. Main goal is still to get MPE
-> functional on the A400 machines.
+capture_on_process() leaks the PipeWire buffer on the p == NULL and
+underrun early-return paths by not calling pw_stream_queue_buffer().
+The stream eventually starves from its buffer pool.
 
-Applied, thanks.
+Reported-by: Pavee Hui <phui@google.com>
+Fixes: c2d3d1c29415 ("audio/pwaudio.c: Add Pipewire audio backend for QEMU")
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+---
+ audio/pwaudio.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-r~
+diff --git a/audio/pwaudio.c b/audio/pwaudio.c
+index a59c22e60b87..af360e2ec5ed 100644
+--- a/audio/pwaudio.c
++++ b/audio/pwaudio.c
+@@ -171,6 +171,7 @@ capture_on_process(void *data)
+     buf = b->buffer;
+     p = buf->datas[0].data;
+     if (p == NULL) {
++        pw_stream_queue_buffer(v->stream, b);
+         return;
+     }
+     offs = SPA_MIN(buf->datas[0].chunk->offset, buf->datas[0].maxsize);
+@@ -181,6 +182,8 @@ capture_on_process(void *data)
+ 
+     if (filled < 0) {
+         error_report("%p: underrun write:%u filled:%d", p, index, filled);
++        pw_stream_queue_buffer(v->stream, b);
++        return;
+     } else {
+         if ((uint32_t) filled + n_bytes > RINGBUFFER_SIZE) {
+             error_report("%p: overrun write:%u filled:%d + size:%u > max:%u",
+
+-- 
+2.56.0.rc0.29.g47ce80527c56
+
 
