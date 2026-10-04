@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FEFDCA5FF0
-	for <qemu-devel@archiver.kernel.org>; Sun,  4 Oct 2026 12:31:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C05C2CA5FEC
+	for <qemu-devel@archiver.kernel.org>; Sun,  4 Oct 2026 12:31:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xDLKS-0006yN-83; Sun, 04 Oct 2026 08:28:32 -0400
+	id 1xDLJg-0006Qe-FD; Sun, 04 Oct 2026 08:27:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xDLKO-0006u1-Ql
- for qemu-devel@nongnu.org; Sun, 04 Oct 2026 08:28:29 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xDLJb-0006O1-Pt
+ for qemu-devel@nongnu.org; Sun, 04 Oct 2026 08:27:40 -0400
+Received: from mail-wm2-x11.google.com ([2a00:1450:4864:31::11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xDLKI-0007FB-Uf
- for qemu-devel@nongnu.org; Sun, 04 Oct 2026 08:28:26 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-4a16aaf2067so8636895e9.0
- for <qemu-devel@nongnu.org>; Sun, 04 Oct 2026 05:28:21 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xDLJZ-00075c-PA
+ for qemu-devel@nongnu.org; Sun, 04 Oct 2026 08:27:39 -0400
+Received: by mail-wm2-x11.google.com with SMTP id
+ 5b1f17b1804b1-49fe8bf173aso5527125e9.3
+ for <qemu-devel@nongnu.org>; Sun, 04 Oct 2026 05:27:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1791116900; x=1791721700; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1791116856; x=1791721656; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=LgGp0v9oTRznvsuoY+AnWTbK2P8vfLWEbU2auUJcq5I=;
- b=FOfvPSEHhbvl6NU6CRlHHJzKinBXnWRB8dft9x0g7A/OSADwtV8FvcOV0E5zYF+grP
- d2qcN8ugB0sb/aD3wdCjCtv+UleiK1d2HbtRfywO0XVY2gBS7bqCGVM66Ejo7myCeSsm
- MW/G1wXkkbpWpOB4DLypAVHI0u+Gae36sQkpLW2qGlmCF5PQC4pEE877N8Tui9SxPNKL
- FX5i7/rM22efuvvtYBN8VOjgBvm8qm3jmfk4RTGO1aIBxyZfRiXtULuph4n1Zy7RugOz
- /lAK1rHsmb0E/cOm9/iCe0lGEB3Qu5G6V7WIg4czXrOalh5ogXOuYq6QxYkr49Te4EEr
- GsTw==
+ bh=gRy8WWXvEYtZQPX3GEr0tmWE4nqxjkXA7yTxqBnrb2k=;
+ b=G+CM2elZyysy1SR2pK9qGTCLjDF/V6MUtTGJ54JaSZJ1G8TDynAo4RXegk+gS2b6LT
+ q716MdFR/CXGY6cfxldvU9v2+0j4EinhkIk7eHCXDwwsO386GcTaI3h74Lk48uO6WOB6
+ v/s8RQdq65eDvNYJkTBnC/PJmfKaWraSb6hYf5pLEDp0uoh7KKbSPLFlnMkl1zcNv5Dr
+ 3ax63kp7dLmGfNS4g8azv37GDFTWYtL+yHkbegU5BZkf1bduskecmiFtJMhdeTsff0T7
+ ffwc0ffViX/EfWJz6Z7kwc+jC+YsL5EIJwcVNUgjMRo77Gj8m9QZFEODqPHdouTIfJ6d
+ /W4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791116900; x=1791721700;
+ d=1e100.net; s=20260707; t=1791116856; x=1791721656;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=LgGp0v9oTRznvsuoY+AnWTbK2P8vfLWEbU2auUJcq5I=;
- b=t3GtDQgwGlCImEFhb5P5NWUDK+6euMoccbxmqRxfFJjIpZaWZDRVAArCJnI5JEFAX9
- xtV9ipAyZJUkw5p8r6uLiHosTXak/0UfMMNIYBH5J9D2Q3JWeJR65iPZnIeqlpa77Z/s
- fxMYJxNfDrIrEnDeCeicLd0m++xqZZoFcBtMqx5N7F/GEMm1ZJlOxb6RxiauvfnLDgv0
- 04my6S4dSO3X62u8uNgjm1mgWIw4m71Fe+EY1DwQH2evgcO5lSli4SZZ043gSms8BJIq
- 1MLVQp4IwUhvDlQ50koy4OCYfQNJL7zc6SENZOwlWIvCW4lvsv2l6BtGN+7UuqRttg7y
- brgA==
-X-Gm-Message-State: AFuF++mcO76fjsFQUpfDH/RAcpuvr6/RATIJTiF2Lto9k1We1u5u9MJw
- w+maJ3hp8IK7ZGPlFufHE1TJ1p1cVEDuYai2UWH2Bxh4ns0+sSP1boSft9lL2Q==
-X-Gm-Gg: AYBFou0fbHXG/8yqcD1diLqPT/bSasnnKCDYvxmEO/q6AnF3O7yS/nR6caL2Qw0Brp+
- 4f9g8em7ZDq9SXPnw4MUoW6V748NJdZXQ+USdMI/nVDss+NAQ3ATUQWq56kwBi/mU4DiOopzGqu
- /xi176U94A2cn1nJPkUKwzBgzMGJVcG8D3W3LjoWme8yXDEfQQByItvZJD8UGdZd1DLWj2aDAnX
- KOCrvTelsEnfmaaRdM84mq+Zs0nPbTH+gTCt0E8uKNM72/aAzKl9PcEJ0DJJ0hvMT+6ZuybSmqO
- l6TInoJdFxCfqwvANGEkmBIGxhDiCLtMTFV4KEJJlCpjGsrd5GkvGEG3Z95LR81lmHRtF1IvDMm
- SOg2m/OJlx72rt5Sh+Y7G/y0yH//prbvczg7QowlzhpGle8yo3KKV0Y81HqAX+cG54hAeUd/59Q
- H/MWu6u0+ll3IYe6xNf4fYtiiO1WwhyG9M4e6oKaIg79+//Mr0TJnCke6fkzHMrQzM40ygZr+ju
- vDHANrg3kWlmJjSNlVJoYNnbvMtbxanpUFWpQ==
-X-Received: by 2002:a05:600c:3103:b0:4a0:1feb:de6a with SMTP id
- 5b1f17b1804b1-4a1680fd804mr68101415e9.30.1791116900174; 
- Sun, 04 Oct 2026 05:28:20 -0700 (PDT)
+ bh=gRy8WWXvEYtZQPX3GEr0tmWE4nqxjkXA7yTxqBnrb2k=;
+ b=oif6zmNzGuu1mU3Bxk0I7n3Ynasioa4oe/A8gUEDBtfDQJcMb8RgrlQOtrMWOu8wM4
+ wIaK0yl+m/U3mSa+Lp5QgyxVwoFCdG8X0ShBqr5rfZnfJSAUYwjtYjt4XobzhPBeoA1O
+ sNFsmTBqlYZ2+EgSdJ10VGVR0uJ5JAOUPqx+9pq/85hI+1LRFyY2apRcY1exnklal/Tx
+ Pe4ULV9lkoiogfKRMTQ8qZieDGHRDPtWFu4SCEV8tV+eNVFUojDsV+iD12LZJpPPMtBY
+ ZghbTBVweMehuEa5QoL6sj7O4TEDPuRtC0dXCEnkhp2Hk6kkDBybDjFZyuihoaWbEeMT
+ js+A==
+X-Gm-Message-State: AFuF++mF0VgvptgY2FCGvTccC46pAJGFDiwqEE1raOHajpO7eqwTCPuJ
+ AiHMFjpozmKPeInnLLNVsDtWVQ7FUIinFnUdmuZRsI067zqnWF+LfTaadIsx0Q==
+X-Gm-Gg: AYBFou1HHYGYFMHBhAu1eM3PUKbiFniMr4+c2UBXlMjXsfHB0w2Epe/MXxrRtabyVNi
+ Xs/7wo1YxZegH6P5mUtMxcseXIhExdZOgwTD43hxUTt2RrNxkRlcizvdjADoPdqTzPwlMkb1k5B
+ ViYtEguodlU82ye/CztgjPaaWsSZYAI4OkAYCknJV/Xajn73F4IkYxr4omMoxvVdDY+T7DILtj7
+ CgHx4yZ/xbxOEh5UyK0C4njayrZX4s6rGmnv3PnJPLi5ooQBbOjnuredZ+bCPyatYgyve0o9XT6
+ M6vr51tdXTLnKXu9iWczUySmtpnAY4BIWqjDa+9Fqbo4MTNVTaUMSOBSOvia6MW3iQbe97D7UiD
+ RxTn089hWaV9GTtLeQlnUt+TdnEQzJaAIEBmn4qfFFLXav2UCrvJm3W+AFkaUtVfo2Q3FqdIp71
+ U6dqdQZntyXS/tQZ8jyJ9P0vC84zaL/8zNUdIp5SmgYUtp0u+cn1zRc+1Pe3Ig0qTOW//5vdcB0
+ 5TVACr+rd5MOgQJlq4E4MiL38QFJoAvF72IpQ==
+X-Received: by 2002:a05:600c:5391:b0:4a0:c2a:485e with SMTP id
+ 5b1f17b1804b1-4a02769a99cmr146426475e9.33.1791116856050; 
+ Sun, 04 Oct 2026 05:27:36 -0700 (PDT)
 Received: from archlinux (pd95eda80.dip0.t-ipconnect.de. [217.94.218.128])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a027698f13sm242319975e9.1.2026.10.04.05.28.19
+ 5b1f17b1804b1-4a027698f13sm242319975e9.1.2026.10.04.05.27.34
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 04 Oct 2026 05:28:19 -0700 (PDT)
+ Sun, 04 Oct 2026 05:27:35 -0700 (PDT)
 From: Bernhard Beschow <shentey@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
@@ -75,23 +75,22 @@ Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Bin Meng <bin.meng@processmission.com>,
  Jean-Christophe Dubois <jcd@tribudubois.net>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: [PATCH v2 29/30] Kconfig: Remove config IMX
-Date: Sun,  4 Oct 2026 14:26:45 +0200
-Message-ID: <20261004122647.3913-30-shentey@gmail.com>
+Subject: [PATCH v2 03/30] hw/watchdog/wdt_imx2: Remove redundant attributes
+Date: Sun,  4 Oct 2026 14:26:19 +0200
+Message-ID: <20261004122647.3913-4-shentey@gmail.com>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261004122647.3913-1-shentey@gmail.com>
 References: <20261004122647.3913-1-shentey@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=shentey@gmail.com; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:31::11;
+ envelope-from=shentey@gmail.com; helo=mail-wm2-x11.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,89 +106,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The previous changes removed all uses of config IMX. Remove the now
-hollow config item.
+Since WDT and WDE are write one once bits, their values always
+correspond with their respective locked attributes. Thus, the attributes
+are redundant. Take advantage of this observation to simplify the code.
+
+Note that removing the attributes changes the vmstate structure which
+constitutes a migration break. This is allowed since QEMU does not
+guarantee migration compatibility for i.MX devices between feature
+releases.
 
 Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 ---
- hw/arm/Kconfig  | 7 -------
- hw/misc/Kconfig | 3 ---
- 2 files changed, 10 deletions(-)
+ include/hw/watchdog/wdt_imx2.h |  2 --
+ hw/watchdog/wdt_imx2.c         | 21 ++++-----------------
+ 2 files changed, 4 insertions(+), 19 deletions(-)
 
-diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-index 543220be6b..642dd86217 100644
---- a/hw/arm/Kconfig
-+++ b/hw/arm/Kconfig
-@@ -481,7 +481,6 @@ config FSL_IMX25
-     imply I2C_DEVICES
-     select FSL_IMX25_CCM
-     select GPIO_IMX
--    select IMX
-     select IMX_AVIC
-     select IMX_EPIT
-     select IMX_FEC
-@@ -501,7 +500,6 @@ config FSL_IMX31
-     select FSL_IMX31_CCM
-     select GPIO_IMX
-     select SERIAL_MM
--    select IMX
-     select IMX_AVIC
-     select IMX_EPIT
-     select IMX_GPT
-@@ -519,7 +517,6 @@ config FSL_IMX6
-     select FSL_IMX6_SRC
-     select FSL_IMX7_SNVS
-     select GPIO_IMX
--    select IMX
-     select IMX_EPIT
-     select IMX_FEC
-     select IMX_GPT
-@@ -603,7 +600,6 @@ config FSL_IMX7
-     select FSL_IMX7_SRC
-     select GPIO_IMX
-     select PCI
--    select IMX
-     select IMX_FEC
-     select IMX_GPCV2
-     select IMX_GPT
-@@ -627,7 +623,6 @@ config FSL_IMX8MP
-     select FSL_IMX8MP_ANALOG
-     select FSL_IMX8MP_CCM
-     select GPIO_IMX
--    select IMX
-     select IMX_FEC
-     select IMX_GPT
-     select IMX_I2C
-@@ -657,7 +652,6 @@ config FSL_IMX8MM
-     select FSL_IMX8MP_ANALOG
-     select FSL_IMX8MP_CCM
-     select GPIO_IMX
--    select IMX
-     select IMX_FEC
-     select IMX_GPT
-     select IMX_I2C
-@@ -700,7 +694,6 @@ config FSL_IMX6UL
-     select FSL_IMX6UL_CCM
-     select FSL_IMX7_SNVS
-     select GPIO_IMX
--    select IMX
-     select IMX6UL_LCDIF
-     select IMX_EPIT
-     select IMX_FEC
-diff --git a/hw/misc/Kconfig b/hw/misc/Kconfig
-index ab238767b8..93666c4ac0 100644
---- a/hw/misc/Kconfig
-+++ b/hw/misc/Kconfig
-@@ -89,9 +89,6 @@ config IVSHMEM_FLAT_DEVICE
- config ECCMEMCTL
-     bool
+diff --git a/include/hw/watchdog/wdt_imx2.h b/include/hw/watchdog/wdt_imx2.h
+index fc01fc46e7..0bf2903959 100644
+--- a/include/hw/watchdog/wdt_imx2.h
++++ b/include/hw/watchdog/wdt_imx2.h
+@@ -84,8 +84,6 @@ struct IMX2WdtState {
+     uint16_t wmcr;
  
--config IMX
--    bool
--
- config IMX_CCM
-     bool
+     bool wcr_locked;            /* affects WDZST, WDBG, and WDW */
+-    bool wcr_wde_locked;        /* affects WDE */
+-    bool wcr_wdt_locked;        /* affects WDT, cleared on POR */
+ };
  
+ #endif /* WDT_IMX2_H */
+diff --git a/hw/watchdog/wdt_imx2.c b/hw/watchdog/wdt_imx2.c
+index dc7751bd5a..e9cb5819e4 100644
+--- a/hw/watchdog/wdt_imx2.c
++++ b/hw/watchdog/wdt_imx2.c
+@@ -59,8 +59,6 @@ static void imx2_wdt_reset(DeviceState *dev)
+ 
+     s->wicr_locked = false;
+     s->wcr_locked = false;
+-    s->wcr_wde_locked = false;
+-    s->wcr_wdt_locked = false;
+ 
+     s->wcr = IMX2_WDT_WCR_WDA | IMX2_WDT_WCR_SRS;
+     s->wsr = 0;
+@@ -156,24 +154,14 @@ static void imx2_wdt_write(void *opaque, hwaddr addr,
+     switch (addr) {
+     case IMX2_WDT_WCR:
+         if (s->wcr_locked) {
++            /* WDZST, WDBG, and WDW are write-once bits */
+             value &= ~IMX2_WDT_WCR_LOCK_MASK;
+             value |= (s->wcr & IMX2_WDT_WCR_LOCK_MASK);
+         }
+         s->wcr_locked = true;
+-        if (s->wcr_wde_locked) {
+-            value &= ~IMX2_WDT_WCR_WDE;
+-            value |= (s->wcr & ~IMX2_WDT_WCR_WDE);
+-        } else if (value & IMX2_WDT_WCR_WDE) {
+-            s->wcr_wde_locked = true;
+-        }
+-        if (s->wcr_wdt_locked) {
+-            value &= ~IMX2_WDT_WCR_WDT;
+-            value |= (s->wcr & ~IMX2_WDT_WCR_WDT);
+-        } else if (value & IMX2_WDT_WCR_WDT) {
+-            s->wcr_wdt_locked = true;
+-        }
+ 
+-        s->wcr = value;
++        /* WDT and WDE are write one once bits */
++        s->wcr = value | (s->wcr & (IMX2_WDT_WCR_WDT | IMX2_WDT_WCR_WDE));
+         if (!(value & IMX2_WDT_WCR_SRS)) {
+             s->wrsr = IMX2_WDT_WRSR_SFTW;
+         }
+@@ -234,13 +222,12 @@ static const MemoryRegionOps imx2_wdt_ops = {
+ 
+ static const VMStateDescription vmstate_imx2_wdt = {
+     .name = "imx2.wdt",
++    .version_id = 1,
+     .fields = (const VMStateField[]) {
+         VMSTATE_PTIMER(timer, IMX2WdtState),
+         VMSTATE_PTIMER(itimer, IMX2WdtState),
+         VMSTATE_BOOL(wicr_locked, IMX2WdtState),
+         VMSTATE_BOOL(wcr_locked, IMX2WdtState),
+-        VMSTATE_BOOL(wcr_wde_locked, IMX2WdtState),
+-        VMSTATE_BOOL(wcr_wdt_locked, IMX2WdtState),
+         VMSTATE_UINT16(wcr, IMX2WdtState),
+         VMSTATE_UINT16(wsr, IMX2WdtState),
+         VMSTATE_UINT16(wrsr, IMX2WdtState),
 -- 
 2.56.0
 
