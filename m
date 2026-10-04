@@ -4,91 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BFD5CA5FCE
-	for <qemu-devel@archiver.kernel.org>; Sun,  4 Oct 2026 10:27:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F079CA5FEC
+	for <qemu-devel@archiver.kernel.org>; Sun,  4 Oct 2026 10:27:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xDJNu-0004Tn-1c; Sun, 04 Oct 2026 06:23:58 -0400
+	id 1xDJQA-00016j-Rj; Sun, 04 Oct 2026 06:26:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xDJNr-0004TP-WD
- for qemu-devel@nongnu.org; Sun, 04 Oct 2026 06:23:56 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1xDJPc-0007Wa-K3
+ for qemu-devel@nongnu.org; Sun, 04 Oct 2026 06:25:48 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xDJNq-0002sn-5k
- for qemu-devel@nongnu.org; Sun, 04 Oct 2026 06:23:55 -0400
+ id 1xDJPZ-0003LD-Rk
+ for qemu-devel@nongnu.org; Sun, 04 Oct 2026 06:25:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1791109432;
+ s=mimecast20190719; t=1791109537;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=YbaaWXiHXhmVaMU0nWEhbYUaXsyhUT3YZBmrTo/DDHo=;
- b=Pr2TnZ2N2I5wtoxBLwmrTUPAvcZzrpjxQp2m4ZSuloi+29l3qTnPPd/oib4mRumAQqLG30
- igZ0CvSyXnUcSlRahaOz+l81KiE7e1BvaA13ZPYnmwVYu8+xzNAEHO2YQHRtVPqPMwVhLV
- JjTP/aGllZ32cnqcUlJAFfgcZ6Zgj5g=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=Dp+eTQQpowvqJbb7n0XlhxLHsD3ScVyNygDug1P+lIw=;
+ b=ZqIMFomiLiw+M6KwExQ5a/28memndzykmVmc3SXsFo5YZkHxu6uOHpF/lBbSUYvr1mB4PO
+ 8RWsThgiKLuHgzL3vSXMoP0P2qGwxZp3OE7weTCX/ZDvO+Di2+IhuRwpcWrTNCq4Jqcbpx
+ /pr1zXWuXMkevCbCCDSYG8cwnWbnZxQ=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-568-u1mbyN8aPLGSXWfHcMX8XQ-1; Sun,
- 04 Oct 2026 06:23:45 -0400
-X-MC-Unique: u1mbyN8aPLGSXWfHcMX8XQ-1
-X-Mimecast-MFC-AGG-ID: u1mbyN8aPLGSXWfHcMX8XQ_1791109421
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-169-s9x1VG2iOTOu5JWLQfXMlg-1; Sun,
+ 04 Oct 2026 06:25:36 -0400
+X-MC-Unique: s9x1VG2iOTOu5JWLQfXMlg-1
+X-Mimecast-MFC-AGG-ID: s9x1VG2iOTOu5JWLQfXMlg_1791109535
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 55B051800633; Sun,  4 Oct 2026 10:23:41 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2E8071954B01; Sun,  4 Oct 2026 10:25:35 +0000 (UTC)
 Received: from localhost (headnet03.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.114])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 05115180034F; Sun,  4 Oct 2026 10:23:39 +0000 (UTC)
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 07CA7180036E; Sun,  4 Oct 2026 10:25:33 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Sun, 04 Oct 2026 14:23:15 +0400
-Subject: [PATCH 01/63] audio/ossaudio: fix ioctl passing address-of-pointer
- instead of pointer
+Date: Sun, 04 Oct 2026 14:23:47 +0400
+Subject: [PATCH 33/63] hw/char/ibex_uart: prevent division by zero on baud
+ rate calculation
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20261004-issue-4560-v1-1-ccbef537cbeb@redhat.com>
+Message-Id: <20261004-issue-4560-v1-33-ccbef537cbeb@redhat.com>
 References: <20261004-issue-4560-v1-0-ccbef537cbeb@redhat.com>
 In-Reply-To: <20261004-issue-4560-v1-0-ccbef537cbeb@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
- Pavee Hui <phui@google.com>, Gerd Hoffmann <kraxel@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1050;
+ Pavee Hui <phui@google.com>, Alistair Francis <Alistair.Francis@wdc.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-riscv@nongnu.org
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1490;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=5NWzFvuJoAk8BcYKcTigsiQ1aB61q1lTXdilJWjsKhw=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqwikhqgJboqMTWdX96/cdih2b1M+g7aVvK69vL
- ugmL9zSV/6JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCasIpIQAKCRDa6OEJdZac
- 5evID/9TOP+jDiWf7XgtykPIjpfjSVKmrUwUdhfhanbsjc7mi1m4NB2VLt47+7M7ZyBkVX2zDkZ
- nLXhFI3/WeyHmj6FLHMQdaSrmGvfk9hIVZ3s42IzSaDGHKJWdBZhQXW7ZGAgXWZZycSwbL7RbLK
- 47d4ljI8U8Jsyv5xTiaqCzyRF0j4ienD0B4PpyUfvLclVwv2kYml9RRHskX9GMy+sxkAmAecj+K
- L7vQ7iVuX0kziEU+3SL60LCBRmmSXPQfE9Je9OsE+IvpL4Fjq7vWWDGAK8YACTSEj5SFXDIh0Pn
- r58fKhgR0EKpWjoIyScIplZ5IGRJyGxJ9g8DUk5lbEk5yPygiGf5crCjK3z6RkE+ZjFltEksNL+
- xVVRGztcYreaNjxzDAFQ+g1NreBZdemRQiaCszNXJVlTlqaoBdKRoWzX1owYOZ9gt1dfH66Nf2s
- x6IvcZ7I2NcLauBAvaDH8/92YYq6wUYDPcEImUCQWH3ZsGubiS10lRD2D3VuuBPWE5mLtANwH0z
- 4hBRMji8qj+9RPwyziCA4Kt8iVl97vTuN8k12wtkJ6rOp21VH5CnWl82K2+0Yge6O2IazvQ1sDj
- sfu1fBz3rD+QsI/QKtJkXLBhOCwor1tEOyKLczOWlmwcwUkDi368eAa8mhT10fDKPccQ1jTDiaz
- tap+GUXMtPVSHCQ==
+ bh=7M1aiGYKZF3529Y7CF3n1zUfXvb5KY5JNB5nTmCnGrQ=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqwikj5HocxAzSwzcnET54qfbKFE0gI7r6hvX7K
+ 8myqQY9xkCJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCasIpIwAKCRDa6OEJdZac
+ 5ZLUD/43Yhyuf6+2RNcwhNwYWDxw23rzOIFF8d5NQabzudPrCqLNQNY39dG0bYv1pb34UYaDVGL
+ TcDVu/gCdnkPC7U1mwWaH3qp0/ZGBrtSidJlFDf1/Nnl5E8RZpaCY8T6IGX4Du05S3ROHVQMSnQ
+ eo/88XPxlH7vbct4mid+ksDrMjp0p480pDrTG8BgF5nbvM5+MCYeCe2oWpu3Pj0XIbFZFoxzdv8
+ GxQjosjLJ5wb43SDv11+xwywkf7DDiVLoi2iL9nLT9u5gm4WdwQH0XDzkmi6zfqH4/IO4+vyYnd
+ EgVEXtbBCcWIek8qwwD7ajloSy3hirzRWrbIfRoDCOKzJvdXoEbyOB6inlf7d/S2r+tz91LbpAF
+ Gp6J8B/GU5g4ysNE3JjcOBWDJctUHQdzqlruhcdUcU7DsDY6Et7DOdIt/cyMox/QgRCOiX8yJBS
+ t+xe+GnDJmQuqUX6bO5tDijrzTMCIcLT4/G9fcILZWr/zTsYy6ebniPxWDUzaVuE3iu0zVeRtlZ
+ 7Po0w3gOePOFQMLQClAFOBjauq/NFUu6ehxT1IRDAW8C8hvaUbS37nLJ5zxJcCbqYe7ehUKgaFr
+ aVbvVMBQsIwTAhFd7L07WG0LIDMZuZhSr1J4EY+C8b6XUscCSB/7Mh98f81D9L73SdnnZJF8i9g
+ AQavCIYKM6vQqwQ==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
-X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.337,
+X-Spam_score_int: 9
+X-Spam_score: 0.9
+X-Spam_bar: /
+X-Spam_report: (0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.337,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,30 +105,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-oss_get_version() passes &version to ioctl(), but version is already
-an int*, so &version is int** which writes to the wrong address on the
-stack. Pass version directly.
+Guard NANOSECONDS_PER_SECOND / baud with a zero check. The baud rate
+can be zero when the NCO field is zero or the input clock is not yet
+configured.
 
+Fixes: a7d2d98c5944 ("hw/char: Initial commit of Ibex UART")
+Fixes: 940aabb9f477 ("hw/char: Convert the Ibex UART to use the qdev Clock model")
 Reported-by: Pavee Hui <phui@google.com>
-Fixes: 72ff25e4e98d ("Workaround for broken OSS_GETVERSION on FreeBSD, part two")
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- audio/ossaudio.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/char/ibex_uart.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/audio/ossaudio.c b/audio/ossaudio.c
-index 63c6e0a291f1..95a07ea1cace 100644
---- a/audio/ossaudio.c
-+++ b/audio/ossaudio.c
-@@ -204,7 +204,7 @@ static int oss_to_audfmt (int ossfmt, AudioFormat *fmt, bool *big_endian)
- #ifdef USE_DSP_POLICY
- static int oss_get_version (int fd, int *version, const char *typ)
- {
--    if (ioctl (fd, OSS_GETVERSION, &version)) {
-+    if (ioctl(fd, OSS_GETVERSION, version)) {
- #if defined(__FreeBSD__) || defined(__FreeBSD_kernel__)
-         /*
-          * Looks like atm (20100109) FreeBSD knows OSS_GETVERSION
+diff --git a/hw/char/ibex_uart.c b/hw/char/ibex_uart.c
+index 26ed1aea140b..4c22fb4f58a8 100644
+--- a/hw/char/ibex_uart.c
++++ b/hw/char/ibex_uart.c
+@@ -395,7 +395,9 @@ static void ibex_uart_write(void *opaque, hwaddr addr,
+         if (value & R_CTRL_NCO_MASK) {
+             uint64_t baud = ibex_uart_get_baud(s);
+ 
+-            s->char_tx_time = (NANOSECONDS_PER_SECOND / baud) * 10;
++            if (baud) {
++                s->char_tx_time = (NANOSECONDS_PER_SECOND / baud) * 10;
++            }
+         }
+         break;
+     case R_STATUS:
+@@ -455,7 +457,9 @@ static void ibex_uart_clk_update(void *opaque, ClockEvent event)
+     /* recompute uart's speed on clock change */
+     uint64_t baud = ibex_uart_get_baud(s);
+ 
+-    s->char_tx_time = (NANOSECONDS_PER_SECOND / baud) * 10;
++    if (baud) {
++        s->char_tx_time = (NANOSECONDS_PER_SECOND / baud) * 10;
++    }
+ }
+ 
+ static void fifo_trigger_update(void *opaque)
 
 -- 
 2.56.0.rc0.29.g47ce80527c56
