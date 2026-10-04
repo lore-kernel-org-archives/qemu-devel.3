@@ -4,91 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2DB6CA5FF4
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01157CA5FF5
 	for <qemu-devel@archiver.kernel.org>; Sun,  4 Oct 2026 10:29:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xDJPv-00008N-4X; Sun, 04 Oct 2026 06:26:05 -0400
+	id 1xDJRE-00055D-7H; Sun, 04 Oct 2026 06:27:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xDJPn-00084l-Kp
- for qemu-devel@nongnu.org; Sun, 04 Oct 2026 06:25:55 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1xDJRA-00050S-5x
+ for qemu-devel@nongnu.org; Sun, 04 Oct 2026 06:27:20 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xDJPm-0003ME-4P
- for qemu-devel@nongnu.org; Sun, 04 Oct 2026 06:25:55 -0400
+ id 1xDJR8-0003Vo-SQ
+ for qemu-devel@nongnu.org; Sun, 04 Oct 2026 06:27:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1791109549;
+ s=mimecast20190719; t=1791109638;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=v7jEYCR/mC53ka0TTYImY10mCLnH7g9o9Mqn0hV6SjM=;
- b=XCaWqHJx/F9m4PRaA8ljeh48c/AjTTC9uhzf5ZY6uGwRNF4SoyHrFy6Mb1GCgiW2K5MU/3
- ssL4k0DtAURJRtqvFDiL8uRE72U1dr06fbGff9FcWi3Yw9wkzJ+3/EEVE6iSqmGOub1Op3
- bYat9zb1BSNvqNWOFBcXI2qWH2wu2jk=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=oBce8GCS73s85ICtktrlU0PFp3qiaV2ip+eawwlmseU=;
+ b=F8hnEiwbeFOmfCkY8zZ/C2tN+bH5pgh4gtk/f7XPXZh2RmOBYM0dlOtK1P5tAk75yO2s0W
+ fFK6mUo3qqKbkbQm+My2mirEx2cjTF5ks/1Zl7x7xaohWwmVTSaeND17cs2lvw4E9xUwV6
+ Mvzu5vsKuT3oU0aj8eaBwXjgmSRkBJI=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-658-YkROmC9QNcuoEz4SlCjt8A-1; Sun,
- 04 Oct 2026 06:25:43 -0400
-X-MC-Unique: YkROmC9QNcuoEz4SlCjt8A-1
-X-Mimecast-MFC-AGG-ID: YkROmC9QNcuoEz4SlCjt8A_1791109542
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-3-r2Ca-r2PNAGew67STrhocg-1; Sun,
+ 04 Oct 2026 06:27:15 -0400
+X-MC-Unique: r2Ca-r2PNAGew67STrhocg-1
+X-Mimecast-MFC-AGG-ID: r2Ca-r2PNAGew67STrhocg_1791109634
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5C626180066A; Sun,  4 Oct 2026 10:25:42 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 150721955F3C; Sun,  4 Oct 2026 10:27:14 +0000 (UTC)
 Received: from localhost (headnet03.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.114])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 56DE530000E5; Sun,  4 Oct 2026 10:25:40 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 1F9371800345; Sun,  4 Oct 2026 10:27:12 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Sun, 04 Oct 2026 14:23:49 +0400
-Subject: [PATCH 35/63] hw/char/serial: clamp zero baud rate to default
+Date: Sun, 04 Oct 2026 14:24:15 +0400
+Subject: [PATCH 61/63] hw/input/stellaris_gamepad: deassert IRQs on reset
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20261004-issue-4560-v1-35-ccbef537cbeb@redhat.com>
+Message-Id: <20261004-issue-4560-v1-61-ccbef537cbeb@redhat.com>
 References: <20261004-issue-4560-v1-0-ccbef537cbeb@redhat.com>
 In-Reply-To: <20261004-issue-4560-v1-0-ccbef537cbeb@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
- Pavee Hui <phui@google.com>, "Michael S. Tsirkin" <mst@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1091;
+ Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1109;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=vsQoA3BaJ5Stp6dqcL470I15kWLJbT1SEj2XLBw+imY=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqwikjwF5ywqa2+GRirko6CTEQ3+4XAy2ALMxsL
- ZRySg0aQkeJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCasIpIwAKCRDa6OEJdZac
- 5dZkD/9iG2+Tmw6E1S2G/Fx32JjEke+tlwaXRUrSZ5RGmodIx/eeEGFnB9UE8LGzoGRx+UTny4p
- Mj69l+K95rZr/55wi46we9iW3rRh9kT5KhncvX4Uq6k63MRjG1ugnr3eFp7IjB+QSdOIHwYdtu+
- nOZtWt/UQuMU7jRMmmtsLBgJrpT2nXCqqmAuLna0Wfih4Il38ZLrHz0cxO05X50UASTncN3jnJl
- V15rd7dXtkq4tUvohx+EO/GQZdggf/Pp2lv1vM8omdGmWrXKE7oObsIB6+14ZaCPiHHOiAJZlB3
- iXQgLXUb6O6K4h/X/QDR+hS5w9HkHFfHU0TQuaEv2heWkEiKq1EZnTwY9Hb+lH5jAHUB+e6Q83Q
- oh9kjdum6F0r0aEObjSpVYNv0y9a6P5QrwUn2/yfcGJh0HNj3N7yOsTF2rAw+/XnAH5ox354eRC
- y8LfJqiM4ugRgIB5PkLrzy7R0C1I646wO2D2UiLnmwYqJQO8m0wy8GzvgfR+gk7UduG2VAPd7Iz
- fucwqrv82tITKWOq3zLE3MURSSPSSZF2Qt6ohgPZfhyTT3zykcX1Wy6sA/4MY9uzgkKU7t+vzWe
- 5+M4Hr+GacZ49EysndujHBVdVb9y0YhoDtaUKtY5LGeem+O702btftpLLN0IkkDdZhQ/iH+rPlI
- cjbnyZhNaf+31gQ==
+ bh=7KzMy+0poj++yfNuCdw4qbIcAp6g/wEgP49l2AL+yhs=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqwiklOchfH8yWP6D6mIr72j7ycgOWR145JrgGi
+ vhcpp50kXiJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCasIpJQAKCRDa6OEJdZac
+ 5X6LD/98cxZA8SuObnUFd3T7SCsox28NVBUyCqlAktsGqmGQNemVfrZodgn6XAo9YZwMQIiStf1
+ Befh0J5zhBRvOmRAC8IO7DWo9WDMmCTdXPzk9yTNLvIv9Pnxj6Pn33Ph5NKPz1jLWt0XMlzPDRd
+ VZuP6aQIh+/cwn9/KHQj/bo4dzsdrrFZGdhWfsqCdsXo+aFee5U9eH6DwPH3ZKsKRP1UgEdX50e
+ I4CvKT0cbFhqMaKlweva95Yrcw2WVNCbUMpygodZBLAna4py/3iKBR1h+Dkine+VEIzFfSu3nnr
+ YzK7PD1tGYi3gpH+IJf/s9/uwxHTQE7kCjGbYkU34mO1zF7W4LgE/Jj8j4BH4aZAwElADynZje1
+ 7FTwrV1WrRHWvYsfHAKQez3KWMU4IUz3q5fszYu/8/nOqw7demrpJJicdGUq+E3Pr1pKNSnRw8D
+ G7mhcKavQiz/+uWN1NdKKcrlmJjB/3wg8FU22rfkUoCkoDSUAe7WgaNVgIWVM4xpQKb7eSSoh0v
+ x2Zbt5MAc6hxbYvblmyEccmb623sIP+/+Hf53Tsxx6Zn8sUkaln4mH/We255Qymzb55+X9AEyHv
+ 5f/6/UFmdPlidWA1pih8Hg0JY53vSg2QRN6WfM3sFWhulRllWgLRoZ6/6iELfecIsqcEbuwhlyP
+ FRAfRUkQYblv4Gg==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
-X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.337,
+X-Spam_score_int: 9
+X-Spam_score: 0.9
+X-Spam_bar: /
+X-Spam_report: (0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.337,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,34 +103,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When baudbase is zero (e.g. not yet configured), the division baudbase /
-divider produces zero. This results in NANOSECONDS_PER_SECOND / speed
-yielding infinity, making char_transmit_time infinite and stalling
-transmission.
+The reset handler clears the pressed state but does not deassert
+the IRQ outputs. If a button was pressed before reset, its IRQ
+line remains high even though the internal state shows it as
+released.
 
-Fall back to the same 3500 baud default used for a zero divisor.
+Deassert all IRQ lines during reset to keep GPIO state consistent
+with the pressed array.
 
-Fixes: 96651db423a0 ("serial: add "baudbase" property")
-Reported-by: Pavee Hui <phui@google.com>
+Fixes: a75f336b97a6 ("hw/input/stellaris_input: Convert to qdev")
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- hw/char/serial.c | 3 +++
+ hw/input/stellaris_gamepad.c | 3 +++
  1 file changed, 3 insertions(+)
 
-diff --git a/hw/char/serial.c b/hw/char/serial.c
-index 4339562ab003..44bf9fa0b25b 100644
---- a/hw/char/serial.c
-+++ b/hw/char/serial.c
-@@ -178,6 +178,9 @@ static void serial_update_parameters(SerialState *s)
-     frame_size += data_bits + stop_bits;
-     /* Zero divisor should give about 3500 baud */
-     speed = (s->divider == 0) ? 3500 : (float) s->baudbase / s->divider;
-+    if (speed <= 0) {
-+        speed = 3500;
+diff --git a/hw/input/stellaris_gamepad.c b/hw/input/stellaris_gamepad.c
+index 376d91abad70..90780613069e 100644
+--- a/hw/input/stellaris_gamepad.c
++++ b/hw/input/stellaris_gamepad.c
+@@ -76,6 +76,9 @@ static void stellaris_gamepad_reset_enter(Object *obj, ResetType type)
+     StellarisGamepad *s = STELLARIS_GAMEPAD(obj);
+ 
+     memset(s->pressed, 0, s->num_buttons * sizeof(uint8_t));
++    for (uint32_t i = 0; i < s->num_buttons; i++) {
++        qemu_set_irq(s->irqs[i], 0);
 +    }
-     ssp.speed = speed;
-     ssp.parity = parity;
-     ssp.data_bits = data_bits;
+ }
+ 
+ static const Property stellaris_gamepad_properties[] = {
 
 -- 
 2.56.0.rc0.29.g47ce80527c56
