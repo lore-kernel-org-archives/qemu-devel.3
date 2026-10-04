@@ -4,65 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C05C2CA5FEC
-	for <qemu-devel@archiver.kernel.org>; Sun,  4 Oct 2026 12:31:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B034CA5FF0
+	for <qemu-devel@archiver.kernel.org>; Sun,  4 Oct 2026 12:31:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xDLJg-0006Qe-FD; Sun, 04 Oct 2026 08:27:44 -0400
+	id 1xDLK6-0006ex-4Q; Sun, 04 Oct 2026 08:28:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xDLJb-0006O1-Pt
- for qemu-devel@nongnu.org; Sun, 04 Oct 2026 08:27:40 -0400
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xDLK1-0006e0-Mr
+ for qemu-devel@nongnu.org; Sun, 04 Oct 2026 08:28:05 -0400
 Received: from mail-wm2-x11.google.com ([2a00:1450:4864:31::11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xDLJZ-00075c-PA
- for qemu-devel@nongnu.org; Sun, 04 Oct 2026 08:27:39 -0400
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xDLK0-0007CB-23
+ for qemu-devel@nongnu.org; Sun, 04 Oct 2026 08:28:05 -0400
 Received: by mail-wm2-x11.google.com with SMTP id
- 5b1f17b1804b1-49fe8bf173aso5527125e9.3
- for <qemu-devel@nongnu.org>; Sun, 04 Oct 2026 05:27:37 -0700 (PDT)
+ 5b1f17b1804b1-4a0977b9c20so14482705e9.2
+ for <qemu-devel@nongnu.org>; Sun, 04 Oct 2026 05:28:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1791116856; x=1791721656; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=gRy8WWXvEYtZQPX3GEr0tmWE4nqxjkXA7yTxqBnrb2k=;
- b=G+CM2elZyysy1SR2pK9qGTCLjDF/V6MUtTGJ54JaSZJ1G8TDynAo4RXegk+gS2b6LT
- q716MdFR/CXGY6cfxldvU9v2+0j4EinhkIk7eHCXDwwsO386GcTaI3h74Lk48uO6WOB6
- v/s8RQdq65eDvNYJkTBnC/PJmfKaWraSb6hYf5pLEDp0uoh7KKbSPLFlnMkl1zcNv5Dr
- 3ax63kp7dLmGfNS4g8azv37GDFTWYtL+yHkbegU5BZkf1bduskecmiFtJMhdeTsff0T7
- ffwc0ffViX/EfWJz6Z7kwc+jC+YsL5EIJwcVNUgjMRo77Gj8m9QZFEODqPHdouTIfJ6d
- /W4A==
+ d=gmail.com; s=20251104; t=1791116882; x=1791721682; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=HFK7rw2+rwgEdnucdlvbPkHpZV+5fYg1Du1yvV5rZhE=;
+ b=NThG2I3EjMvrn+ShviwSbQXYK8mg1sXP9CcfQq7LT5LXkPkkGLXovkAoo+zTHQ8ccj
+ ZVsgIUB9uZaC2uYizCySWHxPyV6KgXwOg5aU7NQP46vW42x/UtjSapUuM3cVIUNOuP1u
+ QykMrysQHaOrWrLYMeo7wVkJE3rGiOJgno1ISi07g6efHoRQoVq8SiAi7B3UsZP14+iF
+ vwX6DXUb7HaQDXNAD+AYtSU8WxJ5gm9lXzC4SU3iekik8mek+Z5Dmas2JZpkvEW/34Fg
+ igSLg8XVxeMeCsSO4VKkONNwAGIX8KsF/hNunBe6Pfgnrn8b4AGxtem5vMQEjZ+dech3
+ vZ1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791116856; x=1791721656;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=gRy8WWXvEYtZQPX3GEr0tmWE4nqxjkXA7yTxqBnrb2k=;
- b=oif6zmNzGuu1mU3Bxk0I7n3Ynasioa4oe/A8gUEDBtfDQJcMb8RgrlQOtrMWOu8wM4
- wIaK0yl+m/U3mSa+Lp5QgyxVwoFCdG8X0ShBqr5rfZnfJSAUYwjtYjt4XobzhPBeoA1O
- sNFsmTBqlYZ2+EgSdJ10VGVR0uJ5JAOUPqx+9pq/85hI+1LRFyY2apRcY1exnklal/Tx
- Pe4ULV9lkoiogfKRMTQ8qZieDGHRDPtWFu4SCEV8tV+eNVFUojDsV+iD12LZJpPPMtBY
- ZghbTBVweMehuEa5QoL6sj7O4TEDPuRtC0dXCEnkhp2Hk6kkDBybDjFZyuihoaWbEeMT
- js+A==
-X-Gm-Message-State: AFuF++mF0VgvptgY2FCGvTccC46pAJGFDiwqEE1raOHajpO7eqwTCPuJ
- AiHMFjpozmKPeInnLLNVsDtWVQ7FUIinFnUdmuZRsI067zqnWF+LfTaadIsx0Q==
-X-Gm-Gg: AYBFou1HHYGYFMHBhAu1eM3PUKbiFniMr4+c2UBXlMjXsfHB0w2Epe/MXxrRtabyVNi
- Xs/7wo1YxZegH6P5mUtMxcseXIhExdZOgwTD43hxUTt2RrNxkRlcizvdjADoPdqTzPwlMkb1k5B
- ViYtEguodlU82ye/CztgjPaaWsSZYAI4OkAYCknJV/Xajn73F4IkYxr4omMoxvVdDY+T7DILtj7
- CgHx4yZ/xbxOEh5UyK0C4njayrZX4s6rGmnv3PnJPLi5ooQBbOjnuredZ+bCPyatYgyve0o9XT6
- M6vr51tdXTLnKXu9iWczUySmtpnAY4BIWqjDa+9Fqbo4MTNVTaUMSOBSOvia6MW3iQbe97D7UiD
- RxTn089hWaV9GTtLeQlnUt+TdnEQzJaAIEBmn4qfFFLXav2UCrvJm3W+AFkaUtVfo2Q3FqdIp71
- U6dqdQZntyXS/tQZ8jyJ9P0vC84zaL/8zNUdIp5SmgYUtp0u+cn1zRc+1Pe3Ig0qTOW//5vdcB0
- 5TVACr+rd5MOgQJlq4E4MiL38QFJoAvF72IpQ==
-X-Received: by 2002:a05:600c:5391:b0:4a0:c2a:485e with SMTP id
- 5b1f17b1804b1-4a02769a99cmr146426475e9.33.1791116856050; 
- Sun, 04 Oct 2026 05:27:36 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1791116882; x=1791721682;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=HFK7rw2+rwgEdnucdlvbPkHpZV+5fYg1Du1yvV5rZhE=;
+ b=PlOgh7EvQKh14RQ4J+IKKLtAcOSSkbVI74/ZKoRWhXl8LrtQxSOsvsYweVzdqrCTRS
+ TUX+nELrmtOnGfU9Jh3cx3jNgapZb8iGMDuHz0DSA8vMtG+LeLrCKVRsSZlT9PeHtcFm
+ 3NrWfAqHoeFj9X657HlUTOhOUVfCSmUkWXqqFBN+JMA1BfkU8y5EJ43iW9qQiFFhEC/I
+ xACLrUoFV/cz4rMLAWyIKkUcIloHVElHnXrSd/2eZHDETYLry3DfY1H0i7tY8KT8deUV
+ lWmGhH2kudz1nTn7tLDbq/0ASus+BEDpownyGZHYqFzP5lBCDXjzyctnLAa45Tpm6CdD
+ n2Mg==
+X-Gm-Message-State: AFuF++nHoSZgpQeNwxeidi1l51VhD4F5apkfbJGo1/4pJ7U6SgM9hwoD
+ xWMkr1f/xs9tm/l0YszjlGFlsv/m4n8addCa4iL3bMXC2ojiUnLPSG9KJKDUKg==
+X-Gm-Gg: AYBFou0Z3fekVokBhrdHgfGU63gYUFrspiPzjLJugeHShPIhG1gQ/Gmt3k8DaAV+LTW
+ y8++snLYUDFjCraqMo/Y/fjzOTMCIriL8SPdiGAN274I4TO45bRjg53zcnO7ieFPNBVfjbBYzYk
+ 0xRd47zzRGgRGd+RhMoTOqu3Kf8lESC0l3IoQ9YPFiG77oyE38pgh+kIdI+XJ9t2UL3vdL6fsGa
+ G2/f1qSI1MlHKX0cOckC8GRx9Kq4Yy0i2LITujgLlVrKlo2ar0FpDdnsuoJCDuKrSClcCqIxNzU
+ aFjWJdRiSow+aBi8BXA3G9GPDIk/v5q6+CaSfZY1wE/UtHKNl3bQ52q6o/VZU91M1s4RFRsPSPZ
+ UCCNAhCATHQ0pl0vyG/e18sjTbazPZH50Qn288TnX/pGW6sbRNjl4sKCzFaXY0RQquJcio6m42F
+ QhONY2ZjA+gRCYrt556nX7YlBFagGfHDv4SUOGcxkyBzst3Adog8f8BV47/z3A1rFDlD7+TjYDj
+ UPOVEMxgIxGCu/fhWE7YOffZjUP8lC4/B07Qg==
+X-Received: by 2002:a05:600c:1d1c:b0:4a1:6f72:3ea with SMTP id
+ 5b1f17b1804b1-4a16f72050cmr27328245e9.25.1791116882461; 
+ Sun, 04 Oct 2026 05:28:02 -0700 (PDT)
 Received: from archlinux (pd95eda80.dip0.t-ipconnect.de. [217.94.218.128])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a027698f13sm242319975e9.1.2026.10.04.05.27.34
+ 5b1f17b1804b1-4a027698f13sm242319975e9.1.2026.10.04.05.28.01
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 04 Oct 2026 05:27:35 -0700 (PDT)
+ Sun, 04 Oct 2026 05:28:01 -0700 (PDT)
 From: Bernhard Beschow <shentey@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
@@ -75,13 +76,14 @@ Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Bin Meng <bin.meng@processmission.com>,
  Jean-Christophe Dubois <jcd@tribudubois.net>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: [PATCH v2 03/30] hw/watchdog/wdt_imx2: Remove redundant attributes
-Date: Sun,  4 Oct 2026 14:26:19 +0200
-Message-ID: <20261004122647.3913-4-shentey@gmail.com>
+Subject: [PATCH v2 19/30] Kconfig: Extract config IMX_RNG from config IMX
+Date: Sun,  4 Oct 2026 14:26:35 +0200
+Message-ID: <20261004122647.3913-20-shentey@gmail.com>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261004122647.3913-1-shentey@gmail.com>
 References: <20261004122647.3913-1-shentey@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a00:1450:4864:31::11;
  envelope-from=shentey@gmail.com; helo=mail-wm2-x11.google.com
@@ -90,7 +92,7 @@ X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,90 +108,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since WDT and WDE are write one once bits, their values always
-correspond with their respective locked attributes. Thus, the attributes
-are redundant. Take advantage of this observation to simplify the code.
+Over time, QEMU has grown a number of i.MX boards and the monolithic
+config IMX drags in unneeded dependencies into each SoC model. Extract
+config IMX_RNG to eventually eliminate config IMX.
 
-Note that removing the attributes changes the vmstate structure which
-constitutes a migration break. This is allowed since QEMU does not
-guarantee migration compatibility for i.MX devices between feature
-releases.
-
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 ---
- include/hw/watchdog/wdt_imx2.h |  2 --
- hw/watchdog/wdt_imx2.c         | 21 ++++-----------------
- 2 files changed, 4 insertions(+), 19 deletions(-)
+ hw/arm/Kconfig      | 1 +
+ hw/misc/Kconfig     | 3 +++
+ hw/misc/meson.build | 2 +-
+ 3 files changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/include/hw/watchdog/wdt_imx2.h b/include/hw/watchdog/wdt_imx2.h
-index fc01fc46e7..0bf2903959 100644
---- a/include/hw/watchdog/wdt_imx2.h
-+++ b/include/hw/watchdog/wdt_imx2.h
-@@ -84,8 +84,6 @@ struct IMX2WdtState {
-     uint16_t wmcr;
+diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+index a33f5a46f9..2084813e1c 100644
+--- a/hw/arm/Kconfig
++++ b/hw/arm/Kconfig
+@@ -483,6 +483,7 @@ config FSL_IMX25
+     select IMX_AVIC
+     select IMX_FEC
+     select IMX_I2C
++    select IMX_RNG
+     select USB_CHIPIDEA
+     select WDT_IMX2
+     select SDHCI
+diff --git a/hw/misc/Kconfig b/hw/misc/Kconfig
+index d1711433ef..3f17d29053 100644
+--- a/hw/misc/Kconfig
++++ b/hw/misc/Kconfig
+@@ -94,6 +94,9 @@ config IMX
+     select PTIMER
+     select SSI
  
-     bool wcr_locked;            /* affects WDZST, WDBG, and WDW */
--    bool wcr_wde_locked;        /* affects WDE */
--    bool wcr_wdt_locked;        /* affects WDT, cleared on POR */
- };
++config IMX_RNG
++    bool
++
+ config FSL_IMX8MP_ANALOG
+     bool
  
- #endif /* WDT_IMX2_H */
-diff --git a/hw/watchdog/wdt_imx2.c b/hw/watchdog/wdt_imx2.c
-index dc7751bd5a..e9cb5819e4 100644
---- a/hw/watchdog/wdt_imx2.c
-+++ b/hw/watchdog/wdt_imx2.c
-@@ -59,8 +59,6 @@ static void imx2_wdt_reset(DeviceState *dev)
- 
-     s->wicr_locked = false;
-     s->wcr_locked = false;
--    s->wcr_wde_locked = false;
--    s->wcr_wdt_locked = false;
- 
-     s->wcr = IMX2_WDT_WCR_WDA | IMX2_WDT_WCR_SRS;
-     s->wsr = 0;
-@@ -156,24 +154,14 @@ static void imx2_wdt_write(void *opaque, hwaddr addr,
-     switch (addr) {
-     case IMX2_WDT_WCR:
-         if (s->wcr_locked) {
-+            /* WDZST, WDBG, and WDW are write-once bits */
-             value &= ~IMX2_WDT_WCR_LOCK_MASK;
-             value |= (s->wcr & IMX2_WDT_WCR_LOCK_MASK);
-         }
-         s->wcr_locked = true;
--        if (s->wcr_wde_locked) {
--            value &= ~IMX2_WDT_WCR_WDE;
--            value |= (s->wcr & ~IMX2_WDT_WCR_WDE);
--        } else if (value & IMX2_WDT_WCR_WDE) {
--            s->wcr_wde_locked = true;
--        }
--        if (s->wcr_wdt_locked) {
--            value &= ~IMX2_WDT_WCR_WDT;
--            value |= (s->wcr & ~IMX2_WDT_WCR_WDT);
--        } else if (value & IMX2_WDT_WCR_WDT) {
--            s->wcr_wdt_locked = true;
--        }
- 
--        s->wcr = value;
-+        /* WDT and WDE are write one once bits */
-+        s->wcr = value | (s->wcr & (IMX2_WDT_WCR_WDT | IMX2_WDT_WCR_WDE));
-         if (!(value & IMX2_WDT_WCR_SRS)) {
-             s->wrsr = IMX2_WDT_WRSR_SFTW;
-         }
-@@ -234,13 +222,12 @@ static const MemoryRegionOps imx2_wdt_ops = {
- 
- static const VMStateDescription vmstate_imx2_wdt = {
-     .name = "imx2.wdt",
-+    .version_id = 1,
-     .fields = (const VMStateField[]) {
-         VMSTATE_PTIMER(timer, IMX2WdtState),
-         VMSTATE_PTIMER(itimer, IMX2WdtState),
-         VMSTATE_BOOL(wicr_locked, IMX2WdtState),
-         VMSTATE_BOOL(wcr_locked, IMX2WdtState),
--        VMSTATE_BOOL(wcr_wde_locked, IMX2WdtState),
--        VMSTATE_BOOL(wcr_wdt_locked, IMX2WdtState),
-         VMSTATE_UINT16(wcr, IMX2WdtState),
-         VMSTATE_UINT16(wsr, IMX2WdtState),
-         VMSTATE_UINT16(wrsr, IMX2WdtState),
+diff --git a/hw/misc/meson.build b/hw/misc/meson.build
+index 9790afa104..61e128ab7a 100644
+--- a/hw/misc/meson.build
++++ b/hw/misc/meson.build
+@@ -62,6 +62,7 @@ system_ss.add(when: 'CONFIG_ECCMEMCTL', if_true: files('eccmemctl.c'))
+ system_ss.add(when: 'CONFIG_EXYNOS4', if_true: files('exynos4210_pmu.c', 'exynos4210_clk.c', 'exynos4210_rng.c'))
+ system_ss.add(when: 'CONFIG_FSL_IMX8MP_ANALOG', if_true: files('imx8mp_analog.c'))
+ system_ss.add(when: 'CONFIG_FSL_IMX8MP_CCM', if_true: files('imx8mp_ccm.c'))
++system_ss.add(when: 'CONFIG_IMX_RNG', if_true: files('imx_rngc.c'))
+ system_ss.add(when: 'CONFIG_IMX', if_true: files(
+   'imx25_ccm.c',
+   'imx31_ccm.c',
+@@ -73,7 +74,6 @@ system_ss.add(when: 'CONFIG_IMX', if_true: files(
+   'imx7_gpr.c',
+   'imx7_snvs.c',
+   'imx_ccm.c',
+-  'imx_rngc.c',
+ ))
+ system_ss.add(when: 'CONFIG_MAX78000_AES', if_true: files('max78000_aes.c'))
+ system_ss.add(when: 'CONFIG_MAX78000_GCR', if_true: files('max78000_gcr.c'))
 -- 
 2.56.0
 
