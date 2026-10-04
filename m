@@ -4,28 +4,28 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9AC10CA5FCE
-	for <qemu-devel@archiver.kernel.org>; Sun,  4 Oct 2026 09:06:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD69ACA5FF1
+	for <qemu-devel@archiver.kernel.org>; Sun,  4 Oct 2026 09:06:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xDI9z-0005rP-FR; Sun, 04 Oct 2026 05:05:31 -0400
+	id 1xDIAS-0005zd-7R; Sun, 04 Oct 2026 05:06:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1xDI9y-0005r9-1B; Sun, 04 Oct 2026 05:05:30 -0400
-Received: from mail-koreacentralazlp170130006.outbound.protection.outlook.com
- ([2a01:111:f403:c40f::6] helo=SEYPR02CU001.outbound.protection.outlook.com)
+ id 1xDIA8-0005uI-Rw; Sun, 04 Oct 2026 05:05:42 -0400
+Received: from mail-japanwestazlp170120003.outbound.protection.outlook.com
+ ([2a01:111:f403:c406::3] helo=OS8PR02CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1xDI9v-0005jQ-Nj; Sun, 04 Oct 2026 05:05:29 -0400
+ id 1xDIA6-0005jn-Pj; Sun, 04 Oct 2026 05:05:40 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=yIe8XZsR22jSCkxshM6+uuuHlIhEQHItdlkUpx4xa5SdEYlwRSzf7oZNlXHkN90rV66m9fjCE80UNHUBpx7svvyS5F7TFqIh4HKvJwAj/Sg7wzFcO4TMXO1dDKSj2rX4tGJQuU2qjXu6tvMz9ATHc5G36W6niBDzjYBciloUaiZYohf3HQHDhGNllD851b2TISxSWgHyl0uR8pWCPxQKzyx9XoVogbuJdBA3is/wCblDhvaFuekquVLLQ24dO8ebSqgRBDQZlXgOFPMUhdNPmxTCS/jWhOlu96QRwF0SsapoF0q9lVfVddPDmQ5ierWAmxHHzk7jd4AqGnQCrBNSQQ==
+ b=CtgjKKB3AqZtb2qBnVPfggsQb9ez4ZWP57RVle8mNa654HqnZb+71B0ozIc7MtorX+lPajHFl+tzbMrojWOOwcHS5VzhvDl9fb6fg6sUcolPz2SQdh/RjGxn35Hk84lYTYGlmYb2VViHPnXxRlYuOBOLvgyFbYVU47rTQAPlnLtTGISMULJ93ZfTPNp3P0As2CY7kjXLqm7QfL+KtFBJKy+/CaDawK7nJYCrbTPDLp3ZmslORfcUU/8TityOT6BEowWtX5ANQmkSKrmAdvPOQG2QyNOK3aYOsf+KheewVnlsXmGAWIPKaq3L8OA2ayWwbvTZd9oGHvEhpCurJIZPqw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=QETrCyQ4g9RKkFdgr4lOVRdQZ6cTu3xb15rjLVq478w=;
- b=Fik/EN3aGBAZgumIWNsRBMdWlfcVN/B2Z5GYkbwX2RyB3doEdOQSNEx1wnX2TlGWf2wdMvlKgxGw5VM4AePoc02mU3yNk50SIc13lklFDNIyrTX3B68PKFHPBqGZLQw5I6Xwpk63D5jWM0vRivRxVbqcAAEJavXqzlZyMUm8zpgtSLU4acduV28My16VH9eg/o9oZFfR/uMECKROJZsHOdql7+kcX7EKGKaEiDsO1d4zmSHHYJnJdTOBNuzcCFRJuC2aSXoTobYmHi60Jhi7eMkrgQeLlC4uRNOBJPe3Hszf5FCfbWO62juFsV/TbmgjCPAX+d9pgfNMGfQSBhz3Ag==
+ bh=yQw2+XSrhinHQKTdGGYsrpNr/qfKp+c67h7NlUKlduM=;
+ b=jgpV9OA5BaFT2eARKXn363zcqcnsaELkyJg+9P3MlEBYDzZBy8tgVaSd0VnHm84KQOUK1HfVxrU6gTQI14BQ5F5ZeUvtzvbTjXQHjvNp6S4IaNcuBbjwrWksK6JRQ2k+Ln7lydbAhVpOFVG9Gh/ZNIgUn0rsN6xJipr3Ma/vkvZpUlxoqSL3Pm1JFStnp9rC+mpBWozmY+4AI875jVVGl4W5Wh2beJJnOyRp8u0JYjnb8KHSFamei8T+HgHkOOehiab1XmqgQtrPKYhD6vWpGJfmQuiggeT38Ugbqo1tM9Ysn4x7VQg/k6rg3WJPlzEgQNmddzTp3igNACxgmRPLlw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=processmission.com; dmarc=pass action=none
  header.from=processmission.com; dkim=pass header.d=processmission.com;
@@ -33,108 +33,97 @@ ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=QETrCyQ4g9RKkFdgr4lOVRdQZ6cTu3xb15rjLVq478w=;
- b=nh1SlcI1E56ydOgW9gN8+T/7NVIL4edGcpeIB34fD/eussE/Qcj7jS+gDdGTDFmcVqDCGuk3Vs9Ve2A3tiA3dJ0rCLxYFDX8Yw4k832gnHwZRRAe0fTCEN7/R8pGirjoxtCk4icR0jxno64LfMh9ldKM4QYrWLdCd7s59KVoy0ne3tZjYNEHQlqgD9KQDYeB1ilr4p/KExySlNh9URHzJY1Q5qeAOsiqSpi+Nvwpidp5VeX4XnVQZ9PoxQahMFK3n+QTyMlOs1VhDtGamGGJXHQ4ILHjxU3OsBinMazPAB+XeAHSEkjWlAgP3bm0dzpWxTXBWuqF4o2n+Zn2PeTniQ==
+ bh=yQw2+XSrhinHQKTdGGYsrpNr/qfKp+c67h7NlUKlduM=;
+ b=C89hJRXVXU71nlNLotooIhjOqoVCUHVf68j9LomoctzmZkSPHkjeMCTobi8kmoFvElN3LVdurT7GhB1n9WxaZ58OZY89rTjge4QCDgi4i3QVAgxDMYGZ4Mbw1OzXAlrrNKLhi2LPntgroPpydbsh8fQa/SgndJ7aEByOxOZJ23seqow2DBs8GtD3Og7GISqyBnPFEAcpHnRumWtxNd5xLZbRqFNrhNc74YqeknMkkx9O08cdMyVLI+6W0L5Q+8C6N8LBUM7Hz3D+9jqmUmn/7QQwPNSELMUTumNCPlqkwiptcqdmrsFshdKZTtBT59v2Q/pHs7W0p6IjGj8wRBguWQ==
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=processmission.com;
 Received: from KL1PR02MB6257.apcprd02.prod.outlook.com (2603:1096:820:da::11)
  by TYPPR02MB8958.apcprd02.prod.outlook.com (2603:1096:405:382::16)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.472.20; Sun, 4 Oct
- 2026 09:05:18 +0000
+ 2026 09:05:29 +0000
 Received: from KL1PR02MB6257.apcprd02.prod.outlook.com
  ([fe80::ecf9:e832:8196:215]) by KL1PR02MB6257.apcprd02.prod.outlook.com
  ([fe80::ecf9:e832:8196:215%6]) with mapi id 15.21.0472.016; Sun, 4 Oct 2026
- 09:05:17 +0000
+ 09:05:29 +0000
 From: Bin Meng <bin.meng@processmission.com>
 To: QEMU <qemu-devel@nongnu.org>
 Cc: Bin Meng <bmeng.cn@gmail.com>,
- Jean-Christophe Dubois <jcd@tribudubois.net>,
- Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-arm@nongnu.org,
  qemu-block@nongnu.org
-Subject: [PATCH v3 00/10] hw/arm: Enable U-Boot boot on MCIMX6UL-EVK
-Date: Sun,  4 Oct 2026 17:04:45 +0800
-Message-ID: <20261004090500.3082641-1-bin.meng@processmission.com>
+Subject: [PATCH v3 06/10] hw/sd: sdhci: Honor i.MX uSDHC vendor clock gates
+Date: Sun,  4 Oct 2026 17:04:51 +0800
+Message-ID: <20261004090500.3082641-7-bin.meng@processmission.com>
 X-Mailer: git-send-email 2.53.0
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <20261004090500.3082641-1-bin.meng@processmission.com>
+References: <20261004090500.3082641-1-bin.meng@processmission.com>
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 X-ClientProxiedBy: TYCP301CA0002.JPNP301.PROD.OUTLOOK.COM
  (2603:1096:400:386::20) To KL1PR02MB6257.apcprd02.prod.outlook.com
  (2603:1096:820:da::11)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: KL1PR02MB6257:EE_|TYPPR02MB8958:EE_
-X-MS-Office365-Filtering-Correlation-Id: 9627f391-bb4f-42c6-1c3d-08df21f69c23
+X-MS-Office365-Filtering-Correlation-Id: ac5d0f14-08a5-46f8-41aa-08df21f6a305
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|366016|1800799024|376014|23010399003|56012099006|10067099003|18002099003|6133799003;
-X-Microsoft-Antispam-Message-Info: wE2HR8hvrJ1hFV1t+umJtUS1zUoQBLiD0glNPFM4z030M9o5Nbnz7fBpdRfHxony9zzRre1O4u0LjYuewlhslBXRsosJZ9+GFVwDIoSF352ysTw20OHSSFoMArBY/CKPO2ERMwNVSXp3pxADccwR6qdoqVmmavKBVbExZkqnKTMLQ0vV7OsSlIP3+w1vzRV0dbnjMWtyxAn9Rqgxl7j7kastq7ZdYig5uINOfgIwgaBeuY0nIMs+GK+vr0sS5QWvdzuqZio364hgsKN8qGYNyKrNgJVleIQ/tTC9IIL1oDto4se6dEXf76L1OY/FTCkDWnu+tmNuK1AArz8mhkIUWQUiG1SRe5alHi9ITujSpuYaku97avp3Rgso4rx87QnVX2b06cSnNk5E0dZaU2o1FfICtuy/X9h9z+YFno1Njo9oxqRYsiOkDErtH+W9ygE8wpncX21BJTf+hMFdwzqYh6B5hhBbWdhT1v/vQJUBdR5pYWh0Fo8EGYFpHjkmC0w0DdOpNRdWMnaTy6kbdCmUw1jsVfOCbVhKF1go7F7CAnt1dPlNp5dQbuVLQK5oZe6JJq7vaxQB9GJMre8bVw4MkQbtGYOJZr3lmlT1p2LP7ng3fcBi2XTBRdg/cAUPb/0x03+R5znui+LFIMmuxOWEmmPekCTOp1CBQlNuvG3Jcss=
+ ARA:13230040|366016|1800799024|376014|23010399003|56012099006|10067099003|22082099003|18002099003|6133799003|3023799007;
+X-Microsoft-Antispam-Message-Info: 8GhSZ5uVGluN1gycLH/5ZhlTMp6g/DQRtVCVQNHyazrvjTNmjHTOs6ak9UqZOxpXM+Vj4qg6KjLEliJcA9OPNdaWN6drhoKrj4XQ9B08NXjzlT4SB4IIXrvWGcE60+tuvA0uQCeltXP3plW+omFJwDkvm0OYC17GNVae/Cur5ybZv/HzAGsnEW7ddOAVidxM3QEFV5JRt7nvV9a4OZgEXtfmmKopIMn8MKW7gdYxLxd3oyhRt/gi0JfVbx2jvVJXHz2SPhnvAgJI8gT2iVQiLEWPu/Tf0+N5m6wl5xlr48a41FlIjCrANHa9ULLtZTH3SvtJKekUcTs3PLu71FcdMiLJC3YGw7YpNv3+BmuE89jHI5xA+XELD/hYl8HizvTEqFCZPcw7k8+K/JYmpPvO28J07aNSkbNssLfqdz3AzSfvg2CaU/6RBqO74N/Sh73/sySAhP67ov0/9PDB9P5vnEeEu0vNJ3D5EfKyyXBwd+2uPeSnyhyITPRXvzSICi9wJuIH1Hxg8E+qk/8pG9Gzgp4kWBpIH5HQA9Mf6mq56XUXBGidu5CJBpkOwi0TVfF2uIx8CIJHOZZzL6KKLFUhrcE4pKlWN+k0V+xikfaa+RR8J6ifRQI/J0j/8rwUuBJBzt8O3e8cBmc0uDk14jchte8XsxQ4+UBpqMp8bwOG/Ng=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:KL1PR02MB6257.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(1800799024)(376014)(23010399003)(56012099006)(10067099003)(18002099003)(6133799003);
+ SFS:(13230040)(366016)(1800799024)(376014)(23010399003)(56012099006)(10067099003)(22082099003)(18002099003)(6133799003)(3023799007);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?UEU2MGpFWE40dXNNaXF4WmtEVmszM1IvN08wSmpvZDdvQ3pYZ2w1eTlGZzlr?=
- =?utf-8?B?SkJ0NFp1QzNHRTJPZkg2blQ2dEdtbis5ankzMDZnMEo4aC9rQUZCTkFmMThs?=
- =?utf-8?B?M2N4Z3dMcmlkdkpTaGNPKzROVm1IMFlYRTFaR2xzeE5QdU1oeG5DeTk5VVMr?=
- =?utf-8?B?c1Z0cWpMbWZoTm1yZG5vdCs3ZitlUWZtdGFObjNCR3g1VFlFZ0d5bnNjWEl6?=
- =?utf-8?B?c3lPS1Q1Vkk5SkFyM0RwN1FNNTFRNnNVZE84R01EZkVKa29mQ0RXWXo3ci9u?=
- =?utf-8?B?RVFKa1Q5Z2hIdHoxbTZqQ2JSRGNHN1JJRUg4OUthV2taV01ncEttbm02L2g4?=
- =?utf-8?B?ZDdEL3hhU2tyMjVyYWZBSTJmTzcySWNNalpqb1JjeTlSeDdDcjZvQVJ2NEF2?=
- =?utf-8?B?VDFNN3BPTVBxaW8rL0dXNTZxY05wWW9ORlhkUDhFNW9SU21ZYXM5Z1doN1dK?=
- =?utf-8?B?N0UzUTVObjBKMUVjS1ZzVkxyVjNZczdGcWI5WEEwcUNQQ2NtVVUvZDVpUEVZ?=
- =?utf-8?B?ZmtlV1F3cks1SHg5a0YxeFJFZXB6ekprb2VDMXNSNEJZSWhmZFpiUUZrd3NO?=
- =?utf-8?B?QVBwb0FLVUNtWEp3alRIY0RzMDU0V0xlbVNQd09iN2tkQlA3c0JUK2ZXNXY4?=
- =?utf-8?B?TmRlKzFZbEZWOGtDNzdBdlFTaitFY01oSUdSSWZJWHRFcnNibHJrLzB2azkw?=
- =?utf-8?B?MEYxRDFtM29XWHozUm4xanAwb2hkMDBwUzBKWktvbUhmaWdpN1JGTkRtZ2N2?=
- =?utf-8?B?NzJZU0IvU2NoU2Fna05oNXZGS0kxbThScUN2Ni9QVFZCNUpEZlBORW1xblY0?=
- =?utf-8?B?ekNwK01qK0lxcEtNcUxKWU42VldpZTZSNUkwc0NGSEhlR0RUVW12dmpoeWtl?=
- =?utf-8?B?cUt0QUllSzdUSFJHSVV0dCtOYUgxN1M2b3pld2d4eW4vUG0zWkRVMEJ6WkhY?=
- =?utf-8?B?TnFpTFJpWElsb2F5V3lqeGR3dUg4MCt6UkpCUkJqdUduUjR3WE4vNnlOYkdF?=
- =?utf-8?B?QUl2MjB0MEt5bHhrNUdkbVBhODZSOXJUVjRYbU9RNVRINHJpRzlMZi8xNWxo?=
- =?utf-8?B?MmVVQVc4VnNXNUJTQnVzb3F4UjE3ajJXRFlRMTJKSkMyT1lKOFMzaFp4RnNx?=
- =?utf-8?B?SGJPTXhzdm9XbE9UQzNhMTM4L1ZjY3ROZ1MzMGI1Yno1cS9LSEt0Vks1Nlp5?=
- =?utf-8?B?WThuQ1drK2FqOEtpaHpYVXNjL21USXhvUFdqdFIwcGgzSVorMjFOR08rbzJz?=
- =?utf-8?B?SFpGTmlOK0E3ckZjZUw0RDZBcnhNSHhEVDVMNTlONnZkQUtheEdwdUJESEs4?=
- =?utf-8?B?ZTZqcUFBeE1jazlCaGRqUlVoSEJQYjFYZmwrMkthTy85V3M0bGQxM2pZZ1hQ?=
- =?utf-8?B?d2tPbW1va05TYlloaExtcVdLZDNxVE83SlNXdUNMbVJtTFp4NWhIcFpJTFlD?=
- =?utf-8?B?dGpUZy9YMnFKZjVIRU9KeGZtQjVNYk5hcFA1MEE3Qmt4TWNTbVBhazFCVHhV?=
- =?utf-8?B?dkNYLzRoMU1jaGJvNHZwV1p6ZzhudWhpb3dGVEhaUU90cXRuS2hnR0hCaXR5?=
- =?utf-8?B?MHJHUTJ4bHRUcVZSbXhVL2VsaUxmTU9jeUZnRGVGSGlLQXk2RFh1a2VNZzdE?=
- =?utf-8?B?MDIzUUNYdFhQWkhmaFdjT1VJcFdwN0dRcDJWY0Z3UUV1eWorVklzdFJ2T1Bz?=
- =?utf-8?B?VnUybk9abjVDWHBFdzl3KzBydEtxQlRwaW5XTk56MFVLdC9zWldMZzdObWpp?=
- =?utf-8?B?dHBEOXBOOGxPNHR2QzBvVXFpUkIvWlFlSys3SW56K0VJcVJlQ245b3dTZG5U?=
- =?utf-8?B?ZjVBZndVYTI5bXNlSUduQmFZSzUvdExxZHNmcXo1VkJwa2lLY210bDNzdXNZ?=
- =?utf-8?B?enRZNnZwUi83UmFMN1dqeUtqakpEblRycitCRzF2cWNRaUZ2MXlLL29kUU9m?=
- =?utf-8?B?RUwxaHI1SlBlS0ZjeHI4ZHhrT2N4R1NEdWloeVpFL2MzemI3TFNNOXVaZThG?=
- =?utf-8?B?Y1NkRi9Qb2o3aHUzSGtETGNJSXRwUGI3Ni85NmhrNGd6UWg5Nlc2NDhpckpi?=
- =?utf-8?B?eWdjckJoVXd2d1VNOXBOTCtGdzF2Z0wwb1FwMUVLeUUzVmkvclZnNzVXa1pj?=
- =?utf-8?B?Z3ZvcEZQa2RMeStYbS93dkM5QXZFeVQ4bTVmT3IzSlozSUJwS1ExYXIwcUFj?=
- =?utf-8?B?a2R1ZC9QZnZsTXVqWTllY1VCQjVzOTRUK3Jtc2gyUUIyVlhKQzVmRlhHWWJy?=
- =?utf-8?B?b3N3cUF5bFBSZi9JRXdqWTN3Q3hody9pQVoxbzhRWmlTeTVuT2FXWEo1M3VP?=
- =?utf-8?B?Z0lyNzgrdEdUMWc5K214Mko5bkNoeXN1ZHQzcVA0UTZpbmlDdGhDZndzQUdP?=
- =?utf-8?Q?fhIGcVYHaqmeuqw8=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?TVqP0e2MMiplOa/xUlfcnaUqk4tlWaoAuPy5wRgz00a5PPkmPVUMiqa5L1x/?=
+ =?us-ascii?Q?wKnM89KO5GlejPmpswKwP/UARJ0gyTbvJj5+amFvJZl0ivaqqMol5ZK7+rPf?=
+ =?us-ascii?Q?xZVzJDbP7JTmQmp895VypMcX/c35WTA8HA8zPIPEzZJkDgvIiauzkKCp73X+?=
+ =?us-ascii?Q?5LWo7k0AXzfi5QOnA+dwMKGLJFLQZ1aOlZCDjJns8f07akn9v2fhVuRoaqdP?=
+ =?us-ascii?Q?q8ORK5bMkP/t4n/3ZaOHpYKD0T25+yS7U2ltJms+eW9reU3e7VCdbVwzBkXg?=
+ =?us-ascii?Q?5+FUdQz1LNMBczTksVNIUIq8kSRUbAs+XBBEHG288lw2pSuN1ewTFx3n9x2U?=
+ =?us-ascii?Q?dyyroq1u9XNIlkH17uOiF60VcYa1RRwzTqsfd1+NjCSJ0NRS9eUK/HFH4btj?=
+ =?us-ascii?Q?BfOy4yJrR99ejO5zh4pvcErBxXIySjoE8W75N54KvPf/hdgJtPKdz5zp9TyJ?=
+ =?us-ascii?Q?KkInYoQOPn5SaJ4vRxuXSlmSVgMDMKIdigcvN5bvUnMjf6Ip+re3KSz8hlTg?=
+ =?us-ascii?Q?jfTqG3yAz19l1JJL0K8i2rmokEN3sW47X1DuuGko66ImUya18evwkUkZ/Ox0?=
+ =?us-ascii?Q?5bOfhXXWOFPRCFes/CVLwzyWfH0gj4/pxEaIdPh5Sn+PVmYsAevvMx9QrvGb?=
+ =?us-ascii?Q?W1fnxYiF+5CzBKo0tdOk6z/u7x2rM1j5QemEE7KMI+jFRV9OmQgocppMlQtS?=
+ =?us-ascii?Q?qi3yZ8I9i9IIojibsLemIRj9lEJx2qgTJwDxQdEjs5nJyuSDXZFJ51EN+IIw?=
+ =?us-ascii?Q?HWV3PSDUSlYKTq8uNO9+KbWeKPnhq2nCb50R4N7XruauC5+MDFvRqO0Ok/DV?=
+ =?us-ascii?Q?Et6FhHVFhPBLCDUtMBIuzI3fZXo+vqVHOCE9MTbcAoDzTcphOBEYWgf+NtB2?=
+ =?us-ascii?Q?wyHTG74H3gEyWQN5VWSiQj03isj+w+Ar6WtN4X4IztW2E5asUt5t0l9ILsCM?=
+ =?us-ascii?Q?US4d6NUzXuv7o1hvrHb856YszGhnMfh6tc58nDCkL7Jl95vq1sZfw69GH5q0?=
+ =?us-ascii?Q?JJ45QD6RryV5LsAbpTkS5BBVAAhQWwJc1QQFq1o70U8AwGLKaXeuYrJv/0h5?=
+ =?us-ascii?Q?CiEAWVjLqvXF9G+fBBhvM8cKLz4UFKLe4IoXC3Ucvb0vL2qKMbh01OLa+1ZX?=
+ =?us-ascii?Q?8hFaJtGtbn5F5qXRWgjgOsA43WdgdxEURkSVJUlfGcFxC+PeXKoy9K6kj+JX?=
+ =?us-ascii?Q?DIFd+at3CdbXCNl4R+hE0gyTA+KcDOBUWcRqgh1jEnoDfA55OkEzYj1vZpxO?=
+ =?us-ascii?Q?WnyZ2qKRchwWe1CpYe7huFfyTF+OCTJi96oOFTbm7InMm1kdjF/MpwCf+KkW?=
+ =?us-ascii?Q?ugn1AdF0BYYof7ZMU3UAs3KbTfMHR52W45Oxz9yPSx23LatJgiFL1ELujlUu?=
+ =?us-ascii?Q?vI74Jsp3Etg4gz50x/XAVoAtHEzF/BX7Oby2L2SUhYmoVIQit3T6Xv89S/0J?=
+ =?us-ascii?Q?9dsXJ3DUz0CdVDmZThTTiC1tCeTWDdr6gUOxV14cR+CoutpE/nN40lVB3AcY?=
+ =?us-ascii?Q?kADIyjsmbVycxBLWFtn2Pet8Zwz6PFCbv35Z5T0IAaN5erA2JwJ66uOf1BCD?=
+ =?us-ascii?Q?9NAgSl/a7KCL7Xz0ypjr1aUsNgcz0GFtC7AibXRgLJmsWPG9ViYiI7V/AYzI?=
+ =?us-ascii?Q?WH6grj2GYQDcM7QoNyBKQS7Qbz+TGGUgpbEdKk6YfQYwpXr3vvgjX2PURJNp?=
+ =?us-ascii?Q?7qkHoCFffZ6K/qU6GFuQulnee9bIUrXDnU+x6OWEJ6Q+VM7uIKbELexepAKO?=
+ =?us-ascii?Q?iDItlhskRS2jpnJrA+XtfHX0bXq1rmM=3D?=
 X-OriginatorOrg: processmission.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 9627f391-bb4f-42c6-1c3d-08df21f69c23
+X-MS-Exchange-CrossTenant-Network-Message-Id: ac5d0f14-08a5-46f8-41aa-08df21f6a305
 X-MS-Exchange-CrossTenant-AuthSource: KL1PR02MB6257.apcprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Oct 2026 09:05:17.7936 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Oct 2026 09:05:29.2054 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: x9UMzIufzf1u+muo2hGTLWDnsiGdi1t88C7A5dDKpmjOIgVkLksw7dWDPyAvGdJi+YuEEAapC4O/BfB10376Lm1QtaGxpyphZAh4nfJ+Wx0=
+X-MS-Exchange-CrossTenant-UserPrincipalName: 7gloQXfWNxN+0f6opcgGd9ptNJOjsb9/ODqmlQk3cL3q9CxLOoAj9DxqEwk4TsSkDvly+Hh7651w4bi+x+rti1ti4YsiP9iTq0EQe9QUffk=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYPPR02MB8958
-Received-SPF: pass client-ip=2a01:111:f403:c40f::6;
+Received-SPF: pass client-ip=2a01:111:f403:c406::3;
  envelope-from=bin.meng@processmission.com;
- helo=SEYPR02CU001.outbound.protection.outlook.com
+ helo=OS8PR02CU002.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -151,66 +140,183 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+U-Boot enables i.MX uSDHC clocks through VEND_SPEC, so checking only
+the standard SDHCI clock-control bits drops commands and prevents
+firmware from loading its kernel from the SD card.
 
-The mcimx6ul-evk machine can boot Linux directly, but it cannot run the
-U-Boot proper produced by Buildroot far enough to load a kernel from its
-SD card. Early U-Boot boot test accesses currently abort or observe
-placeholder values, and the i.MX uSDHC model exposes several issues.
+Present vendor gates to the common clock check during uSDHC command
+writes, then restore the guest clock register. Retain the standard
+clock path used by Linux without adding vendor quirks to generic code.
+Report SDSTB and handle partial vendor accesses in uSDHC MMIO handlers.
 
-This series lets an unmodified Buildroot 2026.05 U-Boot 2024.07 image
-run on mcimx6ul-evk, load zImage and imx6ul-14x14-evk.dtb from USDHC2,
-start Linux, mount the SD card root file system, and reach the Buildroot
-login prompt. It also documents and tests the existing direct Linux boot
-path.
+Reference: IMX6ULRM (Rev. 2), sections 56.8.10, 56.8.12 and 56.8.26
+https://www.nxp.com/webapp/Download?colCode=IMX6ULRM
 
-Patches 1 through 4 provide the minimum early-firmware-visible state.
-Patches 5 through 8 address i.MX uSDHC behavior needed by U-Boot. The
-last two patches document both boot paths and add functional tests for
-U-Boot and direct Linux boot.
-
-This series is based on:
-<20261003170232.2450916-1-bin.meng@processmission.com>
-as the sdhci changes have conflicts.
-
-Changes in v3:
-- Rebase on the v3 PolarFire SoC Icicle Kit series
-- Model the full reserved page as a child of a15mpcore_priv
-- Validate MMDC RAM geometry and document supported capacities
-- Translate uSDHC vendor clock gates in its MMIO handlers
-- Cover partial reset accesses and migrate vendor clock state
-- Extend contiguous SDMA completion to both eSDHC byte orders
-
-Bin Meng (10):
-  hw/cpu: a15mpcore: Model the reserved page as RAZ/WI
-  hw/misc: imx6ul_ccm: Update PMU_MISC0 reset value
-  hw/arm: fsl-imx6ul: Map early firmware register placeholders
-  hw/arm: fsl-imx6ul: Add a minimal MMDC geometry model
-  hw/sd: sdhci: Use a QEMU-local no-busy IRQ quirk bit
-  hw/sd: sdhci: Honor i.MX uSDHC vendor clock gates
-  hw/sd: sdhci: Preserve uSDHC status enables for U-Boot
-  hw/sd: sdhci: Skip SDMA boundary stops for eSDHC and uSDHC
-  docs/system/arm: Document MCIMX6UL-EVK Buildroot boot
-  tests/functional/arm: Add MCIMX6UL-EVK boot tests
-
- MAINTAINERS                               |   1 +
- docs/system/arm/mcimx6ul-evk.rst          |  72 +++++++++++
- include/hw/arm/fsl-imx6ul.h               |   2 +
- include/hw/cpu/a15mpcore.h                |   6 +
- include/hw/sd/sdhci.h                     |  10 +-
- hw/arm/fsl-imx6ul.c                       |  87 ++++++++++++-
- hw/arm/mcimx6ul-evk.c                     |   2 +
- hw/cpu/a15mpcore.c                        |  53 ++++++++
- hw/misc/imx6ul_ccm.c                      |   2 +-
- hw/sd/sdhci.c                             | 151 +++++++++++++++++-----
- tests/functional/arm/meson.build          |   2 +
- tests/functional/arm/test_mcimx6ul_evk.py |  69 ++++++++++
- 12 files changed, 416 insertions(+), 41 deletions(-)
- create mode 100644 tests/functional/arm/test_mcimx6ul_evk.py
+Signed-off-by: Bin Meng <bin.meng@processmission.com>
 
 ---
-base-commit: 3ee3bacb1edd0896cb26f0f66493b4ab006fbffa
-branch: imx6ul-evk
 
+Changes in v3:
+- Translate vendor gates in uSDHC MMIO instead of a generic quirk
+- Preserve the standard clock path used by direct Linux boot
+- Handle partial vendor accesses and report SDSTB in uSDHC reads
+- Migrate the vendor register in an optional subsection
+
+ hw/sd/sdhci.c | 93 ++++++++++++++++++++++++++++++++++++++++++++-------
+ 1 file changed, 80 insertions(+), 13 deletions(-)
+
+diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
+index 14c312a691..40cf407876 100644
+--- a/hw/sd/sdhci.c
++++ b/hw/sd/sdhci.c
+@@ -1613,6 +1613,24 @@ static const VMStateDescription sdhci_hostctl2_vmstate = {
+     },
+ };
+ 
++static bool sdhci_vendor_spec_vmstate_needed(void *opaque)
++{
++    SDHCIState *s = opaque;
++
++    return s->vendor_spec;
++}
++
++static const VMStateDescription sdhci_vendor_spec_vmstate = {
++    .name = "sdhci/vendor-spec",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .needed = sdhci_vendor_spec_vmstate_needed,
++    .fields = (const VMStateField[]) {
++        VMSTATE_UINT16(vendor_spec, SDHCIState),
++        VMSTATE_END_OF_LIST()
++    },
++};
++
+ static bool sdhci_pending_insert_vmstate_needed(void *opaque)
+ {
+     SDHCIState *s = opaque;
+@@ -1632,6 +1650,7 @@ static int sdhci_pre_load(void *opaque)
+     SDHCIState *s = opaque;
+ 
+     s->hostctl2 = 0;
++    s->vendor_spec = 0;
+     s->sdma_boundary_paused = false;
+     return 0;
+ }
+@@ -1707,6 +1726,7 @@ const VMStateDescription sdhci_vmstate = {
+     },
+     .subsections = (const VMStateDescription * const []) {
+         &sdhci_hostctl2_vmstate,
++        &sdhci_vendor_spec_vmstate,
+         &sdhci_pending_insert_vmstate,
+         &sdhci_sdma_boundary_paused_vmstate,
+         NULL
+@@ -1810,6 +1830,10 @@ static void sdhci_bus_class_init(ObjectClass *klass, const void *data)
+ 
+ #define ESDHC_VENDOR_SPEC               0xc0
+ #define ESDHC_FRC_SDCLK_ON              (1 << 8)
++#define ESDHC_VENDOR_IPGEN              (1 << 11)
++#define ESDHC_VENDOR_HCKEN              (1 << 12)
++#define ESDHC_VENDOR_PEREN              (1 << 13)
++#define ESDHC_VENDOR_CKEN               (1 << 14)
+ 
+ #define ESDHC_DLL_CTRL                  0x60
+ 
+@@ -2060,12 +2084,67 @@ static void fsl_esdhc_le_init(Object *obj)
+     qdev_prop_set_uint8(dev, "sd-spec-version", 2);
+ }
+ 
++static bool usdhc_vendor_clocks_on(SDHCIState *s)
++{
++    uint16_t clocks = ESDHC_VENDOR_IPGEN | ESDHC_VENDOR_HCKEN |
++                      ESDHC_VENDOR_PEREN | ESDHC_VENDOR_CKEN;
++
++    return (s->vendor_spec & clocks) == clocks;
++}
++
++static uint64_t usdhc_read(void *opaque, hwaddr offset, unsigned size)
++{
++    SDHCIState *s = SYSBUS_SDHCI(opaque);
++    uint32_t value;
++
++    switch (offset & ~3) {
++    case SDHC_PRNSTS:
++        value = esdhc_read(opaque, SDHC_PRNSTS, 4);
++        if ((s->vendor_spec & (ESDHC_VENDOR_IPGEN | ESDHC_VENDOR_HCKEN)) ==
++            (ESDHC_VENDOR_IPGEN | ESDHC_VENDOR_HCKEN)) {
++            value |= ESDHC_PRNSTS_SDSTB;
++        }
++        break;
++    case ESDHC_VENDOR_SPEC:
++        value = s->vendor_spec;
++        break;
++    default:
++        return esdhc_read(opaque, offset, size);
++    }
++    return extract32(value, (offset & 3) * 8, size * 8);
++}
++
+ static void
+ usdhc_write(void *opaque, hwaddr offset, uint64_t val, unsigned size)
+ {
+     SDHCIState *s = SYSBUS_SDHCI(opaque);
+     uint32_t value = (uint32_t)val;
+ 
++    if ((offset & ~3) == ESDHC_VENDOR_SPEC) {
++        value = deposit32(s->vendor_spec, (offset & 3) * 8,
++                          size * 8, value);
++        esdhc_write(opaque, ESDHC_VENDOR_SPEC, value, 4);
++        return;
++    }
++    if ((offset & ~3) == SDHC_CLKCON) {
++        esdhc_write(opaque, offset, val, size);
++        return;
++    }
++    if ((offset & ~3) == SDHC_TRNMOD) {
++        uint16_t clkcon = s->clkcon;
++
++        /* Present vendor clocks to the common command check */
++        if (usdhc_vendor_clocks_on(s)) {
++            s->clkcon |= SDHC_CLOCK_CHK_MASK;
++        }
++        if (offset == SDHC_TRNMOD && size == 4) {
++            val |= s->trnmod;
++        }
++        sdhci_write(opaque, offset, val, size);
++        s->clkcon = clkcon;
++        return;
++    }
++
+     switch (offset) {
+     case ESDHC_MIX_CTRL:
+         /*
+@@ -2085,18 +2164,6 @@ usdhc_write(void *opaque, hwaddr offset, uint64_t val, unsigned size)
+         s->trnmod = value & UINT16_MAX;
+         break;
+ 
+-    case SDHC_TRNMOD:
+-        /*
+-         * Similar to above, but this time a write to "Command
+-         * Register" will be translated into a 4-byte write to
+-         * "Transfer Mode register" where lower 16-bit of value would
+-         * be set to zero. So what we do is fill those bits with
+-         * cached value from s->trnmod and let the SDHCI
+-         * infrastructure handle the rest
+-         */
+-        sdhci_write(opaque, offset, val | s->trnmod, size);
+-        break;
+-
+     default:
+         esdhc_write(opaque, offset, val, size);
+         break;
+@@ -2104,7 +2171,7 @@ usdhc_write(void *opaque, hwaddr offset, uint64_t val, unsigned size)
+ }
+ 
+ static const MemoryRegionOps usdhc_mmio_ops = {
+-    .read = esdhc_read,
++    .read = usdhc_read,
+     .write = usdhc_write,
+     .valid = {
+         .min_access_size = 1,
 -- 
 2.53.0
 
