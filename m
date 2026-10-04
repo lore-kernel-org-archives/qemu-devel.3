@@ -4,93 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A741BCA5FEF
-	for <qemu-devel@archiver.kernel.org>; Sun,  4 Oct 2026 15:27:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88E1ACA5FEF
+	for <qemu-devel@archiver.kernel.org>; Sun,  4 Oct 2026 15:27:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xDO7J-0006GK-88; Sun, 04 Oct 2026 11:27:09 -0400
+	id 1xDO7J-0006L8-UY; Sun, 04 Oct 2026 11:27:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bmeng.cn@gmail.com>)
- id 1xDO73-000614-C9
- for qemu-devel@nongnu.org; Sun, 04 Oct 2026 11:26:58 -0400
-Received: from mail-yx2-x0c.google.com ([2607:f8b0:4864:41::c])
+ id 1xDO79-000664-Kw
+ for qemu-devel@nongnu.org; Sun, 04 Oct 2026 11:27:04 -0400
+Received: from mail-yw1-x112d.google.com ([2607:f8b0:4864:20::112d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <bmeng.cn@gmail.com>)
- id 1xDO71-00060d-L7
- for qemu-devel@nongnu.org; Sun, 04 Oct 2026 11:26:52 -0400
-Received: by mail-yx2-x0c.google.com with SMTP id
- 00721157ae682-8ab46253999so7767907b3.2
- for <qemu-devel@nongnu.org>; Sun, 04 Oct 2026 08:26:51 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1791127610; cv=none;
+ id 1xDO77-000616-HJ
+ for qemu-devel@nongnu.org; Sun, 04 Oct 2026 11:26:58 -0400
+Received: by mail-yw1-x112d.google.com with SMTP id
+ 00721157ae682-8ab3fd8adb1so7737607b3.1
+ for <qemu-devel@nongnu.org>; Sun, 04 Oct 2026 08:26:55 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1791127614; cv=none;
  d=google.com; s=arc-20260327;
- b=p2+h4YsEo+MAhPSwtyxaFRMsE1P1l9FUKPX/GFAjXD37iBSCegcxhyhHtLZm0Ip7Rb
- 5Avup1reM8s9V4RQ/BbLqH0qqCOWNox0dcyA7n4M9qP73JJA4BGJ5t1/sX68q8WhekRP
- LIJNx8nkko34DX5rOW80FUfdtxQa9HEo+5lJJr7JnIrB3EWWh8Wf5FnkGebz9Arn5His
- 7HFGJx2jcDZLNQEQaEQd2d7Pkj0NRLnPo0ilMNm8WWUnZwnaK4j9mlZbc3N7zPJCXUMr
- 0pdGmLSlKFzfUP+D0d5l2cztTFiPqhN+/MjmWBfvflsCaQxpxzPSNr9+3kgZ50GZC1ou
- qe2A==
+ b=akAuIwGyrxD0wSMcPOgT1YFLVokKYbMjOm9Wv/HObmGLhmzJZ0dpui6KOZFZkG/CUy
+ 9ijWxJHUSMiPlM6tmHNbXeaayt/u6WmTBxFh74jvlq1/8QLRuMjpD/B1lk82JOOl7aeZ
+ 9QM84j8IN8BxE6A3hvVK1tXsahZDcJFMHVjRHL7jB+3bo9J4haF7BQRz424XCv8uUV7D
+ zAL7PGemSEuB0+tJVKTOJv02Af3KXaTIs881pJs13bz+VMN0kx3Sz84y0GxmW2V3QWtX
+ HVlzRoBRW7WufoOfEvkSEzUUf4mTCo99Ka3bWiYgWOrHrSdzCo1qJhZQamgorc34Mpqg
+ jTnA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=pFwd6/3wkZ1BbDFLuud1O66rhIuYH7s2vLGJwpTjYyM=;
+ bh=OYCf/3IiB3r6J5jKmU00e9JY0kvGwGvWihTLOwfnIzI=;
  fh=/0IC5dMyt1pYrKG8Th8uxNlasmylZbudYuns8eU0grQ=;
- b=I/tEEEGPAz+k3hEoWRZ9AFwbxsYcFkposvnR99h3Y3zpGRtUV0bgTZ2DUqyktUJ4Q9
- KtLyJXtJKZFAfJGPG+y+04WJFfdU5BGKWlp+jP7YEnPZ5kOQH+eg04l5eY7SHWZetjq/
- PcBHH0flosJhdqu20+pWg+ciL176Hh/9/43KVMUZKzqYfZBJSqpYIYoWLo42BVXbi0NL
- sPVxGtFnCiMO4Dp9iRVq+vjX1y9X/eH5aSOu7aEqD+lbjbIG/BN5tMI/IjfWD1SyccPw
- 9UH6jqCahw4YzivFV2DhjxmiUnXLyvWgeqUcpat7d1X5PzOxS7qIAg9pScpaF5d7iNsO
- DpnQ==; darn=nongnu.org
+ b=lugCddcydLTdj92PtbIpUrhDkxSh+fQ2DJEYUyjY86xJzZc50XO6BPpuSqIFrYBO+y
+ OCGaSUpkbnwattPi7KgdM4M3t7Hn0dZJRjtG9v813cu9ZAX9YnFNmEnVKH0DJ1aNDm2y
+ iXgIB47ICm9igLsN4loy++QB7ywTVxEAktv/4Qh7fShV+7ujn0MPPqHJb6lloj6Ez8gp
+ vPhuj0D8RYZr042LjH0tj6P522Jv0ykQxevRstROwQG2f+RG5PqIfOJVugNL9266bwgP
+ hUwm5vyawd6QK/Yah5yrz3rGI11jqkzZ01NUvwYK6bvf0onOLm6aWBJvysY39q+BKcOz
+ Eozg==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1791127610; x=1791732410; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1791127614; x=1791732414; darn=nongnu.org;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=pFwd6/3wkZ1BbDFLuud1O66rhIuYH7s2vLGJwpTjYyM=;
- b=myeGxWt+3cckGT8gVJQ1ITczbJGPM/koNK8T9H8UF23joFkuwftKFDsNJb7dmrhkkW
- /xPw9YPK49sEeVlMtbqG7ZAyYxZxIHVlzchMY92FfzSbBVtjruAjk6KXQvmF/d/JTVRr
- h4mTOwpBu0HLMogrV0zhG+tpMhSWectSCTwPpzMuWQco41kydkmSohg2LRjX3irtp04k
- Rgxg26Yv8hLQxg+1vDhLpk9nI9KDSnkQGjT1YEOHZ8DnUfYqEX6VuDpmz4P6KDJzdS+e
- 5YU/n5gyXT1fyrqnKfuPSdSblTTwUCg7WYkGcymhebJaGjY9of6wONdfoXvmKav/0cbh
- PWxA==
+ bh=OYCf/3IiB3r6J5jKmU00e9JY0kvGwGvWihTLOwfnIzI=;
+ b=hHx4YbnS9UMsGMELhCRbe6IMDIMIUSkLW1yJJwW7YkifJLnMM/ln0OSoV+Q5R6g6WX
+ WzosdsZzKTuqJt+CMvqBO6Ym9qsOuWzgepy0TlYgCowHG2e0E1psG301X+gc4oRlQN/8
+ jrKIT4IbxA1H5rIyRzHvTyAaoG/dZTkXSwkb9FaceYZTQPhkJc0hF6WCFhvtLzfZwnf+
+ hkD5DFcJ5nq9QKgS2w3vS3LX8L2LnBq/jhZigJp7loi12dcPyXYYioUWuhFkNbB/P8jS
+ xb750RXdc4Ie1hkj7pN4MQ6jWdWnS/4cMAR8UhU/jbmWPQmNqDHD0huMCNsO7OQ95Qe/
+ X3wA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791127610; x=1791732410;
+ d=1e100.net; s=20260707; t=1791127614; x=1791732414;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=pFwd6/3wkZ1BbDFLuud1O66rhIuYH7s2vLGJwpTjYyM=;
- b=wpw2zltce02Zop1IuCDqa1hgjrWoCWWNYSMwNKW34Q6yqIN171Hjd11bXhAVt5Gsuo
- jgy7qwSLZ+gTBGBjy2IjMa0WrwBJEB2iH4nOGEdnlQaugROFbREG5A6KFjddpsVHWQ/2
- j61Kj2KlRZY8QHKZKT8kqhcdD9GhAcWGyhpgS6HBLi79TM7kbcB2FTO9hfjesHFSiP/l
- 52iL0QHmw1GVaje7iHczqXaX+YtCBdW29ErNaEDQtzGvqBWmU1Xnadcrvmg/dYpj6/FH
- 2onXusLOFltXInoWD8jSa6nvmYigulKt6uMabjNhwGOHF9nMrA1Cgj2nSINm4gXKzvtI
- brRA==
-X-Gm-Message-State: AFq9FYKfuq+EngOGQDwrdXq7c/GFWWOd8rgch9uiBbxTYSep+3oLJecJ
- VB0XcrWaFpBBBNZwCj/6gwXO7WABn+xMOfqIshqZa2dX/8Iz3aPMpKlzNNnwvYj9kC94fBYGNAw
- 3NErIOBvvCjx+gfya8zQBXhhQ/Awx4ktNDhbx
-X-Gm-Gg: AYBFou1OQJKTVNatBTQ26SuuP0Mkf9YiRW/FwMzL4wBU6USMhZRKDeD37BOa4FDL+U6
- wXuA+biWFvtpbC0wmdi7x6QKDt8vUC1ct10RYI9NAQr/qzT0asGE/j2zvwX2VoKnYjUmKJaU4Kg
- wTVehADvXSvuX4C/VLqUye/iw9ZmgbnO/iCpQS0lT8mh+C/ur/zR1Dcwfnox+rXbOvFiC8seMLz
- 5vty2K78n44HhGXqO7yqvZs+UDxqgljh5v7UYux50rKdMXuAxzSNOpUmz7gxz8Abr2jwfmh34ca
- KiWnhLqcL5Q/x1eX3q+IPq5WAR48rHlllKCD42/6Oz5p2jE9TP/sY9A9s4fPp5HzWb3aKzakEGA
- RA1uv1ZPIkm6VMSwd
-X-Received: by 2002:a05:690c:348a:b0:8a8:889d:2db with SMTP id
- 00721157ae682-8ae39bc50f7mr32695957b3.34.1791127610516; Sun, 04 Oct 2026
- 08:26:50 -0700 (PDT)
+ bh=OYCf/3IiB3r6J5jKmU00e9JY0kvGwGvWihTLOwfnIzI=;
+ b=BRcL509AyaDJounj1AncfVG470yj2TBO1ttzKTNRbDrDsJeUqWaphaJHTsXYocyfXV
+ OtkT5Ueq/oZidmZ6qlMPC425pNdbTbj8LMbnoURcHCylbOSVwlVTo6JepNNnvdRtC5tw
+ Vt0ltePz+ngNdM9jx0TiYvsdVehk3NA9ex2tlUfCoOWUFx1FUVeg1uoXOxZ6lItZtYGM
+ /8EpMyxz8yifBUl7OdSWMEFcbl5zAzWAoAgKv0J6wsnv1RgHHsV+mz6Q7sIP0S0F3+Js
+ w4GjsKOj4WH/YHmx8Trk+msmxS4663LEsacznYlgpXjFsaT/7Exd8UCoFMUiDookRwaH
+ EjCQ==
+X-Gm-Message-State: AFq9FYJHaToViC24ln62sjmYynxsvXRdN9upH1HCOaSPMAohXE0yaE1k
+ L7D6sISQaDTn7GOhHhXVxMdO9jNl6+dg5kprn12CfdpTMCn+ziWZTbZ4AnPsY6duQguxVq6dBqN
+ b568A5fXwzBI3ZaMzkWzxfOua7ndLChY=
+X-Gm-Gg: AYBFou2SZ9dm/pra/D11EIJJY0EzT+NZDzhle3I5ynCXbs8bJ+hpUgY3EcjwsszIi7l
+ dPhCAuQZYiHBkqcXehaAVNA6DwEZ982cp5xrwUIrIfUcoUHivrSVWhnzUJkTuLTLjnwKL161+cV
+ UHz4uZn6Gb/C7eoaaPQGcDQ6pN41FDY0TjOa1gXFEmrXJVN6MHi0VLuXSd7KZ+L+9LYarAdyise
+ OtWERxMeqX/HQVddYhrQfc0CaQHDFJdKWlR1vN+HwF3LW6OaL5FxxM17xelTA32v+bjcGl1u0xj
+ ukTuDBzlpQX8WCL2WkBrdx6DC+ZKuJ1Q5Du8ijEF6VvYqyfJs8sYChgmJtgwMAxus5dOqJYEtG8
+ tlbRPduRDhjfZ7PEk
+X-Received: by 2002:a05:690c:f04:b0:8a9:8021:5cc0 with SMTP id
+ 00721157ae682-8ae951f455emr16778057b3.21.1791127614473; Sun, 04 Oct 2026
+ 08:26:54 -0700 (PDT)
 MIME-Version: 1.0
 References: <20261004122647.3913-1-shentey@gmail.com>
- <20261004122647.3913-6-shentey@gmail.com>
-In-Reply-To: <20261004122647.3913-6-shentey@gmail.com>
+ <20261004122647.3913-7-shentey@gmail.com>
+In-Reply-To: <20261004122647.3913-7-shentey@gmail.com>
 From: Bin Meng <bmeng.cn@gmail.com>
-Date: Sun, 4 Oct 2026 23:26:38 +0800
-X-Gm-Features: AclHuK-GIluIy7PXKC77O1q0cy8hQUecFfpIKLVNLkywXTFoWEmM1kyXfczi_Y0
-Message-ID: <CAEUhbmX8X9z_kHL2QaH9SLvauTYKOmmrDs5wLjjjRvCEeANkeA@mail.gmail.com>
-Subject: Re: [PATCH v2 05/30] docs, tests/functional: Drop redundant CLI
- arguments in imx8m*-evk invocations
+Date: Sun, 4 Oct 2026 23:26:41 +0800
+X-Gm-Features: AclHuK9hyi-xQl_dfCb6JkYFBIL0ffw9g2vr7wWM1Qp5GNM04tZBkwxSkG1va3Q
+Message-ID: <CAEUhbmX0+nuoRxutdXQvfM02AAMRnazkPv=ZpqA6o9REaUX7wA@mail.gmail.com>
+Subject: Re: [PATCH v2 06/30] hw/arm/sabrelite: Have 4 CPUs and 1 GiB of RAM
+ by default
 To: Bernhard Beschow <shentey@gmail.com>
 Cc: qemu-devel@nongnu.org,
  =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
@@ -104,8 +104,8 @@ Cc: qemu-devel@nongnu.org,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:41::c;
- envelope-from=bmeng.cn@gmail.com; helo=mail-yx2-x0c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112d;
+ envelope-from=bmeng.cn@gmail.com; helo=mail-yw1-x112d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -131,18 +131,19 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Sun, Oct 4, 2026 at 8:36=E2=80=AFPM Bernhard Beschow <shentey@gmail.com>=
  wrote:
 >
-> Both boards provide defaults matching real hardware. No need to ask
-> users to repeat these. Also, remove these redundant arguments from the
-> functional tests such that the defaults get tested.
+> Having four CPUs and 1 GiB of RAM matches real hardware. Fix the machine
+> defaults to make its use more ergonomic and less error-prone. Also
+> reflect this in the board documentation.
+>
+> To reproduce the old default behavior for e.g. migration purposes,
+> `-smp 1 -m 128M` needs to be passed on the command line.
 >
 > Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com>
-> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 > Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 > ---
->  docs/system/arm/imx8m.rst                   | 2 +-
->  tests/functional/aarch64/test_imx8mm_evk.py | 4 +---
->  tests/functional/aarch64/test_imx8mp_evk.py | 4 +---
->  3 files changed, 3 insertions(+), 7 deletions(-)
+>  docs/system/arm/sabrelite.rst | 4 ++--
+>  hw/arm/sabrelite.c            | 3 +++
+>  2 files changed, 5 insertions(+), 2 deletions(-)
 >
 
 Reviewed-by: Bin Meng <bin.meng@processmission.com>
