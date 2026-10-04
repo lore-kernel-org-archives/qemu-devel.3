@@ -4,90 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E912CCA5FCE
-	for <qemu-devel@archiver.kernel.org>; Sun,  4 Oct 2026 10:25:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3608CA5FCE
+	for <qemu-devel@archiver.kernel.org>; Sun,  4 Oct 2026 10:25:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xDJOo-0005LW-Vu; Sun, 04 Oct 2026 06:24:55 -0400
+	id 1xDJOb-0004oN-BV; Sun, 04 Oct 2026 06:24:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xDJOe-0004uS-Gn
- for qemu-devel@nongnu.org; Sun, 04 Oct 2026 06:24:45 -0400
+ id 1xDJOI-0004Wv-Or
+ for qemu-devel@nongnu.org; Sun, 04 Oct 2026 06:24:24 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xDJOd-0002vl-0z
- for qemu-devel@nongnu.org; Sun, 04 Oct 2026 06:24:44 -0400
+ id 1xDJOG-0002u5-SW
+ for qemu-devel@nongnu.org; Sun, 04 Oct 2026 06:24:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1791109482;
+ s=mimecast20190719; t=1791109457;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=iLn0HToiQucmhekriPBtu8oNm8TCPFkMRRfueNJ5LDY=;
- b=QBLMxIw6rCWaVTMenTayS/rU206HDcu3EkCxz3nZfh6E55NnhWuD+V97oOiDwaNJOq8I4W
- ACANQnt6WnEYNNoNrSd/e//B4z06BMqc5RG+/C/YKj1525oymbp4aWlufrbwjA8RpYkFfE
- 7sijrVYZKdyd/1G1TCWZAIiYPImawo0=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=vygvAJomWZefnLtthL0rW2ymfBkR+Pi9SToL5wZ5egI=;
+ b=eDwcalt2dtEASJyohQrraSrx+J0LhloGsj2E0+CEAjVVTkjdl8r/i7sclE7aB2WcYCI9N7
+ FdtxMDLsFsqpBrVYtUzv25KRg0v3yoU9vx4Z3OzznGFAdF4GBiDsuF5tXEId5LDrAO8mM/
+ UITs1s9xMyCCdcU2mLjuZrlaGokS7Lo=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-692-4Rj0UVQkNV6a3gC0CsKOLQ-1; Sun,
- 04 Oct 2026 06:24:39 -0400
-X-MC-Unique: 4Rj0UVQkNV6a3gC0CsKOLQ-1
-X-Mimecast-MFC-AGG-ID: 4Rj0UVQkNV6a3gC0CsKOLQ_1791109478
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-632-JCfeKv32OEy8xsWMdkWKpw-1; Sun,
+ 04 Oct 2026 06:24:12 -0400
+X-MC-Unique: JCfeKv32OEy8xsWMdkWKpw-1
+X-Mimecast-MFC-AGG-ID: JCfeKv32OEy8xsWMdkWKpw_1791109446
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 43F9B180061C; Sun,  4 Oct 2026 10:24:38 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7450B1956088; Sun,  4 Oct 2026 10:24:06 +0000 (UTC)
 Received: from localhost (headnet03.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.114])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 3C1A119560AB; Sun,  4 Oct 2026 10:24:36 +0000 (UTC)
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 2826340E; Sun,  4 Oct 2026 10:24:04 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Sun, 04 Oct 2026 14:23:31 +0400
-Subject: [PATCH 17/63] ui/vnc-enc-zrle: propagate zrle_compress_data error
+Date: Sun, 04 Oct 2026 14:23:22 +0400
+Subject: [PATCH 08/63] audio/pwaudio: fix integer underflow in qpw_read()
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20261004-issue-4560-v1-17-ccbef537cbeb@redhat.com>
+Message-Id: <20261004-issue-4560-v1-8-ccbef537cbeb@redhat.com>
 References: <20261004-issue-4560-v1-0-ccbef537cbeb@redhat.com>
 In-Reply-To: <20261004-issue-4560-v1-0-ccbef537cbeb@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
- Pavee Hui <phui@google.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2914;
+ Pavee Hui <phui@google.com>, Gerd Hoffmann <kraxel@redhat.com>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=991;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=/Qya3Ys4W2DAVAfgzCU1/qn0qYJaUsv84IXi+9j/VQU=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqwikiRO/c+b3PyTM9b+HHVFawdjzdKEKX96CHh
- sGA6Vfpb8mJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCasIpIgAKCRDa6OEJdZac
- 5fR9D/sFTOBD3EDm58ccURpccpiWzUyC0D0VLQlSLqAGke92BxhvQxyFZskHjANj3M+96c6cMLN
- nKBdZeEyeH+jwy3KAPmhDGO1QnraSwGl58QXJ3iEUyUX9vCKTczVqXE0uv3zzrkWEgOD60Cs3oi
- IFOjBmgY6OIZ8rv9AjVGHdIOBCmZ6pleay08FWlONmFojlPyswkmKEM646g1XJ1AGlFreSZ/MCJ
- ZFIaz3g+2MgNydU15So4jIegs5IYlOgmcypPDVwti0Se/n/amorbJoFMqnhw7++ZPWXyr3UqUc4
- 0wKeq2B65pxDvqPwHASdFBJRPbfTPOq900D3S1sxFEQrlf3QM9ydMqP+ZFABDS86c4HwRvZJZFW
- /uyUMtCYyhOImGYo7BzpMUgrKKiqh/eFaf4A1xOCBof7l+YyeZMxVKSuwkRU6NT+8PTAKby1+ny
- CNnODK+bKYM1a/6X6v9A60os56vEuRgae4Mw3JH6M893k9m/1SBUtiI2mNkGdwYekZi6whXtGSK
- +G/h/QEcH/m/lmAT/IbMfHNJBHM3rTO4QiJc2JqEvF46FvC+501CA0tblGFuz8U2dRJZqO3T3B+
- Wjropv1TSenP8o5hqBsaGXC+5rydXbk6UO9pfJQ1tzX/N3EskL7gRgQbK7Yuz3lUMTf+pFwSKra
- 2vjszvlOs6phAUw==
+ bh=gaLK7xWYgkejITZbzPTgEMKfB8Q9SjD43HqsNcP+k84=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqwikhMvF9RJ41XNxEsflfG/rncGm6xL7fgJ/Fs
+ nmElxD99E+JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCasIpIQAKCRDa6OEJdZac
+ 5YUjEAC2dHlixwBMPHxIpUysJa96nbjr3XtD1POeO8HnQiOQMtp7liC0EBc5WXpzerIhuqFfe1O
+ l2AAzqaLvgifZcX8pCOl6kwDaBS+1wzTnGmVd0jtqnspiX+pxZV1wZRBPPd0OX6hJzX26o5Fio+
+ jfiBCd6WY/Lxaxcq20oClp8v5CPwiMX3Mz2nV56KzYQPttCrOIJyKaMcNduhvYlXbQcyEtCPYAr
+ CujGVnEIflakEf44T6gQ7fvPWeBSCCrm84m4fFv8Ndp833Q/UBjyxD4VKxPbl7L6JiUBzqC2fN3
+ dTQUW6m55HgU+3MWszmk21IDVquQ0CJfDdkaTmGLuQkFJWGRDr2J6qN+dB1WI3eagrt70VK2Lim
+ 65MvH/stzJ5fu2yolTOF8+2VHyZ8rJjSdkM8ug+Xpdy4tvXMFpVfompi1U4iD9M2dokKNOH3l93
+ AhqoqNWjp66ioFu6qiGM2HvON+6YBV8wehi6inYn1AcBb5d14+g6ETnRSRiR0Ib7ZyhdHusceO6
+ /Xc7pWeVqJL24MJbP/3NMG5awCvnE01x6+CmTV0qIla3OhKKYVr3pry8mrCwt96jDTyT7QCVB7C
+ AK2J9wMbjwMBlsrzyrM2OL+spWFZXsBqfbSOx8lU4T/Kypr8DTKvAQSJPTe4e2LPnUmi1PsqDiz
+ aNTilGh/fpNT76A==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
-X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.337,
+X-Spam_score_int: 9
+X-Spam_score: 0.9
+X-Spam_bar: /
+X-Spam_report: (0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.337,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,84 +104,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-zrle_compress_data() returns -1 on failure, but the caller stored
-the result in a size_t, silently converting the error to a large
-positive value. Change to int to match the return type, add an
-Error **errp parameter replacing fprintf to stderr, and check
-for errors before using the result.
+qpw_read() casts len to int32_t for comparison with int32_t avail,
+which can underflow when avail is negative. Check for non-positive
+avail first, then cast to size_t for the comparison.
 
 Reported-by: Pavee Hui <phui@google.com>
-Fixes: 148954faca58 ("vnc: Add ZRLE and ZYWRLE encodings.")
+Fixes: c2d3d1c29415 ("audio/pwaudio.c: Add Pipewire audio backend for QEMU")
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- ui/vnc-enc-zrle.c | 19 ++++++++++++++-----
- 1 file changed, 14 insertions(+), 5 deletions(-)
+ audio/pwaudio.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/ui/vnc-enc-zrle.c b/ui/vnc-enc-zrle.c
-index 7679014c9e33..c0702891b4f8 100644
---- a/ui/vnc-enc-zrle.c
-+++ b/ui/vnc-enc-zrle.c
-@@ -27,6 +27,8 @@
-  */
+diff --git a/audio/pwaudio.c b/audio/pwaudio.c
+index 1105e920f3c2..a8c18b9ecf85 100644
+--- a/audio/pwaudio.c
++++ b/audio/pwaudio.c
+@@ -247,8 +247,12 @@ qpw_read(HWVoiceIn *hw, void *data, size_t len)
+     avail = spa_ringbuffer_get_read_index(&v->ring, &index);
  
- #include "qemu/osdep.h"
-+#include "qapi/error.h"
-+#include "qemu/error-report.h"
- #include "vnc.h"
- #include "vnc-enc-zrle.h"
- 
-@@ -69,7 +71,8 @@ static void *zrle_convert_fb(VncState *vs, VncZrle *zrle,
-     return zrle->fb.buffer;
- }
- 
--static int zrle_compress_data(VncState *vs, VncZrle *zrle, int level)
-+static int zrle_compress_data(VncState *vs, VncZrle *zrle, int level,
-+                              Error **errp)
- {
-     z_streamp zstream = &zrle->stream;
- 
-@@ -85,7 +88,7 @@ static int zrle_compress_data(VncState *vs, VncZrle *zrle, int level)
-                            MAX_MEM_LEVEL, Z_DEFAULT_STRATEGY);
- 
-         if (err != Z_OK) {
--            fprintf(stderr, "VNC: error initializing zlib\n");
-+            error_setg(errp, "ZRLE: error initializing zlib");
-             return -1;
-         }
- 
-@@ -104,7 +107,7 @@ static int zrle_compress_data(VncState *vs, VncZrle *zrle, int level)
- 
-     /* start encoding */
-     if (deflate(zstream, Z_SYNC_FLUSH) != Z_OK) {
--        fprintf(stderr, "VNC: error during zrle compression\n");
-+        error_setg(errp, "ZRLE: error during compression");
-         return -1;
-     }
- 
-@@ -256,7 +259,8 @@ static int zrle_send_framebuffer_update(VncState *vs, VncWorker *worker,
-                                         int x, int y, int w, int h)
- {
-     bool be = vs->client_endian == G_BIG_ENDIAN;
--    size_t bytes;
-+    Error *error = NULL;
-+    int bytes;
-     int zywrle_level;
- 
-     if (worker->zrle.type == VNC_ENCODING_ZYWRLE) {
-@@ -336,7 +340,12 @@ static int zrle_send_framebuffer_update(VncState *vs, VncWorker *worker,
-     }
- 
-     vnc_zrle_stop(vs, &worker->zrle);
--    bytes = zrle_compress_data(vs, &worker->zrle, Z_DEFAULT_COMPRESSION);
-+    bytes = zrle_compress_data(vs, &worker->zrle, Z_DEFAULT_COMPRESSION,
-+                               &error);
-+    if (bytes < 0) {
-+        error_report_err(error);
-+        return -1;
+     trace_pw_read(avail, index, len);
++    if (avail <= 0) {
++        l = 0;
++        goto done_unlock;
 +    }
-     vnc_framebuffer_update(vs, x, y, w, h, worker->zrle.type);
-     vnc_write_u32(vs, bytes);
-     vnc_write(vs, worker->zrle.zlib.buffer, worker->zrle.zlib.offset);
+ 
+-    if (avail < (int32_t) len) {
++    if ((size_t)avail < len) {
+         len = avail;
+     }
+ 
 
 -- 
 2.56.0.rc0.29.g47ce80527c56
