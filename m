@@ -4,102 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E8FECA5FE6
-	for <qemu-devel@archiver.kernel.org>; Sun,  4 Oct 2026 12:36:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65374CA5FF0
+	for <qemu-devel@archiver.kernel.org>; Sun,  4 Oct 2026 12:36:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xDLO0-0004rx-Jy; Sun, 04 Oct 2026 08:32:12 -0400
+	id 1xDLJf-0006QM-NW; Sun, 04 Oct 2026 08:27:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xDLMR-0003Ue-Gt
- for qemu-devel@nongnu.org; Sun, 04 Oct 2026 08:30:35 -0400
-Received: from mail-wr2-x10.google.com ([2a00:1450:4864:30::10])
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xDLJd-0006Ov-18
+ for qemu-devel@nongnu.org; Sun, 04 Oct 2026 08:27:41 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xDLMP-0007dA-91
- for qemu-devel@nongnu.org; Sun, 04 Oct 2026 08:30:34 -0400
-Received: by mail-wr2-x10.google.com with SMTP id
- ffacd0b85a97d-482f6351831so371123f8f.1
- for <qemu-devel@nongnu.org>; Sun, 04 Oct 2026 05:30:32 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xDLJb-00076B-CD
+ for qemu-devel@nongnu.org; Sun, 04 Oct 2026 08:27:40 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-4a16629a040so12909145e9.1
+ for <qemu-devel@nongnu.org>; Sun, 04 Oct 2026 05:27:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1791117032; x=1791721832; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id
- :references:in-reply-to:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=yOtfvk3TFyTt4v7wB8UBog4ERy/GTDuDkFhYZWXjGdI=;
- b=VEtmFT6es8yXTg+Ge4OSzzbMYdc8PQtab67hCG9hslnHv0uIH15yKG3DrvX6g0yJ3v
- nEoj3Evai4nPP7yQkjswuaokrcWxa1mj1nE6fblfSLFqJEfUtqIApQGvRs9SaV7aIeiN
- 0sau5DY6TiI4WjchcOhMUcmINFqzf/76y++3ztiVwuXsgkNOrwYQSOkpEONAStkfknBh
- SJwuW1UXeZHxOX4yII5CfYUQKdw8wK/m/i2a6yMy7f7shZj8tusARr8W/qV70ocXQFGk
- wSEwtB2482Wk2d3r6u0PSpcCoeZNBvmZm6kl08CKFybVGSYv7YH+q7zoR4X7zEDQ/x4E
- uEDQ==
+ d=gmail.com; s=20251104; t=1791116858; x=1791721658; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=jrujhK11LCtm9muJjC0W7Qf58NaA06JJ6MzYAoTq2fg=;
+ b=eiS+/kEuxx0SRqN3T6mI64d4v5yCqCyQcJ3Wfp2nxt327O37EWQ68NOYR9trR0WaMP
+ rC71X0C02b5RBV6tsw3s3LWaIB2hc23+o1sGMrragIX23Zb2XTK+k1PNjF4SHjfczu3Z
+ ioU3N/tSw9ojlwLTnkIEBm25wp2uQRpZPzABa/Fd+bO/DuTtn9nTi9zK0g98anMVJYwL
+ M4SKCaJsMxoBzW059XROBR9u1uZgokMUGIoQJ4B5ys2yX0HE3v3qH6qbc5QIf5pczFIe
+ +IH6yTWwVCxuj4sTUqb1BjPl0T8zQY97mjLk3LAqnEXNJZaPye++aVxXTw26EqN8tQsG
+ NKvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791117032; x=1791721832;
- h=content-transfer-encoding:content-type:mime-version:message-id
- :references:in-reply-to:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=yOtfvk3TFyTt4v7wB8UBog4ERy/GTDuDkFhYZWXjGdI=;
- b=frbxkh8D/O2RXrgsIz5YDmFcBj9iwTh+g+TOBGMBdRvOC1B222j8XYRP1TEOvnXr7w
- t+vAL0mhJR9sLrNZHS/ClgY5AJ8R3tnyCQLggw1NBmsUg/imZhYmziod2TScCMCgJBNq
- yDsDnhewbXhS5iRsnsjxI4aD1GkeeJxkaEu4rjxoxUyqE329xLx9rvaOFFnqMy43i+gF
- bzHlt6pACZyiFCiYMqXc10zFd30/csD7fIaf80+Q3btHXfIYvl0KtDBcFKP9gDU1qXJe
- ebUIWLobuCWPs3bG2s8lfv7hpoKK3JZD1n+7QxJLR8NCNrDLeJVv5D5JFrX4HgxAwTQL
- rk1Q==
-X-Forwarded-Encrypted: i=1;
- AKwUvBzENbW5ND0vGJAkY4UjvRPjxkr/wvjWwQygcO1KE7QClkfi6k+Jr+FJQ3OBlxKbl/W29Qd1l4uaQiJc@nongnu.org
-X-Gm-Message-State: AFq9FYKQ+TYh1zNr0bVWNWN1vFSWIgVyN3nqLue+zDtPvoiP5mYGNjmf
- H8XP/mPq0fIW1hNoVzWxgnxnXoUtPz12nscfGDwyssyUm9p4v6/5jMQM
-X-Gm-Gg: AYBFou1KCfQYhhAkgWfU25ax6HCxi5r9ZiO72tp/tiKBRPKla8Qw3yS9WWZVptc8Qve
- MerLoXgFf5HlV8awU/W6x9MBDJh7r95ahaFUF0vi4PLvLtPZaU3hiSSXD6wtzZuA8u0AafXAR5W
- jPMTq1Z/ltIAcMPiyEW1H2y7JZ0nfLbdWB24vjrC3+qyPZUFBoMbnKUCnbUHxvHxBu9vhLUaRoe
- VXXNJ26lHx5XSxVrxVPex5AZ5w5U6EorniboNgY6P3RkcDHS4WNdcMEhOzsH/kVzURNMo6z5feE
- DrabDCKedCuUnkr2oOpsZe3D476tFigW1Dao6du0Vmun0SzEVQ0lgXxd9UHfOgL93D84nry1e8I
- 4eRoAFuEJI4B/vpTbcfqbBZ1jpcMdmXNrbKg1KdfT+igHFnB9gEOckgFOXbklV8Gh9Zr5rUlP0M
- Cd4AgJ1CRJ26R6vUrpHceitlfen6aWjMR+OXC7cnDYfTNKUGMZdlmud0WvsoXFJl4uuLp9VA0Oa
- Uq5XrIdJI3AawJWNNpCErplMSN8dibkNKRCVaviGKL5MKCzcr1E2rUNr6/M9obnGBfGzzhxpLME
- w6po
-X-Received: by 2002:a5d:6f16:0:b0:48c:4649:b020 with SMTP id
- ffacd0b85a97d-48c4649b382mr8342976f8f.19.1791117031580; 
- Sun, 04 Oct 2026 05:30:31 -0700 (PDT)
-Received: from ehlo.thunderbird.net
- (p200300faaf09ae00194a0cc2b67f93fe.dip0.t-ipconnect.de.
- [2003:fa:af09:ae00:194a:cc2:b67f:93fe])
+ d=1e100.net; s=20260707; t=1791116858; x=1791721658;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=jrujhK11LCtm9muJjC0W7Qf58NaA06JJ6MzYAoTq2fg=;
+ b=rYfhMcwxNCJkd/Y0mv9qdgmW4+eBq3JfHU72hxyZcPC1H1/BIHoY6CE2JDV52IULBZ
+ BlTENQVces9oDV/E4kkegP8VdTyweyLR3INQ0K5gY5ldHG/Jlng2wGHzGCe60aLBMdYD
+ TVS9GKvE1xjPpuWUqlZ9ddb9FLYvcrj3JEyIN5oY+Mp4caiTIGmdhWB0ABMAllFs7gbV
+ A8DfqRxTp3gzsEk86zYkz4FCCRQttDVpXI1D8H9yRRriLKKJ3YZlAslm6RE3DrbtJ1GE
+ BaCIdoOOQOLZjUt7+JU7NkuXzeRSlubwdsppDPV1gXy8p6LbhhlZkXM4Y2ahge3HjRmR
+ q2Zg==
+X-Gm-Message-State: AFuF++n9vDlN6IUczwK2V/gNvB98DlfD4Lqwfsyh9atxIknXZYAWo0Jz
+ UPgVf5rJlXw8WFARf0YqLAzu7fsescySswl02ikfzPcyv6T8liQL2QFqLeZMTA==
+X-Gm-Gg: AYBFou3XjZSIjBND7/tRgQXWyJmi+DQWzJRFwxrFg6MjDqenGZjnCcuKUoF6vliErPc
+ RCrd/07Ma51y5fBl1AoqOpSzYoxQHwA6tZQoZ+AJLfioKC/E8hJYcXuu2I6UqLAauYlFf5hSQqq
+ VSm7hD0N8cnsF70etGD2j4c9LQObiGiOd8qx8AyhkZ3sFmnr26yFmZ1uvHtRvWuriUnq1TwRrcd
+ Afn60yA6OVFsnoDsmSrRrbT0hfVQUPlX3o6mBM+q/Nrt0dsH4IyFtxDRLEjYbKXp1HQL1QjL93j
+ uBs7At+xMtI/flKQgAYW5R/MEo/hMOcjCb/JrGI7KbsaohjinrUrzw6MVtKEAvfAprnA5RUn9Qe
+ +rUnI3ysr7WI+PZedG1RXlbxLAi1nxhP2HnfpCjJ4ex3wegj3Sj6oZ2q695yZbUj/L+bwIirwQX
+ BhjKmGJGb7YurOFpzri6+GjTadnZdD8wk9G3CVbjyJfCuIinxdgrsgdAd+AbKWk4Sb1oRKeTK5M
+ R9H5HimErSvy40oxj+raH0hx0Gfr8WdZjHBlQ==
+X-Received: by 2002:a05:600c:6287:b0:4a0:f4:1c76 with SMTP id
+ 5b1f17b1804b1-4a1680b53bbmr78164315e9.4.1791116857381; 
+ Sun, 04 Oct 2026 05:27:37 -0700 (PDT)
+Received: from archlinux (pd95eda80.dip0.t-ipconnect.de. [217.94.218.128])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48b380fada5sm17476540f8f.24.2026.10.04.05.30.28
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 04 Oct 2026 05:30:30 -0700 (PDT)
-Date: Sun, 04 Oct 2026 12:30:23 +0000
+ 5b1f17b1804b1-4a027698f13sm242319975e9.1.2026.10.04.05.27.36
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 04 Oct 2026 05:27:36 -0700 (PDT)
 From: Bernhard Beschow <shentey@gmail.com>
-To: =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@oss.qualcomm.com>,
- qemu-devel@nongnu.org
-CC: Phil Dennis-Jordan <phil@philjordan.eu>,
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Gaurav Sharma <gaurav.sharma_7@nxp.com>,
  Alistair Francis <alistair@alistair23.me>,
- Peter Maydell <peter.maydell@linaro.org>, Alexander Graf <agraf@csgraf.de>,
- Jason Wang <jasowangio@gmail.com>, qemu-arm@nongnu.org,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?ISO-8859-1?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>,
+ Bernhard Beschow <shentey@gmail.com>, qemu-arm@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Jason Wang <jasowangio@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Bin Meng <bin.meng@processmission.com>,
  Jean-Christophe Dubois <jcd@tribudubois.net>,
- Gaurav Sharma <gaurav.sharma_7@nxp.com>
-Subject: Re: [PATCH 00/42] i.MX fixes and cleanup
-In-Reply-To: <d50928dc-f932-403e-ba86-b0708555f9d4@oss.qualcomm.com>
-References: <20260921214710.29422-1-shentey@gmail.com>
- <d50928dc-f932-403e-ba86-b0708555f9d4@oss.qualcomm.com>
-Message-ID: <FD415C9C-BA09-4D16-9AF8-C58FE6755622@gmail.com>
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Subject: [PATCH v2 04/30] hw/arm/imx8mm-evk: Fix reference count of SoC object
+Date: Sun,  4 Oct 2026 14:26:20 +0200
+Message-ID: <20261004122647.3913-5-shentey@gmail.com>
+X-Mailer: git-send-email 2.56.0
+In-Reply-To: <20261004122647.3913-1-shentey@gmail.com>
+References: <20261004122647.3913-1-shentey@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:30::10;
- envelope-from=shentey@gmail.com; helo=mail-wr2-x10.google.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
- FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=shentey@gmail.com; helo=mail-wm1-x32b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,83 +107,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Using sysbus_realize_and_unref() requires object_new() rather than
+object_new_with_props(), otherwise the initial reference count is
+subtracted twice, i.e. ends up being one too low.
 
+board")
 
-Am 29=2E September 2026 12:39:29 UTC schrieb "Philippe Mathieu-Daud=C3=A9"=
- <philmd@oss=2Equalcomm=2Ecom>:
->On 21/9/26 23:46, Bernhard Beschow wrote:
->
->> Bernhard Beschow (42):
->>    hw/watchdog/wdt_imx2: Fix handling of write-once WCR bits
->>    hw/watchdog/wdt_imx2: Remove unused attributes
->>    hw/arm/imx8mm-evk: Fix reference count of SoC object
->>    hw/arm/mcimx7d-sabre: Ignore memory transaction failures
->>    docs, tests/functional: Drop redundant CLI arguments in imx8m*-evk
->>      invocations
->>    hw/arm/sabrelite: Have 4 CPUs and 1 GiB of RAM by default
->>    tests/functional/arm: Add console test for `sabrelite` machine
->>    hw/arm/mcimx6ul-evk: Have 512 MiB of RAM by default
->>    hw/arm/mcimx7d-sabre: Have 2 CPUs and 2 GiB of RAM by default
->>    tests/functional/arm: Add console test for `mcimx7d-sabre` machine
->>    hw/arm/fsl-imx25: Derive from TYPE_SYS_BUS_DEVICE
->>    hw/arm/fsl-imx31: Derive from TYPE_SYS_BUS_DEVICE
->>    hw/arm/fsl-imx6: Derive from TYPE_SYS_BUS_DEVICE
->>    hw/arm/fsl-imx6ul: Derive from TYPE_SYS_BUS_DEVICE
->>    hw/arm/fsl-imx7: Derive from TYPE_SYS_BUS_DEVICE
->>    hw/timer/imx_gpt: Wire clock control module via link property
->>    hw/timer/imx_epit: Wire clock control module via link property
->>    hw/arm/Kconfig: Select missing UNIMP in config FSL_IMX8MM
->>    hw/misc/Kconfig: Remove redundant USB_EHCI_SYSBUS from config IMX
->>    Kconfig: Extract config IMX_AVIC from config IMX
->>    Kconfig: Extract config IMX_GPCV2 from config IMX
->>    Kconfig: Extract config IMX_RNG from config IMX
->>    Kconfig: Extract config FSL_IMX7_GPR from config IMX
->>    Kconfig: Extract config FSL_IMX{6,7}_SRC from config IMX
->>    Kconfig: Extract config FSL_IMX7_SNVS from config IMX
->>    Kconfig: Extract dedicated config FSL_IMXx_CCM from config IMX
->>    Kconfig: Extract config IMX_GPT from config IMX
->>    Kconfig: Extract config IMX_EPIT from config IMX
->>    Kconfig: Extract config GPIO_IMX from config IMX
->>    Kconfig: Extract config IMX_SPI from config IMX
->>    Kconfig: Extract config IMX_SERIAL from config IMX
->>    Kconfig: Remove config IMX
->>    hw/vmapple/Kconfig: Remove unused GPIO_PWR dependency
->>    hw/arm/fsl-imx8m: Fix typo
->>    hw/misc/imx6_src: Avoid casting from void *
->>    hw/char/imx_serial: Avoid casting from void *
->>    hw/intc/imx_avic: Avoid casting from void *
->>    hw/misc/imx*_ccm: Avoid casting from void *
->>    hw/usb/imx-usb-phy: Avoid casting from void *
->>    hw/net/imx_fec: Trace with QOM path where easily possible
->>    hw/net/lan9118_phy: Trace with QOM path
->>    hw/watchdog/wdt_imx2: Trace with QOM path
->
->If no objection I'm queuing the following trivial reviewed fixes
->in my hw-misc tree to reduce the size of respin:
+Fixes: 7bcd1f30bc83 ("hw/arm: Add the i.MX 8MM EVK(Evaluation Kit)
+cc: qemu-stable
+Reported-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+---
+ hw/arm/imx8mm-evk.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Thanks, Phil!
+diff --git a/hw/arm/imx8mm-evk.c b/hw/arm/imx8mm-evk.c
+index c3215b11cb..6de0d9c4a2 100644
+--- a/hw/arm/imx8mm-evk.c
++++ b/hw/arm/imx8mm-evk.c
+@@ -83,8 +83,8 @@ static void imx8mm_evk_init(MachineState *machine)
+     ims->bootinfo.psci_conduit = QEMU_PSCI_CONDUIT_SMC;
+     ims->bootinfo.modify_dtb = imx8mm_evk_modify_dtb;
+ 
+-    s = FSL_IMX8MM(object_new_with_props(TYPE_FSL_IMX8MM, OBJECT(machine),
+-                                         "soc", &error_fatal, NULL));
++    s = FSL_IMX8MM(object_new(TYPE_FSL_IMX8MM));
++    object_property_add_child(OBJECT(machine), "soc", OBJECT(s));
+     object_property_set_uint(OBJECT(s), "fec1-phy-num", 1, &error_fatal);
+     sysbus_realize_and_unref(SYS_BUS_DEVICE(s), &error_fatal);
+ 
+-- 
+2.56.0
 
->
->hw/watchdog/wdt_imx2: Trace with QOM path
->hw/net/lan9118_phy: Trace with QOM path
->hw/net/imx_fec: Trace with QOM path where easily possible
->hw/usb/imx-usb-phy: Avoid casting from void *
->hw/misc/imx*_ccm: Avoid casting from void *
->hw/intc/imx_avic: Avoid casting from void *
->hw/char/imx_serial: Avoid casting from void *
->hw/misc/imx6_src: Avoid casting from void *
->hw/vmapple/Kconfig: Remove unused GPIO_PWR dependency
-
->hw/misc/Kconfig: Remove redundant USB_EHCI_SYSBUS from config IMX
-
-I needed to preserve this patch in v2=2E Otherwise, CONFIG_IMX wasn't empt=
-y and could not be removed=2E
-
-Best regards,
-Bernhard
-
->hw/arm/Kconfig: Select missing UNIMP in config FSL_IMX8MM
->hw/timer/imx_epit: Wire clock control module via link property
->hw/timer/imx_gpt: Wire clock control module via link property
->
 
