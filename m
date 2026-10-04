@@ -4,66 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2472CCA5FCE
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D45FFCA5FEC
 	for <qemu-devel@archiver.kernel.org>; Sun,  4 Oct 2026 07:29:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xDGfF-0001QX-7y; Sun, 04 Oct 2026 03:29:41 -0400
+	id 1xDGfJ-0001RL-2U; Sun, 04 Oct 2026 03:29:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xDGfD-0001QP-D5
- for qemu-devel@nongnu.org; Sun, 04 Oct 2026 03:29:39 -0400
+ id 1xDGfG-0001Qn-39
+ for qemu-devel@nongnu.org; Sun, 04 Oct 2026 03:29:42 -0400
 Received: from mail-dy2-x0f.google.com ([2607:f8b0:4864:36::f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xDGfB-0006Bx-MS
- for qemu-devel@nongnu.org; Sun, 04 Oct 2026 03:29:39 -0400
+ id 1xDGfE-0006CF-IT
+ for qemu-devel@nongnu.org; Sun, 04 Oct 2026 03:29:41 -0400
 Received: by mail-dy2-x0f.google.com with SMTP id
- 5a478bee46e88-33e46a156f4so746014eec.0
- for <qemu-devel@nongnu.org>; Sun, 04 Oct 2026 00:29:37 -0700 (PDT)
+ 5a478bee46e88-33e630052ebso1044362eec.0
+ for <qemu-devel@nongnu.org>; Sun, 04 Oct 2026 00:29:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1791098976; x=1791703776; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:content-type:message-id:date
- :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=fcM+GgvqYnaybOh3REeIuS+9IDsCpLtcMLDjgRhyf2E=;
- b=ndVjAtZDT+S/hD9WJP0QCJ2bW3320+I6FKCIBKm4VHApyt2E2zYV2301begZzCVFAb
- E96YK5GUmq4wc/2kQPssyPIut18Akmgd7wKFUsnfu0mRcHUFQ186dgLfwliYRJCM8aMV
- WfFL5NTmbEoLfqU2sZHmulr/kj7c0128tEv/dIYEhH129GznhZv1XfxvJBNIFy+UASIP
- 4RafCFVMZpgBOH3nITdS/+fJe3ndWJBZ8MKHY7y1rbohxVrUpVVmeRhLxvpUWzuP58Qa
- aGMskFuFK3YHv+bDePimH3ZezO006hXjc9YyjObzIKP7/B3P2m81/0eh6Q4ZsqUGFPGJ
- lBGQ==
+ d=gmail.com; s=20251104; t=1791098979; x=1791703779; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=MwfDJHjDBFDCIZj1c4Xf4y4GCGqkHkL+PFUd7yAaTts=;
+ b=oRjmr119oVTwuTN8ZI5+/CIGnCs/DmrxTGzIOfnB1rWq6J0xYnOWN3rcSIXrr5yjaZ
+ 06g+mRlWFT2v/3RnL/6tsutEf4jFzDMoj8vn5kGMAxKGXAL/z0i411EmaVPGIKS7vkyG
+ kTPPQ0ROtVWhwamgcY446Ta9OHjbt4iUvTLMkUzDkl4tZXfNGV/Ve2UYNBP9AhObhUxG
+ PJRFtU2JGYb7PqWsR59MlGWtWiYc8bDvN5sFk1ZM5cX5Qt0VKt0mIjhDUHQDG+SPyZyk
+ cZAvFeY91eMExm/aUtDdhe0w0XXuAaCE6R2rXlQMKn6KhTVpW7VkFSLAoPzZbcusCbEU
+ utYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791098976; x=1791703776;
- h=content-transfer-encoding:mime-version:content-type:message-id:date
- :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=fcM+GgvqYnaybOh3REeIuS+9IDsCpLtcMLDjgRhyf2E=;
- b=Deo1znvg70incmnebSUHz59Ye8eV1NIDhpirJ2yrzKlHnJ8Lyt5w8fxdX5pW2XskOT
- WfPhRC8D4qUZa2hopvQ6ccNJSVcEu7FILhPEsmtQVCCdrtoEwX2HqVSHnO/v4H21V5mR
- ue7le9rqojVqa/fyF6lYNs+dHa9NVKcIbkELdSKju8JvCcxrkob8zMgbTVdJBDivN28t
- OZFHUkQjS/P9wrsIeK9SdmVIMIeVQhia5jBtzgpEVU9rkcvPjod/oukrqskxg+i+nzkk
- j5sJ3HFhwzNuTHd7eXSAzZery7xRNWbFN4cCALIQkBeAuwMRc6a3CgzI3B2tnJl+/9T1
- q1VQ==
-X-Gm-Message-State: AFq9FYLDH3odP1OytXztp17uh6xlb+KCxHOCFXVdxMIhCIyGh8G3J3rv
- fLVTuMgC5ONRu4t28/GJCOhEmwml6PwofD+ZIouH+GBZYGVwgbexMDhsJbeo0Yr7
-X-Gm-Gg: AYBFou3fCeqsSdZoYGnhbNVeX/7zdWnWU7E8NLFw4i5JxIi5XTcX4QldFOrU/kHoGNC
- SUtwvkgSxSZ/JQZMoLkLkPctwwMZP7XJPhzcsBqp0ReuZuzxXqWCWFtXL07ph8JD0jjpIz/JEaC
- F4owS8FJK70OPzhJhyu42M1y3VXLQyGvHs0Sy895u4dL2lpr3zudJtAcUCv2JUFNIm0KFkxBE/c
- UA3Sq2p7w4JE/hMBprxDjOle88StFqd7fLG+fB+0KOC3+CZ/cEfoUsGQ6/SmMAyrG8xNl0+nSON
- 0Sr4w6v7fgol9e3Kr0lnnkIMNeR6hEY2bfIUWsTPNN/wfM09gQl1UqjYFEdK9E1xHmG20kZMrBF
- MNu0KsixxIgCDUSHCBf92U0lg4ZseyEc7QkzTLVduFOSoAEZakwcvHlxkogfEPBAgjcIg9wiXQ3
- cMl/ZED9mwU6/CwJxU5seOGQfRiBJC2EFKRqXq/xy4a7wttjwBet1ZkMtni0OCmqdEu2NZuOsQZ
- 1XV862tGZmrcPX0SQ==
-X-Received: by 2002:a05:7300:8345:b0:34b:f456:25ce with SMTP id
- 5a478bee46e88-34f14f06d11mr8344456eec.3.1791098975753; 
- Sun, 04 Oct 2026 00:29:35 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1791098979; x=1791703779;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=MwfDJHjDBFDCIZj1c4Xf4y4GCGqkHkL+PFUd7yAaTts=;
+ b=WmvX+oEET5pQA7JQDA8t64yThYU5+13Ck2SWGnyvGkIn9NqchYZoKZFz3SC8UwfrU4
+ 44pNxcwVBSUxnvfkGI4b5WT/A3H301EASk+0iq3Ypx+Ew0WJ9p/69TZzW+R3pPKRqDLT
+ w2k/ToE6qIjMXcM+Bm5zt/W1a0WIe9n3dPbRKx97A81mhreV5/su2Fpj6OQhOamBtnug
+ +6TxMuIqNcl00EB55EXjMgUrP/eKVumVG52GCXUjVe08TgsIODpMvHYS8Aehsy1q9lpN
+ js9GwTf34+ZFHWfABuERFYmne4g+A1BTIsNzl6FetpDc6pHBCzXA02jLmywFTBmrZ9LK
+ z4Kw==
+X-Gm-Message-State: AFq9FYJKInb++BnsHLecncWK6/xLH2drrzmEZucUqjgF/lqp4am7gO9E
+ EaTgJOsUyRQ1k+8jFLCZWThPZ0QejC0JKFdg1Cy13qZ13Ydr9jcK4VmeLETG0VeT
+X-Gm-Gg: AYBFou3TAI/aQ0DbbRV+4coar91pjSOYwcWNoTkdCDZV1tmRhZFBIqW3pzEdKRSPW08
+ U1zqKHyfxgng/mpZcudM1Hfnh4id19OLMoxQAk9BxdsVn5afl6Ro6Q0ELn9kgS3b2smoDx9kwLw
+ y20eGcoaLZ8C80X19kY6XYx6YuU3fcA6ZjaVct8Js/ZDAtP0Kqjh1kk469L9fUnW57Zingam35T
+ XNmsYm6ecWWiDsbDVMDjKOx3mRfZfJAUqkT9yMGRBWfG2KMnfTbkWsi8zuAe3+d94B+e1WpJmEv
+ WGun/48LOZTVY4QDbAAe/dvBFqWwwXXAUM/6wA91vt/9Az7Btws+P/dMm4nBtsQx7Pw0OLJYEWn
+ biCeCfRrWM4HhChPxTNr+iRozii7G3gmsrY5qEOhD650jdUDmT7al35SmdUVMMIDAF+aVGvXoSa
+ mI6wOQ5OB/o510cD9qweIqMxTRP6AruI+3icYLCV2HCXDfwt+9M/yeUN8POa4T3bCNbymcGYqzs
+ HXsAeNPd2kDan1jdQ==
+X-Received: by 2002:a05:7301:9a90:b0:34a:586e:84db with SMTP id
+ 5a478bee46e88-34f14f0b781mr9302984eec.2.1791098979176; 
+ Sun, 04 Oct 2026 00:29:39 -0700 (PDT)
 Received: from DESKTOP-Q716RM7 ([103.94.185.75])
  by smtp.googlemail.com with ESMTPSA id
- 5a478bee46e88-351270204e0sm3036770eec.1.2026.10.04.00.29.33
+ 5a478bee46e88-351270204e0sm3036770eec.1.2026.10.04.00.29.36
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 04 Oct 2026 00:29:35 -0700 (PDT)
+ Sun, 04 Oct 2026 00:29:38 -0700 (PDT)
 From: Yonggang Luo <luoyonggang@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
@@ -74,11 +75,12 @@ Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Fabiano Rosas <farosas@suse.de>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PATCH 0/4] target-info: preserve full softmmu target identity
-Date: Sun,  4 Oct 2026 15:29:22 +0800
-Message-ID: <20261004072927.1142-1-luoyonggang@gmail.com>
+Subject: [PATCH 1/4] Revert "target-info: Statically initialize target_arch"
+Date: Sun,  4 Oct 2026 15:29:23 +0800
+Message-ID: <20261004072927.1142-2-luoyonggang@gmail.com>
 X-Mailer: git-send-email 2.55.0.windows.3
-Content-Type: text/plain; charset="utf-8"
+In-Reply-To: <20261004072927.1142-1-luoyonggang@gmail.com>
+References: <20261004072927.1142-1-luoyonggang@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2607:f8b0:4864:36::f;
@@ -105,30 +107,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-`TARGET_ARCH` identifies a base architecture, not necessarily the full
-system-emulation target. For example, `mipsel-softmmu` uses `TARGET_ARCH=mips`,
-which caused `query-target` to report `mips` instead of `mipsel`.
+This reverts commit e934c624f32f6f44f427d73a2e6a67e983a02ae6.
 
-Generate `TARGET_SYS_EMU` separately. Softmmu builds use the full target name,
-as `SysEmuTarget` enumerates system targets. User-mode builds use
-`TARGET_ARCH`: user target names such as `aarch64_be` and `mipsn32el` do not
-have corresponding `SysEmuTarget` values. This means `mipsel-linux-user` now
-reports the base architecture `mips` rather than `mipsel`; its executable name
-remains unchanged. Initialize `TargetInfo.target_arch` from this token and add
-a qtest to check the `query-target` result against the target name of the
-running QEMU binary.
+Fixes: e934c624f3 ("target-info: Statically initialize target_arch")
 
-Yonggang Luo (4):
-  Revert "target-info: Statically initialize target_arch"
-  Revert "meson: Add TARGET_ARCH to config_target_data"
-  tests/qtest: check query-target architecture
-  target-info: preserve full softmmu target identity
+Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
+---
+ target-info-stub.c | 2 +-
+ target-info.c      | 8 +++++++-
+ 2 files changed, 8 insertions(+), 2 deletions(-)
 
- meson.build            | 11 +++++++++--
- target-info-stub.c     |  2 +-
- tests/qtest/qmp-test.c | 13 +++++++++++++
- 3 files changed, 23 insertions(+), 3 deletions(-)
-
+diff --git a/target-info-stub.c b/target-info-stub.c
+index d121b8c017..4a8630b5f5 100644
+--- a/target-info-stub.c
++++ b/target-info-stub.c
+@@ -26,7 +26,7 @@ QEMU_BUILD_BUG_ON(TARGET_PAGE_BITS < TARGET_PAGE_BITS_MIN);
+ 
+ static const TargetInfo target_info_stub = {
+     .target_name = TARGET_NAME,
+-    .target_arch = glue(SYS_EMU_TARGET_, TARGET_ARCH),
++    .target_arch = SYS_EMU_TARGET__MAX,
+     .long_bits = TARGET_LONG_BITS,
+     .cpu_type = CPU_RESOLVING_TYPE,
+     .endianness = TARGET_BIG_ENDIAN ? ENDIAN_MODE_BIG : ENDIAN_MODE_LITTLE,
+diff --git a/target-info.c b/target-info.c
+index 012b384036..bd126613b0 100644
+--- a/target-info.c
++++ b/target-info.c
+@@ -24,7 +24,13 @@ unsigned target_long_bits(void)
+ 
+ SysEmuTarget target_arch(void)
+ {
+-    return target_info()->target_arch;
++    SysEmuTarget arch = target_info()->target_arch;
++
++    if (arch == SYS_EMU_TARGET__MAX) {
++        arch = qapi_enum_parse(&SysEmuTarget_lookup, target_name(), -1,
++                               &error_abort);
++    }
++    return arch;
+ }
+ 
+ const char *target_cpu_type(void)
 -- 
 2.55.0.windows.3
 
