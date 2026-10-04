@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F079CA5FEC
-	for <qemu-devel@archiver.kernel.org>; Sun,  4 Oct 2026 10:27:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 463E7CA5FCE
+	for <qemu-devel@archiver.kernel.org>; Sun,  4 Oct 2026 10:28:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xDJQA-00016j-Rj; Sun, 04 Oct 2026 06:26:19 -0400
+	id 1xDJQr-0004Fz-LJ; Sun, 04 Oct 2026 06:27:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xDJPc-0007Wa-K3
- for qemu-devel@nongnu.org; Sun, 04 Oct 2026 06:25:48 -0400
+ id 1xDJQm-0003pg-P9
+ for qemu-devel@nongnu.org; Sun, 04 Oct 2026 06:26:57 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xDJPZ-0003LD-Rk
- for qemu-devel@nongnu.org; Sun, 04 Oct 2026 06:25:42 -0400
+ id 1xDJQl-0003TL-9f
+ for qemu-devel@nongnu.org; Sun, 04 Oct 2026 06:26:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1791109537;
+ s=mimecast20190719; t=1791109614;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Dp+eTQQpowvqJbb7n0XlhxLHsD3ScVyNygDug1P+lIw=;
- b=ZqIMFomiLiw+M6KwExQ5a/28memndzykmVmc3SXsFo5YZkHxu6uOHpF/lBbSUYvr1mB4PO
- 8RWsThgiKLuHgzL3vSXMoP0P2qGwxZp3OE7weTCX/ZDvO+Di2+IhuRwpcWrTNCq4Jqcbpx
- /pr1zXWuXMkevCbCCDSYG8cwnWbnZxQ=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=0mYguefsKtjpw3Axb+YuOOHGH+GKmeeXao/xbTg7TcY=;
+ b=Q1pSrgcqEdbigEMA86MSmnSsDymBlkgfm/wt4PFBRQp4rWj303LzQGAzswGHT7DOz1v929
+ 31xnwtxIlJg4DSNymWAMKIfxejijUyfC3JiP86tP7kNn5tY4E/k2/vafb5Ie21CVbDRGsZ
+ vtTgekVCci3Ny6XXIdp1vLTaAniIX2g=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-169-s9x1VG2iOTOu5JWLQfXMlg-1; Sun,
- 04 Oct 2026 06:25:36 -0400
-X-MC-Unique: s9x1VG2iOTOu5JWLQfXMlg-1
-X-Mimecast-MFC-AGG-ID: s9x1VG2iOTOu5JWLQfXMlg_1791109535
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-595-AFCDAc4DOXCXBcjRbmpTcA-1; Sun,
+ 04 Oct 2026 06:26:51 -0400
+X-MC-Unique: AFCDAc4DOXCXBcjRbmpTcA-1
+X-Mimecast-MFC-AGG-ID: AFCDAc4DOXCXBcjRbmpTcA_1791109610
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2E8071954B01; Sun,  4 Oct 2026 10:25:35 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 456961954238; Sun,  4 Oct 2026 10:26:50 +0000 (UTC)
 Received: from localhost (headnet03.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.114])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 07CA7180036E; Sun,  4 Oct 2026 10:25:33 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 5B783180034F; Sun,  4 Oct 2026 10:26:48 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Sun, 04 Oct 2026 14:23:47 +0400
-Subject: [PATCH 33/63] hw/char/ibex_uart: prevent division by zero on baud
- rate calculation
+Date: Sun, 04 Oct 2026 14:24:08 +0400
+Subject: [PATCH 54/63] hw/input/adb-kbd: guard parent_unrealize against
+ NULL
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20261004-issue-4560-v1-33-ccbef537cbeb@redhat.com>
+Message-Id: <20261004-issue-4560-v1-54-ccbef537cbeb@redhat.com>
 References: <20261004-issue-4560-v1-0-ccbef537cbeb@redhat.com>
 In-Reply-To: <20261004-issue-4560-v1-0-ccbef537cbeb@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
- Pavee Hui <phui@google.com>, Alistair Francis <Alistair.Francis@wdc.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, qemu-riscv@nongnu.org
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1490;
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, qemu-ppc@nongnu.org
+X-Developer-Signature: v=1; a=openpgp-sha256; l=930;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=7M1aiGYKZF3529Y7CF3n1zUfXvb5KY5JNB5nTmCnGrQ=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqwikj5HocxAzSwzcnET54qfbKFE0gI7r6hvX7K
- 8myqQY9xkCJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCasIpIwAKCRDa6OEJdZac
- 5ZLUD/43Yhyuf6+2RNcwhNwYWDxw23rzOIFF8d5NQabzudPrCqLNQNY39dG0bYv1pb34UYaDVGL
- TcDVu/gCdnkPC7U1mwWaH3qp0/ZGBrtSidJlFDf1/Nnl5E8RZpaCY8T6IGX4Du05S3ROHVQMSnQ
- eo/88XPxlH7vbct4mid+ksDrMjp0p480pDrTG8BgF5nbvM5+MCYeCe2oWpu3Pj0XIbFZFoxzdv8
- GxQjosjLJ5wb43SDv11+xwywkf7DDiVLoi2iL9nLT9u5gm4WdwQH0XDzkmi6zfqH4/IO4+vyYnd
- EgVEXtbBCcWIek8qwwD7ajloSy3hirzRWrbIfRoDCOKzJvdXoEbyOB6inlf7d/S2r+tz91LbpAF
- Gp6J8B/GU5g4ysNE3JjcOBWDJctUHQdzqlruhcdUcU7DsDY6Et7DOdIt/cyMox/QgRCOiX8yJBS
- t+xe+GnDJmQuqUX6bO5tDijrzTMCIcLT4/G9fcILZWr/zTsYy6ebniPxWDUzaVuE3iu0zVeRtlZ
- 7Po0w3gOePOFQMLQClAFOBjauq/NFUu6ehxT1IRDAW8C8hvaUbS37nLJ5zxJcCbqYe7ehUKgaFr
- aVbvVMBQsIwTAhFd7L07WG0LIDMZuZhSr1J4EY+C8b6XUscCSB/7Mh98f81D9L73SdnnZJF8i9g
- AQavCIYKM6vQqwQ==
+ bh=KcXSbMVnsuTd6AAcm9tkevUL9tTzOX5r97HV0TTwowQ=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqwikltW01qmHoATT2xj+TLkT6LcmODhoU/adqO
+ ospVRi56DWJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCasIpJQAKCRDa6OEJdZac
+ 5VhIEACLoy6zvxJyQWYIxgeg2rnqON4yH/VXqtVr7vLH7TuGUCQVhVu/z8boQdEX/YIWSKNsM3g
+ /27CEgKNkPw3T8RXBJa0G9Sg/Ouzge5BEQUwe9KWA05/bVNmTJdOqcl7Wvj5TWRgKwW35ALDs1r
+ ZaaUHW9BWv0NPQq5/YiBpuR8JBoCr9WeyxaZbZkmZapkF3ZKp/bpusn9IyrZcuasLRPJVkjIExo
+ nOYwtpBiexLPnyp8Ns9MRGMF1NHVkJMNPACFw0zm2vQKkmzSBw0+IEYMRFsZAXpc0hsaimteFEo
+ FxatN/QhMmbMdQYAMCPox0of3wCsZh8Y3N1tlGyxGEw7bq84tnHapDG84cUpr9kC9V6h97/iqDZ
+ sF5X/Y+V20wdZoGMYW/sT/btmX4MyvenrFpbQXi29AnHZ52GIETrHdWyqbfSVtvX/N6E0HOxQzh
+ IOeDdSMuTcQg9nvv5I9bxmDoW+uAi16VLqWvMiQciDdtAjXMEUeEJYY87D7RNj6GKDYHvwcSong
+ qJpie6ps7a79XxaYUCqkoOkWSZg1u0qhc9NFHChXWcA9VAg/uTcgQhlhJusB+MjBUFhbdMHHAv3
+ 9EXu3goi3XRpD46eU/d6ADVnKvhRLvk5oeooPvkWfTP3G4Bxi+1KT3DyKAOXF2/sfMnOoravJy3
+ B9utqAXfgjVj+iQ==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -105,44 +104,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Guard NANOSECONDS_PER_SECOND / baud with a zero check. The baud rate
-can be zero when the NCO field is zero or the input clock is not yet
-configured.
+parent_unrealize is NULL since neither ADBDeviceClass nor
+DeviceClass sets dc->unrealize. Guard the call to prevent
+a NULL dereference during device teardown.
 
-Fixes: a7d2d98c5944 ("hw/char: Initial commit of Ibex UART")
-Fixes: 940aabb9f477 ("hw/char: Convert the Ibex UART to use the qdev Clock model")
-Reported-by: Pavee Hui <phui@google.com>
+Fixes: 6a935957d60e ("hw/input: keep QemuInputHandlerState in adb-kbd")
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- hw/char/ibex_uart.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ hw/input/adb-kbd.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/hw/char/ibex_uart.c b/hw/char/ibex_uart.c
-index 26ed1aea140b..4c22fb4f58a8 100644
---- a/hw/char/ibex_uart.c
-+++ b/hw/char/ibex_uart.c
-@@ -395,7 +395,9 @@ static void ibex_uart_write(void *opaque, hwaddr addr,
-         if (value & R_CTRL_NCO_MASK) {
-             uint64_t baud = ibex_uart_get_baud(s);
+diff --git a/hw/input/adb-kbd.c b/hw/input/adb-kbd.c
+index d4a131dc1295..43c0ead60c59 100644
+--- a/hw/input/adb-kbd.c
++++ b/hw/input/adb-kbd.c
+@@ -401,7 +401,9 @@ static void adb_kbd_unrealizefn(DeviceState *dev)
+     ADBKeyboardClass *akc = ADB_KEYBOARD_GET_CLASS(dev);
  
--            s->char_tx_time = (NANOSECONDS_PER_SECOND / baud) * 10;
-+            if (baud) {
-+                s->char_tx_time = (NANOSECONDS_PER_SECOND / baud) * 10;
-+            }
-         }
-         break;
-     case R_STATUS:
-@@ -455,7 +457,9 @@ static void ibex_uart_clk_update(void *opaque, ClockEvent event)
-     /* recompute uart's speed on clock change */
-     uint64_t baud = ibex_uart_get_baud(s);
- 
--    s->char_tx_time = (NANOSECONDS_PER_SECOND / baud) * 10;
-+    if (baud) {
-+        s->char_tx_time = (NANOSECONDS_PER_SECOND / baud) * 10;
+     g_clear_pointer(&s->hs, qemu_input_handler_unregister);
+-    akc->parent_unrealize(dev);
++    if (akc->parent_unrealize) {
++        akc->parent_unrealize(dev);
 +    }
  }
  
- static void fifo_trigger_update(void *opaque)
+ static void adb_kbd_initfn(Object *obj)
 
 -- 
 2.56.0.rc0.29.g47ce80527c56
