@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50C16CA5FE6
-	for <qemu-devel@archiver.kernel.org>; Sun,  4 Oct 2026 12:33:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A302CA5FEC
+	for <qemu-devel@archiver.kernel.org>; Sun,  4 Oct 2026 12:33:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xDLJm-0006Ud-OG; Sun, 04 Oct 2026 08:27:51 -0400
+	id 1xDLKP-0006vS-NP; Sun, 04 Oct 2026 08:28:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xDLJk-0006Ta-Bz
- for qemu-devel@nongnu.org; Sun, 04 Oct 2026 08:27:48 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xDLKD-0006iI-GG
+ for qemu-devel@nongnu.org; Sun, 04 Oct 2026 08:28:19 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xDLJh-000788-UM
- for qemu-devel@nongnu.org; Sun, 04 Oct 2026 08:27:48 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-4a1688d7769so6422025e9.0
- for <qemu-devel@nongnu.org>; Sun, 04 Oct 2026 05:27:45 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xDLKA-0007Dt-0P
+ for qemu-devel@nongnu.org; Sun, 04 Oct 2026 08:28:15 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-4a1682bff3cso4678595e9.1
+ for <qemu-devel@nongnu.org>; Sun, 04 Oct 2026 05:28:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1791116864; x=1791721664; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1791116892; x=1791721692; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=6wgNCjnZg7PLB9EBi8rhxREYgokNtvLAhlvhjWMgxUE=;
- b=C/pZAwAWgdiFdV9CxscxazFAaqQrcdBpdLmgawXMOxRS3l7sKt2gBHtFFhmRewWNZH
- 1y+jq0BTxDjUbJuyd7rAB0l5IZyW+1t8Nla0ofv+jqnJ0ACRHb6tipOybjcWFPa9ofb0
- VnUZh/nPUNbHOIJtMA/+J0rToKyr0JBOjyrv4oto0J3Mi8LGSBQb2HsaYzYIyZAoVLHI
- R4FRkw87P0wCEb1M2lg/x7xgzkmfJozHLmUnQp8luaHvuM9qhNjUGuqdLD4Q9cJDq9OW
- Rh2k1owmPiA4JFfQQYEshCvq3Zi4uZLADqKA4GT8mICbTwaBHo8YfkRHg+ZVQXE7Bi1u
- jRuA==
+ bh=YNfGPgzLrT7RWuT4ZW4d+re5o2OQueGyUin4Nv63jyg=;
+ b=R7E1owzFE1Qr8Upm5fdYzuYloTsyk59qKoGVZlTJVeW7YlyFVsmOT2sXyLLPyFRD5H
+ MOpcW6v+S97QbyKrajjMS0DZAP9kZrJHV5xQi1rnayF3NW6O6FTP8S1gafTnmbrC2iHc
+ 7vtpC0MVnWFQe+1rX6cIfRjhfVnxY1zXuQOZAfasFm7F/9xUYpByUpj/fYLw0wxs5DNm
+ +54SKjVBR9OW82LKbxxps9r0oGUJqQK9igZxnLd46Oushn2LzkfEjebg7qRiIFrxNjiw
+ JKQxTwQoB8sqlZPzHByvd1IQBR7Pvr6ZL8BspzyCSh/LuII+YtaIZTljOJnueTSfAW14
+ BjtQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791116864; x=1791721664;
+ d=1e100.net; s=20260707; t=1791116892; x=1791721692;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=6wgNCjnZg7PLB9EBi8rhxREYgokNtvLAhlvhjWMgxUE=;
- b=Lyacnr9Y8BJ3nJldxG4Bs52HEnTJVTBX+Ph9dvq76GnRDrGluiYi2FB3eBATe5mWjS
- sPQdUmEipbNRxuvLOdRUSzNard+9iG3+4/1KH9m5PEQ3yZ18CWdx/k4KjgpTGbf8nj/F
- 2eoflwcJQv9PDEg3fc6w29IkzoovRzmqCPuzhr/RYK9LcQSo4jZCX3o9Rx3Ng1S/Pn1j
- bGr0X/7RchSPVxyTvMLl0ghYyJ9mgmZMqolTW7eY36zGL3NHcyExQToWZW3Nwa3AQ24J
- De9T2nMvPh4wT94/5mjiEH7BOoOariQkCihQttJOYFo9bHJKrcOnbh4xY6JmNKoU/jeK
- dKIw==
-X-Gm-Message-State: AFuF++lILEShMyJS9ZPDgKC0e6ZCb8NV6ib2J+eoOkktLVMagveHSmp8
- BwNjAk8tO5qApVoy9Nm6YrTJhVRUHNDp07i5QM1uTD7dhoM57AMu8Lf4HV/wLQ==
-X-Gm-Gg: AYBFou1V6hpCofY+DPjW9m2QNfbdfh+MODEunMWNOl36Vma8epNHummLPc4Bo5broP6
- FjWRvOsVkf/zPuRdWcAQu0ut84UjSIZRBdV0eRGSkeI4/i4ZB2Nrl67aKWSHRZddip+JzqD35te
- 7MRE614gJU16/IRywsNDEK60NnThB1zgmnO7176uKJ7TGKx0MhvjIieDthIEqGMS9hKU8MP4mjf
- rUu+JZX1zr1DmWuBw+ykTxDpcjoA4xg0k+UBR3/DLwFL36tysAQuAjqqaKwXdnZqftu+0mx6R8Q
- F8XbkDrDTsilDd+eaiVxuQ+F+2/Txz3YFJ7+0EVIQC5vhECzjdODkMo+uPRnH9XFM7EqfCwHxaP
- dJBEQKSq6D3M7SnN0szz+lYj2PAXaPyhg+/Gbc692whYTv33aKeAPwWmuv3vdnHHi+nYJGbn5LW
- xpIY7Fn4QY3GFMfOTW6y6PuQo78RGeqfn3IlVhJB5Yg2ixdJgMi00sbDttroXpghecPMMirM4aA
- xsCSWf/lLbZDrkRTaCtgPpOOcw+B7i54YVWKA==
-X-Received: by 2002:a05:600c:a00e:b0:4a1:706f:b40d with SMTP id
- 5b1f17b1804b1-4a1706fb500mr18950465e9.7.1791116864448; 
- Sun, 04 Oct 2026 05:27:44 -0700 (PDT)
+ bh=YNfGPgzLrT7RWuT4ZW4d+re5o2OQueGyUin4Nv63jyg=;
+ b=gahcfiF+n2zg7LiAcIP554PtEQBA9BPLz9cgG4cEVG6OGGpp8sLAGYQWX882eI++VO
+ wagxmbWiTDcRBc9jtVxaF9z/BUA+QHyh/1wS6xBZPE1s80r9aVDnCmdwP/qJiO19bGHW
+ z0QG/Wh1eEQta/9wvtpRq3Oi9UiW8/PhIq3jC6u2ZMATZmOEtWK3Pg5LB9ohKSE2A7r0
+ 7cscDmb/pX0Z3HCIw8slagSI58TQYWHh+XzAxoTBe1GEuuYkYdlXbWnHXUcihSFoSSf/
+ zLqZj1+guZFcZiG0lw3QAvHYs/ZR8eKwd0oaZ2IAxfcWlm/QYkJCcEAzb1iIeOa5aiSY
+ Gi/A==
+X-Gm-Message-State: AFuF++kHw0cCdBDn48b2Q1mDExcbJX2xwZm+SIJ2Jvkp8FbNrQD2G6dO
+ 07iGLzlYXzU1J/vc5N6sLIHJb5DsNLvsntLc3yHv+QbVN3DGL8plgSDGbfLhLg==
+X-Gm-Gg: AYBFou04FtwvJ45enVm84N06Quzzd57XpQVHZsKFA2eEkABCVts6wpPti3gZavZtG48
+ XISiCzb6JccADlh2euoA42k9S+TmCLNXEIayt0cax1fDyRqNd6YvPk18H9CUh4pXrQi7KOtkQFX
+ O4j00nzu5QVz07zkdf/Zo91OzeaW3vfRvfduYXuBD2tqdE0ZrNV9ryG0WTMjgo3EqjH1zh8MygU
+ xqRTBNTuRqfTTzhRYFYQtF7pSH31D5625WvaOeiAgkRq+FE0vyzBUIpM6Qjplw+zJVVhGrn4yJp
+ G2NmYCYR85bl3YGLlqvY+gqzqQtMZ5MK0qIZJNTviyBXx7ugFRklAPSgyx2bazoFE0dde1gY/nO
+ SMA4WfMUNFiRs4EgPqBNf+LI7r2y7/yKSK9HhdsSLYQF+DE9h8Vc8Nk2O/lVRu3CU8bpU2V+BXW
+ CEPzK1xswM8biOdTD56LxMr7vQSvsFqilr00A1jl0vHQB5enUf0X55+xHAz3ofBF2GYkIyEfiWU
+ 6ESVX/AqQCjFvrggwppCUHTRikLWyidrXsd+w==
+X-Received: by 2002:a05:600c:5883:b0:4a0:12d7:4c88 with SMTP id
+ 5b1f17b1804b1-4a168101d97mr50310065e9.30.1791116892057; 
+ Sun, 04 Oct 2026 05:28:12 -0700 (PDT)
 Received: from archlinux (pd95eda80.dip0.t-ipconnect.de. [217.94.218.128])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a027698f13sm242319975e9.1.2026.10.04.05.27.43
+ 5b1f17b1804b1-4a027698f13sm242319975e9.1.2026.10.04.05.28.11
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 04 Oct 2026 05:27:43 -0700 (PDT)
+ Sun, 04 Oct 2026 05:28:11 -0700 (PDT)
 From: Bernhard Beschow <shentey@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
@@ -75,16 +75,16 @@ Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Bin Meng <bin.meng@processmission.com>,
  Jean-Christophe Dubois <jcd@tribudubois.net>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: [PATCH v2 08/30] hw/arm/mcimx6ul-evk: Have 512 MiB of RAM by default
-Date: Sun,  4 Oct 2026 14:26:24 +0200
-Message-ID: <20261004122647.3913-9-shentey@gmail.com>
+Subject: [PATCH v2 24/30] Kconfig: Extract config IMX_GPT from config IMX
+Date: Sun,  4 Oct 2026 14:26:40 +0200
+Message-ID: <20261004122647.3913-25-shentey@gmail.com>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261004122647.3913-1-shentey@gmail.com>
 References: <20261004122647.3913-1-shentey@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=shentey@gmail.com; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=shentey@gmail.com; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,29 +107,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Having 512 MiB of RAM matches real hardware. Fix the machine
-default to make its use more ergonomic and less error-prone.
-
-To reproduce the old default behavior for e.g. migration purposes,
-`-m 128M` needs to be added to the command line.
+Over time, QEMU has grown a number of i.MX boards and the monolithic
+config IMX drags in unneeded dependencies into each SoC model. Extract
+config IMX_GPT to eventually eliminate config IMX.
 
 Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 ---
- hw/arm/mcimx6ul-evk.c | 1 +
- 1 file changed, 1 insertion(+)
+ hw/arm/Kconfig       | 7 +++++++
+ hw/timer/Kconfig     | 5 +++++
+ hw/timer/meson.build | 2 +-
+ 3 files changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/hw/arm/mcimx6ul-evk.c b/hw/arm/mcimx6ul-evk.c
-index 40071d2c7b..4964cb9345 100644
---- a/hw/arm/mcimx6ul-evk.c
-+++ b/hw/arm/mcimx6ul-evk.c
-@@ -73,6 +73,7 @@ static void mcimx6ul_evk_machine_init(MachineClass *mc)
-     mc->desc = "Freescale i.MX6UL Evaluation Kit (Cortex-A7)";
-     mc->init = mcimx6ul_evk_init;
-     mc->max_cpus = FSL_IMX6UL_NUM_CPUS;
-+    mc->default_ram_size = 512 * MiB;
-     mc->default_ram_id = "mcimx6ul-evk.ram";
-     mc->auto_create_sdcard = true;
- }
+diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+index dada9f57a7..cb6e7056a5 100644
+--- a/hw/arm/Kconfig
++++ b/hw/arm/Kconfig
+@@ -483,6 +483,7 @@ config FSL_IMX25
+     select IMX
+     select IMX_AVIC
+     select IMX_FEC
++    select IMX_GPT
+     select IMX_I2C
+     select IMX_RNG
+     select USB_CHIPIDEA
+@@ -498,6 +499,7 @@ config FSL_IMX31
+     select SERIAL_MM
+     select IMX
+     select IMX_AVIC
++    select IMX_GPT
+     select IMX_I2C
+     select WDT_IMX2
+     select LAN9118
+@@ -512,6 +514,7 @@ config FSL_IMX6
+     select FSL_IMX7_SNVS
+     select IMX
+     select IMX_FEC
++    select IMX_GPT
+     select IMX_I2C
+     select IMX_USBPHY
+     select CAN_FLEXCAN
+@@ -592,6 +595,7 @@ config FSL_IMX7
+     select IMX
+     select IMX_FEC
+     select IMX_GPCV2
++    select IMX_GPT
+     select IMX_I2C
+     select WDT_IMX2
+     select PCI_EXPRESS_DESIGNWARE
+@@ -611,6 +615,7 @@ config FSL_IMX8MP
+     select FSL_IMX8MP_CCM
+     select IMX
+     select IMX_FEC
++    select IMX_GPT
+     select IMX_I2C
+     select OR_IRQ
+     select PCI_EXPRESS_DESIGNWARE
+@@ -637,6 +642,7 @@ config FSL_IMX8MM
+     select FSL_IMX8MP_CCM
+     select IMX
+     select IMX_FEC
++    select IMX_GPT
+     select IMX_I2C
+     select OR_IRQ
+     select SDHCI
+@@ -678,6 +684,7 @@ config FSL_IMX6UL
+     select IMX6UL_LCDIF
+     select IMX_FEC
+     select IMX_GPCV2
++    select IMX_GPT
+     select IMX_I2C
+     select IMX_USBPHY
+     select WDT_IMX2
+diff --git a/hw/timer/Kconfig b/hw/timer/Kconfig
+index e1b751a54a..49a4d20e55 100644
+--- a/hw/timer/Kconfig
++++ b/hw/timer/Kconfig
+@@ -23,6 +23,11 @@ config I8254
+     bool
+     depends on ISA_BUS
+ 
++config IMX_GPT
++    bool
++    depends on IMX_CCM
++    select PTIMER
++
+ config ALLWINNER_A10_PIT
+     bool
+     select PTIMER
+diff --git a/hw/timer/meson.build b/hw/timer/meson.build
+index 8323efaf46..477dd47486 100644
+--- a/hw/timer/meson.build
++++ b/hw/timer/meson.build
+@@ -16,7 +16,7 @@ system_ss.add(when: 'CONFIG_GRLIB', if_true: files('grlib_gptimer.c'))
+ system_ss.add(when: 'CONFIG_HPET_C', if_true: files('hpet.c'))
+ system_ss.add(when: 'CONFIG_I8254', if_true: files('i8254_common.c', 'i8254.c'))
+ system_ss.add(when: 'CONFIG_IMX', if_true: files('imx_epit.c'))
+-system_ss.add(when: 'CONFIG_IMX', if_true: files('imx_gpt.c'))
++system_ss.add(when: 'CONFIG_IMX_GPT', if_true: files('imx_gpt.c'))
+ system_ss.add(when: 'CONFIG_MIPS_CPS', if_true: files('mips_gictimer.c'))
+ system_ss.add(when: 'CONFIG_MSF2', if_true: files('mss-timer.c'))
+ system_ss.add(when: 'CONFIG_NPCM7XX', if_true: files('npcm7xx_timer.c'))
 -- 
 2.56.0
 
