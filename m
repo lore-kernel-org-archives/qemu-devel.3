@@ -4,90 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 420CFCA5FDD
-	for <qemu-devel@archiver.kernel.org>; Sat,  3 Oct 2026 23:43:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E2DECA5FDD
+	for <qemu-devel@archiver.kernel.org>; Sun,  4 Oct 2026 00:34:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xD9Np-0002Rw-FN; Sat, 03 Oct 2026 19:43:13 -0400
+	id 1xDAA9-0005o7-B0; Sat, 03 Oct 2026 20:33:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zakinko@snowrabbit.org>)
- id 1xD9Nn-0002RO-AE
- for qemu-devel@nongnu.org; Sat, 03 Oct 2026 19:43:11 -0400
-Received: from mail-pz2-x0d.google.com ([2607:f8b0:4864:3b::d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <zakinko@snowrabbit.org>)
- id 1xD9Nl-0003F5-5c
- for qemu-devel@nongnu.org; Sat, 03 Oct 2026 19:43:11 -0400
-Received: by mail-pz2-x0d.google.com with SMTP id
- 41be03b00d2f7-cca1f026cfeso124389a12.3
- for <qemu-devel@nongnu.org>; Sat, 03 Oct 2026 16:43:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=snowrabbit.org; s=google; t=1791070986; x=1791675786; darn=nongnu.org;
- h=to:references:message-id:content-transfer-encoding:cc:date
- :in-reply-to:from:subject:mime-version:content-type:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=M1homK3/3IwMGGQaAemgXu2vdN/F5rrrHsLLvHwqiU8=;
- b=QtXhBm8buLfJaqLBISFH5jhvw2WCzHQqkvWGlrKn15FwjsOZyvUIP5hdjMG4RCS+vp
- HffSJ74J5vR67HHotWE7uEXNNs82rK6fIly1+CZwtOuLxmr9Pgp0bOVrm5sRh4yfSbO0
- pP+jMBnRbrKDTTvRjE4HvdJJLPfu3MatpcMH0=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791070986; x=1791675786;
- h=to:references:message-id:content-transfer-encoding:cc:date
- :in-reply-to:from:subject:mime-version:content-type:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=M1homK3/3IwMGGQaAemgXu2vdN/F5rrrHsLLvHwqiU8=;
- b=nBvo3KiWQ3HOMCOgGd6dhLW9p5qPLitH5Vwtl9ko96xZSeL/0BjZRj/oRsZ8t/8FU0
- dE0MfnmjXhlcVquKdK3MLsK00vRKFRYulAx0WdGGXw9vUvGssv7a9L6mn1YEldqSTl/G
- G3b6BsG/pTfUffx22/BPdtNfF2sYqBdOPfN7xC494AfRXsdUO2fVY+g0qOV2/NkOpoyd
- Qv/uqVlaxVCLpf1cjGCPUaDqPriu0tm+8XpTX8BCIo5s38el1qPhHOLhThXpfbUA67N1
- v4c0MPzcErpGQSdxFFOgCXIXhrzw5NXWwHZohDw+nS6TvNEA0EFEMSEtjWxz4/W9XIQm
- GTqg==
-X-Gm-Message-State: AFq9FYI9O+oFkPVjEu8U0veWc4Tuhg8cnfiqXCwZ2c87BM/90pJD4kYt
- /dz7SXMDKKrjYwmEqnpa/B2aGcy4XOb8EMCJeI6WuR48NpEmh5My97yH8FClv3JPo5g=
-X-Gm-Gg: AYBFou3uNtNxuk6jJaWMf0kjLFAcgJkp1iP1n/RCVXjtIvA8FDMSC08HdLdqJ86g6h1
- 1MiL+gfMp/WuA+DX2Tvm6WoyCDfhaQ2V42mUf0rrg/LpfBYNVuUqRaFn93LWTF8PFrRF42z4xB3
- WO6tbrQgyGgPm0GMqrPqJy54GsmKSWJ9iDf4A59WBxYw16ucF73Yv1JOAHTyfJbi/tTBK+cbOJy
- 88Tp3kD4jPuA/LebQuUOBYxcbPvLlK9P8w/BPQo+RYAQxm9b3KbvSDyNDzEy+K7L4Gw6N2/r2Dd
- VlUIkyw3c7NHRKLo6iQQaXtSvv7Z/Cs3naSgSqBIaBTdj3vqXsiFIqfcgf2Qupo7+xMguIIE1sz
- 9vcCGSedL0Ut44ZQo6JbtxoJDLA/q86OlnvUJ56oMEKDNGS3tQfY1o6VnW6rsxDTOrp9CLjG1lD
- 80+QoVgTKaJ6nzCfOnFbc5jVyOK5fNPRJqSCcOTCk4HPTCXYPOu9aO20pdUHky3pXR3rdOPQE/7
- K22Zd84iULQ/W2QEs9P/XpaLh9r4JqKbg==
-X-Received: by 2002:a17:90b:4b0e:b0:39e:2f57:67c0 with SMTP id
- 98e67ed59e1d1-3a6cdd9e044mr10475703a91.0.1791070986375; 
- Sat, 03 Oct 2026 16:43:06 -0700 (PDT)
-Received: from smtpclient.apple ([2405:6580:8a80:2d00:a0ce:6128:34d1:550e])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3a78e4a1bfesm4812028a91.12.2026.10.03.16.43.05
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Sat, 03 Oct 2026 16:43:05 -0700 (PDT)
-Content-Type: text/plain;
-	charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3901.100.1.1.12\))
-Subject: Re: [PATCH] hw/ppc/spapr: Add the "rtas-version" property to /rtas
-From: =?utf-8?B?6J+55r6k57+U5aSq?= <zakinko@snowrabbit.org>
-In-Reply-To: <20260929161126.2679fec2-3f-amachhiw@linux.ibm.com>
-Date: Sun, 4 Oct 2026 08:42:54 +0900
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
- Nicholas Piggin <npiggin@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <5E17BD06-6338-41C7-BA4E-E43771862D8E@snowrabbit.org>
-References: <20260929094138.16A18C92A0@bambi.snowrabbit.org>
- <20260929161126.2679fec2-3f-amachhiw@linux.ibm.com>
-To: Amit Machhiwal <amachhiw@linux.ibm.com>
-X-Mailer: Apple Mail (2.3901.100.1.1.12)
-Received-SPF: pass client-ip=2607:f8b0:4864:3b::d;
- envelope-from=zakinko@snowrabbit.org; helo=mail-pz2-x0d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ (Exim 4.90_1) (envelope-from <conor@kernel.org>)
+ id 1xDAA7-0005nn-DN; Sat, 03 Oct 2026 20:33:07 -0400
+Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <conor@kernel.org>)
+ id 1xDAA5-0008Aw-PC; Sat, 03 Oct 2026 20:33:07 -0400
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+ by tor.source.kernel.org (Postfix) with ESMTP id E863A60052;
+ Sun,  4 Oct 2026 00:32:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA79D1F0089B;
+ Sun,  4 Oct 2026 00:32:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+ s=k20260515; t=1791073976;
+ bh=KUnC+v1tit3ic+7kD3Irb1IBTtSXcOIhW85EFAFNPO4=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To;
+ b=mKafN40u1TMaFNZnQtI9+u0i59juVRS0fXK1Dd416xRh0yYU2J9rsXVEtH1y0qLOf
+ auyzS28mh/Z+ODJoL8ChtbhG97+nk9AE/LIlpWqCH6XQEATwLyyQQYyiFt31CN/6eh
+ pm3aEiQu8dyGAx8e0uWNjIDLSh9djYwWyfpG6XMm2GyZSoBeFRuMMIH9vDhfJH6bgc
+ odKSOjPA2qG1LkOcEOlhJUNIanzFhdtZFX4ZC90S0QRz2TdOxxWUJ2shOCQDu0+Buj
+ vIo+SA9Qt2d64yMczDURq5+3O1eW2YIK1h0C5KxB6p4o5y9N6pxiwF6JxeS0EdnAwI
+ AH1xWv8r5/ReA==
+Date: Sun, 4 Oct 2026 01:32:52 +0100
+From: Conor Dooley <conor@kernel.org>
+To: Bin Meng <bmeng.cn@gmail.com>
+Cc: Conor Dooley <conor.dooley@microchip.com>,
+ Bin Meng <bin.meng@processmission.com>, QEMU <qemu-devel@nongnu.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Sebastian Huber <sebastian.huber@embedded-brains.de>, qemu-riscv@nongnu.org
+Subject: Re: [PATCH v2 20/24] docs/system/riscv: Document Icicle Kit HSS boot
+Message-ID: <20261004-proposal-aneurism-b0df79d008ee@spud>
+References: <20260904155758.3833179-1-bin.meng@processmission.com>
+ <20260904155758.3833179-21-bin.meng@processmission.com>
+ <20260930-disparity-announcer-a6bc30a7084c@wendy>
+ <CAEUhbmXM_ZQSyRpjUmr83WBFLbasAQ410ybm=vR3TmpbP=4V0A@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="u2SJ6KTrpz3VY4KF"
+Content-Disposition: inline
+In-Reply-To: <CAEUhbmXM_ZQSyRpjUmr83WBFLbasAQ410ybm=vR3TmpbP=4V0A@mail.gmail.com>
+Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
+ envelope-from=conor@kernel.org; helo=tor.source.kernel.org
+X-Spam_score_int: -46
+X-Spam_score: -4.7
+X-Spam_bar: ----
+X-Spam_report: (-4.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.337,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,78 +75,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Amit,
+--u2SJ6KTrpz3VY4KF
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I am sorry for the slow reply.  I have just started a new job, and it
-took me a while to get back to this work.
+On Sat, Oct 03, 2026 at 11:16:27PM +0800, Bin Meng wrote:
+> > > +Configure HSS for the ``mpfs-icicle-kit-es`` board using its default
+> > > +configuration. QEMU provides the software-visible registers and dete=
+rministic
+> > > +status consumed by the HSS v2024.06 DDR initialization and training =
+flow;
+> > > +it does not model the electrical properties of DDR training. HSS req=
+uires
+> > > +the RISC-V bare-metal toolchain supplied by Microchip SoftConsole to=
+ be
+> > > +available in ``PATH``.  Build the tested HSS version with:
+> >
+> > What's the reason that this is using 2024.06 by the way? Why not use the
+> > most recent release of the HSS?
+>=20
+> This is because the Buildroot v2026.05 release's defconfig for Icicle
+> Kit board refers to v2024.06 version of
+> 'microchip-hss-payload-generator' which is a tool from HSS, so I chose
+> to use the same HSS source version to build the HSS to match the tools
+> version.
 
-Thank you for the review, for checking it against PAPR v10.60, and for
-testing it on a nestedv2 KVM guest.  Both of your suggestions make
-sense; v2 below cites PAPR v10.60 first, keeps LoPAR and LoPAPR as
-secondary references, and the comment on RTAS_VERSION now names PAPR
-v10.60 Table 20.  There is no other change to the code.
+If that's the rationale, I think this should be moved to using hte most
+recent HSS release. The payload generator version is lagging because
+there's not been any changes to the format of the input or output file
+in the last two years.
 
-Thanks,
-Showta
+--u2SJ6KTrpz3VY4KF
+Content-Type: application/pgp-signature; name=signature.asc
 
--- >8 --
-Subject: [PATCH v2] hw/ppc/spapr: Add the "rtas-version" property to =
-/rtas
+-----BEGIN PGP SIGNATURE-----
 
-PAPR requires every property listed in its table of /rtas device tree
-properties to be present before the OS is booted (R-7.2.6-3 and Table
-20 in PAPR v10.60; the same requirement is in LoPAR 2.9 and LoPAPR
-1.1). One of them is "rtas-version", an integer encoding of the RTAS
-interface version, and PAPR says it describes version 1 of that
-interface.
+iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCasGetAAKCRB4tDGHoIJi
+0vzbAQDORyi9j505mR8eyaNEHEaa1gd74x7PzixP2qGgyBTYxAEAx4JxNVkjbZIM
+JzvgnJlg9hrGR7BdkcRpu1I3epPZ/Q0=
+=bUF6
+-----END PGP SIGNATURE-----
 
-spapr_dt_rtas() sets "rtas-size", "rtas-error-log-max" and
-"rtas-event-scan-rate" but never "rtas-version", so a client that reads
-it finds no RTAS: NetBSD's RTAS driver fails to attach when the
-property is absent.
-
-Set it to 1, the version PAPR describes.
-
-Signed-off-by: Showta Ishizaki <zakinko@snowrabbit.org>
----
-v2:
-- Cite PAPR v10.60 first, as the rest of the spapr code does, and keep
-  LoPAR and LoPAPR as secondary references.
-- The comment on RTAS_VERSION now names PAPR v10.60 Table 20.
-
- hw/ppc/spapr.c         | 1 +
- include/hw/ppc/spapr.h | 3 +++
- 2 files changed, 4 insertions(+)
-
-diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
-index 6d99464486..8a1b5b37b6 100644
---- a/hw/ppc/spapr.c
-+++ b/hw/ppc/spapr.c
-@@ -1068,6 +1068,7 @@ static void spapr_dt_rtas(SpaprMachineState =
-*spapr, void *fdt)
-                           RTAS_ERROR_LOG_MAX));
-     _FDT(fdt_setprop_cell(fdt, rtas, "rtas-event-scan-rate",
-                           RTAS_EVENT_SCAN_RATE));
-+    _FDT(fdt_setprop_cell(fdt, rtas, "rtas-version", RTAS_VERSION));
-=20
-     g_assert(msi_nonbroken);
-     _FDT(fdt_setprop(fdt, rtas, "ibm,change-msix-capable", NULL, 0));
-diff --git a/include/hw/ppc/spapr.h b/include/hw/ppc/spapr.h
-index 9acda15d4f..b92d25c18e 100644
---- a/include/hw/ppc/spapr.h
-+++ b/include/hw/ppc/spapr.h
-@@ -830,6 +830,9 @@ void spapr_load_rtas(SpaprMachineState *spapr, void =
-*fdt, hwaddr addr);
-=20
- #define RTAS_EVENT_SCAN_RATE    1
-=20
-+/* The RTAS interface version PAPR v10.60 Table 20 describes */
-+#define RTAS_VERSION            1
-+
- /* This helper should be used to encode interrupt specifiers when the =
-related
-  * "interrupt-controller" node has its "#interrupt-cells" property set =
-to 2 (ie,
-  * VIO devices, RTAS event sources and PHBs).
-
+--u2SJ6KTrpz3VY4KF--
 
