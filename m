@@ -4,87 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA042CA5FCE
-	for <qemu-devel@archiver.kernel.org>; Sun,  4 Oct 2026 10:28:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 482ECCA5FCE
+	for <qemu-devel@archiver.kernel.org>; Sun,  4 Oct 2026 10:28:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xDJQF-0001ec-VD; Sun, 04 Oct 2026 06:26:24 -0400
+	id 1xDJRE-00054e-5r; Sun, 04 Oct 2026 06:27:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xDJQ2-0000Ro-PU
- for qemu-devel@nongnu.org; Sun, 04 Oct 2026 06:26:14 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1xDJQx-0004nI-8t
+ for qemu-devel@nongnu.org; Sun, 04 Oct 2026 06:27:08 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xDJQ1-0003Nz-3o
- for qemu-devel@nongnu.org; Sun, 04 Oct 2026 06:26:10 -0400
+ id 1xDJQv-0003Uh-GW
+ for qemu-devel@nongnu.org; Sun, 04 Oct 2026 06:27:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1791109567;
+ s=mimecast20190719; t=1791109624;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=s1Hzj75ZS0FKYExK+NyQIhyVjcHUUSfTC1NQBIoAR3c=;
- b=Ru/Tr2uaRQOgqWiByOZHgomh2zR2zs5lLaeSjE6PAa73bbv/mz9R7QImircTh9yDBrKbNM
- 5vHYyUeog6CS+WErGsNNhbnDtCVr+awniLDAoT58YuY2Ds/zJmd6xgTcsY8uibeZsUHP3z
- a0zZ7153pfTy90vtpWxFToAfRZ5Noeo=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=VL/CtSiakI/0oQi2XAUKymy2Z3RN6MVRibEppnHbyhg=;
+ b=HxfgsYHRIEzOIWzO5PC/6+S/7z/4At71vEODRVZvEMZnFKIqOCiyQmIwjvr8mMm+cd7vVQ
+ jof3BY06mfNTObIf4vW6fzOK7HrVJQhyP1WvfsN1sjtn5ldNPUgQ47yEFVuaeDwM+bNRnX
+ rv7jj3/txt6YyruGk/Fux1zH6dg95hY=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-651-H9--NaYSME6KIxkmJ24j3Q-1; Sun,
- 04 Oct 2026 06:26:05 -0400
-X-MC-Unique: H9--NaYSME6KIxkmJ24j3Q-1
-X-Mimecast-MFC-AGG-ID: H9--NaYSME6KIxkmJ24j3Q_1791109564
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-524-jitGhmzOMAKY71c5cJ-2UQ-1; Sun,
+ 04 Oct 2026 06:27:01 -0400
+X-MC-Unique: jitGhmzOMAKY71c5cJ-2UQ-1
+X-Mimecast-MFC-AGG-ID: jitGhmzOMAKY71c5cJ-2UQ_1791109620
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1D329195FCD5; Sun,  4 Oct 2026 10:26:04 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5C3F61955F3C; Sun,  4 Oct 2026 10:27:00 +0000 (UTC)
 Received: from localhost (headnet03.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.114])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 0EAA35BC; Sun,  4 Oct 2026 10:26:02 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 656761956047; Sun,  4 Oct 2026 10:26:59 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Sun, 04 Oct 2026 14:23:55 +0400
-Subject: [PATCH 41/63] hw/char/terminal3270: fix pre-handshake outbound
- data check
+Date: Sun, 04 Oct 2026 14:24:11 +0400
+Subject: [PATCH 57/63] hw/input/adb-mouse: add unrealize handler to
+ unregister input
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20261004-issue-4560-v1-41-ccbef537cbeb@redhat.com>
+Message-Id: <20261004-issue-4560-v1-57-ccbef537cbeb@redhat.com>
 References: <20261004-issue-4560-v1-0-ccbef537cbeb@redhat.com>
 In-Reply-To: <20261004-issue-4560-v1-0-ccbef537cbeb@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
- Pavee Hui <phui@google.com>, Cornelia Huck <cohuck@redhat.com>, 
- Eric Farman <farman@linux.ibm.com>, Matthew Rosato <mjrosato@linux.ibm.com>, 
- Halil Pasic <pasic@linux.ibm.com>, 
- Christian Borntraeger <borntraeger@linux.ibm.com>, 
- "Collin L. Walling" <walling@linux.ibm.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, qemu-s390x@nongnu.org
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1477;
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, qemu-ppc@nongnu.org
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1847;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=MHlK9FjIwX6bLxntMnNVMkHIRG9kCbM2K0nP7Ihc3D0=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqwikkq0DTNEnDn4K+zJw89pk4EGhHuKLXxPf74
- kjScD7Ip4yJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCasIpJAAKCRDa6OEJdZac
- 5eSED/9aZ9UTXN/JW0wN8t6dRBUjyHotYXgY3F0hWtSWWyeZ/7hVCVXP8+RNrGW/GdQH6Hwd7nz
- nX9VzPkljJhcEkl7y80nCAqcK407/Xk2tP4wvsvCFjICtXOUeEdqAhjCUbeuLcFsecogimzxWII
- YCY++SJ4s5LPwvfcCzXTYQXSWav48LcWvLDmJsQngZPoZuV6ikgHI/+6h2EFPALw4NJxeFq7FgA
- LK7wF1s4SUkeHFn1V49Ue+/oWvgoW5kzVclijFEHSoSnfpYvfhy88iCJkkd9i9Mu41uTRzoFSzm
- 1K5j7g+rS5BdsEPLaN1G8qpoGGvViMe9PZjNthDdIxUL5yP82BA9iBOICykL80z55EiOlIrIqfT
- 2SnKk+4pFq7q4dXK/dY2QyHhae2PsqiWIJk0wmkCw+pNgdoUmyx/mDREoen6yOKjt3z28dlwkR/
- dy0Vn43g8bD3DJ9TqWk874by/Op+5kJnqmugjyag2m9eW1B80JTQ1OpFLDWu65Gc52ZzqB9JdYQ
- KITWuWU/7nJ/vPXO3a0TX17DyMwVhPWR3kDeWjvwLsN5KUzURha4mvd8T2iVGbO7aqJa0OwpzTh
- OyIr33KR7Ui+/k613KfzHH8sci73oHEAMYU8DQ9zbB2g/UKGSEHspaRfH8mGO0zM/UB002gdwW+
- W99tdiOibPyjgfg==
+ bh=VMolbXYcx+r++JLOAQnRDbJvuF0SMBTg8zV4aB8U7/c=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqwiklKPjWZGuvXvjDOvXFAqXRAPJT0bp00bRpS
+ flDyhABxySJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCasIpJQAKCRDa6OEJdZac
+ 5WAAEACaeXvnWEs3M3UT997e9ZVAUcv3jNuBrzS38+Zt6qzh4esg+gsYFgNu6vLycj6e1Bx41/5
+ je5zrg9BbsfVvLcjjYiXwCBnopUMOEhT4cdlzTqV+gWXUdLuGm5mWkTYggxOldkqrDnSfjKXiHf
+ foalUqiT1GSCv/FFJMVWUXpZ5QFSLDq/iTz8QTlESGvXeJ0ByecL3r1dGBihD3nqScxMuqPF82c
+ E4jxNTVQTBfd9AIqEY6lKOkomRQU3st6V1FyWuLIjH7sOcGWRY6dzN+ibV7lgAzw61LgfkldhCm
+ t/ARWYtp6UjDeYBP748BErwbIe//jkIyMngw+2LOTSkyACV87maG/ehu5ZMjeasJ0ByRe2L8xgt
+ fH2sLbIq4t0MvGfCDTkcPebqMoaoSZY9J3mz21SOu6dpzqKv1jBNMqFeFZ3A+nQe5yO+YrXQcgl
+ bagHs9+IXCRsET0cTtIoLKnnRvLYl2BK9M8Q1KKUYBVY6G8iekalelCZZwuX32iZAtkvNlhL0R9
+ VfkPjDMRb8y2AKhfYDpQail45oMyEW24mMenOjQRdwZPqHWT7Crfc6pgmZqgy0ceQkR+ngOqGFo
+ NzhGLGL9w+lbmpc6kfUxhGW6fzlCAjLbL41KjgBGTD+sDcEgg61S+ElzooOj27Gw/Gjh0YFHSV+
+ jiW610mT7Q5mjOA==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.129.124;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 9
@@ -92,8 +87,9 @@ X-Spam_score: 0.9
 X-Spam_bar: /
 X-Spam_report: (0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.337,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,41 +105,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-write_payload_3270() tried to allow telnet option negotiation through
-before the handshake by inspecting outv[0] and outv[1]. However, at this
-point the buffer has not been filled for the current call, so it
-inspected stale data from a previous write.
+The mouse device registers a QemuInputHandler during realize but
+never unregisters it, leaking the handler on device removal.
 
-Telnet negotiation is handled at the chardev layer, not through the
-CCW device path, so unconditionally blocking outbound data before the
-handshake is correct.
+Add an unrealize handler that calls
+qemu_input_handler_unregister and chains to parent_unrealize
+when present.
 
-Fixes: e65a27209ca8 ("s390x/3270: Detect for continued presence of a 3270 client")
-Reported-by: Pavee Hui <phui@google.com>
+Fixes: 118e15191800 ("hw/input/adb-mouse: convert to use QemuInputHandler")
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- hw/char/terminal3270.c | 8 +-------
- 1 file changed, 1 insertion(+), 7 deletions(-)
+ hw/input/adb-mouse.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/hw/char/terminal3270.c b/hw/char/terminal3270.c
-index 506c7a77eac1..ad7f5d947291 100644
---- a/hw/char/terminal3270.c
-+++ b/hw/char/terminal3270.c
-@@ -249,13 +249,7 @@ static int write_payload_3270(EmulatedCcw3270Device *dev, uint8_t cmd)
-     int out_len = 0;
+diff --git a/hw/input/adb-mouse.c b/hw/input/adb-mouse.c
+index f9f989930ba1..0f2ecf0fd88c 100644
+--- a/hw/input/adb-mouse.c
++++ b/hw/input/adb-mouse.c
+@@ -51,6 +51,7 @@ struct ADBMouseClass {
+     /*< private >*/
  
-     if (!t->handshake_done) {
--        if (!(t->outv[0] == IAC && t->outv[1] != IAC)) {
--            /*
--             * Before having finished 3270 negotiation,
--             * sending outbound data except protocol options is prohibited.
--             */
--            return 0;
--        }
-+        return 0;
-     }
-     if (!qemu_chr_fe_backend_connected(&t->chr)) {
-         /* We just say we consumed all data if there's no backend. */
+     DeviceRealize parent_realize;
++    DeviceUnrealize parent_unrealize;
+ };
+ 
+ #define ADB_MOUSE_BUTTON_LEFT   0x01
+@@ -285,6 +286,17 @@ static void adb_mouse_realizefn(DeviceState *dev, Error **errp)
+     s->hs = qemu_input_handler_register(dev, &adb_mouse_handler);
+ }
+ 
++static void adb_mouse_unrealizefn(DeviceState *dev)
++{
++    MouseState *s = ADB_MOUSE(dev);
++    ADBMouseClass *amc = ADB_MOUSE_GET_CLASS(dev);
++
++    g_clear_pointer(&s->hs, qemu_input_handler_unregister);
++    if (amc->parent_unrealize) {
++        amc->parent_unrealize(dev);
++    }
++}
++
+ static void adb_mouse_initfn(Object *obj)
+ {
+     ADBDevice *d = ADB_DEVICE(obj);
+@@ -300,6 +312,8 @@ static void adb_mouse_class_init(ObjectClass *oc, const void *data)
+ 
+     device_class_set_parent_realize(dc, adb_mouse_realizefn,
+                                     &amc->parent_realize);
++    device_class_set_parent_unrealize(dc, adb_mouse_unrealizefn,
++                                      &amc->parent_unrealize);
+     set_bit(DEVICE_CATEGORY_INPUT, dc->categories);
+ 
+     adc->devreq = adb_mouse_request;
 
 -- 
 2.56.0.rc0.29.g47ce80527c56
