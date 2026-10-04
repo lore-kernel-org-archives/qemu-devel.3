@@ -4,112 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D272CA5FCE
-	for <qemu-devel@archiver.kernel.org>; Sun,  4 Oct 2026 06:58:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F330ECA5FE6
+	for <qemu-devel@archiver.kernel.org>; Sun,  4 Oct 2026 07:26:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xDGAr-0005kH-Ut; Sun, 04 Oct 2026 02:58:17 -0400
+	id 1xDGbQ-0000pe-QQ; Sun, 04 Oct 2026 03:25:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bmeng.cn@gmail.com>)
- id 1xDGAq-0005jw-M5
- for qemu-devel@nongnu.org; Sun, 04 Oct 2026 02:58:16 -0400
-Received: from mail-yx2-x0c.google.com ([2607:f8b0:4864:41::c])
+ (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
+ id 1xDGb5-0000p1-98
+ for qemu-devel@nongnu.org; Sun, 04 Oct 2026 03:25:26 -0400
+Received: from mail-ed2-x2b.google.com ([2a00:1450:4864:33::2b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <bmeng.cn@gmail.com>)
- id 1xDGAp-0003c1-0s
- for qemu-devel@nongnu.org; Sun, 04 Oct 2026 02:58:16 -0400
-Received: by mail-yx2-x0c.google.com with SMTP id
- 00721157ae682-8abc87cbd93so4477607b3.1
- for <qemu-devel@nongnu.org>; Sat, 03 Oct 2026 23:58:14 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1791097093; cv=none;
+ (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
+ id 1xDGb2-0005sk-KO
+ for qemu-devel@nongnu.org; Sun, 04 Oct 2026 03:25:22 -0400
+Received: by mail-ed2-x2b.google.com with SMTP id
+ 4fb4d7f45d1cf-6ae42b3e901so483636a12.0
+ for <qemu-devel@nongnu.org>; Sun, 04 Oct 2026 00:25:19 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1791098718; cv=none;
  d=google.com; s=arc-20260327;
- b=L+yiZkyfOs7DKhy7KVYjju8l68tvrfcoTP9dEaCkI/I6hmYLSnspQBMgiEAtClz3rI
- RyUhxM6QKlLnh9/5CvEo0UbNUClPIMSD2s4UBu8qAF1ePN8/quMmj05TcuydiYz1+ZUc
- 4EqDhso2+IZzubw1OohqhlWp0L5y57b8Jw4ZAlqlFKDika4nTxF43P7Dk5DSoPxkO5KB
- 45klVOFb8PIynu1+3B9Kc1c+TeQYICsDeGrhKnW6qx01fw+K68O68N5f0ecqgHdbJ3rq
- q4x33Ls2xO8SFRPMApRraZV9PPk36fSmfnYdlzMcGgoxcE36YZ0k3gfECQSIdbRAxaWU
- hvNw==
+ b=nMcZDJwqgGOeJyAR/G5M9afgMOoDfuJZBYF1+R8TzF20k9WP9yYGvfFtme8KRfcssn
+ qXMPdb3fdBipc8knshbFxZnxBFeKScg1YFuXKk+Zrr+IvBefU4MFRgmP8wF6pBpOCJH1
+ RMRxHoq8t83TPqSYbsoCMNHnObrWpkc/p1OE5TUzjKELSsqQpXAl438krM/lqrBqx6d+
+ hM/Kw/GipdJB8hf3ZbtAtYF7Dp8y5U/0CsTcDb0pP4sU2oke2kz26Qer/xwkB1EJPF0M
+ m09Gz98jWrlBj5iRoOevK7qEESb9JNb6WFVOfsx2kemmM1UG2aHPFk6sydHu/G1ReLdw
+ yHbw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=TLREEsVF71675AkImm7FuFPVubfqGxq+5JsUZBr5yo0=;
- fh=5rd/ZVGhqR3UsIq5R6udlvb62NuUL8JXwRobQJTQVnA=;
- b=MVVZtI9lrcQ+bfnRQxBhzyu0jmGe5ev1Wkx8R+YVK/JdWd/RqEf8UdjiabDVyqQy+b
- u1IJ7Jv6OXe3OmCivpRq4S43aJxHpyFhNgm5t6399q5gernu2BRDXVUsc98d9RM4kRWr
- 659YeY2nUEyf5oObL9dOqzspHFZ4VlMiBacSCPlVjpBrN8guD2HPLTbfvHmvPRHYECBR
- 49N2E/cQRuZtnv/4keT6Oh4Ljm93kryfhvGsnjirFQOWe2PLuxufOAEKOJkuEBhusjWw
- n3MK9t8ooAj48QluuJOD4D8PZD8ZlFuMi0WAHDp+DKVYH031dQGOUj+nyhLcIF1CBTgu
- MKvQ==; darn=nongnu.org
+ h=cc:to:subject:message-id:date:from:reply-to:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=SWhdwpHuOLEI4Sb02GS3BiXpQIdT9edjH/DDBeQqrJI=;
+ fh=Ubd+T4N1G56OBO/hTjfm+Yb/26pabtZ7OhCz6EcFcuM=;
+ b=ElYBzUnadMjPaECJMe8VN0aZTGlxRYQJSd1eHUIBzPZ4cNBNq8hyaAbGv0uA0cqDFF
+ 5R3bXve6SJNQYynwpgkCZ+69aAczccVDpN1QDZZ8puUKXW/OmB+Sl93KiI491ceEZxXj
+ nSAXNCegWxvDFVW1f0ZzIe6jfeAbxzosBo3hhAtX4Ua2e4mOpEltocVxfSXVFrEaMSu/
+ 3GRMLQGLLyf9s1jUTtzQbuNXztEEeYNwjt7Lp1h4zbglmsSvVpnI7H0yYR0h42BDo2q1
+ i2dyOGNbUOGMouRgbAPMaodv3IJwvcSpkue8kP19eBd3qJ897NC29Id1+72bJFfNZ6M5
+ wxnQ==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1791097093; x=1791701893; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=TLREEsVF71675AkImm7FuFPVubfqGxq+5JsUZBr5yo0=;
- b=kQRpwcb1NVMb/qfiRwZFIocyW2FNJFZK7ykiytYBCEdxtIOVMDEK+x1F9Q8W/fGU/c
- /2fG0rpqSggrUvIbld5jswerHsxGVt6PNVrmT+PhCyPkLuBuGz1G0RysP0t3bnxErrQl
- jnV/cRj+VXbQGTXg51bv8Pbc4Q6YsNBOm/3sI8M4iWwSBZMxHGhQDFUvlAOckuX/UWqR
- 4y9eTFrk8i+IKIlGZhK9qhYa1uxzvxxB+4kpN+cPj9H48PoyYf1MsfYz5300Z3+PHIxq
- XBGJ1EwbcRtl71Sn5DksexfcIoM69/rV3/32Dr/35ZqKle9xh/fp+xHIbKCKKP84BeZC
- t8Cw==
+ d=gmail.com; s=20251104; t=1791098718; x=1791703518; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:reply-to
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=SWhdwpHuOLEI4Sb02GS3BiXpQIdT9edjH/DDBeQqrJI=;
+ b=iNITXuJC4Jda7ItfnTgCIy08rGEjTcYGWe1Gx7su2RuJ2UNzebBM4J3eSTLqm4HPRb
+ wjLp9BD9H9ZtrmZc5DhAMTX5kawxBvkCjR354Z34ZMa5f7qn5vAWti71xaZJA7ZSYxSh
+ 7cb1YtC3xnhCYEZE51K9FWOeaM03W0MlyJ/KxcklYNWTLcfi1rJZ/54HDCcLjC1XvVeX
+ vl1ZeWS1NS4W+5xdCrNZseq8vR4R6BsAGBuUC1kLEoKl8QQLWhXq/5d3w9nAU5J2fHL6
+ NGOGc42iJ6fOdEsbMI9jgwf4mayyIEQUwN1wGe895pG54Zg+NzGem4xxUAjycXTP4Aw0
+ J1TQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791097093; x=1791701893;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=TLREEsVF71675AkImm7FuFPVubfqGxq+5JsUZBr5yo0=;
- b=wyIC1q/puBd8SQExxSa+1XCpn4M5Ke++z2TLO2Rf7yjrN/4FCdaYgUour8y5WPUz1l
- zYh4wm3X0Zw+Si7QtZ89nHcn0u6e+j4LAThKAq+KitfBzJQwcmipO1qstRjnki4qs2rR
- hxdINqFUBYOjeeY5v/HT0o8/hDfD/xVJeXKyvaCfj1lDm7OWdkqQOEPD5YIHAd8z9g0K
- ryq55qCZQe0ltsBD09g9062jxXe8/LTPTG5gQx8iQJlzR5YuWwT9/ZscjL49O6amItBm
- 10KfZ1NYgKcRvXjtofRC1uopRK351Lqa+Sj4lgmqTfzdkhnns5jnzLLlzDOfPrw51YKA
- KCHQ==
+ d=1e100.net; s=20260707; t=1791098718; x=1791703518;
+ h=content-type:cc:to:subject:message-id:date:from:reply-to
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=SWhdwpHuOLEI4Sb02GS3BiXpQIdT9edjH/DDBeQqrJI=;
+ b=kF+2r1fHGovYmUwOxWVWImEi9TtJMHcyia0nWGEDtk/lk6E3lp1wVZLoddyQbfUTU0
+ r8/rusZvjLeO1rQF+QDNFz8XT5NgC3VKBYrbqruJ9lDCaTVOKq67boHmp5S9WuXGC9zg
+ km/EQRbY2LDUD5jKctQSogaRkniB77HY67OvlQiIVcuVkqDOsRMnimjYZ4n5oy5PS5Pt
+ jmu7hsfx+yIaWNTJ8zTRbhTKWN6HGsoWM/V4vZmSEEBr7rhEByJRePYUkixI7wy+JD7f
+ CNruF6jbAQtrJ4p9mNiyg7N8pS4BrngU3o/DEl99RH7xmUC1N1kdNH66WO0OrHZJ4abc
+ nSJQ==
 X-Forwarded-Encrypted: i=1;
- AKwUvByh/TmD0pwpkIQ9eP44tsyts4hqZO4+eNbQgjbMtYrN5t2L3jM92D3sJPOkMn0eHqvtHTxX0xMUTd4K@nongnu.org
-X-Gm-Message-State: AFq9FYLL6o+5C/ecYx4wZAhUaUVj4Axxnppl72Kn/Npo3UKh6YceTyNO
- PzK+BoyRvEfM08BOCBsZm0lmIvu3lIADWTyqXciKgD+q8vVdzd3LCpEliRMDaPI4Aj19K+OJ+tl
- 8h+CHq7A5uf0Mrcnlqej0qmBE0LyfrGk=
-X-Gm-Gg: AYBFou3B87SBIUVifkon7J0EWtfyaFfT04ddNY5ei83sEA6pk2PClD++MCf1UORiXCR
- 9fLBCDoqXa7YC6RZSf7YxtHPR+s4VSAyBNooE1WBjFphAebyHHxZw+D8803bjfyKkR6vPyxOskh
- 3ODC6XNcQFoab0aJwVaJ/nmRpBQ4iiHUHr/KDYXEdXzIyYTJAQDlXEpakuQB1HeQFh/wj9jrZR9
- 7Jexsht9mg59ey+Qjc7immi1A/hY7Qt+0T2EA3rlt7RucEJ94EIGxStBF4dEGJEn/McACxsZgIL
- 0AeBdGhMCPc6sP73PnKBhSvqcOcjbH1Kz0P1KBsdWuHSl0LfqWSAfDCJvJqbeK3jdlt99ech669
- yvLfpDdcRPd7yocR1aMobzZfV68w=
-X-Received: by 2002:a05:690c:3481:b0:8af:fa5:c081 with SMTP id
- 00721157ae682-8af0fa5c4bbmr3403947b3.1.1791097093331; Sat, 03 Oct 2026
- 23:58:13 -0700 (PDT)
+ AKwUvBwOSExWwEJUXuMJ7ybrtaI/RusPnPhIRLbIT5JI9dXZCCZt+ASBP46FzWayaNPn0nOPnXltjmslhyxf@nongnu.org
+X-Gm-Message-State: AFq9FYKk3XIO0UgF9f+nB3WSbY1pMdavqZbpcyutqcoQQD26dN+AH2TE
+ L7m95BMGJ6T3deikZvZ/YeuSrqkVM9FV5cyZg6RT7koppDlqvF/Zo/yiCin1YMgZFcSMNoZ+zTG
+ OqCrUJiqNycBVzs01/rM74MyTAnQVr00=
+X-Gm-Gg: AYBFou2Pz74G0WaAxR6Y76kLAZNQC9/BOvkXepFpcqIH+nyoTKkvTN9rlC7/Wob4Fu2
+ rEAgU/tZAiudaB2hYzdiFnsBBnhOuVSTYCqiS18KAHUY+Sor22xmqXwVKc2hQ1MrId9VE8KFtth
+ zXNkqKmffyBpVZl5usCqjxx5G5H7ML0AkeeeqlrRS7Hh1A/QBqGcL8cOqb5PR8GYkNYmIjiIqxz
+ hejso10baYvMQfwUSPnsHIwxXWRE8lyyNIQFgrunPz49i8r62l3Mep+rnxvY0I1TJHvoF8LDxSX
+ xH6oKaFc8JWR4jhr5U0PBAlz7HSyUjj3EEuWgaRBvccPUUyckokOkL4=
+X-Received: by 2002:a05:6402:454c:b0:6ac:8d79:9e13 with SMTP id
+ 4fb4d7f45d1cf-6af9e2cb9c6mr4732439a12.6.1791098717796; Sun, 04 Oct 2026
+ 00:25:17 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260904161438.3838261-1-bin.meng@processmission.com>
- <20260904161438.3838261-2-bin.meng@processmission.com>
- <CAFEAcA-p=UaNk-Qddid99o7zeGS4WqmvqAugxtjtBKZwv9ie8Q@mail.gmail.com>
- <CAEUhbmX3N2u732mUZ8wG0pdtN+vCrVf4rdX3TR+vHPeRunsGPQ@mail.gmail.com>
- <CAFEAcA91O71cLf9ogos_xuTx+9fn-jdUGP5u80RD6hOxAQNQOw@mail.gmail.com>
- <CAEUhbmUeeuKiZiaTrU2wm3Gi8NbZ+o9XVegUf-gLNBr-+rogVA@mail.gmail.com>
-In-Reply-To: <CAEUhbmUeeuKiZiaTrU2wm3Gi8NbZ+o9XVegUf-gLNBr-+rogVA@mail.gmail.com>
-From: Bin Meng <bmeng.cn@gmail.com>
-Date: Sun, 4 Oct 2026 14:58:01 +0800
-X-Gm-Features: AclHuK8QNIe2_FQNCXM1830SkbuIfVJvuFPtxNht4XXr9kkrpjYxwC7iGtqiM3I
-Message-ID: <CAEUhbmVO363T1sKmV56N9_uwhV_pGnY+aK0WOmORYQNBirExGA@mail.gmail.com>
-Subject: Re: [PATCH v2 01/10] hw/arm: fsl-imx6ul: Add SCU compatibility window
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Bin Meng <bin.meng@processmission.com>, QEMU <qemu-devel@nongnu.org>, 
- Jean-Christophe Dubois <jcd@tribudubois.net>, qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:41::c;
- envelope-from=bmeng.cn@gmail.com; helo=mail-yx2-x0c.google.com
+References: <20261002091518.1139575-1-pbonzini@redhat.com>
+ <c6a89114-120e-49eb-b62b-be3038cdfc1d@linaro.org>
+In-Reply-To: <c6a89114-120e-49eb-b62b-be3038cdfc1d@linaro.org>
+From: Yonggang Luo <luoyonggang@gmail.com>
+Date: Sun, 4 Oct 2026 15:25:04 +0800
+X-Gm-Features: AclHuK9B9uwn_iXcT_qjpJKGb7M6gijMVIaqQLRA0-_yIe-DDTeZ4Y0GaRC-MHI
+Message-ID: <CAE2XoE9WMLhNdiz-0OT0cgeTtWa+xbroxw-WnB8k-LergUHuvQ@mail.gmail.com>
+Subject: Re: [PULL v2 00/32] target/i386 and misc changes for 2026-09-28
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+Content-Type: multipart/mixed; boundary="000000000000d53440065cfeaa1b"
+Received-SPF: pass client-ip=2a00:1450:4864:33::2b;
+ envelope-from=luoyonggang@gmail.com; helo=mail-ed2-x2b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,89 +113,178 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: luoyonggang@gmail.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Peter,
+--000000000000d53440065cfeaa1b
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Sun, Oct 4, 2026 at 9:19=E2=80=AFAM Bin Meng <bmeng.cn@gmail.com> wrote:
+Found the cause, the mutex is not always initialized, we need to check
+if it's available.
+Maybe a better way is to get the mutex to have no need to initialize.
+Like pthread_mutex_t
+
+On Sat, Oct 3, 2026 at 8:17=E2=80=AFPM Richard Henderson
+<richard.henderson@linaro.org> wrote:
 >
-> Hi Peter,
->
-> On Wed, Sep 16, 2026 at 12:13=E2=80=AFAM Peter Maydell <peter.maydell@lin=
-aro.org> wrote:
+> On 10/2/26 11:15, Paolo Bonzini wrote:
+> > The following changes since commit 9c88811b81a935a172c5c873b2ada2d9b38a=
+5f74:
 > >
-> > On Tue, 15 Sept 2026 at 16:52, Bin Meng <bmeng.cn@gmail.com> wrote:
-> > >
-> > > Hi Peter,
-> > >
-> > > On Mon, Sep 14, 2026 at 5:20=E2=80=AFPM Peter Maydell <peter.maydell@=
-linaro.org> wrote:
-> > > >
-> > > > On Fri, 4 Sept 2026 at 17:15, Bin Meng <bin.meng@processmission.com=
-> wrote:
-> > > > >
-> > > > > +    /*
-> > > > > +     * U-Boot's shared i.MX6 CPU identification code reads the
-> > > > > +     * Cortex-A9 SCU configuration register on i.MX6UL. Cortex-A=
-7
-> > > > > +     * reserves this address, so provide only the compatibility =
-word
-> > > > > +     * needed before the console is initialized.
-> > > > > +     */
-> > > > > +    create_unimplemented_device("a7mpcore-scu-compat",
-> > > > > +                                FSL_IMX6UL_A7MPCORE_ADDR + 0x4, =
-4);
-> > > >
-> > > > What is actually going on here, though? Why is u-boot reading
-> > > > an address that's only here for the A9? Has this been reported
-> > > > to u-boot as a bug? What does the real hardware do?
-> > >
-> > > I suspect the reason is that the imx6 family contains both A9 and A7
-> > > based SoCs and it's a leftover when imx6ul support was introduced in
-> > > U-Boot. I do not see a bug report against U-Boot yet.
-> > >
-> > > >
-> > > > Whatever the answers are, I expect the correct fix is not going
-> > > > to be "fake up this specific 4 bytes to ignore accesses in the
-> > > > imx6 SoC model".
-> > > >
-> > >
-> > > Apparently the real hardware ignores the scu access on A7. So IMO it
-> > > could be accepted as a workaround for buggy software although guests
-> > > should not do so.
+> >    Merge tag 'pull-target-arm-20260929' of https://gitlab.com/pm215/qem=
+u into staging (2026-09-30 06:25:37 +0100)
 > >
-> > Mmm, but I don't think the fix is going to be just this 4 bytes,
-> > and possibly it shouldn't be in this SoC specifically.
+> > are available in the Git repository at:
 > >
-> > What does the TRM for the SoC say is at this address?
+> >    https://gitlab.com/bonzini/qemu.git tags/for-upstream
 > >
+> > for you to fetch changes up to 7b596a6918055eee8e17a78c84127b934ae4531e=
+:
+> >
+> >    agents: Add a skill for finding your way around QEMU (2026-10-02 11:=
+11:37 +0200)
+> >
+> > v1->v2: move validate_vex() before all operand decoding (patches 6-8)
+> >
+> > ----------------------------------------------------------------
+> > * target/i386/tcg: fix EFLAGS reads in TCG plugin callbacks
+> > * target/i386/tcg: raise #GP(0) on null SS load with RPL !=3D CPL
+> > * target/i386/tcg: Don't clear C1 for FCOMI/FCOMIP/FUCOMI/FUCOMIP
+> > * target/i386/tcg: implement APX
+> > * target/i386: Migrate error code only with an exception
+> > * agents: Add a skill for finding your way around QEMU
+> > * tdx: fix buffer overflow in tdx_parse_panic_message
+> > * accel/kvm: fixes
 >
-> The TRM for the SoC only says 00A0_0000 - 00A0_7FFF windows is for
-> "ARM Peripherals: GIC400 Only visible to ARM core(s)", then in the TRM
-> for Cortex-A7 the address 0x0000 - 0x0FFF is marked as reserved.
+> This has a number of failures:
 >
-> I plan to submit a patch to the U-Boot upstream to see how the
-> maintainer thinks.
+> https://gitlab.com/qemu-project/qemu/-/jobs/16911681150#L902
+>
+> I tried bisecting the issue to make sure, but the patch set isn't
+> bisectable.  At
+>
+> commit a6d1cac8651b2a2d5eb56abbe1cea698e72e4e3f (HEAD)
+> Author: Paolo Bonzini <pbonzini@redhat.com>
+> Date:   Wed Sep 23 14:33:32 2026 +0200
+>
+>      target/i386/tcg: use zextT1 for CMPXCHG
+>
+> I get
+>
+> In file included from ../publish/target/i386/tcg/translate.c:3339:
+> ../publish/target/i386/tcg/decode-new.c.inc:2765:10: error: use of
+> undeclared identifier 'X86_EVEX_APX'; did you mean 'X86_VEX_LIG'?
+>   2765 |     case X86_EVEX_APX:
+>        |          ^~~~~~~~~~~~
+>        |          X86_VEX_LIG
+> ../publish/target/i386/tcg/decode-new.h:273:5: note: 'X86_VEX_LIG'
+> declared here
+>    273 |     X86_VEX_LIG,
+>        |     ^
+> In file included from ../publish/target/i386/tcg/translate.c:3339:
+> ../publish/target/i386/tcg/decode-new.c.inc:2766:10: error: use of
+> undeclared identifier 'X86_EVEX_APX_cmp'
+>   2766 |     case X86_EVEX_APX_cmp:
+>        |          ^~~~~~~~~~~~~~~~
+> ../publish/target/i386/tcg/decode-new.c.inc:2767:10: error: use of
+> undeclared identifier 'X86_EVEX_APX_pp2'
+>   2767 |     case X86_EVEX_APX_pp2:
+>        |          ^~~~~~~~~~~~~~~~
+> ../publish/target/i386/tcg/decode-new.c.inc:2768:10: error: use of
+> undeclared identifier 'X86_EVEX_APX_zu'
+>   2768 |     case X86_EVEX_APX_zu:
+>        |          ^~~~~~~~~~~~~~~
+> 4 errors generated.
+>
+>
+> r~
 >
 
-After further reading the GIC-400 TRM (DDI0471B), I found chapter 3.1 says:
 
-The following information applies to the GIC-400 registers:
-=E2=80=A2 The base address of the GIC-400 is not fixed, and can be differen=
-t
-for a particular system
-implementation. The offset of each register from the base address is fixed.
-=E2=80=A2 Access to reserved or unused address locations is RAZ/WI (Read-as=
--Zero, Writes
-Ignored).
-=E2=80=A2 Unless otherwise stated in the accompanying text:
-=E2=80=94 Do not modify reserved register bits.
-=E2=80=94 Ignore reserved register bits on reads.
-=E2=80=94 All register bits are reset to 0 by a system or power-on reset.
+--=20
+         =E6=AD=A4=E8=87=B4
+=E7=A4=BC
+=E7=BD=97=E5=8B=87=E5=88=9A
+Yours
+    sincerely,
+Yonggang Luo
 
-It seems we should create a 4KiB unimplemented window within GiC-400.
+--000000000000d53440065cfeaa1b
+Content-Type: text/plain; charset="US-ASCII"; 
+	name="0001-accel-kvm-protect-kvm_resample_fd_list-with-a-mutex.patch"
+Content-Disposition: attachment; 
+	filename="0001-accel-kvm-protect-kvm_resample_fd_list-with-a-mutex.patch"
+Content-Transfer-Encoding: base64
+Content-ID: <f_muthvjsk0>
+X-Attachment-Id: f_muthvjsk0
 
-Regards,
-Bin
+RnJvbSBjZDRmNmM0YzFmNTAwOGFmNWUyMTEzMjdkMzJmMzBmYTE0NTNjZjU1IE1vbiBTZXAgMTcg
+MDA6MDA6MDAgMjAwMQpGcm9tOiBNYXhpbSBMZXZpdHNreSA8bWxldml0c2tAcmVkaGF0LmNvbT4K
+RGF0ZTogVHVlLCAyMiBTZXAgMjAyNiAyMDo0Njo1MSAtMDQwMApTdWJqZWN0OiBbUEFUQ0hdIGFj
+Y2VsL2t2bTogcHJvdGVjdCBrdm1fcmVzYW1wbGVfZmRfbGlzdCB3aXRoIGEgbXV0ZXgKCkxlZ2Fj
+eSBQQ0kgSU5UeCBpbnRlcnJ1cHRzIGFyZSBsZXZlbCB0cmlnZ2VyZWQgYW5kIGNhbiwgaW4gdGhl
+b3J5LCBiZSBzaGFyZWQuCgpVcG9uIHJlY2VpdmluZyBzdWNoIGFuIGludGVycnVwdCwgVkZJTyBr
+ZXJuZWwgZHJpdmVyIG1hc2tzIGl0IGluIGEgZ2VuZXJpYyB3YXksCnVzaW5nIElOVFhfRElTQUJM
+RSBiaXQgaW4gdGhlIFBDSSBjb25maWcgc3BhY2UuCgpJdCB0aGVuIHdhaXRzIGZvciB0aGUgZ3Vl
+c3QgdG8gc2lnbmFsIGNvbXBsZXRpb24gKEVPSSkgb2YgdGhlIGludGVycnVwdCwKdXBvbiB3aGlj
+aCBWRklPIHJlLWVuYWJsZXMgdGhlIGludGVycnVwdC4KClRoZSBjb21wbGV0aW9uIGlzIHNpZ25h
+bGVkIHdpdGggYW5vdGhlciBldmVudGZkLgoKRm9yIHNwbGl0IGlycWNoaXAgbW9kZSwgS1ZNIGRv
+ZXNuJ3QgaGF2ZSBhIG5vdGlvbiBvZiBFT0kgb24gSU9BUElDIGxldmVsLgpJbnN0ZWFkIGl0IHNp
+Z25hbHMgRU9JIHdpdGggYSB1c2Vyc3BhY2UgVk0gZXhpdCwgS1ZNX0VYSVRfSU9BUElDX0VPSS4K
+ClVwb24gcmVjZWl2aW5nIHRoaXMgVk0gZXhpdCwgUWVtdSBtYW51YWxseSBzaWduYWxzIHRoZSBh
+Ym92ZS1tZW50aW9uZWQgZXZlbnRmZC4KClRoZSBwcm9ibGVtIHRoYXQgdGhpcyBwYXRjaCByZXNv
+bHZlcyBpcyB0aGF0IFFFTVUga2VlcHMgdGhlc2UgZXZlbnRmZHMgaW4KYSBsaW5rZWQgbGlzdCB3
+aXRob3V0IGFueSBsb2NraW5nIHRvIHByZXZlbnQgdGhlIGxpc3QgZnJvbSBiZWluZyBjb3JydXB0
+ZWQgYnkKY29uY3VycmVudCBhY2Nlc3MuCgpTdWNoIHVzZSBpcyBwb3NzaWJsZSBhbmQgZ3Vlc3Qg
+dHJpZ2dlcmFibGUgaWYgdGhlIGd1ZXN0IHJhcGlkbHkgdG9nZ2xlcwpJTlRYIG1vZGUgb2YgYSBW
+RklPIGRldmljZSBhbmQgYXQgdGhlIHNhbWUgdGltZSBzaWduYWxzIEVPSSB3aXRoIGFuIGFyYml0
+cmFyeQp2ZWN0b3IuCgpGaXggdGhpcyBieSBwcm90ZWN0aW5nIHRoaXMgbGlzdCAoa3ZtX3Jlc2Ft
+cGxlX2ZkX2xpc3QpIHdpdGggYSBtdXRleC4KClRoaXMgcGF0Y2ggd2FzIG9ubHkgY29tcGlsZSB0
+ZXN0ZWQuCgpSZXBvcnRlZC1ieTogIlZ1bG5lcmFiaWxpdHkgUmVwb3J0IiA8dnJAZGFya25hdnku
+Y29tPgpSZXNvbHZlczogaHR0cHM6Ly9naXRsYWIuY29tL3FlbXUtcHJvamVjdC9xZW11Ly0vd29y
+a19pdGVtcy8zOTQyClNpZ25lZC1vZmYtYnk6IE1heGltIExldml0c2t5IDxtbGV2aXRza0ByZWRo
+YXQuY29tPgpMaW5rOiBodHRwczovL2xvcmUua2VybmVsLm9yZy9yLzIwMjYwOTIzMDA0NjUxLjEw
+MTE5Ny0xLW1sZXZpdHNrQHJlZGhhdC5jb20KU2lnbmVkLW9mZi1ieTogUGFvbG8gQm9uemluaSA8
+cGJvbnppbmlAcmVkaGF0LmNvbT4KLS0tCiBhY2NlbC9rdm0va3ZtLWFsbC5jIHwgMTggKysrKysr
+KysrKysrKysrKystCiAxIGZpbGUgY2hhbmdlZCwgMTcgaW5zZXJ0aW9ucygrKSwgMSBkZWxldGlv
+bigtKQoKZGlmZiAtLWdpdCBhL2FjY2VsL2t2bS9rdm0tYWxsLmMgYi9hY2NlbC9rdm0va3ZtLWFs
+bC5jCmluZGV4IDEzNGM3MWYzM2EuLjNjOTJiMGI5YWQgMTAwNjQ0Ci0tLSBhL2FjY2VsL2t2bS9r
+dm0tYWxsLmMKKysrIGIvYWNjZWwva3ZtL2t2bS1hbGwuYwpAQCAtMTQ3LDYgKzE0Nyw3IEBAIHR5
+cGVkZWYgc3RydWN0IEtWTVJlc2FtcGxlRmQgS1ZNUmVzYW1wbGVGZDsKIHN0YXRpYyBRTElTVF9I
+RUFEKCwgS1ZNUmVzYW1wbGVGZCkga3ZtX3Jlc2FtcGxlX2ZkX2xpc3QgPQogICAgIFFMSVNUX0hF
+QURfSU5JVElBTElaRVIoa3ZtX3Jlc2FtcGxlX2ZkX2xpc3QpOwogCitzdGF0aWMgUWVtdU11dGV4
+IGt2bV9yZXNhbXBsZV9mZF9saXN0X2xvY2s7CiBzdGF0aWMgUWVtdU11dGV4IGttbF9zbG90c19s
+b2NrOwogCiAjZGVmaW5lIGt2bV9zbG90c19sb2NrKCkgICAgcWVtdV9tdXRleF9sb2NrKCZrbWxf
+c2xvdHNfbG9jaykKQEAgLTE1OCw2ICsxNTksOCBAQCBzdGF0aWMgaW5saW5lIHZvaWQga3ZtX3Jl
+c2FtcGxlX2ZkX3JlbW92ZShpbnQgZ3NpKQogewogICAgIEtWTVJlc2FtcGxlRmQgKnJmZDsKIAor
+ICAgIHFlbXVfbXV0ZXhfbG9jaygma3ZtX3Jlc2FtcGxlX2ZkX2xpc3RfbG9jayk7CisKICAgICBR
+TElTVF9GT1JFQUNIKHJmZCwgJmt2bV9yZXNhbXBsZV9mZF9saXN0LCBub2RlKSB7CiAgICAgICAg
+IGlmIChyZmQtPmdzaSA9PSBnc2kpIHsKICAgICAgICAgICAgIFFMSVNUX1JFTU9WRShyZmQsIG5v
+ZGUpOwpAQCAtMTY1LDYgKzE2OCw4IEBAIHN0YXRpYyBpbmxpbmUgdm9pZCBrdm1fcmVzYW1wbGVf
+ZmRfcmVtb3ZlKGludCBnc2kpCiAgICAgICAgICAgICBicmVhazsKICAgICAgICAgfQogICAgIH0K
+KworICAgIHFlbXVfbXV0ZXhfdW5sb2NrKCZrdm1fcmVzYW1wbGVfZmRfbGlzdF9sb2NrKTsKIH0K
+IAogc3RhdGljIGlubGluZSB2b2lkIGt2bV9yZXNhbXBsZV9mZF9pbnNlcnQoaW50IGdzaSwgRXZl
+bnROb3RpZmllciAqZXZlbnQpCkBAIC0xNzQsMjAgKzE3OSwzMCBAQCBzdGF0aWMgaW5saW5lIHZv
+aWQga3ZtX3Jlc2FtcGxlX2ZkX2luc2VydChpbnQgZ3NpLCBFdmVudE5vdGlmaWVyICpldmVudCkK
+ICAgICByZmQtPmdzaSA9IGdzaTsKICAgICByZmQtPnJlc2FtcGxlX2V2ZW50ID0gZXZlbnQ7CiAK
+KyAgICBxZW11X211dGV4X2xvY2soJmt2bV9yZXNhbXBsZV9mZF9saXN0X2xvY2spOwogICAgIFFM
+SVNUX0lOU0VSVF9IRUFEKCZrdm1fcmVzYW1wbGVfZmRfbGlzdCwgcmZkLCBub2RlKTsKKyAgICBx
+ZW11X211dGV4X3VubG9jaygma3ZtX3Jlc2FtcGxlX2ZkX2xpc3RfbG9jayk7CiB9CiAKIHZvaWQg
+a3ZtX3Jlc2FtcGxlX2ZkX25vdGlmeShpbnQgZ3NpKQogewogICAgIEtWTVJlc2FtcGxlRmQgKnJm
+ZDsKIAorICAgIGlmICgha3ZtX2VuYWJsZWQoKSB8fCAha3ZtX2lycWNoaXBfaXNfc3BsaXQoKSkg
+eworICAgICAgICByZXR1cm47CisgICAgfQorCisgICAgcWVtdV9tdXRleF9sb2NrKCZrdm1fcmVz
+YW1wbGVfZmRfbGlzdF9sb2NrKTsKKwogICAgIFFMSVNUX0ZPUkVBQ0gocmZkLCAma3ZtX3Jlc2Ft
+cGxlX2ZkX2xpc3QsIG5vZGUpIHsKICAgICAgICAgaWYgKHJmZC0+Z3NpID09IGdzaSkgewogICAg
+ICAgICAgICAgZXZlbnRfbm90aWZpZXJfc2V0KHJmZC0+cmVzYW1wbGVfZXZlbnQpOwogICAgICAg
+ICAgICAgdHJhY2Vfa3ZtX3Jlc2FtcGxlX2ZkX25vdGlmeShnc2kpOwotICAgICAgICAgICAgcmV0
+dXJuOworICAgICAgICAgICAgYnJlYWs7CiAgICAgICAgIH0KICAgICB9CisKKyAgICBxZW11X211
+dGV4X3VubG9jaygma3ZtX3Jlc2FtcGxlX2ZkX2xpc3RfbG9jayk7CiB9CiAKIC8qKgpAQCAtMjkx
+Niw2ICsyOTMxLDcgQEAgc3RhdGljIGludCBrdm1faW5pdChBY2NlbFN0YXRlICphcywgTWFjaGlu
+ZVN0YXRlICptcykKICAgICBpbnQgdHlwZTsKIAogICAgIHFlbXVfbXV0ZXhfaW5pdCgma21sX3Ns
+b3RzX2xvY2spOworICAgIHFlbXVfbXV0ZXhfaW5pdCgma3ZtX3Jlc2FtcGxlX2ZkX2xpc3RfbG9j
+ayk7CiAKICAgICAvKgogICAgICAqIE9uIHN5c3RlbXMgd2hlcmUgdGhlIGtlcm5lbCBjYW4gc3Vw
+cG9ydCBkaWZmZXJlbnQgYmFzZSBwYWdlCi0tIAoyLjU1LjAud2luZG93cy4zCgo=
+--000000000000d53440065cfeaa1b--
 
