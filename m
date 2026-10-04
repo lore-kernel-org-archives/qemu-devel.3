@@ -4,64 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5396CA5FCE
-	for <qemu-devel@archiver.kernel.org>; Sun,  4 Oct 2026 15:26:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5C51CA5FF0
+	for <qemu-devel@archiver.kernel.org>; Sun,  4 Oct 2026 15:27:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xDO6B-0005il-1F; Sun, 04 Oct 2026 11:25:59 -0400
+	id 1xDO7H-00068H-1G; Sun, 04 Oct 2026 11:27:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tanchi25@mails.ucas.ac.cn>)
- id 1xDO03-0004IZ-WA; Sun, 04 Oct 2026 11:19:40 -0400
-Received: from smtp21.cstnet.cn ([159.226.251.21] helo=cstnet.cn)
- by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_CBC_SHA1:256)
- (Exim 4.90_1) (envelope-from <tanchi25@mails.ucas.ac.cn>)
- id 1xDO01-0005O6-DA; Sun, 04 Oct 2026 11:19:39 -0400
-Received: from k3-03 (unknown [159.226.43.8])
- by APP-01 (Coremail) with SMTP id qwCowACXbfFnbsJqG3TaCQ--.526S2;
- Sun, 04 Oct 2026 23:19:22 +0800 (CST)
-From: Tan Chi <tanchi25@mails.ucas.ac.cn>
-To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
- liwei1518@gmail.com, daniel.barboza@oss.qualcomm.com,
- zhiwei_liu@linux.alibaba.com, chao.liu@processmission.com,
- Tan Chi <tanchi25@mails.ucas.ac.cn>, qemu-stable@nongnu.org
-Subject: [PATCH] hw/riscv/riscv-iommu: fix entry leak with ioatc-limit=0
-Date: Sun,  4 Oct 2026 23:18:55 +0800
-Message-ID: <20261004151855.201300-1-tanchi25@mails.ucas.ac.cn>
-X-Mailer: git-send-email 2.53.0
+ (Exim 4.90_1) (envelope-from <bmeng.cn@gmail.com>)
+ id 1xDO70-00060V-3m
+ for qemu-devel@nongnu.org; Sun, 04 Oct 2026 11:26:50 -0400
+Received: from mail-yx2-x0c.google.com ([2607:f8b0:4864:41::c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <bmeng.cn@gmail.com>)
+ id 1xDO6y-00060I-MI
+ for qemu-devel@nongnu.org; Sun, 04 Oct 2026 11:26:49 -0400
+Received: by mail-yx2-x0c.google.com with SMTP id
+ 00721157ae682-8ab445ac183so7653617b3.3
+ for <qemu-devel@nongnu.org>; Sun, 04 Oct 2026 08:26:48 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1791127607; cv=none;
+ d=google.com; s=arc-20260327;
+ b=k+oXpjeRNwBd8hWRZLXtMreaV3GY9dp5N0GwWokSppgGEyoYTMIWK6X1TuD8tk61x2
+ ixVsRvkUdDru0K2/LBIpi7pP7qXBzCNHs6CcdmGeoammwxWcNe8GW1siORxWC0/3GhAq
+ 4vtD6lDOHujWTksBadm68iUaML2vvTFD75ntsYc8I1dsVMcDL2b3JQLhX4xRzMB9UfAL
+ R3E1ggoS1egbSZFK6WhCFulCEHfoSdk5/wQPXVTVvLTcgaP6puJ76gYCWDNVKXowssYG
+ i7bqHIv9e+R4C4SiZMGBKBKQr77EU+lLLGPLR+l/65RGrLZuCG+RoZqTdd+GhwBPYNyk
+ ZvHw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=g10pd3X1IgzZ/IO4Y3r2j2UA80f1HVdhL5FiOZhyBNw=;
+ fh=/0IC5dMyt1pYrKG8Th8uxNlasmylZbudYuns8eU0grQ=;
+ b=rz8/XfneIs3txRi93UIi5UiXmMGvpMv9rW6ZvxGb/wLTZ7j1vkVpMwiwMJnpJi1WHc
+ 3CcfR6eT3BGX9GaOkCO75+jH+1a7HnEyc4Tx6KNJ7kuqQ9PMuucQZERGFraRweWj1Ccx
+ cX3dAYetUafPaKIAPm4CaH9KofzWHSzrSgecs8Z45VZQ59m40ppwRyer6CP9qvEfJxS8
+ o+y6meu19ZQQ5D2MzBcz00qS9+Y/1I/e6RCGVwlln51EQPh9C4xPX3AV88vQRiaRdyq2
+ 7RPhBqKo9UBduksV27Bf/cp1lN5EKm5Kiigk3WkkcpBpLPVmKDGSaqFfG7lIUNOxS1/F
+ ZjoA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1791127607; x=1791732407; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=g10pd3X1IgzZ/IO4Y3r2j2UA80f1HVdhL5FiOZhyBNw=;
+ b=g0frr2CAnbgPefFlpCpONvjhJY3OykawQD1LtNcTOPwcWKYWh/iawqVIRgWqfJiNGP
+ y0nbscKCJesLLe5iO0cTme/J+3cfGc0vDV4+3L6goKOOcvpuRC0jiiXlcOwjvxXGOzFN
+ necregcZMsFj3sm4BBnJAY4UmECuBDoHhZtribtdbGnXxT279igFryaA40DyJ8oJ3v4Z
+ XuElYW32L4UTa9hZT7IwBQSXxvvMRgW2H5w3d8Aatnz4R+a5jn0nvDHzhQfAP4llvT7m
+ rp184IK/Z00qmvl2VTLNgf8+cniNNogcag+Tmj6i7d497sUvaG/lZRQbJCLU9tF28hbw
+ BcOw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1791127607; x=1791732407;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=g10pd3X1IgzZ/IO4Y3r2j2UA80f1HVdhL5FiOZhyBNw=;
+ b=J1pEiNEm1gb4aRrz5S6innAqeq1rQjE09Uhx7irh8AGwldEhSeUER58IY4UaUqn9/+
+ RiZXahHOL/4G7cppXL1FIjfLZh6MoNC22HFlFZD/GXcSzinTI9i3lrAgd2kfG24MrV/6
+ yoSIElvdd3PpglWefQNOxwyNZgOt7HQmSrMdItslTV7wXTbV1Gg5MmyB3Ntq3mn5aG/T
+ S9J4R4dFxc5sprT7tUka/O1fn461HClp/MAd/d4/JM2G46jYRD/AnkqdthpLzgRkqn8Z
+ cJdsKqFpndMA78GBbnaEgLV/f3ZZ3OM9wFfasS4/WGxWP+kmEqsHEaE30gfvghCrJUO9
+ d2fA==
+X-Gm-Message-State: AFq9FYLVGw5mTr9w9VRTOnlscDgOf0U04Du6EblcNIhlPO9iOroJlaAj
+ UP8lD56I7uq+KAseIlVuT59QIjwNKvuqb9gk8SXf478dHq8NnuMgrCpC4LWpmEYwK4BrXXFzn2y
+ bLX/nGbq4j05ZkhB7OiuY+tV89HNao9A=
+X-Gm-Gg: AYBFou1R3clQA62Pv3L9shthyXSj3w/VWiCopOGFAAurPzhoWsZAkZijRBmSt0CXu6z
+ +Ec9ns2wTp48AMqPMCz67ML5XIVB73Rn+OugI8InZEa0GvtRmaeBTfOrXvB45aff+ryWzIuRIuZ
+ pIwAICqO77REEOLxK6FHrObkKrMhyw5OEuN2jwPzAFLq7WYFv3B7wRoMVEsCvTiZadwbd8qJAT+
+ RfvfJbwLGdD2DYDtKWasEguadflFVrsa/d3KeHu5qHCAcch11GjcOFlB7s5Js2na21F/nXMtlIe
+ UFwkaho43zgg8qUMv26Z3QX5CvnK2t7Ge44+2Y40e3EBuzgDMH4ZaB/GO7Z2qeCo7CZElF+tqxp
+ /WWZMqxowMuQMwR7H
+X-Received: by 2002:a05:690c:9990:b0:7db:ccda:a409 with SMTP id
+ 00721157ae682-8ae392b6973mr35221947b3.9.1791127606991; Sun, 04 Oct 2026
+ 08:26:46 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qwCowACXbfFnbsJqG3TaCQ--.526S2
-X-Coremail-Antispam: 1UD129KBjvdXoWruryktFy5CF4rWr4rKr47twb_yoWkJrb_CF
- 95Wry2qrWDtanIyFyqyF48GrsIk3yF9ry3t34xGa17W34kWr47C3yjqrs7Xr1UCr4rJFnF
- 9rn3K343GrsxJjkaLaAFLSUrUUUUbb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
- 9fnUUIcSsGvfJTRUUUbDxFF20E14v26r4j6ryUM7CY07I20VC2zVCF04k26cxKx2IYs7xG
- 6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48ve4kI8w
- A2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI0_Gr0_
- Cr1l84ACjcxK6I8E87Iv67AKxVWxJr0_GcWl84ACjcxK6I8E87Iv6xkF7I0E14v26F4UJV
- W0owAac4AC62xK8xCEY4vEwIxC4wAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC
- 0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUAVWUtwAv7VC2z280aVAFwI0_Jr0_Gr
- 1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcxkI7VAKI48JM4x0x7Aq67IIx4CEVc8vx2IE
- rcIFxwACI402YVCY1x02628vn2kIc2xKxwCY1x0262kKe7AKxVWUtVW8ZwCY02Avz4vE14
- v_XrWl42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AK
- xVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r1q6r43MIIYrx
- kI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E14v2
- 6r4j6F4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJVW8Jw
- CI42IY6I8E87Iv6xkF7I0E14v26r4j6r4UJbIYCTnIWIevJa73UjIFyTuYvjfUn5rcUUUU
- U
-X-Originating-IP: [159.226.43.8]
-X-CM-SenderInfo: pwdquxrlsvqzpdlo2hpxfd2hldfou0/
-Received-SPF: pass client-ip=159.226.251.21;
- envelope-from=tanchi25@mails.ucas.ac.cn; helo=cstnet.cn
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20261004122647.3913-1-shentey@gmail.com>
+ <20261004122647.3913-5-shentey@gmail.com>
+In-Reply-To: <20261004122647.3913-5-shentey@gmail.com>
+From: Bin Meng <bmeng.cn@gmail.com>
+Date: Sun, 4 Oct 2026 23:26:35 +0800
+X-Gm-Features: AclHuK8kOWrucEEovAZ35f7qWzs0b5o9-pcokpk5q9uQOeB-jKLKjKqBSPZfs1s
+Message-ID: <CAEUhbmW0BcgxFLF6MMasng_dkQ93dG8-1D_RrcmyNYdSeXexfg@mail.gmail.com>
+Subject: Re: [PATCH v2 04/30] hw/arm/imx8mm-evk: Fix reference count of SoC
+ object
+To: Bernhard Beschow <shentey@gmail.com>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Peter Maydell <peter.maydell@linaro.org>,
+ Gaurav Sharma <gaurav.sharma_7@nxp.com>, 
+ Alistair Francis <alistair@alistair23.me>, qemu-arm@nongnu.org, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
+ Jason Wang <jasowangio@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Bin Meng <bin.meng@processmission.com>,
+ Jean-Christophe Dubois <jcd@tribudubois.net>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:41::c;
+ envelope-from=bmeng.cn@gmail.com; helo=mail-yx2-x0c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Sun, 04 Oct 2026 11:25:55 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -76,37 +128,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-riscv_iommu_translate() allocates an IOATC entry before passing it to
-riscv_iommu_iot_update(). The update helper normally transfers ownership
-to the hash table.
+On Sun, Oct 4, 2026 at 8:36=E2=80=AFPM Bernhard Beschow <shentey@gmail.com>=
+ wrote:
+>
+> Using sysbus_realize_and_unref() requires object_new() rather than
+> object_new_with_props(), otherwise the initial reference count is
+> subtracted twice, i.e. ends up being one too low.
+>
+> board")
 
-When ioatc-limit is zero, however, the helper returns without inserting or
-freeing the entry. Every cacheable non-identity translation therefore leaks
-one RISCVIOMMUEntry.
+corrupted commit message?
 
-Free the entry on the disabled-cache path so that
-riscv_iommu_iot_update() consistently consumes the entry passed to it.
+>
+> Fixes: 7bcd1f30bc83 ("hw/arm: Add the i.MX 8MM EVK(Evaluation Kit)
+> cc: qemu-stable
+> Reported-by: Peter Maydell <peter.maydell@linaro.org>
+> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+> ---
+>  hw/arm/imx8mm-evk.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+>
+> diff --git a/hw/arm/imx8mm-evk.c b/hw/arm/imx8mm-evk.c
+> index c3215b11cb..6de0d9c4a2 100644
+> --- a/hw/arm/imx8mm-evk.c
+> +++ b/hw/arm/imx8mm-evk.c
+> @@ -83,8 +83,8 @@ static void imx8mm_evk_init(MachineState *machine)
+>      ims->bootinfo.psci_conduit =3D QEMU_PSCI_CONDUIT_SMC;
+>      ims->bootinfo.modify_dtb =3D imx8mm_evk_modify_dtb;
+>
+> -    s =3D FSL_IMX8MM(object_new_with_props(TYPE_FSL_IMX8MM, OBJECT(machi=
+ne),
+> -                                         "soc", &error_fatal, NULL));
+> +    s =3D FSL_IMX8MM(object_new(TYPE_FSL_IMX8MM));
+> +    object_property_add_child(OBJECT(machine), "soc", OBJECT(s));
+>      object_property_set_uint(OBJECT(s), "fec1-phy-num", 1, &error_fatal)=
+;
+>      sysbus_realize_and_unref(SYS_BUS_DEVICE(s), &error_fatal);
+>
 
-Fixes: 9d085a1c3cb2 ("hw/riscv/riscv-iommu: add Address Translation Cache (IOATC)")
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Tan Chi <tanchi25@mails.ucas.ac.cn>
----
- hw/riscv/riscv-iommu.c | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-index 323a041b4a..ebf8d7006c 100644
---- a/hw/riscv/riscv-iommu.c
-+++ b/hw/riscv/riscv-iommu.c
-@@ -1700,6 +1700,7 @@ static void riscv_iommu_iot_update(RISCVIOMMUState *s,
-     GHashTable *iot_cache, RISCVIOMMUEntry *iot)
- {
-     if (!s->iot_limit) {
-+        g_free(iot);
-         return;
-     }
- 
--- 
-2.53.0
-
+Otherwise,
+Reviewed-by: Bin Meng <bin.meng@processmission.com>
 
