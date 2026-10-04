@@ -4,123 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E258ECA5FE6
-	for <qemu-devel@archiver.kernel.org>; Sun,  4 Oct 2026 17:53:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 081B5CA5FEC
+	for <qemu-devel@archiver.kernel.org>; Sun,  4 Oct 2026 21:17:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xDQNw-0005PY-B6; Sun, 04 Oct 2026 13:52:28 -0400
+	id 1xDTa1-0001UZ-45; Sun, 04 Oct 2026 17:17:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
- id 1xDQNu-0005PC-OJ; Sun, 04 Oct 2026 13:52:26 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <contact@sayyadumar.com>)
+ id 1xDTZz-0001U7-4w; Sun, 04 Oct 2026 17:17:07 -0400
+Received: from www675.your-server.de ([85.10.213.182])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
- id 1xDQNs-00088F-K9; Sun, 04 Oct 2026 13:52:26 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 694F5kB12138807; Sun, 4 Oct 2026 17:52:07 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-type:date:from:in-reply-to:message-id:mime-version
- :references:subject:to; s=pp1; bh=klR4s/JJWJvNbJtP6DohWDso5wDgVd
- wDAk4ZLNvB13o=; b=bszE8gAsJoi/4sXXtEIWIj7ruuUo2wONG3BxtOzwCeVfES
- lxMK7ZefTbLNIfbsj1w5cSVYuLlkw1OJ+uUe4EjwttgvWo3mxWLl1lfB5PH3N9yf
- CSQk7VlayqoOz0fgBRD3ReSIjHervnI3OJxqsT0pa+WI+ZXpCsKXBB+//xlNXY4a
- uge5EAI7sYLWY/629swnKrrM/DvbAMe9OB4AW8hHmikRShNBLQOVY8nq/XnQ5X28
- mEIkW6W4AnkNjeTggqCTNHbWsNhvNkms/89jTj/287NOWw++sw4RAwxrFpMyRSW7
- mq8M+O9Y6Qi4rArPsx/jX81MWFsZ/BI3hZLbsYUQ==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4h2sbuww3u-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Sun, 04 Oct 2026 17:52:06 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 694ElYWB248355; Sun, 4 Oct 2026 17:52:05 GMT
-Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4h3e8g2382-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sun, 04 Oct 2026 17:52:05 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
- [10.20.54.105])
- by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 694Hq1iV42336680
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Sun, 4 Oct 2026 17:52:02 GMT
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D4B032004D;
- Sun,  4 Oct 2026 17:52:01 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B2E2A2004B;
- Sun,  4 Oct 2026 17:51:59 +0000 (GMT)
-Received: from fedora (unknown [9.5.7.39])
- by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTPS;
- Sun,  4 Oct 2026 17:51:59 +0000 (GMT)
-Date: Sun, 4 Oct 2026 23:30:10 +0530
-From: Amit Machhiwal <amachhiw@linux.ibm.com>
-To: "Kirill A. Korinsky" <kirill@korins.ky>
-Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Chinmay Rath <rathc@linux.ibm.com>,
- Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org,
- qemu-ppc@nongnu.org, Anushree Mathur <anushree.mathur@linux.ibm.com>,
- BALATON Zoltan <balaton@eik.bme.hu>, Miles Glenn <milesg@linux.ibm.com>,
- Amit Machhiwal <amachhiw@linux.ibm.com>
-Subject: Re: [PATCH v3 2/5] ppc: Raise decrementer IRQ on zero write
-Message-ID: <20261004232816.f03c1a83-be-amachhiw@linux.ibm.com>
-Mail-Followup-To: "Kirill A. Korinsky" <kirill@korins.ky>, 
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
- Chinmay Rath <rathc@linux.ibm.com>, Nicholas Piggin <npiggin@gmail.com>,
- qemu-devel@nongnu.org, 
- qemu-ppc@nongnu.org, Anushree Mathur <anushree.mathur@linux.ibm.com>, 
- BALATON Zoltan <balaton@eik.bme.hu>, Miles Glenn <milesg@linux.ibm.com>
-References: <20261001230058.11465-1-kirill@korins.ky>
- <20261001230058.11465-3-kirill@korins.ky>
+ (Exim 4.90_1) (envelope-from <contact@sayyadumar.com>)
+ id 1xDTZw-0005KG-Oj; Sun, 04 Oct 2026 17:17:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=sayyadumar.com; s=default2511; h=Content-Transfer-Encoding:Content-Type:
+ In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender
+ :Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
+ Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID;
+ bh=QHzWOK7SzR8xhkMI4KGWw8+VnUVeO79TcWDA95utWf0=; b=awASUGysQ7rlRYPQtSQ3nxXkNO
+ 1FWvRRcrCKG9OFsGu7IfENR/PJvcs6B760IpMvaAl969sG/lNHAjIPCPLpBKkBkyMgzlc0pvPGtDk
+ XovqfkzBzSyZlImHPL49CJkCp65sv3mDBQtrZyzjzTcQeLKAKfsL+Sia/oP2/zL8xhiU1z23J3hSn
+ 9Lk1s8lAOnu5aOiHUStmJH7WGZ6AXt5nAGqMOKd1dqDSGoUhfA21JvoFaQXv2jLO/FdQ7YV6lY7f0
+ vk/czxqOMsvtPxUzF0MewX86POdevnObJreu5nz8b6v9vUO8R1n1GQS9Vn+YF1LsW0FAN+3INk1Jz
+ HatjfAWg==;
+Received: from sslproxy07.your-server.de ([78.47.199.104])
+ by www675.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+ (Exim 4.96.2) (envelope-from <contact@sayyadumar.com>)
+ id 1xDTZn-000DS6-2F; Sun, 04 Oct 2026 23:16:55 +0200
+Received: from localhost ([127.0.0.1])
+ by sslproxy07.your-server.de with esmtpsa (TLS1.3) tls TLS_AES_256_GCM_SHA384
+ (Exim 4.96) (envelope-from <contact@sayyadumar.com>)
+ id 1xDTZn-000G9y-0O; Sun, 04 Oct 2026 23:16:55 +0200
+Message-ID: <c31dd9df-b82b-4cbc-814c-35d299f19c5c@sayyadumar.com>
+Date: Sun, 4 Oct 2026 23:16:54 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20261001230058.11465-3-kirill@korins.ky>
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-ORIG-GUID: Hk3pVMX2-FeeM-5xzY3ueOGcP_kmFFPb
-X-Authority-Analysis: v=2.4 cv=KJHPn1Fo c=1 sm=1 tr=0 ts=6ac29246 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=kj9zAlcOel0A:10 a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8
- a=pcZqCyVeAAAA:8 a=mGm42c9pDIVS9U7J-8UA:9 a=CjuIK1q_8ugA:10
- a=SGy6VSG0Ue1xmPAwIFl9:22
-X-Proofpoint-GUID: ixIzEelWmFngriIEgwy46UWZZf0S5tJu
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA0MDA3MCBTYWx0ZWRfXxP3WgJFgoEAy
- I9CiOYkGvwlHhphPxrXCWQseiX66uReI5dqJFSeaHx3YWr6lGQyTlddecrtE43MMq+sjSIJS7Tj
- tqBK9JDJWMpQ7yfkKj8lHYLGSimkVYOT0s517ll5is0CCRTP5TQYluM+IRDjxdpYWkHGkCQh5tz
- hoLkFVYSzuPtQspuXSdpwOV6/6Eg1Qt8OK4kccWrE51I/B6s6H/0wkTa+KMgAa8hoXBIL87eNTW
- 6w+kKIN5+ydQ6K/rSEwL0atyCRUgtI9gt5lcVEmvqS4TuV3XpQogSgqcy9WOe6hhGbrXxXlCmNX
- 6be4Y4COm7IlN8bm3okaxvRAThD7trDy2B44UMd2QqO6YJU7sqyvR8kuAd8IJNLmyLjrkj0ekRN
- du4lZ3PvuHWUvGibhF6/SMlp8JzQMSDl82QXKLUyjdPuiVgUxM8bWyVB7VPGDlc6v4rjrunBrmk
- dVkS3EKQfNQcCezdhBQ==
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA0MDA3MCBTYWx0ZWRfX13+Ldwkf1SH1
- Zd/lAo7ijDffeTlL8dlkpYhUeeWTmFLacgyNN6Q+gr1b9vTz2E4yQLbQxm+9eJV5gO1OVxLs8EP
- 2VKZYCtx/jy/FN4FDND+gk9yghSf/Tg=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-10-04_04,2026-10-02_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 malwarescore=0 spamscore=0 lowpriorityscore=0
- priorityscore=1501 phishscore=0 impostorscore=0 adultscore=0 clxscore=1015
- bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
- definitions=main-2610040070
-Received-SPF: pass client-ip=148.163.158.5;
- envelope-from=amachhiw@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/2] target/rx: add RXv2/RXv3 CPU support
+To: yoshinori.sato@nifty.com
+Cc: qemu-devel@nongnu.org, Alistair Francis <alistair@alistair23.me>,
+ Peter Maydell <peter.maydell@linaro.org>, Jason Wang <jasowangio@gmail.com>,
+ qemu-arm@nongnu.org
+References: <20260913-umar-rx-series-v1-0-5a5841a5d1e9@sayyadumar.com>
+ <87o6e06pqs.wl-yoshinori.sato@nifty.com>
+Content-Language: en-US
+From: "Umar, Sayyad Mahammad" <contact@sayyadumar.com>
+In-Reply-To: <87o6e06pqs.wl-yoshinori.sato@nifty.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Virus-Scanned: Clear (ClamAV 1.4.3/28143/Sun Oct  4 08:25:22 2026)
+Received-SPF: pass client-ip=85.10.213.182;
+ envelope-from=contact@sayyadumar.com; helo=www675.your-server.de
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -136,25 +77,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/10/02 12:59 AM, Kirill A. Korinsky wrote:
-> From: "Kirill A. Korinsky" <kirill@korins.ky>
-> 
-> OpenBSD writes zero to an edge triggered decrementer, then enters idle
-> expecting its interrupt. QEMU defers the already due edge to a timer at
-> the current virtual time, leaving the guest stalled.
-> 
-> Signed-off-by: Kirill A. Korinsky <kirill@korins.ky>
-> Tested-by: Anushree Mathur <anushree.mathur@linux.ibm.com>
-> Tested-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-> Suggested-by: Amit Machhiwal <amachhiw@linux.ibm.com>
-> ---
->  hw/ppc/ppc.c | 7 +++++++
->  1 file changed, 7 insertions(+)
+On 9/14/26 13:23, yoshinori.sato@nifty.com wrote:
+> On Mon, 14 Sep 2026 03:21:04 +0900,
+> Sayyad Mahammad Umar wrote:
+>> This series extends the RX target with RXv2 and RXv3 CPU support,
+>> forming the foundation for the RX65N, RX651, and RX72M machine models.
+>>
+>> The first patch adds the CPU definitions, instruction support, and
+>> translator changes required by the newer RX cores.
+>>
+>> The second patch adds the initial RX machine and peripheral support.
+>>
+>> Signed-off-by: Sayyad Mahammad Umar <contact@sayyadumar.com>
+>> ---
+>> Sayyad Mahammad Umar (2):
+>>        target/rx: add RXv2 and RXv3 CPU support
+>>        hw/rx: add common RX peripherals
+>>
+>>   MAINTAINERS                           |   20 +
+>>   hw/adc/renesas_s12ad.c                |  324 +++++++++
+>>   hw/dma/renesas_rx_dmac.c              |  317 +++++++++
+>>   hw/dma/renesas_rx_dtc.c               |  169 +++++
+>>   hw/gpio/renesas_rx_gpio.c             |  256 +++++++
+>>   hw/misc/renesas_rx_crc.c              |  219 ++++++
+>>   hw/misc/renesas_rx_fcu.c              |  985 ++++++++++++++++++++++++++
+>>   hw/misc/renesas_rx_romcache.c         |  139 ++++
+>>   hw/misc/rx65n_sysclk.c                |  190 +++++
+>>   hw/net/renesas_etherc.c               |  955 +++++++++++++++++++++++++
+>>   hw/rtc/renesas_rx_rtc.c               |  330 +++++++++
+>>   hw/ssi/renesas_rspi.c                 |  319 +++++++++
+>>   hw/timer/renesas_mtu3.c               |  509 ++++++++++++++
+>>   hw/watchdog/renesas_rx_wdt.c          |  193 ++++++
+>>   include/hw/adc/renesas_s12ad.h        |   61 ++
+>>   include/hw/dma/renesas_rx_dmac.h      |   57 ++
+>>   include/hw/dma/renesas_rx_dtc.h       |   42 ++
+>>   include/hw/gpio/renesas_rx_gpio.h     |   64 ++
+>>   include/hw/misc/renesas_rx_crc.h      |   30 +
+>>   include/hw/misc/renesas_rx_fcu.h      |  191 +++++
+>>   include/hw/misc/renesas_rx_romcache.h |   30 +
+>>   include/hw/misc/rx65n_sysclk.h        |   37 +
+>>   include/hw/net/renesas_etherc.h       |  109 +++
+>>   include/hw/rtc/renesas_rx_rtc.h       |   52 ++
+>>   include/hw/ssi/renesas_rspi.h         |   61 ++
+>>   include/hw/timer/renesas_mtu3.h       |   73 ++
+>>   include/hw/watchdog/renesas_rx_wdt.h  |   48 ++
+>>   target/rx/cpu-param.h                 |    3 +
+>>   target/rx/cpu-qom.h                   |    2 +
+>>   target/rx/cpu.c                       |   57 +-
+>>   target/rx/cpu.h                       |  124 ++++
+>>   target/rx/disas.c                     |  383 ++++++++++-
+>>   target/rx/gdbstub.c                   |   44 +-
+>>   target/rx/helper.c                    |   56 +-
+>>   target/rx/helper.h                    |   22 +
+>>   target/rx/insns.decode                |  125 +++-
+>>   target/rx/meson.build                 |    6 +-
+>>   target/rx/op_helper.c                 |  357 ++++++++++
+>>   target/rx/translate.c                 | 1225 ++++++++++++++++++++++++++-------
+>>   39 files changed, 7873 insertions(+), 311 deletions(-)
+>> ---
+>> base-commit: ff1d2d19d7e24893e2012d879f8e73077e17b9bd
+>> change-id: 20260913-umar-rx-series-0bfbbfe6b074
+>>
+>> Best regards,
+>> --
+>> Sayyad Mahammad Umar <contact@sayyadumar.com>
+>>
+> Thanks.
+> I also implemented some peripheral functions to emulate the actual board.
+> I haven't verified every single change, but if there are any missing features,
+> it would be best to combine them with my changes.
 
-Thanks for sending the correct fix in v3.  LGTM.
+Hi Mr Sato,
 
-Reviewed-by: Amit Machhiwal <amachhiw@linux.ibm.com>
+Sorry for the late reply, i was sick for couple of weeks.
 
-Thanks,
-Amit
+I have now started to work on splitting my last patch series from 2 
+patches to about ~31 smaller patches.
+
+I will be submitting those in the coming days after i test the changes 
+with real firmware.
+
+The real hardware i want to support are rx65n-2mb, rx660-tb and rx72m-rsk.
+
+Which boards/peripherals are you working on ?
+
+Regards,
+
+Umar
+
 
