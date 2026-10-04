@@ -4,92 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEC29CA5FCE
-	for <qemu-devel@archiver.kernel.org>; Sun,  4 Oct 2026 16:23:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93364CA5FCE
+	for <qemu-devel@archiver.kernel.org>; Sun,  4 Oct 2026 16:24:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xDP06-00086o-BH; Sun, 04 Oct 2026 12:23:46 -0400
+	id 1xDP0n-0000Sg-BZ; Sun, 04 Oct 2026 12:24:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bmeng.cn@gmail.com>)
- id 1xDP02-00084O-64
- for qemu-devel@nongnu.org; Sun, 04 Oct 2026 12:23:42 -0400
-Received: from mail-yx2-x0f.google.com ([2607:f8b0:4864:41::f])
+ id 1xDP0k-0000Ok-K7
+ for qemu-devel@nongnu.org; Sun, 04 Oct 2026 12:24:26 -0400
+Received: from mail-yw1-x112a.google.com ([2607:f8b0:4864:20::112a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <bmeng.cn@gmail.com>)
- id 1xDP00-0001uR-Nb
- for qemu-devel@nongnu.org; Sun, 04 Oct 2026 12:23:41 -0400
-Received: by mail-yx2-x0f.google.com with SMTP id
- 956f58d0204a3-671563fb8beso829929d50.3
- for <qemu-devel@nongnu.org>; Sun, 04 Oct 2026 09:23:40 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1791131019; cv=none;
+ id 1xDP0i-0001vl-Ud
+ for qemu-devel@nongnu.org; Sun, 04 Oct 2026 12:24:26 -0400
+Received: by mail-yw1-x112a.google.com with SMTP id
+ 00721157ae682-8ab37e44643so6344567b3.0
+ for <qemu-devel@nongnu.org>; Sun, 04 Oct 2026 09:24:24 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1791131064; cv=none;
  d=google.com; s=arc-20260327;
- b=AwSMFpJcI+jFin89D4rT/nuv1f4R1eu9zEbHyThDHD7lNrCWh4pd/EqsN+7dWYdFov
- bjbi9YSjHM64pPq0+hSwyoYq50aDSg0auRnHYmq7DmxETyg/f/ips08Fu9iUgiZDKprT
- mSfjxjLEcqb8SKxeQYg3ldU0/dex/uA0e1MzDNePmi5S/dUALMOcEBHdUrb0DngW3fmW
- EGyHH37+LAXQeTIVD/pgAhDW0P0DFhkyeaQezqjo+q1Kz/U5661z5ol4PQsy1tkgEq6i
- lCT0wwNqyvKsuniBObMa8CTIdjIhoNTMDJR+4e7EcFsO4q+hvorOhgP2Mw0h53+yswlr
- 4e+Q==
+ b=JhazLKqyzXmqGm/Pre9S/hVV2J7Hk6dXmX025nGDlWjc58OvGmUDMrpIuFUi3cxrsK
+ JKg9f8O3lItgXyZBYt7mo+Iug1HORhlaM9VXq1TFcH6OS5RHZkwU0tVviDVkyiYEGKi8
+ wLeESCIZCo+ENiVU7LayrkGHXJKH1v+/D7SeThQYBJEvBwsE/b0divU6aS9VCGyxBAhM
+ 9hmPlwBK7WeRr9GihPso20zWk5OnLx5QYVxz14WxG8Ri/hDaAbkPNU+GQdnPA4KiLhsc
+ Uh2ap4OYe7OZOWaaa2H7SIofoi6EpX5DlMktEhJvonF500gNb7EoTSbT7NpMcSn1kLIx
+ U/AQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=QvePUYJSZlCAOhsi+yrewZbslyAkmaf0faPw48P0Lp4=;
+ bh=uOVDhL85kyGJGKff+y9FATncWkUC3Lv1pByLBJzSctc=;
  fh=/0IC5dMyt1pYrKG8Th8uxNlasmylZbudYuns8eU0grQ=;
- b=HGYCGrxHQvSs+CEr6RFXK618fv7dprfBrG7a55cHS2Su9HS8vfC/qxDAy7Hz61vMge
- TSMCKbliM+MixEJNhWq6CQhcmaie4Nja257oV24wEKthOS470D1fYA1BaLYfyZ5b7AVl
- sTN/A7fpqZBi654dTexcTDG7psC6x/G8BZph2gNNgyjXw6P22uhpNbN+65Cxal5z4Yuz
- W0i2bxx6wy+RZy0k9U6Q4FmChfaEVw7qQkAen2RmrQxt4fhlnKPbcjE7SjfuoiX/lk9Z
- DTpllXFKCH9xsE8qnK4tBJ2weq9yGsP/XYHMs/SCJ+2wMQErbrfgCXpsgn1BOjq2T/lT
- h4OQ==; darn=nongnu.org
+ b=MKlJNYQymVP8pqGRYAKcdHeFLRMpHxBuyXRynP+9DT29oAYgRgj6acfoC+0wAYSpFq
+ 0L4+MK7ONQtlXiJoywUxilKpRCNPGJFl6H4liO+iELeM2WLxY5vcZvoPLDbPqPp/Dvrc
+ Sks2AxxbLbqcprA51QDIBP/VLFDKZCifpp4xkK5OMRJ6BzbiWyFU1HQL+CzRS17BrP7i
+ ABiUhG1B1xVRhV3cyTaYQiJMv9tiQ/wpi/rjWFdgg648CH8+epGqHvD/a50OZjr2cJXf
+ Ygr67ygyPZkz2XU12flPtbi+w8qMNtIS5zkC6KOjtUOEEG37OVPeRJgl0pBWB0+UHE6L
+ elog==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1791131019; x=1791735819; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1791131064; x=1791735864; darn=nongnu.org;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=QvePUYJSZlCAOhsi+yrewZbslyAkmaf0faPw48P0Lp4=;
- b=oisCxXISF/30w5xs+DNFUmDyz6/leJ1o7ZuUraycpI+aJCkfPU4fWbThEm+RDIj59V
- abWnsuUNykg09o+xySNiCeen8DkZCEBKYWkk8udVZvcH7az5sYyzbVTBACxAQEiuY2rD
- 22MVLJrAslBDOnqPeiv7jTKASS40ZoUMdwdVl1wI6A3v5USH1DzWlTkLrA22lF6oETJE
- d15eLabyJHSjtTLjVm9X5xgN0hqIHBrhwffj4iu6Lhrdcd2KtS0EYGKWS5xvvt1DZe3O
- Lfd8SzzSVhdR2h2MHmPCueb75IPJQKLidxyLzgt5FMbH1fQCFVYDLrPTAZcXACorhVxx
- 0N9Q==
+ bh=uOVDhL85kyGJGKff+y9FATncWkUC3Lv1pByLBJzSctc=;
+ b=VHatxNG4CNaocu5seIrN69vQ0tjIojIA750o7GowqgoW4NnG/pT22Ufr1WGZufOpQ2
+ fpmu+15ZFBcq1IQzUQx9FTnNQ2hdfMyAUJRNu1hh6CCr8XaKxdVTkT9nsWGoKxEN9qs8
+ Bl+VJZgqP5oIaGzWdeA/ZjMr+Bb1oNj5wW95XEhPyFAxCEtRhxEzCkzPpVqVe7lf2WgH
+ on/XLZVgVofG5gzGdUtti2eLLy5c1ZSggMdQ0+e9Se4dJESq2elhOpIKop8Yt8Yl10nb
+ T6o/MD+gJlJxQnJ33HbvWr6bM/TNygWsv+C4l/K1DrveH4CZmsLLUn8bfJg6Sag9EcgC
+ otWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791131019; x=1791735819;
+ d=1e100.net; s=20260707; t=1791131064; x=1791735864;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=QvePUYJSZlCAOhsi+yrewZbslyAkmaf0faPw48P0Lp4=;
- b=Bh7kpgXl+SnEKpDLqB2dnia6bLooMxVpfi1BYC9acTuEVLz/C/rsygbdGQQPzz0UcX
- HEcJ7eUKkdaM5cOn1hBYULG++OHlkeuiFZsurXmhuV2Z195h+DadIg25mMc9O+4/3Jlp
- c2TOSAQbP+04HhtpfJp6dbahZk5AaET+oDnezeqstZj7m9S1RBIRKrKuw5GUi01uNqw5
- m8NfSuDpDcs6Gj2Qw0CWuHo7eJmqSgunIsLub0mPH7+If6BJpQASCC4kNkXlqXunDzRf
- 8HgF9pFYlwy3fqRALNqbQM+Z48wbOAGxQquj+no8r0xf2r+equpLasuddSUSwq66vE4m
- xl9Q==
-X-Gm-Message-State: AFq9FYKa0RKKnbJQ8DeG8T6eNYwia4OIT+gNw/+fixTRINW+lihgSw/h
- pDXNTP+dJWP8uKkWN0vpKfG3P7C/dbFpQFc/fQgz+0uVYnsUv7yZIqQvQwx64AEji3CDmOC/p44
- dQzQInmJd7Vxk6Z5A9hh4KVxnrvR7URk=
-X-Gm-Gg: AYBFou1+VcmwL3f/TRYRV1N+zN0d7mg1z3zu0Zq88pbwuyhsKo17KuBSqcImTev4WAk
- 9OqdJMnRxzErU+9Kv/ypuicYRXRKtKrA989aHwHsBikoU3UO33y69f6vnSnEXoYKhc7tv/ZcI/w
- zuHRPmLKg5xKVbAqmkEr77D/KoQHwNowhHPtwnmjnsKp+P4p/2F6YQqoqczXpM4HTIpMbvqlAkc
- 4VyE2SGWR38xaQNMzjcTxT5y6B7dnFgaI8AjACaXqv8XqoO8wmnGJghtAYksPVg/9h965SUIkoT
- KhXCx8Yyy8Lx+PXq62nNWvFPVYyXTybU5HfhBbOCP6DTAi87rg0H7ObRCw/Srkh/Ct6aOMufDXc
- 01QNihHvfiYwzcILv9EFySEaJNQ==
-X-Received: by 2002:a05:690e:d86:b0:677:b844:c5a0 with SMTP id
- 956f58d0204a3-677b844f9ebmr2163632d50.81.1791131019635; Sun, 04 Oct 2026
- 09:23:39 -0700 (PDT)
+ bh=uOVDhL85kyGJGKff+y9FATncWkUC3Lv1pByLBJzSctc=;
+ b=NO0Ze7/WOBPi1Y9S4uDAie+a/Ip4mVeUzfeQeKZmq4BuBqQ9aJVSSZo11vh5QWFRtk
+ p4zbCAUODKeQBUM2kbIO8Zc8w5uOd/lRIlRS31IDHfYC5j2FYAILSu8zm7oWM0nlCYgX
+ zDFqbIqT5Vd9XLeFEkta5JbDcgY22o4sGdFJtUIKpgZV3oQomj/DLjsY2etHPpHmRSNV
+ ikuJbhL5ut0YfOQ+cshIyGvIYBZmYmxZ8T5A0Ym5wllMmbwSEr+keUJO2aDSgHwVQfMB
+ 2URbvRUDMiu4yG1bE38sf1KV2k+PtPdTMTFLFf2S/LX0gExOfANkjRZUgtcTjL5bJlN6
+ 2aMg==
+X-Gm-Message-State: AFq9FYLA92R3R8Oh5/XJ68mbap3xPT12LpTHeJp1vIJIrkWDZNh9zVJP
+ RZQcXApV063hAawbvs4xUqJRm+d2bOr28Ua42adNdKChxvjEowzbTbkiM26Zk//hQxwtnoK4m7c
+ 2N9PG1yWadJ166aKGuYkKS4FaEdr76PQ=
+X-Gm-Gg: AYBFou34g37qYeGXaQ/wgaoLbm8f/sfXMLZSgYb/8ebYXs4i3Z0owJ3/bS4Q44wpuZk
+ G8hY+v8e/+HOtm0/BiCdEBPLHhvjOg25IdAbrMoHnJ0eYMNmUePtuokBG47fxIdfvOIAAXbTlja
+ NR/6l3W5jWe3eBrI2Ub9aUXiQwqzp+SI8v9kK3lsW3+dxDSq+pcGGxRaS0xGilVFxDgxqyKrkhG
+ W6/oJ1Qd1zQ9+QntrKUUXhDRCZsid8t0SS94ZXflZWRSK9g/CZVrsqLKeddhJKB5IGgZXkcgoRe
+ fKI0nv09rV7ACqPmWOjUXGE2m2xDJoxunudD/cWGnr+QrEMx4hvuCDsK/G6QX4T0v5vKX7D7tqy
+ MO01aoibHEJHRY4I=
+X-Received: by 2002:a05:690c:39a:b0:89a:63da:faa1 with SMTP id
+ 00721157ae682-8ae95b38df2mr18880947b3.92.1791131063901; Sun, 04 Oct 2026
+ 09:24:23 -0700 (PDT)
 MIME-Version: 1.0
 References: <20261004122647.3913-1-shentey@gmail.com>
- <20261004122647.3913-26-shentey@gmail.com>
-In-Reply-To: <20261004122647.3913-26-shentey@gmail.com>
+ <20261004122647.3913-27-shentey@gmail.com>
+In-Reply-To: <20261004122647.3913-27-shentey@gmail.com>
 From: Bin Meng <bmeng.cn@gmail.com>
-Date: Mon, 5 Oct 2026 00:23:26 +0800
-X-Gm-Features: AclHuK8C4hYubfVbBYgXsXvN-zZGVXVmc775n-j4eVzSS6vCuLRIo5OxJTiJneM
-Message-ID: <CAEUhbmU3+FLnssJrET6bg533JXqg2wo40oxEtL-XL4C02aQeag@mail.gmail.com>
-Subject: Re: [PATCH v2 25/30] Kconfig: Extract config IMX_EPIT from config IMX
+Date: Mon, 5 Oct 2026 00:24:12 +0800
+X-Gm-Features: AclHuK-l4UZbwFjPn4SSfsmg3UdRvYIPSrjZHKRJklgoiQtrgBR2mAsrIUIlPcw
+Message-ID: <CAEUhbmXb5eOzmrVho4SNjMdA75s0VepBL7_eNEPYRMZeFG_PZg@mail.gmail.com>
+Subject: Re: [PATCH v2 26/30] Kconfig: Extract config GPIO_IMX from config IMX
 To: Bernhard Beschow <shentey@gmail.com>
 Cc: qemu-devel@nongnu.org,
  =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
@@ -103,14 +103,15 @@ Cc: qemu-devel@nongnu.org,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:41::f;
- envelope-from=bmeng.cn@gmail.com; helo=mail-yx2-x0f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112a;
+ envelope-from=bmeng.cn@gmail.com; helo=mail-yw1-x112a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,20 +127,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, Oct 4, 2026 at 8:32=E2=80=AFPM Bernhard Beschow <shentey@gmail.com>=
+On Sun, Oct 4, 2026 at 8:36=E2=80=AFPM Bernhard Beschow <shentey@gmail.com>=
  wrote:
 >
 > Over time, QEMU has grown a number of i.MX boards and the monolithic
 > config IMX drags in unneeded dependencies into each SoC model. Extract
-> config IMX_EPIT to eventually eliminate config IMX.
+> config GPIO_IMX to eventually eliminate config IMX.
 >
 > Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 > ---
->  hw/arm/Kconfig       | 4 ++++
->  hw/misc/Kconfig      | 2 --
->  hw/timer/Kconfig     | 5 +++++
->  hw/timer/meson.build | 2 +-
->  4 files changed, 10 insertions(+), 3 deletions(-)
+>  hw/arm/Kconfig      | 7 +++++++
+>  hw/gpio/Kconfig     | 3 +++
+>  hw/gpio/meson.build | 2 +-
+>  3 files changed, 11 insertions(+), 1 deletion(-)
 >
 
 Reviewed-by: Bin Meng <bin.meng@processmission.com>
