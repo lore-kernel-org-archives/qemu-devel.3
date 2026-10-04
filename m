@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78A23CA5FE6
-	for <qemu-devel@archiver.kernel.org>; Sun,  4 Oct 2026 11:44:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B682CA5FF0
+	for <qemu-devel@archiver.kernel.org>; Sun,  4 Oct 2026 11:44:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xDKcn-00041m-Nw; Sun, 04 Oct 2026 07:43:25 -0400
+	id 1xDKcq-00045t-MC; Sun, 04 Oct 2026 07:43:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xDKcl-00040N-NJ
- for qemu-devel@nongnu.org; Sun, 04 Oct 2026 07:43:23 -0400
-Received: from tor.source.kernel.org ([172.105.4.254])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xDKcp-00042y-4X
+ for qemu-devel@nongnu.org; Sun, 04 Oct 2026 07:43:27 -0400
+Received: from sea.source.kernel.org ([172.234.252.31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xDKck-00023Z-3Z
- for qemu-devel@nongnu.org; Sun, 04 Oct 2026 07:43:23 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xDKcn-000249-Le
+ for qemu-devel@nongnu.org; Sun, 04 Oct 2026 07:43:26 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by tor.source.kernel.org (Postfix) with ESMTP id E23C260098;
- Sun,  4 Oct 2026 11:43:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A91E1F000FF;
- Sun,  4 Oct 2026 11:43:18 +0000 (UTC)
+ by sea.source.kernel.org (Postfix) with ESMTP id CB6FF44794;
+ Sun,  4 Oct 2026 11:43:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FF621F000FF;
+ Sun,  4 Oct 2026 11:43:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1791114200;
- bh=RE3Z4aq6YF7bGu14NJ70fL5TRX4Z2iUGzL00FPSZ9IY=;
+ s=k20260515; t=1791114204;
+ bh=j4Rnowfy8+a+Bec+gL8cU3IGcys3lV/+mIyMzWJPu5M=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=fWaa5mzNUKgDvo5+RoII9AhPx4Dg+H95GdHUQGxconlhLcn6YNZlodju6bm84WuWq
- +e1OtZTv10eUDNnsw4YI227OZxYijkI4ViQFhQbZ+s7PRnGQyd5RxRijcM6g6f+LG1
- vQp/C7To+FsNDqocvJCTNV5CBU7bkG6JflArGYYxbrZQ3TRAPtG6lLvqdFNq5yC0Uj
- KfcWdjmx6PFDuo06x7JvLlhfljs53oxMRdjD87Go6bAGJWaj1ZQ9fEuDOPWRNmfb4O
- +I6o8XLyHnBOeTHhrAkg0Lnxk8tZpbho2Kg6XYdTb4Okhq8QxfNw7GY7HjaMxKEF4S
- Og65L0rtnt5Ng==
+ b=UgfjqULTvsqT03U9rhq+i4JBdpPyjNB0SzX1G9e3ewnf1xNuOlFrPELhn/JxngPop
+ zyxdq6y3P8H6/WJx9FDMmOYbu7QEDpZYRYuq3gzKvUwfIVMnCt63DcAGZLly7fGWqv
+ 98plfjZOnptvHh/AHwUu6c9LJ/5+UZ5U+klFDTNErEhx+Db0haiY+3WXyblSSe3pB/
+ CdNzCPK2BGtd6Wpz6Yqvuy3D4j2dNK+mM58RCAm24rMMXQETR6ni0pAgIsKRxXmZjE
+ 4dNp4ThA88CsQQgo2+tyXZam8/vXClIpNpePnBVqWhzy34EcpPC4kzYjhrLipkr5kx
+ NuJR9V+L9ydrg==
 From: Helge Deller <deller@kernel.org>
 To: qemu-devel@nongnu.org
 Cc: Laurent Vivier <laurent@vivier.eu>, Aleksandar Rikalo <arikalo@gmail.com>,
@@ -40,17 +40,18 @@ Cc: Laurent Vivier <laurent@vivier.eu>, Aleksandar Rikalo <arikalo@gmail.com>,
  Helge Deller <deller@gmx.de>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
  Aurelien Jarno <aurelien@aurel32.net>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: [PULL 3/5] linux-user/riscv: copy the executable's e_flags into core
- dumps
-Date: Sun,  4 Oct 2026 13:43:08 +0200
-Message-ID: <20261004114311.3874-4-deller@kernel.org>
+Subject: [PULL 5/5] linux-user/mips: pick Loongson-3A4000 if a pre-r6 mips64
+ binary needs nan2008
+Date: Sun,  4 Oct 2026 13:43:10 +0200
+Message-ID: <20261004114311.3874-6-deller@kernel.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20261004114311.3874-1-deller@kernel.org>
 References: <20261004114311.3874-1-deller@kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=172.105.4.254; envelope-from=deller@kernel.org;
- helo=tor.source.kernel.org
+Received-SPF: pass client-ip=172.234.252.31; envelope-from=deller@kernel.org;
+ helo=sea.source.kernel.org
 X-Spam_score_int: -45
 X-Spam_score: -4.6
 X-Spam_bar: ----
@@ -73,32 +74,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Matt Turner <mattst88@gmail.com>
+From: Alex Rønne Petersen <alex@alexrp.com>
 
-Since commit 8c94db0ae97c ("binfmt_elf: preserve original ELF e_flags
-for core dumps"), Linux writes the main executable's e_flags into RISC-V
-core files, so debuggers can see the float ABI and RVC. QEMU wrote 0.
+Before this patch, we'd pick MIPS64R2-generic which does not have 2008 mode, so
+the binary would just fail to run without an explicit -cpu flag. Now it'll just
+work as in the pre-r6 mips32 case.
 
-Signed-off-by: Matt Turner <mattst88@gmail.com>
+Signed-off-by: Alex Rønne Petersen <alex@alexrp.com>
 Signed-off-by: Helge Deller <deller@gmx.de>
 ---
- linux-user/riscv/target_elf.h | 3 +++
- 1 file changed, 3 insertions(+)
+ linux-user/mips/elfload.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/linux-user/riscv/target_elf.h b/linux-user/riscv/target_elf.h
-index 185b81a2db..e99a9d92ca 100644
---- a/linux-user/riscv/target_elf.h
-+++ b/linux-user/riscv/target_elf.h
-@@ -21,6 +21,9 @@
- #define HAVE_ELF_HWCAP          1
- #define HAVE_ELF_CORE_DUMP      1
- 
-+/* See linux kernel: ARCH_HAS_ELF_CORE_EFLAGS.  */
-+#define elf_core_eflags(info)   ((info)->elf_flags)
-+
- /* Mirrors struct user_regs_struct: pc followed by x1 (ra) .. x31 (t6). */
- typedef struct target_elf_gregset_t {
-     abi_ulong pc;
+diff --git a/linux-user/mips/elfload.c b/linux-user/mips/elfload.c
+index 1d62ae0a4d..19850f4835 100644
+--- a/linux-user/mips/elfload.c
++++ b/linux-user/mips/elfload.c
+@@ -20,17 +20,19 @@ const char *get_elf_cpu_model(uint32_t eflags)
+     case EF_MIPS_MACH_LS2F:
+         return "Loongson-2F";
+     case EF_MIPS_MACH_LS3A:
+-        return "Loongson-3A1000";
++        return (eflags & EF_MIPS_NAN2008) ? "Loongson-3A4000"
++                                          : "Loongson-3A1000";
+     default:
+         break;
+     }
+-    switch (eflags & EF_MIPS_ARCH) {
+-    case EF_MIPS_ARCH_64R6:
++    if ((eflags & EF_MIPS_ARCH) == EF_MIPS_ARCH_64R6) {
+         return "I6400";
+-    case EF_MIPS_ARCH_64R2:
++    }
++    if (eflags & EF_MIPS_NAN2008) {
++        return "Loongson-3A4000";
++    }
++    if ((eflags & EF_MIPS_ARCH) == EF_MIPS_ARCH_64R2) {
+         return "MIPS64R2-generic";
+-    default:
+-        break;
+     }
+     return "5KEf";
+ #else
 -- 
 2.54.0
 
