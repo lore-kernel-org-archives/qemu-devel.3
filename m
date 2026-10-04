@@ -4,93 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5C51CA5FF0
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A741BCA5FEF
 	for <qemu-devel@archiver.kernel.org>; Sun,  4 Oct 2026 15:27:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xDO7H-00068H-1G; Sun, 04 Oct 2026 11:27:07 -0400
+	id 1xDO7J-0006GK-88; Sun, 04 Oct 2026 11:27:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bmeng.cn@gmail.com>)
- id 1xDO70-00060V-3m
- for qemu-devel@nongnu.org; Sun, 04 Oct 2026 11:26:50 -0400
+ id 1xDO73-000614-C9
+ for qemu-devel@nongnu.org; Sun, 04 Oct 2026 11:26:58 -0400
 Received: from mail-yx2-x0c.google.com ([2607:f8b0:4864:41::c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <bmeng.cn@gmail.com>)
- id 1xDO6y-00060I-MI
- for qemu-devel@nongnu.org; Sun, 04 Oct 2026 11:26:49 -0400
+ id 1xDO71-00060d-L7
+ for qemu-devel@nongnu.org; Sun, 04 Oct 2026 11:26:52 -0400
 Received: by mail-yx2-x0c.google.com with SMTP id
- 00721157ae682-8ab445ac183so7653617b3.3
- for <qemu-devel@nongnu.org>; Sun, 04 Oct 2026 08:26:48 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1791127607; cv=none;
+ 00721157ae682-8ab46253999so7767907b3.2
+ for <qemu-devel@nongnu.org>; Sun, 04 Oct 2026 08:26:51 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1791127610; cv=none;
  d=google.com; s=arc-20260327;
- b=k+oXpjeRNwBd8hWRZLXtMreaV3GY9dp5N0GwWokSppgGEyoYTMIWK6X1TuD8tk61x2
- ixVsRvkUdDru0K2/LBIpi7pP7qXBzCNHs6CcdmGeoammwxWcNe8GW1siORxWC0/3GhAq
- 4vtD6lDOHujWTksBadm68iUaML2vvTFD75ntsYc8I1dsVMcDL2b3JQLhX4xRzMB9UfAL
- R3E1ggoS1egbSZFK6WhCFulCEHfoSdk5/wQPXVTVvLTcgaP6puJ76gYCWDNVKXowssYG
- i7bqHIv9e+R4C4SiZMGBKBKQr77EU+lLLGPLR+l/65RGrLZuCG+RoZqTdd+GhwBPYNyk
- ZvHw==
+ b=p2+h4YsEo+MAhPSwtyxaFRMsE1P1l9FUKPX/GFAjXD37iBSCegcxhyhHtLZm0Ip7Rb
+ 5Avup1reM8s9V4RQ/BbLqH0qqCOWNox0dcyA7n4M9qP73JJA4BGJ5t1/sX68q8WhekRP
+ LIJNx8nkko34DX5rOW80FUfdtxQa9HEo+5lJJr7JnIrB3EWWh8Wf5FnkGebz9Arn5His
+ 7HFGJx2jcDZLNQEQaEQd2d7Pkj0NRLnPo0ilMNm8WWUnZwnaK4j9mlZbc3N7zPJCXUMr
+ 0pdGmLSlKFzfUP+D0d5l2cztTFiPqhN+/MjmWBfvflsCaQxpxzPSNr9+3kgZ50GZC1ou
+ qe2A==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=g10pd3X1IgzZ/IO4Y3r2j2UA80f1HVdhL5FiOZhyBNw=;
+ bh=pFwd6/3wkZ1BbDFLuud1O66rhIuYH7s2vLGJwpTjYyM=;
  fh=/0IC5dMyt1pYrKG8Th8uxNlasmylZbudYuns8eU0grQ=;
- b=rz8/XfneIs3txRi93UIi5UiXmMGvpMv9rW6ZvxGb/wLTZ7j1vkVpMwiwMJnpJi1WHc
- 3CcfR6eT3BGX9GaOkCO75+jH+1a7HnEyc4Tx6KNJ7kuqQ9PMuucQZERGFraRweWj1Ccx
- cX3dAYetUafPaKIAPm4CaH9KofzWHSzrSgecs8Z45VZQ59m40ppwRyer6CP9qvEfJxS8
- o+y6meu19ZQQ5D2MzBcz00qS9+Y/1I/e6RCGVwlln51EQPh9C4xPX3AV88vQRiaRdyq2
- 7RPhBqKo9UBduksV27Bf/cp1lN5EKm5Kiigk3WkkcpBpLPVmKDGSaqFfG7lIUNOxS1/F
- ZjoA==; darn=nongnu.org
+ b=I/tEEEGPAz+k3hEoWRZ9AFwbxsYcFkposvnR99h3Y3zpGRtUV0bgTZ2DUqyktUJ4Q9
+ KtLyJXtJKZFAfJGPG+y+04WJFfdU5BGKWlp+jP7YEnPZ5kOQH+eg04l5eY7SHWZetjq/
+ PcBHH0flosJhdqu20+pWg+ciL176Hh/9/43KVMUZKzqYfZBJSqpYIYoWLo42BVXbi0NL
+ sPVxGtFnCiMO4Dp9iRVq+vjX1y9X/eH5aSOu7aEqD+lbjbIG/BN5tMI/IjfWD1SyccPw
+ 9UH6jqCahw4YzivFV2DhjxmiUnXLyvWgeqUcpat7d1X5PzOxS7qIAg9pScpaF5d7iNsO
+ DpnQ==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1791127607; x=1791732407; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1791127610; x=1791732410; darn=nongnu.org;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=g10pd3X1IgzZ/IO4Y3r2j2UA80f1HVdhL5FiOZhyBNw=;
- b=g0frr2CAnbgPefFlpCpONvjhJY3OykawQD1LtNcTOPwcWKYWh/iawqVIRgWqfJiNGP
- y0nbscKCJesLLe5iO0cTme/J+3cfGc0vDV4+3L6goKOOcvpuRC0jiiXlcOwjvxXGOzFN
- necregcZMsFj3sm4BBnJAY4UmECuBDoHhZtribtdbGnXxT279igFryaA40DyJ8oJ3v4Z
- XuElYW32L4UTa9hZT7IwBQSXxvvMRgW2H5w3d8Aatnz4R+a5jn0nvDHzhQfAP4llvT7m
- rp184IK/Z00qmvl2VTLNgf8+cniNNogcag+Tmj6i7d497sUvaG/lZRQbJCLU9tF28hbw
- BcOw==
+ bh=pFwd6/3wkZ1BbDFLuud1O66rhIuYH7s2vLGJwpTjYyM=;
+ b=myeGxWt+3cckGT8gVJQ1ITczbJGPM/koNK8T9H8UF23joFkuwftKFDsNJb7dmrhkkW
+ /xPw9YPK49sEeVlMtbqG7ZAyYxZxIHVlzchMY92FfzSbBVtjruAjk6KXQvmF/d/JTVRr
+ h4mTOwpBu0HLMogrV0zhG+tpMhSWectSCTwPpzMuWQco41kydkmSohg2LRjX3irtp04k
+ Rgxg26Yv8hLQxg+1vDhLpk9nI9KDSnkQGjT1YEOHZ8DnUfYqEX6VuDpmz4P6KDJzdS+e
+ 5YU/n5gyXT1fyrqnKfuPSdSblTTwUCg7WYkGcymhebJaGjY9of6wONdfoXvmKav/0cbh
+ PWxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791127607; x=1791732407;
+ d=1e100.net; s=20260707; t=1791127610; x=1791732410;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=g10pd3X1IgzZ/IO4Y3r2j2UA80f1HVdhL5FiOZhyBNw=;
- b=J1pEiNEm1gb4aRrz5S6innAqeq1rQjE09Uhx7irh8AGwldEhSeUER58IY4UaUqn9/+
- RiZXahHOL/4G7cppXL1FIjfLZh6MoNC22HFlFZD/GXcSzinTI9i3lrAgd2kfG24MrV/6
- yoSIElvdd3PpglWefQNOxwyNZgOt7HQmSrMdItslTV7wXTbV1Gg5MmyB3Ntq3mn5aG/T
- S9J4R4dFxc5sprT7tUka/O1fn461HClp/MAd/d4/JM2G46jYRD/AnkqdthpLzgRkqn8Z
- cJdsKqFpndMA78GBbnaEgLV/f3ZZ3OM9wFfasS4/WGxWP+kmEqsHEaE30gfvghCrJUO9
- d2fA==
-X-Gm-Message-State: AFq9FYLVGw5mTr9w9VRTOnlscDgOf0U04Du6EblcNIhlPO9iOroJlaAj
- UP8lD56I7uq+KAseIlVuT59QIjwNKvuqb9gk8SXf478dHq8NnuMgrCpC4LWpmEYwK4BrXXFzn2y
- bLX/nGbq4j05ZkhB7OiuY+tV89HNao9A=
-X-Gm-Gg: AYBFou1R3clQA62Pv3L9shthyXSj3w/VWiCopOGFAAurPzhoWsZAkZijRBmSt0CXu6z
- +Ec9ns2wTp48AMqPMCz67ML5XIVB73Rn+OugI8InZEa0GvtRmaeBTfOrXvB45aff+ryWzIuRIuZ
- pIwAICqO77REEOLxK6FHrObkKrMhyw5OEuN2jwPzAFLq7WYFv3B7wRoMVEsCvTiZadwbd8qJAT+
- RfvfJbwLGdD2DYDtKWasEguadflFVrsa/d3KeHu5qHCAcch11GjcOFlB7s5Js2na21F/nXMtlIe
- UFwkaho43zgg8qUMv26Z3QX5CvnK2t7Ge44+2Y40e3EBuzgDMH4ZaB/GO7Z2qeCo7CZElF+tqxp
- /WWZMqxowMuQMwR7H
-X-Received: by 2002:a05:690c:9990:b0:7db:ccda:a409 with SMTP id
- 00721157ae682-8ae392b6973mr35221947b3.9.1791127606991; Sun, 04 Oct 2026
- 08:26:46 -0700 (PDT)
+ bh=pFwd6/3wkZ1BbDFLuud1O66rhIuYH7s2vLGJwpTjYyM=;
+ b=wpw2zltce02Zop1IuCDqa1hgjrWoCWWNYSMwNKW34Q6yqIN171Hjd11bXhAVt5Gsuo
+ jgy7qwSLZ+gTBGBjy2IjMa0WrwBJEB2iH4nOGEdnlQaugROFbREG5A6KFjddpsVHWQ/2
+ j61Kj2KlRZY8QHKZKT8kqhcdD9GhAcWGyhpgS6HBLi79TM7kbcB2FTO9hfjesHFSiP/l
+ 52iL0QHmw1GVaje7iHczqXaX+YtCBdW29ErNaEDQtzGvqBWmU1Xnadcrvmg/dYpj6/FH
+ 2onXusLOFltXInoWD8jSa6nvmYigulKt6uMabjNhwGOHF9nMrA1Cgj2nSINm4gXKzvtI
+ brRA==
+X-Gm-Message-State: AFq9FYKfuq+EngOGQDwrdXq7c/GFWWOd8rgch9uiBbxTYSep+3oLJecJ
+ VB0XcrWaFpBBBNZwCj/6gwXO7WABn+xMOfqIshqZa2dX/8Iz3aPMpKlzNNnwvYj9kC94fBYGNAw
+ 3NErIOBvvCjx+gfya8zQBXhhQ/Awx4ktNDhbx
+X-Gm-Gg: AYBFou1OQJKTVNatBTQ26SuuP0Mkf9YiRW/FwMzL4wBU6USMhZRKDeD37BOa4FDL+U6
+ wXuA+biWFvtpbC0wmdi7x6QKDt8vUC1ct10RYI9NAQr/qzT0asGE/j2zvwX2VoKnYjUmKJaU4Kg
+ wTVehADvXSvuX4C/VLqUye/iw9ZmgbnO/iCpQS0lT8mh+C/ur/zR1Dcwfnox+rXbOvFiC8seMLz
+ 5vty2K78n44HhGXqO7yqvZs+UDxqgljh5v7UYux50rKdMXuAxzSNOpUmz7gxz8Abr2jwfmh34ca
+ KiWnhLqcL5Q/x1eX3q+IPq5WAR48rHlllKCD42/6Oz5p2jE9TP/sY9A9s4fPp5HzWb3aKzakEGA
+ RA1uv1ZPIkm6VMSwd
+X-Received: by 2002:a05:690c:348a:b0:8a8:889d:2db with SMTP id
+ 00721157ae682-8ae39bc50f7mr32695957b3.34.1791127610516; Sun, 04 Oct 2026
+ 08:26:50 -0700 (PDT)
 MIME-Version: 1.0
 References: <20261004122647.3913-1-shentey@gmail.com>
- <20261004122647.3913-5-shentey@gmail.com>
-In-Reply-To: <20261004122647.3913-5-shentey@gmail.com>
+ <20261004122647.3913-6-shentey@gmail.com>
+In-Reply-To: <20261004122647.3913-6-shentey@gmail.com>
 From: Bin Meng <bmeng.cn@gmail.com>
-Date: Sun, 4 Oct 2026 23:26:35 +0800
-X-Gm-Features: AclHuK8kOWrucEEovAZ35f7qWzs0b5o9-pcokpk5q9uQOeB-jKLKjKqBSPZfs1s
-Message-ID: <CAEUhbmW0BcgxFLF6MMasng_dkQ93dG8-1D_RrcmyNYdSeXexfg@mail.gmail.com>
-Subject: Re: [PATCH v2 04/30] hw/arm/imx8mm-evk: Fix reference count of SoC
- object
+Date: Sun, 4 Oct 2026 23:26:38 +0800
+X-Gm-Features: AclHuK-GIluIy7PXKC77O1q0cy8hQUecFfpIKLVNLkywXTFoWEmM1kyXfczi_Y0
+Message-ID: <CAEUhbmX8X9z_kHL2QaH9SLvauTYKOmmrDs5wLjjjRvCEeANkeA@mail.gmail.com>
+Subject: Re: [PATCH v2 05/30] docs, tests/functional: Drop redundant CLI
+ arguments in imx8m*-evk invocations
 To: Bernhard Beschow <shentey@gmail.com>
 Cc: qemu-devel@nongnu.org,
  =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
@@ -112,7 +112,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -131,42 +131,19 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Sun, Oct 4, 2026 at 8:36=E2=80=AFPM Bernhard Beschow <shentey@gmail.com>=
  wrote:
 >
-> Using sysbus_realize_and_unref() requires object_new() rather than
-> object_new_with_props(), otherwise the initial reference count is
-> subtracted twice, i.e. ends up being one too low.
+> Both boards provide defaults matching real hardware. No need to ask
+> users to repeat these. Also, remove these redundant arguments from the
+> functional tests such that the defaults get tested.
 >
-> board")
-
-corrupted commit message?
-
->
-> Fixes: 7bcd1f30bc83 ("hw/arm: Add the i.MX 8MM EVK(Evaluation Kit)
-> cc: qemu-stable
-> Reported-by: Peter Maydell <peter.maydell@linaro.org>
+> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com>
 > Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 > Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 > ---
->  hw/arm/imx8mm-evk.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/hw/arm/imx8mm-evk.c b/hw/arm/imx8mm-evk.c
-> index c3215b11cb..6de0d9c4a2 100644
-> --- a/hw/arm/imx8mm-evk.c
-> +++ b/hw/arm/imx8mm-evk.c
-> @@ -83,8 +83,8 @@ static void imx8mm_evk_init(MachineState *machine)
->      ims->bootinfo.psci_conduit =3D QEMU_PSCI_CONDUIT_SMC;
->      ims->bootinfo.modify_dtb =3D imx8mm_evk_modify_dtb;
->
-> -    s =3D FSL_IMX8MM(object_new_with_props(TYPE_FSL_IMX8MM, OBJECT(machi=
-ne),
-> -                                         "soc", &error_fatal, NULL));
-> +    s =3D FSL_IMX8MM(object_new(TYPE_FSL_IMX8MM));
-> +    object_property_add_child(OBJECT(machine), "soc", OBJECT(s));
->      object_property_set_uint(OBJECT(s), "fec1-phy-num", 1, &error_fatal)=
-;
->      sysbus_realize_and_unref(SYS_BUS_DEVICE(s), &error_fatal);
+>  docs/system/arm/imx8m.rst                   | 2 +-
+>  tests/functional/aarch64/test_imx8mm_evk.py | 4 +---
+>  tests/functional/aarch64/test_imx8mp_evk.py | 4 +---
+>  3 files changed, 3 insertions(+), 7 deletions(-)
 >
 
-Otherwise,
 Reviewed-by: Bin Meng <bin.meng@processmission.com>
 
