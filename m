@@ -4,48 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02C07CA5FE6
-	for <qemu-devel@archiver.kernel.org>; Sun,  4 Oct 2026 12:10:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C71BCA5FEC
+	for <qemu-devel@archiver.kernel.org>; Sun,  4 Oct 2026 12:10:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xDL2C-0001fq-QB; Sun, 04 Oct 2026 08:09:41 -0400
+	id 1xDL2C-0001fU-BP; Sun, 04 Oct 2026 08:09:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <junjie.cao@linux.dev>)
- id 1xDDoz-0003NS-C1
- for qemu-devel@nongnu.org; Sun, 04 Oct 2026 00:27:33 -0400
-Received: from out-181.mta0.migadu.com ([2001:41d0:1004:224b::b5]
- helo=mta0.migadu.com)
+ id 1xDDp4-0003Ot-5C
+ for qemu-devel@nongnu.org; Sun, 04 Oct 2026 00:27:38 -0400
+Received: from out-243.mta1.migadu.com ([2001:41d0:203:375::f3]
+ helo=mta1.migadu.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <junjie.cao@linux.dev>)
- id 1xDDox-0000XW-Dj
- for qemu-devel@nongnu.org; Sun, 04 Oct 2026 00:27:33 -0400
+ id 1xDDp2-0000Yc-Os
+ for qemu-devel@nongnu.org; Sun, 04 Oct 2026 00:27:37 -0400
 X-Envelope-To: qemu-devel@nongnu.org
-DKIM-Signature: a=rsa-sha256; bh=CZ/7Ogy/cZ7Ij5XnhN41Kj+HjJH0VQykO6MYhNAyR6k=; 
+DKIM-Signature: a=rsa-sha256; bh=elPuTp0s27a7z8wLoajfymW/LnhbBjulq0S0uaBr+vU=; 
  c=simple/simple; d=linux.dev;
  h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1791088046; v=1; x=1791692846;
- b=hr8Y0tjZg8MIv3GvZg3nOsD/JBmjdujGLbzMfm8W5U0fvg2PZteZwP2g0RY9rgZKmOsU4gWp
- j7BRn+VPXUPLwb7rxM/Ayci6ENl7Vff4DyCyVzx5I96X4hk0i3KbmZ/1R72aEy/13HKQ2zoLYnz
- RADxTpChsgax6isdHh3vCUOw=
+ t=1791088054; v=1; x=1791692854;
+ b=q1h2XGmlYawXl4UcADg7P9p3xZZ57aC6TfeFikLieNdG0MyWX2PdNP1Tw5NulCv41CpK8+24
+ 86oZHGH5T0C1TZJISg7Pfmz17qErhmW1MlLKVpGlQdQuiNenpNQaX/GgHaIxRVFsyRrY/EpdN3o
+ OlNMQjZYggjhVEGQm0MqSzCw=
 X-Envelope-To: qemu-devel@nongnu.org
-Received: by smtp.migadu.com with ESMTPS id fa519eb845901788;
- Sun, 04 Oct 2026 04:27:26 +0000
-X-Mizu-Trace-ID: fa519eb845901788
+Received: by smtp.migadu.com with ESMTPS id a9a2d411480fa0b5;
+ Sun, 04 Oct 2026 04:27:34 +0000
+X-Mizu-Trace-ID: a9a2d411480fa0b5
 X-Migadu-Flow: FLOW_OUT
 From: Junjie Cao <junjie.cao@linux.dev>
 To: qemu-devel@nongnu.org
 Cc: thuth@redhat.com, kraxel@redhat.com, philmd@oss.qualcomm.com,
- junjie.cao@linux.dev
-Subject: [PATCH 0/2] usb-host: validate and release configuration descriptors
-Date: Sat,  3 Oct 2026 23:27:20 -0500
-Message-ID: <20261004042722.6937-1-junjie.cao@linux.dev>
+ junjie.cao@linux.dev, qemu-stable@nongnu.org
+Subject: [PATCH 2/2] usb-host: free configuration descriptors on error paths
+Date: Sat,  3 Oct 2026 23:27:22 -0500
+Message-ID: <20261004042722.6937-3-junjie.cao@linux.dev>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20261004042722.6937-1-junjie.cao@linux.dev>
+References: <20261004042722.6937-1-junjie.cao@linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2001:41d0:1004:224b::b5;
- envelope-from=junjie.cao@linux.dev; helo=mta0.migadu.com
+Received-SPF: pass client-ip=2001:41d0:203:375::f3;
+ envelope-from=junjie.cao@linux.dev; helo=mta1.migadu.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -53,7 +55,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Sun, 04 Oct 2026 08:09:34 -0400
+X-Mailman-Approved-At: Sun, 04 Oct 2026 08:09:35 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -68,18 +70,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The libusb host backend reads interface numbers from the active
-configuration descriptor while opening a device. An out-of-range number
-can index past USBDevice.altsetting. The backend also leaves an allocated
-descriptor behind on endpoint parse and interface claim failures.
+From: Junjie Cao <junjie.cao@intel.com>
 
-Junjie Cao (2):
-  usb-host: validate interface number before indexing altsetting
-  usb-host: free configuration descriptors on error paths
+usb_host_ep_update() returns before freeing the active configuration
+descriptor when an endpoint address is invalid or duplicated.
+usb_host_claim_interfaces() also returns without freeing it when fewer
+interfaces can be claimed than the descriptor declares. Each failure
+leaves one descriptor allocated.
 
- hw/usb/host-libusb.c | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+Fixes: 2b2325ff64 ("use libusb for usb-host")
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Junjie Cao <junjie.cao@intel.com>
+---
+ hw/usb/host-libusb.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
+diff --git a/hw/usb/host-libusb.c b/hw/usb/host-libusb.c
+index fd4a16ee8a..491302feb7 100644
+--- a/hw/usb/host-libusb.c
++++ b/hw/usb/host-libusb.c
+@@ -921,12 +921,12 @@ static void usb_host_ep_update(USBHostDevice *s)
+             if (ep == 0) {
+                 trace_usb_host_parse_error(s->bus_num, s->addr,
+                                            "invalid endpoint address");
+-                return;
++                goto out;
+             }
+             if (usb_ep_get_type(udev, pid, ep) != USB_ENDPOINT_XFER_INVALID) {
+                 trace_usb_host_parse_error(s->bus_num, s->addr,
+                                            "duplicate endpoint address");
+-                return;
++                goto out;
+             }
+ 
+             trace_usb_host_parse_endpoint(s->bus_num, s->addr, ep,
+@@ -949,6 +949,7 @@ static void usb_host_ep_update(USBHostDevice *s)
+         }
+     }
+ 
++out:
+     libusb_free_config_descriptor(conf);
+ }
+ 
+@@ -1375,6 +1376,7 @@ static int usb_host_claim_interfaces(USBHostDevice *s, int configuration)
+         }
+     }
+     if (claimed != conf->bNumInterfaces) {
++        libusb_free_config_descriptor(conf);
+         return USB_RET_STALL;
+     }
+ 
 -- 
 2.43.0
+
 
