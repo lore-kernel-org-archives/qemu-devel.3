@@ -4,93 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4895ACA5FF0
-	for <qemu-devel@archiver.kernel.org>; Sun,  4 Oct 2026 15:53:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9729CA5FEF
+	for <qemu-devel@archiver.kernel.org>; Sun,  4 Oct 2026 15:54:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xDOWg-0003yC-GS; Sun, 04 Oct 2026 11:53:22 -0400
+	id 1xDOWp-00040H-Ee; Sun, 04 Oct 2026 11:53:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bmeng.cn@gmail.com>)
- id 1xDOWe-0003xY-2m
- for qemu-devel@nongnu.org; Sun, 04 Oct 2026 11:53:20 -0400
-Received: from mail-yx2-x2b.google.com ([2607:f8b0:4864:41::2b])
+ id 1xDOWm-0003zf-6G
+ for qemu-devel@nongnu.org; Sun, 04 Oct 2026 11:53:28 -0400
+Received: from mail-yw1-x1134.google.com ([2607:f8b0:4864:20::1134])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <bmeng.cn@gmail.com>)
- id 1xDOWc-0007uL-9n
- for qemu-devel@nongnu.org; Sun, 04 Oct 2026 11:53:19 -0400
-Received: by mail-yx2-x2b.google.com with SMTP id
- 956f58d0204a3-6755aad8a98so390364d50.1
- for <qemu-devel@nongnu.org>; Sun, 04 Oct 2026 08:53:17 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1791129197; cv=none;
+ id 1xDOWk-0007v1-AO
+ for qemu-devel@nongnu.org; Sun, 04 Oct 2026 11:53:27 -0400
+Received: by mail-yw1-x1134.google.com with SMTP id
+ 00721157ae682-8ac9d666d4eso8110247b3.3
+ for <qemu-devel@nongnu.org>; Sun, 04 Oct 2026 08:53:25 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1791129205; cv=none;
  d=google.com; s=arc-20260327;
- b=V9dTRj2WhDNY+ltyASzH/XPE4yd57SWoy7LSY5XP5eGV9ctF34sbc2FoZoProSP5BC
- d6xluy+MY2frLUayqJC2GNYt75UY8I0fPnV1+T71KhCuQYWE0CKsviwa3GEqINiZ4QQ/
- Ux2EIaB5GN2qcj598UDvt/X0GuLg2GTZGdJYErwe77oyKjlnkBjrYZ0u8OgC5RKJ+1ub
- SE3nPTKZj/ZG6W1PxRZvAsFbdFxI3rJ+fQshGJngRIByBXcNCYVAhEsVYI/baW5o1vfG
- o4G0rwxS8EPIaQOppLqb6qKP9EMo4xSCDyAUmSyfs8+P+W2otlEUwB+1ieL5mo/75cV4
- e/1A==
+ b=aXQZaLFu1BV4m8L0e5uaSo3uNvdI0QUsQk53FDtKgYpGGpoXNrM2WDZWFkM6q523GE
+ GDHfD+//Dz3l3OEiphAPTzEyvPGJfXq5fUMpnqv+PlmzpSqcqzzcV4DHHE7h+ISM2Gi9
+ /618q1xo5jmXSwI3eBmDs6InoLA34fdafF7iyfohnWc/5zGEMpi8GOkdszIM6ez1vzjL
+ tVoFZyZQ2B/AIm+AfdQy2vF0bYKDKKvqo3vPqVUNxDe8TXvLcE7kILh1dc1tONqGnCGq
+ tPwe76FM9Wz1uTir1UbyWf9WYvTUAFi/3B+0D38H640DjJGVChKBTGNtrX7XYYxgtIZ2
+ LALg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=PTbsI1qKOCs+tvm4+n4Z61evdmFzD0GBdyy20o/81ms=;
+ bh=IPhuqLGHrYsnQ896hnkS6QDBb5AHYSO16+nV2JZ3S6A=;
  fh=/0IC5dMyt1pYrKG8Th8uxNlasmylZbudYuns8eU0grQ=;
- b=GDwgqqEif0Ky+T0qSFP9Yn+vsD1Hr6BvrpZMqgppH2JLl6GB3GJqyQxENaFc6PigYl
- nabZgyInVhR2XnUq6OAn/OOYM2x4xhFBY5/dagrYl6NfeofW5xTik5/ukIeFlLcqqFaq
- AZ6IK/IO+7+KMUAciQh7g0UmP+lWGMXojkM88ef+Uc7/ue3dHN3l75XVJobmbxKiKyzq
- XVkjvX1VI6xNQzLxhqI+5XmHzs9iJhwA8DtePcyDWgRJIBJM5gxkd9v6zgfxN5OLvulu
- tU6jrG9AzleEv/x5W3UwVbmQHi6CseDDh27Ip+nDzJ5qCBsOnn/DDrmnOerRy528JjED
- b5Hg==; darn=nongnu.org
+ b=Fut9HEBx4BQano1jqib5tsSTptXCFg9kWQaSCv/uEYjhY9dN5nF6DYOL2zUR6ebZBJ
+ imSfjLHMQpwCR9czzPekWvxQ2PDsOsm+88scwcZNcc4OOe5CoOad8SjirGFh6C/IzxKE
+ Ze1twbi3Awp1bSghInJoLVNLb0VHpwSIL5Vfj60I9NH7zlyv0DP5kdOnKqx2N3tHJHJt
+ szeisuU1/CNs+WfYzzI7p5R/6NBRDn5ubtgp18Fyts7Z5XRG23HgSMe4C3gSgMgRCRBp
+ uST0vbyDOH6+EYU9b+HnannOo3ALnre/r35uX3xNkqdkYaS7vOR2JXIAX81RtEZrAm5W
+ cw1A==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1791129197; x=1791733997; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1791129205; x=1791734005; darn=nongnu.org;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=PTbsI1qKOCs+tvm4+n4Z61evdmFzD0GBdyy20o/81ms=;
- b=pdaeJSiFtqzMWn8UBOWN1sHTzzm7q7QwSZMqetsDPhS7N1Q8IVpUg15rpmRRcXNCiN
- de/6E63LihEGnlk62dFruYZiId6Wp7AQbxuvBL6eSnK400ocvUU9KbtUPuk0YevlpQEg
- H4Z/BbKW2O+ZHKK35zBAcCsyGrr9RaviX4GAEkDwY8eej9gIsdmCUdHBapjLGvMwgq1X
- 1/qaEmrTH0+JLFdQYrh2WlM6bPyyFpUS9L4f1/v4dOybD/LFpEgYzNxpNztmbE6tn9qG
- gxf8rSXQp/QsX4JJQQr5CTbSkbQS/fgVIgNqjnGzR1o1S89cZioT3oLFMegm38TvByXW
- q8MQ==
+ bh=IPhuqLGHrYsnQ896hnkS6QDBb5AHYSO16+nV2JZ3S6A=;
+ b=J/27gv9cUs3b4mPhUHcKBNrshu6LvfDYUmDyQPcMIh0lhGaCymwpilCiEFRtn4heBj
+ fH7lvwGyf/xSdcPE6T0ybDj3SgDxl6dV7l1W44XZg2c3RxylhuEq/47IubLZNET/+Rt6
+ mQ35uaVZCCpZ4io+L9vCBVvKxgQwELzJmP6jUYbc+I1Sz6COuhytHGNDxSx7Yo6vG7vN
+ NZueoye4wDalOWbfQAf+sZy5EtctsQ8kvBDVOZiL9n7eCFDlElgp+gWd4TsV3U4dsauh
+ Bpdw0OjmhvtLVlFW/zRnH0Y+kZaP10V0hyria0pgOQW6o78zVQ74Ph6NA0Yq7hwbom/6
+ kxRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791129197; x=1791733997;
+ d=1e100.net; s=20260707; t=1791129205; x=1791734005;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=PTbsI1qKOCs+tvm4+n4Z61evdmFzD0GBdyy20o/81ms=;
- b=bFqEt2Gz2j0BBJGLmcw/SEJ+AtKwHtEMxtQ1rvBTLakXcqObYj4zdRbQV3jDD8Pv3n
- A95vw9qFsb97S98WE5umn46Ca5pdXni3hazIE9GfoCoKmGHoEt1bDfOAEd8BbslSLM9v
- 74ilghO+PrTJCUvO5wbsaDQj9FbpJALs6hLyGVYmt8Uf4bFj7p2XXoMKNu9oGD4t+v1C
- nx9UUg2crIEtK5FKzvpC75+ojp7eOq8LKKmlPzCQ7XLUvkkFhNjbwjYZ7oFSFvND9DRg
- UpitUpw+URX7QRr5DxHtUT543WBbhV5szCbgbDwg1p2ct4pSGnoGKbx6eJsI+7QF5Mri
- aCEw==
-X-Gm-Message-State: AFq9FYJ02TR29bVI3RfPv3PFYJS1ZHR5+MWSDFzptTfH3a2lCcwuMMS/
- aT5BdStFl50bGK6f5eD1qLI0rghetVVIo+00jXct8jBkk2/I/I1hjrYj+xwudZXMduim9mEyFno
- TysW83/2J8Tw7E6Tj1DvWSXYrNYuGhfQ=
-X-Gm-Gg: AYBFou0J5nY2xgembsEVBTlz3oqHLM18aYUlEc/1l5spa9zClc/2RhWu4HxoxpwjA1D
- OqLiZD6IA+92yQZK5124XJkRI3XECprhojhwU8uJyQ1TYtg7N3dDcfJpCyYpajqcT8GGp0pF1pa
- EE0j1wj6EeiYcwkyOGZhtxYVPfZxebrsD3fAZby9mm21xZ3qDqOJvX5ahkc7eDXa8JOYpL+x5p7
- Bd7i0nkVnZAFS8CXJ7bnWNB7//gag9x56O5t06tjdP1f4esUZ0fdoBXwyhXJu+D8hM0SHfNs/FK
- vUUXvGyUW2FhnqMO6zihiwx1ONOQNpX9d7WxOKqAnetllnBCiLJhNrrz0BFexfJROBHWFwIoJ8D
- VVLWvib5ZCrT/D2M=
-X-Received: by 2002:a05:690e:e89:b0:677:c18f:7257 with SMTP id
- 956f58d0204a3-677c18f81f3mr1662467d50.23.1791129197013; Sun, 04 Oct 2026
- 08:53:17 -0700 (PDT)
+ bh=IPhuqLGHrYsnQ896hnkS6QDBb5AHYSO16+nV2JZ3S6A=;
+ b=SD4INkXEGCH/+Ere5hNdF4RlzvPcRIZ1zvuKjXW31qOJtZLgq3xgxJ7KzC5Gth7Yc8
+ 5Y1KELp2Uk/nKNwvDOmUOaIzhey12UlI7Qr9zlZeh4E66SEd0i2VCptq7nnMmacLdr0N
+ ncD4IXR/40a3BBpD60lXfl8X/kcm7nw3m0pnVMfKLP2sHA5+x4uSEODV9WYkrsfV3uiy
+ BQg4AY03VbVmNsWpuiqjiVgk6+wUnOdIa8FRGfRZrnmTKDkOtmwky99jnWD83bXmWk1v
+ YoiYslC4/fZCC7sHVrsitVWMa6DDjpMBSBu4GAVvUK54GXDowrqc08qf/MYr/Qv7Z4zT
+ mHDw==
+X-Gm-Message-State: AFq9FYJZndhoUDbfChEwwDO90KdcvB5vvxYFr7gvk09NR/fk+uHXjYdN
+ 08isaL7xggw5EKfquyqnIhnVXz/6DExIeNWQ9Yr5HYqlo8cHiteBiLbugkVBLaK2rYSqRoKrzXe
+ qpzD7gbcu+OikhUbegnqn4ye69Jv1MSo=
+X-Gm-Gg: AYBFou0nbNnng/iuKQxmBbxEzy9zDV5ddoimSxDS3FIjAiVg3GTR1tF3iuM8JcRHb2x
+ 8GP+RQR3Cn4ZjyKRQA+UGRJVDSnZR6wujscnzmkIXTshCNtLPvXBl0CtzmRUHjmcCb8Ik1Nj02o
+ pjhxQGKgZiTJWcEfWcN7OkFtPIGVztncB+grqwipNgANcRFqLQ6mX6Jv40VNa5+romKMr4SdKCA
+ aGUEgSGrqcbyjr8PX9uER32ON4/Elo8072b62cRndtVpUSKC4LcAi2q6E6kmbEQID8P9f82YQJb
+ ilM2y2YHiu3RlFlN3WHxWxvRX1sfUDHvZhVC/q+gaj82xUc9qaKmpLbY4czT/AoUnKjEPLtiS2F
+ 8VtMmi8exFcJBIZo=
+X-Received: by 2002:a05:690c:6c07:b0:8ab:42fd:2cc2 with SMTP id
+ 00721157ae682-8ae948abd2cmr18084437b3.3.1791129204937; Sun, 04 Oct 2026
+ 08:53:24 -0700 (PDT)
 MIME-Version: 1.0
 References: <20261004122647.3913-1-shentey@gmail.com>
- <20261004122647.3913-9-shentey@gmail.com>
-In-Reply-To: <20261004122647.3913-9-shentey@gmail.com>
+ <20261004122647.3913-11-shentey@gmail.com>
+In-Reply-To: <20261004122647.3913-11-shentey@gmail.com>
 From: Bin Meng <bmeng.cn@gmail.com>
-Date: Sun, 4 Oct 2026 23:53:05 +0800
-X-Gm-Features: AclHuK9eGoJpGs441HvzALMbxy6ASo44jiUDRsSijICZZEnNwYUkk5jU8DNWW38
-Message-ID: <CAEUhbmVOa01Y9m17oUSntnKF5PnAudhP3Zh7YE0OxCLE5QQDSw@mail.gmail.com>
-Subject: Re: [PATCH v2 08/30] hw/arm/mcimx6ul-evk: Have 512 MiB of RAM by
- default
+Date: Sun, 4 Oct 2026 23:53:11 +0800
+X-Gm-Features: AclHuK9C-2-y7S9nPdOcUh6UsopZpEUX2Y3UTQrWFieju1PrSZM9j_7xEKY6_vg
+Message-ID: <CAEUhbmVcGKSUFLCKX=eREfmXwjq7oKTqjqsUxCus7-2g2WpwBg@mail.gmail.com>
+Subject: Re: [PATCH v2 10/30] tests/functional/arm: Add console test for
+ `mcimx7d-sabre` machine
 To: Bernhard Beschow <shentey@gmail.com>
 Cc: qemu-devel@nongnu.org,
  =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
@@ -104,15 +104,15 @@ Cc: qemu-devel@nongnu.org,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:41::2b;
- envelope-from=bmeng.cn@gmail.com; helo=mail-yx2-x2b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1134;
+ envelope-from=bmeng.cn@gmail.com; helo=mail-yw1-x1134.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -128,20 +128,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi Bernhard,
+
 On Sun, Oct 4, 2026 at 8:29=E2=80=AFPM Bernhard Beschow <shentey@gmail.com>=
  wrote:
+
+nits: please add a simple commit body.
+
 >
-> Having 512 MiB of RAM matches real hardware. Fix the machine
-> default to make its use more ergonomic and less error-prone.
->
-> To reproduce the old default behavior for e.g. migration purposes,
-> `-m 128M` needs to be added to the command line.
->
+> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com>
 > Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 > ---
->  hw/arm/mcimx6ul-evk.c | 1 +
->  1 file changed, 1 insertion(+)
+>  MAINTAINERS                                |  1 +
+>  tests/functional/arm/meson.build           |  1 +
+>  tests/functional/arm/test_mcimx7d_sabre.py | 46 ++++++++++++++++++++++
+>  3 files changed, 48 insertions(+)
+>  create mode 100755 tests/functional/arm/test_mcimx7d_sabre.py
 >
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index f31245716a..a605d65d94 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -935,6 +935,7 @@ F: include/hw/misc/imx7_*.h
+>  F: hw/pci-host/designware.c
+>  F: include/hw/pci-host/designware.h
+>  F: docs/system/arm/mcimx7d-sabre.rst
+> +F: tests/functional/arm/test_mcimx7d_sabre.py
+>
+>  MCIMX8MM-EVK / iMX8MM
+>  M: Gaurav Sharma <gaurav.sharma_7@nxp.com>
+> diff --git a/tests/functional/arm/meson.build b/tests/functional/arm/meso=
+n.build
+> index 761b371a8d..e49a04ea6a 100644
+> --- a/tests/functional/arm/meson.build
+> +++ b/tests/functional/arm/meson.build
+> @@ -20,6 +20,7 @@ test_arm_timeouts =3D {
+>    'bpim2u' : 500,
+>    'collie' : 180,
+>    'cubieboard' : 360,
+> +  'mcimx7d-sabre' : 240,
 
-Reviewed-by: Bin Meng <bin.meng@processmission.com>
+This should be "mcimx7d_sabre".
+
+>    'orangepi' : 540,
+>    'quanta_gsj' : 240,
+>    'raspi2' : 120,
+
+and missing an entry in tests_arm_system_thorough.
+
+> diff --git a/tests/functional/arm/test_mcimx7d_sabre.py b/tests/functiona=
+l/arm/test_mcimx7d_sabre.py
+> new file mode 100755
+> index 0000000000..2894b5201f
+> --- /dev/null
+> +++ b/tests/functional/arm/test_mcimx7d_sabre.py
+> @@ -0,0 +1,46 @@
+> +#!/usr/bin/env python3
+> +#
+> +# Functional test that boots a Linux kernel and checks the console
+> +#
+> +# SPDX-License-Identifier: GPL-2.0-or-later
+> +
+> +from qemu_test import LinuxKernelTest, Asset
+> +
+> +
+> +class Mcimx7dSabreMachine(LinuxKernelTest):
+> +
+> +    ASSET_KERNEL =3D Asset(
+> +        ('https://ftp.debian.org/debian/dists/bookworm/main/installer-ar=
+mhf/'
+> +         '20230607/images/netboot/vmlinuz'),
+> +        '5851e9c61465a26db810796db671c4729e66e81c365b3ebb1a4b7f772737605=
+b')
+> +
+> +    ASSET_INITRD =3D Asset(
+> +        ('https://ftp.debian.org/debian/dists/bookworm/main/installer-ar=
+mhf/'
+> +         '20230607/images/netboot/initrd.gz'),
+> +        'fe33f836232a9107716d34dc56d36dea81bab039243a2a42ea6583a50c9b92c=
+a')
+> +
+> +    ASSET_DTB =3D Asset(
+> +        ('https://ftp.debian.org/debian/dists/bookworm/main/installer-ar=
+mhf/'
+> +         '20230607/images/device-tree/imx7d-sdb.dtb'),
+> +        'eed45fe3ba682cc814217bc4558551d36c034ec7a7692c4eb6eaf86132baf80=
+c')
+> +
+> +    def setUp(self):
+> +        super().setUp()
+> +
+> +        self.kernel_path =3D self.ASSET_KERNEL.fetch()
+> +        self.initrd_path =3D self.ASSET_INITRD.fetch()
+> +        self.dtb_path =3D self.ASSET_DTB.fetch()
+> +
+> +    def test_console(self):
+> +        self.require_accelerator("tcg")
+> +        self.set_machine('mcimx7d-sabre')
+> +        self.vm.set_console(console_index=3D0)
+> +        self.vm.add_args('-kernel', self.kernel_path,
+> +                         '-initrd', self.initrd_path,
+> +                         '-dtb', self.dtb_path)
+> +
+> +        self.vm.launch()
+> +        self.wait_for_console_pattern('Starting system log daemon:')
+> +
+> +if __name__ =3D=3D '__main__':
+> +    LinuxKernelTest.main()
+> --
+
+Regards,
+Bin
 
