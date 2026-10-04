@@ -4,107 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CA9FCA5FCE
-	for <qemu-devel@archiver.kernel.org>; Sun,  4 Oct 2026 16:35:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4660CA5FCE
+	for <qemu-devel@archiver.kernel.org>; Sun,  4 Oct 2026 16:38:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xDPB7-00033h-Nm; Sun, 04 Oct 2026 12:35:17 -0400
+	id 1xDPED-0003i8-6R; Sun, 04 Oct 2026 12:38:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1xDPAq-00032r-3b
- for qemu-devel@nongnu.org; Sun, 04 Oct 2026 12:34:52 -0400
-Received: from mail-dy1-x1330.google.com ([2607:f8b0:4864:20::1330])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1xDPAo-0002Z7-Jj
- for qemu-devel@nongnu.org; Sun, 04 Oct 2026 12:34:51 -0400
-Received: by mail-dy1-x1330.google.com with SMTP id
- 5a478bee46e88-351224e684dso976848eec.1
- for <qemu-devel@nongnu.org>; Sun, 04 Oct 2026 09:34:49 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1791131688; cv=none;
- d=google.com; s=arc-20260327;
- b=h95ifNmvVRXXK4gV3EhaQEXvuq/5Efa1orbuuRNyx3DQGfmaCKzhaGZTlS/pAtQ0kt
- M1B16mhJZiunyd3T8f173ZZQebA2G5qkDuoshR0dJEoM6kczO1BCFjO1EYzxOsTmW5Hl
- SyZEdxoA4bziWjvZQZ9haTtCQn4q3bckruFYuIUVR8e6M6D9GHdhJzNWRffPKWk3jAnf
- dirLOoQ7noX9h8p/3XoCJR5qvrK9M3rg872J/MhHy6zeDHAegV0/ec8ucwZqBGvmK5m/
- i5fARQdvcAZpbyNYUnwrPXrY+q8O5fZj3yJGczjiqbFuvp+mGDX9swNf3abqYRRaz3Br
- BKFQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=hLHS1k1QvrlGci2lKCRv5iLcHX/sRzWhLrBDWQEqBEA=;
- fh=9J/Gwyb/4zJKC8CPj6CIAWvqsyEhLveUFmTr6Q7ERwE=;
- b=Q1t5KJcHOoyLS1QiE2hHH9yzdev4m6MS2BUmf4xleqWbtAy+WaxKUxcpGP1o4m/QSQ
- m55QFqCVHXG+4NaQmHrzb/71fGfwA0WhJRiddiztR3AVd7zkgQbRwqPp1hFVq8ECq04p
- 32r6qY2G8jadgNheJrdoltnyt3RfnWeqPX8arCa0db0a3KtezT/xi0+KrVhSdW0zgpy7
- dn3hR8kTiXwsbWl7dStCUS6s8HhXtTPtI98xa1OSNttcQ4f6MLuPcx2EElGKQknfYGNu
- p4eH7pL/P7UD2m5W6jrk3zpYAbDqzpYp0d8eXh+AbI0M27NfPJuHbXB0ZZcuGr9yHpoQ
- VPzQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
+ id 1xDPEB-0003hq-4l
+ for qemu-devel@nongnu.org; Sun, 04 Oct 2026 12:38:19 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
+ id 1xDPE8-0002qO-MB
+ for qemu-devel@nongnu.org; Sun, 04 Oct 2026 12:38:18 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1791131895;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=YM7Q0xjS+lALHG5islNIXYy8PiewPwcfBMqIWUfYTcs=;
+ b=byFEGW2KlvpmiyNAhOZS2g+9meAdboOW5wK10hF6CsbiKB1dBET9f2OsSkL9IM+eWgww4S
+ GX74g+p/vCF7qmzmr5IqgWOfc3gioS9gQ6m9KxTyWpVrqRN/vceuGQHjfs6CEyOOFIp7P6
+ Li0z56oG1tIRwqDQnIarKbNvMoGq6ow=
+Received: from mail-dy1-f197.google.com (mail-dy1-f197.google.com
+ [74.125.82.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-644-EHTV3LqKPmeSTLuzLy1qmw-1; Sun, 04 Oct 2026 12:36:58 -0400
+X-MC-Unique: EHTV3LqKPmeSTLuzLy1qmw-1
+X-Mimecast-MFC-AGG-ID: EHTV3LqKPmeSTLuzLy1qmw_1791131818
+Received: by mail-dy1-f197.google.com with SMTP id
+ 5a478bee46e88-34e676375d9so1085964eec.0
+ for <qemu-devel@nongnu.org>; Sun, 04 Oct 2026 09:36:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1791131688; x=1791736488; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=hLHS1k1QvrlGci2lKCRv5iLcHX/sRzWhLrBDWQEqBEA=;
- b=sf6sCndKeAylfEqZIbsLfJVwfzdx5hBK9+FUqDL2fwhJ8a1ejVzTOEY8jQYU4iRLFo
- I7V0EgrPtJWhjIk7BmDp5qlODRHxgVGNlvy9aTeWmQA3e0Ayxsu/kOBJFTtD2l69++7t
- mK9aUPicNUOWmMH/fkkfKqAZMAzDC2GIrx/wKm1M9AGmcDVYJ0JKtHsj8zHILYsCtAUJ
- kn4sxV6HY0iz5DH11Ow7hSfD/JsCe1F3DnEuJm7Gwr96bNMojPyqqakj8ij5Xv+E6KIG
- 2jWCcf42rh39rhsPmta0g0cQBFALHplSE86CtLlT8GHcQLmoWDAwZME3j0Rv2LV/fmyy
- tzMA==
+ d=redhat.com; s=google; t=1791131818; x=1791736618; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:reply-to:message-id:subject:cc
+ :to:from:date:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=YM7Q0xjS+lALHG5islNIXYy8PiewPwcfBMqIWUfYTcs=;
+ b=nmCkw/1R1ZstiSYf8DYLTf0j/j6px2ZsZM4sCnKbq4CkCnbTEONDUHtn2KdHbE2ll1
+ c3XKOQUnC9O1zm25r5KdNgbVVAAYE5t7DaavKGMjlKWDaqPInPkRJacdQqkvP8Jb/yhC
+ tezHZ8GEFozhxVCSAkDUFR7B8YMZbklSZUYgwT3XfmdIlYhAzCj5dQK93uW4Q9RRzXBn
+ Yl9Qov+SEU47L2Of5odH/RY7gEUJCWUnSMCBoTfx0no+g8IQ4828BfXx2P4oCV57OmTM
+ uSl+KVeDtvBUMEMc5Vklrm3MMYXmdg9KDKRcPvcGue5F813rPI717JU4b6cnFeFd/mjW
+ 3TKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791131688; x=1791736488;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=hLHS1k1QvrlGci2lKCRv5iLcHX/sRzWhLrBDWQEqBEA=;
- b=2zZPKb0qnAK75jIhnmvkoA7yjw5r322BqqXc45eylmB3XM+9xQmrV5O8SnXx2OTlSh
- faFLuP6RKkgM1+auN4qB2yFH2KDtG8bUOfvH/4yO+YNTeerWAQVyxGxMKPRxB6/qp7wZ
- zUnemRKJ5TMznUVjF4fEMQ821s7wLDL2HTZscFMo34ACM6MQ0Sk4cAlC0hmRBGEpjcTA
- UaghHwuN1gIdmE7pf3ajsR1CYnyYDEgBKS7XLZhgt1VLNFSzxI+dJuG9PXzAErVdJqvo
- hSXMumBs5NvHy+fAFWEBkpOgqyWjalzS0KufcpFF+D7eFnON5cpbasLy1dCBIuCPxma9
- DPOQ==
-X-Gm-Message-State: AFq9FYJBPLByj2WZvwa1SzJyIHLucXbcgErimQ9k+0dDGof0wD7mfuL2
- GakGtItLvJnbQMi/OgMlB23RsGjbqKS0BuoIcg1qVIuoJzLyi7y47+jOd8iBjxhl1wQL3lc9aDR
- juNKkvUii9/apAHKRIiAAN2Bs30+NHX4=
-X-Gm-Gg: AYBFou2eU3L3wLZJo4wZEBBOxi9OjduXzeXp/1HFI13dLcZrp2WJeu6AejQaErXto4o
- 0StTmgSyCoDRWDmHUdkYd6jDo3QuTRdQO+iIm5nTrtxOjvcbNZ3Ew4dfnof14ceQwcRNyMBNzLx
- F0uP6poaKiF+mTHnxlkq651Gw6+c2Km+43o35jbBDAv506WtCaURnuMWXd5P4AvMLoNlOQ3UL6l
- iG2R1NEzwVZctAf8NQqUMtA2iIXJYlRq8dUtftWaGxb3SAIapbwepsQ44sQpUVNWPglezkpWdG0
- Jhlo9tayF4eKbq+JulzUjCYXwl+s/hgQUXwYSUt5/Bb7s6BLDNJeGStmEAO005U6EcWptpVhVH7
- MGex3aM3c1To=
-X-Received: by 2002:a05:7300:6c84:b0:351:2fc9:3844 with SMTP id
- 5a478bee46e88-3512fc943c0mr728106eec.33.1791131688209; Sun, 04 Oct 2026
- 09:34:48 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1791131818; x=1791736618;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:reply-to:message-id:subject:cc
+ :to:from:date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=YM7Q0xjS+lALHG5islNIXYy8PiewPwcfBMqIWUfYTcs=;
+ b=d3k6AhAcl+HBRnZQpREbDyLMsEIFsIPuUpR8+SUed8fQIJMLKVxmPte4XYrJfm60AX
+ LtOWRnut9p3CgVqybyxTIo7Cn42H3un0pdV+qp267L0BepgFCejnmQZYAW5YnX6BbRe6
+ k9RSjvViAVSvHAK7vxNw5VjVoQ9JtFS5G9kkTuHl/jI4kwkDZ8GKhJMRPdeGovx3i4AE
+ SJkc+2OgAplEuT8jrXhNHFSOpkgxnRpvdhVMez47ync8//2RfACohOwhqhf1entjKfdP
+ 3qJ+DA2N53S8fLSKm1jHXUKskt2MGGiabI7Y85ku2QR12KnRuJ7OCObKvfmCnBFnUiHV
+ W3fQ==
+X-Gm-Message-State: AFq9FYK9aRVp4qhPBiU87lW7mYUiH4Q0uZnXlIRdwupvkehzz+asz5ob
+ VGFGhncduO/TFEADvpypwNOPTEuCjjk2gL7SQORyMw50L94hMys93lCOUEKoIQfXQ/Me11rnd9Q
+ AyP6st5ghmfdBqk/SHtJP3TmOxyEOhuBmPqxW3HJpEpZJCIGiYgt1hgr+aAdS4QhF
+X-Gm-Gg: AYBFou3kH/0yOSIUzfuPnVHouv9aiROl1XwIFmA2nxVhKX5a6A3jLbcL3vPci7OL3U8
+ aqv+IcrQ6toW77Re8REwGT4bPEjitx/XySzFtCzMjJiaGxCg7lElsVQOhq7XtYoIamsfeEG6Sr1
+ pSWjPypavPP1wva9CguRIW/IBkZ0eplis3QYXDr6vWgpfnlWm3szep6wHBsAL6FarfXVkQCFiKE
+ EwUwRy8KR8nFQsOJPZoajuaPJyXTUs3K62y6lmoTWO/xgHA/s1BGOZepYXvBORfU2CgzhxbQpXN
+ JEQlTLaxKLJKtT/3jga9ZvwxuK7sJk+uTuyAvmzy7y7u5oczrEIPpsVnYlY1L3MX5ok=
+X-Received: by 2002:a05:693c:20ca:10b0:34c:5841:3e12 with SMTP id
+ 5a478bee46e88-34f2186556bmr9139910eec.9.1791131817582; 
+ Sun, 04 Oct 2026 09:36:57 -0700 (PDT)
+X-Received: by 2002:a05:693c:20ca:10b0:34c:5841:3e12 with SMTP id
+ 5a478bee46e88-34f2186556bmr9139888eec.9.1791131817029; 
+ Sun, 04 Oct 2026 09:36:57 -0700 (PDT)
+Received: from fedora ([49.47.193.161]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-351272a45a8sm6234883eec.22.2026.10.04.09.36.54
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 04 Oct 2026 09:36:56 -0700 (PDT)
+Date: Sun, 4 Oct 2026 22:06:50 +0530
+From: Arun Menon <armenon@redhat.com>
+To: Stefan Berger <stefanb@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, marcandre.lureau@gmail.com,
+ =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>
+Subject: Re: [PATCH v3 06/10] hw/tpm: crb: Do not clear internal buffers when
+ backend is busy
+Message-ID: <asKAoq5TrCop1TFx@fedora>
+References: <20261002142516.2063735-1-stefanb@linux.ibm.com>
+ <20261002142516.2063735-7-stefanb@linux.ibm.com>
 MIME-Version: 1.0
-References: <20261004042722.6937-1-junjie.cao@linux.dev>
- <20261004042722.6937-3-junjie.cao@linux.dev>
-In-Reply-To: <20261004042722.6937-3-junjie.cao@linux.dev>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Sun, 4 Oct 2026 20:34:36 +0400
-X-Gm-Features: AclHuK-2ZRXajtpU2ObKchpdZDYQZgmaiMX4eYK5cbeyMGFPHHObolVjRFEHaBs
-Message-ID: <CAJ+F1C+nphu4S_ZJhr7oKV=s3q8SK=OBFpK3JVV1Ovx8UH8EZA@mail.gmail.com>
-Subject: Re: [PATCH 2/2] usb-host: free configuration descriptors on error
- paths
-To: Junjie Cao <junjie.cao@linux.dev>
-Cc: qemu-devel@nongnu.org, thuth@redhat.com, kraxel@redhat.com, 
- philmd@oss.qualcomm.com, qemu-stable@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1330;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-dy1-x1330.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20261002142516.2063735-7-stefanb@linux.ibm.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armenon@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,87 +119,40 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: armenon@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
-
-On Sun, Oct 4, 2026 at 4:11=E2=80=AFPM Junjie Cao <junjie.cao@linux.dev> wr=
-ote:
->
-> From: Junjie Cao <junjie.cao@intel.com>
->
-> usb_host_ep_update() returns before freeing the active configuration
-> descriptor when an endpoint address is invalid or duplicated.
-> usb_host_claim_interfaces() also returns without freeing it when fewer
-> interfaces can be claimed than the descriptor declares. Each failure
-> leaves one descriptor allocated.
->
-> Fixes: 2b2325ff64 ("use libusb for usb-host")
-> Cc: qemu-stable@nongnu.org
-> Signed-off-by: Junjie Cao <junjie.cao@intel.com>
-
-Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-
-Although it's an opportunity to introduce g_auto support:
-typedef struct libusb_config_descriptor libusb_config_descriptor;
-G_DEFINE_AUTOPTR_CLEANUP_FUNC(libusb_config_descriptor,
-                              libusb_free_config_descriptor)
-
-Then declaration should become:
-g_autoptr(libusb_config_descriptor) conf =3D NULL;
-
-And we can drop free paths. Up to you if you want to make a v2
-
-
+On Fri, Oct 02, 2026 at 10:25:12AM -0400, Stefan Berger wrote:
+> While the backend (thread) is accessing the request and response buffers,
+> do not clear those buffers upon a command cancellation. Also, per CRB spec
+> the TPM is expected to either return a normal command response (command
+> could not be cancelled) or an error response indicating TPM_RC_CANCELED.
+> So the response buffer must be able to receive a response as normal.
+> 
+> Fixes: 29315d22b259 ("hw/tpm: Add internal buffer state for chunking")
+> Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+> Signed-off-by: Stefan Berger <stefanb@linux.ibm.com>
 > ---
->  hw/usb/host-libusb.c | 6 ++++--
->  1 file changed, 4 insertions(+), 2 deletions(-)
->
-> diff --git a/hw/usb/host-libusb.c b/hw/usb/host-libusb.c
-> index fd4a16ee8a..491302feb7 100644
-> --- a/hw/usb/host-libusb.c
-> +++ b/hw/usb/host-libusb.c
-> @@ -921,12 +921,12 @@ static void usb_host_ep_update(USBHostDevice *s)
->              if (ep =3D=3D 0) {
->                  trace_usb_host_parse_error(s->bus_num, s->addr,
->                                             "invalid endpoint address");
-> -                return;
-> +                goto out;
+>  hw/tpm/tpm_crb.c | 1 -
+>  1 file changed, 1 deletion(-)
+> 
+> diff --git a/hw/tpm/tpm_crb.c b/hw/tpm/tpm_crb.c
+> index 54fa2042b5..daf451aa56 100644
+> --- a/hw/tpm/tpm_crb.c
+> +++ b/hw/tpm/tpm_crb.c
+> @@ -219,7 +219,6 @@ static void tpm_crb_mmio_write(void *opaque, hwaddr addr,
+>              if (s->regs[R_CRB_CTRL_START] & CRB_START_INVOKE) {
+>                  tpm_backend_cancel_cmd(s->tpmbe);
 >              }
->              if (usb_ep_get_type(udev, pid, ep) !=3D USB_ENDPOINT_XFER_IN=
-VALID) {
->                  trace_usb_host_parse_error(s->bus_num, s->addr,
->                                             "duplicate endpoint address")=
-;
-> -                return;
-> +                goto out;
->              }
->
->              trace_usb_host_parse_endpoint(s->bus_num, s->addr, ep,
-> @@ -949,6 +949,7 @@ static void usb_host_ep_update(USBHostDevice *s)
+> -            tpm_crb_clear_internal_buffers(s);
 >          }
->      }
->
-> +out:
->      libusb_free_config_descriptor(conf);
->  }
->
-> @@ -1375,6 +1376,7 @@ static int usb_host_claim_interfaces(USBHostDevice =
-*s, int configuration)
->          }
->      }
->      if (claimed !=3D conf->bNumInterfaces) {
-> +        libusb_free_config_descriptor(conf);
->          return USB_RET_STALL;
->      }
->
-> --
-> 2.43.0
->
->
+>          break;
+>      case A_CRB_CTRL_START:
+> -- 
+> 2.55.0
+> 
 
+Reviewed-by: Arun Menon <armenon@redhat.com>
 
---=20
-Marc-Andr=C3=A9 Lureau
 
