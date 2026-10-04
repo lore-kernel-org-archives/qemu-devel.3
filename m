@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3608CA5FCE
-	for <qemu-devel@archiver.kernel.org>; Sun,  4 Oct 2026 10:25:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6179ECA5FEC
+	for <qemu-devel@archiver.kernel.org>; Sun,  4 Oct 2026 10:25:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xDJOb-0004oN-BV; Sun, 04 Oct 2026 06:24:41 -0400
+	id 1xDJO8-0004Vp-7F; Sun, 04 Oct 2026 06:24:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xDJOI-0004Wv-Or
- for qemu-devel@nongnu.org; Sun, 04 Oct 2026 06:24:24 -0400
+ id 1xDJO4-0004VJ-CE
+ for qemu-devel@nongnu.org; Sun, 04 Oct 2026 06:24:08 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xDJOG-0002u5-SW
- for qemu-devel@nongnu.org; Sun, 04 Oct 2026 06:24:22 -0400
+ id 1xDJO2-0002tb-R4
+ for qemu-devel@nongnu.org; Sun, 04 Oct 2026 06:24:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1791109457;
+ s=mimecast20190719; t=1791109444;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=vygvAJomWZefnLtthL0rW2ymfBkR+Pi9SToL5wZ5egI=;
- b=eDwcalt2dtEASJyohQrraSrx+J0LhloGsj2E0+CEAjVVTkjdl8r/i7sclE7aB2WcYCI9N7
- FdtxMDLsFsqpBrVYtUzv25KRg0v3yoU9vx4Z3OzznGFAdF4GBiDsuF5tXEId5LDrAO8mM/
- UITs1s9xMyCCdcU2mLjuZrlaGokS7Lo=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=rXT6KfZOjLDWkLEze7exFouGPLDfsD3eJmRwpMq3XO0=;
+ b=Yh8dYQxmcEy7Fx58Jhv4bTVGdwCNo6FKtall5jo5eafX9TQRYvmDmaHoV4nMe+rQ7PRr3Q
+ Sv5RSKO+AuOe9yTjk+iZ1497I6DXeHUH4oSYpi1Lv3r/jiscEOGJffmNxLBGPfx3Q1yXBr
+ lNHRCGaTs6AIiSbi7qzbkksFc99PqP0=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-632-JCfeKv32OEy8xsWMdkWKpw-1; Sun,
- 04 Oct 2026 06:24:12 -0400
-X-MC-Unique: JCfeKv32OEy8xsWMdkWKpw-1
-X-Mimecast-MFC-AGG-ID: JCfeKv32OEy8xsWMdkWKpw_1791109446
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-284-GIvIFc-WMla8oAaR44oyLQ-1; Sun,
+ 04 Oct 2026 06:24:03 -0400
+X-MC-Unique: GIvIFc-WMla8oAaR44oyLQ-1
+X-Mimecast-MFC-AGG-ID: GIvIFc-WMla8oAaR44oyLQ_1791109442
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7450B1956088; Sun,  4 Oct 2026 10:24:06 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 614B31955F3C; Sun,  4 Oct 2026 10:24:02 +0000 (UTC)
 Received: from localhost (headnet03.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.114])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 2826340E; Sun,  4 Oct 2026 10:24:04 +0000 (UTC)
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 6A85C180036E; Sun,  4 Oct 2026 10:24:01 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Sun, 04 Oct 2026 14:23:22 +0400
-Subject: [PATCH 08/63] audio/pwaudio: fix integer underflow in qpw_read()
+Date: Sun, 04 Oct 2026 14:23:21 +0400
+Subject: [PATCH 07/63] audio/pwaudio: clamp overrun writes to remaining
+ ring buffer space
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20261004-issue-4560-v1-8-ccbef537cbeb@redhat.com>
+Message-Id: <20261004-issue-4560-v1-7-ccbef537cbeb@redhat.com>
 References: <20261004-issue-4560-v1-0-ccbef537cbeb@redhat.com>
 In-Reply-To: <20261004-issue-4560-v1-0-ccbef537cbeb@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
  Pavee Hui <phui@google.com>, Gerd Hoffmann <kraxel@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=991;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1625;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=gaLK7xWYgkejITZbzPTgEMKfB8Q9SjD43HqsNcP+k84=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqwikhMvF9RJ41XNxEsflfG/rncGm6xL7fgJ/Fs
- nmElxD99E+JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCasIpIQAKCRDa6OEJdZac
- 5YUjEAC2dHlixwBMPHxIpUysJa96nbjr3XtD1POeO8HnQiOQMtp7liC0EBc5WXpzerIhuqFfe1O
- l2AAzqaLvgifZcX8pCOl6kwDaBS+1wzTnGmVd0jtqnspiX+pxZV1wZRBPPd0OX6hJzX26o5Fio+
- jfiBCd6WY/Lxaxcq20oClp8v5CPwiMX3Mz2nV56KzYQPttCrOIJyKaMcNduhvYlXbQcyEtCPYAr
- CujGVnEIflakEf44T6gQ7fvPWeBSCCrm84m4fFv8Ndp833Q/UBjyxD4VKxPbl7L6JiUBzqC2fN3
- dTQUW6m55HgU+3MWszmk21IDVquQ0CJfDdkaTmGLuQkFJWGRDr2J6qN+dB1WI3eagrt70VK2Lim
- 65MvH/stzJ5fu2yolTOF8+2VHyZ8rJjSdkM8ug+Xpdy4tvXMFpVfompi1U4iD9M2dokKNOH3l93
- AhqoqNWjp66ioFu6qiGM2HvON+6YBV8wehi6inYn1AcBb5d14+g6ETnRSRiR0Ib7ZyhdHusceO6
- /Xc7pWeVqJL24MJbP/3NMG5awCvnE01x6+CmTV0qIla3OhKKYVr3pry8mrCwt96jDTyT7QCVB7C
- AK2J9wMbjwMBlsrzyrM2OL+spWFZXsBqfbSOx8lU4T/Kypr8DTKvAQSJPTe4e2LPnUmi1PsqDiz
- aNTilGh/fpNT76A==
+ bh=InSmx1MT8hzN8R0lefGEujEQ0ZFI5lfJ9yqIklBF3R0=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqwikh9aCOSDDWUH7h28TyjSaBLRW5MXP2LGBkD
+ 9iG5b5mpdeJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCasIpIQAKCRDa6OEJdZac
+ 5XvcD/9MbiJ9+DmmahSlhA+squm71mAfWx51JoHoDf3XT656pSVdAPPICrvqS36YtchUJHjqYy9
+ BYp1IAWsO6Umrdvk/E6d+l/mY7hbzAsqGzBeqLlosnwxCZ3kUtNXRXjcC9WvP26RhOXGMsP7T0M
+ kHF96Mvq9jerInmnJ9vipeAzYskK5vyonU19lBEhTS7U1bUecvMk6tV0asdojLCeIh9ftlTp9rm
+ tcGXsjjlPL86uxOCJHlp2NIXtNCMhyrFkED3RYyXzJTeS3PkMaeyVEFK36cLL9IrDRidAvJiXs8
+ 82ZQkFBS49QVjNBK2iXAY09Df/Zk1rBopibV9NqmUHKRaQfZTQpEwTM0YhiA4EBHJ6GQcVw9ppA
+ AxjOfkqoJOiMVbcwsr5xOeyJeDDo9vB+au8MH5RO2EivTF9+FFTkUhHRJawzk4DyhmQch/AVcyM
+ 6tb8UDHXHsSdvf/ouxnOqMrTcEeMN9e4Vmsh3kjHbDQBK+hdGJ5T8YX7FMSWYIB9V0v/4HY/bS2
+ 6h1UYQUhB5OSYrCDgmbj0RvqobnNTwBSjh6CWm5JtMp/KL1varQUWS3ux4kMIdnDf0OCFD5ILTj
+ MBdSk29kDS1tPgBduNs9Q5ITJjz/D8NqUp4rPJrcgPNWbjNLZ7VXwdxNDsjJvDMvr/skhkrY4/k
+ XO8VVsD7Vmn5s4w==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -104,33 +105,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-qpw_read() casts len to int32_t for comparison with int32_t avail,
-which can underflow when avail is negative. Check for non-positive
-avail first, then cast to size_t for the comparison.
+On overrun in both capture and playback paths, the code logs an error
+but proceeds to write the full unclamped size. This advances the write
+index past read_index + RINGBUFFER_SIZE, causing filled to exceed the
+buffer capacity on subsequent calls. Once in that state, avail goes
+negative and the signed/unsigned comparison fails to clamp further
+writes, leaving the ring buffer in a degenerate state.
+
+Clamp to the remaining space so the write index stays within bounds.
 
 Reported-by: Pavee Hui <phui@google.com>
 Fixes: c2d3d1c29415 ("audio/pwaudio.c: Add Pipewire audio backend for QEMU")
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- audio/pwaudio.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ audio/pwaudio.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/audio/pwaudio.c b/audio/pwaudio.c
-index 1105e920f3c2..a8c18b9ecf85 100644
+index af360e2ec5ed..1105e920f3c2 100644
 --- a/audio/pwaudio.c
 +++ b/audio/pwaudio.c
-@@ -247,8 +247,12 @@ qpw_read(HWVoiceIn *hw, void *data, size_t len)
-     avail = spa_ringbuffer_get_read_index(&v->ring, &index);
- 
-     trace_pw_read(avail, index, len);
-+    if (avail <= 0) {
-+        l = 0;
-+        goto done_unlock;
-+    }
- 
--    if (avail < (int32_t) len) {
-+    if ((size_t)avail < len) {
-         len = avail;
+@@ -188,6 +188,7 @@ capture_on_process(void *data)
+         if ((uint32_t) filled + n_bytes > RINGBUFFER_SIZE) {
+             error_report("%p: overrun write:%u filled:%d + size:%u > max:%u",
+             p, index, filled, n_bytes, RINGBUFFER_SIZE);
++            n_bytes = RINGBUFFER_SIZE - (uint32_t)filled;
+         }
+     }
+     spa_ringbuffer_write_data(&v->ring,
+@@ -318,6 +319,7 @@ qpw_write(HWVoiceOut *hw, void *data, size_t len)
+         if ((uint32_t) filled + len > RINGBUFFER_SIZE) {
+             error_report("%p: overrun write:%u filled:%d + size:%zu > max:%u",
+             pw, index, filled, len, RINGBUFFER_SIZE);
++            len = RINGBUFFER_SIZE - (uint32_t)filled;
+         }
      }
  
 
