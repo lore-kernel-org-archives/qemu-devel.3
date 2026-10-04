@@ -4,92 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D74ECA5FEC
-	for <qemu-devel@archiver.kernel.org>; Sun,  4 Oct 2026 10:29:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86849CA5FCE
+	for <qemu-devel@archiver.kernel.org>; Sun,  4 Oct 2026 10:30:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xDJQe-00039j-7s; Sun, 04 Oct 2026 06:26:48 -0400
+	id 1xDJP8-0006Wg-Ig; Sun, 04 Oct 2026 06:25:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xDJQT-0002yc-HW
- for qemu-devel@nongnu.org; Sun, 04 Oct 2026 06:26:38 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1xDJOx-0005qN-Tw
+ for qemu-devel@nongnu.org; Sun, 04 Oct 2026 06:25:04 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xDJQS-0003QW-4e
- for qemu-devel@nongnu.org; Sun, 04 Oct 2026 06:26:37 -0400
+ id 1xDJOq-0002wk-1u
+ for qemu-devel@nongnu.org; Sun, 04 Oct 2026 06:24:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1791109594;
+ s=mimecast20190719; t=1791109495;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=0dg29o0yqvlBEnHExSppCjAqhKdabPoAfVOp/PkgXVQ=;
- b=BjU1ePiub9XRPGv4riqY7ot5CGw9hr1YVVDzhSXDnhw/9tFHpAU6VYMtgxrbw9NYUGGZew
- YktcIRaWV857tkZoWjk0dJHAIqpJerrOMiNlo7UWfKqLtG3Fos/zLfFHFerUyK634c0RoW
- W3cuHK+wr+wUMBrNeR5vtPIRul5kbLU=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=y9so1LbOiaCZvsO8b8ZyqoYIU8juJ32h87Ted0NV0Y4=;
+ b=P4UEc6mo1X9//7yvYst0iVjlyPmJlzoknKshHEVCjwR53drr1AtAA3AZIMCSnqkWmUxKGy
+ rtab+n1PQ9FPMFrY3lVFODpSzcOTn76I9KDASgeHFPP9Igyz83uW1gOpdofGB0kRF5Xv63
+ efkHPUFAIODRAbBL21eukpLbhQmj0p0=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-102-tAA_M5oNMRm_2zC7mq0WbQ-1; Sun,
- 04 Oct 2026 06:26:30 -0400
-X-MC-Unique: tAA_M5oNMRm_2zC7mq0WbQ-1
-X-Mimecast-MFC-AGG-ID: tAA_M5oNMRm_2zC7mq0WbQ_1791109589
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-253-GF2A358kMEOqyqd802YedA-1; Sun,
+ 04 Oct 2026 06:24:53 -0400
+X-MC-Unique: GF2A358kMEOqyqd802YedA-1
+X-Mimecast-MFC-AGG-ID: GF2A358kMEOqyqd802YedA_1791109492
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2B0A31955DD2; Sun,  4 Oct 2026 10:26:29 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 75988180066A; Sun,  4 Oct 2026 10:24:52 +0000 (UTC)
 Received: from localhost (headnet03.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.114])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D49D51956089; Sun,  4 Oct 2026 10:26:27 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 6323E19560AB; Sun,  4 Oct 2026 10:24:51 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Sun, 04 Oct 2026 14:24:02 +0400
-Subject: [PATCH 48/63] hw/input/adb: reject zero-length requests
+Date: Sun, 04 Oct 2026 14:23:35 +0400
+Subject: [PATCH 21/63] chardev/char-ringbuf: use actual read length in
+ qmp_ringbuf_read
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20261004-issue-4560-v1-48-ccbef537cbeb@redhat.com>
+Message-Id: <20261004-issue-4560-v1-21-ccbef537cbeb@redhat.com>
 References: <20261004-issue-4560-v1-0-ccbef537cbeb@redhat.com>
 In-Reply-To: <20261004-issue-4560-v1-0-ccbef537cbeb@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
- Pavee Hui <phui@google.com>, 
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, qemu-ppc@nongnu.org
-X-Developer-Signature: v=1; a=openpgp-sha256; l=927;
+ Pavee Hui <phui@google.com>, Paolo Bonzini <pbonzini@redhat.com>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1837;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=6fep3I/ry8R6FwSeuAFi/g1+uQ5CHThQE/P0DN0kjQs=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqwikkNc1DVQoDu+/AAWxlhANgZGeMFf9k5RFlu
- 4vOc/Jf9XeJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCasIpJAAKCRDa6OEJdZac
- 5Z1DD/4zoXuhWC9B7++c+5ayVcv4b3v9hn2HKSP7MOlDJBAXu94pIPWAQfZovEEITG0AA1Z9EwY
- etLIobv/xdtC2sPDoywuH6N7Po/LbOyWoTLk9gJM457PBlke7cAIf81sHgT9bUbz4yyIXUvhyhh
- 6KFPSP3I1YWzTIqK5qaucodAzWZdx9DpzA8j7V11TTXJBCHEybk9I40kppQJ3wjz+5IECbhPjd3
- 3d9N2pTQX6/pONk5XllGuWs+QTtWGMXE5FdQkziZA0pjtFmrYxULhNTX2V8OGYFpGOo8gpxs6zP
- lkQ0TxQ53x0cmpW6Df+YTWhyF2tEdiOtdg+U6BhjdkiEceXlj+0XOAR2WOD7FFlRzzNOd+KGYmA
- 9D0C+EsnmazCYJBMy2QAE0vqhJocgRk8MP3cFyPPJXJZ83fX6mZn3Yv8AqIR+MaMbk7NwtVgSkX
- IxAq4gWc6VKK+Z1QcSJ5XvKTe9KniDLMRylYIMKlq+uhUaneXv6yOeZteZLmeXAtoAyQY9UBNbj
- gP/6BblsbPRIEm/ks3I+yiQl1w33r3vwd1cMSaDSc+LnVWaQ4HX6v1agyWHlP/wJC7vR+pZCC5I
- 0RhDB9QZR8zpS3zGWb69nxS4/Hpcrktd5QWdqMceVwJtPr/JcUHe0gQ+LlJNdinYieaahi5k5iv
- gXytDPp5Pg2Y/Qw==
+ bh=844nPa9VijzgYzSdo+Yjc7DzFeIRYOx+I3BWYLa26qo=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqwikigMvCIBRV8lYiu0W2kLoww+y86PNBkUItK
+ KibvgVzhIqJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCasIpIgAKCRDa6OEJdZac
+ 5Qs5D/9B3Kth6/ylPDvfTei/bgTC7aTNhDfuIckMEhTb4ToC3xBOCZ9WuIc/XjKDwXFU/zjBd5H
+ XPXgxL/LewYhBVOzpYN0djFKvMGtAqn/l+BcQL7uPB5V8RMcuh/jgZsoFxlAZcS3SrnFXHLiIYp
+ l2SLYns08ZSyb+FMVEr6UKGKAL+Czp+B+/azOMfKqEij9rHyV9C93UySf+nslWpM6o8WhL2VFvK
+ v76lRRArsndIqSAabsccER9708WwzEeUzjIbFdpyvKwT7iLGlMfgq2xrt6vWzr0yrwI4VjHCIn8
+ L3rkb8XnqY6ZmOjGOm/kY+Lt7++QChK0uvpprwC/voX7A6RIxCCi97hLUrBALjSns1LrKWwb9yJ
+ N/c40/x9O5S2ngcUC8oCGe7DfjAYpvgOKhVeYxb5InGawkwOab+uZ7qZZqUCKwpt3+nYkTz27mt
+ 8OJMlJ/cFVbEh16y06L6JjhNeXGr1kYcefTe/CLe017J4lhbZJhgWiyRMysv/t1ZcF6stwkXIIO
+ hSohDFKetuKr5a8rYB5FjV7LsyRGo4jqDp4rvS2QQd91W9/LfvV4Bh9RlQdJJF5XpYPUiEyHF9T
+ WMVPteZpfz+Lj2SFGkObz0FlODwJoJp9oRG7572Zg1uxx5V5icDsSSl1KQHU0+5aYYTj/W17nYm
+ 4JeNUnqBBmWyTng==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 9
-X-Spam_score: 0.9
-X-Spam_bar: /
-X-Spam_report: (0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.337,
+X-Spam_score_int: -23
+X-Spam_score: -2.4
+X-Spam_bar: --
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.337,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,33 +104,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-adb_request() accesses buf[0] unconditionally for tracing before
-processing the request. A zero-length buffer causes an out-of-bounds
-read. Return early with -1, which all callers already handle (they
-check for > 0 before using the result).
+qmp_ringbuf_read() used the requested size rather than the actual
+number of bytes returned by ringbuf_chr_read() for base64 encoding
+and null-termination. Since ringbuf_count() is called without the
+lock, a concurrent writer can advance the consumer index, leaving
+fewer bytes available by the time ringbuf_chr_read() runs. This
+could encode uninitialized data or misplace the null terminator.
 
 Reported-by: Pavee Hui <phui@google.com>
-Fixes: e590e7f01479 ("adb: add ADB bus trace events")
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- hw/input/adb.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ chardev/char-ringbuf.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/hw/input/adb.c b/hw/input/adb.c
-index 29c09c755966..7c67d2baa663 100644
---- a/hw/input/adb.c
-+++ b/hw/input/adb.c
-@@ -96,6 +96,10 @@ int adb_request(ADBBusState *s, uint8_t *obuf, const uint8_t *buf, int len)
- {
-     int ret;
+diff --git a/chardev/char-ringbuf.c b/chardev/char-ringbuf.c
+index a80519f8d65d..4d83663e9abc 100644
+--- a/chardev/char-ringbuf.c
++++ b/chardev/char-ringbuf.c
+@@ -167,6 +167,7 @@ char *qmp_ringbuf_read(const char *device, int64_t size,
+     Chardev *chr;
+     uint8_t *read_data;
+     size_t count;
++    int actual;
+     char *data;
  
-+    if (len < 1) {
-+        return -1;
-+    }
-+
-     trace_adb_bus_request(buf[0] >> 4, adb_commands[buf[0] & 0xf], len);
+     chr = qemu_chr_find(device);
+@@ -189,10 +190,10 @@ char *qmp_ringbuf_read(const char *device, int64_t size,
+     size = size > count ? count : size;
+     read_data = g_malloc(size + 1);
  
-     assert(s->autopoll_blocked);
+-    ringbuf_chr_read(chr, read_data, size);
++    actual = ringbuf_chr_read(chr, read_data, size);
+ 
+     if (has_format && (format == DATA_FORMAT_BASE64)) {
+-        data = g_base64_encode(read_data, size);
++        data = g_base64_encode(read_data, actual);
+         g_free(read_data);
+     } else {
+         /*
+@@ -202,7 +203,7 @@ char *qmp_ringbuf_read(const char *device, int64_t size,
+          * when) ring buffer lost characters since last read, initial
+          * continuation characters should be dropped.
+          */
+-        read_data[size] = 0;
++        read_data[actual] = 0;
+         data = (char *)read_data;
+     }
+ 
 
 -- 
 2.56.0.rc0.29.g47ce80527c56
