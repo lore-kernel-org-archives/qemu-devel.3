@@ -4,91 +4,118 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D569CA5FCE
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Oct 2026 19:01:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75FFACA5FCE
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Oct 2026 19:07:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xDnw8-0007iF-E7; Mon, 05 Oct 2026 15:01:20 -0400
+	id 1xDo1k-0000Rh-NZ; Mon, 05 Oct 2026 15:07:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1xDnw3-0007hR-0Z; Mon, 05 Oct 2026 15:01:15 -0400
-Received: from vps-ovh.mhejs.net ([145.239.82.108])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1xDnw0-0006KK-Va; Mon, 05 Oct 2026 15:01:14 -0400
-Received: from MUA
- by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
- (Exim 4.99.1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1xDnvh-0000000676B-0igg; Mon, 05 Oct 2026 21:00:53 +0200
-Message-ID: <cd0292cf-2a87-4716-a8c9-d87853949c76@maciej.szmigiero.name>
-Date: Mon, 5 Oct 2026 21:00:47 +0200
+ (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
+ id 1xDo1i-0000RT-LI
+ for qemu-devel@nongnu.org; Mon, 05 Oct 2026 15:07:06 -0400
+Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
+ id 1xDo1g-0006rw-Od
+ for qemu-devel@nongnu.org; Mon, 05 Oct 2026 15:07:06 -0400
+Received: by mail-ed1-x52c.google.com with SMTP id
+ 4fb4d7f45d1cf-6acbdbc1725so2911424a12.3
+ for <qemu-devel@nongnu.org>; Mon, 05 Oct 2026 12:07:04 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1791227223; cv=none;
+ d=google.com; s=arc-20260327;
+ b=raSjkSYDyL90mI4SK0Sm9rDtrObfNqAdgUJZwEziVVHA5WEENs8TLQVsXzPHZIVJml
+ OMY2zqlYoDSWcZuuUu/PfJt8amKEAVv2QDkc/y3WFfY4Ljd5VARixRyqtTAJvXre3o6Q
+ gjGf4V6GHVCOpNtueB5UPEvPNQnmHzG8JmGtt994/2J2kChicKvISBcuawIl0MTv7ySa
+ JVxHVMms4aKotzC+rGIYQBv/TzxFlwDcZxL6zbJBOUgqv/6QYrZuLP2pJ1m7TCx04sZ2
+ u21IIboOEHlv4EpQJheXUqQ+Lq9TvBmJh193mS2f2zoY2qoDlN9XO0mhA5mCluB6dJli
+ FVxA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :reply-to:in-reply-to:references:mime-version:dkim-signature;
+ bh=W+CsBfQUUfwYQCfTJyMKFb2DhxxUZWftjxcQ6uPqVKQ=;
+ fh=IWV5i/bmsnDDiumGg7GH/qn1tjabzJqEv+mL/WiBNIs=;
+ b=e4PUKkE96rmX+NytFBCS3c6FSoJbT2xnTawacOg8M30qW7ujGApPf4a6z7WmGa3qyx
+ 9NxXsMe0AxM282sTtuEyWzn60dPdhcRmDgYpM6699Ffygs0YCR4XvFNO6FO1xvshrP4D
+ upzTRapc7S9dVL9fRRJrMDM12kw45HHXqgiO8sbGweRjQXW3z3Nkpk5Ab9lwlPvHfGi6
+ aKFAGezMkEap+2LdahGSUa/8OCLzhT5MxGaI4Qm8VKoiSqx8Izxe9pq5Gd7hUEJRhP3l
+ kz1ZPcPzNCKOaIC3KkwGFvw7AAxnXdjb+m/6fmdUbO/S6xABUyqmglS3j95bgjB+wWCY
+ RH/A==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1791227223; x=1791832023; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:reply-to:in-reply-to:references:mime-version:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=W+CsBfQUUfwYQCfTJyMKFb2DhxxUZWftjxcQ6uPqVKQ=;
+ b=YVpRj7rVd15/2HNIvKm303DsMNqTZ1dtrqBF0L3DQ6JCY1JesbKErMqrxpaFRhJ0ij
+ 3XgrAQcGxBQE8Dj8qloamOvWUaQ52rqj6JOcvY1hYlLd1+BV72AuBLRl20vKWLxMH+wz
+ me5GC6blxYNbLVJiPDzt+WgLsx35v4UcU0ikulqXvdtjKG7XLTosmtbpubhcJ6lIDnJp
+ Ar5xWqOlTqJ07sssOCMGvhzmADiLbI3AoAoRhHgcbneCuI1PLUAeQ1LmeEoeR8K8nFY2
+ tHyIfTy51CESY4zDyTlUeTyuU91qDf/CMvqm31gekjqwfgPotZmb0sXopgWxcHoTYQzF
+ PSIw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1791227223; x=1791832023;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:reply-to:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=W+CsBfQUUfwYQCfTJyMKFb2DhxxUZWftjxcQ6uPqVKQ=;
+ b=j1i65yjlA5+oq+AIdnETT8jBwb2jrhbTsJKvoz4DIksMd5rTE8hDEdov3hyOFXe9n8
+ 2YsHC+URvYQyktw3qdmv1MUgLuxDieNb6x5AMkn1wkouO/6Pvih7TaQ+O1pnIwloqJP1
+ dyynJ8oRgmBd6gaHfbaHlaa9O+T81v7Ge9qaiaAy5q/DRexTkSJuhAkGVHdZXvu7JM1i
+ DRlOwO+dSPliQ+3vdS6XQ9bDTSB1IMPI3wDl6qauNRsjBCwwu7JbzlXD6w3P0KAzjlyO
+ TGd3t/snzWTmCjWOJgmq9mhNUcasTRib24YeKWJI0fNpd5naTmO5qCP3qa6UItWKat/M
+ W0Ig==
+X-Gm-Message-State: AFq9FYJZh111JtzXLG1lsIgKdv4SMEvjhlWDqzDfnoaSYurds1K28vaH
+ nwyPuXCqqxzcEFwaKVTw5qMJdn2jdWzLrIyLGxU79aI0qRmPy/9GuQ81XcYS9N9NWVTb0x1rD02
+ RTqMhWZ2si+EFRTxokdeRHjGLwstZo9s=
+X-Gm-Gg: AYBFou0hNBHRdxwNwkImKR+NmG/ESY3FQQo4caovcod4t+tMlxjk0rqhrowUyPkq2+s
+ ACXvC0mys4VvRtlqnQaQhPU3QwgWI8s9sTp+kSeVRJr/P54NSl/IKTgjr9NE7PT/udgTf9dsIns
+ I4M0J3CM/WpgcOUMq9XTzno4P/Z0xACQCdeyIosfjJ5Ii2aZxRFF/5phpKkBLnwIqnfqdXEV8XA
+ YmjaZybWx7h0Z5ilOzBb++EFqaXLNyIARz1wELQV9LShLt3fcc79DhX02ulx1zosnPI43V4zdrY
+ 1hmB2CDV0apJX347tMba860oO46OUg2qNhDRUfL3GPYkwK6/qTXtpydGC7WE0rwBHw==
+X-Received: by 2002:a05:6402:3549:b0:6af:9c33:a6f with SMTP id
+ 4fb4d7f45d1cf-6afad8d13aamr6734753a12.18.1791227222428; Mon, 05 Oct 2026
+ 12:07:02 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] hostmem: fix cpr-exec of VMs with bound guest memory
-To: "Denis V. Lunev" <den@openvz.org>
-Cc: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>,
- David Hildenbrand <david@kernel.org>, Igor Mammedov <imammedo@redhat.com>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Mark Kanda <mark.kanda@oracle.com>, Ben Chaney <bchaney@akamai.com>,
- qemu-stable@nongnu.org, qemu-devel@nongnu.org
-References: <20260924125800.4188406-1-den@openvz.org>
- <20260924125800.4188406-2-den@openvz.org>
-From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
-Content-Language: en-US, pl-PL
-Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
- 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
-In-Reply-To: <20260924125800.4188406-2-den@openvz.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=145.239.82.108;
- envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.25, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20261004072927.1142-1-luoyonggang@gmail.com>
+ <0b84bf4d-3b98-4f52-8847-9f89bef92c1e@oss.qualcomm.com>
+ <CAE2XoE-joWZwrBy-jLe+=ZP7OGM9cyDrF_5hz7koVPODeys+JA@mail.gmail.com>
+ <b2297f92-a685-4399-a755-bbe5a37b9b3f@oss.qualcomm.com>
+ <CAE2XoE-4Pdp_n3RgpqJ5se_KTHniMAJAodTLmkfV+0jjou=M5w@mail.gmail.com>
+ <c6bd8e8d-3160-46c2-ba4a-2f5a4b93cf38@oss.qualcomm.com>
+ <CAE2XoE9PKNgE1Zz_frOq_DrgqrPL4B8hcq0xO6ywCNTeUnFLvA@mail.gmail.com>
+ <63d20cc8-8003-489c-9f08-28369a2f71e2@oss.qualcomm.com>
+ <CAE2XoE9uqEcjMsqJXu6Cr+MrposPjq7O6Lnj5cj7uW2nF38uAg@mail.gmail.com>
+ <15e9a768-95bf-45aa-8175-1dbd73d5ee04@oss.qualcomm.com>
+In-Reply-To: <15e9a768-95bf-45aa-8175-1dbd73d5ee04@oss.qualcomm.com>
+From: Yonggang Luo <luoyonggang@gmail.com>
+Date: Tue, 6 Oct 2026 03:06:49 +0800
+X-Gm-Features: AclHuK_KsbUyHZLLiM-39GKgYxFw7vjQLzeQ02C_dR5SP7j8q0z7-v6flS8uiCA
+Message-ID: <CAE2XoE-89zTC4wPnyi_ZUu_dcVuLmwr4uyp-txkxEYQ29Y8uvw@mail.gmail.com>
+Subject: Re: [PATCH 0/4] target-info: preserve full softmmu target identity
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, Philippe Mathieu-Daude <philmd@mailo.com>, 
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
+ Fabiano Rosas <farosas@suse.de>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
+ envelope-from=luoyonggang@gmail.com; helo=mail-ed1-x52c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,100 +128,166 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: luoyonggang@gmail.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24.09.2026 14:57, Denis V. Lunev wrote:
-> From: Denis V. Lunev <den@openvz.org>
-> 
-> cpr-exec kills a VM whose memory backend has host-nodes when the cgroup
-> no longer allows those nodes. 
+On Tue, Oct 6, 2026 at 2:52=E2=80=AFAM Pierrick Bouvier
+<pierrick.bouvier@oss.qualcomm.com> wrote:
+>
+> On 10/5/2026 11:45 AM, Yonggang Luo wrote:
+> > On Tue, Oct 6, 2026 at 2:06=E2=80=AFAM Pierrick Bouvier
+> > <pierrick.bouvier@oss.qualcomm.com> wrote:
+> >>
+> >> On 10/5/2026 10:04 AM, Yonggang Luo wrote:
+> >>> On Tue, Oct 6, 2026 at 12:25=E2=80=AFAM Pierrick Bouvier
+> >>> <pierrick.bouvier@oss.qualcomm.com> wrote:
+> >>>>>>
+> >>>>>> Ok, but I'm not sure it answers the why.
+> >>>>>> Could you explain the benefits?
+> >>>>>
+> >>>>> Which part? keeping target_arch as SYS_EMU_TARGET__MAX for user-bin=
+ary because
+> >>>>> The following original code would return -1 for some user-binary
+> >>>>> +    SysEmuTarget arch =3D target_info()->target_arch;
+> >>>>> +
+> >>>>> +    if (arch =3D=3D SYS_EMU_TARGET__MAX) {
+> >>>>> +        arch =3D qapi_enum_parse(&SysEmuTarget_lookup, target_name=
+(), -1,
+> >>>>> +                               &error_abort);
+> >>>>> +    }
+> >>>>> +    return arch;
+> >>>>> So basically assigning any value for the user binary is valid.
+> >>>>> SYS_EMU_TARGET__MAX is more explicit as it's related to type SysEmu=
+Target.
+> >>>>> -1 is another option but easy to confuse.
+> >>>>>
+> >>>>>
+> >>>>> For why commit e934c624f32f6f44f427d73a2e6a67e983a02ae6.
+> >>>>> "target-info: Statically initialize target_arch"
+> >>>>> doing that, I am not sure.
+> >>>>>
+> >>>>
+> >>>> I guess there is a (good or bad) reason for which sub variants of
+> >>>> targets are not reflected in SYS_EMU_TARGET enum. We should double c=
+heck
+> >>>> that before doing any change, as it might have other consequences.
+> >>>
+> >>>
+> >>> You=E2=80=99re right to ask, and I need to correct my earlier suggest=
+ion:
+> >>> leaving user-mode target_arch
+> >>>  as SYS_EMU_TARGET__MAX is not safe. target_aarch64() is used by ARM
+> >>> code shared with user-mode builds,
+> >>> including cpu-max-v8.c, where its result indexes a two-entry array.
+> >>> For aarch64-linux-user, the sentinel could therefore cause an
+> >>> out-of-bounds access during type registration.
+> >>>
+> >>> I checked the distinction: softmmu needs the full system-target
+> >>> identity, including variants such as mipsel;
+> >>> user-mode variants such as aarch64_be use their base TARGET_ARCH
+> >>> (aarch64) for this enum. I=E2=80=99ll keep the full TARGET_SYS_EMU
+> >>>  value for softmmu and use TARGET_ARCH for user-mode builds, rather
+> >>> than leave the field at SYS_EMU_TARGET__MAX.
+> >>>
+> >>
+> >> That's technical details, but not an answer to the initial question of
+> >> why we need to change anything for user binaries, compared to what exi=
+sts.
+> >
+> > The first two patches revert the current static initialization so the
+> > token can be replaced. They are not a user-mode behavior change.
+> >
+> > Compared with current QEMU, user-mode still uses TARGET_ARCH.
+> > qemu-mipsel already reports mips, and it still will. Names such as
+> > aarch64_be are not SysEmuTarget values, so user-mode cannot use the
+> > full target name for this field; keeping TARGET_ARCH preserves today's
+> > value and avoids the runtime parse.
+> >
+>
+> Why should we need to expose this precise information?
+> So far, if those targets were not exposed (and aliased to 32/64 bit
+> variant), it's probably we didn't need it.
 
-What's the use case for starting a VM with a limited set of allowed NUMA
-nodes for its RAM backend(s), then moving this process to a cgroup that
-excludes all these nodes?
+because for different SysEmuTarget, the machine list is different.
+return a wrong SysEmuTarget would cause a mismatch between SysEmuTarget
+and the machine list. for example:
 
-> The old QEMU saves its state, the new one
-> exits during startup with
-> 
->    cannot bind memory to host NUMA nodes: Invalid argument
-> 
-> and the guest is lost.
-> 
-> Guest RAM survives CPR: its fd is passed to the new QEMU or its backing
-> file is reopened, and the pages stay where they are. For shmem-backed
-> memory the policy set by mbind() lives in the shared object and survives
-> as well. host_memory_backend_memory_complete() treats the memory as
-> fresh anyway: it calls mbind() with MPOL_MF_STRICT | MPOL_MF_MOVE and
-> preallocates again. cpr-exec keeps the PID and the cgroup, so if
-> cpuset.mems has been changed to nodes outside host-nodes since the VM
-> started, mbind() returns EINVAL and QEMU exits. Where it succeeds, it
-> only walks or migrates pages that are already in place, while the guest
-> is stopped.
-> 
-> Skip the NUMA binding and preallocation on incoming CPR. The source
-> blocks CPR while any RAM block cannot be preserved, so every backend
-> created in this mode is an inherited one. 
+static const char * const mips_machines[] =3D {
+    "malta",
+    "none",
+};
 
-Are you sure that CPR incoming QEMU can't be launched with additional
-"unused" memory backends?
+static const char * const mips64_machines[] =3D {
+    "magnum",
+    "malta",
+    "none",
+    "pica61",
+};
 
-> This covers cpr-transfer too,
-> where the new process may be placed in a cgroup that does not allow the
-> original nodes. For a file backend outside shmem the VMA policy is not
-> restored, which affects only pages first touched after the update.
-> Memory added after the incoming migration completes is back on the
-> normal path.
-> 
-> Fixes: 2b7e9739fad8 ("physmem: preserve ram blocks for cpr")
-> Suggested-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-> Signed-off-by: Denis V. Lunev <den@openvz.org>
-> Cc: David Hildenbrand <david@kernel.org>
-> Cc: Igor Mammedov <imammedo@redhat.com>
-> Cc: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
-> Cc: Peter Xu <peterx@redhat.com>
-> Cc: Fabiano Rosas <farosas@suse.de>
-> Cc: Mark Kanda <mark.kanda@oracle.com>
-> Cc: Ben Chaney <bchaney@akamai.com>
-> Cc: Steve Sistare <steven.sistare@oracle.com>
-> Cc: qemu-stable@nongnu.org
-> ---
->   backends/hostmem.c | 5 +++++
->   1 file changed, 5 insertions(+)
-> 
-> diff --git a/backends/hostmem.c b/backends/hostmem.c
-> index 02846b597d..26c7fce1cb 100644
-> --- a/backends/hostmem.c
-> +++ b/backends/hostmem.c
-> @@ -24,6 +24,7 @@
->   #include "qemu/madvise.h"
->   #include "qemu/cutils.h"
->   #include "hw/core/qdev.h"
-> +#include "migration/cpr.h"
->   
->   #ifdef CONFIG_NUMA
->   #include <numaif.h>
-> @@ -365,6 +366,10 @@ host_memory_backend_memory_complete(UserCreatable *uc, Error **errp)
->       if (!backend->dump) {
->           qemu_madvise(ptr, sz, QEMU_MADV_DONTDUMP);
->       }
-> +    /* Memory inherited over CPR already has its pages and policy */
-> +    if (cpr_is_incoming()) {
-> +        return;
-> +    }
-TBH silently skipping all the rest of memory backend
-initialization makes me a bit uncomfortable.
+static const char * const mips64el_machines[] =3D {
+    "boston",
+    "fuloong2e",
+    "loongson3-virt",
+    "magnum",
+    "malta",
+    "none",
+    "pica61",
+};
 
-First, it effectively silently ignores the memory backend
-NUMA setting on the incoming CPR QEMU.
+static const char * const mipsel_machines[] =3D {
+    "malta",
+    "none",
+};
 
-Second, it also skips the backend preallocation step below.
 
-Instead, would just turning the mbind() hard error in
-that case (on CPR inherited backends only) into a
-warning make it work?
+>
+> In case there is a real need to expose it, maybe the simplest solution
+> is to add such target configs.
+>
+> > The only intended change is softmmu, where TARGET_NAME differs from
+> > TARGET_ARCH. qemu-system-mipsel must report mipsel, not mips.
+> >
+> > The cover-letter sentence about mipsel-linux-user compared against the
+> > old target_name() parse, not against current QEMU.
+> >
+> >
+> >
+> >>
+> >>>>
+> >>>>>
+> >>>>>>
+> >>>>>>> "target-info: Statically initialize target_arch"
+> >>>>>>>
+> >>>>>>>>
+> >>>>>>>> Regards,
+> >>>>>>>> Pierrick
+> >>>>>>>
+> >>>>>>>
+> >>>>>>>
+> >>>>>>
+> >>>>>
+> >>>>> --
+> >>>>>          =E6=AD=A4=E8=87=B4
+> >>>>> =E7=A4=BC
+> >>>>> =E7=BD=97=E5=8B=87=E5=88=9A
+> >>>>> Yours
+> >>>>>     sincerely,
+> >>>>> Yonggang Luo
+> >>>>
+> >>>
+> >>>
+> >>
+> >
+> >
+>
 
-Thanks,
-Maciej
 
+--=20
+         =E6=AD=A4=E8=87=B4
+=E7=A4=BC
+=E7=BD=97=E5=8B=87=E5=88=9A
+Yours
+    sincerely,
+Yonggang Luo
 
