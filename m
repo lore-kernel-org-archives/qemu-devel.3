@@ -4,109 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6382CA5FFE
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Oct 2026 21:44:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F3ADCA5FF0
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Oct 2026 21:45:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xDqTs-0004F4-4Q; Mon, 05 Oct 2026 17:44:20 -0400
+	id 1xDqUc-00050I-GN; Mon, 05 Oct 2026 17:45:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1xDqTm-0004EO-Im; Mon, 05 Oct 2026 17:44:14 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1xDqTk-00032p-V4; Mon, 05 Oct 2026 17:44:14 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 695HZSjH3658139; Mon, 5 Oct 2026 21:44:11 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=nouQUE
- PXOT5msozQ0jpq48UeQrvfuQz2+twDjPW3tIo=; b=dPiO8GhzLuVvjlEMkqdQd+
- FVUVP4CXBnvq4WhsrPXP5SbwnejvPssmk0/pgRKfSMiDb+P9/AJfvIGfzTML4kO9
- H0XSi8HpScnl77PAnGsrukd4h5bPjrfRTGHj9OC4yOd7uCX/qcPWgtk4bVP3dnD/
- vhBX62uNh+wxc+mu/nSRFb8q5VwsC0HdqrxnES9RwEsPdImQcFaYCF2JaWwFV/uh
- qXpJaWr7U7O+zFfwnqBlsvsAKfe10Rju8IUALRFCLScqMKIAdbehq7U/6RVfs3Vh
- 3KKHEDr16ztpAzeCKL8p10iFqeaYN8pyABTOhbyPPcW3FbvcNen5SBgPeoFdYtfQ
- ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4h2scrcm3v-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Mon, 05 Oct 2026 21:44:10 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 695HMbv43252062; Mon, 5 Oct 2026 21:44:10 GMT
-Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4h3eqy71xc-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 05 Oct 2026 21:44:10 +0000 (GMT)
-Received: from smtpav02.dal12v.mail.ibm.com (smtpav02.dal12v.mail.ibm.com
- [10.241.53.101])
- by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 695Li9Gv7471746
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 5 Oct 2026 21:44:09 GMT
-Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 162775805A;
- Mon,  5 Oct 2026 21:44:09 +0000 (GMT)
-Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8B7DA58051;
- Mon,  5 Oct 2026 21:44:08 +0000 (GMT)
-Received: from [9.61.15.56] (unknown [9.61.15.56])
- by smtpav02.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Mon,  5 Oct 2026 21:44:08 +0000 (GMT)
-Message-ID: <54ccae64-501d-4f17-b4c5-14eed8d502e8@linux.ibm.com>
-Date: Mon, 5 Oct 2026 17:44:08 -0400
+ (Exim 4.90_1) (envelope-from <fuad.tabba@linux.dev>)
+ id 1xDqUb-000501-5P
+ for qemu-devel@nongnu.org; Mon, 05 Oct 2026 17:45:05 -0400
+Received: from out-183.mta0.migadu.com ([2001:41d0:1004:224b::b7]
+ helo=mta0.migadu.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <fuad.tabba@linux.dev>)
+ id 1xDqUZ-00034q-6w
+ for qemu-devel@nongnu.org; Mon, 05 Oct 2026 17:45:04 -0400
+X-Envelope-To: qemu-devel@nongnu.org
+DKIM-Signature: a=rsa-sha256; bh=w0TIwQV2lUFcngUw95TlXoGDr2YHflHFzIEeIwp6s+Y=; 
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1791236696; v=1; x=1791841496;
+ b=GAw2o/dcPMfyekXJ6FPEg9H6oyfHDnOytR3GgPf3xJBnngtIBLOMqqC1oUGqkgpuFYDRu/0N
+ Kt1pCcvUOYhDNiCQTkdMi3CAEM2Ifc+hUeqySj2dlWmauVX78ZkthgySI90doIrLhk4oZ5a80Fq
+ s7c/pOJhMLDdwQNM6D1J/pXY=
+X-Envelope-To: qemu-devel@nongnu.org
+Received: by smtp.migadu.com with ESMTPS id e121de19412a3869;
+ Mon, 05 Oct 2026 21:44:56 +0000
+X-Mizu-Trace-ID: e121de19412a3869
+X-Migadu-Flow: FLOW_OUT
+From: Fuad Tabba <fuad.tabba@linux.dev>
+To: Gustavo Romero <gromero@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Will Deacon <will@kernel.org>, Itaru Kitayama <itaru.kitayama@linux.dev>,
+ Fuad Tabba <tabba@google.com>
+Subject: Re: [PATCH 1/2] target/arm: Clear TTBR[5:0] from a 52-bit table base
+ address
+Date: Mon,  5 Oct 2026 22:44:51 +0100
+Message-Id: <20261005214451.1036668-1-fuad.tabba@linux.dev>
+X-Mailer: git-send-email 2.39.5
+In-Reply-To: <l5hcpwnktn2hvbt55ux42xzb2euc5zqohnxtaiftr7lxynfx2g@myyytd4e4owp>
+References: <20261001175003.ttbr-baddr-52bit-0-fuad.tabba@linux.dev>
+ <20261002070925.2627344-1-fuad.tabba@linux.dev>
+ <l5hcpwnktn2hvbt55ux42xzb2euc5zqohnxtaiftr7lxynfx2g@myyytd4e4owp>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 0/2] Error recovery for zPCI passthrough devices
-To: Farhan Ali <alifm@linux.ibm.com>, qemu-s390x@nongnu.org,
- qemu-devel@nongnu.org
-Cc: farman@linux.ibm.com, cohuck@redhat.com, alex@shazbot.org, clg@redhat.com
-References: <20261005174314.871-1-alifm@linux.ibm.com>
-Content-Language: en-US
-From: Matthew Rosato <mjrosato@linux.ibm.com>
-In-Reply-To: <20261005174314.871-1-alifm@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA1MDA4NSBTYWx0ZWRfXziNB0Mbn8G+w
- 2qVIosoGGLGzhacg62hO9WlPmbHOXN9A2uIP1yS2xNMICkfWquq2P1LxB5ISr1j+xXLzUtekm+w
- VWZMZUlIxMtw0GUY6KouOHPOnMOeAXI=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA1MDA4NSBTYWx0ZWRfX4V4qGIysb4g7
- DjkRWt74cAKEiS4U1Ftf8ioqnhhlhE6OHwlVCWn3BRKEz1IucZZbsC28tFilml+IpyC81q01meo
- 5CjmJTZsOBo+8/OYXRAa62dA9tF3YXoKTHhqDd2T9m2spE+1OImMjRpUIRS8MnRGItjjCdLB5gb
- Q5z0B5pfmuUbn6H/B3s2/mvvn+mxNN7ruzYJgPOT8aWAChuShGtGybJCl59QgDr3KWMe17LvSZQ
- RU/3wZyj7uV7WHZPE5c00I7qn8gl3ku5DVT4pttFyvHsVvMwMPfAds9shFMkoaRGtyMf2CzyjDa
- JHFTzSr7G/yGaRAvcp+1ILnPeyESdP+uCE0mEXN5vpKdXlgofw5jmQ+Q0NkVpy82Cu84Os/fWdB
- t+fkK65nXJezIX4z9pYfRDzDeBR0C7PaVixKO4GVfOn/+9ORLwmAYtdF9hQZ8wJKJi83qTDPVyW
- RKsR/nAyPbrxR79itBg==
-X-Proofpoint-GUID: Rjbyt8VTH0eXYfWgMB0nHcDnMclpCxlh
-X-Proofpoint-ORIG-GUID: Rjbyt8VTH0eXYfWgMB0nHcDnMclpCxlh
-X-Authority-Analysis: v=2.4 cv=B7osQ+tM c=1 sm=1 tr=0 ts=6ac41a2a cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=t0SE7IyajQzYD5HYdf8A:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-10-05_05,2026-10-05_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 bulkscore=0 malwarescore=0 impostorscore=0 phishscore=0
- clxscore=1015 spamscore=0 adultscore=0 lowpriorityscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2610050085
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=mjrosato@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=2001:41d0:1004:224b::b7;
+ envelope-from=fuad.tabba@linux.dev; helo=mta0.migadu.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -123,37 +74,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/5/26 1:43 PM, Farhan Ali wrote:
-> Hi,
-> 
-> This patch series introduces support for error recovery for passthrough PCI
-> devices on System Z (s390x). This is the user space component for the Linux
-> kernel patches [1]. The kernel patches were merged for 7.3 release.
-> 
-> The current design for QEMU updates the callback for vfio error notifier to
-> an s390x specific error handler if the kernel supports the new device
-> feature VFIO_DEVICE_FEATURE_ZPCI_ERROR, for s390 vfio-pci devices. So now
-> on an eventfd notification for error notifier it will invoke the s390x
-> specific error handler.  The s390x error handler will retrieve the
-> architecture specific PCI error information and inject the information into
-> the guest. Once the guest receives the error information, the guest drivers
-> will drive the error recovery.  Typically recovery involves a device reset
-> which translate to CLP disable/enable cycle for the device.
-> 
-> I would appreciate some feedback on this patch series.
-> 
-> Thanks 
-> Farhan
+Hi Gustavo,
 
-@Eric: Series LGTM at this point, let's give Cédric and/or Alex some
-time to look too.
+On Mon, 05 Oct 2026 21:06:44 +0100, Gustavo Romero <gromero@redhat.com> wrote:
 
-This series should also either go after Konstantin's migration series or
-at least we should take my patch from that series (s390x/pci: implement
-IOMMU replay) to ensure that is in place prior to enabling this recovery
-feature; basically, we want that patch with whichever feature lands first.
+[...]
 
-Thanks,
-Matt
+> > diff --git a/tests/tcg/aarch64/system/ttbr-baddr.c b/tests/tcg/aarch64/system/ttbr-baddr.c
 
+[...]
+
+> > +int main(void)
+
+[...]
+
+> > +    /* PARange 52 bits, TGran16 with 52-bit addresses (FEAT_LPA2) */
+> > +    if ((mmfr0 & 0xf) != 6 || ((mmfr0 >> 20) & 0xf) != 2) {
+>
+> I understand you are checking PARange == 6 here for checking if FEAT_LPA (not
+> FEAT_LPA2) is also available? If so, maybe change the comment to:
+>
+> /* PARange 52 bits (FEAT_LPA) and TGran16 with 52-bit addresses (FEAT_LPA2) */
+>
+> ?
+
+Yes, the test's 52-bit PA and IPA both require FEAT_LPA. I'll take
+your comment for v2.
+
+> > +        ml_printf("SKIP: no 52-bit PA or no FEAT_LPA2 with 16KB\n");
+> > +        return 0;
+>
+> Return 'ret' here for consistence?
+
+Sure, I'll change it in v2.
+
+> That's a nice test.
+>
+> I'm wondering if the fixes should be separated from the tests as we usually do,
+> but feel free to wait for collecting more input from the other reviewers about
+> it.
+
+Thanks! I kept each test case with the fix it covers, so each patch
+carries a test case that fails without its fix. Both forms have gone
+into target/arm, including my last contribution. Happy to split if you
+prefer. I'll wait for more comments before doing that.
+
+Cheers,
+/fuad
 
