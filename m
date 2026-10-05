@@ -4,113 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E47F1CA5FCE
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Oct 2026 12:00:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43690CA5FF0
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Oct 2026 12:05:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xDhML-0001uM-Gd; Mon, 05 Oct 2026 07:59:57 -0400
+	id 1xDhRN-00051j-2K; Mon, 05 Oct 2026 08:05:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>) id 1xDhKl-0001Ty-FN
- for qemu-devel@nongnu.org; Mon, 05 Oct 2026 07:58:20 -0400
-Received: from fhigh-b4-smtp.messagingengine.com ([202.12.124.155])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1xDhQz-00050Q-7k
+ for qemu-devel@nongnu.org; Mon, 05 Oct 2026 08:04:46 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>) id 1xDhKj-0002xU-JG
- for qemu-devel@nongnu.org; Mon, 05 Oct 2026 07:58:19 -0400
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
- by mailfhigh.stl.internal (Postfix) with ESMTP id 2DD4A7A0110
- for <qemu-devel@nongnu.org>; Mon,  5 Oct 2026 07:58:15 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
- by phl-compute-02.internal (MEProxy); Mon, 05 Oct 2026 07:58:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
- h=cc:cc:content-transfer-encoding:content-type:date:date:from
- :from:in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to; s=fm1; t=1791201495; x=
- 1791287895; bh=gcQDFBrUxXdcMdoFL3RqEOPgTt7Zxm2UzsLq3RHz1NE=; b=u
- UuBDIRLqqhLWhhtCR+2PDIPI1P8VBrt84CCiLiBgDJPm+/GtacynJ+3T+K0xVfvY
- y46d9Xe0NcI9KHuVBtHKo+1kW8DEoigWuAoqiv5Pchn/BlUEt6+FZqK5yLRMD6rU
- hMJgQFwmCvpOn7+Z/fmwwFx40NEiB1m1W+F+/XHhI/1XN857EsMHazH2enGcLwB8
- sE3UXZdd1jQec+YtoW3+Y4HFljLFWjpy5OGgnI4JWnEuFOn9wONLOuiC4qTF19dc
- dL9KM7zUfBETZfZT/OxK8JCw47ug+/vVvjzBh64ODiZ0JW1W2VXx1B2kuoGRUu7K
- 6tcMXBgGMf2f4vTR7af2A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:date:date:feedback-id:feedback-id:from:from
- :in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
- :x-me-sender:x-sasl-enc; s=fm2; t=1791201495; x=1791287895; bh=g
- cQDFBrUxXdcMdoFL3RqEOPgTt7Zxm2UzsLq3RHz1NE=; b=lq6mc65gKXbya0agc
- C59asiV7rtUu/sVjtfOvGE77bXT190kLgnNQlFQ47VBwodhuCHsaMrwk9988LaY6
- WFeg2bYCZsAfeW9szJyamypzTR4m15kdtPFwk971REYuI6tVguBomxGRU95g9pQM
- /3sgdp/OCrCVqH6HdWYKxsiFHKuKGdKUjVc72j70HFguy4VNqI+1a1tLw6IYN0d7
- 18A0eCXK+vVvTAznBTZgYw2L7Crmc4FnBepJH6sImkw6IwZvKofo92BdTH9+ed9T
- Ws899S3JdHbvKtpd3RBSVdfLYTZ9II78D6mnuJjz8+WuCjVeDmXA8ULbWNbmcp6i
- 38YJw==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
- repo=github.com/dkim2wg/interop; date=2026-09-30; sw=lmtpprox;
- action=sign d=irrelevant.dk a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1791201495; d=irrelevant.dk;
- mf=PGl0c0BpcnJlbGV2YW50LmRrPg==;
- rt=PHFlbXUtZGV2ZWxAbm9uZ251Lm9yZz4=;
- s=fm1:rsa-sha256:zaE90iUzTzd/3KIkFFYCDDB+VAquy4yxol35GDX3/Ty2vcC
- YbQF+0QxxAgFEj3Rb5AraaWChRMwzEK7hoHQ9DULU7zZmEugu+q5Rmre1ExqyBP2
- eTLUfCq7o9uQ4x6UbwwMQniwT62XWaqQlmB7bLeoDxOWinH8L9g8m+/9V/0o3s/T
- FdBseqxvl3rcua1FSWfENNFWlMV+yCwJ46paSJeDhuLXOyy3S1NUciZ8pCS63ivQ
- BQC2mHWjTgO9I9+M5cC4i8/plGoOya1mbDkpnwip/TaGwr5C5aI1oKZ18CjksH26
- e1DpKYW+v/+tKnatzMci4OXhsYPXlhak697VE3g==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
- repo=github.com/dkim2wg/interop; date=2026-09-30; sw=lmtpprox;
- action=mi-m=1; hc=11;
- hn=cc,content-transfer-encoding,date,feedback-id,from,
- in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1;
- h=sha256:oezOKFzocMcb0fk+VI1ICsL5gnFC8AFm9en7G3Y/sZ8=:O/qVepAX+WvP1ayg3uizjTgpdLnlTkWsxL1mJBFytio=;
-X-ME-Sender: <xms:1pDDaquaL6hhqqyQudUEDRYeFGWyE14CJf-e_We4Fyu9yhPDpoN1sA>
- <xme:1pDDanHYuLS449pru6B6RwlIqCfQjQ9RPTBI8fd-I7-9TjevGYlAf4KUk4sru-V4m
- jNULJrhDhCrTJg3_jNA-zbn85vMb73yZcJY8-grlxEeP9A1Dz9TQtk>
-X-ME-Received: <xmr:1pDDajapvhlSyWISabTHs1aZrm7JesyjXWz1uuzPNBOkPwbqtA4Eeb4h_BGxlDA07fPmoRJz099HOMkM68bh3fAO>
-X-ME-Proxy-Cause: dmFkZTGBqm9Tnuc8Q7oXt0qG4S37jB3ca+dwPggMm/4DbSi+r/PKAIimqWh4i3gxlSXgTA
- omDfi+D5JYgrvVsGPzwjCPVi9Z+xofK2t7xsWdfjUaIGAO+zs3+PFHQ+ngadEQPigikWax
- znhW7Dewf5D0XKW6dVlozMw1Sh5k7T4r2jO8ZgHqq3MErCU5RkI7xjfxtL5varo4Lwl2TK
- L84rAr7ZF0BOSrngZUsBoMXTyobCldT9LtJyyAVrm0GIB2r3B4HIme/LUCuPwBiYfuFrv6
- x0LYJjsbgEXspRRlTQxY6cI5GG4ZcNOGlUwJiefG1Ngbn72lYa+4C380guNER+d5YP6DQ6
- XXdmSmqrMmUupXrk+X8HRzI5xVItGPZrj/F2LPrqhUUNFKeOZPBSYVV2T1sLnNmAisvxsR
- lOeo9OVeTNxAeLtfsSP/TlqCYPRTrYqiZGowBntOyqa6GGct8OGTlwccrNea40TBc+33Mm
- 9MnaDWvg45zRg5+n/KBB/7dNN5Tw98nqJaEDahHIBOTVzmlxAAh5xtnoPATbEL39QSvB3r
- F+7BJN5A89kY+ktgzAPDPi2wO/Ssr69k65jiDhyIYx+EZUoi9nbsjVODvSUG7xatwHhjfJ
- K06k6NtGPv+WmRFxi5zvBbbzdvrSPoA2an17oKfq0FiqpPVvxEyCGI3vK+7A
-X-ME-Proxy: <xmx:1pDDavVNiadXFq5BOOZf_u6V_itTqT39xIuN7nvYa1xtXGzq0ota-w>
- <xmx:1pDDahltRXpb9zCPxvSlvArev_xEg6L8LhJwdkkA5YwJBop_eUYK8w>
- <xmx:1pDDaiB43tj5R3yhrQC27QKWawaYv28KC9Lttvp8J5rCbgHJteYk7Q>
- <xmx:1pDDaojj3ZSbquhKsoqenlRmfXbRNFqrw1bSY_s4aN693eRoHl0etw>
- <xmx:15DDarLpQHlYpjNhjWrYxZuJUxzQYIls1mKOeo4G1dbwhIui_7QwukBJ>
-Feedback-ID: idc91472f:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 5 Oct 2026 07:58:12 -0400 (EDT)
-From: Klaus Jensen <its@irrelevant.dk>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1xDhQx-0003n3-JU
+ for qemu-devel@nongnu.org; Mon, 05 Oct 2026 08:04:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1791201881;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=yYwHnlmZYlzCh5qkAjnXvYra3zgQiPztuA5d2BgTr88=;
+ b=Ig8BmwbYLyhg3j+ruV4UmxUEqrO5kFvwVev2WXQVamFZ6w3qRlnSQTvabkPdeTPZzdcA3Z
+ pX53JdR+BQU8fVTJKEWEG4irYycsS/zKMPyX8+4oFKyEV5Yt86kp/OE+HINqt04Mm7rcqI
+ Ny3+m4EnpTw9Zkd0zkVcj9VvLPr4SS8=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-577-SnZnFbTMMdiJyNwL4cyE6g-1; Mon,
+ 05 Oct 2026 08:04:38 -0400
+X-MC-Unique: SnZnFbTMMdiJyNwL4cyE6g-1
+X-Mimecast-MFC-AGG-ID: SnZnFbTMMdiJyNwL4cyE6g_1791201877
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id ECE8F1800677; Mon,  5 Oct 2026 12:04:36 +0000 (UTC)
+Received: from berrange.csb (headnet03.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.114])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 969661800581; Mon,  5 Oct 2026 12:04:35 +0000 (UTC)
+From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>,
- Klaus Jensen <k.jensen@samsung.com>, Keith Busch <kbusch@kernel.org>,
- Klaus Jensen <its@irrelevant.dk>, Jesper Devantier <foss@defmacro.it>,
- qemu-block@nongnu.org
-Subject: [PULL 1/5] hw/nvme: initialize ns->subsys for n->namespace
-Date: Mon,  5 Oct 2026 13:58:01 +0200
-Message-ID: <20261005115805.99042-2-its@irrelevant.dk>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20261005115805.99042-1-its@irrelevant.dk>
-References: <20261005115805.99042-1-its@irrelevant.dk>
+Cc: Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH] qtest: fail fast when QEMU terminates early
+Date: Mon,  5 Oct 2026 13:04:34 +0100
+Message-ID: <20261005120434.413891-1-berrange@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=202.12.124.155; envelope-from=its@irrelevant.dk;
- helo=fhigh-b4-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -127,32 +83,123 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
+If QEMU fails to start, or crashes early, before libqtest has opened
+its qtest and QMP sockets, we'll get into an 'accept()' call with a
+50 second timeout waiting for a connection that the zombie QEMU
+process will never initiate.
 
-We must properly initialize n->namespace.subsys too.
+Use a short 250ms timeout with accept(), but loop 200 times instead,
+checking whether the process is alive on each iteration. With this
+qtest detects dead QEMU immediately.
 
-Will be important in the following patches.
+socket_accept is renamed to qtest_socket_accept to reflect that it
+now requires QTestState.
 
-Signed-off-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
-Reviewed-by: Klaus Jensen <k.jensen@samsung.com>
-Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- hw/nvme/ctrl.c | 1 +
- 1 file changed, 1 insertion(+)
+ tests/qtest/libqtest.c | 45 ++++++++++++++++++++++++++----------------
+ 1 file changed, 28 insertions(+), 17 deletions(-)
 
-diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index c641226e27ad..597aeedd6a11 100644
---- a/hw/nvme/ctrl.c
-+++ b/hw/nvme/ctrl.c
-@@ -9694,6 +9694,7 @@ static void nvme_realize(PCIDevice *pci_dev, Error **errp)
-         ns = &n->namespace;
-         ns->params.nsid = 1;
-         ns->ctrl = n;
-+        ns->subsys = n->subsys;
+diff --git a/tests/qtest/libqtest.c b/tests/qtest/libqtest.c
+index 05d88476154..9e7a2d43a18 100644
+--- a/tests/qtest/libqtest.c
++++ b/tests/qtest/libqtest.c
+@@ -44,13 +44,14 @@
  
-         if (nvme_ns_setup(ns, errp)) {
-             return;
+ #define MAX_IRQ 256
+ 
++#define ACCEPT_TIMEOUT_MS 250
++#define ACCEPT_RETRIES (4 * 50)
++
+ #ifndef _WIN32
+-# define SOCKET_TIMEOUT 50
+ # define CMD_EXEC   "exec "
+ # define DEV_STDERR "/dev/fd/2"
+ # define DEV_NULL   "/dev/null"
+ #else
+-# define SOCKET_TIMEOUT 50000
+ # define CMD_EXEC   ""
+ # define DEV_STDERR "2"
+ # define DEV_NULL   "nul"
+@@ -116,20 +117,17 @@ static int init_socket(const char *socket_path)
+     return sock;
+ }
+ 
+-static int socket_accept(int sock)
++static int qtest_socket_accept(QTestState *s, int sock)
+ {
+     struct sockaddr_un addr;
+     socklen_t addrlen;
+     int ret;
+-    /*
+-     * timeout unit of blocking receive calls is different among platforms.
+-     * It's in seconds on non-Windows platforms but milliseconds on Windows.
+-     */
++    size_t i;
+ #ifndef _WIN32
+-    struct timeval timeout = { .tv_sec = SOCKET_TIMEOUT,
+-                               .tv_usec = 0 };
++    struct timeval timeout = { .tv_sec = 0,
++                               .tv_usec = ACCEPT_TIMEOUT_MS * 1000ul };
+ #else
+-    DWORD timeout = SOCKET_TIMEOUT;
++    DWORD timeout = ACCEPT_TIMEOUT_MS;
+ #endif
+ 
+     if (setsockopt(sock, SOL_SOCKET, SO_RCVTIMEO,
+@@ -140,13 +138,26 @@ static int socket_accept(int sock)
+         return -1;
+     }
+ 
+-    do {
++    for (i = 0; i < ACCEPT_RETRIES ; i++) {
++        if (!qtest_probe_child(s)) {
++            fprintf(stderr,
++                    "child process unexpectedly exited, skipping socket accept\n");
++            goto cleanup;
++        }
++
+         addrlen = sizeof(addr);
+         ret = accept(sock, (struct sockaddr *)&addr, &addrlen);
+-    } while (ret == -1 && errno == EINTR);
+-    if (ret == -1) {
+-        fprintf(stderr, "%s failed: %s\n", __func__, strerror(errno));
++        if (ret == -1) {
++            if (errno == EINTR || errno == EAGAIN) {
++                continue;
++            } else {
++                fprintf(stderr, "%s failed: %s\n", __func__, strerror(errno));
++            }
++        }
++        return ret;
+     }
++
++ cleanup:
+     close(sock);
+ 
+     return ret;
+@@ -549,9 +560,9 @@ void qtest_connect(QTestState *s)
+     g_autofree gchar *qmp_socket_path = qtest_socket_path("qmp");
+ 
+     g_assert(s->sock >= 0 && s->qmpsock >= 0);
+-    s->fd = socket_accept(s->sock);
++    s->fd = qtest_socket_accept(s, s->sock);
+     if (s->fd >= 0) {
+-        s->qmp_fd = socket_accept(s->qmpsock);
++        s->qmp_fd = qtest_socket_accept(s, s->qmpsock);
+     }
+     unlink(socket_path);
+     unlink(qmp_socket_path);
+@@ -663,7 +674,7 @@ QTestState *qtest_init_with_serial(const char *extra_args, int *sock_fd)
+     qts = qtest_initf("-chardev socket,id=s0,path=%s -serial chardev:s0 %s",
+                       sock_path, extra_args);
+ 
+-    *sock_fd = socket_accept(sock_fd_init);
++    *sock_fd = qtest_socket_accept(qts, sock_fd_init);
+ 
+     unlink(sock_path);
+     g_free(sock_path);
 -- 
-2.53.0
+2.55.0
 
 
