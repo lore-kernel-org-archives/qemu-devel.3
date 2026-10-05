@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11E6CCA5FF0
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Oct 2026 16:31:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E78C0CA5FF0
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Oct 2026 16:41:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xDlaW-0003O8-3h; Mon, 05 Oct 2026 12:30:52 -0400
+	id 1xDlk0-0004Rw-02; Mon, 05 Oct 2026 12:40:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xDlaO-0003Mh-6g
- for qemu-devel@nongnu.org; Mon, 05 Oct 2026 12:30:48 -0400
-Received: from mail-ed2-x0d.google.com ([2a00:1450:4864:33::d])
+ id 1xDljm-0004RW-Ri
+ for qemu-devel@nongnu.org; Mon, 05 Oct 2026 12:40:28 -0400
+Received: from mail-ed2-x0e.google.com ([2a00:1450:4864:33::e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xDlaL-0000O7-Ag
- for qemu-devel@nongnu.org; Mon, 05 Oct 2026 12:30:43 -0400
-Received: by mail-ed2-x0d.google.com with SMTP id
- 4fb4d7f45d1cf-6ac6fa788e6so2438079a12.1
- for <qemu-devel@nongnu.org>; Mon, 05 Oct 2026 09:30:40 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1791217840; cv=none;
+ id 1xDljl-000175-6j
+ for qemu-devel@nongnu.org; Mon, 05 Oct 2026 12:40:26 -0400
+Received: by mail-ed2-x0e.google.com with SMTP id
+ 4fb4d7f45d1cf-6afbfed31d1so2172598a12.1
+ for <qemu-devel@nongnu.org>; Mon, 05 Oct 2026 09:40:24 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1791218423; cv=none;
  d=google.com; s=arc-20260327;
- b=WNwXDSlx7napplCYYmdghG3dQQEoL05kHiNfKv4aKlqhTDjA5dBi3h9S2gXQzHFsg2
- l0/+9EtEjl56+8Rv4FVoxai7tVj1atq/c+IC9b7ft3YIvmGJS+lnmy3xmb52StcDbO9r
- f3/IP3kEe8jeAuVI/5QJDEPGqMV7luRfryCsYtQ/8Xn/FW9hOyRRoTiojRMaSThJ8XAT
- Znr59jz3s0TLb4Ss8yOcR+jXoi0PKQJJ65Zd3Brkdr40kIgjRNSHENfg08US/jXYnWR+
- nObk9I1zVgvtdzPzdM727BauOA7aQRpZM1Cht1PqGE0iDsTKBsZ6bhUTsRTb+Dg4MFvF
- 3lrw==
+ b=Phzbr5vYYOh59zWhgHq1w25vrV4pmPpvp6r+Sx5XIeVR2zjwRBV0nUqmLQ6ZY4srT/
+ wNum1uODXzYwvlGTKgnR3p1AZvrieaOi/E6DjjzhO4jskeDUSOVVHt3PNebA+3zLxy9Q
+ PxtVoWwfuhzEmg73PeQfGy/v1as8Af598TPub0Ev00Ghu6XeagPZfKTmLE/kYbLCxo6q
+ qe318GHqtnt8+2JrkhQzdUsgLSx3cCsn2M7I/kOBYK+1OUACRJl+w1Cy6dWsbPAaFhFP
+ HOcFVmSfhGTqBSBQkCjzdeWqaqwu1Gq1VyTob/8XB80XG+2Wv9wH6VFlsdef82jVs5Co
+ HY3w==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :reply-to:in-reply-to:references:mime-version:dkim-signature;
- bh=N0Yvw+vKz97lXpuFsNzZHoFpkiMzq8nyK4rRiioxKp8=;
+ bh=uYdpFCV1QlFS7PrY0+F6CjY1a1t1Vs25LY4j9FW4PtI=;
  fh=IWV5i/bmsnDDiumGg7GH/qn1tjabzJqEv+mL/WiBNIs=;
- b=AJ3hHZYS/BM7F5l+TJXWnWuBusLNzUpoCp/szCwizrHTfst1menSjpBRggdoP2SEXe
- s8nHA6FeE6hZOv48VHEP4USRF4IovzGYpf5hYo5OZojEwwOqJIfF+aWxlJDMwjMHCLXj
- fqM3kI/LWypNVFqk+DB0j6Lj1B61p9URwBjWDcfY5FG3y8aAHnTLCLiBdjjSk3t5kYVZ
- pdbtYXF48laAiJmtxZ50LtnLyxzILznVQqZKfq2wv3f/Ui1LHfhEkV0ZO5g0rDoMJr13
- 7+iJMWR7DakjNBDAe2lQyOovU/u72IJWKsEfjHKXxtk+8h73YlYNMxZEr4oo0QbiqF2h
- yQ2g==; darn=nongnu.org
+ b=BLI1NX67+00g7QtdrF1eXdFBMYP1aRr4Y+iIq6ir6/sImPh8RweGQ/CVN2JUYhC327
+ zWFdOMT+1nRaOZKqrjfg1Fk6HT+nDgqpL3LbB+6yI7+kBVwnfvZZpJe5opJS5zB4lyc2
+ 5E7d8kofrYex6UGQKDGMsPYFtpvcRFBEBH7cUoy9p6b8NwlNOau/dOfKGpRTomG1VMd8
+ khkqI38UCqShKkUFGWunvk0zG5rAgq/T1a8RC95roNFGj96vzpRDSrscX/UcLs/NWNtF
+ 2Br9oHa5tU5OPqQOkgkqeuoCK39z4ckKKW4ZUIj2koI8rdLru4/OtD1vLJ65VV1kZ6qt
+ My3w==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1791217840; x=1791822640; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1791218423; x=1791823223; darn=nongnu.org;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:reply-to:in-reply-to:references:mime-version:from:to:cc
  :subject:date:message-id:reply-to:content-type;
- bh=N0Yvw+vKz97lXpuFsNzZHoFpkiMzq8nyK4rRiioxKp8=;
- b=Fgfkej1Au0XLMNunSRp7b7LY2IylJnsxUKqmIUWcTFIl4EComAX1BQ14sFb10BZC/t
- Naj6zFVrTYdonTXY+6p/BeZUxQy10Z/cuqiJxlmEt4VyMzaiptr6AO+pmO2ZDrxTcrl+
- zYu7jCdIgEn7DKU5Rv5XEqNZQAZlNE0AOMPuZBQsmiKx3c1jxBu/lifmaxPwIQ7YLjat
- uVkFPiA9iHDDqLcgDJIBrYebAjt9WpG8+5u7ggOpKXFd66QDR52+m8x0j+GivqGvpUNj
- aBEpTlOHRPf+fSgj53iZoF0PTBilyCD0ZCZ6jR4eC7m1kdT9I7zFJ4bLCA0N3U0/bj3o
- B0Nw==
+ bh=uYdpFCV1QlFS7PrY0+F6CjY1a1t1Vs25LY4j9FW4PtI=;
+ b=eaxPn856PPDO8O1bWt6LQu6OH7kaYFRdon9plFOawej0ki3WX8Pw9JRrRxgw2iVHKr
+ q46Rkc1w7JsKMpvxOchLcFgSrnsy0SvJsqk8rs/dr2hQ/rsjcH3zwr4zuge94g6M4Np9
+ PXPeC9jsU+hvx98Y3RHzd97aDYltEdbY5rhwjHY04SWTc6CdJvRNDWnmYBCPMqQBOBCZ
+ 2xT5yvMQIezzr3IhcQwey6XaZE3B9u7I9wWelPFX8KeZP2OZOukmVhMNPeclf+Bji0YG
+ /C3yFGMHtg6CnYe7esm7NXsMJPvVzLyW//y5tN/LXs8aRFrXo2HooRAGWiR5EaxVMu/X
+ aWGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791217840; x=1791822640;
+ d=1e100.net; s=20260707; t=1791218423; x=1791823223;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:reply-to:in-reply-to:references:mime-version:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=N0Yvw+vKz97lXpuFsNzZHoFpkiMzq8nyK4rRiioxKp8=;
- b=FZ9h30AxASk/NwQVZXtcS+bNCGszZaYF8uW+k2XIav0VPtYiz6wYoeVSwqx5wwiZ6Q
- jJ0a8yw2AOaVkDaMAjtjqUpgYptcc8LPLTWKkdSqzt7MFk9QbtqfkxipBFCYiBTdffwi
- 1IV+6E3Hs5FDTLKqDsidfhGhWcZhSWRA2hYZ6YC5Jt/b6FcjNKwEYJ6my0aLsCcrK/Bw
- KO0Nnrnr32QA0U0QwX0pgjec9nLEguaLPCD4HOhVxrglhhjBpjaYWxIt5njQXLRZbs3/
- /q+H+a71NgW4UeTotfmILngA+9uJq8GbapUE1EOfKizG0xwk9nrf/QoQs21hBeFHpQR7
- KgFA==
-X-Gm-Message-State: AFq9FYLti6R6l0pe0DhDTBNOcqtCrkHa4cS1tX38YbByFN/N3EyV6UWg
- my2yeJcMjte2lpR0rgI/VLY+lKSu7u4lXmvAXp8X1z/08Y9XY7lGoo+O5JBJ/N2WpsVzGXEQVWX
- /mjrx+OImD07xwBhe6VVHM/0zXMjFgWS5cKFtXyM=
-X-Gm-Gg: AYBFou3PxPa5TcvRfzNmNNQpxs+8Bfyriakhk1dz7UQ9mDWjkt91+YWshcbSzYFfCpM
- bOnmH80C/coShyrPs0zr744ijzakIaKkDBBCi360l9C71ZwG/igZOflPtyol8XxxtArNvWGUB4S
- 6o/PYyjSQZua4T2E0W4j3CsGT1BTpSf3X2r33rV1Vl/8GsP1JbU10SSGYMJTogaLwp8fNDLw9ME
- a9bduksuWsWvGUuR9o0Ds9aWgmqqOaMjSocTogJwn3yT1NrBCoBsS7Uibrpasm4kTuQgMrBZIqJ
- f1JmLcwdCQ3oyBfhm0S+ydSz8BF2ChiDqENFX9fQpsNoKv6JdqqkedKr
-X-Received: by 2002:a05:6402:1cc8:b0:6ac:8b71:fd91 with SMTP id
- 4fb4d7f45d1cf-6af9e020ca8mr9287537a12.3.1791217839403; Mon, 05 Oct 2026
- 09:30:39 -0700 (PDT)
+ bh=uYdpFCV1QlFS7PrY0+F6CjY1a1t1Vs25LY4j9FW4PtI=;
+ b=XYIOAD/CtiS/2ag+QQ0tJ/TDbHv0fhTbPhvUc9FS/6OudjninCHjjWNHAimKrFuttE
+ XeC4qrnTQrZhRhOsz53cWdebkq+C+Nd9GHPFz+jkJ9dxCFkYz0fKDp/VpN4co4iqQYgt
+ 6Ga1yKdO+M9DTLw5K27tzEEyCAZwiGEiQcj9J2f83DDRMA5nw5510w0FFPYqMfNLiLhG
+ Xx/tRKN0ckv3WCKCjeKJ0xknVXvSbTUVrPFQ/BdW20Hm+/srJVLbhG8K5kNtup5vILGM
+ et9Tk8/ff6ODI/WwCadwJDXyrLrevDx+DC6aQLrjzmNHXunrhH0H45EKQ3G20PuiqSg9
+ nWxQ==
+X-Gm-Message-State: AFq9FYLFKti0NHfquJuqfBK2yvh8A2vz5QJ2OQtAtnVaGxIvjt+xRpuV
+ 5qs1lCYBBmDQ816tCK1q0iVRGahqEAtm6NEHz9HoFGIp/E2Lr5dXRTa7bUJK2h7Vo6qfTUplaoo
+ XARgxoPAY3dcI7G4WjpC7c4V8viw1PVg=
+X-Gm-Gg: AYBFou1Kl7uFy818QKUrgKCdOazQAxvrN+WMok1LAF15bDbpdhxakY9x9iaDHAuwKw1
+ Zwn5/pby+7/8yAzxbUOkf4L8DRB/53mRFMJtOYYmo60FTLM/9Bu7mLHZ2KzAP0Hi18cArzSGVpN
+ Ml1hN3pZMFsSWVKEbJqiDJvrjhRgYFHSGkPhzThCCjtSicUhYXWOsHudq7M5k0eg90Zs908BqS7
+ U2LldkeRu5W9pS9r8IKQ8CgJX9zygWlavyKM6X+KbuwZMBLANs2i1YcqWMNI5ut0AnjEnH5iWOY
+ MU+ABDvrTD5cvCxKXCyfrxMXEy4QrID2hrVwbbF7l5tedv2RuZqanMI=
+X-Received: by 2002:a05:6402:3253:b0:6ae:1a0a:ae9b with SMTP id
+ 4fb4d7f45d1cf-6af9e2ddbadmr7607106a12.25.1791218423334; Mon, 05 Oct 2026
+ 09:40:23 -0700 (PDT)
 MIME-Version: 1.0
 References: <20261004072927.1142-1-luoyonggang@gmail.com>
  <0b84bf4d-3b98-4f52-8847-9f89bef92c1e@oss.qualcomm.com>
@@ -89,9 +89,9 @@ References: <20261004072927.1142-1-luoyonggang@gmail.com>
  <c6bd8e8d-3160-46c2-ba4a-2f5a4b93cf38@oss.qualcomm.com>
 In-Reply-To: <c6bd8e8d-3160-46c2-ba4a-2f5a4b93cf38@oss.qualcomm.com>
 From: Yonggang Luo <luoyonggang@gmail.com>
-Date: Tue, 6 Oct 2026 00:30:26 +0800
-X-Gm-Features: AclHuK8ycPyF_qSCchUP2IyaRHxjirUA1ERfV6IcK-5yNFkNEqPyHrCXaW6BzeI
-Message-ID: <CAE2XoE9n9L=zALTpyjHcpCopT76bDtdqz2N5vQrCcMEGjdW_CA@mail.gmail.com>
+Date: Tue, 6 Oct 2026 00:40:11 +0800
+X-Gm-Features: AclHuK-cSpI_VvmzdN3nQwnYXDO56srgYIla2HfAxK2skSi_AsfJ84iq5qJ1rN8
+Message-ID: <CAE2XoE9vcFg7zKZon8bUk8cf7MLLO9ZSa+LDQ-85UCSM0v=r+w@mail.gmail.com>
 Subject: Re: [PATCH 0/4] target-info: preserve full softmmu target identity
 To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Cc: qemu-devel@nongnu.org, Philippe Mathieu-Daude <philmd@mailo.com>, 
@@ -103,8 +103,8 @@ Cc: qemu-devel@nongnu.org, Philippe Mathieu-Daude <philmd@mailo.com>,
  =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:33::d;
- envelope-from=luoyonggang@gmail.com; helo=mail-ed2-x0d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:33::e;
+ envelope-from=luoyonggang@gmail.com; helo=mail-ed2-x0e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -131,93 +131,22 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Tue, Oct 6, 2026 at 12:25=E2=80=AFAM Pierrick Bouvier
 <pierrick.bouvier@oss.qualcomm.com> wrote:
 >
-> On 10/5/2026 9:19 AM, Yonggang Luo wrote:
-> > On Tue, Oct 6, 2026 at 12:12=E2=80=AFAM Pierrick Bouvier
-> > <pierrick.bouvier@oss.qualcomm.com> wrote:
-> >>
-> >> On 10/5/2026 9:10 AM, Yonggang Luo wrote:
-> >>> On Tue, Oct 6, 2026 at 12:03=E2=80=AFAM Pierrick Bouvier
-> >>> <pierrick.bouvier@oss.qualcomm.com> wrote:
-> >>>>
-> >>>> On 10/4/2026 12:29 AM, Yonggang Luo wrote:
-> >>>>> `TARGET_ARCH` identifies a base architecture, not necessarily the f=
-ull
-> >>>>> system-emulation target. For example, `mipsel-softmmu` uses `TARGET=
-_ARCH=3Dmips`,
-> >>>>> which caused `query-target` to report `mips` instead of `mipsel`.
-> >>>>>
-> >>>>> Generate `TARGET_SYS_EMU` separately. Softmmu builds use the full t=
-arget name,
-> >>>>> as `SysEmuTarget` enumerates system targets. User-mode builds use
-> >>>>> `TARGET_ARCH`: user target names such as `aarch64_be` and `mipsn32e=
-l` do not
-> >>>>> have corresponding `SysEmuTarget` values. This means `mipsel-linux-=
-user` now
-> >>>>> reports the base architecture `mips` rather than `mipsel`; its exec=
-utable name
-> >>>>> remains unchanged. Initialize `TargetInfo.target_arch` from this to=
-ken and add
-> >>>>> a qtest to check the `query-target` result against the target name =
-of the
-> >>>>> running QEMU binary.
-> >>>>>
-> >>>>> Yonggang Luo (4):
-> >>>>>   Revert "target-info: Statically initialize target_arch"
-> >>>>>   Revert "meson: Add TARGET_ARCH to config_target_data"
-> >>>>>   tests/qtest: check query-target architecture
-> >>>>>   target-info: preserve full softmmu target identity
-> >>>>>
-> >>>>>  meson.build            | 11 +++++++++--
-> >>>>>  target-info-stub.c     |  2 +-
-> >>>>>  tests/qtest/qmp-test.c | 13 +++++++++++++
-> >>>>>  3 files changed, 23 insertions(+), 3 deletions(-)
-> >>>>>
-> >>>>
-> >>>> Why should we do this for user binaries? Current work around
-> >>>> single-binary only concerns system binaries, where all targets are
-> >>>> correctly covered by what exists.
-> >>>
-> >>> From my personal point of view, keeping target_arch as
-> >>> SYS_EMU_TARGET__MAX for user binaries
-> >>> is a better option. I am doing this is for replica of commit
-> >>>
-> >>
-> >> Ok, but I'm not sure it answers the why.
-> >> Could you explain the benefits?
-> >
-> > Which part? keeping target_arch as SYS_EMU_TARGET__MAX for user-binary =
-because
-> > The following original code would return -1 for some user-binary
-> > +    SysEmuTarget arch =3D target_info()->target_arch;
-> > +
-> > +    if (arch =3D=3D SYS_EMU_TARGET__MAX) {
-> > +        arch =3D qapi_enum_parse(&SysEmuTarget_lookup, target_name(), =
--1,
-> > +                               &error_abort);
-> > +    }
-> > +    return arch;
-> > So basically assigning any value for the user binary is valid.
-> > SYS_EMU_TARGET__MAX is more explicit as it's related to type SysEmuTarg=
-et.
-> > -1 is another option but easy to confuse.
-> >
-> >
-> > For why commit e934c624f32f6f44f427d73a2e6a67e983a02ae6.
-> > "target-info: Statically initialize target_arch"
-> > doing that, I am not sure.
-> >
->
 > I guess there is a (good or bad) reason for which sub variants of
 > targets are not reflected in SYS_EMU_TARGET enum. We should double check
 > that before doing any change, as it might have other consequences.
 
-Yeap, but this functional change caused me have to add endianness into
-query-targets at
-https://lore.kernel.org/qemu-devel/CAE2XoE_fxTRQJPzsDZHS44z65KR0e54cWjVpyZQ=
-Gtr1sdLOinw@mail.gmail.com/
+Just for record, I found the original reason doing this is here
+https://lore.kernel.org/qemu-devel/20260205030617.266625-1-richard.henderso=
+n@linaro.org/
 
-because in the current qemu tip, The $arch returned by query-target
-not match the qemu-sytem-$arch anymore.
+target_arch() function would reparse target_name() every time if
+it was not set to a proper SYS_EMU_TARGET_* value (when using
+target-info-stub.c), which is not efficient.
+
+This was found when doing changes to virtio_access_is_big_endian()
+function, having an overhead of 50% after switching to runtime checks.
+With this, overhead left is around 3%, due to indirect function calls.
+
 
 >
 > >
