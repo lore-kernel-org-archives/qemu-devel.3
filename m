@@ -4,95 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93972CA5FF0
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Oct 2026 10:40:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2BEBCA5FCE
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Oct 2026 10:40:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xDg6c-0002qx-2k; Mon, 05 Oct 2026 06:39:38 -0400
+	id 1xDg7O-0002yn-5L; Mon, 05 Oct 2026 06:40:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <schwab@suse.de>) id 1xDg6U-0002qK-U6
- for qemu-devel@nongnu.org; Mon, 05 Oct 2026 06:39:33 -0400
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <schwab@suse.de>) id 1xDg6T-00039R-8a
- for qemu-devel@nongnu.org; Mon, 05 Oct 2026 06:39:30 -0400
-Received: from hawking.suse.de (unknown
- [IPv6:2a07:de40:a101:3:92b1:1cff:fe69:ddc])
- by smtp-out1.suse.de (Postfix) with ESMTP id D855521BF8;
- Mon,  5 Oct 2026 10:39:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1791196762; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type;
- bh=iQGC9LDZjjog8dmS0QYk+0SInCQGVgps86NPyJ2ICtg=;
- b=fHOqO70TWmfUmAr2JOtjOIDFSHmhjTmmsVipY7EF72/ClA7/PYOVOtzfTOJal2eyM1hRw3
- 6UHjTRhtFFOIluTsKsU3UPhfhHqLNcB3a6l5crJAi7JkzQRLAzSQyDUKBGwNRYfVhae9bH
- 3neLlxeYVkuO9OVvwCAVLEqTrZOB8Jw=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1791196762;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type;
- bh=iQGC9LDZjjog8dmS0QYk+0SInCQGVgps86NPyJ2ICtg=;
- b=kv8nu1YSFchxArWQoBRSQGSrEMcl/dDqG2wnq0ARsH+t6Gr9d/i1h/IXwgU8CoPWmmw8/F
- r6/fyHbt3Gc8LCCg==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=y62x07mM;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=tfkNXe84
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1791196757; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type;
- bh=iQGC9LDZjjog8dmS0QYk+0SInCQGVgps86NPyJ2ICtg=;
- b=y62x07mMQvneW5CuG35Cu5cohgt3FkfoE7UWhwiqH60cpRabkw9KTAByB1lTaAp7pGDQgM
- 4A5pFXZn0Nsl7F2gpJ3kF9/B7mOsUBWYrN2FRUQfETWNy/8gUDCWbAgbeY64kNI3MSIpQt
- ye2RqB5Dop+HrM5xSGkNK9zrE+DLQPI=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1791196757;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type;
- bh=iQGC9LDZjjog8dmS0QYk+0SInCQGVgps86NPyJ2ICtg=;
- b=tfkNXe84yw4lwFjGhu4drPU6lK/L0AbBAV9RJrTENj9taMntWoV6Cf3NkW4qg/Vzvv4NG/
- 2zDFSqPbhe743EAA==
-Received: by hawking.suse.de (Postfix, from userid 17005)
- id BC9F14AAD7A; Mon,  5 Oct 2026 12:39:17 +0200 (CEST)
-From: Andreas Schwab <schwab@suse.de>
-To: qemu-devel@nongnu.org
-Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
-Subject: [PATCH] linux-user: don't print core dump message by default
-Date: Mon, 05 Oct 2026 12:39:17 +0200
-Message-ID: <mvmzews2zze.fsf@suse.de>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <rick@sloservers.com>)
+ id 1xDg7G-0002x7-Pw; Mon, 05 Oct 2026 06:40:19 -0400
+Received: from vps.sloservers.com ([204.109.61.218])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <rick@sloservers.com>)
+ id 1xDg7E-0003MB-9D; Mon, 05 Oct 2026 06:40:18 -0400
+Received: from thinking.duckdns.org (unknown [192.168.11.4])
+ by vps.sloservers.com (Postfix) with ESMTPS id 9337324F57;
+ Mon, 05 Oct 2026 10:40:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sloservers.com;
+ s=mail; t=1791196812;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=1I6JxHzkaYhzu/LUpETS71XPfw0mgd36NWRq5mYA/VA=;
+ b=NA3bclpamk1puyB6as9yc+TBmIqUm9Zf3ALZzOuXvOCMGwjRPebLi8Xm6EbuiAb4wPGbyT
+ 9fvuGvBK10w089vrfjuVHGWDySaM77xcmGxD6Psd+Fa3RBJLfK8hxr8HWJo9O4K8IbVAOx
+ MHKijidstNovHkCojrEGfjbxAMSV0bRn+qpaBC2DYi49fr0UNgrgvKZdGESxVyC7hv4wbC
+ aMctRFLLeyQdsPiIGKqVhgzCAJMvdeLKiEFe01KSkN/roCDKLxE1ywAlWlrnVSP0spu2m3
+ f1FH774HWlLWKSx4CCJ+0WP9osvxHu/Gt5HQ6wH99pml85oo4Sv0+u2mae5NcA==
+Received: from ollopa-pc.thinking.duckdns.org (OPNsense.thinking.duckdns.org
+ [192.168.1.5])
+ by thinking.duckdns.org (Postfix) with ESMTPSA id EEBCFED5;
+ Mon, 05 Oct 2026 03:40:11 -0700 (PDT)
+From: Rick Richard <rick@sloservers.com>
+To: qemu-devel@nongnu.org,
+	qemu-riscv@nongnu.org
+Cc: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Sunil V L <sunilvl@ventanamicro.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>
+Subject: [PATCH v2 3/3] tests/qtest/bios-tables-test: Update riscv64 virt SPCR
+ golden reference
+Date: Mon,  5 Oct 2026 03:40:08 -0700
+Message-ID: <20261005104008.214588-4-rick@sloservers.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20261005104008.214588-1-rick@sloservers.com>
+References: <20261005104008.214588-1-rick@sloservers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Spamd-Result: default: False [15.23 / 50.00]; SPAM_FLAG(5.00)[];
- NEURAL_SPAM_LONG(3.50)[1.000]; BAYES_HAM(-3.00)[99.99%];
- NEURAL_SPAM_SHORT(2.94)[0.980];
- HFILTER_HOSTNAME_UNKNOWN(2.50)[]; RDNS_NONE(2.00)[];
- ONCE_RECEIVED(1.20)[];
- HFILTER_HELO_IP_A(1.00)[hawking.suse.de];
- HFILTER_HELO_NORES_A_OR_MX(0.30)[hawking.suse.de];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- RCVD_NO_TLS_LAST(0.10)[]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- MIME_TRACE(0.00)[0:+]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DIRECT_TO_MX(0.00)[Gnus/5.13 (Gnus v5.13)]; ARC_NA(0.00)[];
- FREEMAIL_ENVRCPT(0.00)[gmx.de];
- FREEMAIL_CC(0.00)[vivier.eu,gmx.de,oss.qualcomm.com];
- DNSWL_BLOCKED(0.00)[2a07:de40:a101:3:92b1:1cff:fe69:ddc:from];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- TO_DN_SOME(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- RCPT_COUNT_THREE(0.00)[4]; RCVD_COUNT_ONE(0.00)[1];
- DKIM_TRACE(0.00)[suse.de:+];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,suse.de:email,suse.de:dkim]
-X-Spamd-Bar: +++++++++++++++
-X-Rspamd-Queue-Id: D855521BF8
-X-Rspamd-Action: add header
-X-Spam: Yes
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=schwab@suse.de; helo=smtp-out1.suse.de
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=204.109.61.218; envelope-from=rick@sloservers.com;
+ helo=vps.sloservers.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -114,36 +78,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When the target binary is killed by a signal with core dump print a
-message to the guest_errors log instead of stderr.  This avoids breaking
-various testsuites due to the extra output produced by the emulation.
+Update the riscv64 virt SPCR golden reference file to have the fix for
+the UART register width.
 
-Signed-off-by: Andreas Schwab <schwab@suse.de>
+Diffs from iasl:
+
+@@ -1,58 +1,58 @@
+ /*
+  * Intel ACPI Component Architecture
+  * AML/ASL+ Disassembler version 20230628 (64-bit version)
+  * Copyright (c) 2000 - 2023 Intel Corporation
+  *
+  * Disassembly of tests/data/acpi/riscv64/virt/SPCR, Sat Oct  3 08:44:51 2026
+  *
+  * ACPI Data Table [SPCR]
+  *
+  * Format: [HexOffset DecimalOffset ByteLength]  FieldName : FieldValue (in hex)
+  */
+
+ [000h 0000 004h]                   Signature : "SPCR"    [Serial Port Console Redirection Table]
+ [004h 0004 004h]                Table Length : 0000005A
+ [008h 0008 001h]                    Revision : 04
+-[009h 0009 001h]                    Checksum : 13
++[009h 0009 001h]                    Checksum : 2B
+ [00Ah 0010 006h]                      Oem ID : "BOCHS "
+ [010h 0016 008h]                Oem Table ID : "BXPC    "
+ [018h 0024 004h]                Oem Revision : 00000001
+ [01Ch 0028 004h]             Asl Compiler ID : "BXPC"
+ [020h 0032 004h]       Asl Compiler Revision : 00000001
+
+ [024h 0036 001h]              Interface Type : 12
+ [025h 0037 003h]                    Reserved : 000000
+
+ [028h 0040 00Ch]        Serial Port Register : [Generic Address Structure]
+ [028h 0040 001h]                    Space ID : 00 [SystemMemory]
+-[029h 0041 001h]                   Bit Width : 20
++[029h 0041 001h]                   Bit Width : 08
+ [02Ah 0042 001h]                  Bit Offset : 00
+ [02Bh 0043 001h]        Encoded Access Width : 01 [Byte Access:8]
+ [02Ch 0044 008h]                     Address : 0000000010000000
+
+ [034h 0052 001h]              Interrupt Type : 10
+ [035h 0053 001h]         PCAT-compatible IRQ : 00
+ [036h 0054 004h]                   Interrupt : 0000000A
+ [03Ah 0058 001h]                   Baud Rate : 07
+ [03Bh 0059 001h]                      Parity : 00
+ [03Ch 0060 001h]                   Stop Bits : 01
+ [03Dh 0061 001h]                Flow Control : 00
+ [03Eh 0062 001h]               Terminal Type : 03
+ [04Ch 0076 001h]                    Reserved : 00
+ [040h 0064 002h]               PCI Device ID : FFFF
+ [042h 0066 002h]               PCI Vendor ID : FFFF
+ [044h 0068 001h]                     PCI Bus : 00
+ [045h 0069 001h]                  PCI Device : 00
+ [046h 0070 001h]                PCI Function : 00
+ [047h 0071 004h]                   PCI Flags : 00000000
+ [04Bh 0075 001h]                 PCI Segment : 00
+ [04Ch 0076 004h]                    Reserved : 00000000
+
+ Raw Table Data: Length 90 (0x5A)
+
+-    0000: 53 50 43 52 5A 00 00 00 04 13 42 4F 43 48 53 20  // SPCRZ.....BOCHS
++    0000: 53 50 43 52 5A 00 00 00 04 2B 42 4F 43 48 53 20  // SPCRZ....+BOCHS
+     0010: 42 58 50 43 20 20 20 20 01 00 00 00 42 58 50 43  // BXPC    ....BXPC
+-    0020: 01 00 00 00 12 00 00 00 00 20 00 01 00 00 00 10  // ......... ......
++    0020: 01 00 00 00 12 00 00 00 00 08 00 01 00 00 00 10  // ................
+     0030: 00 00 00 00 10 00 0A 00 00 00 07 00 01 00 03 00  // ................
+     0040: FF FF FF FF 00 00 00 00 00 00 00 00 00 00 00 00  // ................
+     0050: 00 00 00 00 02 00 58 00 2E 00                    // ......X...
+
+Signed-off-by: Rick Richard <rick@sloservers.com>
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 ---
- linux-user/signal.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ tests/data/acpi/riscv64/virt/SPCR           | Bin 90 -> 90 bytes
+ tests/qtest/bios-tables-test-allowed-diff.h |   1 -
+ 2 files changed, 1 deletion(-)
 
-diff --git a/linux-user/signal.c b/linux-user/signal.c
-index f0a22577e5..cabcc2bb28 100644
---- a/linux-user/signal.c
-+++ b/linux-user/signal.c
-@@ -839,8 +839,8 @@ void dump_core_and_abort(CPUArchState *env, int target_sig)
-         getrlimit(RLIMIT_CORE, &nodump);
-         nodump.rlim_cur=0;
-         setrlimit(RLIMIT_CORE, &nodump);
--        (void) fprintf(stderr, "qemu: uncaught target signal %d (%s) - %s\n",
--            target_sig, strsignal(host_sig), "core dumped" );
-+        qemu_log_mask(LOG_GUEST_ERROR, "qemu: uncaught target signal %d (%s) - %s\n",
-+                      target_sig, strsignal(host_sig), "core dumped" );
-     }
- 
-     preexit_cleanup(env, 128 + target_sig);
+diff --git a/tests/data/acpi/riscv64/virt/SPCR b/tests/data/acpi/riscv64/virt/SPCR
+index 59d2c8f7f215a604612cbd0294c18bc6301e208a..6003c230b1a901e16dded8719e29dfd81055b474 100644
+GIT binary patch
+delta 21
+ccma!w;tCFM4vJ!6U|`Xn$R*FnF;U9^05RMIE&u=k
+
+delta 21
+ccma!w;tCFM4vJ!6U|<oR$R*FHFj30@05N0)E&u=k
+
+diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
+index aae97304..dfb8523c 100644
+--- a/tests/qtest/bios-tables-test-allowed-diff.h
++++ b/tests/qtest/bios-tables-test-allowed-diff.h
+@@ -1,2 +1 @@
+ /* List of comma-separated changed AML files to ignore */
+-"tests/data/acpi/riscv64/virt/SPCR",
 -- 
-2.56.0
+2.43.0
 
-
--- 
-Andreas Schwab, SUSE Labs, schwab@suse.de
-GPG Key fingerprint = 0196 BAD8 1CE9 1970 F4BE  1748 E4D4 88E3 0EEA B9D7
-"And now for something completely different."
 
