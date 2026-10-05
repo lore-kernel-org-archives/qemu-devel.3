@@ -4,140 +4,138 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED713CA5FCE
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Oct 2026 08:58:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B986CA5FF0
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Oct 2026 08:58:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xDeWW-0000BK-LC; Mon, 05 Oct 2026 04:58:16 -0400
+	id 1xDeWg-0000Gb-Hd; Mon, 05 Oct 2026 04:58:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <den@virtuozzo.com>)
- id 1xDeWQ-0000B2-Tc; Mon, 05 Oct 2026 04:58:11 -0400
-Received: from mail-northeuropeazlp170120005.outbound.protection.outlook.com
- ([2a01:111:f403:c200::5] helo=DUZPR83CU001.outbound.protection.outlook.com)
+ id 1xDeWe-0000ET-Fc; Mon, 05 Oct 2026 04:58:24 -0400
+Received: from mail-francesouthazlp170110003.outbound.protection.outlook.com
+ ([2a01:111:f403:c207::3] helo=MRWPR03CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <den@virtuozzo.com>)
- id 1xDeWN-0002RV-1S; Mon, 05 Oct 2026 04:58:09 -0400
+ id 1xDeWa-0002Uf-GK; Mon, 05 Oct 2026 04:58:22 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=eEqQ0e3ykQdmYmnL5vs0hJzytxvXZpYHk11No6T53UrM5eLg81uVn1fUpKBcoZYhzTKMjwHz5QQ+5iJl3l7mFF0pO89xJJY9AFqDuRXziCx6FAtz6AVwlnwglrDkbSH88bmXPDVVCXWibjlGtwx0Eo04lFXI+iqpPaRoqUYwbaHGZj9PQuhnBu0s8feQKhJXC/HBhdFMB+tfVdAsFd5vi0aMI3TTGRlSmb0J3pV3HzhJU6L9/BmeiSShHSFO1OGBLoU+4F61oTs1qmtV+BhKJR9XJNvE/6s0XFU5H+YzO2TGXcLcX2Er/IeMUDraAqYDC5BuroFFF5cW5BdtvFWx2A==
+ b=cxYLT5esN5JtEacqh8h8lpHYF/peyX0JMUc0RRQytOp3zbL2Kb/ottEgdWYr/ln8pnPn6KjtaFlY7LT7ZaTquSJh25wuzBq2QR1VlvtgKpDUtiuEGN7+uaVKyZ3m80BS1i4GvjcjMNtXJaPIf71OdIMuSvYHh1LnTaDoGZvDqnPpSW55NfKpWaOY9bhAFXWueS0a+AOrxe2pPEYFrxn1BufuNHQUlByE+wak7u/RysuVEnZnszGx1zqIsoivsWJ81DgCUKSoiMArqh17vYnjRaKkYBADhxzwB5mXQaCaq7yAEVEEQMvk3DkQ01dnJgtGcQ50q84b/nof08SM4b08NA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=qzyUE0TTwDUS/i5+3vrHWSmNQV0Tnu3WLfwmWis8Sek=;
- b=U+2UVp6XGeaMszAc5Y7cQDoFpX9JXmpH+w9+RDTgP7h0thIRwSWR8e9vnVxR3xhzdV+SZ1jpENV6fVVc59PLb8f5xy9KLxRQV/x+6l1/0DZbCWbZ6cByJPX9SLxtNxl1cDOGhxcGY0AwOs0/WcndzVWqgiD36O/qkZ4V7WsuGKfCkjVE6zwv/pKmf009XX/3oRgDMNTYs+0vAwz3sysc6ivKcUX2z+2BmYOhoYeE8W7LsBn3ANGrcDANctqDOG32xRcc+cVPZ2VaLgUlkfS8/q3vqU8Qd3fEuPT8mRxDpCrhK6LdzqN4HB/3t0beuklw07Y97MBG22I8LTuow/H7Yw==
+ bh=hegeFFQdHM2GAs6ubWi/8XQgvw/ZK56T7TjTF/ZfaBk=;
+ b=kEPUKYeWBFaoVQ+XrahTi9g2caS7zkV/HVhjfYNnWd4CtDhhG4gs9wqhQPNE68f7AmOi/cO4LZbh5a6nXMluK18+3+deaEkGN5zdrcI0SAkv4G+hxSBHkObaMjcVvEoWN+WiwHUBg3PXArK4rYaP+Z+2+/BAiBt1STDw38SXt8j9OWl68uC5561QBFfdgPugSTf/ZFjDV3h9WnOhgAnmzhjX/9wBp1C3uDYMtJaJ64YF4hVjEjJGCHWeipUEYi8d9tDF0PbYKxPls5Et3u++iciqnv4olEk/nsAb8je9ZmNWjdlHNUKNVPuW77nr1VbgSnB9rVnNgTz88eEkHN4UMw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
  header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=qzyUE0TTwDUS/i5+3vrHWSmNQV0Tnu3WLfwmWis8Sek=;
- b=ISzcunPwTqJu8ktc8qC1ayl0K5rww3AHtZD0uH74mqbFYYmMCIpSDz87Sa4GIUeaJG8ZADPEjOCr0DJSlL5/RRX+o1pNW1ynau3hnr48ex0WvXTvtuO5d1cCTtrQc8waPNqz4YjBAK2Ea6Suu6Ad2sF5kknd4YTQGUpePZFC27qXR4mJ5k8MMSp7A4cEoMUEXmrz44zb4Dp+0SYLC0RH/BMSFOJlJMFQePGiZf+bcxf9a35f4REo8Vm7cBWErHQrjP8itBhHnrNNyex422fE4VvpjHDxMTXr/ljap3g3mzxWaB7q1Sd1bVjxZSLAOgH2iuK6cWOKDGFa/ThsUJcXnw==
+ bh=hegeFFQdHM2GAs6ubWi/8XQgvw/ZK56T7TjTF/ZfaBk=;
+ b=x4WyGxDPDimuqkUcMw3HqGuje2lbDbz1bgzUDklbpmp0U6Fq8oVejFAw0AG0DBuQEDXb8gRvXQ3Hs4aTx0SbINSotjN4JZAvSPWMQED57Q6o3xEG6mPS85dpPAGd0HjaxUANl62WhgEqRV7tDUFZEbq9DvJz1FWPUIOAP+/wliwot6j/vVMHpa1PsS0WciA2CsHKVabRNKXM9uN4tWMObeHTEyNRVsT9+hxvtXe0kN4iRpbJI0UF6g7KtGozX46NLPQaPcARrIjUU/hpvG2GWnP2L7jIHJ4CG5AwodERYjrLBw8jDzpQyEL/DBbk6gdfFe/BLc5smrCKFMKbfiizgg==
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=virtuozzo.com;
 Received: from AM9PR08MB5892.eurprd08.prod.outlook.com (2603:10a6:20b:2dd::16)
  by PA1PR08MB556523.eurprd08.prod.outlook.com (2603:10a6:102:54f::6)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.496.14; Mon, 5 Oct
- 2026 08:57:58 +0000
+ 2026 08:58:15 +0000
 Received: from AM9PR08MB5892.eurprd08.prod.outlook.com
  ([fe80::94bb:633f:1f55:4bbd]) by AM9PR08MB5892.eurprd08.prod.outlook.com
  ([fe80::94bb:633f:1f55:4bbd%6]) with mapi id 15.21.0472.016; Mon, 5 Oct 2026
- 08:57:58 +0000
-Message-ID: <015fcc1e-31f5-4435-9bf3-5f991e46527f@virtuozzo.com>
-Date: Mon, 5 Oct 2026 10:57:57 +0200
+ 08:58:15 +0000
+Message-ID: <1d3222b1-fd72-413e-a938-3e48eaf340dd@virtuozzo.com>
+Date: Mon, 5 Oct 2026 10:58:14 +0200
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 0/5] qcow2: silent corruption when a dirty image
- becomes writable
+Subject: Re: [PATCH 0/2] migration/block-dirty-bitmap: fix postcopy abort with
+ bitmaps on several nodes
 To: "Denis V. Lunev" <den@openvz.org>, qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>, 
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- qemu-stable@nongnu.org
-References: <20260824133729.1141990-1-den@openvz.org>
+Cc: qemu-block@nongnu.org, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Eric Blake <eblake@redhat.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+References: <20260924115611.4098417-1-den@openvz.org>
 Content-Language: en-US
 From: "Denis V. Lunev" <den@virtuozzo.com>
-In-Reply-To: <20260824133729.1141990-1-den@openvz.org>
+In-Reply-To: <20260924115611.4098417-1-den@openvz.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: VI1PR04CA0127.eurprd04.prod.outlook.com
- (2603:10a6:803:f0::25) To AM9PR08MB5892.eurprd08.prod.outlook.com
+X-ClientProxiedBy: VI1PR04CA0126.eurprd04.prod.outlook.com
+ (2603:10a6:803:f0::24) To AM9PR08MB5892.eurprd08.prod.outlook.com
  (2603:10a6:20b:2dd::16)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: AM9PR08MB5892:EE_|PA1PR08MB556523:EE_
-X-MS-Office365-Filtering-Correlation-Id: 40b62c00-7116-4524-7854-08df22bec0b8
+X-MS-Office365-Filtering-Correlation-Id: 15c82bb7-67df-4030-7865-08df22becb03
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|1800799024|23010399003|10070799003|366016|10067099003|56012099006|5023799004|22082099003|18002099003;
-X-Microsoft-Antispam-Message-Info: VLOxHX6WfM00Sr3NwkXhVzyh2yG54WnlImuhPrKspEhTLUvpt3U2aeJZAUJ7blIQhn0BDMfytA+3M9V9XSRQqIm3z2PxhnZE8yQlxTtQjfBlgmgrB3YUupg8K5YaPFvzW2uXHMp/JepG0q23fGeNTcLUsLKdDXyvQJn8tgsRcetlTWUPhk2oy5wUHxSDSTHRGDau65tCQV82U22mkzkBQIPU4YGdCA57HIiuuvz5uefgnDZn5NCSJKPfuBmnJwG5ULrWT7tIcVhVEDVViV+MovfodBCx8x0433v8yeL3CQuohNJWo4w9N2zZKYSdAtqy/41h/UlA5b9Ef1ZIyZ9dZS7LEE6NWyV+5b4i+t6/LYeajLMZEL5pkCvQuYuqjFvokn+6wKvTJuqc1Ta2TlU2hhXNpqkMUC1zMMH5dheja70NR13GGUynJM+bUh4kYI/R+/j+LIuKKZH3lgyXn61ff9HljkukTwCeQVI8hAmcUV07Kw8U3FlLvjOIbSb+Q7HyI5nAX0Rs+0FKDI4V1Jz2SehQvr9bVvgIOqKZxh3PLf+ZKKIvKoDR9Syrs5R8eJhCCDzmmPisVTOyp4b4BbVt5IINX6GAj8/Cb08sp4vriIPzRxjbOFAHh+OJQcOkFwBV
+ ARA:13230040|376014|1800799024|23010399003|10070799003|366016|10067099003|56012099006|22082099003|18002099003;
+X-Microsoft-Antispam-Message-Info: skziQoiIZeiRZatulB4jJ/NJikK0m0ad6DFVhxCp4VI5EmLUKDiPrajBo9OfV9mOYrf41V9ATtEgUoWBr52wwuN0uGMaHRrDMUJ2cYIrN4OKXnR+TFB/ptzCs9V3KCdatGGGW6LB8jjTqpLvD1+y7LI7fvV/y4eP7nz4RHjHrdpZp+MYK2jNFtxatfbHxIeQgabtMdDeI2vKJSBwh16xPsrvPLhB3QYL4BE/kw4L4JfTauds0ZEkZQM0HAJOCkt8VTHMMmrqruVZJndDYeFYD3VjOo2q05TKhBF5bV4G5Yp3XdLT1jea6Oo/w+h/nm5/v8b/RDrq8EM4vczY+E0ieBggzKGuA40dEbejb4XW7XkPlgVbDAJmd8Mx2aGc2n6Js9Du6qJlWTpma+R3d5EoCIB/9JYGHXHEaY87kj3uZK/RorCkmG4pyz1l7qw1TzD/b9gLbrH4QJy+oEZpSG9mIqAdXZpdAjswEg4DwssL+bkrGk3eBsyIrPwJf8UBNhOU4ot9+3a4fE94clqdzrgKN0ome4rmswmCn/keCL+kQi1LQyNC5N08ssye0rIaay1JLTS/P9dnhusRRD2zOqevD364ZftF1bNarJsGNyrGCHeWSyJHhzCAXgB9UoajN7LgLDwwmA/XMzv2WhA5dGDZIvfOARnpmQ0PrkZLuh3f+X0=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:AM9PR08MB5892.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(1800799024)(23010399003)(10070799003)(366016)(10067099003)(56012099006)(5023799004)(22082099003)(18002099003);
+ SFS:(13230040)(376014)(1800799024)(23010399003)(10070799003)(366016)(10067099003)(56012099006)(22082099003)(18002099003);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 2
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?RnZocEtWVVJZR0V6S011UDJLeHQrenp3QlRZSFNIRU4vam8xL2dkOTNPT04x?=
- =?utf-8?B?dUd5ZStYT1ZzbFZ3U3VCQWRNMG4wOTN3bVRFUW9EVW5LVUx2dkVSejRaUEJi?=
- =?utf-8?B?T29nUjIrQXM2YWJUS3N0YXBsRUo2U2Rlb3RHRGJnamEzRyttSkduNmxaNFJt?=
- =?utf-8?B?dSs1cEdDaVFkY05qREZTUHN6VytRdCtyWE9ra21COHRQSE5oKzFkMnFscVl0?=
- =?utf-8?B?RHQ1RXo5Vm9zNU5SMjBBbFRqbmVQUStQeEFsdDFMWDRITjFkNWtHRW4zNGRC?=
- =?utf-8?B?TUFEeDZtWFl2ODhjaFlLOVErVVRDcDFaMG5uN2JwdTdFc1hjSkh4R2d2cWUr?=
- =?utf-8?B?YUxHN3hnb2pJaXhUZXNXSjAwUURHUTNOVEo2YnBudGV2Wmkyc1F2OXB4UUxL?=
- =?utf-8?B?S3B6TEVGK0JuUzBJYjAyL2x6N1ZWcklhN0JNNGtWWUNzTEh4K0Y4TTZHVzd4?=
- =?utf-8?B?ZTNrTS9KaE5pYkhEM09EcDk2TFpRN3A2WTNuZDVTWmtBSEdsZFZsVkVxSS9B?=
- =?utf-8?B?T2hMdHpEVVU1bVcwZFJmZGFvUEZDUU9QODdHYjZmNWxUdHRBZkp6T3JuTGlx?=
- =?utf-8?B?YnhDZ09VQ0VHdkZFay8zY2V6R0llNFE5TEp1OVowck1sVmRJNktwaEkremJi?=
- =?utf-8?B?TzJlcWoxNlZ4UFk0VUYxcDhrSXlyWlpxaVJTREtwclZQYVNRejVPTEVNWGJz?=
- =?utf-8?B?NzAvQ005MitXNkJKVndYZm1vd1lEa3pGanpRQ2xyL3VHdmduNXFkVFgvSkVq?=
- =?utf-8?B?ai85NGZWOU1FY0RMUms2TUZvUnhxbGxJYmtxTGpKdmFEaFNIa2F0eTJCdVBx?=
- =?utf-8?B?ZkZlbXF0OGhVcTVFYkxiMk5HcTRpN0xkc3hyQS9QajNNdjA0Vmd5VUlhN2Q5?=
- =?utf-8?B?ZGNtSFBaUVZFNUlHeXlnVFBhZXlxTHJnZW5UOHFGR3pGaU1hd2tRbURyVjhV?=
- =?utf-8?B?ZER6NDRjRnB6YVFMMjYwaE9vTjZCTTRTdW9YNklZL2pKZDQ1ZTREeHlpaEZB?=
- =?utf-8?B?K0MwUllsRmpjQXhrQkxrUEtNYkU4WXBycDFVV3d1QUxXdUw2b05zV2hXbGMv?=
- =?utf-8?B?OTlReEQ5V3l0RkR6NEFVbXNDd3FyQTk0U09iWDBXVlpPWnk0a2QwQWRRT2ZK?=
- =?utf-8?B?WWk0NGlhSlhSRTRTaEM4cnBCRXB4SGlIWk5CTFllRHgvTVpzRk1Dbm94bHZP?=
- =?utf-8?B?UW0rbjVvRTJLYWZ5WHRPdXArbmI4bmVLRXl6NHhNaUR4ZW5CTXl6MDRmUWl1?=
- =?utf-8?B?NnNLdzg4Z2s4TXAwMEpvekxPTkJtUFRma29KRmpydjlLOVZHMGpwYnlJZ242?=
- =?utf-8?B?V21oTnFXU1l5dnVPKzhxVWRENitEMGNFYVlIdlNBZld3R3hkeVFKMWk2Mk1V?=
- =?utf-8?B?ZUl3K2x5dlNzMjNTQVNqZnlSMC90TFRqZWRKeTZGNXdUYkgwL1VibTk2Y3kr?=
- =?utf-8?B?bTJ4aytxbU0yc1FNaFRjV3hjOFNuZ3hnOVZ5NkU3eWdxNTFieUJOUWtIUVV1?=
- =?utf-8?B?SnYyRTVwSEUxOHF4bFdNL1JxY3o0UVhqREw0YzNqd1l1QmJjSmtTQVFhTDI4?=
- =?utf-8?B?UHl6ZnBjYU1RMnlydWJNWVh2MjJDYkRoVkVkWlNpbG1Gd2krZEttajNaQi9E?=
- =?utf-8?B?R3IyYVBmeHlsY2JadzZZOGpMaUU2U2NCWTJ0OTRUODFiT3g1V3NweWpFMTc5?=
- =?utf-8?B?QlVlSC82OEo2Slg4ZzlEbFg1R0duTVhtempIMWRuZjcvUWRUbnBueDlreUhB?=
- =?utf-8?B?ZlErSjV6SGlZaG5PakpiQ0E1aG9tdHpVelo0Znp5bVVidy8zTUR0Kzh5eDNq?=
- =?utf-8?B?NE9LQ09qbFc3YU1CaUtxcjJlaE0yMkhnY0FuTE4valBQVnVYbVdIWHVDMHF3?=
- =?utf-8?B?Y1FwY3AyS25Va04rL1ppZHlnQjBtaE9FcGZyL1ZIRURkZXhiVndVOXdZdFk3?=
- =?utf-8?B?MU85SG43QmJ1dmlSOEVHVEIzdjNkUW8rclNCYlllaUw5c2dRMGVzVis4NSt0?=
- =?utf-8?B?bE1pUjVUb3FDL1ArNEF0cVFjUlllMm8yc1JPcG5VYVpjS2xMTmUxUFZ2cUhJ?=
- =?utf-8?B?NWdBT0Z5dzNIcCtYaExVWUZacVR1Q0IydWdYR0tsMTRDaUY0cTFLWU5oUkVR?=
- =?utf-8?B?Mk84N3R6QlFwc0htbHBsWFVUblF4cVFwVmUzOFhIY3k5RGdUdmM5SFo2dVBj?=
- =?utf-8?B?eDJ1bUJMMEoxZjBVeEJ3emc5eUhCZ1ovQkkydDFUOVBvQmpqMzQ0bjVsZHpl?=
- =?utf-8?B?bnRhclJyOFRqdUFIV00yUXBva1RxS0pVWCs0ei9kdjdWMzh6Y2lKb1ZvUEpY?=
- =?utf-8?B?b1YvZ2JVajBVTDg3c0FQT2cvNGFEeXlKTWZTVkFwTnQ1TjZUdjRsaWNnUXZo?=
- =?utf-8?Q?yxKiDJN4RRZi5ItjaFH+7TD+i279kEsoahlEfVxCh1IRg?=
-X-MS-Exchange-AntiSpam-MessageData-1: rE6BVVXRQB8z/g==
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?WndmTUVjNkZ4QVFpMXZxcmxNVHdSdXNVVXZwcVJhejV6aGZlbFY2YVRHMXJW?=
+ =?utf-8?B?aFlzcHUrSEZzeURVMHRhRWxpcmxFMlU2TUM4SGluU3BUZTJtUVFIQ3granox?=
+ =?utf-8?B?Wml5ZFF5V1NMT1dxTlp6YTgxalZySFNxZzltNXVHYVdoMjlOcURHZkdHWU1L?=
+ =?utf-8?B?cFpWZk5rekRZUktveTcvNFB2Tk1NM1NzTVZNMnF1MFh5M3ZFb0pWQzVSbmJn?=
+ =?utf-8?B?WllxUmZ4UFVUYWhhdVA1YnBHbS84SW50L3pwQ01nMWIyUUlLQUZnN1pmMnVG?=
+ =?utf-8?B?ZHM2QWhwbUFad3ZrVkgrc2pzMVNFcS9ac2R5d3pveGxOcXo1UUtHMFJrcDBM?=
+ =?utf-8?B?ZThIcE8rTkpDYm5YNTBWTUFQWWdpTkhpemlmL0ltR2FaTXdxZ2JiS0pxM3BH?=
+ =?utf-8?B?RHA0d3dwZmVHR3JYMkxMeWo0VFE3NGxibzROTTJ6cVJ2YW5TY3Nzc25rUEF0?=
+ =?utf-8?B?dm5HbjVvZ3I1SklaeXZDdGVqWFYzQThDRTFuK0t4Q29DeTJkZUR3Sk9CMmEr?=
+ =?utf-8?B?bjdvOUtYMHJrYXQyMm5Eci9yMEx4Q3FYRFdCd004eHZGZDVaNnRsQVVyZTh6?=
+ =?utf-8?B?dEl2YThaSVRrVE5EWnlaNURhZ0dxMW51enlYWTJLcEljODJQSCt0dTBxei9U?=
+ =?utf-8?B?a1hxcURRbzI3WUE0RjhWdGlpMytrLzVVU0RnUzk2ekxyVmc3aU9vUGtXUkQv?=
+ =?utf-8?B?R3lwUGNFWklQbGRhdU01VXlmc1lYNi9CbDFMdGc3RXNGRG5aUjhLbmVRZU1W?=
+ =?utf-8?B?Q1d5M1EzNTlsV0k2WjFLZktPMDRYSDBua21PVms4cWVpdXZmZmlXN0JOdCtW?=
+ =?utf-8?B?b05UMVFHb1RNK2tlNFdZc3RWRUZrNkpMcEM2NEVXUzFGVkRlNFJ3MnRkREd2?=
+ =?utf-8?B?T20vOEFkdHZFWGNYaXVpbEk3eS8wZUc4TnUwazZxN0tkanZiVjlwWTcvSFpK?=
+ =?utf-8?B?Vi9aYVNHOHRyd3JZTHNEUnZZcXp4NVh0dG9CaVRqUXlucmpEMDBnZzFBVXQ1?=
+ =?utf-8?B?ZUtRditmdzZWTmczMFhMNnIvUUN3TDNtdG5ZMWxhTW9tcnFUTkVjUGQwNEFi?=
+ =?utf-8?B?VVJTZ20xemRtQ3dKTUIvOSsrVzNreU9IU1FlbTFCNkdNV3pCaVFtczYvMWli?=
+ =?utf-8?B?dkdEWTF2LzhkcWFidFdVdFlUOGc5YzVxbU1ZT2R0UjJRcjNiYy9uUEMwaThq?=
+ =?utf-8?B?SnhZMHpVSW9XVnMzZjkwQThnSUFjTDA1MFIvMHcxZHNHdDRRRHAxN1lNaVU3?=
+ =?utf-8?B?VVFqMUg3N01yclRtNUFWVXdEZ28vMDJMK0YrV3ZwaWpmM1JxZG92Y0hjM2ll?=
+ =?utf-8?B?RVdNeXp2UXhjUHZxWVFiRFU0ZVpGMHY5MFVqeEFNRDlsaEtVTFBDNXNOb1M0?=
+ =?utf-8?B?VENNR2hHS2tvZ3VjbkFzUmd4YzlwQXNsWnhFVTBLRHhDb3gzSmZMQ1ArZ2pM?=
+ =?utf-8?B?Zy9kWFd6RlNOMXlXakpJbmd5MjM0VUlZR1M2cHMxanJsejltNldjK0grZVpG?=
+ =?utf-8?B?ekVZYzFmY2hPUFM5R0I2TWovcWtkbXhoQ2lreTFJK2xKVjFvM2JtS2VEYytl?=
+ =?utf-8?B?Q3lzNmhEcVRTdTlWYmtnUk5lZEhEUG1KdzBkM00vZDhVTFJpMnlmRzhYUDRn?=
+ =?utf-8?B?WlY4bWVld3ViTmh5K3I5UXB6NmUxWTFENWd5eW9uak5taGZ0eUZ5b1dVRFNi?=
+ =?utf-8?B?UTlyMHVYc2RBdDJjb1NubGhmMlRBNEZ3YW5vMSt6Sm11a3JYM3luNFVEa2Zy?=
+ =?utf-8?B?QmVVNExhYys2TW9hUyt1OVpUVXNUZU9FSUtUY1lud3QrY20xTGE0dU1OdzZK?=
+ =?utf-8?B?eUh0aTBKOC9IbExaa3lvM0dGNEZCdU9VQTF6U1FaeER2elYvcHp2dUZmVUxH?=
+ =?utf-8?B?aXJiWFEzZ1hPRTA0eDNEQ1Zvd0F1clFYck1HZENQZWtRYlprSFUxTGlsekNU?=
+ =?utf-8?B?OFNjQ3BheVJUOWxLN3dnalZmQ0FobEVXTVJRd3I1eG9VRHZQN1E4K3hYd3hL?=
+ =?utf-8?B?VkdFQTBjMGZKRVE5S1NJTlo5dERhenhrQUJvTFArSE9jaXFjWUhqNnJ4aWxv?=
+ =?utf-8?B?V0Vka1FmenhpZ2tDUVQ5Q21SMWF5S0VKYWZoQlhiRTVxSkg4SnJHS3N6cHNO?=
+ =?utf-8?B?N1ZFNWZoZ3lkcXdIenhPaGVFLzdSNURGY1lWTWhqK0g5RVlOL2xkWVl2WFBN?=
+ =?utf-8?B?S1NNenhGcjZLSnBOUWoyWVVJaFpialFMZFRxa1F5U0Qzd3dLSHNuRmZPY01z?=
+ =?utf-8?B?OVBjSG02YkJTNndZNkVzSGNOZm1MK3QydjNFLzJwTERETzR3QTFYOHRRK2N3?=
+ =?utf-8?B?M1JUbnZTQzlNODFaQUdiSTdBNTJGZmJDNWtNdDdXN3FyMlJoaVNRYk15TTZs?=
+ =?utf-8?Q?bUdJsRjbspKJDC2wTrVFqM0onyrY9ZbdrOdjssIXIrUn3?=
+X-MS-Exchange-AntiSpam-MessageData-1: nvgAnG/z6w2C6A==
 X-OriginatorOrg: virtuozzo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 40b62c00-7116-4524-7854-08df22bec0b8
+X-MS-Exchange-CrossTenant-Network-Message-Id: 15c82bb7-67df-4030-7865-08df22becb03
 X-MS-Exchange-CrossTenant-AuthSource: AM9PR08MB5892.eurprd08.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Oct 2026 08:57:58.4594 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Oct 2026 08:58:15.7165 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: il2c/Ass83YJdEaiy+57upkscBAv7I92w6YdwHRIqRhiHdlgHqTG3EDH6OWwLmVibrqqUZ504y8/lVXSSkDhog==
+X-MS-Exchange-CrossTenant-UserPrincipalName: 8cEYJQu0duzTTs+Uu/a6J7aJcDP1y2R793fzjeQ8hlvZ1k2TaVw2KT5dt2ItVhjKqkKQD57xDYj0LzhCwdea+w==
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: PA1PR08MB556523
-Received-SPF: pass client-ip=2a01:111:f403:c200::5;
+Received-SPF: pass client-ip=2a01:111:f403:c207::3;
  envelope-from=den@virtuozzo.com;
- helo=DUZPR83CU001.outbound.protection.outlook.com
+ helo=MRWPR03CU001.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -154,192 +152,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/24/26 15:37, Denis V. Lunev wrote:
+On 9/24/26 13:56, Denis V. Lunev wrote:
 > This email originated from an IP that might not be authorized by the domain it was sent from.
 > Do not click links or open attachments unless it is an email you expected to receive.
-> Today I have faced real data corrupt from our customer with the
-> situation very close to the one addressed in the patch
-> "qcow2: do not try to clear the dirty bit on a read-only node" and
-> that is interesting. I was really unsure that design is correct
-> but with today case I can say that correct thing was done.
+> Postcopy migration of dirty bitmaps kills the destination as soon as
+> bitmaps live on more than one node:
 >
-> The problem
-> -----------
+>   qemu-system-x86_64: ../block.c:6400: bdrv_lookup_bs: Assertion
+>   `qemu_in_main_thread()' failed.
 >
-> qcow2_do_open() repairs an image carrying QCOW2_INCOMPAT_DIRTY, but only
-> for a node that is writable from the start:
+> The postcopy listen thread resolves node names with bdrv_lookup_bs()
+> without the BQL. With a single node the name is sent only during setup,
+> which runs in the main thread, so the existing test never gets there.
 >
->     if (!(flags & BDRV_O_CHECK) && bdrv_is_writable(bs) &&
->         (s->incompatible_features & QCOW2_INCOMPAT_DIRTY)) {
+> We hit it in production with libvirt: a CBT backup leaves a persistent
+> bitmap on every disk, libvirt enables the dirty-bitmaps capability, and
+> the next live migration of any VM with more than one disk aborts the
+> destination after the guest has already been switched over to it.
 >
-> A node opened read-only skips it, correctly, since it resolves nothing
-> and writes nothing. Nothing revisits the question when that same node
-> later becomes writable, and bdrv_reopen() is not an exotic way to get
-> there: commit_active_start() and commit_start() both reopen the base
-> read-write for the duration of the job, so an ordinary block-commit onto
-> a read-only backing file is enough.
->
-> With lazy refcounts the refcount blocks are not written again once the
-> dirty bit is set, so an image left behind by a killed QEMU has an
-> on-disk refcount block that accounts for the metadata clusters and
-> nothing else. Every data cluster reads as free. s->free_cluster_index
-> starts at 0, so the first allocation after such a reopen starts at the
-> front of the image and hands out clusters that L2 entries still point
-> at.
->
-> The result is aliasing: two guest offsets mapped onto one host cluster,
-> so the guest reads back data belonging to some other offset. Nothing
-> about this fails. No I/O error is reported, the corrupt bit stays clear,
-> and a clean close clears the dirty bit as well, so no later open will
-> repair the image either. Afterwards qemu-img check reports
->
->     ERROR cluster N refcount=1 reference=2
->     ERROR cluster N refcount=0 reference=1
->     ERROR OFLAG_COPIED data cluster: l2_entry=<host>|COPIED refcount=0
->
-> and the only runtime witness, if something eventually frees one of those
-> clusters, is a bare
->
->     qcow2_free_clusters failed: Invalid argument
->
-> on stderr, with the guest none the wiser.
->
-> How it looked in production
-> ---------------------------
->
-> A VM was killed while its storage was unavailable, leaving a 100 GiB
-> volume dirty. It came back with a snapshot-revert overlay on top, so the
-> volume itself was now the read-only backing file, and the overlay was
-> committed into it two and a half hours later. 8082 host clusters ended
-> up referenced by two L2 entries each, roughly 8 GiB of guest data
-> cross-mapped. The guest filesystem began failing metadata verification
-> on buffers holding fragments of unrelated files.
->
-> Two properties of the damage are worth recording, because they are what
-> told us this was not a race:
->
->  - aliasing is exactly two-way, never three or more, which is a single
->    monotonic sweep of the allocator rather than a window hit repeatedly;
->
->  - it stops dead at the host cluster that was the image end at the
->    moment the volume was made writable. Everything allocated after that
->    point is intact.
->
-> qemu-img check -r all makes the metadata self-consistent again, and then
-> honestly reports no errors, but it cannot un-alias anything. The guest
-> data stays wrong.
->
-> Reproducer
-> ----------
->
-> Under a second, no guest and no block job required:
->
->   qemu-img create -f qcow2 -o compat=1.1,lazy_refcounts=on base.qcow2 1G
->   qemu-io -f qcow2 -c "write -P 0xaa 0 100M" -c flush \
->           -c "sigraise 9" base.qcow2
->
->   qemu-io -r -f qcow2 base.qcow2 \
->       <<< $'reopen -w\nwrite -P 0xbb 900M 100M\nquit'
->
->   qemu-io -r -f qcow2 -c "read -v 0 16" base.qcow2
->   # 00000000:  bb bb bb bb bb bb bb bb bb bb bb bb bb bb bb bb
->
-> The flush is load-bearing: it writes out the L2 cache but not the
-> refcount blocks, which is exactly the asymmetry the bug needs. Guest
-> fsyncs supply it in production, so a long-running VM is the ideal
-> victim. qemu-img commit of an overlay reaches the same state through
-> commit_active_start().
-> v1:
-> https://lore.kernel.org/qemu-devel/20260731220039.1765584-1-den@openvz.org/
-> v2:
-> https://lore.kernel.org/qemu-devel/20260811173857.396571-1-den@openvz.org/
-> v3:
-> https://lore.kernel.org/qemu-devel/20260819120558.3870413-1-den@openvz.org/
->
-> Notes for review
-> ----------------
->
->  - The repair still runs under bdrv_drain_all(), so a block-commit onto
->    a large dirty base stalls guest I/O for the length of a full metadata
->    scan. Rejecting the reopen instead would be cheap, but block-commit
->    depends on it succeeding, so repairing in place is the only option.
->
->  - .bdrv_reopen_commit_post() runs after the transaction is committed
->    and cannot roll anything back, so a negative return value reports an
->    unusable node rather than rejecting the reopen. That is unusual, and
->    it is the only channel available: there is no failable hook once the
->    node holds BLK_PERM_WRITE.
->
-> Changes in v4
-> -------------
->
->  - patch 5: block-stream and change-backing-file document the repair as
->    well, they reopen read-write too. (Andrey)
->  - patch 5: the message says why a failed repair does not mark the image
->    corrupt. (Andrey)
->  - patch 5: each of those notes is one or two lines now.
->  - Cc: qemu-stable restored, QAPI maintainers added to patch 5.
->
-> Changes in v3
-> -------------
->
->  - patch 1: the same bug aborts QEMU, not only fails a reopen, when the
->    file node below is writable; the message says so and iotests 039
->    covers the read-write to read-only direction as well. (Andrey)
->  - patch 2: new, a reopen of a node whose driver is gone segfaults in
->    bdrv_reopen_queue_child() and asserts in bdrv_reopen_prepare(), which
->    is the crash a failed repair would reach through commit_clean();
->    bdrv_reopen_prepare() reports it instead, iotests 060 covers it.
->    (Andrey)
->  - patch 3: bdrv_reopen_multiple() documents that a failure means either
->    nothing changed or the reopen went through and left an unusable tree;
->    no caller changes. (Andrey)
->  - patch 3: an implementation which fails must set an error, asserted,
->    and the loop skips a node whose driver is already gone.
->  - patch 4: the pre-reopen flags are recorded as int old_flags rather
->    than a bool, with a bdrv_reopen_was_writable() accessor for drivers.
->    (Andrey)
->  - patch 5: the failure names the node and keeps the errno of the check.
->    (Andrey)
->  - patch 5: a failed repair drops the driver instead of calling
->    qcow2_signal_corruption(), which would write the corrupt bit into the
->    header for what may be a transient ENOSPC.
->  - patch 5: blockdev-reopen and block-commit document the failure and the
->    state it leaves. (Andrey)
->  - patch 5: iotests 040 covers a commit onto a dirty base through both
->    commit_start() and commit_active_start(), and the failed repair.
->    (Andrey)
+> Patch 1 resolves every chunk but START from the bitmaps that START set
+> up, instead of from the block graph. Patch 2 extends
+> migrate-bitmaps-postcopy-test with a bitmap on a second node, and it
+> fails without patch 1.
 >
 > Signed-off-by: Denis V. Lunev <den@openvz.org>
-> Reviewed-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-> CC: Kevin Wolf <kwolf@redhat.com>
-> CC: Hanna Reitz <hreitz@redhat.com>
-> CC: Eric Blake <eblake@redhat.com>
-> CC: Markus Armbruster <armbru@redhat.com>
-> CC: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-> Cc: qemu-stable@nongnu.org
+> Cc: Peter Xu <peterx@redhat.com>
+> Cc: Fabiano Rosas <farosas@suse.de>
+> Cc: Eric Blake <eblake@redhat.com>
+> Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 >
-> Denis V. Lunev (5):
->   qcow2: do not clear the dirty bit when reopening a read-only node
->   block: reject a reopen of an unusable node instead of crashing
->   block: let bdrv_reopen_commit_post() report a failure
->   block: remember the flags a reopen starts from
->   qcow2: repair a dirty image when it becomes writable
+> Denis V. Lunev (2):
+>   migration/block-dirty-bitmap: fix postcopy abort with bitmaps on
+>     several nodes
+>   iotests/migrate-bitmaps-postcopy-test: add a bitmap on a second node
 >
->  block.c                          |  55 ++++++++++++--
->  block/qcow2.c                    |  33 ++++++++-
->  include/block/block-common.h     |   1 +
->  include/block/block_int-common.h |  11 ++-
->  qapi/block-core.json             |  19 +++++
->  tests/qemu-iotests/039           | 110 ++++++++++++++++++++++++++++
->  tests/qemu-iotests/039.out       |  56 ++++++++++++++
->  tests/qemu-iotests/040           | 122 +++++++++++++++++++++++++++++++
->  tests/qemu-iotests/040.out       |   4 +-
->  tests/qemu-iotests/060           |  30 ++++++++
->  tests/qemu-iotests/060.out       |  13 ++++
->  11 files changed, 439 insertions(+), 15 deletions(-)
+>  migration/block-dirty-bitmap.c                | 59 +++++++++++++++++--
+>  .../tests/migrate-bitmaps-postcopy-test       | 19 ++++++
+>  2 files changed, 74 insertions(+), 4 deletions(-)
 >
 >
-> base-commit: fa19879df1658f96ac07365fca8835b7decd6995
+> base-commit: 942229961efea74b153c44c59188eb08375f10f1
 ping
 
