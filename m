@@ -4,60 +4,140 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23BBECA5FF0
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Oct 2026 21:09:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8976CCA5FF0
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Oct 2026 21:10:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xDpvt-0003TW-2i; Mon, 05 Oct 2026 17:09:13 -0400
+	id 1xDpwy-00041q-W2; Mon, 05 Oct 2026 17:10:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1xDpvq-0003TI-IG
- for qemu-devel@nongnu.org; Mon, 05 Oct 2026 17:09:10 -0400
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1xDpws-00040K-Br
+ for qemu-devel@nongnu.org; Mon, 05 Oct 2026 17:10:15 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1xDpvo-0008Nf-A4
- for qemu-devel@nongnu.org; Mon, 05 Oct 2026 17:09:10 -0400
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 04D00583301;
- Mon, 05 Oct 2026 23:09:06 +0200 (CEST)
-X-Virus-Scanned: amavis at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id lOtxTKJdTTLV; Mon,  5 Oct 2026 23:09:03 +0200 (CEST)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 39BCF5832AF; Mon, 05 Oct 2026 23:09:03 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 379C25831F0;
- Mon, 05 Oct 2026 23:09:03 +0200 (CEST)
-Date: Mon, 5 Oct 2026 23:09:03 +0200 (CEST)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Paolo Bonzini <pbonzini@redhat.com>
-cc: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org, 
- "Michael S . Tsirkin" <mst@redhat.com>, 
- =?ISO-8859-15?Q?Alex_Benn=E9e?= <alex.bennee@linaro.org>, 
- Alistair Francis <alistair.francis@wdc.com>, 
- =?ISO-8859-15?Q?Daniel_P_=2E_Berrang=E9?= <berrange@redhat.com>, 
- Fabiano Rosas <farosas@suse.de>, Kevin Wolf <kwolf@redhat.com>, 
- Warner Losh <imp@bsdimp.com>, 
- =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
-Subject: Re: [PATCH 1/4] docs/devel: relax policy on AI-generated contributions
-In-Reply-To: <69164823-7271-4d59-9684-637bec454a1d@redhat.com>
-Message-ID: <293cb972-35e1-1922-0834-601e2491a7a6@eik.bme.hu>
-References: <20260930085433.830743-1-pbonzini@redhat.com>
- <20260930085433.830743-2-pbonzini@redhat.com>
- <CAFEAcA91XU=_hS3iB+0p7hXQ_nvf0YpgNZaKsd=b=fSVaTJDxw@mail.gmail.com>
- <69164823-7271-4d59-9684-637bec454a1d@redhat.com>
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1xDpwq-00009g-NN
+ for qemu-devel@nongnu.org; Mon, 05 Oct 2026 17:10:14 -0400
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 695KMiC71535283
+ for <qemu-devel@nongnu.org>; Mon, 5 Oct 2026 21:10:10 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ KMQwEgxn/MF5iV0a+c3UNRabac8BzucF0gho9/+Vp1o=; b=e/tHTECucFgNUEU8
+ yJgbKD2N+WD2280FMBAtwtrjxaK+qH7VnoO3ZGJHhDzZ7Gzhfg54N4a8RnkgmHom
+ ROX1vh3Kbrr8NtxnOIm2loA8iBWW+sByc82mzqIKamgTCf6p7seORwjvJxeIUJk7
+ yrTaLRJALJMX5fJNNHMeiv7nA0G16Qc2Ozl9P6gcHps8qcQ3vmtBX1WrAbH5jDLm
+ K4t077zPs1r4d0evPOyhSPWyZVkkED4yyNVmbmUnpZ5bubF5VEiGHL1aSPCfwHNb
+ BJujJMuma99NDjtV3zAiwrm8Kz0ChsotlfmQyvrfTkOJ9X9LNG+6h+vSgk7e/TES
+ cTHekg==
+Received: from mail-dy1-f197.google.com (mail-dy1-f197.google.com
+ [74.125.82.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h4dnchhnt-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 05 Oct 2026 21:10:10 +0000 (GMT)
+Received: by mail-dy1-f197.google.com with SMTP id
+ 5a478bee46e88-33c35f5ca6cso4345436eec.1
+ for <qemu-devel@nongnu.org>; Mon, 05 Oct 2026 14:10:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1791234609; x=1791839409; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=KMQwEgxn/MF5iV0a+c3UNRabac8BzucF0gho9/+Vp1o=;
+ b=gjJ3AqUaPhxT2/19ypQABA0y6a5T0Jhvhdxaqr3WDRtcdzCBHlIXJi/iU0JCedChkF
+ TB4vFzhWGRNqSxFlA4c55ZrwxVGzUPRHqbfe5Q0C3XcNZaE/xuLYGs0VNPSYVAcu3p0s
+ C/SEemajN0+OPVfxS3WvTNtD/qnuYc5WcR9yXtfW9vKtJwpt4hhVltt5/V58ctR+G2jw
+ jwKUPx3ySKz6a4Qxozm/Dxu059utReJ6hoIBFI7MJ1sKo8dpT8EGJVeJlSiKyfT6fF26
+ hG/0cFjhRzrUAZ+PCjQJoYtjcBwwvm1BcGaUlJM71kwrMygLnX0v5Fudlx6kUNilZR59
+ zfcA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1791234609; x=1791839409;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=KMQwEgxn/MF5iV0a+c3UNRabac8BzucF0gho9/+Vp1o=;
+ b=xIgNBqhNE2j0b0tByc17uxRn9J39IiXhX5YltTN1WUPEm2bJa41notuLsBBWJlZuBz
+ dhI2XWzLGozMNScwQg0+QAmlslLYeAVOXUFxFG4k6SxySc0777PW5pk7kWulZPdfKmpY
+ XWhbWPlsFyXkIMYys9gldi4Hri+8ujRZT+p4qF2qabiLcVKXFE7d8BZYPJoLh57fqTp6
+ 4UtJcXDIA4iihoNNowX+M48+yB5pue0KA3c92fKTDnKJBbPSpcLO/pSU2csr6CRsyAX8
+ F9BnCsJqlpD5fmtqy1em9ZVe+Zi0c0BN6Fpsa1u6DZYfTKGd4QU5Jvg1EirvEFHkmgbS
+ gynA==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBx497QgTnwVJLCp5PHV8OEp6WSmJnFpuO2dMlNf29FC0+j5acYu3G2KOqDH6juLPALrD6clpFofMt6W@nongnu.org
+X-Gm-Message-State: AFuF++lIQe4wWqpfY1gL4HHx96BjBTEQFdRD9cyfoaqWw7z0i8IK/e3q
+ j4SV0RHaqOHoLr4lgC5vDL2EhKhN+cxbIkWzmLPiBk6AzM7Bn12GAsohcQ0nnl4kiDGRXPPWrKe
+ nOcws7BgDaFifgSEj46WFz43AGCWww0cnmz/xO2bnDHA4hQqKJ8GEkQPQ7w==
+X-Gm-Gg: AYBFou2S9bKz3ZlPaGcBFgH4wIxbSMJbhIQA/RilSv1WXFATLa8L6SjvM+JuwTM9xLn
+ Q6KYXB4H4xXXUsGn35YcoRfep8orL4tn4o5ABVbTx+u/4xPYrCjNO8PkNkNwNoWhSpzHHtHVpiW
+ xSJW3I655duA0nhTs96jtOY3xl4sjz1EIe94F04YLrdjlOLTj1RUabE4mH0Vjfobf2i0gsd3Bt3
+ 0N07HJuW+LKb0wuvxLNjdCkmkc/Uj0CIVQQsIVsKibcFz53GWgm+6GJ60p11KFOSBU1m23ahy2L
+ Ow4vaqTj7/BKdS7sFIZzOsd+6Q4LC9Sxw9u0HE6gJB6PkHpOPPJO6PE5HOzuey8DaL0Zx1j5b1E
+ MJjKCIl5BiMAQpRarZMPLHj458GyfzGPAkA2ARCX5txYGcGuGrdVFdSP+g/kr7vku/5Cfwg==
+X-Received: by 2002:a05:7301:d795:b0:351:1567:41b7 with SMTP id
+ 5a478bee46e88-3511567798emr10432697eec.29.1791234608962; 
+ Mon, 05 Oct 2026 14:10:08 -0700 (PDT)
+X-Received: by 2002:a05:7301:d795:b0:351:1567:41b7 with SMTP id
+ 5a478bee46e88-3511567798emr10432648eec.29.1791234608181; 
+ Mon, 05 Oct 2026 14:10:08 -0700 (PDT)
+Received: from [192.168.1.199] (192-80-163-190.dyn.novuscom.net.
+ [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-35146b3b5aesm1587556eec.29.2026.10.05.14.10.07
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 05 Oct 2026 14:10:07 -0700 (PDT)
+Message-ID: <c87183cf-bb24-42be-a51c-d700ff6b8a1f@oss.qualcomm.com>
+Date: Mon, 5 Oct 2026 14:10:06 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] target/hexagon: yield on system-mode pause
+To: Brian Cain <brian.cain@oss.qualcomm.com>, qemu-devel@nongnu.org
+References: <20261005194519.2945862-1-brian.cain@oss.qualcomm.com>
+ <20261005194519.2945862-2-brian.cain@oss.qualcomm.com>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <20261005194519.2945862-2-brian.cain@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA1MDA4MyBTYWx0ZWRfX0PgGCcvOWpp1
+ QdqwagWsiq9I6okcf35bzDa1eoSbaQBkM0xbVwEDlZZDK2q4sykqBcu9B6Bzof8b1zCdUBk2021
+ IC1l8lJHczTjJs0irQ8bFZamvj8dVGU=
+X-Authority-Analysis: v=2.4 cv=Vdxir1p9 c=1 sm=1 tr=0 ts=6ac41232 cx=c_pps
+ a=Uww141gWH0fZj/3QKPojxA==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
+ a=EUspDBNiAAAA:8 a=Hgqyw1ebcACVWZcZZt0A:9 a=QEXdDO2ut3YA:10
+ a=PxkB5W3o20Ba91AHUih5:22
+X-Proofpoint-GUID: L_tAtMs80xN50alXHyRfT2vtAO5iAp3H
+X-Proofpoint-ORIG-GUID: L_tAtMs80xN50alXHyRfT2vtAO5iAp3H
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA1MDA4MyBTYWx0ZWRfXzf2f95crOFGF
+ mNQoJF987GXhMc1IbUX28z7WczlJlpqvBnoCpczlQznklcWHak26bAx7+/tTDYEBJ5STye2zkon
+ 4J5qtcb8G6gN2AK2Y9SNjOxXaPTmqkatwr4hf+gN63okVFZ3Al7cbQdgSsNgMjVpn9BaP5fXo3T
+ 9H42PXeOvX/SAvERc3vleipYparqPs/gSzzlzo3rr9ZeoGNP+3V7siGjF4ppnpruElTUSoY/wxE
+ oNc6T8SzJEtOzRLaWgCbWfggbhOL38KhCNyt6+gJ6trOeaLuYyEPn2pbvNX79YPaWLN3Dg6drVX
+ qXjH5tWWy5QImxGtYd2SrmbWzV+F35q8F9QQS6ubgFG3YSP4pE3E3NB6bQdZQ9vN23fTbDKY784
+ HHlgwwMPq4515rxutNK4ewrYpd3BfmuuN8jy7qDyeHI0nMMbVG4UhWHtBLBSgUrFHD9FudT9UYq
+ P0tuCicYdUfTCnV4Fug==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-10-05_05,2026-10-05_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 priorityscore=1501 suspectscore=0 malwarescore=0 clxscore=1015
+ impostorscore=0 phishscore=0 spamscore=0 bulkscore=0 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2610050083
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -74,84 +154,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 2 Oct 2026, Paolo Bonzini wrote:
-> On 10/1/26 14:21, Peter Maydell wrote:
->> On Wed, 30 Sept 2026 at 09:54, Paolo Bonzini <pbonzini@redhat.com> wrote:
->>> +- large, heavily LLM-assisted contributions where LLMs write large parts
->>> +  of functional code.  These are only allowed if *pre-arranged*,
->>> +  *high-quality* and *well-tested*.
->>> +
->>> +The last case (*"LLM-created contribution"*) is the one that requires
->>> +a more careful approach.  In particular:
->>> +
->>> +- "Pre-arranged" means that a maintainer has communicated ahead of time,
->>> +  for example on `IRC or the QEMU mailing
->>> +  list <https://www.qemu.org/contribute/>`__, that they are willing
->>> +  to review an LLM-created contribution.
->>> +
->>> +- "High-quality" means that the contributor must apply the same judgment
->>> +  that would be applied to other code changes.  Contributors must invest
->>> +  substantial time reviewing their contributions, curating them, and
->>> +  understanding them in depth.
->>> +
->>> +- "Well-tested" means the LLM-created contributions will be held to a
->>> +  higher standard than human-created ones, because LLMs make it easier
->>> +  to write tests.  There are no exceptions for "writing the tests seems
->>> +  hard" or for `yak shaving 
->>> <https://en.wiktionary.org/wiki/yak_shaving>`__.
->> 
->> ...but I think fundamentally I am not in favour of having this
->> fourth category of permitted uses. It seems even to have lost the
->> idea of it being an "experimental" approach in this revision of the
->> series. The first three categories are fine, and I have no particular
->> problem with our relaxing our current policy to explicitly permit them.
->> 
->> Our problem as a project does not seem to be on the "writing
->> code" side of things, but has always been on the "code review"
->> side. This policy relaxation makes it much easier to write more
->> code. Even when there's a "pre-arranged reviewer" that isn't
->> necessarily helpful -- if you're one of the primary maintainers
->> for an area of QEMU then the fact that somebody else is reviewing
->> it doesn't make a big AI-generated code infusion any more palatable.
->
-> I understand where you're coming from.
->
-> The purpose of the fourth category is norming contributions that are already 
-> happening.  I apologize for the allegation in advance, but take for example 
-> https://lore.kernel.org/qemu-devel/20260817190038.580257-1-mattst88@gmail.com/; 
-> on one hand it is very high quality, on the other hand I give it at least a 
-> 70% likelihood of being heavily LLM-assisted for the implementation and not 
-> just for the analysis.
->
-> The question is: do we want contributions like that one?  If we decide that 
-> their quality and usefulness are high enough to want them, what process do we 
-> need around them?  I think we all agree that, if that kind of contribution is 
-> desirable, we want the submitters to declare AI usage and the reviewers to be 
-> aware of it.
->
->> Allowing large heavily LLM-assisted contributions seems to me:
->>   * the biggest risk legally speaking (though I think this is
->>     in practice not all that big a risk at this point)
->>   * the biggest risk of the codebase degenerating into
->>     unmaintainability
->>   * the biggest risk of finding ourselves reviewing contributions
->>     that are in practice much more vibe-coded than the policy text
->>     above is asking for
->
-> I agree completely with how you phrased the first and third.  I agree that 
-> the second bullet is a risk too, but it's mitigated by "LLM-created 
-> contributions will be held to a higher standard than human-created ones, 
-> because LLMs make it easier to write tests" (and by maintainers being able to
+On 10/5/2026 12:45 PM, Brian Cain wrote:
+> System-mode pause currently advances the PC and continues execution instead
+> of yielding the vCPU. Raise EXCP_YIELD with the next packet PC so execution
+> returns to the CPU loop and another hardware thread can run. Keep the
+> linux-user behavior unchanged.
+> 
+> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+> ---
+>  target/hexagon/gen_tcg.h | 10 ++++++++++
+>  1 file changed, 10 insertions(+)
+> 
+> diff --git a/target/hexagon/gen_tcg.h b/target/hexagon/gen_tcg.h
+> index 5f7df66ae67..80d8a7b6bac 100644
+> --- a/target/hexagon/gen_tcg.h
+> +++ b/target/hexagon/gen_tcg.h
+> @@ -1125,11 +1125,21 @@
+>  #define fGEN_TCG_Y2_break(SHORTCODE)
+>  #define fGEN_TCG_J2_unpause(SHORTCODE)
+>  
+> +#ifdef CONFIG_USER_ONLY
+>  #define fGEN_TCG_J2_pause(SHORTCODE) \
+>      do { \
+>          uiV = uiV; \
+>          tcg_gen_movi_tl(hex_gpr[HEX_REG_PC], ctx->next_PC); \
+>      } while (0)
+> +#else
+> +#define fGEN_TCG_J2_pause(SHORTCODE) \
+> +    do { \
+> +        uiV = uiV; \
+> +        gen_helper_raise_exception(tcg_env, \
+> +            tcg_constant_i32(EXCP_YIELD), \
+> +            tcg_constant_i32(ctx->next_PC)); \
+> +    } while (0)
+> +#endif
+>  
+>  /* r0 = asr(r1, r2):sat */
+>  #define fGEN_TCG_S2_asr_r_r_sat(SHORTCODE) \
 
-Tests need to be reviewed too to be able to trust them so that does not 
-help against overloading reviewers with generated patches but burdens them 
-even more: they will also have to review the tests before the code.
-
-We could say tests must be written by hand but nobody wants to do that or 
-that they need to be reviewed by a human before submission but we ask that 
-for all code in the patch including tests so I don't see how the argument 
-that LLMs can write tests would reduce the original problem.
-
-Regards,
-BALATON Zoltan
+How is this working at the moment?
+In system mode, if a given cpu never really yield, a given "thread"
+could keep it spinning with a busy loop forever.
 
