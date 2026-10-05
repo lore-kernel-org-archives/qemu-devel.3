@@ -4,112 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18E65CA5FF5
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Oct 2026 20:38:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18E92CA5FF0
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Oct 2026 20:43:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xDpSF-0005iu-8h; Mon, 05 Oct 2026 16:38:35 -0400
+	id 1xDpVv-0006Ow-BP; Mon, 05 Oct 2026 16:42:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1xDpSC-0005iI-MA; Mon, 05 Oct 2026 16:38:32 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1xDpVt-0006OI-Dp
+ for qemu-devel@nongnu.org; Mon, 05 Oct 2026 16:42:21 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1xDpSB-0005qK-4q; Mon, 05 Oct 2026 16:38:32 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 695HZPqT1339401; Mon, 5 Oct 2026 20:38:29 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=2gkMR0
- FIIBk0qvsc9mYnUsjtMvziGycBnTIP3VVyVPU=; b=DZKSafi1ClpBOKTkeBZVrb
- whx2cNpjB+6gmHCq13h4h7RCkg016mG0QSbJlSoCR3IO78GlnlDu/fZjbqxU18fa
- hLBTEdD/2BqSva6b7G1I9DtJlPTXOVbHnLXttBTMpaqYAX39RQrHSi83oZaoCHcW
- ygp4HNY+EkE51TbADXjo/DNRmcy8OmjEtO1f4nN/P8m2TwR2+LTX5aCs9+ZRPQUX
- toT9UTIkaAw9Hts9fhr7kO3FU5Z/1O+gTvDEFoBK2RvjNfm8Cr8+03+CJ4HWnMdb
- QDea09Q9W++l/nYLI1wPgzRvoRUeQlWZTPbGr9u1nhP54TlAjRmVdWet0bnjG4SQ
- ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4h2s74mey1-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Mon, 05 Oct 2026 20:38:28 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 695HMbuf3280917; Mon, 5 Oct 2026 20:38:28 GMT
-Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4h3dhgq0np-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 05 Oct 2026 20:38:28 +0000 (GMT)
-Received: from smtpav02.dal12v.mail.ibm.com (smtpav02.dal12v.mail.ibm.com
- [10.241.53.101])
- by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 695KcQ3d41026090
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 5 Oct 2026 20:38:26 GMT
-Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8B0215805C;
- Mon,  5 Oct 2026 20:38:26 +0000 (GMT)
-Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 10D785805A;
- Mon,  5 Oct 2026 20:38:26 +0000 (GMT)
-Received: from [9.61.15.56] (unknown [9.61.15.56])
- by smtpav02.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Mon,  5 Oct 2026 20:38:25 +0000 (GMT)
-Message-ID: <5d03e50e-4e53-4640-bb13-68733d978a6e@linux.ibm.com>
-Date: Mon, 5 Oct 2026 16:38:25 -0400
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1xDpVr-0006Ci-KI
+ for qemu-devel@nongnu.org; Mon, 05 Oct 2026 16:42:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1791232938;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Qbv+2PcrvMmwglfn/lUl8ywZtKYur3eQ1PKeRU5k5pQ=;
+ b=EaGCOKJ7rYmcO1/4EYryONWyr8zjW3EZtE/cdxuP00G/UhuJjDZqMu3hdro0RbKrl78hgZ
+ qIiBTAqFsFRAhFZT13m//Jl+45wqt/RihiLQRSEbDgmYgBXHIny70KVDeG2DoIe3b63eQI
+ FeBs3G9VlhH1NCkB40mTrtqx9VeHI0M=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-662-2Zc9XotnPribZissiCL7WQ-1; Mon,
+ 05 Oct 2026 16:42:17 -0400
+X-MC-Unique: 2Zc9XotnPribZissiCL7WQ-1
+X-Mimecast-MFC-AGG-ID: 2Zc9XotnPribZissiCL7WQ_1791232936
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4D9AD1954206; Mon,  5 Oct 2026 20:42:15 +0000 (UTC)
+Received: from redhat.com (headnet05.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.117])
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 34003471; Mon,  5 Oct 2026 20:42:13 +0000 (UTC)
+Date: Mon, 5 Oct 2026 15:42:10 -0500
+From: Eric Blake <eblake@redhat.com>
+To: "Denis V. Lunev" <den@openvz.org>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, 
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>, 
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+Subject: Re: [PATCH 11/13] block/blkdebug: make a breakpoint work across
+ AioContexts
+Message-ID: <asQK3F0s7sxm5Cyx@redhat.com>
+References: <20260930165000.303236-1-den@openvz.org>
+ <20260930165000.303236-12-den@openvz.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 2/2] s390x/pci: Reset a device in error state
-To: Farhan Ali <alifm@linux.ibm.com>, qemu-s390x@nongnu.org,
- qemu-devel@nongnu.org
-Cc: farman@linux.ibm.com, cohuck@redhat.com, alex@shazbot.org, clg@redhat.com
-References: <20261005174314.871-1-alifm@linux.ibm.com>
- <20261005174314.871-3-alifm@linux.ibm.com>
-Content-Language: en-US
-From: Matthew Rosato <mjrosato@linux.ibm.com>
-In-Reply-To: <20261005174314.871-3-alifm@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: _tQ3JqkbQuvuqzALvDgNWEoBm7vDpEFP
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA1MDA4MSBTYWx0ZWRfX+U4M4NQP7yAz
- n4OWnqB7eqqg6zXfqLnB5H+/jTvSmw31axX1KTMkNdHhUHd/kDx5QzuCwJXWxKz8VrxKIiu/q7F
- HVbYup8y2FMivJ8tsQxnuBRQVF6XxIk=
-X-Proofpoint-GUID: _tQ3JqkbQuvuqzALvDgNWEoBm7vDpEFP
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA1MDA4MSBTYWx0ZWRfX/U2LJpNuDAxG
- xqVdk/b3dkoLGEKwZhnPSe/dwd60hxWEkoG7pPlzYMsRxzPC6qBjHQtEEEkFqCZtVDIlUkA4hso
- IjRc53rAJW/xBHo9dUsoyoHjJakpY2fCM2Mc7SbgZ4Z/QWceWW6fxZANHCep0ccnlF/Gn81rGsF
- SIb6RZ4atNywuV/H2LwR4yVMB0e/mjlU+JPPJV9/NzC4d2DbrzsEHo46vLIM9eUGfaeyM+lnsRu
- 1l3bap3ii0JhMSUVV53N5UCxx6vuoWsWSQOfM17JtCVrJ0OTRdcoFEWoV9DodkUlkJSxIxPc8kI
- QXWZD8dbpZYM4wuHIYtcN1LaUkwZ5czAxErv+0JdlSVR0wkE6cVO753UUio3c7SSPNbEBoclmqe
- kVIpAi4Yyz20Dahr12IuZ1iy1EfUipJ7Q1dxBml+Lzizpdv2p9/eEUykm0M9AoC/ypKT0FCCCdm
- cH80CJKBh/WGFP68Y2g==
-X-Authority-Analysis: v=2.4 cv=fM2sTpae c=1 sm=1 tr=0 ts=6ac40ac5 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8
- a=Tm8Z0uH1JAIsG0wHSzQA:9 a=QEXdDO2ut3YA:10 a=ZXulRonScM0A:10
- a=zZCYzV9kfG8A:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-10-05_05,2026-10-05_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 bulkscore=0 priorityscore=1501 spamscore=0 lowpriorityscore=0
- phishscore=0 adultscore=0 malwarescore=0 clxscore=1015 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2610050081
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=mjrosato@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260930165000.303236-12-den@openvz.org>
+User-Agent: NeoMutt/20260616
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=eblake@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 10
+X-Spam_score: 1.0
+X-Spam_bar: +
+X-Spam_report: (1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,15 +88,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/5/26 1:43 PM, Farhan Ali wrote:
-> For passthrough devices in error state, for a guest driven reset of the
-> device we can attempt a reset to recover the device. A reset of the device
-> will trigger a CLP disable/enable cycle on the host to bring the device
-> into a recovered state.
+On Wed, Sep 30, 2026 at 06:49:57PM +0200, Denis V. Lunev wrote:
+> From: Denis V. Lunev <den@openvz.org>
 > 
-> Signed-off-by: Farhan Ali <alifm@linux.ibm.com>
+> A request that stops at a breakpoint belongs to whichever AioContext
+> issued it, and the monitor or qemu-io that resumes it runs somewhere
+> else. Two things go wrong once those are not the same thread.
+> 
+> resume_req_by_tag() woke the request with qemu_coroutine_enter(), which
+> enters the coroutine on the caller's thread. That moves the request off
+> its own thread for the rest of its life, and it aborts outright when it
+> wins the race against the yield, because the request is published to
+> the list before the coroutine gets there.
+> 
+> wait_break polled the block backend's AioContext, where the event will
+> never arrive, so it slept through the suspension it was waiting for.
+> 
+> Wake the request in the context it came from and wait for it the way
+> the rest of the block layer waits across contexts. Where the two
+> contexts are the same the coroutine is still entered directly, so
+> single-threaded behaviour, and the output tests depending on it, do not
+> change.
+> 
+> Signed-off-by: Denis V. Lunev <den@openvz.org>
+> CC: Kevin Wolf <kwolf@redhat.com>
+> CC: Hanna Reitz <hreitz@redhat.com>
+> CC: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+> CC: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+> ---
+>  block/blkdebug.c | 3 ++-
+>  qemu-io-cmds.c   | 5 ++---
+>  2 files changed, 4 insertions(+), 4 deletions(-)
 
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+Reviewed-by: Eric Blake <eblake@redhat.com>
 
+-- 
+Eric Blake, Principal Software Engineer
+Red Hat, Inc.
+Virtualization:  qemu.org | libguestfs.org
 
 
