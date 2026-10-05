@@ -4,127 +4,127 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25BD6CA5FFC
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Oct 2026 18:57:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D8B1CA5FFC
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Oct 2026 18:57:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xDnqX-0007a1-4N; Mon, 05 Oct 2026 14:55:33 -0400
+	id 1xDnrI-0008JS-K2; Mon, 05 Oct 2026 14:56:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xDnqJ-0007PM-Ov
- for qemu-devel@nongnu.org; Mon, 05 Oct 2026 14:55:25 -0400
+ id 1xDnqf-0007e3-Hv
+ for qemu-devel@nongnu.org; Mon, 05 Oct 2026 14:55:43 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xDnqH-0005iI-Kw
- for qemu-devel@nongnu.org; Mon, 05 Oct 2026 14:55:19 -0400
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+ id 1xDnqd-0005n8-NR
+ for qemu-devel@nongnu.org; Mon, 05 Oct 2026 14:55:41 -0400
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 695HLk7l3044082
- for <qemu-devel@nongnu.org>; Mon, 5 Oct 2026 18:55:16 GMT
+ 695HLwjb2207552
+ for <qemu-devel@nongnu.org>; Mon, 5 Oct 2026 18:55:28 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- LN+R6qmkI4PitlWRiMuSW+1+WCz+gKEqP4cGAp93U3o=; b=bqpozPWMmzeA+s9z
- gtRqqsc8Nr0fhvS3kqT5z89aiDr63yY5G2HZEHXOeylDxLkPtt9DzblYFP6dwaE1
- mmGM+s2URsHBMtRxBwfe65numn+Z+CKRhe3JyUFDma8F3ykx7NcYORSbIsaso23C
- faMCESWQy4h6fag3lalJ9/5c/D/G7oFQyz0NCVP/O+HM+OWaT5ZFKvmPPK94xRkk
- CuZis98LYhrAbSyWoLqmb20fqCWFR+wchEWjF+iO//cAAwowmnEnBxkhzhF/jVWL
- I1jFQSIKqjujrcHVVupXOQ687KCNP9g1DEqIbeBPRYIHdI2SPZ2PyYehAEZBlyAX
- ks/CgQ==
-Received: from mail-dl1-f70.google.com (mail-dl1-f70.google.com [74.125.82.70])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h49tvsxb6-1
+ Qg7+5KQ/iu7wwjJMv1unmHfU6kdQYPa7UxbzroAesjE=; b=RelYnqSbUtO8hBIu
+ DbpA/EoejhijsL8+tg+u0Bh/QyS/jdVmRnaThEViQm04Z/sC3o4H4UeACz2Qf5ze
+ S0R+ouNi7JPAVMBEnHB6KWZ8p2DGIsmqAHeNSQNPXfOKB3zjFxvNAo76BBa8cuXr
+ rRf3Tg1q4HMSUU9FrGgeZAJzogyMa+Qj6WwqPPutG/Do09UDRdyVg63wb7vWYfIf
+ Cbno/G8G55op4UZuvwDkdJ+2vGiPOXpZTsISkU+2lcT2kXybUqPe8nr2Xu55ii+2
+ RIN3tSQGvJRQ2k5n7qzkG520IfJZf+IoTT1xsQl8YMXa6QVcuc2ob38Q97/DqqZB
+ 8v8kDA==
+Received: from mail-dy1-f200.google.com (mail-dy1-f200.google.com
+ [74.125.82.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h4a7dsww7-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 05 Oct 2026 18:55:16 +0000 (GMT)
-Received: by mail-dl1-f70.google.com with SMTP id
- a92af1059eb24-1438fef603cso4712873c88.0
- for <qemu-devel@nongnu.org>; Mon, 05 Oct 2026 11:55:16 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Mon, 05 Oct 2026 18:55:27 +0000 (GMT)
+Received: by mail-dy1-f200.google.com with SMTP id
+ 5a478bee46e88-34d80ca2184so2766950eec.0
+ for <qemu-devel@nongnu.org>; Mon, 05 Oct 2026 11:55:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1791226515; x=1791831315; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1791226527; x=1791831327; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=LN+R6qmkI4PitlWRiMuSW+1+WCz+gKEqP4cGAp93U3o=;
- b=hokjX3LEsB6mzr5OxSm8An3WzZ7NMf9jhUzUsUIkNE8rTWfyAaBTWuxuTvdDpc5IyH
- YJcR5M9URqypGU9WJvHVncWMrFQ3/N6139p8LV27EIw8giaHZuxqvhqBV3BV+FYloSUk
- tAuiM2dl6wrTH5UH7YYtxtgAmoXbEN/8P0sgEju0hxPkqjJwMLezjODeUefXKmVbHRfy
- qSMpF1DKrETS5Eein1j5LcUvDbO8Ha1lT2lS8XLqFcm28trEyi1V0dp/aWgQ8a7vaNi6
- RN8nYQ/qidEYvDo5D/KAm2WHQ3Mqws0bz7JRLsQYxM/hpKcbFdF1xrL0jFE6Iw5c7236
- qQ2A==
+ bh=Qg7+5KQ/iu7wwjJMv1unmHfU6kdQYPa7UxbzroAesjE=;
+ b=URTyu01auWz+po7/xsyhQPXu/EUWPFqjK0M2x0Tv2OYSAoCB8d3U8+L+sFkl2J/8Ma
+ jgHdjqzJ+oQSbW+IQqx8QQEP/CX7yuPt00erD2zSvMiW2OV7a5wu6AHtSvM1+1/8eOJT
+ LXMHBo1SQkZlOU7ZvXJiKbP7yUL3t7sMhzVTsehq7mph+dkvr/UKY9FA6GDYRYG9xwJt
+ 30plUBLQfl1ILLPIwQTSXURHQuwjliGGXVqewdm2iXo4Z7JBpujvCckjUUw2QVe1o6P3
+ ePofCLO83HcCXcoN+DFQXYs2ax7XRGvn7+4R3sBhKxm+NTi2bZs2Mlb3GegZfbx5Wlgv
+ H+Cw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791226515; x=1791831315;
+ d=1e100.net; s=20260707; t=1791226527; x=1791831327;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=LN+R6qmkI4PitlWRiMuSW+1+WCz+gKEqP4cGAp93U3o=;
- b=09IWSSNkCRTZfLhwTcXabp/0Lvm4MVl7ZRNcHqQpdaoG5vFMDRq+9tmiPtvbuwyDZl
- UJvcqsbhdMwWqszKSZugTeSuw4EMw/DwaiCKqh+WaFijyK0jeDbcpHmCxzvERgU2n0hn
- a0QWwcgD/dF89RwMk8a2ZSEWru4tg4bjIdte1T4WDZ3fvtHs8m5WhfGH9iIc2nnElZwF
- eSwYNBD87oj7qEI4j4LswpJFfbpsypcnWSzYCmDjg5ZSpWj/xM6gAOoX4qMu9S0DQ6et
- ez1MMsylAAP9KAYyLjt41zm+Io1kbKvSHpPuijKTrV3UngZVGIeQnNbJjh+cgn3Mfz26
- PWyQ==
-X-Gm-Message-State: AFuF++muz4pkziZSowxtLqr37BqWcN+MjBHdAQLHuimoVN7KzqhHuq0u
- DRNghEBHX6K3Ihxn5gB9p0YPfVhrH36Z7NRqwX4NizKnwurdJHqnbCr8e6e/HuMELKXXRlbpgIe
- bOxMqeKJbvfhQUEyE+qrLSviBJ4uRTEmS9Zj80ImcqTWB9zlaC9SxplNlZMvSAxJtyg==
-X-Gm-Gg: AYBFou1/X6EKooDEP7JpoZHBvxHdz7OwCpzDAkhXdIRVvBOcmiss+7D9Fc8bhOug59Z
- 07RkHDP0vCx5KE/esfQPIS9A1KEzxSz4sGYW5AHxbLsowDsMdSwZLdz8Nl7IypGknHQV5R6z9ng
- Ti7eqJVQXzNW5RJMaz3ItYuNViHW6tIOfEYMk0R4YsDndgye1CbHlh5HSkHLiLJiipewr7qybi2
- rQ70THtKHdEpLNFq0JwGsU4a/PqU0MIeC6oSQIA8aDmjGXmMBhLtvKcQBtD4Mtu3UPwBo4BnNzh
- OZYpjLvaLVpxCcdWPectF/6pMu2NtvYqAUSJA5ytdn+SLyggxefFC8+9OyyZg0gd4ZpDLr5mHkZ
- OBH7DwzMGqRgxXkBY+4wtxLVsv8yRz9lohpRK08SZEMWQYgeshPk51AnLBEMb
-X-Received: by 2002:a05:7022:220e:b0:149:50cb:216f with SMTP id
- a92af1059eb24-14f5cdca28amr21105071c88.33.1791226515418; 
- Mon, 05 Oct 2026 11:55:15 -0700 (PDT)
-X-Received: by 2002:a05:7022:220e:b0:149:50cb:216f with SMTP id
- a92af1059eb24-14f5cdca28amr21105034c88.33.1791226514870; 
- Mon, 05 Oct 2026 11:55:14 -0700 (PDT)
+ bh=Qg7+5KQ/iu7wwjJMv1unmHfU6kdQYPa7UxbzroAesjE=;
+ b=omizoDM6UALjlOyA834CsFK47UkQpm5VhibTs+3AYuJdi7w/5RqzbJxdRo0Ss74edH
+ povxSL+4wSh0UuoPSy2xy/RRQMKXIiINtfjp5eRVCgGe6CnTlFGU3RYa9ixnl1YpeHB6
+ qz4XRpEGTNtdIHyvgso8kTNveC/ORrnfRk8EkmeWvlSHgIYrRPuv0+0tnsrWjui8yvyi
+ hTv0Vrh/vdm2bNmTRlpKA0iCu3bE3CPNIiDz3/IfLrRpnkHs18cXSRl3Q5WB2UP5b2AI
+ 5zVtFf6i6dV6P6jly+3mnf3/lxqYU+9YlotGELsDTgltrxpkRiqg2zhMAfcG8jQxxOSO
+ KoOg==
+X-Gm-Message-State: AFuF++kEZiM+O8uOk/sH3v9Gy9AE41YVohsAiosJxEP6fsfT/tD5xDc5
+ VYjywA0L0zVhW0vd6182tm9XWIfIRBN6ekv7jYtJMS4sTRPYa+3Hq5d0JMaRuFLz8J7kWceRprR
+ 7Q89DMIqWvZTQgmH/OISqeo5zoZOprj1zz1f+/XiHJZfLg8nnDPODSK5vzrHzlnYf8g==
+X-Gm-Gg: AYBFou1J+vsoftbMmjosI9+UufY8AdB6sFsbQbyj4zjQbFHSLtPUZHBeZ0k2QMUh87q
+ cMf4476H+1wAhddxXDU+S3e9y4gNepn7zFe/+GKf65a69a+gw0GUjEcKHeNzcaSANrD1LpHDrRV
+ 20t1Ck3nohpYKuz/vFx+V9a8rooNHshAiFk4afQPBD7bHFSD6y9fVJ2L2/ma7guMzwevWoUoGvV
+ 1p+JsCeks5kgSNyc7pVuceDmC5qxCaGLS0ygHHXAR4NqBierkx14H6ajjURoJwsNci5MTSsu1C8
+ prU7++V+T8sLtSf+MMpgxYh1WzaS3ZxHJs7PMKRuE4DYZyybLmXaG5oHGqnaTIjELDbglzRRkr3
+ 9dZczmEKQnKBlAh/v3qOBuT4KK0F+Nvm1qzw3aHdNVenNTWunwOaZnt/dvsUa
+X-Received: by 2002:a05:701b:2051:20b0:147:9ad0:cf25 with SMTP id
+ a92af1059eb24-151c435c1eemr11392095c88.46.1791226526780; 
+ Mon, 05 Oct 2026 11:55:26 -0700 (PDT)
+X-Received: by 2002:a05:701b:2051:20b0:147:9ad0:cf25 with SMTP id
+ a92af1059eb24-151c435c1eemr11392065c88.46.1791226526214; 
+ Mon, 05 Oct 2026 11:55:26 -0700 (PDT)
 Received: from debian.qualcomm.com (192-80-163-190.dyn.novuscom.net.
  [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-15d7234c2a2sm602092c88.0.2026.10.05.11.55.13
+ a92af1059eb24-15d7234c2a2sm602092c88.0.2026.10.05.11.55.25
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 05 Oct 2026 11:55:14 -0700 (PDT)
+ Mon, 05 Oct 2026 11:55:25 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 To: qemu-devel@nongnu.org, peter.maydell@linaro.org,
  richard.henderson@linaro.org, pbonzini@redhat.com, stefanha@redhat.com
 Cc: pierrick.bouvier@oss.qualcomm.com
-Subject: [PULL 04/22] target/microblaze: prefix helper conflicting with other
- arch
-Date: Mon,  5 Oct 2026 11:54:40 -0700
-Message-ID: <20261005185458.405929-5-pierrick.bouvier@oss.qualcomm.com>
+Subject: [PULL 12/22] target/hppa: prefix helpers conflicting with other arch
+Date: Mon,  5 Oct 2026 11:54:48 -0700
+Message-ID: <20261005185458.405929-13-pierrick.bouvier@oss.qualcomm.com>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20261005185458.405929-1-pierrick.bouvier@oss.qualcomm.com>
 References: <20261005185458.405929-1-pierrick.bouvier@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=aN9lOr9m c=1 sm=1 tr=0 ts=6ac3f294 cx=c_pps
- a=SvEPeNj+VMjHSW//kvnxuw==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA1MDA3NCBTYWx0ZWRfXzFgoMvSNdsMO
+ jBX9WHjMyqIMDBq7c2iTm6gomZOK7TmVygy8+o6+klrgNwqFsEO1Tq7CO/qYqR/Xi/Z7/xOztyZ
+ +hsWhN8di4DKlImcZTs8+6vdgpca7oA=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA1MDA3NCBTYWx0ZWRfX9jrhHStjAABP
+ t70WeKgSZsMFAF9Bd0AJFaH3yWG8aMwcnkcs37Tt0wshqeTVE+x/NixwvJn3oQFnfkmWkROxUbA
+ mXi2RSZFWDVEBLUN/qUlueJOIdxCMJkyZX8Iqce884lLGNz37aOn/Jw8VoXDEbc69EpIeDsozRA
+ bEMRuv1/IjNI5kyh1N/2RtImxmaYyCyD35bwQhQVpOJnhkSfI6E0oCqZCwQ84/6KuW10Sq/PgBp
+ eD5bdK8b44dBc4rKZE67i0FGePNzdMNUZ2IlRUpszZUMXvCBaPXg/Q+h53Lom17rH8vBqYj/ThE
+ KqJ7wPmAm8TIvo41/P2kWVUJpBcvIBaJZA+jtaqQY3pJS3Cve4P+8Ffg6hjJsIu+TxdGDw/UFcR
+ xlZdXVKrV1JCU1Bjg1SwfQntJ/xNYL28Tc+uwpfJu2wFB9Lc71cFIICCxBtOnX0pdEBsPPh14UJ
+ 6fP0AreQmQzAQpN/L+g==
+X-Proofpoint-GUID: CkEGyYXxzfjPI5ans8gZFQ22z-a-ojAe
+X-Authority-Analysis: v=2.4 cv=SvwFe/O0 c=1 sm=1 tr=0 ts=6ac3f29f cx=c_pps
+ a=PfFC4Oe2JQzmKTvty2cRDw==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
  a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=20KFwNOVAAAA:8 a=WCYGlPGn4HfFrzm5WJIA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=Kq8ClHjjuc5pcCNDwlU0:22
-X-Proofpoint-GUID: OsCZdIlF2uNYF5qu46gyN90dTAIyen-1
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA1MDA3NCBTYWx0ZWRfX326OpCH95TQJ
- qH5ofTfwyIp3UDqNFf79pCab4keHHcPWWXg/vaj403QlpE90EOqTX1sHfSOkPH7PyQJg0EYNjJh
- 2WPV9LYEVylJjglKc3zYx7abZUCyxpE1LvMlTFwk3WhxVWI5mb/kz0wx2I7JsRNMa3PgKIJeF5R
- ctIziGC0aaleuAflttdRPexFyac/9xEMe/oGRmUFWsOVpn7vXRc4/ebKSS8T6+rFSXDcBWSbEtC
- 24XCCM/7Sk66J8uAlPapwkWXYRz+yQbZXBqXNqhRHZplHHVbgdLpkDAdRd+gZYIwue44G/ES+5w
- erOo/UWwnPa8PH/ejbCXqkH9qSrEoIIJYAGfMZWhlCaWnL6gOrSCPn4Y71nsFJ9XFzM15rEDjHc
- aeccW2J3f09UHRsTbIZae66C2IFwXF0b5DbHkFsxDZt46YJ7JoLFvGS4LxcuTMh/vBpFOrvt+VY
- orTfK0IUK5UQYWlqVDA==
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA1MDA3NCBTYWx0ZWRfX/6u7208JIfoL
- fcwLfFah2+MdMXZSmFTPUSf5wvFbBblJyarrf1iDKw4NLVi+V4E240cAnEmxTdk/nCYp4qdzWF3
- N7fl+0lOzSg8yX8s0skeJDy2Ha6an5U=
-X-Proofpoint-ORIG-GUID: OsCZdIlF2uNYF5qu46gyN90dTAIyen-1
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=20KFwNOVAAAA:8 a=O6_tSJhFkAU4UwOEi8cA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=6Ab_bkdmUrQuMsNx7PHu:22
+X-Proofpoint-ORIG-GUID: CkEGyYXxzfjPI5ans8gZFQ22z-a-ojAe
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-10-05_05,2026-10-05_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 suspectscore=0 clxscore=1015 spamscore=0 phishscore=0
- malwarescore=0 priorityscore=1501 adultscore=0 lowpriorityscore=0 bulkscore=0
+ suspectscore=0 bulkscore=0 lowpriorityscore=0 impostorscore=0 spamscore=0
+ adultscore=0 malwarescore=0 clxscore=1015 phishscore=0 priorityscore=1501
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2610050074
 Received-SPF: pass client-ip=205.220.180.131;
@@ -153,124 +153,114 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20260930020108.217892-5-pierrick.bouvier@oss.qualcomm.com
+Link: https://lore.kernel.org/qemu-devel/20260930020108.217892-13-pierrick.bouvier@oss.qualcomm.com
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 ---
- target/microblaze/helper.h    | 10 +++++-----
- target/microblaze/op_helper.c | 10 +++++-----
- target/microblaze/translate.c | 10 +++++-----
- 3 files changed, 15 insertions(+), 15 deletions(-)
+ target/hppa/helper.h     | 6 +++---
+ target/hppa/op_helper.c  | 4 ++--
+ target/hppa/sys_helper.c | 8 ++++----
+ target/hppa/translate.c  | 6 +++---
+ 4 files changed, 12 insertions(+), 12 deletions(-)
 
-diff --git a/target/microblaze/helper.h b/target/microblaze/helper.h
-index 1429c1727ef..63a94ac4bbc 100644
---- a/target/microblaze/helper.h
-+++ b/target/microblaze/helper.h
-@@ -1,15 +1,15 @@
--DEF_HELPER_FLAGS_2(raise_exception, TCG_CALL_NO_WG, noreturn, env, i32)
-+DEF_HELPER_FLAGS_2(microblaze_raise_exception, TCG_CALL_NO_WG, noreturn, env, i32)
+diff --git a/target/hppa/helper.h b/target/hppa/helper.h
+index 8369855d78e..8d7fa1ae348 100644
+--- a/target/hppa/helper.h
++++ b/target/hppa/helper.h
+@@ -1,4 +1,4 @@
+-DEF_HELPER_2(excp, noreturn, env, int)
++DEF_HELPER_2(hppa_excp, noreturn, env, int)
  
- DEF_HELPER_FLAGS_3(divs, TCG_CALL_NO_WG, i32, env, i32, i32)
- DEF_HELPER_FLAGS_3(divu, TCG_CALL_NO_WG, i32, env, i32, i32)
+ DEF_HELPER_FLAGS_3(stby_b, TCG_CALL_NO_WG, void, env, tl, tl)
+ DEF_HELPER_FLAGS_3(stby_b_parallel, TCG_CALL_NO_WG, void, env, tl, tl)
+@@ -82,8 +82,8 @@ DEF_HELPER_FLAGS_4(fmpynfadd_d, TCG_CALL_NO_RWG, i64, env, i64, i64, i64)
+ DEF_HELPER_FLAGS_0(read_interval_timer, TCG_CALL_NO_RWG, tl)
  
--DEF_HELPER_FLAGS_3(fadd, TCG_CALL_NO_WG, i32, env, i32, i32)
-+DEF_HELPER_FLAGS_3(microblaze_fadd, TCG_CALL_NO_WG, i32, env, i32, i32)
- DEF_HELPER_FLAGS_3(frsub, TCG_CALL_NO_WG, i32, env, i32, i32)
--DEF_HELPER_FLAGS_3(fmul, TCG_CALL_NO_WG, i32, env, i32, i32)
--DEF_HELPER_FLAGS_3(fdiv, TCG_CALL_NO_WG, i32, env, i32, i32)
-+DEF_HELPER_FLAGS_3(microblaze_fmul, TCG_CALL_NO_WG, i32, env, i32, i32)
-+DEF_HELPER_FLAGS_3(microblaze_fdiv, TCG_CALL_NO_WG, i32, env, i32, i32)
- DEF_HELPER_FLAGS_2(flt, TCG_CALL_NO_WG, i32, env, i32)
- DEF_HELPER_FLAGS_2(fint, TCG_CALL_NO_WG, i32, env, i32)
--DEF_HELPER_FLAGS_2(fsqrt, TCG_CALL_NO_WG, i32, env, i32)
-+DEF_HELPER_FLAGS_2(microblaze_fsqrt, TCG_CALL_NO_WG, i32, env, i32)
+ #ifndef CONFIG_USER_ONLY
+-DEF_HELPER_1(halt, noreturn, env)
+-DEF_HELPER_1(reset, noreturn, env)
++DEF_HELPER_1(hppa_halt, noreturn, env)
++DEF_HELPER_1(hppa_reset, noreturn, env)
+ DEF_HELPER_1(rfi, void, env)
+ DEF_HELPER_1(rfi_r, void, env)
+ DEF_HELPER_FLAGS_2(b_gate_priv, TCG_CALL_NO_WG, i64, env, i64)
+diff --git a/target/hppa/op_helper.c b/target/hppa/op_helper.c
+index 76a8d8a0d34..3542c275663 100644
+--- a/target/hppa/op_helper.c
++++ b/target/hppa/op_helper.c
+@@ -30,7 +30,7 @@
+ #include "user/page-protection.h"
+ #endif
  
- DEF_HELPER_FLAGS_3(fcmp_un, TCG_CALL_NO_WG, i32, env, i32, i32)
- DEF_HELPER_FLAGS_3(fcmp_lt, TCG_CALL_NO_WG, i32, env, i32, i32)
-diff --git a/target/microblaze/op_helper.c b/target/microblaze/op_helper.c
-index 3da0c68da39..c169312e954 100644
---- a/target/microblaze/op_helper.c
-+++ b/target/microblaze/op_helper.c
-@@ -62,7 +62,7 @@ uint32_t helper_get(uint32_t id, uint32_t ctrl)
-     return 0xdead0000 | id;
- }
- 
--void helper_raise_exception(CPUMBState *env, uint32_t index)
-+void helper_microblaze_raise_exception(CPUMBState *env, uint32_t index)
+-G_NORETURN void HELPER(excp)(CPUHPPAState *env, int excp)
++G_NORETURN void HELPER(hppa_excp)(CPUHPPAState *env, int excp)
  {
      CPUState *cs = env_cpu(env);
  
-@@ -154,7 +154,7 @@ static void update_fpu_flags(CPUMBState *env, int flags, uintptr_t ra)
+@@ -341,7 +341,7 @@ target_ulong HELPER(probe)(CPUHPPAState *env, target_ulong addr,
+         if (excp == EXCP_DTLB_MISS) {
+             excp = EXCP_NA_DTLB_MISS;
+         }
+-        helper_excp(env, excp);
++        helper_hppa_excp(env, excp);
      }
+     return (want & prot) != 0;
+ #endif
+diff --git a/target/hppa/sys_helper.c b/target/hppa/sys_helper.c
+index 88109f0181a..f7fd80b5830 100644
+--- a/target/hppa/sys_helper.c
++++ b/target/hppa/sys_helper.c
+@@ -48,16 +48,16 @@ void HELPER(write_interval_timer)(CPUHPPAState *env, target_ulong val)
+     timer_mod(cpu->alarm_timer, timeout);
  }
  
--uint32_t helper_fadd(CPUMBState *env, uint32_t a, uint32_t b)
-+uint32_t helper_microblaze_fadd(CPUMBState *env, uint32_t a, uint32_t b)
+-void HELPER(halt)(CPUHPPAState *env)
++void HELPER(hppa_halt)(CPUHPPAState *env)
  {
-     CPU_FloatU fd, fa, fb;
-     int flags;
-@@ -183,7 +183,7 @@ uint32_t helper_frsub(CPUMBState *env, uint32_t a, uint32_t b)
-     return fd.l;
+     qemu_system_shutdown_request(SHUTDOWN_CAUSE_GUEST_SHUTDOWN);
+-    helper_excp(env, EXCP_HLT);
++    helper_hppa_excp(env, EXCP_HLT);
  }
  
--uint32_t helper_fmul(CPUMBState *env, uint32_t a, uint32_t b)
-+uint32_t helper_microblaze_fmul(CPUMBState *env, uint32_t a, uint32_t b)
+-void HELPER(reset)(CPUHPPAState *env)
++void HELPER(hppa_reset)(CPUHPPAState *env)
  {
-     CPU_FloatU fd, fa, fb;
-     int flags;
-@@ -198,7 +198,7 @@ uint32_t helper_fmul(CPUMBState *env, uint32_t a, uint32_t b)
-     return fd.l;
+     qemu_system_reset_request(SHUTDOWN_CAUSE_GUEST_RESET);
+-    helper_excp(env, EXCP_HLT);
++    helper_hppa_excp(env, EXCP_HLT);
  }
  
--uint32_t helper_fdiv(CPUMBState *env, uint32_t a, uint32_t b)
-+uint32_t helper_microblaze_fdiv(CPUMBState *env, uint32_t a, uint32_t b)
+ target_ulong HELPER(swap_system_mask)(CPUHPPAState *env, target_ulong nsm)
+diff --git a/target/hppa/translate.c b/target/hppa/translate.c
+index 41300c0dd73..befdb58e9a6 100644
+--- a/target/hppa/translate.c
++++ b/target/hppa/translate.c
+@@ -726,7 +726,7 @@ static void install_link(DisasContext *ctx, unsigned link, bool with_sr0)
+ 
+ static void gen_excp_1(int exception)
  {
-     CPU_FloatU fd, fa, fb;
-     int flags;
-@@ -352,7 +352,7 @@ uint32_t helper_fint(CPUMBState *env, uint32_t a)
-     return r;
+-    gen_helper_excp(tcg_env, tcg_constant_i32(exception));
++    gen_helper_hppa_excp(tcg_env, tcg_constant_i32(exception));
  }
  
--uint32_t helper_fsqrt(CPUMBState *env, uint32_t a)
-+uint32_t helper_microblaze_fsqrt(CPUMBState *env, uint32_t a)
- {
-     CPU_FloatU fd, fa;
-     int flags;
-diff --git a/target/microblaze/translate.c b/target/microblaze/translate.c
-index 8b219afb5dd..16794059a22 100644
---- a/target/microblaze/translate.c
-+++ b/target/microblaze/translate.c
-@@ -100,7 +100,7 @@ static void t_sync_flags(DisasContext *dc)
- 
- static void gen_raise_exception(DisasContext *dc, uint32_t index)
- {
--    gen_helper_raise_exception(tcg_env, tcg_constant_i32(index));
-+    gen_helper_microblaze_raise_exception(tcg_env, tcg_constant_i32(index));
-     dc->base.is_jmp = DISAS_NORETURN;
- }
- 
-@@ -421,10 +421,10 @@ static void gen_cmpu(TCGv_i32 out, TCGv_i32 ina, TCGv_i32 inb)
- DO_TYPEA(cmp, false, gen_cmp)
- DO_TYPEA(cmpu, false, gen_cmpu)
- 
--ENV_WRAPPER3(gen_fadd, gen_helper_fadd)
-+ENV_WRAPPER3(gen_fadd, gen_helper_microblaze_fadd)
- ENV_WRAPPER3(gen_frsub, gen_helper_frsub)
--ENV_WRAPPER3(gen_fmul, gen_helper_fmul)
--ENV_WRAPPER3(gen_fdiv, gen_helper_fdiv)
-+ENV_WRAPPER3(gen_fmul, gen_helper_microblaze_fmul)
-+ENV_WRAPPER3(gen_fdiv, gen_helper_microblaze_fdiv)
- ENV_WRAPPER3(gen_fcmp_un, gen_helper_fcmp_un)
- ENV_WRAPPER3(gen_fcmp_lt, gen_helper_fcmp_lt)
- ENV_WRAPPER3(gen_fcmp_eq, gen_helper_fcmp_eq)
-@@ -447,7 +447,7 @@ DO_TYPEA_CFG(fcmp_ge, use_fpu, true, gen_fcmp_ge)
- 
- ENV_WRAPPER2(gen_flt, gen_helper_flt)
- ENV_WRAPPER2(gen_fint, gen_helper_fint)
--ENV_WRAPPER2(gen_fsqrt, gen_helper_fsqrt)
-+ENV_WRAPPER2(gen_fsqrt, gen_helper_microblaze_fsqrt)
- 
- DO_TYPEA0_CFG(flt, use_fpu >= 2, true, gen_flt)
- DO_TYPEA0_CFG(fint, use_fpu >= 2, true, gen_fint)
+ static void gen_excp(DisasContext *ctx, int exception)
+@@ -2450,7 +2450,7 @@ static bool trans_halt(DisasContext *ctx, arg_halt *a)
+ #ifndef CONFIG_USER_ONLY
+     set_psw_xb(ctx, 0);
+     nullify_over(ctx);
+-    gen_helper_halt(tcg_env);
++    gen_helper_hppa_halt(tcg_env);
+     ctx->base.is_jmp = DISAS_NORETURN;
+     return nullify_end(ctx);
+ #endif
+@@ -2462,7 +2462,7 @@ static bool trans_reset(DisasContext *ctx, arg_reset *a)
+ #ifndef CONFIG_USER_ONLY
+     set_psw_xb(ctx, 0);
+     nullify_over(ctx);
+-    gen_helper_reset(tcg_env);
++    gen_helper_hppa_reset(tcg_env);
+     ctx->base.is_jmp = DISAS_NORETURN;
+     return nullify_end(ctx);
+ #endif
 -- 
 2.47.3
 
