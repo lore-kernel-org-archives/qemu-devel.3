@@ -4,50 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 410EECA6001
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D305CA6002
 	for <qemu-devel@archiver.kernel.org>; Mon,  5 Oct 2026 12:11:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xDhWM-0006If-Od; Mon, 05 Oct 2026 08:10:20 -0400
+	id 1xDhXP-0007nO-2r; Mon, 05 Oct 2026 08:11:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xDhVL-0005zo-Pn
- for qemu-devel@nongnu.org; Mon, 05 Oct 2026 08:09:23 -0400
+ id 1xDhVT-000657-U6
+ for qemu-devel@nongnu.org; Mon, 05 Oct 2026 08:09:35 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xDhVK-0004im-4n
- for qemu-devel@nongnu.org; Mon, 05 Oct 2026 08:09:15 -0400
+ id 1xDhVR-0004jR-6c
+ for qemu-devel@nongnu.org; Mon, 05 Oct 2026 08:09:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1791202153;
+ s=mimecast20190719; t=1791202159;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=vYK8uyoSgHR5oFrvRW3UePwVftb7R2+FEmXyIxd1LQ4=;
- b=YATkvY5KYTapN/uSECPv5hYhKjMlsE0ngjjivSutuF0HWAgtim4Lqy/Z3/qDhKxVQNJAtP
- Qa6DhZgfGK6lOhCYLShYHsxNUKokJ1ekbqpmfus7IAWgaFxPtK+GQK3632Kiiy4lqZ8Z2/
- f4wJWlxBWmtpDp2gNT2qe3fV5BcAkdg=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=zmYel1/eflsvRYajw35HaaQe4jA/LTj2KXwNJyiHD1s=;
+ b=evRwm4ioREfeAGp+uWmSXWKiYdFgfCgAWB47YzN+RgCl14qw6U2XIq3a7gG+fYP6uK1xv/
+ Mp2npaZ8Wt+e/9CRFxegtRoCi9bGEDRN0e3E0UAsXSwc/rewJTtgA15sBCFtT2QmDUj8ic
+ Mlhm7IR1EBRe4HZi7wB8R7hSY1OC+jM=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-357-DcPRTnNyMEu691REshvc6Q-1; Mon,
- 05 Oct 2026 08:09:11 -0400
-X-MC-Unique: DcPRTnNyMEu691REshvc6Q-1
-X-Mimecast-MFC-AGG-ID: DcPRTnNyMEu691REshvc6Q_1791202151
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-169-1QD_fhKSOl-vvIVrPEYGTw-1; Mon,
+ 05 Oct 2026 08:09:15 -0400
+X-MC-Unique: 1QD_fhKSOl-vvIVrPEYGTw-1
+X-Mimecast-MFC-AGG-ID: 1QD_fhKSOl-vvIVrPEYGTw_1791202155
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E24F81944B03; Mon,  5 Oct 2026 12:09:10 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D4871197701A; Mon,  5 Oct 2026 12:09:14 +0000 (UTC)
 Received: from berrange.csb (headnet03.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.114])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 7667D3001D2B; Mon,  5 Oct 2026 12:09:09 +0000 (UTC)
+ id 092523001D2A; Mon,  5 Oct 2026 12:09:12 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -55,9 +55,10 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Stefan Hajnoczi <stefanha@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v3 07/24] trace: remove obsolete references to vcpu property
-Date: Mon,  5 Oct 2026 13:08:38 +0100
-Message-ID: <20261005120855.421973-8-berrange@redhat.com>
+Subject: [PATCH v3 09/24] trace: change "DSTATE" variables from uint16_t to
+ uint8_t
+Date: Mon,  5 Oct 2026 13:08:40 +0100
+Message-ID: <20261005120855.421973-10-berrange@redhat.com>
 In-Reply-To: <20261005120855.421973-1-berrange@redhat.com>
 References: <20261005120855.421973-1-berrange@redhat.com>
 MIME-Version: 1.0
@@ -88,124 +89,405 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The 'vcpu' property for trace events was removed 2 years ago
-but some mentions of it remain in the code.
+Previously these variables had two distinct semantics. For
+most probes DSTATE was treated as a simple boolean, while
+for vcpu probes it was treated as a bitmask of vCPU indexes.
 
-Fixes: 7ffc4894a6(trace: Remove deprecated 'vcpu' field from QMP trace events)
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+With vcpu probes removed, it is now exclusively a boolean
+and thus using uint16_t is a waste of memory.
+
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- trace/control-target.c |  6 ------
- trace/control.c        |  6 ------
- trace/control.h        | 12 ------------
- trace/event-internal.h | 11 -----------
- 4 files changed, 35 deletions(-)
+ scripts/tracetool/format/c.py  | 2 +-
+ scripts/tracetool/format/h.py  | 2 +-
+ scripts/tracetool/format/rs.py | 4 ++--
+ tests/tracetool/dtrace.c       | 4 ++--
+ tests/tracetool/dtrace.h       | 4 ++--
+ tests/tracetool/dtrace.rs      | 6 +++---
+ tests/tracetool/ftrace.c       | 4 ++--
+ tests/tracetool/ftrace.h       | 4 ++--
+ tests/tracetool/ftrace.rs      | 6 +++---
+ tests/tracetool/log.c          | 4 ++--
+ tests/tracetool/log.h          | 4 ++--
+ tests/tracetool/log.rs         | 6 +++---
+ tests/tracetool/simple.c       | 4 ++--
+ tests/tracetool/simple.h       | 4 ++--
+ tests/tracetool/simple.rs      | 6 +++---
+ tests/tracetool/syslog.c       | 4 ++--
+ tests/tracetool/syslog.h       | 4 ++--
+ tests/tracetool/syslog.rs      | 6 +++---
+ tests/tracetool/ust.c          | 4 ++--
+ tests/tracetool/ust.h          | 4 ++--
+ trace/event-internal.h         | 2 +-
+ 21 files changed, 44 insertions(+), 44 deletions(-)
 
-diff --git a/trace/control-target.c b/trace/control-target.c
-index 24d9b7abbde..87b0f5037df 100644
---- a/trace/control-target.c
-+++ b/trace/control-target.c
-@@ -14,12 +14,6 @@ void trace_event_set_state_dynamic(TraceEvent *ev, bool state)
- {
-     assert(trace_event_get_state_static(ev));
+diff --git a/scripts/tracetool/format/c.py b/scripts/tracetool/format/c.py
+index abe738ac423..de1c154a881 100644
+--- a/scripts/tracetool/format/c.py
++++ b/scripts/tracetool/format/c.py
+@@ -30,7 +30,7 @@ def generate(events, backend, group):
+         '')
  
--    /*
--     * There is no longer a "vcpu" property, dstate can only be 1 or
--     * 0. With it, we haven't instantiated any vCPU yet, so we will
--     * set a global state instead, and trace_init_vcpu will reconcile
--     * it afterwards.
--     */
-     bool state_pre = *ev->dstate;
-     if (state_pre != state) {
-         if (state) {
-diff --git a/trace/control.c b/trace/control.c
-index 49f0a4c5cda..6971157cbe7 100644
---- a/trace/control.c
-+++ b/trace/control.c
-@@ -37,7 +37,6 @@ typedef struct TraceEventGroup {
- static TraceEventGroup *event_groups;
- static size_t nevent_groups;
- static uint32_t next_id;
--static uint32_t next_vcpu_id;
+     for e in events:
+-        out('uint16_t %s;' % e.api(e.QEMU_DSTATE))
++        out('uint8_t %s;' % e.api(e.QEMU_DSTATE))
+ 
+     for e in events:
+         out('TraceEvent %(event)s = {',
+diff --git a/scripts/tracetool/format/h.py b/scripts/tracetool/format/h.py
+index dd58713a158..4dc1ad7eb15 100644
+--- a/scripts/tracetool/format/h.py
++++ b/scripts/tracetool/format/h.py
+@@ -32,7 +32,7 @@ def generate(events, backend, group):
+             event = e.api(e.QEMU_EVENT))
+ 
+     for e in events:
+-        out('extern uint16_t %s;' % e.api(e.QEMU_DSTATE))
++        out('extern uint8_t %s;' % e.api(e.QEMU_DSTATE))
+ 
+     # static state
+     for e in events:
+diff --git a/scripts/tracetool/format/rs.py b/scripts/tracetool/format/rs.py
+index 7d9af7edfee..1fddcee1ad2 100644
+--- a/scripts/tracetool/format/rs.py
++++ b/scripts/tracetool/format/rs.py
+@@ -26,7 +26,7 @@ def generate(events, backend, group):
+         '',
+         '#[allow(dead_code)]',
+         '#[inline(always)]',
+-        'fn trace_event_state_is_enabled(dstate: u16) -> bool {',
++        'fn trace_event_state_is_enabled(dstate: u8) -> bool {',
+         '    (unsafe { trace_events_enabled_count }) != 0 && dstate != 0',
+         '}',
+         '',
+@@ -39,7 +39,7 @@ def generate(events, backend, group):
+ 
+     for e in events:
+         out('    #[allow(dead_code)]',
+-            '    static mut %s: u16;' % e.api(e.QEMU_DSTATE))
++            '    static mut %s: u8;' % e.api(e.QEMU_DSTATE))
+     out('}',
+         '')
+ 
+diff --git a/tests/tracetool/dtrace.c b/tests/tracetool/dtrace.c
+index 05a93918240..f83d06252ea 100644
+--- a/tests/tracetool/dtrace.c
++++ b/tests/tracetool/dtrace.c
+@@ -5,8 +5,8 @@
+ #include "qemu/module.h"
+ #include "trace-testsuite.h"
+ 
+-uint16_t _TRACE_TEST_BLAH_DSTATE;
+-uint16_t _TRACE_TEST_WIBBLE_DSTATE;
++uint8_t _TRACE_TEST_BLAH_DSTATE;
++uint8_t _TRACE_TEST_WIBBLE_DSTATE;
+ TraceEvent _TRACE_TEST_BLAH_EVENT = {
  #ifdef CONFIG_TRACE_SIMPLE
- static bool init_trace_on_startup;
- #endif
-@@ -304,8 +303,3 @@ void trace_opt_parse(const char *optstr)
-     trace_opts_file = g_strdup(qemu_opt_get(opts, "file"));
-     qemu_opts_del(opts);
+     .id = 0,
+diff --git a/tests/tracetool/dtrace.h b/tests/tracetool/dtrace.h
+index c8931a8d7b3..0b5b47089e8 100644
+--- a/tests/tracetool/dtrace.h
++++ b/tests/tracetool/dtrace.h
+@@ -8,8 +8,8 @@
+ 
+ extern TraceEvent _TRACE_TEST_BLAH_EVENT;
+ extern TraceEvent _TRACE_TEST_WIBBLE_EVENT;
+-extern uint16_t _TRACE_TEST_BLAH_DSTATE;
+-extern uint16_t _TRACE_TEST_WIBBLE_DSTATE;
++extern uint8_t _TRACE_TEST_BLAH_DSTATE;
++extern uint8_t _TRACE_TEST_WIBBLE_DSTATE;
+ #define TRACE_TEST_BLAH_ENABLED 1
+ #define TRACE_TEST_WIBBLE_ENABLED 1
+ #ifndef SDT_USE_VARIADIC
+diff --git a/tests/tracetool/dtrace.rs b/tests/tracetool/dtrace.rs
+index 3490fcb271a..07398f4731b 100644
+--- a/tests/tracetool/dtrace.rs
++++ b/tests/tracetool/dtrace.rs
+@@ -8,7 +8,7 @@
+ 
+ #[allow(dead_code)]
+ #[inline(always)]
+-fn trace_event_state_is_enabled(dstate: u16) -> bool {
++fn trace_event_state_is_enabled(dstate: u8) -> bool {
+     (unsafe { trace_events_enabled_count }) != 0 && dstate != 0
  }
--
--uint32_t trace_get_vcpu_event_count(void)
--{
--    return next_vcpu_id;
--}
-diff --git a/trace/control.h b/trace/control.h
-index 6754bfe052b..20033fb6669 100644
---- a/trace/control.h
-+++ b/trace/control.h
-@@ -139,8 +139,6 @@ static bool trace_event_get_state_static(TraceEvent *ev);
-  * trace_event_get_state_dynamic:
-  *
-  * Get the dynamic tracing state of an event.
-- *
-- * If the event has the 'vcpu' property, gets the OR'ed state of all vCPUs.
-  */
- static bool trace_event_get_state_dynamic(TraceEvent *ev);
  
-@@ -149,8 +147,6 @@ static bool trace_event_get_state_dynamic(TraceEvent *ev);
-  *
-  * Set the dynamic tracing state of an event.
-  *
-- * If the event has the 'vcpu' property, sets the state on all vCPUs.
-- *
-  * Pre-condition: trace_event_get_state_static(ev) == true
-  */
- void trace_event_set_state_dynamic(TraceEvent *ev, bool state);
-@@ -203,14 +199,6 @@ extern QemuOptsList qemu_trace_opts;
-  */
- void trace_opt_parse(const char *optstr);
+@@ -18,9 +18,9 @@ fn trace_event_state_is_enabled(dstate: u16) -> bool {
+ }
+ extern "C" {
+     #[allow(dead_code)]
+-    static mut _TRACE_TEST_BLAH_DSTATE: u16;
++    static mut _TRACE_TEST_BLAH_DSTATE: u8;
+     #[allow(dead_code)]
+-    static mut _TRACE_TEST_WIBBLE_DSTATE: u16;
++    static mut _TRACE_TEST_WIBBLE_DSTATE: u8;
+ }
  
--/**
-- * trace_get_vcpu_event_count:
-- *
-- * Return the number of known vcpu-specific events
-- */
--uint32_t trace_get_vcpu_event_count(void);
--
--
- #include "control-internal.h"
+ use std::cell::UnsafeCell;
+diff --git a/tests/tracetool/ftrace.c b/tests/tracetool/ftrace.c
+index 05a93918240..f83d06252ea 100644
+--- a/tests/tracetool/ftrace.c
++++ b/tests/tracetool/ftrace.c
+@@ -5,8 +5,8 @@
+ #include "qemu/module.h"
+ #include "trace-testsuite.h"
  
- #endif /* TRACE__CONTROL_H */
+-uint16_t _TRACE_TEST_BLAH_DSTATE;
+-uint16_t _TRACE_TEST_WIBBLE_DSTATE;
++uint8_t _TRACE_TEST_BLAH_DSTATE;
++uint8_t _TRACE_TEST_WIBBLE_DSTATE;
+ TraceEvent _TRACE_TEST_BLAH_EVENT = {
+ #ifdef CONFIG_TRACE_SIMPLE
+     .id = 0,
+diff --git a/tests/tracetool/ftrace.h b/tests/tracetool/ftrace.h
+index 1dfe4239413..b34eef17d10 100644
+--- a/tests/tracetool/ftrace.h
++++ b/tests/tracetool/ftrace.h
+@@ -8,8 +8,8 @@
+ 
+ extern TraceEvent _TRACE_TEST_BLAH_EVENT;
+ extern TraceEvent _TRACE_TEST_WIBBLE_EVENT;
+-extern uint16_t _TRACE_TEST_BLAH_DSTATE;
+-extern uint16_t _TRACE_TEST_WIBBLE_DSTATE;
++extern uint8_t _TRACE_TEST_BLAH_DSTATE;
++extern uint8_t _TRACE_TEST_WIBBLE_DSTATE;
+ #define TRACE_TEST_BLAH_ENABLED 1
+ #define TRACE_TEST_WIBBLE_ENABLED 1
+ #include "trace/ftrace.h"
+diff --git a/tests/tracetool/ftrace.rs b/tests/tracetool/ftrace.rs
+index 34f66004902..ff0bcde4b8b 100644
+--- a/tests/tracetool/ftrace.rs
++++ b/tests/tracetool/ftrace.rs
+@@ -8,7 +8,7 @@
+ 
+ #[allow(dead_code)]
+ #[inline(always)]
+-fn trace_event_state_is_enabled(dstate: u16) -> bool {
++fn trace_event_state_is_enabled(dstate: u8) -> bool {
+     (unsafe { trace_events_enabled_count }) != 0 && dstate != 0
+ }
+ 
+@@ -18,9 +18,9 @@ fn trace_event_state_is_enabled(dstate: u16) -> bool {
+ }
+ extern "C" {
+     #[allow(dead_code)]
+-    static mut _TRACE_TEST_BLAH_DSTATE: u16;
++    static mut _TRACE_TEST_BLAH_DSTATE: u8;
+     #[allow(dead_code)]
+-    static mut _TRACE_TEST_WIBBLE_DSTATE: u16;
++    static mut _TRACE_TEST_WIBBLE_DSTATE: u8;
+ }
+ 
+ #[inline(always)]
+diff --git a/tests/tracetool/log.c b/tests/tracetool/log.c
+index 05a93918240..f83d06252ea 100644
+--- a/tests/tracetool/log.c
++++ b/tests/tracetool/log.c
+@@ -5,8 +5,8 @@
+ #include "qemu/module.h"
+ #include "trace-testsuite.h"
+ 
+-uint16_t _TRACE_TEST_BLAH_DSTATE;
+-uint16_t _TRACE_TEST_WIBBLE_DSTATE;
++uint8_t _TRACE_TEST_BLAH_DSTATE;
++uint8_t _TRACE_TEST_WIBBLE_DSTATE;
+ TraceEvent _TRACE_TEST_BLAH_EVENT = {
+ #ifdef CONFIG_TRACE_SIMPLE
+     .id = 0,
+diff --git a/tests/tracetool/log.h b/tests/tracetool/log.h
+index c7795871f85..ff510d54908 100644
+--- a/tests/tracetool/log.h
++++ b/tests/tracetool/log.h
+@@ -8,8 +8,8 @@
+ 
+ extern TraceEvent _TRACE_TEST_BLAH_EVENT;
+ extern TraceEvent _TRACE_TEST_WIBBLE_EVENT;
+-extern uint16_t _TRACE_TEST_BLAH_DSTATE;
+-extern uint16_t _TRACE_TEST_WIBBLE_DSTATE;
++extern uint8_t _TRACE_TEST_BLAH_DSTATE;
++extern uint8_t _TRACE_TEST_WIBBLE_DSTATE;
+ #define TRACE_TEST_BLAH_ENABLED 1
+ #define TRACE_TEST_WIBBLE_ENABLED 1
+ #include "qemu/log-for-trace.h"
+diff --git a/tests/tracetool/log.rs b/tests/tracetool/log.rs
+index 770758611d1..0f052bb2c9c 100644
+--- a/tests/tracetool/log.rs
++++ b/tests/tracetool/log.rs
+@@ -8,7 +8,7 @@
+ 
+ #[allow(dead_code)]
+ #[inline(always)]
+-fn trace_event_state_is_enabled(dstate: u16) -> bool {
++fn trace_event_state_is_enabled(dstate: u8) -> bool {
+     (unsafe { trace_events_enabled_count }) != 0 && dstate != 0
+ }
+ 
+@@ -18,9 +18,9 @@ fn trace_event_state_is_enabled(dstate: u16) -> bool {
+ }
+ extern "C" {
+     #[allow(dead_code)]
+-    static mut _TRACE_TEST_BLAH_DSTATE: u16;
++    static mut _TRACE_TEST_BLAH_DSTATE: u8;
+     #[allow(dead_code)]
+-    static mut _TRACE_TEST_WIBBLE_DSTATE: u16;
++    static mut _TRACE_TEST_WIBBLE_DSTATE: u8;
+ }
+ 
+ #[inline(always)]
+diff --git a/tests/tracetool/simple.c b/tests/tracetool/simple.c
+index 490d6f379a5..820ddb575b0 100644
+--- a/tests/tracetool/simple.c
++++ b/tests/tracetool/simple.c
+@@ -5,8 +5,8 @@
+ #include "qemu/module.h"
+ #include "trace-testsuite.h"
+ 
+-uint16_t _TRACE_TEST_BLAH_DSTATE;
+-uint16_t _TRACE_TEST_WIBBLE_DSTATE;
++uint8_t _TRACE_TEST_BLAH_DSTATE;
++uint8_t _TRACE_TEST_WIBBLE_DSTATE;
+ TraceEvent _TRACE_TEST_BLAH_EVENT = {
+ #ifdef CONFIG_TRACE_SIMPLE
+     .id = 0,
+diff --git a/tests/tracetool/simple.h b/tests/tracetool/simple.h
+index ec6fcb22c3c..735cb21d911 100644
+--- a/tests/tracetool/simple.h
++++ b/tests/tracetool/simple.h
+@@ -8,8 +8,8 @@
+ 
+ extern TraceEvent _TRACE_TEST_BLAH_EVENT;
+ extern TraceEvent _TRACE_TEST_WIBBLE_EVENT;
+-extern uint16_t _TRACE_TEST_BLAH_DSTATE;
+-extern uint16_t _TRACE_TEST_WIBBLE_DSTATE;
++extern uint8_t _TRACE_TEST_BLAH_DSTATE;
++extern uint8_t _TRACE_TEST_WIBBLE_DSTATE;
+ #define TRACE_TEST_BLAH_ENABLED 1
+ #define TRACE_TEST_WIBBLE_ENABLED 1
+ void _simple_trace_test_blah(void *context, const char *filename);
+diff --git a/tests/tracetool/simple.rs b/tests/tracetool/simple.rs
+index 92f896ef178..976feddde5b 100644
+--- a/tests/tracetool/simple.rs
++++ b/tests/tracetool/simple.rs
+@@ -8,7 +8,7 @@
+ 
+ #[allow(dead_code)]
+ #[inline(always)]
+-fn trace_event_state_is_enabled(dstate: u16) -> bool {
++fn trace_event_state_is_enabled(dstate: u8) -> bool {
+     (unsafe { trace_events_enabled_count }) != 0 && dstate != 0
+ }
+ 
+@@ -18,9 +18,9 @@ fn trace_event_state_is_enabled(dstate: u16) -> bool {
+ }
+ extern "C" {
+     #[allow(dead_code)]
+-    static mut _TRACE_TEST_BLAH_DSTATE: u16;
++    static mut _TRACE_TEST_BLAH_DSTATE: u8;
+     #[allow(dead_code)]
+-    static mut _TRACE_TEST_WIBBLE_DSTATE: u16;
++    static mut _TRACE_TEST_WIBBLE_DSTATE: u8;
+ }
+ 
+ #[inline(always)]
+diff --git a/tests/tracetool/syslog.c b/tests/tracetool/syslog.c
+index 05a93918240..f83d06252ea 100644
+--- a/tests/tracetool/syslog.c
++++ b/tests/tracetool/syslog.c
+@@ -5,8 +5,8 @@
+ #include "qemu/module.h"
+ #include "trace-testsuite.h"
+ 
+-uint16_t _TRACE_TEST_BLAH_DSTATE;
+-uint16_t _TRACE_TEST_WIBBLE_DSTATE;
++uint8_t _TRACE_TEST_BLAH_DSTATE;
++uint8_t _TRACE_TEST_WIBBLE_DSTATE;
+ TraceEvent _TRACE_TEST_BLAH_EVENT = {
+ #ifdef CONFIG_TRACE_SIMPLE
+     .id = 0,
+diff --git a/tests/tracetool/syslog.h b/tests/tracetool/syslog.h
+index ed4305554c1..4203b8b37dc 100644
+--- a/tests/tracetool/syslog.h
++++ b/tests/tracetool/syslog.h
+@@ -8,8 +8,8 @@
+ 
+ extern TraceEvent _TRACE_TEST_BLAH_EVENT;
+ extern TraceEvent _TRACE_TEST_WIBBLE_EVENT;
+-extern uint16_t _TRACE_TEST_BLAH_DSTATE;
+-extern uint16_t _TRACE_TEST_WIBBLE_DSTATE;
++extern uint8_t _TRACE_TEST_BLAH_DSTATE;
++extern uint8_t _TRACE_TEST_WIBBLE_DSTATE;
+ #define TRACE_TEST_BLAH_ENABLED 1
+ #define TRACE_TEST_WIBBLE_ENABLED 1
+ #include <syslog.h>
+diff --git a/tests/tracetool/syslog.rs b/tests/tracetool/syslog.rs
+index 378d03d34b2..9688dac84a5 100644
+--- a/tests/tracetool/syslog.rs
++++ b/tests/tracetool/syslog.rs
+@@ -8,7 +8,7 @@
+ 
+ #[allow(dead_code)]
+ #[inline(always)]
+-fn trace_event_state_is_enabled(dstate: u16) -> bool {
++fn trace_event_state_is_enabled(dstate: u8) -> bool {
+     (unsafe { trace_events_enabled_count }) != 0 && dstate != 0
+ }
+ 
+@@ -18,9 +18,9 @@ fn trace_event_state_is_enabled(dstate: u16) -> bool {
+ }
+ extern "C" {
+     #[allow(dead_code)]
+-    static mut _TRACE_TEST_BLAH_DSTATE: u16;
++    static mut _TRACE_TEST_BLAH_DSTATE: u8;
+     #[allow(dead_code)]
+-    static mut _TRACE_TEST_WIBBLE_DSTATE: u16;
++    static mut _TRACE_TEST_WIBBLE_DSTATE: u8;
+ }
+ 
+ #[inline(always)]
+diff --git a/tests/tracetool/ust.c b/tests/tracetool/ust.c
+index 05a93918240..f83d06252ea 100644
+--- a/tests/tracetool/ust.c
++++ b/tests/tracetool/ust.c
+@@ -5,8 +5,8 @@
+ #include "qemu/module.h"
+ #include "trace-testsuite.h"
+ 
+-uint16_t _TRACE_TEST_BLAH_DSTATE;
+-uint16_t _TRACE_TEST_WIBBLE_DSTATE;
++uint8_t _TRACE_TEST_BLAH_DSTATE;
++uint8_t _TRACE_TEST_WIBBLE_DSTATE;
+ TraceEvent _TRACE_TEST_BLAH_EVENT = {
+ #ifdef CONFIG_TRACE_SIMPLE
+     .id = 0,
+diff --git a/tests/tracetool/ust.h b/tests/tracetool/ust.h
+index b7acd0c39b1..079b2c74491 100644
+--- a/tests/tracetool/ust.h
++++ b/tests/tracetool/ust.h
+@@ -8,8 +8,8 @@
+ 
+ extern TraceEvent _TRACE_TEST_BLAH_EVENT;
+ extern TraceEvent _TRACE_TEST_WIBBLE_EVENT;
+-extern uint16_t _TRACE_TEST_BLAH_DSTATE;
+-extern uint16_t _TRACE_TEST_WIBBLE_DSTATE;
++extern uint8_t _TRACE_TEST_BLAH_DSTATE;
++extern uint8_t _TRACE_TEST_WIBBLE_DSTATE;
+ #define TRACE_TEST_BLAH_ENABLED 1
+ #define TRACE_TEST_WIBBLE_ENABLED 1
+ #include <lttng/tracepoint.h>
 diff --git a/trace/event-internal.h b/trace/event-internal.h
-index 1d57b0ff1b5..cc095a6ad54 100644
+index ecf2caabd03..ad1578aa2c5 100644
 --- a/trace/event-internal.h
 +++ b/trace/event-internal.h
-@@ -10,12 +10,6 @@
- #ifndef TRACE__EVENT_INTERNAL_H
- #define TRACE__EVENT_INTERNAL_H
+@@ -25,7 +25,7 @@ typedef struct TraceEvent {
+ #endif
+     const char * name;
+     const bool sstate;
+-    uint16_t *dstate;
++    uint8_t *dstate;
+ } TraceEvent;
  
--/*
-- * Special value for TraceEvent.vcpu_id field to indicate
-- * that the event is not VCPU specific
-- */
--#define TRACE_VCPU_EVENT_NONE ((uint32_t)-1)
--
- /**
-  * TraceEvent:
-  * @id: Unique event identifier.
-@@ -23,11 +17,6 @@
-  * @sstate: Static tracing state.
-  * @dstate: Dynamic tracing state
-  *
-- * Interpretation of @dstate depends on whether the event has the 'vcpu'
-- *  property:
-- * - false: Boolean value indicating whether the event is active.
-- * - true : Integral counting the number of vCPUs that have this event enabled.
-- *
-  * Opaque generic description of a tracing event.
-  */
- typedef struct TraceEvent {
+ #endif /* TRACE__EVENT_INTERNAL_H */
 -- 
 2.55.0
 
