@@ -4,76 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 918E9CA5FCE
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Oct 2026 12:16:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B94ECA5FF0
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Oct 2026 12:31:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xDhWf-0006lc-VT; Mon, 05 Oct 2026 08:10:38 -0400
+	id 1xDhq8-0002vq-Nl; Mon, 05 Oct 2026 08:30:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xDhVm-00067P-7F
- for qemu-devel@nongnu.org; Mon, 05 Oct 2026 08:09:45 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xDhVk-0004mN-FA
- for qemu-devel@nongnu.org; Mon, 05 Oct 2026 08:09:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1791202179;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=lyP3UQF2xWV/4IztDyEFIqZ2kWG1P/DRVkR4OcGm7lU=;
- b=GyZDNUMDcFjt9STsAJYTxFCPC9XyHw4nPo30IaJP/slWPaj0OflW3Om8gSa/l5YBb8dHgn
- ArBV+MV+KBJbLoxdrUwl6lpgZnk+WPS6KnobpcUrjU4Ie4CkbGoUUkOSk+ceN/LR6HKf/v
- O2l2hoCzOu8Rfsn67TAdKe1Wun0wJ4c=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-353-g2ND1kX1OmyDbKDx2UMaEg-1; Mon,
- 05 Oct 2026 08:09:37 -0400
-X-MC-Unique: g2ND1kX1OmyDbKDx2UMaEg-1
-X-Mimecast-MFC-AGG-ID: g2ND1kX1OmyDbKDx2UMaEg_1791202176
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D48DD1954227; Mon,  5 Oct 2026 12:09:36 +0000 (UTC)
-Received: from berrange.csb (headnet03.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.114])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 66DB13001D29; Mon,  5 Oct 2026 12:09:35 +0000 (UTC)
-From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+ (Exim 4.90_1) (envelope-from <kevincheng60303@gmail.com>)
+ id 1xDhLx-0001q8-0b
+ for qemu-devel@nongnu.org; Mon, 05 Oct 2026 07:59:39 -0400
+Received: from mail-pj2-x2a.google.com ([2607:f8b0:4864:39::2a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <kevincheng60303@gmail.com>)
+ id 1xDhLr-00033t-3C
+ for qemu-devel@nongnu.org; Mon, 05 Oct 2026 07:59:30 -0400
+Received: by mail-pj2-x2a.google.com with SMTP id
+ d9443c01a7336-2e2dd05994cso4580915ad.2
+ for <qemu-devel@nongnu.org>; Mon, 05 Oct 2026 04:59:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1791201562; x=1791806362; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=kXY8X4qyai2cQehCVlEpPRB7/FEYuF+0iLxJD7N9epc=;
+ b=XvFEQ2rxh6cLhaerV5uT1lqXs+rVepdNgzr7eTRxLJzOb6IWZ74YvJABM5TcuWqreM
+ +rov4w8rxpoLRqOIQQkAmflbqksV1B6YtBDxD/BOD6Ddioc1NgUBSis8jhMW+PJG6BE3
+ k3Oyok5pSktDjHsMeosvcQ39HqJzBGpqPkOKPke0ehPwV6+7YpymMnHTamJrV0hVTCi7
+ vH6FZNdC7i14QFJbmdWf1CliBEZazsGQuRxjeAHFkbkNmZ52NA+uiCdJDKtksGniNtgC
+ eYSfVnb6eujp/jpnRrj4vOG1dAdo9sqA63ENq+tyEazTSOS7sxdhPmLWOcQmgJzWBr2k
+ jeVg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1791201562; x=1791806362;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=kXY8X4qyai2cQehCVlEpPRB7/FEYuF+0iLxJD7N9epc=;
+ b=fIYIehgh1JpBjlZMY0V38FFrKLCavnTcrcx8Xg3Qq/5ZkZ5LhJ6P70/gBxEua3vnA5
+ IaHW48Sr/hcM+Y1XePTPG8Ibo09a45NcN0jX8w9r5WsPglQN3x7CMxheCGt/rJiAja3u
+ WsLkKu1TD8mMRc+0TossuRF/ekjwGuhZLdy3I9NEmZxtYXQCvCPkTxPS8ynzY3KLHEzE
+ xweG5JmTHxVa+GESBPLp6pDTCrSdCFU1QYyMA44ZSW/PMm/XAqH+FkAeiw7/x/lorZ46
+ LmFo9EeS5ItXFJqVqfCiRjQAOarlP21Kc0hr837avOjMBPtcJYELF34M5ykmU6bxNRpe
+ JorQ==
+X-Gm-Message-State: AFq9FYJVhOowmZnhU5Wqw33qcun4LQtB/tGq77irMjb7bZ6vYmgYs9gB
+ xxwtDwH8yg3/LSZttacHMWZ3xWO24fltkt4yAXTa2jNwEUyfSzaWCn1q6602DYse
+X-Gm-Gg: AYBFou3mgSvSigr4yjLO6ImeL9RnxURjXhlmGqgkDDIvSRwHM1cNw79HdxjtOTt2UDA
+ P2/1AQl5BJT9h6DeIJrBFlIOG8XLn4mwSvcZ9NpWQoiZR+HiITMYZqcMMrz83BU32nJ42KXWdfM
+ lu4UriJnEtoAKpl9rlAO9AbWjSyx4smIA/TcrlZrHZRspHLOjkzmVBflRXOofCcyCrlhs6pF+zb
+ IJ+iiaIuIRR/r4HGJyHf0RjYRzq/qj/ixQoMe7Gn1GABeTFgsfBaVmMpDBdRLSg7sb3nC5TJBeQ
+ MMycwbgkRl07xKOWHrcEzWs3O8LM1dbu6PJg12NyLBRv59BpNRo2Guv5UFIouKE4FqjKNeBvI2k
+ CkdayqY2fT2dXY0f5TduLoKkn4saSOKBy082Aoui9hPzG/a3YP050Vu8daWncZtxDiNb91MmQ7f
+ 1UmFScM3YfyLyH7jGmqDq/4NRW6+Y0uA3Q6vJqYoDvxDR1GkaHWpWO1TZrMzo+mVaDvEbC9KHHi
+ gQql6/jIxxtjaEx/r2A8uFmJGy/5855kpczf+8lOv6ucFlTDZOdinBZzfnf/wBHsIMRkGgYEifS
+ IrEmjT0JD8zrYn2vmEWAUIW2wLxhGpOl+/SY
+X-Received: by 2002:a17:902:cec4:b0:2df:ae99:7595 with SMTP id
+ d9443c01a7336-2e49b694ce0mr92908525ad.69.1791201562603; 
+ Mon, 05 Oct 2026 04:59:22 -0700 (PDT)
+Received: from localhost.localdomain (ip24-93.wifi.cc.ntu.edu.tw.
+ [140.112.24.93]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2e5a5ef67f2sm6024465ad.76.2026.10.05.04.59.20
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Mon, 05 Oct 2026 04:59:22 -0700 (PDT)
+From: dodochicha <kevincheng60303@gmail.com>
 To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Stefan Hajnoczi <stefanha@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v3 21/24] trace: remove "disable" property from trace files
-Date: Mon,  5 Oct 2026 13:08:52 +0100
-Message-ID: <20261005120855.421973-22-berrange@redhat.com>
-In-Reply-To: <20261005120855.421973-1-berrange@redhat.com>
-References: <20261005120855.421973-1-berrange@redhat.com>
+Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
+ liwei1518@gmail.com, daniel.barboza@oss.qualcomm.com,
+ zhiwei_liu@linux.alibaba.com, chao.liu@processmission.com,
+ dodochicha <kevincheng60303@gmail.com>
+Subject: [PATCH] target/riscv: Check Svnapot PTE before updating A/D bits
+Date: Mon,  5 Oct 2026 19:59:16 +0800
+Message-ID: <20261005115916.21196-1-kevincheng60303@gmail.com>
+X-Mailer: git-send-email 2.50.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 10
-X-Spam_score: 1.0
-X-Spam_bar: +
-X-Spam_report: (1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:39::2a;
+ envelope-from=kevincheng60303@gmail.com; helo=mail-pj2-x2a.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Mon, 05 Oct 2026 08:30:40 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -88,67 +102,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The scenarios are not significant enough to justify its use
+Reserved Svnapot PTE encodings must raise a page fault without modifying the PTE. Currently the A/D bits may be updated before the Svnapot encoding is validated.
 
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+Move the Svnapot validation before the A/D update so reserved PTEs fault without changing the PTE.
+
+Signed-off-by: dodochicha <kevincheng60303@gmail.com>
 ---
- hw/display/trace-events  |  2 +-
- target/hppa/trace-events | 28 ++++++++++++++--------------
- 2 files changed, 15 insertions(+), 15 deletions(-)
+ target/riscv/tcg/cpu_helper.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/hw/display/trace-events b/hw/display/trace-events
-index c5e7e42af23..223a085922b 100644
---- a/hw/display/trace-events
-+++ b/hw/display/trace-events
-@@ -60,7 +60,7 @@ virtio_gpu_dec_inflight_fences(uint32_t inflight) "in-flight- %u"
- virtio_gpu_cmd_suspended(uint32_t cmd) "cmd 0x%x"
+diff --git a/target/riscv/tcg/cpu_helper.c b/target/riscv/tcg/cpu_helper.c
+index 07d9222652..105f2f1927 100644
+--- a/target/riscv/tcg/cpu_helper.c
++++ b/target/riscv/tcg/cpu_helper.c
+@@ -1403,6 +1403,13 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
+         return sstack_page ? TRANSLATE_PMP_FAIL : TRANSLATE_FAIL;
+     }
  
- # qxl.c
--disable qxl_io_write_vga(int qid, const char *mode, uint32_t addr, uint32_t val) "%d %s addr=%u val=%u"
-+qxl_io_write_vga(int qid, const char *mode, uint32_t addr, uint32_t val) "%d %s addr=%u val=%u"
- qxl_create_guest_primary(int qid, uint32_t width, uint32_t height, uint64_t mem, uint32_t format, uint32_t position) "%d %ux%u mem=0x%" PRIx64 " %u,%u"
- qxl_create_guest_primary_rest(int qid, int32_t stride, uint32_t type, uint32_t flags) "%d %d,%d,%d"
- qxl_destroy_primary(int qid) "%d"
-diff --git a/target/hppa/trace-events b/target/hppa/trace-events
-index 01761a4559b..7c897610a9e 100644
---- a/target/hppa/trace-events
-+++ b/target/hppa/trace-events
-@@ -1,19 +1,19 @@
- # See docs/devel/tracing.rst for syntax documentation.
++    if (riscv_cpu_cfg(env)->ext_svnapot && (pte & PTE_N)) {
++        napot_bits = ctzl(ppn) + 1;
++        if ((i != (levels - 1)) || (napot_bits != 4)) {
++            return TRANSLATE_FAIL;
++        }
++    }
++
+     target_ulong updated_pte = pte;
  
- # mem_helper.c
--disable hppa_tlb_flush_ent(void *env, void *ent, uint64_t va_b, uint64_t va_e, uint64_t pa) "env=%p ent=%p va_b=0x%lx va_e=0x%lx pa=0x%" PRIx64
--disable hppa_tlb_find_entry(void *env, void *ent, int valid, uint64_t va_b, uint64_t va_e, uint64_t pa) "env=%p ent=%p valid=%d va_b=0x%lx va_e=0x%lx pa=0x%" PRIx64
--disable hppa_tlb_find_entry_not_found(void *env, uint64_t addr) "env=%p addr=%08lx"
--disable hppa_tlb_get_physical_address(void *env, int ret, int prot, uint64_t addr, uint64_t phys) "env=%p ret=%d prot=%d addr=0x%lx phys=0x%lx"
--disable hppa_tlb_fill_excp(void *env, uint64_t addr, int size, int type, int mmu_idx) "env=%p addr=0x%lx size=%d type=%d mmu_idx=%d"
--disable hppa_tlb_fill_success(void *env, uint64_t addr, uint64_t phys, int size, int type, int mmu_idx) "env=%p addr=0x%lx phys=0x%lx size=%d type=%d mmu_idx=%d"
--disable hppa_tlb_itlba(void *env, void *ent, uint64_t va_b, uint64_t va_e, uint64_t pa) "env=%p ent=%p va_b=0x%lx va_e=0x%lx pa=0x%" PRIx64
--disable hppa_tlb_itlbp(void *env, void *ent, int access_id, int u, int pl2, int pl1, int type, int b, int d, int t) "env=%p ent=%p access_id=%x u=%d pl2=%d pl1=%d type=%d b=%d d=%d t=%d"
--disable hppa_tlb_ptlb(void *env) "env=%p"
--disable hppa_tlb_ptlb_local(void *env) "env=%p"
--disable hppa_tlb_ptlbe(void *env) "env=%p"
--disable hppa_tlb_lpa_success(void *env, uint64_t addr, uint64_t phys) "env=%p addr=0x%lx phys=0x%lx"
--disable hppa_tlb_lpa_failed(void *env, uint64_t addr) "env=%p addr=0x%lx"
-+hppa_tlb_flush_ent(void *env, void *ent, uint64_t va_b, uint64_t va_e, uint64_t pa) "env=%p ent=%p va_b=0x%lx va_e=0x%lx pa=0x%" PRIx64
-+hppa_tlb_find_entry(void *env, void *ent, int valid, uint64_t va_b, uint64_t va_e, uint64_t pa) "env=%p ent=%p valid=%d va_b=0x%lx va_e=0x%lx pa=0x%" PRIx64
-+hppa_tlb_find_entry_not_found(void *env, uint64_t addr) "env=%p addr=%08lx"
-+hppa_tlb_get_physical_address(void *env, int ret, int prot, uint64_t addr, uint64_t phys) "env=%p ret=%d prot=%d addr=0x%lx phys=0x%lx"
-+hppa_tlb_fill_excp(void *env, uint64_t addr, int size, int type, int mmu_idx) "env=%p addr=0x%lx size=%d type=%d mmu_idx=%d"
-+hppa_tlb_fill_success(void *env, uint64_t addr, uint64_t phys, int size, int type, int mmu_idx) "env=%p addr=0x%lx phys=0x%lx size=%d type=%d mmu_idx=%d"
-+hppa_tlb_itlba(void *env, void *ent, uint64_t va_b, uint64_t va_e, uint64_t pa) "env=%p ent=%p va_b=0x%lx va_e=0x%lx pa=0x%" PRIx64
-+hppa_tlb_itlbp(void *env, void *ent, int access_id, int u, int pl2, int pl1, int type, int b, int d, int t) "env=%p ent=%p access_id=%x u=%d pl2=%d pl1=%d type=%d b=%d d=%d t=%d"
-+hppa_tlb_ptlb(void *env) "env=%p"
-+hppa_tlb_ptlb_local(void *env) "env=%p"
-+hppa_tlb_ptlbe(void *env) "env=%p"
-+hppa_tlb_lpa_success(void *env, uint64_t addr, uint64_t phys) "env=%p addr=0x%lx phys=0x%lx"
-+hppa_tlb_lpa_failed(void *env, uint64_t addr) "env=%p addr=0x%lx"
+     /*
+@@ -1473,13 +1480,6 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
+     /* For superpage mappings, make a fake leaf PTE for the TLB's benefit. */
+     target_ulong vpn = addr >> PGSHIFT;
  
- # op_helper.c
--disable hppa_tlb_probe(uint64_t addr, int level, int want) "addr=0x%lx level=%d want=%d"
-+hppa_tlb_probe(uint64_t addr, int level, int want) "addr=0x%lx level=%d want=%d"
+-    if (riscv_cpu_cfg(env)->ext_svnapot && (pte & PTE_N)) {
+-        napot_bits = ctzl(ppn) + 1;
+-        if ((i != (levels - 1)) || (napot_bits != 4)) {
+-            return TRANSLATE_FAIL;
+-        }
+-    }
+-
+     napot_mask = (1 << napot_bits) - 1;
+     *physical = (((ppn & ~napot_mask) | (vpn & napot_mask) |
+                   (vpn & (((target_ulong)1 << ptshift) - 1))
 -- 
-2.55.0
+2.50.1 (Apple Git-155)
 
 
