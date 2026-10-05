@@ -4,100 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F7BDCA5FCE
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Oct 2026 11:59:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD858CA5FF0
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Oct 2026 12:00:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xDhL7-0001V2-Jm; Mon, 05 Oct 2026 07:58:41 -0400
+	id 1xDhLp-0001iV-1F; Mon, 05 Oct 2026 07:59:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>) id 1xDhKl-0001Tz-IQ
- for qemu-devel@nongnu.org; Mon, 05 Oct 2026 07:58:21 -0400
-Received: from fout-b8-smtp.messagingengine.com ([202.12.124.151])
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>) id 1xDhKy-0001VR-95
+ for qemu-devel@nongnu.org; Mon, 05 Oct 2026 07:58:34 -0400
+Received: from fhigh-b4-smtp.messagingengine.com ([202.12.124.155])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>) id 1xDhKj-0002xM-J1
- for qemu-devel@nongnu.org; Mon, 05 Oct 2026 07:58:19 -0400
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
- by mailfout.stl.internal (Postfix) with ESMTP id 37A701D000D1
- for <qemu-devel@nongnu.org>; Mon,  5 Oct 2026 07:58:12 -0400 (EDT)
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>) id 1xDhKt-0002yt-6q
+ for qemu-devel@nongnu.org; Mon, 05 Oct 2026 07:58:28 -0400
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+ by mailfhigh.stl.internal (Postfix) with ESMTP id 880707A00CA
+ for <qemu-devel@nongnu.org>; Mon,  5 Oct 2026 07:58:24 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
- by phl-compute-02.internal (MEProxy); Mon, 05 Oct 2026 07:58:12 -0400
+ by phl-compute-09.internal (MEProxy); Mon, 05 Oct 2026 07:58:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
  h=cc:cc:content-transfer-encoding:content-type:date:date:from
- :from:in-reply-to:message-id:mime-version:reply-to:subject
- :subject:to:to; s=fm1; t=1791201492; x=1791287892; bh=LE2A1XPNQQ
- HlZhk7FYQc29VDi3DQ47/QXFDlSXAmSOk=; b=aE7w14FzIoSryUapmWH9kBLZp4
- uty5XQ/1Rey2GG/mDC80hSINl9z1iAhMYjb7RE6jVse948pUEqhTtdbkzTcBMgHI
- B88Um8sTUr3vTjsLS1k1/76Gu1yyxSYPN/uXIjCdWdC4L23SG++J240w+4ox/4Id
- oJ4VYMZDqXLujeScPUFl5g77fUwZcb+eQw1bknOsB/iM4FlZhc7T7e79J0upeHf2
- Tbwaz74uQmwN7vZf2g4YJj4vtTvV81DOWJC+WXx1icc2lAiGTujBW6srpgNW4+Sw
- NCoSl0AA0NgO1M6ONf1sJYYba12s6v70ww5qUgtOfZ4Ph1+e4PFF1nypqVvA==
+ :from:in-reply-to:in-reply-to:message-id:mime-version:references
+ :reply-to:subject:subject:to:to; s=fm1; t=1791201504; x=
+ 1791287904; bh=42GhXicXrnkHoYCttTFBJi2Ci4I0PDpk/K4m2dmDyCA=; b=H
+ jBqK2zBdxcbySTmufkObR9bkcotQEmOp/lIn71PBS1FP9/pCkwnM8eiDKm6qKN+a
+ kAAFZd1xcXuDv4O9zErdaqsyGnzsusmjOXHm8I/1ZIT+9atFoOUzskzVEur+L2zp
+ c/0deKVVBuAbDvy5ixShM1NHIjYzVbOsVcqTCvUFBEEsjyOmJpD5Oz7FSXG6UOx8
+ gY2PTQfIXJmrtsMzJ/JJiAaFj1YqdO8ZJcNEx48UdTrxej1ZSGy2UWtqr9jS6pjo
+ l74Zc9LS65qA8dyTEyopGIZMd0BARrBGEDz0dsEeODBSC5znsPHt/8oVJKD3Q8/Y
+ bcqVKX6XUgZzYyWWH9Wiw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-transfer-encoding
  :content-type:date:date:feedback-id:feedback-id:from:from
- :in-reply-to:message-id:mime-version:reply-to:subject:subject:to
- :to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
- 1791201492; x=1791287892; bh=LE2A1XPNQQHlZhk7FYQc29VDi3DQ47/QXFD
- lSXAmSOk=; b=AjgUZviAJLgtHAQU4JKiOPgusHyVhXQyDis4e92F3oXPgriOsxi
- iYn8rhvCtQRPT9TSJIqziK5oUPbukWPURyrBVen1CTLoMWcOrLF6mQHihnw3tb3j
- zCATh8Gkbhd6DummuDtCgtGCArQXx0r8uKixzA/AY1ZB1T2hEvcuaIvhmwuw8UBP
- riyxOrBFqo+k8Sth8YxE1iorKvD1FE4Hx9Fb9O9VK9H3css+esGAB6n6+vqVywkx
- nU50cg+hzgChX/XNTiDljYB7g2JVT0HW48Jryzsiv87TJSekREAMannSfpQqQQ8y
- UpWMmFb9i6icmQ3gkUtaHkfndYA0kUubu0Q==
+ :in-reply-to:in-reply-to:message-id:mime-version:references
+ :reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
+ :x-me-sender:x-sasl-enc; s=fm2; t=1791201504; x=1791287904; bh=4
+ 2GhXicXrnkHoYCttTFBJi2Ci4I0PDpk/K4m2dmDyCA=; b=w7bIUwYVb07Z6D6QW
+ X5GDLdbUQHrXNklGh+HGcIUaOEi3N/ZlHX3Prnsc23Zr1TTeBswTQ5i+SroubTiF
+ ex3fSndhsecLMXtMSxSWFgQrX7iiqzdWYPB4VIwoFrP7ZDKjWzBNdv59Gxscld++
+ 14koPzSl/vbzTOOh53ai5XI8OhM8qQP/F1SeQefnlkhFHnADbKh4TZHwAq5sZlqE
+ 4/8ut1vI/0O3vIU++pQM/C5mmIOwdPdqBI1FAKyOk7KbYmiatZkcSW0tEZJSpvFg
+ Eavu5MLN+epeQkjoEXsk5vZ+IEJAYDgzQMEkLw13KmeADED0eixzYQ2e2A+xUQR0
+ IrFcg==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
  repo=github.com/dkim2wg/interop; date=2026-09-30; sw=lmtpprox;
  action=sign d=irrelevant.dk a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1791201492; d=irrelevant.dk;
+DKIM2-Signature: i=1; m=1; t=1791201504; d=irrelevant.dk;
  mf=PGl0c0BpcnJlbGV2YW50LmRrPg==;
  rt=PHFlbXUtZGV2ZWxAbm9uZ251Lm9yZz4=;
- s=fm1:rsa-sha256:4MRLRcMZy/smG4NO3KFHLLNzKwKkoveCH9GzmqYaidLYV+K
- f7/oXQM6PxF2Q9p1GD+kKkM+L2wmAx3FwCFXVwCzXev9ofokluwO2FNUODHSUagT
- 7KA5LmlnI358+Jk9BifhPgk+c2N995mJbShcwZGSUQDoN8L26SG4L4azWKfIVeyY
- eE6+JNfiZfecGxZFGSFxy11EsqVNwct9QCVDdUudkJbqXKk6ZK45GT5LhPAz8zNL
- qX/uuJHykKkZVLf1ebZyzJF54bDbWXdTd+D9JQB5pwkgYni5n9Bpsi1/ybJdGGNo
- mFPCSc4JQwY7E5mv/x4ZiRu+RPSNBmdD+n88lBg==;
+ s=fm1:rsa-sha256:sGlzvUihX9NLPwM7OyEhDyRTA59koLi4QEkqJIOa0cAu40f
+ 9J+P402narZdGos0wOsCbohysa5+hsuJRZbIg964l29KWlMeoNRffkHK4TgkHlMi
+ Z9UUBU5BWRhzXjv6QAMGdk0fHznBo336gKJ/JfoVrie+gVnS72zSPh1Mq+4U3f2O
+ 8wD8JUfompQpaYJi/ljU6X7tvG6+45CbTnDJxqQ1oMHyaOF4wA7BG86NEIBIYz6b
+ NuDReUeXYNAEsl67kGhkDtCkHcX7RPk7YNu65bJXXX3hvAyp4BmdIrBt492dRVQG
+ K6mQMAG2y6QSPvqMmns+nYMVHQxh7Y8xDAr17jg==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
  repo=github.com/dkim2wg/interop; date=2026-09-30; sw=lmtpprox;
- action=mi-m=1; hc=9;
+ action=mi-m=1; hc=11;
  hn=cc,content-transfer-encoding,date,feedback-id,from,
- message-id,mime-version,subject,to;
+ in-reply-to,message-id,mime-version,references,subject,to;
 Message-Instance: m=1;
- h=sha256:5LBmkppfoOyGmoj8GkWRrjndBxu5B8+lQ2mto53pUuY=:GPRFjCC2bAXcIyOqvLOh0qru63YrVYAxQdTic8BpSJs=;
-X-ME-Sender: <xms:05DDahIY_Y_QEUrWrN5fCUjOty6Wv8vCyvmoSMOwSEEwJqMOw_oTOQ>
- <xme:05DDahdXkxznJiDSp3fgNos_9u4shNKeWlbtMmA8C7X44HHh2YfNlQ71yTcMIw4YZ
- Ld-hjZM46LgzjWqS-UhJ-JfIY74KoXXXzy0cw9ENqcUvQ0SrAzxChI>
-X-ME-Received: <xmr:05DDao1xw6Gmhfn1ZTIoLgNlVSC23BQM0OhH4F25n592ncRuZmPsxKAtTBSpJy5_z72nnpbHYZMtL3ConIrdpC1Y>
-X-ME-Proxy-Cause: dmFkZTGcjIY7TAZkzSrmRiOJgWlfcteyq21Arp/gQI0vc97Wt2AKcErwPJSxuKLrMOkqF3
- WdQTFydZXsTOe1QutO+aO+zquXhjpW4DStFu03LvcTO5p/kqvfLuAUXzuxYI4cY3jj/mSs
- LHugKa9MO7wqz56tUCHXHpJt2wF6RorzpsNCTMzaCjMDWdiAq3u5yRy385yUbQcinpFc6M
- k0GAwkQEGnrF+XqbkY1umDxQ8NAkG2yB9vr6DWNPQTN4oPO+pqe5LQyVBuqCA8i3ttIe5J
- OHGS9sEYeWuvrpJPBmhECYeA8tIuMcywKr3vxO5kXKk8V7XiojxDtPq0Mr93Ok9QRqOvhH
- BtECkZyrP9uyPY12WQpewAQOysBpTM7Sis1m1TBGTprJsacFhRtq/Su1UdOPTm3kXWfWyb
- go2uW+aQCkGyB2yEwBoJIjT8NbY97tUlYsQdAmMvHMX93gkWe4nwnMh+c1yuFhZu2vH+H0
- OuwFAtoqj1vOv/Es94muHYd9w22MzCIAZmEfiiF45aVX2RTUDY742TzDPko7tJeSvT3fdT
- O7HtnMGUGdB8AZnoJtTSw32qnyPiphG9S2RNFsE3cdDznmcVUxENxNk9qltdxIF5MICYpj
- +vhzQXZY5/DI55olKoWCaebR6ZLFYg43fymUtbVu92f1F5vyLLEo7/ZU5yIQ
-X-ME-Proxy: <xmx:05DDaqj-CR5ouP_7og8rvqQGbJWjjxy2vrONBVJnYcAtFV91XMIe6A>
- <xmx:05DDauRlamw47KyGQUWIMzrExCp3yofx9ziWH6HF7WOah5SgPFHOBw>
- <xmx:05DDari90k_z0fX9A_Do_0aMA7sgOAvJAVVopmGulHz6DHxnjfJGKQ>
- <xmx:05DDau6SLzMY_UmllVaxeVALwg-O1U_PGY0LG-c_7ia-VPn6A7nnew>
- <xmx:1JDDaitRTvGVzqDCwpkJvHyJ1lJte31JEv5FKXlT99EPiNnSM4cGOSty>
+ h=sha256:9XG28e4QGa+3pIyWZejT07N7DUD4+GlPpLNzdsyHMy8=:kEMenXJ+RDZB4hdbv5FxAwdBa35SwUMmFxCK40Mrlvk=;
+X-ME-Sender: <xms:4JDDatfHl0z3GmljDCqoStkD_BliPxjdfaOE2leYMwR_BVFOPlYFLg>
+ <xme:4JDDanM-F4dHFKgEsPkACBKzE1PsLnL8Uz_-a9QGnvli4bGwqZg4XVtTBca0_yHRY
+ jdmvm6jYDZzEdVKUuAibZy6UsVQ52v1B6yIoSix5gF6A6FHjangt2G_>
+X-ME-Received: <xmr:4JDDaos5yDWh7vre8Xuth9r4PzoAM2pcAMAuSgsWccM7_lh3X7VFCUSNOwWy9dxd6XapdZnVYMtXmwEm9s59ca-3>
+X-ME-Proxy-Cause: dmFkZTEr+xmrqVGlVQGKS+bQ19SBCupADr7Hdv3MLlYOmJJ0MHpcGBVX7wqD5lzPTIvynB
+ 3Z7xCzf/9N09kBvoXTuT/jDvRF8pgZiXd8K7UF45X63MTAjNTmzBXogOUz2NqoJ/AIU0ui
+ QVACBXTrXIFHdjQxbdPBca+AbDua3wZNoq8iqf7GWb8Rpl5PWnY1cpPh9s6B1Djg0gXYjJ
+ iuexN2Z4QEn6q4Pqa7RSW1oF5+CdzLm0KydieObKFnQL5JMZ5ROLoF5dosd/2BfT/YKZmJ
+ Pxl/3KtExYI0YoOpy2pHP658F+mvvlGXHM6P39dTEl5srih6JlOC+ix6hCTMWogIDu43ki
+ KmcsFNzpmQtvczmB6ECzdbk531arpqO+L1ZFcSPISCOJdByBtps3RYi5SIiFLrzX4zYIvn
+ SgYghV6ImtuYfd7y7jcqXhC3lKE+EFXsghQJHZfg8jyv3zRlOKF2p/bzY6BXLMNM/Wv+94
+ Yfvef93crMztoYypk0jSVOPwyViAE4Bvol9/73272EYsT1ZP2/Rt33ll6jchN8EsP64ig6
+ AbraEnM+xFisXEfCvDw74mwQ5pxoNanrXRMkfKxG7bE0AW61tOfMSHH2nKHn4QCC2kzZYI
+ JfZJY2brB8jw6ujMCzNp86HiJroxkOMuc99Fgk8QYOWYClMsI0ETDQF/rjVQ
+X-ME-Proxy: <xmx:4JDDaoBCy5KSl8zK8DV_Cld5nSrB10xypOa6-Um6r1LPo1QPqfZgsA>
+ <xmx:4JDDanYlaPPc1SRn0fYdF89qAmj2wJwmPfRz0vZWn0E1HXI3YEy0zg>
+ <xmx:4JDDarWsVB-n99pZFV92l8IWh_pNWwFKsSk4vzcR-029DtMl0f9dHA>
+ <xmx:4JDDauNWlBhggjvyzSD9CxX1_A2dbKQgxw256cub9D4G-I06tzdXHw>
+ <xmx:4JDDat2794VZhuSDiQcEqzJPTVPrQXVpqI7j25HjLuJ0eDLct6FUavAp>
 Feedback-ID: idc91472f:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 5 Oct 2026 07:58:10 -0400 (EDT)
+ 5 Oct 2026 07:58:22 -0400 (EDT)
 From: Klaus Jensen <its@irrelevant.dk>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Klaus Jensen <k.jensen@samsung.com>
-Subject: [PULL 0/5] hw/nvme queue
-Date: Mon,  5 Oct 2026 13:58:00 +0200
-Message-ID: <20261005115805.99042-1-its@irrelevant.dk>
+ Daniel Paziyski <danielpaziyski@gmail.com>, qemu-stable@nongnu.org,
+ Klaus Jensen <k.jensen@samsung.com>, Keith Busch <kbusch@kernel.org>,
+ Klaus Jensen <its@irrelevant.dk>, Jesper Devantier <foss@defmacro.it>,
+ qemu-block@nongnu.org
+Subject: [PULL 4/5] hw/nvme: fix memory leak on sr-iov capable nvme controller
+ removal
+Date: Mon,  5 Oct 2026 13:58:04 +0200
+Message-ID: <20261005115805.99042-5-its@irrelevant.dk>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20261005115805.99042-1-its@irrelevant.dk>
+References: <20261005115805.99042-1-its@irrelevant.dk>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=202.12.124.151; envelope-from=its@irrelevant.dk;
- helo=fout-b8-smtp.messagingengine.com
+Received-SPF: pass client-ip=202.12.124.155; envelope-from=its@irrelevant.dk;
+ helo=fhigh-b4-smtp.messagingengine.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -120,39 +128,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Klaus Jensen <k.jensen@samsung.com>
+From: Daniel Paziyski <danielpaziyski@gmail.com>
 
-Hi,
+If a nvme controller is SR-IOV capable, its list of secondary controllers
+(virtual functions) is stored in the sec_ctrl_list dynamically allocated
+array, located in the NvmeCtrl struct.
 
-The following changes since commit d7a65d1793d691d356a56833620f7d1e6f5d653b:
+Free the secondary controller list after destroying the virtual functions and
+freeing their controller IDs.
 
-  Merge tag 'hppa-a400-updates-pull-request' of https://github.com/hdeller/qemu-hppa into staging (2026-10-03 14:17:49 +0200)
+QEMU command line (boot with a hotunplug-aware OS, such as Linux):
 
-are available in the Git repository at:
+    qemu-system-x86_64 -M q35 -device pcie-root-port,id=rp -monitor stdio \
+    -device nvme-subsys,id=subsys0 \
+    -device nvme,subsys=subsys0,serial=ctrl0,sriov_max_vfs=1,\
+sriov_vq_flexible=2,sriov_vi_flexible=1,max_ioqpairs=4,msix_qsize=2,bus=rp,id=ctrl0
 
-  https://gitlab.com/birkelund/qemu.git tags/pull-nvme-20261005
+In the QEMU monitor:
 
-for you to fetch changes up to f6c0588fd7c22caefc5b31f485c8bb3ee994a58b:
+    device_del ctrl0
+    quit
 
-  hw/nvme: fix firmware boot path when nvme-ns has a bootindex (2026-10-05 11:00:47 +0200)
+ASAN splat:
 
-----------------------------------------------------------------
-nvme queue
+==78982==ERROR: LeakSanitizer: detected memory leaks
 
-----------------------------------------------------------------
-Alexander Mikhalitsyn (2):
-      hw/nvme: initialize ns->subsys for n->namespace
-      hw/nvme: support online resize
+Direct leak of 32 byte(s) in 1 object(s) allocated from:
+    #0 0x7fcbab32bea9 in calloc (/usr/lib/libasan.so.8+0x12bea9) (BuildId: 7f2845989b820f536270e19ec47df085ae89a675)
+    #1 0x7fcbaa2a34b2 in g_malloc0 (/usr/lib/libglib-2.0.so.0+0x694b2) (BuildId: cb17d184459352a7985a010f1cd3acef4a4f90d8)
+    #2 0x559c531fff4b in nvme_subsys_register_ctrl ../hw/nvme/subsys.c:65
+    #3 0x559c531d715e in nvme_init_subsys ../hw/nvme/ctrl.c:9582
+    #4 0x559c531d7a7d in nvme_realize ../hw/nvme/ctrl.c:9637
+    #5 0x559c5323c0da in pci_qdev_realize ../hw/pci/pci.c:2316
+    #6 0x559c54001e88 in device_set_realized ../hw/core/qdev.c:514
+    #7 0x559c5402462e in property_set_bool ../qom/object.c:2484
+    #8 0x559c5401dbd2 in object_property_set ../qom/object.c:1548
+    #9 0x559c5402b76c in object_property_set_qobject ../qom/qom-qobject.c:28
+    #10 0x559c5401e24c in object_property_set_bool ../qom/object.c:1618
+    #11 0x559c53fffd77 in qdev_realize ../hw/core/qdev.c:277
+    #12 0x559c53934166 in qdev_device_add_from_qdict ../system/qdev-monitor.c:740
+    #13 0x559c53934272 in qdev_device_add ../system/qdev-monitor.c:758
+    #14 0x559c538867c8 in device_init_func ../system/vl.c:1217
+    #15 0x559c5487236a in qemu_opts_foreach ../util/qemu-option.c:1148
+    #16 0x559c53891205 in qemu_create_cli_devices ../system/vl.c:2762
+    #17 0x559c53891968 in qmp_x_exit_preconfig ../system/vl.c:2822
+    #18 0x559c53898108 in qemu_init ../system/vl.c:3862
+    #19 0x559c545efabf in main ../system/main.c:71
+    #20 0x7fcba7627780  (/usr/lib/libc.so.6+0x27780) (BuildId: 1fa174a830cef40a5b2388add4318ee2795f573e)
+    #21 0x7fcba76278b8 in __libc_start_main (/usr/lib/libc.so.6+0x278b8) (BuildId: 1fa174a830cef40a5b2388add4318ee2795f573e)
+    #22 0x559c524df1f4 in _start (BuildId: 35402cb4fc46114b7a4102258726bbdec82cd9bc)
 
-Daniel Paziyski (2):
-      hw/nvme: fix assertion failure on sr-iov capable nvme controller removal
-      hw/nvme: fix memory leak on sr-iov capable nvme controller removal
+Cc: qemu-stable@nongnu.org
+Fixes: c6159d0e384f ("hw/nvme: Allocate sec-ctrl-list as a dynamic array")
+Signed-off-by: Daniel Paziyski <danielpaziyski@gmail.com>
+Reviewed-by: Klaus Jensen <k.jensen@samsung.com>
+Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
+---
+ hw/nvme/ctrl.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-Luigi Leonardi (1):
-      hw/nvme: fix firmware boot path when nvme-ns has a bootindex
+diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+index 1047961b03c5..578421c21761 100644
+--- a/hw/nvme/ctrl.c
++++ b/hw/nvme/ctrl.c
+@@ -9738,6 +9738,10 @@ static void nvme_exit(PCIDevice *pci_dev)
+ 
+     nvme_subsys_unregister_ctrl(n->subsys, n);
+ 
++    if (!pci_is_vf(pci_dev) && n->params.sriov_max_vfs) {
++        g_free(n->sec_ctrl_list);
++    }
++
+     g_free(n->cq);
+     g_free(n->sq);
+     g_free(n->aer_reqs);
+-- 
+2.53.0
 
- hw/nvme/ctrl.c | 22 ++++++++++++---
- hw/nvme/ns.c   | 88 +++++++++++++++++++++++++++++++++++++++++++++++++++++++---
- hw/nvme/nvme.h |  2 ++
- 3 files changed, 104 insertions(+), 8 deletions(-)
 
