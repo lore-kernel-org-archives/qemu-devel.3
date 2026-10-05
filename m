@@ -4,38 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A7EACA5FCE
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Oct 2026 10:40:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 345EFCA5FF0
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Oct 2026 10:41:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xDg7l-0003Ef-DS; Mon, 05 Oct 2026 06:40:51 -0400
+	id 1xDg7h-0003Bq-Re; Mon, 05 Oct 2026 06:40:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <rick@sloservers.com>)
- id 1xDg7G-0002x6-HT; Mon, 05 Oct 2026 06:40:19 -0400
+ id 1xDg7G-0002x5-Cc; Mon, 05 Oct 2026 06:40:19 -0400
 Received: from vps.sloservers.com ([204.109.61.218])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <rick@sloservers.com>)
- id 1xDg7E-0003MA-9W; Mon, 05 Oct 2026 06:40:18 -0400
+ id 1xDg7E-0003M9-7c; Mon, 05 Oct 2026 06:40:18 -0400
 Received: from thinking.duckdns.org (unknown [192.168.11.4])
- by vps.sloservers.com (Postfix) with ESMTPS id 7196724F56;
+ by vps.sloservers.com (Postfix) with ESMTPS id 5831624F55;
  Mon, 05 Oct 2026 10:40:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sloservers.com;
  s=mail; t=1791196812;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=H7+D0TzjBHqUvSyHQxmy+lF+u8662gGlKQ8JxKTLYnA=;
- b=DlhdYP3UwS+aiX6CKAIk6KTr7foqW7jSme2NRWOMa0435JEn4cc9ofd7y406CJX3mFqegw
- aHRRN7ZMfLoCzNzOhQK15rfLmLA4TmBzg5zmegb3tNhU1k5dVBhbYcQHzZoffRrhzjajYB
- GrmE7uDxlFnp2I7Gsqfl7vGRtaxPM6EHrhWfBkcI+SLxlWotl562wLKgK8YpHTRxMGfTKe
- iGhlJnpi4PERc71WBPnMJQ/k43TqYKZ9RVehYtC+P2mY99iTluS1gOdK3MOGmH4zG6gqAA
- Qamxxt9k35QxsPjttReCP085rGEeMPy5Pq1HdFxJcuW8+gCbyIyEhWY8yr3XEA==
+ content-transfer-encoding:content-transfer-encoding;
+ bh=TXwLLrvHCZTGu7oXHOiKwRSRlMAaU5YkF7jmhARqmC0=;
+ b=SKdnpVGWREpoKr2pL34aiOMP8uomwV1Ve974a2s4byJZORXHSWXuRmA/NrODyXBgyuop2F
+ PTeoGK1xKV7ULZ3cst1PzQvbZncoy7jTRk5p/CDJgimQ5M4BjfAP7hGwuMfpHrPnEda+em
+ 6c9cW2DnvWK/DVZlaP8QQ7vGgQd6FXnNiS4BC9QPSvZxKsl2Tcg9wtMedigFZSRCGSIYUz
+ 0giEKySzFW7bRjF6P0U+zTA/pP4dVj8wZxbbD8fSyafGxyRC6PPclD0USJIkUbt102J6Dp
+ siDhdefMvrIlksYzYpXFLmnjapAdZXVZ8sUWrRqxX2tv6cDTjxDIXL8nOC/03Q==
 Received: from ollopa-pc.thinking.duckdns.org (OPNsense.thinking.duckdns.org
  [192.168.1.5])
- by thinking.duckdns.org (Postfix) with ESMTPSA id C5D721001;
+ by thinking.duckdns.org (Postfix) with ESMTPSA id A4BB1D5B;
  Mon, 05 Oct 2026 03:40:11 -0700 (PDT)
 From: Rick Richard <rick@sloservers.com>
 To: qemu-devel@nongnu.org,
@@ -46,13 +45,10 @@ Cc: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
  Palmer Dabbelt <palmer@dabbelt.com>,
  "Michael S . Tsirkin" <mst@redhat.com>,
  Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>
-Subject: [PATCH v2 1/3] tests/qtest/bios-tables-test: Allow changes to riscv64
- virt SPCR
-Date: Mon,  5 Oct 2026 03:40:06 -0700
-Message-ID: <20261005104008.214588-2-rick@sloservers.com>
+Subject: [PATCH v2 0/3] hw/riscv/virt: Fix the UART register width in SPCR
+Date: Mon,  5 Oct 2026 03:40:05 -0700
+Message-ID: <20261005104008.214588-1-rick@sloservers.com>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20261005104008.214588-1-rick@sloservers.com>
-References: <20261005104008.214588-1-rick@sloservers.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=204.109.61.218; envelope-from=rick@sloservers.com;
@@ -78,22 +74,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Allow changes to the riscv64 virt board SPCR -- we are going to fix
-an error in the UART description there.
+The riscv virt board's SPCR table says its 16550 UART has a 32-bit
+register stride, but the registers are actually byte spaced.  Linux
+doesn't use this field to work out the register spacing, but FreeBSD's
+EFI loader does, and the FreeBSD kernel then crashes on the console
+UART when booted through EDK2 with ACPI enabled.
 
-Signed-off-by: Rick Richard <rick@sloservers.com>
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
----
- tests/qtest/bios-tables-test-allowed-diff.h | 1 +
- 1 file changed, 1 insertion(+)
+This series fixes the width, plus the usual bios-tables-test patches to
+update the golden reference so 'make check' keeps passing.
 
-diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
-index dfb8523c..aae97304 100644
---- a/tests/qtest/bios-tables-test-allowed-diff.h
-+++ b/tests/qtest/bios-tables-test-allowed-diff.h
-@@ -1 +1,2 @@
- /* List of comma-separated changed AML files to ignore */
-+"tests/data/acpi/riscv64/virt/SPCR",
+v2:
+- Keep the relative file path in the patch 3 iasl diff (Daniel)
+- Add Reviewed-by tags
+
+Thanks,
+Rick
+
+Rick Richard (3):
+  tests/qtest/bios-tables-test: Allow changes to riscv64 virt SPCR
+  hw/riscv/virt-acpi-build: Fix the UART register width in SPCR
+  tests/qtest/bios-tables-test: Update riscv64 virt SPCR golden
+    reference
+
+ hw/riscv/virt-acpi-build.c        |   2 +-
+ tests/data/acpi/riscv64/virt/SPCR | Bin 90 -> 90 bytes
+ 2 files changed, 1 insertion(+), 1 deletion(-)
+
 -- 
 2.43.0
 
