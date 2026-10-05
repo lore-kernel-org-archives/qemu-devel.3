@@ -4,93 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DDB28CA5FFC
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Oct 2026 15:05:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7723CA5FF0
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Oct 2026 15:05:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xDkFj-0007Fn-9C; Mon, 05 Oct 2026 11:05:19 -0400
+	id 1xDkG4-0007cj-So; Mon, 05 Oct 2026 11:05:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bmeng.cn@gmail.com>)
- id 1xDkFh-00078Q-6K
- for qemu-devel@nongnu.org; Mon, 05 Oct 2026 11:05:17 -0400
-Received: from mail-yx2-x2a.google.com ([2607:f8b0:4864:41::2a])
+ id 1xDkFm-0007LE-QD
+ for qemu-devel@nongnu.org; Mon, 05 Oct 2026 11:05:25 -0400
+Received: from mail-yx2-x0c.google.com ([2607:f8b0:4864:41::c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <bmeng.cn@gmail.com>)
- id 1xDkFe-0005gR-SK
- for qemu-devel@nongnu.org; Mon, 05 Oct 2026 11:05:16 -0400
-Received: by mail-yx2-x2a.google.com with SMTP id
- 956f58d0204a3-67561cbafd0so1524321d50.2
- for <qemu-devel@nongnu.org>; Mon, 05 Oct 2026 08:05:14 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1791212713; cv=none;
+ id 1xDkFl-0005is-9z
+ for qemu-devel@nongnu.org; Mon, 05 Oct 2026 11:05:22 -0400
+Received: by mail-yx2-x0c.google.com with SMTP id
+ 00721157ae682-8abc87cbd93so13158687b3.1
+ for <qemu-devel@nongnu.org>; Mon, 05 Oct 2026 08:05:20 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1791212720; cv=none;
  d=google.com; s=arc-20260327;
- b=gLkAKX6tUxM71ofDEwTw7QKcATOJVE7GOG1Oln3IajqzFniGRqt/zFV9qw81Kd7Bma
- 1uDINsyBDYgpoAr8R1oQhvOMEW2cEx+1MEjFpdN9GajZQkd0u7yMIZz8exZk7vyeZNEC
- 8v5G2WhNvQxNF1O2dgp4bu8rvR6Yj3Pv2XtZWi5nsOG575iTJKe5wRhFh3WHVwrMI477
- AV5FeE/DC2JYkNLDUE1ziwXT8GCntV/gPZMYovw+y8LgiD3iGxzRJHuTDBYjQdZTQo7/
- /t6Rk7iTzZguuaB0aBxlmcnzcEAEK7eQwB8rdhJez5cAfYkinqKp6bi5UD0cdZvHHnkp
- 4pew==
+ b=T2YJOTYgug8fLuTheKq7amXI5TmkgK64j2PNQAdCNrA7SocC1aSPq+NqQMGBzax+lW
+ aelncIc0Gxor2bLVgKG5MgiAN2j6jccqMWj4QfCB+mxciU7mPFPusW87KHDBta2EH9F6
+ EvVqXTUcidJd/rO1iRgP6Txj/IDn7fwaG9epnU31cawHFhnCsrJeZOXfYKFMZHMzVqn9
+ B8DjymSZ8a7HtoadehXC63XrN+va67VK6KccFsYztlzCXq8MOhUJ/bq5KwPZ/3386T9G
+ P3UCCPOQ3/JqT3cv6byYao2yrzzg6A2kY2hqXTOVHU4SbW1AWZvWbjhUU1/TPE2uElyv
+ c6Ug==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=8ro3ouLpcMepwU7npi+EYrB9mABhvxcqlWiph0s+VYU=;
+ bh=4KcoWNhRKkBGA3tAv9e6pyRHghGbdQKqmQsVa9lTQvk=;
  fh=EjplmlcXR8MWJXDdpR5ncThIs/e4S293bvxZuvqDLMM=;
- b=lZzVACd3DoV0Mo/eZ22HQ4Rd1TreSUmMKneRL/tFe4HwfuIJIpBKbdLzCrV6UWpGL+
- B/Ipj6O3e2wO0dxzDyN3GA8Rzn9HuzwKit513zyY1+n7qPF+ztXEmmuhL+Oje0Wnk9Rc
- me7KuWBmHq7gEmS6gQhnc+tsgJoiCL/3QTAx/26C97uzc8Uz9DxFIc5f4qneUsiiplAb
- B69QIExpi7cYJAL5voDn0JkwOR/w1RWlSQJ10jkdlX1g7bbvBGT+4FbZ8E5ZhKp9jd1t
- DjAtBNN107pcCaeDu8Z8yOeNJRAs22biBAIl0YmyADZqhgU2VyJrECkBmf/k80/D5Bsw
- iOtA==; darn=nongnu.org
+ b=ogGW/EO++WG/+97AocULq0SkAJ+B+neP6Hrss6wa+3FPvF5/PX9sZY6GbYlqlUJgks
+ MpmaqHyCDBdZruPrHBRI/y/HUkyh/eflYXAYwi2bugSX9bleSBfkDgu0RI6DymfeJeX7
+ 7di8BjVZidhAJColWRTbFD+gMrPcBT+D+JJ+dAYQxwxHx59cBUgkZyRHcnlm1Rn2lEP5
+ e441kWqq3COXBmcLAketFWEx0jx6fWDtJRY3ONk3zmPV/kr3Rxg1u1g6/By+P4EkTj7F
+ 3cvNmvWzYM0ZMGpxKcCqISuub2m+dezniRPAoYXfLzGD6ocwDk57wxzDaMtGjq3UDtys
+ hC/w==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1791212713; x=1791817513; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1791212720; x=1791817520; darn=nongnu.org;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=8ro3ouLpcMepwU7npi+EYrB9mABhvxcqlWiph0s+VYU=;
- b=sg7f7h2+w5Q2sujV6xBFJjMtJcHALuW/j8m9PSEssi9b3k25dR+kjIvuaIpm/XDVY3
- ZGbW7SPD5d46n2bHg+to6EFdpizldoo2uCQcb5k0HGkds8ReQ65GfCgCd2cnDtC2zVAP
- dVAiXsSPysQnwTdbZMiX8s4jmK12vT0Wk8ITmD1dwqjdKm+UEoLZ4AWIIMZrbkgEP1nB
- plKvEoHzqtwio3jVt4BMloaMQWqrlsHF7xMV+r4X94uzSk+vp4iyUt/y9AXv+RwWBRih
- W5WErGT1Ed1odGEPjGEbj8V5SKurmQjIl/l1ZbhDsHBy20eLDs8MH3tD7UalS82UvCOI
- aC/Q==
+ bh=4KcoWNhRKkBGA3tAv9e6pyRHghGbdQKqmQsVa9lTQvk=;
+ b=rt5htrV+aW6H72YNSBDwq504zXLZYo8Oa6Q5hroT7c8WGVguXG531UCtYLnhqwArW3
+ FvXf1ngvNdEGTxPSELI7oma++7QLwTBi8t6HKIPgc7WEa5vyDn2BeRLzuWnLBDnSYRyE
+ dCxKc7WpIfAOfl7XdbDpnTo6Tj/MTeyVgA5WUSNTo05PuY1/hgSR618PrBLq+cGaiIhX
+ DNgvNWTgHF7ayWp7+q1uP8vTnFOEbU1WRkA7eJ1R0cwPwCdU73tKMrnjDPmVlvmHCziS
+ 3tMcazP4M+MGaoCQu727+UxzhrfFGlt0wEYAjo9zYwdJA6qaQkPiXTn6w3+l3060khga
+ PYkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791212713; x=1791817513;
+ d=1e100.net; s=20260707; t=1791212720; x=1791817520;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=8ro3ouLpcMepwU7npi+EYrB9mABhvxcqlWiph0s+VYU=;
- b=XkPbBF3DuHn1ehIWwtQa3233EQpXVZmgdrZN3DbQ9ZJvuZgqZGMYYhuO01YXxZiOPX
- aP8jqqGH7RalcIjqXAuNMJ/iDDix4i/U+QS0gYkCz5RJ3jHawFJ1w8bkwI3dGYD4G02W
- rXx5hCunDaPXRlJfAe7Hs//kyvBCyT2GlsTvxmP9rhXdgJFKjSVVqaXDkosTs/Te1WQ0
- zBEuAtFuGX/clTX/ymmPA94zVHhA/595mAv80Z0xAoLov63sdBOek/o/tTGwbhsRACIt
- Yq1V5DLmmEWwveKpOFeVILzeQA4mtCZZ8ga29JoDsnvPmb0n2NPWqPQOu50UVJhgDS5r
- /sGg==
-X-Gm-Message-State: AFq9FYLdvyPDHjYsEO6KPA/AOI18et/mk+IdOd7GBLgWk9Et4dBIRR9t
- 7Ub8/jjNMBl6M3j4DaEBmLbpb0T0VfTI+0tuFXXBt6TJvpsCsX9LUfSuVpQqW6sZmvFP1STxsYF
- pRUFtkMTkaiPn1i36RtVcSatws62x40Mj8I8Ea54=
-X-Gm-Gg: AYBFou0PJZRkEJF9EIaKzSg8uQSS+WXug+FS+Nny6wKjWIePxjsSnW5yaLGgRMnET4Z
- IdGUMOEmO40vJCizo70d2k42C5yuiqcr1hfU+ZoRuVev1qT5zZq17DSVsANjLL+F9dfpPF6uQ2S
- 1g6wrrd4uDzTU+uzyxxY43xAtRTbH7grHkxhBYGRsy5Th9Zd1rWEp45N8hElDe/JhW1160Uylge
- d3FWW7xt3BZupij+B7widL5+ryXyG1Paoy98lvFlPvdJH1kgJq4wD7TkZ8sGla5omJWyXaWTkkh
- LXBfCdzER2bR20JYQO10Zg6DPF2154NzjtnpkxJNkxBb/fJCXPoigKpC5X4zMFuiNWUytuE1qVK
- wHqLvIhTlrQlHaVE=
-X-Received: by 2002:a05:690c:c3c1:b0:891:faab:ff1e with SMTP id
- 00721157ae682-8ae3690ccf9mr36088087b3.4.1791212713531; Mon, 05 Oct 2026
- 08:05:13 -0700 (PDT)
+ bh=4KcoWNhRKkBGA3tAv9e6pyRHghGbdQKqmQsVa9lTQvk=;
+ b=FZGlRc5L6txlmRNrWq1u6r+oQW3axBzXT3mQA7DUX9X9q3ai4elo53mJfWj1kHcs93
+ ly3a3of7LSAojDrZv50EEajYBeuqXZ5WC2DI6i3zQXt5hlF1GzKhCIi135OG0KGp3isL
+ 3p7eXva5pJ2VcoeEU6V6MvWFLlsCWB2iX/N7ZLcVLytyE2MrXp6dNLtN9AbsXrdjHtZN
+ KiRFj6FnsuCcviyNcWKLMXF0poVqrg/EN3xBQixh+lMYCGHU0hP1y4/LT1RHIrGa51TX
+ jrN8cQC9c3eNgVDk2WCjylyRpIGkUGcEbKaDUKY/Ytcqt2OpBHSXO+BFYgSxAlBPBLe4
+ iccw==
+X-Gm-Message-State: AFq9FYK7NmjWzR7y9gU9BFfrMM35Ul8Y8OkRxPgnqQfV6mBxu/RnOusu
+ PZ96a7ZKoTbdqGsCzYkbu5I8xRiKccCSRz6c2uQhk78zDdcHPmw1nCw6QHduwgmoDo6qi7wxnx/
+ /Rgrz6bOExtKTcbPQGRmibXpVUtBy3vQ=
+X-Gm-Gg: AYBFou3r2zLGy2cvklzUyu7Y03ycsnlHKbrkxN9m+RU1CJSICn19lKfzStWCvDV0oWu
+ 65Yidbi2IzTKWV4XP4aHuheEEM3EKTEH2eHCW0LTLLxi3a+2AtxysHbR/XMjUN/h8RB4V5nu/mh
+ umHtpbLOI5E8x6JbQdDUNCOtZbtd7JiZwZsGS7RpTdAXzYqlE8oC4sQbjZqzgwmuFzOUNtQYJor
+ P2M6cvpYow/EmqLWLOX7uSucyeDQb8AiV/buuLLgZkH7JXGNxYQoi7onmS/iWFPJwlX2UkQ/3xw
+ oHoq0ydSwPPbFsiaQlvnp8laMQGIee0Vfx5JGtPj9TDjYQCcHPlU8+oGZGeUN8n90GA9pOOq7D6
+ QjO+D82LUD6eCmMu1l9Iw1uz5eA==
+X-Received: by 2002:a05:690c:e3ef:b0:8a9:97ba:26b9 with SMTP id
+ 00721157ae682-8ae39bfdf0amr49927697b3.41.1791212719962; Mon, 05 Oct 2026
+ 08:05:19 -0700 (PDT)
 MIME-Version: 1.0
 References: <20261005101800.10821-1-shentey@gmail.com>
- <20261005101800.10821-9-shentey@gmail.com>
-In-Reply-To: <20261005101800.10821-9-shentey@gmail.com>
+ <20261005101800.10821-12-shentey@gmail.com>
+In-Reply-To: <20261005101800.10821-12-shentey@gmail.com>
 From: Bin Meng <bmeng.cn@gmail.com>
-Date: Mon, 5 Oct 2026 23:05:01 +0800
-X-Gm-Features: AclHuK-yqs1FD5anwNhAanO0PQX9KeMjF3ZhrgqC-Wk-swzSZ_3G_5Fw2s9kigQ
-Message-ID: <CAEUhbmXu2fhLKD_-LUp-xdQ85LB_A80mW7nNGPNNGARem1seAw@mail.gmail.com>
-Subject: Re: [PATCH v3 08/31] tests/functional/arm: Add console test for
- `sabrelite` machine
+Date: Mon, 5 Oct 2026 23:05:06 +0800
+X-Gm-Features: AclHuK9bi0TYBNlCb_SKzXAJdc1S974UXVFyUjiee_wD455NwAjxXMeB-7ZPE9c
+Message-ID: <CAEUhbmWSkX0Hj_X9+o8SY0+PB-ZXU7sD7P6rXHBtrGucugN59w@mail.gmail.com>
+Subject: Re: [PATCH v3 11/31] tests/functional/arm: Add console test for
+ `mcimx7d-sabre` machine
 To: Bernhard Beschow <shentey@gmail.com>
 Cc: qemu-devel@nongnu.org, Gaurav Sharma <gaurav.sharma_7@nxp.com>, 
  =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
@@ -103,15 +103,15 @@ Cc: qemu-devel@nongnu.org, Gaurav Sharma <gaurav.sharma_7@nxp.com>,
  =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:41::2a;
- envelope-from=bmeng.cn@gmail.com; helo=mail-yx2-x2a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:41::c;
+ envelope-from=bmeng.cn@gmail.com; helo=mail-yx2-x0c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,7 +127,7 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Oct 5, 2026 at 6:23=E2=80=AFPM Bernhard Beschow <shentey@gmail.com>=
+On Mon, Oct 5, 2026 at 6:24=E2=80=AFPM Bernhard Beschow <shentey@gmail.com>=
  wrote:
 >
 > The test currently exercises the Linux kernel and waits for the first
@@ -138,11 +138,11 @@ On Mon, Oct 5, 2026 at 6:23=E2=80=AFPM Bernhard Beschow <shentey@gmail.com>=
 > Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com>
 > Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 > ---
->  MAINTAINERS                            |  1 +
->  tests/functional/arm/meson.build       |  2 ++
->  tests/functional/arm/test_sabrelite.py | 46 ++++++++++++++++++++++++++
+>  MAINTAINERS                                |  1 +
+>  tests/functional/arm/meson.build           |  2 +
+>  tests/functional/arm/test_mcimx7d_sabre.py | 46 ++++++++++++++++++++++
 >  3 files changed, 49 insertions(+)
->  create mode 100755 tests/functional/arm/test_sabrelite.py
+>  create mode 100755 tests/functional/arm/test_mcimx7d_sabre.py
 >
 
 Reviewed-by: Bin Meng <bin.meng@processmission.com>
