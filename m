@@ -4,93 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24D70CA5FF5
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Oct 2026 21:52:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 422E5CA5FF0
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Oct 2026 22:05:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xDqbT-0006xc-Mr; Mon, 05 Oct 2026 17:52:13 -0400
+	id 1xDqnR-0000Go-FN; Mon, 05 Oct 2026 18:04:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yundi.eric.xu@gmail.com>)
- id 1xDpmW-0001ss-HM
- for qemu-devel@nongnu.org; Mon, 05 Oct 2026 16:59:32 -0400
-Received: from mail-qk1-x72b.google.com ([2607:f8b0:4864:20::72b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <yundi.eric.xu@gmail.com>)
- id 1xDpmU-0007Zg-6K
- for qemu-devel@nongnu.org; Mon, 05 Oct 2026 16:59:32 -0400
-Received: by mail-qk1-x72b.google.com with SMTP id
- af79cd13be357-93cbee4b010so132377285a.0
- for <qemu-devel@nongnu.org>; Mon, 05 Oct 2026 13:59:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1791233969; x=1791838769; darn=nongnu.org;
- h=content-transfer-encoding:content-type:content-language:cc:to
- :subject:from:user-agent:mime-version:date:message-id:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=kOIV1zUG+2y+LCYyabP7QEGAPX4iveRbB6Db8e+t6T4=;
- b=VMPHkHTQgcs9e1HZdB+0xwPt5qUPlwL3NI9/GMYYhVmaCKMSbMSyuJLqZpcqbsdAyM
- y8AjNTVH6DAIaXglBPISO/84bFX8zRAuLGFyYhkwDLk2cj6pen1eheHWd3zfZ0px1yrl
- ZJYdq0nIUPGXFj47YdBZNPpgBSd/peI2lMGUbcyTe59iN2CN8KzdCWOb0xnYuyZlkjFv
- eoNjs7JkxGMqirT9rWxVN/MiAqCWk7v2H54C/lHg9Uvz5OCbm+7bYKFEktZ5Og4V0pii
- eQ5v5R+W2Ibztg9bOIU7SbP5rSRvL8ns5PKZt52uQTYCTVnnXaIG07Z7+W4ZdRi2sx2Y
- cBMA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791233969; x=1791838769;
- h=content-transfer-encoding:content-type:content-language:cc:to
- :subject:from:user-agent:mime-version:date:message-id:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=kOIV1zUG+2y+LCYyabP7QEGAPX4iveRbB6Db8e+t6T4=;
- b=kaYJoXHbXnKzJrqVPsPTQSd0KR7k+4vrA8QYX5UqjpFExxuev1InqpZLRyVuFT9QUT
- 2myjJhzOUb4K48Xz0/vzjbLwN9cbSS8yBMQewq38qu4s/1aOFq/8nSh7pQL8jo7OH0hI
- 9EOjTjB29U26OlpCOyn3WgFQ3Q4+A1TQedOsNZ+prXk3RdkYBG4k3YNNGv6I0YRIJN2/
- 7faeuNVoKKW6pADLNCvIm6R5Nu5USEr66+TmvSRDWsiKAC4Dxub2gpNMoPscHzyCw+ul
- nUfrVXnqyXbfhIcyEoknPvxc91Nf6puPMDSnSrp7DJSUuMX1sYPWUKM8MvILtO7hQDDk
- G5kg==
-X-Gm-Message-State: AFuF++n+CJdiq8Up25+GkVr2vQG4M2JgJ2vMGxIOwEgOATBueHzuZg08
- eykBYZMHsnNxzr1830kR1bZyg9dqdtHLNhdn2KZ6p4PMtZ1I2Elt173Y4FbIY/Jt
-X-Gm-Gg: AYBFou243oPXt/y/bIaqPHQwUPhLp3p0lNbMnAlHT7R6mw045sT3sC/ePSKmhRfWH8X
- w2VZSnmQq9bL4J7CKUF95LLjMvdps1TcqfodswpUhLtN/uw+jzCg4cd2Oijqnc3Zxk2dqvxh8iH
- Aw1yVg9WkNb3Wc7jDTGHUg2TnOupFXVrvEEKcn9Pk9sK43d/JQ3ymQF1J2ASsEDSARrHG4GKUou
- LPsuI3DwwHzTUXeDQ3Eydeq26eIofPAmibZxNmovJ5HZGE67CVPyZx7ikJlzAYfEriYztt/Kr/i
- phZYtHmWVb5WqBiQLpNIfnBf0soXjer0+9g1uLzUqT8UrImI1VKy9K5WpqSI/o5N7xJiI2hu9gG
- O23/bMR90ATkFYvW5IcfWbaxsBXntZPouR+LYnUYUARRhHHok0RdQz0OMr+Qd0LRp4Ogew02Nn7
- BuBdFI9Bzay9UafaeQKJaZoQkxkQ942OkNYYHxmNsl10s8seqjweEJYxuWMz7evKRUapaJlHkh1
- JZFhlCpfQE+DPH2pdvE97D+GGiziGVy6aRraonIl+aT5qXyM560KJgsNiD+sKVb+g1rRuaIFfdE
- OPAR9uHd373Xg7PamQExxw==
-X-Received: by 2002:a05:620a:2626:b0:93c:c4b9:9b12 with SMTP id
- af79cd13be357-93e50e4a6d3mr1335716485a.4.1791233968642; 
- Mon, 05 Oct 2026 13:59:28 -0700 (PDT)
-Received: from [192.168.20.246]
- (host-183-232.ilcmi2.champaign.il.us.clients.pavlovmedia.net.
- [66.253.183.232]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-93cca21d8fcsm978835085a.26.2026.10.05.13.59.28
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 05 Oct 2026 13:59:28 -0700 (PDT)
-Message-ID: <1e5b1f1f-1d7f-43cf-8883-0e0ab2ec88ce@gmail.com>
-Date: Mon, 5 Oct 2026 15:59:27 -0500
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1xDqnO-0000GB-Ns
+ for qemu-devel@nongnu.org; Mon, 05 Oct 2026 18:04:30 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1xDqnN-0004jy-3H
+ for qemu-devel@nongnu.org; Mon, 05 Oct 2026 18:04:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1791237867;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=ElwfLK4I6tA6MHPhVqf7xfSj5Z4og465c8eWqEahqZ8=;
+ b=cIn0Kz1soYTDzo9HLFgHuc4xQ3N2KCSVNlfsyCHPjBMxXBbLWZkYH2NtCUTmeQKzieRRt8
+ pPJxMU3WD7ouxDdK6qaU1Z22PRsYYnb46lYUiqU21guWqmKWPfbubVfuZ8F1UBTlaQh1Fm
+ JMjXwU2yd5ME8zIpMznC+GOTw2/ndvM=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-395-0MsMiYqhOfy6uNwvM7GRJw-1; Mon,
+ 05 Oct 2026 18:04:24 -0400
+X-MC-Unique: 0MsMiYqhOfy6uNwvM7GRJw-1
+X-Mimecast-MFC-AGG-ID: 0MsMiYqhOfy6uNwvM7GRJw_1791237863
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 92157180AEED; Mon,  5 Oct 2026 22:04:22 +0000 (UTC)
+Received: from redhat.com (headnet05.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.117])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4DD203001D2E; Mon,  5 Oct 2026 22:04:20 +0000 (UTC)
+Date: Mon, 5 Oct 2026 17:04:17 -0500
+From: Eric Blake <eblake@redhat.com>
+To: "Denis V. Lunev" <den@virtuozzo.com>
+Cc: "Denis V. Lunev" <den@openvz.org>, qemu-devel@nongnu.org, 
+ qemu-block@nongnu.org, Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ John Snow <jsnow@redhat.com>, Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+Subject: Re: [PATCH v3 0/9] block: cheaper zero handling in backup and commit
+Message-ID: <asQeay3yVze-ELxa@redhat.com>
+References: <20260929155125.3151111-1-den@openvz.org>
+ <127bf797-defd-46bf-9aa2-063f15152cfc@virtuozzo.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Yundi Xu <yundi.eric.xu@gmail.com>
-Subject: [PATCH] hw/display/apple: Fix obsolete PGDevice function
-To: qemu-devel@nongnu.org
-Cc: Phil Dennis-Jordan <phil@philjordan.eu>, qemu-trivial@nongnu.org,
- Yundi Xu <yundi.eric.xu@gmail.com>
-Content-Language: en-US
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::72b;
- envelope-from=yundi.eric.xu@gmail.com; helo=mail-qk1-x72b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <127bf797-defd-46bf-9aa2-063f15152cfc@virtuozzo.com>
+User-Agent: NeoMutt/20260616
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=eblake@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Mon, 05 Oct 2026 17:52:02 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -105,50 +85,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-PGNewDeviceWithDescriptor is obsolete. Replace with
-PGCreateDeviceWIthDescriptor.
+On Mon, Oct 05, 2026 at 10:59:11AM +0200, Denis V. Lunev wrote:
+> On 9/29/26 17:51, Denis V. Lunev wrote:
+> > This email originated from an IP that might not be authorized by the domain it was sent from.
+> > Do not click links or open attachments unless it is an email you expected to receive.
+> > Backup and commit re-query the source block status for every task and
+> > size a task by the copy buffer, so a long run of zeroes turns into a
+> > crowd of small write-zeroes requests. This series reuses what the
+> > up-front scan already learned and lets one write-zeroes task cover a
+> > whole run.
+> >
+> > Backup of a 16G qcow2 image holding 1G of data, the rest never
+> > allocated, sync=full to a raw target on ext4:
+> >
+> >                tasks    time
+> >     before     16384    1.6s
+> >     after       1088    1.0s
+> >
+> > Such an image is the normal case rather than a corner one: a guest with
+> > discard enabled on a disk which is mostly free leaves exactly this
+> > shape behind.
 
-Signed-off-by: Yundi Xu<yundi.eric.xu@gmail.com>
----
-  hw/display/apple-gfx.m | 17 +++++++++++++++++
-  1 file changed, 17 insertions(+)
+> ping
 
-diff --git a/hw/display/apple-gfx.m b/hw/display/apple-gfx.m
-index be0061b9db..e730909c7e 100644
---- a/hw/display/apple-gfx.m
-+++ b/hw/display/apple-gfx.m
-@@ -767,7 +767,24 @@ bool apple_gfx_common_realize(AppleGFXState *s, DeviceState *dev,
-  
-      s->cursor_show = true;
-  
-+    /*
-+     * PGNewDeviceWithDescriptor() was deprecated in macOS 15.2 and removed
-+     * in 27.0.
-+     *
-+     * It is replaced by PGCreateDeviceWithDescriptor(), which is available in
-+     * >=15.2
-+     */
-+#if __MAC_OS_X_VERSION_MAX_ALLOWED >= 270000
-+    s->pgdev = PGCreateDeviceWithDescriptor(desc);
-+#elif __MAC_OS_X_VERSION_MAX_ALLOWED >= 150200
-+    if (@available(macOS 15.2, *)) {
-+        s->pgdev = PGCreateDeviceWithDescriptor(desc);
-+    } else {
-+        s->pgdev = PGNewDeviceWithDescriptor(desc);
-+    }
-+#else /* (__MAC_OS_X_VERSION_MAX_ALLOWED >= 150200) */
-      s->pgdev = PGNewDeviceWithDescriptor(desc);
-+#endif /* (__MAC_OS_X_VERSION_MAX_ALLOWED >= 150200) */
-  
-      disp_desc = apple_gfx_prepare_display_descriptor(s);
-      /*
+It looks like this series is fully reviewed; I also took a look at it
+and didn't spot anything to add. I plan on queueing into a pull
+request shortly.
 
----
-base-commit: f7ada39edacaa5c26b30e98b94017b0b2ccbcf94
-change-id: 20261001-fix-pgcreatedevicewithdescriptor-3ec303c2500a
-
-Best regards,
---
-Yundi Xu<yundi.eric.xu@gmail.com>
+-- 
+Eric Blake, Principal Software Engineer
+Red Hat, Inc.
+Virtualization:  qemu.org | libguestfs.org
 
 
