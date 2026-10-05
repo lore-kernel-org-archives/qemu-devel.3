@@ -4,106 +4,117 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BC00CA5FCE
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Oct 2026 09:19:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 164C4CA5FFC
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Oct 2026 09:21:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xDeqH-0007Iy-RW; Mon, 05 Oct 2026 05:18:42 -0400
+	id 1xDerx-0007ts-Ke; Mon, 05 Oct 2026 05:20:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xDeqA-0007IU-43
- for qemu-devel@nongnu.org; Mon, 05 Oct 2026 05:18:34 -0400
-Received: from mail-yx2-x2b.google.com ([2607:f8b0:4864:41::2b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xDeq8-00040s-ET
- for qemu-devel@nongnu.org; Mon, 05 Oct 2026 05:18:33 -0400
-Received: by mail-yx2-x2b.google.com with SMTP id
- 00721157ae682-8ad0c8eac08so9401067b3.1
- for <qemu-devel@nongnu.org>; Mon, 05 Oct 2026 02:18:31 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1791191911; cv=none;
- d=google.com; s=arc-20260327;
- b=URWH2cIwN15MH0+7cFx7O5UNTdpAT+0cpYEHl0JFzbQyg/HMjI9sWxNVLpUvty9Gdq
- +W+qZ6Bu6hf/GEYmvCvEibDglMPV+q9ClQGXpMxZt//Zydr9D8W96cE2SWbR0z4xu+Cn
- zFj0Gjj4p/y6UFxIVdvvk3lIYn62Iy23miBHdt5lzDa5w3Zbksdm5ge8skj9GkORrMhY
- mUo3S1i6gFnrdDt6gRw6BCir2b3ckD1lFlZ56ycT9OR0Dwt3W4tNB/3q2+wF3QYVgoOg
- IE7Hx9IG7/Az7GuF9zysb0afNDhByfLE9xvW7Pg8hBWmVBa1QselgXwhWve9bROfFCm5
- EEEg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=UpwCXd6XmIrFOY9h2iXrcSniKBp6sSDaPVEm6KEbgrs=;
- fh=skaqemkmEYcyFg+X1G92An4ZvipxzcY0utyF4fq/fUc=;
- b=pUDtP7nfngdzmYRDawpXFunq3aqpqAW4j8Bo1lddEv44uoA6GOvqkdR6IYxUa3D2Zj
- iDCcFIIiEN9Frwr4X1o2DMhjx75Q2j6gIAFXykDzxlsNpXFTbUjbMSaJWAw/rwCyZ38y
- lairu7pnA+g5f78UFDUysjpkNdQQaJHfVnTNaM80zwF1wxq5m8bUhkWU6w5b/T+jRl9i
- Ku5EIIQ+HuDyp8VvSrQAVH5NHS5dQ4g08//tsU+s8M+Bc15ifrgUqp4+HaymuKG7Yacv
- 3ADZfsqxhO96GH1HPfgrSCtaLySvHSk4RiDFeeuq25FaVF8T3Y7XC2RGP99osEFGD2FS
- kaPQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1791191911; x=1791796711; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=UpwCXd6XmIrFOY9h2iXrcSniKBp6sSDaPVEm6KEbgrs=;
- b=aBLOCo6cagd7n8Kwja07rD/IRSkNI4YEJeM/ehtrZvOfJNFOKHQiXgTGIlVH+nTO5l
- xE/DXTk9IkrNY01hX4FbYhHQFBWze2NjQyTgvD+y86UOmz63/OrhDBEPczNNF8IzCtsz
- OyrxofoKrBmcAhwNN3O/0YkHPjQxXbcyNzJPHkQp9hNnC8bY4xhyYMaU9g0RKQxg89pZ
- fyTLTM/JnFDWZI8Q5BB7AyYfFzDMp07nYz59NNofVh99KhUNXxC+lsq+G6eKj7iTjqK2
- 94j6IBR+A4Cu+nCwLsvbtuaZGp9gO0IDxk7usj1Yr4r/JuyQeqH2aP2SSo21+cYnccJZ
- buSg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791191911; x=1791796711;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=UpwCXd6XmIrFOY9h2iXrcSniKBp6sSDaPVEm6KEbgrs=;
- b=KQi/r1NVgnFqnyJ7ugQHIero4mrYF9wcZy+J3BIZJ9YasTbZlgPSK3kXfnEDzg7enr
- 8Kv2vrjEj2kwOM4Hqn37XAoH85c8d9ZMzmxY/X8EBsCudA9xf8IeDJTqm6iWgwJ2wTtc
- me+a17Yyla00ke/B7iug8JCUX2ib9L2ACj5IkgDhZMHJGRSMji7DwldRwiL/x3SkuCOK
- xMbQC5FG7pOFOOQ8dAoCURsrZPNpqDlX6ujRflGORAktJ2mWl57VGO1i9JTpD7DqWlrY
- OWOXjrX7rQ5mA3HTmWFFyYd14ag4e9fjwnZSDcfXUozuf5gq0ahdOHo74MB0pkauAYyT
- YJKA==
-X-Gm-Message-State: AFq9FYIixXz3Mi930l9qbPJ4++37UUqM26P5iZxwHyKWATD/CDyTYTVr
- KibDR6sbNyzMOkJqvwcl1PX5L3XsudcQhhm5JnrISj1Q/N5Gn0q+KSHZi+QGEBGYDP+EtnLFh5I
- aLS3LqppaAK7leBt4p9y97BBoGEdvtJVmVEL+dPT97g==
-X-Gm-Gg: AYBFou2fSZEb2cHrwEUroR5xGVs6thg57XFCte9HXNKJOeDIyI5qSSKw40zhpJ+1gBB
- d6v8RIzpJI4dDeNDgQUmUD/Ck1iLBBj+OtDKfFXZWBViIkqiTrf0mWJ6CvXkwA1n3lXefFDXJBc
- 6M0gqZBn5Ipj9pIErI3SESt1ChMHMgLaQd+WCVPwfHNuvhLzxNxlX3yIddlYThKjOvewSXsOAK5
- rKIX49gJOV/Nij7VC33ZOdl0TyeoyvTiK6tqhgcZmSNQD9P+ThN8B1FoWWcYUVZ7lLDwehv2B2G
- aL8JiONj2SXQxb7VqKoL73cx4qKmZgBGdFmOhbbjdaoq9eFbCKsQQ4KtGQQJRzo4JF5afasf6Up
- Uoc1rOAiqZG+5llScHXHtvhDLFDPKOW6DMk/FFAI=
-X-Received: by 2002:a05:690c:ed6:b0:8ae:81e8:a719 with SMTP id
- 00721157ae682-8ae81e8ae1amr26929087b3.62.1791191910673; Mon, 05 Oct 2026
- 02:18:30 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
+ id 1xDerN-0007jX-Go; Mon, 05 Oct 2026 05:19:56 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
+ id 1xDerJ-000460-G4; Mon, 05 Oct 2026 05:19:47 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 69515mOa3138333; Mon, 5 Oct 2026 09:19:43 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
+ content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=iod7op
+ 9+NzIGlqg39M1sf9w38i0ihekxm/DydDhqDek=; b=EZqJrj2yE0HJpMCUZ+piKS
+ B8bpdTe2H+d3Xl0BLZqEEB+16UfGhCbMdgDgiMpKeQYhTvwUabtgEAD+hB1SxjQZ
+ T/EhLr/m1TOP66U2PbuvtSoMe7Rb98WuUWzCuI4HjkxueOEMUgZ1b1PMtmov/+0O
+ v5MWl4rgJQJm8IRK3EWbtNqfwl/zUsYvguO771J9n3kFG+6NQrwbmYXoXIM4B2Q6
+ lGXNZK9QlQSFJVLmaBcLPorW2M0548GbenFSuNtDGSZw7Bi822irGZCKpNaHTE02
+ cwc18SHpxDaJ4L+o7/NZnwSyIBb4QJOZNATTTieq1eRhP+aRmhOVaoG4Dx81IOOQ
+ ==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4h2q4jh1t3-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Mon, 05 Oct 2026 09:19:43 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6956dXst2163522; Mon, 5 Oct 2026 09:19:42 GMT
+Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4h3cdvmveb-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 05 Oct 2026 09:19:42 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
+ [10.20.54.101])
+ by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 6959JepC49807792
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 5 Oct 2026 09:19:40 GMT
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 80E462004B;
+ Mon,  5 Oct 2026 09:19:40 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 57C6220043;
+ Mon,  5 Oct 2026 09:19:39 +0000 (GMT)
+Received: from fedora (unknown [9.5.7.39])
+ by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+ Mon,  5 Oct 2026 09:19:39 +0000 (GMT)
+Date: Mon, 5 Oct 2026 14:57:50 +0530
+From: Amit Machhiwal <amachhiw@linux.ibm.com>
+To: =?utf-8?B?6J+55r6k57+U5aSq?= <zakinko@snowrabbit.org>,
+ qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>
+Subject: Re: [PATCH] hw/ppc/spapr: Add the "rtas-version" property to /rtas
+Message-ID: <20261005145654.9aa03d20-a9-amachhiw@linux.ibm.com>
+Mail-Followup-To: =?utf-8?B?6J+55r6k57+U5aSq?= <zakinko@snowrabbit.org>, 
+ qemu-devel@nongnu.org, qemu-ppc@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>
+References: <20260929094138.16A18C92A0@bambi.snowrabbit.org>
+ <20260929161126.2679fec2-3f-amachhiw@linux.ibm.com>
+ <5E17BD06-6338-41C7-BA4E-E43771862D8E@snowrabbit.org>
+ <20261005144738.9c0e1f8c-ba-amachhiw@linux.ibm.com>
 MIME-Version: 1.0
-References: <20261004-issue-4560-v1-0-ccbef537cbeb@redhat.com>
- <20261004-issue-4560-v1-32-ccbef537cbeb@redhat.com>
-In-Reply-To: <20261004-issue-4560-v1-32-ccbef537cbeb@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 5 Oct 2026 10:18:18 +0100
-X-Gm-Features: AclHuK-WKMjyk8tdK8S9BZgf3HecTb4v29EwNrraYxBflF4Uz8__xqWN0v7he8w
-Message-ID: <CAFEAcA_piHxiTAqzHmvFW4JY01kHFnh9cUg9qiLe5om=8xBg4Q@mail.gmail.com>
-Subject: Re: [PATCH 32/63] hw/char/exynos4210_uart: enforce 32-bit MMIO access
- size
-To: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Cc: qemu-devel@nongnu.org, Pavee Hui <phui@google.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:41::2b;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx2-x2b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20261005144738.9c0e1f8c-ba-amachhiw@linux.ibm.com>
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-ORIG-GUID: G6ht0o7wsksgPPWV-40AILnS1-9s4ih2
+X-Proofpoint-GUID: QoI6lbw_-IvVmAHhL8FV3ReMDOj6Gj94
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA1MDAzNiBTYWx0ZWRfX6dOgBTOK6eAg
+ T+8o8vIB9p86T/LXcrcY05gJVggdHWeBj7AESqnLFfW+Yuf9iE1VdNn/jQonOYjMgFkFYsxJaW7
+ v/rKY5cThvk4hmAqvqpDRK2A/b+ppkI=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA1MDAzNiBTYWx0ZWRfX04ocsBZFs36U
+ 1/Mqfc1jiHxA6ZRCxyMyT6R8HNF9gBWNG/IbdQbuSkYNk6z6mJNqgZIkAgqnqUsoFVJQaCcDW4Z
+ wnRWR2ooiRv5QZiAQS9lfl1cyGtnhhjGJ6X8FXCOCQ+DPi+asoiIwkVkQTpuCF6oB9Y/inMjpqQ
+ FqPfx58Mt5REmzEu7tK1hNGXoNpzsTtfGTw7R5GZTvWplRtcHU1/4bAKm2rt0d1XCy7uDnh7OWM
+ ltxP8TBUQbo6vLLjHK+qiheYmb4BsJzNCHRhUcWqWYFJA3F2MCRMS70OZyoSjx1yf/XHiaoC8mh
+ zQSJ47A0z6pyxQQ2JJZgMD1WbCrxBV1PDRYV53mQrWaugx1JmIZ1Jc+y2g93O2rWVZG4iN1ESY+
+ c/OqrxwTZX2LSi7Qu+Y0c1Ms8KpECDscliFVYxaqcSQhSkwQi3fBt48Guj6jSkYpYN1fSIXicle
+ Rf4yaBi/s+WplfJo1ag==
+X-Authority-Analysis: v=2.4 cv=eYeo7LEH c=1 sm=1 tr=0 ts=6ac36baf cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VnNF1IyMAAAA:8
+ a=Qh0I4lJ5mTKsEwSnB44A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-10-05_01,2026-10-02_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 lowpriorityscore=0 phishscore=0 bulkscore=0 clxscore=1015
+ spamscore=0 malwarescore=0 priorityscore=1501 impostorscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2610050036
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=amachhiw@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,40 +130,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 4 Oct 2026 at 11:25, Marc-Andr=C3=A9 Lureau
-<marcandre.lureau@redhat.com> wrote:
->
-> Set .impl min/max_access_size to 4 bytes so the memory subsystem
-> synthesizes sub-word guest accesses into 32-bit handler calls. The
-> read/write handlers ignore the size parameter and always operate on full
-> 32-bit register values, so without this QEMU would not extract the
-> correct byte or halfword from the result.
->
-> Reported-by: Pavee Hui <phui@google.com>
-> Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> ---
->  hw/char/exynos4210_uart.c | 4 ++++
->  1 file changed, 4 insertions(+)
->
-> diff --git a/hw/char/exynos4210_uart.c b/hw/char/exynos4210_uart.c
-> index 7240ff7b5c24..8774d4bb43d7 100644
-> --- a/hw/char/exynos4210_uart.c
-> +++ b/hw/char/exynos4210_uart.c
-> @@ -506,6 +506,10 @@ static const MemoryRegionOps exynos4210_uart_ops =3D=
- {
->          .max_access_size =3D 4,
->          .unaligned =3D false
->      },
-> +    .impl =3D {
-> +        .min_access_size =3D 4,
-> +        .max_access_size =3D 4,
-> +    },
->  };
+On 2026/10/05 02:53 PM, Amit Machhiwal wrote:
+> Hi Showta,
+> 
+> Thanks for addressing the nits — both look good.  A few things before this is
+> ready:
+> 
+> 1. Please send v2 as a proper standalone patch submission (not inline in a
+>    reply), so it gets picked up correctly by patchwork.
+> 
+> 2. Since the nits have been addressed, please carry over the tags in v2:
+> 
+> Reviewed-by: Amit Machhiwal amachhiw@linux.ibm.com
+> Tested-by: Amit Machhiwal amachhiw@linux.ibm.com
 
-This needs to come with more than just this as a commit message
-and change. What is a test case / situation that failed here?
-What does the data sheet say? Etc.
+Correction, the tags should read:
 
-thanks
--- PMM
+Reviewed-by: Amit Machhiwal <amachhiw@linux.ibm.com>
+Tested-by: Amit Machhiwal <amachhiw@linux.ibm.com>
+
+Thanks,
+Amit
 
