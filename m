@@ -4,56 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B6ECCA5FF0
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Oct 2026 15:02:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A239CA5FFC
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Oct 2026 15:03:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xDkC3-0008FM-4B; Mon, 05 Oct 2026 11:01:31 -0400
+	id 1xDkC2-0008FF-Sl; Mon, 05 Oct 2026 11:01:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1xDkBt-0008EM-JC
- for qemu-devel@nongnu.org; Mon, 05 Oct 2026 11:01:28 -0400
+ id 1xDkBq-0008Dr-MR
+ for qemu-devel@nongnu.org; Mon, 05 Oct 2026 11:01:19 -0400
 Received: from mail-norwayeastazlp170130007.outbound.protection.outlook.com
  ([2a01:111:f403:c20f::7] helo=OSPPR02CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1xDkBr-00056Z-Fo
- for qemu-devel@nongnu.org; Mon, 05 Oct 2026 11:01:20 -0400
+ id 1xDkBn-00056Z-Ua
+ for qemu-devel@nongnu.org; Mon, 05 Oct 2026 11:01:18 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=akuAD79tk2LqwxVicATnExovz1sFNYLptgAOOgvSFLgrUilu0x/pXguJM/UN42hs8FM/CU3FJ2HLhXbAKpPgsmRffTmr8KwEk0ikRwFcgwnvQL4KTNKgljsT2WFpmqPQwipEmVSb9Tx4VE8dkuTWORuN0Y9yPQXvwV8gI8ytMe37fRM4qm9N3z/gr3R/xN90N/8crGEMux+XcT0ZPwlcfmZW5Edp1ko1BgjR3GcK9XxdZrs+dMQs6gpwxCqmkHYHJiUWxtPL+aHalFN/ibTi9gH8ALODtHVt29UPtF7cWrvnrsXW2uhV7fpuSGiq1X5+PIP4BTUh4u3t+2adYubVdA==
+ b=bPISRHdjLdZsLyMg8VaaYylsEXSbp8LVXrEa4WebGd2ydXX4DwWz8FFfZB6Wnt+suduhS9gLvXDQ3vY2fE7RVFMNQg68dRVXqL7ElMTQRTu8eu+5eKJ51WbLopj4D3h8R/rwvnpoiH9/a8R3yNBpNRJ8ZrA9QSKAO46appT7jJsmC1dVnb9vkRq/hn3kussccp0ROCUtBUmXrSeuaqM5EE7nDk0lnY/rXYeB4XwkxFy/Vo1XdUVXlW/uJOQFvLZDTljGZI1VdFop+IvaHXRSz8t9WQ7tCNzW7WQ1dwkGFgcjxfyXQB+1SZfiKP1YDvKjPSZD/1ooBAFSeMftBe0ecQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=CzhhEOopcN3KOOtfWAhLZROUNYy2FrEKLzdoJ27vb+k=;
- b=PG1cb/D5Vhy/hW1sXxMOU6vZL/F9ONeU4luET51EUIqIZGHuA+BJ2u5BagivUSZebcbHU6FQM6NJzFS36g5l137opqdWYzQfilTMnYgqtLhfVnHlX3OpMqTZYiaTulvMF6WTyxmJQ9qQeDh0uBdBFkcph8HF99Kj4dR8mkHLU0IyifwAuvPnPrZIMKUFcu5JG4sBvXrLkgX2+mZXfO5/hOInUvQdgG8dnGXkWVK3+X83Fy+plzu1HcNs5HOYfQbVwAIRaZ5jav3hLGEFW6LuSZT2C88tH90MotYoKGESmxTt7nmyyZC+4U1nqXddCUTU7ChO0V1GJNyJhcImejUZgg==
+ bh=qpeYjDkVXimj7vKcwL0s8nD/Fw3mIrHREQmIZwYVvdc=;
+ b=c2zI1VOZt8AtHUP6BNzBDrxHJhGZYYLrR9ep3C1tsmBbN00QGdvmIZO1bdTCfbbS1OY3/BXDc93f6dmYg0FaZfhIywCFKLrt1K7InfcaDG5ofe9aod0dNx/RcNPsHiaqlICUEeztUw5zXoCoTEYbZg4Hv91XD/OzFSedWZZrraLP7PEp79tV5xO4eIDRiKYmM1LXQBibMFj1CoLT7Rd9VNga9PjRX0O4Gjv1yhKt3ZHDpM4eGYR4SOwb16EygvPC7mt3RsU/6NYUIZnPNWnlDMrF1u0q93M7SgOwi0/jGJgmRHBNtZjOGydeY98oo7/lN8Jgtz0xTllIqjfMAGW2AA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
  header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=CzhhEOopcN3KOOtfWAhLZROUNYy2FrEKLzdoJ27vb+k=;
- b=C9DgE0mVeFl8t9wBA0JIhuJTQmVsTttUyN0L3+E1VXP2zOH+myzYloJfjTjJi3cDb9tbyottCKJl9nxgM5PLP1lsX9WHUlAE2qcnEFhY6A56JtC6NuuntYqlyQPRRMy/Wkjheq+I/nyL6aDGsLAXGZ3WStQUvTHphydlWFqlvuKhAfcWTWmmq8EHJsprEE7B/TAeWWxWp4uZlFjPdFP5sXyGP1BAXayp9HshYGuSCJXQcN/XV9Ta7ZoqJaMwZ/EhjTe3+SMxw1e3A4SO5fC48aG2/eOun9h1cgsSfQy79IZJJfdxHyqbTSk+QG2jwYzPEsQVkI93AkMz5msiHSClzA==
+ bh=qpeYjDkVXimj7vKcwL0s8nD/Fw3mIrHREQmIZwYVvdc=;
+ b=jVcPyRPmzjilChQp5Xk0guV047w/Ew0lNl5XOj8PmKuRXldQma8T7L0Jm6Lm5wLT3h8PW6KRRtWPO6fQQtztF7aWIIimQog0mlF+xIaaCQGZA/SHnjaH1Ovadr48Q6GF911M0cGXE/nnag0+JC76z70IsLEXa/gSksAscfJGaXauMxLKYMmRD/xXVrk01lboRHUPc9kgGAg+SmohLUcBvw8+lHX/Od2EDq0lp0HiNou/3gVzTbrJYhKhnU7kpbfu61vRHG7Iz8SH2bDsf/gRBEhUeWne+C39AxxVF/hnUP6dxUCIMhBXDCiEW1B9Rcr5RjfY+L0ZtrZehD/asOSI8g==
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=virtuozzo.com;
 Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
  (2603:10a6:800:20a::12) by AS1PR08MB7452.eurprd08.prod.outlook.com
  (2603:10a6:20b:4dc::13) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.496.14; Mon, 5 Oct
- 2026 15:01:09 +0000
+ 2026 15:01:08 +0000
 Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
  ([fe80::4e37:b189:ddcd:3dd8]) by VI0PR08MB10656.eurprd08.prod.outlook.com
  ([fe80::4e37:b189:ddcd:3dd8%7]) with mapi id 15.21.0496.010; Mon, 5 Oct 2026
- 15:01:09 +0000
+ 15:01:08 +0000
 From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-Date: Mon, 05 Oct 2026 18:00:41 +0300
-Subject: [PATCH v12 02/21] tests/unit: add test for duplicate keys in CPR
- FD table
+Date: Mon, 05 Oct 2026 18:00:40 +0300
+Subject: [PATCH v12 01/21] migration/cpr: forbid saving duplicate CprFds
+ into hash table
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20261005-up-vsock-vhost-v5-v12-2-40162390c68a@virtuozzo.com>
+Content-Transfer-Encoding: 8bit
+Message-Id: <20261005-up-vsock-vhost-v5-v12-1-40162390c68a@virtuozzo.com>
 References: <20261005-up-vsock-vhost-v5-v12-0-40162390c68a@virtuozzo.com>
 In-Reply-To: <20261005-up-vsock-vhost-v5-v12-0-40162390c68a@virtuozzo.com>
 To: qemu-devel@nongnu.org
@@ -69,66 +69,66 @@ X-ClientProxiedBy: WA0P291CA0014.POLP291.PROD.OUTLOOK.COM
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: VI0PR08MB10656:EE_|AS1PR08MB7452:EE_
-X-MS-Office365-Filtering-Correlation-Id: 9a15087a-0f4a-43a5-9b92-08df22f17d67
+X-MS-Office365-Filtering-Correlation-Id: ae694648-1429-426a-1f07-08df22f17cc5
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|366016|7416014|376014|52116014|23010399003|18002099003|22082099003|3023799007|38350700014|56012099006|10067099003;
-X-Microsoft-Antispam-Message-Info: mgoenvwr6QqmD87rsSF2OE4kNqX+Vz/1ktFj154iOkhnV6Sn9Evf0EE0A1Ax55cEfpQsFqFxVey64kbfYW324LWtFMcqe7DERXN5lL0Vb6JtiZNx5D1e5Fc7hChBnJ8Tz2WCVfTWnMbcC6a6e9DYIFtlIYmdpXjICR8kOIwCMm14lXDKv2EU73zWcE5+VnMScf3PCL8ijaqOZTBTb4Gus7s044+BHX6SV36BQGkGdUkdDSc+YURswEAWOf0ugWgxz7h1sDzFWYUv+vhMGjkK56EC1SNF/DjFoff2iQhD64SiJZffe0zEvF+jton+cLuwvA+aBj+6yqM2i3gcrTkx2yv6ZLN3i5hhxpPt9z4d4fMxtvCKUrN6c7ZRM0gmQAdEWIb/lL7SoYygVzhh9nQz5JOu/9Bh96xzNYKN26FpNSxfVKSw2G/khO2a9HgvnSd88uKMPAuns8Q6vFlWfjdETnIxEY14d2jDsn6Mvd12ytlrI0NITu63tmV+uoSX/6vrD2p3kyz7MpTL5zHFgoxJcj5321eH5Cn8xxMSJBtcXOcXkuskV89pDA/7aR2XqtWt3dhciqiZpRdg/X/p4foonQnOVhyrGOk3hybY8NG0w0QMFmlVNKCSicMbQbF+VXY1vJQZO545jnuEH1bTAd2qbP8LVTJK8nFa87DCPpezJNlx+DAm0ks94JhIusXlQ5XInjxhu0mhKH3TAV55ICrMLOFjY44tYYXXCbAXy2126gc=
+ ARA:13230040|1800799024|366016|7416014|376014|52116014|23010399003|18002099003|22082099003|38350700014|56012099006|10067099003;
+X-Microsoft-Antispam-Message-Info: qr/+pGlCRRCGGIoqeeGvW5BDubpzaxA8uDOY30PosFI83k1qzNnjY9i0jyDH89cNxMpgTTiC3csGRa7ABHO2LTmks5M4wS+uKPexY/nilCEXPs3kKqqkIcC4koDqYgj+SS2+L/PmlCoSlcUZihb63PQJbbgcxY6LYs74AeQ95kCwBKFclh0mM2/z/TubKElu6XxeeaIBfsdzUAbAUA2VvZOiONEyhOYMTFeIroQX0qb9zKUhDjgSZb5z0adI5tvl9VlUDWIJDUMyPJMXlvix1G8hh4LQfG/3xW0kn/ghIDegs7/WKZ3NSjiGCv2t22Ad5Xp9lZLesqXcipwENt28gc3d1si7tsAkZVybHSecEhdKHGjZetgnNMlKOimOLYu8urDUIDh36LlGFcw6ugrXr5DvY8m/UgBHcJ1rBAATtyjn+UqmHl8sUTaXiyr+sjnp1pzHQUSiT2XVi1fHIY+2JaGNZjvZ91CVZnAnwz40dVjOXNPQ2U03MpaMC/yf9OKsxW7/KW+SzjtQ5EIspsXjT7DbjipfyAux8erYueluyZdkwVEszEZ1AxV7jKKfwgJuUWmO+TSpPefmYLnlARFcr4H4WKiH0OdPM06F+gjGCYCKuRBEsC+KvVKosnZoKQv+GBkjzoqZvJqHzrYOCFEKdMibDcgfWtaxiV+icToSdyg=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:VI0PR08MB10656.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(366016)(7416014)(376014)(52116014)(23010399003)(18002099003)(22082099003)(3023799007)(38350700014)(56012099006)(10067099003);
+ SFS:(13230040)(1800799024)(366016)(7416014)(376014)(52116014)(23010399003)(18002099003)(22082099003)(38350700014)(56012099006)(10067099003);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?ZU9VbW5WN290ZldCbmJxRSt6Q0ZRa2JqUUZ0aXVXYi9oVkhMalJQbW11QnV0?=
- =?utf-8?B?dDFmejY0NlZxWEdvRGtWM1A3TlNHQzhKcDZqSCt6SFk1QUswVFQrcENFaGQ5?=
- =?utf-8?B?dEZjbGNFcGk4UUZPd2hqajYvNlJNQ3NpSUJpQVIvNHV1NmpqbGV0by9sK1hZ?=
- =?utf-8?B?M2lVMTN4SVNSVHMxZFRYQnBoYk9CSmZBWXN1RnVYYWduU2NQZXVkVVFCOU5M?=
- =?utf-8?B?RGQraE1Cc0d1d1I5MWw2RzMrazdHekY4aE1KdDJvTjVkZS9zcVVlN3lxdjRh?=
- =?utf-8?B?amNVMlZnbThuaWtrQTFDdmdxVmh4TXRDOGpvS05nUWZHa0ZqUk9Cd1I2d2Fm?=
- =?utf-8?B?Nk9SSXMzb2xEUEJ2aFZFTkZDc012cWxNK0NqQTZmTmwzOVZHV09sazNRTWdS?=
- =?utf-8?B?MitkbEtlVWpDaDVJd1YxdmY0WFRpRmlYUmFSQmkveEwrSDNPWGlJaUZmdU1n?=
- =?utf-8?B?b1RVV2xBY0pqclJYOG4rNTltVjVXYmRwdHRPZTE1TVJ6UmdvdlhqT2tIM0VS?=
- =?utf-8?B?RzhGSWJZU3hiQ0NOdlBWTCtqZHpTRGlkQ3k2WERQSGJLWWU3a1lwWFl2STBJ?=
- =?utf-8?B?VWJVQVJLMm9zWFF6YncxRTVYcDZseGtRVXRzYjBpajQ1M3ZKZDRCZWhlQjZk?=
- =?utf-8?B?MGorUUxXRm44R1AycmZlaHVPZm9YNzVmZVdGdklYeXZzNGFScDQ2dWlnNWpM?=
- =?utf-8?B?UjJzcnJqakZaR2hIclcxdEZlbFNFY2JJTzlaLzM4Y0I0TW15b1V2QzJYTlBn?=
- =?utf-8?B?eXZteS9PQ0c5MGtLVnMyY01zUVFxT1FTc2t0UjFHWno4OGd5SCtnK3orMmZ0?=
- =?utf-8?B?NytCMWpTQWd3U3E5OE5id2doREZZY2l0VGh4ajJ5RlFoWVVSQWtSQTFibkR6?=
- =?utf-8?B?U3ErMW9iNmROU2pFR29mVzBrMjJkaXZjakJHYS9PL3RkOXIrMDRnQmpNaHg5?=
- =?utf-8?B?WWdJZTduUzAxTldxYm9jNStXQ2tsMHhMWHhQTm15WUR0S2h2SW1qaFRvSmRX?=
- =?utf-8?B?QUxnNjYwRklWRzljZGdpd0w3YmhMTWtmeWVpK2VPU0hUS3EyalRvWUtOSFJJ?=
- =?utf-8?B?Wmc3UHl4MlkzY2VERUIreWRDNk1Dc0E5eFhCOUlIS2pwYW5RSkVIOHhmelN2?=
- =?utf-8?B?eDEzUGgrSUppb1I3M1l3Tnk0T1U5eEJJSU1mWUMvTVdWVkE0ZDF6UmM0VmlI?=
- =?utf-8?B?L1ZTYTZQN3RORGZ5TFBRaTYrS0FleXAvc2IvYmx4aG9QOFhKaitYa2lkZEli?=
- =?utf-8?B?ZXZZTWh4eVdSS1dhQXdUZGFoS2lPcFVnREVBV3cySGt4blFmNERxWENRL0cr?=
- =?utf-8?B?OWpHb2ZhbVNJVGRDWVVBWks3MVN1b1kwYmJKclBSVytsbmhzYURqVDQ5QVow?=
- =?utf-8?B?ZHhYVXBGTEhqWDhXQUNEcW5scW1Ed0wzQmtMa1JVc3JQS1VBdjAyRGpZR2NT?=
- =?utf-8?B?ZE1uaVYwa1F3WVZLSVBrL0MxSnlyK2EvcFh2NDNYZmZ1UHJLRkdqNW8rcFVh?=
- =?utf-8?B?c2NmQUd4R1NqWncvU3YrTDd4UlkzRVZMak1tUUNYQVNNUCt1YWtRV0VpYmZE?=
- =?utf-8?B?emZDQ1FpYmpLdnYyaVo4UTJ2SDYwMDZKcXFwUFEvbzVBYzNyZ1gwSmxpZHV2?=
- =?utf-8?B?Ykhla21VMk9CeTZ1QWZpN01EU2lsbG1VdURWL3k4eVFHSVVybzg3eUc1Qnhx?=
- =?utf-8?B?eEpXTUl2Skk3T1JDK21tL0pVaFY3cG16cHpTczd0NEV0ek5XRWltellqa2t2?=
- =?utf-8?B?blI5Z2NTR2ZRUjhSMjRXNmd4YjdOMU5ZTHQxdC9HcldZVVE1QmcyMjNBMWNO?=
- =?utf-8?B?U1BjMXZTcHdiZHJiTm5DYzI2Unh4ckt2ZEJaZHo0dmZDcDdlVmZWRGJzV0pr?=
- =?utf-8?B?NzZBVndVMnNwcXhIRmdBalY4VU5DTG0wSXVRV0dXbzIwN1BITXd6cXFQWE9W?=
- =?utf-8?B?MWJqTkpGTzh2Q0xxNWt0S21FOVlsdEVqTnM0bEJrS1QzNVZtM3BzVDJYbDZj?=
- =?utf-8?B?SlQrcGRsOGNWMXBtT1ZKSkozeGw0UTNLNU5pMkxoRkVSM0FaYk1zSjJOWWFJ?=
- =?utf-8?B?bllIbkVxR1hVUHc3eDR1Q1Z3bnFGRWQ3Vng1R2VQS2w4VUJua24rUGtnY1dx?=
- =?utf-8?B?NWxJSlBsL29ETnVhZVNRcG9GVWk3eThUR2pEd3AxR1lYYm1FRHo4N0NtUEVr?=
- =?utf-8?B?N2pONlNuVHhyV2xhemlmaEpVbWJCZ0N3SnArRUNqdDFPclNISlh5dEdPUnRm?=
- =?utf-8?B?Q2tUSkROTTUvZ3J2UzI0NWM2ZnRwRUxqY1RXQ0Q3SGpZL1NybSsxdWhsR0hv?=
- =?utf-8?B?eUJURDVCQjM0bTRWSWxwN0Z2a2J2RlBWSlV0dGh0SWJpbkg1ZC96M1VSUjFD?=
- =?utf-8?Q?G7iTmqxUoOAYHhSE=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?T2I1R3Y5Mjhtcm01dm53S1Q0dXFOeHdBSkdLeHBhbU05T0VxenBraDdBMkVk?=
+ =?utf-8?B?T1ZNdGVOUWVhN3dsaDFwZzlUa0VuMW02WFpFd21CaFJvRTFsTmZxR2tkZWE3?=
+ =?utf-8?B?RTlDd3E0VjhabGpoZXBja2pyY284TmRiRWs5Si9CWDgxYjhFZ1dIdEhsOEdh?=
+ =?utf-8?B?c0xtOUExWnV1REg1UHhpNGtKaTVGRXZxSlpLRzNUMFpyZVBGUWVpNGZlNTc1?=
+ =?utf-8?B?UnI2cGlrZjFNTlhMVlRrb3BSelhoQnpHNlptcXptT0hmSE5ndmJWaEtUdzcw?=
+ =?utf-8?B?aG1URURHNlpsK2xST1g4MDQyM21zUDhDb2IyUFM5anRROGxjWlhNVjhOSXlJ?=
+ =?utf-8?B?WmNDNVVOaXZ1QS9BeXZ2Y1lZNkdFYjVzSndoWjIvck5pNzg2YzVNOU1yYi9Z?=
+ =?utf-8?B?QU82OXBFdllCdkVzVkNRRkJER2JaSDlLa28yZEZ2WW5nY3k5YXVxTi8zT3I5?=
+ =?utf-8?B?S25JeDZaVVdLdFhyT2tidSttTE5lUDh6UzcyNDFheXZvRGhPM01TUmVTdnU1?=
+ =?utf-8?B?WmRJWnBNMlc5ZUZnSzFjZHprRzV1Y0dybDlpbXp6bnNoQzdaS0pidmJuSnVr?=
+ =?utf-8?B?UGpPeG9heVlnclpETElNQ0RnWm5wU0QvUjBDVjM5dTB4bzZkZkNJM0dLc3VS?=
+ =?utf-8?B?TFR6WDEvcitmRkNrdEZ6TWs0NExIMmJ5eHE5azRtMUxaQndMQmRENVNZWTdE?=
+ =?utf-8?B?VEcyR2NSdmQwTTk4bC9sL2xVWklWSE9lcTltaXN0ejFGTmplQkVSMHhERHJ3?=
+ =?utf-8?B?RDBxY2tGZ0dHOXhkZ1FhSkRGVkw0a1FGRkxoSWJJVGlTS0dremY1WGkrTTgr?=
+ =?utf-8?B?WFBYWTlodVU5SVVSMDBYcFMwS3R6UnNWN2o3MzEyb3hmY1dGTW5yVXpBcElL?=
+ =?utf-8?B?OTV0VHBldkNEYm9GZ2hjNEhVR2F4a1NkYmZRdXNhUFQrRXJiYmcxZlFMTU9v?=
+ =?utf-8?B?OHJFMm5MYlZDeCtXT1g3VWVTTFN6eHp1c2pOZWFhWU54SXVwYUk0RmJIcC85?=
+ =?utf-8?B?TWdQQ0t3bSsvMVVmOEwySGh6QmVxdFk1VTVXZUVnVDJzYmZHdlpvRU5qeDFC?=
+ =?utf-8?B?azVrZlk1RXZlNTZJUU91K29qTFhXQ1JpUDhFMlUzOXQ5cG5PR05NZjVYMFNK?=
+ =?utf-8?B?QXloNVp4Nmw5RG9mMk1vZWwzd2ZuQ05GKzhlc08ycVRqb3hqY2FoZ1hhbXNZ?=
+ =?utf-8?B?MkNhS3JteFhORWhqcTQyc2J4MzZhL2puOGR2ZG1XYnlEZ2E2anZYQ2Zab1dV?=
+ =?utf-8?B?TjRGK1FMYkxDcmpFamhLd0FpTWdLTWQzaUJDVU1CSitLN0lia0RhazlQM3Z2?=
+ =?utf-8?B?YlB2bERWdUtUQXpTZHdzUkxGT0NzWGpEUmJTa25sYm16T0FZWnppdlJrL1o5?=
+ =?utf-8?B?d3NyV0hTeFUzRHI4UmNtNmhOSy9xRS9RajhJTnJwa3hxUERCT040NWNZeHdS?=
+ =?utf-8?B?ZVR4Nmk0SDNlSFcyak11UlQ5Q29CYVAzVEFtL3NGOXk0ZkMyWk03OCs5SVhK?=
+ =?utf-8?B?ektwb2l1a0UxV24yZDVES0xna0FKZldnYlF0Y1lFK3JuQWE2dXhIZm5CTCs3?=
+ =?utf-8?B?bWZQS2t4ZkJiam5pWlFsWjBMUi80SU1KM1NHVWo4MVRQalhYWE1uS3pjcklY?=
+ =?utf-8?B?VU9jcDZpUTE5TEx3U0NXY2tGL0RFeUtCMUFNRzhRblAzT0tFV1E2cnNtVmFP?=
+ =?utf-8?B?b1dHZnB6anJZZ0xSeEltQTExV1BRdWJ2WWNWeitia1M0TGFCRnV6bk5wbVU1?=
+ =?utf-8?B?bWRTbDR3MFpWaHlEZnRyVU91NUlpdVBncDNPdTBvQWVTamljV1p0WndnTEl0?=
+ =?utf-8?B?VDAxWER2RVpoRElQUHNvNkt1cXVoSmJiRVNzVi9HbFR1RzF3dThQcXBMbHpY?=
+ =?utf-8?B?L09HZnVXRjh4TXlzeFpjWWc5VHlRT2kzWEo4L1pJSC9mMHkrN2ViaUcvUlpM?=
+ =?utf-8?B?eGt3Z2VzRnpPUDBMN2tLMHlMQ3dUeXNHam1PQzZBSm85K0pQVEF3Q05lcmN6?=
+ =?utf-8?B?UytjbitPWkdCSXlORWJYdGJIWkVvUG5YTjY3U3VXalBUcDVLK1hyUGF4SFpE?=
+ =?utf-8?B?dHlaMkg5QlpwRUJFb0ZWMnNLUkhQRGFqcWNHYndDazAwaVUzaVloaDZtdHRV?=
+ =?utf-8?B?bXBUUUN0TFlGTFA1QVc2UndHbEVzMEovZFZvUnZoeXMwVmdUN0t3clQ0Y1Ew?=
+ =?utf-8?B?TkVtd0FoRDZ1TUd3M1cxTzdmRXEvSnFBRWV2cHhQT3B3blRZdWpOYnQ4Vm52?=
+ =?utf-8?B?NkhFOFBySFpRQjN4cmZXSG5scFVoUDNyN0gzNXBCdThRRmdJclFPbFVOSTJY?=
+ =?utf-8?B?dFc5RTFXWlRBYTJVa3hOSEYwUnl4QjVEY21JZllhWGsyMGkzYmd5TWtqcWJ2?=
+ =?utf-8?Q?pVoz6uGTcizKRZ9g=3D?=
 X-OriginatorOrg: virtuozzo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 9a15087a-0f4a-43a5-9b92-08df22f17d67
+X-MS-Exchange-CrossTenant-Network-Message-Id: ae694648-1429-426a-1f07-08df22f17cc5
 X-MS-Exchange-CrossTenant-AuthSource: VI0PR08MB10656.eurprd08.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Oct 2026 15:01:09.7470 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Oct 2026 15:01:08.6706 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 8ixzlZEPSXZSBEdC7GTcix/MhMmVze5Ez4hz6yf6OfwMnZwxo5eiKqzEYhNXpjmAk25dWFR/XjwQ/V/HA0/DFkJamGxCuYucOuVIMWaPQl8=
+X-MS-Exchange-CrossTenant-UserPrincipalName: lCorT2QLwAGrEwDb3F9a8igsPEU+cle6HdGYyJcFC7E7Rxv9C7XhDvaX8WfOznU8FvV05HRLEdldMvTDGTDiB4NkPkNyShztOozDawHd1t4=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS1PR08MB7452
 Received-SPF: pass client-ip=2a01:111:f403:c20f::7;
  envelope-from=andrey.drobyshev@virtuozzo.com;
@@ -155,133 +155,386 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-cpr_save_fd() now refuses to register an FD under a (name, id) key which
-is already taken.  Add a test which checks that 2nd registration fails
-with an error while the 1st one is left intact, that different names
-or ids don't clash, and that the key can be reused once deleted.
+In its current form, the mechanism for saving CPR FDs into hash table
+has flaws.
 
+The CPR fd hash table uses the same CprFd for both key and value, and
+is created with a key destroy function.  Inserting a second element
+with the same (name, id) key leads to a use after free.  According to
+GLib docs [1], g_hash_table_insert() keeps the old key, replaces the
+value with the new element, and destroys the new key.  Thus when
+inserting 2 CprFd elements fd1 and fd2 with equal keys we get:
+
+  g_hash_table_insert(table, fd1, fd1);  /* table has fd1 -> fd1 */
+  g_hash_table_insert(table, fd2, fd2);  /* table has fd1 -> fd2, fd2 freed */
+
+Any subsequent cpr_find_fd() for that key then returns freed memory.
+
+This is reachable whenever two CPR-aware objects register fds under the
+same name, and it happens long before an actual CPR, since cpr_save_fd()
+is typically called from .realize(), i.e. at boot time.
+
+Apart from the UAF itself, when the user decides to perform CPR migration,
+on CPR target we'd get corrupted FD from the hash table and fail somewhere
+in .realize() for affected devices.
+
+As a solution, let's altogether prohibit adding CprFds with duplicate
+keys.  Since FDs are being registered for a subsequent CPR right at the
+startup in .realize(), that'll allow us to error out and exit QEMU (or
+fail a device hotplug op) gracefully instead of delaying potential
+problems for later.  To do so, let's make cpr_save_fd() return 'bool'
+instead of 'void' and provide an 'errp' argument to it.  That way caller
+becomes responsible for checking the return value and propagating the
+error.
+
+Also update all the callers to use the adjusted interface to keep things
+compilable and bisectable.
+
+[1] https://docs.gtk.org/glib/type_func.HashTable.insert.html
+
+Fixes: a181df93bb3 ("migration/cpr: use hashtable for cpr fds")
+Reviewed-by: Peter Xu <peterx@redhat.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 ---
- tests/unit/meson.build |  1 +
- tests/unit/test-cpr.c  | 98 ++++++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 99 insertions(+)
+ backends/hostmem-memfd.c   |  5 +++-
+ backends/hostmem-shm.c     |  5 +++-
+ backends/iommufd.c         |  4 ++-
+ hw/vfio/container-legacy.c |  7 +----
+ hw/vfio/cpr-legacy.c       | 29 ++++++++++++++++-----
+ hw/vfio/cpr.c              |  6 ++---
+ hw/vfio/pci.c              |  5 +++-
+ include/hw/vfio/vfio-cpr.h |  7 ++---
+ include/migration/cpr.h    |  2 +-
+ migration/cpr.c            | 64 +++++++++++++++++++++++++++++-----------------
+ system/physmem.c           |  5 ++--
+ 11 files changed, 91 insertions(+), 48 deletions(-)
 
-diff --git a/tests/unit/meson.build b/tests/unit/meson.build
-index d17435c1877..5d2b413fcab 100644
---- a/tests/unit/meson.build
-+++ b/tests/unit/meson.build
-@@ -140,6 +140,7 @@ if have_system
-     'test-bufferiszero': [],
-     'test-smp-parse': [qom, meson.project_source_root() / 'hw/core/machine-smp.c'],
-     'test-vmstate': [migration, io],
-+    'test-cpr': [migration, io, meson.project_source_root() / 'migration/cpr.c'],
-     'test-yank': ['socket-helpers.c', qom, io, chardev],
-     'test-ram-discard-manager': [
-       'test-ram-discard-manager.c',
-diff --git a/tests/unit/test-cpr.c b/tests/unit/test-cpr.c
-new file mode 100644
-index 00000000000..dfc6b1f2ec0
---- /dev/null
-+++ b/tests/unit/test-cpr.c
-@@ -0,0 +1,98 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+/*
-+ * Unit tests for the CPR fd table
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qapi/error.h"
-+#include "migration/cpr.h"
-+#include "migration/vmstate.h"
-+#include "monitor/monitor.h"
-+#include "hw/vfio/vfio-cpr.h"
-+
-+/* Stubs for the parts of migration/cpr.c that these tests don't exercise */
-+
-+const VMStateDescription vmstate_cpr_vfio_devices = {
-+    .name = "cpr vfio devices",
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_END_OF_LIST()
+diff --git a/backends/hostmem-memfd.c b/backends/hostmem-memfd.c
+index 666593ff6c0..67f1924a369 100644
+--- a/backends/hostmem-memfd.c
++++ b/backends/hostmem-memfd.c
+@@ -84,7 +84,10 @@ memfd_backend_memory_alloc(HostMemoryBackend *backend, Error **errp)
+     if (fd < 0) {
+         return false;
+     }
+-    cpr_save_fd(name, 0, fd);
++    if (!cpr_save_fd(name, 0, fd, errp)) {
++        close(fd);
++        return false;
 +    }
-+};
+ 
+ have_fd:
+     backend->aligned = true;
+diff --git a/backends/hostmem-shm.c b/backends/hostmem-shm.c
+index 4766db6aad0..adf60957c3c 100644
+--- a/backends/hostmem-shm.c
++++ b/backends/hostmem-shm.c
+@@ -48,7 +48,10 @@ shm_backend_memory_alloc(HostMemoryBackend *backend, Error **errp)
+     if (fd < 0) {
+         return false;
+     }
+-    cpr_save_fd(backend_name, 0, fd);
++    if (!cpr_save_fd(backend_name, 0, fd, errp)) {
++        close(fd);
++        return false;
++    }
+ 
+ have_fd:
+     /* Let's do the same as memory-backend-ram,share=on would do. */
+diff --git a/backends/iommufd.c b/backends/iommufd.c
+index 15f2a513501..45fd2e44c7f 100644
+--- a/backends/iommufd.c
++++ b/backends/iommufd.c
+@@ -85,7 +85,9 @@ static void iommufd_backend_complete(UserCreatable *uc, Error **errp)
+         if (cpr_is_incoming()) {
+             be->fd = cpr_find_fd(name, 0);
+         } else {
+-            cpr_save_fd(name, 0, be->fd);
++            if (!cpr_save_fd(name, 0, be->fd, errp)) {
++                return;
++            }
+         }
+     } else if (!g_file_test("/dev/iommu", G_FILE_TEST_EXISTS)) {
+         error_setg(errp, "/dev/iommu does not exist"
+diff --git a/hw/vfio/container-legacy.c b/hw/vfio/container-legacy.c
+index 7ac7b372145..50ca5a3a7ea 100644
+--- a/hw/vfio/container-legacy.c
++++ b/hw/vfio/container-legacy.c
+@@ -847,13 +847,8 @@ static bool vfio_device_get(VFIOGroup *group, const char *name,
+     g_autofree struct vfio_device_info *info = NULL;
+     int fd;
+ 
+-    fd = vfio_cpr_group_get_device_fd(group->fd, name);
++    fd = vfio_cpr_group_get_device_fd(group, name, errp);
+     if (fd < 0) {
+-        error_setg_errno(errp, errno, "error getting device from group %d",
+-                         group->groupid);
+-        error_append_hint(errp,
+-                      "Verify all devices in group %d are bound to vfio-<bus> "
+-                      "or pci-stub and not already in use\n", group->groupid);
+         return false;
+     }
+ 
+diff --git a/hw/vfio/cpr-legacy.c b/hw/vfio/cpr-legacy.c
+index 2d40d8baeaf..807ffacdbc9 100644
+--- a/hw/vfio/cpr-legacy.c
++++ b/hw/vfio/cpr-legacy.c
+@@ -254,17 +254,33 @@ bool vfio_cpr_ram_discard_replay_populated(VFIOContainer *bcontainer,
+                                                 &vrdl->listener) == 0;
+ }
+ 
+-int vfio_cpr_group_get_device_fd(int d, const char *name)
++int vfio_cpr_group_get_device_fd(VFIOGroup *group, const char *name,
++                                 Error **errp)
+ {
++    ERRP_GUARD();
+     const int id = 0;
+     int fd = cpr_find_fd(name, id);
+ 
++    if (fd >= 0) {
++        return fd;
++    }
 +
-+QEMUFile *cpr_transfer_output(MigrationChannel *channel, Error **errp)
++    fd = ioctl(group->fd, VFIO_GROUP_GET_DEVICE_FD, name);
+     if (fd < 0) {
+-        fd = ioctl(d, VFIO_GROUP_GET_DEVICE_FD, name);
+-        if (fd >= 0) {
+-            cpr_save_fd(name, id, fd);
+-        }
++        error_setg_errno(errp, errno, "error getting device from group %d",
++                         group->groupid);
++        error_append_hint(errp,
++                          "Verify all devices in group %d are bound to "
++                          "vfio-<bus> or pci-stub and not already in use\n",
++                          group->groupid);
++        return -1;
+     }
++
++    if (!cpr_save_fd(name, id, fd, errp)) {
++        close(fd);
++        return -1;
++    }
++
+     return fd;
+ }
+ 
+@@ -291,6 +307,7 @@ bool vfio_cpr_container_match(VFIOLegacyContainer *container, VFIOGroup *group,
+      */
+     cpr_delete_fd("vfio_container_for_group", group->groupid);
+     close(fd);
+-    cpr_save_fd("vfio_container_for_group", group->groupid, container->fd);
++    cpr_save_fd("vfio_container_for_group", group->groupid, container->fd,
++                &error_abort);
+     return true;
+ }
+diff --git a/hw/vfio/cpr.c b/hw/vfio/cpr.c
+index ffa4f8e099d..6e1659dcddc 100644
+--- a/hw/vfio/cpr.c
++++ b/hw/vfio/cpr.c
+@@ -32,11 +32,11 @@ int vfio_cpr_reboot_notifier(NotifierWithReturn *notifier,
+ #define STRDUP_VECTOR_FD_NAME(vdev, name)   \
+     g_strdup_printf("%s_%s", (vdev)->vbasedev.name, (name))
+ 
+-void vfio_cpr_save_vector_fd(VFIOPCIDevice *vdev, const char *name, int nr,
+-                             int fd)
++bool vfio_cpr_save_vector_fd(VFIOPCIDevice *vdev, const char *name, int nr,
++                             int fd, Error **errp)
+ {
+     g_autofree char *fdname = STRDUP_VECTOR_FD_NAME(vdev, name);
+-    cpr_save_fd(fdname, nr, fd);
++    return cpr_save_fd(fdname, nr, fd, errp);
+ }
+ 
+ int vfio_cpr_load_vector_fd(VFIOPCIDevice *vdev, const char *name, int nr)
+diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+index 428ab2f0698..ad13f2306f1 100644
+--- a/hw/vfio/pci.c
++++ b/hw/vfio/pci.c
+@@ -76,7 +76,10 @@ static bool vfio_notifier_init(VFIOPCIDevice *vdev, EventNotifier *e,
+     }
+ 
+     fd = event_notifier_get_fd(e);
+-    vfio_cpr_save_vector_fd(vdev, name, nr, fd);
++    if (!vfio_cpr_save_vector_fd(vdev, name, nr, fd, errp)) {
++        event_notifier_cleanup(e);
++        return false;
++    }
+     return true;
+ }
+ 
+diff --git a/include/hw/vfio/vfio-cpr.h b/include/hw/vfio/vfio-cpr.h
+index ecabe0c747d..9157a4ac649 100644
+--- a/include/hw/vfio/vfio-cpr.h
++++ b/include/hw/vfio/vfio-cpr.h
+@@ -60,7 +60,8 @@ void vfio_iommufd_cpr_register_device(struct VFIODevice *vbasedev);
+ void vfio_iommufd_cpr_unregister_device(struct VFIODevice *vbasedev);
+ void vfio_cpr_load_device(struct VFIODevice *vbasedev);
+ 
+-int vfio_cpr_group_get_device_fd(int d, const char *name);
++int vfio_cpr_group_get_device_fd(struct VFIOGroup *group, const char *name,
++                                 Error **errp);
+ 
+ bool vfio_cpr_container_match(struct VFIOLegacyContainer *container,
+                               struct VFIOGroup *group, int fd);
+@@ -71,8 +72,8 @@ void vfio_cpr_giommu_remap(struct VFIOContainer *bcontainer,
+ bool vfio_cpr_ram_discard_replay_populated(
+     struct VFIOContainer *bcontainer, const MemoryRegionSection *section);
+ 
+-void vfio_cpr_save_vector_fd(struct VFIOPCIDevice *vdev, const char *name,
+-                             int nr, int fd);
++bool vfio_cpr_save_vector_fd(struct VFIOPCIDevice *vdev, const char *name,
++                             int nr, int fd, Error **errp);
+ int vfio_cpr_load_vector_fd(struct VFIOPCIDevice *vdev, const char *name,
+                             int nr);
+ void vfio_cpr_delete_vector_fd(struct VFIOPCIDevice *vdev, const char *name,
+diff --git a/include/migration/cpr.h b/include/migration/cpr.h
+index 56fb67e6b4d..3ad084d5bab 100644
+--- a/include/migration/cpr.h
++++ b/include/migration/cpr.h
+@@ -28,7 +28,7 @@ typedef struct CprState {
+ 
+ extern CprState cpr_state;
+ 
+-void cpr_save_fd(const char *name, int id, int fd);
++bool cpr_save_fd(const char *name, int id, int fd, Error **errp);
+ void cpr_delete_fd(const char *name, int id);
+ int cpr_find_fd(const char *name, int id);
+ void cpr_resave_fd(const char *name, int id, int fd);
+diff --git a/migration/cpr.c b/migration/cpr.c
+index bca43e9bf35..cb027bba504 100644
+--- a/migration/cpr.c
++++ b/migration/cpr.c
+@@ -82,10 +82,29 @@ static GHashTable *get_cpr_fds_hash(void)
+     return cpr_fds_hash;
+ }
+ 
++static CprFd *find_fd(const char *name, int id)
 +{
-+    g_assert_not_reached();
++    CprFd key = {
++        .name = (char *)name,
++        .id = id,
++    };
++
++    return g_hash_table_lookup(get_cpr_fds_hash(), &key);
 +}
 +
-+QEMUFile *cpr_transfer_input(MigrationChannel *channel, Error **errp)
-+{
-+    g_assert_not_reached();
-+}
+ static void cpr_fd_hash_insert(CprFd *elem)
+ {
+-    /* Use the same CprFd as key and value. */
+-    g_hash_table_insert(get_cpr_fds_hash(), elem, elem);
++    GHashTable *hash = get_cpr_fds_hash();
 +
-+QEMUFile *cpr_exec_output(Error **errp)
-+{
-+    g_assert_not_reached();
-+}
++    /*
++     * We prohibit inserting duplicate keys into the hash table.  All callers
++     * are responsible for checking that each added key is unique.
++     *
++     * 'elem' serves as both key and value, and a replacing insert would
++     * silently free it.  Therefore we assert, not overwrite.
++     */
++    g_assert(!g_hash_table_contains(hash, elem));
++    g_hash_table_insert(hash, elem, elem);
+ }
+ 
+ static int cpr_fd_pre_save(void *opaque)
+@@ -127,26 +146,24 @@ static int cpr_fd_post_load(void *opaque, int version_id)
+     return 0;
+ }
+ 
+-void cpr_save_fd(const char *name, int id, int fd)
++bool cpr_save_fd(const char *name, int id, int fd, Error **errp)
+ {
+-    CprFd *elem = g_new0(CprFd, 1);
++    CprFd *elem;
+ 
++    if (find_fd(name, id)) {
++        error_setg(errp, "cpr fd '%s' id %d is already registered", name, id);
++        return false;
++    }
 +
-+QEMUFile *cpr_exec_input(Error **errp)
-+{
-+    g_assert_not_reached();
-+}
-+
-+bool cpr_exec_persist_state(QEMUFile *f, Error **errp)
-+{
-+    g_assert_not_reached();
-+}
-+
-+bool cpr_exec_has_state(void)
-+{
-+    return false;
-+}
-+
-+void cpr_exec_unpreserve_fds(void)
-+{
-+}
-+
-+int monitor_fd_param(Monitor *mon, const char *fdname, Error **errp)
-+{
-+    g_assert_not_reached();
-+}
-+
-+static void test_cpr_fd_duplicate(void)
-+{
-+    Error *err = NULL;
-+
-+    g_assert_true(cpr_save_fd("dup", 0, 10, &error_abort));
-+
-+    /* A second registration of the same (name, id) key must be refused */
-+    g_assert_false(cpr_save_fd("dup", 0, 11, &err));
-+    g_assert_nonnull(err);
-+    g_assert_nonnull(strstr(error_get_pretty(err), "already registered"));
-+    error_free(err);
-+
-+    /* and the first registration must be left intact */
-+    g_assert_cmpint(cpr_find_fd("dup", 0), ==, 10);
-+
-+    /* A different id or name is a different key */
-+    g_assert_true(cpr_save_fd("dup", 1, 12, &error_abort));
-+    g_assert_true(cpr_save_fd("other", 0, 13, &error_abort));
-+    g_assert_cmpint(cpr_find_fd("dup", 1), ==, 12);
-+    g_assert_cmpint(cpr_find_fd("other", 0), ==, 13);
-+
-+    /* Once deleted, the key can be registered again */
-+    cpr_delete_fd("dup", 0);
-+    g_assert_cmpint(cpr_find_fd("dup", 0), ==, -1);
-+    g_assert_true(cpr_save_fd("dup", 0, 14, &error_abort));
-+    g_assert_cmpint(cpr_find_fd("dup", 0), ==, 14);
-+
-+    cpr_delete_fd("dup", 0);
-+    cpr_delete_fd("dup", 1);
-+    cpr_delete_fd("other", 0);
-+}
-+
-+int main(int argc, char **argv)
-+{
-+    g_test_init(&argc, &argv, NULL);
-+    g_test_add_func("/cpr/fd/duplicate", test_cpr_fd_duplicate);
-+    return g_test_run();
-+}
++    elem = g_new0(CprFd, 1);
+     trace_cpr_save_fd(name, id, fd);
+     elem->name = g_strdup(name);
+     elem->namelen = strlen(name) + 1;
+     elem->id = id;
+     elem->fd = fd;
+     cpr_fd_hash_insert(elem);
+-}
+-
+-static CprFd *find_fd(const char *name, int id)
+-{
+-    CprFd key = {
+-        .name = (char *)name,
+-        .id = id,
+-    };
+ 
+-    return g_hash_table_lookup(get_cpr_fds_hash(), &key);
++    return true;
+ }
+ 
+ void cpr_delete_fd(const char *name, int id)
+@@ -173,14 +190,13 @@ int cpr_find_fd(const char *name, int id)
+ void cpr_resave_fd(const char *name, int id, int fd)
+ {
+     CprFd *elem = find_fd(name, id);
+-    int old_fd = elem ? elem->fd : -1;
+ 
+-    if (old_fd < 0) {
+-        cpr_save_fd(name, id, fd);
+-    } else if (old_fd != fd) {
++    if (!elem) {
++        cpr_save_fd(name, id, fd, &error_abort);
++    } else if (elem->fd != fd) {
+         error_report("internal error: cpr fd '%s' id %d value %d "
+                      "already saved with a different value %d",
+-                     name, id, fd, old_fd);
++                     name, id, fd, elem->fd);
+         g_assert_not_reached();
+     }
+ }
+@@ -192,8 +208,9 @@ int cpr_open_fd(const char *path, int flags, const char *name, int id,
+ 
+     if (fd < 0) {
+         fd = qemu_open(path, flags, errp);
+-        if (fd >= 0) {
+-            cpr_save_fd(name, id, fd);
++        if (fd >= 0 && !cpr_save_fd(name, id, fd, errp)) {
++            close(fd);
++            fd = -1;
+         }
+     }
+     return fd;
+@@ -400,10 +417,11 @@ int cpr_get_fd_param(const char *name, const char *fdname, int index,
+         }
+     } else {
+         fd = monitor_fd_param(monitor_cur(), fdname, errp);
+-        if (fd >= 0) {
+-            cpr_save_fd(name, index, fd);
+-        } else {
++        if (fd < 0) {
+             error_prepend(errp, "Could not parse object fd %s:", fdname);
++        } else if (!cpr_save_fd(name, index, fd, errp)) {
++            close(fd);
++            fd = -1;
+         }
+     }
+     return fd;
+diff --git a/system/physmem.c b/system/physmem.c
+index db3dda563d4..a7300bb9d97 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -2456,8 +2456,9 @@ static int qemu_ram_get_shared_fd(const char *name, bool *reused, Error **errp)
+         fd = qemu_shm_alloc(0, errp);
+     }
+ 
+-    if (fd >= 0) {
+-        cpr_save_fd(name, 0, fd);
++    if (fd >= 0 && !cpr_save_fd(name, 0, fd, errp)) {
++        close(fd);
++        fd = -1;
+     }
+     *reused = false;
+     return fd;
 
 -- 
 2.47.1
