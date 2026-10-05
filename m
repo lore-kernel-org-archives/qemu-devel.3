@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75FFACA5FCE
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Oct 2026 19:07:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D8C4CA5FFC
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Oct 2026 19:13:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xDo1k-0000Rh-NZ; Mon, 05 Oct 2026 15:07:08 -0400
+	id 1xDo7R-0001KI-UA; Mon, 05 Oct 2026 15:13:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xDo1i-0000RT-LI
- for qemu-devel@nongnu.org; Mon, 05 Oct 2026 15:07:06 -0400
-Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
+ id 1xDo7P-0001K4-W4
+ for qemu-devel@nongnu.org; Mon, 05 Oct 2026 15:13:00 -0400
+Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xDo1g-0006rw-Od
- for qemu-devel@nongnu.org; Mon, 05 Oct 2026 15:07:06 -0400
-Received: by mail-ed1-x52c.google.com with SMTP id
- 4fb4d7f45d1cf-6acbdbc1725so2911424a12.3
- for <qemu-devel@nongnu.org>; Mon, 05 Oct 2026 12:07:04 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1791227223; cv=none;
+ id 1xDo7N-0007LT-Er
+ for qemu-devel@nongnu.org; Mon, 05 Oct 2026 15:12:59 -0400
+Received: by mail-ej1-x62a.google.com with SMTP id
+ a640c23a62f3a-c169ae1cb26so22789166b.1
+ for <qemu-devel@nongnu.org>; Mon, 05 Oct 2026 12:12:57 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1791227575; cv=none;
  d=google.com; s=arc-20260327;
- b=raSjkSYDyL90mI4SK0Sm9rDtrObfNqAdgUJZwEziVVHA5WEENs8TLQVsXzPHZIVJml
- OMY2zqlYoDSWcZuuUu/PfJt8amKEAVv2QDkc/y3WFfY4Ljd5VARixRyqtTAJvXre3o6Q
- gjGf4V6GHVCOpNtueB5UPEvPNQnmHzG8JmGtt994/2J2kChicKvISBcuawIl0MTv7ySa
- JVxHVMms4aKotzC+rGIYQBv/TzxFlwDcZxL6zbJBOUgqv/6QYrZuLP2pJ1m7TCx04sZ2
- u21IIboOEHlv4EpQJheXUqQ+Lq9TvBmJh193mS2f2zoY2qoDlN9XO0mhA5mCluB6dJli
- FVxA==
+ b=Y5CAWdIWQXUaTQoiPLlJjf00oZTSpd09QBzTbMz0uW+UuY29Ujuj/cu1sQY6u+MLmr
+ o3d5IaL8koo+aOnm0XcPX6MA8LlrjesQ14AtDyx3ERDR7erPdCiQdh7+C8ORoQqiQINm
+ /Z/XZizdoqwwiUHGtW2WzXtFhhxvW03wYktb4APQZ15VUDtPaCQqoG6QMQRiS67cm8nw
+ cuHAV4nA81EeoFx4FnnK/ixUPYYhQTH9zGKyZgQ3fg/Zs/tMv/xyjcCbUzAcqz57Z8i0
+ V4Rz/ZMXiI1aXPEVZrj/xRvtxKX006MIE3Uu5JdZzO+EMf7whPiNxC5yCa3LSSJZk1v1
+ KYvw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :reply-to:in-reply-to:references:mime-version:dkim-signature;
- bh=W+CsBfQUUfwYQCfTJyMKFb2DhxxUZWftjxcQ6uPqVKQ=;
+ bh=so9X74c/k8ur915gA2+HGFAKIbInrLrXAx0o3xeYd4I=;
  fh=IWV5i/bmsnDDiumGg7GH/qn1tjabzJqEv+mL/WiBNIs=;
- b=e4PUKkE96rmX+NytFBCS3c6FSoJbT2xnTawacOg8M30qW7ujGApPf4a6z7WmGa3qyx
- 9NxXsMe0AxM282sTtuEyWzn60dPdhcRmDgYpM6699Ffygs0YCR4XvFNO6FO1xvshrP4D
- upzTRapc7S9dVL9fRRJrMDM12kw45HHXqgiO8sbGweRjQXW3z3Nkpk5Ab9lwlPvHfGi6
- aKFAGezMkEap+2LdahGSUa/8OCLzhT5MxGaI4Qm8VKoiSqx8Izxe9pq5Gd7hUEJRhP3l
- kz1ZPcPzNCKOaIC3KkwGFvw7AAxnXdjb+m/6fmdUbO/S6xABUyqmglS3j95bgjB+wWCY
- RH/A==; darn=nongnu.org
+ b=GU5s1AsuvGRmJ0T66HENegsWQcx5Zac0mXXvXJBncFJleTB4x+NVWmR46GGTPqRHrF
+ kofsAGB4o3YXcDCyXl5HtX+D+ttkIceQtDfirs/3Ab73bKuIX43g0f1CyaFxO5udGdnf
+ +vXHUIDNndHVMpkRVKHDoxBszNHE86gSm/UPjOMFbgCnjr0G42Fw02lmZWV3TQo491OY
+ opXS9N9OIx8h//WFiiCKQ2dBfutsOsY622dngvqKY4uXn8gEZ5Mtp0h7vBUxCkVCX1ra
+ NVM4SnnaF544gL2p8fnJQ2WkV85fGRjl7DbPnZMFzKpX6MF00ulAFRKzf/mCLM1Wm6QF
+ 7jMQ==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1791227223; x=1791832023; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1791227575; x=1791832375; darn=nongnu.org;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:reply-to:in-reply-to:references:mime-version:from:to:cc
  :subject:date:message-id:reply-to:content-type;
- bh=W+CsBfQUUfwYQCfTJyMKFb2DhxxUZWftjxcQ6uPqVKQ=;
- b=YVpRj7rVd15/2HNIvKm303DsMNqTZ1dtrqBF0L3DQ6JCY1JesbKErMqrxpaFRhJ0ij
- 3XgrAQcGxBQE8Dj8qloamOvWUaQ52rqj6JOcvY1hYlLd1+BV72AuBLRl20vKWLxMH+wz
- me5GC6blxYNbLVJiPDzt+WgLsx35v4UcU0ikulqXvdtjKG7XLTosmtbpubhcJ6lIDnJp
- Ar5xWqOlTqJ07sssOCMGvhzmADiLbI3AoAoRhHgcbneCuI1PLUAeQ1LmeEoeR8K8nFY2
- tHyIfTy51CESY4zDyTlUeTyuU91qDf/CMvqm31gekjqwfgPotZmb0sXopgWxcHoTYQzF
- PSIw==
+ bh=so9X74c/k8ur915gA2+HGFAKIbInrLrXAx0o3xeYd4I=;
+ b=gAmj8OrGxy5L7DDUYXtr2/TkSEEoEVnN7viRvYUY174Dp/B9jKEFlCK8UDG1uhyGtk
+ nvPHcFrydgxZSerbiNOPjoPQssaxqqZdeO+BbBvnFiq3S7uUsH9wawzkpzRkhCW8czxM
+ 0DFK+3iQ7OtRUxu03eeogLXT6tvsoguk/EX0808Mv0kCdK67gTU0OnDTEAC5GYUCqpBb
+ suMsH43mqjYumHCrl/Ac9O/4ga/ijv43lsQRuZS+wkhpdXP5MucVCw4C6Xqhy/c9JNsT
+ wpUX/pw0RanoI+CbJUhx5y4fkcG/edqRJWBvqhkb07fKjcXPtJDNypRPH9L8evxIA1y/
+ ZZRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791227223; x=1791832023;
+ d=1e100.net; s=20260707; t=1791227575; x=1791832375;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:reply-to:in-reply-to:references:mime-version:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=W+CsBfQUUfwYQCfTJyMKFb2DhxxUZWftjxcQ6uPqVKQ=;
- b=j1i65yjlA5+oq+AIdnETT8jBwb2jrhbTsJKvoz4DIksMd5rTE8hDEdov3hyOFXe9n8
- 2YsHC+URvYQyktw3qdmv1MUgLuxDieNb6x5AMkn1wkouO/6Pvih7TaQ+O1pnIwloqJP1
- dyynJ8oRgmBd6gaHfbaHlaa9O+T81v7Ge9qaiaAy5q/DRexTkSJuhAkGVHdZXvu7JM1i
- DRlOwO+dSPliQ+3vdS6XQ9bDTSB1IMPI3wDl6qauNRsjBCwwu7JbzlXD6w3P0KAzjlyO
- TGd3t/snzWTmCjWOJgmq9mhNUcasTRib24YeKWJI0fNpd5naTmO5qCP3qa6UItWKat/M
- W0Ig==
-X-Gm-Message-State: AFq9FYJZh111JtzXLG1lsIgKdv4SMEvjhlWDqzDfnoaSYurds1K28vaH
- nwyPuXCqqxzcEFwaKVTw5qMJdn2jdWzLrIyLGxU79aI0qRmPy/9GuQ81XcYS9N9NWVTb0x1rD02
- RTqMhWZ2si+EFRTxokdeRHjGLwstZo9s=
-X-Gm-Gg: AYBFou0hNBHRdxwNwkImKR+NmG/ESY3FQQo4caovcod4t+tMlxjk0rqhrowUyPkq2+s
- ACXvC0mys4VvRtlqnQaQhPU3QwgWI8s9sTp+kSeVRJr/P54NSl/IKTgjr9NE7PT/udgTf9dsIns
- I4M0J3CM/WpgcOUMq9XTzno4P/Z0xACQCdeyIosfjJ5Ii2aZxRFF/5phpKkBLnwIqnfqdXEV8XA
- YmjaZybWx7h0Z5ilOzBb++EFqaXLNyIARz1wELQV9LShLt3fcc79DhX02ulx1zosnPI43V4zdrY
- 1hmB2CDV0apJX347tMba860oO46OUg2qNhDRUfL3GPYkwK6/qTXtpydGC7WE0rwBHw==
-X-Received: by 2002:a05:6402:3549:b0:6af:9c33:a6f with SMTP id
- 4fb4d7f45d1cf-6afad8d13aamr6734753a12.18.1791227222428; Mon, 05 Oct 2026
- 12:07:02 -0700 (PDT)
+ bh=so9X74c/k8ur915gA2+HGFAKIbInrLrXAx0o3xeYd4I=;
+ b=qL8nRNeKHMowUs7130s5805zsnfPELyj0YZ6CpEcAZSul2ESsmI+YrhHMdOJJBQLF9
+ Kj13uNS2o3XgjJrjThAZNgBdnGvsTBpwLUUFivspFP2qQti1uaf3fzdhGRGskzYUaDvW
+ pYxVu00unnwqS92+VwEAnGkBBdZ8UXSuTgmwJEr8q1K7HgM2eGJiSwybzGC5zsVmQDLL
+ l5hl5Wo5NUl0TVWlWvuVPiGWP7BMfiwjkCOOcUh6JxLbGVwRzI4TvzwGnHI5ATDWBbmX
+ k2v9ng9gZHw04VE/j1kC2cThVSW05luIOP4Foh7+u9ykCMgigr/t0k5ekUR6RQr1j36K
+ wD6Q==
+X-Gm-Message-State: AFuF++kBlLdYn/PscIvxNw9LPVr5jDy5k91mSPjRGri0U1556qVA82yE
+ z50MwI8o5FXjXmvmfo+Lv396MGtMv6hwgECf7vXRrO4+beeL6kknyoV/Oo7A5i6y8Pzp8lF8Bj4
+ NOTqS8m9Tj/96RmBChzNwzjweBsBW/gs=
+X-Gm-Gg: AYBFou1OKuoHXeHTOLmLF1qPzdQs6c6upvUPO+KK4xrqrEjMq/mE1O4i8XfbSBtDYNm
+ 1CgFSpivXL03HFm1db2wnn987pff+t3o4b9oa/U2xJ9sDVq5DKOD5dQGVA8OP9I2il5S7FzCLR3
+ kox605kpk4/NCxmR064qzM88cDlklCBTwPXItStb9RbuCK8VufU+NcvVMQ/5f7cIaPa+0UGOHE3
+ q1KvaBaQyTmpb+Shgd58nWjdzNWuN2Hl/MJhBP4rIqc51NnHGR7MPrVnxdCxntwv8SFgnZvpZ6V
+ 3PWxA1BaPfXh4C/EMCNCzsZkvdnLQ+LrtNWEIxGsy0yTIgBaNf+PkOI=
+X-Received: by 2002:a17:907:9727:b0:c25:f7dc:2dc with SMTP id
+ a640c23a62f3a-c316155f671mr51007266b.29.1791227574993; Mon, 05 Oct 2026
+ 12:12:54 -0700 (PDT)
 MIME-Version: 1.0
 References: <20261004072927.1142-1-luoyonggang@gmail.com>
  <0b84bf4d-3b98-4f52-8847-9f89bef92c1e@oss.qualcomm.com>
@@ -93,9 +93,9 @@ References: <20261004072927.1142-1-luoyonggang@gmail.com>
  <15e9a768-95bf-45aa-8175-1dbd73d5ee04@oss.qualcomm.com>
 In-Reply-To: <15e9a768-95bf-45aa-8175-1dbd73d5ee04@oss.qualcomm.com>
 From: Yonggang Luo <luoyonggang@gmail.com>
-Date: Tue, 6 Oct 2026 03:06:49 +0800
-X-Gm-Features: AclHuK_KsbUyHZLLiM-39GKgYxFw7vjQLzeQ02C_dR5SP7j8q0z7-v6flS8uiCA
-Message-ID: <CAE2XoE-89zTC4wPnyi_ZUu_dcVuLmwr4uyp-txkxEYQ29Y8uvw@mail.gmail.com>
+Date: Tue, 6 Oct 2026 03:12:41 +0800
+X-Gm-Features: AclHuK8Cmq3gkxG_a6RfDXEmEomR51s31qoTLlpvSkB1_reQ3hwpT8UrgGqYLl8
+Message-ID: <CAE2XoE-Dyh+aFnOGUYQnjkuWkmXbxGatc2Vn9V9t8aNLp18Qfg@mail.gmail.com>
 Subject: Re: [PATCH 0/4] target-info: preserve full softmmu target identity
 To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Cc: qemu-devel@nongnu.org, Philippe Mathieu-Daude <philmd@mailo.com>, 
@@ -107,8 +107,8 @@ Cc: qemu-devel@nongnu.org, Philippe Mathieu-Daude <philmd@mailo.com>,
  =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
- envelope-from=luoyonggang@gmail.com; helo=mail-ed1-x52c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
+ envelope-from=luoyonggang@gmail.com; helo=mail-ej1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -209,9 +209,14 @@ sts.
 > So far, if those targets were not exposed (and aliased to 32/64 bit
 > variant), it's probably we didn't need it.
 
-because for different SysEmuTarget, the machine list is different.
-return a wrong SysEmuTarget would cause a mismatch between SysEmuTarget
-and the machine list. for example:
+Another thing for a combined-binary qemu-system. The qmp's
+query-machines' targets
+can not return the exact target list of SysEmuTarget.
+malta belongs to both mips, mips64 mips64el mipsel
+qemu-system -target none -M malta will not able to print the full list that
+ mips, mips64 mips64el mipsel are the proper target
+but give us misleading
+mips mips64
 
 static const char * const mips_machines[] =3D {
     "malta",
@@ -224,22 +229,6 @@ static const char * const mips64_machines[] =3D {
     "none",
     "pica61",
 };
-
-static const char * const mips64el_machines[] =3D {
-    "boston",
-    "fuloong2e",
-    "loongson3-virt",
-    "magnum",
-    "malta",
-    "none",
-    "pica61",
-};
-
-static const char * const mipsel_machines[] =3D {
-    "malta",
-    "none",
-};
-
 
 >
 > In case there is a real need to expose it, maybe the simplest solution
