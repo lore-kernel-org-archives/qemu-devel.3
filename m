@@ -4,73 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59F2BCA5FF5
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Oct 2026 21:07:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23BBECA5FF0
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Oct 2026 21:09:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xDpt5-0002rG-Ba; Mon, 05 Oct 2026 17:06:19 -0400
+	id 1xDpvt-0003TW-2i; Mon, 05 Oct 2026 17:09:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1xDpt3-0002qu-C1
- for qemu-devel@nongnu.org; Mon, 05 Oct 2026 17:06:17 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1xDpvq-0003TI-IG
+ for qemu-devel@nongnu.org; Mon, 05 Oct 2026 17:09:10 -0400
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1xDpt1-0008I2-RN
- for qemu-devel@nongnu.org; Mon, 05 Oct 2026 17:06:17 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1791234374;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=AlEldR9HDTOt3hsmnmi3skjGS4vUIdiz1L9r1ZMU35I=;
- b=JigkRAIWQuPL3VVvTpdXQsHhtwLfnxs3kMpWNrkZs5jXgTVlqefn4TXyZIXIiLMIGCKWEN
- 8SASHRriVsBzyhY/Oguq1YAJCVaviKC+j1qYJZt8EtJlUGZA+M2TTxzJx75yg7YfmZXrZ4
- S5czw0p1fixKYiO2XQXsk6+iQ6bpjXM=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-614-g5p6APSmOeqIfFaVgXLNVA-1; Mon,
- 05 Oct 2026 17:06:11 -0400
-X-MC-Unique: g5p6APSmOeqIfFaVgXLNVA-1
-X-Mimecast-MFC-AGG-ID: g5p6APSmOeqIfFaVgXLNVA_1791234370
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 78FA31800869; Mon,  5 Oct 2026 21:06:10 +0000 (UTC)
-Received: from redhat.com (headnet05.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.117])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AF8C419560AB; Mon,  5 Oct 2026 21:06:07 +0000 (UTC)
-Date: Mon, 5 Oct 2026 16:06:04 -0500
-From: Eric Blake <eblake@redhat.com>
-To: "Denis V. Lunev" <den@openvz.org>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, 
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>, 
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-Subject: Re: [PATCH 13/13] iotests/298: cover the preallocation races
-Message-ID: <asQNnJmHzzJFhZ1k@redhat.com>
-References: <20260930165000.303236-1-den@openvz.org>
- <20260930165000.303236-14-den@openvz.org>
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1xDpvo-0008Nf-A4
+ for qemu-devel@nongnu.org; Mon, 05 Oct 2026 17:09:10 -0400
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 04D00583301;
+ Mon, 05 Oct 2026 23:09:06 +0200 (CEST)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id lOtxTKJdTTLV; Mon,  5 Oct 2026 23:09:03 +0200 (CEST)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 39BCF5832AF; Mon, 05 Oct 2026 23:09:03 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 379C25831F0;
+ Mon, 05 Oct 2026 23:09:03 +0200 (CEST)
+Date: Mon, 5 Oct 2026 23:09:03 +0200 (CEST)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Paolo Bonzini <pbonzini@redhat.com>
+cc: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org, 
+ "Michael S . Tsirkin" <mst@redhat.com>, 
+ =?ISO-8859-15?Q?Alex_Benn=E9e?= <alex.bennee@linaro.org>, 
+ Alistair Francis <alistair.francis@wdc.com>, 
+ =?ISO-8859-15?Q?Daniel_P_=2E_Berrang=E9?= <berrange@redhat.com>, 
+ Fabiano Rosas <farosas@suse.de>, Kevin Wolf <kwolf@redhat.com>, 
+ Warner Losh <imp@bsdimp.com>, 
+ =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
+Subject: Re: [PATCH 1/4] docs/devel: relax policy on AI-generated contributions
+In-Reply-To: <69164823-7271-4d59-9684-637bec454a1d@redhat.com>
+Message-ID: <293cb972-35e1-1922-0834-601e2491a7a6@eik.bme.hu>
+References: <20260930085433.830743-1-pbonzini@redhat.com>
+ <20260930085433.830743-2-pbonzini@redhat.com>
+ <CAFEAcA91XU=_hS3iB+0p7hXQ_nvf0YpgNZaKsd=b=fSVaTJDxw@mail.gmail.com>
+ <69164823-7271-4d59-9684-637bec454a1d@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260930165000.303236-14-den@openvz.org>
-User-Agent: NeoMutt/20260616
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=eblake@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
-X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,36 +74,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Sep 30, 2026 at 06:49:59PM +0200, Denis V. Lunev wrote:
-> From: Denis V. Lunev <den@openvz.org>
-> 
-> Three cases the filter has to get right, all deterministic: a write the
-> preallocation cannot reach goes through without waiting for it, a write
-> into the range it covers does not, and a write zeroes over data written
-> inside that range is not skipped as already zero.
-> 
-> The second one cannot wait for the write to finish, because that is
-> what it is checking does not happen, and the data survives either way:
-> a preallocation that finds the write still in flight gives up. It asks
-> whether the write got past the filter at all instead, by leaving a
-> breakpoint below it.
-> 
-> Signed-off-by: Denis V. Lunev <den@openvz.org>
-> CC: Kevin Wolf <kwolf@redhat.com>
-> CC: Hanna Reitz <hreitz@redhat.com>
-> CC: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-> CC: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-> ---
->  tests/qemu-iotests/298     | 64 ++++++++++++++++++++++++++++++++++++++
->  tests/qemu-iotests/298.out |  4 +--
->  2 files changed, 66 insertions(+), 2 deletions(-)
+On Fri, 2 Oct 2026, Paolo Bonzini wrote:
+> On 10/1/26 14:21, Peter Maydell wrote:
+>> On Wed, 30 Sept 2026 at 09:54, Paolo Bonzini <pbonzini@redhat.com> wrote:
+>>> +- large, heavily LLM-assisted contributions where LLMs write large parts
+>>> +  of functional code.  These are only allowed if *pre-arranged*,
+>>> +  *high-quality* and *well-tested*.
+>>> +
+>>> +The last case (*"LLM-created contribution"*) is the one that requires
+>>> +a more careful approach.  In particular:
+>>> +
+>>> +- "Pre-arranged" means that a maintainer has communicated ahead of time,
+>>> +  for example on `IRC or the QEMU mailing
+>>> +  list <https://www.qemu.org/contribute/>`__, that they are willing
+>>> +  to review an LLM-created contribution.
+>>> +
+>>> +- "High-quality" means that the contributor must apply the same judgment
+>>> +  that would be applied to other code changes.  Contributors must invest
+>>> +  substantial time reviewing their contributions, curating them, and
+>>> +  understanding them in depth.
+>>> +
+>>> +- "Well-tested" means the LLM-created contributions will be held to a
+>>> +  higher standard than human-created ones, because LLMs make it easier
+>>> +  to write tests.  There are no exceptions for "writing the tests seems
+>>> +  hard" or for `yak shaving 
+>>> <https://en.wiktionary.org/wiki/yak_shaving>`__.
+>> 
+>> ...but I think fundamentally I am not in favour of having this
+>> fourth category of permitted uses. It seems even to have lost the
+>> idea of it being an "experimental" approach in this revision of the
+>> series. The first three categories are fine, and I have no particular
+>> problem with our relaxing our current policy to explicitly permit them.
+>> 
+>> Our problem as a project does not seem to be on the "writing
+>> code" side of things, but has always been on the "code review"
+>> side. This policy relaxation makes it much easier to write more
+>> code. Even when there's a "pre-arranged reviewer" that isn't
+>> necessarily helpful -- if you're one of the primary maintainers
+>> for an area of QEMU then the fact that somebody else is reviewing
+>> it doesn't make a big AI-generated code infusion any more palatable.
 >
+> I understand where you're coming from.
+>
+> The purpose of the fourth category is norming contributions that are already 
+> happening.  I apologize for the allegation in advance, but take for example 
+> https://lore.kernel.org/qemu-devel/20260817190038.580257-1-mattst88@gmail.com/; 
+> on one hand it is very high quality, on the other hand I give it at least a 
+> 70% likelihood of being heavily LLM-assisted for the implementation and not 
+> just for the analysis.
+>
+> The question is: do we want contributions like that one?  If we decide that 
+> their quality and usefulness are high enough to want them, what process do we 
+> need around them?  I think we all agree that, if that kind of contribution is 
+> desirable, we want the submitters to declare AI usage and the reviewers to be 
+> aware of it.
+>
+>> Allowing large heavily LLM-assisted contributions seems to me:
+>>   * the biggest risk legally speaking (though I think this is
+>>     in practice not all that big a risk at this point)
+>>   * the biggest risk of the codebase degenerating into
+>>     unmaintainability
+>>   * the biggest risk of finding ourselves reviewing contributions
+>>     that are in practice much more vibe-coded than the policy text
+>>     above is asking for
+>
+> I agree completely with how you phrased the first and third.  I agree that 
+> the second bullet is a risk too, but it's mitigated by "LLM-created 
+> contributions will be held to a higher standard than human-created ones, 
+> because LLMs make it easier to write tests" (and by maintainers being able to
 
-Reviewed-by: Eric Blake <eblake@redhat.com>
+Tests need to be reviewed too to be able to trust them so that does not 
+help against overloading reviewers with generated patches but burdens them 
+even more: they will also have to review the tests before the code.
 
--- 
-Eric Blake, Principal Software Engineer
-Red Hat, Inc.
-Virtualization:  qemu.org | libguestfs.org
+We could say tests must be written by hand but nobody wants to do that or 
+that they need to be reviewed by a human before submission but we ask that 
+for all code in the patch including tests so I don't see how the argument 
+that LLMs can write tests would reduce the original problem.
 
+Regards,
+BALATON Zoltan
 
