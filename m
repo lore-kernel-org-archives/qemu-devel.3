@@ -4,134 +4,130 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E529ECA5FFC
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Oct 2026 18:12:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3D16CA5FF0
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Oct 2026 18:19:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xDnAY-0006vq-Ja; Mon, 05 Oct 2026 14:12:13 -0400
+	id 1xDnGy-0007og-Ai; Mon, 05 Oct 2026 14:18:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xDnAJ-0006tf-SQ
- for qemu-devel@nongnu.org; Mon, 05 Oct 2026 14:11:56 -0400
+ id 1xDnGe-0007nE-Qo
+ for qemu-devel@nongnu.org; Mon, 05 Oct 2026 14:18:34 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xDnAI-0001lE-2u
- for qemu-devel@nongnu.org; Mon, 05 Oct 2026 14:11:55 -0400
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+ id 1xDnGb-0002Eu-6B
+ for qemu-devel@nongnu.org; Mon, 05 Oct 2026 14:18:27 -0400
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 695HLdFd3043993
- for <qemu-devel@nongnu.org>; Mon, 5 Oct 2026 18:11:52 GMT
+ 695HLKMn2909389
+ for <qemu-devel@nongnu.org>; Mon, 5 Oct 2026 18:18:21 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- ng9WySV14TSTJCdCCvPSLLU2VEH+VQ0K8UfvW7I5bUI=; b=j1oG/+iHH1XeI8A4
- CgY+2x96pSooi3SwZgXfG4AqZ5/+aBpaFno5TX97u4gWuNU9jlQuMtiimk8nAzqK
- b4ZnhjBEp2q0CbkERuZ4jO1CMv0OOht6+layjQ1o2+ju3taqSRv+G49UyEd7CZRE
- utg4pHtpcQO3DrIEg19u3VqyXBH+yyJI3t6F4qzpv8AEXMCv+4tukYyI9ncWX67e
- Lu529NyxXrKFNZUehsRjYvnJrHqbZP97ALKKKqH5ISxerDPSXeOgkXHod3ntkoA5
- 9ARBMpLKMbahwGD79iNqQFkAx+EbqSs5dJHsBv1rBZIY/73s1bqBJQADk1m/kDCf
- igxUxA==
-Received: from mail-dy1-f198.google.com (mail-dy1-f198.google.com
- [74.125.82.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h49tvss1x-1
+ cc:content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:subject:to; s=qcppdkim1; bh=3oQBqCqzUxBQw0X5HB1vUb
+ PUa4rFBwr97Qk3QzG+Bmg=; b=V8QV6tzsxtYidcHDOShXo9Lvetz62Lfx/hxDKm
+ bZ8oSPw3xOyvu84DF0DVwanhKDgli4qG4d2QMTuZsXFQ3iyqNeOsBdQsn6on1IE1
+ C+25+tGr+IpQSk9rORE3F+MfqIaofiufELp+eczaY/XgxBGCKBj6BW/IktZz2Y4s
+ oBe+wSlGmEDMgnhXXT5d33xj/tHqCGP4ic2PWFIhuSxQ7sp4WgaN+2eFWONcwQJY
+ BOfkIv12I/LFCQRtd5+oM0GiLUntE7Vu6/eMFEK3QFt/+zcXJRZicU4nW1ueUJSg
+ j2ovYUxuOPZKX+T4S2NIAA2BEMNCHQTxH/yLwt7tp2UnzFng==
+Received: from mail-dy1-f200.google.com (mail-dy1-f200.google.com
+ [74.125.82.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h4bhg1j68-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 05 Oct 2026 18:11:52 +0000 (GMT)
-Received: by mail-dy1-f198.google.com with SMTP id
- 5a478bee46e88-34d80ca2184so2719622eec.0
- for <qemu-devel@nongnu.org>; Mon, 05 Oct 2026 11:11:51 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Mon, 05 Oct 2026 18:18:21 +0000 (GMT)
+Received: by mail-dy1-f200.google.com with SMTP id
+ 5a478bee46e88-34d84114044so8711608eec.1
+ for <qemu-devel@nongnu.org>; Mon, 05 Oct 2026 11:18:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1791223911; x=1791828711; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=ng9WySV14TSTJCdCCvPSLLU2VEH+VQ0K8UfvW7I5bUI=;
- b=aXHE0jrleW8e9M0VlC4cTKVbyYCiVxJXDLhcFi0TQfK+1mnkYC+lfHrNMuXQmfSLwr
- rCgQebIACaHYOsnr4+FwNLWundO3BnlBdRMiKKpKfK5uyKJV0auaRVvV1QjAtiJhTr8H
- dSije2qMu9r8sSLPH6fERtxs7DVB8jmZnnLCqOh42aozL7rHYvn4xBIDRgwoom7LlPec
- trnbo6g9wcUezltf+/pm+STV3L3Owcc7jgy01axmU2n7NvBG1AgNNqCHM5en59XbSMVi
- x9NlvsnEXZ2NjVgUMizqMzsA6tW5x4DLZ9f5ctRHi88TMw/usaBsw2DGeNpL/8rFF7Kj
- pG/w==
+ d=oss.qualcomm.com; s=google; t=1791224301; x=1791829101; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=3oQBqCqzUxBQw0X5HB1vUbPUa4rFBwr97Qk3QzG+Bmg=;
+ b=flaN/3IDlsypS0GUqQ0KXVJs4C03sJqwz3fe6dC0ZOt9P3T6KrJTuKanLGO5E6y41y
+ Ke1BYPrnjJ9/+LxlLPqbmPpoLZkrQoDAKaAbMkZrCLmjM7YDlrICsrRCFk5BTzAJOTUB
+ 8Y3IY8kSfaLBHp9+VZBEx0kr6DxiIv1Fve1mHZ6KZV+2PICHmB428U7QhIPosG3kjsaN
+ hbu3C7Qjk1KLLvmNCOWVLKiVNEQo0yM1yQj4N1WLjfNDihuBOpSWa9waHUvm+ScBgu+Z
+ PCrnlljCNiO1PURdl7MzOsx8D2kppWUD35jW8mfQ60E4sJnYijwA5VDgOhG0SXNWl2hb
+ eH4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791223911; x=1791828711;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=ng9WySV14TSTJCdCCvPSLLU2VEH+VQ0K8UfvW7I5bUI=;
- b=W86TCvbno1lKR2AEISozBuA7yfrXgOSZJkPmKo/JinAm4DPZgNYdi91bvAwXqS1Kte
- y99Ym5am+C/WbdBf74qNtPabXvjrZb91kJ8Ul60PEUCrD7sflUPaTtYEwSREA87PsZup
- e12R0RBGqYdHu5g3+jDG7kIIe3hTsiudzWHYdAxMjeegYCFXN7+HbyCxm5kLV+UEOj50
- exzIEUs2sr4Qj7NFlnkmstNI+OpYcKtWV+cBCrSLZ6APvmvYr0jJ1l3IjW19zH9soocL
- YSDc5D8DtZuaopbBtUOzIsUI38+q4xNzA8xF3o5o2goiEWQoZpZZHTgcbmt4XXoJRnIN
- f1hw==
-X-Gm-Message-State: AFq9FYLTscDWQhIhoPplnDZHYpO7ObaWAFGPhOvQ8M/Xl30eRHPVWe7s
- bOwnpazzgKu23Uq1bD8OMZRFb6iLp2t/9AcxwYS+hqHDlMcwXPgSecg60rO/Zw3HE/+Iu6IAQik
- YDEYzzYYnlYO9xnsKRd8f7Q0LG95Caf0B4/TuQad3eqw3wIZHnWz0MJcchg==
-X-Gm-Gg: AYBFou2UZQfs8rdkXQi88v2qADj+oIohBzD3A00d7saCJMLd8QPXq7mlyGTMpFdF/kM
- 5FImPB+9yvGgR2xw4/xVkaTM0adzQOIjFm7hbxn/ste9NCaRh9J05XTk1yt4qHqm5BvOz2kkPX2
- PR+QyP7A/bFFFVCnRA6MqyzMlej2IEqCl8+v9SnQI5m5i15NjhcctPRGn246MzcHndcgDklGf+n
- rRMwoPhMlhFHdyyI8c0YsZZr78beVbavYhKgjxi4446ehglu4E081SXR1gFMnwNI2oaz47EXQvD
- rz6A2MV2h58wGiLpflu7uTiOkfWb0cOvXosD2TTUvFq7R0JS6/oc6wGYtIFvhZr0/MaMTAQMe/f
- 6C3ddncvWzM/92x04828vVZcLrYE1xVav09tdMmyEkgfy/Qbi694ZStoErgwkVGTW5bzbZA==
-X-Received: by 2002:a05:693c:881a:10b0:351:2a3a:7e7c with SMTP id
- 5a478bee46e88-3512a3a8632mr5713613eec.34.1791223911078; 
- Mon, 05 Oct 2026 11:11:51 -0700 (PDT)
-X-Received: by 2002:a05:693c:881a:10b0:351:2a3a:7e7c with SMTP id
- 5a478bee46e88-3512a3a8632mr5713561eec.34.1791223910400; 
- Mon, 05 Oct 2026 11:11:50 -0700 (PDT)
-Received: from [192.168.1.199] (192-80-163-190.dyn.novuscom.net.
+ d=1e100.net; s=20260707; t=1791224301; x=1791829101;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=3oQBqCqzUxBQw0X5HB1vUbPUa4rFBwr97Qk3QzG+Bmg=;
+ b=AP4F78NXnHOLDKapHFUS3SoxiXmcwFGTm7yDa25FaOtQ2R+8QsLJDJ5eHnE4kC/UEk
+ JpjoPHGEersAXlG8qZMM9+x2Z4JRlNFmsZloocW9+2/GwifyLmL0wCqRjE2GJ38MBr3V
+ Y+TeESsHylIsOKHCpHOK7suJ9qZjhBItjNMuyBJM5H+CmS7kd3+UEP41bO0RKcy+++V8
+ xRT8AsLW23CYRdDjwwail66+vujIjD8ZaZYbohkWfTQGf8c23tr8jkguNL/VjBONJvut
+ 2B0V8vNh7RS84KX3hLU3i38MYpViseZtetP1RImalbVaS2VKprr5hPx0lL0PhHURA+Wl
+ 9fhQ==
+X-Gm-Message-State: AFuF++n56kkfiHSe8YN9DFJieiIKEqUGaxCaK4RJtjZr28rsG3gqPWkl
+ KcVJNnLkFqWeHWOQ4xUZzmxkE24eNDaABdzbypiuwyx0wVQbA/qOTAdPr3wJSQjazwycLA2tdEh
+ CpkuwQ0C6hs0OaeeOcb7Ig0cKTqQ/gNzMjTa5uSH9xcPqPYjsvFkZXKu/XsEGM3Op9A==
+X-Gm-Gg: AYBFou1AcaUmSdAyVT8GC9tC83DpaTP2q2pMaFOaJiWMv++WkoDHc3RPMbhUMvSr8LR
+ uagt0m9GzseA9m765i3cK5YUYbxl4wceXh6SLn5iMLvhFfJaIkaTm4RvgxQRmUZudFElS/AqFFc
+ dFTMQFiZFBLjwu+wuQ+PgQeQNL7jfSvpMtz6xvLJHwP8DKIDrNBV5e8LFmblPslKSWyVl7YR+GA
+ yx9Nqsz+0fKkzvOtJqCkYVJroLnjoUm1uMv/PQE2SxKWyWW2ELt7877kQ3I+/IoLMK3XofZx2b4
+ Jz8J8aAzpCC6eRjYa4hnyfG7WTzZSS8NvRpeaQu1MClv29W8rSNR7wAAfiSo/v2CUt9HcywWhyT
+ EuOQ+BhVzBEQYkREAjPlqLjyNz0aGvIjR8SS8C5RTr/FWYM5sBhIT6MWZxi6J
+X-Received: by 2002:a05:7300:d80d:b0:351:1dff:ae1f with SMTP id
+ 5a478bee46e88-3511dffafd0mr8658262eec.41.1791224300713; 
+ Mon, 05 Oct 2026 11:18:20 -0700 (PDT)
+X-Received: by 2002:a05:7300:d80d:b0:351:1dff:ae1f with SMTP id
+ 5a478bee46e88-3511dffafd0mr8658232eec.41.1791224300123; 
+ Mon, 05 Oct 2026 11:18:20 -0700 (PDT)
+Received: from debian.qualcomm.com (192-80-163-190.dyn.novuscom.net.
  [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-35146b3b5aesm101719eec.29.2026.10.05.11.11.49
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 05 Oct 2026 11:11:49 -0700 (PDT)
-Message-ID: <00f04444-18ca-4881-a0e9-a0dfac654e35@oss.qualcomm.com>
-Date: Mon, 5 Oct 2026 11:11:48 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 04/21] target/microblaze: prefix helper conflicting
- with other arch
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- luoyonggang@gmail.com
-Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>
-References: <20260930020108.217892-1-pierrick.bouvier@oss.qualcomm.com>
- <20260930020108.217892-5-pierrick.bouvier@oss.qualcomm.com>
- <CAE2XoE_XCgvZLZL8xpRcyw9b_vNXA3w8fmnbd0X4q_-8wjtoxw@mail.gmail.com>
- <80ced4bc-202b-4223-866f-62a68edff48f@oss.qualcomm.com>
+ 5a478bee46e88-35146b07310sm89796eec.24.2026.10.05.11.18.19
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 05 Oct 2026 11:18:19 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <80ced4bc-202b-4223-866f-62a68edff48f@oss.qualcomm.com>
+To: qemu-devel@nongnu.org
+Cc: Alexandre Iooss <erdnaxe@crans.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ y zhou <yzhou.dev@outlook.com>, qemu-stable@nongnu.org
+Subject: [PATCH] plugins: fix register handle encoding to reserve NULL as
+ invalid
+Date: Mon,  5 Oct 2026 11:18:17 -0700
+Message-ID: <20261005181817.403766-1-pierrick.bouvier@oss.qualcomm.com>
+X-Mailer: git-send-email 2.47.3
+MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=aN9lOr9m c=1 sm=1 tr=0 ts=6ac3e868 cx=c_pps
- a=wEP8DlPgTf/vqF+yE6f9lg==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
+X-Proofpoint-ORIG-GUID: -rnC0QRmI2xPsntFNm8ePoJ1u2w0_235
+X-Authority-Analysis: v=2.4 cv=GMGdgeNK c=1 sm=1 tr=0 ts=6ac3e9ed cx=c_pps
+ a=PfFC4Oe2JQzmKTvty2cRDw==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
  a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
- a=VwQbUJbxAAAA:8 a=pGLkceISAAAA:8 a=OmRjonFGwHG3DbjuugIA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=bBxd6f-gb0O0v-kibOvt:22
-X-Proofpoint-GUID: P4vRU2qNfx9BrmifBjrukWDpL3PSmOXK
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA1MDA3MSBTYWx0ZWRfX1FpN1wxqqONx
- Tx2V5ZbkxhHrcpgfaNra0ru0KRmxso3wy9085gzKoeowHKy3QzI5lRsLfCJC2OgjE5jduUrRXPG
- 5w9qCjxQaUQcVq2oaJkADFdSwXrL8tvbOvZlPPonLJth9U2NCbg4vil12Ikmk+Yro4m4mdgp25l
- C/FLmL9C1oOmNIPUl32zhgPxNasEbwBJMDvTnsvhx5dmswsN/IhSy7jrnpY8jLGVW4A5qTAXFXg
- M/k9feYgRX+ADWSJ+GYQO5KTzwiHhzbyRRZq9leJU5PrK4NmeYVHzzO7y7k8zbQRjlLMNtQA+Ij
- Ez7NHoejpxG8I8zLwMRtW/47A7XjglMuoI85zJ8EEfruGJZOij2vax0tp2TIn7rk+uK8UtZzfEu
- CkoeQCmNF9JCsGjk/kcO4TPBuVl4k7kdoFTRXG/bE1BeZNMYAzT3MJhKoetogLrqDZ5jki/aJTZ
- BmMBnvwbbCe4E4RwuNQ==
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA1MDA3MSBTYWx0ZWRfX/mwAB3uGIDPl
- mh/ud6rzzqvetKMlqdimrxFMRz1JF7D+6DEC67AIKjdcps+nIV4LhXWthZdOfkYS+eSUe3ONo8/
- qSDa5hjRcBm/SeODJ9rReIVhw1uuk64=
-X-Proofpoint-ORIG-GUID: P4vRU2qNfx9BrmifBjrukWDpL3PSmOXK
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
+ a=UqCG9HQmAAAA:8 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=dGsWvjqBAAAA:8
+ a=69wJf7TsAAAA:8 a=lzdKdEW7bAII_ysEmBsA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=6Ab_bkdmUrQuMsNx7PHu:22 a=cvBusfyB2V15izCimMoJ:22 a=EwAE0RQWx3bH85eTCWcH:22
+ a=Fg1AiH1G6rFz08G2ETeA:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA1MDA3MSBTYWx0ZWRfX6F7WCwCVwsyi
+ nLnDfO2SEXANKeZ8wtuxnnqOmjc8V92x0bDLB/N8vibnQ9kh8yo6aIrrdVoY1dqbR8PUiAmKn4E
+ lGazS3It8SINwIhIBXcJmCqlaqXVtYM=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA1MDA3MSBTYWx0ZWRfX2FK7eyMX/1Jy
+ p+X9FPPs/5VBTxo66SiOMYbIAFIVg1/bNKLDvZcxPtJjTwGUQdH7snZbw/fKIBhOzVpFMp17Mgt
+ GzWaDwxyDWHI583LfVMc15f6vXuzKxKGQylj5y9vLLG9A/RbxloLlux7X3ib1FjdzEXEDJDol5h
+ nGPsuH8NvqUTk2wN2l5tsKjEVtwnZE7/d3yQ8TerZBGidGtXG60CrSUn57Xx2vRP+07ISzqeY+4
+ IJdWuPwfP/yfidI0zo3zCtSMzCdeqzwCgdGZiV9NeEVE+4uRTWYh1f3uiBSsnpPTuAbxzipQrmx
+ o6U4uWBKJNHK3OiVdzeMuwTElt8xc3IzrmWRrXDjOgoFRABVPsVhEhyEpvk9hDoQOrVdCyonu/0
+ 7UXM/RGCYpePs2ldhs3BmEIcGFIBjGCyUcK1W+3hzQh/j7R9ZC4HngRfziOWY0YkyJnS8oguutA
+ QQVsNvrEk+a+puVazNQ==
+X-Proofpoint-GUID: -rnC0QRmI2xPsntFNm8ePoJ1u2w0_235
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-10-05_05,2026-10-05_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 suspectscore=0 clxscore=1015 spamscore=0 phishscore=0
- malwarescore=0 priorityscore=1501 adultscore=0 lowpriorityscore=0 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2610050071
+ bulkscore=0 suspectscore=0 spamscore=0 adultscore=0 malwarescore=0
+ priorityscore=1501 impostorscore=0 lowpriorityscore=0 clxscore=1015
+ phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
+ definitions=main-2610050071
 Received-SPF: pass client-ip=205.220.180.131;
  envelope-from=pierrick.bouvier@oss.qualcomm.com;
  helo=mx0b-0031df01.pphosted.com
@@ -157,27 +153,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/1/2026 8:53 AM, Philippe Mathieu-Daudé wrote:
-> On 1/10/26 13:41, Yonggang Luo wrote:
->> Hi Pierrick
->> I have prepared:
->>
->> Subject: [PATCH v2 4/6] tcg: namespace target helper symbols for
->> combined builds
->> at
->> https://lore.kernel.org/qemu-devel/20260930073935.712-5-
->> luoyonggang@gmail.com/
->>
->> to deal with these issues in a generic way.
-> 
-> Thanks for proposing a generic way to rename helpers! Let's see
-> what Richard (the maintainer of this area) think about it first.
-> 
+From: y zhou <yzhou.dev@outlook.com>
 
-As there was no answer to this patch, I'll move forward with current
-series and sent it as PR. In case we introduce such a generic helper
-change, it should be trivial to revert rename patches.
+The opaque register handles returned by qemu_plugin_get_registers()
+are currently encoded as:
 
-Regards,
-Pierrick
+    handle = (gdb_reg << 1) | read_only_bit
+
+For the first core register of every target -- gdb_reg 0, not
+read-only -- this encodes to GINT_TO_POINTER(0), i.e. NULL. That is
+x86_64 "rax", aarch64 "x0" and ppc "r0", among others.
+
+A NULL handle is indistinguishable from an invalid one, so any plugin
+that defensively checks its handles silently loses access to the
+first core register (where the Linux syscall number lives on x86_64,
+for example). Passing NULL to qemu_plugin_write_register() instead of
+being rejected silently writes register 0.
+
+Restore the invariant that NULL is never a valid handle by keeping an
+offset on the gdb register number, as was already done before the
+read-only property was packed into the handle (see v10.0.0, where
+handles were encoded as GINT_TO_POINTER(gdb_reg + 1)):
+
+    handle = ((gdb_reg + 1) << 1) | read_only_bit
+
+Also assert in tests/tcg/plugins/registers.c that every descriptor
+carries a non-NULL handle: the current test passes the handles
+straight to read/write without checking them, and a handle encoding
+that maps a valid register to NULL goes unnoticed for that reason.
+
+Found while writing a system-mode syscall tracing plugin, which could
+read neither the syscall number on x86_64 nor the first argument on
+aarch64 (both handles came back NULL). Auditing every
+GINT_TO_POINTER/GPOINTER_TO_INT site in the tree shows this is the
+only place where a valid entity encodes to NULL.
+
+Fixes: 55327b85ce32c ("plugins: prohibit writing to read-only registers")
+Signed-off-by: y zhou <yzhou.dev@outlook.com>
+Cc: Alex Bennée <alex.bennee@linaro.org>
+Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Cc: Alexandre Iooss <erdnaxe@crans.org>
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+---
+ plugins/api.c                 | 7 ++++---
+ tests/tcg/plugins/registers.c | 8 ++++++++
+ 2 files changed, 12 insertions(+), 3 deletions(-)
+
+diff --git a/plugins/api.c b/plugins/api.c
+index 3520c96f411..46cba6796cc 100644
+--- a/plugins/api.c
++++ b/plugins/api.c
+@@ -455,7 +455,7 @@ static GArray *create_register_handles(GArray *gdbstub_regs)
+             desc.is_readonly = true;
+             plugin_ro_bit = 1;
+         }
+-        desc.handle = GINT_TO_POINTER((grd->gdb_reg << 1) | plugin_ro_bit);
++        desc.handle = GINT_TO_POINTER(((grd->gdb_reg + 1) << 1) | plugin_ro_bit);
+         desc.feature = g_intern_string(grd->feature_name);
+         g_array_append_val(find_data, desc);
+     }
+@@ -480,7 +480,7 @@ bool qemu_plugin_read_register(struct qemu_plugin_register *reg,
+         return false;
+     }
+ 
+-    return (gdb_read_register(current_cpu, buf, GPOINTER_TO_INT(reg) >> 1) > 0);
++    return (gdb_read_register(current_cpu, buf, (GPOINTER_TO_INT(reg) >> 1) - 1) > 0);
+ }
+ 
+ bool qemu_plugin_write_register(struct qemu_plugin_register *reg,
+@@ -497,7 +497,8 @@ bool qemu_plugin_write_register(struct qemu_plugin_register *reg,
+         return false;
+     }
+ 
+-    return (gdb_write_register(current_cpu, buf->data, GPOINTER_TO_INT(reg) >> 1) > 0);
++    return (gdb_write_register(current_cpu, buf->data,
++                               (GPOINTER_TO_INT(reg) >> 1) - 1) > 0);
+ }
+ 
+ void qemu_plugin_set_pc(uint64_t vaddr)
+diff --git a/tests/tcg/plugins/registers.c b/tests/tcg/plugins/registers.c
+index 0e41734435f..02058fe8a82 100644
+--- a/tests/tcg/plugins/registers.c
++++ b/tests/tcg/plugins/registers.c
+@@ -29,6 +29,14 @@ static void vcpu_init_cb(unsigned int vcpu_index, void *userdata)
+     qemu_plugin_reg_descriptor *reg_desc = NULL;
+     bool success = false;
+ 
++    /* NULL must never be a valid register handle */
++    for (size_t i = 0; i < regs->len; i++) {
++        qemu_plugin_reg_descriptor *desc =
++            &g_array_index(regs, qemu_plugin_reg_descriptor, i);
++
++        g_assert(desc->handle != NULL);
++    }
++
+     /* Make sure we can read and write a register not marked as readonly */
+     for (size_t i = 0; i < regs->len; i++) {
+         reg_desc = &g_array_index(regs, qemu_plugin_reg_descriptor, i);
+-- 
+2.47.3
+
 
