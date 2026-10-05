@@ -4,114 +4,122 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7723CA5FF0
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Oct 2026 15:05:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6212CA5FF0
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Oct 2026 15:06:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xDkG4-0007cj-So; Mon, 05 Oct 2026 11:05:40 -0400
+	id 1xDkGd-0008Ii-O2; Mon, 05 Oct 2026 11:06:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bmeng.cn@gmail.com>)
- id 1xDkFm-0007LE-QD
- for qemu-devel@nongnu.org; Mon, 05 Oct 2026 11:05:25 -0400
-Received: from mail-yx2-x0c.google.com ([2607:f8b0:4864:41::c])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xDkGP-0008G5-FM
+ for qemu-devel@nongnu.org; Mon, 05 Oct 2026 11:06:02 -0400
+Received: from mail-yw1-x1129.google.com ([2607:f8b0:4864:20::1129])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <bmeng.cn@gmail.com>)
- id 1xDkFl-0005is-9z
- for qemu-devel@nongnu.org; Mon, 05 Oct 2026 11:05:22 -0400
-Received: by mail-yx2-x0c.google.com with SMTP id
- 00721157ae682-8abc87cbd93so13158687b3.1
- for <qemu-devel@nongnu.org>; Mon, 05 Oct 2026 08:05:20 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1791212720; cv=none;
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xDkGM-0005oL-Rl
+ for qemu-devel@nongnu.org; Mon, 05 Oct 2026 11:06:00 -0400
+Received: by mail-yw1-x1129.google.com with SMTP id
+ 00721157ae682-8ab37e44643so13239567b3.0
+ for <qemu-devel@nongnu.org>; Mon, 05 Oct 2026 08:05:58 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1791212757; cv=none;
  d=google.com; s=arc-20260327;
- b=T2YJOTYgug8fLuTheKq7amXI5TmkgK64j2PNQAdCNrA7SocC1aSPq+NqQMGBzax+lW
- aelncIc0Gxor2bLVgKG5MgiAN2j6jccqMWj4QfCB+mxciU7mPFPusW87KHDBta2EH9F6
- EvVqXTUcidJd/rO1iRgP6Txj/IDn7fwaG9epnU31cawHFhnCsrJeZOXfYKFMZHMzVqn9
- B8DjymSZ8a7HtoadehXC63XrN+va67VK6KccFsYztlzCXq8MOhUJ/bq5KwPZ/3386T9G
- P3UCCPOQ3/JqT3cv6byYao2yrzzg6A2kY2hqXTOVHU4SbW1AWZvWbjhUU1/TPE2uElyv
- c6Ug==
+ b=iwzEYBJqgJQj/lZnnSTNdgCDTl8C1hfVUFCY3eG9d7qLp+3ld+BepxYfHmbkjZ1AB2
+ b7DV6k2Y7WbOekj5YfICWvoYi7BT6Oc52uy/JoKLkfsEY75BDqIuHTDxRN52vAGyWk94
+ I5zDdzEM0A/ui0Tr9WtUhkAO3TUfFt7S/Ztc5CVg7YVTaOTkBW1xPu7YNrdx7HD2c9nq
+ /u+aV7wyz0AUqzBDKl1Y5Hy358IF45WovRVmKJ+ISI7u6owMw4ziwHrIBiWOjBvOGG0q
+ Z7hFUJUUrY/jkvXiRZsHf+9JsI4d1rmagUyZpJjW/bGGchb8VMQEcWN6s7CxxXalYgva
+ +sew==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=4KcoWNhRKkBGA3tAv9e6pyRHghGbdQKqmQsVa9lTQvk=;
- fh=EjplmlcXR8MWJXDdpR5ncThIs/e4S293bvxZuvqDLMM=;
- b=ogGW/EO++WG/+97AocULq0SkAJ+B+neP6Hrss6wa+3FPvF5/PX9sZY6GbYlqlUJgks
- MpmaqHyCDBdZruPrHBRI/y/HUkyh/eflYXAYwi2bugSX9bleSBfkDgu0RI6DymfeJeX7
- 7di8BjVZidhAJColWRTbFD+gMrPcBT+D+JJ+dAYQxwxHx59cBUgkZyRHcnlm1Rn2lEP5
- e441kWqq3COXBmcLAketFWEx0jx6fWDtJRY3ONk3zmPV/kr3Rxg1u1g6/By+P4EkTj7F
- 3cvNmvWzYM0ZMGpxKcCqISuub2m+dezniRPAoYXfLzGD6ocwDk57wxzDaMtGjq3UDtys
- hC/w==; darn=nongnu.org
+ bh=2sGFBf4wmaMheBhnmNd1s3L4v+PoOPdqTDVFowvlh94=;
+ fh=n5bJ3LyX3XR59/fqwiCDFYXcbJtA8CwqKfaF7j3v2Ic=;
+ b=jsxDuBfl5bhOqlHlUpblRiOjHaYUTsA51pG3B+AvhsyZaU8n1DbltmA6qjnfBUamZb
+ 2iUrZayx7vEm9UJy04kUw7GHOyhpWXsTXHMG7N98HzsQJN+wjplrDFGAFcuXtC0xqrCb
+ COw106jx32zrSHNW7dDWvXnx8bSWehGyGrc2xx1cTbGSdC28w8Cz9cfcz1rj2HgKVjaf
+ o1URDoDmie9YZ7JziTETidxb0VYkZWqZeaW4bsPg4y1UWzaeeTVoUN7R+vw4Rr+8i+oh
+ 4Y0mXUTdIMC9+6+kUZCYjAyqejcxOihGbnFdR2ipEr/eJVAgvNr/zAx18v0uiPVsFGx/
+ x+sA==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1791212720; x=1791817520; darn=nongnu.org;
+ d=linaro.org; s=google; t=1791212757; x=1791817557; darn=nongnu.org;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=4KcoWNhRKkBGA3tAv9e6pyRHghGbdQKqmQsVa9lTQvk=;
- b=rt5htrV+aW6H72YNSBDwq504zXLZYo8Oa6Q5hroT7c8WGVguXG531UCtYLnhqwArW3
- FvXf1ngvNdEGTxPSELI7oma++7QLwTBi8t6HKIPgc7WEa5vyDn2BeRLzuWnLBDnSYRyE
- dCxKc7WpIfAOfl7XdbDpnTo6Tj/MTeyVgA5WUSNTo05PuY1/hgSR618PrBLq+cGaiIhX
- DNgvNWTgHF7ayWp7+q1uP8vTnFOEbU1WRkA7eJ1R0cwPwCdU73tKMrnjDPmVlvmHCziS
- 3tMcazP4M+MGaoCQu727+UxzhrfFGlt0wEYAjo9zYwdJA6qaQkPiXTn6w3+l3060khga
- PYkQ==
+ bh=2sGFBf4wmaMheBhnmNd1s3L4v+PoOPdqTDVFowvlh94=;
+ b=LjX8/2xxAe1qbkCphuG3D0tNlXGh5czmBymHtGZya84pQNtshrAu226LBvE26lF2XK
+ 8HIqRMniTq8qdOq5QbNgCclzBuDp5FUvuNBb8/gYMixE/4+RdAo3jio2O3fPgpefqa9y
+ jz5ac/RXshNji2GA7izRXJQ3mmqxfAbOpX3igqLgby7nFt/kCwYSMam4MyybUPP0pdmV
+ otBB89WUO8frqYuducN8DM94kliqCl7g/XM5YNscjENmdsF6RNKVMWRIY33qqUnZ/C7Z
+ x+hGB7oCvqb499r2XU6yd5HPXfNqihr+h72I4SRGhMB9Kst5yNQGcsYb+QU9ZDOQHHC0
+ rvlg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791212720; x=1791817520;
+ d=1e100.net; s=20260707; t=1791212757; x=1791817557;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=4KcoWNhRKkBGA3tAv9e6pyRHghGbdQKqmQsVa9lTQvk=;
- b=FZGlRc5L6txlmRNrWq1u6r+oQW3axBzXT3mQA7DUX9X9q3ai4elo53mJfWj1kHcs93
- ly3a3of7LSAojDrZv50EEajYBeuqXZ5WC2DI6i3zQXt5hlF1GzKhCIi135OG0KGp3isL
- 3p7eXva5pJ2VcoeEU6V6MvWFLlsCWB2iX/N7ZLcVLytyE2MrXp6dNLtN9AbsXrdjHtZN
- KiRFj6FnsuCcviyNcWKLMXF0poVqrg/EN3xBQixh+lMYCGHU0hP1y4/LT1RHIrGa51TX
- jrN8cQC9c3eNgVDk2WCjylyRpIGkUGcEbKaDUKY/Ytcqt2OpBHSXO+BFYgSxAlBPBLe4
- iccw==
-X-Gm-Message-State: AFq9FYK7NmjWzR7y9gU9BFfrMM35Ul8Y8OkRxPgnqQfV6mBxu/RnOusu
- PZ96a7ZKoTbdqGsCzYkbu5I8xRiKccCSRz6c2uQhk78zDdcHPmw1nCw6QHduwgmoDo6qi7wxnx/
- /Rgrz6bOExtKTcbPQGRmibXpVUtBy3vQ=
-X-Gm-Gg: AYBFou3r2zLGy2cvklzUyu7Y03ycsnlHKbrkxN9m+RU1CJSICn19lKfzStWCvDV0oWu
- 65Yidbi2IzTKWV4XP4aHuheEEM3EKTEH2eHCW0LTLLxi3a+2AtxysHbR/XMjUN/h8RB4V5nu/mh
- umHtpbLOI5E8x6JbQdDUNCOtZbtd7JiZwZsGS7RpTdAXzYqlE8oC4sQbjZqzgwmuFzOUNtQYJor
- P2M6cvpYow/EmqLWLOX7uSucyeDQb8AiV/buuLLgZkH7JXGNxYQoi7onmS/iWFPJwlX2UkQ/3xw
- oHoq0ydSwPPbFsiaQlvnp8laMQGIee0Vfx5JGtPj9TDjYQCcHPlU8+oGZGeUN8n90GA9pOOq7D6
- QjO+D82LUD6eCmMu1l9Iw1uz5eA==
-X-Received: by 2002:a05:690c:e3ef:b0:8a9:97ba:26b9 with SMTP id
- 00721157ae682-8ae39bfdf0amr49927697b3.41.1791212719962; Mon, 05 Oct 2026
- 08:05:19 -0700 (PDT)
+ bh=2sGFBf4wmaMheBhnmNd1s3L4v+PoOPdqTDVFowvlh94=;
+ b=kb7+HTdjddKPKhV+A2wMx7VEZuE7umC+fDglcqaj0OU0XF3FVumu4TZ2dH7tj36Icu
+ 08Oe4vXX+SLSnd5Bj/OozvlbVPQZADxjpBMHFuJkt4M+qVFZufVk1knLsvYIhtF8De6V
+ vjoxX7eAyvUEkhAbfXFbd1xP4q09h/EZ6xN/8ikWGYbwZxMkpukXpHYwhPzJvCMPir3z
+ C3NoTU/xHa3kN8ycJurfsUTfH3KGl9HRdY2CmNCrJB2fY9ksq7ErQJt1fdz4WbySoLTT
+ ZnKdnd898aA1PpQJ/uSucjkdgmvHLXTAYcuW/OnJZnagTCzYr4parSBM0qJUCy/JuckZ
+ CSmQ==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBzSKUDID0m1nmqrof4mIwYkPuH1Issy/zGq1QnkE+oIO1x4ctDG19Yia2gsc3SM+YZxBTgb5BDupfTd@nongnu.org
+X-Gm-Message-State: AFq9FYKv+X6Uy7s3xwsLUpHByMHm+etG1JeTz0dAlnF0qjlX6XwoBoso
+ 3zC1rXz7MDapNkz3yXELqAsBJPpx6dKIC8Pc0iD9giVyOWd4rNXrJrvKUtcEkNtqVj3NFI73jqt
+ QT9clsifYwqJONJoTash9t0wx2KD8hWgsNnLPUaw+EA==
+X-Gm-Gg: AYBFou1kjmd/sn+yhflhN0U+VjLxpCFM1fdOh+RUXaDpXgiVaEX0cs7x3oCn9mH8k07
+ ACcQ7cYxypyzZX0xzR65tZ3adCIMJVGiYcbPYnGySqG7fss+Fn9EcX0B4ioQL/NAq/AODuTLKjL
+ Sl8+ORuIyf6B+swrUK8xGCnAKpbTzrneSdvZxdnR9NKexLaTawXtDQU+F5uM6jxnYsWJKYMlVSY
+ m4Rg2w18CwRAkBAsTdMAloBD1yGqiLX0j9OXn6rgYpM7HlSIZFdHt2bruF4rBKlcrQBp4RRaerf
+ uDgUwr5PyEW1lmGkaKXblc3kY4crafo3qCHzfkjNwuiSsov8vbs0HXn+rklqGwVyRtuQ0pvzVKU
+ iWUEICZxGlwn61154DeXtcmbACUDHDj/NZzJPRndk
+X-Received: by 2002:a05:690c:67c3:b0:8ac:c329:67c5 with SMTP id
+ 00721157ae682-8ae94b38657mr28701737b3.6.1791212757349; Mon, 05 Oct 2026
+ 08:05:57 -0700 (PDT)
 MIME-Version: 1.0
-References: <20261005101800.10821-1-shentey@gmail.com>
- <20261005101800.10821-12-shentey@gmail.com>
-In-Reply-To: <20261005101800.10821-12-shentey@gmail.com>
-From: Bin Meng <bmeng.cn@gmail.com>
-Date: Mon, 5 Oct 2026 23:05:06 +0800
-X-Gm-Features: AclHuK9bi0TYBNlCb_SKzXAJdc1S974UXVFyUjiee_wD455NwAjxXMeB-7ZPE9c
-Message-ID: <CAEUhbmWSkX0Hj_X9+o8SY0+PB-ZXU7sD7P6rXHBtrGucugN59w@mail.gmail.com>
-Subject: Re: [PATCH v3 11/31] tests/functional/arm: Add console test for
- `mcimx7d-sabre` machine
-To: Bernhard Beschow <shentey@gmail.com>
-Cc: qemu-devel@nongnu.org, Gaurav Sharma <gaurav.sharma_7@nxp.com>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Peter Maydell <peter.maydell@linaro.org>,
+References: <20260921214710.29422-1-shentey@gmail.com>
+ <8affd0bc-1c2f-488c-88b9-af3fd7a6571c@oss.qualcomm.com>
+In-Reply-To: <8affd0bc-1c2f-488c-88b9-af3fd7a6571c@oss.qualcomm.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 5 Oct 2026 16:05:45 +0100
+X-Gm-Features: AclHuK81bz4IOIA3wj40cqGVFSp18As7_4HqW2WIzAYWDo7oZVVP788ziGIl4KQ
+Message-ID: <CAFEAcA8n73edkk2PNJO94_yO28Un5w_AYuHU5UW4yNe33P+qtQ@mail.gmail.com>
+Subject: Re: SysBus reset and heterogeneous emulation
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
+Cc: Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org, 
+ Phil Dennis-Jordan <phil@philjordan.eu>,
  Alistair Francis <alistair@alistair23.me>, 
- Paolo Bonzini <pbonzini@redhat.com>, Jason Wang <jasowangio@gmail.com>,
- qemu-arm@nongnu.org, Bin Meng <bin.meng@processmission.com>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
+ Alexander Graf <agraf@csgraf.de>, Jason Wang <jasowangio@gmail.com>,
+ qemu-arm@nongnu.org, Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
  Jean-Christophe Dubois <jcd@tribudubois.net>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
+ Gaurav Sharma <gaurav.sharma_7@nxp.com>, 
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
+ Jamin Lin <jamin_lin@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, 
+ Joel Stanley <joel@jms.id.au>, Luc Michel <luc@lmichel.fr>,
+ Markus Armbruster <armbru@redhat.com>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:41::c;
- envelope-from=bmeng.cn@gmail.com; helo=mail-yx2-x0c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1129;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1129.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,23 +135,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Oct 5, 2026 at 6:24=E2=80=AFPM Bernhard Beschow <shentey@gmail.com>=
- wrote:
+On Mon, 5 Oct 2026 at 15:35, Philippe Mathieu-Daud=C3=A9
+<philmd@oss.qualcomm.com> wrote:
 >
-> The test currently exercises the Linux kernel and waits for the first
-> daemons to be started. At this point, basic hardware is initialized and
-> if the log message is reached, no driver ended up in an endless loop,
-> thus the system should be usable.
+> Hi,
 >
-> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com>
-> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
-> ---
->  MAINTAINERS                                |  1 +
->  tests/functional/arm/meson.build           |  2 +
->  tests/functional/arm/test_mcimx7d_sabre.py | 46 ++++++++++++++++++++++
->  3 files changed, 49 insertions(+)
->  create mode 100755 tests/functional/arm/test_mcimx7d_sabre.py
+> On 21/9/26 23:46, Bernhard Beschow wrote:
 >
+> > Patches 11-15 turn the remaining i.MX SoC device models into SySBus dev=
+ices
+> > which fixes their reset behavior.
+>
+> > Bernhard Beschow (42):
+>
+> >    hw/arm/fsl-imx25: Derive from TYPE_SYS_BUS_DEVICE
+> >    hw/arm/fsl-imx31: Derive from TYPE_SYS_BUS_DEVICE
+> >    hw/arm/fsl-imx6: Derive from TYPE_SYS_BUS_DEVICE
+> >    hw/arm/fsl-imx6ul: Derive from TYPE_SYS_BUS_DEVICE
+> >    hw/arm/fsl-imx7: Derive from TYPE_SYS_BUS_DEVICE
+>
+> These patches are described as:
+>
+>    ```
+>    Deriving from TYPE_SYS_BUS_DEVICE fixes the SoC object to be
+>    reset upon machine reset.
+>    ```
+>
+> This is correct for the current state of the codebase.
 
-Reviewed-by: Bin Meng <bin.meng@processmission.com>
+Yes, and I think that until/unless we sort out where we want
+to go and can merge TYPE_SYS_BUS_DEVICE's features into the
+base TYPE_DEVICE then we're better off having devices and SoCs
+inherit from TYPE_SYS_BUS_DEVICE than from TYPE_DEVICE.
+
+> However
+> I'm foreseeing a problem in heterogeneous context, having 2
+> SoCs (like some Aspeed boards), if one SoC is locally reset
+> (i.e. a software reset), then sysbus will also reset objects of the
+> other SoC, which is unlikely expecting that.
+>
+> CpuCluster are not impacted because CPU types are not sysbus
+> based.
+>
+> Sysbus API was designed for centralized memory bus and
+> non-heterogenous machine. It is good enough for whole-machine
+> reset but does not adapt to per-SoC reset domain.
+
+Yes. Even in the heterogenous context, if the only thing
+guests in practice do is "reset the whole machine" it will
+continue to probably be good-enough. If guests want to be
+able to do "the BMC CPU resets the application-processor SoC"
+then this is one of the things we'll need to fix.
+
+Ideally our reset API would both (a) allow you to model an
+SoC's reset handling correctly, whatever it was and (b) default
+to something that is at least vaguely sensible behaviour
+if you don't write any reset-related code. (That is, I would
+hope we can avoid "every SoC object has to write extra boilerplate
+to handle reset of its child devices, and if you forget it then
+reset silently doesn't work right".) Figuring out how we get
+from where we are now to where we want to be without breaking
+all the existing machines is then the second half of the problem...
+
+thanks
+-- PMM
 
