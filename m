@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00437CA5FCE
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Oct 2026 10:24:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15D00CA5FF0
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Oct 2026 10:24:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xDfq3-00073p-4I; Mon, 05 Oct 2026 06:22:32 -0400
+	id 1xDfou-00044E-2i; Mon, 05 Oct 2026 06:21:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xDfmp-0002Oq-6y
- for qemu-devel@nongnu.org; Mon, 05 Oct 2026 06:19:14 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xDfmK-0002H8-1q
+ for qemu-devel@nongnu.org; Mon, 05 Oct 2026 06:18:43 -0400
+Received: from mail-wm2-x11.google.com ([2a00:1450:4864:31::11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xDfmk-00014T-Ke
- for qemu-devel@nongnu.org; Mon, 05 Oct 2026 06:19:10 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-4a16c1608faso8423355e9.0
- for <qemu-devel@nongnu.org>; Mon, 05 Oct 2026 03:19:06 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xDfmH-0000wg-5s
+ for qemu-devel@nongnu.org; Mon, 05 Oct 2026 06:18:39 -0400
+Received: by mail-wm2-x11.google.com with SMTP id
+ 5b1f17b1804b1-4a169d33ef6so8751495e9.1
+ for <qemu-devel@nongnu.org>; Mon, 05 Oct 2026 03:18:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1791195545; x=1791800345; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1791195515; x=1791800315; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=mgVWeZ276Ptk3/+zMkn5/HpMKm4YkXpqgFDkFWs/ZN0=;
- b=J8xp19ApnkTqiyFeLRbM3PvTdx/9acEEG40BQuc/HqyW/Cy9FdEb0I8mi48Ljx2h5O
- 0sR+Badjh5ERuoxp/ieC9vbr/eC3/JUYwJAHXrqXpC1qxXYcro29ugPWuqwMYNSxkjoN
- wf8x+WtTbPRZAlGNXiGp2oFsytVWJybOMaJwH3GzOvSQWH4xtdWOJ9mfWMTYLLpfAZGu
- KyfOZsypfI/Al6SQuPDhn+HTEJZuXQMiaktYpHN70OpEUZW6/poiYaOxtHRRklbFLqZS
- fRJz1OiRxgAYmaz0X2DzR9PKhw5LaDJasi8UquMaqC9Oi67UfGpnJ1LxEQ5d901YySNN
- obvw==
+ bh=e8TB0ZtYp24WPs3mqNNFoiQRZJQqozvFbAYX81zZos4=;
+ b=d9sCIUV8FzfeZnapR+lQZbYGG3iwZte3VtbcxUoWBuWf2VUU/xeb5vMfZiF39W5mhD
+ S6juZYl+cXYnxQwTn7t85gDyISqQ4g45Lbior1UnyxrAa0y1rHl4sjF7C1PHSm5CxFgq
+ vK0B8xnI+T5sCtdK9rf1H/yAWjz5GbX7OMRnQx/rpXjKWa8gsIXyb5XGx17Ni76CAPKg
+ 6/1w+yFrh1uHCT3fCNr5NERu7NyRDPvpzhsaKdD4Lgirrlukxzid4726G9Gr11qLquch
+ g5kElZapyODzkGGJOkWzUjf4bJqK1gR+lL1DxzDWn29mAn74yVd63DFblKD00yc3coKj
+ u5yw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791195545; x=1791800345;
+ d=1e100.net; s=20260707; t=1791195515; x=1791800315;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=mgVWeZ276Ptk3/+zMkn5/HpMKm4YkXpqgFDkFWs/ZN0=;
- b=lp1ymnk+RPSATWGAFwnxaA8CJl+cCLXie6EQbVQlsiDKUrUssq43EJv39B6KzkEw13
- LH9SZYFgzRCTTJcF5puiycfu2PYjY6ri78dWnxDtTntXbWwkuujAYFMy6TTUpRzjNln+
- Di+fKbRkiBcShMGebpJBtmMOxyScnVRSTJo8dQQdF1WUQst8Eihr/YyWFiK5JllPw/iG
- nY45HJCb5Ecne1zubcDuD072BGdtgWEK2xWtyWkcMO5W/VrUU//ZLVmWnDogSbGVAooS
- t3pS+owVph9fJXFbQxQHZhHlluNjqxT4BoPWVmq84JXvJYmKU8rgqalT67o8KFVsBMl2
- x+cw==
-X-Gm-Message-State: AFuF++lGNKKCmtRnv1hkBGP9t7yHXH6yijedQF9Sp8j5GSdMJT3K/npK
- YTENDXzzjyP3N/PEHAQAuVrARJxNU34L/EuDv9bBr0XNzcdcqvQINTRN6Vx3KA==
-X-Gm-Gg: AYBFou1Yeyop61lF6xP3ZHlBFwYGFE1GhLw+h8eOWAs2UAYkiqfkHEdiiijAfvJymDE
- 4zRAVQs5wOLwejTHH9Mp8IFCHM33T17YFQfEGj9ysAAGu6E8gzO1vBuQi29+xyXyjYzFH11mCT6
- 7IU7Qk59q71uT2j7EehyD7MctQNXjYnYy5DnfKSwjOKJOkQJxSkSxkcC6DEPENpJsGyBhfsMIZl
- KDstA63GcoLfHNI77dp6X64xuffMvuH1s30pxOeHp+fNmPAlt8Il7EfQ+VOEvEHCT52gsAIzZ35
- UgWBcxtQSf8PVP0ZT1AtcNk/ICNcpiqS+nCbblEh4RWXLvotxSiIQNFwpI1gSQyxrl20MnFY9Ue
- T8PN96xEkMClItaRhMJhD5H1J2Fhy5FG7kLv+Tg2XVxE8naureZqUVDkhvt2DA9qQ1ZVO0iQ/sx
- b0UcMLE0sURgyvkzC3XDhwz1GywC4SHNWq/sEz3nK6uaoDqKx3U1Z3bceovV/FrKpqwRnuqTk/1
- QMusHriNa3e4DKX8K6VMWpwSQLGhbW0YfmZpw==
-X-Received: by 2002:a7b:c3cc:0:b0:4a0:ff8:2a0e with SMTP id
- 5b1f17b1804b1-4a01eb1e93fmr187174465e9.3.1791195544782; 
- Mon, 05 Oct 2026 03:19:04 -0700 (PDT)
+ bh=e8TB0ZtYp24WPs3mqNNFoiQRZJQqozvFbAYX81zZos4=;
+ b=HDTl+RdaHm6PTu3RmI8cgR4zixvgsjilSUvfNap+R+ddhobE0HCXd8PdaLOZuzU09V
+ PqWCNJOSZpYKw4x0PsjMpXzsQZW4nc832zjubQvxOKlj35oeVIupmdqJvPdKKxSyzr1R
+ VDpKrGeA7xtREMXpKJrfyEkJZkkhFKomFR9PwwnO10JG3MdG79/hw8eDKb2jktNfp/J8
+ MxMsLZFF9uVijv2zW0yypiYndHP8dgrvfBiwAOUyAPJHJGYDxGviRKWFp1vVu8A4bZNa
+ Pr+0pwzieo/WIE7/x89sGfhX2+10p8RvYemFx/AcO+baYBL5WZTXGjanmPFBnDFaSqo3
+ BkHA==
+X-Gm-Message-State: AFuF++lXCAAbcFf6X79HG4QToZpXvoCXv9dm1ojtOyS0ILfpBX3/sT0c
+ J9Rj09LWory1QnPrs2PbHUscNkiGWW7KZcak+yK4dUrBc+LGgKf+R9fhfU1gow==
+X-Gm-Gg: AYBFou1kLb6a3Z607MstyY7Pp11qNLc/P3cl6eneaWEr0B95/IdXvyTE3+z44V/Brw4
+ HNrMPLq8c+HRLIDxl5V7m3aSd5IsRj9mRNaiDnxIGs0aZjf80XaBQ9TKCa3m5g6WR4VtObWN5Th
+ ioWm95UQkQghhAHlRu4+TSpO2oMXUTqaMCjE5IvtdY1zV+9bCxXLN4O6AhuOJ7zCEUgKV357Z42
+ DzvcEiGgfxdRobomgxjJSuB8EuifoTb3XVJ5mcL5jXLy9Odjw3Vw+DP1+Zz44QFM05H006ySLCO
+ 4rqAMF4DzLA0/pfo+tyk0T8TuXw/a1NjA6HaOQPw41BGFcS04eBm63Xrmnb+VeTn7ET5Qch/z1z
+ 0OPqxAVDkPsGMVogOZqLesnnHWV7k71tAcF2Jy+5vCnE/NaJ69Z3YdTXGi48COCVoboHLFaYN6N
+ Dk6IfuoGg4bDQkBazW378XmMGid6e+EwXso8+3V5tI5+L5GUEOOYzZDTszeYOjKGFaYHJVrZE3T
+ kWUi1t/ebCnODhtI7/TlrHX1VN4SUjVaegLLQ==
+X-Received: by 2002:a05:600c:1551:b0:49d:1fa8:b266 with SMTP id
+ 5b1f17b1804b1-4a0275a229bmr192399055e9.26.1791195515277; 
+ Mon, 05 Oct 2026 03:18:35 -0700 (PDT)
 Received: from archlinux (pd95eda80.dip0.t-ipconnect.de. [217.94.218.128])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48c622ab7b5sm2742111f8f.37.2026.10.05.03.19.03
+ ffacd0b85a97d-48c622ab7b5sm2742111f8f.37.2026.10.05.03.18.34
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 05 Oct 2026 03:19:04 -0700 (PDT)
+ Mon, 05 Oct 2026 03:18:34 -0700 (PDT)
 From: Bernhard Beschow <shentey@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Gaurav Sharma <gaurav.sharma_7@nxp.com>,
@@ -75,23 +75,22 @@ Cc: Gaurav Sharma <gaurav.sharma_7@nxp.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Jean-Christophe Dubois <jcd@tribudubois.net>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: [PATCH v3 31/31] hw/arm/fsl-imx8m: Fix typo
-Date: Mon,  5 Oct 2026 12:17:58 +0200
-Message-ID: <20261005101800.10821-32-shentey@gmail.com>
+Subject: [PATCH v3 09/31] hw/arm/mcimx6ul-evk: Have 512 MiB of RAM by default
+Date: Mon,  5 Oct 2026 12:17:36 +0200
+Message-ID: <20261005101800.10821-10-shentey@gmail.com>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261005101800.10821-1-shentey@gmail.com>
 References: <20261005101800.10821-1-shentey@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=shentey@gmail.com; helo=mail-wm1-x335.google.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
- FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:31::11;
+ envelope-from=shentey@gmail.com; helo=mail-wm2-x11.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,76 +106,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is IMX8MP and IMX8MM, not IMX6.
+Having 512 MiB of RAM matches real hardware. Fix the machine
+default to make its use more ergonomic and less error-prone.
 
-Fixes: 0c105b261551 ("hw/arm/fsl-imx8mp: Add Ethernet controller")
-Fixes: 857670200c51 ("hw/arm/fsl-imx8mm: Adding support for ENET ethernet controller")
-Reviewed-by: Gaurav Sharma <gaurav.sharma_7@nxp.com>
+To reproduce the old default behavior for e.g. migration purposes,
+`-m 128M` needs to be added to the command line.
+
 Reviewed-by: Bin Meng <bin.meng@processmission.com>
 Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 ---
- include/hw/arm/fsl-imx8mm.h | 4 ++--
- include/hw/arm/fsl-imx8mp.h | 4 ++--
- hw/arm/fsl-imx8mm.c         | 2 +-
- hw/arm/fsl-imx8mp.c         | 2 +-
- 4 files changed, 6 insertions(+), 6 deletions(-)
+ hw/arm/mcimx6ul-evk.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/include/hw/arm/fsl-imx8mm.h b/include/hw/arm/fsl-imx8mm.h
-index 60d79a6e3c..1966fa505f 100644
---- a/include/hw/arm/fsl-imx8mm.h
-+++ b/include/hw/arm/fsl-imx8mm.h
-@@ -229,8 +229,8 @@ enum FslImx8mmIrqs {
-     FSL_IMX8MM_WDOG2_IRQ    = 79,
-     FSL_IMX8MM_WDOG3_IRQ    = 10,
- 
--    FSL_IMX8MM_ENET1_MAC_IRQ    = 118,
--    FSL_IMX6_ENET1_MAC_1588_IRQ = 121,
-+    FSL_IMX8MM_ENET1_MAC_IRQ      = 118,
-+    FSL_IMX8MM_ENET1_MAC_1588_IRQ = 121,
- 
-     FSL_IMX8MM_PCI_INTA_IRQ = 122,
-     FSL_IMX8MM_PCI_INTB_IRQ = 123,
-diff --git a/include/hw/arm/fsl-imx8mp.h b/include/hw/arm/fsl-imx8mp.h
-index 2be3c51af5..3acfffd30f 100644
---- a/include/hw/arm/fsl-imx8mp.h
-+++ b/include/hw/arm/fsl-imx8mp.h
-@@ -276,8 +276,8 @@ enum FslImx8mpIrqs {
-     FSL_IMX8MP_WDOG2_IRQ    = 79,
-     FSL_IMX8MP_WDOG3_IRQ    = 10,
- 
--    FSL_IMX8MP_ENET1_MAC_IRQ    = 118,
--    FSL_IMX6_ENET1_MAC_1588_IRQ = 121,
-+    FSL_IMX8MP_ENET1_MAC_IRQ      = 118,
-+    FSL_IMX8MP_ENET1_MAC_1588_IRQ = 121,
- 
-     FSL_IMX8MP_PCI_INTA_IRQ = 126,
-     FSL_IMX8MP_PCI_INTB_IRQ = 125,
-diff --git a/hw/arm/fsl-imx8mm.c b/hw/arm/fsl-imx8mm.c
-index 875e92bb34..dd79188e0c 100644
---- a/hw/arm/fsl-imx8mm.c
-+++ b/hw/arm/fsl-imx8mm.c
-@@ -589,7 +589,7 @@ static void fsl_imx8mm_realize(DeviceState *dev, Error **errp)
-     sysbus_connect_irq(SYS_BUS_DEVICE(&s->enet), 0,
-                        qdev_get_gpio_in(gicdev, FSL_IMX8MM_ENET1_MAC_IRQ));
-     sysbus_connect_irq(SYS_BUS_DEVICE(&s->enet), 1,
--                       qdev_get_gpio_in(gicdev, FSL_IMX6_ENET1_MAC_1588_IRQ));
-+                       qdev_get_gpio_in(gicdev, FSL_IMX8MM_ENET1_MAC_1588_IRQ));
- 
-     /* SNVS */
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->snvs), errp)) {
-diff --git a/hw/arm/fsl-imx8mp.c b/hw/arm/fsl-imx8mp.c
-index bcd91739d9..0b46a4971f 100644
---- a/hw/arm/fsl-imx8mp.c
-+++ b/hw/arm/fsl-imx8mp.c
-@@ -619,7 +619,7 @@ static void fsl_imx8mp_realize(DeviceState *dev, Error **errp)
-     sysbus_connect_irq(SYS_BUS_DEVICE(&s->enet), 0,
-                        qdev_get_gpio_in(gicdev, FSL_IMX8MP_ENET1_MAC_IRQ));
-     sysbus_connect_irq(SYS_BUS_DEVICE(&s->enet), 1,
--                       qdev_get_gpio_in(gicdev, FSL_IMX6_ENET1_MAC_1588_IRQ));
-+                       qdev_get_gpio_in(gicdev, FSL_IMX8MP_ENET1_MAC_1588_IRQ));
- 
-     /* SNVS */
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->snvs), errp)) {
+diff --git a/hw/arm/mcimx6ul-evk.c b/hw/arm/mcimx6ul-evk.c
+index 40071d2c7b..4964cb9345 100644
+--- a/hw/arm/mcimx6ul-evk.c
++++ b/hw/arm/mcimx6ul-evk.c
+@@ -73,6 +73,7 @@ static void mcimx6ul_evk_machine_init(MachineClass *mc)
+     mc->desc = "Freescale i.MX6UL Evaluation Kit (Cortex-A7)";
+     mc->init = mcimx6ul_evk_init;
+     mc->max_cpus = FSL_IMX6UL_NUM_CPUS;
++    mc->default_ram_size = 512 * MiB;
+     mc->default_ram_id = "mcimx6ul-evk.ram";
+     mc->auto_create_sdcard = true;
+ }
 -- 
 2.56.0
 
