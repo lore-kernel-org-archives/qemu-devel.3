@@ -4,146 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27043CA5FF0
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Oct 2026 18:45:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C57A7CA5FF0
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Oct 2026 18:46:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xDngi-0004uI-1P; Mon, 05 Oct 2026 14:45:24 -0400
+	id 1xDnh0-00052H-Fr; Mon, 05 Oct 2026 14:45:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1xDngd-0004p8-3H
- for qemu-devel@nongnu.org; Mon, 05 Oct 2026 14:45:21 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1xDnga-0004n6-5R
- for qemu-devel@nongnu.org; Mon, 05 Oct 2026 14:45:18 -0400
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 695HLx1T2207561
- for <qemu-devel@nongnu.org>; Mon, 5 Oct 2026 18:45:14 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- gTIbJ/8G2vRrSRHZBc+WupQYNvgl/eDYPw71x+1+av0=; b=DXGkPiaPIR/arFam
- 0iZhm8GWrolWCSIjAiDS8oyaTSQ6+QgaJd5uHpT+ayz77JejQH23xwhGNSi4zr1D
- 1I5quYNm5ZKJ10KsKBHGNu36BRLBP5ncDjEst5A4WRKOZVMHjlrin2pQQRbo0gJd
- yQzy4xtYvp+RWpoqI1cjfU5csrnL3c+/EAlGiDpaFw0CDc7+IqFPTc0D87MF5r1d
- V55Whjlw/s9O38yysyOTvRv0MnT/GYDHAsexRiApkaCskoNEDgOkYsBBLeLUoYo1
- 9oD+7CqepE1MrcVye1DngI3Xcb9t1Pl4d5ydODxeWYkWjBZ8jsANE+YzRbtSZn8Y
- 7T59Og==
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h4a7dsvte-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 05 Oct 2026 18:45:14 +0000 (GMT)
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-93caf7856ffso326135485a.3
- for <qemu-devel@nongnu.org>; Mon, 05 Oct 2026 11:45:14 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
+ id 1xDngo-00051x-BG
+ for qemu-devel@nongnu.org; Mon, 05 Oct 2026 14:45:30 -0400
+Received: from mail-ed2-x10.google.com ([2a00:1450:4864:33::10])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
+ id 1xDngm-0004oG-HA
+ for qemu-devel@nongnu.org; Mon, 05 Oct 2026 14:45:30 -0400
+Received: by mail-ed2-x10.google.com with SMTP id
+ 4fb4d7f45d1cf-6a6063d7dc4so2771410a12.3
+ for <qemu-devel@nongnu.org>; Mon, 05 Oct 2026 11:45:27 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1791225926; cv=none;
+ d=google.com; s=arc-20260327;
+ b=bozCNBsyPiiMsEbnWRo8qlK/BeYYMLN4JnyfsivOhImX9SDEIUF6QifWhx27RiAodM
+ Y1eravty4OZewTQgdBVDE14Uh7TRCOvCP+RhbKMFBZWVkpO0Tc5Bsuq50Vf6eswhT/hp
+ nGwOHirt5bzdSxn45hjQ/lgdlhk4TnsTOcG6xQkRIgB6Yun6tCsrCUUx160MYHL+vLpx
+ lVR/Wyalgz+ABA0djRNONqW+roBiQWCa0mg1WoiAAJ+FXtrTcAg7eAKZ+U/8uEZKcUq5
+ qtfc038VGoHLjsfZkHGLBVWcUa8Ko9Tc1uwHcraSLMsZMnsZYyVn2Z8b1lkYWmREGFGc
+ eD5Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :reply-to:in-reply-to:references:mime-version:dkim-signature;
+ bh=IWfUiCYd2+Z5XLYUj72WvwcI5uiXXAbrqDCUBe00fVc=;
+ fh=IWV5i/bmsnDDiumGg7GH/qn1tjabzJqEv+mL/WiBNIs=;
+ b=UswWKYa3xhMYe6GPfOLrKo25OGZDqcfS5ypu33TjcydL9WCAuYsPjwoeU9W7kIXIl6
+ WAcexyHkjV4PnQjhSvM4jGBlRsiFkuWtB/2ZXAlS/Snn8kADzI4QRs21cYE+MzwceHO8
+ f1/5bNgEwuk9tssAgwvCY9mgusCkz5bXRx1qNBvhdbvXNtJpDalEu6sN7QZ7HafZtSBw
+ 0ChplqNwyX5BRSCQ+o1C1o80qlJSFSndTw0Fl4SwXUSWEfFtf54gFEush5x13CFRvPkx
+ JhdocO2CUVwDEiBMPCnkjLUWEr0sENTAGmotK3rOVoCeVgn0K+2j3TuSxrprrrbQgpIj
+ nRcQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1791225913; x=1791830713; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :references:cc:to:from:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=gTIbJ/8G2vRrSRHZBc+WupQYNvgl/eDYPw71x+1+av0=;
- b=F22Fh4MHFcBD4JLVB4LmOpywNV/LbVFGxRw5NPOgsOF1W20cmua9RVEK4PYWPinXK0
- hUmx9k1pEfwrLwMK7mCSN6+E6wzl3UokjoSnYMsoCCJhpm0lWhJURbNMd1pdvEp/4ayZ
- I2LB+vlzPoJ66iZtVk0sDcy/vIJUav8yH27slS8aTd/58gz/bACXD62sJLBMzW658sAS
- Co5nBc7n3O/3+1Q9xgKru1h8YNbemmndbAMN6CB4T/CjdBZhForldoDPX2JDg4toKuf7
- KxRZlpIfk4Sr+mxrYSuyCO8JtFQjpy97RJAFS4iApMbHwUmmY7Y6PjVNB3mVnBWMDvyY
- 0dew==
+ d=gmail.com; s=20251104; t=1791225926; x=1791830726; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:reply-to:in-reply-to:references:mime-version:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=IWfUiCYd2+Z5XLYUj72WvwcI5uiXXAbrqDCUBe00fVc=;
+ b=b+h0riTQc45vL7buWapiDmEgfU9Ok95ErAXOnk2C0kxuUh6wghAOvNBkGijKzRv6ma
+ Hr58zHDjV0na0frASQ8YucBYmL1Izu5iiuyiHVgRFKHHUegRc779+Lp8h8DITMSmS3fA
+ Ec2J6e0DlEcnacdS3ZI3hk5yhZLFja8oP2y47lxOBCvM/D+tO/xH61DfFM4QGdomvKMW
+ NxJxQh7ycE08zWIyY4ZwkcwmwOmEUOKVZx1p9tjrjuZFYvwSgC1H3/H5ROx+JVg9FqZf
+ cb7U/lE9IBXWVAWFx13y+tDXIOG4L808OkBTe0da0HRAvzXky5SSTkOPIlI5jwdsCunq
+ vYnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791225913; x=1791830713;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :references:cc:to:from:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=gTIbJ/8G2vRrSRHZBc+WupQYNvgl/eDYPw71x+1+av0=;
- b=bqLKlUq2RDEXqqU32YvQOr+1euqurqFu5X3CmzwP3ynj70vdmFnFghIURJpf6dcw2P
- CKsXuFNPbidAelAwwRpsrgV/YZzmn8bsvZw2YRp6ajiPEV8OAm/C+RY/q9v4Hr/tgZyR
- 2A+RA3Va2ZQe7sPTn4+kHDhmksAAoOy0mF97V91bH/dvJ8MZ1hB3TK/Vc0M0/VrCO7Uw
- m6yNLkEW3YjLGXgcenuDLIqNzmxkVOA7Su34AidTlcypypyfoorgWa+0+xGcpl/OJFu+
- NlwNyhbFN05CJgjANaDVt3cKDFS3qyVwWqqo99bhuZHE+jLg387Y2nWKVi+1tDZSz9Uq
- ZpOQ==
-X-Forwarded-Encrypted: i=1;
- AKwUvBxFaWILGjq8jCtWZPjHtk+MPUtz34alMaIYhwNXp7L4PUgputicvCv8wY9XHfmw7gUFGU3CF8LDNDvN@nongnu.org
-X-Gm-Message-State: AFuF++kfWQ6JnqnmifvZSnZL7+OFhP60ne//Z4JcPTCjLQm5Td+zFsoW
- N7FU01ceSgZyvjv5O6X4ircxPeJkkjqKhxP/xdksFMJ7m8v2evjVjExiiPb+p1X7JxMu4g423A+
- nLWLo6qwdBRQ6azuIPaLqIRi58DNXKrOxI2iEo0tOxm0+VPhfKaKvrNPOJQ==
-X-Gm-Gg: AYBFou2uYNaog1XMcq8P/b+RHKipgbNSUxPemqDZR4yVH9TZqGcSBhBFoz+dxfTgc4j
- 6+vVml3K88oA53DjL0oZrHt4X4UbXyOq3NPxUkhlnu/qq7HWCA1JccMgrD+alGUOtt4+dIUtI1E
- s+MycwL2PMZEsTP6ubKljHBlytp4ZlbTyvsgXounq5HSpaSboH1Ud6rGMwSWf4Mb4HAtTgWLiWO
- HvdoKue1KFvcbFdV/A918xFRbGINunY0wWqxAKruL3MaVoklGtRdTciA0EqDFK6AbrqwOY8ZEpR
- GmlvYLB7Qn523jmkiEfNsNyqNkjfsiy0+0604DKRk+EGdCJtPLDLCCaoogqxUW5vUDB9hUal8Dv
- t6VjLQjc7gPVFRjNUdQMZgWpY5Erz1TIyoPO/RmBnE5V64Uu0PPFLeYvV3YEf65EV
-X-Received: by 2002:a05:620a:c53:b0:93c:6963:ff3b with SMTP id
- af79cd13be357-93cf17832a3mr2127703085a.42.1791225913105; 
- Mon, 05 Oct 2026 11:45:13 -0700 (PDT)
-X-Received: by 2002:a05:620a:c53:b0:93c:6963:ff3b with SMTP id
- af79cd13be357-93cf17832a3mr2127692785a.42.1791225912359; 
- Mon, 05 Oct 2026 11:45:12 -0700 (PDT)
-Received: from [10.222.168.219] (Global_NAT1_IAD_FW.qualcomm.com.
- [129.46.232.65]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-93e472b24e1sm802922785a.24.2026.10.05.11.45.10
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 05 Oct 2026 11:45:11 -0700 (PDT)
-Message-ID: <af812a3f-1065-45e8-849e-492582b1a8b5@oss.qualcomm.com>
-Date: Mon, 5 Oct 2026 13:45:10 -0500
+ d=1e100.net; s=20260707; t=1791225926; x=1791830726;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:reply-to:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=IWfUiCYd2+Z5XLYUj72WvwcI5uiXXAbrqDCUBe00fVc=;
+ b=NfFBvFvifFqZro6Xa+BJ46RG+GZDrUc09lMnk60xOKsC9zHNdjyEDQIl2yoUFSpg0C
+ rKSWyyQSfaTdgHvTZ0k0kWlPDt0Jf3BiVSebDyn++ADJjb6sbfbqOFen5F+NusLKYEjX
+ 1B/jwZsJ2gDuvMJjbPITg3igbWWHdnA6AjhW6wwWpOn4uOxPXr2zTscvE9qp3PSkCLwc
+ Vpuby4YQDvyinYbUqvheC0DnLmYZS9fHRH58kqqj4aEjGsS9jyigN78pHwE4spbghUWo
+ ZceOMxRV2XT2r7IJjJ+J46oybCfs8A9nCR116jUfJd/bO9XQmIzuyQIDthMV+HGj+sml
+ r7nw==
+X-Gm-Message-State: AFq9FYIFVTOcq0dkpmp4i3BAsV/tCmyRR/nYBnnRB9auN1EdakORVF7W
+ rgeHb0+E2nTIlm8VpvvqVdS9qeCN+HOlmHsCn36JlryfU8AuNk4caYEcIcJZxqhPWiGBowBpe4y
+ a0KpK42t8m2yW+R3kqmf0X44WC6gJ1WM=
+X-Gm-Gg: AYBFou1Zq4kqd1bTIQgrAYRNlOWuy4Sk2ainpcvh0P+E7FT+Xm+KucUwe1crgcJovAM
+ e0OigAKHAm/eWzedvKr0xKkFrUY2BoYMWXKSSTU4WqQfHgpA6/s27BFZPRDa8c1MzOCfb1naInB
+ BfX9/VmiXqacUhzECc7OlnmIlXm5vNLpo6CTe5wj3o/2ZcYzxtc4HWEqPQsulA9jmFvvFaqsqyM
+ f69jdjve7F4ZmhjgU5d8LFx1f7eXMEyfRPYaa1UOnfGNfuEpaeg+P9uKDxlbmssq35RGv1ZLwhe
+ 7j1HqPw+PV2KNDqqevmBUT3I7iqI30/dDjzAsn1D3lsUzM272SRICr3Qw3x65KEUeQ==
+X-Received: by 2002:a05:6402:13cd:b0:6ab:6e:a8e4 with SMTP id
+ 4fb4d7f45d1cf-6af9e31de84mr8646099a12.44.1791225926027; Mon, 05 Oct 2026
+ 11:45:26 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 03/10] target/hexagon: add v81 HVX compare, align, and
- convert instructions
-From: Brian Cain <brian.cain@oss.qualcomm.com>
-To: Marco Liebel <marco.liebel@oss.qualcomm.com>, qemu-devel@nongnu.org
-Cc: Helge Deller <deller@gmx.de>, Laurent Vivier <laurent@vivier.eu>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- richard.henderson@linaro.org
-References: <20260926192338.2702952-1-brian.cain@oss.qualcomm.com>
- <20260926192338.2702952-4-brian.cain@oss.qualcomm.com>
- <00d46b8b-0ee1-4162-8d4d-51d86d5cc477@oss.qualcomm.com>
- <281bfd72-9f6e-482b-a74a-750da96eed01@oss.qualcomm.com>
- <162a08c2-b287-4c94-908d-00d95a319d4f@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <162a08c2-b287-4c94-908d-00d95a319d4f@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA1MDA3MyBTYWx0ZWRfX6YaYZ5NnGuuC
- rw518q4mdbJAs74aJhnVzFdwuFD5MMVznfMspJ1MOPyEpQfGQ8qEMfD6AAbTFrZSzCgwS3WV7Mk
- H98RSzYwEu/CNs6fhLBHagZgzbkUGnE=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA1MDA3MyBTYWx0ZWRfX3c5wm9zki9Bi
- 2+YCKJxJkajcl63cLkQ8/ccGntFmScW8LKDH1cEj7cBPB6NyoMn1hwPYiJsZsjpqDvI8gXtGltY
- E+MrqtoyjqCGX/75/3NuNHDgtjpPGd0qrqzZg7s1VullLEVN3qjSEtwOEXzvf33WVtdzV/gDU0/
- 0+9fWYoR0tdxmM6iDM51Xlz2/zWVMbDbkR2iNabbUpehssjOGnVUFypGuTslCOZPrkpspflSkME
- yC1sezjxSklzq87aNrPbfACbFOjL2fMwmhFv0k/2XAlnu8WrQp0XZ0knz9rWJ0XSeJHwPv4zgYU
- Ks8IhwZFRBfpIjzyo6fR/AhkmsztmFXho8aI5UrsAJ0fk8oNyl3SDQyfzVAghKxA1n5K8StDWC8
- 4C2fH0eUy8IO5ZA5c9+yPlgOCECK0/rHXhnB00qr8/a4AMVANzIKznjhUV8MrwpAKpU5/kGLss3
- UK42NTDGZCEdyGeGuhg==
-X-Proofpoint-GUID: tSWt8cMby4w5pUgH4WRUtRoTun6yly96
-X-Authority-Analysis: v=2.4 cv=SvwFe/O0 c=1 sm=1 tr=0 ts=6ac3f03a cx=c_pps
- a=qKBjSQ1v91RyAK45QCPf5w==:117 a=C3Dk8TwHQYyIj7nOf9RCJw==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
- a=EUspDBNiAAAA:8 a=VwQbUJbxAAAA:8 a=f7tA75arMO8DkslLnDcA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=NFOGd7dJGGMPyQGDc5-O:22
-X-Proofpoint-ORIG-GUID: tSWt8cMby4w5pUgH4WRUtRoTun6yly96
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-10-05_05,2026-10-05_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 bulkscore=0 lowpriorityscore=0 impostorscore=0 spamscore=0
- adultscore=0 malwarescore=0 clxscore=1015 phishscore=0 priorityscore=1501
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2610050073
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <20261004072927.1142-1-luoyonggang@gmail.com>
+ <0b84bf4d-3b98-4f52-8847-9f89bef92c1e@oss.qualcomm.com>
+ <CAE2XoE-joWZwrBy-jLe+=ZP7OGM9cyDrF_5hz7koVPODeys+JA@mail.gmail.com>
+ <b2297f92-a685-4399-a755-bbe5a37b9b3f@oss.qualcomm.com>
+ <CAE2XoE-4Pdp_n3RgpqJ5se_KTHniMAJAodTLmkfV+0jjou=M5w@mail.gmail.com>
+ <c6bd8e8d-3160-46c2-ba4a-2f5a4b93cf38@oss.qualcomm.com>
+ <CAE2XoE9PKNgE1Zz_frOq_DrgqrPL4B8hcq0xO6ywCNTeUnFLvA@mail.gmail.com>
+ <63d20cc8-8003-489c-9f08-28369a2f71e2@oss.qualcomm.com>
+In-Reply-To: <63d20cc8-8003-489c-9f08-28369a2f71e2@oss.qualcomm.com>
+From: Yonggang Luo <luoyonggang@gmail.com>
+Date: Tue, 6 Oct 2026 02:45:13 +0800
+X-Gm-Features: AclHuK8TU8e4ytjUpz6PQHZVGEPpvwzTyanARfmGaZFrG4eU49L0-Mt4Jkd9cOI
+Message-ID: <CAE2XoE9uqEcjMsqJXu6Cr+MrposPjq7O6Lnj5cj7uW2nF38uAg@mail.gmail.com>
+Subject: Re: [PATCH 0/4] target-info: preserve full softmmu target identity
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, Philippe Mathieu-Daude <philmd@mailo.com>, 
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
+ Fabiano Rosas <farosas@suse.de>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:33::10;
+ envelope-from=luoyonggang@gmail.com; helo=mail-ed2-x10.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -157,68 +126,118 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: luoyonggang@gmail.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-On 9/30/2026 4:14 PM, Brian Cain wrote:
+On Tue, Oct 6, 2026 at 2:06=E2=80=AFAM Pierrick Bouvier
+<pierrick.bouvier@oss.qualcomm.com> wrote:
 >
-> On 9/29/2026 3:28 PM, Brian Cain wrote:
->>
->> On 9/29/2026 1:09 PM, Marco Liebel wrote:
->>> On 26.09.2026 14:23, Brian Cain wrote:
->>>> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
->>>> ---
->>>>   target/hexagon/mmvec/hvx_ieee_fp.h           |  2 +
->>>>   target/hexagon/mmvec/macros.h                |  2 +
->>>>   target/hexagon/mmvec/hvx_ieee_fp.c           | 15 ++++
->>>>   target/hexagon/tag_rev_info.c.inc            | 13 ++++
->>>>   target/hexagon/imported/mmvec/encode_ext.def | 10 +++
->>>>   target/hexagon/imported/mmvec/ext.idef       | 74 
->>>> ++++++++++++++++++++
->>>>   6 files changed, 116 insertions(+)
->>>>
->>>> +ITERATOR_INSN_SHIFT_SLOT_FLT(16, vconv_h_hf_rnd,"Vd32.h=Vu32.hf:rnd",
->>>> +    "Vector conversion of hf16 format to int hw, round to nearest 
->>>> even",
->>>> +    VdV.h[i] = float16_to_int16_scalbn(VuV.hf[i], 
->>>> float_round_nearest_even, 0,
->>>> + &env->hvx_fp_status))
->>>> +
->>> I think there are two issues with vconv_h_hf_rnd. Because it's using 
->>> float16_to_int16_scalbn:
->>>
->>> - It hard-codes nearest-even instead of using USR.FPRND.
->>
->> This matches the defined semantics for rounding. 
->> https://docs.qualcomm.com/doc/80-N2040-61/topic/hvx-floating-point.html#rounding-modes
->>
->> "HVX floating point only supports IEEE-754 round-to-even mode."
+> On 10/5/2026 10:04 AM, Yonggang Luo wrote:
+> > On Tue, Oct 6, 2026 at 12:25=E2=80=AFAM Pierrick Bouvier
+> > <pierrick.bouvier@oss.qualcomm.com> wrote:
+> >>>>
+> >>>> Ok, but I'm not sure it answers the why.
+> >>>> Could you explain the benefits?
+> >>>
+> >>> Which part? keeping target_arch as SYS_EMU_TARGET__MAX for user-binar=
+y because
+> >>> The following original code would return -1 for some user-binary
+> >>> +    SysEmuTarget arch =3D target_info()->target_arch;
+> >>> +
+> >>> +    if (arch =3D=3D SYS_EMU_TARGET__MAX) {
+> >>> +        arch =3D qapi_enum_parse(&SysEmuTarget_lookup, target_name()=
+, -1,
+> >>> +                               &error_abort);
+> >>> +    }
+> >>> +    return arch;
+> >>> So basically assigning any value for the user binary is valid.
+> >>> SYS_EMU_TARGET__MAX is more explicit as it's related to type SysEmuTa=
+rget.
+> >>> -1 is another option but easy to confuse.
+> >>>
+> >>>
+> >>> For why commit e934c624f32f6f44f427d73a2e6a67e983a02ae6.
+> >>> "target-info: Statically initialize target_arch"
+> >>> doing that, I am not sure.
+> >>>
+> >>
+> >> I guess there is a (good or bad) reason for which sub variants of
+> >> targets are not reflected in SYS_EMU_TARGET enum. We should double che=
+ck
+> >> that before doing any change, as it might have other consequences.
+> >
+> >
+> > You=E2=80=99re right to ask, and I need to correct my earlier suggestio=
+n:
+> > leaving user-mode target_arch
+> >  as SYS_EMU_TARGET__MAX is not safe. target_aarch64() is used by ARM
+> > code shared with user-mode builds,
+> > including cpu-max-v8.c, where its result indexes a two-entry array.
+> > For aarch64-linux-user, the sentinel could therefore cause an
+> > out-of-bounds access during type registration.
+> >
+> > I checked the distinction: softmmu needs the full system-target
+> > identity, including variants such as mipsel;
+> > user-mode variants such as aarch64_be use their base TARGET_ARCH
+> > (aarch64) for this enum. I=E2=80=99ll keep the full TARGET_SYS_EMU
+> >  value for softmmu and use TARGET_ARCH for user-mode builds, rather
+> > than leave the field at SYS_EMU_TARGET__MAX.
+> >
 >
+> That's technical details, but not an answer to the initial question of
+> why we need to change anything for user binaries, compared to what exists=
+.
+
+The first two patches revert the current static initialization so the
+token can be replaced. They are not a user-mode behavior change.
+
+Compared with current QEMU, user-mode still uses TARGET_ARCH.
+qemu-mipsel already reports mips, and it still will. Names such as
+aarch64_be are not SysEmuTarget values, so user-mode cannot use the
+full target name for this field; keeping TARGET_ARCH preserves today's
+value and avoids the runtime parse.
+
+The only intended change is softmmu, where TARGET_NAME differs from
+TARGET_ARCH. qemu-system-mipsel must report mipsel, not mips.
+
+The cover-letter sentence about mipsel-linux-user compared against the
+old target_name() parse, not against current QEMU.
+
+
+
 >
-> Okay - as it turns out, Marco has explained to me that the statement 
-> applies to the unqualified instructions.  In fact, the explicit ":rnd" 
-> instructions *do* consult USR round fp flags.  I will fix this too.
-
-Ugh - this thread has turned into a bit of a flip/flop/flip.
-
-The text in the PRM regarding :rnd instructions was wrong, so we've 
-asked for a correction and will post an updated link to the PRM when 
-that happens.  In the meantime, we've verified QEMU against the 
-instruction set simulator hexagon-sim that ships with the commercial 
-Hexagon SDK.  That confirms the round-to-nearest-even behavior 
-originally implemented.  The v2 series reflects that and adds tests to 
-show the rounding behavior independent of USR.
-
-v2 posted: 
-https://lore.kernel.org/qemu-devel/20261005032616.1293829-1-brian.cain@oss.qualcomm.com/
-
+> >>
+> >>>
+> >>>>
+> >>>>> "target-info: Statically initialize target_arch"
+> >>>>>
+> >>>>>>
+> >>>>>> Regards,
+> >>>>>> Pierrick
+> >>>>>
+> >>>>>
+> >>>>>
+> >>>>
+> >>>
+> >>> --
+> >>>          =E6=AD=A4=E8=87=B4
+> >>> =E7=A4=BC
+> >>> =E7=BD=97=E5=8B=87=E5=88=9A
+> >>> Yours
+> >>>     sincerely,
+> >>> Yonggang Luo
+> >>
+> >
+> >
 >
->
->>
->>
->>> - It uses generic conversion, which returns INT16_MAX for negative 
->>> NaNs. Hexagon requires INT16_MIN.
->>
->> I will fix this.
+
+
+--=20
+         =E6=AD=A4=E8=87=B4
+=E7=A4=BC
+=E7=BD=97=E5=8B=87=E5=88=9A
+Yours
+    sincerely,
+Yonggang Luo
 
