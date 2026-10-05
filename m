@@ -4,100 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49005CA5FFE
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45AE1CA5FF0
 	for <qemu-devel@archiver.kernel.org>; Mon,  5 Oct 2026 14:52:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xDk39-0006RB-7J; Mon, 05 Oct 2026 10:52:20 -0400
+	id 1xDk3C-0006Rt-Cv; Mon, 05 Oct 2026 10:52:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <sraymaek@redhat.com>)
- id 1xDiqZ-0001mm-Ti
- for qemu-devel@nongnu.org; Mon, 05 Oct 2026 09:35:19 -0400
+ id 1xDirL-00029o-Lg
+ for qemu-devel@nongnu.org; Mon, 05 Oct 2026 09:36:03 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <sraymaek@redhat.com>)
- id 1xDiqX-00066A-SS
- for qemu-devel@nongnu.org; Mon, 05 Oct 2026 09:35:15 -0400
+ id 1xDirK-0006AD-6x
+ for qemu-devel@nongnu.org; Mon, 05 Oct 2026 09:36:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1791207310;
+ s=mimecast20190719; t=1791207361;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=b4FWQdbM07j/9au5SYYXb29KFoNEF+u0Wkfmi1bFWgI=;
- b=JJDmFSt/mSqbKBlu3ZFP2p4CSXGDshThlwxjd8RuQ+cexsAJPWsjzDbTNcVBZ/N24eLXNB
- xkp/sXDbOMADG6Gusx3l3Q7duQci9BN+35gHaUPimm0wl4N0HOxM2r1Ty+wDmUMaJ43GqI
- DwLaF4KYzkokOG80lB3zAXP1BmK0qhY=
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=E15ep+8Mtfj5Tb7dPyiBvDUKhD4d7eBcdIb5m4qBDrA=;
+ b=cclK2L2jhAX/b6ax6nMLxurJIbpFzdwqc5xdnEV0Q3hPgkVpsYIfuVjvibA+HIoquayw/a
+ bsav0XCk+n+5W+OEitNcWtMlrgSUrwz3tlU5JPTEfIqcqdkpgphoQ5vaa4bspNfvACxIgO
+ x75oeBjRtH3kuZgQpanBGXEA84tkXyE=
 Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
  [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-312-hqbbA0tHO6unx02texvQ4g-1; Mon, 05 Oct 2026 09:34:03 -0400
-X-MC-Unique: hqbbA0tHO6unx02texvQ4g-1
-X-Mimecast-MFC-AGG-ID: hqbbA0tHO6unx02texvQ4g_1791207242
+ us-mta-493-W5-Uc4nwOuKaMmEZUNnhPw-1; Mon, 05 Oct 2026 09:34:00 -0400
+X-MC-Unique: W5-Uc4nwOuKaMmEZUNnhPw-1
+X-Mimecast-MFC-AGG-ID: W5-Uc4nwOuKaMmEZUNnhPw_1791207239
 Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-4a013ea30c0so13630955e9.0
- for <qemu-devel@nongnu.org>; Mon, 05 Oct 2026 06:34:03 -0700 (PDT)
+ 5b1f17b1804b1-4a17574b5easo4788635e9.2
+ for <qemu-devel@nongnu.org>; Mon, 05 Oct 2026 06:34:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1791207242; x=1791812042; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=b4FWQdbM07j/9au5SYYXb29KFoNEF+u0Wkfmi1bFWgI=;
- b=oWacmDWkES+LugHgL9QaNF9iGiRL8l1R5TKxmRb3z0Mmm1CjQLR5B3xf5TKpbznrmo
- rOENf4i976zCToyYBK9sioIjvhOffeyWd/HDjhPrNKNHeKRhmFKU7llvfntt/msV6/7w
- T9MZq7WnsHUQhToYPhKBw6l8BJ8KxFBjRDAsaNOdwVez/imkU4ZyqpqWPMAuTniAyPK6
- uvha1GMjXgtMdbfdjf7LZt4cwJK7uv6XncOlCJJYR226EQ5sk4TDMsB/DGAxR3iQhMeW
- pLTIkpfMH5IZsAPv+kr0/yyuqvZpJ4NjAbCkmtkW/TcoLjs3klGSpxBIUtS2zPyAUaRK
- /4PA==
+ d=redhat.com; s=google; t=1791207239; x=1791812039; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=E15ep+8Mtfj5Tb7dPyiBvDUKhD4d7eBcdIb5m4qBDrA=;
+ b=gVjpQrM21eWi0+wHrjNSQBqs6d36HEMmWIQQB0PiHo9a4wENeKhxmt0Ua7CPMldNUh
+ GgpuEx6OBl1TXS3XsFrCf/hW/tymcDGcfG9+HXhDAxAmgOghCFkH3ujnrPcecY1WQVpC
+ oN/rp5US3GXQGS5EJzVdJdYLeaR0fO2g/FlIn6/sAB5ij22pzg+Y4+6/P2Q9RkBfOB0v
+ z3PbOiR79Xdk+libwPP28zbKlrIY3iZLCEHvRDLoPKzcJLpoUeAF5wZrVCgjp0bPb7F6
+ xhnohlPQ/dDMaSK/b1cYV12zxXg/0EYuM3Cf5A51OPoxRRxVjBVT3nf+Zt51ZTxeTFFF
+ IR6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791207242; x=1791812042;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=b4FWQdbM07j/9au5SYYXb29KFoNEF+u0Wkfmi1bFWgI=;
- b=0ReiXVIoLCjcfddP3Gi18lywvK73t6JvjCBItX1qzfnmOA0ws1BzjuBFhs8q7/Z+Ho
- i0P4PNbQF2+6RXs2E6OgeFFXzwc4f1Evm/5t75pX5Wv4C4fNNdbrUuZ8PAq9U1sgFoTA
- y9HBcpoe6aLS7FN2Rflpkvmr2R//NtUvMhuedQnfqObCRmcCWtl7y8UikUb/d30xNr57
- s82HwEJOh2O5utpIxUgTlheF7TQlRXql0w4A4xWfU/vM2Q5wo2Tox4kPHduKJ/ReaZiP
- zIwafdnCdIK6TsMQKhly8HxE5+hFmRjcKIZoVzZxmY3V0WMymZZnQKC1Bze3oI5bThya
- I+2Q==
-X-Gm-Message-State: AFuF++lTiVgjYy19o9AtGQidqI8Azt5B9i78zgcq9YqgDkI10C/HGCSI
- 4YeIF+S4GJ+s9G5FmLY2PVXYJt6cMIBo893I6aaIs0JRpxZg7FnC9q8XFMQxnqObrES6OVlpMSI
- NOXiRiDGUQSGFjMMtGokWOKjX+exQDNeIAql0NIGLTI5/GEOUpOHQ3Cm2jEHcIFVfCZR+1/wake
- S+X8kZdN2ZtHMA0YkocG/xi6smS5rKyAQgTJiFGrc8
-X-Gm-Gg: AYBFou1CznBFjwnaYdef7WFJ9GiCYO9ns1aozlJxtsHp3eYM1YWOE0VlAX+VFAf7HAX
- lXLyVb7FcDYemNm8qSyKJeql5kGuxi7Tp6rLaP97KPx3Bl5dtFNabWxu27OPPKG275HF6jC9Jb+
- Z5mVR/u2doqdrvIDYdtgABVyYS/RXR/1usynIgoLD1KWeYUu2qIYmRXeqtRzfs9NYPeSHTlLbwu
- b374ox5YwgY4EFBYqZTAJA7NO2X2YB2bcVUehu36HqcNZSPgtXfzvce5wAtVbWWjv/6RY2q369D
- eNzCOqCr5SnCBvwbOOByjZeWdfXgEjT1LiK8v/xwHTwhYs9GuWE7sEQNLXkKGBxr/UnJJ7Lcpaa
- k2ekYFvgLsNGLcd3c6fyvFCfurPwWhMUTIHTvBbcB82aSxV7nmuYR1xmeQusvBh/LhFXAYHGq+j
- oDNbx4NjbfkEJDlOq9aqLhu2MQOCDdrlSR
-X-Received: by 2002:a05:600c:4e50:b0:49f:faa3:3ca2 with SMTP id
- 5b1f17b1804b1-4a0275840aamr167428655e9.13.1791207241620; 
- Mon, 05 Oct 2026 06:34:01 -0700 (PDT)
-X-Received: by 2002:a05:600c:4e50:b0:49f:faa3:3ca2 with SMTP id
- 5b1f17b1804b1-4a0275840aamr167428105e9.13.1791207241076; 
- Mon, 05 Oct 2026 06:34:01 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1791207239; x=1791812039;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=E15ep+8Mtfj5Tb7dPyiBvDUKhD4d7eBcdIb5m4qBDrA=;
+ b=jNFxHNV1KgBWkffvXutgJ4vXlDTD5xnbkaui3YEyyM2SCqoNcmW/dZtQyNQJ3uumZz
+ dzG1Sm1oWf49/Kk825DbL+8rE2dDzRKsRnewo+UUX+eQp7MMPiTgAiewxNr5ga537qmr
+ eCAHQ4vYAjwmkod7/KL1q1kEdqGSDDYUbtnaa194lHpK7iXoOs19i7/Z12k/CVdR0Hgp
+ khwGaCNNTxWu5iXbGuiB0ibApACp1WnN2eGvLshlL6kBQ+H7fdixBG1JsEAWSy63kxZv
+ eMSbbMVGEMvD2bdQC+UAGA3F4cLovyudLkYhK8t6wWiTp/VeLsAcJ06lTkTpEJjlPMmd
+ nkEg==
+X-Gm-Message-State: AFuF++kIn3OmyzGJJy0bM4htOKPnzSvXHftxBmHgQ8eQYu/OSUg/Yd5g
+ 36/bCrt5DCHQaUFEZbmCH6nz9qRsgzil6d0t9jMoT57cs3eWf/jWeaX7i2nErRc4IHbfz82FMG5
+ dSRhVQOg8itvT5QhsJhQfdwO7OwePizgq0wSeUm3UBatJZWUfKqJtiRiAKWZKPWQH9LtXud28p9
+ ftWpAuG5AEsrCxmEsfHGzJ7tOZFGsWQWUYpYWVsUMX
+X-Gm-Gg: AYBFou1oQm55XsBbTKJX7D3PE76BHCsVaYvcAsGSMJ2i9vdwqTxOYFOqkDCy5ruvsXG
+ 0i4JkmyeP98N00YbLjrXN0IIdwvfCx0UyNRum1+L/iFlb7ZSF13PtlL7hNhXIZVQsd1fA+tc2pZ
+ gouGlJIcxctuRXsKVXxhUugTLfj77nJkid5IFAUGJdxc6x3X6vq7LHXA79UNrYM2vZax7m5r0+5
+ +F7VoGs/ZF5veXwDIqJRXAtZZRM7ZsGx4Q5HfRm+wS2cm/SLfclkLDqmPXRU/I8FZ3GFUqhi9ZA
+ yIlC1QrmFGbMsX26RFavei1a+5/4y+Imecza7ABTeXOpFuZMwjp+63iS/+PXYK+NPotDdTTud+G
+ kbd/dA4v1A66Z3nhFZlloyEUR8kRzxUoijyvu1gvgUb9hRSL01k8pdBPUGilzuyOIlAnrLmRRNH
+ Hcd9nAbDhUZe5fDKq15KMNYP9jGmL7RLA/
+X-Received: by 2002:a05:600c:4f06:b0:49e:7a00:b9a5 with SMTP id
+ 5b1f17b1804b1-4a1680b469dmr151904735e9.4.1791207239191; 
+ Mon, 05 Oct 2026 06:33:59 -0700 (PDT)
+X-Received: by 2002:a05:600c:4f06:b0:49e:7a00:b9a5 with SMTP id
+ 5b1f17b1804b1-4a1680b469dmr151902995e9.4.1791207237934; 
+ Mon, 05 Oct 2026 06:33:57 -0700 (PDT)
 Received: from sraymaek-thinkpadx1nanogen2.rmtbe.csb
  (2a02-1811-d30-6f00-217b-1d12-f4f3-7e56.ip6.access.telenet.be.
  [2a02:1811:d30:6f00:217b:1d12:f4f3:7e56])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a030326132sm279730405e9.0.2026.10.05.06.33.59
+ 5b1f17b1804b1-4a030326132sm279730405e9.0.2026.10.05.06.33.56
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 05 Oct 2026 06:34:00 -0700 (PDT)
+ Mon, 05 Oct 2026 06:33:56 -0700 (PDT)
 From: Sanne Raymaekers <sraymaek@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: kwolf@redhat.com, hreitz@redhat.com, fam@euphon.net,
  Sanne Raymaekers <sraymaek@redhat.com>
-Subject: [PATCH 3/3] block/vmdk: add eos marker for stream optimized disks
-Date: Mon,  5 Oct 2026 15:33:16 +0200
-Message-ID: <20261005133316.198087-3-sraymaek@redhat.com>
+Subject: [PATCH 1/3] block/vmdk: align stream optimized data grains on 512
+ byte chunks
+Date: Mon,  5 Oct 2026 15:33:14 +0200
+Message-ID: <20261005133316.198087-1-sraymaek@redhat.com>
 X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20261005133316.198087-1-sraymaek@redhat.com>
-References: <20261005133316.198087-1-sraymaek@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=sraymaek@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -124,79 +122,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The end of stream marker should be at the very end of a stream optimized
-disk. It consists of a regular marker struct with `val`, `size` and
-`type` set to 0. It is then padded with more 0s to fill out a
-sector. This effectively results in 512 zero bytes.[^1]
+According to the spec: "Each marker and its associated block begin on a
+sector or 512‐byte boundary... There are five types of markers:
+compressed grain markers,..." [^1]
+
+This means that instead of aligning grains on their typical size (64K),
+in stream optimized disks, grains should be aligned on 512 byte chunks.
 
 [^1] Virtual Disk Format 5.0 Technical Note.
 
 Signed-off-by: Sanne Raymaekers <sraymaek@redhat.com>
 ---
- block/vmdk.c | 29 +++++++++++++++++++++++------
- 1 file changed, 23 insertions(+), 6 deletions(-)
+ block/vmdk.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/block/vmdk.c b/block/vmdk.c
-index 040f38cd1d..c10321146e 100644
+index cd8b4ec7c8..3cdca06fff 100644
 --- a/block/vmdk.c
 +++ b/block/vmdk.c
-@@ -195,6 +195,13 @@ typedef struct VmdkGrainMarker {
-     uint8_t  data[];
- } QEMU_PACKED VmdkGrainMarker;
+@@ -1460,9 +1460,11 @@ get_whole_cluster(BlockDriverState *bs, VmdkExtent *extent,
+     int64_t cluster_bytes;
+     uint8_t *whole_grain;
+     bool copy_from_backing;
++    BDRVVmdkState *s = bs->opaque;
  
-+typedef struct EosMarker {
-+   uint64_t val;
-+   uint32_t size;
-+   uint32_t type;
-+   uint8_t pad[512 - 16];
-+} QEMU_PACKED EosMarker;
-+
- enum {
-     MARKER_END_OF_STREAM    = 0,
-     MARKER_GRAIN_TABLE      = 1,
-@@ -987,12 +994,7 @@ vmdk_open_vmdk4(BlockDriverState *bs, BdrvChild *file, int flags,
-             VMDK4Header header;
-             uint8_t pad[512 - 4 - sizeof(VMDK4Header)];
- 
--            struct {
--                uint64_t val;
--                uint32_t size;
--                uint32_t type;
--                uint8_t pad[512 - 16];
--            } QEMU_PACKED eos_marker;
-+            EosMarker eos_marker;
-         } QEMU_PACKED footer;
- 
-         ret = bdrv_pread(file, bs->file->bs->total_sectors * 512 - 1536,
-@@ -2180,6 +2182,7 @@ vmdk_co_pwritev_compressed(BlockDriverState *bs, int64_t offset, int64_t bytes,
-         BDRVVmdkState *s = bs->opaque;
-         int i, ret;
-         int64_t length;
-+        EosMarker *eos_marker = NULL;
- 
-         for (i = 0; i < s->num_extents; i++) {
-             length = bdrv_co_getlength(s->extents[i].file->bs);
-@@ -2193,6 +2196,20 @@ vmdk_co_pwritev_compressed(BlockDriverState *bs, int64_t offset, int64_t bytes,
-                 return ret;
-             }
-         }
-+
-+        /* Stream optimized disks end with an EOS marker, consisting of 512 null bytes. */
-+        if (strcmp(s->create_type, "streamOptimized") == 0) {
-+            eos_marker = g_malloc(sizeof(EosMarker));
-+            memset(eos_marker, 0, sizeof(EosMarker));
-+            length = bdrv_co_getlength(s->extents[s->num_extents - 1].file->bs);
-+            ret = bdrv_co_pwrite(s->extents[s->num_extents - 1].file, length,
-+                                 sizeof(EosMarker), eos_marker, 0);
-+            g_free(eos_marker);
-+            if (ret < 0) {
-+                return ret;
-+            }
-+        }
-+
-         return 0;
-     }
-     return vmdk_co_pwritev(bs, offset, bytes, qiov, 0);
+     /* For COW, align request sector_num to cluster start */
+-    cluster_bytes = extent->cluster_sectors << BDRV_SECTOR_BITS;
++    cluster_bytes = strcmp(s->create_type, "streamOptimized") == 0 ? SECTOR_SIZE
++      : extent->cluster_sectors << BDRV_SECTOR_BITS;
+     offset = QEMU_ALIGN_DOWN(offset, cluster_bytes);
+     whole_grain = qemu_blockalign(bs, cluster_bytes);
+     copy_from_backing = bs->backing && !zeroed;
 -- 
 2.55.0
 
