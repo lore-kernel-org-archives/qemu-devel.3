@@ -4,119 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC52BCA5FFC
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Oct 2026 19:36:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07B15CA5FFC
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Oct 2026 19:40:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xDoTu-00089n-0f; Mon, 05 Oct 2026 15:36:14 -0400
+	id 1xDoXA-0000ds-Sz; Mon, 05 Oct 2026 15:39:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xDoTr-000896-14
- for qemu-devel@nongnu.org; Mon, 05 Oct 2026 15:36:11 -0400
-Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xDoTo-0000wj-7c
- for qemu-devel@nongnu.org; Mon, 05 Oct 2026 15:36:10 -0400
-Received: by mail-ed1-x529.google.com with SMTP id
- 4fb4d7f45d1cf-6aa5d092211so3477581a12.1
- for <qemu-devel@nongnu.org>; Mon, 05 Oct 2026 12:36:07 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1791228966; cv=none;
- d=google.com; s=arc-20260327;
- b=cb1COXdZlA1BLnBkC3kt9qH9GQCvvMKph0iQE4dRqcG5Zu3Pft4PT9yD4/QYf0H026
- fgfIa0xUi0ciNZMta+CnLhMVZZTlWDmexcVflB1lK8Rno++qPtDSmlU5hxTN2EMsztWV
- gkeDbc/13JamwJ+Jdu3jofS58uHBs+x8hH08ZuGQAysKl/voRjOaofnzUXe26J1YhuXm
- FSfa3GZidG+gNBtL0qbdh+hNRDd0A3ey7nTTys2xf+g56GoAMyHsRyNlbH2xxkZa5ANN
- stH8ubu51HOPBRiFdDtALU/nAT59SWd2mZtHrkr238av9W+LY3DcaIMkqnFAeFxMpCMX
- SVpg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :reply-to:in-reply-to:references:mime-version:dkim-signature;
- bh=fCNoTCKX6u5EMBiV9qj0aGXtFoj1YDiSHgHyV+VfjfU=;
- fh=IWV5i/bmsnDDiumGg7GH/qn1tjabzJqEv+mL/WiBNIs=;
- b=srDb44EdRv/xvOcqUQMXXRegOoOXSV6dyGx8/mOdWN0+3uXL1DcPUm/A2amSKG39yX
- qNM5uJgdL02H5o1PYg+4X0PtSVBNPFwEt59TqVBUuR/vnz1FK/4nnHQ79Pcn90vnfQSz
- CumEOnx7ILck7tQQMf4WCqj97iwJaFPmMNwhOswRj1opgJTEjcHLjuszQv6AnFRY1OZh
- SKQdwYayoLopKELomdei4WM1hy5R1xLE6Xs/E/oJjTOU3XzPwCjfHB3XSvBdJMSqsO4p
- 0G3GDI4Cof86KbXliKyOLdRpB3TCOfGiljSi6o2ETHjPWs6XRjzVsJ7hO4kjmfBjcdAC
- 5jYA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1791228966; x=1791833766; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:reply-to:in-reply-to:references:mime-version:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=fCNoTCKX6u5EMBiV9qj0aGXtFoj1YDiSHgHyV+VfjfU=;
- b=le8KhIaLGiiKWdyjk34BV/dQLusPR4bcZwQtg/wZph9l1Q48m2bsDM4ed1DIBqAZC3
- /998QiSFLypLXqne1qXVvZZNVELEqpSMlA2LvFMPILYzFymm9cKAYjeN5JLENLyWyWj3
- yDTUwcf2S08EviL0ACrXB+GHqow2X+bgj/PG8SIdfv0RwhujLkK0fWfXVEH+GE7uoEbg
- WPE4khf91tFKtOFNeP1XUHV8EWJTrOOZP4Krj78rhO3xMUQCiQzrU/qEWlGv+udJYass
- oJCbHyUqN8i3XoKvtXtyNEHdQsLQPHoWzqAetYJZtlooko3aSCWnb9Swwc1pbQH+seG1
- Dexg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791228966; x=1791833766;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:reply-to:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=fCNoTCKX6u5EMBiV9qj0aGXtFoj1YDiSHgHyV+VfjfU=;
- b=i4Z3FMRV0wrmA9TY6f9e8pKZrqMy6RUSlU1az9WMzjl/7ryBkUrqKKagMOMr8ZDI3S
- ziWa146Yc5JJHeJwHFCF3zW2r9mYCTVu4+Nz61bDFHdvh13p9Ylnbc8TKFa2BHb8yk9M
- hPjtfVlO3Xs+I8QLUFygBSlA49af097pwkEEkSi7kILhVvPSLcBGt1S34AA+YaMxOnOE
- 5ee9Sq2dyzX8RWuhFWFBhmtzjl+nRvuU0Mgz9nRDTeQNGDMIk8EWKTik2pX5kR1Jroix
- HKQHbnfl9ccfIDBzeA8bNoizTZZINABnwmktk9lbi8UNgpnEjqiRZPhy6k3rT/h+qVRP
- lHCw==
-X-Gm-Message-State: AFq9FYIzzUgq1UVsoJ0DQkVKx58bBa7PiAzwNpfWOz4WtQ0zSW4bpjIm
- cxk1s4cLbC++bH44XLVeITuywXca8N3KNnrokXTOhxHlUYC+jqSepkFvI7PsfSkuidM6b2+VZsk
- xPBQ//va6sLqoMFh97UxlSpiNzJH8ads=
-X-Gm-Gg: AYBFou0q4YnJ581cRR6pJoUQvcUh6EnLQULzESPLhJmKkIoWQeDc+9U10LiQVq2nP/m
- GjvP9nsxIgRuQvhUPt0BJiD0g3Lic4xUnDW6j+a4ODRGmDIWpDeELF9WvtMt1sTGvoNoYiSMgME
- ztuPI2iM6K/Z8BGAWcocWPZ6t7wI8CH9RCUqugJuu1LyO0lq0qUkbKdWexeKjPGoA09tuEO9zhx
- X++7ANOa/M7tDbf77TSOB/X81RMrQjw/qc0g+DfpAEi2xzGbsvvUEnvvaUUvanPcSF2LnlrCeYI
- wXjt6B7wDyNL2rl2OFcQrnhYfH/P8uzlz+RAHQXxBAS7m70GoBw3+Cs=
-X-Received: by 2002:a05:6402:20ce:20b0:6af:bc82:e126 with SMTP id
- 4fb4d7f45d1cf-6afca043e6dmr2899334a12.44.1791228966056; Mon, 05 Oct 2026
- 12:36:06 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
+ id 1xDoX2-0000dT-HK; Mon, 05 Oct 2026 15:39:30 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
+ id 1xDoX0-000150-88; Mon, 05 Oct 2026 15:39:27 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 695HZVKO1131254; Mon, 5 Oct 2026 19:39:22 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=mEEDpG
+ 9IkwYeeQegEUT8fqkA4UZzsQ9uIq5Fg5O388g=; b=ePEWvADiyfzwEt+ItFzWdP
+ 6mb2S193KVf1almczYQ1NBgy4Kx6Pmj5688FPzJBxSynQyJyPRxFv3DmB3FaYIqX
+ 0/lFYvGNwG42+Ykl0CWfGTNnmoIZpT/H/kAFcsamKeMe1tY4D5pFZazVw58i/3RO
+ BAOsu5lAZJGf87EeUx7clmN9L7jzHuSfOXmMrmdklHKoik3rgCXPk/xti8+7dYMd
+ 9UJJAl2onvrMKNTGrgJp9CVBUQdEJFBViLJFlYRWBoR9iSziHxE64fwl5R5n40UV
+ m8MTNYD3x70Wox7+uWkC2sIaFBVumHDU2aBwJq/cdlGlxhdUIHUw73OtM+vvTG4Q
+ ==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4h2q4jks1p-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Mon, 05 Oct 2026 19:39:22 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 695HbVhC3231089; Mon, 5 Oct 2026 19:39:21 GMT
+Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4h3cdvq04g-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 05 Oct 2026 19:39:21 +0000 (GMT)
+Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
+ [10.39.53.232])
+ by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 695JdKRa9306704
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 5 Oct 2026 19:39:20 GMT
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 06B6658043;
+ Mon,  5 Oct 2026 19:39:20 +0000 (GMT)
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id CE45058053;
+ Mon,  5 Oct 2026 19:39:18 +0000 (GMT)
+Received: from [9.61.15.56] (unknown [9.61.15.56])
+ by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Mon,  5 Oct 2026 19:39:18 +0000 (GMT)
+Message-ID: <59791e4a-ac5a-434f-b938-b7f3d154d3dc@linux.ibm.com>
+Date: Mon, 5 Oct 2026 15:39:18 -0400
 MIME-Version: 1.0
-References: <20261004072927.1142-1-luoyonggang@gmail.com>
- <0b84bf4d-3b98-4f52-8847-9f89bef92c1e@oss.qualcomm.com>
- <CAE2XoE-joWZwrBy-jLe+=ZP7OGM9cyDrF_5hz7koVPODeys+JA@mail.gmail.com>
- <b2297f92-a685-4399-a755-bbe5a37b9b3f@oss.qualcomm.com>
- <CAE2XoE-4Pdp_n3RgpqJ5se_KTHniMAJAodTLmkfV+0jjou=M5w@mail.gmail.com>
- <c6bd8e8d-3160-46c2-ba4a-2f5a4b93cf38@oss.qualcomm.com>
- <CAE2XoE9PKNgE1Zz_frOq_DrgqrPL4B8hcq0xO6ywCNTeUnFLvA@mail.gmail.com>
- <63d20cc8-8003-489c-9f08-28369a2f71e2@oss.qualcomm.com>
- <CAE2XoE9uqEcjMsqJXu6Cr+MrposPjq7O6Lnj5cj7uW2nF38uAg@mail.gmail.com>
- <15e9a768-95bf-45aa-8175-1dbd73d5ee04@oss.qualcomm.com>
- <CAE2XoE-89zTC4wPnyi_ZUu_dcVuLmwr4uyp-txkxEYQ29Y8uvw@mail.gmail.com>
- <b361fbd9-7dce-4364-bc3b-bb98fed52bb4@oss.qualcomm.com>
-In-Reply-To: <b361fbd9-7dce-4364-bc3b-bb98fed52bb4@oss.qualcomm.com>
-From: Yonggang Luo <luoyonggang@gmail.com>
-Date: Tue, 6 Oct 2026 03:35:50 +0800
-X-Gm-Features: AclHuK--3H-FQ_3R-heZEM6zP8YjMZHmyjoh9l-qywLsbxvYwJZUPfHi9HwN-Bw
-Message-ID: <CAE2XoE-U_UZPX26u+Nd2jbwX=rZTWxH0cpCn8NuHK4Se+0x64Q@mail.gmail.com>
-Subject: Re: [PATCH 0/4] target-info: preserve full softmmu target identity
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, Philippe Mathieu-Daude <philmd@mailo.com>, 
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
- Fabiano Rosas <farosas@suse.de>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::529;
- envelope-from=luoyonggang@gmail.com; helo=mail-ed1-x529.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v11 15/16] s390x/pci: Implement migration for emulated
+ devices
+To: Konstantin Shkolnyy <kshk@linux.ibm.com>
+Cc: alifm@linux.ibm.com, farman@linux.ibm.com, richard.henderson@linaro.org,
+ iii@linux.ibm.com, david@kernel.org, cohuck@redhat.com,
+ pasic@linux.ibm.com, borntraeger@linux.ibm.com, qemu-s390x@nongnu.org,
+ qemu-devel@nongnu.org
+References: <20260930145255.140164-1-kshk@linux.ibm.com>
+ <20260930145255.140164-16-kshk@linux.ibm.com>
+From: Matthew Rosato <mjrosato@linux.ibm.com>
+Content-Language: en-US
+In-Reply-To: <20260930145255.140164-16-kshk@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: tL31HjKzvCKd9khV0PcDPUjmsjaMG7Lu
+X-Proofpoint-GUID: tL31HjKzvCKd9khV0PcDPUjmsjaMG7Lu
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA1MDA3NyBTYWx0ZWRfX4nx5dshW/Cpo
+ mthKiMATEQDGUB8uN/SWMsuVDux5W3GBQCgFZ0DE93R70v6hyApGQgd7FbQbQFRbfjZLJdhWCOd
+ BRAD0ki6PG2Hg6zEiksM3GW/e0oPJBY=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA1MDA3NyBTYWx0ZWRfX9NpZjH+LnxQF
+ mEE+aGbMrsulknTt3iog7W/Y58hxb6KFc/4WlTd4Kv+koSRqBVq2BrbkMTJdcPyvHx/Q2IY90Ld
+ baaAhy82y16a1sIEFnrIICw6O0oQPmV/LnWy+BW/enKpguJlRds2BmyZ1pf25AE88Df7zOdGKH8
+ pSD4VQ2C7I9V7IxEccyf30fizXuzmK8Vr1lbdFI8c3oVELWlinv2CDndzsaasuT/KNJ8M0q3IxM
+ uVVIb+Mivw3nujG4nFBKoltYMQb6MgfjwgsYzlUh81EBuyfP5qyn5sPzkZz4VEBCz9PresiOj/k
+ xTd19WsHaFUdDDIZADZUBcqijh4MUaxC0yfXg3a9tmPqVulQUCAosUwfXJcV5Sfv1sXKPT3gAwW
+ dactweqGiGb5PVOpEW/NswDMbx4vKlU4FPpkq4Up3666VchCIbNF0bgxsW7DKvSx8g8RNL4hTN5
+ jSCisF2Y8xnj1Z/p/PA==
+X-Authority-Analysis: v=2.4 cv=eYeo7LEH c=1 sm=1 tr=0 ts=6ac3fcea cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=8Xgp8btWZVU1dCH4KUkA:9
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-10-05_05,2026-10-05_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 lowpriorityscore=0 phishscore=0 bulkscore=0 clxscore=1015
+ spamscore=0 malwarescore=0 priorityscore=1501 impostorscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2610050077
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=mjrosato@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -130,174 +124,135 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: luoyonggang@gmail.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Oct 6, 2026 at 3:15=E2=80=AFAM Pierrick Bouvier
-<pierrick.bouvier@oss.qualcomm.com> wrote:
->
-> On 10/5/2026 12:06 PM, Yonggang Luo wrote:
-> > On Tue, Oct 6, 2026 at 2:52=E2=80=AFAM Pierrick Bouvier
-> > <pierrick.bouvier@oss.qualcomm.com> wrote:
-> >>
-> >> On 10/5/2026 11:45 AM, Yonggang Luo wrote:
-> >>> On Tue, Oct 6, 2026 at 2:06=E2=80=AFAM Pierrick Bouvier
-> >>> <pierrick.bouvier@oss.qualcomm.com> wrote:
-> >>>>
-> >>>> On 10/5/2026 10:04 AM, Yonggang Luo wrote:
-> >>>>> On Tue, Oct 6, 2026 at 12:25=E2=80=AFAM Pierrick Bouvier
-> >>>>> <pierrick.bouvier@oss.qualcomm.com> wrote:
-> >>>>>>>>
-> >>>>>>>> Ok, but I'm not sure it answers the why.
-> >>>>>>>> Could you explain the benefits?
-> >>>>>>>
-> >>>>>>> Which part? keeping target_arch as SYS_EMU_TARGET__MAX for user-b=
-inary because
-> >>>>>>> The following original code would return -1 for some user-binary
-> >>>>>>> +    SysEmuTarget arch =3D target_info()->target_arch;
-> >>>>>>> +
-> >>>>>>> +    if (arch =3D=3D SYS_EMU_TARGET__MAX) {
-> >>>>>>> +        arch =3D qapi_enum_parse(&SysEmuTarget_lookup, target_na=
-me(), -1,
-> >>>>>>> +                               &error_abort);
-> >>>>>>> +    }
-> >>>>>>> +    return arch;
-> >>>>>>> So basically assigning any value for the user binary is valid.
-> >>>>>>> SYS_EMU_TARGET__MAX is more explicit as it's related to type SysE=
-muTarget.
-> >>>>>>> -1 is another option but easy to confuse.
-> >>>>>>>
-> >>>>>>>
-> >>>>>>> For why commit e934c624f32f6f44f427d73a2e6a67e983a02ae6.
-> >>>>>>> "target-info: Statically initialize target_arch"
-> >>>>>>> doing that, I am not sure.
-> >>>>>>>
-> >>>>>>
-> >>>>>> I guess there is a (good or bad) reason for which sub variants of
-> >>>>>> targets are not reflected in SYS_EMU_TARGET enum. We should double=
- check
-> >>>>>> that before doing any change, as it might have other consequences.
-> >>>>>
-> >>>>>
-> >>>>> You=E2=80=99re right to ask, and I need to correct my earlier sugge=
-stion:
-> >>>>> leaving user-mode target_arch
-> >>>>>  as SYS_EMU_TARGET__MAX is not safe. target_aarch64() is used by AR=
-M
-> >>>>> code shared with user-mode builds,
-> >>>>> including cpu-max-v8.c, where its result indexes a two-entry array.
-> >>>>> For aarch64-linux-user, the sentinel could therefore cause an
-> >>>>> out-of-bounds access during type registration.
-> >>>>>
-> >>>>> I checked the distinction: softmmu needs the full system-target
-> >>>>> identity, including variants such as mipsel;
-> >>>>> user-mode variants such as aarch64_be use their base TARGET_ARCH
-> >>>>> (aarch64) for this enum. I=E2=80=99ll keep the full TARGET_SYS_EMU
-> >>>>>  value for softmmu and use TARGET_ARCH for user-mode builds, rather
-> >>>>> than leave the field at SYS_EMU_TARGET__MAX.
-> >>>>>
-> >>>>
-> >>>> That's technical details, but not an answer to the initial question =
-of
-> >>>> why we need to change anything for user binaries, compared to what e=
-xists.
-> >>>
-> >>> The first two patches revert the current static initialization so the
-> >>> token can be replaced. They are not a user-mode behavior change.
-> >>>
-> >>> Compared with current QEMU, user-mode still uses TARGET_ARCH.
-> >>> qemu-mipsel already reports mips, and it still will. Names such as
-> >>> aarch64_be are not SysEmuTarget values, so user-mode cannot use the
-> >>> full target name for this field; keeping TARGET_ARCH preserves today'=
-s
-> >>> value and avoids the runtime parse.
-> >>>
-> >>
-> >> Why should we need to expose this precise information?
-> >> So far, if those targets were not exposed (and aliased to 32/64 bit
-> >> variant), it's probably we didn't need it.
-> >
-> > because for different SysEmuTarget, the machine list is different.
-> > return a wrong SysEmuTarget would cause a mismatch between SysEmuTarget
-> > and the machine list. for example:
-> >
-> > static const char * const mips_machines[] =3D {
-> >     "malta",
-> >     "none",
-> > };
-> >
-> > static const char * const mips64_machines[] =3D {
-> >     "magnum",
-> >     "malta",
-> >     "none",
-> >     "pica61",
-> > };
-> >
-> > static const char * const mips64el_machines[] =3D {
-> >     "boston",
-> >     "fuloong2e",
-> >     "loongson3-virt",
-> >     "magnum",
-> >     "malta",
-> >     "none",
-> >     "pica61",
-> > };
-> >
-> > static const char * const mipsel_machines[] =3D {
-> >     "malta",
-> >     "none",
-> > };
-> >
-> >
->
-> I see, in this case, I would invite you to first work on how to declare
-> for which target a machine is available, as discussed with Daniel on a
-> previous thread.
->
-> What comes out of this will give the answer about how to deal with sub
-> variants.
->
-> If it's a callback, it should be easy to use:
-> is_available_mips64el() {
->   target_mips64() && target_big_endian()
-> }
 
-That again triggers another issue, the query-machines need to return
-the endianness/target_arch() pair
-for checking if the machine filtering is implemented valid to match
-existing qemu-system-$arch binaries.
+> +/* Return a unique bus "path" for zpci device */
+> +static char *s390_pci_bus_get_dev_path(DeviceState *dev)
+> +{
+> +    S390PCIBusDevice *pbdev = S390_PCI_DEVICE(dev);
+> +    return g_strdup_printf("uid-%04x", pbdev->uid);
+> +}
+> +
+> +static void s390_pcibus_class_init(ObjectClass *oc, const void *data)
+> +{
+> +    BusClass *bc = BUS_CLASS(oc);
+> +    bc->get_dev_path = s390_pci_bus_get_dev_path;
+> +}
+> +
+>  static const TypeInfo s390_pcibus_info = {
+>      .name = TYPE_S390_PCI_BUS,
+>      .parent = TYPE_BUS,
+>      .instance_size = sizeof(S390PCIBus),
+> +    /*
+> +     * Implement get_dev_path() to provide each zpci device with a unique
+> +     * stable UID-based bus "path". The "path" is used as part of idstr in the
+> +     * migration stream, making idstr unique and instance_id always 0.
+> +     * For migration to succeed, (idstr+instance_id) must match those generated
+> +     * during QEMU start. Without unique idstr, QEMU will generate variable
+> +     * instance_id to distinguish devices, and that instance_id can change
+> +     * if a device is unplugged and plugged back, preventing migration.
+> +     */
+> +    .class_init = s390_pcibus_class_init,
 
->
-> If it's a static list of SYS_EMU_TARGET, then the easiest path will
-> probably be to extend list of targets in this enum.
+This patch is already pretty big.  I wonder if adding
+s390_pci_bus_get_dev_path + setting get_dev_path could be its own patch
+prior to this one - up to you.
 
+[...]
 
-No, adding every user-mode target to SYS_EMU_TARGET is not necessary for th=
-is
- softmmu machine-availability work. All configured softmmu targets already =
-have
-matching enum values. The missing variants (aarch64_be, armeb,
-microblazeel, mipsn32, mipsn32el, ppc64le, and sparc32plus)
-are user-mode-only here, so include them only if the availability
-mechanism is intended
- to represent user-mode targets too.
+> +static bool s390_pci_device_post_load_errp(void *opaque, int version_id,
+> +                                           Error **errp)
+> +{
+> +    S390PCIBusDevice *pbdev = S390_PCI_DEVICE(opaque);
+> +
+> +    /*
+> +     * Guard against the scenario that s390_pcihost_plug() of the target PCI
+> +     * device succeeded in the source QEMU, but failed on this destination
+> +     * QEMU, before migration state load. In this case we'll find !pbdev->pdev
+> +     * but the pbdev->state != ZPCI_FS_RESERVED as just loaded from the stream.
+> +     * Such value combination is invalid and migration should fail.
+> +     */
+> +    if (pbdev->state != ZPCI_FS_RESERVED && !pbdev->pdev) {
+> +        error_setg(errp, "zpci device uid 0x%x state %d has no PCI device",
+> +                   pbdev->uid, pbdev->state);
+> +        return false;
+> +    }
+> +
+> +    pbdev->zpci_fn.fid = pbdev->fid;
+> +    pbdev->zpci_fn.uid = pbdev->uid;
+> +
+> +    /*
+> +     * Now that pbdev->idx has been loaded, use it to place pbdev back into
+> +     * the table. This may replace a different not-yet-state-loaded pbdev,
+> +     * but pre_load() handles this case.
+> +     */
+> +    g_hash_table_replace(s390_get_phb()->zpci_table, &pbdev->idx, pbdev);
+> +
+> +    /*
+> +     * Regenerate IOMMU state, including IOTLB contents and QEMU memory regions.
+> +     */
+> +    if (pbdev->iommu_enabled) {
+> +        if (!pbdev->iommu) {
+> +            error_setg(errp, "iommu is NULL");
+> +            return false;
+> +        }
+> +        if (!s390_pci_ioat_validate(pbdev, pbdev->pba, pbdev->pal,
+> +                                    pbdev->g_iota, errp)) {
+> +            if (*errp) {
+> +                error_prepend(errp,
+> +                              "invalid pba, pal or g_iota in migration stream: ");
+> +            } else {
+> +                error_setg(errp,
+> +                           "invalid pba, pal or g_iota in migration stream");
+> +            }
+> +            return false;
+> +        }
+> +        if (s390_pci_is_translation_enabled(pbdev->g_iota)) {
+> +            s390_pci_iommu_enable(pbdev);
+> +            s390_pci_ioat_replay(pbdev);
+> +        } else {
+> +            /* TODO: unreachable until vfio passthrough migration is enabled */
+> +            s390_pci_iommu_direct_map_enable(pbdev);
 
+I would further clarify that this is because rtr_avail is always set to
+false for emulated devices today.
 
+Also, besides vfio migration, it could also be reachable if were to ever
+allow rtr_avail for emulated devices.
 
->
-> In all cases, that's the first thing to work on before any other step.
->
-> Regards,
-> Pierrick
+But I wonder: if we can never reach this code today, should this then be
+a g_assert_not_reached() and improve the comment above to indicate that
+if/when either emulated devices are allowed to set rtr_avail or
+migration of VFIO devices are added, this path needs to be updated to
+call s390_pci_iommu_direct_map_enable(pbdev)?
 
+If/when either of those things happen in the future it would already
+need to be on a machine-version boundary whether this call were in-place
+or not.  And then we don't worry about devices driving this codepath
+that should not be able to do so.
 
+[...]
 
---=20
-         =E6=AD=A4=E8=87=B4
-=E7=A4=BC
-=E7=BD=97=E5=8B=87=E5=88=9A
-Yours
-    sincerely,
-Yonggang Luo
+>  struct S390pciState {
+>      PCIHostState parent_obj;
+>      uint32_t next_idx;
+> @@ -386,11 +390,14 @@ struct S390pciState {
+>      S390PCIBus *bus;
+>      GHashTable *iommu_table;
+>      GHashTable *zpci_table;
+> -    QTAILQ_HEAD(, SeiContainer) pending_sei;
+> +    SeiContainerList pending_sei;
+> +    /* Only used temporarily between migration pre_load and post_load. */
+> +    SeiContainerList pending_sei_stash;
+
+Hrm, I don't love that -- but I can't think of a better solution either.
+
+I guess if we find anything else that needs this kind of treatment in
+the future we should create a single object chained off of S390pciState
+to hold all of them vs adding more of these to S390pciState.
+
+Thanks,
+Matt
 
