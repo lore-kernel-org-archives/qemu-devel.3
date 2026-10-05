@@ -4,80 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F26A5CA5FCE
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Oct 2026 12:09:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3993ECA5FCE
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Oct 2026 12:10:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xDhUy-0005s9-Oz; Mon, 05 Oct 2026 08:08:52 -0400
+	id 1xDhVt-00066O-Ia; Mon, 05 Oct 2026 08:09:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xDhUs-0005nB-V3
- for qemu-devel@nongnu.org; Mon, 05 Oct 2026 08:08:47 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1xDhVA-0005yl-R1
+ for qemu-devel@nongnu.org; Mon, 05 Oct 2026 08:09:04 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xDhUr-0004aB-7m
- for qemu-devel@nongnu.org; Mon, 05 Oct 2026 08:08:46 -0400
+ id 1xDhV9-0004ee-90
+ for qemu-devel@nongnu.org; Mon, 05 Oct 2026 08:09:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1791202124;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ s=mimecast20190719; t=1791202142;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=kL5kNh2FZ6DP+XCeCTJ+fdbv5ux+6yG59/qGpYqWLf4=;
- b=PbvefKvQpJlSqC/YD+v+DAIWc4vYUmdQJ6oGIAcdQUli054Tp07DGxyjSGb8qkBfnp/Z8R
- ssgutwh38hy4tifCZD7K7sxYswxIx7t7ZeIR3q5wegOBgEK/JUkDPn6BAP7Zn9Psp8s/mv
- dcXRJm3mMascOgFf1Q20nB5J1hPUNPM=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=4VRn9BcWM4m2OIUTvrMmMWK66T1YxQvQAH4PF3wKvTo=;
+ b=WBDQgCVk18aW7h6JgxVXvu1HkdthORm+WCFPffzZQoSXPjlgcW+7tyxkM8rGNjL6bhUCxN
+ KrCrpVNXMu7NT4vc+0dEyODAyXXBkasoWFQebOpKC0UgodCc//3TwbncYReCyRuKIVlYBf
+ fvyAXEcC/sOTVpM+8Qsm9EN6caFgg6I=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-335-cEPaxYxlNTymyL0Wb5iloQ-1; Mon,
- 05 Oct 2026 08:08:42 -0400
-X-MC-Unique: cEPaxYxlNTymyL0Wb5iloQ-1
-X-Mimecast-MFC-AGG-ID: cEPaxYxlNTymyL0Wb5iloQ_1791202121
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-74-J9I3t5ssOpyRgFdJqt3bhg-1; Mon,
+ 05 Oct 2026 08:09:01 -0400
+X-MC-Unique: J9I3t5ssOpyRgFdJqt3bhg-1
+X-Mimecast-MFC-AGG-ID: J9I3t5ssOpyRgFdJqt3bhg_1791202140
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2CFE2193E8F1
- for <qemu-devel@nongnu.org>; Mon,  5 Oct 2026 12:08:41 +0000 (UTC)
-Received: from redhat.com (headnet03.pony-001.prod.iad2.dc.redhat.com
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0FE861955DEA; Mon,  5 Oct 2026 12:09:00 +0000 (UTC)
+Received: from berrange.csb (headnet03.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.114])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id F38C5180057F; Mon,  5 Oct 2026 12:08:39 +0000 (UTC)
-Date: Mon, 5 Oct 2026 13:08:37 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>, Stefan Hajnoczi <stefanha@redhat.com>
-Subject: Re: [PATCH 16/20] trace: include qemu_loglevel_mask(LOG_TRACE) in
- guard
-Message-ID: <asOTRbLHbNuDohVC@redhat.com>
-References: <20261001151228.3373747-1-berrange@redhat.com>
- <20261001151228.3373747-17-berrange@redhat.com>
- <75ae2444-0ac9-4aee-8881-fb3431c639e8@redhat.com>
- <ar-Pm3jf4q4gyj0W@redhat.com>
- <CABgObfbXqUA1JHikLqCqrvbaxtVAq7QsP7+f987dS+tc_OrQsQ@mail.gmail.com>
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 983D03001D29; Mon,  5 Oct 2026 12:08:58 +0000 (UTC)
+From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH v3 01/24] osdep: add 'ignore_value(x)' macro
+Date: Mon,  5 Oct 2026 13:08:32 +0100
+Message-ID: <20261005120855.421973-2-berrange@redhat.com>
+In-Reply-To: <20261005120855.421973-1-berrange@redhat.com>
+References: <20261005120855.421973-1-berrange@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CABgObfbXqUA1JHikLqCqrvbaxtVAq7QsP7+f987dS+tc_OrQsQ@mail.gmail.com>
-User-Agent: Mutt/2.4.2 (2026-08-30)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 10
 X-Spam_score: 1.0
 X-Spam_bar: +
 X-Spam_report: (1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,78 +86,49 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Oct 02, 2026 at 04:49:19PM +0200, Paolo Bonzini wrote:
-> Il ven 2 ott 2026, 13:04 Daniel P. Berrangé <berrange@redhat.com> ha
-> scritto:
-> 
-> > On Fri, Oct 02, 2026 at 12:45:49PM +0200, Paolo Bonzini wrote:
-> > > On 10/1/26 17:12, Daniel P. Berrangé wrote:
-> > > > If emitting a trace event requires computation for the parameters
-> > > > passed to the probe, the callers should guard that computation
-> > > > with trace_event_by_state_backends(), which is a macro expanding
-> > > > to the a check of the "TRACE_...._DSTATE()" expression. For the
-> > > > log backend this should include a check for LOG_TRACE being
-> > > > present in the configured log level.
-> > > This also needs something for Rust (apologies for the mailer damage):
-> >
-> > Ok, I'll test that and include it in a future v3, since I already
-> > sent out v2 before seeing this.
-> >
-> 
-> No hurry, it's just an optimization.
+Functions annotated with 'warn_unused_result' cannot be cast
+to (void) to silence the compiler. Add the ignore_value()
+macro which tricks the compiler into thinking the result is
+genuinely used, avoiding the need for manual workarounds where
+the return value is intentionally ignored.
 
-Trying your suggested patch exposed an existing bug in the code, where we
-did not merge the checks in the C code, and this was only apparent once
-removing the CHECK_TRACE_EVENT_GET_STATE flag. So I've fixed this all in
-the v3 posting.
+This clever macro is derived from one originating with the
+GNULIB project:
 
-> 
-> Paolo
-> 
-> > --- a/scripts/tracetool/backend/log.py
-> > > +++ b/scripts/tracetool/backend/log.py
-> > > @@ -16,7 +16,6 @@
-> > >
-> > >
-> > >  PUBLIC = True
-> > > -CHECK_TRACE_EVENT_GET_STATE = True
-> > >
-> > >
-> > >  def generate_h_begin(events, group):
-> > > @@ -52,3 +51,9 @@ def generate_rs(event, group):
-> > >          '        }',
-> > >          fmt=expand_format_string(event.fmt, event.name + " "),
-> > >          args=event.args.rust_call_varargs())
-> > > +
-> > > +def generate_rs_backend_dstate(event, group):
-> > > +    out('    unsafe { (bindings::qemu_loglevel & bindings::LOG_TRACE)
-> > != 0
-> > > && '
-> > > +        + 'trace_event_state_is_enabled(_%(event_id)s_DSTATE) } ||',
-> > > +        event_id = 'TRACE_' + e.name.upper())
-> > > +
-> > >
-> > > Paolo
-> > >
-> >
-> > With regards,
-> > Daniel
-> > --
-> > |: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-> > |: https://libvirt.org          ~~          https://entangle-photo.org :|
-> > |: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
-> >
-> >
+  https://gitweb.git.savannah.gnu.org/gitweb/?p=gnulib.git;a=blob;f=lib/ignore-value.h;hb=HEAD
 
-With regards,
-Daniel
+but simplified since we don't need compat with old GCC and
+optimizing on clang is overkill.
+
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+---
+ include/qemu/osdep.h | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/include/qemu/osdep.h b/include/qemu/osdep.h
+index 1ec5b42230b..c1ca2c127b6 100644
+--- a/include/qemu/osdep.h
++++ b/include/qemu/osdep.h
+@@ -251,6 +251,14 @@ extern "C" {
+ #endif
+ 
+ 
++/*
++ * Merely casting to (void) is not sufficient for functions
++ * annotated with the "warn_unused_result" attribute
++ */
++#define ignore_value(x) \
++    (__extension__ ({ __typeof__(x) __x = (x); (void) __x; }))
++
++
+ /*
+  * For mingw, as of v6.0.0, the function implementing the assert macro is
+  * not marked as noreturn, so the compiler cannot delete code following an
 -- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+2.55.0
 
 
