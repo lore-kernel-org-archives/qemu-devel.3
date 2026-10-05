@@ -4,109 +4,143 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD387CA5FFC
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Oct 2026 16:11:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D782CA5FFC
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Oct 2026 16:12:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xDlHY-0005Ka-1M; Mon, 05 Oct 2026 12:11:16 -0400
+	id 1xDlIi-0005fK-JD; Mon, 05 Oct 2026 12:12:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xDlHX-0005KS-7n
- for qemu-devel@nongnu.org; Mon, 05 Oct 2026 12:11:15 -0400
-Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xDlHV-00076l-DT
- for qemu-devel@nongnu.org; Mon, 05 Oct 2026 12:11:14 -0400
-Received: by mail-ed1-x536.google.com with SMTP id
- 4fb4d7f45d1cf-6acbdbc1725so2682967a12.3
- for <qemu-devel@nongnu.org>; Mon, 05 Oct 2026 09:11:12 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1791216671; cv=none;
- d=google.com; s=arc-20260327;
- b=a6y2rdXeF451tJCsJ79MsP2e6+7aa6lsRlz/F2fitvcWsDZ/2vHU6KdTpomP74gqT2
- M0ShriCMCOfGWW6NOjKXNaNR94ZFaiG8v5cQA4rBds1Awy51dNciQNpjWTl513SMVoM7
- xpL+ZDH0vPJ7YNRJ2+Aa5F+4NytzqPlKKJ8NiJdwurJPWtvKkGZnGkV9NLw0Pzdbjn30
- byNCOQzoohj8711GhKxdnwX4qjO+DsxScdInHRHF3h2GmlKc1lR5O3RLgX62D5Wg9yfV
- j8zdWlFUtZSqINbNc+rstuq/8axWRhdyj0GoxVdu1q0L/XzKudMd/uex2tzsUEk4NFt8
- lQfw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :reply-to:in-reply-to:references:mime-version:dkim-signature;
- bh=TJH4KvIh7Qsn9EylEvnnzTGgLZ/gxhWOmlKL6PrS4vI=;
- fh=IWV5i/bmsnDDiumGg7GH/qn1tjabzJqEv+mL/WiBNIs=;
- b=sCubcYJ5rokkQPe0Y9qkyxYICJOo1oXVyeg2vYXoVKaKnotG6xFls1/2TL+rn8/Tpo
- lCzh/Oc0R2jNtm5UWn4eZO6cpjN1p9WWMmyNZ6h11rMDFUYpkXZpdZ0Bl4KJWHGEotzb
- DuJCo6FhNmddwbHEFnCoB6ZS/7NNZr032U4aaSou1kvKqJY0VrQ5vIqMS7ajqvZfCgUB
- aW3dA/ddcVQG0q7JxPEVLI3FtL6KNr24zalSxvPzwd4xy/di57BHw0kPCpPRUeoOwa1U
- dUTvB2oz0FXe5zn8KiXXlCQ27cuKuIxeET08ibA0z4BPowZ31QAri8Y+j+XF9fTn20wv
- Vi4g==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1xDlIS-0005d0-OX
+ for qemu-devel@nongnu.org; Mon, 05 Oct 2026 12:12:14 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1xDlIR-00079P-3S
+ for qemu-devel@nongnu.org; Mon, 05 Oct 2026 12:12:12 -0400
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 695EP2MW2014915
+ for <qemu-devel@nongnu.org>; Mon, 5 Oct 2026 16:12:09 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ gWGjBdy7NDC8HgfWd4j7LCkGEtGOMXe0sIV8VVvUOeM=; b=JUFGNOaxEklFVkqg
+ Xgm2Hn0Redr4RAd1nNE+BqAbfuZOa4piziW69OfHpx98vL/fn/+3XmMc6cV/rD7l
+ 1uNa23YG5uMwRXJpYfb/BV3qo1zDqZXxYdgmlKoY5N/GzuEbjhpIQL7qUgjPflAf
+ JwlwhFytPvc57uh7aBqxzXp3w48hiPQ4SRGyhbYNwXeHPIsuDp0FJS+uTBgtURgh
+ jrlXXZHt8yrdx5W3X+0Nxg7lunbSZDTAmz9XutTEEqQLLr6R2bIcxZ/mT1OyeHsh
+ eStLq03AaXI+Izni7SMiIZQmzFPVnUXCcGzfhSEwuM59QfWNLGutcn0IykQ9KEhJ
+ 48Cuew==
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
+ [209.85.219.69])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h3xhs2wh7-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 05 Oct 2026 16:12:08 +0000 (GMT)
+Received: by mail-qv1-f69.google.com with SMTP id
+ 6a1803df08f44-91235881828so46859516d6.3
+ for <qemu-devel@nongnu.org>; Mon, 05 Oct 2026 09:12:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1791216671; x=1791821471; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:reply-to:in-reply-to:references:mime-version:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=TJH4KvIh7Qsn9EylEvnnzTGgLZ/gxhWOmlKL6PrS4vI=;
- b=IJKf8k4jkQpK20dFUNLchM/9uVl24KIAhWLPvkBe4MWxjUPRxRpowYHaq8rrRFQM7Y
- bdGUq965hEWUCFo3/uPkt5md4mZ/tiqe7F8B5TymJUzOBrzCRVj95Chh8XiazsgFSKQf
- m7aWQ10QdoSHAAzCX5rbSoDCqNZc6CwCwOpyoeVVwOLPlW+85UM3WYMkx+Z2Sx69FIs7
- gqBVM2ue1WedM2cB1yXQUtu4B1jnipePubomMi5kF+CoDvbRp00EMZR2SSzvwo9b3Cw0
- 4hgSpnjASD14WrQqrK91m7awb2UAJeyDl0kTu74PxxVQtd6UpldpgzB2hxQi5Axa/7az
- ewKg==
+ d=oss.qualcomm.com; s=google; t=1791216728; x=1791821528; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=gWGjBdy7NDC8HgfWd4j7LCkGEtGOMXe0sIV8VVvUOeM=;
+ b=HjamCXEMApFUstOw6gn04fT5/Tsh0Rjtkerp+6TxWvu4/QLmRQLQQBfp8+8KPpAfgv
+ DRQLXMBYjP52lMh1tAui3Udj4LSE7tWIEypW0ANpo82GgeYv0IZwWFZRIjTrOPjQ/CZ+
+ awWZfWaq5LlabgWSEmaE4K4XHcAtsYHCB+3n//DOzCckBRGMYzopVCTyzppnsRTOlLji
+ hJyA+uoJSrqe2dpZvO/F75gr04+dzIma2VBLpJM5lS9Bnxq3ZS/NmYTatweClwvWjpiS
+ tOBdO9q5ebhZQWmxIWYmjyRuc5Y6krXEcYFtGC+SyNDsT1TQuWqoAKzFU5c6tDnnIG+u
+ gKlg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791216671; x=1791821471;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:reply-to:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=TJH4KvIh7Qsn9EylEvnnzTGgLZ/gxhWOmlKL6PrS4vI=;
- b=BjNKlvkt+R+ns8Op+Ln09a/jrnBLz9DTHKNaePTQGw9+i80dJX8wUnQiaUmhozU5Gz
- aVg1ccae3EQpIWmjDQ9Cd8ujsQeSsXEyT5jQWWVNZ9coMbtNcJYdxZguUB9riZCGWDK3
- fv75cpdmMlApkRAdK9GSQUREAhy5SCCmVh6J0GS9EveafplEMdIf6Dadq4L5tkkqHd29
- m3Rr5VUQrHWnTO5e1qS0m4c3Smb5WnW5n16W9zCxrgLC3lIzYNZMo+5b8xacpbUxZNq8
- BJ0xBfDcwLccJ3CFwrTa7BXMi5au4NpIp7U67QgYPNN1zUlrz4UmjrCHjMFOHY2AqPiX
- K9JQ==
-X-Gm-Message-State: AFq9FYLv903fcjiHimOjBCdM24tyjxw7S8VtUx/kUDkJ/2JqV+YPqI8O
- zooNjyYrhDzPYRqOKly+nf3JIXa/RfevkPgIDL81haQ5H/rjr4pqFTGwWlqKL8u2F8XRPjk8K2c
- SR7aBuCevKt5aTqwNpjIaW/bt3Rmy8QE=
-X-Gm-Gg: AYBFou0gkw8INcUosaSDWHJxdSV2aq7/PFTmAKN0eE/wOL8n5kFRTdefEzCSXSmHng5
- MVVcv4qeIjVWbfbgjXX/9BalOWmCG96KMkHpLUwZq6Z098c+/rpXxPdmmLWKYtuQ8baatprGWVY
- uunXoOGQohMnwsxKxcpOED/f2J1ZCZchhdTLi5fxawi4LsArwsThYHYJhlZV+1wLVRmoDZLmZ1Y
- h4JeVzdyFrzDpYXsUu09ItpdLOli5pbRVQT8++GPK+fZlsx3FSV7ddB3/6ptYk4yc5Z5wwbZvrE
- QmKHSRFyWOcCDfDq80vZuwGqIlo4gvcG+bhioeDvU/BWfMF2SFf7EaI=
-X-Received: by 2002:a05:6402:438e:b0:6a5:f202:c1c7 with SMTP id
- 4fb4d7f45d1cf-6afad8bd54dmr6037700a12.8.1791216670527; Mon, 05 Oct 2026
- 09:11:10 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1791216728; x=1791821528;
+ h=content-transfer-encoding:content-type:in-reply-to:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=gWGjBdy7NDC8HgfWd4j7LCkGEtGOMXe0sIV8VVvUOeM=;
+ b=hUZD/JUfmPHZsL+0w1D3LsrvntUR5ipGsGSXS7xNhGGUz3wGBUsxiZ8kMpUqCO17v3
+ jk0oSCAW4/r4iIY8yvaL1WSEC+ScFHf9TcGHYFVlNiHi6DJdjOcivr6A0qlPuptznt7k
+ s0JUK073YgUjcmqKWlyLFQCzKLHY1EX/+GgvCv+7LDP2N25CH7tBAxczvr42egJ3Np6f
+ FcbG0f3Fppo9jcJTu/inztOj1kMDHL0Fy9jRdqiZK7QOC5Nhyx0nPohNnf9tSVb8E9TQ
+ DLsK/2cBhcYkhe489jZmq9mACVlZPA+ZuEIbani4KrSWvN4MyttDQHAZA4gDSckB1t01
+ vcsw==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBz8aail2/Rg8lx7i9o2vTeja3K8RUo1UHJtOFT8LIErYUyYw7BE81XT/s8q/DAixXejYlZWfsVdUK0A@nongnu.org
+X-Gm-Message-State: AFuF++nmqU/7cu/61pa8zOpUrYOyEo7B9dOdp3/vpxNzD4vDx9nqOOIO
+ obG4fINyTcKRFOoYrlHR0TmM/0aERWGyAoZs3POpnR49QvQOG6NoH8Zjl1pqa1c9UFbXZC2txgg
+ VFOkXSYYz2ASbYW/jdR5EK7NRYWQEH54tg11jd2HKRdJ4XKNbgXhoURMN1g==
+X-Gm-Gg: AYBFou0a7kkl5HBHnnd1JcrAL+nuxuqF/v8TK85Nee8QXi8VgNdc4/JmyIrnxHDKLUo
+ Y6a42dC88+TO3QlHzmV9l4uAqBZhPfiJ1db5og0376jnorIuyPrAGQaLjEzQX0U2oeEJ93Bl3u3
+ fUe3aTgw9MOEA7JmRrUF3BS0rEIBQTBdd0iZprF4v0tDSv9YBfTZboUdJifW7jIBRHnhSsncWeU
+ i5DDKkSNvnR4dPXzkR1uIYcLf6Jt6kYV+6+TmQ5siA1QUDanbpve5m6g9ddA1r0AsSxdiwnNgJZ
+ 1rlLaFurgZkKrN4fIVq59vilDSSf+toXpw3ywBx8MVwZVW29wbekU0HzmTN+aEKxFccIRL9OXOo
+ cHeF8TEsw6+vD37FoB8Av3PHRmLeZva+OyDS6aiL2RIlsMf13V3CzC63MjhFdzC4D
+X-Received: by 2002:a05:6214:5294:b0:917:a646:7fa6 with SMTP id
+ 6a1803df08f44-917c008e5fcmr206780906d6.16.1791216728241; 
+ Mon, 05 Oct 2026 09:12:08 -0700 (PDT)
+X-Received: by 2002:a05:6214:5294:b0:917:a646:7fa6 with SMTP id
+ 6a1803df08f44-917c008e5fcmr206774536d6.16.1791216722174; 
+ Mon, 05 Oct 2026 09:12:02 -0700 (PDT)
+Received: from [10.222.168.219] (Global_NAT1_IAD_FW.qualcomm.com.
+ [129.46.232.65]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-917e0bcd906sm89757686d6.31.2026.10.05.09.12.01
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 05 Oct 2026 09:12:01 -0700 (PDT)
+Message-ID: <6d2355e6-fc9d-435f-9d76-9ff6c306d55e@oss.qualcomm.com>
+Date: Mon, 5 Oct 2026 11:12:00 -0500
 MIME-Version: 1.0
-References: <20261004072927.1142-1-luoyonggang@gmail.com>
- <0b84bf4d-3b98-4f52-8847-9f89bef92c1e@oss.qualcomm.com>
-In-Reply-To: <0b84bf4d-3b98-4f52-8847-9f89bef92c1e@oss.qualcomm.com>
-From: Yonggang Luo <luoyonggang@gmail.com>
-Date: Tue, 6 Oct 2026 00:10:58 +0800
-X-Gm-Features: AclHuK_UraKZBtVxb0WftPOEegjy3hubNZE4g9yva-OIUxamZAoNKA2kYCKNjC8
-Message-ID: <CAE2XoE-joWZwrBy-jLe+=ZP7OGM9cyDrF_5hz7koVPODeys+JA@mail.gmail.com>
-Subject: Re: [PATCH 0/4] target-info: preserve full softmmu target identity
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, Philippe Mathieu-Daude <philmd@mailo.com>, 
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
- Fabiano Rosas <farosas@suse.de>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::536;
- envelope-from=luoyonggang@gmail.com; helo=mail-ed1-x536.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] target/hexagon: gdbstub - Add sys reg support
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ qemu-devel@nongnu.org
+Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+References: <20260930175108.3592113-1-brian.cain@oss.qualcomm.com>
+ <20260930175108.3592113-3-brian.cain@oss.qualcomm.com>
+ <623a0707-e074-42e2-a40a-bbbb01c618a2@oss.qualcomm.com>
+Content-Language: en-US
+From: Brian Cain <brian.cain@oss.qualcomm.com>
+In-Reply-To: <623a0707-e074-42e2-a40a-bbbb01c618a2@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-ORIG-GUID: sfa7AtZ4yI91bi9Kem0BZ6QKa1LId0oS
+X-Proofpoint-GUID: sfa7AtZ4yI91bi9Kem0BZ6QKa1LId0oS
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA1MDA2MyBTYWx0ZWRfX48zLDQTCvKEB
+ RW6qeyRVVWOigUNk0SRK5ATCqGtmylqLBuLfqUxiCjx8QD1KxTqzM2lCn+8WenFQGp9sgnabp2U
+ tU1tLdgEQ0sTR+rxbPa/xxMhNPkkpUM=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA1MDA2MyBTYWx0ZWRfX4X1SBSCkVJ6q
+ v8dCSLMB95eB3wwmmd29SKZRwvXmsDUJG0NCbvAj59gnDFHXF5yh2+OaqaTTIbXoxsfKBPaHAUz
+ PFb+15IjTPw8ua7FoJ5zuLyyzlCmkXxxkADNXT2+vtCIXZMpCA5VMgN8vv8H6atlanVjoN8gkyf
+ p0b9HDeMl1lLkTkv6yEpmdAUxxxuvqAEEVQ0Zd7lm0mbn4uJ1B4zlCKm74EOl1hMxiEDyKw+yoR
+ 445bSVaK5v4+kLqJOv7xgYJ3vZ5+EOdzRDBnAKPT6W2aOd1h9xL9LatgvKICj9CXb9D3gpX7YSX
+ PYtQvVSu0j5YseQ+HOcJcHLYodDyScWbK5rY5mypYA0PXrp+mYlK+/cde7lWhI47rd9tKswBFUP
+ opTfX6joe/Qj7STCVxxjOJ+vuFyqusZjU6ypwEsf9sKxBB5CNXB5ZwR/1dj3Dz0lofIjmtJNrIi
+ TT4/v8Rl8V8GiVea8Ag==
+X-Authority-Analysis: v=2.4 cv=Q6tHcI2a c=1 sm=1 tr=0 ts=6ac3cc58 cx=c_pps
+ a=wEM5vcRIz55oU/E2lInRtA==:117 a=C3Dk8TwHQYyIj7nOf9RCJw==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=0hCBIctGHN8lopuAG_kA:9
+ a=6G3yfeA19X49byLq:21 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=OIgjcC2v60KrkQgK7BGD:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-10-05_04,2026-10-05_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 bulkscore=0 priorityscore=1501 adultscore=0 lowpriorityscore=0
+ malwarescore=0 impostorscore=0 suspectscore=0 phishscore=0 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2610050063
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -120,67 +154,81 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: luoyonggang@gmail.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Oct 6, 2026 at 12:03=E2=80=AFAM Pierrick Bouvier
-<pierrick.bouvier@oss.qualcomm.com> wrote:
->
-> On 10/4/2026 12:29 AM, Yonggang Luo wrote:
-> > `TARGET_ARCH` identifies a base architecture, not necessarily the full
-> > system-emulation target. For example, `mipsel-softmmu` uses `TARGET_ARC=
-H=3Dmips`,
-> > which caused `query-target` to report `mips` instead of `mipsel`.
-> >
-> > Generate `TARGET_SYS_EMU` separately. Softmmu builds use the full targe=
-t name,
-> > as `SysEmuTarget` enumerates system targets. User-mode builds use
-> > `TARGET_ARCH`: user target names such as `aarch64_be` and `mipsn32el` d=
-o not
-> > have corresponding `SysEmuTarget` values. This means `mipsel-linux-user=
-` now
-> > reports the base architecture `mips` rather than `mipsel`; its executab=
-le name
-> > remains unchanged. Initialize `TargetInfo.target_arch` from this token =
-and add
-> > a qtest to check the `query-target` result against the target name of t=
-he
-> > running QEMU binary.
-> >
-> > Yonggang Luo (4):
-> >   Revert "target-info: Statically initialize target_arch"
-> >   Revert "meson: Add TARGET_ARCH to config_target_data"
-> >   tests/qtest: check query-target architecture
-> >   target-info: preserve full softmmu target identity
-> >
-> >  meson.build            | 11 +++++++++--
-> >  target-info-stub.c     |  2 +-
-> >  tests/qtest/qmp-test.c | 13 +++++++++++++
-> >  3 files changed, 23 insertions(+), 3 deletions(-)
-> >
->
-> Why should we do this for user binaries? Current work around
-> single-binary only concerns system binaries, where all targets are
-> correctly covered by what exists.
 
-From my personal point of view, keeping target_arch as
-SYS_EMU_TARGET__MAX for user binaries
-is a better option. I am doing this is for replica of commit
+On 10/1/2026 11:45 PM, Philippe Mathieu-Daudé wrote:
+> On 30/9/26 19:51, Brian Cain wrote:
+>> Add support for the system and guest registers to the gdbstub.
+>>
+>> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+>> ---
+>>   target/hexagon/cpu.h      |  1 +
+>>   target/hexagon/internal.h |  4 +++
+>>   target/hexagon/cpu.c      | 14 ++++++++
+>>   target/hexagon/gdbstub.c  | 68 +++++++++++++++++++++++++++++++++++++++
+>>   4 files changed, 87 insertions(+)
+>
+>
+>> +void hexagon_greg_write(CPUHexagonState *env, uint32_t reg, uint32_t 
+>> val)
+>> +{
+>> +    if (reg <= HEX_GREG_G3) {
+>> +        env->greg[reg] = val;
+>> +        return;
+>> +    }
+>> +    qemu_log_mask(LOG_UNIMP, "writing greg %" PRIu32
+>> +            " not yet supported.\n", reg);
+>
+> Not sure void/LOG_UNIMP is safe, LOG_UNIMP is only enabled with
+> '-d unimp' and goes on stderr, ...
+>
+> (nit misaligned style)
+>
+>> +}
+>
 
-"target-info: Statically initialize target_arch"
+Sorry I unintentionally omitted you from the v2, Phil.  The changes here 
+should solve the UNIMP/returncode issues by taking another approach - 
+just delivering the reg read/writes without the G3 guard.
+
+https://lore.kernel.org/qemu-devel/20261005030538.1257295-1-brian.cain@oss.qualcomm.com/
+
 
 >
-> Regards,
-> Pierrick
-
-
-
---=20
-         =E6=AD=A4=E8=87=B4
-=E7=A4=BC
-=E7=BD=97=E5=8B=87=E5=88=9A
-Yours
-    sincerely,
-Yonggang Luo
+>> +int hexagon_sys_gdb_write_register(CPUState *cs, uint8_t *mem_buf, 
+>> int n)
+>> +{
+>> +    CPUHexagonState *env = cpu_env(cs);
+>> +    HexagonCPU *cpu = env_archcpu(env);
+>> +    BQL_LOCK_GUARD();
+>> +
+>> +    if (n < NUM_SREGS) {
+>> +        uint32_t val = ldl_le_p(mem_buf);
+>> +        if (n == HEX_SREG_SSR) {
+>> +            uint32_t old = env->t_sreg[HEX_SREG_SSR];
+>> +            env->t_sreg[HEX_SREG_SSR] = val;
+>> +            hexagon_modify_ssr(env, val, old);
+>> +        } else if (n < HEX_SREG_GLB_START) {
+>> +            env->t_sreg[n] = val;
+>> +        } else if (cpu->globalregs) {
+>> +            hexagon_globalreg_write(cpu->globalregs, n, val, 
+>> env->threadId);
+>> +        }
+>> +        return sizeof(uint32_t);
+>> +    }
+>> +    n -= NUM_SREGS;
+>> +
+>> +    if (n < NUM_GREGS) {
+>> +        hexagon_greg_write(env, n, ldl_le_p(mem_buf));
+>> +        return sizeof(uint32_t);
+>
+> ... and here we tell the user the register was correctly written.
+>
+>> +    }
+>> +    n -= NUM_GREGS;
+>> +
+>> +    g_assert_not_reached();
+>> +}
 
