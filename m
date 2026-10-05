@@ -4,143 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AD89CA5FF0
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Oct 2026 13:22:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F100CA5FCE
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Oct 2026 13:24:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xDie2-0005dr-Re; Mon, 05 Oct 2026 09:22:18 -0400
+	id 1xDifv-000615-Lk; Mon, 05 Oct 2026 09:24:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1xDie1-0005df-U4
- for qemu-devel@nongnu.org; Mon, 05 Oct 2026 09:22:17 -0400
-Received: from mail-francesouthazon11021095.outbound.protection.outlook.com
- ([40.107.130.95] helo=MRWPR03CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <kshk@linux.ibm.com>)
+ id 1xDifU-00060H-0q; Mon, 05 Oct 2026 09:23:49 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1xDie0-0004La-7M
- for qemu-devel@nongnu.org; Mon, 05 Oct 2026 09:22:17 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=FL6J42/lXJasHJk9gxbYZKu9c9j/556mQJt7jLOkXbGiMJ+8PiiSNR0oGfFyyxtT1W/4tWBQaK5DmPiOpaChSkpdxoYlRekGbWBM+JgIAq7QWItT8cXehnF1UBeAcQljirBh/xFsVCgGLcdsAVBndH+mi8FXvurMwHW1a3VpNFXLR37Tvwmk0LKbBuJlhzTnfI1nen6ZjG0aGUFvU4REpvqsipaZ2ZIiPvV2fLeTP94MLntQ+2OOajVx7TYdu+ZthnOyZTuNAt1alfHe5Jn4M2ktAqSRpowR+3GLL086nJfg8AFKlkXVkyuK+P/dni+Ug4z7pKxbgAcB6IKUfi4l8g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=VzAkkuzJmsNHzFH7yXVMsnVZs94QVdDTTXlBdqUuhDU=;
- b=xPNIgG1d2UJQbZYhTFRPZW2l54WpgfYCjWgJOjBwL7DbPxd3wAK/ISjVHJJxdHwNj/iUjua6STY+lRjbatK6WmgO9kmGGL/MJUSjkQ8OoHbHEHpXY9rxljnE4LHGjcCU+teopAc5hzLlyp+mEXDqb1UMRFBdv0vn13JL6RNCkn/jEOQUMEkS/7SQJPO/miPiy/dEsBkFG7cAjUNy7B65Y+0UuvOlmbesyF8xM253C6MaE3agZC6l+XQxlBG1is9Nh+shYhJJoC7TS5KfyFGgqF9h+8r925zfxZO+HtOpIcB1EpriukbJblOw24qa0TT6KWQyFTKtuFjQm4PMEtxS9A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
- header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=VzAkkuzJmsNHzFH7yXVMsnVZs94QVdDTTXlBdqUuhDU=;
- b=qIbgXb+TNOhuHfQiVxwMeJHxOcNZ19tICVhwVkaPJHdPjVf/6no1bNj8p7nNkqf1cacpeiA5huwEjlTz191OMKNgw2F0tsENDuho3+1UaxOhvJ53UQ1U4j0IHdmFbUyIryyVXoU6UpcCFK7A43j6NdA9/bsIWeZFW0hpGfpH+GX3PFbspnCZARTVIG2KE3n6AcrpcDxytqJoK+75WTjrM68lKMU6+BdrLg01UZt3fNIPJy/XspG0D5F0jy5eC8bAXITkZtj+gcaEpj4gQsmu5JZ+Sf2vU+UEhJmKwQwyhz++RAbqbTzNGGV6B6/axoDy7Mdua9dLLswDQKJiuLaAAg==
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=virtuozzo.com;
-Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
- (2603:10a6:800:20a::12) by AS8PR08MB5942.eurprd08.prod.outlook.com
- (2603:10a6:20b:29f::8) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.496.14; Mon, 5 Oct
- 2026 13:17:09 +0000
-Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
- ([fe80::4e37:b189:ddcd:3dd8]) by VI0PR08MB10656.eurprd08.prod.outlook.com
- ([fe80::4e37:b189:ddcd:3dd8%7]) with mapi id 15.21.0496.010; Mon, 5 Oct 2026
- 13:17:08 +0000
-Message-ID: <8d680749-7032-4276-afe5-5b81184641d7@virtuozzo.com>
-Date: Mon, 5 Oct 2026 16:17:06 +0300
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v11 16/19] vhost: release ownership on exit
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org
-Cc: farosas@suse.de, bchaney@akamai.com, dongli.zhang@oracle.com,
- vsementsov@yandex-team.ru, philmd@oss.qualcomm.com,
- maciej.szmigiero@oracle.com, mst@redhat.com, dwmw2@infradead.org,
- mark.kanda@oracle.com, sgarzare@redhat.com, den@openvz.org,
- peterx@redhat.com, clg@redhat.com
-References: <20261002-up-vsock-vhost-v5-v11-0-18fa09d8273d@virtuozzo.com>
- <20261002-up-vsock-vhost-v5-v11-16-18fa09d8273d@virtuozzo.com>
- <674e4907-1065-42a3-838e-400d369ed28e@rsg.ci.i.u-tokyo.ac.jp>
-Content-Language: en-US
-From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-In-Reply-To: <674e4907-1065-42a3-838e-400d369ed28e@rsg.ci.i.u-tokyo.ac.jp>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: FR4P281CA0213.DEUP281.PROD.OUTLOOK.COM
- (2603:10a6:d10:e4::13) To VI0PR08MB10656.eurprd08.prod.outlook.com
- (2603:10a6:800:20a::12)
+ (Exim 4.90_1) (envelope-from <kshk@linux.ibm.com>)
+ id 1xDifR-0004OX-Ne; Mon, 05 Oct 2026 09:23:47 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 695CZaT03033433; Mon, 5 Oct 2026 13:23:41 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=Z/BAEU
+ MfO5XLYAsGPgMHf9JY/3EoWRJswtCwR8ilZtw=; b=fImwpZPev+EhJzwDfh8jlX
+ oDoU5K8oKG9k7rUTUzwP0p4ethbFjsVK6LYREh1hvHdqLJkotLRUBweWJAYggowX
+ KVl6cZZq2WARAnP5keyhUMN1vjPj1cvcKcYwehLueHJ50y3duGg08ak4BegnbHfV
+ f6wrZC8J/ZO3TKnBfJv8hR+gaPDA7/AlV6pyQUtXWoPDcVPhhHcGG3nHIe253RbV
+ pA7sX0LVok7OMbx2norgAXSLKZK7dGegmqlMhVICXGIZj3pYs4rWSVTy2dh8Uv6O
+ DTKJ+bgGQFhaNrMF83BhGc7TlMw57yquC78BpLDaNU5zzw0B4aIkBoeqiELPd/vw
+ ==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4h2scradt6-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Mon, 05 Oct 2026 13:23:40 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 695CI13R2874749; Mon, 5 Oct 2026 13:23:40 GMT
+Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4h3d1jnkhv-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 05 Oct 2026 13:23:40 +0000 (GMT)
+Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
+ [10.241.53.103])
+ by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 695DNcbc19071560
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 5 Oct 2026 13:23:38 GMT
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B3C6D5805A;
+ Mon,  5 Oct 2026 13:23:38 +0000 (GMT)
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7E3EE58052;
+ Mon,  5 Oct 2026 13:23:38 +0000 (GMT)
+Received: from [9.16.60.171] (unknown [9.16.60.171])
+ by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Mon,  5 Oct 2026 13:23:38 +0000 (GMT)
+Message-ID: <cbd6f028-1c29-42fc-b7fc-7510ecc08ac6@linux.ibm.com>
+Date: Mon, 5 Oct 2026 08:23:38 -0500
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: VI0PR08MB10656:EE_|AS8PR08MB5942:EE_
-X-MS-Office365-Filtering-Correlation-Id: 917b88d6-f682-411a-66d3-08df22e2f56e
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|366016|1800799024|7416014|23010399003|376014|56012099006|4143699003|10067099003|18002099003|22082099003;
-X-Microsoft-Antispam-Message-Info: cxbDxWuyUO9l0qvXF2P4Mnfp6+YASfXp5i5vgz96WlWU93ddyeumpcu9Enz3sbtfZVbj2rtDiG0pYJ5q26KIzaT8KkdloW0M923c6uopuoRSSMnUzwakcLj3KRhe0zLQF5LuJdVUvUkdOzob30BmVg5myk3A8/FMVQke7fQKtD8b6LRRpUpy713cahSM9yZ9OvK+EyDAp7uf+cet0WU8NuSD5ta0/vlf35Ywdx+AMAbHRUppHuBaxFkDHkuhrJfeQZzJPH0UYeTHE0f8EPdgE/lkosByjJhy/XwyVCGsxKRRxjOpdcn9khRokY0/qN28n0YR5q0n+H4dZ0e5jhjXA0r3ftUoC8bcZ0th4scHwnL9f6dQizEJMvxE8wfeAAZJRHYCoFjm/ve+xTjlusWLILF2f4cfQWLIyXwndL9vlrDZsuKwBB+uZaPXkjf6Kcu8JCxFIftqUafAhpDBn66oVficCltLJ2KsT+G5iqXpw1ONOWKw0AGtjwTIcJlybLLuPzsgV3Lfye9OOHngUJaV9YOS+C0/6x+nWQCgWNqFZ6XP76i/SYSwKKc409xkfLSe6uiVoTtw71QB/82V76bEqMfUwLj88tp6aXIgQfaUUgTFbHloqJWXFIe2eTE0D6UQo4J/t8BH85eeOl8zjq1aw/6hH42x/UgPgW9h19OXmUc=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:VI0PR08MB10656.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(1800799024)(7416014)(23010399003)(376014)(56012099006)(4143699003)(10067099003)(18002099003)(22082099003);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?UVJjSlY1aFhENEcxQ29XYW42Z1U2enFXR3FEVDRjckdvMHZxczlwWTF5VGxV?=
- =?utf-8?B?N0toRU0vZjdGRVVXallnMmdLVytsTlBXQ2pmL3ZVU2RWUFFJdGpNVkc1SWMz?=
- =?utf-8?B?YnRoMURKcU1sYm1DNGpvc1dpMjdrVlZaWkdSUUw5Y3hKUEh2dXY2ZVZhUW16?=
- =?utf-8?B?emhNcGUxT2ZibW51S2FwODFJcTZuTWwrbFduWlRaSU1kMGF3Q1pWN3NxRTUw?=
- =?utf-8?B?bmM4NzFoRjhpNi9KZVJZMFNmdFh4RTZmYUE4b0ZTMEtvRmFVUmJpakx6Sk9D?=
- =?utf-8?B?Y2pKbUZWM0xRUDhEU0JYN2grUk1MaGRld0tnbFpXMDNveC9DQmY5ekpucW1h?=
- =?utf-8?B?c3prOHJjMHFQVlMzWkxlYWRmbGd2ZWh6RXZwU0hQWUNtSTVpS0wvek9IT2dt?=
- =?utf-8?B?S1hELzRocVc0Vjl6SXFGNTNXYk03d2s5clF3c2dsbkdJQStwQ3ZsV3BLSkR0?=
- =?utf-8?B?N2w2MXdzOXRnV0ViSDhVdFdIbnBSb3ZBNWVDNnFlaTM4L1lpaWJaUUtsL2Vw?=
- =?utf-8?B?TElqNzNtNGhYQnNXekJrc0hHMDJTOUhuN2k4eXhvK2F2bkdkYTU5TGJGRFNH?=
- =?utf-8?B?Tkk0eWk1OGtQS1NIcERLZ2tweVROTzZBMkwxS0dFWll2eGIwSTdKYkRyaUdL?=
- =?utf-8?B?ckRLcndNWDNPbWJkRGNCM2tQb2NXOW5PckJrRmtQZnNBSFpOaWlid3lsMjdu?=
- =?utf-8?B?dmsrVUhwamdQZkdEWnQvMEd3ZitMV2dpeGEralN1bUNxclBDbDUzWFJYVFBB?=
- =?utf-8?B?bHJJWU9YbGNuTWd3dS9iOUpJaHU1am0vcGZCazNMK05TdFAvQnN5ZDlKL0dn?=
- =?utf-8?B?dit3QkcrOTAxY1luRjFxM05KeFdsaGlWc0lKam01R1QvS3h4dVdGL2JnTHlM?=
- =?utf-8?B?d0xHdTBJb3N2TnVuU3dzRUo2bGZ3RGpCVFM3VEp1VG15TWZZT2p1NngrMlJw?=
- =?utf-8?B?d1l1MkhWT3AyZnR1cnNYQ3kvUjBBUmZPdWJTcmFPRHUrNzY1aWlhNk5zME94?=
- =?utf-8?B?L1VDY0g1THMrc1hSRk1pOGtGZVd5ZExSWFF4MzNWUDhMbjkwNUJieEpQUFd4?=
- =?utf-8?B?Z3liYkpSaitSS0JlTklnQXk4ZWppWDhmalF0MS9YOTc5aVZmS3ZIeUhYdHN5?=
- =?utf-8?B?NEg4MG1PUXUwdHJoK1NtdDZzNnowb1Npc0U1NjJTWWJJaFF1R0JaVU5UQjY4?=
- =?utf-8?B?d3dhMmJhdDFKSWFFRkJqYzNSVXQ2emZRM1d2YTVsSStON2RuMDZobEJuUW16?=
- =?utf-8?B?ZDd5b0doS1FLRDlIL2ZEMXF4Tkthc2FvTXp6QzNsWmtYQkNnT1Nncy9udEpj?=
- =?utf-8?B?bTUxamVIVFZtYjUzMHNNL0Y1OGI2OCt1UGU1Q3gzVjdid1hDb1gzcVJPRWFt?=
- =?utf-8?B?YkpmQ296MnlwWGdqYUJPRFNKc1NEaHFiMm5Pc3BIYk4vZi8vYngrYzkrK0p5?=
- =?utf-8?B?WlRNRUNua3F2dGFLWXJqK1lHRTNMdUhmTWZrRlIvdlZUU3l4eXV4VDRsR1Vi?=
- =?utf-8?B?ZU1KaW1ON2NpRmUyYTNjUk45TXM0OFV4K25vVWNrNEMzTElZeGVlNWVvR1oy?=
- =?utf-8?B?eW9QWWo3VzlZN29FdTVoemp5dzlSZlJFZXJxQm1XNDVabEV4VXlXUEVvRWph?=
- =?utf-8?B?a3VoT1RpcUNyblRnTVlTbmlCQ0U2TjF3Uys1cVA2RXV4UFdWODZ1RXV4VVFL?=
- =?utf-8?B?bUlBemRoT3VRZ3ZjRVJUTXpjOThxMW9SRVcvaGEreDZyMXBnL0dKbXplM3dz?=
- =?utf-8?B?RWprWTE5U2hrblYwQ2pkWjdMVURuelo2bVFDM0tvMUY0WmdzYjhtem9wdng3?=
- =?utf-8?B?M1lJbi8wbUYwaHRRa2g0cjA5SEV5c0FXY1lOdUdmZ2Y3RmFsVzYzTEkxdzlT?=
- =?utf-8?B?ZHpaenR0RDk0WU1JN0tvbitLaGxucFM0YmtKK3JIcCtZZmJkU2VybVRINkVF?=
- =?utf-8?B?cUR2VE1BN3NsNzBTT3Y5a3B0enJIclNSRHVOc2E0Z0FkT1V4d1k3L0hVSVQv?=
- =?utf-8?B?SmlhZFlVcDBPV2MrVE1BcUZlLzU1KzhOR0dwUEhVeGdweG9kSTBUNFJHbzM0?=
- =?utf-8?B?SngxMGJleWgrSGM3cUgvSEhjZnI1d3BNVGNmYUhUSnhCOFQ0dXNkU2lSSFRR?=
- =?utf-8?B?ZEM2UGhyZHArVUFyR1EvaXh3bmtuY05UeDZWVllGQXp1RWIwRXlWMFhqTW14?=
- =?utf-8?B?Uy9nZmRsUFA2ZVl3VG1GbkxpZkRLaE00UFBibWVZN3lRV3ZPWVdlaXN3ejF2?=
- =?utf-8?B?QlBna2hkTlBkSnI5UE5nNTNSTHJLaXJSQlZQYmp0VVAydTlobkQ2OUYxLzdE?=
- =?utf-8?B?NG5reitqN01VRXJHdjdrQ0FIN2YreUNwejlyYVJmOFM2YjVHbUpMaVg2a0NI?=
- =?utf-8?Q?Y5oDywOFqXhdS7SE=3D?=
-X-OriginatorOrg: virtuozzo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 917b88d6-f682-411a-66d3-08df22e2f56e
-X-MS-Exchange-CrossTenant-AuthSource: VI0PR08MB10656.eurprd08.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Oct 2026 13:17:08.7364 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: iN3X0kuTGU4+rSjoy5rC3F4oxorRGkPORm869Y9zBZwILZXnm61yyGoFQIRexbscQuQgf1NPXZbGVizzd/Jz7ktgKQ6I+MwrQtHrSkoaJ9k=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS8PR08MB5942
-Received-SPF: pass client-ip=40.107.130.95;
- envelope-from=andrey.drobyshev@virtuozzo.com;
- helo=MRWPR03CU001.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v11 14/16] s390x/pci: Factor ioat sanity checks into a
+ separate function
+Content-Language: en-US
+From: Konstantin Shkolnyy <kshk@linux.ibm.com>
+To: Matthew Rosato <mjrosato@linux.ibm.com>
+Cc: alifm@linux.ibm.com, farman@linux.ibm.com, richard.henderson@linaro.org,
+ iii@linux.ibm.com, david@kernel.org, cohuck@redhat.com,
+ pasic@linux.ibm.com, borntraeger@linux.ibm.com, qemu-s390x@nongnu.org,
+ qemu-devel@nongnu.org
+References: <20260930145255.140164-1-kshk@linux.ibm.com>
+ <20260930145255.140164-15-kshk@linux.ibm.com>
+ <a58ad322-bfb3-4ca6-a9fd-098391da4f3b@linux.ibm.com>
+ <606b2a78-52b5-40a7-87cc-3f247985aa51@linux.ibm.com>
+In-Reply-To: <606b2a78-52b5-40a7-87cc-3f247985aa51@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA1MDA1MSBTYWx0ZWRfXyDjGdjVJi1xN
+ qWEuNVElEPjvOd369kOG32/D8idz2wAvkMBul7hvwfJ2O4LCEKXFtHqxO8N5TX9hnGAo1azyxA3
+ VFkUUSczD/PVyJZK9O3zGZRYZOB3+9g=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA1MDA1MSBTYWx0ZWRfX+yBpLJin1528
+ SAaMsSciSnrJ4VauTN6dTUSPaO4wkc8Rv00NKmHk9Mr6nU6B0/eT4Ne9p883LJTJguDLyBnNfsb
+ Bi0InmIuz2ug9P7uf6hnMkxlzYZyGy9L6NkpVE2/xeyyNpiesHDxD/LV9oYDUEM5IX6/DP9vrv/
+ VwoKuFiGHObf9mc14upVGtrX9DzSDP8MFZhj5xAtCqJ1vLLICrq22Nr+n+9iEsEUCLdxElrmzPP
+ tCkGbTlChMhmQmmmpM5z2OAlmIh7xZcgW6t+nHC2UKSDTqera5Bq3bm75pfPlljAJER31LJeics
+ hfRayIZ4Zps1SwQmFaYvRCsSXnINvY7yLpZWjZUikbQW9ZIekduoSOzcED4yfm1riZmA2s5P+b3
+ 3cH6znHw+YOLlzMMe/SJd+de9kuBZL56ut+PhZf+F7/K/bFPod3Blrlr3U0zS0ejgsu+TJp5W9b
+ kPTtiPsjU26XB//9sJg==
+X-Proofpoint-GUID: QMtXg-EQK2o-lywV2pAMTOvTAlaicj1I
+X-Proofpoint-ORIG-GUID: QMtXg-EQK2o-lywV2pAMTOvTAlaicj1I
+X-Authority-Analysis: v=2.4 cv=B7osQ+tM c=1 sm=1 tr=0 ts=6ac3a4dd cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=M8hfrNKWCRZ6EoJrtGIA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-10-05_03,2026-10-05_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 bulkscore=0 malwarescore=0 impostorscore=0 phishscore=0
+ clxscore=1015 spamscore=0 adultscore=0 lowpriorityscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2610050051
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=kshk@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -157,36 +129,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/2/26 5:53 PM, Akihiko Odaki wrote:
-> On 2026/10/02 22:02, Andrey Drobyshev wrote:
->> A CPR target that has taken the device ownership in post_load() doesn't
->> always reach vhost_dev_cleanup(): a subsequent load error, e.g. a
->> truncated migration stream footer, makes QEMU exit() right away, and the
->> ownership stays with the dead process.  The source still holds the FD,
->> so the kernel never releases the device, and the source can't take it
->> back after being resumed -> SET_OWNER fails with EBUSY.
+On 261002 19:43, Konstantin Shkolnyy wrote:
+> On 261002 13:28, Matthew Rosato wrote:
 >>
->> Add an exit notifier to each vhost_dev, registered for its lifetime,
->> that releases the ownership if still held.  This covers every orderly
->> exit, which is every failure QEMU detects itself.  A target killed with
->> SIGKILL or crashing still leaves the device unrecoverable.
+>>> -static int reg_ioat(CPUS390XState *env, S390PCIBusDevice *pbdev, 
+>>> ZpciFib fib,
+>>> -                    uintptr_t ra)
+>>> +bool s390_pci_ioat_validate(S390PCIBusDevice *pbdev, uint64_t pba,
+>>> +                             uint64_t pal, uint64_t g_iota, Error 
+>>> **errp)
+>>>   {
+>>> -    uint64_t pba = ldq_be_p(&fib.pba);
+>>> -    uint64_t pal = ldq_be_p(&fib.pal);
+>>> -    uint64_t g_iota = ldq_be_p(&fib.iota);
+>>>       uint8_t dt = (g_iota >> 2) & 0x7;
+>>>       bool t = s390_pci_is_translation_enabled(g_iota);
+>>> -    pba &= ~0xfff;
+>>> -    pal |= 0xfff;
+>>>       if (pba > pal || pba < pbdev->zpci_fn.sdma || pal > pbdev- 
+>>> >zpci_fn.edma) {
+>>> -        s390_program_interrupt(env, PGM_OPERAND, ra);
+>>> -        return -EINVAL;
+>>> +        return false;
+>>
+>> This will now violate include/qapi/error.h because you're returning
+>> false but not setting errp:
+>>
+>>   * - On success, the function should not touch *errp.  On failure, it
+>>   *   should set a new error, e.g. with error_setg(errp, ...), or
+>>   *   propagate an existing one, e.g. with error_propagate(errp, ...).
+>>
+>> A simple solution would be to add a new message for this case.
 > 
-> With return-path enabled, incoming failure first sends "SHUT" with 
-> migrate_send_rp_shut(). The source can automatically resume before the 
-> notifier runs, receive EBUSY, and leave vsock stopped while the guest runs.
+> But the original reg_ioat() also didn't print any message in this error 
+> branch. I had to assume it was intentional, and preserved the behavior.
 > 
-> Regards,
-> Akihiko Odaki
+> If you believe a new message should be introduced, I can insert a commit 
+> for that - what would be the explanation?
 
-I don't think using 'return-path' buys us much when used with CPR
-migration.  However I agree the gap is real.  The way I see it, we might
-just register a failure notifier on the target side with
-migration_incoming_add_failure_notifier().  That notifier runs before
-the exit() path we're fixing in this patch.  And therefore we'll close
-both the exit() hole and the 'return-path' hole in one go.
+Other code sites reporting PGM_OPERAND also don't generate error 
+messages - it appears, the current policy is not to do that in the cases 
+when the guest is at fault (gave invalid parameters). The case at hand 
+falls in that category.
 
-I'll send a respin with this if you don't have any objections.
+> 
+>>
+>> [...]
+>>> +
+>>> +static int reg_ioat(CPUS390XState *env, S390PCIBusDevice *pbdev, 
+>>> ZpciFib fib,
+>>> +                    uintptr_t ra)
+>>> +{
+>>> +    Error *err = NULL;
+>>> +    uint64_t pba = ldq_be_p(&fib.pba);
+>>> +    uint64_t pal = ldq_be_p(&fib.pal);
+>>> +    uint64_t g_iota = ldq_be_p(&fib.iota);
+>>> +    bool t = s390_pci_is_translation_enabled(g_iota);
+>>> +
+>>> +    pba &= ~0xfff;
+>>> +    pal |= 0xfff;
+>>> +
+>>> +    if (!s390_pci_ioat_validate(pbdev, pba, pal, g_iota, &err)) {
+>>> +        if (err) {
+>>> +            qemu_log_mask(LOG_GUEST_ERROR, "%s\n", 
+>>> error_get_pretty(err));
+>>> +            error_free(err);
+>>> +        }
+>>
+>> With that change, you won't need the if (err) check anymore.
+>>
+>> Thanks,
+>> Matt
+> 
 
-Thanks,
-Andrey
 
