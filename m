@@ -4,117 +4,148 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87EC6CA5FF0
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Oct 2026 16:20:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E8B4CA5FF0
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Oct 2026 16:25:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xDlQk-0000ro-Q1; Mon, 05 Oct 2026 12:20:46 -0400
+	id 1xDlV6-0001Uz-CD; Mon, 05 Oct 2026 12:25:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kshk@linux.ibm.com>)
- id 1xDlQf-0000rR-Rm; Mon, 05 Oct 2026 12:20:41 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1xDlV4-0001Uk-3H
+ for qemu-devel@nongnu.org; Mon, 05 Oct 2026 12:25:14 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kshk@linux.ibm.com>)
- id 1xDlQc-0007u7-LK; Mon, 05 Oct 2026 12:20:40 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 695EZhtV964451; Mon, 5 Oct 2026 16:20:34 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=KnJtQf
- iC0aGIj/qERqWj7TOIo+tp3DB46IBsBm74fZ4=; b=gWsM+uNZCAdsZGEGitG5E2
- Tp+dM7rnORXspui7lnmJKI2E4gP5rdKWwgCC8Wdglyc70Exc6Qghf+0lhvbryYSQ
- UGiIIb3jJ3bffJm7eJCphpY75OvHXubTm1xONnPqGwpllH7k9Qz//SPOeg7ECKaA
- XESrM9bPmED4GFdfTOscIUbK66cVlGBWkhaAMd9JUCZhTr5msWj9CVpyJfbN1s3N
- IZQjG/1OjLUO9R50V6VrgGehTEe6qrM7VY4iK5dB0iHTyrxep9yoP/IuljseeRih
- HhSY8GS0glN0bvn37CpEaAc61oetrY0GPOrC6+b66jWq5h2FT2EP1/Fbn/uwwT/w
- ==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4h2s74kbx2-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Mon, 05 Oct 2026 16:20:34 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 695ElTsG3042183; Mon, 5 Oct 2026 16:20:33 GMT
-Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4h3cdvpac2-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 05 Oct 2026 16:20:33 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
- [10.241.53.103])
- by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 695GKWbL1573394
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 5 Oct 2026 16:20:32 GMT
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0F6D358052;
- Mon,  5 Oct 2026 16:20:32 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id CC15F58056;
- Mon,  5 Oct 2026 16:20:31 +0000 (GMT)
-Received: from [9.16.60.171] (unknown [9.16.60.171])
- by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Mon,  5 Oct 2026 16:20:31 +0000 (GMT)
-Message-ID: <2ef53f92-e5b4-4632-b296-de57b99c8b96@linux.ibm.com>
-Date: Mon, 5 Oct 2026 11:20:31 -0500
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1xDlUz-0008JW-FS
+ for qemu-devel@nongnu.org; Mon, 05 Oct 2026 12:25:13 -0400
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 695EP0LT2014391
+ for <qemu-devel@nongnu.org>; Mon, 5 Oct 2026 16:25:06 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ JiQMXOL8IiKWJSGfdzkZPQGb1Z2PbljBA8tcNw3ywWg=; b=DeOxwqHEvjM/JUpz
+ ORawMXqw/gsGv3hjXddGwo3azTMrhRq6rb2gbNx+1sA+nSX/mixtnH9c9nqvRiK+
+ AyjHGeKNukVn8KJPxUc7KQAi+P1G0WIzwstq07Id2+3q1Um2F33ac0WXOAilNx45
+ Z9Qwtsb4oq4ci4mTX1Jah/FxM3SLxyTb7CEni85EpCHn2nlZHOAei1lb8LjPMxbE
+ ncR+/1wAqn4ACRYYi9P1fkJox4S8+tZukXlYp7390G7oBBec5mHfxB0liDqzcyiK
+ N78j0VcD+K+g6/lIsQuCWUtUfFRT5+4po+xNtXXj29LvDctNuui1VrazjsBrTRp0
+ Y1E6cA==
+Received: from mail-dy1-f197.google.com (mail-dy1-f197.google.com
+ [74.125.82.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h3xhs30cp-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 05 Oct 2026 16:25:06 +0000 (GMT)
+Received: by mail-dy1-f197.google.com with SMTP id
+ 5a478bee46e88-30bcb065bfdso3825723eec.0
+ for <qemu-devel@nongnu.org>; Mon, 05 Oct 2026 09:25:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1791217506; x=1791822306; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=JiQMXOL8IiKWJSGfdzkZPQGb1Z2PbljBA8tcNw3ywWg=;
+ b=cqlNWLjuulwbNUDMzoTtbO0AVm6wLbKc5ZEIAvheiRucae/QW7T5rPdy2mjsxUBKZp
+ 0hgUREPnHLWPOK4kVOxyuhPv5OhsQocV686dT9LiYwj+a7blOW/p/BHCKtUbT1KKDKrr
+ uhdsV2fk9XNqXp/YfiHC+DF98XM2zENR/bzveNYT5A6Qa0tQs2tD+P8G0+PZxfhWvxj9
+ MeRJkN/oXKBgdSJeRCAVrT8Wc7ZbZc4m1SFDS99ej27CovrTx90OF9olZ6BsD+5oEEVC
+ G9wQgqr8CzP0lG8siW2h5wF5zvO86cuxe7SNEoJvGMclXBp4XEtDo7vJhM6q0iVDejSb
+ 6D3w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1791217506; x=1791822306;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=JiQMXOL8IiKWJSGfdzkZPQGb1Z2PbljBA8tcNw3ywWg=;
+ b=HpuQ9Icpz4MZCDjdRkn07eN1asKE8eBg2o1SR1WkBCJUOD89UZNBM4nDwwRNl4MG8x
+ tHbP8/pbEVDx73LkqDYX4yKOK6kAQZNp51iybBLhOKdNuJxq77cq8/U8k6Xj//kntuaN
+ U9n5mVYrkf81GJzYdqsXQ2NtELA39QaJ9F5ICUJQpyJGORLNA9bGWvoLAU9IqtJjCADs
+ 4Sbye95yHNniUopLWxuE3gUEX82dLp4V1POnTlL/7TFJtYIN6axr/o/LJ0VGpXx/ek63
+ RQDq+ynd2v3x4b0IVJuPzDgr3B+p8+2hkKPET/BiZ5FbjRrDy+HK1aql//DF6wgO7Yt7
+ wufw==
+X-Gm-Message-State: AFuF++lgU1C86QXFJ0+t4fkTBYB1GiCjvuyh6K0yHp+jWJQyOWcVijZA
+ xEaxtjPbjStr1ATFsr7jO+86cdklTp4F0e731MPz1IBiTgZNcUvF9mb15TO+GuqYeVZIeJKseOh
+ 8/19ynBjGcTup6lopivJUPmiy/K7c4yqsggHKdg8Qn/kGPEnt/43JLvHDeg==
+X-Gm-Gg: AYBFou2kHNT2TWCQY/RLbycrToOZjRl7wZ24OfgwnSulivXLSUIDSU37u5IutsXXy87
+ fYOkthFBgtAPvOsSqzkXgfDAfYqnDTLm2qjx5J77/raaQvLeyb/uVP2xHO+1tBHE6kBtYjFsYM2
+ q+XxC9RiKTi/C+vqYb9b9QiBsElsrnrG01k9sGa8rWvJb4FNBltGfAoxOdaT/PNKmkgY5n6XLyo
+ sL3W2aHZ78UN/jOUusc16crS6eTiFxQieM5Md2356Km8U3KoM1hYN1QD5umjxmPUWRzVepaqKOK
+ H8EsglAcRDZcAiy+lT4VnJ4gVkgkUTnhhKN3DBp+k11qXN0ewIR8qv3Gi7DFrsqS+OnunHDTcpb
+ D6SOIBQQpA1S2TNrmiu1rGDdnJ0io5lyHve/2ZExZM9bLE9zbiGLocgfbqKRvWfDuyvpO1Q==
+X-Received: by 2002:a05:7023:a56:10b0:152:92c6:8b0c with SMTP id
+ a92af1059eb24-15292c68cb2mr9648480c88.43.1791217505424; 
+ Mon, 05 Oct 2026 09:25:05 -0700 (PDT)
+X-Received: by 2002:a05:7023:a56:10b0:152:92c6:8b0c with SMTP id
+ a92af1059eb24-15292c68cb2mr9648441c88.43.1791217504683; 
+ Mon, 05 Oct 2026 09:25:04 -0700 (PDT)
+Received: from [192.168.1.199] (192-80-163-190.dyn.novuscom.net.
+ [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-151fd2b2a95sm23467164c88.17.2026.10.05.09.25.03
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 05 Oct 2026 09:25:03 -0700 (PDT)
+Message-ID: <c6bd8e8d-3160-46c2-ba4a-2f5a4b93cf38@oss.qualcomm.com>
+Date: Mon, 5 Oct 2026 09:25:02 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v11 14/16] s390x/pci: Factor ioat sanity checks into a
- separate function
+Subject: Re: [PATCH 0/4] target-info: preserve full softmmu target identity
+To: luoyonggang@gmail.com
+Cc: qemu-devel@nongnu.org, Philippe Mathieu-Daude <philmd@mailo.com>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Fabiano Rosas <farosas@suse.de>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
+ <marcandre.lureau@redhat.com>
+References: <20261004072927.1142-1-luoyonggang@gmail.com>
+ <0b84bf4d-3b98-4f52-8847-9f89bef92c1e@oss.qualcomm.com>
+ <CAE2XoE-joWZwrBy-jLe+=ZP7OGM9cyDrF_5hz7koVPODeys+JA@mail.gmail.com>
+ <b2297f92-a685-4399-a755-bbe5a37b9b3f@oss.qualcomm.com>
+ <CAE2XoE-4Pdp_n3RgpqJ5se_KTHniMAJAodTLmkfV+0jjou=M5w@mail.gmail.com>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Content-Language: en-US
-To: Matthew Rosato <mjrosato@linux.ibm.com>
-Cc: alifm@linux.ibm.com, farman@linux.ibm.com, richard.henderson@linaro.org,
- iii@linux.ibm.com, david@kernel.org, cohuck@redhat.com,
- pasic@linux.ibm.com, borntraeger@linux.ibm.com, qemu-s390x@nongnu.org,
- qemu-devel@nongnu.org
-References: <20260930145255.140164-1-kshk@linux.ibm.com>
- <20260930145255.140164-15-kshk@linux.ibm.com>
- <a58ad322-bfb3-4ca6-a9fd-098391da4f3b@linux.ibm.com>
- <606b2a78-52b5-40a7-87cc-3f247985aa51@linux.ibm.com>
- <cbd6f028-1c29-42fc-b7fc-7510ecc08ac6@linux.ibm.com>
- <8f105949-c5e1-479a-a996-3dacede11738@linux.ibm.com>
-From: Konstantin Shkolnyy <kshk@linux.ibm.com>
-In-Reply-To: <8f105949-c5e1-479a-a996-3dacede11738@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+In-Reply-To: <CAE2XoE-4Pdp_n3RgpqJ5se_KTHniMAJAodTLmkfV+0jjou=M5w@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: 3HLy8_gri8baOJyf4TQkhvg1bVbs0H1o
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA1MDA2MyBTYWx0ZWRfXy6v7inHUERon
- OgKyCd7bkaYOujJMbjAiaujJVhgJZ7Hj3jUm/+844EPuWDfpNsYHPWsV3xyxpNU5CvtimebyAvb
- bwc0NCVnNm0us1Vjk2Z8vGQDHzSEvXs=
-X-Proofpoint-GUID: 3HLy8_gri8baOJyf4TQkhvg1bVbs0H1o
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA1MDA2MyBTYWx0ZWRfX1+LxtvNVrQqC
- 5jlJMVf3HlwdbPoBpgomR9NInmUoJjXyUEp+RDuWfm1xedWQ8JxcqZufx39J2EdhsB12mih0QwQ
- cGlJ91ghEpWTfMFelrkhepASsvFINSQjPKzKxdjrChYkm9e6/nCoYMpsCfMhBFDtqvC6c0YRIjO
- AWYdoiJR2Z5km/dLTCJxE1P2o0l37Lrpof+7hW25ct5b8qwAbE57HFu9rjJ0d8q/rvnOkI1puBk
- MYbi2f1fMF2+fZRnd3UIPLtM+4k1eRR7vi6BkcVfai46D3+kfFOalMGHT540D9IkPv6DLY+QVHb
- dLZZYMd3XOl18MjJ4gAQ0IpIZIXLi7wpiMNkPhWgSXkSkj/gaPT+EvedMaskz9UwsP8CRgGYTND
- p7LCXAdJ61oJ3/+mCTZl6ifM8Z0ZZA1AKu5/cxPKPzqsPOGMXlNR4au07bfNQP/4EzUONnYrWEi
- zPV3yftoJxK2LreC6Zg==
-X-Authority-Analysis: v=2.4 cv=fM2sTpae c=1 sm=1 tr=0 ts=6ac3ce52 cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=rabq5xu0FV1yoOBActIA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: mAou9Vgqs7L4tzctQ3128NqQ8epQw4Wp
+X-Proofpoint-GUID: mAou9Vgqs7L4tzctQ3128NqQ8epQw4Wp
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA1MDA2NCBTYWx0ZWRfX5fHWNAl4PYUc
+ AansaHpE/xeyWZ+A4yT2FoO0/u08RNroRcqCBIaSeBWNajc3Hc2heF96m3DAN5SWglKdOpEUk+Y
+ ChZ7YcudIoZSjAtJI45ZWhAe2+m2wz4=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA1MDA2NCBTYWx0ZWRfX2gzYcasdiiHA
+ G1vomZNaG6G1LxgH8nJ/nncN/RhAC67guJjStob0rttBmt8lz4tErFE+xkPtIF/hcgKWhketP8F
+ eg/pDuQeEXrSFgZa6Ren8d1Rbd8aAS8UZPk8+fa/Cm0MP7efnEu5ND/JEAihJTW843dk1ZnKmK5
+ DXzyUvWuaLu0j/+w6/CV1n31GoJf+QJLUQudpz4aNiAT4hSARfStCVuYbnqb5DBKPYQeleUMZ7t
+ Q/39rSV/Yl/64o9KeMCxM+yu8L2+SSqcKZ9G1j8uKwG1ZhIPKNd0clm1xjqyYeeVCDChlqTxejs
+ N/8wlyG+JiT1Y6nLtrFb+AakcJMRV/XGh7IMreaTMk2QFLPoAsGnOGwiQ3ugmiBH6fGagDoukGP
+ 94tvkzlhXYESfKd914dgEhLaOTwmOs9m8qcszUSZn0i0t6q1m/obviAQUl0hxKIZJDdBGmWEB+l
+ GH4Mgq6LcMNeueIYNmw==
+X-Authority-Analysis: v=2.4 cv=Q6tHcI2a c=1 sm=1 tr=0 ts=6ac3cf62 cx=c_pps
+ a=Uww141gWH0fZj/3QKPojxA==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
+ a=EUspDBNiAAAA:8 a=y1I8XtfQHUGU1im4zcoA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=PxkB5W3o20Ba91AHUih5:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-10-05_04,2026-10-05_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 bulkscore=0 priorityscore=1501 spamscore=0 lowpriorityscore=0
- phishscore=0 adultscore=0 malwarescore=0 clxscore=1015 suspectscore=0
+ clxscore=1015 bulkscore=0 priorityscore=1501 adultscore=0 lowpriorityscore=0
+ malwarescore=0 impostorscore=0 suspectscore=0 phishscore=0 spamscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2610050063
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=kshk@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+ reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2610050064
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -131,78 +162,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 261005 08:46, Matthew Rosato wrote:
-> On 10/5/26 9:23 AM, Konstantin Shkolnyy wrote:
->> On 261002 19:43, Konstantin Shkolnyy wrote:
->>> On 261002 13:28, Matthew Rosato wrote:
->>>>
->>>>> -static int reg_ioat(CPUS390XState *env, S390PCIBusDevice *pbdev,
->>>>> ZpciFib fib,
->>>>> -                    uintptr_t ra)
->>>>> +bool s390_pci_ioat_validate(S390PCIBusDevice *pbdev, uint64_t pba,
->>>>> +                             uint64_t pal, uint64_t g_iota, Error
->>>>> **errp)
->>>>>    {
->>>>> -    uint64_t pba = ldq_be_p(&fib.pba);
->>>>> -    uint64_t pal = ldq_be_p(&fib.pal);
->>>>> -    uint64_t g_iota = ldq_be_p(&fib.iota);
->>>>>        uint8_t dt = (g_iota >> 2) & 0x7;
->>>>>        bool t = s390_pci_is_translation_enabled(g_iota);
->>>>> -    pba &= ~0xfff;
->>>>> -    pal |= 0xfff;
->>>>>        if (pba > pal || pba < pbdev->zpci_fn.sdma || pal > pbdev-
->>>>>> zpci_fn.edma) {
->>>>> -        s390_program_interrupt(env, PGM_OPERAND, ra);
->>>>> -        return -EINVAL;
->>>>> +        return false;
->>>>
->>>> This will now violate include/qapi/error.h because you're returning
->>>> false but not setting errp:
->>>>
->>>>    * - On success, the function should not touch *errp.  On failure, it
->>>>    *   should set a new error, e.g. with error_setg(errp, ...), or
->>>>    *   propagate an existing one, e.g. with error_propagate(errp, ...).
->>>>
->>>> A simple solution would be to add a new message for this case.
->>>
->>> But the original reg_ioat() also didn't print any message in this
->>> error branch. I had to assume it was intentional, and preserved the
->>> behavior.
->>>
->>> If you believe a new message should be introduced, I can insert a
->>> commit for that - what would be the explanation?
+On 10/5/2026 9:19 AM, Yonggang Luo wrote:
+> On Tue, Oct 6, 2026 at 12:12 AM Pierrick Bouvier
+> <pierrick.bouvier@oss.qualcomm.com> wrote:
 >>
->> Other code sites reporting PGM_OPERAND also don't generate error
->> messages - it appears, the current policy is not to do that in the cases
->> when the guest is at fault (gave invalid parameters). The case at hand
->> falls in that category.
+>> On 10/5/2026 9:10 AM, Yonggang Luo wrote:
+>>> On Tue, Oct 6, 2026 at 12:03 AM Pierrick Bouvier
+>>> <pierrick.bouvier@oss.qualcomm.com> wrote:
+>>>>
+>>>> On 10/4/2026 12:29 AM, Yonggang Luo wrote:
+>>>>> `TARGET_ARCH` identifies a base architecture, not necessarily the full
+>>>>> system-emulation target. For example, `mipsel-softmmu` uses `TARGET_ARCH=mips`,
+>>>>> which caused `query-target` to report `mips` instead of `mipsel`.
+>>>>>
+>>>>> Generate `TARGET_SYS_EMU` separately. Softmmu builds use the full target name,
+>>>>> as `SysEmuTarget` enumerates system targets. User-mode builds use
+>>>>> `TARGET_ARCH`: user target names such as `aarch64_be` and `mipsn32el` do not
+>>>>> have corresponding `SysEmuTarget` values. This means `mipsel-linux-user` now
+>>>>> reports the base architecture `mips` rather than `mipsel`; its executable name
+>>>>> remains unchanged. Initialize `TargetInfo.target_arch` from this token and add
+>>>>> a qtest to check the `query-target` result against the target name of the
+>>>>> running QEMU binary.
+>>>>>
+>>>>> Yonggang Luo (4):
+>>>>>   Revert "target-info: Statically initialize target_arch"
+>>>>>   Revert "meson: Add TARGET_ARCH to config_target_data"
+>>>>>   tests/qtest: check query-target architecture
+>>>>>   target-info: preserve full softmmu target identity
+>>>>>
+>>>>>  meson.build            | 11 +++++++++--
+>>>>>  target-info-stub.c     |  2 +-
+>>>>>  tests/qtest/qmp-test.c | 13 +++++++++++++
+>>>>>  3 files changed, 23 insertions(+), 3 deletions(-)
+>>>>>
+>>>>
+>>>> Why should we do this for user binaries? Current work around
+>>>> single-binary only concerns system binaries, where all targets are
+>>>> correctly covered by what exists.
+>>>
+>>> From my personal point of view, keeping target_arch as
+>>> SYS_EMU_TARGET__MAX for user binaries
+>>> is a better option. I am doing this is for replica of commit
+>>>
 >>
-> The other 2 cases in this very function, where we are providing an error
-> message, are also due to invalid guest parameters.  We advertised the
-> necessary information to make a correct decision via CLP query payloads,
-> but the guest gave us bad input anyway.
+>> Ok, but I'm not sure it answers the why.
+>> Could you explain the benefits?
+> 
+> Which part? keeping target_arch as SYS_EMU_TARGET__MAX for user-binary because
+> The following original code would return -1 for some user-binary
+> +    SysEmuTarget arch = target_info()->target_arch;
+> +
+> +    if (arch == SYS_EMU_TARGET__MAX) {
+> +        arch = qapi_enum_parse(&SysEmuTarget_lookup, target_name(), -1,
+> +                               &error_abort);
+> +    }
+> +    return arch;
+> So basically assigning any value for the user binary is valid.
+> SYS_EMU_TARGET__MAX is more explicit as it's related to type SysEmuTarget.
+> -1 is another option but easy to confuse.
+> 
+> 
+> For why commit e934c624f32f6f44f427d73a2e6a67e983a02ae6.
+> "target-info: Statically initialize target_arch"
+> doing that, I am not sure.
+>
 
-OK, since we already have a precedent right here, I'll add the message 
-you've suggested in the earlier reply.
+I guess there is a (good or bad) reason for which sub variants of
+targets are not reflected in SYS_EMU_TARGET enum. We should double check
+that before doing any change, as it might have other consequences.
 
 > 
-> The fact that these messages are in response to guest parameters is why
-> it made sense to switch to qemu_log_mask(LOG_GUEST_ERROR, ...) -- the
-> guest can control if the message pops by purposely setting bad inputs.
+>>
+>>> "target-info: Statically initialize target_arch"
+>>>
+>>>>
+>>>> Regards,
+>>>> Pierrick
+>>>
+>>>
+>>>
+>>
 > 
-> With that in mind, there's probably an argument for adding more messages
-> and/or trace events to other PGM_OPERAND paths for debug purposes since
-> these aren't things expected to fail on a normally-behaving guest.  But
-> that's beyond the scope of this series.
-> 
-> For this series:  you need to either add a message to this case or, if
-> you feel that strongly about not reporting a message for it, then
-> another solution would be to remove it from the s390_pci_ioat_validate()
-> function and check it in 2 places so that a message is not required and
-> then everything in s390_pci_ioat_validate() will generate an errp for
-> the false case, satisfying include/qapi/error.h.
-> 
-> Thanks,
-> Matt
+> --
+>          此致
+> 礼
+> 罗勇刚
+> Yours
+>     sincerely,
+> Yonggang Luo
 
 
