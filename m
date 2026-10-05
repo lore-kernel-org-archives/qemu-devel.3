@@ -4,135 +4,133 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45BA9CA5FF0
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Oct 2026 08:59:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBAEACA5FF0
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Oct 2026 08:59:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xDeWw-0000Ha-U7; Mon, 05 Oct 2026 04:58:42 -0400
+	id 1xDeXR-0000iE-F3; Mon, 05 Oct 2026 04:59:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@virtuozzo.com>) id 1xDeWr-0000HS-M6
- for qemu-devel@nongnu.org; Mon, 05 Oct 2026 04:58:37 -0400
-Received: from mail-westeuropeazlp170100001.outbound.protection.outlook.com
- ([2a01:111:f403:c201::1] helo=AM0PR83CU005.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <den@virtuozzo.com>)
+ id 1xDeXL-0000aL-UI; Mon, 05 Oct 2026 04:59:07 -0400
+Received: from mail-francecentralazlp170130007.outbound.protection.outlook.com
+ ([2a01:111:f403:c20a::7] helo=PA4PR04CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@virtuozzo.com>) id 1xDeWp-0002WL-Ks
- for qemu-devel@nongnu.org; Mon, 05 Oct 2026 04:58:37 -0400
+ (Exim 4.90_1) (envelope-from <den@virtuozzo.com>)
+ id 1xDeXC-0002XH-LB; Mon, 05 Oct 2026 04:59:07 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Yi7lJUQmZ91xDtG6ev5JGl6bbhQoqdfNwVbTTrsRjaYbQCKEoUPvZeXPWtPGwYgz2CZJxA/dxTk9MlW4S+VfBTpbWp9Tw1o4c0Gg/4O8dudQ1pkLO07VUy2No8kU7oUjZlF9V29OnpCDtXz2x48xDKheB6AdgX8YZTWV/Rm70ZKx4krZRgNRn+FrsvNeHmOOPKx39prKU9M20yB0eaRof+gGEH6mXAXqlXFaJbv5fGxleqr7lkIqQN12xuWAwPZR32aCTSHRUsIqu0acZ2YOaMQkB6kiyRjUOd3s/J8aMakpo52tW0pZIIe/pHi9fNs400c/QLFobTzek9W8R8OpNQ==
+ b=FyR3BJxwOo9R9xifoEf8GH0ALI7CXihlWLPt8aEhowPPKXT0fenY1LJiMtIanF6MYM+aYLNClgKOiZJrhOtJRBPhwc4Igyy76J0yZlOtBequGZ1sFe4A2Nkc9M7UcGd9ShM6C9C4+TArychVd5Csdzc5fqvxST/RP3Gka7aVJ3n4ywyGHWg2KvWWOf15UICSAFVaFrHRnD3AI4jazSYD2g5Xii2eWw1LpkgZZVwCU+OdBg+zZ5iH8Oqyj0SdbpQ+0ehNX66Qsautil4X+sbIaxIZYKunDwYicxV888FB1M8L8wE5Kim7SfttAPi2nJgx1dQ62A0bxFovoZC+kaevPg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=DyyC+tCwXgk2szBhvWP3h5EPiPUQruudt7c07gp6iHs=;
- b=AvgK8KVn9JJopp2K+wL7VLq9wsadRB0QgyZw6OdvO6hnDGC/1hYBqerQQlPk57733ETULPu6Xv/t2mQxtxxN+6sOeQ6Eu4wVSi/DXY7MweDgFZi/Q9tRnsBncItBs7ZI+VnDe+IbqnNmo/RVOmjEn4jB7tfmZ5LUu0a23I6GVYn2GQJpZQAzjyF2F+L0lSKCusj5vfjKN5b+IZl0FixNx89GQXPgkk7OPLFPIBWyMbAtwyOJRFtJLo4KgqW876RHuBj75BFI4nQrVS8dc8+ApCIYqmdjR2msMAIFAduzOfhNijWuYlKfVYbD07OVw3B/U2sPH1chCVYoLVo1SiHIfA==
+ bh=B8SH1GKkR3dpoJJdrXSSNryXM0kMfanPG2X5QbD1q3Q=;
+ b=K6WGe1AX70FEA5AWP1oxrJDVwCpy52JKMZP5KPaq6U6PKAsjwlqbUwHpptE8KZTU2bZ92oMshNVqwI9Md9BUJP273gUlIJ9uhuILulBGlkfRpPuRMYALrdqTd3m352qEEVwSex17RrYr4Sj3KzdGCMRRfdxAy6kqTjcdznarKlMk/5hvG87IqZjMghNTIFVj/1BEq/AuucRa6geBQ4KEfINUpzwhF2L75MXNqNOv4knuqJGUN1AEYOBVhfDuTYGm6ExFOQiSarNcxYGuE+i3KNISJa7IyKyV66amv7sVkn56oP9MkWa1DBplys/aEQBu7Zh4NkL10XrfjF1edOQHOg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
  header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=DyyC+tCwXgk2szBhvWP3h5EPiPUQruudt7c07gp6iHs=;
- b=PHZCovvkM2znox4X/MhFY5himBXTlyU4VdAAeVSbWBcQv7v/Les/f4nZ0/dzYpDhbSzUDSYsLuaz6YwLaxVdmxgGB8kKJbwNrGPaK3F/HW1nCjd1rAdGWooQObzNe2n6Meob9J1bKbPNYAdsfw4wSwg/DgJhSTCaqoTeRymvqP3Em4NggnRqhq5r1xkkAC2O80sT5CHOotx97nupFlKP6RuWkj2f/vBLkFZB67aGarfUnReY7lKx7ADw6Ib6dyOUikiUqQ4eIcL4Lg7pewSzbuCqgyV4cUepZm/iFn8cuXVr/ebV3oDDJIDeVPmYsoWWNYx/SoVNGOSgWR8XSM2/UQ==
+ bh=B8SH1GKkR3dpoJJdrXSSNryXM0kMfanPG2X5QbD1q3Q=;
+ b=ilhAovuOmLBW5F79cIRoTYADRMhoGQl5rG6NcNm3oOrv+AJnvFXAz9i93C5emsFGVktjpkrirwfmHcw8fqhMyJ6XVyrCDDBa36eeayt78YGef0xMQiFrqnhhP+V4ShkDotit7OAQAFb1YATe94eG6xQ6L6ysZ+T2Lzgkf1HaZB8ii65dsrbiEd/StAXQoR03LnqmTMFI+lilptN6u7UULNohZWWebUeBNdtNXnNgktItaUvQ8gnDuHQd1nYQqvXWxV8DXf5uxTU+qn1GxRYxGbE2TYVfyUtObTXdkjuheHz9BJr49gViZb+4ZwiUncKPRnX9w5RsvJD6bJS90Si2QQ==
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=virtuozzo.com;
 Received: from AM9PR08MB5892.eurprd08.prod.outlook.com (2603:10a6:20b:2dd::16)
- by PA1PR08MB556523.eurprd08.prod.outlook.com (2603:10a6:102:54f::6)
+ by AS8PR08MB7741.eurprd08.prod.outlook.com (2603:10a6:20b:525::20)
  with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.496.14; Mon, 5 Oct
- 2026 08:58:32 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.451.23; Mon, 5 Oct
+ 2026 08:58:54 +0000
 Received: from AM9PR08MB5892.eurprd08.prod.outlook.com
  ([fe80::94bb:633f:1f55:4bbd]) by AM9PR08MB5892.eurprd08.prod.outlook.com
  ([fe80::94bb:633f:1f55:4bbd%6]) with mapi id 15.21.0472.016; Mon, 5 Oct 2026
- 08:58:32 +0000
-Message-ID: <86b784f5-60e7-4be1-8052-068caefdabb2@virtuozzo.com>
-Date: Mon, 5 Oct 2026 10:58:31 +0200
+ 08:58:54 +0000
+Message-ID: <afcbcf32-dea6-421e-8b49-18e3788cbf68@virtuozzo.com>
+Date: Mon, 5 Oct 2026 10:58:53 +0200
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] hostmem: fix cpr-exec of VMs with bound guest memory
+Subject: Re: [PATCH 0/4] block, scsi-disk: honour a size change on child
+ replacement
 To: "Denis V. Lunev" <den@openvz.org>, qemu-devel@nongnu.org
-Cc: David Hildenbrand <david@kernel.org>, Igor Mammedov
- <imammedo@redhat.com>, "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Mark Kanda <mark.kanda@oracle.com>, Ben Chaney <bchaney@akamai.com>,
- Steve Sistare <steven.sistare@oracle.com>,
- Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-References: <20260924125800.4188406-1-den@openvz.org>
+Cc: qemu-block@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Fam Zheng <fam@euphon.net>
+References: <20260812121500.1034178-1-den@openvz.org>
 Content-Language: en-US
 From: "Denis V. Lunev" <den@virtuozzo.com>
-In-Reply-To: <20260924125800.4188406-1-den@openvz.org>
+In-Reply-To: <20260812121500.1034178-1-den@openvz.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: VI1PR04CA0115.eurprd04.prod.outlook.com
- (2603:10a6:803:f0::13) To AM9PR08MB5892.eurprd08.prod.outlook.com
+X-ClientProxiedBy: VI1PR04CA0128.eurprd04.prod.outlook.com
+ (2603:10a6:803:f0::26) To AM9PR08MB5892.eurprd08.prod.outlook.com
  (2603:10a6:20b:2dd::16)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: AM9PR08MB5892:EE_|PA1PR08MB556523:EE_
-X-MS-Office365-Filtering-Correlation-Id: 508939ce-f385-4fac-5bd6-08df22bed518
+X-MS-TrafficTypeDiagnostic: AM9PR08MB5892:EE_|AS8PR08MB7741:EE_
+X-MS-Office365-Filtering-Correlation-Id: 273da72c-f516-49c9-9a16-08df22bee207
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|7416014|1800799024|23010399003|10070799003|366016|10067099003|56012099006|6133799003|22082099003|18002099003;
-X-Microsoft-Antispam-Message-Info: oinqWBFVNb9fKN2aMFrw3l43Bj1KadjMU1rZ5QMUjH3SMpTlV3Hmt2k8RcXq657s8fuet6Oywpj4fueSBb9+/nKPBMtx95GfIv1VdnBGZTZz16NgNQvwlLWNnedImNQ5C8q5wx3D9iW+V+tVc3jE22JXVaiigefBqrKH3gsJlg55oCmlkP02iiHSwbPeKN2WI8Hl9Y9slf3cWESlBAZ/wCpH0l3bsv4nz45Ft26jO4zo6EovRunKEB6Bmy1rrOF9FNQMWTTYziRMF6unYVcs74x+TnXzqbEqiWe8PhUnNoTosqQ7sPmP9kBPMwQBO0T89vB1/c0E/NP95dAKZe+XRFenmYlXMqR0p1p3Nih7WiT4lvajsyzKH/WNG0VtKNN9/KkDX3DsGuC1PY+La/EpICyv7qeneXTy9dipdHoXEjCaSuyuH8pWfUWQKctH4wnuPKrH612AU60qKrziGsS0VcQbyFCBuc3tyEpTpX8aw6IcNhlc2GYVOl4N8xZ6vUvUrD2BK+zqJa9u6PEbMP5vYh+8tYOEh9Djl4HQJTSiDc8+KyDXowRRMeEExl947q6lCelu6jQS0/vaXNr8T7j3of55o7s4sFAKtZ3ww9fmk+++bHfSZykfV6LdkG4BwCAdX/OsSn9k4mDWtQ8LFDqZT6Uxw53rIS5UHbdVP7iPzz8=
+ ARA:13230040|376014|10070799003|1800799024|366016|23010399003|56012099006|10067099003|22082099003|18002099003;
+X-Microsoft-Antispam-Message-Info: yJZcVZJCKS4OXlptHgpnfZ1Y0N1Ncd3fHyblbUmO6ahPFbxhHutzPc9I7fbI5S+QnINTcey8kraFU5jj1IyNOAFrErgQL8F4ZLCO+zh79JN6IUa1YFiVkCd9evqWVcXZSaMKvAf6YnpnjJRiaEQzYiSXdGdBUWuBj0hBQOVd3kz2+JAhFkUJmUB2PhgL8JEz8FdzdM+lTx0iEDTXQn94/jMIuN0bI+RW414eD7Ez/fOmcBWuRFTl/DlnGhVZCXqOIoXr8X5/UXnxPA7TKYkTch9XyFkuphUFm96ddrMRTVE9idAFUWZ4v4mqsWZAjvFntqo/9n6e2LD8YoWmemlGOgsd6IF99uLu6fKRw0k74We33AkMgpFEHGRdvNGWI/nBqxvLQmFnPVFjwk5ImRzj2ET1kG5po4KQueQwhy5MbJ0+DqvSLlQvXykB15l5mbpKIFiSJkob5c0PMZBj8J7/VXMVkYrqrwtxo58fEOBv4Eh8QiVhNrGdgZ9VokQJ2NM0xca2azmOtNlENELGyCbo2f43GeMSfB/XJDPvNR45nWKteqePs5JIfIkdo7rBIgmGr1VkWfUermOulYbLop31CUxib4L12ow73gwrq7+QM05u1+W3M02z8WBR9KW6k3hNeyualW1QJXqZsaQjCiMbWhkzrXvZOdJU+BJ8gAsAveo=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:AM9PR08MB5892.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(7416014)(1800799024)(23010399003)(10070799003)(366016)(10067099003)(56012099006)(6133799003)(22082099003)(18002099003);
+ SFS:(13230040)(376014)(10070799003)(1800799024)(366016)(23010399003)(56012099006)(10067099003)(22082099003)(18002099003);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 2
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?K1lUNy9JZ05JOWpySHZDYWgwY256VTdFMFRsSk15L2tnLzFYNHRMS2NYR2k5?=
- =?utf-8?B?NDVHUktmaVR6Mk1ad050SFJENjRaZDRwTTFYNTRGZWNPL2lHNVhBOG8vaVZh?=
- =?utf-8?B?a3gyV2dDNEkwSFpzZWVFNkFoT2xsa3dnRjhyZ0RYOTg4aEZNUDYvRWtldi9i?=
- =?utf-8?B?ZERRYVdVL0d0VUkzOVZaaFI5RmxTc1VjVkpwWWRtRFNSQ2ZwWVhaNWozL2JZ?=
- =?utf-8?B?RVJTZ1FKTlVjQUNhUHdEV2lKUXRVc0NMSXRsMFJBWnBsbVdsNk9Zbno5eWty?=
- =?utf-8?B?TGdYYlpONExJNy93SFJHRE41dXBYMTZERkV3bFBmTVJxWkpXS1hSRjJVOTAv?=
- =?utf-8?B?TFNLczRFZUtEZHlTZ1JEUGF0bHBkdHRTU2daNERRS2piVzdsZTBxVHpYNUla?=
- =?utf-8?B?ZVFrbVZTMXFueDc5cFE1eFdLZUgxMGltZThiSUx1TE9QOFJRL3ZEZWp3emZq?=
- =?utf-8?B?ZWdlODBMZ3h4S005c0RDZ0RPQ0d2eUEwVWF1MDhoMzh6U1luREN4RmY4U0Uy?=
- =?utf-8?B?czNCRlJUT1FSeHFTZ0FYTkNpUXlrWWF6UUZuK0lYSE5pYVBCNlY5UUNHNE95?=
- =?utf-8?B?S1UrL2tlTlZzcjNObW1SVGFnVy9pYVZ0MzZxMVNlN0ErODZma3d0eENIbk5E?=
- =?utf-8?B?SlJFREFsK0l1RWgwUzc3OVVjemNMWGgyeTN3b3g2TVBlOW1GTWlRSkJ3MWpK?=
- =?utf-8?B?UlpSUlNOSVB2RVNTMk1TanBBQ3ptTk50Yi9tQTduV2Q2VzJWaWhjSVJ1Ujdy?=
- =?utf-8?B?aG9XU0ZWT3hMMktjaXlZbGwydlNaYnFLVlVHVHpRNUNBaWliWGpvRUhaR1Z6?=
- =?utf-8?B?SGRNdFRUTTNsNWh2R3lWS3BkUVo3a3EvenQzcU5hazkrdk5hRHN1aEZQS3d1?=
- =?utf-8?B?VDNqRTUraW52QitxczZ1Z2VzbitZQVBXOHVuRGNvOHRVTDdGVDErNUF2OUZK?=
- =?utf-8?B?blk1NXNUSkU5SjgvWjNpTHc4NXVRTXNoNmVuTlNRSDlIVkFYRVZXR1NGeGdC?=
- =?utf-8?B?WWRvOS9JUHJrWXhqNnlOV1NJMGQrSittZ3BkajZQWVQwbXdLZEd3T2VHVDVL?=
- =?utf-8?B?dzRweStXZjNiS2Q2RlBJYk03VDh6WUthNTcvQys5SUZXN3RIM1hZK2xnV21j?=
- =?utf-8?B?emMzZmt3MmU5ekNDSVF4cU9mN3N0ZSs4MWtSeEQvM1gybWJEZkUySkxYSWFY?=
- =?utf-8?B?cEVUaktMNDQ2YWlJb3VjOU5zTzZ6ai9pdHVyVGhEYzNKY0VhS2NtZG15RWZk?=
- =?utf-8?B?eENoQVAvbFZsOFV5OUtKbVdIejhMRFBTNVdzMjFLWmowUWJPMmJITjFGMUho?=
- =?utf-8?B?ZEhaeHRzVzFhOUxDSVVMT0h2NS9kUmc4VzdmUjBybmNMY1FkTWo4eGVlTXpB?=
- =?utf-8?B?V1l5dVhzSzRVbnBmWjZyQlNNb2dHdEIxTmpmMi9Qby9FL1BxeVBNMXNhR1hs?=
- =?utf-8?B?RElOTzl3YzdkeVVrU3NzREtzR3h1cU5HaFkxc0lia1c2Sk0yanhXcm8rMFdN?=
- =?utf-8?B?Mkcydll6MFJyTWcxYjdpYjlMamdHODlFQjY5S0hBNUpXVTMzMU54MU5rN3J6?=
- =?utf-8?B?VkZpVXg1aktvb3czSzVxTTBTMFBTd1BSWm9GZHQvOExYY1RpaUNZR1FXbU5y?=
- =?utf-8?B?L2NNR3R1YjBjeExMQk4yWWVBRUNRNkhubmJET2NjNGdqWU1JOFh6WE50OHdE?=
- =?utf-8?B?SGFVMGRHWGNXYjd3SzQzOGJZd3Y2cXpVeG1ITVV2WFErSGd4S3dIbnVOeHJx?=
- =?utf-8?B?Q2pOS2U5cXdNT2RXazlrTWJVc2hUai95eHArQ0UwVGo3MHcycE5YdVljNER3?=
- =?utf-8?B?WGg1VHNENGpKZUtTdmNTMm9RVm4rWkZTNXRXd0pLZE1GWUtORzJkZmpCanNi?=
- =?utf-8?B?ajdkOWNEdnVZRHR3cmJQVjNFOUZZbUJKM21KeDltRW13SDY2YTVxSFJPb2Mv?=
- =?utf-8?B?Q1ordnhYK3AzWHZTRUZYalozUmVVZmtwODFqaStTeFZydXJYb2dJK1VOODJJ?=
- =?utf-8?B?azZSRWZFQjJjeUV0TkVGQVp0aDZLeUVjYm9vS0krS0E5YlRxYWtjSmpRdG1Z?=
- =?utf-8?B?c2dqUk1ManNpSjV1bFFiVEViRXo4ejRpNUl3ZVpvMU9pVlliZ243NmVHQWl6?=
- =?utf-8?B?dmY3RURsVnBMbndGTis1bFl5NVE3UUFlQ1BCbE84NzZKRnZtZTZUYjBqa3ds?=
- =?utf-8?B?WGlIV2pERzJ1K2FBbUJEZjZCSzU4K0V2c3NWa1c0K215OE5VcFdGQk9PYzdO?=
- =?utf-8?B?eUFSdmFmdVVLT3NvYnc2SmxXUGUrK1ZOa0ZWOUlHRHRCQ3RaOGVOTEd3Rmtt?=
- =?utf-8?B?bDFLYnd5L3ZyRS84Q052OU1QSVNvMkE2VTQ2RHl4OXBHdGlJc3lCOGlJR2Zo?=
- =?utf-8?Q?Qiv4yzThe0CkjolSvHAL9I2tCJ3Y9T55M9nUT4SOOxvuV?=
-X-MS-Exchange-AntiSpam-MessageData-1: zeLfgBkUZAn0aw==
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?WHhSVm8vcFRtMFBXeUwxQ0lHUlY2dFJSQXZGMi9KRmJoMjFNd3hWcHdsS0NV?=
+ =?utf-8?B?VG8rTXhBVkNNRFA0Z0JpTWdMYkF4ZHNaWWY4eGsyM21mRzlkeVFnT1Y1cERk?=
+ =?utf-8?B?emd5bFd2ZlRGbU14YUVLRER0cVAwQmM0NXlRNzlENHEvcllPM1BVaXZWWDVn?=
+ =?utf-8?B?eWFIZ0cvL0srVUZaeEt2ZUE5S2NlNW1WanQ1dFdnZFdsRU9CN1VTTGx4N1RN?=
+ =?utf-8?B?VHY4ZlhGZllvQWdyczYwbTJ1QmJJUzBwcFNPNk1WcTdJYW9aOWlSUjhZSTBJ?=
+ =?utf-8?B?Umw3MDRHeTdHZm5SOEgwSlI0RHF6WUpaT0JDRGxPbklaUDV2TUVwcUFyS3dK?=
+ =?utf-8?B?bnFEVXUzSnNzSGh6bkxNa0xqZDEwN1o4L1llUkVGUFJ3ZndmUmF6dnZodWth?=
+ =?utf-8?B?dGJrMG1HdS96UHJ3YUIzU2xxczFhdkhteVliOEtvTVdNbkZCR0gvb09IKzdK?=
+ =?utf-8?B?a0FKUU9SWmRXa2ltbWdyUEdsOG5BL3FTMGlLZkVrVGJBSXpQZ1hHRStyM2wx?=
+ =?utf-8?B?Y3NWRkkyOVo0YWtraVZGVFlXQkpNNGFMY3RDL08zMktQTDZWQ2pZQ292VEtN?=
+ =?utf-8?B?Z1Y5S0pseVpBejA0Y1B3UWE1YXhwYzdvcXRzTWFrd2tUdHlDL0J5a1NtU0JR?=
+ =?utf-8?B?b0lHS2RRSnRTaEhTSmtnNFo1dHRCSG11c3dkQ2paL3FwekpvaG10NXpCYmxy?=
+ =?utf-8?B?dERSTVBGa0dnZWJBNFpoZFBEZEZvc3JxQjRIS0hWVERXbG1RclcyTkVNdTRt?=
+ =?utf-8?B?MTMwMmVyZXU3Z1V5TEVMVytvd3ZmZHczRkthK1diWm9adldhbXI4MCtMYkFD?=
+ =?utf-8?B?ZjkyVVJMNWIyWURoSjI0NElPWVhVdjBQQURBR09WSFBJR2dSY05mVzBzZ1g1?=
+ =?utf-8?B?MWdDUGJZZit6czlRYVFGM29QaEhkTzgyUHYxd3ZDdkZjS3ZtS3ZOYVRDeDZk?=
+ =?utf-8?B?c3F4SGFvVGNCRFBtWnVxYkFPcUpCS1ZZWXBTT1diazZUR2VZMEdoNEFOYU1L?=
+ =?utf-8?B?R2kxaWdTRHp3YW1QVkpFanoxVFdFRWV0azFSRWdkb1R1SXg2aDNOL1BNakQz?=
+ =?utf-8?B?YWQ0eWZ5Tzh2Umd6R1RtUmE5VFVETjhaaVpmeENyZXBhejJCK0N5K3Rlckor?=
+ =?utf-8?B?WllwWllEalVNc2xwelVNNnhMTUdoNUcrVEJka1MvaCtsL1lpazNmUzJGVG5p?=
+ =?utf-8?B?SEZKMENZb0ZadnpxK1pkRTlyVDJ0KzQycnVlRzRPd0VPdkM3Q2pZWVpSTnJ0?=
+ =?utf-8?B?V0hDQmNvQXlpK3VxdEJwbXZVa29wWVVlMkJOL3ZBTDI1dWlSeVJrNEhOQUIy?=
+ =?utf-8?B?SytCazVRc2VieGtWSUs1a1gxTUlma1lnc2VIYlhlOERyRWxaSlpXM212VE1H?=
+ =?utf-8?B?dEdBcTFQYlpNclpYZTNONmwzZUpuWk5vUnE3UjBBemVsOElXR2diZXEvR211?=
+ =?utf-8?B?YjhzYlBhd1hhaFRGODJOeDFKaUhHZUlyMGdGKzVoVndUdXVndE1RbDZ6dFZu?=
+ =?utf-8?B?T0JuWlBHNXp6L0ZmUEdTUUpsVmxEV092blB5dnh6T3pyNkJwYU5iUFdVd3NM?=
+ =?utf-8?B?QitZbkg5Vm81VlM3YXZxL1JQU2lPYXJpOWIrYjU3NkJvaUV5U01sVVNuUlFD?=
+ =?utf-8?B?bWVXWkRaZWIzVXBsQjJIVTk3ajVLRlBjWGovNjYwR2U0UGNFNEZGSXIwcEUy?=
+ =?utf-8?B?WWkxU1cxaWtwQzNPTTE0QmRrN2R3T3pTdEx6cW5uL0tuME10QUJPZlVVWlZF?=
+ =?utf-8?B?QUtGOEhpam1mNVAwcXlnYUlVUUZkdG9KZndwNlI2V0RDOE9vZTk3ZmVTMnFW?=
+ =?utf-8?B?Ym1ISUdYTkZxdkRFZTBmQ3ZOUVlzYktPMTc4MCtxUWRUT0pNdUdlam02TkJ6?=
+ =?utf-8?B?UWxaR2gvbFNxdGszdnlhQ0pQUk1FNUxzNHd2SUIvQnByVHJjKyswWkZVM1Vy?=
+ =?utf-8?B?ZXU0QWRFeDFpOEZySnpiTlVtV2pTcXcyT1NtSDc2STFmd3NOUkJrZTdLL0pQ?=
+ =?utf-8?B?L0U5VTJ0UGhhclp4T1hWWXhISFA1WW1XTThBTmUvUy9vRXFhZ2lEc1doWmtv?=
+ =?utf-8?B?dWZLbFpPN1VpUHdXMVlkOXkwcVl4ZTFGWVI1cmRWRExzUDZqRXFFV1RGU3hn?=
+ =?utf-8?B?UytCSVFZcHRpRHlRS0hWd2FoekZBU05mWW9Dc1ZnYjhzc3Z4QUFtZmpPWW1Y?=
+ =?utf-8?B?WDBMKzRYdDY0NVNPdzAxS3ZrZDFsNnF6Wm5HY3JDRm1UREI0K1FHYksyeFV6?=
+ =?utf-8?B?NGtuZUtncUJ5ODRhSUdJcjFacnJDNjA1dmVxdGVFWEJCTUIzNWZQc1J4QVo3?=
+ =?utf-8?B?VjBYZXlBNitXYUhPTFR3OUQ0RGJoajhSdGlnVFh1S1E3dG1jNE51ejFUbGxw?=
+ =?utf-8?Q?uFgIovzrU2WkYKntkgSSLcI/NXRN62sBWPgW8Td0rLczP?=
+X-MS-Exchange-AntiSpam-MessageData-1: 8fiVadMNa3Vwag==
 X-OriginatorOrg: virtuozzo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 508939ce-f385-4fac-5bd6-08df22bed518
+X-MS-Exchange-CrossTenant-Network-Message-Id: 273da72c-f516-49c9-9a16-08df22bee207
 X-MS-Exchange-CrossTenant-AuthSource: AM9PR08MB5892.eurprd08.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Oct 2026 08:58:32.5445 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Oct 2026 08:58:54.2334 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: u9ubB5Z+F+eH+MrIuTctGCSZnCvRjCDdQcF6V0TRjgH450797R/0RHS66akVfR7lehiCRvuQFBnNKQw4xbRjKQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PA1PR08MB556523
-Received-SPF: pass client-ip=2a01:111:f403:c201::1;
+X-MS-Exchange-CrossTenant-UserPrincipalName: QqEvzRXK0u4hdafJb+QSaQgx7VNfuJV62lje+UI0aIXh2ibE29ql+3G5R/PWrEhUOspxo+7jHPkVC8Wdi06z8w==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS8PR08MB7741
+Received-SPF: pass client-ip=2a01:111:f403:c20a::7;
  envelope-from=den@virtuozzo.com;
- helo=AM0PR83CU005.outbound.protection.outlook.com
+ helo=PA4PR04CU001.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -155,46 +153,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/24/26 14:57, Denis V. Lunev wrote:
+On 8/12/26 14:14, Denis V. Lunev wrote:
 > This email originated from an IP that might not be authorized by the domain it was sent from.
 > Do not click links or open attachments unless it is an email you expected to receive.
-> We lost several production VMs during an in-place QEMU update. Each had
-> its guest memory bound to a host node with host-nodes. The new QEMU
-> re-ran mbind() on the inherited RAM, got EINVAL and exited, taking the
-> guest with it. The likely trigger is the host's memory manager moving
-> the emulator cgroup's cpuset.mems to other nodes while the VMs ran;
-> doing exactly that reproduces the failure.
+> qom-set of the 'drive' property is allowed on a realized device and ends
+> up in bdrv_replace_child_bs(), which swaps the node a BdrvChild points to
+> without telling the parent anything about it. Every other way the size of
+> a node changes goes through bdrv_co_truncate(), which does notify, so a
+> device model caching the size of its child has no way to learn that it
+> changed.
 >
-> Patch 1 stops the new QEMU from rebinding and preallocating memory it
-> inherited over CPR. Patch 2 adds a qtest that reproduces the failure
-> without root: the exec'd QEMU asks for a host node mbind() rejects,
-> which is what a narrowed cpuset looks like to it.
->
-> Tested with migration-test on x86_64: mode/exec/numa fails without
-> patch 1 and passes with it, the rest of the suite passes. A standalone
-> reproducer that moves a real cgroup v2 cpuset.mems between nodes while
-> the VM runs shows the same before and after on a four-node host.
+> scsi-disk is the one really hurt by this. check_lba_range() validates
+> every guest request against SCSIDevice.max_lba, filled in by
+> scsi_disk_reset() and updated only by the READ CAPACITY(10) and (16)
+> handlers. Point a scsi-hd at a larger node and every request past the end
+> of the old one is refused with ILLEGAL REQUEST / LOGICAL BLOCK ADDRESS
+> OUT OF RANGE for the whole life of the device, which Linux turns into
+> EREMOTEIO for reads as well as writes. It is silent on the host:
+> out-of-range requests are answered by scsi_check_condition() and never
+> reach scsi_handle_rw_error(), so there is no BLOCK_IO_ERROR event and
+> io-status stays 'ok'. virtio-blk and ide call blk_get_geometry() for
+> every request, so they end up with a stale idea of the size but never
+> refuse I/O the node underneath can serve.
 >
 > Signed-off-by: Denis V. Lunev <den@openvz.org>
-> Cc: David Hildenbrand <david@kernel.org>
-> Cc: Igor Mammedov <imammedo@redhat.com>
-> Cc: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
-> Cc: Peter Xu <peterx@redhat.com>
-> Cc: Fabiano Rosas <farosas@suse.de>
-> Cc: Mark Kanda <mark.kanda@oracle.com>
-> Cc: Ben Chaney <bchaney@akamai.com>
-> Cc: Steve Sistare <steven.sistare@oracle.com>
-> Cc: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+> Cc: Kevin Wolf <kwolf@redhat.com>
+> Cc: Hanna Reitz <hreitz@redhat.com>
+> Cc: Paolo Bonzini <pbonzini@redhat.com>
+> Cc: Fam Zheng <fam@euphon.net>
 >
-> Denis V. Lunev (2):
->   hostmem: fix cpr-exec of VMs with bound guest memory
->   tests/qtest/migration: add a cpr-exec test for bound guest memory
+> Denis V. Lunev (4):
+>   block: notify the parent when a replaced child has a different size
+>   scsi-disk: refresh the cached capacity from the resize callback
+>   tests/qtest/virtio-scsi: cover a replacement that changes the size
+>   tests/qemu-iotests/qom-set-drive: replace with a differently sized
+>     node
 >
->  backends/hostmem.c                |  5 ++++
->  tests/qtest/migration/cpr-tests.c | 38 ++++++++++++++++++++++++++++---
->  2 files changed, 40 insertions(+), 3 deletions(-)
+>  block.c                                    | 13 +++++
+>  hw/scsi/scsi-disk.c                        | 16 ++++--
+>  include/block/block_int-io.h               |  3 ++
+>  tests/qemu-iotests/tests/qom-set-drive     | 14 +++--
+>  tests/qemu-iotests/tests/qom-set-drive.out |  2 +
+>  tests/qtest/virtio-scsi-test.c             | 63 ++++++++++++++++++++++
+>  6 files changed, 104 insertions(+), 7 deletions(-)
 >
 >
-> base-commit: 942229961efea74b153c44c59188eb08375f10f1
+> base-commit: 3e3ccab106f879b1512f8e0d51a827dd4de30e22
 ping
 
