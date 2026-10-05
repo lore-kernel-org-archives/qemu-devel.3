@@ -4,65 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37309CA5FFD
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Oct 2026 10:21:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1374CA5FFF
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Oct 2026 10:21:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xDfoV-0003CZ-RG; Mon, 05 Oct 2026 06:21:01 -0400
+	id 1xDfoK-000397-26; Mon, 05 Oct 2026 06:20:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xDfm9-0002EJ-0c
- for qemu-devel@nongnu.org; Mon, 05 Oct 2026 06:18:30 -0400
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xDfmL-0002HG-8q
+ for qemu-devel@nongnu.org; Mon, 05 Oct 2026 06:18:45 -0400
+Received: from mail-wm2-x11.google.com ([2a00:1450:4864:31::11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xDfm5-0000uM-2u
- for qemu-devel@nongnu.org; Mon, 05 Oct 2026 06:18:27 -0400
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-48b0ef9c76eso1388454f8f.0
- for <qemu-devel@nongnu.org>; Mon, 05 Oct 2026 03:18:23 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xDfmH-0000wJ-62
+ for qemu-devel@nongnu.org; Mon, 05 Oct 2026 06:18:39 -0400
+Received: by mail-wm2-x11.google.com with SMTP id
+ 5b1f17b1804b1-49e7d2bb404so5852765e9.1
+ for <qemu-devel@nongnu.org>; Mon, 05 Oct 2026 03:18:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1791195502; x=1791800302; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=64hePJipeN8Fs5nwKi76fMFIZFKTMyNTsfqNW9sCfE0=;
- b=gIz4rw4IOo0vnyzC0Y5iUTJR5WnXlqyRWLf+9Av9/Ah21m2NyPq9oE1omz8KKHgMlm
- 75hxLDpZkTkn5PHM6mdV2SWOS6lByya/APw+/lUVJeuWPBfA1vwGGWNZEFlLzO8O8n6j
- iPZr3zNQRAakbPS9CFzAmVEdxbetT5N4vSIqkV1hXzrXqnqWDzDBAGtAhQ+7asDADdTs
- ZpQT02pUaGlTMupzj6Z5vdR9LuY/Aujf3BGKHiZYlQ0KcBmRw80qbIVTgXAKTCX/08VD
- YfRrko2F1r5WVLRizXpJwP2n7Q9GK7FdTCOxlDWy15MOBQ8JxSFnH0AR9j6dar26cvaR
- +Mkw==
+ d=gmail.com; s=20251104; t=1791195513; x=1791800313; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=b00qIVQjxzUez6mivBhAzHlvEuKBA7PieDHBj92W3ss=;
+ b=quncPJLqy9/O9Lwc6jAKThGc8V9iN+xIb52c+4HG1vvbhi2MknElS58FOL0u8/sLOR
+ mQu6fFR01oYeiXrXT1MVNKnx9MarrzvUSnhVBtorq6jE5qJ5F4kQNa9E1lmbbQiF/6X5
+ +ZRArpjEHvLl7B0073aqWVaukHY3GhhpF2Hl5f/tm5bxZUHVQEp0if9hm9zV8QnxKGTU
+ BpGOOYpZiVdWTmHCeNiUlZkKRO/xfd2FsGird4GyPQbcQSaeUdzjUEpJK50oEozRSyTi
+ gQ4hjidm8qbfIJKlmjz6/aBNl8qiobCLpZn3CEG5JITQqBnoGDCB/E5yrzJycfAPQzRA
+ TIXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791195502; x=1791800302;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=64hePJipeN8Fs5nwKi76fMFIZFKTMyNTsfqNW9sCfE0=;
- b=c0gFhSP/4Tq7N2HDQM7lmPolG3GuDdlSU4aZsCdt2g1MDERTBYyZ+h1UkrAups8s/f
- YVEYhhsuh47S2fATP/GnODXUMk2qZoX20M/GKnXnXJZ2HZMxTmKtkBDvVeUcO63+SGwL
- Kgq86pu2moHbute6FAwKMDrFyemeISYhtuQtplSxuavSu1LIXEnNw/xya0sVZzUTycwA
- o2nKISMhgG6bIka0qh1DCxmKMLodyDgcwS7F0byqfn4qFG2VhJ4A0EtggFYWcdU/xnIG
- qlFLpMf64q2FZGCqM7Km2L8urdhSOSujqrBUIYcy6wiTMbU1cuyL8Bd+p7G/WX9qtOPH
- wUfQ==
-X-Gm-Message-State: AFq9FYJhZlUH9weawWw7sHfQPdjSO+S8FdgusuRA4J4P1Tm9VK7ZDNuw
- r3QB0hMsGsH84jKrKFLfqyxTcWfVaVvh8cwIjS7rEMNx1VHHNzXRokW+AMF6Xg==
-X-Gm-Gg: AYBFou0nPGrZwYn+bpYt7JVDLVSqtspqMN9yDF87FwRsMe4yCibSVLQ0Mg9gD6SeNQi
- y4MUEUtsG9gI3cA7H6E2acS4Cxr/5iTyVN8+BOuUz+o4/oG9dY+C80tUo7DCf5xS/nnCHtG0O57
- 8dXF55zc2o2bvwTNO6qng6kocTw4/CjPnobl30Zz/kSy0RQ4WLiKAw7Vj22Dhhbsy5gykVKb9JX
- +boqoqzAqswUEJW2Hyrh0Ov//CTqswFIktddekqKK6uqAy8ZDNwrAIS8JiLCSLvujKjeIAyVqMg
- BZudSF+GPOmVbpYAY2LwrlKWYrT7vAM3HMrqzYT2NS7kIl/0om5OXXzj5dH8tHn567Fr+sVD4yj
- Z+JUGGgfDIYBMXMNpT65ni2W8Ou/uacKNbLHzuPjDacwnEandS470ggp5oXdobhpu8ZFZx4up0r
- /81cTl2Bb+xBsGHZcQxCbOs+K3XjlzbD1wS/iwGk8YD8dHtz3X2InFC3AtWHxsY1jZ3VKZ3rJHz
- 3ovHT/dBtiCp5Q9k0VoLajP5e433uXPbCi9SnFgFTsmdULV
-X-Received: by 2002:a05:6000:2589:b0:48b:1124:f2fb with SMTP id
- ffacd0b85a97d-48c47fc91a3mr10950401f8f.13.1791195502015; 
- Mon, 05 Oct 2026 03:18:22 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1791195513; x=1791800313;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=b00qIVQjxzUez6mivBhAzHlvEuKBA7PieDHBj92W3ss=;
+ b=d4QyvKBZ07eluRbtfFKoCmnPw44ItfogB9O5zm4hArtcwb4hBUhgStse7JiI6wfNJY
+ 2Uxw3rVh4wODhYdV0iYRU90lkGDSsFh2H3jEsXXsxU3bK1gNJbadjD5n6Y458YjCqx65
+ HPeXWk7KdYVUV/6ylI2QhJ2J2maE9mQ29Ypn9u2uZwQ92S5rO1NCYPcsVfxFOgSJ2Ue0
+ OY8lMLyRyOKIn40pmRbO4Dn/x6PezdB5Zp4eyyEU58CqaPO6JuitUiOoHD1Bw4jbkbuh
+ cVhgLP8DFKozFEQBRLec31hpXYy2dOQO8it9pNzJgC8nW1BiPPnAwVkQL59HWdvlfBCz
+ oPCg==
+X-Gm-Message-State: AFuF++mO0IWL+IzwludTNkTalxEQN46PBTOF7fbTYqT4NtzLeXfhp1lj
+ iGqMe01Ukioco65l7EbdnXJUeufd+u/Ywuh1e2NiFk0P1Dqju3wKIwHEQkGoxg==
+X-Gm-Gg: AYBFou3Es5zhTfVcALV5/eGkr7qvhugyAArhnGrwzJkUJ6loa3V6ooqYg4kQVSIMLT8
+ uYcAICZX333VbGMVLxcQRwoDQ86Zyt0git5f3UDnco55JdNBiQ7qrh9fZcVYvcokeS4BCoe4B8l
+ iNAKkPKk2FWhwgpTn2MN6ih7v251nwHZoksZN64mYCQpQ+zvuVwXv4nAPiv/cAQ+eqaXEKCJ3xL
+ 9oSd9EpjXcuyX9f3mP/BaAq+eMjyg5rMQwC7inORgF6Uss6Ayw/Uxp0r83liC+2PuE/jqD0jCBZ
+ qlDjUs4RD5f4jPpxmIRaZjfvVP7C/9+oaPXu6/cSjBw9p5OG7BIUkh50T0yoRL6xV+ugRQ6iWSZ
+ BGislSHjElpEbNbrhPw451nHcKAGkKukynNRc03lQNjplzuz9SxBl/lBCnX//f8HGLu+Hf7tlG4
+ zdph8lAfkbOgtgB/Bm7997Yjf+Grf98/aBiJ0pEdhDcBmosSHVNfS2y3EZlNO77b3kYI046O+5k
+ cKgbxXnP3IcyR1hzaUwRltjzi8Zm/i/V01veNNQ0Ti53S3W
+X-Received: by 2002:a05:600c:190d:b0:49f:c5aa:9ef4 with SMTP id
+ 5b1f17b1804b1-4a02753fc8emr175863735e9.8.1791195512760; 
+ Mon, 05 Oct 2026 03:18:32 -0700 (PDT)
 Received: from archlinux (pd95eda80.dip0.t-ipconnect.de. [217.94.218.128])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48c622ab7b5sm2742111f8f.37.2026.10.05.03.18.21
+ ffacd0b85a97d-48c622ab7b5sm2742111f8f.37.2026.10.05.03.18.30
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 05 Oct 2026 03:18:21 -0700 (PDT)
+ Mon, 05 Oct 2026 03:18:31 -0700 (PDT)
 From: Bernhard Beschow <shentey@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Gaurav Sharma <gaurav.sharma_7@nxp.com>,
@@ -75,24 +76,25 @@ Cc: Gaurav Sharma <gaurav.sharma_7@nxp.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Jean-Christophe Dubois <jcd@tribudubois.net>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: [PATCH v3 02/31] hw/watchdog/wdt_imx2: Fix handling of write one once
- WCR bits
-Date: Mon,  5 Oct 2026 12:17:29 +0200
-Message-ID: <20261005101800.10821-3-shentey@gmail.com>
+Subject: [PATCH v3 07/31] hw/arm/sabrelite: Have 4 CPUs and 1 GiB of RAM by
+ default
+Date: Mon,  5 Oct 2026 12:17:34 +0200
+Message-ID: <20261005101800.10821-8-shentey@gmail.com>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261005101800.10821-1-shentey@gmail.com>
 References: <20261005101800.10821-1-shentey@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=shentey@gmail.com; helo=mail-wr1-x435.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:31::11;
+ envelope-from=shentey@gmail.com; helo=mail-wm2-x11.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,40 +110,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In locked state, the WDE and WDT bits of the WCR register are one and
-need to be preserved when written. At the moment, the logic is reversed
-such that all but the locked bits are preserved in locked state. Fix
-that.
+Having four CPUs and 1 GiB of RAM matches real hardware. Fix the machine
+defaults to make its use more ergonomic and less error-prone. Also
+reflect this in the board documentation.
 
-Fixes: daca13d495a1 ("hw/watchdog: Implement full i.MX watchdog
-support")
-cc: qemu-stable
-Reported-by: Bin Meng <bin.meng@processmission.com>
+To reproduce the old default behavior for e.g. migration purposes,
+`-smp 1 -m 128M` needs to be passed on the command line.
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Reviewed-by: Bin Meng <bin.meng@processmission.com>
 Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 ---
- hw/watchdog/wdt_imx2.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ docs/system/arm/sabrelite.rst | 4 ++--
+ hw/arm/sabrelite.c            | 3 +++
+ 2 files changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/hw/watchdog/wdt_imx2.c b/hw/watchdog/wdt_imx2.c
-index 3283990bbf..d897ff6e52 100644
---- a/hw/watchdog/wdt_imx2.c
-+++ b/hw/watchdog/wdt_imx2.c
-@@ -161,13 +161,13 @@ static void imx2_wdt_write(void *opaque, hwaddr addr,
-         s->wcr_locked = true;
-         if (s->wcr_wde_locked) {
-             value &= ~IMX2_WDT_WCR_WDE;
--            value |= (s->wcr & ~IMX2_WDT_WCR_WDE);
-+            value |= (s->wcr & IMX2_WDT_WCR_WDE);
-         } else if (value & IMX2_WDT_WCR_WDE) {
-             s->wcr_wde_locked = true;
-         }
-         if (s->wcr_wdt_locked) {
-             value &= ~IMX2_WDT_WCR_WDT;
--            value |= (s->wcr & ~IMX2_WDT_WCR_WDT);
-+            value |= (s->wcr & IMX2_WDT_WCR_WDT);
-         } else if (value & IMX2_WDT_WCR_WDT) {
-             s->wcr_wdt_locked = true;
-         }
+diff --git a/docs/system/arm/sabrelite.rst b/docs/system/arm/sabrelite.rst
+index d3a3c01dd6..b8ac9548f5 100644
+--- a/docs/system/arm/sabrelite.rst
++++ b/docs/system/arm/sabrelite.rst
+@@ -55,7 +55,7 @@ To boot the newly built Linux kernel in QEMU with the SABRE Lite machine, use:
+ 
+ .. code-block:: bash
+ 
+-  $ qemu-system-arm -M sabrelite -smp 4 -m 1G \
++  $ qemu-system-arm -M sabrelite \
+       -display none -serial null -serial stdio \
+       -kernel arch/arm/boot/zImage \
+       -dtb arch/arm/boot/dts/imx6q-sabrelite.dtb \
+@@ -89,7 +89,7 @@ the -kernel argument, along with an SD card image with rootfs:
+ 
+ .. code-block:: bash
+ 
+-  $ qemu-system-arm -M sabrelite -smp 4 -m 1G \
++  $ qemu-system-arm -M sabrelite \
+       -display none -serial null -serial stdio \
+       -kernel u-boot
+ 
+diff --git a/hw/arm/sabrelite.c b/hw/arm/sabrelite.c
+index 05dfabd937..34f302f83c 100644
+--- a/hw/arm/sabrelite.c
++++ b/hw/arm/sabrelite.c
+@@ -17,6 +17,7 @@
+ #include "hw/core/boards.h"
+ #include "hw/core/qdev-properties.h"
+ #include "qemu/error-report.h"
++#include "qemu/units.h"
+ #include "system/qtest.h"
+ 
+ struct SabreliteMachineState {
+@@ -139,7 +140,9 @@ static void sabrelite_machine_class_init(ObjectClass *oc, const void *data)
+     mc->desc = "Freescale i.MX6 Quad SABRE Lite Board (Cortex-A9)";
+     mc->init = sabrelite_init;
+     mc->max_cpus = FSL_IMX6_NUM_CPUS;
++    mc->default_cpus = FSL_IMX6_NUM_CPUS;
+     mc->ignore_memory_transaction_failures = true;
++    mc->default_ram_size = 1 * GiB;
+     mc->default_ram_id = "sabrelite.ram";
+     mc->auto_create_sdcard = true;
+ }
 -- 
 2.56.0
 
