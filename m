@@ -4,92 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 223C4CA5FFD
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Oct 2026 10:26:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F302FCA5FCE
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Oct 2026 10:26:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xDfqa-0007j9-Mt; Mon, 05 Oct 2026 06:23:04 -0400
+	id 1xDfr1-0001To-3G; Mon, 05 Oct 2026 06:23:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xDfmn-0002Oc-Fh
- for qemu-devel@nongnu.org; Mon, 05 Oct 2026 06:19:14 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xDfpj-0006D9-9p
+ for qemu-devel@nongnu.org; Mon, 05 Oct 2026 06:22:11 -0400
+Received: from mail-yx2-x0d.google.com ([2607:f8b0:4864:41::d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xDfmj-00013T-8m
- for qemu-devel@nongnu.org; Mon, 05 Oct 2026 06:19:08 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-4a1728d8dfcso6606745e9.1
- for <qemu-devel@nongnu.org>; Mon, 05 Oct 2026 03:19:02 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xDfph-0001SQ-KB
+ for qemu-devel@nongnu.org; Mon, 05 Oct 2026 06:22:11 -0400
+Received: by mail-yx2-x0d.google.com with SMTP id
+ 00721157ae682-8aef5f85003so6504087b3.0
+ for <qemu-devel@nongnu.org>; Mon, 05 Oct 2026 03:22:09 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1791195728; cv=none;
+ d=google.com; s=arc-20260327;
+ b=s929F7I13H70dEs9SKbGG5OPZrnlarLyJTqVbDwX1utyS9gStohvfiJeAkMFdZVJ2f
+ tV1sWscDNX+BiayZXqbBj9cmlYUebglyL4j4Cp4jlTeim+vmX5gUT77i73hOcLgeonFL
+ zCqK+aHD1kIzKXE0ab7bsjTCaCiiL90rHLWFeeoq2XKf7CD941aO5gQF2ZPXxGJS7JE/
+ b3XMP9tpE3Evvxtxqdd2htjXiO1r9y9b+ySJPUeX7n/0qp3blC9DVGShPYhvrOJbzD7c
+ PZT6lxtCuqRMUF+3ebOuytUfkbUTYJQze3O9oSiGdrgQZmzsq8xsvcdSnJPwgzMrQsh2
+ M5Eg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=sqWtUnPJUFRrz3Q7YgFC/UguLabWTP65yRRQnW0kLBI=;
+ fh=fYbink0dv2K5JH7y7l0ooFc+Kby/5lHeieI3AgvMwzs=;
+ b=OSgojuY7Uko3KW1glVKXk9qHlItQSn3nKpsnvnFOBxmGXzKDkZ4Ae0xAH2vLXrlvCc
+ 4erDiozb0k5LldArXniPgaC9haQmUC9qi2xZXi42Vx3CRDY8LuBrfyRkrkxsMMr6ZUq8
+ 2ocPi3YfoKSGwoWY9Jj1zmHBM28s4AX/jLKFLxMNaup/X7d2DYAHaMFeODSiFeMaS6Z1
+ t2SNzplDFQzexcjdhGSvG5K/PcpAb3B+IEUy7p1+QzCX+RdQUusjrDTBrJhcji7/1PAD
+ PgrEreYRklvaPYOAd7kSAkBvkb3iiR1UzJsZ4bCF2/ubAT5UMEE7XloMfS5z/2cRR1Kt
+ TkMA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1791195541; x=1791800341; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=TSgSmbIol/w3uLzkMCO+LFEzRwoP9tuMmsJ3pCoOB1Y=;
- b=VJut4+7/hsIupQgDhEjkuS7gyaj5WX6MikdqBlbdADsDv1P4N2M+1LNIgQh+p/B7xi
- M2/Qtrfe+exzjJ4dA7JxQYz1UcRDiH7SKB8IkkhSethR5P2RVajw6gKElL9RzE7myzWG
- z9iTIgOccJkwewajx4Ff8ChgUbEdDp22uWDmurVftKdY/WzdhRxViy0ZGPyLAWcuu/Yy
- 9sv9QVHsZJEZqga2z+usKH+9lquTiOjhbe8uxy7qgApA7xc3nb6kdTvtaavTe4JZKKcT
- ztEmJKvD40HX3Xtr/v7elizkiLBgkfM2oo33GQ1HPkGP0E1qdB7dfYzjOCt0jQaLgG4y
- gtQw==
+ d=linaro.org; s=google; t=1791195728; x=1791800528; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=sqWtUnPJUFRrz3Q7YgFC/UguLabWTP65yRRQnW0kLBI=;
+ b=Gi801J2lhW/f9GWR44wTD1Ro8mMRbEFt6ZK5Obyy5V/qBNLb4SoDv4fy8+1fY2Jar/
+ j+yOGzKSluacsnCditlbO1/+1eaAtY0U25pSHNDBFI/Xgbc1SJS3jANz735mz4JIFFqv
+ m6UmCVERDT9N21RuU9MGXguOhfAZm3BkJYeRnD0Mm28jStH7Aost1EjBvUvgqk9liH1r
+ 6ngVBJH1g8lXYR8Ej8XZwXqPnn6Ua6jeQb4CS0wC9KJifJ7W3Y+mcjRkQv3q8ZbTIOYt
+ b+xiZQf49b9KguKrIxJhq7cn8nSH0Cqg1vjey0LqzcNyNeO+r37M2xaMxnBJhFhO68mu
+ fPRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791195541; x=1791800341;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=TSgSmbIol/w3uLzkMCO+LFEzRwoP9tuMmsJ3pCoOB1Y=;
- b=EN/1tQo6PqruoaSuEndAAQNSx2krrcwBc31jmtzb3Te+W+0osyWJeki0v+YvPnRvyu
- 3M9zoEGvxGMyhLQ4ERXQG1Hq1wBUzmB0wqKCjWuT5K4rymuX7a7lD/EUpdaqGqPzlIIh
- ExsCHgdRrjRapESpEJ4Vb8su6JGc0ZM9laRDijBzTAD1qFhR7gsUYRdwiZHdrEZHV2Nj
- xm3YCTOCLOk7uEzj3eFolMt3rV8iCRMuukKzmSsJuHTZjKd8Y7f8O8/YvZ6nDJA6Kqin
- BQHMqUVRN738cABTY1p2ohKIfH2i+gtRrZhKvhxrjCTEI7kfeD0xV9HaGHNjtSnOzjdg
- 1Bqg==
-X-Gm-Message-State: AFuF++kryapTQjO0UoRlx3uGzySQBJZzIoOPCPevJHUELOXB1ei4zUFp
- 77qoZvQeGPLIu+sLQa0U0sxXeYCCBj+PkFGAOOtZYptGkMKnNSOH+VQScRDTIQ==
-X-Gm-Gg: AYBFou1kAhe4ucKj2epe3WrRqHaD4/OqDW5VgQYm90+6xkhKnFLdxWgOgmcdN5JNgsR
- 3NjmfNAFqu0s7DvTPp9c1R98qs9s6ROuxtUy75ZTmrlRRchUAC8a7+AgOu+lKJrsdS7JkYxALqf
- l72tiEotIQ+iQ5109Fjfve1iZF02/FtRD3b0q4NFlqGB1InmPMKUONPQqf0t0hVgOqLH2/3mTJg
- yzF1YEL7K/yBsNBJapMM5i86Amt2Iej7pQiAyq4EGYOp7FO3LhnDzDMZvTbh7PytQHZ2o9ATQ5W
- U1OrWw1iJS/CXjT9zjGoxPp+koZWTUearZkqj0k6phCKrnVWs0qxhmvP4RolG6dbhgBVzihrBPb
- dzaSe5jc7ONHjrSMsqwtQF04DkatkuIEftAzEM8JZuANiHu8JDBr5Ip10xleCblv4ZwQVJaa3rk
- 2E5pFJ7Z31/kQuiEYoP5n8vuWM/3ya32zuzDKwEfZ1W/HE91d/T1xCZICPerWLqddXkvE+PJTCT
- vfxgXz1mZgB+n3Wovv99MEVrwJUsBqpXgiGAQ==
-X-Received: by 2002:a05:600c:4f4b:b0:4a1:6dca:51e3 with SMTP id
- 5b1f17b1804b1-4a16dca51eamr92349625e9.3.1791195540744; 
- Mon, 05 Oct 2026 03:19:00 -0700 (PDT)
-Received: from archlinux (pd95eda80.dip0.t-ipconnect.de. [217.94.218.128])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48c622ab7b5sm2742111f8f.37.2026.10.05.03.18.59
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 05 Oct 2026 03:19:00 -0700 (PDT)
-From: Bernhard Beschow <shentey@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Gaurav Sharma <gaurav.sharma_7@nxp.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Bernhard Beschow <shentey@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Alistair Francis <alistair@alistair23.me>,
- Paolo Bonzini <pbonzini@redhat.com>, Jason Wang <jasowangio@gmail.com>,
- qemu-arm@nongnu.org, Bin Meng <bin.meng@processmission.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Jean-Christophe Dubois <jcd@tribudubois.net>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: [PATCH v3 28/31] Kconfig: Extract config IMX_SPI from config IMX
-Date: Mon,  5 Oct 2026 12:17:55 +0200
-Message-ID: <20261005101800.10821-29-shentey@gmail.com>
-X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261005101800.10821-1-shentey@gmail.com>
-References: <20261005101800.10821-1-shentey@gmail.com>
+ d=1e100.net; s=20260707; t=1791195728; x=1791800528;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=sqWtUnPJUFRrz3Q7YgFC/UguLabWTP65yRRQnW0kLBI=;
+ b=JTZlhum1DschR/86jTT5gGF4sMzZ85H7BdXTH9Ovq0D/ZzPGqunzTPB3VubzPMqAkF
+ nFgNznhNIiPEaFSsJDA7eD/pyiMPRRYXLM5Oti4E8UV0GRIOxefLO3apwtqbLKFSzJ/z
+ BPYl8IImSjIH/Hbj0SxCfAphul7MSRZ+5sMVgO3L7tNR2+qNODtozWS0+3tCKFLcmWma
+ h0oxqyLK306OT9HS2cQC1eyGWv25qq6qtql3ZbYT5pqDeceYMlwb1bYq9zuOBu3kw7r7
+ kCIeISufcAZ75jTpHl7NvQb19MSLu/eAHLrEt+v3MUcXH5CU8NEV0U2Ph5BhoOyhzjwr
+ k5Ag==
+X-Gm-Message-State: AFq9FYJGBMPlviRq2cKn4nc/SGcAz0jcfg54jZJCNYu1AjKqZCWm7GVX
+ DcDye/ldf9B/XFnCVZp+Mrj1L/Cg8i6DuDeQtlE7IwebpjdgArQYGVuuMNk7/wPhUCeeTWhbe44
+ cp8+EDfdszL+qZkAT4Q420zHZM5xWjKJNWS/J6g8Bfw==
+X-Gm-Gg: AYBFou35BjMCUAj8BJ+jwcQKcYWoyqSOrbnlg6OlPR8tFuc/ZKEZwE26JOYVK8nkMBw
+ d2HnCvawBpsoAHqUcVbPDBSQScIemVay5G230B+N4fJoadQP2M2WEX44qOXfTUxhumxEkwUD3rU
+ xBX92f4nUW/ngoViOid8xger1HAPaBG1O6VlrNgfqtZMSRkG95AlhDICteYeKhRbsYRKYLo2pgN
+ JpUQ+aBIQS2rR95/VYZkIP8E7scGVXSTFjlkQW9whbf0gu9u1dgeuNFKRDxfNlpP3C7zK+WH3Yj
+ e8bisaZ6tHwgXFAV4BGfEhyGBn1betObPSIL/oEJ8K4Xb4Ez4hvtjdAgSyyHhyUnXuEMJ8/901V
+ INikLj10XUE0V+iPcWYtyhLNo7cH6b1Iu61T8oEY=
+X-Received: by 2002:a05:690c:e0d0:20b0:87d:b776:c659 with SMTP id
+ 00721157ae682-8ae392b69fbmr32255737b3.11.1791195728187; Mon, 05 Oct 2026
+ 03:22:08 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=shentey@gmail.com; helo=mail-wm1-x329.google.com
+References: <20261005101800.10821-1-shentey@gmail.com>
+ <20261005101800.10821-3-shentey@gmail.com>
+In-Reply-To: <20261005101800.10821-3-shentey@gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 5 Oct 2026 11:21:56 +0100
+X-Gm-Features: AclHuK82AhiTED4Taf48DHXN3-rU8axogLreps_k5XYFoTPGqJkm_1q9xHVTNTk
+Message-ID: <CAFEAcA-agZs6r50+grUT22CFRKARwU9Ad9nPY7EOs_scN7aV+w@mail.gmail.com>
+Subject: Re: [PATCH v3 02/31] hw/watchdog/wdt_imx2: Fix handling of write one
+ once WCR bits
+To: Bernhard Beschow <shentey@gmail.com>
+Cc: qemu-devel@nongnu.org, Gaurav Sharma <gaurav.sharma_7@nxp.com>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Alistair Francis <alistair@alistair23.me>, Paolo Bonzini <pbonzini@redhat.com>,
+ Jason Wang <jasowangio@gmail.com>, qemu-arm@nongnu.org, 
+ Bin Meng <bin.meng@processmission.com>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
+ Jean-Christophe Dubois <jcd@tribudubois.net>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:41::d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx2-x0d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -107,101 +123,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Over time, QEMU has grown a number of i.MX boards and the monolithic
-config IMX drags in unneeded dependencies into each SoC model. Extract
-config IMX_SPI to eventually eliminate config IMX.
+On Mon, 5 Oct 2026 at 11:18, Bernhard Beschow <shentey@gmail.com> wrote:
+>
+> In locked state, the WDE and WDT bits of the WCR register are one and
+> need to be preserved when written. At the moment, the logic is reversed
+> such that all but the locked bits are preserved in locked state. Fix
+> that.
+>
+> Fixes: daca13d495a1 ("hw/watchdog: Implement full i.MX watchdog
+> support")
+> cc: qemu-stable
+> Reported-by: Bin Meng <bin.meng@processmission.com>
+> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 
-Reviewed-by: Bin Meng <bin.meng@processmission.com>
-Signed-off-by: Bernhard Beschow <shentey@gmail.com>
----
- hw/arm/Kconfig     | 5 +++++
- hw/misc/Kconfig    | 1 -
- hw/ssi/Kconfig     | 4 ++++
- hw/ssi/meson.build | 2 +-
- 4 files changed, 10 insertions(+), 2 deletions(-)
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
-diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-index c21ad260a1..3f502685f4 100644
---- a/hw/arm/Kconfig
-+++ b/hw/arm/Kconfig
-@@ -522,6 +522,7 @@ config FSL_IMX6
-     select IMX_FEC
-     select IMX_GPT
-     select IMX_I2C
-+    select IMX_SPI
-     select IMX_USBPHY
-     select CAN_FLEXCAN
-     select WDT_IMX2
-@@ -604,6 +605,7 @@ config FSL_IMX7
-     select IMX_GPCV2
-     select IMX_GPT
-     select IMX_I2C
-+    select IMX_SPI
-     select WDT_IMX2
-     select PCI_EXPRESS_DESIGNWARE
-     select SDHCI
-@@ -625,6 +627,7 @@ config FSL_IMX8MP
-     select IMX_FEC
-     select IMX_GPT
-     select IMX_I2C
-+    select IMX_SPI
-     select OR_IRQ
-     select PCI_EXPRESS_DESIGNWARE
-     select PCI_EXPRESS_FSL_IMX8M_PHY
-@@ -653,6 +656,7 @@ config FSL_IMX8MM
-     select IMX_FEC
-     select IMX_GPT
-     select IMX_I2C
-+    select IMX_SPI
-     select OR_IRQ
-     select SDHCI
-     select PCI_EXPRESS_DESIGNWARE
-@@ -697,6 +701,7 @@ config FSL_IMX6UL
-     select IMX_GPCV2
-     select IMX_GPT
-     select IMX_I2C
-+    select IMX_SPI
-     select IMX_USBPHY
-     select WDT_IMX2
-     select SDHCI
-diff --git a/hw/misc/Kconfig b/hw/misc/Kconfig
-index dbdef58505..ab238767b8 100644
---- a/hw/misc/Kconfig
-+++ b/hw/misc/Kconfig
-@@ -91,7 +91,6 @@ config ECCMEMCTL
- 
- config IMX
-     bool
--    select SSI
- 
- config IMX_CCM
-     bool
-diff --git a/hw/ssi/Kconfig b/hw/ssi/Kconfig
-index 1bd56463c1..d477d20e9b 100644
---- a/hw/ssi/Kconfig
-+++ b/hw/ssi/Kconfig
-@@ -32,3 +32,7 @@ config PNV_SPI
- config ALLWINNER_A10_SPI
-     bool
-     select SSI
-+
-+config IMX_SPI
-+    bool
-+    select SSI
-diff --git a/hw/ssi/meson.build b/hw/ssi/meson.build
-index 6afb1ea200..f334e48e2f 100644
---- a/hw/ssi/meson.build
-+++ b/hw/ssi/meson.build
-@@ -9,7 +9,7 @@ system_ss.add(when: 'CONFIG_STM32F2XX_SPI', if_true: files('stm32f2xx_spi.c'))
- system_ss.add(when: 'CONFIG_XILINX_SPI', if_true: files('xilinx_spi.c'))
- system_ss.add(when: 'CONFIG_XILINX_SPIPS', if_true: files('xilinx_spips.c'))
- system_ss.add(when: 'CONFIG_XLNX_VERSAL', if_true: files('xlnx-versal-ospi.c'))
--system_ss.add(when: 'CONFIG_IMX', if_true: files('imx_spi.c'))
-+system_ss.add(when: 'CONFIG_IMX_SPI', if_true: files('imx_spi.c'))
- system_ss.add(when: 'CONFIG_IBEX', if_true: files('ibex_spi_host.c'))
- system_ss.add(when: 'CONFIG_BCM2835_SPI', if_true: files('bcm2835_spi.c'))
- system_ss.add(when: 'CONFIG_PNV_SPI', if_true: files('pnv_spi.c'))
--- 
-2.56.0
-
+thanks
+-- PMM
 
