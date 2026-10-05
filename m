@@ -4,108 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1591CA5FCE
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Oct 2026 10:25:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3BE6CA5FF0
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Oct 2026 10:25:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xDfr2-0001Yi-1c; Mon, 05 Oct 2026 06:23:32 -0400
+	id 1xDfp5-0004sa-Sk; Mon, 05 Oct 2026 06:21:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xDfqs-00013I-Pi
- for qemu-devel@nongnu.org; Mon, 05 Oct 2026 06:23:23 -0400
-Received: from mail-yx2-x2a.google.com ([2607:f8b0:4864:41::2a])
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xDfmV-0002Hy-R2
+ for qemu-devel@nongnu.org; Mon, 05 Oct 2026 06:18:57 -0400
+Received: from mail-wr2-x0f.google.com ([2a00:1450:4864:30::f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xDfqq-0001cC-1n
- for qemu-devel@nongnu.org; Mon, 05 Oct 2026 06:23:22 -0400
-Received: by mail-yx2-x2a.google.com with SMTP id
- 00721157ae682-8ab41af29caso9301667b3.3
- for <qemu-devel@nongnu.org>; Mon, 05 Oct 2026 03:23:19 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1791195799; cv=none;
- d=google.com; s=arc-20260327;
- b=AvfrRmISI+cTLZZsVgmXWHSA053Dvz8gA+L5Mj5u/TCHprcXu5Ft+6FCpKMYiUEZlD
- YNAQadnOVBAxhZw4JQg8SonXuneXPdpZ0KFNRsZ6yWZhlQ8dswByjewxelbovopq3bc7
- YZVYeJHzmE/VHHeatT70fCQ67YzKkNZyBAFgaPA8Z6++onhIRARw4qIk1xe2ewTkVIZs
- ooP10JLYsB4HflnWvTCsiVnbRin7VhTxDOFqaJIPY2tnl72xXuSDMetAovD3POWxg3lF
- xakx0Z2I0/yg0fB9pn63O9/Bz8dRTS4noQM2u6605RF9obtNtpKTY9fklRU9lTvlM4BX
- HxXg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=JY5AhUvRIeC8DPXhmcL74nL/Q5+jZSyAmHm3WFUmfDw=;
- fh=fYbink0dv2K5JH7y7l0ooFc+Kby/5lHeieI3AgvMwzs=;
- b=Pt9FuDpL560OCcfMmTrd7ZahZX1k2Nr3cXe6e/Eai5NL+8ezlD/YaEeXd9ExkbrK67
- 2BDow9pCvgAtMNdHT5pmtvKPmoTkQdcY/GqGMElT34UZxIRkDw4Fq5NenLXWNeqr6Xtz
- NKGdUJ4XgO4dMw3GS7j8W9nXsPzzmFjRllSK+0r9jncpGBjCyW4pyJ6JMRbps6yhYNAG
- 3RsXB7ShJuq+yiKpSlizKRUWaWg/S9avDZ9Zm1xLcdMMCI34TmK4JQRS1CeGxN85GX6H
- hQs/sQS9ilzKko+RJ1No3Dfce9mW+z5NxYDWPMh/hdCFuHbvX0Hk5kgWYPY6h34/x+mR
- Andg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xDfmS-0000zg-Rq
+ for qemu-devel@nongnu.org; Mon, 05 Oct 2026 06:18:50 -0400
+Received: by mail-wr2-x0f.google.com with SMTP id
+ ffacd0b85a97d-48b059eae96so1359674f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 05 Oct 2026 03:18:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1791195799; x=1791800599; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=JY5AhUvRIeC8DPXhmcL74nL/Q5+jZSyAmHm3WFUmfDw=;
- b=hC13d+uefsREdUpMToLHUGM56nF0UoTdrh20prERH/TfDf7vgNjUUofGifd4YxARDL
- ETxjXUC0c2mqLfVCt8A+JlR3bvnwo4rUi4CSHRWOU0uzP/Toinkx5Vx/c4bi1yrUlkl7
- Kv/3ar4GlWj3XyLy4YNkwVvAdfHbwYF7rNI+F9yqsuqPPb9FVCzVdHPrapSi0qORORTI
- YleQ56RTJXGn0Z5OFqrbKWOSw2s57d0UH0zQJ/+yEsvdJLQqaFu4S63ivIFX+GPD5OKD
- A2CzicDHTiFtgD7nV/p1lbDKoGLc7OyiwvC2eOumjLN0vwiJ2GZ7t3YbfJObfqTGU+O7
- yTAg==
+ d=gmail.com; s=20251104; t=1791195526; x=1791800326; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=RMh0wnw3agFF2IsElQcMdXFWf485YmO8ORQx8WUZoWU=;
+ b=qKNrbwO+LHyxFxMczEgKPswMfvWEVMCZN5kVGPecE/eyL7XhxUf9tiwzF/6dW4Z2Xi
+ cLbliqiYv7EVC46jim67DdJx6jjiF83jZLOm60czw4YsXqCLsFAiExPDFbPoALW+nwHy
+ CtzC7UFsUpWpXnaAwesyragaN8REogTK0/Gx8e3FBW0owedgU8H1ubIhc6JjBdK1KFwH
+ 61lxrzYQYzEuo7TPXAQkKu1e1cCPt0nR12Pirzh1MvzSMZhw0cYT+AP69z3a5W9V2k5K
+ fRVs+5MhDqZbPwN3RqhXUuoS1K0iT2XpnoOgr7laiIp9geyfeuUfhq285GmcJjprH82S
+ GzyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791195799; x=1791800599;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=JY5AhUvRIeC8DPXhmcL74nL/Q5+jZSyAmHm3WFUmfDw=;
- b=BgWwM9Jj+3IOl0KHiw1Bw7mXldB5ONrfd2IpFi6I6vIDpqdN78s+Av5CFpk/NslDq2
- GGCA1HqP412oR4p5tZjKj8bLp7Cjuyre4LBUQaBJk8syEPeK1Ni97t+p3/kpQYV45rti
- 7y73rTBACYAPVTNOvndFu3UEqxRpO0BDq21YnjztowjkRRyQthQ8fDF/ts01w5ZNNf3I
- tEYFUVNfyqYAABNrcRYzwN8UPyQVpmAjz+ZYGHw9WoU5QuiY73pwYdvC56HmHTAonZLg
- bM3hSaZXDxZQWxsOAoO756SR8B2//ySKeyBqYFwrcuHPVBSEoVQ4+UiXF4DXmMcceubT
- PrMw==
-X-Gm-Message-State: AFq9FYKobiKr3zYxam/Usv+y3VskcOqvTm0jX768tox9n3B6ZR4Ji6Cs
- voEqwd7v+xbGHIEJCRl09TcED/ZixZt+lPAY5xQSgswAIE2egD0Jb5b1tsi9g4Za6HY8MSQmBur
- P6ztYw2/E4X6ebKqNlPLFV23bhMzLLULvrNrnedUU3g==
-X-Gm-Gg: AYBFou38QtCr8Mr46Pu9IQ72n3cBXCXBI/CQslDfno1N24zl4PsjVqL/t4X2PYIk66b
- JjK7J5se8L9ABOiasBNHvYf91LEAaPlItMWeRCw/w1dJYyp7PDNDUNTtOh/5doRuOfUGEUzkhmh
- abfIYds3UvgLys5smwLsimFAFTVTNl7JNfY/Gsnhky967NhH6lWfsrWeDQQR+G0uYeXNzdr3Xc7
- Wu3dbMp7/TbS8On42lJnMfq3w2XboPYdf0RwbOuC2IEflqnFFcpmYYrtdGUUB2qEAOBQo8GS5j9
- gqwHnYg/M8V7p6JSj0Nch0Qk2b9sCRXM9SgGv2DWSd/I12kpHCiTvzgy6ScwCmyl+qkN3DegEDG
- akjAojDKf0Apfu03EhVcd6FLZxEcMUkLvTe0wUyQ=
-X-Received: by 2002:a05:690c:c3a9:b0:882:1d1e:9aaf with SMTP id
- 00721157ae682-8ae394b659emr36708537b3.29.1791195798634; Mon, 05 Oct 2026
- 03:23:18 -0700 (PDT)
-MIME-Version: 1.0
-References: <20261005101800.10821-1-shentey@gmail.com>
- <20261005101800.10821-5-shentey@gmail.com>
-In-Reply-To: <20261005101800.10821-5-shentey@gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 5 Oct 2026 11:23:07 +0100
-X-Gm-Features: AclHuK-NjQ8FmVGML3rIHMMCx2sM6WMtR-F1Y-Hv0YrYlvU6el4EICqs9bKtX9I
-Message-ID: <CAFEAcA8B1yu+xWj1iAP7fOPB-o+B9LjzKWYfxA4fNd67c6JaQg@mail.gmail.com>
-Subject: Re: [PATCH v3 04/31] hw/watchdog/wdt_imx2: Remove redundant attributes
-To: Bernhard Beschow <shentey@gmail.com>
-Cc: qemu-devel@nongnu.org, Gaurav Sharma <gaurav.sharma_7@nxp.com>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Alistair Francis <alistair@alistair23.me>, Paolo Bonzini <pbonzini@redhat.com>,
- Jason Wang <jasowangio@gmail.com>, qemu-arm@nongnu.org, 
- Bin Meng <bin.meng@processmission.com>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
+ d=1e100.net; s=20260707; t=1791195526; x=1791800326;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=RMh0wnw3agFF2IsElQcMdXFWf485YmO8ORQx8WUZoWU=;
+ b=ecZzxli3q3WuAlkz8PPLlsB2vJVmNHxlD4+oESBfhGKpczKZpHTj0Lt057XQP3HYu2
+ cTEUmgdsRDO5K8mIMRQmPr5y568mF4OouUdKuCC4NGxcShqNHS2EZK1HCjTc33cHe0pA
+ BIikrA01FBO2WA4xmEnjmqw6KZbcen5KgyS55BDGFzz080elvoiX7y+NYncFokcAgEaN
+ w28PyHcoxbfqgvJQY5l4xDEu8/i6BBTsZDFbVZ6wjDEgS+b+xZBD07uOt3Cq5uAa4T3L
+ nMNlMyvmu2S9WK4QxLVNM+EkuvQyLIeTu0ao3wl0qT37Ee5dIOiHAz7d44U7HiXhnFNb
+ 82tQ==
+X-Gm-Message-State: AFq9FYKZbH/tZBIe/PswZgQ8iX71J12tAJfCysmbj1bFk6l6j8WFdlpU
+ LGeqh3Zycn7FjxYwlTVIqnkOnFI+xX4cSqcMGcJvpGdcMwLmGLrM31wkw3kjZQ==
+X-Gm-Gg: AYBFou1KrcU+yFv6fAvhUSqZhr6+bRqVFiy14ZCIaZJjMhlw66YCr3c3qNgP7XGqp0k
+ aN+E7BVr2SlVD5lD7RAqtBI+6/tmoU/heRW74jjBAQpdXfOF18JukuORlsZJxCvygubE8Ha+IxB
+ SLoTDjvpFpaV2xrAAersv+0VBKznnNuVZDAXGxUpRsUep+0VYIZCqIkPiNelg/bt7ECZa3kluV+
+ 0HNcs18IV5Ub/bozZiAE8MLZ/c3MGCT6HQ6P/1YhXCXz3GcltpfchyhPzb2Z8FcTctelTA+FkVP
+ p8OmzbYVhU1o1bB1vB7v6J+Y4D6de0mCfrYbsnwJ8tcpBvGWVaHGJFYTJyfovWStpRjhpy83xOs
+ zhQgT+1RR0AFmALFMT7yYEfLqwdSH4X8bjpLHRLq7kDANWahYU8Ltuh7hn79whfXzKFPaGH/Utx
+ 5aZL6RN67FJh/bQQhkIuaPrSiS6oRSERkehJ6Q3LsRrjAqNfv+zM5JJVf0lJkv89aaZNbYNH6YG
+ IBh61SjsNAKNlBJMJpEBkaX4rNqU4W3x2rcdEPBuouiCXiv
+X-Received: by 2002:a05:6000:40c8:b0:48c:5785:9b77 with SMTP id
+ ffacd0b85a97d-48c5785a1e1mr6214528f8f.27.1791195525257; 
+ Mon, 05 Oct 2026 03:18:45 -0700 (PDT)
+Received: from archlinux (pd95eda80.dip0.t-ipconnect.de. [217.94.218.128])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-48c622ab7b5sm2742111f8f.37.2026.10.05.03.18.44
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 05 Oct 2026 03:18:44 -0700 (PDT)
+From: Bernhard Beschow <shentey@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: Gaurav Sharma <gaurav.sharma_7@nxp.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Bernhard Beschow <shentey@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Alistair Francis <alistair@alistair23.me>,
+ Paolo Bonzini <pbonzini@redhat.com>, Jason Wang <jasowangio@gmail.com>,
+ qemu-arm@nongnu.org, Bin Meng <bin.meng@processmission.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Jean-Christophe Dubois <jcd@tribudubois.net>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:41::2a;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx2-x2a.google.com
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Subject: [PATCH v3 17/31] hw/misc/Kconfig: Remove redundant USB_EHCI_SYSBUS
+ from config IMX
+Date: Mon,  5 Oct 2026 12:17:44 +0200
+Message-ID: <20261005101800.10821-18-shentey@gmail.com>
+X-Mailer: git-send-email 2.56.0
+In-Reply-To: <20261005101800.10821-1-shentey@gmail.com>
+References: <20261005101800.10821-1-shentey@gmail.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:30::f;
+ envelope-from=shentey@gmail.com; helo=mail-wr2-x0f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,25 +108,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 5 Oct 2026 at 11:18, Bernhard Beschow <shentey@gmail.com> wrote:
->
-> Since WDT and WDE are write one once bits, their values always
-> correspond with their respective locked attributes. Thus, the attributes
-> are redundant. Take advantage of this observation to simplify the code.
->
-> Note that removing the attributes changes the vmstate structure which
-> constitutes a migration break. This is allowed since QEMU does not
-> guarantee migration compatibility for i.MX devices between feature
-> releases.
->
-> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
-> ---
->  include/hw/watchdog/wdt_imx2.h |  2 --
->  hw/watchdog/wdt_imx2.c         | 21 ++++-----------------
->  2 files changed, 4 insertions(+), 19 deletions(-)
+Since commit 464ce71a963b "Kconfig: Extract CONFIG_USB_CHIPIDEA from
+CONFIG_IMX" all relevant i.MX SoC models select USB_CHIPIDEA such
+that selecting USB_EHCI_SYSBUS became redundant in CONFIG_IMX. Remove
+it.
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Fixes: 464ce71a963b ("Kconfig: Extract CONFIG_USB_CHIPIDEA from CONFIG_IMX")
+Reviewed-by: Bin Meng <bin.meng@processmission.com>
+Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+---
+ hw/misc/Kconfig | 1 -
+ 1 file changed, 1 deletion(-)
 
-thanks
--- PMM
+diff --git a/hw/misc/Kconfig b/hw/misc/Kconfig
+index 46e3c03cc8..d1711433ef 100644
+--- a/hw/misc/Kconfig
++++ b/hw/misc/Kconfig
+@@ -93,7 +93,6 @@ config IMX
+     bool
+     select PTIMER
+     select SSI
+-    select USB_EHCI_SYSBUS
+ 
+ config FSL_IMX8MP_ANALOG
+     bool
+-- 
+2.56.0
+
 
