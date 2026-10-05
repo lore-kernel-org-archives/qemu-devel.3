@@ -4,65 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DA01CA5FCE
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Oct 2026 10:23:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27273CA5FCE
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Oct 2026 10:23:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xDfpH-0005Nk-Ah; Mon, 05 Oct 2026 06:21:43 -0400
+	id 1xDfq2-00072L-8F; Mon, 05 Oct 2026 06:22:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xDfmd-0002K5-1x
- for qemu-devel@nongnu.org; Mon, 05 Oct 2026 06:18:59 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xDfmL-0002HL-TM
+ for qemu-devel@nongnu.org; Mon, 05 Oct 2026 06:18:45 -0400
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xDfmb-000127-1f
- for qemu-devel@nongnu.org; Mon, 05 Oct 2026 06:18:58 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-4998b5a63e2so15294435e9.1
- for <qemu-devel@nongnu.org>; Mon, 05 Oct 2026 03:18:56 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xDfmJ-0000xB-OL
+ for qemu-devel@nongnu.org; Mon, 05 Oct 2026 06:18:41 -0400
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-48b0d19cf7eso565651f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 05 Oct 2026 03:18:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1791195535; x=1791800335; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=MtjyPqAx1DBfXhNfiNBwnE4QmFljId/OHSHkX1Y8u+4=;
- b=L7Bykl+D6UmyfQqIJdr1qCJdzz4En3bySBeGc6+9JTJ+XXPyarZgF5oAFiTdCQcskK
- AxwVPA6k6ZiEI0pronZKBWv+MOCCnn6xlEeESNTBsuv262zbmVEv246ZnjLjd0HaqXiX
- 1hcDA+CsD/zcWxFcvdM77nWylPxd/dMOyE5Dr03o/6cpvy2Vxru/mcGHryoR5hrSeF/d
- 4UF72mseke7gPj6/WXC0OyqAQJMZ4jQDnqujmOGkFE995gfD8IGuaujO0NDZl0fDuqya
- IP/UrJalZTm1B62oXkpug9sydvV7bA05O8Zrc2NWGMcvh2AQW9TbK0UX447RWr+uk7D6
- 6yxA==
+ d=gmail.com; s=20251104; t=1791195518; x=1791800318; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=pOxduKRCTuytQO5PRMLsrv51EvLlQX2lLk9OuLBZpag=;
+ b=K5gA4kWEChze9H2VWgPBuxzjI01h6Kju2mO9o5reoTTiinP1sSmagaovyLD5cJNnhM
+ mG5uENVKIRlwoqpC6juGypC3MO/dmmB8cSbsb2IZy8L8nDBaHZBmMx9GoFjvR/j9+pb0
+ SLROUHAGuvm4z5EBdR5L5yr69QuvsusfGEWwxXxIzL2EIk4g64DIMtOLXo9MjbvreVZ1
+ Vhcc5AlVX8h7gldciRMS2RdnNSdccYGgrkPX+e5fmx3fKPSexWKHvftwnDgx7RgAq4Fp
+ tbXzHV/QAtcXMGbrdQxk0/1ntz5zl1XBUzP9a3My9m9rQMoETNcph4+JrzTLv/lCEsFn
+ TCMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791195535; x=1791800335;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=MtjyPqAx1DBfXhNfiNBwnE4QmFljId/OHSHkX1Y8u+4=;
- b=eFlEYxTguMQx0GM2NvOpxSazlj2LV6XSmoXUWs6VLvKgO/392bhK52VvQ6Aeh5tV4q
- PVFUb/nJYbzKPmVV9Mody1LJ4ypFa98S924W+7Y/4CKjQJT8Szmfv1+TgamQdRer4Q56
- PQrICY269Cg9vt4Qif9r/4ublbY3SACu4zn5Uod4oPT2huDady7M2Ui5yMELvq8Wr+JN
- d+D8yNC/TK5D/UegqF+nMIg2e7splohsI1jyxSuNRfZij8TUN2bl5M3T07gHyWDocKIF
- q4SCm0r4nMzYVmMu/9LqZvNdHTV3p8bDFHJnHe35KA/r49Hp+ax8WhWaxz3A3iBPlrSN
- HIBQ==
-X-Gm-Message-State: AFuF++k6uHo98+N1nQweqQ/ZnhZYtYQ9g3RvWSLbIIY0WGN6CMeMBfuX
- ICyM0Uf8Y6SYOZ3EAMr/ubbJ76jTpmDRncBb6ijWuARw8B8kKye5N4qmvhioZQ==
-X-Gm-Gg: AYBFou0uF+QDAn1ZwV41/AvHa8L0l9KeIT59ar0NWqdGJbPlwtJ2StpbwXcw8c5BW9/
- 49Ai20vH4ZUrktYFRAsn5TyGE/EJTgLXGhs6BzZgRdjBHtbp45Z+9lg8I6KguXIk/PXPtKz7Kl0
- syCAkFJkAemG8BBckSeQ1LKo7W0SNRoJSep2G1YYnGjA1pMsvDuvhsIIMEq4CEkFLwiYB2fgTci
- E/afi55xkT42OghqAtcX6GjNp0OQxmacDeMG+c3ic0OOBsGstg1xZBo7EU1/mwUEUq0WJjVvPJ0
- ZfuwTmFSEjbvUeGMK0TL/y74Xv6i79n5yyGoQh6g9E+PDKbDY/7C3LkGvPbnxgjdaEAxba3SZsz
- PlXwO0putQUb3amajsO/J3q2jpnAJy1ArOM0P/lyZTz2ZNTqBBcgBrjr7w9tsR89A4bDn1S8fPr
- MDlWf0qGYPYYS6PBQaa7tuFHUKklszoNM2lH6tD9Ss1YsKKX5IjnXNmaSKNU7uQJSUzIxbiKR/X
- aZ0wHEOCboEuqY79xWpFV0DWAK3zLQ9yeOpa0riCI/A33YJ
-X-Received: by 2002:a05:600c:3e0a:b0:4a1:6843:eabb with SMTP id
- 5b1f17b1804b1-4a16843efe6mr102135435e9.1.1791195535515; 
- Mon, 05 Oct 2026 03:18:55 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1791195518; x=1791800318;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=pOxduKRCTuytQO5PRMLsrv51EvLlQX2lLk9OuLBZpag=;
+ b=HXB3iJn9NOuk/uygDmz79O3cFGNvnuULrHbyMLu516ErQsts4rIq+d0VaeJDt/67LI
+ UImMvXdyUz1nz4Fzyak72LbWLUZ6qkGeDgYhIbMzAJw1cvgrUnfTQbBZe/vEkQgq5zbA
+ +6RbIJ/dJ7PCvRXbRT2oaM44+Sva/TswOcIAoZ1NateTdnh02+jF4sfOeSvcCbxK5Elx
+ 9aIYT3H+JFD3a23TGYR0QOIIoYrKi3WB3DZGfgg/y5hmtWX4dIaldk5pp6VzQGs7z56j
+ FdLFRyVBOEyS2HCi2FbBQsM8j0MtXHLpvCihUdgKDx9eQUKcMbUm1HXmqWyLLQlQLm65
+ JSIw==
+X-Gm-Message-State: AFq9FYJrIrF0lWxiNkMyknsDcjNgt5WbJ/0hFaZ1fp/+3lEy+ipkXRfw
+ 4MjH7blwgq6TZsLIMvCOgKCPh/iPfDj5v6c+9loVGZzJNCsqUfebH3hkuZXpXg==
+X-Gm-Gg: AYBFou29n8mFHxni9j76biQrRW6Aia/MDrkQyaa1VNqQ8vJ0d71bjk5QLxbRQLOB3be
+ NPbe9gjvYqOZ4r5OfmQ/t79W2cnPoEnMCvWkyp0YyLZl4RI638RS7jXU8dd+N+a1Elk+ZG/9W4K
+ zjW1zGSBeiQatQlYy5yV6C3+D+0+7hoTUnCl6cBP4Lm+WfhUVqv6mpAAGqi+YPJgytHgBFs/hmz
+ baUoWuUzficyaCDB4Q3CaaxH6MXpXj3jLLrCWCuSwYvhfWgKS5tUo/7Ua0P4imCOGYdNemizJSV
+ Mju6pvqxl5I2aUPZ4EP/ATpIaS9CLvQhfIF/FRQrPH7WZf4IxIEPlZFNAUwU7HKPs1yrgk1Mw+e
+ f3yD1W3eeiNp9NckSE2iKtOFpKBjIA3OlhF2iEcKVi/IVDMu8Xm1Sss9qPcFsY3cg3VFNSahBtI
+ RcMSbslA1RurM7sGZWkAHRa2rvY2zF1yFPFfApOZtE3TBCXd1lPdA59djn0h84HVGvQ5gR7H4hI
+ zndZ9TmlDzy5raSdQ6XKzXasSNUbkQeOx/jIQ==
+X-Received: by 2002:a5d:4609:0:b0:48a:fff3:f9c1 with SMTP id
+ ffacd0b85a97d-48b067c2795mr16655720f8f.20.1791195518082; 
+ Mon, 05 Oct 2026 03:18:38 -0700 (PDT)
 Received: from archlinux (pd95eda80.dip0.t-ipconnect.de. [217.94.218.128])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48c622ab7b5sm2742111f8f.37.2026.10.05.03.18.54
+ ffacd0b85a97d-48c622ab7b5sm2742111f8f.37.2026.10.05.03.18.36
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 05 Oct 2026 03:18:54 -0700 (PDT)
+ Mon, 05 Oct 2026 03:18:37 -0700 (PDT)
 From: Bernhard Beschow <shentey@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Gaurav Sharma <gaurav.sharma_7@nxp.com>,
@@ -75,24 +76,25 @@ Cc: Gaurav Sharma <gaurav.sharma_7@nxp.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Jean-Christophe Dubois <jcd@tribudubois.net>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: [PATCH v3 24/31] Kconfig: Extract dedicated config FSL_IMXx_CCM from
- config IMX
-Date: Mon,  5 Oct 2026 12:17:51 +0200
-Message-ID: <20261005101800.10821-25-shentey@gmail.com>
+Subject: [PATCH v3 11/31] tests/functional/arm: Add console test for
+ `mcimx7d-sabre` machine
+Date: Mon,  5 Oct 2026 12:17:38 +0200
+Message-ID: <20261005101800.10821-12-shentey@gmail.com>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261005101800.10821-1-shentey@gmail.com>
 References: <20261005101800.10821-1-shentey@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=shentey@gmail.com; helo=mail-wm1-x32d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=shentey@gmail.com; helo=mail-wr1-x430.google.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
+ FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,161 +110,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Over time, QEMU has grown a number of i.MX boards and the monolithic
-config IMX drags in unneeded dependencies into each SoC model. Extract
-SoC-specific config FSL_IMXx_CCM to eventually eliminate config IMX.
+The test currently exercises the Linux kernel and waits for the first
+daemons to be started. At this point, basic hardware is initialized and
+if the log message is reached, no driver ended up in an endless loop,
+thus the system should be usable.
 
-Note that config IMX_CCM represents a base class for i.MX clock
-control modules which is used in i.MX timers and FlexCAN.
-
-Reviewed-by: Bin Meng <bin.meng@processmission.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 ---
- hw/arm/Kconfig      |  5 +++++
- hw/misc/Kconfig     | 25 +++++++++++++++++++++++++
- hw/misc/meson.build | 14 ++++++--------
- hw/net/Kconfig      |  2 +-
- 4 files changed, 37 insertions(+), 9 deletions(-)
+ MAINTAINERS                                |  1 +
+ tests/functional/arm/meson.build           |  2 +
+ tests/functional/arm/test_mcimx7d_sabre.py | 46 ++++++++++++++++++++++
+ 3 files changed, 49 insertions(+)
+ create mode 100755 tests/functional/arm/test_mcimx7d_sabre.py
 
-diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-index 8d857d8bd1..dada9f57a7 100644
---- a/hw/arm/Kconfig
-+++ b/hw/arm/Kconfig
-@@ -479,6 +479,7 @@ config FSL_IMX25
-     default y
-     depends on TCG && ARM
-     imply I2C_DEVICES
-+    select FSL_IMX25_CCM
-     select IMX
-     select IMX_AVIC
-     select IMX_FEC
-@@ -493,6 +494,7 @@ config FSL_IMX31
-     default y
-     depends on TCG && ARM
-     imply I2C_DEVICES
-+    select FSL_IMX31_CCM
-     select SERIAL_MM
-     select IMX
-     select IMX_AVIC
-@@ -505,6 +507,7 @@ config FSL_IMX6
-     imply PCIE_DEVICES
-     imply I2C_DEVICES
-     select A9MPCORE
-+    select FSL_IMX6_CCM
-     select FSL_IMX6_SRC
-     select FSL_IMX7_SNVS
-     select IMX
-@@ -581,6 +584,7 @@ config FSL_IMX7
-     imply TEST_DEVICES
-     imply I2C_DEVICES
-     select A15MPCORE
-+    select FSL_IMX7_CCM
-     select FSL_IMX7_GPR
-     select FSL_IMX7_SNVS
-     select FSL_IMX7_SRC
-@@ -668,6 +672,7 @@ config FSL_IMX6UL
-     imply I2C_DEVICES
-     select A15MPCORE
-     select FSL_IMX6_SRC
-+    select FSL_IMX6UL_CCM
-     select FSL_IMX7_SNVS
-     select IMX
-     select IMX6UL_LCDIF
-diff --git a/hw/misc/Kconfig b/hw/misc/Kconfig
-index 4d47de6a02..a2095d64ae 100644
---- a/hw/misc/Kconfig
-+++ b/hw/misc/Kconfig
-@@ -91,15 +91,39 @@ config ECCMEMCTL
+diff --git a/MAINTAINERS b/MAINTAINERS
+index f31245716a..a605d65d94 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -935,6 +935,7 @@ F: include/hw/misc/imx7_*.h
+ F: hw/pci-host/designware.c
+ F: include/hw/pci-host/designware.h
+ F: docs/system/arm/mcimx7d-sabre.rst
++F: tests/functional/arm/test_mcimx7d_sabre.py
  
- config IMX
-     bool
-+    depends on IMX_CCM
-     select PTIMER
-     select SSI
- 
-+config IMX_CCM
-+    bool
+ MCIMX8MM-EVK / iMX8MM
+ M: Gaurav Sharma <gaurav.sharma_7@nxp.com>
+diff --git a/tests/functional/arm/meson.build b/tests/functional/arm/meson.build
+index 989b841555..e657ecd278 100644
+--- a/tests/functional/arm/meson.build
++++ b/tests/functional/arm/meson.build
+@@ -20,6 +20,7 @@ test_arm_timeouts = {
+   'bpim2u' : 500,
+   'collie' : 180,
+   'cubieboard' : 360,
++  'mcimx7d_sabre' : 240,
+   'orangepi' : 540,
+   'quanta_gsj' : 240,
+   'raspi2' : 120,
+@@ -60,6 +61,7 @@ tests_arm_system_thorough = [
+   'emcraft_sf2',
+   'integratorcp',
+   'max78000fthr',
++  'mcimx7d_sabre',
+   'microbit',
+   'orangepi',
+   'quanta_gsj',
+diff --git a/tests/functional/arm/test_mcimx7d_sabre.py b/tests/functional/arm/test_mcimx7d_sabre.py
+new file mode 100755
+index 0000000000..2894b5201f
+--- /dev/null
++++ b/tests/functional/arm/test_mcimx7d_sabre.py
+@@ -0,0 +1,46 @@
++#!/usr/bin/env python3
++#
++# Functional test that boots a Linux kernel and checks the console
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
 +
- config IMX_RNG
-     bool
- 
-+config FSL_IMX25_CCM
-+    bool
-+    select IMX_CCM
++from qemu_test import LinuxKernelTest, Asset
 +
-+config FSL_IMX31_CCM
-+    bool
-+    select IMX_CCM
 +
-+config FSL_IMX6_CCM
-+    bool
-+    select IMX_CCM
++class Mcimx7dSabreMachine(LinuxKernelTest):
 +
- config FSL_IMX6_SRC
-     bool
- 
-+config FSL_IMX6UL_CCM
-+    bool
-+    select IMX_CCM
++    ASSET_KERNEL = Asset(
++        ('https://ftp.debian.org/debian/dists/bookworm/main/installer-armhf/'
++         '20230607/images/netboot/vmlinuz'),
++        '5851e9c61465a26db810796db671c4729e66e81c365b3ebb1a4b7f772737605b')
 +
-+config FSL_IMX7_CCM
-+    bool
-+    select IMX_CCM
++    ASSET_INITRD = Asset(
++        ('https://ftp.debian.org/debian/dists/bookworm/main/installer-armhf/'
++         '20230607/images/netboot/initrd.gz'),
++        'fe33f836232a9107716d34dc56d36dea81bab039243a2a42ea6583a50c9b92ca')
 +
- config FSL_IMX7_GPR
-     bool
- 
-@@ -114,6 +138,7 @@ config FSL_IMX8MP_ANALOG
- 
- config FSL_IMX8MP_CCM
-     bool
-+    select IMX_CCM
- 
- config STM32_RCC
-     bool
-diff --git a/hw/misc/meson.build b/hw/misc/meson.build
-index 48c5c20455..6ff31183a6 100644
---- a/hw/misc/meson.build
-+++ b/hw/misc/meson.build
-@@ -60,21 +60,19 @@ system_ss.add(when: 'CONFIG_AXP2XX_PMU', if_true: files('axp2xx.c'))
- system_ss.add(when: 'CONFIG_REALVIEW', if_true: files('arm_sysctl.c'))
- system_ss.add(when: 'CONFIG_ECCMEMCTL', if_true: files('eccmemctl.c'))
- system_ss.add(when: 'CONFIG_EXYNOS4', if_true: files('exynos4210_pmu.c', 'exynos4210_clk.c', 'exynos4210_rng.c'))
-+system_ss.add(when: 'CONFIG_FSL_IMX25_CCM', if_true: files('imx25_ccm.c'))
-+system_ss.add(when: 'CONFIG_FSL_IMX31_CCM', if_true: files('imx31_ccm.c'))
-+system_ss.add(when: 'CONFIG_FSL_IMX6_CCM', if_true: files('imx6_ccm.c'))
- system_ss.add(when: 'CONFIG_FSL_IMX6_SRC', if_true: files('imx6_src.c'))
-+system_ss.add(when: 'CONFIG_FSL_IMX6UL_CCM', if_true: files('imx6ul_ccm.c'))
-+system_ss.add(when: 'CONFIG_FSL_IMX7_CCM', if_true: files('imx7_ccm.c'))
- system_ss.add(when: 'CONFIG_FSL_IMX7_GPR', if_true: files('imx7_gpr.c'))
- system_ss.add(when: 'CONFIG_FSL_IMX7_SNVS', if_true: files('imx7_snvs.c'))
- system_ss.add(when: 'CONFIG_FSL_IMX7_SRC', if_true: files('imx7_src.c'))
- system_ss.add(when: 'CONFIG_FSL_IMX8MP_ANALOG', if_true: files('imx8mp_analog.c'))
- system_ss.add(when: 'CONFIG_FSL_IMX8MP_CCM', if_true: files('imx8mp_ccm.c'))
-+system_ss.add(when: 'CONFIG_IMX_CCM', if_true: files('imx_ccm.c'))
- system_ss.add(when: 'CONFIG_IMX_RNG', if_true: files('imx_rngc.c'))
--system_ss.add(when: 'CONFIG_IMX', if_true: files(
--  'imx25_ccm.c',
--  'imx31_ccm.c',
--  'imx6_ccm.c',
--  'imx6ul_ccm.c',
--  'imx7_ccm.c',
--  'imx_ccm.c',
--))
- system_ss.add(when: 'CONFIG_MAX78000_AES', if_true: files('max78000_aes.c'))
- system_ss.add(when: 'CONFIG_MAX78000_GCR', if_true: files('max78000_gcr.c'))
- system_ss.add(when: 'CONFIG_MAX78000_ICC', if_true: files('max78000_icc.c'))
-diff --git a/hw/net/Kconfig b/hw/net/Kconfig
-index b56a173eed..4a2cacbcd2 100644
---- a/hw/net/Kconfig
-+++ b/hw/net/Kconfig
-@@ -160,5 +160,5 @@ config CAN_CTUCANFD_PCI
- 
- config CAN_FLEXCAN
-     bool
--    depends on IMX
-+    depends on IMX_CCM
-     select CAN_BUS
++    ASSET_DTB = Asset(
++        ('https://ftp.debian.org/debian/dists/bookworm/main/installer-armhf/'
++         '20230607/images/device-tree/imx7d-sdb.dtb'),
++        'eed45fe3ba682cc814217bc4558551d36c034ec7a7692c4eb6eaf86132baf80c')
++
++    def setUp(self):
++        super().setUp()
++
++        self.kernel_path = self.ASSET_KERNEL.fetch()
++        self.initrd_path = self.ASSET_INITRD.fetch()
++        self.dtb_path = self.ASSET_DTB.fetch()
++
++    def test_console(self):
++        self.require_accelerator("tcg")
++        self.set_machine('mcimx7d-sabre')
++        self.vm.set_console(console_index=0)
++        self.vm.add_args('-kernel', self.kernel_path,
++                         '-initrd', self.initrd_path,
++                         '-dtb', self.dtb_path)
++
++        self.vm.launch()
++        self.wait_for_console_pattern('Starting system log daemon:')
++
++if __name__ == '__main__':
++    LinuxKernelTest.main()
 -- 
 2.56.0
 
