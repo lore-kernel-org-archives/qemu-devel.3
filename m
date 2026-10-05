@@ -4,114 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39DE6CA5FF0
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Oct 2026 17:17:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59156CA5FF0
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Oct 2026 17:44:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xDmIX-0006Gf-JA; Mon, 05 Oct 2026 13:16:21 -0400
+	id 1xDmiq-0001My-Jy; Mon, 05 Oct 2026 13:43:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xDmIG-0006Fh-K6
- for qemu-devel@nongnu.org; Mon, 05 Oct 2026 13:16:13 -0400
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xDmID-0004w1-KE
- for qemu-devel@nongnu.org; Mon, 05 Oct 2026 13:16:04 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 84E4121ED0;
- Mon,  5 Oct 2026 17:15:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1791220554; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=6RNWgaXHc1SjzXNxb3yHBcoCQXgUc9FA6C+qgxbSYsc=;
- b=OOPggiv/Wvt1wndaPj662o3/yCm6TEHgvmCdrFvt3TmRCwHoH7Lq41pwBP1WkZkZCVRve1
- kCBx+GvDr7QCFpt6r26V0gAS8q3pLPviA99B31nKkHabUEz//1SP/ZePsT3pEJd5W2OIfY
- nIFOT8trTY1Vv5z/tc5cJUe6xoxVxco=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1791220554;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=6RNWgaXHc1SjzXNxb3yHBcoCQXgUc9FA6C+qgxbSYsc=;
- b=zX9Snw7L+s5TuW2nTZwny3iOUkfEEOIvh8OxujqziWQbEnM3mIjuGtRD1emoc27oKAaxOh
- 452WoU92PuCYoZBg==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=iymPrw6b;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=pFz8kpzi
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1791220550; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=6RNWgaXHc1SjzXNxb3yHBcoCQXgUc9FA6C+qgxbSYsc=;
- b=iymPrw6bfW8WpOCJbQt1263MNi/QFKfN/ztImdI/ulVtmHbokPEMa2pYA2n1X771LafKCO
- bT/enQWV6m8iVAMQM1bP/k+SQMGabdV9NSh5zRLGvW4ic9+eYRS6Tcq80wHWhhnYntAuUv
- xiBtck7Qs5G6pzI8sLW5v27qxr64K3M=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1791220550;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=6RNWgaXHc1SjzXNxb3yHBcoCQXgUc9FA6C+qgxbSYsc=;
- b=pFz8kpziLdw4ylafbbE2n4c6qXyWzuWULHvkkJyffc6eiZx/CxM51RRVH6EGDa53nPqFmI
- tk3erMMSL/xuPrAA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 029C113688;
- Mon,  5 Oct 2026 17:15:49 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id KaxsJkXbw2onaQAAD6G6ig
- (envelope-from <farosas@suse.de>); Mon, 05 Oct 2026 17:15:49 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Laurent Vivier
- <lvivier@redhat.com>, =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>
-Subject: Re: [PATCH] qtest: fail fast when QEMU terminates early
-In-Reply-To: <20261005120434.413891-1-berrange@redhat.com>
-References: <20261005120434.413891-1-berrange@redhat.com>
-Date: Mon, 05 Oct 2026 14:15:47 -0300
-Message-ID: <8733uk83wc.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
+ id 1xDmij-0001Ky-SA; Mon, 05 Oct 2026 13:43:26 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
+ id 1xDmih-0007YJ-8z; Mon, 05 Oct 2026 13:43:25 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 695HZrQq1257970; Mon, 5 Oct 2026 17:43:20 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=K3e3zL8kBO4quMbID
+ CYCTuLs2hTd7jJl1EXMPtlluG0=; b=BBNTvTsiBjKEuZW8LQ3UynLHoHGNPlQ+7
+ fTIFt78JIAF7QCYXaQfHkhZS4Eji7QXGFZq/O3fHaFjYB6VNsRTlAPrvehzJkwVy
+ /Q1vDGcylycxTkH6TnCtGeuyRiDcfI5RE/6Rmt4ZeczC6mxSNSDGMHciykSfu8A2
+ Qy+TW9Wss2ZmJ98aSvWgpgMR1//nzAj9gMnWxhmzg+S9kKc5pWkUxisr+0/NQJf/
+ l+qf3ybKPhMMTHHKtsnhRD1V5C/S9BNas8fR6gUsmROUAH3fcka6Nadw1mIwbFWN
+ UdEbBv8IA4/Uj/uSrsJtpbhOra0x9bjFmZ7QOiZy4r6YoYiSkMIfw==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4h2se5bmbq-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Mon, 05 Oct 2026 17:43:19 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 695HMYDR3214609; Mon, 5 Oct 2026 17:43:19 GMT
+Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4h3d1jpffv-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 05 Oct 2026 17:43:19 +0000 (GMT)
+Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
+ [10.241.53.102])
+ by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 695HhHsB66519302
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 5 Oct 2026 17:43:17 GMT
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7944F58056;
+ Mon,  5 Oct 2026 17:43:17 +0000 (GMT)
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D2B315803F;
+ Mon,  5 Oct 2026 17:43:16 +0000 (GMT)
+Received: from IBM-D32RQW3.ibm.com (unknown [9.61.253.223])
+ by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Mon,  5 Oct 2026 17:43:16 +0000 (GMT)
+From: Farhan Ali <alifm@linux.ibm.com>
+To: qemu-s390x@nongnu.org, qemu-devel@nongnu.org
+Cc: alifm@linux.ibm.com, mjrosato@linux.ibm.com, farman@linux.ibm.com,
+ cohuck@redhat.com, alex@shazbot.org, clg@redhat.com
+Subject: [PATCH v7 2/2] s390x/pci: Reset a device in error state
+Date: Mon,  5 Oct 2026 10:43:14 -0700
+Message-ID: <20261005174314.871-3-alifm@linux.ibm.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20261005174314.871-1-alifm@linux.ibm.com>
+References: <20261005174314.871-1-alifm@linux.ibm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Queue-Id: 84E4121ED0
-X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; ARC_NA(0.00)[]; MISSING_XM_UA(0.00)[];
- MIME_TRACE(0.00)[0:+]; RCVD_VIA_SMTP_AUTH(0.00)[];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- TO_DN_SOME(0.00)[]; RCVD_TLS_ALL(0.00)[];
- MID_RHS_MATCH_FROM(0.00)[]; RCPT_COUNT_FIVE(0.00)[5];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- DWL_DNSWL_BLOCKED(0.00)[suse.de:dkim]; RCVD_COUNT_TWO(0.00)[2];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,suse.de:email,suse.de:dkim,imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- DKIM_TRACE(0.00)[suse.de:+]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA1MDA2OSBTYWx0ZWRfX9i9nUHiEyHu2
+ knDAJkVZS1UU7NlgUVKeJAZKS5DAKAMhXyWkOaKiiozUGnmEE7EBvh0+Cf5PBkFjTFbvhAjwrKN
+ m9lRRlxzZBXygeiTX4qLHnmkUor0CAs=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA1MDA2OSBTYWx0ZWRfX8ghIqwF1C3s5
+ dCjxdQ/M2Y5ZOen6CxvP/bhOc8mUfhrE5v9o+nsrl7SqMmAp434nQCsaMTz/KZbaiR9HpO8g7Df
+ 7hqgXOxCGlKjPfx6Mgv0fqoFznHXx1EhfXq08P/1C1UiUVag0xiguxSKifcVQ9AIoNbdI/QZyrA
+ QNaZgdNsCy30TlesVQz4WYhLHmptWV5sbJJDbhVyXKnvkNNJH6mmLHVjam3F5W2gq8KOJR7P90x
+ zpiLo84VOyiFU5GrS0/BI6v0io5v7TCs6x/RLChIC59f9l13/lod3eMsyzyRRwtAXRnwp+Ize1L
+ XWUmpQjBo5VKnA4vEwulzFZGqhZs8GTh6Uj+FTgbfV5l7SfGVKa1Tr3pcEHB7gl5DbT6GgXQ7E3
+ evkiesu9KkQLGxKuy+DBcFdc/YeqOb4juUtjeHdSArLRdz/bR5P+q/2C6G1gHjRoHd8aLgcEqXm
+ iok3FVL9vyEOM5qn1xw==
+X-Proofpoint-GUID: yHCYHp6zUU9nW3N5AtYJkxX81cc1cZea
+X-Authority-Analysis: v=2.4 cv=UNRIjyfy c=1 sm=1 tr=0 ts=6ac3e1b7 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8 a=FuZLNSxbJke2QbDKExoA:9
+X-Proofpoint-ORIG-GUID: yHCYHp6zUU9nW3N5AtYJkxX81cc1cZea
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-10-05_05,2026-10-05_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 impostorscore=0 adultscore=0 bulkscore=0 lowpriorityscore=0
+ phishscore=0 clxscore=1015 priorityscore=1501 suspectscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2610050069
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=alifm@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -128,130 +119,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+For passthrough devices in error state, for a guest driven reset of the
+device we can attempt a reset to recover the device. A reset of the device
+will trigger a CLP disable/enable cycle on the host to bring the device
+into a recovered state.
 
-> If QEMU fails to start, or crashes early, before libqtest has opened
-> its qtest and QMP sockets, we'll get into an 'accept()' call with a
-> 50 second timeout waiting for a connection that the zombie QEMU
-> process will never initiate.
->
-> Use a short 250ms timeout with accept(), but loop 200 times instead,
-> checking whether the process is alive on each iteration. With this
-> qtest detects dead QEMU immediately.
->
-> socket_accept is renamed to qtest_socket_accept to reflect that it
-> now requires QTestState.
->
-> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
-> ---
->  tests/qtest/libqtest.c | 45 ++++++++++++++++++++++++++----------------
->  1 file changed, 28 insertions(+), 17 deletions(-)
->
-> diff --git a/tests/qtest/libqtest.c b/tests/qtest/libqtest.c
-> index 05d88476154..9e7a2d43a18 100644
-> --- a/tests/qtest/libqtest.c
-> +++ b/tests/qtest/libqtest.c
-> @@ -44,13 +44,14 @@
->=20=20
->  #define MAX_IRQ 256
->=20=20
-> +#define ACCEPT_TIMEOUT_MS 250
-> +#define ACCEPT_RETRIES (4 * 50)
-> +
->  #ifndef _WIN32
-> -# define SOCKET_TIMEOUT 50
->  # define CMD_EXEC   "exec "
->  # define DEV_STDERR "/dev/fd/2"
->  # define DEV_NULL   "/dev/null"
->  #else
-> -# define SOCKET_TIMEOUT 50000
->  # define CMD_EXEC   ""
->  # define DEV_STDERR "2"
->  # define DEV_NULL   "nul"
-> @@ -116,20 +117,17 @@ static int init_socket(const char *socket_path)
->      return sock;
->  }
->=20=20
-> -static int socket_accept(int sock)
-> +static int qtest_socket_accept(QTestState *s, int sock)
->  {
->      struct sockaddr_un addr;
->      socklen_t addrlen;
->      int ret;
-> -    /*
-> -     * timeout unit of blocking receive calls is different among platfor=
-ms.
-> -     * It's in seconds on non-Windows platforms but milliseconds on Wind=
-ows.
-> -     */
-> +    size_t i;
->  #ifndef _WIN32
-> -    struct timeval timeout =3D { .tv_sec =3D SOCKET_TIMEOUT,
-> -                               .tv_usec =3D 0 };
-> +    struct timeval timeout =3D { .tv_sec =3D 0,
-> +                               .tv_usec =3D ACCEPT_TIMEOUT_MS * 1000ul };
->  #else
-> -    DWORD timeout =3D SOCKET_TIMEOUT;
-> +    DWORD timeout =3D ACCEPT_TIMEOUT_MS;
->  #endif
->=20=20
->      if (setsockopt(sock, SOL_SOCKET, SO_RCVTIMEO,
-> @@ -140,13 +138,26 @@ static int socket_accept(int sock)
->          return -1;
->      }
->=20=20
-> -    do {
-> +    for (i =3D 0; i < ACCEPT_RETRIES ; i++) {
-> +        if (!qtest_probe_child(s)) {
-> +            fprintf(stderr,
-> +                    "child process unexpectedly exited, skipping socket =
-accept\n");
-> +            goto cleanup;
-> +        }
-> +
->          addrlen =3D sizeof(addr);
->          ret =3D accept(sock, (struct sockaddr *)&addr, &addrlen);
-> -    } while (ret =3D=3D -1 && errno =3D=3D EINTR);
-> -    if (ret =3D=3D -1) {
-> -        fprintf(stderr, "%s failed: %s\n", __func__, strerror(errno));
-> +        if (ret =3D=3D -1) {
-> +            if (errno =3D=3D EINTR || errno =3D=3D EAGAIN) {
-> +                continue;
-> +            } else {
-> +                fprintf(stderr, "%s failed: %s\n", __func__, strerror(er=
-rno));
-> +            }
-> +        }
-> +        return ret;
->      }
-> +
-> + cleanup:
->      close(sock);
->=20=20
->      return ret;
-> @@ -549,9 +560,9 @@ void qtest_connect(QTestState *s)
->      g_autofree gchar *qmp_socket_path =3D qtest_socket_path("qmp");
->=20=20
->      g_assert(s->sock >=3D 0 && s->qmpsock >=3D 0);
-> -    s->fd =3D socket_accept(s->sock);
-> +    s->fd =3D qtest_socket_accept(s, s->sock);
->      if (s->fd >=3D 0) {
-> -        s->qmp_fd =3D socket_accept(s->qmpsock);
-> +        s->qmp_fd =3D qtest_socket_accept(s, s->qmpsock);
->      }
->      unlink(socket_path);
->      unlink(qmp_socket_path);
-> @@ -663,7 +674,7 @@ QTestState *qtest_init_with_serial(const char *extra_=
-args, int *sock_fd)
->      qts =3D qtest_initf("-chardev socket,id=3Ds0,path=3D%s -serial chard=
-ev:s0 %s",
->                        sock_path, extra_args);
->=20=20
-> -    *sock_fd =3D socket_accept(sock_fd_init);
-> +    *sock_fd =3D qtest_socket_accept(qts, sock_fd_init);
->=20=20
->      unlink(sock_path);
->      g_free(sock_path);
+Signed-off-by: Farhan Ali <alifm@linux.ibm.com>
+---
+ hw/s390x/s390-pci-bus.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
+diff --git a/hw/s390x/s390-pci-bus.c b/hw/s390x/s390-pci-bus.c
+index b2967dacba..6557ec4240 100644
+--- a/hw/s390x/s390-pci-bus.c
++++ b/hw/s390x/s390-pci-bus.c
+@@ -1505,6 +1505,21 @@ static void s390_pci_device_reset(DeviceState *dev)
+         return;
+     case ZPCI_FS_STANDBY:
+         break;
++    case ZPCI_FS_ERROR:
++        /*
++         * Attempt a reset to recover the device. A device in ERROR state
++         * can be transitioned to ENABLED or DISABLED state via guest
++         * driven actions.  Since this code path is also executed on
++         * subsystem_reset() and the expected state of a configured device
++         * after subsystem_reset() is to be in a DISABLED state, we need to
++         * transition from ERROR to DISABLED.
++         *
++         * Linux guests drive the state transition from ERROR to DISABLED
++         * via CLP_SET_DISABLE_PCI_FN. So it should be safe to transition
++         * from ERROR to DISABLED state.
++         */
++        pci_device_reset(pbdev->pdev);
++        /* fallthrough */
+     default:
+         pbdev->fh &= ~FH_MASK_ENABLE;
+         pbdev->state = ZPCI_FS_DISABLED;
+-- 
+2.43.0
+
 
