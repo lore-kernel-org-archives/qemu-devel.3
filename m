@@ -4,108 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1604DCA5FF0
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Oct 2026 11:59:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F7BDCA5FCE
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Oct 2026 11:59:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xDhLF-0001Xp-6v; Mon, 05 Oct 2026 07:58:51 -0400
+	id 1xDhL7-0001V2-Jm; Mon, 05 Oct 2026 07:58:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>) id 1xDhKp-0001Uh-R5
- for qemu-devel@nongnu.org; Mon, 05 Oct 2026 07:58:25 -0400
-Received: from fhigh-b4-smtp.messagingengine.com ([202.12.124.155])
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>) id 1xDhKl-0001Tz-IQ
+ for qemu-devel@nongnu.org; Mon, 05 Oct 2026 07:58:21 -0400
+Received: from fout-b8-smtp.messagingengine.com ([202.12.124.151])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>) id 1xDhKo-0002yE-18
- for qemu-devel@nongnu.org; Mon, 05 Oct 2026 07:58:23 -0400
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
- by mailfhigh.stl.internal (Postfix) with ESMTP id 360447A012E
- for <qemu-devel@nongnu.org>; Mon,  5 Oct 2026 07:58:21 -0400 (EDT)
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>) id 1xDhKj-0002xM-J1
+ for qemu-devel@nongnu.org; Mon, 05 Oct 2026 07:58:19 -0400
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+ by mailfout.stl.internal (Postfix) with ESMTP id 37A701D000D1
+ for <qemu-devel@nongnu.org>; Mon,  5 Oct 2026 07:58:12 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
- by phl-compute-06.internal (MEProxy); Mon, 05 Oct 2026 07:58:21 -0400
+ by phl-compute-02.internal (MEProxy); Mon, 05 Oct 2026 07:58:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
  h=cc:cc:content-transfer-encoding:content-type:date:date:from
- :from:in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to; s=fm1; t=1791201501; x=
- 1791287901; bh=B7FvqKu3aFiGVZTos9xZIqlwk17QZCSqTyNct9jdkMI=; b=7
- IBInQ9iRVcObp+hrc96eonid8wPJeUlzDOUkwC6WyCHrKRgBwaI3kHG0o76QJpO7
- ir1p63T8UuH0EearS2n2YUOPzkoZFn1FMGV6ZZZIBUyO+AlrwdvmARcBE8lWfcmD
- JOMYhFcZUFQhZE49XDDlM6YRvFLNTFFgo+opvKBL7MKeYQ1qk53irvrgCg0A4NW8
- ZQVuddq2PTfgP9Kkpbf58ZNqJOh2btecwrxrz6ztQ+Ir9vRulfms0fi1hgfhTb4j
- k3+I+y7AJ9qY/I/wF8pWvrgk2Asecq8/doavknC2CmriXoaJ8NNqWVTCKJjBsKPa
- SvNkKzZBz0SR6qy6Sy8Dw==
+ :from:in-reply-to:message-id:mime-version:reply-to:subject
+ :subject:to:to; s=fm1; t=1791201492; x=1791287892; bh=LE2A1XPNQQ
+ HlZhk7FYQc29VDi3DQ47/QXFDlSXAmSOk=; b=aE7w14FzIoSryUapmWH9kBLZp4
+ uty5XQ/1Rey2GG/mDC80hSINl9z1iAhMYjb7RE6jVse948pUEqhTtdbkzTcBMgHI
+ B88Um8sTUr3vTjsLS1k1/76Gu1yyxSYPN/uXIjCdWdC4L23SG++J240w+4ox/4Id
+ oJ4VYMZDqXLujeScPUFl5g77fUwZcb+eQw1bknOsB/iM4FlZhc7T7e79J0upeHf2
+ Tbwaz74uQmwN7vZf2g4YJj4vtTvV81DOWJC+WXx1icc2lAiGTujBW6srpgNW4+Sw
+ NCoSl0AA0NgO1M6ONf1sJYYba12s6v70ww5qUgtOfZ4Ph1+e4PFF1nypqVvA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-transfer-encoding
  :content-type:date:date:feedback-id:feedback-id:from:from
- :in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
- :x-me-sender:x-sasl-enc; s=fm2; t=1791201501; x=1791287901; bh=B
- 7FvqKu3aFiGVZTos9xZIqlwk17QZCSqTyNct9jdkMI=; b=MP+wUnqvg8tv7deRp
- JYfOufsneiw6vNd4DWm4hkHAsKN/u4Y9O4Iswj/rqNRB1ldyB2c41pbtRhwVK0XA
- 6S3CiP3lZtpaNbvU7cJvoNvy9uQpf+HhuqfYIoPPFqaxmtSZqKRAGaG+KkBPEtsx
- WfeTEfr5wfatht84e/LORneQ+28ENqHJKIkR9KA17AHYICXGy6ojm4FDnNEb+oT7
- ZP7ZPyUNaEmOHAbr4dwt8837yEDbbl1wphXoSoTxZYKrjUYbqAEfLxpXqiMKQLQE
- VSW/KP4JgBf2TGU57jSK9CurtSrBKD9hm94lPxymUUpW9F6LFA/WdVnhNzC51g+s
- 9dvIg==
+ :in-reply-to:message-id:mime-version:reply-to:subject:subject:to
+ :to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+ 1791201492; x=1791287892; bh=LE2A1XPNQQHlZhk7FYQc29VDi3DQ47/QXFD
+ lSXAmSOk=; b=AjgUZviAJLgtHAQU4JKiOPgusHyVhXQyDis4e92F3oXPgriOsxi
+ iYn8rhvCtQRPT9TSJIqziK5oUPbukWPURyrBVen1CTLoMWcOrLF6mQHihnw3tb3j
+ zCATh8Gkbhd6DummuDtCgtGCArQXx0r8uKixzA/AY1ZB1T2hEvcuaIvhmwuw8UBP
+ riyxOrBFqo+k8Sth8YxE1iorKvD1FE4Hx9Fb9O9VK9H3css+esGAB6n6+vqVywkx
+ nU50cg+hzgChX/XNTiDljYB7g2JVT0HW48Jryzsiv87TJSekREAMannSfpQqQQ8y
+ UpWMmFb9i6icmQ3gkUtaHkfndYA0kUubu0Q==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
  repo=github.com/dkim2wg/interop; date=2026-09-30; sw=lmtpprox;
  action=sign d=irrelevant.dk a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1791201501; d=irrelevant.dk;
+DKIM2-Signature: i=1; m=1; t=1791201492; d=irrelevant.dk;
  mf=PGl0c0BpcnJlbGV2YW50LmRrPg==;
  rt=PHFlbXUtZGV2ZWxAbm9uZ251Lm9yZz4=;
- s=fm1:rsa-sha256:j1zNoXypwtclkm82PIdGbqaF+sqBNQany7GWfI9d0zwjNVL
- PyOwA2hnILNFea9nsuVAHbtLtVpGBoYDfaZlgmEYzYHYy8qRyKbfZliZV6JwISR1
- Lhp8JfwRkcGQJL0bi6DRYwM7XLY4sg57x5+Tdg4jreNyEPGq/n2W+VFrNM1Wxx98
- etmkQrJxfYeLowS9T6+ftR1a6ihoYSPjGimaefYp/+xF5Ad+Jd/FAt8ggugFsAx2
- Az6wfpoudky2PpBZYwYWm+jKuxhpFyyEJ+4MeUBmyFbg7bNTsHu9YMHNOio+0u3k
- V5Jd1PZ5eZj0cMkdzRLODzzaRkxGNZIGUiiYNCA==;
+ s=fm1:rsa-sha256:4MRLRcMZy/smG4NO3KFHLLNzKwKkoveCH9GzmqYaidLYV+K
+ f7/oXQM6PxF2Q9p1GD+kKkM+L2wmAx3FwCFXVwCzXev9ofokluwO2FNUODHSUagT
+ 7KA5LmlnI358+Jk9BifhPgk+c2N995mJbShcwZGSUQDoN8L26SG4L4azWKfIVeyY
+ eE6+JNfiZfecGxZFGSFxy11EsqVNwct9QCVDdUudkJbqXKk6ZK45GT5LhPAz8zNL
+ qX/uuJHykKkZVLf1ebZyzJF54bDbWXdTd+D9JQB5pwkgYni5n9Bpsi1/ybJdGGNo
+ mFPCSc4JQwY7E5mv/x4ZiRu+RPSNBmdD+n88lBg==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
  repo=github.com/dkim2wg/interop; date=2026-09-30; sw=lmtpprox;
- action=mi-m=1; hc=11;
+ action=mi-m=1; hc=9;
  hn=cc,content-transfer-encoding,date,feedback-id,from,
- in-reply-to,message-id,mime-version,references,subject,to;
+ message-id,mime-version,subject,to;
 Message-Instance: m=1;
- h=sha256:nS3487K64OKgAWuPIDuF5qe3eFI+cQq06a0zhl0Uh4g=:GuHmSuPo4pgdznOI8ol8QJF0irKZ0dhV/BfYVqcGknU=;
-X-ME-Sender: <xms:3JDDamxWk6kW3-RFfXgbdiKXHtJpzQW_mgdO0ax03sS7tjTBz_KQcQ>
- <xme:3JDDauTRqMess6v7K46zhjr_kphKprGi12QriFNxHshJCJiBsu3HvrvuilZKbOO7h
- kJSXJTQjf6yqU2Fe2s7wUs6L1MmXDi94dequmTpSy8yLiPHF0tx5C4>
-X-ME-Received: <xmr:3JDDaqiGZ2iazQPu0q5JydEohRNOfZ0i4WENZw2ttgN60q7wRTqpvJfzt5HvtdJe-mDOmSzCD2RaTIQHciah61py>
-X-ME-Proxy-Cause: dmFkZTEr+xmrqVGlVQGKS+bQ19SBCupADr7Hdv3MLlYOmJJ0MHpcGBVX7wqD5lzPTIvynB
- 3Z7xCzf/9N09kBvoXTuT/jDvRF8pgZiXd8K7UF45X63MTAjNTmzBXogOUz2NqoJ/AIU0ui
- QVACBXTrXIFHdjQxbdPBca+AbDua3wZNoq8iqf7GWb8Rpl5PWnY1cpPh9s6B1Djg0gXYjJ
- iuexN2Z4QEn6q4Pqa7RSW1oF5+CdzLm0KydieObKFnQL5JMZ5ROLoF5dosd/2BfT/YKZmJ
- Pxl/3KtExYI0YoOpy2pHP658F+mvvlGXHM6P39dTEl5srih6JlOC+ix6hCTMWogIDu43iO
- iaKeZ3ug2j06JII12Np0/CvXKKOgnaKRRN+XGJDvxFEfAffAZPbiTiX3jvX4geBXysLddy
- Ofg1/6Q/cFbfFh/G2iX2snwq4UXB+zj6pqehWJFj2VqezHPx+LfYo2pQmHKAbaDDwA27aV
- 4ckiuqhQbtDGl9fOQHwhKYjNbZ/y/Bvfyg39fluDEdq2PNtBvUOM2UKuLwTVg7c1lvk9eX
- uU/0MVrdNzTr2d0tKSHMCeaHAlGix/TXeZ5Hjd8kZ8Dd5usx0G0AyeQ6Ibs/Xk7ahjWY0Q
- balIv/gb2+kMNBGmxFEUSjg4xmlP7n9lPU3jIJ9vXJqEhm/fKleL5yKxG6AQ
-X-ME-Proxy: <xmx:3JDDatklo3wsAwSXDp1-c_N0ES4HwU8VswwTojN2uz4FyuplY-0ztQ>
- <xmx:3JDDalvooT5XrfwUM0CWe83HRRlm2vHQoM0YEnyJlPnev3l6Wu2XDw>
- <xmx:3JDDajZmIk3UOKa7KDCqzm-u5UjxrHEPmMVRRJMmZK8n7FPyAsxfTg>
- <xmx:3JDDatA4wk4jV9Lt4qjYcVngL0Na8aps5je81Jj0QQGJfKpDItFopw>
- <xmx:3ZDDambWQuoGcrgg0MEO6krWjMWdqjeDPd-upD9kQRn9mO3Ht7w3iuuW>
+ h=sha256:5LBmkppfoOyGmoj8GkWRrjndBxu5B8+lQ2mto53pUuY=:GPRFjCC2bAXcIyOqvLOh0qru63YrVYAxQdTic8BpSJs=;
+X-ME-Sender: <xms:05DDahIY_Y_QEUrWrN5fCUjOty6Wv8vCyvmoSMOwSEEwJqMOw_oTOQ>
+ <xme:05DDahdXkxznJiDSp3fgNos_9u4shNKeWlbtMmA8C7X44HHh2YfNlQ71yTcMIw4YZ
+ Ld-hjZM46LgzjWqS-UhJ-JfIY74KoXXXzy0cw9ENqcUvQ0SrAzxChI>
+X-ME-Received: <xmr:05DDao1xw6Gmhfn1ZTIoLgNlVSC23BQM0OhH4F25n592ncRuZmPsxKAtTBSpJy5_z72nnpbHYZMtL3ConIrdpC1Y>
+X-ME-Proxy-Cause: dmFkZTGcjIY7TAZkzSrmRiOJgWlfcteyq21Arp/gQI0vc97Wt2AKcErwPJSxuKLrMOkqF3
+ WdQTFydZXsTOe1QutO+aO+zquXhjpW4DStFu03LvcTO5p/kqvfLuAUXzuxYI4cY3jj/mSs
+ LHugKa9MO7wqz56tUCHXHpJt2wF6RorzpsNCTMzaCjMDWdiAq3u5yRy385yUbQcinpFc6M
+ k0GAwkQEGnrF+XqbkY1umDxQ8NAkG2yB9vr6DWNPQTN4oPO+pqe5LQyVBuqCA8i3ttIe5J
+ OHGS9sEYeWuvrpJPBmhECYeA8tIuMcywKr3vxO5kXKk8V7XiojxDtPq0Mr93Ok9QRqOvhH
+ BtECkZyrP9uyPY12WQpewAQOysBpTM7Sis1m1TBGTprJsacFhRtq/Su1UdOPTm3kXWfWyb
+ go2uW+aQCkGyB2yEwBoJIjT8NbY97tUlYsQdAmMvHMX93gkWe4nwnMh+c1yuFhZu2vH+H0
+ OuwFAtoqj1vOv/Es94muHYd9w22MzCIAZmEfiiF45aVX2RTUDY742TzDPko7tJeSvT3fdT
+ O7HtnMGUGdB8AZnoJtTSw32qnyPiphG9S2RNFsE3cdDznmcVUxENxNk9qltdxIF5MICYpj
+ +vhzQXZY5/DI55olKoWCaebR6ZLFYg43fymUtbVu92f1F5vyLLEo7/ZU5yIQ
+X-ME-Proxy: <xmx:05DDaqj-CR5ouP_7og8rvqQGbJWjjxy2vrONBVJnYcAtFV91XMIe6A>
+ <xmx:05DDauRlamw47KyGQUWIMzrExCp3yofx9ziWH6HF7WOah5SgPFHOBw>
+ <xmx:05DDari90k_z0fX9A_Do_0aMA7sgOAvJAVVopmGulHz6DHxnjfJGKQ>
+ <xmx:05DDau6SLzMY_UmllVaxeVALwg-O1U_PGY0LG-c_7ia-VPn6A7nnew>
+ <xmx:1JDDaitRTvGVzqDCwpkJvHyJ1lJte31JEv5FKXlT99EPiNnSM4cGOSty>
 Feedback-ID: idc91472f:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 5 Oct 2026 07:58:19 -0400 (EDT)
+ 5 Oct 2026 07:58:10 -0400 (EDT)
 From: Klaus Jensen <its@irrelevant.dk>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Daniel Paziyski <danielpaziyski@gmail.com>, qemu-stable@nongnu.org,
- Klaus Jensen <k.jensen@samsung.com>, Keith Busch <kbusch@kernel.org>,
- Klaus Jensen <its@irrelevant.dk>, Jesper Devantier <foss@defmacro.it>,
- qemu-block@nongnu.org
-Subject: [PULL 3/5] hw/nvme: fix assertion failure on sr-iov capable nvme
- controller removal
-Date: Mon,  5 Oct 2026 13:58:03 +0200
-Message-ID: <20261005115805.99042-4-its@irrelevant.dk>
+ Klaus Jensen <k.jensen@samsung.com>
+Subject: [PULL 0/5] hw/nvme queue
+Date: Mon,  5 Oct 2026 13:58:00 +0200
+Message-ID: <20261005115805.99042-1-its@irrelevant.dk>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20261005115805.99042-1-its@irrelevant.dk>
-References: <20261005115805.99042-1-its@irrelevant.dk>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=202.12.124.155; envelope-from=its@irrelevant.dk;
- helo=fhigh-b4-smtp.messagingengine.com
+Received-SPF: pass client-ip=202.12.124.151; envelope-from=its@irrelevant.dk;
+ helo=fout-b8-smtp.messagingengine.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -128,82 +120,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel Paziyski <danielpaziyski@gmail.com>
+From: Klaus Jensen <k.jensen@samsung.com>
 
-In a nvme subsystem, the ctrls array maps controller IDs to nvme controllers.
-The value of the array elements can either be NULL (no controller present for
-this ID), SUBSYS_SLOT_RSVD, or any other value, representing a pointer to the
-nvme controller structure.
+Hi,
 
-The SUBSYS_SLOT_RSVD value is special: when a nvme controller physical function
-is being created and is reserving the controller IDs for its virtual functions,
-it indicates that the slot is soon going to be filled by its corresponding
-virtual function when it is realized, and on virtual function removal, it means
-that its controller has been removed.
+The following changes since commit d7a65d1793d691d356a56833620f7d1e6f5d653b:
 
-When the physical function is being removed, it goes through its list of
-secondary controllers (virtual functions), ensures that their slots have the
-SUBSYS_SLOT_RSVD values, and then frees up the controller IDs by setting the
-NULL value. This traversal occurs before the virtual functions are destroyed,
-causing an assertion failure because the slots contain as values the pointers to
-the secondary controllers.
+  Merge tag 'hppa-a400-updates-pull-request' of https://github.com/hdeller/qemu-hppa into staging (2026-10-03 14:17:49 +0200)
 
-Destroy the virtual functions (and therefore, the secondary controllers) after
-they are offlined in the nvme_ctrl_reset call of the physical function, but
-before releasing the controller IDs of the secondary controllers in
-nvme_subsys_unregister_ctrl.
+are available in the Git repository at:
 
-QEMU command line (boot with a hotunplug-aware OS, such as Linux):
+  https://gitlab.com/birkelund/qemu.git tags/pull-nvme-20261005
 
-    qemu-system-x86_64 -M q35 -device pcie-root-port,id=rp -monitor stdio \
-    -device nvme-subsys,id=subsys0 \
-    -device nvme,subsys=subsys0,serial=ctrl0,sriov_max_vfs=1,\
-sriov_vq_flexible=2,sriov_vi_flexible=1,max_ioqpairs=4,msix_qsize=2,bus=rp,id=ctrl0
+for you to fetch changes up to f6c0588fd7c22caefc5b31f485c8bb3ee994a58b:
 
-In the QEMU monitor:
+  hw/nvme: fix firmware boot path when nvme-ns has a bootindex (2026-10-05 11:00:47 +0200)
 
-    device_del ctrl0
+----------------------------------------------------------------
+nvme queue
 
-Message in stderr:
+----------------------------------------------------------------
+Alexander Mikhalitsyn (2):
+      hw/nvme: initialize ns->subsys for n->namespace
+      hw/nvme: support online resize
 
-qemu-system-x86_64: ../hw/nvme/subsys.c:49: nvme_subsys_unreserve_cntlids: Assertion `subsys->ctrls[cntlid] == SUBSYS_SLOT_RSVD' failed.
+Daniel Paziyski (2):
+      hw/nvme: fix assertion failure on sr-iov capable nvme controller removal
+      hw/nvme: fix memory leak on sr-iov capable nvme controller removal
 
-Cc: qemu-stable@nongnu.org
-Fixes: 44c2c09488db ("hw/nvme: Add support for SR-IOV")
-Signed-off-by: Daniel Paziyski <danielpaziyski@gmail.com>
-Reviewed-by: Klaus Jensen <k.jensen@samsung.com>
-Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
----
- hw/nvme/ctrl.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+Luigi Leonardi (1):
+      hw/nvme: fix firmware boot path when nvme-ns has a bootindex
 
-diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index 3e8a1c8b77b1..1047961b03c5 100644
---- a/hw/nvme/ctrl.c
-+++ b/hw/nvme/ctrl.c
-@@ -9732,6 +9732,10 @@ static void nvme_exit(PCIDevice *pci_dev)
-         }
-     }
- 
-+    if (!pci_is_vf(pci_dev) && n->params.sriov_max_vfs) {
-+        pcie_sriov_pf_exit(pci_dev);
-+    }
-+
-     nvme_subsys_unregister_ctrl(n->subsys, n);
- 
-     g_free(n->cq);
-@@ -9756,10 +9760,6 @@ static void nvme_exit(PCIDevice *pci_dev)
-         host_memory_backend_set_mapped(n->pmr.dev, false);
-     }
- 
--    if (!pci_is_vf(pci_dev) && n->params.sriov_max_vfs) {
--        pcie_sriov_pf_exit(pci_dev);
--    }
--
-     if (n->params.msix_exclusive_bar && !pci_is_vf(pci_dev)) {
-         msix_uninit_exclusive_bar(pci_dev);
-     } else {
--- 
-2.53.0
-
+ hw/nvme/ctrl.c | 22 ++++++++++++---
+ hw/nvme/ns.c   | 88 +++++++++++++++++++++++++++++++++++++++++++++++++++++++---
+ hw/nvme/nvme.h |  2 ++
+ 3 files changed, 104 insertions(+), 8 deletions(-)
 
