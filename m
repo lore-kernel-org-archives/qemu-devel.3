@@ -4,50 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D305CA6002
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Oct 2026 12:11:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D84AFCA5FCE
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Oct 2026 12:11:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xDhXP-0007nO-2r; Mon, 05 Oct 2026 08:11:25 -0400
+	id 1xDhXX-00087V-Df; Mon, 05 Oct 2026 08:11:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xDhVT-000657-U6
- for qemu-devel@nongnu.org; Mon, 05 Oct 2026 08:09:35 -0400
+ id 1xDhVs-0006BT-IG
+ for qemu-devel@nongnu.org; Mon, 05 Oct 2026 08:09:49 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xDhVR-0004jR-6c
- for qemu-devel@nongnu.org; Mon, 05 Oct 2026 08:09:23 -0400
+ id 1xDhVp-0004oq-IA
+ for qemu-devel@nongnu.org; Mon, 05 Oct 2026 08:09:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1791202159;
+ s=mimecast20190719; t=1791202184;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=zmYel1/eflsvRYajw35HaaQe4jA/LTj2KXwNJyiHD1s=;
- b=evRwm4ioREfeAGp+uWmSXWKiYdFgfCgAWB47YzN+RgCl14qw6U2XIq3a7gG+fYP6uK1xv/
- Mp2npaZ8Wt+e/9CRFxegtRoCi9bGEDRN0e3E0UAsXSwc/rewJTtgA15sBCFtT2QmDUj8ic
- Mlhm7IR1EBRe4HZi7wB8R7hSY1OC+jM=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=dE0hkgRcixixneHs+e6RMVjXvZxsqIBI71YxmCx4AB0=;
+ b=NGf7iB+CdMCHbVECQVW7QwudpQmMdVDcuJj0i25ykuYcYzl7iOY8i859hPrYx+N8vxMgHy
+ HyKdfDw7iW7B27AMiSBfoszmbQGM4ICwH5iAssqj4527ayNVaVTxXBGVJgLnMEekVAdg88
+ Ha+8gZGJh/Gvy0vgZ1wVPu7BCGFKc3U=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-169-1QD_fhKSOl-vvIVrPEYGTw-1; Mon,
- 05 Oct 2026 08:09:15 -0400
-X-MC-Unique: 1QD_fhKSOl-vvIVrPEYGTw-1
-X-Mimecast-MFC-AGG-ID: 1QD_fhKSOl-vvIVrPEYGTw_1791202155
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-643-MDFzepZ1Nni-ZXhTh4QYNg-1; Mon,
+ 05 Oct 2026 08:09:41 -0400
+X-MC-Unique: MDFzepZ1Nni-ZXhTh4QYNg-1
+X-Mimecast-MFC-AGG-ID: MDFzepZ1Nni-ZXhTh4QYNg_1791202180
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D4871197701A; Mon,  5 Oct 2026 12:09:14 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7BB9F180131E; Mon,  5 Oct 2026 12:09:40 +0000 (UTC)
 Received: from berrange.csb (headnet03.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.114])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 092523001D2A; Mon,  5 Oct 2026 12:09:12 +0000 (UTC)
+ id ED1793001D29; Mon,  5 Oct 2026 12:09:38 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -55,10 +55,9 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Stefan Hajnoczi <stefanha@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v3 09/24] trace: change "DSTATE" variables from uint16_t to
- uint8_t
-Date: Mon,  5 Oct 2026 13:08:40 +0100
-Message-ID: <20261005120855.421973-10-berrange@redhat.com>
+Subject: [PATCH v3 23/24] trace: remove parsing of "disable" event property
+Date: Mon,  5 Oct 2026 13:08:54 +0100
+Message-ID: <20261005120855.421973-24-berrange@redhat.com>
 In-Reply-To: <20261005120855.421973-1-berrange@redhat.com>
 References: <20261005120855.421973-1-berrange@redhat.com>
 MIME-Version: 1.0
@@ -67,13 +66,13 @@ Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 10
-X-Spam_score: 1.0
-X-Spam_bar: +
-X-Spam_report: (1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
+X-Spam_score_int: -22
+X-Spam_score: -2.3
+X-Spam_bar: --
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,405 +88,370 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Previously these variables had two distinct semantics. For
-most probes DSTATE was treated as a simple boolean, while
-for vcpu probes it was treated as a bitmask of vCPU indexes.
+Finish the removal of the "disable" event property by removing code
+that parses properties and the backend code generators.
 
-With vcpu probes removed, it is now exclusively a boolean
-and thus using uint16_t is a waste of memory.
+This "fixes" a bug in the UST backends which looked for a property
+called "disabled" instead of "disable".
 
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- scripts/tracetool/format/c.py  | 2 +-
- scripts/tracetool/format/h.py  | 2 +-
- scripts/tracetool/format/rs.py | 4 ++--
- tests/tracetool/dtrace.c       | 4 ++--
- tests/tracetool/dtrace.h       | 4 ++--
- tests/tracetool/dtrace.rs      | 6 +++---
- tests/tracetool/ftrace.c       | 4 ++--
- tests/tracetool/ftrace.h       | 4 ++--
- tests/tracetool/ftrace.rs      | 6 +++---
- tests/tracetool/log.c          | 4 ++--
- tests/tracetool/log.h          | 4 ++--
- tests/tracetool/log.rs         | 6 +++---
- tests/tracetool/simple.c       | 4 ++--
- tests/tracetool/simple.h       | 4 ++--
- tests/tracetool/simple.rs      | 6 +++---
- tests/tracetool/syslog.c       | 4 ++--
- tests/tracetool/syslog.h       | 4 ++--
- tests/tracetool/syslog.rs      | 6 +++---
- tests/tracetool/ust.c          | 4 ++--
- tests/tracetool/ust.h          | 4 ++--
- trace/event-internal.h         | 2 +-
- 21 files changed, 44 insertions(+), 44 deletions(-)
+ docs/devel/tracing.rst                       | 24 +++-------------
+ scripts/tracetool/__init__.py                | 27 ++++--------------
+ scripts/tracetool/backend/dtrace.py          |  2 --
+ scripts/tracetool/format/c.py                |  9 ++----
+ scripts/tracetool/format/d.py                |  3 --
+ scripts/tracetool/format/h.py                | 30 +++++++++-----------
+ scripts/tracetool/format/log_stap.py         |  3 --
+ scripts/tracetool/format/rs.py               | 26 ++++++++---------
+ scripts/tracetool/format/simpletrace_stap.py |  3 --
+ scripts/tracetool/format/stap.py             |  3 --
+ scripts/tracetool/format/ust_events_c.py     |  3 --
+ scripts/tracetool/format/ust_events_h.py     |  3 --
+ 12 files changed, 39 insertions(+), 97 deletions(-)
 
+diff --git a/docs/devel/tracing.rst b/docs/devel/tracing.rst
+index f4557ee20e4..f94063587fa 100644
+--- a/docs/devel/tracing.rst
++++ b/docs/devel/tracing.rst
+@@ -366,30 +366,14 @@ To facilitate simple usage of systemtap where there merely needs to be printf
+ logging of certain probes, a helper script "qemu-trace-stap" is provided.
+ Consult its manual page for guidance on its usage.
+ 
+-Trace event properties
++Trace event conditions
+ ======================
+ 
+-Each event in the "trace-events-all" file can be prefixed with a space-separated
+-list of zero or more of the following event properties.
+-
+-"disable"
+----------
+-
+-If a specific trace event is going to be invoked a huge number of times, this
+-might have a noticeable performance impact even when the event is
+-programmatically disabled.
+-
+-In this case you should declare such event with the "disable" property. This
+-will effectively disable the event at compile time (by using the "nop" backend),
+-thus having no performance impact at all on regular builds (i.e., unless you
+-edit the "trace-events-all" file).
+-
+-In addition, there might be cases where relatively complex computations must be
++There might be cases where relatively complex computations must be
+ performed to generate values that are only used as arguments for a trace
+ function. In these cases you can use 'trace_event_get_state_backends()' to
+-guard such computations, so they are skipped if the event has been either
+-compile-time disabled or run-time disabled. If the event is compile-time
+-disabled, this check will have no performance impact.
++guard such computations, so they are skipped if the event is not currently
++enabled:
+ 
+ ::
+ 
+diff --git a/scripts/tracetool/__init__.py b/scripts/tracetool/__init__.py
+index 6ed7cdd6ce4..bdbb06b5205 100644
+--- a/scripts/tracetool/__init__.py
++++ b/scripts/tracetool/__init__.py
+@@ -362,8 +362,6 @@ class Event(object):
+         The event name.
+     fmt : str
+         The event format string.
+-    properties : set(str)
+-        Properties of the event.
+     args : Arguments
+         The event arguments.
+     lineno : int
+@@ -373,23 +371,18 @@ class Event(object):
+ 
+     """
+ 
+-    _CRE = re.compile(r"((?P<props>[\w\s]+)\s+)?"
+-                      r"(?P<name>\w+)"
++    _CRE = re.compile(r"(?P<name>\w+)"
+                       r"\((?P<args>[^)]*)\)"
+                       r"\s*"
+                       r"(?P<fmt>\".+)?"
+                       r"\s*")
+ 
+-    _VALID_PROPS = set(["disable"])
+-
+-    def __init__(self, name, props, fmt, args, lineno, filename):
++    def __init__(self, name, fmt, args, lineno, filename):
+         """
+         Parameters
+         ----------
+         name : string
+             Event name.
+-        props : list of str
+-            Property names.
+         fmt : str
+             Event printing format string.
+         args : Arguments
+@@ -401,7 +394,6 @@ def __init__(self, name, props, fmt, args, lineno, filename):
+ 
+         """
+         self.name = name
+-        self.properties = props
+         self.fmt = fmt
+         self.args = args
+         self.lineno = int(lineno)
+@@ -411,11 +403,6 @@ def __init__(self, name, props, fmt, args, lineno, filename):
+             raise ValueError("Event '%s' has more than maximum permitted "
+                              "argument count" % name)
+ 
+-        unknown_props = set(self.properties) - self._VALID_PROPS
+-        if len(unknown_props) > 0:
+-            raise ValueError("Unknown properties: %s"
+-                             % ", ".join(unknown_props))
+-
+ 
+     @staticmethod
+     def build(line_str, lineno, filename):
+@@ -435,7 +422,6 @@ def build(line_str, lineno, filename):
+         groups = m.groupdict('')
+ 
+         name = groups["name"]
+-        props = groups["props"].split()
+         fmt = groups["fmt"]
+         if fmt.find("%m") != -1:
+             raise ValueError("Event format '%m' is forbidden, pass the error "
+@@ -448,14 +434,13 @@ def build(line_str, lineno, filename):
+ 
+         args = Arguments.build(groups["args"])
+ 
+-        return Event(name, props, fmt, args, lineno, posix_relpath(filename))
++        return Event(name, fmt, args, lineno, posix_relpath(filename))
+ 
+     def __repr__(self):
+         """Evaluable string representation for this object."""
+-        return "Event('%s %s(%s) %s')" % (" ".join(self.properties),
+-                                          self.name,
+-                                          self.args,
+-                                          self.fmt)
++        return "Event('%s(%s) %s')" % (self.name,
++                                       self.args,
++                                       self.fmt)
+     # Star matching on PRI is dangerous as one might have multiple
+     # arguments with that format, hence the non-greedy version of it.
+     _FMT = re.compile(r"(%[\d\.]*\w+|%.*?PRI\S+)")
+diff --git a/scripts/tracetool/backend/dtrace.py b/scripts/tracetool/backend/dtrace.py
+index f0b58cc1585..6bce25c8d2d 100644
+--- a/scripts/tracetool/backend/dtrace.py
++++ b/scripts/tracetool/backend/dtrace.py
+@@ -79,8 +79,6 @@ def generate_rs_begin(events, group):
+     # These are the Rust declarations of the .probes section semaphores
+     # generated by dtrace(1) in its .o file output.
+     for e in events:
+-        if 'disable' in e.properties:
+-            continue
+         out('    #[allow(dead_code)]',
+             f'    static qemu_{e.name}_semaphore: UnsafeCell<u16>;')
+     out('}',
 diff --git a/scripts/tracetool/format/c.py b/scripts/tracetool/format/c.py
-index abe738ac423..de1c154a881 100644
+index 9f06894623e..3754c7e06fd 100644
 --- a/scripts/tracetool/format/c.py
 +++ b/scripts/tracetool/format/c.py
-@@ -30,7 +30,7 @@ def generate(events, backend, group):
-         '')
+@@ -16,9 +16,6 @@
  
-     for e in events:
--        out('uint16_t %s;' % e.api(e.QEMU_DSTATE))
-+        out('uint8_t %s;' % e.api(e.QEMU_DSTATE))
  
-     for e in events:
-         out('TraceEvent %(event)s = {',
+ def generate(events, backend, group):
+-    active_events = [e for e in events
+-                     if "disable" not in e.properties]
+-
+     header = "trace-" + group + ".h"
+ 
+     out('/* This file is autogenerated by tracetool, do not edit. */',
+@@ -62,7 +59,7 @@ def generate(events, backend, group):
+             'trace_init(trace_%(group)s_register_events)',
+             group = group.lower())
+ 
+-        backend.generate_begin(active_events, group)
+-        for event in active_events:
++        backend.generate_begin(events, group)
++        for event in events:
+             backend.generate(event, group)
+-        backend.generate_end(active_events, group)
++        backend.generate_end(events, group)
+diff --git a/scripts/tracetool/format/d.py b/scripts/tracetool/format/d.py
+index e9e33dfe30a..df7780cb0af 100644
+--- a/scripts/tracetool/format/d.py
++++ b/scripts/tracetool/format/d.py
+@@ -30,9 +30,6 @@
+ 
+ 
+ def generate(events, backend, group):
+-    events = [e for e in events
+-              if "disable" not in e.properties]
+-
+     # SystemTap's dtrace(1) warns about empty "provider qemu {}" but is happy
+     # with an empty file.  Avoid the warning.
+     # But dtrace on macOS can't deal with empty files.
 diff --git a/scripts/tracetool/format/h.py b/scripts/tracetool/format/h.py
-index dd58713a158..4dc1ad7eb15 100644
+index 544bbc0ba93..f719fe09397 100644
 --- a/scripts/tracetool/format/h.py
 +++ b/scripts/tracetool/format/h.py
-@@ -32,7 +32,7 @@ def generate(events, backend, group):
-             event = e.api(e.QEMU_EVENT))
+@@ -46,14 +46,13 @@ def generate(events, backend, group):
+             '#define %(api)s() ( \\',
+             api=e.api(e.QEMU_BACKEND_DSTATE))
  
-     for e in events:
--        out('extern uint16_t %s;' % e.api(e.QEMU_DSTATE))
-+        out('extern uint8_t %s;' % e.api(e.QEMU_DSTATE))
+-        if "disable" not in e.properties:
+-            backend.generate_backend_dstate(e, group, check_trace_event_get_state=False)
++        backend.generate_backend_dstate(e, group, check_trace_event_get_state=False)
  
-     # static state
-     for e in events:
-diff --git a/scripts/tracetool/format/rs.py b/scripts/tracetool/format/rs.py
-index 7d9af7edfee..1fddcee1ad2 100644
---- a/scripts/tracetool/format/rs.py
-+++ b/scripts/tracetool/format/rs.py
-@@ -26,7 +26,7 @@ def generate(events, backend, group):
-         '',
-         '#[allow(dead_code)]',
-         '#[inline(always)]',
--        'fn trace_event_state_is_enabled(dstate: u16) -> bool {',
-+        'fn trace_event_state_is_enabled(dstate: u8) -> bool {',
-         '    (unsafe { trace_events_enabled_count }) != 0 && dstate != 0',
-         '}',
-         '',
-@@ -39,7 +39,7 @@ def generate(events, backend, group):
+-            if backend.check_trace_event_get_state:
+-                event_id = 'TRACE_' + e.name.upper()
+-                out('    trace_event_get_state_dynamic_by_id(%(event_id)s) || \\',
+-                    event_id=event_id)
+-                backend.generate_backend_dstate(e, group, check_trace_event_get_state=True)
++        if backend.check_trace_event_get_state:
++            event_id = 'TRACE_' + e.name.upper()
++            out('    trace_event_get_state_dynamic_by_id(%(event_id)s) || \\',
++                event_id=event_id)
++            backend.generate_backend_dstate(e, group, check_trace_event_get_state=True)
  
-     for e in events:
-         out('    #[allow(dead_code)]',
--            '    static mut %s: u16;' % e.api(e.QEMU_DSTATE))
-+            '    static mut %s: u8;' % e.api(e.QEMU_DSTATE))
-     out('}',
+         out('    false)')
+ 
+@@ -63,16 +62,15 @@ def generate(events, backend, group):
+             api=e.api(),
+             args=e.args)
+ 
+-        if "disable" not in e.properties:
+-            backend.generate(e, group, check_trace_event_get_state=False)
++        backend.generate(e, group, check_trace_event_get_state=False)
+ 
+-            if backend.check_trace_event_get_state:
+-                event_id = 'TRACE_' + e.name.upper()
+-                cond = "trace_event_get_state(%s)" % event_id
+-                out('    if (%(cond)s) {',
+-                        cond=cond)
+-                backend.generate(e, group, check_trace_event_get_state=True)
+-                out('    }')
++        if backend.check_trace_event_get_state:
++            event_id = 'TRACE_' + e.name.upper()
++            cond = "trace_event_get_state(%s)" % event_id
++            out('    if (%(cond)s) {',
++                cond=cond)
++            backend.generate(e, group, check_trace_event_get_state=True)
++            out('    }')
+         out('}')
+ 
+     backend.generate_end(events, group)
+diff --git a/scripts/tracetool/format/log_stap.py b/scripts/tracetool/format/log_stap.py
+index 259303a189d..3fa6c2dd3f2 100644
+--- a/scripts/tracetool/format/log_stap.py
++++ b/scripts/tracetool/format/log_stap.py
+@@ -90,9 +90,6 @@ def generate(events, backend, group):
          '')
  
-diff --git a/tests/tracetool/dtrace.c b/tests/tracetool/dtrace.c
-index 05a93918240..f83d06252ea 100644
---- a/tests/tracetool/dtrace.c
-+++ b/tests/tracetool/dtrace.c
-@@ -5,8 +5,8 @@
- #include "qemu/module.h"
- #include "trace-testsuite.h"
+     for event_id, e in enumerate(events):
+-        if 'disable' in e.properties:
+-            continue
+-
+         out('probe %(probeprefix)s.log.%(name)s = %(probeprefix)s.%(name)s ?',
+             '{',
+             probeprefix=probeprefix(),
+diff --git a/scripts/tracetool/format/rs.py b/scripts/tracetool/format/rs.py
+index 1fddcee1ad2..97d89a981da 100644
+--- a/scripts/tracetool/format/rs.py
++++ b/scripts/tracetool/format/rs.py
+@@ -52,11 +52,10 @@ def generate(events, backend, group):
+             '{',
+             api=e.api(e.QEMU_RUST_DSTATE))
  
--uint16_t _TRACE_TEST_BLAH_DSTATE;
--uint16_t _TRACE_TEST_WIBBLE_DSTATE;
-+uint8_t _TRACE_TEST_BLAH_DSTATE;
-+uint8_t _TRACE_TEST_WIBBLE_DSTATE;
- TraceEvent _TRACE_TEST_BLAH_EVENT = {
- #ifdef CONFIG_TRACE_SIMPLE
-     .id = 0,
-diff --git a/tests/tracetool/dtrace.h b/tests/tracetool/dtrace.h
-index c8931a8d7b3..0b5b47089e8 100644
---- a/tests/tracetool/dtrace.h
-+++ b/tests/tracetool/dtrace.h
-@@ -8,8 +8,8 @@
+-        if "disable" not in e.properties:
+-            backend.generate_backend_dstate(e, group)
+-            if backend.check_trace_event_get_state:
+-                out('    trace_event_state_is_enabled(unsafe { _%(event_id)s_DSTATE}) ||',
+-                    event_id = 'TRACE_' + e.name.upper())
++        backend.generate_backend_dstate(e, group)
++        if backend.check_trace_event_get_state:
++            out('    trace_event_state_is_enabled(unsafe { _%(event_id)s_DSTATE}) ||',
++                event_id = 'TRACE_' + e.name.upper())
  
- extern TraceEvent _TRACE_TEST_BLAH_EVENT;
- extern TraceEvent _TRACE_TEST_WIBBLE_EVENT;
--extern uint16_t _TRACE_TEST_BLAH_DSTATE;
--extern uint16_t _TRACE_TEST_WIBBLE_DSTATE;
-+extern uint8_t _TRACE_TEST_BLAH_DSTATE;
-+extern uint8_t _TRACE_TEST_WIBBLE_DSTATE;
- #define TRACE_TEST_BLAH_ENABLED 1
- #define TRACE_TEST_WIBBLE_ENABLED 1
- #ifndef SDT_USE_VARIADIC
-diff --git a/tests/tracetool/dtrace.rs b/tests/tracetool/dtrace.rs
-index 3490fcb271a..07398f4731b 100644
---- a/tests/tracetool/dtrace.rs
-+++ b/tests/tracetool/dtrace.rs
-@@ -8,7 +8,7 @@
+         out('    false',
+             '}',
+@@ -68,15 +67,14 @@ def generate(events, backend, group):
+             api=e.api(e.QEMU_TRACE),
+             args=e.args.rust_decl())
  
- #[allow(dead_code)]
- #[inline(always)]
--fn trace_event_state_is_enabled(dstate: u16) -> bool {
-+fn trace_event_state_is_enabled(dstate: u8) -> bool {
-     (unsafe { trace_events_enabled_count }) != 0 && dstate != 0
- }
+-        if "disable" not in e.properties:
+-            backend.generate(e, group, check_trace_event_get_state=False)
+-            if backend.check_trace_event_get_state:
+-                event_id = 'TRACE_' + e.name.upper()
+-                out('    if trace_event_state_is_enabled(unsafe { _%(event_id)s_DSTATE}) {',
+-                    event_id = event_id,
+-                    api=e.api())
+-                backend.generate(e, group, check_trace_event_get_state=True)
+-                out('    }')
++        backend.generate(e, group, check_trace_event_get_state=False)
++        if backend.check_trace_event_get_state:
++            event_id = 'TRACE_' + e.name.upper()
++            out('    if trace_event_state_is_enabled(unsafe { _%(event_id)s_DSTATE}) {',
++                event_id = event_id,
++                api=e.api())
++            backend.generate(e, group, check_trace_event_get_state=True)
++            out('    }')
+         out('}',
+             '')
  
-@@ -18,9 +18,9 @@ fn trace_event_state_is_enabled(dstate: u16) -> bool {
- }
- extern "C" {
-     #[allow(dead_code)]
--    static mut _TRACE_TEST_BLAH_DSTATE: u16;
-+    static mut _TRACE_TEST_BLAH_DSTATE: u8;
-     #[allow(dead_code)]
--    static mut _TRACE_TEST_WIBBLE_DSTATE: u16;
-+    static mut _TRACE_TEST_WIBBLE_DSTATE: u8;
- }
+diff --git a/scripts/tracetool/format/simpletrace_stap.py b/scripts/tracetool/format/simpletrace_stap.py
+index c7bde97a855..393d85319c7 100644
+--- a/scripts/tracetool/format/simpletrace_stap.py
++++ b/scripts/tracetool/format/simpletrace_stap.py
+@@ -24,9 +24,6 @@ def generate(events, backend, group):
+         '')
  
- use std::cell::UnsafeCell;
-diff --git a/tests/tracetool/ftrace.c b/tests/tracetool/ftrace.c
-index 05a93918240..f83d06252ea 100644
---- a/tests/tracetool/ftrace.c
-+++ b/tests/tracetool/ftrace.c
-@@ -5,8 +5,8 @@
- #include "qemu/module.h"
- #include "trace-testsuite.h"
+     for event_id, e in enumerate(events):
+-        if 'disable' in e.properties:
+-            continue
+-
+         out('probe %(probeprefix)s.simpletrace.%(name)s = %(probeprefix)s.%(name)s ?',
+             '{',
+             probeprefix=probeprefix(),
+diff --git a/scripts/tracetool/format/stap.py b/scripts/tracetool/format/stap.py
+index 285c9203ba7..e3d16b72d34 100644
+--- a/scripts/tracetool/format/stap.py
++++ b/scripts/tracetool/format/stap.py
+@@ -34,9 +34,6 @@ def stap_escape(identifier):
  
--uint16_t _TRACE_TEST_BLAH_DSTATE;
--uint16_t _TRACE_TEST_WIBBLE_DSTATE;
-+uint8_t _TRACE_TEST_BLAH_DSTATE;
-+uint8_t _TRACE_TEST_WIBBLE_DSTATE;
- TraceEvent _TRACE_TEST_BLAH_EVENT = {
- #ifdef CONFIG_TRACE_SIMPLE
-     .id = 0,
-diff --git a/tests/tracetool/ftrace.h b/tests/tracetool/ftrace.h
-index 1dfe4239413..b34eef17d10 100644
---- a/tests/tracetool/ftrace.h
-+++ b/tests/tracetool/ftrace.h
-@@ -8,8 +8,8 @@
  
- extern TraceEvent _TRACE_TEST_BLAH_EVENT;
- extern TraceEvent _TRACE_TEST_WIBBLE_EVENT;
--extern uint16_t _TRACE_TEST_BLAH_DSTATE;
--extern uint16_t _TRACE_TEST_WIBBLE_DSTATE;
-+extern uint8_t _TRACE_TEST_BLAH_DSTATE;
-+extern uint8_t _TRACE_TEST_WIBBLE_DSTATE;
- #define TRACE_TEST_BLAH_ENABLED 1
- #define TRACE_TEST_WIBBLE_ENABLED 1
- #include "trace/ftrace.h"
-diff --git a/tests/tracetool/ftrace.rs b/tests/tracetool/ftrace.rs
-index 34f66004902..ff0bcde4b8b 100644
---- a/tests/tracetool/ftrace.rs
-+++ b/tests/tracetool/ftrace.rs
-@@ -8,7 +8,7 @@
+ def generate(events, backend, group):
+-    events = [e for e in events
+-              if "disable" not in e.properties]
+-
+     out('/* This file is autogenerated by tracetool, do not edit. */',
+         '/* SPDX-License-Identifier: GPL-2.0-or-later */',
+         '')
+diff --git a/scripts/tracetool/format/ust_events_c.py b/scripts/tracetool/format/ust_events_c.py
+index 074226bfd37..93f88a03e90 100644
+--- a/scripts/tracetool/format/ust_events_c.py
++++ b/scripts/tracetool/format/ust_events_c.py
+@@ -16,9 +16,6 @@
  
- #[allow(dead_code)]
- #[inline(always)]
--fn trace_event_state_is_enabled(dstate: u16) -> bool {
-+fn trace_event_state_is_enabled(dstate: u8) -> bool {
-     (unsafe { trace_events_enabled_count }) != 0 && dstate != 0
- }
  
-@@ -18,9 +18,9 @@ fn trace_event_state_is_enabled(dstate: u16) -> bool {
- }
- extern "C" {
-     #[allow(dead_code)]
--    static mut _TRACE_TEST_BLAH_DSTATE: u16;
-+    static mut _TRACE_TEST_BLAH_DSTATE: u8;
-     #[allow(dead_code)]
--    static mut _TRACE_TEST_WIBBLE_DSTATE: u16;
-+    static mut _TRACE_TEST_WIBBLE_DSTATE: u8;
- }
+ def generate(events, backend, group):
+-    events = [e for e in events
+-              if "disabled" not in e.properties]
+-
+     out('/* This file is autogenerated by tracetool, do not edit. */',
+         '/* SPDX-License-Identifier: GPL-2.0-or-later */',
+         '',
+diff --git a/scripts/tracetool/format/ust_events_h.py b/scripts/tracetool/format/ust_events_h.py
+index 76c883bc5c0..441e6a41933 100644
+--- a/scripts/tracetool/format/ust_events_h.py
++++ b/scripts/tracetool/format/ust_events_h.py
+@@ -16,9 +16,6 @@
  
- #[inline(always)]
-diff --git a/tests/tracetool/log.c b/tests/tracetool/log.c
-index 05a93918240..f83d06252ea 100644
---- a/tests/tracetool/log.c
-+++ b/tests/tracetool/log.c
-@@ -5,8 +5,8 @@
- #include "qemu/module.h"
- #include "trace-testsuite.h"
  
--uint16_t _TRACE_TEST_BLAH_DSTATE;
--uint16_t _TRACE_TEST_WIBBLE_DSTATE;
-+uint8_t _TRACE_TEST_BLAH_DSTATE;
-+uint8_t _TRACE_TEST_WIBBLE_DSTATE;
- TraceEvent _TRACE_TEST_BLAH_EVENT = {
- #ifdef CONFIG_TRACE_SIMPLE
-     .id = 0,
-diff --git a/tests/tracetool/log.h b/tests/tracetool/log.h
-index c7795871f85..ff510d54908 100644
---- a/tests/tracetool/log.h
-+++ b/tests/tracetool/log.h
-@@ -8,8 +8,8 @@
- 
- extern TraceEvent _TRACE_TEST_BLAH_EVENT;
- extern TraceEvent _TRACE_TEST_WIBBLE_EVENT;
--extern uint16_t _TRACE_TEST_BLAH_DSTATE;
--extern uint16_t _TRACE_TEST_WIBBLE_DSTATE;
-+extern uint8_t _TRACE_TEST_BLAH_DSTATE;
-+extern uint8_t _TRACE_TEST_WIBBLE_DSTATE;
- #define TRACE_TEST_BLAH_ENABLED 1
- #define TRACE_TEST_WIBBLE_ENABLED 1
- #include "qemu/log-for-trace.h"
-diff --git a/tests/tracetool/log.rs b/tests/tracetool/log.rs
-index 770758611d1..0f052bb2c9c 100644
---- a/tests/tracetool/log.rs
-+++ b/tests/tracetool/log.rs
-@@ -8,7 +8,7 @@
- 
- #[allow(dead_code)]
- #[inline(always)]
--fn trace_event_state_is_enabled(dstate: u16) -> bool {
-+fn trace_event_state_is_enabled(dstate: u8) -> bool {
-     (unsafe { trace_events_enabled_count }) != 0 && dstate != 0
- }
- 
-@@ -18,9 +18,9 @@ fn trace_event_state_is_enabled(dstate: u16) -> bool {
- }
- extern "C" {
-     #[allow(dead_code)]
--    static mut _TRACE_TEST_BLAH_DSTATE: u16;
-+    static mut _TRACE_TEST_BLAH_DSTATE: u8;
-     #[allow(dead_code)]
--    static mut _TRACE_TEST_WIBBLE_DSTATE: u16;
-+    static mut _TRACE_TEST_WIBBLE_DSTATE: u8;
- }
- 
- #[inline(always)]
-diff --git a/tests/tracetool/simple.c b/tests/tracetool/simple.c
-index 490d6f379a5..820ddb575b0 100644
---- a/tests/tracetool/simple.c
-+++ b/tests/tracetool/simple.c
-@@ -5,8 +5,8 @@
- #include "qemu/module.h"
- #include "trace-testsuite.h"
- 
--uint16_t _TRACE_TEST_BLAH_DSTATE;
--uint16_t _TRACE_TEST_WIBBLE_DSTATE;
-+uint8_t _TRACE_TEST_BLAH_DSTATE;
-+uint8_t _TRACE_TEST_WIBBLE_DSTATE;
- TraceEvent _TRACE_TEST_BLAH_EVENT = {
- #ifdef CONFIG_TRACE_SIMPLE
-     .id = 0,
-diff --git a/tests/tracetool/simple.h b/tests/tracetool/simple.h
-index ec6fcb22c3c..735cb21d911 100644
---- a/tests/tracetool/simple.h
-+++ b/tests/tracetool/simple.h
-@@ -8,8 +8,8 @@
- 
- extern TraceEvent _TRACE_TEST_BLAH_EVENT;
- extern TraceEvent _TRACE_TEST_WIBBLE_EVENT;
--extern uint16_t _TRACE_TEST_BLAH_DSTATE;
--extern uint16_t _TRACE_TEST_WIBBLE_DSTATE;
-+extern uint8_t _TRACE_TEST_BLAH_DSTATE;
-+extern uint8_t _TRACE_TEST_WIBBLE_DSTATE;
- #define TRACE_TEST_BLAH_ENABLED 1
- #define TRACE_TEST_WIBBLE_ENABLED 1
- void _simple_trace_test_blah(void *context, const char *filename);
-diff --git a/tests/tracetool/simple.rs b/tests/tracetool/simple.rs
-index 92f896ef178..976feddde5b 100644
---- a/tests/tracetool/simple.rs
-+++ b/tests/tracetool/simple.rs
-@@ -8,7 +8,7 @@
- 
- #[allow(dead_code)]
- #[inline(always)]
--fn trace_event_state_is_enabled(dstate: u16) -> bool {
-+fn trace_event_state_is_enabled(dstate: u8) -> bool {
-     (unsafe { trace_events_enabled_count }) != 0 && dstate != 0
- }
- 
-@@ -18,9 +18,9 @@ fn trace_event_state_is_enabled(dstate: u16) -> bool {
- }
- extern "C" {
-     #[allow(dead_code)]
--    static mut _TRACE_TEST_BLAH_DSTATE: u16;
-+    static mut _TRACE_TEST_BLAH_DSTATE: u8;
-     #[allow(dead_code)]
--    static mut _TRACE_TEST_WIBBLE_DSTATE: u16;
-+    static mut _TRACE_TEST_WIBBLE_DSTATE: u8;
- }
- 
- #[inline(always)]
-diff --git a/tests/tracetool/syslog.c b/tests/tracetool/syslog.c
-index 05a93918240..f83d06252ea 100644
---- a/tests/tracetool/syslog.c
-+++ b/tests/tracetool/syslog.c
-@@ -5,8 +5,8 @@
- #include "qemu/module.h"
- #include "trace-testsuite.h"
- 
--uint16_t _TRACE_TEST_BLAH_DSTATE;
--uint16_t _TRACE_TEST_WIBBLE_DSTATE;
-+uint8_t _TRACE_TEST_BLAH_DSTATE;
-+uint8_t _TRACE_TEST_WIBBLE_DSTATE;
- TraceEvent _TRACE_TEST_BLAH_EVENT = {
- #ifdef CONFIG_TRACE_SIMPLE
-     .id = 0,
-diff --git a/tests/tracetool/syslog.h b/tests/tracetool/syslog.h
-index ed4305554c1..4203b8b37dc 100644
---- a/tests/tracetool/syslog.h
-+++ b/tests/tracetool/syslog.h
-@@ -8,8 +8,8 @@
- 
- extern TraceEvent _TRACE_TEST_BLAH_EVENT;
- extern TraceEvent _TRACE_TEST_WIBBLE_EVENT;
--extern uint16_t _TRACE_TEST_BLAH_DSTATE;
--extern uint16_t _TRACE_TEST_WIBBLE_DSTATE;
-+extern uint8_t _TRACE_TEST_BLAH_DSTATE;
-+extern uint8_t _TRACE_TEST_WIBBLE_DSTATE;
- #define TRACE_TEST_BLAH_ENABLED 1
- #define TRACE_TEST_WIBBLE_ENABLED 1
- #include <syslog.h>
-diff --git a/tests/tracetool/syslog.rs b/tests/tracetool/syslog.rs
-index 378d03d34b2..9688dac84a5 100644
---- a/tests/tracetool/syslog.rs
-+++ b/tests/tracetool/syslog.rs
-@@ -8,7 +8,7 @@
- 
- #[allow(dead_code)]
- #[inline(always)]
--fn trace_event_state_is_enabled(dstate: u16) -> bool {
-+fn trace_event_state_is_enabled(dstate: u8) -> bool {
-     (unsafe { trace_events_enabled_count }) != 0 && dstate != 0
- }
- 
-@@ -18,9 +18,9 @@ fn trace_event_state_is_enabled(dstate: u16) -> bool {
- }
- extern "C" {
-     #[allow(dead_code)]
--    static mut _TRACE_TEST_BLAH_DSTATE: u16;
-+    static mut _TRACE_TEST_BLAH_DSTATE: u8;
-     #[allow(dead_code)]
--    static mut _TRACE_TEST_WIBBLE_DSTATE: u16;
-+    static mut _TRACE_TEST_WIBBLE_DSTATE: u8;
- }
- 
- #[inline(always)]
-diff --git a/tests/tracetool/ust.c b/tests/tracetool/ust.c
-index 05a93918240..f83d06252ea 100644
---- a/tests/tracetool/ust.c
-+++ b/tests/tracetool/ust.c
-@@ -5,8 +5,8 @@
- #include "qemu/module.h"
- #include "trace-testsuite.h"
- 
--uint16_t _TRACE_TEST_BLAH_DSTATE;
--uint16_t _TRACE_TEST_WIBBLE_DSTATE;
-+uint8_t _TRACE_TEST_BLAH_DSTATE;
-+uint8_t _TRACE_TEST_WIBBLE_DSTATE;
- TraceEvent _TRACE_TEST_BLAH_EVENT = {
- #ifdef CONFIG_TRACE_SIMPLE
-     .id = 0,
-diff --git a/tests/tracetool/ust.h b/tests/tracetool/ust.h
-index b7acd0c39b1..079b2c74491 100644
---- a/tests/tracetool/ust.h
-+++ b/tests/tracetool/ust.h
-@@ -8,8 +8,8 @@
- 
- extern TraceEvent _TRACE_TEST_BLAH_EVENT;
- extern TraceEvent _TRACE_TEST_WIBBLE_EVENT;
--extern uint16_t _TRACE_TEST_BLAH_DSTATE;
--extern uint16_t _TRACE_TEST_WIBBLE_DSTATE;
-+extern uint8_t _TRACE_TEST_BLAH_DSTATE;
-+extern uint8_t _TRACE_TEST_WIBBLE_DSTATE;
- #define TRACE_TEST_BLAH_ENABLED 1
- #define TRACE_TEST_WIBBLE_ENABLED 1
- #include <lttng/tracepoint.h>
-diff --git a/trace/event-internal.h b/trace/event-internal.h
-index ecf2caabd03..ad1578aa2c5 100644
---- a/trace/event-internal.h
-+++ b/trace/event-internal.h
-@@ -25,7 +25,7 @@ typedef struct TraceEvent {
- #endif
-     const char * name;
-     const bool sstate;
--    uint16_t *dstate;
-+    uint8_t *dstate;
- } TraceEvent;
- 
- #endif /* TRACE__EVENT_INTERNAL_H */
+ def generate(events, backend, group):
+-    events = [e for e in events
+-              if "disabled" not in e.properties]
+-
+     if group == "all":
+         include = "trace-ust-all.h"
+     else:
 -- 
 2.55.0
 
