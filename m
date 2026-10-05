@@ -4,90 +4,146 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B94ECA5FF0
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Oct 2026 12:31:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 998B8CA5FCE
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Oct 2026 13:07:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xDhq8-0002vq-Nl; Mon, 05 Oct 2026 08:30:44 -0400
+	id 1xDiOq-0001Ym-4g; Mon, 05 Oct 2026 09:06:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kevincheng60303@gmail.com>)
- id 1xDhLx-0001q8-0b
- for qemu-devel@nongnu.org; Mon, 05 Oct 2026 07:59:39 -0400
-Received: from mail-pj2-x2a.google.com ([2607:f8b0:4864:39::2a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <kevincheng60303@gmail.com>)
- id 1xDhLr-00033t-3C
- for qemu-devel@nongnu.org; Mon, 05 Oct 2026 07:59:30 -0400
-Received: by mail-pj2-x2a.google.com with SMTP id
- d9443c01a7336-2e2dd05994cso4580915ad.2
- for <qemu-devel@nongnu.org>; Mon, 05 Oct 2026 04:59:23 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xDiOa-0001Ub-Kz
+ for qemu-devel@nongnu.org; Mon, 05 Oct 2026 09:06:20 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xDiOX-0002s1-Nh
+ for qemu-devel@nongnu.org; Mon, 05 Oct 2026 09:06:20 -0400
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 695CFljn2226474
+ for <qemu-devel@nongnu.org>; Mon, 5 Oct 2026 13:06:15 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ 68/MEj2aCnTszQcG+42MXKwOQtnPqyWZO3EspYwBapY=; b=dpawgZD59/svzDvA
+ 5eyEAYiHv2bphtiWRdbm98p0zG4ASH7l9aodoZmPfNdd9tJZXy1OgTlyU/IBuDZI
+ HMoU5QtoRKm4WWYYjGkRVIu1onMT3aNaKjFdeORaxQ9KGGWvk7g8jZ5eG9bQcg6l
+ Gf3TSvWV7AFgw+CAeYalbTi18XoYO/gSdKTdMkfUR2S0/S8AGWtKTTWzthENpTrd
+ LqOcWwW73dMW5+BZ2mOf3MWnIBjri23EfBFOfeg9ZkxvyelGJkDLQekPerJpZoBv
+ v7glvw/Dat37P7uQkZJALSWGl7jvLJKVjZetBltp5/j/4JRQq2KXoeQ15N3aX1xq
+ ar9oeg==
+Received: from mail-vs1-f72.google.com (mail-vs1-f72.google.com
+ [209.85.217.72])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h4bhg06wh-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 05 Oct 2026 13:06:15 +0000 (GMT)
+Received: by mail-vs1-f72.google.com with SMTP id
+ ada2fe7eead31-7c10b8abe29so1866690137.0
+ for <qemu-devel@nongnu.org>; Mon, 05 Oct 2026 06:06:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1791201562; x=1791806362; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=kXY8X4qyai2cQehCVlEpPRB7/FEYuF+0iLxJD7N9epc=;
- b=XvFEQ2rxh6cLhaerV5uT1lqXs+rVepdNgzr7eTRxLJzOb6IWZ74YvJABM5TcuWqreM
- +rov4w8rxpoLRqOIQQkAmflbqksV1B6YtBDxD/BOD6Ddioc1NgUBSis8jhMW+PJG6BE3
- k3Oyok5pSktDjHsMeosvcQ39HqJzBGpqPkOKPke0ehPwV6+7YpymMnHTamJrV0hVTCi7
- vH6FZNdC7i14QFJbmdWf1CliBEZazsGQuRxjeAHFkbkNmZ52NA+uiCdJDKtksGniNtgC
- eYSfVnb6eujp/jpnRrj4vOG1dAdo9sqA63ENq+tyEazTSOS7sxdhPmLWOcQmgJzWBr2k
- jeVg==
+ d=oss.qualcomm.com; s=google; t=1791205574; x=1791810374; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=68/MEj2aCnTszQcG+42MXKwOQtnPqyWZO3EspYwBapY=;
+ b=g5Cx83D5stos0gxNU15npIEX1sGZNY42Cgo6EpxiVrSmqLZ/Y2u1QtWovE8Lr5mj5m
+ hQvOJRr4dYhygDCdoJiXoOMpurQ4r71XeHHQAwZlm2XUi7qyvvUzNniYG6DQrXbsAbO2
+ FqUnKC6viPD44KtTRFRrABS8kOXjXyjsEpOV/1YedUDKIeQy2RFojxWB782UL4p2KWB/
+ Wa4Lb+t8Vh9PAiGjoNmQs/+i1fLeRg4fiJHh6DlpuRhCq77XRiYTUt1E07zNCpZpiORh
+ rK7HyI73GCSnaD+2LkMCGUKhRDSbWb+7Ee3cjt72OlaHPePWkUSuPSex7KQaCW9yk1IY
+ rjYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791201562; x=1791806362;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20260707; t=1791205574; x=1791810374;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=kXY8X4qyai2cQehCVlEpPRB7/FEYuF+0iLxJD7N9epc=;
- b=fIYIehgh1JpBjlZMY0V38FFrKLCavnTcrcx8Xg3Qq/5ZkZ5LhJ6P70/gBxEua3vnA5
- IaHW48Sr/hcM+Y1XePTPG8Ibo09a45NcN0jX8w9r5WsPglQN3x7CMxheCGt/rJiAja3u
- WsLkKu1TD8mMRc+0TossuRF/ekjwGuhZLdy3I9NEmZxtYXQCvCPkTxPS8ynzY3KLHEzE
- xweG5JmTHxVa+GESBPLp6pDTCrSdCFU1QYyMA44ZSW/PMm/XAqH+FkAeiw7/x/lorZ46
- LmFo9EeS5ItXFJqVqfCiRjQAOarlP21Kc0hr837avOjMBPtcJYELF34M5ykmU6bxNRpe
- JorQ==
-X-Gm-Message-State: AFq9FYJVhOowmZnhU5Wqw33qcun4LQtB/tGq77irMjb7bZ6vYmgYs9gB
- xxwtDwH8yg3/LSZttacHMWZ3xWO24fltkt4yAXTa2jNwEUyfSzaWCn1q6602DYse
-X-Gm-Gg: AYBFou3mgSvSigr4yjLO6ImeL9RnxURjXhlmGqgkDDIvSRwHM1cNw79HdxjtOTt2UDA
- P2/1AQl5BJT9h6DeIJrBFlIOG8XLn4mwSvcZ9NpWQoiZR+HiITMYZqcMMrz83BU32nJ42KXWdfM
- lu4UriJnEtoAKpl9rlAO9AbWjSyx4smIA/TcrlZrHZRspHLOjkzmVBflRXOofCcyCrlhs6pF+zb
- IJ+iiaIuIRR/r4HGJyHf0RjYRzq/qj/ixQoMe7Gn1GABeTFgsfBaVmMpDBdRLSg7sb3nC5TJBeQ
- MMycwbgkRl07xKOWHrcEzWs3O8LM1dbu6PJg12NyLBRv59BpNRo2Guv5UFIouKE4FqjKNeBvI2k
- CkdayqY2fT2dXY0f5TduLoKkn4saSOKBy082Aoui9hPzG/a3YP050Vu8daWncZtxDiNb91MmQ7f
- 1UmFScM3YfyLyH7jGmqDq/4NRW6+Y0uA3Q6vJqYoDvxDR1GkaHWpWO1TZrMzo+mVaDvEbC9KHHi
- gQql6/jIxxtjaEx/r2A8uFmJGy/5855kpczf+8lOv6ucFlTDZOdinBZzfnf/wBHsIMRkGgYEifS
- IrEmjT0JD8zrYn2vmEWAUIW2wLxhGpOl+/SY
-X-Received: by 2002:a17:902:cec4:b0:2df:ae99:7595 with SMTP id
- d9443c01a7336-2e49b694ce0mr92908525ad.69.1791201562603; 
- Mon, 05 Oct 2026 04:59:22 -0700 (PDT)
-Received: from localhost.localdomain (ip24-93.wifi.cc.ntu.edu.tw.
- [140.112.24.93]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2e5a5ef67f2sm6024465ad.76.2026.10.05.04.59.20
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 05 Oct 2026 04:59:22 -0700 (PDT)
-From: dodochicha <kevincheng60303@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
- liwei1518@gmail.com, daniel.barboza@oss.qualcomm.com,
- zhiwei_liu@linux.alibaba.com, chao.liu@processmission.com,
- dodochicha <kevincheng60303@gmail.com>
-Subject: [PATCH] target/riscv: Check Svnapot PTE before updating A/D bits
-Date: Mon,  5 Oct 2026 19:59:16 +0800
-Message-ID: <20261005115916.21196-1-kevincheng60303@gmail.com>
-X-Mailer: git-send-email 2.50.1
+ bh=68/MEj2aCnTszQcG+42MXKwOQtnPqyWZO3EspYwBapY=;
+ b=aGjQxZ3no3nfvL7XSfWTGHzv6/bJbj32a1qs5Zvbn2FJFZFmt8Um8uyORGzkFZMWFe
+ kxrZhPmx92U6iwGzkvQbKi1gm8rkY/DfdUMTiEgdplf5D/NZsGsiUfMqevdXEMsYSfFN
+ UC0tY30F53xm81IU4uiTJOGvRiC1eFrQebkBge8qoHtHXfzUOr/0dwOalv86bL/5ofAr
+ 8fIyxhVW3FQpr03LKHPmx6bpE/CMyrT1HWyNZOhzCWtVBFd1Vm6n4Nq81ZLrCNCz6qpL
+ r3er0mAh7PD67qwGJRR6traGl1GKEb13z0W/D7/E5m5BN9H6zLYumvQT36VUt4m8EJI0
+ bnyA==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBwYfwWTunlg3UCbjGAi/dmPJe4PQp96bWm4R/HzRh3W2O7SfbH2OdOzU0YBeS5zb49HGamSMMO6fQZW@nongnu.org
+X-Gm-Message-State: AFq9FYJAffWyDI/qZiOpaq7apoq380ncPwQx43SrV0PDok6/Qw8Wb/Hd
+ 2Koy80NRyoXp6MW8KQjMZ4haZ5CvbWS60KveKuNTqUUM34j8gMQeGVNdcLb3o+f516rxasvhSfy
+ Qcrain2uD+0fL0VR6oU5jjkTHHdsVUevC7Pa1hsbVl4Vx4hDcUzG/jNdx/A==
+X-Gm-Gg: AYBFou1i1fau1HkGTwhivUgVtI/sgVqrKby3FgeNYdvJ7fYOP/VSnkq3ib59e/Ezfp0
+ ULS4k2vnV7NexuPIRrahfgoW3iqtMYmrbkCJs8oDdegTJtJUcOYOH5fABaebrWKF1aLGR3RZbTF
+ wT0qfFK4qudmBrlOUl4aPFqbpMLdkOe8LJxwHY2e83yoxatqfYQ2sBFwMejr78Uze3/9fwqHf1o
+ 3pDyzRgA2P8wqvLCtONMEEhBo/Y3Ut0zQBLNxffSqH0SqvHcKnxlz+xC1ojGMwXV1wGB3XK9mPM
+ BQym/6qKYwb4YAMQJTy7OvUP8c/nulmLFBP2diUsznOsATRQT1MOuvicPtCzpzRA52KLrbq6vpF
+ yJb1gq7R0D0ylh0PDMkN0EWrbWCZ7nEnBcA==
+X-Received: by 2002:a05:6102:148c:b0:7bc:696f:a5fb with SMTP id
+ ada2fe7eead31-7c0f5baadd7mr2929704137.29.1791205572743; 
+ Mon, 05 Oct 2026 06:06:12 -0700 (PDT)
+X-Received: by 2002:a05:6102:148c:b0:7bc:696f:a5fb with SMTP id
+ ada2fe7eead31-7c0f5baadd7mr2929564137.29.1791205570734; 
+ Mon, 05 Oct 2026 06:06:10 -0700 (PDT)
+Received: from [192.168.69.225] (pmd666.hd.free.fr. [88.187.86.199])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-48c6229ce17sm3389247f8f.29.2026.10.05.06.06.09
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 05 Oct 2026 06:06:10 -0700 (PDT)
+Message-ID: <f1481bad-4dbb-414c-801e-aa24a6977b18@oss.qualcomm.com>
+Date: Mon, 5 Oct 2026 15:06:08 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 01/28] hw: mark secure machines for x86, s390, ppc, arm,
+ loonarch, riscv
+Content-Language: en-US
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: xen-devel@lists.xenproject.org, qemu-riscv@nongnu.org, qemu-ppc@nongnu.org,
+ qemu-block@nongnu.org, qemu-s390x@nongnu.org, qemu-arm@nongnu.org
+References: <20260911143627.2743803-1-berrange@redhat.com>
+ <20260911143627.2743803-2-berrange@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <20260911143627.2743803-2-berrange@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:39::2a;
- envelope-from=kevincheng60303@gmail.com; helo=mail-pj2-x2a.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Proofpoint-ORIG-GUID: Au4XxLOvgnlVChXRiA2-uBU27YEQ1Fjt
+X-Authority-Analysis: v=2.4 cv=GMGdgeNK c=1 sm=1 tr=0 ts=6ac3a0c7 cx=c_pps
+ a=DUEm7b3gzWu7BqY5nP7+9g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
+ a=20KFwNOVAAAA:8 a=tVdpVsJRxwjYG60tULUA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=-aSRE8QhW-JAV6biHavz:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA1MDA1MSBTYWx0ZWRfX6Zs9YfqJ13fI
+ zMX/RmExvbLrew8lW/0r+9EoiUQ7A8wWAMIZLY6kYkoeSc+5JnhlfeMghc3d2doLqBbAO2Ddre4
+ 3IfTC8efxAZlP8O1ce81ncfdTLwaS2w=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA1MDA1MSBTYWx0ZWRfX65f1z4K95lod
+ zrsPj0k3OOnz8AVTGGSN3Zaz3BkDwIjrp279bN7nuK21tzulx6OKFGke0zzccp29ijrYGsBStRL
+ Czk1ebhEQZgDrlngeSkXucHfFPAahyMXloeNTf0AsCYgqcFotFQG6U0UiRjKYrwjemav6vmo2X/
+ 1PGFhAt1b87bOZhfA1wq1uRzHZ86MkC+UFoAf+I05OpjPdsGO3KI0Zt2fUAcWHcKCtfHBHnjGvQ
+ nqpQrF+z9prmZZCxDiD7dL3M4T3Z0hbDTZSsB3lL7TeUY2Kg7eAgwthtSqAiyOU5y+HiF8gyZ0I
+ 6ryztqblpcn94XoHerc3m0XnKPGhk1Dr7dfOvl/GbjjoOo4CMss4sJStx8mmX8HwhWKEMTZGZMR
+ /NcOLoNdAvLx48yDCahsHoo7EZnGM3nBFgbbAX0x2xX6gb/KjcLZyOcGyJ/xrmu5cnP5XC24tD9
+ 8OekRd8ZdoedwtkWmWw==
+X-Proofpoint-GUID: Au4XxLOvgnlVChXRiA2-uBU27YEQ1Fjt
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-10-05_03,2026-10-05_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 suspectscore=0 spamscore=0 adultscore=0 malwarescore=0
+ priorityscore=1501 impostorscore=0 lowpriorityscore=0 clxscore=1015
+ phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
+ definitions=main-2610050051
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Mon, 05 Oct 2026 08:30:40 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -102,48 +158,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reserved Svnapot PTE encodings must raise a page fault without modifying the PTE. Currently the A/D bits may be updated before the Svnapot encoding is validated.
+Hi,
 
-Move the Svnapot validation before the A/D update so reserved PTEs fault without changing the PTE.
+On 11/9/26 16:36, Daniel P. BerrangÃ© wrote:
+> The versioned machine types are typically present for use in
+> virtualization use cases and can be expected to provide a security
+> barrier. The only exceptions are the m68k versioned machine types
+> which are only used with TCG. There are also a handful of other
+> machines declared secure in docs/system/security.rst, notably
+> the Xen machine variants and microvm.
+> 
+> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> ---
+>   hw/arm/virt.c              | 1 +
+>   hw/arm/xen-pvh.c           | 1 +
+>   hw/i386/microvm.c          | 1 +
+>   hw/i386/pc_piix.c          | 4 ++--
+>   hw/i386/xen/xen-pvh.c      | 1 +
+>   hw/loongarch/virt.c        | 2 ++
+>   hw/ppc/spapr.c             | 1 +
+>   hw/riscv/virt.c            | 1 +
+>   hw/s390x/s390-virtio-ccw.c | 1 +
+>   hw/xen/xen-pvh-common.c    | 1 +
+>   hw/xenpv/xen_machine_pv.c  | 2 +-
+>   include/hw/i386/pc.h       | 1 +
+>   12 files changed, 14 insertions(+), 3 deletions(-)
 
-Signed-off-by: dodochicha <kevincheng60303@gmail.com>
----
- target/riscv/tcg/cpu_helper.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+This patch should be split per machine / area of maintenance,
+so maintainers can officially Ack their commitment to security
+boundary for their machine.
 
-diff --git a/target/riscv/tcg/cpu_helper.c b/target/riscv/tcg/cpu_helper.c
-index 07d9222652..105f2f1927 100644
---- a/target/riscv/tcg/cpu_helper.c
-+++ b/target/riscv/tcg/cpu_helper.c
-@@ -1403,6 +1403,13 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
-         return sstack_page ? TRANSLATE_PMP_FAIL : TRANSLATE_FAIL;
-     }
- 
-+    if (riscv_cpu_cfg(env)->ext_svnapot && (pte & PTE_N)) {
-+        napot_bits = ctzl(ppn) + 1;
-+        if ((i != (levels - 1)) || (napot_bits != 4)) {
-+            return TRANSLATE_FAIL;
-+        }
-+    }
-+
-     target_ulong updated_pte = pte;
- 
-     /*
-@@ -1473,13 +1480,6 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
-     /* For superpage mappings, make a fake leaf PTE for the TLB's benefit. */
-     target_ulong vpn = addr >> PGSHIFT;
- 
--    if (riscv_cpu_cfg(env)->ext_svnapot && (pte & PTE_N)) {
--        napot_bits = ctzl(ppn) + 1;
--        if ((i != (levels - 1)) || (napot_bits != 4)) {
--            return TRANSLATE_FAIL;
--        }
--    }
--
-     napot_mask = (1 << napot_bits) - 1;
-     *physical = (((ppn & ~napot_mask) | (vpn & napot_mask) |
-                   (vpn & (((target_ulong)1 << ptshift) - 1))
--- 
-2.50.1 (Apple Git-155)
+I'm not sure LoongArch / RISCV / PPC are. If this was previously
+discussed, then pointer to the public discussions should be listed
+in the patch description.
 
+Regards,
+
+Phil.
 
