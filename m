@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F9C8CA5FE2
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Oct 2026 06:47:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45B4CCA5FFD
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Oct 2026 06:47:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xDcRM-0006f6-Co; Mon, 05 Oct 2026 02:44:48 -0400
+	id 1xDcRK-0006dp-KT; Mon, 05 Oct 2026 02:44:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1xDcRJ-0006cf-HH; Mon, 05 Oct 2026 02:44:45 -0400
-Received: from mail-japanwestazlp170120003.outbound.protection.outlook.com
- ([2a01:111:f403:c406::3] helo=OS8PR02CU002.outbound.protection.outlook.com)
+ id 1xDcRH-0006bb-IE; Mon, 05 Oct 2026 02:44:43 -0400
+Received: from mail-japaneastazlp170130007.outbound.protection.outlook.com
+ ([2a01:111:f403:c405::7] helo=TYDPR03CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1xDcRH-00005B-Sb; Mon, 05 Oct 2026 02:44:45 -0400
+ id 1xDcRF-00004z-S4; Mon, 05 Oct 2026 02:44:43 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=gPl2scaEOrN5TQENSpwbVx+69+ELvC9qpoWke9S0C3h7+lE+mUh8q6ZhIg/VZ2v6j/WtNAfm2Fpb7CqXsHLLL5Q6Zw3ifJysvxkC02GSaSLJ9RpcusNnUPux9nVry4cHyKbwUBZielUbxWgnu2F7KEMapbdZIO1ru+HvKNb6aYhRX9OAHXIkhW0ZNBj3k/49lpH1RMDfrOear8JiQi7l+Q8gtOGftVbWGWREaw8E387XuGsx/vAhSLUEDIRZ8wUGUjsjxvz6Lnsx9OwZFd1WcgyIjCmrG1g6srkL/TWmona9h8MlzlWD6bvczi8n7EyN1Pkza7zIv+mNdvJc3L5zCQ==
+ b=uKjoVEQ/G6mga9+jZBPXCQn4b5F4QLH5Vm9cTWMt3rwKuLRILDj23JYZ8rsFVMDAmUbEMU/mzugAhUazh2r9rOiuzXLp5pINJwln+40D+tk7R6SHLb4myvikQHHeCUzNw69Qbs9xrIj7X8FRBY8kZtwKnR4t9f9XCeDl7vqpEIshIY28hjbmz3Eu87249PwkgYU2MNYXhebioHbJj0EzdqWIdHiP5Sj9rPanojXCcYB6ME+e0NnCS3c8a1gRzQ/g7A4+fcyExwVwcwNBomKItmmEnYI7dt8QPP7biWuKhw8J1hM0K5LOnpFO+ajrCAewmgTdds0YijiMOnkOLbgF3Q==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=fNJWhLr9igZ2kB5vR+c5od9Loo0924fKdDn3NOBTHS8=;
- b=p+dfEUQrqUfnVkHB1NnU4i/nATNJzcMw2G9mCYy4SUoP7R3OkdMG615NQnZGKL3ZOeJgTwlSFDz+hVlhOdRVOkr5V4p+RLrkRYnPklUp2nCrkKpKRmdiqAtfQBy3emYd8H/YiNOsM6mbXHHqAtrQ9wNjZCLnRPh8psAcf7nMnYLmTnSwcBNWsJU1lGFO/vKzFIpGkQysFg4oTykOYRugodBB1f1sxcyEHBoro3dYjkrR7hp5ME9VRRfrdK9GxRf3YQ6mzClBcQ+WjnMFSFIsUSAq2Gr+mIb3GPUvrKrJE0Mc8Bir+gws4RqP7U/B/au+20dAchLs6Gk+LmY7l8/rUQ==
+ bh=I8qAlsUrS5EBzuAdL+2YWqWu96JfsSLbYUfS9BawsUc=;
+ b=CMR+OQV8d85yx2QjZjYrXV4MQtknmSBjgPmOwt/IE/EKacbXD99nmyyvY8MYJFtTFltttLokN5XFQL4b7vEho0jHKpcmiOz8wCD+XtBLDSVriaR85PuxhgnTT0KphaWuGJ9wgpxa7P0Uud2xfjNbb0zjM8sxvw5viLdXa992q8ZLqarhNUvdeZvwfI2YAzqqszW1qUyjrdtJgqMDUVuPhZD9BVzbh8b89Qaqr9xdKNYG1mGSw7JWhBP1hFT4dE+zbsyBsumgQrQC8YjItYBuGmEtwet4gOfwF82ASft0KefeC8GK7SZsUiTZXO6Z2ezKMkfVz4bBhqqY6Xe3CiG1vw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
  header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=fNJWhLr9igZ2kB5vR+c5od9Loo0924fKdDn3NOBTHS8=;
- b=jXXlgwch3MFpfuVuP4cuKa93X95OW7SWMNc8+bv4joyWggIju/z84TaaUtqzDixZIM0/5miMZyhRUtD9NtTL8oyJL0nfHhBXPZGI9xbuaFMiyFPb59NTr0Hs/V6D+wd77i4W8xwDSEmqA7AKF/iufwxq38DupH65a1UZF2/hxWpmtuBBJjSfkkZG15ShEILLIDr1njbCZ1Ew7GvP6VXXvtICfb1ykdiLesfidGpaeJfdSHpzzPif+R7orNzrtYELiiDTpJS9RB6HIH+qJLzdwBifO2qTO8AiMQvWjokdMuKzocoV0OK2hXug1dKT12xFle/X72q6HZRPX8i9tlinqw==
+ bh=I8qAlsUrS5EBzuAdL+2YWqWu96JfsSLbYUfS9BawsUc=;
+ b=j9CXewx3UJnvdPdadGPg3SEfX+62t6+8jUZ6b9O15WUdzCaG4KNpspc4Nz/JQ9E6CL/bPSYTLOCqaQvFHvTnfrYRnGimJ3YkIy1Jtv8Uvaru+A0W5wqTI//ONCS9zMUWiXwDt6h23vTAvkN738BjsmHhMdiSBmTmXjGmzTVWHZPOQC0MPXJywIoeyNCxbt5BzaSLPYMfQaSsxC2VzqOpJMZdbkT5yceAsu55kLJ56kscdwsnGwCjyZYE4URoVER0lsq822hrePjBNOjRuzaVnzFLdwvNPZhVyByXuaF8gQffFulFXsVmSzT1/B+gqIHCLi1QJ3nDeFYwmc6oXbS3sg==
 Received: from SEZPR06MB7362.apcprd06.prod.outlook.com (2603:1096:101:253::10)
  by SI6PR06MB7166.apcprd06.prod.outlook.com (2603:1096:4:24c::11) with
  Microsoft SMTP Server (version=TLS1_2,
@@ -51,13 +51,13 @@ To: =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@kaod.org>, Peter Maydell
  list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
  <qemu-devel@nongnu.org>
 CC: Jamin Lin <jamin_lin@aspeedtech.com>, Troy Lee <troy_lee@aspeedtech.com>
-Subject: [PATCH v2 09/11] hw/usb/aspeed-udc: Add trace events for the transfer
- paths
-Thread-Topic: [PATCH v2 09/11] hw/usb/aspeed-udc: Add trace events for the
- transfer paths
-Thread-Index: AQHdVJT4AGKsuUUpLEiyqf+2nPuDqA==
-Date: Mon, 5 Oct 2026 06:44:29 +0000
-Message-ID: <20261005064418.3060881-10-jamin_lin@aspeedtech.com>
+Subject: [PATCH v2 08/11] hw/usb/aspeed-udc: Use the endpoint max packet size
+ for OUT transfers
+Thread-Topic: [PATCH v2 08/11] hw/usb/aspeed-udc: Use the endpoint max packet
+ size for OUT transfers
+Thread-Index: AQHdVJT4GD6016aHRkGdLtI0bJ8j0w==
+Date: Mon, 5 Oct 2026 06:44:28 +0000
+Message-ID: <20261005064418.3060881-9-jamin_lin@aspeedtech.com>
 References: <20261005064418.3060881-1-jamin_lin@aspeedtech.com>
 In-Reply-To: <20261005064418.3060881-1-jamin_lin@aspeedtech.com>
 Accept-Language: zh-TW, en-US
@@ -68,70 +68,71 @@ authentication-results: mx.microsoft.com 1; dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=aspeedtech.com;
 x-ms-publictraffictype: Email
 x-ms-traffictypediagnostic: SEZPR06MB7362:EE_|SI6PR06MB7166:EE_
-x-ms-office365-filtering-correlation-id: 0bdb7efb-5372-4d59-2235-08df22ac1bcd
+x-ms-office365-filtering-correlation-id: c5c5e3b9-997b-4307-153f-08df22ac1b66
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
 x-microsoft-antispam: BCL:0;
- ARA:13230040|376014|23010399003|366016|1800799024|18002099003|22082099003|10067099003|38070700021|56012099006|5023799004;
-x-microsoft-antispam-message-info: SaMzfqO4QNQUxS0QCCTq5YrdRsjqztACjN7PJfSHAimQc/gtc5SiIvd0nWIjWyKUZfUwk+w+JAOR8KulI+crTXiwjKmIYUVgimu9sOkIgLMIn4+OGooKTrWBmmnFsYsQ7DDJX3Fa/X9O8Ttv1sBDYxs85iqVzu3FfIICsFGFV/OPSzb9lzN+cb3XXdicNgI7/Az7v8x0+dNiZQdW8OGRX2FU9JHSkPpelYcpjAkOgx5aFrF7SAxemiBm/UOb7FcFZKxSX0jvMPe3r8ahODPCbFpbL1p9BhCrFisCxDw2uUUm+rEdbEgJhSpeFxbuEdhWm6kM6DCsqzeyTWdnj6XehzV7AVNx8A/gPxq5Hi1oiqzAo1Dn1vct+OYSim8d0sUjj9sVxi7KFBC0h9DRX5wFrjxMff4SO1ytVdtnGLe7r3P2jEddHKFPEYvUc7N1wCBSkJqRCYNc0DX2HcudhyFyXRXgZPvwpP8JlPAO43v6QN9QdMsbIa8mdRgk9pPsuWLlxBljSTEdYQrrb3VbenDhRieX5l2nULC90+Y/O+t6KmZl4sbbr4ESHSTHMnAqWaj9VFG+6YQxfUfxbQy/lYAeSW7aGGIZ7J/xufMkLDIn3Ph6Cga/2/ELm/pgZndPSdIIOUqRoC82ZuEh8tf/VYVkL4eWMU5W0SsmDceGsmXZP8Jy0KOzpepYeHZgt6VVjnw2Ukgz8XxsNEl025F56aJWghWKTybI/BEuUeGQKbPwVbI=
+ ARA:13230040|376014|23010399003|366016|1800799024|18002099003|22082099003|10067099003|38070700021|56012099006;
+x-microsoft-antispam-message-info: taNAuEvrzUydjohyFThqW4pLef81IGuSlBdNnhs7N+D6yDivzYAwnK+SFUnVpThino2UjaJlyLenW3Fta/zL7fszdl1kQujnyzOVaM0Wi9gpTdSczLMRhz9Dcpgr1RqFQQyw/LGpPYf2gTuL6IUlKe74SPJweKEjGVdMG5d+EgN/02sfU5F176AqbHLNghgk0IuIZ3+LfbjqkcJrdd7c1mraC7YF4Ij4dVRxUyYjiwEcPcZU+jds+b3vhIm0QvorG86cDWaZ8cu3NFVqyIrbxZSPELbJej0bZ95z4wVUYqboJHSitNtojZalQVzs+c6aciyP3yiIsnmSogcirn5DVHLdLabdNjj2DD1gI9EuuMOaaguFdIRewugiMyxyB9C3iafBiSiT4vI+weVayxFzJZ3y0B8gbuUKR1iTBDLssvpsK9liWUPilbjInChAXqNzkfVWJVYdUDKyXCy9esUkBYWjR5VizcmrZXlHXolDoDczFxVyItWleqfo5OS61iHvHqujN81Jtw6xhmPErayd3nCvwAHM7hfQkO9r889uQI0gE0URKfWazUjN//d2nR+QTnrO69xIbWfb1uHSL86AXjRD+rF+1Uvah/uqyoYYS7WorPkN49fVF+56LrEScbO5Wx4PmoxUbRxqFdiBarxzlZJ52t5FTVRdFZ+tLj0VJ7bgq79Nay2J3R1nhpobR1x9dY+hTwaWLSqsrEO4uDxBfkWnac8cJsV7n/ed948RHQI=
 x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:SEZPR06MB7362.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(23010399003)(366016)(1800799024)(18002099003)(22082099003)(10067099003)(38070700021)(56012099006)(5023799004);
+ SFS:(13230040)(376014)(23010399003)(366016)(1800799024)(18002099003)(22082099003)(10067099003)(38070700021)(56012099006);
  DIR:OUT; SFP:1102; 
 x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?heyKx46Nu6Whdaj+/7AjGZZiv0SrPc+FlHscFQNhYYiy+uM3nU3dmrO+ib?=
- =?iso-8859-1?Q?yDxS+PB+v60swraPJ2uz3ZsPYmG4hyR8to15w/S9qUVbGeNXJkSs3oo5Fr?=
- =?iso-8859-1?Q?k8Bo4rTQtBlkSCPvHTytDeQmgIdDbqNHa6lth4BdWajWhCWgO2y0QXcxyV?=
- =?iso-8859-1?Q?KPL8W0T2HgXm2Qzb47/0U3VHeGWlzE1JTV3WMto0DEw0QmzBe30v2H5SaD?=
- =?iso-8859-1?Q?sHoE74h16wPeWZ1h+DCNKmYxTizAfXBvPnFnXKr4uKMKWt7aAVZVqk1qig?=
- =?iso-8859-1?Q?NpGIkp2hEGiSfI3pMjKUee7NQRjsn2FR61iaUnrOHS+3VKzCUHMPphPWSx?=
- =?iso-8859-1?Q?a3QCMBYYvY1Y3Rl+8lKsZ5U/tYAe3jTD/OisPbG7pEyPcKCbfal9TJ9BF3?=
- =?iso-8859-1?Q?H6+OSzIZFsATQl2D/yxKeFBMAF65uLqHK0QXou4spqXRnmmeIUcIRCl7ma?=
- =?iso-8859-1?Q?nL657t5GdDVewnpDskL4VN0Fg+0FzBeIjgYrjvwBy+Bj4cOtloxdB1eOLO?=
- =?iso-8859-1?Q?wm3OsTcEd52pI64nfGBUfgizrLxRk/UY21K4pReF5BNCFwjtY4hybbZwMJ?=
- =?iso-8859-1?Q?OBcx/zwfjKQyqAQKLa11a2S/4eYgVqki3XNWfiMplfrFpFOQpLn4a3c5QL?=
- =?iso-8859-1?Q?Z2r8xEQuIeD6o60wc5wlwRTXeW1oSMVqLvW/ZVR83igpkzWvbGgWPHXuvM?=
- =?iso-8859-1?Q?mYcOjgX7WPjT2euuIvQx0LFoBelXRGlc7PW329lmA52ghWLCPFb5jK/DGb?=
- =?iso-8859-1?Q?g97vPJKAmddX6uKsEERy5SugoxxtmtPN9dIlx8NeEOw3peeBXGpuf/FpgU?=
- =?iso-8859-1?Q?fBXN0F+mPpMMOlW8EEkkW9VGsYgH42Jm39auHvkSDqfce2nUbkdxz3uiK1?=
- =?iso-8859-1?Q?8m5GhTB3EW8JbuDsLM3lqHTCgigZGS7l3dpPAl/pySUPIsa8zLpXOzrNDX?=
- =?iso-8859-1?Q?wSAfcHxQX4OUmOUYfsSDKXAMo8NE8TrA/o6IrG1K8bsYbbR5Ss0G0brOgI?=
- =?iso-8859-1?Q?goNcDVfQE5v1fxu1baf/GLPvifn16n21TrRhQYCxWKZ4SkBjB8yOszrzXj?=
- =?iso-8859-1?Q?LoP7xsg/N0b5CZHr9gzcQMrwKGtHUDshNcrKAmmanYSEejDtXX6GRgnme2?=
- =?iso-8859-1?Q?HL8jChO7iQ4k1qTCsUe4lMNVNAt1aFa/5bY98u41Hi4evcO3a2wNfVBP3L?=
- =?iso-8859-1?Q?o9Z7WkLMm0AI4WjK/ugs16H9XacLZ6lODbzT/JA4wi4Wu7AD8DZz/h064o?=
- =?iso-8859-1?Q?1k6Y1S9GFEjJclJAC6snjMn0w60A7yxE/+NVk8heMPFlWOkDnH/7KxbV1+?=
- =?iso-8859-1?Q?jWvo+PQZ2GG6BUW167yHKK6gOxzU4ov3S+7iyaJtbHWSU7hUTCqLckcIYB?=
- =?iso-8859-1?Q?BvZTjZi0+4fHCWyWQBD0WF9FfQWB9cwvLBK+gjdUkCkQlvAuXUe1NFQxiH?=
- =?iso-8859-1?Q?qdVHlqIFeDhDXtZhCdYjtJMypVFtS9VKRxJ1uKO7yzvLoQCceTVuqG5gVq?=
- =?iso-8859-1?Q?QaXXd3bhicwEJFhU3oAuX8YeYiM3akBhyORjOgdiu7F8YYQDl4pRnr8M/y?=
- =?iso-8859-1?Q?pipJtma5MAK3DeTD7jmYy7j5/wy2rLUjwcjB1cx7OxXNFtReLck962LInP?=
- =?iso-8859-1?Q?XqxbCbaUlv1Fxig8zYHLhqCaIxQtJRUzlB0x+eLdTD4rR5Uzg/Mbliab3U?=
- =?iso-8859-1?Q?3MbFN/cFaAODZxLDVsc/7uis0IOBSAaw6Do6pOfgOrG06k2LUPf2dYLqEQ?=
- =?iso-8859-1?Q?S9oKVZpo9XkKfD+Yeo9QKfE/d/6yH2bC2qWC0RX+95JWA1/n7hE6m+iJjn?=
- =?iso-8859-1?Q?dw7lFPPVbg=3D=3D?=
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?/pf8hjg9kZvaGjFc+yBKdVmeDc+5qR07t4//mGXcwVW7FeADT38QlfpQUr?=
+ =?iso-8859-1?Q?2jOTYaSPAL7a1XYuiiVIU/IXRyigkn/HlEL3Ke7Fiv9twTDT1SahD7SeWA?=
+ =?iso-8859-1?Q?6fpOYz/dnksTKmnFKPZx2mCvUXXSRJcibGF+fHvEkLP1koPmdn56RTcorc?=
+ =?iso-8859-1?Q?/R722YmjYI9vcSK/cs38sYnykhb/DrAjEIVVN9s1qVHyGs9Mk80GUgD+4o?=
+ =?iso-8859-1?Q?x06qG4CmpP+jyU0qS8EZWLTCzgSrHxkQyurhsRh61shDvUWzYPrhIRuE6i?=
+ =?iso-8859-1?Q?SHTW/NCEIXRoAr33Ol7wmDNW0u3rC04qeCLvxc2Rh2oYLRZukQetLmmVmH?=
+ =?iso-8859-1?Q?1jalCqGCx4CGaDBjUTMlWXAGO1pvZWLJtl+pawqeJ8NXIc37T2SWSkg870?=
+ =?iso-8859-1?Q?8V9Ru7xGJOPQjmBSvdouYRwRaL1t1EmwS3XlRjI/H0Dac13fr+iE5evdaO?=
+ =?iso-8859-1?Q?hDrLMfFOQra79nu40A2bpg2jhCGQzQ46O4QD5ASZydxaBo7vnWV3igJUvo?=
+ =?iso-8859-1?Q?QCS8pm+5pcdfEWwDERWYAvU2cjXsE11PbeXe19lsr/aBozYw5FjL/2pc7H?=
+ =?iso-8859-1?Q?zYr5AguXN26EZ4zyuSztTFoh7Zv7GT+aWTXKBSuhYgdy0TH+Ht+mEt3XO6?=
+ =?iso-8859-1?Q?qAovX3J/p/cifhEhKlrPG6bhsssF/gmivDY20HOw00RJUhYTuKO6NVeZI2?=
+ =?iso-8859-1?Q?sFthfIL4W9uV3nYyE/675e33CgiiOpELOe7mo4onbb68ZfLxQS4zmviZrl?=
+ =?iso-8859-1?Q?8uRYV2vQQbxABBAcYXSa+Pka8l0byAWyPNbkGT44gclysGT67W8O3DvasU?=
+ =?iso-8859-1?Q?bxTrHZQte+gyS8FnVc7dlnu33l/QLocPTT9EXmGBIdR0l2TVNnOwbHGvOQ?=
+ =?iso-8859-1?Q?TQZjzpFyKP3RHtwCyUWSMYEZSeSjgvseOdEJtLBEBIgK8tTN6u7uRJSy/s?=
+ =?iso-8859-1?Q?GL5MzSpE3lAiwBU8A+7vYH3DCo1VrwX1oOCsX71edAPxJuw4R6hnWxP5PM?=
+ =?iso-8859-1?Q?BUISIP09yNjm3/LlZqP0JjiSAHrY8RmnxWm4RjYpFFGL6tGclqUQv1j7S2?=
+ =?iso-8859-1?Q?CyJdX5J2wHdMw2ICcQtL5MXHwsMXtNIkeyhpGsMpGvJMuN/28CBE8siPWV?=
+ =?iso-8859-1?Q?GQ/tfWKjlZzAzQwNmhqguAiSEVprJc16Nmoc59QQ5Aekly7iYrYSJ4MxwY?=
+ =?iso-8859-1?Q?IWk7YSksJh7dEaoPnvwUqRWtjY4/dLJ9GIZ07u4RS0EQru2YLVlixezpEV?=
+ =?iso-8859-1?Q?HLirisCrXaFgQ0w9rfUpZfJIhMwB2O0HvSZgl67K8uPpHm7jNcLuABXBOL?=
+ =?iso-8859-1?Q?UZ6bQztMFqeSwfnBjoST0G989wdkAxU8EJs568RkA6DRl4Y7qZ+lGx1By0?=
+ =?iso-8859-1?Q?sotWwlamti1jlqN5XJm8A0UO7jIwEZgZzmSWGtM5+QPSBaML4RxspaqiXL?=
+ =?iso-8859-1?Q?PA7B8EhBq9DmBZQwZAxBuaGW1LJVLZBqTam/4XjGM7j/7DE17FD2HX6m4j?=
+ =?iso-8859-1?Q?AxyRQ4JO55USwXBNNRSIomIWhxWj/IB4EHBOQb9Jpmz0ZDSsUrYuP6W25B?=
+ =?iso-8859-1?Q?z4IMLLaMucfkEYeoP8tMrfkm9B7COb18/QPfkYORbpZCHkSqd3ZC2qi2am?=
+ =?iso-8859-1?Q?exetKOXEkpzNM1c8KQirwaJh1O5Aa8mWCLvLHrIXNfGvkiTdS0KwYm5tS3?=
+ =?iso-8859-1?Q?xTNC2rPyWF4lzP7H+EBNXQG65VvQ0o6kE/u3bMZeBMQLyNWG6uX3HOTxJO?=
+ =?iso-8859-1?Q?cagAoi66Utw9LFqwAgrNfc1Ct3aHFzeUEFYo5c50J0GxesqdPiz7AceMeC?=
+ =?iso-8859-1?Q?/8p0aBvlcA=3D=3D?=
 Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked: A8XySWcFe0/uDbMnJKIX6lumwdbBcew7seBTasQBOw/MXIm8Dr47gYhFsEqINL7NFtQ51HFZIWmCGKDfQsSnRqK2KDUZnV2NYaVQJbmXK6m71j78S/0HMzBIMxDoVy1RndNmmTM2l+vqv7mQW3haQDPz/U/oKpgLBr0yXUvi3ngkWy3BP8i5HniZB2g4v0uBBkjisqkAR6QRHgHWiNZVOqj3UCTD994vRQL9D7gnLPE2CE0UB0UrbC/vBoxFEwB5Gd6wuGCFD/166VuwrG4cktfmhnSvw9TIQI8wJpZ5pJ7KWmGviqR2kaDkpRtbL45HP2jNPrcS/9+yfb54+MIR7w==
+X-Exchange-RoutingPolicyChecked: xDTarmpI0XLzRwwunidOJsY/Bn3ZD9EjmLvAXQKsez0xlfpCnDZOueKlzE/K26SqktCSE4p6py6gqwbVf7kpkJI5gE2BU4AHOmksTFokmgl1gwTC+UF8frIoNbzN3YjXMkIzj1zkQeYD17LvknZBnMHCVQVeCrGMtepfhYbHc1hNdJFEOFPaio979oLldtYFBARikuUqDhwtroRbuWJzoBqwyC2xxDtowyDQqMBul9p5M3YuiFKGS5EXMjUxaPBAP6ev61f7IlT+VUC3Sjh9EO7u1gCl+3NX0m4KD6ynn2NwkDAb8xC7Glj8AwwyAc0jWiLm6CV1I8OlU7v3n0RLJg==
 X-OriginatorOrg: aspeedtech.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
 X-MS-Exchange-CrossTenant-AuthSource: SEZPR06MB7362.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 0bdb7efb-5372-4d59-2235-08df22ac1bcd
-X-MS-Exchange-CrossTenant-originalarrivaltime: 05 Oct 2026 06:44:29.9863 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: c5c5e3b9-997b-4307-153f-08df22ac1b66
+X-MS-Exchange-CrossTenant-originalarrivaltime: 05 Oct 2026 06:44:28.4900 (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: iYKI9p4riyjc7Zlkyb8UVonry+Abd1PkhXvlQeONLBlN+Ea4/E3hdjR0k4ei173eJsQWuhAzV/6Q15JLNcBlKZOhKueozSQ6MFtb0Il+KeQ=
+X-MS-Exchange-CrossTenant-userprincipalname: u0EOD/hN4C+LJm7gXGZZp3qcwsljfI+RtcYwJk1Xl1CXqL1KqaTB30u6KYAhcQWC3KOA4sLhPl/YzFT9FgogeOj//IGLN3Fow60/uJY7Vqw=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: SI6PR06MB7166
-Received-SPF: pass client-ip=2a01:111:f403:c406::3;
+Received-SPF: pass client-ip=2a01:111:f403:c405::7;
  envelope-from=jamin_lin@aspeedtech.com;
- helo=OS8PR02CU002.outbound.protection.outlook.com
+ helo=TYDPR03CU002.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -148,140 +149,127 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The register traces show what the guest wrote, but not which transfer=0A=
-path the write chose, how much each call moved, or when the host gave up=0A=
-on a packet.=0A=
+In single mode EP_DMA_STS.PKT_SIZE on an OUT endpoint is where the=0A=
+controller reports the length it received. It is not a buffer size. The=0A=
+model took the copy length from it, so a zero in that field meant no=0A=
+data was copied at all.=0A=
 =0A=
-Add one event per path, so the name says which path ran and a single=0A=
-path can be enabled on its own: a kick, a transfer result, and a=0A=
-cancelled packet.=0A=
+One maximum packet is the most that can arrive, so copy at most=0A=
+EP_CONFIG.MAX_PKT bytes per call instead. That field cannot hold 1024,=0A=
+so a value of 0 there means 1024 bytes. The IN path decoded that by=0A=
+hand; move it into one helper and use it from both paths.=0A=
+=0A=
+Take the packet size from the combined packet when there is one, as the=0A=
+IN paths do. A combined packet holds more than p->iov says, so reading=0A=
+p->iov.size cut the transfer short.=0A=
 =0A=
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>=0A=
 ---=0A=
- hw/usb/aspeed-udc.c | 23 +++++++++++++++++++++++=0A=
- hw/usb/trace-events |  7 +++++++=0A=
- 2 files changed, 30 insertions(+)=0A=
+ hw/usb/aspeed-udc.c | 32 ++++++++++++++++++--------------=0A=
+ 1 file changed, 18 insertions(+), 14 deletions(-)=0A=
 =0A=
 diff --git a/hw/usb/aspeed-udc.c b/hw/usb/aspeed-udc.c=0A=
-index 09f5913aef..1c99e45d9a 100644=0A=
+index dcced1b8fb..09f5913aef 100644=0A=
 --- a/hw/usb/aspeed-udc.c=0A=
 +++ b/hw/usb/aspeed-udc.c=0A=
-@@ -565,6 +565,9 @@ static AspeedUDCXferResult aspeed_udc_ep_xfer_in_desc(A=
-speedUDCState *s,=0A=
-         aspeed_udc_raise_ep_ack(s, ep);=0A=
-     }=0A=
+@@ -416,6 +416,13 @@ static const MemoryRegionOps aspeed_udc_setup_ops =3D =
+{=0A=
+     },=0A=
+ };=0A=
  =0A=
-+    trace_aspeed_udc_ep_xfer_in_desc(ep, (uint32_t)p->actual_length,=0A=
-+                                     done ? "done" : "more");=0A=
++static uint32_t aspeed_udc_ep_get_max_packet(AspeedUDCEP *e)=0A=
++{=0A=
++    uint32_t mps =3D FIELD_EX32(e->regs[R_EP_CONFIG], EP_CONFIG, MAX_PKT);=
+=0A=
 +=0A=
-     return done ? ASPEED_UDC_XFER_DONE : ASPEED_UDC_XFER_MORE;=0A=
- }=0A=
- =0A=
-@@ -606,6 +609,9 @@ static AspeedUDCXferResult aspeed_udc_ep_xfer_in_single=
++    return mps ? mps : ASPEED_UDC_EP_MAXPKT;=0A=
++}=0A=
++=0A=
+ /*=0A=
+  * Copy len bytes from guest memory at addr into the IN packet, going thro=
+ugh=0A=
+  * a bounce buffer one buf-full at a time. Returns false on DMA failure.=
+=0A=
+@@ -464,10 +471,10 @@ static AspeedUDCXferResult aspeed_udc_ep_xfer_in_desc=
 (AspeedUDCState *s,=0A=
-      * buffer, and the next IN request sends the rest.=0A=
-      */=0A=
-     if (e->single_buf_off < buf_len) {=0A=
-+        trace_aspeed_udc_ep_xfer_in_single(ep,=0A=
-+                                           (uint32_t)p->actual_length,=0A=
-+                                           "buffer left");=0A=
-         return ASPEED_UDC_XFER_DONE;=0A=
-     }=0A=
+ {=0A=
+     QEMUIOVector *pktiov =3D p->combined ? &p->combined->iov : &p->iov;=0A=
+     AspeedUDCEP *e =3D &s->ep[ep];=0A=
+-    uint32_t mps =3D FIELD_EX32(e->regs[R_EP_CONFIG], EP_CONFIG, MAX_PKT);=
+=0A=
+     uint32_t wptr =3D FIELD_EX32(e->regs[R_EP_DMA_STS], EP_DMA_STS, WPTR);=
+=0A=
+     uint32_t rptr =3D FIELD_EX32(e->regs[R_EP_DMA_STS], EP_DMA_STS, RPTR);=
+=0A=
+     uint32_t desc_base =3D e->regs[R_EP_DMA_BUFF];=0A=
++    uint32_t mps =3D aspeed_udc_ep_get_max_packet(e);=0A=
+     uint32_t desc_addr;=0A=
+     uint32_t remaining;=0A=
+     uint32_t desc_ctrl;=0A=
+@@ -480,11 +487,6 @@ static AspeedUDCXferResult aspeed_udc_ep_xfer_in_desc(=
+AspeedUDCState *s,=0A=
+     bool done =3D false;=0A=
+     bool ack =3D false;=0A=
  =0A=
-@@ -619,6 +625,9 @@ static AspeedUDCXferResult aspeed_udc_ep_xfer_in_single=
-(AspeedUDCState *s,=0A=
-                                         PROC_STS, EP_DMA_CTRL_STS_TX_IDLE)=
+-    if (mps =3D=3D 0) {=0A=
+-        /* a MAX_PKT field of 0 means the maximum packet size */=0A=
+-        mps =3D ASPEED_UDC_EP_MAXPKT;=0A=
+-    }=0A=
+-=0A=
+     trace_aspeed_udc_ep_data_in(ep, rptr, wptr, pktiov->size);=0A=
+ =0A=
+     /* walk the queued descriptors, filling the packet */=0A=
+@@ -624,19 +626,21 @@ static AspeedUDCXferResult aspeed_udc_ep_xfer_in_sing=
+le(AspeedUDCState *s,=0A=
+  * OUT transfer: receive data from the host by copying its OUT packet into=
+ the=0A=
+  * buffer the guest gadget driver set up.=0A=
+  *=0A=
+- * A host packet can be bigger than one buffer, so we copy at most PKT_SIZ=
+E=0A=
+- * bytes per call, continuing from where the last call stopped=0A=
+- * (p->actual_length). The caller keeps the packet parked until it is full=
+y=0A=
+- * copied.=0A=
++ * In single mode PKT_SIZE is where the controller reports the length it=
+=0A=
++ * received, so it is not a buffer size. One maximum packet is the most th=
+at=0A=
++ * can arrive, so copy at most that much per call, continuing from where t=
+he=0A=
++ * last call stopped (p->actual_length). The caller keeps the packet parke=
+d=0A=
++ * until it is fully copied.=0A=
+  */=0A=
+ static AspeedUDCXferResult aspeed_udc_ep_xfer_out_single(AspeedUDCState *s=
+,=0A=
+                                                          int ep, USBPacket=
+ *p)=0A=
+ {=0A=
++    QEMUIOVector *pktiov =3D p->combined ? &p->combined->iov : &p->iov;=0A=
+     AspeedUDCEP *e =3D &s->ep[ep];=0A=
+-    uint32_t chunk =3D FIELD_EX32(e->regs[R_EP_DMA_STS], EP_DMA_STS, PKT_S=
+IZE);=0A=
+-    uint32_t remaining =3D p->iov.size - (uint32_t)p->actual_length;=0A=
++    uint32_t remaining =3D pktiov->size > (uint32_t)p->actual_length ?=0A=
++                         pktiov->size - (uint32_t)p->actual_length : 0;=0A=
++    uint32_t len =3D MIN(remaining, aspeed_udc_ep_get_max_packet(e));=0A=
+     uint32_t data_buf_addr =3D e->regs[R_EP_DMA_BUFF];=0A=
+-    uint32_t len =3D MIN(remaining, chunk);=0A=
+     g_autofree uint8_t *buf =3D g_malloc(len);=0A=
+ =0A=
+     if (data_buf_addr && len) {=0A=
+@@ -659,7 +663,7 @@ static AspeedUDCXferResult aspeed_udc_ep_xfer_out_singl=
+e(AspeedUDCState *s,=0A=
+                                         PROC_STS, EP_DMA_CTRL_STS_RX_IDLE)=
 ;=0A=
      aspeed_udc_raise_ep_ack(s, ep);=0A=
  =0A=
-+    trace_aspeed_udc_ep_xfer_in_single(ep, (uint32_t)p->actual_length,=0A=
-+                                       "done");=0A=
-+=0A=
-     return ASPEED_UDC_XFER_DONE;=0A=
- }=0A=
- =0A=
-@@ -664,9 +673,15 @@ static AspeedUDCXferResult aspeed_udc_ep_xfer_out_sing=
-le(AspeedUDCState *s,=0A=
-     aspeed_udc_raise_ep_ack(s, ep);=0A=
- =0A=
-     if ((uint32_t)p->actual_length >=3D pktiov->size) {=0A=
-+        trace_aspeed_udc_ep_xfer_out_single(ep,=0A=
-+                                            (uint32_t)p->actual_length,=0A=
-+                                            "done");=0A=
+-    if ((uint32_t)p->actual_length >=3D p->iov.size) {=0A=
++    if ((uint32_t)p->actual_length >=3D pktiov->size) {=0A=
          return ASPEED_UDC_XFER_DONE;=0A=
      }=0A=
  =0A=
-+    trace_aspeed_udc_ep_xfer_out_single(ep, (uint32_t)p->actual_length,=0A=
-+                                        "more");=0A=
-+=0A=
-     return ASPEED_UDC_XFER_MORE;=0A=
- }=0A=
- =0A=
-@@ -686,6 +701,8 @@ static void aspeed_udc_ep_in_kick_desc(AspeedUDCState *=
-s, int ep,=0A=
-     uint32_t cur_rptr =3D FIELD_EX32(old_val, EP_DMA_STS, RPTR);=0A=
-     USBPacket *p =3D e->pkt;=0A=
- =0A=
-+    trace_aspeed_udc_ep_in_kick_desc(ep);=0A=
-+=0A=
-     /*=0A=
-      * A normal kick only sets the write pointer and leaves the read-point=
-er=0A=
-      * field 0 (the read pointer is ours to advance). The guest resets the=
- ring=0A=
-@@ -735,6 +752,8 @@ static void aspeed_udc_ep_in_kick_single(AspeedUDCState=
- *s, int ep)=0A=
-     AspeedUDCEP *e =3D &s->ep[ep];=0A=
-     USBPacket *p =3D e->pkt;=0A=
- =0A=
-+    trace_aspeed_udc_ep_in_kick_single(ep);=0A=
-+=0A=
-     /* Do nothing if no host request is waiting, or no buffer was queued. =
-*/=0A=
-     if (!p || !FIELD_EX32(e->regs[R_EP_DMA_STS], EP_DMA_STS, WPTR)) {=0A=
-         return;=0A=
-@@ -770,6 +789,8 @@ static void aspeed_udc_ep_out_kick_single(AspeedUDCStat=
-e *s, int ep)=0A=
-     AspeedUDCEP *e =3D &s->ep[ep];=0A=
-     USBPacket *p =3D e->pkt;=0A=
- =0A=
-+    trace_aspeed_udc_ep_out_kick_single(ep);=0A=
-+=0A=
-     /* nothing to do unless an OUT packet is waiting and a buffer is ready=
- */=0A=
-     if (!p || !FIELD_EX32(e->regs[R_EP_DMA_STS], EP_DMA_STS, WPTR)) {=0A=
-         return;=0A=
-@@ -1155,6 +1176,8 @@ static void aspeed_udc_gadget_cancel_packet(USBDevice=
- *udev, USBPacket *p)=0A=
-     AspeedUDCState *s =3D ASPEED_UDC_GADGET(udev)->udc;=0A=
-     int i;=0A=
- =0A=
-+    trace_aspeed_udc_cancel_packet(p->ep->nr);=0A=
-+=0A=
-     if (s->ep0_packet =3D=3D p) {=0A=
-         s->ep0_packet =3D NULL;=0A=
-     }=0A=
-diff --git a/hw/usb/trace-events b/hw/usb/trace-events=0A=
-index aa260dacad..661011b07e 100644=0A=
---- a/hw/usb/trace-events=0A=
-+++ b/hw/usb/trace-events=0A=
-@@ -395,3 +395,10 @@ aspeed_udc_handle_data(int ep_nr, const char *dir, uin=
-t32_t iov, int ep_idx) "ep=0A=
- aspeed_udc_ep_data_in(unsigned ep, uint32_t rptr, uint32_t wptr, uint32_t =
-iov) "ep %u, rptr %u, wptr %u, iov %u"=0A=
- aspeed_udc_ep_data_out(unsigned ep, uint32_t wptr, uint32_t avail, uint32_=
-t iov) "ep %u, wptr %u, avail %u, iov %u"=0A=
- aspeed_udc_ep_ack(unsigned ep) "ep %u"=0A=
-+aspeed_udc_ep_in_kick_desc(int ep) "ep %d"=0A=
-+aspeed_udc_ep_in_kick_single(int ep) "ep %d"=0A=
-+aspeed_udc_ep_out_kick_single(int ep) "ep %d"=0A=
-+aspeed_udc_ep_xfer_in_desc(int ep, uint32_t sent, const char *res) "ep %d,=
- sent %u, %s"=0A=
-+aspeed_udc_ep_xfer_in_single(int ep, uint32_t sent, const char *res) "ep %=
-d, sent %u, %s"=0A=
-+aspeed_udc_ep_xfer_out_single(int ep, uint32_t received, const char *res) =
-"ep %d, received %u, %s"=0A=
-+aspeed_udc_cancel_packet(int ep) "ep %d"=0A=
 -- =0A=
 2.43.0=0A=
 
