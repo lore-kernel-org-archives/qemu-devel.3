@@ -4,65 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D56BCA5FF0
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Oct 2026 09:39:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85010CA5FCE
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Oct 2026 09:42:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xDfAD-0004O5-Q4; Mon, 05 Oct 2026 05:39:17 -0400
+	id 1xDfDO-0005KA-EK; Mon, 05 Oct 2026 05:42:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xDfA8-0004Kz-Pq
- for qemu-devel@nongnu.org; Mon, 05 Oct 2026 05:39:13 -0400
+ id 1xDfCz-0005I7-0X
+ for qemu-devel@nongnu.org; Mon, 05 Oct 2026 05:42:13 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xDfA7-0005lI-54
- for qemu-devel@nongnu.org; Mon, 05 Oct 2026 05:39:12 -0400
+ id 1xDfCw-00068P-Nr
+ for qemu-devel@nongnu.org; Mon, 05 Oct 2026 05:42:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1791193149;
+ s=mimecast20190719; t=1791193325;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=XTD33Ze437RIyD1HN/Z7Ka/Uk5oV0YYG4eEC0r6aeQc=;
- b=PXfcNUgTLWMOUAz5aYM+xr8NOstf+GdYAfrdpGw34ohG+etmPS9Z+dFpV8d4rF69HfSFNA
- JpuogLOBeydaPH1A2OHJpCa5a8wbNmBuWCLLiNcyiPtUuFbiAqjbCCQtCTOp2uh+wEOGXi
- GWQ49I9+6vVNIorRs/e/86Y5fOUf/84=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=5/LmwwkMGKBZHMAEKHir0f8WnD6+dJOfZIN/6ERvhNg=;
+ b=BkL1pL3pwM+7n+sa/F9g3sXvi/pY+VRZn3JEa6bmhOskkIxl/lN7V+VJQalP1+LJ8vhApG
+ WxfryuFO4igiOy843+x04SwmyuudBzHERwcD3tmqi8qAvcEyiUL/3iUQyMX07gO3Fsravx
+ K6hvACJ2BoRj/tjRrJifDFqxFWdNajY=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-574-eIPyz1uXNNe0JUYtKo6Ylw-1; Mon,
- 05 Oct 2026 05:39:07 -0400
-X-MC-Unique: eIPyz1uXNNe0JUYtKo6Ylw-1
-X-Mimecast-MFC-AGG-ID: eIPyz1uXNNe0JUYtKo6Ylw_1791193146
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-330-69yXMHp-N9eSCptSvo8SPw-1; Mon,
+ 05 Oct 2026 05:42:04 -0400
+X-MC-Unique: 69yXMHp-N9eSCptSvo8SPw-1
+X-Mimecast-MFC-AGG-ID: 69yXMHp-N9eSCptSvo8SPw_1791193323
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BFAF519539BA; Mon,  5 Oct 2026 09:39:05 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7D88919772C7
+ for <qemu-devel@nongnu.org>; Mon,  5 Oct 2026 09:42:03 +0000 (UTC)
 Received: from redhat.com (headnet03.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.114])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CA95C30000E4; Mon,  5 Oct 2026 09:39:03 +0000 (UTC)
-Date: Mon, 5 Oct 2026 10:39:00 +0100
+ id 874613001D28; Mon,  5 Oct 2026 09:42:02 +0000 (UTC)
+Date: Mon, 5 Oct 2026 10:41:59 +0100
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: marcandre.lureau@redhat.com
-Cc: qemu-devel@nongnu.org, xen-devel@lists.xenproject.org,
- qemu-riscv@nongnu.org, qemu-ppc@nongnu.org, qemu-block@nongnu.org,
- qemu-s390x@nongnu.org, qemu-arm@nongnu.org
-Subject: Re: [PATCH 10/28] hw/usb: mark commonly used USB devices/hosts as
- secure
-Message-ID: <asNwNM5DgooeSn27@redhat.com>
-References: <20260911143627.2743803-1-berrange@redhat.com>
- <20260911143627.2743803-11-berrange@redhat.com>
- <179096166117.3025252.2297105460212965387.b4-review@b4>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH] ui/spice-app: honor gl=off option, reject core/es
+Message-ID: <asNw58UKSFSAu2Uj@redhat.com>
+References: <20261005091459.737182-2-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <179096166117.3025252.2297105460212965387.b4-review@b4>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20261005091459.737182-2-marcandre.lureau@redhat.com>
 User-Agent: Mutt/2.4.2 (2026-08-30)
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
@@ -91,22 +90,22 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Oct 02, 2026 at 09:21:01PM +0400, marcandre.lureau@redhat.com wrote:
-> > Most of the standardized  USB1/2/3 host controllers are relevant
-> > for virtualization use cases, so should be declared secure. The
-> > "NEC" XHCI variant is slightly non-standard, but since it is a
-> > trivial sub-class of the generic XHCI, there's no reason to
-> > exclude it.
-> > 
-> > The set of devices that are expected to be used is HID (mouse,
-> > tablet, keyboard), host passthrough, CCID (smartcard), hub,
-> > storage and the redirect tunnelling.
+On Mon, Oct 05, 2026 at 01:15:00PM +0400, marcandre.lureau@redhat.com wrote:
+> From: Marc-André Lureau <marcandre.lureau@redhat.com>
 > 
-> Can't we exclude uhci/ehci nowadays?
+> With -display spice-app, the value of the gl option is ignored: gl=off
+> enables OpenGL exactly like gl=on. Only omitting the option keeps OpenGL
+> disabled.
+> 
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4639
+> Fixes: d8aec9d9f129 ("display: add -display spice-app launching a Spice client")
+> Reported-by: @jeremie.b
+> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+> ---
+>  ui/spice-app.c | 10 ++++++++--
+>  1 file changed, 8 insertions(+), 2 deletions(-)
 
-RHEL-10 still ships both, so there's still a demand from a downstream
-POV, but USB is in an awkward place with its lack of maintainership,
-and arguably these should be considered obsolete.
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
 
 With regards,
