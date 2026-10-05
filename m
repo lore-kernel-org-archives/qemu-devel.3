@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B331CA5FFD
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Oct 2026 11:04:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 220FCCA5FCE
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Oct 2026 11:04:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xDgTa-0002WX-Fh; Mon, 05 Oct 2026 07:03:22 -0400
+	id 1xDgTm-0002dZ-5q; Mon, 05 Oct 2026 07:03:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <38IPDagoKCmMTUBOMFZKIVHPPHMF.DPNRFNV-EFWFMOPOHOV.PSH@flex--stanleyjhu.bounces.google.com>)
- id 1xDgTW-0002Rg-0l
- for qemu-devel@nongnu.org; Mon, 05 Oct 2026 07:03:18 -0400
-Received: from mail-pj1-x1047.google.com ([2607:f8b0:4864:20::1047])
+ <3_IPDagoKCm8fgNaYRlWUhTbbTYR.PbZdRZh-QRiRYabaTah.beT@flex--stanleyjhu.bounces.google.com>)
+ id 1xDgTh-0002al-Fm
+ for qemu-devel@nongnu.org; Mon, 05 Oct 2026 07:03:30 -0400
+Received: from mail-pg1-x545.google.com ([2607:f8b0:4864:20::545])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from
- <38IPDagoKCmMTUBOMFZKIVHPPHMF.DPNRFNV-EFWFMOPOHOV.PSH@flex--stanleyjhu.bounces.google.com>)
- id 1xDgTU-0005Ov-77
- for qemu-devel@nongnu.org; Mon, 05 Oct 2026 07:03:17 -0400
-Received: by mail-pj1-x1047.google.com with SMTP id
- 98e67ed59e1d1-38ecc48b3c2so3065438a91.1
- for <qemu-devel@nongnu.org>; Mon, 05 Oct 2026 04:03:14 -0700 (PDT)
+ <3_IPDagoKCm8fgNaYRlWUhTbbTYR.PbZdRZh-QRiRYabaTah.beT@flex--stanleyjhu.bounces.google.com>)
+ id 1xDgTf-0005Re-2k
+ for qemu-devel@nongnu.org; Mon, 05 Oct 2026 07:03:28 -0400
+Received: by mail-pg1-x545.google.com with SMTP id
+ 41be03b00d2f7-cc7695f6a30so2146553a12.0
+ for <qemu-devel@nongnu.org>; Mon, 05 Oct 2026 04:03:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20251104; t=1791198193; x=1791802993; darn=nongnu.org;
+ d=google.com; s=20251104; t=1791198205; x=1791803005; darn=nongnu.org;
  h=content-type:cc:to:from:subject:message-id:references:mime-version
  :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=FH1iLKBetG4x/MDzsh4R7Fyx25gsAQ78NtG4N/fApBM=;
- b=TVYPdeO1JWBrn6CXN5l8n+BK72PsC793dg4hdchw/469eWDRIOwmaJWD0Iy0ODSuf1
- YWstYd7pgKltDKDJcpt+GKqYUjCFeC1BvbCghEriJJArFxuAkf56BgdGc+mJFhjkQDT8
- F7Y0OVsVTvkcaeCiG/J3I+K+gEZu7yZrlKcDkC2Bo0Rv/tQUfdCWiOfgXscpmRi6OvmA
- ApYP+iBiGedjAcHyo0ywUIzjITf6nCJu/Z/2fe9E7CrgWlRal5JYa98ebzKvKRKjA7X/
- /qkPAsRwZXNNZbNBU2//e5B8UspXeLVinTegWD/fz6CpdiB2rMRsr1G62KvPrZuTsr+V
- f1kw==
+ :content-type; bh=KmtpQWUw98ulbJ4Apgs/zzyDTH2jGHwieHZEIkyAWR8=;
+ b=tm6FcR2cBNygNe/taJPiLQf+0v8Its+umcwZnbSkN+KmHIf34TkW3wEobfajkK+jWA
+ /TQsN+RQlti5wvcnRjIpYlfn+DvSURNzf45o363pObLJMC0gm/Ga6SEgsCZWQq2H80yc
+ uPhOu+5eo87rFGBU2gE1y5n905jFx4a9bFLlXfj1eqi7IN8lEwetfAYM0aJXSH0s+DAR
+ bvqfbpmaHAJ1KpgjzWCpbAnR14D4If1eTG9RYDvQ1mGiEJnMU5H/BTmf4TMKe0sS0ZLs
+ tDxDvbg8Mp6dPg3hTRu/dKD5tuCXmTmrN/4N1MRbfCBpe9ZUcSVZ9DlbO7O5DCeKf3ij
+ XpDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791198193; x=1791802993;
+ d=1e100.net; s=20260707; t=1791198205; x=1791803005;
  h=content-type:cc:to:from:subject:message-id:references:mime-version
  :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=FH1iLKBetG4x/MDzsh4R7Fyx25gsAQ78NtG4N/fApBM=;
- b=C4rNOg61RkKlLHLCiuEJV0qdtfd3RNzXj3n6sA9cSb4yhyIWtKEAuA68roWnzMv2A6
- AG9eUq1X8D/ZXa784an7Nz8aflHcBsxsZF2Mw8c16sIlE1S4ldUrNsLHQPHQfULUd5XC
- hc8k0MC6TIAlnLkJ0K1SKkjmVtsJrhRHwjHr153R+GN1PNB8/W+6ZspFM0CCS5fPFPqC
- C7sbFPuyxy+vOuSUbmUX8y8HKxgTBwkHKwY4YvWk5FuuSFCgtqgbMTp2yYCvV5y66EWy
- snsT9KaZEm3HctXk3ttOORicZcNYk5uWHUw2j4zumfbHnmdmZGqOwJdliCQDOd/jGrt1
- pffw==
+ bh=KmtpQWUw98ulbJ4Apgs/zzyDTH2jGHwieHZEIkyAWR8=;
+ b=bsS2MBgMoJPIhWgaYddu9wJvdFzbCfkpe+y/BFNEhewj30AdP/45aqLeBUla9ZFSFi
+ YDXWIf8L0vyES3udWrW3EojdoECBh13TwJ69iYkFco0m1Nfz/Wv1VNcZLnxvOWU3dEqG
+ faFGj3E4ZzGjjzq9+hnfeAyOaI0j9hpsAt2WpsjFDoOPLaAfNyfGKiyHjTaPlCG5HTW2
+ xw0D//o1PExbte0Q0H7TJCvZGXgcuDb4/L8VtDTi5KOsqFaUx/9t8TQ6PgSJhJwS/q3j
+ aiE8I8PllWtq78K0GJH+QP6OJklEGHwVNF9l6TUdbF48sylcpyHWwP2i3QTywfNTEPdl
+ 7HLw==
 X-Forwarded-Encrypted: i=1;
- AKwUvBxUTudtFSyT55lXUyJlYxHkxS58VG2vl5lb7otsHN7uJJvIGpSnxQ2w0WLjlEvpa1EjDweZ3SlZOfBG@nongnu.org
-X-Gm-Message-State: AFq9FYJC1ZwgG10sGWGt6EaHUFC6gb7FcoRs/NpaCFkQmCrv03wU5E+k
- IVrn66a95gAIucBajMv1Y/TJhua5+/uvibcdM5KnpWj3dcwTXgKLcHFY0s+y1767SZhh1CNPcB6
- HpFjaScW8q9S/V6eOj24P2g==
-X-Received: from pgme8-n2.prod.google.com
- ([2002:a05:6a02:6c88:20b0:cc7:caf5:50f3])
+ AKwUvByhgoCz3Cl02fTIR5GcOTY+zvfmRO+Wv8SyM0gar8/QvCpCoy544u6jj7ZUS0GptopPUAlN9K8YXcrX@nongnu.org
+X-Gm-Message-State: AFuF++nnugzcF40547CvUeVrYDCiy3bgB7p5SF5myZht8Ari6JHAaygu
+ wOC1+Y1zmtWkmyGoz7XbicNzC28dk9TTVHIWVlNrrtC9wEkwWXJTbaHsdTq0mviVncBew+pboSU
+ EfW+qE60zzQLMmeviuJ7i2w==
+X-Received: from pgcv27.prod.google.com ([2002:a05:6a02:531b:b0:cc7:a1dc:d7e4])
  (user=stanleyjhu job=prod-delivery.src-stubby-dispatcher) by
- 2002:a17:90b:5347:b0:3a4:b061:2765 with SMTP id
- 98e67ed59e1d1-3a6cec13adbmr8660175a91.15.1791198192928; 
- Mon, 05 Oct 2026 04:03:12 -0700 (PDT)
-Date: Mon,  5 Oct 2026 19:03:10 +0800
-In-Reply-To: <179093130014.85103.8462033204202020267.b4-review@b4>
+ 2002:a05:6a20:734c:b0:3d3:aec2:4dcd with SMTP id
+ adf61e73a8af0-3e0bced1f06mr9322012637.25.1791198204911; 
+ Mon, 05 Oct 2026 04:03:24 -0700 (PDT)
+Date: Mon,  5 Oct 2026 19:03:15 +0800
+In-Reply-To: <20261005110315.3327418-1-stanleyjhu@google.com>
 Mime-Version: 1.0
-References: <20260923144911.2877141-1-stanleyjhu@google.com>
- <20260923144911.2877141-3-stanleyjhu@google.com>
- <179093130014.85103.8462033204202020267.b4-review@b4>
+References: <20261005110315.3327418-1-stanleyjhu@google.com>
 X-Mailer: git-send-email 2.56.0.rc1.315.gc6ed9934b7-goog
-Message-ID: <20261005110310.3326834-1-stanleyjhu@google.com>
-Subject: Re: [PATCH v3 2/3] hw/ufs: Support MCQ runtime interrupt and queue
- status registers
+Message-ID: <20261005110315.3327418-5-stanleyjhu@google.com>
+Subject: [PATCH v4 4/4] hw/ufs: Skip nullified MCQ submission queue entries
+ with OCS_ABORTED
 From: Stanley Jhu <stanleyjhu@google.com>
-To: Jeuk Kim <jeuk20.kim@gmail.com>, Jeuk Kim <jeuk20.kim@samsung.com>
-Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, stefanha@redhat.com, 
- richard.henderson@linaro.org, pbonzini@redhat.com, fam@euphon.net, 
- kwolf@redhat.com, hreitz@redhat.com, j-young.choi@samsung.com
+To: Jeuk Kim <jeuk20.kim@samsung.com>, Jeuk Kim <jeuk20.kim@gmail.com>
+Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, 
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
+ Kevin Wolf <kwolf@redhat.com>, 
+ Hanna Reitz <hreitz@redhat.com>, Jinyoung Choi <j-young.choi@samsung.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1047;
- envelope-from=38IPDagoKCmMTUBOMFZKIVHPPHMF.DPNRFNV-EFWFMOPOHOV.PSH@flex--stanleyjhu.bounces.google.com;
- helo=mail-pj1-x1047.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::545;
+ envelope-from=3_IPDagoKCm8fgNaYRlWUhTbbTYR.PbZdRZh-QRiRYabaTah.beT@flex--stanleyjhu.bounces.google.com;
+ helo=mail-pg1-x545.google.com
 X-Spam_score_int: -95
 X-Spam_score: -9.6
 X-Spam_bar: ---------
@@ -100,11 +100,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 02 Oct 2026 17:55:00 +0900, Jeuk Kim <jeuk20.kim@gmail.com> wrote:
-> RTC = 0 reports successful cleanup, whereas a missing task must be reported
-> with RTC = 1. If no request matches the nexus from SQCTI, this path posts no
-> OCS = ABORTED CQE but still sets CUS = 1 and RTC = 0. Please report RTC = 1
-> for this path.
+Per JEDEC UFSHCI (JESD223G Section 6.1.1 and Section 4.4.6 Step 2B),
+host software in MCQ mode may stop a Submission Queue and nullify an
+unfetched SQE by setting its UTRD Command Type (DW0 bits 31:28) to
+0xF. When the Submission Queue is resumed, the host controller shall
+skip execution of the nullified transfer request and post a Completion
+Queue Entry (CQE) to the Completion Queue with OCS = ABORTED (0x06).
 
-Fixed in v4.
+In ufs_mcq_process_sq(), check for UFS_UTP_CMD_TYPE_NULL (0xF), read
+the Request UPIU header on a best-effort basis via
+ufs_dma_read_req_upiu() to populate cqe.task_tag and cqe.lun for
+UFSHCI 4.1+ completion decoding, and unconditionally post a CQE with
+UFS_OCS_ABORTED without executing the command or writing a Response
+UPIU for the nullified entry.
+
+Signed-off-by: Stanley Jhu <stanleyjhu@google.com>
+---
+ hw/ufs/ufs.c        | 17 ++++++++++++++++-
+ include/block/ufs.h |  1 +
+ 2 files changed, 17 insertions(+), 1 deletion(-)
+
+diff --git a/hw/ufs/ufs.c b/hw/ufs/ufs.c
+index 4c505e0bf..f008af746 100644
+--- a/hw/ufs/ufs.c
++++ b/hw/ufs/ufs.c
+@@ -36,6 +36,7 @@
+ 
+ static void ufs_exec_req(UfsRequest *req);
+ static void ufs_clear_req(UfsRequest *req);
++static void ufs_mcq_process_cq(void *opaque);
+ 
+ static inline uint64_t ufs_mcq_reg_addr(UfsHc *u, int qid)
+ {
+@@ -474,6 +475,17 @@ static void ufs_mcq_process_sq(void *opaque)
+         ufs_mcq_init_req(sq->u, req, sq);
+         memcpy(&req->utrd, &sqe, sizeof(req->utrd));
+ 
++        if ((le32_to_cpu(sqe.header.dword_0) >> 28) == UFS_UTP_CMD_TYPE_NULL) {
++            ufs_dma_read_req_upiu(req);
++            req->utrd.header.dword_2 = cpu_to_le32(
++                (le32_to_cpu(req->utrd.header.dword_2) & ~UFS_MASK_OCS) |
++                UFS_OCS_ABORTED);
++            req->state = UFS_REQUEST_COMPLETE;
++            QTAILQ_INSERT_TAIL(&sq->cq->req_list, req, entry);
++            ufs_mcq_process_cq(sq->cq);
++            continue;
++        }
++
+         req->state = UFS_REQUEST_RUNNING;
+         ufs_exec_req(req);
+     }
+@@ -493,7 +505,10 @@ static void ufs_mcq_process_cq(void *opaque)
+             break;
+         }
+ 
+-        ufs_dma_write_rsp_upiu(req);
++        if ((le32_to_cpu(req->utrd.header.dword_0) >> 28) !=
++            UFS_UTP_CMD_TYPE_NULL) {
++            ufs_dma_write_rsp_upiu(req);
++        }
+ 
+         /* UTRD/CQE are LE; round-trip through host to keep BE correct. */
+         uint64_t ucdba =
+diff --git a/include/block/ufs.h b/include/block/ufs.h
+index b0515325f..4a614fbe5 100644
+--- a/include/block/ufs.h
++++ b/include/block/ufs.h
+@@ -665,6 +665,7 @@ enum {
+     UFS_UTP_CMD_TYPE_SCSI = 0x0,
+     UFS_UTP_CMD_TYPE_UFS = 0x1,
+     UFS_UTP_CMD_TYPE_DEV_MANAGE = 0x2,
++    UFS_UTP_CMD_TYPE_NULL = 0xf,
+ };
+ 
+ /* To accommodate UFS2.0 required Command type */
+-- 
+2.56.0.rc1.315.gc6ed9934b7-goog
+
 
