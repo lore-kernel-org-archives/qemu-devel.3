@@ -4,141 +4,121 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5577CCA5FFC
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Oct 2026 18:53:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3DE2CA5FCE
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Oct 2026 18:55:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xDno2-0006dF-T4; Mon, 05 Oct 2026 14:52:59 -0400
+	id 1xDnqU-0007Vw-VW; Mon, 05 Oct 2026 14:55:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xDno0-0006d3-Pe
- for qemu-devel@nongnu.org; Mon, 05 Oct 2026 14:52:57 -0400
+ id 1xDnqG-0007Ox-Jv
+ for qemu-devel@nongnu.org; Mon, 05 Oct 2026 14:55:19 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xDnnz-0005Kd-1u
- for qemu-devel@nongnu.org; Mon, 05 Oct 2026 14:52:56 -0400
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+ id 1xDnqE-0005hm-At
+ for qemu-devel@nongnu.org; Mon, 05 Oct 2026 14:55:15 -0400
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 695HuYI52484596
- for <qemu-devel@nongnu.org>; Mon, 5 Oct 2026 18:52:53 GMT
+ 695HLc1U3043975
+ for <qemu-devel@nongnu.org>; Mon, 5 Oct 2026 18:55:12 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 6/L04cvnLPoEdfa01Y+kJHZylIHuNNtiYN5aGfc9EHI=; b=HfPGScYOF5hsGouH
- ZkAMpbCmDgO59yrLsIdWA6/ASN/HMONNTrA0QzeGgf2FQFuDlUfSCoqN5YP4k7/5
- fH72DXhYdY6Vk85PoenBI+0JEwALyPOiUuGN/MhQsOBbpC2E0GaaxnV4N8LZnclP
- 3bLbRyNN5Fym/6KRuUhP2tKC6suyJc3TJ1viZt8a7EC/C727cnAoZzJ6SzX69D0d
- SK0ITTV/jtsWSWg/w/UWXY0WXbnmTAF3aOihR3Xf/0pg4AbI4NzrN7wOBum3Y4dT
- s2NAnsk4KbGc8Xc2yLw6nb94h/ZrFlYSemwoRoQXg91fA3v4THH2yXuAXey9fxQQ
- 6VpOAQ==
-Received: from mail-dy1-f197.google.com (mail-dy1-f197.google.com
- [74.125.82.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h4gr087e1-1
+ cc:content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:subject:to; s=qcppdkim1; bh=xB4lf7p37uc6I3q5sWvEeK
+ CbW/6aOFCAnxBUdA0OyLA=; b=hP5OAv3IlLrpri5Km3NWcy9G327QY/DA2UJbUW
+ 3Ok6E+HpWB7iQnKIzCd0KqQeTdoXaMeOp+o/oM1pT8DnnC000O2DpxBD7XXQ3Nvl
+ i9hZFSBxnL9NObWwaPuQh0u/FYqYs3U1FW8Wcs2HjtxOA1YUM+aFANjo4vPdxn6v
+ 593UdVNKif3xHMWVi12RbWs9gcCp2vqvLD24sHbcq0IxU2jvXSPCuYHaskYYT2ZG
+ Vlh+JXj9Xu012Uz2fnURwq/Xu8loFq9xBgQq9Y6GbDB7RUvkAJ6h3wxD73Gj79P8
+ q7mPAS4n0g3VOpIxinnsgT1tK5+c1Jv6EAxTbh5SMU5jVucA==
+Received: from mail-dl1-f71.google.com (mail-dl1-f71.google.com [74.125.82.71])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h49tvsxb1-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 05 Oct 2026 18:52:53 +0000 (GMT)
-Received: by mail-dy1-f197.google.com with SMTP id
- 5a478bee46e88-341eff9e381so5028148eec.1
- for <qemu-devel@nongnu.org>; Mon, 05 Oct 2026 11:52:53 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Mon, 05 Oct 2026 18:55:11 +0000 (GMT)
+Received: by mail-dl1-f71.google.com with SMTP id
+ a92af1059eb24-147be78cd56so7699537c88.1
+ for <qemu-devel@nongnu.org>; Mon, 05 Oct 2026 11:55:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1791226372; x=1791831172; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=6/L04cvnLPoEdfa01Y+kJHZylIHuNNtiYN5aGfc9EHI=;
- b=Xw2LKdxy1ckiu5AZcVJ4/s0uB1FL/+G0m1bE7DYZZG+UoTHj8dzkzoQOWJXjwlX/lT
- wrP1Ylma1V0b7vWLEQW04CaX5VgCHDDOHWmHL4l6GtpoUKqPl8omaaN3p3aZ1yr4VQve
- 1+XU5riN3K8erAXLS0gVzs9pbcYsA99bsopBspsQRvWzlnRevXWAe7cNden8zCmaal5E
- HU1HCXFl3cIg+cRsm4+bdc1oY3Xk1vHnA2xfqsdM6Xr5RIw702BZWnFadNRj3I/bchso
- DgaJj3MOgGIYKkceFa1am8N9uKkQS9NZHgkFPyGiGUKhOo1mWIAXc6qmtDH8fVsf/VVx
- tPdw==
+ d=oss.qualcomm.com; s=google; t=1791226511; x=1791831311; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=xB4lf7p37uc6I3q5sWvEeKCbW/6aOFCAnxBUdA0OyLA=;
+ b=W/5ee6abRqCEcoOV9q1AH7WIXH9FsDh5kyqxzyTFfcpc2Kz72IHWKAwSwe4fkYjcS2
+ w80XS6goKraF1klfyciR06p44SuuLz1G4cb2r08YRKyZ/EQUekUN6U5qFkDkKparCxS6
+ a1Ms+82qEXuAnjk1vozhvYH6EBQ5XujbBAJ2Wdw+ZCjlJkvZhHzlZ+N+fEqjsil7uDDd
+ UHZSkuwrBsZskW+gQen+kguHHCp7fCWuVsUbKWmbV+Udk0ZB63D7hm21wSBAh70dyfpy
+ HAvGvz/qU54hs9dHQzfLlMebE9Wqt3lVQm9iXaZqDaE17f66+3RBmIGwy+WsYRcb3Nh7
+ tIBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791226372; x=1791831172;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=6/L04cvnLPoEdfa01Y+kJHZylIHuNNtiYN5aGfc9EHI=;
- b=WR8rU5DNe7UMCHoMoPYEWn8UPcYtZNA5PcyDJ1i72DAZ+vxiwrFu/DFtNO5bf1FcN3
- 30snnNdOCqWKaQoSSLDdzM8wuQEkspoSADGPZSMw+JYiFJ5zL5ks3b94kOzF6dLE2bsK
- 8Q1YPSpBQbNnULgGxmqsgqSSqZygQ9tSNaWjVDotoInbqaqAEjByVFgX2I99Cb0DU0ZJ
- 6C57+dNGMfuC+duoSBdGJ0+NjB5IMNwcod2rOJZEcvbMvT7rAiR7Ie7f39Vf4VXD2kPt
- wykpJNndtXFGgp+domScm1eAIjG3zolPDnCK56u0vcg7i5JK9jiFwmoRTpwWlO3IzNqM
- 6haw==
-X-Gm-Message-State: AFuF++meLRoARAILIbrODU6YfS4hsaxoRySNaekket7xcj2wV4Y89JlA
- Z7bgwEeJaZOvYhEiHlyhgvahKeR+4lyvy830ipGm1xXM2nkiWWh7CXQcH4I70Eddq4bQuMURQ29
- 8yOiB1sLRW1xukDbnHDLf6bJF3x8OX5UYk4Su4eMonNn68gRc71W/b35B+g==
-X-Gm-Gg: AYBFou0DOzTIGmn/Px3eM5IQJcd5Hz7jON88FwDKxs3DqY5O/x8GXgd0SVEJRt6Rl/w
- zNgbX8H4kuNnKDSSiW2FU11tnkUWzYFIGg9ZpygB4c3ZzH8+2+Eb6ysx6+7ZztyK39HMpPmNwkL
- 6VQygAHTPSTlLrN70xKJv+daLgP/DQJspt/umHWfMx9vdkP0d/UltzxQRcBZ/IzuwsC1qEPls4S
- dDrWxcXC+cSWKpCid7f4Q1+foHmvV0ayXdt0Z4KfWyWpM4CqL55z47jE1z86dvu/4h8+Xze8EWu
- C6v/iczt9fOG8JvENB6jawUdf1qgn4U8OQ+TzoHAoc47CnkXpwoe692UpVbgTM6CpVfF9IC5jYa
- geUPJd0YMy8/dyLIoZhVjnbQLefZKaG9Qxo9CzYmCcZ6QbFVU8tpOAC9OnsWZIPFQUXxd9w==
-X-Received: by 2002:a05:701b:2705:b0:15a:4155:3d9d with SMTP id
- a92af1059eb24-15a41554461mr3035053c88.31.1791226372048; 
- Mon, 05 Oct 2026 11:52:52 -0700 (PDT)
-X-Received: by 2002:a05:701b:2705:b0:15a:4155:3d9d with SMTP id
- a92af1059eb24-15a41554461mr3034972c88.31.1791226370639; 
- Mon, 05 Oct 2026 11:52:50 -0700 (PDT)
-Received: from [192.168.1.199] (192-80-163-190.dyn.novuscom.net.
+ d=1e100.net; s=20260707; t=1791226511; x=1791831311;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=xB4lf7p37uc6I3q5sWvEeKCbW/6aOFCAnxBUdA0OyLA=;
+ b=1nLQqLykwBgNWYt6egd5RYhLS7J/5SCRf0FMK7DlGFAJ48+1151KF37C+9rxFWDpS2
+ oV1JLbtkmS84YBGgCieW7ro4fDjWHVI4HGUQwmfO5oK0FkWKWY0w4dudULfKHzjf5rc7
+ zTQslqNjbbK/i7kAx4IqNNDNYTfCY40xEvac1nFfukX433FXLaJwXxwK+aqqqmTiN3yU
+ 14Q8JQ/oWl1mWOt5kYdsY9GozBJr4MaHvZYunjeph8Sxei7mkcW+cNjEK6PviwiaXn/m
+ hrBL/kNoxXLsxuIwP8BZEa0ZjmLGBrxe75PwjNZRYVNOtoousi25/64nU72nQ8XtrC8s
+ gvqQ==
+X-Gm-Message-State: AFuF++n8CU6eXWw9pSpX674uKTLdj8C0wBEH9WQlNGMBAtEhQxCZ7Ojw
+ BhvWdeZaO5t0wCWg/5FKmj2Yc37mjNhUF0ADzSUo/pfUxUBCAApc10c66fq0R/XUQTt74mEAQ9I
+ PDcRNPZqV1jNyuhWI8KGcfD23SjeY36rStEAbwploppRWRvb6U/nPTN3Dl+8t14dy0g==
+X-Gm-Gg: AYBFou3GzosJlolUFQUWi3dG0el8blb6Gi17mpulrYiIdVJd7VwTVss1EUxBOvQeS6O
+ hTuOLAkbrr4JH8lYX5kK3SvHguQTdktIINbYcPE8rOagPvUv9s+VnErj261iPifvbQJsqgtrE9P
+ wk9v+DqnaI0YC9kmRc0JFyRu/J9m0F13nC+7PKPOqL9TYJ6ezTdmZ0bZo62gSTz7ZwaRT5OvIT2
+ lKJNOP5B0N+DRbcyXz2JqVXKKKrZRQJ59XtgqdiXUFLi8CCbMQRL/y7iUJnQ9p1UWDN4Q+owHl/
+ /e3/KSfGa64afiryDUxZsljXA0OZNYUVr3b5P8o/HrsChOTLLtro6NkPkCeBtA6fLEQO3ptmISx
+ ykkTECAV76CHhhsCfCnvZ2Gm2IK9li7JH8NA1v+afR8E6euzn2t5OYjUri9OT
+X-Received: by 2002:a05:7022:f51a:b0:153:7a27:b7d with SMTP id
+ a92af1059eb24-1537a2710c4mr9061573c88.20.1791226510772; 
+ Mon, 05 Oct 2026 11:55:10 -0700 (PDT)
+X-Received: by 2002:a05:7022:f51a:b0:153:7a27:b7d with SMTP id
+ a92af1059eb24-1537a2710c4mr9061541c88.20.1791226510156; 
+ Mon, 05 Oct 2026 11:55:10 -0700 (PDT)
+Received: from debian.qualcomm.com (192-80-163-190.dyn.novuscom.net.
  [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-15d84ec510dsm289314c88.13.2026.10.05.11.52.49
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 05 Oct 2026 11:52:50 -0700 (PDT)
-Message-ID: <15e9a768-95bf-45aa-8175-1dbd73d5ee04@oss.qualcomm.com>
-Date: Mon, 5 Oct 2026 11:52:48 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/4] target-info: preserve full softmmu target identity
-To: luoyonggang@gmail.com
-Cc: qemu-devel@nongnu.org, Philippe Mathieu-Daude <philmd@mailo.com>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Fabiano Rosas <farosas@suse.de>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
- <marcandre.lureau@redhat.com>
-References: <20261004072927.1142-1-luoyonggang@gmail.com>
- <0b84bf4d-3b98-4f52-8847-9f89bef92c1e@oss.qualcomm.com>
- <CAE2XoE-joWZwrBy-jLe+=ZP7OGM9cyDrF_5hz7koVPODeys+JA@mail.gmail.com>
- <b2297f92-a685-4399-a755-bbe5a37b9b3f@oss.qualcomm.com>
- <CAE2XoE-4Pdp_n3RgpqJ5se_KTHniMAJAodTLmkfV+0jjou=M5w@mail.gmail.com>
- <c6bd8e8d-3160-46c2-ba4a-2f5a4b93cf38@oss.qualcomm.com>
- <CAE2XoE9PKNgE1Zz_frOq_DrgqrPL4B8hcq0xO6ywCNTeUnFLvA@mail.gmail.com>
- <63d20cc8-8003-489c-9f08-28369a2f71e2@oss.qualcomm.com>
- <CAE2XoE9uqEcjMsqJXu6Cr+MrposPjq7O6Lnj5cj7uW2nF38uAg@mail.gmail.com>
+ a92af1059eb24-15d7234c2a2sm602092c88.0.2026.10.05.11.55.09
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 05 Oct 2026 11:55:09 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <CAE2XoE9uqEcjMsqJXu6Cr+MrposPjq7O6Lnj5cj7uW2nF38uAg@mail.gmail.com>
+To: qemu-devel@nongnu.org, peter.maydell@linaro.org,
+ richard.henderson@linaro.org, pbonzini@redhat.com, stefanha@redhat.com
+Cc: pierrick.bouvier@oss.qualcomm.com
+Subject: [PULL 00/22] Multi target update 20261005
+Date: Mon,  5 Oct 2026 11:54:36 -0700
+Message-ID: <20261005185458.405929-1-pierrick.bouvier@oss.qualcomm.com>
+X-Mailer: git-send-email 2.47.3
+MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA1MDA3NCBTYWx0ZWRfX4GTm0IFrSe3n
- TSf3vpFZA3F/B3tB9sDI6E59x68Nm8e3GZ9Yea9B8+Ygwyslx3GGZ+IHWqp72VI4K0sE2+aGBZk
- cuqCgSusBq5NTqNqj8GOT0TTRkJTUHSetHpJ1Kn6BRiiXCNj/+HFiXZEujTt1wVu1/0uLbISplo
- LqIQD86U/Y66+X+oSmVje3/2WMSOLH6OfdJ/tVvoXdxXq7SvUTfahMmTXNzWaE55owITlgYUhE/
- vGJSznHhaRhQpINJPmt/TdaLRG1vG57aIIVeanP9mHFuCIvDKOpoIZdse0AwnEU2rPFphbErPCk
- NtZD3WHeDJmQWweYm6/Bl+2Xdn4xl2hwvnne95trn6RFMaOVx3MB8paXHKneUk4jgjQbUwyZAZ3
- uzMqrs8G1yHO6lyUjyk/w/xnvbggP9brdw2x9vleOpaXqdP6a+5rFOvP6jU6DCJY3rwLYRcnjoT
- QQoMu+cqC+z2IqtIxBQ==
-X-Proofpoint-GUID: zyB3O5zwGjdMYCeyzdtWyCPa4KRtf1uO
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA1MDA3NCBTYWx0ZWRfX0x88lkdT1xSd
- +hR0k0Ow0RmJt/aXBHmnqhF8T7OfO/IQ16Y5BYzHNp9nW6kX6+utnDvaIgOY3U0FCxzh0ccvT9L
- hjmlL+EWcvctgEyiHDhpl1ilPy0ETwk=
-X-Proofpoint-ORIG-GUID: zyB3O5zwGjdMYCeyzdtWyCPa4KRtf1uO
-X-Authority-Analysis: v=2.4 cv=BrQIUoX5 c=1 sm=1 tr=0 ts=6ac3f205 cx=c_pps
- a=Uww141gWH0fZj/3QKPojxA==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
+X-Authority-Analysis: v=2.4 cv=aN9lOr9m c=1 sm=1 tr=0 ts=6ac3f290 cx=c_pps
+ a=JYo30EpNSr/tUYqK9jHPoA==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
  a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
- a=EUspDBNiAAAA:8 a=nknU55U_wiY0WzLILoMA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=PxkB5W3o20Ba91AHUih5:22
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
+ a=NEAV23lmAAAA:8 a=p0WdMEafAAAA:8 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
+ a=_QIKIsHotRbyyty9gaQA:9 a=QEXdDO2ut3YA:10 a=Fk4IpSoW4aLDllm1B1p-:22
+X-Proofpoint-GUID: VzROIXF-l0uHqtuBQjELjvYMkGFuu_Ps
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA1MDA3NCBTYWx0ZWRfX/yKs5uQjuIp6
+ kJ6Q4NyNq+F25z0jHCCS2JSwRGfvX626l3BAvkMvOm5dT0T91f6sCDfn+hLfoXRCpAlpM+1csBD
+ pyYNBzge0EtnFZYBq2CZy8uZPYKj/Q8JDjj5q9hk584YL8IbaNrVgPBr/lRCGTb8XTpJPMRel/T
+ DB2PsbdtQx2Z4wlLaPS3BQ8pgMgBqZ+NJ2WGQ4TEdDdEMP45vSgm9j2hsgMV5Lf3gGI+9eOKzbX
+ VR+ljg2vnUvQbAbVepLcMMFJEAgQoasVegNeVSK9PRmNzm4CQ64tNMif7pue3ztTnelW5ykZ+1C
+ r4ZHl15aDyCf8mM1cL2oXCGzyrk1aDoz+LeW8fMWrsAtkCT+aPIbpegVjNbXv8m+FhsCgv53dBd
+ Mfr13Wm0CjWBRQ+QuCTHjwuwZEKTze9IGoXPtfulrG0Y3jUMRU2H8kgJOEi28tatYl7lFvVJiPp
+ K9nsOA7P0Vn18sG8Y0Q==
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA1MDA3NCBTYWx0ZWRfX9UiiXhpEWuLZ
+ AeSTxS/iDs7FadShFCxkRGV2CZ8qyvJ0jkGIBmkDf3hepFrvy3q7wYGynPm9WJQxdut03ZV3BFG
+ yHrYoOwAypqER/FU37tLfuQukpgqTNs=
+X-Proofpoint-ORIG-GUID: VzROIXF-l0uHqtuBQjELjvYMkGFuu_Ps
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-10-05_05,2026-10-05_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 suspectscore=0 bulkscore=0 spamscore=0 priorityscore=1501
- malwarescore=0 phishscore=0 clxscore=1015 impostorscore=0 lowpriorityscore=0
+ impostorscore=0 suspectscore=0 clxscore=1015 spamscore=0 phishscore=0
+ malwarescore=0 priorityscore=1501 adultscore=0 lowpriorityscore=0 bulkscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2610050074
 Received-SPF: pass client-ip=205.220.180.131;
@@ -166,111 +146,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/5/2026 11:45 AM, Yonggang Luo wrote:
-> On Tue, Oct 6, 2026 at 2:06 AM Pierrick Bouvier
-> <pierrick.bouvier@oss.qualcomm.com> wrote:
->>
->> On 10/5/2026 10:04 AM, Yonggang Luo wrote:
->>> On Tue, Oct 6, 2026 at 12:25 AM Pierrick Bouvier
->>> <pierrick.bouvier@oss.qualcomm.com> wrote:
->>>>>>
->>>>>> Ok, but I'm not sure it answers the why.
->>>>>> Could you explain the benefits?
->>>>>
->>>>> Which part? keeping target_arch as SYS_EMU_TARGET__MAX for user-binary because
->>>>> The following original code would return -1 for some user-binary
->>>>> +    SysEmuTarget arch = target_info()->target_arch;
->>>>> +
->>>>> +    if (arch == SYS_EMU_TARGET__MAX) {
->>>>> +        arch = qapi_enum_parse(&SysEmuTarget_lookup, target_name(), -1,
->>>>> +                               &error_abort);
->>>>> +    }
->>>>> +    return arch;
->>>>> So basically assigning any value for the user binary is valid.
->>>>> SYS_EMU_TARGET__MAX is more explicit as it's related to type SysEmuTarget.
->>>>> -1 is another option but easy to confuse.
->>>>>
->>>>>
->>>>> For why commit e934c624f32f6f44f427d73a2e6a67e983a02ae6.
->>>>> "target-info: Statically initialize target_arch"
->>>>> doing that, I am not sure.
->>>>>
->>>>
->>>> I guess there is a (good or bad) reason for which sub variants of
->>>> targets are not reflected in SYS_EMU_TARGET enum. We should double check
->>>> that before doing any change, as it might have other consequences.
->>>
->>>
->>> You’re right to ask, and I need to correct my earlier suggestion:
->>> leaving user-mode target_arch
->>>  as SYS_EMU_TARGET__MAX is not safe. target_aarch64() is used by ARM
->>> code shared with user-mode builds,
->>> including cpu-max-v8.c, where its result indexes a two-entry array.
->>> For aarch64-linux-user, the sentinel could therefore cause an
->>> out-of-bounds access during type registration.
->>>
->>> I checked the distinction: softmmu needs the full system-target
->>> identity, including variants such as mipsel;
->>> user-mode variants such as aarch64_be use their base TARGET_ARCH
->>> (aarch64) for this enum. I’ll keep the full TARGET_SYS_EMU
->>>  value for softmmu and use TARGET_ARCH for user-mode builds, rather
->>> than leave the field at SYS_EMU_TARGET__MAX.
->>>
->>
->> That's technical details, but not an answer to the initial question of
->> why we need to change anything for user binaries, compared to what exists.
-> 
-> The first two patches revert the current static initialization so the
-> token can be replaced. They are not a user-mode behavior change.
-> 
-> Compared with current QEMU, user-mode still uses TARGET_ARCH.
-> qemu-mipsel already reports mips, and it still will. Names such as
-> aarch64_be are not SysEmuTarget values, so user-mode cannot use the
-> full target name for this field; keeping TARGET_ARCH preserves today's
-> value and avoids the runtime parse.
->
+The following changes since commit d7a65d1793d691d356a56833620f7d1e6f5d653b:
 
-Why should we need to expose this precise information?
-So far, if those targets were not exposed (and aliased to 32/64 bit
-variant), it's probably we didn't need it.
+  Merge tag 'hppa-a400-updates-pull-request' of https://github.com/hdeller/qemu-hppa into staging (2026-10-03 14:17:49 +0200)
 
-In case there is a real need to expose it, maybe the simplest solution
-is to add such target configs.
+are available in the Git repository at:
 
-> The only intended change is softmmu, where TARGET_NAME differs from
-> TARGET_ARCH. qemu-system-mipsel must report mipsel, not mips.
-> 
-> The cover-letter sentence about mipsel-linux-user compared against the
-> old target_name() parse, not against current QEMU.
-> 
-> 
-> 
->>
->>>>
->>>>>
->>>>>>
->>>>>>> "target-info: Statically initialize target_arch"
->>>>>>>
->>>>>>>>
->>>>>>>> Regards,
->>>>>>>> Pierrick
->>>>>>>
->>>>>>>
->>>>>>>
->>>>>>
->>>>>
->>>>> --
->>>>>          此致
->>>>> 礼
->>>>> 罗勇刚
->>>>> Yours
->>>>>     sincerely,
->>>>> Yonggang Luo
->>>>
->>>
->>>
->>
-> 
-> 
+  https://gitlab.com/p-b-o/qemu tags/pbouvier/pr/multi_target-20261005
 
+for you to fetch changes up to 2cd349bf10c915d7a02c7444fa037f827a04bd0a:
+
+  ci: add multi-target job (2026-10-05 11:54:09 -0700)
+
+----------------------------------------------------------------
+Changes:
+- [PATCH v2 00/21] multi-target: add straightforward architectures (Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>)
+  Link: https://lore.kernel.org/qemu-devel/20260930020108.217892-1-pierrick.bouvier@oss.qualcomm.com
+- [PATCH] ci: add multi-target job (Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>)
+  Link: https://lore.kernel.org/qemu-devel/20260929183320.2960-1-pierrick.bouvier@oss.qualcomm.com
+
+----------------------------------------------------------------
+Pierrick Bouvier (22):
+      hw/arm/virt: make virt machines available for base arm targets only
+      meson.build: subdir system before finalizing stubs library
+      system/meson: use stub_ss for dtb stubs
+      target/microblaze: prefix helper conflicting with other arch
+      target-info: add target_m68k
+      hw/m68k/virt: make machine available for m68k target only
+      meson.build: add m68k to multi-target
+      hw/pci-bridge: use stub_ss for pci_expander_bridge_stubs.c
+      target/alpha: prefix divs helper
+      meson.build: add alpha-softmmu to multi-target
+      meson.build: add avr-softmmu to multi-target
+      target/hppa: prefix helpers conflicting with other arch
+      meson.build: add hppa-softmmu to multi-target
+      target/rx: prefix helpers conflicting with other arch
+      meson.build: add rx-softmmu to multi-target
+      target/tricore: prefix helpers conflicting with other arch
+      meson.build: add tricore-softmmu to multi-target
+      target-info: add target_or1k
+      hw/or1k/virt: make virt machine available for or1k target only
+      target/or1k: prefix symbols conflicting with other arch
+      meson.build: add or1k-softmmu to multi-target
+      ci: add multi-target job
+
+ .gitlab-ci.d/buildtest.yml     | 11 +++++++++++
+ hw/arm/virt.c                  |  2 ++
+ hw/m68k/virt.c                 | 10 ++++++----
+ hw/or1k/virt.c                 |  1 +
+ hw/pci-bridge/meson.build      |  4 ++--
+ include/qemu/target-info.h     | 14 ++++++++++++++
+ meson.build                    | 10 ++++++++--
+ system/meson.build             |  4 ++--
+ target-info.c                  | 10 ++++++++++
+ target/alpha/fpu_helper.c      |  2 +-
+ target/alpha/helper.h          |  2 +-
+ target/alpha/translate.c       |  4 ++--
+ target/hppa/helper.h           |  6 +++---
+ target/hppa/op_helper.c        |  4 ++--
+ target/hppa/sys_helper.c       |  8 ++++----
+ target/hppa/translate.c        |  6 +++---
+ target/microblaze/helper.h     | 10 +++++-----
+ target/microblaze/op_helper.c  | 10 +++++-----
+ target/microblaze/translate.c  | 10 +++++-----
+ target/or1k/exception.c        |  2 +-
+ target/or1k/exception.h        |  2 +-
+ target/or1k/exception_helper.c |  2 +-
+ target/or1k/helper.h           |  2 +-
+ target/or1k/interrupt_helper.c |  2 +-
+ target/or1k/sys_helper.c       |  6 +++---
+ target/or1k/translate.c        |  2 +-
+ target/rx/helper.h             | 12 ++++++------
+ target/rx/op_helper.c          | 12 ++++++------
+ target/rx/translate.c          | 14 +++++++-------
+ target/tricore/fpu_helper.c    | 12 ++++++------
+ target/tricore/helper.h        | 14 +++++++-------
+ target/tricore/translate.c     | 14 +++++++-------
+ 32 files changed, 135 insertions(+), 89 deletions(-)
 
