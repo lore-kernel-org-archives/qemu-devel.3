@@ -4,69 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1667DCA5FF0
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39BEACA5FCE
 	for <qemu-devel@archiver.kernel.org>; Mon,  5 Oct 2026 11:03:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xDgTe-0002Zs-1a; Mon, 05 Oct 2026 07:03:26 -0400
+	id 1xDgTd-0002ZB-DS; Mon, 05 Oct 2026 07:03:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <394PDagoKCmoabIVTMgRPcOWWOTM.KWUYMUc-LMdMTVWVOVc.WZO@flex--stanleyjhu.bounces.google.com>)
- id 1xDgTb-0002YK-DO
- for qemu-devel@nongnu.org; Mon, 05 Oct 2026 07:03:23 -0400
+ <39YPDagoKCmgYZGTRKePNaMUUMRK.IUSWKSa-JKbKRTUTMTa.UXM@flex--stanleyjhu.bounces.google.com>)
+ id 1xDgTZ-0002W9-Bw
+ for qemu-devel@nongnu.org; Mon, 05 Oct 2026 07:03:21 -0400
 Received: from mail-pf1-x448.google.com ([2607:f8b0:4864:20::448])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from
- <394PDagoKCmoabIVTMgRPcOWWOTM.KWUYMUc-LMdMTVWVOVc.WZO@flex--stanleyjhu.bounces.google.com>)
- id 1xDgTZ-0005QF-G7
- for qemu-devel@nongnu.org; Mon, 05 Oct 2026 07:03:22 -0400
+ <39YPDagoKCmgYZGTRKePNaMUUMRK.IUSWKSa-JKbKRTUTMTa.UXM@flex--stanleyjhu.bounces.google.com>)
+ id 1xDgTX-0005Pg-KX
+ for qemu-devel@nongnu.org; Mon, 05 Oct 2026 07:03:21 -0400
 Received: by mail-pf1-x448.google.com with SMTP id
- d2e1a72fcca58-86fa6b15ed3so1956372b3a.1
- for <qemu-devel@nongnu.org>; Mon, 05 Oct 2026 04:03:20 -0700 (PDT)
+ d2e1a72fcca58-887e45c81bdso920125b3a.1
+ for <qemu-devel@nongnu.org>; Mon, 05 Oct 2026 04:03:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20251104; t=1791198199; x=1791802999; darn=nongnu.org;
- h=content-type:cc:to:from:subject:message-id:references:mime-version
- :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=M5v8qUl4HO0U7DRUSDf/YGwEmMmliYBjW9aq2FXssZY=;
- b=mla61yVEQSehEE0+4uEY9rm1rMy+DN6bYlii1+0QqfoLzlmUP7bDLMKPA/3z/+rmTR
- aYZP9hAJ2wnFUGPHWkmqDevpI4dgpStSFAxVa5gSJfwDtGNczF8WrRKjGtcFGjZm4ekl
- WiO7aIAz3spB4jbKQc97IPwebfmzZoTESTIncS8wyeVpY2Z/hyhN8LzRCxkQWGjiVWhn
- QX9xXYor2UVYN5SteXDN5k5BqxdyHbOlcyCsv2TT0YHcqx0Dh51pO3iBN4jwFxi3oTVN
- gXkjitnNW9lm6qVCL+8loiQi5h/zg8n2Le/70T+FyHyAd+bVtPo2DL3/cpHIGuOYHE7L
- Lb1Q==
+ d=google.com; s=20251104; t=1791198197; x=1791802997; darn=nongnu.org;
+ h=content-type:cc:to:from:subject:message-id:mime-version:date:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=8MPYG4Bh6FkEtC/KAsAPK+0BOK3VGLPUJ5RkXknpzwc=;
+ b=E6T609Koo8Efb7tz37VaDj/SyM0sR1ING4sFWz8Im+FlHoGhZ7AsTp8VTIlC5CeNnK
+ NH9Yeg730N2F+k4H8UOrmwRbMOL9fNZnFqtbasZP1eI4Yp5oPZqm+StQTyoHWAvohV/i
+ VqT+9nkyOnVqyfazgO+m236QTytBaFo2aDAxwNWDE73uupVCEKEGzvjilzkyC/jQFeyE
+ y6WSxCriHLVo4dobapgXafSY4cJ9g848K7mpWyc4KvzzqvFLMBYzUl9WRKa+AdvK4Nyt
+ Nk8YKbrTG3jatty9/ae6Dvbwp3p1nizN3ISmYpmNRfoNdKFNNnnRi4Omqzue50Lwtq/j
+ KF8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791198199; x=1791802999;
- h=content-type:cc:to:from:subject:message-id:references:mime-version
- :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=M5v8qUl4HO0U7DRUSDf/YGwEmMmliYBjW9aq2FXssZY=;
- b=saHuzGoVbtyjAZPgRwM/Q+SPw8p+TzexqAs+MtMPUv9L+w433sg/mZbZrU+YstpglR
- dGHbGxBAFP6rVO3Q+QUxmFF0nyXriRKOvBdq3ZGQSfzgUFxXlevPUHhksI6zkqKPPRIm
- HrOj7AX2wfx9HPXSF7u8U6GWeMO7fKS89L0kSYPLY9DH+exSiSmb0wfJ6jEoPd6N3PJ1
- h1+uYpJMkmp8/mC5hfZhu1ZEU1qLXtVOJh2P2htcNNUINEHa/HA9+DTnu5cRr8kl1hVY
- iPxZuhZEO60UX631cl7V49fJCeySC13li1Kz8pN/zeHcQL8EUPAC/6Lx5D/d/43wHrnW
- 8caA==
+ d=1e100.net; s=20260707; t=1791198197; x=1791802997;
+ h=content-type:cc:to:from:subject:message-id:mime-version:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=8MPYG4Bh6FkEtC/KAsAPK+0BOK3VGLPUJ5RkXknpzwc=;
+ b=0qX8ZQgmGiWmncUAEnaeEg5Ut/3MzdeCm914vHNKJZQJ0Z47lXp3MQbqEclJ7z/F8K
+ lgunzcov6yuVQwDVFh77EhlgcAv9ofAmd8cS01kEviGKVDp6xonFUqQN8epaELcXvwpk
+ /NFDViY/qk446rDvT3kXLvd7U8ZrlpVkdQZ5qCmLrQswfPcR1E7cmdd0g8IBlpWy7xrt
+ wXDmOKqVTQHc4+eE0pZ23tCXpRn/9nB1iDfog3kq13ly/NxzU05CjwTZdej6DTPzBef4
+ 36A3clAapvx3S4+Rdr8vxcEPeUdPFOW93+YXBTl7ZPuG6YOnpgvIoq1BHMSLNwdwESeU
+ v26w==
 X-Forwarded-Encrypted: i=1;
- AKwUvBwdo0F/jSVJFwowXUPK86s+glrzmlEBNi9tgSh9LplHk10XBUE9ioEcQpOlNk1CquGJ1mlIQL5Jlt0I@nongnu.org
-X-Gm-Message-State: AFq9FYLAmjhDpj8od2t/GkaAkg4RckLvlQYWidnv/P5rA2h5b3bjYQLY
- Y2nGBVXn9YoHUenLPPzmH89sDUpCnbPh15NUC2cZxoSdLNdN34UH8PLlTi5QjwJeZ3Xrc3ZZEeS
- l9bYSMn6RUkqcF/B6ErXJPw==
-X-Received: from pfbmt10.prod.google.com
- ([2002:a05:6a00:6e6a:b0:88f:a93e:7dfa])
+ AKwUvBwnxe05hCwnzScQaTBbs1XJZ0EZsfaOZW3sLRSecX7YlO3dHxGwTyRmLBXBSVMiqeeXFuJyYgitwafb@nongnu.org
+X-Gm-Message-State: AFq9FYJqIgz/9ytwgiWOlhGqGSX7IVROHETRffbX4PfxfDJ01wwzDBqi
+ qMvckZe4IvtuQGOalk3TyXtNdr1hGPMXAwa2ZKxS/1sZ6sIkGW7O/g36GAuwivtOuuM/6wlor/8
+ W9XgezSBFRH4zDEjw/xQWKQ==
+X-Received: from pfoo15.prod.google.com ([2002:a05:6a00:1a0f:b0:88d:7c25:5ff])
  (user=stanleyjhu job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:6a00:1bc7:b0:880:ee58:2768 with SMTP id
- d2e1a72fcca58-88af8b3f3c3mr8408909b3a.56.1791198199093; 
- Mon, 05 Oct 2026 04:03:19 -0700 (PDT)
-Date: Mon,  5 Oct 2026 19:03:12 +0800
-In-Reply-To: <20261005110315.3327418-1-stanleyjhu@google.com>
+ 2002:a05:6a00:451b:b0:86a:c062:8af2 with SMTP id
+ d2e1a72fcca58-88af249500emr9233312b3a.3.1791198197225; 
+ Mon, 05 Oct 2026 04:03:17 -0700 (PDT)
+Date: Mon,  5 Oct 2026 19:03:11 +0800
 Mime-Version: 1.0
-References: <20261005110315.3327418-1-stanleyjhu@google.com>
 X-Mailer: git-send-email 2.56.0.rc1.315.gc6ed9934b7-goog
-Message-ID: <20261005110315.3327418-2-stanleyjhu@google.com>
-Subject: [PATCH v4 1/4] hw/ufs: Track SCSIRequest and cancel pending requests
- in ufs_clear_req
+Message-ID: <20261005110315.3327418-1-stanleyjhu@google.com>
+Subject: [PATCH v4 0/4] hw/ufs: Support MCQ runtime registers and Task
+ Management Requests
 From: Stanley Jhu <stanleyjhu@google.com>
 To: Jeuk Kim <jeuk20.kim@samsung.com>, Jeuk Kim <jeuk20.kim@gmail.com>
 Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, 
@@ -77,7 +74,7 @@ Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org,
  Hanna Reitz <hreitz@redhat.com>, Jinyoung Choi <j-young.choi@samsung.com>
 Content-Type: text/plain; charset="UTF-8"
 Received-SPF: pass client-ip=2607:f8b0:4864:20::448;
- envelope-from=394PDagoKCmoabIVTMgRPcOWWOTM.KWUYMUc-LMdMTVWVOVc.WZO@flex--stanleyjhu.bounces.google.com;
+ envelope-from=39YPDagoKCmgYZGTRKePNaMUUMRK.IUSWKSa-JKbKRTUTMTa.UXM@flex--stanleyjhu.bounces.google.com;
  helo=mail-pf1-x448.google.com
 X-Spam_score_int: -95
 X-Spam_score: -9.6
@@ -85,7 +82,8 @@ X-Spam_bar: ---------
 X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- USER_IN_DEF_DKIM_WL=-7.5 autolearn=unavailable autolearn_force=no
+ T_PDS_OTHER_BAD_TLD=0.01,
+ USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,83 +99,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Existing callers of ufs_clear_req() only invoke it after requests are no
-longer in flight. In preparation for Task Management Request (TMR) task
-abort and MCQ queue cleanup support, where individual in-flight requests
-are aborted without purging the entire SCSI device, track the active
-SCSIRequest in UfsRequest and cancel any pending request via
-scsi_req_cancel() in ufs_clear_req().
+This series adds support for Task Management Requests (TMR) and
+Multi-Circular Queue (MCQ) runtime status, interrupt, and queue cleanup
+operations in the QEMU UFS emulator.
 
-Signed-off-by: Stanley Jhu <stanleyjhu@google.com>
----
- hw/ufs/lu.c  | 8 ++++++++
- hw/ufs/ufs.c | 6 ++++++
- hw/ufs/ufs.h | 1 +
- 3 files changed, 15 insertions(+)
+Why:
+Linux UFS error recovery issues Task Management Requests (TMR) via the
+UTP Task Management Request List (UTMRL). In MCQ mode, the driver also
+uses per-queue operational registers (SQnRTC, SQnRTS, SQnCTI, CQnIS) to
+stop queues and clean up aborted tasks, and nullifies unfetched SQEs by
+setting Command Type to 0xF. QEMU does not yet model these paths or
+track per-request SCSIRequest pointers needed to cancel individual
+in-flight commands. Per-SQ interrupt status/enable bits (SQIS.SSS/SUS,
+SQIE, and IS.SQES) remain unmodeled.
 
-diff --git a/hw/ufs/lu.c b/hw/ufs/lu.c
-index bdb165085..5905c49fa 100644
---- a/hw/ufs/lu.c
-+++ b/hw/ufs/lu.c
-@@ -173,6 +173,9 @@ static void ufs_scsi_command_complete(SCSIRequest *scsi_req, size_t resid)
-     int16_t status = scsi_req->status;
-     uint32_t transfered_len = scsi_req->cmd.xfer - resid;
- 
-+    assert(req != NULL);
-+    req->sreq = NULL;
-+
-     /* WB / HID accounting should only happen for successful commands */
-     if (status == GOOD) {
-         ufs_wb_process_write_req(req, transfered_len);
-@@ -190,6 +193,10 @@ static void ufs_scsi_command_complete(SCSIRequest *scsi_req, size_t resid)
- 
- static void ufs_scsi_command_cancelled(SCSIRequest *scsi_req)
- {
-+    UfsRequest *req = scsi_req->hba_private;
-+
-+    assert(req != NULL);
-+    req->sreq = NULL;
-     scsi_req->hba_private = NULL;
-     scsi_req_unref(scsi_req);
- }
-@@ -389,6 +396,7 @@ static UfsReqResult ufs_process_scsi_cmd(UfsLu *lu, UfsRequest *req)
-     SCSIRequest *scsi_req =
-         scsi_req_new(lu->scsi_dev, task_tag, lu->lun, req->req_upiu.sc.cdb,
-                      UFS_CDB_SIZE, req);
-+    req->sreq = scsi_req;
- 
-     uint32_t len = scsi_req_enqueue(scsi_req);
-     if (len) {
-diff --git a/hw/ufs/ufs.c b/hw/ufs/ufs.c
-index 3c4d7424d..adae6639e 100644
---- a/hw/ufs/ufs.c
-+++ b/hw/ufs/ufs.c
-@@ -2221,6 +2221,12 @@ void ufs_complete_req(UfsRequest *req, UfsReqResult req_result)
- 
- static void ufs_clear_req(UfsRequest *req)
- {
-+    if (req->sreq != NULL) {
-+        SCSIRequest *sreq = req->sreq;
-+        req->sreq = NULL;
-+        scsi_req_cancel(sreq);
-+    }
-+
-     if (req->sg != NULL) {
-         qemu_sglist_destroy(req->sg);
-         g_free(req->sg);
-diff --git a/hw/ufs/ufs.h b/hw/ufs/ufs.h
-index 6f2693b7c..265a43faa 100644
---- a/hw/ufs/ufs.h
-+++ b/hw/ufs/ufs.h
-@@ -60,6 +60,7 @@ typedef struct UfsRequest {
-     UtpUpiuRsp rsp_upiu;
- 
-     /* for scsi command */
-+    SCSIRequest *sreq;
-     QEMUSGList *sg;
-     uint32_t data_len;
- 
+What:
+- Patch 1: Track SCSIRequest in UfsRequest and cancel it in
+  ufs_clear_req().
+- Patch 2: Implement MCQ runtime operational registers and SQnRTC.ICU
+  cleanup.
+- Patch 3: Implement UTMRL doorbell and TMR handling (QUERY_TASK and
+  ABORT_TASK).
+- Patch 4: Skip nullified MCQ SQEs (CT = 0xF) and post CQEs with
+  UFS_OCS_ABORTED.
+
+Differences from v3:
+- Report SQRTS.RTC (0..3) and preserve SQRTS.CUS across SQ_START (Jeuk)
+- Separate TMR rsp_header.response from output_param1 and gate IS.UTMRCS
+  on the UTMRD I-bit (Jeuk)
+- Drop non-spec MMIO configuration register resets in ufs_hce_reset()
+- Complete nullified MCQ SQEs (CT = 0xF) with UFS_OCS_ABORTED
+
+Tested:
+Verified on QEMU ARM64 with qos-test and Linux guest MCQ TMR abort, SQ
+cleanup, and host reset.
+
+Stanley Jhu (4):
+  hw/ufs: Track SCSIRequest and cancel pending requests in ufs_clear_req
+  hw/ufs: Support MCQ runtime interrupt and queue status registers
+  hw/ufs: Implement Task Management Request (TMR) handling
+  hw/ufs: Skip nullified MCQ submission queue entries with OCS_ABORTED
+
+ hw/ufs/lu.c         |   8 ++
+ hw/ufs/trace-events |   2 +
+ hw/ufs/ufs.c        | 268 +++++++++++++++++++++++++++++++++++++++++++-
+ hw/ufs/ufs.h        |   1 +
+ include/block/ufs.h |  17 +++
+ 5 files changed, 292 insertions(+), 4 deletions(-)
+
 -- 
 2.56.0.rc1.315.gc6ed9934b7-goog
-
 
