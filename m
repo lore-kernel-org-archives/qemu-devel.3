@@ -4,104 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E14C9CA5FF0
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Oct 2026 09:51:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D72CCA5FCE
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Oct 2026 10:19:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xDfLs-00078Y-KG; Mon, 05 Oct 2026 05:51:20 -0400
+	id 1xDfmZ-0002Go-VS; Mon, 05 Oct 2026 06:18:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1xDfLb-00072v-Nj
- for qemu-devel@nongnu.org; Mon, 05 Oct 2026 05:51:04 -0400
-Received: from mail-dy1-x132f.google.com ([2607:f8b0:4864:20::132f])
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xDfm4-0002E5-RB
+ for qemu-devel@nongnu.org; Mon, 05 Oct 2026 06:18:30 -0400
+Received: from mail-wr2-x0e.google.com ([2a00:1450:4864:30::e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1xDfLY-00077g-G2
- for qemu-devel@nongnu.org; Mon, 05 Oct 2026 05:51:02 -0400
-Received: by mail-dy1-x132f.google.com with SMTP id
- 5a478bee46e88-35120d43ecaso2033176eec.1
- for <qemu-devel@nongnu.org>; Mon, 05 Oct 2026 02:51:00 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1791193859; cv=none;
- d=google.com; s=arc-20260327;
- b=CEYht32tVeSMMuwxJrvtJcFNCstK1yaoZq1FAovIbQIDZCo4LB3ZNFvsXkeWC6pu0K
- qfZZDlZd7st3dsaAB8RvyLNYkhRmAvn3jdEm2pGyadlJvlHjkAGtvRxpR3asfLM5NFzz
- alncikh98nosplUPp1UgpEGi4G7tZqhcdH6sUx1HMPhqOuwKa6s9PCDZkjAzoYtZs0Dt
- wuI+lZwA6T8/pDQMUJAsHuUNOSPqawXSUzdSeGVIZwJmFa4dv3HCN1suIzasaJulXtMC
- 4WhXtV0R5TaAOOtrfCJjkhx1vjqUw0xWk848576paWhWTexFfK9IuiHjrex+FidC00yT
- lwZQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=WC0eN5xNl2wscbX4IwNTFrP3/uP+9wHSY2pwZo86tBQ=;
- fh=Qpl77bHkcE0bYSjiKXT9vs9obKUyn+uhBwvH7ERnfRM=;
- b=DTwBlmhdk3s6k335eS5orP+cm+6RaDBVp/Z4KnTG8ngbipvEkBKhD6eZalDa0Kn1AR
- 1CXCdrgF/vo90BdKvEx3NV8Rpyx2c9ASWC7myE/bgXADPNAB4nnHnBZBHWbYdRYwTzU9
- K1wm9jN+yA7TfYEZMEetSJgXgi0BuIwMoyBTKewAouOcZ0DCGgjZBxvU5Dw41ehK2Gi7
- 13jCFTAw2O+26XQ7bIba0YqW/BqoPAcC/hM/i8bc9wyWZXZudO4R9UP2SPWRDmh77rUx
- emqbVOyr4ggq9zZx2zQWOlx+NTrMT7dD3QRRytEauwEoP83NXIUmpS/+lIBKOtCMoD6g
- rVPw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xDfm0-0000tu-4J
+ for qemu-devel@nongnu.org; Mon, 05 Oct 2026 06:18:21 -0400
+Received: by mail-wr2-x0e.google.com with SMTP id
+ ffacd0b85a97d-48b01c4f4daso1274617f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 05 Oct 2026 03:18:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1791193859; x=1791798659; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=WC0eN5xNl2wscbX4IwNTFrP3/uP+9wHSY2pwZo86tBQ=;
- b=KkHPMp9isuOYPTEApbC+E2PLqonZu2rmzXPzcgmkIoOKh0oMRuHGy7uc8hxVhXmlnn
- gIjoXl5cdZJWFeV8f8V5k7x1FNC/qdIe7PZg1VrJyxMN+uO+dHa+gzsz4kBSjc2TGaq8
- f0DPwZkL566Smt/H2cor2eXdBh+x0bF1YEvvZY7fUXQVg0+nHqRk6NgY3uraoZzO78cL
- arspMKLdfOMZ2hS9YpQRi+dBzfjkgQN+3HzVeOEqf8zL4So3zpdgNO01tCaRO7cXQhG7
- kNBCIfOE0640J0CmQ/+8QvNnr63jv+72/+q8gxW6G9+KH48b++L8bgJUG0LaLKUklWkA
- 4rnA==
+ d=gmail.com; s=20251104; t=1791195498; x=1791800298; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=f47AbJC9WyThfLCVVK5eZtwGzw1GZhhu1L6TKd9diQw=;
+ b=cD2ts5NtB7xSoqSEDDueBSLOdBfz8a5icS5YVpvK4EUqC7cjWXQzNQTvLuPiI3sODs
+ lwXKK6dxxjIk9gDFmSduu45pr6+JgKMuDjfhimJLMs22g12q8mlGRaenRYdB689lTuIK
+ zE9brRA7A4rJ9uibxhUGs+nNVtIxMbPv0NeFeMg6BB+fXWhO7oYZ5Lo1R3ddDIrPyOo7
+ 222p+zm5JTFpzero2qZ0nd5QhO4uB9l1MEdj3FXp7nX69XHGfP50aMoL102hsIVF/g/9
+ VbeA9NCyupKQ9fSckY/NKH1Msefh+VZBfGTynJI3JvXa6/aAiryfXsxzb7bWZa11a0hw
+ V4fg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791193859; x=1791798659;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=WC0eN5xNl2wscbX4IwNTFrP3/uP+9wHSY2pwZo86tBQ=;
- b=HMawMyfaPBDCD+sF11txrNafRq3k0AK7fjJ6VODiMeKUAkCi401a/MOv4MT8SZVLfD
- PbaSv+T6kcEG8NPN/so9jMSedKipEILFBzrFeVqXt3vjtKPw8X+2jNWwZfATPVb5jzjV
- qWu6Zt0pTf/8J6J8mBMulvG+lWtVhB/WMpbvdgiMF42lUGjTIh2qruCaq33XtfxSrwND
- +jsrz1SVW3Heqo7lJ0G3a879sR/4pSc9rLVqe6e9AFJvM1Oikf19GL+xu8uFiXeSYc1x
- YHzwDw6fg2HA0tZwr9vrLNsdG4b9FVeju7/5OLJGRu60wbPvuoCXDefG5qnJpxOQCGje
- 6sEQ==
-X-Gm-Message-State: AFuF++mmIBV8FVBdWTv9Qbq2Egjqu08EmqSsSXsQYgFjGlfYYNLcrJtY
- jlRb0Lr2ihANQfa6Qwiewv8nQlFqXkAryOTYAUee9nWExTx4xhMGIGqv394syqJGhkiOgsEvGeN
- cqfBp4b2vhCDXjShTaLTPZtMP/RzQB6E=
-X-Gm-Gg: AYBFou2fGpiLqU/BfpKipFpng9TFzNiegrvnXiCxkLeCCWGztWkDcWOzj7fMpi3yZQx
- UxNqcdfAlXZjv9f98B+Keq/W8e2kdr0PTWdtNsFLp/Wd/CviWF+GScw9rdk+UOmGkSxit3X4Fhg
- mtYyy2Duvr02AcESX39AFgtorrxZOdJBf7iy/Z2ycFyyxCV88zvBbnG/oaz5MP8jvC/6Xn5WMmx
- Q6Jv55LecnFAXvaHHjkM2kOHqtbmV3NuNmFBbHqfUfkNPS0amMubTNKZpNe4SGG0aqWh/x1sslD
- wZZ1RtQ37+tgwWs/kQwRgJd49o/w98GwSD0L5wjUKxfFMNn8pK8YLGDTQ8zyALp1C2tIpxTQ+cM
- JqZCi5U2BpoE=
-X-Received: by 2002:a05:693c:864e:20b0:351:214a:de43 with SMTP id
- 5a478bee46e88-351214adf20mr6897156eec.17.1791193858765; Mon, 05 Oct 2026
- 02:50:58 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1791195498; x=1791800298;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=f47AbJC9WyThfLCVVK5eZtwGzw1GZhhu1L6TKd9diQw=;
+ b=nBSWJB+QWcvxhGq/OzYAxtjOy6FxzoF2Olqiwz4+sggk4UZKLGSgc9NxsI0L/wpST4
+ PxGpNwwDqkEEaGleAadjAalQ11gstLDh+i0iH4YYT4dA+I8yfh/5ASyCWDfPxakt4etY
+ xDUfABXXJii0F8XDCfmq6LSUjVleeJhxcuJSEK3Dca0q1EnEOdRsslmwyzM4Q9aXbUPF
+ Hzvq13k+Bsnh0QwkZFAIuTiUzrQ6YrIwAHx5G2rGqHFh9HhQtn7xlPq9k8wrklR0bcJq
+ kxjJe33CDojt80BjIIFrkCgdZwmmUZ8wKrjzBNAxDVAB2Mfbkn5zHrXQ3Oyej7hgJg0d
+ fUlQ==
+X-Gm-Message-State: AFq9FYLKPlNTnRxtIY8qXH/wqHPy6fFU5It0jJ+sg/HwF/qfc0NvRYQ6
+ uMruKRmihaVjeNtJN2niQ/1dPqpI26av037bmPIpV8QKhef/wai+FfoWHRucig==
+X-Gm-Gg: AYBFou2B23yQ/Y+1Epq3AQwLEmSpWmMiJ0H4/l/VB7EvJ7wwc/KJ4xESrxf6/GW4NTa
+ ENgID4T2LPDUcGzdCL8R6NcilLJOxjoKhBFiBtcjr5wGEGP8W61Wyl5mUt2GtXRCI8NZC4XQC8s
+ ie/G7f9j2z2EUm4uTy5I477sQHOMh0R/biC3yGn8osJ9Ee4o31YX50JBzs9JUN9nZxJCmUp3m8p
+ fT/opTQybCptI9nGtBzUrwE6n5FMUtZRsh25i9VMT6y/e+eNudpekJUlrNkk9L16MfkHs7CS29G
+ G5uXUcfB6QEU5HweApvoCxaJL3rXlJAWM0rXakOWSNittLYSgwqr3TvtxZgEadi2c066J2lZBdt
+ xDAy0lym9NwfaItk1SLCe6TO0rFS1/Ro8luDEKb7cGkw1Rwnj0JjsJTIgI3vC3D3TT6Az8PNW7q
+ 9EaC6iaTT1rGAIf4Psq/9101+ThnufGcV0oHwQm5lU8N+qfPDfiaYssWXn9fpZno26Yt6hyBmP9
+ Aslt890odVFdjy9KiY0k7OrEsSDLPUyJZe8ZQ==
+X-Received: by 2002:a05:6000:2909:b0:48a:fc9a:3765 with SMTP id
+ ffacd0b85a97d-48b1273e480mr18155804f8f.46.1791195498057; 
+ Mon, 05 Oct 2026 03:18:18 -0700 (PDT)
+Received: from archlinux (pd95eda80.dip0.t-ipconnect.de. [217.94.218.128])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-48c622ab7b5sm2742111f8f.37.2026.10.05.03.18.16
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 05 Oct 2026 03:18:17 -0700 (PDT)
+From: Bernhard Beschow <shentey@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: Gaurav Sharma <gaurav.sharma_7@nxp.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Bernhard Beschow <shentey@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Alistair Francis <alistair@alistair23.me>,
+ Paolo Bonzini <pbonzini@redhat.com>, Jason Wang <jasowangio@gmail.com>,
+ qemu-arm@nongnu.org, Bin Meng <bin.meng@processmission.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Jean-Christophe Dubois <jcd@tribudubois.net>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Subject: [PATCH v3 00/31] i.MX fixes and cleanup
+Date: Mon,  5 Oct 2026 12:17:27 +0200
+Message-ID: <20261005101800.10821-1-shentey@gmail.com>
+X-Mailer: git-send-email 2.56.0
 MIME-Version: 1.0
-References: <20261005090056.32064-1-berrange@redhat.com>
-In-Reply-To: <20261005090056.32064-1-berrange@redhat.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Mon, 5 Oct 2026 13:50:46 +0400
-X-Gm-Features: AclHuK8noDwSEWyPJ4Ulxiy7NA6nq_CIrQtdzmgtGDKr6owjew--6nI8WeOu3DQ
-Message-ID: <CAJ+F1C+_6edJJSkKrBqUA6XUwmu0QLCGsvjKWBcKUdeY95bwVg@mail.gmail.com>
-Subject: Re: [PATCH] seccomp: fix blocking of setns/execveat/unshare
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::132f;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-dy1-x132f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:30::e;
+ envelope-from=shentey@gmail.com; helo=mail-wr2-x0e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,74 +104,145 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Oct 5, 2026 at 1:01=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@re=
-dhat.com> wrote:
->
-> The initializer for these syscalls missed the seccomp action
-> field, so it got the default action which was to kill the calling
-> thread, instead of returning an errno value, which the other
-> equivalent syscalls use.
->
-> Since we don't ever intend to use a seccomp filter without a
-> defined action, use an assert to validate that action is always
-> set to non-zero.
->
-> Reported-by: Igor Santos-Grueiro (gitlab:@igorsantosgrueiro)
-> Fixes: https://gitlab.com/qemu-project/qemu/-/work_items/4600
-> Fixes: 4638057110 (seccomp: block setns, unshare and execveat syscalls)
-> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
-
-Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-
-> ---
->  system/qemu-seccomp.c | 15 ++++++++++++---
->  1 file changed, 12 insertions(+), 3 deletions(-)
->
-> diff --git a/system/qemu-seccomp.c b/system/qemu-seccomp.c
-> index f8e1238b914..3889d48b4f2 100644
-> --- a/system/qemu-seccomp.c
-> +++ b/system/qemu-seccomp.c
-> @@ -249,10 +249,13 @@ static const struct QemuSeccompSyscall denylist[] =
-=3D {
->        0, NULL, SCMP_ACT_ERRNO(ENOSYS) },
->  #endif
->  #ifdef __SNR_execveat
-> -    { SCMP_SYS(execveat),               QEMU_SECCOMP_SET_SPAWN },
-> +    { SCMP_SYS(execveat),               QEMU_SECCOMP_SET_SPAWN,
-> +      ARRAY_SIZE(clone_arg_none), clone_arg_none, SCMP_ACT_ERRNO(EPERM) =
-},
->  #endif
-> -    { SCMP_SYS(setns),                  QEMU_SECCOMP_SET_SPAWN },
-> -    { SCMP_SYS(unshare),                QEMU_SECCOMP_SET_SPAWN },
-> +    { SCMP_SYS(setns),                  QEMU_SECCOMP_SET_SPAWN,
-> +      ARRAY_SIZE(clone_arg_none), clone_arg_none, SCMP_ACT_ERRNO(EPERM) =
-},
-> +    { SCMP_SYS(unshare),                QEMU_SECCOMP_SET_SPAWN,
-> +      ARRAY_SIZE(clone_arg_none), clone_arg_none, SCMP_ACT_ERRNO(EPERM) =
-},
->      /* resource control */
->      { SCMP_SYS(setpriority),            QEMU_SECCOMP_SET_RESOURCECTL,
->        0, NULL, SCMP_ACT_ERRNO(EPERM) },
-> @@ -337,6 +340,12 @@ static int seccomp_start(uint32_t seccomp_opts, Erro=
-r **errp)
->          if (!(seccomp_opts & denylist[i].set)) {
->              continue;
->          }
-> +        /*
-> +         * action =3D=3D 0 is SCMP_ACT_KILL_THREAD which is not
-> +         * something we ever want to use. Validate it to protect
-> +         * against missing struct field initializers
-> +         */
-> +        assert(denylist[i].action);
->
->          action =3D qemu_seccomp_update_action(denylist[i].action);
->          rc =3D seccomp_rule_add_array(ctx, action, denylist[i].num,
-> --
-> 2.55.0
->
->
-
-
---=20
-Marc-Andr=C3=A9 Lureau
+This series fixes various issues in i.MX device emulation, cleans up i.MX=0D
+Kconfig handling, and improves some code. Functional console tests for the=
+=0D
+remaining i.MX boards are added where images are publicly available, except=
+ for=0D
+imx6ul which is taken care of in a different series [1]. Fixes which appear=
+ safe=0D
+for backporting are cc'd to qemu-stable.=0D
+=0D
+The series is structured as follows: Patches 1-5 fix some issues and are=0D
+mostly marked for backporting. Patch 4 is a follow-up on patches 1-3 and=0D
+should not be backported since it breaks migration.=0D
+=0D
+Patches 6-11 add and improve functional tests for i.MX devices. While at it=
+,=0D
+saner defaults for the amount of RAM and number of CPUs are established.=0D
+=0D
+Patches 12-16 turn the remaining i.MX SoC device models into SySBus devices=
+=0D
+which fixes their reset behavior.=0D
+=0D
+Patches 17-30 are Kconfig cleanups where CONFIG_IMX gets split into dedicat=
+ed=0D
+config items.=0D
+=0D
+The last commit just fixes some typos in the code.=0D
+=0D
+Changes in v3:=0D
+* Add dedicated patch fixing write one once WCR bits, cc'd to qemu-stable (=
+Bin)=0D
+Done as yet another patch to tell the issues apart.=0D
+* Add and fix some commit messages (Bin)=0D
+* Add functional tests to 'tests_arm_system_thorough' (Bin)=0D
+* Fix typo in functional tests for mcimx7d-sabre machine (Bin)=0D
+* Use sysbus_realize() rather than sysbus_realize_and_unref() in case of=0D
+embedded SoC struct (Bin)=0D
+* Pick up R-b tags=0D
+=0D
+Changes in v2:=0D
+* Remove patch adding `mc->ignore_memory_transaction_failures =3D true;` (P=
+eter)=0D
+* Rework wdt_imx2 patches (Peter)=0D
+* Remove all but "hw/misc/Kconfig: Remove redundant USB_EHCI_SYSBUS from co=
+nfig=0D
+IMX" already queued by Phil. The preserved patch is required to remove all=
+=0D
+dependencies from CONFIG_IMX such that it can be removed.=0D
+* Pick up R-b tags=0D
+* Rebase onto latest master=0D
+=0D
+[1]=0D
+https://lore.kernel.org/qemu-devel/20261004090500.3082641-1-bin.=0D
+meng@processmission.com/=0D
+=0D
+base-commit: d7a65d1793d691d356a56833620f7d1e6f5d653b=0D
+=0D
+Bernhard Beschow (31):=0D
+  hw/watchdog/wdt_imx2: Preserve own locked bits in WCR=0D
+  hw/watchdog/wdt_imx2: Fix handling of write one once WCR bits=0D
+  hw/watchdog/wdt_imx2: Clear WDT lock on reset=0D
+  hw/watchdog/wdt_imx2: Remove redundant attributes=0D
+  hw/arm/imx8mm-evk: Fix reference count of SoC object=0D
+  docs, tests/functional: Drop redundant CLI arguments in imx8m*-evk=0D
+    invocations=0D
+  hw/arm/sabrelite: Have 4 CPUs and 1 GiB of RAM by default=0D
+  tests/functional/arm: Add console test for `sabrelite` machine=0D
+  hw/arm/mcimx6ul-evk: Have 512 MiB of RAM by default=0D
+  hw/arm/mcimx7d-sabre: Have 2 CPUs and 2 GiB of RAM by default=0D
+  tests/functional/arm: Add console test for `mcimx7d-sabre` machine=0D
+  hw/arm/fsl-imx25: Derive from TYPE_SYS_BUS_DEVICE=0D
+  hw/arm/fsl-imx31: Derive from TYPE_SYS_BUS_DEVICE=0D
+  hw/arm/fsl-imx6: Derive from TYPE_SYS_BUS_DEVICE=0D
+  hw/arm/fsl-imx6ul: Derive from TYPE_SYS_BUS_DEVICE=0D
+  hw/arm/fsl-imx7: Derive from TYPE_SYS_BUS_DEVICE=0D
+  hw/misc/Kconfig: Remove redundant USB_EHCI_SYSBUS from config IMX=0D
+  Kconfig: Extract config IMX_AVIC from config IMX=0D
+  Kconfig: Extract config IMX_GPCV2 from config IMX=0D
+  Kconfig: Extract config IMX_RNG from config IMX=0D
+  Kconfig: Extract config FSL_IMX7_GPR from config IMX=0D
+  Kconfig: Extract config FSL_IMX{6, 7}_SRC from config IMX=0D
+  Kconfig: Extract config FSL_IMX7_SNVS from config IMX=0D
+  Kconfig: Extract dedicated config FSL_IMXx_CCM from config IMX=0D
+  Kconfig: Extract config IMX_GPT from config IMX=0D
+  Kconfig: Extract config IMX_EPIT from config IMX=0D
+  Kconfig: Extract config GPIO_IMX from config IMX=0D
+  Kconfig: Extract config IMX_SPI from config IMX=0D
+  Kconfig: Extract config IMX_SERIAL from config IMX=0D
+  Kconfig: Remove config IMX=0D
+  hw/arm/fsl-imx8m: Fix typo=0D
+=0D
+ MAINTAINERS                                 |  2 +=0D
+ docs/system/arm/imx8m.rst                   |  2 +-=0D
+ docs/system/arm/sabrelite.rst               |  4 +-=0D
+ include/hw/arm/fsl-imx25.h                  |  5 +-=0D
+ include/hw/arm/fsl-imx31.h                  |  5 +-=0D
+ include/hw/arm/fsl-imx6.h                   |  5 +-=0D
+ include/hw/arm/fsl-imx6ul.h                 |  5 +-=0D
+ include/hw/arm/fsl-imx7.h                   |  5 +-=0D
+ include/hw/arm/fsl-imx8mm.h                 |  4 +-=0D
+ include/hw/arm/fsl-imx8mp.h                 |  4 +-=0D
+ include/hw/watchdog/wdt_imx2.h              |  2 -=0D
+ hw/arm/fsl-imx25.c                          |  7 +--=0D
+ hw/arm/fsl-imx31.c                          |  7 +--=0D
+ hw/arm/fsl-imx6.c                           |  4 +-=0D
+ hw/arm/fsl-imx6ul.c                         |  4 +-=0D
+ hw/arm/fsl-imx7.c                           |  5 +-=0D
+ hw/arm/fsl-imx8mm.c                         |  2 +-=0D
+ hw/arm/fsl-imx8mp.c                         |  2 +-=0D
+ hw/arm/imx25_pdk.c                          |  2 +-=0D
+ hw/arm/imx8mm-evk.c                         |  4 +-=0D
+ hw/arm/kzm.c                                |  2 +-=0D
+ hw/arm/mcimx6ul-evk.c                       |  3 +-=0D
+ hw/arm/mcimx7d-sabre.c                      |  4 +-=0D
+ hw/arm/sabrelite.c                          |  5 +-=0D
+ hw/watchdog/wdt_imx2.c                      | 22 ++------=0D
+ hw/arm/Kconfig                              | 56 ++++++++++++++++++---=0D
+ hw/char/Kconfig                             |  3 ++=0D
+ hw/char/meson.build                         |  2 +-=0D
+ hw/gpio/Kconfig                             |  3 ++=0D
+ hw/gpio/meson.build                         |  2 +-=0D
+ hw/intc/Kconfig                             |  6 +++=0D
+ hw/intc/meson.build                         |  3 +-=0D
+ hw/misc/Kconfig                             | 41 +++++++++++++--=0D
+ hw/misc/meson.build                         | 24 ++++-----=0D
+ hw/net/Kconfig                              |  2 +-=0D
+ hw/ssi/Kconfig                              |  4 ++=0D
+ hw/ssi/meson.build                          |  2 +-=0D
+ hw/timer/Kconfig                            | 10 ++++=0D
+ hw/timer/meson.build                        |  4 +-=0D
+ tests/functional/aarch64/test_imx8mm_evk.py |  4 +-=0D
+ tests/functional/aarch64/test_imx8mp_evk.py |  4 +-=0D
+ tests/functional/arm/meson.build            |  4 ++=0D
+ tests/functional/arm/test_mcimx7d_sabre.py  | 46 +++++++++++++++++=0D
+ tests/functional/arm/test_sabrelite.py      | 46 +++++++++++++++++=0D
+ 44 files changed, 273 insertions(+), 109 deletions(-)=0D
+ create mode 100755 tests/functional/arm/test_mcimx7d_sabre.py=0D
+ create mode 100755 tests/functional/arm/test_sabrelite.py=0D
+=0D
+-- =0D
+2.56.0=0D
+=0D
 
