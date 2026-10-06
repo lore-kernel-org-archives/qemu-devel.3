@@ -4,56 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EF9BCA6002
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 08:48:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 990C3CA5FF1
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 08:48:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xENEC-00054t-B3; Wed, 07 Oct 2026 04:42:20 -0400
+	id 1xENAq-0005Ta-LV; Wed, 07 Oct 2026 04:38:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1xEIt2-000057-C0
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 00:04:28 -0400
-Received: from linux.microsoft.com ([13.77.154.182])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1xEIsy-0004cB-7w
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 00:04:11 -0400
-Received: from DESKTOP-TUU1E5L.localdomain (unknown [167.220.208.46])
- by linux.microsoft.com (Postfix) with ESMTPSA id 53FE420B716D;
- Tue,  6 Oct 2026 09:48:46 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 53FE420B716D
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1791305327;
- bh=AL4sp3TkGvdtEM1QJ08Inmb4FA5wGCa7jieuaUQo7KY=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=cPcerY4JvuJtVTCrxvuhpzBi3J4hmeZPARiLwaZwiJOQuQ0xPL992pNc7DYej4g0B
- Ac/lxQObqVcPPyFj8r3/sFMpom7poaBhzU5mDSGx0GxYwgkGgpg31eqXFmKPtsjsJ2
- 5aXKXkJOecPdJkzSq2UmjlNMvAaD4J4NsU7+kAp4=
-From: Magnus Kulke <magnuskulke@linux.microsoft.com>
-To: qemu-devel@nongnu.org
-Cc: Wei Liu <wei.liu@kernel.org>,
- =?UTF-8?q?Doru=20Bl=C3=A2nzeanu?= <dblanzeanu@linux.microsoft.com>,
- Magnus Kulke <magnuskulke@microsoft.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PULL 06/11] target/i386/mshv: fix pio handlers clobbering
- device-modified registers
-Date: Tue,  6 Oct 2026 18:49:00 +0200
-Message-Id: <20261006164905.776466-7-magnuskulke@linux.microsoft.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20261006164905.776466-1-magnuskulke@linux.microsoft.com>
-References: <20261006164905.776466-1-magnuskulke@linux.microsoft.com>
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1xEITn-0004I8-2t
+ for qemu-devel@nongnu.org; Tue, 06 Oct 2026 23:38:09 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1xEITg-0000NM-PW
+ for qemu-devel@nongnu.org; Tue, 06 Oct 2026 23:38:06 -0400
+Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 696DD6MM064588
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Tue, 6 Oct 2026 22:13:06 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=f/WVcBpeVBDZZ4GKMELOT03MepcChUOq4TbDTU/HEI0=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=From:Message-ID:To:Subject:Date;
+ s=rs20250326; t=1791292386; v=1;
+ b=XFJOKTIdBlTDMzrWQk+RdLTmIdV6puYgPqfqVKLsLnQQvaHezsvXImkj2WsURGRz
+ 2himlJhlThbZgaNJxyMVZvxOgVsYSb6T8VozCqQO51Y0YAmv/JbaOmPim15pLsai
+ UFNH2l+ZWJSo8af+6s3o16ApXix8zveWtiu4IMbo7bqHQw6Y1abmLfNwWNtXKX5i
+ FLbeLPIkKhJuA/EwSPbdBXml389w5dxhfJ0l6rWKuB6dekpBf7IRxVkDN2cjiAjT
+ Y5Zic9y8IlwypEsxO2wpEfuaQqjPS8oC/P29Xw28SoGenO7aS3RH4r2bsomeL7yk
+ O76lLZFb/hB10VnrDWTHpQ==
+Message-ID: <f2c7bede-842b-444f-b3f1-75b5fe2d76fa@rsg.ci.i.u-tokyo.ac.jp>
+Date: Tue, 6 Oct 2026 22:13:06 +0900
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v12 16/21] migration: add incoming migration failure
+ notifiers
+To: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>, qemu-devel@nongnu.org
+Cc: vsementsov@yandex-team.ru, clg@redhat.com, mark.kanda@oracle.com,
+ bchaney@akamai.com, mst@redhat.com, sgarzare@redhat.com,
+ peterx@redhat.com, philmd@oss.qualcomm.com,
+ maciej.szmigiero@oracle.com, dongli.zhang@oracle.com, den@openvz.org,
+ dwmw2@infradead.org, farosas@suse.de
+References: <20261005-up-vsock-vhost-v5-v12-0-40162390c68a@virtuozzo.com>
+ <20261005-up-vsock-vhost-v5-v12-16-40162390c68a@virtuozzo.com>
+ <c9e3523e-a2ca-4187-8274-225f2c667c53@rsg.ci.i.u-tokyo.ac.jp>
+ <d4bed047-06c6-4b7b-a886-80dfd3223022@virtuozzo.com>
+ <1f3bffbc-ca46-4f66-b23d-d40d5033666c@rsg.ci.i.u-tokyo.ac.jp>
+ <820e6db0-204d-401c-adf9-ab6e4a8637b1@virtuozzo.com>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <820e6db0-204d-401c-adf9-ab6e4a8637b1@virtuozzo.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=13.77.154.182;
- envelope-from=magnuskulke@linux.microsoft.com; helo=linux.microsoft.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -9
+X-Spam_score: -1.0
+X-Spam_bar: -
+X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_12_24=1.049,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -69,161 +82,121 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Doru Blânzeanu <dblanzeanu@linux.microsoft.com>
+On 2026/10/06 21:33, Andrey Drobyshev wrote:
+> On 10/6/26 2:56 PM, Akihiko Odaki wrote:
+>> On 2026/10/06 19:28, Andrey Drobyshev wrote:
+>>> On 10/6/26 1:03 PM, Akihiko Odaki wrote:
+>>>> On 2026/10/06 0:00, Andrey Drobyshev wrote:
+>>>>> A device may take over a resource from the source in post_load(), e.g.
+>>>>> vhost-vsock acquires the device ownership on a CPR target.  If the
+>>>>> incoming migration fails afterwards, there's currently no way for the
+>>>>> device to give that resource back before the source is told about the
+>>>>> failure over the return path and resumes, or before the target exits.
+>>>>>
+>>>>> Add a notifier list for that, called from the failure path of
+>>>>> process_incoming_migration_co() before migration_incoming_state_destroy().
+>>>>>
+>>>>> Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+>>>>> ---
+>>>>>     include/migration/misc.h |  7 +++++++
+>>>>>     migration/migration.c    | 23 +++++++++++++++++++++++
+>>>>>     2 files changed, 30 insertions(+)
+>>>>>
+>>>>> diff --git a/include/migration/misc.h b/include/migration/misc.h
+>>>>> index 019717f4cda..08d110750fc 100644
+>>>>> --- a/include/migration/misc.h
+>>>>> +++ b/include/migration/misc.h
+>>>>> @@ -112,6 +112,13 @@ void migration_add_notifier_modes(NotifierWithReturn *notify,
+>>>>>      */
+>>>>>     void migration_remove_notifier(NotifierWithReturn *notify);
+>>>>>     
+>>>>> +/*
+>>>>> + * Incoming side: @notify is called when an incoming migration fails,
+>>>>> + * before the target dies or before the source is told about the failure.
+>>>>> + */
+>>>>> +void migration_incoming_add_failure_notifier(Notifier *notify);
+>>>>> +void migration_incoming_remove_failure_notifier(Notifier *notify);
+>>>>> +
+>>>>>     void migration_file_set_error(int ret, Error *err);
+>>>>>     
+>>>>>     /* True if incoming migration entered POSTCOPY_INCOMING_DISCARD */
+>>>>> diff --git a/migration/migration.c b/migration/migration.c
+>>>>> index fab7949fe11..55ea1e019fa 100644
+>>>>> --- a/migration/migration.c
+>>>>> +++ b/migration/migration.c
+>>>>> @@ -71,6 +71,8 @@
+>>>>>     #define INMIGRATE_DEFAULT_EXIT_ON_ERROR true
+>>>>>     
+>>>>>     static GSList *migration_state_notifiers[MIG_MODE__MAX];
+>>>>> +static NotifierList incoming_failure_notifiers =
+>>>>> +    NOTIFIER_LIST_INITIALIZER(incoming_failure_notifiers);
+>>>>>     
+>>>>>     /* Messages sent on the return path from destination to source */
+>>>>>     enum mig_rp_message_type {
+>>>>> @@ -818,6 +820,17 @@ fail:
+>>>>>         migrate_set_state(&mis->state, MIGRATION_STATUS_ACTIVE,
+>>>>>                           MIGRATION_STATUS_FAILED);
+>>>>>         migrate_error_propagate(s, local_err);
+>>>>> +
+>>>>> +    /*
+>>>>> +     * Allow the devices which have registered their callbacks for
+>>>>> +     * migration target failure to undo the changes they may have
+>>>>> +     * done in post_load().
+>>>>> +     *
+>>>>> +     * Do that before migration_incoming_state_destroy() reports the
+>>>>> +     * failure over the return path (if present) and before the exit()
+>>>>> +     * below.
+>>>>> +     */
+>>>>> +    notifier_list_notify(&incoming_failure_notifiers, NULL);
+>>>>
+>>>> This invokes the callbacks after migrate_set_state(...FAILED) emits the
+>>>> target’s QMP event. Without return-path enabled, the source can already
+>>>> be POSTMIGRATE, so a management application may react to that event can
+>>>> resume it before ownership is released, causing VHOST_SET_OWNER to fail
+>>>> with EBUSY. The callbacks may be invoked before publishing FAILED.
+>>>>
+>>>> Regards,
+>>>> Akihiko Odaki
+>>> Hmm, looks like you're right again.  Also looks that this gap can be
+>>> easily closed by just moving this notifier_list_notify(...) line right
+>>> before the migrate_set_state(FAILED) above.  Do you think it's going to
+>>> be sufficient?
+>>
+>> Yes, I think so.
+>>
+>> By the way, I found another scenario that may result in stranded ownership:
+>>
+>> 1. Start the target with -S.
+>> 2. Perform the migration successfully. The target acquires ownership.
+>> (The failure notifier never runs since the migration succeeds).
+>> 3. Quit the target normally.
+>> (Note that devices won't be unrealized when QEMU quits).
+>> 4. Resume the source.
+>>
+>> As I noted previously, there are a number of ways the QEMU process can
+>> exit (via exit() calls and signals), and I'm not saying this particular
+>> case needs to be specifically covered. I just wanted to bring it to your
+>> attention.
+>>
+>> Regards,
+>> Akihiko Odaki
+> 
+> Actually that scenario is the one which'd be covered by the exit()
+> notifier.  Maybe I've rushed a bit removing that patch.  So what if we:
+> 
+> 1. Keep this patch, but move the notifier_list_notify() right before
+> migrate_set_state(FAILED);
+> 2. Bring back the exit() notifier from the v11.
+> 
+> That way, in the cases we discussed previously (e.g. broken migration
+> stream) both notifiers will be called here.  However only 1st one will
+> fire actual RESET_OWNER, as it's still guarded by hdev->owner flag.
+> 
+> What do you think?
 
-When a device handler (e.g. vmport) calls cpu_synchronize_state() during
-I/O port dispatch, it sets cpu->accel->dirty = true and may modify
-registers directly in env. The old PIO code ignored this: it
-unconditionally wrote the stale info->rax from the VM-exit intercept
-message back to the hypervisor and then cleared dirty, discarding any
-register changes made by the device.
+That sounds good to me. Combining both notifiers should cover all 
+non-abrupt exit scenarios.
 
-Bifurcate both handlers on cpu->accel->dirty:
-
-handle_pio_non_str:
-- dirty path: update env->eip directly. For reads (IN), merge the I/O
-  result into env->regs[R_EAX] (which may have been modified by the
-  device) rather than info->rax. For writes (OUT), leave RAX untouched.
-  Flush all registers via mshv_store_regs() and clear dirty.
-- non-dirty path: write RIP and RAX via set_x64_registers hypercall as
-  before.
-
-handle_pio_str:
-- dirty path: update env->eip and the appropriate index register
-  (RSI for OUTS, RDI for INS) directly. Flush via mshv_store_regs()
-  and clear dirty.
-- non-dirty path: write the index register and RIP via
-  set_x64_registers. Drop the RAX assignment that was here before;
-  string I/O does not modify RAX, and set_x64_registers is hardcoded
-  to write only 2 registers so the third slot was silently ignored
-  anyway.
-
-Remove the unconditional "cpu->accel->dirty = false" at the end of both
-handlers. In the non-dirty fast path it was redundant (already false).
-In the dirty path it was actively harmful: it told the vcpu run loop
-that env was clean when it was not, losing the device's modifications.
-
-Signed-off-by: Doru Blânzeanu <dblanzeanu@linux.microsoft.com>
-Reviewed-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
-Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
----
- target/i386/mshv/mshv-cpu.c | 72 +++++++++++++++++++++++++------------
- 1 file changed, 50 insertions(+), 22 deletions(-)
-
-diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
-index 5a34357693..4f113da02d 100644
---- a/target/i386/mshv/mshv-cpu.c
-+++ b/target/i386/mshv/mshv-cpu.c
-@@ -1718,10 +1718,12 @@ static int handle_pio_non_str(CPUState *cpu,
-     uint32_t val, eax;
-     const uint32_t eax_mask =  0xffffffffu >> (32 - len * 8);
-     size_t insn_len;
--    uint64_t rip, rax;
-+    uint64_t rip;
-     uint32_t reg_names[2];
-     uint64_t reg_values[2];
-     uint16_t port = info->port_number;
-+    X86CPU *x86_cpu = X86_CPU(cpu);
-+    CPUX86State *env = &x86_cpu->env;
- 
-     if (access_type == HV_X64_INTERCEPT_ACCESS_TYPE_WRITE) {
-         union {
-@@ -1752,21 +1754,36 @@ static int handle_pio_non_str(CPUState *cpu,
- 
-     /* Advance RIP and update RAX */
-     rip = info->header.rip + insn_len;
--    rax = info->rax;
- 
--    reg_names[0] = HV_X64_REGISTER_RIP;
--    reg_values[0] = rip;
--    reg_names[1] = HV_X64_REGISTER_RAX;
--    reg_values[1] = rax;
-+    if (cpu->vcpu_dirty) {
-+        env->eip = rip;
-+        if (access_type != HV_X64_INTERCEPT_ACCESS_TYPE_WRITE) {
-+            /*
-+             * For reads, merge the I/O result into the current RAX.
-+             * Use env->regs[R_EAX] as the base since a device handler
-+             * (e.g. vmport) may have called cpu_synchronize_state()
-+             * and modified registers.
-+             */
-+            eax = (((uint32_t)env->regs[R_EAX]) & ~eax_mask)
-+                  | (val & eax_mask);
-+            env->regs[R_EAX] = (uint64_t)eax;
-+        }
-+        /* Sync modified standard registers back and clear dirty. */
-+        store_regs(cpu);
-+        cpu->vcpu_dirty = false;
-+    } else {
-+        reg_names[0] = HV_X64_REGISTER_RIP;
-+        reg_values[0] = rip;
-+        reg_names[1] = HV_X64_REGISTER_RAX;
-+        reg_values[1] = info->rax;
- 
--    ret = set_x64_registers(cpu, reg_names, reg_values);
--    if (ret < 0) {
--        error_report("Failed to set x64 registers");
--        return -1;
-+        ret = set_x64_registers(cpu, reg_names, reg_values);
-+        if (ret < 0) {
-+            error_report("Failed to set x64 registers");
-+            return -1;
-+        }
-     }
- 
--    cpu->vcpu_dirty = false;
--
-     return 0;
- }
- 
-@@ -1915,6 +1932,7 @@ static int handle_pio_str(CPUState *cpu, hv_x64_io_port_intercept_message *info)
-     bool repop = info->access_info.rep_prefix == 1;
-     size_t repeat = repop ? info->rcx : 1;
-     size_t insn_len = info->header.instruction_length;
-+    uint64_t rip;
-     bool direction_flag;
-     uint32_t reg_names[3];
-     uint64_t reg_values[3];
-@@ -1944,18 +1962,28 @@ static int handle_pio_str(CPUState *cpu, hv_x64_io_port_intercept_message *info)
-         reg_values[0] = info->rdi;
-     }
- 
--    reg_names[1] = HV_X64_REGISTER_RIP;
--    reg_values[1] = info->header.rip + insn_len;
--    reg_names[2] = HV_X64_REGISTER_RAX;
--    reg_values[2] = info->rax;
-+    rip = info->header.rip + insn_len;
- 
--    ret = set_x64_registers(cpu, reg_names, reg_values);
--    if (ret < 0) {
--        error_report("Failed to set RIP and RAX registers");
--        return -1;
--    }
-+    if (cpu->vcpu_dirty) {
-+        env->eip = rip;
-+        if (access_type == HV_X64_INTERCEPT_ACCESS_TYPE_WRITE) {
-+            env->regs[R_ESI] = info->rsi;
-+        } else {
-+            env->regs[R_EDI] = info->rdi;
-+        }
-+        /* Sync modified standard registers back and clear dirty. */
-+        store_regs(cpu);
-+        cpu->vcpu_dirty = false;
-+    } else {
-+        reg_names[1] = HV_X64_REGISTER_RIP;
-+        reg_values[1] = rip;
- 
--    cpu->vcpu_dirty = false;
-+        ret = set_x64_registers(cpu, reg_names, reg_values);
-+        if (ret < 0) {
-+            error_report("Failed to set x64 registers");
-+            return -1;
-+        }
-+    }
- 
-     return 0;
- }
--- 
-2.34.1
-
+Regards,
+Akihiko Odaki
 
