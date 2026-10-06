@@ -4,135 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CD3CCA5FFF
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 09:06:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BFAECA5FF1
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 09:06:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xENVN-0008MW-Ku; Wed, 07 Oct 2026 05:00:15 -0400
+	id 1xENbE-0007ja-7t; Wed, 07 Oct 2026 05:06:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1xEKsa-0003Ep-21
+ (Exim 4.90_1) (envelope-from <fuad.tabba@linux.dev>)
+ id 1xEKsJ-0003Dq-Nu
  for qemu-devel@nongnu.org; Wed, 07 Oct 2026 02:12:16 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1xEKsI-0002AL-Bh
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 02:11:37 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1791353482;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=0KjBGitEkOT6/H3O0Jz3UU2krKy3QWVZjrAiPk8YehM=;
- b=SHA/jAVMdprBbnbRRfFwCXwkY5Nw+LLGR4C1KIewA6QLuAJEE8AWq+xYA3nSGqYrm7h8q3
- su3M1Cy5bL0NCCQaolIiJF/59koO4PcxWgfKuht+af+pmeTWYH7vLD1QZV/ojBw+pu3qxG
- deeGSqn59FDQncBkwIU7z1JBKUT396Y=
-Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com
- [209.85.214.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-292-Mkt63JpHODyMrMn17jr2ow-1; Wed, 07 Oct 2026 02:11:20 -0400
-X-MC-Unique: Mkt63JpHODyMrMn17jr2ow-1
-X-Mimecast-MFC-AGG-ID: Mkt63JpHODyMrMn17jr2ow_1791353479
-Received: by mail-pl1-f197.google.com with SMTP id
- d9443c01a7336-2df8d1e91c9so67012785ad.0
- for <qemu-devel@nongnu.org>; Tue, 06 Oct 2026 23:11:19 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1791353479; cv=none;
- d=google.com; s=arc-20260327;
- b=frVjibAU6xly9ey4x3fxXJNBcTeEwRej2NC3BjvPByh84NVhJQqZD5zsDEKwWsh7SE
- 1yLkKa1osdPxfljolTlFoLDqrHjcntuz5bToaHOwjWYzEhKQMs3Fc77XDQ5DbQfO7J4B
- cGyj59/cST7GHsNwVM7UJgS0m99/axVytrDjn6WCFbYayO9euAeMjj8djZdoNWjGHD1j
- lkXzHUk0q6HNz7+W3HpM/HXpxgQZlQiagcGE6RpfgqeXdcjMATt/3oPczITtLTUB3U8r
- fVzuHwV9I91Y3DMf+hgdLuWLTvvdNFalsmcYAYiHaBXPUM56UDD7dYFzJYRGBqrMQ0We
- GDYw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=0KjBGitEkOT6/H3O0Jz3UU2krKy3QWVZjrAiPk8YehM=;
- fh=A8uD+msS3MKQfhfDeZBeS3RPqVja6wU9NXA3uZOXLCc=;
- b=bL/WNYrwHmFMIaMpEL+kg40RBo9b7/2zdwuk1VHTyWFWA1klWOYCRhzJ9JhPFVz83e
- Z4klk0lJxl20oQupWSLah00CGYdihZSyi6119qQXLH420yQtnjRfV9Pipy8hG+vMEozt
- urHQz9zyID4b06kVSYI8s4sr1opSqrf0V/IO0Vxzm5nvSNK/QgrRA8E9yguOZ54c0/pp
- wFobtkzT3X+ORlfOF0/ZFjCquxei93ECep55HFAN+eSc9e4KIpMnlWW6l3V3Ft8xYl63
- PvU8MvYtZ7i7zW2dE5+r/I6F9N92el7HkvTtsDTBmdS3UWRTgByopfDEDKmLy41gjt8g
- Xmzg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1791353479; x=1791958279; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=0KjBGitEkOT6/H3O0Jz3UU2krKy3QWVZjrAiPk8YehM=;
- b=DKtfaYYqqUvdTQT9/+X83WHc20EX4VSO/31Jp1PZycqjG4UBJPCUxzDpOwJtDHLxRO
- HcTEftn8JGK2TOpBiaRuM/ZxfAcVgHfhOvz0lOhTg3mZfAKuPzUh2ClWFvH+6HDwvHGL
- QDRse/1CD7jd6i1lw8glueEeuxEaxJzGvgABUm1OVspVqPeG42DCBykey77dzP5J6AQw
- PVjBZZoim5PYYfyPpguO35RS4kxfM0EUTSeKjMY+GVkJ2sn3NjGDX8PwgknqVkWNGmrU
- Q7IDU1L+agOFE4U6X9fIkhMDlOPmEMlVJApKO2b9ipjqFHhXLZI1QXyLm4GLuCUzLiRH
- trKQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791353479; x=1791958279;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=0KjBGitEkOT6/H3O0Jz3UU2krKy3QWVZjrAiPk8YehM=;
- b=Zveh5WFxZGm5lHVCXNnmyH1izp0yfEPFUw1UCK9JhM/4nxT875382i66QL5Jm//1VL
- 1vI8egn7JTudVfUyoLkvLbsI6vT4MajPyw46Y5AC8fYMcmHaMMmN6XWv5zWEUqLPXdxj
- A+DGObhd0i86pmnvqGgky+q/BIzbCiUidBovbCX4hwW4EFbgFGDgTO27KcWfFs0ykmya
- Rpi4hZRqH4Ms2rIylIfzMW4r+ACwehqQ74HWYbkMK4lR5u5u+ZpjOeqWd5cLiCb+ZdCN
- DU2lEbTmiaXOp/6Int9OUelfZor8s9fdocc1FOtXHuG5N8vaOSOBsL82ISfG1MFLcXU6
- sbxg==
+Received: from out-134.mta1.migadu.com ([2001:41d0:203:375::86]
+ helo=mta1.migadu.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <fuad.tabba@linux.dev>)
+ id 1xEKs5-00029b-5u
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 02:11:30 -0400
+X-Envelope-To: qemu-devel@nongnu.org
+DKIM-Signature: a=rsa-sha256; bh=23mYlrG2cdi53aM9FDjWK41Tu5taXomCLzhdx5ei8vo=; 
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1791353458; v=1; x=1791958258;
+ b=Gl5negLgPJVWXTdkncz5xsDrwllW6BB0uPlhAbasfXzgTdy+4lB+WtkSzdlMVn1ZAzx0/UoA
+ NxHxzjdmj1nVkI3lfAljfW7m3vIy0lglrZuj9pl8KWK+N1hKdTmhh3+NIneHuFSLyytLru/Osgn
+ JSktPhnvziImb014Asrs1Ff8=
+X-Envelope-To: qemu-devel@nongnu.org
+Received: by smtp.migadu.com with ESMTPS id 2f112445c1fd4654;
+ Tue, 06 Oct 2026 09:28:12 +0000
+X-Mizu-Trace-ID: 2f112445c1fd4654
+X-Migadu-Flow: FLOW_OUT
+Received: by mail-lf1-f49.google.com with SMTP id
+ 2adb3069b0e04-5bcbb378fc9so6573e87.0
+ for <qemu-devel@nongnu.org>; Tue, 06 Oct 2026 02:28:12 -0700 (PDT)
 X-Forwarded-Encrypted: i=1;
- AKwUvBzUo0nzpN5C/3VanW1YktGlgjXi3e7VWFinkkQAMRA9cbM+NdKwwacuL1G0rGfa0v1VnFGAfviqm0jh@nongnu.org
-X-Gm-Message-State: AFq9FYIQdb5KseQZQfQsgQaCSQjPol1Xzq22mYlLVYbisSy04/Mrdb7r
- PJcEyYAeZp25THrXnWVsePAayAWgK4Rc5/hUxk40jPNINaLgbiRSvGIk4F7kZnBJwRjk/MTyUG8
- 3PIlDl/cpGqo9yk9c4Rx4DFK21gJT8H0hAA1FxrqYDG2O6AAF+IoN8dTfB/Bn3sP7SZhfIi64L2
- 7Tyv/QOAM5XTB5EK9jRdY75ITr9mPosuY=
-X-Gm-Gg: AYBFou2/3WHYg6RyB8izSDlLW1hSyHzKmAh1KBsSCITXDK6hUh43NE0opVBwpyoT1AW
- bcyftyx0/ld6Gw5ojd/pT43k3ip/tFKMScAuVhOPRXaOAAE+SOSsuRcGrqoKQlvG9b7X8OTG6Gj
- scFHtCczGlWztBiLMJpAiFlDrgXD9DAq9LVhZi6QvVJwiAr2gfBCty+HVB9Vee2pinDlqG+rxfR
- cFpCesnpIlBNOFDCz7ls8VsK6p+6aKm/AfBtEEmBYlyejwPhIvmhhnyL7dXoN1DNLuOFNaLyawz
- fA==
-X-Received: by 2002:a17:903:2c10:b0:2e4:b112:14d with SMTP id
- d9443c01a7336-2e60054442bmr11393795ad.54.1791353478704; 
- Tue, 06 Oct 2026 23:11:18 -0700 (PDT)
-X-Received: by 2002:a17:903:2c10:b0:2e4:b112:14d with SMTP id
- d9443c01a7336-2e60054442bmr11393675ad.54.1791353478256; Tue, 06 Oct 2026
- 23:11:18 -0700 (PDT)
+ AKwUvBwGcOGWnXc2FTzk6ebc5dZ4Pkbg7oBG7hrtCt7oEGXDKMynQ81gyQp2UV+LNknxsSCnsMDYaYsoj4ek@nongnu.org
+X-Gm-Message-State: AFq9FYLvr74uyX06KDPYaRkeFFsM3lHbkazBIHrRolr4ToQb2d6Fwajp
+ w6h0NjFH8gAy5NrBG06jWrD83VzYWVfufkwtVTYjDIsgjhWxua7bmz5dreUPDJOKsJC/+nN1wAw
+ 0oGyOUAHNa2d9arsWXjAX/8L2Z9euFJAFsaKXJw/V
+X-Received: by 2002:a05:6512:33d4:b0:5b8:e882:5148 with SMTP id
+ 2adb3069b0e04-5bcca86ee33mr79019e87.14.1791278891513; Tue, 06 Oct 2026
+ 02:28:11 -0700 (PDT)
 MIME-Version: 1.0
-References: <20261005032022.3980903-1-jamin_lin@aspeedtech.com>
- <20261005032022.3980903-3-jamin_lin@aspeedtech.com>
- <179119075845.699310.5944945395562648270.b4-review@b4>
- <SEZPR06MB736267CA04EA7BB0EE82D87DFC942@SEZPR06MB7362.apcprd06.prod.outlook.com>
-In-Reply-To: <SEZPR06MB736267CA04EA7BB0EE82D87DFC942@SEZPR06MB7362.apcprd06.prod.outlook.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Wed, 7 Oct 2026 10:11:06 +0400
-X-Gm-Features: AclHuK9YhCBll7k6ee6cr2xOKlOWG5fTekkMuOlJEvKfQxFPaHMc_LiizB4zZ9U
-Message-ID: <CAMxuvazTUQ7Z2c2+6mUpKr1EJgaVTdxYqyeyZgb7LMRbAXfrEg@mail.gmail.com>
-Subject: Re: [PATCH v2 2/8] hw/usb/redirect-server: Add a usbredir server
- device
-To: Jamin Lin <jamin_lin@aspeedtech.com>
-Cc: "clg@kaod.org" <clg@kaod.org>, Peter Maydell <peter.maydell@linaro.org>, 
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>, 
- Kane Chen <kane_chen@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, 
- Joel Stanley <joel@jms.id.au>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>, 
- "open list:All patches CC here" <qemu-devel@nongnu.org>,
- Troy Lee <troy_lee@aspeedtech.com>
+References: <20261001175003.ttbr-baddr-52bit-0-fuad.tabba@linux.dev>
+ <20261002070925.2627344-1-fuad.tabba@linux.dev>
+ <l5hcpwnktn2hvbt55ux42xzb2euc5zqohnxtaiftr7lxynfx2g@myyytd4e4owp>
+ <20261005214451.1036668-1-fuad.tabba@linux.dev>
+ <CAFEAcA81JuAjk-aOnBWcT1ZXWy0U9tVrWRoa5yYQ4WtvhZJKjg@mail.gmail.com>
+In-Reply-To: <CAFEAcA81JuAjk-aOnBWcT1ZXWy0U9tVrWRoa5yYQ4WtvhZJKjg@mail.gmail.com>
+From: Fuad Tabba <fuad.tabba@linux.dev>
+Date: Tue, 6 Oct 2026 11:27:35 +0200
+X-Gmail-Original-Message-ID: <CA+EHjTzvAKMf5LWVfvSLv6tqoi+MaVi91E++RvYpTDL6tzrZ5w@mail.gmail.com>
+X-Gm-Features: AclHuK-xl8GepuyPVLw1vn7yLRDxqOS795mMrZVyjK5xBzUL2FH1vTgtAK5mv54
+Message-ID: <CA+EHjTzvAKMf5LWVfvSLv6tqoi+MaVi91E++RvYpTDL6tzrZ5w@mail.gmail.com>
+Subject: Re: [PATCH 1/2] target/arm: Clear TTBR[5:0] from a 52-bit table base
+ address
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Gustavo Romero <gromero@redhat.com>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org, 
+ Richard Henderson <richard.henderson@linaro.org>, Will Deacon <will@kernel.org>,
+ Itaru Kitayama <itaru.kitayama@linux.dev>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mlureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
+Received-SPF: pass client-ip=2001:41d0:203:375::86;
+ envelope-from=fuad.tabba@linux.dev; helo=mta1.migadu.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -148,39 +88,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
+Hi Peter,
 
-On Wed, Oct 7, 2026 at 6:16=E2=80=AFAM Jamin Lin <jamin_lin@aspeedtech.com>=
- wrote:
->
-> Hi Marc-Andr=C3=A9 Lureau
->
-> > > diff --git a/include/hw/usb/redirect-server.h
-> > > b/include/hw/usb/redirect-server.h
-> >
-> > What do you need a header for? If there is nothing to share with other =
-units,
-> > better keep it all in .c.
-> >
-> > --
-> > Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
->
-> Thanks for your suggestion and review.
->
-> Nothing else includes it. The main reason for having a separate header fi=
-le is readability.
-> redirect-server.c is already about 1600 lines, so I thought keeping the s=
-tate structure
-> and constants in a separate file would make the code easier to follow.
->
-> Would hw/usb/redirect-server.h be OK instead?
+On Tue, 6 Oct 2026 at 11:03, Peter Maydell <peter.maydell@linaro.org> wrote:
+[...]
+> Personally I prefer "fix commit first, test commit second", especially
+> for cases like this where the fix is a one-liner and the test case is
+> 150 lines; but I don't object to single-commit strongly enough to
+> require splitting it if it wouldn't otherwise require a respin.
 
-Yes - I don't think we have strict rules about headers
+Since Gistavo had other feedback, I'm happy to respin with this.
 
-> If you still prefer to keep everything in the .c file, I will move it the=
-re for v3.
+Cheers,
+/fuad
 
-That would be "my" preference. I don't mind large files as long as
-they don't mix various concerns/domains/levels.
-
+> thanks
+> -- PMM
 
