@@ -4,55 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0E3DCA5FFF
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 08:38:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41114CA5FF1
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 08:38:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xEN5B-00053m-ES; Wed, 07 Oct 2026 04:33:01 -0400
+	id 1xEN5k-00074b-Ln; Wed, 07 Oct 2026 04:33:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1xEHrM-0007BJ-Hs
- for qemu-devel@nongnu.org; Tue, 06 Oct 2026 22:58:29 -0400
-Received: from linux.microsoft.com ([13.77.154.182])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1xEHr4-0005OS-L0
- for qemu-devel@nongnu.org; Tue, 06 Oct 2026 22:58:11 -0400
-Received: from DESKTOP-TUU1E5L.localdomain (unknown [167.220.208.46])
- by linux.microsoft.com (Postfix) with ESMTPSA id A419A20B7169;
- Tue,  6 Oct 2026 09:48:35 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com A419A20B7169
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1791305316;
- bh=sS6+v/KG0bNpCvXev6mchI5kX9JuCuUyBiKRAWCn5Uk=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=p+ED14+rnZ3nKg7wdvRA4zrK4r4yOKnZ97h1qT07hIWLoiwcHHwhFzWW+NBVan9gu
- dP+Paq4tCHH1T4zMCuJ4SP3Jky/MYU9j3w+KMckZTiGo2w9vQoTRHMBvMPEeiIxSxi
- x/1xCr6zFDRcxxWFm4K3MntEf1ePfMVqzCPCrnAE=
-From: Magnus Kulke <magnuskulke@linux.microsoft.com>
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xEHww-0007vm-58
+ for qemu-devel@nongnu.org; Tue, 06 Oct 2026 23:04:12 -0400
+Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xEHwk-0006Sc-Ak
+ for qemu-devel@nongnu.org; Tue, 06 Oct 2026 23:04:06 -0400
+Received: by mail-ej1-x62f.google.com with SMTP id
+ a640c23a62f3a-c2acc1e170cso201299166b.1
+ for <qemu-devel@nongnu.org>; Tue, 06 Oct 2026 19:59:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1791341950; x=1791946750; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=PYKfHPldhWeFOjyIkeLoCzfvceJRidlCUcbU149i39Q=;
+ b=Q8hsb6m8HSn5k7bMtZLm/QRjbqODEpA4HbHozIG/p2TqZ8c8kNg7Wb109BWKGEB8BR
+ JBUSsbIlONjpgjObVMAS35/9sNYxqdLfc/Ez3uMhCsu9nvbXz54A6nqNN7vqNhrCQKju
+ D5C+7RUYXO4gOTOdF6JMzyv8P+8x/NOjYFcwVlKXX4Pk7RDhvxOYeTyN8qkjyF0k/BRv
+ dzjhgq69mxQNQUOqI9o434duYvpmtBXbaBhGOPI78mCNu2wgNUOcv9ZmL8nZCWmBkPwr
+ 9h5dd/m19qyOhg1Os6WTWGi1vkzXkfiH1yThP6xIWLX/eGFVZrxhcJM4EZTWycZbyHK4
+ X8Ew==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1791341950; x=1791946750;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=PYKfHPldhWeFOjyIkeLoCzfvceJRidlCUcbU149i39Q=;
+ b=2sZEjJ9zEJfW465YwngRhlhWgyiXqquyf+wfJ09w3/cnI1WjZbgUkmcWiGqAcVsS7O
+ r69H7k5g4K4buz6kzp5ebyFDV4HxVfu5OrcbvG/0t30zlOp98/GNzNaEX67MGiur8N+6
+ uO0kAZtouT6D07TMky2tBANX+2p6ozL0IHBp4IQBJIomBN2HuAIQuULL0C9Pix1WQYkA
+ maGwNwkE6ckqHdQ9+CNt8rnF89mdlEEYTMI0ipTWvej3Ype9DVJooQQRld2Hg8qwzT+t
+ mvRP1VjedUriTwefVkuVcKMYtGCmafmMcA4POtKxcoH5Oc17fEJ2buOIbnDI+KqWs+BG
+ u0hg==
+X-Gm-Message-State: AFq9FYKuAPLhKGNRKc6JE7o7w8p8VNODBNo1MLNCZKPe3sYxeAp0+1Nx
+ Avg6bxh16pEyHdLpqojB5H+kQOsRZED6ArOyDKrO80NUBTYOo60VYt+L9WObPg==
+X-Gm-Gg: AYBFou1qJP7/ud/lnqA4Fobh1p1YRwOlFT2HH22VzCXdZv3grzIpsFxZu2NsCwVz+qw
+ z4q7EeN61hYxEBLaEt8St5jedcXPQITpOg4EE5AWgGzoGKXMu5Uo1rDkIBSzGAEtqmLr7oY2h4G
+ lVfq6qfiGDVmxGNOEjwYpk28uAyJUjXduNNRder7Wj+MUR0PG2kw4kObuMNIqozmQaV0wShUJku
+ /FjGarIkOrTkMa0/GOYY9QZq4cCFNid7AWEDj32vCmlTcsLjoLGqJl7rGrABwVBGQ1AApg/CUOC
+ AOEiHDu41l64b4R6+zT1dXJvobkk8jcMULkFxLr2sprrABi/ovDmEo7yj4Clm0jtdOCHHOFLXV5
+ bLKGh4YPtBvhf4VwRgaehGbXruD37dfte44O+d7nA/yzWKKbJo5G7TPGpPv7Vrl8zfWenY1lqrP
+ nB4MzPKyjtcHi4aMI97cetET0uaYkuV9YY3u9vLA6oFIBlFCpJd+OsloDi5/hq7WaiAFgX8mYPy
+ 4u5Ml80S2Iq0F51rNg/rjmsQmTxzt9eymSnTrIM2k2gp4sj
+X-Received: by 2002:a05:6000:40ca:b0:48c:4f83:f42f with SMTP id
+ ffacd0b85a97d-48c6d0f432dmr1564943f8f.8.1791279908514; 
+ Tue, 06 Oct 2026 02:45:08 -0700 (PDT)
+Received: from archlinux (pd95eda80.dip0.t-ipconnect.de. [217.94.218.128])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-48c6faa93fbsm433426f8f.16.2026.10.06.02.45.07
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 06 Oct 2026 02:45:08 -0700 (PDT)
+From: Bernhard Beschow <shentey@gmail.com>
 To: qemu-devel@nongnu.org
-Cc: Wei Liu <wei.liu@kernel.org>,
- =?UTF-8?q?Doru=20Bl=C3=A2nzeanu?= <dblanzeanu@linux.microsoft.com>,
- Magnus Kulke <magnuskulke@microsoft.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PULL 02/11] include/hw/hyperv: move hv_vp_register_page struct
- definition
-Date: Tue,  6 Oct 2026 18:48:56 +0200
-Message-Id: <20261006164905.776466-3-magnuskulke@linux.microsoft.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20261006164905.776466-1-magnuskulke@linux.microsoft.com>
-References: <20261006164905.776466-1-magnuskulke@linux.microsoft.com>
+Cc: Zhao Liu <zhao1.liu@intel.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Christian Speich <c.speich@avm.de>, Bin Meng <bmeng.cn@gmail.com>,
+ qemu-block@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v5 4/8] hw/sd/sdhci: Don't use bounce buffer for ADMA
+Date: Tue,  6 Oct 2026 11:44:43 +0200
+Message-ID: <20261006094447.43491-5-shentey@gmail.com>
+X-Mailer: git-send-email 2.56.0
+In-Reply-To: <20261006094447.43491-1-shentey@gmail.com>
+References: <20261006094447.43491-1-shentey@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=13.77.154.182;
- envelope-from=magnuskulke@linux.microsoft.com; helo=linux.microsoft.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
+ envelope-from=shentey@gmail.com; helo=mail-ej1-x62f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -69,272 +104,159 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Doru Blânzeanu <dblanzeanu@linux.microsoft.com>
+From: Christian Speich <c.speich@avm.de>
 
-Move the `hv_vp_register_page` structure definition from `hvgdk_mini.h` to
-`hvhdk.h`.
+Currently, ADMA will temporarily store data into a local bounce buffer
+when transferring it. This will produce unneeded copies of the data and
+limit us to the bounce buffer size for each step.
 
-Fixes: 8afb40b7fe
-Signed-off-by: Doru Blânzeanu <dblanzeanu@linux.microsoft.com>
-Reviewed-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
-Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
+This patch now maps the requested DMA address and passes this buffer
+directly to sdbus_{read,write}_data. This allows to pass much larger
+buffers down to increase the performance. sdbus_{read,write}_data is
+already able to handle arbitrary length and alignments, so we do not
+need to ensure this.
+
+Signed-off-by: Christian Speich <c.speich@avm.de>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/hw/hyperv/hvgdk.h      |   2 +
- include/hw/hyperv/hvgdk_mini.h | 103 --------------------------------
- include/hw/hyperv/hvhdk.h      | 106 +++++++++++++++++++++++++++++++++
- 3 files changed, 108 insertions(+), 103 deletions(-)
+ hw/sd/sdhci.c | 102 +++++++++++++++++++++++++++-----------------------
+ 1 file changed, 55 insertions(+), 47 deletions(-)
 
-diff --git a/include/hw/hyperv/hvgdk.h b/include/hw/hyperv/hvgdk.h
-index 71161f477c..e4be861716 100644
---- a/include/hw/hyperv/hvgdk.h
-+++ b/include/hw/hyperv/hvgdk.h
-@@ -9,6 +9,8 @@
- #ifndef HW_HYPERV_HVGDK_H
- #define HW_HYPERV_HVGDK_H
+diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
+index bd74c60f72..2f52b252ce 100644
+--- a/hw/sd/sdhci.c
++++ b/hw/sd/sdhci.c
+@@ -852,7 +852,7 @@ static void get_adma_description(SDHCIState *s, ADMADescr *dscr)
  
-+#include "hvgdk_mini.h"
+ static void sdhci_do_adma(SDHCIState *s)
+ {
+-    unsigned int begin, length;
++    unsigned int length;
+     const uint16_t block_size = s->blksize & BLOCK_SIZE_MASK;
+     const MemTxAttrs attrs = { .memory = true };
+     ADMADescr dscr = {};
+@@ -894,66 +894,74 @@ static void sdhci_do_adma(SDHCIState *s)
+             if (s->trnmod & SDHC_TRNS_READ) {
+                 s->prnsts |= SDHC_DOING_READ;
+                 while (length) {
+-                    if (s->data_count == 0) {
+-                        sdbus_read_data(&s->sdbus, s->fifo_buffer, block_size);
+-                    }
+-                    begin = s->data_count;
+-                    if ((length + begin) < block_size) {
+-                        s->data_count = length + begin;
+-                        length = 0;
+-                     } else {
+-                        s->data_count = block_size;
+-                        length -= block_size - begin;
+-                    }
+-                    res = dma_memory_write(s->dma_as, dscr.addr,
+-                                           &s->fifo_buffer[begin],
+-                                           s->data_count - begin,
+-                                           attrs);
+-                    if (res != MEMTX_OK) {
++                    dma_addr_t dma_len = length;
 +
- #define HVGDK_H_VERSION         (25125)
- 
- enum hv_unimplemented_msr_action {
-diff --git a/include/hw/hyperv/hvgdk_mini.h b/include/hw/hyperv/hvgdk_mini.h
-index a5527d49cf..4ae20d2ac1 100644
---- a/include/hw/hyperv/hvgdk_mini.h
-+++ b/include/hw/hyperv/hvgdk_mini.h
-@@ -508,109 +508,6 @@ struct hv_input_assert_virtual_interrupt {
-     uint16_t rsvd_z1;
- } QEMU_PACKED;
- 
--/* Flags for dirty mask of hv_vp_register_page */
--enum hv_x64_register_class_type {
--    HV_X64_REGISTER_CLASS_GENERAL = 0,
--    HV_X64_REGISTER_CLASS_IP = 1,
--    HV_X64_REGISTER_CLASS_XMM = 2,
--    HV_X64_REGISTER_CLASS_SEGMENT = 3,
--    HV_X64_REGISTER_CLASS_FLAGS = 4,
--};
--
--#define HV_VP_REGISTER_PAGE_MAX_VECTOR_COUNT  7
--
--union hv_vp_register_page_interrupt_vectors {
--    uint64_t as_uint64;
--    struct {
--        uint8_t vector_count;
--        uint8_t vector[HV_VP_REGISTER_PAGE_MAX_VECTOR_COUNT];
--    };
--};
--
--struct hv_vp_register_page {
--    uint16_t version;
--    uint8_t isvalid;
--    uint8_t rsvdz;
--    uint32_t dirty;
--
--    union {
--        struct {
--            /* General purpose registers (HV_X64_REGISTER_CLASS_GENERAL) */
--            union {
--                struct {
--                    uint64_t rax;
--                    uint64_t rcx;
--                    uint64_t rdx;
--                    uint64_t rbx;
--                    uint64_t rsp;
--                    uint64_t rbp;
--                    uint64_t rsi;
--                    uint64_t rdi;
--                    uint64_t r8;
--                    uint64_t r9;
--                    uint64_t r10;
--                    uint64_t r11;
--                    uint64_t r12;
--                    uint64_t r13;
--                    uint64_t r14;
--                    uint64_t r15;
--                } QEMU_PACKED;
--
--                uint64_t gp_registers[16];
--            };
--            /* Instruction pointer (HV_X64_REGISTER_CLASS_IP) */
--            uint64_t rip;
--            /* Flags (HV_X64_REGISTER_CLASS_FLAGS) */
--            uint64_t rflags;
--        } QEMU_PACKED;
--
--        uint64_t registers[18];
--    };
--    uint8_t reserved[8];
--    /* Volatile XMM registers (HV_X64_REGISTER_CLASS_XMM) */
--    union {
--        struct {
--            struct hv_u128 xmm0;
--            struct hv_u128 xmm1;
--            struct hv_u128 xmm2;
--            struct hv_u128 xmm3;
--            struct hv_u128 xmm4;
--            struct hv_u128 xmm5;
--        } QEMU_PACKED;
--
--        struct hv_u128 xmm_registers[6];
--    };
--    /* Segment registers (HV_X64_REGISTER_CLASS_SEGMENT) */
--    union {
--        struct {
--            struct hv_x64_segment_register es;
--            struct hv_x64_segment_register cs;
--            struct hv_x64_segment_register ss;
--            struct hv_x64_segment_register ds;
--            struct hv_x64_segment_register fs;
--            struct hv_x64_segment_register gs;
--        } QEMU_PACKED;
--
--        struct hv_x64_segment_register segment_registers[6];
--    };
--    /* Misc. control registers (cannot be set via this interface) */
--    uint64_t cr0;
--    uint64_t cr3;
--    uint64_t cr4;
--    uint64_t cr8;
--    uint64_t efer;
--    uint64_t dr7;
--    union hv_x64_pending_interruption_register pending_interruption;
--    union hv_x64_interrupt_state_register interrupt_state;
--    uint64_t instruction_emulation_hints;
--    uint64_t xfem;
--
--    uint8_t reserved1[0x100];
--
--    /* Interrupts injected as part of HvCallDispatchVp. */
--    union hv_vp_register_page_interrupt_vectors interrupt_vectors;
--} QEMU_PACKED;
--
- /* /dev/mshv */
- #define MSHV_CREATE_PARTITION   _IOW(MSHV_IOCTL, 0x00, struct mshv_create_partition)
- #define MSHV_CREATE_VP          _IOW(MSHV_IOCTL, 0x01, struct mshv_create_vp)
-diff --git a/include/hw/hyperv/hvhdk.h b/include/hw/hyperv/hvhdk.h
-index 9e6dcb22f6..b9b76cf93c 100644
---- a/include/hw/hyperv/hvhdk.h
-+++ b/include/hw/hyperv/hvhdk.h
-@@ -9,7 +9,12 @@
- #ifndef HW_HYPERV_HVHDK_H
- #define HW_HYPERV_HVHDK_H
- 
-+#include "hvgdk.h"
-+#include "hvhdk_mini.h"
++                    void *buf = dma_memory_map(s->dma_as, dscr.addr, &dma_len,
++                                               DMA_DIRECTION_FROM_DEVICE,
++                                               attrs);
 +
- #define HV_PARTITION_SYNTHETIC_PROCESSOR_FEATURES_BANKS 1
-+#define HV_VP_REGISTER_PAGE_VERSION_1  1u
-+#define HV_VP_REGISTER_PAGE_MAX_VECTOR_COUNT  7
- 
- struct hv_input_get_partition_property {
-     uint64_t partition_id;
-@@ -441,4 +446,105 @@ typedef struct hv_input_register_intercept_result {
-     union hv_register_intercept_result_parameters parameters;
- } QEMU_PACKED hv_input_register_intercept_result;
- 
-+/* Flags for dirty mask of hv_vp_register_page */
-+enum hv_x64_register_class_type {
-+    HV_X64_REGISTER_CLASS_GENERAL = 0,
-+    HV_X64_REGISTER_CLASS_IP = 1,
-+    HV_X64_REGISTER_CLASS_XMM = 2,
-+    HV_X64_REGISTER_CLASS_SEGMENT = 3,
-+    HV_X64_REGISTER_CLASS_FLAGS = 4,
-+};
++                    if (buf == NULL) {
++                        res = MEMTX_ERROR;
+                         break;
++                    } else {
++                        res = MEMTX_OK;
+                     }
+-                    dscr.addr += s->data_count - begin;
+-                    if (s->data_count == block_size) {
+-                        s->data_count = 0;
+-                        if (s->trnmod & SDHC_TRNS_BLK_CNT_EN) {
+-                            s->blkcnt--;
+-                            if (s->blkcnt == 0) {
+-                                break;
+-                            }
 +
-+union hv_vp_register_page_interrupt_vectors {
-+    uint64_t as_uint64;
-+    struct {
-+        uint8_t vector_count;
-+        uint8_t vector[HV_VP_REGISTER_PAGE_MAX_VECTOR_COUNT];
-+    };
-+};
++                    sdbus_read_data(&s->sdbus, buf, dma_len);
++                    length -= dma_len;
++                    dscr.addr += dma_len;
 +
-+struct hv_vp_register_page {
-+    uint16_t version;
-+    uint8_t isvalid;
-+    uint8_t rsvdz;
-+    uint32_t dirty;
++                    dma_memory_unmap(s->dma_as, buf, dma_len,
++                                     DMA_DIRECTION_FROM_DEVICE, dma_len);
 +
-+    union {
-+        struct {
-+            /* General purpose registers (HV_X64_REGISTER_CLASS_GENERAL) */
-+            union {
-+                struct {
-+                    uint64_t rax;
-+                    uint64_t rcx;
-+                    uint64_t rdx;
-+                    uint64_t rbx;
-+                    uint64_t rsp;
-+                    uint64_t rbp;
-+                    uint64_t rsi;
-+                    uint64_t rdi;
-+                    uint64_t r8;
-+                    uint64_t r9;
-+                    uint64_t r10;
-+                    uint64_t r11;
-+                    uint64_t r12;
-+                    uint64_t r13;
-+                    uint64_t r14;
-+                    uint64_t r15;
-+                } QEMU_PACKED;
++                    if (s->trnmod & SDHC_TRNS_BLK_CNT_EN) {
++                        size_t transfered = s->data_count + dma_len;
 +
-+                uint64_t gp_registers[16];
-+            };
-+            /* Instruction pointer (HV_X64_REGISTER_CLASS_IP) */
-+            uint64_t rip;
-+            /* Flags (HV_X64_REGISTER_CLASS_FLAGS) */
-+            uint64_t rflags;
-+        } QEMU_PACKED;
++                        s->blkcnt -= transfered / block_size;
++                        s->data_count = transfered % block_size;
 +
-+        uint64_t registers[18];
-+    };
-+    uint8_t reserved[8];
-+    /* Volatile XMM registers (HV_X64_REGISTER_CLASS_XMM) */
-+    union {
-+        struct {
-+            struct hv_u128 xmm0;
-+            struct hv_u128 xmm1;
-+            struct hv_u128 xmm2;
-+            struct hv_u128 xmm3;
-+            struct hv_u128 xmm4;
-+            struct hv_u128 xmm5;
-+        } QEMU_PACKED;
++                        if (s->blkcnt == 0) {
++                            s->data_count = 0;
++                            break;
+                         }
+                     }
+                 }
+             } else {
+                 s->prnsts |= SDHC_DOING_WRITE;
+                 while (length) {
+-                    begin = s->data_count;
+-                    if ((length + begin) < block_size) {
+-                        s->data_count = length + begin;
+-                        length = 0;
+-                     } else {
+-                        s->data_count = block_size;
+-                        length -= block_size - begin;
+-                    }
+-                    res = dma_memory_read(s->dma_as, dscr.addr,
+-                                          &s->fifo_buffer[begin],
+-                                          s->data_count - begin,
+-                                          attrs);
+-                    if (res != MEMTX_OK) {
++                    dma_addr_t dma_len = length;
 +
-+        struct hv_u128 xmm_registers[6];
-+    };
-+    /* Segment registers (HV_X64_REGISTER_CLASS_SEGMENT) */
-+    union {
-+        struct {
-+            struct hv_x64_segment_register es;
-+            struct hv_x64_segment_register cs;
-+            struct hv_x64_segment_register ss;
-+            struct hv_x64_segment_register ds;
-+            struct hv_x64_segment_register fs;
-+            struct hv_x64_segment_register gs;
-+        } QEMU_PACKED;
++                    void *buf = dma_memory_map(s->dma_as, dscr.addr, &dma_len,
++                                               DMA_DIRECTION_TO_DEVICE, attrs);
 +
-+        struct hv_x64_segment_register segment_registers[6];
-+    };
-+    /* Misc. control registers (cannot be set via this interface) */
-+    uint64_t cr0;
-+    uint64_t cr3;
-+    uint64_t cr4;
-+    uint64_t cr8;
-+    uint64_t efer;
-+    uint64_t dr7;
-+    union hv_x64_pending_interruption_register pending_interruption;
-+    union hv_x64_interrupt_state_register interrupt_state;
-+    uint64_t instruction_emulation_hints;
-+    uint64_t xfem;
++                    if (buf == NULL) {
++                        res = MEMTX_ERROR;
+                         break;
++                    } else {
++                        res = MEMTX_OK;
+                     }
+-                    dscr.addr += s->data_count - begin;
+-                    if (s->data_count == block_size) {
+-                        sdbus_write_data(&s->sdbus, s->fifo_buffer, block_size);
+-                        s->data_count = 0;
+-                        if (s->trnmod & SDHC_TRNS_BLK_CNT_EN) {
+-                            s->blkcnt--;
+-                            if (s->blkcnt == 0) {
+-                                break;
+-                            }
 +
-+    uint8_t reserved1[0x100];
++                    sdbus_write_data(&s->sdbus, buf, dma_len);
++                    length -= dma_len;
++                    dscr.addr += dma_len;
 +
-+    /* Interrupts injected as part of HvCallDispatchVp. */
-+    union hv_vp_register_page_interrupt_vectors interrupt_vectors;
-+} QEMU_PACKED;
++                    dma_memory_unmap(s->dma_as, buf, dma_len,
++                                     DMA_DIRECTION_TO_DEVICE, dma_len);
 +
- #endif /* HW_HYPERV_HVHDK_H */
++                    if (s->trnmod & SDHC_TRNS_BLK_CNT_EN) {
++                        size_t transfered = s->data_count + dma_len;
++
++                        s->blkcnt -= transfered / block_size;
++                        s->data_count = transfered % block_size;
++
++                        if (s->blkcnt == 0) {
++                            s->data_count = 0;
++                            break;
+                         }
+                     }
+                 }
+             }
++
+             if (res != MEMTX_OK) {
+                 s->data_count = 0;
+                 if (s->errintstsen & SDHC_EISEN_ADMAERR) {
 -- 
-2.34.1
+2.56.0
 
 
