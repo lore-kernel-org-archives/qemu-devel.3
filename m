@@ -4,115 +4,137 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C58BBCA5FFF
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 03:04:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F05FCA5FF1
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 03:44:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xEHwS-0007oX-7T; Tue, 06 Oct 2026 23:03:44 -0400
+	id 1xEIYk-00053d-4y; Tue, 06 Oct 2026 23:43:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
- id 1xEFcN-0004A1-Bb
- for qemu-devel@nongnu.org; Tue, 06 Oct 2026 20:35:57 -0400
-Received: from fout-b7-smtp.messagingengine.com ([202.12.124.150])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1xEFZC-0003a3-J0
+ for qemu-devel@nongnu.org; Tue, 06 Oct 2026 20:32:26 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
- id 1xEFc9-0004qn-72
- for qemu-devel@nongnu.org; Tue, 06 Oct 2026 20:34:37 -0400
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
- by mailfout.stl.internal (Postfix) with ESMTP id 29A531D0010C
- for <qemu-devel@nongnu.org>; Tue,  6 Oct 2026 09:50:47 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
- by phl-compute-03.internal (MEProxy); Tue, 06 Oct 2026 09:50:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alistair23.me;
- h=cc:cc:content-transfer-encoding:content-type:content-type
- :date:date:from:from:in-reply-to:in-reply-to:message-id
- :mime-version:references:reply-to:subject:subject:to:to; s=fm2;
- t=1791294646; x=1791381046; bh=Uj0wNxqrnR2qbFh6X7GTZOclshGEa0jt
- PZ0u931P9sg=; b=MRn8mgupUSaSQvVCPxlKnCln2AohmypHoqFcJycioewRcoid
- QyP8G8YhmKkOHhB1mMk+viKnDGQP4IaMvZ/cDUC1okj1BmzRG9JpPDPdz+5Ux0FD
- F7cvEa3GJK1HkXC17Bdq2pz/j6SC5M19hfzX52gbPlDNG+ufHYNeI98ZGZtpYhZF
- 9AImFhQkTLv9Naq1/BI8kP+WrwI3WOMnefriVoz9R6su0vjHi5UoVMlPnTYR8QbJ
- CJBeoR7uIfp7hbmb3z20NnUnZWMPKDemoOZSOoE6pq8npYUWM/+Z5kcr9Y3a0N5Z
- 8qIViI2fjiwDxgi0GMxHT+cshFSPLSbCwXfXRA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1791294646; x=
- 1791381046; bh=Uj0wNxqrnR2qbFh6X7GTZOclshGEa0jtPZ0u931P9sg=; b=x
- /ykshM4yIj5ZW6zqMbap+GkqxqXf/S1hvr6RHPTqkIYKOir3Qm7Itj+d42JmKIgY
- TSqBOwFIioSvQAWfJIp8+lm/ThrBpv5VI6hb6AqDqZm9kY+grE05Ygw+Op3rauB1
- gmx8RRxcECCe6oul4Y6vdvSIffobyfGWLm/j/ITUoZTkrSMJZNAaQXCX4kNctrOf
- Aevb4Jr1ywFY8l8Zo8V7l2k4WMMFSknkHVWXEsAyEMkM6LLJd7cCuZJeLOFiv7pv
- 07Dnv+xLf7asC+5G+R3+oO0b+HlbOaRhS12YtczlRvavcHgsIjA47OYnhD9gk45P
- 9HIVUxF/r6P20IowbM2zQ==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
- repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
- action=sign d=alistair23.me a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1791294646; d=alistair23.me;
- mf=PGFsaXN0YWlyQGFsaXN0YWlyMjMubWU+;
- rt=PHFlbXUtZGV2ZWxAbm9uZ251Lm9yZz4=;
- s=fm2:rsa-sha256:LeFkytNguNAduVIbQT+7dAnDKPTs6R0DHd3+u4vDPZ72h7V
- AWC7FcjcnuXLTS7EhmIvqjAr5RWLxv+PNthMBe1CZQkI6B6q0ELE6X6ZV3CdN+SK
- 7Q1DUv99ILvn18V39MXsG+yjPXcRhqoTQSh8+veiq0/5cUDOGOvF4X/Lal8jCPIe
- WBHSGUVCiRgcpxYdCjv3nBM12GS3WoMjWMG5OogxFRY9d9Q+BMSgJzzwzfHd41NR
- xtxATZeW3BQEUoEQQnomoe+XRD1uqRjFacHqSxIglGSyE6NLmNoylQtMCbLXy9Bz
- ABTKl9tgwvRWClqNhgFx+h9xDXo61rXyuKE4OlA==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
- repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
- action=mi-m=1; hc=13;
- hn=cc,content-transfer-encoding,content-type,date,feedback-id,
- from,in-reply-to,message-id,mime-version,references,subject,to,
- user-agent;
-Message-Instance: m=1;
- h=sha256:MvPiQJfik46Q8I2mSVYvWHLlXPEsNd9U5ZCsRDGbgTk=:Uj0wNxqrnR2qbFh6X7GTZOclshGEa0jtPZ0u931P9sg=;
-X-ME-Sender: <xms:tvzEakzizIM1Kw7dHg85hYADWX0FeW4_LvgdO2wKPDGpwIM2CDb5gw>
- <xme:tvzEatNXKcXC0Lw7BCb49CnZ2Pc1squG0YGhNy3E2RkTssgO-_uxK9_3UqMallEm6
- paEeSbcOpQ72xVn5C7Xou-huSir3M9OMB1JzP9rkTkuSBKmZN7Eot_8>
-X-ME-Received: <xmr:tvzEaqkmholI0-GigiamDHsIReMMNCtva1pFq7qrU0nZxQSzaFMFu6VmB5XqpAx24wIonJxEJkGF>
-X-ME-Proxy-Cause: dmFkZTFOHIuVClSPo0iZNPqxqCyEH9GEAZ6xmYJcSoj4v5hQZhej11xpHX3iPXaOncVGZj
- JaduPlB5cB5vzFqtRqJiB9JNVLBa1YFlCH9Z8QVUuBqgl2VmY9H+/VYTeAwD2wNu33k3pY
- KDZ3ix60HCcVmsnO1bO4uElUtt+fDvch9R5UV+0pvAD2W5WralZxO/R9XbgOQWw1q6Bstj
- IDhzJPaIgse/vXAtPlfV/CMbgTbrX6cMep6rfPkJ0VQWXG1u1h3wzwxyzhCAUf6ikJxNG8
- EJ0pi8vTbBI01dzWvIXTDo+d/GrWqaTv/tw5mzZaRt4Ndevlt1jQm8jmKX3glrLE/KOFqZ
- qvGc9c/5BdLe2TZGnmm11T769N+GCGWvGFHeodWjTdRnWqmnqOJBp4i2pQ/uNaAZHPVp0p
- QYEeKV2pGyUn8AMmtZ+zMPO1wkL8tZpH1S/MF7NpM9H840VNN8C5lORfX6snPMHdU6U/eb
- 5hQJsm/4nauIsfeaQhyZpeatWni6JfmMX4kPgeqphP+sq8vNSZdsmt/Y82vgWqCfDwELCx
- X2v3DpH+4/6skbYovcGEYhB78bI9e7z5NlfWN7Z1EOKWn2RyfMmw3nlED63O5XwbNp80Ze
- eqU3xtnDevFCbo+TH6Dk6IGhaJDXFnQE1df/KATD/fZ22hnKNTcD1MyOu9Lg
-X-ME-Proxy: <xmx:tvzEaiQCSFiAnMkMglarXsWCjvO8qF8wDEiAxgcsqP0vjp2p2Hg-tg>
- <xmx:tvzEapU9zEJyw7X-fgnn-WSQHFO4m6dcX500MNUohuYfaa8LnwzcSw>
- <xmx:tvzEamL9cWMqTbber0pWD0ffxJhLB3g0goyc5ZGv7Vf5iyurr0Rpmg>
- <xmx:tvzEap0nLcfhZxf_9Xn8tx3OOghWERscOz-4sRfNLYn_eET-zswDOA>
- <xmx:tvzEam0ubolTNVLpUQCWLxlCctDiBDIISjUMjmLqocs57PcN7XD6IzVN>
-Feedback-ID: ifd214418:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 6 Oct 2026 09:50:38 -0400 (EDT)
-Message-ID: <c3afd961430a46e27647959efd6ea1096d36602a.camel@alistair23.me>
-Subject: Re: [PATCH] target/riscv: Check Svnapot PTE before updating A/D bits
-From: Alistair <alistair@alistair23.me>
-To: dodochicha <kevincheng60303@gmail.com>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com, 
- liwei1518@gmail.com, daniel.barboza@oss.qualcomm.com, 
- zhiwei_liu@linux.alibaba.com, chao.liu@processmission.com
-Date: Tue, 06 Oct 2026 23:50:34 +1000
-In-Reply-To: <20261005115916.21196-1-kevincheng60303@gmail.com>
-References: <20261005115916.21196-1-kevincheng60303@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.62.0 (by Flathub.org) 
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1xEFYl-0003yR-DU
+ for qemu-devel@nongnu.org; Tue, 06 Oct 2026 20:31:11 -0400
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 696HelCo1538675
+ for <qemu-devel@nongnu.org>; Tue, 6 Oct 2026 18:26:21 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=qcppdkim1; bh=jD17LJdVd2X
+ 3CdnLia9agfv8941rUVRDu8/mH/+YD4Q=; b=KRjwvwLgfyWsNUoODiYqENq5/Z1
+ fytpwNBSAL6HzOvuHg1uIZ5Yr75yaNX3MpFxoK/jmDc5FRHU6zOOB6REbdZrMbpR
+ nEoQ65ugKFgev9WL+3cHWH0F0B/duzdN/4i0qt+vCkYgMViIIrBu+y7tZ+fkp0gj
+ P2Du4wrOAwseleZ+tV6WZVHSOJBYkLAs+HzCEXoDoq5i8FFVXWTFf8QeDCT5vb07
+ uL9UIt+uTzQ+HsfjMY1ffN1FdwHKlvEFnL6FqYSi1HgS7dd08SJaakzEryofE1kD
+ VFnKZgtdLTa6ShKCjSbgcQn7HVRmheRfo0TmXPWm0uKXCbySi3d4VFnfV9w==
+Received: from mail-dy1-f199.google.com (mail-dy1-f199.google.com
+ [74.125.82.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h54620muq-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 06 Oct 2026 18:26:21 +0000 (GMT)
+Received: by mail-dy1-f199.google.com with SMTP id
+ 5a478bee46e88-33c35f5ca6cso6276973eec.1
+ for <qemu-devel@nongnu.org>; Tue, 06 Oct 2026 11:26:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1791311180; x=1791915980; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=jD17LJdVd2X3CdnLia9agfv8941rUVRDu8/mH/+YD4Q=;
+ b=g9X9scWsQLCq6OztEojrp8qgGN6e4FfPPC2SvcdthePXkKtf8d/J4K0srhulrhjt8w
+ 1fAhu24bqMghu2N51DRrGMPVDRB4PRaD/QxXDoVKv8glBeaNvXJdY/opqGGSKN1D0DgH
+ o6G83JJhw8b0Be3QHT2YkSiyUJrlDv7foGryZz7psSvAR2vtYftob/E73/yV1H2L26Ru
+ Ft5z0jLoDOlD2ESPuX6vtRByfFFVoWnX4vUfacIR4bNJjMkKDww6sFK3s/Z/IjXHKEmU
+ qRoLM+ixbay07K8dg5cht65uFwRbO6XSpQ/FiAARaXKDvwOGKp/VKKx98lRhqh9V95t7
+ jAWg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1791311180; x=1791915980;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=jD17LJdVd2X3CdnLia9agfv8941rUVRDu8/mH/+YD4Q=;
+ b=Q7HHtVhB6lWeAgkCHot26Szu2a+R/++Ddf3hxzpIJWRC+NC/r/I+HCouAbazTfknQs
+ ygNqV5LdPCOeT+Q/1+a30pVUennOokUWplEnE+LLMqqL/Hu3bC+5u0vxmxrvhhYRKpDG
+ i68Kqs8wpIKr2JIdkrOatv5xSZtgEFbWi1M0Gjk8lsIAyxfxVsSd1rZvxVOJOyNY98Qr
+ veaZLHezD/KthM5g5pNaIuvFeSJmjheysJ26Di+E7DU6EKsHun8Wnmq/eRDWgqfpBJwa
+ Bjo9yUQSCYX56a35Dosm7IQ2TWjikRK6PFtoxZmJ6q1cz7cYsV0PvhzjQntM/8qjdx2O
+ J2nQ==
+X-Gm-Message-State: AFq9FYJ0bGvSdjDyO3kAkmeZXTjQzI5HhvektNq4A9LzN9Ka8IkYOcqo
+ nUGG2XwYRcSzwy2lZzMddHHXxW2csjAYgC8vBrar09yMKbUBaqXHlLhPYLFtkRyv5UVu3PnTxls
+ BxV0DQTUgy/W6XOuMr9ZpzdeCgDYoqIjnPPy6iK6lTugtNcjOfm8Q0RNKGfZb9avK7Q==
+X-Gm-Gg: AYBFou0Oh9X6FUsNxs87i1ZOpPEIwtQvEVZVIQrKjmWPRJWtmVj9VWsG0Ksx/D64LBc
+ hQV0Hln5JAycAxq9nut4xAy3qSKz4JVVmq0L67OyVcFiSV6mpj+FXMimFEIhIPSKlvJU6F2qk5j
+ NIENiPRmwV4DC/EGgx0Cn6LID3DffzEDnMDwYDMuXtjghuFqcuiu2gHiEmgESvsdSpdNQssL716
+ +rhYrIYcLGM2zM1BOjddxbM2yeBVD1fpxxaQKoR5TpGAlFm0AWgg9aGbdVB8beD44EAMfhlvMom
+ 6rz3msIUlsXHUP+Igv5sEQCVVbsTwHS1TtRHEPDGk/OKTKsjW4C2DxpgML94qqeRaR+uZKNYleU
+ uX4jyeQ2KfrIKEySy3Bb5f15kVm/zzBjNz3PBGggWgJ6u9QfqwR2tvA2AG44k
+X-Received: by 2002:a05:7301:f0c:b0:342:39f5:f9c5 with SMTP id
+ 5a478bee46e88-3514e0a8fd8mr2214744eec.18.1791311180244; 
+ Tue, 06 Oct 2026 11:26:20 -0700 (PDT)
+X-Received: by 2002:a05:7301:f0c:b0:342:39f5:f9c5 with SMTP id
+ 5a478bee46e88-3514e0a8fd8mr2214719eec.18.1791311179660; 
+ Tue, 06 Oct 2026 11:26:19 -0700 (PDT)
+Received: from debian.qualcomm.com (192-80-163-190.dyn.novuscom.net.
+ [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-3515aff5dd6sm242567eec.26.2026.10.06.11.26.18
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 06 Oct 2026 11:26:19 -0700 (PDT)
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH 1/2] meson.build: export TARGET_ARCH_VARIANT in target config
+Date: Tue,  6 Oct 2026 18:25:57 +0000
+Message-ID: <20261006182558.151956-2-pierrick.bouvier@oss.qualcomm.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20261006182558.151956-1-pierrick.bouvier@oss.qualcomm.com>
+References: <20261006182558.151956-1-pierrick.bouvier@oss.qualcomm.com>
 MIME-Version: 1.0
-Received-SPF: pass client-ip=202.12.124.150;
- envelope-from=alistair@alistair23.me; helo=fout-b7-smtp.messagingengine.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-GUID: wEFBA1p0htqMIuZDDssQm92EZavWLpYR
+X-Authority-Analysis: v=2.4 cv=ZZiIpcVA c=1 sm=1 tr=0 ts=6ac53d4d cx=c_pps
+ a=cFYjgdjTJScbgFmBucgdfQ==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
+ a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22 a=EUspDBNiAAAA:8
+ a=cG8ItAKBDvZcF1xHM40A:9 a=scEy_gLbYbu1JhEsrz4S:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA2MDA3MyBTYWx0ZWRfX0SszFjMfrWoe
+ vXNcA0XVjbQFf+piVJ+/OOuPYIEYvyNVcH0NwlsbBxAt06eUzKgDgUX5haJJ2U+a/MkItZKwNAc
+ teApay/do+xGmZKjM1MbgyMy5RCwKt0=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA2MDA3MyBTYWx0ZWRfX+rpW/vlm0uBQ
+ KmYLaOqJdWNZDRh89cYpo1HirWhbvWFy0S8Dzx+FT6gVorwdmXa3QK91ByFo2fSNJn8CDX711XC
+ 04f6sXK3nlWxteK71BJ2ZMaoEK1Jag/rXOcx7/Tw/7nkX2+9olpjgGBBMH8xJ7I+ARs275a/GIg
+ g55Z0rjBNDuNRCU4+CLTztn7tT5OVjmeEdmY7NcZb2OWusLOmZwLRq7VsmtLlgsmMDD4sgLX5xC
+ MjNtcevFpKkhwapcK0ui2Ie34pS2HANTdECMgAoqGj0FRvPbw3syAZVTn6Zmicnb8r9H+Vw7fjo
+ sQQRT7TREcF48rFyvIyuJNMBxsd6PNot+6rOE/Z2c+51WyQxUO83tSVqsQi4Rc/l1QonMluC2kK
+ WXpd8Vo5h5EarveDluJO3DcAkK0f01f5hBtPDeEQVNIO7gFFqgWEILkLBPJj+4r7UQQr3p5HWkU
+ 5xebEBzvP54nNzgAzUQ==
+X-Proofpoint-ORIG-GUID: wEFBA1p0htqMIuZDDssQm92EZavWLpYR
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-10-06_05,2026-10-06_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 spamscore=0 priorityscore=1501 impostorscore=0 bulkscore=0
+ phishscore=0 lowpriorityscore=0 suspectscore=0 clxscore=1015 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2610060073
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -129,69 +151,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 2026-10-05 at 19:59 +0800, dodochicha wrote:
-> Reserved Svnapot PTE encodings must raise a page fault without
-> modifying the PTE. Currently the A/D bits may be updated before the
-> Svnapot encoding is validated.
->=20
-> Move the Svnapot validation before the A/D update so reserved PTEs
-> fault without changing the PTE.
->=20
-> Signed-off-by: dodochicha <kevincheng60303@gmail.com>
+For now, TARGET_ARCH only contains 32 vs 64 bit arch. The variants,
+based on endianness, are accessible through TARGET_NAME. However,
+TARGET_NAME is a string, and thus can't be concatenated to generate code
+and retrieve matching SYS_EMU_TARGET enum entry.
+Thus, export this information in TARGET_ARCH_VARIANT as an unquoted
+identifier.
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+There is one more subtlety, user binaries have extra targets that are
+not present in SYS_EMU_TARGET, like armeb.
+Thus, for user binaries, simply export TARGET_ARCH.
 
-Alistair
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+---
+ meson.build | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-> ---
-> =C2=A0target/riscv/tcg/cpu_helper.c | 14 +++++++-------
-> =C2=A01 file changed, 7 insertions(+), 7 deletions(-)
->=20
-> diff --git a/target/riscv/tcg/cpu_helper.c
-> b/target/riscv/tcg/cpu_helper.c
-> index 07d9222652..105f2f1927 100644
-> --- a/target/riscv/tcg/cpu_helper.c
-> +++ b/target/riscv/tcg/cpu_helper.c
-> @@ -1403,6 +1403,13 @@ static int get_physical_address(CPURISCVState
-> *env, hwaddr *physical,
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return sstack_page ? TRA=
-NSLATE_PMP_FAIL : TRANSLATE_FAIL;
-> =C2=A0=C2=A0=C2=A0=C2=A0 }
-> =C2=A0
-> +=C2=A0=C2=A0=C2=A0 if (riscv_cpu_cfg(env)->ext_svnapot && (pte & PTE_N))=
- {
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 napot_bits =3D ctzl(ppn) + 1;
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if ((i !=3D (levels - 1)) || =
-(napot_bits !=3D 4)) {
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 retur=
-n TRANSLATE_FAIL;
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
-> +=C2=A0=C2=A0=C2=A0 }
-> +
-> =C2=A0=C2=A0=C2=A0=C2=A0 target_ulong updated_pte =3D pte;
-> =C2=A0
-> =C2=A0=C2=A0=C2=A0=C2=A0 /*
-> @@ -1473,13 +1480,6 @@ static int get_physical_address(CPURISCVState
-> *env, hwaddr *physical,
-> =C2=A0=C2=A0=C2=A0=C2=A0 /* For superpage mappings, make a fake leaf PTE =
-for the TLB's
-> benefit. */
-> =C2=A0=C2=A0=C2=A0=C2=A0 target_ulong vpn =3D addr >> PGSHIFT;
-> =C2=A0
-> -=C2=A0=C2=A0=C2=A0 if (riscv_cpu_cfg(env)->ext_svnapot && (pte & PTE_N))=
- {
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 napot_bits =3D ctzl(ppn) + 1;
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if ((i !=3D (levels - 1)) || =
-(napot_bits !=3D 4)) {
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 retur=
-n TRANSLATE_FAIL;
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
-> -=C2=A0=C2=A0=C2=A0 }
-> -
-> =C2=A0=C2=A0=C2=A0=C2=A0 napot_mask =3D (1 << napot_bits) - 1;
-> =C2=A0=C2=A0=C2=A0=C2=A0 *physical =3D (((ppn & ~napot_mask) | (vpn & nap=
-ot_mask) |
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 (vpn & (((target_ulong)1 << ptshift) -=
- 1))
+diff --git a/meson.build b/meson.build
+index cae1591cd28..9bcfe84daba 100644
+--- a/meson.build
++++ b/meson.build
+@@ -3288,7 +3288,14 @@ default_targets = 'CONFIG_DEFAULT_TARGETS' in config_host
+ actual_target_dirs = []
+ fdt_required = []
+ foreach target : target_dirs
+-  config_target = { 'TARGET_NAME': target.split('-')[0] }
++  target_name = target.split('-')[0]
++  config_target = { 'TARGET_NAME': target_name }
++  if target.endswith('linux-user')
++    config_target += { 'TARGET_ARCH_VARIANT': 'TARGET_ARCH' }
++  else
++    config_target += { 'TARGET_ARCH_VARIANT': target_name.to_upper() }
++  endif
++
+   if target.endswith('linux-user')
+     if host_os != 'linux'
+       if default_targets
+@@ -3372,7 +3379,7 @@ foreach target : target_dirs
+       # do nothing
+     elif ignored.contains(k)
+       # do nothing
+-    elif k == 'TARGET_ARCH'
++    elif k == 'TARGET_ARCH' or k == 'TARGET_ARCH_VARIANT'
+       config_target_data.set(k, v.to_upper())
+     elif k == 'TARGET_BASE_ARCH'
+       # Note that TARGET_BASE_ARCH ends up in config-target.h but it is
+-- 
+2.43.0
+
 
