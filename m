@@ -4,71 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5823CA5FF1
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 09:10:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57837CA5FF1
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 09:10:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xENL7-0003Ue-5s; Wed, 07 Oct 2026 04:49:29 -0400
+	id 1xENGM-00035Y-JA; Wed, 07 Oct 2026 04:44:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xEJoA-0000sY-SX
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 01:03:37 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1xEJAD-0002uQ-R4
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 00:22:21 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xEJo9-0004m1-70
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 01:03:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1791349392;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=dJmy/26wtIG5PBMzxzq6pUIv+M+jbJJbV13LYhoOPD0=;
- b=eDVQl0+3vOy4cUUxyx+2kS5N2Od0MNWR0vW8/yzxS3fhKL+6v+sBCw/rX4AWBmLMYhrHc5
- VU9DP4XfdOZlO2vt2YhzotYMNsTKarLVN5qRdxK+H8bJ6grv1bRtTE34JIN7VHUZ1q3rKS
- z8p8loKL00I2oQx9TTKYsAaFU1eOcVY=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-269-RjL8D_stOhanitfnRVzj8A-1; Tue,
- 06 Oct 2026 04:36:32 -0400
-X-MC-Unique: RjL8D_stOhanitfnRVzj8A-1
-X-Mimecast-MFC-AGG-ID: RjL8D_stOhanitfnRVzj8A_1791275791
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4F4CA1805A22; Tue,  6 Oct 2026 08:36:31 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.2])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 07DCA1800579; Tue,  6 Oct 2026 08:36:31 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id A0E2721E6A04; Tue, 06 Oct 2026 10:36:28 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: John Snow <jsnow@redhat.com>
-Cc: qemu-devel@nongnu.org,  Pierrick Bouvier
- <pierrick.bouvier@oss.qualcomm.com>,  Michael Roth <michael.roth@amd.com>
-Subject: Re: [PATCH 05/11] docs/qapi-code-gen: add "Details" docs subsection
-In-Reply-To: <20261001172239.2825745-6-jsnow@redhat.com> (John Snow's message
- of "Thu, 1 Oct 2026 13:22:32 -0400")
-References: <20261001172239.2825745-1-jsnow@redhat.com>
- <20261001172239.2825745-6-jsnow@redhat.com>
-Date: Tue, 06 Oct 2026 10:36:28 +0200
-Message-ID: <87cxtndy43.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1xEJA8-0000Sm-CA
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 00:21:55 -0400
+Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 696A3dtW033683
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Tue, 6 Oct 2026 19:03:39 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=+OJohLtqmK6leIfUbaL7MvukqS43JIid+JFbOyzzLNQ=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=From:Message-ID:To:Subject:Date;
+ s=rs20250326; t=1791281019; v=1;
+ b=ih4MC+e8fHkOphsxEbsbEjrowRdRUi1EoM8PmWrRzmVdC4lGKhBNTGrAnBajdUgh
+ WhiyRQvbG8SmQ6hypmpAQbAPR2Z97pqgCCufclZl+e/4RWDzohrFD5TjI3WiAekn
+ 7iIZAMYJlyja9orkd/5ernsuOpqbJE6r/1exRhZA3LP+cChYwxa1rYv/fzxbPQui
+ JHYikPN8X4mqfsyoJAZvLuV01PpxxWJWW1nPtAiA+TcLATHbcOpx39YhCsV5uJ5s
+ 065V48zYvCVPOrOzyd6oydIQOblBlAtnohgDPTvhSEpRGjQhZS9MhGVQLbxq3Edw
+ wpHf7q53wGCYvZuTlNlfSQ==
+Message-ID: <c9e3523e-a2ca-4187-8274-225f2c667c53@rsg.ci.i.u-tokyo.ac.jp>
+Date: Tue, 6 Oct 2026 19:03:38 +0900
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v12 16/21] migration: add incoming migration failure
+ notifiers
+To: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>, qemu-devel@nongnu.org
+Cc: vsementsov@yandex-team.ru, clg@redhat.com, mark.kanda@oracle.com,
+ bchaney@akamai.com, mst@redhat.com, sgarzare@redhat.com,
+ peterx@redhat.com, philmd@oss.qualcomm.com,
+ maciej.szmigiero@oracle.com, dongli.zhang@oracle.com, den@openvz.org,
+ dwmw2@infradead.org, farosas@suse.de
+References: <20261005-up-vsock-vhost-v5-v12-0-40162390c68a@virtuozzo.com>
+ <20261005-up-vsock-vhost-v5-v12-16-40162390c68a@virtuozzo.com>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20261005-up-vsock-vhost-v5-v12-16-40162390c68a@virtuozzo.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -85,54 +78,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-John Snow <jsnow@redhat.com> writes:
-
-> Mostly, this is just adding a heading and explaining that arbitrary
-> rST formatting is allowed in this section.
->
-> Note: The QAPI parser still refers to these sections internally as
-> "PLAIN",
-
-Really?
-
->          but I wanted to name this documentation section after the
-> eventual, true name for the section. It is effectively only an
-> implementation detail at this point.
->
-> Signed-off-by: John Snow <jsnow@redhat.com>
+On 2026/10/06 0:00, Andrey Drobyshev wrote:
+> A device may take over a resource from the source in post_load(), e.g.
+> vhost-vsock acquires the device ownership on a CPR target.  If the
+> incoming migration fails afterwards, there's currently no way for the
+> device to give that resource back before the source is told about the
+> failure over the return path and resumes, or before the target exits.
+> 
+> Add a notifier list for that, called from the failure path of
+> process_incoming_migration_co() before migration_incoming_state_destroy().
+> 
+> Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 > ---
->  docs/devel/qapi-code-gen.rst | 11 +++++++++--
->  1 file changed, 9 insertions(+), 2 deletions(-)
->
-> diff --git a/docs/devel/qapi-code-gen.rst b/docs/devel/qapi-code-gen.rst
-> index fcb52ce157e..8fc75488019 100644
-> --- a/docs/devel/qapi-code-gen.rst
-> +++ b/docs/devel/qapi-code-gen.rst
-> @@ -1035,8 +1035,15 @@ detailing a relevant error condition.  For example::
->   #     - Any other error returns a GenericError.
->  
->  
-> -In other sections, the text is formatted, and rST markup can be
-> -used.
-> +Details
-> +^^^^^^^
+>   include/migration/misc.h |  7 +++++++
+>   migration/migration.c    | 23 +++++++++++++++++++++++
+>   2 files changed, 30 insertions(+)
+> 
+> diff --git a/include/migration/misc.h b/include/migration/misc.h
+> index 019717f4cda..08d110750fc 100644
+> --- a/include/migration/misc.h
+> +++ b/include/migration/misc.h
+> @@ -112,6 +112,13 @@ void migration_add_notifier_modes(NotifierWithReturn *notify,
+>    */
+>   void migration_remove_notifier(NotifierWithReturn *notify);
+>   
+> +/*
+> + * Incoming side: @notify is called when an incoming migration fails,
+> + * before the target dies or before the source is told about the failure.
+> + */
+> +void migration_incoming_add_failure_notifier(Notifier *notify);
+> +void migration_incoming_remove_failure_notifier(Notifier *notify);
 > +
-> +Details sections are comprised of one or more paragraphs of rST
-> +formatted text, but otherwise are not marked up with any QAPI-specific
-> +syntax.
+>   void migration_file_set_error(int ret, Error *err);
+>   
+>   /* True if incoming migration entered POSTCOPY_INCOMING_DISCARD */
+> diff --git a/migration/migration.c b/migration/migration.c
+> index fab7949fe11..55ea1e019fa 100644
+> --- a/migration/migration.c
+> +++ b/migration/migration.c
+> @@ -71,6 +71,8 @@
+>   #define INMIGRATE_DEFAULT_EXIT_ON_ERROR true
+>   
+>   static GSList *migration_state_notifiers[MIG_MODE__MAX];
+> +static NotifierList incoming_failure_notifiers =
+> +    NOTIFIER_LIST_INITIALIZER(incoming_failure_notifiers);
+>   
+>   /* Messages sent on the return path from destination to source */
+>   enum mig_rp_message_type {
+> @@ -818,6 +820,17 @@ fail:
+>       migrate_set_state(&mis->state, MIGRATION_STATUS_ACTIVE,
+>                         MIGRATION_STATUS_FAILED);
+>       migrate_error_propagate(s, local_err);
+> +
+> +    /*
+> +     * Allow the devices which have registered their callbacks for
+> +     * migration target failure to undo the changes they may have
+> +     * done in post_load().
+> +     *
+> +     * Do that before migration_incoming_state_destroy() reports the
+> +     * failure over the return path (if present) and before the exit()
+> +     * below.
+> +     */
+> +    notifier_list_notify(&incoming_failure_notifiers, NULL);
 
-Feels awkward.  You're trying to define you're talking about, but what
-you're talking about is distinguished by absence of syntax, which makes
-it harder to nail down.
+This invokes the callbacks after migrate_set_state(...FAILED) emits the 
+target’s QMP event. Without return-path enabled, the source can already 
+be POSTMIGRATE, so a management application may react to that event can 
+resume it before ownership is released, causing VHOST_SET_OWNER to fail 
+with EBUSY. The callbacks may be invoked before publishing FAILED.
 
-I can't see how to do this better right now.  I'll come back to it.
+Regards,
+Akihiko Odaki
 
->          In general, this text contains in-depth explanations of the
-> +definition being documented and may include various rST admonitions
-> +like ``.. seealso::``, ``.. note::``, etc. This is also the section
-> +where QMP usage examples should be placed.
->  
->  QMP Examples can be added by using the ``.. qmp-example::`` directive.
->  In its simplest form, this can be used to contain a single QMP code
+>       migration_incoming_state_destroy();
+>   
+>       if (mis->exit_on_error) {
+> @@ -1590,6 +1603,16 @@ void migration_add_notifier(NotifierWithReturn *notify,
+>       migration_add_notifier_mode(notify, func, MIG_MODE_NORMAL);
+>   }
+>   
+> +void migration_incoming_add_failure_notifier(Notifier *notify)
+> +{
+> +    notifier_list_add(&incoming_failure_notifiers, notify);
+> +}
+> +
+> +void migration_incoming_remove_failure_notifier(Notifier *notify)
+> +{
+> +    notifier_remove(notify);
+> +}
+> +
+>   void migration_remove_notifier(NotifierWithReturn *notify)
+>   {
+>       if (notify->notify) {
+> 
 
 
