@@ -4,90 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF927CA5FF1
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 08:53:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9CF9CA5FFF
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 08:53:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xENIZ-0007SP-Pk; Wed, 07 Oct 2026 04:46:52 -0400
+	id 1xENCu-0001es-Cq; Wed, 07 Oct 2026 04:41:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <narimansayed28@gmail.com>)
- id 1xEJsp-0001cE-GZ
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 01:08:32 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <narimansayed28@gmail.com>)
- id 1xEJsn-0005JO-9h
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 01:08:03 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-4a172eb31f0so11859575e9.1
- for <qemu-devel@nongnu.org>; Tue, 06 Oct 2026 22:08:00 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xEIjY-0006lN-AF
+ for qemu-devel@nongnu.org; Tue, 06 Oct 2026 23:54:46 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xEIjM-0003BI-6D
+ for qemu-devel@nongnu.org; Tue, 06 Oct 2026 23:54:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1791345243;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=9nwNhbSo70/X0tJPmtDCKCPQvZwR26DjNXeNb2q93IA=;
+ b=WEwuTwhQ4ByrUV3o/R5M765SvhV9yQNXiSGOvEgeWD6w9o3+NQsNR+5OFf4hHVIfmbvyIE
+ hpVaO/6UHY5MJl/9mtj5EajTJAiVAy7TFVbNE2spyzOaB3j9Gk8KxQ0OJJyzw8xyUfumvq
+ crhGLhcJj/WXHF5L34x7cJS++fCK/Ig=
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-260-bp19xN5IOCm6Z6Xauof5vg-1; Tue, 06 Oct 2026 14:20:53 -0400
+X-MC-Unique: bp19xN5IOCm6Z6Xauof5vg-1
+X-Mimecast-MFC-AGG-ID: bp19xN5IOCm6Z6Xauof5vg_1791310853
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-51c26012cd0so55198341cf.0
+ for <qemu-devel@nongnu.org>; Tue, 06 Oct 2026 11:20:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1791349679; x=1791954479; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=5Ltu2h4mQNH63wNh6b4t2KW06UJSusNDf0EeH5Va9VI=;
- b=f003dV1hu/ZNbwx1PCA2ykJGlFsrhrWSf21Lv5qVqa16slIc8VglOaNFTYzmppyaH8
- +uUhQcaN0vEeOXyWZUfPfkQAx35HuNPVXsEQLDAdBFVEiPRAeY4zw4CaBT4FHig47t9u
- XKQ9y9yp0KQ4zo3qoI6NDDNCsmjF6/rbpdAtzHjULGDxE/DxJuYLjv2RtwBFlXvxDg8r
- YFOFJmRM4FM71ve4gtzPwYyQS/1TdEVgYtuxpBxbck/zqGy+OG6ij3C/xJMtabfUhrMa
- CdCnK2b1CX92QobyYJEttdjhaErjQ7mFKDwSy5++CYSZrMTRVg0bxZaz/cMMyFt0gAVI
- 3vjQ==
+ d=redhat.com; s=google; t=1791310853; x=1791915653; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=9nwNhbSo70/X0tJPmtDCKCPQvZwR26DjNXeNb2q93IA=;
+ b=eb7X5PgthJtPt9H2G5hu5nLqD1uZvEdQWEqi4ZTzRDOAe19vKqkC8P99UysCaSOboM
+ v5cGv+g2gvbLZv65ad2BC0mqFvLQ3HlS5HEi3XNN5Qx3ou1L/WLue7hofmiLeF9aueex
+ zzo5g3KFUKshTugF9e8caSoWzl2EEQ87HIyIf9/TCqG9JMA1M4JhidykMJG6Ob3uSJ71
+ jm1UGGB7XyZAs7pU9cI8LxbSoX+vCH4RcqZSfhudnCInjChuQ8PHSz4fX8dyzLk5Ixdo
+ DEnms05jm4JPLSmgY1qC7EI65JyTxwLJFHyoPhSETp0vYIeQKhtRuutgoYvtwhJnqnOI
+ SckQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791349679; x=1791954479;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=5Ltu2h4mQNH63wNh6b4t2KW06UJSusNDf0EeH5Va9VI=;
- b=1SXjUHgN+pehUJ/xpTdziXdMnRBO8fp8P07izZgcIj5ANYT36Mk6MMXkMqJfokzSyM
- U0hbtadKdVngOCPl+XF6y+MMhDX+5jdXvoTKbinInnifuQTkTQlGfdPgphmT8M1lNRRp
- 6MQVRb7UFuLBidqAFXYPOMsvTOUhkmZrMiB8+BVoeNxgff7tkCiQBTNpw92z6j4JDDpO
- mOGZO/K2fWdK5EHhN4G8tA8EOI3J7+BqWxBOcCQIwU4TQNpugM3Vl5VTb4MSHUfFQZde
- gHkMpSx7huir7IqZEZADLOz5760xxicAbgTseXDNZlYfjcMsvM7REnkSKevqyieAHHaZ
- Js3Q==
-X-Gm-Message-State: AFuF++lmYN3EWHoAO9cbelaFPsX8YfPyPJoteCp7xtdRgBtVlN47/sZr
- bEP4sYg1SmCt8dsEcE/ZQslf6Vfw9Ixa+HZ7Fm8WV8yNcKGY9I9ODPFMhWkrgaURhdE=
-X-Gm-Gg: AYBFou3H7V996+sa4GrkviTv9blINWoaf8hu+D+ZjD4sgntZx5f4REaienE8TpmhRFw
- 1yFcPZq1vFHkWuqCgEywpkrmXZMyM3FJ5jnjDaOS51ZPCuNl+Q+IdfwJe/esM+pS3aXTn29s4nk
- wOlUGVqrwDIGdm6E929U8b/c3mGYfuZDcy5raltB5XznzijsC7GGuTr3W5d30DRBSlwea6EZkIy
- ojve5ufo7UbGEWZW11t86Q6gSa+gOSir291mIM+0AM92SqB1Mvbxib5z86rYUv5o+c/OFPUvVNi
- t6NQrfguHERtqBr5FfqtmjxTFmUZHzHz0ibnXf8qFNPPsyhyK3q0GQQ0HG9cJJ+xTrXVSEeDUo3
- Uaz1fjXgO+ZsmGi+9Z3jH/cVnihmx7R9HVxUMwVdqjOQr3sdyhohRuO7pdVwA8DfzMS4IbGrePN
- sngtWpF1O0mR9zHBte+6QnIAZHfuqabEsOTKdH/naAN3KNTt1uM3DeFcCEvl0KtH7g4KhGyEGVe
- QH/Phc2+CLYc/ODvLT3hAcwKw==
-X-Received: by 2002:a05:600c:810c:b0:49f:ff73:9971 with SMTP id
- 5b1f17b1804b1-4a180420274mr12578265e9.18.1791349679023; 
- Tue, 06 Oct 2026 22:07:59 -0700 (PDT)
-Received: from DESKTOP-2SK3BJA.localdomain ([197.49.190.197])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a17f795f29sm33359315e9.11.2026.10.06.22.07.57
+ d=1e100.net; s=20260707; t=1791310853; x=1791915653;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=9nwNhbSo70/X0tJPmtDCKCPQvZwR26DjNXeNb2q93IA=;
+ b=Io0wzZHqIfooL6lxtP7f4c9qFV586Mg3nEjZdyat2XIX/B/TWcRdJ1j2KHSUq2Rqve
+ vIHYmcZPF6I6Ej0RjQlmIM+AWZYOZh3IrO2LzaWRDqm05MKaJlKIlZ/5OfgYQE4ztfnh
+ xBzjzEV7taP1Ejew8MzQ0yrzJwK3XPAQaJSL5LwHWe/JF9Y3yKnw1EQxKgahh5yFLyH1
+ XQx+/Jj1OHik+XcwxQGYhaQZHfKsWPvrqIwgOfWmMG1uI8IijiIB7cAliRuyiAxbM0uu
+ KmbaqyCoYemQG4H1V24LawPxg7R5ANbPHWT1fDnaFqUj1S4stvKNyNihbksk/TQALwUl
+ EGQg==
+X-Gm-Message-State: AFuF++kY9C4Xv14vidW6zVEfbIbEv5426dMG1IbOI/RVRVyYP/jp/b+c
+ /eToY8XMwQcksSH/9AccPwZE3xbj6peLMVuwOlYrco7Oa4YdqZAZCjdAzb8IAZA033H0dPgr76N
+ vH4qBPDVv0Jau9+K8rBts4BEQ1FFoxN3gd6mvSmgxn7V5PBzjd8DGOoVp0fFDq6cxvNP/8/C0i0
+ QIxIfkPDYjoacobOV0jxE54MbXEhN9HSKD986LKQ==
+X-Gm-Gg: AYBFou3NSlz2HeNl1eHEHyhj99oRy1tdhmB++/+GJMys7qT/OGEVMVueQky1aPp9BEj
+ mkLm7N3FMZJ+3BUqrNc7ZzYbprSrBW7dIoAR91wRBX6xgWnMBAYcDJ7+oSWjiScc3S34ZF3ao0o
+ AgApoDhm1MnzLbAqiL7VfLcJZ2LwoOK6+ufG+aqk3VFtQQDLBHU94WII68RXXIvj+jgkYFdnD5d
+ feogTmt6kFP7DBSDyFm5C9j3BxLja2LWyrNWs7i53tQOzaflyWnRhMxiowR6VYfoR90hyPz6am2
+ SHm0dCwbwxFCgb0WmNZEtiU48fQ/n+2vwsM+H61IEF252B/qB5ccrbFYJhdg66zcJOl8hJ0=
+X-Received: by 2002:a05:622a:6f12:10b0:535:70c4:9a92 with SMTP id
+ d75a77b69052e-53570c49d02mr9959391cf.72.1791310852815; 
+ Tue, 06 Oct 2026 11:20:52 -0700 (PDT)
+X-Received: by 2002:a05:622a:6f12:10b0:535:70c4:9a92 with SMTP id
+ d75a77b69052e-53570c49d02mr9958911cf.72.1791310852225; 
+ Tue, 06 Oct 2026 11:20:52 -0700 (PDT)
+Received: from localhost ([142.188.212.246]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-53571f19a98sm1962751cf.3.2026.10.06.11.20.51
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 06 Oct 2026 22:07:58 -0700 (PDT)
-From: Nariman Sayed <narimansayed28@gmail.com>
+ Tue, 06 Oct 2026 11:20:51 -0700 (PDT)
+From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Jason Wang <jasowangio@gmail.com>, "Michael S . Tsirkin" <mst@redhat.com>,
- Nariman Sayed <narimansayed28@gmail.com>
-Subject: [PATCH v2 1/3] net/tap: add tap_fd_get_mtu() to query host tap MTU
-Date: Wed,  7 Oct 2026 08:07:16 +0300
-Message-Id: <20261007050718.926-2-narimansayed28@gmail.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20261007050718.926-1-narimansayed28@gmail.com>
-References: <20260816043451.2547-1-narimansayed28@gmail.com>
- <20261007050718.926-1-narimansayed28@gmail.com>
+Cc: peterx@redhat.com, Fabiano Rosas <farosas@suse.de>,
+ Akash Kulhalli <akulhall@redhat.com>, Juraj Marcin <jmarcin@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH v2 3/7] migration: Fix socket listen backlog
+Date: Tue,  6 Oct 2026 14:20:42 -0400
+Message-ID: <20261006182046.3767283-4-peterx@redhat.com>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20261006182046.3767283-1-peterx@redhat.com>
+References: <20261006182046.3767283-1-peterx@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=narimansayed28@gmail.com; helo=mail-wm1-x330.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
+X-Spam_bar: --
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,138 +119,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a helper function to read the host tap device's configured
-MTU via SIOCGIFMTU. Since this ioctl requires a socket rather than
-the tap character device fd itself, a separate control socket is
-opened to perform the query, following the same pattern used by
-net/can/can_socketcan.c.
+QEMU incoming side may have set a wrong listen() backlog.  After the
+support of multifd + postcopy now we have four possibilities on setting the
+backlog, some of them are wrong:
 
-This is implemented for Linux only, with stub implementations
-returning -1 for BSD, Solaris, and the tap-stub backend, matching
-the existing pattern used by tap_fd_get_ifname() and
-tap_fd_set_steering_ebpf() in those files.
+  Vanilla:            1 (correct)
+  Multifd:            N (wrong, should be N+1)
+  Preempt:            2 (correct)
+  Multifd+Preempt:    N (wrong, should be N+2)
 
-This is a preparatory patch; the function is not yet called from
-anywhere.
+No real report for this, found by code observation only.  Logically the
+backlog (pending accept requests on destination on the listening sockets)
+needs to be the maximum of possible channels.  Otherwise if the accept
+queue full on destination, source QEMU may hit connection errors.
 
-Signed-off-by: Nariman Sayed <narimansayed28@gmail.com>
+Cc: Daniel P. Berrangé <berrange@redhat.com>
+Fixes: 0705e56496 ("multifd: Use number of channels as listen backlog")
+Fixes: e274188612 ("migration: enable multifd and postcopy together")
+Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- net/tap-bsd.c     |  5 +++++
- net/tap-linux.c   | 30 ++++++++++++++++++++++++++++++
- net/tap-solaris.c |  5 +++++
- net/tap-stub.c    |  5 +++++
- net/tap_int.h     |  1 +
- 5 files changed, 46 insertions(+)
+ migration/socket.c | 25 ++++++++++++++++++-------
+ 1 file changed, 18 insertions(+), 7 deletions(-)
 
-diff --git a/net/tap-bsd.c b/net/tap-bsd.c
-index c39daf9385..17cedccf9e 100644
---- a/net/tap-bsd.c
-+++ b/net/tap-bsd.c
-@@ -264,6 +264,11 @@ int tap_fd_get_ifname(int fd, char *ifname)
-     return -1;
+diff --git a/migration/socket.c b/migration/socket.c
+index f57f1a8e7c..31bfa1eeeb 100644
+--- a/migration/socket.c
++++ b/migration/socket.c
+@@ -139,21 +139,32 @@ socket_incoming_migration_end(void *opaque)
+     object_unref(OBJECT(listener));
  }
  
-+int tap_fd_get_mtu(int fd)
++static int socket_get_max_channels(void)
 +{
-+    return -1;
-+}
++    /* The main channel is always wanted */
++    int num = 1;
 +
- int tap_fd_set_steering_ebpf(int fd, int prog_fd)
- {
-     return -1;
-diff --git a/net/tap-linux.c b/net/tap-linux.c
-index 3cd7d26710..23a10151c1 100644
---- a/net/tap-linux.c
-+++ b/net/tap-linux.c
-@@ -34,6 +34,7 @@
- #include "qapi/error.h"
- #include "qemu/error-report.h"
- #include "qemu/cutils.h"
-+#include "qemu/sockets.h"
- 
- #define PATH_NET_TUN "/dev/net/tun"
- 
-@@ -346,6 +347,35 @@ int tap_fd_get_ifname(int fd, char *ifname)
-     return 0;
- }
- 
-+int tap_fd_get_mtu(int fd)
-+{
-+    struct ifreq ifr;
-+    int s, ret, mtu;
-+
-+    memset(&ifr, 0, sizeof(ifr));
-+    if (tap_fd_get_ifname(fd, ifr.ifr_name) != 0) {
-+        return -1;
++    if (migrate_multifd()) {
++        num += migrate_multifd_channels();
 +    }
 +
-+    s = qemu_socket(AF_INET, SOCK_DGRAM, 0);
-+    if (s < 0) {
-+        error_report("could not create control socket: %s",
-+                      strerror(errno));
-+        return -1;
++    if (migrate_postcopy_preempt()) {
++        /* The preempt channel */
++        num += 1;
 +    }
 +
-+    ret = ioctl(s, SIOCGIFMTU, &ifr);
-+    if (ret != 0) {
-+        error_report("SIOCGIFMTU ioctl() failed: %s", strerror(errno));
-+        close(s);
-+        return -1;
-+    }
-+
-+    mtu = ifr.ifr_mtu;
-+    close(s);
-+    return mtu;
++    return num;
 +}
 +
- int tap_fd_set_steering_ebpf(int fd, int prog_fd)
+ void socket_connect_incoming(SocketAddress *saddr, Error **errp)
  {
-     if (ioctl(fd, TUNSETSTEERINGEBPF, (void *) &prog_fd) != 0) {
-diff --git a/net/tap-solaris.c b/net/tap-solaris.c
-index 8704b1084b..d3bd6e6b48 100644
---- a/net/tap-solaris.c
-+++ b/net/tap-solaris.c
-@@ -266,6 +266,11 @@ int tap_fd_get_ifname(int fd, char *ifname)
-     return -1;
- }
+     QIONetListener *listener = qio_net_listener_new();
+     MigrationIncomingState *mis = migration_incoming_get_current();
+     size_t i;
+-    int num = 1;
++    int num = socket_get_max_channels();
  
-+int tap_fd_get_mtu(int fd)
-+{
-+    return -1;
-+}
-+
- int tap_fd_set_steering_ebpf(int fd, int prog_fd)
- {
-     return -1;
-diff --git a/net/tap-stub.c b/net/tap-stub.c
-index 6aa60d96ad..756ce882a7 100644
---- a/net/tap-stub.c
-+++ b/net/tap-stub.c
-@@ -91,6 +91,11 @@ int tap_fd_get_ifname(int fd, char *ifname)
-     return -1;
- }
+     qio_net_listener_set_name(listener, "migration-socket-listener");
  
-+int tap_fd_get_mtu(int fd)
-+{
-+    return -1;
-+}
-+
- int tap_fd_set_steering_ebpf(int fd, int prog_fd)
- {
-     return -1;
-diff --git a/net/tap_int.h b/net/tap_int.h
-index dc4f484006..360d61c889 100644
---- a/net/tap_int.h
-+++ b/net/tap_int.h
-@@ -45,6 +45,7 @@ int tap_fd_set_vnet_be(int fd, int vnet_is_be);
- int tap_fd_enable(int fd);
- int tap_fd_disable(int fd);
- int tap_fd_get_ifname(int fd, char *ifname);
-+int tap_fd_get_mtu(int fd);
- int tap_fd_set_steering_ebpf(int fd, int prog_fd);
- 
- #endif /* NET_TAP_INT_H */
+-    if (migrate_multifd()) {
+-        num = migrate_multifd_channels();
+-    } else if (migrate_postcopy_preempt()) {
+-        num = RAM_CHANNEL_MAX;
+-    }
+-
+     if (qio_net_listener_open_sync(listener, saddr, num, errp) < 0) {
+         object_unref(OBJECT(listener));
+         return;
 -- 
-2.34.1
+2.55.0
 
 
