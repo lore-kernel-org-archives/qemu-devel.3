@@ -4,113 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40FB0CA5FF1
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51EBBCA6009
 	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 08:39:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xEN9f-0000JH-4N; Wed, 07 Oct 2026 04:37:45 -0400
+	id 1xEN8f-0005OA-1f; Wed, 07 Oct 2026 04:36:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
- id 1xEI81-0001nO-9b; Tue, 06 Oct 2026 23:15:56 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1xEI57-0001IB-0S
+ for qemu-devel@nongnu.org; Tue, 06 Oct 2026 23:12:49 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
- id 1xEI7p-0002GT-JS; Tue, 06 Oct 2026 23:15:29 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 696I5NCe2622476; Tue, 6 Oct 2026 20:13:27 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=XAn3Zc
- iBCAjHGN4Y5X3V1Ro/Ny2o/92hOsAUije3E0A=; b=o9EyD0rWJCFBnPq/mgfI43
- UragH2UFq5e14r5TivlwFBfVP80ANyVhUQq6dRdZyTP/kMXVRukSmwaw78EVwqr2
- ij76M2GMtYYcXk+1C4PAA9dApTeXgCvCdNTzNWgMd7jIaF7FHhvqNwQajkZvinWi
- b7f42gssWZgO7BoVy5PWNlpElufiui+q/xnsahfOguaLxfE4VhAICneUI6QNO9ni
- dFUHEzYW6ZYT05d9IAtDXXZxx4ADDy3rXNx5UrX/m22ePYO1D7/Ha2a4Mzxxlo7i
- OzvKIenI9M98M132x9EKq2ES7lUHcSE61BTFNndoFHyBCFX9HI7xHa2F8JhpDL4A
- ==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4h2scrj4dj-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Tue, 06 Oct 2026 20:13:27 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 696I2Oec642052; Tue, 6 Oct 2026 20:13:26 GMT
-Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4h3cdvuqrr-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 06 Oct 2026 20:13:26 +0000 (GMT)
-Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
- [10.241.53.102])
- by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 696KDPTJ33423944
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 6 Oct 2026 20:13:25 GMT
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5359558056;
- Tue,  6 Oct 2026 20:13:25 +0000 (GMT)
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 937D35803F;
- Tue,  6 Oct 2026 20:13:24 +0000 (GMT)
-Received: from [9.61.251.167] (unknown [9.61.251.167])
- by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Tue,  6 Oct 2026 20:13:24 +0000 (GMT)
-Message-ID: <e3261ca6-e7fc-451b-bad4-8732bfb2e096@linux.ibm.com>
-Date: Tue, 6 Oct 2026 13:13:24 -0700
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1xEI4z-0001C6-BM
+ for qemu-devel@nongnu.org; Tue, 06 Oct 2026 23:12:34 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1791342722;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=UUpuq8kGZVhpW7rdFIIKKgacW+psg4/ICzoFgyy6TBA=;
+ b=gHNOSTd89O3TCGeuNlTqUEfd6Sp/vEEaWsnKvxuaVanP1RGMZE5Q4ZbZfYyEy2R1o2qzto
+ VgOBy+0ZWazijbcc/HUM5/IIV7KDGjZyadmCbaUpstE8X4qzttZhP0aOqT7sg2ABncZ07J
+ EA3Oudxpa/2BfOCwXiOZTJ+xy87gRUw=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-113-0_gdHdaPNq6b3JDfHOFTJA-1; Tue,
+ 06 Oct 2026 16:56:47 -0400
+X-MC-Unique: 0_gdHdaPNq6b3JDfHOFTJA-1
+X-Mimecast-MFC-AGG-ID: 0_gdHdaPNq6b3JDfHOFTJA_1791320207
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A7BC6195E909; Tue,  6 Oct 2026 20:56:46 +0000 (UTC)
+Received: from redhat.com (headnet05.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.117])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0B1C03001D31; Tue,  6 Oct 2026 20:56:44 +0000 (UTC)
+Date: Tue, 6 Oct 2026 21:56:41 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ Akash Kulhalli <akulhall@redhat.com>, Juraj Marcin <jmarcin@redhat.com>
+Subject: Re: [PATCH v2 3/7] migration: Fix socket listen backlog
+Message-ID: <asVgieiXH1aieDak@redhat.com>
+References: <20261006182046.3767283-1-peterx@redhat.com>
+ <20261006182046.3767283-4-peterx@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v12 15/17] s390x/pci: Provide each zpci device with a
- unique stable bus "path"
-To: Konstantin Shkolnyy <kshk@linux.ibm.com>, mjrosato@linux.ibm.com
-Cc: farman@linux.ibm.com, richard.henderson@linaro.org, iii@linux.ibm.com,
- david@kernel.org, cohuck@redhat.com, pasic@linux.ibm.com,
- borntraeger@linux.ibm.com, qemu-s390x@nongnu.org, qemu-devel@nongnu.org
-References: <20261006001643.420929-1-kshk@linux.ibm.com>
- <20261006001643.420929-16-kshk@linux.ibm.com>
-Content-Language: en-US
-From: Farhan Ali <alifm@linux.ibm.com>
-In-Reply-To: <20261006001643.420929-16-kshk@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA2MDA4MCBTYWx0ZWRfXywYE3LfistKK
- ldad9gXUo8rX3VWT42hEo5AXn1cj3Z+VUR6qGfPamnPHS0z9m/2HkaIb2V1eLb1B7RcIvXU1u6G
- QSZhWk+a4Jqgoi8iPeI5Ke/+5ttxlO8=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA2MDA4MCBTYWx0ZWRfX5CPYMLUOePZd
- Vi59ER2hSZfMqbzGmTZVxekrhKv9KmboH3jHAqn+tbwzUCgANYHzWyN2mEsmsOvifHPrUENrDyb
- hsSbiuHrNSmvh6ekpUULs3hEpgoLseNVeG8rxCyI5Mc118p/RqiReKpCDhhl7pXbfjKirP0spoa
- 0RxbR3+YlX4VBa4cjGMgaj0qOKEiQ524eArT0B12V+mgkk7nF5sk9GHxk27q5njEdTRN3SiPQyI
- 1Ww1ZmCY4I/RpRt1m0FdfeXsJy/J+f8EwDBG04qByU1XsuFQTEKxZIEEbvn7EqxIgTB26oD2sni
- D5ZdTiErPfDyR7VNLgIjJo6GZRg2Q+3xBUjv3bd0B33sPt2FY1aXh1wc6bBNw7ltJzLYSWoHaXt
- xcAIs0etRdFRmQr6RD7ACfanhxKSANafmOAkTJenrqRFwUr/YcuWN8NGrjbNMhMKSp9hCaznSYx
- M0LJHVg22LHUxHK4LPQ==
-X-Proofpoint-GUID: tuh_jGaR4RmZDNVze7Q7CExYy__jOrxK
-X-Proofpoint-ORIG-GUID: tuh_jGaR4RmZDNVze7Q7CExYy__jOrxK
-X-Authority-Analysis: v=2.4 cv=B7osQ+tM c=1 sm=1 tr=0 ts=6ac55667 cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8
- a=1OaBWXuRFuCUTItNd-0A:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-10-06_05,2026-10-06_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 bulkscore=0 malwarescore=0 impostorscore=0 phishscore=0
- clxscore=1015 spamscore=0 adultscore=0 lowpriorityscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2610060080
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=alifm@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20261006182046.3767283-4-peterx@redhat.com>
+User-Agent: Mutt/2.4.2 (2026-08-30)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 10
+X-Spam_score: 1.0
+X-Spam_bar: +
+X-Spam_report: (1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,26 +87,53 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Tue, Oct 06, 2026 at 02:20:42PM -0400, Peter Xu wrote:
+> QEMU incoming side may have set a wrong listen() backlog.  After the
+> support of multifd + postcopy now we have four possibilities on setting the
+> backlog, some of them are wrong:
+> 
+>   Vanilla:            1 (correct)
+>   Multifd:            N (wrong, should be N+1)
+>   Preempt:            2 (correct)
+>   Multifd+Preempt:    N (wrong, should be N+2)
+> 
+> No real report for this, found by code observation only.  Logically the
+> backlog (pending accept requests on destination on the listening sockets)
+> needs to be the maximum of possible channels.  Otherwise if the accept
+> queue full on destination, source QEMU may hit connection errors.
 
-On 10/5/2026 5:16 PM, Konstantin Shkolnyy wrote:
-> This is necessary for the follow-on migration support. The new unique
-> UID-based bus "path" is used as part of idstr in the migration stream,
-> making idstr unique and instance_id always 0.
->
-> For migration to succeed, (idstr+instance_id) must match those generated
-> during QEMU start. Without unique idstr, QEMU will generate variable
-> instance_id to distinguish devices, and that instance_id can change
-> if a device is unplugged and plugged back, preventing migration.
->
-> Signed-off-by: Konstantin Shkolnyy<kshk@linux.ibm.com>
+From a robustness POV, we might also consider retrying connections
+if we see a transient failure. Though I'm not sure offhand what
+errrno would result on the client when the accept() queue  is full,
+hopefully there's something distinct.
+
+This would mitigate a risk of DoS from an unauthorized client
+making its own incoming connections concurrently. Such a client
+is not necessarily malicious, as there are monitoring tools or
+port scanners that randomly open connections to TCP listener
+sockets.
+
+> Cc: Daniel P. Berrangé <berrange@redhat.com>
+> Fixes: 0705e56496 ("multifd: Use number of channels as listen backlog")
+> Fixes: e274188612 ("migration: enable multifd and postcopy together")
+> Signed-off-by: Peter Xu <peterx@redhat.com>
 > ---
->   hw/s390x/s390-pci-bus.c | 23 +++++++++++++++++++++++
->   1 file changed, 23 insertions(+)
+>  migration/socket.c | 25 ++++++++++++++++++-------
+>  1 file changed, 18 insertions(+), 7 deletions(-)
 
-Reviewed-by: Farhan Ali <alifm@linux.ibm.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
+
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
 
