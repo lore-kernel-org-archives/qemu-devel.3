@@ -4,108 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C11EFCA5FF1
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 08:37:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 519C0CA5FF1
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 08:37:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xEN99-0007FV-5w; Wed, 07 Oct 2026 04:37:07 -0400
+	id 1xEN5x-0008Ve-Hb; Wed, 07 Oct 2026 04:33:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
- id 1xEI53-0001HN-5l; Tue, 06 Oct 2026 23:12:39 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
- id 1xEI4o-0000kN-5b; Tue, 06 Oct 2026 23:12:28 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 696A5ufd2199189; Tue, 6 Oct 2026 10:57:35 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=ePARvRh9BwVwBuVww
- rYO5ihk2fLbwZAVIHosO3ZqR1E=; b=Ejxw1uMTrbR5wSDyfye83FtH4MtKFl8qz
- ANOOSJVxT6j/bowJC3+qq+8oLW7bHAqxImCy8SL9/u/MhPZK3rW9XcokBzo3yGtT
- wmpRgVlzqw3zyfvbGlKBjScltIngmFhmWRu/EyJvRtJ8QzDUQMuBT+ulBrVUZZJQ
- PVbGhn2thXt41u2QYjSyWtUQ7LiljnbYqWiOAsqGteSpg8t77Ai2nuuDffKx3svC
- ovinmBixELbhEZhpxmec78l06rUeZjMZD5ms6KnvaQHmujJHCKdXMGZQI+DkQevU
- ZUMGr0vGwdRd4HmQtR+gJfDA2pBnMnO+PS0bB8rF+MQyd3tfZnsMw==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4h2r4fxrvm-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Tue, 06 Oct 2026 10:57:34 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 696A6IkW3066172; Tue, 6 Oct 2026 10:57:34 GMT
-Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4h3e8g9d52-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 06 Oct 2026 10:57:34 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
- [10.20.54.102])
- by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 696AvSV129557324
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 6 Oct 2026 10:57:28 GMT
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0027E2004D;
- Tue,  6 Oct 2026 10:57:28 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A78572004B;
- Tue,  6 Oct 2026 10:57:25 +0000 (GMT)
-Received: from li-18a0a34c-33fc-11b2-a85c-d9f1631c5692.ibm.com (unknown
- [9.87.135.85]) by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue,  6 Oct 2026 10:57:25 +0000 (GMT)
-From: Chinmay Rath <rathc@linux.ibm.com>
-To: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, harshpb@linux.ibm.com
-Cc: npiggin@gmail.com, amachhiw@linux.ibm.com, uverma@linux.ibm.com,
- milesg@linux.ibm.com, Chinmay Rath <rathc@linux.ibm.com>
-Subject: [RFC PATCH 8/8] target/ppc: Add DMF Outer-Product accumulate to ACC
- insns
-Date: Tue,  6 Oct 2026 16:26:19 +0530
-Message-ID: <20261006105650.189752-9-rathc@linux.ibm.com>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20261006105650.189752-1-rathc@linux.ibm.com>
-References: <20261006105650.189752-1-rathc@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
+ id 1xEHue-0007hD-7X
+ for qemu-devel@nongnu.org; Tue, 06 Oct 2026 23:01:57 -0400
+Received: from fout-b3-smtp.messagingengine.com ([202.12.124.146])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <alistair@alistair23.me>) id 1xEHuY-0006KQ-3M
+ for qemu-devel@nongnu.org; Tue, 06 Oct 2026 23:01:46 -0400
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+ by mailfout.stl.internal (Postfix) with ESMTP id 65C5E1D00198
+ for <qemu-devel@nongnu.org>; Tue,  6 Oct 2026 11:55:45 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+ by phl-compute-10.internal (MEProxy); Tue, 06 Oct 2026 11:55:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alistair23.me;
+ h=cc:cc:content-transfer-encoding:content-type:content-type
+ :date:date:from:from:in-reply-to:in-reply-to:message-id
+ :mime-version:references:reply-to:subject:subject:to:to; s=fm2;
+ t=1791302145; x=1791388545; bh=09KaVtKvQzYY7G8YgQhLlMPDfNvLW2ct
+ +vvcDgL8rTs=; b=oO9PRiiewuXnKsk57B+ku9sjtQcLwFUvLkejVFudmIcwxMiz
+ hi/xTde4ykCYFVG02uqL1eqx8QEUhsrvzAx2QhQ3JJ+f6uCtNvJP7LZCRVAAJaSd
+ kP8UeUPbz7w1cEJrjIN8/VQll7a6GPP5NwcvaIVD5c5xvew06CAO9zhE+GW5gnKZ
+ rC0HtyRijQa+lSCV52c8jz7jl0TU1NWnzgFog+7uBpW865LTBOObobdcCJbHCfyK
+ i0ACRwDeitio4ajBanJWL9Hn44edUG2EQRr87Pz5V87ByMFP5kTYOEduzKHQ8J7M
+ 8QNCJkfaKeEK/mCReu13vFG8p5eXerTAAEDRKA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:content-type:date:date:feedback-id:feedback-id
+ :from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1791302145; x=
+ 1791388545; bh=09KaVtKvQzYY7G8YgQhLlMPDfNvLW2ct+vvcDgL8rTs=; b=C
+ cNul3ntMyjQCUcc0GfgKSkBqKINQ57N/8hNL49NNXjLRpfL+uPyRx0+p0L09PNh3
+ SV42/J83X9t+hmF2VmbcpL5T4zyckjXo/mdiAmFuATiOj0/rj0L8CJkmovBDHvjH
+ nx88Q0WG2zvpMPQThAfC94I8LCTAYlaUOseNFudjZvEkwWnjLBXniLmtTUDHHZKa
+ HmsPkFpObwK1BDKCTGKikuz/P6GrH3GrPDoCqLPqfd/kXiebL/c2tPisu6azfo32
+ MnBQJK8zkyyvydlAye+xxUbQxoNGwg68ma+629mgrimrASCLe8aypbjkU+hzYKG4
+ KLyVeW4TZcS4q5+NcUhfQ==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+ repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
+ action=sign d=alistair23.me a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1791302145; d=alistair23.me;
+ mf=PGFsaXN0YWlyQGFsaXN0YWlyMjMubWU+;
+ rt=PHFlbXUtZGV2ZWxAbm9uZ251Lm9yZz4=;
+ s=fm2:rsa-sha256:ChusdHYM1m2Wj1n4XBKyYQnjX6VfwSAFQdFi8+fryT+l3P9
+ I2zFsSrfDvCb8cFl2+FJABOpGkrS+YilkXYrQNTNCpYcWpQU3ysVdwUFmHu8ZLrg
+ tUn1yhebB+2lF/wkXSK1k0bvLgy1ZZrK7ZB5EL4qFsHLUjATXm/3EIacoz9JODAK
+ GmsFFIN2RuotTwZAVwuNhQ88kkNOna5BctA6Vp/BmdZwNShV2XjOMhIN3dTE2DzL
+ Q18GrDDH/KI+/MTiOoNMTjPnvNF2/OY2YeY9AAp6tKg0ujCilxvwin/2xuHqU8cG
+ Yh17fPeWtsg20kTaAR291kDjvAFasONlmOAUFOA==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+ repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
+ action=mi-m=1; hc=13;
+ hn=cc,content-transfer-encoding,content-type,date,feedback-id,
+ from,in-reply-to,message-id,mime-version,references,subject,to,
+ user-agent;
+Message-Instance: m=1;
+ h=sha256:wZbeSildOB+adRaE5qk2lJQUkgTFBr03nl5+tWsbhLU=:09KaVtKvQzYY7G8YgQhLlMPDfNvLW2ct+vvcDgL8rTs=;
+X-ME-Sender: <xms:ABrFasHs1onwaSojjFSoJSzq_TffspnM4zQ2BicwbEpaJTRf1wv_IQ>
+ <xme:ABrFau_muESu94Aaqu2_MIDEpJ9z_6gL8omd6f2x4rZLRUjFQBBGwZt7NLg688VH9
+ i9xgFfLM3ZUPF4giDsJwtebOYjyS661Y1mz4e6_qt6RNYkcEJfWOy8>
+X-ME-Received: <xmr:ABrFamIFWzquDSsonANGhKYRGpG0HCnROgcwTsfggeL3lod2fwgkQVy5FCJBW_TQOoxjY_6cfSbsQu2fFQNgR0Q>
+X-ME-Proxy-Cause: dmFkZTF2uB5BkfvHGkM6vVZ5eZxvFEVVqVCsMtE+IDbXhUuaPYspa4gBx87mnymjqXTmml
+ O2zH1M/AIOpH+psVAGUWutHYCsDXS0lXQWOjBUUrydKiTmUonHXP1b1Y1Nxd0eH5PqV1a3
+ ypnPF+RUzTEQrK1NTC0XgIGGFRe0dRyn3Jnhy8jSGojRsuoJp0DtOE2zyz6rirdWxxrpkK
+ 2uHz/dnICJ93FWr5GjDXrZlm1QDp78uajo56Lpx8FNLxWkRTgF1rhhM+1y9y3a1/J1WmiY
+ 08iiYo+0Kev9WnI2yB2ou6fb15Lkj+2NQFGzTHKZcqz5IQrxm9L+MRyk/rbvZPEIecxKCM
+ 6yhF3hn88lAvNCHvM7ch5C5CgZBKC/pD6AXY+c5PrdpgpA8ZPn58E2twYhulKEOGfNZ9NQ
+ 9id3m2q0igcXd8rMdsbCQkA3mvfyTRM5VkVks3niaPWNjcQ6kVOPaPLaBgvmWj7HvUvMMD
+ lvhbVFw8hmxVnLQvOPZgBWpjJF+e+7lAotH8MtFfg2lqoEfN/r3qpsddTQ5WE/ZEZVvCE3
+ a09f7YpUamtUiaYJQw1fSvyDPXXJniugCuFIHErUfw4JvQyJJM+dwzU2/V635nh2k2weSG
+ yEMGpM8ZoWJUEBHFeLp0A9+OuVoiJfpXYtx39Oy65a5NoeuFpaMpABqyJeuQ
+X-ME-Proxy: <xmx:ABrFahZfbcaRxwHtzcy20qdWJwhmEfvKGR0w_aGK1Ti4VPWNhjxjtg>
+ <xmx:ABrFagLEEWUyJP7rd6UXmqRCnuNzLk0wfhLjcUCuDZi1c3aUaVz0tA>
+ <xmx:ABrFanC849YytsdGUjb5sYRyv0CaVSNvXgd9neqlcMm3BGYx_SsY-Q>
+ <xmx:ABrFatpcFfxK4fDpMXh7SeQZvzNWoFRCwylEGHikUwEV7VHY3wAwog>
+ <xmx:ARrFaqUacroqSwih_gvc4yT2y7DgZZVVSFyotW_pnJ4g3tCwdB0vxEEV>
+Feedback-ID: ifd214418:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 6 Oct 2026 11:55:44 -0400 (EDT)
+Message-ID: <a7d69be956ca8dd1d81f92248436fcd9f9ecfd18.camel@alistair23.me>
+Subject: Re: [PATCH v2 11/23] target/riscv: Use vext_ldst_us_notail in
+ vext_ldst_whole
+From: Alistair <alistair@alistair23.me>
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org
+Date: Wed, 07 Oct 2026 01:55:42 +1000
+In-Reply-To: <20260821040404.268123-12-richard.henderson@linaro.org>
+References: <20260821040404.268123-1-richard.henderson@linaro.org>
+ <20260821040404.268123-12-richard.henderson@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: base64
+User-Agent: Evolution 3.62.0 (by Flathub.org) 
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Authority-Analysis: v=2.4 cv=TOPQ2Fla c=1 sm=1 tr=0 ts=6ac4d41f cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8 a=vHorKMG06VLUeFaFf2gA:9
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA2MDA0MiBTYWx0ZWRfX0FUMMC8mnWn3
- RaBg9tQgtb4EKxhOaMzKOTKJW4Eg1l3oJnxpEk0O1nV+Rms1ZJP8p9mq49EE7CIR5457duyxoLI
- /IwOIbVE534mBeRslftGNvjqPfnx3cfqTGen4KAuoeBQdzYQVHYwDm5ZIFLwG3+Htz26XDdrDbF
- 7DSXJ3JYfnryziBO+CIZX+a6L0gH90/yTPWr5QV6mXl665FjNl7x8B4vpAQIVZzdtPMt0/5ESMx
- PbcU06qqdvHuhCIDG5Rx2ge3J74UTScKE96oTG3aYsMqcdqGkcQXJPO9XMPiPPn2CWel38SVfvV
- FVsYRDefMq64retFHJc4GoFti/XJzbezMDj21wr47MeD6ssrB6h1BmayKY6R6F7iii+2Fe5/lBV
- c00MGCifjsla7Q3Jriqq2iOVYj9ru1vtaDGYiwdhHxFvkdGipw7npTQojm0wSHTGbsOhWxKP6yA
- exbyhYaEnGw0SdtD1CA==
-X-Proofpoint-GUID: 81QBH2uo7WuKHKestvKCfE4hGYBS6VJv
-X-Proofpoint-ORIG-GUID: mzdcHorUWQXgDOKRpB8QMsA0sr_HPuDo
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA2MDA0MiBTYWx0ZWRfXy/st6LYj0YMG
- n7U7lRqvVKhoHCR+t4Sre3ZjyMjbbRTEW7XZAMwo1RMVdkCv6FpN8/rECN+7IVOU6gED8MzbdEh
- AK3vI4RHLIu3uuHMPyvwFA65a06GQSQ=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-10-06_03,2026-10-05_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 priorityscore=1501 spamscore=0 adultscore=0 clxscore=1015
- lowpriorityscore=0 impostorscore=0 bulkscore=0 phishscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2610060042
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=rathc@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=202.12.124.146;
+ envelope-from=alistair@alistair23.me; helo=fout-b3-smtp.messagingengine.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,573 +127,137 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-PowerPC ISA 3.2 DMF RFC02653 moves the exisiting VSX Outer-Product
-instructions to the DMF. Add those instructions.
-The instructions have new names now, though their opcode remains exactly
-the same. This is handled using overlapping pattern group in the
-decodetree specification. Since the operations remain logically the same,
-reusing the same helpers. Results now accumulate to the accumulators in
-the DMRs.
-
-Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
----
- target/ppc/fpu_helper.c             |   5 +
- target/ppc/insn32.decode            | 157 ++++++++++++++----
- target/ppc/insn64.decode            | 244 ++++++++++++++++++++--------
- target/ppc/int_helper.c             |   5 +
- target/ppc/translate/dmf-impl.c.inc |  86 ++++++++++
- 5 files changed, 398 insertions(+), 99 deletions(-)
-
-diff --git a/target/ppc/fpu_helper.c b/target/ppc/fpu_helper.c
-index c1bdde9e10..8e211b40b2 100644
---- a/target/ppc/fpu_helper.c
-+++ b/target/ppc/fpu_helper.c
-@@ -3386,6 +3386,11 @@ static float64 extract_bf16(bfloat16 in, float_status *fp_status)
-     return bfloat16_to_float64(in, fp_status);
- }
- 
-+/*
-+ * ISA 3.2 onwards accumulators are assigned in DMRs instead of VSRs.
-+ * However both ppc_acc_t and ppc_dmr_row_t are essentially ppc_vsr_t,
-+ * hence the below helpers work for either.
-+ */
- static void vsxger16(CPUPPCState *env, ppc_vsr_t *a, ppc_vsr_t *b,
-                      ppc_acc_t  *at, uint32_t mask, bool acc,
-                      bool neg_mul, bool neg_acc, extract_f16 extract)
-diff --git a/target/ppc/insn32.decode b/target/ppc/insn32.decode
-index f718d550dc..ff25dfa802 100644
---- a/target/ppc/insn32.decode
-+++ b/target/ppc/insn32.decode
-@@ -1440,41 +1440,128 @@ XXLEQV          111100 ..... ..... ..... 10111010 ...   @XX3
- XXLNAND         111100 ..... ..... ..... 10110010 ...   @XX3
- XXLORC          111100 ..... ..... ..... 10101010 ...   @XX3
- 
--## VSX GER instruction
--
--XVI4GER8        111011 ... -- ..... ..... 00100011 ..-  @XX3_at xa=%xx_xa
--XVI4GER8PP      111011 ... -- ..... ..... 00100010 ..-  @XX3_at xa=%xx_xa
--XVI8GER4        111011 ... -- ..... ..... 00000011 ..-  @XX3_at xa=%xx_xa
--XVI8GER4PP      111011 ... -- ..... ..... 00000010 ..-  @XX3_at xa=%xx_xa
--XVI16GER2       111011 ... -- ..... ..... 01001011 ..-  @XX3_at xa=%xx_xa
--XVI16GER2PP     111011 ... -- ..... ..... 01101011 ..-  @XX3_at xa=%xx_xa
--XVI8GER4SPP     111011 ... -- ..... ..... 01100011 ..-  @XX3_at xa=%xx_xa
--XVI16GER2S      111011 ... -- ..... ..... 00101011 ..-  @XX3_at xa=%xx_xa
--XVI16GER2SPP    111011 ... -- ..... ..... 00101010 ..-  @XX3_at xa=%xx_xa
--
--XVBF16GER2      111011 ... -- ..... ..... 00110011 ..-  @XX3_at xa=%xx_xa
--XVBF16GER2PP    111011 ... -- ..... ..... 00110010 ..-  @XX3_at xa=%xx_xa
--XVBF16GER2PN    111011 ... -- ..... ..... 10110010 ..-  @XX3_at xa=%xx_xa
--XVBF16GER2NP    111011 ... -- ..... ..... 01110010 ..-  @XX3_at xa=%xx_xa
--XVBF16GER2NN    111011 ... -- ..... ..... 11110010 ..-  @XX3_at xa=%xx_xa
--
--XVF16GER2       111011 ... -- ..... ..... 00010011 ..-  @XX3_at xa=%xx_xa
--XVF16GER2PP     111011 ... -- ..... ..... 00010010 ..-  @XX3_at xa=%xx_xa
--XVF16GER2PN     111011 ... -- ..... ..... 10010010 ..-  @XX3_at xa=%xx_xa
--XVF16GER2NP     111011 ... -- ..... ..... 01010010 ..-  @XX3_at xa=%xx_xa
--XVF16GER2NN     111011 ... -- ..... ..... 11010010 ..-  @XX3_at xa=%xx_xa
--
--XVF32GER        111011 ... -- ..... ..... 00011011 ..-  @XX3_at xa=%xx_xa
--XVF32GERPP      111011 ... -- ..... ..... 00011010 ..-  @XX3_at xa=%xx_xa
--XVF32GERPN      111011 ... -- ..... ..... 10011010 ..-  @XX3_at xa=%xx_xa
--XVF32GERNP      111011 ... -- ..... ..... 01011010 ..-  @XX3_at xa=%xx_xa
--XVF32GERNN      111011 ... -- ..... ..... 11011010 ..-  @XX3_at xa=%xx_xa
--
--XVF64GER        111011 ... -- .... 0 ..... 00111011 ..-  @XX3_at xa=%xx_xa_pair
--XVF64GERPP      111011 ... -- .... 0 ..... 00111010 ..-  @XX3_at xa=%xx_xa_pair
--XVF64GERPN      111011 ... -- .... 0 ..... 10111010 ..-  @XX3_at xa=%xx_xa_pair
--XVF64GERNP      111011 ... -- .... 0 ..... 01111010 ..-  @XX3_at xa=%xx_xa_pair
--XVF64GERNN      111011 ... -- .... 0 ..... 11111010 ..-  @XX3_at xa=%xx_xa_pair
-+## DMF and VSX GER instruction
-+
-+{
-+  DMXVI4GER8      111011 ... -- ..... ..... 00100011 ..-  @XX3_at xa=%xx_xa
-+  XVI4GER8        111011 ... -- ..... ..... 00100011 ..-  @XX3_at xa=%xx_xa
-+}
-+{
-+  DMXVI4GER8PP    111011 ... -- ..... ..... 00100010 ..-  @XX3_at xa=%xx_xa
-+  XVI4GER8PP      111011 ... -- ..... ..... 00100010 ..-  @XX3_at xa=%xx_xa
-+}
-+{
-+  DMXVI8GER4      111011 ... -- ..... ..... 00000011 ..-  @XX3_at xa=%xx_xa
-+  XVI8GER4        111011 ... -- ..... ..... 00000011 ..-  @XX3_at xa=%xx_xa
-+}
-+{
-+  DMXVI8GER4PP    111011 ... -- ..... ..... 00000010 ..-  @XX3_at xa=%xx_xa
-+  XVI8GER4PP      111011 ... -- ..... ..... 00000010 ..-  @XX3_at xa=%xx_xa
-+}
-+{
-+  DMXVI16GER2     111011 ... -- ..... ..... 01001011 ..-  @XX3_at xa=%xx_xa
-+  XVI16GER2       111011 ... -- ..... ..... 01001011 ..-  @XX3_at xa=%xx_xa
-+}
-+{
-+  DMXVI16GER2PP   111011 ... -- ..... ..... 01101011 ..-  @XX3_at xa=%xx_xa
-+  XVI16GER2PP     111011 ... -- ..... ..... 01101011 ..-  @XX3_at xa=%xx_xa
-+}
-+{
-+  DMXVI8GER4SPP   111011 ... -- ..... ..... 01100011 ..-  @XX3_at xa=%xx_xa
-+  XVI8GER4SPP     111011 ... -- ..... ..... 01100011 ..-  @XX3_at xa=%xx_xa
-+}
-+{
-+  DMXVI16GER2S    111011 ... -- ..... ..... 00101011 ..-  @XX3_at xa=%xx_xa
-+  XVI16GER2S      111011 ... -- ..... ..... 00101011 ..-  @XX3_at xa=%xx_xa
-+}
-+{
-+  DMXVI16GER2SPP  111011 ... -- ..... ..... 00101010 ..-  @XX3_at xa=%xx_xa
-+  XVI16GER2SPP    111011 ... -- ..... ..... 00101010 ..-  @XX3_at xa=%xx_xa
-+}
-+
-+{
-+  DMXVBF16GER2    111011 ... -- ..... ..... 00110011 ..-  @XX3_at xa=%xx_xa
-+  XVBF16GER2      111011 ... -- ..... ..... 00110011 ..-  @XX3_at xa=%xx_xa
-+}
-+{
-+  DMXVBF16GER2PP  111011 ... -- ..... ..... 00110010 ..-  @XX3_at xa=%xx_xa
-+  XVBF16GER2PP    111011 ... -- ..... ..... 00110010 ..-  @XX3_at xa=%xx_xa
-+}
-+{
-+  DMXVBF16GER2PN  111011 ... -- ..... ..... 10110010 ..-  @XX3_at xa=%xx_xa
-+  XVBF16GER2PN    111011 ... -- ..... ..... 10110010 ..-  @XX3_at xa=%xx_xa
-+}
-+{
-+  DMXVBF16GER2NP  111011 ... -- ..... ..... 01110010 ..-  @XX3_at xa=%xx_xa
-+  XVBF16GER2NP    111011 ... -- ..... ..... 01110010 ..-  @XX3_at xa=%xx_xa
-+}
-+{
-+  DMXVBF16GER2NN  111011 ... -- ..... ..... 11110010 ..-  @XX3_at xa=%xx_xa
-+  XVBF16GER2NN    111011 ... -- ..... ..... 11110010 ..-  @XX3_at xa=%xx_xa
-+}
-+
-+{
-+  DMXVF16GER2     111011 ... -- ..... ..... 00010011 ..-  @XX3_at xa=%xx_xa
-+  XVF16GER2       111011 ... -- ..... ..... 00010011 ..-  @XX3_at xa=%xx_xa
-+}
-+{
-+  DMXVF16GER2PP   111011 ... -- ..... ..... 00010010 ..-  @XX3_at xa=%xx_xa
-+  XVF16GER2PP     111011 ... -- ..... ..... 00010010 ..-  @XX3_at xa=%xx_xa
-+}
-+{
-+  DMXVF16GER2PN   111011 ... -- ..... ..... 10010010 ..-  @XX3_at xa=%xx_xa
-+  XVF16GER2PN     111011 ... -- ..... ..... 10010010 ..-  @XX3_at xa=%xx_xa
-+}
-+{
-+  DMXVF16GER2NP   111011 ... -- ..... ..... 01010010 ..-  @XX3_at xa=%xx_xa
-+  XVF16GER2NP     111011 ... -- ..... ..... 01010010 ..-  @XX3_at xa=%xx_xa
-+}
-+{
-+  DMXVF16GER2NN   111011 ... -- ..... ..... 11010010 ..-  @XX3_at xa=%xx_xa
-+  XVF16GER2NN     111011 ... -- ..... ..... 11010010 ..-  @XX3_at xa=%xx_xa
-+}
-+
-+{
-+  DMXVF32GER      111011 ... -- ..... ..... 00011011 ..-  @XX3_at xa=%xx_xa
-+  XVF32GER        111011 ... -- ..... ..... 00011011 ..-  @XX3_at xa=%xx_xa
-+}
-+{
-+  DMXVF32GERPP    111011 ... -- ..... ..... 00011010 ..-  @XX3_at xa=%xx_xa
-+  XVF32GERPP      111011 ... -- ..... ..... 00011010 ..-  @XX3_at xa=%xx_xa
-+}
-+{
-+  DMXVF32GERPN    111011 ... -- ..... ..... 10011010 ..-  @XX3_at xa=%xx_xa
-+  XVF32GERPN      111011 ... -- ..... ..... 10011010 ..-  @XX3_at xa=%xx_xa
-+}
-+{
-+  DMXVF32GERNP    111011 ... -- ..... ..... 01011010 ..-  @XX3_at xa=%xx_xa
-+  XVF32GERNP      111011 ... -- ..... ..... 01011010 ..-  @XX3_at xa=%xx_xa
-+}
-+{
-+  DMXVF32GERNN    111011 ... -- ..... ..... 11011010 ..-  @XX3_at xa=%xx_xa
-+  XVF32GERNN      111011 ... -- ..... ..... 11011010 ..-  @XX3_at xa=%xx_xa
-+}
-+
-+{
-+  DMXVF64GER      111011 ... -- .... 0 ..... 00111011 ..-  @XX3_at xa=%xx_xa_pair
-+  XVF64GER        111011 ... -- .... 0 ..... 00111011 ..-  @XX3_at xa=%xx_xa_pair
-+}
-+{
-+  DMXVF64GERPP    111011 ... -- .... 0 ..... 00111010 ..-  @XX3_at xa=%xx_xa_pair
-+  XVF64GERPP      111011 ... -- .... 0 ..... 00111010 ..-  @XX3_at xa=%xx_xa_pair
-+}
-+{
-+  DMXVF64GERPN    111011 ... -- .... 0 ..... 10111010 ..-  @XX3_at xa=%xx_xa_pair
-+  XVF64GERPN      111011 ... -- .... 0 ..... 10111010 ..-  @XX3_at xa=%xx_xa_pair
-+}
-+{
-+  DMXVF64GERNP    111011 ... -- .... 0 ..... 01111010 ..-  @XX3_at xa=%xx_xa_pair
-+  XVF64GERNP      111011 ... -- .... 0 ..... 01111010 ..-  @XX3_at xa=%xx_xa_pair
-+}
-+{
-+  DMXVF64GERNN    111011 ... -- .... 0 ..... 11111010 ..-  @XX3_at xa=%xx_xa_pair
-+  XVF64GERNN      111011 ... -- .... 0 ..... 11111010 ..-  @XX3_at xa=%xx_xa_pair
-+}
- 
- ## Cache Management Instructions
- 
-diff --git a/target/ppc/insn64.decode b/target/ppc/insn64.decode
-index de115c1943..bb2fd6c55e 100644
---- a/target/ppc/insn64.decode
-+++ b/target/ppc/insn64.decode
-@@ -129,70 +129,186 @@ PSTFS           000001 10 0--.-- .................. \
- PSTFD           000001 10 0--.-- .................. \
-                 110110 ..... ..... ................     @PLS_D
- 
--## VSX GER instruction
--
--PMXVI4GER8      000001 11 1001 -- - - pmsk:8 ........              \
--                111011 ... -- ..... ..... 00100011 ..-  @MMIRR_XX3
--PMXVI4GER8PP    000001 11 1001 -- - - pmsk:8 ........              \
--                111011 ... -- ..... ..... 00100010 ..-  @MMIRR_XX3
--PMXVI8GER4      000001 11 1001 -- - - pmsk:4 ---- ........         \
--                111011 ... -- ..... ..... 00000011 ..-  @MMIRR_XX3
--PMXVI8GER4PP    000001 11 1001 -- - - pmsk:4 ---- ........         \
--                111011 ... -- ..... ..... 00000010 ..-  @MMIRR_XX3
--PMXVI16GER2     000001 11 1001 -- - - pmsk:2 ------ ........       \
--                111011 ... -- ..... ..... 01001011 ..-  @MMIRR_XX3
--PMXVI16GER2PP   000001 11 1001 -- - - pmsk:2 ------ ........       \
--                111011 ... -- ..... ..... 01101011 ..-  @MMIRR_XX3
--PMXVI8GER4SPP   000001 11 1001 -- - - pmsk:4 ---- ........         \
--                111011 ... -- ..... ..... 01100011 ..-  @MMIRR_XX3
--PMXVI16GER2S    000001 11 1001 -- - - pmsk:2 ------ ........       \
--                111011 ... -- ..... ..... 00101011 ..-  @MMIRR_XX3
--PMXVI16GER2SPP  000001 11 1001 -- - - pmsk:2 ------ ........       \
--                111011 ... -- ..... ..... 00101010 ..-  @MMIRR_XX3
--
--PMXVBF16GER2    000001 11 1001 -- - - pmsk:2 ------ ........ \
--                111011 ... -- ..... ..... 00110011 ..-  @MMIRR_XX3
--PMXVBF16GER2PP  000001 11 1001 -- - - pmsk:2 ------ ........ \
--                111011 ... -- ..... ..... 00110010 ..-  @MMIRR_XX3
--PMXVBF16GER2PN  000001 11 1001 -- - - pmsk:2 ------ ........ \
--                111011 ... -- ..... ..... 10110010 ..-  @MMIRR_XX3
--PMXVBF16GER2NP  000001 11 1001 -- - - pmsk:2 ------ ........ \
--                111011 ... -- ..... ..... 01110010 ..-  @MMIRR_XX3
--PMXVBF16GER2NN  000001 11 1001 -- - - pmsk:2 ------ ........ \
--                111011 ... -- ..... ..... 11110010 ..-  @MMIRR_XX3
--
--PMXVF16GER2     000001 11 1001 -- - - pmsk:2 ------ ........ \
--                111011 ... -- ..... ..... 00010011 ..-  @MMIRR_XX3
--PMXVF16GER2PP   000001 11 1001 -- - - pmsk:2 ------ ........ \
--                111011 ... -- ..... ..... 00010010 ..-  @MMIRR_XX3
--PMXVF16GER2PN   000001 11 1001 -- - - pmsk:2 ------ ........ \
--                111011 ... -- ..... ..... 10010010 ..-  @MMIRR_XX3
--PMXVF16GER2NP   000001 11 1001 -- - - pmsk:2 ------ ........ \
--                111011 ... -- ..... ..... 01010010 ..-  @MMIRR_XX3
--PMXVF16GER2NN   000001 11 1001 -- - - pmsk:2 ------ ........ \
--                111011 ... -- ..... ..... 11010010 ..-  @MMIRR_XX3
--
--PMXVF32GER      000001 11 1001 -- - - -------- .... ymsk:4 \
--                111011 ... -- ..... ..... 00011011 ..-  @MMIRR_XX3_NO_P xa=%xx3_xa
--PMXVF32GERPP    000001 11 1001 -- - - -------- .... ymsk:4 \
--                111011 ... -- ..... ..... 00011010 ..-  @MMIRR_XX3_NO_P xa=%xx3_xa
--PMXVF32GERPN    000001 11 1001 -- - - -------- .... ymsk:4 \
--                111011 ... -- ..... ..... 10011010 ..-  @MMIRR_XX3_NO_P xa=%xx3_xa
--PMXVF32GERNP    000001 11 1001 -- - - -------- .... ymsk:4 \
--                111011 ... -- ..... ..... 01011010 ..-  @MMIRR_XX3_NO_P xa=%xx3_xa
--PMXVF32GERNN    000001 11 1001 -- - - -------- .... ymsk:4 \
--                111011 ... -- ..... ..... 11011010 ..-  @MMIRR_XX3_NO_P xa=%xx3_xa
--
--PMXVF64GER      000001 11 1001 -- - - -------- .... ymsk:2 -- \
--                111011 ... -- ....0 ..... 00111011 ..-  @MMIRR_XX3_NO_P xa=%xx3_xa_pair
--PMXVF64GERPP    000001 11 1001 -- - - -------- .... ymsk:2 -- \
--                111011 ... -- ....0 ..... 00111010 ..-  @MMIRR_XX3_NO_P xa=%xx3_xa_pair
--PMXVF64GERPN    000001 11 1001 -- - - -------- .... ymsk:2 -- \
--                111011 ... -- ....0 ..... 10111010 ..-  @MMIRR_XX3_NO_P xa=%xx3_xa_pair
--PMXVF64GERNP    000001 11 1001 -- - - -------- .... ymsk:2 -- \
--                111011 ... -- ....0 ..... 01111010 ..-  @MMIRR_XX3_NO_P xa=%xx3_xa_pair
--PMXVF64GERNN    000001 11 1001 -- - - -------- .... ymsk:2 -- \
--                111011 ... -- ....0 ..... 11111010 ..-  @MMIRR_XX3_NO_P xa=%xx3_xa_pair
-+## DMF and VSX GER instruction
-+
-+{
-+  PMDMXVI4GER8    000001 11 1001 -- - - pmsk:8 ........              \
-+                  111011 ... -- ..... ..... 00100011 ..-  @MMIRR_XX3
-+  PMXVI4GER8      000001 11 1001 -- - - pmsk:8 ........              \
-+                  111011 ... -- ..... ..... 00100011 ..-  @MMIRR_XX3
-+}
-+{
-+  PMDMXVI4GER8PP  000001 11 1001 -- - - pmsk:8 ........              \
-+                  111011 ... -- ..... ..... 00100010 ..-  @MMIRR_XX3
-+  PMXVI4GER8PP    000001 11 1001 -- - - pmsk:8 ........              \
-+                  111011 ... -- ..... ..... 00100010 ..-  @MMIRR_XX3
-+}
-+{
-+  PMDMXVI8GER4    000001 11 1001 -- - - pmsk:4 ---- ........         \
-+                  111011 ... -- ..... ..... 00000011 ..-  @MMIRR_XX3
-+  PMXVI8GER4      000001 11 1001 -- - - pmsk:4 ---- ........         \
-+                  111011 ... -- ..... ..... 00000011 ..-  @MMIRR_XX3
-+}
-+{
-+  PMDMXVI8GER4PP  000001 11 1001 -- - - pmsk:4 ---- ........         \
-+                  111011 ... -- ..... ..... 00000010 ..-  @MMIRR_XX3
-+  PMXVI8GER4PP    000001 11 1001 -- - - pmsk:4 ---- ........         \
-+                  111011 ... -- ..... ..... 00000010 ..-  @MMIRR_XX3
-+}
-+{
-+  PMDMXVI16GER2   000001 11 1001 -- - - pmsk:2 ------ ........       \
-+                  111011 ... -- ..... ..... 01001011 ..-  @MMIRR_XX3
-+  PMXVI16GER2     000001 11 1001 -- - - pmsk:2 ------ ........       \
-+                  111011 ... -- ..... ..... 01001011 ..-  @MMIRR_XX3
-+}
-+{
-+  PMDMXVI16GER2PP 000001 11 1001 -- - - pmsk:2 ------ ........       \
-+                  111011 ... -- ..... ..... 01101011 ..-  @MMIRR_XX3
-+  PMXVI16GER2PP   000001 11 1001 -- - - pmsk:2 ------ ........       \
-+                  111011 ... -- ..... ..... 01101011 ..-  @MMIRR_XX3
-+}
-+{
-+  PMDMXVI8GER4SPP 000001 11 1001 -- - - pmsk:4 ---- ........         \
-+                  111011 ... -- ..... ..... 01100011 ..-  @MMIRR_XX3
-+  PMXVI8GER4SPP   000001 11 1001 -- - - pmsk:4 ---- ........         \
-+                  111011 ... -- ..... ..... 01100011 ..-  @MMIRR_XX3
-+}
-+{
-+  PMDMXVI16GER2S  000001 11 1001 -- - - pmsk:2 ------ ........       \
-+                  111011 ... -- ..... ..... 00101011 ..-  @MMIRR_XX3
-+  PMXVI16GER2S    000001 11 1001 -- - - pmsk:2 ------ ........       \
-+                  111011 ... -- ..... ..... 00101011 ..-  @MMIRR_XX3
-+}
-+{
-+  PMDMXVI16GER2SPP 000001 11 1001 -- - - pmsk:2 ------ ........       \
-+                  111011 ... -- ..... ..... 00101010 ..-  @MMIRR_XX3
-+  PMXVI16GER2SPP  000001 11 1001 -- - - pmsk:2 ------ ........       \
-+                  111011 ... -- ..... ..... 00101010 ..-  @MMIRR_XX3
-+}
-+
-+{
-+  PMDMXVBF16GER2   000001 11 1001 -- - - pmsk:2 ------ ........ \
-+                   111011 ... -- ..... ..... 00110011 ..-  @MMIRR_XX3
-+  PMXVBF16GER2     000001 11 1001 -- - - pmsk:2 ------ ........ \
-+                   111011 ... -- ..... ..... 00110011 ..-  @MMIRR_XX3
-+}
-+{
-+  PMDMXVBF16GER2PP 000001 11 1001 -- - - pmsk:2 ------ ........ \
-+                   111011 ... -- ..... ..... 00110010 ..-  @MMIRR_XX3
-+  PMXVBF16GER2PP   000001 11 1001 -- - - pmsk:2 ------ ........ \
-+                   111011 ... -- ..... ..... 00110010 ..-  @MMIRR_XX3
-+}
-+{
-+  PMDMXVBF16GER2PN 000001 11 1001 -- - - pmsk:2 ------ ........ \
-+                   111011 ... -- ..... ..... 10110010 ..-  @MMIRR_XX3
-+  PMXVBF16GER2PN   000001 11 1001 -- - - pmsk:2 ------ ........ \
-+                   111011 ... -- ..... ..... 10110010 ..-  @MMIRR_XX3
-+}
-+{
-+  PMDMXVBF16GER2NP 000001 11 1001 -- - - pmsk:2 ------ ........ \
-+                   111011 ... -- ..... ..... 01110010 ..-  @MMIRR_XX3
-+  PMXVBF16GER2NP   000001 11 1001 -- - - pmsk:2 ------ ........ \
-+                   111011 ... -- ..... ..... 01110010 ..-  @MMIRR_XX3
-+}
-+{
-+  PMDMXVBF16GER2NN 000001 11 1001 -- - - pmsk:2 ------ ........ \
-+                   111011 ... -- ..... ..... 11110010 ..-  @MMIRR_XX3
-+  PMXVBF16GER2NN   000001 11 1001 -- - - pmsk:2 ------ ........ \
-+                   111011 ... -- ..... ..... 11110010 ..-  @MMIRR_XX3
-+}
-+
-+{
-+  PMDMXVF16GER2    000001 11 1001 -- - - pmsk:2 ------ ........ \
-+                   111011 ... -- ..... ..... 00010011 ..-  @MMIRR_XX3
-+  PMXVF16GER2      000001 11 1001 -- - - pmsk:2 ------ ........ \
-+                   111011 ... -- ..... ..... 00010011 ..-  @MMIRR_XX3
-+}
-+{
-+  PMDMXVF16GER2PP  000001 11 1001 -- - - pmsk:2 ------ ........ \
-+                   111011 ... -- ..... ..... 00010010 ..-  @MMIRR_XX3
-+  PMXVF16GER2PP    000001 11 1001 -- - - pmsk:2 ------ ........ \
-+                   111011 ... -- ..... ..... 00010010 ..-  @MMIRR_XX3
-+}
-+{
-+  PMDMXVF16GER2PN  000001 11 1001 -- - - pmsk:2 ------ ........ \
-+                   111011 ... -- ..... ..... 10010010 ..-  @MMIRR_XX3
-+  PMXVF16GER2PN    000001 11 1001 -- - - pmsk:2 ------ ........ \
-+                   111011 ... -- ..... ..... 10010010 ..-  @MMIRR_XX3
-+}
-+{
-+  PMDMXVF16GER2NP  000001 11 1001 -- - - pmsk:2 ------ ........ \
-+                   111011 ... -- ..... ..... 01010010 ..-  @MMIRR_XX3
-+  PMXVF16GER2NP    000001 11 1001 -- - - pmsk:2 ------ ........ \
-+                   111011 ... -- ..... ..... 01010010 ..-  @MMIRR_XX3
-+}
-+{
-+  PMDMXVF16GER2NN  000001 11 1001 -- - - pmsk:2 ------ ........ \
-+                   111011 ... -- ..... ..... 11010010 ..-  @MMIRR_XX3
-+  PMXVF16GER2NN    000001 11 1001 -- - - pmsk:2 ------ ........ \
-+                   111011 ... -- ..... ..... 11010010 ..-  @MMIRR_XX3
-+}
-+
-+{
-+  PMDMXVF32GER     000001 11 1001 -- - - -------- .... ymsk:4 \
-+                   111011 ... -- ..... ..... 00011011 ..-  @MMIRR_XX3_NO_P xa=%xx3_xa
-+  PMXVF32GER       000001 11 1001 -- - - -------- .... ymsk:4 \
-+                   111011 ... -- ..... ..... 00011011 ..-  @MMIRR_XX3_NO_P xa=%xx3_xa
-+}
-+{
-+  PMDMXVF32GERPP   000001 11 1001 -- - - -------- .... ymsk:4 \
-+                   111011 ... -- ..... ..... 00011010 ..-  @MMIRR_XX3_NO_P xa=%xx3_xa
-+  PMXVF32GERPP     000001 11 1001 -- - - -------- .... ymsk:4 \
-+                   111011 ... -- ..... ..... 00011010 ..-  @MMIRR_XX3_NO_P xa=%xx3_xa
-+}
-+{
-+  PMDMXVF32GERPN   000001 11 1001 -- - - -------- .... ymsk:4 \
-+                   111011 ... -- ..... ..... 10011010 ..-  @MMIRR_XX3_NO_P xa=%xx3_xa
-+  PMXVF32GERPN     000001 11 1001 -- - - -------- .... ymsk:4 \
-+                   111011 ... -- ..... ..... 10011010 ..-  @MMIRR_XX3_NO_P xa=%xx3_xa
-+}
-+{
-+  PMDMXVF32GERNP   000001 11 1001 -- - - -------- .... ymsk:4 \
-+                   111011 ... -- ..... ..... 01011010 ..-  @MMIRR_XX3_NO_P xa=%xx3_xa
-+  PMXVF32GERNP     000001 11 1001 -- - - -------- .... ymsk:4 \
-+                   111011 ... -- ..... ..... 01011010 ..-  @MMIRR_XX3_NO_P xa=%xx3_xa
-+}
-+{
-+  PMDMXVF32GERNN   000001 11 1001 -- - - -------- .... ymsk:4 \
-+                   111011 ... -- ..... ..... 11011010 ..-  @MMIRR_XX3_NO_P xa=%xx3_xa
-+  PMXVF32GERNN     000001 11 1001 -- - - -------- .... ymsk:4 \
-+                   111011 ... -- ..... ..... 11011010 ..-  @MMIRR_XX3_NO_P xa=%xx3_xa
-+}
-+
-+{
-+  PMDMXVF64GER     000001 11 1001 -- - - -------- .... ymsk:2 -- \
-+                   111011 ... -- ....0 ..... 00111011 ..-  @MMIRR_XX3_NO_P xa=%xx3_xa_pair
-+  PMXVF64GER       000001 11 1001 -- - - -------- .... ymsk:2 -- \
-+                   111011 ... -- ....0 ..... 00111011 ..-  @MMIRR_XX3_NO_P xa=%xx3_xa_pair
-+}
-+{
-+  PMDMXVF64GERPP   000001 11 1001 -- - - -------- .... ymsk:2 -- \
-+                   111011 ... -- ....0 ..... 00111010 ..-  @MMIRR_XX3_NO_P xa=%xx3_xa_pair
-+  PMXVF64GERPP     000001 11 1001 -- - - -------- .... ymsk:2 -- \
-+                   111011 ... -- ....0 ..... 00111010 ..-  @MMIRR_XX3_NO_P xa=%xx3_xa_pair
-+}
-+{
-+  PMDMXVF64GERPN   000001 11 1001 -- - - -------- .... ymsk:2 -- \
-+                   111011 ... -- ....0 ..... 10111010 ..-  @MMIRR_XX3_NO_P xa=%xx3_xa_pair
-+  PMXVF64GERPN     000001 11 1001 -- - - -------- .... ymsk:2 -- \
-+                   111011 ... -- ....0 ..... 10111010 ..-  @MMIRR_XX3_NO_P xa=%xx3_xa_pair
-+}
-+{
-+  PMDMXVF64GERNP   000001 11 1001 -- - - -------- .... ymsk:2 -- \
-+                   111011 ... -- ....0 ..... 01111010 ..-  @MMIRR_XX3_NO_P xa=%xx3_xa_pair
-+  PMXVF64GERNP     000001 11 1001 -- - - -------- .... ymsk:2 -- \
-+                   111011 ... -- ....0 ..... 01111010 ..-  @MMIRR_XX3_NO_P xa=%xx3_xa_pair
-+}
-+{
-+  PMDMXVF64GERNN   000001 11 1001 -- - - -------- .... ymsk:2 -- \
-+                   111011 ... -- ....0 ..... 11111010 ..-  @MMIRR_XX3_NO_P xa=%xx3_xa_pair
-+  PMXVF64GERNN     000001 11 1001 -- - - -------- .... ymsk:2 -- \
-+                   111011 ... -- ....0 ..... 11111010 ..-  @MMIRR_XX3_NO_P xa=%xx3_xa_pair
-+}
- 
- ### Prefixed No-operation Instruction
- 
-diff --git a/target/ppc/int_helper.c b/target/ppc/int_helper.c
-index 86346f5b9a..0a576e4387 100644
---- a/target/ppc/int_helper.c
-+++ b/target/ppc/int_helper.c
-@@ -782,6 +782,11 @@ static int64_t ger_rank2(uint32_t a, uint32_t b, uint32_t mask)
-     return psum;
- }
- 
-+/*
-+ * ISA 3.2 onwards accumulators are assigned in DMRs instead of VSRs.
-+ * However both ppc_acc_t and ppc_dmr_row_t are essentially ppc_vsr_t,
-+ * hence this helpers works for either.
-+ */
- static void xviger(CPUPPCState *env, ppc_vsr_t *a, ppc_vsr_t *b, ppc_acc_t  *at,
-                    uint32_t mask, bool sat, bool acc, do_ger ger)
- {
-diff --git a/target/ppc/translate/dmf-impl.c.inc b/target/ppc/translate/dmf-impl.c.inc
-index 5bc70663f8..87762e79af 100644
---- a/target/ppc/translate/dmf-impl.c.inc
-+++ b/target/ppc/translate/dmf-impl.c.inc
-@@ -167,3 +167,89 @@ static bool trans_DMSETACCZ(DisasContext *ctx, arg_DMSETACCZ *a)
-      */
-     return trans_DMSETDMRZ(ctx, a);
- }
-+
-+static bool do_dm_ger(DisasContext *ctx, arg_MMIRR_XX3 *a,
-+    void (*helper)(TCGv_env, TCGv_ptr, TCGv_ptr, TCGv_ptr, TCGv_i32))
-+{
-+    uint32_t mask;
-+    TCGv_ptr xt, xa, xb;
-+    REQUIRE_INSNS_FLAGS2(ctx, ISA320);
-+    REQUIRE_DM(ctx);
-+    REQUIRE_VSX(ctx);
-+
-+    xt = gen_dmr_ptr(a->xt);
-+    xa = gen_vsr_ptr(a->xa);
-+    xb = gen_vsr_ptr(a->xb);
-+
-+    mask = ger_pack_masks(a->pmsk, a->ymsk, a->xmsk);
-+    helper(tcg_env, xa, xb, xt, tcg_constant_i32(mask));
-+    return true;
-+}
-+
-+TRANS(DMXVI4GER8, do_dm_ger, gen_helper_XVI4GER8)
-+TRANS(DMXVI4GER8PP, do_dm_ger,  gen_helper_XVI4GER8PP)
-+TRANS(DMXVI8GER4, do_dm_ger, gen_helper_XVI8GER4)
-+TRANS(DMXVI8GER4PP, do_dm_ger,  gen_helper_XVI8GER4PP)
-+TRANS(DMXVI8GER4SPP, do_dm_ger, gen_helper_XVI8GER4SPP)
-+TRANS(DMXVI16GER2, do_dm_ger, gen_helper_XVI16GER2)
-+TRANS(DMXVI16GER2PP, do_dm_ger, gen_helper_XVI16GER2PP)
-+TRANS(DMXVI16GER2S, do_dm_ger, gen_helper_XVI16GER2S)
-+TRANS(DMXVI16GER2SPP, do_dm_ger, gen_helper_XVI16GER2SPP)
-+
-+TRANS64(PMDMXVI4GER8, do_dm_ger, gen_helper_XVI4GER8)
-+TRANS64(PMDMXVI4GER8PP, do_dm_ger, gen_helper_XVI4GER8PP)
-+TRANS64(PMDMXVI8GER4, do_dm_ger, gen_helper_XVI8GER4)
-+TRANS64(PMDMXVI8GER4PP, do_dm_ger, gen_helper_XVI8GER4PP)
-+TRANS64(PMDMXVI8GER4SPP, do_dm_ger, gen_helper_XVI8GER4SPP)
-+TRANS64(PMDMXVI16GER2, do_dm_ger, gen_helper_XVI16GER2)
-+TRANS64(PMDMXVI16GER2PP, do_dm_ger, gen_helper_XVI16GER2PP)
-+TRANS64(PMDMXVI16GER2S, do_dm_ger, gen_helper_XVI16GER2S)
-+TRANS64(PMDMXVI16GER2SPP, do_dm_ger, gen_helper_XVI16GER2SPP)
-+
-+TRANS(DMXVBF16GER2, do_dm_ger, gen_helper_XVBF16GER2)
-+TRANS(DMXVBF16GER2PP, do_dm_ger, gen_helper_XVBF16GER2PP)
-+TRANS(DMXVBF16GER2PN, do_dm_ger, gen_helper_XVBF16GER2PN)
-+TRANS(DMXVBF16GER2NP, do_dm_ger, gen_helper_XVBF16GER2NP)
-+TRANS(DMXVBF16GER2NN, do_dm_ger, gen_helper_XVBF16GER2NN)
-+
-+TRANS(DMXVF16GER2, do_dm_ger, gen_helper_XVF16GER2)
-+TRANS(DMXVF16GER2PP, do_dm_ger, gen_helper_XVF16GER2PP)
-+TRANS(DMXVF16GER2PN, do_dm_ger, gen_helper_XVF16GER2PN)
-+TRANS(DMXVF16GER2NP, do_dm_ger, gen_helper_XVF16GER2NP)
-+TRANS(DMXVF16GER2NN, do_dm_ger, gen_helper_XVF16GER2NN)
-+
-+TRANS(DMXVF32GER, do_dm_ger, gen_helper_XVF32GER)
-+TRANS(DMXVF32GERPP, do_dm_ger, gen_helper_XVF32GERPP)
-+TRANS(DMXVF32GERPN, do_dm_ger, gen_helper_XVF32GERPN)
-+TRANS(DMXVF32GERNP, do_dm_ger, gen_helper_XVF32GERNP)
-+TRANS(DMXVF32GERNN, do_dm_ger, gen_helper_XVF32GERNN)
-+
-+TRANS(DMXVF64GER, do_dm_ger, gen_helper_XVF64GER)
-+TRANS(DMXVF64GERPP, do_dm_ger, gen_helper_XVF64GERPP)
-+TRANS(DMXVF64GERPN, do_dm_ger, gen_helper_XVF64GERPN)
-+TRANS(DMXVF64GERNP, do_dm_ger, gen_helper_XVF64GERNP)
-+TRANS(DMXVF64GERNN, do_dm_ger, gen_helper_XVF64GERNN)
-+
-+TRANS64(PMDMXVBF16GER2, do_dm_ger, gen_helper_XVBF16GER2)
-+TRANS64(PMDMXVBF16GER2PP, do_dm_ger, gen_helper_XVBF16GER2PP)
-+TRANS64(PMDMXVBF16GER2PN, do_dm_ger, gen_helper_XVBF16GER2PN)
-+TRANS64(PMDMXVBF16GER2NP, do_dm_ger, gen_helper_XVBF16GER2NP)
-+TRANS64(PMDMXVBF16GER2NN, do_dm_ger, gen_helper_XVBF16GER2NN)
-+
-+TRANS64(PMDMXVF16GER2, do_dm_ger, gen_helper_XVF16GER2)
-+TRANS64(PMDMXVF16GER2PP, do_dm_ger, gen_helper_XVF16GER2PP)
-+TRANS64(PMDMXVF16GER2PN, do_dm_ger, gen_helper_XVF16GER2PN)
-+TRANS64(PMDMXVF16GER2NP, do_dm_ger, gen_helper_XVF16GER2NP)
-+TRANS64(PMDMXVF16GER2NN, do_dm_ger, gen_helper_XVF16GER2NN)
-+
-+TRANS64(PMDMXVF32GER, do_dm_ger, gen_helper_XVF32GER)
-+TRANS64(PMDMXVF32GERPP, do_dm_ger, gen_helper_XVF32GERPP)
-+TRANS64(PMDMXVF32GERPN, do_dm_ger, gen_helper_XVF32GERPN)
-+TRANS64(PMDMXVF32GERNP, do_dm_ger, gen_helper_XVF32GERNP)
-+TRANS64(PMDMXVF32GERNN, do_dm_ger, gen_helper_XVF32GERNN)
-+
-+TRANS64(PMDMXVF64GER, do_dm_ger, gen_helper_XVF64GER)
-+TRANS64(PMDMXVF64GERPP, do_dm_ger, gen_helper_XVF64GERPP)
-+TRANS64(PMDMXVF64GERPN, do_dm_ger, gen_helper_XVF64GERPN)
-+TRANS64(PMDMXVF64GERNP, do_dm_ger, gen_helper_XVF64GERNP)
-+TRANS64(PMDMXVF64GERNN, do_dm_ger, gen_helper_XVF64GERNN)
--- 
-2.55.0
+T24gVGh1LCAyMDI2LTA4LTIwIGF0IDIxOjAzIC0wNzAwLCBSaWNoYXJkIEhlbmRlcnNvbiB3cm90
+ZToKPiBUaGlzIGVsaW1pbmF0ZXMgdGhlIGxhc3QgdXNlIG9mIHByb2JlX3BhZ2VzLgo+IAo+IFNp
+Z25lZC1vZmYtYnk6IFJpY2hhcmQgSGVuZGVyc29uIDxyaWNoYXJkLmhlbmRlcnNvbkBsaW5hcm8u
+b3JnPgoKUmV2aWV3ZWQtYnk6IEFsaXN0YWlyIEZyYW5jaXMgPGFsaXN0YWlyLmZyYW5jaXNAd2Rj
+LmNvbT4KCkFsaXN0YWlyCgo+IC0tLQo+IMKgdGFyZ2V0L3Jpc2N2L3RjZy92ZWN0b3JfaGVscGVy
+LmMgfCAxMTkgKy0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0KPiAtLQo+IMKgMSBmaWxlIGNo
+YW5nZWQsIDMgaW5zZXJ0aW9ucygrKSwgMTE2IGRlbGV0aW9ucygtKQo+IAo+IGRpZmYgLS1naXQg
+YS90YXJnZXQvcmlzY3YvdGNnL3ZlY3Rvcl9oZWxwZXIuYwo+IGIvdGFyZ2V0L3Jpc2N2L3RjZy92
+ZWN0b3JfaGVscGVyLmMKPiBpbmRleCA3NmYzYmFiZWQ2Li43Njk5MDg5NGU1IDEwMDY0NAo+IC0t
+LSBhL3RhcmdldC9yaXNjdi90Y2cvdmVjdG9yX2hlbHBlci5jCj4gKysrIGIvdGFyZ2V0L3Jpc2N2
+L3RjZy92ZWN0b3JfaGVscGVyLmMKPiBAQCAtMTQ5LDUwICsxNDksNiBAQCBzdGF0aWMgaW5saW5l
+IHVpbnQzMl90IHZleHRfbWF4X2VsZW1zKHVpbnQzMl90Cj4gZGVzYywgdWludDMyX3QgbG9nMl9l
+c3opCj4gwqDCoMKgwqAgcmV0dXJuIHNjYWxlIDwgMCA/IHZsZW5iID4+IC1zY2FsZSA6IHZsZW5i
+IDw8IHNjYWxlOwo+IMKgfQo+IMKgCj4gLS8qCj4gLSAqIFRoaXMgZnVuY3Rpb24gY2hlY2tzIHdh
+dGNocG9pbnQgYmVmb3JlIHJlYWwgbG9hZCBvcGVyYXRpb24uCj4gLSAqCj4gLSAqIEluIHN5c3Rl
+bSBtb2RlLCB0aGUgVExCIEFQSSBwcm9iZV9hY2Nlc3MgaXMgZW5vdWdoIGZvciB3YXRjaHBvaW50
+Cj4gY2hlY2suCj4gLSAqIEluIHVzZXIgbW9kZSwgdGhlcmUgaXMgbm8gd2F0Y2hwb2ludCBzdXBw
+b3J0IG5vdy4KPiAtICoKPiAtICogSXQgd2lsbCB0cmlnZ2VyIGFuIGV4Y2VwdGlvbiBpZiB0aGVy
+ZSBpcyBubyBtYXBwaW5nIGluIFRMQgo+IC0gKiBhbmQgcGFnZSB0YWJsZSB3YWxrIGNhbid0IGZp
+bGwgdGhlIFRMQiBlbnRyeS4gVGhlbiB0aGUgZ3Vlc3QKPiAtICogc29mdHdhcmUgY2FuIHJldHVy
+biBoZXJlIGFmdGVyIHByb2Nlc3MgdGhlIGV4Y2VwdGlvbiBvciBuZXZlcgo+IHJldHVybi4KPiAt
+ICoKPiAtICogVGhpcyBmdW5jdGlvbiBjYW4gYWxzbyBiZSB1c2VkIHdoZW4gZGlyZWN0IGFjY2Vz
+cyB0bwo+IHByb2JlX2FjY2Vzc19mbGFncyBpcwo+IC0gKiBuZWVkZWQgaW4gb3JkZXIgdG8gYWNj
+ZXNzIHRoZSBmbGFncy4gSWYgYSBwb2ludGVyIHRvIGEgZmxhZ3MKPiBvcGVyYW5kIGlzCj4gLSAq
+IHByb3ZpZGVkIHRoZSBmdW5jdGlvbiB3aWxsIGNhbGwgcHJvYmVfYWNjZXNzX2ZsYWdzIGluc3Rl
+YWQsIHVzZQo+IG5vbmZhdWx0Cj4gLSAqIGFuZCB1cGRhdGUgaG9zdCBhbmQgZmxhZ3MuCj4gLSAq
+Lwo+IC1zdGF0aWMgdm9pZCBwcm9iZV9wYWdlcyhDUFVSSVNDVlN0YXRlICplbnYsIHRhcmdldF91
+bG9uZyBhZGRyLAo+IHRhcmdldF91bG9uZyBsZW4sCj4gLcKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgdWludHB0cl90IHJhLCBNTVVBY2Nlc3NUeXBlIGFjY2Vz
+c190eXBlLCBpbnQKPiBtbXVfaW5kZXgsCj4gLcKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqAgdm9pZCAqKmhvc3QsIGludCAqZmxhZ3MsIGJvb2wgbm9uZmF1bHQp
+Cj4gLXsKPiAtwqDCoMKgIHRhcmdldF91bG9uZyBwYWdlbGVuID0gLShhZGRyIHwgVEFSR0VUX1BB
+R0VfTUFTSyk7Cj4gLcKgwqDCoCB0YXJnZXRfdWxvbmcgY3VybGVuID0gTUlOKHBhZ2VsZW4sIGxl
+bik7Cj4gLQo+IC3CoMKgwqAgaWYgKGZsYWdzICE9IE5VTEwpIHsKPiAtwqDCoMKgwqDCoMKgwqAg
+KmZsYWdzID0gcHJvYmVfYWNjZXNzX2ZsYWdzKGVudiwgYWRqdXN0X2FkZHIoZW52LCBhZGRyKSwK
+PiBjdXJsZW4sCj4gLcKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgYWNjZXNzX3R5cGUsIG1tdV9pbmRleCwKPiBub25m
+YXVsdCwgaG9zdCwgcmEpOwo+IC3CoMKgwqAgfSBlbHNlIHsKPiAtwqDCoMKgwqDCoMKgwqAgcHJv
+YmVfYWNjZXNzKGVudiwgYWRqdXN0X2FkZHIoZW52LCBhZGRyKSwgY3VybGVuLAo+IGFjY2Vzc190
+eXBlLAo+IC3CoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIG1tdV9pbmRl
+eCwgcmEpOwo+IC3CoMKgwqAgfQo+IC0KPiAtwqDCoMKgIGlmIChsZW4gPiBjdXJsZW4pIHsKPiAt
+wqDCoMKgwqDCoMKgwqAgYWRkciArPSBjdXJsZW47Cj4gLcKgwqDCoMKgwqDCoMKgIGN1cmxlbiA9
+IGxlbiAtIGN1cmxlbjsKPiAtwqDCoMKgwqDCoMKgwqAgaWYgKGZsYWdzICE9IE5VTEwpIHsKPiAt
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoCAqZmxhZ3MgfD0gcHJvYmVfYWNjZXNzX2ZsYWdzKGVudiwg
+YWRqdXN0X2FkZHIoZW52LAo+IGFkZHIpLCBjdXJsZW4sCj4gLcKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgIGFjY2Vzc190eXBlLCBtbXVfaW5kZXgsCj4gbm9uZmF1bHQsCj4gLcKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgIGhvc3QsIHJhKTsKPiAtwqDCoMKgwqDCoMKgwqAgfSBlbHNlIHsKPiAtwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoCBwcm9iZV9hY2Nlc3MoZW52LCBhZGp1c3RfYWRkcihlbnYsIGFkZHIp
+LCBjdXJsZW4sCj4gYWNjZXNzX3R5cGUsCj4gLcKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoCBtbXVfaW5kZXgsIHJhKTsKPiAtwqDCoMKgwqDCoMKgwqAgfQo+
+IC3CoMKgwqAgfQo+IC19Cj4gLQo+IMKgc3RhdGljIGlubGluZSB2b2lkIHZleHRfc2V0X2VsZW1f
+bWFzayh2b2lkICp2MCwgaW50IGluZGV4LAo+IMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgdWludDhfdCB2
+YWx1ZSkKPiDCoHsKPiBAQCAtNDMwLDMzICszODYsNiBAQCB2ZXh0X3BhZ2VfbGRzdF91c190bGIo
+Q1BVUklTQ1ZTdGF0ZSAqZW52LCB2b2lkCj4gKnZkLCB0YXJnZXRfdWxvbmcgYWRkciwKPiDCoMKg
+wqDCoCB9IHdoaWxlIChpIDwgZXZsKTsKPiDCoH0KPiDCoAo+IC1zdGF0aWMgaW5saW5lIFFFTVVf
+QUxXQVlTX0lOTElORSB2b2lkCj4gLXZleHRfcGFnZV9sZHN0X3VzKENQVVJJU0NWU3RhdGUgKmVu
+diwgdm9pZCAqdmQsIHRhcmdldF91bG9uZyBhZGRyLAo+IC3CoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgIHVpbnQzMl90IGVsZW1zLCB1aW50MzJfdCBuZiwgdWludDMyX3QgbWF4X2Vs
+ZW1zLAo+IC3CoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHVpbnQzMl90IGxvZzJf
+ZXN6LCBib29sIGlzX2xvYWQsIGludCBtbXVfaW5kZXgsCj4gLcKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqAgdmV4dF9sZHN0X2VsZW1fZm5fdGxiICpsZHN0X3RsYiwKPiAtwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB2ZXh0X2xkc3RfZWxlbV9mbl9ob3N0ICpsZHN0
+X2hvc3QsIHVpbnRwdHJfdCByYSkKPiAtewo+IC3CoMKgwqAgdm9pZCAqaG9zdDsKPiAtwqDCoMKg
+IGludCBmbGFnczsKPiAtwqDCoMKgIHVpbnQzMl90IHNpemUgPSAoZWxlbXMgKiBuZikgPDwgbG9n
+Ml9lc3o7Cj4gLcKgwqDCoCB1aW50MzJfdCBpID0gZW52LT52c3RhcnQ7Cj4gLcKgwqDCoCBNTVVB
+Y2Nlc3NUeXBlIGFjY2Vzc190eXBlID0gaXNfbG9hZCA/IE1NVV9EQVRBX0xPQUQgOgo+IE1NVV9E
+QVRBX1NUT1JFOwo+IC0KPiAtwqDCoMKgIC8qIENoZWNrIHBhZ2UgcGVybWlzc2lvbi9wbXAvd2F0
+Y2hwb2ludC9ldGMuICovCj4gLcKgwqDCoCBwcm9iZV9wYWdlcyhlbnYsIGFkZHIsIHNpemUsIHJh
+LCBhY2Nlc3NfdHlwZSwgbW11X2luZGV4LCAmaG9zdCwKPiAmZmxhZ3MsCj4gLcKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoCB0cnVlKTsKPiAtCj4gLcKgwqDCoCBpZiAoZmxhZ3MgPT0gMCkg
+ewo+IC3CoMKgwqDCoMKgwqDCoCB2ZXh0X3BhZ2VfbGRzdF91c19ob3N0KHZkLCBob3N0LCBpLCBp
+ICsgZWxlbXMsIG5mLCBsb2cyX2VzeiwKPiAtwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIG1heF9lbGVtcywgbGRzdF9ob3N0LCBpc19s
+b2FkKTsKPiAtwqDCoMKgwqDCoMKgwqAgZW52LT52c3RhcnQgKz0gZWxlbXM7Cj4gLcKgwqDCoCB9
+IGVsc2Ugewo+IC3CoMKgwqDCoMKgwqDCoCB2ZXh0X3BhZ2VfbGRzdF91c190bGIoZW52LCB2ZCwg
+YWRkciwgaSwgaSArIGVsZW1zLCBuZiwKPiBsb2cyX2VzeiwKPiAtwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBtYXhfZWxlbXMsIGxkc3Rf
+dGxiLCBtbXVfaW5kZXgsIHJhKTsKPiAtwqDCoMKgIH0KPiAtfQo+IC0KPiDCoHN0YXRpYyB2b2lk
+IHZleHRfdGVzdF9hbGlnbm1lbnQoQ1BVUklTQ1ZTdGF0ZSAqZW52LCB2YWRkciBhZGRyLAo+IHVp
+bnQzMl90IGVzeiwKPiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgIE1NVUFjY2Vzc1R5cGUgYWNjZXNzX3R5cGUsIGludAo+IG1t
+dV9pbmRleCwKPiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgIHVpbnRwdHJfdCByYSkKPiBAQCAtMTAxNSw1MiArOTQ0LDEwIEBA
+IHZleHRfbGRzdF93aG9sZSh2b2lkICp2ZCwgdGFyZ2V0X3Vsb25nIGJhc2UsCj4gQ1BVUklTQ1ZT
+dGF0ZSAqZW52LCB1aW50MzJfdCBkZXNjLAo+IMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgIHZleHRfbGRzdF9lbGVtX2ZuX2hvc3QgKmxkc3RfaG9zdCwgdWludDMyX3QKPiBsb2cyX2Vz
+eiwKPiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB1aW50cHRyX3QgcmEsIGJvb2wg
+aXNfbG9hZCkKPiDCoHsKPiAtwqDCoMKgIHRhcmdldF91bG9uZyBwYWdlX3NwbGl0LCBlbGVtcywg
+YWRkcjsKPiAtwqDCoMKgIHVpbnQzMl90IG5mID0gdmV4dF9uZihkZXNjKTsKPiAtwqDCoMKgIHVp
+bnQzMl90IHZsZW5iID0gcmlzY3ZfY3B1X2NmZyhlbnYpLT52bGVuYjsKPiAtwqDCoMKgIHVpbnQz
+Ml90IG1heF9lbGVtcyA9IHZsZW5iID4+IGxvZzJfZXN6Owo+IC3CoMKgwqAgdWludDMyX3QgZXZs
+ID0gbmYgKiBtYXhfZWxlbXM7Cj4gLcKgwqDCoCB1aW50MzJfdCBlc3ogPSAxIDw8IGxvZzJfZXN6
+Owo+IC3CoMKgwqAgaW50IG1tdV9pbmRleCA9IHJpc2N2X2Vudl9tbXVfaW5kZXgoZW52LCBmYWxz
+ZSk7Cj4gLcKgwqDCoCBNTVVBY2Nlc3NUeXBlIGFjY2Vzc190eXBlID0gaXNfbG9hZCA/IE1NVV9E
+QVRBX0xPQUQgOgo+IE1NVV9EQVRBX1NUT1JFOwo+IC0KPiAtwqDCoMKgIC8qIENhbGN1bGF0ZSB0
+aGUgcGFnZSByYW5nZSBvZiBmaXJzdCBwYWdlICovCj4gLcKgwqDCoCBhZGRyID0gYmFzZSArIChl
+bnYtPnZzdGFydCA8PCBsb2cyX2Vzeik7Cj4gLQo+IC3CoMKgwqAgLyogUmVjb2duaXplIGFsaWdu
+bWVudCBmYXVsdCBiZWZvcmUgbWVtb3J5IHByb3RlY3Rpb24gZmF1bHQuICovCj4gLcKgwqDCoCB2
+ZXh0X3Rlc3RfYWxpZ25tZW50KGVudiwgYWRkciwgZXN6LCBhY2Nlc3NfdHlwZSwgbW11X2luZGV4
+LCByYSk7Cj4gLQo+IC3CoMKgwqAgcGFnZV9zcGxpdCA9IC0oYWRkciB8IFRBUkdFVF9QQUdFX01B
+U0spOwo+IC3CoMKgwqAgLyogR2V0IG51bWJlciBvZiBlbGVtZW50cyAqLwo+IC3CoMKgwqAgZWxl
+bXMgPSBwYWdlX3NwbGl0IC8gZXN6Owo+IC3CoMKgwqAgaWYgKHVubGlrZWx5KGVudi0+dnN0YXJ0
+ICsgZWxlbXMgPj0gZXZsKSkgewo+IC3CoMKgwqDCoMKgwqDCoCBlbGVtcyA9IGV2bCAtIGVudi0+
+dnN0YXJ0Owo+IC3CoMKgwqAgfQo+IC0KPiAtwqDCoMKgIC8qIExvYWQvc3RvcmUgZWxlbWVudHMg
+aW4gdGhlIGZpcnN0IHBhZ2UgKi8KPiAtwqDCoMKgIGlmIChsaWtlbHkoZWxlbXMpKSB7Cj4gLcKg
+wqDCoMKgwqDCoMKgIHZleHRfcGFnZV9sZHN0X3VzKGVudiwgdmQsIGFkZHIsIGVsZW1zLCAxLCBt
+YXhfZWxlbXMsCj4gbG9nMl9lc3osCj4gLcKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgIGlzX2xvYWQsIG1tdV9pbmRleCwgbGRzdF90bGIsIGxkc3RfaG9z
+dCwKPiByYSk7Cj4gLcKgwqDCoCB9Cj4gLQo+IC3CoMKgwqAgLyogTG9hZC9zdG9yZSBlbGVtZW50
+cyBpbiB0aGUgc2Vjb25kIHBhZ2UgKi8KPiAtwqDCoMKgIGlmICh1bmxpa2VseShlbnYtPnZzdGFy
+dCA8IGV2bCkpIHsKPiAtwqDCoMKgwqDCoMKgwqAgLyogQ3Jvc3MgcGFnZSBlbGVtZW50ICovCj4g
+LcKgwqDCoMKgwqDCoMKgIGlmICh1bmxpa2VseShwYWdlX3NwbGl0ICUgZXN6KSkgewo+IC3CoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgIGFkZHIgPSBiYXNlICsgKGVudi0+dnN0YXJ0IDw8IGxvZzJfZXN6
+KTsKPiAtwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBsZHN0X3RsYihlbnYsIGFkanVzdF9hZGRyKGVu
+diwgYWRkciksIGVudi0+dnN0YXJ0LCB2ZCwKPiByYSk7Cj4gLcKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqAgZW52LT52c3RhcnQrKzsKPiAtwqDCoMKgwqDCoMKgwqAgfQo+IC0KPiAtwqDCoMKgwqDCoMKg
+wqAgYWRkciA9IGJhc2UgKyAoZW52LT52c3RhcnQgPDwgbG9nMl9lc3opOwo+IC3CoMKgwqDCoMKg
+wqDCoCAvKiBHZXQgbnVtYmVyIG9mIGVsZW1lbnRzIG9mIHNlY29uZCBwYWdlICovCj4gLcKgwqDC
+oMKgwqDCoMKgIGVsZW1zID0gZXZsIC0gZW52LT52c3RhcnQ7Cj4gLQo+IC3CoMKgwqDCoMKgwqDC
+oCAvKiBMb2FkL3N0b3JlIGVsZW1lbnRzIGluIHRoZSBzZWNvbmQgcGFnZSAqLwo+IC3CoMKgwqDC
+oMKgwqDCoCB2ZXh0X3BhZ2VfbGRzdF91cyhlbnYsIHZkLCBhZGRyLCBlbGVtcywgMSwgbWF4X2Vs
+ZW1zLAo+IGxvZzJfZXN6LAo+IC3CoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoCBpc19sb2FkLCBtbXVfaW5kZXgsIGxkc3RfdGxiLCBsZHN0X2hvc3QsCj4g
+cmEpOwo+IC3CoMKgwqAgfQo+ICvCoMKgwqAgdWludDMyX3QgZXZsID0gKHJpc2N2X2NwdV9jZmco
+ZW52KS0+dmxlbmIgKiB2ZXh0X25mKGRlc2MpKSA+Pgo+IGxvZzJfZXN6Owo+IMKgCj4gK8KgwqDC
+oCB2ZXh0X2xkc3RfdXNfbm90YWlsKHZkLCBiYXNlLCBlbnYsIGxvZzJfZXN6LCAxLCBldmwsIGV2
+bCwgZmFsc2UsCj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqAgbGRzdF90bGIsIGxkc3RfaG9zdCwgcmEsIGlzX2xvYWQpOwo+IMKgwqDCoMKgIGVudi0+dnN0
+YXJ0ID0gMDsKPiDCoH0KPiDCoAo=
 
 
