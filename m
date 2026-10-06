@@ -4,59 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 919A2CA5FF1
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 09:20:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7FDFCA5FFF
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 09:20:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xENec-00057y-Nd; Wed, 07 Oct 2026 05:09:39 -0400
+	id 1xENbe-00006X-7r; Wed, 07 Oct 2026 05:06:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <fuad.tabba@linux.dev>)
- id 1xEMa3-0004NF-7j
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 04:01:00 -0400
-Received: from out-61.mta1.migadu.com ([2001:41d0:203:375::3d]
- helo=mta1.migadu.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <fuad.tabba@linux.dev>)
- id 1xEMa1-0002zn-LD
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 04:00:51 -0400
-X-Envelope-To: qemu-devel@nongnu.org
-DKIM-Signature: a=rsa-sha256; bh=4+K7kjtnxVVTxDRVdX7b8BFOietGIl+KAntdxEKevao=; 
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1791360047; v=1; x=1791964847;
- b=XossW9TJKm57tWZRU/moV+idSlKKqJiX6CcWlwzCQ8/EGxt2gFwBiO9LA5IPY9HTGuv/vHBq
- hvF+2cXHNH3ff/xkP7xgimtHLLt9jifZ+w0ahoGaJNcdvyYMddEOGIu77N58G32Zwu1WcDxpq2T
- ClcJLVgtjNRQVLcflwdCEF+I=
-X-Envelope-To: qemu-devel@nongnu.org
-Received: by smtp.migadu.com with ESMTPS id 5bd603d399fc8c14;
- Wed, 07 Oct 2026 08:00:47 +0000
-X-Mizu-Trace-ID: 5bd603d399fc8c14
-X-Migadu-Flow: FLOW_OUT
-From: Fuad Tabba <fuad.tabba@linux.dev>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org,
- Richard Henderson <richard.henderson@linaro.org>,
- Gustavo Romero <gromero@redhat.com>, Will Deacon <will@kernel.org>,
- Itaru Kitayama <itaru.kitayama@linux.dev>, Fuad Tabba <tabba@google.com>
-Subject: [PATCH v2 1/3] target/arm: Clear TTBR[5:0] from a 52-bit table base
- address
-Date: Wed,  7 Oct 2026 09:00:17 +0100
-Message-Id: <20261007080019.350315-2-fuad.tabba@linux.dev>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20261007080019.350315-1-fuad.tabba@linux.dev>
-References: <20261007080019.350315-1-fuad.tabba@linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2001:41d0:203:375::3d;
- envelope-from=fuad.tabba@linux.dev; helo=mta1.migadu.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1)
+ (envelope-from <ac8c13c38e569b04c613f287c3a83234dea161b4@kylie.crudebyte.com>)
+ id 1xELM0-0002nF-9Y; Wed, 07 Oct 2026 02:42:47 -0400
+Received: from kylie.crudebyte.com ([5.189.157.229])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1)
+ (envelope-from <ac8c13c38e569b04c613f287c3a83234dea161b4@kylie.crudebyte.com>)
+ id 1xELLO-0004C2-WE; Wed, 07 Oct 2026 02:42:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=crudebyte.com; s=kylie; h=Cc:To:Subject:Date:From:Message-ID:Content-Type:
+ Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:Content-ID:
+ Content-Description; bh=uiwmNdn0AG3dm6JoSOxIencvSbhtz8X/AqTLUpX1E7I=; b=T98mr
+ zXVxK0m8aS21ICnAmuxDOUR09pN01L4mraVBvx9Yb47o1tpoV0zCDLXWbBkpFmh/CGyQuU2svPfHI
+ APgOSWzxVp6Jje9l0FlBCj9oLKS5TO3V68er1x3acVKDcoywaj+r3pRUIghYBLKiROdFyxwCjCBbm
+ 8DbQiEvHZI/X2A5iA5kH6NghQWMf/WqfK6n3Ul7LUFLD/Uf1R5D3SpwZQTRQCjtn2nJLO6/8h6p2L
+ ZQ+92PpkRwPO1tp+doOho1pmUGxpI7M62ByijSJHBq561IEjpU1Ln8kVAy/NQamXbcpeb8Q9eXDpq
+ WylbyqppF1wH51kHfoRQzhJ6O3ZigYwRzMUbtpdKUUHhfzNKuXtbyalJBBf6HL3/92QA8Ltt3LqRk
+ gue9Jg08ljICnwTtzP9k7o8R+d+MDEXUTma7CcregTo/BHSyidkT8k7ZYkFnc5++dwTi+4cRz+Vej
+ q+S5ZAPt5mCjjKIy0en+mxN0VAHF0wYLZKlAXKRQuPhyudOK0iigQ3vk2m4C3kEYjMA3wKCsbqHCg
+ 7PMzIHPs/Brc07dod9I9QMZJIaL68DvXgtF9K/oSft6vbWK5BBkqChTEWe31zsY+Nv9nawJc3vchJ
+ XCC2Doe4sPqzpth4IoIbn+6jWdZfg8oi1VklTiewE04hysGIPmMjRyu2xZeZI8=;
+Message-ID: <cover.1791291812.git.qemu_oss@crudebyte.com>
+From: Christian Schoenebeck <qemu_oss@crudebyte.com>
+Date: Tue, 6 Oct 2026 15:03:32 +0200
+Subject: [PATCH 0/9] 9pfs: add race test suite + fix 9p2000.u dir stream race
+To: qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org,
+    Greg Kurz <groug@kaod.org>
+Received-SPF: pass client-ip=5.189.157.229;
+ envelope-from=ac8c13c38e569b04c613f287c3a83234dea161b4@kylie.crudebyte.com;
+ helo=kylie.crudebyte.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_12_24=1.049,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -72,59 +64,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-get_phys_addr_lpae() can read the first descriptor of a walk from the
-wrong address. This happens with a 52-bit OA when the initial lookup
-table has fewer than eight entries and its base address has bit 51 set,
-or bit 50 for a two-entry table. The walk then faults or translates
-through whatever that address holds. VTTBR walks for stage 2 take the
-same path.
+This series adds a race test suite for 9p and fixes a race on legacy
+9p2000(.u)'s Tread request on directories, which was uncovered by this
+new test suite.
 
-For example, the 16KB granule with a 48-bit VA has a two-entry level 0
-(FEAT_LPA2). The 64KB granule with a 44-bit VA has a four-entry level 1
-(FEAT_LPA). KVM's page_fault_test hangs on this in its 16KB, 52-bit PA
-guest mode under TCG, as reported on kvmarm.
+This new race test suite challenges races by sending crafted concurrent 9p
+requests on certain aspects of the 9p protocol. This series covers 3 race
+tests:
 
-With a 52-bit OA, TTBR[5:2] hold bits [51:48] of the base address. Such
-a table is 64-byte aligned (R_KBLCR), so bits [5:0] of the base address
-are zero. get_phys_addr_lpae() ORs TTBR[5:2] into bits [51:48], but
-then clears only the bits in indexmask. For these tables indexmask
-covers fewer than six bits, so TTBR[5] stays in the address, and
-TTBR[4] too for a two-entry table.
+  1. Patch 2 adds "race/fid-path": this race test guards CVE-2026-93834
+     (fixed by commit fe9e30899f "hw/9pfs: Use read-write lock for protecting
+     fid path.").
 
-Clear TTBR[5:0] when forming a 52-bit table base address.
+     Please refer to the commit log message of this patch for how to run
+     these new 9p race tests in general.
 
-Reported-by: Itaru Kitayama <itaru.kitayama@linux.dev>
-Link: https://lore.kernel.org/kvmarm/B4C0AC3E-6A4F-4A7B-B7BC-81207539115E@linux.dev/
-Fixes: 7a928f43d872 ("target/arm: Implement FEAT_LPA")
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Fuad Tabba <fuad.tabba@linux.dev>
----
- target/arm/ptw.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+  2. Patch 5 adds "race/readdir": this test guards directory stream races
+     on 9p2000.L's Treaddir request.
 
-diff --git a/target/arm/ptw.c b/target/arm/ptw.c
-index de0435a58b..6cff52d592 100644
---- a/target/arm/ptw.c
-+++ b/target/arm/ptw.c
-@@ -2107,13 +2107,16 @@ static bool get_phys_addr_lpae(CPUARMState *env, S1Translate *ptw,
-     descaddr = extract64(ttbr, 0, 48);
- 
-     /*
--     * For FEAT_LPA and PS=6, bits [51:48] of descaddr are in [5:2] of TTBR.
-+     * With a 52-bit OA (FEAT_LPA or FEAT_LPA2), bits [51:48] of descaddr are
-+     * in [5:2] of TTBR, and bits [5:0] of the base address are zero: a table
-+     * under 64 bytes is still 64-byte aligned (R_KBLCR).
-      *
-      * Otherwise, if the base address is out of range, raise AddressSizeFault.
-      * In the pseudocode, this is !IsZero(baseregister<47:outputsize>),
-      * but we've just cleared the bits above 47, so simplify the test.
-      */
-     if (outputsize > 48) {
-+        descaddr &= ~MAKE_64BIT_MASK(0, 6);
-         descaddr |= extract64(ttbr, 2, 4) << 48;
-     } else if (descaddr >> outputsize) {
-         level = 0;
+  3. Patch 9 adds "race/tread-dir": this tests legacy 9p2000(.u)'s equivalent
+     of Treaddir for directory stream races, and this test got triggered during
+     the work on this series.
+
+Therefore:
+
+  - Fix: Patch 6 fixes the directory stream race vulnerability uncovered by
+    race test #3.
+
+All the other patches are basically just 9p test client additions required
+for these new tests.
+
+Christian Schoenebeck (9):
+  tests/9p-client: add Txattrwalk / Rxattrwalk test client functions
+  tests/9p-race: add 9p race test suite (race FID-path mutations)
+  tests/9p-client: add Rerror function (legacy 9p2000.u)
+  tests/9p-client: add Tstat / Rstat test client functions
+  tests/9p-race: add Treaddir race test
+  hw/9pfs: fix dirent stream protection for legacy (9p2000.u) Tread
+  tests/9p-client: add Tcreate / Rcreate test client functions
+  tests/9p-client: track the negotiated 9p version for session
+  tests/9p-race: add Tread-on-dir race test
+
+ MAINTAINERS                           |    1 +
+ hw/9pfs/9p.c                          |   23 +-
+ tests/qtest/libqos/virtio-9p-client.c |  213 +++++-
+ tests/qtest/libqos/virtio-9p-client.h |  124 +++
+ tests/qtest/libqos/virtio-9p.h        |    6 +
+ tests/qtest/meson.build               |    1 +
+ tests/qtest/virtio-9p-race-test.c     | 1016 +++++++++++++++++++++++++
+ 7 files changed, 1374 insertions(+), 10 deletions(-)
+ create mode 100644 tests/qtest/virtio-9p-race-test.c
+
 -- 
-2.39.5
+2.47.3
 
 
