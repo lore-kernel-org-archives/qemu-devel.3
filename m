@@ -4,53 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 491A2CA6009
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 08:50:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED89BCA5FFF
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 08:50:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xENEA-0004t4-AO; Wed, 07 Oct 2026 04:42:18 -0400
+	id 1xENCu-0001eu-CS; Wed, 07 Oct 2026 04:41:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1xEIt2-000058-CA
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 00:04:28 -0400
-Received: from linux.microsoft.com ([13.77.154.182])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1xEIsy-0004cG-OA
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 00:04:11 -0400
-Received: from DESKTOP-TUU1E5L.localdomain (unknown [167.220.208.46])
- by linux.microsoft.com (Postfix) with ESMTPSA id 8B54C20B7166;
- Tue,  6 Oct 2026 09:48:27 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 8B54C20B7166
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1791305308;
- bh=z6UFF2yWyifVchNILESFkZYhgOjmppX2NpsLTymFLz0=;
- h=From:To:Cc:Subject:Date:From;
- b=HCJQNDIUrgmK8Pc4DixcU23sLTTuexwkEuklAUt+4lHxaJAQbV48SDaBeqpodz3Ys
- B14Dj4sapzys7yR26kpzANvdUq48KmRH+tEgw8MoV5joei7VGI2wjpdA1ItB/TCmsc
- d62imi5azlfVPYd0ErJ/cqcBS3G7UHJyxs+QCakA=
-From: Magnus Kulke <magnuskulke@linux.microsoft.com>
+ (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
+ id 1xEIZa-0005B6-2M; Tue, 06 Oct 2026 23:44:17 -0400
+Received: from proxmox-new.maurer-it.com ([94.136.29.106])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
+ id 1xEIZU-0001Mn-Ti; Tue, 06 Oct 2026 23:44:03 -0400
+Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
+ by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 87F8844458;
+ Tue, 06 Oct 2026 13:42:45 +0200 (CEST)
+From: Fiona Ebner <f.ebner@proxmox.com>
 To: qemu-devel@nongnu.org
-Cc: Wei Liu <wei.liu@kernel.org>,
- =?UTF-8?q?Doru=20Bl=C3=A2nzeanu?= <dblanzeanu@linux.microsoft.com>,
- Magnus Kulke <magnuskulke@microsoft.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PULL 00/11] MSHV changes for 2026-10-06
-Date: Tue,  6 Oct 2026 18:48:54 +0200
-Message-Id: <20261006164905.776466-1-magnuskulke@linux.microsoft.com>
-X-Mailer: git-send-email 2.34.1
+Cc: qemu-block@nongnu.org, hreitz@redhat.com, kwolf@redhat.com,
+ armbru@redhat.com, eblake@redhat.com
+Subject: [PATCH v2 3/3] iotests/041: add tests for mirroring below throttle
+ node
+Date: Tue,  6 Oct 2026 13:42:18 +0200
+Message-ID: <20261006114240.478523-4-f.ebner@proxmox.com>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20261006114240.478523-1-f.ebner@proxmox.com>
+References: <20261006114240.478523-1-f.ebner@proxmox.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=13.77.154.182;
- envelope-from=magnuskulke@linux.microsoft.com; helo=linux.microsoft.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Bm-Milter-Handled: 55990f41-d878-4baa-be0a-ee34c49e34d2
+X-Bm-Transport-Timestamp: 1791286964627
+Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
+ helo=proxmox-new.maurer-it.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -66,57 +58,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Various minor fixes and a feature (gdb debugger support) for the Microsoft
-Hypervisor (mshv) accelerator. The changes have been rebased and re-tested
-individually.
+Test mirror with a non-root node as a source. This restriction was
+dropped with commit "blockdev: mirror: do not require a root block
+node".
 
-My public certificate is available at:
-https://mkulke.github.io/magnuskulke.asc
+Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
+---
 
-Primary key fingerprint:
-5255 B617 7982 9168 7022 31CA 68D9 BB56 DD17 8417
+No changes in v2.
 
-The following changes since commit 3377670ee96b5a68361016680a95b9013709d4b7:
+ tests/qemu-iotests/041     | 40 ++++++++++++++++++++++++++++++++++++++
+ tests/qemu-iotests/041.out |  4 ++--
+ 2 files changed, 42 insertions(+), 2 deletions(-)
 
-  Merge tag 'linux-user-next-pull-request' of https://github.com/hdeller/qemu-hppa into staging (2026-10-05 07:14:51 +0200)
-
-are available in the Git repository at:
-
-  https://github.com/mkulke/qemu.git tags/mkulke-pull-20261006
-
-for you to fetch changes up to 7d42b0a4f52d57cd2d9e0a9ceb8ad5102219a801:
-
-  target/i386/mshv: support single-stepping (2026-10-06 18:14:35 +0200)
-
-----------------------------------------------------------------
-mshv changes for 2026-10-06
-
-----------------------------------------------------------------
-Doru Blânzeanu (9):
-      target/i386/mshv: fix read/write memory across the page boundary
-      include/hw/hyperv: move hv_vp_register_page struct definition
-      target/i386/mshv: abort when hv_vp_register_page setup fails
-      target/i386/mshv: remove fallback for register page get registers
-      target/i386/mshv: remove fallback for register page set registers
-      target/i386/mshv: fix pio handlers clobbering device-modified registers
-      include/hw/hyperv: add ABI for exception intercepts and pending events
-      accel/mshv: add gdbstub software breakpoint support
-      target/i386/mshv: support single-stepping
-
-Magnus Kulke (2):
-      target/i386/mshv: zero-init msr hvcall args
-      target/i386/mshv: Fix cpu feature-leak from host
-
- accel/mshv/mshv-all.c          | 170 +++++++++++++-
- include/hw/hyperv/hvgdk.h      |   2 +
- include/hw/hyperv/hvgdk_mini.h | 159 +++++--------
- include/hw/hyperv/hvhdk.h      | 106 +++++++++
- include/system/mshv_int.h      |  14 ++
- target/i386/mshv/mshv-cpu.c    | 491 ++++++++++++++++++++++++++++-------------
- target/i386/mshv/msr.c         |   4 +-
- 7 files changed, 684 insertions(+), 262 deletions(-)
-
+diff --git a/tests/qemu-iotests/041 b/tests/qemu-iotests/041
+index 2552388690..abc070435d 100755
+--- a/tests/qemu-iotests/041
++++ b/tests/qemu-iotests/041
+@@ -1434,10 +1434,19 @@ class TestThrottle(iotests.QMPTestCase):
+                     bus='vio-scsi.0',
+                     drive='throttle')
+ 
++        self.drive_qdev = '/machine/peripheral/virtio'
++
+     def tearDown(self):
+         os.remove(test_img)
+         os.remove(target_img)
+ 
++    def blockstats(self, device):
++        result = self.vm.qmp("query-blockstats")
++        for r in result['return']:
++            if r['node-name'] == device:
++                return r['stats']
++        raise Exception(f'Device {device} not found when querying blockstats')
++
+     def test_throttled(self):
+         self.mirror_command('throttle')
+ 
+@@ -1451,6 +1460,37 @@ class TestThrottle(iotests.QMPTestCase):
+         self.assertTrue(iotests.compare_images(test_img, target_img),
+                         'target image does not match source after mirroring')
+ 
++    def test_below_throttle(self):
++        self.mirror_command('source')
++
++        # The throttling above should not block the mirror from completing.
++        self.complete_and_wait('mirror')
++        self.vm.shutdown()
++        self.assertTrue(iotests.compare_images(test_img, target_img),
++                        'target image does not match source after mirroring')
++
++    def test_below_throttle_with_io_on_throttle(self):
++        self.mirror_command('source')
++
++        reqs = 3
++        req_len = 1 * 1024
++
++        for i in range(0, reqs):
++            req = f'aio_write -P 7 {i}M {req_len}'
++            self.vm.hmp_qemu_io(self.drive_qdev, req, qdev=True)
++
++        self.wait_ready('mirror')
++        # The throttle node above should still have in-flight requests.
++        assert self.blockstats('throttle')['wr_bytes'] <= 1 * req_len
++
++        self.complete_and_wait('mirror', wait_ready=False)
++        assert self.blockstats('throttle')['wr_bytes'] == reqs * req_len
++        self.vm.shutdown()
++        # The throttle node above is drained too when the mirror finishes, so
++        # the images should match.
++        self.assertTrue(iotests.compare_images(test_img, target_img),
++                        'target image does not match source after mirroring')
++
+ class TestThrottleDriveMirror(TestThrottle):
+     attachTargetImage = False
+ 
+diff --git a/tests/qemu-iotests/041.out b/tests/qemu-iotests/041.out
+index 96a0752f44..ec055a9915 100644
+--- a/tests/qemu-iotests/041.out
++++ b/tests/qemu-iotests/041.out
+@@ -1,5 +1,5 @@
+-.............................................................................................................
++.................................................................................................................
+ ----------------------------------------------------------------------
+-Ran 109 tests
++Ran 113 tests
+ 
+ OK
 -- 
-2.34.1
+2.47.3
+
 
 
