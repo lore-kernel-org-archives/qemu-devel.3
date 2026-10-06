@@ -4,95 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9B92CA5FF1
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 09:04:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72145CA5FFF
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 09:04:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xENIL-0006Dd-MU; Wed, 07 Oct 2026 04:46:37 -0400
+	id 1xENE2-00049V-R1; Wed, 07 Oct 2026 04:42:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xEJkE-0000AI-Pd
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 00:59:22 -0400
-Received: from mail-lf1-x12e.google.com ([2a00:1450:4864:20::12e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xEJk8-0004Mq-G0
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 00:59:08 -0400
-Received: by mail-lf1-x12e.google.com with SMTP id
- 2adb3069b0e04-5ba3ec92031so1356592e87.2
- for <qemu-devel@nongnu.org>; Tue, 06 Oct 2026 21:59:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1791349141; x=1791953941; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=mgVWeZ276Ptk3/+zMkn5/HpMKm4YkXpqgFDkFWs/ZN0=;
- b=VF6m0GCh6mJpUYxweFS2bUGig9s+Ai+gE/n7PhyIIBzqEC95/YG45e+X1THDs87aRC
- jVANjVY7mIw1MEqxhgqI6e0ovtinL//UqwBTLeOOvmSdmagk/BjmeJsRRW1ABQX1yQxo
- h1m1M1Z2Z3X1fj8Ray4JZeBbw/iv8So6idT0LSqeg7Pqj8P5WzwT7FZf6xVc4VhvDMIG
- mTf+1vpYcPS3ytY89gIfKILgc10PEaaaRYG/9ZxT+hfrhEGTdvJXhDatQGvzYLc7Ivxg
- He3NuEzMPCpn+LLM0Zp/Dr9HBu3qa7jdRhDuoboiaFQvItUviMvOXHsC060n9XN1Moip
- vs3g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791349141; x=1791953941;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=mgVWeZ276Ptk3/+zMkn5/HpMKm4YkXpqgFDkFWs/ZN0=;
- b=JLlnEC/86xGoWjzw5agEBKhregyK8Gx99V8cox9OCxp5LAMzWUqO0J6+m+T2VC4BH8
- 2Qwxo5gl5uZam+SIs9+Cm06UEsWIEN6uANhoJYQbjNjthI+ZvEVAlI1B3j+DP0bhXBBX
- f7NqEddDZpZ/L9WYxsa04m83vAjp6KzpQ/KcRPbKIKTIk3kVUxJ3lFEC8usxjYF0wIIe
- I/9sDpwQ1B7FeH51YuGfeVzG0g3boo/kLb4JtkcLoGxND2fl/dtWzLssoCZcOP75vUhJ
- wgskzNaoH63g54WuyLJlneNWI+ykaBUeIHhMF9N7g2ZsY3wA47H+v2KDXLbiaYMcI6Dc
- IuZg==
-X-Gm-Message-State: AFq9FYJCu6m6NlhgYYj0dy4cFKRT7O5/eB4meZ+xErvoisObKCmAiA57
- Pqb7Mjdtw29Jz+c90VQlSmBbxoCoO8Z/r2oK1gZc5QopzDqi+uyUc6I2dRaqNg==
-X-Gm-Gg: AYBFou3vuEEhJ/wbmWiA0adVsUO1iQvY0OTdPfLZspLbO1Q0c63+MIMxY3Gb3Rmx4ZF
- JJ7XIz1hx/u+JXfmWzfqC0KIXamQNVsPhUPijvuf2Xr1sZ7YD8I422rU1NhoNrXe/xVREubruEq
- RP+Inhz22kS5egMzJiZwPiS7BYFWGiqLKA2ZdErRbFXA2BlZNuHxJyOLZHXDlz4AV6eHS/oCRXz
- tfSI14j+d2A/VTKGXXdBvv8NE18Fbalhs0CUR3H1pEb39psTTvzqQtnr1I5ovXzttR3aLKdUbtt
- Bpgcl3ywza9Qu45JR2mMfx+6V4Y1PdLRVcCXvbTx9s0+tz/kNx+ivLN6/MlafTjgRe4gtbr3kVE
- DmvXhloF32xO4fzQspqxdFxaL18F2coSoZ+cDWc3SR5Qh8utVxcueTqvQDbEgw2qXkDG4X/YjWo
- aqC4wVsNBNwO+dtblG+aA+JnqY8HKfY7LM8txBQ2bN40YvJhGM97fFHxbKV1WsQlRT1NUYj+6u9
- u/4hAW1ZecZqvZsdMswWMIoWwnXtPloc3AV5Q==
-X-Received: by 2002:a5d:5f54:0:b0:483:3695:6ea6 with SMTP id
- ffacd0b85a97d-48c6d1ad188mr1086450f8f.20.1791275758024; 
- Tue, 06 Oct 2026 01:35:58 -0700 (PDT)
-Received: from archlinux (pd95eda80.dip0.t-ipconnect.de. [217.94.218.128])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48c6cdb281csm1566764f8f.55.2026.10.06.01.35.57
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 06 Oct 2026 01:35:57 -0700 (PDT)
-From: Bernhard Beschow <shentey@gmail.com>
+ (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
+ id 1xEIsw-0008Vh-VW
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 00:04:11 -0400
+Received: from linux.microsoft.com ([13.77.154.182])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <magnuskulke@linux.microsoft.com>) id 1xEIsr-0004ZK-Jy
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 00:04:04 -0400
+Received: from DESKTOP-TUU1E5L.localdomain (unknown [167.220.208.46])
+ by linux.microsoft.com (Postfix) with ESMTPSA id 04E8F20B716B;
+ Tue,  6 Oct 2026 09:48:40 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 04E8F20B716B
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
+ s=default; t=1791305322;
+ bh=KCY+msSUAAWnpPXgA8t8rOn1n03rmATYG58A1AjMq24=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=SzUQsl5QFmoFre5Myy3z8S6Apd1AfGSVvi85NFVfJEmj3bUnozd+Tjv7/YjcqtfpD
+ Ep87fXPiWE6E0s4qu9TShuO0bwM3jdkIJgVR+rH4mk4AcH1u91nF8PjUQ2RHSMC4gw
+ IrAnMgi6HoPuS8dfOVd08bmzHWKQ9bcbllnigcrI=
+From: Magnus Kulke <magnuskulke@linux.microsoft.com>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Bin Meng <bin.meng@processmission.com>,
- Jean-Christophe Dubois <jcd@tribudubois.net>,
- Gaurav Sharma <gaurav.sharma_7@nxp.com>,
- Bernhard Beschow <shentey@gmail.com>, qemu-arm@nongnu.org,
- Jason Wang <jasowangio@gmail.com>,
- Alistair Francis <alistair@alistair23.me>
-Subject: [PATCH v4 31/31] hw/arm/fsl-imx8m: Fix typo
-Date: Tue,  6 Oct 2026 10:34:43 +0200
-Message-ID: <20261006083445.30362-32-shentey@gmail.com>
-X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261006083445.30362-1-shentey@gmail.com>
-References: <20261006083445.30362-1-shentey@gmail.com>
+Cc: Wei Liu <wei.liu@kernel.org>,
+ =?UTF-8?q?Doru=20Bl=C3=A2nzeanu?= <dblanzeanu@linux.microsoft.com>,
+ Magnus Kulke <magnuskulke@microsoft.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PULL 04/11] target/i386/mshv: remove fallback for register page get
+ registers
+Date: Tue,  6 Oct 2026 18:48:58 +0200
+Message-Id: <20261006164905.776466-5-magnuskulke@linux.microsoft.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20261006164905.776466-1-magnuskulke@linux.microsoft.com>
+References: <20261006164905.776466-1-magnuskulke@linux.microsoft.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::12e;
- envelope-from=shentey@gmail.com; helo=mail-lf1-x12e.google.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
- FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=13.77.154.182;
+ envelope-from=magnuskulke@linux.microsoft.com; helo=linux.microsoft.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,77 +69,214 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is IMX8MP and IMX8MM, not IMX6.
+From: Doru Blânzeanu <dblanzeanu@linux.microsoft.com>
 
-Fixes: 0c105b261551 ("hw/arm/fsl-imx8mp: Add Ethernet controller")
-Fixes: 857670200c51 ("hw/arm/fsl-imx8mm: Adding support for ENET ethernet controller")
-Reviewed-by: Gaurav Sharma <gaurav.sharma_7@nxp.com>
-Reviewed-by: Bin Meng <bin.meng@processmission.com>
-Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+Change `load_regs` to use the register page when it is mmapped
+and is valid.
+Eliminate the hypercall based logic and fail in case the register page
+is found in an unexpected state.
+
+When retrieving the special registers, there are some registers that are
+not present in the register page: TR, LDTR, GDTR, IDTR, CR2, APIC_BASE.
+As this registers are not likely to be used in an MMIO/PIO operation,
+and to avoid a hypercall overhead we do not retrieve them.
+
+Local testing showed no regression when using this logic. To properly
+retrieve all the necessary registers for each decoded operation implies
+having a mechanism that tracks the state of each register, which is
+beyond the scope of this patch series.
+
+Fixes: 40072a7391
+Signed-off-by: Doru Blânzeanu <dblanzeanu@linux.microsoft.com>
+Reviewed-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
+Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
 ---
- include/hw/arm/fsl-imx8mm.h | 4 ++--
- include/hw/arm/fsl-imx8mp.h | 4 ++--
- hw/arm/fsl-imx8mm.c         | 2 +-
- hw/arm/fsl-imx8mp.c         | 2 +-
- 4 files changed, 6 insertions(+), 6 deletions(-)
+ target/i386/mshv/mshv-cpu.c | 107 +++++++++++-------------------------
+ 1 file changed, 31 insertions(+), 76 deletions(-)
 
-diff --git a/include/hw/arm/fsl-imx8mm.h b/include/hw/arm/fsl-imx8mm.h
-index 60d79a6e3c..1966fa505f 100644
---- a/include/hw/arm/fsl-imx8mm.h
-+++ b/include/hw/arm/fsl-imx8mm.h
-@@ -229,8 +229,8 @@ enum FslImx8mmIrqs {
-     FSL_IMX8MM_WDOG2_IRQ    = 79,
-     FSL_IMX8MM_WDOG3_IRQ    = 10,
+diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
+index d236b9461f..fe1645f87d 100644
+--- a/target/i386/mshv/mshv-cpu.c
++++ b/target/i386/mshv/mshv-cpu.c
+@@ -307,15 +307,6 @@ static int get_xc_reg(CPUState *cpu)
+     return 0;
+ }
  
--    FSL_IMX8MM_ENET1_MAC_IRQ    = 118,
--    FSL_IMX6_ENET1_MAC_1588_IRQ = 121,
-+    FSL_IMX8MM_ENET1_MAC_IRQ      = 118,
-+    FSL_IMX8MM_ENET1_MAC_1588_IRQ = 121,
+-static enum hv_register_name NON_VP_PAGE_REGISTER_NAMES[6] = {
+-    HV_X64_REGISTER_TR,
+-    HV_X64_REGISTER_LDTR,
+-    HV_X64_REGISTER_GDTR,
+-    HV_X64_REGISTER_IDTR,
+-    HV_X64_REGISTER_CR2,
+-    HV_X64_REGISTER_APIC_BASE,
+-};
+-
+ static int translate_gva(const CPUState *cpu, uint64_t gva, uint64_t *gpa,
+                          uint64_t flags)
+ {
+@@ -652,7 +643,7 @@ static void populate_special_regs(const hv_register_assoc *assocs,
+     cpu_set_apic_base(x86cpu->apic_state, assocs[16].value.reg64);
+ }
  
-     FSL_IMX8MM_PCI_INTA_IRQ = 122,
-     FSL_IMX8MM_PCI_INTB_IRQ = 123,
-diff --git a/include/hw/arm/fsl-imx8mp.h b/include/hw/arm/fsl-imx8mp.h
-index 2be3c51af5..3acfffd30f 100644
---- a/include/hw/arm/fsl-imx8mp.h
-+++ b/include/hw/arm/fsl-imx8mp.h
-@@ -276,8 +276,8 @@ enum FslImx8mpIrqs {
-     FSL_IMX8MP_WDOG2_IRQ    = 79,
-     FSL_IMX8MP_WDOG3_IRQ    = 10,
+-static void mshv_get_standard_regs_vp_page(CPUState *cpu)
++static void get_standard_regs_vp_page(CPUState *cpu)
+ {
+     X86CPU *x86cpu = X86_CPU(cpu);
+     CPUX86State *env = &x86cpu->env;
+@@ -680,13 +671,19 @@ static void mshv_get_standard_regs_vp_page(CPUState *cpu)
+     rflags_to_lflags(env);
+ }
  
--    FSL_IMX8MP_ENET1_MAC_IRQ    = 118,
--    FSL_IMX6_ENET1_MAC_1588_IRQ = 121,
-+    FSL_IMX8MP_ENET1_MAC_IRQ      = 118,
-+    FSL_IMX8MP_ENET1_MAC_1588_IRQ = 121,
+-static int mshv_get_special_regs_vp_page(CPUState *cpu)
++/*
++ * This function synchronizes the special registers present in the
++ * register vp page, which are not all the special registers.
++ * The rest of the special registers (LD, TR, GDT, IDT, CR2, APIC_BASE)
++ * are not synchronized to avoid the overhead of a hypercall.
++ *
++ * These special registers are not normally used by the guest,
++ * and are only used in some specific cases.
++ */
++static void get_special_regs_vp_page(CPUState *cpu)
+ {
+     X86CPU *x86cpu = X86_CPU(cpu);
+     CPUX86State *env = &x86cpu->env;
+-    struct hv_register_assoc assocs[ARRAY_SIZE(NON_VP_PAGE_REGISTER_NAMES)];
+-    int ret;
+-    size_t n_regs = ARRAY_SIZE(NON_VP_PAGE_REGISTER_NAMES);
+     hv_x64_segment_register seg;
  
-     FSL_IMX8MP_PCI_INTA_IRQ = 126,
-     FSL_IMX8MP_PCI_INTB_IRQ = 125,
-diff --git a/hw/arm/fsl-imx8mm.c b/hw/arm/fsl-imx8mm.c
-index 875e92bb34..dd79188e0c 100644
---- a/hw/arm/fsl-imx8mm.c
-+++ b/hw/arm/fsl-imx8mm.c
-@@ -589,7 +589,7 @@ static void fsl_imx8mm_realize(DeviceState *dev, Error **errp)
-     sysbus_connect_irq(SYS_BUS_DEVICE(&s->enet), 0,
-                        qdev_get_gpio_in(gicdev, FSL_IMX8MM_ENET1_MAC_IRQ));
-     sysbus_connect_irq(SYS_BUS_DEVICE(&s->enet), 1,
--                       qdev_get_gpio_in(gicdev, FSL_IMX6_ENET1_MAC_1588_IRQ));
-+                       qdev_get_gpio_in(gicdev, FSL_IMX8MM_ENET1_MAC_1588_IRQ));
+     /* Populate special registers that are in the VP register page */
+@@ -709,46 +706,15 @@ static int mshv_get_special_regs_vp_page(CPUState *cpu)
+     populate_segment_reg(&seg, &env->segs[R_FS]);
+     memcpy(&seg, &env->regs_page->gs, sizeof(hv_x64_segment_register));
+     populate_segment_reg(&seg, &env->segs[R_GS]);
+-
+-    /* The rest of the special registers that are not in the VP register page */
+-    for (size_t i = 0; i < n_regs; i++) {
+-        assocs[i].name = NON_VP_PAGE_REGISTER_NAMES[i];
+-    }
+-
+-    ret = mshv_get_generic_regs(cpu, assocs, n_regs);
+-    if (ret < 0) {
+-        error_report("failed to get non-vp-page special registers");
+-        return -1;
+-    }
+-
+-    /* Non-VP page registers - TR, LDTR, GDTR, IDTR, CR2, APIC_BASE */
+-    populate_segment_reg(&assocs[0].value.segment, &env->tr);
+-    populate_segment_reg(&assocs[1].value.segment, &env->ldt);
+-
+-    populate_table_reg(&assocs[2].value.table, &env->gdt);
+-    populate_table_reg(&assocs[3].value.table, &env->idt);
+-    env->cr[2] = assocs[4].value.reg64;
+-
+-    cpu_set_apic_base(x86cpu->apic_state, assocs[5].value.reg64);
+-
+-    return ret;
+ }
  
-     /* SNVS */
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->snvs), errp)) {
-diff --git a/hw/arm/fsl-imx8mp.c b/hw/arm/fsl-imx8mp.c
-index bcd91739d9..0b46a4971f 100644
---- a/hw/arm/fsl-imx8mp.c
-+++ b/hw/arm/fsl-imx8mp.c
-@@ -619,7 +619,7 @@ static void fsl_imx8mp_realize(DeviceState *dev, Error **errp)
-     sysbus_connect_irq(SYS_BUS_DEVICE(&s->enet), 0,
-                        qdev_get_gpio_in(gicdev, FSL_IMX8MP_ENET1_MAC_IRQ));
-     sysbus_connect_irq(SYS_BUS_DEVICE(&s->enet), 1,
--                       qdev_get_gpio_in(gicdev, FSL_IMX6_ENET1_MAC_1588_IRQ));
-+                       qdev_get_gpio_in(gicdev, FSL_IMX8MP_ENET1_MAC_1588_IRQ));
+-static int mshv_get_registers_vp_page(CPUState *cpu)
++static void get_registers_vp_page(CPUState *cpu)
+ {
+-    int ret;
+-
+     /* General Purpose Registers  */
+-    mshv_get_standard_regs_vp_page(cpu);
++    get_standard_regs_vp_page(cpu);
  
-     /* SNVS */
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->snvs), errp)) {
+-    /* Special Registers - makes a hypercall */
+-    ret = mshv_get_special_regs_vp_page(cpu);
+-    if (ret < 0) {
+-        error_report("failed to get special registers for vp page");
+-        return -1;
+-    }
+-
+-    return 0;
++    /* Special Registers */
++    get_special_regs_vp_page(cpu);
+ }
+ 
+ 
+@@ -772,29 +738,26 @@ static int get_special_regs(CPUState *cpu)
+     return 0;
+ }
+ 
+-static int load_regs(CPUState *cpu)
++static void load_regs(CPUState *cpu)
+ {
+     X86CPU *x86_cpu = X86_CPU(cpu);
+     CPUX86State *env = &x86_cpu->env;
+-    int ret;
+-
+-    /* Use register vp page to optimize registers access */
+-    if (env->regs_page && env->regs_page->isvalid != 0) {
+-        ret = mshv_get_registers_vp_page(cpu);
+-        return ret;
+-    }
+ 
+-    ret = get_standard_regs(cpu);
+-    if (ret < 0) {
+-        return ret;
++    /* Check register page pointer and abort if in unexpected state */
++    if (!env->regs_page) {
++        error_report(
++                "load regs: register page not set for vcpu %d",
++                cpu->cpu_index);
++        abort();
+     }
+-
+-    ret = get_special_regs(cpu);
+-    if (ret < 0) {
+-        return ret;
++    if (env->regs_page->isvalid == 0) {
++        error_report(
++                "load regs: register page invalid for vcpu %d",
++                cpu->cpu_index);
++        abort();
+     }
+ 
+-    return 0;
++    get_registers_vp_page(cpu);
+ }
+ 
+ static int get_vcpu_events(CPUState *cpu)
+@@ -1637,11 +1600,7 @@ static int emulate_instruction(CPUState *cpu,
+     int ret;
+     x86_insn_stream stream = { .bytes = insn_bytes, .len = insn_len };
+ 
+-    ret = load_regs(cpu);
+-    if (ret < 0) {
+-        error_report("Failed to load registers");
+-        return -1;
+-    }
++    load_regs(cpu);
+ 
+     decode_instruction_stream(env, &decode, &stream);
+     exec_instruction(env, &decode);
+@@ -1977,11 +1936,7 @@ static int handle_pio_str(CPUState *cpu, hv_x64_io_port_intercept_message *info)
+     X86CPU *x86_cpu = X86_CPU(cpu);
+     CPUX86State *env = &x86_cpu->env;
+ 
+-    ret = load_regs(cpu);
+-    if (ret < 0) {
+-        error_report("Failed to load registers");
+-        return -1;
+-    }
++    load_regs(cpu);
+ 
+     direction_flag = (env->eflags & DESC_E_MASK) != 0;
+ 
+@@ -2118,7 +2073,7 @@ static void read_segment_descriptor(CPUState *cpu,
+ 
+     /*
+      * SegmentCache stores the hypervisor-provided value verbatim (populated by
+-     * mshv_load_regs). We need to convert it to format expected by the
++     * load_regs). We need to convert it to format expected by the
+      * instruction emulator. We can have a limit value > 0xfffff with
+      * granularity of 0 (byte granularity), which is not representable
+      * in real x86_segment_descriptor. In this case we set granularity to 1
 -- 
-2.56.0
+2.34.1
 
 
