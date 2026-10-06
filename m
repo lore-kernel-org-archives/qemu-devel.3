@@ -4,90 +4,134 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41114CA5FF1
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 08:38:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2774ECA600A
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 08:38:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xEN5k-00074b-Ln; Wed, 07 Oct 2026 04:33:36 -0400
+	id 1xEN7K-00041R-SO; Wed, 07 Oct 2026 04:35:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xEHww-0007vm-58
- for qemu-devel@nongnu.org; Tue, 06 Oct 2026 23:04:12 -0400
-Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xEHwk-0006Sc-Ak
- for qemu-devel@nongnu.org; Tue, 06 Oct 2026 23:04:06 -0400
-Received: by mail-ej1-x62f.google.com with SMTP id
- a640c23a62f3a-c2acc1e170cso201299166b.1
- for <qemu-devel@nongnu.org>; Tue, 06 Oct 2026 19:59:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1791341950; x=1791946750; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=PYKfHPldhWeFOjyIkeLoCzfvceJRidlCUcbU149i39Q=;
- b=Q8hsb6m8HSn5k7bMtZLm/QRjbqODEpA4HbHozIG/p2TqZ8c8kNg7Wb109BWKGEB8BR
- JBUSsbIlONjpgjObVMAS35/9sNYxqdLfc/Ez3uMhCsu9nvbXz54A6nqNN7vqNhrCQKju
- D5C+7RUYXO4gOTOdF6JMzyv8P+8x/NOjYFcwVlKXX4Pk7RDhvxOYeTyN8qkjyF0k/BRv
- dzjhgq69mxQNQUOqI9o434duYvpmtBXbaBhGOPI78mCNu2wgNUOcv9ZmL8nZCWmBkPwr
- 9h5dd/m19qyOhg1Os6WTWGi1vkzXkfiH1yThP6xIWLX/eGFVZrxhcJM4EZTWycZbyHK4
- X8Ew==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791341950; x=1791946750;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=PYKfHPldhWeFOjyIkeLoCzfvceJRidlCUcbU149i39Q=;
- b=2sZEjJ9zEJfW465YwngRhlhWgyiXqquyf+wfJ09w3/cnI1WjZbgUkmcWiGqAcVsS7O
- r69H7k5g4K4buz6kzp5ebyFDV4HxVfu5OrcbvG/0t30zlOp98/GNzNaEX67MGiur8N+6
- uO0kAZtouT6D07TMky2tBANX+2p6ozL0IHBp4IQBJIomBN2HuAIQuULL0C9Pix1WQYkA
- maGwNwkE6ckqHdQ9+CNt8rnF89mdlEEYTMI0ipTWvej3Ype9DVJooQQRld2Hg8qwzT+t
- mvRP1VjedUriTwefVkuVcKMYtGCmafmMcA4POtKxcoH5Oc17fEJ2buOIbnDI+KqWs+BG
- u0hg==
-X-Gm-Message-State: AFq9FYKuAPLhKGNRKc6JE7o7w8p8VNODBNo1MLNCZKPe3sYxeAp0+1Nx
- Avg6bxh16pEyHdLpqojB5H+kQOsRZED6ArOyDKrO80NUBTYOo60VYt+L9WObPg==
-X-Gm-Gg: AYBFou1qJP7/ud/lnqA4Fobh1p1YRwOlFT2HH22VzCXdZv3grzIpsFxZu2NsCwVz+qw
- z4q7EeN61hYxEBLaEt8St5jedcXPQITpOg4EE5AWgGzoGKXMu5Uo1rDkIBSzGAEtqmLr7oY2h4G
- lVfq6qfiGDVmxGNOEjwYpk28uAyJUjXduNNRder7Wj+MUR0PG2kw4kObuMNIqozmQaV0wShUJku
- /FjGarIkOrTkMa0/GOYY9QZq4cCFNid7AWEDj32vCmlTcsLjoLGqJl7rGrABwVBGQ1AApg/CUOC
- AOEiHDu41l64b4R6+zT1dXJvobkk8jcMULkFxLr2sprrABi/ovDmEo7yj4Clm0jtdOCHHOFLXV5
- bLKGh4YPtBvhf4VwRgaehGbXruD37dfte44O+d7nA/yzWKKbJo5G7TPGpPv7Vrl8zfWenY1lqrP
- nB4MzPKyjtcHi4aMI97cetET0uaYkuV9YY3u9vLA6oFIBlFCpJd+OsloDi5/hq7WaiAFgX8mYPy
- 4u5Ml80S2Iq0F51rNg/rjmsQmTxzt9eymSnTrIM2k2gp4sj
-X-Received: by 2002:a05:6000:40ca:b0:48c:4f83:f42f with SMTP id
- ffacd0b85a97d-48c6d0f432dmr1564943f8f.8.1791279908514; 
- Tue, 06 Oct 2026 02:45:08 -0700 (PDT)
-Received: from archlinux (pd95eda80.dip0.t-ipconnect.de. [217.94.218.128])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48c6faa93fbsm433426f8f.16.2026.10.06.02.45.07
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 06 Oct 2026 02:45:08 -0700 (PDT)
-From: Bernhard Beschow <shentey@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>,
+ (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
+ id 1xEI4V-0001BP-Ki; Tue, 06 Oct 2026 23:11:59 -0400
+Received: from mail-japanwestazlp170120003.outbound.protection.outlook.com
+ ([2a01:111:f403:c406::3] helo=OS8PR02CU002.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
+ id 1xEI4H-0008Ps-B0; Tue, 06 Oct 2026 23:11:56 -0400
+Received: from SI3PR02MB9388.apcprd02.prod.outlook.com (2603:1096:4:2a6::8) by
+ KUZPR02MB9164.apcprd02.prod.outlook.com (2603:1096:d10:61::12) with
+ Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.496.15; Tue, 6 Oct 2026 20:56:24 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=uaer+SkL094bs+Z09z9H4OT4rKWO6TxiAthhvBbydTxIFHKoBx67dGB5OP/jWztf02FhQzF3su0oHf/9fQhkqv1i0A5ckThJeSh4l04r+C78Dg8hocctPNZL8bc0eo9kuSV+yM3I5ftAj1aGbPmqqvE/8OPo7b84kbh4CTTSvsnC2pTe5PAUNWeIOAQNQZrwVjK6HdS5uYAUKPhrEO3ilTRGs/XmwdkG/4owx4TDkXalx1gE//sLRCzUWUn5wxbg0u8Ihqqy2Z42NnBGHzA8WVUo291b4sfxxdM3IEWeQiAoM6L1DRxRUtb7QmxZX4oZFNBlNEsOQyAsuTHy1v7yRw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=oHSjh9Q0SqqNOORWC5+xT03sPzPS7XlvavFR2Eua0g0=;
+ b=YabiuzWiS90XSg490QefWMjNHAuzhy5tjI5fhBBKR4NGU7yuIY8QrDkGIQZpgjA0CCtOsFn4Vrh+PGfvUvWLevP6HQc13ETvJL2CJld25+jVxmG4H50FbATvoco483bDik0I131lC0oUK20KDlBZoWFv4DG3KJMtj7tMF3r5GjhNm7u0DvudeBkOxc+wSj7SL0W9CF+datjHRUISIrTKYFFFfXtMba+jN7Ek/eyqztd8maPJ6mUx36IF/AigUgwNZKPUNMF2ijRVIqRgZEtzNrtcjzG08DCMNXOhTaLOLPYH8R2N2Mw5/8xuKxmbAzpLIiJKlYxrWv88X8tRo3qvXg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=processmission.com; dmarc=pass action=none
+ header.from=processmission.com; dkim=pass header.d=processmission.com;
+ arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=oHSjh9Q0SqqNOORWC5+xT03sPzPS7XlvavFR2Eua0g0=;
+ b=ntnfG4LOVj7xwNJWgOZEYJ//Ck156JQoXdQAHeElTk8PDvbBXNedkduEO9wd9O5OE1kUz/m76IUZJybVPRyvI1Cv7oUKYnHyoz8+4t96HKpORlroTrEpZCWN4BzMoN764H+Y333fyIpYfxfayhu6EMYmTk6LvQRImQNGD3kbSDYfjOZ58AyAT07BJ090k44fbBYI0F3zi1eBHYrYD5aPSejYVx5Ggi2AQdgT/fyKtwNHJ1q07a7cFfQ1IWLC+CxJf8tHlK7bhxkKyhV3wpIvccuG57ieyQ95Jn9S2DnqNbarXyW6BgZt+wZJ1ajqdfdd1flQ4xTsOMyM9TgjLRrcXw==
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=processmission.com;
+Received: from KL1PR02MB6257.apcprd02.prod.outlook.com (2603:1096:820:da::11)
+ by SI3PR02MB9388.apcprd02.prod.outlook.com (2603:1096:4:2a6::8) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.472.20; Tue, 6 Oct
+ 2026 09:50:16 +0000
+Received: from KL1PR02MB6257.apcprd02.prod.outlook.com
+ ([fe80::ecf9:e832:8196:215]) by KL1PR02MB6257.apcprd02.prod.outlook.com
+ ([fe80::ecf9:e832:8196:215%6]) with mapi id 15.21.0472.016; Tue, 6 Oct 2026
+ 09:50:16 +0000
+From: Bin Meng <bin.meng@processmission.com>
+To: QEMU <qemu-devel@nongnu.org>
+Cc: Bernhard Beschow <shentey@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Christian Speich <c.speich@avm.de>, Bin Meng <bmeng.cn@gmail.com>,
- qemu-block@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v5 4/8] hw/sd/sdhci: Don't use bounce buffer for ADMA
-Date: Tue,  6 Oct 2026 11:44:43 +0200
-Message-ID: <20261006094447.43491-5-shentey@gmail.com>
-X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261006094447.43491-1-shentey@gmail.com>
-References: <20261006094447.43491-1-shentey@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+ qemu-stable@nongnu.org, Chinmay Rath <rathc@linux.ibm.com>,
+ Glenn Miles <milesg@linux.ibm.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
+Subject: [PATCH 04/17] target/ppc: Correct cache line size for e6500
+Date: Tue,  6 Oct 2026 17:48:59 +0800
+Message-ID: <20261006094921.110871-5-bin.meng@processmission.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20261006094921.110871-1-bin.meng@processmission.com>
+References: <20261006094921.110871-1-bin.meng@processmission.com>
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
- envelope-from=shentey@gmail.com; helo=mail-ej1-x62f.google.com
+Content-Type: text/plain
+X-ClientProxiedBy: TYCPR01CA0136.jpnprd01.prod.outlook.com
+ (2603:1096:400:2b7::6) To KL1PR02MB6257.apcprd02.prod.outlook.com
+ (2603:1096:820:da::11)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: KL1PR02MB6257:EE_|SI3PR02MB9388:EE_|KUZPR02MB9164:EE_
+X-MS-Office365-Filtering-Correlation-Id: 4ba4bc2d-b030-49ec-affa-08df238f3975
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|23010399003|1800799024|366016|376014|18002099003|22082099003|6133799003|10067099003|3023799007|56012099006;
+X-Microsoft-Antispam-Message-Info: 7aarpWQHGBhdB8IffypjyqEq7xlI+qQeLRd3g3QYd+KIid1E1ewQBGhCkT9uyET0c1OOMCOP9JhMLZHT3amLD8NRCJrQDcGWulArTZsyKyLEZI4V9M7CU2MtLARrAVPOjK5H1b78CHXsJzJOzhNvEQME9jo1kXZbiRrLl0ZnxuT2pbiC4Zo+qOHbvqxpjqhVnb9Ic99sOh9eouK6DSa9VDP00aSGa/ThJ2xJYjF7bDxz/V9F8DlOw4J1aTURkn5zzPLa5UkqZV+PHJCGphCZHUSkKeXa6C/5sC/JT3xVuUP0AIuVN4iWhkmX61i6Q44kcUbSlctkHO1u3kuTY7ysNEpvb/usMuv/t+jdAJxFEEp6PvFYysDxEX9LHH4UXRyGdXyuhFpCs3Va7u7/QDXWtDUWuVZEbxPic4nhRwBVapBTNISKUEe5VU2Y/I18cMqNhttP++G2QE3fmlyXTkBqFj35Dj3A8z0NKE8meOmcY+oUyHPo2+eYHxzxx3m6wliAz+fZpbfJ1gnJpqS3vVsqfZx8rH8U8vLx6tzIRG6ZUwTvsDlzPBaYgaUueqp4YeKDvmIQmZTThmhF4mH2FF32p2Y9hdXxIcA4OCqfGcJSzrQox5yqDoJ/mDOdBhKVc6/MO8q4vf+jQmdVGKwDtVQAW3+bQkQo8exEF/j9omZwC74=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:KL1PR02MB6257.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(23010399003)(1800799024)(366016)(376014)(18002099003)(22082099003)(6133799003)(10067099003)(3023799007)(56012099006);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?sapiOyj+eQN8MTCzJ5iRYKeMqhWsH7MOMh+SEvrC/+p0UELPEiZiRS1FRO9D?=
+ =?us-ascii?Q?u2/zF5L+aUoKAclBMGRGWqQiAK+NAP0peI2CfDHAD+RvXv6ow/ewLpZSiqYd?=
+ =?us-ascii?Q?i/MECuCHnhxeugsZHsb8HtxZqLmPk4zgi2pHvjP+D9qHMaA3z426biDWBfiA?=
+ =?us-ascii?Q?y3h97FJyf8Jso9+eKjTVPLVcB/hCkrJSCvFSHwHbidzgqm9EA7u4myob11l7?=
+ =?us-ascii?Q?swqscJsNcWK9cK4JSb0SrmTYyhb9yDC6jGkmzWa+oBHWqp3k+mSftQIemjVj?=
+ =?us-ascii?Q?dWnpYXaAK2UrSlH2ydCoPZfGexdm+/xgacan47xmiOawqIvw8nkVa+QdFeSJ?=
+ =?us-ascii?Q?RPzTBzlnApzosC9vq0ik4LTFq1UAhrS6SbfQTZwVMnGn/UB5nbTBD20URgGi?=
+ =?us-ascii?Q?sC5r2N8dILejR1HZb1lKywM24HBGAAs46Mfuywf8HtI54CUN2KPr+0ZQx05f?=
+ =?us-ascii?Q?wMInzXyTavrtEwm2XgvJITPXIzFPuerP8qdlTgnLjL9KuYxmmWRXFMqkrcJP?=
+ =?us-ascii?Q?2gvZ8WNLrb6akgjxdi8GL2FZZSK8rr9C9mCBm9ohN1Mn2zMvYxIrwnae5aMe?=
+ =?us-ascii?Q?F+0UWQScZHdl7q7Yo6CIP6VTF3JskC3yE0gHjaFnwXyYbejd7DF1jjS1Xcsz?=
+ =?us-ascii?Q?NYbm3BRZQKPGJOrP6gtp4Qt6CPhDHremFeLs+m+XX9KyPml9VI1FDPbawkbg?=
+ =?us-ascii?Q?6SxrKKtBU4C1y2tMSwviexPudcr1ytUoMYjt/kq3GB8g5y8XTYRa3RUDuN1e?=
+ =?us-ascii?Q?0aRGYqJNyFrqqz89dH4taWdRymS0SEdNsBi0qy4Zpqi7USyCHkouZ3Wa3/2U?=
+ =?us-ascii?Q?qALI54nGNx8jHjjWEnyvvWYuxdK98w3pcIaR2KbmndrlkE9ThYRVXEvMoDok?=
+ =?us-ascii?Q?5hzI8Xh4lkWK2BVtsTTNxhJUO2KT8XfEnDzkxT08PYwawicuhj999/Cc9u4U?=
+ =?us-ascii?Q?x/4rj3+uu3hf8S5vmfVw468LTuuSqqwUW055U0IMFI3Sc/Y3tBC966Mk1HZt?=
+ =?us-ascii?Q?ZvU0QC41K76e/R/5Vl37RNv55Ud6wQkXnP2LBrR1PxSA2EWXj6Ehx7jYX/bQ?=
+ =?us-ascii?Q?dNgG84jCd4nky9n4mS4ZYlu6K2lLHLXQLUVZ3iBGbO0br4eX4Qg4swH/E0WD?=
+ =?us-ascii?Q?bSRgsqm3CgH+BcS6LVHcZoarMnVywRgyqouXNYuiHXHx6HMIrWxt9r44AQ1O?=
+ =?us-ascii?Q?tz7kOKTMIjpaLMa7WQILpu9rcKRkm8O4ZZcZ3+0GRungHrsFSiGJyuughCyl?=
+ =?us-ascii?Q?/EFrQbh+t7sqiAMZ+4/FU5ksvRvZRoh1ZdDlD2FRGPkDU2/LkfTw8ZBq9OEW?=
+ =?us-ascii?Q?VLaNqIBk+Iw3jJiKnoONRu3qtcGM9xdwr+y143hr86elY8Q/WbUlSXmVxXQK?=
+ =?us-ascii?Q?imhsd1De4m03LMhHUBOip7iD86BAf9/YlIKdOdsE3I5r2hBXpyqL/17DhRSL?=
+ =?us-ascii?Q?S6dDhCD57kUNVpSFdvtInx2hEBvmV3bJkRfGP9Bf6a/AXxExWLXPfE2NqJSA?=
+ =?us-ascii?Q?oKSThBD8jSaWCwOvEEAL6pUIv8B0VGLryKyTShRcbw+u5k40RCIsn4yJ4RD7?=
+ =?us-ascii?Q?jTQ5tH9HsLHUg7Jli3nI6SCtF+nzPFt/deSIKfZcyq1QAE8jPWyXulvSsfsP?=
+ =?us-ascii?Q?RKt8bR2BVpFDkfdYqn+Q6vMW4NEAay8rIB1qH7YwnyhzXizbmEp+8UtWY4vh?=
+ =?us-ascii?Q?5OXcvzfd56XMYKegWftJA7LOBgpoGvacosQzZ9jMqxHt7ykgBu4TZSDlvyg+?=
+ =?us-ascii?Q?7PDmCDXwubdzI1eS5PJY8GdCqGuIXfg=3D?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: 4ba4bc2d-b030-49ec-affa-08df238f3975
+X-MS-Exchange-CrossTenant-AuthSource: KL1PR02MB6257.apcprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Oct 2026 09:50:16.3323 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 6//41+nJCSFp88KxY1ak/JLLgkvbHBdSpCqtl2CTbJl82Ww4XMdrChldA0APrqK0j/k7d8CpUQl+8/ZLNa/D1I0mUNjQ6Y0G16T+J6i7uZo=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SI3PR02MB9388
+X-OriginatorOrg: processmission.com
+Received-SPF: pass client-ip=2a01:111:f403:c406::3;
+ envelope-from=bin.meng@processmission.com;
+ helo=OS8PR02CU002.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -104,159 +148,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Christian Speich <c.speich@avm.de>
+The e6500 L1 instruction and data caches use 64-byte cache lines.
+The cache configuration registers already describe this geometry,
+but the translator used 32-byte lines for cache operations.
 
-Currently, ADMA will temporarily store data into a local bounce buffer
-when transferring it. This will produce unneeded copies of the data and
-limit us to the bounce buffer size for each step.
+Match the line sizes to the hardware so that guest cache management
+and dcbz agree with the reported configuration.
 
-This patch now maps the requested DMA address and passes this buffer
-directly to sdbus_{read,write}_data. This allows to pass much larger
-buffers down to increase the performance. sdbus_{read,write}_data is
-already able to handle arbitrary length and alignments, so we do not
-need to ensure this.
+Reference: E6500RM (Rev.0), section 2.11.4 and 2.11.5
+https://www.nxp.com/docs/en/reference-manual/E6500RM.pdf
 
-Signed-off-by: Christian Speich <c.speich@avm.de>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Fixes: 54a50dae93fa ("ppc64: introduce e6500")
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Bin Meng <bin.meng@processmission.com>
 ---
- hw/sd/sdhci.c | 102 +++++++++++++++++++++++++++-----------------------
- 1 file changed, 55 insertions(+), 47 deletions(-)
 
-diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
-index bd74c60f72..2f52b252ce 100644
---- a/hw/sd/sdhci.c
-+++ b/hw/sd/sdhci.c
-@@ -852,7 +852,7 @@ static void get_adma_description(SDHCIState *s, ADMADescr *dscr)
- 
- static void sdhci_do_adma(SDHCIState *s)
- {
--    unsigned int begin, length;
-+    unsigned int length;
-     const uint16_t block_size = s->blksize & BLOCK_SIZE_MASK;
-     const MemTxAttrs attrs = { .memory = true };
-     ADMADescr dscr = {};
-@@ -894,66 +894,74 @@ static void sdhci_do_adma(SDHCIState *s)
-             if (s->trnmod & SDHC_TRNS_READ) {
-                 s->prnsts |= SDHC_DOING_READ;
-                 while (length) {
--                    if (s->data_count == 0) {
--                        sdbus_read_data(&s->sdbus, s->fifo_buffer, block_size);
--                    }
--                    begin = s->data_count;
--                    if ((length + begin) < block_size) {
--                        s->data_count = length + begin;
--                        length = 0;
--                     } else {
--                        s->data_count = block_size;
--                        length -= block_size - begin;
--                    }
--                    res = dma_memory_write(s->dma_as, dscr.addr,
--                                           &s->fifo_buffer[begin],
--                                           s->data_count - begin,
--                                           attrs);
--                    if (res != MEMTX_OK) {
-+                    dma_addr_t dma_len = length;
-+
-+                    void *buf = dma_memory_map(s->dma_as, dscr.addr, &dma_len,
-+                                               DMA_DIRECTION_FROM_DEVICE,
-+                                               attrs);
-+
-+                    if (buf == NULL) {
-+                        res = MEMTX_ERROR;
-                         break;
-+                    } else {
-+                        res = MEMTX_OK;
-                     }
--                    dscr.addr += s->data_count - begin;
--                    if (s->data_count == block_size) {
--                        s->data_count = 0;
--                        if (s->trnmod & SDHC_TRNS_BLK_CNT_EN) {
--                            s->blkcnt--;
--                            if (s->blkcnt == 0) {
--                                break;
--                            }
-+
-+                    sdbus_read_data(&s->sdbus, buf, dma_len);
-+                    length -= dma_len;
-+                    dscr.addr += dma_len;
-+
-+                    dma_memory_unmap(s->dma_as, buf, dma_len,
-+                                     DMA_DIRECTION_FROM_DEVICE, dma_len);
-+
-+                    if (s->trnmod & SDHC_TRNS_BLK_CNT_EN) {
-+                        size_t transfered = s->data_count + dma_len;
-+
-+                        s->blkcnt -= transfered / block_size;
-+                        s->data_count = transfered % block_size;
-+
-+                        if (s->blkcnt == 0) {
-+                            s->data_count = 0;
-+                            break;
-                         }
-                     }
-                 }
-             } else {
-                 s->prnsts |= SDHC_DOING_WRITE;
-                 while (length) {
--                    begin = s->data_count;
--                    if ((length + begin) < block_size) {
--                        s->data_count = length + begin;
--                        length = 0;
--                     } else {
--                        s->data_count = block_size;
--                        length -= block_size - begin;
--                    }
--                    res = dma_memory_read(s->dma_as, dscr.addr,
--                                          &s->fifo_buffer[begin],
--                                          s->data_count - begin,
--                                          attrs);
--                    if (res != MEMTX_OK) {
-+                    dma_addr_t dma_len = length;
-+
-+                    void *buf = dma_memory_map(s->dma_as, dscr.addr, &dma_len,
-+                                               DMA_DIRECTION_TO_DEVICE, attrs);
-+
-+                    if (buf == NULL) {
-+                        res = MEMTX_ERROR;
-                         break;
-+                    } else {
-+                        res = MEMTX_OK;
-                     }
--                    dscr.addr += s->data_count - begin;
--                    if (s->data_count == block_size) {
--                        sdbus_write_data(&s->sdbus, s->fifo_buffer, block_size);
--                        s->data_count = 0;
--                        if (s->trnmod & SDHC_TRNS_BLK_CNT_EN) {
--                            s->blkcnt--;
--                            if (s->blkcnt == 0) {
--                                break;
--                            }
-+
-+                    sdbus_write_data(&s->sdbus, buf, dma_len);
-+                    length -= dma_len;
-+                    dscr.addr += dma_len;
-+
-+                    dma_memory_unmap(s->dma_as, buf, dma_len,
-+                                     DMA_DIRECTION_TO_DEVICE, dma_len);
-+
-+                    if (s->trnmod & SDHC_TRNS_BLK_CNT_EN) {
-+                        size_t transfered = s->data_count + dma_len;
-+
-+                        s->blkcnt -= transfered / block_size;
-+                        s->data_count = transfered % block_size;
-+
-+                        if (s->blkcnt == 0) {
-+                            s->data_count = 0;
-+                            break;
-                         }
-                     }
-                 }
-             }
-+
-             if (res != MEMTX_OK) {
-                 s->data_count = 0;
-                 if (s->errintstsen & SDHC_EISEN_ADMAERR) {
+ target/ppc/cpu_init.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
+index db807f64c2..29f28be7e0 100644
+--- a/target/ppc/cpu_init.c
++++ b/target/ppc/cpu_init.c
+@@ -2890,8 +2890,8 @@ static void init_proc_e500(CPUPPCState *env, int version)
+         l1cfg1 |= 0x00800000; /* 64 byte cache block size */
+         break;
+     case fsl_e6500:
+-        env->dcache_line_size = 32;
+-        env->icache_line_size = 32;
++        env->dcache_line_size = 64;
++        env->icache_line_size = 64;
+         l1cfg0 |= 0x0F83820;
+         l1cfg1 |= 0x0B83820;
+         break;
 -- 
-2.56.0
+2.53.0
 
 
