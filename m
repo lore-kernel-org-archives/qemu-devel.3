@@ -4,106 +4,147 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 331CBCA600C
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 08:35:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7621CA600B
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 08:35:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xEN3c-0003or-FB; Wed, 07 Oct 2026 04:31:28 -0400
+	id 1xEMzC-0007Of-GQ; Wed, 07 Oct 2026 04:26:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
- id 1xEHjJ-0006BQ-Nq; Tue, 06 Oct 2026 22:50:32 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
+ id 1xEHiS-00066r-LQ; Tue, 06 Oct 2026 22:49:15 -0400
+Received: from mail-japaneastazlp170120005.outbound.protection.outlook.com
+ ([2a01:111:f403:c405::5] helo=TYPPR03CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
- id 1xEHj2-00040V-Hi; Tue, 06 Oct 2026 22:49:54 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 696A5XVP1603478; Tue, 6 Oct 2026 10:57:19 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=FICTGFNUbsZvRU5/q
- kM31KCJEdZMVkEI0BlR/dbmCVY=; b=HpaUxMZQClW+KKZR+9bxPXG6/Qafdfgts
- Eb9uyVkNaTpokTRerxhu6lqm3z8ENnpzPt9B1ZZn6o+H/oCaBIQG8dhSE/UsGZ0+
- Q3XDVVZdKxmW+q64AlRmtQEOshd6mot2+zm0ouY7idwa72qOCzNI4W1wdPn9ZrtG
- iovI6ItUwAyI3PwzOisLaHdw0s8vBH5lei8Hdd+n9IF485XCcf09nArbvn7dbr0B
- d32ebIOmpJ7hcngJJw9P3mtRGq3KoZkX/3jb81nwPkFAFmUQk2qD+Zn4eahKV2mR
- cLOYyGc0O52pzDqKF9FeW0p5z9IluPSJpw90hwkMOXFNoL8QScADA==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4h2scrfguc-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Tue, 06 Oct 2026 10:57:18 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 696A6Ift108866; Tue, 6 Oct 2026 10:57:17 GMT
-Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4h3d1jsjbs-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 06 Oct 2026 10:57:17 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
- [10.20.54.102])
- by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 696AvDKO42140152
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 6 Oct 2026 10:57:13 GMT
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1AAF62004D;
- Tue,  6 Oct 2026 10:57:13 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id F3A0120040;
- Tue,  6 Oct 2026 10:57:10 +0000 (GMT)
-Received: from li-18a0a34c-33fc-11b2-a85c-d9f1631c5692.ibm.com (unknown
- [9.87.135.85]) by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue,  6 Oct 2026 10:57:10 +0000 (GMT)
-From: Chinmay Rath <rathc@linux.ibm.com>
-To: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, harshpb@linux.ibm.com
-Cc: npiggin@gmail.com, amachhiw@linux.ibm.com, uverma@linux.ibm.com,
- milesg@linux.ibm.com, Chinmay Rath <rathc@linux.ibm.com>
-Subject: [RFC PATCH 2/8] target/ppc: Enable Dense Math Facility for ISA 3.2
-Date: Tue,  6 Oct 2026 16:26:13 +0530
-Message-ID: <20261006105650.189752-3-rathc@linux.ibm.com>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20261006105650.189752-1-rathc@linux.ibm.com>
-References: <20261006105650.189752-1-rathc@linux.ibm.com>
-MIME-Version: 1.0
+ (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
+ id 1xEHiH-0004Be-OF; Tue, 06 Oct 2026 22:49:05 -0400
+Received: from SE2PPF27A9EBFF5.apcprd02.prod.outlook.com
+ (2603:1096:108:1::80c) by OSNPR02MB9899.apcprd02.prod.outlook.com
+ (2603:1096:604:47e::21) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.496.15; Tue, 6 Oct
+ 2026 16:17:35 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=CtQblebpgnxSYgBXgvn1PnkK2dBkvvERvIc4SK5pttt68wlSxbUsUuUAXOT3GBXJqSu29PzLoCTfSG9JOvjhuz0UMbJdITotc5xGxrieVWLWYakS8iLhROWMWSQWyVXlzqeKcQLR/7UjqOp5iZdIcdjvQ9zHGX5tNwkUG35cQ+5g5RH6d+l49F3ie2dOaLrynkxcpnm8n9kXUYDxefiUddaOlf/icHA1lLEGVRUx58Pe31SnRIIrz/ttfOhok8eYOv7Fp5rmm8GkJlb6xfok9EQU8JI82es0RvZ/pyppstWHy8WXKVZ6b4yhIhhrCd5hWK7JeHD3kdcD4rOFnaZUyg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=tQIf0BDr+vzZiCYTRmn/f/kqhZiX4bckrBeoyjQ5nUI=;
+ b=SQMIuImtH++vmqywesBLsiPwcMq0laboEmLUUc9Ty1XI6JJ29jor2ox2PjOP813dbQzMd/xhJHpJvxKOzuYBtK7Hsgs+GZ6fIdOus03XiORQHvyXEvqw9A2N/CJcESu8FVcQAa2yzln7K0xloUxfX+MpIMEf4JWStXF33x3JrT3EJesqJWJE+jHo1Lk6RXQ2ejeBmFnkIKpzIVhUZd2yt5liXrKn3Z43UuHKTeMa/nHDTRj+nekl/eXIwbfALjKpdgp+MzhHkRrqX5+0cHLzpctMvRxSusKfLf1uD1Z0I9uj9RymNgT0wbPvgQNbNaRnIGrA8jdrWYDW0WvO7AMdlw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=processmission.com; dmarc=pass action=none
+ header.from=processmission.com; dkim=pass header.d=processmission.com;
+ arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=tQIf0BDr+vzZiCYTRmn/f/kqhZiX4bckrBeoyjQ5nUI=;
+ b=h52Dfb5E2nFZENYtS6zSUbiozyiSJNORXMUsncAKqre85PULKjqw9ZFv6Q+2mG8mzdUH6QIAQb4t8pY5JkBV95hlyV0FcliI9RXaL9JKcsRG9TLhu6cP2ch50ojjFkQVS51gSWWQhbbPHh9gvXuwHps+QBE/6/BQVdQkJzNGOWqJUDkBi4XUempMCRR0Xjptr8Wfye5Q1tPx8fNhGr1j/4c1RN6l7WMqXiG6/ono2TRgXpCcnLaUyyVtVgrdGmgk42j7rRS/IGaPLatsErIICup9nWFf6rBxxr+sFx+VU/6PyPN08qzAtCSuVSCJ37qxV/Q9OjQOXr1YCdIxUI0OzA==
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=processmission.com;
+Received: from KL1PR02MB6257.apcprd02.prod.outlook.com (2603:1096:820:da::11)
+ by SE2PPF27A9EBFF5.apcprd02.prod.outlook.com (2603:1096:108:1::80c)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.472.20; Tue, 6 Oct
+ 2026 09:50:04 +0000
+Received: from KL1PR02MB6257.apcprd02.prod.outlook.com
+ ([fe80::ecf9:e832:8196:215]) by KL1PR02MB6257.apcprd02.prod.outlook.com
+ ([fe80::ecf9:e832:8196:215%6]) with mapi id 15.21.0472.016; Tue, 6 Oct 2026
+ 09:50:04 +0000
+From: Bin Meng <bin.meng@processmission.com>
+To: QEMU <qemu-devel@nongnu.org>
+Cc: Bernhard Beschow <shentey@gmail.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Chinmay Rath <rathc@linux.ibm.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Glenn Miles <milesg@linux.ibm.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Nicholas Piggin <npiggin@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-ppc@nongnu.org
+Subject: [PATCH 00/17] target/ppc: Correct Freescale Book E CPU models
+Date: Tue,  6 Oct 2026 17:48:55 +0800
+Message-ID: <20261006094921.110871-1-bin.meng@processmission.com>
+X-Mailer: git-send-email 2.53.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA2MDA0MiBTYWx0ZWRfX2RbZXnpsXOHg
- 8/VqpiBCEmlsxkS3hjzz+GFYRGR4IXaIBylEixbbU18v8Ogy05Obw9RIJu6EPKKDaYGW/m74XOe
- Y37nXejfImItYp1sb3AxQhrsNt0PQY4=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA2MDA0MiBTYWx0ZWRfX1ul9rUjdKfgb
- fGtAWM1tzmITR7p1w5ti4B8tNeulw1H4hBJX/3wibi3YDVj7HAaTtza+TZ635TZ/n6gfea60pyX
- cJLRpkoT9GBjHMrAq6vShHDGQDR4vHJav8lDgv6Q6k/Nl1GuxS/Lio6leafTGQtaPEp4mNztgtY
- Z8/+3hgIGIrDRiPg4sfuG0f032RImAm+24RjAbBDn5Viw19OWJONRssWZXNa6Rkr7R56XZDEaeX
- fSwwGB8sYm3LYi8012mwUl1Im7rL+ox34k7eqjc3GO11pKFCRf7rOhX+q3D+mNAcP8pVM/shOU6
- eLWjL1tDx+k+VeVK5C4hDkVYLGGLxdwMZuVOqnFtQicPEPdbyHKnWkqOgLNcQrFBNt9Vwn1CYQf
- MjxHKbh04/xba+zeVf9REQc9X5hg18d9mW6lyB0mDAkjbfTxLK6W5Z9wA3B6KqfWvob6AIXiRLF
- HJL8q0Dcy32vZeWb2og==
-X-Proofpoint-GUID: 47kyCsAjE7Mg-p2j2--csrAXrRWzqO4D
-X-Proofpoint-ORIG-GUID: gSrBdjKQrj2IwX0Z9Aa0TrB3f_bHAJa9
-X-Authority-Analysis: v=2.4 cv=B7osQ+tM c=1 sm=1 tr=0 ts=6ac4d40f cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8 a=WKNKSzKWUzdxrvhZDZcA:9
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-10-06_03,2026-10-05_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 bulkscore=0 malwarescore=0 impostorscore=0 phishscore=0
- clxscore=1015 spamscore=0 adultscore=0 lowpriorityscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2610060042
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=rathc@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+X-ClientProxiedBy: TYCPR01CA0136.jpnprd01.prod.outlook.com
+ (2603:1096:400:2b7::6) To KL1PR02MB6257.apcprd02.prod.outlook.com
+ (2603:1096:820:da::11)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: KL1PR02MB6257:EE_|SE2PPF27A9EBFF5:EE_|OSNPR02MB9899:EE_
+X-MS-Office365-Filtering-Correlation-Id: bc0c58f9-307d-49d2-4e74-08df238f3269
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|366016|1800799024|7416014|23010399003|376014|56012099006|10067099003|18002099003|6133799003|3023799007;
+X-Microsoft-Antispam-Message-Info: 6DZPG+GnmpQdsU0seMeCLH8DmShWMz09qrywXCa5OxC1c7UgahXTz4QexKneT1+t/VCtAMRizIeoAIj6VRw2gOEsnJ+hI5bzRNDY4D2wFMtbJisQ+V8xOPflO/SQfJZQQO7CZ7ObhzDZJimMzr1GDXgntGLAAMUboueR2wRzbpVSGYwk1jkKhGaKyIKt5apRB0y5tJic6c7VOsR23ifKwRWg4d6VFtoMgTIvz2SBUHgq5WNSzb1zDETaLjwgpBemK9xVh+UhbvqfOjHff/ZFF2g1Mne1or8TNcjXfkjAaLrxMeOa51FyTbl33g7Wcgi8qncVldhoECc2YZR8s/lRjpr6ibC/nUM6NUzxLm132FhxGHoqRKSPUpg4fuBDbhuh9EMBdEMc0EVSgO21/ivoLuk5Q2MlrvWSnr7UXUS3bIhB0VTk2C00uB8Nd6yBuIe+v834xr2akvZxL2lVG6Wwwlys9a0ThVmQExWpa0GVnXG/SxXAfJzY3xHgVeaX1jRC1NlKqx+zrIY4gAXr6Pp9ecBXBkOl8ldkc4n5dtbolNf5I2QLWOkA/betD9FHNUZ83dGmtx3t6npbKHncqDukIMhQdzYigUDmhTtwKTHFmKNXWsqGfDkNNWD7ZfV00dJNEovuMpZm80ekR4SqHXvevXbfyBREs4QQwKTCuLrvK/8=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:KL1PR02MB6257.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(1800799024)(7416014)(23010399003)(376014)(56012099006)(10067099003)(18002099003)(6133799003)(3023799007);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?NTUramJNMnNJdFRiMllSN0t5aVJOUGl3TXJQYUNDS3VUTS96V3J4MFRzZ0dT?=
+ =?utf-8?B?djA3MmtzWkhmcWV6RFVBWk11bEFMSW1Xamp5bGRrYTBPZEl2RVpuZUZjQklr?=
+ =?utf-8?B?ZmJDMmJiZzI3WWJuVzVjZmNXNDZyQUhyQnU3d2R4WkhOVUFPNWFYRTU1c0x3?=
+ =?utf-8?B?bE9CWmlqV3A5ZHo4elUvRHcyVStIMDgxckVReXIxSFMrVkR2dTRQR3FEVGtl?=
+ =?utf-8?B?YldYc3BVUGh4eUFWSHhSaUhoVEhJd25IS08xbGY1QW11cGJ1bzgraC94U0xQ?=
+ =?utf-8?B?bUFRMkxReFZXWGp6Z2lwcTQ4SXlQeGFnWVdzYi9rZnBGdHZWblBHT3VZU1BJ?=
+ =?utf-8?B?enBLc3dTVFVEck1TS3haVjlubzhBcGdkOFpicVJnVHUvMmVidDZ5QzdZclMw?=
+ =?utf-8?B?d3Rra1B2QWV4czJEN0lHL0NhMVA1a0JlZklVY0tnaDJJK0hOU3dhTE5ZV2NV?=
+ =?utf-8?B?dHI4eE04Yk5yMTF0Yi9BMmVmN2RGQnZFZlJIVDJ1STZ5SDJMWjlEdVB0b0c1?=
+ =?utf-8?B?aW9pV2RvU2tCWjR2OFZ6VzFiYnFlY05mcXRBeW5rS0s3MWx3YTBPaHdTZVNq?=
+ =?utf-8?B?T3hhekMyeU1JczJvNmRLMGhCMEkzNGpwQVgzdEhyRHFHZXU0NGVJWGlndzBF?=
+ =?utf-8?B?a2hjUUhWT3A3RndZTk5aRnVOYnNoWVdRaS9KOGZaV3NXcitRbkJlVnN3WTFv?=
+ =?utf-8?B?QmlwUkxObU9XSUpQM1cyRTdFcW5lcU1RR0Q0cW9JZm42RVJ2clBFMDhRMlFw?=
+ =?utf-8?B?QXpDd2NvcU5JU2VvcnRnS1hzOXFiY0U4T2FQb3I0WUprL05kYkNUNUt0N0pl?=
+ =?utf-8?B?blB2Q3J6YkJ0U1VvMEIvTGFkMlUzWjh0bW8ydndnWm5aemxBOEh5RmpOM2dW?=
+ =?utf-8?B?N09HdXUySEord1EzcCtLeDI3Y2IxQTFabDFjcHNCcm83b2lvV2E2MUY0aWh0?=
+ =?utf-8?B?cTYvaUc4UnVKMmNlNjJpa3R4UnhYWFN3a0hRNGRUbXRKb09HVHhKS21LeEhZ?=
+ =?utf-8?B?cTB5MVZ4MERRUGU3eVhNdklSMzFGSVpTaGluMkpBN05ZeVdyak9NUTBVcFEv?=
+ =?utf-8?B?UDl3L0ZLbG0yZTlsZnFsMDVMZTF6azhIdVlFOGpaUDdRdzFZL0grUzhxVDdI?=
+ =?utf-8?B?S0xEcGhxS2kwWEhWajQ5MTdZU0N3bG5ybC91T1hsMFFNZExwb01leXd1bFk3?=
+ =?utf-8?B?TENGc3dYc28zZnJRZkNOUkNGSmk1NWFqWDJpWUxvdnN4cTFaMnBkUlloODY4?=
+ =?utf-8?B?QklvV1A2Rk92eVA3U3FraUhwSmREeDJaSGE0TlIxVFdJWTFUbFVmOXRPbXdN?=
+ =?utf-8?B?ejNIVmVuYUV4TDVBbHFhdDhOYnRwYXcvYTlIMFRBTHN2SU1qcDlzQzd1RUcv?=
+ =?utf-8?B?QTJseEJqYStyd2JBTHNuWUNwaHE1WWVXNm1aZEUvV2pKZXk1eEd2THdGL0lC?=
+ =?utf-8?B?WFVUdHJ1bWNiZmN0RG1YbUw3SFVqZUNTOWxJYmplZnJtQ1Q3K1RuV1BaN3Uw?=
+ =?utf-8?B?M0lMWlpvUjN2Z2xTZUx6SzJwd3dEMDZMY0RYSnM3Rmw4cDMvZzhQUWdlOGo3?=
+ =?utf-8?B?V0cxRmtoUzFsd24wR1E4K2p0M2x1UG5jL25EQWFKOXp5Nm5WcWZWYnNYY09P?=
+ =?utf-8?B?K2FENE1YNCs2bnNOZlBxUE1FRFRBM2tMejFPOXp2TVhaS0xTdTlOWnowOFU2?=
+ =?utf-8?B?MWwxbGFMZktEOUtXcFVGUDZkQmVnMXpNT2o2dDVwcTIvc09Od3NIS3BIN01N?=
+ =?utf-8?B?Rm1KMmt2ZUVURlVFdHNDajVad3ZhMkp0TUJta0d5NXJBS0ZaTlIvN3MzVkdq?=
+ =?utf-8?B?ZVR5SkFHdEo5RmNhY0h6a2hVeUxXWlNtR09NOWtnWXFlUWxQc09sazArS0No?=
+ =?utf-8?B?eU0xaENoV2MwZ2doOUlXalErK1Z1dUF1dG1uNklBZVF0WmpzNEpyMnNRVUJu?=
+ =?utf-8?B?emRBYXB1bWhFby9Sa0FObVNMRWFJYzNTTzdJckFQQWpjMnd0dThVTU9YaXJ6?=
+ =?utf-8?B?WjB5K0ZVMHB3Z25wNlc1bXRESyt2MitRVWluTDFtZjUvL1EvTVZsVTd4OHRV?=
+ =?utf-8?B?bEptNlRESlNEeDVLZm5OZmkvbkdZaXhKN1hJRnJPbGtCNmdBZUdTSkh2aUYv?=
+ =?utf-8?B?d0tZUjVzK2ZrcXMxMFhLYkZoc0lmYXZENURqbzFZTUdYRWdQNEU4YU1nT3RN?=
+ =?utf-8?B?UFo0bW9HTy9TVmZlQU9WY3BvMXJtaVNUWTRyckppWTJEbG9oN2M2bExwVU8v?=
+ =?utf-8?B?Q0FlUmZjV3dQWXJjQmg2QnJYUVFRT3pHQjB0OTNDYStYc21yT252bkJJMmg5?=
+ =?utf-8?B?NnAyU2pxSmgyckdwRWwwT3Zrc2RqTmRTSDNxTkVlZ1N3RXlYMk5TUzJDSm0z?=
+ =?utf-8?Q?OYK+Y4vsfAczJeJU=3D?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: bc0c58f9-307d-49d2-4e74-08df238f3269
+X-MS-Exchange-CrossTenant-AuthSource: KL1PR02MB6257.apcprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Oct 2026 09:50:04.5100 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: N8U2WCIMJsmhD0UwZIX3+8uHE+1bbDo6oRC1Nhrf664Dj7HvuGnWaooRh19SXdHnWVTuJAnwYujqiz+lOu6Zb2VGoBHuAtZij98YF+/mOz8=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SE2PPF27A9EBFF5
+X-OriginatorOrg: processmission.com
+Received-SPF: pass client-ip=2a01:111:f403:c405::5;
+ envelope-from=bin.meng@processmission.com;
+ helo=TYPPR03CU001.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -120,116 +161,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch implements the dense math registers (DMR) that are introduced
-in RFC 02653 for ISA 3.2 as part of the dense math facility (DMF).
-Also adds a new hflag for the same.
+This series corrects SPR access, cache configuration and instruction
+availability in the Freescale Book E CPU models. It also adds system
+TCG tests for e500mc, e5500 and e6500.
 
-DMR which are 1024 bits long are implemented as an array of 'rows' which
-are 128 bits each. DMF instructions manipulate DMRs in the granularity
-of these rows.
+The patches are grouped as follows:
 
-Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
+- patch #1-#4, bug fixes to PIR write access, the MAS5 SPR number and
+  cache block/line sizes (qemu-stable cc'ed)
+- patch #5-#6, complete e500mc/e5500 L1 cache configuration and
+  remove redundant e6500 cache geometry bits
+- patch #7-#11, register the missing cache, MMU-assist and sevearl
+  control SPRs
+- patch #12-#14, split the PowerISA 2.05 instructions to several sub-flags
+  controlled groups, due to differences seen on the e500 series cores
+- patch #15-#17: Add TCG tests for illegal-instruction exceptions, byte
+  comparison and parity results, and FPSCR field-mask handling
+
+
+Bin Meng (17):
+  target/ppc: Correct PIR write access on e500 cores
+  target/ppc: Correct the MAS5 SPR number
+  target/ppc: Correct the e500mc and e5500 cache block size fields
+  target/ppc: Correct cache line size for e6500
+  target/ppc: Complete e500mc and e5500 L1 cache configuration
+  target/ppc: Drop redundant e6500 L1 cache geometry bits
+  target/ppc: Register L1CSR2 on e500mc/e5500/e6500 cores
+  target/ppc: Register L2CFG0 and L2CSR1 on e500mc and e5500
+  target/ppc: Register MAS5 and MAS8 on e500mc/e5500/e6500
+  target/ppc: Register PWRMGTCR0 on e6500
+  target/ppc: Register IVOR42 on e6500
+  target/ppc: Split the ISA 2.05 instruction feature group
+  target/ppc: Enable byte comparison and parity on e5500 and e6500
+  target/ppc: Ignore FPSCR W/L fields on e500mc, e5500 and e6500
+  tests/tcg/ppc: Add Book E illegal instruction tests
+  tests/tcg/ppc: Test byte comparison and parity on e5500/e6500
+  tests/tcg/ppc: Test FPSCR W/L handling on e500mc/e5500/e6500
+
+ target/ppc/cpu.h                           | 31 ++++++--
+ target/ppc/cpu_init.h                      |  5 +-
+ target/ppc/cpu_init.c                      | 72 +++++++++++++----
+ target/ppc/translate.c                     | 10 ++-
+ target/ppc/translate/fixedpoint-impl.c.inc |  6 +-
+ target/ppc/translate/fp-impl.c.inc         | 14 +++-
+ target/ppc/translate/fp-ops.c.inc          |  9 ++-
+ meson_options.txt                          |  4 +
+ scripts/meson-buildoptions.sh              |  2 +
+ tests/tcg/meson.build                      |  1 +
+ tests/tcg/ppc/meson.build                  |  5 ++
+ tests/tcg/ppc/system/README                | 22 ++++++
+ tests/tcg/ppc/system/boot.S                | 92 ++++++++++++++++++++++
+ tests/tcg/ppc/system/byte-parity.S         | 33 ++++++++
+ tests/tcg/ppc/system/fpscr.S               | 75 ++++++++++++++++++
+ tests/tcg/ppc/system/isa.out               |  1 +
+ tests/tcg/ppc/system/kernel.ld             | 18 +++++
+ tests/tcg/ppc/system/macros.inc            | 56 +++++++++++++
+ tests/tcg/ppc/system/meson.build           | 39 +++++++++
+ tests/tcg/ppc/system/unsupported.S         | 31 ++++++++
+ tests/tcg/ppc64/meson.build                |  2 +
+ tests/tcg/ppc64/system/meson.build         | 33 ++++++++
+ 22 files changed, 525 insertions(+), 36 deletions(-)
+ create mode 100644 tests/tcg/ppc/meson.build
+ create mode 100644 tests/tcg/ppc/system/README
+ create mode 100644 tests/tcg/ppc/system/boot.S
+ create mode 100644 tests/tcg/ppc/system/byte-parity.S
+ create mode 100644 tests/tcg/ppc/system/fpscr.S
+ create mode 100644 tests/tcg/ppc/system/isa.out
+ create mode 100644 tests/tcg/ppc/system/kernel.ld
+ create mode 100644 tests/tcg/ppc/system/macros.inc
+ create mode 100644 tests/tcg/ppc/system/meson.build
+ create mode 100644 tests/tcg/ppc/system/unsupported.S
+ create mode 100644 tests/tcg/ppc64/system/meson.build
+
 ---
- target/ppc/cpu.h         | 13 +++++++++++++
- target/ppc/helper_regs.c |  4 ++++
- target/ppc/translate.c   |  2 ++
- 3 files changed, 19 insertions(+)
+base-commit: 2a0ac9c8ac2d303ca515dc819043409aef18cab5
+branch: ppc-fsl-booke
 
-diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
-index 09b511030b..1cd379810a 100644
---- a/target/ppc/cpu.h
-+++ b/target/ppc/cpu.h
-@@ -355,6 +355,11 @@ typedef union _ppc_vsr_t {
- typedef ppc_vsr_t ppc_avr_t;
- typedef ppc_vsr_t ppc_fprp_t;
- typedef ppc_vsr_t ppc_acc_t;
-+typedef ppc_vsr_t ppc_dmr_row_t;
-+
-+typedef struct ppc_dmr_t {
-+    ppc_dmr_row_t row[8];
-+} ppc_dmr_t;
- 
- #if !defined(CONFIG_USER_ONLY)
- /* Software TLB cache */
-@@ -449,6 +454,7 @@ typedef enum {
- #define MSR_SEM5 PPC_BIT_NR(38) /* SIB Error Mask Bit 5 (PPE42)              */
- #define MSR_SEM6 PPC_BIT_NR(39) /* SIB Error Mask Bit 6 (PPE42)              */
- #define MSR_VSX  PPC_BIT_NR(40) /* Vector Scalar Extension (>= 2.06)x hflags */
-+#define MSR_DM   PPC_BIT_NR(39) /* Dense Math Facility (>= 3.2)     x hflags */
- #define MSR_IS0  PPC_BIT_NR(40) /* Instance Specific Bit 0 (PPE42)           */
- #define MSR_S    PPC_BIT_NR(41) /* Secure state                              */
- #define MSR_SIBRC0 PPC_BIT_NR(41) /* Last SIB return code Bit 0 (PPE42)      */
-@@ -743,6 +749,7 @@ FIELD(MSR, SIBRCA, MSR_SIBRCA7, 8)
- #define FSCR_IC_EBB         7
- #define FSCR_IC_TAR         8
- #define FSCR_IC_SCV        12
-+#define FSCR_IC_DM         14
- 
- /* Exception state register bits definition                                  */
- #define ESR_PIL   PPC_BIT(36) /* Illegal Instruction                    */
-@@ -844,6 +851,8 @@ enum {
-     POWERPC_FLAG_BHRB      = 0x01000000,
-     /* Use PPE42-specific behavior                                           */
-     POWERPC_FLAG_PPE42     = 0x02000000,
-+    /* Has DMF                                                               */
-+    POWERPC_FLAG_DM        = 0x04000000,
- };
- 
- /*
-@@ -873,6 +882,7 @@ enum {
-     HFLAGS_INSN_CNT = 19, /* PMU instruction count enabled */
-     HFLAGS_BHRB_ENABLE = 20, /* Summary flag for enabling BHRB */
-     HFLAGS_VSX = 23, /* MSR_VSX if cpu has VSX */
-+    HFLAGS_DM = 24, /* MSR_DM */
-     HFLAGS_VR = 25,  /* MSR_VR if cpu has VRE */
- 
-     HFLAGS_IMMU_IDX = 26, /* 26..28 -- the composite immu_idx */
-@@ -1364,6 +1374,9 @@ struct CPUArchState {
-     float_status fp_status; /* Floating point execution context */
-     target_ulong fpscr;     /* Floating point status and control register */
- 
-+    /* DMF registers */
-+    ppc_dmr_t dmr[8] QEMU_ALIGNED(16);
-+
-     /* Internal devices resources */
-     ppc_tb_t *tb_env;      /* Time base and decrementer */
-     ppc_dcr_t *dcr_env;    /* Device control registers */
-diff --git a/target/ppc/helper_regs.c b/target/ppc/helper_regs.c
-index acf74c543a..75a97f8795 100644
---- a/target/ppc/helper_regs.c
-+++ b/target/ppc/helper_regs.c
-@@ -189,6 +189,10 @@ static uint32_t hreg_compute_hflags_value(CPUPPCState *env)
-         /* PPE42 has a single address space and no problem state */
-         msr = 0;
-     }
-+    if (ppc_flags & POWERPC_FLAG_DM) {
-+        QEMU_BUILD_BUG_ON(MSR_DM != HFLAGS_DM);
-+        msr_mask |= 1 << MSR_DM;
-+    }
- 
- #ifndef CONFIG_USER_ONLY
-     if (!env->has_hv_mode || (msr & (1ull << MSR_HV))) {
-diff --git a/target/ppc/translate.c b/target/ppc/translate.c
-index 467b8f3d4e..48e5903214 100644
---- a/target/ppc/translate.c
-+++ b/target/ppc/translate.c
-@@ -187,6 +187,7 @@ struct DisasContext {
-     bool fpu_enabled;
-     bool altivec_enabled;
-     bool vsx_enabled;
-+    bool dm_enabled;
-     bool spe_enabled;
-     bool tm_enabled;
-     bool gtse;
-@@ -5023,6 +5024,7 @@ static void ppc_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cs)
-     ctx->spe_enabled = (hflags >> HFLAGS_SPE) & 1;
-     ctx->altivec_enabled = (hflags >> HFLAGS_VR) & 1;
-     ctx->vsx_enabled = (hflags >> HFLAGS_VSX) & 1;
-+    ctx->dm_enabled = (hflags >> HFLAGS_DM) & 1;
-     ctx->tm_enabled = (hflags >> HFLAGS_TM) & 1;
-     ctx->gtse = (hflags >> HFLAGS_GTSE) & 1;
-     ctx->hr = (hflags >> HFLAGS_HR) & 1;
 -- 
-2.55.0
+2.53.0
 
 
