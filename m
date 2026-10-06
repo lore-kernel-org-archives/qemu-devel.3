@@ -4,89 +4,123 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDDF8CA5FFF
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 08:31:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA516CA5FF1
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 08:31:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xEMvR-0002tv-01; Wed, 07 Oct 2026 04:22:57 -0400
+	id 1xEN1w-0001U3-Jn; Wed, 07 Oct 2026 04:29:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1xEGwR-00088x-H0
- for qemu-devel@nongnu.org; Tue, 06 Oct 2026 22:00:01 -0400
-Received: from mail-lf1-x132.google.com ([2a00:1450:4864:20::132])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1xEGw7-0003c5-BN
- for qemu-devel@nongnu.org; Tue, 06 Oct 2026 21:59:21 -0400
-Received: by mail-lf1-x132.google.com with SMTP id
- 2adb3069b0e04-5bcb4f23ddeso2376688e87.3
- for <qemu-devel@nongnu.org>; Tue, 06 Oct 2026 18:55:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1791338131; x=1791942931; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=2/rjn73u5CZ6muuxZmMgEQ6ISO1owLFLaPcFwvySHXk=;
- b=p8raicHUw429Y8VlY0dW4ashP4eS55z1vRcdgk6yK55w3VKE9gRyqC1ZmvEOuY3qtW
- YwZL52rYW8xUOtXoBEBZb6BmFwvkvyZW6UB5DLOnV1W9w8Y4xrmTtY1b2BsfnFsKqiC5
- 62r4ki9p9i1sd7kNvT0Sdnl/ZB+gDOr6mB4Vcgwh2h/cyJcdnfij8JbF5OcFHSvp6DhW
- 634kw7yfQvUadT7uzYMWl2uQJW/hUCce3ZK3DPb8FuylQbbfJnFzoNhBKyNUWs+aaw/u
- gbcMDqDq48J3+5jP48wO+bwHAXhZ69v3+LAN9WK2Oqkcj2Mn/y6wGsBoPbAR+pk8zI59
- akhg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791338131; x=1791942931;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=2/rjn73u5CZ6muuxZmMgEQ6ISO1owLFLaPcFwvySHXk=;
- b=mJGdu6ZDtq3f1NNpYIZQLv1ryTkWWfJhFKyXJVVdwckeyd70J7S/LeJEVujgA0ZPQa
- ZdlVNEN7ehUaM47nYfywEvn9oEROH4EDUTYRthC7R7g2EIEXKDJ2YcUhN0LkMCw2osph
- +ytErYVU1i6fh2bfwKMEAiSukZ/5lMyHAcdV6mcZeUXOk7DBvpdynfHKiDXphoK+SEDA
- VS2fOCiCu16dbczLOOVGHmifed7XHGvpANbKDyCnzjwpgcXvnkY87kPrriFTbgpe5RYb
- +xv+XinOwhfwUl5e6xMH3no0IlVx66MFUnHOGnm+e+qx5fHPuGqp7lMsl348LFYD9svF
- uvgQ==
-X-Gm-Message-State: AFq9FYIpvB1zQBL7J8TZYQGmgYL058jhOVJXfniqIIQIj/pwO4HzPHVG
- UCOepu2yg1ILxKind7mhgtReoq3dCblX7lpvM9T2Nhw619kyzI+EjfDkDbbH7O5dSJDTC7Cjs3+
- QK/hv
-X-Gm-Gg: AYBFou0WacXN78luPCA6mhufkFojclzJrMhIC4KobRAU4o4QHpHSQlK61qR5zCrohht
- 3VDzDj/VPvu/6PPd3r++gb85WWApi3gkvYESbdcY/UYv2Mo+5Os1cRACXGjMVzUXlFIeWmudH3I
- ZvPYlZ4i2moUdTOCDpSmqgZ2KyYDG9trZ25emJ1YQEXIms4u6x29B+E5lA7KgfG5EXHN23KCMJu
- ky2MNNFwVxSUyWWvZj+xonuBrmnsZbHbXhixDakWytHwYktj+BbpujZWOHRF43A314MefiDQiCV
- CXkUtoy+wAT7gAfz2o/9JqadgppwjZlHU0gdiTVJnL3Kin5EZLmjxkEt4vQTAifUgk6sM/VuYMX
- WeHIo1+jnkZqLWExeBxmN1xOJn46pmjd7ChGt3SH8MG7vl5oN3c2LhCfvpcZ12ZdqQj//uwB6Lu
- J6bNXmQi375E0VieVPpkneU6v/Kq2g6CuaAi/IP9hGYf22R1sMCsmTMwiXRdRY/WfO8L4=
-X-Received: by 2002:a05:600c:3556:b0:49f:dc71:e609 with SMTP id
- 5b1f17b1804b1-4a1680f7447mr191817285e9.20.1791306465294; 
- Tue, 06 Oct 2026 10:07:45 -0700 (PDT)
-Received: from athena.sw.ru ([2a06:5b06:b600:300:a39a:8667:da6e:b69f])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a178c5b9d6sm76254095e9.13.2026.10.06.10.07.43
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 06 Oct 2026 10:07:44 -0700 (PDT)
-From: "Denis V. Lunev" <den@openvz.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Eric Blake <eblake@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- qemu-stable@nongnu.org
-Subject: [PATCH v2 2/3] migration/block-dirty-bitmap: fix postcopy abort with
- bitmaps on several nodes
-Date: Tue,  6 Oct 2026 19:07:37 +0200
-Message-ID: <20261006170738.453977-3-den@openvz.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20261006170738.453977-1-den@openvz.org>
-References: <20261006170738.453977-1-den@openvz.org>
+ (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
+ id 1xEHr4-00078t-3k
+ for qemu-devel@nongnu.org; Tue, 06 Oct 2026 22:58:16 -0400
+Received: from fhigh-b4-smtp.messagingengine.com ([202.12.124.155])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
+ id 1xEHqu-0005vx-U4
+ for qemu-devel@nongnu.org; Tue, 06 Oct 2026 22:58:03 -0400
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+ by mailfhigh.stl.internal (Postfix) with ESMTP id 41AA77A0157
+ for <qemu-devel@nongnu.org>; Tue,  6 Oct 2026 09:36:10 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+ by phl-compute-04.internal (MEProxy); Tue, 06 Oct 2026 09:36:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alistair23.me;
+ h=cc:cc:content-transfer-encoding:content-type:content-type
+ :date:date:from:from:in-reply-to:in-reply-to:message-id
+ :mime-version:references:reply-to:subject:subject:to:to; s=fm2;
+ t=1791293769; x=1791380169; bh=6DW6IlZZGHJITdLlFDtHQgxriC42dwGa
+ YENtT0ImBGk=; b=GsmKDRO8dQ5KM4pM3niLrf+1cJ4hNKDax4dFOKL0zJDqXHdN
+ MD2Yr5oY4iMyyE6mRcC/K3zWecZFUH0Tlkpq+CO6jMc/ldM9VdcoI2xyeTXlhSPO
+ KZ+Yl4OLzVZbS4NpdMcICR6LoowDv3moHekWZSeRs5cXDJeEVKYrUB8/sP0xcYXK
+ 0u9t/4cHJhL+F7nfFxLpoVHLBtHY4/y7i1bg6L1uZwel7UkWNmAa67sK0gIcy/N3
+ nT02djBkwlDIM5CD5w31levroc+XHJrLiAGXjA4dOnEOqx/5w36l4K+kLs97ZnyC
+ JSD9Q92J23h1moED9gY6g2vyMCZGtgdxLJfjfw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:content-type:date:date:feedback-id:feedback-id
+ :from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1791293769; x=
+ 1791380169; bh=6DW6IlZZGHJITdLlFDtHQgxriC42dwGaYENtT0ImBGk=; b=y
+ mxufALxJEQiSJ/JacyGqD1LKx2kh366UsB+I8vqB6JZjaDuzduF7caaG02noZJzz
+ BNvPsmDfojNFTJtzyCTNryeRH1b/VQDojY0I+o9DzgmsUwUmr/wagTxTsAgr0HuP
+ KcPKPAyLL9F5JlbzM0Vks0MwQ1o1x+NWajgQTDNvPwbSK45baCE54u+gxKRqbrih
+ OAZi9PZEgS1XDH2qIoBTZ6KggnCSsG7AklKcUUi+i/6Oe0gvUWr/jMImPW0g1AJS
+ cwh5GTaXNjkI6dcR246WAQvcQVDnNMZUa7Ne21iu6VAgvONjQvEEoswcPOQ/HaLY
+ hfEj/mAFfuGJBbMYSyK8w==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+ repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
+ action=sign d=alistair23.me a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1791293769; d=alistair23.me;
+ mf=PGFsaXN0YWlyQGFsaXN0YWlyMjMubWU+;
+ rt=PHFlbXUtZGV2ZWxAbm9uZ251Lm9yZz4=;
+ s=fm2:rsa-sha256:KWxQeimRZ1TBjsRYpX4cwVRTEODAaAjw6kxarW2i7Yz46JO
+ gICx+wzMy6FXbl/SlgQ+GKNO0QWw+xDwiMm/dWFH61SAv/6qd0ku8p3RPytzxu7e
+ fMH/mYvJgEeBTBWTPJiqNq1R09ZXodTcUETnHvx3kM2SFbpA8WJsDL3GCuWRms05
+ IBy8tv1vGUwWY8fgkL0NQiwndcg5K5r2Pw5igjvow88J61+1CCqzRotjRwFdFcOe
+ mb7GImBiwBydlB90giYfYsGBcsXTvtIU6x83rNBXKTrH9/EVePhsQXgiryZfTD2l
+ EdEpJrjWWSMUT+UaMKPq6GR0IhN6ecrBUKgDokQ==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+ repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
+ action=mi-m=1; hc=13;
+ hn=cc,content-transfer-encoding,content-type,date,feedback-id,
+ from,in-reply-to,message-id,mime-version,references,subject,to,
+ user-agent;
+Message-Instance: m=1;
+ h=sha256:NOs6Sof+Tj4eW2LlPhl5gpihfXWJyvrxV+ZoctxpO5k=:6DW6IlZZGHJITdLlFDtHQgxriC42dwGaYENtT0ImBGk=;
+X-ME-Sender: <xms:SPnEajgCBbBgsRYvk8QVeD0mEeUYIHtGrKFVnSpp7jrrLstKgu7oxQ>
+ <xme:SPnEaqtHbewSxjq-p2dHroETiOCIoGxUfCgO-WKym5E0mmn5_7154DqSCrRrVZuws
+ MQHkEaHxtb6vkfAAWKbyIZj3mT0hnaLwc-y89J21kCsS27ojQPxK_BZ>
+X-ME-Received: <xmr:SPnEarzvEOJZ2cdzCf1QPqMwjUC4mtjyFnt3AR280B6yPO_G4mxpC_XEZaKeLo60GC4vbe8YQBRv>
+X-ME-Proxy-Cause: dmFkZTFkUPb2dm4ATpQneYWUD/AhbHp1mq9MC7oAX83ZEpgJIS6j5FlQ6Xh1pBwjeWfeaS
+ E230umU766aoUXnkc8aHzmWwe4ICxmGuVp2kCqz3U4YKPlbycE5VNhfLzOpsfHzbyqvkxR
+ xwPLePdNg/eG/Zzcwrc/EOw+PoSQvxY4RQ/E9epq//LTcLs7kajop8tWtwEGw3KmdTmGSf
+ 8wWPjduIEE6A4q0eiSmr4nKhwZIrVir7/6ym7S7ptXmR2FxI/wrqut3Ns2+OQhXlehB/D+
+ 6rGecd8dxVAPwQfWx3fzalZotka1ia1N/dCZaYxYUKhEOgfrpy/Fpt5/aWo+d/RBZ3s+lZ
+ XID4t9IdEhskRS4R6fYm/PpXuZjrhp6JfNcNX5qsbLLlRCv85C7yBAETKdp77J7lEdjHsG
+ N9IjWuLscwnp/S2lkRsAsjRHUwbjMoafrJF9I2RR1rJc0+5LYJx+o9gFyOzw5JFeePQXyR
+ dQrzkylgBJD0l9EYkvmJpt4JS7aeQrkGshPFcTusNmpOiMpc886laIsW90+IdFanS/SvBw
+ knK0zdHJPA4bhSlAkE82lyEI4wt/9TZd++Sdz+zBuC1QhL2DhAlKAl9FC/kUTJVbM7IfCv
+ bvunJUn2KdAWVCGjQ8nPp9hq3Ez5DF6tJZ0ls5aDSX7RT6XH7Ot+9Mi+MUcg
+X-ME-Proxy: <xmx:SPnEanad3juJ1DUp4FDZbbve6RkMqeQsOlzs7VvuJqgSyCnoS0CPRA>
+ <xmx:SPnEaiXOTUUu58Joreig8T7MwKJRkP3IYt83erSdrnS5nKqgs1u-Jw>
+ <xmx:SPnEagGgU0wlf_TpXR5siXm0h8uODbJ0SDc9THJYZD6x9JQqddCTNA>
+ <xmx:SPnEakDf7SKMmTBdtMZnOOAw10NXVTQbfVjxhO4Zo-ULba6WyW03CA>
+ <xmx:SfnEar2quijfs0vZPSuOpSNAsnGUcyG5YWi5KSCAxtDgzlqpYGCuHQ9t>
+Feedback-ID: ifd214418:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 6 Oct 2026 09:35:57 -0400 (EDT)
+Message-ID: <41b85b9ad64efab7ae41cdc4a7315ffe6903264b.camel@alistair23.me>
+Subject: Re: [PATCH v3 3/4] hw/riscv/atlantis: Add machine property to
+ select default uart
+From: Alistair <alistair@alistair23.me>
+To: Portia Stephens <portias@oss.tenstorrent.com>, qemu-devel@nongnu.org
+Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, Anirudh Srinivasan
+ <asrinivasan@oss.tenstorrent.com>, Daniel Henrique Barboza	
+ <daniel.barboza@oss.qualcomm.com>, Weiwei Li <liwei1518@gmail.com>, Palmer
+ Dabbelt <palmer@dabbelt.com>, Nicholas Piggin <npiggin@gmail.com>, Alistair
+ Francis	 <alistair.francis@wdc.com>, Michael Ellerman <mpe@kernel.org>,
+ Chao Liu	 <chao.liu@processmission.com>, qemu-riscv@nongnu.org, Paolo
+ Bonzini	 <pbonzini@redhat.com>, =?ISO-8859-1?Q?Marc-Andr=E9?= Lureau	
+ <marcandre.lureau@redhat.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ Joel Stanley <joel@jms.id.au>
+Date: Tue, 06 Oct 2026 23:35:51 +1000
+In-Reply-To: <20261001233324.2636629-4-portias@oss.tenstorrent.com>
+References: <20261001233324.2636629-1-portias@oss.tenstorrent.com>
+ <20261001233324.2636629-4-portias@oss.tenstorrent.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: base64
+User-Agent: Evolution 3.62.0 (by Flathub.org) 
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::132;
- envelope-from=den@openvz.org; helo=mail-lf1-x132.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=202.12.124.155;
+ envelope-from=alistair@alistair23.me; helo=fhigh-b4-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -103,140 +137,123 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Denis V. Lunev <den@openvz.org>
-
-With dirty bitmaps on more than one node, the source switches nodes
-during the postcopy bulk phase and sends the node name again. The
-destination reads those chunks in the postcopy listen thread, which does
-not hold the BQL, and resolves the name through bdrv_lookup_bs():
-
-  qemu-system-x86_64: ../block.c:6400: bdrv_lookup_bs: Assertion
-  `qemu_in_main_thread()' failed.
-
-The bdrv_find_dirty_bitmap() call right after it needs the BQL or the
-dirty bitmap lock as well. Taking the BQL there would deadlock: the
-listen thread holds s->lock, and dirty_bitmap_mig_before_vm_start()
-takes s->lock with the BQL held.
-
-Every node and bitmap that a non-START chunk refers to was set up by a
-START chunk, and those are loaded under the BQL during setup. Record the
-node alias there, and resolve all other chunks against s->bitmaps
-instead of the block graph.
-
-Bitmaps on a single node never resend the node name after setup, which
-is why migrate-bitmaps-postcopy-test does not catch this.
-
-Fixes: f791bf7f93f2 ("assertions for block global state API")
-Signed-off-by: Denis V. Lunev <den@openvz.org>
-Cc: Peter Xu <peterx@redhat.com>
-Cc: Fabiano Rosas <farosas@suse.de>
-Cc: Eric Blake <eblake@redhat.com>
-Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: qemu-stable@nongnu.org
----
- migration/block-dirty-bitmap.c | 58 +++++++++++++++++++++++++++++++---
- 1 file changed, 54 insertions(+), 4 deletions(-)
-
-diff --git a/migration/block-dirty-bitmap.c b/migration/block-dirty-bitmap.c
-index 1386f43635..35623379eb 100644
---- a/migration/block-dirty-bitmap.c
-+++ b/migration/block-dirty-bitmap.c
-@@ -140,6 +140,7 @@ typedef struct LoadBitmapState {
-     BdrvDirtyBitmap *bitmap;
-     bool migrated;
-     bool enabled;
-+    char node_alias[QEMU_COUNTED_STRING_SIZE];
- } LoadBitmapState;
- 
- /* State of the dirty bitmap migration (DBM) during load process */
-@@ -859,6 +860,7 @@ static int dirty_bitmap_load_start(QEMUFile *f, DBMLoadState *s)
-     }
- 
-     b = g_new(LoadBitmapState, 1);
-+    g_strlcpy(b->node_alias, s->node_alias, sizeof(b->node_alias));
-     b->bs = s->bs;
-     b->bitmap = s->bitmap;
-     b->migrated = false;
-@@ -1056,6 +1058,53 @@ static int dirty_bitmap_load_bits(QEMUFile *f, DBMLoadState *s)
-     return 0;
- }
- 
-+/*
-+ * Only START chunks are guaranteed to be loaded under the BQL; the rest may
-+ * come from the postcopy listen thread and must not touch the block graph.
-+ */
-+static BlockDriverState *dirty_bitmap_load_find_bs(DBMLoadState *s,
-+                                                   const char *device,
-+                                                   const char *node_name,
-+                                                   Error **errp)
-+{
-+    GSList *item;
-+
-+    if (s->flags & DIRTY_BITMAP_MIG_FLAG_START) {
-+        return bdrv_lookup_bs(device, node_name, errp);
-+    }
-+
-+    for (item = s->bitmaps; item; item = g_slist_next(item)) {
-+        LoadBitmapState *b = item->data;
-+
-+        if (!strcmp(b->node_alias, s->node_alias)) {
-+            return b->bs;
-+        }
-+    }
-+
-+    error_setg(errp, "no migrated bitmaps on node alias '%s'", s->node_alias);
-+    return NULL;
-+}
-+
-+static BdrvDirtyBitmap *dirty_bitmap_load_find_bitmap(DBMLoadState *s)
-+{
-+    GSList *item;
-+
-+    if (s->flags & DIRTY_BITMAP_MIG_FLAG_START) {
-+        return bdrv_find_dirty_bitmap(s->bs, s->bitmap_name);
-+    }
-+
-+    for (item = s->bitmaps; item; item = g_slist_next(item)) {
-+        LoadBitmapState *b = item->data;
-+
-+        if (b->bs == s->bs &&
-+            !strcmp(bdrv_dirty_bitmap_name(b->bitmap), s->bitmap_name)) {
-+            return b->bitmap;
-+        }
-+    }
-+
-+    return NULL;
-+}
-+
- static int dirty_bitmap_load_header(QEMUFile *f, DBMLoadState *s,
-                                     GHashTable *alias_map)
- {
-@@ -1084,11 +1133,12 @@ static int dirty_bitmap_load_header(QEMUFile *f, DBMLoadState *s,
-                     s->bs = NULL;
-                 } else {
-                     bitmap_alias_map = amin->subtree;
--                    s->bs = bdrv_lookup_bs(NULL, amin->string, &local_err);
-+                    s->bs = dirty_bitmap_load_find_bs(s, NULL, amin->string,
-+                                                      &local_err);
-                 }
-             } else {
--                s->bs = bdrv_lookup_bs(s->node_alias, s->node_alias,
--                                       &local_err);
-+                s->bs = dirty_bitmap_load_find_bs(s, s->node_alias,
-+                                                  s->node_alias, &local_err);
-             }
-             if (!s->bs) {
-                 error_report_err(local_err);
-@@ -1139,7 +1189,7 @@ static int dirty_bitmap_load_header(QEMUFile *f, DBMLoadState *s,
- 
-         if (!s->cancelled) {
-             g_strlcpy(s->bitmap_name, bitmap_name, sizeof(s->bitmap_name));
--            s->bitmap = bdrv_find_dirty_bitmap(s->bs, s->bitmap_name);
-+            s->bitmap = dirty_bitmap_load_find_bitmap(s);
- 
-             /*
-              * bitmap may be NULL here, it wouldn't be an error if it is the
--- 
-2.53.0
+T24gRnJpLCAyMDI2LTEwLTAyIGF0IDA5OjMzICsxMDAwLCBQb3J0aWEgU3RlcGhlbnMgd3JvdGU6
+Cj4gVGhlIEF0bGFudGlzIFNvQyBoYXMgNSBVQVJUcy4gVGhpcyBhZGRzIGEgbWFjaGluZSBwcm9w
+ZXJ0eSB0byBzZXQKPiB3aGljaCB1YXJ0IGlzIG9uIHRoZSBmaXJzdCBzZXJpYWwgaW50ZXJmYWNl
+LiBUaGlzIGlzIHRoZSBzYW1lIHBhdHRlcm4KPiB0aGF0IGlzIHVzZWQgYnkgYXNwZWVkLiBUaGUg
+cmVzdCBvZiB0aGUgdWFydCdzIHdpbGwgYmUgYWRkZWQgaW4KPiBzZXF1ZW50aWFsIG9yZGVyIHN0
+YXJ0aW5nIGF0IHNlcmlhbCBpbnRlcmZhY2UgMS4KPiAKPiBUaGUgZGVmYXVsdCB2YWx1ZSBpcyB1
+YXJ0MSB3aGljaCBtZWFucyB0aGUgQXNjYWxvbiBjb25zb2xlIHdpbGwgYmUgb24KPiBzZXJpYWwg
+aW50ZXJmYWNlIDAgYnkgZGVmYXVsdC4KPiAKPiBTaWduZWQtb2ZmLWJ5OiBQb3J0aWEgU3RlcGhl
+bnMgPHBvcnRpYXNAb3NzLnRlbnN0b3JyZW50LmNvbT4KPiBSZXZpZXdlZC1ieTogRGFuaWVsIEhl
+bnJpcXVlIEJhcmJvemEKPiA8ZGFuaWVsLmJhcmJvemFAb3NzLnF1YWxjb21tLmNvbT4KPiAtLS0K
+PiDCoGh3L3Jpc2N2L3R0X2F0bGFudGlzLmPCoMKgwqDCoMKgwqDCoMKgIHwgNzcgKysrKysrKysr
+KysrKysrKysrKysrKysrKysrKysrLS0KPiAtLQo+IMKgaW5jbHVkZS9ody9yaXNjdi90dF9hdGxh
+bnRpcy5oIHzCoCAxICsKPiDCoDIgZmlsZXMgY2hhbmdlZCwgNjkgaW5zZXJ0aW9ucygrKSwgOSBk
+ZWxldGlvbnMoLSkKPiAKPiBkaWZmIC0tZ2l0IGEvaHcvcmlzY3YvdHRfYXRsYW50aXMuYyBiL2h3
+L3Jpc2N2L3R0X2F0bGFudGlzLmMKPiBpbmRleCAyMzQyZWRjZTkzLi43YTVlMWRkY2QxIDEwMDY0
+NAo+IC0tLSBhL2h3L3Jpc2N2L3R0X2F0bGFudGlzLmMKPiArKysgYi9ody9yaXNjdi90dF9hdGxh
+bnRpcy5jCj4gQEAgLTEyLDYgKzEyLDcgQEAKPiDCoCNpbmNsdWRlICJxZW11L2Vycm9yLXJlcG9y
+dC5oIgo+IMKgI2luY2x1ZGUgInFlbXUvZ3Vlc3QtcmFuZG9tLmgiCj4gwqAjaW5jbHVkZSAicWVt
+dS91bml0cy5oIgo+ICsjaW5jbHVkZSAicWFwaS92aXNpdG9yLmgiCj4gwqAKPiDCoCNpbmNsdWRl
+ICJody9jb3JlL2JvYXJkcy5oIgo+IMKgI2luY2x1ZGUgImh3L2NvcmUvbG9hZGVyLmgiCj4gQEAg
+LTQyMiw2ICs0MjMsMjYgQEAgc3RhdGljIHZvaWQgbG9hZF9mZHQoVFRBdGxhbnRpc1N0YXRlICph
+bXMpCj4gwqDCoMKgwqAgY3JlYXRlX2ZkdF9tZW1vcnkobXMtPmZkdCwgJmFtcy0+c29jKTsKPiDC
+oH0KPiDCoAo+ICtzdGF0aWMgaW5saW5lIGludCB0dF9hdGxhbnRpc191YXJ0X2luZGV4KGludCB1
+YXJ0X2RldikKPiArewo+ICvCoMKgwqAgcmV0dXJuIHVhcnRfZGV2IC0gVFRfQVRMX1VBUlQwOwo+
+ICt9Cj4gKwo+ICtzdGF0aWMgdm9pZCB0dF9hdGxhbnRpc19jb25uZWN0X3NlcmlhbF9oZHNfdG9f
+dWFydHMoVFRBdGxhbnRpc1N0YXRlCj4gKmFtcykKPiArewo+ICvCoMKgwqAgVFRBdGxhbnRpc1Nv
+Q1N0YXRlICpzID0gJmFtcy0+c29jOwo+ICvCoMKgwqAgaW50IHVhcnRfaW5kZXggPSB0dF9hdGxh
+bnRpc191YXJ0X2luZGV4KGFtcy0+dWFydF9jaG9zZW4pOwo+ICsKPiArwqDCoMKgIHFkZXZfcHJv
+cF9zZXRfY2hyKERFVklDRSgmcy0+dWFydFt1YXJ0X2luZGV4XSksICJjaGFyZGV2IiwKPiBzZXJp
+YWxfaGQoMCkpOwo+ICsKPiArwqDCoMKgIGZvciAoaW50IGkgPSAxLCB1YXJ0ID0gMDsgaSA8IFRU
+X0FUTF9OVU1fVUFSVFM7IHVhcnQrKykgewo+ICvCoMKgwqDCoMKgwqDCoCBpZiAodWFydCA9PSB1
+YXJ0X2luZGV4KSB7Cj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqAgY29udGludWU7Cj4gK8KgwqDC
+oMKgwqDCoMKgIH0KPiArwqDCoMKgwqDCoMKgwqAgcWRldl9wcm9wX3NldF9jaHIoREVWSUNFKCZz
+LT51YXJ0W3VhcnRdKSwgImNoYXJkZXYiLAo+IHNlcmlhbF9oZChpKyspKTsKPiArwqDCoMKgIH0K
+CkkgZG9uJ3QgbGlrZSB0aGlzLiBXZSBzaG91bGRuJ3QgZHluYW1pY2FsbHkgY2hhbmdlIHRoZSBj
+b21tYW5kIGxpbmUgQVBJCmJhc2VkIG9uIGEgcHJvcGVydHkKCkFsaXN0YWlyCgo+ICt9Cj4gKwo+
+IMKgc3RhdGljIHZvaWQgdHRfYXRsYW50aXNfbWFjaGluZV9kb25lKE5vdGlmaWVyICpuLCB2b2lk
+ICpkYXRhKQo+IMKgewo+IMKgwqDCoMKgIFRUQXRsYW50aXNTdGF0ZSAqYW1zID0gY29udGFpbmVy
+X29mKG4sIFRUQXRsYW50aXNTdGF0ZSwKPiBtYWNoaW5lX2RvbmUpOwo+IEBAIC00ODQsMTEgKzUw
+NSw2IEBAIHN0YXRpYyB2b2lkIHR0X2F0bGFudGlzX21hY2hpbmVfZG9uZShOb3RpZmllcgo+ICpu
+LCB2b2lkICpkYXRhKQo+IMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoCBmZHRfbG9hZF9hZGRyKTsKPiDCoH0KPiDCoAo+IC1zdGF0aWMg
+aW5saW5lIGludCB0dF9hdGxhbnRpc191YXJ0X2luZGV4KGludCB1YXJ0X2RldikKPiAtewo+IC3C
+oMKgwqAgcmV0dXJuIHVhcnRfZGV2IC0gVFRfQVRMX1VBUlQwOwo+IC19Cj4gLQo+IMKgc3RhdGlj
+IHZvaWQgdHRfYXRsYW50aXNfc29jX2luaXQoT2JqZWN0ICpvYmopCj4gwqB7Cj4gwqDCoMKgwqAg
+VFRBdGxhbnRpc1NvQ1N0YXRlICpzID0gVFRfQVRMQU5USVNfU09DKG9iaik7Cj4gQEAgLTU5Miwx
+MCArNjA4LDYgQEAgc3RhdGljIHZvaWQgdHRfYXRsYW50aXNfc29jX3JlYWxpemUoRGV2aWNlU3Rh
+dGUKPiAqZGV2LCBFcnJvciAqKmVycnApCj4gwqDCoMKgwqAgbWVtb3J5X3JlZ2lvbl9hZGRfc3Vi
+cmVnaW9uKHMtPm1lbW9yeSwgcy0KPiA+bWVtbWFwW1RUX0FUTF9CT09UUk9NXS5iYXNlLAo+IMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqAgJnMtPmJvb3Ryb20pOwo+IMKgCj4gLcKgwqDCoCAvKiBVQVJUMSwgdGhlIHNvYyBjb25z
+b2xlIChVQVJUMCBpcyBmb3IgdGhlIGJvb3QgbWljcm9jb250cm9sbGVyCj4gKi8KPiAtwqDCoMKg
+IHFkZXZfcHJvcF9zZXRfY2hyKERFVklDRSgmcy0KPiA+dWFydFt0dF9hdGxhbnRpc191YXJ0X2lu
+ZGV4KFRUX0FUTF9VQVJUMSldKSwKPiAtwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgICJjaGFyZGV2Iiwgc2VyaWFsX2hkKDApKTsKPiAtCj4gwqDCoMKgwqAgZm9yIChp
+bnQgaSA9IDA7IGkgPCBUVF9BVExfTlVNX1VBUlRTOyBpKyspIHsKPiDCoMKgwqDCoMKgwqDCoMKg
+IFN5c0J1c0RldmljZSAqc2JkID0gU1lTX0JVU19ERVZJQ0UoJnMtPnVhcnRbaV0pOwo+IMKgwqDC
+oMKgwqDCoMKgwqAgaWYgKCFzeXNidXNfcmVhbGl6ZShzYmQsIGVycnApKSB7Cj4gQEAgLTY2Myw2
+ICs2NzUsMTAgQEAgc3RhdGljIHZvaWQKPiB0dF9hdGxhbnRpc19tYWNoaW5lX2luaXQoTWFjaGlu
+ZVN0YXRlICptYWNoaW5lKQo+IMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqAgT0JKRUNUKCZhbXMtPnNvY19tZW1vcnkpLAo+ICZlcnJvcl9h
+Ym9ydCk7Cj4gwqDCoMKgwqAgb2JqZWN0X3Byb3BlcnR5X3NldF9saW5rKE9CSkVDVCgmYW1zLT5z
+b2MpLCAiZHJhbSIsCj4gT0JKRUNUKG1hY2hpbmUtPnJhbSksCj4gwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCAmZXJyb3JfYWJvcnQpOwo+
+ICsKPiArwqDCoMKgIC8qIE1hcCBzZXJpYWwgaW50ZXJmYWNlcyB0byB1YXJ0ICovCj4gK8KgwqDC
+oCB0dF9hdGxhbnRpc19jb25uZWN0X3NlcmlhbF9oZHNfdG9fdWFydHMoYW1zKTsKPiArCj4gwqDC
+oMKgwqAgcWRldl9yZWFsaXplKERFVklDRSgmYW1zLT5zb2MpLCBOVUxMLCAmZXJyb3JfZmF0YWwp
+Owo+IMKgCj4gwqDCoMKgwqAgLyogSTJDIHBlcmlwaGVyYWxzOiBxZW11IHNwZWNpZmljICovCj4g
+QEAgLTY4MCw2ICs2OTYsNDcgQEAgc3RhdGljIHZvaWQKPiB0dF9hdGxhbnRpc19tYWNoaW5lX2lu
+aXQoTWFjaGluZVN0YXRlICptYWNoaW5lKQo+IMKgwqDCoMKgIHFlbXVfYWRkX21hY2hpbmVfaW5p
+dF9kb25lX25vdGlmaWVyKCZhbXMtPm1hY2hpbmVfZG9uZSk7Cj4gwqB9Cj4gwqAKPiArc3RhdGlj
+IHZvaWQgdHRfYXRsYW50aXNfZ2V0X2NvbnNvbGUoT2JqZWN0ICpvYmosIFZpc2l0b3IgKnYsIGNv
+bnN0Cj4gY2hhciAqbmFtZSwKPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB2b2lkICpvcGFxdWUsIEVycm9yICoq
+ZXJycCkKPiArewo+ICvCoMKgwqAgVFRBdGxhbnRpc1N0YXRlICphbXMgPSBUVF9BVExBTlRJU19N
+QUNISU5FKG9iaik7Cj4gK8KgwqDCoCB1aW50MzJfdCB1YXJ0X2luZGV4ID0gdHRfYXRsYW50aXNf
+dWFydF9pbmRleChhbXMtPnVhcnRfY2hvc2VuKTsKPiArCj4gK8KgwqDCoCB2aXNpdF90eXBlX3Vp
+bnQzMih2LCBuYW1lLCAmdWFydF9pbmRleCwgZXJycCk7Cj4gK30KPiArCj4gK3N0YXRpYyB2b2lk
+IHR0X2F0bGFudGlzX3NldF9jb25zb2xlKE9iamVjdCAqb2JqLCBWaXNpdG9yICp2LCBjb25zdAo+
+IGNoYXIgKm5hbWUsCj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgdm9pZCAqb3BhcXVlLCBFcnJvciAqKmVycnAp
+Cj4gK3sKPiArwqDCoMKgIFRUQXRsYW50aXNTdGF0ZSAqYW1zID0gVFRfQVRMQU5USVNfTUFDSElO
+RShvYmopOwo+ICvCoMKgwqAgdWludDMyX3QgdmFsdWU7Cj4gKwo+ICvCoMKgwqAgaWYgKCF2aXNp
+dF90eXBlX3VpbnQzMih2LCBuYW1lLCAmdmFsdWUsIGVycnApKSB7Cj4gK8KgwqDCoMKgwqDCoMKg
+IHJldHVybjsKPiArwqDCoMKgIH0KPiArCj4gK8KgwqDCoCBpZiAodmFsdWUgPj0gVFRfQVRMX05V
+TV9VQVJUUykgewo+ICvCoMKgwqDCoMKgwqDCoCBlcnJvcl9zZXRnKGVycnAsICJcImNvbnNvbGVc
+IiBzaG91bGQgYmUgaW4gcmFuZ2UgWyVkIC0gJWRdIiwKPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgIDAsIFRUX0FUTF9OVU1fVUFSVFMgLSAxKTsKPiArwqDCoMKgwqDCoMKg
+wqAgcmV0dXJuOwo+ICvCoMKgwqAgfQo+ICvCoMKgwqAgYW1zLT51YXJ0X2Nob3NlbiA9IHZhbHVl
+ICsgVFRfQVRMX1VBUlQwOwo+ICt9Cj4gKwo+ICtzdGF0aWMgdm9pZCB0dF9hdGxhbnRpc19tYWNo
+aW5lX2NsYXNzX3Byb3BzX2luaXQoT2JqZWN0Q2xhc3MgKm9jKQo+ICt7Cj4gK8KgwqDCoCBPYmpl
+Y3RQcm9wZXJ0eSAqY29uc29sZTsKPiArCj4gK8KgwqDCoCBjb25zb2xlID0gb2JqZWN0X2NsYXNz
+X3Byb3BlcnR5X2FkZChvYywgImNvbnNvbGUiLCAidWludDMyX3QiLAo+ICvCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqAgdHRfYXRsYW50aXNfZ2V0X2NvbnNvbGUsCj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oCB0dF9hdGxhbnRpc19zZXRfY29uc29sZSwKPiBOVUxMLCBOVUxMKTsKPiArwqDCoMKgIG9iamVj
+dF9jbGFzc19wcm9wZXJ0eV9zZXRfZGVzY3JpcHRpb24ob2MsICJjb25zb2xlIiwKPiArwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoCAiQ2hhbmdlIHRoZSBkZWZhdWx0IFVBUlQgaW5kZXggb24gLXNlcmlh
+bC4gVmFsaWQgdmFsdWVzCj4gYXJlIDAgIiBcCj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqAgInRo
+cm91Z2ggNCIpOwo+ICvCoMKgwqAgLyogRGVmYXVsdCB0byBVQVJUMSwgdGhlIEFzY2Fsb24gY29u
+c29sZSAqLwo+ICvCoMKgwqAgb2JqZWN0X3Byb3BlcnR5X3NldF9kZWZhdWx0X3VpbnQoY29uc29s
+ZSwgMSk7Cj4gK30KPiArCj4gwqBzdGF0aWMgdm9pZCB0dF9hdGxhbnRpc19tYWNoaW5lX2NsYXNz
+X2luaXQoT2JqZWN0Q2xhc3MgKm9jLCBjb25zdAo+IHZvaWQgKmRhdGEpCj4gwqB7Cj4gwqDCoMKg
+wqAgTWFjaGluZUNsYXNzICptYyA9IE1BQ0hJTkVfQ0xBU1Mob2MpOwo+IEBAIC02OTMsNiArNzUw
+LDggQEAgc3RhdGljIHZvaWQKPiB0dF9hdGxhbnRpc19tYWNoaW5lX2NsYXNzX2luaXQoT2JqZWN0
+Q2xhc3MgKm9jLCBjb25zdCB2b2lkICpkYXRhKQo+IMKgwqDCoMKgIG1jLT5ibG9ja19kZWZhdWx0
+X3R5cGUgPSBJRl9WSVJUSU87Cj4gwqDCoMKgwqAgbWMtPm5vX2Nkcm9tID0gMTsKPiDCoMKgwqDC
+oCBtYy0+ZGVmYXVsdF9yYW1faWQgPSAidHRfYXRsYW50aXMucmFtIjsKPiArCj4gK8KgwqDCoCB0
+dF9hdGxhbnRpc19tYWNoaW5lX2NsYXNzX3Byb3BzX2luaXQob2MpOwo+IMKgfQo+IMKgCj4gwqBz
+dGF0aWMgY29uc3QgVHlwZUluZm8gdHRfYXRsYW50aXNfdHlwZXNbXSA9IHsKPiBkaWZmIC0tZ2l0
+IGEvaW5jbHVkZS9ody9yaXNjdi90dF9hdGxhbnRpcy5oCj4gYi9pbmNsdWRlL2h3L3Jpc2N2L3R0
+X2F0bGFudGlzLmgKPiBpbmRleCBiODFiN2M4YWJkLi43YmQ0NmU5YzliIDEwMDY0NAo+IC0tLSBh
+L2luY2x1ZGUvaHcvcmlzY3YvdHRfYXRsYW50aXMuaAo+ICsrKyBiL2luY2x1ZGUvaHcvcmlzY3Yv
+dHRfYXRsYW50aXMuaAo+IEBAIC01Niw2ICs1Niw3IEBAIHN0cnVjdCBUVEF0bGFudGlzU3RhdGUg
+ewo+IMKgCj4gwqDCoMKgwqAgTWVtb3J5UmVnaW9uIHNvY19tZW1vcnk7Cj4gwqDCoMKgwqAgVFRB
+dGxhbnRpc1NvQ1N0YXRlIHNvYzsKPiArwqDCoMKgIHVpbnQzMl90IHVhcnRfY2hvc2VuOwo+IMKg
+fTsKPiDCoAo+IMKgZW51bSB7Cg==
 
 
