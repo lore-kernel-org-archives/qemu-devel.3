@@ -4,73 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CF1CCA5FFF
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 08:49:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31C13CA5FFF
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 08:50:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xENI6-0004vI-DX; Wed, 07 Oct 2026 04:46:22 -0400
+	id 1xENIU-0006wP-Si; Wed, 07 Oct 2026 04:46:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xEJOA-0004Rv-24
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 00:36:36 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xEJO6-00022b-CZ
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 00:36:21 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1791347776;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=MjUeXHsGJ17okHZ3na6dp3v+GdACzsj2sjRGphoZqy4=;
- b=Ey/2B7YVfAm1VgZZjhfsnWEqzOKSNIpbpO4TSPT0j/3SFts48izW6VX5cdISfLkbPbM3J8
- /Xh+OZvLhM3UkSbn4+WtXwiPh8O6LDFM1BJ4jJdboiBJeB37VKiE0lUJr++7QS/8KK9Ymq
- L7Mv4p44xBesv0Xf2rrIQL/rxGaT5eg=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-371-GerKf0TFP4ykAKCwxk9_uA-1; Tue,
- 06 Oct 2026 03:55:56 -0400
-X-MC-Unique: GerKf0TFP4ykAKCwxk9_uA-1
-X-Mimecast-MFC-AGG-ID: GerKf0TFP4ykAKCwxk9_uA_1791273355
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AA3791800115; Tue,  6 Oct 2026 07:55:55 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.2])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 25B7119560AB; Tue,  6 Oct 2026 07:55:55 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id C01C621E6A04; Tue, 06 Oct 2026 09:55:52 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: John Snow <jsnow@redhat.com>
-Cc: qemu-devel@nongnu.org,  Pierrick Bouvier
- <pierrick.bouvier@oss.qualcomm.com>,  Michael Roth <michael.roth@amd.com>
-Subject: Re: [PATCH 02/11] docs/qapi-code-gen: add "Putting it all together"
- subsection
-In-Reply-To: <20261001172239.2825745-3-jsnow@redhat.com> (John Snow's message
- of "Thu, 1 Oct 2026 13:22:29 -0400")
-References: <20261001172239.2825745-1-jsnow@redhat.com>
- <20261001172239.2825745-3-jsnow@redhat.com>
-Date: Tue, 06 Oct 2026 09:55:52 +0200
-Message-ID: <87mrsrdzzr.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xEJZS-0006Xk-84
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 00:48:10 -0400
+Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xEJZN-0003L6-Q8
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 00:47:59 -0400
+Received: by mail-ej1-x62a.google.com with SMTP id
+ a640c23a62f3a-c247f6687dcso197658066b.2
+ for <qemu-devel@nongnu.org>; Tue, 06 Oct 2026 21:47:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1791348476; x=1791953276; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=n+X9R9jlN+7vQGOVgR1i+/9dNr+MHCZvV0d0XgyV1TY=;
+ b=M17rxCVGQcF5B8AVTqXq1IzXEGrcGJ0reOFKRSur9abRhVg+aTeVAOfnXN+1cmCm8t
+ O0sCf2Rdi8TePur+4GRH+ugTJ6YCvBa2STA4CUfavV74QsUfJncu0gQnp3u0NRJ1Vseq
+ I/cEe2uBFFqErE/9E4baHRfBO2M/dTT1piASaz3nz8H9oICfIJJ2fOnBKvk2ZEyZf+zx
+ +UYKyf50hszcLG+yKMH7EgCCI6U4Gv5K2DlwKp4UVhv2icngPKn1EIeZqbrPTzNb55NA
+ 8+rUVmzNdJAfnVEOZ5EqJmuESOM1qKhGG2zXE/aLDy50cgUyIphjGitYpMrdsRS9Yfhp
+ DJJg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1791348476; x=1791953276;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=n+X9R9jlN+7vQGOVgR1i+/9dNr+MHCZvV0d0XgyV1TY=;
+ b=A+cqrHVVa4A0DHL77nntWKDqWHzXFjrYE5NFox3O4S55B7aULdnMeqzEyTLWeBNuJE
+ L9fQpQPaQ0jIPQdd4uxUTRBOLuea+ywBlnfut3199xYKURiRpM9j19J6OCckiem+tlhj
+ l2N6oUFUh4Cx35CDYo2rfUsqWhZNJCrmJNPtCfs5QlvZkEiQLRSruUkt65VXhxNB4urb
+ u/YMnDUFeHkaKJEU4MRx/7+wZ0v0cRPQN7XP6fwDEyt9ujq/8ZgWWG8/s08oBuJJXcWG
+ 7V+dhH+QQTBmw3HtjLU0av/2T4wywkgYa03OuPLWxjKOQz7aqoIZ2WH/ZtdZdgluWSaL
+ ForA==
+X-Gm-Message-State: AFuF++kY2ZxHdwNLBYQOpg4NuFbGNlB2o9/5BI7Q6MZ4R3+Gl+AFSWqu
+ xQc5CSkl4t0fdYnMRQxDU/op/PiW0aw+w71u4fbvzqwyJawJn8Z0pWBy01u3OA==
+X-Gm-Gg: AYBFou2kfC+IHj5kg0VtrP97xu0tSlC5LdP9Wsc30vvDSPIttrVdsCZwjBTCj4zjJgB
+ avqak6r7v8y88cNEyGC6I3mwhGVTOrIPZSj9VnQQsJlB3cEl3a/TNNDouWcjRIYKnwZuhibiox2
+ cJ7qRLXk8gGaw20+DJ5rwrwJ11j3XLrtvB5yZIn0e0xROvzKewPybSbvQQoEpzy1l9bCki7RWrE
+ Dy2fDT2to8egRu9uiDnUQ1mHGoTDrUD1WfAJOdIymkpWvTBiue8KRlu6QbHlUxEgvA5+5XMidpa
+ 6BkhEWMZ3zT3/jv4Q49Hx21EoywQQ5gFZaIB4rCg7lW2BQPsIXBMH8OxlDALbYbm5bCR9GjiGpX
+ OP07Jilfef4OjO4f49Jj++3lkQv7YZoYE9gs+d3d1ODnyqGsRMkmh3C0XPpkPFQQSfvJ3X0NCDv
+ 7BGK3lTQ2yi9k5gvCoELN3aTdUek8VmwRUv+bIe8541OMwvb/ij79R/QwnO7xplLAddNVuVqlGe
+ NHfGSN2WlWRfjsZkP+OyeeFxCaD1TDCOLp2nQ==
+X-Received: by 2002:a05:6000:4b02:b0:48b:451:4f19 with SMTP id
+ ffacd0b85a97d-48c6d1ad0a5mr1051712f8f.51.1791275735359; 
+ Tue, 06 Oct 2026 01:35:35 -0700 (PDT)
+Received: from archlinux (pd95eda80.dip0.t-ipconnect.de. [217.94.218.128])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-48c6cdb281csm1566764f8f.55.2026.10.06.01.35.34
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 06 Oct 2026 01:35:34 -0700 (PDT)
+From: Bernhard Beschow <shentey@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Bin Meng <bin.meng@processmission.com>,
+ Jean-Christophe Dubois <jcd@tribudubois.net>,
+ Gaurav Sharma <gaurav.sharma_7@nxp.com>,
+ Bernhard Beschow <shentey@gmail.com>, qemu-arm@nongnu.org,
+ Jason Wang <jasowangio@gmail.com>,
+ Alistair Francis <alistair@alistair23.me>
+Subject: [PATCH v4 13/31] hw/arm/fsl-imx31: Derive from TYPE_SYS_BUS_DEVICE
+Date: Tue,  6 Oct 2026 10:34:25 +0200
+Message-ID: <20261006083445.30362-14-shentey@gmail.com>
+X-Mailer: git-send-email 2.56.0
+In-Reply-To: <20261006083445.30362-1-shentey@gmail.com>
+References: <20261006083445.30362-1-shentey@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
+ envelope-from=shentey@gmail.com; helo=mail-ej1-x62a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,135 +108,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-John Snow <jsnow@redhat.com> writes:
+Deriving from TYPE_SYS_BUS_DEVICE fixes the SoC object to be reset upon
+machine reset.
 
-> Separate the specification portion of the documentation section from
-> the holistic examples. Avoid naming the section "Examples" because it
-> might be confused with the literal case of documenting how code
-> examples should themselves be documented.
->
-> Signed-off-by: John Snow <jsnow@redhat.com>
-> ---
->  docs/devel/qapi-code-gen.rst | 3 +++
->  1 file changed, 3 insertions(+)
->
-> diff --git a/docs/devel/qapi-code-gen.rst b/docs/devel/qapi-code-gen.rst
-> index f276a2bc9bc..0f66f012be1 100644
-> --- a/docs/devel/qapi-code-gen.rst
-> +++ b/docs/devel/qapi-code-gen.rst
-> @@ -1089,6 +1089,9 @@ Highlighting in non-QMP languages can be accomplished by using the
->  achieved by omitting the language argument.
->  
->  
-> +Putting it all together
-> +^^^^^^^^^^^^^^^^^^^^^^^
-> +
->  Examples of complete definition documentation::
->  
->   ##
+Reviewed-by: Bin Meng <bin.meng@processmission.com>
+Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+---
+ include/hw/arm/fsl-imx31.h | 5 ++---
+ hw/arm/fsl-imx31.c         | 7 +------
+ hw/arm/kzm.c               | 2 +-
+ 3 files changed, 4 insertions(+), 10 deletions(-)
 
-This adds another level of headings, level seven:
-
-    Developer Information
-        QEMU Build System
-            How to use the QAPI code generator
-                The QAPI schema language
-                    Documentation comments
-                        Definition documentation
-                            Putting it all together
-
-I'm not thrilled by this depth, to be honest.
-
-Adding the heading makes next to no sense by itself.  However, you add
-more headings next to it later in the series, and I believe that's why
-you add this one now.  Recommend to mention this in your commit message.
-
-The series' total change to the section structure:
-
-    Introduction
-    ============
-    The QAPI schema language
-    ========================
-        Schema syntax
-        -------------
-        Built-in Types
-        --------------
-        Include directives
-        ------------------
-        Pragma directives
-        -----------------
-        Enumeration types
-        -----------------
-        Type references and array types
-        -------------------------------
-        Struct types
-        ------------
-        Union types
-        -----------
-        Alternate types
-        ---------------
-        Commands
-        --------
-        Events
-        ------
-        Features
-        --------
-            Special features
-            ~~~~~~~~~~~~~~~~
-        Naming rules and reserved names
-        -------------------------------
-        Downstream extensions
-        ---------------------
-        Configuring the schema
-        ----------------------
-        Documentation comments
-        ----------------------
-            Headings and subheadings
-            ~~~~~~~~~~~~~~~~~~~~~~~~
-            Documentation markup
-            ~~~~~~~~~~~~~~~~~~~~
-            Definition documentation
-            ~~~~~~~~~~~~~~~~~~~~~~~~
-   +            Intro
-   +            ^^^^^
-   +            Descriptions
-   +            ^^^^^^^^^^^^
-   +            Tagged sections
-   +            ^^^^^^^^^^^^^^^
-   +            Returns
-   +            ^^^^^^^
-   +            Errors
-   +            ^^^^^^
-   +            Feature Descriptions
-   +            ^^^^^^^^^^^^^^^^^^^^
-   +            Details
-   +            ^^^^^^^
-   +            Since
-   +            ^^^^^
-   +            TODO
-   +            ^^^^
-   +            Putting it all together
-   +            ^^^^^^^^^^^^^^^^^^^^^^^
-            Markup pitfalls
-            ~~~~~~~~~~~~~~~
-    Client JSON Protocol introspection
-    ==================================
-    Compatibility considerations
-    ============================
-    Code generation
-    ===============
-        Code generated for QAPI types
-        -----------------------------
-        Code generated for visiting QAPI types
-        --------------------------------------
-        Code generated for commands
-        ---------------------------
-        Code generated for events
-        -------------------------
-        Code generated for introspection
-        --------------------------------
-
-It's more deeply nested than I'd like, but to avoid that, we'd need a
-more invasive restructuring.  Let's not go there now.
+diff --git a/include/hw/arm/fsl-imx31.h b/include/hw/arm/fsl-imx31.h
+index 41232a2237..ea916de15a 100644
+--- a/include/hw/arm/fsl-imx31.h
++++ b/include/hw/arm/fsl-imx31.h
+@@ -25,6 +25,7 @@
+ #include "hw/i2c/imx_i2c.h"
+ #include "hw/gpio/imx_gpio.h"
+ #include "hw/watchdog/wdt_imx2.h"
++#include "hw/core/sysbus.h"
+ #include "system/memory.h"
+ #include "target/arm/cpu.h"
+ #include "qom/object.h"
+@@ -38,10 +39,8 @@ OBJECT_DECLARE_SIMPLE_TYPE(FslIMX31State, FSL_IMX31)
+ #define FSL_IMX31_NUM_GPIOS 3
+ 
+ struct FslIMX31State {
+-    /*< private >*/
+-    DeviceState parent_obj;
++    SysBusDevice parent_obj;
+ 
+-    /*< public >*/
+     ARMCPU         cpu;
+     IMXAVICState   avic;
+     IMX31CCMState  ccm;
+diff --git a/hw/arm/fsl-imx31.c b/hw/arm/fsl-imx31.c
+index 190f863355..dd929c1085 100644
+--- a/hw/arm/fsl-imx31.c
++++ b/hw/arm/fsl-imx31.c
+@@ -224,16 +224,11 @@ static void fsl_imx31_class_init(ObjectClass *oc, const void *data)
+ 
+     dc->realize = fsl_imx31_realize;
+     dc->desc = "i.MX31 SOC";
+-    /*
+-     * Reason: uses serial_hds in realize and the kzm board does not
+-     * support multiple CPUs
+-     */
+-    dc->user_creatable = false;
+ }
+ 
+ static const TypeInfo fsl_imx31_type_info = {
+     .name = TYPE_FSL_IMX31,
+-    .parent = TYPE_DEVICE,
++    .parent = TYPE_SYS_BUS_DEVICE,
+     .instance_size = sizeof(FslIMX31State),
+     .instance_init = fsl_imx31_init,
+     .class_init = fsl_imx31_class_init,
+diff --git a/hw/arm/kzm.c b/hw/arm/kzm.c
+index 387bf54ced..e9cc53ce01 100644
+--- a/hw/arm/kzm.c
++++ b/hw/arm/kzm.c
+@@ -69,7 +69,7 @@ static void kzm_init(MachineState *machine)
+ 
+     object_initialize_child(OBJECT(machine), "soc", &s->soc, TYPE_FSL_IMX31);
+ 
+-    qdev_realize(DEVICE(&s->soc), NULL, &error_fatal);
++    sysbus_realize(SYS_BUS_DEVICE(&s->soc), &error_fatal);
+ 
+     /* Check the amount of memory is compatible with the SOC */
+     if (machine->ram_size > (FSL_IMX31_SDRAM0_SIZE + FSL_IMX31_SDRAM1_SIZE)) {
+-- 
+2.56.0
 
 
