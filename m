@@ -4,124 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA516CA5FF1
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 08:31:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3535CCA5FF1
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 08:33:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xEN1w-0001U3-Jn; Wed, 07 Oct 2026 04:29:40 -0400
+	id 1xEMzf-0007hP-16; Wed, 07 Oct 2026 04:27:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
- id 1xEHr4-00078t-3k
- for qemu-devel@nongnu.org; Tue, 06 Oct 2026 22:58:16 -0400
-Received: from fhigh-b4-smtp.messagingengine.com ([202.12.124.155])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
- id 1xEHqu-0005vx-U4
- for qemu-devel@nongnu.org; Tue, 06 Oct 2026 22:58:03 -0400
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
- by mailfhigh.stl.internal (Postfix) with ESMTP id 41AA77A0157
- for <qemu-devel@nongnu.org>; Tue,  6 Oct 2026 09:36:10 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
- by phl-compute-04.internal (MEProxy); Tue, 06 Oct 2026 09:36:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alistair23.me;
- h=cc:cc:content-transfer-encoding:content-type:content-type
- :date:date:from:from:in-reply-to:in-reply-to:message-id
- :mime-version:references:reply-to:subject:subject:to:to; s=fm2;
- t=1791293769; x=1791380169; bh=6DW6IlZZGHJITdLlFDtHQgxriC42dwGa
- YENtT0ImBGk=; b=GsmKDRO8dQ5KM4pM3niLrf+1cJ4hNKDax4dFOKL0zJDqXHdN
- MD2Yr5oY4iMyyE6mRcC/K3zWecZFUH0Tlkpq+CO6jMc/ldM9VdcoI2xyeTXlhSPO
- KZ+Yl4OLzVZbS4NpdMcICR6LoowDv3moHekWZSeRs5cXDJeEVKYrUB8/sP0xcYXK
- 0u9t/4cHJhL+F7nfFxLpoVHLBtHY4/y7i1bg6L1uZwel7UkWNmAa67sK0gIcy/N3
- nT02djBkwlDIM5CD5w31levroc+XHJrLiAGXjA4dOnEOqx/5w36l4K+kLs97ZnyC
- JSD9Q92J23h1moED9gY6g2vyMCZGtgdxLJfjfw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1791293769; x=
- 1791380169; bh=6DW6IlZZGHJITdLlFDtHQgxriC42dwGaYENtT0ImBGk=; b=y
- mxufALxJEQiSJ/JacyGqD1LKx2kh366UsB+I8vqB6JZjaDuzduF7caaG02noZJzz
- BNvPsmDfojNFTJtzyCTNryeRH1b/VQDojY0I+o9DzgmsUwUmr/wagTxTsAgr0HuP
- KcPKPAyLL9F5JlbzM0Vks0MwQ1o1x+NWajgQTDNvPwbSK45baCE54u+gxKRqbrih
- OAZi9PZEgS1XDH2qIoBTZ6KggnCSsG7AklKcUUi+i/6Oe0gvUWr/jMImPW0g1AJS
- cwh5GTaXNjkI6dcR246WAQvcQVDnNMZUa7Ne21iu6VAgvONjQvEEoswcPOQ/HaLY
- hfEj/mAFfuGJBbMYSyK8w==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
- repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
- action=sign d=alistair23.me a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1791293769; d=alistair23.me;
- mf=PGFsaXN0YWlyQGFsaXN0YWlyMjMubWU+;
- rt=PHFlbXUtZGV2ZWxAbm9uZ251Lm9yZz4=;
- s=fm2:rsa-sha256:KWxQeimRZ1TBjsRYpX4cwVRTEODAaAjw6kxarW2i7Yz46JO
- gICx+wzMy6FXbl/SlgQ+GKNO0QWw+xDwiMm/dWFH61SAv/6qd0ku8p3RPytzxu7e
- fMH/mYvJgEeBTBWTPJiqNq1R09ZXodTcUETnHvx3kM2SFbpA8WJsDL3GCuWRms05
- IBy8tv1vGUwWY8fgkL0NQiwndcg5K5r2Pw5igjvow88J61+1CCqzRotjRwFdFcOe
- mb7GImBiwBydlB90giYfYsGBcsXTvtIU6x83rNBXKTrH9/EVePhsQXgiryZfTD2l
- EdEpJrjWWSMUT+UaMKPq6GR0IhN6ecrBUKgDokQ==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
- repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
- action=mi-m=1; hc=13;
- hn=cc,content-transfer-encoding,content-type,date,feedback-id,
- from,in-reply-to,message-id,mime-version,references,subject,to,
- user-agent;
-Message-Instance: m=1;
- h=sha256:NOs6Sof+Tj4eW2LlPhl5gpihfXWJyvrxV+ZoctxpO5k=:6DW6IlZZGHJITdLlFDtHQgxriC42dwGaYENtT0ImBGk=;
-X-ME-Sender: <xms:SPnEajgCBbBgsRYvk8QVeD0mEeUYIHtGrKFVnSpp7jrrLstKgu7oxQ>
- <xme:SPnEaqtHbewSxjq-p2dHroETiOCIoGxUfCgO-WKym5E0mmn5_7154DqSCrRrVZuws
- MQHkEaHxtb6vkfAAWKbyIZj3mT0hnaLwc-y89J21kCsS27ojQPxK_BZ>
-X-ME-Received: <xmr:SPnEarzvEOJZ2cdzCf1QPqMwjUC4mtjyFnt3AR280B6yPO_G4mxpC_XEZaKeLo60GC4vbe8YQBRv>
-X-ME-Proxy-Cause: dmFkZTFkUPb2dm4ATpQneYWUD/AhbHp1mq9MC7oAX83ZEpgJIS6j5FlQ6Xh1pBwjeWfeaS
- E230umU766aoUXnkc8aHzmWwe4ICxmGuVp2kCqz3U4YKPlbycE5VNhfLzOpsfHzbyqvkxR
- xwPLePdNg/eG/Zzcwrc/EOw+PoSQvxY4RQ/E9epq//LTcLs7kajop8tWtwEGw3KmdTmGSf
- 8wWPjduIEE6A4q0eiSmr4nKhwZIrVir7/6ym7S7ptXmR2FxI/wrqut3Ns2+OQhXlehB/D+
- 6rGecd8dxVAPwQfWx3fzalZotka1ia1N/dCZaYxYUKhEOgfrpy/Fpt5/aWo+d/RBZ3s+lZ
- XID4t9IdEhskRS4R6fYm/PpXuZjrhp6JfNcNX5qsbLLlRCv85C7yBAETKdp77J7lEdjHsG
- N9IjWuLscwnp/S2lkRsAsjRHUwbjMoafrJF9I2RR1rJc0+5LYJx+o9gFyOzw5JFeePQXyR
- dQrzkylgBJD0l9EYkvmJpt4JS7aeQrkGshPFcTusNmpOiMpc886laIsW90+IdFanS/SvBw
- knK0zdHJPA4bhSlAkE82lyEI4wt/9TZd++Sdz+zBuC1QhL2DhAlKAl9FC/kUTJVbM7IfCv
- bvunJUn2KdAWVCGjQ8nPp9hq3Ez5DF6tJZ0ls5aDSX7RT6XH7Ot+9Mi+MUcg
-X-ME-Proxy: <xmx:SPnEanad3juJ1DUp4FDZbbve6RkMqeQsOlzs7VvuJqgSyCnoS0CPRA>
- <xmx:SPnEaiXOTUUu58Joreig8T7MwKJRkP3IYt83erSdrnS5nKqgs1u-Jw>
- <xmx:SPnEagGgU0wlf_TpXR5siXm0h8uODbJ0SDc9THJYZD6x9JQqddCTNA>
- <xmx:SPnEakDf7SKMmTBdtMZnOOAw10NXVTQbfVjxhO4Zo-ULba6WyW03CA>
- <xmx:SfnEar2quijfs0vZPSuOpSNAsnGUcyG5YWi5KSCAxtDgzlqpYGCuHQ9t>
-Feedback-ID: ifd214418:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 6 Oct 2026 09:35:57 -0400 (EDT)
-Message-ID: <41b85b9ad64efab7ae41cdc4a7315ffe6903264b.camel@alistair23.me>
-Subject: Re: [PATCH v3 3/4] hw/riscv/atlantis: Add machine property to
- select default uart
-From: Alistair <alistair@alistair23.me>
-To: Portia Stephens <portias@oss.tenstorrent.com>, qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, Anirudh Srinivasan
- <asrinivasan@oss.tenstorrent.com>, Daniel Henrique Barboza	
- <daniel.barboza@oss.qualcomm.com>, Weiwei Li <liwei1518@gmail.com>, Palmer
- Dabbelt <palmer@dabbelt.com>, Nicholas Piggin <npiggin@gmail.com>, Alistair
- Francis	 <alistair.francis@wdc.com>, Michael Ellerman <mpe@kernel.org>,
- Chao Liu	 <chao.liu@processmission.com>, qemu-riscv@nongnu.org, Paolo
- Bonzini	 <pbonzini@redhat.com>, =?ISO-8859-1?Q?Marc-Andr=E9?= Lureau	
- <marcandre.lureau@redhat.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- Joel Stanley <joel@jms.id.au>
-Date: Tue, 06 Oct 2026 23:35:51 +1000
-In-Reply-To: <20261001233324.2636629-4-portias@oss.tenstorrent.com>
-References: <20261001233324.2636629-1-portias@oss.tenstorrent.com>
- <20261001233324.2636629-4-portias@oss.tenstorrent.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: base64
-User-Agent: Evolution 3.62.0 (by Flathub.org) 
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xEHmA-0006Xb-3v
+ for qemu-devel@nongnu.org; Tue, 06 Oct 2026 22:53:09 -0400
+Received: from mail-lf1-x136.google.com ([2a00:1450:4864:20::136])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xEHly-0004rp-VW
+ for qemu-devel@nongnu.org; Tue, 06 Oct 2026 22:52:56 -0400
+Received: by mail-lf1-x136.google.com with SMTP id
+ 2adb3069b0e04-5bccc73eea4so1129731e87.1
+ for <qemu-devel@nongnu.org>; Tue, 06 Oct 2026 19:50:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1791341440; x=1791946240; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=GLxNFWV8pCAYWPytD3wTV65ZM3p+kzSwWoszDQAFfO8=;
+ b=WngT7Oo9kpQDED41dqAvJLWjZmUFbd9/omILqrdVhmW5mkROYTCO966jX2IfkR+tlJ
+ wfoj4v7CtTeNb9IdGrQd25ITyduevCg09+VTFvHHA7kK1mUSDKelizAskZn8mgBT6mJm
+ LhgHFW+g9CCgVDakIYBagE+nhe2lb9Rm6A7JTMU9owP58zvziLwja2itc7pm277N04cz
+ Jx5qTaFZqvzTcwPcMeTknD9Ar3xSXWJSBxq/NvBc3uD+pgoAXZOCCi2SSBrYo3WmABiM
+ RGeawAPJhb3qY0319bzaRyiFkC4l94X5LOETIA+ekpaMZ+h6B+FcLoaq9KZzPPwTUBlh
+ qcAQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1791341440; x=1791946240;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=GLxNFWV8pCAYWPytD3wTV65ZM3p+kzSwWoszDQAFfO8=;
+ b=i/TCT1M9ASRfHvghAXRQCPIXEgLWpcxWaEctNwgYzTM+jBXilGRLxQ1yyb/C0wXOML
+ jedtYhRZTd01Zbz+2LmQB99QOJaCjrPmNM6anUB7YGCAEroFGm5iRIfd8gwYgGsQsAkr
+ Ba/v4X67JmwDWdcFo7NW3VqhidR2t3D2iKoDIpo3YR1/XmrtASbxzQNn4ISkC02UxloZ
+ 4OY07hsdTmyDe1SJPpoQgMztZaInzGI/9zz/jhCAy1mPiAJgFIh+Lwu6hzG+TH8ivEG5
+ eDQD11brLTtbSmB3za0nduAmZZg4S3d6Gx4w1nSiEjIX11Wg9/q5gRQm9xUeQ8ReLSy9
+ gCCw==
+X-Gm-Message-State: AFq9FYJSAprSBN4xbckAk6SVpMUqfTwugAUcoBZ0T9QsJoQDzIGumJi5
+ y+j6VBHreq8sUnNUkFmlBy+2s3ByoTQOqoxjojEpy8Cjh9woa01oNKprmDdZWg==
+X-Gm-Gg: AYBFou0wbv7uMbaC2xQeCQbNDUwb2S+wTL1fXKCDFuSD1kuLeIEqGyOffcDsrXDvEaQ
+ 9kllk+tJ3YdSurV0CKML5FZIZRB+KvCQ7QzYUQnXljv/X91o7HYYi//kGua6kWf1z1FVQVQpuUR
+ YEoMixVac9HSnluEDcgdLSA1FoXzCH0XEqC8ud0NDG/2xPLuw8zU3yUn36XTRL27gZUimhwXSSS
+ oTkYMs1uCKMKVvoFIVv0KQQilX0mLbY4ydrQuDMaEJD7yesohui5IOV/3zQnyjlJYcVxcS0e27R
+ 6n+GeonKDYW0/48VLxjmKwww5BWFL7VShZABGcFFIXA3/iza5OzW/DTUn2UNTWhU5nzx4nh5JRP
+ 6jLu0127Bz2v1jffVgJZ4/3MbrCiCgu+1cse/d2B24aDuGX14nKK4RgWodelpqUiv7C09BMnju6
+ a3jtmOlHytzTdEl0a/QrfE3yH/QeIxkxAB4UUuK3eNldFmk4qc69SCBupUi2SqIIcPzTWVFun/x
+ umjHzQU0LjqVmKR2keKUNCjXWJIJxofTD9W7oGLZO0dzdLf
+X-Received: by 2002:a5d:5f88:0:b0:48c:4a62:9b31 with SMTP id
+ ffacd0b85a97d-48c6d164fa6mr2204289f8f.5.1791279905135; 
+ Tue, 06 Oct 2026 02:45:05 -0700 (PDT)
+Received: from archlinux (pd95eda80.dip0.t-ipconnect.de. [217.94.218.128])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-48c6faa93fbsm433426f8f.16.2026.10.06.02.45.04
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 06 Oct 2026 02:45:04 -0700 (PDT)
+From: Bernhard Beschow <shentey@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: Zhao Liu <zhao1.liu@intel.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Christian Speich <c.speich@avm.de>, Bin Meng <bmeng.cn@gmail.com>,
+ qemu-block@nongnu.org, Bernhard Beschow <shentey@gmail.com>
+Subject: [PATCH v5 1/8] hw/sd/sd: Transfer up to one block in case of
+ multi-block commands
+Date: Tue,  6 Oct 2026 11:44:40 +0200
+Message-ID: <20261006094447.43491-2-shentey@gmail.com>
+X-Mailer: git-send-email 2.56.0
+In-Reply-To: <20261006094447.43491-1-shentey@gmail.com>
+References: <20261006094447.43491-1-shentey@gmail.com>
 MIME-Version: 1.0
-Received-SPF: pass client-ip=202.12.124.155;
- envelope-from=alistair@alistair23.me; helo=fhigh-b4-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::136;
+ envelope-from=shentey@gmail.com; helo=mail-lf1-x136.google.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
+ FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -137,123 +102,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gRnJpLCAyMDI2LTEwLTAyIGF0IDA5OjMzICsxMDAwLCBQb3J0aWEgU3RlcGhlbnMgd3JvdGU6
-Cj4gVGhlIEF0bGFudGlzIFNvQyBoYXMgNSBVQVJUcy4gVGhpcyBhZGRzIGEgbWFjaGluZSBwcm9w
-ZXJ0eSB0byBzZXQKPiB3aGljaCB1YXJ0IGlzIG9uIHRoZSBmaXJzdCBzZXJpYWwgaW50ZXJmYWNl
-LiBUaGlzIGlzIHRoZSBzYW1lIHBhdHRlcm4KPiB0aGF0IGlzIHVzZWQgYnkgYXNwZWVkLiBUaGUg
-cmVzdCBvZiB0aGUgdWFydCdzIHdpbGwgYmUgYWRkZWQgaW4KPiBzZXF1ZW50aWFsIG9yZGVyIHN0
-YXJ0aW5nIGF0IHNlcmlhbCBpbnRlcmZhY2UgMS4KPiAKPiBUaGUgZGVmYXVsdCB2YWx1ZSBpcyB1
-YXJ0MSB3aGljaCBtZWFucyB0aGUgQXNjYWxvbiBjb25zb2xlIHdpbGwgYmUgb24KPiBzZXJpYWwg
-aW50ZXJmYWNlIDAgYnkgZGVmYXVsdC4KPiAKPiBTaWduZWQtb2ZmLWJ5OiBQb3J0aWEgU3RlcGhl
-bnMgPHBvcnRpYXNAb3NzLnRlbnN0b3JyZW50LmNvbT4KPiBSZXZpZXdlZC1ieTogRGFuaWVsIEhl
-bnJpcXVlIEJhcmJvemEKPiA8ZGFuaWVsLmJhcmJvemFAb3NzLnF1YWxjb21tLmNvbT4KPiAtLS0K
-PiDCoGh3L3Jpc2N2L3R0X2F0bGFudGlzLmPCoMKgwqDCoMKgwqDCoMKgIHwgNzcgKysrKysrKysr
-KysrKysrKysrKysrKysrKysrKysrLS0KPiAtLQo+IMKgaW5jbHVkZS9ody9yaXNjdi90dF9hdGxh
-bnRpcy5oIHzCoCAxICsKPiDCoDIgZmlsZXMgY2hhbmdlZCwgNjkgaW5zZXJ0aW9ucygrKSwgOSBk
-ZWxldGlvbnMoLSkKPiAKPiBkaWZmIC0tZ2l0IGEvaHcvcmlzY3YvdHRfYXRsYW50aXMuYyBiL2h3
-L3Jpc2N2L3R0X2F0bGFudGlzLmMKPiBpbmRleCAyMzQyZWRjZTkzLi43YTVlMWRkY2QxIDEwMDY0
-NAo+IC0tLSBhL2h3L3Jpc2N2L3R0X2F0bGFudGlzLmMKPiArKysgYi9ody9yaXNjdi90dF9hdGxh
-bnRpcy5jCj4gQEAgLTEyLDYgKzEyLDcgQEAKPiDCoCNpbmNsdWRlICJxZW11L2Vycm9yLXJlcG9y
-dC5oIgo+IMKgI2luY2x1ZGUgInFlbXUvZ3Vlc3QtcmFuZG9tLmgiCj4gwqAjaW5jbHVkZSAicWVt
-dS91bml0cy5oIgo+ICsjaW5jbHVkZSAicWFwaS92aXNpdG9yLmgiCj4gwqAKPiDCoCNpbmNsdWRl
-ICJody9jb3JlL2JvYXJkcy5oIgo+IMKgI2luY2x1ZGUgImh3L2NvcmUvbG9hZGVyLmgiCj4gQEAg
-LTQyMiw2ICs0MjMsMjYgQEAgc3RhdGljIHZvaWQgbG9hZF9mZHQoVFRBdGxhbnRpc1N0YXRlICph
-bXMpCj4gwqDCoMKgwqAgY3JlYXRlX2ZkdF9tZW1vcnkobXMtPmZkdCwgJmFtcy0+c29jKTsKPiDC
-oH0KPiDCoAo+ICtzdGF0aWMgaW5saW5lIGludCB0dF9hdGxhbnRpc191YXJ0X2luZGV4KGludCB1
-YXJ0X2RldikKPiArewo+ICvCoMKgwqAgcmV0dXJuIHVhcnRfZGV2IC0gVFRfQVRMX1VBUlQwOwo+
-ICt9Cj4gKwo+ICtzdGF0aWMgdm9pZCB0dF9hdGxhbnRpc19jb25uZWN0X3NlcmlhbF9oZHNfdG9f
-dWFydHMoVFRBdGxhbnRpc1N0YXRlCj4gKmFtcykKPiArewo+ICvCoMKgwqAgVFRBdGxhbnRpc1Nv
-Q1N0YXRlICpzID0gJmFtcy0+c29jOwo+ICvCoMKgwqAgaW50IHVhcnRfaW5kZXggPSB0dF9hdGxh
-bnRpc191YXJ0X2luZGV4KGFtcy0+dWFydF9jaG9zZW4pOwo+ICsKPiArwqDCoMKgIHFkZXZfcHJv
-cF9zZXRfY2hyKERFVklDRSgmcy0+dWFydFt1YXJ0X2luZGV4XSksICJjaGFyZGV2IiwKPiBzZXJp
-YWxfaGQoMCkpOwo+ICsKPiArwqDCoMKgIGZvciAoaW50IGkgPSAxLCB1YXJ0ID0gMDsgaSA8IFRU
-X0FUTF9OVU1fVUFSVFM7IHVhcnQrKykgewo+ICvCoMKgwqDCoMKgwqDCoCBpZiAodWFydCA9PSB1
-YXJ0X2luZGV4KSB7Cj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqAgY29udGludWU7Cj4gK8KgwqDC
-oMKgwqDCoMKgIH0KPiArwqDCoMKgwqDCoMKgwqAgcWRldl9wcm9wX3NldF9jaHIoREVWSUNFKCZz
-LT51YXJ0W3VhcnRdKSwgImNoYXJkZXYiLAo+IHNlcmlhbF9oZChpKyspKTsKPiArwqDCoMKgIH0K
-CkkgZG9uJ3QgbGlrZSB0aGlzLiBXZSBzaG91bGRuJ3QgZHluYW1pY2FsbHkgY2hhbmdlIHRoZSBj
-b21tYW5kIGxpbmUgQVBJCmJhc2VkIG9uIGEgcHJvcGVydHkKCkFsaXN0YWlyCgo+ICt9Cj4gKwo+
-IMKgc3RhdGljIHZvaWQgdHRfYXRsYW50aXNfbWFjaGluZV9kb25lKE5vdGlmaWVyICpuLCB2b2lk
-ICpkYXRhKQo+IMKgewo+IMKgwqDCoMKgIFRUQXRsYW50aXNTdGF0ZSAqYW1zID0gY29udGFpbmVy
-X29mKG4sIFRUQXRsYW50aXNTdGF0ZSwKPiBtYWNoaW5lX2RvbmUpOwo+IEBAIC00ODQsMTEgKzUw
-NSw2IEBAIHN0YXRpYyB2b2lkIHR0X2F0bGFudGlzX21hY2hpbmVfZG9uZShOb3RpZmllcgo+ICpu
-LCB2b2lkICpkYXRhKQo+IMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoCBmZHRfbG9hZF9hZGRyKTsKPiDCoH0KPiDCoAo+IC1zdGF0aWMg
-aW5saW5lIGludCB0dF9hdGxhbnRpc191YXJ0X2luZGV4KGludCB1YXJ0X2RldikKPiAtewo+IC3C
-oMKgwqAgcmV0dXJuIHVhcnRfZGV2IC0gVFRfQVRMX1VBUlQwOwo+IC19Cj4gLQo+IMKgc3RhdGlj
-IHZvaWQgdHRfYXRsYW50aXNfc29jX2luaXQoT2JqZWN0ICpvYmopCj4gwqB7Cj4gwqDCoMKgwqAg
-VFRBdGxhbnRpc1NvQ1N0YXRlICpzID0gVFRfQVRMQU5USVNfU09DKG9iaik7Cj4gQEAgLTU5Miwx
-MCArNjA4LDYgQEAgc3RhdGljIHZvaWQgdHRfYXRsYW50aXNfc29jX3JlYWxpemUoRGV2aWNlU3Rh
-dGUKPiAqZGV2LCBFcnJvciAqKmVycnApCj4gwqDCoMKgwqAgbWVtb3J5X3JlZ2lvbl9hZGRfc3Vi
-cmVnaW9uKHMtPm1lbW9yeSwgcy0KPiA+bWVtbWFwW1RUX0FUTF9CT09UUk9NXS5iYXNlLAo+IMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqAgJnMtPmJvb3Ryb20pOwo+IMKgCj4gLcKgwqDCoCAvKiBVQVJUMSwgdGhlIHNvYyBjb25z
-b2xlIChVQVJUMCBpcyBmb3IgdGhlIGJvb3QgbWljcm9jb250cm9sbGVyCj4gKi8KPiAtwqDCoMKg
-IHFkZXZfcHJvcF9zZXRfY2hyKERFVklDRSgmcy0KPiA+dWFydFt0dF9hdGxhbnRpc191YXJ0X2lu
-ZGV4KFRUX0FUTF9VQVJUMSldKSwKPiAtwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgICJjaGFyZGV2Iiwgc2VyaWFsX2hkKDApKTsKPiAtCj4gwqDCoMKgwqAgZm9yIChp
-bnQgaSA9IDA7IGkgPCBUVF9BVExfTlVNX1VBUlRTOyBpKyspIHsKPiDCoMKgwqDCoMKgwqDCoMKg
-IFN5c0J1c0RldmljZSAqc2JkID0gU1lTX0JVU19ERVZJQ0UoJnMtPnVhcnRbaV0pOwo+IMKgwqDC
-oMKgwqDCoMKgwqAgaWYgKCFzeXNidXNfcmVhbGl6ZShzYmQsIGVycnApKSB7Cj4gQEAgLTY2Myw2
-ICs2NzUsMTAgQEAgc3RhdGljIHZvaWQKPiB0dF9hdGxhbnRpc19tYWNoaW5lX2luaXQoTWFjaGlu
-ZVN0YXRlICptYWNoaW5lKQo+IMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqAgT0JKRUNUKCZhbXMtPnNvY19tZW1vcnkpLAo+ICZlcnJvcl9h
-Ym9ydCk7Cj4gwqDCoMKgwqAgb2JqZWN0X3Byb3BlcnR5X3NldF9saW5rKE9CSkVDVCgmYW1zLT5z
-b2MpLCAiZHJhbSIsCj4gT0JKRUNUKG1hY2hpbmUtPnJhbSksCj4gwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCAmZXJyb3JfYWJvcnQpOwo+
-ICsKPiArwqDCoMKgIC8qIE1hcCBzZXJpYWwgaW50ZXJmYWNlcyB0byB1YXJ0ICovCj4gK8KgwqDC
-oCB0dF9hdGxhbnRpc19jb25uZWN0X3NlcmlhbF9oZHNfdG9fdWFydHMoYW1zKTsKPiArCj4gwqDC
-oMKgwqAgcWRldl9yZWFsaXplKERFVklDRSgmYW1zLT5zb2MpLCBOVUxMLCAmZXJyb3JfZmF0YWwp
-Owo+IMKgCj4gwqDCoMKgwqAgLyogSTJDIHBlcmlwaGVyYWxzOiBxZW11IHNwZWNpZmljICovCj4g
-QEAgLTY4MCw2ICs2OTYsNDcgQEAgc3RhdGljIHZvaWQKPiB0dF9hdGxhbnRpc19tYWNoaW5lX2lu
-aXQoTWFjaGluZVN0YXRlICptYWNoaW5lKQo+IMKgwqDCoMKgIHFlbXVfYWRkX21hY2hpbmVfaW5p
-dF9kb25lX25vdGlmaWVyKCZhbXMtPm1hY2hpbmVfZG9uZSk7Cj4gwqB9Cj4gwqAKPiArc3RhdGlj
-IHZvaWQgdHRfYXRsYW50aXNfZ2V0X2NvbnNvbGUoT2JqZWN0ICpvYmosIFZpc2l0b3IgKnYsIGNv
-bnN0Cj4gY2hhciAqbmFtZSwKPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB2b2lkICpvcGFxdWUsIEVycm9yICoq
-ZXJycCkKPiArewo+ICvCoMKgwqAgVFRBdGxhbnRpc1N0YXRlICphbXMgPSBUVF9BVExBTlRJU19N
-QUNISU5FKG9iaik7Cj4gK8KgwqDCoCB1aW50MzJfdCB1YXJ0X2luZGV4ID0gdHRfYXRsYW50aXNf
-dWFydF9pbmRleChhbXMtPnVhcnRfY2hvc2VuKTsKPiArCj4gK8KgwqDCoCB2aXNpdF90eXBlX3Vp
-bnQzMih2LCBuYW1lLCAmdWFydF9pbmRleCwgZXJycCk7Cj4gK30KPiArCj4gK3N0YXRpYyB2b2lk
-IHR0X2F0bGFudGlzX3NldF9jb25zb2xlKE9iamVjdCAqb2JqLCBWaXNpdG9yICp2LCBjb25zdAo+
-IGNoYXIgKm5hbWUsCj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgdm9pZCAqb3BhcXVlLCBFcnJvciAqKmVycnAp
-Cj4gK3sKPiArwqDCoMKgIFRUQXRsYW50aXNTdGF0ZSAqYW1zID0gVFRfQVRMQU5USVNfTUFDSElO
-RShvYmopOwo+ICvCoMKgwqAgdWludDMyX3QgdmFsdWU7Cj4gKwo+ICvCoMKgwqAgaWYgKCF2aXNp
-dF90eXBlX3VpbnQzMih2LCBuYW1lLCAmdmFsdWUsIGVycnApKSB7Cj4gK8KgwqDCoMKgwqDCoMKg
-IHJldHVybjsKPiArwqDCoMKgIH0KPiArCj4gK8KgwqDCoCBpZiAodmFsdWUgPj0gVFRfQVRMX05V
-TV9VQVJUUykgewo+ICvCoMKgwqDCoMKgwqDCoCBlcnJvcl9zZXRnKGVycnAsICJcImNvbnNvbGVc
-IiBzaG91bGQgYmUgaW4gcmFuZ2UgWyVkIC0gJWRdIiwKPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgIDAsIFRUX0FUTF9OVU1fVUFSVFMgLSAxKTsKPiArwqDCoMKgwqDCoMKg
-wqAgcmV0dXJuOwo+ICvCoMKgwqAgfQo+ICvCoMKgwqAgYW1zLT51YXJ0X2Nob3NlbiA9IHZhbHVl
-ICsgVFRfQVRMX1VBUlQwOwo+ICt9Cj4gKwo+ICtzdGF0aWMgdm9pZCB0dF9hdGxhbnRpc19tYWNo
-aW5lX2NsYXNzX3Byb3BzX2luaXQoT2JqZWN0Q2xhc3MgKm9jKQo+ICt7Cj4gK8KgwqDCoCBPYmpl
-Y3RQcm9wZXJ0eSAqY29uc29sZTsKPiArCj4gK8KgwqDCoCBjb25zb2xlID0gb2JqZWN0X2NsYXNz
-X3Byb3BlcnR5X2FkZChvYywgImNvbnNvbGUiLCAidWludDMyX3QiLAo+ICvCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqAgdHRfYXRsYW50aXNfZ2V0X2NvbnNvbGUsCj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oCB0dF9hdGxhbnRpc19zZXRfY29uc29sZSwKPiBOVUxMLCBOVUxMKTsKPiArwqDCoMKgIG9iamVj
-dF9jbGFzc19wcm9wZXJ0eV9zZXRfZGVzY3JpcHRpb24ob2MsICJjb25zb2xlIiwKPiArwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoCAiQ2hhbmdlIHRoZSBkZWZhdWx0IFVBUlQgaW5kZXggb24gLXNlcmlh
-bC4gVmFsaWQgdmFsdWVzCj4gYXJlIDAgIiBcCj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqAgInRo
-cm91Z2ggNCIpOwo+ICvCoMKgwqAgLyogRGVmYXVsdCB0byBVQVJUMSwgdGhlIEFzY2Fsb24gY29u
-c29sZSAqLwo+ICvCoMKgwqAgb2JqZWN0X3Byb3BlcnR5X3NldF9kZWZhdWx0X3VpbnQoY29uc29s
-ZSwgMSk7Cj4gK30KPiArCj4gwqBzdGF0aWMgdm9pZCB0dF9hdGxhbnRpc19tYWNoaW5lX2NsYXNz
-X2luaXQoT2JqZWN0Q2xhc3MgKm9jLCBjb25zdAo+IHZvaWQgKmRhdGEpCj4gwqB7Cj4gwqDCoMKg
-wqAgTWFjaGluZUNsYXNzICptYyA9IE1BQ0hJTkVfQ0xBU1Mob2MpOwo+IEBAIC02OTMsNiArNzUw
-LDggQEAgc3RhdGljIHZvaWQKPiB0dF9hdGxhbnRpc19tYWNoaW5lX2NsYXNzX2luaXQoT2JqZWN0
-Q2xhc3MgKm9jLCBjb25zdCB2b2lkICpkYXRhKQo+IMKgwqDCoMKgIG1jLT5ibG9ja19kZWZhdWx0
-X3R5cGUgPSBJRl9WSVJUSU87Cj4gwqDCoMKgwqAgbWMtPm5vX2Nkcm9tID0gMTsKPiDCoMKgwqDC
-oCBtYy0+ZGVmYXVsdF9yYW1faWQgPSAidHRfYXRsYW50aXMucmFtIjsKPiArCj4gK8KgwqDCoCB0
-dF9hdGxhbnRpc19tYWNoaW5lX2NsYXNzX3Byb3BzX2luaXQob2MpOwo+IMKgfQo+IMKgCj4gwqBz
-dGF0aWMgY29uc3QgVHlwZUluZm8gdHRfYXRsYW50aXNfdHlwZXNbXSA9IHsKPiBkaWZmIC0tZ2l0
-IGEvaW5jbHVkZS9ody9yaXNjdi90dF9hdGxhbnRpcy5oCj4gYi9pbmNsdWRlL2h3L3Jpc2N2L3R0
-X2F0bGFudGlzLmgKPiBpbmRleCBiODFiN2M4YWJkLi43YmQ0NmU5YzliIDEwMDY0NAo+IC0tLSBh
-L2luY2x1ZGUvaHcvcmlzY3YvdHRfYXRsYW50aXMuaAo+ICsrKyBiL2luY2x1ZGUvaHcvcmlzY3Yv
-dHRfYXRsYW50aXMuaAo+IEBAIC01Niw2ICs1Niw3IEBAIHN0cnVjdCBUVEF0bGFudGlzU3RhdGUg
-ewo+IMKgCj4gwqDCoMKgwqAgTWVtb3J5UmVnaW9uIHNvY19tZW1vcnk7Cj4gwqDCoMKgwqAgVFRB
-dGxhbnRpc1NvQ1N0YXRlIHNvYzsKPiArwqDCoMKgIHVpbnQzMl90IHVhcnRfY2hvc2VuOwo+IMKg
-fTsKPiDCoAo+IMKgZW51bSB7Cg==
+Commit eff58d3d9681 ("hw/sd/sd: Allow multi-byte read/write for generic
+paths") allowed for transferring multiple bytes at once at the choice of
+the SD host implementation. Take advantage of that in the multi-block
+commands CMD18 and CMD25 by transferring up to one block rather than one
+byte at a time.
+
+Note that the drive limits and write-protect groups were already checked
+at the block boundary only. In between, bytes were accumulated up to one
+block and the block was trustfully transferred once full. This patch
+optimizes the accumulation process to fill a whole block at once if
+possible, so no further checks are required.
+
+This patch is based on https://lore.kernel.org/qemu-devel/20260417-sdcard-performance-b4-v4-3-119e66be10c2@avm.de/
+
+Signed-off-by: Christian Speich <c.speich@avm.de>
+Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+---
+ hw/sd/sd.c | 27 ++++++++++-----------------
+ 1 file changed, 10 insertions(+), 17 deletions(-)
+
+diff --git a/hw/sd/sd.c b/hw/sd/sd.c
+index b1b3b1226a..759db66e3d 100644
+--- a/hw/sd/sd.c
++++ b/hw/sd/sd.c
+@@ -2663,7 +2663,6 @@ static size_t sd_write_data(SDState *sd, const void *buf, size_t length)
+ {
+     unsigned int partition_access;
+     int i;
+-    const uint8_t *value = buf;
+ 
+     if (!sd->blk || !blk_is_inserted(sd->blk)) {
+         return length;
+@@ -2695,12 +2694,6 @@ static size_t sd_write_data(SDState *sd, const void *buf, size_t length)
+         break;
+ 
+     case 25:  /* CMD25:  WRITE_MULTIPLE_BLOCK */
+-        /*
+-         * Only read one byte at a time. We will be called again with the
+-         * remaining.
+-         */
+-        length = 1;
+-
+         if (sd->data_offset == 0) {
+             /* Start of the block - let's check the address is valid */
+             if (!address_in_range(sd, "WRITE_MULTIPLE_BLOCK",
+@@ -2714,7 +2707,11 @@ static size_t sd_write_data(SDState *sd, const void *buf, size_t length)
+                 }
+             }
+         }
+-        sd->data[sd->data_offset++] = value[0];
++
++        length = MIN(sd->blk_len - sd->data_offset, length);
++        memcpy(sd->data + sd->data_offset, buf, length);
++        sd->data_offset += length;
++
+         if (sd->data_offset >= sd->blk_len) {
+             /* TODO: Check CRC before committing */
+             sd->state = sd_programming_state;
+@@ -2811,7 +2808,6 @@ static size_t sd_read_data(SDState *sd, void *buf, size_t length)
+     const uint8_t dummy_byte = 0x00;
+     unsigned int partition_access;
+     uint32_t io_len;
+-    uint8_t *value = buf;
+ 
+     if (!sd->blk || !blk_is_inserted(sd->blk)) {
+         memset(buf, dummy_byte, length);
+@@ -2851,16 +2847,10 @@ static size_t sd_read_data(SDState *sd, void *buf, size_t length)
+         break;
+ 
+     case 18:  /* CMD18:  READ_MULTIPLE_BLOCK */
+-        /*
+-         * We will only read one byte at a time. We will be called again with
+-         * the remaining buffer.
+-         */
+-        length = 1;
+-
+         if (sd->data_offset == 0) {
+             if (!address_in_range(sd, "READ_MULTIPLE_BLOCK",
+                                   sd->data_start, io_len)) {
+-                *value = dummy_byte;
++                memset(buf, dummy_byte, length);
+                 return length;
+             }
+             partition_access = sd->ext_csd[EXT_CSD_PART_CONFIG]
+@@ -2871,7 +2861,10 @@ static size_t sd_read_data(SDState *sd, void *buf, size_t length)
+                 sd_blk_read(sd, sd->data_start, io_len);
+             }
+         }
+-        *value = sd->data[sd->data_offset++];
++
++        length = MIN(io_len - sd->data_offset, length);
++        memcpy(buf, sd->data + sd->data_offset, length);
++        sd->data_offset += length;
+ 
+         if (sd->data_offset >= io_len) {
+             sd->data_start += io_len;
+-- 
+2.56.0
 
 
