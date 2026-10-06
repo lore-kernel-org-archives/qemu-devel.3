@@ -4,96 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E86FDCA6002
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 08:19:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE440CA5FF1
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 08:19:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xEMrq-0006M6-4p; Wed, 07 Oct 2026 04:19:14 -0400
+	id 1xEMrk-00068q-OZ; Wed, 07 Oct 2026 04:19:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xEHKm-0003EG-Ln
- for qemu-devel@nongnu.org; Tue, 06 Oct 2026 22:24:59 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xEHKZ-0008An-H1
- for qemu-devel@nongnu.org; Tue, 06 Oct 2026 22:24:38 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-4a180fbeef5so907665e9.1
- for <qemu-devel@nongnu.org>; Tue, 06 Oct 2026 19:22:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1791339747; x=1791944547; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=0VdAFjhLSQ0qYTLZ/KWF4f2KzUr8JCGRG8XMPOs/pjU=;
- b=q5OzLM2KfvbViMeI5sEpAVfDZbyoiDG5HC6517s6cSn3kCbg8Va2yTUheqKywWN7Am
- bdMjV+bHc11eB1DRGPl8/B02j0wxgniHPbfmVbojtmaxxtFvlrwbFNAzqKVbfJ4vr/+Q
- XrzYgvIyTZ3CoqUXBtwveoGy8TW2vEpwG8hl+ciBv16Jqa720Ld1t5nRYn9zYYhPOLZ5
- NAAUG/Z+6rZ6igaJSo78rWy+Awd7jjC2NDDPACJZh1eoEBC53WIF97N9srYbc51ekZ/b
- hL/AN9nJAseDqoCkmJXCt7FQhlstIRekQp05N88leOkCP3XtkhMRAXe9tkPjGo0vKRKL
- veJw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791339747; x=1791944547;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=0VdAFjhLSQ0qYTLZ/KWF4f2KzUr8JCGRG8XMPOs/pjU=;
- b=HT+gqGiNXb0Pep3NjE13MUU2oPir47JyJqJU56IK6/JJyVV9hFqtlUiffgtSD6z+q+
- hgf+HDWFP7MUZYTAz0371Bu8bQnjv/ay/r+xmXMHjmiJqd1BecpYmNvB/5Bi2XxmTotT
- dG+Cx05lXZq4kwEfZ+Awt+t+vXrgpyJdtN7ekkC1Efj3Emne0sXneKwqpRQpBAZw6RJO
- jtNtYsXbb6OjSjOGVtyQsXuGjFT4T+X22R5bNCDi5Y/4yU0YntZRhT5MN8cbwD6+Gb6V
- m57N9MXD2xYy19il+6/wNTw8U/Xafnw/rNws0DZihFEaFHh4oYpjfvatFi3tYBoypLe5
- JhCg==
-X-Forwarded-Encrypted: i=1;
- AKwUvBxs8SoiOOGtfkBD6yM2OtDWIS48w9mJUb6//00rM9M0Ud4EaI0cQ9x+gWzAo9deaoAjtwgFb+eMeGsi@nongnu.org
-X-Gm-Message-State: AFuF++kyoBsSCo7dIJuOzCqnSpC8jY9ApEQc+7QwT3R0Hak9GsqFFgnI
- bt2MGUYDCpiq/dbJcwviMwmCWcn6mk/OHOypUmrRBpSs6/p8R1lrKh+igPacVNhGX04HGlXkwlK
- t6Jb20lQ=
-X-Gm-Gg: AYBFou3RzOsJrXk2Z1hxoOjtkkA2Pd80qC7vMjRzfszhQV1hNfqMlihOJO72Mt7JZNY
- RklLLzs9Uy4PLWnqw0B2RKSVgJMe6iOr7EGZpqYunChAWoPUolLxRN/8PLBTn2oW99JBRhhMgPu
- OkF8L88Oy4RG2VbWH6JjmoJbVgBRTrrZwCVl4UwM9KQbnXgBKQmXPFI1WOsHhgwaxc0SKUrXYNq
- Vr7Vw+HPnSsT2AWmf+/TS76aqixttGtBsz321pp0UdTUPd1U309qBjmoxpILQIb3U+LFbS0eKTm
- SKGIfqTKNGeI79kif/kaxvw6GQtF51K01DZ0dtWZp7oOFZO/if46O7OgEvbHBViU2vrKo1qLnUr
- oki1PO6wnD8MjGJgrLl0ejdEMn5kNx4w26YKR2DZiwAM9nXVCgHWoA8LiEW1JC8On6Yl4nEY1Xp
- lGeJqkesslD6N/RfgZZUTAACubp907l5CzvpXEH50YUDgVj6ppcBAhk69qsJ+lknzAgvnx27YjC
- VvarKD3bxmNMFOe7OV5OzoY33RLPRGe64s=
-X-Received: by 2002:a5d:5f53:0:b0:48b:437:8fae with SMTP id
- ffacd0b85a97d-48c6d16d17dmr1910947f8f.9.1791278699504; 
- Tue, 06 Oct 2026 02:24:59 -0700 (PDT)
-Received: from [192.168.148.60] (90-182-211-1.rcp.o2.cz. [90.182.211.1])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48c6cdb281csm1782126f8f.55.2026.10.06.02.24.58
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 06 Oct 2026 02:24:59 -0700 (PDT)
-Message-ID: <084389ce-329f-4cee-a159-8f8503eac291@linaro.org>
-Date: Tue, 6 Oct 2026 11:24:57 +0200
+ (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
+ id 1xEHFp-0002fh-8X
+ for qemu-devel@nongnu.org; Tue, 06 Oct 2026 22:19:43 -0400
+Received: from fhigh-b4-smtp.messagingengine.com ([202.12.124.155])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
+ id 1xEHFZ-0006yp-8R
+ for qemu-devel@nongnu.org; Tue, 06 Oct 2026 22:19:26 -0400
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+ by mailfhigh.stl.internal (Postfix) with ESMTP id 1E8FC7A0139
+ for <qemu-devel@nongnu.org>; Tue,  6 Oct 2026 11:12:48 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+ by phl-compute-04.internal (MEProxy); Tue, 06 Oct 2026 11:12:48 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alistair23.me;
+ h=cc:cc:content-transfer-encoding:content-type:content-type
+ :date:date:from:from:in-reply-to:in-reply-to:message-id
+ :mime-version:references:reply-to:subject:subject:to:to; s=fm2;
+ t=1791299567; x=1791385967; bh=a0HA3daietqtclncs6logHCQSy+D8rYZ
+ 7Y8M8Fs8XNM=; b=WX/60QfyWq85LJJgHV8+fJbHRYABHI/3eP0UnWKSwqwm5hgf
+ QTjmrt6UgWLllA1a3pyix34uikklAXiyLHcCiSTTPTiQheih+15vz2nJ+mHpjKGf
+ 6AaTbnXrOsKzc6HzSJeJY/HpQ5bZ54oYl580PTJiqn6xy0hoc6QnTSfKJdFQ/2kg
+ OJA7H1dnp38xoVXmpO8wRJ7hfj0SFuWNdsNze+Mfymh8Rrcpx5ZqKTfXGXBTpI8N
+ n/dbEthOCnEjHA6tccjFP+CbN6h/MHPkhQxGh7kFVC0aJdia97LOOnPeHVDYDek0
+ Hd0uMID2Ag2vkpf2sOG0+g9BkZfHrYeNdQrOUg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:content-type:date:date:feedback-id:feedback-id
+ :from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1791299567; x=
+ 1791385967; bh=a0HA3daietqtclncs6logHCQSy+D8rYZ7Y8M8Fs8XNM=; b=F
+ EBtAN4EquLZVMXA1PM2qtLZYfS0gfiNXhp/gjl+CCrwDK14WX3zB67YW70Qr6BAN
+ 3lCwL79aQlcaFQBwjUxp+b7tcuchOS3QtDw5LlGfvZDDpzIFyVsKv4HviYlLyouP
+ stLC4urkJcDmY4R7xO6NTZmwvmA/J0FUIJiKMpL1wHM/6jTy0GFtkzTe8CU/azRH
+ j/kTB7p3Fe4F6iVVmMSdOy0135gxuGCgRiVrLf0/35OwXGmQtrKkblNMZJm2fpAD
+ kldla9nzSlP+CGxmJgkJeE+wPA2ZvJ3kyerEz1Rad9KP483FSMPDKqLNgCDeOU47
+ mB75j0R6g6iskr+sVh8Sw==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+ repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
+ action=sign d=alistair23.me a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1791299567; d=alistair23.me;
+ mf=PGFsaXN0YWlyQGFsaXN0YWlyMjMubWU+;
+ rt=PHFlbXUtZGV2ZWxAbm9uZ251Lm9yZz4=;
+ s=fm2:rsa-sha256:eaUUUqPx+LJ9rIpKrL+bokf8sNqAUujXqEchrue0+sd/CpK
+ sGnXyfXrykQzIHg1vAgRSt2jxyq6tvJh4itNL8bdEB4HgX/AfI9bDi9mqkjkL7ll
+ 6z/LNi3H3cLqZ+oiDn4fL5RrOGqqrBcxidMak+54RhKqhCWZL+2bT/XELd8RPs4A
+ /8IpYqni9Z6/mHJIXf0UmwZ99YFZH37vA56UdMT9IN/w/2InBnFCXfl06Z3mMiJ5
+ mMRr2siVP0WPARotdY2htNF4YF/JV/1dkseFoV6lX6zZcrgO5xRbh5kBbY3wGZag
+ Ob/o2GVMKLs5mB6gfB9ztdSBvwcg4yQUr+bPeFA==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+ repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
+ action=mi-m=1; hc=13;
+ hn=cc,content-transfer-encoding,content-type,date,feedback-id,
+ from,in-reply-to,message-id,mime-version,references,subject,to,
+ user-agent;
+Message-Instance: m=1;
+ h=sha256:Mm5tsuJ8pbS0c+JXBG9kqmI2u0UTN8gYgT58wKCjgO8=:a0HA3daietqtclncs6logHCQSy+D8rYZ7Y8M8Fs8XNM=;
+X-ME-Sender: <xms:7w_FauSbiIXth32L3aBARsUqT961HJVxDbHNL4rCjfcuFOk2c-VVwQ>
+ <xme:7w_FaoEjAaPFahv2H2G4FUNz6Tba9vPTdINs_QSqezTtcRVrJ_fcDehJRAO9opuJ8
+ Y36CIceBnyY41XAehzsQmHmGVNf_5dQHe3NrIa6aEXSXXnHOfrfws0a>
+X-ME-Received: <xmr:7w_Faq-24uG9w7WsVgggrzlC_gzAvEn6atWCSDiqfl1ibfEOB-7fzqbAofLzcKSbz5STRCS2M4Nk0BF0Kwx11HE>
+X-ME-Proxy-Cause: dmFkZTEl7aq6felP5dblyjPqWzSmrHhN1WjCZMLqd89JHkdGn2WeJeoE35WPZr3sGPJ/tX
+ D+iEhgNBe/iEs+FXlh+vjs5/At4esFa74xX20wkR1h1/0M2FYiKgfIYGJW8kaF74M0AF43
+ JqcIK4kIC74PwGv4kzNntMOlWOHlOnKAqwFAYpeGxE58o811bbAuanIiNTv35nDkAzTicS
+ hGumKH0C+XYMHDzXaWM0GGRVj4OhwPq1wpPPn/kVmQelmAMEH5Z057DaeV82OfmpS/EfdO
+ Zu5WDfjJCdkp7Mp9q3ESVwl/452+MZzjU/wmJM+ebUKzg/3pkrsWswJ0/Y/7ouAgvfN0d7
+ C7nuF48zDbijLDsaTLPqsyx9wQ/TnT9CDHkSOX9u5qMu4D4TVyaviUsJvwsqIKEgp80AmW
+ 6W+FOfmHBb3NBPFFKOaLagIHqZelcjoT382IFRrjVu1GSYb5LwueKr18Hb/JaiKu6keg7+
+ MJOkmI7r164Q2QwgUrKbiWR1AaV+hdKSCe2vnW9yQfwxjZoxHnubWpzEyz3EpJrs5SBD/d
+ dZB9ZimPq9R49EcG50KTrNupFwH6cfruRxT26dWe2gjoShyaEbR+T/+xWeF1FsqQ+dgWet
+ 28bxy/B5pt5x+S5y21wHwOXYNIIfeqTb/gDsVVzHly2iGxRMKf3uq3nhL/cw
+X-ME-Proxy: <xmx:7w_FaiL6zrqtksIDg1i3U200saaSweEbpW1q1rISpY-wHZVpBxpJ-Q>
+ <xmx:7w_FatYUscYS-Qgx6VpH18r3N_lRTaFcpCNvr_EUvxvDRj-YjOaleA>
+ <xmx:7w_FasKmMGShpVnDt4wos_dz3VBn26HXjc0nLBPLkU8YGr41hhHUSg>
+ <xmx:7w_FajDIwr8xpwrEs1cq-3M2ePFtJxU5Q_0ODXq3LahTmZFUFXXA7A>
+ <xmx:7w_Faokk2lYR59xt1JJIx59SimwaOOlWgdlk_gJMhONJGXW9UQOUHXDV>
+Feedback-ID: ifd214418:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 6 Oct 2026 11:12:47 -0400 (EDT)
+Message-ID: <0a9f8801342551c999bff354dcb8d7204d688f56.camel@alistair23.me>
+Subject: Re: [PATCH v2 04/23] target/riscv: Drop is_load parameter from
+ vext_continuous_ldst_tlb
+From: Alistair <alistair@alistair23.me>
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org
+Date: Wed, 07 Oct 2026 01:12:46 +1000
+In-Reply-To: <20260821040404.268123-5-richard.henderson@linaro.org>
+References: <20260821040404.268123-1-richard.henderson@linaro.org>
+ <20260821040404.268123-5-richard.henderson@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: base64
+User-Agent: Evolution 3.62.0 (by Flathub.org) 
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 0/5] Linux user next patches
-To: Helge Deller <deller@kernel.org>, qemu-devel@nongnu.org
-Cc: Laurent Vivier <laurent@vivier.eu>, Aleksandar Rikalo
- <arikalo@gmail.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@oss.qualcomm.com>, Helge Deller <deller@gmx.de>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Aurelien Jarno
- <aurelien@aurel32.net>, Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-References: <20261004114311.3874-1-deller@kernel.org>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20261004114311.3874-1-deller@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x333.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=202.12.124.155;
+ envelope-from=alistair@alistair23.me; helo=fhigh-b4-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -110,30 +129,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/4/26 13:43, Helge Deller wrote:
-> From: Helge Deller<deller@gmx.de>
-> 
-> The following changes since commit d7a65d1793d691d356a56833620f7d1e6f5d653b:
-> 
->    Merge tag 'hppa-a400-updates-pull-request' ofhttps://github.com/hdeller/qemu-hppa into staging (2026-10-03 14:17:49 +0200)
-> 
-> are available in the Git repository at:
-> 
->    https://github.com/hdeller/qemu-hppa.git tags/linux-user-next-pull-request
-> 
-> for you to fetch changes up to 8e021b85cc06caec24a24302aa68f040a0970c12:
-> 
->    linux-user/mips: pick Loongson-3A4000 if a pre-r6 mips64 binary needs nan2008 (2026-10-04 13:32:14 +0200)
-> 
-> ----------------------------------------------------------------
-> linux user patches
-> 
-> Some patches for linux-user, which
-> - make it possible to run pre-r6 mips64 binaries that need nan2008 without
->    requiring the user to explicitly set a compatible -cpu, and
-> - copy the executable's e_flags into core dumps on mips and riscv
+T24gVGh1LCAyMDI2LTA4LTIwIGF0IDIxOjAzIC0wNzAwLCBSaWNoYXJkIEhlbmRlcnNvbiB3cm90
+ZToKPiBUaGlzIHBhcmFtZXRlciBpcyB1bnVzZWQuCj4gCj4gU2lnbmVkLW9mZi1ieTogUmljaGFy
+ZCBIZW5kZXJzb24gPHJpY2hhcmQuaGVuZGVyc29uQGxpbmFyby5vcmc+CgpSZXZpZXdlZC1ieTog
+QWxpc3RhaXIgRnJhbmNpcyA8YWxpc3RhaXIuZnJhbmNpc0B3ZGMuY29tPgoKQWxpc3RhaXIKCj4g
+LS0tCj4gwqB0YXJnZXQvcmlzY3YvdGNnL3ZlY3Rvcl9oZWxwZXIuYyB8IDE0ICsrKysrKy0tLS0t
+LS0tCj4gwqAxIGZpbGUgY2hhbmdlZCwgNiBpbnNlcnRpb25zKCspLCA4IGRlbGV0aW9ucygtKQo+
+IAo+IGRpZmYgLS1naXQgYS90YXJnZXQvcmlzY3YvdGNnL3ZlY3Rvcl9oZWxwZXIuYwo+IGIvdGFy
+Z2V0L3Jpc2N2L3RjZy92ZWN0b3JfaGVscGVyLmMKPiBpbmRleCA2MTA4Y2YzYTZjLi5kYTFlNzA0
+YzU2IDEwMDY0NAo+IC0tLSBhL3RhcmdldC9yaXNjdi90Y2cvdmVjdG9yX2hlbHBlci5jCj4gKysr
+IGIvdGFyZ2V0L3Jpc2N2L3RjZy92ZWN0b3JfaGVscGVyLmMKPiBAQCAtMjc0LDkgKzI3NCw4IEBA
+IEdFTl9WRVhUX0hPU1RfU1RfRUxFTShzdGVfZCwgdWludDY0X3QsIEg4LAo+IHN0cV9sZSkKPiDC
+oAo+IMKgc3RhdGljIGlubGluZSBRRU1VX0FMV0FZU19JTkxJTkUgdm9pZAo+IMKgdmV4dF9jb250
+aW51b3VzX2xkc3RfdGxiKENQVVJJU0NWU3RhdGUgKmVudiwgdmV4dF9sZHN0X2VsZW1fZm5fdGxi
+Cj4gKmxkc3RfdGxiLAo+IC3CoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoCB2b2lkICp2ZCwgdWludDMyX3QgZXZsLCB0YXJnZXRfdWxvbmcgYWRkciwKPiAtwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgdWludDMyX3QgcmVnX3N0YXJ0
+LCB1aW50cHRyX3QgcmEsIHVpbnQzMl90Cj4gZXN6LAo+IC3CoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBib29sIGlzX2xvYWQpCj4gK8KgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB2b2lkICp2ZCwgdWludDMyX3QgZXZsLCB0
+YXJnZXRfdWxvbmcgYWRkciwKPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgIHVpbnQzMl90IHJlZ19zdGFydCwgdWludHB0cl90IHJhLCB1aW50MzJfdAo+
+IGVzeikKPiDCoHsKPiDCoMKgwqDCoCB1aW50MzJfdCBpOwo+IMKgwqDCoMKgIGZvciAoaSA9IGVu
+di0+dnN0YXJ0OyBpIDwgZXZsOyBlbnYtPnZzdGFydCA9ICsraSwgYWRkciArPSBlc3opIHsKPiBA
+QCAtNDY3LDggKzQ2Niw4IEBAIHZleHRfcGFnZV9sZHN0X3VzKENQVVJJU0NWU3RhdGUgKmVudiwg
+dm9pZCAqdmQsCj4gdGFyZ2V0X3Vsb25nIGFkZHIsCj4gwqDCoMKgwqDCoMKgwqDCoCBlbnYtPnZz
+dGFydCArPSBlbGVtczsKPiDCoMKgwqDCoCB9IGVsc2Ugewo+IMKgwqDCoMKgwqDCoMKgwqAgaWYg
+KG5mID09IDEpIHsKPiAtwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB2ZXh0X2NvbnRpbnVvdXNfbGRz
+dF90bGIoZW52LCBsZHN0X3RsYiwgdmQsIGV2bCwgYWRkciwKPiBlbnYtPnZzdGFydCwKPiAtwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqAgcmEsIGVzeiwgaXNfbG9hZCk7Cj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqAgdmV4
+dF9jb250aW51b3VzX2xkc3RfdGxiKGVudiwgbGRzdF90bGIsIHZkLCBldmwsIGFkZHIsCj4gK8Kg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoCBlbnYtPnZzdGFydCwgcmEsIGVzeik7Cj4gwqDCoMKgwqDCoMKgwqDCoCB9
+IGVsc2Ugewo+IMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBmb3IgKHVpbnQzMl90IGkgPSBlbnYt
+PnZzdGFydDsgaSA8IGV2bDsgZW52LT52c3RhcnQgPQo+ICsraSkgewo+IMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgIHZleHRfbGRzdF9uZl90bGIoZW52LCB2ZCwgYWRkciwgaSwgbmYs
+IGVzeiwKPiBAQCAtNTAxLDkgKzUwMCw4IEBAIHZleHRfbGRzdF91cyh2b2lkICp2ZCwgdGFyZ2V0
+X3Vsb25nIGJhc2UsCj4gQ1BVUklTQ1ZTdGF0ZSAqZW52LCB1aW50MzJfdCBkZXNjLAo+IMKgwqDC
+oMKgwqAgKi8KPiDCoMKgwqDCoCBpZiAobmYgPT0gMSAmJiAoZXZsIDw8IGxvZzJfZXN6KSA8PSA2
+KSB7Cj4gwqDCoMKgwqDCoMKgwqDCoCBhZGRyID0gYmFzZSArIChlbnYtPnZzdGFydCA8PCBsb2cy
+X2Vzeik7Cj4gLcKgwqDCoMKgwqDCoMKgIHZleHRfY29udGludW91c19sZHN0X3RsYihlbnYsIGxk
+c3RfdGxiLCB2ZCwgZXZsLCBhZGRyLCBlbnYtCj4gPnZzdGFydCwgcmEsCj4gLcKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgZXN6
+LCBpc19sb2FkKTsKPiAtCj4gK8KgwqDCoMKgwqDCoMKgIHZleHRfY29udGludW91c19sZHN0X3Rs
+YihlbnYsIGxkc3RfdGxiLCB2ZCwgZXZsLCBhZGRyLAo+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIGVudi0+dnN0YXJ0LCBy
+YSwgZXN6KTsKPiDCoMKgwqDCoMKgwqDCoMKgIGVudi0+dnN0YXJ0ID0gMDsKPiDCoMKgwqDCoMKg
+wqDCoMKgIHZleHRfc2V0X3RhaWxfZWxlbXNfMXMoZXZsLCB2ZCwgZGVzYywgbmYsIGVzeiwgbWF4
+X2VsZW1zKTsKPiDCoMKgwqDCoMKgwqDCoMKgIHJldHVybjsK
 
-Applied, thanks.
-
-r~
 
