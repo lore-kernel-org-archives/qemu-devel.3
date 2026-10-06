@@ -4,95 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23285CA6002
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 491A2CA6009
 	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 08:50:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xENAq-0005Tv-M4; Wed, 07 Oct 2026 04:38:52 -0400
+	id 1xENEA-0004t4-AO; Wed, 07 Oct 2026 04:42:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xEIUY-0004Vw-BX
- for qemu-devel@nongnu.org; Tue, 06 Oct 2026 23:39:05 -0400
-Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xEIUT-0000bk-97
- for qemu-devel@nongnu.org; Tue, 06 Oct 2026 23:38:52 -0400
-Received: by mail-ej1-x631.google.com with SMTP id
- a640c23a62f3a-c2e5e090746so121200766b.0
- for <qemu-devel@nongnu.org>; Tue, 06 Oct 2026 20:38:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1791344318; x=1791949118; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=pWczp/OkfHNMKp8cpsFTwKDih/BeJgnENvn2ywZv19Y=;
- b=CW9rtK3SD2Kyk26kwcpbQYwATUKZnPh9n8R0LVsQF8ePO/WF9AclCFDPc1sh5JUXFB
- fscb952gCD+zXG2pzQ/vQX3hqBohYTbDf7s3QUyCzQ4qSy3bDxpfIt7z11QizG+lQ3wh
- 4zz5Ere1ljdVcgsP2l5njNU1jCGv8Yiy6yfrSU+3tOMeq4/JoI4cq/1nWlhgsFHk25qc
- jFhtnETtnMcQi6BMkvVTQkL4g47zP8dvyXWhy7N9MxCqsElXjXb37NRpC0w87DPuSZx9
- cCtfd3u6jFnCZ0Ooqp6C7doOXnloIcP0kMKc87EZEQdRrn0bU2fbWV8mlOtgH7yejSh+
- U9Jw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791344318; x=1791949118;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=pWczp/OkfHNMKp8cpsFTwKDih/BeJgnENvn2ywZv19Y=;
- b=OHskn4dwEHevi0mHIpeDxDWT2oSfsxtX65HisyCxAhc7F3q3XVf6VI6+GWLtzioaHI
- HV2lz3DTw6Jo7VqLGj5lNWzYim9+YUAukCYWyA3bjKTXdj733mQCJ3NzSDTu0Ja+vqCt
- pM12XR8A3zUx0Nt9NVpUFoW+VzO2aFlBA9+uNHQpe8R4aZVQrIDbtsiN8r/8WyMTVYoR
- UaIU8iVI3Yw6BwpzUXWW4q1DGZfid9uyluC/6yfdP0RIF7pLMEF9EGZ0n/WsqbNe3n2Y
- iSmthP0xZEXLSwJq4JUzQuryP/0nkMwVoF52KLwG8DE7yK+VHPuDXMPRNTSB/C3bQWRc
- IAgg==
-X-Gm-Message-State: AFq9FYIVmu9XgcyBhQmFqnd9y12Po6bSGzNJP3Vvb7bM2aq/lP92r3c7
- oW4rzT3+QF/kmNostzvF4hUaup5O6wP2WHquqip0B3EV0MUkZ2t8DOtGNV9xQQ==
-X-Gm-Gg: AYBFou1MJ4N88Ev4ju5o5zbBsUYDACydyBYFVq28rMA7eN4xPxQRN/wwvPCSAcISGJV
- uMo/Mc8BtN4h7S+1O9appRVVmSdzM8SFsKZwPppg6cZraBst9VElBHXMCH0NdGdBOlfzQ5HKHF8
- HivMXEXt69FbWcaYsCdw3XBkyRWiXdGlmXbLF/FEkyuPSov8gJw6KYNvXiK5ZaZa3mYrQsLURUe
- SJ5GYNict6nf/Fft4GYMWv0x91g2EkWpzOJ42W/wb9jESgVHlgazF9NBCMLereDS/CcxBKGRjSh
- KZxp4FvAOksKmQySQ9vgyF8a2aF6a1IKTA/a6T+64v25yHIqYKnz38QJ6OMAbytdtdqjbbMIu49
- 1ALqkXca3gml6nuMSb0sJAw7C2Pr9zMN9An34GSgfzEjJTWKL/tYloIPwTiPEtR9asR3e5ZVSkT
- flC018GZaN060sND2vFWz6nWjMAoN1iknXPQSnBZuLhGVS37f5kDLuw7WT0keQxCNBSux4fUN44
- PsLKOg7LXWh2+7M3PSj6e6NroyRg4Rw+XLOATsWGOOUMmzE
-X-Received: by 2002:a05:600c:6986:b0:4a1:6811:8d with SMTP id
- 5b1f17b1804b1-4a17b526bd6mr10659365e9.11.1791275722516; 
- Tue, 06 Oct 2026 01:35:22 -0700 (PDT)
-Received: from archlinux (pd95eda80.dip0.t-ipconnect.de. [217.94.218.128])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48c6cdb281csm1566764f8f.55.2026.10.06.01.35.21
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 06 Oct 2026 01:35:22 -0700 (PDT)
-From: Bernhard Beschow <shentey@gmail.com>
+ (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
+ id 1xEIt2-000058-CA
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 00:04:28 -0400
+Received: from linux.microsoft.com ([13.77.154.182])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <magnuskulke@linux.microsoft.com>) id 1xEIsy-0004cG-OA
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 00:04:11 -0400
+Received: from DESKTOP-TUU1E5L.localdomain (unknown [167.220.208.46])
+ by linux.microsoft.com (Postfix) with ESMTPSA id 8B54C20B7166;
+ Tue,  6 Oct 2026 09:48:27 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 8B54C20B7166
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
+ s=default; t=1791305308;
+ bh=z6UFF2yWyifVchNILESFkZYhgOjmppX2NpsLTymFLz0=;
+ h=From:To:Cc:Subject:Date:From;
+ b=HCJQNDIUrgmK8Pc4DixcU23sLTTuexwkEuklAUt+4lHxaJAQbV48SDaBeqpodz3Ys
+ B14Dj4sapzys7yR26kpzANvdUq48KmRH+tEgw8MoV5joei7VGI2wjpdA1ItB/TCmsc
+ d62imi5azlfVPYd0ErJ/cqcBS3G7UHJyxs+QCakA=
+From: Magnus Kulke <magnuskulke@linux.microsoft.com>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Bin Meng <bin.meng@processmission.com>,
- Jean-Christophe Dubois <jcd@tribudubois.net>,
- Gaurav Sharma <gaurav.sharma_7@nxp.com>,
- Bernhard Beschow <shentey@gmail.com>, qemu-arm@nongnu.org,
- Jason Wang <jasowangio@gmail.com>,
- Alistair Francis <alistair@alistair23.me>
-Subject: [PATCH v4 02/31] hw/watchdog/wdt_imx2: Fix handling of write one once
- WCR bits
-Date: Tue,  6 Oct 2026 10:34:14 +0200
-Message-ID: <20261006083445.30362-3-shentey@gmail.com>
-X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261006083445.30362-1-shentey@gmail.com>
-References: <20261006083445.30362-1-shentey@gmail.com>
+Cc: Wei Liu <wei.liu@kernel.org>,
+ =?UTF-8?q?Doru=20Bl=C3=A2nzeanu?= <dblanzeanu@linux.microsoft.com>,
+ Magnus Kulke <magnuskulke@microsoft.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PULL 00/11] MSHV changes for 2026-10-06
+Date: Tue,  6 Oct 2026 18:48:54 +0200
+Message-Id: <20261006164905.776466-1-magnuskulke@linux.microsoft.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::631;
- envelope-from=shentey@gmail.com; helo=mail-ej1-x631.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=13.77.154.182;
+ envelope-from=magnuskulke@linux.microsoft.com; helo=linux.microsoft.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -109,42 +66,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In locked state, the WDE and WDT bits of the WCR register are one and
-need to be preserved when written. At the moment, the logic is reversed
-such that all but the locked bits are preserved in locked state. Fix
-that.
+Various minor fixes and a feature (gdb debugger support) for the Microsoft
+Hypervisor (mshv) accelerator. The changes have been rebased and re-tested
+individually.
 
-Fixes: daca13d495a1 ("hw/watchdog: Implement full i.MX watchdog support")
-cc: qemu-stable
-Reported-by: Bin Meng <bin.meng@processmission.com>
-Reviewed-by: Bin Meng <bin.meng@processmission.com>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Bernhard Beschow <shentey@gmail.com>
----
- hw/watchdog/wdt_imx2.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+My public certificate is available at:
+https://mkulke.github.io/magnuskulke.asc
 
-diff --git a/hw/watchdog/wdt_imx2.c b/hw/watchdog/wdt_imx2.c
-index 3283990bbf..d897ff6e52 100644
---- a/hw/watchdog/wdt_imx2.c
-+++ b/hw/watchdog/wdt_imx2.c
-@@ -161,13 +161,13 @@ static void imx2_wdt_write(void *opaque, hwaddr addr,
-         s->wcr_locked = true;
-         if (s->wcr_wde_locked) {
-             value &= ~IMX2_WDT_WCR_WDE;
--            value |= (s->wcr & ~IMX2_WDT_WCR_WDE);
-+            value |= (s->wcr & IMX2_WDT_WCR_WDE);
-         } else if (value & IMX2_WDT_WCR_WDE) {
-             s->wcr_wde_locked = true;
-         }
-         if (s->wcr_wdt_locked) {
-             value &= ~IMX2_WDT_WCR_WDT;
--            value |= (s->wcr & ~IMX2_WDT_WCR_WDT);
-+            value |= (s->wcr & IMX2_WDT_WCR_WDT);
-         } else if (value & IMX2_WDT_WCR_WDT) {
-             s->wcr_wdt_locked = true;
-         }
+Primary key fingerprint:
+5255 B617 7982 9168 7022 31CA 68D9 BB56 DD17 8417
+
+The following changes since commit 3377670ee96b5a68361016680a95b9013709d4b7:
+
+  Merge tag 'linux-user-next-pull-request' of https://github.com/hdeller/qemu-hppa into staging (2026-10-05 07:14:51 +0200)
+
+are available in the Git repository at:
+
+  https://github.com/mkulke/qemu.git tags/mkulke-pull-20261006
+
+for you to fetch changes up to 7d42b0a4f52d57cd2d9e0a9ceb8ad5102219a801:
+
+  target/i386/mshv: support single-stepping (2026-10-06 18:14:35 +0200)
+
+----------------------------------------------------------------
+mshv changes for 2026-10-06
+
+----------------------------------------------------------------
+Doru Blânzeanu (9):
+      target/i386/mshv: fix read/write memory across the page boundary
+      include/hw/hyperv: move hv_vp_register_page struct definition
+      target/i386/mshv: abort when hv_vp_register_page setup fails
+      target/i386/mshv: remove fallback for register page get registers
+      target/i386/mshv: remove fallback for register page set registers
+      target/i386/mshv: fix pio handlers clobbering device-modified registers
+      include/hw/hyperv: add ABI for exception intercepts and pending events
+      accel/mshv: add gdbstub software breakpoint support
+      target/i386/mshv: support single-stepping
+
+Magnus Kulke (2):
+      target/i386/mshv: zero-init msr hvcall args
+      target/i386/mshv: Fix cpu feature-leak from host
+
+ accel/mshv/mshv-all.c          | 170 +++++++++++++-
+ include/hw/hyperv/hvgdk.h      |   2 +
+ include/hw/hyperv/hvgdk_mini.h | 159 +++++--------
+ include/hw/hyperv/hvhdk.h      | 106 +++++++++
+ include/system/mshv_int.h      |  14 ++
+ target/i386/mshv/mshv-cpu.c    | 491 ++++++++++++++++++++++++++++-------------
+ target/i386/mshv/msr.c         |   4 +-
+ 7 files changed, 684 insertions(+), 262 deletions(-)
+
 -- 
-2.56.0
+2.34.1
 
 
