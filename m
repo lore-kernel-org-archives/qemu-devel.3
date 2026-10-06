@@ -4,115 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7781ACA5FFF
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 899A3CA6009
 	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 08:19:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xEMrd-0005q3-GU; Wed, 07 Oct 2026 04:19:01 -0400
+	id 1xEMrY-0005bB-IU; Wed, 07 Oct 2026 04:18:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
- id 1xEHAW-00029H-Dr
- for qemu-devel@nongnu.org; Tue, 06 Oct 2026 22:14:17 -0400
-Received: from fhigh-b4-smtp.messagingengine.com ([202.12.124.155])
+ (Exim 4.90_1) (envelope-from <tcalifan@redhat.com>)
+ id 1xEH6P-0001dq-UF
+ for qemu-devel@nongnu.org; Tue, 06 Oct 2026 22:10:03 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
- id 1xEHAN-0006Ju-Mj
- for qemu-devel@nongnu.org; Tue, 06 Oct 2026 22:14:04 -0400
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
- by mailfhigh.stl.internal (Postfix) with ESMTP id 4F9CB7A00D1
- for <qemu-devel@nongnu.org>; Tue,  6 Oct 2026 11:07:37 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
- by phl-compute-04.internal (MEProxy); Tue, 06 Oct 2026 11:07:37 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alistair23.me;
- h=cc:cc:content-transfer-encoding:content-type:content-type
- :date:date:from:from:in-reply-to:in-reply-to:message-id
- :mime-version:references:reply-to:subject:subject:to:to; s=fm2;
- t=1791299257; x=1791385657; bh=5jByob1KKKFWk1PM31YZhw+otE9xXCdQ
- pZ6FVO7lAJQ=; b=qyc1mgQfCTIepe5QAU8QShwQJDcR5vueXd5RlnIp2Cpm2XZZ
- 7KUsggg9JqU/liQOKHRTaGJyus8z+DI/H+n8l4/X+jcOUIZAWjLnwvGUxHjdznVa
- v9m/AITwnD7rEXjp4SQT/j7lhQAz65V2d59lfppS3fQkvG2QZllQz80M/Nw4oPFM
- JzLHE4lFmci+SY5AqPcZgo+Bm3i7sdSp1W7aozdW3AFwd3YvTekoYKDW7jKHX7sR
- QERlJq34WXbrd4TRIycaz1/fnhTdgNX90NFdhCwxffrHmZSBoY1WNRdfYzmt354h
- UNPF7Y/S5mmM5YIFXNdORNU+PoQWBaTw0KgNmw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1791299257; x=
- 1791385657; bh=5jByob1KKKFWk1PM31YZhw+otE9xXCdQpZ6FVO7lAJQ=; b=M
- RguFiEVYJh465hZabY6PKMMk2m2PI62x4DUtShySIs2TiLkVwY5nFArgrGbbNub5
- BPmOpwi+fHgcfW0wAmE/EOBC0ucw/1MArT0Ua3A7tMpaobjW/Km0mAYC58/Y2U5M
- VFQzrhzxRl8OLhDEZSyDIyujv35/Suc3CmbwQRTWz6INtwoxxGoL3NymICaAfOIl
- 6PlRpZVZs2RicZff93ATCuAlusGZdUO4Wf0GDisKS8wA5E3dGTODBh5A5IqaTF8r
- KnWMlVGMHV5Oo8nXFcIUA1fIyP4ReVGinGMMqVNTQJ3SMbRyqlW7hTnIyReWEZxR
- 7rzSSfv7/APQar4OmneJA==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
- repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
- action=sign d=alistair23.me a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1791299257; d=alistair23.me;
- mf=PGFsaXN0YWlyQGFsaXN0YWlyMjMubWU+;
- rt=PHFlbXUtZGV2ZWxAbm9uZ251Lm9yZz4=;
- s=fm2:rsa-sha256:IPUyKyr8s3WtFNZ/1P2YbG4hoLJfTX98uNsn1yame9K6DYb
- 2aj69ej8Qbd5eodUIqaISU8/QfYjMm8NFR/pPu2IP6H2noafg+YH6uJrp3I6KXvu
- ocymwxXgZ2vgCzXjiicPJ8MleaYQBBdO7f2wN3RlsDhlbOPFuhlRIAikONwX9KZI
- iF6VoNRmGX8Di/0LRVul40n6EfuVfW1RAh5HZNrV7XRIp2NGGr+F5H7I6/biGWLt
- jAQa9suoo4StADs6WrcshYjhKnv8ngDq34D8SdC6J9kLtb2cbDx5Vf8l2MNsNSes
- rvIKXazAVwc06IAcW/GXJT0YHNJS1B5MEjI13GQ==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
- repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
- action=mi-m=1; hc=13;
- hn=cc,content-transfer-encoding,content-type,date,feedback-id,
- from,in-reply-to,message-id,mime-version,references,subject,to,
- user-agent;
-Message-Instance: m=1;
- h=sha256:1IiMoxWX4Y1d8+Oq0VK0AFAxYUUMgv0sNSdTsktol7o=:5jByob1KKKFWk1PM31YZhw+otE9xXCdQpZ6FVO7lAJQ=;
-X-ME-Sender: <xms:uA7FatF0Y68zo2bYD1WXYiBsfa3lLLvJPiEqD0U0QfasL_cd5sZjTQ>
- <xme:uA7FampukJTThb6tmOU2gba1Rixr6zceBsUT6mCC7q26AN5TSwR-XLNmmgWLuqsL7
- 8JcLdvW6l58KiAySh9lwBbqelRoKgmbbmtJxZvg3rRRQPeMdXDMoDnd>
-X-ME-Received: <xmr:uA7FauTx_pWeK0J2NBSwsba-vaOXWZ5w8BdWmgbqeSFDxO_fO4xWQpA_nfrQZPRFEBSUwxooRofN>
-X-ME-Proxy-Cause: dmFkZTF4NurMzvDgAhF3fL9tJkiuEVvxTjyLRs+gIqz+XpOYrZSeewrpQRUfYskwKFIWWn
- 3FPlkQDinpnokD3OhX8xsQWh1dF57+CIN8N1oNEsV4B1YFXFx0YOdSM+fYptaZyGcllQWF
- QpAN7irFIO1RpbiUv76zac+ilCRMktxO2en1Ydqa+IjXSyXw2ryvnXx1cag1fiOAzVO5U+
- U9CvsWjlrTA8K0I1PhsN4u/qfmU9UyrUdRQOqNBpyOGyOJQ67Ag4b8WWr5pBn60hy9KoWU
- UgVUHFA/oK9NHTrO1GfdINblMbX/3gpVRmQIYTdgBZy3/bRjK7yXNkcGzFDxN89PkBjPdS
- e/5XBAV51ksKLJj3h3B3CxPHFfwHc1fSE9SbxFeoHpq6ltDIgYGAsYwaVg7wRchdcIil3V
- Dq8XCPnEuVd8EjPwQ6sa2Ocz/m7X7QE5v2Izz1ejgkatdIw8mNdJlBiRwBn97YO5jUy7/4
- UxbRiRCQ156Mg0RBUw6SVGCdxIeVrsu8VmYIUt4EPWPTXKRCIbVSK55pwpO1iN4t01hhp1
- +SGM92wQnaVFkkdHxpHQfciNawPLqasqhNxkEqEb/TLoZd4EgTxLNpfBp37s7dW4KaphzV
- 39vuxHdhimYqxKWsxVmRQKPoJ4nYjGBy/RGbJfL/CsyI82xXmdqhHrAqCcRw
-X-ME-Proxy: <xmx:uA7FarPN4VIuQ5Wz--Jk0DZa6F61RUe6VQLW548o0RRJAntjO_fPVQ>
- <xmx:uA7FapNvdTiCcpBjk0eX9APkU9HbYhetI9oJD83dTHXpNkWCvbzJgw>
- <xmx:uA7FajsXjcp5jAK8ePrxEZsO7_nDvdGeAKxLfAuKeNPyRDuIr7QVfQ>
- <xmx:uA7FarVht_8ZtVNK3cZszLj0LkiOXCiUtwYYA6FnrwVT8_k89a1t2Q>
- <xmx:uQ7FaioJ3A2Ikk9RJqdpJx0bmrO1CqlpoW9CQnZxqw78tvYrot5W7PpX>
-Feedback-ID: ifd214418:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 6 Oct 2026 11:07:33 -0400 (EDT)
-Message-ID: <211123b8af8b606a9a310680378bc9708b951424.camel@alistair23.me>
-Subject: Re: [PATCH v2 01/23] target/riscv: Split out vext_set_nf_elems_1s
-From: Alistair <alistair@alistair23.me>
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org
-Date: Wed, 07 Oct 2026 01:07:27 +1000
-In-Reply-To: <20260821040404.268123-2-richard.henderson@linaro.org>
-References: <20260821040404.268123-1-richard.henderson@linaro.org>
- <20260821040404.268123-2-richard.henderson@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: base64
-User-Agent: Evolution 3.62.0 (by Flathub.org) 
+ (Exim 4.90_1) (envelope-from <tcalifan@redhat.com>)
+ id 1xEH6C-0005Mg-Pu
+ for qemu-devel@nongnu.org; Tue, 06 Oct 2026 22:09:48 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1791338775;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=M89lxZsuxChm9n3jZxG+XCC2e0PMpR73WMg/cEbQG2Y=;
+ b=hyojw0e5ZslAa3LVTpj+FD0pZZKzs0ue5+YnXnyr70Yr5MQaSOEqaM5kKiWgyXIwi9XG94
+ anOparDnk6SBb0k2LuvpXdIGzAtEsTjTftA6ATUgZ9FK+4XIS5G1QJWa7IMGE+4E7aCGjW
+ hT51LQ2ijcVhch2WrH5yj3TQBczQjcc=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-38-2_0tyKkxPNilxmJkYDloLg-1; Tue, 6 Oct 2026 16:38:38 +0000
+X-MC-Unique: 2_0tyKkxPNilxmJkYDloLg-1
+X-Mimecast-MFC-AGG-ID: 2_0tyKkxPNilxmJkYDloLg_1791304718
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4a1721559b4so21553545e9.1
+ for <qemu-devel@nongnu.org>; Tue, 06 Oct 2026 09:38:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1791304717; x=1791909517; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=M89lxZsuxChm9n3jZxG+XCC2e0PMpR73WMg/cEbQG2Y=;
+ b=b3cIB+nvBdiNSAqXji7yeqFA434aKC2kyOgMpn6LSj1MX19uKJhNKDmBh7Nsh09gPw
+ zSXUBvDDg5qv+B6u6njnRhnZ6kGoD9lW+DBB4MTjJ6FRlwzN0eWtAncwsnpXGpDHa8Xt
+ wmH3Iun2Siu/ccLOc568nAA9cD+vatzuIeVPyHBUFrfbIM9CN4BLl9xgH6mwHDgOrN8D
+ 0H6g+yHHIfxT3i1oKFs5ZRvhJJnxjwfhej5Qz4rzAy2nTgyg7Fp4fhHXMTlGe42eJ8XM
+ J2PL+1oJpZvupA3QEF/dOF4mgp5PDidamWywGCH85YnKLX7tLhYyHlSve7z4p/VJQM71
+ Js1Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1791304717; x=1791909517;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=M89lxZsuxChm9n3jZxG+XCC2e0PMpR73WMg/cEbQG2Y=;
+ b=kFTu9sHKbGuBDKV3PoCxcMQOY6dWKMMAo/N5NAqMna5CLb2UzE7xCTBDidVsu2tmvp
+ Me8bI/OocGDcT3OA89j5ce7fiAZfNuE54qgoCdEtlwKPClZdm8n+jYxHCR+gIFuvjR4X
+ UccN7asH58l5JgRZQc2q3NBJfwAhdOWd0ONLUkADYVyM5J2C4Mh2jyYKVIYeZtvXnXed
+ 5OSCGGtoH/J8tWZKMBwckt/xcn2ouSoj08B4PiBvZBQUPWT81lvAmOApDnXEHbKcKHC/
+ DBscW0og955uz0NlZvY6OMfpmB3G1OPxezpZyphLkzUZdzxMsQ+GoN0oP4TOLP/kdja5
+ k5RQ==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBy+XH4EiTbRaSx2u40qgABjdDDpEOeSQh2cjIRiGQJwQYVpxgyPMKqG+Vw3lvpxATwtVgjwm0G4MNhw@nongnu.org
+X-Gm-Message-State: AFuF++ktEThZCTAV/IEV6lCA1vU4dhV65IGW/hW3ZfTYl1g4kkYnFhpA
+ p+t3JmbjUHiokgnUh5vLktpZcPOPcX7/ENnbpfevx+QD2l7dUWp9HabPf8Ueg7K746Xr612yxds
+ RMpWasQjEIvl1GC7pwd8CaZ1gGz2CwMhBVhnCDMPjJ5Za8rqtBvVlPK+x
+X-Gm-Gg: AYBFou0NkrqbM4CwG/a/WNhAe025ZF94V4k7eI9OQFiK6HXI48TB5pLMbZhKMkRo9aW
+ QnILjIgumxYQoE2JO0DqEIq2V+rt/VFCQkAdG4K/yKdJ5lSSRx7SbP1rrrMNRQe9nsKsMEEvE2r
+ 3dkxaUl3sD7AXO2JX9sfVORskPkGjWmGlZoTpPknEFN4zqXYJDR+4Oxn9TjVf+dGFs4izsaW96V
+ 7uvY53C14upTKvOCJ0SRZXk5EbM8OaZI+ZGJ+3XfNQe7jlFxrNTiuJTFM1mreZCRUG2N/xV2qG8
+ y/4CnoDNkPuMkG0Z70ecpdrILbliV3wimnSWlGxaymNnpPybzh8FP/OO17q94uwbSMFcCh4=
+X-Received: by 2002:a05:600d:82c2:b0:49c:cee0:f383 with SMTP id
+ 5b1f17b1804b1-4a17b54978cmr39345285e9.16.1791304717681; 
+ Tue, 06 Oct 2026 09:38:37 -0700 (PDT)
+X-Received: by 2002:a05:600d:82c2:b0:49c:cee0:f383 with SMTP id
+ 5b1f17b1804b1-4a17b54978cmr39345025e9.16.1791304717215; 
+ Tue, 06 Oct 2026 09:38:37 -0700 (PDT)
+Received: from tcalifan-p1g8.csb ([213.175.37.14])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4a178c53997sm123125045e9.12.2026.10.06.09.38.36
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 06 Oct 2026 09:38:36 -0700 (PDT)
+Date: Tue, 6 Oct 2026 18:38:34 +0200
+From: Tommaso Califano <tcalifan@redhat.com>
+To: Luigi Leonardi <leonardi@redhat.com>
+Cc: Tommaso Califano <tcalifano@redhat.com>, qemu-devel@nongnu.org, 
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ qemu-stable@nongnu.org
+Subject: Re: [PATCH v2] hw/usb: Fix USB MTP heap OOB read via dlen underflow
+Message-ID: <asUf_npZzV59e2rM@tcalifan-p1g8.csb>
+References: <20261005162549.120647-1-tcalifano@redhat.com>
+ <asUBcqRi6PVnxA_E@leonardi-redhat>
 MIME-Version: 1.0
-Received-SPF: pass client-ip=202.12.124.155;
- envelope-from=alistair@alistair23.me; helo=fhigh-b4-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <asUBcqRi6PVnxA_E@leonardi-redhat>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=tcalifan@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -128,125 +125,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gVGh1LCAyMDI2LTA4LTIwIGF0IDIxOjAzIC0wNzAwLCBSaWNoYXJkIEhlbmRlcnNvbiB3cm90
-ZToKPiBQcm92aWRlIGEgaGVscGVyIHRoYXQgMSdzIGVsZW1lbnQgSSBmb3IgYWxsIE5GIHZlY3Rv
-cnMuCj4gRm9yIHRoZSBjYWxsZXJzLCB0aGlzIHBlcmZvcm1zIHRoZSBlbGVtZW50IG1hc2sgdGVz
-dCBvbmNlCj4gaW5zdGVhZCBvZiBORiB0aW1lcy4KPiAKPiBTaWduZWQtb2ZmLWJ5OiBSaWNoYXJk
-IEhlbmRlcnNvbiA8cmljaGFyZC5oZW5kZXJzb25AbGluYXJvLm9yZz4KClJldmlld2VkLWJ5OiBB
-bGlzdGFpciBGcmFuY2lzIDxhbGlzdGFpci5mcmFuY2lzQHdkYy5jb20+CgpBbGlzdGFpcgoKPiAt
-LS0KPiDCoHRhcmdldC9yaXNjdi90Y2cvdmVjdG9yX2hlbHBlci5jIHwgNjkgKysrKysrKysrKysr
-KysrKy0tLS0tLS0tLS0tLS0tCj4gLS0KPiDCoDEgZmlsZSBjaGFuZ2VkLCAzNCBpbnNlcnRpb25z
-KCspLCAzNSBkZWxldGlvbnMoLSkKPiAKPiBkaWZmIC0tZ2l0IGEvdGFyZ2V0L3Jpc2N2L3RjZy92
-ZWN0b3JfaGVscGVyLmMKPiBiL3RhcmdldC9yaXNjdi90Y2cvdmVjdG9yX2hlbHBlci5jCj4gaW5k
-ZXggZTI4ZDhhM2Q5Zi4uMjBhOGY5NWVmYiAxMDA2NDQKPiAtLS0gYS90YXJnZXQvcmlzY3YvdGNn
-L3ZlY3Rvcl9oZWxwZXIuYwo+ICsrKyBiL3RhcmdldC9yaXNjdi90Y2cvdmVjdG9yX2hlbHBlci5j
-Cj4gQEAgLTMyOCw2ICszMjgsMTUgQEAgc3RhdGljIHZvaWQgdmV4dF9zZXRfdGFpbF9lbGVtc18x
-cyh1aW50MzJfdCB2bCwKPiB2b2lkICp2ZCwKPiDCoMKgwqDCoCB9Cj4gwqB9Cj4gwqAKPiArc3Rh
-dGljIHZvaWQgdmV4dF9zZXRfbmZfZWxlbXNfMXModm9pZCAqdmQsIHVpbnQzMl90IGksIHVpbnQz
-Ml90IG5mLAo+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgIHVpbnQzMl90IGVzeiwgdWludDMyX3QgbWF4X2VsZW1zKQo+ICt7
-Cj4gK8KgwqDCoCBmb3IgKHVpbnQzMl90IGsgPSAwOyBrIDwgbmY7ICsraykgewo+ICvCoMKgwqDC
-oMKgwqDCoCB2ZXh0X3NldF9lbGVtc18xcyh2ZCwgdHJ1ZSwgKGkgKyBrICogbWF4X2VsZW1zKSAq
-IGVzeiwKPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqAgKGkgKyBrICogbWF4X2VsZW1zICsgMSkgKiBlc3opOwo+ICvCoMKgwqAgfQo+ICt9Cj4gKwo+
-IMKgLyoKPiDCoCAqIHN0cmlkZTogYWNjZXNzIHZlY3RvciBlbGVtZW50IGZyb20gc3RyaWRlZCBt
-ZW1vcnkKPiDCoCAqLwo+IEBAIC0zMzcsNyArMzQ2LDYgQEAgdmV4dF9sZHN0X3N0cmlkZSh2b2lk
-ICp2ZCwgdm9pZCAqdjAsIHRhcmdldF91bG9uZwo+IGJhc2UsIHRhcmdldF91bG9uZyBzdHJpZGUs
-Cj4gwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB2ZXh0X2xkc3RfZWxlbV9mbl90
-bGIgKmxkc3RfZWxlbSwgdWludDMyX3QKPiBsb2cyX2VzeiwKPiDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgIHVpbnRwdHJfdCByYSkKPiDCoHsKPiAtwqDCoMKgIHVpbnQzMl90IGks
-IGs7Cj4gwqDCoMKgwqAgdWludDMyX3QgbmYgPSB2ZXh0X25mKGRlc2MpOwo+IMKgwqDCoMKgIHVp
-bnQzMl90IG1heF9lbGVtcyA9IHZleHRfbWF4X2VsZW1zKGRlc2MsIGxvZzJfZXN6KTsKPiDCoMKg
-wqDCoCB1aW50MzJfdCBlc3ogPSAxIDw8IGxvZzJfZXN6Owo+IEBAIC0zNDUsMjMgKzM1MywyMSBA
-QCB2ZXh0X2xkc3Rfc3RyaWRlKHZvaWQgKnZkLCB2b2lkICp2MCwKPiB0YXJnZXRfdWxvbmcgYmFz
-ZSwgdGFyZ2V0X3Vsb25nIHN0cmlkZSwKPiDCoAo+IMKgwqDCoMKgIFZTVEFSVF9DSEVDS19FQVJM
-WV9FWElUKGVudiwgZW52LT52bCk7Cj4gwqAKPiAtwqDCoMKgIGZvciAoaSA9IGVudi0+dnN0YXJ0
-OyBpIDwgZW52LT52bDsgZW52LT52c3RhcnQgPSArK2kpIHsKPiAtwqDCoMKgwqDCoMKgwqAgayA9
-IDA7Cj4gLcKgwqDCoMKgwqDCoMKgIHdoaWxlIChrIDwgbmYpIHsKPiAtwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoCBpZiAoIXZtICYmICF2ZXh0X2VsZW1fbWFzayh2MCwgaSkpIHsKPiAtwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgIC8qIHNldCBtYXNrZWQtb2ZmIGVsZW1lbnRzIHRvIDFzICov
-Cj4gLcKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB2ZXh0X3NldF9lbGVtc18xcyh2ZCwg
-dm1hLCAoaSArIGsgKiBtYXhfZWxlbXMpICoKPiBlc3osCj4gLcKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCAoaSArIGsgKiBt
-YXhfZWxlbXMgKyAxKSAqIGVzeik7Cj4gLcKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBr
-Kys7Cj4gLcKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBjb250aW51ZTsKPiArwqDCoMKg
-IGZvciAodWludDMyX3QgaSA9IGVudi0+dnN0YXJ0OyBpIDwgZW52LT52bDsgZW52LT52c3RhcnQg
-PSArK2kpIHsKPiArwqDCoMKgwqDCoMKgwqAgaWYgKCF2bSAmJiAhdmV4dF9lbGVtX21hc2sodjAs
-IGkpKSB7Cj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqAgaWYgKHZtYSkgewo+ICvCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqAgdmV4dF9zZXRfbmZfZWxlbXNfMXModmQsIGksIG5mLCBlc3os
-IG1heF9lbGVtcyk7Cj4gwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIH0KPiArwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoCBjb250aW51ZTsKPiArwqDCoMKgwqDCoMKgwqAgfQo+ICsKPiArwqDCoMKgwqDC
-oMKgwqAgZm9yICh1aW50MzJfdCBrID0gMDsgayA8IG5mOyArK2spIHsKPiDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqAgdGFyZ2V0X3Vsb25nIGFkZHIgPSBiYXNlICsgc3RyaWRlICogaSArIChrIDw8
-IGxvZzJfZXN6KTsKPiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgbGRzdF9lbGVtKGVudiwgYWRq
-dXN0X2FkZHIoZW52LCBhZGRyKSwgaSArIGsgKgo+IG1heF9lbGVtcywgdmQsIHJhKTsKPiAtwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoCBrKys7Cj4gwqDCoMKgwqDCoMKgwqDCoCB9Cj4gwqDCoMKgwqAg
-fQo+IC3CoMKgwqAgZW52LT52c3RhcnQgPSAwOwo+IMKgCj4gK8KgwqDCoCBlbnYtPnZzdGFydCA9
-IDA7Cj4gwqDCoMKgwqAgdmV4dF9zZXRfdGFpbF9lbGVtc18xcyhlbnYtPnZsLCB2ZCwgZGVzYywg
-bmYsIGVzeiwgbWF4X2VsZW1zKTsKPiDCoH0KPiDCoAo+IEBAIC02MzIsNyArNjM4LDYgQEAgdmV4
-dF9sZHN0X2luZGV4KHZvaWQgKnZkLCB2b2lkICp2MCwgdGFyZ2V0X3Vsb25nCj4gYmFzZSwKPiDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB2ZXh0X2xkc3RfZWxlbV9mbl90bGIgKmxk
-c3RfZWxlbSwKPiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB1aW50MzJfdCBsb2cy
-X2VzeiwgdWludHB0cl90IHJhKQo+IMKgewo+IC3CoMKgwqAgdWludDMyX3QgaSwgazsKPiDCoMKg
-wqDCoCB1aW50MzJfdCBuZiA9IHZleHRfbmYoZGVzYyk7Cj4gwqDCoMKgwqAgdWludDMyX3Qgdm0g
-PSB2ZXh0X3ZtKGRlc2MpOwo+IMKgwqDCoMKgIHVpbnQzMl90IG1heF9lbGVtcyA9IHZleHRfbWF4
-X2VsZW1zKGRlc2MsIGxvZzJfZXN6KTsKPiBAQCAtNjQxLDI0ICs2NDYsMjEgQEAgdmV4dF9sZHN0
-X2luZGV4KHZvaWQgKnZkLCB2b2lkICp2MCwKPiB0YXJnZXRfdWxvbmcgYmFzZSwKPiDCoAo+IMKg
-wqDCoMKgIFZTVEFSVF9DSEVDS19FQVJMWV9FWElUKGVudiwgZW52LT52bCk7Cj4gwqAKPiAtwqDC
-oMKgIC8qIGxvYWQgYnl0ZXMgZnJvbSBndWVzdCBtZW1vcnkgKi8KPiAtwqDCoMKgIGZvciAoaSA9
-IGVudi0+dnN0YXJ0OyBpIDwgZW52LT52bDsgZW52LT52c3RhcnQgPSArK2kpIHsKPiAtwqDCoMKg
-wqDCoMKgwqAgayA9IDA7Cj4gLcKgwqDCoMKgwqDCoMKgIHdoaWxlIChrIDwgbmYpIHsKPiAtwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoCBpZiAoIXZtICYmICF2ZXh0X2VsZW1fbWFzayh2MCwgaSkpIHsK
-PiAtwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIC8qIHNldCBtYXNrZWQtb2ZmIGVsZW1l
-bnRzIHRvIDFzICovCj4gLcKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB2ZXh0X3NldF9l
-bGVtc18xcyh2ZCwgdm1hLCAoaSArIGsgKiBtYXhfZWxlbXMpICoKPiBlc3osCj4gLcKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oCAoaSArIGsgKiBtYXhfZWxlbXMgKyAxKSAqIGVzeik7Cj4gLcKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoCBrKys7Cj4gLcKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBjb250aW51
-ZTsKPiArwqDCoMKgIGZvciAodWludDMyX3QgaSA9IGVudi0+dnN0YXJ0OyBpIDwgZW52LT52bDsg
-ZW52LT52c3RhcnQgPSArK2kpIHsKPiArwqDCoMKgwqDCoMKgwqAgaWYgKCF2bSAmJiAhdmV4dF9l
-bGVtX21hc2sodjAsIGkpKSB7Cj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqAgaWYgKHZtYSkgewo+
-ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgdmV4dF9zZXRfbmZfZWxlbXNfMXModmQs
-IGksIG5mLCBlc3osIG1heF9lbGVtcyk7Cj4gwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIH0KPiAr
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBjb250aW51ZTsKPiArwqDCoMKgwqDCoMKgwqAgfQo+ICsK
-PiArwqDCoMKgwqDCoMKgwqAgZm9yICh1aW50MzJfdCBrID0gMDsgayA8IG5mOyArK2spIHsKPiDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgYWJpX3B0ciBhZGRyID0gZ2V0X2luZGV4X2FkZHIoYmFz
-ZSwgaSwgdnMyKSArIChrIDw8Cj4gbG9nMl9lc3opOwo+IMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oCBsZHN0X2VsZW0oZW52LCBhZGp1c3RfYWRkcihlbnYsIGFkZHIpLCBpICsgayAqCj4gbWF4X2Vs
-ZW1zLCB2ZCwgcmEpOwo+IC3CoMKgwqDCoMKgwqDCoMKgwqDCoMKgIGsrKzsKPiDCoMKgwqDCoMKg
-wqDCoMKgIH0KPiDCoMKgwqDCoCB9Cj4gLcKgwqDCoCBlbnYtPnZzdGFydCA9IDA7Cj4gwqAKPiAr
-wqDCoMKgIGVudi0+dnN0YXJ0ID0gMDsKPiDCoMKgwqDCoCB2ZXh0X3NldF90YWlsX2VsZW1zXzFz
-KGVudi0+dmwsIHZkLCBkZXNjLCBuZiwgZXN6LCBtYXhfZWxlbXMpOwo+IMKgfQo+IMKgCj4gQEAg
-LTgyNCwyNSArODI2LDIyIEBAIFByb2JlU3VjY2VzczoKPiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqAgfQo+IMKgwqDCoMKgwqDCoMKgwqAgfSBlbHNlIHsKPiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqAgZm9yIChpID0gZW52LT52c3RhcnQ7IGkgPCBlbnYtPnZsOyBpKyspIHsKPiAtwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgIGsgPSAwOwo+IC3CoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqAgd2hpbGUgKGsgPCBuZikgewo+IC3CoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoCBpZiAoIXZleHRfZWxlbV9tYXNrKHYwLCBpKSkgewo+IC3CoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIC8qIHNldCBtYXNrZWQtb2ZmIGVsZW1lbnRz
-IHRvIDFzICovCj4gLcKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqAgdmV4dF9zZXRfZWxlbXNfMXModmQsIHZtYSwgKGkgKyBrICoKPiBtYXhfZWxlbXMpICogZXN6
-LAo+IC3CoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIChpICsgayAqIG1heF9lbGVtcyArIDEpICoK
-PiBlc3opOwo+IC3CoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-IGsrKzsKPiAtwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBj
-b250aW51ZTsKPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIGlmICghdmV4dF9lbGVt
-X21hc2sodjAsIGkpKSB7Cj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-IGlmICh2bWEpIHsKPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoCB2ZXh0X3NldF9uZl9lbGVtc18xcyh2ZCwgaSwgbmYsIGVzeiwKPiBtYXhfZWxlbXMpOwo+
-IMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgfQo+ICvCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBjb250aW51ZTsKPiArwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgIH0KPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIGZvciAo
-ayA9IDA7IGsgPCBuZjsgKytrKSB7Cj4gwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoCBhZGRyID0gYmFzZSArICgoaSAqIG5mICsgaykgPDwgbG9nMl9lc3opOwo+IMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgbGRzdF90bGIoZW52LCBhZGp1c3Rf
-YWRkcihlbnYsIGFkZHIpLCBpICsgayAqCj4gbWF4X2VsZW1zLAo+IMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgdmQsIHJhKTsKPiAtwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgaysrOwo+IMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgIH0KPiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgfQo+IMKgwqDC
-oMKgwqDCoMKgwqAgfQo+IMKgwqDCoMKgIH0KPiAtwqDCoMKgIGVudi0+dnN0YXJ0ID0gMDsKPiDC
-oAo+ICvCoMKgwqAgZW52LT52c3RhcnQgPSAwOwo+IMKgwqDCoMKgIHZleHRfc2V0X3RhaWxfZWxl
-bXNfMXMoZW52LT52bCwgdmQsIGRlc2MsIG5mLCBlc3osIG1heF9lbGVtcyk7Cj4gwqB9Cj4gwqAK
+On Tue, Oct 06, 2026 at 04:12:07PM +0200, Luigi Leonardi wrote:
+>On Mon, Oct 05, 2026 at 06:25:49PM +0200, Tommaso Califano wrote:
+>>In QEMU’s USB MTP device, usb_mtp_write_metadata() computes
+>>filename_chars = dlen - offsetof(ObjectInfo, filename) where
+>>offsetof(ObjectInfo,filename) = 53. The dlen parameter is the size of the
+>>last USB packet, not the total ObjectInfo size. If the final packet has
+>>fewer than 53 bytes, filename_chars underflows to SIZE_MAX, causing
+>>utf16_to_str() to read far beyond the heap buffer, leaking QEMU host
+>>process memory.
+>>
+>>Replace dlen with d->length to avoid this issue, given that the latter
+>>represents the total size of the buffer allocated for the unsegmented object.
+>>
+>>Fixes: 90c1a74271ce ("usb-mtp: Limit filename to object information size")
+>>Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3992
+>>Signed-off-by: Tommaso Califano <tcalifano@redhat.com>
+>>---
+>>
+>>v2:
+>>- Remove the dlen guard and variable in favor of using d->length.
+>>
+>>hw/usb/dev-mtp.c | 6 +++---
+>>1 file changed, 3 insertions(+), 3 deletions(-)
+>>
+>>diff --git a/hw/usb/dev-mtp.c b/hw/usb/dev-mtp.c
+>>index 1d8cfd32dc..53b5904a5c 100644
+>>--- a/hw/usb/dev-mtp.c
+>>+++ b/hw/usb/dev-mtp.c
+>>@@ -1696,7 +1696,7 @@ close:
+>>    s->write_pending = false;
+>>}
+>>
+>>-static void usb_mtp_write_metadata(MTPState *s, uint64_t dlen)
+>>+static void usb_mtp_write_metadata(MTPState *s)
+>>{
+>>    MTPData *d = s->data_out;
+>>    ObjectInfo *dataset = (ObjectInfo *)d->data;
+>>@@ -1704,7 +1704,7 @@ static void usb_mtp_write_metadata(MTPState *s, uint64_t dlen)
+>>    MTPObject *o;
+>>    MTPObject *p = usb_mtp_object_lookup(s, s->dataset.parent_handle);
+>>    uint32_t next_handle = s->next_handle;
+>>-    size_t filename_chars = dlen - offsetof(ObjectInfo, filename);
+>>+    size_t filename_chars = d->length - offsetof(ObjectInfo, filename);
+>>
+>>    /*
+>>     * filename is utf-16. We're intentionally doing
+>>@@ -1801,7 +1801,7 @@ static void usb_mtp_get_data(MTPState *s, mtp_container *container,
+>>        if (d->data_offset == d->length) {
+>>            /* The operation might have already failed */
+>>            if (!s->result) {
+>>-                usb_mtp_write_metadata(s, dlen);
+>>+                usb_mtp_write_metadata(s);
+>>            }
+>>            usb_mtp_data_free(s->data_out);
+>>            s->data_out = NULL;
+>>-- 
+>>2.55.0
+>>
+>
+>IIUC, `d->length` is controlled by the guest, so I think we still need
+>the check that was present in the v1.
+>
+>Thanks,
+>Luigi
+>
 
+Yes, you are right. I missed it. I'll re-add the check from v1.
+
+I also noticed that with the guard in place it is still possible to craft a write where 
+d->length == offsetof(ObjectInfo, filename): filename_chars is then computed as 0, so
+utf16_to_str() returns an empty string and the device creates a file with no name. This
+behavior already existed before, so it is not introduced by the patch. Since I think
+that zero-length filename should never be valid, I'm inclined to make the check strict
+and reject any ObjectInfo that does not "carry" a file name.
 
 
