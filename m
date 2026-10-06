@@ -4,54 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 616C3CA6002
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 09:06:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08373CA5FF1
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 09:06:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xENbH-0007zh-Vk; Wed, 07 Oct 2026 05:06:12 -0400
+	id 1xENII-0005wz-Ew; Wed, 07 Oct 2026 04:46:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <6f6487421d35badb9add8efcd0885475fea90dd6@kylie.crudebyte.com>)
- id 1xELIw-0002Ew-TA; Wed, 07 Oct 2026 02:39:22 -0400
-Received: from kylie.crudebyte.com ([5.189.157.229])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <6f6487421d35badb9add8efcd0885475fea90dd6@kylie.crudebyte.com>)
- id 1xELIj-0004C2-QP; Wed, 07 Oct 2026 02:39:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=crudebyte.com; s=kylie; h=Cc:To:Subject:Date:From:References:In-Reply-To:
- Message-ID:Content-Type:Content-Transfer-Encoding:MIME-Version:Content-ID:
- Content-Description; bh=eLN1TR5f6xDXXnp7p6spr8PjR+7MZLAQWssnhhEooyU=; b=sCYfl
- 3dLWyc3gsv+w0Ld0L15eyENUUZqA1FFaZmSvtn7RICXq+N0T4g2btX5frQO96SrO8GAqMX5eePARI
- TcLcIejPZoyDNMXgdFhJSies3+W0PpjLdDNbVp5rLsmiTt3RH5wjZ+3yKpG593S+dOII6OZAZAs6+
- z+5PxRAzGRQNSu0I/J9KbxRZSdksa/z+sKf/VKbL9waLjpbGNOudpMUPGANxmAmEn1gtVUnLTgw6X
- VxVPaJ6VOA7k7Xr8J6JH/vUmdMr6NFu9WJnetNehBlASNuSBN8Qxr0Poz0pOS9BrOWUqcS8Em6N2S
- ysphDb7pQr3e/swwRbQ9u+QSjuZoOYSxg+FC6EkxlJIc3ExiJW89TQVonslr8DBgll/wQB1xPZdwe
- vDX3U7OVzIHJ3yU17EkjhhMEwB6X7lQls+MuTIpPJVc+WubMm23ePYtiVOUYTg3hYqqjbcEt6vLlW
- K+XE4nx7YA18/DKNbDDY+yllqmY//xyjWpzuG5x1oyLZbEiC/Y8Rex5NjX/X63djl4B7eV6NwKQCi
- SxmJXMPGvBbtwcToPjTh9yZfGuV3KMIXOWNU+l9HUlRe+ot50cYAJ7IlWKhyirl62QdZ44/cpF7qC
- 9A7dRH8ajvryw1GxXat6gf6sLiGzNajq4PU06bNKoq8HgDrB0Qb2OwN1X2ykrE=;
-Message-ID: <6f6487421d35badb9add8efcd0885475fea90dd6.1791291812.git.qemu_oss@crudebyte.com>
-In-Reply-To: <cover.1791291812.git.qemu_oss@crudebyte.com>
-References: <cover.1791291812.git.qemu_oss@crudebyte.com>
-From: Christian Schoenebeck <qemu_oss@crudebyte.com>
-Date: Mon, 28 Sep 2026 10:46:47 +0000
-Subject: [PATCH 6/9] hw/9pfs: fix dirent stream protection for legacy
- (9p2000.u) Tread
-To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
-    Greg Kurz <groug@kaod.org>
-Received-SPF: pass client-ip=5.189.157.229;
- envelope-from=6f6487421d35badb9add8efcd0885475fea90dd6@kylie.crudebyte.com;
- helo=kylie.crudebyte.com
-X-Spam_score_int: 13
-X-Spam_score: 1.3
-X-Spam_bar: +
-X-Spam_report: (1.3 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_96_XX=3.405,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1xEJSh-00059p-Vj
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 00:41:07 -0400
+Received: from mail-lf1-x131.google.com ([2a00:1450:4864:20::131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1xEJSc-0002fE-P6
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 00:41:02 -0400
+Received: by mail-lf1-x131.google.com with SMTP id
+ 2adb3069b0e04-5ba37877490so1181178e87.3
+ for <qemu-devel@nongnu.org>; Tue, 06 Oct 2026 21:40:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1791348054; x=1791952854; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=ik/hojUtRmfVooae/SPDnjYNa1bQB8bp9dQu9aYtayA=;
+ b=aSlG401onQfiUzR6//EWADZ8Djjh8qbnkU9fdyUuXVmWZDMZH6Zkr7OMPnqUTB3+Zi
+ g3CHdjJQqaJFeOy9Sx/tZIr8+1rtknVZ3n6Y72kWScX66IoNu7MkNO7jtArvUMSlC4da
+ Gj6lkl35dVqg1tOsdwzZzjsqSXtEArksP5SE5Zgu1f7Hm29XWQzQ66MdUsPP32P2l/Rg
+ ji55JR54u0Gwv9vqkfS5gmosP7kimgawbbtjKLm++gMxKl3v+6UAIFkohFV+qs9DQ9HK
+ uifn46ExnRHODdGsAetxT3R/ZQY9EXUb+64jR4F6nSP8DF3AW+36R2o+6qGMCuGIQ44W
+ 3zcA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1791348054; x=1791952854;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=ik/hojUtRmfVooae/SPDnjYNa1bQB8bp9dQu9aYtayA=;
+ b=snjev8arECURCp5l4fq0YQkAWmpaEvQ/IQjksg5cqCgG9e0qiQ5qWs5o2mfN1o3bt6
+ 3k0wYfsXZQuiL1SQ3H1fvH97Qhy7QEf/4ruQ6j8Cca4LuFsOjSf0PbwabLwdwbncx2yw
+ OfwzC1vgDDHn++vupFFpiEMJy8ujvgXvOy28HkbRWikn7+zihKdL3Liaocz1alXvOyF7
+ XNDFf9NSLoXz3py4bKqmxjT/iQzpA7+Wy61eZnvJvle+AaC3GBBokSnCuguRhWIXq0qG
+ /m6UfaN+gdgpEBaB+cvRLHBda7s7TNnoI9K6lkp6MbXpUU67TPC7sYa3z4M5dSTE1gvF
+ Xpmw==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBwCO+5CBKHNk7LWrJQsoLSuu00ujEDPZdc8YwwqGF5g0kJpcjhgZCcRLf0z+/lUkT7rn/XTPG4EAKJc@nongnu.org
+X-Gm-Message-State: AFq9FYI1s5qJjo6IEsEUkmArIMR3zJoyUS1YBaXV8K4j9zRH5d+C1MRg
+ gTxCr8QFG8UV10z6iyXg19RPp/RDJQOd6+ErKxaIzaw5y+vmloK7/YJIWKBLpn56HQDKoI+45D/
+ 52935YRE=
+X-Gm-Gg: AYBFou1ix9vHycxaB8ZQzQzJU+C82hiiq6Dxud8H1xN5pdJfvVCS7JWlj6ybBfkBjzA
+ ZGaxO2hhzbuOC9goBeds9IATuD/vlSFqdDn3zz4CNoWUY2VxTdR8GFFOnS8Eg6HDscqodqM3Mj6
+ udj4WXpbPEurkqhzTcS6YLP9ENQwoJMGSkisYCePxDlLkk7fzgXN6orPaY4XStWAQR+/Gc8gokO
+ oAhylnPmCk8d6AdhhjWfRFGZZecN8DWk+eLSldfYLv0I/rj7HllcEN2jgE/5SRhCZhPocTb5Pft
+ AY8rwDMdXmEbdc0S1jdUI/jXnwlqGmTe5TtwETUNMAOdnc4yX8ZYBWZYKs99rl+p7Q8Zdpg5/aa
+ JJSCAhx77VC3qslRZh7i2SjjLkxdEjaGU4D867xONMC6uhwPEj5lsveCb2egnDySRwXMSKbqj+O
+ uIccKjgr4wNKrRsc4/XxFD5x3zqg6yV00EnHKDGe6J0CDAlhXaHLyyu3JjrD4IBhItvsMJog==
+X-Received: by 2002:a05:600c:8b54:b0:49f:ff7b:f056 with SMTP id
+ 5b1f17b1804b1-4a17b5266b6mr14641355e9.9.1791279879743; 
+ Tue, 06 Oct 2026 02:44:39 -0700 (PDT)
+Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4a178daa115sm60319325e9.9.2026.10.06.02.44.38
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 06 Oct 2026 02:44:39 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 0458F5F861;
+ Tue, 06 Oct 2026 10:44:38 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Kevin Wolf <kwolf@redhat.com>
+Cc: BALATON Zoltan <balaton@eik.bme.hu>,  Paolo Bonzini
+ <pbonzini@redhat.com>,  Peter Maydell <peter.maydell@linaro.org>,
+ qemu-devel@nongnu.org,  "Michael S . Tsirkin" <mst@redhat.com>,  Alistair
+ Francis <alistair.francis@wdc.com>,  Daniel P . =?utf-8?Q?Berrang=C3=A9?=
+ <berrange@redhat.com>,  Fabiano Rosas <farosas@suse.de>,  Warner Losh
+ <imp@bsdimp.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>
+Subject: Re: [PATCH 1/4] docs/devel: relax policy on AI-generated contributions
+In-Reply-To: <asS0HLYRmZhB3Ban@redhat.com> (Kevin Wolf's message of "Tue, 6
+ Oct 2026 10:41:00 +0200")
+References: <20260930085433.830743-1-pbonzini@redhat.com>
+ <20260930085433.830743-2-pbonzini@redhat.com>
+ <CAFEAcA91XU=_hS3iB+0p7hXQ_nvf0YpgNZaKsd=b=fSVaTJDxw@mail.gmail.com>
+ <69164823-7271-4d59-9684-637bec454a1d@redhat.com>
+ <293cb972-35e1-1922-0834-601e2491a7a6@eik.bme.hu>
+ <asS0HLYRmZhB3Ban@redhat.com>
+User-Agent: mu4e 1.14.4-pre5; emacs 30.1
+Date: Tue, 06 Oct 2026 10:44:37 +0100
+Message-ID: <87mrsrjh8a.fsf@draig.linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::131;
+ envelope-from=alex.bennee@linaro.org; helo=mail-lf1-x131.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -67,118 +118,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Concurrent legacy Tread requests (9p2000.u) on the same directory FID
-race the FID's shared dirent stream.
+Kevin Wolf <kwolf@redhat.com> writes:
 
-In the initial Tread implementation (a92315553d) the dirent stream
-was entirely unprotected. Commit 7cde47d4a8 introduced a lock, which
-mitigated the problem, but without sufficient full coverage for this
-request type, as it only held the lock during individual dirent
-stream steps. A concurrent request could mutate the dirent stream in
-between. Furthermore the initial rewinddir() (to offset 0) was still
-not protected at all.
+> Am 05.10.2026 um 23:09 hat BALATON Zoltan geschrieben:
+>> On Fri, 2 Oct 2026, Paolo Bonzini wrote:
+>> > I agree completely with how you phrased the first and third.  I agree
+>> > that the second bullet is a risk too, but it's mitigated by "LLM-creat=
+ed
+>> > contributions will be held to a higher standard than human-created one=
+s,
+>> > because LLMs make it easier to write tests" (and by maintainers being
+>> > able to
+>>=20
+>> Tests need to be reviewed too to be able to trust them so that does not =
+help
+>> against overloading reviewers with generated patches but burdens them ev=
+en
+>> more: they will also have to review the tests before the code.
+>
+> The required level of trust for tests is comparatively low, so it's much
+> easier to review tests to a sufficient level than say device emulation
+> code.
+>
+> If a new test looks plausible, fails before the fix and passes
+> afterwards, it's more useful that what we had before, even if it's
+> technically buggy in some corner case.
 
-This could cause corrupted directory entries being returned to
-client, with entries missing, duplicate entries and wrong order, up
-to heap corruption of 9p server's QEMU process due to garbage seek
-targets.
+And also easier to rip out in the unlikely event it infringes anything.
 
-Fix this by holding the lock for the entire directory reading
-transaction (i.e. for the whole v9fs_do_readdir_with_stat() call).
+But broadly having a test* is better than having no test.
 
-Fixes: a92315553d ("virtio-9p: Add P9_TREAD support")
-Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
----
- hw/9pfs/9p.c | 23 ++++++++++++++---------
- 1 file changed, 14 insertions(+), 9 deletions(-)
+>
+> Kevin
 
-diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
-index 4764d9db13..730d1279bb 100644
---- a/hw/9pfs/9p.c
-+++ b/hw/9pfs/9p.c
-@@ -2421,6 +2421,10 @@ v9fs_xattr_read(V9fsState *s, V9fsPDU *pdu, V9fsFidState *fidp,
-     return offset;
- }
- 
-+/*
-+ * The only caller of this function (v9fs_read()) holds the per-FID readdir
-+ * lock during the whole call of this function.
-+ */
- static int coroutine_fn v9fs_do_readdir_with_stat(V9fsPDU *pdu,
-                                                   V9fsFidState *fidp,
-                                                   uint32_t max_count)
-@@ -2431,6 +2435,7 @@ static int coroutine_fn v9fs_do_readdir_with_stat(V9fsPDU *pdu,
-     int32_t count = 0;
-     struct stat stbuf;
-     off_t saved_dir_pos;
-+    off_t current_dir_pos;
-     struct dirent *dent;
- 
-     /* save the directory position */
-@@ -2442,12 +2447,11 @@ static int coroutine_fn v9fs_do_readdir_with_stat(V9fsPDU *pdu,
-     while (1) {
-         v9fs_path_init(&path);
- 
--        v9fs_readdir_lock(&fidp->fs.dir);
--
-         err = v9fs_co_readdir(pdu, fidp, &dent);
-         if (err || !dent) {
-             break;
-         }
-+        current_dir_pos = qemu_dirent_off(dent);
-         err = v9fs_co_name_to_path(pdu, &fidp->path, dent->d_name, &path);
-         if (err < 0) {
-             break;
-@@ -2461,8 +2465,6 @@ static int coroutine_fn v9fs_do_readdir_with_stat(V9fsPDU *pdu,
-             break;
-         }
-         if ((count + v9stat.size + 2) > max_count) {
--            v9fs_readdir_unlock(&fidp->fs.dir);
--
-             /* Ran out of buffer. Set dir back to old position and return */
-             v9fs_co_seekdir(pdu, fidp, saved_dir_pos);
-             v9fs_stat_free(&v9stat);
-@@ -2473,8 +2475,6 @@ static int coroutine_fn v9fs_do_readdir_with_stat(V9fsPDU *pdu,
-         /* 11 = 7 + 4 (7 = start offset, 4 = space for storing count) */
-         len = pdu_marshal(pdu, 11 + count, "S", &v9stat);
- 
--        v9fs_readdir_unlock(&fidp->fs.dir);
--
-         if (len < 0) {
-             v9fs_co_seekdir(pdu, fidp, saved_dir_pos);
-             v9fs_stat_free(&v9stat);
-@@ -2484,11 +2484,9 @@ static int coroutine_fn v9fs_do_readdir_with_stat(V9fsPDU *pdu,
-         count += len;
-         v9fs_stat_free(&v9stat);
-         v9fs_path_free(&path);
--        saved_dir_pos = qemu_dirent_off(dent);
-+        saved_dir_pos = current_dir_pos;
-     }
- 
--    v9fs_readdir_unlock(&fidp->fs.dir);
--
-     v9fs_path_free(&path);
-     if (err < 0) {
-         return err;
-@@ -2528,10 +2526,17 @@ static void coroutine_fn v9fs_read(void *opaque)
-             err = -EOPNOTSUPP;
-             goto out;
-         }
-+        /*
-+         * Hold the lock for the entire readdir transaction (rewind and
-+         * getdents) to prevent dirent stream corruption on concurrent requests
-+         * on the same FID.
-+         */
-+        v9fs_readdir_lock(&fidp->fs.dir);
-         if (off == 0) {
-             v9fs_co_rewinddir(pdu, fidp);
-         }
-         count = v9fs_do_readdir_with_stat(pdu, fidp, max_count);
-+        v9fs_readdir_unlock(&fidp->fs.dir);
-         if (count < 0) {
-             err = count;
-             goto out;
--- 
-2.47.3
+* modulo the effects on our coverage.
 
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
