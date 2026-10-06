@@ -4,79 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 141E4CA5FFF
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 08:46:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2D04CA6002
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 08:46:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xEN94-0006hX-Lj; Wed, 07 Oct 2026 04:37:02 -0400
+	id 1xENAt-0005mt-UL; Wed, 07 Oct 2026 04:38:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1xEI67-0001RO-A7
- for qemu-devel@nongnu.org; Tue, 06 Oct 2026 23:13:45 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1xEI5r-0001F6-22
- for qemu-devel@nongnu.org; Tue, 06 Oct 2026 23:13:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1791342733;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=WW8g2nBbFktHDBbDuyRMokYgOWOXE7YL5nguzrGq128=;
- b=OzrH9jQ6n0oLqSSOqA6SxuPnHj/POIkY9iN18tshbu68Ap3Q6a3PoclpErWO76rs7ndQJ0
- BDBylfwuxjiO4BJl0q/Gi5X9wIse8gn+dN9yioVuhgZUkEbXyxs7FARqKq/Vy9EUKPNTy5
- e9jzztoV0aAuSJirBDmJimwdMxM2Rd4=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-428-Kq7jhnNKOwOqMyDEPOyGHQ-1; Tue,
- 06 Oct 2026 06:30:32 -0400
-X-MC-Unique: Kq7jhnNKOwOqMyDEPOyGHQ-1
-X-Mimecast-MFC-AGG-ID: Kq7jhnNKOwOqMyDEPOyGHQ_1791282631
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 62CC6193E884; Tue,  6 Oct 2026 10:30:31 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.48.53])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 58A901956042; Tue,  6 Oct 2026 10:30:28 +0000 (UTC)
-Date: Tue, 6 Oct 2026 12:30:26 +0200
-From: Kevin Wolf <kwolf@redhat.com>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: "Denis V. Lunev" <den@virtuozzo.com>, "Denis V. Lunev" <den@openvz.org>,
- qemu-devel@nongnu.org, qemu-block@nongnu.org,
- Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>,
- Hanna Reitz <hreitz@redhat.com>, Eric Blake <eblake@redhat.com>,
- qemu-stable@nongnu.org
-Subject: Re: [PATCH v4 5/5] qcow2: repair a dirty image when it becomes
- writable
-Message-ID: <asTNwqM03qYY8eUb@redhat.com>
-References: <20260824133729.1141990-1-den@openvz.org>
- <20260824133729.1141990-6-den@openvz.org>
- <87ld9umth3.fsf@pond.sub.org>
- <f0b0023d-385c-4a47-8672-f06e01ea3211@virtuozzo.com>
- <8733w0j45n.fsf@pond.sub.org>
- <0880ebd0-d548-496a-9832-eb4e58c46594@virtuozzo.com>
- <87fqzzgc13.fsf@pond.sub.org>
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xEIUd-0004Wz-FD
+ for qemu-devel@nongnu.org; Tue, 06 Oct 2026 23:39:14 -0400
+Received: from mail-lf1-x134.google.com ([2a00:1450:4864:20::134])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xEIUX-0000eF-KA
+ for qemu-devel@nongnu.org; Tue, 06 Oct 2026 23:38:55 -0400
+Received: by mail-lf1-x134.google.com with SMTP id
+ 2adb3069b0e04-5ba7ed32ccdso4019205e87.0
+ for <qemu-devel@nongnu.org>; Tue, 06 Oct 2026 20:38:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1791344331; x=1791949131; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=A5T0Q4tG1KFl/zAm+FMtUPPeNHZC6qNa+VYuFXQeTT8=;
+ b=LtNNMJ9NkYOUyDDwflGbEA0eZVVliIo+ra7tSmKXUhj0K3ijb7+xvnhvsTlwfDdgIc
+ Say3gk72lPuPYXeXlfXV4nqZweXvShmv8JQXXHOxECUULlYdJltsl1zfWxcnI4ms62Sh
+ ZRHVkzfj8uVce4n54+KK8Eh917UfdpqkIwVsI4ya73wRHUT7WrBG6WRd4z+A5H5FcBDh
+ JKFZbwgoOR4j/Yvs6So6LS/q1u9bDXEVd9qc7sxUsxZn4DSoKBtoZj/P8WC7L9XFg3a/
+ 1Mgm78WEL2w57wvGlEqSPr02jpBBeSPnu/TrqOIH+IVldCjuNQgfqpNNwgIh7f8vSE0B
+ Zglw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1791344331; x=1791949131;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=A5T0Q4tG1KFl/zAm+FMtUPPeNHZC6qNa+VYuFXQeTT8=;
+ b=osOcsY9J6U89E/A5POa0kwpi7taoTeJ/7pC/9059G+EQBJweOR1OBiN3mIW3wQS/je
+ 1fRTHKCgm49N76Aue2pn+ozh1PpMhG/IfcyMaOlv/fXnBEQni3yzZKI3X78LQVEy+Sa2
+ 2w23dZnG53yUCrmwvkdnXiJmZtrXwqRo21Jpf9ckj+7lCGq+RNpmj3XAB0UiMJhM18ey
+ 9Pff8iIoitBMhvtBL9O/Z6jigPg4KDpdAm2qn1ukhHLuXVuXPnXK6M6wQ2Rs3ChkShYy
+ lkVi3XutkqszJ158l0ogCLn2SkAIKD+Esm2DnM8G8iBSHjtXNXghk6zrAPzDN8AWwpHZ
+ uv0Q==
+X-Gm-Message-State: AFq9FYKXu99oNq3wFTfDaqYMod3Oy/6JwMhmuompk0mgahh8/M1SRp4R
+ 70j8nqD7QIGlm7TMiL2QqtRX5CXGwmWZQhKf8a5PErakryFDidmehrVvYN2M5A==
+X-Gm-Gg: AYBFou2mY6sZsfYkTbke3YjDNH3RdFrPFxnTRoSTjbkMg1o/TJoH5hwgdHbhHwift+T
+ 3ekblVtOYtniKlubucHDhI8E1r3ZcGKrV58BnFR6Ml8ZxxFJHgEcoVpLeaw/GwQ6LfidkQJDETA
+ /dVhyMICT0Nd1Z1cf5Us6UtQAmXt2J7XqKVmWFmVByaMosJjW+Kk//KZdGuoGK78CzX9i0Eww+G
+ K4GP3SVpf/QWjP80OTOmVYlHiuMDihGhdHOwwimLuxRltG4FTRI8BTPVK1NlTuX6gvDrNnlAH5m
+ mxkdDkEmowSPe7wVG6NEb0tsZ1DNlN4pGTTWpmdGVFflabovLhfwkgjZglIZQQ2pFrVyjh6IHEm
+ 7fx6RH1PtUg9y8R+FMwsPDOHwZ408l1n/Yb7N1LsNMdCApArUEmSIGtSioKTHHlogFJfTNktLXG
+ XA6jxfvoCgsnlPbn+HuGo2QqZ9IwHYwiFnWfNC5GeCcYR5vKgUW4djKz09imJWqBuW8+OhKYlTP
+ otNxJA4qqdQZQ8+XcN2LYsPBJJfILQBXfIr7ZRwqxfbefjw
+X-Received: by 2002:a05:6000:288f:b0:48b:5e2:52c7 with SMTP id
+ ffacd0b85a97d-48c47c66e8amr17784318f8f.8.1791275750847; 
+ Tue, 06 Oct 2026 01:35:50 -0700 (PDT)
+Received: from archlinux (pd95eda80.dip0.t-ipconnect.de. [217.94.218.128])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-48c6cdb281csm1566764f8f.55.2026.10.06.01.35.49
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 06 Oct 2026 01:35:50 -0700 (PDT)
+From: Bernhard Beschow <shentey@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Bin Meng <bin.meng@processmission.com>,
+ Jean-Christophe Dubois <jcd@tribudubois.net>,
+ Gaurav Sharma <gaurav.sharma_7@nxp.com>,
+ Bernhard Beschow <shentey@gmail.com>, qemu-arm@nongnu.org,
+ Jason Wang <jasowangio@gmail.com>,
+ Alistair Francis <alistair@alistair23.me>
+Subject: [PATCH v4 25/31] Kconfig: Extract config IMX_GPT from config IMX
+Date: Tue,  6 Oct 2026 10:34:37 +0200
+Message-ID: <20261006083445.30362-26-shentey@gmail.com>
+X-Mailer: git-send-email 2.56.0
+In-Reply-To: <20261006083445.30362-1-shentey@gmail.com>
+References: <20261006083445.30362-1-shentey@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <87fqzzgc13.fsf@pond.sub.org>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 10
-X-Spam_score: 1.0
-X-Spam_bar: +
-X-Spam_report: (1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::134;
+ envelope-from=shentey@gmail.com; helo=mail-lf1-x134.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,109 +108,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 27.08.2026 um 11:15 hat Markus Armbruster geschrieben:
-> "Denis V. Lunev" <den@virtuozzo.com> writes:
-> 
-> > On 8/26/26 17:24, Markus Armbruster wrote:
-> >> "Denis V. Lunev" <den@virtuozzo.com> writes:
-> >>
-> >>> On 8/25/26 11:37, Markus Armbruster wrote:
-> >>>> "Denis V. Lunev" <den@openvz.org> writes:
-> >>>>
-> >>>>> From: Denis V. Lunev <den@openvz.org>
-> >>>>>
-> >>>>> A dirty image must be repaired before anything allocates a cluster in
-> >>>>> it. qcow2_do_open() does that, but only for a node that is writable
-> >>>>> from the start. A node opened read-only skips it, and nothing revisits
-> >>>>> the question once that node becomes writable, which block-commit does
-> >>>>> routinely: commit_active_start() and commit_start() reopen the base
-> >>>>> read-write for the duration of the job.
-> >>>>>
-> >>>>> With lazy refcounts the on-disk refcount block then still accounts for
-> >>>>> the metadata clusters only, so the allocator restarts at the front of
-> >>>>> the image and hands out clusters that L2 entries point at. Two guest
-> >>>>> offsets end up sharing one host cluster. Nothing fails, the corrupt bit
-> >>>>> stays clear, and a clean close clears the dirty bit, so no later open
-> >>>>> repairs the image either. The bit also stays set for the whole writable
-> >>>>> session, so a node which is merely writable says nothing.
-> >>>>>
-> >>>>> Refusing the reopen instead is simpler and keeps it atomic, but it
-> >>>>> leaves nowhere to go: the base belongs to a chain the VM has open, so
-> >>>>> the qemu-img check -r such an error would ask for cannot take the write
-> >>>>> lock it needs. The repair does the trick in most cases anyway.
-> >>>>>
-> >>>>> Do the repair in qcow2_reopen_commit_post(), the earliest point where
-> >>>>> the node is writable. An inactive node is skipped: bdrv_activate() calls
-> >>>>> qcow2_do_open() again through qcow2_co_invalidate_cache().
-> >>>>>
-> >>>>> commit_post cannot reject the reopen, so a failed repair takes the
-> >>>>> driver away from the node instead, which is what stops writes from
-> >>>>> aliasing live clusters. qcow2_signal_corruption() does that as well,
-> >>>>> but it also sends BLOCK_IMAGE_CORRUPTED and sets the corrupt bit,
-> >>>>> which qcow2_do_open() honours by refusing every later read-write open.
-> >>>>> The image is dirty and unrepaired, not corrupt, and qemu-img check -r
-> >>>>> still fixes it, so neither belongs here. Return the error and skip
-> >>>>> the bitmaps.
-> >>>>>
-> >>>>> Signed-off-by: Denis V. Lunev <den@openvz.org>
-> >>>>> Reviewed-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-> >>>>> CC: Kevin Wolf <kwolf@redhat.com>
-> >>>>> CC: Hanna Reitz <hreitz@redhat.com>
-> >>>>> CC: Eric Blake <eblake@redhat.com>
-> >>>>> CC: Markus Armbruster <armbru@redhat.com>
-> >>>>> CC: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-> >>>>> Cc: qemu-stable@nongnu.org
-> >>>> [...]
-> >>>>
-> >>>>> diff --git a/qapi/block-core.json b/qapi/block-core.json
-> >>>>> index 199efc1e00..940249a5e5 100644
-> >>>>> --- a/qapi/block-core.json
-> >>>>> +++ b/qapi/block-core.json
-> >>>>> @@ -1852,6 +1852,9 @@
-> >>>>   ##
-> >>>>   # @change-backing-file:
-> >>>>   #
-> >>>>   # Change the backing file in the image file metadata.  This does not
-> >>>>   # cause QEMU to reopen the image file to reparse the backing filename
-> >>>>   # (it may, however, perform a reopen to change permissions from r/o ->
-> >>>>>  # r/w -> r/o, if needed).  The new backing file string is written into
-> >>>>>  # the image file metadata, and the QEMU internal strings are updated.
-> >>>>>  #
-> >>>>> +# A dirty qcow2 image is repaired during that reopen, which blocks
-> >>>>> +# other requests and can fail the command.
-> >>>>
-> >>>> Pardon my ignorance: what makes a qcow2 image dirty?
-> >>> usual obvious reasons are SIGKILL to qemu process (f.e. from OOM)
-> >>> or node crash.
-> >>
-> >> So, you have to do some cleaning work before you can use it again, just
-> >> like a dirty filesystem.  Correct?
-> > Correct. QEMU allows right now to open dirty images in read-only
-> > mode and it is OK to be used until we switch to RW. In this
-> > case real write to metadata corrupts image.
-> 
-> Feels... adventurous?
+Over time, QEMU has grown a number of i.MX boards and the monolithic
+config IMX drags in unneeded dependencies into each SoC model. Extract
+config IMX_GPT to eventually eliminate config IMX.
 
-Not really. This one is fairly harmless.
+Reviewed-by: Bin Meng <bin.meng@processmission.com>
+Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+---
+ hw/arm/Kconfig       | 7 +++++++
+ hw/timer/Kconfig     | 5 +++++
+ hw/timer/meson.build | 2 +-
+ 3 files changed, 13 insertions(+), 1 deletion(-)
 
-The dirty flag is generally set in the context of lazy refcounts, i.e.
-the image will have refcounts that are inconsistent with the mappings.
-The user explicitly asked for this and the mapping is authoritative in
-this case. Repairing simply means updating the refcounts to match the
-mapping again so that the next cluster allocation can work correctly.
-
-If the image is accessed read-only, you obviously can't repair the image
-because that would mean writing to the refcount blocks, but also you
-really don't care about refcounts at all when you're only reading from
-the image. Refcounts are only important for cluster allocation.
-
-There is another flag QCOW2_INCOMPAT_CORRUPT that actually is a bit
-adventurous to open even read-only because it means that something is
-seriously wrong with the image. We still allow it, and I think the
-reasoning for that was that it can be the difference between "all data
-lost" and "okay, some parts of the image are broken, but we can at least
-copy out those gigabytes of data that are still accessible".
-
-Kevin
+diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+index dada9f57a7..cb6e7056a5 100644
+--- a/hw/arm/Kconfig
++++ b/hw/arm/Kconfig
+@@ -483,6 +483,7 @@ config FSL_IMX25
+     select IMX
+     select IMX_AVIC
+     select IMX_FEC
++    select IMX_GPT
+     select IMX_I2C
+     select IMX_RNG
+     select USB_CHIPIDEA
+@@ -498,6 +499,7 @@ config FSL_IMX31
+     select SERIAL_MM
+     select IMX
+     select IMX_AVIC
++    select IMX_GPT
+     select IMX_I2C
+     select WDT_IMX2
+     select LAN9118
+@@ -512,6 +514,7 @@ config FSL_IMX6
+     select FSL_IMX7_SNVS
+     select IMX
+     select IMX_FEC
++    select IMX_GPT
+     select IMX_I2C
+     select IMX_USBPHY
+     select CAN_FLEXCAN
+@@ -592,6 +595,7 @@ config FSL_IMX7
+     select IMX
+     select IMX_FEC
+     select IMX_GPCV2
++    select IMX_GPT
+     select IMX_I2C
+     select WDT_IMX2
+     select PCI_EXPRESS_DESIGNWARE
+@@ -611,6 +615,7 @@ config FSL_IMX8MP
+     select FSL_IMX8MP_CCM
+     select IMX
+     select IMX_FEC
++    select IMX_GPT
+     select IMX_I2C
+     select OR_IRQ
+     select PCI_EXPRESS_DESIGNWARE
+@@ -637,6 +642,7 @@ config FSL_IMX8MM
+     select FSL_IMX8MP_CCM
+     select IMX
+     select IMX_FEC
++    select IMX_GPT
+     select IMX_I2C
+     select OR_IRQ
+     select SDHCI
+@@ -678,6 +684,7 @@ config FSL_IMX6UL
+     select IMX6UL_LCDIF
+     select IMX_FEC
+     select IMX_GPCV2
++    select IMX_GPT
+     select IMX_I2C
+     select IMX_USBPHY
+     select WDT_IMX2
+diff --git a/hw/timer/Kconfig b/hw/timer/Kconfig
+index e1b751a54a..49a4d20e55 100644
+--- a/hw/timer/Kconfig
++++ b/hw/timer/Kconfig
+@@ -23,6 +23,11 @@ config I8254
+     bool
+     depends on ISA_BUS
+ 
++config IMX_GPT
++    bool
++    depends on IMX_CCM
++    select PTIMER
++
+ config ALLWINNER_A10_PIT
+     bool
+     select PTIMER
+diff --git a/hw/timer/meson.build b/hw/timer/meson.build
+index 8323efaf46..477dd47486 100644
+--- a/hw/timer/meson.build
++++ b/hw/timer/meson.build
+@@ -16,7 +16,7 @@ system_ss.add(when: 'CONFIG_GRLIB', if_true: files('grlib_gptimer.c'))
+ system_ss.add(when: 'CONFIG_HPET_C', if_true: files('hpet.c'))
+ system_ss.add(when: 'CONFIG_I8254', if_true: files('i8254_common.c', 'i8254.c'))
+ system_ss.add(when: 'CONFIG_IMX', if_true: files('imx_epit.c'))
+-system_ss.add(when: 'CONFIG_IMX', if_true: files('imx_gpt.c'))
++system_ss.add(when: 'CONFIG_IMX_GPT', if_true: files('imx_gpt.c'))
+ system_ss.add(when: 'CONFIG_MIPS_CPS', if_true: files('mips_gictimer.c'))
+ system_ss.add(when: 'CONFIG_MSF2', if_true: files('mss-timer.c'))
+ system_ss.add(when: 'CONFIG_NPCM7XX', if_true: files('npcm7xx_timer.c'))
+-- 
+2.56.0
 
 
