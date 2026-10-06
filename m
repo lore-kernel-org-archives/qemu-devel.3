@@ -4,54 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8436CA5FF1
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 09:14:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 488DDCA5FFF
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 09:14:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xENfl-00082S-5h; Wed, 07 Oct 2026 05:10:49 -0400
+	id 1xENDv-0003Ut-EL; Wed, 07 Oct 2026 04:42:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <19b11cf636abb031179a655166fbf4b0400eb643@kylie.crudebyte.com>)
- id 1xELJM-0002IG-BK
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 02:39:40 -0400
-Received: from kylie.crudebyte.com ([5.189.157.229])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <19b11cf636abb031179a655166fbf4b0400eb643@kylie.crudebyte.com>)
- id 1xELJ5-0004C2-1U
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 02:39:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=crudebyte.com; s=kylie; h=Cc:To:Subject:Date:From:References:In-Reply-To:
- Message-ID:Content-Type:Content-Transfer-Encoding:MIME-Version:Content-ID:
- Content-Description; bh=RMFEv1H2qLG2LAoQXWPqfXPoLdZeJ4Fp7dc4nmeg7Hs=; b=nbV4s
- 2orcog7eocx85T+imMZcnot0RsABzFfFWLjGFazs2SW8KdeLAkJWlIY24SWtBNJfLAZUWfa7sncvb
- GACGr85e2I1oQs5bfw6xCwOxRXsKzf4vHJ8WRv6Gs5KMnJRNLRDDJIklfuFCNHUYrMm7Aua8Cie93
- Bg6ht3H+pWMMzcX21zkC67OcSjw56BlaEoO9wF2KN7X9JxPnfvEmVQpZ1fLYVcPgILYTwld8qmTZa
- Fbko8u4amBpQuhmFO9m7pI35zk2/5xM4QM6zadNB/zD4zm85P+ES7cv4sNGzaiyLW81xsD78wiOZh
- KeAFksR4l3pJELcK1IKa9CzGRJ58SBqolffrnssQIiS8l7kbYAG9vdqeK6JKzOF7y+NaMOW8/MHUN
- VidDH4VyrsMfQMv+5WGV6TP+zw0XNC8p2PYZo1UbIlY6yaLsJmldAp579cou3mtLWAmVJOLP46HQV
- NueRK7QB2Fogh1GcFcRbjeNqKh2113rxzEXtvHsoB9eej027vt1h1dBihG5+cZ4WBCdkNASuA8Y5+
- KsaKEfFgeSFL+ws17cCYD9EVqk7iLvJggiMvN3tWU0V0sz5/1ThsS3gftWLAIzLdPWOfUuwxrpMGD
- 1F6Vl3rg47nxJkxiYT4ETSBv6MnaXHHTSTzbd/nF87RL8bMy/YyK5NIkQiJRro=;
-Message-ID: <19b11cf636abb031179a655166fbf4b0400eb643.1791291812.git.qemu_oss@crudebyte.com>
-In-Reply-To: <cover.1791291812.git.qemu_oss@crudebyte.com>
-References: <cover.1791291812.git.qemu_oss@crudebyte.com>
-From: Christian Schoenebeck <qemu_oss@crudebyte.com>
-Date: Sat, 3 Oct 2026 22:41:16 +0200
-Subject: [PATCH 5/9] tests/9p-race: add Treaddir race test
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1xEIfD-0005yd-AU
+ for qemu-devel@nongnu.org; Tue, 06 Oct 2026 23:50:20 -0400
+Received: from mail-lf1-x134.google.com ([2a00:1450:4864:20::134])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1xEIf6-0002ac-MA
+ for qemu-devel@nongnu.org; Tue, 06 Oct 2026 23:49:51 -0400
+Received: by mail-lf1-x134.google.com with SMTP id
+ 2adb3069b0e04-5bcbd8df6fdso871919e87.0
+ for <qemu-devel@nongnu.org>; Tue, 06 Oct 2026 20:49:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=openvz.org; s=google; t=1791344980; x=1791949780; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=GSG5eI9J9gA2CNZ85JVT5WvSVphnqbW6RKvlDFGJvRA=;
+ b=NdiIsJgGF3GBsOn9Ni4afMWAnrH04WQ1L7Z8e0LhKxmSyPw9ieRJC1IJj+7ig5J4SW
+ IF/6+jvQGW/ReDnFjtm3rv8ZFVp4o3Haa0csCAaW5kReUHwFb92TqH5jcCBSD3IA5y+Y
+ xE7m4g/WNyHZtfZe/zbmo9zZVXH7sCvRgP8KeY+uHZcJ9z075+JKXO4WPX8V2GnZ5wqZ
+ uoqqscyC7/o1vjMSKJJlxsk4+dicMUbUJJTZ0KTNia5ovwXf2r70O8jHlaIAt5LY40or
+ Q/uTltpGqgSArh5q+bFGgYP5KWbyC8CXMQ3c3EYq1vAKbjVbEzVYFUKKl2psIwu9ZJf0
+ JkzQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1791344980; x=1791949780;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=GSG5eI9J9gA2CNZ85JVT5WvSVphnqbW6RKvlDFGJvRA=;
+ b=KfolsOuxruIr3MvRO+otkscaoIcWfGdYpNhfZMAVqZxctY0l46PaJG0KgnWCsyyGOC
+ 5W/8VghfAARm7GANlmx9zcVb6SQAJC58xRGz4Pv0GpkPra6bPBT30V1rGJbOntdHxMeM
+ DJplU4Ck+5DtWoC6J5ZGJAzkvQoqSWjDzlfPuctu/z6ki/asoXlP9n6sWM3DBlNR/O+T
+ TwkVzLCRHs9vzLuwjbxghQXr2KDB1ZjNQBpNj/LXqwgnm0tIsO+OkY8Us7emb77CxdqM
+ T/LNj1alOh27i0tqLB5gjXoVfz91M6RekNEvm0FQIflqs9jGowIXtjqGqLZav9TxMZia
+ MkRg==
+X-Gm-Message-State: AFq9FYK1w9uz8vAzYbrcE5n1J9DSZvipWES1sDEEaS5VkGXVbkpBbv9o
+ xnma7en+AWma7jLKPQLBWwhwD8Up85osxZmgtHgsdWKK7JigS27c7Smz2vaq6uI2zWaDvOXngmv
+ 9wugF
+X-Gm-Gg: AYBFou0o5KvJD5YBnWwkYOkMp1ksfUprlNPdSNOufdk8wDGIryzh5tIJNkvuvijD0m2
+ q5gthBL+vqkP0mIBNRC9rHywUMrBprmyRjjHjp6IZAlpq+5keX8AJT81A1pztO8FnvkqpcFXF6d
+ aJazg6w1WOe65Sl39WYjUcldyBvgcINJWxBktFUY+xwdcmLdDQoq/LRtYs5dMDWM/KHFAb+i2Fo
+ pt3FRnjELNib4A+BqtsoEMJTaEt2eTzDyRWTHKtViYiQGJA91o+QG8lA12kEtBXVLQDPMrfdRMm
+ mAiWdTgp/tlL+8zZj8TMeZxr7CzfRmRncjQtUEUfX4134mTIEGK1nwBspZK76bd+AGY8oMPHG9h
+ wNc3Yj3DlzCt5lGnK1YuJbh55otH/orieTzcoTH8XQ7FeyVdESRSdqZKZowUyVKEd+aXC1XnZI9
+ u3ZsxM4RdjEtUWUvxLZMjprvJTlwDSVjn8BDY4wYW333WF0iJpUhrcaj+8Bo/LzBRXrG4=
+X-Received: by 2002:a05:600c:1f83:b0:4a0:2500:2cd0 with SMTP id
+ 5b1f17b1804b1-4a17b537e11mr33188345e9.18.1791306467137; 
+ Tue, 06 Oct 2026 10:07:47 -0700 (PDT)
+Received: from athena.sw.ru ([2a06:5b06:b600:300:a39a:8667:da6e:b69f])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4a178c5b9d6sm76254095e9.13.2026.10.06.10.07.45
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 06 Oct 2026 10:07:46 -0700 (PDT)
+From: "Denis V. Lunev" <den@openvz.org>
 To: qemu-devel@nongnu.org
-Cc: Greg Kurz <groug@kaod.org>
-Received-SPF: pass client-ip=5.189.157.229;
- envelope-from=19b11cf636abb031179a655166fbf4b0400eb643@kylie.crudebyte.com;
- helo=kylie.crudebyte.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_48_96=1,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Cc: qemu-block@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
+ Eric Blake <eblake@redhat.com>, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Subject: [PATCH v2 3/3] iotests/migrate-bitmaps-postcopy-test: add a bitmap on
+ a second node
+Date: Tue,  6 Oct 2026 19:07:38 +0200
+Message-ID: <20261006170738.453977-4-den@openvz.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20261006170738.453977-1-den@openvz.org>
+References: <20261006170738.453977-1-den@openvz.org>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::134;
+ envelope-from=den@openvz.org; helo=mail-lf1-x134.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -67,126 +102,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add "race/readdir" test, a test racing Treaddir's directory stream.
+From: Denis V. Lunev <den@openvz.org>
 
-In each round a Treaddir request is sent against another Treaddir
-request or Tstat request on the same FID.
+All bitmaps in the test live on drive0, so the source never switches
+nodes after setup and the destination never resolves a node name from
+the postcopy listen thread. Add a second drive with one bitmap and check
+that it arrives intact.
 
-This test is registered as slow test (i.e. skipped by default) and
-therefore requires -m slow to run.
-
-On my test machine a full run of 20000 rounds took around 1 minute
-to complete.
-
-Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+Signed-off-by: Denis V. Lunev <den@openvz.org>
+Tested-by: Eric Blake <eblake@redhat.com>
+Reviewed-by: Eric Blake <eblake@redhat.com>
+Cc: Peter Xu <peterx@redhat.com>
+Cc: Fabiano Rosas <farosas@suse.de>
+Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 ---
- tests/qtest/virtio-9p-race-test.c | 85 +++++++++++++++++++++++++++++++
- 1 file changed, 85 insertions(+)
+ .../tests/migrate-bitmaps-postcopy-test       | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
 
-diff --git a/tests/qtest/virtio-9p-race-test.c b/tests/qtest/virtio-9p-race-test.c
-index d376565626..c01da69410 100644
---- a/tests/qtest/virtio-9p-race-test.c
-+++ b/tests/qtest/virtio-9p-race-test.c
-@@ -525,6 +525,90 @@ static void v9p_race_fid_path(void *obj, void *data, QGuestAllocator *t_alloc)
-     fflush(stdout);
- }
+diff --git a/tests/qemu-iotests/tests/migrate-bitmaps-postcopy-test b/tests/qemu-iotests/tests/migrate-bitmaps-postcopy-test
+index b2b37ada4b..36c281596d 100755
+--- a/tests/qemu-iotests/tests/migrate-bitmaps-postcopy-test
++++ b/tests/qemu-iotests/tests/migrate-bitmaps-postcopy-test
+@@ -27,6 +27,8 @@ debug = False
  
-+/*
-+ * Race 9p server's internal directory stream for Treaddir.
-+ *
-+ * Race Treaddir request against another Treaddir or Tstat request on the same
-+ * FID.
-+ */
-+static void v9p_race_readdir(void *obj, void *data, QGuestAllocator *t_alloc)
-+{
-+    QVirtio9P *v9p = obj;
-+    uint32_t rounds;
-+    uint32_t i;
-+
-+    if (!g_test_slow()) {
-+        g_test_skip("This is a slow test, run with -m slow");
-+        return;
-+    }
-+    rounds = v9p_race_rounds();
-+
-+    v9fs_set_allocator(t_alloc);
-+    v9p_race_prepare(v9p);
-+
-+    for (i = 0; i < rounds; i++) {
-+        P9Req *req_a, *req_b;
-+        uint16_t tag_a = v9p_race_new_tag();
-+        uint16_t tag_b = v9p_race_new_tag();
-+
-+        if (i % 2000 == 0) {
-+            g_print("race/readdir: %u/%u rounds\n", i, rounds);
-+            fflush(stdout);
-+        }
-+
-+        /*
-+         * Reset the descriptor pool at the start of every round, where
-+         * no request is in-flight anymore.
-+         */
-+        v9p_race_reset_pool(v9p);
-+
-+        /* initial Treaddir request */
-+        req_a = v9fs_treaddir((TReadDirOpt) {
-+            .client = v9p,
-+            .fid = V9P_RACE_D2_FID,
-+            .offset = 0,
-+            .count = 64,
-+            .tag = tag_a,
-+            .requestOnly = true,
-+        }).req;
-+
-+        /*
-+         * On every 3rd round send a concurrent Tstat, otherwise a
-+         * concurrent Treaddir request.
-+         */
-+        if (i % 3 == 0) {
-+            /* a Tstat on the same directory FID */
-+            req_b = v9fs_tstat((TStatOpt) {
-+                .client = v9p,
-+                .fid = V9P_RACE_D2_FID,
-+                .tag = tag_b,
-+                .requestOnly = true,
-+            }).req;
-+        } else {
-+            /* a concurrent Treaddir on the same FID */
-+            req_b = v9fs_treaddir((TReadDirOpt) {
-+                .client = v9p,
-+                .fid = V9P_RACE_D2_FID,
-+                .offset = 0,
-+                .count = 64,
-+                .tag = tag_b,
-+                .requestOnly = true,
-+            }).req;
-+        }
-+
-+        uint8_t resp_a, resp_b;
-+
-+        resp_a = v9p_race_resp_collect(v9p, req_a);
-+        g_assert_cmpint(resp_a, ==, P9_RREADDIR);
-+        resp_b = v9p_race_resp_collect(v9p, req_b);
-+        g_assert_cmpint(resp_b, ==,
-+                        (i % 3 == 0) ? P9_RSTAT : P9_RREADDIR);
-+    }
-+
-+    g_print("race/readdir: %u rounds done\n", rounds);
-+    fflush(stdout);
-+}
-+
- /* setup and cleanup for race tests using the 9p 'local' fs driver */
- static void *v9p_race_local_driver(GString *cmd_line, void *arg)
- {
-@@ -549,6 +633,7 @@ static void v9p_race_register_tests(void)
-     };
+ disk_a = os.path.join(iotests.test_dir, 'disk_a')
+ disk_b = os.path.join(iotests.test_dir, 'disk_b')
++disk_a1 = os.path.join(iotests.test_dir, 'disk_a1')
++disk_b1 = os.path.join(iotests.test_dir, 'disk_b1')
+ size = '256G'
+ fifo = os.path.join(iotests.test_dir, 'mig_fifo')
  
-     qos_add_test("race/fid-path", "virtio-9p", v9p_race_fid_path, &opts);
-+    qos_add_test("race/readdir", "virtio-9p", v9p_race_readdir, &opts);
- }
+@@ -97,16 +99,23 @@ class TestDirtyBitmapPostcopyMigration(iotests.QMPTestCase):
+         self.vm_b.shutdown()
+         os.remove(disk_a)
+         os.remove(disk_b)
++        os.remove(disk_a1)
++        os.remove(disk_b1)
+         os.remove(fifo)
  
- libqos_init(v9p_race_register_tests);
+     def setUp(self):
+         os.mkfifo(fifo)
+         qemu_img('create', '-f', iotests.imgfmt, disk_a, size)
+         qemu_img('create', '-f', iotests.imgfmt, disk_b, size)
++        qemu_img('create', '-f', iotests.imgfmt, disk_a1, '1G')
++        qemu_img('create', '-f', iotests.imgfmt, disk_b1, '1G')
+         self.vm_a = iotests.VM(path_suffix='a').add_drive(disk_a,
+                                                           'discard=unmap')
+         self.vm_b = iotests.VM(path_suffix='b').add_drive(disk_b,
+                                                           'discard=unmap')
++        # A bitmap on a second node makes postcopy switch nodes after setup
++        self.vm_a.add_drive(disk_a1)
++        self.vm_b.add_drive(disk_b1)
+         self.vm_b.add_incoming("exec: cat '" + fifo + "'")
+         self.vm_a.launch()
+         self.vm_b.launch()
+@@ -127,6 +136,13 @@ class TestDirtyBitmapPostcopyMigration(iotests.QMPTestCase):
+                                node='drive0', name='bitmap0')
+         empty_sha256 = result['return']['sha256']
+ 
++        self.vm_a.cmd('block-dirty-bitmap-add', node='drive1',
++                      name='bitmap0', granularity=granularity)
++        self.vm_a.hmp_qemu_io('drive1', 'write 0 64k')
++        result = self.vm_a.qmp('x-debug-block-dirty-bitmap-sha256',
++                               node='drive1', name='bitmap0')
++        self.drive1_sha256 = result['return']['sha256']
++
+         apply_discards(self.vm_a, discards1)
+ 
+         result = self.vm_a.qmp('x-debug-block-dirty-bitmap-sha256',
+@@ -212,6 +228,9 @@ class TestDirtyBitmapPostcopyMigration(iotests.QMPTestCase):
+ 
+         # check that bitmaps are migrated and persistence works
+         check_bitmaps(self.vm_b, nb_bitmaps)
++        result = self.vm_b.qmp('x-debug-block-dirty-bitmap-sha256',
++                               node='drive1', name='bitmap0')
++        self.assert_qmp(result, 'return/sha256', self.drive1_sha256)
+         self.vm_b.shutdown()
+         # recreate vm_b, so there is no incoming option, which prevents
+         # loading bitmaps from disk
 -- 
-2.47.3
+2.53.0
 
 
