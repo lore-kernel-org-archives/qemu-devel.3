@@ -4,145 +4,150 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87DF4CA5FFC
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 00:56:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CCC0CA5FFC
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 01:24:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xEFuy-0006iF-Gl; Tue, 06 Oct 2026 20:54:35 -0400
+	id 1xEGN0-0002nk-OM; Tue, 06 Oct 2026 21:23:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xEFJe-0001Zp-8W
- for qemu-devel@nongnu.org; Tue, 06 Oct 2026 20:16:07 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1xEFRR-0002PK-UV
+ for qemu-devel@nongnu.org; Tue, 06 Oct 2026 20:23:53 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xEFJD-00011j-Iv
- for qemu-devel@nongnu.org; Tue, 06 Oct 2026 20:15:11 -0400
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1xEFRB-00029o-Kr
+ for qemu-devel@nongnu.org; Tue, 06 Oct 2026 20:23:23 -0400
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6969Xbkm801248
- for <qemu-devel@nongnu.org>; Tue, 6 Oct 2026 10:01:56 GMT
+ 696HCbMg018299
+ for <qemu-devel@nongnu.org>; Tue, 6 Oct 2026 17:31:51 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- OrTB1UEgNvk9qRTstESWngRSI9amH7wWSHnxh6O1xdc=; b=cj3n45aKKYrUnvpK
- ozOW6VUWs4qtVYbHA/tSefVWAl3fz85fMKD7eYGoVDAVq3E7DgKF7vB7tP4bK2aP
- gWrUjwIHUmWuE6DvklP/5/flG8GycDKGNYVRQ6pZ74oYdREZZO0YOVe0m6WBe8J7
- cAUJJd851UtS+AY5Xdkbi00l8qi9Vbq7czHizbT/UuEp3VNnvxYqxDXq3/YOjUx+
- H7YRbLAEOLUMqU+f+wnww04rVb1OXf2QiRJiilznXPTBxwzEJU9kUz/Mq3E5owOk
- bmfeAIXNMHwKtvfRlfxzbUtctiGndZeVzt+5RuzZ/DLGQTeGQaPlJ2DHfHIeWNiM
- /5492Q==
-Received: from mail-vs1-f70.google.com (mail-vs1-f70.google.com
- [209.85.217.70])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h4xfbg3c6-1
+ /6BiI61Cte1mhMhN3Xi5Ms/6VjIniSBqjSgqFpfWm5o=; b=k312MgpzyNnuRWJ4
+ G31U2AWDUe+6iIWOBeQIKS4NT/vZc1KmceuL748GtMvYNC//mTjBil0HFwONozoL
+ owPgGJrXUkfcjjnSoB+JF3bK51FXDF1SGlXNMWdFK6EDbsUe/1xF/NAVPU1LJWn4
+ r2+cAP0uiyxKooqdF4ROKGxAtYTCO7eZlVFZQt+O8GWcMz9h7I2UA/DazZgRvAhz
+ UEqSTWZERs/79NNZ4x065LYx8dlABuaNJLeH4NLiDEyCJDhmUhhjMLg6dxcHDpW6
+ 7tLUvIfx2o409agj5LV+4IXP2nyRzLH+d9+wMFS8jNlsH2vDPAQtme03gHz2MwH4
+ CrW55A==
+Received: from mail-dy1-f198.google.com (mail-dy1-f198.google.com
+ [74.125.82.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h4y91hq7h-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 06 Oct 2026 10:01:56 +0000 (GMT)
-Received: by mail-vs1-f70.google.com with SMTP id
- ada2fe7eead31-7c0f07b4e97so2297321137.0
- for <qemu-devel@nongnu.org>; Tue, 06 Oct 2026 03:01:56 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Tue, 06 Oct 2026 17:31:50 +0000 (GMT)
+Received: by mail-dy1-f198.google.com with SMTP id
+ 5a478bee46e88-34d49d8dee1so1668817eec.0
+ for <qemu-devel@nongnu.org>; Tue, 06 Oct 2026 10:31:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1791280915; x=1791885715; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1791307910; x=1791912710; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=OrTB1UEgNvk9qRTstESWngRSI9amH7wWSHnxh6O1xdc=;
- b=PQa4D1bAi+l9l8HcfUZqikk1r1q+zWGbqtDGeulBTeaMdR3wU0zSEFIVxZ4OH2QDTj
- t+MGi3u3ouFhsf6nUAcoN2V//ziShT5KXRMpTCRv52QkWa6j/YF7YZ/pus+MdLYVD3tK
- t6FKR38IaCL9r2HD0Vzru4RVtx5hpGsrh/cDRCnWLByDVlohdRcV/qetTMh0ia1r66zQ
- Q3GeK3RiAVvuSLYTlBQsUJWyZSmYt6vPHu/MbfSepFpOIrEWfDHuEJ0Aio5nzGpGcK/O
- IURrRhJtlVa3KaRukNOCMV0rYzgQNDJ59Crhx0VRK7sTI5iHiqQhgvSDu/D4HSB7SLz0
- a4mg==
+ bh=/6BiI61Cte1mhMhN3Xi5Ms/6VjIniSBqjSgqFpfWm5o=;
+ b=bATI1jq4Pq8mRAPvw3fzL/h6CrQMYlTBuCsVd/Z/FH7yBiCS0IUOfZwV3HF0LG3yOX
+ 9V4lltZUupCGenDUd/RywhlwjLcKzmdlwyhD2W/6Rme/bacI5snRXDMugOVfaarYOgWK
+ 1kunDkStRQUwviprAygzLDzlyEnjADlcm528x5r3kglRQAmtvcEbFEACaD07Es/ohbiY
+ uAQJdVnK/nNJd2nm1xT2VSI1t22LcMOts/Y7hBpgPzw2cQxMquBLSA6aKt4AUrlkm84O
+ ojDus6gdGU1NHM028MxUGjQSkspAmSSKfnEpodGiadggGWLqYtPDWlTuPXFeV6L7f75F
+ OFVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791280915; x=1791885715;
+ d=1e100.net; s=20260707; t=1791307910; x=1791912710;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=OrTB1UEgNvk9qRTstESWngRSI9amH7wWSHnxh6O1xdc=;
- b=UgBZp97mZAQm7rTE62gjFbiN+Pir2i8HpBraqebPeT5uisgohETQ2/E62G42F61O+z
- XDMFQmODWgXPqJK5oIbt7xDGnA6nOnXcvyJ4h1J4aEK8g45ofjKCrSATeHlFVdB2rChq
- t5msizIuPCEOeoQWDQLqN/l5ypzHqfiDl1asTvDfjOmL6XZRTww48uyN4LBCazY+kx2f
- 88n3NRO0fLdNHB4UAAJCpHdBZzXT3O5rR5r5RdQKHtU2DZCvvTOB0auuYYrydCmp+81R
- 4h+02emUP6yQAWUeHZDgiGG62jKBwr00BvyX7i2EZ5KxTogO9LYEF9dLFIXIAV9SXLPs
- u9HA==
+ bh=/6BiI61Cte1mhMhN3Xi5Ms/6VjIniSBqjSgqFpfWm5o=;
+ b=oZLKvyKi1c6TL7AItLJG1Y0blLbFzkzZvK0/yAz/Q5wl1yFmlt8pxoWJ0WS71Vd1nA
+ 2MQDmCqzS72We1xlMjN2jt4fWHCzdP0hmdYc8emrTZqPS05RRBbZLAaMBdnpl5KMVZyg
+ 25V9NxLT9jhPDIcnqATNPWOhr69so74cE6OQokPNApRc4fzcO+K5OuKVZi2SXZpBmynH
+ JuoR6OezfQTVmfgg6OxvWavwPBRQ2L+QF5jTad9GEqnWVe8CuvXC2yT3eit2BS1W0aqc
+ /YzD68z/D/nZvsoiIGHGM6RZ4o8hFgvt8eFEADz5h+N20R6IVLgRLSOHw2OjHDCe2H81
+ i4tg==
 X-Forwarded-Encrypted: i=1;
- AKwUvBy0zy4SvuhZ0DpS9QynPgkE/mdHx7H4uLiVCkBSxpzN+eq4CdimvhT8KhejYE0DasAjrmrcBgneqBR8@nongnu.org
-X-Gm-Message-State: AFq9FYKaPtNDrKotKks9cc56lqZ4vpQTsKZqdpbBhXWSQLK2AvZBlzIY
- O0EH/SZpJzd8YbEIaY7Qf0+aSSBlEMnyG3yL3LKjYBbY09EpOofMjEvZwSattbckZeDVpSCZsuz
- 18bxblZ3Y99d542DztzwpaFdRGCrmUwZdgmi5J/0NQhJiDt3bXRMHevmEIQ==
-X-Gm-Gg: AYBFou0P5C5Kox7ys+LocXb5s4k1ACBOgE6wWZcLFIhqQUo0nK4wF4m9zs9DhyF24p5
- 73fI46xyOH3FSbreJQFWD2UIerKOokd+urDSFkrNu8JiAD/ZISgrT1IZkiNlE5VCUKmrX/eEUBp
- UqDRRZ36LSM6mQhnM4ZeYxGfcnz6logQNFdbJtQuVdbRpEgkXHffxZF7dI9uzL+JG7M4CmFi8Go
- WPBbrBt7Og0iosQJjyhEZgBJ5Ioj+y3Xl+wqmjY250x64Hbcj30nhdYkKn+JC1Eis85CldTa0b6
- 2fQyd5wYil0cDDz3QV2nf7LG914qlYYlLIBmg1Lg5XDxHlNPS3Cj8Mglil3C0HKJ8Y0Eo5/jTbv
- hFkcJipy9mY0/krhXnnk0lg==
-X-Received: by 2002:a05:6102:4189:b0:7bf:6218:bc59 with SMTP id
- ada2fe7eead31-7c87c7e7ec7mr196469137.32.1791280915510; 
- Tue, 06 Oct 2026 03:01:55 -0700 (PDT)
-X-Received: by 2002:a05:6102:4189:b0:7bf:6218:bc59 with SMTP id
- ada2fe7eead31-7c87c7e7ec7mr196454137.32.1791280915019; 
- Tue, 06 Oct 2026 03:01:55 -0700 (PDT)
-Received: from [10.111.138.48] ([212.136.9.21])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a178c5d8dfsm63810545e9.14.2026.10.06.03.01.53
+ AKwUvBzVzpVsTCskcBo89QMv7/t+nWAWbrGgFlBXMrNL/f+zfKpVgHccQQC5gHPS3bZ5rAKZUNLzdlDNaHIE@nongnu.org
+X-Gm-Message-State: AFuF++mMa+OQ+hCEQuQKEOgtC/T9cOSlRS1irSuV3bGHcdhbkYOpTrj/
+ 09a2XXz7StojQl3WkdTwiY9OJsRlVIG2Z2Q9LMvMSC5xCajaT+SOMP/BW9HxkBLxWd+mWfdtdHH
+ wkGkeGtQ9bzgONLhbhD0TJtDn11RQ+6u4aU83XsxafvPu4ybT6CbAlprfvw==
+X-Gm-Gg: AYBFou0OeYqHIaXHguBjioVYRXuBFrRqpmQ3CHfwXgGmjiwez/iiJ6T6FwnPaFyQj9n
+ +Zape4OIF5D545AEhggGqFJtnR72C5IzLW9Vl+lTYa3V+Twv5NCZkpsSXvHSKECT1kYJ2OpOKzr
+ qhLwgtDk90IUzBIoLvh6RcrIDYF3DZbQ5BgqoaM22yXDqwfLWQ3n7evANPqQOUNCVD/oCvWCJml
+ WCXOhu9uv7ZnALPjl2y+YQ+g3sCh6hyZxTH2dcpnAYjIHReL/P/hQGnCcbxngDoOmVOQCIoPfc+
+ DLwZ2jvl1pax6NF+fGITsay5P6+XbVJhOxG3xmWc33RN+vnZtCxabxHjhclAQTCjwU9Hu1l18fv
+ uq1YsdQ/qY/i+fQxgkDh5gAltm+HMMmJ6ZeJlaBkPZ2jiPJqE1+NkgU6u360PY5VbhJQ/MA==
+X-Received: by 2002:a05:7301:7004:b0:351:3c34:9bfa with SMTP id
+ 5a478bee46e88-3514e3523e1mr2479506eec.31.1791307910158; 
+ Tue, 06 Oct 2026 10:31:50 -0700 (PDT)
+X-Received: by 2002:a05:7301:7004:b0:351:3c34:9bfa with SMTP id
+ 5a478bee46e88-3514e3523e1mr2479469eec.31.1791307909420; 
+ Tue, 06 Oct 2026 10:31:49 -0700 (PDT)
+Received: from [192.168.1.199] (192-80-163-190.dyn.novuscom.net.
+ [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-35159d58ff3sm199457eec.28.2026.10.06.10.31.47
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 06 Oct 2026 03:01:54 -0700 (PDT)
-Message-ID: <9fff40ae-6378-41c8-9cff-74d4a15645de@oss.qualcomm.com>
-Date: Tue, 6 Oct 2026 12:01:51 +0200
+ Tue, 06 Oct 2026 10:31:48 -0700 (PDT)
+Message-ID: <2dc73982-a162-415e-92a3-48bd0cb018ce@oss.qualcomm.com>
+Date: Tue, 6 Oct 2026 10:31:47 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 12/31] hw/arm/fsl-imx25: Derive from TYPE_SYS_BUS_DEVICE
-To: Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Bin Meng <bin.meng@processmission.com>,
- Jean-Christophe Dubois <jcd@tribudubois.net>,
- Gaurav Sharma <gaurav.sharma_7@nxp.com>, qemu-arm@nongnu.org,
- Jason Wang <jasowangio@gmail.com>,
- Alistair Francis <alistair@alistair23.me>
-References: <20261006083445.30362-1-shentey@gmail.com>
- <20261006083445.30362-13-shentey@gmail.com>
- <d63caf07-24f1-4911-b0f9-f375c48b6159@oss.qualcomm.com>
- <1EAADDBD-1ED9-47BA-81AA-E6539880B7E4@gmail.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Subject: Re: [PATCH 0/4] target-info: preserve full softmmu target identity
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: luoyonggang@gmail.com, qemu-devel@nongnu.org,
+ Philippe Mathieu-Daude <philmd@mailo.com>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Fabiano Rosas <farosas@suse.de>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+References: <20261004072927.1142-1-luoyonggang@gmail.com>
+ <0b84bf4d-3b98-4f52-8847-9f89bef92c1e@oss.qualcomm.com>
+ <CAE2XoE-joWZwrBy-jLe+=ZP7OGM9cyDrF_5hz7koVPODeys+JA@mail.gmail.com>
+ <b2297f92-a685-4399-a755-bbe5a37b9b3f@oss.qualcomm.com>
+ <CAE2XoE-4Pdp_n3RgpqJ5se_KTHniMAJAodTLmkfV+0jjou=M5w@mail.gmail.com>
+ <c6bd8e8d-3160-46c2-ba4a-2f5a4b93cf38@oss.qualcomm.com>
+ <CAE2XoE9PKNgE1Zz_frOq_DrgqrPL4B8hcq0xO6ywCNTeUnFLvA@mail.gmail.com>
+ <63d20cc8-8003-489c-9f08-28369a2f71e2@oss.qualcomm.com>
+ <CAE2XoE9uqEcjMsqJXu6Cr+MrposPjq7O6Lnj5cj7uW2nF38uAg@mail.gmail.com>
+ <15e9a768-95bf-45aa-8175-1dbd73d5ee04@oss.qualcomm.com>
+ <asT-GoQ6xH4-dLET@redhat.com>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Content-Language: en-US
-In-Reply-To: <1EAADDBD-1ED9-47BA-81AA-E6539880B7E4@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+In-Reply-To: <asT-GoQ6xH4-dLET@redhat.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=D8TSufRj c=1 sm=1 tr=0 ts=6ac4c714 cx=c_pps
- a=N1BjEkVkxJi3uNfLdpvX3g==:117 a=/bviTfK1dmy+WGcHzWQ0gg==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
- a=EUspDBNiAAAA:8 a=FRSEYCzRAAAA:8 a=pGLkceISAAAA:8 a=pDo3CIXR1aYm_AGmTWgA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=crWF4MFLhNY0qMRaF8an:22
- a=H4N_Y-AU75W7NKDNhZlT:22
-X-Proofpoint-GUID: c_YnPz07fsjHurXHDDm1b07T5cf1-ADn
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA2MDAzOSBTYWx0ZWRfXxNjoyQMHqdO4
- fG9WiAV0iSZYpZaqfHh2en0Cv3MLMaQFkrHrbH41GoESpR5AdfE6CgynnoP1yyhYRUFEKz6EzhX
- A/ywLSHteeskD3W0ueBMXrJKcnPydJo=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA2MDAzOSBTYWx0ZWRfX4ik3kYtALp1p
- WEwX8Uk0K7/xtMPAUqUK0PZaZ1gGNjgcoIWim/Zh8mikh8KMjAcW3uS+Hs0bIAhKgVOVQFRFubR
- oKfSnLROdDheR27MMw7mShuxa7OdjGXcRsAGghF0hLObfn1yxP4n5dkFK+JuLNuGC5KazGdRnBD
- WFawcfv1eE1+1ufWXQ3ioSw79Vnb9cG6CIVMlOrvJxtAViw+Syy92Majwwf6ffGgrGiCIbCpXrX
- JYZrNDYD3gzS6zkP143v8kCkVmcQ/AZynuChwRjaXmLsTFAwQ5v84setH0kWGqMgz0wuQS1cJIr
- wkAeN++7ulXhh9yqKLWQYNkqHLeql8jlGugu8DYiF/85vPUpVktVAwoh9FCaCi13c/dwZqPr61F
- LJkCvwKot+UlARxfshxIWJ7VV9efjVEgGVI0lB5Ids9mrIe/WxX+Z9jrMwcD1yma5DjZP7s1/yj
- Dj+ODTch4QmF82AmYfQ==
-X-Proofpoint-ORIG-GUID: c_YnPz07fsjHurXHDDm1b07T5cf1-ADn
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA2MDA2OSBTYWx0ZWRfX8fgn165+gjzG
+ S8yqfNoeB9lwB+CqVwV41YsX+WsjrX5HaRE67tlQ2d1QM9gv9qLHE7K4kTXKZXR7w7Tuc85RMFT
+ cnCw2Ct4tztmRw7VcchhzOLEvvGmY0M=
+X-Authority-Analysis: v=2.4 cv=Ho/jiETS c=1 sm=1 tr=0 ts=6ac53086 cx=c_pps
+ a=wEP8DlPgTf/vqF+yE6f9lg==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
+ a=EUspDBNiAAAA:8 a=tpycsQwXMIYJ9kwHvnUA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=bBxd6f-gb0O0v-kibOvt:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA2MDA2OSBTYWx0ZWRfXyUzBzCKABGTh
+ 5VZ558swPaN4UmRjlZMl8EO1yC3vZ4dEZUjZd/mPyqbz2xIpI0tgsMvYsRLd0Ei0lJ4OA8O2TnS
+ fSiicvdY0a0tRsqn8oVXmoSgL6rDnsu7JdkRDueQDBrihwtX9ibT0LKQENReOgoGOaBGwB8codS
+ y+CRqqzD9tv2i1NsCKbyss5S0QhPvsOTcZRNaEidbvB9dWlFd37IJdPJVqoThlIfVdl77Z9Z/wR
+ D2hB6PWs7uNuq0+G64FhunV/nM+9Mu4FwSLzxaBXjzcA4r0pD7lFqlB/FdaYHsNWLL0R6ouyPP9
+ LfD6FDMrgW+/tWaMfJ1y/U+HRqyfkOF+jc9T9qjIFcFN/8fV6068XNIdVZlzLBX7aeBxd8N5rht
+ voKreY13hrLVn1SzmdzZjwsUMR3pW1sWE5tmb6guI89rWnQWzAurFM7Yax6f3cYFg4NS9zPzWa2
+ frk34056r9yYwgIn9qg==
+X-Proofpoint-ORIG-GUID: _13aqSMsib3mJu8lTT1wToyatZKJHpDI
+X-Proofpoint-GUID: _13aqSMsib3mJu8lTT1wToyatZKJHpDI
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-10-06_02,2026-10-05_01,2025-10-01_01
+ definitions=2026-10-06_05,2026-10-06_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 clxscore=1015 adultscore=0 suspectscore=0 priorityscore=1501
- bulkscore=0 lowpriorityscore=0 spamscore=0 impostorscore=0 malwarescore=0
+ spamscore=0 phishscore=0 lowpriorityscore=0 adultscore=0 suspectscore=0
+ bulkscore=0 priorityscore=1501 impostorscore=0 malwarescore=0 clxscore=1015
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2610060039
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+ reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2610060069
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -165,63 +170,166 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026-10-06 11:47, Bernhard Beschow wrote:
-> 
-> 
-> Am 6. Oktober 2026 09:26:52 UTC schrieb "Philippe Mathieu-Daudé" <philmd@oss.qualcomm.com>:
->> On 6/10/26 10:34, Bernhard Beschow wrote:
->>> Deriving from TYPE_SYS_BUS_DEVICE fixes the SoC object to be reset upon
->>> machine reset.
+On 10/6/2026 6:56 AM, Daniel P. Berrangé wrote:
+> On Mon, Oct 05, 2026 at 11:52:48AM -0700, Pierrick Bouvier wrote:
+>> On 10/5/2026 11:45 AM, Yonggang Luo wrote:
+>>> On Tue, Oct 6, 2026 at 2:06 AM Pierrick Bouvier
+>>> <pierrick.bouvier@oss.qualcomm.com> wrote:
+>>>>
+>>>> On 10/5/2026 10:04 AM, Yonggang Luo wrote:
+>>>>> On Tue, Oct 6, 2026 at 12:25 AM Pierrick Bouvier
+>>>>> <pierrick.bouvier@oss.qualcomm.com> wrote:
+>>>>>>>>
+>>>>>>>> Ok, but I'm not sure it answers the why.
+>>>>>>>> Could you explain the benefits?
+>>>>>>>
+>>>>>>> Which part? keeping target_arch as SYS_EMU_TARGET__MAX for user-binary because
+>>>>>>> The following original code would return -1 for some user-binary
+>>>>>>> +    SysEmuTarget arch = target_info()->target_arch;
+>>>>>>> +
+>>>>>>> +    if (arch == SYS_EMU_TARGET__MAX) {
+>>>>>>> +        arch = qapi_enum_parse(&SysEmuTarget_lookup, target_name(), -1,
+>>>>>>> +                               &error_abort);
+>>>>>>> +    }
+>>>>>>> +    return arch;
+>>>>>>> So basically assigning any value for the user binary is valid.
+>>>>>>> SYS_EMU_TARGET__MAX is more explicit as it's related to type SysEmuTarget.
+>>>>>>> -1 is another option but easy to confuse.
+>>>>>>>
+>>>>>>>
+>>>>>>> For why commit e934c624f32f6f44f427d73a2e6a67e983a02ae6.
+>>>>>>> "target-info: Statically initialize target_arch"
+>>>>>>> doing that, I am not sure.
+>>>>>>>
+>>>>>>
+>>>>>> I guess there is a (good or bad) reason for which sub variants of
+>>>>>> targets are not reflected in SYS_EMU_TARGET enum. We should double check
+>>>>>> that before doing any change, as it might have other consequences.
+>>>>>
+>>>>>
+>>>>> You’re right to ask, and I need to correct my earlier suggestion:
+>>>>> leaving user-mode target_arch
+>>>>>  as SYS_EMU_TARGET__MAX is not safe. target_aarch64() is used by ARM
+>>>>> code shared with user-mode builds,
+>>>>> including cpu-max-v8.c, where its result indexes a two-entry array.
+>>>>> For aarch64-linux-user, the sentinel could therefore cause an
+>>>>> out-of-bounds access during type registration.
+>>>>>
+>>>>> I checked the distinction: softmmu needs the full system-target
+>>>>> identity, including variants such as mipsel;
+>>>>> user-mode variants such as aarch64_be use their base TARGET_ARCH
+>>>>> (aarch64) for this enum. I’ll keep the full TARGET_SYS_EMU
+>>>>>  value for softmmu and use TARGET_ARCH for user-mode builds, rather
+>>>>> than leave the field at SYS_EMU_TARGET__MAX.
+>>>>>
+>>>>
+>>>> That's technical details, but not an answer to the initial question of
+>>>> why we need to change anything for user binaries, compared to what exists.
 >>>
->>> Reviewed-by: Bin Meng <bin.meng@processmission.com>
->>> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
->>> ---
->>>    include/hw/arm/fsl-imx25.h | 5 ++---
->>>    hw/arm/fsl-imx25.c         | 7 +------
->>>    hw/arm/imx25_pdk.c         | 2 +-
->>>    3 files changed, 4 insertions(+), 10 deletions(-)
+>>> The first two patches revert the current static initialization so the
+>>> token can be replaced. They are not a user-mode behavior change.
 >>>
->>> diff --git a/include/hw/arm/fsl-imx25.h b/include/hw/arm/fsl-imx25.h
->>> index b68d4334a0..4bb4d5b3e5 100644
->>> --- a/include/hw/arm/fsl-imx25.h
->>> +++ b/include/hw/arm/fsl-imx25.h
->>> @@ -29,6 +29,7 @@
->>>    #include "hw/sd/sdhci.h"
->>>    #include "hw/usb/chipidea.h"
->>>    #include "hw/watchdog/wdt_imx2.h"
->>> +#include "hw/core/sysbus.h"
->>>    #include "system/memory.h"
->>>    #include "target/arm/cpu.h"
->>>    #include "qom/object.h"
->>> @@ -45,10 +46,8 @@ OBJECT_DECLARE_SIMPLE_TYPE(FslIMX25State, FSL_IMX25)
->>>    #define FSL_IMX25_NUM_USBS 2
->>>      struct FslIMX25State {
->>> -    /*< private >*/
->>> -    DeviceState parent_obj;
->>> +    SysBusDevice parent_obj;
->>>    -    /*< public >*/
->>>        ARMCPU         cpu;
->>>        IMXAVICState   avic;
->>>        IMX25CCMState  ccm;
->>> diff --git a/hw/arm/fsl-imx25.c b/hw/arm/fsl-imx25.c
->>> index 7f65f4ca4b..efb22359c5 100644
->>> --- a/hw/arm/fsl-imx25.c
->>> +++ b/hw/arm/fsl-imx25.c
->>> @@ -317,16 +317,11 @@ static void fsl_imx25_class_init(ObjectClass *oc, const void *data)
->>>        device_class_set_props(dc, fsl_imx25_properties);
->>>        dc->realize = fsl_imx25_realize;
->>>        dc->desc = "i.MX25 SOC";
->>> -    /*
->>> -     * Reason: uses serial_hds in realize and the imx25 board does not
->>> -     * support multiple CPUs
->>> -     */
->>> -    dc->user_creatable = false;
+>>> Compared with current QEMU, user-mode still uses TARGET_ARCH.
+>>> qemu-mipsel already reports mips, and it still will. Names such as
+>>> aarch64_be are not SysEmuTarget values, so user-mode cannot use the
+>>> full target name for this field; keeping TARGET_ARCH preserves today's
+>>> value and avoids the runtime parse.
+>>>
 >>
->> Can we explain this change?
+>> Why should we need to expose this precise information?
+>> So far, if those targets were not exposed (and aliased to 32/64 bit
+>> variant), it's probably we didn't need it.
 > 
-> SysBus devices aren't user-creatable, are they?
+> Current git master is exhibiting a regression compared to previous
+> releases.
+> 
+> For example on 10.1.0:
+> 
+> $ for i in /usr/bin/qemu-system-* ; do echo -n "$i: " ; echo -e '{"execute":"qmp_capabilities"}\r\n{"execute":"query-target"}\r\n{"execute":"quit"}\r\n' | $i -qmp stdio -display none -M none | jq .return.arch | grep -v null ; done
+> /usr/bin/qemu-system-aarch64: "aarch64"
+> /usr/bin/qemu-system-alpha: "alpha"
+> /usr/bin/qemu-system-arm: "arm"
+> /usr/bin/qemu-system-avr: "avr"
+> /usr/bin/qemu-system-hppa: "hppa"
+> /usr/bin/qemu-system-i386: "i386"
+> /usr/bin/qemu-system-loongarch64: "loongarch64"
+> /usr/bin/qemu-system-m68k: "m68k"
+> /usr/bin/qemu-system-microblaze: "microblaze"
+> /usr/bin/qemu-system-microblazeel: "microblazeel"
+> /usr/bin/qemu-system-mips: "mips"
+> /usr/bin/qemu-system-mips64: "mips64"
+> /usr/bin/qemu-system-mips64el: "mips64el"
+> /usr/bin/qemu-system-mipsel: "mipsel"
+> /usr/bin/qemu-system-or1k: "or1k"
+> /usr/bin/qemu-system-ppc: "ppc"
+> /usr/bin/qemu-system-ppc64: "ppc64"
+> /usr/bin/qemu-system-riscv32: "riscv32"
+> /usr/bin/qemu-system-riscv64: "riscv64"
+> /usr/bin/qemu-system-rx: "rx"
+> /usr/bin/qemu-system-s390x: "s390x"
+> /usr/bin/qemu-system-sh4: "sh4"
+> /usr/bin/qemu-system-sh4eb: "sh4eb"
+> /usr/bin/qemu-system-sparc: "sparc"
+> /usr/bin/qemu-system-sparc64: "sparc64"
+> /usr/bin/qemu-system-tricore: "tricore"
+> /usr/bin/qemu-system-x86_64: "x86_64"
+> /usr/bin/qemu-system-xtensa: "xtensa"
+> /usr/bin/qemu-system-xtensaeb: "xtensaeb"
+> 
+> 
+> but on git master:
+> 
+> $ for i in $(find ./build -type f -name 'qemu-system-*') ; do echo -n "$i: " ; echo -e '{"execute":"qmp_capabilities"}\r\n{"execute":"query-target"}\r\n{"execute":"quit"}\r\n' | $i -qmp stdio -display none -M none | jq .return.arch | grep -v null ; done
+> ./build/qemu-system-hexagon: "hexagon"
+> ./build/qemu-system-x86_64: "x86_64"
+> ./build/qemu-system-s390x: "s390x"
+> ./build/qemu-system-m68k: "m68k"
+> ./build/qemu-system-xtensa: "xtensa"
+> ./build/qemu-system-xtensaeb: "xtensa"
+> ./build/qemu-system-rx: "rx"
+> ./build/qemu-system-loongarch64: "loongarch64"
+> ./build/qemu-system-riscv32: "riscv32"
+> ./build/qemu-system-hppa: "hppa"
+> ./build/qemu-system-ppc64: "ppc64"
+> ./build/qemu-system-microblaze: "microblaze"
+> ./build/qemu-system-sparc: "sparc"
+> ./build/qemu-system-riscv64: "riscv64"
+> ./build/qemu-system-i386: "i386"
+> ./build/qemu-system-mipsel: "mips"
+> ./build/qemu-system-sh4: "sh4"
+> ./build/qemu-system-mips64el: "mips64"
+> ./build/qemu-system-mips64: "mips64"
+> ./build/qemu-system-sparc64: "sparc64"
+> ./build/qemu-system-arm: "arm"
+> ./build/qemu-system-tricore: "tricore"
+> ./build/qemu-system-mips: "mips"
+> ./build/qemu-system-or1k: "or1k"
+> ./build/qemu-system-sh4eb: "sh4"
+> ./build/qemu-system-aarch64: "aarch64"
+> ./build/qemu-system-ppc: "ppc"
+> ./build/qemu-system-avr: "avr"
+> ./build/qemu-system-alpha: "alpha"
+> 
+> 
+> so we need to fix that behaviour change for query-target.
+> 
+> If we want to be able to expose only the "base" target,
+> then query-target's  QemuTargetInfo struct could be
+> extended with a 2nd field that presents the base.
+> 
+> 
+> With regards,
+> Daniel
 
-"Remove clearing user-creatable which is implicit for
-  SysBus-based devices" comment would have cleared any
-  doubts.
+Thanks for finding this Daniel.
+SYS_EMU_TARGET already has the correct variants, the regression was to
+use TARGET_ARCH instead of TARGET_NAME in target-info-stub.c.
+
+I think Richard used this one just because TARGET_NAME is a string, so
+it can't be concatenated with C preprocessor.
+
+I'll fix that part.
+
+Regards,
+Pierrick
 
