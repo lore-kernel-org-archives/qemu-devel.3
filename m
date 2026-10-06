@@ -4,111 +4,145 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E252CA5FFF
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E2AACA6009
 	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 08:20:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xEMsH-0007V5-8u; Wed, 07 Oct 2026 04:19:42 -0400
+	id 1xEMrw-0006SO-Rf; Wed, 07 Oct 2026 04:19:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1xEHLG-0003PP-Kj; Tue, 06 Oct 2026 22:25:28 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
+ id 1xEHLA-0003L3-GO
+ for qemu-devel@nongnu.org; Tue, 06 Oct 2026 22:25:22 -0400
+Received: from mail-northeuropeazlp170110003.outbound.protection.outlook.com
+ ([2a01:111:f403:c200::3] helo=DU2PR03CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1xEHL8-00083s-3W; Tue, 06 Oct 2026 22:25:10 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 696DZndQ3725801; Tue, 6 Oct 2026 14:12:08 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:reply-to:subject:to; s=pp1;
- bh=wRIVhhHnpJQpRblu/W7Spl4ZWuLW+sizk4CsKz3S7Qo=; b=VVXTyWs/LiO1
- V28ghc/w33EixIuY4vzmL/qElGvPgOBJUZCuulDqkv8M09ZvaoXjoJ+qY5n/x+fQ
- XIsXa7bNL66SclFvnQ9uUgTWrMuBMclt/jubAT6gSdP5oe6ov1T6Wo42x35Kj5JH
- jJJij56gglp7p30m3M52SPWCY7RIMAGErtzQGo9uo2+i0JharFSjidPwolfXdH4e
- Qp8VnErbV4mXE0KQwZ6jVIWbPD0XmOiy31A/CE+XLZTIUMq0FDD8n1asiKA8XfdC
- pT8j67oFEFgFIdyI+voTwmnuEjqRLvMsv8YS2sypE4UJkl8JxTV46C7HOamwa/lM
- gKIfUwNJSw==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4h2q4jquvg-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Tue, 06 Oct 2026 14:12:07 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 696DWXuf361216; Tue, 6 Oct 2026 14:12:06 GMT
-Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4h3c1ptdp6-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 06 Oct 2026 14:12:06 +0000 (GMT)
-Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
- [10.39.53.230])
- by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 696EC5u819595974
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 6 Oct 2026 14:12:05 GMT
-Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1B6825805A;
- Tue,  6 Oct 2026 14:12:05 +0000 (GMT)
-Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5C70D5805D;
- Tue,  6 Oct 2026 14:12:04 +0000 (GMT)
-Received: from mambor8.rchland.ibm.com (unknown [9.10.239.198])
- by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Tue,  6 Oct 2026 14:12:04 +0000 (GMT)
-Message-ID: <ff76938939cac5d306f84af4ba5d3cd75d854248.camel@linux.ibm.com>
-Subject: Re: [RFC PATCH 0/8] Enable DMF for Power ISA 3.2
-From: Miles Glenn <milesg@linux.ibm.com>
-To: Chinmay Rath <rathc@linux.ibm.com>, qemu-devel@nongnu.org,
- qemu-ppc@nongnu.org, harshpb@linux.ibm.com
-Cc: npiggin@gmail.com, amachhiw@linux.ibm.com, uverma@linux.ibm.com, Saif
- Abrar <saif.abrar@linux.ibm.com>
-Date: Tue, 06 Oct 2026 09:12:03 -0500
-In-Reply-To: <20261006105650.189752-1-rathc@linux.ibm.com>
-References: <20261006105650.189752-1-rathc@linux.ibm.com>
-Organization: IBM
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.28.5 (3.28.5-27.el8_10) 
-Mime-Version: 1.0
+ (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
+ id 1xEHKw-0008Mk-AX
+ for qemu-devel@nongnu.org; Tue, 06 Oct 2026 22:24:59 -0400
+Received: from MIWPR08MB285920.eurprd08.prod.outlook.com
+ (2603:10a6:290:aa::21) by GVXPR08MB11009.eurprd08.prod.outlook.com
+ (2603:10a6:150:1fb::14) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.522.5; Wed, 7 Oct 2026
+ 01:08:31 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=bP4HhXaI42OfR4XCo20p2rLPKNG8DgNlaTHSRBMPzy2uiYWsN/D5QDHmQkMWfEIEJd/ohICh7VelWVlse2J3Wtc24f9rqIsIYkkHnemvGmX2zszE05XvMU4LK83gQnNB1nFDw88R1NUYESNhM5TI3fA5r8Gtw3Q/9H+nHPiAV6XvK5XHcSeS8bCgWTBH+AUK9n4ea5U/HWz2Gyju7yJs0vK5nKqvoLzxKAGeCOK10jjJPxU90XM11pIZKWNfTDdlmPJBcvDNIBVKNHNHDNJlX4Nz2L577XM9taT9GGsyycZ6FtgiXqUleG3ctnffoGA64gaObnLlx6Xl+DwPJeIGwg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=M7pz+/dwZ2x/cB6u+akczuOQxtrm3QcNryzTw5waVXI=;
+ b=tZyvoDdG/SdP7+eLAIzd5npc3h8kehne3qghSZb2ufEygRJXgav3w2xukIZ+HDOBoCvKreEk5GZdpF5s8+tNtZtRJxPhnGK8xju/Mbc1v+Pg1z7y5z1RYGV7REXL/YkR7xAPaJjiNRDjs4CtivKHbCO/KKBBTNN75HMXLgEK1uOWUCUCJwyImb/e9XJjR+DEdoaS27tSJc5dJJwMXruxe3fMuetR2xGrnefxgnZsh1K625ik3ajg4JVD97DBAO7WmrtZ9IiAxZIMpISTr/vXIBu9/S0T6SjuOgwZvS3Mhqqfos05gweeNRROR3aYoSM7wrOqgSmQndZtufcDK4LZQg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
+ header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=M7pz+/dwZ2x/cB6u+akczuOQxtrm3QcNryzTw5waVXI=;
+ b=AAjYjgjbIb++GJlmlgfSnQtHaptljEeaSqvFZvMEqYmKD/VBSBhjOHuvbWmlJp2sJ4SMSgSWQUvuSQ/LuAvVk5GKrwlPghZ0u4VApfQqIBXxA5jOEb+LXg0I6HM3f+f3QqxAWaWq+wDIfslz+szkqVh7AdYWHJ9tZwO+biCGWeBUdhN0SNZGqPMO+G94JxDX7fXyTpT04v6g+rOgNmEcj7a82B2UratDL4vjGiYqdYRZpvzEwp8pQa2ghKc39LpkeIpjpTaQ0o0QZntAIujucjF6eVH4rECi/kfHCL4kQzyWSGRk2v0HNYIRNtIcbddO5f3NxZ1Roi7v8FBpeJ1M8Q==
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=virtuozzo.com;
+Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
+ (2603:10a6:800:20a::12) by MIWPR08MB285920.eurprd08.prod.outlook.com
+ (2603:10a6:290:aa::21) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.496.15; Tue, 6 Oct
+ 2026 13:58:58 +0000
+Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
+ ([fe80::4e37:b189:ddcd:3dd8]) by VI0PR08MB10656.eurprd08.prod.outlook.com
+ ([fe80::4e37:b189:ddcd:3dd8%7]) with mapi id 15.21.0496.010; Tue, 6 Oct 2026
+ 13:58:58 +0000
+From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+Date: Tue, 06 Oct 2026 16:58:38 +0300
+Subject: [PATCH v13 15/22] vhost: release ownership in vhost_dev_cleanup()
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-ORIG-GUID: luEsak5RHv1PzM9jzuzlhdsjfLgYefdw
-X-Proofpoint-GUID: 5OD9859gParwS2CabRe_mvn7Y-sy-zlV
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA2MDA1NiBTYWx0ZWRfX28M98PUMzaXW
- vgDVqosYRVU/M8S/EbLYt1n/9Qz7zTbUWm8Q7UJJjHKTvFknFB7VRveCl0RVqUpB4yJYwY5vtu2
- ktQNHWzySCk+GmF0g/jzas8s5r9OADg=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA2MDA1NiBTYWx0ZWRfX4IdSlsxAOm8X
- ULAPGMFnizHBMG7s/wwVUQaEkzuIYSk7M/LzWcy0tq19UrsIuaMynNZllTEVoirZfd2DqyBGG35
- ok2/LP13sw1ZUtBIWZPsUE/AyEUmeO8eeN5s3okkEU6mf02mMnIvWHLOBEiQ1y0VHmwnJ8mtVYE
- cfI81h+GH2ACM2HVbQkprKy0Kb4NGHEr4vmEW7lKSc+6wzqPD/3QxfXGLYwB/Y5rXxRKwf6yRxw
- wuN3A5fp9OWJQpjOsw8ob2ZnGZibiQ3Ms4VJQHKiVGycMBjXlvWwmHrfgC8IBveeZZpnKmoh90c
- AgY3YVzdw/5OAaBT8jWZmaWvme0quQBmbTRBiB6jx64HXdale/0n8rQ7uyQm3Au5FJRzYDeCvEy
- YoPg8AZU6qllP20/UuSrCT/qQgStDuTPU7SXlVDXt2HEGRRREvFL4DHCFWIuWlJ7Cl4+P7HxnKv
- j4qG6SbAB45Nk7CnZYA==
-X-Authority-Analysis: v=2.4 cv=eYeo7LEH c=1 sm=1 tr=0 ts=6ac501b7 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=Ixqt2FsUAAAA:8
- a=pNjESXi9GmZwinAVpVkA:9 a=QEXdDO2ut3YA:10 a=wbNHd7AAyUN6gYWAVcba:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-10-06_04,2026-10-06_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 lowpriorityscore=0 phishscore=0 bulkscore=0 clxscore=1015
- spamscore=0 malwarescore=0 priorityscore=1501 impostorscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2610060056
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=milesg@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Message-Id: <20261006-up-vsock-vhost-v5-v13-15-2ea78fd1b7ed@virtuozzo.com>
+References: <20261006-up-vsock-vhost-v5-v13-0-2ea78fd1b7ed@virtuozzo.com>
+In-Reply-To: <20261006-up-vsock-vhost-v5-v13-0-2ea78fd1b7ed@virtuozzo.com>
+To: qemu-devel@nongnu.org
+Cc: mst@redhat.com, maciej.szmigiero@oracle.com, peterx@redhat.com, 
+ odaki@rsg.ci.i.u-tokyo.ac.jp, dwmw2@infradead.org, dongli.zhang@oracle.com, 
+ bchaney@akamai.com, den@openvz.org, farosas@suse.de, 
+ andrey.drobyshev@virtuozzo.com, clg@redhat.com, mark.kanda@oracle.com, 
+ vsementsov@yandex-team.ru, philmd@oss.qualcomm.com, sgarzare@redhat.com
+X-Mailer: b4 0.16.0
+X-ClientProxiedBy: VI6PEPF00000229.AUTP296.PROD.OUTLOOK.COM
+ (2603:10a6:808:1::8f3) To VI0PR08MB10656.eurprd08.prod.outlook.com
+ (2603:10a6:800:20a::12)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: VI0PR08MB10656:EE_|MIWPR08MB285920:EE_|GVXPR08MB11009:EE_
+X-MS-Office365-Filtering-Correlation-Id: 47499732-d62d-42b3-6b15-08df23b1f7ee
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|366016|1800799024|376014|52116014|7416014|23010399003|38350700014|56012099006|10067099003|22082099003|18002099003;
+X-Microsoft-Antispam-Message-Info: SASmZW3OOwqOYJuxkMOsEZKuAeDDW1x8/goalgaQTpx5TgXMcqflNnq4B26OUZVKp2+gKM/XmRww2ZWgXO4Br3VaWKvummtD3FhVXZHWhDjmAI3fZl9vdXNGccSnMYqdFIFZNwOOdyhAeX75QwDnY03c/0cp10Fagh6a8qsar0PMUugFDq4xogDNdi1i44AiPwhXr/rAdw0XnZLpFapxJ9XMin0UOzLJWAIzIHbxe4NjDMgRcvdpIlUO1StCKF+Q50k2vKK+cejnzGTRGLVXhEAkewwOOpIGEEROwaTb2QVulbEnVAlEBCNfmeVPvdH1R9YGEL/lfwC6YaM54QpXLTrcD0/zT/YTCsi4q8Pnjzyu0gcR8Z/4o15RHGISU23bb1TbAcsduB7SJlLCNYGYJPPmYX7VihIWTM3Mtc1BjsuNPxuTQOy+3Dv/8W46g1+hRG0VH0WOQoH/0yDB5cf/607Mx5acCHGnh+LSQ+Tpv2xnGSh/p1oteGTlhILp4ZBde0Z4RHtBSOTEnqFADHsjji2WL2KASj+cSp4//X7GwKnE271EXf0yGgj7YNVhuGexvkFbK69VtdO28z8R6TIFIUGutsKj9zzUPDGX8RljxowRV2Jr4/p5eXqG9BqdEEruwOl5VN9UMCD7KBzrIUBtjTYG4xzjsMAGYz0ExL7/zNI5muW5QVREV6Bu/JfMthGvLUkMByH945KGqH2ssdlyyE1WtRYUPzgzuex3MOnmKPI=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:VI0PR08MB10656.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(1800799024)(376014)(52116014)(7416014)(23010399003)(38350700014)(56012099006)(10067099003)(22082099003)(18002099003);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?b3RkVlcydUlrdFVxbWM2SU02Qm55QkZkeXBMM3RsT2tobzN6RWRmKzVERmlM?=
+ =?utf-8?B?b3NuZTQrYy9QYjZyYldEUUlrUzkvckI1ZmJQdmFUM1J0dzFLYTQxSEFzR3ZU?=
+ =?utf-8?B?UWdWY3BSdndQS05tQ0M0dVFTQTJHd0VPUmpDTUl6S3lEdlBsU2hGdlpJbmlv?=
+ =?utf-8?B?SVA4M3laaTluQkJ6SHNxZkFiallxVkYvNEsrVU1YTFg1YUx1TjZKSDVJMU9o?=
+ =?utf-8?B?QVdiclp2aDZqSjdsbWVYU1FRRTVCRmY4SDN3S1pxZzUwWnk3VGRFTXVWa3I5?=
+ =?utf-8?B?MnhUVlFzWTB2U3ZuR2QreVBxK1RiUmtCU3I1Q1BNbk9Dc2dIMnBPRnVFV09k?=
+ =?utf-8?B?eE9VNnh6Zk5qWVhvVXlXcVFKWFNEWjYvNGI3NXRsUmp0Zyt1eXBXS25KSTh0?=
+ =?utf-8?B?c3lUaGV2djRxaDJvL0V3dVJFckd4WFgzM0FZaStyY2RoMTNnd3U3bU8yellD?=
+ =?utf-8?B?aE1wSDQvMC9kYWtjKzZYcVE0SE53ejJqWVpBNUtFRjZOamVseXdtam1pZE5l?=
+ =?utf-8?B?VUNodHpYMHFHWTEvb3k4Z2pUNnBtRlhoZ3J0b0NnTnZHTytKSG11Q1Z2akVs?=
+ =?utf-8?B?U24yQ1pKU0hHMjluUDZxVm4yL3NoSis4NkFmY3dRVk1YL2Izakdqem1sa0Jj?=
+ =?utf-8?B?N0srMlVVT21PbSt4WHpTd1A5SEZPNmxVM05DbURZbEYwRHJDV0xKRjBHd0dr?=
+ =?utf-8?B?NkUrcisya2xtbEFkbWNjOXA0NHh6d1VieHUwM2kxMCtqZFNUNThyK0NTdVpU?=
+ =?utf-8?B?YWE1Q0ROU1ZQdUhHYjVVbWZUWlA4dUxiV2ZBSGZaWU1Pc2MrcCtpakJvL2l6?=
+ =?utf-8?B?Nk5XWUQwa0k2d1M3K0dyc3k3T2ZyVlVIT2lQMldVMi80SFNybmhpR3JGRmpz?=
+ =?utf-8?B?aElpODhXKzA5UlQxWEJybzBsaHk2b0VLM2V4aGtmeklZTjdsZTQyVDQwdDEv?=
+ =?utf-8?B?TUE1NnJXUVFDaWhlSGozUmtqM25SN3ViOWcrNmNIYThFcGFRV2p3enkvNm4z?=
+ =?utf-8?B?REEvSWlpdmtqZ2d0WUk5ZTIxREg1bmo2WjdhbisrZ1dkWHJFVS9iMHpGZC96?=
+ =?utf-8?B?c1Z2YldvbVI1bHh1R0tlUUZDQWVORXZ0V2trU3RndUxEcUxiMUNSRDh6MGUv?=
+ =?utf-8?B?bGNVOUlta3lnYVhVS3V0MmdWeFI4emtPTlRsUGpjOCtYT1B4NjZ2ZXdTS1kw?=
+ =?utf-8?B?YXA3cThpV0U0SVRubWV4c25LRWdQN2p5anczeWFKZm1ONmE1bWRWVmh3bGJp?=
+ =?utf-8?B?QzRKblYvWXBEUWFwUTlKb2cyMU12NzZQZ3N0Yi9zUno5TkFrSHR4UmY4bm1n?=
+ =?utf-8?B?ZDhVRzZEanFhWXhXQmVrWjMwUHdkemtiaERnYzBYOVI0clY4RXg4L1NmSnlX?=
+ =?utf-8?B?bkgrVHBGQVJoSGp4S2w2eVNtTWZ0ZEVtNHZJMllNK0pDM1B0MGtSVGZOZ1Vi?=
+ =?utf-8?B?b1ZXSnhNUmFYYlpGdHBmUU00NStzRXJzdEYwWG9MOEEwWVNNMW1mNmpGQmdH?=
+ =?utf-8?B?aDJ4b1NsS3dzTDZncFNqaVpFL3lUUWVwcmhpVUNncWdBYll3WWtnT1hKWnBI?=
+ =?utf-8?B?eExwWjhRL2tjbnQ3eU0wclV3U3FId0ViZzZIeU5DSmt0ZktIQWo5R2FTS25D?=
+ =?utf-8?B?MXZtem9xL1lKT0U3ZXNYKzdBSFBFc28zZG10WGFUTHk5UVZOQkNoT1c1dFdo?=
+ =?utf-8?B?L2NsVi9qZnhuVVVhdDhGTWFIR1lvZWRlOUJaL2FybmhtZ293VmxOb0xRWDc3?=
+ =?utf-8?B?ZFV3dkFIR21tdmppN2RlbnhJcjV5ZkcvMFZrSkJNY0tkR09FQkNtcTRXbFF3?=
+ =?utf-8?B?blF5RVRBVVZ4V1A5dEVVT0VnemhpVWVyWTlrbmU5R3RMSUU2enBPR0picHVY?=
+ =?utf-8?B?Nko1QTVXNEhNcUNkRldjVjVseVBhbWoyNC9USGlBZXFGbDNESnJvbFNaL21t?=
+ =?utf-8?B?cGZxNlpMM2xrN0pBMXVuOVRCeDRMMUtrS3RzMXR0NVNWVnZUWm1sbW1MR01x?=
+ =?utf-8?B?MEZOaDVGdUovMzlUZEFTL3NLdHkrSmwrcm9RYkxiVlF4SFNIaG15QWRFbnZY?=
+ =?utf-8?B?TVQ4UExETlFhVlltdHdlVkpEanRrVGwyVHY2WExaM0Y1S1pJWitNWHZ4UEZm?=
+ =?utf-8?B?SjF1QTJmYmdsdHhMZG5WeXhIQ1BUeVQrVXUxbFNJOW9sRUFKd3U5eEU3bUY3?=
+ =?utf-8?B?dDdDQjBrWVdZZTJUQ2VPWVRDcTA4bytzN3lRcmovdUlkR01xL1hqclVkNGEv?=
+ =?utf-8?B?MVEvbzEwamRqNUViTGdRVTNsMjBmZUtnTVhQcngwZnJDV3N1elFTWG1HM0My?=
+ =?utf-8?B?ZStDaUtMc2pRZ0d5R3JaT21LSzU1MEs4NjJ3VElJazFnM1JtRkQwQmJScnNv?=
+ =?utf-8?Q?DVKRGZUawD6201wA=3D?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: 47499732-d62d-42b3-6b15-08df23b1f7ee
+X-MS-Exchange-CrossTenant-AuthSource: VI0PR08MB10656.eurprd08.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Oct 2026 13:58:58.6792 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: v2/8rE/f7Z3yshbsUbVLwt4BMonjHQgYVgWCWr4vAI4RBEnnYinurzZE+390mzNAYzQVFL0iAHJzd3wGQ5byiuB0d8Z4NZ/AzRurZsxeYis=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MIWPR08MB285920
+X-OriginatorOrg: virtuozzo.com
+Received-SPF: pass client-ip=2a01:111:f403:c200::3;
+ envelope-from=andrey.drobyshev@virtuozzo.com;
+ helo=DU2PR03CU002.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -122,43 +156,102 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: milesg@linux.ibm.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-I know that Saif has done some work on DMF recently so adding him to
-the CC list as well.
+vhost_dev_cleanup() closes the backend FD, but that doesn't release the
+device ownership taken with VHOST_SET_OWNER if the same file is open
+elsewhere.  That's the case on a CPR target: the source keeps the FD,
+so if the target fails after SET_OWNER, either inside vhost_dev_init()
+or later in its caller, the ownership stays with the target.  Once the
+source is resumed it can't take the device back, SET_OWNER fails with
+EBUSY.
 
-Regards,
+Track the ownership with a new 'owner' flag in struct vhost_dev, set and
+cleared by vhost_dev_set_owner() and vhost_dev_reset_owner(), and issue
+VHOST_RESET_OWNER in vhost_dev_cleanup() if it's set, as the common
+teardown for all those paths.  That should be safe in any case: the kernel
+refuses it from a non-owner, and an owner is about to close the FD anyway.
 
-Glenn
+Reported-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Suggested-by: Stefano Garzarella <sgarzare@redhat.com>
+Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+---
+ hw/virtio/vhost.c         | 23 +++++++++++++++++++++--
+ include/hw/virtio/vhost.h |  5 +++++
+ 2 files changed, 26 insertions(+), 2 deletions(-)
+
+diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+index c01ccc800cb..1241c5a954d 100644
+--- a/hw/virtio/vhost.c
++++ b/hw/virtio/vhost.c
+@@ -1705,20 +1705,32 @@ int vhost_dev_init_backend(struct vhost_dev *hdev, void *opaque,
  
-On Tue, 2026-10-06 at 16:26 +0530, Chinmay Rath wrote:
-> This series aims to implement the dense math facility introduced in
-> RFC 02653: Dense Math Facility for Power ISA 3.2.
-> The RFC is available in the OpenPOWER website here :
-> https://files.openpowerfoundation.org/s/Fyp9TWZf8oYTd7D
-> 
-> Chinmay Rath (8):
->   target/ppc: Add flag for Power ISA 3.2
->   target/ppc: Enable Dense Math Facility for ISA 3.2
->   target/ppc: Implement DMR getter/setter and some DMF insns.
->   target/ppc: Add FSSIR spr for ISA 3.2
->   target/ppc: Implement DMMR and DMXOR instructions.
->   target/ppc: Implement DMF accumulator instructions
->   target/ppc: Add function to point to dmr regs in tcg_env
->   target/ppc: Add DMF Outer-Product accumulate to ACC insns
-> 
->  target/ppc/cpu.h                    |  23 ++-
->  target/ppc/fpu_helper.c             |   5 +
->  target/ppc/helper_regs.c            |   4 +
->  target/ppc/insn32.decode            | 201 +++++++++++++++++-----
->  target/ppc/insn64.decode            | 244 +++++++++++++++++++-------
->  target/ppc/int_helper.c             |   5 +
->  target/ppc/translate.c              |  13 ++
->  target/ppc/translate/dmf-impl.c.inc | 255 ++++++++++++++++++++++++++++
->  8 files changed, 644 insertions(+), 106 deletions(-)
->  create mode 100644 target/ppc/translate/dmf-impl.c.inc
-> 
+ int vhost_dev_set_owner(struct vhost_dev *hdev)
+ {
++    int r;
++
+     assert(hdev->vhost_ops);
+     if (!hdev->vhost_ops->vhost_set_owner) {
+         return -ENOSYS;
+     }
+-    return hdev->vhost_ops->vhost_set_owner(hdev);
++    r = hdev->vhost_ops->vhost_set_owner(hdev);
++    if (!r) {
++        hdev->owner = true;
++    }
++    return r;
+ }
+ 
+ int vhost_dev_reset_owner(struct vhost_dev *hdev)
+ {
++    int r;
++
+     assert(hdev->vhost_ops);
+     if (!hdev->vhost_ops->vhost_reset_owner) {
+         return -ENOSYS;
+     }
+-    return hdev->vhost_ops->vhost_reset_owner(hdev);
++    r = hdev->vhost_ops->vhost_reset_owner(hdev);
++    if (!r) {
++        hdev->owner = false;
++    }
++    return r;
+ }
+ 
+ int vhost_dev_init(struct vhost_dev *hdev, void *opaque,
+@@ -1864,6 +1876,13 @@ void vhost_dev_cleanup(struct vhost_dev *hdev)
+     g_free(hdev->mem);
+     g_free(hdev->mem_sections);
+     if (hdev->vhost_ops) {
++        /*
++         * Release the device ownership if we hold it.  Needed e.g. for
++         * failing CPR target, so the source can re-acquire it.
++         */
++        if (hdev->owner) {
++            vhost_dev_reset_owner(hdev);
++        }
+         hdev->vhost_ops->vhost_cleanup(hdev);
+     }
+     assert(!hdev->log);
+diff --git a/include/hw/virtio/vhost.h b/include/hw/virtio/vhost.h
+index 73ea130d7ee..f6e32b59ab2 100644
+--- a/include/hw/virtio/vhost.h
++++ b/include/hw/virtio/vhost.h
+@@ -111,6 +111,11 @@ struct vhost_dev {
+     bool started;
+     /* @initialized: has the full vhost_dev_init() completed? */
+     bool initialized;
++    /*
++     * @owner: has this vhost_dev acquired the device ownership?
++     * Updated only by vhost_dev_set_owner()/vhost_dev_reset_owner()
++     */
++    bool owner;
+     bool log_enabled;
+     uint64_t log_size;
+     Error *migration_blocker;
+
+-- 
+2.47.1
 
 
