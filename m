@@ -4,71 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36DACCA5FFF
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFBF7CA6002
 	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 08:49:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xENKb-0002eD-LB; Wed, 07 Oct 2026 04:49:00 -0400
+	id 1xENIJ-0005zx-1u; Wed, 07 Oct 2026 04:46:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1xEJcD-0007FX-Ga
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 00:51:10 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1xEJc8-0003iO-P2
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 00:50:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1791348646;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=FRtW5cFSs4wjYESNRRhPuh47kYLeysd9Cxr3ZmEN9I0=;
- b=i6h6xEywy99sAlPEG5oOFFTWkgF6tYVygWTn3IwEyX4qZyUcjvbszVSOD758MJ80tZz/ux
- ABABC2uNYF97J23kaloaO7lq5dKXELDSAbozsNPLeuLQ/aQ6jeO/M21ia/l5hG4sPIjM/V
- yAYa/zopkmK2mvhd01UoN2QZkDqdqLU=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-414-VDmzYP8qM2GE73W9JqWp8g-1; Tue,
- 06 Oct 2026 08:12:15 -0400
-X-MC-Unique: VDmzYP8qM2GE73W9JqWp8g-1
-X-Mimecast-MFC-AGG-ID: VDmzYP8qM2GE73W9JqWp8g_1791288734
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E65091830908; Tue,  6 Oct 2026 12:12:13 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.48.53])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8F28419560AB; Tue,  6 Oct 2026 12:12:11 +0000 (UTC)
-Date: Tue, 6 Oct 2026 14:12:09 +0200
-From: Kevin Wolf <kwolf@redhat.com>
-To: "Denis V. Lunev" <den@openvz.org>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org,
- Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>,
- Hanna Reitz <hreitz@redhat.com>, qemu-stable@nongnu.org
-Subject: Re: [PATCH v4 3/5] block: let bdrv_reopen_commit_post() report a
- failure
-Message-ID: <asTlmZ3i9tSCw4Ss@redhat.com>
-References: <20260824133729.1141990-1-den@openvz.org>
- <20260824133729.1141990-4-den@openvz.org>
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xEJjJ-0008UD-VU
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 00:58:20 -0400
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xEJjG-0004LY-Rt
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 00:58:12 -0400
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-48b001cd92bso1857017f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 06 Oct 2026 21:58:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1791349089; x=1791953889; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=TSgSmbIol/w3uLzkMCO+LFEzRwoP9tuMmsJ3pCoOB1Y=;
+ b=aVYzF58XDpvgm0A6GEQNi3s2HjeYiq+gMC0xa3rElGE+Ath+15fu3eP0XXGaT/SfPG
+ cMKF7USNEwB3Jja/uAdzk43U5JsmHK4I+6Pgv6wL3M9wd+IDX1nSy73i3GSuqnLcd93R
+ aIKHgoUMpBMhJaTZuko95t2RoWTvDwFLzmoiDHKKUUpCjAaDMR2U5m3ne3tUkweamqs+
+ +LYidBgY8R47Fdcvp/bPNIC7QsS9Yij4zXu0MCpG+kdWePzGG9QR2mXC9epfZT41aar4
+ H9XLzxnU4THNeHdr9AfBT1YVh2zsSuyDN5nZHb14XcBuPeX48541gIVawZb/p7piSX1j
+ XOHg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1791349089; x=1791953889;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=TSgSmbIol/w3uLzkMCO+LFEzRwoP9tuMmsJ3pCoOB1Y=;
+ b=CEQm0FQBy2SmuFebYN7HIlioZ8mr0jFeW+uTErLuxCKSJxRiZRwpLSNg8NYg4yqyld
+ ORFte1HGNR99w4ldWUxqV/K/fyXEmimax9bp8BHI1+z6EFxeKrPBCrrvMFsj8Ct/mB4h
+ /DSSIfIvO2YkQeEv+xSjOGzJfbr3dLBVzESadLb+OalKAy7W3SIKkFHrXpbT74pb58op
+ dWxO8Zj18wQNa5wg1MjakqxzvKQPn0yxjgIHLfaFYtfYBOBL3AE6L5FzXgWymyS+vQ8D
+ q+rQ3pXA39Oz+49RchfdteuGNrKjV38AFTpYWm+Mo6oWk8g5SmUM7cea8FeLpmXBjjBu
+ en+g==
+X-Gm-Message-State: AFq9FYIROW4Q5SQ0uX5tUz3SbSUMS1fz3y+J1BuDNSaG18HP9C7Xmy+J
+ ury6Y2Fd4yPA30jWF6w7r/iQyShYLaC1NXlCMaIacM9RmHQjfMs1ndjmA16pwQ==
+X-Gm-Gg: AYBFou2qLVaISLDe44VQE0WYW2yb1fM39bpYw2taJzlaGI0lk4rJCL+3Ww3ihXGeWFf
+ HzcNCEBYp8G1xjGvfcPnsqLa/ey+85WzJBzIBhNWYIpapn4pLEtdBsWxZGQQxyAINfBO1T5cLNp
+ iXthoIlLHnYPQF8gGO8b+evwft0aLst5EKVFZiDyel4ugc0OaT/iNtdM8b4RxpaIrata4DtU+8J
+ 0Pqb8kSicBiuGOGFpCjo03eQZ9sh+QG8EFUEWWLI7+ILQ+fGaH/QjRo+eCTy+m6jHOj4lF1lqSp
+ tKvGh6psLHTgWTcMnkWp1F59qsgEF8zWB03m2Sp7jSVrfLMvOfq3KpZJC58zQVxJ7+eq5BSHKc9
+ +oiGZ9EZ3fJbnz1o/HV2+uW8k7it64Yy7RHJGx6nLOGAMO5JMJmqTxdViFjmE++lkat0FajODQ5
+ KhUPoh9TNdFVhyjDU+eK3BGnAnwVLTda61XAzCvN2m+HMKrE4/vQE9yRe8YvKel7ZFVQn8PtFhK
+ uNFE/tGYLwl7ZOWfVb5u27k48Gu4zBc7C9LWw==
+X-Received: by 2002:a05:6000:24c6:b0:48a:f5cb:4356 with SMTP id
+ ffacd0b85a97d-48c4801ac46mr17402531f8f.45.1791275754413; 
+ Tue, 06 Oct 2026 01:35:54 -0700 (PDT)
+Received: from archlinux (pd95eda80.dip0.t-ipconnect.de. [217.94.218.128])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-48c6cdb281csm1566764f8f.55.2026.10.06.01.35.53
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 06 Oct 2026 01:35:53 -0700 (PDT)
+From: Bernhard Beschow <shentey@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Bin Meng <bin.meng@processmission.com>,
+ Jean-Christophe Dubois <jcd@tribudubois.net>,
+ Gaurav Sharma <gaurav.sharma_7@nxp.com>,
+ Bernhard Beschow <shentey@gmail.com>, qemu-arm@nongnu.org,
+ Jason Wang <jasowangio@gmail.com>,
+ Alistair Francis <alistair@alistair23.me>
+Subject: [PATCH v4 28/31] Kconfig: Extract config IMX_SPI from config IMX
+Date: Tue,  6 Oct 2026 10:34:40 +0200
+Message-ID: <20261006083445.30362-29-shentey@gmail.com>
+X-Mailer: git-send-email 2.56.0
+In-Reply-To: <20261006083445.30362-1-shentey@gmail.com>
+References: <20261006083445.30362-1-shentey@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260824133729.1141990-4-den@openvz.org>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=shentey@gmail.com; helo=mail-wr1-x432.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,69 +108,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 24.08.2026 um 15:37 hat Denis V. Lunev geschrieben:
-> From: Denis V. Lunev <den@openvz.org>
-> 
-> The callback runs after bdrv_reopen_multiple() has committed the
-> transaction, so it cannot reject the reopen. It can still find that
-> the node it has just made writable is unusable, and has no way to say
-> so: bdrv_reopen() returns success and the caller carries on.
-> 
-> Give it a return value and an Error argument. The reopen stays
-> committed, the error only reports that the node is gone. Every queued
-> node still gets its callback, the first error is the one reported. A
-> callback may leave its node without a driver, and so may the I/O of a
-> later bdrv_reopen_prepare(), so do not assume that the nodes still
-> ahead of it in the queue have one. qcow2 is the only implementation and
-> does not fail yet.
-> 
-> An error therefore means one of two things now, either that the reopen
-> was denied and nothing changed, or that it went through and left a tree
-> which cannot be used. Nothing is undone in the second case: the node is
-> beyond repair by another reopen, and a caller which reacts to the error
-> by reopening anything is making it worse. bdrv_reopen_multiple() says
-> so, nothing else changes.
-> 
-> Signed-off-by: Denis V. Lunev <den@openvz.org>
-> Reviewed-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-> CC: Kevin Wolf <kwolf@redhat.com>
-> CC: Hanna Reitz <hreitz@redhat.com>
-> CC: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-> Cc: qemu-stable@nongnu.org
+Over time, QEMU has grown a number of i.MX boards and the monolithic
+config IMX drags in unneeded dependencies into each SoC model. Extract
+config IMX_SPI to eventually eliminate config IMX.
 
-What you write both in the commit messages of this and the following
-patches and in this thread makes me think that you understand well that
-this approach is fundamentally wrong if we're taking the transaction
-model seriously, so I don't have to explain that.
+Reviewed-by: Bin Meng <bin.meng@processmission.com>
+Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+---
+ hw/arm/Kconfig     | 5 +++++
+ hw/misc/Kconfig    | 1 -
+ hw/ssi/Kconfig     | 4 ++++
+ hw/ssi/meson.build | 2 +-
+ 4 files changed, 10 insertions(+), 2 deletions(-)
 
-If we were discussing which transaction phase should contain image
-repairing completely out of the context of QEMU code, I think we would
-be very quick to agree that it's the prepare phase.
-
-The problem is just that it shows once again the old problem that the
-reopen design is flawed and doesn't allow writing to the image in the
-prepare phase for a ro -> rw transition. Even the already existing
-qcow2_reopen_commit_post() is just a hack; in theory, the bitmaps should
-be made writable in prepare and then commit should just be a switchover.
-Reverting to read-only in abort is an operation that can tolerate
-failure, it just gives up access.
-
-I've been thinking for a long time that during reopen, parent nodes
-should have access to both the old state and the new state of their
-children to allow all necessary modifications. This feels like a very
-big change, though.
-
-I'm wondering if for ro/rw specifically (which is actually the one
-setting that is always involved in these nasty cases), it might be
-enough if we define the expected state after prepare to be that the
-image is writable if either the old or the new state is writable. Then
-commit and abort always just either leave it writable or drop write
-permissions.
-
-Do you think this would be a viable approach for your problem here or
-are there additional problems why the image checking can't be done
-during prepare?
-
-Kevin
+diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+index c21ad260a1..3f502685f4 100644
+--- a/hw/arm/Kconfig
++++ b/hw/arm/Kconfig
+@@ -522,6 +522,7 @@ config FSL_IMX6
+     select IMX_FEC
+     select IMX_GPT
+     select IMX_I2C
++    select IMX_SPI
+     select IMX_USBPHY
+     select CAN_FLEXCAN
+     select WDT_IMX2
+@@ -604,6 +605,7 @@ config FSL_IMX7
+     select IMX_GPCV2
+     select IMX_GPT
+     select IMX_I2C
++    select IMX_SPI
+     select WDT_IMX2
+     select PCI_EXPRESS_DESIGNWARE
+     select SDHCI
+@@ -625,6 +627,7 @@ config FSL_IMX8MP
+     select IMX_FEC
+     select IMX_GPT
+     select IMX_I2C
++    select IMX_SPI
+     select OR_IRQ
+     select PCI_EXPRESS_DESIGNWARE
+     select PCI_EXPRESS_FSL_IMX8M_PHY
+@@ -653,6 +656,7 @@ config FSL_IMX8MM
+     select IMX_FEC
+     select IMX_GPT
+     select IMX_I2C
++    select IMX_SPI
+     select OR_IRQ
+     select SDHCI
+     select PCI_EXPRESS_DESIGNWARE
+@@ -697,6 +701,7 @@ config FSL_IMX6UL
+     select IMX_GPCV2
+     select IMX_GPT
+     select IMX_I2C
++    select IMX_SPI
+     select IMX_USBPHY
+     select WDT_IMX2
+     select SDHCI
+diff --git a/hw/misc/Kconfig b/hw/misc/Kconfig
+index dbdef58505..ab238767b8 100644
+--- a/hw/misc/Kconfig
++++ b/hw/misc/Kconfig
+@@ -91,7 +91,6 @@ config ECCMEMCTL
+ 
+ config IMX
+     bool
+-    select SSI
+ 
+ config IMX_CCM
+     bool
+diff --git a/hw/ssi/Kconfig b/hw/ssi/Kconfig
+index 1bd56463c1..d477d20e9b 100644
+--- a/hw/ssi/Kconfig
++++ b/hw/ssi/Kconfig
+@@ -32,3 +32,7 @@ config PNV_SPI
+ config ALLWINNER_A10_SPI
+     bool
+     select SSI
++
++config IMX_SPI
++    bool
++    select SSI
+diff --git a/hw/ssi/meson.build b/hw/ssi/meson.build
+index 6afb1ea200..f334e48e2f 100644
+--- a/hw/ssi/meson.build
++++ b/hw/ssi/meson.build
+@@ -9,7 +9,7 @@ system_ss.add(when: 'CONFIG_STM32F2XX_SPI', if_true: files('stm32f2xx_spi.c'))
+ system_ss.add(when: 'CONFIG_XILINX_SPI', if_true: files('xilinx_spi.c'))
+ system_ss.add(when: 'CONFIG_XILINX_SPIPS', if_true: files('xilinx_spips.c'))
+ system_ss.add(when: 'CONFIG_XLNX_VERSAL', if_true: files('xlnx-versal-ospi.c'))
+-system_ss.add(when: 'CONFIG_IMX', if_true: files('imx_spi.c'))
++system_ss.add(when: 'CONFIG_IMX_SPI', if_true: files('imx_spi.c'))
+ system_ss.add(when: 'CONFIG_IBEX', if_true: files('ibex_spi_host.c'))
+ system_ss.add(when: 'CONFIG_BCM2835_SPI', if_true: files('bcm2835_spi.c'))
+ system_ss.add(when: 'CONFIG_PNV_SPI', if_true: files('pnv_spi.c'))
+-- 
+2.56.0
 
 
