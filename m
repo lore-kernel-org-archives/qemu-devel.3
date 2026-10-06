@@ -4,69 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C251CA6009
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 08:23:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08B16CA5FF1
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 08:24:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xEMv5-00020x-6M; Wed, 07 Oct 2026 04:22:38 -0400
+	id 1xEMwC-0004FZ-29; Wed, 07 Oct 2026 04:23:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1xEGO7-0002zZ-UK
- for qemu-devel@nongnu.org; Tue, 06 Oct 2026 21:24:27 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1xEHdg-0005Z5-W9
+ for qemu-devel@nongnu.org; Tue, 06 Oct 2026 22:44:22 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1xEGNw-000673-Jy
- for qemu-devel@nongnu.org; Tue, 06 Oct 2026 21:24:04 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1xEHdV-0003Bi-7x
+ for qemu-devel@nongnu.org; Tue, 06 Oct 2026 22:44:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1791336075;
+ s=mimecast20190719; t=1791340980;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=PqSdPTYYLH6RD9HHKPQwI8fzzYjCK4J5HuVj48B5Qhk=;
- b=SHxlsBaLwrm0awcQOrv/7aA20ZlGQ/9JUpSV76sWcYT2n+kqSW9pNETEFxnDS232pt+3aK
- Vl0VcUHFcswYw+lEBNTeRQFU5OZMs6OWixotKRDBS681ERrnmMU/zdgKnSt5/98+XhBN8p
- HSbCNa79vSPA7tnHsyoZsHt8CogP5z8=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=Q48BE2IEcNUWcqGIBr43OQS1am5d1J5E99crXuHfnlE=;
+ b=RmkDvaCSPD8k9Tpq1UiuG6pCtpOBOoqYCaUAyOIstZeiynGngXjDRqTzgyyX2CXlcx5Wjo
+ 2lztREH3fRsoYpKMngHsOSZDvoIdxjjGD6xhI26QO3iNmRHzLW+neI8UTox2eOANdpWRnp
+ RCt8pHAeOL1VzKAmxlPGuMO+vgEtkew=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-523-IoZDn5L5OiO6oFGS6RhNLA-1; Tue,
- 06 Oct 2026 04:41:08 -0400
-X-MC-Unique: IoZDn5L5OiO6oFGS6RhNLA-1
-X-Mimecast-MFC-AGG-ID: IoZDn5L5OiO6oFGS6RhNLA_1791276067
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-26-hsU4yqFyPSO-9TBIeDoGyA-1; Tue,
+ 06 Oct 2026 06:02:19 -0400
+X-MC-Unique: hsU4yqFyPSO-9TBIeDoGyA-1
+X-Mimecast-MFC-AGG-ID: hsU4yqFyPSO-9TBIeDoGyA_1791280937
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 74CA71954B1F; Tue,  6 Oct 2026 08:41:06 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6B42A19235DB; Tue,  6 Oct 2026 10:02:16 +0000 (UTC)
 Received: from redhat.com (unknown [10.44.48.53])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 29CFC1800345; Tue,  6 Oct 2026 08:41:02 +0000 (UTC)
-Date: Tue, 6 Oct 2026 10:41:00 +0200
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 47C9F3001D2A; Tue,  6 Oct 2026 10:02:14 +0000 (UTC)
+Date: Tue, 6 Oct 2026 12:02:11 +0200
 From: Kevin Wolf <kwolf@redhat.com>
-To: BALATON Zoltan <balaton@eik.bme.hu>
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
- "Michael S . Tsirkin" <mst@redhat.com>,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- Alistair Francis <alistair.francis@wdc.com>,
- Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Warner Losh <imp@bsdimp.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
-Subject: Re: [PATCH 1/4] docs/devel: relax policy on AI-generated contributions
-Message-ID: <asS0HLYRmZhB3Ban@redhat.com>
-References: <20260930085433.830743-1-pbonzini@redhat.com>
- <20260930085433.830743-2-pbonzini@redhat.com>
- <CAFEAcA91XU=_hS3iB+0p7hXQ_nvf0YpgNZaKsd=b=fSVaTJDxw@mail.gmail.com>
- <69164823-7271-4d59-9684-637bec454a1d@redhat.com>
- <293cb972-35e1-1922-0834-601e2491a7a6@eik.bme.hu>
+To: "Denis V. Lunev" <den@openvz.org>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org,
+ Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>,
+ Hanna Reitz <hreitz@redhat.com>, qemu-stable@nongnu.org
+Subject: Re: [PATCH v4 2/5] block: reject a reopen of an unusable node
+ instead of crashing
+Message-ID: <asTHI1FWnb4sWMVK@redhat.com>
+References: <20260824133729.1141990-1-den@openvz.org>
+ <20260824133729.1141990-3-den@openvz.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <293cb972-35e1-1922-0834-601e2491a7a6@eik.bme.hu>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+In-Reply-To: <20260824133729.1141990-3-den@openvz.org>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 10
@@ -92,26 +85,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 05.10.2026 um 23:09 hat BALATON Zoltan geschrieben:
-> On Fri, 2 Oct 2026, Paolo Bonzini wrote:
-> > I agree completely with how you phrased the first and third.  I agree
-> > that the second bullet is a risk too, but it's mitigated by "LLM-created
-> > contributions will be held to a higher standard than human-created ones,
-> > because LLMs make it easier to write tests" (and by maintainers being
-> > able to
+Am 24.08.2026 um 15:37 hat Denis V. Lunev geschrieben:
+> From: Denis V. Lunev <den@openvz.org>
 > 
-> Tests need to be reviewed too to be able to trust them so that does not help
-> against overloading reviewers with generated patches but burdens them even
-> more: they will also have to review the tests before the code.
+> qcow2_signal_corruption() drops bs->drv, so a node can lose its driver
+> at any time and a reopen has to expect that. Both ends of the path
+> assume otherwise:
+> 
+>   $ qemu-io -c "read 0 64k" -c "reopen -r" corrupt.qcow2
+>   qcow2: Marking image as corrupt: Cluster allocation offset 0x1200
+>   unaligned (L2 offset: 0x40000, L2 index: 0); ...
+>   Segmentation fault
+> 
+> bdrv_reopen_queue_child() dereferences bs->drv while descending into
+> the children the node opened itself, and bdrv_reopen_prepare() asserts
+> on it. commit_clean() reopens the base of a commit job back to
+> read-only, so a base which goes corrupt under the job arrives here too.
+> 
+> There is nothing to reopen for such a node, so stop descending into its
+> children and let bdrv_reopen_prepare() report what every caller of
+> bdrv_reopen() already handles. bdrv_reopen_commit() and
+> bdrv_reopen_abort() keep their assertion, only a prepared entry reaches
+> them.
+> 
+> Signed-off-by: Denis V. Lunev <den@openvz.org>
+> Reviewed-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+> CC: Kevin Wolf <kwolf@redhat.com>
+> CC: Hanna Reitz <hreitz@redhat.com>
+> CC: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+> Cc: qemu-stable@nongnu.org
 
-The required level of trust for tests is comparatively low, so it's much
-easier to review tests to a sufficient level than say device emulation
-code.
-
-If a new test looks plausible, fails before the fix and passes
-afterwards, it's more useful that what we had before, even if it's
-technically buggy in some corner case.
-
-Kevin
+Reviewed-by: Kevin Wolf <kwolf@redhat.com>
 
 
