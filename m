@@ -4,107 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E819ACA5FFF
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 07:43:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DDC5CCA5FF1
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 07:45:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xEMIT-00054R-Oc; Wed, 07 Oct 2026 03:42:53 -0400
+	id 1xEMKd-0005v6-Ix; Wed, 07 Oct 2026 03:45:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xEGdx-0005dN-4Y
- for qemu-devel@nongnu.org; Tue, 06 Oct 2026 21:40:55 -0400
-Received: from mail-ua1-x932.google.com ([2607:f8b0:4864:20::932])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xEGdY-0000a9-Qe
- for qemu-devel@nongnu.org; Tue, 06 Oct 2026 21:40:10 -0400
-Received: by mail-ua1-x932.google.com with SMTP id
- a1e0cc1a2514c-97ca72f2cd9so682557241.2
- for <qemu-devel@nongnu.org>; Tue, 06 Oct 2026 18:36:11 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1791336971; cv=none;
- d=google.com; s=arc-20260327;
- b=OYirS1okj3HJmj04N9Bz0+n2iERQXZHfkJZ+2eVmJRLHQOUvRYK6nh8RRI+vNzctHG
- Bt5IOqAa9dJ0+6aupcdwYBw5mvld3vxxb6vi+gC9J9lLd98KcvWtFyRMugzLAnyQTn6c
- Z29GgjEPcc9eic/BVXrduHGrGoZ5GHf3ioQh5n3kiZhsBK390VhIwoTC55hyUDRqvSb3
- zERstf6RbvAoXSHoDnn9MJaPdvSs6yeOrRP5OBytULD1d/GZQ7vG9wpKMUrLxrW1yC3/
- yub8QLwkVJo/cXIdjkyvzspnYUJso9e8zO3PiaE7iemp5oe8Kheu3z7KPsWdPJW2yQwQ
- vnYA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=BNe28fzsNkReZkp5SawmoMK8Xda+uKQwSZoPrHwYWD4=;
- fh=wTxIsAelXXjAlRbDvt0umNptksPbd8Ep0cPp+Wu6Bro=;
- b=nvjzkctEb/+49QK8VmX4MmS1NCgtb+fRV1fQezxYOflHFVXckzhwRJWtkLjdgvdAxx
- kcMPC3Dg0mLUlgmXonkjf55R65GAOJ3+JZlnDyR/FlFUU+bVl0ExEl/sqCqm3E7FT9x4
- 4eiTh3xr1azTCT54/scZvzIC0/29m6afxNzoErtM9evKbLv9mePGIFXQAl6myNfzf312
- dD0ObfFEbbNDvoC2BYNOwv/8RSln6eUilpkxGuBwyBjcUWewDwmxtW7J1i5KqG0T+pDB
- +FBO5RAJL1KZNREMVKImAn6Lv//MQHNDDvtDRWI7tKgdWNO85ZbhVMhj+FYAZKjK+ydH
- j7pA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1791336971; x=1791941771; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=BNe28fzsNkReZkp5SawmoMK8Xda+uKQwSZoPrHwYWD4=;
- b=Gw4vPX/++ji7hm8+Hf3yOCZwRrLjjF6VNf6UUygAMlEv5aHorTgOUx9OaAhp/SiKJO
- SXt0RqYb/xEUrKklOWTbTCO0kPDFa1kHcl/VuwqnmNQ7foff+nxYUcJX0wBTThylBm2m
- zHV071KLD8NfiQBMOSBiQmZPvD6ZYV4U0fPPJlhxCq84VzZrSkcbREcuMSr60Wrz9y06
- 9F9WgssX9kISzv3UBq7RNYKomEwMn63x+xH2XjV37QnEjHISl44y80EARtS7md7kDDsN
- gXrc8oU7t1K5GmVfUJXJRmw6PL7yMw61wu71+gTCgrOVda+E+7MlNth9ERHjG/+vrFFY
- CLoA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791336971; x=1791941771;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=BNe28fzsNkReZkp5SawmoMK8Xda+uKQwSZoPrHwYWD4=;
- b=jaFvcI/x5kfui0+0GaWHrYAWGRaWERBghv6W5CEX39kOdJGVnSYghB2vMyW7Vm0Uex
- 0duNlPDWNa6BWnyzLPKWemdtvww6Lt6v9kvoECFDh/FunuowoUGYwcrOVCTjfnoEEjoX
- vu9JUFk9IEGYcJM7SFhOpD8dVwPsKNtBmP3aHamvi2EkbAKUagnAVjiK15n/Rdtytyji
- iq1/brDPIQUaLXOgUz1RjTt9xUu/m+3wf09UQEaoy1xZc53VUaKtX6B3myR4i/3pxGDU
- J+rHBON6nUg4u7L7QeHsDdFRgWxFSup96A7eh9vJrO49L7XHIh9gG3pga45WAdrOW9m6
- hlGg==
-X-Forwarded-Encrypted: i=1;
- AKwUvBzQA3qefEXMD4NgeJWrx2B2GqW05BrE1eNtR+u2r6SGgxB+rcJzDT95A+UUxxmJSUiobUdIatPpKW2z@nongnu.org
-X-Gm-Message-State: AFq9FYJrxUrXQdtJ3JGFYdNwJKqEQecgs+33wVFle6q9lpGmm1eFuB2E
- g52/LBUp7os1tP2mNJLl5CjHnSJd2K5AuKP8UgldLViKnrp86se32BglWG4w1B0uQFMCv9lniRc
- ruWQYd8jFi7SDnZCilkRGMzrl492f83d7K1zyomzhr5jXE713LG1mGNdQZQ==
-X-Gm-Gg: AYBFou3rt7MvwX/2VpvQmmV7RqwnJujvKxiHW6bAsd+4Aw8D0zADPtATKFXOTXrKg9a
- VoF5EtxjUCsanjWBnqCD0qJNgavc1lHt6o/W7UzToFVlNbBMFO/zrYud+ohKEsxtnBudLAYIVRU
- /8qwWypoDVK9sUn6Vz+95Sq8yGGxCAwaNa1Jdqt9mhxaLtem7sKwsQzDvFjKPrFngAXMQYC6/VR
- FtJfODN5tiM8OfI6eRUcyAr9BesDEygr8hSwOxCaeEDPLQycFxWX/PTx1cf+zJUw3vd4xAl/8Uq
- gckR8VnJP5faXf+xnK9vnS7X3cDegNTxXmFgVxPtPUAhO6Tng4dj7kZ9oFt0eBxHvTDDorNaeZX
- DRERB2VJdH+NW3jK4e16ZLffdbdRPQt/z2XPoayQ=
-X-Received: by 2002:a05:690c:6d83:b0:8af:1843:a9e5 with SMTP id
- 00721157ae682-8b04f489215mr4470257b3.23.1791285868752; Tue, 06 Oct 2026
- 04:24:28 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>)
+ id 1xEGec-0005h5-B5; Tue, 06 Oct 2026 21:41:34 -0400
+Received: from rev.ng ([94.130.142.21])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>)
+ id 1xEGeB-0000is-VN; Tue, 06 Oct 2026 21:40:52 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
+ s=dkim; h=In-Reply-To:Content-Transfer-Encoding:Content-Type:MIME-Version:
+ References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:Content-ID:
+ Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+ :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+ List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
+ List-Help; bh=njGK9zBHI4u311p4O5Evxf6MG7bRo0x1PCKcPxGZfdY=; b=mXMiSRlz4e2T4Ch
+ 0fRXGSKbN0MZaYV23vzlO4Im23LJVAL3/osGKZl2Fj9f1/HfJ7/uAmeZ+MqZTuEeJ2UFgqXI96z62
+ igjlBb1bv1QezS1JZ6HiCpoJkLYDvX1E7/QLzwTjBTjYNdVJxQzoYS1QxRDoVAoeN4uxj2hxzLRMs
+ sY=;
+Date: Wed, 7 Oct 2026 01:15:14 +0200
+To: Yonggang Luo <luoyonggang@gmail.com>
+Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
+ qemu-devel@nongnu.org, qemu-riscv@nongnu.org, daniel.barboza@oss.qualcomm.com, 
+ philmd@oss.qualcomm.com, palmer@dabbelt.com, alistair.francis@wdc.com
+Subject: Re: [PATCH 07/18] target/riscv: Runtime register MAX and BARE CPUs
+Message-ID: <asUMlHlLI7j5MTUf@hive.localdomain>
+References: <20261001-rv-dedup-v1-0-ea69b07afd31@rev.ng>
+ <20261001-rv-dedup-v1-7-ea69b07afd31@rev.ng>
+ <CAE2XoE_ag1RR_JFwgcg+9zPed+qpO2skf7W1_kiqvwB=Vf9aAQ@mail.gmail.com>
+ <f8f27bc3-83ce-4ccf-ae38-a43188b2ebc5@oss.qualcomm.com>
+ <ar_AzEWpF9XDGNdg@hive.localdomain>
+ <CAE2XoE_vsVDXH2qggECnqHC8dMpo7zyTTg9w64uvjnPeXE9y6A@mail.gmail.com>
 MIME-Version: 1.0
-References: <20261001175003.ttbr-baddr-52bit-0-fuad.tabba@linux.dev>
- <20261002070925.2627344-2-fuad.tabba@linux.dev>
-In-Reply-To: <20261002070925.2627344-2-fuad.tabba@linux.dev>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 6 Oct 2026 12:24:17 +0100
-X-Gm-Features: AclHuK_TkizGvf2w5BH9Ft35CVoiFyCh2Bna_MqzKkZHPm7QtqNfesSt9hkXhj8
-Message-ID: <CAFEAcA_+gr25p1gix=qto5DQzh=VAguhAUh6Una9uMLzNYWZmg@mail.gmail.com>
-Subject: Re: [PATCH 2/2] target/arm: Use the 52-bit TTBR base address layout
- when TCR.DS is set
-To: Fuad Tabba <fuad.tabba@linux.dev>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, 
- Richard Henderson <richard.henderson@linaro.org>, Will Deacon <will@kernel.org>,
- Itaru Kitayama <itaru.kitayama@linux.dev>, Fuad Tabba <tabba@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::932;
- envelope-from=peter.maydell@linaro.org; helo=mail-ua1-x932.google.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_12_24=1.049,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAE2XoE_vsVDXH2qggECnqHC8dMpo7zyTTg9w64uvjnPeXE9y6A@mail.gmail.com>
+Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
+ helo=rev.ng
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,84 +66,189 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Anton Johansson <anjo@rev.ng>
+From:  Anton Johansson via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 2 Oct 2026 at 08:09, Fuad Tabba <fuad.tabba@linux.dev> wrote:
->
-> With TCR.DS set, TTBR[5:2] hold bits [51:48] of the translation table
-> base address, whatever the OA size. If the effective OA size is below
-> 52 bits, setting any of them is a level 0 Address size fault
-> (AArch64_S1TTBaseAddress(), AArch64_S1Walk()).
->
-> get_phys_addr_lpae() uses the 52-bit layout only when the OA size is
-> over 48 bits. With TCR.DS set and an IPS of 48 bits, it takes TTBR[5:2]
-> as base address bits [5:2] instead. A guest that sets them gets no
-> fault: the walk either succeeds with TTBR[5:2] ignored, or reads its
-> first descriptor from the wrong address. VTTBR walks with VTCR.DS take
-> the same path.
->
-> Use the 52-bit layout whenever TCR.DS is set, and check the whole base
-> address against the OA size. Add TCR.DS and VTCR.DS cases with a 48-bit
-> OA to the test.
->
-> Fixes: ef56c2425e5f ("target/arm: Implement FEAT_LPA2")
-> Cc: qemu-stable@nongnu.org
-> Signed-off-by: Fuad Tabba <fuad.tabba@linux.dev>
+On 02/10/26, Yonggang Luo wrote:
+> target/riscv: resolve target-dependent CPU definition fields
+> 
+> The class-base initializer later reads def->misa_mxl_max and passes
+> def->cfg to riscv_cpu_cfg_merge(), which merges max_satp_mode. Resolve
+> both chooser results in a mutable copy so those steps use the selected
+> values without modifying the const TypeInfo class data.
+> 
+> 
+> defer riscv_cpu_validate_misa_mxl is not enough, mainly
+> def->misa_mxl_max is accessed in
+> riscv_cpu_class_base_init, for exactly match previous behavior, add
+> two callback for each value
+
+Right, we would have to move more stuff to instance init which isn't the
+best idea.  Personally I'm still not keen on adding more callbacks to
+initialize two fields for two cpus, surely this is solvable with the
+current machinery.  I'll submit a v2 and try defining two tables for
+MAX/BARE instead, similar to ARM.
+
+> 
+> On Fri, Oct 2, 2026 at 11:36 PM Anton Johansson <anjo@rev.ng> wrote:
+> >
+> > On 02/10/26, Pierrick Bouvier wrote:
+> > > On 10/1/2026 9:28 AM, Yonggang Luo wrote:
+> > > > On Thu, Oct 1, 2026 at 11:55 PM Anton Johansson via qemu development
+> > > > <qemu-devel@nongnu.org> wrote:
+> > > >>
+> > > >> Moves initialization of satp and mxl fields to a class initialization
+> > > >> function that checks target_riscv64().
+> > > >>
+> > > >> Note: I'm aware the current iteration of this patch is rather hacky, I
+> > > >> don't like the introduction of runtime_misa_mxl_max, but I'm keeping
+> > > >> this in to get the series out there and collect feedback.
+> > > >>
+> > > >> Signed-off-by: Anton Johansson <anjo@rev.ng>
+> > > >> ---
+> > > >>  target/riscv/cpu.h |  1 +
+> > > >>  target/riscv/cpu.c | 90 +++++++++++++++++++++++++++++++++++-------------------
+> > > >>  2 files changed, 59 insertions(+), 32 deletions(-)
+> > > >>
+> > > >
+> > > > This patch is how I handle these, just for reference, not a review.
+> > >
+> > > Yonggang approach looks cleaner, I would favor this one.
+> >
+> > I'm personally not a huge fan, it still feels rather hacky. Why add a
+> > completely new RISCVCPUDef::target_init just to make sure fields are
+> > initialized before riscv_cpu_validate_misa_mxl()? Wouldn't moving the
+> > check to a later point, maybe .instance_init, be better? Then for
+> > riscv_cpu_init() we get
+> >
+> >   riscv_cpu_validate_misa_mxl(mcc);
+> >   env->misa_mxl = mcc->def->misa_mxl_max;
+> >
+> > misa_mxl_max would be verified only during instance rather than
+> > class initialization, which seems like a decent tradeoff for a simpler
+> > solution.
+> >
+> > --
+> > Anton Johansson
+> > rev.ng Labs Srl.
+> 
+> 
+> 
+> -- 
+>          此致
+> 礼
+> 罗勇刚
+> Yours
+>     sincerely,
+> Yonggang Luo
+
+> From 31138892fe5cf878da9818cf93535ce10b125cb0 Mon Sep 17 00:00:00 2001
+> From: Yonggang Luo <luoyonggang@gmail.com>
+> Date: Sat, 3 Oct 2026 01:54:52 +0800
+> Subject: [PATCH] target/riscv: resolve target-dependent CPU definition fields
+> 
+> The class-base initializer later reads def->misa_mxl_max and passes
+> def->cfg to riscv_cpu_cfg_merge(), which merges max_satp_mode. Resolve
+> both chooser results in a mutable copy so those steps use the selected
+> values without modifying the const TypeInfo class data.
+> 
+> Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
 > ---
->  target/arm/ptw.c                      | 16 ++++----
->  tests/tcg/aarch64/system/ttbr-baddr.c | 53 +++++++++++++++++++++++++++
->  2 files changed, 61 insertions(+), 8 deletions(-)
->
-> diff --git a/target/arm/ptw.c b/target/arm/ptw.c
-> index 6cff52d592..16f5fdfe0b 100644
-> --- a/target/arm/ptw.c
-> +++ b/target/arm/ptw.c
-> @@ -2107,18 +2107,18 @@ static bool get_phys_addr_lpae(CPUARMState *env, S1Translate *ptw,
->      descaddr = extract64(ttbr, 0, 48);
->
->      /*
-> -     * With a 52-bit OA (FEAT_LPA or FEAT_LPA2), bits [51:48] of descaddr are
-> -     * in [5:2] of TTBR, and bits [5:0] of the base address are zero: a table
-> -     * under 64 bytes is still 64-byte aligned (R_KBLCR).
-> +     * With a 52-bit OA, or with TCR.DS, bits [51:48] of the base address are
-> +     * in [5:2] of TTBR, and bits [5:0] of the base address are zero: the
-> +     * table is at least 64-byte aligned.
-
-You put that R_KBLCR reference into this comment in patch 1, so
-why are you deleting it again in patch 2?
-
->       *
-> -     * Otherwise, if the base address is out of range, raise AddressSizeFault.
-> -     * In the pseudocode, this is !IsZero(baseregister<47:outputsize>),
-> -     * but we've just cleared the bits above 47, so simplify the test.
-> +     * If the base address is out of range, raise AddressSizeFault, as
-> +     * AArch64_OAOutOfRange() does in the pseudocode.
-
-Please don't drop information that's still relevant. This comment is
-remarking that although the pseudocode is doing an IsZero check only
-on the bits of the address between the max physaddr size and the
-outputsize, QEMU is doing a check on all the upper bits, and saying
-why that's OK. This is still the case, although the pseudocode has
-changed a little so AArch64_OAOutOfRange()'s test is now:
-   return !IsZero(address[NUM_PABITS-1:oasize]);
-(and NUM_PABITS is 56).
-
->       */
-> -    if (outputsize > 48) {
-> +    if (outputsize > 48 || param.ds) {
->          descaddr &= ~MAKE_64BIT_MASK(0, 6);
->          descaddr |= extract64(ttbr, 2, 4) << 48;
-> -    } else if (descaddr >> outputsize) {
-> +    }
-> +    if (descaddr >> outputsize) {
->          level = 0;
->          fi->type = ARMFault_AddressSize;
->          goto do_fault;
-
-The code changes here look correct (compare AArch64_S1TTBaseAddress()
-which checks walkparams.ds == '1' || (complex expr for FEAT_LPA)).
-
-thanks
--- PMM
+>  target/riscv/cpu.c | 40 +++++++++++++++++++++++++++-------------
+>  target/riscv/cpu.h |  2 ++
+>  2 files changed, 29 insertions(+), 13 deletions(-)
+> 
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index c6f1739075..754f158250 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -3092,6 +3092,8 @@ static void riscv_cpu_class_base_init(ObjectClass *c, const void *data)
+>  
+>      if (pcc->def) {
+>          mcc->def = g_memdup2(pcc->def, sizeof(*pcc->def));
+> +        mcc->def->max_satp_mode_choose = NULL;
+> +        mcc->def->misa_mxl_max_choose = NULL;
+>      } else {
+>          mcc->def = g_new0(RISCVCPUDef, 1);
+>      }
+> @@ -3108,7 +3110,16 @@ static void riscv_cpu_class_base_init(ObjectClass *c, const void *data)
+>  #endif
+>  
+>      if (data) {
+> -        const RISCVCPUDef *def = data;
+> +        RISCVCPUDef def_data = *(const RISCVCPUDef *)data;
+> +        RISCVCPUDef *def = &def_data;
+> +
+> +        if (def->max_satp_mode_choose) {
+> +            def->cfg.max_satp_mode = def->max_satp_mode_choose(def);
+> +        }
+> +        if (def->misa_mxl_max_choose) {
+> +            def->misa_mxl_max = def->misa_mxl_max_choose(def);
+> +        }
+> +
+>          mcc->def->bare |= def->bare;
+>          if (def->profile) {
+>              assert(profile_extends(def->profile, mcc->def->profile));
+> @@ -3299,6 +3310,18 @@ static void riscv_cpu_instance_finalize(Object *obj)
+>      g_clear_pointer(&cpu->multi_ext_user_opts, g_hash_table_destroy);
+>  }
+>  
+> +static int8_t riscv_cpu_max_satp_mode_choose(const RISCVCPUDef *def)
+> +{
+> +    (void)def;
+> +    return target_riscv32() ? VM_1_10_SV32 : VM_1_10_SV57;
+> +}
+> +
+> +static RISCVMXL riscv_cpu_misa_mxl_max_choose(const RISCVCPUDef *def)
+> +{
+> +    (void)def;
+> +    return target_riscv32() ? MXL_RV32 : MXL_RV64;
+> +}
+> +
+>  static const TypeInfo riscv_cpu_type_infos[] = {
+>      {
+>          .name = TYPE_RISCV_CPU,
+> @@ -3339,21 +3362,12 @@ static const TypeInfo riscv_cpu_type_infos[] = {
+>           * only MBARE will be available if the user doesn't enable
+>           * a mode manually (see riscv_cpu_satp_mode_finalize()).
+>           */
+> -#ifdef TARGET_RISCV32
+> -        .cfg.max_satp_mode = VM_1_10_SV32,
+> -#else
+> -        .cfg.max_satp_mode = VM_1_10_SV57,
+> -#endif
+> +        .max_satp_mode_choose = riscv_cpu_max_satp_mode_choose,
+>      ),
+>  
+>      DEFINE_RISCV_CPU(TYPE_RISCV_CPU_MAX, TYPE_RISCV_DYNAMIC_CPU,
+> -#if defined(TARGET_RISCV32)
+> -        .misa_mxl_max = MXL_RV32,
+> -        .cfg.max_satp_mode = VM_1_10_SV32,
+> -#elif defined(TARGET_RISCV64)
+> -        .misa_mxl_max = MXL_RV64,
+> -        .cfg.max_satp_mode = VM_1_10_SV57,
+> -#endif
+> +        .max_satp_mode_choose = riscv_cpu_max_satp_mode_choose,
+> +        .misa_mxl_max_choose = riscv_cpu_misa_mxl_max_choose,
+>      ),
+>  
+>      DEFINE_ABSTRACT_RISCV_CPU(TYPE_RISCV_CPU_SIFIVE_E, TYPE_RISCV_VENDOR_CPU,
+> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+> index 034d7e96c4..b6b5f679c9 100644
+> --- a/target/riscv/cpu.h
+> +++ b/target/riscv/cpu.h
+> @@ -597,6 +597,8 @@ typedef struct RISCVCPUDef {
+>  #endif
+>      /* This is just a setter for env->num_triggers.  */
+>      uint32_t num_triggers;
+> +    int8_t (*max_satp_mode_choose)(const struct RISCVCPUDef *def);
+> +    RISCVMXL (*misa_mxl_max_choose)(const struct RISCVCPUDef *def);
+>  } RISCVCPUDef;
+>  
+>  /**
+> -- 
+> 2.55.0.windows.3
+> 
 
