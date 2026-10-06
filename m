@@ -4,92 +4,147 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45CCACA5FF1
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 08:52:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 061E0CA5FF1
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 08:53:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xENGx-0004Ka-2R; Wed, 07 Oct 2026 04:45:12 -0400
+	id 1xEN9J-0008Ma-Au; Wed, 07 Oct 2026 04:37:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xEJb5-0006rq-VP
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 00:49:53 -0400
-Received: from mail-lj1-x22a.google.com ([2a00:1450:4864:20::22a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xEJav-0003QI-2Z
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 00:49:41 -0400
-Received: by mail-lj1-x22a.google.com with SMTP id
- 38308e7fff4ca-3a9a2cfe1d4so2824271fa.2
- for <qemu-devel@nongnu.org>; Tue, 06 Oct 2026 21:49:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1791348540; x=1791953340; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=21yxfb4i7kxC3qcFd4IJSGMl/u7d4pLAk60w6us8vRM=;
- b=EprH6Pq7UqRgDIx+ts5V827FxpwJKJ9bFX9zYKpmSzAlJYOa/bGmYeCYMbclY95eaZ
- Q1PS9Hre/fHzJuDjwcLgKjtTIwkv/bt4IqgRDtuQD6uZ090W+HSMcE2mYqTnLSTDMVDm
- NkRmtIMgBt5RCLwAhwfqa+IRo89AiQMOqdsywGZHwg4EPF5SOwRXWTwRLcc1fyAfadPZ
- htyNJHKwp4cQWN+IMzKUBNBBmQbJt/XsTNGMtvSx0KS45+g4M54W2mtGNbSXGh9/TJzj
- nMjMvqaHXaREHitRCrRfXcPj5yy0yCpsf5TWramNRu7K7hHgUJAUxGUMhB2dxPsEiQTi
- G7pw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791348540; x=1791953340;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=21yxfb4i7kxC3qcFd4IJSGMl/u7d4pLAk60w6us8vRM=;
- b=Ac62Vw+veywjCfX+Bj1GyzLGWIPDLWm3HvXBb5i7cKpfzp8ozrM/YiMAZOlDYgFMRq
- qQWuwp+WQtrzHWmZim7SY0Wpr/tHTorM/z3e9WfOHvV6exsJAs6fs9IlH6dVzIX2MfzP
- 4F1L2+O1yoNQrMqqQMpNHmvErRxLEjJLuunabwQzONbHnBDSzDioYxfRN0TwuMeZE9iY
- E4O9V7+oAV5bRKL8Q2ToyyeBvhdegOxGCSTbuyNbIr73Peaef3oYoE4m+uz/uQFlERYF
- COonto3OLZMXj8kSUW+UUHZS4MaYjRGpSomkD7XIkgB8gS/Votdo0KpMKfBWDmTuWvit
- R79w==
-X-Gm-Message-State: AFq9FYJhRW2DyqQdUc9EpRe1bctpnoDj6vRuTVk6b2pvqRmNfOEC1/91
- G8l6iRwbAe3ssqoVwQPtdIGG/lHuz7of4XL5LoD87b9dy/6jWhzafcrRJY+gdA==
-X-Gm-Gg: AYBFou1/8AszOk1vstjbPu/hZf9HsiaahxClUTvhOTExPTbBTT20TM8TF3IGknrm6sI
- 7DNUWifdopOISfMhk7UdjTuFHw/VPj6dcmMDepgd/By/lPBb0MjKKI5gVv01v4uQHHCFVfdfC5Q
- hc2i6eDXA1WbJi03l+enppOnTKrllrWXfo+jqGs13/TyNf9DlSlhj1ClRQwGrTUKQRi3+EkXiYd
- M1k3im7yp9VzILvCFn6Kr9Hy6OgX+bhd+d1IWhH6JMoYziUxxUuRP77voZqIwy4rLccsNQ8/aVM
- hKJjwrFybgG7Gvwt7qljcm3UB19Zo0PkCj2UljGKht3dVie4qa7mI8l/iNUrbGl7WopVhTIqTvJ
- HylkMaZLumME1VNmWy+V4dKAEnh9U/WxjBQ221f9krm90L0iT1zPhU65KPINUHXd+XdvmjEXFLK
- 7T7X2lK+eke9uC3dKf4jW5tudw8gsnNQqfD5N17LOaFRar6DHJwhj00uyJ2KePOtU5BivtNT3YA
- dPFwCV8wx4QrLIPMhNtREmb5QNximjhzdM8UA==
-X-Received: by 2002:a05:6000:26c9:b0:487:218b:bbb0 with SMTP id
- ffacd0b85a97d-48c6d1d1c18mr1762387f8f.42.1791279909492; 
- Tue, 06 Oct 2026 02:45:09 -0700 (PDT)
-Received: from archlinux (pd95eda80.dip0.t-ipconnect.de. [217.94.218.128])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48c6faa93fbsm433426f8f.16.2026.10.06.02.45.08
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 06 Oct 2026 02:45:09 -0700 (PDT)
-From: Bernhard Beschow <shentey@gmail.com>
+ (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
+ id 1xEI5b-0001OF-13
+ for qemu-devel@nongnu.org; Tue, 06 Oct 2026 23:13:30 -0400
+Received: from mail-westeuropeazlp170130006.outbound.protection.outlook.com
+ ([2a01:111:f403:c201::6] helo=AM0PR02CU008.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
+ id 1xEI5Q-0000dx-EK
+ for qemu-devel@nongnu.org; Tue, 06 Oct 2026 23:13:02 -0400
+Received: from MIWPR08MB285920.eurprd08.prod.outlook.com
+ (2603:10a6:290:aa::21) by DBBPR08MB6155.eurprd08.prod.outlook.com
+ (2603:10a6:10:1f5::15) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.496.15; Wed, 7 Oct
+ 2026 01:08:30 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=mH40BmtpnvOh/MoNmPohqKunwA73n3SDJgpGbWXfiyOlydOfjAFhUlSeO27FnVi2FNqmJ9oriX5SFJpAFhp4vIPUsCl2cpMubi0bV9GZMEV96NIbWzfyfigGaLFxbUEZ1CCath9nhpI4cECxgFUZzXpNzSl4phC74c4OglkqaY+RCAH++41FeQemYgWXrNZWc9C/XIClu5XyQNqivO5u/r+4Wso1leEM/DRPMOi0VxRaYcFlR2KKL3ZtFfRbJIcJBN9KiZgXKaJK7r42zzjy5fzUehBc/pEjgBT+nXEpwXuYiMb2DbWsI1tr+suo7vjP5FjejtuctH6uW4Rf7IdxTQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=gWXhh68le3RfUJjypRVq8x/GzIl/qjsOycrfUzYBtG0=;
+ b=rnE6UNombVRY3AJSNn3dv/NPYRvLGOKo6eTuWyd288jXpqucGkW15+fqFjCpX2nGyokoXGqpf+8dA3XSRJgS4k3v/V+/Rkd2eBsV8RflgyJ/sL488mKyyZOD1ofr4ubLyIZi3BI0mUt8z4yjjvxACaIAPiumIbaYNpw/ocAi2lDYeWF1HHrtAkMRcDOXKp+Wse/Njt2J1F7wWcXL2mtRITpE+K0sQ9560iW1YgG0yblEoOgNean1z8QtNKAwFk20ODdo20QhYGMAL2D8M7wz1UtLihDcKb14vBE/QiWjuterA/nwmY4/4aTwTlWJiscEmfg81Fd8Vq2ZAOs4LefQFA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
+ header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=gWXhh68le3RfUJjypRVq8x/GzIl/qjsOycrfUzYBtG0=;
+ b=LLeTql0FxDFw8vCLZ3KLIY0SCFdGFUqoXgGnAHaBTi45s3yfrGhFS7crynOBDN6SEGPL87XaaSHAWIId4NRO6qyrlnXlTC965tF5DjdL1Xm3kA9w9+QGiU+LPKqdayfZ8Pl/m3HljK/wh0ms14wMBd/wGhjGDUTT5BSwY/TFcVw2qCrNGwoDJ0/paQCNgA7JxOxQVXsHa0PGz9RjkbCQCLB4OqZuOQ5IEE/W+lc0IYHAJd9RosZopLD5DcJBwuf0NtLpirCI4R6W0KgN0449Ve+f6ONhlzdFGoTJQScrcRvLRM9R24NTOF6KsgQoLb/apBgnr/2slqVlgcYG+f7wBQ==
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=virtuozzo.com;
+Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
+ (2603:10a6:800:20a::12) by MIWPR08MB285920.eurprd08.prod.outlook.com
+ (2603:10a6:290:aa::21) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.496.15; Tue, 6 Oct
+ 2026 13:58:57 +0000
+Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
+ ([fe80::4e37:b189:ddcd:3dd8]) by VI0PR08MB10656.eurprd08.prod.outlook.com
+ ([fe80::4e37:b189:ddcd:3dd8%7]) with mapi id 15.21.0496.010; Tue, 6 Oct 2026
+ 13:58:56 +0000
+From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+Date: Tue, 06 Oct 2026 16:58:35 +0300
+Subject: [PATCH v13 12/22] vhost: make vhost_dev_cleanup() safe on a
+ partially initialized device
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20261006-up-vsock-vhost-v5-v13-12-2ea78fd1b7ed@virtuozzo.com>
+References: <20261006-up-vsock-vhost-v5-v13-0-2ea78fd1b7ed@virtuozzo.com>
+In-Reply-To: <20261006-up-vsock-vhost-v5-v13-0-2ea78fd1b7ed@virtuozzo.com>
 To: qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Christian Speich <c.speich@avm.de>, Bin Meng <bmeng.cn@gmail.com>,
- qemu-block@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Bernhard Beschow <shentey@gmail.com>
-Subject: [PATCH v5 5/8] hw/sd/sd: Add erase-blocks-as-zero option.
-Date: Tue,  6 Oct 2026 11:44:44 +0200
-Message-ID: <20261006094447.43491-6-shentey@gmail.com>
-X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261006094447.43491-1-shentey@gmail.com>
-References: <20261006094447.43491-1-shentey@gmail.com>
+Cc: mst@redhat.com, maciej.szmigiero@oracle.com, peterx@redhat.com, 
+ odaki@rsg.ci.i.u-tokyo.ac.jp, dwmw2@infradead.org, dongli.zhang@oracle.com, 
+ bchaney@akamai.com, den@openvz.org, farosas@suse.de, 
+ andrey.drobyshev@virtuozzo.com, clg@redhat.com, mark.kanda@oracle.com, 
+ vsementsov@yandex-team.ru, philmd@oss.qualcomm.com, sgarzare@redhat.com
+X-Mailer: b4 0.16.0
+X-ClientProxiedBy: VI6PEPF00000229.AUTP296.PROD.OUTLOOK.COM
+ (2603:10a6:808:1::8f3) To VI0PR08MB10656.eurprd08.prod.outlook.com
+ (2603:10a6:800:20a::12)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::22a;
- envelope-from=shentey@gmail.com; helo=mail-lj1-x22a.google.com
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: VI0PR08MB10656:EE_|MIWPR08MB285920:EE_|DBBPR08MB6155:EE_
+X-MS-Office365-Filtering-Correlation-Id: 3ea692f9-624f-4e77-52a8-08df23b1f6ac
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|366016|1800799024|376014|52116014|7416014|23010399003|38350700014|56012099006|10067099003|22082099003|18002099003;
+X-Microsoft-Antispam-Message-Info: x2pS6GFoIUOCXS//MsuxDFDiSLOzZ6Zt0iR8AQSrAurjTRZnpBHk8W+5CeEjnJ/M9qO6FOXhp2e+NQoAIj1NCZNXj9ubQG7rLhekolhOVOSm71CmBD9lXfIdgCe/2eUUn4EUWMDnl+AKANWmDyCl/SO85BOmJCe7KqrV/xwjG4even4KuRFgLRf8cW5AlTQC/F9Hegw43Jq84na5iMmt/T2N0fsG+oqS00B+trQAja84wbwDN4WeBcIO4qkaYJotmtqasukbK8VPgF3JFLrJlftr/02kNCu07/s2kI6p2+1dDdjHs/b8KSnTUx9O9ti31E8RpIUvznnmBNdb4rFyu6WrIgEkr7qXQNrZgj5OsikHCI5MdYkNGwXq2yZgWdJmkMEHd3jDDw57HD/nhNxCQZUCKXGYS6OvJ1w2JfIF4YN8OjtQzK2OXGr8gR82cCl8YcUKTJWdK9mSNBpyhHtopAl3rOMdMIaXknpIrsvCpO5SPjw0TPMBT1jqGzPVLZv0ifrEMunKnV7SHGaVjAwVJO1PSbDGF5iywpPo6E/XV4qe+FVdtQvSV36YaE1fiIXBfU3ykgEiJvdnK5XrmWqr7liuvBy0K/eqVMHXmGgxxXUHGwP0ucNqhmqi5TZxhSQHpI1W29o0HhDbOodo78bOYP5YS03D2Wvq2JLTvvFWqw9cbjcO396UQBu6FpT9Vr/ZrWHFjz0d8a0S/47eFoHh58EQlbvg+C8EcPgfFGpmdjQ=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:VI0PR08MB10656.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(1800799024)(376014)(52116014)(7416014)(23010399003)(38350700014)(56012099006)(10067099003)(22082099003)(18002099003);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?QnZWVnBhd2s5Z05wTi9jSko2aUdLUFZES3hibmtpVmRWY3JjY0lwN3JNWlNz?=
+ =?utf-8?B?N2JIVUlSZ3N6MU9lMEMzazc1WERKUVp5L0lLeVB3eEZaVHQrK08vSSsxWWg2?=
+ =?utf-8?B?WGFib2NxN0o0UWE1eElMSFZIV1VyR1QwZEgzZVdtdk9mZzVEV080aEdRWnRv?=
+ =?utf-8?B?MFZVUnVxSzJJL2YrQU4ranlFbkt2TmI2akpSVmVnTGJjMmpDS2RueFR2N2cv?=
+ =?utf-8?B?Q3ZMS0pwM01peEwydTZBOSt5ZHE4UWpSUUhyMUVmY3puSzI2SHB5a2E5Znhu?=
+ =?utf-8?B?KytkeWZUN1hrNVdDaDRpTzhGZElKa2F0dStPc1VIRWVoZDd0eFhuY0pvQ2lB?=
+ =?utf-8?B?TUxYRWFwK2NFQUdtemYvRWZ0Rk5zaGtOY09pR1NWWk9KU1l0d1Q1WDZiekl6?=
+ =?utf-8?B?R3FOYmp1VW5oTmpmeG5SVTI1cWFlbitGVHRJU1NIdlpqV0hIWms1V1hiYk9Z?=
+ =?utf-8?B?OHR5Sm8rM3BCL3FFY3hmN2pRWHY1OXBwc3NxOGd4SHBWc2c3TFBWdExlTmg1?=
+ =?utf-8?B?SWhmSlpQR1VuSXY1ZWFxRjFFbUg4R1ptaXZKUzJVcXp3NDF1bTFnUXJwdVd5?=
+ =?utf-8?B?K3ludHJEU2trdENJOS9XYUdxa25oY0I5NFNwN0FmK2hsaXhDVzNxOE9hQmlN?=
+ =?utf-8?B?M0ZSVnJ1SWVVZkVKbGVNNjdlZDBsRXhiQW9ZR1hHQmROTTlva2V0SWxWOTFk?=
+ =?utf-8?B?UmRsejg1Q2tJSnVGTU5pWko0YktpTUxwWkI5WG9QMGF0b1pvcUxtMmZFbzMy?=
+ =?utf-8?B?c2owUVd1U1JLQ0RVUHpqWWpPOWJWRGdKSk4zdjF4NFJySm9zNWlCZDRFSUty?=
+ =?utf-8?B?aXo2eXBJQ1p2anVQL1dhOGR5bXFJcHRoS3l5SWVKRGZmdnErZVc1bk45Zk5h?=
+ =?utf-8?B?czNxSTVzbVIxQ1BEbGJjR2w4NVBHNUQ5Z3FhZzVCNFhmUE9MVTJtVFlhUndz?=
+ =?utf-8?B?SXJ2Ymd5Uk5JMUxzckRjMnNGOXQ1RFpPSE1hSEJQQTlHQkNsQ2IvTnh1cnBh?=
+ =?utf-8?B?SnJvVHgxSm9neWJIKzdNbklOSXlSUytSNkxDZmlHWGptczVVK1VJL0c1OXdL?=
+ =?utf-8?B?UFhOZ24xSnRvVFVpeG1FT0Z5TWdGWEhsS05ReW1mN3UwOC8rOXNxbEx3U3Y2?=
+ =?utf-8?B?MmdPendoWDVqR0pNTHZ3VzJ0STFvSlVRZm9RMVVFMFpIQ21NL2VNeEkyV1dr?=
+ =?utf-8?B?K1gvZDczNHQ4NkJtL3JKS3l1d21pZnFrc0xEUmcvVzRXMDlONmZseUhTTzdF?=
+ =?utf-8?B?dGVuR0tSNlFlWVV6K29kOEpVUkxqbEFsK2hiRmJJL0M3QkNyWDZZdUpjVlZw?=
+ =?utf-8?B?b2VRTUhTRTFSc1RTUCtFWjRQOHljQVhKTUhta3MrajgwM3Q3RFlsTXpZSW1N?=
+ =?utf-8?B?clRrdUhJTWxiQzhYYWo3YWo0amNCdm4vRjNKRTVOVitHKzA5alEyV2Y2SkVD?=
+ =?utf-8?B?RFdjNDJtYmNiUHlPWEo5TXNXQkw4M21Ca2psZkRZMzAxbWYyS1NKS3h3M2tS?=
+ =?utf-8?B?dEZxNUxNVHFTTTVtNWd1TTNLSUc3Ujk1aUMrTGJJL3ZPYU43Nm80ak50QnZt?=
+ =?utf-8?B?ZzhMVnEwS0pIMVFSWUNJZm1kMkVXWmU0Y0lpUFBCYXNGS25XVE93SmI5TWRN?=
+ =?utf-8?B?NDhoRUFLNFRxeFFld1dSakIzWERQdEtPN2dwc1I1SkxHRm96dmVmRHhzQTVG?=
+ =?utf-8?B?NkI3ckpaSDN1RHR5S2xTOTdGQU5PSmVSZExCRTJpQnVKaDhUdytMQ2doenBq?=
+ =?utf-8?B?L2t2MDlpN2FJeVlhNmZkYnp6STVzWElMeEgrbURYRjY5NnZucUlNbW1CcUgx?=
+ =?utf-8?B?UUNMcmNxK21EOVFyQjM2cWE3dFhOT0t5R21IY2x4Yld2UllzNnNTNDhyZVJN?=
+ =?utf-8?B?NTRMOXMxcmJPditTSjc3dzdrSHczSmR5Q0lKeVBoNm00SWdhUnJhaEhMR0hw?=
+ =?utf-8?B?ay9GZjQwQWd3OEZqOWRZRWlqeVNMaVdWcUwzaVFrT3lMenBKN1N5YlJ4ZVd2?=
+ =?utf-8?B?dC9PbUwwTE15bDl1T0VHQmNmOUlyeEQ0dnFDVFk5WDE3NGp5ZU1aYTV2akF0?=
+ =?utf-8?B?STk3YjRZVStUWnplLzBOV0ozbkEvQ0tzL2ZpYk5XWUFFa3R1d2VaTEh0Mjl1?=
+ =?utf-8?B?Z1IrSVhvdnExVWMzai92bk1LYVNZa0t2Vko2ck1rdUNaSlRWanUrczc4S0pi?=
+ =?utf-8?B?TFRySEdKWHJFVUZFS2hlSzN6dHVkUHA3UWlUYStFOVpOcXZoU0NkbmQwbWdn?=
+ =?utf-8?B?ZHpUQUNkM3ZqcUk4aWxWS3BLdzRTR3pLZm85bzNVb1E1eHpPYitmZjNQRktK?=
+ =?utf-8?B?T3d2U1Q2cTNOQW13QWZjSlFUbVFvUDJ0SUNraktPb0dyNStGM0ZTNVBrU2dk?=
+ =?utf-8?Q?ITuKDtgW3T8hsv8o=3D?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: 3ea692f9-624f-4e77-52a8-08df23b1f6ac
+X-MS-Exchange-CrossTenant-AuthSource: VI0PR08MB10656.eurprd08.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Oct 2026 13:58:56.5657 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: nhLB2EFTgu9miV63JVj4BuvEDX96hv09pX89ypCCaPH/kVUaaPU4Gt6hLOKQFDwuvNQ4slJTM6QlbxNwknJmqqwsRk802TTh6O1jVol5EeQ=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MIWPR08MB285920
+X-OriginatorOrg: virtuozzo.com
+Received-SPF: pass client-ip=2a01:111:f403:c201::6;
+ envelope-from=andrey.drobyshev@virtuozzo.com;
+ helo=AM0PR02CU008.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,103 +160,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Christian Speich <c.speich@avm.de>
+A device which only went through vhost_dev_init_backend() has its VQs
+not yet initialized, so vq->dev is NULL and vhost_virtqueue_cleanup()
+would crash dereferencing it.  Check vq->dev before use, so that
+vhost_dev_cleanup() can be called to release a device whose full
+vhost_dev_init() never ran or failed along the way.
 
-Currently, erased blocks are filled with 0xFF. However SCR Bit 55
-(DATA_STAT_AFTER_ERASE) indicates that an erase produces zeros. One of
-them is wrong.
+As of now, there's no way for the cleanup path to be reached with
+vq->dev uninitialized.  However after a subsequent patch adding CPR
+support for vhost-vsock this'll become a possibility, so let's prevent
+such a crash beforehand.
 
-This patch does two things.
-
-First it fixes the reporting of DATA_STAT_AFTER_ERASE in SCR to
-correctly reflect the content of erased blocks. We also increase the
-Product Revision (REV in CID) to indicate to the guest that
-DATA_STAT_AFTER_ERASE is now reliable.
-
-Secondly, we introduce a erase-blocks-as-zero option, which allows the
-user to choose if erased blocks should contain 0xFF or 0x00. The default
-is still 0xFF to remain compatible with current users.
-
-Signed-off-by: Christian Speich <c.speich@avm.de>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
-Move global compat property
-  `{ "sdmmc-common", "erase-blocks-as-zero", "false" }`
-to 11.1 section.
-
-Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 ---
- hw/core/machine.c |  1 +
- hw/sd/sd.c        | 15 +++++++++++++--
- 2 files changed, 14 insertions(+), 2 deletions(-)
+ hw/virtio/vhost.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/core/machine.c b/hw/core/machine.c
-index d9ac4b419a..7b0be16444 100644
---- a/hw/core/machine.c
-+++ b/hw/core/machine.c
-@@ -41,6 +41,7 @@
- #include "hw/arm/smmuv3.h"
- 
- GlobalProperty hw_compat_11_1[] = {
-+    { "sdmmc-common", "erase-blocks-as-zero", "false" },
-     { "sysbus-ehci-usb", "x-migrate-fetch-addr-64bit", "off" },
-     { "pci-ehci-usb", "x-migrate-fetch-addr-64bit", "off" },
- };
-diff --git a/hw/sd/sd.c b/hw/sd/sd.c
-index 6e2bb8ff2d..c40097924c 100644
---- a/hw/sd/sd.c
-+++ b/hw/sd/sd.c
-@@ -162,6 +162,7 @@ struct SDState {
-     /* Static properties */
- 
-     uint8_t spec_version;
-+    bool erase_blocks_as_zero;
-     uint64_t boot_part_size;
-     uint64_t rpmb_part_size;
-     BlockBackend *blk;
-@@ -440,6 +441,9 @@ static void sd_set_scr(SDState *sd)
-     sd->scr[0] |= 2;            /* Spec Version 2.00 or Version 3.0X */
-     sd->scr[1] = (2 << 4)       /* SDSC Card (Security Version 1.01) */
-                  | 0b0101;      /* 1-bit or 4-bit width bus modes */
-+    if (!sd->erase_blocks_as_zero) {
-+        sd->scr[1] |= (1 << 7); /* DATA_STAT_AFTER_ERASE: Erase produces 0xFF */
-+    }
-     sd->scr[2] = 0x00;          /* Extended Security is not supported. */
-     if (sd->spec_version >= SD_PHY_SPECv3_01_VERS) {
-         sd->scr[2] |= 1 << 7;   /* Spec Version 3.0X */
-@@ -457,7 +461,7 @@ static void sd_set_scr(SDState *sd)
- #define MID     0xaa
- #define OID     "XY"
- #define PNM     "QEMU!"
--#define PRV     0x01
-+#define PRV     0x02
- #define MDT_YR  2006
- #define MDT_MON 2
- 
-@@ -1354,7 +1358,12 @@ static void sd_erase(SDState *sd)
-     sd->erase_end = INVALID_ADDRESS;
-     sd->csd[14] |= 0x40;
- 
--    memset(sd->data, 0xff, erase_len);
-+    if (sd->erase_blocks_as_zero) {
-+        memset(sd->data, 0x0, erase_len);
-+    } else {
-+        memset(sd->data, 0xFF, erase_len);
-+    }
-+
-     for (erase_addr = erase_start; erase_addr <= erase_end;
-          erase_addr += erase_len) {
-         if (sdsc) {
-@@ -3281,6 +3290,8 @@ static void emmc_realize(DeviceState *dev, Error **errp)
- 
- static const Property sdmmc_common_properties[] = {
-     DEFINE_PROP_DRIVE("drive", SDState, blk),
-+    DEFINE_PROP_BOOL("erase-blocks-as-zero", SDState, erase_blocks_as_zero,
-+                     true),
- };
- 
- static const Property sd_properties[] = {
+diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+index 99561ac5868..dfdfd49da3f 100644
+--- a/hw/virtio/vhost.c
++++ b/hw/virtio/vhost.c
+@@ -1661,7 +1661,7 @@ fail_call:
+ static void vhost_virtqueue_cleanup(struct vhost_virtqueue *vq)
+ {
+     event_notifier_cleanup(&vq->masked_notifier);
+-    if (vq->dev->vhost_ops->vhost_set_vring_err) {
++    if (vq->dev && vq->dev->vhost_ops->vhost_set_vring_err) {
+         event_notifier_set_handler(&vq->error_notifier, NULL);
+         event_notifier_cleanup(&vq->error_notifier);
+     }
+
 -- 
-2.56.0
+2.47.1
 
 
