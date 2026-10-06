@@ -4,59 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B95F4CA5FFF
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 09:14:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAD3ACA5FF1
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 09:14:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xENcA-0001zV-6W; Wed, 07 Oct 2026 05:07:06 -0400
+	id 1xENFs-0001I1-95; Wed, 07 Oct 2026 04:44:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <fuad.tabba@linux.dev>)
- id 1xEMaG-0004Ry-Rd
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 04:01:05 -0400
-Received: from out-73.mta1.migadu.com ([2001:41d0:203:375::49]
- helo=mta1.migadu.com)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xEJEG-0003Ny-LU
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 00:26:15 -0400
+Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <fuad.tabba@linux.dev>)
- id 1xEMaC-00030S-Er
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 04:01:03 -0400
-X-Envelope-To: qemu-devel@nongnu.org
-DKIM-Signature: a=rsa-sha256; bh=fFxHzIV0eSnU5WJN8HLRv0Vr1WaPMW5vaKA+HJab+a0=; 
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1791360058; v=1; x=1791964858;
- b=cszTm6U1SepiexY7qZFWBzvMJJJeN7i5jY4CAZaFqUObYPHhZEmPJYEeZ2qQ8G8uT2Q7pFhE
- 7Sw3wJF06fRR7eOyqv1iVuLRR7lXikYsnhJtf4tifk2qawZGpqeziSbI78POdjsDHEM3gttJ9yt
- tMGj2LmHrEDdSvHc6CWJKfWI=
-X-Envelope-To: qemu-devel@nongnu.org
-Received: by smtp.migadu.com with ESMTPS id d7bdcd0e766fb0df;
- Wed, 07 Oct 2026 08:00:58 +0000
-X-Mizu-Trace-ID: d7bdcd0e766fb0df
-X-Migadu-Flow: FLOW_OUT
-From: Fuad Tabba <fuad.tabba@linux.dev>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org,
- Richard Henderson <richard.henderson@linaro.org>,
- Gustavo Romero <gromero@redhat.com>, Will Deacon <will@kernel.org>,
- Itaru Kitayama <itaru.kitayama@linux.dev>, Fuad Tabba <tabba@google.com>
-Subject: [PATCH v2 3/3] tests/tcg/aarch64: Add a test for the 52-bit TTBR base
- address layout
-Date: Wed,  7 Oct 2026 09:00:19 +0100
-Message-Id: <20261007080019.350315-4-fuad.tabba@linux.dev>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20261007080019.350315-1-fuad.tabba@linux.dev>
-References: <20261007080019.350315-1-fuad.tabba@linux.dev>
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xEJEE-0000v5-U8
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 00:26:08 -0400
+Received: by mail-ej1-x62d.google.com with SMTP id
+ a640c23a62f3a-c2dc63f8d8aso214314266b.0
+ for <qemu-devel@nongnu.org>; Tue, 06 Oct 2026 21:26:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1791347164; x=1791951964; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=MtjyPqAx1DBfXhNfiNBwnE4QmFljId/OHSHkX1Y8u+4=;
+ b=XViEelOV55ofwWCgbTp5J5WUU3c/V1cOV0iA7QI2hEFVoZl50GaiSUngBbZfT4dSYX
+ yW9ipI1vRe9jFsmMppwSFxP1O07zwd+ICwnC5xtd6wl8L12+QwZ3K7WFomw45D5BJS3n
+ Gl71lFRmMLJRW6RvmjS0iy4fvgv374nUY/ntzSy4Yuqao7iyYgHy4N0yG8z/BbKh6ziD
+ ZvSVXxVnigvnHl+NhDoSVAmNP4QR+xQ/qfs64XHa1aV0tfOH3mvgNj/YzcOGf8r4igUg
+ BxwoSpj6x0oxOhePc5lNnPSsVMdJ4pJFMWhP9S+OkP4Hiqt57sIoBBMeabrCYcohatdD
+ MRsw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1791347164; x=1791951964;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=MtjyPqAx1DBfXhNfiNBwnE4QmFljId/OHSHkX1Y8u+4=;
+ b=M8CQK942Q/5GZJiy45tqxnmzenufllogmWd573GPvsD2CCoHZz8DWgLJTkYSt3UjKQ
+ SSfBr36pRqF1fl9Qb8/2i+u2wiuTk9vPf8JmyUx36hXTqp2jZ/+UUoZkdMnWvZropeGj
+ 4bEs4WO4B/biqPCHI4bGoREqcFIGiy6/UASymqp5FD5dM6DlP9m+Y5+kJPoUPSj6+P/b
+ WpBOIASCUQpNeiazF8WdWfXjO5LQSutsLLWpGwhvSY0HEWXQE0dX1XW4BPIZNASxriYz
+ YemEW4v1aTLV8XIpG073JQgr8yMnSWueuRMGqA5IEL43AgQ2rXWGK5eaXW/e8rm06UP9
+ 6cjg==
+X-Gm-Message-State: AFuF++kABXaMLYavfncO+vp6/ru7hw0EXC84mXg6Pdj7X12mFbbVCTBK
+ DQT1yZiPRJG84HrvdEcVdsLWf1Kkrys1J/muU3hXljEO2KHDP0wyVNgTNMumWw==
+X-Gm-Gg: AYBFou2Jp/5rL8+vrdiyXMvLeShNo4o5IpCbXwzX52MgwYQLQgKvxa3wVgKpn4N/TtV
+ Z8yn2//lPlmzbgmaNfYIpj2vEXweggpf8TaDn81RnrP7D3mM2FPIszaMsVjy46hMeio5CRmYT/U
+ DZXajyEvqeWu1cws1NkOcFJfRXDt4izV9KhpZg/NKF4KfGznUaB6f+yybpHo5tJ5aWKqCPxpOts
+ cA+h0wACJFWDF2uIub63xvZHiz/EJBZt1Ez8j5+mtex2TtbZ6/4MJ48hb20Cn6SEWGuPaAwKbMh
+ 4WMu0HMsGfBaaxxif2iNJDrOZZbPg6tvuPK9aBPs4PpqOtLxD7BWcAGibPnb4fILSNaGkCvFgxM
+ as+lEjqBpkki7OqfPTIhMMGoiF8e157MvHCJEtl4RmD/9bfQJh4HUgvUmFC35voWuxEdDT58pz7
+ bYVLjKLBw2N/4J2ju5lryE7r+aDhvRHQtbz6h+ICYKUeVIQv+VQa2k3EMFvX169Z2sE70fJ81HR
+ k72OtNhya3/IFJZTyQ9IxtYDHUIwqoFln+VKHk=
+X-Received: by 2002:a05:6000:2203:b0:488:89c7:31aa with SMTP id
+ ffacd0b85a97d-48c6d1959e4mr1280488f8f.39.1791275749594; 
+ Tue, 06 Oct 2026 01:35:49 -0700 (PDT)
+Received: from archlinux (pd95eda80.dip0.t-ipconnect.de. [217.94.218.128])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-48c6cdb281csm1566764f8f.55.2026.10.06.01.35.48
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 06 Oct 2026 01:35:49 -0700 (PDT)
+From: Bernhard Beschow <shentey@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Bin Meng <bin.meng@processmission.com>,
+ Jean-Christophe Dubois <jcd@tribudubois.net>,
+ Gaurav Sharma <gaurav.sharma_7@nxp.com>,
+ Bernhard Beschow <shentey@gmail.com>, qemu-arm@nongnu.org,
+ Jason Wang <jasowangio@gmail.com>,
+ Alistair Francis <alistair@alistair23.me>
+Subject: [PATCH v4 24/31] Kconfig: Extract dedicated config FSL_IMXx_CCM from
+ config IMX
+Date: Tue,  6 Oct 2026 10:34:36 +0200
+Message-ID: <20261006083445.30362-25-shentey@gmail.com>
+X-Mailer: git-send-email 2.56.0
+In-Reply-To: <20261006083445.30362-1-shentey@gmail.com>
+References: <20261006083445.30362-1-shentey@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2001:41d0:203:375::49;
- envelope-from=fuad.tabba@linux.dev; helo=mta1.migadu.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
+ envelope-from=shentey@gmail.com; helo=mail-ej1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -72,240 +109,162 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-With a 52-bit OA, walk a two-entry level 0 table through an IPA with
-bit 50 set, which stage 2 maps back onto the table, so the walk
-succeeds only if TTBR[4] is cleared from bit 4 of the base address.
-With TCR.DS or VTCR.DS and a 48-bit OA, check that setting TTBR[5:2]
-is a level 0 Address size fault.
+Over time, QEMU has grown a number of i.MX boards and the monolithic
+config IMX drags in unneeded dependencies into each SoC model. Extract
+SoC-specific config FSL_IMXx_CCM to eventually eliminate config IMX.
 
-Signed-off-by: Fuad Tabba <fuad.tabba@linux.dev>
+Note that config IMX_CCM represents a base class for i.MX clock
+control modules which is used in i.MX timers and FlexCAN.
+
+Reviewed-by: Bin Meng <bin.meng@processmission.com>
+Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 ---
- tests/tcg/aarch64/system/meson.build  |   6 +
- tests/tcg/aarch64/system/ttbr-baddr.c | 197 ++++++++++++++++++++++++++
- 2 files changed, 203 insertions(+)
- create mode 100644 tests/tcg/aarch64/system/ttbr-baddr.c
+ hw/arm/Kconfig      |  5 +++++
+ hw/misc/Kconfig     | 25 +++++++++++++++++++++++++
+ hw/misc/meson.build | 14 ++++++--------
+ hw/net/Kconfig      |  2 +-
+ 4 files changed, 37 insertions(+), 9 deletions(-)
 
-diff --git a/tests/tcg/aarch64/system/meson.build b/tests/tcg/aarch64/system/meson.build
-index f51feb253f..270d4d6c31 100644
---- a/tests/tcg/aarch64/system/meson.build
-+++ b/tests/tcg/aarch64/system/meson.build
-@@ -79,6 +79,12 @@ tests += {
-                   '-semihosting-config', 'enable=on,arg=2',
-                   qemu_base_args]
-   },
-+  'ttbr-baddr.c': {
-+    'cflags': cflags,
-+    'qemu_args': ['-M', 'virt,virtualization=on', '-cpu', 'max',
-+                  '-semihosting-config', 'enable=on,arg=2',
-+                  qemu_base_args]
-+  },
- }
+diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+index 8d857d8bd1..dada9f57a7 100644
+--- a/hw/arm/Kconfig
++++ b/hw/arm/Kconfig
+@@ -479,6 +479,7 @@ config FSL_IMX25
+     default y
+     depends on TCG && ARM
+     imply I2C_DEVICES
++    select FSL_IMX25_CCM
+     select IMX
+     select IMX_AVIC
+     select IMX_FEC
+@@ -493,6 +494,7 @@ config FSL_IMX31
+     default y
+     depends on TCG && ARM
+     imply I2C_DEVICES
++    select FSL_IMX31_CCM
+     select SERIAL_MM
+     select IMX
+     select IMX_AVIC
+@@ -505,6 +507,7 @@ config FSL_IMX6
+     imply PCIE_DEVICES
+     imply I2C_DEVICES
+     select A9MPCORE
++    select FSL_IMX6_CCM
+     select FSL_IMX6_SRC
+     select FSL_IMX7_SNVS
+     select IMX
+@@ -581,6 +584,7 @@ config FSL_IMX7
+     imply TEST_DEVICES
+     imply I2C_DEVICES
+     select A15MPCORE
++    select FSL_IMX7_CCM
+     select FSL_IMX7_GPR
+     select FSL_IMX7_SNVS
+     select FSL_IMX7_SRC
+@@ -668,6 +672,7 @@ config FSL_IMX6UL
+     imply I2C_DEVICES
+     select A15MPCORE
+     select FSL_IMX6_SRC
++    select FSL_IMX6UL_CCM
+     select FSL_IMX7_SNVS
+     select IMX
+     select IMX6UL_LCDIF
+diff --git a/hw/misc/Kconfig b/hw/misc/Kconfig
+index 4d47de6a02..a2095d64ae 100644
+--- a/hw/misc/Kconfig
++++ b/hw/misc/Kconfig
+@@ -91,15 +91,39 @@ config ECCMEMCTL
  
- tests += {
-diff --git a/tests/tcg/aarch64/system/ttbr-baddr.c b/tests/tcg/aarch64/system/ttbr-baddr.c
-new file mode 100644
-index 0000000000..b36c14aa29
---- /dev/null
-+++ b/tests/tcg/aarch64/system/ttbr-baddr.c
-@@ -0,0 +1,197 @@
-+/*
-+ * TTBR base address with a 52-bit layout and a small initial lookup table
-+ *
-+ * Copyright (c) 2026 Google LLC
-+ * Author: Fuad Tabba <fuad.tabba@linux.dev>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
+ config IMX
+     bool
++    depends on IMX_CCM
+     select PTIMER
+     select SSI
+ 
++config IMX_CCM
++    bool
 +
-+#include <stdint.h>
-+#include <minilib.h>
+ config IMX_RNG
+     bool
+ 
++config FSL_IMX25_CCM
++    bool
++    select IMX_CCM
 +
-+/* from Linux's include/linux/stringify.h */
-+#define __stringify_1(x...) #x
-+#define __stringify(x...)   __stringify_1(x)
++config FSL_IMX31_CCM
++    bool
++    select IMX_CCM
 +
-+#define read_sysreg(r) ({                                           \
-+            uint64_t __val;                                         \
-+            asm volatile("mrs %0, " __stringify(r) : "=r" (__val)); \
-+            __val;                                                  \
-+})
++config FSL_IMX6_CCM
++    bool
++    select IMX_CCM
 +
-+#define write_sysreg(r, v) do {                     \
-+        uint64_t __val = (uint64_t)(v);             \
-+        asm volatile("msr " __stringify(r) ", %x0"  \
-+                 : : "rZ" (__val));                 \
-+} while (0)
+ config FSL_IMX6_SRC
+     bool
+ 
++config FSL_IMX6UL_CCM
++    bool
++    select IMX_CCM
 +
-+#define RAM_BASE    0x40000000UL
-+#define HIGH_IPA    (1UL << 50)
-+#define TEST_VA     (0xffff000000000000UL | RAM_BASE)
++config FSL_IMX7_CCM
++    bool
++    select IMX_CCM
 +
-+/*
-+ * Stage 1: 16KB granule, 48-bit VA, so level 0 has two entries.
-+ * Stage 2: 64KB granule, 52-bit IPA, mapping RAM at its own address and
-+ * again at HIGH_IPA.
-+ * Stage 2 with VTCR.DS: 16KB granule, 47-bit IPA, mapping RAM flat.
-+ */
-+static uint64_t s1_l0[2048] __attribute__((aligned(16384)));
-+static uint64_t s1_l1[2048] __attribute__((aligned(16384)));
-+static uint64_t s1_l2[2048] __attribute__((aligned(16384)));
-+static uint64_t s2ds_l1[2048] __attribute__((aligned(16384)));
-+static uint64_t s2ds_l2[2048] __attribute__((aligned(16384)));
-+static uint64_t s2_l1[1024] __attribute__((aligned(65536)));
-+static uint64_t s2_l2[8192] __attribute__((aligned(65536)));
-+static uint64_t s2_l2_high[8192] __attribute__((aligned(65536)));
-+
-+#define TCR_T0SZ(x)     ((uint64_t)(x) << 0)
-+#define TCR_T1SZ(x)     ((uint64_t)(x) << 16)
-+#define TCR_TG0_16K     (2UL << 14)
-+#define TCR_TG1_16K     (1UL << 30)
-+#define TCR_IPS_48      (5UL << 32)
-+#define TCR_IPS_52      (6UL << 32)
-+#define TCR_DS          (1UL << 59)
-+
-+#define VTCR_T0SZ(x)    ((uint64_t)(x) << 0)
-+#define VTCR_SL0_L1     (2UL << 6)
-+#define VTCR_TG0_16K    (2UL << 14)
-+#define VTCR_TG0_64K    (1UL << 14)
-+#define VTCR_PS_48      (5UL << 16)
-+#define VTCR_PS_52      (6UL << 16)
-+#define VTCR_RES1       (1UL << 31)
-+#define VTCR_DS         (1UL << 32)
-+
-+#define HCR_VM          (1UL << 0)
-+#define HCR_RW          (1UL << 31)
-+
-+#define PAR_F           (1UL << 0)
-+#define PAR_FST(par)    (((par) >> 1) & 0x3f)
-+#define PAR_PA(par)     ((par) & 0xfffffffff000UL)
-+#define FST_ADDR_SIZE_L0    0x00
-+
-+#define S2_BLOCK        ((1 << 10) | (3 << 6) | (0xf << 2) | 1)
-+
-+static void tlb_flush(void)
-+{
-+    asm volatile("dsb sy; tlbi alle1; dsb sy; isb" : : : "memory");
-+}
-+
-+static uint64_t at(uint64_t ttbr1)
-+{
-+    uint64_t par;
-+
-+    write_sysreg(ttbr1_el1, ttbr1);
-+    tlb_flush();
-+    asm volatile("at s12e1r, %1; isb; mrs %0, par_el1"
-+                 : "=r" (par) : "r" (TEST_VA));
-+    return par;
-+}
-+
-+static uint64_t at_s1(uint64_t ttbr1)
-+{
-+    uint64_t par;
-+
-+    write_sysreg(ttbr1_el1, ttbr1);
-+    tlb_flush();
-+    asm volatile("at s1e1r, %1; isb; mrs %0, par_el1"
-+                 : "=r" (par) : "r" (TEST_VA));
-+    return par;
-+}
-+
-+static void setup_tables(void)
-+{
-+    /* Stage 1: TEST_VA -> RAM_BASE, 32MB block, AF */
-+    s1_l0[0] = (uint64_t)s1_l1 | 3;
-+    s1_l1[0] = (uint64_t)s1_l2 | 3;
-+    s1_l2[(RAM_BASE >> 25) & 0x7ff] = RAM_BASE | (1 << 10) | 1;
-+
-+    /* Stage 2 with VTCR.DS: RAM_BASE -> RAM_BASE, 32MB block, AF, RW */
-+    s2ds_l1[0] = (uint64_t)s2ds_l2 | 3;
-+    s2ds_l2[(RAM_BASE >> 25) & 0x7ff] = RAM_BASE | S2_BLOCK;
-+
-+    /* Stage 2: 512MB blocks at RAM_BASE and HIGH_IPA | RAM_BASE, AF, RW */
-+    s2_l1[0] = (uint64_t)s2_l2 | 3;
-+    s2_l1[HIGH_IPA >> 42] = (uint64_t)s2_l2_high | 3;
-+    s2_l2[RAM_BASE >> 29] = RAM_BASE | S2_BLOCK;
-+    s2_l2_high[RAM_BASE >> 29] = RAM_BASE | S2_BLOCK;
-+}
-+
-+static int check(const char *name, uint64_t par)
-+{
-+    int ok = !(par & PAR_F) && PAR_PA(par) == RAM_BASE;
-+
-+    ml_printf("%s: PAR_EL1=%lx %s\n", name, par, ok ? "ok" : "FAIL");
-+    return !ok;
-+}
-+
-+/* A level 0 Address size fault */
-+static int check_fault(const char *name, uint64_t par)
-+{
-+    int ok = (par & PAR_F) && PAR_FST(par) == FST_ADDR_SIZE_L0;
-+
-+    ml_printf("%s: PAR_EL1=%lx %s\n", name, par, ok ? "ok" : "FAIL");
-+    return !ok;
-+}
-+
-+int main(void)
-+{
-+    uint64_t mmfr0 = read_sysreg(id_aa64mmfr0_el1);
-+    uint64_t tcr = TCR_T0SZ(16) | TCR_T1SZ(16) | TCR_TG0_16K | TCR_TG1_16K |
-+                   TCR_DS;
-+    uint64_t base = (uint64_t)s1_l0;
-+    int ret = 0;
-+
-+    ml_printf("TTBR base address test\n");
-+
-+    /*
-+     * PARange 52 bits (FEAT_LPA) and TGran16 with 52-bit addresses
-+     * (FEAT_LPA2)
-+     */
-+    if ((mmfr0 & 0xf) != 6 || ((mmfr0 >> 20) & 0xf) != 2) {
-+        ml_printf("SKIP: no 52-bit PA or no FEAT_LPA2 with 16KB\n");
-+        return ret;
-+    }
-+
-+    /*
-+     * The test runs at EL2 (arg=2) and walks the EL1&0 regime with AT, so
-+     * the EL1 MMU settings below only affect those walks.
-+     */
-+    setup_tables();
-+    write_sysreg(mair_el1, 0xff);
-+    write_sysreg(sctlr_el1, read_sysreg(sctlr_el1) | 1);
-+
-+    /*
-+     * TCR.DS with a 48-bit OA: TTBR[5:2] are base address bits [51:48],
-+     * so setting any of them is a level 0 Address size fault.
-+     */
-+    write_sysreg(hcr_el2, HCR_RW);
-+    write_sysreg(tcr_el1, tcr | TCR_IPS_48);
-+    ret |= check("ips48", at_s1(base));
-+    ret |= check_fault("ips48 ttbr[2]", at_s1(base | (1 << 2)));
-+    ret |= check_fault("ips48 ttbr[4]", at_s1(base | (1 << 4)));
-+
-+    /* The same for VTTBR, with VTCR.DS and a 48-bit PS */
-+    write_sysreg(vtcr_el2, VTCR_T0SZ(17) | VTCR_SL0_L1 | VTCR_TG0_16K |
-+                 VTCR_PS_48 | VTCR_RES1 | VTCR_DS);
-+    write_sysreg(hcr_el2, HCR_RW | HCR_VM);
-+    write_sysreg(vttbr_el2, (uint64_t)s2ds_l1);
-+    ret |= check("ps48", at(base));
-+    write_sysreg(vttbr_el2, (uint64_t)s2ds_l1 | (1 << 2));
-+    ret |= check_fault("ps48 vttbr[2]", at(base));
-+
-+    /*
-+     * 52-bit OA: TTBR[4] is base address bit 50. Through stage 2, the
-+     * table at HIGH_IPA | s1_l0 is s1_l0, so the walk succeeds only if
-+     * TTBR[4] does not also offset the two-entry table by 0x10.
-+     */
-+    write_sysreg(vtcr_el2, VTCR_T0SZ(12) | VTCR_SL0_L1 | VTCR_TG0_64K |
-+                 VTCR_PS_52 | VTCR_RES1);
-+    write_sysreg(vttbr_el2, (uint64_t)s2_l1);
-+    write_sysreg(hcr_el2, HCR_RW | HCR_VM);
-+    write_sysreg(tcr_el1, tcr | TCR_IPS_52);
-+    ret |= check("ips52", at(base));
-+    ret |= check("ips52 ttbr[4]", at(base | (1 << 4)));
-+
-+    return ret;
-+}
+ config FSL_IMX7_GPR
+     bool
+ 
+@@ -114,6 +138,7 @@ config FSL_IMX8MP_ANALOG
+ 
+ config FSL_IMX8MP_CCM
+     bool
++    select IMX_CCM
+ 
+ config STM32_RCC
+     bool
+diff --git a/hw/misc/meson.build b/hw/misc/meson.build
+index 48c5c20455..6ff31183a6 100644
+--- a/hw/misc/meson.build
++++ b/hw/misc/meson.build
+@@ -60,21 +60,19 @@ system_ss.add(when: 'CONFIG_AXP2XX_PMU', if_true: files('axp2xx.c'))
+ system_ss.add(when: 'CONFIG_REALVIEW', if_true: files('arm_sysctl.c'))
+ system_ss.add(when: 'CONFIG_ECCMEMCTL', if_true: files('eccmemctl.c'))
+ system_ss.add(when: 'CONFIG_EXYNOS4', if_true: files('exynos4210_pmu.c', 'exynos4210_clk.c', 'exynos4210_rng.c'))
++system_ss.add(when: 'CONFIG_FSL_IMX25_CCM', if_true: files('imx25_ccm.c'))
++system_ss.add(when: 'CONFIG_FSL_IMX31_CCM', if_true: files('imx31_ccm.c'))
++system_ss.add(when: 'CONFIG_FSL_IMX6_CCM', if_true: files('imx6_ccm.c'))
+ system_ss.add(when: 'CONFIG_FSL_IMX6_SRC', if_true: files('imx6_src.c'))
++system_ss.add(when: 'CONFIG_FSL_IMX6UL_CCM', if_true: files('imx6ul_ccm.c'))
++system_ss.add(when: 'CONFIG_FSL_IMX7_CCM', if_true: files('imx7_ccm.c'))
+ system_ss.add(when: 'CONFIG_FSL_IMX7_GPR', if_true: files('imx7_gpr.c'))
+ system_ss.add(when: 'CONFIG_FSL_IMX7_SNVS', if_true: files('imx7_snvs.c'))
+ system_ss.add(when: 'CONFIG_FSL_IMX7_SRC', if_true: files('imx7_src.c'))
+ system_ss.add(when: 'CONFIG_FSL_IMX8MP_ANALOG', if_true: files('imx8mp_analog.c'))
+ system_ss.add(when: 'CONFIG_FSL_IMX8MP_CCM', if_true: files('imx8mp_ccm.c'))
++system_ss.add(when: 'CONFIG_IMX_CCM', if_true: files('imx_ccm.c'))
+ system_ss.add(when: 'CONFIG_IMX_RNG', if_true: files('imx_rngc.c'))
+-system_ss.add(when: 'CONFIG_IMX', if_true: files(
+-  'imx25_ccm.c',
+-  'imx31_ccm.c',
+-  'imx6_ccm.c',
+-  'imx6ul_ccm.c',
+-  'imx7_ccm.c',
+-  'imx_ccm.c',
+-))
+ system_ss.add(when: 'CONFIG_MAX78000_AES', if_true: files('max78000_aes.c'))
+ system_ss.add(when: 'CONFIG_MAX78000_GCR', if_true: files('max78000_gcr.c'))
+ system_ss.add(when: 'CONFIG_MAX78000_ICC', if_true: files('max78000_icc.c'))
+diff --git a/hw/net/Kconfig b/hw/net/Kconfig
+index b56a173eed..4a2cacbcd2 100644
+--- a/hw/net/Kconfig
++++ b/hw/net/Kconfig
+@@ -160,5 +160,5 @@ config CAN_CTUCANFD_PCI
+ 
+ config CAN_FLEXCAN
+     bool
+-    depends on IMX
++    depends on IMX_CCM
+     select CAN_BUS
 -- 
-2.39.5
+2.56.0
 
 
