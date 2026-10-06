@@ -4,140 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D4FBCA6002
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DCA1CA5FFF
 	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 08:34:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xEN3L-0003Vg-B3; Wed, 07 Oct 2026 04:31:07 -0400
+	id 1xEN1K-0008UC-DC; Wed, 07 Oct 2026 04:29:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1xEHiz-0006A7-CG; Tue, 06 Oct 2026 22:50:02 -0400
-Received: from mail-japaneastazlp170120005.outbound.protection.outlook.com
- ([2a01:111:f403:c405::5] helo=TYPPR03CU001.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1xEHin-00043A-Ro; Tue, 06 Oct 2026 22:49:38 -0400
-Received: from TY0PR02MB6981.apcprd02.prod.outlook.com (2603:1096:405:c::14)
- by SEYPR02MB6548.apcprd02.prod.outlook.com (2603:1096:101:16f::5) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.496.15; Tue, 6 Oct
- 2026 22:23:10 +0000
-Received: from SE2PPF27A9EBFF5.apcprd02.prod.outlook.com
- (2603:1096:108:1::80c) by TY0PR02MB6981.apcprd02.prod.outlook.com
- (2603:1096:405:c::14) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.472.20; Tue, 6 Oct
- 2026 16:17:36 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Icq4jMLyOMRoSveh+916purtqdHeoTlFL70aZ044U7J7e1w/mmUuPa8wsc8fweKsEAXZ2sF+FkOlrwHleynOzRv++tTLKVg6OMrLxIJOfezA4fkte0RKL5l45XhgduTPOyiOqZQRRU8x1IojtBuTn7+wWm3lL9FiRhzqaojR+lbVk/gKAsPziN+I0TMiUKSooyciyjfQXkAqNoS0y+SOks+dgUy0bFILyflqye0WJjcS3w4j1hmgDC+HsvjOq7Kr8UIlZiJOTdKvXZaF2OMNxiHicOxZ47ftM7AmZ2eQaWQwMnRfsVd8h5cb5lSgUzVoK/MD4dE0sUMvCW9XA4jV9g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Ffya+uplZY52b1L/i+ORXMXqd3oBTdc6l5jfa0aSWT0=;
- b=J64c+SOVQAadYrxN3IaNqj5sozlOHNU/+x8HaPk63UH55CsJVM01t8SSJnL1//0Zff5/ByNBAaDpc+l8acNWwF2p3KrlzVB1hZTCu4zKxLnqjK1G8rqb3GwMJX1wkekKqN+adht86Ux9TlBL8veB9zspBoDj42Q+piAr5ceHBDQtnmvLcIXSzS90uTKSNsB5USWcI/Q3041HfqwOk+Z3CsLp+AN/JDhSfx/t3d3L78feJ58QzUbyUz6P3WYOnjg8w3uCKQ75ypEcy684lnxp+M+Lm3pCWNqHlO5CGhMXZAFv3wZXcr8UXsMSbzbtIh7faH73QAXYX8cWpbne2zzXrw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=processmission.com; dmarc=pass action=none
- header.from=processmission.com; dkim=pass header.d=processmission.com;
- arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Ffya+uplZY52b1L/i+ORXMXqd3oBTdc6l5jfa0aSWT0=;
- b=sRfYlZ9YFquuYjPHn0v6PPtM+oZuQG3BUgpjROiuE5l+uzUH6DNb2PRHlqZcW91BbI46xKjnXcYCdyDy/eqKBcaxj0zV6SbtfN/svtehJBV+Ukk3CFC0WSNQiz2/mJQu8EoF+NptpYVJUbK+IPh4tACzDtNnj0R8rzVq8D1XjLuX8EG0kecaKINete7TnpGUkdBr2DO7A6CoA6uOMKnp40JKpuhA7I4LR+3UT9tYO/owE8Ppz+MUGG7vdbyfRumFw0danq5uEbsj6xE2Y1VC0QijYg/+lGDOm4iEML0n+UOtz/XnnYoRS1fsR5G0xb+GZ+ehuVJg7Zv8J8DCGs5PRw==
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=processmission.com;
-Received: from KL1PR02MB6257.apcprd02.prod.outlook.com (2603:1096:820:da::11)
- by SE2PPF27A9EBFF5.apcprd02.prod.outlook.com (2603:1096:108:1::80c)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.472.20; Tue, 6 Oct
- 2026 09:50:07 +0000
-Received: from KL1PR02MB6257.apcprd02.prod.outlook.com
- ([fe80::ecf9:e832:8196:215]) by KL1PR02MB6257.apcprd02.prod.outlook.com
- ([fe80::ecf9:e832:8196:215%6]) with mapi id 15.21.0472.016; Tue, 6 Oct 2026
- 09:50:07 +0000
-From: Bin Meng <bin.meng@processmission.com>
-To: QEMU <qemu-devel@nongnu.org>
-Cc: Bernhard Beschow <shentey@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- qemu-stable@nongnu.org, Chinmay Rath <rathc@linux.ibm.com>,
- Glenn Miles <milesg@linux.ibm.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
-Subject: [PATCH 01/17] target/ppc: Correct PIR write access on e500 cores
-Date: Tue,  6 Oct 2026 17:48:56 +0800
-Message-ID: <20261006094921.110871-2-bin.meng@processmission.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20261006094921.110871-1-bin.meng@processmission.com>
-References: <20261006094921.110871-1-bin.meng@processmission.com>
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: TYCPR01CA0136.jpnprd01.prod.outlook.com
- (2603:1096:400:2b7::6) To KL1PR02MB6257.apcprd02.prod.outlook.com
- (2603:1096:820:da::11)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xEHjN-0006Bi-Jh
+ for qemu-devel@nongnu.org; Tue, 06 Oct 2026 22:50:28 -0400
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xEHj4-0003p6-Ne
+ for qemu-devel@nongnu.org; Tue, 06 Oct 2026 22:50:00 -0400
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-487048857f6so1059012f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 06 Oct 2026 19:46:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1791341161; x=1791945961; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=q18CxezF3O0NQZL4J8j8k8FGd9ovRcOXZH6XavOaHP0=;
+ b=B80Z+XTFKRM01OjhZbmep4cdVi4+8bzgE8WGDOy6uQSFIt0P06O8qBQJ7h/slebAkH
+ tan3rj9BG8+pJ8Zsw8ERQJsWsPLxCq+hFnDR7wjX9whrGvUGqk9C4wrzCv91wFNvsjBR
+ ptNBO+MKiU4lVsJFhH0DuykgMkOcnK/wpenGxh2fGnuZeZF8EMtx2HHkrv+atRT8Tvsp
+ qA5ZO/zR4S6eAfXA9+MJajcwgeTxkeCq883DV98Ki5jCbn3IM1ddiAy2l2stYSiTsWQO
+ ExuMbnAd6jFBVYmWPvJN1/LnriTKuPkMRF3g4Z8dYnmOQgWCQNX6OoR4Y3UXCzjZ3sRR
+ RIIw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1791341161; x=1791945961;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=q18CxezF3O0NQZL4J8j8k8FGd9ovRcOXZH6XavOaHP0=;
+ b=SHQPg8pWRyeVjNmoR6zOjJgUJtWDSN4I7UEvL9Qx19x3cwXtq4LSV9JZ6qhCTvMLPx
+ JTaJYfpCqT+CyntsoXjend6yhlAtvJRkMnpymXPyXGsUBHTGMRU4wOUpExc+nyctGi8d
+ enlxYuHgJfnkixoEEwtMnnRe2761BUkMSawSPJsDB98TQ6H19NrM9QpCVdOelJFtx1tY
+ 0EwotoBhaCqR1bB3tIeaLrZifnBiNcscqoHxVNSzg1NIE9ZzdaXj5TCKqzib0BI2b2D4
+ TDAC2wQJrmbI8y8YQebMqSlGG+VIYlCx89YWD3v6Xj6spkjPS/O93qJcgnTlxLfxSe1q
+ 9NGA==
+X-Gm-Message-State: AFq9FYJ3rqyRGHQ/IWqafe99YRcNCdWw1SgzlUr4EdCJ/LxGo0esGwxw
+ uKftYCiSJ+BN5SnPC3You86VQgrXTG9rJtZ8yZ8xn3TL+tzgPYCoJK+SY8yWuw==
+X-Gm-Gg: AYBFou1SAvs5O2zd5xjP3LIL+OssxS9YgdA6eGEXgCfavFkkizFuLexE+hDxikSe0KQ
+ IF/ATA5HN7jC2kQMsMKFhgptnxlCs4dMR8MIUqLyJyrpFL/zhpJtlJjm5C71tG2CiZc0w0GhGbk
+ ulAEyKkZBJ4nBi9djRz8fVmNxTGUS/vxo2Fc98D2JjRE6nmP3AJlszq98pRKbsTZWXgo+LNA3tn
+ VUQ7blK7vV2bPg2Pn2wNK4ESQHaCQtNLEZmvMFnQmhypq5sEvNSfqV89grQTIvkkxHcHoaJqeRK
+ qlVYzXsHdtlmCWcA4wNHHOXKwAayuKePBEXxGKU0PRLfojx8U28yQoK65OKYnN8Fw7Z8NKlzSWN
+ PUk9usVsu6fa4IelPCBJR/851eoaFwNQxDZ43w4n+9DgITZYJ0zlN6Clnh4rmRevmUvMzO01r68
+ njNqtfUi5txmnYKbF9INTPQu/2a+WULWchjI8z3gk/c2TQXod4pOfW/o+DEW9wVZIn3j59P71gc
+ ZACITeTEPZtdZbavBjKmea9WiigUGIMDlRfUQ==
+X-Received: by 2002:a05:6000:430c:b0:48a:f36d:fb57 with SMTP id
+ ffacd0b85a97d-48c6d16d3ecmr1121502f8f.18.1791275744671; 
+ Tue, 06 Oct 2026 01:35:44 -0700 (PDT)
+Received: from archlinux (pd95eda80.dip0.t-ipconnect.de. [217.94.218.128])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-48c6cdb281csm1566764f8f.55.2026.10.06.01.35.43
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 06 Oct 2026 01:35:43 -0700 (PDT)
+From: Bernhard Beschow <shentey@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Bin Meng <bin.meng@processmission.com>,
+ Jean-Christophe Dubois <jcd@tribudubois.net>,
+ Gaurav Sharma <gaurav.sharma_7@nxp.com>,
+ Bernhard Beschow <shentey@gmail.com>, qemu-arm@nongnu.org,
+ Jason Wang <jasowangio@gmail.com>,
+ Alistair Francis <alistair@alistair23.me>
+Subject: [PATCH v4 20/31] Kconfig: Extract config IMX_RNG from config IMX
+Date: Tue,  6 Oct 2026 10:34:32 +0200
+Message-ID: <20261006083445.30362-21-shentey@gmail.com>
+X-Mailer: git-send-email 2.56.0
+In-Reply-To: <20261006083445.30362-1-shentey@gmail.com>
+References: <20261006083445.30362-1-shentey@gmail.com>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: KL1PR02MB6257:EE_|SE2PPF27A9EBFF5:EE_|TY0PR02MB6981:EE_|SEYPR02MB6548:EE_
-X-MS-Office365-Filtering-Correlation-Id: f3b63a2a-3015-42f8-1379-08df238f343e
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|366016|1800799024|23010399003|376014|56012099006|10067099003|22082099003|18002099003;
-X-Microsoft-Antispam-Message-Info: SAupuuR62GZnuLUSZiwzCH3kipD5IxtKoh6H0D8LagRiNSxVrAHMCgForNxN6fPljbq/f1HVxZRkFWdvL8Gxk211vU8W91LkRE0hVdW3+kJ1w2DaK4mDguNp9qZM7bth5eYlaVTL39VrkesHEf8VEiWWId+ZacZ2788dKHwH0ScolRbox7F81RvRrlk0K+DIBPR4YpB1qFSWzYlgQjnasbDhQA7JUEtrcPtfGqRy84RMYySd+80WifAwfYYFi4K1BmbuJ0h2AheohaUqrHNgKu8+TiEBmGvmf7aEi/70FPDNhcJUjvnSybFc/08rlkpTTHO8sKuSQCD23msZMQKdK9iRzfrMQZuGrjIS96k7jY9wZ20pvxwe0TXoQs3PnKR2X+wJYEnoEFd2E27/wJQBWRRW9HthohZRJ+1BIFynNz0hOWwr/mmZc8IikrfYqACvazOx/rmSRs60tJRylzILZlCKoCvw91aZ5Tz3TFj7QTfy6TKhfGxyNw+kafETRe2ADmLNu50CuY+z3y+RHIHx3FTuH48a1YkemEqyhHBPX2lpjQpawVAV6IIF/5s2qab6BC/OjEIzWm7X7wY8zJc2bJWTSqQtrPykizLgg/G28bL39l56P7UYeLxsr6+x06KiBq+msfcH4+PyrjiIQOM9O+vS8oIPlF5jXk4piSnWbCo=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:KL1PR02MB6257.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(1800799024)(23010399003)(376014)(56012099006)(10067099003)(22082099003)(18002099003);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?Ii/O6eZ9FKahtEwth1x8bDoGVHCGQJpwPaWhg1j5IhiZvpjOXSEqAzWVeNYx?=
- =?us-ascii?Q?1cFOac3zpmZkaMdcFOVSTfZ8RLtL3Gu3i53E18MjRIWJUDcyfVmFlvONz4wP?=
- =?us-ascii?Q?wG+WC3DgJnLKuz5yPOnn90KWdpgo8wqW3mCkoY0qdMq0YxP1mK3DwTi94azZ?=
- =?us-ascii?Q?WaH6PN5bDMtaxdYlzXaGUJLjeLAwWWlGMExBWPLl/1m4TFZsXA7rR0dt3wFt?=
- =?us-ascii?Q?PQEYk+8jjGi4rnH3C1qJeeCAIUcadI8eTCIHs7lFhJ/LINcslQZDRUwsxA5+?=
- =?us-ascii?Q?pRTcg4goA0sHCaZDp02jlBB/LVMZFJjN+WR+hyNCxKEqPL9EGumfUmyEnE6C?=
- =?us-ascii?Q?5RgbiqE2XCHbyd9rkWHIuPwPemoxRHYXd+KuWsU2Xm3cN+eoCAhk4RskbyRY?=
- =?us-ascii?Q?1YUsNAzXri6b847r2eCAktK4npjHb+tMOnUrdWkM0MGXmsByuraE4AO3UDXp?=
- =?us-ascii?Q?DZ7cn+Ig6NTWB+UPnZ/1YaOUlGErFrAVWFnHuOJcTYc+7NdvnCvPkDP1rkHZ?=
- =?us-ascii?Q?8gfP23Hk9sHNkZiChyG2Fmx2ZaM8a6hVzeSeUF5+TtDO8tYriE5qSmFmupyw?=
- =?us-ascii?Q?rYT7oyHRnylnFXirEyEvge+18FvT+J5URvK9k/H+yIFqWhkkNTQCvzem4Qcr?=
- =?us-ascii?Q?EhqTPi2aowY/cSpUXsSrx1njqip5EfvDtoooZoCAyY0l2VVchM0wt3n+S+Zs?=
- =?us-ascii?Q?dLXnvydxg6AFDKQbm8xqNluIawQFN58lE/VU+Xdro/ktSHkKrZXbb81V20cr?=
- =?us-ascii?Q?pn+RBHqyJP+xGTX4q540uk2+5bGrApo4kAt+tw/HSJAGPXZR/sxEhMiB7VEV?=
- =?us-ascii?Q?Mt0HL1Zcp5Dp7kWPPWLmD1AKNfgGtfcC0GD0cITu9bwDJh1c1nbBSYVoDFjc?=
- =?us-ascii?Q?kVYST2rjhvfb7NUAqUrPAVmCI4RGNPJ4r/EL2Ddy68D+NwmTXKgf33ZPtl4D?=
- =?us-ascii?Q?kEE/3By+xmDeQ5pbqjv1C6uvOp71Zn10bVPoywLw4nGE8nBmx7HWNwUffUgn?=
- =?us-ascii?Q?Dm05oOFTNMJoPFzYET57DMhnU+K7342ouwYDm/oT+QhjLBopX67axrZygUo6?=
- =?us-ascii?Q?XApABgVsDyhXc0RCwkYlIwoqSKM0Yy71ak3Ptl3PIjEjmq1ejqhv0ft1i7C8?=
- =?us-ascii?Q?G36SXB3gvBEJH3xsy0DCfTMYLIi0sWa9QDImdTAVR8j3LkXrl+eI247+zbcw?=
- =?us-ascii?Q?efORnDs304Aw821Bg4Sx1S1r2sLMnIdDJa3lIJf21x3kjTxIB74UlNb63v6o?=
- =?us-ascii?Q?g+QvehLeJ1D49S3Pn2Rm4wYRHSb8MENhEN6d8iYHgj7+seQkYPJTjTd3yWwB?=
- =?us-ascii?Q?+TWehGjgUaxnov4WQyvNguhI1BdVQtnmmn7I5dJV7xgfQSKyybWgKJCFoSgh?=
- =?us-ascii?Q?obV8wwqNuAkbiXFE7R6jFH4I7mEbzTeau4vo9kPW12fw0awQH0a/SBoYWJug?=
- =?us-ascii?Q?lLx6Eo6j4I2vgqJsgf4IJFkBRAGLuQXdWOSJ17yE28WyFsq9Sdc0+mJ//miE?=
- =?us-ascii?Q?OuBGRyPP5LrtkXRcA5sImVo5eM/h4+BNhzrbm0fy9crnGBkBGEnGdIze4vCN?=
- =?us-ascii?Q?xKiy2GmuLt7J/SNJJCLlAJKv5O7cwmwlhZYYUP30FJ41CDcc+gcL9+t6Jrxw?=
- =?us-ascii?Q?aC1OWYKkY8NLB2pJv07LcKUFSG3ptCNqFQan2eePbJRfqxUwpwCc2NF4XS2R?=
- =?us-ascii?Q?s8y32p7yD+Cn8CBhtSlXxBUCh3AfCqaAbf29/8C3S6uVV93zSIfqQ1+oKCIm?=
- =?us-ascii?Q?giYtakWS2Pv9AMNheUtOCFaNKuU5Joo=3D?=
-X-MS-Exchange-CrossTenant-Network-Message-Id: f3b63a2a-3015-42f8-1379-08df238f343e
-X-MS-Exchange-CrossTenant-AuthSource: KL1PR02MB6257.apcprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Oct 2026 09:50:07.5165 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: RfhNMYb09WbjuOkz36JAbo1pfWF8dvG7WDIaotybT+6cbjQVTG84lyDUNVg2LeymZpBsJVcwGsw3PmgWpihDiDRL3d040mkArTkntJjMDRA=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SE2PPF27A9EBFF5
-X-OriginatorOrg: processmission.com
-Received-SPF: pass client-ip=2a01:111:f403:c405::5;
- envelope-from=bin.meng@processmission.com;
- helo=TYPPR03CU001.outbound.protection.outlook.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=shentey@gmail.com; helo=mail-wr1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -154,51 +110,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The BookE PIR registration reuses the classic PowerPC 604 write
-callback, which writes SPR 1023 and masks the value to four bits.
-BookE PIR is SPR 286; on e500, SPR 1023 is SVR, so a PIR write can
-corrupt SVR while leaving PIR unchanged.
+Over time, QEMU has grown a number of i.MX boards and the monolithic
+config IMX drags in unneeded dependencies into each SoC model. Extract
+config IMX_RNG to eventually eliminate config IMX.
 
-The e500v1/e500v2 manual defines PIR as read-only. The e500mc, e5500
-and e6500 manuals allow hypervisor software to write PIR after reset.
-Reject writes on e500v1/e500v2 and use the generic 32-bit SPR write
-callback on the other three cores to update the correct register
-without the four-bit restriction.
-
-Reference:
-- E500CORERM (Rev.1), section 2.5.2
-  https://www.nxp.com/docs/en/reference-manual/E500CORERM.pdf
-- E500MCRM (Rev.3), section 2.9.7
-  https://www.nxp.com/docs/en/reference-manual/E500MCRM.pdf
-- E5500RM (Rev.4), section 2.9.7
-  https://www.nxp.com/webapp/Download?colCode=E5500RM
-- E6500RM (Rev.0), section 2.9.8
-  https://www.nxp.com/docs/en/reference-manual/E6500RM.pdf
-
-Fixes: 76a66253e5e4 ("Great PowerPC emulation code resynchronisation and improvments")
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Bin Meng <bin.meng@processmission.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Reviewed-by: Bin Meng <bin.meng@processmission.com>
+Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 ---
+ hw/arm/Kconfig      | 1 +
+ hw/misc/Kconfig     | 3 +++
+ hw/misc/meson.build | 2 +-
+ 3 files changed, 5 insertions(+), 1 deletion(-)
 
- target/ppc/cpu_init.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
-
-diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
-index b711f9c0a8..96bae6a6d1 100644
---- a/target/ppc/cpu_init.c
-+++ b/target/ppc/cpu_init.c
-@@ -2837,7 +2837,9 @@ static void init_proc_e500(CPUPPCState *env, int version)
-     /* Processor identification */
-     spr_register(env, SPR_BOOKE_PIR, "PIR",
-                  SPR_NOACCESS, SPR_NOACCESS,
--                 &spr_read_generic, &spr_write_pir,
-+                 &spr_read_generic,
-+                 (version == fsl_e500v1 || version == fsl_e500v2) ?
-+                     SPR_NOACCESS : &spr_write_generic32,
-                  0x00000000);
+diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+index a33f5a46f9..2084813e1c 100644
+--- a/hw/arm/Kconfig
++++ b/hw/arm/Kconfig
+@@ -483,6 +483,7 @@ config FSL_IMX25
+     select IMX_AVIC
+     select IMX_FEC
+     select IMX_I2C
++    select IMX_RNG
+     select USB_CHIPIDEA
+     select WDT_IMX2
+     select SDHCI
+diff --git a/hw/misc/Kconfig b/hw/misc/Kconfig
+index d1711433ef..3f17d29053 100644
+--- a/hw/misc/Kconfig
++++ b/hw/misc/Kconfig
+@@ -94,6 +94,9 @@ config IMX
+     select PTIMER
+     select SSI
  
-     spr_register(env, SPR_BOOKE_SPEFSCR, "SPEFSCR",
++config IMX_RNG
++    bool
++
+ config FSL_IMX8MP_ANALOG
+     bool
+ 
+diff --git a/hw/misc/meson.build b/hw/misc/meson.build
+index 9790afa104..61e128ab7a 100644
+--- a/hw/misc/meson.build
++++ b/hw/misc/meson.build
+@@ -62,6 +62,7 @@ system_ss.add(when: 'CONFIG_ECCMEMCTL', if_true: files('eccmemctl.c'))
+ system_ss.add(when: 'CONFIG_EXYNOS4', if_true: files('exynos4210_pmu.c', 'exynos4210_clk.c', 'exynos4210_rng.c'))
+ system_ss.add(when: 'CONFIG_FSL_IMX8MP_ANALOG', if_true: files('imx8mp_analog.c'))
+ system_ss.add(when: 'CONFIG_FSL_IMX8MP_CCM', if_true: files('imx8mp_ccm.c'))
++system_ss.add(when: 'CONFIG_IMX_RNG', if_true: files('imx_rngc.c'))
+ system_ss.add(when: 'CONFIG_IMX', if_true: files(
+   'imx25_ccm.c',
+   'imx31_ccm.c',
+@@ -73,7 +74,6 @@ system_ss.add(when: 'CONFIG_IMX', if_true: files(
+   'imx7_gpr.c',
+   'imx7_snvs.c',
+   'imx_ccm.c',
+-  'imx_rngc.c',
+ ))
+ system_ss.add(when: 'CONFIG_MAX78000_AES', if_true: files('max78000_aes.c'))
+ system_ss.add(when: 'CONFIG_MAX78000_GCR', if_true: files('max78000_gcr.c'))
 -- 
-2.53.0
+2.56.0
 
 
