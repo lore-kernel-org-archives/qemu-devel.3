@@ -4,133 +4,117 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2999CA6002
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 08:55:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E258ECA5FF1
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 08:55:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xEN7d-0004ej-GN; Wed, 07 Oct 2026 04:35:35 -0400
+	id 1xEN9J-0008MC-8Q; Wed, 07 Oct 2026 04:37:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1xEI4D-00017i-H3
- for qemu-devel@nongnu.org; Tue, 06 Oct 2026 23:11:50 -0400
-Received: from mail-koreacentralazlp170130006.outbound.protection.outlook.com
- ([2a01:111:f403:c40f::6] helo=SEYPR02CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <uverma@linux.ibm.com>)
+ id 1xEI7e-0001hE-K4; Tue, 06 Oct 2026 23:15:22 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1xEI3y-0000co-LV
- for qemu-devel@nongnu.org; Tue, 06 Oct 2026 23:11:37 -0400
-Received: from SI3PR02MB9388.apcprd02.prod.outlook.com (2603:1096:4:2a6::8) by
- KUZPR02MB9164.apcprd02.prod.outlook.com (2603:1096:d10:61::12) with
- Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.496.15; Tue, 6 Oct 2026 20:56:23 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=kYs8hL7A3rkrhTQwdSJyl6hKlQI2ISm75aEptRYNnH/LjGMKQ1cETMpRZ5f1ptP8lUCXLoxByotx2jYiLE0sNVjMMhatKcNnRyIH8nhkwRpxOobK8Ea3zK1STgQL3F6mlsZKQ08YOc7wnbqORFHfDv/ru6lR0eqC15HesF3UB/PH01jQqS2omxm+y5TXHpHlx/hnaNGg7DLzxwSwAVeZraUusKsBd3lsN9re7KZUsE1aiNWRnofeSSpyyyGPX0GW4GrJ2U5d9dZgwM4U7yIFMC3kCwhK1zzWSFcX2WSzoNDe3rfQMymhxEP6tiE8cbq7BiWOlPOhEylN1qxD8DloLw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=+Nh646pCJPzlIYGNaYOmbMZHm1hYySth9053vym/pOU=;
- b=jrCaPcX1F6Hip8dwvjluK9RSwzisp2EqC1Y9NEuOT8gBloy33K+1Jv0/F2eVefU/h0miGRt7IEmPXjXnbljUfvJh6bF8O07/X4ecI7HqF+KInmiAdQC+qLRWfnW+76GqdnNVws62XF8143JaMUUHn86IkBc1VmWo1IxujVVD8QFQySeBsC6r4weuFE2JN2yFQM8+7ybdCLMelISUyO3hLy1e9+TkYKG3aa9Un0VyVA3XskJZl5iVq9t0CDNfntxnpNglXFdg+XTm6QEGNPhMxda2faFreMqhkq6v3vVRzrqXyxZqmRQ8yiZOPbnwm18jSpSVDmZMu6rJ3YmaacT6ow==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=processmission.com; dmarc=pass action=none
- header.from=processmission.com; dkim=pass header.d=processmission.com;
- arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=+Nh646pCJPzlIYGNaYOmbMZHm1hYySth9053vym/pOU=;
- b=jJXa+qPM9pNWxojl8kcl6yO0qOzlRmKoN526OZ3d1W5CbRhc4NVPsz2MEvVk6w/CAist4A9j3aaR9SjwqxraBwu0VpW/EP2pPcDof4mLBLegwbVOXvBNsLF3RQ4DguEE9X/UxPE+odnXDNexQrIXZAMFhpUYX4z2eWRvDcKHLHy2hmHXL3vCXxLN3Pyd5F+IqpP3JUJiyKubPLWO+tbO4mWhObaktQMlPRn2ji8APVWp7n6i7qLAo6GE/PCoWKKClNFa0kcAL8MxDbxzWjnbmOfH8rgGWIq/4yhLieg/sr7FVSJDxMYzl8skXCaBBdh8rILFd7LBt7ZJjX5eOaS9TQ==
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=processmission.com;
-Received: from KL1PR02MB6257.apcprd02.prod.outlook.com (2603:1096:820:da::11)
- by SI3PR02MB9388.apcprd02.prod.outlook.com (2603:1096:4:2a6::8) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.472.20; Tue, 6 Oct
- 2026 09:50:50 +0000
-Received: from KL1PR02MB6257.apcprd02.prod.outlook.com
- ([fe80::ecf9:e832:8196:215]) by KL1PR02MB6257.apcprd02.prod.outlook.com
- ([fe80::ecf9:e832:8196:215%6]) with mapi id 15.21.0472.016; Tue, 6 Oct 2026
- 09:50:50 +0000
-From: Bin Meng <bin.meng@processmission.com>
-To: QEMU <qemu-devel@nongnu.org>
-Cc: Bernhard Beschow <shentey@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: [PATCH 16/17] tests/tcg/ppc: Test byte comparison and parity on
- e5500/e6500
-Date: Tue,  6 Oct 2026 17:49:11 +0800
-Message-ID: <20261006094921.110871-17-bin.meng@processmission.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20261006094921.110871-1-bin.meng@processmission.com>
-References: <20261006094921.110871-1-bin.meng@processmission.com>
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: TYCPR01CA0136.jpnprd01.prod.outlook.com
- (2603:1096:400:2b7::6) To KL1PR02MB6257.apcprd02.prod.outlook.com
- (2603:1096:820:da::11)
+ (Exim 4.90_1) (envelope-from <uverma@linux.ibm.com>)
+ id 1xEI7T-0001v9-HY; Tue, 06 Oct 2026 23:15:11 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6966c5WC2994055; Tue, 6 Oct 2026 08:11:00 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=3rGIk4
+ IuhrVamx3Q3y/MEovh5gXsO/Qbw5nIMrMs5vw=; b=mkRVJbGuSViZRBa64ZC2Ug
+ vSvz+m4naqEcfD8vkVtOpKYQJzzMq2DrEHT4CmZq8f7DywgO7QclYRZ/zzvduEry
+ WIvF+0fWoEXXe7BNgFZ6PbL7YzeT4pAG4w1rwNTPTNKip26jBjW1HCzlaf4n7XzX
+ YS9JI8xVTrV3QCFjkGqYMIT0YG76ieUhLvCm+BS1Zu7qKLiXdtMqJtfrc7trcHN2
+ AFUAmSUb2kIlYYVpdnl/6f+Wk+j633UA6G7eZ1xY6H/6NNxG883dyEVFtu+QFc7t
+ rtEhEskQiqxz4BUnsEsbowQ8ed52jY2+bX29Slq5zcmxcw5u9r4gyCW2rIBjvWxw
+ ==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4h2s74pvm3-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Tue, 06 Oct 2026 08:11:00 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6966lY8w4151924; Tue, 6 Oct 2026 08:10:59 GMT
+Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4h3dhgrya6-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 06 Oct 2026 08:10:59 +0000 (GMT)
+Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
+ [10.39.53.231])
+ by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 6968AwS932178830
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 6 Oct 2026 08:10:58 GMT
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id F08505805E;
+ Tue,  6 Oct 2026 08:10:57 +0000 (GMT)
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 75B3C58056;
+ Tue,  6 Oct 2026 08:10:51 +0000 (GMT)
+Received: from [9.123.12.1] (unknown [9.123.12.1])
+ by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Tue,  6 Oct 2026 08:10:51 +0000 (GMT)
+Message-ID: <09391c7e-d9e0-40fa-9ba5-382980c1f52f@linux.ibm.com>
+Date: Tue, 6 Oct 2026 13:40:50 +0530
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: KL1PR02MB6257:EE_|SI3PR02MB9388:EE_|KUZPR02MB9164:EE_
-X-MS-Office365-Filtering-Correlation-Id: 291b5b71-ca4e-4b75-b6ab-08df238f4d9c
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|23010399003|1800799024|366016|376014|18002099003|22082099003|10067099003|260925021311599003|260925021911599003|260925022911599003|56012099006;
-X-Microsoft-Antispam-Message-Info: gJv6PqQgi940RuG/CACZYEBDdYqBpbCX7G+irbRF0HV6NfiYichDQH3nN+ufUWKHQrwN7zfI7jcw9tK6PkmR/A4Xmm59gy7FkzbsDRE4h3gTh7uzn9unR9EwY8nEgjI9WvkdA6OJoqSuAWTcS2ozru4UEuvJSswTmLeRzeEFSfaMbduATf9j/AO2Axzayackn9rnD9uKfFyR8Cadq24McMwcG7OIvy3DMWoxys+Bi/U1erDzmN5Y5f2E/ldm9hRotK4M2QsM47J3xE1xxCYvAAugQZWJG1u7pvQNJLo5VM1q7bgSvw1e9CbK1nT4rHDsLhtZ8YabVunz/GkT23PB5ulOCAD5vvVM5iEAEe57FaTzcOGN+KFCVHyBcLNinfS5L1JQrQbpNyAvzPGBpgQibg+U+enOQGfrafGeYvpiwRGy1Oyca5H2rGzLJfQwoc/KbqrUEQHCdk3xyIHoSNjy12gO2KQH/SpDqjdRs46jTtQOl/6ZEzSup/ZZeJhtYt+PQ/0BiBtPmpIvOskvmiWDMTW2WnTJ1fjNsE4rFSSB/WW1gEiRr33z4m40+bkc3BoQRylZIjh39l/w7TDVdy6jXU/fvfq0jVZg7n4zy5CwrqXXWYyL1SJoDUrOTasoz/TJ3AHemIl7/9Ecz1jyrKhf945K8a0Nie3KTEAW0M2bWLU=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:KL1PR02MB6257.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(23010399003)(1800799024)(366016)(376014)(18002099003)(22082099003)(10067099003)(260925021311599003)(260925021911599003)(260925022911599003)(56012099006);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?t5PxOuFPWoB1m6qRLhSzPK9C1BIs60+3JjjqbXJ6mA51CA74M+pZBcZf80pI?=
- =?us-ascii?Q?Og8+RmbnzTjzOEZgqBPDKikQ4DXSeo7xyCgY7ifRDmr7Vzl6ou78AOBOsaOz?=
- =?us-ascii?Q?MEu8peDRm4T/hcZhzNbdMgoTMqMpcKcm5Rs1eyAUaJauUyZ6FqwxVfevjMVE?=
- =?us-ascii?Q?FZD1jcnzydoAfUAIYDWbXlHQJcocJ/6dN6OAWThhoDhBuLcivRyyc2Ca9ews?=
- =?us-ascii?Q?16TKViOfOPUTKVaG2BMNgSuczLU9KpJh7P+onLsmxH3ksUlkbESnA3qDp192?=
- =?us-ascii?Q?D95LugUYj0FJMFa1pLcj3mWQs4lVnb8CMN2PBHh/2r2mT83IFphiH3KjGKfF?=
- =?us-ascii?Q?E8iF0vyRw34kJKJtKX5/CXHyIOzSIOwoPhu/MP53ZAYIxDti69VG0jWNNl3Z?=
- =?us-ascii?Q?67N2zRuTCKehJfP8QVdhHQr8VcmjcD4874LEK3SA6dyKozhEH7pZIbAW805J?=
- =?us-ascii?Q?4zpyLN9AENcj72VroYkUr0YMGx6+RpyGNTiFZ6nE82oPBY+tfGkXCyvilm5J?=
- =?us-ascii?Q?92tZaz+6mjz6L2dRwNU9Qbw0Xb6R51nY87/evhc9m8k4l66Hx9fApzswB7dh?=
- =?us-ascii?Q?WFbN7GJbpql5+mlPUXi82NcAaxlipa2l1DLAi+gwkFv0mTl/i41jptwcGT83?=
- =?us-ascii?Q?6nAbVH3S526SCQzF+1rHMpHJRdnUSFzZbHtgA9eLd0JE/TKXU2vnjtCMVgcC?=
- =?us-ascii?Q?7JQm6uWOQswsRK93vpmoxNkQRmcf/LKzC8TwhZ8XFZ9tACT/g7p5TVI3/bow?=
- =?us-ascii?Q?/Y9VkBTVPwtE1QEGtU743kHfcGIodSxBG/cYzhx6BVgAcrdQP3Hi34bvjUYE?=
- =?us-ascii?Q?pztBcUbT63qlVyby4ow3s1GSxnkvRkHFHM7UoHwLXsYM71cGfEnqTK28pIoV?=
- =?us-ascii?Q?B5xxFPTSmZXRCJtKNJgXamsIpKHD7vO8I3Ae3WJCgcWOdKqXOFEY6I/golb1?=
- =?us-ascii?Q?nfCAdki/DgCeZrzFc0m7e+GpBS/fCfOEOJcMfHSBb/ynox1n04lE9iX2GU0W?=
- =?us-ascii?Q?ihqg4gRuPPQhTX9hpJxNQFiBnFbVd1DPb3V8niLYLMIXFe6U2muoX6JwZhM/?=
- =?us-ascii?Q?o8xvEwq/e9HRdB00kKHCQ2xygpiI946Q+kzVHOY1FYvXjiQJZgt55XsbOV5u?=
- =?us-ascii?Q?Tsx05vIjFulnYFWyuCdCb7UUUA5UwpGCucDYoPaU7mpPVKGCh7BVhykZ8Hjp?=
- =?us-ascii?Q?t9cxgQmlYrjPlFd0wUEbIg1lK5HmAOmMT0Q3DGzSi3M/pFvw5HO3/tMD6cfL?=
- =?us-ascii?Q?6kyXUHZjsoThi7rjv3DtO1TYyh9fe4WGjuunVzJiV8STAMYJsAhghwBlD6LH?=
- =?us-ascii?Q?EhP5CVC/HihAK1ywMlQ2qYCEI2JwrfDy0yWdGLlhAJPe5+iV5ew6bIshK0Th?=
- =?us-ascii?Q?Nj8EdLK99shPJ7uCf4RlwhDwFH+yqEc5bNMZQwGDTTf0fKYQuKqRPa8aozJP?=
- =?us-ascii?Q?glgbn9QXHl1Kf0j+1xNFe0FPU3eOgspaYjVO6w27Ipio6eD15u8aEuMckpbR?=
- =?us-ascii?Q?0aZAh5aDxEUSy6Jg1Mrxm6REezJ6Fi4mg3FwQQ5WS0d3YLLEwyIjkV9zhG9s?=
- =?us-ascii?Q?t4PLxR+aSOHWVQfPXnMtckviw2o9OVIM86Jp8C168R2BiH3vLPVfpx3nPXte?=
- =?us-ascii?Q?/9vJTszu5dwjwAMwbnzf9CT7OMg7YRwSmq5elaoJUxE53vha86SMwyeGNEWB?=
- =?us-ascii?Q?t6xUe1rAv3EpJ9GOrjBPolQKtLGWvcZRKQsWw+jN1p655N1wPALG14QDLeA8?=
- =?us-ascii?Q?6IG1WmRbaCQmS2k4n10cDONXNF1AOa4=3D?=
-X-MS-Exchange-CrossTenant-Network-Message-Id: 291b5b71-ca4e-4b75-b6ab-08df238f4d9c
-X-MS-Exchange-CrossTenant-AuthSource: KL1PR02MB6257.apcprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Oct 2026 09:50:50.0805 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: tHxxHXGM8W4PoZRxsdu46hhguRuGmGrGfKiOj7m6NMEHf9SBGO+GmLxT8Em8VNInRzHkj0a9pIYpF74/VWkNx8T6Dyh5j9pAHC4vYoeV9KA=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SI3PR02MB9388
-X-OriginatorOrg: processmission.com
-Received-SPF: pass client-ip=2a01:111:f403:c40f::6;
- envelope-from=bin.meng@processmission.com;
- helo=SEYPR02CU001.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v2 2/8] hw/loader: add load_elf_ram_sym_buf() for
+ in-memory ELF loading
+To: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, aik@amd.com,
+ nnmlinux@linux.ibm.com, avnish@linux.ibm.com, philmd@oss.qualcomm.com,
+ alistair@alistair23.me
+Cc: pbonzini@redhat.com, th.huth@posteo.eu, sbhat@linux.ibm.com,
+ harshpb@linux.ibm.com, amachhiw@linux.ibm.com, rathc@linux.ibm.com,
+ balaton@eik.bme.hu, philmd@linaro.org, npiggin@gmail.com,
+ marcandre.lureau@redhat.com, fam@euphon.net, alex.bennee@linaro.org,
+ richard.henderson@linaro.org
+References: <20261002052605.605858-1-uverma@linux.ibm.com>
+ <20261002052605.605858-3-uverma@linux.ibm.com>
+Content-Language: en-US, en-ZM
+From: Utkarsh Verma <uverma@linux.ibm.com>
+In-Reply-To: <20261002052605.605858-3-uverma@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-ORIG-GUID: 35NJN8pwVWL8YYiES7LvmBB1T5a8wSzg
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA2MDAzMiBTYWx0ZWRfX5MCUJEFjAYu1
+ cPgrTmw+LDPLy60LJd7LcIC3D3jm+bJlLJvo+NK1qc4uoiI7Kc37M5Ci8JCp5WOrCMY6pitibdu
+ nssuD2a2tbsVo0PWhdTTlGDqT5Nd+ZA=
+X-Proofpoint-GUID: gGWxE839sji040USvoRUJQz8Sx_WxB_5
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA2MDAzMiBTYWx0ZWRfX8tadK8ps8taD
+ X14K4tpc7Hg9GDtYhOUbm3DsPoiCa6RDPR4fwywQ7qFb/iTNhW8oTFX5komYjtUYlvgYkgvyVqy
+ VyEG6WTH4IfgJcc0J52zioUuSZ4jz1Tmc5SlkaED0xNW5vZ65FLCX1wL6GCwKusbe7WPYdHJup/
+ ylKxZt47zWtHLwsHwyzNjNXKPPYH+tBItG1B5gtJMu/BNhYdcec8us05j2C3bPZu0ETgS+ZinZO
+ XBGYtjGVQ3glZyxKK6kwvF2vo1EeaTUE2niB/W+FhlonxkQUVMxpQkcf5MVPEmcAhEeTQX9J9Wk
+ 6NmOICzS9ElVIeBFFMCr3CJhl0YFnnG8T6c4h0SjcFin8ncTME9nL6SBrAZMyvtssM4P9Hw/VL7
+ o7hziof+v1Z5kukJBAAXyQPITfI3HS19OCG/aPxfkK1QrgVmVopsMJDA5S+fwf/oI7d52DUh1GG
+ /BR0uaRSdneoq6Ag7AQ==
+X-Authority-Analysis: v=2.4 cv=fM2sTpae c=1 sm=1 tr=0 ts=6ac4ad14 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8
+ a=hHydlDmERXRUVUicuWIA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-10-06_02,2026-10-05_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 bulkscore=0 priorityscore=1501 spamscore=0 lowpriorityscore=0
+ phishscore=0 adultscore=0 malwarescore=0 clxscore=1011 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2610060032
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=uverma@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -147,76 +131,218 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The e5500 and e6500 implement cmpb, prtyw and prtyd. Check matching-byte
-masks and parity results, including the separate word results in a
-64-bit register and parity based on the low bit of each byte.
++ Alistair and Philippe
 
-Use inputs with odd parity in bits above each byte's low bit to reject
-implementations that compute parity over all bits.
+Hi Alistair and Philippe,
+Could you please share your feedback on this new ELF loader from buffer 
+function. Or suggest someone who may help to review this.
+Also, hw/core/loader.c file has no entry in the MAINTAINERS file. So, 
+should we add the file under Generic loader section only?
 
-Add the test to the existing Book E matrix for e5500 and e6500 in
-64-bit mode.
+Regards,
+Utkarsh
 
-Signed-off-by: Bin Meng <bin.meng@processmission.com>
----
-
- tests/tcg/ppc/system/byte-parity.S | 33 ++++++++++++++++++++++++++++++
- tests/tcg/ppc64/system/meson.build |  1 +
- 2 files changed, 34 insertions(+)
- create mode 100644 tests/tcg/ppc/system/byte-parity.S
-
-diff --git a/tests/tcg/ppc/system/byte-parity.S b/tests/tcg/ppc/system/byte-parity.S
-new file mode 100644
-index 0000000000..f4d434c881
---- /dev/null
-+++ b/tests/tcg/ppc/system/byte-parity.S
-@@ -0,0 +1,33 @@
-+/*
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ * Copyright (c) 2026 Process Mission
-+ */
-+
-+#include "macros.inc"
-+
-+    .text
-+    .globl test_main
-+test_main:
-+    load_value r9, 0x1122334455667788
-+    load_value r10, 0x1122994455660088
-+    cmpb r11, r9, r10
-+    check_value r11, 0xffff00ffffff00ff
-+
-+    .macro parity value, word, doubleword
-+    load_value r9, \value
-+    prtyw r11, r9
-+    check_value r11, \word
-+#ifdef _LP64
-+    prtyd r11, r9
-+    check_value r11, \doubleword
-+#endif
-+    .endm
-+
-+    /* Parity uses the least significant bit of each byte */
-+    parity 0x0101010100010000, 1, 1
-+    parity 0x0001010100010000, 0x100000001, 0
-+    parity 0x8080808002020202, 0, 0
-+    parity 0x0000000000000080, 0, 0
-+    parity 0x8000000000000000, 0, 0
-+    b pass
-diff --git a/tests/tcg/ppc64/system/meson.build b/tests/tcg/ppc64/system/meson.build
-index ca398860e3..ffa3060f05 100644
---- a/tests/tcg/ppc64/system/meson.build
-+++ b/tests/tcg/ppc64/system/meson.build
-@@ -6,6 +6,7 @@ ppc64_system_cflags = ppc_system_cflags + ['-m64']
- tests = []
- foreach cpu: ['e5500', 'e6500']
-   sources = ppc_system_sources
-+  sources += ['byte-parity.S']
-   foreach src: sources
-     tests += {
-       '../ppc/system/' + src: {
--- 
-2.53.0
+On 10/2/26 10:55 AM, uverma@linux.ibm.com wrote:
+> From: Utkarsh Verma <uverma@linux.ibm.com>
+> 
+> Add a new public API load_elf_ram_sym_buf() that loads an ELF image
+> from a caller-supplied memory buffer rather than a file path.
+> The implementation creates a temporary file via g_file_open_tmp(), then
+> reuses the existing load_elf32/load_elf64 paths.
+> 
+> To support per-segment inspection by callers (e.g. detecting VoF
+> firmware segments), extend the internal load_elf{32,64} template
+> (elf_ops.h.inc) with an optional segment_fn_t callback that is
+> invoked once for every PT_LOAD segment after its load address is
+> resolved. Returning false from the callback aborts the load with
+> ELF_LOAD_FAILED.
+> 
+> AI-used-for: code
+> Signed-off-by: Utkarsh Verma <uverma@linux.ibm.com>
+> ---
+> Chaneglog:
+> v2:
+> - Replaced memfd_create() with g_file_open_tmp()
+> - Replaced write() call with qemu_write_full()
+> ---
+>   hw/core/loader.c         | 81 +++++++++++++++++++++++++++++++++++++++-
+>   include/hw/core/loader.h | 30 +++++++++++++++
+>   include/hw/elf_ops.h.inc | 12 +++++-
+>   3 files changed, 120 insertions(+), 3 deletions(-)
+> 
+> diff --git a/hw/core/loader.c b/hw/core/loader.c
+> index 5cbfba0a86..fa04c59ed0 100644
+> --- a/hw/core/loader.c
+> +++ b/hw/core/loader.c
+> @@ -510,12 +510,14 @@ ssize_t load_elf_ram_sym(const char *filename,
+>           ret = load_elf64(filename, fd, elf_note_fn,
+>                            translate_fn, translate_opaque, must_swab,
+>                            pentry, lowaddr, highaddr, pflags, elf_machine,
+> -                         clear_lsb, data_swab, as, load_rom, sym_cb);
+> +                         clear_lsb, data_swab, as, load_rom, sym_cb,
+> +                         NULL, NULL);
+>       } else {
+>           ret = load_elf32(filename, fd, elf_note_fn,
+>                            translate_fn, translate_opaque, must_swab,
+>                            pentry, lowaddr, highaddr, pflags, elf_machine,
+> -                         clear_lsb, data_swab, as, load_rom, sym_cb);
+> +                         clear_lsb, data_swab, as, load_rom, sym_cb,
+> +                         NULL, NULL);
+>       }
+>   
+>       if (ret > 0) {
+> @@ -527,6 +529,81 @@ ssize_t load_elf_ram_sym(const char *filename,
+>       return ret;
+>   }
+>   
+> +ssize_t load_elf_ram_sym_buf(const uint8_t *buf, size_t buflen,
+> +                              uint64_t (*elf_note_fn)(void *, void *, bool),
+> +                              uint64_t (*translate_fn)(void *, uint64_t),
+> +                              void *translate_opaque, uint64_t *pentry,
+> +                              uint64_t *lowaddr, uint64_t *highaddr,
+> +                              uint32_t *pflags, int elf_data_order,
+> +                              int elf_machine, int clear_lsb, int data_swab,
+> +                              AddressSpace *as, bool load_rom,
+> +                              symbol_fn_t sym_cb,
+> +                              segment_fn_t segment_fn, void *segment_opaque)
+> +{
+> +    const int host_data_order = HOST_BIG_ENDIAN ? ELFDATA2MSB : ELFDATA2LSB;
+> +    int fd, must_swab;
+> +    ssize_t ret = ELF_LOAD_FAILED;
+> +    uint8_t e_ident[EI_NIDENT];
+> +    gchar *tmp_path = NULL;
+> +    GError *gerr = NULL;
+> +
+> +    fd = g_file_open_tmp("qemu-elf-buf-XXXXXX", &tmp_path, &gerr);
+> +    if (fd < 0) {
+> +        error_report("load_elf_ram_sym_buf: %s", gerr->message);
+> +        g_error_free(gerr);
+> +        return ELF_LOAD_FAILED;
+> +    }
+> +    g_unlink(tmp_path);
+> +    g_free(tmp_path);
+> +
+> +    if (qemu_write_full(fd, buf, buflen) != buflen) {
+> +        error_report("load_elf_ram_sym_buf: write: %s", strerror(errno));
+> +        goto fail;
+> +    }
+> +
+> +    lseek(fd, 0, SEEK_SET);
+> +    if (read(fd, e_ident, sizeof(e_ident)) != sizeof(e_ident)) {
+> +        goto fail;
+> +    }
+> +    if (e_ident[0] != ELFMAG0 ||
+> +        e_ident[1] != ELFMAG1 ||
+> +        e_ident[2] != ELFMAG2 ||
+> +        e_ident[3] != ELFMAG3) {
+> +        ret = ELF_LOAD_NOT_ELF;
+> +        goto fail;
+> +    }
+> +
+> +    if (elf_data_order != ELFDATANONE && elf_data_order != e_ident[EI_DATA]) {
+> +        ret = ELF_LOAD_WRONG_ENDIAN;
+> +        goto fail;
+> +    }
+> +
+> +    must_swab = host_data_order != e_ident[EI_DATA];
+> +
+> +    lseek(fd, 0, SEEK_SET);
+> +    if (e_ident[EI_CLASS] == ELFCLASS64) {
+> +        ret = load_elf64("(buffer)", fd, elf_note_fn,
+> +                         translate_fn, translate_opaque, must_swab,
+> +                         pentry, lowaddr, highaddr, pflags, elf_machine,
+> +                         clear_lsb, data_swab, as, load_rom, sym_cb,
+> +                         segment_fn, segment_opaque);
+> +    } else {
+> +        ret = load_elf32("(buffer)", fd, elf_note_fn,
+> +                         translate_fn, translate_opaque, must_swab,
+> +                         pentry, lowaddr, highaddr, pflags, elf_machine,
+> +                         clear_lsb, data_swab, as, load_rom, sym_cb,
+> +                         segment_fn, segment_opaque);
+> +    }
+> +
+> +    if (ret > 0) {
+> +        debuginfo_report_elf("(buffer)", fd, 0);
+> +    }
+> +
+> + fail:
+> +    close(fd);
+> +    return ret;
+> +}
+> +
+>   static void bswap_uboot_header(uboot_image_header_t *hdr)
+>   {
+>   #if !HOST_BIG_ENDIAN
+> diff --git a/include/hw/core/loader.h b/include/hw/core/loader.h
+> index d9431e8a8d..b67b2ca013 100644
+> --- a/include/hw/core/loader.h
+> +++ b/include/hw/core/loader.h
+> @@ -156,6 +156,36 @@ ssize_t load_elf_ram_sym(const char *filename,
+>                            int clear_lsb, int data_swab,
+>                            AddressSpace *as, bool load_rom, symbol_fn_t sym_cb);
+>   
+> +/*
+> + * segment_fn_t:
+> + * Per-PT_LOAD segment callback for load_elf_ram_sym_buf().
+> + */
+> +typedef bool (*segment_fn_t)(void *opaque,
+> +                             uint64_t paddr, uint64_t vaddr,
+> +                             uint64_t filesz, uint64_t memsz);
+> +
+> +/*
+> + * load_elf_ram_sym_buf:
+> + * @buf: pointer to an in-memory ELF image
+> + * @buflen: size of @buf in bytes
+> + * @segment_fn: optional per-PT_LOAD callback
+> + * @segment_opaque: opaque data passed to @segment_fn
+> + *
+> + * Identical to load_elf_ram_sym() but loads from a caller-supplied
+> + * memory buffer instead of a file.  All other parameters have the
+> + * same meaning as load_elf_ram_sym().
+> + */
+> +ssize_t load_elf_ram_sym_buf(const uint8_t *buf, size_t buflen,
+> +                             uint64_t (*elf_note_fn)(void *, void *, bool),
+> +                             uint64_t (*translate_fn)(void *, uint64_t),
+> +                             void *translate_opaque, uint64_t *pentry,
+> +                             uint64_t *lowaddr, uint64_t *highaddr,
+> +                             uint32_t *pflags, int elf_data_order,
+> +                             int elf_machine, int clear_lsb, int data_swab,
+> +                             AddressSpace *as, bool load_rom,
+> +                             symbol_fn_t sym_cb,
+> +                             segment_fn_t segment_fn, void *segment_opaque);
+> +
+>   /** load_elf_as:
+>    * Same as load_elf_ram_sym(), but always loads the elf as ROM
+>    */
+> diff --git a/include/hw/elf_ops.h.inc b/include/hw/elf_ops.h.inc
+> index 044e72de2a..a2c9b52bf9 100644
+> --- a/include/hw/elf_ops.h.inc
+> +++ b/include/hw/elf_ops.h.inc
+> @@ -321,7 +321,9 @@ static ssize_t glue(load_elf, SZ)(const char *name, int fd,
+>                                     uint32_t *pflags, int elf_machine,
+>                                     int clear_lsb, int data_swab,
+>                                     AddressSpace *as, bool load_rom,
+> -                                  symbol_fn_t sym_cb)
+> +                                  symbol_fn_t sym_cb,
+> +                                  segment_fn_t segment_fn,
+> +                                  void *segment_opaque)
+>   {
+>       struct elfhdr ehdr;
+>       struct elf_phdr *phdr = NULL, *ph;
+> @@ -504,6 +506,14 @@ static ssize_t glue(load_elf, SZ)(const char *name, int fd,
+>                   addr = ph->p_paddr;
+>               }
+>   
+> +            if (segment_fn) {
+> +                if (!segment_fn(segment_opaque, addr, ph->p_vaddr,
+> +                                file_size, mem_size)) {
+> +                    ret = ELF_LOAD_FAILED;
+> +                    goto fail;
+> +                }
+> +            }
+> +
+>               if (data_swab) {
+>                   elf_word j;
+>                   for (j = 0; j < file_size; j += (1 << data_swab)) {
 
 
