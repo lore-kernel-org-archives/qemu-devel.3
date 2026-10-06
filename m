@@ -4,109 +4,150 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74ACDCA5FF1
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 08:24:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC401CA5FFF
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 08:25:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xEMwE-0004P9-Ia; Wed, 07 Oct 2026 04:23:46 -0400
+	id 1xEMxP-00064v-QF; Wed, 07 Oct 2026 04:25:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
- id 1xEHhv-00063Z-TT
- for qemu-devel@nongnu.org; Tue, 06 Oct 2026 22:48:49 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
+ id 1xEHlc-0006Ty-Re
+ for qemu-devel@nongnu.org; Tue, 06 Oct 2026 22:52:50 -0400
+Received: from mail-francesouthazlp170110003.outbound.protection.outlook.com
+ ([2a01:111:f403:c207::3] helo=MRWPR03CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
- id 1xEHhp-0003uA-Ai
- for qemu-devel@nongnu.org; Tue, 06 Oct 2026 22:48:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1791341198;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=0Y2Cf0qiwbTYW8nwxamly50QakA7MVWZfoaEl6TzEfA=;
- b=FebkC19PRkTNFmH9q8rLkK25yW2nywsA9ouilOp4frO8bFY/h0LA0SWgLTFpKLAUSuIty7
- q7iSBSUB/HSfPUUpGqT0h6cctysK2enWo0UZPlGJu+7euaxKstSj8tP4oP5qzFg4mxEvJL
- akF2OKnZfAcqz5EUpjmDWWIeb3ROXyM=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-561-4KN5PfRcMXSrnO-KkOiFVw-1; Tue, 06 Oct 2026 10:12:18 -0400
-X-MC-Unique: 4KN5PfRcMXSrnO-KkOiFVw-1
-X-Mimecast-MFC-AGG-ID: 4KN5PfRcMXSrnO-KkOiFVw_1791295937
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4a170fa0879so15182495e9.3
- for <qemu-devel@nongnu.org>; Tue, 06 Oct 2026 07:12:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1791295937; x=1791900737; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=0Y2Cf0qiwbTYW8nwxamly50QakA7MVWZfoaEl6TzEfA=;
- b=e4owKprGQ/CjZd4hPqd39wY5bPxmp0Nz63hHXoJ0cM13dvvCxRZZQA8LN6F2hO+6v2
- D7t9L7+uzBlCgJvb+0INxZe3lZIm8XZo8/0cWRZjTKjiM8sX8xYKeocy3Pu5izi+pPAV
- 5CyxtjfkpKjYiQaDJ3Fv5dRmfTx42Uj24y+/C0zdcYjFVtr72eIyjVn+UupyRaOgGygk
- 9IuruogdygqgQaMHA/gb8yXlbjHaivVhlH+FSxN2XNWUeF0RecFgVTtsq2c3oY3QqU2M
- T0hZK00vo7qaMWXRFx2VCq59Ov6wXVWvk3Z5CLx9SwJVSdN1Wn8ghuSoTHpZcj69e830
- /FVA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791295937; x=1791900737;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=0Y2Cf0qiwbTYW8nwxamly50QakA7MVWZfoaEl6TzEfA=;
- b=B+UFL3+P+OkuQZ96VXi9xNhmL4B0ltlLO/yj8LBAR9QF19LpT4JAflHVQ+Kd5xKsy5
- ZWiM3RQZ8VhyC3oOict8ViY2CdIzE7QlHioCDEah5K6zomF49WSRRJSr9yrgyBS0Rl8g
- fVLh8EF0lWMxqppsijSZGtkI7wi9VS4M7Sviz+aHcmUoa46iOJhlw2mvm6r9isLZfSnp
- d4qLoN6LVXi/YHOAI4FSmm4efYBXt+GLbRm4fjUSKr5pPVnqqiLUmzfe0vI70EXNpI5/
- qzVPvlT0aJ2nQPmuYr2pBDmJNcyr4yZJ/JG0+Nb0wJJzHWGvYoX94CJu2zVe5X6xOqhA
- Wnmg==
-X-Gm-Message-State: AFuF++lzGp8/8aGYufjA1Uw9vHvfYciFBd4M64SnMWA3w9mHa/zNuAja
- XkvSy3I8UzyVUzndhiHb0DmHL8fNsU7K4gpEIbIspHwbHew1zI3J26W+zfFQkoRpqIAtspefmvH
- 1CAiHqxeS1F2VkZa+OuuzosMPydDLfwiFIUAdXg1exRxV9YZj/70dTPdm
-X-Gm-Gg: AYBFou1Kd4fePAb/8YWpNR+0ypSX+h5tkmC2vVPOHeQXDLLMxGNnF4OfNOO1KKdCnGx
- 7nrzb1WiJpNGW66M8VLRfjaw4M+hrci+Teag+f+UHLNvgnJvtsuX5H9h21DEXQB+w2NO0affQEn
- 2zZY1AoF7frvf87Zh7XYQhjhgvam2b8zs0D4wSZhmmsjBrE7zdSATant6t7CNTGOEs55hOFVmTO
- PD8byAamtc7oaFHYHPJKpHIES7/M1oRNXnbQhbL3ciLlDvv0UZqeYw0jihdldDbcjSAksrojo04
- Pffifk0l4V3p13b9GVpJ2yqPwFXHGEPOlkCdmqzLuX+hcPd7ChT1Uqr4SiMWQyzMLNamfjIPyFP
- tuXSaxc1s4ExPG5+zwB8wXWk+UCmPGncpclQ=
-X-Received: by 2002:a05:600c:4705:b0:49c:fc6c:be08 with SMTP id
- 5b1f17b1804b1-4a17b54ec4dmr26934995e9.31.1791295937121; 
- Tue, 06 Oct 2026 07:12:17 -0700 (PDT)
-X-Received: by 2002:a05:600c:4705:b0:49c:fc6c:be08 with SMTP id
- 5b1f17b1804b1-4a17b54ec4dmr26934265e9.31.1791295936484; 
- Tue, 06 Oct 2026 07:12:16 -0700 (PDT)
-Received: from leonardi-redhat ([176.206.38.69])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a178c53997sm112426335e9.12.2026.10.06.07.12.15
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 06 Oct 2026 07:12:16 -0700 (PDT)
-Date: Tue, 6 Oct 2026 16:12:07 +0200
-From: Luigi Leonardi <leonardi@redhat.com>
-To: Tommaso Califano <tcalifano@redhat.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- qemu-stable@nongnu.org
-Subject: Re: [PATCH v2] hw/usb: Fix USB MTP heap OOB read via dlen underflow
-Message-ID: <asUBcqRi6PVnxA_E@leonardi-redhat>
-References: <20261005162549.120647-1-tcalifano@redhat.com>
+ (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
+ id 1xEHlR-00054L-73
+ for qemu-devel@nongnu.org; Tue, 06 Oct 2026 22:52:23 -0400
+Received: from AM0PR08MB286923.eurprd08.prod.outlook.com
+ (2603:10a6:20b:804::5) by GVXPR08MB10587.eurprd08.prod.outlook.com
+ (2603:10a6:150:15c::11) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.496.15; Wed, 7 Oct
+ 2026 01:02:36 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=abIccMP2SoiB8zmkmYvadblMkIJC4K+po7ZDriS8RgqQTy78UuSsh6SR425cJd+wGiuHaZyusUbGkfSZIaLvO8NPiZUw7nnxbARBidXxq5FofRnXlokRDNV9NmsXc8Z6o+MyTSlXCoDY4m7EAC3eBCdO5VYpvV6ScCHoiiW3tenHIaKY0WeryK/8U0+9Id5RzACK1ZS5hha4XjpLS5WidsHsfvYLzVqf/Wgwk+Wr7bt9jtauQfMcwwvgjvCcFkNsb5Yw8NhoFFkdkNgqZfO1awD0ReziWqfJtJUzWNMjcRVI0/u510A8Eiy0AEVwE+0T0rKS2vmLFVLBvslHxRi58Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=rSYvis4evdcYzcKJQUyoAUjH/0QlDPOzhF2pDwJHL2g=;
+ b=k0XIr90lP/OWyWQFV4CvW1TBML+WjKdx/AZklLqTpbWnmDGxi68TgtYQ1A6JhmKIB9CwUlH+GqHmCOurnQRwuA4EmIexKpoV3QbhdbfJZG0BGOFGa4Zrin3a6tINlZ04jTA+bnQKy5Sy85HwxyCdx0Lu01eLsdnVp2eD9XkSovfX20jVgaXzWreaBe48E6X4DrTW6orysJMTymxkqq3kk3pqLIYidantEP6SPpGpQgl/HRbiyBPizG9hxk6IUTSQH8Bj5zmRIXDGAbvXA6DPRHBo3JSdHZvWA0KFXbP4554swqyrjsmAMUPY60N3KPAp1nn0mgKNDA6jyi1bdprWWQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
+ header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=rSYvis4evdcYzcKJQUyoAUjH/0QlDPOzhF2pDwJHL2g=;
+ b=Pb6FXI6zedWQr+CIhVfnTFEp9/dKurhtred3F3idLEqlRbkSBK4fVzvyzO80iRchaMb0Y1X5W5DlatC/t7Zm62tkiBpagIZIqLSw9MH7utFZJ9rROablAt4ZJGOZ2dcyhlJENVenKO6sp1PtklF2cAVh5AdHX0anMmoJqhqepjqu2PGzz45OpY18JexB6AygnRZWuiIoFdMvZ4yK89oD3lJMOPK9GV44LdjF96LBBB0OKrqJiK1/moJg4L1mFNDZ9G4WUzT3YnD+ZINXTuQ6HezGfm4ItyDFdEu/o83AW0UtaBzBV3QCttVJEc8tkHtm/Zh5opH3hWX+/C0F28Mijw==
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=virtuozzo.com;
+Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
+ (2603:10a6:800:20a::12) by AM0PR08MB286923.eurprd08.prod.outlook.com
+ (2603:10a6:20b:804::5) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.496.15; Tue, 6 Oct
+ 2026 13:58:48 +0000
+Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
+ ([fe80::4e37:b189:ddcd:3dd8]) by VI0PR08MB10656.eurprd08.prod.outlook.com
+ ([fe80::4e37:b189:ddcd:3dd8%7]) with mapi id 15.21.0496.010; Tue, 6 Oct 2026
+ 13:58:48 +0000
+From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+Subject: [PATCH v13 00/22] migration/cpr: support vhost-vsock devices
+Date: Tue, 06 Oct 2026 16:58:23 +0300
+Message-Id: <20261006-up-vsock-vhost-v5-v13-0-2ea78fd1b7ed@virtuozzo.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAH/+xGoC/23RwW7DIAwA0F+pOI/JBgK4p/3HtENCYM2mlSqka
+ GvVfx/ppinSLHExsp9l+ypKnKdYxH53FXOsU5nysQWoH3YiHPrja5TT2D6EAmWBwMvzSdaSw7u
+ sh1wWWTsZnMdBU8KAvWh1pzmm6fOOPr/8xOU8vMWwrNCacZjKkueve9farXm/PhrGbw/kiM4o3
+ XlKxj/VaV7O+XLJjyF/iLVHtVul4xTbFDNqHNQYbJ9GTnFbhZu1uqbYmCgm0DrojlP8RlHEKb4
+ pqIbQdgaDNz2n0EbRwCnUlEhANllFzgGnIPwxCIAcg9AcH4CMNzqSH1gHt45iHVyn8qkHGr1ym
+ t0wqq3DHgrVeilAqzRBsP7fdm632zc8yZiluQIAAA==
+X-Change-ID: 20260908-up-vsock-vhost-v5-c781b39f1c1a
+To: qemu-devel@nongnu.org
+Cc: mst@redhat.com, maciej.szmigiero@oracle.com, peterx@redhat.com, 
+ odaki@rsg.ci.i.u-tokyo.ac.jp, dwmw2@infradead.org, dongli.zhang@oracle.com, 
+ bchaney@akamai.com, den@openvz.org, farosas@suse.de, 
+ andrey.drobyshev@virtuozzo.com, clg@redhat.com, mark.kanda@oracle.com, 
+ vsementsov@yandex-team.ru, philmd@oss.qualcomm.com, sgarzare@redhat.com
+X-Mailer: b4 0.16.0
+X-ClientProxiedBy: VI6PEPF00000229.AUTP296.PROD.OUTLOOK.COM
+ (2603:10a6:808:1::8f3) To VI0PR08MB10656.eurprd08.prod.outlook.com
+ (2603:10a6:800:20a::12)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20261005162549.120647-1-tcalifano@redhat.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=leonardi@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: VI0PR08MB10656:EE_|AM0PR08MB286923:EE_|GVXPR08MB10587:EE_
+X-MS-Office365-Filtering-Correlation-Id: 5cf5b490-3947-4253-6b42-08df23b1f1b1
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|1800799024|366016|376014|7416014|52116014|23010399003|10067099003|56012099006|6133799003|18002099003|38350700014;
+X-Microsoft-Antispam-Message-Info: OoA5CXnMHzNe8DOPk+93Q+zePowuTAFmjbYjY6rwbEnPAim/G62D0nHwN4wtqpHBv71bnqFpR3XkZO82BYrWQ9sn4FX2nP9sGd74qZdXWcLrluVzFhh9tPWWnHLOAvrT9j+x6wxxWHMzB2yNv08HPWwndkHe3+lD3wZzUPjE69k5PPgWA2A6YS10r6oIKCut93m71+pHdn55bhng2wTOS3aAkzWXXb/s0KsN/3f9TLwSk3BHUpnS8NP7z6svXcvdcX1bIA9wLF2IXXo3r+DFfvM9YV/3GOaHOKWgB05OTG0gbbBMkyYj1Gh/trbeDjuS1g8AtIXEjRAmrGhgB731esaQedahQriCtymgJ/nmPcq3zDGp3LSa6uPAlSGAvjBClf6nnwqyAiB9/Pb7/tjYQg+mMOzVrz2LJiLokFAbz5fD0lSb2IEBYQyLlW2dqXyxqqIWBdY9vd+8tV7z9odSUHSvv/YNdVQpshZwysjEe/lV4MmLn74Wr1o0Ru+lLFIwtfwJ3MydXpMEjcS/LAUskjxqmIwbziv+Oxzkc9lr52TBKBDhe0qR2dPaBuPtsA/8Bf1iR19Wwa4sGM+6AAWBFlvqCHDReKGqCuZlEia8sOr+BfVX88RLvV5TJncxHemDYr06VQ6QXZ6g4YPA0IHtRweVsN41H7VV34hz7L6h/C0=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:VI0PR08MB10656.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(366016)(376014)(7416014)(52116014)(23010399003)(10067099003)(56012099006)(6133799003)(18002099003)(38350700014);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?Y0NiSXhrTmZRWFgzSGhHTGIrR3ZhT2IxL2tLdWV2UGxSbXFEMGxGRkllaXVR?=
+ =?utf-8?B?Qlo4cjBZUGFrME1ROUo1VjdMemdjZjhmL2FrMlJSZnptTVpkT2M0SHdVbHNS?=
+ =?utf-8?B?YU9EU2owdHVIMVB3S1RHKytteWtBNyt1bU8xSWh2eTJ1V1FHMFZ0TWVyeTJa?=
+ =?utf-8?B?SjNWSDZnV1VMM1c2MXZyWStidW11TmJLWlBwem1yNE9NTitlbjRnNG5wU25N?=
+ =?utf-8?B?OVlWU1QwWTByU1lFczJuMkdPSFVIMUNuTm4ydEk4UmZjcDY1ekNBeTFCVHFv?=
+ =?utf-8?B?aHh3cFhjci9oSUY2VWVUOURUNGpITXVhTVlURjFTSmVRR0R5V3JBMklCYWFR?=
+ =?utf-8?B?cHo5aHpleUZyM0hlcU95aXFYUFV6YXZuYUVacmpsU0Fvc3JIQnlFU0ZYamVF?=
+ =?utf-8?B?USs0VmlQOUIrMHJCeGlvTUhOL3Iyck93OXhEMzcxcFY2bUs3b2RmWnMyREFr?=
+ =?utf-8?B?WWtZYXpJdmc3bFhJYnZXV24vS2Urc2lVbHJwckJJQ0QyTDlsMUJUdUJRd2Qv?=
+ =?utf-8?B?QjdLYi8rKzVURVg3d1R3ZFIrVnRyWkhtOTFvMVFvYWp4OFpsYWFVY0R0U292?=
+ =?utf-8?B?MUZtUExnYVJCT2tCNStWYTJTTGNkUmJNU01YeSs1UjJudDh4SlFOZmlrUW1t?=
+ =?utf-8?B?RlV4dFlQbjZJUDh0RUFvbGJadk5QL3ZRWC9lZGsxUGFRTjF4bGJwS01QaE1m?=
+ =?utf-8?B?RTlpZWFrOG4zdVBvZVdvc294NjlaaEJKVnJNaGMvM2JmY01hamVSTXRqSkRZ?=
+ =?utf-8?B?eGpGOCt3QUo1OWhXbnRqZjBQTnpKbS9meVNaVFRoTFVtdzZQVzdEakVETVBm?=
+ =?utf-8?B?U2d2S0dTOWsyN0E2d01jckV1WSt3V1lMR0JSQ1FHZy9oc1h3TGdyT0hKZVNX?=
+ =?utf-8?B?WnJWN1JyeCtjeDVSdUdkMkZvZ3BpTEdzSEFuSmNwSFdsczcvdUVYSStuOHJL?=
+ =?utf-8?B?L0J5RFlNTStnVVdLQzFRbm13RDNwOUd5dE5xRHFZOTc5dFd3eklEd2pxNkdI?=
+ =?utf-8?B?VXlHczRnM0dGU3RaalRrb3RmYzVaRTBGUWowQ3g0cGFsSWNrMGZDKzhuQjlY?=
+ =?utf-8?B?Wldxc3UwckluVDc1ck5PNC8wU2F4QS9mbE1MTDlYcHBDQzIvbTZFdFBqNDY1?=
+ =?utf-8?B?djdOOGJpZXpodjBZMEF5eG1SN1dFdytyaURKSjQ4SWZGdDhvcFNrQ1N2Qms1?=
+ =?utf-8?B?bkN6ZTZ3bGZBV0NpVzhlNVIvUTRVUWVMbG5RbTlVNmdHSDFHYkdXRlRsdGNI?=
+ =?utf-8?B?M2Y2bHRpWDRqWWtFK0F4V2d6UnlxQ3l2cDNNaTZXa2ZGdDFoWTVlSVltTHZT?=
+ =?utf-8?B?dExRSGZuajF0blV3cXplSWs4TkJpQzNPd2pGY3NKc2pzdW1vS3pwbFpNbTNj?=
+ =?utf-8?B?Qmt5emRRZ2NER29BS1RZYytLbnc5OCtISVovZ1dSQ2U2ZkZ0TlYwb1VGU204?=
+ =?utf-8?B?TG5rWGMwUFpoVWdtODhQMVhHOG8wc2pXVUExTTArS2U4NVIxSzJEMEkxWFdU?=
+ =?utf-8?B?UHZLbzIwSVJPTXVUV1lVcVlNanF0cjV5R0JNNWJpZUhhS2JmMmJPWnEyWmtH?=
+ =?utf-8?B?T25VZjkrVWF3emwxaVl6akFsOG00eUhYS2k3UHR4L1p1Vm9WYTlPc05YZUVt?=
+ =?utf-8?B?eGdNSmxZSFc1eFp5a2FINUR0ank0TU5DUTkvUjFhbFo3RnhYNE02aEhUdllY?=
+ =?utf-8?B?K1VnaFVIMVRaWUVuRU5iRTJsZm9TTVlCVUtzY25ZMk51SjVjRmUvNjN4Rm1K?=
+ =?utf-8?B?cTc5U1pMMVZhak4xZWlZOHZveUdwbHN3RmF3MWtBTWdDd29PZ3ZVZFlGU1Jt?=
+ =?utf-8?B?bGZqeDhVZTBwUStiVStuM2lyeHI5R1FvL0lLd0FTODgrV3ZwejNEWCtubTR0?=
+ =?utf-8?B?QmRSUTk2Q2VzeGRPWHpPVEVSaXBTVWZSRHBleFUrVFhsNUxLQ1VEek04VjFo?=
+ =?utf-8?B?anl3NEhad0RWSjM0eDc5d0d1K1NFTEtNUmR3eHZGdVMzYnJqbjVZdzZhUnox?=
+ =?utf-8?B?eEJDazRFZFZpOEFXZ052NTVoK0NUWGJpZXJJekYvcVdMUGNLWE53VUM2Nk1W?=
+ =?utf-8?B?eWppTUlEMWNYeENic2pKd1lrNGVVOTdiaFBDT3ZMQ2o4dy9VR0tXNWtKTXJw?=
+ =?utf-8?B?ZFRYNzgrUkV0NHV5MDE3K1Q5WEFaV1VhUUJ1NjhSOGlZY0syTzk3VE1YY24w?=
+ =?utf-8?B?Rlc1dnFEdy9tQ3RXSDdoNWphV3JBejZjcExFZTNzcnVDc1grWlRPc01uOEY2?=
+ =?utf-8?B?ZkszcU5XUWt2QjdGdytxTjJxY25weXczOUMreHVlNXE4QVZ1L3hKRmVKNzU3?=
+ =?utf-8?B?VTlhbG1LSU15UEZUR2hCdy9sZjlsL3V6WUszNzlWeFE5OFJuQ1N2alQvSERw?=
+ =?utf-8?Q?9RKyPwqlyQN7CNA4=3D?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: 5cf5b490-3947-4253-6b42-08df23b1f1b1
+X-MS-Exchange-CrossTenant-AuthSource: VI0PR08MB10656.eurprd08.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Oct 2026 13:58:48.2462 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: hhngA/83OsoXvhPOallO1EWG+8fDuxyiaH9Pz4HP2WMBP4gkSFJADTkiELpz7XIKSh8BzF1ILmSaPx7n3d95QZXriSYBfvhO/xqSMVdrJvU=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM0PR08MB286923
+X-OriginatorOrg: virtuozzo.com
+Received-SPF: pass client-ip=2a01:111:f403:c207::3;
+ envelope-from=andrey.drobyshev@virtuozzo.com;
+ helo=MRWPR03CU001.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,68 +163,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Oct 05, 2026 at 06:25:49PM +0200, Tommaso Califano wrote:
->In QEMU’s USB MTP device, usb_mtp_write_metadata() computes
->filename_chars = dlen - offsetof(ObjectInfo, filename) where
->offsetof(ObjectInfo,filename) = 53. The dlen parameter is the size of the
->last USB packet, not the total ObjectInfo size. If the final packet has
->fewer than 53 bytes, filename_chars underflows to SIZE_MAX, causing
->utf16_to_str() to read far beyond the heap buffer, leaking QEMU host
->process memory.
->
->Replace dlen with d->length to avoid this issue, given that the latter
->represents the total size of the buffer allocated for the unsegmented object.
->
->Fixes: 90c1a74271ce ("usb-mtp: Limit filename to object information size")
->Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3992
->Signed-off-by: Tommaso Califano <tcalifano@redhat.com>
->---
->
->v2:
-> - Remove the dlen guard and variable in favor of using d->length.
->
-> hw/usb/dev-mtp.c | 6 +++---
-> 1 file changed, 3 insertions(+), 3 deletions(-)
->
->diff --git a/hw/usb/dev-mtp.c b/hw/usb/dev-mtp.c
->index 1d8cfd32dc..53b5904a5c 100644
->--- a/hw/usb/dev-mtp.c
->+++ b/hw/usb/dev-mtp.c
->@@ -1696,7 +1696,7 @@ close:
->     s->write_pending = false;
-> }
->
->-static void usb_mtp_write_metadata(MTPState *s, uint64_t dlen)
->+static void usb_mtp_write_metadata(MTPState *s)
-> {
->     MTPData *d = s->data_out;
->     ObjectInfo *dataset = (ObjectInfo *)d->data;
->@@ -1704,7 +1704,7 @@ static void usb_mtp_write_metadata(MTPState *s, uint64_t dlen)
->     MTPObject *o;
->     MTPObject *p = usb_mtp_object_lookup(s, s->dataset.parent_handle);
->     uint32_t next_handle = s->next_handle;
->-    size_t filename_chars = dlen - offsetof(ObjectInfo, filename);
->+    size_t filename_chars = d->length - offsetof(ObjectInfo, filename);
->
->     /*
->      * filename is utf-16. We're intentionally doing
->@@ -1801,7 +1801,7 @@ static void usb_mtp_get_data(MTPState *s, mtp_container *container,
->         if (d->data_offset == d->length) {
->             /* The operation might have already failed */
->             if (!s->result) {
->-                usb_mtp_write_metadata(s, dlen);
->+                usb_mtp_write_metadata(s);
->             }
->             usb_mtp_data_free(s->data_out);
->             s->data_out = NULL;
->-- 
->2.55.0
->
+v12 -> v13:
 
-IIUC, `d->length` is controlled by the guest, so I think we still need
-the check that was present in the v1.
+Fixes for ownership issues reported by Akihiko.
 
-Thanks,
-Luigi
+  * Patch 16:
+    - call the failure notifiers before the FAILED state is set, so that
+      the ownership is released before the MIGRATION event is emitted as
+      well;
+
+  * Patch 18 (NEW):
+    - bring back the exit notifier from v11: a target which has loaded
+      the state but hasn't been started quit normally, with the source
+      resumed instea.  Then devices aren't unrealized on quit, so the
+      ownership has to be released on exit;
+
+  * Patch 22:
+    - add a test case for the above -S / qmp_quit case.
+
+v12: https://lore.kernel.org/qemu-devel/20261005-up-vsock-vhost-v5-v12-0-40162390c68a@virtuozzo.com
+
+Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+---
+Andrey Drobyshev (22):
+      migration/cpr: forbid saving duplicate CprFds into hash table
+      tests/unit: add test for duplicate keys in CPR FD table
+      migration: forbid snapshots in CPR migration modes
+      migration: forbid snapshots under Xen
+      tests/qtest/migration: add test for snapshot rejection in CPR modes
+      vhost-vsock: block CPR migration modes
+      vhost: add vhost_reset_owner op
+      vhost-vsock: don't reset connections during CPR
+      vhost-vsock: fix FD leak in realize()
+      vhost-vsock: preserve vhost FD during CPR
+      vhost: factor out vhost_dev_init_backend()
+      vhost: make vhost_dev_cleanup() safe on a partially initialized device
+      vhost: add vhost_dev_set_owner() / vhost_dev_reset_owner() helpers
+      vhost: add vhost_dev_is_initialized() helper
+      vhost: release ownership in vhost_dev_cleanup()
+      migration: add incoming migration failure notifiers
+      vhost: release ownership when the incoming migration fails
+      vhost: release ownership on exit
+      vhost-vsock: hand off device ownership across CPR
+      tests/qtest/migration: add vhost-vsock tests for cpr-transfer and cpr-exec
+      tests/functional: add vhost-vsock CPR test with a live guest
+      tests/functional: cover a cpr-transfer target going away with vhost-vsock
+
+ backends/hostmem-memfd.c                        |   5 +-
+ backends/hostmem-shm.c                          |   5 +-
+ backends/iommufd.c                              |   4 +-
+ hw/vfio/container-legacy.c                      |   7 +-
+ hw/vfio/cpr-legacy.c                            |  29 +-
+ hw/vfio/cpr.c                                   |   6 +-
+ hw/vfio/pci.c                                   |   5 +-
+ hw/virtio/vhost-kernel.c                        |   6 +
+ hw/virtio/vhost-vsock.c                         | 193 ++++++++++++-
+ hw/virtio/vhost.c                               | 122 ++++++++-
+ include/hw/vfio/vfio-cpr.h                      |   7 +-
+ include/hw/virtio/vhost-backend.h               |   2 +
+ include/hw/virtio/vhost-vsock.h                 |   1 +
+ include/hw/virtio/vhost.h                       |  74 +++++
+ include/migration/cpr.h                         |   2 +-
+ include/migration/misc.h                        |   7 +
+ migration/cpr.c                                 |  64 +++--
+ migration/migration.c                           |  22 ++
+ migration/options.c                             |  13 +
+ system/physmem.c                                |   5 +-
+ tests/functional/x86_64/meson.build             |   2 +
+ tests/functional/x86_64/test_vhost_vsock_cpr.py | 347 ++++++++++++++++++++++++
+ tests/qtest/migration/cpr-tests.c               | 133 ++++++++-
+ tests/unit/meson.build                          |   1 +
+ tests/unit/test-cpr.c                           |  98 +++++++
+ 25 files changed, 1079 insertions(+), 81 deletions(-)
+---
+base-commit: f7ada39edacaa5c26b30e98b94017b0b2ccbcf94
+change-id: 20260908-up-vsock-vhost-v5-c781b39f1c1a
+
+Best regards,
+--  
+Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 
 
