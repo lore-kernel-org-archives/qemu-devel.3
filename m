@@ -4,106 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28979CA5FF1
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 08:50:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23285CA6002
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 08:50:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xENLJ-0004Zp-UK; Wed, 07 Oct 2026 04:49:42 -0400
+	id 1xENAq-0005Tv-M4; Wed, 07 Oct 2026 04:38:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xEK2f-0003Gg-N1
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 01:18:44 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xEK2X-0006DY-OC
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 01:18:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1791350284;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=rAk3sAjhik5dcaseDafgdsDIbY6X80t8riJucxtzHqU=;
- b=JRC2Ag0zx1LvzZBkBjONAE+IzOS6w/caJVynEl9zfLtGc4R/rD3BztEmZLf37QQFtl/7SZ
- 08nLeThrJPmvtHX2L9cOXDQs1A+k/anuU5b5lVq57LRCCDMmE6omuYMn6KUj2qKNclXY3y
- T/l+bX7EMEo7FSB7noUdvgQzKRcNh7s=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-467-y6wr-CP9PWyZSEhCKiaz4Q-1; Tue, 06 Oct 2026 00:44:10 -0400
-X-MC-Unique: y6wr-CP9PWyZSEhCKiaz4Q-1
-X-Mimecast-MFC-AGG-ID: y6wr-CP9PWyZSEhCKiaz4Q_1791261849
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-4887e5afd67so1982950f8f.3
- for <qemu-devel@nongnu.org>; Mon, 05 Oct 2026 21:44:10 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xEIUY-0004Vw-BX
+ for qemu-devel@nongnu.org; Tue, 06 Oct 2026 23:39:05 -0400
+Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xEIUT-0000bk-97
+ for qemu-devel@nongnu.org; Tue, 06 Oct 2026 23:38:52 -0400
+Received: by mail-ej1-x631.google.com with SMTP id
+ a640c23a62f3a-c2e5e090746so121200766b.0
+ for <qemu-devel@nongnu.org>; Tue, 06 Oct 2026 20:38:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1791261849; x=1791866649; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=rAk3sAjhik5dcaseDafgdsDIbY6X80t8riJucxtzHqU=;
- b=eMof1bGafQreWpGkHNeOQfEYY3zqK6R9vERslJdDEGHfQ7wruHP61ghU3IQXzMjJDm
- PdElqmRfe6c0LWkoupyhi+9kA4j8JOAV8q4saS/UB/gdfRPVwA/3YZEHuQtCKXX/Mcnl
- UmjDQgn6tw2aqlAPI8d0oHZ2xnHXNBUGfiOC6OgUzt564qkGBRKwoV69tGirlHLz8QXx
- TvnwO16KzTPwV+oSKQCrtyccdTTuDK9X0EGY6EfacWp/cIeoU/M+e118xa3ySNUnRJLG
- QWddUxXYbgV6zOZoeCEBwQzhsj+ea/pzydWRJO33fOESAWY+S4SNn96dHytUtR2rkbrf
- NdnA==
+ d=gmail.com; s=20251104; t=1791344318; x=1791949118; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=pWczp/OkfHNMKp8cpsFTwKDih/BeJgnENvn2ywZv19Y=;
+ b=CW9rtK3SD2Kyk26kwcpbQYwATUKZnPh9n8R0LVsQF8ePO/WF9AclCFDPc1sh5JUXFB
+ fscb952gCD+zXG2pzQ/vQX3hqBohYTbDf7s3QUyCzQ4qSy3bDxpfIt7z11QizG+lQ3wh
+ 4zz5Ere1ljdVcgsP2l5njNU1jCGv8Yiy6yfrSU+3tOMeq4/JoI4cq/1nWlhgsFHk25qc
+ jFhtnETtnMcQi6BMkvVTQkL4g47zP8dvyXWhy7N9MxCqsElXjXb37NRpC0w87DPuSZx9
+ cCtfd3u6jFnCZ0Ooqp6C7doOXnloIcP0kMKc87EZEQdRrn0bU2fbWV8mlOtgH7yejSh+
+ U9Jw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791261849; x=1791866649;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=rAk3sAjhik5dcaseDafgdsDIbY6X80t8riJucxtzHqU=;
- b=OtiFQ3/8bH70PEklKyhZmX9pRaNze2wCgIwqrAjROUf1Kaa+JwYJYRbSTsPdrrA372
- 98WAkKStkbQhFuO4bOGgxf45rMoX5muG/meXa8nAoj0oavqf2BFGhOgRpb8WSJ7lYT0J
- +DcBNL24uERKz6hBqf0/jtiN0flg74sSrg0eqwd2dov5L9vS0Pbmalz69p5XuWe8Ecmz
- AqbHok2NWm27qyq0i/ALb06Qo9RZ9spQ/rtoENkYuiTyjyUIKaiUTSyowH2dE28TQhRW
- +dpTAYesb9P7GxOb5oa7WzojKrduMCdiH4b75olrCDJZ/vD3pnVp/Y+HWgfgOFIitLEZ
- s3QQ==
-X-Gm-Message-State: AFq9FYIkiCcUbyeN+spmdkUIJXPPIsRcqafe+0qUvTArQN23Oss8+0OY
- +rPmeSyojjvykfESpQhAIgW9xPtppOu3jmpRiUzWn3n/9qxFo/5tA3IJHJMSuilKXd3R2y57mQp
- GFVVdAuLVpgwom7CV2wa88jAcq63RCpUMBCZCsgIstUSpEWNVZKdVGYA5
-X-Gm-Gg: AYBFou2jblLG8shkEcz5n0F1zny9hDfo9Du/vQIIqB9R/rCb3kkrq5oq5QewA+LqQzR
- QfaDjTKU8xXY+p4NZmPio+IUUUiu235tVRh7FJZw6iUMGaiOXYqj7lkG2jEIctFJRQYqxIb32+Y
- bIJ2iJviu1p8SFLc8bYe8QDXgorIGxGFs/mmwVnB0FOnu9+YQGih/wcXpu58Ss2TrE31FUKzzUZ
- UO6GAlYJaPzkJD03LY+s1RiN1ZIRGMZWlZH+7S9txQyp2i5CIUPIPowDVMfVa0e9vVmbegsVNX/
- TVTUfKvbRmn+0yYnbnus2PwCbbSgb9EKYXQH1c5p8qSwHuN2bUPGZU5mmDG/kHKqnBV2glc=
-X-Received: by 2002:a05:6000:2486:b0:48c:4fdb:437 with SMTP id
- ffacd0b85a97d-48c6d0f2294mr334141f8f.2.1791261849317; 
- Mon, 05 Oct 2026 21:44:09 -0700 (PDT)
-X-Received: by 2002:a05:6000:2486:b0:48c:4fdb:437 with SMTP id
- ffacd0b85a97d-48c6d0f2294mr334114f8f.2.1791261848767; 
- Mon, 05 Oct 2026 21:44:08 -0700 (PDT)
-Received: from redhat.com ([2a0d:6fc0:3fd7:5300:3d6b:52a4:a23f:9d0b])
+ d=1e100.net; s=20260707; t=1791344318; x=1791949118;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=pWczp/OkfHNMKp8cpsFTwKDih/BeJgnENvn2ywZv19Y=;
+ b=OHskn4dwEHevi0mHIpeDxDWT2oSfsxtX65HisyCxAhc7F3q3XVf6VI6+GWLtzioaHI
+ HV2lz3DTw6Jo7VqLGj5lNWzYim9+YUAukCYWyA3bjKTXdj733mQCJ3NzSDTu0Ja+vqCt
+ pM12XR8A3zUx0Nt9NVpUFoW+VzO2aFlBA9+uNHQpe8R4aZVQrIDbtsiN8r/8WyMTVYoR
+ UaIU8iVI3Yw6BwpzUXWW4q1DGZfid9uyluC/6yfdP0RIF7pLMEF9EGZ0n/WsqbNe3n2Y
+ iSmthP0xZEXLSwJq4JUzQuryP/0nkMwVoF52KLwG8DE7yK+VHPuDXMPRNTSB/C3bQWRc
+ IAgg==
+X-Gm-Message-State: AFq9FYIVmu9XgcyBhQmFqnd9y12Po6bSGzNJP3Vvb7bM2aq/lP92r3c7
+ oW4rzT3+QF/kmNostzvF4hUaup5O6wP2WHquqip0B3EV0MUkZ2t8DOtGNV9xQQ==
+X-Gm-Gg: AYBFou1MJ4N88Ev4ju5o5zbBsUYDACydyBYFVq28rMA7eN4xPxQRN/wwvPCSAcISGJV
+ uMo/Mc8BtN4h7S+1O9appRVVmSdzM8SFsKZwPppg6cZraBst9VElBHXMCH0NdGdBOlfzQ5HKHF8
+ HivMXEXt69FbWcaYsCdw3XBkyRWiXdGlmXbLF/FEkyuPSov8gJw6KYNvXiK5ZaZa3mYrQsLURUe
+ SJ5GYNict6nf/Fft4GYMWv0x91g2EkWpzOJ42W/wb9jESgVHlgazF9NBCMLereDS/CcxBKGRjSh
+ KZxp4FvAOksKmQySQ9vgyF8a2aF6a1IKTA/a6T+64v25yHIqYKnz38QJ6OMAbytdtdqjbbMIu49
+ 1ALqkXca3gml6nuMSb0sJAw7C2Pr9zMN9An34GSgfzEjJTWKL/tYloIPwTiPEtR9asR3e5ZVSkT
+ flC018GZaN060sND2vFWz6nWjMAoN1iknXPQSnBZuLhGVS37f5kDLuw7WT0keQxCNBSux4fUN44
+ PsLKOg7LXWh2+7M3PSj6e6NroyRg4Rw+XLOATsWGOOUMmzE
+X-Received: by 2002:a05:600c:6986:b0:4a1:6811:8d with SMTP id
+ 5b1f17b1804b1-4a17b526bd6mr10659365e9.11.1791275722516; 
+ Tue, 06 Oct 2026 01:35:22 -0700 (PDT)
+Received: from archlinux (pd95eda80.dip0.t-ipconnect.de. [217.94.218.128])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48c6228d948sm7185700f8f.23.2026.10.05.21.44.06
+ ffacd0b85a97d-48c6cdb281csm1566764f8f.55.2026.10.06.01.35.21
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 05 Oct 2026 21:44:07 -0700 (PDT)
-Date: Tue, 6 Oct 2026 00:44:05 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Tushar Dave <tdave@nvidia.com>
-Cc: qemu-devel@nongnu.org, philmd@oss.qualcomm.com, zhao1.liu@intel.com,
- yishaih@nvidia.com, alwilliamson@nvidia.com, jgg@nvidia.com,
- skolothumtho@nvidia.com
-Subject: Re: [PATCH v2 3/3] hw/pci: Make ACS Control read-only to guests
-Message-ID: <20261006004130-mutt-send-email-mst@kernel.org>
-References: <20261006013133.3457555-1-tdave@nvidia.com>
- <20261006013133.3457555-4-tdave@nvidia.com>
+ Tue, 06 Oct 2026 01:35:22 -0700 (PDT)
+From: Bernhard Beschow <shentey@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Bin Meng <bin.meng@processmission.com>,
+ Jean-Christophe Dubois <jcd@tribudubois.net>,
+ Gaurav Sharma <gaurav.sharma_7@nxp.com>,
+ Bernhard Beschow <shentey@gmail.com>, qemu-arm@nongnu.org,
+ Jason Wang <jasowangio@gmail.com>,
+ Alistair Francis <alistair@alistair23.me>
+Subject: [PATCH v4 02/31] hw/watchdog/wdt_imx2: Fix handling of write one once
+ WCR bits
+Date: Tue,  6 Oct 2026 10:34:14 +0200
+Message-ID: <20261006083445.30362-3-shentey@gmail.com>
+X-Mailer: git-send-email 2.56.0
+In-Reply-To: <20261006083445.30362-1-shentey@gmail.com>
+References: <20261006083445.30362-1-shentey@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20261006013133.3457555-4-tdave@nvidia.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
+Received-SPF: pass client-ip=2a00:1450:4864:20::631;
+ envelope-from=shentey@gmail.com; helo=mail-ej1-x631.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -120,212 +109,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Oct 05, 2026 at 08:31:33PM -0500, Tushar Dave wrote:
-> GPUDirect RDMA using data-direct requires a specific ACS configuration
-> on PCIe Root Ports and Downstream Ports.
-> 
-> While ACS can be configured via QEMU's 'acs-ctrl' property, the guest
-> kernel may overwrite ACS during standard programming.
-> 
-> This change blocks all guest writes to the PCIe ACS Control register and
-> preserves QEMU-provided ACS settings across device resets on PCIe Root Ports
-> and Downstream Ports.
+In locked state, the WDE and WDT bits of the WCR register are one and
+need to be preserved when written. At the moment, the logic is reversed
+such that all but the locked bits are preserved in locked state. Fix
+that.
 
-Why is that a sensible thing to do?
-per pci express spec:
+Fixes: daca13d495a1 ("hw/watchdog: Implement full i.MX watchdog support")
+cc: qemu-stable
+Reported-by: Bin Meng <bin.meng@processmission.com>
+Reviewed-by: Bin Meng <bin.meng@processmission.com>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+---
+ hw/watchdog/wdt_imx2.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-7.16.3. ACS Control Register (Offset 06h)
-
-Bit Location
-0
-Register Description
-ACS Source Validation Enable (V) – When Set, the component
-validates the Bus Number from the Requester ID of Upstream
-Requests against the secondary/subordinate Bus Numbers.
-Attributes
-RW
-Default value of this bit is 0b. Must be hardwired to 0b if the ACS
-Source Validation functionality is not implemented.
-
-
-And this is repeated for every bit:
-
-RW
-Default value of this bit is 0b. Must be hardwired to 0b if the ACS
-Source Validation functionality is not implemented.
-
-
-
-Looks like your change would put us out of spec?
-
-
-> Signed-off-by: Tushar Dave <tdave@nvidia.com>
-> ---
->  hw/pci-bridge/pcie_root_port.c     |  5 ++--
->  hw/pci-bridge/xio3130_downstream.c |  5 ++--
->  hw/pci/pcie.c                      | 46 ++++++++++++++++++++++++++++--
->  include/hw/pci/pcie.h              |  3 ++
->  include/hw/pci/pcie_port.h         |  1 +
->  5 files changed, 54 insertions(+), 6 deletions(-)
-> 
-> diff --git a/hw/pci-bridge/pcie_root_port.c b/hw/pci-bridge/pcie_root_port.c
-> index e7cce8c0ee..6ac64c8b2b 100644
-> --- a/hw/pci-bridge/pcie_root_port.c
-> +++ b/hw/pci-bridge/pcie_root_port.c
-> @@ -123,7 +123,7 @@ static void rp_realize(PCIDevice *d, Error **errp)
->          if (rc < 0) {
->              goto err;
->          }
-> -    } else if (p->acs_ctrl) {
-> +    } else if (p->acs_ctrl_configured) {
->          error_setg(errp, "acs-ctrl is not supported by this root port");
->          goto err;
->      }
-> @@ -159,7 +159,8 @@ static void rp_exit(PCIDevice *d)
->  static const Property rp_props[] = {
->      DEFINE_PROP_BIT(COMPAT_PROP_PCP, PCIDevice, cap_present,
->                      QEMU_PCIE_SLTCAP_PCP_BITNR, true),
-> -    DEFINE_PROP_UINT16("acs-ctrl", PCIEPort, acs_ctrl, 0),
-> +    DEFINE_PROP_UNSIGNED_NODEFAULT("acs-ctrl", PCIEPort, acs_ctrl,
-> +                                   qdev_prop_acs_ctrl, uint16_t),
->  };
->  
->  static void rp_instance_post_init(Object *obj)
-> diff --git a/hw/pci-bridge/xio3130_downstream.c b/hw/pci-bridge/xio3130_downstream.c
-> index e243dfdf7d..66d25098d7 100644
-> --- a/hw/pci-bridge/xio3130_downstream.c
-> +++ b/hw/pci-bridge/xio3130_downstream.c
-> @@ -120,7 +120,7 @@ static void xio3130_downstream_realize(PCIDevice *d, Error **errp)
->          if (rc < 0) {
->              goto err;
->          }
-> -    } else if (p->acs_ctrl) {
-> +    } else if (p->acs_ctrl_configured) {
->          error_setg(errp, "acs-ctrl requires x-pcie-acs to be on");
->          goto err;
->      }
-> @@ -154,7 +154,8 @@ static const Property xio3130_downstream_props[] = {
->                      QEMU_PCIE_SLTCAP_PCP_BITNR, true),
->      DEFINE_PROP_BIT("x-pcie-acs", PCIDevice, cap_present,
->                      QEMU_PCIE_ACS_BITNR, true),
-> -    DEFINE_PROP_UINT16("acs-ctrl", PCIEPort, acs_ctrl, 0),
-> +    DEFINE_PROP_UNSIGNED_NODEFAULT("acs-ctrl", PCIEPort, acs_ctrl,
-> +                                   qdev_prop_acs_ctrl, uint16_t),
->  };
->  
->  static const VMStateDescription vmstate_xio3130_downstream = {
-> diff --git a/hw/pci/pcie.c b/hw/pci/pcie.c
-> index af24ec7fd9..1fead3a053 100644
-> --- a/hw/pci/pcie.c
-> +++ b/hw/pci/pcie.c
-> @@ -1265,6 +1265,8 @@ int pcie_acs_init(PCIDevice *dev, uint16_t offset, uint16_t ctrl_bits,
->  {
->      bool is_downstream = pci_is_express_downstream_port(dev);
->      uint16_t cap_bits = 0;
-> +    PCIEPort *p = (PCIEPort *)object_dynamic_cast(OBJECT(dev), TYPE_PCIE_PORT);
-> +    bool configured = p && p->acs_ctrl_configured;
->  
->      /* For endpoints, only multifunction devs may have an ACS capability: */
->      assert(is_downstream ||
-> @@ -1286,7 +1288,7 @@ int pcie_acs_init(PCIDevice *dev, uint16_t offset, uint16_t ctrl_bits,
->          cap_bits = PCI_ACS_SV | PCI_ACS_TB | PCI_ACS_RR |
->              PCI_ACS_CR | PCI_ACS_UF | PCI_ACS_DT;
->  
-> -        if (ctrl_bits & ~cap_bits) {
-> +        if (configured && (ctrl_bits & ~cap_bits)) {
->              error_setg(errp,
->                         "acs-ctrl 0x%hx has bits not supported by this port "
->                         "(supported: 0x%hx)", ctrl_bits, cap_bits);
-> @@ -1295,7 +1297,17 @@ int pcie_acs_init(PCIDevice *dev, uint16_t offset, uint16_t ctrl_bits,
->      }
->  
->      pci_set_word(dev->config + offset + PCI_ACS_CAP, cap_bits);
-> -    pci_set_word(dev->wmask + offset + PCI_ACS_CTRL, cap_bits);
-> +
-> +    if (is_downstream && configured) {
-> +        /*
-> +         * Block guest writes to ACS Control entirely to preserve QEMU
-> +         * ACS settings
-> +         */
-> +        pci_set_word(dev->wmask + offset + PCI_ACS_CTRL, 0);
-> +    } else {
-> +        pci_set_word(dev->wmask + offset + PCI_ACS_CTRL, cap_bits);
-> +    }
-> +
->      pci_set_word(dev->config + offset + PCI_ACS_CTRL, ctrl_bits);
->  
->      return 0;
-> @@ -1308,6 +1320,36 @@ void pcie_acs_reset(PCIDevice *dev, uint16_t val)
->      }
->  }
->  
-> +static void set_acs_ctrl(Object *obj, Visitor *v, const char *name,
-> +                         void *opaque, Error **errp)
-> +{
-> +    PCIEPort *p = PCIE_PORT(obj);
-> +    const Property *prop = opaque;
-> +    uint16_t *ptr = object_field_prop_ptr(obj, prop);
-> +
-> +    if (!visit_type_uint16(v, name, ptr, errp)) {
-> +        return;
-> +    }
-> +    p->acs_ctrl_configured = true;
-> +}
-> +
-> +static void get_acs_ctrl(Object *obj, Visitor *v, const char *name,
-> +                         void *opaque, Error **errp)
-> +{
-> +    const Property *prop = opaque;
-> +    uint16_t *ptr = object_field_prop_ptr(obj, prop);
-> +
-> +    visit_type_uint16(v, name, ptr, errp);
-> +}
-> +
-> +const PropertyInfo qdev_prop_acs_ctrl = {
-> +    .type = "uint16",
-> +    .description = "PCIe ACS ctrl configuration (if set, even to 0, "
-> +                   "makes ACS Control read-only to the guest)",
-> +    .get = get_acs_ctrl,
-> +    .set = set_acs_ctrl,
-> +};
-> +
->  void pcie_pasid_common_init(PCIDevice *dev, uint16_t offset,
->                              uint8_t pasid_width, bool exec_perm, bool priv_mod)
->  {
-> diff --git a/include/hw/pci/pcie.h b/include/hw/pci/pcie.h
-> index 678ad73f7f..bbb11fd402 100644
-> --- a/include/hw/pci/pcie.h
-> +++ b/include/hw/pci/pcie.h
-> @@ -26,6 +26,7 @@
->  #include "hw/pci/pcie_aer.h"
->  #include "hw/pci/pcie_sriov.h"
->  #include "hw/core/hotplug.h"
-> +#include "hw/core/qdev-properties.h"
->  
->  typedef struct PCIEPort PCIEPort;
->  typedef struct PCIESlot PCIESlot;
-> @@ -86,6 +87,8 @@ struct PCIExpressDevice {
->  
->  #define COMPAT_PROP_PCP "power_controller_present"
->  
-> +extern const PropertyInfo qdev_prop_acs_ctrl;
-> +
->  /* PCI express capability helper functions */
->  int pcie_cap_init(PCIDevice *dev, uint8_t offset, uint8_t type,
->                    uint8_t port, Error **errp);
-> diff --git a/include/hw/pci/pcie_port.h b/include/hw/pci/pcie_port.h
-> index 2ad9a563d9..ef2c2ec2cd 100644
-> --- a/include/hw/pci/pcie_port.h
-> +++ b/include/hw/pci/pcie_port.h
-> @@ -37,6 +37,7 @@ struct PCIEPort {
->      /* pci express switch port */
->      uint8_t     port;
->      uint16_t    acs_ctrl;
-> +    bool        acs_ctrl_configured;
->  };
->  
->  void pcie_port_init_reg(PCIDevice *d);
-> -- 
-> 2.34.1
+diff --git a/hw/watchdog/wdt_imx2.c b/hw/watchdog/wdt_imx2.c
+index 3283990bbf..d897ff6e52 100644
+--- a/hw/watchdog/wdt_imx2.c
++++ b/hw/watchdog/wdt_imx2.c
+@@ -161,13 +161,13 @@ static void imx2_wdt_write(void *opaque, hwaddr addr,
+         s->wcr_locked = true;
+         if (s->wcr_wde_locked) {
+             value &= ~IMX2_WDT_WCR_WDE;
+-            value |= (s->wcr & ~IMX2_WDT_WCR_WDE);
++            value |= (s->wcr & IMX2_WDT_WCR_WDE);
+         } else if (value & IMX2_WDT_WCR_WDE) {
+             s->wcr_wde_locked = true;
+         }
+         if (s->wcr_wdt_locked) {
+             value &= ~IMX2_WDT_WCR_WDT;
+-            value |= (s->wcr & ~IMX2_WDT_WCR_WDT);
++            value |= (s->wcr & IMX2_WDT_WCR_WDT);
+         } else if (value & IMX2_WDT_WCR_WDT) {
+             s->wcr_wdt_locked = true;
+         }
+-- 
+2.56.0
 
 
