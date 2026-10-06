@@ -4,97 +4,146 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B242CCA5FF1
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 08:44:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79E70CA5FF1
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 08:44:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xENAy-0006i2-VM; Wed, 07 Oct 2026 04:39:01 -0400
+	id 1xEN1q-0000jl-OW; Wed, 07 Oct 2026 04:29:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xEIQP-0003hJ-Gg
- for qemu-devel@nongnu.org; Tue, 06 Oct 2026 23:34:56 -0400
-Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xEIQD-00081e-OV
- for qemu-devel@nongnu.org; Tue, 06 Oct 2026 23:34:28 -0400
-Received: by mail-ed1-x535.google.com with SMTP id
- 4fb4d7f45d1cf-6a9bd4db6ccso4848459a12.0
- for <qemu-devel@nongnu.org>; Tue, 06 Oct 2026 20:34:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1791344050; x=1791948850; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=b00qIVQjxzUez6mivBhAzHlvEuKBA7PieDHBj92W3ss=;
- b=RMABze1R3NQyc5onlebOSo2fB/n7TOPj6Q6/o9FMGSrH4L1KaGi9Z19Fbq9dcsWfvV
- 4UY+vfxifgSjO28L/4xDvmkdql/398lJgSjpE7F1Q3IOfWIVMFkGpP/tBzWKMi6LJORG
- ywm9u5uvoUZipiO/0Csml8h/L45cnwhDbTLYdDhWZwr4viRbVXKWBupEpxOADRep9XMT
- AWQe7dfpzkkrXaqWYh7dw+Xo2lnfYXwPwrUOeyTiMr3DlbDS3Iic8SL2QupKCjU80CXL
- Ekh9pUh/kRA1to3/RtMIq+o74Ah4SyiJ34rEZovuCK/5Wv6XtMNuwsQvmvS9C5EsqUWK
- 5IoQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791344050; x=1791948850;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=b00qIVQjxzUez6mivBhAzHlvEuKBA7PieDHBj92W3ss=;
- b=swhMuOj1gH1vygCdORRH8VLAH5m1b6Ub68bEwSW+a/Rs5hVzkNEoG+nFwc40gEKplF
- VK5IfMIjIE7vLvKJnSNsxGD57xRWM2Tyiu6LnlNe9vaTznlFlskSyixDjXcxUz6yy0Vy
- eZnw9q6L5t09OzjPW4RQPTjgNb9IL/94t63QH0Hhrb4+fwIVdrp+i2PypsaEsmzN7NH7
- AHUlbl3WOjvaawdXSK1we4bKohxyOX49PloAK9oPZ8zFVT7t2GgE8s22+4CU+DpYk3Z2
- ftjWOmND+POj7+s8ulxEK0TDzRQ3iqM/1s0xItaXChF6F+fAHBAgOPo+81M4zrr8qBU7
- bKdg==
-X-Gm-Message-State: AFq9FYLOqxy9tqape2zXogVejZr2hFY6p5wMHRhCOExbzCYlkvw810rT
- fhFmIDHMCJPoelEdPAUqcoRSPi9cRi3TpY/BaRuNUXq1VKrNf6MQsHkzn1YvKw==
-X-Gm-Gg: AYBFou3pPOQ3f1/K8vCASZacyypzjwKoCD/wIcSwN8sg+z52in3Vs7Ekagik4wiW80c
- UdYKIvivyv5siYG0zGIvKe2W/D1v2nvranV9eDE8da3hhB/BNd3YN/WZLCvREVb+aLFnik1dyAE
- f3Uj5od+avgD5Ri/H5vyYKwxo90lmfXCwtWDUVZzo6vM9BzvtuPNQwezArjT0fe/t/gzhQV+Nk2
- qCOFZWgoaPTezLoWNsrhc0wWlybrovg/jzKjLm/wUS1OLzsTZFp/LI7ahEm7wcpmiBjcYP2i34W
- hpfsZIwGL+Q64UqUn58LBfBe/DjByXCKiRTzgOAIuCoLuRMiqA6xWcm/Y5DAS+el6wkhOgb2mCW
- K/dLPjAxZrYBlFwKkTOn2bmF4JNwXBMe6ozRD5nGWWgAKflUDNn9enB+3tYv9OZCYBFT9GlorWA
- KDS0pu55bI+M7fEZokjA4fSVq/gmfPMNeQXWWZPf2s6RjReUh6GPPmi8dOeDtb+HhlaRqPPQ4G/
- NOP8tVNy/AxMBYPs41inftjeh2yDzz0LzgGHA==
-X-Received: by 2002:a05:6000:29ce:b0:48c:67d6:a87a with SMTP id
- ffacd0b85a97d-48c67d6a90amr2803641f8f.32.1791275728163; 
- Tue, 06 Oct 2026 01:35:28 -0700 (PDT)
-Received: from archlinux (pd95eda80.dip0.t-ipconnect.de. [217.94.218.128])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48c6cdb281csm1566764f8f.55.2026.10.06.01.35.27
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 06 Oct 2026 01:35:27 -0700 (PDT)
-From: Bernhard Beschow <shentey@gmail.com>
+ (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
+ id 1xEHhP-00061D-Bf
+ for qemu-devel@nongnu.org; Tue, 06 Oct 2026 22:48:29 -0400
+Received: from mail-northeuropeazlp170100001.outbound.protection.outlook.com
+ ([2a01:111:f403:c200::1] helo=DB3PR0202CU003.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
+ id 1xEHhG-00042F-J8
+ for qemu-devel@nongnu.org; Tue, 06 Oct 2026 22:48:01 -0400
+Received: from MIWPR08MB285920.eurprd08.prod.outlook.com
+ (2603:10a6:290:aa::21) by DBBPR08MB6155.eurprd08.prod.outlook.com
+ (2603:10a6:10:1f5::15) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.496.15; Wed, 7 Oct
+ 2026 01:08:28 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=rne8CMKbidci2X4RAahmx8DyfJ2Nln07OAjrcofCdSLIfnyVLcKT3BGR8gCgKcLr3oe5awepfYrP+95p+Oq4nTm4pV8n1TD32jUKCTLiFP3OBmmkupT/yzmNABZX91ZXB/vsTyc9GprkTn3lUXXKUTK3XYbcR1aDE6LtYg3Bte5y7DHB0sIAI30CpJ5DPHPRWFucVJROjl8j/yNx24/+IxZHoYwKItA5oG8YKlsj4JJT16d132l+PnFufsxky7lBNwVv3ezWxrPbgbIE1WMa+uwVufWCk1bKNNAwjABbVeqUnoZ/DEHVmqqvS8v1WTP2PxB+k9jmekbhXsGX+jx52A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=De18djxtHE2E9HKgY8x4Fskcmy6Hm5lIvLp+NNMBlUg=;
+ b=KMSWuEGbzVlDXxbh85S+ZQab4L++n7R0v8HQ0xdxbnQree/ZmdwV1sbyyyFuW37GuxjXx/TfN7T8naec60zHJ2JnxBFwfyvq0Jk7kNpz0PNFbjcHKdtHZA52zVXQDl7qDpTLdiI5TXu8xKvT2m06K6pN+V2SlVh1fPwLLI9XB5J6Z0CZJfcFci/uGOXaKyVNA9s+UbYqBxDuOL2EP/DVt4lJeCu+bAlaNwT1LN8beufKQ/YkWErea6SE/ry6pYO8n+rJWjTKB24MPWM2d15Yv4HVa5xFz0xwCqZASb/11ArTbsPI6ND4KB7TWl0JVUc/gW01x0efZxVo+EH8G3E5dQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
+ header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=De18djxtHE2E9HKgY8x4Fskcmy6Hm5lIvLp+NNMBlUg=;
+ b=b4+mU4OJ+fFUaQP/JSBhQHLPdBUMJYXF9KOyQbp3sEU0/rN8ktMhS/58CnMUl3kniknzdxLP+dezmqQf+Ecyp1MAgUNkM/AWXQ3fDG8/kjL13GaNhgZfZxQvl05D9N5TYuJr9DZK3UR/cYWppDpgQa+QoIM+3/iTEdS6X8t5rsx/ktoE3t/6R+K8jnGmncwitUsoLM5apiP/kPlDoRs9iiTxBr2g3y9KYZPwuno/QeZezxkfUqecIV2MdDwzjBSfUa9vzXcE8eG55DZlDKIJ78pyO02pkaxozjXEkwpnx0+Br4q6yACR5RQ7VAu335r8MCHGljjP0ZTnKwi6yyFyrQ==
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=virtuozzo.com;
+Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
+ (2603:10a6:800:20a::12) by MIWPR08MB285920.eurprd08.prod.outlook.com
+ (2603:10a6:290:aa::21) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.496.15; Tue, 6 Oct
+ 2026 13:58:52 +0000
+Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
+ ([fe80::4e37:b189:ddcd:3dd8]) by VI0PR08MB10656.eurprd08.prod.outlook.com
+ ([fe80::4e37:b189:ddcd:3dd8%7]) with mapi id 15.21.0496.010; Tue, 6 Oct 2026
+ 13:58:51 +0000
+From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+Date: Tue, 06 Oct 2026 16:58:28 +0300
+Subject: [PATCH v13 05/22] tests/qtest/migration: add test for snapshot
+ rejection in CPR modes
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20261006-up-vsock-vhost-v5-v13-5-2ea78fd1b7ed@virtuozzo.com>
+References: <20261006-up-vsock-vhost-v5-v13-0-2ea78fd1b7ed@virtuozzo.com>
+In-Reply-To: <20261006-up-vsock-vhost-v5-v13-0-2ea78fd1b7ed@virtuozzo.com>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Bin Meng <bin.meng@processmission.com>,
- Jean-Christophe Dubois <jcd@tribudubois.net>,
- Gaurav Sharma <gaurav.sharma_7@nxp.com>,
- Bernhard Beschow <shentey@gmail.com>, qemu-arm@nongnu.org,
- Jason Wang <jasowangio@gmail.com>,
- Alistair Francis <alistair@alistair23.me>
-Subject: [PATCH v4 07/31] hw/arm/sabrelite: Have 4 CPUs and 1 GiB of RAM by
- default
-Date: Tue,  6 Oct 2026 10:34:19 +0200
-Message-ID: <20261006083445.30362-8-shentey@gmail.com>
-X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261006083445.30362-1-shentey@gmail.com>
-References: <20261006083445.30362-1-shentey@gmail.com>
+Cc: mst@redhat.com, maciej.szmigiero@oracle.com, peterx@redhat.com, 
+ odaki@rsg.ci.i.u-tokyo.ac.jp, dwmw2@infradead.org, dongli.zhang@oracle.com, 
+ bchaney@akamai.com, den@openvz.org, farosas@suse.de, 
+ andrey.drobyshev@virtuozzo.com, clg@redhat.com, mark.kanda@oracle.com, 
+ vsementsov@yandex-team.ru, philmd@oss.qualcomm.com, sgarzare@redhat.com
+X-Mailer: b4 0.16.0
+X-ClientProxiedBy: VI6PEPF00000229.AUTP296.PROD.OUTLOOK.COM
+ (2603:10a6:808:1::8f3) To VI0PR08MB10656.eurprd08.prod.outlook.com
+ (2603:10a6:800:20a::12)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::535;
- envelope-from=shentey@gmail.com; helo=mail-ed1-x535.google.com
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: VI0PR08MB10656:EE_|MIWPR08MB285920:EE_|DBBPR08MB6155:EE_
+X-MS-Office365-Filtering-Correlation-Id: da2ccb5c-7344-4de1-44b6-08df23b1f3d7
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|366016|1800799024|376014|52116014|7416014|23010399003|38350700014|56012099006|10067099003|22082099003|18002099003;
+X-Microsoft-Antispam-Message-Info: S43YzkBcbFXL+wjJwu/ny+RkxkE+H8Ol8ZRze77/8LLIVCuusBd4tYhI7yMG3QSGO+eFxCuaTQ9BVwioaq5AjT4jsrBje54ce6uqWbj303LlyITrxtg97domGBQeT0Y8KXeriiR7Y3kJCX7Xm+ZuCh+bL8w1s4b6cNaim7wczKjPCSeE4BYHIY9I13R57F1O2rS3LJIC4//ign12sowUbzCmWlWF+D5VOTtQUnbUC+QLa93PCfLGMvqYirjvbw8F3+qr55W3G374tQJXk0+lIWOM8C+aUAkpShnqX2V46+6OxBMCHsAYjtEJwggK5tlVxKYIbAxc0sj12rZbq8m4Tm7sL+L51Lj47ckQNfpcUBALtazGEHSfX0xB8ZsMPBxnYu61rqFlD6sEEbh4JmxHLT4GmVeLhj2PjIiBkqF95T6JBYD4zuMpFh5rGpeGm2QhmITxwayxEFbD9HU3hvHfTlVejj99r+1MJOVvOzDBM+bzCGDfu8Ww+sZwnYMW39IGEaGWWjdhBz2LiCEoS2ZFE50UOq+NLgSWYjLPrbZkVyxmakcfXbQb88++pPyxP4LvYr5d/L3wjgOpDQ2KStea75P9THKS+L1mcceQDp7ELM+HxKNDFRWH7Eije6HhdgZT2dse4d6z4AOC63YmtgLHUKlK1L2QISxry4JYr35o8jjbpnGzmm4B1684oPg6Cs3y87/HkTg/L0wUGqMbUl7fFA==
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:VI0PR08MB10656.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(1800799024)(376014)(52116014)(7416014)(23010399003)(38350700014)(56012099006)(10067099003)(22082099003)(18002099003);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?bG50aFcwV1lqeFc4Wno5aEx4aFFoOG5wZkxhcmxvMTVXd1NmWkdhQUJZWW9H?=
+ =?utf-8?B?b0RRaCsrQzZhSlk5SHBIbDgwb0h4R2l4NU1BVzVCeHhFWVp1OWg1TVJ6UUc2?=
+ =?utf-8?B?SWFjR1dLa0JXV1B6SDlHTFQ1aFdSa05HMDlyZlY3bkU4YXR3WUdTcjNBU0Y4?=
+ =?utf-8?B?NzNVanpTajAxU3Nzc1dkeUV5b2tCUDBPMDNZZUVkbzlJdFF3R1hKSFBRMGtB?=
+ =?utf-8?B?Z3FydmR0NmFqQUp1MjBwaS9OK3Rlbjh5ZWFPZ2EzQzNkL0JCb3J5c0owaDUy?=
+ =?utf-8?B?ckxQeTYveEd2ZGsxNC9udCtldEpXSUNVSlhJT2cyajhLdnVhQ1dtdFVzdms5?=
+ =?utf-8?B?dkFadUkvbm9WTWpnemN0VGxzcEFLYjQ0cjhZNUhtS3p0aGQ0dTZEQnYwek9q?=
+ =?utf-8?B?YXZlSnJxeTlLK2h4VFhiWjRvSkJSZ0NKNityY2d5S1ZqQTUxc2VCWHE0ajEy?=
+ =?utf-8?B?UHVsOUw1RGlZV2NVNTZJTk1Hb2d6UEpoT3c3NXgzcGY3b0dTSFZ5RnJTazF0?=
+ =?utf-8?B?cjNKK0hjZnk5WjA3TjF4ODJsd1g5UzNEMlExNC9vZFBIUTgxR2xXVnovQ3JM?=
+ =?utf-8?B?VkpFbkk2RTIvQWw0YVNUa0NXNVFrU2RjWnhlanloeGZrWGdkWmozamhLeEN5?=
+ =?utf-8?B?RnBFaXRZMktlZWpZTkc3SG5GSHpTYno2VjZMc3A2WFl1NVp2NEdDVkkzd0Rw?=
+ =?utf-8?B?SjhlNkE5WXZaZ0dEam4rTWNpN2xIYjBvSkJZNUZIZXJwRFYrYXllenZ0cTA1?=
+ =?utf-8?B?VUI0WGhLelBIWXZyMkFlZE42WHNvKzMxeXRlOGhFN0p3WHFxM29ZMzd2ZVJ0?=
+ =?utf-8?B?cWJzd3JKT0RVcHVaWDVTQUF6Mlk0anZ1NjNHc01BLzg2bVljNjdUM1F2bUJ1?=
+ =?utf-8?B?czFiY2tudVRnOER6czYzY0M0SWo0WVNkNXBkTWg4Um5Oalc1TUEvaGU5ZjU0?=
+ =?utf-8?B?dVJSYnBXOUtLVjFUU0JqT3plMFZiUmxEVUd0b1V1NVllVm5RYVRuemhJeG5U?=
+ =?utf-8?B?QWxMdGQ4dk15OWExUVNKVU1VNk4zanFFaDV3NEtWbGcrYzlaMVBlbnh4Vitz?=
+ =?utf-8?B?cElyemFOaWo2dUdQN1hsOU9TN09WYVU4TVlmekRxYTArTXBUak9oWXFKd0Rp?=
+ =?utf-8?B?SVB0OHNUaWswbzBKLzEvN3pkUlpDNVYraUpaSGhWb3BPTWc4MmVFcHlhSWdT?=
+ =?utf-8?B?SWZ6K1Vqb2p6Q0tiUkhHYjNoTDB3NjhGRVI4Zmd1K0RqUEI1ZnA2dEQwU05E?=
+ =?utf-8?B?WlZxSUcycm02NFRUakFLL2NhSXlvSVRmOGxRWkEzakdMbWlGdlNLSTAzMjQ1?=
+ =?utf-8?B?Q1FjY3JxOGFSaVQ5SXdrdXI1TElaWStVaU4wQTJRTTlzQUpSY0RUZGRaR1l3?=
+ =?utf-8?B?U2xCdDNmVGMxeHF1WTlsbjR4bm5MdFkrM1NmeFJQZ2hCSm9QenpVMnFEZlNu?=
+ =?utf-8?B?eUp6N004c0hKMEJwcFFSU1NXcHp4WUhaV1VmeTZNa2Z2eHlFazZaU2xXc0pu?=
+ =?utf-8?B?eXlBak55dG1pOUZOaXpZQm9vMWtTU1I3WDEvYXlTcXdiUUdmYk5lVTBReGk2?=
+ =?utf-8?B?NnhnVSs0RDgxbTVwQWZSSmY4YWxjVjB2MHAvZllPWk1QcUs3cXRBT1RxVVRh?=
+ =?utf-8?B?Sm5JZDF1cUd2RkQ3WXJEZEp1RSsrcjdHUExhVVBBSzl3MXQ0TUYwejhJUSt0?=
+ =?utf-8?B?VGVkelVBY21KRlFsWkVxNEpTZDlVV1pTUG9nTUtQWnhpMFM3eUxyV1N4bVVD?=
+ =?utf-8?B?UTNqR24xOHpsZkZlZHpyaXIxQ2xJZGVKTXZQUVU3Q0F3aW9yTnVFVzVTelZj?=
+ =?utf-8?B?d1QxUDFYRmpTbmJsV1kvbUJsUVZFM29hVFVpSkJ4UkI3dUZ6NituZHoyT21I?=
+ =?utf-8?B?R0xlRzV6Rkk0Mk9RbFdoeUcyU2hHY1VxcWdkb0syVWg1NlFidlJFeHFNMFhR?=
+ =?utf-8?B?U0FHUDFORlRHVlhnZmpITzdjRjBqdVRPeURWZjNOQU9XVEdQVS91OGMrZ1JS?=
+ =?utf-8?B?K1Mxc1BzMFBPZ0UrWXFlUDNybDRvVGE1NExqZ29qUlM4UlArL25qdklJQ1Iv?=
+ =?utf-8?B?WmFwcy9VeC9lRk1OdHBkdXYweElac1NkTzVIWHUyM0IyNXNya3ZEbWovRmxZ?=
+ =?utf-8?B?eXV1UHA1NG1qbjBJOCtZNmY0ZFdiRGJ6d2lXbEJpVmQvaUVvWnJhbjdsSVYy?=
+ =?utf-8?B?MG83b2NKKzNQazA4QkVzMjZVdDRVUE8wdXlCb2dRcEhpOVgrRVZOUWJDV09C?=
+ =?utf-8?B?ZHAwd2YvelZvTlFnL1F1Sm55Ym1BU1lrQXdIUG1DTjFkelNpRW9QL0tqcE5j?=
+ =?utf-8?B?S1Z6U3crTjY2ZjJuWGhpZDdlZUhydTQvTFhQMExwKzFsd1ZQbllEOStUdmtD?=
+ =?utf-8?Q?iHX+YjIREGJGgYig=3D?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: da2ccb5c-7344-4de1-44b6-08df23b1f3d7
+X-MS-Exchange-CrossTenant-AuthSource: VI0PR08MB10656.eurprd08.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Oct 2026 13:58:51.8313 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: +lEhOAhfShPFglnavo0tOMDRkE/o36PbMfzeUunyNyOa3QfqBilqFEBGNT81MdBWUxaEqKjggpvQ0iYWhDe5DI8YU0YJYnAPMDXwc9wT3jw=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MIWPR08MB285920
+X-OriginatorOrg: virtuozzo.com
+Received-SPF: pass client-ip=2a01:111:f403:c200::1;
+ envelope-from=andrey.drobyshev@virtuozzo.com;
+ helo=DB3PR0202CU003.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -111,66 +160,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Having four CPUs and 1 GiB of RAM matches real hardware. Fix the machine
-defaults to make its use more ergonomic and less error-prone. Also
-reflect this in the board documentation.
+Snapshots are refused whenever a CPR migration mode is set.  Add a test
+which sets each of the CPR modes in turn and checks that 'savevm' and
+'loadvm' fail with the corresponding error, then switches back to
+'normal' mode and checks that the error is gone.
 
-To reproduce the old default behavior for e.g. migration purposes,
-`-smp 1 -m 128M` needs to be passed on the command line.
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Reviewed-by: Bin Meng <bin.meng@processmission.com>
-Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+Reviewed-by: Peter Xu <peterx@redhat.com>
+Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 ---
- docs/system/arm/sabrelite.rst | 4 ++--
- hw/arm/sabrelite.c            | 3 +++
- 2 files changed, 5 insertions(+), 2 deletions(-)
+ tests/qtest/migration/cpr-tests.c | 40 +++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 40 insertions(+)
 
-diff --git a/docs/system/arm/sabrelite.rst b/docs/system/arm/sabrelite.rst
-index d3a3c01dd6..b8ac9548f5 100644
---- a/docs/system/arm/sabrelite.rst
-+++ b/docs/system/arm/sabrelite.rst
-@@ -55,7 +55,7 @@ To boot the newly built Linux kernel in QEMU with the SABRE Lite machine, use:
- 
- .. code-block:: bash
- 
--  $ qemu-system-arm -M sabrelite -smp 4 -m 1G \
-+  $ qemu-system-arm -M sabrelite \
-       -display none -serial null -serial stdio \
-       -kernel arch/arm/boot/zImage \
-       -dtb arch/arm/boot/dts/imx6q-sabrelite.dtb \
-@@ -89,7 +89,7 @@ the -kernel argument, along with an SD card image with rootfs:
- 
- .. code-block:: bash
- 
--  $ qemu-system-arm -M sabrelite -smp 4 -m 1G \
-+  $ qemu-system-arm -M sabrelite \
-       -display none -serial null -serial stdio \
-       -kernel u-boot
- 
-diff --git a/hw/arm/sabrelite.c b/hw/arm/sabrelite.c
-index 05dfabd937..34f302f83c 100644
---- a/hw/arm/sabrelite.c
-+++ b/hw/arm/sabrelite.c
-@@ -17,6 +17,7 @@
- #include "hw/core/boards.h"
- #include "hw/core/qdev-properties.h"
- #include "qemu/error-report.h"
-+#include "qemu/units.h"
- #include "system/qtest.h"
- 
- struct SabreliteMachineState {
-@@ -139,7 +140,9 @@ static void sabrelite_machine_class_init(ObjectClass *oc, const void *data)
-     mc->desc = "Freescale i.MX6 Quad SABRE Lite Board (Cortex-A9)";
-     mc->init = sabrelite_init;
-     mc->max_cpus = FSL_IMX6_NUM_CPUS;
-+    mc->default_cpus = FSL_IMX6_NUM_CPUS;
-     mc->ignore_memory_transaction_failures = true;
-+    mc->default_ram_size = 1 * GiB;
-     mc->default_ram_id = "sabrelite.ram";
-     mc->auto_create_sdcard = true;
+diff --git a/tests/qtest/migration/cpr-tests.c b/tests/qtest/migration/cpr-tests.c
+index 0bec753b4ab..05c2ac1336d 100644
+--- a/tests/qtest/migration/cpr-tests.c
++++ b/tests/qtest/migration/cpr-tests.c
+@@ -290,6 +290,44 @@ static void test_mode_exec(char *name, MigrateCommon *args)
+     test_cpr_exec(args);
  }
+ 
++/* Snapshots must be refused while a CPR migration mode is set */
++static void test_mode_no_snapshot(char *name, MigrateCommon *args)
++{
++    static const char *const modes[] = {
++        "cpr-reboot", "cpr-transfer", "cpr-exec",
++    };
++    QTestState *vm = qtest_init("-nodefaults -machine none");
++    char *out;
++    int i;
++
++    for (i = 0; i < ARRAY_SIZE(modes); i++) {
++        g_autofree char *expected = g_strdup_printf(
++            "Snapshots are not compatible with migration mode %s", modes[i]);
++
++        migrate_set_parameter_str(vm, "mode", modes[i]);
++
++        out = qtest_hmp(vm, "savevm snap");
++        g_assert_nonnull(strstr(out, expected));
++        g_free(out);
++
++        out = qtest_hmp(vm, "loadvm snap");
++        g_assert_nonnull(strstr(out, expected));
++        g_free(out);
++    }
++
++    /*
++     * The check should no longer fire in normal mode.  savevm still fails
++     * (there's no block device for storing the snapshot).  We just check
++     * that it's not the mode error any more.
++     */
++    migrate_set_parameter_str(vm, "mode", "normal");
++    out = qtest_hmp(vm, "savevm snap");
++    g_assert_null(strstr(out, "not compatible with migration mode"));
++    g_free(out);
++
++    qtest_quit(vm);
++}
++
+ void migration_test_add_cpr(MigrationTestEnv *env)
+ {
+     tmpfs = env->tmpfs;
+@@ -300,6 +338,8 @@ void migration_test_add_cpr(MigrationTestEnv *env)
+         return;
+     }
+ 
++    migration_test_add("/migration/mode/no-snapshot", test_mode_no_snapshot);
++
+     /*
+      * Our CI system has problems with shared memory.
+      * Don't run this test until we find a workaround.
+
 -- 
-2.56.0
+2.47.1
 
 
