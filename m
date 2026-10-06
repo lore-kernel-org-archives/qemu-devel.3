@@ -4,74 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F4237CA5FFF
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 08:56:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45E50CA5FF1
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 08:57:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xENBA-0007tM-Ea; Wed, 07 Oct 2026 04:39:12 -0400
+	id 1xENK5-00017G-Uw; Wed, 07 Oct 2026 04:48:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1xEISY-000433-F3
- for qemu-devel@nongnu.org; Tue, 06 Oct 2026 23:36:53 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1xEISK-0008To-Mm
- for qemu-devel@nongnu.org; Tue, 06 Oct 2026 23:36:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1791344163;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=epOPjtpfhjcgXLEVRyDwO9+wTuqrvXxMWECrCalhg64=;
- b=agDfg6uejhqq15IuOqviXeU9wgk0q3RstHwIMN6aahHRZQ5ruRmKGW8RGOOlNYPslvOvn3
- sdhrz+x5CywZIV5yTSbtIbkgKuD+bYBjhzBE+LrisgP+EczI1rWQyF0q8CH3cVsfjOZZmX
- qCmc9zkMHwlAUCuXZ8FaG/+bf3sZGUA=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-611-__VhWUPcNXCYw0lDl92RAQ-1; Tue,
- 06 Oct 2026 17:33:55 -0400
-X-MC-Unique: __VhWUPcNXCYw0lDl92RAQ-1
-X-Mimecast-MFC-AGG-ID: __VhWUPcNXCYw0lDl92RAQ_1791322434
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 29DD71805A11; Tue,  6 Oct 2026 21:33:53 +0000 (UTC)
-Received: from redhat.com (headnet05.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.117])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 099C1180034F; Tue,  6 Oct 2026 21:33:49 +0000 (UTC)
-Date: Tue, 6 Oct 2026 16:33:46 -0500
-From: Eric Blake <eblake@redhat.com>
-To: "Denis V. Lunev" <den@openvz.org>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, 
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>, 
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- qemu-stable@nongnu.org
-Subject: Re: [PATCH v2 1/3] migration: add QEMU_COUNTED_STRING_SIZE for
- counted string buffers
-Message-ID: <asVo_Fz1A3pPZG1x@redhat.com>
-References: <20261006170738.453977-1-den@openvz.org>
- <20261006170738.453977-2-den@openvz.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20261006170738.453977-2-den@openvz.org>
-User-Agent: NeoMutt/20260616
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=eblake@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
-X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ (Exim 4.90_1) (envelope-from <yundi.eric.xu@gmail.com>)
+ id 1xEJ4J-0002JK-S3
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 00:16:18 -0400
+Received: from mail-dy1-x1332.google.com ([2607:f8b0:4864:20::1332])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <yundi.eric.xu@gmail.com>)
+ id 1xEJ4H-0007tT-Hy
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 00:15:51 -0400
+Received: by mail-dy1-x1332.google.com with SMTP id
+ 5a478bee46e88-3515f9a5d25so613747eec.0
+ for <qemu-devel@nongnu.org>; Tue, 06 Oct 2026 21:15:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1791346540; x=1791951340; darn=nongnu.org;
+ h=references:to:cc:in-reply-to:date:subject:mime-version:content-type
+ :message-id:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=a7shD+Of3pCMm3lHwJzX3zAbeCuSad88ZRx98eK575I=;
+ b=UvJsOHDoHjkrngoicmmUMy9hIq9ZatOAhuMBq9A5NlrDr8XMDZPXp3Q7GB99wqtq5R
+ pvTvQiHdMJRNpUBVsswmB2ItvdLJhGKGltQJ6+v1o1iTFgzTQknWbwARIH5o3Mka3dhD
+ 2x4AHh9+Dj70oSQbd1WTwep3v4lM1lksiApDrK8btnoHUpB/P9u85ViwO0d+y6ZnsNDn
+ xD1hReA0j3lXuFnRaHDeBU0fVjtffYYJPsNLN06ohLzvMUXGssJN3A/5mekEBbGc/Mtg
+ XzdoIlIwcrjVul9alOpoxAaPRu+Q+PSG4OnH8SrQIsHCLV+TNzODzLmigGa8SVqe/Nee
+ LxeQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1791346540; x=1791951340;
+ h=references:to:cc:in-reply-to:date:subject:mime-version:content-type
+ :message-id:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=a7shD+Of3pCMm3lHwJzX3zAbeCuSad88ZRx98eK575I=;
+ b=J8mIEi/Xx2mbsaIYvMcOi3dY8mms+su7ciGqGUcBSl7mF49gV39N5x2o0vk0p1fv+8
+ lFt8Kb4D7ipwh44s3Q7K4RhWbcmLk9TJ4J/fjaRjpwztfOfTG+uPbPdnVQDfGI4WAIa4
+ 2PvRUVSYFteWOA4mVhkbjEX9fjHY5CKIlJ+VIKXYZSvD3LbT5aEyLv6xAJ7NZknTBhWq
+ xlGPZ6WbLMx9f4DXFprq+Qba9W20R+0MOzdrEy/1YdEFnvLpRaF9uEYYC5VlK3CwYxS1
+ K43191yfAAnsxxjNmqTSOrtz3lQzO0N7dA/0KTOklqRR0wB64jxJKYINlhhq+AZqSzGc
+ hq/Q==
+X-Gm-Message-State: AFq9FYLwPqH5G4Bhl3sQpU/EsM7u8EW61P6IUV6+WSCGm+j9pPXvWPyL
+ c5UzQf7anV5/eKxMV/0eARNcLQ9Ov0RrAFXWv+h3noOaA08kx+0iivnjz9nKi/tq
+X-Gm-Gg: AYBFou3eWIaRVMUi2QqgWDxNZdNai+vlzsp1Ev3UT/4TWgx/U8W0QpS+lmrX3TcoYQg
+ UxUFY05giKUfO/IaXXpOo77HQ3593iWHl20lPO5iSN/DXyVIpz72HKpkK7S5D2GOOTuNapodVnI
+ LLxRJzGacN4UArtXYvnxjvyBI2uZLHmCjyfDJ287zyz5xwQPUgI5yIm/g6FKNYsDiLF5jfah7FN
+ OspetfgJ7KU8Ewdd65IqA7w/AFWJPLNOq0zXmWLbsRl8QAQasz2UUujYS+i/f4zESZCvRHK10XT
+ X8VlZHn8LA+cF81TXU5I/P6vqvl8Cbx2rYsRcvnju0ramL8kXojCeQBYtBDkk+7UrUsT7eW15E5
+ WpwqSeTcrNhiAI1iR8A5Rf8tGygCHImmTabiHZ//VcEjBSlxJTStTIUnxsEWigxxEoJ+/Spfw5W
+ OMRq7Ab0KQDqvM0A6y7eqLNLFb3yfAlhKxhf9dQebDUNCrrxXwpfO/jKOV6GsC5YJ0rSUewdcoc
+ /hpVkmja9tJCxFKlWu1fmJgyTdEptPEOnLuGot6fU4Dh6RMd2U3iL19yiugXW8AVEzB2MMu31VT
+ BbWdteWXgPH4h79JlYk3
+X-Received: by 2002:ad4:5c46:0:b0:919:5c8f:8fc0 with SMTP id
+ 6a1803df08f44-919978297b2mr3026456d6.37.1791320581770; 
+ Tue, 06 Oct 2026 14:03:01 -0700 (PDT)
+Received: from smtpclient.apple
+ (host-183-232.ilcmi2.champaign.il.us.clients.pavlovmedia.net.
+ [66.253.183.232]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-91996bad504sm3355766d6.1.2026.10.06.14.02.59
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Tue, 06 Oct 2026 14:03:01 -0700 (PDT)
+From: Yundi Xu <yundi.eric.xu@gmail.com>
+Message-Id: <FA33E2E2-28EB-4AA9-A069-9B70D292929B@gmail.com>
+Content-Type: multipart/alternative;
+ boundary="Apple-Mail=_569CBFC4-46BC-4270-A161-A6500595CE56"
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.700.51.1.1\))
+Subject: Re: [PATCH] hw/display/apple: Fix obsolete PGDevice function
+Date: Tue, 6 Oct 2026 16:02:48 -0500
+In-Reply-To: <CAFEAcA_pVpXW+8g1tTY0dyJdXXzffO7sn0gqMZMBsc+SgbPu4Q@mail.gmail.com>
+Cc: qemu-devel@nongnu.org, Phil Dennis-Jordan <phil@philjordan.eu>,
+ qemu-trivial@nongnu.org, Mohamed Mediouni <mohamed@unpredictable.fr>
+To: Peter Maydell <peter.maydell@linaro.org>
+References: <1e5b1f1f-1d7f-43cf-8883-0e0ab2ec88ce@gmail.com>
+ <CAFEAcA_pVpXW+8g1tTY0dyJdXXzffO7sn0gqMZMBsc+SgbPu4Q@mail.gmail.com>
+X-Mailer: Apple Mail (2.3864.700.51.1.1)
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1332;
+ envelope-from=yundi.eric.xu@gmail.com; helo=mail-dy1-x1332.google.com
+X-Spam_score_int: 5
+X-Spam_score: 0.5
+X-Spam_bar: /
+X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
+ FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ URIBL_SBL=1.623 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,33 +105,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Oct 06, 2026 at 07:07:36PM +0200, Denis V. Lunev wrote:
-> From: Denis V. Lunev <den@openvz.org>
-> 
-> A counted string carries its length in one byte, so the buffer that
-> qemu_get_counted_string() fills must hold 256 bytes. The dirty bitmap
-> load state spells that size as a bare 256 for both of its alias buffers.
-> Name it next to the qemu_get_counted_string() prototype and use it there,
-> in the length assert of qemu_put_counted_string() and in DBMLoadState.
-> 
-> Suggested-by: Eric Blake <eblake@redhat.com>
-> Signed-off-by: Denis V. Lunev <den@openvz.org>
-> Cc: Peter Xu <peterx@redhat.com>
-> Cc: Fabiano Rosas <farosas@suse.de>
-> Cc: Eric Blake <eblake@redhat.com>
-> Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-> Cc: qemu-stable@nongnu.org
-> ---
->  include/migration/qemu-file-types.h | 6 +++++-
->  migration/block-dirty-bitmap.c      | 4 ++--
->  migration/qemu-file.c               | 5 +++--
->  3 files changed, 10 insertions(+), 5 deletions(-)
 
-Reviewed-by: Eric Blake <eblake@redhat.com>
+--Apple-Mail=_569CBFC4-46BC-4270-A161-A6500595CE56
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=utf-8
 
--- 
-Eric Blake, Principal Software Engineer
-Red Hat, Inc.
-Virtualization:  qemu.org | libguestfs.org
+Thanks, I hadn't spotted that series. Please disregard this patch.
 
+Yundi Xu
+
+> On Oct 6, 2026, at 4:06=E2=80=AFAM, Peter Maydell =
+<peter.maydell@linaro.org> wrote:
+>=20
+> On Mon, 5 Oct 2026 at 22:52, Yundi Xu <yundi.eric.xu@gmail.com> wrote:
+>>=20
+>> PGNewDeviceWithDescriptor is obsolete. Replace with
+>> PGCreateDeviceWIthDescriptor.
+>>=20
+>> Signed-off-by: Yundi Xu<yundi.eric.xu@gmail.com>
+>> ---
+>>  hw/display/apple-gfx.m | 17 +++++++++++++++++
+>>  1 file changed, 17 insertions(+)
+>=20
+> There's a somewhat more comprehensive set of changes to this
+> device that include something like this one already on the list:
+>=20
+> =
+https://patchew.org/QEMU/20260916100021.73825-1-mohamed@unpredictable.fr/2=
+0260916100021.73825-6-mohamed@unpredictable.fr/
+>=20
+> thanks
+> -- PMM
+
+
+--Apple-Mail=_569CBFC4-46BC-4270-A161-A6500595CE56
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html;
+	charset=utf-8
+
+<html aria-label=3D"message body"><head><meta http-equiv=3D"content-type" =
+content=3D"text/html; charset=3Dutf-8"></head><body =
+style=3D"overflow-wrap: break-word; -webkit-nbsp-mode: space; =
+line-break: after-white-space;"><code style=3D"white-space: pre-wrap; =
+color: rgb(20, 24, 31); background-image: none; background-position: 0% =
+0%; background-size: auto; background-repeat: repeat; =
+background-attachment: scroll; background-origin: padding-box; =
+background-clip: border-box; font-family: var(--font-mono);">Thanks, I =
+hadn't spotted that series. Please disregard this =
+patch.</code><div><font color=3D"#14181f"><span style=3D"caret-color: =
+rgb(20, 24, 31); white-space-collapse: =
+preserve;"><br></span></font></div><div><span style=3D"caret-color: =
+rgb(20, 24, 31); white-space-collapse: preserve; color: rgb(20, 24, =
+31);">Yundi Xu</span></div><div><div><br><blockquote type=3D"cite"><div>On=
+ Oct 6, 2026, at 4:06=E2=80=AFAM, Peter Maydell =
+&lt;peter.maydell@linaro.org&gt; wrote:</div><br =
+class=3D"Apple-interchange-newline"><div><div>On Mon, 5 Oct 2026 at =
+22:52, Yundi Xu &lt;yundi.eric.xu@gmail.com&gt; wrote:<br><blockquote =
+type=3D"cite"><br>PGNewDeviceWithDescriptor is obsolete. Replace =
+with<br>PGCreateDeviceWIthDescriptor.<br><br>Signed-off-by: Yundi =
+Xu&lt;yundi.eric.xu@gmail.com&gt;<br>---<br> =
+&nbsp;hw/display/apple-gfx.m | 17 +++++++++++++++++<br> &nbsp;1 file =
+changed, 17 insertions(+)<br></blockquote><br>There's a somewhat more =
+comprehensive set of changes to this<br>device that include something =
+like this one already on the =
+list:<br><br>https://patchew.org/QEMU/20260916100021.73825-1-mohamed@unpre=
+dictable.fr/20260916100021.73825-6-mohamed@unpredictable.fr/<br><br>thanks=
+<br>-- PMM<br></div></div></blockquote></div><br></div></body></html>=
+
+--Apple-Mail=_569CBFC4-46BC-4270-A161-A6500595CE56--
 
