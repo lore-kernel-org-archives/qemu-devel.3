@@ -4,57 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F2DECA5FFF
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 09:24:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31A5FCA5FFF
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 09:24:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xENsM-000445-Nc; Wed, 07 Oct 2026 05:23:50 -0400
+	id 1xENr8-0002Rx-VM; Wed, 07 Oct 2026 05:22:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>)
- id 1xENAS-0004lF-Tp; Wed, 07 Oct 2026 04:38:29 -0400
-Received: from rev.ng ([94.130.142.21])
+ (Exim 4.90_1) (envelope-from <vkuznets@redhat.com>)
+ id 1xEN2g-0002xx-S4
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 04:30:35 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>)
- id 1xENAQ-0006Yq-TA; Wed, 07 Oct 2026 04:38:28 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
- s=dkim; h=Cc:To:In-Reply-To:References:Message-Id:Content-Transfer-Encoding:
- Content-Type:MIME-Version:Subject:Date:From:Sender:Reply-To:Content-ID:
- Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
- :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
- List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=jLUIeU9uX+0lUOJbZ9oWkmdr2/6VJEqBa8Wqz+SxgwQ=; b=nQTePQVd6oCFBaE
- ZqETFLuA7PD9HOuH6b/RqIKIWMopuUYl5bHtFuMupoUkd7JD+1sU/6XbsSk9YrW74+7qrKXMA/hr0
- kABpSPOmYk9mqqWPzlBoGogs4BKIzr9pxTdqIV7LHkKkpSeU6JtEaVswB2xVXG9gGCOCTM3F1kLNA
- Gk=;
-Date: Wed, 07 Oct 2026 10:43:24 +0200
-Subject: [PATCH v2 18/18] target/riscv: Compile monitor.c once
+ (Exim 4.90_1) (envelope-from <vkuznets@redhat.com>)
+ id 1xEN2a-0005fp-UK
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 04:30:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1791361812;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=qp2lJL9snYnEKuT235PoTU9jnDR3ji5fB4b56J7+nvA=;
+ b=BXZLOEj44xBTsHv0fB+TfMSIoaOzwXSJkkRrw58PfLNil4+2KVFRUOfdGQK0fMki+fdMqD
+ nxV/OPWDz8saiQzBgE+HT9f3JoROaIJApWRaIT4+igOI2KMuzlr2xuPNLaStPJm8u6Z8XF
+ +YG/FM+XCsz/5Cw6MijxqI5tJFku1tE=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-255-YdLhlQb2PL2DJIgwqiN7Eg-1; Tue,
+ 06 Oct 2026 04:04:49 -0400
+X-MC-Unique: YdLhlQb2PL2DJIgwqiN7Eg-1
+X-Mimecast-MFC-AGG-ID: YdLhlQb2PL2DJIgwqiN7Eg_1791273888
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 174EC184B39D; Tue,  6 Oct 2026 08:04:48 +0000 (UTC)
+Received: from vkuznets-thinkpadx1carbongen12.rmtcz.csb
+ (headnet04.pony-001.prod.iad2.dc.redhat.com [10.2.32.116])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 36BBB1956042; Tue,  6 Oct 2026 08:04:45 +0000 (UTC)
+From: Vitaly Kuznetsov <vkuznets@redhat.com>
+To: Mushahid Hussain <hmushi@amazon.co.uk>, qemu-devel@nongnu.org,
+ linux-hyperv@vger.kernel.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, Marcelo Tosatti
+ <mtosatti@redhat.com>, kvm@vger.kernel.org, nh-open-source@amazon.com,
+ mushi.shar@gmail.com, Michael Kelley <mhkelley58@gmail.com>
+Subject: Re: [PATCH] i386: Hyper-V partition time restore feature
+In-Reply-To: <20261005194057.10910-1-hmushi@amazon.co.uk>
+References: <20261005194057.10910-1-hmushi@amazon.co.uk>
+Date: Tue, 06 Oct 2026 10:04:42 +0200
+Message-ID: <kupqzi35k6d.fsf@vkuznets-thinkpadx1carbongen12.rmtcz.csb>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20261007-rv-dedup-v2-18-8a2f0f296a7f@rev.ng>
-References: <20261007-rv-dedup-v2-0-8a2f0f296a7f@rev.ng>
-In-Reply-To: <20261007-rv-dedup-v2-0-8a2f0f296a7f@rev.ng>
-To: qemu-devel@nongnu.org
-Cc: Anton Johansson <anjo@rev.ng>, qemu-riscv@nongnu.org, 
- daniel.barboza@oss.qualcomm.com, philmd@oss.qualcomm.com, 
- pierrick.bouvier@oss.qualcomm.com, palmer@dabbelt.com, 
- alistair.francis@wdc.com, luoyonggang@gmail.com
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1791362620; l=8274;
- i=anjo@rev.ng; s=20260210; h=from:subject:message-id;
- bh=aAqG1svz51OZqrFbo2HcINXRUsf6jgQgyLv056SwqnE=;
- b=2n0DKuDdpL/eZsK2OEV7qUN3M0tFPg8aoimF/I8Ud6a48ZsyC7VFyTf6SiYxOb9x8IBWHv5jj
- LIuKNJpuhx0DiNVCbVF2Lq/6Y+lyuvRzG22eSe32gt9zTHSW5Etp0Fa
-X-Developer-Key: i=anjo@rev.ng; a=ed25519;
- pk=dKsZvj/g3kgDxnV1/SWg8a0YNGSpWtFGNsWIepQYKow=
-Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
- helo=rev.ng
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=vkuznets@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -68,227 +83,120 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Anton Johansson <anjo@rev.ng>
-From:  Anton Johansson via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Replaces uses of target_ulong with vaddr/hwaddr/uint64_t where
-appropriate.  Formatting of printed HMP fields is moved to runtime by
-relying on printf specifiers.
+Mushahid Hussain <hmushi@amazon.co.uk> writes:
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Signed-off-by: Anton Johansson <anjo@rev.ng>
----
- target/riscv/monitor.c   | 88 ++++++++++++++++++++++++++----------------------
- target/riscv/meson.build |  2 +-
- 2 files changed, 48 insertions(+), 42 deletions(-)
+> A nested Hyper-V that sees the frequency MSRs lets L0 own the
+> partition reference time. After a resume from hibernation it issues
+> HvCallRestorePartitionTime with the TSC and the reference counter it
+> saved. Hyper-V offers hibernation to its root partition only when L0
+> advertises CPUID 0x40000004 EAX bit 20 (RestoreTimeOnResume).
+>
+> Add 'hv-restore-time-on-resume' for the bit. It requires
+> 'hv-frequencies'. KVM reports the bit in KVM_GET_SUPPORTED_HV_CPUID
+> when it handles the hypercall.
+>
+> KVM side: https://lore.kernel.org/kvm/20261005192431.87317-4-hmushi@amazon.co.uk/
+>
+> The TLFS marks the bit as reserved. The name comes from Microsoft's
+> hvdef crate.
 
-diff --git a/target/riscv/monitor.c b/target/riscv/monitor.c
-index fc61638702..5d2decf893 100644
---- a/target/riscv/monitor.c
-+++ b/target/riscv/monitor.c
-@@ -21,48 +21,50 @@
- #include "qemu/osdep.h"
- #include "qemu/ctype.h"
- #include "qemu/qemu-print.h"
--#include "exec/target_long.h"
--#include "cpu.h"
-+#include "target/riscv/cpu.h"
-+#include "target/riscv/cpu_bits.h"
- #include "target/riscv/tcg/csr.h"
--#include "cpu_bits.h"
- #include "monitor/monitor.h"
- #include "monitor/hmp.h"
- #include "system/memory.h"
- #include "internals.h"
- 
--#ifdef TARGET_RISCV64
--#define PTE_HEADER_FIELDS       "vaddr            paddr            "\
--                                "size             attr\n"
--#define PTE_HEADER_DELIMITER    "---------------- ---------------- "\
--                                "---------------- -------\n"
--#else
--#define PTE_HEADER_FIELDS       "vaddr    paddr            size     attr\n"
--#define PTE_HEADER_DELIMITER    "-------- ---------------- -------- -------\n"
--#endif
-+#define PTE_HEADER_DELIMITER "----------------"
- 
- #ifdef CONFIG_HMP
- 
- /* Perform linear address sign extension */
--static target_ulong addr_canonical(int va_bits, target_ulong addr)
-+static vaddr addr_canonical(int va_bits, vaddr addr)
- {
--#ifdef TARGET_RISCV64
--    if (addr & (1UL << (va_bits - 1))) {
--        addr |= (hwaddr)-(1L << va_bits);
-+    if (target_riscv64()) {
-+        if (addr & (1UL << (va_bits - 1))) {
-+            addr |= (hwaddr)-(1L << va_bits);
-+        }
-     }
--#endif
- 
-     return addr;
- }
- 
--static void print_pte_header(MonitorHMP *hmp)
-+static void print_pte_header(MonitorHMP *hmp, unsigned print_width)
- {
--    monitor_hmp_printf(hmp, PTE_HEADER_FIELDS);
--    monitor_hmp_printf(hmp, PTE_HEADER_DELIMITER);
-+    g_assert(print_width <= 16);
-+    monitor_hmp_printf(hmp, "%-*s %-*s %-*s %s\n",
-+                       print_width, "vaddr",
-+                       16,          "paddr",
-+                       print_width, "size",
-+                                    "attr");
-+    monitor_hmp_printf(hmp, "%.*s %.*s %.*s %.*s\n",
-+                       print_width, PTE_HEADER_DELIMITER,
-+                       16,          PTE_HEADER_DELIMITER,
-+                       print_width, PTE_HEADER_DELIMITER,
-+                       7,           PTE_HEADER_DELIMITER);
- }
- 
--static void print_pte(MonitorHMP *hmp, int va_bits, target_ulong vaddr,
--                      hwaddr paddr, target_ulong size, int attr)
-+static void print_pte(MonitorHMP *hmp, unsigned print_width,
-+                      int va_bits, vaddr vaddr,
-+                      hwaddr paddr, uint64_t size, int attr)
- {
-+    g_assert(print_width <= 16);
-     /* sanity check on vaddr */
-     if (vaddr >= (1UL << va_bits)) {
-         return;
-@@ -72,10 +74,11 @@ static void print_pte(MonitorHMP *hmp, int va_bits, target_ulong vaddr,
-         return;
-     }
- 
--    monitor_hmp_printf(hmp, TARGET_FMT_lx " " HWADDR_FMT_plx " " TARGET_FMT_lx
-+    monitor_hmp_printf(hmp, "%0*" VADDR_PRIx " " HWADDR_FMT_plx " %0*" PRIx64
-                        " %c%c%c%c%c%c%c\n",
--                       addr_canonical(va_bits, vaddr),
--                       paddr, size,
-+                       print_width, addr_canonical(va_bits, vaddr),
-+                       paddr,
-+                       print_width, size,
-                        attr & PTE_R ? 'r' : '-',
-                        attr & PTE_W ? 'w' : '-',
-                        attr & PTE_X ? 'x' : '-',
-@@ -85,18 +88,18 @@ static void print_pte(MonitorHMP *hmp, int va_bits, target_ulong vaddr,
-                        attr & PTE_D ? 'd' : '-');
- }
- 
--static void walk_pte(MonitorHMP *hmp, AddressSpace *as,
--                     hwaddr base, target_ulong start,
-+static void walk_pte(MonitorHMP *hmp, int print_width,
-+                     AddressSpace *as, hwaddr base, uint64_t start,
-                      int level, int ptidxbits, int ptesize, int va_bits,
--                     target_ulong *vbase, hwaddr *pbase, hwaddr *last_paddr,
--                     target_ulong *last_size, int *last_attr)
-+                     vaddr *vbase, hwaddr *pbase, hwaddr *last_paddr,
-+                     uint64_t *last_size, int *last_attr)
- {
-     const MemTxAttrs attrs = MEMTXATTRS_UNSPECIFIED;
-     hwaddr pte_addr;
-     hwaddr paddr;
--    target_ulong last_start = -1;
--    target_ulong pgsize;
--    target_ulong pte;
-+    uint64_t last_start = -1;
-+    uint64_t pgsize;
-+    uint64_t pte;
-     int ptshift;
-     int attr;
-     int idx;
-@@ -129,7 +132,7 @@ static void walk_pte(MonitorHMP *hmp, AddressSpace *as,
-                 if ((*last_attr != attr) ||
-                     (*last_paddr + *last_size != paddr) ||
-                     (last_start + *last_size != start)) {
--                    print_pte(hmp, va_bits, *vbase, *pbase,
-+                    print_pte(hmp, print_width, va_bits, *vbase, *pbase,
-                               *last_paddr + *last_size - *pbase, *last_attr);
- 
-                     *vbase = start;
-@@ -142,8 +145,8 @@ static void walk_pte(MonitorHMP *hmp, AddressSpace *as,
-                 *last_size = pgsize;
-             } else {
-                 /* pointer to the next level of the page table */
--                walk_pte(hmp, as, paddr, start, level - 1, ptidxbits, ptesize,
--                         va_bits, vbase, pbase, last_paddr,
-+                walk_pte(hmp, print_width, as, paddr, start, level - 1,
-+                         ptidxbits, ptesize, va_bits, vbase, pbase, last_paddr,
-                          last_size, last_attr);
-             }
-         }
-@@ -156,15 +159,17 @@ static void walk_pte(MonitorHMP *hmp, AddressSpace *as,
- static void mem_info_svxx(MonitorHMP *hmp, CPUArchState *env)
- {
-     AddressSpace *as = env_cpu(env)->as;
-+    bool rv32 = riscv_cpu_mxl(env) == MXL_RV32;
-+    int print_width = (rv32) ? 8 : 16;
-     int levels, ptidxbits, ptesize, vm, va_bits;
-     hwaddr base;
--    target_ulong vbase;
-+    vaddr vbase;
-     hwaddr pbase;
-     hwaddr last_paddr;
--    target_ulong last_size;
-+    uint64_t last_size;
-     int last_attr;
- 
--    if (riscv_cpu_mxl(env) == MXL_RV32) {
-+    if (rv32) {
-         base = (hwaddr)get_field(env->satp, SATP32_PPN) << PGSHIFT;
-         vm = get_field(env->satp, SATP32_MODE);
-     } else {
-@@ -201,7 +206,7 @@ static void mem_info_svxx(MonitorHMP *hmp, CPUArchState *env)
-     va_bits = PGSHIFT + levels * ptidxbits;
- 
-     /* print header */
--    print_pte_header(hmp);
-+    print_pte_header(hmp, print_width);
- 
-     vbase = -1;
-     pbase = -1;
-@@ -210,11 +215,12 @@ static void mem_info_svxx(MonitorHMP *hmp, CPUArchState *env)
-     last_attr = 0;
- 
-     /* walk page tables, starting from address 0 */
--    walk_pte(hmp, as, base, 0, levels - 1, ptidxbits, ptesize, va_bits,
-+    walk_pte(hmp, print_width,
-+             as, base, 0, levels - 1, ptidxbits, ptesize, va_bits,
-              &vbase, &pbase, &last_paddr, &last_size, &last_attr);
- 
-     /* don't forget the last one */
--    print_pte(hmp, va_bits, vbase, pbase,
-+    print_pte(hmp, print_width, va_bits, vbase, pbase,
-               last_paddr + last_size - pbase, last_attr);
- }
- 
-diff --git a/target/riscv/meson.build b/target/riscv/meson.build
-index d20eaa2269..a28466515e 100644
---- a/target/riscv/meson.build
-+++ b/target/riscv/meson.build
-@@ -22,7 +22,6 @@ riscv_stubs_ss = ss.source_set()
- 
- riscv_system_ss = ss.source_set()
- riscv_system_ss.add(files(
--  'monitor.c',
- ))
- 
- riscv_user_ss = ss.source_set()
-@@ -36,6 +35,7 @@ riscv_common_system_ss.add(files(
-   'arch_dump.c',
-   'cpu.c',
-   'machine.c',
-+  'monitor.c',
-   'riscv-qmp-cmds.c',
-   'time_helper.c',
- ))
+This won't be the first time we use side channels to implement Hyper-V
+features in KVM/QEMU but it's certainly better when feature bits are
+documented and thus backwards compatible.
+
+Cc: linux-hyperv list, maybe there's a chance to get TLFS amended.
+
+>
+> Signed-off-by: Mushahid Hussain <hmushi@amazon.co.uk>
+> ---
+>  docs/system/i386/hyperv.rst    | 9 +++++++++
+>  target/i386/cpu.c              | 2 ++
+>  target/i386/cpu.h              | 1 +
+>  target/i386/kvm/hyperv-proto.h | 1 +
+>  target/i386/kvm/kvm.c          | 8 ++++++++
+>  5 files changed, 21 insertions(+)
+>
+> diff --git a/docs/system/i386/hyperv.rst b/docs/system/i386/hyperv.rst
+> index e1babffb0f..2224dc2111 100644
+> --- a/docs/system/i386/hyperv.rst
+> +++ b/docs/system/i386/hyperv.rst
+> @@ -259,6 +259,15 @@ Existing enlightenments
+>  
+>    Recommended: ``hv-evmcs`` (Intel)
+>  
+> +``hv-restore-time-on-resume``
+> +  The enlightenment is nested specific, it targets Hyper-V on KVM guests. When
+> +  enabled, Hyper-V lets L0 (KVM) own the partition reference time and issues
+> +  HvCallRestorePartitionTime after a resume from hibernation so that the TSC
+> +  and the reference counter continue from the values it saved. Hyper-V offers
+> +  hibernation to its root partition only when this enlightenment is present.
+> +
+> +  Requires: ``hv-frequencies``
+> +
+>  Supplementary features
+>  ----------------------
+>  
+> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+> index f3bc6911c1..9fa14f6fab 100644
+> --- a/target/i386/cpu.c
+> +++ b/target/i386/cpu.c
+> @@ -10769,6 +10769,8 @@ static const Property x86_cpu_properties[] = {
+>                        HYPERV_FEAT_TLBFLUSH_EXT, 0),
+>      DEFINE_PROP_BIT64("hv-tlbflush-direct", X86CPU, hyperv_features,
+>                        HYPERV_FEAT_TLBFLUSH_DIRECT, 0),
+> +    DEFINE_PROP_BIT64("hv-restore-time-on-resume", X86CPU, hyperv_features,
+> +                      HYPERV_FEAT_RESTORE_TIME_ON_RESUME, 0),
+>      DEFINE_PROP_ON_OFF_AUTO("hv-no-nonarch-coresharing", X86CPU,
+>                              hyperv_no_nonarch_cs, ON_OFF_AUTO_OFF),
+>  #ifdef CONFIG_SYNDBG
+> diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+> index 786957fadd..dab559a3d8 100644
+> --- a/target/i386/cpu.h
+> +++ b/target/i386/cpu.h
+> @@ -1487,6 +1487,7 @@ uint64_t x86_cpu_get_supported_feature_word(X86CPU *cpu, FeatureWord w);
+>  #define HYPERV_FEAT_XMM_INPUT           18
+>  #define HYPERV_FEAT_TLBFLUSH_EXT        19
+>  #define HYPERV_FEAT_TLBFLUSH_DIRECT     20
+> +#define HYPERV_FEAT_RESTORE_TIME_ON_RESUME 21
+>  
+>  #ifndef HYPERV_SPINLOCK_NEVER_NOTIFY
+>  #define HYPERV_SPINLOCK_NEVER_NOTIFY             0xFFFFFFFF
+> diff --git a/target/i386/kvm/hyperv-proto.h b/target/i386/kvm/hyperv-proto.h
+> index a9f056f2f3..e420827a68 100644
+> --- a/target/i386/kvm/hyperv-proto.h
+> +++ b/target/i386/kvm/hyperv-proto.h
+> @@ -81,6 +81,7 @@
+>  #define HV_EX_PROCESSOR_MASKS_RECOMMENDED   (1u << 11)
+>  #define HV_ENLIGHTENED_VMCS_RECOMMENDED     (1u << 14)
+>  #define HV_NO_NONARCH_CORESHARING           (1u << 18)
+> +#define HV_RESTORE_TIME_ON_RESUME           (1u << 20)
+>  
+>  /*
+>   * HV_CPUID_SYNDBG_PLATFORM_CAPABILITIES.EAX bits
+> diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+> index a72b6e6b74..1b16af7cd4 100644
+> --- a/target/i386/kvm/kvm.c
+> +++ b/target/i386/kvm/kvm.c
+> @@ -1137,6 +1137,14 @@ static struct {
+>          },
+>          .dependencies = BIT(HYPERV_FEAT_VAPIC)
+>      },
+> +    [HYPERV_FEAT_RESTORE_TIME_ON_RESUME] = {
+> +        .desc = "partition time restore (hv-restore-time-on-resume)",
+> +        .flags = {
+> +            {.func = HV_CPUID_ENLIGHTMENT_INFO, .reg = R_EAX,
+> +             .bits = HV_RESTORE_TIME_ON_RESUME}
+> +        },
+> +        .dependencies = BIT(HYPERV_FEAT_FREQUENCIES)
+> +    },
+>  };
+>  
+>  static struct kvm_cpuid2 *try_get_hv_cpuid(CPUState *cs, int max,
 
 -- 
-2.52.0
+Vitaly
 
 
