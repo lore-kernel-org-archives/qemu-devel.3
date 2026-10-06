@@ -4,96 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7329CA5FFF
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 09:09:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5823CA5FF1
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 09:10:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xENKE-0001cY-N8; Wed, 07 Oct 2026 04:48:35 -0400
+	id 1xENL7-0003Ue-5s; Wed, 07 Oct 2026 04:49:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xEJHK-0003go-S4
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 00:29:29 -0400
-Received: from mail-lf1-x131.google.com ([2a00:1450:4864:20::131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xEJHA-00015x-72
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 00:29:09 -0400
-Received: by mail-lf1-x131.google.com with SMTP id
- 2adb3069b0e04-5ba357a1929so1302204e87.0
- for <qemu-devel@nongnu.org>; Tue, 06 Oct 2026 21:29:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1791347346; x=1791952146; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=07cFrgUM6cjvx6tpFpm8bpJgkAMQMVUlJURJV9H4y9I=;
- b=V6T7qu9vndO1plop9s6aM/pqTYsAAxIQj0YPXGlbwyVdfsKIV+hGl9gMrXY4A288Et
- 8SStiqNGDcc25ql6nyruBpH3s4KE1g0KpVHAnbo/FxmGxtONTsazrtZAYXGtlOrKGqW9
- G+TfOGsJM7VrFAScJM7q69SUGPgnt8wWhMNpnYdqbqLOMJn2+6sAQYRKnGILqto02zpj
- u+/rIuVtFzONCOuTS/DI68+pzohIqzFF4WEXXyGFonU2T/8wUZazvycSJwG+H3x0jZ4w
- Y2dUKd6zf9HRVHBNw5VQQVbvdsjwd1QgYCEPtqLaPxtGO2VhMo35KssGxYkEcd0JtSKf
- E7Ew==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791347346; x=1791952146;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=07cFrgUM6cjvx6tpFpm8bpJgkAMQMVUlJURJV9H4y9I=;
- b=ie0vvvsJ/KCF5v4J/lpdMdGtSejet3X2XOyZxBS2f63pBNSeSCqx8tbT0HYU5DIx3C
- qfdMFCgUkfh6eL9oI0ruPQ6kOMq9VN2MabxOJeGzLJjD6kll2KHfpOmqnE4rCuU3M2wd
- NxwFaWKSl/sexZ+n3JLWWWm4jkNNp7/B9RnP1o3NhAw+QswqekHzMare1ixRH6Lyt55u
- CMl9XfQG5aKd8dm2nY0gXpRGhdgFtzNj+n8bnZiecYARqmUCmR6gyca0Uvcgl37Chzpc
- W6FOPrhXWxNnC2stqcKd/BbgoPuny/IWqFP/xsdhAGfTWz+8yZrKANjiNOg6IkehqZHG
- kfow==
-X-Gm-Message-State: AFq9FYIguHU3TzyiBubtSnrbSlpImef6W/YXkrh8ifk6/DPJAjglnxhz
- eK4JigTUkIdxU1NzRKH7NZ2NyItHMY+/smTfvLRyPli9GnsQZIjfBbeh0GL52w==
-X-Gm-Gg: AYBFou13NuZ/GP+63xD3TJvM75xI+FtRL7XZAqry6xeIqIWiT8VmhrcM1uSyYq4rR1j
- +/9PGcipNQJQhoyMvkeEfe7EaUSvlaEHHYnej+L7EcOeRrZKqpFTPrHGDtWr+9AEicEfdTN3sZG
- msebx9BVb99bce91EaWWTAoSUQF7u521O2AYORBByOYh2eVCfDybC6rwQHxcDNJ9mHQoymVUqUm
- K27YMxgvYZ2ckdR+54nNiFgPFenaz4jVMEzav6RGKC8+FaflLAM+V/31phJx7UKWJtKq9TT3KXo
- otGsfjPND5uzo83mxpPlGmrtYijIpw1XdNThPiA/P4dFIJ63JJ8UewCaFWwycsdMJQ+8weMhJJa
- zTA0YYI3fmE2Q8trfVHCNs9NVk7sbf82XIEe6cc4FjfWOPZN/NCpv80y+i2B2dKCtagSCaZ8eZJ
- HYccvcOzTHf9z0QSZHVA8OgBlMtAQaxtXfGi/e+Jx81BxUl5uT/V1Az/lhXk/BiTZ4/iFdxX3Ey
- ZTAQofTTWxWO0KMM7X8BI8BZFdXCUd2t62oig==
-X-Received: by 2002:a05:6000:4305:b0:487:27f6:a4e4 with SMTP id
- ffacd0b85a97d-48c6d1ad525mr1230103f8f.52.1791275732032; 
- Tue, 06 Oct 2026 01:35:32 -0700 (PDT)
-Received: from archlinux (pd95eda80.dip0.t-ipconnect.de. [217.94.218.128])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48c6cdb281csm1566764f8f.55.2026.10.06.01.35.30
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 06 Oct 2026 01:35:31 -0700 (PDT)
-From: Bernhard Beschow <shentey@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Bin Meng <bin.meng@processmission.com>,
- Jean-Christophe Dubois <jcd@tribudubois.net>,
- Gaurav Sharma <gaurav.sharma_7@nxp.com>,
- Bernhard Beschow <shentey@gmail.com>, qemu-arm@nongnu.org,
- Jason Wang <jasowangio@gmail.com>,
- Alistair Francis <alistair@alistair23.me>
-Subject: [PATCH v4 10/31] hw/arm/mcimx7d-sabre: Have 2 CPUs and 2 GiB of RAM
- by default
-Date: Tue,  6 Oct 2026 10:34:22 +0200
-Message-ID: <20261006083445.30362-11-shentey@gmail.com>
-X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261006083445.30362-1-shentey@gmail.com>
-References: <20261006083445.30362-1-shentey@gmail.com>
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xEJoA-0000sY-SX
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 01:03:37 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xEJo9-0004m1-70
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 01:03:14 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1791349392;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=dJmy/26wtIG5PBMzxzq6pUIv+M+jbJJbV13LYhoOPD0=;
+ b=eDVQl0+3vOy4cUUxyx+2kS5N2Od0MNWR0vW8/yzxS3fhKL+6v+sBCw/rX4AWBmLMYhrHc5
+ VU9DP4XfdOZlO2vt2YhzotYMNsTKarLVN5qRdxK+H8bJ6grv1bRtTE34JIN7VHUZ1q3rKS
+ z8p8loKL00I2oQx9TTKYsAaFU1eOcVY=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-269-RjL8D_stOhanitfnRVzj8A-1; Tue,
+ 06 Oct 2026 04:36:32 -0400
+X-MC-Unique: RjL8D_stOhanitfnRVzj8A-1
+X-Mimecast-MFC-AGG-ID: RjL8D_stOhanitfnRVzj8A_1791275791
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4F4CA1805A22; Tue,  6 Oct 2026 08:36:31 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.2])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 07DCA1800579; Tue,  6 Oct 2026 08:36:31 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id A0E2721E6A04; Tue, 06 Oct 2026 10:36:28 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: John Snow <jsnow@redhat.com>
+Cc: qemu-devel@nongnu.org,  Pierrick Bouvier
+ <pierrick.bouvier@oss.qualcomm.com>,  Michael Roth <michael.roth@amd.com>
+Subject: Re: [PATCH 05/11] docs/qapi-code-gen: add "Details" docs subsection
+In-Reply-To: <20261001172239.2825745-6-jsnow@redhat.com> (John Snow's message
+ of "Thu, 1 Oct 2026 13:22:32 -0400")
+References: <20261001172239.2825745-1-jsnow@redhat.com>
+ <20261001172239.2825745-6-jsnow@redhat.com>
+Date: Tue, 06 Oct 2026 10:36:28 +0200
+Message-ID: <87cxtndy43.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::131;
- envelope-from=shentey@gmail.com; helo=mail-lf1-x131.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,32 +85,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Having two CPUs and 1 GiB of RAM matches real hardware. Fix the machine
-defaults to make its use more ergonomic and less error-prone.
+John Snow <jsnow@redhat.com> writes:
 
-To reproduce the old default behavior for e.g. migration purposes,
-`-smp 1 -m 128M` needs to be passed on the command line.
+> Mostly, this is just adding a heading and explaining that arbitrary
+> rST formatting is allowed in this section.
+>
+> Note: The QAPI parser still refers to these sections internally as
+> "PLAIN",
 
-Reviewed-by: Bin Meng <bin.meng@processmission.com>
-Signed-off-by: Bernhard Beschow <shentey@gmail.com>
----
- hw/arm/mcimx7d-sabre.c | 2 ++
- 1 file changed, 2 insertions(+)
+Really?
 
-diff --git a/hw/arm/mcimx7d-sabre.c b/hw/arm/mcimx7d-sabre.c
-index 65fdb19c06..47744e66a4 100644
---- a/hw/arm/mcimx7d-sabre.c
-+++ b/hw/arm/mcimx7d-sabre.c
-@@ -81,6 +81,8 @@ static void mcimx7d_sabre_machine_init(MachineClass *mc)
-     mc->desc = "Freescale i.MX7 DUAL SABRE (Cortex-A7)";
-     mc->init = mcimx7d_sabre_init;
-     mc->max_cpus = FSL_IMX7_NUM_CPUS;
-+    mc->default_cpus = FSL_IMX7_NUM_CPUS;
-+    mc->default_ram_size = 2 * GiB;
-     mc->default_ram_id = "mcimx7d-sabre.ram";
-     mc->auto_create_sdcard = true;
- }
--- 
-2.56.0
+>          but I wanted to name this documentation section after the
+> eventual, true name for the section. It is effectively only an
+> implementation detail at this point.
+>
+> Signed-off-by: John Snow <jsnow@redhat.com>
+> ---
+>  docs/devel/qapi-code-gen.rst | 11 +++++++++--
+>  1 file changed, 9 insertions(+), 2 deletions(-)
+>
+> diff --git a/docs/devel/qapi-code-gen.rst b/docs/devel/qapi-code-gen.rst
+> index fcb52ce157e..8fc75488019 100644
+> --- a/docs/devel/qapi-code-gen.rst
+> +++ b/docs/devel/qapi-code-gen.rst
+> @@ -1035,8 +1035,15 @@ detailing a relevant error condition.  For example::
+>   #     - Any other error returns a GenericError.
+>  
+>  
+> -In other sections, the text is formatted, and rST markup can be
+> -used.
+> +Details
+> +^^^^^^^
+> +
+> +Details sections are comprised of one or more paragraphs of rST
+> +formatted text, but otherwise are not marked up with any QAPI-specific
+> +syntax.
+
+Feels awkward.  You're trying to define you're talking about, but what
+you're talking about is distinguished by absence of syntax, which makes
+it harder to nail down.
+
+I can't see how to do this better right now.  I'll come back to it.
+
+>          In general, this text contains in-depth explanations of the
+> +definition being documented and may include various rST admonitions
+> +like ``.. seealso::``, ``.. note::``, etc. This is also the section
+> +where QMP usage examples should be placed.
+>  
+>  QMP Examples can be added by using the ``.. qmp-example::`` directive.
+>  In its simplest form, this can be used to contain a single QMP code
 
 
