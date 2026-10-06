@@ -4,95 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA638CA5FF1
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 08:48:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EF9BCA6002
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 08:48:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xENEJ-0005rS-3N; Wed, 07 Oct 2026 04:42:27 -0400
+	id 1xENEC-00054t-B3; Wed, 07 Oct 2026 04:42:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xEIww-000175-BO
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 00:08:18 -0400
-Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xEIwr-0005px-3P
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 00:08:12 -0400
-Received: by mail-ed1-x52f.google.com with SMTP id
- 4fb4d7f45d1cf-6ae14eecc64so4957598a12.1
- for <qemu-devel@nongnu.org>; Tue, 06 Oct 2026 21:08:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1791346082; x=1791950882; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=8K7Yq/KgL/Zin4VcTKhCZ6b8VSA0wVYhUmnTHSEofyE=;
- b=ri7ojN4Rh2dSupTWnCDN8qy4CHFWCb/AZR/yj07R8lOX+6q/57MeBlBVjgEkAAI0/E
- I69zmd+sGY9YJORvL5Df1k4rpH77CjC4Gye9rStCe1VEc85wnDVzG3fc2zjN5TA8BGq9
- l6soxvSgkWxYs4wFDtpHLKx2VvekHzRqoWkbfH+So7hODvs4iLaOqh67MUCUXYjSppJf
- RYEInIKqElzR3UTH7aQS4QZV8/iR50d5wcijlSfvkYE7ekMPcpRF26bs2oPJe5UJrlQp
- wDMc/PhNj8jwbnxpAqVtk7tnjT9GBBZ9EqoTS3ZK3vCnM1mlpOodM+utMDd+N2Rixpzz
- zpmg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791346082; x=1791950882;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=8K7Yq/KgL/Zin4VcTKhCZ6b8VSA0wVYhUmnTHSEofyE=;
- b=GDzjJVwA9NylIXe9dQyDDqWBjKCXopL3OeEUVV4uXEKfS4TPlbKbE1upYyD6r4TULn
- 84oISRxpJUVAB2OmzilUo/Mzk5NSh5QXs8ynvY11ARMde7HobOE9RIn8ZhxriSovAVgw
- I4FCk+51pR7w76uwzHATWb1ZvvVCDjUgmRD63wAa/Dqp4vNow42Kc2HXlE+z8AOSgmBo
- J6oXSwhWdqoU/D24VKxQIJC14KCQjAeDYZc1O47cimuyovrWQMHMbGbTFUyknRkPKK1N
- IN0dTpwYPRx3w7BFkgprWsR9ntXZ+TjSLERAb6p8VqA9LMqv4Anqbynne4vC7CgbrdcR
- pwjw==
-X-Gm-Message-State: AFuF++mIk105vKWdBWd1JnD7pIV5N33XUk+MtkS3Y/p/xLHs4BuldfS3
- bUzsE1YIYUXK1O++ZjpuMGcR6b6sSh/ny84da2RBd5mfOy2/NA8zecG7fU66Fg==
-X-Gm-Gg: AYBFou3xEhAY70MEXHRpfb7akYFMB6T9pzAokqazVYedRLv+eByFeXdTrT5fJF+Clng
- hPh0JBrxr++ErBRfSA6C/5pP6vQ/hm4ab0u/BptqeFkArAvPAjXNnGCm5rDBYOGsKitWLNGV2Oe
- vN3qKA163dgE5W3pSNwf4YOfD0WFUdHbL8YM721tPsX3yChPTfuU2DtwaZqSbxFDGB+zKQMUvbu
- fjhCVuiAkF3w4XVknwL51YT+0ztJpmMIDg3i3COLX0VOzGxefslnGoPCFWmhZ/DCjDDh+wvZvwo
- I3Pc/TrBp0xY7wqcKf6wI8AC85gf4tFgPg7pODorOIUyMBH07Zv57JARFlLtrwR5gIKDjPoq/dT
- SR+6pRfarU0TRkc0HAodZZnwzHRF3DZlzEWU5XS1igbJjysrVZGqlKXmNqrKIv7OYyVMT3Pf1fz
- +ByaVKwbGua0vorJGvDYO2jc4XDwniMK916l21hxL92sEzbY7YQnO77Nis10InxEyyR+FbPZC48
- aOgK6q86JGL+WEnDjWzqQxF5eeKyissu5yruQ==
-X-Received: by 2002:a5d:5f50:0:b0:488:8111:6f56 with SMTP id
- ffacd0b85a97d-48c6d0f4c77mr1187617f8f.8.1791275721430; 
- Tue, 06 Oct 2026 01:35:21 -0700 (PDT)
-Received: from archlinux (pd95eda80.dip0.t-ipconnect.de. [217.94.218.128])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48c6cdb281csm1566764f8f.55.2026.10.06.01.35.20
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 06 Oct 2026 01:35:21 -0700 (PDT)
-From: Bernhard Beschow <shentey@gmail.com>
+ (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
+ id 1xEIt2-000057-C0
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 00:04:28 -0400
+Received: from linux.microsoft.com ([13.77.154.182])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <magnuskulke@linux.microsoft.com>) id 1xEIsy-0004cB-7w
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 00:04:11 -0400
+Received: from DESKTOP-TUU1E5L.localdomain (unknown [167.220.208.46])
+ by linux.microsoft.com (Postfix) with ESMTPSA id 53FE420B716D;
+ Tue,  6 Oct 2026 09:48:46 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 53FE420B716D
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
+ s=default; t=1791305327;
+ bh=AL4sp3TkGvdtEM1QJ08Inmb4FA5wGCa7jieuaUQo7KY=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=cPcerY4JvuJtVTCrxvuhpzBi3J4hmeZPARiLwaZwiJOQuQ0xPL992pNc7DYej4g0B
+ Ac/lxQObqVcPPyFj8r3/sFMpom7poaBhzU5mDSGx0GxYwgkGgpg31eqXFmKPtsjsJ2
+ 5aXKXkJOecPdJkzSq2UmjlNMvAaD4J4NsU7+kAp4=
+From: Magnus Kulke <magnuskulke@linux.microsoft.com>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Bin Meng <bin.meng@processmission.com>,
- Jean-Christophe Dubois <jcd@tribudubois.net>,
- Gaurav Sharma <gaurav.sharma_7@nxp.com>,
- Bernhard Beschow <shentey@gmail.com>, qemu-arm@nongnu.org,
- Jason Wang <jasowangio@gmail.com>,
- Alistair Francis <alistair@alistair23.me>
-Subject: [PATCH v4 01/31] hw/watchdog/wdt_imx2: Preserve own locked bits in WCR
-Date: Tue,  6 Oct 2026 10:34:13 +0200
-Message-ID: <20261006083445.30362-2-shentey@gmail.com>
-X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261006083445.30362-1-shentey@gmail.com>
-References: <20261006083445.30362-1-shentey@gmail.com>
+Cc: Wei Liu <wei.liu@kernel.org>,
+ =?UTF-8?q?Doru=20Bl=C3=A2nzeanu?= <dblanzeanu@linux.microsoft.com>,
+ Magnus Kulke <magnuskulke@microsoft.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PULL 06/11] target/i386/mshv: fix pio handlers clobbering
+ device-modified registers
+Date: Tue,  6 Oct 2026 18:49:00 +0200
+Message-Id: <20261006164905.776466-7-magnuskulke@linux.microsoft.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20261006164905.776466-1-magnuskulke@linux.microsoft.com>
+References: <20261006164905.776466-1-magnuskulke@linux.microsoft.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
- envelope-from=shentey@gmail.com; helo=mail-ed1-x52f.google.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
- FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=13.77.154.182;
+ envelope-from=magnuskulke@linux.microsoft.com; helo=linux.microsoft.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,47 +69,161 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Apparently there is a typo in the WCR locked bits handling: The locked
-values for s->wcr must come from itself rather than from s->wicr, so fix
-that. Without it, guests such as u-boot may experience inadvertent
-reboots when configuring the WCR register.
+From: Doru Blânzeanu <dblanzeanu@linux.microsoft.com>
 
-Fixes: daca13d495a1 ("hw/watchdog: Implement full i.MX watchdog support")
-cc: qemu-stable
-Reviewed-by: Bin Meng <bin.meng@processmission.com>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+When a device handler (e.g. vmport) calls cpu_synchronize_state() during
+I/O port dispatch, it sets cpu->accel->dirty = true and may modify
+registers directly in env. The old PIO code ignored this: it
+unconditionally wrote the stale info->rax from the VM-exit intercept
+message back to the hypervisor and then cleared dirty, discarding any
+register changes made by the device.
+
+Bifurcate both handlers on cpu->accel->dirty:
+
+handle_pio_non_str:
+- dirty path: update env->eip directly. For reads (IN), merge the I/O
+  result into env->regs[R_EAX] (which may have been modified by the
+  device) rather than info->rax. For writes (OUT), leave RAX untouched.
+  Flush all registers via mshv_store_regs() and clear dirty.
+- non-dirty path: write RIP and RAX via set_x64_registers hypercall as
+  before.
+
+handle_pio_str:
+- dirty path: update env->eip and the appropriate index register
+  (RSI for OUTS, RDI for INS) directly. Flush via mshv_store_regs()
+  and clear dirty.
+- non-dirty path: write the index register and RIP via
+  set_x64_registers. Drop the RAX assignment that was here before;
+  string I/O does not modify RAX, and set_x64_registers is hardcoded
+  to write only 2 registers so the third slot was silently ignored
+  anyway.
+
+Remove the unconditional "cpu->accel->dirty = false" at the end of both
+handlers. In the non-dirty fast path it was redundant (already false).
+In the dirty path it was actively harmful: it told the vcpu run loop
+that env was clean when it was not, losing the device's modifications.
+
+Signed-off-by: Doru Blânzeanu <dblanzeanu@linux.microsoft.com>
+Reviewed-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
+Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
 ---
- hw/watchdog/wdt_imx2.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ target/i386/mshv/mshv-cpu.c | 72 +++++++++++++++++++++++++------------
+ 1 file changed, 50 insertions(+), 22 deletions(-)
 
-diff --git a/hw/watchdog/wdt_imx2.c b/hw/watchdog/wdt_imx2.c
-index c83d4107c1..3283990bbf 100644
---- a/hw/watchdog/wdt_imx2.c
-+++ b/hw/watchdog/wdt_imx2.c
-@@ -156,18 +156,18 @@ static void imx2_wdt_write(void *opaque, hwaddr addr,
-     case IMX2_WDT_WCR:
-         if (s->wcr_locked) {
-             value &= ~IMX2_WDT_WCR_LOCK_MASK;
--            value |= (s->wicr & IMX2_WDT_WCR_LOCK_MASK);
-+            value |= (s->wcr & IMX2_WDT_WCR_LOCK_MASK);
-         }
-         s->wcr_locked = true;
-         if (s->wcr_wde_locked) {
-             value &= ~IMX2_WDT_WCR_WDE;
--            value |= (s->wicr & ~IMX2_WDT_WCR_WDE);
-+            value |= (s->wcr & ~IMX2_WDT_WCR_WDE);
-         } else if (value & IMX2_WDT_WCR_WDE) {
-             s->wcr_wde_locked = true;
-         }
-         if (s->wcr_wdt_locked) {
-             value &= ~IMX2_WDT_WCR_WDT;
--            value |= (s->wicr & ~IMX2_WDT_WCR_WDT);
-+            value |= (s->wcr & ~IMX2_WDT_WCR_WDT);
-         } else if (value & IMX2_WDT_WCR_WDT) {
-             s->wcr_wdt_locked = true;
-         }
+diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
+index 5a34357693..4f113da02d 100644
+--- a/target/i386/mshv/mshv-cpu.c
++++ b/target/i386/mshv/mshv-cpu.c
+@@ -1718,10 +1718,12 @@ static int handle_pio_non_str(CPUState *cpu,
+     uint32_t val, eax;
+     const uint32_t eax_mask =  0xffffffffu >> (32 - len * 8);
+     size_t insn_len;
+-    uint64_t rip, rax;
++    uint64_t rip;
+     uint32_t reg_names[2];
+     uint64_t reg_values[2];
+     uint16_t port = info->port_number;
++    X86CPU *x86_cpu = X86_CPU(cpu);
++    CPUX86State *env = &x86_cpu->env;
+ 
+     if (access_type == HV_X64_INTERCEPT_ACCESS_TYPE_WRITE) {
+         union {
+@@ -1752,21 +1754,36 @@ static int handle_pio_non_str(CPUState *cpu,
+ 
+     /* Advance RIP and update RAX */
+     rip = info->header.rip + insn_len;
+-    rax = info->rax;
+ 
+-    reg_names[0] = HV_X64_REGISTER_RIP;
+-    reg_values[0] = rip;
+-    reg_names[1] = HV_X64_REGISTER_RAX;
+-    reg_values[1] = rax;
++    if (cpu->vcpu_dirty) {
++        env->eip = rip;
++        if (access_type != HV_X64_INTERCEPT_ACCESS_TYPE_WRITE) {
++            /*
++             * For reads, merge the I/O result into the current RAX.
++             * Use env->regs[R_EAX] as the base since a device handler
++             * (e.g. vmport) may have called cpu_synchronize_state()
++             * and modified registers.
++             */
++            eax = (((uint32_t)env->regs[R_EAX]) & ~eax_mask)
++                  | (val & eax_mask);
++            env->regs[R_EAX] = (uint64_t)eax;
++        }
++        /* Sync modified standard registers back and clear dirty. */
++        store_regs(cpu);
++        cpu->vcpu_dirty = false;
++    } else {
++        reg_names[0] = HV_X64_REGISTER_RIP;
++        reg_values[0] = rip;
++        reg_names[1] = HV_X64_REGISTER_RAX;
++        reg_values[1] = info->rax;
+ 
+-    ret = set_x64_registers(cpu, reg_names, reg_values);
+-    if (ret < 0) {
+-        error_report("Failed to set x64 registers");
+-        return -1;
++        ret = set_x64_registers(cpu, reg_names, reg_values);
++        if (ret < 0) {
++            error_report("Failed to set x64 registers");
++            return -1;
++        }
+     }
+ 
+-    cpu->vcpu_dirty = false;
+-
+     return 0;
+ }
+ 
+@@ -1915,6 +1932,7 @@ static int handle_pio_str(CPUState *cpu, hv_x64_io_port_intercept_message *info)
+     bool repop = info->access_info.rep_prefix == 1;
+     size_t repeat = repop ? info->rcx : 1;
+     size_t insn_len = info->header.instruction_length;
++    uint64_t rip;
+     bool direction_flag;
+     uint32_t reg_names[3];
+     uint64_t reg_values[3];
+@@ -1944,18 +1962,28 @@ static int handle_pio_str(CPUState *cpu, hv_x64_io_port_intercept_message *info)
+         reg_values[0] = info->rdi;
+     }
+ 
+-    reg_names[1] = HV_X64_REGISTER_RIP;
+-    reg_values[1] = info->header.rip + insn_len;
+-    reg_names[2] = HV_X64_REGISTER_RAX;
+-    reg_values[2] = info->rax;
++    rip = info->header.rip + insn_len;
+ 
+-    ret = set_x64_registers(cpu, reg_names, reg_values);
+-    if (ret < 0) {
+-        error_report("Failed to set RIP and RAX registers");
+-        return -1;
+-    }
++    if (cpu->vcpu_dirty) {
++        env->eip = rip;
++        if (access_type == HV_X64_INTERCEPT_ACCESS_TYPE_WRITE) {
++            env->regs[R_ESI] = info->rsi;
++        } else {
++            env->regs[R_EDI] = info->rdi;
++        }
++        /* Sync modified standard registers back and clear dirty. */
++        store_regs(cpu);
++        cpu->vcpu_dirty = false;
++    } else {
++        reg_names[1] = HV_X64_REGISTER_RIP;
++        reg_values[1] = rip;
+ 
+-    cpu->vcpu_dirty = false;
++        ret = set_x64_registers(cpu, reg_names, reg_values);
++        if (ret < 0) {
++            error_report("Failed to set x64 registers");
++            return -1;
++        }
++    }
+ 
+     return 0;
+ }
 -- 
-2.56.0
+2.34.1
 
 
