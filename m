@@ -4,134 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B80E7CA6009
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 08:34:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A5C7CA5FFF
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 08:34:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xEN6b-0000qj-Hc; Wed, 07 Oct 2026 04:34:29 -0400
+	id 1xEN5P-0006OZ-6I; Wed, 07 Oct 2026 04:33:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1xEHvD-0007mc-Qi; Tue, 06 Oct 2026 23:02:43 -0400
-Received: from mail-japaneastazlp170130007.outbound.protection.outlook.com
- ([2a01:111:f403:c405::7] helo=TYDPR03CU002.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
+ id 1xEHpT-0006yR-3X; Tue, 06 Oct 2026 22:56:38 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1xEHv5-0006Sj-FL; Tue, 06 Oct 2026 23:02:18 -0400
-Received: from SI3PR02MB9388.apcprd02.prod.outlook.com (2603:1096:4:2a6::8) by
- KUZPR02MB9164.apcprd02.prod.outlook.com (2603:1096:d10:61::12) with
- Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.496.15; Tue, 6 Oct 2026 20:56:24 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=XN6f8D53IBh26k57oc397Qta3oMsBirlfFaLUS5z2DmOAofTq4mSE5HhgPmcevpk/eWka3N/9nfFSyg12QPdk6RXuCrdoZ5lx7nWKXZz+b1nev335SvvEE3szJwmthe/VYICVyB8bvrNpRQVV04nNyc3SHjOqLhcXY5jFTRWpLpAEuT5JwY0PSYgZ7KWN0S7W6fhKXEGuMyTS/E890ey11+f5YZY093AGI/AwCUzEqNzKelRZ11McZ2WSlqZWxURAe1K45uNNzyHYX5xzg+5quCQ1vc22I5oDBhYTdR/y6neNDzF3GYUirn+Fz/n9Jo2VguIvL1P3zwIgtWK5V4arQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=7tt0x2zYyzdTv18d9nzyJ5Qy4RJwAgqXh86gM8PWAEg=;
- b=bRCFa32obHK1XmlpRiIjJTzKXD3MTBoE2qXwfgbYhUty4r/4pL4RagQCURBcpE5SP/3fuTsq8J2YnmZhRJeTeQZmKEzIDmTnDFdBVuC6EmVy6L1XgR65HPEGG/ZGZ56QVr0aOamJj59xtim2EqN9NRgHOqLdSIKZZdscv6wrUqh4Ag5p6HP8NtDgxExsAhNtQJ0+evRgOsx7PquH/d3UR6Hch9i2XeIr1gjruwJdZdmHnTiEck2Itka8L+uzigszDxDjlE6BWQpM4UxpqmbFVMAchGbh2qY9qhNuRFrHEVp1X9oN1u034AftUGv3oiz+tuHs81zUHPm4CkKNnxQa6Q==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=processmission.com; dmarc=pass action=none
- header.from=processmission.com; dkim=pass header.d=processmission.com;
- arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=7tt0x2zYyzdTv18d9nzyJ5Qy4RJwAgqXh86gM8PWAEg=;
- b=gNgPgH72ZJmQNf5jQJrLo7gWTtEeXbDo9VQlwmDWiTQIwpuIbrjtAw4D+h00PrFDsja+ffefIl/F2BFFMYOXK+YZnryPe2fuczFlV2OdYHtC5Mdeu+X8nZ7ZfK9vvc2TqJhln1xiGu2wN5LNIXulKhAKNrjxILXK+qUqHIERJQNWsUFvHPT0I4XuhGIFL5QgGN9EZoaDByE5ApyBY0HMnHEZhLHtLcmuah7aMNDw1dTgEpBTijsXh61vy+aYrgu+pbo2zH3Yy/t5ijvpPLoXFHYLTBYLoy73M1O8HYg3Pgu9sBjaqXU2NaQBlkiWyQIyn1/2++kXxtWwvhXtcea27g==
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=processmission.com;
-Received: from KL1PR02MB6257.apcprd02.prod.outlook.com (2603:1096:820:da::11)
- by SI3PR02MB9388.apcprd02.prod.outlook.com (2603:1096:4:2a6::8) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.472.20; Tue, 6 Oct
- 2026 09:50:33 +0000
-Received: from KL1PR02MB6257.apcprd02.prod.outlook.com
- ([fe80::ecf9:e832:8196:215]) by KL1PR02MB6257.apcprd02.prod.outlook.com
- ([fe80::ecf9:e832:8196:215%6]) with mapi id 15.21.0472.016; Tue, 6 Oct 2026
- 09:50:33 +0000
-From: Bin Meng <bin.meng@processmission.com>
-To: QEMU <qemu-devel@nongnu.org>
-Cc: Bernhard Beschow <shentey@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Chinmay Rath <rathc@linux.ibm.com>, Glenn Miles <milesg@linux.ibm.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
-Subject: [PATCH 10/17] target/ppc: Register PWRMGTCR0 on e6500
-Date: Tue,  6 Oct 2026 17:49:05 +0800
-Message-ID: <20261006094921.110871-11-bin.meng@processmission.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20261006094921.110871-1-bin.meng@processmission.com>
-References: <20261006094921.110871-1-bin.meng@processmission.com>
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: TYCPR01CA0136.jpnprd01.prod.outlook.com
- (2603:1096:400:2b7::6) To KL1PR02MB6257.apcprd02.prod.outlook.com
- (2603:1096:820:da::11)
+ (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
+ id 1xEHp3-0005W7-As; Tue, 06 Oct 2026 22:56:17 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 696I6P8i240501; Tue, 6 Oct 2026 20:35:54 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=K0mzXZ
+ 2tgtuR3Qvjnj/daBe5/8Orl0oacQtyICZ0wIk=; b=eRoQhxrbumk4O3B1XXQYlT
+ VK1IjjzPSIEHKdvrA0H9W3uSzWSb48RUtF6smTjutvYNCguKtXmZZ5wv0EvT75Wh
+ dmbFL0WapLtkd+xLdkzxm+sB2LGo4CRM2UGKDxW/X2ZrPj/t6SZuNHZuM9zIGNQh
+ eHux/WXUjIGmF0pJo1f86KBjJIUZgzCMUMITllN/5RBgsxFXOsuHtbMGbyAUWxbW
+ 1cm9vJXW+fGy9Mrxo9zPva046/WJX2P/rkm88eVWn6K9Cv24MRiRsxyLH9v5J+6A
+ VJZf165XdPe/sIWp9TP5DQfhKM39cyl/1QqKUkA8SbPCgHvnTX+QBSECMjk1AZrw
+ ==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4h2sbv978q-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Tue, 06 Oct 2026 20:35:54 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 696HlWAe690425; Tue, 6 Oct 2026 20:35:53 GMT
+Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4h3dhgun74-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 06 Oct 2026 20:35:53 +0000 (GMT)
+Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
+ [10.39.53.228])
+ by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 696KZqCU1377256
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 6 Oct 2026 20:35:52 GMT
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 6CE3E5804B;
+ Tue,  6 Oct 2026 20:35:52 +0000 (GMT)
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 5830458066;
+ Tue,  6 Oct 2026 20:35:51 +0000 (GMT)
+Received: from [9.61.15.56] (unknown [9.61.15.56])
+ by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Tue,  6 Oct 2026 20:35:50 +0000 (GMT)
+Message-ID: <964ad056-b8ee-4734-9403-91264a75c84f@linux.ibm.com>
+Date: Tue, 6 Oct 2026 16:35:49 -0400
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: KL1PR02MB6257:EE_|SI3PR02MB9388:EE_|KUZPR02MB9164:EE_
-X-MS-Office365-Filtering-Correlation-Id: ecaff2ae-8980-4aa6-3fd5-08df238f4375
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|23010399003|1800799024|366016|376014|18002099003|22082099003|10067099003|56012099006;
-X-Microsoft-Antispam-Message-Info: ZKlWXYQpqTThVc5KZuRqFR1m2n3Vh6U+IoH5MqhqzewqZ4zTf9GXW9lWdQ4DK6yrLH/fgyyxcWgLTSuFH26XkOH+JKT9CEaVIx3a7lRocerGG+IUaHR50RUrDjQafHpQ/btiUKRebyXDDvgTUQuVO/Q9y19Opn2SIa7bu0G1h9jSIsIplxz3jbAiPouR7kCdzW/J41+G46OTJ8175ZaMdKpGUHZaRHqb+yARzsVT7UX0Km3pUQHsZ8c1MwZkiXSbY2AIgUg5CyV8sbhdghvWKAx+J/KTQZU5cuYNg0tmZ8q1TAX9OkYfH99Suuj0ek7k1U4zYO9+RcAOl3yCYq9Q8XNxDVoUhsSsVYPkJIXkJuxuwURsJxygK/6fLPm4wezKAZyIr3t1v3x5bMSHTUnWiXOwvr0xxDWmJ+M9xdBMMkgHCwDXZbHPkRLPGm0lFJfXjwKVnmZE8p3kDHWB4pqMCOu23wwX+j4EAyeItwKWwNMvpMAHd8NCQ3fpit/JBFhV23sadOThGq1Lrdr7ufXhHSY9q4ThUi0AScFus6oUp4d+KQiK4dDN8gsWY5swt7dGBLlPMbiyHRBwRcE2toIISIehotjTe4x1ZhcNBbNTvXz6GW1bz1JoX3FxT+8jIB5OtQR/mXtmdowZz92aHPoxq70paMHfdtmD+1T2kiFaEIY=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:KL1PR02MB6257.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(23010399003)(1800799024)(366016)(376014)(18002099003)(22082099003)(10067099003)(56012099006);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?Jn3WgxZ/dCW0Ib4IgIHuaH3dlZLdz9MhcauTgqunVBCY41HvXVxOG21t97zP?=
- =?us-ascii?Q?1Xly/qcAX3BgZds3kaO3ZqcoCFW1GZ7HSOXrkyPjG2LzFLzo30gUyS+e9bN6?=
- =?us-ascii?Q?uvKk4pqgVQMTPipUwYljRRF8xoIxTrIUuzKjGBzuA3Herz3DDaq1nppWen83?=
- =?us-ascii?Q?huP7gFP4lXY5nWE2MPY4KzNKGdFQg+fAUNH+b1iiM/NEcJXqbxo9zIHBopqR?=
- =?us-ascii?Q?X4HV20Joy7odpII9AGRFQgVL0Y0gFdLwsjfF9H93Fm3cn8mmU/RY4Cj3k6lc?=
- =?us-ascii?Q?oal06kTg6dt26e0g3fNzIrWWy05Qu6NTalJsZrAi8k+/u1p7gTmS4kjhTpQW?=
- =?us-ascii?Q?XOaniBSpyYY+pm4eES1sGdfSsSRFdUZqeCkInV0jktGMWiVBQj4oq71sWcmG?=
- =?us-ascii?Q?svCSOg5m6TboL2AxudZ3RSET7wiEV1h4EljwQz/fx+vqwn8A+UvvmxyymWSi?=
- =?us-ascii?Q?PI/BCYYNPXcgTLW5OsZ8n1aPeDkaG1wXepLZ38izYXtpUEof4ciJTzK8Ockl?=
- =?us-ascii?Q?nypFWYEGcSIe4uZGnEcjsVFiIXsnFHPty2WJ6fdZGuF7vut4vFqLkAq/PegD?=
- =?us-ascii?Q?7Y9zWE+mVEB6s4PoZi+uG684gwZTM5IrdMe2cKOo7nPs5QItO4dTGzhclrTL?=
- =?us-ascii?Q?3/PUXRCSdeiDaPRuZlnHrKv5jbSgzM2l9FaUroTIJ0Z3LoCQ0VbD4RyxvQ+6?=
- =?us-ascii?Q?Z+rOdU3VQTI8sMTbBCONtAw3f7WUu3xLYEbuKWCY7HTicV/qBEV4r5yyjIJJ?=
- =?us-ascii?Q?dsQvJlD+vlpVAWO+5zC/r87cRTXzB7+mqnpKCKf5OYCz++jZ3z3n8NCI4Xhh?=
- =?us-ascii?Q?3bFHvUo6Hh6oUNAB5wqAAQJe/cGQc+gjNaSNAnG1aXXNdEMv6pxMWLMa9rgR?=
- =?us-ascii?Q?70wpoZCzOrHeNX8v6rIX2PiqNJVYv8wGlvjlAbfLSWLLxxajhvJDXik9qkmQ?=
- =?us-ascii?Q?Iv5/4zFZBPXcErpCpHYlgn1ia2egBCMnaOq3QzHZX4qciejamZ1J/5UemOnH?=
- =?us-ascii?Q?uueHdj/7L/+GkI9jWaLEnZaRl/IEUsPlnQHh+/4TjZ0S3W0SoE/9m9J0DDp3?=
- =?us-ascii?Q?vgBWAGpSnmSolZRnoQbeeB9PmPwtgXiZ5awgtcb/dlz9A0ZSg+I7YGL973c5?=
- =?us-ascii?Q?Qzk/obIELXbfhwc56HehZGbjGMv245655ysb66yDkLz/4bRqsXosBQ0q+hs+?=
- =?us-ascii?Q?uGXxlbrs1+plXhNotxLuDCC3KhxgWIkwpp60J7ccJV+JsFxglWWXrh81uzKi?=
- =?us-ascii?Q?OifTObYHsItMiut9H8SRpBa+nqUQzOOM9BKAo7sblxUy5oHWbkt7yj5iaHcx?=
- =?us-ascii?Q?6lwX5ddDqGNrBg0IrIS7JAnbSV8ZYU3b6PLmUvtoHyrRkzATpemJVURrF1ZU?=
- =?us-ascii?Q?91EMDZ/V+V7wpXIZeaUYRnmc+irZXi+cYhzrTxRRvyBOafm+qbmVK0/eeL+D?=
- =?us-ascii?Q?tmxGIIJIOHuHm0Q1+1LahLH+dHl2o0cj21zn9XCzJZcYzWnPONgIcTPcCa/2?=
- =?us-ascii?Q?Z/6bjowUrbfrrcqJ8+FrjIC0Ya68OD0SSpDA/glymmUEoCoad31vvssosrk4?=
- =?us-ascii?Q?/hk7Nkr9ZWTxNBqvh1Y7EMGXFcYQGMxJrgsoWMmhxb0BXiylTn+FRjT5i8EB?=
- =?us-ascii?Q?2/CwwvuGXcY/wVZYLzzwI4NSoAqhKOvc9lvbt2UlIBm8o2G1FGM93FVWKQ9O?=
- =?us-ascii?Q?RCXTu5ecE3KUnvVYoiKk5E3CogxSilE9fZSppwOiBYOhYeBOsrkj3SFJacuD?=
- =?us-ascii?Q?Waldw1a0JWdT1J0fCxdY3kl3YjtsZ88=3D?=
-X-MS-Exchange-CrossTenant-Network-Message-Id: ecaff2ae-8980-4aa6-3fd5-08df238f4375
-X-MS-Exchange-CrossTenant-AuthSource: KL1PR02MB6257.apcprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Oct 2026 09:50:32.9775 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: WPIkgCq0iueVsjiYJwM05Kk1m88UcK/ASUnrEjjtOtd4fjKYA1cbSItbk5raoQo1X8QuK1ddkvhisGtDTIKmoWoTlY0F+0Yy6QTV1onLBpQ=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SI3PR02MB9388
-X-OriginatorOrg: processmission.com
-Received-SPF: pass client-ip=2a01:111:f403:c405::7;
- envelope-from=bin.meng@processmission.com;
- helo=TYDPR03CU002.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v12 16/17] s390x/pci: Implement migration for emulated
+ devices
+To: Konstantin Shkolnyy <kshk@linux.ibm.com>
+Cc: alifm@linux.ibm.com, farman@linux.ibm.com, richard.henderson@linaro.org,
+ iii@linux.ibm.com, david@kernel.org, cohuck@redhat.com,
+ pasic@linux.ibm.com, borntraeger@linux.ibm.com, qemu-s390x@nongnu.org,
+ qemu-devel@nongnu.org
+References: <20261006001643.420929-1-kshk@linux.ibm.com>
+ <20261006001643.420929-17-kshk@linux.ibm.com>
+From: Matthew Rosato <mjrosato@linux.ibm.com>
+Content-Language: en-US
+In-Reply-To: <20261006001643.420929-17-kshk@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: 4RJ7TXt0uPfQWMY_JHr8DKDOkpaP7qE4
+X-Authority-Analysis: v=2.4 cv=KJHPn1Fo c=1 sm=1 tr=0 ts=6ac55baa cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8
+ a=x-B4hQBy79GTlnKUhDoA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: 4RJ7TXt0uPfQWMY_JHr8DKDOkpaP7qE4
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA2MDA4MiBTYWx0ZWRfX5VxW+ACPTCLw
+ nMyrhnMd6+wtl4/sREuS/kJ7y7rGy35TyH4BrtPFKyS/pHvK+/4nIGlR7jqEvNRvg58s9SYPNh3
+ bTtBkBne0380xoFbjkag9skzk5KP1F8wUP7ANNxgfnINHHs4I28P+fpAW0f5oTdSAIoxYz6vwUQ
+ JGHeK0pgvwTndS4F0mJcS+TgTfoI80GIBQ+HsyIxZdcbpBCgmpLBRwfXYlGHgXSs4PVJO+UcI40
+ cCeuw4ysPBrx/z1O4AGK94qaq/Eow/fv+sSm1+So9NhLU8LPVS7nJtj33Qy8ye5d040iq9Hfxo+
+ wRYb7IxB1+j3g6BOc4gS4a1e23W7JIjEHK5mBoMW6TerTs/PhQVxNmKzUaaX/UJAQJPtVcmDL5n
+ HdBBsq/5wH//DfsuflFxqLMgLwgALqoqjuBRCLGTiObfxChV+4sFAmFz7QUSI+IXuPD4TuXwGWv
+ 07Z8ThEBz3b8NoAwpBg==
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA2MDA4MiBTYWx0ZWRfX257Rjud9Hdrs
+ nEtE08swxRET+Y7VXOCtMjXztsvYOw54rgIAx6DlD2D898mSoh06OEECMKQ7JtdtIKLmpcbuhTq
+ 98pY/RRVUaSxgxd1G2yWwOE7dmpIVHA=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-10-06_05,2026-10-06_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 malwarescore=0 spamscore=0 lowpriorityscore=0
+ priorityscore=1501 phishscore=0 impostorscore=0 adultscore=0 clxscore=1015
+ bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
+ definitions=main-2610060082
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=mjrosato@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -148,49 +128,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The e6500 core manual defines PWRMGTCR0 as SPR 1019 (0x3fb). QorIQ
-U-Boot and kernel access its fields during processor power setup.
+On 10/5/26 8:16 PM, Konstantin Shkolnyy wrote:
+> Implement zPCI device state migration, consequently enabling migration
+> of VMs that have emulated PCI devices, whether virtio or not.
+> Migration is allowed for devices whose function handle has the
+> FH_SHM_EMUL bit set. For these devices QEMU will save and restore the
+> state of its zPCI emulator.
+> 
+> This will enable emulated PCI migration starting with s390-ccw-virtio-11.2.
+> 
+> Passthrough devices will continue to block migration.
+> 
+> Signed-off-by: Konstantin Shkolnyy <kshk@linux.ibm.com>
 
-Define and register PWRMGTCR0 using the existing 32-bit SPR storage
-to retain the programmed control fields.
+Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
 
-Reference: E6500RM (Rev.0), section 2.7.7
-https://www.nxp.com/docs/en/reference-manual/E6500RM.pdf
-
-Signed-off-by: Bin Meng <bin.meng@processmission.com>
----
-
- target/ppc/cpu.h      | 1 +
- target/ppc/cpu_init.c | 3 +++
- 2 files changed, 4 insertions(+)
-
-diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
-index 9d3d27be91..b716ccf540 100644
---- a/target/ppc/cpu.h
-+++ b/target/ppc/cpu.h
-@@ -2346,6 +2346,7 @@ void ppc_compat_add_property(Object *obj, const char *name,
- #define SPR_Exxx_L2CSR1       (0x3FA)
- #define SPR_ICTC              (0x3FB)
- #define SPR_40x_ICCR          (0x3FB)
-+#define SPR_Exxx_PWRMGTCR0    (0x3FB)
- #define SPR_THRM1             (0x3FC)
- #define SPR_403_PBL1          (0x3FC)
- #define SPR_SP                (0x3FD)
-diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
-index 032b8b606e..4d12152659 100644
---- a/target/ppc/cpu_init.c
-+++ b/target/ppc/cpu_init.c
-@@ -3026,6 +3026,9 @@ static void init_proc_e500(CPUPPCState *env, int version)
-     }
- 
-     if (version == fsl_e6500) {
-+        spr_register(env, SPR_Exxx_PWRMGTCR0, "PWRMGTCR0",
-+                     SPR_NOACCESS, SPR_NOACCESS,
-+                     &spr_read_generic, &spr_write_generic32, 0);
-         /* Thread identification */
-         spr_register(env, SPR_TIR, "TIR",
-                      SPR_NOACCESS, SPR_NOACCESS,
--- 
-2.53.0
 
 
