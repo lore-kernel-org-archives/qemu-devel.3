@@ -4,56 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0078ACA5FF1
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 08:52:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E47EECA5FFF
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 08:52:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xENE5-0004QV-9U; Wed, 07 Oct 2026 04:42:13 -0400
+	id 1xENFl-0000ZI-0E; Wed, 07 Oct 2026 04:43:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1xEIt0-0008WU-Q2
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 00:04:19 -0400
-Received: from linux.microsoft.com ([13.77.154.182])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1xEIsy-0004cD-8i
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 00:04:10 -0400
-Received: from DESKTOP-TUU1E5L.localdomain (unknown [167.220.208.46])
- by linux.microsoft.com (Postfix) with ESMTPSA id 6EF9820B716A;
- Tue,  6 Oct 2026 09:48:38 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 6EF9820B716A
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1791305319;
- bh=9q6qbvRTkwKTu3YCkBzK1EfhMChrRvZ9BhOeFnGLE0k=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=H7FilEUk5zg5yBpO/l52LFIQ49f1CAHu/lZ+uExmarXXtx3otQ+dEqSS1ANk/4ggP
- CSOf/f7oD2Lpk80EVOKMO5zjDQ6M10M7Q2zTpSS41jInPnk8i8LfcAA+2Tsc1Otvb4
- ZTvLQ2hyqUC+B/p624+i+stMzXJgzQXfhuKQBNaM=
-From: Magnus Kulke <magnuskulke@linux.microsoft.com>
-To: qemu-devel@nongnu.org
-Cc: Wei Liu <wei.liu@kernel.org>,
- =?UTF-8?q?Doru=20Bl=C3=A2nzeanu?= <dblanzeanu@linux.microsoft.com>,
- Magnus Kulke <magnuskulke@microsoft.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PULL 03/11] target/i386/mshv: abort when hv_vp_register_page setup
- fails
-Date: Tue,  6 Oct 2026 18:48:57 +0200
-Message-Id: <20261006164905.776466-4-magnuskulke@linux.microsoft.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20261006164905.776466-1-magnuskulke@linux.microsoft.com>
-References: <20261006164905.776466-1-magnuskulke@linux.microsoft.com>
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1xEIvv-0000lC-3E
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 00:07:13 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1xEIvp-0005cY-5C
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 00:07:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1791346022;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=lCvmPtQZGBan/hL2hr9DcE0dQa7qoGMCEUgmDFkhnho=;
+ b=RjxsWVo1a06q0FSUHl8ZXveBBBGEqIsjxJcYZxebO5VhmH5oCbXTiESloXYdbFHG1NJG9W
+ Fm1n44WLx+VxIWDS88qmJfRFgWqH+kADqyGdBRbtNhN+TAKQqDGBVuMuPr/JXYVqv0bC45
+ /BW9ar9xV7BiLwceTzFkWxGQNre04m8=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-29--AiVHn6XOzOgK06I6-wlrA-1; Tue,
+ 6 Oct 2026 11:49:51 +0000
+X-MC-Unique: -AiVHn6XOzOgK06I6-wlrA-1
+X-Mimecast-MFC-AGG-ID: -AiVHn6XOzOgK06I6-wlrA_1791287390
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 68CE9195423A; Tue,  6 Oct 2026 11:49:49 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.48.53])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BF3881956042; Tue,  6 Oct 2026 11:49:45 +0000 (UTC)
+Date: Tue, 6 Oct 2026 13:49:43 +0200
+From: Kevin Wolf <kwolf@redhat.com>
+To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
+Cc: Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ BALATON Zoltan <balaton@eik.bme.hu>, Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Fabiano Rosas <farosas@suse.de>, Warner Losh <imp@bsdimp.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
+Subject: Re: [PATCH 1/4] docs/devel: relax policy on AI-generated contributions
+Message-ID: <asTgV5DRpbQ8nEoP@redhat.com>
+References: <20260930085433.830743-1-pbonzini@redhat.com>
+ <20260930085433.830743-2-pbonzini@redhat.com>
+ <CAFEAcA91XU=_hS3iB+0p7hXQ_nvf0YpgNZaKsd=b=fSVaTJDxw@mail.gmail.com>
+ <69164823-7271-4d59-9684-637bec454a1d@redhat.com>
+ <293cb972-35e1-1922-0834-601e2491a7a6@eik.bme.hu>
+ <asS0HLYRmZhB3Ban@redhat.com> <87mrsrjh8a.fsf@draig.linaro.org>
+ <asTF0za8c5njDtrK@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=13.77.154.182;
- envelope-from=magnuskulke@linux.microsoft.com; helo=linux.microsoft.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <asTF0za8c5njDtrK@redhat.com>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 10
+X-Spam_score: 1.0
+X-Spam_bar: +
+X-Spam_report: (1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -69,62 +94,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Doru Bl√¢nzeanu <dblanzeanu@linux.microsoft.com>
+Am 06.10.2026 um 11:56 hat Daniel P. BerrangÈ geschrieben:
+> On Tue, Oct 06, 2026 at 10:44:37AM +0100, Alex BennÈe wrote:
+> > Kevin Wolf <kwolf@redhat.com> writes:
+> > 
+> > > Am 05.10.2026 um 23:09 hat BALATON Zoltan geschrieben:
+> > >> On Fri, 2 Oct 2026, Paolo Bonzini wrote:
+> > >> > I agree completely with how you phrased the first and third.  I agree
+> > >> > that the second bullet is a risk too, but it's mitigated by "LLM-created
+> > >> > contributions will be held to a higher standard than human-created ones,
+> > >> > because LLMs make it easier to write tests" (and by maintainers being
+> > >> > able to
+> > >> 
+> > >> Tests need to be reviewed too to be able to trust them so that does not help
+> > >> against overloading reviewers with generated patches but burdens them even
+> > >> more: they will also have to review the tests before the code.
+> > >
+> > > The required level of trust for tests is comparatively low, so it's much
+> > > easier to review tests to a sufficient level than say device emulation
+> > > code.
+> > >
+> > > If a new test looks plausible, fails before the fix and passes
+> > > afterwards, it's more useful that what we had before, even if it's
+> > > technically buggy in some corner case.
+> > 
+> > And also easier to rip out in the unlikely event it infringes anything.
+> > 
+> > But broadly having a test* is better than having no test.
+> > 
+> > * modulo the effects on our coverage.
+> 
+> The maintability of test code is really important too, just as much
+> as the code being tested. Every test potentially constrains how we
+> can change code in future as tests themselves are never perfect or
+> exhaustive and often take short-cuts in their design to suit the
+> current testing needs. As we enhance the code under test, the test
+> suite needs to evolve with it and that requires that we understand
+> the test code and why it is doing what it is doing.
+> 
+> A test spat out by AI which is a string of 20 undocumented qtest
+> commands may fail before the fix and pass afterwards, but that
+> test is not automatically a win if we don't understand why the test
+> is doing what it is doing - it becomes a burden for long term maint.
 
-In case the call to mmap fails, we log an error and abort to signal
-there is something wrong with the system.
-Check the register page version and compare with the expected version and
-abort in case of a mismatch.
+That's the "looks plausible" part. It's really not a lot of work to
+recognise that a test is just 20 undocumented qtest commands.
 
-Fixes: a173f8f170
-Signed-off-by: Doru Bl√¢nzeanu <dblanzeanu@linux.microsoft.com>
-Reviewed-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
-Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
----
- target/i386/mshv/mshv-cpu.c | 20 +++++++++++++-------
- 1 file changed, 13 insertions(+), 7 deletions(-)
-
-diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
-index b8a6924088..d236b9461f 100644
---- a/target/i386/mshv/mshv-cpu.c
-+++ b/target/i386/mshv/mshv-cpu.c
-@@ -2154,6 +2154,7 @@ void mshv_arch_init_vcpu(CPUState *cpu)
-     CPUX86State *env = &x86_cpu->env;
-     AccelCPUState *state = cpu->accel;
-     size_t page = HV_HYP_PAGE_SIZE, xsave_len;
-+    void *regs_page;
-     void *mem = qemu_memalign(page, 2 * page);
-     int ret;
-     X86XSaveHeader *header;
-@@ -2165,15 +2166,20 @@ void mshv_arch_init_vcpu(CPUState *cpu)
-                       > HV_HYP_PAGE_SIZE));
- 
-     /* mmap the registers page */
--    void *rp = mmap(NULL, page, PROT_READ | PROT_WRITE,
-+    regs_page = mmap(NULL, page, PROT_READ | PROT_WRITE,
-                     MAP_SHARED, mshv_vcpufd(cpu),
-                     MSHV_VP_MMAP_OFFSET_REGISTERS * page);
--    if (rp == MAP_FAILED) {
--        warn_report("register page mmap failed, falling back to hypercalls: %s",
--                    strerror(errno));
--        env->regs_page = NULL;
--    } else {
--        env->regs_page = (struct hv_vp_register_page *) rp;
-+    if (regs_page == MAP_FAILED) {
-+        /* This shouldn't fail, so we treat it as a fatal error */
-+        error_report("register page mmap failed: %s", strerror(errno));
-+        abort();
-+    }
-+    env->regs_page = (struct hv_vp_register_page *) regs_page;
-+
-+    if (env->regs_page->version != HV_VP_REGISTER_PAGE_VERSION_1) {
-+        error_report("register page version mismatch: got %u, expected %u",
-+                     env->regs_page->version, HV_VP_REGISTER_PAGE_VERSION_1);
-+        abort();
-     }
- 
-     state->hvcall_args.base = mem;
--- 
-2.34.1
+Kevin
 
 
