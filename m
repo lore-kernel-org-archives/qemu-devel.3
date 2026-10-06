@@ -4,95 +4,147 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2D04CA6002
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F264CA5FFF
 	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 08:46:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xENAt-0005mt-UL; Wed, 07 Oct 2026 04:38:56 -0400
+	id 1xEN7H-0003bY-LS; Wed, 07 Oct 2026 04:35:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xEIUd-0004Wz-FD
- for qemu-devel@nongnu.org; Tue, 06 Oct 2026 23:39:14 -0400
-Received: from mail-lf1-x134.google.com ([2a00:1450:4864:20::134])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xEIUX-0000eF-KA
- for qemu-devel@nongnu.org; Tue, 06 Oct 2026 23:38:55 -0400
-Received: by mail-lf1-x134.google.com with SMTP id
- 2adb3069b0e04-5ba7ed32ccdso4019205e87.0
- for <qemu-devel@nongnu.org>; Tue, 06 Oct 2026 20:38:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1791344331; x=1791949131; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=A5T0Q4tG1KFl/zAm+FMtUPPeNHZC6qNa+VYuFXQeTT8=;
- b=LtNNMJ9NkYOUyDDwflGbEA0eZVVliIo+ra7tSmKXUhj0K3ijb7+xvnhvsTlwfDdgIc
- Say3gk72lPuPYXeXlfXV4nqZweXvShmv8JQXXHOxECUULlYdJltsl1zfWxcnI4ms62Sh
- ZRHVkzfj8uVce4n54+KK8Eh917UfdpqkIwVsI4ya73wRHUT7WrBG6WRd4z+A5H5FcBDh
- JKFZbwgoOR4j/Yvs6So6LS/q1u9bDXEVd9qc7sxUsxZn4DSoKBtoZj/P8WC7L9XFg3a/
- 1Mgm78WEL2w57wvGlEqSPr02jpBBeSPnu/TrqOIH+IVldCjuNQgfqpNNwgIh7f8vSE0B
- Zglw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791344331; x=1791949131;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=A5T0Q4tG1KFl/zAm+FMtUPPeNHZC6qNa+VYuFXQeTT8=;
- b=osOcsY9J6U89E/A5POa0kwpi7taoTeJ/7pC/9059G+EQBJweOR1OBiN3mIW3wQS/je
- 1fRTHKCgm49N76Aue2pn+ozh1PpMhG/IfcyMaOlv/fXnBEQni3yzZKI3X78LQVEy+Sa2
- 2w23dZnG53yUCrmwvkdnXiJmZtrXwqRo21Jpf9ckj+7lCGq+RNpmj3XAB0UiMJhM18ey
- 9Pff8iIoitBMhvtBL9O/Z6jigPg4KDpdAm2qn1ukhHLuXVuXPnXK6M6wQ2Rs3ChkShYy
- lkVi3XutkqszJ158l0ogCLn2SkAIKD+Esm2DnM8G8iBSHjtXNXghk6zrAPzDN8AWwpHZ
- uv0Q==
-X-Gm-Message-State: AFq9FYKXu99oNq3wFTfDaqYMod3Oy/6JwMhmuompk0mgahh8/M1SRp4R
- 70j8nqD7QIGlm7TMiL2QqtRX5CXGwmWZQhKf8a5PErakryFDidmehrVvYN2M5A==
-X-Gm-Gg: AYBFou2mY6sZsfYkTbke3YjDNH3RdFrPFxnTRoSTjbkMg1o/TJoH5hwgdHbhHwift+T
- 3ekblVtOYtniKlubucHDhI8E1r3ZcGKrV58BnFR6Ml8ZxxFJHgEcoVpLeaw/GwQ6LfidkQJDETA
- /dVhyMICT0Nd1Z1cf5Us6UtQAmXt2J7XqKVmWFmVByaMosJjW+Kk//KZdGuoGK78CzX9i0Eww+G
- K4GP3SVpf/QWjP80OTOmVYlHiuMDihGhdHOwwimLuxRltG4FTRI8BTPVK1NlTuX6gvDrNnlAH5m
- mxkdDkEmowSPe7wVG6NEb0tsZ1DNlN4pGTTWpmdGVFflabovLhfwkgjZglIZQQ2pFrVyjh6IHEm
- 7fx6RH1PtUg9y8R+FMwsPDOHwZ408l1n/Yb7N1LsNMdCApArUEmSIGtSioKTHHlogFJfTNktLXG
- XA6jxfvoCgsnlPbn+HuGo2QqZ9IwHYwiFnWfNC5GeCcYR5vKgUW4djKz09imJWqBuW8+OhKYlTP
- otNxJA4qqdQZQ8+XcN2LYsPBJJfILQBXfIr7ZRwqxfbefjw
-X-Received: by 2002:a05:6000:288f:b0:48b:5e2:52c7 with SMTP id
- ffacd0b85a97d-48c47c66e8amr17784318f8f.8.1791275750847; 
- Tue, 06 Oct 2026 01:35:50 -0700 (PDT)
-Received: from archlinux (pd95eda80.dip0.t-ipconnect.de. [217.94.218.128])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48c6cdb281csm1566764f8f.55.2026.10.06.01.35.49
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 06 Oct 2026 01:35:50 -0700 (PDT)
-From: Bernhard Beschow <shentey@gmail.com>
+ (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
+ id 1xEI4Q-0001AG-9l
+ for qemu-devel@nongnu.org; Tue, 06 Oct 2026 23:11:59 -0400
+Received: from mail-francecentralazlp170130007.outbound.protection.outlook.com
+ ([2a01:111:f403:c20a::7] helo=PA4PR04CU001.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
+ id 1xEI4C-0000LX-Ti
+ for qemu-devel@nongnu.org; Tue, 06 Oct 2026 23:11:51 -0400
+Received: from MIWPR08MB285920.eurprd08.prod.outlook.com
+ (2603:10a6:290:aa::21) by DBBPR08MB6155.eurprd08.prod.outlook.com
+ (2603:10a6:10:1f5::15) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.496.15; Wed, 7 Oct
+ 2026 01:08:30 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=e4l8GHy7OevjCpPRRWPSKFXgnx7ngJRJ/IUfh5//UXwM3T/9zVZKHSc4agI1pvn6JsHaptk4ulkKGmTE6HvvCT45lkgIQnxbJqeX7jVSMuVO6Ju7jGPWejb5BuRpo7uBSu0WL+YCmMCI5VC0Z0et6PM/oiDvf4nb8B1PshcClYKMrT2LUw8pJzIddctiqp7XmVEtbMMaCCJdmgibHB+lg4+uiscKp4ONfDSI2r44V6EKrZvZGo34AsYbx5etZtDVcNWG3rnQlmlkH7JnRF4XYBl+JctSAw8XCjJIeRLQqPiIZ2PTdkL/SXuE/xKwiUgRTu/ggGvI1J5wxJUNoAS7jQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=ZsVXvvvzwqJ72NVYywAYrq/LWoyKs50mmgOws/1FLo0=;
+ b=bWquK/6ejkrBmYQ3VNRxkt/kdPR6sECIlVaLgwFidLAha1et/vdjTaRlOz2UevHA7ac3Wk5xAW6cGfYr3oQ7YC0eAjJjH8waxbvF5O/VX7ClWv83GM0XhQ6/LqroPVX/iabIaHE1VNc1KFU1jPuvik2XnUDebPNd7Rd1T9ZzqYH5Hm8p38VSQsT0fVRIdhQoNzUIgav993qD8Mhvjp6pFYvw2hgX9RJsJhGincbFwq55iSWHbBq9R/feebwhhDkFuF9crzBubrHEFJF4jMvI3aMxdxVOEbY2tmz4/XTnrhhb3tT6f4wq9sz82wkah99U4cxMbJc3pYBnHbMQcrNrJA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
+ header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=ZsVXvvvzwqJ72NVYywAYrq/LWoyKs50mmgOws/1FLo0=;
+ b=CfFrRlvM/x9obEfAuqVE5ulCFTTFc/Uo4NOeCNgtZ15g+3SIcYtDZ2e1iyMnyWj2c8W4fSuN62f61l1GX8bUepU7V1WU0SYpLDjCOVNNmXwogkokuOa4BovOm2rRdQGD5rlt/j6QqlCFMTTP7JU7FPiz8oByS+660uws5g6LX3RIP9ThJRyKjIAicZ1xxB8S3QEILtznkKhNdPucIrQcuADIMTZiJiQWZZSPSjrb2NhfB8HITcPIQnVZ0273TCVmNALwnpP/eMs1aQ4nNuNxcq8IzbwcapIuNwMv8D7D3IqYq+T6YouOVJ55IzlNT3V3UVupD0rOJyn+lcTcvZTpMw==
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=virtuozzo.com;
+Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
+ (2603:10a6:800:20a::12) by MIWPR08MB285920.eurprd08.prod.outlook.com
+ (2603:10a6:290:aa::21) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.496.15; Tue, 6 Oct
+ 2026 13:58:57 +0000
+Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
+ ([fe80::4e37:b189:ddcd:3dd8]) by VI0PR08MB10656.eurprd08.prod.outlook.com
+ ([fe80::4e37:b189:ddcd:3dd8%7]) with mapi id 15.21.0496.010; Tue, 6 Oct 2026
+ 13:58:57 +0000
+From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+Date: Tue, 06 Oct 2026 16:58:36 +0300
+Subject: [PATCH v13 13/22] vhost: add vhost_dev_set_owner() /
+ vhost_dev_reset_owner() helpers
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20261006-up-vsock-vhost-v5-v13-13-2ea78fd1b7ed@virtuozzo.com>
+References: <20261006-up-vsock-vhost-v5-v13-0-2ea78fd1b7ed@virtuozzo.com>
+In-Reply-To: <20261006-up-vsock-vhost-v5-v13-0-2ea78fd1b7ed@virtuozzo.com>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Bin Meng <bin.meng@processmission.com>,
- Jean-Christophe Dubois <jcd@tribudubois.net>,
- Gaurav Sharma <gaurav.sharma_7@nxp.com>,
- Bernhard Beschow <shentey@gmail.com>, qemu-arm@nongnu.org,
- Jason Wang <jasowangio@gmail.com>,
- Alistair Francis <alistair@alistair23.me>
-Subject: [PATCH v4 25/31] Kconfig: Extract config IMX_GPT from config IMX
-Date: Tue,  6 Oct 2026 10:34:37 +0200
-Message-ID: <20261006083445.30362-26-shentey@gmail.com>
-X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261006083445.30362-1-shentey@gmail.com>
-References: <20261006083445.30362-1-shentey@gmail.com>
+Cc: mst@redhat.com, maciej.szmigiero@oracle.com, peterx@redhat.com, 
+ odaki@rsg.ci.i.u-tokyo.ac.jp, dwmw2@infradead.org, dongli.zhang@oracle.com, 
+ bchaney@akamai.com, den@openvz.org, farosas@suse.de, 
+ andrey.drobyshev@virtuozzo.com, clg@redhat.com, mark.kanda@oracle.com, 
+ vsementsov@yandex-team.ru, philmd@oss.qualcomm.com, sgarzare@redhat.com
+X-Mailer: b4 0.16.0
+X-ClientProxiedBy: VI6PEPF00000229.AUTP296.PROD.OUTLOOK.COM
+ (2603:10a6:808:1::8f3) To VI0PR08MB10656.eurprd08.prod.outlook.com
+ (2603:10a6:800:20a::12)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::134;
- envelope-from=shentey@gmail.com; helo=mail-lf1-x134.google.com
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: VI0PR08MB10656:EE_|MIWPR08MB285920:EE_|DBBPR08MB6155:EE_
+X-MS-Office365-Filtering-Correlation-Id: 4b06acf5-d758-452f-4a3b-08df23b1f719
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|366016|1800799024|376014|52116014|7416014|23010399003|38350700014|56012099006|10067099003|22082099003|18002099003;
+X-Microsoft-Antispam-Message-Info: 4AYMsEACpUxJ+2oKDhteTH2G6KNwHOOomrqlufRUVxIgYqVDADvmxpLo79t5Lr2gSR6aynT2WgHinpI7xdCzOtEY79CtB0NwUIMh3yFSFtvrTKmRp2OddgFV3QQsmUatu7Uawa0v/8sRhX/39pw4o00zA1ogrUDzpIPZ7pEuey17dTkE9DbyaQ5Pa+cpYsmpgudI9aW4MvIkWWCE/LeQDzRTSKhr46Va+ok/OWUrTk+r56C5tw0YDYui2bbCDh7oOJtQqdY+YGwYCYF1qm45NXVVTDtXL2bsDQf6Xpuu8qNoHoD6/DAjgazIwY3/eAm4QTSugXb1h/UTvPHPtANl8CS9VisU+kZIzrXf6pfDzYy7wxEREtEZcadkoGNkYzJ+4AaihCe0OpP0xO8xvM0bX6iIF9I4+CXfCWRQi8RSMU0V+quu1JeSJhybVwWrddekR9HNFv/GO6DMRDLZ2X8EIOUsqHZWIEuSZVIWsYU1ElRX5MdiBB8VnM8YDLvVekocU4POCTcDD4ynOyisk7eOELXrd+XzjhZzrN49bw6jqhGPwGQzG+argZ5D7lP9Cp6Xsv5LTpHEL251vhlKQTs2NmjhJfJNIIo0n0nm4BMvSYB6BwCduic7/t15AZ53u6YHwALS/PM7auZq2XuzoraBSidSh6TzqHSJ06n9WRZIFNnyH2VxlLIXO0C4iaYHvCo0IH3U4epxpdnWRZEJZ6E7DeoUQ0HIoPfYdbXrHzjNcwg=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:VI0PR08MB10656.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(1800799024)(376014)(52116014)(7416014)(23010399003)(38350700014)(56012099006)(10067099003)(22082099003)(18002099003);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?dDFSSkVtcVljMlJmalNTZEpqWTltM0tQaWtVV2pMTFR2SnVmcGtQdU1oUG9O?=
+ =?utf-8?B?Y3Y5T3RBR09QZjR5cU1rckFzVlZqWFZBYU9kMU92Q2xJNFVYUDRJcEU0NSs1?=
+ =?utf-8?B?ZEF2YStHOVhyaEpMZ3JTTnVxMXp4ZDhOK3BQNzNia3k4K3dKRGo4ZHEydnJi?=
+ =?utf-8?B?dzlrSkd4K09ER1lrQ0x1Z0VYaERGMnk0NkZtOG5LczNuM1ZGUk5pOEp0ajgx?=
+ =?utf-8?B?cFEzYVNRWlcwNkVKVHJ3WGcwc1lOWWs2VnNNMmNoMm5xdE1ON25FbFlWM3Ay?=
+ =?utf-8?B?L1NQSm12cjcyc05tN2ozWmgzSDY0UnhwUWZ6Z2xpQWNsUlRjUklGOFBneTc5?=
+ =?utf-8?B?aWZ2TWJJaWllWDR0b2dFNjFmYXNrS2dQUzNJbldUaEhXRlVKNHVpdGcvTWFu?=
+ =?utf-8?B?amFxY0hoTXB4UmFpV0psb3BraHlZYmtlS0gxcHVoaGZwNkV0SktjU0pjK3o4?=
+ =?utf-8?B?M0RUNzdkMERYdDQ0ZGZGVEhjZDFyY1pZM0FzdXJSL2tURDdMVDlpbjBCNEVM?=
+ =?utf-8?B?M0F2SEVLbmxITE5HeHpncWFLSHBSTkxkUHdyUDN4V3Zmb3NmNklDV2N4SVhu?=
+ =?utf-8?B?RWxuN1FzTm44bGtBWldoeVdtS0tLYUl2U0NUTjdpR1llSXZBdTFQUXZYNTlH?=
+ =?utf-8?B?QmY4TzRFMUJpYjR1VEpLbEwxVjIwaEFaUW04dmp4RzlCUlpFaUFiVUt5ekZJ?=
+ =?utf-8?B?c29WWkxGcmlNZzdWeWVUU2c5LzBxSWRmYTBvbytZWUU3cEJnM1g4QThDR05U?=
+ =?utf-8?B?R0RKcVBkVld6VUlHQU1YL1lDZUtCNFRlcDFnNGx3ajN4SVpuN2VtV2JJL1dx?=
+ =?utf-8?B?NG04cWNRMXBoZE5RemFxTC9tRnIyY25XWkRJcTFielE1bTNNbHRlNzJDY3kz?=
+ =?utf-8?B?anhyaHZ5UmlBMmwzbVRKSXdxbnozQWNXYW93dzVSSmhNR2U2YXpEVjRxTExU?=
+ =?utf-8?B?N3lEQ0RsVHpreW1BeFo5SDFPQmVCZjk3SDR1bE9CK2ROSVJhdkdtVGJ6djl1?=
+ =?utf-8?B?UDV5YXBMbnpiNTJ5dkZVQVM0SUhZUW9GcmdzVVBjSlJ3d2RXeGRLREtOS2VZ?=
+ =?utf-8?B?R1hnVUhEZ3FtbW9iNjdQV1BMV0xYc0NXcHlwZy9ZSzJGZC9Gelc0YitqaGdE?=
+ =?utf-8?B?T0FNMVFuMzJ3cUpWVGJIVHJCajJraE45dkJsRUoyN0pRZ1FXZWJCbS9OMS9k?=
+ =?utf-8?B?NGpaVHhKanVlbnAzdExpMDVBTFlOU0xycWVaYVdmcHR6YmtmczcwUHNKc1pL?=
+ =?utf-8?B?VGZNUldNM2FyekIzVTNMcUxBUktWSzFIdmgrdzZEemp1eWlXclBCRW5LaEIv?=
+ =?utf-8?B?ZEVJaExTUk5TcGQ3TEpENUc3ajBZTmpRL01hVTMwckk5V21YUnpuRE9yWFRQ?=
+ =?utf-8?B?N1VtWFcvcTVQclRUekFObHhKd2h5Nm9LcENPZ1ZCWFpWbVAzdVkyV1BYMCtx?=
+ =?utf-8?B?VzFIbzdhZVBGUGFWSVNwWGxNaHJqSUkrMFpBa1R4bll4aXc2VmRrSzBBeGV6?=
+ =?utf-8?B?cVZJbEdTTXNoeVNYYkVoZzNqd1NMdmIwbHFEbGNnWGtrQjdZMjlrUU5pcTVH?=
+ =?utf-8?B?QlFMLzFlL2Z5RHpyaW55YXdRUTN2ZC9SUlpSRjZMejZMTXlDaDY3ZWtXOWFL?=
+ =?utf-8?B?eldncWtubm53REFmTFg2cEliMkRDQ3IxYTArUnkwVXpHUGJrZDBSVlNweHV3?=
+ =?utf-8?B?b0ZrYURNS1N1SkQwcXR3Rm1kS0dEWmZrRFQvSDE5YTQ3R0k2Smc2d3ZnY01t?=
+ =?utf-8?B?ZUl1cXJOU0U1NEtVbWpJZlRvanpxUXRYV1RmeU5GR2c5aHNJZEo2QzNJaFlz?=
+ =?utf-8?B?R0hBYko1M09hNFZobGlpVnJ6UUdBS1ZmVUxXTE1ITVNFZmdHWHNxZi8vM0Jm?=
+ =?utf-8?B?am1Tc2JyUmdES2t1elJPczY5clZwZjNZakpwUTVMWGpvYTdDNnRrZHNVbTBN?=
+ =?utf-8?B?dEpXTjNUQ3VEbHdQUEJHaDUwT29hcEdFVWtuWWZPL2VJY21DSmt4bWZTRjM0?=
+ =?utf-8?B?Y0tsdkFBeWpoOXJKeXBqREF4clJGWjhVRkNRVUZYODd6TDFBMmRsanN3VnBa?=
+ =?utf-8?B?bHNqSG10NEVyeVBOTFc2SUgwVzhsTkJyY1ozSkxUWm5FVytUM3FXZHlXSEpT?=
+ =?utf-8?B?Z1FwQS9Ba1dQdVNaUDVaVUtwNHQ4ZCtlbUFFbEoyZlNHdmJNREFaQ0JQOTBa?=
+ =?utf-8?B?ZnZXcnBqQ1pSdFhUWHVVOGRmZmJXbng5emhOcE9JbVZIQ05PLzJ2MmFJaHNJ?=
+ =?utf-8?B?elgxMlkyUUI1elhrYm83aUoxR3JmRElzVXZhTkp6VzRlRjYxU3hvWExiVk50?=
+ =?utf-8?B?TS8xdXlJUmJaZUVldEIrdHNRSHo0aXROSXhvY2kremlCNGNPeXFieGJ3YlNB?=
+ =?utf-8?Q?pqsyJH1jc4Z6j5lM=3D?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: 4b06acf5-d758-452f-4a3b-08df23b1f719
+X-MS-Exchange-CrossTenant-AuthSource: VI0PR08MB10656.eurprd08.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Oct 2026 13:58:57.2857 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: JPf7WHvUMTmdYJIvIAN3kIQP+jJ5ARM5QYHtNVQmRqQ2iZlXwDpqGpknS1bywN0eGhGjBmPbhy4RSiYJG+5nGFU8dxkG9Wbl4MFqjJxzJJs=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MIWPR08MB285920
+X-OriginatorOrg: virtuozzo.com
+Received-SPF: pass client-ip=2a01:111:f403:c20a::7;
+ envelope-from=andrey.drobyshev@virtuozzo.com;
+ helo=PA4PR04CU001.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,108 +160,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Over time, QEMU has grown a number of i.MX boards and the monolithic
-config IMX drags in unneeded dependencies into each SoC model. Extract
-config IMX_GPT to eventually eliminate config IMX.
+Wrap the set_owner/reset_owner backend ops in dev-level helpers, matching
+other vhost_dev_* wrappers, so device code can take or release ownership
+without reaching into vhost_ops directly.  vhost_dev_init() now uses
+vhost_dev_set_owner(). Both return -ENOSYS if the backend has no such op.
 
-Reviewed-by: Bin Meng <bin.meng@processmission.com>
-Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+No functional change.  These are used by the following vhost-vsock patch to
+hand a device between owners during CPR.
+
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 ---
- hw/arm/Kconfig       | 7 +++++++
- hw/timer/Kconfig     | 5 +++++
- hw/timer/meson.build | 2 +-
- 3 files changed, 13 insertions(+), 1 deletion(-)
+ hw/virtio/vhost.c         | 20 +++++++++++++++++++-
+ include/hw/virtio/vhost.h | 25 +++++++++++++++++++++++++
+ 2 files changed, 44 insertions(+), 1 deletion(-)
 
-diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-index dada9f57a7..cb6e7056a5 100644
---- a/hw/arm/Kconfig
-+++ b/hw/arm/Kconfig
-@@ -483,6 +483,7 @@ config FSL_IMX25
-     select IMX
-     select IMX_AVIC
-     select IMX_FEC
-+    select IMX_GPT
-     select IMX_I2C
-     select IMX_RNG
-     select USB_CHIPIDEA
-@@ -498,6 +499,7 @@ config FSL_IMX31
-     select SERIAL_MM
-     select IMX
-     select IMX_AVIC
-+    select IMX_GPT
-     select IMX_I2C
-     select WDT_IMX2
-     select LAN9118
-@@ -512,6 +514,7 @@ config FSL_IMX6
-     select FSL_IMX7_SNVS
-     select IMX
-     select IMX_FEC
-+    select IMX_GPT
-     select IMX_I2C
-     select IMX_USBPHY
-     select CAN_FLEXCAN
-@@ -592,6 +595,7 @@ config FSL_IMX7
-     select IMX
-     select IMX_FEC
-     select IMX_GPCV2
-+    select IMX_GPT
-     select IMX_I2C
-     select WDT_IMX2
-     select PCI_EXPRESS_DESIGNWARE
-@@ -611,6 +615,7 @@ config FSL_IMX8MP
-     select FSL_IMX8MP_CCM
-     select IMX
-     select IMX_FEC
-+    select IMX_GPT
-     select IMX_I2C
-     select OR_IRQ
-     select PCI_EXPRESS_DESIGNWARE
-@@ -637,6 +642,7 @@ config FSL_IMX8MM
-     select FSL_IMX8MP_CCM
-     select IMX
-     select IMX_FEC
-+    select IMX_GPT
-     select IMX_I2C
-     select OR_IRQ
-     select SDHCI
-@@ -678,6 +684,7 @@ config FSL_IMX6UL
-     select IMX6UL_LCDIF
-     select IMX_FEC
-     select IMX_GPCV2
-+    select IMX_GPT
-     select IMX_I2C
-     select IMX_USBPHY
-     select WDT_IMX2
-diff --git a/hw/timer/Kconfig b/hw/timer/Kconfig
-index e1b751a54a..49a4d20e55 100644
---- a/hw/timer/Kconfig
-+++ b/hw/timer/Kconfig
-@@ -23,6 +23,11 @@ config I8254
-     bool
-     depends on ISA_BUS
+diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+index dfdfd49da3f..56fa4345886 100644
+--- a/hw/virtio/vhost.c
++++ b/hw/virtio/vhost.c
+@@ -1703,6 +1703,24 @@ int vhost_dev_init_backend(struct vhost_dev *hdev, void *opaque,
+     return 0;
+ }
  
-+config IMX_GPT
-+    bool
-+    depends on IMX_CCM
-+    select PTIMER
++int vhost_dev_set_owner(struct vhost_dev *hdev)
++{
++    assert(hdev->vhost_ops);
++    if (!hdev->vhost_ops->vhost_set_owner) {
++        return -ENOSYS;
++    }
++    return hdev->vhost_ops->vhost_set_owner(hdev);
++}
 +
- config ALLWINNER_A10_PIT
-     bool
-     select PTIMER
-diff --git a/hw/timer/meson.build b/hw/timer/meson.build
-index 8323efaf46..477dd47486 100644
---- a/hw/timer/meson.build
-+++ b/hw/timer/meson.build
-@@ -16,7 +16,7 @@ system_ss.add(when: 'CONFIG_GRLIB', if_true: files('grlib_gptimer.c'))
- system_ss.add(when: 'CONFIG_HPET_C', if_true: files('hpet.c'))
- system_ss.add(when: 'CONFIG_I8254', if_true: files('i8254_common.c', 'i8254.c'))
- system_ss.add(when: 'CONFIG_IMX', if_true: files('imx_epit.c'))
--system_ss.add(when: 'CONFIG_IMX', if_true: files('imx_gpt.c'))
-+system_ss.add(when: 'CONFIG_IMX_GPT', if_true: files('imx_gpt.c'))
- system_ss.add(when: 'CONFIG_MIPS_CPS', if_true: files('mips_gictimer.c'))
- system_ss.add(when: 'CONFIG_MSF2', if_true: files('mss-timer.c'))
- system_ss.add(when: 'CONFIG_NPCM7XX', if_true: files('npcm7xx_timer.c'))
++int vhost_dev_reset_owner(struct vhost_dev *hdev)
++{
++    assert(hdev->vhost_ops);
++    if (!hdev->vhost_ops->vhost_reset_owner) {
++        return -ENOSYS;
++    }
++    return hdev->vhost_ops->vhost_reset_owner(hdev);
++}
++
+ int vhost_dev_init(struct vhost_dev *hdev, void *opaque,
+                    VhostBackendType backend_type, uint32_t busyloop_timeout,
+                    Error **errp)
+@@ -1720,7 +1738,7 @@ int vhost_dev_init(struct vhost_dev *hdev, void *opaque,
+         goto fail;
+     }
+ 
+-    r = hdev->vhost_ops->vhost_set_owner(hdev);
++    r = vhost_dev_set_owner(hdev);
+     if (r < 0) {
+         error_setg_errno(errp, -r, "vhost_set_owner failed");
+         goto fail;
+diff --git a/include/hw/virtio/vhost.h b/include/hw/virtio/vhost.h
+index b2b644c0d1c..8127a9a5a2c 100644
+--- a/include/hw/virtio/vhost.h
++++ b/include/hw/virtio/vhost.h
+@@ -178,6 +178,31 @@ int vhost_dev_init(struct vhost_dev *hdev, void *opaque,
+ int vhost_dev_init_backend(struct vhost_dev *hdev, void *opaque,
+                            VhostBackendType backend_type, Error **errp);
+ 
++/**
++ * vhost_dev_set_owner() - take ownership of a vhost device
++ * @hdev: the common vhost_dev structure
++ *
++ * Issue VHOST_SET_OWNER on a device that has already been set up, e.g. to
++ * complete a CPR handoff on the destination, or to take the device back on
++ * the source after a failed CPR.
++ *
++ * Return: 0 on success, -ENOSYS if the backend has no such op, negative
++ * errno on failure.
++ */
++int vhost_dev_set_owner(struct vhost_dev *hdev);
++
++/**
++ * vhost_dev_reset_owner() - release ownership of a vhost device
++ * @hdev: the common vhost_dev structure
++ *
++ * Issue VHOST_RESET_OWNER so that another process can take the device over
++ * with vhost_dev_set_owner(), e.g. on the CPR source once the VM is stopped.
++ *
++ * Return: 0 on success, -ENOSYS if the backend has no such op, negative
++ * errno on failure.
++ */
++int vhost_dev_reset_owner(struct vhost_dev *hdev);
++
+ /**
+  * vhost_dev_cleanup() - tear down and cleanup vhost interface
+  * @hdev: the common vhost_dev structure
+
 -- 
-2.56.0
+2.47.1
 
 
