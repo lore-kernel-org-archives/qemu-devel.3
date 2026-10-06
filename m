@@ -4,103 +4,135 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05194CA5FF1
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 08:52:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47F7BCA5FFF
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 08:52:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xENAJ-0003cJ-Gd; Wed, 07 Oct 2026 04:38:19 -0400
+	id 1xEN8d-0005FI-R8; Wed, 07 Oct 2026 04:36:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xEINT-0003Sd-W4
- for qemu-devel@nongnu.org; Tue, 06 Oct 2026 23:31:53 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
+ id 1xEI4t-0001GQ-A1; Tue, 06 Oct 2026 23:12:33 -0400
+Received: from mail-japaneastazlp170120005.outbound.protection.outlook.com
+ ([2a01:111:f403:c405::5] helo=TYPPR03CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xEIND-00078J-RP
- for qemu-devel@nongnu.org; Tue, 06 Oct 2026 23:31:28 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1791343803;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=cqpRJxQS+iNTJ0+npVm/fkKuNV78OA2rpfF1fhhaJNk=;
- b=a/gT/uuaM1NacdagrMwMkjijQEf9pRCNKOgwlxyUsx7oKhKGHDgbdl3wE0KojEnwtgaeCf
- dX7r0m6urPd6sgmBDkAVtYbvX8OGO5xpct0qe3JeSiTUYDwzUpc6d7hhp7r4dRIbyg7Klo
- K/z793thXDQHk6A/jrWWZ0dq87El0JQ=
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-624-Z_LSY-NMPv2-Unow2onxNA-1; Tue, 06 Oct 2026 14:20:52 -0400
-X-MC-Unique: Z_LSY-NMPv2-Unow2onxNA-1
-X-Mimecast-MFC-AGG-ID: Z_LSY-NMPv2-Unow2onxNA_1791310852
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-534f3fe0236so57007651cf.2
- for <qemu-devel@nongnu.org>; Tue, 06 Oct 2026 11:20:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1791310852; x=1791915652; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=cqpRJxQS+iNTJ0+npVm/fkKuNV78OA2rpfF1fhhaJNk=;
- b=bmTnbXAeYJWjO6ZYnzz46H4n6akpr4PiONQm8cH9yPXKIwRAvcdMiM1KVXjof4Cg/v
- ZzqziFGHwLsEkDhyXYzXkaUIl7NBxt98aO5hkCrFwkjgo5W7vqOoYne/v+hC/u9jFWtM
- SLSG0J3KLMFBnRMlRjG5ven0NDnnDRKirYwzb89se98jhquHnkUZFiVonE6AD2sJCWrx
- gp0XQTfoYgsASlAnsO6ljUc5orX4qR3Wuwq5q5HLbG8tgYB4ey3AVkOnlZUi9a4NJCmB
- ArtcwxNSWVM8VKMHaPGXkeMC6bJJPxXMRct4DQauef78rGkhK8VMeC/C+GUL1D1NH9tY
- tKyQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791310852; x=1791915652;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=cqpRJxQS+iNTJ0+npVm/fkKuNV78OA2rpfF1fhhaJNk=;
- b=fc7ugjfoEwy/gNLeAtgC7y4e3Do03fQQBljOHHx4zuwUvRzMf/I+konlmWqBXgqVut
- qP/kYhiCdLbm1CoGug9YA8wciVmsn4wZZliI/hfRJxRUBOYHg66TxCcCHIYKnsqQWggv
- OyTIIJJ/rUJwp6kafFsRiTW4o/jrkhkJCCZ7jZ+4+e5a+6Fs11+em861bRrVep9qJpkI
- Uwsk5/lk643I9sb/SeNU32NxEZjvYn47ov0mV6C3EWkTHAJABNSzvvBFsgDgp+ZrKgPe
- +fkk9OmzaxfOxPSBLWW310Y/xSfHYmbaKz3No4qdc/1aB7/k/EnS9nahOjQy+3M/aR7L
- q/SQ==
-X-Gm-Message-State: AFuF++ly2QYbRwLLdizZmvk57pRtdz3gpkZDjf3dRzG9gVs+QBmb8ahZ
- aDAxDaheUSSLa8fgi2gwdTNal/fUZksUtOkW8jTjFiXtTKTrp03emq6CMsj1e8lVsD9ZoeFAH8/
- Bl0cZmM9AHLUr/LRIjdBzWXCpUqFCRUU6mXNnk9ooBOmkJ4vPuVzrKEKw6srLfapdX+/lvXCOmb
- P7pRA5FGR9Tfs3PE8iYzs3dOkSTvw+JCakxKmhlA==
-X-Gm-Gg: AYBFou2sUCXCVenIMD+fqwQHAcJGM18/VUjtetfiioAUGSueNLPnU1cskTBb9neE1k5
- j4Od5lcYNJcAY5hzsDbxk5fWQzKITk0WYcx0q4Y78OwnBEDfus1Q0dCc7LNd7zZbzksy2bv5nFM
- weJoEJVCxHR8A4f6JLIlPtGfZniM7liIm18C2xpaAnobnFkZertw22zZ4t+VFnCJueA4nHGiPKm
- 9ip6W5x8CR/OG3HckW/2vNArzju/0pzFLP5VNdm12Y8+cLqXXK+1t8k9p4jyGauB1nS7nqDWt0X
- MU4mB7P4bWKueBwzHn2JbHbZXH7LDbACfcZwP7kG4B27VJADvnlzjicX77GWzBIpkvAhXEI=
-X-Received: by 2002:ac8:5f10:0:b0:533:8cc0:2e17 with SMTP id
- d75a77b69052e-53566d94c2emr35082831cf.50.1791310851556; 
- Tue, 06 Oct 2026 11:20:51 -0700 (PDT)
-X-Received: by 2002:ac8:5f10:0:b0:533:8cc0:2e17 with SMTP id
- d75a77b69052e-53566d94c2emr35082071cf.50.1791310850728; 
- Tue, 06 Oct 2026 11:20:50 -0700 (PDT)
-Received: from localhost ([142.188.212.246]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-53571f162e7sm1995671cf.1.2026.10.06.11.20.50
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 06 Oct 2026 11:20:50 -0700 (PDT)
-From: Peter Xu <peterx@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: peterx@redhat.com, Fabiano Rosas <farosas@suse.de>,
- Akash Kulhalli <akulhall@redhat.com>, Juraj Marcin <jmarcin@redhat.com>
-Subject: [PATCH v2 2/7] migration: Add two more trace points for incoming
- channel mgmt
-Date: Tue,  6 Oct 2026 14:20:41 -0400
-Message-ID: <20261006182046.3767283-3-peterx@redhat.com>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20261006182046.3767283-1-peterx@redhat.com>
-References: <20261006182046.3767283-1-peterx@redhat.com>
-MIME-Version: 1.0
+ (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
+ id 1xEI4T-0000iz-P3; Tue, 06 Oct 2026 23:12:18 -0400
+Received: from SI3PR02MB9388.apcprd02.prod.outlook.com (2603:1096:4:2a6::8) by
+ KUZPR02MB9164.apcprd02.prod.outlook.com (2603:1096:d10:61::12) with
+ Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.496.15; Tue, 6 Oct 2026 20:56:25 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=yTUeZwodjciXUOtyyWxhsu4AEd65nVQakqILslkYau5Iihm0CUr6XheEQWPCwsxcBfHh5kfcxWPQOA9H9R/Xh3b0ynzyFM75O2EU9PBz/tuh+aqYmrF6b1dO+liogkLxjR7Q15Y7x2cpFrRoiLnuf11A9nzI0T02ENhrkX+f0jlWNCJ1hGShRi1eAIatzy97vXOiP4FbPOocenSExW5RWMNoeUQMV1QP4tqHueOJBoVFjs8Q7pMhH0PqRDEEqC+LTOlIaD9nlifaGYPbuRh1uEJfP5u/Ap3Gai/nNWSW7dsjUXtN/ZwPuOOn8qzk0C7mIILCEJ/EYmylEmkuIEYysg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=ttaX2V3rulJC8JuORF/9zSkrNZLdTaBnHNJSBgJCeLI=;
+ b=kOufS40Lt1FDECbqgoVEFYCqIoEEyHcmqguf3ipwMlHaJzXkN7YYV2hOHtxmuGyjOdMe/xXS+qNkv7eWHMI9FGWjeW7ycnWNxeIHSFdRZ3vHBm6ezD60tgCOSvjk0WGCU47gLh/1TyibVHfH9MdZadt2r4FmArr4o3lSlWiVxgXfT5AQcx7ezBzQTQjKzU0XNmEq8o0vLS/ML/TMCEDWyUYFYpvtpnvZ42BFqCXMUsEx3sTmTDZ1R2YUfXOHVvrn3NCQe1dzjcW0RqDYAeIwjXKoXQ9BEA3Vr7JxbfEvrzeJP4KSWPBBXO6ZyufdCHQRldpUbaLG3R4bEHQZPni1CQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=processmission.com; dmarc=pass action=none
+ header.from=processmission.com; dkim=pass header.d=processmission.com;
+ arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=ttaX2V3rulJC8JuORF/9zSkrNZLdTaBnHNJSBgJCeLI=;
+ b=BwE0nBMHjciDZwsCrzZJ/wvX3QLugEJGJTTedTVDjOoIX5pGpq9U3yg4OzGm/+QwvyhwsESEKZnaDQRRi+EYBxWg0/UaF3OjNqtCN+OCElm7z5ul1dorVD32CaCUiCXYgsHvLG3tPUWuOND0O9kVkt+nZoS+781I0YyQg5gZVzY4bmB2MfyLOc6/p2IdC/ymrvzXMN6QsXCvl/XInMTobdi+qv/nAflb54mcU5gKmjbppnY/hHci0rn2vDQHJSpmuhScp41/NtY8npuj0PjOfeR7Srf3yH/zqVXB3DozX0usgNvL3WDxkT8BEVgEja0xE5GnMjfUj+aEaqGfIP9xKg==
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=processmission.com;
+Received: from KL1PR02MB6257.apcprd02.prod.outlook.com (2603:1096:820:da::11)
+ by SI3PR02MB9388.apcprd02.prod.outlook.com (2603:1096:4:2a6::8) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.472.20; Tue, 6 Oct
+ 2026 09:50:27 +0000
+Received: from KL1PR02MB6257.apcprd02.prod.outlook.com
+ ([fe80::ecf9:e832:8196:215]) by KL1PR02MB6257.apcprd02.prod.outlook.com
+ ([fe80::ecf9:e832:8196:215%6]) with mapi id 15.21.0472.016; Tue, 6 Oct 2026
+ 09:50:27 +0000
+From: Bin Meng <bin.meng@processmission.com>
+To: QEMU <qemu-devel@nongnu.org>
+Cc: Bernhard Beschow <shentey@gmail.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Chinmay Rath <rathc@linux.ibm.com>, Glenn Miles <milesg@linux.ibm.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
+Subject: [PATCH 08/17] target/ppc: Register L2CFG0 and L2CSR1 on e500mc and
+ e5500
+Date: Tue,  6 Oct 2026 17:49:03 +0800
+Message-ID: <20261006094921.110871-9-bin.meng@processmission.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20261006094921.110871-1-bin.meng@processmission.com>
+References: <20261006094921.110871-1-bin.meng@processmission.com>
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
+Content-Type: text/plain
+X-ClientProxiedBy: TYCPR01CA0136.jpnprd01.prod.outlook.com
+ (2603:1096:400:2b7::6) To KL1PR02MB6257.apcprd02.prod.outlook.com
+ (2603:1096:820:da::11)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: KL1PR02MB6257:EE_|SI3PR02MB9388:EE_|KUZPR02MB9164:EE_
+X-MS-Office365-Filtering-Correlation-Id: d6fdd4e1-017c-402b-b44e-08df238f4018
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|23010399003|1800799024|366016|376014|18002099003|22082099003|6133799003|10067099003|3023799007|56012099006;
+X-Microsoft-Antispam-Message-Info: suG6OtgF9Z5PQ1zRgjE3zJhe/e+pOd6FTfri6dyTPBx6oK/2/Y0hFw49kXD4mj3lsRTEldV2GPEA8LBa33rwfAjGt1gveP/c1dYrCxCeozrwAdYbfL4c64QNEjczEwoKtLAN0OEzY2JCX96Ok3L0+slkZaFfyhoOzUMuqTbOojwZWI/9WYI3VNvTX9WWwhIuHb/lomW/pNEiiBfavdp1YgnvuyDkhWS3WrUOVFtb/Gfdym8aJKfH9PLz7V3uUbJSCrcfB0vGyynGG/T1I+AMY9KxahW2KFUr7R7HqHZtDRw9MJBeo6dNW18pTlgSDqc2yq9WRcbWbsu8PvSygp5nvMR6nTCMxWjOKsyx8i5oNj2jUgis8iFQYAxyJ/09pXnF4W9XDfGRO6Dk8vlp89SShADMYkttWqnY8AfMNmkXI6jX1JpotWIYg12ktBRUC45ID+s1uw3HG0iP9F0rdg5SnhkHpcs+NOfpAUu/rZOaduupDmclI/sNtJeC2zJAtSasLBfC2kB+qE/Dy5Bg+YkfVR9CAyty+PUihZa08BKNOp4I+IezBv3q9CMnSopyn47E9GTGLDn+nMEvFevOtK5uabs1k5fl+scjf4BOTHzuBtV3pMpgqh0i4OKcblwiTHfj1U90l4ZBON+Y6bMW/gWDZ10I8FLfm7pR4NX4misS7PA=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:KL1PR02MB6257.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(23010399003)(1800799024)(366016)(376014)(18002099003)(22082099003)(6133799003)(10067099003)(3023799007)(56012099006);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?Y8c/4HvGhIqIHjuU8HRAlKiFLarcSwpgBqk4/bL1AfSiV0y+0Xwo5+rw+hZj?=
+ =?us-ascii?Q?rvS+F2DSjk2KzPbWRzuTgGGvffNjQJprkKGoxxgwBLmpLC8NZOVp8ZwRhnh3?=
+ =?us-ascii?Q?1uWciAJjDY+prnymgH/LJ5/w6eMlnYyCBoTTaGjoIIVfXTudM8KTRdIDhHJL?=
+ =?us-ascii?Q?QRH/g1HTMaEGzE3J2fDn6Zdyk3zAmtIDrYmII1xC5DiB3rG9OS/RNUSLEFAg?=
+ =?us-ascii?Q?zfM9vD+biU0VyPuQsQ/DNuxNf5NUt1hC//3BjK5IZZ7dVCwlbn3rHNHvFhmy?=
+ =?us-ascii?Q?mCyfWm/REPW7jNArif6P0I9LZvYGxRmOrBXBDDPidg+NRRIqWTLauyZP4l5m?=
+ =?us-ascii?Q?Jkj1+cyWWYgv/7maoQlwF2D84e+UogsN4j7gXsgOd6t97GZutr4JtsL+X6sG?=
+ =?us-ascii?Q?cXlPpgjHvYffj/J5kb6DJugq24GeGFeudf/6GYou7pHDj2wCqYjrHcFzcAsL?=
+ =?us-ascii?Q?orYNkju+oMtODI4ttfTINLrT6FT2O1A4X7Ms2p5NQK0bgbm3uykUf9G2c2tI?=
+ =?us-ascii?Q?NRgp5MmubLQ/ttOahMjmDiiKq48rQv4Kpd4hyCPf3mZxeOE51es9HkVWRvyS?=
+ =?us-ascii?Q?U6mKK7o3+LinuFZFjgOANZHuvdBVz9yUxOuQoqDUqJcLMjIXjz9iBeTgUx0B?=
+ =?us-ascii?Q?SOuLGE6IkZqmb1E5dtQMdEvuyyFwxvsv3X1o7u3li0cUZwcxdYTXG2Oass4y?=
+ =?us-ascii?Q?MiuStLwjv+0AiP0+6YNoWszroVxoO9LNG6KBSzvlOt3jFxQB37EQ46ffqCy2?=
+ =?us-ascii?Q?cQHFzj1BilvYQXID+DnkwOWTGv+bnjX4+XkqbOTiltAI4xa58KfWB66yGIh2?=
+ =?us-ascii?Q?2dlXfasWWrf7dczcb9Wf3g818Dd0tQAN8gWP0bWhT/WYo4LslX+wNDHmOfAe?=
+ =?us-ascii?Q?JY6LdZp8zHT9CEkpuZPbks2Giz9LHJxsq6ARblPAPzizrUPDE1Gi+b/VGSpC?=
+ =?us-ascii?Q?xKB6I4wbRo6A5PYvlgRF1eiupE+d1w85rfpgyVFUP01eEaTbxXvedZTYuDsi?=
+ =?us-ascii?Q?q3xHzObU23d8wb7oND5K8fC8Yjo2zQ4imLFKE2DNfx2GXwWKglCdeZ5PLhwz?=
+ =?us-ascii?Q?zH4nrxd9R/OUAweY/mp2BMyYwmlpQNzofHiqXXfaAU7INHPOYFurAvNN3HQg?=
+ =?us-ascii?Q?a8+uukGtfse1rYLJOLh5x2/Mf/9WwJJ7NpWKQeqpwlVcrtRu18vmIbYW8CAx?=
+ =?us-ascii?Q?9p0ebnRpacMSHdGiP8ZOBlzbbJkFkmls/rTPVGQj9pK3KEFSAcEcOms7izHu?=
+ =?us-ascii?Q?z56mfu066dGfHDN2uM4XXE0MJRb0HRas3efj1F/dFvdtRePl6Nb8XHadUpAH?=
+ =?us-ascii?Q?rII2pp0hskMkK0rKn56yN/bgXcY0uUaxEGxeyAT8UEusoQ6IY2ZfppqMK+rG?=
+ =?us-ascii?Q?TQXF/XbUYTCq5Zj6bhRnTW2Q8o2q30zyzOobI91RzbApMTbzw4vJSKlbGLtS?=
+ =?us-ascii?Q?uDKQjOgIP2n22cOVMdsEo4GE+nZa/8ZEzlcUYZsP3/5Xrdcl/O6yosypeCkx?=
+ =?us-ascii?Q?CqpG2E4gPytE1sC2gFnam1iN6wkk7EHBU2mLIkMLJEXL25O2gGTqKappKhXW?=
+ =?us-ascii?Q?QPK7WVWXV2UYW9VLGKKAXByXrtmJkOqtCUwHuHO/g9YcolYvPdDNB5WCyxVk?=
+ =?us-ascii?Q?wv/lCt3mjn7vSIpPY38kEHkkur22IljofnrW/5XOEIJvPOncXvMn1DaTsAxO?=
+ =?us-ascii?Q?SKNpMFkYpF++auH2wniifZrSjRc761b7IocyBOH74d/2kr+i9CITRIcyjFaU?=
+ =?us-ascii?Q?FO6jrizhWwZ5nXx7GhHGJw/nQ/j5gjw=3D?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: d6fdd4e1-017c-402b-b44e-08df238f4018
+X-MS-Exchange-CrossTenant-AuthSource: KL1PR02MB6257.apcprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Oct 2026 09:50:27.4757 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: LbucrsnmYgtY/bl9mNe2xTHLMaRcfh676Oyuw7vWjjgRZ0eQe7CP+GIoTIT65NIdqLycameFsy6KNNMx+LeI2JqNtT7Wc45U8WzA9q3xvzE=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SI3PR02MB9388
+X-OriginatorOrg: processmission.com
+Received-SPF: pass client-ip=2a01:111:f403:c405::5;
+ envelope-from=bin.meng@processmission.com;
+ helo=TYPPR03CU001.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -117,55 +149,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We have trace points for both multifd channel and preempt channel when a
-new channel is established on the destination, but no main channel.  We can
-normally deduce this by analyzing the socket channel tracepoints, but add
-one for debugging purpose so in a trace log we can see when all channels
-are established.
+The e500mc and e5500 core manuals define L2CFG0 as read-only SPR 519
+(0x207) and L2CSR1 as writable SPR 1018 (0x3fa). U-Boot reads the
+former to discover the private L2 cache and programs the latter to
+select its stash ID. Missing registrations leave cache discovery
+and stash setup incomplete.
 
-Add one more for start / resume of incoming migration too.
+Expose both registers on e500mc and e5500. Use the 128 KiB L2 geometry
+specified by the e500mc manual and a 256 KiB default for e5500,
+matching T1040/T1024. Other SoC integrations can override the capacity.
 
-Signed-off-by: Peter Xu <peterx@redhat.com>
+Note the e6500 shared L2 uses memory-mapped registers, hence we do not
+add these SPRs to that core.
+
+Reference:
+- E500MCRM (Rev.3), section 2.15.1 and 2.15.3
+  https://www.nxp.com/docs/en/reference-manual/E500MCRM.pdf
+- E5500RM (Rev.4), section 2.15.1 and 2.15.3
+  https://www.nxp.com/webapp/Download?colCode=E5500RM
+- E6500RM (Rev.0), section 2.12.1 and 2.12.3
+  https://www.nxp.com/docs/en/reference-manual/E6500RM.pdf
+
+Signed-off-by: Bin Meng <bin.meng@processmission.com>
 ---
- migration/migration.c  | 3 +++
- migration/trace-events | 2 ++
- 2 files changed, 5 insertions(+)
 
-diff --git a/migration/migration.c b/migration/migration.c
-index fab7949fe1..3ffc0c2c6a 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -852,6 +852,7 @@ bool migration_incoming_setup(QIOChannel *ioc, uint8_t channel, Error **errp)
-         assert(!mis->from_src_file);
-         mis->from_src_file = f;
-         qemu_file_set_blocking(f, false, &error_abort);
-+        trace_migration_main_channel_received();
-         break;
- 
-     case CH_MULTIFD:
-@@ -918,6 +919,8 @@ static bool postcopy_try_recover(void)
- 
- void migration_start_incoming(void)
- {
-+    trace_migration_start_incoming();
-+
-     if (postcopy_try_recover()) {
-         return;
+ target/ppc/cpu.h      |  2 ++
+ target/ppc/cpu_init.c | 14 ++++++++++++++
+ 2 files changed, 16 insertions(+)
+
+diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
+index d3f1c82730..498b505a96 100644
+--- a/target/ppc/cpu.h
++++ b/target/ppc/cpu.h
+@@ -1976,6 +1976,7 @@ void ppc_compat_add_property(Object *obj, const char *name,
+ #define SPR_Exxx_L1CFG0       (0x203)
+ #define SPR_Exxx_L1CFG1       (0x204)
+ #define SPR_Exxx_NPIDR        (0x205)
++#define SPR_Exxx_L2CFG0       (0x207)
+ #define SPR_ATBL              (0x20E)
+ #define SPR_ATBU              (0x20F)
+ #define SPR_IBAT0U            (0x210)
+@@ -2341,6 +2342,7 @@ void ppc_compat_add_property(Object *obj, const char *name,
+ #define SPR_750_TDCH          (0x3FA)
+ #define SPR_IABR2             (0x3FA)
+ #define SPR_40x_DCCR          (0x3FA)
++#define SPR_Exxx_L2CSR1       (0x3FA)
+ #define SPR_ICTC              (0x3FB)
+ #define SPR_40x_ICCR          (0x3FB)
+ #define SPR_THRM1             (0x3FC)
+diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
+index e5856b5b1d..21c6012fa1 100644
+--- a/target/ppc/cpu_init.c
++++ b/target/ppc/cpu_init.c
+@@ -2974,6 +2974,20 @@ static void init_proc_e500(CPUPPCState *env, int version)
+                      &spr_read_generic, &spr_write_e500_l2csr0,
+                      0x00000000);
      }
-diff --git a/migration/trace-events b/migration/trace-events
-index db911fe6f2..68bcf12dc7 100644
---- a/migration/trace-events
-+++ b/migration/trace-events
-@@ -200,6 +200,8 @@ postcopy_preempt_enabled(bool value) "%d"
- migration_precopy_complete(void) ""
- migration_call_notifiers(int type) "type=%d"
- migration_request_switchover_ack_legacy(const char *requester, unsigned int switchover_ack_pending_num_legacy) "Requester %s, switchover_ack_pending_num_legacy %u"
-+migration_main_channel_received(void) ""
-+migration_start_incoming(void) ""
- 
- # migration-stats
- migration_transferred_bytes(uint64_t qemu_file, uint64_t multifd, uint64_t rdma) "qemu_file %" PRIu64 " multifd %" PRIu64 " RDMA %" PRIu64
++    if (version == fsl_e500mc || version == fsl_e5500) {
++        /*
++         * L2CSIZE is in 64 KiB units. Use 128 KiB for e500mc and a
++         * 256 KiB default for e5500, matching the T1040/T1024 SoCs.
++         * Other SoC models can override the e5500 capacity.
++         */
++        spr_register(env, SPR_Exxx_L2CFG0, "L2CFG0",
++                     &spr_read_generic, SPR_NOACCESS,
++                     &spr_read_generic, SPR_NOACCESS,
++                     version == fsl_e500mc ? 0x3cb1c002 : 0x3cb1c004);
++        spr_register(env, SPR_Exxx_L2CSR1, "L2CSR1",
++                     SPR_NOACCESS, SPR_NOACCESS,
++                     &spr_read_generic, &spr_write_generic32, 0);
++    }
+     spr_register(env, SPR_BOOKE_MCSRR0, "MCSRR0",
+                  SPR_NOACCESS, SPR_NOACCESS,
+                  &spr_read_generic, &spr_write_generic,
 -- 
-2.55.0
+2.53.0
 
 
