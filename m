@@ -4,168 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D399ECA5FF1
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 08:54:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5258BCA5FF1
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 08:55:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xENMG-0006oG-0m; Wed, 07 Oct 2026 04:50:40 -0400
+	id 1xENLw-0005Fx-5C; Wed, 07 Oct 2026 04:50:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xEKZ9-0000KS-M3
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 01:52:24 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xEKAL-0004Wq-D3
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 01:26:21 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xEKYx-0000UX-94
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 01:51:41 -0400
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6974U9pG3264015
- for <qemu-devel@nongnu.org>; Wed, 7 Oct 2026 05:51:30 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- jDqU1asXJVNklrJMBXsgkl0awJ724rKzgxqsm1RENOo=; b=bflIWJ6yJghTXTDP
- Ddaz3kCYbfcAaaE6sjzBi7izrIwz0+7ThU5MGFsDu3V28kL9REJdtiGSXd2U76D/
- 1Xl4BokxmKXWL0oN556mkqRJXdWt6GhuRv+Zoduxm1BlmpB1v1Yds9nM210Dwvsi
- YDMcYWEvmO341CoSUdpQcFaOq6+E4Ij46vTxs6pFBSmQWYYjqarNM/03GX2oAJbV
- fr+qVN4tmPOH7zuqFpWw/R149MK6st/PgvSonRgxhFf1oKKxqJDyADokmn7fqH/a
- 7Qucu/OM/SrHpD0I1q0zgGZQ7c3uXI0JQkDSJ6p78R8GvJ8VAQetLDNDN+/POrsD
- HBLmCw==
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h5c608rsj-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 07 Oct 2026 05:51:30 +0000 (GMT)
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-93bf4c0af4eso563256685a.1
- for <qemu-devel@nongnu.org>; Tue, 06 Oct 2026 22:51:30 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xEKAE-0006xQ-TJ
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 01:26:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1791350761;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=uX/t8GJWMyMm9XuiC7iBFGfun+/uPNMllUeEyhgqwpY=;
+ b=EH8hxKSwKuM23tJQxA5yE56GXCJhnkFqaLkh0JyYYvAhHLbVzZ45CCS3kj68G5fi6UBDKS
+ 50Wvf3fUo1DuXALfeGFW0DFYiQpexM81UCIDRlE9EXISaNswvooNx8cbP9wvoSo5dWzJSj
+ S0VNQzdYwbEJx5gfYZn1KyzLkHV8Q4A=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-450-P3kcCYW6Pb-u9cM-RycJRA-1; Tue, 06 Oct 2026 00:49:16 -0400
+X-MC-Unique: P3kcCYW6Pb-u9cM-RycJRA-1
+X-Mimecast-MFC-AGG-ID: P3kcCYW6Pb-u9cM-RycJRA_1791262155
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-487038bc9b8so1584887f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 05 Oct 2026 21:49:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1791352290; x=1791957090; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=jDqU1asXJVNklrJMBXsgkl0awJ724rKzgxqsm1RENOo=;
- b=O1yzfR8pI5iowo0eBNxFNpm5Az6APM7vkzceKFV/Iar3mrL5CbpeKrfLRrGW1u3oBk
- tgmtGKM+oyb6LN9UB7SgQu+Wt9tstZ4UFSShpKtmWn+n1RBkT3Qc5ceVQLQ2cqH84U0L
- O7QaPRLZ6ECKLR3UT41MJaj2SK23FUBvBZUAbOjCnhY9MSZadZUx7CWd39iiURf8AfwR
- wTSU/jJHOtQdi2bfPQinN4OcwjDWoyY8xAaURmXTKvASDJ/ZFEzhQA+1xK0y97bLpFS2
- 4luOWhbahR/5O61+1BSRMqnasGbtJ5/LQx1RcqsLoL3a1ISF+kiyOj8ACadvBJ4DGdwx
- thfw==
+ d=redhat.com; s=google; t=1791262155; x=1791866955; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=uX/t8GJWMyMm9XuiC7iBFGfun+/uPNMllUeEyhgqwpY=;
+ b=T8n6Lb3Zem0QsBdjpnMqvLiTrH11NhzZJFnK6igyZ/HHHe0SLYitDNU15EoaWH8HS3
+ 8n36g+G+rLMhmm8yexbF/09NyArUeuFCb3hM/iMtsy2EN6zLbD3NB2rJ8wNJatgarUKo
+ av5heD2sK0zoklE7VpVRZFiqxcxEfWMUAh2TkvHlcMFG9yxRPN9QWKxs/pmXs5h5lEx/
+ 89HUeL1AHPmhgsd1nBB/ptcOV434WujzoRSpkBjQNGlfYVVGk6dytk1KR7CsJWBrWIhH
+ Yf3dcWQoEMUcJSI6Sja70IS7LrcdEK2x4UfTljN1YC7B9xuUx2z2HGwwG6Fh0nnwtuCO
+ 67nA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791352290; x=1791957090;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=jDqU1asXJVNklrJMBXsgkl0awJ724rKzgxqsm1RENOo=;
- b=wCeyZHP7MnqFWLCmj+6yzJOLBN4qqswm+7zC5sSoxnUAssC58aZAl7J/kDbi1ASCpJ
- DwY/b+50eHKsedpChpOGHtNqHVfjXqftUHcqImzeWjlbUY9vedweBfmGgWGkKLV/HQ5R
- Tfy1uYgMKfm8vpvN8f9JxDglKpsJ7lqXoWmLSFH7jcHMZwk5UgBmc4H2V9E62wXS7350
- ljyob8pHJKIchmS0/ACnB1AKpyTjwQINSlyOfsMfUM5Ek6OCalJk/23lFcbd01Q+WO8e
- gGv33NjTUMmXdKOfXXL1LoPCJRi2T7hTJ7Ihut9eLHUT2Wu1r25iJ+g6x4hkc/OXqNxh
- DRTA==
-X-Forwarded-Encrypted: i=1;
- AKwUvBy11Py+Et+PHrnd9QFPWPQpySaMaPEWSGEMYUg1PXoDx1IU/st7rUtpL1kzRtVDQymQu9ntKFITJy9C@nongnu.org
-X-Gm-Message-State: AFuF++kkXzS4IqVyaUfR2ROmVzRARTgJJ5qPLX1Vaj7dOt+igNLNxQlV
- VU0Az+JpIygM7atacV7sSy/CN1t9GNjgi84+fjtocsIDl/TKi4td8WdQDjXogl+8JkxjF+bNJc5
- JhBQcJBRlI2skFmRSuulCnT/5fb00RLZ6aIL7Kxe5Vf1vD9P/5pBBc9IU2Q==
-X-Gm-Gg: AYBFou3p3raO41B+/115orSUVyS0P2NGZhq9O/23hqN4YdycblEx/oHFVfWRlGRuPvl
- 77xoOzi1cuU38q3A9+oyXer4E/702qDMZvJ4wpBd3yaDAHCB8zuxsiTzKy6t9+Idb/g2SHIIbc9
- eXFlcWg7EE7Sok8JAsltOBc941C1ih+o24te507DG97q7nzjiptZNHvy8fpokSVO2SqVeDvsunn
- wOxVBmdSaWJxw7pesVzbk2o3T7hNkno0duRbmqqDnZDg/Ic2ZendyR5nWoFKepClB3X36+W7W0X
- CShCnDFJguFPPap7/Mv50t4ywGhv6FJCd/ZDp4pD0uJpXD+3hKAuvImR16w3ppykc3gHWyyEaQN
- fElajy+N8kvP7Y1ekwzgjfLvuhV9WkkJT8g==
-X-Received: by 2002:a05:620a:394e:b0:93c:290e:9e9c with SMTP id
- af79cd13be357-93e860404a9mr924133885a.16.1791352289926; 
- Tue, 06 Oct 2026 22:51:29 -0700 (PDT)
-X-Received: by 2002:a05:620a:394e:b0:93c:290e:9e9c with SMTP id
- af79cd13be357-93e860404a9mr924128285a.16.1791352289477; 
- Tue, 06 Oct 2026 22:51:29 -0700 (PDT)
-Received: from [192.168.69.210] (pmd666.hd.free.fr. [88.187.86.199])
+ d=1e100.net; s=20260707; t=1791262155; x=1791866955;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=uX/t8GJWMyMm9XuiC7iBFGfun+/uPNMllUeEyhgqwpY=;
+ b=o8j9XuF4fQZNcluGx3CjisrPD6oaGxegK3k8Ep99sbBtOeD7krl27yhFsm/X6MosWi
+ AcC+0JFxw7XfsJFku0v1/djhd9nyPD9aFEH2QgZef0PoQTpXNggW7mBvO2w4uqsg5mDi
+ XRpsOUxGJ4S6khwNHKTORXPlSUXHIJEeClogXFb4YnzznAvCz4EZOtdewkYIQrCvHLv8
+ nYFurMDegs6EXKvgyqgv1dzup0dZJWRuAayfLpvR5QqH+hk8wDYLfCcdVSQ8x2ozlPtW
+ dG3QjEOko2T9c4+sxp+YvD6ZwVTTLtdj6e/z/bceCaMhP0nOnU2MXN8QhScIBwvcz9cK
+ lLNA==
+X-Gm-Message-State: AFq9FYIX1k3GSeF4OFlfuR+Jw3KWgppoqYPaE7Un6qIdbH24tOgQNIN7
+ HaRTBz0zHfSrkf/z8S6VBXAxgK8AxGoRPE9zcMfE+tUoL275ptyhEJThFK7+oWlW59LeKddKm9K
+ 5BoTktQlo3eJ6HhkY5ywEzXlaykBvZrexk3p4rjgomkts1mNSpitCrU9W
+X-Gm-Gg: AYBFou0TqzlrNyS1vxLb33Yl/ZZfQup16n3nLCO6lHpLqzoV0A30bqGa3ZxV38dDsEP
+ 2KFbU0TmSrjabvfIsOAbgQESuYlxIR8Howa+yLvVxd/qLDCHSSwNEDWxTLCYXEzDtS++VA1uPmz
+ DV1liZBI46AJCXA3P4CAd4eyLD4+nuv60ewabzAvOajUQ2iLElTlYAWkZRC7tWtE/IBSGBoePW1
+ vqSWNwaW6GxJCLz0JuB8dF3XAPjrDmHUoARdarIuwosDNmoZMaT13xsaFtqIlFNGroKDx4nTlvl
+ SdbZQtrUX3Iug+MFj+M+RPW01D7QESffZGAtogPQxzIH2dTpfrPIJ80xoF1pR1bg5R9TkeM=
+X-Received: by 2002:adf:e186:0:b0:488:6523:e15c with SMTP id
+ ffacd0b85a97d-48c6d1ba854mr275815f8f.32.1791262155181; 
+ Mon, 05 Oct 2026 21:49:15 -0700 (PDT)
+X-Received: by 2002:adf:e186:0:b0:488:6523:e15c with SMTP id
+ ffacd0b85a97d-48c6d1ba854mr275798f8f.32.1791262154758; 
+ Mon, 05 Oct 2026 21:49:14 -0700 (PDT)
+Received: from redhat.com ([2a0d:6fc0:3fd7:5300:3d6b:52a4:a23f:9d0b])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a18044c970sm18616775e9.4.2026.10.06.22.51.27
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 06 Oct 2026 22:51:28 -0700 (PDT)
-Message-ID: <d9f09744-4d92-47dd-a1da-6d20090662cc@oss.qualcomm.com>
-Date: Wed, 7 Oct 2026 07:51:26 +0200
+ ffacd0b85a97d-48c63550d1esm7621927f8f.18.2026.10.05.21.49.13
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 05 Oct 2026 21:49:14 -0700 (PDT)
+Date: Tue, 6 Oct 2026 00:49:11 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Tushar Dave <tdave@nvidia.com>
+Cc: qemu-devel@nongnu.org, philmd@oss.qualcomm.com, zhao1.liu@intel.com,
+ yishaih@nvidia.com, alwilliamson@nvidia.com, jgg@nvidia.com,
+ skolothumtho@nvidia.com
+Subject: Re: [PATCH v2 1/3] xio3130_downstream: Add ACS support for
+ downstream PCIe ports
+Message-ID: <20261006004605-mutt-send-email-mst@kernel.org>
+References: <20261006013133.3457555-1-tdave@nvidia.com>
+ <20261006013133.3457555-2-tdave@nvidia.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 06/27] target/sh4: Define exception vector constants
-Content-Language: en-US
-To: Yonggang Luo <luoyonggang@gmail.com>, qemu-devel@nongnu.org
-Cc: Max Filippov <jcmvbkbc@gmail.com>, Stafford Horne <shorne@gmail.com>,
- Brian Cain <brian.cain@oss.qualcomm.com>, Eric Farman
- <farman@linux.ibm.com>, Song Gao <17746591750@163.com>,
- qemu-riscv@nongnu.org,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Aleksandar Rikalo <arikalo@gmail.com>, qemu-s390x@nongnu.org,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Philippe Mathieu-Daude <philmd@mailo.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Michael Rolnik <mrolnik@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Nicholas Piggin <npiggin@gmail.com>, Cornelia Huck <cohuck@redhat.com>,
- Helge Deller <deller@gmx.de>, Chinmay Rath <rathc@linux.ibm.com>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-ppc@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>,
- Chao Liu <chao.liu@processmission.com>, Aurelien Jarno
- <aurelien@aurel32.net>, Richard Henderson <richard.henderson@linaro.org>,
- David Hildenbrand <david@kernel.org>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Weiwei Li <liwei1518@gmail.com>, Yoshinori Sato <yoshinori.sato@nifty.com>,
- Artyom Tarasenko <atar4qemu@gmail.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>,
- Laurent Vivier <laurent@vivier.eu>, qemu-arm@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>, Glenn Miles <milesg@linux.ibm.com>,
- Ilya Leoshkevich <iii@linux.ibm.com>
-References: <20261002175037.1747-1-luoyonggang@gmail.com>
- <20261002175037.1747-7-luoyonggang@gmail.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20261002175037.1747-7-luoyonggang@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: ljgy5iq1gmEV-rNusknXgYGUDiSsp_L4
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA3MDAyMyBTYWx0ZWRfX3bBH5hu0odk1
- CZADTCs27h93yBpRXo56RwrOKRnZrnoes50+YIMwhAHLhQWG5u72i+OYA/fPrO4oFiHqjG6W/Z2
- f4Jl2RkWqIXgGUHWJi0of9pq96Ppj38=
-X-Authority-Analysis: v=2.4 cv=PM+aavqC c=1 sm=1 tr=0 ts=6ac5dde2 cx=c_pps
- a=qKBjSQ1v91RyAK45QCPf5w==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
- a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8 a=5KkIcTHh3hzyv8iDLVEA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=NFOGd7dJGGMPyQGDc5-O:22
-X-Proofpoint-GUID: ljgy5iq1gmEV-rNusknXgYGUDiSsp_L4
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA3MDAyMyBTYWx0ZWRfX1gz2TgS2T0VR
- iO8/csJwwkoAeAM3TL+C4DJRmb3jbGAGew2azarN2adinNqcsdYltK1xUQwwF99sO3eNY5dX/+f
- KRI1nlpZNMTB+v9fwhYJ9YwgIg3MyK427NCf9LKAOZL1qDVt+txIaZmuq41XjALOlMSH0voSIQf
- wyPIZP2Z4jJNlDLxQN1/kvZ1tMo8GzQzONoc4k+D0Sig6NSstilIvFlJPDBixpXZFNxLgpKhmMw
- DUkkUfLoryMlAwHNdSGIQTk2oW7bGbNYNxDJnL134c/idFZ77dOu0pINfuPut5pmpzQhaf9hyQo
- ooT8GNxfAu2aZGm6JASlsxSrpEXaaXtP4gp2NWRL6YAtU/1VKsNPU4bAVZIg9wAuWUgEDca+lEy
- Qhv7xfdKyFSkpMHkUyUu/56K0Gmpa2OCXyyRXGOWUdotnsXFGd4X6cJFFuAj90Uc1cxP0FaD26r
- 5Dn3wpoxx80qBqPPpHA==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-10-07_02,2026-10-06_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 clxscore=1015 adultscore=0 bulkscore=0 phishscore=0
- malwarescore=0 suspectscore=0 priorityscore=1501 lowpriorityscore=0
- spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
- definitions=main-2610070023
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20261006013133.3457555-2-tdave@nvidia.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -181,16 +119,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/10/26 19:50, Yonggang Luo wrote:
-> Name SH4 exception vectors and use the definitions throughout exception
-> handling and exception raising.
+On Mon, Oct 05, 2026 at 08:31:31PM -0500, Tushar Dave wrote:
+> When a PASID-capable device is added behind the PCIe downstream port,
+> for example, an Nvidia GPU, the PCIe downstream ports must expose ACS
+> capability otherwise PASID won't get enabled.
 > 
-> Signed-off-by: Yonggang Luo <yonggang@gmail.com>
-> ---
->   target/sh4/cpu.h       | 21 +++++++++++++++
->   target/sh4/helper.c    | 60 +++++++++++++++++++++---------------------
->   target/sh4/op_helper.c | 16 +++++------
->   3 files changed, 59 insertions(+), 38 deletions(-)
+> In addition, the other use case is GPUDirect RDMA using Data Direct
+> that must require special ACS controls at the PCIe downstream ports
+> for P2P communication.
+> 
+> Gate it behind a new x-pcie-acs property (default on), following the
+> x-pcie-* compat-bit convention (x-pcie-ext-tag/x-pcie-err-unc-mask/
+> x-pcie-ari-nextfn-1), so older machine types can disable it via
+> hw_compat to preserve migration compatibility.
+> 
+> Signed-off-by: Tushar Dave <tdave@nvidia.com>
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Does TI X3130 have ACS? If not will the purpose be
+served better by the new generic port recently proposed?
+
+> ---
+>  hw/core/machine.c                  | 1 +
+>  hw/pci-bridge/xio3130_downstream.c | 9 +++++++++
+>  include/hw/pci/pci.h               | 3 +++
+>  3 files changed, 13 insertions(+)
+> 
+> diff --git a/hw/core/machine.c b/hw/core/machine.c
+> index d9ac4b419a..b1b3911430 100644
+> --- a/hw/core/machine.c
+> +++ b/hw/core/machine.c
+> @@ -43,6 +43,7 @@
+>  GlobalProperty hw_compat_11_1[] = {
+>      { "sysbus-ehci-usb", "x-migrate-fetch-addr-64bit", "off" },
+>      { "pci-ehci-usb", "x-migrate-fetch-addr-64bit", "off" },
+> +    { "xio3130-downstream", "x-pcie-acs", "off" },
+>  };
+>  const size_t hw_compat_11_1_len = G_N_ELEMENTS(hw_compat_11_1);
+>  
+> diff --git a/hw/pci-bridge/xio3130_downstream.c b/hw/pci-bridge/xio3130_downstream.c
+> index 0c3fed3053..6a9df5c174 100644
+> --- a/hw/pci-bridge/xio3130_downstream.c
+> +++ b/hw/pci-bridge/xio3130_downstream.c
+> @@ -40,6 +40,8 @@
+>  #define XIO3130_SSVID_SSID              0
+>  #define XIO3130_EXP_OFFSET              0x90
+>  #define XIO3130_AER_OFFSET              0x100
+> +#define XIO3130_ACS_OFFSET \
+> +    (XIO3130_AER_OFFSET + PCI_ERR_SIZEOF)
+>  
+>  static void xio3130_downstream_write_config(PCIDevice *d, uint32_t address,
+>                                           uint32_t val, int len)
+> @@ -60,6 +62,7 @@ static void xio3130_downstream_reset(DeviceState *qdev)
+>      pcie_cap_deverr_reset(d);
+>      pcie_cap_slot_reset(d);
+>      pcie_cap_arifwd_reset(d);
+> +    pcie_acs_reset(d);
+>      pci_bridge_reset(qdev);
+>  }
+>  
+> @@ -111,6 +114,10 @@ static void xio3130_downstream_realize(PCIDevice *d, Error **errp)
+>          goto err;
+>      }
+>  
+> +    if (d->cap_present & QEMU_PCIE_CAP_ACS) {
+> +        pcie_acs_init(d, XIO3130_ACS_OFFSET);
+> +    }
+> +
+>      return;
+>  
+>  err:
+> @@ -137,6 +144,8 @@ static void xio3130_downstream_exitfn(PCIDevice *d)
+>  static const Property xio3130_downstream_props[] = {
+>      DEFINE_PROP_BIT(COMPAT_PROP_PCP, PCIDevice, cap_present,
+>                      QEMU_PCIE_SLTCAP_PCP_BITNR, true),
+> +    DEFINE_PROP_BIT("x-pcie-acs", PCIDevice, cap_present,
+> +                    QEMU_PCIE_ACS_BITNR, true),
+>  };
+>  
+>  static const VMStateDescription vmstate_xio3130_downstream = {
+> diff --git a/include/hw/pci/pci.h b/include/hw/pci/pci.h
+> index f2448e941a..dd52b9639e 100644
+> --- a/include/hw/pci/pci.h
+> +++ b/include/hw/pci/pci.h
+> @@ -231,6 +231,9 @@ enum {
+>      QEMU_PCI_CAP_PM = (1 << QEMU_PCI_CAP_PM_BITNR),
+>  #define QEMU_PCI_SKIP_RESET_ON_CPR_BITNR 15
+>      QEMU_PCI_SKIP_RESET_ON_CPR = (1 << QEMU_PCI_SKIP_RESET_ON_CPR_BITNR),
+> +    /* PCIe ACS (Access Control Services) extended capability present */
+> +#define QEMU_PCIE_ACS_BITNR 16
+> +    QEMU_PCIE_CAP_ACS = (1 << QEMU_PCIE_ACS_BITNR),
+>  };
+>  
+>  typedef struct PCIINTxRoute {
+> -- 
+> 2.34.1
+
 
