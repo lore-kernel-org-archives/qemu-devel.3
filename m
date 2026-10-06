@@ -4,56 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DD41CA5FF1
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 08:56:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F4237CA5FFF
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 08:56:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xENEK-0005zq-T1; Wed, 07 Oct 2026 04:42:28 -0400
+	id 1xENBA-0007tM-Ea; Wed, 07 Oct 2026 04:39:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1xEIsw-0008Ve-V6
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 00:04:11 -0400
-Received: from linux.microsoft.com ([13.77.154.182])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1xEIsr-0004Zl-Es
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 00:04:04 -0400
-Received: from DESKTOP-TUU1E5L.localdomain (unknown [167.220.208.46])
- by linux.microsoft.com (Postfix) with ESMTPSA id BCF7220B716C;
- Tue,  6 Oct 2026 09:48:43 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com BCF7220B716C
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1791305324;
- bh=XTYPPY2H2Ob4ucufyR35QTIL+2W6byD+ZTLIgdA99Pc=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=cpr+IlHk2A+plLEXXVkSnfJCbKpDaO+sIQfPIoBGdVd6+9KvNFWxRMcZeOyL2ByAi
- Fh/qi6iCeBncBqJrtRzbLwYRtPeBIKm3AVGaZ/52EPWneUTioFBkr/glsKQKVLbze/
- oNiINGqGYns7c4gG/juoYpRHqt9dvL6mneVZhJyM=
-From: Magnus Kulke <magnuskulke@linux.microsoft.com>
-To: qemu-devel@nongnu.org
-Cc: Wei Liu <wei.liu@kernel.org>,
- =?UTF-8?q?Doru=20Bl=C3=A2nzeanu?= <dblanzeanu@linux.microsoft.com>,
- Magnus Kulke <magnuskulke@microsoft.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PULL 05/11] target/i386/mshv: remove fallback for register page set
- registers
-Date: Tue,  6 Oct 2026 18:48:59 +0200
-Message-Id: <20261006164905.776466-6-magnuskulke@linux.microsoft.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20261006164905.776466-1-magnuskulke@linux.microsoft.com>
-References: <20261006164905.776466-1-magnuskulke@linux.microsoft.com>
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1xEISY-000433-F3
+ for qemu-devel@nongnu.org; Tue, 06 Oct 2026 23:36:53 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1xEISK-0008To-Mm
+ for qemu-devel@nongnu.org; Tue, 06 Oct 2026 23:36:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1791344163;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=epOPjtpfhjcgXLEVRyDwO9+wTuqrvXxMWECrCalhg64=;
+ b=agDfg6uejhqq15IuOqviXeU9wgk0q3RstHwIMN6aahHRZQ5ruRmKGW8RGOOlNYPslvOvn3
+ sdhrz+x5CywZIV5yTSbtIbkgKuD+bYBjhzBE+LrisgP+EczI1rWQyF0q8CH3cVsfjOZZmX
+ qCmc9zkMHwlAUCuXZ8FaG/+bf3sZGUA=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-611-__VhWUPcNXCYw0lDl92RAQ-1; Tue,
+ 06 Oct 2026 17:33:55 -0400
+X-MC-Unique: __VhWUPcNXCYw0lDl92RAQ-1
+X-Mimecast-MFC-AGG-ID: __VhWUPcNXCYw0lDl92RAQ_1791322434
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 29DD71805A11; Tue,  6 Oct 2026 21:33:53 +0000 (UTC)
+Received: from redhat.com (headnet05.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.117])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 099C1180034F; Tue,  6 Oct 2026 21:33:49 +0000 (UTC)
+Date: Tue, 6 Oct 2026 16:33:46 -0500
+From: Eric Blake <eblake@redhat.com>
+To: "Denis V. Lunev" <den@openvz.org>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, 
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>, 
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ qemu-stable@nongnu.org
+Subject: Re: [PATCH v2 1/3] migration: add QEMU_COUNTED_STRING_SIZE for
+ counted string buffers
+Message-ID: <asVo_Fz1A3pPZG1x@redhat.com>
+References: <20261006170738.453977-1-den@openvz.org>
+ <20261006170738.453977-2-den@openvz.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=13.77.154.182;
- envelope-from=magnuskulke@linux.microsoft.com; helo=linux.microsoft.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20261006170738.453977-2-den@openvz.org>
+User-Agent: NeoMutt/20260616
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=eblake@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -69,124 +87,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Doru Blânzeanu <dblanzeanu@linux.microsoft.com>
+On Tue, Oct 06, 2026 at 07:07:36PM +0200, Denis V. Lunev wrote:
+> From: Denis V. Lunev <den@openvz.org>
+> 
+> A counted string carries its length in one byte, so the buffer that
+> qemu_get_counted_string() fills must hold 256 bytes. The dirty bitmap
+> load state spells that size as a bare 256 for both of its alias buffers.
+> Name it next to the qemu_get_counted_string() prototype and use it there,
+> in the length assert of qemu_put_counted_string() and in DBMLoadState.
+> 
+> Suggested-by: Eric Blake <eblake@redhat.com>
+> Signed-off-by: Denis V. Lunev <den@openvz.org>
+> Cc: Peter Xu <peterx@redhat.com>
+> Cc: Fabiano Rosas <farosas@suse.de>
+> Cc: Eric Blake <eblake@redhat.com>
+> Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+> Cc: qemu-stable@nongnu.org
+> ---
+>  include/migration/qemu-file-types.h | 6 +++++-
+>  migration/block-dirty-bitmap.c      | 4 ++--
+>  migration/qemu-file.c               | 5 +++--
+>  3 files changed, 10 insertions(+), 5 deletions(-)
 
-Update `store_regs` to use the register page when it is mmapped and
-valid to set registers.
-Remove the ioctl based register retrieval and fail in case the register
-page is not correctly set or valid.
+Reviewed-by: Eric Blake <eblake@redhat.com>
 
-Fixes: 80c7f8e9cd
-Signed-off-by: Doru Blânzeanu <dblanzeanu@linux.microsoft.com>
-Reviewed-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
-Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
----
- target/i386/mshv/mshv-cpu.c | 48 +++++++++++++------------------------
- 1 file changed, 17 insertions(+), 31 deletions(-)
-
-diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
-index fe1645f87d..5a34357693 100644
---- a/target/i386/mshv/mshv-cpu.c
-+++ b/target/i386/mshv/mshv-cpu.c
-@@ -485,7 +485,7 @@ static int set_standard_regs(const CPUState *cpu)
-     return 0;
- }
- 
--static void mshv_set_standard_regs_vp_page(CPUState *cpu)
-+static void set_standard_regs_vp_page(CPUState *cpu)
- {
-     X86CPU *x86cpu = X86_CPU(cpu);
-     CPUX86State *env = &x86cpu->env;
-@@ -515,29 +515,26 @@ static void mshv_set_standard_regs_vp_page(CPUState *cpu)
-                                 | (1u << HV_X64_REGISTER_CLASS_FLAGS);
- }
- 
--static int store_regs(CPUState *cpu)
-+static void store_regs(CPUState *cpu)
- {
-     X86CPU *x86cpu = X86_CPU(cpu);
-     CPUX86State *env = &x86cpu->env;
--    int ret;
- 
--    /* Use register vp page to optimize registers access */
--    if (env->regs_page && env->regs_page->isvalid != 0) {
--        mshv_set_standard_regs_vp_page(cpu);
--    } else {
--        ret = set_standard_regs(cpu);
--        if (ret < 0) {
--            return ret;
--        }
-+    /* Check register page pointer and abort if in unexpected state */
-+    if (!env->regs_page) {
-+        error_report(
-+                "store regs: register page not set for vcpu %d",
-+                cpu->cpu_index);
-+        abort();
-     }
--
--    ret = set_special_regs(cpu);
--    if (ret < 0) {
--        error_report("Failed to store speical registers");
--        return ret;
-+    if (env->regs_page->isvalid == 0) {
-+        error_report(
-+                "store regs: register page invalid for vcpu %d",
-+                cpu->cpu_index);
-+        abort();
-     }
- 
--    return 0;
-+    set_standard_regs_vp_page(cpu);
- }
- 
- static void populate_standard_regs(const hv_register_assoc *assocs,
-@@ -1590,14 +1587,13 @@ static int set_memory_info(const struct hyperv_message *msg,
-     return 0;
- }
- 
--static int emulate_instruction(CPUState *cpu,
-+static void emulate_instruction(CPUState *cpu,
-                                const uint8_t *insn_bytes, size_t insn_len,
-                                uint64_t gva, uint64_t gpa)
- {
-     X86CPU *x86_cpu = X86_CPU(cpu);
-     CPUX86State *env = &x86_cpu->env;
-     struct x86_decode decode = { 0 };
--    int ret;
-     x86_insn_stream stream = { .bytes = insn_bytes, .len = insn_len };
- 
-     load_regs(cpu);
-@@ -1605,13 +1601,7 @@ static int emulate_instruction(CPUState *cpu,
-     decode_instruction_stream(env, &decode, &stream);
-     exec_instruction(env, &decode);
- 
--    ret = store_regs(cpu);
--    if (ret < 0) {
--        error_report("failed to store registers");
--        return -1;
--    }
--
--    return 0;
-+    store_regs(cpu);
- }
- 
- static int handle_mmio(CPUState *cpu, const struct hyperv_message *msg,
-@@ -1647,13 +1637,9 @@ static int handle_mmio(CPUState *cpu, const struct hyperv_message *msg,
- 
-     instruction_bytes = info.instruction_bytes;
- 
--    ret = emulate_instruction(cpu, instruction_bytes, insn_len,
-+    emulate_instruction(cpu, instruction_bytes, insn_len,
-                               info.guest_virtual_address,
-                               info.guest_physical_address);
--    if (ret < 0) {
--        error_report("failed to emulate mmio");
--        return -1;
--    }
- 
-     *exit_reason = MshvVmExitIgnore;
- 
 -- 
-2.34.1
+Eric Blake, Principal Software Engineer
+Red Hat, Inc.
+Virtualization:  qemu.org | libguestfs.org
 
 
