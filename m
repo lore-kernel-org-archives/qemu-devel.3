@@ -4,88 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39088CA5FFF
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 08:25:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62ACACA5FFF
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 08:26:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xEMsT-0007xd-3x; Wed, 07 Oct 2026 04:19:56 -0400
+	id 1xEMxV-00068P-EV; Wed, 07 Oct 2026 04:25:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xEHM1-0003V6-IB
- for qemu-devel@nongnu.org; Tue, 06 Oct 2026 22:26:15 -0400
-Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xEHPU-0003oN-ND
+ for qemu-devel@nongnu.org; Tue, 06 Oct 2026 22:29:52 -0400
+Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xEHLs-0008Kj-KA
- for qemu-devel@nongnu.org; Tue, 06 Oct 2026 22:25:58 -0400
-Received: by mail-ed1-x535.google.com with SMTP id
- 4fb4d7f45d1cf-6acb57c2b88so4929711a12.2
- for <qemu-devel@nongnu.org>; Tue, 06 Oct 2026 19:23:43 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xEHP6-0000Sh-NM
+ for qemu-devel@nongnu.org; Tue, 06 Oct 2026 22:29:25 -0400
+Received: by mail-ed1-x530.google.com with SMTP id
+ 4fb4d7f45d1cf-6a9a20a5e72so1670834a12.0
+ for <qemu-devel@nongnu.org>; Tue, 06 Oct 2026 19:25:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1791339822; x=1791944622; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1791339951; x=1791944751; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=wmm7DGZqm4QJ3LuHhxoQfymIpreglajXFKpx721XcyM=;
- b=D3LMc3TvlNoKsF+5Z4IEUHav7Nme4djBoUB3Yhi6Hub41rgLeuX9AsPoevjy+oyWE0
- FXi2B8w1t/jbu4cmTIWxlW2/NRd+NeXV6U4VEybCEVHeANxkRHL5lO3FyrhtUWbcUWpU
- 0eACji6o8oKOPGmvQAQ4y7il9Nx/HlFUz+sYaoGFHILJjUkMNcveqrX8bc5G289uGRFK
- e4SmOGNfLkv2WiGUDFtKfOcDvix5NG6+NvAxH0wWBS/xxOJ5iDWcqaI3N9UStRbNPpRs
- 3Y6G0kHJtIhEswCBGosALRcRiLa6NFD6BQqx0x2+0i+K3MCRcZa7XkIcr65qPnjakFnO
- dlhg==
+ bh=+qm9RFm9kpcLhP87Ut2zliIvFmj6+EMYEVrRI1a4jgs=;
+ b=N+p8FdcyrdVuHtY/38hYtefONo2nYnSplI99zfak/PtlyGr7vW/genlFghQ/FiKXoI
+ i6191ck7jGHrAyTvizGYkb1f73thxGlG7TKcZkkvAFSpwYWGW9ZZ+5rn4jIzUS6R9SCS
+ O64IE8t0Jfzb7TEX3oao5djK8Yl3lPS39YQJHujvCM20idNdPtrcMEmhT1u9nxAYyIPt
+ fEjoKkoul7AbZEZkSGHMyAQ3cGASIXrHdwvyAnXubEpxxaKUyWeIKPbCc1np0tStRhZu
+ AunNGC1D3bB6lVG+e/DLhHb5XbZTus1RR9HfRL49QBDfaNvrUSU41cq50rwiqq7bi4O7
+ Kxxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791339822; x=1791944622;
+ d=1e100.net; s=20260707; t=1791339951; x=1791944751;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=wmm7DGZqm4QJ3LuHhxoQfymIpreglajXFKpx721XcyM=;
- b=sq14Nta652A8w6lkq2kc3JBLhtcZYlk4Ye7Ds7hbSiwmePnwxte/wnj3AHSCYNBqhs
- IHMqxeUQfIElw5rWUBWeoQWxFm9KMyGhcxeHcGwVaAJvz+IYT27gc6UAdD7QdQ0h264D
- OunNBSYikjSS0dWSJWO1a9EuaEpmZIN3IaHFvbpbzNb9whuXInEkP73DOHDPl8PUTsnD
- 9MinioIvj+dyYkcJXMDuZKcldTHdVmFtYlfMKArwpNV0gDp71+MFWDSvUqKHOss9Y35z
- 2rTWGn1uHNOfhyC9EnObjHZM/V3y5mKQzdpZLfwqgjFZ6KNcECcQaeBxFGygltLZYpa0
- 61HQ==
-X-Gm-Message-State: AFq9FYJP4O8LYjY4GAsmY2tQ1GkcSdGYXDGhiFcUU6tJMP0dEMSwPHT+
- j/3noaRbJp4k0eDxV+rbHD1469T8bD7qJ7D0TpCaU0/oZnDYlTsHnSI2nTjQXQ==
-X-Gm-Gg: AYBFou25mj87AVA6D48EJh7B9KtcId18D6oGKnuB01URURxb5pRgg/9lTALQBJWrrYr
- LXG9UQ+7gL3GoRqpGErZihUOiUMSNQOtmp/pZ65h+H0WICIxHwF9NgiQ0TvYackxMZZ7rL3Nc/y
- Lm3VtfHdq3Crh7lobQudYvWUbWDJEEQOlKcG6i9D41lJca8vlFGrdZ5mtJpuz+zgB4n6vpeJq5c
- TSRvWsIY/bzpCwVVhx688EBsn0iqjpeh98mlziCEou5nXCgVvW5Lkacy2z/2kpHuoVNkucqO9vW
- AsEvqWybIWWVW7lREGcL/BDPdp6ndKAWANqwdI+uf6rKstqI6D09sB52f38SnYgwVT6PHCrB7H9
- 0Djbp2rFv6EgYsVSrt9TnegwP9gBYKPAK9YuOdZq0nNWAXt/FByPC+6mvjNK/cw+0/MK73Tuo70
- 5ve0w2G+BkehScRqPrYUFIwQtXFLRFhwHFQ8y2hrjPHRimi5DfdBIz1I36RM1P/3qA5xAwE3gyr
- 4WXiFn4JA2Ce6ftYBon3YGDWbCluIx45RPWbg==
-X-Received: by 2002:a5d:64e6:0:b0:48b:26c:8cc with SMTP id
- ffacd0b85a97d-48c47fd9eefmr18069961f8f.27.1791275739080; 
- Tue, 06 Oct 2026 01:35:39 -0700 (PDT)
+ bh=+qm9RFm9kpcLhP87Ut2zliIvFmj6+EMYEVrRI1a4jgs=;
+ b=M8Py2mNCUDqawd3H+plZIAxHik0xI96IBa87JINZB8/gz3GMETg0s+dAO0LZrU/RsC
+ voLBO+K1B5X+hq4RoOC8bs2Hu8mPvXGoIjESH8CpBHzH6VGWSieq/EEY3hjGfTvW7d0D
+ FQUwz3sN43ACK0GjFF1qxP6bnq46zNyiVx9g+PKHv8jrg4JQMPx1IRa+DFDlA+i9v84R
+ uYYjP39tNUke89x4bhzAhI8zERM4OxoBvDofXe9JV9WByGix0GCoB7lUeZjHP8zOrkKG
+ vvarLzPzAUUIhkOazRC5OXhRmcijhIINfNkt7SBoF8+C9+eDbJPywZVCU3pm/19WSx7I
+ wH/Q==
+X-Gm-Message-State: AFq9FYLbsGCQJzdEQ0RiwFi4b+d0yBQc0lJu9eJ7nd3yRXS7WKrlmgW+
+ M/RQFOSZ3e+rMKheQ/cokvAHNpcw+nnf2qLY+A/Yv6VIr1PkHXz5n9SPJXoqSA==
+X-Gm-Gg: AYBFou0wEcjRq+pLi8i5Eaeg60kQXEbQLHYg6fuN6mPpsDGw7atGbXHDE/LrwoSddFX
+ LFIHnt/YN1RJgE09TaYNdcsDX1UVXoNKi+NlDYg/liQkljFyyK2OmBHPK6Jp/qsEPqOZdVxlR7q
+ /d59mzqDbLcm3LIrXAtR3O8TbTSZvAmrkHyiEKmJD+0UpvWbfXXd18bxsRWDeJ47mHCsqjgTGMt
+ d8UpaUTniLYlLEdzwHg23AjqXWkzC8PHyOpHqzB3ycdbqCc0SlUpYb0i5WKpp2xmxNXyz9L3it8
+ Yy1MEUBI1Cx3ALVMb3DoBXyAAi0g+reiscznLp/BbNypJ0nEQebuH7lwL/gVQ6cPo/rG5WOCb+j
+ OvXYE3eT+2G3LI5aEq9WcuQ3ZtAwSmYcLgHCZgRq/73VL89stVpWvngB3gLpWxAZUS3ypv0mUUF
+ DowXwIlME2q3XXWU6bxJHAbnFNL2q6XXT9kWvEbZEqhbWkK25kc8MFj/8r5qNHed8cwtqAQnIR1
+ vvlP0vY4CTzDdGcwgzX7lhfd5FwlmCf41UPPA==
+X-Received: by 2002:a5d:5f85:0:b0:487:2805:6834 with SMTP id
+ ffacd0b85a97d-48c6d1e6f2dmr1521384f8f.42.1791279907601; 
+ Tue, 06 Oct 2026 02:45:07 -0700 (PDT)
 Received: from archlinux (pd95eda80.dip0.t-ipconnect.de. [217.94.218.128])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48c6cdb281csm1566764f8f.55.2026.10.06.01.35.37
+ ffacd0b85a97d-48c6faa93fbsm433426f8f.16.2026.10.06.02.45.06
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 06 Oct 2026 01:35:38 -0700 (PDT)
+ Tue, 06 Oct 2026 02:45:07 -0700 (PDT)
 From: Bernhard Beschow <shentey@gmail.com>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Bin Meng <bin.meng@processmission.com>,
- Jean-Christophe Dubois <jcd@tribudubois.net>,
- Gaurav Sharma <gaurav.sharma_7@nxp.com>,
- Bernhard Beschow <shentey@gmail.com>, qemu-arm@nongnu.org,
- Jason Wang <jasowangio@gmail.com>,
- Alistair Francis <alistair@alistair23.me>
-Subject: [PATCH v4 16/31] hw/arm/fsl-imx7: Derive from TYPE_SYS_BUS_DEVICE
-Date: Tue,  6 Oct 2026 10:34:28 +0200
-Message-ID: <20261006083445.30362-17-shentey@gmail.com>
+Cc: Zhao Liu <zhao1.liu@intel.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Christian Speich <c.speich@avm.de>, Bin Meng <bmeng.cn@gmail.com>,
+ qemu-block@nongnu.org, Bernhard Beschow <shentey@gmail.com>
+Subject: [PATCH v5 3/8] hw/sd/sd: Use multi-byte/block writes for block path
+Date: Tue,  6 Oct 2026 11:44:42 +0200
+Message-ID: <20261006094447.43491-4-shentey@gmail.com>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261006083445.30362-1-shentey@gmail.com>
-References: <20261006083445.30362-1-shentey@gmail.com>
+In-Reply-To: <20261006094447.43491-1-shentey@gmail.com>
+References: <20261006094447.43491-1-shentey@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::535;
- envelope-from=shentey@gmail.com; helo=mail-ed1-x535.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::530;
+ envelope-from=shentey@gmail.com; helo=mail-ed1-x530.google.com
 X-Spam_score_int: -10
 X-Spam_score: -1.1
 X-Spam_bar: -
@@ -108,75 +101,226 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Deriving from TYPE_SYS_BUS_DEVICE fixes the SoC object to be reset upon
-machine reset.
+When writing/reading blocks via WRITE/READ_MULTIPLE_BLOCK we try to
+directly pass this request down to the block layer. This can only be
+done for properly sized and aligned accesses, other access still use a
+bounce buffer but still benefit from copying as much data in one memcpy
+as possible.
 
-Reviewed-by: Bin Meng <bin.meng@processmission.com>
+RPMB is limited to the slow path using a bounce buffer.
+
+Signed-off-by: Christian Speich <c.speich@avm.de>
+
+Original patch has been split into multiple ones to help review.
+
+Further changes:
+* Drive limits and write protect groups are preserved to be checked on
+block boundaries only since these checks are redundant in case the SD
+host transfers one byte at a time.
+* WP_VIOLATION is only raised once the first protected block shall be
+written, rather than immediately at the beginning of a multiple block
+write which starts with allowed blocks.
+* An off-by-one error has been fixed in the same case where one bye too
+less had been written if a write protected block had been detected.
+* There are only two rather than three code paths each handling the
+multiple block optimization.
+
 Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 ---
- include/hw/arm/fsl-imx7.h | 5 ++---
- hw/arm/fsl-imx7.c         | 5 +----
- hw/arm/mcimx7d-sabre.c    | 2 +-
- 3 files changed, 4 insertions(+), 8 deletions(-)
+ hw/sd/sd.c | 147 +++++++++++++++++++++++++++++++++++++++++------------
+ 1 file changed, 114 insertions(+), 33 deletions(-)
 
-diff --git a/include/hw/arm/fsl-imx7.h b/include/hw/arm/fsl-imx7.h
-index a573e0dd4f..945d8c5ad7 100644
---- a/include/hw/arm/fsl-imx7.h
-+++ b/include/hw/arm/fsl-imx7.h
-@@ -37,6 +37,7 @@
- #include "hw/pci-host/designware.h"
- #include "hw/usb/chipidea.h"
- #include "hw/core/or-irq.h"
-+#include "hw/core/sysbus.h"
- #include "target/arm/cpu.h"
- #include "qom/object.h"
- #include "qemu/units.h"
-@@ -64,10 +65,8 @@ enum FslIMX7Configuration {
- };
+diff --git a/hw/sd/sd.c b/hw/sd/sd.c
+index bccb839ce6..6e2bb8ff2d 100644
+--- a/hw/sd/sd.c
++++ b/hw/sd/sd.c
+@@ -2702,36 +2702,84 @@ static size_t sd_write_data(SDState *sd, const void *buf, size_t length)
+                                   sd->data_start, sd->blk_len)) {
+                 break;
+             }
++
++            /* Limit writing data to our device size */
++            length = MIN(sd->size - sd->data_start, length);
++
+             if (sd->size <= SDSC_MAX_CAPACITY) {
+                 if (sd_wp_addr(sd, sd->data_start)) {
+                     sd->card_status |= WP_VIOLATION;
+                     break;
+                 }
++
++                /*
++                 * Check if any covered address violates WP. If so, limit our
++                 * write up to the allowed address.
++                 */
++                for (uint64_t addr = ROUND_UP(sd->data_start + 1, WPGROUP_SIZE);
++                     addr < sd->data_start + length;
++                     addr += WPGROUP_SIZE) {
++                    if (sd_wp_addr(sd, addr)) {
++                        length = addr - sd->data_start;
++                        break;
++                    }
++                }
+             }
+         }
  
- struct FslIMX7State {
--    /*< private >*/
--    DeviceState    parent_obj;
-+    SysBusDevice   parent_obj;
+-        length = MIN(sd->blk_len - sd->data_offset, length);
+-        memcpy(sd->data + sd->data_offset, buf, length);
+-        sd->data_offset += length;
++        partition_access = sd->ext_csd[EXT_CSD_PART_CONFIG]
++                            & EXT_CSD_PART_CONFIG_ACC_MASK;
  
--    /*< public >*/
-     ARMCPU             cpu[FSL_IMX7_NUM_CPUS];
-     A15MPPrivState     a7mpcore;
-     IMXGPTState        gpt[FSL_IMX7_NUM_GPTS];
-diff --git a/hw/arm/fsl-imx7.c b/hw/arm/fsl-imx7.c
-index 2defa498d3..fc5d0efe06 100644
---- a/hw/arm/fsl-imx7.c
-+++ b/hw/arm/fsl-imx7.c
-@@ -753,15 +753,12 @@ static void fsl_imx7_class_init(ObjectClass *oc, const void *data)
+-        if (sd->data_offset >= sd->blk_len) {
+-            /* TODO: Check CRC before committing */
+-            sd->state = sd_programming_state;
+-            partition_access = sd->ext_csd[EXT_CSD_PART_CONFIG]
+-                    & EXT_CSD_PART_CONFIG_ACC_MASK;
+-            if (partition_access == EXT_CSD_PART_CONFIG_ACC_RPMB) {
+-                emmc_rpmb_blk_write(sd, sd->data_start, sd->data_offset);
+-            } else {
+-                sd_blk_write(sd, sd->data, sd->data_start, sd->data_offset);
++        if (length < sd->blk_len || sd->data_offset > 0
++            || partition_access == EXT_CSD_PART_CONFIG_ACC_RPMB) {
++            /* Partial write or RPMB (single block only for now) */
++            length = MIN(sd->blk_len - sd->data_offset, length);
++
++            memcpy(sd->data + sd->data_offset, buf, length);
++            sd->data_offset += length;
++
++            if (sd->data_offset >= sd->blk_len) {
++                sd->state = sd_programming_state;
++                if (partition_access == EXT_CSD_PART_CONFIG_ACC_RPMB) {
++                    emmc_rpmb_blk_write(sd, sd->data_start, sd->data_offset);
++                } else {
++                    sd_blk_write(sd, sd->data, sd->data_start, sd->data_offset);
++                }
++                sd->blk_written++;
++                sd->data_start += sd->blk_len;
++                sd->data_offset = 0;
++                sd->csd[14] |= 0x40;
++
++                /* Bzzzzzzztt .... Operation complete.  */
++                if (sd->multi_blk_cnt != 0) {
++                    if (--sd->multi_blk_cnt == 0) {
++                        /* Stop! */
++                        sd->state = sd_transfer_state;
++                        break;
++                    }
++                }
++
++                sd->state = sd_receivingdata_state;
+             }
+-            sd->blk_written++;
+-            sd->data_start += sd->blk_len;
+-            sd->data_offset = 0;
++        } else {
++            /* Write multiple of block sizes */
++            length = QEMU_ALIGN_DOWN(length, sd->blk_len);
++
++            /* For limited writes, only write the requested block count. */
++            if (sd->multi_blk_cnt != 0) {
++                length = MIN(length, sd->multi_blk_cnt * sd->blk_len);
++            }
++
++            sd->state = sd_programming_state;
++            sd_blk_write(sd, buf, sd->data_start, length);
++            sd->blk_written += length / sd->blk_len;
++            sd->data_start += length;
+             sd->csd[14] |= 0x40;
  
-     device_class_set_props(dc, fsl_imx7_properties);
-     dc->realize = fsl_imx7_realize;
--
--    /* Reason: Uses serial_hds and nd_table in realize() directly */
--    dc->user_creatable = false;
-     dc->desc = "i.MX7 SOC";
- }
+-            /* Bzzzzzzztt .... Operation complete.  */
+             if (sd->multi_blk_cnt != 0) {
+-                if (--sd->multi_blk_cnt == 0) {
++                sd->multi_blk_cnt -= length / sd->blk_len;
++
++                if (sd->multi_blk_cnt == 0) {
+                     /* Stop! */
+                     sd->state = sd_transfer_state;
+                     break;
+@@ -2740,6 +2788,7 @@ static size_t sd_write_data(SDState *sd, const void *buf, size_t length)
  
- static const TypeInfo fsl_imx7_type_info = {
-     .name = TYPE_FSL_IMX7,
--    .parent = TYPE_DEVICE,
-+    .parent = TYPE_SYS_BUS_DEVICE,
-     .instance_size = sizeof(FslIMX7State),
-     .instance_init = fsl_imx7_init,
-     .class_init = fsl_imx7_class_init,
-diff --git a/hw/arm/mcimx7d-sabre.c b/hw/arm/mcimx7d-sabre.c
-index 47744e66a4..55c23061b0 100644
---- a/hw/arm/mcimx7d-sabre.c
-+++ b/hw/arm/mcimx7d-sabre.c
-@@ -52,7 +52,7 @@ static void mcimx7d_sabre_init(MachineState *machine)
-     object_property_add_child(OBJECT(machine), "soc", OBJECT(s));
-     object_property_set_bool(OBJECT(s), "fec2-phy-connected", false,
-                              &error_fatal);
--    qdev_realize(DEVICE(s), NULL, &error_fatal);
-+    sysbus_realize_and_unref(SYS_BUS_DEVICE(s), &error_fatal);
+             sd->state = sd_receivingdata_state;
+         }
++
+         break;
  
-     memory_region_add_subregion(get_system_memory(), FSL_IMX7_MMDC_ADDR,
-                                 machine->ram);
+     case 26:  /* CMD26:  PROGRAM_CID */
+@@ -2855,28 +2904,60 @@ static size_t sd_read_data(SDState *sd, void *buf, size_t length)
+                 memset(buf, dummy_byte, length);
+                 return length;
+             }
+-            partition_access = sd->ext_csd[EXT_CSD_PART_CONFIG]
+-                    & EXT_CSD_PART_CONFIG_ACC_MASK;
+-            if (partition_access == EXT_CSD_PART_CONFIG_ACC_RPMB) {
+-                emmc_rpmb_blk_read(sd, sd->data_start, io_len);
+-            } else {
+-                sd_blk_read(sd, sd->data, sd->data_start, io_len);
+-            }
+         }
+ 
+-        length = MIN(io_len - sd->data_offset, length);
+-        memcpy(buf, sd->data + sd->data_offset, length);
+-        sd->data_offset += length;
++        /* Limit reading data to our device size */
++        length = MIN(sd->size - sd->data_start, length);
++
++        partition_access = sd->ext_csd[EXT_CSD_PART_CONFIG]
++                & EXT_CSD_PART_CONFIG_ACC_MASK;
++
++        if (length < io_len || sd->data_offset > 0
++            || partition_access == EXT_CSD_PART_CONFIG_ACC_RPMB) {
++            /* Partial read or RPMB (single block only for now) */
++            if (sd->data_offset == 0) {
++                /* Fill the buffer */
++                if (partition_access == EXT_CSD_PART_CONFIG_ACC_RPMB) {
++                    emmc_rpmb_blk_read(sd, sd->data_start, io_len);
++                } else {
++                    sd_blk_read(sd, sd->data, sd->data_start, io_len);
++                }
++            }
++
++            length = MIN(io_len - sd->data_offset, length);
++            memcpy(buf, sd->data + sd->data_offset, length);
++            sd->data_offset += length;
+ 
+-        if (sd->data_offset >= io_len) {
+-            sd->data_start += io_len;
+-            sd->data_offset = 0;
++            if (sd->data_offset >= io_len) {
++                sd->data_start += io_len;
++                sd->data_offset = 0;
+ 
++                if (sd->multi_blk_cnt != 0) {
++                    if (--sd->multi_blk_cnt == 0) {
++                        /* Stop! */
++                        sd->state = sd_transfer_state;
++                        break;
++                    }
++                }
++            }
++        } else {
++            /* Read multiple of block sizes */
++            length = QEMU_ALIGN_DOWN(length, io_len);
++
++            /* For limited reads, only read the requested block count. */
+             if (sd->multi_blk_cnt != 0) {
+-                if (--sd->multi_blk_cnt == 0) {
+-                    /* Stop! */
++                length = MIN(length, sd->multi_blk_cnt * io_len);
++            }
++
++            sd_blk_read(sd, buf, sd->data_start, length);
++
++            sd->data_start += length;
++
++            if (sd->multi_blk_cnt != 0) {
++                sd->multi_blk_cnt -= length / io_len;
++
++                if (sd->multi_blk_cnt == 0) {
+                     sd->state = sd_transfer_state;
+-                    break;
+                 }
+             }
+         }
 -- 
 2.56.0
 
