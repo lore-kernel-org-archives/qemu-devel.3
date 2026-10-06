@@ -4,113 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC816CA5FFF
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 08:37:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F24A4CA6002
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 08:37:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xEN5L-0006Ab-H9; Wed, 07 Oct 2026 04:33:11 -0400
+	id 1xEN2B-0002dS-8V; Wed, 07 Oct 2026 04:29:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
- id 1xEHtP-0007aF-Vt
- for qemu-devel@nongnu.org; Tue, 06 Oct 2026 23:00:41 -0400
-Received: from fout-b3-smtp.messagingengine.com ([202.12.124.146])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <alistair@alistair23.me>) id 1xEHtH-0006bJ-6k
- for qemu-devel@nongnu.org; Tue, 06 Oct 2026 23:00:27 -0400
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
- by mailfout.stl.internal (Postfix) with ESMTP id 72F111D000F1
- for <qemu-devel@nongnu.org>; Tue,  6 Oct 2026 12:02:38 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
- by phl-compute-01.internal (MEProxy); Tue, 06 Oct 2026 12:02:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alistair23.me;
- h=cc:cc:content-transfer-encoding:content-type:content-type
- :date:date:from:from:in-reply-to:in-reply-to:message-id
- :mime-version:references:reply-to:subject:subject:to:to; s=fm2;
- t=1791302558; x=1791388958; bh=MgC1Xt9XFFFkiebHCYydmvPFVkwsyZgh
- 5ubiBZEKcEg=; b=mnk6QgjsF7dM/4DjmKypaoHn4S1mJ5ffKkGfD0o/ZwaCSxbN
- YNaAEZdQsGZpNaFt3YTVLeMtDs/XhRdYHk8HuUw41fTAOhhwzbUEQUwsdkgCzcLY
- jJVxRvh3o5bgrWgMs1VffIgJhApXRcPX1MbO4uNP9/+naEUKDKVPJOX/ePsW49Gl
- SEByh/uLQeL/YIgOmuodGbu0BNylNPtlj1UNM4K2eJuhVt1JtRZdSBo5dPTPzS1o
- Ueyq0HZUG3GORdY1a3c4C7yV+2Jzjw4NufG+PCJSwrmE1pPPZzFh2CQY5PB508y+
- C4S4M2FhOa+y/IJ5TbHQ06gRpCzgOs4Uqb2ABw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1791302558; x=
- 1791388958; bh=MgC1Xt9XFFFkiebHCYydmvPFVkwsyZgh5ubiBZEKcEg=; b=E
- 6UkkSUaiX6atAlJ+24ypO6qVgOMXLUxbxH1d6OIUejIs6Uf5rvdbY+9inYhpFn31
- BYTq454w8ZoQGN6NtS1DDLfoZOUUavrC7YAxEsj4jTRpZQiTmaFput05nX6cq8fg
- IcQBXWcaBpdKFN4EJKaTi5Bkm3ZwVyQER7SUQA9neYfF423tfgV5jhXUSU5yb2bu
- KmKIF/UoIHt1MuVyxUlaaArJcdbpimJd1q4kVCVeU7orA+w1sOsZbLEdfwSn74AP
- bq9K3YkobsE7bqJPTpsGydA02vFDF0eHgXMARqMC9Ijto1Ck1MRKrVn8Kry1Gg08
- 83C+EQnYa2uAp6jWjD3cA==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
- repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
- action=sign d=alistair23.me a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1791302558; d=alistair23.me;
- mf=PGFsaXN0YWlyQGFsaXN0YWlyMjMubWU+;
- rt=PHFlbXUtZGV2ZWxAbm9uZ251Lm9yZz4=;
- s=fm2:rsa-sha256:sQFxRi769L20F6ZJNstWI/lzSQI9NURZJq2YH0o3lHs4j1z
- oyhFpA2oFDFHgAXbXcR95zwd1GEgckr9Kd6IONiUf6TQPvsEoy5VN587EZiceGDH
- ktvOmJkU6HOIRoR2Jmfqva9fVlb8zo0b2Zy+lg6pE48JyRp/CkXZ7gVhPw9GzNaP
- 9VT/fWOP2Bb+mXNnSs4Law0QdBfWBOyK/IAP4Nn5mYKMYvpq7XNt2upxD1DzPEUO
- /jBgcqsnRUk5qZi68EUXOJenW203ksVNXUutmHyR0kYaD2/4XJ2jlOwf93HHUry7
- iVrEJ8htQ0sKBlL9KXyBg3M2WKgpugshioYfiAA==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
- repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
- action=mi-m=1; hc=13;
- hn=cc,content-transfer-encoding,content-type,date,feedback-id,
- from,in-reply-to,message-id,mime-version,references,subject,to,
- user-agent;
-Message-Instance: m=1;
- h=sha256:96+KaWRX584EOThj6hUpgidJ5fuKS7OStez5EpFkbpQ=:MgC1Xt9XFFFkiebHCYydmvPFVkwsyZgh5ubiBZEKcEg=;
-X-ME-Sender: <xms:nhvFanCnIaFVPzb5__0g_P95m8dj0uBZQm0_fD7QlBteAARuSXSP_g>
- <xme:nhvFah3WmvB0jPdSSFXGACEXl8HzQtVTd7BpTk1jBIMvyUkyb7RJIlo3SznjMKdKj
- zsX0O_iv_axm_G6sOkQGH_Hk6rbNj2hXcNxIg6BevjXTmv7nbqAsWed>
-X-ME-Received: <xmr:nhvFahvrm_KOJaBEpvMJ8Ed2NO5UAV9RuxRdQXcFMixp39j91WtlUqUVGZofvhl9OYPCqkYoP5i-S1AjMvwglOM>
-X-ME-Proxy-Cause: dmFkZTFw1gHQeph3+U0iVbTgmpkrjOplMu53RIX24qMa8tkDrzBv3YyuWv8IG9k0OKI8bE
- Xlyb0GlafGiXlCnDW0OuAM649lnf1jSFTp4oz8WDdYOqVTpsTxiBavypRMvgPcJ98YfBds
- TeS3vFh19ee3iy7xsS10Tnnthg355PvqrqwC4OrM5Ul/s//p08j0oKyYxZCuw1HChSxnVV
- 5fgGmBEovbQcqZ2r1Z3D1c1uM/wPap+evUgAEGdaFfC8ZJpZjfho9HaOLQPd4SZ1JXTqOP
- 3TFkjN8RDiXqAUj82tJ68HAW2DnlgNl9GQcnCMb0G7ZB4M4PEWXrDx0JyMe6jaNz+AuAkI
- FvYYg4rw3bx4CArRd5OLs9IN+x+3As91KMGpvRgDvL1G8R6rzAbDUqIfUaaozb8o4COnnO
- kvSEwkCvP+srAXgcVYui8Q8mODqNeFO4/3tkVd9wFljmZg8iWmI3g1JsMzkUQtpOyTU0ZD
- hDl0vZ9G9pfHfI8/eG5P7nKb77kRg7V8MtmUIFIyPpYI2eq9oMY7I/zDfE7bdednYwIu8+
- Q54WbehcJnaMW/44rnhANW9rJ8Iw7s3Gxxjd3PrAglW8AmirGTFHmmJcjw9zSwcGg500aJ
- 5rF0tylFiZsz4y6P8ve+mCuFhVRIzvLxWkjcQvwKmMb3yXUMgrh7NAMNlPTQ
-X-ME-Proxy: <xmx:nhvFah5UUzrsUQZoq98iNJEAap0C29zCochmyL0mdKHIySEPeaZ1Lw>
- <xmx:nhvFaiLNM3euMifVyHXn-2cXrh22p7aZYv4jrggRLHPjFYyPdhDsmg>
- <xmx:nhvFah5nfcstoA7F6Jehdw60aHHR4tipboyRnDBBeNT6ZMBxBa7SCw>
- <xmx:nhvFalxXE82tmoS-_-dIhhDwIG1YsPhM7lnCiMCzXUMjJ80LZGT-LQ>
- <xmx:nhvFakW-chuY8ROKnaRDsGK3vk-OevE48Bfn0ztU02TcKck6f6xQjQTz>
-Feedback-ID: ifd214418:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 6 Oct 2026 12:02:37 -0400 (EDT)
-Message-ID: <ece1d936a974013f305b4b3c976316686b0fdfd3.camel@alistair23.me>
-Subject: Re: [PATCH v2 16/23] target/riscv: Build MemOpIdx to vext_ldff
-From: Alistair <alistair@alistair23.me>
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org
-Date: Wed, 07 Oct 2026 02:02:36 +1000
-In-Reply-To: <20260821040404.268123-17-richard.henderson@linaro.org>
-References: <20260821040404.268123-1-richard.henderson@linaro.org>
- <20260821040404.268123-17-richard.henderson@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.62.0 (by Flathub.org) 
+ (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
+ id 1xEHiw-00069b-Nh
+ for qemu-devel@nongnu.org; Tue, 06 Oct 2026 22:49:57 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
+ id 1xEHil-0004Jl-Qt
+ for qemu-devel@nongnu.org; Tue, 06 Oct 2026 22:49:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1791341313;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=I+NUM2DajgTvHfa2tOlFEsHRgPTBQv++tkYzu6/+Iho=;
+ b=RVNzDJvHZe5bwDlvpHw93hy+/b4JX/LbvRILMlpFY/w9OGP0VyRq8q3Aru1SKv6ZTF3VFu
+ 2JbclWl2NabTFAPgAdUh4i/yr9nmIvKMZoZcJSPICQm6BXtRxY0g/tj2Fvqvndwzr8xQtF
+ 4T3mTcsr+Q/P4W6+JxhAQ7nUnWNTgQM=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-665-QSP_kYQoPFSNqZfKu0iQ9w-1; Tue, 06 Oct 2026 10:13:27 -0400
+X-MC-Unique: QSP_kYQoPFSNqZfKu0iQ9w-1
+X-Mimecast-MFC-AGG-ID: QSP_kYQoPFSNqZfKu0iQ9w_1791296006
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-48af5a07314so2108079f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 06 Oct 2026 07:13:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1791296006; x=1791900806; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=I+NUM2DajgTvHfa2tOlFEsHRgPTBQv++tkYzu6/+Iho=;
+ b=IF1IrEr4vF3QwYZW+TvA7EWP5af3qMLNnKfQ2Gx4KEmmpkcA6EMGg08EtKcuyQ5IHE
+ Lexzsw+q24bjhvblmkPFzTnxeVv028J6L2VkcrMtanx8S6+GhAQG0tPC1V1Jy2xQLyH2
+ uQnF/7535rEzPGSGV+IXT/ld0DufC4ljOYDdcGCXmRbFnFoqUjPKlQOyB0fgzFL5AUqR
+ NY0j/SWdAEMtAOjTbGqZ/gMseXNla0OIjfMTQqkNjSmuxW5TScE/R76RU0v+HgvWk+NT
+ o3JWPiE8Qj+hubJXQ/u4LaUv5ap6FUEVFJt3FwkBbM2DwD2K0osi/EoU86D6j7w+YW1s
+ /Ofw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1791296006; x=1791900806;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=I+NUM2DajgTvHfa2tOlFEsHRgPTBQv++tkYzu6/+Iho=;
+ b=fsvN+kVOPg79Gv5gPc4EnlTatGw4cZUHpgRs8B9m7TjFeJlXwh4hJ0DT44hZKmr9Un
+ ssBTXE9NxhnAAgUx2rLiP5G8iO9eYMrSLWcts5qKjzqjrTfItzb9StsLBm1a7WhY5C38
+ +idZuq8/Rf0B3ZB1iRDIYTa626FHU/prkswQbTi5GICWIsOqfa9wZv9+bmQLhp1Zsj6R
+ Nrze7fml93YarQG789nQpuYJBHGyFrgu/D8SRu1fwbhFv2+rwonavOZz8CIqnoaI9bOa
+ Ku5ClcfF7hzXBX+0Q3h8nxEZYnw8a4NY9Fvn4hMJB0E+EKEXwJMmCT3Nye6jI16HOiwG
+ cmRw==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBwQlM3+obR1s9cBNvZkIFnnhFxoAQFVUJe4jdZjVl6Mx8GQZv0trlRmVrAP7bQ4DuPSTx6qdeQ7ERqB@nongnu.org
+X-Gm-Message-State: AFq9FYLVu1LrFqETCLC/rpFjDQEeuINc8Vqpsr+AnIQp8U7RC9EGET6x
+ KJOs4c/X9UXyckbn/Bo232FFDkqDDgAddjHyk4GYYvcn/jp6tkPx/aIRsM0VVms3jaoEWqyAlPW
+ vmxyzIJMTqg7S4/edZToYCT0uwVRwxzop7pdUZ6i0/GalkKgHPTZki0kD
+X-Gm-Gg: AYBFou1H38DGjJBxdESXeCA0xwF1GEGt195XHxNxmu3CqzFaNsKjRHM9i/gvnGg9psX
+ WsHWib+/PxVfERyBRAh63sRw8KgQZ3PO/Y/hD8HeaDWHZxpO1XjroHqrK3qRlmj67HNmBzQ2mkB
+ ANrn62b9j/7799uKpl3jD3xiq6htnqSnt2wVDyN9Gqgqrf41A+pPzfoIn6Vm75hCB4tIks+TFzj
+ zV7uooBxWQOm8C87o3JpGJZuIFKeTIM6HhDuSPOmnkPkCx95ZFZLTWlCgXJfFtw9I6FlEL9434Y
+ 6Y6COEnzR2rE6GttjBX17w9JJqPkXd2DLdkzGpPKEx1sg4gr6YjXTbBR91XOTq7jx0P+RRek7HN
+ 6C6GVYEueajQEWmx4gtDaA07SsXWnqN39g/8=
+X-Received: by 2002:a05:6000:4b04:b0:486:f6dc:52c8 with SMTP id
+ ffacd0b85a97d-48c6d1981ffmr2742522f8f.37.1791296006269; 
+ Tue, 06 Oct 2026 07:13:26 -0700 (PDT)
+X-Received: by 2002:a05:6000:4b04:b0:486:f6dc:52c8 with SMTP id
+ ffacd0b85a97d-48c6d1981ffmr2742466f8f.37.1791296005676; 
+ Tue, 06 Oct 2026 07:13:25 -0700 (PDT)
+Received: from leonardi-redhat ([176.206.38.69])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-48c622ab7b5sm11145824f8f.37.2026.10.06.07.13.23
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 06 Oct 2026 07:13:24 -0700 (PDT)
+Date: Tue, 6 Oct 2026 16:13:17 +0200
+From: Luigi Leonardi <leonardi@redhat.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>, 
+ qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>, 
+ Stefano Garzarella <sgarzare@redhat.com>, Ani Sinha <anisinha@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>
+Subject: Re: [PATCH] igvm: add command line parameter support
+Message-ID: <asUByBuZl_qE2ux4@leonardi-redhat>
+References: <20260930-igvm_command_line-v1-1-62857007d89d@redhat.com>
+ <87qzi9alml.fsf@pond.sub.org> <ar4V1i54Czo45lQh@redhat.com>
+ <87jyo1akr1.fsf@pond.sub.org>
 MIME-Version: 1.0
-Received-SPF: pass client-ip=202.12.124.146;
- envelope-from=alistair@alistair23.me; helo=fout-b3-smtp.messagingengine.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=iso-8859-1; format=flowed
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87jyo1akr1.fsf@pond.sub.org>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=leonardi@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,34 +127,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 2026-08-20 at 21:03 -0700, Richard Henderson wrote:
-> Use mmu data passed in with VDATA.
->=20
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+On Thu, Oct 01, 2026 at 10:27:30AM +0200, Markus Armbruster wrote:
+>Daniel P. Berrangé <berrange@redhat.com> writes:
+>
+>> On Thu, Oct 01, 2026 at 10:08:34AM +0200, Markus Armbruster wrote:
+>>> Luigi Leonardi <leonardi@redhat.com> writes:
+>>>
+>>> > Add a "cmdline" property to the igvm-cfg object and a handler for the
+>>> > IGVM_VHT_COMMAND_LINE directive, which copies the string into the
+>>> > parameter area the directive points at.
+>>> >
+>>> > This command line is intended for the component running at VMPL0, such
+>>> > as SVSM, rather than for the guest OS, whose own command line still
+>>> > comes from -append. SVSM can use it to select the serial port it logs
+>>> > to, for example.
+>>> >
+>>> > Signed-off-by: Luigi Leonardi <leonardi@redhat.com>
+>>>
+>>> [...]
+>>>
+>>> > diff --git a/qapi/qom.json b/qapi/qom.json
+>>> > index 5895c97750..d56bdef561 100644
+>>> > --- a/qapi/qom.json
+>>> > +++ b/qapi/qom.json
+>>> > @@ -1004,11 +1004,15 @@
+>>> >  #
+>>> >  # @file: IGVM file to use to configure guest
+>>> >  #
+>>> > +# @cmdline: command line for the software loaded from the IGVM file,
+>>> > +#     rather than for the guest OS.  Ignored if the IGVM file does
+>>> > +#     not ask for one.  (since 11.2)
+>>> > +#
+>>> >  # Since: 10.1
+>>> >  ##
+>>> >  { 'struct': 'IgvmCfgProperties',
+>>> >    'if': 'CONFIG_IGVM',
+>>> > -  'data': { 'file': 'str' } }
+>>> > +  'data': { 'file': 'str', '*cmdline': 'str' } }
+>>> >
+>>> >  ##
+>>> >  # @SevCommonProperties:
+>>>
+>>> How is @cmdline going to be parsed?  By a shell?
+>>
+>> This is something passed to the guest workflow. ie a kernel command
+>> line string.
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+yep, correct!
 
-Alistair
+>
+>Not obvious from the description text.  Please make it obvious.
+>
 
-> ---
-> =C2=A0target/riscv/tcg/vector_helper.c | 3 ++-
-> =C2=A01 file changed, 2 insertions(+), 1 deletion(-)
->=20
-> diff --git a/target/riscv/tcg/vector_helper.c
-> b/target/riscv/tcg/vector_helper.c
-> index 9b0c3f70c2..98a0a5d025 100644
-> --- a/target/riscv/tcg/vector_helper.c
-> +++ b/target/riscv/tcg/vector_helper.c
-> @@ -711,7 +711,8 @@ vext_ldff(void *vd, void *v0, target_ulong base,
-> CPURISCVState *env,
-> =C2=A0=C2=A0=C2=A0=C2=A0 uint32_t msize =3D nf * esz;
-> =C2=A0=C2=A0=C2=A0=C2=A0 uint32_t vma =3D vext_vma(desc);
-> =C2=A0=C2=A0=C2=A0=C2=A0 target_ulong addr, last, last_in_page, page_spli=
-t, elems;
-> -=C2=A0=C2=A0=C2=A0 int mmu_index =3D riscv_env_mmu_index(env, false);
-> +=C2=A0=C2=A0=C2=A0 MemOpIdx oi =3D vext_oi(desc, log2_esz);
-> +=C2=A0=C2=A0=C2=A0 int mmu_index =3D get_mmuidx(oi);
-> =C2=A0=C2=A0=C2=A0=C2=A0 bool first_active;
-> =C2=A0=C2=A0=C2=A0=C2=A0 int flags;
-> =C2=A0=C2=A0=C2=A0=C2=A0 void *host;
+will do!
+
+Thanks,
+Luigi
+
 
