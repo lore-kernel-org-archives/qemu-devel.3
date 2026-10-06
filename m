@@ -4,104 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A633CA5FFF
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 04:56:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DFCDCA5FF1
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 05:02:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xEJhO-00087f-Ot; Wed, 07 Oct 2026 00:56:17 -0400
+	id 1xEJln-0000KR-1q; Wed, 07 Oct 2026 01:01:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xEFp3-00069U-J9
- for qemu-devel@nongnu.org; Tue, 06 Oct 2026 20:48:32 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xEFop-0007GL-S2
- for qemu-devel@nongnu.org; Tue, 06 Oct 2026 20:47:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1791333901;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=1QccO1ewA7uCctsMw+H9QSnUhVtqxnp43iU3gAZqGys=;
- b=J0k9rAJXyDAmQ0guPu5KgBkrT/FbPSEvAaTjDCLNi9osmjUULaLrkeUGuVODZOrX0J2867
- 8ijeJm2utFeXIG5gA2Y3qj+4aSwoKHU3gTCx1Vgx0mimvcRBdsEX6mINFc/yQkteQpXu5v
- mIV7em1SmJIS0NSTRl5y4ec8+bdMylo=
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-332-7dV8-ErNPUOlY6VVYxQopg-1; Tue, 06 Oct 2026 14:20:57 -0400
-X-MC-Unique: 7dV8-ErNPUOlY6VVYxQopg-1
-X-Mimecast-MFC-AGG-ID: 7dV8-ErNPUOlY6VVYxQopg_1791310856
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-53390e79a19so54325921cf.0
- for <qemu-devel@nongnu.org>; Tue, 06 Oct 2026 11:20:56 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1xEGKG-0002Rv-Lv
+ for qemu-devel@nongnu.org; Tue, 06 Oct 2026 21:20:20 -0400
+Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1xEGK1-0005LR-LC
+ for qemu-devel@nongnu.org; Tue, 06 Oct 2026 21:20:00 -0400
+Received: by mail-ej1-x632.google.com with SMTP id
+ a640c23a62f3a-c2e43f3d1fdso479780266b.3
+ for <qemu-devel@nongnu.org>; Tue, 06 Oct 2026 18:17:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1791310856; x=1791915656; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=1QccO1ewA7uCctsMw+H9QSnUhVtqxnp43iU3gAZqGys=;
- b=CKRsUFfostpNXsDU0zh7i4XAFQ7Tm885oTxUEBrR+uxskvGMP0qsJvghdlEA+a1gq4
- /yHm0gGTzdXezEtQOxj9leGdGpYt8Uje/SXAil5VsG08QwVQD3r77YFTpNXq800hL1M1
- vw64qAS1K08vutdCNEJsk1TxTNHLon6cgtrZPZOTvcF6tS/sUOd4O5TbQOukqTQDBDge
- XJnEHLYrCCsxhWst1mrog/kaj3ryLQ3snVwT49wPPf585qhbjUWpqTfDsk2onmWjYwgp
- ShljyLwPbicGiJJl/TbqhYR4gLQmp2Bqt6g2h1ME0qgPGDEdqf+ayKT9IOQyT6UgbF6j
- 5D1A==
+ d=openvz.org; s=google; t=1791335840; x=1791940640; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=+1je5jbz98cOnDM+2YbUYGnloaQTpMBxfi1H9Ht7mU0=;
+ b=nJ7MkUiLM51imZos2fq73t/4KjKTf2kt2QGU5G1pepmz2BbxBfOo9zUIdOZ5jtOQ49
+ y0aQzM7hDRhuVeY2506KEj6pPVB8SzGFfqoJ2FHIrMW5oP/Q9V0fjeMrUwveDaq4f2U3
+ WerWIj2eMvrFlnCUzfvC+S6FadJxOYH6q7D55+EF49kMmjBFWVNc8ksW08aPGI5FgdcQ
+ 3d9V78VePfIfsLjpTSI9imG7SiYmYFnREZrsz07aHA/8us6wOoLLlwsmNwrkBNKCs7Sf
+ UII1HfUTaQkww59/2HBA3VclxAXIEHIXBwqnLSexlwoFyAdJVNr8dsOK3vZDj6jH4LVU
+ ekXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791310856; x=1791915656;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=1QccO1ewA7uCctsMw+H9QSnUhVtqxnp43iU3gAZqGys=;
- b=DwxXHQPt5UEP2s0QUyQH9R/pZ7VPSPWprK87OdBbNby1rWej48FFUPpWBwCLQ+5AHe
- RYe0lvOD2Jt5lUT/nGaMFauxFUVw9sCcAx2a+6M2acCh0ZeUmaE8WA9jWiov/6f0LjmD
- jXWbc5GahCbi7Q8na2ucmEHmYrKvhldmf0rpiPYy4SI51ZGjyfHd09Nh5HPxYIe7tgwt
- 2hE7XwpieOKfAB/NzfmdoP0DWxieczAht1zianmubWxHxAzlJng8lATriBsQLbMA2zqt
- 3l+H3N1I10a2GZanhNDN/JZ852lITP8l95RR6IDdJr7tSK6pzpbO51nlRWEzBdaVr3/6
- CQGA==
-X-Gm-Message-State: AFuF++nMzafVxxnlPnvIKUej8hA50LEECaRFIofYf967jY1nBmIxphgv
- IUMfWTUmyGIDQPPU6uEdauGbQLni8uRo2kvJHh9AMPr5SFPOfOtpPx06f4ZAifZusNjATALe4P4
- WTrXUVPGoBR6oyKvzHN/o9uJHJXEEUr6RvK5URFTRkTL66plfF3+7rXH+hu15+XOBwQWbGYUXEv
- NK+ORJ8nrQTYM2kfSrcd1a9K0yUBamHFlFE2gLoQ==
-X-Gm-Gg: AYBFou3foWRxGYYL+RSLaDUj9WKcCEUfzATwGboTzxWmaYmsR2WSASszMTreshiAbSX
- LbFXSvN3eU5xu708Kz/zmHaOKr8nE+RQgXdNJnySdfmi7j9t/bQqk0f7co1lJQ/1J70Ji8UvfDs
- Jxm2tPupMDLpIa7945/sHKZt9qFfT8IX3OGJgb5DXlHDcIM2lWJMHviW4BcKOaxpcxAzixyrVE8
- cjnJ4hO0tI/g+cJX3wxROUJLr2MplLkgfUIUsKIsWDIng+3zI36E9Tk0TFKbpNZAOIVSO9v5Nkq
- o2DUwlNN4y0ViTOWUDMOLZs4LKJdX+kE0RIhjHqOavYLncT1ULU5C/595naU7rUrA5Gm4E4=
-X-Received: by 2002:ac8:6f09:0:b0:533:3192:7a8e with SMTP id
- d75a77b69052e-53566d92720mr38236401cf.43.1791310855903; 
- Tue, 06 Oct 2026 11:20:55 -0700 (PDT)
-X-Received: by 2002:ac8:6f09:0:b0:533:3192:7a8e with SMTP id
- d75a77b69052e-53566d92720mr38235691cf.43.1791310855242; 
- Tue, 06 Oct 2026 11:20:55 -0700 (PDT)
-Received: from localhost ([142.188.212.246]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-5357219c5f5sm1623791cf.25.2026.10.06.11.20.54
+ d=1e100.net; s=20260707; t=1791335840; x=1791940640;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=+1je5jbz98cOnDM+2YbUYGnloaQTpMBxfi1H9Ht7mU0=;
+ b=NLerYRuSS1LDrhnnK6EDIaGQ/feAG5b3k146ORZphHw9juiJT2mZauYjXtDt2s7qav
+ F8N6RYKIrR1PZ3KMY8vTa84FGdhgCngV7DQyyyLpYLj2oYqM4NcmVN7CND8HB29DFmRz
+ jH02ttlzx3gPPlVyEE+CVaXjQ4OAbnsjVfRbEGeZo1zGNPFylDLtazGBUWczgZkTpzO2
+ a7Dq3uwyY15/ZkgzGUPYPDZ1/c30SWdAzgR53piEGe8pgEAuBKo6G6DqGv8nP1X3/lU3
+ ZFDi/bUmoHo8eVwBY7WYbvJbRxq8vsamLeqwNddVU73SkyKW8bhCSrdhdJy3InaId1KM
+ 3DIg==
+X-Gm-Message-State: AFq9FYISd7xvtWtJc6lAHz0Oaq+IvTKgq1p5gQODw9o6Kyb8oAoXAcHR
+ Pwomwp2FTSWj0R+z3Dtl0hFVmnD1B/UiuiFZCiBGcDQglEKw3eGmDrT78eUcaHuKYlbiYVvxBew
+ koRBO
+X-Gm-Gg: AYBFou1PH4J2XBItfSJ3XLLMT68SB5Z0pXGx2TwLRbZa9bh1b31agpehs+BnR8PU+mX
+ VYtZQR+UWLNAdsuS/GFNrH3TLHcKqzQL74Rkvr0WPkNVVt8F6ZHBxu7WrUYi7Pfq0za1v93d3tP
+ D9ZX/0avJ8rvUKSBJoZFoZP3zzOamLZALbiXqNN2KdCITJG7C/v6YVQj/5YBZ+sPr71B3o88hGb
+ ChCOr7JYZ3sjzcZa5jNKh00r3SD+KLdtMNnTfgrEPBzObg4Qki6GzeSnqgCgmNDOQ8pnP0M/QSC
+ zq30JG+cAbSAKmXtNiZBWOODtf0/TwIjlkcNLyxPyOaZXi8NqJ5NcD3pGW7m6THUIt3c0InaIQn
+ W0nVkhFZkI5RtJ13qeSBdE1vW7/BFrtAOq2DrQK0/1eEgUNRrQGzy7n4IN7ZC3g3vNaw0Rz5Azp
+ sjhRR5QFPbI1KBPbuvcOkit0N6xu7y/zIO8uooayY2mAyMh5JjY5d0zqRwlcbOawG8CHw=
+X-Received: by 2002:a05:600c:630d:b0:4a0:2533:c8b7 with SMTP id
+ 5b1f17b1804b1-4a17b56d40bmr33925525e9.35.1791306462085; 
+ Tue, 06 Oct 2026 10:07:42 -0700 (PDT)
+Received: from athena.sw.ru ([2a06:5b06:b600:300:a39a:8667:da6e:b69f])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4a178c5b9d6sm76254095e9.13.2026.10.06.10.07.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 06 Oct 2026 11:20:54 -0700 (PDT)
-From: Peter Xu <peterx@redhat.com>
+ Tue, 06 Oct 2026 10:07:41 -0700 (PDT)
+From: "Denis V. Lunev" <den@openvz.org>
 To: qemu-devel@nongnu.org
-Cc: peterx@redhat.com, Fabiano Rosas <farosas@suse.de>,
- Akash Kulhalli <akulhall@redhat.com>, Juraj Marcin <jmarcin@redhat.com>
-Subject: [PATCH v2 5/7] migration: Dump type of channel in
- set_incoming_channel tracepoint
-Date: Tue,  6 Oct 2026 14:20:44 -0400
-Message-ID: <20261006182046.3767283-6-peterx@redhat.com>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20261006182046.3767283-1-peterx@redhat.com>
-References: <20261006182046.3767283-1-peterx@redhat.com>
+Cc: qemu-block@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Eric Blake <eblake@redhat.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Subject: [PATCH v2 0/3] migration/block-dirty-bitmap: fix postcopy abort with
+ bitmaps on several nodes
+Date: Tue,  6 Oct 2026 19:07:35 +0200
+Message-ID: <20261006170738.453977-1-den@openvz.org>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
+Received-SPF: pass client-ip=2a00:1450:4864:20::632;
+ envelope-from=den@openvz.org; helo=mail-ej1-x632.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,71 +99,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add this info to be crystal clear on what channel we're installing.
+Postcopy migration of dirty bitmaps kills the destination as soon as
+bitmaps live on more than one node:
 
-Signed-off-by: Peter Xu <peterx@redhat.com>
----
- migration/channel.h    |  3 ++-
- migration/channel.c    | 10 +++++++++-
- migration/trace-events |  2 +-
- 3 files changed, 12 insertions(+), 3 deletions(-)
+  qemu-system-x86_64: ../block.c:6400: bdrv_lookup_bs: Assertion
+  `qemu_in_main_thread()' failed.
 
-diff --git a/migration/channel.h b/migration/channel.h
-index a7d0d29058..678712f291 100644
---- a/migration/channel.h
-+++ b/migration/channel.h
-@@ -24,7 +24,8 @@ typedef enum {
-     CH_NONE,
-     CH_MAIN,
-     CH_MULTIFD,
--    CH_POSTCOPY
-+    CH_POSTCOPY,
-+    CH_NUM,
- } MigChannelType;
- 
- void migration_channel_process_incoming(QIOChannel *ioc);
-diff --git a/migration/channel.c b/migration/channel.c
-index 8407ea46cb..b9065efd03 100644
---- a/migration/channel.c
-+++ b/migration/channel.c
-@@ -34,6 +34,13 @@
- #include "trace.h"
- #include "yank_functions.h"
- 
-+static const char *const mig_channel_str[CH_NUM] = {
-+    [CH_NONE] = "NONE",
-+    [CH_MAIN] = "MAIN",
-+    [CH_MULTIFD] = "MULTIFD",
-+    [CH_POSTCOPY] = "PREEMPT",
-+};
-+
- void migration_connect_outgoing(MigrationState *s, MigrationAddress *addr,
-                                 Error **errp)
- {
-@@ -219,7 +226,8 @@ static bool migration_incoming_channel_install(MigrationIncomingState *mis,
-     }
- 
-     trace_migration_set_incoming_channel(ioc,
--                                         object_get_typename(OBJECT(ioc)));
-+                                         object_get_typename(OBJECT(ioc)),
-+                                         mig_channel_str[ch]);
-     migration_ioc_register_yank(ioc);
- 
-     if (migration_incoming_setup(ioc, ch, errp)) {
-diff --git a/migration/trace-events b/migration/trace-events
-index c93c9f9e75..8840d82f8d 100644
---- a/migration/trace-events
-+++ b/migration/trace-events
-@@ -208,7 +208,7 @@ migration_transferred_bytes(uint64_t qemu_file, uint64_t multifd, uint64_t rdma)
- 
- # channel.c
- migration_channel_process_incoming(void *ioc, const char *ioctype) "ioc=%p ioctype=%s"
--migration_set_incoming_channel(void *ioc, const char *ioctype) "ioc=%p ioctype=%s"
-+migration_set_incoming_channel(void *ioc, const char *ioctype, const char *type) "ioc=%p ioctype=%s type=%s"
- migration_set_outgoing_channel(void *ioc, const char *ioctype) "ioc=%p ioctype=%s"
- 
- # global_state.c
+The postcopy listen thread resolves node names with bdrv_lookup_bs()
+without the BQL. With a single node the name is sent only during setup,
+which runs in the main thread, so the existing test never gets there.
+
+We hit it in production with libvirt: a CBT backup leaves a persistent
+bitmap on every disk, libvirt enables the dirty-bitmaps capability, and
+the next live migration of any VM with more than one disk aborts the
+destination after the guest has already been switched over to it.
+
+Patch 1 names the counted string buffer size that patch 2 needs. Patch 2
+resolves every chunk but START from the bitmaps that START set up,
+instead of from the block graph. Patch 3 extends
+migrate-bitmaps-postcopy-test with a bitmap on a second node, and it
+fails without patch 2.
+
+Changes in v2:
+- new patch 1: add QEMU_COUNTED_STRING_SIZE instead of bare 256 (Eric)
+- patch 2: drop the "Error: " prefix from the new error message (Eric)
+- patch 2: move node_alias to the end of LoadBitmapState
+- patch 3: add Eric's Tested-by and Reviewed-by
+
+v1: https://lore.kernel.org/qemu-devel/20260924115611.4098417-1-den@openvz.org/
+
+Signed-off-by: Denis V. Lunev <den@openvz.org>
+Cc: Peter Xu <peterx@redhat.com>
+Cc: Fabiano Rosas <farosas@suse.de>
+Cc: Eric Blake <eblake@redhat.com>
+Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+
+Denis V. Lunev (3):
+  migration: add QEMU_COUNTED_STRING_SIZE for counted string buffers
+  migration/block-dirty-bitmap: fix postcopy abort with bitmaps on
+    several nodes
+  iotests/migrate-bitmaps-postcopy-test: add a bitmap on a second node
+
+ include/migration/qemu-file-types.h           |  6 +-
+ migration/block-dirty-bitmap.c                | 62 +++++++++++++++++--
+ migration/qemu-file.c                         |  5 +-
+ .../tests/migrate-bitmaps-postcopy-test       | 19 ++++++
+ 4 files changed, 83 insertions(+), 9 deletions(-)
+
+
+base-commit: 942229961efea74b153c44c59188eb08375f10f1
 -- 
-2.55.0
+2.53.0
 
 
