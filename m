@@ -4,118 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DA98CA5FF1
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 08:35:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 331CBCA600C
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 08:35:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xEN5o-0007Un-Cd; Wed, 07 Oct 2026 04:33:41 -0400
+	id 1xEN3c-0003or-FB; Wed, 07 Oct 2026 04:31:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
- id 1xEHxB-0007xG-9x
- for qemu-devel@nongnu.org; Tue, 06 Oct 2026 23:04:41 -0400
-Received: from fhigh-b5-smtp.messagingengine.com ([202.12.124.156])
+ (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
+ id 1xEHjJ-0006BQ-Nq; Tue, 06 Oct 2026 22:50:32 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
- id 1xEHx3-0007Af-Oz
- for qemu-devel@nongnu.org; Tue, 06 Oct 2026 23:04:21 -0400
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
- by mailfhigh.stl.internal (Postfix) with ESMTP id 3AF907A0142
- for <qemu-devel@nongnu.org>; Tue,  6 Oct 2026 09:54:26 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
- by phl-compute-01.internal (MEProxy); Tue, 06 Oct 2026 09:54:26 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alistair23.me;
- h=cc:cc:content-transfer-encoding:content-type:content-type
- :date:date:from:from:in-reply-to:in-reply-to:message-id
- :mime-version:references:reply-to:subject:subject:to:to; s=fm2;
- t=1791294865; x=1791381265; bh=lm9IrxyAZ6qHOndZx9oTe7WA0TM9BmL0
- qX3CNqgZij0=; b=MrP7V1ACuvMTOFITI8WBquRcUhgKHlvl/WVdEWIdVHDu0Apu
- 8GMYzsoOOi8/QQv247XE4GGWPQ8ycuz8SfdUpKwyjNtbGqtKvulbjofQeQrk3lha
- yAS0tuA0j6bUbwPdTXlv1oGxX6/Xarx777kC/ANbEdnfozPQwQNOag1G0qSKzGkI
- S4YTvEUQH+x4KEWLE2H1hnCdqACLSnBihQm4+j8YvqHL37Cee78dhpexHlJyeyKw
- Ymdu3+35v08eA/4Wd7DKU6a6sk0Urd2OCj2oQQZ5xURu3aNOv8to9YsUx2nfwFs1
- HDaLBKdg6/NOSsXCUbPYHxAZZJD9kSKYl91+sQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1791294865; x=
- 1791381265; bh=lm9IrxyAZ6qHOndZx9oTe7WA0TM9BmL0qX3CNqgZij0=; b=v
- iNa1h0y4Sf73FVFKmYk16JWNAyXPVxTl3K21uOtoJhsPOAbI+wZyOJAR6iKrI/jE
- dbuZd83MBdAT+V+p9i9F1I74OTw633/qXF2B3b9hK507/nWGyUi/NPohHk+QjRpo
- avIaHMG8dsI2st6/g0/rAWPayKYZWGhPxlVyypoNd9DXGL39FS7ftAhCkErdn4nK
- C+AwguiGKVeUgMv9R/AogE/DWhlw/z5/ZECUdvRjTeig+Zo0eVNI2IH7gD7x/F00
- PNLwXSfUFElYGx2NR2cud8Jh67N/zCmMHJX+jo3uNQG+hr5N3JWvGIlt2LkmyFlk
- AqFskqU7k54gobLmN/ndA==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
- repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
- action=sign d=alistair23.me a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1791294865; d=alistair23.me;
- mf=PGFsaXN0YWlyQGFsaXN0YWlyMjMubWU+;
- rt=PHFlbXUtZGV2ZWxAbm9uZ251Lm9yZz4=;
- s=fm2:rsa-sha256:HivZ9QawfjXdPZv1gxIK0jiEy9JnBHy4SyrR3tKOVr4K0Fv
- f4yH7/2sA3D8Z089wwrZOSe46wT8MTO2ws1fbJoMEUD/TS92bYXRCRPx85MqawPu
- Em0D58AjW5GbsnB7NBtm1EcoSE5abCM5W6HSD1C8CJ2kyI51sx+bpNj0K5iy2t1S
- K0mMB065nZb7ux3EPH7zy/sqFpksBDrbdjdV06yOwn9gPI64LB4WSXAHAZbmyxZm
- mVst9CnkusvSJU65R6THPfnr3M57L68OXU9qZqLBWwyKYSNMKtTSkxx5+L79YsKK
- OJYNvlkOWbwTBY+b180kZDWJhKo5fnIvpmYEDHA==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
- repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
- action=mi-m=1; hc=13;
- hn=cc,content-transfer-encoding,content-type,date,feedback-id,
- from,in-reply-to,message-id,mime-version,references,subject,to,
- user-agent;
-Message-Instance: m=1;
- h=sha256:MASlSQ8HDFYMgOII5EqE7R4/e5I+ZA/HRFvaj3SyP94=:lm9IrxyAZ6qHOndZx9oTe7WA0TM9BmL0qX3CNqgZij0=;
-X-ME-Sender: <xms:kf3EasSJLjwm-FKXcTtdm9ylTYfYu6YB1-qtXCiEv6VWIG_xg9aY6g>
- <xme:kf3Ealf57Nto-ZNqzCF-D9M-Ub-pskpMJUVIakuojFshdmPzsL_QhjJDlYR-oiLnB
- UfJAXxGLL744RBhNKfXyBMP_y_NzaOWyzXTb7HgYiJ9sngs83cvlZZA>
-X-ME-Received: <xmr:kf3EamRVkwoB13agljbPO_4cX1POhxIO8VhFqT8ABtg0IOJLWb4nIkGFlYHKGalt5eITEvZW-ApX>
-X-ME-Proxy-Cause: dmFkZTGG4cdYWkZl+OiS87QmLJZCZSYCzq+t5qj6SVGJXyNY0K9utq0wQSc5JU88OY7XEz
- CyOgtuuySOVlJFUEhc/lg8AD5ktzB9M9Qn13A6sOH3D2fIMYLNI/0bA6mM3j3UViUygoxF
- cULBXIYhYUu36kN5tPce45zTiVl7dVS/dDNcLDwa0WpdZR+e1MHshmvj5/TLwpCSP3Kf3C
- ozYaEmXr99SzrAPudG4SxxDoz7OO0eqIJgIx37JkPXz7JW3EmL4e0v4bL3CPhdFeQ6w9qk
- 7mFVA+KGTAbeitYVNWoJnUUIEZF/4EzC9MjwVNzsxuRij6Y5b4BAmNJghYe2DwYntCoPEg
- n221lB9ujYPvnSHZVAur50l6TJFiyI3CeF4W25gWRRS+KN/lhRHDZ7srHGmhAFOSUS3cZP
- Zu03injTLQisWnC838a0CcAFkXP/tNOPcWzMxdFCtoQvcLpJ34YLpdoDl9YyiBI7KdMeIb
- Arsqvp2wsJiSR54Ec5/kVwJ0JBval+bNEB4DNGDJNfiHMRtJ5lTbYo7qtKIS6Evv7O/Lu5
- gz77gmph51CkICI11Uc8E217tnQc4i5dhvVUccsjTP7gjRZJ7LHEOtGgsLLky4DGBroHxB
- v1WxJxGNvQlpJ00jDShiAYi1Q1mEDCxuFyi68QBwxYIjAZqcmBgQXWfQfHaQ
-X-ME-Proxy: <xmx:kf3EapILwas3XpAPKSh-YSBGQ2oW58xZXcx2FGtl3_7H_fsy283Isg>
- <xmx:kf3EarKQMbEDk6obQTVN1gB6ZndkNO-3672isDsYeXl-P2dBrR-skQ>
- <xmx:kf3Easjw8k2qbEMkxAU9cb2nqZ1gLWH7ag2Y_kxI1-sG735V2JPBXA>
- <xmx:kf3EatNFlp9b93UWQlALqonhLMS04EdPsLIKfgR0LhdkBYKkRtkGGA>
- <xmx:kf3EasEly45HxuYAEMemhi8JmePF83cCiMefWj-d3G13gFwysaQIDu15>
-Feedback-ID: ifd214418:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 6 Oct 2026 09:54:17 -0400 (EDT)
-Message-ID: <63fb07be15290675cf2f2f30171d9766937bc422.camel@alistair23.me>
-Subject: Re: [PATCH v2 0/3] hw/riscv/virt: Fix the UART register width in SPCR
-From: Alistair <alistair@alistair23.me>
-To: Rick Richard <rick@sloservers.com>, qemu-devel@nongnu.org, 
- qemu-riscv@nongnu.org
-Cc: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, Sunil V L	
- <sunilvl@ventanamicro.com>, Alistair Francis <alistair.francis@wdc.com>, 
- Palmer Dabbelt <palmer@dabbelt.com>, "Michael S . Tsirkin"
- <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>,  Ani Sinha
- <anisinha@redhat.com>
-Date: Tue, 06 Oct 2026 23:54:13 +1000
-In-Reply-To: <20261005104008.214588-1-rick@sloservers.com>
-References: <20261005104008.214588-1-rick@sloservers.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.62.0 (by Flathub.org) 
+ (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
+ id 1xEHj2-00040V-Hi; Tue, 06 Oct 2026 22:49:54 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 696A5XVP1603478; Tue, 6 Oct 2026 10:57:19 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=FICTGFNUbsZvRU5/q
+ kM31KCJEdZMVkEI0BlR/dbmCVY=; b=HpaUxMZQClW+KKZR+9bxPXG6/Qafdfgts
+ Eb9uyVkNaTpokTRerxhu6lqm3z8ENnpzPt9B1ZZn6o+H/oCaBIQG8dhSE/UsGZ0+
+ Q3XDVVZdKxmW+q64AlRmtQEOshd6mot2+zm0ouY7idwa72qOCzNI4W1wdPn9ZrtG
+ iovI6ItUwAyI3PwzOisLaHdw0s8vBH5lei8Hdd+n9IF485XCcf09nArbvn7dbr0B
+ d32ebIOmpJ7hcngJJw9P3mtRGq3KoZkX/3jb81nwPkFAFmUQk2qD+Zn4eahKV2mR
+ cLOYyGc0O52pzDqKF9FeW0p5z9IluPSJpw90hwkMOXFNoL8QScADA==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4h2scrfguc-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Tue, 06 Oct 2026 10:57:18 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 696A6Ift108866; Tue, 6 Oct 2026 10:57:17 GMT
+Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4h3d1jsjbs-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 06 Oct 2026 10:57:17 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
+ [10.20.54.102])
+ by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 696AvDKO42140152
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 6 Oct 2026 10:57:13 GMT
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 1AAF62004D;
+ Tue,  6 Oct 2026 10:57:13 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id F3A0120040;
+ Tue,  6 Oct 2026 10:57:10 +0000 (GMT)
+Received: from li-18a0a34c-33fc-11b2-a85c-d9f1631c5692.ibm.com (unknown
+ [9.87.135.85]) by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Tue,  6 Oct 2026 10:57:10 +0000 (GMT)
+From: Chinmay Rath <rathc@linux.ibm.com>
+To: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, harshpb@linux.ibm.com
+Cc: npiggin@gmail.com, amachhiw@linux.ibm.com, uverma@linux.ibm.com,
+ milesg@linux.ibm.com, Chinmay Rath <rathc@linux.ibm.com>
+Subject: [RFC PATCH 2/8] target/ppc: Enable Dense Math Facility for ISA 3.2
+Date: Tue,  6 Oct 2026 16:26:13 +0530
+Message-ID: <20261006105650.189752-3-rathc@linux.ibm.com>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20261006105650.189752-1-rathc@linux.ibm.com>
+References: <20261006105650.189752-1-rathc@linux.ibm.com>
 MIME-Version: 1.0
-Received-SPF: pass client-ip=202.12.124.156;
- envelope-from=alistair@alistair23.me; helo=fhigh-b5-smtp.messagingengine.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA2MDA0MiBTYWx0ZWRfX2RbZXnpsXOHg
+ 8/VqpiBCEmlsxkS3hjzz+GFYRGR4IXaIBylEixbbU18v8Ogy05Obw9RIJu6EPKKDaYGW/m74XOe
+ Y37nXejfImItYp1sb3AxQhrsNt0PQY4=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA2MDA0MiBTYWx0ZWRfX1ul9rUjdKfgb
+ fGtAWM1tzmITR7p1w5ti4B8tNeulw1H4hBJX/3wibi3YDVj7HAaTtza+TZ635TZ/n6gfea60pyX
+ cJLRpkoT9GBjHMrAq6vShHDGQDR4vHJav8lDgv6Q6k/Nl1GuxS/Lio6leafTGQtaPEp4mNztgtY
+ Z8/+3hgIGIrDRiPg4sfuG0f032RImAm+24RjAbBDn5Viw19OWJONRssWZXNa6Rkr7R56XZDEaeX
+ fSwwGB8sYm3LYi8012mwUl1Im7rL+ox34k7eqjc3GO11pKFCRf7rOhX+q3D+mNAcP8pVM/shOU6
+ eLWjL1tDx+k+VeVK5C4hDkVYLGGLxdwMZuVOqnFtQicPEPdbyHKnWkqOgLNcQrFBNt9Vwn1CYQf
+ MjxHKbh04/xba+zeVf9REQc9X5hg18d9mW6lyB0mDAkjbfTxLK6W5Z9wA3B6KqfWvob6AIXiRLF
+ HJL8q0Dcy32vZeWb2og==
+X-Proofpoint-GUID: 47kyCsAjE7Mg-p2j2--csrAXrRWzqO4D
+X-Proofpoint-ORIG-GUID: gSrBdjKQrj2IwX0Z9Aa0TrB3f_bHAJa9
+X-Authority-Analysis: v=2.4 cv=B7osQ+tM c=1 sm=1 tr=0 ts=6ac4d40f cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8 a=WKNKSzKWUzdxrvhZDZcA:9
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-10-06_03,2026-10-05_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 bulkscore=0 malwarescore=0 impostorscore=0 phishscore=0
+ clxscore=1015 spamscore=0 adultscore=0 lowpriorityscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2610060042
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=rathc@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -131,40 +120,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 2026-10-05 at 03:40 -0700, Rick Richard wrote:
-> The riscv virt board's SPCR table says its 16550 UART has a 32-bit
-> register stride, but the registers are actually byte spaced.=C2=A0 Linux
-> doesn't use this field to work out the register spacing, but
-> FreeBSD's
-> EFI loader does, and the FreeBSD kernel then crashes on the console
-> UART when booted through EDK2 with ACPI enabled.
->=20
-> This series fixes the width, plus the usual bios-tables-test patches
-> to
-> update the golden reference so 'make check' keeps passing.
->=20
-> v2:
-> - Keep the relative file path in the patch 3 iasl diff (Daniel)
-> - Add Reviewed-by tags
->=20
-> Thanks,
-> Rick
->=20
-> Rick Richard (3):
-> =C2=A0 tests/qtest/bios-tables-test: Allow changes to riscv64 virt SPCR
-> =C2=A0 hw/riscv/virt-acpi-build: Fix the UART register width in SPCR
-> =C2=A0 tests/qtest/bios-tables-test: Update riscv64 virt SPCR golden
-> =C2=A0=C2=A0=C2=A0 reference
+This patch implements the dense math registers (DMR) that are introduced
+in RFC 02653 for ISA 3.2 as part of the dense math facility (DMF).
+Also adds a new hflag for the same.
 
-Thanks!
+DMR which are 1024 bits long are implemented as an array of 'rows' which
+are 128 bits each. DMF instructions manipulate DMRs in the granularity
+of these rows.
 
-Applied to riscv-to-apply.next
+Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
+---
+ target/ppc/cpu.h         | 13 +++++++++++++
+ target/ppc/helper_regs.c |  4 ++++
+ target/ppc/translate.c   |  2 ++
+ 3 files changed, 19 insertions(+)
 
-Alistair
+diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
+index 09b511030b..1cd379810a 100644
+--- a/target/ppc/cpu.h
++++ b/target/ppc/cpu.h
+@@ -355,6 +355,11 @@ typedef union _ppc_vsr_t {
+ typedef ppc_vsr_t ppc_avr_t;
+ typedef ppc_vsr_t ppc_fprp_t;
+ typedef ppc_vsr_t ppc_acc_t;
++typedef ppc_vsr_t ppc_dmr_row_t;
++
++typedef struct ppc_dmr_t {
++    ppc_dmr_row_t row[8];
++} ppc_dmr_t;
+ 
+ #if !defined(CONFIG_USER_ONLY)
+ /* Software TLB cache */
+@@ -449,6 +454,7 @@ typedef enum {
+ #define MSR_SEM5 PPC_BIT_NR(38) /* SIB Error Mask Bit 5 (PPE42)              */
+ #define MSR_SEM6 PPC_BIT_NR(39) /* SIB Error Mask Bit 6 (PPE42)              */
+ #define MSR_VSX  PPC_BIT_NR(40) /* Vector Scalar Extension (>= 2.06)x hflags */
++#define MSR_DM   PPC_BIT_NR(39) /* Dense Math Facility (>= 3.2)     x hflags */
+ #define MSR_IS0  PPC_BIT_NR(40) /* Instance Specific Bit 0 (PPE42)           */
+ #define MSR_S    PPC_BIT_NR(41) /* Secure state                              */
+ #define MSR_SIBRC0 PPC_BIT_NR(41) /* Last SIB return code Bit 0 (PPE42)      */
+@@ -743,6 +749,7 @@ FIELD(MSR, SIBRCA, MSR_SIBRCA7, 8)
+ #define FSCR_IC_EBB         7
+ #define FSCR_IC_TAR         8
+ #define FSCR_IC_SCV        12
++#define FSCR_IC_DM         14
+ 
+ /* Exception state register bits definition                                  */
+ #define ESR_PIL   PPC_BIT(36) /* Illegal Instruction                    */
+@@ -844,6 +851,8 @@ enum {
+     POWERPC_FLAG_BHRB      = 0x01000000,
+     /* Use PPE42-specific behavior                                           */
+     POWERPC_FLAG_PPE42     = 0x02000000,
++    /* Has DMF                                                               */
++    POWERPC_FLAG_DM        = 0x04000000,
+ };
+ 
+ /*
+@@ -873,6 +882,7 @@ enum {
+     HFLAGS_INSN_CNT = 19, /* PMU instruction count enabled */
+     HFLAGS_BHRB_ENABLE = 20, /* Summary flag for enabling BHRB */
+     HFLAGS_VSX = 23, /* MSR_VSX if cpu has VSX */
++    HFLAGS_DM = 24, /* MSR_DM */
+     HFLAGS_VR = 25,  /* MSR_VR if cpu has VRE */
+ 
+     HFLAGS_IMMU_IDX = 26, /* 26..28 -- the composite immu_idx */
+@@ -1364,6 +1374,9 @@ struct CPUArchState {
+     float_status fp_status; /* Floating point execution context */
+     target_ulong fpscr;     /* Floating point status and control register */
+ 
++    /* DMF registers */
++    ppc_dmr_t dmr[8] QEMU_ALIGNED(16);
++
+     /* Internal devices resources */
+     ppc_tb_t *tb_env;      /* Time base and decrementer */
+     ppc_dcr_t *dcr_env;    /* Device control registers */
+diff --git a/target/ppc/helper_regs.c b/target/ppc/helper_regs.c
+index acf74c543a..75a97f8795 100644
+--- a/target/ppc/helper_regs.c
++++ b/target/ppc/helper_regs.c
+@@ -189,6 +189,10 @@ static uint32_t hreg_compute_hflags_value(CPUPPCState *env)
+         /* PPE42 has a single address space and no problem state */
+         msr = 0;
+     }
++    if (ppc_flags & POWERPC_FLAG_DM) {
++        QEMU_BUILD_BUG_ON(MSR_DM != HFLAGS_DM);
++        msr_mask |= 1 << MSR_DM;
++    }
+ 
+ #ifndef CONFIG_USER_ONLY
+     if (!env->has_hv_mode || (msr & (1ull << MSR_HV))) {
+diff --git a/target/ppc/translate.c b/target/ppc/translate.c
+index 467b8f3d4e..48e5903214 100644
+--- a/target/ppc/translate.c
++++ b/target/ppc/translate.c
+@@ -187,6 +187,7 @@ struct DisasContext {
+     bool fpu_enabled;
+     bool altivec_enabled;
+     bool vsx_enabled;
++    bool dm_enabled;
+     bool spe_enabled;
+     bool tm_enabled;
+     bool gtse;
+@@ -5023,6 +5024,7 @@ static void ppc_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cs)
+     ctx->spe_enabled = (hflags >> HFLAGS_SPE) & 1;
+     ctx->altivec_enabled = (hflags >> HFLAGS_VR) & 1;
+     ctx->vsx_enabled = (hflags >> HFLAGS_VSX) & 1;
++    ctx->dm_enabled = (hflags >> HFLAGS_DM) & 1;
+     ctx->tm_enabled = (hflags >> HFLAGS_TM) & 1;
+     ctx->gtse = (hflags >> HFLAGS_GTSE) & 1;
+     ctx->hr = (hflags >> HFLAGS_HR) & 1;
+-- 
+2.55.0
 
->=20
-> =C2=A0hw/riscv/virt-acpi-build.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0 |=C2=A0=C2=A0 2 +-
-> =C2=A0tests/data/acpi/riscv64/virt/SPCR | Bin 90 -> 90 bytes
-> =C2=A02 files changed, 1 insertion(+), 1 deletion(-)
 
