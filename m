@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A508CA5FF1
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 13:52:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1242CA5FFC
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 13:53:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xES4B-0007FJ-K9; Wed, 07 Oct 2026 09:52:24 -0400
+	id 1xES4i-0007O0-Ay; Wed, 07 Oct 2026 09:53:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
- id 1xES19-0006NH-A1
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 09:49:20 -0400
-Received: from mail-eastusazlp17011000f.outbound.protection.outlook.com
- ([2a01:111:f403:c100::f] helo=BL2PR02CU003.outbound.protection.outlook.com)
+ id 1xERy8-0005nw-FT
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 09:46:11 -0400
+Received: from mail-northcentralusazlp170100001.outbound.protection.outlook.com
+ ([2a01:111:f403:c105::1] helo=CH1PR05CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
- id 1xES0X-00040f-FG
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 09:48:37 -0400
+ id 1xERy4-0003sH-VZ
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 09:46:02 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=pW5cyi3jyUc4DlJ0YHcJY+m+6yLiBBbmlFYlhYSdChb8RYp+MGHnmSa8fM9SefCCVmMMf3qf7VbGanfjPgs/ZHbxBnEg901Xg2mSUTaXjmWtB+flS2Gx3XfJ0od1XI6iaor5wt0Rx/lHqqodtzULK5Jp5NoJzDOHNBvo1ooP2/McTtvsYeaJUbzWkpOxT3P1Lougre2YU1t+yq3nvjRQtrP+dptkZjVUxUg+d9cg5iz/xXgvJuHMDXgJrwgDaMoXtvxzTrja6zpw2fTfpZDYYDQ1k9e7xVqcjdPko3LtrPU1sY++FE69KfQMBkoX3gmGY1FXI/rQEb+O3GmxrgLhRw==
+ b=zFWq7P5qG3OAoQl6NtmyaTTwO/WicjqET+9iOkTJ01elmd+3F4Rwlu61zE4cpFxyD/aXuzLv4AqlXMn507l5ewhr4cIwkgDMGCVQIkQ//Bsc1BijF2zJLqOL/zTkMzHE9LRtI9SozbiAAKT+PJrWsc4grVjUmwRALnUTne6fLJVX1EDwscUv4S++P7JuwlP63B7eg4VyHekriNoJbdlIDu2sWwYW3Rb1k2OereJMAZr8H0FY2nbaovTJGCCQLd44EL+e8lND1iHTGHrjyCvMysCKYsFBuqkhDrOjh4/PXn4YYkEFIFSK/xK5MQ/x73NNKhO9dq7UfNialCz7oTzexw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=y3w86TgdE7KjIg2Wup4AaxvjND2DiFb3KAKZLmuIFnk=;
- b=yYii1tfXh0WLBER3GNg/JVYlHKqbDszoL+Mi/qwR7afkw+3Dkfnl/pob3oziiBMPlKJQBh/H0OTk6pyRtsG2BNgBNhzHZ6QVuQ+3Z8fD/F9P0kUVqu+1gaiKlxmKL0PFmOSO0VaPPk6Gj2hxzTQ7At+rFN0OqQ2OCPhy/ADCId0foO0DrPHXLsMeSxP6Q8WZ4GbKBmpXtoZMSINrtCA19gT+9PAKw79XVozySpGAsm1Waq+E9O9JvbLhq93z4eo8lCHC6wPZK0G/uuMBKaHEtPtXaYc0XSX8Kc5nBd9tQ/Z/lKlUC2c4pky6TponbpukksIQl4yEe7jp1fVgOJpRXw==
+ bh=U7iSxx3/ZmYQ+roiiq5QsiL5RGo7UrsoemSCLi1+3sY=;
+ b=Ecjc/CwI2v8pVz62hVoAyeXoQ90onudm/uF+nGScQr1P5VTwHsMTFnmisDDzqnXt5T/BKiabcW+XFu2ZhMJpzl79iWqPns/bRvi19c5SymL+f816foeJtVD+zaBN4I5Hf+HnCX4kRdh0fd70zR693fTgnndxxUtHodNffT7tQA1AnG8X2SH3nMg01e1RdxFdn1+To0XYlwFSmm1O6vzUsKr4zRBpJAK+GQDSBMpbRSs0MeyWcylbKPHw4u2JekLPOpZH57rNLARogvMBd0+wjgVNwR4eREgwWhRgo4+F9GhFoE3kzqofka4ZZjJHqwW7tdcN94yfX6kTCGGwo4aXgA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
  165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
  (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
  dkim=none (message not signed); arc=none (0)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=y3w86TgdE7KjIg2Wup4AaxvjND2DiFb3KAKZLmuIFnk=;
- b=xFO09SJKk7xZdc79DB8Y0gyhs5+0l/W2YU4VsHn+PT5ku3upkv3/rEeoz60PP2+t85SlKrcv0thYm1smjVko/ca+gTCjouxl2uiKmHZsuOhrFfMG5rmxC4SjEzlwVTa+qW3uLSkFrRxwj2jgTVfm7bMOZbARtCTgs46BbUPmeXs=
-Received: from BY3PR10CA0008.namprd10.prod.outlook.com (2603:10b6:a03:255::13)
- by DM4PR12MB6328.namprd12.prod.outlook.com (2603:10b6:8:a0::16) with
+ bh=U7iSxx3/ZmYQ+roiiq5QsiL5RGo7UrsoemSCLi1+3sY=;
+ b=Cf6w/MihX+01eGTGRoL3wymKtyfVedPw7tyjPAgDe0p3Z0Q3WnoCdXRn06u18Yqt73+UHQXqtCBAVKIojjTB0J/YkV3Fsft9DCycUAzi2K//hhoFBQleLNf2NumYEBRzIvYi6/bEjw1jpYVUVU9gwMxMs86mXyMVDMJw0wnKK6M=
+Received: from PH7P222CA0020.NAMP222.PROD.OUTLOOK.COM (2603:10b6:510:33a::8)
+ by PH0PR12MB8152.namprd12.prod.outlook.com (2603:10b6:510:292::14) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.472.18; Wed, 7 Oct
- 2026 13:48:22 +0000
-Received: from BY1PEPF000264B4.namprd02.prod.outlook.com
- (2603:10b6:a03:255:cafe::19) by BY3PR10CA0008.outlook.office365.com
- (2603:10b6:a03:255::13) with Microsoft SMTP Server (version=TLS1_3,
+ 2026 13:45:52 +0000
+Received: from BY1PEPF000264B3.namprd02.prod.outlook.com
+ (2603:10b6:510:33a:cafe::f) by PH7P222CA0020.outlook.office365.com
+ (2603:10b6:510:33a::8) with Microsoft SMTP Server (version=TLS1_3,
  cipher=TLS_AES_256_GCM_SHA384) id 15.21.472.20 via Frontend Transport; Wed, 7
- Oct 2026 13:48:21 +0000
+ Oct 2026 13:45:52 +0000
 X-MS-Exchange-Authentication-Results: mx.microsoft.com 1; spf=pass (sender IP
  is 165.204.84.17) smtp.mailfrom=amd.com;
  dkim=none (message not signed)
@@ -54,23 +54,23 @@ Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
  165.204.84.17 as permitted sender) receiver=protection.outlook.com;
  client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
 Received: from satlexmb07.amd.com (165.204.84.17) by
- BY1PEPF000264B4.mail.protection.outlook.com (10.167.242.121) with Microsoft
+ BY1PEPF000264B3.mail.protection.outlook.com (10.167.242.120) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.496.14 via Frontend Transport; Wed, 7 Oct 2026 13:48:21 +0000
+ 15.21.496.14 via Frontend Transport; Wed, 7 Oct 2026 13:45:51 +0000
 Received: from localhost (10.180.168.240) by satlexmb07.amd.com
  (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.49; Wed, 7 Oct
- 2026 08:48:19 -0500
+ 2026 08:45:49 -0500
 From: Michael Roth <michael.roth@amd.com>
 To: <qemu-devel@nongnu.org>
 CC: <kvm@vger.kernel.org>, <pbonzini@redhat.com>, <berrange@redhat.com>,
  <armbru@redhat.com>, <pankaj.gupta@amd.com>, <xiaoyao.li@intel.com>,
  <chao.p.peng@linux.intel.com>, <david@kernel.org>, <ashish.kalra@amd.com>,
  <ackerleytng@google.com>, <lpieralisi@kernel.org>
-Subject: [PATCH v3 02/19] accel/kvm: Fix kvm_convert_memory() calls crossing
- memory regions
-Date: Wed, 7 Oct 2026 08:41:26 -0500
-Message-ID: <20261007134323.1606088-3-michael.roth@amd.com>
+Subject: [PATCH v3 14/19] accel/kvm: Don't default to private attributes for
+ in-place conversion
+Date: Wed, 7 Oct 2026 08:41:38 -0500
+Message-ID: <20261007134323.1606088-15-michael.roth@amd.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261007134323.1606088-1-michael.roth@amd.com>
 References: <20261007134323.1606088-1-michael.roth@amd.com>
@@ -82,38 +82,39 @@ X-ClientProxiedBy: satlexmb08.amd.com (10.181.42.217) To satlexmb07.amd.com
  (10.181.42.216)
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BY1PEPF000264B4:EE_|DM4PR12MB6328:EE_
-X-MS-Office365-Filtering-Correlation-Id: 933fadf2-bfad-4a0a-fc28-08df2479a6b3
+X-MS-TrafficTypeDiagnostic: BY1PEPF000264B3:EE_|PH0PR12MB8152:EE_
+X-MS-Office365-Filtering-Correlation-Id: 8f6f7dcb-f273-481f-edc6-08df24794d45
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|7416014|36860700016|82310400026|23010399003|1800799024|56012099006|11063799006|10067099003|18002099003|22082099003;
-X-Microsoft-Antispam-Message-Info: DP5ood6jRiDIinpRX1krGIdvYbM1b6MV36GHQUcbcIzgbgNt5oLUtmXCXUmolefuCZhR+J8B0UO6lLaHd5Cud5jxnFHC6RwWEwEiT8534r+qWpgiJim8cOHZv8+dx2ud6BIqhKKz+nb/p7u/O44h1Li7VR5IZwiacXUEqAawVpsLHmOO8YSWBwfjeMRwgLZTT5p/l0GHjzi5HBHEW1aQ9475X1d2Eo9qUSInBTL0Y0FUeH1AOAbPAkLouY7KTJzF+rVKIQM4zXeBMhIVr7ozn/jqtg2w3SuCdHvGN5Ewi0JoMKH9ji3FATfRhBv8PqAJPbOwlQZSVj0I4J7+Dm653WmVRMpBmc8Y9dEUlEhWyrjeHacUpxzTgn/v3Ito86rcyhAAz7OkOdvbcCk+xN3tKXE6gvDZHu7TlHByEGK7EuC2IflzbPVrwl16TY5c7nycPPaqY2QXoeBhcfNoNBo5F5wp9wmhtOx871Gj9fGmiL7+LLt/1Ee0yvZDdelSH5Deg6+M8cwrWgbEyHmvhSbS+lW7d2mxDR4JbAOvFlT8ndb51DVea6lHXtEaqchNH/WN9ELUwXILfTMdnyfCYR4k0ioK9aLrBZXlF0h3aXMbCdIGMxAfK69lYx41Hryr13pwQTnz7Hk1Th4pfUmQFjwkcg8c3Hgf4TiohwKdUXzwjTcPkgFXFV+dJroyyelfqlIN3hH0EgFvLRb6tp1eQQjSMg==
+ ARA:13230040|7416014|376014|36860700016|82310400026|1800799024|23010399003|11063799006|22082099003|18002099003|10067099003|56012099006;
+X-Microsoft-Antispam-Message-Info: rhURSsK+ycoQc09NmXM3xEP/EFOSc30j1Dp0o9L+pvkOeXDqZ6w0zaidlu7uHuiHjYJ+bCWTgOjvvmI3hfuF03UoUAdfzB/XkJAimEAd7wi4qPC2C/+ADVDqNIvq171sGWqmjvhTHs+tITIKkP5YZbInOrI0VuCHmn15/A3pcrNtuOHv9xkpnSeL3SekxxenQwXfnlXhnctG1Zr0zlzFWgJkU7+X+AlMyR0Nhj00WmN9yhX0V5uKz1IHWzYtT+ylEcNhIX3yd/2iny7L2mBhmIBEZ4ES5k8n6Vn1Z7jIfVXFI+va9q5gM/eTyOuElKlSusMzh3BfCMm12mz3ycJPH7EyRZxCz2golKFnxOFFMOSN2xH9h616NCPGZvBJljdvxfN0R3jLCXEkR2m/oIRtPPUfg4f22Tc5zBGtkY71zlnw31kt6ebRQkCMhvFOeXKJM1Zrrz3WMWw5Yk1O+86utCV85n4lTJ34ImoSYxsVOv0vgqzA5A41F8g5M3kgGcWlclwYyNhtEZZ+Kr6zniYX+A4fWA1q+NgdPBE6bATmYIZc5nr6qHc83OjD2KphRcdGiap0q98I0R+Q9fGng6svRsy7Pu+isIkWTzVuCkzvfNrWaFurN4qY47L9VFpDNIpO30VD0sG8FSlIEm0WzE+3gE8RUZiWRvV6tTymjDLb77WnN3K3/5bPYCAgjU9fYDI3jQgJAhBDPENdqNTn1+oNag==
 X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(376014)(7416014)(36860700016)(82310400026)(23010399003)(1800799024)(56012099006)(11063799006)(10067099003)(18002099003)(22082099003);
+ SFS:(13230040)(7416014)(376014)(36860700016)(82310400026)(1800799024)(23010399003)(11063799006)(22082099003)(18002099003)(10067099003)(56012099006);
  DIR:OUT; SFP:1101; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: IO2DSFpX19z5d+mW0jrNOzYmjmLZI5TjmZddT4LIVmoxKQnPQdfzS/M3SmjNl+1sM+FkaA9VdSxfn7fclr4G9q59J+PrDqg/QRtQhAp8K1vlJ4focD2qg2rqWRrlHWJG8l0K4cFAsCgyq6W+09wxOzdOPzYSpbzR85GKl1i6ulQl/UFe/mBR6vPogA3u+NSLdVHsFUzBRko5KOPQ8NAwA6xcbG0scQ2FQX0QeI2tv1DgpQzUtXHeU/i+I1RUGLbJlUHucDGxDTvpt9qEP4ull87TMr/rZt2lfS/Na7TKia4wERanqS57PfOum14yWgFqxtsRlpTlv2ymGaQ9UmgYE/0vEqUuvTaDapHJgrSjSYQbR2P/NeTHeyVGqsDiIYoAKOuDwhTgziKbj2FvnO248fwu3RMKp3u0aCOBn1uhNTyFjU7AS3SWwQUN45ig+mw/
+X-MS-Exchange-AntiSpam-MessageData-0: KFRGIgfFFRBsC7vBChvyPWtpx4MXXf2OKDv8LQK5KZgHpGsTmgaQmLyBPgEAIJTywLO03gCMz1CB1oG06LWLLAWez3SnJ/wJ8p3Md5khec+k2lJVudLnggTvXGz+frMQMfCWREgL/I38Tkv68UZMod728Opm2WHYNwHBo+WJhfiI6jF8HnLV69gtwjt/SAXrgaCb4N+B86WTW80c49pIgSyKp3klXN8PynZuTcprfP7kkODbq4Vc5qNofLmbR7Zchm4pEINbu+jssvuqTWLIuhdddMjk1BFeb6yDHwR+OTfVrDXeJdrfQpD/8I8GZ6ZBZ6V2b713eRDTZiVkIrQfhetD4kZnty2BGhqAzIfNrd3BXrn1i7PLpSVqFNVIAaxyR6O5thsa5Be5pF36Xz76tMf04qrrI4DHdQK3IOnl2JellIOsli6fZJ4SQAXwtdC1
 X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Oct 2026 13:48:21.5072 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 933fadf2-bfad-4a0a-fc28-08df2479a6b3
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Oct 2026 13:45:51.4716 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8f6f7dcb-f273-481f-edc6-08df24794d45
 X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
  Helo=[satlexmb07.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: BY1PEPF000264B4.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthSource: BY1PEPF000264B3.namprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR12MB6328
-Received-SPF: permerror client-ip=2a01:111:f403:c100::f;
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR12MB8152
+Received-SPF: permerror client-ip=2a01:111:f403:c105::1;
  envelope-from=Michael.Roth@amd.com;
- helo=BL2PR02CU003.outbound.protection.outlook.com
+ helo=CH1PR05CU001.outbound.protection.outlook.com
 X-Spam_score_int: -22
 X-Spam_score: -2.3
 X-Spam_bar: --
 X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -129,162 +130,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ashish Kalra <ashish.kalra@amd.com>
+Without in-place conversion, QEMU can still access shared memory to load
+initial state into guest memory prior to launch even if the GPA's memory
+attributes default to private, since userspace is accessing a completely
+separate pool of memory. With in-place conversion, all these accesses
+would need to first be converted to shared, then back to private, since
+the memory all comes from guest_memfd and only shared memory can be
+accessed by userspace.
 
-Page conversion calls can span multiple memory regions, potentially
-resulting in a conversion failure if the memory range being converted
-extends beyond the boundaries of the referenced memory region.
+Additionally, with in-place conversion, the most efficient way to set
+the default memory attribute state is via the presence/absence of the
+GUEST_MEMFD_FLAG_INIT_SHARED flag, which is handled in the guest_memfd
+creation routine, so if future in-place conversion implementations wish
+to set the default to something otherwise then doing so using that flag
+would be ideal rather than changing the default after guest_memfd
+creation by issuing a guest_memfd ioctl.
 
-Handle the case of page conversion calls straddling across memory
-regions by looping through the subregions and handling conversions and
-related work section by section.
+To account for that and avoid sprinkling these differences in behavior
+throughout QEMU when in-place conversion is enabled, just default to
+shared. This does not compromise guest security, since Confidential VMs
+will necessarily enforce this via trusted entities, and simply generate
+implicit page state changes if their default expectations don't match
+KVM's. However, in most cases a guest will explicitly convert memory to
+a particular state before actually using it, so even these implicit
+conversion requests should be rare. If this ends up needing to be
+changed for other reasons in the future, the guest_memfd creation is the
+right place to handle it for in-place conversions.
 
-Fixes: c15e5684071d ("kvm: handle KVM_EXIT_MEMORY_FAULT")
-Signed-off-by: Ashish Kalra <ashish.kalra@amd.com>
-Co-developed-by: Michael Roth <michael.roth@amd.com>
 Signed-off-by: Michael Roth <michael.roth@amd.com>
 ---
- accel/kvm/kvm-all.c | 94 ++++++++++++++++++++++++++++++---------------
- 1 file changed, 63 insertions(+), 31 deletions(-)
+ accel/kvm/kvm-all.c | 21 ++++++++++++++++++++-
+ 1 file changed, 20 insertions(+), 1 deletion(-)
 
 diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index c824e4d963..9ba8462f5d 100644
+index 2d4cba1a3b..bfb8b4a190 100644
 --- a/accel/kvm/kvm-all.c
 +++ b/accel/kvm/kvm-all.c
-@@ -3395,54 +3395,35 @@ static int handle_memory_hole(MemoryRegionSection *section, bool to_private,
-     return 0;
- }
- 
--int kvm_convert_memory(hwaddr start, hwaddr size, bool to_private)
-+static int kvm_convert_section(MemoryRegionSection *section, bool to_private)
- {
--    MemoryRegionSection section;
-+    hwaddr start = section->offset_within_address_space;
-+    hwaddr size = int128_get64(section->size);
-+    MemoryRegion *mr = section->mr;
-     ram_addr_t offset;
--    MemoryRegion *mr;
-     RAMBlock *rb;
-     void *addr;
--    bool skip;
-     int ret = -EINVAL;
- 
--    trace_kvm_convert_memory(start, size, to_private ? "shared_to_private" : "private_to_shared");
--
--    if (!QEMU_PTR_IS_ALIGNED(start, qemu_real_host_page_size()) ||
--        !QEMU_PTR_IS_ALIGNED(size, qemu_real_host_page_size())) {
--        return ret;
--    }
--
--    if (!size) {
--        return ret;
--    }
--
--    section = memory_region_find(get_system_memory(), start, size);
--    mr = section.mr;
--
--    ret = handle_memory_hole(&section, to_private, &skip);
--    if (ret || skip) {
--        goto out_unref;
--    }
--
-     if (to_private) {
-         ret = kvm_set_memory_attributes_private(start, size);
-     } else {
-         ret = kvm_set_memory_attributes_shared(start, size);
-     }
-     if (ret) {
--        goto out_unref;
-+        return ret;
-     }
- 
--    addr = memory_region_get_ram_ptr(mr) + section.offset_within_region;
-+    addr = memory_region_get_ram_ptr(mr) + section->offset_within_region;
-     rb = qemu_ram_block_from_host(addr, false, &offset);
- 
-     ret = ram_block_attributes_state_change(rb->attributes,
-                                             offset, size, to_private);
-     if (ret) {
-         error_report("Failed to notify the listener the state change of "
--                     "(0x%"HWADDR_PRIx" + 0x%"HWADDR_PRIx") to %s",
--                     start, size, to_private ? "private" : "shared");
--        goto out_unref;
-+                     "(0x%"HWADDR_PRIx" + 0x%"HWADDR_PRIx") to %s, ret %d",
-+                     start, size, to_private ? "private" : "shared", ret);
-+        return ret;
-     }
- 
-     if (to_private) {
-@@ -3451,15 +3432,66 @@ int kvm_convert_memory(hwaddr start, hwaddr size, bool to_private)
-              * shared memory is backed by hugetlb, which is supposed to be
-              * pre-allocated and doesn't need to be discarded
-              */
--            goto out_unref;
-+            return 0;
+@@ -1810,7 +1810,26 @@ static void kvm_set_phys_mem(KVMMemoryListener *kml,
+             abort();
          }
-         ret = ram_block_discard_shared_range(rb, offset, size);
-     } else {
-         ret = ram_block_discard_guest_memfd_range(rb, offset, size);
-     }
  
--out_unref:
--    memory_region_unref(mr);
-+    return ret;
-+}
-+
-+int kvm_convert_memory(hwaddr start, hwaddr size, bool to_private)
-+{
-+    int ret = -EINVAL;
-+
-+    trace_kvm_convert_memory(start, size, to_private ? "shared_to_private" : "private_to_shared");
-+
-+    if (!QEMU_PTR_IS_ALIGNED(start, qemu_real_host_page_size()) ||
-+        !QEMU_PTR_IS_ALIGNED(size, qemu_real_host_page_size())) {
-+        return ret;
-+    }
-+
-+    /*
-+     * Page conversions can span multiple memory regions, for example, if two
-+     * memory backends are added to support two different NUMA nodes/policies.
-+     * Handle the covered sections accordingly.
-+     */
-+    while (size) {
-+        MemoryRegionSection section = memory_region_find(get_system_memory(),
-+                                                         start, size);
-+        hwaddr section_end;
-+        bool skip;
-+
+-        if (memory_region_has_guest_memfd_private(mr)) {
 +        /*
-+         * If there's no region present, then the current hole "section"
-+         * consumes the entire remaining range. In that case, update the
-+         * relevant indices to terminate the loop after this iteration.
++         * Without in-place conversion, QEMU can still access shared memory
++         * to load initial state into guest memory prior to launch even if
++         * the GPA's memory attributes default to private, since userspace
++         * is accessing a completely separate pool of memory. With in-place
++         * conversion, all these accesses would need to first be converted
++         * to shared, then back to private, since the memory all comes from
++         * guest_memfd and only shared memory can be accessed by userspace.
++         *
++         * To avoid sprinkling these differences in behavior throughout QEMU
++         * when in-place conversion is enabled, just default to shared. This
++         * does not compromise guest security, since Confidential VMs will
++         * necessarily enforce this via trusted entities, and simply generate
++         * implicit page state changes if their default expectations don't
++         * match KVM's. However, in most cases a guest will explicitly
++         * convert memory to a particular state before actually using it, so
++         * even these implicit conversion requests should be rare.
 +         */
-+        section_end = section.mr
-+            ? section.offset_within_address_space + int128_get64(section.size)
-+            : start + size;
-+        assert(section_end > start);
-+        assert(section_end - start <= size);
-+
-+        ret = handle_memory_hole(&section, to_private, &skip);
-+        if (ret || skip) {
-+            memory_region_unref(section.mr);
-+            break;
-+        }
-+
-+        ret = kvm_convert_section(&section, to_private);
-+        memory_region_unref(section.mr);
-+
-+        if (ret) {
-+            break;
-+        }
-+
-+        size -= section_end - start;
-+        start = section_end;
-+    }
-+
-     return ret;
- }
- 
++        if (memory_region_has_guest_memfd_private(mr) &&
++            !machine_require_guest_memfd_convert_in_place(current_machine)) {
+             err = kvm_set_memory_attributes_private(start_addr, slot_size);
+             if (err) {
+                 error_report("%s: failed to set memory attribute private: %s",
 -- 
 2.43.0
 
