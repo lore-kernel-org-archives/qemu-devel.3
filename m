@@ -4,158 +4,125 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E42EDCA6009
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 22:40:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDF42CA6009
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 22:55:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xEaJ2-0001y0-JF; Wed, 07 Oct 2026 18:40:12 -0400
+	id 1xEaXb-0003Oa-Mu; Wed, 07 Oct 2026 18:55:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1xEaJ1-0001xn-Cd; Wed, 07 Oct 2026 18:40:11 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1xEaIz-0005iT-Jx; Wed, 07 Oct 2026 18:40:11 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 697M64CS3777716; Wed, 7 Oct 2026 22:40:06 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=kyk9VD
- H4/ILJatxD/xUd5MmUF+guSU783Q5j+7NbIts=; b=NwWx0BiivlHYudK94441YC
- 42QpB65cje5DJyCOKf63NUB1szT6naB2cKx61oqRIc++HfYHD6KYtrdkrUr6xsFH
- 5dAJVkDWWbR0KsU0X9+cOtztxKD17VZ5fHDn8doLVP6dYjCyK6zgciSb+Suaue47
- uPUEQLiTr9rBy0M3VgX45C+xxpHMT+v9M3y7lHeBeH/7Zf9hyGIBE2RdI/GcTSmU
- Afzdf6YxoO9C8kIcj7qXUfdBKTtZiWeuOHTCLkMMcLXnxwypyvdoSsCGJU/Kmkh7
- XnQWKjopsOZiSyZCfzojfnfm1QBqBrxCJx7s5EPd10tegPsFQsBobS96fMNNXy3A
- ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4h5xjvr45n-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Wed, 07 Oct 2026 22:40:05 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 697LWbhY2459732; Wed, 7 Oct 2026 22:40:05 GMT
-Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4h58d5mwms-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 07 Oct 2026 22:40:05 +0000 (GMT)
-Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com
- [10.241.53.100])
- by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 697Me4Mx37749086
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 7 Oct 2026 22:40:04 GMT
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 57D6158063;
- Wed,  7 Oct 2026 22:40:04 +0000 (GMT)
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id CA7F858059;
- Wed,  7 Oct 2026 22:40:03 +0000 (GMT)
-Received: from [9.61.5.156] (unknown [9.61.5.156])
- by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Wed,  7 Oct 2026 22:40:03 +0000 (GMT)
-Message-ID: <17b1046e-e072-4ca8-97fa-cc5b6d08870e@linux.ibm.com>
-Date: Wed, 7 Oct 2026 18:40:03 -0400
+ (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
+ id 1xEaXK-0003Ny-Tk
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 18:55:00 -0400
+Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
+ id 1xEaXI-0006tX-0c
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 18:54:58 -0400
+Received: by mail-ed1-x533.google.com with SMTP id
+ 4fb4d7f45d1cf-6aff0c4bda3so2877585a12.3
+ for <qemu-devel@nongnu.org>; Wed, 07 Oct 2026 15:54:54 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1791413693; cv=none;
+ d=google.com; s=arc-20260327;
+ b=lg6NGwiPEAKEO6cMJMHp5I1lXVyxu4Mk8f6QYrHBAEIkSaaspl+XKhoKUwLDh4wI4w
+ tZATqKc4lrwEM1ijwBAGosmfB9/jRBnlgNtSN/ktTqW3zFfMbVqRPAEJ5bYFfTA1XQNi
+ XXaI9xzslEIeH4nlIwEONNLHPu7n+qfxKlsp9rQqXcIeR+DkZrHtcidCA1f5+alQkffm
+ A0Hg0mp+58Cdvlb8wJpuhdDLY/sSoujPDLk0fLbgGg+GvViY2QEksnQPz5Axe/3fSmN1
+ ZmGhhKW4ocuZCDsfUDQ51rl7hMifMxZi82mjSXLemuhsooxfw6hCeB3OGo2IDONE2c8k
+ hbBQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :reply-to:in-reply-to:references:mime-version:dkim-signature;
+ bh=zSjVc/tu+Y9ukXAP0Ef1p9qDGK6Rj596TGAY61jYM6s=;
+ fh=4/wcS88II3VX6Ye4PZnRAhk86dIgygccFhqjRWP+6KY=;
+ b=olK66IkqOrQfHRoquAqvMTUvdY1CQGI85MWfwUyDT7cO8n8JSHJMDBHWgtGGseJdUl
+ n+FceCwC4uI4w2QaHsI8J9HCqsSkqKVV/WtzhoGFS6ClsJ3SfhXUHwxTn9YSAZzajPey
+ Dr5hbiw5uc95cpwPs9u/1uK7px+yoIx8hSgt2S4a7jQK3KgSXJWklxkcj+jCmAN01rqD
+ PvqwyEddRbw+80w6nh5FYKrwVr/8/fMeD7tCm/x/T0iumzXIoNm+vl/DJOwoSZ/o/v/t
+ HHqVYeangeDpmgG5fACk2vF6l9Kx2BX2RN1s9pjxqCm70rwS0cVYtcjCs/VblqGvcsU8
+ jLrg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1791413693; x=1792018493; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:reply-to:in-reply-to:references:mime-version:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=zSjVc/tu+Y9ukXAP0Ef1p9qDGK6Rj596TGAY61jYM6s=;
+ b=rU5C6yavrYJpmY+IjCkG6QUYpe2rDCULUHmHBbOqXyTEcq+PrKHPEGxeSlszmOsAt9
+ 1GIn68d18ifakU2rlJxO/uHNFFjtbAbj8/wz3vYJqQfZIWH602cm+aWp2m2grg7uf3I8
+ +6HLgIoxQZtfq4CjEVDYzhYx+n3mVRLFBS5O2wTX7DhWVQOy9kN9RVcLSTURQStukiee
+ AqmrZ/2p8ca1IceAwG6qzQ+qTN+LB1iDyLlbI2MBL/w9cIY95cCt3W83gT7vbdol379g
+ Wv/iTNpbd38cjWrtZiJyfehNnQ3pIgcxucNkvXYnnw+rrTyXPTIgGmawDg/Jn0QQyXn1
+ 9RpA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1791413693; x=1792018493;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:reply-to:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=zSjVc/tu+Y9ukXAP0Ef1p9qDGK6Rj596TGAY61jYM6s=;
+ b=N5BwW08TWRMRTOPgvdUKENp1Wqxv+CPBMgJY7Yeef2HLxaBquSk3+Qv5o06ncEhztC
+ SHthgtjCu5bRlIOVjIGZ+ScLvirlrCM8JKscAnDmx+HU5VB6qDEQ5tP9acEF7HZXTj3l
+ 1XvxfjNtrg1HkUfEE+Q1jq9/k3JWNteMQaQftD1X3hoHs8q/sOih0X85+NZkqq5ZBrkr
+ 1aDHALUocCGCR7DMCk0fq8CI1OH0zBB/xUG+Q8xresp8CIMKlyuot8csA+r2cz421qYl
+ DF6rY8bbQQnChlipDxVnrC3XYP6uKj4bhQmirE4i5sdX8RH9WOrzFwd2ELebXwmbchoe
+ 0AxA==
+X-Gm-Message-State: AFq9FYLpguj+2GqXICHyk4S25QMJWlhu9nWEdCeNXLhTYFQ9lXn0HcpT
+ uS/5RGwhJ7RtgGdvcXJOhbQYXGwCCtaqfJzI4Q8puEG23kChhQbrX/4qM42Pb3dwoEs9klXnDj8
+ +2IuFdR+JaaqFXm4f1ASvIDxoA8L9mQE=
+X-Gm-Gg: AYBFou3uxzGnu676zkYnEJO3zeq52NlbQ+qpw+Jp+galoXEVlV9hyj1iO4DSF7yXRpz
+ jE1IdkGrtvgaV6tTsDZFRfYkFsgVh9X5UIV46xSGdIM0QOH5qO13xnwM7b5OTyTmPu3OuVW9KCJ
+ 5HIoz82+oeIJ8fcdBUjus2/GbnxNz8WU6wjYsT1yUkbxv71YT0prls4e2zECDigaBb+X0xq7dhb
+ B8yBHZDTQSfPFDirtmd3/WiEFPnNGa9hSCihuEPGGuQme/WQ3cPiBiLqWqxNSjNFMeJh2NlTY4t
+ oqHQJFHjhHQxjH07t5rDOXNx7u4WRYvkliFLzsKrT4V+mLXlr50ohus/y4ZIak7ndw==
+X-Received: by 2002:a05:6402:440b:b0:6aa:f937:106d with SMTP id
+ 4fb4d7f45d1cf-6aff4551bcfmr3512929a12.36.1791413693172; Wed, 07 Oct 2026
+ 15:54:53 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 0/5] iotests fixes
-To: Eric Blake <eblake@redhat.com>
-Cc: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- qemu-block@nongnu.org, qemu-devel@nongnu.org,
- Matthew Rosato <mjrosato@linux.ibm.com>
-References: <20260925194409.716498-1-farman@linux.ibm.com>
- <arbrou8C1yKLZtVe@redhat.com>
- <93bc1b59-5a95-4733-8c6f-7fb38d815b8f@linux.ibm.com>
- <asa8Tr8zCTTcFKnN@redhat.com>
-Content-Language: en-US
-From: Eric Farman <farman@linux.ibm.com>
-Autocrypt: addr=farman@linux.ibm.com; keydata=
- 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
- y8m0x6unNti2MZIUMy0m2gcE
-In-Reply-To: <asa8Tr8zCTTcFKnN@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: brqXXThr2Qcz2uk-xE9sZYJccY-eEaeX
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA3MDA5MCBTYWx0ZWRfX6P+AuHJOQcvW
- TxTS0t4N02tR9yP6+AiT0xChM34suqbrZpA58zytXfUef1zeUDF/4d1E6SFVMiE5Qa4GcauWbO7
- 253rhGAXq6VpLSFXMUNfC20APsXwOlXT0TTOCk7UKlHioREdnDMfEaLX94BrbEqR0eL8tomUSEK
- sJve2AlzZk48IQswxqR9IfWf0z0aI13i5nWB/YFCx9wpwI5L4S7Qhht4Klqq+f/Y/Q6+6E7kx5y
- gXgzAa6axoGAOUrgYBdPvOFeZE6zGmZftD7ocwdlVsbC/FdpLs9I3PuO++xszyUAxiL9U+A+tiX
- atyGw1FJXpaPT5raz7YW9VpNau4UCPmYDpTudpZ+UmQasK+YVu2hM6L5KEdYZ1A8UG6c9eHTWoc
- hyz4pv7hev+gOXmTQ0XCYNdZFu2WFzrSQP30GTwxVtA1GV/A2q32H7sLRMQZ0k2UZjVvWoBJNzj
- q3gBJx64/erAGeOGLOQ==
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA3MDA5MCBTYWx0ZWRfX0vJsnyuKYmJJ
- fls3Q9tioedxN23DYPvqwirIpnPjjv6E8Ca7W0nf8Xh1sF9Tg535cjF/mv1pgw3BZZ8IeUOEgTu
- SLh7Lnauk6FDW4mhKfoAeekd/3BWny4=
-X-Proofpoint-GUID: brqXXThr2Qcz2uk-xE9sZYJccY-eEaeX
-X-Authority-Analysis: v=2.4 cv=FLCOVOos c=1 sm=1 tr=0 ts=6ac6ca45 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=20KFwNOVAAAA:8
- a=IwFWgu1DwZyBaCJXsQoA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-10-07_07,2026-10-06_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 impostorscore=0 adultscore=0 priorityscore=1501 suspectscore=0
- clxscore=1015 bulkscore=0 spamscore=0 phishscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610020000 definitions=main-2610070090
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=farman@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+References: <20261007115253.328-1-luoyonggang@gmail.com>
+ <20261007115253.328-5-luoyonggang@gmail.com>
+ <37275f1f-aee9-444b-aaed-3e0bf34b63cd@oss.qualcomm.com>
+ <CAE2XoE_GmDbA5SSUb3k_9HwE+bxnBjK+kBj-RE5BonEBC=GpMw@mail.gmail.com>
+ <919a1a75-78b9-42a9-93ed-9edf6757f707@oss.qualcomm.com>
+In-Reply-To: <919a1a75-78b9-42a9-93ed-9edf6757f707@oss.qualcomm.com>
+From: Yonggang Luo <luoyonggang@gmail.com>
+Date: Thu, 8 Oct 2026 06:54:40 +0800
+X-Gm-Features: AclHuK9kE16liw36x5Raqabdi5GZ-fn5rleuW_Jul-TKJagPE7aEBvcLgBxSY9o
+Message-ID: <CAE2XoE8G7Pyu-UaoW0BRxHqEX2aef_ak29mAkwwssSS5Rf_y5A@mail.gmail.com>
+Subject: Re: [PATCH 4/8] target-info: replace QOM registration with a
+ constructor list
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Cleber Rosa <crosa@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>, 
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
+ Laurent Vivier <lvivier@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
+ John Snow <jsnow@redhat.com>, Laurent Vivier <laurent@vivier.eu>,
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Joel Stanley <joel@jms.id.au>, Fabiano Rosas <farosas@suse.de>,
+ Kane Chen <kane_chen@aspeedtech.com>, 
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Troy Lee <leetroy@gmail.com>, 
+ Jamin Lin <jamin_lin@aspeedtech.com>, Stafford Horne <shorne@gmail.com>,
+ qemu-arm@nongnu.org, Philippe Mathieu-Daude <philmd@mailo.com>,
+ Peter Maydell <peter.maydell@linaro.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Steven Lee <steven_lee@aspeedtech.com>, Alexander Bulekov <alxndr@bu.edu>, 
+ Darren Kenny <darren.kenny@oracle.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::533;
+ envelope-from=luoyonggang@gmail.com; helo=mail-ed1-x533.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -168,39 +135,196 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: luoyonggang@gmail.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Thu, Oct 8, 2026 at 6:31=E2=80=AFAM Pierrick Bouvier
+<pierrick.bouvier@oss.qualcomm.com> wrote:
+>
+> On 10/7/2026 1:50 PM, Yonggang Luo wrote:
+> > On Thu, Oct 8, 2026 at 4:29=E2=80=AFAM Pierrick Bouvier
+> > <pierrick.bouvier@oss.qualcomm.com> wrote:
+> >>
+> >> On 10/7/2026 4:48 AM, Yonggang Luo wrote:
+> >>> Register target definitions through constructors instead of
+> >>> MODULE_INIT_TARGET_INFO, making target_info_list() and target_info()
+> >>> available on entry to main(), without explicit initialization or a
+> >>> call to module_call_init(MODULE_INIT_QOM).
+> >>>
+> >>> Keep the target list sorted by target_arch and default to its first
+> >>> entry. Provide an unknown TargetInfo fallback for target-independent
+> >>> tools such as qemu-img and unit tests that link no target-info-def.c
+> >>> objects.
+> >>>
+> >>> Remove the obsolete QOM target-info registration infrastructure and
+> >>> update the multi-target test to inspect target information before
+> >>> initializing QOM.
+> >>>
+> >>> Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
+> >>> ---
+> >>>  include/qemu/module.h           |  1 -
+> >>>  include/qemu/target-info-def.h  | 56 +++++++++++++++++++++++++++---
+> >>>  include/qemu/target-info-init.h | 53 ----------------------------
+> >>>  include/qemu/target-info-qom.h  | 31 -----------------
+> >>>  include/qemu/target-info.h      |  9 +++++
+> >>>  meson.build                     |  6 ++--
+> >>>  system/vl.c                     |  4 ---
+> >>>  target-info-def.c               |  1 -
+> >>>  target-info-qom.c               | 60 -------------------------------=
+-
+> >>>  target-info.c                   | 61 +++++++++++++++++++++++++++++++=
++-
+> >>>  tests/qtest/fuzz/fuzz.c         |  3 --
+> >>>  tests/unit/test-multi-target.c  | 12 +++----
+> >>>  12 files changed, 129 insertions(+), 168 deletions(-)
+> >>>  delete mode 100644 include/qemu/target-info-init.h
+> >>>  delete mode 100644 include/qemu/target-info-qom.h
+> >>>  delete mode 100644 target-info-qom.c
+> >>>
+> >>
+> >> This approach (custom list based) was considered before implementing
+> >> things with QOM Types. The rationale I followed was that if everything
+> >> is in QOM, we might better follow that for consistency sake.
+> >> Yes, the compromise if that we need an extra init step, but it was not=
+ a
+> >> problem to add it.
+> > I have issue to add the init step for unit-tests, and hard to write the=
+ -target
+> > parse procedure and get it right. Not means this won't work. but for
+> > me, too much
+> > coupled.
+> >
+>
+> We already have such a test upstream:
+> https://gitlab.com/qemu-project/qemu/-/blob/master/tests/unit/test-multi-=
+target.c#L35
+>
+> The init sequence is quite straightforward:
+>
+> ```
+> /* initialize target types, and only them */
+> module_call_init(MODULE_INIT_TARGET_INFO);
+>
+> /* we can get the list if we want, for -target or any other purpose */
+> g_autoptr(GSList) targets =3D object_class_get_list(TYPE_TARGET_INFO, fal=
+se);
+>
+> /* set the global target info from any element in this list */
+> TargetInfo* ti =3D ...;
+> target_info_qom_set_target_info(ti);
+>
+> /* register rest of QOM types */
+> module_call_init(MODULE_INIT_QOM);
+> ```
+>
+> It works fine to implement -target (if we would like to do it), since I
+> implemented it myself. That was also my initial motivation by the way.
+>
+> Also, I appreciate that target-info is NULL by default, it crashes
+> loudly when it has not been set, and make it easy to find who depends on =
+it.
+>
+> > If we treat target_info as a QOM, but QOM needs target_info to set
+> > up(is_avaible). That makes
+> > the init sequence too much of a burden.
+> >
+>
+> See sequence above, the solution is to initialize TARGET_INFO first,
+> before the rest of QOM. You end up with the same result than with a
+> statically initialized list.
+>
+> >
+> > is_available is depends on target_arch
+> > And before this patch, target_arch depends on QOM, pulls user/softmmu b=
+ecause
+> > target_info_init. By moving target-info to be a custom list based, we
+> > can decouple
+> > target-info from qom/softmmu/user. and target-info will always
+> > available once "main(argv, argc)" is entered. We also have the
+> > advantage of doing all sorts
+> > of tests against it.
+> >
+>
+> Which kind of tests are you trying to add?
+>
+> For now, the exact list of places where we need to do this initialize
+> target dance are:
+> - system/vl.c:    module_call_init(MODULE_INIT_TARGET_INFO);
+> - tests/qtest/fuzz/fuzz.c:    module_call_init(MODULE_INIT_TARGET_INFO);
+> - tests/unit/test-multi-target.c:
+> module_call_init(MODULE_INIT_TARGET_INFO);
+>
+> If we want more tests, I'm totally ok to move this init code to
+> target-info.c, and replace call sites if needed.
+>
+> >
+> > Tools such as qemu-img and unit tests may link target-info.c without an=
+y
+> > target-info-def.c objects. Their target list remains empty, so use this
+> > fallback.
+> >
+>
+> Why should this tool get access to target list? qemu-img deals with disk
+> images, and is unrelated to targets.
+>
+> >
+> > static TypeImpl *type_register_internal(const TypeInfo *info)
+> > {
+> >     TypeImpl *ti;
+> >
+> >     if (!type_name_is_valid(info->name)) {
+> >         fprintf(stderr, "Registering '%s' with illegal type name\n",
+> > info->name);
+> >         abort();
+> >     }
+> >
+> >     if (info->is_available && !info->is_available()) {
+> >         return NULL;
+> >     }
+> >
+> >     ti =3D type_new(info);
+> >
+> >     type_table_add(ti);
+> >     return ti;
+> > }
+> >
+> >>
+> >> Is there another good value this list approach brings compared to what
+> >> exists?
+
+Sorry, I have to wait for your work to be done first.
+I have too many patches depending on this, and it seems hard to
+convince you. Let's just keep it as is.
+Maybe you can work them out in an easier way.
+
+My work is here.
+https://gitlab.com/lygstate-qemu/qemu/-/tree/combined-binary-multi-targets?=
+ref_type=3Dheads
+I am afraid of posting 300 pathces into threads to flood it(and
+disturbing yours). So I'll wait for your work first. and resolving
+conflicts later, that's really time-consuming.
+
+I did many explanations before. seems my explanation is too bad and
+not to give a clean picture for you, let's delay these first.
+
+I only sent these 8 patches for easier review. because too many
+patches won't be accepted either.
+
+> >>
+> >> Regards,
+> >> Pierrick
+> >
+> >
+> >
+>
 
 
-On 10/7/26 5:40 PM, Eric Blake wrote:
-> On Wed, Oct 07, 2026 at 01:34:43PM -0400, Eric Farman wrote:
->>
->>
->> On 9/25/26 5:46 PM, Eric Blake wrote:
->>> On Fri, Sep 25, 2026 at 09:44:04PM +0200, Eric Farman wrote:
->>>> Hi Kevin, Hanna,
->>>>
->>>> Here is a new version of iotests fixes from our s390x systems.
->>>> They aren't related, just came up walking through the failures.
->>>>
->>>> I saw you asked Eric Blake about the nbd-in-qcow2-chain patch.
->>>> I left it as-is, but I am fine with skipping it if that's easier.
->>>>
->>>> I added a new patch at the end of this series, which skips the last remaining
->>>> failure I can create out-of-the-box on s390. I had hoped that I could get
->>>> that one to work, but it doesn't appear to be trivial.
->>>
->>> Series:
->>> Reviewed-by: Eric Blake <eblake@redhat.com>
->>>
->>
->> Thanks, Eric!
->>
->> @Kevin, @Hanna... Any concerns with this series?
-> 
-> At this point, I plan on queuing this in my next NBD pull request.
-> 
-
-Thank you!
+--=20
+         =E6=AD=A4=E8=87=B4
+=E7=A4=BC
+=E7=BD=97=E5=8B=87=E5=88=9A
+Yours
+    sincerely,
+Yonggang Luo
 
