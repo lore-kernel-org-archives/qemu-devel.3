@@ -4,141 +4,139 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 108BCCA5FFF
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 09:43:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D82FCA5FFF
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 09:44:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xENsb-0004Ld-Rw; Wed, 07 Oct 2026 05:24:05 -0400
+	id 1xEO9k-0004gs-2J; Wed, 07 Oct 2026 05:41:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1xENCF-0001H5-Vf
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 04:40:28 -0400
-Received: from mail-northeuropeazlp170110003.outbound.protection.outlook.com
- ([2a01:111:f403:c200::3] helo=DU2PR03CU002.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xENyV-0007w0-Vm
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 05:30:13 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1xENC9-0006sq-Lh
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 04:40:17 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=VgMI8xU/bVosD6hZg1o779YdNvkV/XKED2momS6Gf71WrlonLX4vuLkSsqjatrwnek1QUME/qAwarN1Wh8KiPNDhmRjBNqYUarIkz+4UaQKQNCi+kQaF+qBIly4VUF8I1j7hNJYvd5AWBFxoSnTI2xvA7ZG210ji4B+rwZ13aodDTkwIJy37wCZQZXFSASQuCoWcK1MVjN3UlMhnmvUPFoQsEEHzYi2QIHPSakBbDD6ygUnjpxO9Eh/2uwLL+tkelOyVr3Q1QumvNBIIK7sxwEM8Sn4xu702/54rd5Prkj5tAqM2YgEGgv03ADQIQ7MZRXTvzzs+JuKzLNmRZtkAnw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=ExIQu0ecC+MilHqTTHG4T+cwdoW/u9j+e/13UOC8evk=;
- b=qO07ovr5xCkl5eVs7ri+46O+CvXtha7sSy6dQ9gDL1tvX72CTzO7PWA3HBtdiQOh6MtRef1rANjYF5WGTf4AzsvXUxjczsIIa6vLivVtS2h9C5uavLk4wmgDYPNs7EpywpKD71QOooPoGME8jzYD9fKpMhCWsccLV3icxYrSILUCHgxq4MnXQlhMFtu3cSYyvMlLv16mQ3iZ3dtXuSnJimibncPbEqRQfFJfIjmbcsBbEMJUpApj9ppZFS+l37lw8OgKRRQg7r+8odjOSN187ybA72sYt3RzjxTSqdWOV0cR6PsyKTJkZo0sO8s1dBp9r4torsQFnK2/bWjdBbGrrg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
- header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=ExIQu0ecC+MilHqTTHG4T+cwdoW/u9j+e/13UOC8evk=;
- b=ti45l6R3rAairjST8wQpX4rwAdEhUbxlvsWe3pRQDPGmgdpH7hi3qh0ah8pImSgpEYXkJYF/G4zW8wM/rRWsaot0n0DmpNAPPQIaKNVnbuUTXuKJ3d9wJBh6pAhI0sfZrV095n+txoSbSr2hCkwVtfSsVHcJurVLbCDC48zoIBdHEm1k4Bv0t5n/2I5tjOb89wrRTpK03FOC4OG8q3f310uPEjvqXsPpsudf7lnHKPZt7hQCaHRNS0zfb/temzQTvwKtXJUFUTm3AAE7wBi1Hffo5Fv7DJnGk33MIoCovSQfqnfg7H1LdCgGF1LZkIM/kvKERMH9sDKmT5q/hdU2FQ==
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=virtuozzo.com;
-Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
- (2603:10a6:800:20a::12) by DB3PR08MB9058.eurprd08.prod.outlook.com
- (2603:10a6:10:430::21) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.496.15; Wed, 7 Oct
- 2026 08:40:04 +0000
-Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
- ([fe80::4e37:b189:ddcd:3dd8]) by VI0PR08MB10656.eurprd08.prod.outlook.com
- ([fe80::4e37:b189:ddcd:3dd8%7]) with mapi id 15.21.0496.010; Wed, 7 Oct 2026
- 08:40:04 +0000
-From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-Date: Wed, 07 Oct 2026 11:40:03 +0300
-Subject: [PATCH v14 10/22] vhost-vsock: preserve vhost FD during CPR
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20261007-up-vsock-vhost-v5-v14-10-e16de9962df0@virtuozzo.com>
-References: <20261007-up-vsock-vhost-v5-v14-0-e16de9962df0@virtuozzo.com>
-In-Reply-To: <20261007-up-vsock-vhost-v5-v14-0-e16de9962df0@virtuozzo.com>
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xENyS-0005Hp-MU
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 05:30:10 -0400
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6977jeA53298341
+ for <qemu-devel@nongnu.org>; Wed, 7 Oct 2026 09:30:06 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:subject:to; s=qcppdkim1; bh=peOisZFBpZ32NfgNzRqCOq
+ BYF37h9kgf8/mExHACSj8=; b=Z3Hky59E4w3XAFutILqPUIF5ibcW7JUYKIcct3
+ eTG9ugLUXYOqV8YKPkZ4MTs3/BCT+QrOHdt7UqsKmNz5Vsj9dwAVvrxU05A2F8zQ
+ 4LCt9W+nRCb3eP0LMpgcKagGMEBLgSxWkOHKZfcOiFC+LGUFZW1V/vlDfvuIkyTe
+ ku/BNxGtrvgqTlfXtYTHxiPF2wKXG5XdonX5+D3jLWwlE6EkR74inbtfEHTFwNcc
+ 0tBrlmkb3605A8hrFKJpL988jlSoFzzMrgYL0F4/BHD968oIOWOq3VWqy6XnrECH
+ b3T71LcaFpq289YdWqH9V5dD+6JlpPJqBPijRZFKPsPLAxPQ==
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h5hdcrf60-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Wed, 07 Oct 2026 09:30:06 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-939c30aa9a0so446641385a.0
+ for <qemu-devel@nongnu.org>; Wed, 07 Oct 2026 02:30:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1791365406; x=1791970206; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=peOisZFBpZ32NfgNzRqCOqBYF37h9kgf8/mExHACSj8=;
+ b=afJsEUvFwzOYQRd73AtNf1/DeOLk26WrjvfgpftUYiajsAz3sb6zI9SlPg7VLUWVDQ
+ EcEMB6bcJ27O0jv5eX4A9ebimyGkkSD+U9JDYn8TwKsae37VS0MOJSmIf+57/uNVIjNI
+ 7NwQuQq9eBK34QxuOI4GKf0zT/2TjyqtX2iuRfiKXyG57nZvvY+ni1bNqTaKSYrV3jOZ
+ BqQuecjSxW/aoMojV9P3dW3lin3GmLIwbbuyavRcPJkzPFGXzkJIp9f3plRhw0TINdM7
+ KWRE233LxnKS8qU6LrYql3AyDRDpE1xu9ItGLxcqw+YJW9t7N2xzKVtIYj6blA2aeA9M
+ pEVQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1791365406; x=1791970206;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=peOisZFBpZ32NfgNzRqCOqBYF37h9kgf8/mExHACSj8=;
+ b=FOw7xnFNrAWJe/rj/MGIprAk6eiPKNcyuJGutjF0ffrQkc/N64kewMBS+3aHNVavNY
+ ozWkVTlyFd3e9qZ4BXkwjNFOoP5t5+276DP40ddXpZ0ekNXU4vq1dzQjVHIDqqPIls/o
+ x77TnTxI2Bz9nPRbnIrXERe0l5PXLRqOKnT9BFcurDRPRKW37wxY5kYlHRwOu1JDfQ1R
+ 1Nditf6VHCw+pq+Tu6+e0RjiKozeWN2yq5opBPVffLHCKXhyMgkSvYgshQjMxXyNNtZn
+ q03jv68WgeNr02jj0lkvGzQHaki1b8eM3UAErp+6QpwO3tJLg9+poSKBQPhwPdfNkSnT
+ WCBg==
+X-Gm-Message-State: AFuF++mGiLphxxmgJ5TYBP9YgoFOatTyIhcwY7xI0529WJuI9Rm/+21A
+ gbjfVeI6N8ZXHxDxHWqFcsX2N+1mc8dS0aPJZf3ddJZoZWXAQhn4YFF5xFY7vKIcGVX504B7CV0
+ baeI/pmWpusqSSIRArZI1fgN96+cnMifctR/Ny1CBku94J1l/rpXdTM4at/QAS3Jp9GK2
+X-Gm-Gg: AYBFou04/ZFSQn4Sw+ayXrVEXXKVTj74DRMcgOvbg/qlq5Ggw1sNpxRAcI+hi06UKUF
+ 9lKyzhzAa7VM85Ix0RRfz6IAWlbJmuObJnDXWJE86kITaQeQxK3y4rbNX2gfLBfZb8JmebPB5JC
+ Oz+G7R+fM6/1n2/Urx6vDBEt3pFKuZw700vQj5luIUdS9+zu9uw1PZFfyJtVllN5skOl1YCgWOr
+ f5uK257XSXhNPMd7n9wpJhiG1w4hfatLP8hs9UQxjfL0/E96SD2L/D/y9dPP9nQXnptd4pZsyJ5
+ O9GROhrRvnzgzPKgkveoWkOOxITRLXShgp6ggsCtawNEGE32/Tw51p5UYFW5Up4N8BRB6nhwDTC
+ Z9i+q0fcnKvGHgv0w45Imlg6JOoCzn5CoA/CAe8hL
+X-Received: by 2002:a05:620a:460f:b0:93c:ca09:aa34 with SMTP id
+ af79cd13be357-93e9b7c2ac4mr328637085a.46.1791365405788; 
+ Wed, 07 Oct 2026 02:30:05 -0700 (PDT)
+X-Received: by 2002:a05:620a:460f:b0:93c:ca09:aa34 with SMTP id
+ af79cd13be357-93e9b7c2ac4mr328632385a.46.1791365404997; 
+ Wed, 07 Oct 2026 02:30:04 -0700 (PDT)
+Received: from localhost.localdomain (pmd666.hd.free.fr. [88.187.86.199])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4a180310c9fsm37495675e9.4.2026.10.07.02.30.02
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Wed, 07 Oct 2026 02:30:04 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
-Cc: dwmw2@infradead.org, mst@redhat.com, vsementsov@yandex-team.ru, 
- farosas@suse.de, peterx@redhat.com, dongli.zhang@oracle.com, den@openvz.org, 
- andrey.drobyshev@virtuozzo.com, mark.kanda@oracle.com, sgarzare@redhat.com, 
- maciej.szmigiero@oracle.com, odaki@rsg.ci.i.u-tokyo.ac.jp, 
- philmd@oss.qualcomm.com, bchaney@akamai.com, clg@redhat.com
-X-Mailer: b4 0.16.0
-X-ClientProxiedBy: VI6PEPF00000236.AUTP296.PROD.OUTLOOK.COM
- (2603:10a6:808:1::8ee) To VI0PR08MB10656.eurprd08.prod.outlook.com
- (2603:10a6:800:20a::12)
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Peter Xu <peterx@redhat.com>, Alexander Graf <agraf@csgraf.de>,
+ "Scott J . Goldman" <scottjgo@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Mark Burton <mburton@qti.qualcomm.com>, qemu-stable@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Subject: [PATCH] target/arm/hvf: Retry RAM write faults only for dirty logging
+Date: Wed,  7 Oct 2026 11:30:01 +0200
+Message-ID: <20261007093001.74476-1-philmd@oss.qualcomm.com>
+X-Mailer: git-send-email 2.55.0
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: VI0PR08MB10656:EE_|DB3PR08MB9058:EE_
-X-MS-Office365-Filtering-Correlation-Id: e65009ca-cee3-42cc-1b18-08df244e9563
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|52116014|7416014|376014|23010399003|366016|1800799024|10067099003|56012099006|18002099003|22082099003|38350700014;
-X-Microsoft-Antispam-Message-Info: x9BizHDWYZ/+Thx4eqPJaqaMJz/jzdWh1io55DB8biitaYb5lYawvBCYQX0GCQ1h8x5DY/nDVQuUbI23fSVOiUkp9ZEpuicX2ITZsnrr2xCF1c1T6lhOSmYcIQDxSKJVy5LQVCAt3VcyaL8WJiLXfJo1YdEOT2brSnzaNAYD/bE91uJMP//2AvmzMNnkn1qcAG04l1ymHZkMtBrdaI5KfdNcAByfH4eCtAxexWG/KyY8vECmXFoQGxHT2mwEwmDF7cl2FKC7guRbtrqzeN0y4iK0BRhWhtTIlDJUstoDvtyCph4kkNnOK0QS+8Urvd7yJB1OPB060TJ0rTtqA6zDDv+BUOR54iQmRgrqccfsRQXDoDwvEF3Y4SfVi0Dp9M+q1RMTvHxcLxCY+VBokTTI94wfBNRE2jNjxQtBaCxcfWXcYOFd4AHWRuNUox0RLmmCp0fzdt8f5oFxGby1OvQzqLx+/7WSiDpktxN6NFeh4YChT7V2HBs8wlDbP82UmORvIkaFb03GDdRutc2AToVWDxTmlLSLVorKSyPoH6LoUESrLPFLLUZybafF5RjZfD9T2P/6d2IthmQ4z7zEf/9TszQ86TmuPJvoik+kNfEfg6LsVdPh8tmq/IwGdvmP9gKU0nMvrs13IP3z+mreaivB3PTGzjNIgEIw2zWn+Kla6g/27EoMXmua8+rWu/+VlCIX3SL7K6vvAE1sFPrk0aDUjYSy6tqM1vVrIJcYA+0avHs=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:VI0PR08MB10656.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(52116014)(7416014)(376014)(23010399003)(366016)(1800799024)(10067099003)(56012099006)(18002099003)(22082099003)(38350700014);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?dklhQ0p0eWZFekorYlUwRHdrYU1LYTFmanBTTzk4SE40WC9JTVNLRUlFUmla?=
- =?utf-8?B?ajNtL2dSaVA3em1UcUpOemNKSTlVMFB1dlIxMGJFQTQ2d08wbysvZDVRUFgv?=
- =?utf-8?B?d3hYZjRrZHdsby9qaFp3WkVHUEkxZHcwTmJESjFoQTkxQXBIem5jSnNERFFz?=
- =?utf-8?B?VmFmMk9xMEk4UXA4NTM0YjRBaW5nc0ZpV2ttclhNa0pSaVVHc1RmWGRzSmow?=
- =?utf-8?B?aGVBSTRtWEMwS29jNFlTMDNRamE4akZ3WkRVQ2V1SFI1Q0tBN054QmkvcWY0?=
- =?utf-8?B?ejhEY09mZjBsRmttVkI4SlRsWncwam8xMCsxdWJWSGVZcXNQRlRGU3dIcmZZ?=
- =?utf-8?B?VVlNOHlkSjdOaWxaNWZRbUhZNmdxL2RDS28vVzRlQ2F5cUFyb08vYVBBbG4v?=
- =?utf-8?B?M2VjdU9VdmlHVzRoVmQwSnJLZngvNjV0N1VQemR0OXJTSnlFQWZyQ0Iza0NJ?=
- =?utf-8?B?UE1xaTM1UytCV3E3eUtTV2tRTnFHNGxaTUtVQXpKanFVMHZjbkRRaDVDK3JG?=
- =?utf-8?B?UFR2ai8rQTVrUCtDWU10Z214bGVSM3k1OGNhNWoxUWVRdC9ybmpDZTlMY1hH?=
- =?utf-8?B?aFpkMjV4RVJ3azhjNHNja1E2MkgzT21sbXRKdWVQWTk5YzY3akJ1MVd5Y2cv?=
- =?utf-8?B?dEFtQjh6a04vLytMSytNOTJ4YnRYRXIydURnNUNFNWl1aSthVUVOQnluWEw0?=
- =?utf-8?B?ZEp5Ly9KbkFiZmhiajVYQnkvUUJxZmRLbDdDZHR4VWZnTHFZQlRjekR3MzZa?=
- =?utf-8?B?ZWVmdHd5ZG1udGg1NzZkNDVIc0lRMEo4dzJ4dkgxOFRIY3ZJMDljd3YwbVBv?=
- =?utf-8?B?TzUybGhlakJnVnp3Tmc1WXdzbUlvVElrMXo3cHErOTFOcnFINHhDR1J3eE9Q?=
- =?utf-8?B?dHpad0x4OEViRDJmV3ZvTFFQcis5ZjE0UjNNOUxEZW5pSTRLYUpBY0FuNlNm?=
- =?utf-8?B?c1VFWm1MVDFXWUR5MGFZVDhvL2ZCMko5YlBCa0Jsc3FSbEZaMXAxU3VoNGRh?=
- =?utf-8?B?MDBMUlB4NHlLV2hlc3pndkpHeXhxLzFNOE41R0tHbG56cU13M2JIbSt1MC9O?=
- =?utf-8?B?cmdqalpwNUlSQnZkdkJLeDlubW9tYnYzVGFNUDIrTUlXb0JuRkFJMS9NbjZj?=
- =?utf-8?B?d0VyY1lpb3RwVWNnQlBpOWxycVhlM0hqWVpCUVVxbWNPR2NRNXI3S3J5cm1l?=
- =?utf-8?B?NEJQQUcrb0VrUXNjcWNMWHFJU3JpZEFHQ3huMk1haHpyb0FJbDdxTzRaZjgy?=
- =?utf-8?B?cnBsMlFNWXBOVGdyU2xQRG56YlZUT2UwdWZZTzdqbTIxQjJGRFZrTWZFSSti?=
- =?utf-8?B?RGFucC9vQXBoU0s5R0UxWkhweDgydnY3MTVjVG43Q3o5ZVFwdDBMV3ZXcTFE?=
- =?utf-8?B?OXUwQ0k0QjdGWkZKUmlRa3lNNTdreWVnczRmdld0d0lTUDRQSW9CRG9vczVU?=
- =?utf-8?B?bWp0UFVVTlBuTUtlS2FlYTRlRUgxOVd3U2E3bmlJdmx4YWY3N0gxZEhNRkhU?=
- =?utf-8?B?NS90K0Fic3pDL0x2WTE4QU1MbXBXcjFVdHRYUUxKUjliZjYvR2NWZlg3VTRS?=
- =?utf-8?B?blJJOEdiUlpmSUZCcGIzbkUxdVdvQ2VzSUdIWkRwQXQ0NWhFMEg5OUREUDFT?=
- =?utf-8?B?dnBaSTRzWndFd3drSnBsd24yaXdDYmMxZ2JhZmN2K2JaV1RKbWV3djI2R21l?=
- =?utf-8?B?dm1JQ0xoNGQvdWJ1ZXg0Rlo1OVo3YWYvd0twcmdweHRTUi9JcGQ1cmI4VXE3?=
- =?utf-8?B?Q1RnU0IrekRnUXRlV3JXK2ZReXF6a1lpUWYyeTZIMHhVZ3dFLzJQUHFTTzBr?=
- =?utf-8?B?WnJHVlJNV2lXK2RyajZrUm4yUVppclVKYU4yQjUxRGI2U091cVJlRW5sTGUz?=
- =?utf-8?B?enY5VmVBQWUwdFMyTldJOTh2aUNIazBPc0hsT0FwbkV6VHdWZGttRWs3WHNM?=
- =?utf-8?B?VWhGS3BnengwclMrRVJUZzRMZEVFWmRiZ3BadzhRaVl1UHVST2w0d1FIelV3?=
- =?utf-8?B?M1Y3Q2xjZXhBNUQ3OUZ0MGtMb3BKbkRvMGdGWWJENnoxZGlFbEdRYlNJOWtZ?=
- =?utf-8?B?UDZTYmJLakxMVnQxT2E4SnZOQU9GQzZYVEtCY2d4dEg2YnpsNE1nc3FSRHJP?=
- =?utf-8?B?alBXckphUmhsT1NzeHdVWnl5UWR2bG9MYlliV2lBODAvUkg5ZkRJbEhNYVYr?=
- =?utf-8?B?UVc1dEFYYTl3MG05bHRQcmkweDdDNTFUZ1dKOFdKNkRtb0JuSjNsRXZweXZG?=
- =?utf-8?B?ZlMvOEVCaDlQUnJvRG0xUkNYdmxSS2NUWm5ER2xyTjJBVFJFUkFhbVpvUUQy?=
- =?utf-8?B?NVNSK3Z1cEVrN2hYQ05RVnBRbm92dE11TGJ1SEpMTW14bnZNc3YyY2JaMzJz?=
- =?utf-8?Q?brLCsEsoD8qmp0co=3D?=
-X-OriginatorOrg: virtuozzo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: e65009ca-cee3-42cc-1b18-08df244e9563
-X-MS-Exchange-CrossTenant-AuthSource: VI0PR08MB10656.eurprd08.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Oct 2026 08:40:04.3196 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: xo8AscULvnb1L4JdYEPdPLOx+U79a/VDD+vFcXeAJmZ4RV9Z7xL+NWM5VA39xYZldri4L9o96ez7KMSSOnWraTGqyBFIGycPtV0zOUMHocU=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB3PR08MB9058
-Received-SPF: pass client-ip=2a01:111:f403:c200::3;
- envelope-from=andrey.drobyshev@virtuozzo.com;
- helo=DU2PR03CU002.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-GUID: hTJzi_Q4hkHjh6zzr-YD1tKAR5XWPt_F
+X-Authority-Analysis: v=2.4 cv=aKFlOr9m c=1 sm=1 tr=0 ts=6ac6111e cx=c_pps
+ a=HLyN3IcIa5EE8TELMZ618Q==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
+ a=EUspDBNiAAAA:8 a=69wJf7TsAAAA:8 a=4iX3uDW9G_cJQgqnWakA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=bTQJ7kPSJx9SKPbeHEYW:22 a=Fg1AiH1G6rFz08G2ETeA:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA3MDAzNyBTYWx0ZWRfX/6Ezir8tXh4A
+ Pa+JJybyYyG5doghJGcilGEUAOlHM9SMEmqHlODgNq6OyFYpQLaxqUY1J0xtG+QoglOBl1Pc0mr
+ CfWILKopuljX5ATGC03fFlE+ch6cxtI=
+X-Proofpoint-ORIG-GUID: hTJzi_Q4hkHjh6zzr-YD1tKAR5XWPt_F
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA3MDAzNyBTYWx0ZWRfXyMsUtTKpafkr
+ XerF9SXXEnwp337VpySDb5nYm8oJngb/EIYFc/AMPvUvOHdimkIYfArZZRNV9tWPB41w4Usn6hd
+ NG6jLH/DBiSb7EFe866Mp3UmhJCkbDcGr3HfwR3H1YdNEgBrAtaBUfjI7FpxylmT6InRQvCuIDK
+ pOTqEdAQniLdLBo3YOv5PqiUNMr29kk6VVQkOQ1YJ57d4yFVCsdiLRW5jEJVppNpuM6MNXPuV8I
+ hDHmwtYctUzCUettnzOD8b+bgnfbwGyLOIDAun3LPoEeG9OshF+YTHR3+0SzuW+o/dKDCdMYq9d
+ UUB4PC+9G7zDii1QvW2q5YVBha9YeDAzHcBemtrtyfKFPoPkBD3gFQTZhtBlqKD7M6hk3cIWrhs
+ VL4ms3kaFkF3sohh+RR0nxFU66wZiwPOpwHwXkbMMrl/76kB7wsEKStGehAOsbxBCAMbOXlxzUe
+ Zvrpg1fBnKq1GpTrV6Q==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-10-07_03,2026-10-06_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 phishscore=0 malwarescore=0 priorityscore=1501 impostorscore=0
+ bulkscore=0 adultscore=0 lowpriorityscore=0 spamscore=0 clxscore=1015
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2610070037
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -154,124 +152,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-During CPR (checkpoint-restore) migration the guest keeps running on the
-same host, so instead of reopening /dev/vhost-vsock on the destination,
-we should reuse the FD from the source.  The FD is saved in the CPR
-namespace (hash table) with cpr_save_fd() and then reclaimed on the
-target via cpr_find_fd().
+From: Mark Burton <mburton@qti.qualcomm.com>
 
-Use the (suffixed) device path as the key in CPR hash table.  Device
-path is obtained with qdev_get_dev_path() and is essentially the
-device's address on the underlying bus.  As any vhost-vsock device is
-attached to a virtio bus, whose .get_dev_path() forwards to the proxy
-device, and every proxy bus (PCI, MMIO, CCW) implements it, we should
-always be getting a unique non-empty path with qdev_get_dev_path().
+Dirty-page logging handles a RAM write fault by marking the page dirty,
+restoring write permission, and retrying the guest instruction.
 
-vhost_dev_init() (and thus VHOST_SET_OWNER) still runs in realize() here.
-Deferring the ownership handoff to pre_save/post_load is done in a
-following patch.  Until then CPR remains blocked, so the restore path
-added here is not reachable yet.
+The handler also retried when the resolved RAM region had no dirty-log
+client.  This path neither restores permission nor advances the PC, so
+the instruction can repeatedly exit to QEMU.
 
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+Retry only after marking the page dirty and restoring write permission.
+Otherwise, use the existing emulation path to complete the access and
+advance the guest PC.
+
+Cc: qemu-stable@nongnu.org
+Fixes: 58bc47fd1c ("target/arm/hvf: Implement dirty page tracking")
+Signed-off-by: Mark Burton <mburton@qti.qualcomm.com>
+[PMD: Reworded description]
+Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 ---
- hw/virtio/vhost-vsock.c | 37 ++++++++++++++++++++++++++++++++++++-
- 1 file changed, 36 insertions(+), 1 deletion(-)
+ target/arm/hvf/hvf.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/hw/virtio/vhost-vsock.c b/hw/virtio/vhost-vsock.c
-index 3ec20d87606..6e89007b2ce 100644
---- a/hw/virtio/vhost-vsock.c
-+++ b/hw/virtio/vhost-vsock.c
-@@ -69,6 +69,18 @@ static int vhost_vsock_set_running(VirtIODevice *vdev, int start)
-     return 0;
- }
+diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
+index b00a7e1a845..b6a2dba71bb 100644
+--- a/target/arm/hvf/hvf.c
++++ b/target/arm/hvf/hvf.c
+@@ -2427,10 +2427,10 @@ static int hvf_handle_exception(CPUState *cpu, hv_vcpu_exit_exception_t *excp)
+                 if (memory_region_get_dirty_log_mask(mr)) {
+                     memory_region_set_dirty(mr, xlat, page_size);
+                     hvf_unprotect_dirty_range(ipa_page, page_size);
+-                }
  
-+/*
-+ * Any vhost-vsock device is attached to a virtio bus, whose .get_dev_path()
-+ * forwards to the proxy device, and every proxy bus (PCI, MMIO, CCW)
-+ * implements it.  Thus qdev_get_dev_path() always returns a non-empty string,
-+ * which guarantees us a unique CPR name.
-+ */
-+static char *vhost_vsock_cpr_name(DeviceState *dev)
-+{
-+    g_autofree char *path = qdev_get_dev_path(dev);
-+    g_assert(path && path[0]);
-+    return g_strdup_printf("%s/vhost-vsock", path);
-+}
+-                /* Retry with page writes enabled. */
+-                break;
++                    /* Retry with page writes enabled. */
++                    break;
++                }
+             }
+         }
  
- static int vhost_vsock_set_status(VirtIODevice *vdev, uint8_t status)
- {
-@@ -143,6 +155,8 @@ static void vhost_vsock_device_realize(DeviceState *dev, Error **errp)
-     VHostVSockCommon *vvc = VHOST_VSOCK_COMMON(dev);
-     VirtIODevice *vdev = VIRTIO_DEVICE(dev);
-     VHostVSock *vsock = VHOST_VSOCK(dev);
-+    g_autofree char *cpr_name = vhost_vsock_cpr_name(dev);
-+    bool cpr_incoming = cpr_is_incoming();
-     int vhostfd;
-     int ret;
- 
-@@ -170,7 +184,14 @@ static void vhost_vsock_device_realize(DeviceState *dev, Error **errp)
-         return;
-     }
- 
--    if (vsock->conf.vhostfd) {
-+    if (cpr_incoming) {
-+        /* Reuse the fd handed over from the source QEMU */
-+        vhostfd = cpr_find_fd(cpr_name, 0);
-+        if (vhostfd < 0) {
-+            error_setg(errp, "vhost-vsock: could not find restored vhost FD");
-+            goto err_blocker;
-+        }
-+    } else if (vsock->conf.vhostfd) {
-         vhostfd = monitor_fd_param(monitor_cur(), vsock->conf.vhostfd, errp);
-         if (vhostfd == -1) {
-             error_prepend(errp, "vhost-vsock: unable to parse vhostfd: ");
-@@ -186,6 +207,9 @@ static void vhost_vsock_device_realize(DeviceState *dev, Error **errp)
- 
-     if (!qemu_set_blocking(vhostfd, false, errp)) {
-         close(vhostfd);
-+        if (cpr_incoming) {
-+            cpr_delete_fd(cpr_name, 0);
-+        }
-         goto err_blocker;
-     }
- 
-@@ -207,11 +231,20 @@ static void vhost_vsock_device_realize(DeviceState *dev, Error **errp)
-         goto err_vhost_dev;
-     }
- 
-+    /* Register the fd for a future CPR after a fully successful realize */
-+    if (!cpr_incoming && !cpr_save_fd(cpr_name, 0, vhostfd, errp)) {
-+        goto err_vhost_dev;
-+    }
-+
-     return;
- 
- err_vhost_dev:
-     /* vhost_dev_cleanup() closes the vhostfd passed to vhost_dev_init() */
-     vhost_dev_cleanup(&vvc->vhost_dev);
-+    if (cpr_incoming) {
-+        /* The fd came from cpr_find_fd() and is closed now, drop the entry */
-+        cpr_delete_fd(cpr_name, 0);
-+    }
- err_virtio:
-     vhost_vsock_common_unrealize(vdev);
- err_blocker:
-@@ -223,10 +256,12 @@ static void vhost_vsock_device_unrealize(DeviceState *dev)
-     VHostVSockCommon *vvc = VHOST_VSOCK_COMMON(dev);
-     VirtIODevice *vdev = VIRTIO_DEVICE(dev);
-     VHostVSock *vsock = VHOST_VSOCK(dev);
-+    g_autofree char *cpr_name = vhost_vsock_cpr_name(dev);
- 
-     /* This will stop vhost backend if appropriate. */
-     vhost_vsock_set_status(vdev, 0);
- 
-+    cpr_delete_fd(cpr_name, 0);
-     migrate_del_blocker(&vsock->migration_blocker);
-     vhost_dev_cleanup(&vvc->vhost_dev);
-     vhost_vsock_common_unrealize(vdev);
-
 -- 
-2.47.1
+2.55.0
 
 
