@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3174CA5FFC
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 13:09:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57181CA5FFC
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 13:11:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xEROA-0005vu-LV; Wed, 07 Oct 2026 09:08:59 -0400
+	id 1xERQE-0006mr-2b; Wed, 07 Oct 2026 09:11:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1xERNz-0005v5-Kk
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 09:08:44 -0400
-Received: from smtpout1.mo536.mail-out.ovh.net ([51.210.91.10])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1xERQC-0006m1-2D
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 09:11:00 -0400
+Received: from smtpout10.mo538.mail-out.ovh.net ([51.210.91.39])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1xERNw-0008GN-Hv
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 09:08:43 -0400
-Received: from director3.derp.mail-out.ovh.net
- (director3.derp.mail-out.ovh.net [79.137.60.223])
- by mo536.mail-out.ovh.net (Postfix) with ESMTPS id 4j0D2q70fGz88R6;
- Wed,  7 Oct 2026 13:08:35 +0000 (UTC)
-Received: from director3.derp.mail-out.ovh.net
- (director3.derp.mail-out.ovh.net. [127.0.0.1])
- by director3.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
- for <jamin_lin@aspeedtech.com>; Wed,  7 Oct 2026 13:08:35 +0000 (UTC)
-Received: from mta10.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.164.42])
- by director3.derp.mail-out.ovh.net (Postfix) with ESMTPS id
- 4j0D2q317Dz1xrl; Wed,  7 Oct 2026 13:08:35 +0000 (UTC)
-Received: from kaod.org (unknown [10.1.6.2])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1xERQA-0000Ei-85
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 09:10:59 -0400
+Received: from director4.derp.mail-out.ovh.net
+ (director4.derp.mail-out.ovh.net [79.137.60.37])
+ by mo538.mail-out.ovh.net (Postfix) with ESMTPS id 4j0D5V0ZPsz6FR0;
+ Wed,  7 Oct 2026 13:10:53 +0000 (UTC)
+Received: from director4.derp.mail-out.ovh.net
+ (director4.derp.mail-out.ovh.net. [127.0.0.1])
+ by director4.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
+ for <jamin_lin@aspeedtech.com>; Wed,  7 Oct 2026 13:10:53 +0000 (UTC)
+Received: from mta11.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.109.231.33])
+ by director4.derp.mail-out.ovh.net (Postfix) with ESMTPS id
+ 4j0D5T2YsZz1xrR; Wed,  7 Oct 2026 13:10:53 +0000 (UTC)
+Received: from kaod.org (unknown [10.1.6.3])
  (Authenticated sender: clg@kaod.org)
- by mta10.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id
- 842651922C58; Wed,  7 Oct 2026 13:08:33 +0000 (UTC)
+ by mta11.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id
+ EE49E2402C64; Wed,  7 Oct 2026 13:10:50 +0000 (UTC)
 Authentication-Results: garm.ovh; auth=pass
- (GARM-105G00607362911-8fae-4702-af6c-f2f90f0a929a,
+ (GARM-112S00617a45ec8-15d4-40d3-b84e-ad180e49bb48,
  55F3741E86F82430FE8C443D65E56F6716F373F4) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 92.184.136.188
-Message-ID: <23d822c9-4c74-4e34-af38-237416cee439@kaod.org>
-Date: Wed, 7 Oct 2026 15:08:32 +0200
+Message-ID: <809fa0e8-889c-43a6-95bd-6a536b6bae93@kaod.org>
+Date: Wed, 7 Oct 2026 15:10:49 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/2] tests/functional/aarch64/test_aspeed_ast2700a2:
- Add I2C test for IO expander 1
+Subject: Re: [PATCH v2 0/2] hw/arm/aspeed: Sort device IDs and add IO expander
+ test
 To: Jamin Lin <jamin_lin@aspeedtech.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
@@ -52,7 +52,6 @@ To: Jamin Lin <jamin_lin@aspeedtech.com>,
  "open list:All patches CC here" <qemu-devel@nongnu.org>
 Cc: Troy Lee <troy_lee@aspeedtech.com>
 References: <20261005020428.3496039-1-jamin_lin@aspeedtech.com>
- <20261005020428.3496039-3-jamin_lin@aspeedtech.com>
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Content-Language: en-US, fr
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -97,23 +96,23 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20261005020428.3496039-3-jamin_lin@aspeedtech.com>
+In-Reply-To: <20261005020428.3496039-1-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-x-ovh-tracer-id: 4923278821287767051
+Content-Transfer-Encoding: 7bit
+x-ovh-tracer-id: 4962122364486200331
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTGv9ncUogrE83oDH/5+N52iY1GKGKIZUSmnfpDcBTyw7FvZ2Ip7+Fp0ewWo2k73W0Ab+6ir9POEQaAkNIVN0oHxd3wU1U9CvO87uGFn+Fp/C89ZjzcbMW5uU9ylRrVP3f50vUOIdq868aXHkI45bsledf7oDl61+54gH6/WeYaUBrdKHlaoVLneIn3HukAVB83a33lk1+DVDkasQ0JlNZ7FSlBFZeCSllQfF6Fh0y8sU5EvAeZRUk4cV0jBYFvUnrp9HX2I5so/QY5KeqsgqZpV+oJwfyLnUe1AniYT+MPi2jVaLPpawttPnWkdAJISCZOKFJoWjDTerUv5OeJjnt/CNNl+xivLbAocz8LCqQNI5zYi6LvtFBcCpuOE4v3YylpN3ZJy9Wwk4O/LSNOtILkKng0k41RUpOEEPo5IMJSH/p+ifQdmqwPdHqqjjdYfGmM1lSl9P3ve9s14Ln9Re53ehGOgAbFLNFH9xRBJELtpX3SW328uv9HgfRg3mKL7ZuhmCjdIJKatgYvOHcclvXQHIZIwaYF52afDLkLoclMdZ5ItIrLzFlx/BbOVPEjIm3Tt+H1HSJ1JVfl14dezSKHdTGjN4QYeoJOdzRYV+O8IuRaJKnHWf7mPXDu6jtaUfHuQPJ9DtPiJxn+qd+MrVGIFz9bbH3CCVN0BHu+CNOUDTQ
-DKIM-Signature: a=rsa-sha256; bh=SV0MTsx7G7yOApnYx1aE0y7EEVL0SEvBEZ7p/p5ON/Q=; 
+X-VR-SPAMCAUSE: dmFkZTEInt30jbAn7Ow/7fgB+j2w/UxQ/Y8Bc1Yr0npbQNJ39wud+g8sgrFx6KnyUhSE1rpCuZf/teP8heIXP2ci7DcPbtBp52drvJ8DAw4i4M5xxs+EqDpUJBmWLEoWGdciBBjczyBH8anQtDvBFK0jQpTJGuPMSJcywLJ2vY8s2etFwB7GCw4/sBAcBtUBS4xaQHOkyXxpsDo+k4EEvIjQpr9BEUbSCE/sMPGTjK+dAzf/EYj+hz3Evqm6gfEPILq1ohLfbPZ9kCmAx/Q9pbpA5pXSbasq3w5J0bwIgFeDI48rR669gRv2YDaBQ5y2OHj2rOLOPv5Xq2PT5cMAhEKHX8u8EQlfjecthirNySttu4Rvg+bIxQjGyk/Rvx+oSfJtSBWYf0NOR10V+jHSV6P2/p2g8GXKjAbz7oP5ykgrqCqw8q51DMoLIqH25i/wsjaV7m9nyuQ+I4vZFoSiA2p7EXWPkR/GVxCfTB0f8eVw4Cj9TpE9HlGFVg6/OcWjmsAHPiIxqb4yRlZ23UPVwfEkFzgrXhaVfHdEQorOkTigGygMfvRoVRE5jpxldXlwzoCBfoKEhCRZ3arecEiG5MhGCroT4ziZzZw+M5nmoqVFuvCHDYpkFfJNDWm1yOY6z3wQO9mTvcRw0CKHCtsdz/M3TsRxRcbu00Nz9BwpdoaNhQqALg
+DKIM-Signature: a=rsa-sha256; bh=taFxztoqmRRv6d/v2uoqHsCs2r0py2UdzSqGlqInQ2E=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1791378517; v=1;
- b=uHGXbzMoZe2IXQjKwXTHRohhqomRR738k9rjKkzw+2quAhMfxJgqc82Hit/OkAmPLhBV5Xjz
- UyuhOX7W9VTqmkf72x8r0PLllJRhndai5XyeAvk29U8I3J5Ntfl8/WUuLXx5VgJL111CF/b2bTc
- 8fCKjpPKPnoVWmXBExjCTmLU0s2UEigYMG5jjScRWyqG4/dbO9NF8XlyzCCBRUEswl0sNX4IwOb
- /EM/xRNI0WDrar9zTqvfVNKOpXRMEXy+X5V/VGZ2+NDOMUtzLoXjFlJ7eX9Yk6LCRLLp8AQpg+/
- V1NdVmRO2Rv9FmfB4s2R6eL8ND9+NUN4Lj2D6M/YuAr4w==
-Received-SPF: pass client-ip=51.210.91.10; envelope-from=clg@kaod.org;
- helo=smtpout1.mo536.mail-out.ovh.net
+ t=1791378655; v=1;
+ b=osgwRjhNyA6DS6tU/C1jDz9qvLb1RCf4U+mVR80JIsHneUi42cBSGrQud1djm+RlvuC935W5
+ bzJaladprt6ceXQOLNogoQ9fk63xkqpk2WrL24UKn9phGFwuuT0DEUVMb33A5jRQiWIpqjl2dYj
+ gVRVwbOQANNVDojuMJti8IzijP1IQL4xcf45rvn+lwkxVoEVUeBTI2baIgCn5Iti/KJgUlYKvAk
+ ECgkblglt6cdzVK0DcWoV9uoA/aSUSX84VrDIJFUnszYdCeVBqvRwQ+C/iAiaIh92UD4CTfpY2L
+ +oiTAiXQY4Fzm58QUaNrIx0ryIVqFtwU+r7HSbm7dj8uw==
+Received-SPF: pass client-ip=51.210.91.39; envelope-from=clg@kaod.org;
+ helo=smtpout10.mo538.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -137,41 +136,40 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 10/5/26 04:04, Jamin Lin wrote:
-> The IO expander test only checks the I2C bus of IO expander 0. The I2C
-> buses of IO expander 1 are not tested, so a wrong interrupt wiring for
-> IO expander 1 can not be detected.
+> This series is split out from "[PATCH v1 0/11] hw/arm/aspeed: Use
+> unimp array and table for unimplemented devices" to make the changes
+> easier to review.
 > 
-> Add a TMP105 device on the first I2C bus of IO expander 1 and check that
-> it can be read from firmware.
-> 
-> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-> ---
->   tests/functional/aarch64/test_aspeed_ast2700a2.py | 3 +++
->   1 file changed, 3 insertions(+)
-> 
-> diff --git a/tests/functional/aarch64/test_aspeed_ast2700a2.py b/tests/functional/aarch64/test_aspeed_ast2700a2.py
-> index 01c7c4fdbe..74ef93fc0d 100755
-> --- a/tests/functional/aarch64/test_aspeed_ast2700a2.py
-> +++ b/tests/functional/aarch64/test_aspeed_ast2700a2.py
-> @@ -196,10 +196,13 @@ def test_aarch64_ast2700a2_evb_ioexp_v11_03(self):
->           self.vm.set_machine('ast2700a2-evb,fmc-model=w25q512jv')
->           self.vm.add_args('-device',
->                            'tmp105,bus=ioexp0.0,address=0x4d,id=tmp-test-16')
-> +        self.vm.add_args('-device',
-> +                         'tmp105,bus=ioexp1.0,address=0x4d,id=tmp-test-32')
->           self.start_ast2700_test('ast2700-dcscm-image', 8)
->           self.verify_openbmc_boot_and_login('ast2700-dcscm', False)
->           self.do_ast2700_i2c_test(8)
->           self.do_ast2700_i2c_test(16)
-> +        self.do_ast2700_i2c_test(32)
->   
->   if __name__ == '__main__':
->       QemuSystemTest.main()
+> v1
+>   1. sorts the ASPEED device IDs alphabetically.
+
+This is already applied to aspeed-next along with :
+https://lore.kernel.org/qemu-devel/20260930072501.2612119-1-jamin_lin@aspeedtech.com/
+
+> v2
+>   1. Split the device ID sorting change out into a separate series.
+>   2. Fix the IO expander device IDs in the correct order.
+>   3. Add a functional test for IO Expander 1 I2C.
 
 
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
+
+Applied patch 2 to :
+
+     https://github.com/legoater/qemu aspeed-next
 
 Thanks,
 
 C.
+
+
+> Jamin Lin (2):
+>    hw/arm/aspeed: Sort device IDs alphabetically
+>    tests/functional/aarch64/test_aspeed_ast2700a2: Add I2C test for IO
+>      expander 1
+> 
+>   include/hw/arm/aspeed_soc.h                   | 176 +++++++++---------
+>   .../aarch64/test_aspeed_ast2700a2.py          |   3 +
+>   2 files changed, 91 insertions(+), 88 deletions(-)
+> 
+
 
