@@ -4,79 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 760C1CA5FFC
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 11:01:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 851F0CA5FF1
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 11:25:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xEPOE-0000gN-1c; Wed, 07 Oct 2026 07:00:50 -0400
+	id 1xEPku-00068b-FC; Wed, 07 Oct 2026 07:24:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xEPOA-0000dH-Bf
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 07:00:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xEPO7-0001gj-NF
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 07:00:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1791370841;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ne9+pahuFHq5YTDYEIRYP/+u9UQG+XNxluMpTQ3NQh4=;
- b=VgBw5ah4xcGEgsj81Kjqe1k3jLJ6agzlFtgyRts1mlaEdhdmNBZR613Qx4b24XHuo+lSN8
- mYparSmFShDnrAoPb+FATUnBgMztqCSUPnIewtkqALGPn8zx4Kc7T7jIjAhR33657rhsQS
- 5ZZJb7E24gpCDRcV5oNBq3JUD4PCBYk=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-315-AUyowbpkNNOS7pQm8it-Lg-1; Wed,
- 07 Oct 2026 07:00:40 -0400
-X-MC-Unique: AUyowbpkNNOS7pQm8it-Lg-1
-X-Mimecast-MFC-AGG-ID: AUyowbpkNNOS7pQm8it-Lg_1791370839
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 355DB191320E; Wed,  7 Oct 2026 11:00:39 +0000 (UTC)
-Received: from redhat.com (headnet04.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.116])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D2C3630002D6; Wed,  7 Oct 2026 11:00:37 +0000 (UTC)
-Date: Wed, 7 Oct 2026 12:00:35 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>
-Subject: Re: [PATCH 01/27] cpus: Add helper to log raised exceptions with '-d
- int'
-Message-ID: <asYmU2H_J225oU2s@redhat.com>
-References: <20261007094516.75732-1-philmd@oss.qualcomm.com>
- <20261007094516.75732-2-philmd@oss.qualcomm.com>
- <7437c9ee-d1f5-452a-a456-d1dd7e1d268d@oss.qualcomm.com>
+ (Exim 4.90_1) (envelope-from <tanchi25@mails.ucas.ac.cn>)
+ id 1xEPkr-000683-2N; Wed, 07 Oct 2026 07:24:13 -0400
+Received: from smtp25.cstnet.cn ([159.226.251.25] helo=cstnet.cn)
+ by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_CBC_SHA1:256)
+ (Exim 4.90_1) (envelope-from <tanchi25@mails.ucas.ac.cn>)
+ id 1xEPkn-0004bZ-0f; Wed, 07 Oct 2026 07:24:12 -0400
+Received: from k3-03 (unknown [159.226.43.8])
+ by APP-05 (Coremail) with SMTP id zQCowADHND+0K8Zqm8iMCg--.24585S2;
+ Wed, 07 Oct 2026 19:23:55 +0800 (CST)
+From: Tan Chi <tanchi25@mails.ucas.ac.cn>
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
+ liwei1518@gmail.com, daniel.barboza@oss.qualcomm.com,
+ zhiwei_liu@linux.alibaba.com, chao.liu@processmission.com,
+ Tan Chi <tanchi25@mails.ucas.ac.cn>
+Subject: [PATCH] hw/riscv/riscv-iommu: reclaim invalidated IOATC entries
+Date: Wed,  7 Oct 2026 19:23:30 +0800
+Message-ID: <20261007112330.298720-1-tanchi25@mails.ucas.ac.cn>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <7437c9ee-d1f5-452a-a456-d1dd7e1d268d@oss.qualcomm.com>
-User-Agent: Mutt/2.4.2 (2026-08-30)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 10
-X-Spam_score: 1.0
-X-Spam_bar: +
-X-Spam_report: (1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-CM-TRANSID: zQCowADHND+0K8Zqm8iMCg--.24585S2
+X-Coremail-Antispam: 1UD129KBjvAXoW3tw4kCryfKF1fCw18JrW5KFg_yoW8Gw4fJo
+ W8ZrWrZa1UWry7A348WrnFkF4xG3yqk3ySvrZ0qF4vk3ZrA3WrG34IvrnxWF9Yqa13CF98
+ A3WkX39rJF1UJw1fn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7v73VFW2AGmfu7bjvjm3
+ AaLaJ3UjIYCTnIWjp_UUUYS7AC8VAFwI0_Gr0_Xr1l1xkIjI8I6I8E6xAIw20EY4v20xva
+ j40_Wr0E3s1l1IIY67AEw4v_Jr0_Jr4l8cAvFVAK0II2c7xJM28CjxkF64kEwVA0rcxSw2
+ x7M28EF7xvwVC0I7IYx2IY67AKxVW5JVW7JwA2z4x0Y4vE2Ix0cI8IcVCY1x0267AKxVW8
+ JVWxJwA2z4x0Y4vEx4A2jsIE14v26F4UJVW0owA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_Gc
+ CE3s1lnxkEFVAIw20F6cxK64vIFxWle2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xv
+ F2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v26r1j6r
+ 4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvY0x0EwIxGrwACjI8F5VA0II8E6IAqYI8I
+ 648v4I1lc7CjxVAaw2AFwI0_Jw0_GFyl42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7
+ v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF
+ 1VAY17CE14v26r1q6r43MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIx
+ AIcVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI
+ 42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r1j6r4UYxBIdaVFxh
+ VjvjDU0xZFpf9x0JUQvtAUUUUU=
+X-Originating-IP: [159.226.43.8]
+X-CM-SenderInfo: pwdquxrlsvqzpdlo2hpxfd2hldfou0/
+Received-SPF: pass client-ip=159.226.251.25;
+ envelope-from=tanchi25@mails.ucas.ac.cn; helo=cstnet.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,128 +71,429 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Oct 07, 2026 at 12:47:24PM +0200, Philippe Mathieu-Daudé wrote:
-> On 7/10/26 11:44, Philippe Mathieu-DaudÃ© wrote:
-> > Add log_raise_exception(), a common helper cpu_loop_*() can
-> > call to log a raised exception when '-d int' is used, and
-> > qemu_excp_name() to resolve QEMU-internal exceptions to names.
-> > 
-> > Use it in cpu_loop_exit_atomic() to log the EXCP_ATOMIC reason.
-> > 
-> > Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-> > ---
-> >   accel/tcg/cpu-exec-common.c | 32 ++++++++++++++++++++++++++++++++
-> >   1 file changed, 32 insertions(+)
-> > 
-> > diff --git a/accel/tcg/cpu-exec-common.c b/accel/tcg/cpu-exec-common.c
-> > index 68077c8fd9d..2ac8380d0bb 100644
-> > --- a/accel/tcg/cpu-exec-common.c
-> > +++ b/accel/tcg/cpu-exec-common.c
-> > @@ -89,6 +89,37 @@ void tcg_update_all_cflags(void)
-> >       }
-> >   }
-> > +#define EXCP_QEMU_INTERNAL 0x10000
-> > +
-> > +static const char *qemu_excp_name(int excp)
-> > +{
-> > +    static const char *excp_name[] = {
-> > +        [EXCP_INTERRUPT - EXCP_QEMU_INTERNAL] = "async interruption",
-> > +        [EXCP_HLT       - EXCP_QEMU_INTERNAL] = "hlt instruction",
-> > +        [EXCP_DEBUG     - EXCP_QEMU_INTERNAL] = "debug",
-> > +        [EXCP_HALTED    - EXCP_QEMU_INTERNAL] = "halted",
-> > +        [EXCP_YIELD     - EXCP_QEMU_INTERNAL] = "yield",
-> > +        [EXCP_ATOMIC    - EXCP_QEMU_INTERNAL] = "emulate atomic",
-> > +    };
-> > +    assert(excp >= EXCP_QEMU_INTERNAL);
-> > +    excp -= EXCP_QEMU_INTERNAL;
-> > +    if ((excp < ARRAY_SIZE(excp_name)) && excp_name[excp]) {
-> > +        return excp_name[excp];
-> > +    }
-> > +    return "undocumented";
-> > +}
-> > +
-> > +static void log_raise_exception(const CPUState *cpu, int excp)
-> > +{
-> > +    if (!qemu_loglevel_mask(CPU_LOG_INT)) {
-> > +        return;
-> > +    }
-> > +    if (excp >= EXCP_QEMU_INTERNAL) {
-> > +        qemu_log_mask(CPU_LOG_INT, "raise exception: 0x%x (internal: %s)\n",
-> > +                                   excp, qemu_excp_name(excp));
-> 
-> Daniel suggested on IRC we can use target_name() here to distinguish
-> between different kinds of vCPUs. Alternatively we can add a
-> CPUClass::log_friendly_format_name() defaulting to current "%p index:%d"
-> but overwritable i.e. as "accel:%s target:%s cluster:%d index:%u", so
-> each time we log something on a vCPU context we have an unified prefix
-> format to parse.
+IOTINVAL currently walks the IOATC hash table and invalidates matching
+entries by setting iot->perm to IOMMU_NONE. The invalidated entries remain
+in the hash table afterwards.
 
-That would be problematic. Those two different format strings have
-different args. Also since it is not a static string, it can't be
-concatenated with the format strnig being passed to qemu_log_mask().
-So that would imply sprintf'ing the CPU format string prefix first
-with whatever args it needs, before passing the result into the
-qemu_log_mask() call.
+Under workloads with frequent DMA map/unmap activity, invalid entries can
+accumulate while only a smaller number of entries remain valid. Subsequent
+IOTINVAL operations continue to scan these entries. They are also included
+in g_hash_table_size(), causing the IOATC to reach iot_limit earlier and
+the entire cache to be flushed more frequently.
 
-     g_autofree char *prefix = g_strdup_printf(
-         "accel:%s target:%s cluster:%d index:%u",
-	 accel, targe,t cluster, index);
-     cpu_log_mask(CPU_LOG_INT,
-                  "%s raise exception: 0x%x (internal: %s)\n",
-                  prefix, excp, qemu_excp_name(excp));
+Remove matching entries during invalidation instead of leaving them in the
+hash table with IOMMU_NONE.
 
-the double layers of printf makes logging quite unpleasant,
-and while it could be hidden in a macro, the runtime overhead
-still exists.
+Removing an entry also frees it, so a concurrent lookup must not retain a
+pointer to an entry being removed. Accesses that modify the IOATC hash table
+must also be serialized. Add iot_lock to protect IOATC lookup, update,
+invalidation, and reset operations, keeping both the hash table state and
+cached entry lifetime valid while they are accessed.
 
-On IRC, I suggested an approach that would work at the preprocessor
-level to concatenate the arch target name at compile time on to the
-front of all log messages, so there is no runtime impact at all,
-nor any code impact beyond s/qemu_log_mask/qemu_log_mask_target/.
+The measurements use a Linux 7.3-rc5 guest based on linux-iommu/next
+commit cec2dc7663e7 with v6 of the "iommu/riscv: Enable MSI remapping,
+IOMMU_DMA and VFIO" series applied. The QEMU behavior is not specific to
+this guest kernel; this configuration makes it easier to exercise through
+normal DMA map/unmap activity.
 
-#define  qemu_log_mask_target(MASK, FMT, ...)           \
-    do {                                                \
-        if (unlikely(qemu_loglevel_mask(MASK))) {       \
-          qemu_log(TARGET_NAME # FMT, ## __VA_ARGS__);\
-         }                                               \
-    } while (0)
+In a high-churn NVMe workload with frequent DMA map/unmap activity, runtime
+drops from 168 seconds to 35 seconds, a 4.8x speedup.
 
-Note, TARGE_NAME is poisoned, so we can't add this to to main
-include/qemu/log.h file. It would need to live in a header file
-that is built per-target, and thus only used from target specific
-code like the TCG impls. 
+A short fio workload with a small working set remains within measurement
+noise, showing no measurable regression from the added locking. Across
+three runs for each version of a 300-second fio workload with a 4 GiB
+working set, median throughput improves from 68.6 MiB/s to 75.0 MiB/s, an
+increase of 9.3%.
 
-As a slight variation, *if* we can assume each target arch's VCPUs
-are in a separate thread, we could avoid using TARGET_NAME directly
-and instead use a thread local
+Signed-off-by: Tan Chi <tanchi25@mails.ucas.ac.cn>
+---
+ hw/riscv/riscv-iommu.c | 160 ++++++++++++++++++++---------------------
+ hw/riscv/riscv-iommu.h |   1 +
+ 2 files changed, 79 insertions(+), 82 deletions(-)
 
-  __thread const char *target_name;
-
-...which would be initialized to TARGET_NAME when the vcpu's thread
-starts.
-
-Then  we would change the macro to be 
-
-#define  qemu_log_mask_target(MASK, FMT, ...)           \
-    do {                                                \
-        if (unlikely(qemu_loglevel_mask(MASK))) {       \
-          qemu_log("%s" # FMT, target_name, ## __VA_ARGS__);\
-         }                                               \
-    } while (0)
-
-That would make it possible to include more dynamic information
-by adding more thread-locals and hiding more fmt args in the
-macro.
-
-With regards,
-Daniel
+diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
+index 323a041b4a..85121f6468 100644
+--- a/hw/riscv/riscv-iommu.c
++++ b/hw/riscv/riscv-iommu.c
+@@ -1582,107 +1582,96 @@ static guint riscv_iommu_iot_hash(gconstpointer v)
+ /* GV: 0 AV: 0 PSCV: 0 GVMA: 0 */
+ /* GV: 0 AV: 0 GVMA: 1 */
+ static
+-void riscv_iommu_iot_inval_all(gpointer key, gpointer value, gpointer data)
++gboolean riscv_iommu_iot_inval_all(gpointer key, gpointer value, gpointer data)
+ {
+     RISCVIOMMUEntry *iot = (RISCVIOMMUEntry *) value;
+     RISCVIOMMUEntry *arg = (RISCVIOMMUEntry *) data;
+-    if (iot->tag == arg->tag) {
+-        iot->perm = IOMMU_NONE;
+-    }
++    return iot->tag == arg->tag;
+ }
+ 
+ /* GV: 0 AV: 0 PSCV: 1 GVMA: 0 */
+ static
+-void riscv_iommu_iot_inval_pscid(gpointer key, gpointer value, gpointer data)
++gboolean riscv_iommu_iot_inval_pscid(gpointer key, gpointer value,
++                                     gpointer data)
+ {
+     RISCVIOMMUEntry *iot = (RISCVIOMMUEntry *) value;
+     RISCVIOMMUEntry *arg = (RISCVIOMMUEntry *) data;
+-    if (iot->tag == arg->tag &&
+-        iot->pscid == arg->pscid) {
+-        iot->perm = IOMMU_NONE;
+-    }
++    return iot->tag == arg->tag &&
++           iot->pscid == arg->pscid;
+ }
+ 
+ /* GV: 0 AV: 1 PSCV: 0 GVMA: 0 */
+ static
+-void riscv_iommu_iot_inval_iova(gpointer key, gpointer value, gpointer data)
++gboolean riscv_iommu_iot_inval_iova(gpointer key, gpointer value, gpointer data)
+ {
+     RISCVIOMMUEntry *iot = (RISCVIOMMUEntry *) value;
+     RISCVIOMMUEntry *arg = (RISCVIOMMUEntry *) data;
+-    if (iot->tag == arg->tag &&
+-        iot->iova == arg->iova) {
+-        iot->perm = IOMMU_NONE;
+-    }
++    return iot->tag == arg->tag &&
++           iot->iova == arg->iova;
+ }
+ 
+ /* GV: 0 AV: 1 PSCV: 1 GVMA: 0 */
+-static void riscv_iommu_iot_inval_pscid_iova(gpointer key, gpointer value,
+-                                             gpointer data)
++static gboolean riscv_iommu_iot_inval_pscid_iova(gpointer key,
++                                                 gpointer value,
++                                                 gpointer data)
+ {
+     RISCVIOMMUEntry *iot = (RISCVIOMMUEntry *) value;
+     RISCVIOMMUEntry *arg = (RISCVIOMMUEntry *) data;
+-    if (iot->tag == arg->tag &&
+-        iot->pscid == arg->pscid &&
+-        iot->iova == arg->iova) {
+-        iot->perm = IOMMU_NONE;
+-    }
++    return iot->tag == arg->tag &&
++           iot->pscid == arg->pscid &&
++           iot->iova == arg->iova;
+ }
+ 
+ /* GV: 1 AV: 0 PSCV: 0 GVMA: 0 */
+ /* GV: 1 AV: 0 GVMA: 1 */
+-static
+-void riscv_iommu_iot_inval_gscid(gpointer key, gpointer value, gpointer data)
++static gboolean riscv_iommu_iot_inval_gscid(gpointer key, gpointer value,
++                                            gpointer data)
+ {
+     RISCVIOMMUEntry *iot = (RISCVIOMMUEntry *) value;
+     RISCVIOMMUEntry *arg = (RISCVIOMMUEntry *) data;
+-    if (iot->tag == arg->tag &&
+-        iot->gscid == arg->gscid) {
+-        iot->perm = IOMMU_NONE;
+-    }
++    return iot->tag == arg->tag &&
++           iot->gscid == arg->gscid;
+ }
+ 
+ /* GV: 1 AV: 0 PSCV: 1 GVMA: 0 */
+-static void riscv_iommu_iot_inval_gscid_pscid(gpointer key, gpointer value,
+-                                              gpointer data)
++static gboolean riscv_iommu_iot_inval_gscid_pscid(gpointer key,
++                                                  gpointer value,
++                                                  gpointer data)
+ {
+     RISCVIOMMUEntry *iot = (RISCVIOMMUEntry *) value;
+     RISCVIOMMUEntry *arg = (RISCVIOMMUEntry *) data;
+-    if (iot->tag == arg->tag &&
+-        iot->gscid == arg->gscid &&
+-        iot->pscid == arg->pscid) {
+-        iot->perm = IOMMU_NONE;
+-    }
++    return iot->tag == arg->tag &&
++           iot->gscid == arg->gscid &&
++           iot->pscid == arg->pscid;
+ }
+ 
+ /* GV: 1 AV: 1 PSCV: 0 GVMA: 0 */
+ /* GV: 1 AV: 1 GVMA: 1 */
+-static void riscv_iommu_iot_inval_gscid_iova(gpointer key, gpointer value,
+-                                             gpointer data)
++static gboolean riscv_iommu_iot_inval_gscid_iova(gpointer key,
++                                                 gpointer value,
++                                                 gpointer data)
+ {
+     RISCVIOMMUEntry *iot = (RISCVIOMMUEntry *) value;
+     RISCVIOMMUEntry *arg = (RISCVIOMMUEntry *) data;
+-    if (iot->tag == arg->tag &&
+-        iot->gscid == arg->gscid &&
+-        iot->iova == arg->iova) {
+-        iot->perm = IOMMU_NONE;
+-    }
++    return iot->tag == arg->tag &&
++           iot->gscid == arg->gscid &&
++           iot->iova == arg->iova;
+ }
+ 
+ /* GV: 1 AV: 1 PSCV: 1 GVMA: 0 */
+-static void riscv_iommu_iot_inval_gscid_pscid_iova(gpointer key, gpointer value,
+-                                                   gpointer data)
++static gboolean riscv_iommu_iot_inval_gscid_pscid_iova(gpointer key,
++                                                       gpointer value,
++                                                       gpointer data)
+ {
+     RISCVIOMMUEntry *iot = (RISCVIOMMUEntry *) value;
+     RISCVIOMMUEntry *arg = (RISCVIOMMUEntry *) data;
+-    if (iot->tag == arg->tag &&
+-        iot->gscid == arg->gscid &&
+-        iot->pscid == arg->pscid &&
+-        iot->iova == arg->iova) {
+-        iot->perm = IOMMU_NONE;
+-    }
++    return iot->tag == arg->tag &&
++           iot->gscid == arg->gscid &&
++           iot->pscid == arg->pscid &&
++           iot->iova == arg->iova;
+ }
+ 
+-/* caller should keep ref-count for iot_cache object */
++/* caller must hold s->iot_lock */
+ static RISCVIOMMUEntry *riscv_iommu_iot_lookup(RISCVIOMMUContext *ctx,
+     GHashTable *iot_cache, hwaddr iova, RISCVIOMMUTransTag transtag)
+ {
+@@ -1695,27 +1684,26 @@ static RISCVIOMMUEntry *riscv_iommu_iot_lookup(RISCVIOMMUContext *ctx,
+     return g_hash_table_lookup(iot_cache, &key);
+ }
+ 
+-/* caller should keep ref-count for iot_cache object */
+-static void riscv_iommu_iot_update(RISCVIOMMUState *s,
+-    GHashTable *iot_cache, RISCVIOMMUEntry *iot)
++/* caller must hold s->iot_lock */
++static void riscv_iommu_iot_update(RISCVIOMMUState *s, RISCVIOMMUEntry *iot)
+ {
+     if (!s->iot_limit) {
+         return;
+     }
+ 
+     if (g_hash_table_size(s->iot_cache) >= s->iot_limit) {
+-        iot_cache = g_hash_table_new_full(riscv_iommu_iot_hash,
++        GHashTable *old_cache = s->iot_cache;
++        s->iot_cache = g_hash_table_new_full(riscv_iommu_iot_hash,
+                                           riscv_iommu_iot_equal,
+                                           g_free, NULL);
+-        g_hash_table_unref(qatomic_xchg(&s->iot_cache, iot_cache));
++        g_hash_table_unref(old_cache);
+     }
+-    g_hash_table_add(iot_cache, iot);
++    g_hash_table_add(s->iot_cache, iot);
+ }
+ 
+-static void riscv_iommu_iot_inval(RISCVIOMMUState *s, GHFunc func,
++static void riscv_iommu_iot_inval(RISCVIOMMUState *s, GHRFunc func,
+     uint32_t gscid, uint32_t pscid, hwaddr iova, RISCVIOMMUTransTag transtag)
+ {
+-    GHashTable *iot_cache;
+     RISCVIOMMUEntry key = {
+         .tag = transtag,
+         .gscid = gscid,
+@@ -1723,9 +1711,9 @@ static void riscv_iommu_iot_inval(RISCVIOMMUState *s, GHFunc func,
+         .iova  = PPN_DOWN(iova),
+     };
+ 
+-    iot_cache = g_hash_table_ref(s->iot_cache);
+-    g_hash_table_foreach(iot_cache, func, &key);
+-    g_hash_table_unref(iot_cache);
++    qemu_mutex_lock(&s->iot_lock);
++    g_hash_table_foreach_remove(s->iot_cache, func, &key);
++    qemu_mutex_unlock(&s->iot_lock);
+ }
+ 
+ static RISCVIOMMUTransTag riscv_iommu_get_transtag(RISCVIOMMUContext *ctx)
+@@ -1750,12 +1738,10 @@ static int riscv_iommu_translate(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
+     IOMMUAccessFlags perm;
+     bool enable_pid;
+     bool enable_pri;
+-    GHashTable *iot_cache;
+     int fault;
+ 
+     riscv_iommu_hpm_incr_ctr(s, ctx, RISCV_IOMMU_HPMEVENT_URQ);
+ 
+-    iot_cache = g_hash_table_ref(s->iot_cache);
+     enable_pri = (iotlb->perm == IOMMU_NONE) &&
+                  (ctx->tc & RISCV_IOMMU_DC_TC_EN_PRI);
+     enable_pid = (ctx->tc & RISCV_IOMMU_DC_TC_PDTV);
+@@ -1771,15 +1757,18 @@ static int riscv_iommu_translate(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
+         }
+     }
+ 
+-    iot = riscv_iommu_iot_lookup(ctx, iot_cache, iotlb->iova, transtag);
++    qemu_mutex_lock(&s->iot_lock);
++    iot = riscv_iommu_iot_lookup(ctx, s->iot_cache, iotlb->iova, transtag);
+     perm = iot ? iot->perm : IOMMU_NONE;
+     if (perm != IOMMU_NONE) {
+         iotlb->translated_addr = PPN_PHYS(iot->phys);
+         iotlb->addr_mask = ~TARGET_PAGE_MASK;
+         iotlb->perm = perm;
+         fault = 0;
++        qemu_mutex_unlock(&s->iot_lock);
+         goto done;
+     }
++    qemu_mutex_unlock(&s->iot_lock);
+ 
+     riscv_iommu_hpm_incr_ctr(s, ctx, RISCV_IOMMU_HPMEVENT_TLB_MISS);
+ 
+@@ -1805,12 +1794,12 @@ static int riscv_iommu_translate(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
+         iot->pscid = get_field(ctx->ta, RISCV_IOMMU_DC_TA_PSCID);
+         iot->perm = iotlb->perm;
+         iot->tag = transtag;
+-        riscv_iommu_iot_update(s, iot_cache, iot);
++        qemu_mutex_lock(&s->iot_lock);
++        riscv_iommu_iot_update(s, iot);
++        qemu_mutex_unlock(&s->iot_lock);
+     }
+ 
+ done:
+-    g_hash_table_unref(iot_cache);
+-
+     if (enable_pri && fault) {
+         struct riscv_iommu_pq_record pr = {0};
+         if (enable_pid) {
+@@ -1969,7 +1958,8 @@ static void riscv_iommu_process_cq_tail(RISCVIOMMUState *s)
+     dma_addr_t addr;
+     uint32_t tail, head, ctrl;
+     uint64_t cmd_opcode;
+-    GHFunc func;
++    GHRFunc iot_func;
++    GHFunc ctx_func;
+ 
+     ctrl = riscv_iommu_reg_get32(s, RISCV_IOMMU_REG_CQCSR);
+     tail = riscv_iommu_reg_get32(s, RISCV_IOMMU_REG_CQT) & s->cq_mask;
+@@ -2032,18 +2022,18 @@ static void riscv_iommu_process_cq_tail(RISCVIOMMUState *s)
+                 goto cmd_ill;
+             }
+ 
+-            func = riscv_iommu_iot_inval_all;
++            iot_func = riscv_iommu_iot_inval_all;
+ 
+             if (gv) {
+-                func = (av) ? riscv_iommu_iot_inval_gscid_iova :
++                iot_func = (av) ? riscv_iommu_iot_inval_gscid_iova :
+                               riscv_iommu_iot_inval_gscid;
+             }
+ 
+             riscv_iommu_iot_inval(
+-                s, func, gscid, pscid, iova, RISCV_IOMMU_TRANS_TAG_VG);
++                s, iot_func, gscid, pscid, iova, RISCV_IOMMU_TRANS_TAG_VG);
+ 
+             riscv_iommu_iot_inval(
+-                s, func, gscid, pscid, iova, RISCV_IOMMU_TRANS_TAG_VN);
++                s, iot_func, gscid, pscid, iova, RISCV_IOMMU_TRANS_TAG_VN);
+             break;
+         }
+ 
+@@ -2063,24 +2053,24 @@ static void riscv_iommu_process_cq_tail(RISCVIOMMUState *s)
+             if (gv) {
+                 transtag = RISCV_IOMMU_TRANS_TAG_VN;
+                 if (pscv) {
+-                    func = (av) ? riscv_iommu_iot_inval_gscid_pscid_iova :
++                    iot_func = (av) ? riscv_iommu_iot_inval_gscid_pscid_iova :
+                                   riscv_iommu_iot_inval_gscid_pscid;
+                 } else {
+-                    func = (av) ? riscv_iommu_iot_inval_gscid_iova :
++                    iot_func = (av) ? riscv_iommu_iot_inval_gscid_iova :
+                                   riscv_iommu_iot_inval_gscid;
+                 }
+             } else {
+                 transtag = RISCV_IOMMU_TRANS_TAG_SS;
+                 if (pscv) {
+-                    func = (av) ? riscv_iommu_iot_inval_pscid_iova :
++                    iot_func = (av) ? riscv_iommu_iot_inval_pscid_iova :
+                                   riscv_iommu_iot_inval_pscid;
+                 } else {
+-                    func = (av) ? riscv_iommu_iot_inval_iova :
++                    iot_func = (av) ? riscv_iommu_iot_inval_iova :
+                                   riscv_iommu_iot_inval_all;
+                 }
+             }
+ 
+-            riscv_iommu_iot_inval(s, func, gscid, pscid, iova, transtag);
++            riscv_iommu_iot_inval(s, iot_func, gscid, pscid, iova, transtag);
+             break;
+         }
+ 
+@@ -2088,12 +2078,12 @@ static void riscv_iommu_process_cq_tail(RISCVIOMMUState *s)
+                              RISCV_IOMMU_CMD_IODIR_OPCODE):
+             if (!(cmd.dword0 & RISCV_IOMMU_CMD_IODIR_DV)) {
+                 /* invalidate all device context cache mappings */
+-                func = riscv_iommu_ctx_inval_all;
++                ctx_func = riscv_iommu_ctx_inval_all;
+             } else {
+                 /* invalidate all device context matching DID */
+-                func = riscv_iommu_ctx_inval_devid;
++                ctx_func = riscv_iommu_ctx_inval_devid;
+             }
+-            riscv_iommu_ctx_inval(s, func,
++            riscv_iommu_ctx_inval(s, ctx_func,
+                 get_field(cmd.dword0, RISCV_IOMMU_CMD_IODIR_DID), 0);
+             break;
+ 
+@@ -2103,9 +2093,9 @@ static void riscv_iommu_process_cq_tail(RISCVIOMMUState *s)
+                 /* illegal command arguments IODIR_PDT & DV == 0 */
+                 goto cmd_ill;
+             } else {
+-                func = riscv_iommu_ctx_inval_devid_procid;
++                ctx_func = riscv_iommu_ctx_inval_devid_procid;
+             }
+-            riscv_iommu_ctx_inval(s, func,
++            riscv_iommu_ctx_inval(s, ctx_func,
+                 get_field(cmd.dword0, RISCV_IOMMU_CMD_IODIR_DID),
+                 get_field(cmd.dword0, RISCV_IOMMU_CMD_IODIR_PID));
+             break;
+@@ -2671,6 +2661,7 @@ static void riscv_iommu_instance_init(Object *obj)
+                                          riscv_iommu_ctx_equal,
+                                          g_free, NULL);
+ 
++    qemu_mutex_init(&s->iot_lock);
+     s->iot_cache = g_hash_table_new_full(riscv_iommu_iot_hash,
+                                          riscv_iommu_iot_equal,
+                                          g_free, NULL);
+@@ -2690,6 +2681,8 @@ static void riscv_iommu_instance_finalize(Object *obj)
+ 
+     g_hash_table_unref(s->ctx_cache);
+     g_hash_table_unref(s->iot_cache);
++
++    qemu_mutex_destroy(&s->iot_lock);
+ }
+ 
+ static void riscv_iommu_realize(DeviceState *dev, Error **errp)
+@@ -2850,7 +2843,10 @@ void riscv_iommu_reset(RISCVIOMMUState *s)
+     riscv_iommu_reg_set32(s, RISCV_IOMMU_REG_IPSR, 0);
+ 
+     g_hash_table_remove_all(s->ctx_cache);
++
++    qemu_mutex_lock(&s->iot_lock);
+     g_hash_table_remove_all(s->iot_cache);
++    qemu_mutex_unlock(&s->iot_lock);
+ }
+ 
+ static const Property riscv_iommu_properties[] = {
+diff --git a/hw/riscv/riscv-iommu.h b/hw/riscv/riscv-iommu.h
+index da70e8bfa8..16d257a106 100644
+--- a/hw/riscv/riscv-iommu.h
++++ b/hw/riscv/riscv-iommu.h
+@@ -73,6 +73,7 @@ struct RISCVIOMMUState {
+ 
+     GHashTable *iot_cache;          /* IO Translated Address Cache */
+     unsigned iot_limit;             /* IO Translation Cache size limit */
++    QemuMutex iot_lock;
+ 
+     /* MMIO Hardware Interface */
+     MemoryRegion regs_mr;
 -- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+2.53.0
 
 
