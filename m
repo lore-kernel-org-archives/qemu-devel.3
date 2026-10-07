@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55826CA5FFF
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 09:41:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1D69CA5FF1
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 09:43:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xENvZ-0001yy-E0; Wed, 07 Oct 2026 05:27:10 -0400
+	id 1xENw6-0003Jt-7z; Wed, 07 Oct 2026 05:27:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anjo@rev.ng>)
- id 1xENA0-0001gL-0o; Wed, 07 Oct 2026 04:38:00 -0400
+ id 1xENAP-0004Ms-2r; Wed, 07 Oct 2026 04:38:25 -0400
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anjo@rev.ng>)
- id 1xEN9y-0006XA-3f; Wed, 07 Oct 2026 04:37:59 -0400
+ id 1xENAN-0006YZ-Iy; Wed, 07 Oct 2026 04:38:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=Cc:To:In-Reply-To:References:Message-Id:Content-Transfer-Encoding:
  Content-Type:MIME-Version:Subject:Date:From:Sender:Reply-To:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=99qf/l2hm1FuxqZDomIozoDf2qiSquzS4qjRio0BAu4=; b=JMgfXV991hJCgcF
- 6NoSStfWZRbHX9RaL/VES/70dd2DVFLiIbH+0NcqhczSeoFa/PrXsiDgkOEgEXCaHiH2sMAh/djWZ
- XBFG8RxpNy5zqx3H5Z1jHdSdQ9pOVg2jUZJxcRbQdOgFznMMupqKE/Ib+jHn5GZDMP/27d/CrazRy
- d4=;
-Date: Wed, 07 Oct 2026 10:43:13 +0200
-Subject: [PATCH v2 07/18] target/riscv: Runtime register MAX and BARE CPUs
+ List-Help; bh=ODZYs0CKmBfvSwkKqkAWWVRvX7trmNcIsX9bhJq269o=; b=SMn+ls8R3bq1Aa2
+ +ybBUAlyl/Lk26LIuuCj0LxxEFjBFhRHHNaslAWtHkoyGY+HvOBts+n1cLs8I3t+juW6XQljB8SiT
+ D/8SCxm5PeZ4IXBe9MpoBFqMwds11jiM++ciy1Ah7GSsirkt2zr0hb5JxP5ztcTR8l7oL8uWiaonD
+ As=;
+Date: Wed, 07 Oct 2026 10:43:20 +0200
+Subject: [PATCH v2 14/18] target/riscv: Compile pmp.c once
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261007-rv-dedup-v2-7-8a2f0f296a7f@rev.ng>
+Message-Id: <20261007-rv-dedup-v2-14-8a2f0f296a7f@rev.ng>
 References: <20261007-rv-dedup-v2-0-8a2f0f296a7f@rev.ng>
 In-Reply-To: <20261007-rv-dedup-v2-0-8a2f0f296a7f@rev.ng>
 To: qemu-devel@nongnu.org
@@ -41,11 +41,11 @@ Cc: Anton Johansson <anjo@rev.ng>, qemu-riscv@nongnu.org,
  daniel.barboza@oss.qualcomm.com, philmd@oss.qualcomm.com, 
  pierrick.bouvier@oss.qualcomm.com, palmer@dabbelt.com, 
  alistair.francis@wdc.com, luoyonggang@gmail.com
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1791362620; l=3978;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1791362620; l=1840;
  i=anjo@rev.ng; s=20260210; h=from:subject:message-id;
- bh=t9/N+zUDJTNxnN0dAedqA1IbUNoARAX4eUhu9lg6V2E=;
- b=nmesCUatKP9DjORKRxiZY5fMFCubREavsi6cD3msMxMJNMigKsmnzo/l8yT8NQnT6yyPrpbjm
- lErb2GUT0xeDEKPPWXcsOKh83g6UUeIbPhI54xKabk9FPrNkvVC3gdt
+ bh=IWK5oqCYxk+0/V5SJ06uaGRRZer/zDkVjL9V8CYZvLg=;
+ b=G/EEb+jVCYwDkE/0wAfMeDLEQCG/fCEVEmzrxgS9TkR/weOcvGdiCYOQN1i/wRd9QrcORJ4ks
+ x2ROOdW/I+vAq5mk6BCDEszaiuHCoiryntmhSmSIlqGJNM5lbloXOFc
 X-Developer-Key: i=anjo@rev.ng; a=ed25519;
  pk=dKsZvj/g3kgDxnV1/SWg8a0YNGSpWtFGNsWIepQYKow=
 Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
@@ -73,117 +73,58 @@ From:  Anton Johansson via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Moves MAX and BARE cpus to separate typeinfo tables indexed by
-target_riscv64() during registration, similar to how ARM handles MAX cpu
-types.
-
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Signed-off-by: Anton Johansson <anjo@rev.ng>
 ---
- target/riscv/cpu.c | 86 ++++++++++++++++++++++++++++++++----------------------
- 1 file changed, 51 insertions(+), 35 deletions(-)
+ target/riscv/tcg/pmp.c       | 5 +++--
+ target/riscv/tcg/meson.build | 2 +-
+ 2 files changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index cfc80aaaf1..d1727ce2f5 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -3365,41 +3365,6 @@ static const TypeInfo riscv_cpu_type_infos[] = {
-     ),
+diff --git a/target/riscv/tcg/pmp.c b/target/riscv/tcg/pmp.c
+index 99345d63dc..2d7194de10 100644
+--- a/target/riscv/tcg/pmp.c
++++ b/target/riscv/tcg/pmp.c
+@@ -638,19 +638,20 @@ uint64_t pmpaddr_csr_read(CPURISCVState *env, uint32_t addr_index)
+     if (addr_index < pmp_regions) {
+         val = env->pmp_state.pmp[addr_index].addr_reg;
+         int g = pmp_get_granularity_g(env);
++        const unsigned long_bits = target_long_bits();
+         switch (pmp_get_a_field(env->pmp_state.pmp[addr_index].cfg_reg)) {
+         case PMP_AMATCH_OFF:
+             /* fallthrough */
+         case PMP_AMATCH_TOR:
+             /* Bit [g-1:0] read all zero */
+-            if (g >= 1 && g < TARGET_LONG_BITS) {
++            if (g >= 1 && g < long_bits) {
+                 uint64_t granule = 1ULL << g;
+                 val = ROUND_DOWN(val, granule);
+             }
+             break;
+         case PMP_AMATCH_NAPOT:
+             /* Bit [g-2:0] read all one */
+-            if (g >= 2 && g < TARGET_LONG_BITS) {
++            if (g >= 2 && g < long_bits) {
+                 val = deposit64(val, 0, g - 1, -1ULL);
+             }
+             break;
+diff --git a/target/riscv/tcg/meson.build b/target/riscv/tcg/meson.build
+index 69dadfd662..0aaba9cf34 100644
+--- a/target/riscv/tcg/meson.build
++++ b/target/riscv/tcg/meson.build
+@@ -17,7 +17,6 @@ riscv_ss.add(files(
  
-     DEFINE_ABSTRACT_RISCV_CPU(TYPE_RISCV_VENDOR_CPU, TYPE_RISCV_CPU),
--    DEFINE_ABSTRACT_RISCV_CPU(TYPE_RISCV_BARE_CPU, TYPE_RISCV_CPU,
--        /*
--         * Bare CPUs do not inherit the timer and performance
--         * counters from the parent class (see riscv_cpu_init()
--         * for info on why the parent enables them).
--         *
--         * Users have to explicitly enable these counters for
--         * bare CPUs.
--         */
--        .bare = true,
--
--        /* Set to QEMU's first supported priv version */
--        .priv_spec = PRIV_VERSION_1_10_0,
--
--        /*
--         * Support all available satp_mode settings. By default
--         * only MBARE will be available if the user doesn't enable
--         * a mode manually (see riscv_cpu_satp_mode_finalize()).
--         */
--#ifdef TARGET_RISCV32
--        .cfg.max_satp_mode = VM_1_10_SV32,
--#else
--        .cfg.max_satp_mode = VM_1_10_SV57,
--#endif
--    ),
--
--    DEFINE_RISCV_CPU(TYPE_RISCV_CPU_MAX, TYPE_RISCV_DYNAMIC_CPU,
--#if defined(TARGET_RISCV32)
--        .misa_mxl_max = MXL_RV32,
--        .cfg.max_satp_mode = VM_1_10_SV32,
--#elif defined(TARGET_RISCV64)
--        .misa_mxl_max = MXL_RV64,
--        .cfg.max_satp_mode = VM_1_10_SV57,
--#endif
--    ),
+ riscv_system_ss.add(files(
+   'debug.c',
+-  'pmp.c',
+ ))
  
-     DEFINE_ABSTRACT_RISCV_CPU(TYPE_RISCV_CPU_SIFIVE_E, TYPE_RISCV_VENDOR_CPU,
-         .misa_ext = RVI | RVM | RVA | RVC | RVU,
-@@ -3838,4 +3803,55 @@ static const TypeInfo riscv_cpu_type_infos[] = {
-     DEFINE_RISCV64_PROFILE_CPU(TYPE_RISCV_CPU_RVA23S64,  TYPE_RISCV_CPU_RV64I,  RVA23S64),
- };
  
-+
-+static const TypeInfo riscv_cpu_bare_type_infos[] = {
-+    /*
-+     * Bare CPUs do not inherit the timer and performance
-+     * counters from the parent class (see riscv_cpu_init()
-+     * for info on why the parent enables them).
-+     *
-+     * Users have to explicitly enable these counters for
-+     * bare CPUs.
-+     *
-+     * Support all available satp_mode settings. By default
-+     * only MBARE will be available if the user doesn't enable
-+     * a mode manually (see riscv_cpu_satp_mode_finalize()).
-+     */
-+
-+    /* 32-bit entry */
-+    DEFINE_ABSTRACT_RISCV_CPU(TYPE_RISCV_BARE_CPU, TYPE_RISCV_CPU,
-+        /* Set to QEMU's first supported priv version */
-+        .priv_spec = PRIV_VERSION_1_10_0,
-+        .bare = true,
-+        .cfg.max_satp_mode = VM_1_10_SV32,
-+    ),
-+    /* 64-bit entry */
-+    DEFINE_ABSTRACT_RISCV_CPU(TYPE_RISCV_BARE_CPU, TYPE_RISCV_CPU,
-+        /* Set to QEMU's first supported priv version */
-+        .priv_spec = PRIV_VERSION_1_10_0,
-+        .bare = true,
-+        .cfg.max_satp_mode = VM_1_10_SV57,
-+    ),
-+};
-+
-+static const TypeInfo riscv_cpu_max_type_infos[2] = {
-+    /* 32-bit entry */
-+    DEFINE_RISCV_CPU(TYPE_RISCV_CPU_MAX, TYPE_RISCV_DYNAMIC_CPU,
-+        .misa_mxl_max = MXL_RV32,
-+        .cfg.max_satp_mode = VM_1_10_SV32,
-+    ),
-+    /* 64-bit entry */
-+    DEFINE_RISCV_CPU(TYPE_RISCV_CPU_MAX, TYPE_RISCV_DYNAMIC_CPU,
-+        .misa_mxl_max = MXL_RV64,
-+        .cfg.max_satp_mode = VM_1_10_SV57,
-+    ),
-+};
-+
-+static void riscv_register_max_bare_types(void)
-+{
-+    bool rv64 = target_riscv64();
-+    type_register_static(&riscv_cpu_bare_type_infos[rv64]);
-+    type_register_static(&riscv_cpu_max_type_infos[rv64]);
-+}
-+type_init(riscv_register_max_bare_types)
- DEFINE_TYPES(riscv_cpu_type_infos)
+@@ -35,4 +34,5 @@ riscv_common_system_ss.add(files(
+   'pmu.c',
+   'tcg-cpu.c',
+   'th_csr.c',
++  'pmp.c',
+ ))
 
 -- 
 2.52.0
