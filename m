@@ -4,33 +4,33 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 390D0CA5FFC
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 12:02:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 242F0CA5FFC
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 12:04:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xEQLS-0005eA-Vb; Wed, 07 Oct 2026 08:02:03 -0400
+	id 1xEQNT-0006lD-R1; Wed, 07 Oct 2026 08:04:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1xEQLL-0005aA-5Q; Wed, 07 Oct 2026 08:01:55 -0400
-Received: from zero.eik.bme.hu ([152.66.115.2])
+ id 1xEQMO-0006Ja-UU; Wed, 07 Oct 2026 08:03:05 -0400
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1xEQLI-0000TI-SC; Wed, 07 Oct 2026 08:01:54 -0400
+ id 1xEQMN-0000b8-0D; Wed, 07 Oct 2026 08:03:00 -0400
 Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id A1ADD5833DF;
- Wed, 07 Oct 2026 14:01:50 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id 8A5BB583382;
+ Wed, 07 Oct 2026 14:02:55 +0200 (CEST)
 X-Virus-Scanned: amavis at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id h8wkls39FzNh; Wed,  7 Oct 2026 14:01:48 +0200 (CEST)
+ id Sx90o8hJAv5y; Wed,  7 Oct 2026 14:02:53 +0200 (CEST)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 46F895833C5; Wed, 07 Oct 2026 14:01:48 +0200 (CEST)
+ id 253495833DF; Wed, 07 Oct 2026 14:02:53 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 45AA4583382;
- Wed, 07 Oct 2026 14:01:48 +0200 (CEST)
-Date: Wed, 7 Oct 2026 14:01:48 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id 235E2583355;
+ Wed, 07 Oct 2026 14:02:53 +0200 (CEST)
+Date: Wed, 7 Oct 2026 14:02:53 +0200 (CEST)
 From: BALATON Zoltan <balaton@eik.bme.hu>
 To: Bin Meng <bin.meng@processmission.com>
 cc: QEMU <qemu-devel@nongnu.org>, Bernhard Beschow <shentey@gmail.com>, 
@@ -38,16 +38,16 @@ cc: QEMU <qemu-devel@nongnu.org>, Bernhard Beschow <shentey@gmail.com>,
  Chinmay Rath <rathc@linux.ibm.com>, Glenn Miles <milesg@linux.ibm.com>, 
  Harsh Prateek Bora <harshpb@linux.ibm.com>, 
  Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
-Subject: Re: [PATCH 07/17] target/ppc: Register L1CSR2 on e500mc/e5500/e6500
- cores
-In-Reply-To: <20261006094921.110871-8-bin.meng@processmission.com>
-Message-ID: <4bc51987-b59a-e626-cf39-3edf28747c7d@eik.bme.hu>
+Subject: Re: [PATCH 08/17] target/ppc: Register L2CFG0 and L2CSR1 on e500mc
+ and e5500
+In-Reply-To: <20261006094921.110871-9-bin.meng@processmission.com>
+Message-ID: <d5a1cffd-164c-7b41-2c56-93364f6c977d@eik.bme.hu>
 References: <20261006094921.110871-1-bin.meng@processmission.com>
- <20261006094921.110871-8-bin.meng@processmission.com>
+ <20261006094921.110871-9-bin.meng@processmission.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -69,61 +69,85 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Tue, 6 Oct 2026, Bin Meng wrote:
-> U-Boot programs the L1 data cache stash identifier before entering
-> its C initialization code. The e500mc, e5500 and e6500 core manuals
-> define L1CSR2 as a 32-bit SPR with number 606 (0x25e) and reset
-> value zero.
+> The e500mc and e5500 core manuals define L2CFG0 as read-only SPR 519
+> (0x207) and L2CSR1 as writable SPR 1018 (0x3fa). U-Boot reads the
+> former to discover the private L2 cache and programs the latter to
+> select its stash ID. Missing registrations leave cache discovery
+> and stash setup incomplete.
 >
-> Expose the register on all three cores, excluding e500v1 and e500v2.
+> Expose both registers on e500mc and e5500. Use the 128 KiB L2 geometry
+> specified by the e500mc manual and a 256 KiB default for e5500,
+> matching T1040/T1024. Other SoC integrations can override the capacity.
+>
+> Note the e6500 shared L2 uses memory-mapped registers, hence we do not
+> add these SPRs to that core.
 >
 > Reference:
-> - E500MCRM (Rev.3), section 2.14.3
+> - E500MCRM (Rev.3), section 2.15.1 and 2.15.3
 >  https://www.nxp.com/docs/en/reference-manual/E500MCRM.pdf
-> - E5500RM (Rev.4), section 2.14.3
+> - E5500RM (Rev.4), section 2.15.1 and 2.15.3
 >  https://www.nxp.com/webapp/Download?colCode=E5500RM
-> - E6500RM (Rev.0), section 2.11.3
+> - E6500RM (Rev.0), section 2.12.1 and 2.12.3
 >  https://www.nxp.com/docs/en/reference-manual/E6500RM.pdf
 >
 > Signed-off-by: Bin Meng <bin.meng@processmission.com>
 > ---
 >
-> target/ppc/cpu.h      | 1 +
-> target/ppc/cpu_init.c | 4 ++++
-> 2 files changed, 5 insertions(+)
+> target/ppc/cpu.h      |  2 ++
+> target/ppc/cpu_init.c | 14 ++++++++++++++
+> 2 files changed, 16 insertions(+)
 >
 > diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
-> index abcbcf3c18..d3f1c82730 100644
+> index d3f1c82730..498b505a96 100644
 > --- a/target/ppc/cpu.h
 > +++ b/target/ppc/cpu.h
-> @@ -2038,6 +2038,7 @@ void ppc_compat_add_property(Object *obj, const char *name,
-> #define SPR_BOOKE_DSRR1       (0x23F)
-> #define SPR_BOOKE_SPRG8       (0x25C)
-> #define SPR_BOOKE_SPRG9       (0x25D)
-> +#define SPR_Exxx_L1CSR2       (0x25E)
+> @@ -1976,6 +1976,7 @@ void ppc_compat_add_property(Object *obj, const char *name,
+> #define SPR_Exxx_L1CFG0       (0x203)
+> #define SPR_Exxx_L1CFG1       (0x204)
+> #define SPR_Exxx_NPIDR        (0x205)
+> +#define SPR_Exxx_L2CFG0       (0x207)
 
-This name is too unspecific. Did you mean E5xx or something similar? Or 
-could just be E500MC with 5500 and 6500 being derivative of that.
+I see there are more of these already. Disregard previous comment in that 
+case.
 
 Regards,
 BALATON Zoltan
 
-> #define SPR_BOOKE_MAS0        (0x270)
-> #define SPR_BOOKE_MAS1        (0x271)
-> #define SPR_BOOKE_MAS2        (0x272)
+> #define SPR_ATBL              (0x20E)
+> #define SPR_ATBU              (0x20F)
+> #define SPR_IBAT0U            (0x210)
+> @@ -2341,6 +2342,7 @@ void ppc_compat_add_property(Object *obj, const char *name,
+> #define SPR_750_TDCH          (0x3FA)
+> #define SPR_IABR2             (0x3FA)
+> #define SPR_40x_DCCR          (0x3FA)
+> +#define SPR_Exxx_L2CSR1       (0x3FA)
+> #define SPR_ICTC              (0x3FB)
+> #define SPR_40x_ICCR          (0x3FB)
+> #define SPR_THRM1             (0x3FC)
 > diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
-> index 23f25a56c0..e5856b5b1d 100644
+> index e5856b5b1d..21c6012fa1 100644
 > --- a/target/ppc/cpu_init.c
 > +++ b/target/ppc/cpu_init.c
-> @@ -2965,6 +2965,10 @@ static void init_proc_e500(CPUPPCState *env, int version)
->                  &spr_read_generic, &spr_write_e500_l1csr1,
->                  0x00000000);
->     if (version != fsl_e500v1 && version != fsl_e500v2) {
-> +        spr_register(env, SPR_Exxx_L1CSR2, "L1CSR2",
-> +                     SPR_NOACCESS, SPR_NOACCESS,
-> +                     &spr_read_generic, &spr_write_generic32,
-> +                     0x00000000);
->         spr_register(env, SPR_Exxx_L2CSR0, "L2CSR0",
->                      SPR_NOACCESS, SPR_NOACCESS,
+> @@ -2974,6 +2974,20 @@ static void init_proc_e500(CPUPPCState *env, int version)
 >                      &spr_read_generic, &spr_write_e500_l2csr0,
+>                      0x00000000);
+>     }
+> +    if (version == fsl_e500mc || version == fsl_e5500) {
+> +        /*
+> +         * L2CSIZE is in 64 KiB units. Use 128 KiB for e500mc and a
+> +         * 256 KiB default for e5500, matching the T1040/T1024 SoCs.
+> +         * Other SoC models can override the e5500 capacity.
+> +         */
+> +        spr_register(env, SPR_Exxx_L2CFG0, "L2CFG0",
+> +                     &spr_read_generic, SPR_NOACCESS,
+> +                     &spr_read_generic, SPR_NOACCESS,
+> +                     version == fsl_e500mc ? 0x3cb1c002 : 0x3cb1c004);
+> +        spr_register(env, SPR_Exxx_L2CSR1, "L2CSR1",
+> +                     SPR_NOACCESS, SPR_NOACCESS,
+> +                     &spr_read_generic, &spr_write_generic32, 0);
+> +    }
+>     spr_register(env, SPR_BOOKE_MCSRR0, "MCSRR0",
+>                  SPR_NOACCESS, SPR_NOACCESS,
+>                  &spr_read_generic, &spr_write_generic,
 >
 
