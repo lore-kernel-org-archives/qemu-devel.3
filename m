@@ -4,50 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7FDFCA5FFF
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 09:20:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27A90CA5FFF
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 09:20:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xENbe-00006X-7r; Wed, 07 Oct 2026 05:06:34 -0400
+	id 1xENkc-0001Jp-Fm; Wed, 07 Oct 2026 05:15:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <ac8c13c38e569b04c613f287c3a83234dea161b4@kylie.crudebyte.com>)
- id 1xELM0-0002nF-9Y; Wed, 07 Oct 2026 02:42:47 -0400
-Received: from kylie.crudebyte.com ([5.189.157.229])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1xELtS-00005n-JK
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 03:17:10 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <ac8c13c38e569b04c613f287c3a83234dea161b4@kylie.crudebyte.com>)
- id 1xELLO-0004C2-WE; Wed, 07 Oct 2026 02:42:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=crudebyte.com; s=kylie; h=Cc:To:Subject:Date:From:Message-ID:Content-Type:
- Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:Content-ID:
- Content-Description; bh=uiwmNdn0AG3dm6JoSOxIencvSbhtz8X/AqTLUpX1E7I=; b=T98mr
- zXVxK0m8aS21ICnAmuxDOUR09pN01L4mraVBvx9Yb47o1tpoV0zCDLXWbBkpFmh/CGyQuU2svPfHI
- APgOSWzxVp6Jje9l0FlBCj9oLKS5TO3V68er1x3acVKDcoywaj+r3pRUIghYBLKiROdFyxwCjCBbm
- 8DbQiEvHZI/X2A5iA5kH6NghQWMf/WqfK6n3Ul7LUFLD/Uf1R5D3SpwZQTRQCjtn2nJLO6/8h6p2L
- ZQ+92PpkRwPO1tp+doOho1pmUGxpI7M62ByijSJHBq561IEjpU1Ln8kVAy/NQamXbcpeb8Q9eXDpq
- WylbyqppF1wH51kHfoRQzhJ6O3ZigYwRzMUbtpdKUUHhfzNKuXtbyalJBBf6HL3/92QA8Ltt3LqRk
- gue9Jg08ljICnwTtzP9k7o8R+d+MDEXUTma7CcregTo/BHSyidkT8k7ZYkFnc5++dwTi+4cRz+Vej
- q+S5ZAPt5mCjjKIy0en+mxN0VAHF0wYLZKlAXKRQuPhyudOK0iigQ3vk2m4C3kEYjMA3wKCsbqHCg
- 7PMzIHPs/Brc07dod9I9QMZJIaL68DvXgtF9K/oSft6vbWK5BBkqChTEWe31zsY+Nv9nawJc3vchJ
- XCC2Doe4sPqzpth4IoIbn+6jWdZfg8oi1VklTiewE04hysGIPmMjRyu2xZeZI8=;
-Message-ID: <cover.1791291812.git.qemu_oss@crudebyte.com>
-From: Christian Schoenebeck <qemu_oss@crudebyte.com>
-Date: Tue, 6 Oct 2026 15:03:32 +0200
-Subject: [PATCH 0/9] 9pfs: add race test suite + fix 9p2000.u dir stream race
-To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
-    Greg Kurz <groug@kaod.org>
-Received-SPF: pass client-ip=5.189.157.229;
- envelope-from=ac8c13c38e569b04c613f287c3a83234dea161b4@kylie.crudebyte.com;
- helo=kylie.crudebyte.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_12_24=1.049,
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1xELtP-0007Z3-1S
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 03:16:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1791357403;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=X+59H1acN0PHgUcGLHfpWLwOXLXsXzvIDUNX4rGNgPM=;
+ b=KDx8GSZq5djD8iLwoNgZYlWlHXtMpQ5el5s+L9g4FIaDMSt/F02z+dcV5vjdZH4Bd2QsJG
+ LGCa74Tj0TBFAUv6uA0YwUEFbkm8xYgXMhvdIb6FS6khsqhs1NjPW4x1zllYAjPvardD6/
+ u52mE/sWg1yBEcIuwaGgmgHmHi4u77c=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-25-94DEfPhUPK2MnJjRjhNJsA-1; Wed,
+ 7 Oct 2026 07:16:40 +0000
+X-MC-Unique: 94DEfPhUPK2MnJjRjhNJsA-1
+X-Mimecast-MFC-AGG-ID: 94DEfPhUPK2MnJjRjhNJsA_1791357399
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 319731977402; Wed,  7 Oct 2026 07:16:39 +0000 (UTC)
+Received: from redhat.com (headnet04.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.116])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DCC9C1956087; Wed,  7 Oct 2026 07:16:37 +0000 (UTC)
+Date: Wed, 7 Oct 2026 08:16:34 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Hector Cao <hector.cao@canonical.com>
+Cc: qemu-devel@nongnu.org, stefanha@redhat.com
+Subject: Re: [PATCH] util/coroutine: trim sysctl's max_map_count newline
+ before parsing
+Message-ID: <asXx0kf7O0nOsBCX@redhat.com>
+References: <20261006232018.211749-1-hector.cao@canonical.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20261006232018.211749-1-hector.cao@canonical.com>
+User-Agent: Mutt/2.4.2 (2026-08-30)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 10
+X-Spam_score: 1.0
+X-Spam_bar: +
+X-Spam_report: (1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -61,61 +85,49 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series adds a race test suite for 9p and fixes a race on legacy
-9p2000(.u)'s Tread request on directories, which was uncovered by this
-new test suite.
+On Wed, Oct 07, 2026 at 01:20:18AM +0200, Hector Cao wrote:
+> Strip trailing whitespace from max_map_count before passing it to
+> qemu_strtoi(), allowing the strict full-string parse to succeed.
+> Otherwise, qemu_strtoi() fails to parse the string and returns -22,
+> making the global cache pool cap size set to UINT_MAX.
+> 
+> Fixes: 86a637e48104 ("coroutine: cap per-thread local pool size")
+> Signed-off-by: Hector Cao <hector.cao@canonical.com>
+> ---
+>  util/qemu-coroutine.c | 8 ++++++--
+>  1 file changed, 6 insertions(+), 2 deletions(-)
 
-This new race test suite challenges races by sending crafted concurrent 9p
-requests on certain aspects of the 9p protocol. This series covers 3 race
-tests:
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
-  1. Patch 2 adds "race/fid-path": this race test guards CVE-2026-93834
-     (fixed by commit fe9e30899f "hw/9pfs: Use read-write lock for protecting
-     fid path.").
+> diff --git a/util/qemu-coroutine.c b/util/qemu-coroutine.c
+> index d17135f585a..5af61995437 100644
+> --- a/util/qemu-coroutine.c
+> +++ b/util/qemu-coroutine.c
+> @@ -374,8 +374,12 @@ static unsigned int get_global_pool_hard_max_size(void)
+>       * VMAs.
+>       */
+>      if (g_file_get_contents("/proc/sys/vm/max_map_count", &contents, NULL,
+> -                            NULL) &&
+> -        qemu_strtoi(contents, NULL, 10, &max_map_count) == 0) {
+> +                            NULL)) {
+> +        /* contents has trailing newline, remove it before conversion */
+> +        g_strchomp(contents);
+> +        if (qemu_strtoi(contents, NULL, 10, &max_map_count) != 0) {
+> +            return UINT_MAX;
+> +        }
+>          /*
+>           * This is an upper bound that avoids exceeding max_map_count. Leave a
+>           * fixed amount for non-coroutine users like library dependencies,
 
-     Please refer to the commit log message of this patch for how to run
-     these new 9p race tests in general.
-
-  2. Patch 5 adds "race/readdir": this test guards directory stream races
-     on 9p2000.L's Treaddir request.
-
-  3. Patch 9 adds "race/tread-dir": this tests legacy 9p2000(.u)'s equivalent
-     of Treaddir for directory stream races, and this test got triggered during
-     the work on this series.
-
-Therefore:
-
-  - Fix: Patch 6 fixes the directory stream race vulnerability uncovered by
-    race test #3.
-
-All the other patches are basically just 9p test client additions required
-for these new tests.
-
-Christian Schoenebeck (9):
-  tests/9p-client: add Txattrwalk / Rxattrwalk test client functions
-  tests/9p-race: add 9p race test suite (race FID-path mutations)
-  tests/9p-client: add Rerror function (legacy 9p2000.u)
-  tests/9p-client: add Tstat / Rstat test client functions
-  tests/9p-race: add Treaddir race test
-  hw/9pfs: fix dirent stream protection for legacy (9p2000.u) Tread
-  tests/9p-client: add Tcreate / Rcreate test client functions
-  tests/9p-client: track the negotiated 9p version for session
-  tests/9p-race: add Tread-on-dir race test
-
- MAINTAINERS                           |    1 +
- hw/9pfs/9p.c                          |   23 +-
- tests/qtest/libqos/virtio-9p-client.c |  213 +++++-
- tests/qtest/libqos/virtio-9p-client.h |  124 +++
- tests/qtest/libqos/virtio-9p.h        |    6 +
- tests/qtest/meson.build               |    1 +
- tests/qtest/virtio-9p-race-test.c     | 1016 +++++++++++++++++++++++++
- 7 files changed, 1374 insertions(+), 10 deletions(-)
- create mode 100644 tests/qtest/virtio-9p-race-test.c
-
+With regards,
+Daniel
 -- 
-2.47.3
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
 
