@@ -4,96 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35218CA6002
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 18:53:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6582CA6002
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 18:55:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xEWla-0006r6-Vw; Wed, 07 Oct 2026 14:53:27 -0400
+	id 1xEWn4-0007D4-CV; Wed, 07 Oct 2026 14:54:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xEWlZ-0006qs-Ej
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 14:53:25 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1xEWn1-0007Cp-Va
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 14:54:55 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xEWlW-0003DN-Tq
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 14:53:25 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1xEWn0-0003H7-Bq
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 14:54:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1791399201;
+ s=mimecast20190719; t=1791399293;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ZKl9d+pTSU7suVSd5m+FF4hXN8Ml7fhgVQFTZcBAn/M=;
- b=c4In9cXpY9M+c8+ZgnWc4H3nlKCeVeNgnxmqYxHek1qxjOCIrtP1di7w3HFFLrJn2VNS75
- grIMEQptqBTyjs0Lru9hF/OpvXQVLS7OZ50HtFcZz4QKeEqqsH/A0DjLB952vKnFt4WPEb
- lmXnAF7vIJLY2+rIUGjd9/1zkeIegCY=
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
- [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=UkNYxRHQdnxLuv0WMLeqPWCzytTTLeXrxrp3NIqVDw4=;
+ b=I+7EmDfBeQ3LTFPhGQaBCMvj/7/9QCC4c4VEpL8Q+FVqgubmUnhTiNRhWlqSC5+lMNg054
+ 21xyKn7ZwDWQiSqaMEkIWeUbMsdhMoahmLriHnOu642MLAubm1cqpi6+Psus9yWmJELjN4
+ 0GeO3R1UWHwSPW8DavWlGXu+keyxCi4=
+Received: from mail-yw1-f200.google.com (mail-yw1-f200.google.com
+ [209.85.128.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-394-pqweVvDfOU2Wdwb4csJ0Cw-1; Wed, 07 Oct 2026 14:53:20 -0400
-X-MC-Unique: pqweVvDfOU2Wdwb4csJ0Cw-1
-X-Mimecast-MFC-AGG-ID: pqweVvDfOU2Wdwb4csJ0Cw_1791399200
-Received: by mail-qt1-f197.google.com with SMTP id
- d75a77b69052e-5347732a495so6689341cf.1
- for <qemu-devel@nongnu.org>; Wed, 07 Oct 2026 11:53:20 -0700 (PDT)
+ us-mta-558-HumtCnrAMxqk5yGGXVMJ6w-1; Wed, 07 Oct 2026 14:54:52 -0400
+X-MC-Unique: HumtCnrAMxqk5yGGXVMJ6w-1
+X-Mimecast-MFC-AGG-ID: HumtCnrAMxqk5yGGXVMJ6w_1791399292
+Received: by mail-yw1-f200.google.com with SMTP id
+ 00721157ae682-8881abf79a4so63465337b3.3
+ for <qemu-devel@nongnu.org>; Wed, 07 Oct 2026 11:54:52 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1791399292; cv=none;
+ d=google.com; s=arc-20260327;
+ b=hcd+5qCv9A0hDFFL0XtpuXiHincAnM+3Bldwdbk9RggSEI7Ex47/KKpVkP4h3jRi5i
+ 9BZ9Rd9vaXLVKUDmRixrnAQCMc3wnenME9SnEUxWysHlo9l7gxU5nK6n+b9JHtfctZnO
+ Im+9FOJRtVo7YSaWt9qxSwgsi7PexqNLasr+kLWPj/r9hVw8Ps0gir4Ti6CTlaLgbZlu
+ erv5tXddmlol4R+byKOx/NfAPsm1y8AjfCCl06PWF4miZFfV3T6wTGKd/fyD1Er6ps61
+ 6CB0Wr0R6V6kHHAIxEhE0LBUYi58xJf3KGHexUzT54V2tjxRexlj2tyRJNOGsi6+9fhQ
+ ox/g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=UkNYxRHQdnxLuv0WMLeqPWCzytTTLeXrxrp3NIqVDw4=;
+ fh=9fdqRXfOBOypzKvXtoydzTfP73jPiZvb0xAMRDNN+Ys=;
+ b=b399ovQ9lxOh1wc8oiiMFq4467ulsCXbmQQh01izPebl/VMwR5Yi/amkH/Hu8/bumP
+ NL6+6eTCHncpnxI2c3y+JZpW1TiSBh7BvlI88ejWGgSsGy/By8yrcy7wxuWU/4c19WEm
+ 7EZXKJ7LBkn1o3QZNTGPHNnThIg5TCNGkOeoCsgxKn5JkpNkKrOzO8RjAssLOZFZRKZK
+ EEUJGhZtt7TdnBbwUBXKFZIMm8f/E1sAfgm+Incv/6w3fDiMSXoTC379ySke3F7MWCMK
+ NkX7198skjSSAiM4jjiEm+M7LEVAz2XDulfNT8reepwDRxcmtVnVFVIXOYReGhB7SeXX
+ Oxkw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1791399199; x=1792003999; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ d=redhat.com; s=google; t=1791399292; x=1792004092; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=ZKl9d+pTSU7suVSd5m+FF4hXN8Ml7fhgVQFTZcBAn/M=;
- b=a3ZyPUBivoCcviGkR68YgmFMW7wEFysilq5MmVfAPEqPgkj3kMDzAvhhhfkJqPaw88
- zY3aD0W+buIN3wUyTd7wkGt+J0hA5m0bu0NhgGwJRvPMDlAu/+y3/IGC8VETBI0hjDma
- e9XyD3DZBeHdQd75KAJ192WPBlUYIjc5GgfLvF4Ty+9cJrKi5+rqpz1BXfA34Erodlaa
- zOpijfrrbabJWMqSWL+ogKJCEqsG55OrPbtZ0zWG2ApdDdya27+0AfWvlcJxvxp1g8lS
- WtArnSyKWUGIcFFdtfsvKUAuvEg8sUPS9rfYi2e0praDfwsux5+gQwtouujwrG/i6uiG
- /5sQ==
+ bh=UkNYxRHQdnxLuv0WMLeqPWCzytTTLeXrxrp3NIqVDw4=;
+ b=qoJBsM5xAYaqPfXAnHOTtn0ku33mQnSA2vYiuRQ448jN+t5RsNyALIQHRcXvPSXUnM
+ unhKQgbEIIb/QStmNinq6YW7kmSPOjMSoMpc6oDGf93rnoF4NKT5jplQbwsQTyf6AONY
+ NE7JTPrAncH7+FlXrhzgVrLXCZPKxOupBIf/gCp/LL/k7vhpr+v4eJyj6AjG6NGvKPxL
+ BZwfumrKF8HpxuoZqnHYgVCI5ARF4SVMInQB0XLfjIPbs5jb0isewVLLY0Jxaqmg7J/B
+ 3R9UK8CP1gocuhqk9Z7ylGpGTRst6ClA12F9uH4EMWwGycDbcfB1lgO2fUl7iY3PD18W
+ rO4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791399199; x=1792003999;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
+ d=1e100.net; s=20260707; t=1791399292; x=1792004092;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=ZKl9d+pTSU7suVSd5m+FF4hXN8Ml7fhgVQFTZcBAn/M=;
- b=QKt31ZJFrHbz/qnnNlwsUESP0pRRmza+f8mALOMFpRnrgX8xuYiho9WHRaxARVb24z
- QUm3I0OrVRsqRSLJ+tSi4pDzF32GR0+xiOh+Y+R59CPctt+CjBLau5uRaxVEnJYsUD5z
- tHcLQEq0cDwmzrCT2YmGSYe293Y33rZBiYzpbW8D7MNb/mko0zBqh5Gf6DWZQECu4AtL
- GnV+xzXbMEGcvZ+vWigiW9h3BNVP3hK9Mv/OPETxlOHXNXviZiudJrDwCpmt1qKvB4cG
- iO9Dl2fC4VwtwIm8gcB3uBZWtsYndZWbEgUKxpkA0pRVs/tTOeUKxogcW+6XDVMHeLzC
- MFRw==
-X-Gm-Message-State: AFuF++lN5CP/BaJRltQwJKOOtr1o33uyXj034fN74VK40ROJuOd7ZMQU
- 4VfYbSksZEb+LHSfFLkefRonWH/VTNL877Rs6Cq81GX8dejD4x7zsQMIBDpLn99L11UtjCeAsQZ
- VVudNx4lFhBGyR9ZooyeGWqfgZEPdJPKUgMs2tSoSAdj578WTBp+dRcLc
-X-Gm-Gg: AYBFou0IIwNt4C5O3lyyty80z81RwzVZnmKznkgySmY1DAiki6XrxkwmMAaLgz9kxVa
- y26JPaydMGkduXqw2GZrN0IUeMrZ0YuUcgtiYyDWa7v0Q+hZB60bbUdE32xbOLPgTUbLDO5cjUK
- yLbp0A6H/OYIVCja4jmOzuwy5PvO9eY8E8cNOFWhPAag1nfXQ1TSX4+sLfMth90VBAyXzi3Pb4C
- 16YBApsxIo76YR375Moj3IEjuqzLXanlAZrBtzPPXeBGZM/UUVl0JuA6yLJR/wFKS48p9QC5N/V
- WjG7Syc2dhsCqkWcMpVFOEzwqkAyyndea6UsZXDrJJFJe+Iju3v0XwuqpwLeYcU/IIws23I=
-X-Received: by 2002:a05:622a:8ce:b0:533:39eb:8d42 with SMTP id
- d75a77b69052e-5358a8dbdbcmr732581cf.21.1791399199409; 
- Wed, 07 Oct 2026 11:53:19 -0700 (PDT)
-X-Received: by 2002:a05:622a:8ce:b0:533:39eb:8d42 with SMTP id
- d75a77b69052e-5358a8dbdbcmr732241cf.21.1791399198852; 
- Wed, 07 Oct 2026 11:53:18 -0700 (PDT)
-Received: from localhost ([142.188.212.246]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-53571f162e7sm26789321cf.1.2026.10.07.11.53.18
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 07 Oct 2026 11:53:18 -0700 (PDT)
-Date: Wed, 7 Oct 2026 14:53:17 -0400
-From: Peter Xu <peterx@redhat.com>
-To: "Denis V. Lunev" <den@openvz.org>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- Juraj Marcin <jmarcin@redhat.com>
-Subject: Re: [PATCH 1/4] migration/postcopy: report COMPLETED only after the
- run BH has run
-Message-ID: <asaVHeTm2MljE2z0@zhexu-thinkpadt14gen5.rmtcaon.csb>
-References: <20261002110258.1835979-1-den@openvz.org>
- <20261002110258.1835979-2-den@openvz.org>
+ bh=UkNYxRHQdnxLuv0WMLeqPWCzytTTLeXrxrp3NIqVDw4=;
+ b=SegYi6rNKF0WmiPUCS4HMDEU/C+rtegFdDJhhsUxgSS0IUPrFiFi2inn+998YG/Kjl
+ S9PnaGljwpRrOGiOusSd2JyR/beljp3Xh18MQpWezkrVVi0fleYPJETNz2kT+nTbr/jZ
+ L2A+GCIO6Rh8YagXUe5Z/E5aIAxyV6JvuNo8nHzZQF5f4oVfXzdAOG278HfmOFKFBzur
+ w1vNPunvQrXOz4F6KnUhaZURZt8fEFWBtqKu6ozcegcK3YPIqtUHkZlklOwuRsQENe+k
+ TJXTrnTDYKopQab+/TLOBefk8JfqfV/+aMjrkZgbQJIVWFUJgDwzmuuWqvUYq8ItXr5z
+ ilQg==
+X-Gm-Message-State: AFq9FYK8pB8OC1W4uVO3ooWngc1h8wxEFQSmrlaQcIylgWBLCQcCNEw5
+ 9BCGj1XPP8dAGhfCykQu87848Z0wiprNqI5olviuBfbIi8o+YvhNXuyEhDzjdyWh6apD5JXUuqa
+ /EBTZMrIN9j7Fc/2baL2cVkuoTcjltrCJ2PfitD1SyCxZDs9p1uTlr5cmTXXSGdU73wbUXWCIxL
+ /pmtWEIu+QvU85z9AGQg1vGoRq06fT+Oc=
+X-Gm-Gg: AYBFou0ZloYEKcsFn+3J5wkLvrkJZj+QR+bR1UpTa9MTxKdfSAcfrCssfYG+QvakHIB
+ x95TrTRfpgcUgrsGrUVWmOClmNG+O2humGTm1ylbh7DIPGpYKDnag+02Jwy84QJRUL4MQ+tYDQH
+ +ZYAHf2IdOIDNzb2Mq4LHdKot2bvoL/ZIv+l0yy8muZLb7mnajsMgcp+LqmYtpncycFEGxUPF28
+ 1fqKbcEcreZEqk3
+X-Received: by 2002:a05:690e:bc7:b0:677:c92c:52f0 with SMTP id
+ 956f58d0204a3-67909f0c4d8mr2050396d50.15.1791399291421; 
+ Wed, 07 Oct 2026 11:54:51 -0700 (PDT)
+X-Received: by 2002:a05:690e:bc7:b0:677:c92c:52f0 with SMTP id
+ 956f58d0204a3-67909f0c4d8mr2050383d50.15.1791399290976; Wed, 07 Oct 2026
+ 11:54:50 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20261002110258.1835979-2-den@openvz.org>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+References: <20260929223044.2998391-1-jsnow@redhat.com>
+ <87ik3nti0x.fsf@pond.sub.org>
+In-Reply-To: <87ik3nti0x.fsf@pond.sub.org>
+From: John Snow <jsnow@redhat.com>
+Date: Wed, 7 Oct 2026 14:54:39 -0400
+X-Gm-Features: AclHuK9aYezqbUXUiBej5xQXey8rXYFm318wzCDA3hkPn1fn2KF40u-ZGtjB8rg
+Message-ID: <CAFn=p-Yoa5pEgVAj_BqiBeACppadzgBBgVTUtq0EquOoWc6u8w@mail.gmail.com>
+Subject: Re: [PATCH] qapi: convert intro sections fixup
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, Eric Blake <eblake@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -22
 X-Spam_score: -2.3
@@ -117,122 +136,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Oct 02, 2026 at 01:02:55PM +0200, Denis V. Lunev wrote:
-> From: Denis V. Lunev <den@openvz.org>
-> 
-> The postcopy listen thread waits for main_thread_load_event before it
-> reports COMPLETED. That event is set as soon as qemu_loadvm_state_main()
-> returns in the main thread, while the run state is changed later, in
-> loadvm_postcopy_handle_run_bh(). The listen thread can therefore report
-> COMPLETED while the VM is still in RUN_STATE_INMIGRATE, easily so in a
-> bitmap-only postcopy where it has little to load.
-> 
-> Management reacting to COMPLETED then finds the VM still incoming: a
-> blockdev-add creates an inactive node, since bds_tree_init() forces
-> BDRV_O_INACTIVE in RUN_STATE_INMIGRATE, and attaching a device to it
-> fails with "Block node is read-only". Precopy gets this right:
-> process_incoming_migration_bh() changes the run state before it reports
-> COMPLETED.
-> 
-> Set an event at the end of the run BH and wait for it in the listen
-> thread, unless loading failed before CMD_POSTCOPY_RUN and the BH was
-> never scheduled.
+On Wed, Sep 30, 2026 at 1:39=E2=80=AFAM Markus Armbruster <armbru@redhat.co=
+m> wrote:
+>
+> John Snow <jsnow@redhat.com> writes:
+>
+> > "We" (Me, I, Myself) missed two last spots during bulk conversion of th=
+e
+> > intro section syntax.
+> >
+> > Some definitions are still intentionally left without an intro
+> > section: BlockdevSnapshotSync is the only case I am presently aware
+> > of.
+>
+> There are quite a few more, but BlockdevSnapshotSync is the only one
+> followed by a plain section.
+>
+> > The remaining two were genuinely just missed; convert them now.
+> >
+> > Reported-by: Markus Armbruster <armbru@redhat.com>
+> > Signed-off-by: John Snow <jsnow@redhat.com>
+> > ---
+> >  qapi/machine-s390x.json |  4 ++--
+> >  qapi/qom.json           | 14 +++++++-------
+> >  2 files changed, 9 insertions(+), 9 deletions(-)
+> >
+> > diff --git a/qapi/machine-s390x.json b/qapi/machine-s390x.json
+> > index 8d8cbe2fb75..9ae559bbc2d 100644
+> > --- a/qapi/machine-s390x.json
+> > +++ b/qapi/machine-s390x.json
+> > @@ -150,8 +150,8 @@
+> >
+> >  ##
+> >  # @DummyBootCertificates:
+> > -#
+> > -# Not used by QMP; hack to let us use BootCertificatesList internally.
+> > +#     Not used by QMP; hack to let us use BootCertificatesList
+> > +#     internally.
+> >  #
+> >  # Since: 11.2
+> >  ##
+> > diff --git a/qapi/qom.json b/qapi/qom.json
+> > index e03ede34421..2d0d0e47fbb 100644
+> > --- a/qapi/qom.json
+> > +++ b/qapi/qom.json
+> > @@ -1039,13 +1039,13 @@
+> >
+> >  ##
+> >  # @SevSnpGuestProperties:
+> > -#
+> > -# Properties for sev-snp-guest objects.  Most of these are direct
+> > -# arguments for the KVM_SNP_* interfaces documented in the Linux
+> > -# kernel source under
+> > -# Documentation/arch/x86/amd-memory-encryption.rst, which are in turn
+> > -# closely coupled with the SNP_INIT/SNP_LAUNCH_* firmware commands
+> > -# documented in the SEV-SNP Firmware ABI Specification (Rev 0.9).
+> > +#     Properties for sev-snp-guest objects.  Most of these are direct
+> > +#     arguments for the KVM_SNP_* interfaces documented in the Linux
+> > +#     kernel source under
+> > +#     Documentation/arch/x86/amd-memory-encryption.rst, which are in
+> > +#     turn closely coupled with the SNP_INIT/SNP_LAUNCH_* firmware
+> > +#     commands documented in the SEV-SNP Firmware ABI Specification
+> > +#     (Rev 0.9).
+> >  #
+> >  # More usage information is also available in the QEMU source tree
+> >  # under docs/amd-memory-encryption.
+>
+> Hmm, shouldn't we split this one?
 
-This in general looks reasonable, only some question to impl details,
+Looping back to stuff that got missed:
 
-> 
-> Signed-off-by: Denis V. Lunev <den@openvz.org>
-> Cc: Peter Xu <peterx@redhat.com>
-> Cc: Fabiano Rosas <farosas@suse.de>
-> Cc: Juraj Marcin <jmarcin@redhat.com>
-> ---
->  migration/migration.c    | 2 ++
->  migration/migration.h    | 2 ++
->  migration/postcopy-ram.c | 4 ++++
->  migration/savevm.c       | 1 +
->  4 files changed, 9 insertions(+)
-> 
-> diff --git a/migration/migration.c b/migration/migration.c
-> index fab7949fe1..8944acf3cd 100644
-> --- a/migration/migration.c
-> +++ b/migration/migration.c
-> @@ -324,6 +324,7 @@ void migration_object_init(void)
->      qemu_mutex_init(&current_incoming->rp_mutex);
->      qemu_mutex_init(&current_incoming->postcopy_prio_thread_mutex);
->      qemu_event_init(&current_incoming->main_thread_load_event, false);
-> +    qemu_event_init(&current_incoming->postcopy_run_event, false);
->      qemu_sem_init(&current_incoming->postcopy_pause_sem_dst, 0);
->      qemu_sem_init(&current_incoming->postcopy_pause_sem_fault, 0);
->      qemu_sem_init(&current_incoming->postcopy_pause_sem_fast_load, 0);
-> @@ -493,6 +494,7 @@ void migration_incoming_state_destroy(void)
->  
->      migration_incoming_transport_cleanup(mis);
->      qemu_event_reset(&mis->main_thread_load_event);
-> +    qemu_event_reset(&mis->postcopy_run_event);
->  
->      if (mis->page_requested) {
->          g_tree_destroy(mis->page_requested);
-> diff --git a/migration/migration.h b/migration/migration.h
-> index 683bc7bdd5..c65212ff63 100644
-> --- a/migration/migration.h
-> +++ b/migration/migration.h
-> @@ -108,6 +108,8 @@ struct MigrationIncomingState {
->       * loading state.
->       */
->      QemuEvent main_thread_load_event;
-> +    /* Set once the postcopy run BH has changed the run state */
-> +    QemuEvent postcopy_run_event;
-
-Can we just move main_thread_load_event post to be run_bh?  AFAIU that's
-the last thing postcopy does anyway, then the bh does whatever offloaded
-later.
-
-IOW, my read is the new run event should always be posted after the
-main_thread_load, then we don't need two.
-
->  
->      /* For network announces */
->      AnnounceTimer  announce_timer;
-> diff --git a/migration/postcopy-ram.c b/migration/postcopy-ram.c
-> index 5509cbdcb8..fd2c139cfe 100644
-> --- a/migration/postcopy-ram.c
-> +++ b/migration/postcopy-ram.c
-> @@ -2443,6 +2443,10 @@ static void *postcopy_listen_thread(void *opaque)
->       * state yet; wait for the end of the main thread.
->       */
->      qemu_event_wait(&mis->main_thread_load_event);
-> +    /* The VM run state is changed later, in loadvm_postcopy_handle_run_bh() */
-> +    if (postcopy_state_get() == POSTCOPY_INCOMING_RUNNING) {
-
-Why the condition, rather than always waiting for it?  If it happened
-already, the wait() will consume the posted.
-
-Thanks,
-
-> +        qemu_event_wait(&mis->postcopy_run_event);
-> +    }
->  
->      /*
->       * Device load in the main thread has finished, we should be in
-> diff --git a/migration/savevm.c b/migration/savevm.c
-> index 4b590ea672..5ec09d4889 100644
-> --- a/migration/savevm.c
-> +++ b/migration/savevm.c
-> @@ -2263,6 +2263,7 @@ static void loadvm_postcopy_handle_run_bh(void *opaque)
->      }
->  
->      trace_vmstate_downtime_checkpoint("dst-postcopy-bh-vm-started");
-> +    qemu_event_set(&mis->postcopy_run_event);
->  }
->  
->  /* After all discards we can start running and asking for pages */
-> 
-> base-commit: f7ada39edacaa5c26b30e98b94017b0b2ccbcf94
-> -- 
-> 2.53.0
-> 
-
--- 
-Peter Xu
+Split how? I think I have to rephrase this a bit, because when it gets
+inlined, it (might) be lacking the context of what specifically it
+refers to, i.e. "Most of these" might become ambiguous.
 
 
