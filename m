@@ -4,54 +4,143 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3F85CA5FF1
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 10:40:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 609CDCA5FFC
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 10:40:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xEP41-0000B0-N4; Wed, 07 Oct 2026 06:39:59 -0400
+	id 1xEP4A-0000Rh-V5; Wed, 07 Oct 2026 06:40:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <fcd4dd1ed8cf6ae9af99ba5ade8b5922875e442d@kylie.crudebyte.com>)
- id 1xEP3B-0008Mw-8T
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 06:39:10 -0400
-Received: from kylie.crudebyte.com ([5.189.157.229])
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xEP3I-0008Ng-LV
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 06:39:20 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <fcd4dd1ed8cf6ae9af99ba5ade8b5922875e442d@kylie.crudebyte.com>)
- id 1xEP39-00080j-Nt
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 06:39:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=crudebyte.com; s=kylie; h=Cc:To:Subject:Date:From:References:In-Reply-To:
- Message-ID:Content-Type:Content-Transfer-Encoding:MIME-Version:Content-ID:
- Content-Description; bh=+Y8/MEhhw7dTr+JFJolHL7vFyQWF9Q7QCWyhn9FUpR8=; b=sidIb
- Xrf7PoWC2brQ4Xr0XHBl3AUp7whoopwKo07KFP757PrtW97LlhQLmElRDI9aiH9MOdySeXcz920BQ
- 7WeVZqEz++q0xMNbdla4Y8ZH3kTJeJL/gdYZEJoV6AZfjG7uSOf49w+Lzo+kwOeSWXNO8zSyfvQAM
- jhvmAkCH3p3jCN29XNMlvaZTBehT4MyWoKB/L/W52Ri85VBR2JFMamHAXN2p0t2mzPNV6d8rVMAG5
- phD/BpAMI1lk66+/gJlTSx/qkGGFhUXqufK+wUfDvHGWj5HxStBjCLX8BFth+yx8kWVskhavozOwc
- Dd/fQXNQF6p1GolzuO+ph6zhGv4OaPaHb617x58EDbtomuvDXlfK6Nb0ftEywIkLv/JTOH0pLyJaH
- pELFcEHBXHs7Hv2j8smOB9yYyFHnaSC+Lln74QCsiK5ouQWJkSQq+EKxE0plB4ftsbh4tjr/v36sQ
- w0W51U4sWY7GluKAug3PPHjz5ziCNPYsIrwTpiUAynwHxGfYozRak7BaZ2w7NuNP1Gb4pm4YXYh74
- zK81KI84R3W6FlZoXhZHRqy08YKlyVztMGWZnBY+cOgHjgF6xva5F+TCYEdtt4I1pB36f/Fyat8ky
- H5wnX0OxAYbuT5KcskG/GE6/pyaBxcK+Vj+6C5MjoXRYdiFlCDIpAywEpHZT44=;
-Message-ID: <fcd4dd1ed8cf6ae9af99ba5ade8b5922875e442d.1791368962.git.qemu_oss@crudebyte.com>
-In-Reply-To: <cover.1791368962.git.qemu_oss@crudebyte.com>
-References: <cover.1791368962.git.qemu_oss@crudebyte.com>
-From: Christian Schoenebeck <qemu_oss@crudebyte.com>
-Date: Wed, 7 Oct 2026 12:26:58 +0200
-Subject: [PATCH v2 1/9] tests/9p-client: add Txattrwalk / Rxattrwalk test
- client functions
-To: qemu-devel@nongnu.org
-Cc: Greg Kurz <groug@kaod.org>
-Received-SPF: pass client-ip=5.189.157.229;
- envelope-from=fcd4dd1ed8cf6ae9af99ba5ade8b5922875e442d@kylie.crudebyte.com;
- helo=kylie.crudebyte.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xEP3H-00081E-74
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 06:39:12 -0400
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6977jReD3298187
+ for <qemu-devel@nongnu.org>; Wed, 7 Oct 2026 10:39:10 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ lzJRKa/HQTPPvRww9hPJ5u8ABX5npk5rxYv0jmRYOfo=; b=hjMeKEWJfyOpYGCh
+ p0t3qFu2rGoAtKQmjP122S0AhdUpkcocCUPrmNKHQIDxRnL+LMpoDUyZZBncLxpl
+ r93gAQP4oPCV/oXJnNLM7RMKswZaXwr463B6hgns+v3IFQQGEE3YvemEA5qAO8F9
+ yYlMaSce68qE4ERuU+DhEXyGHXpKX0lRoY4X9ZZrI2LZGKnydJTD026dUZihDh+R
+ 5w7PY6Cw+lpeTNPASkYdCCuZCRet2tmWWmWEPPH8GpNtMiOFUSqpqeC9jKJL2IJ6
+ e68bH7PiPPS7FVwbEjx5K1f7c6iqcEJnnM64pWRo5bgLsMxj0z8W8jfiMOGZy1vr
+ ke+DZQ==
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h5hdcrp2x-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Wed, 07 Oct 2026 10:39:10 +0000 (GMT)
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-93cc0b31ecaso837374085a.1
+ for <qemu-devel@nongnu.org>; Wed, 07 Oct 2026 03:39:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1791369550; x=1791974350; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=lzJRKa/HQTPPvRww9hPJ5u8ABX5npk5rxYv0jmRYOfo=;
+ b=PRoa7Xvy3gXAtH6sLt6GwYdNq5ZIvR6AeXpxmO6itfQjX/kBXhNwgYB2si34o6y30s
+ xDP/qrRqmOlMIqsXQ74B7/Lrm/8lSUpSAOhzXYVeaR4VXGUtiuhSoZ7VjG92OuEIJwgQ
+ +/MxLXmaeYT8zlodc7hJNXxP1RdZyjVCpIGOzjefXvvPrrwu8atAS+jY7yvQed8hRboY
+ dgOJBlEA/019VuLhzX02toyLvLTCUC/TxPgZJA4kKHhDScWxBXVgYcKWpiW1uJC0Rxpe
+ rN6q2D+790QdrxjTgkYzKnEzV0gEe0SM++erfowaBd9PYMxafmmFsU7PSLcUB7DQZdGe
+ nmew==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1791369550; x=1791974350;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=lzJRKa/HQTPPvRww9hPJ5u8ABX5npk5rxYv0jmRYOfo=;
+ b=1xICwLPZVk2aNmoTG4VpX3h9vJALclcjtZIARxCze2xvOETa2Yy24PreixgfiMHsV+
+ W/X/oQExhFQqpIxs6yA4sdP1rBXDs6LCR4cFN7+TbSrYTNZG7r1XwSKVxHMdm8L/ZJGK
+ NwXk+ghW8WVkyXhn3Cvqj9/w+vsnacb07zV9BUOMCj2RKZ4c0NwPBadyiWNGd1EgHio6
+ +XiqWH1oEZVChKLt/nJNogOJNurYlh/0lFZNXeM7B+z6XbimUxkLREepbnOmsQPxQwgg
+ 4xar1GUr9R/KU1Gu2H7RS05AoiRr/ausNWILQA/eZmkWe8oMfTJDOwy/uvLNlBu+sWP1
+ 0Amg==
+X-Forwarded-Encrypted: i=1;
+ AKwUvByOiEEazdKfVMpMEHGwfP4qb5K3xP6PpA/jUPm12k9se66pVGqkxECJze7GJluVYUYyqLupyKe/DzQf@nongnu.org
+X-Gm-Message-State: AFuF++nLDvzIU28E5cnsDUEVrNslyEp+p3iKhGwy8NGA1Ygg1guFU30y
+ QCh/GHuHCJE+seSaloTHrXe0xZNvG5DFyu92vXg9zUbBK2LN78MNzXzzYh48Cos3xTJynuIEqxl
+ 98UG/zEE+US8R8hS/fUbvHdjX6g1pzY6K+3D0BAM7zDig9/yy57UPRnoF/A==
+X-Gm-Gg: AYBFou3tYVEQPbpxI0pIWTEzN8Jbaurn9sICC2kValqtcXtld0kopn76VZXJQ44Yu99
+ wSf/N7K4xRYjnYg+QNdd7qpEAPzV7ohX2FfTKcC5/WF1qhjcxcjtKDRusg2fjmnGAq8QetOuTcE
+ pCSc1oiWFAYI9bp4rtUbfzVQALRQ9lxmzWe8iCa6I+HzqPiubqQL4lbBXZVO3Y7M6dXj2oeAcPs
+ IfT3MWpQLbUGF2Nxu4mhMzASVbR5QTvZJht06mJeKGVcQPCt3klulfzZzilERlPQXocE3Zsoik+
+ oCzC4iCDrYho6tqdPP/t3G1bOPdyGOApcwlKHXXZhb3K3Kasl8G2Tm9UZKORDL85ppRaWupurpm
+ 1vJy2Na9zyU3JkeBodPXR0dmz9qCOJNoFyA==
+X-Received: by 2002:a05:620a:2584:b0:93c:be5f:b807 with SMTP id
+ af79cd13be357-93e9b76ca3dmr356459785a.13.1791369549598; 
+ Wed, 07 Oct 2026 03:39:09 -0700 (PDT)
+X-Received: by 2002:a05:620a:2584:b0:93c:be5f:b807 with SMTP id
+ af79cd13be357-93e9b76ca3dmr356457585a.13.1791369549215; 
+ Wed, 07 Oct 2026 03:39:09 -0700 (PDT)
+Received: from [192.168.69.210] (pmd666.hd.free.fr. [88.187.86.199])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-48c71d2e2dcsm5380084f8f.42.2026.10.07.03.39.02
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 07 Oct 2026 03:39:03 -0700 (PDT)
+Message-ID: <81100ac4-f8eb-424c-b275-867e25a7237f@oss.qualcomm.com>
+Date: Wed, 7 Oct 2026 12:38:58 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 02/18] target/riscv: meson, add user and common system
+ source sets
+Content-Language: en-US
+To: Anton Johansson <anjo@rev.ng>, qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, daniel.barboza@oss.qualcomm.com,
+ pierrick.bouvier@oss.qualcomm.com, palmer@dabbelt.com,
+ alistair.francis@wdc.com, luoyonggang@gmail.com
+References: <20261007-rv-dedup-v2-0-8a2f0f296a7f@rev.ng>
+ <20261007-rv-dedup-v2-2-8a2f0f296a7f@rev.ng>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <20261007-rv-dedup-v2-2-8a2f0f296a7f@rev.ng>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-GUID: oEl4SV1cVIEFaf5dYlQwNf6roDpXz1cN
+X-Authority-Analysis: v=2.4 cv=aKFlOr9m c=1 sm=1 tr=0 ts=6ac6214e cx=c_pps
+ a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
+ a=EUspDBNiAAAA:8 a=1tSEMpTH9XP_W59IOagA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=PEH46H7Ffwr30OY-TuGO:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA3MDA0MiBTYWx0ZWRfXwWzvBdMOHoF9
+ thspGHsTcSDJXrxK0sPiDJWVWJuvC0udNE5Cj5Uq2i3OIXLtcRdemZOUjQBWbMneg2wYzMCU/7g
+ 6HSLfvoO309r0dVwKO5VFejypYK12Io=
+X-Proofpoint-ORIG-GUID: oEl4SV1cVIEFaf5dYlQwNf6roDpXz1cN
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA3MDA0MiBTYWx0ZWRfX6UkkV9dsag26
+ Wqw0g1bTAKYAoVr4eyRoYCI6hpDD3zkMXZFRSTaYIac4giizugqpQQutC4oBMlNocP5YuX+x5qG
+ pwwglV8R6Mrd9KrwLHGLtQ22kYyTN9TSuLq7XJwKLH7itVi5nW7slUugFgn0WARpvkBfGR7mcpk
+ T8gXWOzAOEMh0O6lECOdVf1vniKH0ijQM7UHQR+17GQd7qmevWA1Zp7dgNUDKHCaIXPnhwppjBY
+ g4RhzJEtQBHA8fdtSb5Che/Si5IxKoV41oewf4j2gWFn5TIcgv+A1IY0J+fFEGyf4gXAcM3f8Mu
+ R4UWuoDMA3pAE8m3qX/BCW2DAQ7xhtB3qzx1UDKEEslkM3VWD3T+0pGD8fk7OZf18WMKeQG2WlV
+ EnWeF9WrJ8mPlLOEkQa0kfqyNYk1a6wJIv6yKvAcIltpHsoTAi3P+yi4ygEw3irCP6HU75KwBcq
+ JFCj8CYHMRtXfphvhVg==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-10-07_03,2026-10-06_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 phishscore=0 malwarescore=0 priorityscore=1501 impostorscore=0
+ bulkscore=0 adultscore=0 lowpriorityscore=0 spamscore=0 clxscore=1015
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2610070042
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -68,121 +157,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add v9fs_txattrwalk() and v9fs_rxattrwalk() functions to the 9p test
-client. This can be used to retrieve a list of xattrs or to acquire
-a FID that can subsequently be used to retrieve the value of an xattr.
+On 7/10/26 10:43, Anton Johansson via qemu development wrote:
+> This allows us to, in future commits, handle compilation units which
+> need to be compiled once for system-, but twice for user-mode.
+> 
+> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+> Signed-off-by: Anton Johansson <anjo@rev.ng>
+> ---
+>   target/riscv/meson.build | 5 +++++
+>   1 file changed, 5 insertions(+)
 
-This is a preparatory patch, these functions will be used by the
-subsequently added 9p race test.
-
-Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
----
- tests/qtest/libqos/virtio-9p-client.c | 48 +++++++++++++++++++++++++++
- tests/qtest/libqos/virtio-9p-client.h | 28 ++++++++++++++++
- 2 files changed, 76 insertions(+)
-
-diff --git a/tests/qtest/libqos/virtio-9p-client.c b/tests/qtest/libqos/virtio-9p-client.c
-index 305b0dac63..b2f0037b7b 100644
---- a/tests/qtest/libqos/virtio-9p-client.c
-+++ b/tests/qtest/libqos/virtio-9p-client.c
-@@ -1227,3 +1227,51 @@ void v9fs_rxattrcreate(P9Req *req)
-     v9fs_req_recv(req, P9_RXATTRCREATE);
-     v9fs_req_free(req);
- }
-+
-+/* size[4] Txattrwalk tag[2] fid[4] newfid[4] name[s] */
-+TXattrWalkRes v9fs_txattrwalk(TXattrWalkOpt opt)
-+{
-+    P9Req *req;
-+    uint32_t err;
-+    uint32_t body_size = 4 + 4;
-+    uint16_t string_size;
-+    uint64_t xattr_size = 0;
-+
-+    g_assert(opt.client);
-+    g_assert(opt.name);
-+
-+    string_size = v9fs_string_size(opt.name);
-+    g_assert_cmpint(body_size, <=, UINT32_MAX - string_size);
-+    body_size += string_size;
-+
-+    req = v9fs_req_init(opt.client, body_size, P9_TXATTRWALK, opt.tag);
-+    v9fs_uint32_write(req, opt.fid);
-+    v9fs_uint32_write(req, opt.newfid);
-+    v9fs_string_write(req, opt.name);
-+    v9fs_req_send(req);
-+
-+    if (!opt.requestOnly) {
-+        v9fs_req_wait_for_reply(req, NULL);
-+        if (opt.expectErr) {
-+            v9fs_rlerror(req, &err);
-+            g_assert_cmpint(err, ==, opt.expectErr);
-+        } else {
-+            v9fs_rxattrwalk(req, &xattr_size);
-+        }
-+        req = NULL; /* request was freed */
-+    }
-+
-+    return (TXattrWalkRes) { .req = req, xattr_size };
-+}
-+
-+/* size[4] Rxattrwalk tag[2] size[8] */
-+void v9fs_rxattrwalk(P9Req *req, uint64_t *size)
-+{
-+    v9fs_req_recv(req, P9_RXATTRWALK);
-+    if (size) {
-+        v9fs_uint64_read(req, size);
-+    } else {
-+        v9fs_memskip(req, 8);
-+    }
-+    v9fs_req_free(req);
-+}
-diff --git a/tests/qtest/libqos/virtio-9p-client.h b/tests/qtest/libqos/virtio-9p-client.h
-index 4b04324503..c910407f70 100644
---- a/tests/qtest/libqos/virtio-9p-client.h
-+++ b/tests/qtest/libqos/virtio-9p-client.h
-@@ -553,6 +553,32 @@ typedef struct TXattrCreateRes {
-     uint32_t err;
- } TXattrCreateRes;
- 
-+/* options for 'Txattrwalk' 9p request */
-+typedef struct TXattrWalkOpt {
-+    /* 9P client being used (mandatory) */
-+    QVirtio9P *client;
-+    /* user supplied tag number being returned with response (optional) */
-+    uint16_t tag;
-+    /* file ID of file/dir from which to walk (required) */
-+    uint32_t fid;
-+    /* file ID that will refer to the walked-to xattr (required) */
-+    uint32_t newfid;
-+    /* xattr name, or empty for a list of all xattrs (required) */
-+    const char *name;
-+    /* only send Txattrwalk request but not wait for a reply? (optional) */
-+    bool requestOnly;
-+    /* do we expect an Rlerror response, if yes which error code? (optional) */
-+    uint32_t expectErr;
-+} TXattrWalkOpt;
-+
-+/* result of 'Txattrwalk' 9p request */
-+typedef struct TXattrWalkRes {
-+    /* if requestOnly was set: request object for further processing */
-+    P9Req *req;
-+    /* size of xattr */
-+    uint64_t size;
-+} TXattrWalkRes;
-+
- void v9fs_set_allocator(QGuestAllocator *t_alloc);
- void v9fs_memwrite(P9Req *req, const void *addr, size_t len);
- void v9fs_memskip(P9Req *req, size_t len);
-@@ -610,5 +636,7 @@ TClunkRes v9fs_tclunk(TClunkOpt opt);
- void v9fs_rclunk(P9Req *req);
- TXattrCreateRes v9fs_txattrcreate(TXattrCreateOpt opt);
- void v9fs_rxattrcreate(P9Req *req);
-+TXattrWalkRes v9fs_txattrwalk(TXattrWalkOpt opt);
-+void v9fs_rxattrwalk(P9Req *req, uint64_t *size);
- 
- #endif
--- 
-2.47.3
-
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 
