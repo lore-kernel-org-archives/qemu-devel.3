@@ -4,110 +4,140 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E88D5CA6002
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 16:56:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00E20CA6002
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 17:01:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xEUwc-0000Kv-2R; Wed, 07 Oct 2026 12:56:42 -0400
+	id 1xEV0e-0002oI-HO; Wed, 07 Oct 2026 13:00:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gromero@redhat.com>)
- id 1xEUwa-0000Jy-5n
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 12:56:40 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <tdave@nvidia.com>) id 1xEV0O-0002lA-Up
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 13:00:37 -0400
+Received: from mail-northcentralusazlp170130007.outbound.protection.outlook.com
+ ([2a01:111:f403:c105::7] helo=CH4PR04CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gromero@redhat.com>)
- id 1xEUwY-0000EY-2c
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 12:56:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1791392197;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=UatQT68T3Y1N+OsYslNAjwUJIF+/+h1urhB1lsxs2js=;
- b=A9EZXKhb2EMU2W9AZJqVH1ePYO+eryQFjFe0wfJDYmTbmTdL9hGIP1QaDIbiBDTcOV/gb2
- oToobgzAispz+TrCRlsM7GmTQ5ciLhZuBKw28nBOkU609bena/bSkiVsyxMDzHz9R0Cs/O
- Wu4hpOCBs1gPiCz+sVtB0c6w/Je+qRA=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-647-zyLfcaHqNOWLZWu1Y_nYsw-1; Wed, 07 Oct 2026 12:56:36 -0400
-X-MC-Unique: zyLfcaHqNOWLZWu1Y_nYsw-1
-X-Mimecast-MFC-AGG-ID: zyLfcaHqNOWLZWu1Y_nYsw_1791392195
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-48af4a0bd0fso2409326f8f.2
- for <qemu-devel@nongnu.org>; Wed, 07 Oct 2026 09:56:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1791392195; x=1791996995; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=UatQT68T3Y1N+OsYslNAjwUJIF+/+h1urhB1lsxs2js=;
- b=ZWoRl1w9qt9gYTMAeYxV7wLkIdCEg8fXwnfyQMajBibhnd5YrngVr1ILqbEvGUZyWV
- 4TmYcfcaCT3WE4kd05HSHQlrC0f5YVXjP+hFiBE4EaOYD6VzIm0kK2+oBjJ89N6xGehv
- QLhi0CR2nhM9h9PPoUO4b/xH2aMgGP7esrLK+Urzd3f1awbdd+rTQNSyX0eImQTSVOS8
- VNqXkikcGz93Ma2cuPxmNISI0Pf4RXE1tsznTOvxQ8jsH2lC/zn/MYZhBrBLdkSkOPlb
- 3Jxiq9P/xdiXi1ysDqMYv8kAweJJIElYXPjz5lJpE1u7R9BRmwfhNh3pSByFG7nm8SQq
- 2y0g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791392195; x=1791996995;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=UatQT68T3Y1N+OsYslNAjwUJIF+/+h1urhB1lsxs2js=;
- b=C+wnOzlwoJ48XUGX9IEvdgnaFkX97j4KhZuM3lXSajAQQ0+tz43/Vl1kHqWgV2GqqN
- BUDTghdqulIUIdeoJwa0aYmqsPNH0SvlqoTA+xpTme7U7Q4L0RKFl16oZOm6zfj9wBh0
- xTSjhbyOgfuudebQIb4ZRhI7RE+ijafwuHEWdMrpKUkyiiddlr3QDAuEmkst/OglUbeL
- YQJ2y1WBZqgunVdkAu7iw5h/YKy0sqx4H4g3Tj45UOz1oWslUhaYTVHJahay/fVoxfUH
- MjhcxCaxIMcA4gGRtGdldtBz25WMmCc57BKGppkcWj+GobMXrOx41MKtKs+IZNmxj87f
- P18g==
-X-Forwarded-Encrypted: i=1;
- AKwUvBxU0EmXuu606RtuwKpc924V8qDO/Slq+nckVzFmCUun37E8TsdFVmHO4om4B2pU4ZnTheF6TPDotRRl@nongnu.org
-X-Gm-Message-State: AFuF++nEMqFxDsq/0r6MWB1hnanZt9bJx0TKC2H6KufBbXqOUyo4kBpE
- JNvBUn6O/Ww++mNZeVDMKHm+P8+QlI6rcsPbp60Ch/EmfQTN4WUgBLSlVxJg+XmWho2HKyurMPI
- 3Vfgp8QR+5ajBVAVKMaGscU0xnSNVRWcbBL+jXF2Z7AFu9izDZZchf9iq
-X-Gm-Gg: AYBFou0XZNfnGDL0GWLDroDayPiT77Z3pthMLq/gOE8Td0xs/CAhRRrlU3q5UFfIbCp
- Pa0pG+EuJevEKAQx756af9bR+Ny/5BDR3PqJEhNCkBFGm9AJJnIGLUmiS2NS3eDCMvD6r6lD16d
- vHF0/hZ4PmtlQYqYhIzkwSK/MrWVSc3EJHvFITOuLN62sd8nDH9tUWG5Pb7phSoKYfAgcBmj0u+
- BbzzvBDNQ3M7qCZ5U3pzNdcTMuBPMuhtt73eWu08mcTEH61MvAoMxPp57ximt0qb9XkqNXtMSqo
- OBnO0V7e4hm+DinrIgHG0Ng0gJCzAsicmOp+Hp2ceXg4k41+7nWU7Wt1rA==
-X-Received: by 2002:a05:600d:8654:10b0:4a0:2391:6533 with SMTP id
- 5b1f17b1804b1-4a1815a2080mr29725685e9.21.1791392194799; 
- Wed, 07 Oct 2026 09:56:34 -0700 (PDT)
-X-Received: by 2002:a05:600d:8654:10b0:4a0:2391:6533 with SMTP id
- 5b1f17b1804b1-4a1815a2080mr29725405e9.21.1791392194395; 
- Wed, 07 Oct 2026 09:56:34 -0700 (PDT)
-Received: from x1 ([151.67.89.12]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48c71c0b37csm6193363f8f.9.2026.10.07.09.56.32
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 07 Oct 2026 09:56:33 -0700 (PDT)
-Date: Wed, 7 Oct 2026 18:56:30 +0200
-From: Gustavo Romero <gromero@redhat.com>
-To: Fuad Tabba <fuad.tabba@linux.dev>
-Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org, 
- qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>, 
- Will Deacon <will@kernel.org>, Itaru Kitayama <itaru.kitayama@linux.dev>, 
- Fuad Tabba <tabba@google.com>
-Subject: Re: [PATCH v2 3/3] tests/tcg/aarch64: Add a test for the 52-bit TTBR
- base address layout
-Message-ID: <4ajscli4c4ef7agtizxzdiopjseck5qwa6s4n4mmwwjdrqlnby@xit5l76dxm2w>
-References: <20261007080019.350315-1-fuad.tabba@linux.dev>
- <20261007080019.350315-4-fuad.tabba@linux.dev>
+ (Exim 4.90_1) (envelope-from <tdave@nvidia.com>) id 1xEV0M-0000eh-Te
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 13:00:36 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=lYMCeVSW8UsDJB3T0up+ciH54VYUMsytkRpRhyfTgCisdSOSVQU8LxZBd5Ty8lKYQkHfOTdm1yXqSZX6wjgB12LY9/FFtQIeJasS5/rRJ6RHN1Ggvtn87o/xtcbr+DpW5zwGGD9kf3BOxnyfMG0bY1rzLd5jcNspA2l58b6qR3dvp2UprmMIVwy/Qw6yl7OgJlQkdw/6TAKk7QZdeawicK/eOcwjo2aaiEe53l66NgIkqCB5o8Lrbea2rE+jFjYMoeYtQRuSc67NZD5EXwrjDIguBdwtQnzYrF81ay4SxLy+NDr7PQupa0UL5qtutKzwRnlC3Dl5NHzioTem4ytAWA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=ON9FWYqsfw5epgpkT23px1SkKQYAkW5dUs/PSbNWTSI=;
+ b=IbA2onYv07j5VEhou9Dj8M4sbIvA1yQL5TNh+V/HR63H2EzvBY4q1/8UFzogKuNevzCaOFbifu3L8N4WC+gp3ksv8zVO6yr0JuCDMWplvn6wTpuPIcMnUUvduSC0FFbm8rn7yWINt1vi6XUV6yLMegmzotMFjlmcSmtFqBDZrzxdk3nfwCwL0BCKLNUGfhvG2CHlqoSOs1JEeKzUa16PKlLHI5u6qBvhMfI00TQknDvoVM4rQnWZ2ODEut5RNkqfpDejon4Hh9UgGLWsoo0QCk7Cs3ljAwxpOdM5Zr10fMjM52nXgHCl3yhS1pkRZvEVtC71HdTM4A4SOX10J0rH2A==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=ON9FWYqsfw5epgpkT23px1SkKQYAkW5dUs/PSbNWTSI=;
+ b=Ct2E7y6KL7EQshajIOB1K0D/qyl1v8u+tI31z1F4B/4mLzXv5P8CvO9C8RFdkriHyq6rfj+73/6c1j/OGpkYT/69GmuR1NDrB7O737fsiuGClwHorPWcJtTxlANTntGBPdYaM0SVCWltUPHRrywkmgQPSGZL87Qa+FUQ+yDVmR/M87SDEfLt+1bxklNcKFbeAVoRn3YsjlHm2Qzvb45Dm2SWL08ZeEJFD7o0l3FO2eThnwgg8BsxGr10ZWhUIOoKyeHVrX5V63onlQ66ARsZd75VN5bJ/cyjn4KStYVVkmw/0FeM/T5QomQqD5T6ONXQspBVNOsPoV67CmkcuzN/Aw==
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from IA3PR12MB923065.namprd12.prod.outlook.com
+ (2603:10b6:208:627::17) by SJ5PPF09E5F035B.namprd12.prod.outlook.com
+ (2603:10b6:a0f:fc02::988) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.496.16; Wed, 7 Oct
+ 2026 17:00:24 +0000
+Received: from IA3PR12MB923065.namprd12.prod.outlook.com
+ ([fe80::1c83:bf47:4202:50b1]) by IA3PR12MB923065.namprd12.prod.outlook.com
+ ([fe80::1c83:bf47:4202:50b1%5]) with mapi id 15.21.0496.010; Wed, 7 Oct 2026
+ 17:00:24 +0000
+Message-ID: <518c7575-2e44-4d6f-9e5c-3504758e396a@nvidia.com>
+Date: Wed, 7 Oct 2026 12:00:21 -0500
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/3] hw/pci: Expose ACS ctrl on Guest as configured by
+ the hypervisor
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: qemu-devel@nongnu.org, philmd@oss.qualcomm.com, zhao1.liu@intel.com,
+ yishaih@nvidia.com, alwilliamson@nvidia.com, jgg@nvidia.com,
+ skolothumtho@nvidia.com
+References: <20261006013133.3457555-1-tdave@nvidia.com>
+ <20261006013133.3457555-3-tdave@nvidia.com>
+ <20261006004500-mutt-send-email-mst@kernel.org>
+From: Tushar Dave <tdave@nvidia.com>
+Content-Language: en-US
+In-Reply-To: <20261006004500-mutt-send-email-mst@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: PH8PR05CA0014.namprd05.prod.outlook.com
+ (2603:10b6:510:2cc::7) To IA3PR12MB923065.namprd12.prod.outlook.com
+ (2603:10b6:208:627::17)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20261007080019.350315-4-fuad.tabba@linux.dev>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=gromero@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
-X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: IA3PR12MB923065:EE_|SJ5PPF09E5F035B:EE_
+X-MS-Office365-Filtering-Correlation-Id: 5ce419fb-6c5a-440f-5b5d-08df24947aa4
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|1800799024|23010399003|366016|376014|56012099006|11063799006|4143699003|22082099003|18002099003|6133799003|10067099003;
+X-Microsoft-Antispam-Message-Info: fFCHnMcQIe/BbNW1tK4k4KvOBEUD6Z2bJqZai8LAnbG4X7bBuO9u+nBlNiN5IJkucsJCHXl/GqkGJH0NgqSi16NeYl+EYFrSx3V/QGmgKZdNXkvA+cwePwQDIbIhiuyhkoPP5ykbU8oJAuC7Ge2yv7mSZTO8dDuBu57zcyfjovTUaQTrVfkT38RzYqR9g8MWethkxBRTGAGQ7aKFupWBm2q8TD1qCnQxXei9/MOY15k+2SyluXKGp78Vop165anAtnL/YGtBWMab16kf3CualVDF7NxXbY5UK4ufaFzV7+bpFJWea3Z7eA1MCmN4CZKe8w9nKq6t7HHINvEba9f/Xo/sVZSZpvANVyooavRqFzaBkezkCZoG8UfhGyUP7GSyQqnONFq3pMKYZNjDZZhZ9q4uD/a6a6qaegi1LwLDASL9XfsZ0ZKIMzDR/S73foggTbNSwyR+iXQ7y27L4esYIc7VkfJBgTkiaObMXLmbBZi+0KR3FBM2N9eSVBZ1E3a7ckrJo5rD2o31D4Z1zHtVI4devzinpShFyKvzEv2FR6agPG2F5DQZyecfL3dA+1X4CSEab+btw0b+awwiDDv+hehQ+bScjxe+U/iY+j6UKHJ+Uo69WiSGZusUEXRq8EjWA8tcr0DqsZ+IVBq4Uwzwz1ZanHlyKddaEoPZRYgA/bw=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:IA3PR12MB923065.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(23010399003)(366016)(376014)(56012099006)(11063799006)(4143699003)(22082099003)(18002099003)(6133799003)(10067099003);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?SEdSZUFMQ0szRWx2QWM1aGlhUWcwN2ZKRlliWjdpV2FSV2paMno4SG9wTjZ0?=
+ =?utf-8?B?emdQU1ovbE1xazVIZVdydWxtenNSd0MwanhpdFZrMUQzSGVzQ0pFL2RuTE13?=
+ =?utf-8?B?RW5xQkJBTUljTDNOVFdXM1hhVHhudnFQeHZBRXBXNVQ2U1JCdmdHcHI1Slgz?=
+ =?utf-8?B?ZTRFZVo4SHBzWmIzNkFOckVKL0Jva3AyckFLaTBqV1J1SnhZeGkzTndZTGk5?=
+ =?utf-8?B?TFNqRFVxc2NkZlY3Tzl2bmd1Skx4b1dncUJGTmFxb0hiUVAwMi9RQWR4MTRn?=
+ =?utf-8?B?WjFQVkZ6aEg3dmNkOVVDN0NWUDdYU09nUVlzVEgxWGg2aFJQOGNvb0dON1Zk?=
+ =?utf-8?B?dENrcUFsNXdVNUNBVjF2akNTMU56L3B1ZnVnYkFGUnQxSkZ2QU9mNmR4dlk1?=
+ =?utf-8?B?MUQrbXFKSFkyQk0yV1V5c1FkYXRDVE1tT05aMWh3c3ZoTlVjS2NxSlJKazVB?=
+ =?utf-8?B?enJ2SlBuZTF2M2RVakFORExLa3k1TXBjQmtOdHVKRzRiempPc2djbGZWaVM0?=
+ =?utf-8?B?czRCRUdCc1BTRGxuZG15YTQvL0ErT0pvMUE0UTNsR1FBZGJ5RnRPNVFHYXFo?=
+ =?utf-8?B?L1ZSN2p4S1F3Mkl0YzA0UE15WXU4NVRuTkR4L2dyY2ZmTU5SNkZKekVYVTZG?=
+ =?utf-8?B?ZDR6cmJ2ek0zYU1lN3VRa2RwWTBSSitUYlVGdXY0Nit4R3llV3hZb0RzV2N3?=
+ =?utf-8?B?dlFnQTV2bEVqdDQrRC9uWVB5TURtWnRjVTZDaEpaOS95Mmo0Z0w0TlJtMkxs?=
+ =?utf-8?B?aXNjVUlGZGI3YnAwVWZYckluMzBTRlBoM2hnRE1USTNUalJrVzQxd2gzMUpC?=
+ =?utf-8?B?RU01ckdIeDBoU0ZibnVRQVVnU0ljcTZ2SzUwUDE2RnN2NDJCVnhQb1J4SWtq?=
+ =?utf-8?B?UnVmSEV3NE9VQXE0cUNmdmRLbFVtRExRakZ2WkxuTmhyK2lySHpLcW1qeEN4?=
+ =?utf-8?B?UytLZy9XakEybG5Kalo1K0huaHRtYVVFTXN3aU84TzZ5dGFXV1FxWnREaXlG?=
+ =?utf-8?B?ZnZrU1FCV1o2VG83clZrbm9QS2dxS3B6cUdmSDJBZkxNQXIyaW9ncUREUk54?=
+ =?utf-8?B?ZVo2c25FWVd1NHpKUG9sM1dYSEVtNkRNR2dCVnhzSklFUnBVNldDNnBTeExj?=
+ =?utf-8?B?REFIandZNHpxNVF3VEFmVFZVdHNTeE1NaTd4OUZSQUhRVXJ1VmFXYjk5NWlu?=
+ =?utf-8?B?MjBBVnVKbldRODA1cjFIYVVldStoYllNcnRRZDRYeFBaNTY0S21YWGpNN0pw?=
+ =?utf-8?B?cE5YR1BPM0JEcmpCZTRHcWluelprbjNPZDcxRlVKK2Q2QmNKODRNZmpyYXR5?=
+ =?utf-8?B?NWNGQ25TNmZQSHRsOEZmNEh2TmpnQW42aHBVc3ZpUmdRTlFQQ2tna3pPYXNs?=
+ =?utf-8?B?U2dkdHAxWUdsUGcyd0pkQVVPNHlmK3VGOVVHSnh1NWg0L2tMcWJ3Ym1Yc0tP?=
+ =?utf-8?B?RHFSeitJeUp5U2g5bWg5Z2FYM1dRMm5mblBZbGxQZnBETlcxaXdZVC90eWh1?=
+ =?utf-8?B?VEY4bzZkVktPczhPVUxwNEZEMFVtcXArZTlhSlNCa3RrSlBacHdCNkVJL1dL?=
+ =?utf-8?B?S01hd0ZlcjR2RGlYNDcyRHF3WGNVSUpWMmQzQ3dQWDVTcTFSRHArazFEd0JD?=
+ =?utf-8?B?cFhTcUt0RXRJMUE4c2FyR0p1ZjFKVHluUUpSTEZuYWlUZHMzSGo5L3ZsaEdS?=
+ =?utf-8?B?T2prNHdsOWdiVWVaSzA4V2YyK1dpOXZWK2ZXL3JCU2hRUVpDdkJRQ0dVcFFX?=
+ =?utf-8?B?aHVwOFNBQ0Eza21hNEFkQ2hsNDhjZklONGRhY3dTVmZ2ekErZTRTZXVHelZp?=
+ =?utf-8?B?TmxXM1hPK25kSWZQM2VGYUhrZzVWSXFiczhtTVp0U0IxK1V6TkR6SFhnZ0JB?=
+ =?utf-8?B?Wk94OVVwS3orYytSS3B0bVN6OFVCaHNQY01ueEtxRGdXeHNka1ZvMmhoVnFK?=
+ =?utf-8?B?YnNOVjJWMnJodTVsNTVlcjB4V2JremVwZW9qc1F4RkxzOVQ3VmRmdFE0MDlV?=
+ =?utf-8?B?WFhud21mOEp4T3NXQ2IzQ2FURUFjbE5oOVFaN1ZraWsvRFQvd1JsV0FLaDMz?=
+ =?utf-8?B?TktQaURITGx3N1dya1pKdk5WNG1kdi84UUJGamJyLzBkTW5YUi9mWFhiOGVB?=
+ =?utf-8?B?TzFUOGVDVmIwSlp4US8zbVFEQk0yVGtKam1USjdoRklobjVSR1QrS1RmZDJI?=
+ =?utf-8?B?N0ErTExSWm04eW1YajVnQlpDVVNuKzdLRFlxcjNJcGtobWo0UDRUeGN6ODho?=
+ =?utf-8?B?SkNQYy84ME1BNmpBRVpnZ0g1UEo4TW4zZzQ0SVNaYi9iNzV5N2srYW9EOFZ5?=
+ =?utf-8?Q?Qq9RygbX6EqKk5alJT?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 5ce419fb-6c5a-440f-5b5d-08df24947aa4
+X-MS-Exchange-CrossTenant-AuthSource: IA3PR12MB923065.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Oct 2026 17:00:24.2326 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: ozy8+RR3NdIMv5tNqNuHctiaX0n7Z/mPXNmMNzKYHobmIZMBVTnf2nLY+5qFhxGnLT06NntRUKE96ogcocesQw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ5PPF09E5F035B
+Received-SPF: permerror client-ip=2a01:111:f403:c105::7;
+ envelope-from=tdave@nvidia.com;
+ helo=CH4PR04CU002.outbound.protection.outlook.com
+X-Spam_score_int: -12
+X-Spam_score: -1.3
+X-Spam_bar: -
+X-Spam_report: (-1.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,278 +153,218 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Fuad,
-
-On Wed, Oct 07, 2026 at 09:00:19AM +0100, Fuad Tabba wrote:
-> With a 52-bit OA, walk a two-entry level 0 table through an IPA with
-> bit 50 set, which stage 2 maps back onto the table, so the walk
-> succeeds only if TTBR[4] is cleared from bit 4 of the base address.
-> With TCR.DS or VTCR.DS and a 48-bit OA, check that setting TTBR[5:2]
-> is a level 0 Address size fault.
-
-Maybe move this commit message to ttbr-baddr.c header and just replace it with
-something like "Add a test for checking if with a 52-bit OA a walk ...".
-
-I like better the test split done in v1. There there are two tests and the
-changes are clear, helping to understand which parts of the test are related to
-each fix.
-
-So the organization I think is better for this series is:
-
-Fix 0
-Test 0
-Fix 1
-Test 1
 
 
-> Signed-off-by: Fuad Tabba <fuad.tabba@linux.dev>
-> ---
->  tests/tcg/aarch64/system/meson.build  |   6 +
->  tests/tcg/aarch64/system/ttbr-baddr.c | 197 ++++++++++++++++++++++++++
->  2 files changed, 203 insertions(+)
->  create mode 100644 tests/tcg/aarch64/system/ttbr-baddr.c
+On 10/5/2026 11:45 PM, Michael S. Tsirkin wrote:
+> On Mon, Oct 05, 2026 at 08:31:32PM -0500, Tushar Dave wrote:
+>> From: Yishai Hadas <yishaih@nvidia.com>
+>>
+>> To support P2P on Guest we must expose to the guest OS the actual
+>> PCIe topology and configuration as set by the hypervisor. The ACS
+>> control must be set accordingly to have functional P2P. A mismatch
+>> between the hypervisor's ACS configuration and the guest-visible ACS
+>> Control register can prevent P2P between devices from working as
+>> expected.
+>>
+>> Extend both root port and downstream port to accept ACS Control bits
+>> that match the hypervisor configuration and expose them to the guest.
+>>
+>> Signed-off-by: Yishai Hadas <yishaih@nvidia.com>
+>> Co-developed-by: Tushar Dave <tdave@nvidia.com>
+>> Signed-off-by: Tushar Dave <tdave@nvidia.com>
+>> ---
+>>  hw/pci-bridge/pcie_root_port.c     | 13 +++++++++++--
+>>  hw/pci-bridge/xio3130_downstream.c | 13 +++++++++++--
+>>  hw/pci/pcie.c                      | 17 ++++++++++++++---
+>>  include/hw/pci/pcie.h              |  5 +++--
+>>  include/hw/pci/pcie_port.h         |  1 +
+>>  5 files changed, 40 insertions(+), 9 deletions(-)
+>>
+>> diff --git a/hw/pci-bridge/pcie_root_port.c b/hw/pci-bridge/pcie_root_port.c
+>> index 7c3e78010b..e7cce8c0ee 100644
+>> --- a/hw/pci-bridge/pcie_root_port.c
+>> +++ b/hw/pci-bridge/pcie_root_port.c
+>> @@ -46,6 +46,7 @@ static void rp_write_config(PCIDevice *d, uint32_t address,
+>>  static void rp_reset_hold(Object *obj, ResetType type)
+>>  {
+>>      PCIDevice *d = PCI_DEVICE(obj);
+>> +    PCIEPort *p = PCIE_PORT(d);
+>>      DeviceState *qdev = DEVICE(obj);
+>>  
+>>      rp_aer_vector_update(d);
+>> @@ -53,7 +54,7 @@ static void rp_reset_hold(Object *obj, ResetType type)
+>>      pcie_cap_deverr_reset(d);
+>>      pcie_cap_slot_reset(d);
+>>      pcie_cap_arifwd_reset(d);
+>> -    pcie_acs_reset(d);
+>> +    pcie_acs_reset(d, p->acs_ctrl);
+>>      pcie_aer_root_reset(d);
+>>      pci_bridge_reset(qdev);
+>>      pci_bridge_disable_base_limit(d);
+>> @@ -118,11 +119,18 @@ static void rp_realize(PCIDevice *d, Error **errp)
+>>      rp_aer_vector_update(d);
+>>  
+>>      if (rpc->acs_offset) {
+>> -        pcie_acs_init(d, rpc->acs_offset);
+>> +        rc = pcie_acs_init(d, rpc->acs_offset, p->acs_ctrl, errp);
+>> +        if (rc < 0) {
+>> +            goto err;
+>> +        }
+>> +    } else if (p->acs_ctrl) {
+>> +        error_setg(errp, "acs-ctrl is not supported by this root port");
+>> +        goto err;
+>>      }
+>>      return;
+>>  
+>>  err:
+>> +    pcie_aer_exit(d);
+>>      pcie_chassis_del_slot(s);
+>>  err_pcie_cap:
+>>      pcie_cap_exit(d);
+>> @@ -151,6 +159,7 @@ static void rp_exit(PCIDevice *d)
+>>  static const Property rp_props[] = {
+>>      DEFINE_PROP_BIT(COMPAT_PROP_PCP, PCIDevice, cap_present,
+>>                      QEMU_PCIE_SLTCAP_PCP_BITNR, true),
+>> +    DEFINE_PROP_UINT16("acs-ctrl", PCIEPort, acs_ctrl, 0),
+>>  };
+>>  
+>>  static void rp_instance_post_init(Object *obj)
+>> diff --git a/hw/pci-bridge/xio3130_downstream.c b/hw/pci-bridge/xio3130_downstream.c
+>> index 6a9df5c174..e243dfdf7d 100644
+>> --- a/hw/pci-bridge/xio3130_downstream.c
+>> +++ b/hw/pci-bridge/xio3130_downstream.c
+>> @@ -58,11 +58,12 @@ static void xio3130_downstream_write_config(PCIDevice *d, uint32_t address,
+>>  static void xio3130_downstream_reset(DeviceState *qdev)
+>>  {
+>>      PCIDevice *d = PCI_DEVICE(qdev);
+>> +    PCIEPort *p = PCIE_PORT(d);
+>>  
+>>      pcie_cap_deverr_reset(d);
+>>      pcie_cap_slot_reset(d);
+>>      pcie_cap_arifwd_reset(d);
+>> -    pcie_acs_reset(d);
+>> +    pcie_acs_reset(d, p->acs_ctrl);
+>>      pci_bridge_reset(qdev);
+>>  }
+>>  
+>> @@ -115,12 +116,19 @@ static void xio3130_downstream_realize(PCIDevice *d, Error **errp)
+>>      }
+>>  
+>>      if (d->cap_present & QEMU_PCIE_CAP_ACS) {
+>> -        pcie_acs_init(d, XIO3130_ACS_OFFSET);
+>> +        rc = pcie_acs_init(d, XIO3130_ACS_OFFSET, p->acs_ctrl, errp);
+>> +        if (rc < 0) {
+>> +            goto err;
+>> +        }
+>> +    } else if (p->acs_ctrl) {
+>> +        error_setg(errp, "acs-ctrl requires x-pcie-acs to be on");
+>> +        goto err;
 > 
-> diff --git a/tests/tcg/aarch64/system/meson.build b/tests/tcg/aarch64/system/meson.build
-> index f51feb253f..270d4d6c31 100644
-> --- a/tests/tcg/aarch64/system/meson.build
-> +++ b/tests/tcg/aarch64/system/meson.build
-> @@ -79,6 +79,12 @@ tests += {
->                    '-semihosting-config', 'enable=on,arg=2',
->                    qemu_base_args]
->    },
-> +  'ttbr-baddr.c': {
-> +    'cflags': cflags,
-> +    'qemu_args': ['-M', 'virt,virtualization=on', '-cpu', 'max',
-> +                  '-semihosting-config', 'enable=on,arg=2',
-> +                  qemu_base_args]
-> +  },
->  }
->  
->  tests += {
-> diff --git a/tests/tcg/aarch64/system/ttbr-baddr.c b/tests/tcg/aarch64/system/ttbr-baddr.c
-> new file mode 100644
-> index 0000000000..b36c14aa29
-> --- /dev/null
-> +++ b/tests/tcg/aarch64/system/ttbr-baddr.c
-> @@ -0,0 +1,197 @@
-> +/*
-> + * TTBR base address with a 52-bit layout and a small initial lookup table
-> + *
-> + * Copyright (c) 2026 Google LLC
-> + * Author: Fuad Tabba <fuad.tabba@linux.dev>
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +#include <stdint.h>
-> +#include <minilib.h>
-> +
-> +/* from Linux's include/linux/stringify.h */
-> +#define __stringify_1(x...) #x
-> +#define __stringify(x...)   __stringify_1(x)
-> +
-> +#define read_sysreg(r) ({                                           \
-> +            uint64_t __val;                                         \
-> +            asm volatile("mrs %0, " __stringify(r) : "=r" (__val)); \
-> +            __val;                                                  \
-> +})
-> +
-> +#define write_sysreg(r, v) do {                     \
-> +        uint64_t __val = (uint64_t)(v);             \
-> +        asm volatile("msr " __stringify(r) ", %x0"  \
-> +                 : : "rZ" (__val));                 \
-> +} while (0)
-> +
-> +#define RAM_BASE    0x40000000UL
-> +#define HIGH_IPA    (1UL << 50)
-> +#define TEST_VA     (0xffff000000000000UL | RAM_BASE)
-> +
-> +/*
-> + * Stage 1: 16KB granule, 48-bit VA, so level 0 has two entries.
-> + * Stage 2: 64KB granule, 52-bit IPA, mapping RAM at its own address and
-> + * again at HIGH_IPA.
-> + * Stage 2 with VTCR.DS: 16KB granule, 47-bit IPA, mapping RAM flat.
-> + */
-> +static uint64_t s1_l0[2048] __attribute__((aligned(16384)));
-> +static uint64_t s1_l1[2048] __attribute__((aligned(16384)));
-> +static uint64_t s1_l2[2048] __attribute__((aligned(16384)));
-> +static uint64_t s2ds_l1[2048] __attribute__((aligned(16384)));
-> +static uint64_t s2ds_l2[2048] __attribute__((aligned(16384)));
-> +static uint64_t s2_l1[1024] __attribute__((aligned(65536)));
-> +static uint64_t s2_l2[8192] __attribute__((aligned(65536)));
-> +static uint64_t s2_l2_high[8192] __attribute__((aligned(65536)));
-> +
-> +#define TCR_T0SZ(x)     ((uint64_t)(x) << 0)
-> +#define TCR_T1SZ(x)     ((uint64_t)(x) << 16)
-> +#define TCR_TG0_16K     (2UL << 14)
-> +#define TCR_TG1_16K     (1UL << 30)
-> +#define TCR_IPS_48      (5UL << 32)
-> +#define TCR_IPS_52      (6UL << 32)
-> +#define TCR_DS          (1UL << 59)
-> +
-> +#define VTCR_T0SZ(x)    ((uint64_t)(x) << 0)
-> +#define VTCR_SL0_L1     (2UL << 6)
-> +#define VTCR_TG0_16K    (2UL << 14)
-> +#define VTCR_TG0_64K    (1UL << 14)
-> +#define VTCR_PS_48      (5UL << 16)
-> +#define VTCR_PS_52      (6UL << 16)
-> +#define VTCR_RES1       (1UL << 31)
-> +#define VTCR_DS         (1UL << 32)
-> +
-> +#define HCR_VM          (1UL << 0)
-> +#define HCR_RW          (1UL << 31)
-> +
-> +#define PAR_F           (1UL << 0)
-> +#define PAR_FST(par)    (((par) >> 1) & 0x3f)
-> +#define PAR_PA(par)     ((par) & 0xfffffffff000UL)
-> +#define FST_ADDR_SIZE_L0    0x00
-> +
-> +#define S2_BLOCK        ((1 << 10) | (3 << 6) | (0xf << 2) | 1)
-> +
-> +static void tlb_flush(void)
-> +{
-> +    asm volatile("dsb sy; tlbi alle1; dsb sy; isb" : : : "memory");
-> +}
-> +
-> +static uint64_t at(uint64_t ttbr1)
-> +{
-> +    uint64_t par;
-> +
-> +    write_sysreg(ttbr1_el1, ttbr1);
-> +    tlb_flush();
-> +    asm volatile("at s12e1r, %1; isb; mrs %0, par_el1"
-> +                 : "=r" (par) : "r" (TEST_VA));
-> +    return par;
-> +}
-> +
-> +static uint64_t at_s1(uint64_t ttbr1)
-> +{
-> +    uint64_t par;
-> +
-> +    write_sysreg(ttbr1_el1, ttbr1);
-> +    tlb_flush();
-> +    asm volatile("at s1e1r, %1; isb; mrs %0, par_el1"
-> +                 : "=r" (par) : "r" (TEST_VA));
-> +    return par;
-> +}
-> +
-> +static void setup_tables(void)
-> +{
-> +    /* Stage 1: TEST_VA -> RAM_BASE, 32MB block, AF */
-> +    s1_l0[0] = (uint64_t)s1_l1 | 3;
-> +    s1_l1[0] = (uint64_t)s1_l2 | 3;
-> +    s1_l2[(RAM_BASE >> 25) & 0x7ff] = RAM_BASE | (1 << 10) | 1;
-> +
-> +    /* Stage 2 with VTCR.DS: RAM_BASE -> RAM_BASE, 32MB block, AF, RW */
-> +    s2ds_l1[0] = (uint64_t)s2ds_l2 | 3;
-> +    s2ds_l2[(RAM_BASE >> 25) & 0x7ff] = RAM_BASE | S2_BLOCK;
-> +
-> +    /* Stage 2: 512MB blocks at RAM_BASE and HIGH_IPA | RAM_BASE, AF, RW */
-> +    s2_l1[0] = (uint64_t)s2_l2 | 3;
-> +    s2_l1[HIGH_IPA >> 42] = (uint64_t)s2_l2_high | 3;
-> +    s2_l2[RAM_BASE >> 29] = RAM_BASE | S2_BLOCK;
-> +    s2_l2_high[RAM_BASE >> 29] = RAM_BASE | S2_BLOCK;
-> +}
-> +
-> +static int check(const char *name, uint64_t par)
-> +{
-> +    int ok = !(par & PAR_F) && PAR_PA(par) == RAM_BASE;
-> +
-> +    ml_printf("%s: PAR_EL1=%lx %s\n", name, par, ok ? "ok" : "FAIL");
-> +    return !ok;
-> +}
-> +
-> +/* A level 0 Address size fault */
-> +static int check_fault(const char *name, uint64_t par)
-> +{
-> +    int ok = (par & PAR_F) && PAR_FST(par) == FST_ADDR_SIZE_L0;
-> +
-> +    ml_printf("%s: PAR_EL1=%lx %s\n", name, par, ok ? "ok" : "FAIL");
-> +    return !ok;
-> +}
-> +
-> +int main(void)
-> +{
-> +    uint64_t mmfr0 = read_sysreg(id_aa64mmfr0_el1);
-> +    uint64_t tcr = TCR_T0SZ(16) | TCR_T1SZ(16) | TCR_TG0_16K | TCR_TG1_16K |
-> +                   TCR_DS;
-> +    uint64_t base = (uint64_t)s1_l0;
-> +    int ret = 0;
-> +
-> +    ml_printf("TTBR base address test\n");
-> +
-> +    /*
-> +     * PARange 52 bits (FEAT_LPA) and TGran16 with 52-bit addresses
-> +     * (FEAT_LPA2)
-> +     */
-> +    if ((mmfr0 & 0xf) != 6 || ((mmfr0 >> 20) & 0xf) != 2) {
-> +        ml_printf("SKIP: no 52-bit PA or no FEAT_LPA2 with 16KB\n");
-> +        return ret;
-> +    }
-> +
-> +    /*
-> +     * The test runs at EL2 (arg=2) and walks the EL1&0 regime with AT, so
-> +     * the EL1 MMU settings below only affect those walks.
-> +     */
-> +    setup_tables();
-> +    write_sysreg(mair_el1, 0xff);
-> +    write_sysreg(sctlr_el1, read_sysreg(sctlr_el1) | 1);
-> +
-> +    /*
-> +     * TCR.DS with a 48-bit OA: TTBR[5:2] are base address bits [51:48],
-> +     * so setting any of them is a level 0 Address size fault.
-> +     */
-> +    write_sysreg(hcr_el2, HCR_RW);
-> +    write_sysreg(tcr_el1, tcr | TCR_IPS_48);
-> +    ret |= check("ips48", at_s1(base));
-> +    ret |= check_fault("ips48 ttbr[2]", at_s1(base | (1 << 2)));
-> +    ret |= check_fault("ips48 ttbr[4]", at_s1(base | (1 << 4)));
-> +
-> +    /* The same for VTTBR, with VTCR.DS and a 48-bit PS */
-> +    write_sysreg(vtcr_el2, VTCR_T0SZ(17) | VTCR_SL0_L1 | VTCR_TG0_16K |
-> +                 VTCR_PS_48 | VTCR_RES1 | VTCR_DS);
-> +    write_sysreg(hcr_el2, HCR_RW | HCR_VM);
-> +    write_sysreg(vttbr_el2, (uint64_t)s2ds_l1);
-> +    ret |= check("ps48", at(base));
-> +    write_sysreg(vttbr_el2, (uint64_t)s2ds_l1 | (1 << 2));
-> +    ret |= check_fault("ps48 vttbr[2]", at(base));
-> +
-> +    /*
-> +     * 52-bit OA: TTBR[4] is base address bit 50. Through stage 2, the
-> +     * table at HIGH_IPA | s1_l0 is s1_l0, so the walk succeeds only if
-
-I struggled a bit to make sense of this part: "Through Stage 2, the table
-HIGH_IPA | s1_l0 is s1_l0 ...", not so much for the duplication of s1_l0 in the
-text but because Stage 2 uses the s2_l* tables. Any chance you could enhance a
-the explanation here?
+> Tying a stable QAPI to an unstable one like this is not really
+> reasonable.
 
 
-> +     * TTBR[4] does not also offset the two-entry table by 0x10.
-> +     */
-> +    write_sysreg(vtcr_el2, VTCR_T0SZ(12) | VTCR_SL0_L1 | VTCR_TG0_64K |
-> +                 VTCR_PS_52 | VTCR_RES1);
-> +    write_sysreg(vttbr_el2, (uint64_t)s2_l1);
-> +    write_sysreg(hcr_el2, HCR_RW | HCR_VM);
-> +    write_sysreg(tcr_el1, tcr | TCR_IPS_52);
-> +    ret |= check("ips52", at(base));
-> +    ret |= check("ips52 ttbr[4]", at(base | (1 << 4)));
-> +
-> +    return ret;
-> +}
-> -- 
-> 2.39.5
+My bad. It is not tied to x-pcie-acs. The error message is worded
+incorrectly. The check (added as per Shameer's feedback on V1) is there
+so that acs-ctrl is not silently ignored on a port without ACS, so the
+message should simply say that ACS is not supported by this port. I will
+fix the message.
+
+Thanks.
+-Tushar
+
+
 > 
-
-Otherwise:
-
-Reviewed-by: Gustavo Romero <gromero@redhat.com>
-
-As always, free feel to respin it only when you get more review comments.
-
-We probably want an additional review of the series from Richard ;)
-
-
-Cheers,
-Gustavo
+>>      }
+>>  
+>>      return;
+>>  
+>>  err:
+>> +    pcie_aer_exit(d);
+>>      pcie_chassis_del_slot(s);
+>>  err_pcie_cap:
+>>      pcie_cap_exit(d);
+>> @@ -146,6 +154,7 @@ static const Property xio3130_downstream_props[] = {
+>>                      QEMU_PCIE_SLTCAP_PCP_BITNR, true),
+>>      DEFINE_PROP_BIT("x-pcie-acs", PCIDevice, cap_present,
+>>                      QEMU_PCIE_ACS_BITNR, true),
+>> +    DEFINE_PROP_UINT16("acs-ctrl", PCIEPort, acs_ctrl, 0),
+>>  };
+>>  
+>>  static const VMStateDescription vmstate_xio3130_downstream = {
+>> diff --git a/hw/pci/pcie.c b/hw/pci/pcie.c
+>> index 42bcb9206d..af24ec7fd9 100644
+>> --- a/hw/pci/pcie.c
+>> +++ b/hw/pci/pcie.c
+>> @@ -1260,7 +1260,8 @@ void pcie_ats_init(PCIDevice *dev, uint16_t offset, bool aligned)
+>>  }
+>>  
+>>  /* ACS (Access Control Services) */
+>> -void pcie_acs_init(PCIDevice *dev, uint16_t offset)
+>> +int pcie_acs_init(PCIDevice *dev, uint16_t offset, uint16_t ctrl_bits,
+>> +                  Error **errp)
+>>  {
+>>      bool is_downstream = pci_is_express_downstream_port(dev);
+>>      uint16_t cap_bits = 0;
+>> @@ -1284,16 +1285,26 @@ void pcie_acs_init(PCIDevice *dev, uint16_t offset)
+>>           */
+>>          cap_bits = PCI_ACS_SV | PCI_ACS_TB | PCI_ACS_RR |
+>>              PCI_ACS_CR | PCI_ACS_UF | PCI_ACS_DT;
+>> +
+>> +        if (ctrl_bits & ~cap_bits) {
+>> +            error_setg(errp,
+>> +                       "acs-ctrl 0x%hx has bits not supported by this port "
+>> +                       "(supported: 0x%hx)", ctrl_bits, cap_bits);
+>> +            return -EINVAL;
+>> +        }
+>>      }
+>>  
+>>      pci_set_word(dev->config + offset + PCI_ACS_CAP, cap_bits);
+>>      pci_set_word(dev->wmask + offset + PCI_ACS_CTRL, cap_bits);
+>> +    pci_set_word(dev->config + offset + PCI_ACS_CTRL, ctrl_bits);
+>> +
+>> +    return 0;
+>>  }
+>>  
+>> -void pcie_acs_reset(PCIDevice *dev)
+>> +void pcie_acs_reset(PCIDevice *dev, uint16_t val)
+>>  {
+>>      if (dev->exp.acs_cap) {
+>> -        pci_set_word(dev->config + dev->exp.acs_cap + PCI_ACS_CTRL, 0);
+>> +        pci_set_word(dev->config + dev->exp.acs_cap + PCI_ACS_CTRL, val);
+>>      }
+>>  }
+>>  
+>> diff --git a/include/hw/pci/pcie.h b/include/hw/pci/pcie.h
+>> index ec25e7a7de..678ad73f7f 100644
+>> --- a/include/hw/pci/pcie.h
+>> +++ b/include/hw/pci/pcie.h
+>> @@ -137,8 +137,9 @@ bool pcie_insert_capability(PCIDevice *dev, uint16_t cap_id, uint8_t cap_ver,
+>>                              uint16_t offset, uint16_t size);
+>>  void pcie_sync_bridge_lnk(PCIDevice *dev);
+>>  
+>> -void pcie_acs_init(PCIDevice *dev, uint16_t offset);
+>> -void pcie_acs_reset(PCIDevice *dev);
+>> +int pcie_acs_init(PCIDevice *dev, uint16_t offset, uint16_t ctrl_bits,
+>> +                  Error **errp);
+>> +void pcie_acs_reset(PCIDevice *dev, uint16_t val);
+>>  
+>>  void pcie_ari_init(PCIDevice *dev, uint16_t offset);
+>>  void pcie_dev_ser_num_init(PCIDevice *dev, uint16_t offset, uint64_t ser_num);
+>> diff --git a/include/hw/pci/pcie_port.h b/include/hw/pci/pcie_port.h
+>> index b28af067a6..2ad9a563d9 100644
+>> --- a/include/hw/pci/pcie_port.h
+>> +++ b/include/hw/pci/pcie_port.h
+>> @@ -36,6 +36,7 @@ struct PCIEPort {
+>>  
+>>      /* pci express switch port */
+>>      uint8_t     port;
+>> +    uint16_t    acs_ctrl;
+>>  };
+>>  
+>>  void pcie_port_init_reg(PCIDevice *d);
+>> -- 
+>> 2.34.1
+> 
 
 
