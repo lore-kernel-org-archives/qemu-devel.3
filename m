@@ -4,45 +4,144 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED89BCA5FFF
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 08:50:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D59FCA5FF1
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 08:50:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xENCu-0001eu-CS; Wed, 07 Oct 2026 04:41:00 -0400
+	id 1xENKJ-00023E-B7; Wed, 07 Oct 2026 04:48:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1xEIZa-0005B6-2M; Tue, 06 Oct 2026 23:44:17 -0400
-Received: from proxmox-new.maurer-it.com ([94.136.29.106])
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xEK68-0003m7-LP
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 01:22:08 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1xEIZU-0001Mn-Ti; Tue, 06 Oct 2026 23:44:03 -0400
-Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
- by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 87F8844458;
- Tue, 06 Oct 2026 13:42:45 +0200 (CEST)
-From: Fiona Ebner <f.ebner@proxmox.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, hreitz@redhat.com, kwolf@redhat.com,
- armbru@redhat.com, eblake@redhat.com
-Subject: [PATCH v2 3/3] iotests/041: add tests for mirroring below throttle
- node
-Date: Tue,  6 Oct 2026 13:42:18 +0200
-Message-ID: <20261006114240.478523-4-f.ebner@proxmox.com>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20261006114240.478523-1-f.ebner@proxmox.com>
-References: <20261006114240.478523-1-f.ebner@proxmox.com>
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xEK66-0006b7-En
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 01:21:48 -0400
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6974lMrO3929609
+ for <qemu-devel@nongnu.org>; Wed, 7 Oct 2026 05:21:44 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ 4s3HR9Tp5uPg38Kxnn2WwDMXV3ICPAPhY32b4hukIo8=; b=H/6//riXahtziFx5
+ MG+w49ENePeHQx2N+pky/O4boGR+nVXTOFf9A/rDAeOD5E7Ywv2MKKJmMCGSNjdl
+ GoaRwsx3Ii8JTfPYjj0W4SDLfMZOJGFc0UKJb5SDPMQHuGtAU2FnVfdDmNdHcRTE
+ uSBWvP6g0LxzTSOb31Dt9JQ3UYmO/c4wy4PGEsQe+kRcE+/1TVrn5YMNFBznappv
+ 3FOqqQmYp1VtoBTM5y9p9JWORbB95psbt7WZIyaCudo1OvrjyM7ePCjCDchN1zaG
+ 7mj00JKPv1FiiM+8oYliF6Wzqgf0ley/mquOXmFUTZAoss/YP3INERRzgR04zEFh
+ 65shpg==
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h5fc5830q-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Wed, 07 Oct 2026 05:21:43 +0000 (GMT)
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-934956beec8so784619185a.0
+ for <qemu-devel@nongnu.org>; Tue, 06 Oct 2026 22:21:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1791350503; x=1791955303; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=4s3HR9Tp5uPg38Kxnn2WwDMXV3ICPAPhY32b4hukIo8=;
+ b=L2o0qlRYKfJ/LKjhq5kRamtARjqH/aKdFECLY3czRtTxCCGN8n5VVdCsUYTsoIqpeA
+ hhARi2xPOiqf8aeXYZSEwsPeHsufUwIBgb9rXyFNq0vNtBcbDo7E40y6uelRqMrU7LM+
+ QUWyhJ54ZHUHp7fi/XQHIdxpgffpksDOevcwguOmBHhxslF2E2nrmuja3SY6fIw5Qn1v
+ Okqx6NNAUQSwDet+JmNhhJgt1qqu7MUR/ziWCrJrD0YtA9/StfU65AL1XOrZ4IPBa8zi
+ /8j1aiBS8MSgeXvgJ1KwVzd7N05+AqpQWhc1y3Xm1OhhP6B3y3DMdfnbtdLSzCtXQwCV
+ KMOA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1791350503; x=1791955303;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=4s3HR9Tp5uPg38Kxnn2WwDMXV3ICPAPhY32b4hukIo8=;
+ b=aN4DgSlWzsUTNAmUxLeLGURaSz6uB/6pQ4KbqO5qd6pjcuesOs1atDB3YfKRtVoVV+
+ FTYs9w9IDJztHICB8wSkXCslJRP6z9gvEUfzJB5eGOWN3BRd0LUhM1O0+CZD/43pXsQT
+ ce6zPD9yE2h6ycTmP2D098cRmkO2sDAeJejvCq5U8icXg1hEkotRlvWOfDjAOKpUq9g0
+ qbgVSKXSusLNGcFr3zDNKKOyNQlV+/0Q+4M+xa5N4IGfIwjmpRdZRJytlGWTETqaOCe9
+ leClo5ugwwxnFtH8td9iRq2ohiGpV8B/hMvEXLE+cHoDy+HoJIEXamPxUFlQPXtOGAwe
+ YF0w==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBycrC6YvpqQ1GwdYKVYAlJ3iyX4skMCC1mz3rFWb62tD8wMsckO11aQtAFaWWfW50vm8Pt5J03KTcWb@nongnu.org
+X-Gm-Message-State: AFuF++l1OITiH1O6X99GCKjJFYJN+sCRKCMVYi+fEIQ/C92b+q46BquK
+ ZdpoyfNkLKfWWjnM2KiUNP2Ebn1TPkv2LJEGGBifN2W627ckZZa/L8+WpLKZcijPYc7N6uJblIF
+ 2fMOaKtFFeTD8LrKafPx1Z1bjsmXqEL8Oe5FhoqBFdKk3xv62hBGemvH7gA==
+X-Gm-Gg: AYBFou3nsgNbmSrQbCzn/7rv2oyDq0rkKGNOI0NnQM3ZmIsSLKU/sZ3T4AxDG2RoWJ4
+ tgpvt8dHHI4xup3rbLZN89INZRPYQIi8Dp/oXp7buGFje22GMxB6otb28xyY/0EKAKQ50WoWCSm
+ SjqmZ4f3tv7DV0DWWfJ9VpnMCLF4e8oH+pdLb+3C/Wd3pWDjehl1r30SRcsCU+fuBaKZrQcOq9w
+ bsGs7XjriouYTbC04ba6onnPnbdY51FFsMteoywYVF3nRvyA+1vYd4lY20DHPatMpIiaCxmM95H
+ oT/UqEAxMZvMg/tkthenhJ2K4ZiuMR9raG2pUVEaBIrpmSpjGdYGFmomyOwtRCLG9vCYkgl37oF
+ yHhE9kG1pZC+AXdfxwpTcQ/y0jScbxA9KzA==
+X-Received: by 2002:a05:620a:2915:b0:936:e18d:763d with SMTP id
+ af79cd13be357-93e9b0f2644mr249653285a.8.1791350502861; 
+ Tue, 06 Oct 2026 22:21:42 -0700 (PDT)
+X-Received: by 2002:a05:620a:2915:b0:936:e18d:763d with SMTP id
+ af79cd13be357-93e9b0f2644mr249651085a.8.1791350502428; 
+ Tue, 06 Oct 2026 22:21:42 -0700 (PDT)
+Received: from [192.168.69.210] (pmd666.hd.free.fr. [88.187.86.199])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4a180303863sm18062345e9.3.2026.10.06.22.21.40
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 06 Oct 2026 22:21:41 -0700 (PDT)
+Message-ID: <c888a721-7674-4b24-9083-8b15c17734d6@oss.qualcomm.com>
+Date: Wed, 7 Oct 2026 07:21:39 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] target-info: use TARGET_ARCH_VARIANT
+Content-Language: en-US
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>
+References: <20261006182558.151956-1-pierrick.bouvier@oss.qualcomm.com>
+ <20261006182558.151956-3-pierrick.bouvier@oss.qualcomm.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <20261006182558.151956-3-pierrick.bouvier@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Bm-Milter-Handled: 55990f41-d878-4baa-be0a-ee34c49e34d2
-X-Bm-Transport-Timestamp: 1791286964627
-Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
- helo=proxmox-new.maurer-it.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA3MDAyMSBTYWx0ZWRfX6cgzXJ56hAER
+ iH/rX+AeUmIxXVW0lb/QHcbs4tmCFMMmV8H+eRgb2IOQ7civYfpB/ZquW/JGDEjNucaiqLF/9nq
+ yM12MTKJWv9CyxRFWtzX/9eEuj7CXq8=
+X-Proofpoint-GUID: UZRdPAPepqpU8x2C-j69HZhnhu1lZEex
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA3MDAyMSBTYWx0ZWRfX2UbTAstHjmNA
+ 974qZ9yAN6oFPmHri70NbrDKhhxVYk1d+yN7BnXkpXj/pweI7w7+iGojUbhCu+6UtWa3OWX+J4D
+ Ro0fdxdlRMn9DVavidcJPUAhDxk8wkaJMvc2YIhIomjUN9MlI3G/+LexbYYo6HgMvE4Z/PLgdrm
+ WJEpnFJdWSV4D6IuwWPu3IW3xORu8B7uZQGk0KIxSBpZpzfMdEiy4EAoy5B3OsfkAxa2kIgegqz
+ eHOvdROBLl2MW9637xQyw1ImNWXtylUF9FqHc/8pztgjGnvqmdP+HQ2SAyARISmnjgJtUMbF1MK
+ 5FN+rTz25uRKUlzLb5wjODZCst+r2C2/04JFrApqjoa9A54KoGReaDD+0dzpEB/jzjnjYrD2m/n
+ NmgWbaKai/3X6HriUbCQONQ+I7m3rOzBlz9yyQDmqSzBb1mCNR0War5Jn64RCH4D95sAp+qp5qI
+ Sqbzm71sO1UiSwjmEdQ==
+X-Proofpoint-ORIG-GUID: UZRdPAPepqpU8x2C-j69HZhnhu1lZEex
+X-Authority-Analysis: v=2.4 cv=a6+lZkSF c=1 sm=1 tr=0 ts=6ac5d6e7 cx=c_pps
+ a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
+ a=EUspDBNiAAAA:8 a=20KFwNOVAAAA:8 a=1tSEMpTH9XP_W59IOagA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=PEH46H7Ffwr30OY-TuGO:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-10-07_02,2026-10-06_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 adultscore=0 suspectscore=0 malwarescore=0
+ lowpriorityscore=0 bulkscore=0 spamscore=0 clxscore=1015 impostorscore=0
+ phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
+ definitions=main-2610070021
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -58,95 +157,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Test mirror with a non-root node as a source. This restriction was
-dropped with commit "blockdev: mirror: do not require a root block
-node".
+On 6/10/26 20:25, Pierrick Bouvier wrote:
+> target_arch() will now return the full variant, per SYS_EMU_TARGET enum.
+> 
+> Fixes: e934c624f3 ("target-info: Statically initialize target_arch")
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+> ---
+>   target-info-stub.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 
-Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
----
-
-No changes in v2.
-
- tests/qemu-iotests/041     | 40 ++++++++++++++++++++++++++++++++++++++
- tests/qemu-iotests/041.out |  4 ++--
- 2 files changed, 42 insertions(+), 2 deletions(-)
-
-diff --git a/tests/qemu-iotests/041 b/tests/qemu-iotests/041
-index 2552388690..abc070435d 100755
---- a/tests/qemu-iotests/041
-+++ b/tests/qemu-iotests/041
-@@ -1434,10 +1434,19 @@ class TestThrottle(iotests.QMPTestCase):
-                     bus='vio-scsi.0',
-                     drive='throttle')
- 
-+        self.drive_qdev = '/machine/peripheral/virtio'
-+
-     def tearDown(self):
-         os.remove(test_img)
-         os.remove(target_img)
- 
-+    def blockstats(self, device):
-+        result = self.vm.qmp("query-blockstats")
-+        for r in result['return']:
-+            if r['node-name'] == device:
-+                return r['stats']
-+        raise Exception(f'Device {device} not found when querying blockstats')
-+
-     def test_throttled(self):
-         self.mirror_command('throttle')
- 
-@@ -1451,6 +1460,37 @@ class TestThrottle(iotests.QMPTestCase):
-         self.assertTrue(iotests.compare_images(test_img, target_img),
-                         'target image does not match source after mirroring')
- 
-+    def test_below_throttle(self):
-+        self.mirror_command('source')
-+
-+        # The throttling above should not block the mirror from completing.
-+        self.complete_and_wait('mirror')
-+        self.vm.shutdown()
-+        self.assertTrue(iotests.compare_images(test_img, target_img),
-+                        'target image does not match source after mirroring')
-+
-+    def test_below_throttle_with_io_on_throttle(self):
-+        self.mirror_command('source')
-+
-+        reqs = 3
-+        req_len = 1 * 1024
-+
-+        for i in range(0, reqs):
-+            req = f'aio_write -P 7 {i}M {req_len}'
-+            self.vm.hmp_qemu_io(self.drive_qdev, req, qdev=True)
-+
-+        self.wait_ready('mirror')
-+        # The throttle node above should still have in-flight requests.
-+        assert self.blockstats('throttle')['wr_bytes'] <= 1 * req_len
-+
-+        self.complete_and_wait('mirror', wait_ready=False)
-+        assert self.blockstats('throttle')['wr_bytes'] == reqs * req_len
-+        self.vm.shutdown()
-+        # The throttle node above is drained too when the mirror finishes, so
-+        # the images should match.
-+        self.assertTrue(iotests.compare_images(test_img, target_img),
-+                        'target image does not match source after mirroring')
-+
- class TestThrottleDriveMirror(TestThrottle):
-     attachTargetImage = False
- 
-diff --git a/tests/qemu-iotests/041.out b/tests/qemu-iotests/041.out
-index 96a0752f44..ec055a9915 100644
---- a/tests/qemu-iotests/041.out
-+++ b/tests/qemu-iotests/041.out
-@@ -1,5 +1,5 @@
--.............................................................................................................
-+.................................................................................................................
- ----------------------------------------------------------------------
--Ran 109 tests
-+Ran 113 tests
- 
- OK
--- 
-2.47.3
-
-
+Reported-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 
