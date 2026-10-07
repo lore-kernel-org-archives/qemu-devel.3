@@ -4,95 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F420CA6002
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 595A3CA5FFF
 	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 08:22:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xEMuc-0001XO-Bj; Wed, 07 Oct 2026 04:22:14 -0400
+	id 1xEMtc-000181-9k; Wed, 07 Oct 2026 04:21:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xEGKi-0002dR-6E
- for qemu-devel@nongnu.org; Tue, 06 Oct 2026 21:20:43 -0400
-Received: from mail-lf1-x131.google.com ([2a00:1450:4864:20::131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xEGKV-0005vW-QN
- for qemu-devel@nongnu.org; Tue, 06 Oct 2026 21:20:28 -0400
-Received: by mail-lf1-x131.google.com with SMTP id
- 2adb3069b0e04-5bcb2ecebb4so1111546e87.2
- for <qemu-devel@nongnu.org>; Tue, 06 Oct 2026 18:20:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1791336015; x=1791940815; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=RMh0wnw3agFF2IsElQcMdXFWf485YmO8ORQx8WUZoWU=;
- b=ZV98JErt/pBGTh7gMd6ivExez3IQ35d6tV14ZphwIwwE9xqmTsD9USs8E1uP4vh2GQ
- QnW634ka+5m5TE5Z8+x0f5f2P7REpTIuM8i8r7p91I9uiP8Li1Qx4HATgz4Ry9zqKp6l
- eRFhfZAiavnItXoftRNIJb3+gu2kdj5XcRC+4rZ43NIL2YOy0qoJzzFLaI+tPfQa8p6N
- GNxub72u+ddFvQ9XBdkEaELu/gr8DnKULt7j7pw3gItlNotjPoU76m8A7UlfqU103VJo
- cxqAVTBHw+pKHD5dmrjPY/NVUc/QBZx3Ju2PmV7lMi1gS4kfE/qpA9Uy5hPvaotgcRdi
- rhWQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791336015; x=1791940815;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=RMh0wnw3agFF2IsElQcMdXFWf485YmO8ORQx8WUZoWU=;
- b=uYIoX2fppIIwRhfwLoZsLsSC//Wsb3v7NOFZiwM/WyVKJPV1K5iFjsEiOD66cdR+9O
- 4GFuQRTCZ7XKQTWVkKpV4sYrOhngCsFEl1Sl6gStxFS7kACzHI0DGwHCawN6b8ROjeIV
- BTBMcB8T4Tg2TNWFX9o9q43tn9aRg46nyxMnIzWsjuSIrrn2cFhzrFhtUkki0OQBpUSd
- Z8YAvJ1ahQhr8Nduiok4bW89mLpoa8fUOiD0c7TW3Q9QdISZ8TbxoKzVNt06FkRU6hWF
- HjhHxatwKcAuW6dqliw90NFYuflsSOaf0viMom4syFDPhw1OHBKcEGUximYGJYdhJRU+
- qjKA==
-X-Gm-Message-State: AFq9FYJsBep+8ojrSvpTd4datJNmdW5fk2ESdKATvbLIqxcv+rQuCRrw
- MoZpI+Rik6bchfDZuYVtX7vdOhNX3ocKx61ZtESeUIuk+oNOaZLepbLbgti2dg==
-X-Gm-Gg: AYBFou2zt95uT+jwdL47ckouZBwVjWS3jCQW/fvcywDVqRJCpFdOH/yhGMG3BRcT+xI
- CBCQkS6/eTqdem1v0rIGjqPJWBBX+WLP6VxZqZjQaP67KXzCD1ePdCL5aE0Tne10uvWnbyB0Tl+
- YRyke93uzGSPFeeoHl3PIvw9JdrZBCrJ5VzAqJBRtd2s02Br+CLrOPd9uX1eOL2U2vH3C89qUQ5
- lDCQhBaJr2hZm49/qs3Y2alxPVKRnFHeXPliM1e1N2EjQtDLduWQbaZpiB9p7K08aVszewoSJJw
- zhPTGB54vlBp5TnHXhZGvIiCE9SHqFmnKXbHf9LncKjfnWqdUCxFUr498mEUyDplDCO13myFXxn
- DHe0z1j6X3DnRZ4PpFtZOV63dNWuUPqqJXTlR3h2xM4v+wG5EariBGyL6RObvLcZoDSGhUS1CIG
- 5sQ14cJPK3pjF/47GUnXIE5ABOnfe5E/xRQrNaOw6z+qSKlv7LRGNL+CWYPpsbBA71rXQ6DkPCo
- ore1/y+pw8QNMxhwBRLlgtp6GEhu0lKyL5esg==
-X-Received: by 2002:a05:600c:c16f:b0:4a1:65d2:7912 with SMTP id
- 5b1f17b1804b1-4a17b527aebmr11741325e9.8.1791275740674; 
- Tue, 06 Oct 2026 01:35:40 -0700 (PDT)
-Received: from archlinux (pd95eda80.dip0.t-ipconnect.de. [217.94.218.128])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48c6cdb281csm1566764f8f.55.2026.10.06.01.35.39
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 06 Oct 2026 01:35:39 -0700 (PDT)
-From: Bernhard Beschow <shentey@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Bin Meng <bin.meng@processmission.com>,
- Jean-Christophe Dubois <jcd@tribudubois.net>,
- Gaurav Sharma <gaurav.sharma_7@nxp.com>,
- Bernhard Beschow <shentey@gmail.com>, qemu-arm@nongnu.org,
- Jason Wang <jasowangio@gmail.com>,
- Alistair Francis <alistair@alistair23.me>
-Subject: [PATCH v4 17/31] hw/misc/Kconfig: Remove redundant USB_EHCI_SYSBUS
- from config IMX
-Date: Tue,  6 Oct 2026 10:34:29 +0200
-Message-ID: <20261006083445.30362-18-shentey@gmail.com>
-X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261006083445.30362-1-shentey@gmail.com>
-References: <20261006083445.30362-1-shentey@gmail.com>
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1xEHNb-0003di-QQ
+ for qemu-devel@nongnu.org; Tue, 06 Oct 2026 22:27:43 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1xEHNU-00009Z-U2
+ for qemu-devel@nongnu.org; Tue, 06 Oct 2026 22:27:38 -0400
+Received: from [192.168.10.153] (p865013-ipoe.ipoe.ocn.ne.jp [153.242.222.12])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 6972Oaim068752
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Wed, 7 Oct 2026 11:24:37 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=ar5Zw42vm3kIwbmZJVWl8gEIk5e3AXoMK4M12wC9V7E=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=From:Message-ID:To:Subject:Date;
+ s=rs20250326; t=1791339877; v=1;
+ b=eigla2J4Zwl/AxFYPPyCcTg7uTV83gjzZXfAHwYa8awGXULbcWPAyU9LuTgCU/x5
+ DXNZhAQeZtCvHcA9w4urOrzHIORkZtaPmxjP4pDrptO7mKVNu5Ejb+T9ttsLN2ul
+ 72mTjXf8XMl9Sx/plrJ+Mzo4XEpD3VqzgNhXaRecIt3ujmrisLZfnV4t5l5Lz1JT
+ zFa9+3Zens7bYivUwe35n+kL3eF0pbLLEg1Pxl1ZS5YSIqmsVqHt17tfUO1oShLS
+ miQtrgR+3QywYo4hv0sSDIIXWSlcW9ma038wMCuiOCq3H8m/9Y1Zqnk7jikcTRPV
+ qRYIcCRqFuWdt0Ek/WvCkA==
+Message-ID: <30912a3c-d401-4d38-82b1-5e3b63fd5e5b@rsg.ci.i.u-tokyo.ac.jp>
+Date: Wed, 7 Oct 2026 11:24:36 +0900
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::131;
- envelope-from=shentey@gmail.com; helo=mail-lf1-x131.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v13 16/22] migration: add incoming migration failure
+ notifiers
+To: Peter Xu <peterx@redhat.com>,
+ Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+Cc: qemu-devel@nongnu.org, mst@redhat.com, maciej.szmigiero@oracle.com,
+ dwmw2@infradead.org, dongli.zhang@oracle.com, bchaney@akamai.com,
+ den@openvz.org, farosas@suse.de, clg@redhat.com, mark.kanda@oracle.com,
+ vsementsov@yandex-team.ru, philmd@oss.qualcomm.com, sgarzare@redhat.com
+References: <20261006-up-vsock-vhost-v5-v13-0-2ea78fd1b7ed@virtuozzo.com>
+ <20261006-up-vsock-vhost-v5-v13-16-2ea78fd1b7ed@virtuozzo.com>
+ <asUCSERCr0EkHu4j@zhexu-thinkpadt14gen5.rmtcaon.csb>
+ <21631cbe-5b7f-42dd-90ae-e2266fba6f4c@virtuozzo.com>
+ <asVAZWDo4mAxpke4@zhexu-thinkpadt14gen5.rmtcaon.csb>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <asVAZWDo4mAxpke4@zhexu-thinkpadt14gen5.rmtcaon.csb>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -109,31 +81,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since commit 464ce71a963b "Kconfig: Extract CONFIG_USB_CHIPIDEA from
-CONFIG_IMX" all relevant i.MX SoC models select USB_CHIPIDEA such
-that selecting USB_EHCI_SYSBUS became redundant in CONFIG_IMX. Remove
-it.
+On 2026/10/07 3:39, Peter Xu wrote:
+> On Tue, Oct 06, 2026 at 06:19:29PM +0300, Andrey Drobyshev wrote:
+>> On 10/6/26 5:14 PM, Peter Xu wrote:
+>>> On Tue, Oct 06, 2026 at 04:58:39PM +0300, Andrey Drobyshev wrote:
+>>>> A device may take over a resource from the source in post_load(), e.g.
+>>>> vhost-vsock acquires the device ownership on a CPR target.  If the
+>>>> incoming migration fails afterwards, there's currently no way for the
+>>>> device to give that resource back before the source is told about the
+>>>> failure, over the return path or via the MIGRATION event, and resumes,
+>>>> or before the target exits.
+>>>>
+>>>> Add a notifier list for that, called from the failure path of
+>>>> process_incoming_migration_co() before the failure is published.
+>>>>
+>>>> Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+>>>
+>>> Should we better reuse migration_state_notifiers[] and introduce
+>>> MIG_EVENT_INCOMING_FAILED?
+>> So far I can't see why this wouldn't work.  Should be functionally
+>> identical to what I've done in this and subsequent patches.  So if you
+>> think adding a separate event is cleaner - I can certainly go this way.
+> 
+> Yes I think it's cleaner.
+> 
+> Not only because I want to reduce possible global list of notifies only to
+> be used in migration (we still have another global notifier for postcopy
+> that only vhost-user uses..), but also in this case you didn't introduce
+> per-mode notifiers, stop matching with what the source notifiers can do.
+> 
+> When reused, it should then only register it against CPR_TRANSFER|CPR_EXEC,
+> IIUC.
+The logic in the current series looks sound, and I don't see any gaps. I 
+look forward to reviewing the next version with the suggested 
+refactoring, and will likely give my Reviewed-by for the entire series then.
 
-Fixes: 464ce71a963b ("Kconfig: Extract CONFIG_USB_CHIPIDEA from CONFIG_IMX")
-Reviewed-by: Bin Meng <bin.meng@processmission.com>
-Signed-off-by: Bernhard Beschow <shentey@gmail.com>
----
- hw/misc/Kconfig | 1 -
- 1 file changed, 1 deletion(-)
-
-diff --git a/hw/misc/Kconfig b/hw/misc/Kconfig
-index 46e3c03cc8..d1711433ef 100644
---- a/hw/misc/Kconfig
-+++ b/hw/misc/Kconfig
-@@ -93,7 +93,6 @@ config IMX
-     bool
-     select PTIMER
-     select SSI
--    select USB_EHCI_SYSBUS
- 
- config FSL_IMX8MP_ANALOG
-     bool
--- 
-2.56.0
-
+Regards,
+Akihiko Odaki
 
