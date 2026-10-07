@@ -4,106 +4,135 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CED5FCA5FFF
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 19:39:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0C44CA6004
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 19:39:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xEXU2-0005rr-3C; Wed, 07 Oct 2026 15:39:22 -0400
+	id 1xEXTt-0005mM-J1; Wed, 07 Oct 2026 15:39:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xEXU0-0005r4-8s
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 15:39:20 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <manuele.conti@archimede-energia.com>)
+ id 1xEXTr-0005lt-T6; Wed, 07 Oct 2026 15:39:11 -0400
+Received: from mail-westeuropeazlp170100001.outbound.protection.outlook.com
+ ([2a01:111:f403:c201::1] helo=AM0PR83CU005.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xEXTy-0007Sv-D1
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 15:39:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1791401956;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=VdQQ6F/Y7NRlXUXigBrE8bUV3yitf1QvJEYqoCWQuqU=;
- b=Qm0rJs2Z1IjR/cbIUlTPzhsfpYt40SiNElBkYYmxXBusFgppBydWBMNKOOWgQHlhpkvO/5
- HCVBP9eLApMCscpcXuDL2Vtdj/IL3S/GMIJ3DBClinYWMUzxUIgz6UBTutOMbLbiD5++ar
- CIZKOAPbxENGDBfTkWrzstatPi5pV3Q=
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-194-MdspYPBKMASx7qPBFnxSqg-1; Wed, 07 Oct 2026 15:39:15 -0400
-X-MC-Unique: MdspYPBKMASx7qPBFnxSqg-1
-X-Mimecast-MFC-AGG-ID: MdspYPBKMASx7qPBFnxSqg_1791401955
-Received: by mail-qv1-f70.google.com with SMTP id
- 6a1803df08f44-919879b09b7so44416956d6.3
- for <qemu-devel@nongnu.org>; Wed, 07 Oct 2026 12:39:15 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <manuele.conti@archimede-energia.com>)
+ id 1xEXTq-0007SF-8T; Wed, 07 Oct 2026 15:39:11 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=RrIVppOqAS6Xz/D3P12zeql9Z9Z1AobNVvFI+v+4WaMvBDZaf3IMPB7Gz/TWTIav2v63XFWfUjwBq/4vaUSIMJOUrSs53O+ihoDNBcEwRMhXRuQQz+1YO489Dzz0DmqCjDtcX38E+/11UcP+ioXTH9dzqzqYegMiOepmAIIwrGn/+mHtzwVqaXUK/YvxKM0ARUc6WHEXR3z4QMEIDiyUtj8QhuuETltrVsjh7lBK9CYLjT3PJJDrqrDrfcC2dnBeyV2uY6cvyckNKF3YSv+ogIy1cjeZYe/is8Azsg7f9BpPT4rGjfSwbo/9PZ6PjSEzi3xSoQDLHRZwqCg6qgW1dg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=OlBgxbFFHG9e0p9QM/3+wlYcg6Rrx/o6FqH44aNP3IU=;
+ b=sG67G21OayoMZ4iENyaFVWhld/hPbQAML9z0E8UHnBr3PcD76bEjIzhyZhIQAtb1k0wIuMCBPuq0ppOtOOBK1vpcfSRtBUfA9tWwU0cUR4VM9tMrg2btxUh4OM5718VYmwMf6PHIg8sL7yeJ+65KoNTfA3onXi4nph5hJNBhnsYkFbRdwbOmYKlZ7vLg4WymbTb7/y1Rpa5fsjAhRTq1wHESDKuLsO+M6P4iu2CNhmxzj9QJTs8QOqyXXQqJfxnEPn4CYRO6PLvA+qJgLq5qx+DZ7Rya9uUwJER3rXEZ6+W+taOJ7qQ9WwR7a4Pu/EQzIXEIPmNHcJX6X5QGfcN0Vw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=archimede-energia.com; dmarc=pass action=none
+ header.from=archimede-energia.com; dkim=pass header.d=archimede-energia.com;
+ arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1791401955; x=1792006755; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=VdQQ6F/Y7NRlXUXigBrE8bUV3yitf1QvJEYqoCWQuqU=;
- b=Kgznbldp0DtsrJAYaz8EgJUL5QvLgtsDTzihjN3mjoXFtAvB0dXg3kBZXU/RocGO8e
- xPrX6NLe1z+adDoMMzQyH+Ae5GaZFQX1fjK2+crL0a9tgh2qR3sdyj1BXVMSSdZ8bHjC
- zscAf0mtGg9GG7ESG1n6HYJ+0VuYemUEhrHFPGp6RWAKy8C7j3xkAYs/Kd7Vw1exJbyt
- QKP30dDOYDI6pRZp/4FGHhc1GWKQ9mn14iwvCcviPLO09m4GboFJKba8VaBa3gMvY32h
- ZG0I1F7UG2N0xR5bgxXTiOd9ehujS4gDMBJFdLKjQvEofyvmlDTRNSfu3Y83lScYmN3n
- uiNA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791401955; x=1792006755;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=VdQQ6F/Y7NRlXUXigBrE8bUV3yitf1QvJEYqoCWQuqU=;
- b=CSVRjuuYwwOU9FeGggtebtSZ1/eOaHDnbJLpL0cpehAyz0Aj/NYDprnPm/s1Fs1go9
- chNX/6b+TO8BNXXlIlBTQ9K7S1TkThtLcwu9s3KpHjsoTaSWznw0cxluAuv/7azgOKel
- LLSrz1eCWi4sRfqDwQ3yEoKdNRscTYceGSIfe//O8ywKQ+AsY/BhLjms3kjla/8CyI3F
- Ox32V6E2DgDLNtqBORy7veJMIqEAlEh28vHv/QCtk2XwI+LmnBZWRHgavVPBEmgqUzCP
- V+ux6+o/2CWCTbqZgZWjL8c6UgZx7MLLunsYDvXh9XQFaqkF+eqrumm5CZBTv7dEnaFE
- V8AQ==
-X-Gm-Message-State: AFuF++nfErjEYmYEaa92oNfUIShfg5c6Q9mLXyrhe+czhp0/rG+43bSK
- 4+hsudoWtPuTP8VvQazdTilRfZfPy2PPiI7LeDik8EUyYXWIVYtZKwxkD5upt8U9D1t7UoK1ttO
- 6Rmf++h/zycA9aUXVH/gwNPsrgopMBZkfv8ZrAEjoYhgsREO+FfP6mWj2
-X-Gm-Gg: AYBFou20KY2jTQU8cqVvnCS97hJQkGHc6LWUH33e14wdg4hTOCCPPehkdByChXrY4Sa
- eUNnnWJMEjAFq8uSJMJpmQBx/xJnnJdwyuOtmUL/lrhYJExY9A+szUa36dvHd4rQbao7pCbskKW
- bZtNUFfvRa4hyUagftUc276G1X+7L/3QvOPVyq6UFnCXo82jI6OmKI5MdsoHXcnMfCglhwkEzgm
- 99r20aYIcr+oRxpYLQLkh+WFALXv3louIRzaHjLHm6ZBRRaUVDFBeBsfB5Cmncz3MmPRnSkKAvF
- kfoFziJJ5wm9xnvj2SSO14+p7vzsVpGzSYFjCe9KjMWsHDyB8a32foiNsvkOHI4XJLFIT+0=
-X-Received: by 2002:a05:6214:2f90:b0:917:8a83:a15c with SMTP id
- 6a1803df08f44-91997821199mr61604506d6.34.1791401954562; 
- Wed, 07 Oct 2026 12:39:14 -0700 (PDT)
-X-Received: by 2002:a05:6214:2f90:b0:917:8a83:a15c with SMTP id
- 6a1803df08f44-91997821199mr61603876d6.34.1791401953907; 
- Wed, 07 Oct 2026 12:39:13 -0700 (PDT)
-Received: from localhost ([142.188.212.246]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-919973a87c3sm26668236d6.42.2026.10.07.12.39.12
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 07 Oct 2026 12:39:12 -0700 (PDT)
-Date: Wed, 7 Oct 2026 15:39:11 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- Akash Kulhalli <akulhall@redhat.com>, Juraj Marcin <jmarcin@redhat.com>
-Subject: Re: [PATCH v2 3/7] migration: Fix socket listen backlog
-Message-ID: <asaf3zJnivu9VC6U@zhexu-thinkpadt14gen5.rmtcaon.csb>
-References: <20261006182046.3767283-1-peterx@redhat.com>
- <20261006182046.3767283-4-peterx@redhat.com>
- <asVgieiXH1aieDak@redhat.com>
+ d=ARCHIMEDENERGIA.onmicrosoft.com;
+ s=selector1-ARCHIMEDENERGIA-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=OlBgxbFFHG9e0p9QM/3+wlYcg6Rrx/o6FqH44aNP3IU=;
+ b=h6XdbKiEpoaLAUuI0YydLSNlYgvTg6xeepmGYtbCZIps3GZ0zveuk9utnF8DZk0Ou53bi/7ms/dE7StHLitJeshm7fyZB/GPBkbiVD0vZtoW2Spe3eVF67gPOKY6+27ZSqEGLKrvd7IhVtAIL67R2sL1/qy+sfBOPZ2OFU9n9lo=
+Received: from AM7PPF9020C43FB.eurprd02.prod.outlook.com
+ (2603:10a6:20f:fff1::816) by DB3PR02MB10402.eurprd02.prod.outlook.com
+ (2603:10a6:10:439::8) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.451.23; Wed, 7 Oct
+ 2026 19:39:07 +0000
+Received: from AM7PPF9020C43FB.eurprd02.prod.outlook.com
+ ([fe80::d6fd:d61:e01f:727c]) by AM7PPF9020C43FB.eurprd02.prod.outlook.com
+ ([fe80::d6fd:d61:e01f:727c%3]) with mapi id 15.21.0496.010; Wed, 7 Oct 2026
+ 19:39:07 +0000
+From: Manuele Conti <manuele.conti@archimede-energia.com>
+To: "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+CC: "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "alistair@alistair23.me"
+ <alistair@alistair23.me>, "farosas@suse.de" <farosas@suse.de>,
+ "lvivier@redhat.com" <lvivier@redhat.com>, "pbonzini@redhat.com"
+ <pbonzini@redhat.com>
+Subject: [PATCH v2 2/2] hw/misc/stm32_rcc: Mirror clock ready and switch
+ status bits
+Thread-Topic: [PATCH v2 2/2] hw/misc/stm32_rcc: Mirror clock ready and switch
+ status bits
+Thread-Index: AQHdVpOE3GGCzNQDmk6iljvNRH/AeA==
+Date: Wed, 7 Oct 2026 19:39:06 +0000
+Message-ID: <15D27BC1-1A15-464A-9C9F-4719C2B10DCC@archimede-energia.com>
+Accept-Language: it-IT, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-mailer: Apple Mail (2.3864.700.51.1.1)
+authentication-results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=archimede-energia.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: AM7PPF9020C43FB:EE_|DB3PR02MB10402:EE_
+x-ms-office365-filtering-correlation-id: 8907b3d3-4d71-41fc-58ee-08df24aaa6b3
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|1800799024|366016|376014|10070799003|23010399003|10067099003|260925022911599003|260925021911599003|260925021311599003|56012099006|18002099003|38070700021;
+x-microsoft-antispam-message-info: LpPwRP6Ly5E34rDniR9NApT8NWXXkLfAIix5Ia/hZgy1KBITcwYIA/XiQR4KxoBeLjDrUu0os1hlWT360Fh4VjXxK2l6iHHQDwuReQwv7GB19FwKQ20oU16emJh9YEs+o4UwjErurvdpt/rKkiSnpHYOB3tfhEOuAPw817wvsl1Ee9dW5HaP2sTfZA06rTUZ2mi4vWA6DVFH5AlknuvugXRXxuqX+LkCwjjs+KS9g7OCRJYKnIURXtEDva0IgTBO4trcMriqNTFDNg5d5LSfp8GLbgPxr+roJODFAtJM/Xh0EesSxfhL4DVVwreTg/yWmNmt5EKunVbBKVVDID+iqbzEh8kv+jtD/3scxX55IO8rohVCWyUR8Cawi35SwjP2NFLVp5Q7eLC6DHFdZDF+TQWfwRDrCJM/WtLjx3djRLomk8YeRvuOEkVh91SrFVvTX2CAk8LfWFi2FFa0N3bEEXKFhFKvEgV8arT4bQh9u40AzFrhYZhGIfStuTdYqZCUAiqhlMX268SfTCQaybnbupqg8DA08te9/f3Hiv49SxMn9D0MEmYpVWskycHE1icf2ZmCBG+0Ppp9LTOzLawRnkjT19NgKu5hSAfBoefFz7RcYkKYHIP1tEj9jCM3sMWjmYDXa5+CMIplM9X9nk7bUsQb+RhJW6JhcV62uHl7+e6qb6LLG9UcJSp1EquVoeW60mujMgOF8OUHfnzoGQkCNG2ZI7jOsfJQYFy1mdUVslw=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:AM7PPF9020C43FB.eurprd02.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(366016)(376014)(10070799003)(23010399003)(10067099003)(260925022911599003)(260925021911599003)(260925021311599003)(56012099006)(18002099003)(38070700021);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata-chunkcount: 2
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?NJYcoP43Bv7TW2zuubSi4C7w1Bdk1cxV9ooqLZ9wUBn/HgMS4/FF1W7ezhxB?=
+ =?us-ascii?Q?4q28xQBCiSffU5WwCcagjMkTfyUaVa+AWKHtybX+N9iV6viGGrinhSuexF6+?=
+ =?us-ascii?Q?0oIiaHI9ztcw09uiTZBtv2217OFQeM49cJK5e+B2jQil4erdqiuUXjP2rSu4?=
+ =?us-ascii?Q?Im0GDc7VEunJqS112y5H9reX9AU9GYzCGKHEYpne7fHAYi5tQKM7H0D1Q3Sa?=
+ =?us-ascii?Q?isaRMByR/5IXeVsO/Z/8zT9MhM37/rYOxTV/JOjfeVvqkmObskGnQWR3GzDf?=
+ =?us-ascii?Q?squiQ9dq9wIgW1b0xj5V+nNm0zxBhTKsoL/XWtg6+7d7KXzKKcbACGs5Z4CR?=
+ =?us-ascii?Q?9LcvwoEhRSKKrcC9BCuAGQvwS3BEkGS40atFVXOr2rwI9UTzVrCvyl+aZhKL?=
+ =?us-ascii?Q?BSCoWVOPy1FddZ0rKPrsWliyFKSzv0qJh2oq82P+HFSMAKGzgOsdfzPSnS51?=
+ =?us-ascii?Q?463Md2iQ05gMPG/YcQmJz7mOlEZVi+7kr4dTdrpB6PWsiDs5g96mkKukwpZP?=
+ =?us-ascii?Q?TYlhhRtX2gPOrZ4Lkr1YT5WEOn1dEgxwLFa1fjgt6i3C7jq5LUy1NgRTbZHa?=
+ =?us-ascii?Q?dqPW4lX1NQuc9MQAQvmV+UM33nT1wiaEVSEZ8my9X1hrMSlXpE900cTrwIlm?=
+ =?us-ascii?Q?tBiOQlPjO7tuXz6Clpen2G+mLGRtWOUJGsUxchTNwHo/hNcRAOxkW3E4LrYj?=
+ =?us-ascii?Q?JR0GS+VYU1DCRtTW/jMDoMiTZqlUr/1Ua44+ybNWbFC8uiY2vsQLhuNasxYw?=
+ =?us-ascii?Q?7b/LcRrBh4/WE5P8c5arN6fnFaqzKeWn/20Scg8soVZs1CmZmDW1PGRWJqX6?=
+ =?us-ascii?Q?W+19oAjFfb4zVu3NPMiA+VIof3RGpe9vHoEUDiItX/mNsG5OOS6nN/Jj+Z5A?=
+ =?us-ascii?Q?g72VdQ4u6n1wezGS8lEK2fkepfjclPOindJXDX+OcH81WN0MW20/mH7rxmmw?=
+ =?us-ascii?Q?QKFkHQ1bJsK7Voxo4J19Q79REa21xvGid3huka9eRi8Ctf9qbwcqDf+DOG2n?=
+ =?us-ascii?Q?ogYK1NvUpWZWFLVJnj/BUYvpUl7MKTh+S1uSS0HriUT2tGYqR4TPloQjlU+U?=
+ =?us-ascii?Q?/xdWaANy4SO7aiv8rbRSWyR5Qx53OVLJv9PpYzLOMJwyRVz24H5bVN11BtvN?=
+ =?us-ascii?Q?WTB1qkf6DfLJbyv4ALC/LMoA7fksn9k1gZPOuwn3qIrqqN0gE1klvE6IavML?=
+ =?us-ascii?Q?/vmlHfH6x4TrdXfR7b74jdmt2FiDd53l2RMSuxwGx47r53zLIBYFh24CqGjU?=
+ =?us-ascii?Q?IKCogByOzZaKp1xsv9tJrlJFSnFXP+WlWOx9RdD4KsyeVHhEkcySyyOZmUa8?=
+ =?us-ascii?Q?uheJIr420GNpVmCMWZKxssXnD1RMW41SckhD/H3+57Rm4Dy/5ajxvt4jpfJb?=
+ =?us-ascii?Q?GACzG+hgRLQ5HlxmfFPonbwr1euI7okL1fjGPCgqemu1qWtU9HGoIFtHSawE?=
+ =?us-ascii?Q?IIv5yW+TMFEp4umQ+xZt1QfzQjSvWEWx9ChYagQfiAAtFnFV4KYnq0OsSfu1?=
+ =?us-ascii?Q?8aSbfanCgWdEgkGWyHaTUHmXjjVn78NKsyNUg7RiSlHBCRB962aXhXQHDSnt?=
+ =?us-ascii?Q?z+c30dHBcDoQSO1EWbiKtOJAonDZmhkPXyCloIWvexddLozf3/2wbf+CkEOE?=
+ =?us-ascii?Q?A7N+7DuIwIAaXeA+XMQFP26caZCH4z2W8l6qsB5tEgH5kBRZQ240tkV59bV2?=
+ =?us-ascii?Q?MOonErZ5KUhQjswah1IGI9Dja9M9tetC6UCLVHIe77G+m2wSEWWvsdCNL0/a?=
+ =?us-ascii?Q?LL/lwk82GJ6o3o64l9KIucTLI8TUZukd1NKakvo9OoBS73HJgaVEwIe15w7J?=
+x-ms-exchange-antispam-messagedata-1: KZG+Z4SP7JB6Dckv5ICn7rLedHxK93gSmZE7qn/J0hwTEHOfi7q/d99O
+Content-Type: text/plain; charset="us-ascii"
+Content-ID: <D894C740EE68C146A696F4832D1CBFD8@eurprd02.prod.outlook.com>
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <asVgieiXH1aieDak@redhat.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
-X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-OriginatorOrg: archimede-energia.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: AM7PPF9020C43FB.eurprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8907b3d3-4d71-41fc-58ee-08df24aaa6b3
+X-MS-Exchange-CrossTenant-originalarrivaltime: 07 Oct 2026 19:39:06.9159 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 1f446eb6-a8f2-46bc-96fd-2665698112e8
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: c7kZxq4aLNFH8+R/YDxePWY4OHrIyTy8rorFKL3JfxFtVNiJoPJ9gjmd3BvMwqSniK3MoPRgMtDACRAwDWxWEd7V0oQUiiJFIsjxwZl9FrHULwQZaTK4m4qO01YPkeui
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB3PR02MB10402
+Received-SPF: pass client-ip=2a01:111:f403:c201::1;
+ envelope-from=manuele.conti@archimede-energia.com;
+ helo=AM0PR83CU005.outbound.protection.outlook.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,71 +148,149 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Oct 06, 2026 at 09:56:41PM +0100, Daniel P. Berrangé wrote:
-> On Tue, Oct 06, 2026 at 02:20:42PM -0400, Peter Xu wrote:
-> > QEMU incoming side may have set a wrong listen() backlog.  After the
-> > support of multifd + postcopy now we have four possibilities on setting the
-> > backlog, some of them are wrong:
-> > 
-> >   Vanilla:            1 (correct)
-> >   Multifd:            N (wrong, should be N+1)
-> >   Preempt:            2 (correct)
-> >   Multifd+Preempt:    N (wrong, should be N+2)
-> > 
-> > No real report for this, found by code observation only.  Logically the
-> > backlog (pending accept requests on destination on the listening sockets)
-> > needs to be the maximum of possible channels.  Otherwise if the accept
-> > queue full on destination, source QEMU may hit connection errors.
-> 
-> From a robustness POV, we might also consider retrying connections
-> if we see a transient failure. Though I'm not sure offhand what
-> errrno would result on the client when the accept() queue  is full,
-> hopefully there's something distinct.
+RM0090 7.3.1/7.3.3: oscillator ready bits follow their
+corresponding enable bits, and SWS follows SW. Upstream stored raw
+values, so firmware polling for ready or checking SWS never saw the
+expected state.
 
-I tried to find but didn't see an explicit errno for it..  The hope is even
-if hit it will fail migration with some errno, then a retry would work.
-It'll be similar to when there's other random network issues when starting
-migration.
+Mirror the enable bits into the ready bits on CR writes and SW into
+SWS on CFGR writes. Clock switching is instantaneous in QEMU. No
+oscillator startup or PLL lock delay is modelled.
 
-> 
-> This would mitigate a risk of DoS from an unauthorized client
-> making its own incoming connections concurrently. Such a client
-> is not necessarily malicious, as there are monitoring tools or
-> port scanners that randomly open connections to TCP listener
-> sockets.
+Add qtest coverage for HSION, HSEON, PLLON, PLLI2SON and SW,
+including clearing the ready bits again when the oscillators are
+disabled.
 
-I expect ports can be scanned, but I didn't expect adhoc connections then
-drop quickly..
+Signed-off-by: Manuele Conti <manuele.conti@archimede-energia.com>
+---
+v2:
+- Mirror HSION into HSIRDY.
+- Mirror PLLI2SON into PLLI2SRDY.
+- Extend the qtest to cover both additional clock ready bits.
 
-If that exists, it should be able to break incoming side of qemu with
-current code indeed.  AFAIU what we do is we deliver the channel to
-migration process and then we'll see qemufile IO error..  not too bad since
-it will very occasionally fail migration, but source unaffected.
+ hw/misc/stm32_rcc.c              | 19 ++++++++++
+ tests/qtest/meson.build          |  2 ++
+ tests/qtest/stm32f405-rcc-test.c | 62 ++++++++++++++++++++++++++++++++
+ 3 files changed, 83 insertions(+)
+ create mode 100644 tests/qtest/stm32f405-rcc-test.c
 
-But I agree, I think we should be more error prone.  Looks like TLS is not
-affected due to the fact that TLS handshake process guaranteed anything
-forwarded to migration core will be verified and solid.
-
-And I believe the migration handshake feature will fix this as a side
-effect: when we will attach a header to all channels during handshake, then
-at least randomly connected sockets will fail the check and then we can
-drop the channel silently until it passes our header check.  I'll keep that
-in mind when working on the feature, which is in near future plan now.
-
-> 
-> > Cc: Daniel P. Berrangé <berrange@redhat.com>
-> > Fixes: 0705e56496 ("multifd: Use number of channels as listen backlog")
-> > Fixes: e274188612 ("migration: enable multifd and postcopy together")
-> > Signed-off-by: Peter Xu <peterx@redhat.com>
-> > ---
-> >  migration/socket.c | 25 ++++++++++++++++++-------
-> >  1 file changed, 18 insertions(+), 7 deletions(-)
-> 
-> Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-
-Thanks,
-
--- 
-Peter Xu
+diff --git a/hw/misc/stm32_rcc.c b/hw/misc/stm32_rcc.c
+index 5cfb39e560..814c5ea3b0 100644
+--- a/hw/misc/stm32_rcc.c
++++ b/hw/misc/stm32_rcc.c
+@@ -90,6 +90,25 @@ static void stm32_rcc_write(void *opaque, hwaddr addr,
+     }
+=20
+     switch (addr) {
++    case STM32_RCC_CR:
++        /*
++         * Oscillators become ready immediately in QEMU.
++         * Mirror enable bits into ready bits. See RM0090 7.3.1.
++         */
++        value =3D deposit32(value, 1, 1, extract32(value, 0, 1));
++        value =3D deposit32(value, 17, 1, extract32(value, 16, 1));
++        value =3D deposit32(value, 25, 1, extract32(value, 24, 1));
++        value =3D deposit32(value, 27, 1, extract32(value, 26, 1));
++        s->regs[addr >> 2] =3D value;
++        return;
++    case STM32_RCC_CFGR:
++        /*
++         * System clock switching is instantaneous in QEMU.
++         * Mirror SW[1:0] into SWS[3:2]. See RM0090 7.3.3.
++         */
++        value =3D deposit32(value, 2, 2, extract32(value, 0, 2));
++        s->regs[addr >> 2] =3D value;
++        return;
+     case STM32_RCC_AHB1_RSTR ... STM32_RCC_AHB3_RSTR:
+     case STM32_RCC_APB1_RSTR ... STM32_RCC_APB2_RSTR:
+         prev_value =3D s->regs[addr / 4];
+diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+--- a/tests/qtest/meson.build
++++ b/tests/qtest/meson.build
+@@ -238,8 +238,10 @@ qtests_stm32l4x5 =3D \
+    'stm32l4x5_usart-test']
+=20
+ qtests_arm =3D \
++  (config_all_devices.has_key('CONFIG_OLIMEX_STM32_H405') ? \
++   ['stm32f405-rcc-test'] : []) + \
+   (config_all_devices.has_key('CONFIG_OLIMEX_STM32_H405') ? \
+    ['stm32f405-timer-test'] : []) + \
+   (config_all_devices.has_key('CONFIG_MPS2') ? ['sse-timer-test'] : []) + =
+\
+   (config_all_devices.has_key('CONFIG_CMSDK_APB_DUALTIMER') ? ['cmsdk-apb-=
+dualtimer-test'] : []) + \
+   (config_all_devices.has_key('CONFIG_CMSDK_APB_TIMER') ? ['cmsdk-apb-time=
+r-test'] : []) + \
+diff --git a/tests/qtest/stm32f405-rcc-test.c b/tests/qtest/stm32f405-rcc-t=
+est.c
+new file mode 100644
+index 0000000000..1a8819b6f5
+--- /dev/null
++++ b/tests/qtest/stm32f405-rcc-test.c
+@@ -0,0 +1,62 @@
++/*
++ * STM32F405 RCC tests
++ *
++ * Copyright (c) 2026 Manuele Conti <manuele.conti@archimede-energia.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "libqtest-single.h"
++
++#define RCC_BASE        0x40023800
++#define RCC_CR          (RCC_BASE + 0x00)
++#define RCC_CFGR        (RCC_BASE + 0x08)
++
++#define CR_HSION        (1U << 0)
++#define CR_HSIRDY       (1U << 1)
++#define CR_HSEON        (1U << 16)
++#define CR_HSERDY       (1U << 17)
++#define CR_PLLON        (1U << 24)
++#define CR_PLLRDY       (1U << 25)
++#define CR_PLLI2SON     (1U << 26)
++#define CR_PLLI2SRDY    (1U << 27)
++
++static void test_cr_ready_bits(void)
++{
++    uint32_t on =3D CR_HSION | CR_HSEON | CR_PLLON | CR_PLLI2SON;
++    uint32_t ready =3D CR_HSIRDY | CR_HSERDY | CR_PLLRDY | CR_PLLI2SRDY;
++
++    writel(RCC_CR, on);
++    g_assert_cmphex(readl(RCC_CR), =3D=3D, on | ready);
++
++    writel(RCC_CR, 0);
++    g_assert_cmphex(readl(RCC_CR), =3D=3D, 0);
++}
++
++static void test_cfgr_switch_status(void)
++{
++    unsigned int sw;
++
++    for (sw =3D 0; sw < 4; sw++) {
++        writel(RCC_CFGR, sw);
++        g_assert_cmphex(readl(RCC_CFGR), =3D=3D, sw | (sw << 2));
++    }
++}
++
++int main(int argc, char **argv)
++{
++    int ret;
++
++    g_test_init(&argc, &argv, NULL);
++
++    qtest_add_func("/stm32f405/rcc/cr-ready-bits", test_cr_ready_bits);
++    qtest_add_func("/stm32f405/rcc/cfgr-switch-status",
++                   test_cfgr_switch_status);
++
++    qtest_start("-machine olimex-stm32-h405");
++    ret =3D g_test_run();
++    qtest_end();
++
++    return ret;
++}
+--=20
+2.54.0 (Apple Git-157)
 
 
