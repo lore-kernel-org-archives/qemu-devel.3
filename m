@@ -4,104 +4,212 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31A5CCA5FFF
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 08:21:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B14E8CA5FF1
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 08:22:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xEMtI-0000eH-7Q; Wed, 07 Oct 2026 04:20:45 -0400
+	id 1xEMrj-00063r-VQ; Wed, 07 Oct 2026 04:19:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xEHNa-0003dJ-0f
- for qemu-devel@nongnu.org; Tue, 06 Oct 2026 22:27:43 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <dongli.zhang@oracle.com>)
+ id 1xEGMc-0002oL-0q
+ for qemu-devel@nongnu.org; Tue, 06 Oct 2026 21:22:45 -0400
+Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xEHNT-0000UZ-Nt
- for qemu-devel@nongnu.org; Tue, 06 Oct 2026 22:27:34 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1791339961;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=1sK5GD5O9fskSwF3ozz8UE5sf0fR4JZta0W2sHM0IuM=;
- b=XJovKhHvyZN0avrCPMpeX/6JWsZC/EBDcBD/M+fWz5BQF2uUzL1pyJ0riWlEuOkvZXiw+Y
- Ba3u4VNsySIozQZ8YKtJM0kUXQnVEmGdfyiPVp/DuatCz2LQoFEb0GUguBKL6JSs0quS39
- FKTJv3Y4RVaN4rrh2gKf+Wn0ZFrwTAg=
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-10-wRdsIhSYMFGxBFPpuTyQYg-1; Tue, 6 Oct 2026 18:21:00 +0000
-X-MC-Unique: wRdsIhSYMFGxBFPpuTyQYg-1
-X-Mimecast-MFC-AGG-ID: wRdsIhSYMFGxBFPpuTyQYg_1791310860
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-5338c59f90dso53618431cf.1
- for <qemu-devel@nongnu.org>; Tue, 06 Oct 2026 11:21:00 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <dongli.zhang@oracle.com>)
+ id 1xEGMM-0005Nj-MD
+ for qemu-devel@nongnu.org; Tue, 06 Oct 2026 21:22:26 -0400
+Received: from pps.filterd (m0333521.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 696LdaEA1697492; Wed, 7 Oct 2026 00:51:15 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=
+ corp-2025-04-25; bh=Nr9UnlVBezxQhLRq9sYEQvw5ftbW2cE0/+mZTf55MFg=; b=
+ lqdwA7RBtz1VwogdJnFfrxJ3RRVil5Q0ESCV1SXpKCDNhq0diAKPyVXTOh5387Rb
+ MhNz6GzaUgxNhkaK+rIjSOLCR7qTrS4M0n3uFhygz3AevwJXu9p33ZqsMHF6AxJ+
+ 0Wykwh72nKq307ix8oWYPnubXyAviz8xoSJmJsnHEGiVsGIfPev9PMIvTRpZ8oug
+ 78IuVqua8bjGQW+oqOXYax3z0D6akhzzDv82DDNwwF6LBc6zfYNNFtNUbj8blxkY
+ 2Lz/S6PwoKIdVldg5UCHMvDWcVxvH3Wuj/U4jdFihmp8P6rkuEjv9MfL3fSZl56a
+ D7uO82ekpboKwgbA40r6aQ==
+Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta03.appoci.oracle.com [138.1.37.129])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4h2rm9cts4-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 07 Oct 2026 00:51:15 +0000 (GMT)
+Received: from pps.filterd
+ (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.7/8.18.1.7)
+ with ESMTP id 6970pB4t007180; Wed, 7 Oct 2026 00:51:14 GMT
+Received: from sn4pr0501cu005.outbound.protection.outlook.com
+ (mail-southcentralusazon11011014.outbound.protection.outlook.com
+ [40.93.194.14])
+ by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
+ 4h4d1r8f29-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=FAIL);
+ Wed, 07 Oct 2026 00:51:14 +0000 (GMT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=UKTUtgqn1Mse58SFrEJoI5MV0gr9+VAeTNtlNhFaviChWjVu+p+FmOEE/kyEG9v/owbvtcW+OfXDtHxb/h5woOwQKmGUJpBeTrTAfMmElFTIwFcaO9JCNqjhSESxAzVrJ+6/LJPHM9ju/1Bka1/kPpP4XCgo8zOisas0lujhRX6eL/Dg1XKb+6qxMuTSnB0ExrqgGh/6vj+yZW6eDttSxbFa9WXitucp29qtotKxFFb2QzKEeTMSPihVd0xH/1bgjMN+fytioPhVVMmEFX794l0kNYkQBPUT6ebskZNSg6WHYutCsTn2mAVj8rkenFIvYODrBaEbSZchoRyZ0pC5WA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=Nr9UnlVBezxQhLRq9sYEQvw5ftbW2cE0/+mZTf55MFg=;
+ b=fF7TQFDPCx1+QfSZOIjaU9qiv1dXVVSUlR0GrONmSP3jC2p0f/GSxYxaq0OI7T8GEXlN02yOExRZ57MjiROX03+CQmHWOFHP0zei3tjSq1Syuz0bOotgjQut1Do75U4hKHD4XYwzVFYHQ0bVUOzKISw3WLuWNA4ycss2BFjfwZVeX0J97q2QGVm7Cxm85oKvB5QwQyh5HdziOvzrMXDgokM7Z6hZiZjyjQFoDPM6D3oV69gs0a6jDAB2TwRsU+gmwFEaPPiLZfikhmoM3++ojjVredNuadPssmjl69U8iSpYHq7LDTay8fdi+pY45rp6DBOZnc0JRh+GhLHQX5+wUg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
+ dkim=pass header.d=oracle.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1791310860; x=1791915660; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=1sK5GD5O9fskSwF3ozz8UE5sf0fR4JZta0W2sHM0IuM=;
- b=FV1uYk1R4W92KIFu8Su1bUS0U1jfvTl0LN6BgpDbUc+E3JnbNKFgFO/CezQNQjQfCh
- 3besqnJUjclrY5DWAFn2U+xtb3MbS60LnykQRjI9nZODKsSYfg2sHPJDzSHF+x8l/syk
- T0oezZzt60D5M3acHFw6BNPCM8H0X/oc32N33hjGV3fpN7jT/JiApjRdnuUlc8JkA0Xv
- 1J269k+Mh71L+S7XXI/MsY1uzWBPuEc7bJEE+c3mDq6nA6tnvKoHMe0SGF/NE0dYjP6Y
- tH5RzXan0OeArTmlhI/afbkhD7xZVat2MWK6vKF51drXDMD40IBziElqtC+fKlPLSATc
- P6aQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791310860; x=1791915660;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=1sK5GD5O9fskSwF3ozz8UE5sf0fR4JZta0W2sHM0IuM=;
- b=o9v28w6YH3WRiL6qs8KQYN4Nis1h7edTE/jxA51jxyzG+KI+/IemRaNxr24ElNUslO
- tV1bUO9U+2LcNfqiL+1Vw0cPJlSSwmkMORFhwSPZk5vJbrzPbOYGnloj4DMnMLcCY75x
- /in5pnduHJ0cux0dXU/Nr3HT+R8N2U8zpDQeE/bny8qrJuBdzYQ3RUKRzH6Xpgf0WgWV
- hQdz9AeAM7xUrAdBw2OBm6yZo9MU//KSgsChgQwdwaGJItUE/MxOvdAuMVuoYa95O+T6
- 0dZGCXuTPrRFynsc6MOdnKe6Rn3Ej4ntebEqRCCCdZge1Ipl+RVAndy0S/ORwzzMbav8
- Ebgg==
-X-Gm-Message-State: AFuF++ktO93UsS6oCsFaIW/sop4U2/4zmhUoB6up1XE+0JcQUO1Egse1
- TTMLvUfp6nc+TJTaQ2LrSsFBW7x8bYPDHPWeHWtRMvX6BxlNV8hbKaOtGfokpi2+1K4lFx5f/a0
- DKFQBALEvn6aTtfYfo2Wbff+c/FyIiL6fLYyPP5FwpRNGziwoL+P+fxD4IkWLK32O+v7jMugCK0
- uRqpTdmeQuazBinqvcUGbSGYPTbszZACiDsr4jDQ==
-X-Gm-Gg: AYBFou1PYFZJ1z2I0W0BBXuJGo4En1CUXMdsbsb6TMY5cbkBl38DnbnD7oOMhk8x796
- 0TmlA7HUPRzC+iXPDQxC8k7Qkq7IKFxLuE7/Tp5pLFTYzY9ebPzVWIZygM/0oXY3kk8TuSp3wDL
- 4EUiZwcsGWRIu+OwnCrh75t5/TRdSgA6PSMIbfXtJ5pw196ivZ5lWT6mW1/mti24dH6HGFsf9bb
- mFNLGiQ2I6Lay5+s8FCeT1ukwlbL0p+rwK6NNAXJJg7j/BbKuhL0/gBylVwm8Op4fxTiThoPBwb
- NGqbF4LbAtLA06eGJEwpyh6JziFunTfebgxLdYE4w7Mmh6x1sqBR/HPROn9qCVtuQtXzj14=
-X-Received: by 2002:ac8:7e93:0:b0:533:37ff:92c1 with SMTP id
- d75a77b69052e-535668c9ad1mr37281701cf.8.1791310859821; 
- Tue, 06 Oct 2026 11:20:59 -0700 (PDT)
-X-Received: by 2002:ac8:7e93:0:b0:533:37ff:92c1 with SMTP id
- d75a77b69052e-535668c9ad1mr37280951cf.8.1791310859059; 
- Tue, 06 Oct 2026 11:20:59 -0700 (PDT)
-Received: from localhost ([142.188.212.246]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-5357211719csm1704951cf.16.2026.10.06.11.20.57
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 06 Oct 2026 11:20:58 -0700 (PDT)
-From: Peter Xu <peterx@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: peterx@redhat.com, Fabiano Rosas <farosas@suse.de>,
- Akash Kulhalli <akulhall@redhat.com>, Juraj Marcin <jmarcin@redhat.com>
-Subject: [PATCH v2 7/7] migration: Postpone the outgoing preempt channel for
- preempt_pre_7_2
-Date: Tue,  6 Oct 2026 14:20:46 -0400
-Message-ID: <20261006182046.3767283-8-peterx@redhat.com>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20261006182046.3767283-1-peterx@redhat.com>
-References: <20261006182046.3767283-1-peterx@redhat.com>
-MIME-Version: 1.0
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Nr9UnlVBezxQhLRq9sYEQvw5ftbW2cE0/+mZTf55MFg=;
+ b=b6m5dsAdz+IovloYYXhUwhyH3muNDfiHE9I4BCO+Y+fgRM3HuD42G8d/+JpxE1IlfUqPrHqd1Ng4om+K5j/SD1QHxWzGMInDUVUczWuaUdMFs6koMubXh8KBLdzB79HyprbhgFNeEA8/5bB2wGsTW7DtzOThfxcbOwzHAPgE/co=
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=oracle.com;
+Received: from SA1PR10MB5510.namprd10.prod.outlook.com (2603:10b6:806:1e5::6)
+ by SJ2PR10MB7734.namprd10.prod.outlook.com (2603:10b6:a03:56f::11)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.496.12; Wed, 7 Oct
+ 2026 00:51:10 +0000
+Received: from SA1PR10MB5510.namprd10.prod.outlook.com
+ ([fe80::a9a8:cb4:1056:5d96]) by SA1PR10MB5510.namprd10.prod.outlook.com
+ ([fe80::a9a8:cb4:1056:5d96%5]) with mapi id 15.21.0496.010; Wed, 7 Oct 2026
+ 00:51:09 +0000
+Message-ID: <d0a22994-1a01-44c6-8a79-12470ee8dcd4@oracle.com>
+Date: Tue, 6 Oct 2026 17:51:07 -0700
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v8 1/7] target/i386/kvm: set KVM_PMU_CAP_DISABLE if "-pmu"
+ is configured
+To: Sandipan Das <sandipan.das@amd.com>, zhao1.liu@intel.com
+Cc: pbonzini@redhat.com, mtosatti@redhat.com, babu.moger@amd.com,
+ likexu@tencent.com, like.xu.linux@gmail.com, groug@kaod.org,
+ khorenko@virtuozzo.com, alexander.ivanov@virtuozzo.com,
+ den@virtuozzo.com, davydov-max@yandex-team.ru, xiaoyao.li@intel.com,
+ dapeng1.mi@linux.intel.com, joe.jin@oracle.com, ewanhai-oc@zhaoxin.com,
+ ewanhai@zhaoxin.com, Michael Tokarev <mjt@tls.msk.ru>,
+ qemu-devel@nongnu.org, kvm@vger.kernel.org
+References: <20251230074354.88958-1-dongli.zhang@oracle.com>
+ <20251230074354.88958-2-dongli.zhang@oracle.com>
+ <81a1f791-37ef-4d26-bcf7-024eab4cd810@tls.msk.ru>
+ <fa8b40df-a35c-4ae3-8eaa-b4b65c546a91@amd.com>
+ <18ff5158-a515-4659-8388-5bcc074afb94@tls.msk.ru>
+ <6ee6f858-37f6-4acb-8253-acd3cec584ad@amd.com>
+ <f4a13c82-927b-465c-8ae9-9e7bb0f2e7b1@tls.msk.ru>
+ <502e4c1f-3f5a-462d-87c3-076612935784@amd.com>
+ <84b5b038-e32f-4765-9d23-9f6ecbf382c0@amd.com>
+From: Dongli Zhang <dongli.zhang@oracle.com>
+Content-Language: en-US
+In-Reply-To: <84b5b038-e32f-4765-9d23-9f6ecbf382c0@amd.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
+X-ClientProxiedBy: SJ2P220CA0005.NAMP220.PROD.OUTLOOK.COM
+ (2603:10b6:a03:5da::17) To SA1PR10MB5510.namprd10.prod.outlook.com
+ (2603:10b6:806:1e5::6)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SA1PR10MB5510:EE_|SJ2PR10MB7734:EE_
+X-MS-Office365-Filtering-Correlation-Id: 2f648605-92dc-47a1-4be0-08df240d13bf
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|23010399003|366016|1800799024|376014|7416014|10067099003|4133799003|56012099006|4143699003|22082099003|18002099003;
+X-Microsoft-Antispam-Message-Info: P0UNb/KWeeSfZVznzZO5zrTw3Oc6UIwg/RYq4oId8w84VPj9/bATip/eMFGxqrKMz4UG33PmbJydOuoPfPD+OAQ98LuabAr2bLrRbkl4CXhkoqeglrKmtzJmkZqijC0MYe6R5YEEjhFDKfiTlxwZAViWY5x79ehyy01OqmjFYsPCAnnxPsqO1roqvv7sZdUr+OsdGUp+qMzxHN0zhWTYxIDNzydRjedmOykZW/L5NsQ8EsXkTC74q9CDcQpqdzwbRcTZEO5H8jyJdCPe4cOer8HpOwrfQSBZQSw/HeY1kdyk/ab5jfywHSIAeWl6fAnEAmllWaecTuymBRSKdBSWqRwLX+a77jL2t4ixkUDHdEyQTiTZszLP1lxrXue934EUDi96OpKLetyFs3SNxBWgBYbLGpra9Fw+T6FbyNGH8TEzcCw0w+Tt/KGp1Z57eAFa7Kifag0ZtQveq2yWf1O1JaOelr+XCskVoP9DXvDTjSXwuI/og2d+Hgc3rlal0zGEMqmseqCNMed7qR/RoD2os50VKUh83hmto0SZr8zmxsHknOQu61iKMT6m4s7wcgf3BWkuds1e+tWB03IuUSGiWz6Ido7EpZxDnws09HesILs=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SA1PR10MB5510.namprd10.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(23010399003)(366016)(1800799024)(376014)(7416014)(10067099003)(4133799003)(56012099006)(4143699003)(22082099003)(18002099003);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?Sk1PYUd1Y3BES3h6bTFTUmR2NVg4VVAwVEpjcHlKWUhPV2hZVmdhU2JEa294?=
+ =?utf-8?B?NkhMRmhqcjNnZ0lZOHBWT3NVUDNYcUF0Tjl1cVNyTEU3OGtHci82Q0p5ejFa?=
+ =?utf-8?B?ajQ1MHFhYzhzQ1ZEOXZ6d1IzcXUzVGlWbkdzanRmNGVsNFFmaVB3djU4OHdi?=
+ =?utf-8?B?UXMwNTVXakJKTEEvQWE2aXNod0tkVzhGVmNkd2QxRy9JNzh6aDdwMExyTEZV?=
+ =?utf-8?B?Wko3ZjRieWp5U0FodVN6QU4xRVNlZ0QzL3dzMG1HaFVySDN5ZGovVGxlYkxl?=
+ =?utf-8?B?eTE4NVRvQVd3dS9FMDl3VDBoc2F3dFNYN1U3d0JUQ2tLYU1ObjBuSjdXdXMv?=
+ =?utf-8?B?MUorMUQvT0Z4ZENyWXpvYmZIbXd6K2lCRnhlb0xUdGNaZTVuMFd0S0NuN2V6?=
+ =?utf-8?B?dkRrT3VPNnBoMk0xdyt1TklNNlA2MUhJZmlzUUc2QnZ1T2tWZ1FPWjZJTE5o?=
+ =?utf-8?B?ZzRlOGpvYkt3KzUzMWxSNlNwWnVhd2xFWWs0U2E5TXdYNHFJTjZ4TFRKNCtt?=
+ =?utf-8?B?d0pMcHI4QkI4dXpSUkJFWGdtdEROK0xKS0xJMUdzZEVzM1E5MWJPWVFucnI1?=
+ =?utf-8?B?VG40TERlT2NrK0pnSkU4aXhjcjNKVlZVcEZqQlBXYWx4TVJhNHR0enJ5YnhX?=
+ =?utf-8?B?blJaRlRpWlorTzFwczl4VHJ1TjhHaWtEU09MUlNZYVhDQnpsUEtaNGROSDZo?=
+ =?utf-8?B?WFMvNUJMSVBmdVpFMGhJOVRVbTBteXVLV3Ezeld1c1NEdWZrY3E2Y285QWN6?=
+ =?utf-8?B?ejFVaWJkYjQ1SFY4OEQxd0FpbjV1TUs2N1BMYmdqZjVkS2JvSWtSbUFwdjV5?=
+ =?utf-8?B?OHRRMXF3Wk5Zam0zT0RTbE4zZlN1TURmM0ZkZmxSQk1WVFNialNvaFNaVUpo?=
+ =?utf-8?B?ei9GNXZFNFNnUzQ5U3pKZTdOZjB4RkJrdHZ4eUI0SVVQajhFaFlVR1AwVWF6?=
+ =?utf-8?B?czZwbk84Ui9jdkFTTEk3M01jTG5PK0RPZUNMdHNmdE5tdU5ZU0RHR1I4ajZO?=
+ =?utf-8?B?WFR5YlVITENoSUlnNmhQMnN3cnkzajEwN2ZBZGJsK2ZrUWRhK1dKWnZUTUlX?=
+ =?utf-8?B?UFZLcHcwaEJJcWhPV2x1bXMxaEVlRmZCNXk2S01wbVZZbWFKNG0rbDZ4ZG1u?=
+ =?utf-8?B?WlkwMGUwTXNGZXBxS3lmTVBmVWRLT1lTbXRxWjladjI0eVFxYlpmQUF4T0I1?=
+ =?utf-8?B?VkVVb1dwV09GZ0Z5SHRZcC9PVU1qNXoveUNkTTFQdEJmY2RZR1hYSnVkTmND?=
+ =?utf-8?B?dHVEdlZsZ3ovWFlLVlFyaGZBWFUwRlhmbWZROERobDFKOFNYaXMyRFJUWDhi?=
+ =?utf-8?B?TWJINkh2RGZKa1l6d2x1TkFFVENHQ24zdVZad1V1NnZMa2g0cEVRUmNWVjha?=
+ =?utf-8?B?Mm9tTVh6OERlcFFMLzNUZU95eUpKUU1mR3NnQzA0R1BOcEFpZWFuK3ZoRVR5?=
+ =?utf-8?B?c1lQM1VpenE0eVZueFhsZXFVS0hwdzRZdmFTVnNwVjFxODNWOUZKckMzUXF6?=
+ =?utf-8?B?RlNvZ2FwaGllb3IvR1F5cEhmYU53SW5IVk5vUUl5ZmpSOTY0YU40UnR2bE5D?=
+ =?utf-8?B?M2pCZGlvWlNpZkhEallFQTlSckJTUnlwRFlacDJMajhLU2NJZ0ttNDBieTVY?=
+ =?utf-8?B?TktLYnhDVktKQUNFYTZnZUhBSzlMb1lmc3RLTmUwUUd0aGNzRGhpdEhqaERR?=
+ =?utf-8?B?ZjJjckdFWXpCQit4d2p1cjZhVDBIdEJieUx3WmViL3hJTmY3TTcyYUpKZjZM?=
+ =?utf-8?B?ZkVXZ2tyRzA4SGtFaGlNZVZ0ZTlFVjlsZThEa1Vjd2lLVEFZbU5uZEpJVWRu?=
+ =?utf-8?B?eE5NYWZTbjFmd0JyaHhsMFhIdjhpRmF3MWlwVUNkazlmdGhnNWFEdElKSUIr?=
+ =?utf-8?B?aDM2aXFSU2pCNkNOa21IcU94OVNiejRLMWJobGVKL0FyN1IvS0I3OERLVG5Q?=
+ =?utf-8?B?blNWREZQWmRDb2UzVFdlWk0vTElwaWdlU1l6eVdVOHByZjJCbmcvdkFPeStL?=
+ =?utf-8?B?WWlld0xuL0RHSFBXSElMSVBKdkJsNk1hR0NObE9zZG9ETFFNSlFBbUdCMmFH?=
+ =?utf-8?B?WDB2RmpPY08yTE9PaXAyVFBWcTduNEZ3dlFFVjdhQ1V1ZmE0dDNHdFZKVVB6?=
+ =?utf-8?B?RjVJOU10UlZic2lFR3BZQmZtVCtKNFkwbGptRGJGQ01UQ2p3TGxFWWZtdHdm?=
+ =?utf-8?B?dU1ieHVZSU9iN2Jsb0xabXpaYnd5aHVXakd5ejg2eUlrcGh6U2dDd2lpVVNw?=
+ =?utf-8?B?cFJoUG93VXR6V1lZQngzOC9VMis0L2srUGlkc294NzFOaVZJSGIvSk4vRnBm?=
+ =?utf-8?B?aHUxN3ZmMzlTUkpUNWRMeGVQRndLRk91STBNZzh5Ri81Ykx4RlljZz09?=
+X-Exchange-RoutingPolicyChecked: tsN/NdwQUHc/xXtPga7fzQ/7D50K3NgxxqiHnmGqSFiEbVIsaRjjCnKx8u2y+Vzfk27ymTIfQPbTCny5ZW4dp9dELnH18Kh4S8Sp4n609g1Js2MiTihnIfcLhO3GPMAnevwyhYTdovdwlzjWT2xN1vq/VHL2631et40Tvkkc3xZpqt3iiR6CVIoVSmyLZQpdZ/SLi/d+OCrFEwnbjkQQWaYdjm8E0xWa0qqDMOkzXAjsJFyqTgqCtGdPD1Svw8oeF2ZKlVOBVh53N6zJcm1nOOq4RPkJoIz/I6AtV8S4v/QrPNeXvLUKEYS6eqETxkoZtr1otiuD9OdZPwwvpkynSw==
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: FRnBLyjOKy+4ZOJb4b7JIcbKNjQ6qxRsN+pag7/1PTW1MYXK8ebn7GNsOHV4ppFD1HlVt+BoqZEBufWaBGwdZgFEaPv+jdOZilGZxRMqrFWx9qybRdt7wIF8VDsFBfbdsCyvntRHLER5VLcGmsZaQdOc11SRdBfQn1Y6BBerW2AQhDHnioIfKywAlTajMlxNy8gW6Hbz2qYMb5fjQkD6gI+ng2lh6AvfeSdCnC+bWeo9l2gbqDs/eC/oNhzBEUiCFki4LB2/9O25k0TDfrJ9f/+nh70q830dicUcIiHcAfB87e8Q2VLiMKAGToZsH5VDMBtit8lsZIADCpnQa5MdF6uJptKWNsbKeafkz64A/068hyy+xl9Z/vufJ51QupcW8Mo8RN4r7lqrcWTCy1rG5S8GicR0FKVwy1vGVI5Go/UvpaCICR1evvnasMAJ9m93qZZbbGTUixg5voOr2ER8Sg90WWWfui+is8CmGWybOByuLMfM4bngAYwiCul9pzTrGzwTZtO5IufY87z5tx7SJT6Qtz06ntJcD9lf93pf86KyZVAJgpyOmTaaMgjPTFmLwmGA2mdl0nT5CvTN4eF0/9NhK0IqxdEJXzfoE25vxkc=
+X-OriginatorOrg: oracle.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 2f648605-92dc-47a1-4be0-08df240d13bf
+X-MS-Exchange-CrossTenant-AuthSource: SA1PR10MB5510.namprd10.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Oct 2026 00:51:09.6363 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: s0kpQGPtv1LaIemFoO73DVmYpyZtwUwC+D0fkgb5pa/BhwoGm9c/aO7WUEJSzrggMR5GrRzm/eVSTQt2Kydl5Q==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ2PR10MB7734
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-10-06_05,2026-10-06_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
+ lowpriorityscore=0 malwarescore=0 spamscore=0 mlxlogscore=999 phishscore=0
+ mlxscore=0 suspectscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2609040000 definitions=main-2610070003
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA3MDAwMyBTYWx0ZWRfXxO0xG0wIJ3t1
+ Q0QUEu+C33wReLKomc3xYPAAvp9vFY4GkPbUZyl2gDpI66jI1x+NqR94sO/rzwzW3ngyP+LIz2V
+ 3x1I5F9hHcH8EC8MZ31gCJ8P2igKGXnbmV281bgJuCNaFbOynBdVX/CISU+nkX5+Ztx5DhbwiSs
+ zFF1C7FTpWMtVJX/MvHkypYAYp4nVoMJhRBlRiSfU0UaYvXRLy4VSVpZDrGuM9QTRNlsg/HHjJf
+ 63vMk5kQW/65zapdH0NRy2Y8v6bDpzRH1kiQcxPOgsQQhXqqOB+jzrIWXtaO6xta4kNex3Ckn9C
+ 81CAKg6shiEWVMRgli0GX8jxyf2BW56vXknu2BOcqexxHMBc9Glj6QT0mya8xhalCLRFN6qio7i
+ ysDmjGci8Sqvd+EehxquB/Kyx2Pg50mcU7kfMeh5DNXsgoLf/ZFFutL7/CP+UMZ2w/PeR7X0lJZ
+ yRpDWjzH9B6QYOQXrKQ==
+X-Authority-Analysis: v=2.4 cv=QMD91QLL c=1 sm=1 tr=0 ts=6ac59783 b=1 cx=c_pps
+ a=WeWmnZmh0fydH62SvGsd2A==:117
+ a=WeWmnZmh0fydH62SvGsd2A==:17
+ a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19
+ a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+ a=660iZSQnnn4A:10 a=GoEa3M9JfhUA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=jiCTI4zE5U7BLdzWsZGv:22 a=x0eKOSpe3m1H3M0S9YoZ:22 a=uherdBYGAAAA:8
+ a=9AdMxfjQAAAA:20 a=VwQbUJbxAAAA:8 a=yPCof4ZbAAAA:8 a=QyXUC8HyAAAA:8
+ a=BoeeIxEzsqvZZbcfIokA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=WmVTiCyuxqgg3mnwYu6p:22 a=bA3UWDv6hWIuX7UZL3qL:22
+X-Proofpoint-ORIG-GUID: P6U8R-XCFJ1lXc7chfzvJNioFMgTYBPS
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA3MDAwMyBTYWx0ZWRfX35GkEkSt3tYx
+ IU1ydqI+RAbXvKZHwEp+N+JYaFlNBzkCAH6P+bdkfig/JLsBYikLpSIUFFSfwdvCWobmOqTaQyd
+ JztI8QAPZQbL92rOA00tYIngzgDRS04KcUrIeHOZQRvg56xv3g+l
+X-Proofpoint-GUID: P6U8R-XCFJ1lXc7chfzvJNioFMgTYBPS
+Received-SPF: pass client-ip=205.220.165.32;
+ envelope-from=dongli.zhang@oracle.com; helo=mx0a-00069f02.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,88 +225,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is the corresponding outgoing fix for the same problem mentioned in
-the previous patch.
 
-The idea is simple: either migration to an old QEMU or when TLS is enabled,
-we rely on correct ordering of channels to make it work: first main, then
-multifd, finally preempt.
 
-This patch re-orders multifd and postcopy preempt channel on outgoing side,
-but only for the old machine types where preempt_pre_7_2 set, to make it
-follow the right orders to create the channels.
+On Tue, Oct 6, 2026 1:41:05AM -0700, Sandipan Das wrote:
+> On 01-10-2026 16: 42, Sandipan Das wrote: > On 01-10-2026 16: 35, Michael
+> Tokarev wrote: >> On 10/1/26 13: 43, Sandipan Das wrote: >>> On 01-10-2026 15: 
+> 30, Michael Tokarev wrote: >>>> On 10/1/26 11: 54, Sandipan Das
+> 
+> On 01-10-2026 16:42, Sandipan Das wrote:
+>> On 01-10-2026 16:35, Michael Tokarev wrote:
+>>> On 10/1/26 13:43, Sandipan Das wrote:
+>>>> On 01-10-2026 15:30, Michael Tokarev wrote:
+>>>>> On 10/1/26 11:54, Sandipan Das wrote:
+>>>>>> On 01-10-2026 14:02, Michael Tokarev wrote:
+>>>>> ...
+>>>>>
+>>>>>>> When booting windows11 VM with -cpu EPYC-Rome-v4 -enable-kvm, the
+>>>>>>> guest enters tight CPU loop while displaying a boot screen, before
+>>>>>>> it starts showing up the rotating circle (which shows boot progress).
+>>>>>
+>>>>>
+>>>>>> What happens if you use "-cpu EPYC-Rome-v4,+pmu"?
+>>>>>
+>>>>> With that, it boots fine, just like before this patch.
+>>>>> I checked current master too - same, +pmu fixes it.
+>>>>>
+>>>> A guest OS cannot expect a functioning PMU if the hypervisor has disabled
+>>>> it. Linux runs a basic sanity test to determine this. See:
+>>>> https://urldefense.com/v3/__https://github.com/torvalds/linux/blob/master/arch/
+> x86/events/core.c*L268__;Iw!!ACWV5N9M2RV99hQ!
+> PdJ7r8w0UUuD5iOlCxu7931wevMkDprX9yCV5mkfktbFkpOobtIWrkMt0Gmb9Ztnj3iZHwTK4UQHh85raOPEmgo$ <https://urldefense.com/v3/__https://github.com/torvalds/linux/blob/master/arch/x86/events/core.c*L268__;Iw!!ACWV5N9M2RV99hQ!PdJ7r8w0UUuD5iOlCxu7931wevMkDprX9yCV5mkfktbFkpOobtIWrkMt0Gmb9Ztnj3iZHwTK4UQHh85raOPEmgo$>
+>>>
+>>> So.. what do we do with all this?  :)
+>>>
+>>> I kinda see the intention of the original change, but it results in
+>>> non-bootable systems (linux too, as I think you demonstrate above).
+>>>
+>> 
+>> Because of the sanity test, Linux will boot but not register the "cpu" PMU.
+>> Perhaps others should also run a similar sanity test on PMU hardware rather
+>> than making assumptions and failing to boot.
+> 
+> After looking at kvm_msr and kvm_cpuid traces, I see that Windows is indeed
+> getting #GPs upon accessing MSRs 0xc0010200 and 0xc0010201 but it is not at
+> fault here since it expects these MSRs to be available as guest CPUID
+> 0x80000001[ECX].PerfCtrExtCore is set. This feature bit should have been
+> cleared by QEMU when "pmu=off".
+> 
+> It boots up when "pmu=off" is combined with "perfctr-core=off" and
+> "perfmon-v2=off". The missing pieces here are the following:
+> 
+> https://lore.kernel.org/qemu-devel/20251111061532.36702-2-dongli.zhang@oracle.com/
+> https://lore.kernel.org/qemu-devel/20251111061532.36702-3-dongli.zhang@oracle.com/
+> 
+> Dongli, Zhao,
+> 
+> I see a discussion about compat array at
+> https://lore.kernel.org/qemu-devel/aUEXkDDOba+oZ4v+@intel.com/
+> 
+> Is this ready for the two patches above to be pulled in?
+> 
 
-Keep the resume path alone because the resume path never involve multifd
-channels, even if multifd is enabled.  For that, fun fact: when multifd is
-enabled with postcopy preempt, network interruption will break all multifd
-channels, but they're never re-connected, until they got recycled at the
-end of postcopy migration.  OTOH, multifd_recv_all_channels_created()
-reports true even after postcopy network down, as multifd_recv_state->count
-is never decremented.
+Thanks Sandipan for analyzing the issue!
 
-NOTE: this will move the preempt channel connection no matter multifd is
-enabled or not.  It should fix multifd's case, but should have zero impact
-on when multifd is not enabled.
+Hi Zhao,
 
-Fixes: e27418861288 ("migration: enable multifd and postcopy together")
-Signed-off-by: Peter Xu <peterx@redhat.com>
----
- migration/migration.c | 33 ++++++++++++++++++++++++---------
- 1 file changed, 24 insertions(+), 9 deletions(-)
+I noticed that the machine compat arrays are now available. Would you be able to
+send updated versions of patches 1 and 2 with the compatibility property you
+suggested?
 
-diff --git a/migration/migration.c b/migration/migration.c
-index b140fb6950..53cb6d3821 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -3729,6 +3729,21 @@ static void *migration_thread(void *opaque)
-         goto out;
-     }
- 
-+    /*
-+     * Only for old 7.1/7.2 machine types (preempt mode supported since
-+     * 7.1).  Connect the preempt channel only after multifd channels,
-+     * because some QEMU versions (v10.1 to v11.1) will assume the order of
-+     * channels to be: (1) main, then (2) multifd channels, then (3)
-+     * preempt channel.  IOW, (3) must be after (2).
-+     *
-+     * multifd_send_setup() makes sure all multifd channels be connected
-+     * first, then initiate preempt channel here guarantees the ordering to
-+     * those QEMU binaries.
-+     */
-+    if (migrate_postcopy_preempt() && s->preempt_pre_7_2) {
-+        postcopy_preempt_setup(s);
-+    }
-+
-     bql_lock();
-     qemu_savevm_state_header(s->to_dst_file);
-     bql_unlock();
-@@ -4009,16 +4024,16 @@ void migration_start_outgoing(MigrationState *s)
-         open_return_path_on_source(s);
-     }
- 
--    /*
--     * This needs to be done before resuming a postcopy.  Note: for newer
--     * QEMUs we will delay the channel creation until postcopy_start(), to
--     * avoid disorder of channel creations.
--     */
--    if (migrate_postcopy_preempt() && s->preempt_pre_7_2) {
--        postcopy_preempt_setup(s);
--    }
--
-     if (resume) {
-+        /*
-+         * This needs to be done before resuming a postcopy.  Note: for newer
-+         * QEMUs we will delay the channel creation until postcopy_start(), to
-+         * avoid disorder of channel creations.
-+         */
-+        if (migrate_postcopy_preempt() && s->preempt_pre_7_2) {
-+            postcopy_preempt_setup(s);
-+        }
-+
-         /* Wakeup the main migration thread to do the recovery */
-         migrate_set_state(&s->state, MIGRATION_STATUS_POSTCOPY_RECOVER_SETUP,
-                           MIGRATION_STATUS_POSTCOPY_RECOVER);
--- 
-2.55.0
+Thank you very much!
 
+Dongli Zhang
 
