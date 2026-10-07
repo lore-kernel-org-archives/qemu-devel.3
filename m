@@ -4,54 +4,141 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C03FDCA5FF1
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 09:27:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E8C2CA5FF1
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 09:27:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xENbJ-000897-V9; Wed, 07 Oct 2026 05:06:14 -0400
+	id 1xENsf-0004TE-4N; Wed, 07 Oct 2026 05:24:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <509753f0ac2fb55607a55df7ec761ffaab15b312@kylie.crudebyte.com>)
- id 1xELJk-0002Lf-Su
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 02:40:16 -0400
-Received: from kylie.crudebyte.com ([5.189.157.229])
+ (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
+ id 1xENC5-0001Dm-Nt
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 04:40:23 -0400
+Received: from mail-westeuropeazlp170100001.outbound.protection.outlook.com
+ ([2a01:111:f403:c201::1] helo=AM0PR83CU005.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <509753f0ac2fb55607a55df7ec761ffaab15b312@kylie.crudebyte.com>)
- id 1xELJX-0004C2-M9
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 02:39:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=crudebyte.com; s=kylie; h=Cc:To:Subject:Date:From:References:In-Reply-To:
- Message-ID:Content-Type:Content-Transfer-Encoding:MIME-Version:Content-ID:
- Content-Description; bh=T5ANrWR5XgQlb4kxxSYmPS4w/awiAnPKvA+hJXMhxXE=; b=OZJnF
- LPRK4Qa4C1kN0y4B/2zJyNIKMugTSulcn1qFuplb6nh8EHKanD6SdvSAIsJUcE2cloaikpM5XxHMt
- 4AIuodgsma3rVpleTDe9e8PH6RX18Rq3xcy0xx3o2ax6SF8QQQ+A67C3m+H5yioePHyGvW3m3Vdu3
- XrIP7+/32X7OcG5PDY2ksvGRuue1WNUpQjKBLroC99sc8kKG7wOT54Y8FQKAEE/vsghs5Py6ZQs7K
- a0rXXk5MbBodFfOJwGPcgEGqG3hMc0JoffL2weNj/b9u0yOCuPjlkXG45m+45Nxldn9xgJY5BQv66
- hr7Dzfa4pyoXe70QIFOXf1tW8RFThZARAm4Ng4/hfGU2d1qcemMl4rJAHncEg+rqwIWGPIzTp0zwj
- 2j5aS8Qp2viW8tbhLz99wuE7TLbtEanhd1SxxCKc1KG1VHWxOHxKmUzuS/seYamBZqKExEEyRBSI2
- 9FAmYeKi3erZw+TMyA/WepDuO8OIKlceWps6E8WxI4JgZDid6gRmw/T4fW6mYT+VISLwS6p79Pjab
- aMzsfbmXb+Wzw3G1nf8ctcLT3uQ/lrrwYB3TnoZNQNUbymMQsmVNjtnOqmiYByBPyBLVa3ljnSoXV
- +dBRnQjuv4F2byADEsvuFKCDnCek4sPTWgN9PlKfpKzg2uap4RoeZGQ4ANjL4c=;
-Message-ID: <509753f0ac2fb55607a55df7ec761ffaab15b312.1791291812.git.qemu_oss@crudebyte.com>
-In-Reply-To: <cover.1791291812.git.qemu_oss@crudebyte.com>
-References: <cover.1791291812.git.qemu_oss@crudebyte.com>
-From: Christian Schoenebeck <qemu_oss@crudebyte.com>
-Date: Sat, 3 Oct 2026 19:50:21 +0200
-Subject: [PATCH 4/9] tests/9p-client: add Tstat / Rstat test client functions
+ (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
+ id 1xENC2-0006jK-Ts
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 04:40:08 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Q2LKftoE9/ILUQgyGDVtmc6uOaLOCRHyFfGhyDNXyBFL+p9iuZx7/a6+NEYk6FJ4Y5Cqn/vKrjMlo6Fe+UiSf0LLOHnF6GC5k14y7f/ESfR2F3eoCNjLkHjGZDi9joltK/lPi4zol1UGWClKLRzTtzTkAjpN8bq1f4ygghucnI1TPPlNPfZfhrvoxSUEDRWVpb5AAeCmlJiMN7sryvkMvloFNcolVe/OI6pEUnYZyJlVxg1i+qf0Ev5NbLEI2XywMa+K2ooO0P/PemZUGum/1nrhz7CL9RJJ7Y/1+TSZqtt7SB43DeZW59i521nolK9NW/mKrmp3a3dLb98ndEzVSg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=iXgQR79hkZDDfXuHJA0otbnU8q3wx4xJTCQyzRPPke0=;
+ b=HpTTzbjz14S2q4Zxyrv/rfJApaY2mzn62v4XqJXm3gMv1CLDNtZ7VzshakOUgwBhL9DfQaYC1XY8KYsQ/3mNIiVeIwVffZZ0BET7kPGDPgLwZgqGtoD4F6ufwss2DNxdLtt3Z08LYgwGG/5EPWJhizq8SjTLkAAO9S7FMLt2TmaApHNOT1lJXiwrHvvz9qCVIXqUoMfyUygYfcxdNhw5gLdYpFUMU0lux0pzB6oAWKFXz8Ns+VqkBM6cHuG3viLzInI8G8D19iPa56/VK+QHsZYIPQ5qdxu14vZ9toYMAccsQ/2raJPRR6veOXScbeyGnchxIIKSaTh3ki70+JNljQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
+ header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=iXgQR79hkZDDfXuHJA0otbnU8q3wx4xJTCQyzRPPke0=;
+ b=Uk2QSF8rPDGOwK0ryz3Ej/XxSggwAreNkSL0NEBcpSBtT+WH2QF2g/re/9us1gFd798i76PYs8kXor5wuUnv8LUCV6zxJe2AhpD7ymeKXoVj3mKDDuP4zetPgRvatV65negq0lbBw8PvlP3gRVpfYQziYI7LsUUeL5n+DXo4+oMHnxecW0orUuyFZ7T3EpDvIAnwW5jzBi2Ovm/ip/42+lHvf9wfsGc9vIdDWmMrBOJzcgnzskA4s1OKZN9Bq5jHrxVePlxXFfkl6Hk49dlY83gXOQgeKDiIxo8+hu9/B5X+r9NtBbIIEhjsUt/DEzxN1P5eOVikkKDzO4Wi0CzVwQ==
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=virtuozzo.com;
+Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
+ (2603:10a6:800:20a::12) by AM9PR08MB6292.eurprd08.prod.outlook.com
+ (2603:10a6:20b:2d8::21) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.496.15; Wed, 7 Oct
+ 2026 08:39:59 +0000
+Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
+ ([fe80::4e37:b189:ddcd:3dd8]) by VI0PR08MB10656.eurprd08.prod.outlook.com
+ ([fe80::4e37:b189:ddcd:3dd8%7]) with mapi id 15.21.0496.010; Wed, 7 Oct 2026
+ 08:39:59 +0000
+From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+Date: Wed, 07 Oct 2026 11:39:56 +0300
+Subject: [PATCH v14 03/22] migration: forbid snapshots in CPR migration modes
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20261007-up-vsock-vhost-v5-v14-3-e16de9962df0@virtuozzo.com>
+References: <20261007-up-vsock-vhost-v5-v14-0-e16de9962df0@virtuozzo.com>
+In-Reply-To: <20261007-up-vsock-vhost-v5-v14-0-e16de9962df0@virtuozzo.com>
 To: qemu-devel@nongnu.org
-Cc: Greg Kurz <groug@kaod.org>
-Received-SPF: pass client-ip=5.189.157.229;
- envelope-from=509753f0ac2fb55607a55df7ec761ffaab15b312@kylie.crudebyte.com;
- helo=kylie.crudebyte.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_48_96=1,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Cc: dwmw2@infradead.org, mst@redhat.com, vsementsov@yandex-team.ru, 
+ farosas@suse.de, peterx@redhat.com, dongli.zhang@oracle.com, den@openvz.org, 
+ andrey.drobyshev@virtuozzo.com, mark.kanda@oracle.com, sgarzare@redhat.com, 
+ maciej.szmigiero@oracle.com, odaki@rsg.ci.i.u-tokyo.ac.jp, 
+ philmd@oss.qualcomm.com, bchaney@akamai.com, clg@redhat.com
+X-Mailer: b4 0.16.0
+X-ClientProxiedBy: VI6PEPF00000236.AUTP296.PROD.OUTLOOK.COM
+ (2603:10a6:808:1::8ee) To VI0PR08MB10656.eurprd08.prod.outlook.com
+ (2603:10a6:800:20a::12)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: VI0PR08MB10656:EE_|AM9PR08MB6292:EE_
+X-MS-Office365-Filtering-Correlation-Id: cf794a87-04ba-4cd8-5d08-08df244e9278
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|376014|366016|7416014|52116014|1800799024|23010399003|38350700014|5023799004|56012099006|22082099003|10067099003|18002099003|3023799007;
+X-Microsoft-Antispam-Message-Info: hHR4wOw4jgzxZiBq9GebfIRjRwLhgMqQjCMeLUQmMyKwmOs6hdGL6VwYgojwTHg0/wByH/67yJPYScECxtMXo9Zwhup27ZP+mIUEXfHNj5FCyO+y/z4bfj0EF1+fHTJ4FgyOqpnlekizQivd1MzQcgdznke++ITdIG3yPrL05dP2x4n5c6eDEa1wz4tBelSucQ4VVAJcO/PNBmLKjP1+NyQpH+Yz2LyV3mwc/sHloatMdm6vS7rYzeuRF/toomx5A3nn/ZMgrE/a8wBSiZyyGTNqTsfGlaAVXa/ynMTjsyBH1HS5DsFZhFYF9xr2C0Co6Qi817VZk6GHrk1eP6evVHHMtySHjot/vv26xw09OWJt2r8shWd7UqqCHJJgJKxZlBVZFURiX4b9kJ5cYTYukH1LZGJieQmgWuP+JRRnOgc5xYQ8W8QA0jNJTJ7ND91CzziICzIM35+fWuExC36pM1IkJyGisx+B7SFMZOETC4yTUGTinAmXXUS/PzJQdgNOODH3udbwTUGonHszQlKWFX7yakN3zj+tlgjLh0Iq7/5Le55jCna72OffmEfTc6GfKbvKHVCzoy2pDfvcxXQFs0DT897eivuX1Qp5Yk/LM2wOspg7Gh3eIDDm6X6h/dhqZEYCXEiMDjLnp3wFDYvZg+iv1XpImrtbfjzUfqW7IMvbUBnTKJKQVCmA6SRtPe0uMqB7VRCs7YYFNOFNuzBb8MAbxdqN7G5qKtZqcRmLbjg=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:VI0PR08MB10656.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(366016)(7416014)(52116014)(1800799024)(23010399003)(38350700014)(5023799004)(56012099006)(22082099003)(10067099003)(18002099003)(3023799007);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?Q1lhcXBrY25ldUJ1WXY0SWkwZ25OZnZ0QTdmWWg3MXRWdHAyVzNLM21OM012?=
+ =?utf-8?B?WkdnNW1EWFpTajlMenZaQmVZN1JBdUp0WlVUd1pyVDhKOUFNS25VZlZwSThk?=
+ =?utf-8?B?ZVAvUWwzSzJocUxtdkp0LzE2S0NMOXIwVVJ1M2VjWHBINUJONU9ReDNHVTJY?=
+ =?utf-8?B?VElwczZLNVJBaDhkTEpHT2h1V0EvR2p3SEEyS0xyZFR3QllIUnFLek81V0l3?=
+ =?utf-8?B?WnRpNTlFaFJBamwzNmhwOTFUSlJBaFBQa2s4bEV0QW5hM1JwM0NjVExvcHN4?=
+ =?utf-8?B?akE1dHZCd3FkWlIvRzBwZ0E5RDNGdXNlb0o4Y0lKaUFlb1ZHaitTSVhuNVM3?=
+ =?utf-8?B?MmFiOUJWZ245b3VXTm9HT2ZCRDNyWUhOWGZQVTZTb2ovbElpR1RMZjl2TnIx?=
+ =?utf-8?B?SmFOQVJ6M0p0dzBxTUpUNHFsTUdVQ29CelV3bEQveFFuRGFETVBUZmtuMHlr?=
+ =?utf-8?B?N3pxZFI3TUxoU1d4UnJMUHhWeXVWTmxCZWtOQ1UwZ2krWTNCemVoRGRzRGkr?=
+ =?utf-8?B?KzV2cDNPcU55d3RLNExFdWliRkwyb1ZHNEordURxenhjalFXYVNIdEZkaVha?=
+ =?utf-8?B?bDVTL0JOQ0NGRzRhV3c0OGJJMFFUNFB1ck1VbEYxTG5uMk1iZ2lxWWhhWGta?=
+ =?utf-8?B?UkNkbVVsNUtBZ09xNC9BS0VrMVNpM2RqVDJIZ1FINGFRUGxnZlN3NHlqbXJ0?=
+ =?utf-8?B?MWNWbjBhbXdnalMvenFXcXgyUGx1K1pYeUM1aFhPdHc1eWlMME8zS05wNjE0?=
+ =?utf-8?B?SDBmMmFhaDFHMEZhWDRJcVpWbURJdEpHa01CenBnR2ROUnoycGlpTFhKZXBy?=
+ =?utf-8?B?TUJ1TzNWaFB6OXJ0NjdrbXV3dldSOEhwUHBROHF5emkySy9GMGVwdC9LT0t5?=
+ =?utf-8?B?bFRoajdac25ucDJ4VURobkhDYUh0SklWRTJ4MU9zQytkQUxwMzhmU3Bzbll3?=
+ =?utf-8?B?eFgvdEhXYVlaVDQ5QVBtbkVLOVBjRExDUldUbU9pQXhydGdaS2xiWVFJUDFh?=
+ =?utf-8?B?U05PS0VpemgyZWQ1bXNvVklYQVhudVVRL2xVazhKczBEUWNJRnJydDdIZnJ5?=
+ =?utf-8?B?anBaWVQzMTVpbldQZUo4Z1hQU0FpZ25KY2NIbklIV08ycTMwam1lYVRuZGxa?=
+ =?utf-8?B?K05mU2k4dUxjWTVWaURrdHdsL2RvQXBOUm9tdjFMTDYzVXJJTHNmUEQ2djI5?=
+ =?utf-8?B?Y0NqaFdwT1h4V3phdUJEclBuczhQcDB3TzV4VU5yUFRUcFVPcEpGR3JmcDhw?=
+ =?utf-8?B?N2NGbWdEOGE2SVJEUzMzSWhCdG80Q1RjTldzMmU3RVVURjMvcStIZXlsVmh6?=
+ =?utf-8?B?Qll2a3FtbkxxUWdJVnlSUWVLcUNnTytGNWlkT0ZoTjFGYkNjL3BwbmZGalAw?=
+ =?utf-8?B?TXhoeEpWRHhlL0FHMXJNQVNlbkxRM2lYa0JhTlZFQ1EzZG9nc0lIcDNHU2Rt?=
+ =?utf-8?B?N2NCZXdaMmlmRTQ4elNkUG9MMXFXbUlOamFzMEdpTW03RVNEWkdKREtOY09t?=
+ =?utf-8?B?SmhsL2I3aHBhRi93MS9sMkZrVE9keWZXM0R5bkFQeG11MTAzT0gyYldUSEJN?=
+ =?utf-8?B?WmlRWFBNVXlKRGJIdlZkSCtpSGJ4T2RzelZlakc3UzVSb2xhUlJaczZ4YVhw?=
+ =?utf-8?B?Skk3Y3lVeEdvRTc2V1k0THR5dnZKanV0bnoxVklablF3ZUZoS0VLVE5JTHNo?=
+ =?utf-8?B?YUxIWmZBeGZRN3FITjZUWDVXMmZlU25HZjdMRGZWVlBSNFI3eGFMNzcxZFJz?=
+ =?utf-8?B?MWppME1VRDFabVBMYVprdzhjWFc3ZXJCVEswMGlaY2dYRDVFa0FNMUM0VDFj?=
+ =?utf-8?B?MFNHc1ZZa3pqYmVhZlNWSWs0ZnhVZFQxV3kremI2Z1BlZWVyQ2lkZkxvV01w?=
+ =?utf-8?B?V0hXeTFuVGtqbFdBU1FNaWJheWEvV25XZnRKU0RqbC9Wa21zb1NXMHV0Uk5F?=
+ =?utf-8?B?ZEM5b01vWWhDbW5EMmVvT3ZNUUw3MlhUdGNMZE1iT0JJZThHUDhlTWFhcUF6?=
+ =?utf-8?B?YS9YbXZ1ZXp0UUd5SjBBLzliUGtyMUYzZGpYdzZmQWdQalhZTUlKVTNXTEVq?=
+ =?utf-8?B?d0xPMEhZZXdnYWpkcXFkVnpNdW01YmJ1Zmdha1BLcW5UemxiU2pvbHRTQ3py?=
+ =?utf-8?B?VGVSWjhtclFkVzMvWmQzT0dKdnNyQ2J4Sk9QQURjU2k1N01NTlQybmUyV3Za?=
+ =?utf-8?B?YXpPWmQ2LzJVRVFlb20zN0UyNUtVMDdUTHBGbHJxWU0wbExPY1ViWEdKVWN3?=
+ =?utf-8?B?eXFoWjUxc1dpcityUzluT00wdHgyNE1XbEVOK0JCWW85b2hsWmQxcnY0ZzNT?=
+ =?utf-8?B?UFlkOFVDQ1R0aWRBTG1CMS9BUFYyclBKNUR6SzNxUnRHT1gwVkVOVENtaERs?=
+ =?utf-8?Q?2Ik6EBCsJ8sYIx2w=3D?=
+X-OriginatorOrg: virtuozzo.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: cf794a87-04ba-4cd8-5d08-08df244e9278
+X-MS-Exchange-CrossTenant-AuthSource: VI0PR08MB10656.eurprd08.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Oct 2026 08:39:59.4392 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: vSTONijEeG8hbBdGFSJHfwjYFSqOkXZNPgbrKvLE8uHiT2zTJXhUDiproFgxuNg8/w3h4Iy55NqI5CxszghkY/v69uVUNLF6VcaNnMyUqCo=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM9PR08MB6292
+Received-SPF: pass client-ip=2a01:111:f403:c201::1;
+ envelope-from=andrey.drobyshev@virtuozzo.com;
+ helo=AM0PR83CU005.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -67,184 +154,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add v9fs_tstat() and v9fs_rstat() functions to the 9p test client.
+The savevm/loadvm operation doesn't make any sense in any of the CPR
+modes.  Saving VM state implies saving its RAM entirely, while the whole
+point of CPR is avoiding that: in cpr-transfer and cpr-exec modes RAM is
+preserved in place and never put into the migration stream (see
+migrate_ram_is_ignored() in migration/ram.c).  As a result, a snapshot
+taken with such a mode set has no RAM in it, and loading a snapshot with
+such a mode set fails in the RAM loader.
 
-Since this is a request type that exists both in legacy 9p2000.u
-and modern 9p2000.L protocol version, error responses types might
-differ (Rerror vs. Rlerror). Therefore v9fs_tstat() is using an
-error type tolerant helper function v9fs_req_check_err() for
-processing expected errors with this request type.
+Currently nothing stops these operations from firing with a CPR mode
+still set, e.g. after an earlier CPR attempt.  Reject them early in
+migrate_can_snapshot(), which guards 'savevm'/'loadvm' HMP commands as
+well as 'snapshot-save'/'snapshot-load' QMP commands.
 
-Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+Reviewed-by: Peter Xu <peterx@redhat.com>
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 ---
- tests/qtest/libqos/virtio-9p-client.c | 79 +++++++++++++++++++++++++++
- tests/qtest/libqos/virtio-9p-client.h | 45 +++++++++++++++
- 2 files changed, 124 insertions(+)
+ migration/options.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/tests/qtest/libqos/virtio-9p-client.c b/tests/qtest/libqos/virtio-9p-client.c
-index 005ae53a3f..4a3fc1511b 100644
---- a/tests/qtest/libqos/virtio-9p-client.c
-+++ b/tests/qtest/libqos/virtio-9p-client.c
-@@ -306,6 +306,33 @@ void v9fs_rlerror(P9Req *req, uint32_t *err)
-     v9fs_req_free(req);
- }
- 
-+/*
-+ * Asserts for caller that the request's response returned with the passed,
-+ * expected error code (in a protocol version agnostic manner).
-+ */
-+static void v9fs_req_check_err(P9Req *req, uint32_t expect_err)
-+{
-+    P9Hdr hdr;
-+    uint32_t err;
-+
-+    /* peek the response header */
-+    v9fs_memread(req, &hdr, sizeof(hdr));
-+    /* reset offset after peek, so v9fs_rlerror() etc. read correctly */
-+    req->r_off = 0;
-+
-+    if (hdr.id == P9_RLERROR) {
-+        v9fs_rlerror(req, &err);
-+    } else if (hdr.id == P9_RERROR) {
-+        v9fs_rerror(req, &err);
-+    } else {
-+        g_printerr("Received response %d (%s) instead of an error response\n",
-+                   hdr.id, rmessage_name(hdr.id));
-+        v9fs_req_free(req);
-+        g_assert_not_reached();
-+    }
-+    g_assert_cmpint(err, ==, expect_err);
-+}
-+
- /* size[4] Tversion tag[2] msize[4] version[s] */
- TVersionRes v9fs_tversion(TVersionOpt opt)
+diff --git a/migration/options.c b/migration/options.c
+index 46d040fc3f2..92eda90114e 100644
+--- a/migration/options.c
++++ b/migration/options.c
+@@ -560,8 +560,15 @@ static bool migrate_incoming_started(void)
+ bool migrate_can_snapshot(Error **errp)
  {
-@@ -1286,3 +1313,55 @@ void v9fs_rxattrwalk(P9Req *req, uint64_t *size)
-     }
-     v9fs_req_free(req);
- }
-+
-+/* size[4] Tstat tag[2] fid[4] */
-+TStatRes v9fs_tstat(TStatOpt opt)
-+{
-+    P9Req *req;
-+
-+    g_assert(opt.client);
-+    /* expecting either Rstat or an error response, but obviously not both */
-+    g_assert(!opt.expectErr || !opt.rstat.stat);
-+
-+    req = v9fs_req_init(opt.client, 4, P9_TSTAT, opt.tag);
-+    v9fs_uint32_write(req, opt.fid);
-+    v9fs_req_send(req);
-+
-+    if (!opt.requestOnly) {
-+        v9fs_req_wait_for_reply(req, NULL);
-+        if (opt.expectErr) {
-+            v9fs_req_check_err(req, opt.expectErr);
-+        } else {
-+            v9fs_rstat(req, opt.rstat.stat);
-+        }
-+        req = NULL; /* request was freed */
+     MigrationState *s = migrate_get_current();
++    MigMode mode = migrate_mode();
+     int i;
+ 
++    if (mode != MIG_MODE_NORMAL) {
++        error_setg(errp, "Snapshots are not compatible with migration mode %s",
++                   MigMode_str(mode));
++        return false;
 +    }
 +
-+    return (TStatRes) { .req = req };
-+}
-+
-+/* size[4] Rstat tag[2] stat[n] */
-+void v9fs_rstat(P9Req *req, v9fs_stat *stat)
-+{
-+    v9fs_req_recv(req, P9_RSTAT);
-+
-+    v9fs_memskip(req, 2); /* protocol quirk: size appears twice */
-+    v9fs_uint16_read(req, &stat->size);
-+    v9fs_uint16_read(req, &stat->type);
-+    v9fs_uint32_read(req, &stat->dev);
-+    v9fs_memread(req, &stat->qid, 13);
-+    v9fs_uint32_read(req, &stat->mode);
-+    v9fs_uint32_read(req, &stat->atime);
-+    v9fs_uint32_read(req, &stat->mtime);
-+    v9fs_uint64_read(req, &stat->length);
-+    v9fs_string_read(req, NULL, &stat->name);
-+    v9fs_string_read(req, NULL, &stat->uid);
-+    v9fs_string_read(req, NULL, &stat->gid);
-+    v9fs_string_read(req, NULL, &stat->muid);
-+    v9fs_string_read(req, NULL, &stat->extension);
-+    v9fs_uint32_read(req, &stat->n_uid);
-+    v9fs_uint32_read(req, &stat->n_gid);
-+    v9fs_uint32_read(req, &stat->n_muid);
-+
-+    v9fs_req_free(req);
-+}
-diff --git a/tests/qtest/libqos/virtio-9p-client.h b/tests/qtest/libqos/virtio-9p-client.h
-index 5a00a0870c..f604cc0ee5 100644
---- a/tests/qtest/libqos/virtio-9p-client.h
-+++ b/tests/qtest/libqos/virtio-9p-client.h
-@@ -63,6 +63,25 @@ typedef struct v9fs_attr {
-     uint64_t data_version;
- } v9fs_attr;
+     for (i = 0; i < check_caps_savevm.size; i++) {
+         int incomp_cap = check_caps_savevm.caps[i];
  
-+typedef struct v9fs_stat {
-+    uint16_t size;
-+    uint16_t type;
-+    uint32_t dev;
-+    v9fs_qid qid;
-+    uint32_t mode;
-+    uint32_t atime;
-+    uint32_t mtime;
-+    uint64_t length;
-+    char *name;
-+    char *uid;
-+    char *gid;
-+    char *muid;
-+    char *extension;
-+    uint32_t n_uid;
-+    uint32_t n_gid;
-+    uint32_t n_muid;
-+} v9fs_stat;
-+
- #define P9_GETATTR_BASIC    0x000007ffULL /* Mask for fields up to BLOCKS */
- #define P9_GETATTR_ALL      0x00003fffULL /* Mask for ALL fields */
- 
-@@ -579,6 +598,30 @@ typedef struct TXattrWalkRes {
-     uint64_t size;
- } TXattrWalkRes;
- 
-+/* options for 'Tstat' 9p request */
-+typedef struct TStatOpt {
-+    /* 9P client being used (mandatory) */
-+    QVirtio9P *client;
-+    /* user supplied tag number being returned with response (optional) */
-+    uint16_t tag;
-+    /* file ID to get the Rstat for (required) */
-+    uint32_t fid;
-+    /* data being received from 9p server as 'Rstat' response (optional) */
-+    struct {
-+        v9fs_stat *stat;
-+    } rstat;
-+    /* only send Tstat request but not wait for a reply? (optional) */
-+    bool requestOnly;
-+    /* do we expect an error response, if yes which error code? (optional) */
-+    uint32_t expectErr;
-+} TStatOpt;
-+
-+/* result of 'Tstat' 9p request */
-+typedef struct TStatRes {
-+    /* if requestOnly was set: request object for further processing */
-+    P9Req *req;
-+} TStatRes;
-+
- void v9fs_set_allocator(QGuestAllocator *t_alloc);
- void v9fs_memwrite(P9Req *req, const void *addr, size_t len);
- void v9fs_memskip(P9Req *req, size_t len);
-@@ -639,5 +682,7 @@ TXattrCreateRes v9fs_txattrcreate(TXattrCreateOpt opt);
- void v9fs_rxattrcreate(P9Req *req);
- TXattrWalkRes v9fs_txattrwalk(TXattrWalkOpt opt);
- void v9fs_rxattrwalk(P9Req *req, uint64_t *size);
-+TStatRes v9fs_tstat(TStatOpt opt);
-+void v9fs_rstat(P9Req *req, v9fs_stat *stat);
- 
- #endif
+
 -- 
-2.47.3
+2.47.1
 
 
