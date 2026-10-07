@@ -4,150 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B7FECA6004
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 13:58:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E141CA5FFC
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 13:58:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xES9F-0000YL-4E; Wed, 07 Oct 2026 09:57:44 -0400
+	id 1xES9V-0000g8-SN; Wed, 07 Oct 2026 09:57:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xES6L-0007zq-Hv
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 09:54:40 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
+ id 1xERzS-0005zV-03
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 09:47:34 -0400
+Received: from mail-southcentralusazlp170130001.outbound.protection.outlook.com
+ ([2a01:111:f403:c10c::1] helo=SA9PR02CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xES6I-0004iS-FQ
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 09:54:32 -0400
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 697BVEGY609967
- for <qemu-devel@nongnu.org>; Wed, 7 Oct 2026 13:54:26 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- Tui9mTR8NgPOLvD11h9XTRIV1yLOkV7DqpwpfF8ODiE=; b=ckK9hYqIp4hkN81S
- BhyW+tkd6erHrwBHiG3gq86822uYfQrLRJs+rSLU4iCgLwMm/RVOBkQssxHXYQg4
- 5sIva76avqB2cwPWoX7Y4NbrjUGCPDVGV0Kc6yfep/Y2zLYKQDeELmTJ2yhkY1xA
- YewQC5HVyVt+v4KaqTdn7ZToya9dC0/YNpWQSaUTicBCHhEgcuRugktSLFSUOpuJ
- JydciyRQkq6ACj021czxpOi8vIwknXujt9JkLuESiytaQMLALiOLG6DBQbh+bjJi
- XsyWhzfX4iWSTjwt3KvXM6ZhaJDfbNFIdEi2Oj6IWFCS5NqF/afKRNEoxIvHzG5G
- CDqkpw==
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h5fc59scq-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 07 Oct 2026 13:54:26 +0000 (GMT)
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-93cb7f9bb86so797448285a.2
- for <qemu-devel@nongnu.org>; Wed, 07 Oct 2026 06:54:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1791381265; x=1791986065; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=Tui9mTR8NgPOLvD11h9XTRIV1yLOkV7DqpwpfF8ODiE=;
- b=JD49+u/t6tyaxrk9EPg2pswB0rUtWCc8WRXWj3AJ0Zn/3kIeUw2lqfrfmAwdEgn/QC
- HiudT/5L6HleEz5Sk9wLsuxii5Bg40F/bDMPZSx6Dfk2qdOtvmd+/Iu9WOjqHvQFLvee
- JqdbDdEdzqyORiGYE/qWKbMIA1sUjK9S17kw01+r04o2Mi2652K6UBcLabxiknGZH3HB
- Fl0BZ1O2wFrpXrsQIgBgAFALQ/2uXMbAEggmaJHhzCChNAntNFZ2jKDmnB5aDgCaK1LY
- 4OuXqo3feRkFqAre2iSjpisJZQe9hohKp3zLOvtwacNsBolHyX7a6SKj0gfCBAWaxWPL
- LTGw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791381265; x=1791986065;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=Tui9mTR8NgPOLvD11h9XTRIV1yLOkV7DqpwpfF8ODiE=;
- b=utxkujXVTG2pPJkoKU08g4vXDkFxuqyvJwR3V56CcXDcPEAfl+L+7g6seOSt2B6C/4
- //jW+gJiAP0nbD2N9vTchRK7fRiCil6cotTooKQtpYghNrAbOYDnT/DwMR0bNA1kgnPh
- xWu4yMVfe5VdQx/WeNIViIm1Ucdc3azvKDBs7ICcWD0N/E7PNEX1DB+JODQhwclfxAOJ
- fqLrQWocuT+si0KfO3i+NXpbt0lbAHlzk4OGiIb8loWBDOiitG16qoI3i1KOJJgPngni
- Bxa/Dc6DyMc2SX8s0wRP/jnI+7DmbSpPdbCNWHmIJsr5rNr8N8cgLrHbXWCz3lCdNhrT
- Mrmg==
-X-Forwarded-Encrypted: i=1;
- AKwUvBwxoo3L2yT1dZRPD9i9O7r9S6OCx2Q8/beIEsXVNIS8KFS3s+c0iOY9pGHNX1UxapvIL+8RUxch6uNY@nongnu.org
-X-Gm-Message-State: AFuF++nGC63ixGDu05teryIlz9xr4yJUY213bfvZ3/dsEakqr3fsy0gf
- Ko/TZ2ArmIkC0lFSKC8mUF6std6NrCVCjUtum3VYt/7CFRrHtCNgBTuUCF0TL8bymnwNpg98+aw
- Zo31aqmyV35RYb6u5JfhYP2X6qJVZG52JMGYMjK4az2oivkq6TUsvSxNC1Q==
-X-Gm-Gg: AYBFou0dwF/+mhvIMW/pXe98d4TpP8BhOhv3lB1KxhlepjMMp7c794ll/fkiwZPl57O
- DYSG0YaoD9vSzRtp7MSDNZqPxEvzPEoOLljrvoop7z+kyJ6mfjgdp5ULR+eX4+qz4oZc4XjTFMq
- n9L3aKuUkzb/lfzFBGfiLat++ShXfaV0lkFf+Ewfuscr8mjTG4TuudDKoSiqPZ9YV1IWZ8GDkl8
- QkfJkbhreyk5pNL7uJwyeTgyDcI7R1mR8tA3V12J9uFRidmt9yqDozd2qpcWma7plf3Yuz6lJoz
- MXBBBDfiS5+YCQxZKQ4N782kbx2sC7D+HqEOglHdo+rLgTdtHfbODLJ60QT4mqRUHldrxEfhNuA
- KVwC4myWnhGKybPMM6yD9knasxHm72zk0Fg==
-X-Received: by 2002:a05:620a:618e:b0:93e:9808:8d73 with SMTP id
- af79cd13be357-93e9b87f19bmr419572685a.77.1791381265440; 
- Wed, 07 Oct 2026 06:54:25 -0700 (PDT)
-X-Received: by 2002:a05:620a:618e:b0:93e:9808:8d73 with SMTP id
- af79cd13be357-93e9b87f19bmr419567285a.77.1791381264807; 
- Wed, 07 Oct 2026 06:54:24 -0700 (PDT)
-Received: from [192.168.69.210] (pmd666.hd.free.fr. [88.187.86.199])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a1787e7792sm145694405e9.0.2026.10.07.06.54.23
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 07 Oct 2026 06:54:24 -0700 (PDT)
-Message-ID: <2874719a-ca6d-473f-a29f-e40f56016fc9@oss.qualcomm.com>
-Date: Wed, 7 Oct 2026 15:54:23 +0200
+ (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
+ id 1xERzO-0003xG-CD
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 09:47:24 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=H9FVv83/RQUsciOGdHmGYk+yUkeKxVWyLMJFsHGt9kHE8OILWn5o5MRQhzCPBlk8B2WbH7lLOkHb+zYx59dsAt7CLND1s9eYo1CEAC6TSTLHIFhlVbmS8To66FBXWstMyf6QQS4ZZ7s/yiXy5stQbMb1FOTKMznsLm4TRC0XyW3CqFeBwlnVn1C8mwXS6PioJO5Q3mC+D9JSPTHDQFMRhz6/OuNptI2b68CTpLvgu8GmlERejxC/A0FlzIhnME1bDUlGhY3YwIjFbowke0oybIlGIfx291VT/Vd/23VAZ6DjLgASpo0zuF0FbcjgTo/z/MWol2E2XA8SJq0jjQtX+A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=djdy3ap9zZZofMHXTK9YbhJE/+NG1SGUcCOO763Htlc=;
+ b=UYxUOGitiFuiMCTTVBm0DVT3buhDxTjA7tCx1RPeOuV0cUqCcZRZK7y4OyTknE/gG6n/TvRk3VSq+4Q7wpf0czYxkjcQD9u5V5Ga+dmLIrcfmw12aeNMgrTjw2158JNJ/Pvo7hy6vcxf4kvykEw8TkZ6whJkB9dFXTYvAXWjavO12GJocMWRLyfHKNjhJzPbWmgGLmpU49Ayg+Aj1mcE8bf4TwAvcWZlloL+KrCowpJVuRJnbw/QC1v38bVGl3mm8PrLiqdA3eN6JmOvDmgKCNey7b/Hw/JfmWS4zDgg1q3164Mb4N3/jIKXG+DCcd6TXOjcu83o8XOYeDasjsfEeQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=djdy3ap9zZZofMHXTK9YbhJE/+NG1SGUcCOO763Htlc=;
+ b=kitZRLbKcFzSXZ3rb5Ma18t8HQyjZ93WhWpzFXSGO87WwRPGSR1NJX3L0gY4zOdtESlMrHA4NZ4Po+3PuZKyzYxqkpjr1ZqwYhftcy/2zIFBMcVFJa2qWVVsEmqzDOLnTV3LikEozUObsQB8GJTO3c1TXurynUMBUJ0C1uqn4ek=
+Received: from MW4PR04CA0055.namprd04.prod.outlook.com (2603:10b6:303:6a::30)
+ by DS0PR12MB8788.namprd12.prod.outlook.com (2603:10b6:8:14f::11) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.451.24; Wed, 7 Oct
+ 2026 13:47:14 +0000
+Received: from BY1PEPF000264B3.namprd02.prod.outlook.com
+ (2603:10b6:303:6a:cafe::a2) by MW4PR04CA0055.outlook.office365.com
+ (2603:10b6:303:6a::30) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.472.20 via Frontend Transport; Wed, 7
+ Oct 2026 13:47:14 +0000
+X-MS-Exchange-Authentication-Results: mx.microsoft.com 1; spf=pass (sender IP
+ is 165.204.84.17) smtp.mailfrom=amd.com;
+ dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
+Received: from satlexmb07.amd.com (165.204.84.17) by
+ BY1PEPF000264B3.mail.protection.outlook.com (10.167.242.120) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.496.14 via Frontend Transport; Wed, 7 Oct 2026 13:47:13 +0000
+Received: from localhost (10.180.168.240) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.49; Wed, 7 Oct
+ 2026 08:47:12 -0500
+From: Michael Roth <michael.roth@amd.com>
+To: <qemu-devel@nongnu.org>
+CC: <kvm@vger.kernel.org>, <pbonzini@redhat.com>, <berrange@redhat.com>,
+ <armbru@redhat.com>, <pankaj.gupta@amd.com>, <xiaoyao.li@intel.com>,
+ <chao.p.peng@linux.intel.com>, <david@kernel.org>, <ashish.kalra@amd.com>,
+ <ackerleytng@google.com>, <lpieralisi@kernel.org>
+Subject: [PATCH v3 18/19] i386/sev: Add sev-snp-guest parameter to enable
+ in-place conversion
+Date: Wed, 7 Oct 2026 08:41:42 -0500
+Message-ID: <20261007134323.1606088-19-michael.roth@amd.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20261007134323.1606088-1-michael.roth@amd.com>
+References: <20261007134323.1606088-1-michael.roth@amd.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 14/18] target/riscv: Compile pmp.c once
-Content-Language: en-US
-To: luoyonggang@gmail.com
-Cc: Anton Johansson <anjo@rev.ng>, qemu-devel@nongnu.org,
- qemu-riscv@nongnu.org, daniel.barboza@oss.qualcomm.com,
- pierrick.bouvier@oss.qualcomm.com, palmer@dabbelt.com,
- alistair.francis@wdc.com
-References: <20261007-rv-dedup-v2-0-8a2f0f296a7f@rev.ng>
- <20261007-rv-dedup-v2-14-8a2f0f296a7f@rev.ng>
- <17cb7c7c-5f22-4a03-8855-4d1ec91d347a@oss.qualcomm.com>
- <CAE2XoE9eXXKQGZZ0kvmex88+tjch1-+H_-MgB6JEu+4bdPZq8g@mail.gmail.com>
- <9bf8945c-6472-462e-a275-f0b74912d3ed@oss.qualcomm.com>
- <CAE2XoE9QzGda8J9QCQysRL8OoxBrR86Ft426Rf4TXJxnPm+Vsg@mail.gmail.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <CAE2XoE9QzGda8J9QCQysRL8OoxBrR86Ft426Rf4TXJxnPm+Vsg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA3MDA1NSBTYWx0ZWRfXxKXhf7Y0lcH0
- tPyvb1JO+qbnjm2qgySJZzTux/WywPzhHaEeNYzKSVyl9HCu4GIBx4XRlSFPON/uqXWBpDbhgZf
- pXjDHjz5BJ3S95pkLcIHyuEhpjxhnFw=
-X-Proofpoint-GUID: LWC9iN-7V129lQ0tuviqUSNSgLgdTw0n
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA3MDA1NSBTYWx0ZWRfXyZPRI9FOXVFF
- BKoZigEanB3yScjdSi/Rwlb8127JYyCHsUP4lBJPWhHpZxr6DK2dKBD2EVZFHWJN+71N6+YWsWj
- 0eWv54KR714JyhTnQ3PpOK/UwiNOWqRjT4IiKvdU8/XPg8/nb4OGYosSMZuL4JoAAN0tajUS/hG
- xiW3bFny56fSQw4bYqBbv6Q1S/p1XHeEt69xNK1KGyt5brLyZVD08YZtWTDcpK5ib2W2ezQyK3n
- 5qc6IvMbAaRDQhJ4mNxDc85bbxvJvv5CkxmeggBVukHmA2Borp0YsZt0zl1ztP/T8WcUuW7nA6H
- Yw9VvQJsV4+FjrMWkxaRHROjVYS/rXeX1rpwcYHcZtnpNCU9r8CgHEvYFVjQsKtgeSIf/iL0RMk
- +c2hmT683y/vJ4x9OUwAnOoz6GpgBAyced5X2yvFmMB53UYfwOhWafumR2/KzHwov7VzJfvQF5B
- Um+FLqp5nF3jGPVpM3Q==
-X-Proofpoint-ORIG-GUID: LWC9iN-7V129lQ0tuviqUSNSgLgdTw0n
-X-Authority-Analysis: v=2.4 cv=a6+lZkSF c=1 sm=1 tr=0 ts=6ac64f12 cx=c_pps
- a=HLyN3IcIa5EE8TELMZ618Q==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
- a=VwQbUJbxAAAA:8 a=69wJf7TsAAAA:8 a=EUspDBNiAAAA:8 a=LnnBb7FsOvHOz9LIuJkA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=bTQJ7kPSJx9SKPbeHEYW:22
- a=Fg1AiH1G6rFz08G2ETeA:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-10-07_04,2026-10-06_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 adultscore=0 suspectscore=0 malwarescore=0
- lowpriorityscore=0 bulkscore=0 spamscore=0 clxscore=1015 impostorscore=0
- phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
- definitions=main-2610070055
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain
+X-Originating-IP: [10.180.168.240]
+X-ClientProxiedBy: satlexmb08.amd.com (10.181.42.217) To satlexmb07.amd.com
+ (10.181.42.216)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BY1PEPF000264B3:EE_|DS0PR12MB8788:EE_
+X-MS-Office365-Filtering-Correlation-Id: d5a022e3-7976-4708-7237-08df24797e63
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|36860700016|7416014|82310400026|23010399003|376014|1800799024|10067099003|56012099006|11063799006|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info: 5NAT8F5ezOCLWkui8HVwjecdtmFTx2WgXaLaT/nqc2xs3HywNUY7w9R/GeAD0LbXQjX4n0FDenefLAjGysSkQOhLg0O2C/j5T0ozGw7S3dxApudwH+81vgejPP8NKEpWNqS/TbVcqOaa5dmfJYEniEzSzVMByytD6j8rbc1+dHwwcl4s1rjupeW0uTf3ET+YZ/sCVRxC/DSgmMW//alWHpsDoPAUa14KS1PMNRdnejMXN9aZQmTnVKdr8PJh4em++i+M09BM6HCOtGZwc3NWwpcJpm0hXUZfyx1Y78Uta10r5fy90INFjWRvpxCby61aU1Jur6xAwqqAuTfZXR1ilqwP3A1O+O7SYr00X6ZhdkZp/UjZbI9dpLq0VdTy9mFfnkWjR/2macb/Wp0xYHmMclBrXx2YDCx3xjgG1ndj85wuxzBlcvGpoc9ZWyUBVIPD8F75ohQiShQs3U64Rlw5sPF10Y6Wn01M5CtvwCXt2wL4axFN98/iBJWe8XSwG0dIrmPnUbUjBNtIsbcv8fEN0OjVRfg0klHB6R+FN5WAyDiW7WtM0NrX7HSTJW+PGCXx2lt5MXNvIvqFzhn8S8xLaFKaVvoxX7gMmS+4xcl6BiSSLqAe8QIEKkiRqNAzbrPWNaDOXKTbo/J4rLxxCYhtuaPY+JFWKM4mjivlFL4o4PCMGIvhlUlm86zG0f94Y0zvL/iKuSEr+85BMY1maJOCpA==
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(36860700016)(7416014)(82310400026)(23010399003)(376014)(1800799024)(10067099003)(56012099006)(11063799006)(18002099003)(22082099003);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: 8+u/Wuzzg2JqQ2Tan070ObRT1eEnOLsOEbsn3NDXdkRerBvlbrsq8XKga4t0E8NrtIaPJO5urveMLx5TTLtO5j7ohpLrygLQmh1eIl3TgFynCeJ46qp3teydrvvGDsPMmJezM/uDSInYW6BQhDatwwT5x4cnJnVjoJN+U5UiXl23/N3kK/tagWKZW6iv67Jl1Hok6iOjy/IQfO8S5Uybv1ORenTyjjNoGyDJZd25Mp8hrRE6uSbQclgsdLm4CCsuKJvzM/WjACUdSFck2iips1rzmebAaXm5OwpG4sdP7tXr6J1Pg3MLHQHc8vmCF9X23jfT9j5eY+9Wyff7MgXlFskW0BQEKncFbamfhnn8BMggItIuETNHk+rVVaDTkUfo+6H/hgyN2eIc/kL9/oVNI2Y5BTG2V/bkMM7Y9H5810nMKp0TLdwwmkhIsYa1PZ/0
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Oct 2026 13:47:13.8982 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: d5a022e3-7976-4708-7237-08df24797e63
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[satlexmb07.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: BY1PEPF000264B3.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB8788
+Received-SPF: permerror client-ip=2a01:111:f403:c10c::1;
+ envelope-from=Michael.Roth@amd.com;
+ helo=SA9PR02CU001.outbound.protection.outlook.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -163,98 +129,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Phil.
+The sev-snp-guest object is currently used to provide confidential guest
+by using guest_memfd for private GPA ranges, and for shared GPA ranges
+the normal memory backend is used, i.e. "out-of-place" conversion
+between shared/private.
 
-Regards,
+Now that "in-place" conversion support is available in QEMU, add a
+parameter to select between these 2 modes of utilizing guest_memfd (it
+cannot be enabled transparently due to noticeable differences in
+behavior (e.g. memory usage accounting and lack of hugetlb support for
+shared GPA ranges) that userspace needs to be aware of when selecting
+the mode).
 
-I missed it, but again Anton's comment were in this patch
-description I wouldn't had barked.
+Note that the actual capability checks for in-place conversion support
+in the host kernel will happen later in kvm_arch_init().
 
-How does this will work in heterogeneous binary with one
-RV32 and another RV64 cores running together?
+Signed-off-by: Michael Roth <michael.roth@amd.com>
+---
+ qapi/qom.json     |  8 +++++++-
+ target/i386/sev.c | 17 +++++++++++++++++
+ 2 files changed, 24 insertions(+), 1 deletion(-)
 
-[we tend to avoid top-posting on technical lists]
-
-On 7/10/26 15:39, Yonggang Luo wrote:
-> It's here https://lore.kernel.org/qemu-devel/ar9WZip2Q2G0qvQI@hive.localdomain/
-> 
-> From: Anton Johansson via qemu development <qemu-devel@nongnu.org>
-> 
-> 
-> I wouldn't be surprised if that's the case, although I'm personally a
-> bit scared of riscv_cpu_mxl_bits() since it returns 128 for MXL_128, so
-> if it's not used carefully or on clear MXL_[32|64] paths you could easily
-> get UB.
-> 
-> 
-> On Wed, Oct 7, 2026 at 9:26 PM Philippe Mathieu-Daudé
-> <philmd@oss.qualcomm.com> wrote:
->>
->> On 7/10/26 13:51, Yonggang Luo wrote:
->>> On Wed, Oct 7, 2026 at 6:25 PM Philippe Mathieu-Daudé
->>> <philmd@oss.qualcomm.com> wrote:
->>>>
->>>> On 7/10/26 10:43, Anton Johansson wrote:
->>>>> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
->>>>> Signed-off-by: Anton Johansson <anjo@rev.ng>
->>>>> ---
->>>>>     target/riscv/tcg/pmp.c       | 5 +++--
->>>>>     target/riscv/tcg/meson.build | 2 +-
->>>>>     2 files changed, 4 insertions(+), 3 deletions(-)
->>>>>
->>>>> diff --git a/target/riscv/tcg/pmp.c b/target/riscv/tcg/pmp.c
->>>>> index 99345d63dc..2d7194de10 100644
->>>>> --- a/target/riscv/tcg/pmp.c
->>>>> +++ b/target/riscv/tcg/pmp.c
->>>>> @@ -638,19 +638,20 @@ uint64_t pmpaddr_csr_read(CPURISCVState *env, uint32_t addr_index)
->>>>>         if (addr_index < pmp_regions) {
->>>>>             val = env->pmp_state.pmp[addr_index].addr_reg;
->>>>>             int g = pmp_get_granularity_g(env);
->>>>> +        const unsigned long_bits = target_long_bits();
->>>>
->>>> We need to fetch this information from @env. Maybe riscv_cpu_mxl_bits()?
->>>
->>> discussed before, there is possible be 128bits
->>
->> Please point me to the discussion (directly, saving us a ping / pong),
->> as:
->>
->>     '''
->>     This was already discussed on v42:
->>
->>     https://lore.kernel.org/qemu-devel/some-message-id-v42-20128438/
->>     '''
->>
->> Having the discussion decision resumed in the patch description will
->> prevent further reviewers to ask again the same.
->>
->> What do you mean by "possible be 128bits"? If we want to cap the
->> value we can use MIN(64, riscv_cpu_mxl_bits(env)).
->>
->>>
->>>>>             switch (pmp_get_a_field(env->pmp_state.pmp[addr_index].cfg_reg)) {
->>>>>             case PMP_AMATCH_OFF:
->>>>>                 /* fallthrough */
->>>>>             case PMP_AMATCH_TOR:
->>>>>                 /* Bit [g-1:0] read all zero */
->>>>> -            if (g >= 1 && g < TARGET_LONG_BITS) {
->>>>> +            if (g >= 1 && g < long_bits) {
->>>>>                     uint64_t granule = 1ULL << g;
->>>>>                     val = ROUND_DOWN(val, granule);
->>>>>                 }
->>>>>                 break;
->>>>>             case PMP_AMATCH_NAPOT:
->>>>>                 /* Bit [g-2:0] read all one */
->>>>> -            if (g >= 2 && g < TARGET_LONG_BITS) {
->>>>> +            if (g >= 2 && g < long_bits) {
->>>>>                     val = deposit64(val, 0, g - 1, -1ULL);
->>>>>                 }
->>>>>                 break;
->>>>
->>>
->>>
->>
-> 
-> 
+diff --git a/qapi/qom.json b/qapi/qom.json
+index 49f222796a..84166c2457 100644
+--- a/qapi/qom.json
++++ b/qapi/qom.json
+@@ -1099,6 +1099,11 @@
+ # @tsc-frequency: set secure TSC frequency.  Only valid if Secure TSC
+ #     is enabled (default: zero) (since 11.1)
+ #
++# @convert-in-place: If true, the same physical pages are reused
++#     when memory is converted between shared and private states.
++#     If false (default), separate allocations are used depending
++#     on whether the page is private or shared.  (since 11.2)
++#
+ # Since: 9.1
+ ##
+ { 'struct': 'SevSnpGuestProperties',
+@@ -1112,7 +1117,8 @@
+             '*host-data': 'str',
+             '*vcek-disabled': 'bool',
+             '*secure-tsc': 'bool',
+-            '*tsc-frequency': 'uint32' } }
++            '*tsc-frequency': 'uint32',
++            '*convert-in-place': 'bool'} }
+ 
+ ##
+ # @TdxGuestProperties:
+diff --git a/target/i386/sev.c b/target/i386/sev.c
+index e15e23c78d..e77ca12fc7 100644
+--- a/target/i386/sev.c
++++ b/target/i386/sev.c
+@@ -3270,6 +3270,20 @@ sev_snp_guest_set_tsc_frequency(Object *obj, Visitor *v, const char *name,
+     SEV_SNP_GUEST(obj)->tsc_khz = value / 1000;
+ }
+ 
++static bool
++sev_snp_guest_get_convert_in_place(Object *obj, Error **errp)
++{
++    return CONFIDENTIAL_GUEST_SUPPORT(obj)->convert_in_place;
++}
++
++static void
++sev_snp_guest_set_convert_in_place(Object *obj, bool value, Error **errp)
++{
++    ConfidentialGuestSupport *cgs = CONFIDENTIAL_GUEST_SUPPORT(obj);
++
++    cgs->convert_in_place = value;
++}
++
+ static void
+ sev_snp_guest_class_init(ObjectClass *oc, const void *data)
+ {
+@@ -3311,6 +3325,9 @@ sev_snp_guest_class_init(ObjectClass *oc, const void *data)
+     object_class_property_add(oc, "tsc-frequency", "uint32",
+                               sev_snp_guest_get_tsc_frequency,
+                               sev_snp_guest_set_tsc_frequency, NULL, NULL);
++    object_class_property_add_bool(oc, "convert-in-place",
++                                   sev_snp_guest_get_convert_in_place,
++                                   sev_snp_guest_set_convert_in_place);
+ }
+ 
+ static void
+-- 
+2.43.0
 
 
