@@ -4,50 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEF7ACA6009
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 10:12:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D55A0CA5FFF
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 10:13:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xEOcq-0004oN-N7; Wed, 07 Oct 2026 06:11:54 -0400
+	id 1xEOcs-0004u0-N2; Wed, 07 Oct 2026 06:11:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaurav.sharma_7@nxp.com>)
- id 1xEOcT-0004Hw-Ga; Wed, 07 Oct 2026 06:11:31 -0400
-Received: from inva021.nxp.com ([92.121.34.21])
+ id 1xEOcV-0004IR-Gl; Wed, 07 Oct 2026 06:11:33 -0400
+Received: from inva020.nxp.com ([92.121.34.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaurav.sharma_7@nxp.com>)
- id 1xEOcR-0004R1-U9; Wed, 07 Oct 2026 06:11:29 -0400
-Received: from inva021.nxp.com (localhost [127.0.0.1])
- by inva021.eu-rdc02.nxp.com (Postfix) with ESMTP id 775CD200037;
- Wed,  7 Oct 2026 12:11:24 +0200 (CEST)
+ id 1xEOcT-0004RR-95; Wed, 07 Oct 2026 06:11:30 -0400
+Received: from inva020.nxp.com (localhost [127.0.0.1])
+ by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id DB24C1A0023;
+ Wed,  7 Oct 2026 12:11:27 +0200 (CEST)
 Received: from aprdc01srsp001v.ap-rdc01.nxp.com
  (aprdc01srsp001v.ap-rdc01.nxp.com [165.114.16.16])
- by inva021.eu-rdc02.nxp.com (Postfix) with ESMTP id 4C5F8200031;
- Wed,  7 Oct 2026 12:11:24 +0200 (CEST)
+ by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id A5AE51A0025;
+ Wed,  7 Oct 2026 12:11:27 +0200 (CEST)
 Received: from lsv031015.swis.in-blr01.nxp.com
  (lsv031015.swis.in-blr01.nxp.com [10.12.177.77])
- by aprdc01srsp001v.ap-rdc01.nxp.com (Postfix) with ESMTP id 30F8B180023B;
- Wed,  7 Oct 2026 18:11:22 +0800 (+08)
+ by aprdc01srsp001v.ap-rdc01.nxp.com (Postfix) with ESMTP id AF0BC180023B;
+ Wed,  7 Oct 2026 18:11:25 +0800 (+08)
 From: Gaurav Sharma <gaurav.sharma_7@nxp.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, pbonzini@redhat.com, peter.maydell@linaro.org,
  shentey@gmail.com, pierrick.bouvier@oss.qualcomm.com,
- Gaurav Sharma <gaurav.sharma_7@nxp.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCHv4 08/11] hw/misc: Extend i.MX8MP CCM with Cortex-M7 clock
- outputs
-Date: Wed,  7 Oct 2026 15:41:02 +0530
-Message-Id: <20261007101105.3917771-9-gaurav.sharma_7@nxp.com>
+ Gaurav Sharma <gaurav.sharma_7@nxp.com>
+Subject: [PATCHv4 10/11] hw/arm: Add IRQ splitter for i.MX8MP AMP interrupt
+ routing
+Date: Wed,  7 Oct 2026 15:41:04 +0530
+Message-Id: <20261007101105.3917771-11-gaurav.sharma_7@nxp.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20261007101105.3917771-1-gaurav.sharma_7@nxp.com>
 References: <20261007101105.3917771-1-gaurav.sharma_7@nxp.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Virus-Scanned: ClamAV using ClamSMTP
-Received-SPF: pass client-ip=92.121.34.21;
- envelope-from=gaurav.sharma_7@nxp.com; helo=inva021.nxp.com
+Received-SPF: pass client-ip=92.121.34.13;
+ envelope-from=gaurav.sharma_7@nxp.com; helo=inva020.nxp.com
 X-Spam_score_int: -41
 X-Spam_score: -4.2
 X-Spam_bar: ----
@@ -68,77 +66,217 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add cm7_cpuclk (24 MHz) and cm7_refclk (32.768 kHz) clock outputs
-to the i.MX8MP CCM. These are required by the ARMv7M model to boot
-the Cortex-M7 core in an AMP configuration.
+Route the i.MX8MP peripheral interrupt sources through two-output
+SplitIRQ devices.
+Connect the first splitter output to the Cortex-A53 GIC. The second
+output will be connected to the Cortex-M7 NVIC when CM7 support is
+added.
 
 Signed-off-by: Gaurav Sharma <gaurav.sharma_7@nxp.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Bernhard Beschow <shentey@gmail.com>
 ---
- hw/misc/imx8mp_ccm.c         | 9 +++++++++
- include/hw/misc/imx8mp_ccm.h | 3 +++
- 2 files changed, 12 insertions(+)
+ hw/arm/fsl-imx8mp.c         | 56 ++++++++++++++++++++++++-------------
+ include/hw/arm/fsl-imx8mp.h |  2 ++
+ 2 files changed, 38 insertions(+), 20 deletions(-)
 
-diff --git a/hw/misc/imx8mp_ccm.c b/hw/misc/imx8mp_ccm.c
-index 97d363e79d..41746e1eeb 100644
---- a/hw/misc/imx8mp_ccm.c
-+++ b/hw/misc/imx8mp_ccm.c
-@@ -12,17 +12,24 @@
- #include "qemu/log.h"
+diff --git a/hw/arm/fsl-imx8mp.c b/hw/arm/fsl-imx8mp.c
+index 18d2b17ca8..395356bc13 100644
+--- a/hw/arm/fsl-imx8mp.c
++++ b/hw/arm/fsl-imx8mp.c
+@@ -196,6 +196,12 @@ static void fsl_imx8mp_init(Object *obj)
+     FslImx8mpState *s = FSL_IMX8MP(obj);
+     int i;
  
- #include "hw/misc/imx8mp_ccm.h"
-+#include "hw/core/qdev-clock.h"
- #include "migration/vmstate.h"
- 
- #include "trace.h"
- 
- #define CKIH_FREQ 16000000 /* 16MHz crystal input */
- 
-+#define IMX8MP_CM7_CPUCLK_HZ 24000000ULL   /* osc_24m */
-+#define IMX8MP_CM7_REFCLK_HZ 32768ULL      /* osc_32k */
++    for (i = 0; i < FSL_IMX8MP_NUM_IRQS; i++) {
++        g_autofree char *name = g_strdup_printf("irq-splitter%d", i);
++        object_initialize_child(obj, name, &s->cpu_irq_splitter[i],
++                                TYPE_SPLIT_IRQ);
++    }
 +
- static void imx8mp_ccm_reset(DeviceState *dev)
- {
-     IMX8MPCCMState *s = IMX8MP_CCM(dev);
+     object_initialize_child(obj, "gic", &s->gic, gicv3_class_name());
  
-     memset(s->ccm, 0, sizeof(s->ccm));
+     object_initialize_child(obj, "ccm", &s->ccm, TYPE_IMX8MP_CCM);
+@@ -280,6 +286,7 @@ static void fsl_imx8mp_realize(DeviceState *dev, Error **errp)
+     FslImx8mpState *s = FSL_IMX8MP(dev);
+     DeviceState *gicdev = DEVICE(&s->gic);
+     const char *cpu_type = ms->cpu_type ?: ARM_CPU_TYPE_NAME("cortex-a53");
++    qemu_irq spi_irq[FSL_IMX8MP_NUM_IRQS];
+     int i;
+ 
+     if (ms->smp.cpus > FSL_IMX8MP_NUM_A53) {
+@@ -407,6 +414,15 @@ static void fsl_imx8mp_realize(DeviceState *dev, Error **errp)
+         }
+     }
+ 
++    for (i = 0; i < FSL_IMX8MP_NUM_IRQS; i++) {
++        DeviceState *splitter = DEVICE(&s->cpu_irq_splitter[i]);
++        qdev_prop_set_uint16(splitter, "num-lines", 2);
++        qdev_realize(splitter, NULL, &error_abort);
++        spi_irq[i] = qdev_get_gpio_in(splitter, 0);
++        qdev_connect_gpio_out(splitter, 0,
++                              qdev_get_gpio_in(gicdev, i));
++    }
 +
-+    clock_set_hz(s->cm7_cpuclk, IMX8MP_CM7_CPUCLK_HZ);
-+    clock_set_hz(s->cm7_refclk, IMX8MP_CM7_REFCLK_HZ);
- }
+     /* CCM */
+     if (!sysbus_realize(SYS_BUS_DEVICE(&s->ccm), errp)) {
+         return;
+@@ -440,7 +456,7 @@ static void fsl_imx8mp_realize(DeviceState *dev, Error **errp)
  
- #define CCM_INDEX(offset)   (((offset) & ~(hwaddr)0xF) / sizeof(uint32_t))
-@@ -88,6 +95,8 @@ static void imx8mp_ccm_init(Object *obj)
-     SysBusDevice *sd = SYS_BUS_DEVICE(obj);
-     IMX8MPCCMState *s = IMX8MP_CCM(obj);
+         sysbus_mmio_map(SYS_BUS_DEVICE(&s->uart[i]), 0, serial_table[i].addr);
+         sysbus_connect_irq(SYS_BUS_DEVICE(&s->uart[i]), 0,
+-                           qdev_get_gpio_in(gicdev, serial_table[i].irq));
++                           spi_irq[serial_table[i].irq]);
+     }
  
-+    s->cm7_cpuclk = qdev_init_clock_out(DEVICE(obj), "cm7_cpuclk");
-+    s->cm7_refclk = qdev_init_clock_out(DEVICE(obj), "cm7_refclk");
-     memory_region_init_io(&s->iomem,
-                           obj,
-                           &imx8mp_set_clr_tog_ops,
-diff --git a/include/hw/misc/imx8mp_ccm.h b/include/hw/misc/imx8mp_ccm.h
-index 685c8582ff..c6ede6928c 100644
---- a/include/hw/misc/imx8mp_ccm.h
-+++ b/include/hw/misc/imx8mp_ccm.h
-@@ -9,6 +9,7 @@
- #ifndef IMX8MP_CCM_H
- #define IMX8MP_CCM_H
+     /* SRC */
+@@ -472,7 +488,7 @@ static void fsl_imx8mp_realize(DeviceState *dev, Error **errp)
+     }
  
-+#include "hw/core/clock.h"
- #include "hw/misc/imx_ccm.h"
- #include "qom/object.h"
+     qdev_connect_gpio_out(DEVICE(&s->gpt5_gpt6_irq), 0,
+-                          qdev_get_gpio_in(gicdev, FSL_IMX8MP_GPT5_GPT6_IRQ));
++                          spi_irq[FSL_IMX8MP_GPT5_GPT6_IRQ]);
  
-@@ -25,6 +26,8 @@ struct IMX8MPCCMState {
-     MemoryRegion iomem;
+     for (i = 0; i < FSL_IMX8MP_NUM_GPTS; i++) {
+         hwaddr gpt_addrs[FSL_IMX8MP_NUM_GPTS] = {
+@@ -501,7 +517,7 @@ static void fsl_imx8mp_realize(DeviceState *dev, Error **errp)
+             };
  
-     uint32_t ccm[CCM_MAX];
-+    Clock *cm7_cpuclk;
-+    Clock *cm7_refclk;
- };
+             sysbus_connect_irq(SYS_BUS_DEVICE(&s->gpt[i]), 0,
+-                               qdev_get_gpio_in(gicdev, gpt_irqs[i]));
++                               spi_irq[gpt_irqs[i]]);
+         } else {
+             int irq = i - FSL_IMX8MP_NUM_GPTS + 2;
  
- #endif /* IMX8MP_CCM_H */
+@@ -536,9 +552,9 @@ static void fsl_imx8mp_realize(DeviceState *dev, Error **errp)
+     }
+ 
+     sysbus_connect_irq(SYS_BUS_DEVICE(&s->mu[0].a), 0,
+-                       qdev_get_gpio_in(gicdev, FSL_IMX8MP_MU1_A_IRQ));
++                       spi_irq[FSL_IMX8MP_MU1_A_IRQ]);
+     sysbus_connect_irq(SYS_BUS_DEVICE(&s->mu[0].b), 0,
+-                       qdev_get_gpio_in(gicdev, FSL_IMX8MP_MU1_B_IRQ));
++                       spi_irq[FSL_IMX8MP_MU1_B_IRQ]);
+ 
+     /* I2Cs */
+     for (i = 0; i < FSL_IMX8MP_NUM_I2CS; i++) {
+@@ -560,7 +576,7 @@ static void fsl_imx8mp_realize(DeviceState *dev, Error **errp)
+ 
+         sysbus_mmio_map(SYS_BUS_DEVICE(&s->i2c[i]), 0, i2c_table[i].addr);
+         sysbus_connect_irq(SYS_BUS_DEVICE(&s->i2c[i]), 0,
+-                           qdev_get_gpio_in(gicdev, i2c_table[i].irq));
++                           spi_irq[i2c_table[i].irq]);
+     }
+ 
+     /* GPIOs */
+@@ -607,9 +623,9 @@ static void fsl_imx8mp_realize(DeviceState *dev, Error **errp)
+ 
+         sysbus_mmio_map(SYS_BUS_DEVICE(&s->gpio[i]), 0, gpio_table[i].addr);
+         sysbus_connect_irq(SYS_BUS_DEVICE(&s->gpio[i]), 0,
+-                           qdev_get_gpio_in(gicdev, gpio_table[i].irq_low));
++                           spi_irq[gpio_table[i].irq_low]);
+         sysbus_connect_irq(SYS_BUS_DEVICE(&s->gpio[i]), 1,
+-                           qdev_get_gpio_in(gicdev, gpio_table[i].irq_high));
++                           spi_irq[gpio_table[i].irq_high]);
+     }
+ 
+     /* USDHCs */
+@@ -629,7 +645,7 @@ static void fsl_imx8mp_realize(DeviceState *dev, Error **errp)
+ 
+         sysbus_mmio_map(SYS_BUS_DEVICE(&s->usdhc[i]), 0, usdhc_table[i].addr);
+         sysbus_connect_irq(SYS_BUS_DEVICE(&s->usdhc[i]), 0,
+-                           qdev_get_gpio_in(gicdev, usdhc_table[i].irq));
++                           spi_irq[usdhc_table[i].irq]);
+     }
+ 
+     /* USBs */
+@@ -650,7 +666,7 @@ static void fsl_imx8mp_realize(DeviceState *dev, Error **errp)
+         }
+         sysbus_mmio_map(SYS_BUS_DEVICE(&s->usb[i]), 0, usb_table[i].addr);
+         sysbus_connect_irq(SYS_BUS_DEVICE(&s->usb[i].sysbus_xhci), 0,
+-                           qdev_get_gpio_in(gicdev, usb_table[i].irq));
++                           spi_irq[usb_table[i].irq]);
+     }
+ 
+     /* ECSPIs */
+@@ -670,7 +686,7 @@ static void fsl_imx8mp_realize(DeviceState *dev, Error **errp)
+ 
+         sysbus_mmio_map(SYS_BUS_DEVICE(&s->spi[i]), 0, spi_table[i].addr);
+         sysbus_connect_irq(SYS_BUS_DEVICE(&s->spi[i]), 0,
+-                           qdev_get_gpio_in(gicdev, spi_table[i].irq));
++                           spi_irq[spi_table[i].irq]);
+     }
+ 
+     /* ENET1 */
+@@ -684,9 +700,9 @@ static void fsl_imx8mp_realize(DeviceState *dev, Error **errp)
+     sysbus_mmio_map(SYS_BUS_DEVICE(&s->enet), 0,
+                     fsl_imx8mp_memmap[FSL_IMX8MP_ENET1].addr);
+     sysbus_connect_irq(SYS_BUS_DEVICE(&s->enet), 0,
+-                       qdev_get_gpio_in(gicdev, FSL_IMX8MP_ENET1_MAC_IRQ));
++                       spi_irq[FSL_IMX8MP_ENET1_MAC_IRQ]);
+     sysbus_connect_irq(SYS_BUS_DEVICE(&s->enet), 1,
+-                       qdev_get_gpio_in(gicdev, FSL_IMX6_ENET1_MAC_1588_IRQ));
++                       spi_irq[FSL_IMX6_ENET1_MAC_1588_IRQ]);
+ 
+     /* SNVS */
+     if (!sysbus_realize(SYS_BUS_DEVICE(&s->snvs), errp)) {
+@@ -714,7 +730,7 @@ static void fsl_imx8mp_realize(DeviceState *dev, Error **errp)
+ 
+         sysbus_mmio_map(SYS_BUS_DEVICE(&s->wdt[i]), 0, wdog_table[i].addr);
+         sysbus_connect_irq(SYS_BUS_DEVICE(&s->wdt[i]), 0,
+-                           qdev_get_gpio_in(gicdev, wdog_table[i].irq));
++                           spi_irq[wdog_table[i].irq]);
+     }
+ 
+     /* PCIe */
+@@ -725,15 +741,15 @@ static void fsl_imx8mp_realize(DeviceState *dev, Error **errp)
+                     fsl_imx8mp_memmap[FSL_IMX8MP_PCIE1].addr);
+ 
+     sysbus_connect_irq(SYS_BUS_DEVICE(&s->pcie), 0,
+-                       qdev_get_gpio_in(gicdev, FSL_IMX8MP_PCI_INTA_IRQ));
++                       spi_irq[FSL_IMX8MP_PCI_INTA_IRQ]);
+     sysbus_connect_irq(SYS_BUS_DEVICE(&s->pcie), 1,
+-                       qdev_get_gpio_in(gicdev, FSL_IMX8MP_PCI_INTB_IRQ));
++                       spi_irq[FSL_IMX8MP_PCI_INTB_IRQ]);
+     sysbus_connect_irq(SYS_BUS_DEVICE(&s->pcie), 2,
+-                       qdev_get_gpio_in(gicdev, FSL_IMX8MP_PCI_INTC_IRQ));
++                       spi_irq[FSL_IMX8MP_PCI_INTC_IRQ]);
+     sysbus_connect_irq(SYS_BUS_DEVICE(&s->pcie), 3,
+-                       qdev_get_gpio_in(gicdev, FSL_IMX8MP_PCI_INTD_IRQ));
++                       spi_irq[FSL_IMX8MP_PCI_INTD_IRQ]);
+     sysbus_connect_irq(SYS_BUS_DEVICE(&s->pcie), 4,
+-                       qdev_get_gpio_in(gicdev, FSL_IMX8MP_PCI_MSI_IRQ));
++                       spi_irq[FSL_IMX8MP_PCI_MSI_IRQ]);
+ 
+     if (!sysbus_realize(SYS_BUS_DEVICE(&s->pcie_phy), errp)) {
+         return;
+@@ -766,7 +782,7 @@ static void fsl_imx8mp_realize(DeviceState *dev, Error **errp)
+         sysbus_mmio_map(SYS_BUS_DEVICE(&s->flexcan[i]), 0,
+                         flexcan_table[i].addr);
+         sysbus_connect_irq(SYS_BUS_DEVICE(&s->flexcan[i]), 0,
+-                           qdev_get_gpio_in(gicdev, flexcan_table[i].irq));
++                           spi_irq[flexcan_table[i].irq]);
+     }
+ 
+     /* On-Chip RAM */
+diff --git a/include/hw/arm/fsl-imx8mp.h b/include/hw/arm/fsl-imx8mp.h
+index f547cbae42..2824f38355 100644
+--- a/include/hw/arm/fsl-imx8mp.h
++++ b/include/hw/arm/fsl-imx8mp.h
+@@ -24,6 +24,7 @@
+ #include "hw/net/flexcan.h"
+ #include "hw/net/imx_fec.h"
+ #include "hw/core/or-irq.h"
++#include "hw/core/split-irq.h"
+ #include "hw/pci-host/designware.h"
+ #include "hw/pci-host/fsl_imx8m_phy.h"
+ #include "hw/sd/sdhci.h"
+@@ -89,6 +90,7 @@ struct FslImx8mpState {
+     FslImx8mPciePhyState   pcie_phy;
+     FlexcanState       flexcan[FSL_IMX8MP_NUM_CANS];
+     OrIRQState         gpt5_gpt6_irq;
++    SplitIRQ           cpu_irq_splitter[FSL_IMX8MP_NUM_IRQS];
+     MemoryRegion       ocram;
+     MemoryRegion       itcm;
+     MemoryRegion       dtcm;
 -- 
 2.34.1
 
