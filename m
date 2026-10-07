@@ -4,86 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F624CA6002
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 23:24:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BED5CCA6009
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 23:24:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xEaz3-0007U6-8r; Wed, 07 Oct 2026 19:23:37 -0400
+	id 1xEazg-0007sl-SB; Wed, 07 Oct 2026 19:24:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xEaz0-0007Om-QT
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 19:23:34 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ id 1xEaze-0007rR-70
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 19:24:14 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xEayy-0001Jg-ID
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 19:23:34 -0400
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+ id 1xEazb-0001Oo-8s
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 19:24:13 -0400
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 697LuQdG2098818
- for <qemu-devel@nongnu.org>; Wed, 7 Oct 2026 23:23:30 GMT
+ 697Lu4D8626311
+ for <qemu-devel@nongnu.org>; Wed, 7 Oct 2026 23:24:10 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:message-id
- :mime-version:subject:to; s=qcppdkim1; bh=iUj2H79bZ6zfQPI74wgeNG
- Wz4BdtVflx5SbXqdQdqtY=; b=KUhh/aEU8TYEHiE6K4LwkxAqbrSB7oe/ft+pmz
- IepZOshVOU3gD9UHRyHkFOUIZO1Xo8lXZ6TGwhMgBnZlk5qojDIT2h2WT1aaMs9/
- HR3DU9rJVcCuM19mMBxD1Q2IHq8WA0BKyYZzxAt27a+U5yrLgfrIlGvsGAQex2L6
- iUU9T8bcqqr7G5uC5E8Rwdqmgv+A3zkVOwIE0YEpEa0TZPDHiNnB+iWMPosHeOuh
- 0rIWYDE0sYS5uCxkH7N8TnAoMPfiVX/pR1suxsUpjqaGydBYn74GVgSQ79JGlh3C
- EPj4houVcfHBTBZ4yB5UO8J2MHtUJHHkrGGb3KpNHJMLS1aQ==
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ kiFRfa1vn1nAsyqHzl2RG/M+r+e4c9+WlXmnF6qfFAk=; b=PJ8NbanocVGIVUqb
+ cE7J31UG1Iz/vqCjjOSqHuyLJkEYZ++NV4veKF8ZjK0+DjXX+jBAgv0+UuJs2Zei
+ OGoB12sRV7Tbnu4XX0U10kMJSZPljxMvREhgPBJHCoJzuFc7Gv6m8gGFVD7fHNjv
+ JBXHaSfHkT3cyUXNW6LDLPZ9GwlTq0XOz200zw7Cs/EF8GRPZ2ONfEg3wbQfOJV4
+ kwxI9OhT1O8QexGAlsU5908LmMev4XYUjZAIYisybxq5BB6uuVa2wZNQjHq6jj13
+ xK2v3y6ANnBLRtLoMbO28gWRP3vcnTdDZaURD0lvui6poQtv+KLEEu5iV1zpx4SN
+ Hr5U+A==
 Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
  [209.85.222.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h5xefg7xe-1
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h5xe3gc6n-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 07 Oct 2026 23:23:30 +0000 (GMT)
+ for <qemu-devel@nongnu.org>; Wed, 07 Oct 2026 23:24:10 +0000 (GMT)
 Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-93c5ab5c136so761788985a.3
- for <qemu-devel@nongnu.org>; Wed, 07 Oct 2026 16:23:30 -0700 (PDT)
+ af79cd13be357-93bf4c0af4eso93665885a.1
+ for <qemu-devel@nongnu.org>; Wed, 07 Oct 2026 16:24:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1791415409; x=1792020209; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=iUj2H79bZ6zfQPI74wgeNGWz4BdtVflx5SbXqdQdqtY=;
- b=V+C7KKSOxg1AY/oWsiMyH10p0s5MtXdgbYz8GCdIw08gXRMYyD2v721kciWirEdwbf
- rC9FLH828D5DYjCzN84Xw3KfmzkwAQSLQomEfD0zKLKECeceITs3VaXw1f7KqFzILKYE
- IpPBAdmQcNBWlQHST+WGS8n1gfbQJyYa39LI1rWJ4EaHoaWwdfhEPKqxL9RDM3A9vXSv
- SYfdUOWYwhWvcG2iYS0raJ2/5+avG0v7Z9qDeuUIKcOw1ZT671Al1STsYHPOGXM47GQy
- EiTz7f/G4JNu6PBK8RmACm6UId57hAej3zd8eQWJmA3KYVI/xF7UEPTV5oYmGZHCFfuq
- f/4A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791415409; x=1792020209;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ d=oss.qualcomm.com; s=google; t=1791415450; x=1792020250; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=iUj2H79bZ6zfQPI74wgeNGWz4BdtVflx5SbXqdQdqtY=;
- b=aHqJn56jCWxLBubbOirxjf315/PkUE1rIZ0kp4bFTs523Z8TbZjahuWLgQDfxh6ZYF
- dGRXnNqeUFQavEAFpGbJCMMo8ziXa3I49/mZVEhLzZ0CQUe5e4cDpEankhRxTHq0kdAi
- 5Kx+hh7Gu4ZnRej5yrou0JbUrvA6nkbDH8bE1xN/I5fd9sloZ6G0ZRZ9h2r5UlZ56dkC
- geJflxPkxtJ828VEuZPj+B7P4fYGFRTkZTZiWMIwor33v+sRFnRt5FNPL0vpqjAsFQst
- 9ML2QNOAZ5VYyPNOBN3xhSOvXJ5g2IGQPdkLudNcXP0eUdLb490rrTZtXuNPJqio1447
- WcMA==
-X-Gm-Message-State: AFuF++lR4SKn8+Qi8rUN07pmik5EvNZiqjf3ryZ1/7ssWrK9RUgYD12z
- Bd4jgDY5Ah+5ZRefSufiWkJfBjMhAgP4JMcPkD36LknE00ZMIDKiRn3b4DO2U8iP9Tm3z4d3plL
- QZZl33iHSCoqFStu0aWo6OXN6UHmrcu/KAxuTHw6JKIeTR84zbygdaL+3ViDarxr3Aw2z
-X-Gm-Gg: AYBFou2EY1kZy1z8PLyUy79BoJYOeRITJsxhg/hOxYoi2sKKZ5G2r9zTuNwArk47twT
- mQWUK9arqaYEBfpDTSLP7Hz/cSuFs9w90HYT4EeHfn7mFhKkPtykLeA5J3dIfoA1OQzwjDeH7Ca
- KHJGyILVMcYj8GUOFS+5ApP2E2BHnu5SPzYNZtjcl1WBKHAMUGrzGb8su2LPd2wLlhgaDqHmEQ8
- zoaM1laSNa8CBJfSYLJFescy7dgvhge7jvNipowQAjj5mCmuF1FxhoeRU5YpqFWV20AWAMYCben
- pexiC932NShZHdTal0yUuz1HEsC44GGL1cAlkW07NjoSlEJlKs71p+Ub7xUTXy/ke9ym6Yyrsx5
- zB5P7jTnoArErAd1OCcwHLWwR9n0MnTbBiJDiQqK5
-X-Received: by 2002:a05:620a:801b:b0:93e:94f2:adaa with SMTP id
- af79cd13be357-93e9b781880mr816043185a.32.1791415409113; 
- Wed, 07 Oct 2026 16:23:29 -0700 (PDT)
-X-Received: by 2002:a05:620a:801b:b0:93e:94f2:adaa with SMTP id
- af79cd13be357-93e9b781880mr816037585a.32.1791415408593; 
- Wed, 07 Oct 2026 16:23:28 -0700 (PDT)
+ bh=kiFRfa1vn1nAsyqHzl2RG/M+r+e4c9+WlXmnF6qfFAk=;
+ b=fTYcKRiHV36gAOxac/o5gnCg6jraAIeuZf0lE0ekRSiF20227NA3SF3R9miVlgjV0+
+ ZJ4CGY/ugbdijEszJLqs+mAZlp6FNyokI14o0lnuuK2WnqwuhU0qmiy+te+Zde7bkCWx
+ LKe8Cbi/ZXnqacvMsG5GF1xHDbtBIcFqldo4Qps3z4a9JGDnwZToCAzohXFs3nfLQAA5
+ ao+0jEveY+vs4UGSuI5KGJivg7eAkSz/RhmgKA2kWKX0LQhYBhYojSOSu7N3906zQad0
+ zU3wXONrd0hryo3Ysk65pqSPSrpbV33yQZaOMrISvFuFkJUn8wpzU9uGMmeOywXOJrco
+ 1fNQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1791415450; x=1792020250;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=kiFRfa1vn1nAsyqHzl2RG/M+r+e4c9+WlXmnF6qfFAk=;
+ b=2bKxQ0ZOc5RxC6NxNJC1VM9tD5ZGisbJSCJ47aLcQoAtZ546D82EO3EEUzzKeB+aJ2
+ IHB0ai8VW58D4f9x+7VCSjewgrQSDfMJVyQQfNHAGRtGCazPYKub3GKSPyILZbFR12Xd
+ +O5lLi3QQr9fz07LL1u1ODbzpiVwT8IxsW+YYF+TiCm+iNqT7S92K4DuUilEXqL+ibvl
+ CJ11qZd2QX6sULNvaO6/m7wJKmp3TPae5v/+tie8D6wAamIRWcjv13ck9FlRr5pgUqzb
+ tEfbyhI1M8SZaGaiv1jAJm8wUN+DMAYdmovh9KtfmO2MApFNsCc9mx8faKt8zaa4avBc
+ SwGw==
+X-Gm-Message-State: AFuF++ljq4/TcxD7jTvRC/aGDu7s84zpXEJ6lVcTZrVa+K/iJ+KqDaC/
+ nOxwgdmoxMCX3hQFi5AZJ08C0y1UKA5WZNNSbEnlDjpWpjuVPvp5/zmfgrdSSiRrfebqXY2sSNl
+ pPNyb6xOyM52jADAB3vdhzceQ6C5utOoQ1H28ZH0im1O5XnVOXcawIusw1T2bSidEjqyx
+X-Gm-Gg: AYBFou0gce2yJrIP+oPYWSqaSkAa1yerOxjK7DEbU35pwtZujJQ91JTptQnF7pX9jPs
+ GjuctPZEIAhS+lv/LPGEVLyGOeEnT/BMlOpQCVXNmvF5ZUN3Ag0PYRGcF3chLSolQGwjFAXtUDo
+ xAa5/jYGPqc+d7O1df5vpxQ4MFMWSrXUpYvB/9hIBEZ9rF6WFRAERfGA0O/zwlfkW1U+Wcu58rX
+ +4jv4yv2lUlzm+/yCXBRoN2XmvvmXnndSIYJKkdrddgvgj3ejJ8ZN4MyCPpEdobH8Tc8PWNtgxn
+ woHForDFvHJElEL3475H/oLj9avX3zm5FXkRBLLXiCExRDWPMbn7f6jxUwfYsacWF0R7sPYoKCE
+ gePZJJm5rmhJzd05F1wTEdF17O4FPNKykB0f9X9kB
+X-Received: by 2002:a05:620a:880f:b0:93e:5677:317b with SMTP id
+ af79cd13be357-93eab120455mr135400785a.25.1791415449507; 
+ Wed, 07 Oct 2026 16:24:09 -0700 (PDT)
+X-Received: by 2002:a05:620a:880f:b0:93e:5677:317b with SMTP id
+ af79cd13be357-93eab120455mr135396785a.25.1791415449037; 
+ Wed, 07 Oct 2026 16:24:09 -0700 (PDT)
 Received: from localhost.localdomain (pmd666.hd.free.fr. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a1843bbe82sm21869735e9.13.2026.10.07.16.23.27
+ ffacd0b85a97d-48c71d1f8fbsm7145472f8f.33.2026.10.07.16.24.06
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 07 Oct 2026 16:23:27 -0700 (PDT)
+ Wed, 07 Oct 2026 16:24:08 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-riscv@nongnu.org,
@@ -92,44 +95,48 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-riscv@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Anton Johansson <anjo@rev.ng>, qemu-ppc@nongnu.org,
- Yonggang Luo <luoyonggang@gmail.com>
-Subject: [PATCH 00/10] gdbstub: Remove target_long_bits() from GDB register
- reads
-Date: Thu,  8 Oct 2026 01:23:15 +0200
-Message-ID: <20261007232326.66240-1-philmd@oss.qualcomm.com>
+ Yonggang Luo <luoyonggang@gmail.com>, Chinmay Rath <rathc@linux.ibm.com>,
+ Nicholas Piggin <npiggin@gmail.com>, Glenn Miles <milesg@linux.ibm.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>
+Subject: [PATCH 05/10] target/ppc/gdbstub: Replace target_long_bits() by
+ ppc_env_is_64bit()
+Date: Thu,  8 Oct 2026 01:23:20 +0200
+Message-ID: <20261007232326.66240-6-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20261007232326.66240-1-philmd@oss.qualcomm.com>
+References: <20261007232326.66240-1-philmd@oss.qualcomm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA3MDA5MyBTYWx0ZWRfX+aOit0yBoWze
- QDteN7jIHmd4L1DAQ3urXFtM46ZCk+6yRbdjB76s2H4NLAx1ivQx5WdyuLFZvvKxkfHy6rx5zv2
- Lh4GdS5Svd2KmCyw79U9ZrxoloLjwyWmAJjRhq3uvsdmOc9ffa69gLA12oMQjpIq+WTuZxK5nLq
- 4WMGeuR+Re/qQdhuRY1s6Tv+mvAE/zrfB1wIkKkfDw7C4YhiftBv3iUy6pjxGaJjGPjo/VwNgmP
- PRztjzHKM0Wylhk7lWdgsoYt8G7TrT6b7O5k8EXhnNvgnkjq/+YCm/BVVvxAHMGuxpesQ8j1EgQ
- /wjHhN1wDFEleGpzOurtZ+POuK34fpGAZkUP83F2u5+Zmp7lnhXObNn29jL+xQy25meR4H/yKNw
- hNEAqNUAqoMXAZaQ1YFGJoD2tF0K8qWlDNhQXdnmdG5r8DFFVlAK4p0Hv3KP+SfPAN8hugA695x
- WJtZ4veCIBtKbWVh2AA==
-X-Proofpoint-ORIG-GUID: sNbaYtBVCcfgkyxCo28Ei0wW5sJAf5N4
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA3MDA5MyBTYWx0ZWRfX6JGjhjZAWzsu
- Q6YHq0rw6YnXW8LqEJhTwTwiCDWsJnlZwdLAr+wJaSZHWQEaPx2YPTA6HZJ7oQRzX6vZLibGO6Q
- ERsBuShgEilmAIlCepx1rkt8nqOGZ3s=
-X-Proofpoint-GUID: sNbaYtBVCcfgkyxCo28Ei0wW5sJAf5N4
-X-Authority-Analysis: v=2.4 cv=YbwodARf c=1 sm=1 tr=0 ts=6ac6d472 cx=c_pps
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA3MDA5MyBTYWx0ZWRfX+Dx2sXcafLhu
+ zdQd8854lT90ynYYiOLsy+49SNUkr8UQN65hOiuQqrUtQjMEePMkcg2i890bqsDxql1M4E0enJJ
+ FTP6sTi8UFId8xKzfFAXND7vJjxXxxY=
+X-Proofpoint-ORIG-GUID: 1uPqIFMuwMMKoBDSI4zaISwyqz1jUZXT
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA3MDA5MyBTYWx0ZWRfX5YD7c5HvVt8m
+ OFv4nKzD1Axi4giSYcGD/u0QmmBclpAfGVvVgmsh+lf8qfdeJRtKL+cJmrRhi6lUO4zcgsK+5mu
+ 8YHHodXZjCjfTdlge1AIfCa/eYLqZgpf1qhdzq/XSvkHMbsrCIC7rOHKyJZMLKJjD6j9EZ4BkDU
+ n4ZQ8fzeg1qHtTyKd0IMIjsLjM9n/A9BS37SpWdPC5K4PIC6YwA3zjhg4ZLT5peQGjuxE5nEhc4
+ 5fKv2kGbNVXIC9eR0R1RxGOXuQ31LAgMiR97Bb2P6l71YIc+KzmIpNr4XwQkrI79KaWcH7FvSu1
+ v8kZg4YWqZuNVWUXFPoMH1AHar8V24kMkMDdIAzXh/7teGZzB5NrajaJKxaFyLKEbFb553MshvV
+ unfHtKrKVxutq2/s56ykbhXOEd9qOX9wEGz7aFyO5eJx4zPsJT62f7+pOMahzrq3r+NtGsHb9Xo
+ AqZJQgaJwGPxJiVyitA==
+X-Authority-Analysis: v=2.4 cv=IIuXmQvG c=1 sm=1 tr=0 ts=6ac6d49a cx=c_pps
  a=HLyN3IcIa5EE8TELMZ618Q==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
- a=8hlkq1QN6mvqOSdO4wQA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
+ a=EUspDBNiAAAA:8 a=ECGyvcmLiFpczC5RLToA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
  a=bTQJ7kPSJx9SKPbeHEYW:22
+X-Proofpoint-GUID: 1uPqIFMuwMMKoBDSI4zaISwyqz1jUZXT
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-10-07_07,2026-10-06_03,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 bulkscore=0 clxscore=1015 suspectscore=0 priorityscore=1501
- spamscore=0 lowpriorityscore=0 impostorscore=0 adultscore=0 phishscore=0
+ spamscore=0 lowpriorityscore=0 impostorscore=0 bulkscore=0 adultscore=0
+ priorityscore=1501 malwarescore=0 suspectscore=0 clxscore=1015 phishscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2610020000 definitions=main-2610070093
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -152,36 +159,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Prefer getting target register word size at runtime (via
-CPU state) instead of build time.
+Add a gdb_get_reg_bits() helper deriving the register width from
+ppc_env_is_64bit(), and use it instead of target_long_bits() and
+TARGET_LONG_SIZE.
 
-This allow to remove gdb_get_regl() and various target_long_bits()
-calls, and to eliminate the TARGET_LONG_SIZE definition.
+Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+---
+ target/ppc/gdbstub.c | 19 ++++++++++++-------
+ 1 file changed, 12 insertions(+), 7 deletions(-)
 
-Philippe Mathieu-Daudé (10):
-  target/sparc/gdbstub: Replace gdb_get_regl() by gdb_get_reg64()
-  target/mips/gdbstub: Reduce to a single gdb_get_regl() call
-  target/mips/gdbstub: Replace target_long_bits() by mips_env_is_64bit()
-  target/ppc: Factor ppc_env_is_64bit() out
-  target/ppc/gdbstub: Replace target_long_bits() by ppc_env_is_64bit()
-  target/ppc/gdbstub: Replace gdb_get_regl() by ppc_env_is_64bit()
-  target/riscv: Factor riscv_gdb_get_reg_mxl() out
-  target/riscv: Replace gdb_get_regl() by riscv_gdb_get_reg_mxl()
-  gdbstub: Remove unused gdb_get_regl()
-  include: Remove TARGET_LONG_SIZE definition
-
- include/exec/target_long.h  |  8 ++--
- include/gdbstub/helpers.h   | 18 --------
- include/user/tswap-target.h |  2 +-
- target/mips/internal.h      |  5 +++
- target/ppc/internal.h       | 11 +++++
- target/mips/gdbstub.c       | 85 ++++++++++++++++++++++---------------
- target/ppc/cpu_init.c       |  2 +-
- target/ppc/gdbstub.c        | 38 +++++++++++------
- target/riscv/gdbstub.c      | 35 +++++++++------
- target/sparc/gdbstub.c      | 13 +++---
- 10 files changed, 125 insertions(+), 92 deletions(-)
-
+diff --git a/target/ppc/gdbstub.c b/target/ppc/gdbstub.c
+index 4d622c5cad5..ee02be63ce8 100644
+--- a/target/ppc/gdbstub.c
++++ b/target/ppc/gdbstub.c
+@@ -23,12 +23,17 @@
+ #include "gdbstub/helpers.h"
+ #include "internal.h"
+ 
+-static unsigned ppc_gdb_register_len(int n)
++static int gdb_get_reg_bits(const CPUPPCState *env)
++{
++    return ppc_env_is_64bit(env) ? 64 : 32;
++}
++
++static unsigned ppc_gdb_register_len(const CPUPPCState *env, int n)
+ {
+     switch (n) {
+     case 0 ... 31:
+         /* gprs */
+-        return target_long_bits() / 8;
++        return gdb_get_reg_bits(env) / 8;
+     case 66:
+         /* cr */
+     case 69:
+@@ -42,7 +47,7 @@ static unsigned ppc_gdb_register_len(int n)
+         /* lr */
+     case 68:
+         /* ctr */
+-        return target_long_bits() / 8;
++        return gdb_get_reg_bits(env) / 8;
+     default:
+         return 0;
+     }
+@@ -85,7 +90,7 @@ int ppc_cpu_gdb_read_register(CPUState *cs, GByteArray *buf, int n)
+ {
+     CPUPPCState *env = cpu_env(cs);
+     uint8_t *mem_buf;
+-    unsigned r = ppc_gdb_register_len(n);
++    unsigned r = ppc_gdb_register_len(env, n);
+ 
+     if (!r) {
+         return r;
+@@ -127,7 +132,7 @@ int ppc_cpu_gdb_read_register(CPUState *cs, GByteArray *buf, int n)
+ int ppc_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
+ {
+     CPUPPCState *env = cpu_env(cs);
+-    unsigned r = ppc_gdb_register_len(n);
++    unsigned r = ppc_gdb_register_len(env, n);
+ 
+     if (!r) {
+         return r;
+@@ -251,7 +256,7 @@ static int gdb_get_spr_reg(CPUState *cs, GByteArray *buf, int n)
+         return 0;
+     }
+ 
+-    len = TARGET_LONG_SIZE;
++    len = gdb_get_reg_bits(env) / 8;
+ 
+     /* Handle those SPRs that are not part of the env->spr[] array */
+     target_ulong val;
+@@ -294,7 +299,7 @@ static int gdb_set_spr_reg(CPUState *cs, uint8_t *mem_buf, int n)
+         return 0;
+     }
+ 
+-    len = TARGET_LONG_SIZE;
++    len = gdb_get_reg_bits(env) / 8;
+     ppc_maybe_bswap_register(env, mem_buf, len);
+ 
+     /* Handle those SPRs that are not part of the env->spr[] array */
 -- 
 2.55.0
 
