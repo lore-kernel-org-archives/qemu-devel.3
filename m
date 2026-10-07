@@ -4,72 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 889F1CA5FF1
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 09:13:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27C05CA5FFF
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 09:14:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xENZW-0005k1-18; Wed, 07 Oct 2026 05:04:22 -0400
+	id 1xENL1-0002tI-EJ; Wed, 07 Oct 2026 04:49:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xELEL-0001PB-MU
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 02:34:42 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xELEG-0003mq-Cv
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 02:34:17 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1791354855;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=y5l6Kzz1LZc0Cvm+ifQAVuzVKkRoqBfsRmYLK4cfhMQ=;
- b=C8q0l4YxBn8bPwRF30VBe9aX2reNSnPLXz0CB9GGf5wZlJ2XMixXL+rn+uCwGaH2XHn0D+
- K222Nj/G+fCRKLI0iNwG6EIAuDyXzRGuC+QCbkf4f8KDog+AbK3USWwnPXui0tcWr9ONWF
- m0eFBJjC7giLz1NhtwXcc9LufYqWtUM=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-557-F-ssqME0OkmQUORY-Xeepg-1; Tue,
- 06 Oct 2026 01:58:36 -0400
-X-MC-Unique: F-ssqME0OkmQUORY-Xeepg-1
-X-Mimecast-MFC-AGG-ID: F-ssqME0OkmQUORY-Xeepg_1791266315
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E0B641802668; Tue,  6 Oct 2026 05:58:34 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.2])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7E7D341D; Tue,  6 Oct 2026 05:58:34 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 1DC7F21E6A04; Tue, 06 Oct 2026 07:58:32 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: John Snow <jsnow@redhat.com>
-Cc: qemu-devel@nongnu.org,  Pierrick Bouvier
- <pierrick.bouvier@oss.qualcomm.com>,  Michael Roth <michael.roth@amd.com>
-Subject: Re: [PATCH 01/11] docs/qapi-code-gen: change "x.y.z" to "x.y" for
- Since: documentation
-In-Reply-To: <20261001172239.2825745-2-jsnow@redhat.com> (John Snow's message
- of "Thu, 1 Oct 2026 13:22:28 -0400")
-References: <20261001172239.2825745-1-jsnow@redhat.com>
- <20261001172239.2825745-2-jsnow@redhat.com>
-Date: Tue, 06 Oct 2026 07:58:32 +0200
-Message-ID: <871pa3fjzr.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <narimansayed28@gmail.com>)
+ id 1xEJsp-0001cF-Gq
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 01:08:32 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <narimansayed28@gmail.com>)
+ id 1xEJsj-0005Iq-Qp
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 01:08:02 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-4a180fbeef5so1670325e9.1
+ for <qemu-devel@nongnu.org>; Tue, 06 Oct 2026 22:07:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1791349672; x=1791954472; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=7JL+4Zj49P9nveo4st+u2ctd/d1goJVIhpcV0zWCWus=;
+ b=mRWQBL3S9DrXJcS/mlY7/c2q2Vkz9OukBoWCc6esmIveGvFpSa2lZ8jOJnQnQM8rvL
+ 4agnsZVWhZDdX2fILupi/jj6vTRTx1fTBqOnsv5YVj5KJF7O4VMDUwEWQSp2SQ9eXAOb
+ oXcn/3NBlO1PTceQ3urFmSGxCPadu0y0lfqdUDdWvRJarfKmXJRsZTqJMW/uoaWSUYud
+ EtwrmOjofZqSX/qHPwyPmH61xtoPa2D8PrQ5z62MfKgJEEwJ5RvdSkVpzPSeLrFKw3Om
+ uKuJmDIloUZlPYDdUnHqqbRzkKBAAfFhItGVtjFAGD9ZMuo3bGS9PuQbn2rJMZN40Syd
+ /J0g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1791349672; x=1791954472;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=7JL+4Zj49P9nveo4st+u2ctd/d1goJVIhpcV0zWCWus=;
+ b=C9QPfQCh/fWvtb0mRg3KoV5o1VtsamiZWlpIIhiTT7/iYSQhQwhZZ4rQMWGhWFSkyh
+ tbjsVSFauE2y7bJfTzM2EWsb56FntLzichTvQIo/b5/P5AU8BLwbKipf41IVFnkw01u+
+ QTlg11otUq/f/xqz8cK1mvKnGXzAqQN29qXQTUZceGYUf5Z0QRIMwqL4ewtcRpQfEfuu
+ GJu3DxpAZw9lOvXhtCqHfI0kiz8NET10QAn25HBHfCJdJJOy1wv2i2rztsgyC1ObnS//
+ naZ9/kc6oIFFEad/4oDMpUmY7kzreHCsAaAHBpUpBCv2X4X0SCoyauAHsM7QjEWFbgDq
+ mlOw==
+X-Gm-Message-State: AFuF++l+Yex+1Xv0IRZeMye7HjsXn/xSRb7lGbQkt+6gywEzVP06GjKy
+ 026DFy9Uv9qWYZ8Y/BmGnIviz52p2wLJjtQYV9Y9ip2SwjFMM06w0lc11c3UfLCEOh4=
+X-Gm-Gg: AYBFou0hYBP348Jq4FHETRY1GRYs8w7d6t9876E/YDGzqklXoErlFyeD0piily1IrdK
+ plbDwh3EPl72G0EwHo13IOfrPBJfPPvKqQuBsfy0dy5Ltx+tSfou1pbbCKqEDxyujRO+GSHnRSd
+ zzjKctfARMKmr+onS54OjFWPEt/WchUNbm0MJil04KKNF1q4mx/SrUsxvd47GvfqPNSOGBQAD2B
+ xBKNporTjOMCZIjpVU7yz2UwOgA1JREKYHeKNhf0mPy2p9+Z6Ac6yJBlcZTCRSN/vbzRIvPZn0m
+ MmYRj3Dm+LU95ejNuoP1P4UjOYvi2f+K4mhuHBbFRqZ7wBUAQwejooS+fmC9zCpuDjxOtpp6uVc
+ KvqQG6HpSsgCvsLm2XHQQZsTZoooA+7fYoVnLCDDR83ZrzxtYhNyvEt3zHzUHR4J9eHcihNW9/4
+ +pKaP62fiq22gvTDRHJXHv32GD+wD+obwG9bmsfpo6+0BMxp8AHXAW3NCRhejWvLRnG7CLFF68s
+ EA1p5M2cq15ScJ5n6zPJPCH
+X-Received: by 2002:a05:600c:3b0a:b0:4a1:70da:3350 with SMTP id
+ 5b1f17b1804b1-4a180679e58mr10765145e9.32.1791349671857; 
+ Tue, 06 Oct 2026 22:07:51 -0700 (PDT)
+Received: from DESKTOP-2SK3BJA.localdomain ([197.49.190.197])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4a17f795f29sm33359315e9.11.2026.10.06.22.07.49
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 06 Oct 2026 22:07:50 -0700 (PDT)
+From: Nariman Sayed <narimansayed28@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: Jason Wang <jasowangio@gmail.com>, "Michael S . Tsirkin" <mst@redhat.com>,
+ Nariman Sayed <narimansayed28@gmail.com>
+Subject: [PATCH v2 0/3] net/tap,
+ virtio-net: auto-detect MTU from host tap device
+Date: Wed,  7 Oct 2026 08:07:15 +0300
+Message-Id: <20261007050718.926-1-narimansayed28@gmail.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20260816043451.2547-1-narimansayed28@gmail.com>
+References: <20260816043451.2547-1-narimansayed28@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
-X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=narimansayed28@gmail.com; helo=mail-wm1-x32a.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -86,29 +103,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-John Snow <jsnow@redhat.com> writes:
+This series adds automatic detection of the host tap device's MTU
+and exposes it to the guest via VIRTIO_NET_F_MTU, addressing
+gitlab.com/qemu-project/qemu/-/issues/3155.
 
-> We prefer using only x.y for Since: tags, not x.y.z.
+Currently, host_mtu= must be set manually on the virtio-net-pci
+device, duplicating the MTU already configured on the host's tap
+interface. This series adds a new mtu-from-tap boolean property
+(default off) that, when enabled, automatically reads the backend's
+MTU and uses it for the guest, avoiding the need to specify the
+value twice.
 
-True:
+v2:
+ - Addressed feedback from Eugenio Perez Martin: rather than
+   checking for NET_CLIENT_DRIVER_TAP and calling tap_get_mtu()
+   directly, added a generic get_mtu callback to NetClientInfo and
+   a qemu_get_mtu() wrapper, following the existing qemu_has_ufo()
+   pattern. virtio-net.c now calls qemu_get_mtu() without any
+   backend-type check, so other backends (e.g. vhost-user,
+   vhost-vdpa) can implement get_mtu in the future without
+   requiring any change to virtio-net.c. (patch 2 is new as a
+   result; patch 3 updated accordingly)
 
-    $ git-grep -Ei '\(since [0-9]+\.[0-9]+\.' qapi
-    qapi/block-core.json:#     Not set if the job completed successfully.  (since 2.12.1)
-    qapi/crypto.json:# @sm3: SM3.  (since 9.2.0)
+The series is split into three patches:
+ - patch 1 adds a helper to query a tap fd's host MTU (Linux only,
+   with build-safe stubs for BSD/Solaris/stub backends)
+ - patch 2 adds a generic get_mtu NetClientInfo callback and wires
+   it up for the tap backend
+ - patch 3 adds the new virtio-net property and wires it up,
+   including a note on a config-space sizing timing issue
+   discovered during testing
 
-The latter could be shortened to 9.2 for consistency.
+Tested manually with a tap device configured for MTU 9000 and an
+Alpine Linux guest, confirming the guest correctly negotiates
+VIRTIO_NET_F_MTU and reports the expected MTU. Also tested by
+Aniket Sahu on ppc64le/POWER10 with a SLES guest.
 
-The former was merged into master as commit ab9ba614556 on 2018-05-15,
-released in v3.0.0 on 2018-08-14.  It was picked into stable as commit
-0779afdc897 on 2018-07-18, released in 2.12.1 on 2018-08-02.  We do such
-things all the time, but this is the only time we recorded a stable
-release.  I think we could replace it by 3.0 for consistency.
+Nariman Sayed (3):
+  net/tap: add tap_fd_get_mtu() to query host tap MTU
+  net: add generic get_mtu NetClientInfo callback
+  virtio-net: add mtu-from-tap property for automatic MTU detection
 
->                                                      Adjust docs
-> accordingly.
->
-> Signed-off-by: John Snow <jsnow@redhat.com>
+ hw/net/virtio-net.c            | 10 ++++++++++
+ include/hw/virtio/virtio-net.h |  1 +
+ include/net/net.h              |  3 +++
+ net/net.c                      |  9 +++++++++
+ net/tap-bsd.c                  |  5 +++++
+ net/tap-linux.c                | 30 ++++++++++++++++++++++++++++++
+ net/tap-solaris.c              |  5 +++++
+ net/tap-stub.c                 |  5 +++++
+ net/tap.c                      |  8 ++++++++
+ net/tap_int.h                  |  1 +
+ 10 files changed, 77 insertions(+)
 
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
+-- 
+2.34.1
 
 
