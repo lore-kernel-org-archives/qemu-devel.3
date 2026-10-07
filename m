@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF0F2CA5FFF
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 11:54:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0647ACA5FF1
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 11:54:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xEQDE-0008UW-GV; Wed, 07 Oct 2026 07:53:32 -0400
+	id 1xEQDd-0000Ql-3d; Wed, 07 Oct 2026 07:53:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xEQDB-0008SL-JO
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 07:53:29 -0400
-Received: from mail-dy1-x1334.google.com ([2607:f8b0:4864:20::1334])
+ id 1xEQDV-0000Ej-H8
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 07:53:52 -0400
+Received: from mail-dl1-x1231.google.com ([2607:f8b0:4864:20::1231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xEQDA-0007xx-0f
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 07:53:29 -0400
-Received: by mail-dy1-x1334.google.com with SMTP id
- 5a478bee46e88-33c2520ad38so3987719eec.1
- for <qemu-devel@nongnu.org>; Wed, 07 Oct 2026 04:53:27 -0700 (PDT)
+ id 1xEQDU-0007zu-0g
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 07:53:49 -0400
+Received: by mail-dl1-x1231.google.com with SMTP id
+ a92af1059eb24-15756f82e8aso1130837c88.1
+ for <qemu-devel@nongnu.org>; Wed, 07 Oct 2026 04:53:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1791374006; x=1791978806; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1791374026; x=1791978826; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=y/n2W1Aed3myqHNBQyYhTG0fof+USqcnKZ3df3b6IGk=;
- b=mAmQ6q+DZa9FvksxBhqK13PC06sYuUthxRX/G6ewppban9CDuvcntmeptgwwU3xymV
- XK/s8X1UQOww3IQgVlCMqsIt0PyHPNPOeorzj5aOzND7iaB0D+Vz7b+csX4auPqiiNPt
- UIz0qa15730yluBa3WIr4xkZD0kt+i3RACBsKfQ47IHycJkfW3cqkeJvCqwkAI7H0tYM
- ZtQvalWOPTK2WSneEboNxBP+53/M9SlWIpwv9hU0k6o2sFMv4s0I0pjzdB1IMKbWBtma
- 4JgeNtLVYt8xWxyRY5xxN8I4a2ygfsdyaH0bpibHb0f6Dv91KxJyE4cAwze4s1nDZiSe
- 5cVA==
+ bh=3776CLp541OEwyOHu/UC1V9cuWUL7746DEpJsnTYqMk=;
+ b=XfjUw1ENz/bqATs7+ggLntpdHtaCEUQ5hO0MU8D0Oxxao8acCB+ki8CftMx2B8qtPb
+ r69sYA2T19vuwxcvqSSBXW7P6JN6U5e6tmCUo4gTEnQaUtq4Qz405odus2J64gILkZft
+ meCc5jpdmLjDeV7uf849wKYUsufV7d4JvU0GYy0ifzBwjOdmUDIHit2r0XBjitPkNaF+
+ 4ac1AFFXL5NxCmBkc5VK4m+ya4fhXgrIm8vyJMNputodeTmKZdr6+rBSE1TPpTD5D43q
+ kcZuH0kTY0q61m8YNZZ2RT7s0yEHrpPkrhHmhgKcr48Jd1sFQaTsFfDa1KLuUCX/n8zP
+ TEwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791374006; x=1791978806;
+ d=1e100.net; s=20260707; t=1791374026; x=1791978826;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=y/n2W1Aed3myqHNBQyYhTG0fof+USqcnKZ3df3b6IGk=;
- b=gYUCS1OR9qJ0akvQfOz5ULNcANiEwTYwW11/izlwT2kSw4YARZIS9LHM42525GCgHe
- Gm0U6Ov1plfglKQDpuhrJl7+ytl6sVbRr1KXrJHaeuLNx+9F6ygIuKtEWHEgyYd/Z+ZL
- c0uLrTXxIg2vCReI7Cup1UxRmCsRH6EGs3unAVVS/6/leG/lEg6FizNvy8TYMzLrmT97
- k7p7+bDwjNr5nI01wpWcCIfsy0AFZycBMdbD9+X5pVsxBk0U5S0vSGNv1qc6DInf8Lvg
- L0JFsGo9gUfrgXMeiBqSjj0IicIfio4so3N1PgTMzR7OJjgyn96kQVMP/7tnjO5+IS6D
- VnEQ==
-X-Gm-Message-State: AFuF++kmO+9WA+sx+gMlsoUWzCq16VueGgnofo//ZpbKLcUuapB/8kDx
- H3fsehXXIvCkiD1ZFNYj/4VeDpo+EmkBV1RkT7+OB3brsGZQ0mPMlbvSvjhBV4Pc
-X-Gm-Gg: AYBFou1EXSLagjym7IDQxdi6DdzCSnwGrTDyLrWljCJnBPAJQSL29Rja+oCed839yBW
- eweFn7qcqZG87qgT2TWE/oy0dPOyzKRpLmzhPn7NL6yXZ52+8Yo8T4Y1/yAvHDnhXKtOFAjEiLa
- 4WZGWaEMTj2WFjBEIKx029E57wSY1994lhPYmHoKRjsUD4obCEHZeS7Y/RVhyuJIsfI4PSAokPJ
- ysT1rL7Y4sRNBKetKIzVktDcxbJ+ANxwWadQl1kjUEkC+0BXV7f55v0hZX5VvJBQ3PwDnBc02MF
- 2UwHJAUDJYslFPk3FUI18ZNDJwNwGS9rdy0x22r3qbsb8dIz8TItZaXqs2mw9hsCnBbHP50XZOQ
- AcfhqOVfr7n/IZW3kXY3P3wQ0t5PK29iF6igl9jN3RLhysOgnwp60oUInICtGhjEKNYXsY9Hg7I
- nEofBicHApLbKtyMPSXaApKMC+oF0WwIy1x/LJer5LuXw40C2WyCoEJAeojVhQ2Q3eqzmebsfDu
- KyjcIrNXuwgHoBp5g==
-X-Received: by 2002:a05:701b:4183:10b0:151:ece6:b171 with SMTP id
- a92af1059eb24-162041de4a1mr2065651c88.14.1791374006190; 
- Wed, 07 Oct 2026 04:53:26 -0700 (PDT)
+ bh=3776CLp541OEwyOHu/UC1V9cuWUL7746DEpJsnTYqMk=;
+ b=DS3mjweMsORROKWeVHgFJnx7XOW32aLV6DI59j4S+jyTImA9YRAnohT7/83p4kfjS/
+ NNW7c7hU1b8SRODGVykEkxPkf4XqX47ryS0yQSp/ig2MmUESUfkvTysRL1CtFxkFsF9/
+ xrCnnoy/gdBX0OO2hpyiSR7UJ54SblcRqvmokC6bd241oyyXJw6H0LdD7E2D28QiXsVP
+ 46blM3WWHM1EbRHWfRHbBcePFpzUL9gaMXyuGU6jsn28Z5OoOuDeTZiDWJ6iMUT9reEc
+ /LNucYKcvOAbwVzPzQkVo967beB05jySSgGU86xDUe70lcnmE8ipcLzX53qDGkmQwlSG
+ eWJA==
+X-Gm-Message-State: AFuF++nYwZ1Jq2ND55Vr4I0+3s7j8rGFBMkle3xVEGgY7tmxdAFmFs4X
+ SNmNcztXIW3oYpyAT0BQGpLyyTid1uwabJnUS6ECXt6Vj7WL3csrF51+6ZXi6zhg
+X-Gm-Gg: AYBFou1UZpQrYsiXU/9oszhQ0DOMkR38oJUFpQSROYr3GGSCpbuKtZ7mPi6DTIhnEsq
+ xHPezk3729g18pSFvtEPsu0cw4tqi9BzYa08q3W0d290IEt7RLF8nJfedtcp028AHEOa1zFlUai
+ 2Leb/gFPlVooiDOilo9h7xGvZB19HofyYYku4dKge5k6c9b6LOkL6f3dmfNzhD4uOKTOlkEY8Jb
+ 8mK48lbaDlPUPBAVu62ecVBOMLcIJY0A6ZEgWaTLAeuuOu3MmQy/iNQ194DJYC/XZWN1ocmSepm
+ ykRhVSWleObFXyZJfF5Je+jkZfGXiG7r6ZuW72A/vs0R2qb333MVnvj1cl4HZseTrUuX/c/qUcF
+ hi06D7yeuPrnLyHZSRux0b3vX1DPLI00AheXGJhAlGv2n++N0S06K2um994honG7+41etDFqbe6
+ iHO5OQCRKG5/n9TwmJCRID1rEkQa6oQcHO7cQMT2TsRl0O9T4pyoQwncmKrLjoD5UZcGB0I5lUA
+ uV7FUb42FHAqBf+s6U=
+X-Received: by 2002:a05:7022:439b:b0:14a:a6dc:9cbf with SMTP id
+ a92af1059eb24-16205044165mr2803386c88.4.1791374026296; 
+ Wed, 07 Oct 2026 04:53:46 -0700 (PDT)
 Received: from DESKTOP-Q716RM7 ([103.94.185.75])
  by smtp.googlemail.com with ESMTPSA id
- a92af1059eb24-1616980c3b7sm6429520c88.16.2026.10.07.04.53.20
+ a92af1059eb24-1616980c3b7sm6429520c88.16.2026.10.07.04.53.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 07 Oct 2026 04:53:25 -0700 (PDT)
+ Wed, 07 Oct 2026 04:53:45 -0700 (PDT)
 From: Yonggang Luo <luoyonggang@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
@@ -85,24 +85,23 @@ Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Steven Lee <steven_lee@aspeedtech.com>, Alexander Bulekov <alxndr@bu.edu>,
  Darren Kenny <darren.kenny@oracle.com>
-Subject: [PATCH 3/8] target-info: rename target-info-impl.h to
- target-info-def.h
-Date: Wed,  7 Oct 2026 19:48:00 +0800
-Message-ID: <20261007115253.328-4-luoyonggang@gmail.com>
+Subject: [PATCH 6/8] meson: load all target .mak files into target_mak_all
+Date: Wed,  7 Oct 2026 19:48:03 +0800
+Message-ID: <20261007115253.328-7-luoyonggang@gmail.com>
 X-Mailer: git-send-email 2.55.0.windows.3
 In-Reply-To: <20261007115253.328-1-luoyonggang@gmail.com>
 References: <20261007115253.328-1-luoyonggang@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1334;
- envelope-from=luoyonggang@gmail.com; helo=mail-dy1-x1334.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1231;
+ envelope-from=luoyonggang@gmail.com; helo=mail-dl1-x1231.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,116 +117,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Rename the TargetInfo structure header and its include guard.
+Load every configs/targets/*.mak once into target_mak_all, keyed by
+target_dirs_all, with TARGET_BASE_ARCH defaulted to TARGET_ARCH. The
+per-target loop now takes its config from target_mak_all instead of
+loading the file again.
+
+target_dirs is still the --target-list filtered subset and is the only
+list built. target_mak_all is for later use by code that needs target
+properties independent of --target-list, such as generating
+TargetInfo helpers for every target.
 
 Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
 ---
- include/qemu/{target-info-impl.h => target-info-def.h} | 4 ++--
- include/qemu/target-info-qom.h                         | 2 +-
- page-vary-common.c                                     | 2 +-
- page-vary-system.c                                     | 2 +-
- target-info-def.c                                      | 2 +-
- target-info-qom.c                                      | 2 +-
- target-info.c                                          | 2 +-
- 7 files changed, 8 insertions(+), 8 deletions(-)
- rename include/qemu/{target-info-impl.h => target-info-def.h} (94%)
+ meson.build | 20 ++++++++++++++++----
+ 1 file changed, 16 insertions(+), 4 deletions(-)
 
-diff --git a/include/qemu/target-info-impl.h b/include/qemu/target-info-def.h
-similarity index 94%
-rename from include/qemu/target-info-impl.h
-rename to include/qemu/target-info-def.h
-index cf42aabbc8b..8019d2c7196 100644
---- a/include/qemu/target-info-impl.h
-+++ b/include/qemu/target-info-def.h
-@@ -6,8 +6,8 @@
-  * SPDX-License-Identifier: GPL-2.0-or-later
-  */
+diff --git a/meson.build b/meson.build
+index fd7a4f68389..d070dafe2a9 100644
+--- a/meson.build
++++ b/meson.build
+@@ -3239,6 +3239,21 @@ config_target_mak = {}
+ config_base_arch_mak = {}
+ config_target_info = {}
  
--#ifndef QEMU_TARGET_INFO_IMPL_H
--#define QEMU_TARGET_INFO_IMPL_H
-+#ifndef QEMU_TARGET_INFO_DEF_H
-+#define QEMU_TARGET_INFO_DEF_H
++# Load every configs/targets/*.mak unconditionally; target_dirs is the
++# --target-list filtered subset of target_dirs_all.
++target_dirs_all = run_command(python, '-c',
++  'import os, sys; print(" ".join(sorted(f[:-4] for f in os.listdir(sys.argv[1]) if f.endswith(".mak"))))',
++  meson.current_source_dir() / 'configs/targets',
++  check: true).stdout().split()
++target_mak_all = {}
++foreach target : target_dirs_all
++  mak = keyval.load('configs/targets' / target + '.mak')
++  if 'TARGET_BASE_ARCH' not in mak
++    mak += {'TARGET_BASE_ARCH': mak['TARGET_ARCH']}
++  endif
++  target_mak_all += {target: mak}
++endforeach
++
+ disassemblers = {
+   'alpha' : ['CONFIG_ALPHA_DIS'],
+   'avr' : ['CONFIG_AVR_DIS'],
+@@ -3318,7 +3333,7 @@ foreach target : target_dirs
+     }
+   endif
  
- #include "qapi/qapi-types-common.h"
- #include "qapi/qapi-types-machine.h"
-diff --git a/include/qemu/target-info-qom.h b/include/qemu/target-info-qom.h
-index 8b6e1ece969..ba2e4370afb 100644
---- a/include/qemu/target-info-qom.h
-+++ b/include/qemu/target-info-qom.h
-@@ -9,7 +9,7 @@
- #ifndef QEMU_TARGET_INFO_QOM_H
- #define QEMU_TARGET_INFO_QOM_H
+-  config_target += keyval.load('configs/targets' / target + '.mak')
++  config_target += target_mak_all[target]
  
--#include "qemu/target-info-impl.h"
-+#include "qemu/target-info-def.h"
- #include "qom/object.h"
+   target_kconfig = []
+   foreach sym: accelerators
+@@ -3348,9 +3363,6 @@ foreach target : target_dirs
  
- #define TYPE_TARGET_INFO "target-info"
-diff --git a/page-vary-common.c b/page-vary-common.c
-index ddd08633788..5a4654725a8 100644
---- a/page-vary-common.c
-+++ b/page-vary-common.c
-@@ -20,7 +20,7 @@
- #define IN_PAGE_VARY 1
- 
- #include "qemu/osdep.h"
--#include "qemu/target-info-impl.h"
-+#include "qemu/target-info-def.h"
- #include "exec/page-vary.h"
- 
- /* WARNING: This file must *not* be complied with -flto. */
-diff --git a/page-vary-system.c b/page-vary-system.c
-index 6c49c10e23b..9773685dc16 100644
---- a/page-vary-system.c
-+++ b/page-vary-system.c
-@@ -20,7 +20,7 @@
- #include "qemu/osdep.h"
- #include "exec/page-vary.h"
- #include "exec/tlb-flags.h"
--#include "qemu/target-info-impl.h"
-+#include "qemu/target-info-def.h"
- 
- QEMU_BUILD_BUG_ON(TLB_FLAGS_MASK & ((1u < TARGET_PAGE_BITS_MIN) - 1));
- 
-diff --git a/target-info-def.c b/target-info-def.c
-index d121b8c0170..fa19cabc55f 100644
---- a/target-info-def.c
-+++ b/target-info-def.c
-@@ -8,7 +8,7 @@
- 
- #include "qemu/osdep.h"
- #include "qemu/target-info.h"
--#include "qemu/target-info-impl.h"
-+#include "qemu/target-info-def.h"
- #include "qemu/target-info-init.h"
- #include "hw/core/boards.h"
- #include "cpu.h"
-diff --git a/target-info-qom.c b/target-info-qom.c
-index 3ae1627b8fb..aeeedb7e818 100644
---- a/target-info-qom.c
-+++ b/target-info-qom.c
-@@ -9,7 +9,7 @@
- #include "qemu/osdep.h"
- #include "qapi/error.h"
- #include "qom/object.h"
--#include "qemu/target-info-impl.h"
-+#include "qemu/target-info-def.h"
- #include "qemu/target-info-init.h"
- #include "qemu/target-info-qom.h"
- 
-diff --git a/target-info.c b/target-info.c
-index ab43c9f802c..6b365113955 100644
---- a/target-info.c
-+++ b/target-info.c
-@@ -9,7 +9,7 @@
- #include "qemu/osdep.h"
- #include "qemu/target-info.h"
- #include "qemu/target-info-qapi.h"
--#include "qemu/target-info-impl.h"
-+#include "qemu/target-info-def.h"
- #include "qapi/error.h"
- 
- const char *target_name(void)
+   # Add default keys
+   config_target += { 'TARGET_' + config_target['TARGET_ARCH'].to_upper(): 'y' }
+-  if 'TARGET_BASE_ARCH' not in config_target
+-    config_target += {'TARGET_BASE_ARCH': config_target['TARGET_ARCH']}
+-  endif
+   if 'TARGET_ABI_DIR' not in config_target
+     config_target += {'TARGET_ABI_DIR': config_target['TARGET_ARCH']}
+   endif
 -- 
 2.55.0.windows.3
 
