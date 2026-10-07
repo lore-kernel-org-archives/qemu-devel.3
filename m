@@ -4,134 +4,135 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D492CA6007
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 09:56:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A495BCA5FFF
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 09:56:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xEOMO-0001da-MT; Wed, 07 Oct 2026 05:54:53 -0400
+	id 1xEOLV-0000dv-UK; Wed, 07 Oct 2026 05:53:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xEOGE-0000TV-7g
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 05:48:40 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ id 1xEOEb-0008St-6m
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 05:46:56 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xEOGB-0000tC-IL
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 05:48:29 -0400
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+ id 1xEOEZ-0000i7-J1
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 05:46:48 -0400
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6977jeHx3194063
- for <qemu-devel@nongnu.org>; Wed, 7 Oct 2026 09:48:26 GMT
+ 6977japx1873499
+ for <qemu-devel@nongnu.org>; Wed, 7 Oct 2026 09:46:46 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- iTh5m2YQTWXSBC0GlLmXdtPPGcPnrBBEZumeLXJTLqA=; b=F1SLOlSFe6qT4xKG
- kR+oIvHSDXXzHnWOdlUmgHGFthqG7BK0RtP4cEaxgSD4xIN0grJ7eDcBKaMK0Foi
- nIOmi2dR5oO7Pj/yU55Bm4ccSwBcJyuWZZU/Bs0LQq/1ac2EHWocJMALRG0ZqgfK
- hJDRtEidMaQ/T2UAXsbH7i+9gmI8QCy/Q7IQXJ+Ukx0RinZYyxuTfIzGTH8MKXW/
- TVNv9eDGEQxIbjwYQ2RaRFSRT2eOzc90pKHbTv7IOsP1CjrTvbg8Mcp2l3YZ0eDt
- uRFJu+FEduQvH3YXAqTdyth7a3q3v6beE2lHL6MoZyVOyof/8dxq8LS6/38RD5SF
- U/vvCw==
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h541ukpt6-1
+ Mw6FdQ5AtA9pUNFmEgch+ZbOHFxRIvXAKyzbh+eOPaU=; b=iTaj3WrviVI/rIL6
+ 227K4k/WyAvrGkhAVzI6/UetaJVBZTrIyYe2IgSgkhtY8Yb7hzLh91Bi9Q1EdtQK
+ Zk1BpQ0K7agBlP4p4/IgwpVQ3wzINVIBOGasrvol4kIhDkS57w+rKiI7lUj+tKS0
+ QnnNogvLTuqBPsO2ah3lYCY09lQuJxAu0MCocgSZNdKUlkpNn0yUQXEYMoICVlRU
+ TXdBp2JeEekenx/Um29MO+LtebXG+1iBvMiPhh6697WX+lw2/xQ8+oyiuc6ELZjj
+ eplsGWuPh/NusJukp6cNB0sWfNKiqcbmGzKLRRJ3oM1Pd8iTJhGEQ5vfPzghJlEA
+ vrn1dg==
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h5fw8rtk4-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 07 Oct 2026 09:48:26 +0000 (GMT)
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-93e46b4b700so642262885a.1
- for <qemu-devel@nongnu.org>; Wed, 07 Oct 2026 02:48:26 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Wed, 07 Oct 2026 09:46:46 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-93caa0ce0cdso470051885a.2
+ for <qemu-devel@nongnu.org>; Wed, 07 Oct 2026 02:46:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1791366506; x=1791971306; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1791366405; x=1791971205; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=iTh5m2YQTWXSBC0GlLmXdtPPGcPnrBBEZumeLXJTLqA=;
- b=QA1kjaP7qTbKm46Ca4YvgcvO7QHPv7M2NidTKKzr68jAg/RWi6+C2Vni+vdKXYox1r
- Rl4BmJx6uiiKluMUs4v9ubVZZS0BbTg6QVmlZJIIM5BPJsJS1C+OkUXtxXyjPI07CzhU
- 2tGJ3VzLkXwll/+XzECqmmdta4sTXVj1D/KgZV19CcfeFDSz90xSJw0BliCoPHeIdcV5
- ILZh2TAyrxSfD/mVUT6COnB/bdweLjf30DVrxQkE7Th15T96uaobpCyDyORUfJfawN0I
- kozut9dQTZ5WDDLemqMNSZrwWXqO+/ecIZsNRYb0vWizy53hAaEW2POhmepWyEa1LRb7
- pCtg==
+ bh=Mw6FdQ5AtA9pUNFmEgch+ZbOHFxRIvXAKyzbh+eOPaU=;
+ b=f7hmIVZpBuJ1DfWJfV3f8D7yaXKZ5ggonYbk5B6CDmOxGjnNQALitTwEZT+KeCMfZI
+ fDJ5wUBfanntWWlJzpgP9RTfg4NauvHD3KcVgFzE0DBDzfrbUSvgr1AH9WRhwLQF1O+g
+ qH3ENz2YsF7F1h42tMRFvI6ZvptXYjRhTRExhIjy8x+p0LcqJcGVM9xHeiKHieiY98uZ
+ sX5y0UGIvrr7mRt/c/XLSay2MX6DZA/AICM5VEI/02Py3vMJ3xG9IyEFPBEkaRfc78yO
+ R1MUjT1jSBxshmESi6U8mRiCdwr7lBD+vPoE53Ii3l/3C5yhVFrEdl7dLChlz6X+XIVg
+ UjGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791366506; x=1791971306;
+ d=1e100.net; s=20260707; t=1791366405; x=1791971205;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=iTh5m2YQTWXSBC0GlLmXdtPPGcPnrBBEZumeLXJTLqA=;
- b=VT2/y4hyCRO8VjbiOvlPlvlKHyAjXjUPU8+eFUECHdHEbWYITbWi1i79syPAvizWeh
- ppj/UgTmd5nSsSGsqyFLc25/KH+5qQB7X95PgeROJmEImBGeqowhM2PYGX42O/T6kPs8
- R0LjANfjVuQWNOLGaFd4Wzficf4bYSWXqknYBGQ+bVnFCI18iso+/Bi6yl588TDzAuCf
- T25SkEGxRiQ6uWPim9wfu4YI0kpZk5vUDHDx6QI7tZ68VZRdkXvODL6TBzAhrLqkXN8e
- WjR7tGy7p5azh6IVAtY6PEW2aDDjAXD1kjyCJKVhEDVb/mQj5tJvCTI3aDbd6p6irfx6
- Dg4Q==
-X-Gm-Message-State: AFuF++m+JHPPwzarrHqxg6H3pGd3pg4EW1fk4fWxY77Hz249h0ubx+qP
- aJBMo3xq/NVZtPURU0xne+sHzfrpAyAG8KpP0RZxNnxWaSvR8Y0m/rNvEYZOzPiz3PtGFcBqzPj
- oQ3f+PmEoze99EAzOa0mSX9yLNbhEl90LFodF0+Xq9dDNCoJ23TSV8gcdZw7q81EXDtr8
-X-Gm-Gg: AYBFou0Bp6hOVvWeJ8prC7OQIRFXzQWOSOFDkJmdZ1tXXJUTx8ZKQXUDJx4F47MP77H
- 2HfpsEZkPA8HThJBJepLlKQZ2mu/2bqB79UThuRvO1EE7L+UjrlooF2YxponeQb01GX2Sq7cie4
- sBBdWjY9dPJ2ZL7IjFZJK41e1DLeduR96hyPqovTDxyjLMRKAYIPzRBzWaB7+0jsGe54VUoUCZt
- suhrvSUZs7KUNfzQyDJfiNbXV3pjK11BhrJuLil2X8fGnv7o/pnxewLpBOakfjIYxUu1yQ2oMrG
- sav184ebysp71spvsC5JDbnOMX9a7rd0jayzx5AS8sFf7ZfWGOo1Ay9ILyji2s0EvZ8NlfbNstN
- Y2RQwvumovlhF3FiEu3nVO83dw+SOQ07zZ/FF9d67
-X-Received: by 2002:a05:620a:26a9:b0:937:11c9:37f1 with SMTP id
- af79cd13be357-93e9b74c37emr294935185a.16.1791366505652; 
- Wed, 07 Oct 2026 02:48:25 -0700 (PDT)
-X-Received: by 2002:a05:620a:26a9:b0:937:11c9:37f1 with SMTP id
- af79cd13be357-93e9b74c37emr294932885a.16.1791366505218; 
- Wed, 07 Oct 2026 02:48:25 -0700 (PDT)
+ bh=Mw6FdQ5AtA9pUNFmEgch+ZbOHFxRIvXAKyzbh+eOPaU=;
+ b=fdMZuGFYjoFCJ3m9I/vOVEBMSjg8qr1OTsHaIoDZTw8lDh7EIVI0HCK8VuEC3gx8iW
+ 6cuoCUMT1Rs6Z/IoDFVUY2V7axZWKisSezv99DxqS7sYrsAI902H/4hExsyjgiSSsYRa
+ EVF69vfBoj1oRdZ56lUveUZQSU6bF6j7SjEox1I88Fd3mowlJxvP6LCv5Hh83JK2xrp1
+ lD1qsloJ0qKqO1yvdHCx1CeRkJn+E9R287iPaZImF1rmUDRGuzcmIdpaoqMwDS8QZoKp
+ ZNxH1U/KDb83Jc3OHo9fGuuUEA1Suo1tw7SyCFvT9qB/3F5a3P1Q5IGzY+mnJfEcNctf
+ SKtQ==
+X-Gm-Message-State: AFuF++n+RAI9OuziDDXIM2aGb7rKB7IkFPPxt7RwyYpG9EsonYJ5N2zE
+ 1auuC6RmBmJ21wdNExX1RKmQaAwuA/vBuPUNh4QI5sqh8MLbWN6NQLvU5snb8CTFGZ3AnWeRu17
+ x6yN6Ec2ExU0QhU8voLrO7wxmWG8uKj07/SbB1T8G3QaHAMvBLyG+/mQhg6LVgyvSfHzD
+X-Gm-Gg: AYBFou3pfXqaacNeGxQ7c99eojN5o8iDBJslkgHpcnZKbbHpMLCcBNNdrKF/Q2CouXQ
+ 6CYRt1wEoSHw/SZdpuYgXQqs+LY3akdUkI9d0aORuY8YJ8q2SJbGu9MYHlt5BHscLcjbLJVlTeK
+ BJcZ+2HDVay8cfGjJyj30Tf68YJFSqM5pg/oHRekju4bGWaMH/ZLwn4NnafdGL6F8Ex2tP/fB/0
+ j2wobFxU9P/ZYnnG64JODBkcIUSGg9mT72KUI381FXJJrMG4ZMRPr2ReBq32U+byO5VYt8uybsb
+ a3kH/VrddeAuamWWzshEdQoZ11XuaOG+aGCk5M4S+a7CPghwlYqaQ8ZSKDUdizPRXUofHqgsQ8e
+ DNlW9TlxRQsPUoGMbBqyCjZ4Gv9ZeigdrRi+r3V/q
+X-Received: by 2002:a05:620a:408b:b0:93e:9808:b9ee with SMTP id
+ af79cd13be357-93e9b88bf27mr355344285a.83.1791366405067; 
+ Wed, 07 Oct 2026 02:46:45 -0700 (PDT)
+X-Received: by 2002:a05:620a:408b:b0:93e:9808:b9ee with SMTP id
+ af79cd13be357-93e9b88bf27mr355339785a.83.1791366404548; 
+ Wed, 07 Oct 2026 02:46:44 -0700 (PDT)
 Received: from localhost.localdomain (pmd666.hd.free.fr. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a17f54a650sm53925465e9.4.2026.10.07.02.48.24
+ ffacd0b85a97d-48c71d1272esm4427249f8f.27.2026.10.07.02.46.43
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 07 Oct 2026 02:48:24 -0700 (PDT)
+ Wed, 07 Oct 2026 02:46:43 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: [PATCH 26/27] target/tricore: Implement and register
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+Subject: [PATCH 12/27] target/microblaze: Implement and register
  CPUClass::exception_name()
-Date: Wed,  7 Oct 2026 11:45:14 +0200
-Message-ID: <20261007094516.75732-27-philmd@oss.qualcomm.com>
+Date: Wed,  7 Oct 2026 11:45:00 +0200
+Message-ID: <20261007094516.75732-13-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20261007094516.75732-1-philmd@oss.qualcomm.com>
 References: <20261007094516.75732-1-philmd@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: CAcKcY0jqSyRk5BxKQ6Zs5qxVQzXLA0_
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA3MDAzOCBTYWx0ZWRfXwxW6MHjmpSdG
- KUFcwtTDH9sB/hyFR0RE5RwZ90/qsbjQhQ/ZIc5YmHNIFAcfk/YQ6C0bIpXy+eG06XH/icfCKW4
- q9oMJAMmVofd4XGo1K+ouMBLbGu43ek=
-X-Authority-Analysis: v=2.4 cv=XZYcX455 c=1 sm=1 tr=0 ts=6ac6156a cx=c_pps
- a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA3MDAzOCBTYWx0ZWRfX1d9ZL21fKYTQ
+ 1aX+HMeuHeV5nN3f9w9XwlI7JHYobdxNe0JcAIj0wN7DGZOnDTsLXaNq+v8itJTr/TF1KVt3Dzj
+ QB69umQa1jbmvE+IHjmWnu82P0N+yxI=
+X-Proofpoint-ORIG-GUID: L3CeGdl-u8Me6UYuSh-oiGVHWLFAW6kH
+X-Proofpoint-GUID: L3CeGdl-u8Me6UYuSh-oiGVHWLFAW6kH
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA3MDAzOCBTYWx0ZWRfX1o2sI6WBHYy9
+ n4izAfLejijNNT1IAx7TpihWOIrxmZNgGy2GK6zW0YRROPqPL6b8eREnAq0ybySgM6DvVO8wqY0
+ rGmP8ayXNMBR/TVJtDEkCaCApF545qaCRyN2b1VPZzVgqkDTnbr6LAgC291h76R0Nomv1QHeu6D
+ ny0fVnBCnxeL0cNUWof0UnnQI9u2uLOveb/+gS4I5ZuxjZbJwKXBP4saIIBB7tJOszQZn5UNDYr
+ FUgQfrTzS2pJPb4s0qV2B0AHYoWOUxD1gtjZU+H474kp3cF6MrDsaKnFyWXo9az5yE2p5kHseCx
+ ksG1WP1pB1nr8R3wGpi8xEZPfTl1M14uqLVAGoMSskwtCI+7rY7D1ckl5eryCHYY29+A6t5WUWD
+ cUH9TPzmQZIVEOZLoEslf1suyzy5XfIUCUIgkH2VaoUv+w4/+7wa5G7NPMZQYZup1+DjCV/xqv8
+ UwGVQQTpqkXFDFuOEMQ==
+X-Authority-Analysis: v=2.4 cv=Af0kjHXG c=1 sm=1 tr=0 ts=6ac61506 cx=c_pps
+ a=HLyN3IcIa5EE8TELMZ618Q==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
- a=EUspDBNiAAAA:8 a=M3mzNYHUzacmDIfs9B8A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=PEH46H7Ffwr30OY-TuGO:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA3MDAzOCBTYWx0ZWRfX/morIoQ68h1y
- VraE3bmeUxtzHlO2M5uX+/AQLPktY3Asn8CN6u2QmwFTIs7aouLUkunACzSgqqwBtUXpNhePska
- RM/BVhOVG9cxS0GZCLJsQAHQw0fYFlPN2fB/l1DS7XYvgkPb21TIBfV7ew2xB2JeT491HIkDQEX
- XZxosV70rYRnS9iPgP2OH84CiVqzRY89cO4ok16WrxrZrcvTNzZsCeUAGui5Bp3hUnJZPxH+eta
- 6KUt1ueWqTIKhEcAyefW47Rsfwd4PJE8qek6+3iu8EG2TuAYl6XiTcyB1t8OM2zDk1ru/OUwPzh
- rK71n6I80KiKfZ19b8Anmiw98ObMDZDOmv+QpLYNu1wuBIJbcf7/JuTgVxt3zsxs2TuxhLIZfkN
- 2nbAJbbevS/zreW5kllM3suKdVZrzmw/3ULmKGCpyqK1KjCTxTx1zKQ2YviNyeNaxlO6lji/EKx
- ApY8qb3L7wtlOzQu8Xw==
-X-Proofpoint-ORIG-GUID: CAcKcY0jqSyRk5BxKQ6Zs5qxVQzXLA0_
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
+ a=EUspDBNiAAAA:8 a=_ZqrUhsafL45AmjA-XwA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=bTQJ7kPSJx9SKPbeHEYW:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-10-07_03,2026-10-06_03,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 priorityscore=1501 impostorscore=0 bulkscore=0 suspectscore=0
- clxscore=1015 phishscore=0 adultscore=0 spamscore=0 lowpriorityscore=0
+ bulkscore=0 malwarescore=0 clxscore=1015 impostorscore=0 lowpriorityscore=0
+ adultscore=0 priorityscore=1501 spamscore=0 suspectscore=0 phishscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2610070038
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -154,68 +155,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Implement tricore_trap_name() and register it as the
+Implement microblaze_exception_name() and register it as the
 CPUClass::exception_name() handler, so the common exception
-logging can resolve TriCore trop numbers to names.
+logging can resolve MicroBlaze exception codes to names.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 ---
- target/tricore/cpu.h |  2 ++
- target/tricore/cpu.c | 21 +++++++++++++++++++++
- 2 files changed, 23 insertions(+)
+ target/microblaze/cpu.h |  2 ++
+ target/microblaze/cpu.c | 17 +++++++++++++++++
+ 2 files changed, 19 insertions(+)
 
-diff --git a/target/tricore/cpu.h b/target/tricore/cpu.h
-index 12e497d2a7a..fb8d2fd1011 100644
---- a/target/tricore/cpu.h
-+++ b/target/tricore/cpu.h
-@@ -178,6 +178,8 @@ enum {
-     TRAPC_IRQ      = 8
- };
+diff --git a/target/microblaze/cpu.h b/target/microblaze/cpu.h
+index b9602f72b94..fc2783693e3 100644
+--- a/target/microblaze/cpu.h
++++ b/target/microblaze/cpu.h
+@@ -36,6 +36,8 @@ typedef struct CPUArchState CPUMBState;
+ #define EXCP_HW_BREAK   4
+ #define EXCP_HW_EXCP    5
  
-+const char *tricore_trap_name(int trap);
++const char *microblaze_exception_name(int excp);
 +
- /* Class 0 TIN */
- enum {
-     TIN0_VAF = 0,
-diff --git a/target/tricore/cpu.c b/target/tricore/cpu.c
-index 84a05e3d363..d550b8b0b8e 100644
---- a/target/tricore/cpu.c
-+++ b/target/tricore/cpu.c
-@@ -36,6 +36,26 @@ static const gchar *tricore_gdb_arch_name(CPUState *cs)
-     return "tricore";
- }
+ /* MicroBlaze-specific interrupt pending bits.  */
+ #define CPU_INTERRUPT_NMI       CPU_INTERRUPT_TGT_EXT_3
  
-+const char *tricore_trap_name(int trap)
+diff --git a/target/microblaze/cpu.c b/target/microblaze/cpu.c
+index 389a5124b12..224f1052f70 100644
+--- a/target/microblaze/cpu.c
++++ b/target/microblaze/cpu.c
+@@ -79,6 +79,22 @@ static const struct {
+ /* If no specific version gets selected, default to the following.  */
+ #define DEFAULT_CPU_VERSION "10.0"
+ 
++const char *microblaze_exception_name(int excp)
 +{
-+    static const char * const trap_names[] = {
-+        [TRAPC_MMU]         = "mmu",
-+        [TRAPC_PROT]        = "prot",
-+        [TRAPC_INSN_ERR]    = "insn err",
-+        [TRAPC_CTX_MNG]     = "ctx mng",
-+        [TRAPC_SYSBUS]      = "sysbus",
-+        [TRAPC_ASSERT]      = "assert",
-+        [TRAPC_SYSCALL]     = "syscall",
-+        [TRAPC_NMI]         = "NMI",
-+        [TRAPC_IRQ]         = "IRQ",
++    static const char * const excp_names[] = {
++        [EXCP_MMU]      = "mmu",
++        [EXCP_IRQ]      = "irq",
++        [EXCP_SYSCALL]  = "syscall",
++        [EXCP_HW_BREAK] = "hw break",
++        [EXCP_HW_EXCP]  = "hw excp",
 +    };
 +
-+    if (trap < 0 || trap >= ARRAY_SIZE(trap_names) || !trap_names[trap]) {
++    if (excp < 0 || excp >= ARRAY_SIZE(excp_names) || !excp_names[excp]) {
 +        return "unknown";
 +    }
-+    return trap_names[trap];
++    return excp_names[excp];
 +}
 +
- static void tricore_disas_set_info(const CPUState *cpu, disassemble_info *info)
+ static void mb_cpu_set_pc(CPUState *cs, vaddr value)
  {
-     CPUTriCoreState *env = cpu_env((CPUState *)cpu);
-@@ -240,6 +260,7 @@ static void tricore_cpu_class_init(ObjectClass *c, const void *data)
-     resettable_class_set_parent_phases(rc, NULL, tricore_cpu_reset_hold, NULL,
+     MicroBlazeCPU *cpu = MICROBLAZE_CPU(cs);
+@@ -469,6 +485,7 @@ static void mb_cpu_class_init(ObjectClass *oc, const void *data)
                                         &mcc->parent_phases);
-     cc->class_by_name = tricore_cpu_class_by_name;
-+    cc->exception_name = tricore_trap_name;
  
-     cc->gdb_read_register = tricore_cpu_gdb_read_register;
-     cc->gdb_write_register = tricore_cpu_gdb_write_register;
+     cc->class_by_name = mb_cpu_class_by_name;
++    cc->exception_name = microblaze_exception_name;
+     cc->dump_state = mb_cpu_dump_state;
+     cc->set_pc = mb_cpu_set_pc;
+     cc->get_pc = mb_cpu_get_pc;
 -- 
 2.55.0
 
