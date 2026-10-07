@@ -4,54 +4,142 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96863CA5FF1
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 10:41:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D384CA5FFC
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 10:48:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xEP4P-00010q-PF; Wed, 07 Oct 2026 06:40:23 -0400
+	id 1xEPBd-0005z8-1N; Wed, 07 Oct 2026 06:47:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <46192047d8b38e4d37cef7115de6cad11ea8f362@kylie.crudebyte.com>)
- id 1xEP3t-00008J-Or
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 06:39:50 -0400
-Received: from kylie.crudebyte.com ([5.189.157.229])
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xEPBJ-0005xm-LO
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 06:47:30 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <46192047d8b38e4d37cef7115de6cad11ea8f362@kylie.crudebyte.com>)
- id 1xEP3s-00083G-3B
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 06:39:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=crudebyte.com; s=kylie; h=Cc:To:Subject:Date:From:References:In-Reply-To:
- Message-ID:Content-Type:Content-Transfer-Encoding:MIME-Version:Content-ID:
- Content-Description; bh=T5ANrWR5XgQlb4kxxSYmPS4w/awiAnPKvA+hJXMhxXE=; b=iiblt
- HPgteLwTeBnNpu0N14PLcl1WbtZjoXMuaNvp+dIYg4Fg2HynLCeLaXKQqxdBAqFqTCHPtPHcPWzUM
- D7YdXBF+8Gn1YgpPNSpawlydVtSpFiQAdVTpGKzDCDFyWgcdRYEeYIspNJkL7kZPhMwhYdE0KvsBw
- YPFbrL/PWR1Rn2eeUVPxkvjmRH6U+0Sx+W8lsue8NyMANc5lI6XaSXAijL0cS10FJibz3cyph1wgH
- 5QU0b61XfIVsSECwI0L2zdyY7ZHI82sbfuT8RPJXja00z51ZF3lZNjmQdkk1+7opWCUbT8lnfKmsj
- XtIuxAJyVNTAHFDvT9JLfpdu74AjsLofoDPbhAQtaLUmmkf1UuHqZxUDpWrq7K090ld7zeuv2WJ25
- 2CPJmKctbnvmYEf1gFBU4lyVGHFYP57CqDGBJlIhx+TocMFPjQkba/mxVSQTcP9n75co+XxGvdYXZ
- J2h/HszPanveQ1dW5FJ/OUC7le4TLAiZYnOl0EYHDTmRKodSFJhpYl/1zDjCm7ObZajUmapJxVwNo
- wadYj0YUEMmF7b+yIt+PkN4jB7Izeptbu8sM+Cna7Sv/DatR4Uvo6esDL7pBfOSZEG6omuhQqzXi9
- Njgp+gjg7Nukj6yP+FoBqlLtxlh5QID+WuKTWDHOea1Op95lCizzmtpSTCaubE=;
-Message-ID: <46192047d8b38e4d37cef7115de6cad11ea8f362.1791368962.git.qemu_oss@crudebyte.com>
-In-Reply-To: <cover.1791368962.git.qemu_oss@crudebyte.com>
-References: <cover.1791368962.git.qemu_oss@crudebyte.com>
-From: Christian Schoenebeck <qemu_oss@crudebyte.com>
-Date: Wed, 7 Oct 2026 12:27:38 +0200
-Subject: [PATCH v2 4/9] tests/9p-client: add Tstat / Rstat test client
- functions
-To: qemu-devel@nongnu.org
-Cc: Greg Kurz <groug@kaod.org>
-Received-SPF: pass client-ip=5.189.157.229;
- envelope-from=46192047d8b38e4d37cef7115de6cad11ea8f362@kylie.crudebyte.com;
- helo=kylie.crudebyte.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xEPBI-0000O7-1l
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 06:47:29 -0400
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 697Ac61a2687227
+ for <qemu-devel@nongnu.org>; Wed, 7 Oct 2026 10:47:26 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ zTwDpqCTDAR/o1ceRdCR0OMNvjx25gjaWUhWaJJBvCY=; b=Y+lKa4X/ZN6XhTQD
+ OBI0tG4Mor2dN0st4eeilUilouMNPsAyDqWcSuLOpChw4IaFZAKEtZJdbZYXioU7
+ KHEnoGejMJGDct5yRMTV/XlaIvDHeOT+mEuUheE1OdqJjEgLyqaNeUUst5+txGvw
+ zelocB5UiOOo31UDJk1ogAAC1Q1hAVBLn3gNgthtV5jUcgMKm3oKosj+iveS3JPd
+ e488NWu3GpuBGxIGcuvWGEScbbdJvezqwUfoWEKXYTyR5yVgiDsJmHPJQozf+E1Z
+ MrA43CGYgWyhtYwV5+Knhrp+L6wvvu19c/ExeS5YG4Yg3scKesR1qkZ1LMjy3WXI
+ te7uhw==
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h5mge00w7-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Wed, 07 Oct 2026 10:47:26 +0000 (GMT)
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-93e834ff4d0so591503785a.3
+ for <qemu-devel@nongnu.org>; Wed, 07 Oct 2026 03:47:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1791370046; x=1791974846; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=zTwDpqCTDAR/o1ceRdCR0OMNvjx25gjaWUhWaJJBvCY=;
+ b=jDhJIVSNuS6bhRjGy61DsyZnG3S2RtgzZ3rPh79WjuHoiMwCI6WIXiH3yaCf8r4HZG
+ LXuF7q5BSreCjyRPC12qk3RGkmk7FUMe64+izI+ReCinJ4JQKId3Aceo0ZfNYlC6PSt0
+ 21sHoSSaZl9sYrHPiNNPSoz/v2ydJItSdPjYxCsBJnf/+SGOB1PxjvIrKGgZP6dX67hD
+ 9/8xW36eKWwu/hAFVny7UKzGTN4ig3Q8gGFrVkrOgYiIZhfyK5lb9PrDJTW1vRlZCWN8
+ 1bi1h9mTZLkLQAScmMsQn00/JEpVgkzmDWV7Q0GnjRVWGdWCE6DbVGyYuqC8TIFMm0AW
+ G3xA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1791370046; x=1791974846;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=zTwDpqCTDAR/o1ceRdCR0OMNvjx25gjaWUhWaJJBvCY=;
+ b=hn3Ios94AFCH0Xv8nmWLy+pXDb4tsQ8gkQsVntbWFTt6xffPLPNlX8Dkr1hRu5Ngyt
+ cloERjOneTW+PAw+NAFn2dbdsaRspPyqTI3Ghu1wjqnisvt1TmG/tp6MMJ/XTve577T3
+ G75eGpzUfo5EkYsalQ/T/V5MY3JM07WnVY6V4HPeLnGTBYigsSGc6owotVOwKe/Xmxhe
+ 3eBDeYUPfrhS2uMMLL6/qfu/DpV8LMW5xTD4yo2ThDGznkE1FB3Gf1RW+ddsKXN4adDl
+ YnQAjT5Yk7w/8iIJY/lRt4MU0j3O3JBE5bHPck6QLCCU/ik8LAduC6a2KTmLe3goiAWS
+ FYNQ==
+X-Gm-Message-State: AFuF++lo+qeYQUDZ0VMx0eb6Yhyb9SevCCKcxmujJ0ZeoFZ1DuCT/A+s
+ LUS7NiLgYb1TEfgulhPtLHHt7JfH9nMoo/ouqx4Yz7R+5+1rIz/OnWSRiAvuACNSBXeZn/5dUGQ
+ qh5wncQHLVUDaIJ70x6sTjdJuwQ5rvgK9DEK+efZ0O+Vc3yYasdaUAmK/yux8/JaN7kbI
+X-Gm-Gg: AYBFou3HnZ7WYPkG172djvLuAukn6StEd5alLonfemIv3EtwTdAPXYGjNuyx2fKFo5Q
+ MvoPB3mz0q7qbIFePPFioL1Jx8KyXSo/N5Gc1swLPQ+9HBAwrdU6rHMPxCgcHcBKa9zrUIMHllX
+ TO17waWvCGqpMiB10jyPpcNH4x1nkyoWwXmwnWrX99p0YWvtfHnRW5yC05SY+snKlxuGlah+m58
+ GE1nQ71XMjPN8rtxQBF632D3aUwu+8yLQzu6yIYgECfmeBU+R+iPyRA+6jIrd71jX/i5SZ81l+u
+ VCOFygNqg3EIHIRMB5Wcw5RfeOx0/ZOhrgwV9CoLeB/+vvGeT7/14YEgmtA4/L+Q/ZGsKvBcjgQ
+ 4bN2Mig9AFN3+yyJ7Fxc8RgeDiA/5RaQvTw==
+X-Received: by 2002:a05:620a:29c7:b0:93c:b721:b10d with SMTP id
+ af79cd13be357-93e9b2ea329mr344296785a.8.1791370045955; 
+ Wed, 07 Oct 2026 03:47:25 -0700 (PDT)
+X-Received: by 2002:a05:620a:29c7:b0:93c:b721:b10d with SMTP id
+ af79cd13be357-93e9b2ea329mr344294885a.8.1791370045430; 
+ Wed, 07 Oct 2026 03:47:25 -0700 (PDT)
+Received: from [192.168.69.210] (pmd666.hd.free.fr. [88.187.86.199])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4a181aeaea2sm31986455e9.5.2026.10.07.03.47.24
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 07 Oct 2026 03:47:24 -0700 (PDT)
+Message-ID: <7437c9ee-d1f5-452a-a456-d1dd7e1d268d@oss.qualcomm.com>
+Date: Wed, 7 Oct 2026 12:47:24 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 01/27] cpus: Add helper to log raised exceptions with '-d
+ int'
+Content-Language: en-US
+To: qemu-devel@nongnu.org, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+References: <20261007094516.75732-1-philmd@oss.qualcomm.com>
+ <20261007094516.75732-2-philmd@oss.qualcomm.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <20261007094516.75732-2-philmd@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA3MDA0MiBTYWx0ZWRfX3wEKKQ2srmi0
+ +Hbk2I5LZ2xKxgJ1DSRhb2Hx/8MxjIKs/qWN7V4tipbYLzVGV/kgBPruz6Y5JGtFbD9wnUwK6lW
+ KTKp+xdIVntMPLVtQCyJEcHWvoCq6zY=
+X-Proofpoint-GUID: 7vN6KUl4Zp5mrfNhrhe0DbmjvyLBmSC3
+X-Authority-Analysis: v=2.4 cv=PdJqFShd c=1 sm=1 tr=0 ts=6ac6233e cx=c_pps
+ a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
+ a=EUspDBNiAAAA:8 a=E14uGW6T9AX781czc9gA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=PEH46H7Ffwr30OY-TuGO:22
+X-Proofpoint-ORIG-GUID: 7vN6KUl4Zp5mrfNhrhe0DbmjvyLBmSC3
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA3MDA0MiBTYWx0ZWRfX/UNFnyJNVO1i
+ s6XGtYYwOSHkZ1wRWQGqbEmU9xqBu+cnvgLY3jg6YXO4ZOkzCJYxVmuYtb/L6fSCkyDQZmTLAm2
+ FCjW9OQ1l318hVhb/dg/iBGpfbomG5/7oZb6I++NmhRTqAFxj4ZV47gZub8FWbOpQ7pKYANznn3
+ FMeXgQJQ3EtFRbJG8cHqXrwnMkdu8hvtBNdZwVk65myymXLSiLFBYYKYykNG1ce3cMOVGwdw7Ts
+ 9jv48+nU4LEiHnqhA5/4a2cK0H15P8GjvMsOZeRg77NCyJNWbn0Ael+GMAj0xBhNxIEDM4IXEmk
+ RZJE4231Wxhzkx0cYssumQS1FlP5Sly/whTiBWRj+tnSdScJK4kCry9E99MrcPApI/zOy7hkqpD
+ HpvDyzBukoXkCDRXxVcTeKdWpxquJ7IqD4AYip6NkNKDsSz436aEyf9f5SFN96SuqzSBJvr/Fyu
+ 6vg+qEJU+ELrW5mQRKQ==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-10-07_03,2026-10-06_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 priorityscore=1501 phishscore=0 suspectscore=0 spamscore=0
+ lowpriorityscore=0 impostorscore=0 adultscore=0 bulkscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2610070042
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -68,184 +156,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add v9fs_tstat() and v9fs_rstat() functions to the 9p test client.
+On 7/10/26 11:44, Philippe Mathieu-DaudÃ© wrote:
+> Add log_raise_exception(), a common helper cpu_loop_*() can
+> call to log a raised exception when '-d int' is used, and
+> qemu_excp_name() to resolve QEMU-internal exceptions to names.
+> 
+> Use it in cpu_loop_exit_atomic() to log the EXCP_ATOMIC reason.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+> ---
+>   accel/tcg/cpu-exec-common.c | 32 ++++++++++++++++++++++++++++++++
+>   1 file changed, 32 insertions(+)
+> 
+> diff --git a/accel/tcg/cpu-exec-common.c b/accel/tcg/cpu-exec-common.c
+> index 68077c8fd9d..2ac8380d0bb 100644
+> --- a/accel/tcg/cpu-exec-common.c
+> +++ b/accel/tcg/cpu-exec-common.c
+> @@ -89,6 +89,37 @@ void tcg_update_all_cflags(void)
+>       }
+>   }
+>   
+> +#define EXCP_QEMU_INTERNAL 0x10000
+> +
+> +static const char *qemu_excp_name(int excp)
+> +{
+> +    static const char *excp_name[] = {
+> +        [EXCP_INTERRUPT - EXCP_QEMU_INTERNAL] = "async interruption",
+> +        [EXCP_HLT       - EXCP_QEMU_INTERNAL] = "hlt instruction",
+> +        [EXCP_DEBUG     - EXCP_QEMU_INTERNAL] = "debug",
+> +        [EXCP_HALTED    - EXCP_QEMU_INTERNAL] = "halted",
+> +        [EXCP_YIELD     - EXCP_QEMU_INTERNAL] = "yield",
+> +        [EXCP_ATOMIC    - EXCP_QEMU_INTERNAL] = "emulate atomic",
+> +    };
+> +    assert(excp >= EXCP_QEMU_INTERNAL);
+> +    excp -= EXCP_QEMU_INTERNAL;
+> +    if ((excp < ARRAY_SIZE(excp_name)) && excp_name[excp]) {
+> +        return excp_name[excp];
+> +    }
+> +    return "undocumented";
+> +}
+> +
+> +static void log_raise_exception(const CPUState *cpu, int excp)
+> +{
+> +    if (!qemu_loglevel_mask(CPU_LOG_INT)) {
+> +        return;
+> +    }
+> +    if (excp >= EXCP_QEMU_INTERNAL) {
+> +        qemu_log_mask(CPU_LOG_INT, "raise exception: 0x%x (internal: %s)\n",
+> +                                   excp, qemu_excp_name(excp));
 
-Since this is a request type that exists both in legacy 9p2000.u
-and modern 9p2000.L protocol version, error responses types might
-differ (Rerror vs. Rlerror). Therefore v9fs_tstat() is using an
-error type tolerant helper function v9fs_req_check_err() for
-processing expected errors with this request type.
+Daniel suggested on IRC we can use target_name() here to distinguish
+between different kinds of vCPUs. Alternatively we can add a
+CPUClass::log_friendly_format_name() defaulting to current "%p index:%d"
+but overwritable i.e. as "accel:%s target:%s cluster:%d index:%u", so
+each time we log something on a vCPU context we have an unified prefix
+format to parse.
 
-Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
----
- tests/qtest/libqos/virtio-9p-client.c | 79 +++++++++++++++++++++++++++
- tests/qtest/libqos/virtio-9p-client.h | 45 +++++++++++++++
- 2 files changed, 124 insertions(+)
-
-diff --git a/tests/qtest/libqos/virtio-9p-client.c b/tests/qtest/libqos/virtio-9p-client.c
-index 005ae53a3f..4a3fc1511b 100644
---- a/tests/qtest/libqos/virtio-9p-client.c
-+++ b/tests/qtest/libqos/virtio-9p-client.c
-@@ -306,6 +306,33 @@ void v9fs_rlerror(P9Req *req, uint32_t *err)
-     v9fs_req_free(req);
- }
- 
-+/*
-+ * Asserts for caller that the request's response returned with the passed,
-+ * expected error code (in a protocol version agnostic manner).
-+ */
-+static void v9fs_req_check_err(P9Req *req, uint32_t expect_err)
-+{
-+    P9Hdr hdr;
-+    uint32_t err;
-+
-+    /* peek the response header */
-+    v9fs_memread(req, &hdr, sizeof(hdr));
-+    /* reset offset after peek, so v9fs_rlerror() etc. read correctly */
-+    req->r_off = 0;
-+
-+    if (hdr.id == P9_RLERROR) {
-+        v9fs_rlerror(req, &err);
-+    } else if (hdr.id == P9_RERROR) {
-+        v9fs_rerror(req, &err);
-+    } else {
-+        g_printerr("Received response %d (%s) instead of an error response\n",
-+                   hdr.id, rmessage_name(hdr.id));
-+        v9fs_req_free(req);
-+        g_assert_not_reached();
-+    }
-+    g_assert_cmpint(err, ==, expect_err);
-+}
-+
- /* size[4] Tversion tag[2] msize[4] version[s] */
- TVersionRes v9fs_tversion(TVersionOpt opt)
- {
-@@ -1286,3 +1313,55 @@ void v9fs_rxattrwalk(P9Req *req, uint64_t *size)
-     }
-     v9fs_req_free(req);
- }
-+
-+/* size[4] Tstat tag[2] fid[4] */
-+TStatRes v9fs_tstat(TStatOpt opt)
-+{
-+    P9Req *req;
-+
-+    g_assert(opt.client);
-+    /* expecting either Rstat or an error response, but obviously not both */
-+    g_assert(!opt.expectErr || !opt.rstat.stat);
-+
-+    req = v9fs_req_init(opt.client, 4, P9_TSTAT, opt.tag);
-+    v9fs_uint32_write(req, opt.fid);
-+    v9fs_req_send(req);
-+
-+    if (!opt.requestOnly) {
-+        v9fs_req_wait_for_reply(req, NULL);
-+        if (opt.expectErr) {
-+            v9fs_req_check_err(req, opt.expectErr);
-+        } else {
-+            v9fs_rstat(req, opt.rstat.stat);
-+        }
-+        req = NULL; /* request was freed */
-+    }
-+
-+    return (TStatRes) { .req = req };
-+}
-+
-+/* size[4] Rstat tag[2] stat[n] */
-+void v9fs_rstat(P9Req *req, v9fs_stat *stat)
-+{
-+    v9fs_req_recv(req, P9_RSTAT);
-+
-+    v9fs_memskip(req, 2); /* protocol quirk: size appears twice */
-+    v9fs_uint16_read(req, &stat->size);
-+    v9fs_uint16_read(req, &stat->type);
-+    v9fs_uint32_read(req, &stat->dev);
-+    v9fs_memread(req, &stat->qid, 13);
-+    v9fs_uint32_read(req, &stat->mode);
-+    v9fs_uint32_read(req, &stat->atime);
-+    v9fs_uint32_read(req, &stat->mtime);
-+    v9fs_uint64_read(req, &stat->length);
-+    v9fs_string_read(req, NULL, &stat->name);
-+    v9fs_string_read(req, NULL, &stat->uid);
-+    v9fs_string_read(req, NULL, &stat->gid);
-+    v9fs_string_read(req, NULL, &stat->muid);
-+    v9fs_string_read(req, NULL, &stat->extension);
-+    v9fs_uint32_read(req, &stat->n_uid);
-+    v9fs_uint32_read(req, &stat->n_gid);
-+    v9fs_uint32_read(req, &stat->n_muid);
-+
-+    v9fs_req_free(req);
-+}
-diff --git a/tests/qtest/libqos/virtio-9p-client.h b/tests/qtest/libqos/virtio-9p-client.h
-index 5a00a0870c..f604cc0ee5 100644
---- a/tests/qtest/libqos/virtio-9p-client.h
-+++ b/tests/qtest/libqos/virtio-9p-client.h
-@@ -63,6 +63,25 @@ typedef struct v9fs_attr {
-     uint64_t data_version;
- } v9fs_attr;
- 
-+typedef struct v9fs_stat {
-+    uint16_t size;
-+    uint16_t type;
-+    uint32_t dev;
-+    v9fs_qid qid;
-+    uint32_t mode;
-+    uint32_t atime;
-+    uint32_t mtime;
-+    uint64_t length;
-+    char *name;
-+    char *uid;
-+    char *gid;
-+    char *muid;
-+    char *extension;
-+    uint32_t n_uid;
-+    uint32_t n_gid;
-+    uint32_t n_muid;
-+} v9fs_stat;
-+
- #define P9_GETATTR_BASIC    0x000007ffULL /* Mask for fields up to BLOCKS */
- #define P9_GETATTR_ALL      0x00003fffULL /* Mask for ALL fields */
- 
-@@ -579,6 +598,30 @@ typedef struct TXattrWalkRes {
-     uint64_t size;
- } TXattrWalkRes;
- 
-+/* options for 'Tstat' 9p request */
-+typedef struct TStatOpt {
-+    /* 9P client being used (mandatory) */
-+    QVirtio9P *client;
-+    /* user supplied tag number being returned with response (optional) */
-+    uint16_t tag;
-+    /* file ID to get the Rstat for (required) */
-+    uint32_t fid;
-+    /* data being received from 9p server as 'Rstat' response (optional) */
-+    struct {
-+        v9fs_stat *stat;
-+    } rstat;
-+    /* only send Tstat request but not wait for a reply? (optional) */
-+    bool requestOnly;
-+    /* do we expect an error response, if yes which error code? (optional) */
-+    uint32_t expectErr;
-+} TStatOpt;
-+
-+/* result of 'Tstat' 9p request */
-+typedef struct TStatRes {
-+    /* if requestOnly was set: request object for further processing */
-+    P9Req *req;
-+} TStatRes;
-+
- void v9fs_set_allocator(QGuestAllocator *t_alloc);
- void v9fs_memwrite(P9Req *req, const void *addr, size_t len);
- void v9fs_memskip(P9Req *req, size_t len);
-@@ -639,5 +682,7 @@ TXattrCreateRes v9fs_txattrcreate(TXattrCreateOpt opt);
- void v9fs_rxattrcreate(P9Req *req);
- TXattrWalkRes v9fs_txattrwalk(TXattrWalkOpt opt);
- void v9fs_rxattrwalk(P9Req *req, uint64_t *size);
-+TStatRes v9fs_tstat(TStatOpt opt);
-+void v9fs_rstat(P9Req *req, v9fs_stat *stat);
- 
- #endif
--- 
-2.47.3
+> +    }
+> +}
+> +
+>   /* exit the current TB, but without causing any exception to be raised */
+>   void cpu_loop_exit_noexc(CPUState *cpu)
+>   {
+> @@ -118,5 +149,6 @@ void cpu_loop_exit_atomic(CPUState *cpu, uintptr_t pc)
+>       /* Prevent looping if already executing in a serial context. */
+>       g_assert(!cpu_in_serial_context(cpu));
+>       cpu->exception_index = EXCP_ATOMIC;
+> +    log_raise_exception(cpu, EXCP_ATOMIC);
+>       cpu_loop_exit_restore(cpu, pc);
+>   }
 
 
