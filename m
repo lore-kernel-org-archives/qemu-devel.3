@@ -4,55 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 806B5CA5FF1
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 09:14:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8EA1BCA5FF1
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 09:14:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xENfZ-0007be-17; Wed, 07 Oct 2026 05:10:37 -0400
+	id 1xENc8-0001ro-6L; Wed, 07 Oct 2026 05:07:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <0f65020b6dc46e3b44e106025ac6005a22765fc7@kylie.crudebyte.com>)
- id 1xELIR-00028Z-T2
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 02:38:45 -0400
-Received: from kylie.crudebyte.com ([5.189.157.229])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <0f65020b6dc46e3b44e106025ac6005a22765fc7@kylie.crudebyte.com>)
- id 1xELIE-0004C2-KX
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 02:38:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=crudebyte.com; s=kylie; h=Cc:To:Subject:Date:From:References:In-Reply-To:
- Message-ID:Content-Type:Content-Transfer-Encoding:MIME-Version:Content-ID:
- Content-Description; bh=WF6DSzV64ZfOk/VkTHngDk53OI0keuHDeiSkvItexeY=; b=bdGCl
- zf6wpKOqmFH0UI7U4qULh96wIP+q5Kp13vIlF3G54Qm99p3jlonZQuyS8Z+n+Ui4vMyIJR+aj/XnA
- OLeBp8L/kBJuCo0YI3DdPVLUMMQIZU0Lzw1MaI+evs2Ebvbk7Jo26Umry0OtjhtPC6BbJa7jR+Qw0
- 0a4XdI/tQbjHfvrEkphUTso8VvBbxUrwl4MdP3RgwOf5bLQTsKne/nUQqCiJ3Ba3oW57YYWvqpzgu
- LNPTz6sXyb6BugyvLZBqhhd+t4JqgIL4x9H41lvbqFPqQc2O5bhuOBBVDwRJTQ1hjsNgEzCJUwy1+
- WN9JCuCeAMZQgLBX6CPyFfYVoQWhLLYTlLmU2+OKAfVEEWZSAmSmogauBlbUkHnD1cdW3UGYu6tWe
- DrXeqktfROUvxGpcLWH+t++fMsXnJr/z+sGs3acbfhcLX3R/wRDUU6aHlwyHHD8xVhd6ZsDoVxXBH
- 8aKdPVcjdIiSySn1yBWa5EwyyKI2zvJ9++egFwy/enLhScl65XYvGhG9ONyKC8kdDkj+Nxt3dfU/v
- gYOr1WhJtW3QUsP+Z1/K0qLDAJnYpgpd9AG1I792jhi8aOL9Qv9ndyvwT4fKcNifRPuaEwONAludP
- pBHwVlB/xX5rFQnhvjseLcAoLZHSRUQddt4fYIfxXfi9d1EWiKdKkrDSEYiIxg=;
-Message-ID: <0f65020b6dc46e3b44e106025ac6005a22765fc7.1791291812.git.qemu_oss@crudebyte.com>
-In-Reply-To: <cover.1791291812.git.qemu_oss@crudebyte.com>
-References: <cover.1791291812.git.qemu_oss@crudebyte.com>
-From: Christian Schoenebeck <qemu_oss@crudebyte.com>
-Date: Sun, 4 Oct 2026 13:17:42 +0000
-Subject: [PATCH 7/9] tests/9p-client: add Tcreate / Rcreate test client
- functions
-To: qemu-devel@nongnu.org
-Cc: Greg Kurz <groug@kaod.org>
-Received-SPF: pass client-ip=5.189.157.229;
- envelope-from=0f65020b6dc46e3b44e106025ac6005a22765fc7@kylie.crudebyte.com;
- helo=kylie.crudebyte.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_48_96=1,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ (Exim 4.90_1) (envelope-from <fuad.tabba@linux.dev>)
+ id 1xEMa9-0004Pu-5D
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 04:01:04 -0400
+Received: from out-67.mta1.migadu.com ([2001:41d0:203:375::43]
+ helo=mta1.migadu.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <fuad.tabba@linux.dev>)
+ id 1xEMa7-000308-JW
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 04:00:56 -0400
+X-Envelope-To: qemu-devel@nongnu.org
+DKIM-Signature: a=rsa-sha256; bh=nss3Hqr01vFUSgYIIam7NZUSf/Tjy1sPyQsAIFFF8KU=; 
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1791360054; v=1; x=1791964854;
+ b=lG5mqYlaOKTCncoG7W0sjRp2VdkfHonnA7Rm6yowyRkfY3lqmjmYQdm1NBjqxnDy/qc44jUS
+ BKztXAd79itbr+yV7kFyt9/Svn89WPnaU59+vwr2B99JQSAPxGkwbupN016AjoO1cxVkQZoWgKF
+ UCZFvk88QCWT+zFm0qwT/TKw=
+X-Envelope-To: qemu-devel@nongnu.org
+Received: by smtp.migadu.com with ESMTPS id 3aac927842e36481;
+ Wed, 07 Oct 2026 08:00:53 +0000
+X-Mizu-Trace-ID: 3aac927842e36481
+X-Migadu-Flow: FLOW_OUT
+From: Fuad Tabba <fuad.tabba@linux.dev>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Gustavo Romero <gromero@redhat.com>, Will Deacon <will@kernel.org>,
+ Itaru Kitayama <itaru.kitayama@linux.dev>, Fuad Tabba <tabba@google.com>
+Subject: [PATCH v2 2/3] target/arm: Use the 52-bit TTBR base address layout
+ when TCR.DS is set
+Date: Wed,  7 Oct 2026 09:00:18 +0100
+Message-Id: <20261007080019.350315-3-fuad.tabba@linux.dev>
+X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20261007080019.350315-1-fuad.tabba@linux.dev>
+References: <20261007080019.350315-1-fuad.tabba@linux.dev>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2001:41d0:203:375::43;
+ envelope-from=fuad.tabba@linux.dev; helo=mta1.migadu.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -68,155 +72,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add v9fs_tcreate() and v9fs_rcreate() functions to the 9p test
-client for the legacy 9p2000(.u) Tcreate request type.
+With TCR.DS set, TTBR[5:2] hold bits [51:48] of the translation table
+base address, whatever the OA size. If the effective OA size is below
+52 bits, setting any of them is a level 0 Address size fault
+(AArch64_S1TTBaseAddress(), AArch64_S1Walk()).
 
-This is a preparatory patch, these functions will be used by the
-subsequently added 9p race test.
+get_phys_addr_lpae() uses the 52-bit layout only when the OA size is
+over 48 bits. With TCR.DS set and an IPS of 48 bits, it takes TTBR[5:2]
+as base address bits [5:2] instead. A guest that sets them gets no
+fault: the walk either succeeds with TTBR[5:2] ignored, or reads its
+first descriptor from the wrong address. VTTBR walks with VTCR.DS take
+the same path.
 
-Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+Use the 52-bit layout whenever TCR.DS is set, and check the whole base
+address against the OA size.
+
+Fixes: ef56c2425e5f ("target/arm: Implement FEAT_LPA2")
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Fuad Tabba <fuad.tabba@linux.dev>
 ---
- tests/qtest/libqos/virtio-9p-client.c | 60 +++++++++++++++++++++++++++
- tests/qtest/libqos/virtio-9p-client.h | 50 ++++++++++++++++++++++
- 2 files changed, 110 insertions(+)
+ target/arm/ptw.c | 19 +++++++++++--------
+ 1 file changed, 11 insertions(+), 8 deletions(-)
 
-diff --git a/tests/qtest/libqos/virtio-9p-client.c b/tests/qtest/libqos/virtio-9p-client.c
-index 4a3fc1511b..ce67a4b8c5 100644
---- a/tests/qtest/libqos/virtio-9p-client.c
-+++ b/tests/qtest/libqos/virtio-9p-client.c
-@@ -1365,3 +1365,63 @@ void v9fs_rstat(P9Req *req, v9fs_stat *stat)
+diff --git a/target/arm/ptw.c b/target/arm/ptw.c
+index 6cff52d592..2e67d02493 100644
+--- a/target/arm/ptw.c
++++ b/target/arm/ptw.c
+@@ -2107,18 +2107,21 @@ static bool get_phys_addr_lpae(CPUARMState *env, S1Translate *ptw,
+     descaddr = extract64(ttbr, 0, 48);
  
-     v9fs_req_free(req);
- }
-+
-+/* size[4] Tcreate tag[2] fid[4] name[s] perm[4] mode[1] extension[s] */
-+TCreateRes v9fs_tcreate(TCreateOpt opt)
-+{
-+    P9Req *req;
-+    uint8_t mode = opt.mode;
-+    uint32_t body_size = 4 + 4 + 1;
-+    uint16_t string_size;
-+
-+    g_assert(opt.client);
-+    /* expecting either Rcreate or an error response, but obviously not both */
-+    g_assert(!opt.expectErr || !(opt.rcreate.qid || opt.rcreate.iounit));
-+
-+    if (!opt.perm) {
-+        opt.perm = 0644;
+     /*
+-     * With a 52-bit OA (FEAT_LPA or FEAT_LPA2), bits [51:48] of descaddr are
+-     * in [5:2] of TTBR, and bits [5:0] of the base address are zero: a table
+-     * under 64 bytes is still 64-byte aligned (R_KBLCR).
++     * With a 52-bit OA (FEAT_LPA or FEAT_LPA2), or with TCR.DS set at any OA
++     * size, bits [51:48] of descaddr are in [5:2] of TTBR, and bits [5:0] of
++     * the base address are zero: a table under 64 bytes is still 64-byte
++     * aligned (R_KBLCR).
+      *
+-     * Otherwise, if the base address is out of range, raise AddressSizeFault.
+-     * In the pseudocode, this is !IsZero(baseregister<47:outputsize>),
+-     * but we've just cleared the bits above 47, so simplify the test.
++     * If the base address is out of range, raise AddressSizeFault.
++     * In the pseudocode, this is !IsZero(address<NUM_PABITS-1:outputsize>)
++     * in AArch64_OAOutOfRange(), but descaddr has no bits set above 51,
++     * so simplify the test.
+      */
+-    if (outputsize > 48) {
++    if (outputsize > 48 || param.ds) {
+         descaddr &= ~MAKE_64BIT_MASK(0, 6);
+         descaddr |= extract64(ttbr, 2, 4) << 48;
+-    } else if (descaddr >> outputsize) {
 +    }
-+    if (!opt.extension) {
-+        opt.extension = "";
-+    }
-+
-+    string_size = v9fs_string_size(opt.name) +
-+                  v9fs_string_size(opt.extension);
-+    g_assert_cmpint(body_size, <=, UINT32_MAX - string_size);
-+    body_size += string_size;
-+
-+    req = v9fs_req_init(opt.client, body_size, P9_TCREATE, opt.tag);
-+    v9fs_uint32_write(req, opt.fid);
-+    v9fs_string_write(req, opt.name);
-+    v9fs_uint32_write(req, opt.perm);
-+    v9fs_memwrite(req, &mode, 1);
-+    v9fs_string_write(req, opt.extension);
-+    v9fs_req_send(req);
-+
-+    if (!opt.requestOnly) {
-+        v9fs_req_wait_for_reply(req, NULL);
-+        if (opt.expectErr) {
-+            v9fs_req_check_err(req, opt.expectErr);
-+        } else {
-+            v9fs_rcreate(req, opt.rcreate.qid, opt.rcreate.iounit);
-+        }
-+        req = NULL; /* request was freed */
-+    }
-+
-+    return (TCreateRes) { .req = req };
-+}
-+
-+/* size[4] Rcreate tag[2] qid[13] iounit[4] */
-+void v9fs_rcreate(P9Req *req, v9fs_qid *qid, uint32_t *iounit)
-+{
-+    v9fs_req_recv(req, P9_RCREATE);
-+    if (qid) {
-+        v9fs_memread(req, qid, 13);
-+    } else {
-+        v9fs_memskip(req, 13);
-+    }
-+    if (iounit) {
-+        v9fs_uint32_read(req, iounit);
-+    }
-+    v9fs_req_free(req);
-+}
-diff --git a/tests/qtest/libqos/virtio-9p-client.h b/tests/qtest/libqos/virtio-9p-client.h
-index f604cc0ee5..88e0f41ff0 100644
---- a/tests/qtest/libqos/virtio-9p-client.h
-+++ b/tests/qtest/libqos/virtio-9p-client.h
-@@ -372,6 +372,54 @@ typedef struct TMkdirRes {
-     P9Req *req;
- } TMkdirRes;
- 
-+/* create directory */
-+#define P9_CREATE_PERM_DMDIR     0x80000000
-+
-+/* options for 'Tcreate' 9p request (legacy 9p2000.u) */
-+typedef struct TCreateOpt {
-+    /* 9P client being used (mandatory) */
-+    QVirtio9P *client;
-+    /* user supplied tag number being returned with response (optional) */
-+    uint16_t tag;
-+    /* file ID of the directory the new file shall be created in (required) */
-+    uint32_t fid;
-+    /* name of the new file (required) */
-+    const char *name;
-+    /*
-+     * Create mode bits (including file type bits):
-+     * e.g. 0644 for a regular file,
-+     * or P9_CREATE_PERM_DMDIR | 0755 for a directory
-+     * (optional)
-+     */
-+    uint32_t perm;
-+    /*
-+     * Open mode byte:
-+     * OREAD (0), OWRITE (1), ORDWR (2), OEXEC(3), OTRUNC(0x10), ORCLOSE(0x40)
-+     * (optional)
-+     */
-+    uint8_t mode;
-+    /*
-+     * Extension data for special files (e.g. symlink target), empty for
-+     * regular files. (optional)
-+     */
-+    const char *extension;
-+    /* data being received from 9p server as 'Rcreate' response (optional) */
-+    struct {
-+        v9fs_qid *qid;
-+        uint32_t *iounit;
-+    } rcreate;
-+    /* only send Tcreate request but not wait for a reply? (optional) */
-+    bool requestOnly;
-+    /* do we expect an error response, if yes which error code? (optional) */
-+    uint32_t expectErr;
-+} TCreateOpt;
-+
-+/* result of 'Tcreate' 9p request */
-+typedef struct TCreateRes {
-+    /* if requestOnly was set: request object for further processing */
-+    P9Req *req;
-+} TCreateRes;
-+
- /* options for 'Tlcreate' 9p request */
- typedef struct TlcreateOpt {
-     /* 9P client being used (mandatory) */
-@@ -666,6 +714,8 @@ TFlushRes v9fs_tflush(TFlushOpt);
- void v9fs_rflush(P9Req *req);
- TMkdirRes v9fs_tmkdir(TMkdirOpt);
- void v9fs_rmkdir(P9Req *req, v9fs_qid *qid);
-+TCreateRes v9fs_tcreate(TCreateOpt opt);
-+void v9fs_rcreate(P9Req *req, v9fs_qid *qid, uint32_t *iounit);
- TlcreateRes v9fs_tlcreate(TlcreateOpt);
- void v9fs_rlcreate(P9Req *req, v9fs_qid *qid, uint32_t *iounit);
- TsymlinkRes v9fs_tsymlink(TsymlinkOpt);
++    if (descaddr >> outputsize) {
+         level = 0;
+         fi->type = ARMFault_AddressSize;
+         goto do_fault;
 -- 
-2.47.3
+2.39.5
 
 
