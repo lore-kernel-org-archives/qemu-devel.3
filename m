@@ -4,71 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FA56CA5FFC
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 17:36:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 929A2CA5FFC
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 17:36:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xEVYX-0001CO-PH; Wed, 07 Oct 2026 13:35:53 -0400
+	id 1xEVZQ-0001nh-Ul; Wed, 07 Oct 2026 13:36:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1xEVYW-0001Bm-7C; Wed, 07 Oct 2026 13:35:52 -0400
+ id 1xEVZH-0001ix-Ns; Wed, 07 Oct 2026 13:36:39 -0400
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1xEVYU-0004Ed-EW; Wed, 07 Oct 2026 13:35:51 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ id 1xEVZG-0004Gw-CU; Wed, 07 Oct 2026 13:36:39 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 697F5d2r1633855; Wed, 7 Oct 2026 17:35:46 GMT
+ 697F5a592848347; Wed, 7 Oct 2026 17:36:37 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=n5AxeT
- xoxb9IQrBdlOflYdoSCyu+CvSkRXvw65+6z/Q=; b=nQvAfRwsq6RbWvq7B9WhM8
- A0K0rIiQWSuOz5IL1ZBC1gZxg3OIGvC29OcinJWrKoXtpq3eWuraXmf0xspJ4QzU
- jw6xsCXdp72jpvVeMtWVhOg6iqbMeCZbstF6MpEbncpRMqnJCCDdmFttKJaUANAf
- YRxmIrd1cN1mi6C25yIWhpoy9B2Pm7d+vNmu5RMesjvbfKiXXjua+5FhINnWFiH6
- eodC6NG51WJmjM0KeXz/DbzgMa9P86iMhBu3chufn9VzWSj97TN5e2bEgQLjry5u
- T1otLsBsxQwn8g5NBq9GSEGW/USOUxrRFD6+BwIs6TAlzVUrhcVtWVNo6VkGYSVQ
+ :message-id:mime-version:references:subject:to; s=pp1; bh=WzzCt/
+ I6hgnKdlVndVFfpPwGhVKQ3B6lmpKGTujKDcU=; b=j8Bo0EgOHY6HWbqhZJyrzx
+ 5Bk/yft0UeCwpkDN3wyc/5IoXq/iXS48J2pfcyDFUJLNvof2niDviUFTCqMJQhyz
+ +mNwyEcE7JgP/y2pZHejg/Qe8cDNrLbU4ULAJ5bXp/fdAmtjlDafRks88PE6LcbR
+ /m88nMx+nMjLIJY7hILaWafTuJXQq19EUfwbCefpyRYmzQLq6WGU2fD5KMNg8OTF
+ FTXGcz9XK1dakqS96DVCBaJcm6cyymjtonVi8Bbhb6XOTT6MNaA/MiuFQB7kH3VL
+ 2Z4X9NGSkxK+vR7oK4lJ0ixo0VXoTy7BVrssFclWyc9GSM9mBdiwHzL9ftCcbE9w
  ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4h2r4g625p-1
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4h2sbvdubw-1
  (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Wed, 07 Oct 2026 17:35:46 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 697F2YqP2022581; Wed, 7 Oct 2026 17:35:46 GMT
-Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4h58d5kw63-1
+ Wed, 07 Oct 2026 17:36:37 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 697F2ntQ2085116; Wed, 7 Oct 2026 17:36:36 GMT
+Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4h3dhgykme-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 07 Oct 2026 17:35:46 +0000 (GMT)
+ Wed, 07 Oct 2026 17:36:36 +0000 (GMT)
 Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com
  [10.241.53.100])
- by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 697HZjRJ32244240
+ by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 697HaZkl8847874
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 7 Oct 2026 17:35:45 GMT
+ Wed, 7 Oct 2026 17:36:35 GMT
 Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E9D4B58057;
- Wed,  7 Oct 2026 17:35:44 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 1B1D758059;
+ Wed,  7 Oct 2026 17:36:35 +0000 (GMT)
 Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1FF8658058;
- Wed,  7 Oct 2026 17:35:44 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 8449E58058;
+ Wed,  7 Oct 2026 17:36:34 +0000 (GMT)
 Received: from [9.61.5.156] (unknown [9.61.5.156])
  by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Wed,  7 Oct 2026 17:35:44 +0000 (GMT)
-Message-ID: <3eb02742-7eaa-4b6e-921d-5df0bd5b74a6@linux.ibm.com>
-Date: Wed, 7 Oct 2026 13:35:43 -0400
+ Wed,  7 Oct 2026 17:36:34 +0000 (GMT)
+Message-ID: <9e7730a2-a62f-40ae-8677-425a633d6984@linux.ibm.com>
+Date: Wed, 7 Oct 2026 13:36:33 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v12 00/17] s390x/pci: Implement migration for emulated
- devices
-To: Konstantin Shkolnyy <kshk@linux.ibm.com>, mjrosato@linux.ibm.com
-Cc: alifm@linux.ibm.com, richard.henderson@linaro.org, iii@linux.ibm.com,
- david@kernel.org, cohuck@redhat.com, pasic@linux.ibm.com,
- borntraeger@linux.ibm.com, qemu-s390x@nongnu.org, qemu-devel@nongnu.org
-References: <20261006001643.420929-1-kshk@linux.ibm.com>
+Subject: Re: [PATCH v7 0/2] Error recovery for zPCI passthrough devices
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>,
+ Farhan Ali <alifm@linux.ibm.com>, qemu-s390x@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: cohuck@redhat.com, alex@shazbot.org
+References: <20261005174314.871-1-alifm@linux.ibm.com>
+ <54ccae64-501d-4f17-b4c5-14eed8d502e8@linux.ibm.com>
+ <97a696f4-37e6-4454-a1cc-f9583e3bf44d@redhat.com>
 Content-Language: en-US
 From: Eric Farman <farman@linux.ibm.com>
 Autocrypt: addr=farman@linux.ibm.com; keydata=
@@ -115,36 +117,37 @@ Autocrypt: addr=farman@linux.ibm.com; keydata=
  4HX/6RAR4Dbzry6/epWTTji+7ApzePzmJzPcuzD31ICsgT2dJ6ydxyxxXikBFJqx6BPOF+u+
  1BtKcTz1ek3I2sWvBM1V5CKaFw7iNXxS6HgS2scuAT2awKq+BQlt778/GfBWpXonfqixMvit
  y8m0x6unNti2MZIUMy0m2gcE
-In-Reply-To: <20261006001643.420929-1-kshk@linux.ibm.com>
+In-Reply-To: <97a696f4-37e6-4454-a1cc-f9583e3bf44d@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=TOPQ2Fla c=1 sm=1 tr=0 ts=6ac682f2 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+X-Proofpoint-ORIG-GUID: jE6O_xiIoNwq4qw75wY5iPJEPOwk_grp
+X-Authority-Analysis: v=2.4 cv=KJHPn1Fo c=1 sm=1 tr=0 ts=6ac68325 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
  a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=p0WdMEafAAAA:8
- a=VhT55RRkC2X4mMkaRA8A:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA3MDA3MCBTYWx0ZWRfXyOoFNst1LDpv
- vS5hUQ9q17qV+uoY4iys1uUjNv2n/zQI7BzvhYCH4lg/xDUVUGPAgGlnxOFIJ/qB+AHL+243lhq
- 16F+VtJNyn8UGgu0Z+WlrtJvCvG6dZa8+7heDFKMf+nAMmcYI+zhcw/ZBtAqrOt261cVVYgG0F+
- AQxxUEpn+YziZdVoDmUPyuHr+k5WTzXI0ReCFzL06AL7HlZ1Rl2k0J5Loyfq6zMWhXocc2AhYlU
- ylH4gTncewbUiRIWWh7g5/wHXtvjrMt/xWTD4KelSnXw/XZePiPWFhhuO9Iaz82oLmZ3sAgm/JP
- grVHYXz9WPIs15Xv5o78UlkMb/yjG7waPIx5A1dx1aNP8n5LmWuWfpSeRnozYlE9egQ532LNyV3
- 2LsmdUKxrgQ+haEs88JUdtsaXyuzuVVsx6OGTtjI/roSFDJ80u4rCdB80KoqqQ1gC3CJfmZAO0n
- SvgNhwsHLFbLuEcx7Sw==
-X-Proofpoint-GUID: ctmJk6YRo0QWO8Bjhhun7PngUpIlqDDi
-X-Proofpoint-ORIG-GUID: ctmJk6YRo0QWO8Bjhhun7PngUpIlqDDi
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA3MDA3MCBTYWx0ZWRfX3kD7xJCspdEW
- d+M74sSVMLzc0r89ag/TvQqoRmd3wXl+aYr4xgl4K/yJyLlx8y7/EARdAQLd2p5j+2xA5tJh1Ym
- Ms9TxB1MtgNp74cWd04hbyQfcu8cyaY=
+ a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=1BXtr7fskoQUwKDzLcoA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: jE6O_xiIoNwq4qw75wY5iPJEPOwk_grp
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA3MDA3MCBTYWx0ZWRfX+2lDy7Qh01Cj
+ zAEh71g0QIDKxFrgSA7xwrwrnbXUdZeX7PfcCB+1c4L5fhkYaSrLRoj8ezWYY3MUfLn3I4Jj15G
+ wldKh+zQSJS8fe9ibULtyhWOF+Acmg+IUkjkRpy41Zn/vYOOtPz2QH5b5xrfFM6O6OnKiBfCryd
+ 9q/ZDjhuISb0FZkQQaZ6vxyyMersbPSHNZJ2aLFjAgbUZZo8KJik2bZdRinLJVi2kolAofXlerv
+ ob0sUASnmmH8fAC3X/ghSg1wpoDIywVOYN0NDNq0OUFgcx0kmKeS1CVM7nxPxW9/8Lvp0O+cGMq
+ 3cWfdBo3w1mQOAEBzEp9skjVrGGoEvjYYz5bWqP6PB5/lxy0rapayoraY8f3cwP67A5w6RE+42N
+ Qcly/xwOxEyMvVRDM2MhkNeTMRPNeFBB+cAc+24R1Mm7zRu19J8/5auM7ZXkAf5/xFPKLHHoKNX
+ raJvmVEYOgK3jdDDztQ==
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA3MDA3MCBTYWx0ZWRfXzWSK4jWGV2JC
+ tkK35g7rnhRbYOclYtPk9ULqWX8iXDR1bycglPOXl4EdFOiEmJVYk+95qbIbK4TSIR8sWSlLN6H
+ yF67UFGszfFbycLKtTJQOmxE/FeoPxE=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-10-07_05,2026-10-06_03,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 priorityscore=1501 spamscore=0 adultscore=0 clxscore=1015
- lowpriorityscore=0 impostorscore=0 bulkscore=0 phishscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2610070070
+ suspectscore=0 malwarescore=0 spamscore=0 lowpriorityscore=0
+ priorityscore=1501 phishscore=0 impostorscore=0 adultscore=0 clxscore=1015
+ bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
+ definitions=main-2610070070
 Received-SPF: pass client-ip=148.163.158.5; envelope-from=farman@linux.ibm.com;
  helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
@@ -171,62 +174,49 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-On 10/5/26 8:16 PM, Konstantin Shkolnyy wrote:
-> ATTENTION! This series is built to apply on top of https://gitlab.com/efarman/qemu/-/tree/s390-next.
+On 10/7/26 2:48 AM, Cédric Le Goater wrote:
+> On 10/5/26 23:44, Matthew Rosato wrote:
+>> On 10/5/26 1:43 PM, Farhan Ali wrote:
+>>> Hi,
+>>>
+>>> This patch series introduces support for error recovery for 
+>>> passthrough PCI
+>>> devices on System Z (s390x). This is the user space component for the 
+>>> Linux
+>>> kernel patches [1]. The kernel patches were merged for 7.3 release.
+>>>
+>>> The current design for QEMU updates the callback for vfio error 
+>>> notifier to
+>>> an s390x specific error handler if the kernel supports the new device
+>>> feature VFIO_DEVICE_FEATURE_ZPCI_ERROR, for s390 vfio-pci devices. So 
+>>> now
+>>> on an eventfd notification for error notifier it will invoke the s390x
+>>> specific error handler.  The s390x error handler will retrieve the
+>>> architecture specific PCI error information and inject the 
+>>> information into
+>>> the guest. Once the guest receives the error information, the guest 
+>>> drivers
+>>> will drive the error recovery.  Typically recovery involves a device 
+>>> reset
+>>> which translate to CLP disable/enable cycle for the device.
+>>>
+>>> I would appreciate some feedback on this patch series.
+>>>
+>>> Thanks
+>>> Farhan
+>>
+>> @Eric: Series LGTM at this point, let's give Cédric and/or Alex some
+>> time to look too.
 > 
-> Up until now QEMU marked any zPCI device as "unmigratable."
 > 
-> This patch series adds support for migrating emulated devices, which are
-> simpler to migrate. It leaves VFIO devices still unmigratable.
+> Looks OK to me. The ERRP_GUARD() is not useful anymore but it is minor.
 > 
-> To enable migration, the device state needs to be saved/restored to/from
-> the migration stream.
+> Thanks,
 > 
-> There are 2 kinds of emulated devices - those that use the zPCI IOMMU page
-> table emulation in QEMU (e.g., Intel IGB NIC), and those that don't (virtio).
-> This is important to note for testing purposes.
-> 
-> This change was tested on IGB, virtio-net and virtio-blk devices by running
-> I/O on them while performing "virsh managedsave, virsh start" and also live
-> migration to another host and back.
-> 
-> Changes in v12:
->   - patch 14: Add a message to an error path that didn't have it.
->   - patch 15: New. Extract here an isolated change from the next patch to make it smaller.
->   - patch 16 (formerly 15):
->     - Simplify error handling on s390_pci_ioat_validate() failure,
->     - Put an assert() with a comment into unreacheable branch.
-> 
-> Konstantin Shkolnyy (16):
->    s390x/pci: Create function to contain translation status check
->    s390x/pci: Move iommu_mr from S390PCIIOMMU to S390PCIBusDevice
->    s390x/pci: Move dm_mr from S390PCIIOMMU to S390PCIBusDevice
->    s390x/pci: Move iotlb from S390PCIIOMMU to S390PCIBusDevice
->    s390x/pci: Remove a ptr to S390PCIBusDevice from S390PCIIOMMU
->    s390x/pci: Move/rename enabled from S390PCIIOMMU to S390PCIBusDevice
->    s390x/pci: Move dma_limit from S390PCIIOMMU to S390PCIBusDevice
->    s390x/pci: Move g_iota from S390PCIIOMMU to S390PCIBusDevice
->    s390x/pci: Move pba from S390PCIIOMMU to S390PCIBusDevice
->    s390x/pci: Move pal from S390PCIIOMMU to S390PCIBusDevice
->    s390x/pci: Move max_dma_limit from S390PCIIOMMU to S390PCIBusDevice
->    s390x/pci: Add a comment explaining S390PCIIOMMU purpose
->    s390x/pci: Move ioat sanity checks into new function, add error
->      message
->    s390x/pci: Provide each zpci device with a unique stable bus "path"
->    s390x/pci: Implement migration for emulated devices
->    s390x/pci: Create function to contain fmb_timer start
-> 
-> Matthew Rosato (1):
->    s390x/pci: implement IOMMU replay
-> 
->   hw/s390x/s390-pci-bus.c          | 528 +++++++++++++++++++++++++++----
->   hw/s390x/s390-pci-inst.c         | 174 +++++-----
->   hw/s390x/s390-pci-vfio.c         |   4 +-
->   hw/s390x/s390-virtio-ccw.c       |   4 +
->   include/hw/s390x/s390-pci-bus.h  |  43 ++-
->   include/hw/s390x/s390-pci-inst.h |   7 +-
->   6 files changed, 611 insertions(+), 149 deletions(-)
+> C.
 > 
 
-Applied to the s390x queue for 11.2; thank you!
+Thanks, all! Applied to the s390x queue for 11.2
+
+
 
