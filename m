@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F9B1CA5FFC
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 14:05:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68F1DCA5FF1
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 14:05:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xESGY-00044j-0B; Wed, 07 Oct 2026 10:05:08 -0400
+	id 1xESGP-0003zm-3L; Wed, 07 Oct 2026 10:05:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
- id 1xES2V-0006sv-2b
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 09:50:46 -0400
-Received: from mail-westus3azlp170110003.outbound.protection.outlook.com
- ([2a01:111:f403:c107::3] helo=PH0PR06CU001.outbound.protection.outlook.com)
+ id 1xES0G-0006E8-2x
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 09:48:29 -0400
+Received: from mail-southcentralusazlp170120001.outbound.protection.outlook.com
+ ([2a01:111:f403:c10d::1] helo=SN4PR2101CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
- id 1xES2S-0004Im-Sy
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 09:50:34 -0400
+ id 1xES0D-0003zi-PZ
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 09:48:15 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=bjrvcPeQLgGviGCG7FPnCuCFlZuKo8iwjEfGJdMqsE7Vub7BJmw/Aws08rkRdw1de1nrTvVscAeTZZPT0K2cbhYUmSe7TJNJRyPTS/18cxzbVilCVgRc7tzI041ovhPXPvrfrR7eHSzpgv4RNQzqIVfR0dBa4cf8ZYkdDbIscn1dSl31qEdtYTEGWtovwoWUJWwioYw18XUU1UNrr/QMaUhCEdy0djI/UySUFPY2NVVA12alw8q99aBwH/i4P7r/5ZZN0Cf9dZqooztF8DC3mAysWZyAmjx3l1wmFqCYV+XqlpHlCJVUZDXQ93nzt2lwuPjE6fTnU7DS5xQHtwT5rw==
+ b=MrZ3ZfElLf02BsmU8KiptahPEcput3c7L1KyV1elH0E/JF5hyL1S68rJqeM4IUK+8Brve4vPu+mFkJ26n1vfhHwnvEq9IuxNbslWOtISoGXkJ8+yTnZdOm+TNdxDPqQ6wkGXLXPjGradtNnih0PRdaELJOBrElc1BjYqN3RBI6sMGGSBCV05csVzZzEaO+VFp1D/B+TtRAPbhJouVNNgJUpA5d2nZrRjWkV9xUOtIy/eOePFIqR2D4086Jc6ShjQc6icCTNGcK//N7XKaCnBce/TyylzTVEC7EeiYOQlGvfFTg8wLfCGC77tSqWkKi6eDNKUpTO8Ue0zFwU3z3smew==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=P8FrZ3+Fy2e196Kcifl/Kgnvomb1xROz6PQEKbm3QSA=;
- b=wqN4zZ0XW/oFlY0Kbl1HOu0MQTjKl+cfSMLynr6sBBXnTq4Ru6WZMh73iliQsRid2nrRV+ua9QH5CdZN29MHk0A2dOzXzPydeaxNp9aUEB0FeZrYrXz9AyoRD71ONqJzQSxU4exLS09cYs8ybGSDCg7MzafcW4N2CZyGstuAcfMWuyZYocHrzOIEhgF0nYyRBa7byBd+iWWYqTMpjD7YMIaxzTZfFk1kC5bxkfCxtZ6w7jLdsa5A9D1OHOCOHVKWMr08mSt+Vd8L6zcDQj0gwqZDLt5cMWmnC3dr6ubZKQV0zntYT9a+vEq7kwLZRNuF/NRDUxyw7bFmEm8naUZ3ZQ==
+ bh=5abwgF8DvVYI9AYSzlBVazZExpdePXaGa8i6mrF5cfI=;
+ b=CpIuulYSE6Lt5WtK5RtING4JkZjy7vk9iG/gMM15bhH61inI56s0xCGiA8qF5cXgOldSvNINoxWJ+Xmzr0DHqm+efUUzKTevqin1b3EeS/wmYdqT4BiVNcf2YLKW9xLxQThUNle1LO3RBUMS6fR9Mnp50v8vLchinEryhgdx36GpfCryAQUZMlA79oIrCMQRs780zT97nCTV3RnGc/pFRsFLM6wyScn9ZCwQP1/8veSFzNYJC8VzAMDFDjGBInvY//yOw+g1ZvZwuAGi1mmD3WkEzXBCBFy0fdZsYRWzDA3pvUTj1F7TVOEYUNugtqdg1+CwlZ0RKtJzxvAKtTLm/A==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
  165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
  (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
  dkim=none (message not signed); arc=none (0)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=P8FrZ3+Fy2e196Kcifl/Kgnvomb1xROz6PQEKbm3QSA=;
- b=cfhseGK/Nt5IHW3qSe+eQXSI5dOiGTon6vQxGVAIlmfjK/MKusV3Xscj16nckTfuGnu89ivM1LqWb9HAx78z48KX7+b1EgVR9SbUL/z/SjeZfidWrB8UFB6PnWjJIURhr4NNmhhIbryrP3Um3frpJ5MjmAuu7aSGOYxz80C2qAA=
-Received: from CH0PR03CA0408.namprd03.prod.outlook.com (2603:10b6:610:11b::9)
- by CHXPR12MB999245.namprd12.prod.outlook.com (2603:10b6:610:2fc::10)
- with Microsoft SMTP Server (version=TLS1_2,
+ bh=5abwgF8DvVYI9AYSzlBVazZExpdePXaGa8i6mrF5cfI=;
+ b=inieBsT7dP77h4ZW0dDEtNNF6Yxy29H3pdk6HdZvqVmGm4nQY12h0LmuFiaAmQNJXQb8Iz0viDrHEqZiMTJrHI11fRj5BMAvhiE8s55qRttQMrVzQfubiG/F/LhuNqgzb87OmrJppBKT0jR0UGZFX0WRGLcMHjdIcb1DHsE3vjg=
+Received: from BY3PR05CA0037.namprd05.prod.outlook.com (2603:10b6:a03:39b::12)
+ by DS2PR12MB9797.namprd12.prod.outlook.com (2603:10b6:8:2ba::9) with
+ Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.496.15; Wed, 7 Oct
- 2026 13:50:26 +0000
-Received: from BL6PEPF00022570.namprd02.prod.outlook.com
- (2603:10b6:610:11b:cafe::46) by CH0PR03CA0408.outlook.office365.com
- (2603:10b6:610:11b::9) with Microsoft SMTP Server (version=TLS1_3,
+ 2026 13:48:09 +0000
+Received: from BY1PEPF000264B1.namprd02.prod.outlook.com
+ (2603:10b6:a03:39b:cafe::e) by BY3PR05CA0037.outlook.office365.com
+ (2603:10b6:a03:39b::12) with Microsoft SMTP Server (version=TLS1_3,
  cipher=TLS_AES_256_GCM_SHA384) id 15.21.496.5 via Frontend Transport; Wed, 7
- Oct 2026 13:50:25 +0000
+ Oct 2026 13:48:09 +0000
 X-MS-Exchange-Authentication-Results: mx.microsoft.com 1; spf=pass (sender IP
  is 165.204.84.17) smtp.mailfrom=amd.com;
  dkim=none (message not signed)
@@ -54,23 +54,23 @@ Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
  165.204.84.17 as permitted sender) receiver=protection.outlook.com;
  client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
 Received: from satlexmb07.amd.com (165.204.84.17) by
- BL6PEPF00022570.mail.protection.outlook.com (10.167.249.38) with Microsoft
+ BY1PEPF000264B1.mail.protection.outlook.com (10.167.242.117) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.496.14 via Frontend Transport; Wed, 7 Oct 2026 13:50:25 +0000
+ 15.21.496.14 via Frontend Transport; Wed, 7 Oct 2026 13:48:09 +0000
 Received: from localhost (10.180.168.240) by satlexmb07.amd.com
  (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.49; Wed, 7 Oct
- 2026 08:50:23 -0500
+ 2026 08:47:54 -0500
 From: Michael Roth <michael.roth@amd.com>
 To: <qemu-devel@nongnu.org>
 CC: <kvm@vger.kernel.org>, <pbonzini@redhat.com>, <berrange@redhat.com>,
  <armbru@redhat.com>, <pankaj.gupta@amd.com>, <xiaoyao.li@intel.com>,
  <chao.p.peng@linux.intel.com>, <david@kernel.org>, <ashish.kalra@amd.com>,
  <ackerleytng@google.com>, <lpieralisi@kernel.org>
-Subject: [PATCH v3 08/19] system/memory: Re-use memory-backend-guest-memfd
- inode for private memory
-Date: Wed, 7 Oct 2026 08:41:32 -0500
-Message-ID: <20261007134323.1606088-9-michael.roth@amd.com>
+Subject: [PATCH v3 01/19] accel/kvm: Add helper for handling conversions of
+ MMIO holes
+Date: Wed, 7 Oct 2026 08:41:25 -0500
+Message-ID: <20261007134323.1606088-2-michael.roth@amd.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261007134323.1606088-1-michael.roth@amd.com>
 References: <20261007134323.1606088-1-michael.roth@amd.com>
@@ -82,38 +82,38 @@ X-ClientProxiedBy: satlexmb08.amd.com (10.181.42.217) To satlexmb07.amd.com
  (10.181.42.216)
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BL6PEPF00022570:EE_|CHXPR12MB999245:EE_
-X-MS-Office365-Filtering-Correlation-Id: 9e86a633-6656-4ffa-f0d8-08df2479f050
+X-MS-TrafficTypeDiagnostic: BY1PEPF000264B1:EE_|DS2PR12MB9797:EE_
+X-MS-Office365-Filtering-Correlation-Id: abb232b0-5438-496f-59c0-08df24799f7c
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
  ARA:13230040|36860700016|82310400026|376014|7416014|1800799024|23010399003|22082099003|18002099003|10067099003|11063799006|56012099006;
-X-Microsoft-Antispam-Message-Info: CLerRd/DHar0X55FyKqH+o9KP3wawEJAt/OsRIOluD1nk2TZMN3Qa08rJS1UoxTxpwUh7wY1cK7llefZqi6vTc1ymzKUbFYpUDjppU4PueDJqax7lqOCg/dVuIBVPaV+L0C+D2a1xGY9c+7EMgp5skYfUDIEeqxlVbGskxKSyrFVol+F1C4XHokfMveZGnBmJFSJ2yILRx+8CdmUSr06rzbO7HRiRBtESqUEFwRLt7ckwSxLjsDybDjfkfzIl/RfPd49kpV6Cra3JJnwtxnFTLBfY4dFU9GtjD2pO9FIM8F0HZ6ovL4JbBMOtvkgXcOjGeT0hXlnwUcUzq24+/NRyAZ2a26cj+wlHBbYQU182fsIp+/ckFSoDB3EWWpHRXPjTD9R55yKxZ4myZAYba5EbiOUX4N3rFcDUTaQnpB59fjB+t9cA8bgPHYfImWPZa2xe7lS3tSCRCOuN94NI8z9NjTVG46508M3NA5okUnufV/iGmZG24tU1AC9wnDLOhmUBkQXNvYjxJC0wYJwOCUCd7F+dI4qec2WggXGrnZNQiNTPgtofj4QOxytUfo3GPqRAhA2WGdVvAQ2PAGbzqB9idco3ew1JThbdUC7K9rv2PvHaEAg/5IurXiPB8e7yhu12mv3AKdxHZw7PseslHPVK3V40OU2w43smSSjPwLKRtz8kOERbh5YbtMbupNTzO0FyuVX2WcMRfJaRTXbwN62BQ==
+X-Microsoft-Antispam-Message-Info: IH1w1aatfyw9LejFAIn1OyWZQmo+XnUPE5MFjXrxOvqVdS9SrDd9zOS6aw/ZKPkT/uFZf99cf3PKZFDXgVIe6nKD2Gae7Ell4zd5sl61091EOxvDlKIAiNrbNJZQ0YCgb5RWPUH2K2phTB1mfmKIZkefMt4HaizQF8Dxz5HY/VI7/JaotcQ3mewQcQczpW/AFG4TzxCIQqizDXBsPfHRYDXGbhyk23nCESHQdt9lU40SycY3KIzG7vdcYpFeglGyBYTUJ6kJVgRY05K4uNo8vGccyPBetiOaIlHPva6Tv51TeB6fux0C3pCI/8DM7HqQnBCJ5NZwyTuYgdZC0dv2AWRhhvUparkz3FJo4lq06y0WFHpIZ/srYb5pHKOpDuEQPFzlYCnKpJe2Dp7g6I0jrZIvBFyn/BfScQwbZKslO4eQTZEC6g6gH1srW65Z6knEhC3WgJ0kByr+0+iaFa3zxaETE8lcSJDXqZBjNhJ5i481y+L2bAL1g8rDzb4rqol8iqBMqECeXoXvhd2SFSKBeLLc6egC2fFNfyHOO1al8VGttB0HHMmxeznfgL/wjSzM5z2CsQmqT3J4nsiKpxf2xa33WydEgk9OJF3QxvAQFfaBXVTa7sg3PlXpDtfZq0DgpSWd65fS8eF4P9iSoxE73ijW4iz0BoLLe96uAhH7XcRV2bB7j3D6wKW1cihzt4OvQHFFpeSKoy37XNwIzf9O3Q==
 X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
  SFS:(13230040)(36860700016)(82310400026)(376014)(7416014)(1800799024)(23010399003)(22082099003)(18002099003)(10067099003)(11063799006)(56012099006);
  DIR:OUT; SFP:1101; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: zX5xyAsk52ALaAGpVTDF5mI5Zr7+06keD7ne0VEJCb9eAZw+MYnXmNJvuCqfVqUd/lePN6rqDsK8n5Mj+NfvBQn/Idb7WAZ0HkmurCa6NCbekWM7G7pMTtVqBwLX2W4w0KZzFlKobklgg5B0HnQQtuHoJaNnLktjxtcjUUy+gQJHWTdEUJkjBWraTndpNUxlutc+6GttUnWJkTzZXOzCQv579w+l0hMm6+CHgnlFHcGFn9utoAyIb/6+3dXcOA5sd/gTSwn7G8dso7Zb3faIOtOau14W+itO1bmkOF56ki+GoEVjDqRO+XM1S1oY7gWQ0G0ruuD0c5qMqcEZj0uR8UDH0LbIqsCdf/W2SDGeSpmVfEbKLoNGv6o4L2CIyKnKJo+xILy4FcqQaV1hZZjyadVwRS2xMzOAS7bRDdLm5buVBn2+3ASST0cFV3JU5n5w
+X-MS-Exchange-AntiSpam-MessageData-0: vAYcCbBDqrsItC565ib7HICuES9Jcecfgp0HMvExSnIAjsakZMdSarMSVndPG90vm7ETwb9cxI5RuKzwi0RwgrHtGYBLkYPSdI6OjVAjurPZ5Hh/efye0hj9SGrX71g3G3ro7zmOljZbwEEszHsOQkwozbPSCQaZR8P4OqvXxYs/NwhILkHKSfRddSghdawDm3W5TSoHnIGKncr3rKl1sdVcJcGympVz34ZMyDow/l8dIMiW9BjqCoE7jCe1cay3fcf/6PkUYu7C0UjzymbOVpPfp0Vzprav6vuk10sPIMSYFUlRUgWhIOZVi9nfbatPUbgutnCyrtX9W0WezzUtQUD7FBC9wZxxt/41Gp8D7xjba+IqtLp8bxl6S7PF57MayBIkW49TeWnna4PcY2uG4AnUeO908rznlUsDHMq9ZHI+a2pHKobnqL67Dp2zc8TG
 X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Oct 2026 13:50:25.0933 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 9e86a633-6656-4ffa-f0d8-08df2479f050
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Oct 2026 13:48:09.3985 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: abb232b0-5438-496f-59c0-08df24799f7c
 X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
  Helo=[satlexmb07.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: BL6PEPF00022570.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthSource: BY1PEPF000264B1.namprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CHXPR12MB999245
-Received-SPF: permerror client-ip=2a01:111:f403:c107::3;
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS2PR12MB9797
+Received-SPF: permerror client-ip=2a01:111:f403:c10d::1;
  envelope-from=Michael.Roth@amd.com;
- helo=PH0PR06CU001.outbound.protection.outlook.com
+ helo=SN4PR2101CU001.outbound.protection.outlook.com
 X-Spam_score_int: -22
 X-Spam_score: -2.3
 X-Spam_bar: --
 X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -129,146 +129,148 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When convert-in-place=true, the guest_memfd instance created by
-memory-backend-memfd (when guest-memfd=on option is specified) should
-also be used internally for private memory.
+When converting GPA ranges containing MMIO holes, the general intended
+logic is to skip MMIO ranges as long as it is a private->shared
+conversion, and to fail otherwise.
 
-Do this by dup()'ing the guest_memfd FD provided by the backend so the
-separate cleanup paths for shared vs. private FDs can be managed in the
-same way they are currently for convert-in-place=false (where shared
-memory must come from something other than guest_memfd).
+To better enable some future refactorings to address bugs in the current
+code, go ahead and consolidate all of the MMIO handling to a
+self-contained helper.
 
-Introduce a new RAM_GUEST_MEMFD_SHAREABLE flag that can be used to
-limit this dup()'ing to specific backend types like
-memory-backend-memfd.
+The only intended functional change is that the error message for
+shared->private conversion of MMIO ranges corresponding to a
+non-RAM/non-ROM region now report the range of the region that
+specifically caused the failure, as opposed to reporting the entire
+conversion range. There is also a stray "," in the error message which
+is fixed up as part of this refactoring.
 
 Signed-off-by: Michael Roth <michael.roth@amd.com>
 ---
- backends/hostmem-memfd.c |  1 +
- include/system/memory.h  |  7 ++++++
- system/physmem.c         | 50 +++++++++++++++++++++++++++++++++++++---
- 3 files changed, 55 insertions(+), 3 deletions(-)
+ accel/kvm/kvm-all.c | 96 ++++++++++++++++++++++++++++++---------------
+ 1 file changed, 64 insertions(+), 32 deletions(-)
 
-diff --git a/backends/hostmem-memfd.c b/backends/hostmem-memfd.c
-index 666593ff6c..c1ea6eefbd 100644
---- a/backends/hostmem-memfd.c
-+++ b/backends/hostmem-memfd.c
-@@ -90,6 +90,7 @@ have_fd:
-     backend->aligned = true;
-     ram_flags = backend->share ? RAM_SHARED : RAM_PRIVATE;
-     ram_flags |= backend->reserve ? 0 : RAM_NORESERVE;
-+    ram_flags |= RAM_GUEST_MEMFD_SHAREABLE;
-     ram_flags |= backend->guest_memfd_private ? RAM_GUEST_MEMFD_PRIVATE : 0;
-     return memory_region_init_ram_from_fd(&backend->mr, OBJECT(backend), name,
-                                           backend->size, ram_flags, fd, 0, errp);
-diff --git a/include/system/memory.h b/include/system/memory.h
-index 027ca81bd2..ef6c767021 100644
---- a/include/system/memory.h
-+++ b/include/system/memory.h
-@@ -274,6 +274,13 @@ typedef struct IOMMUTLBEvent {
-  */
- #define RAM_PRIVATE (1 << 13)
+diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+index db52bb9ffb..c824e4d963 100644
+--- a/accel/kvm/kvm-all.c
++++ b/accel/kvm/kvm-all.c
+@@ -3334,6 +3334,67 @@ static void kvm_eat_signals(CPUState *cpu)
+     } while (sigismember(&chkset, SIG_IPI));
+ }
  
 +/*
-+ * RAM is backed by a guest-memfd instance that supports being used as shared
-+ * memory (as opposed to RAM_GUEST_MEMFD_PRIVATE which, by itself, entails
-+ * the guest-memfd instance can only ever be used for private memory).
++ * This handles checking whether a conversion overlaps with any holes in
++ * the given section/range, and indicates whether or not the section/range
++ * can be safely skipped (which is generally allowed as long as the
++ * conversion is private->shared and not the other way around).
++ *
++ * Returns 0 if section is normal guest-memfd-backed memory, or is a hole or
++ * non-RAM/ROM region that should be skipped as MMIO. In the latter case, the
++ * 'skip' parameter will be set. Returns < 0 if the conversion request is not
++ * valid.
 + */
-+#define RAM_GUEST_MEMFD_SHAREABLE   (1 << 14)
++static int handle_memory_hole(MemoryRegionSection *section, bool to_private,
++                              bool *skip)
++{
++    MemoryRegion *mr = section->mr;
 +
- static inline void iommu_notifier_init(IOMMUNotifier *n, IOMMUNotify fn,
-                                        IOMMUNotifierFlag flags,
-                                        hwaddr start, hwaddr end,
-diff --git a/system/physmem.c b/system/physmem.c
-index 86046d46df..b9b4864a94 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -59,6 +59,7 @@
- #include "system/hostmem.h"
- #include "system/hw_accel.h"
- #include "system/xen-mapcache.h"
-+#include "system/confidential-guest-support.h"
- #include "trace.h"
- 
- #ifdef CONFIG_FALLOCATE_PUNCH_HOLE
-@@ -2187,6 +2188,8 @@ static void ram_block_add(RAMBlock *new_block, Error **errp)
-     if (new_block->flags & RAM_GUEST_MEMFD_PRIVATE) {
-         int ret;
- 
-+        assert(current_machine->cgs);
-+
-         if (!kvm_enabled()) {
-             error_setg(errp, "cannot set up private guest memory for %s: KVM required",
-                        object_get_typename(OBJECT(current_machine->cgs)));
-@@ -2211,9 +2214,44 @@ static void ram_block_add(RAMBlock *new_block, Error **errp)
-             goto out_free;
-         }
- 
--        new_block->guest_memfd_private =
--            kvm_create_guest_memfd_private(new_block->max_length, errp);
++    if (!mr) {
 +        /*
-+         * If both shared/private memory are handled by guest_memfd, make sure
-+         * to re-use the guest_memfd inode that should have already been created
-+         * for handling shared memory.
++         * TDX requires vMMIO region to be shared to inject #VE to guest.
++         * OVMF issues conservatively MapGPA(shared) on 32bit PCI MMIO
++         * region, and vIO-APIC 0xFEC00000 4K page.
++         * OVMF assigns 32bit PCI MMIO region to
++         * [top of low memory: typically 2GB=0xC000000,  0xFC00000)
++         *
++         * If the current lookup failed to find any regions, then skip the
++         * entire remaining range as a hole/MMIO.
 +         */
-+        if (machine_require_guest_memfd_convert_in_place(current_machine)) {
-+            if (!(new_block->flags & RAM_GUEST_MEMFD_SHAREABLE)) {
-+                error_setg(errp, "configured memory backend is not compatible"
-+                                 " with in-place conversion");
-+                ram_block_coordinated_discard_require(false);
-+                qemu_mutex_unlock_ramlist();
-+                goto out_free;
-+            }
-+            assert(new_block->fd >= 0);
-+
-+            /*
-+             * Current logic calculates guest_memfd_offset on the assumption
-+             * that offset 0 corresponds to the first GPA that is backed by the
-+             * RAM block/backend. For cases where the guest_memfd is only used
-+             * for private memory and created internally as-needed this is
-+             * always the case, but when re-using a guest_memfd that's also
-+             * usable for shared memory (e.g. via memory-backend-guest-memfd)
-+             * it's possible that guest_memfd might be mmap()'d starting at some
-+             * non-zero offset. For now, this isn't a reachable condition, but
-+             * assert this in case this ever changes and the logic needs to be
-+             * updated to account for this.
-+             */
-+            assert(new_block->fd_offset == 0);
-+
-+            new_block->guest_memfd_private = qemu_dup(new_block->fd);
-+        } else {
-+            new_block->guest_memfd_private =
-+                kvm_create_guest_memfd_private(new_block->max_length, &err);
++        if (!to_private) {
++            *skip = true;
++            return 0;
 +        }
-+
-         if (new_block->guest_memfd_private < 0) {
-+            error_propagate(errp, err);
-+            ram_block_coordinated_discard_require(false);
-             qemu_mutex_unlock_ramlist();
-             goto out_free;
-         }
-@@ -2323,7 +2361,7 @@ RAMBlock *qemu_ram_alloc_from_fd(ram_addr_t size, ram_addr_t max_size,
-     assert((ram_flags & ~(RAM_SHARED | RAM_PMEM | RAM_NORESERVE |
-                           RAM_PROTECTED | RAM_NAMED_FILE | RAM_READONLY |
-                           RAM_READONLY_FD | RAM_GUEST_MEMFD_PRIVATE |
--                          RAM_RESIZEABLE)) == 0);
-+                          RAM_RESIZEABLE | RAM_GUEST_MEMFD_SHAREABLE)) == 0);
-     assert(max_size >= size);
- 
-     if (xen_enabled()) {
-@@ -2835,6 +2873,12 @@ int ram_block_rebind(Error **errp)
- {
-     RAMBlock *block;
- 
-+    if (machine_require_guest_memfd_convert_in_place(current_machine)) {
-+        error_setg(errp,
-+                   "rebind support is not yet enabled for in-place conversion");
-+        return -1;
++        return -EINVAL;
 +    }
 +
-     qemu_mutex_lock_ramlist();
++    /*
++     * Because vMMIO region must be shared, guest TD may convert vMMIO
++     * region to shared explicitly.  Don't complain such case.  See
++     * memory_region_type() for checking if the region is MMIO region.
++     */
++    if (!memory_region_has_guest_memfd_private(mr)) {
++        if (!to_private &&
++            !memory_region_is_ram(mr) &&
++            !memory_region_is_ram_device(mr) &&
++            !memory_region_is_rom(mr) &&
++            !memory_region_is_romd(mr)) {
++            *skip = true;
++            return 0;
++        } else {
++            error_report("Convert non guest_memfd backed memory region "
++                         "(0x%"HWADDR_PRIx" + 0x%"HWADDR_PRIx") to %s",
++                         section->offset_within_address_space,
++                         int128_get64(section->size),
++                         to_private ? "private" : "shared");
++            return -EINVAL;
++        }
++    }
++
++    *skip = false;
++    return 0;
++}
++
+ int kvm_convert_memory(hwaddr start, hwaddr size, bool to_private)
+ {
+     MemoryRegionSection section;
+@@ -3341,6 +3402,7 @@ int kvm_convert_memory(hwaddr start, hwaddr size, bool to_private)
+     MemoryRegion *mr;
+     RAMBlock *rb;
+     void *addr;
++    bool skip;
+     int ret = -EINVAL;
  
-     RAMBLOCK_FOREACH(block) {
+     trace_kvm_convert_memory(start, size, to_private ? "shared_to_private" : "private_to_shared");
+@@ -3356,39 +3418,9 @@ int kvm_convert_memory(hwaddr start, hwaddr size, bool to_private)
+ 
+     section = memory_region_find(get_system_memory(), start, size);
+     mr = section.mr;
+-    if (!mr) {
+-        /*
+-         * Ignore converting non-assigned region to shared.
+-         *
+-         * TDX requires vMMIO region to be shared to inject #VE to guest.
+-         * OVMF issues conservatively MapGPA(shared) on 32bit PCI MMIO region,
+-         * and vIO-APIC 0xFEC00000 4K page.
+-         * OVMF assigns 32bit PCI MMIO region to
+-         * [top of low memory: typically 2GB=0xC000000,  0xFC00000)
+-         */
+-        if (!to_private) {
+-            return 0;
+-        }
+-        return ret;
+-    }
+ 
+-    if (!memory_region_has_guest_memfd_private(mr)) {
+-        /*
+-         * Because vMMIO region must be shared, guest TD may convert vMMIO
+-         * region to shared explicitly.  Don't complain such case.  See
+-         * memory_region_type() for checking if the region is MMIO region.
+-         */
+-        if (!to_private &&
+-            !memory_region_is_ram(mr) &&
+-            !memory_region_is_ram_device(mr) &&
+-            !memory_region_is_rom(mr) &&
+-            !memory_region_is_romd(mr)) {
+-            ret = 0;
+-        } else {
+-            error_report("Convert non guest_memfd backed memory region "
+-                        "(0x%"HWADDR_PRIx" ,+ 0x%"HWADDR_PRIx") to %s",
+-                        start, size, to_private ? "private" : "shared");
+-        }
++    ret = handle_memory_hole(&section, to_private, &skip);
++    if (ret || skip) {
+         goto out_unref;
+     }
+ 
 -- 
 2.43.0
 
