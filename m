@@ -4,58 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 876B0CA6002
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 20:15:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80E94CA6004
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 20:15:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xEY1n-0004cK-FG; Wed, 07 Oct 2026 16:14:15 -0400
+	id 1xEY26-0004dH-IQ; Wed, 07 Oct 2026 16:14:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
- id 1xEY1a-0004Zt-NC
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 16:14:02 -0400
+ id 1xEY1b-0004aC-An
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 16:14:03 -0400
 Received: from mgamail.intel.com ([198.175.65.18])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
- id 1xEY1Y-0002BI-Pi
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 16:14:02 -0400
+ id 1xEY1Z-0002B7-34
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 16:14:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
  t=1791404041; x=1822940041;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=eewvSv5A7/D5spMXJzGxhfFCFSwhWuB7A5JmKaq8VG4=;
- b=MEexrU7lydf6LCUKb82ekuQ0hsP1RIbtdmKusQwcGRDlGj39Y23kaRFo
- EolT6HGT1K6UWhz3ick/T7MDFNydHppymztvodLO56iJKLuGVRTVL4VFw
- Cy/4NDu1db22nY0heAYTfGYAHpVFJUWNGnS4ZgqaS6mLCxoGtoI6r2LOb
- 8kReitefTHMNoZK+X7CZlyjnIFrefok6U4T0zpDpjXsbXHuB/kLnRNL0T
- l64qumxgoSEaL3eoB0Vt/ikJVIilZvkQiRSHthbHJqfNZWNN6IV0U4FFc
- 1Dw9OcpDwBLu8gnrUhVoOVDYAM0JkLdJqpubAJ7bzvxFvRqDuBPPsHjjx g==;
-X-CSE-ConnectionGUID: rRc7hSIWSD2r9JJvrpAXDg==
-X-CSE-MsgGUID: MeoxBeV+SYuBIC2BE2F+rw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11928"; a="178486"
+ bh=j5Y5Ol7gneFTBsVCADr0uA3bbbqU8zNP6j9n0Cubp4M=;
+ b=D56R4wlnzW3gVT79Fd1hQqur15a13NHOfgQ3PnVbmKfJJowNps0JHVKZ
+ GstDkdDzaceWXS/i9FxCTM6iW2dfaJCrL1fa5tU312p5i2ew0CI1SM5fo
+ ilCUl1nyglJXumcBEQmsZVIXXiMGR888/E9UvqKSPZls+r6Qb9wl6cs6N
+ LC58I0IKZ2qe0YUR3H7CH1Uqnnyc1DrLqDosoobiQOkBh+Jj1Vry5S2yI
+ yfQBOJ48FGQA422iMwpPYHBwciR0uXb+GeKcu2zj7A4c4hZRmwGOZpUbJ
+ q0ge5D7ea0hOt6prhPzoIjxRBA2sJbreoOSohIImYRvZhWDyH14XpTVFf w==;
+X-CSE-ConnectionGUID: VxdSNqJbTuWUBeCVSbgyig==
+X-CSE-MsgGUID: 2JyNYqdVT96sR0itdLULww==
+X-IronPort-AV: E=McAfee;i="6800,10657,11928"; a="178489"
 X-IronPort-AV: E=Sophos;i="6.27,144,1787036400"; 
-   d="scan'208";a="178486"
+   d="scan'208";a="178489"
 Received: from fmviesa013.fm.intel.com ([10.60.135.153])
  by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
  07 Oct 2026 13:13:49 -0700
-X-CSE-ConnectionGUID: i3tHxe2jSr2sy4nLIC9/XA==
-X-CSE-MsgGUID: PRWoqnA5Txe1IemkAeqapQ==
+X-CSE-ConnectionGUID: mVA8jQE/S+CDjml634+J1Q==
+X-CSE-MsgGUID: NRnJrLvhQ4SLEFQ1BQdxaQ==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.27,144,1787036400"; 
-   d="scan'208";a="1564970"
+   d="scan'208";a="1564974"
 Received: from vkasired-desk1.fm.intel.com ([10.121.64.242])
  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
  07 Oct 2026 13:13:47 -0700
 From: Vivek Kasireddy <vivek.kasireddy@intel.com>
 To: qemu-devel@nongnu.org
 Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
  Alex Williamson <alex@shazbot.org>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v13 7/9] vfio/device: Add a helper to mmap a dmabuf
-Date: Wed,  7 Oct 2026 13:09:26 -0700
-Message-ID: <20261007201222.648687-8-vivek.kasireddy@intel.com>
+Subject: [PATCH v13 8/9] virtio-gpu-dmabuf: Improve error handling with 'Error
+ **' and err enum
+Date: Wed,  7 Oct 2026 13:09:27 -0700
+Message-ID: <20261007201222.648687-9-vivek.kasireddy@intel.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261007201222.648687-1-vivek.kasireddy@intel.com>
 References: <20261007201222.648687-1-vivek.kasireddy@intel.com>
@@ -86,124 +91,174 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In order to mmap a dmabuf, we first need to create a placeholder
-mapping that would fit the entire size of the dmabuf. This mapping
-would then be replaced with smaller mappings of individual dmabuf
-segments.
+Make the error handling more robust in virtio_gpu_init_udmabuf()
+by introducing 'Error **' parameter to capture errors and using
+an enum from VFIO to categorize different errors. This allows for
+better error reporting and handling of errors from
+virtio_gpu_create_udmabuf() and virtio_gpu_remap_dmabuf().
 
+Furtheremore, the main reason for using the VFIO enum is to handle
+the special INVALID_IOV case which can happen in two scenarios:
+1) When the Blob resource's memory is backed by a VFIO region. This
+   would cause INVALID_IOV error when we try to create a dmabuf via
+   udmabuf driver but we can recover from this error by having the
+   dmabuf be created by the VFIO driver instead.
+2) When the Blob resource's memory is not backed by memfd or VFIO
+   region. In this case, since the error can be attributed to the
+   guest, we should use qemu_log_mask() instead of error_report_err()
+   and emit a message that can be used to debug the guest error.
+
+Note that, to diagnose errors, a common pattern is to return -errno
+to enable the caller to implement specific error handling. However, in
+this case, since we want to distinguish the INVALID_IOV error from other
+errors, using the VFIO enum allows us to do so and is very convenient.
+
+Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
+Cc: Alex Bennée <alex.bennee@linaro.org>
+Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 Cc: Alex Williamson <alex@shazbot.org>
 Cc: Cédric Le Goater <clg@redhat.com>
+Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
 ---
- include/hw/vfio/vfio-device.h | 15 ++++++++++
- hw/vfio/device.c              | 55 +++++++++++++++++++++++++++++++++++
- hw/vfio/dmabuf-stubs.c        |  7 +++++
- 3 files changed, 77 insertions(+)
+ hw/display/virtio-gpu-dmabuf.c | 69 ++++++++++++++++++++++------------
+ 1 file changed, 46 insertions(+), 23 deletions(-)
 
-diff --git a/include/hw/vfio/vfio-device.h b/include/hw/vfio/vfio-device.h
-index c05430be8a..4b8fb62056 100644
---- a/include/hw/vfio/vfio-device.h
-+++ b/include/hw/vfio/vfio-device.h
-@@ -345,6 +345,21 @@ int vfio_device_get_irq_info(VFIODevice *vbasedev, int index,
-  */
- int vfio_device_create_dmabuf_fd(struct iovec *iov, unsigned int iov_cnt,
-                                  Error **errp);
-+
-+/**
-+ * Mmap a dmabuf by first translating the addresses in the iovec
-+ * array into VFIO region offsets and then creating a placeholder
-+ * mapping that would be replaced later with mappings that
-+ * correspond to the dmabuf segments.
-+ *
-+ * @iov: array of iovec entries associated with the dmabuf
-+ * @iov_cnt: number of entries in the iovec array
-+ * @errp: pointer to Error*, to store an error if it happens.
-+ *
-+ * Returns the mapped pointer on success and NULL on error.
-+ */
-+void *vfio_device_mmap_dmabuf(struct iovec *iov, unsigned int iov_cnt,
-+                              Error **errp);
- #endif
+diff --git a/hw/display/virtio-gpu-dmabuf.c b/hw/display/virtio-gpu-dmabuf.c
+index 6f05f367d0..c9de8e9ba3 100644
+--- a/hw/display/virtio-gpu-dmabuf.c
++++ b/hw/display/virtio-gpu-dmabuf.c
+@@ -18,6 +18,7 @@
+ #include "ui/console.h"
+ #include "hw/virtio/virtio-gpu.h"
+ #include "hw/virtio/virtio-gpu-pixman.h"
++#include "hw/vfio/vfio-device.h"
+ #include "trace.h"
+ #include "system/ramblock.h"
+ #include "system/hostmem.h"
+@@ -27,28 +28,32 @@
+ #include "standard-headers/linux/udmabuf.h"
+ #include "standard-headers/drm/drm_fourcc.h"
  
- /* Returns 0 on success, or a negative errno. */
-diff --git a/hw/vfio/device.c b/hw/vfio/device.c
-index d95503a5f1..5bc0443764 100644
---- a/hw/vfio/device.c
-+++ b/hw/vfio/device.c
-@@ -776,3 +776,58 @@ int vfio_device_create_dmabuf_fd(struct iovec *iov, unsigned int iov_cnt,
+-static void virtio_gpu_create_udmabuf(struct virtio_gpu_simple_resource *res)
++static int virtio_gpu_create_udmabuf(struct virtio_gpu_simple_resource *res,
++                                     Error **errp)
+ {
+     g_autofree struct udmabuf_create_list *list = NULL;
+     RAMBlock *rb;
+     ram_addr_t offset;
+-    int udmabuf, i;
++    int udmabuf, i, fd;
+ 
+     udmabuf = udmabuf_fd();
+     if (udmabuf < 0) {
+-        return;
++        error_setg(errp, "udmabuf device not available or enabled");
++        return VFIO_DMABUF_CREATE_ERR_UNSPEC;
      }
-     return ret;
+ 
+     list = g_try_malloc0(sizeof(struct udmabuf_create_list) +
+                          sizeof(struct udmabuf_create_item) * res->iov_cnt);
+     if (!list) {
+-        return;
++        error_setg(errp, "failed to allocate udmabuf create list");
++        return VFIO_DMABUF_CREATE_ERR_UNSPEC;
+     }
+ 
+     for (i = 0; i < res->iov_cnt; i++) {
+         rb = qemu_ram_block_from_host(res->iov[i].iov_base, false, &offset);
+         if (!rb || rb->fd < 0) {
+-            return;
++            error_setg(errp, "IOV memory address incompatible with udmabuf ");
++            return VFIO_DMABUF_CREATE_ERR_INVALID_IOV;
+         }
+ 
+         list->list[i].memfd  = rb->fd;
+@@ -59,22 +64,28 @@ static void virtio_gpu_create_udmabuf(struct virtio_gpu_simple_resource *res)
+     list->count = res->iov_cnt;
+     list->flags = UDMABUF_FLAGS_CLOEXEC;
+ 
+-    res->dmabuf_fd = ioctl(udmabuf, UDMABUF_CREATE_LIST, list);
+-    if (res->dmabuf_fd < 0) {
+-        warn_report("%s: UDMABUF_CREATE_LIST: %s", __func__,
+-                    strerror(errno));
++    fd = ioctl(udmabuf, UDMABUF_CREATE_LIST, list);
++    if (fd < 0) {
++        error_setg_errno(errp, errno, "UDMABUF_CREATE_LIST: ioctl failed");
++        if (errno == EINVAL || errno == EBADFD) {
++            return VFIO_DMABUF_CREATE_ERR_INVALID_IOV;
++        }
++        return VFIO_DMABUF_CREATE_ERR_UNSPEC;
+     }
++    return fd;
  }
+ 
+-static void virtio_gpu_remap_dmabuf(struct virtio_gpu_simple_resource *res)
++static void *virtio_gpu_remap_dmabuf(struct virtio_gpu_simple_resource *res,
++                                     Error **errp)
+ {
+-    res->remapped = mmap(NULL, res->blob_size, PROT_READ,
+-                         MAP_SHARED, res->dmabuf_fd, 0);
+-    if (res->remapped == MAP_FAILED) {
+-        warn_report("%s: dmabuf mmap failed: %s", __func__,
+-                    strerror(errno));
+-        res->remapped = NULL;
++    void *map;
 +
-+void *vfio_device_mmap_dmabuf(struct iovec *iov, unsigned int iov_cnt,
-+                              Error **errp)
-+{
-+    size_t total_size = iov_size(iov, iov_cnt);
-+    struct vfio_region_info *info = NULL;
-+    ram_addr_t offset, len = 0;
-+    VFIODevice *vbasedev;
-+    VFIORegion *region;
-+    RAMBlock *first_rb;
-+    void *map, *submap;
-+    int i;
-+
-+    if (!vfio_device_lookup(iov, &vbasedev, &first_rb, errp)) {
-+        return NULL;
-+    }
-+
-+    /*
-+     * We first reserve a contiguous chunk of address space for the entire
-+     * dmabuf, then replace it with smaller mappings that correspond to the
-+     * individual segments of the dmabuf.
-+     */
-+    map = mmap(NULL, total_size, PROT_NONE, MAP_SHARED | MAP_ANONYMOUS, -1, 0);
++    map = mmap(NULL, res->blob_size, PROT_READ, MAP_SHARED, res->dmabuf_fd, 0);
 +    if (map == MAP_FAILED) {
-+        error_setg_errno(errp, errno, "Could not reserve placeholder mapping");
++        error_setg_errno(errp, errno, "dmabuf mmap failed");
 +        return NULL;
-+    }
-+
-+    for (i = 0; i < iov_cnt; i++) {
-+        if (!vfio_region_lookup(iov[i].iov_base, &region,
-+                                first_rb, &offset, errp)) {
-+            goto err;
-+        }
-+
-+        if (vfio_device_get_region_info(vbasedev, region->nr, &info)) {
-+            error_setg(errp, "Cannot find region info for dmabuf segment\n");
-+            goto err;
-+        }
-+
-+        submap = mmap(map + len, iov[i].iov_len, PROT_READ,
-+                      MAP_SHARED | MAP_FIXED, vbasedev->fd,
-+                      info->offset + offset);
-+        if (submap == MAP_FAILED) {
-+            error_setg_errno(errp, errno, "Could not mmap dmabuf segment\n");
-+            goto err;
-+        }
-+        len += iov[i].iov_len;
-+    }
+     }
 +    return map;
-+err:
-+    munmap(map, total_size);
-+    error_prepend(errp, "VFIO dmabuf mmap failed: ");
-+    return NULL;
-+}
-+
-diff --git a/hw/vfio/dmabuf-stubs.c b/hw/vfio/dmabuf-stubs.c
-index fb5318e929..b9e03a162a 100644
---- a/hw/vfio/dmabuf-stubs.c
-+++ b/hw/vfio/dmabuf-stubs.c
-@@ -15,3 +15,10 @@ int vfio_device_create_dmabuf_fd(struct iovec *iov, unsigned int iov_cnt,
-     error_setg(errp, "VFIO dmabuf support is not enabled");
-     return VFIO_DMABUF_CREATE_ERR_UNSPEC;
  }
+ 
+ void virtio_gpu_fini_dmabuf(struct virtio_gpu_simple_resource *res)
+@@ -130,6 +141,7 @@ bool virtio_gpu_have_udmabuf(void)
+ 
+ bool virtio_gpu_init_dmabuf(struct virtio_gpu_simple_resource *res)
+ {
++    Error *local_err = NULL;
+     void *pdata = NULL;
+ 
+     res->dmabuf_fd = -1;
+@@ -137,17 +149,28 @@ bool virtio_gpu_init_dmabuf(struct virtio_gpu_simple_resource *res)
+         res->iov[0].iov_len < 4096) {
+         pdata = res->iov[0].iov_base;
+     } else if (res->blob_size) {
+-        virtio_gpu_create_udmabuf(res);
++        res->dmabuf_fd = virtio_gpu_create_udmabuf(res, &local_err);
++        if (res->dmabuf_fd == VFIO_DMABUF_CREATE_ERR_INVALID_IOV) {
++            error_free_or_abort(&local_err);
 +
-+void *vfio_device_mmap_dmabuf(struct iovec *iov, unsigned int iov_cnt,
-+                              Error **errp)
-+{
-+    error_setg(errp, "VFIO mmap dmabuf support is not enabled");
-+    return NULL;
-+}
++            qemu_log_mask(LOG_GUEST_ERROR,
++                          "Cannot create dmabuf: incompatible memory\n");
++            return false;
++        } else if (res->dmabuf_fd >= 0) {
++            pdata = virtio_gpu_remap_dmabuf(res, &local_err);
++            if (!pdata) {
++                virtio_gpu_fini_dmabuf(res);
++            }
++        } else {
++            res->dmabuf_fd = -1;
++        }
++
+         if (res->dmabuf_fd < 0) {
+-            return false;
+-        }
+-        virtio_gpu_remap_dmabuf(res);
+-        if (!res->remapped) {
+-            virtio_gpu_fini_dmabuf(res);
++            error_report_err(local_err);
+             return false;
+         }
+         res->share_handle = res->dmabuf_fd;
+-        pdata = res->remapped;
++        res->remapped = pdata;
+     }
+ 
+     res->blob = pdata;
 -- 
 2.53.0
 
