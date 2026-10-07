@@ -4,144 +4,121 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 953C9CA5FF1
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 09:56:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29219CA5FFF
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 10:07:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xEONx-0004kI-2V; Wed, 07 Oct 2026 05:56:29 -0400
+	id 1xEOXt-0005RC-A2; Wed, 07 Oct 2026 06:06:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xEOFd-0000Jw-Uo
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 05:48:18 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
+ id 1xEOWj-0005FT-DG
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 06:05:43 -0400
+Received: from fhigh-b8-smtp.messagingengine.com ([202.12.124.159])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xEOFc-0000qU-D6
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 05:47:53 -0400
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6977jlTI3686121
- for <qemu-devel@nongnu.org>; Wed, 7 Oct 2026 09:47:51 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- nL9noJ5JaxCwh3o7FEV1rn1MVIAs7FNngi8An3Ba4d0=; b=V2IqRhCVrAZpGpji
- wMTrWBQHi9kQMdEPhHtmZxneqVtkon08ZirgWk3CxP+fhI43b1dlHXvYusOHKnqJ
- JLvVG7yznE7Aikk4OFe0lOluxju7UE8ekQ36DfcVgcjU8h0uuc7CCTLazUtiq6w/
- P/W0xDOhV3cqtdgHvnV4XAgUqCQq4T7B/X6D3GZcrpdwSH7zctL12g79Ka6nssWK
- RCtxDbmjtoGO2WrvYDvqyVwDFy2BZtjpO7z2k2P6vpMwfEj6+8q05U3Bv0n0tLH8
- g2qFXdGj5btOgO2scJ/e88IEtsaylnawTEm6vwmDfMZep/Pa5y/lf7WJ2Bd3xyAo
- maGhuw==
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h5c609hkq-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 07 Oct 2026 09:47:51 +0000 (GMT)
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-93cb98809caso541292085a.1
- for <qemu-devel@nongnu.org>; Wed, 07 Oct 2026 02:47:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1791366471; x=1791971271; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=nL9noJ5JaxCwh3o7FEV1rn1MVIAs7FNngi8An3Ba4d0=;
- b=KCQFtfJuxJXbEr52T2nvgJXrvQzSNupiBSTczAyhMVQK9fyifzqlwm9RcRMw84ezo5
- TT4Teid72IyWAT74w0IPYevY/+jn0s7j7aZLyhuwEcM4AlJpATwEeeDMeyaX3uWg4NI9
- TO7Uz2Jkih8J3EFU7f888u0Gbe/QPebvwhQX96arWhcWwdIkzpEJCaL5hewH8Xe9R9K1
- blkxYbZMhisWGUxGC7/a8ZRnxxGdC5H6IFW1wN9kWmIff1oeGPERZzBDB1GDirfk0eEk
- 18soA3Vp8B6eyDHo8YLP596hWMvsbu4vivTbKCEx+cny41GiLNwEZySv+t3HgXQYL9Zm
- sSVg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791366471; x=1791971271;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=nL9noJ5JaxCwh3o7FEV1rn1MVIAs7FNngi8An3Ba4d0=;
- b=RDm3Q9u7F1azvGcksccMzrRUReHFzozWNTONYh42JQJlAMqmfTWNHiMYMBKH7Y0Zse
- 6AAe8tK4sdUq8mS1Se9vDL8cpTBZOm85dqlN3oOCDTr1t4nHSe+RePMEQV412vBCIlch
- c3lz/vM2npccPmvnzi6qARocY1uAvbrATT9t/plbsWT3IsYq96RxmBZD8J2S1tGfFI0n
- nJDOUMTEOlGh7OAuBK6ZsizPB4yqgU9Tls+VzRWoL/lg7XHn+YoehXLYEbiPT/DdrOE+
- CetZk7cpNevFwgTKt2PoQOFAWHegMCPj5tpL7w/ELRm0lKwjprqqnRMWASacnyOtWPgV
- bM5w==
-X-Gm-Message-State: AFuF++kE9vpOpnAxieCX8edGgYgI9nL8sKBLOVCnogHKx6rZ+/RTswMk
- WwvFp75MTieNhfV95eVdNlE8DOx1p9b04KkXWwq0nKlFwPRfaITCSRIqk9OmVMvtQ0Xqo2d2TQj
- 5FfxUkhDUTdSHxh836Ppmuk79gvvoJMxxMHEsoe144FZZJNgwDj/1jNRAgKOpiaw+EQ/o
-X-Gm-Gg: AYBFou01m2sv7SuRbvftXDS2E+YiXi4AaOLK5cVG5FP9aVPYFFWzfCJb4Iqqce8TV0c
- o/ixFQXh1xAQvIOvf3ECH+/HILRdAxmtvwrhz9xMxCWgmYdakPSEcpJ6WH3VHcjv7ej5wxVSv08
- jRLwrTKvOYq9S2Oa78H85dOxQ8xkzia109L9fBI42wsHSI4P0GF/cgia87ktKN4t8uJVMqDb0jx
- aQdgVZl61DqIQn42GU0NXR7ldBm76eEkonhz9fdp4C/R/eIvZbMvFTvW3JWVMG0lJHY87k/WEEd
- JCc1e5ClGVmQkwyfoH6xHCLaCqq1Wp+OkLvSh5ePotLkHl8cErj4zI5rdF5MhraefAlhHza7qCR
- gQEg7zQ0udNFiT3Jqkfzqz4fBaCYjmy5bGrIDWmml
-X-Received: by 2002:a05:620a:890c:b0:93c:5f3c:f485 with SMTP id
- af79cd13be357-93e9b835522mr288664985a.53.1791366470400; 
- Wed, 07 Oct 2026 02:47:50 -0700 (PDT)
-X-Received: by 2002:a05:620a:890c:b0:93c:5f3c:f485 with SMTP id
- af79cd13be357-93e9b835522mr288660985a.53.1791366469780; 
- Wed, 07 Oct 2026 02:47:49 -0700 (PDT)
-Received: from localhost.localdomain (pmd666.hd.free.fr. [88.187.86.199])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a17f54a650sm53888675e9.4.2026.10.07.02.47.48
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 07 Oct 2026 02:47:49 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand <david@kernel.org>,
- Cornelia Huck <cohuck@redhat.com>, Eric Farman <farman@linux.ibm.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>, qemu-s390x@nongnu.org
-Subject: [PATCH 21/27] target/s390x: Implement and register
- CPUClass::exception_name()
-Date: Wed,  7 Oct 2026 11:45:09 +0200
-Message-ID: <20261007094516.75732-22-philmd@oss.qualcomm.com>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20261007094516.75732-1-philmd@oss.qualcomm.com>
-References: <20261007094516.75732-1-philmd@oss.qualcomm.com>
+ (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
+ id 1xEOWZ-0003hL-Sx
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 06:05:29 -0400
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+ by mailfhigh.stl.internal (Postfix) with ESMTP id CC29D7A0248
+ for <qemu-devel@nongnu.org>; Wed,  7 Oct 2026 06:05:21 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+ by phl-compute-03.internal (MEProxy); Wed, 07 Oct 2026 06:05:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alistair23.me;
+ h=cc:cc:content-transfer-encoding:content-type:content-type
+ :date:date:from:from:in-reply-to:in-reply-to:message-id
+ :mime-version:references:reply-to:subject:subject:to:to; s=fm2;
+ t=1791367521; x=1791453921; bh=1ElQgkgTnRrbfU+LPnajfIpKhzbTjZaq
+ CVJDX71zB7U=; b=SickJmIefC0g7m5ohcYFV1HPmLZpG7KIYMpTdWrwviQoNjFR
+ 7G4UfuEPNf3w2S+QSYQqo27zprHkTUXv9zckr3Hgj1wyAv2zF7NIF6T2oME7uaAL
+ j9VofwAdBYq8kiwDb6mmwajkDH8ZTcZLTdFDUoASdRop9k6+v5jh6fDbrqL9B4dg
+ kcH4HIDral/9bC0NKDqIXTDzKi3ljyyteSE9G6if1yQNbS5lDUx7b2ompclTnu/9
+ RXN7u1dv7Qsif3NicNWTZQsW5A0adqceUmIDgCOxnXGv1hArWI8KBFdGDqa9GExK
+ yVEr+Sp9PyUvSjh3mTPlIaKHKqKKgWp/ZRAxNQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:content-type:date:date:feedback-id:feedback-id
+ :from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1791367521; x=
+ 1791453921; bh=1ElQgkgTnRrbfU+LPnajfIpKhzbTjZaqCVJDX71zB7U=; b=X
+ p39Wl7rqr2+rl452cbJuSZa86EwjrPzsR82b83zjikayv59GG5Z5APc9rQhRAGDL
+ TJ+W6wYGCxEaf9xkQ0BFq+FYrZ1b31spVEgQqoBzVIILgZaCQVpBbGerHvN1alWc
+ HH9R0lueyat8b8xDbajwPVx7x+6EYPrXWFA5UUxAgpihDvJnEiLpB/l55KZgfvqa
+ w3YkBWjTiRziosAlB2ShHiDKuf2ARGo8jhuogmtU0Hy6MsLlLeRfJYZuLKnfYe9K
+ jHv/PAF+coWIMr3kFZ1ocNutckMXF1LrEdxb2oOZw6UxyTQcVUSLIXpFYKaSXLlO
+ Qna8pCVDFoscOWkEkUQHw==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+ repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
+ action=sign d=alistair23.me a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1791367521; d=alistair23.me;
+ mf=PGFsaXN0YWlyQGFsaXN0YWlyMjMubWU+;
+ rt=PHFlbXUtZGV2ZWxAbm9uZ251Lm9yZz4=;
+ s=fm2:rsa-sha256:jn44nDxD3aB6H/p0bunImRfdeNrjaOMnlr6yk1KdHcp8g62
+ RU5qmJ0tAKomc4uvFPR1s9+J017XBDXtOWjfI8SPou4FDJggfaY6pWQICmNXjFsA
+ mh2jWY9ZUOxr6J1q+x0JI/a0W9tVsUvOg7NddBvk2mIqaZtu6hY89cCTucueNswE
+ nYHu13curK6nKwrnpBWpW22NfAwDTVfqtanjtN2HDOMwaNu2KiZU3K24PjO59QpP
+ zbEbNvXDKjCEZg0oYheh/vyMELqR5VbDu64/hrh0PW6NJUApkQeZA52jixsLPA9P
+ DqP2RiWNhN4UYs8fYH7a6is26A9FRHuWvADhNWA==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+ repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
+ action=mi-m=1; hc=13;
+ hn=cc,content-transfer-encoding,content-type,date,feedback-id,
+ from,in-reply-to,message-id,mime-version,references,subject,to,
+ user-agent;
+Message-Instance: m=1;
+ h=sha256:uNN55SAwG0HvRWssl5S8vMepdWWS4OnZPp1skukjnQw=:1ElQgkgTnRrbfU+LPnajfIpKhzbTjZaqCVJDX71zB7U=;
+X-ME-Sender: <xms:YBnGavLmZ9joZ_EkvWkw3x1Q700mkiSABfMgO1puoH7j8x41tiOWJA>
+ <xme:YBnGaiHG_dTCZucu1-h7YWOJzgv62cFs3rrfW1PDWTTpsHbF0SQ_YQcrPzJ0W28R6
+ HdzghwNakfVIsDRwobcVopWS8QzHmbTZp-1P3i5I0wZI1hJA_UZQ1PE>
+X-ME-Received: <xmr:YBnGajx1JShv8Og81AjaJZI6CuTVjKGzYdsCzCQlUUIUInp1zPJK0-hgOtI_-yMRj-x9WC89Hlty>
+X-ME-Proxy-Cause: dmFkZTERQ3z818WTsXAmxJqTaoEOe6PosnZrz+nQYEGtCgjpTZc4BArGD/57VGZGkop1MX
+ 0tQKdFAN5py1t4DXITuAG/dyuCZ383bF4v/ee3CpiuPROZKb08IH85guO4KlJe4yGfWs7i
+ FzXgNlSCyGJHtaIhfjncoU+2CiUpTNzgl5iiz1orB1kQsAq4ZsE3iXb/rf3aXPsLe37+09
+ 09KqYHfVeyzVCZ+HZyy5NE4ixSsuqT5MkVU9s7GjNBEmlgC0kRjzGQWkDhLrtb89JtZu2i
+ au64gJ6BkaYREqEDspepFUxwOk/BUwgqArkje2/nA2CFyg8CcYdHj7TpDb61KTo3QiCFpF
+ IkQEFVThjkozD8qbg2dA6gtlbKvJtZiJHYk8m//x77ljRpYUZzGcjse8I7pQqZBEle3Wji
+ cXollIbvGtUwvrsOz2LnycFuNsXGfZrtDHRXTVkd9gAiSyKhfQI/wNz96dc0jxAgOkb0jw
+ dQm/r/7CEEa/O3wTjWwYV4eW4IG21OSzZYLI4U5X+Laz4o0S/+0ZPdk/iEWHbtr55FY2aO
+ Qex0qCtBH9YkK7fH8DY1AjOtn0hye1c28EZUkbk+ANbv+zwqpLoWxsvpS7g4g2Z6erno5M
+ UmJdzOTLQx1Nx7bbdH1Tkx2HSRDQlpetlP+lRvEpdgXmzIDNyYmmFYSyLMnQ
+X-ME-Proxy: <xmx:YBnGar5Cejt957OCghVb_c5HjqO-Tom8rmIm_W7pNJ6szF9SVgVtiA>
+ <xmx:YBnGaofuvswZ2Zr7J2k0UODYpucXK0Rttp074ztMniUOVfZ9YfbC6g>
+ <xmx:YBnGaiHkt8gsMaJff4PGGpZkY57lZG11VeW4VTidxMsX86FdDSrVTQ>
+ <xmx:YBnGao4nYU0CmRSZBgFK0up35oGhcK_XzFd37uklIx9dCfvycwdvvw>
+ <xmx:YRnGauJgNuLZUZ-WPwTxyYcsXltUq5WTl1l2jvfgYt_nbED8wZAKLYCv>
+Feedback-ID: ifd214418:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 7 Oct 2026 06:05:10 -0400 (EDT)
+Message-ID: <ca89932e98ad61ca4f4baff2add53558ed6eb712.camel@alistair23.me>
+Subject: Re: [PATCH v4 0/3] Add Model for Tenstorrent Atlantis PRCM
+From: Alistair <alistair@alistair23.me>
+To: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>, 
+ qemu-devel@nongnu.org
+Cc: Joel Stanley <joel@jms.id.au>, Nicholas Piggin <npiggin@gmail.com>, 
+ Michael Ellerman	 <mpe@kernel.org>, Portia Stephens
+ <portias@oss.tenstorrent.com>, 	qemu-riscv@nongnu.org, Pierrick Bouvier
+ <pierrick.bouvier@oss.qualcomm.com>,  Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
+ <liwei1518@gmail.com>,  Daniel Henrique Barboza
+ <daniel.barboza@oss.qualcomm.com>, Liu Zhiwei
+ <zhiwei_liu@linux.alibaba.com>, Chao Liu	 <chao.liu@processmission.com>
+Date: Wed, 07 Oct 2026 20:05:03 +1000
+In-Reply-To: <20261001-atlantis_prcm-v4-0-95d33c470eeb@oss.tenstorrent.com>
+References: <20261001-atlantis_prcm-v4-0-95d33c470eeb@oss.tenstorrent.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.62.0 (by Flathub.org) 
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: JfPN4mVLRr2fXreOhfmJclk8bMkPkjrr
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA3MDAzOCBTYWx0ZWRfXwH+Bb0hv1WGR
- gIP+j9gPbYkGz5y/M9hbJhOFbemzdYCMY7ds70srbjAR1xJAXK48yoVPa9jRRruw7DNUF/C0DcJ
- WMgvOGgNzSXg1xuIpQfRZjWmNCJ82as=
-X-Authority-Analysis: v=2.4 cv=PM+aavqC c=1 sm=1 tr=0 ts=6ac61547 cx=c_pps
- a=50t2pK5VMbmlHzFWWp8p/g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
- a=EUspDBNiAAAA:8 a=lKt1HvW_8kBegW_OfZ4A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=IoWCM6iH3mJn3m4BftBB:22
-X-Proofpoint-GUID: JfPN4mVLRr2fXreOhfmJclk8bMkPkjrr
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA3MDAzOCBTYWx0ZWRfXzscgzLNeY94E
- vimrS1zwM0FVqkOiZx4ScnO1iSXRa9Jy0gZHDBbmoYlbOuUIAw8YRU+734R49NRT8h877yzIrqQ
- Z3whCDA7Fm3EBfjyou/q9D6aip+nI0E4Odrqgt1iZzyY3IfFmMMasgdlJlJZk2pmRbolNeRoCnv
- BinJ+b8F03Jp1bxxC4Ng55dZh6BxkM58qG+LSfr3Y0ewuehQeODCGzDN4MKkJFtFFDbN5mh+xPU
- oHgfcJ5z/OoGjs5b+kC4OIGI8PMOa2H43Se18s6I/BUZysy/j8hwicrNGNCqrSU/rrl1NO4fXCX
- qZU97mFb+FTrCDdO8JSjvy4md36ulWxoYGtTTt2OAVrsRCb0OwWWrkqXeZ0DWOTalYdxxSVl5QZ
- q4kodz8K494DS1LmRWJECq3xK8uQhkJW4xkb6F4drITtaEAswBiPLXpdUFlDuLujYYGbYd1wiku
- nOJ5CxFCn04/58/pgVA==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-10-07_03,2026-10-06_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 clxscore=1015 adultscore=0 bulkscore=0 phishscore=0
- malwarescore=0 suspectscore=0 priorityscore=1501 lowpriorityscore=0
- spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
- definitions=main-2610070038
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+Received-SPF: pass client-ip=202.12.124.159;
+ envelope-from=alistair@alistair23.me; helo=fhigh-b8-smtp.messagingengine.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -158,107 +135,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Implement s390x_exception_name() and register it as the
-CPUClass::exception_name() handler, so the common exception
-logging can resolve s390x exception codes to names.
+On Thu, 2026-10-01 at 08:52 -0500, Anirudh Srinivasan wrote:
+> This series adds a qemu model for the PRCM blocks present in
+> Tenstorrent
+> Atlantis. This block controls clock, reset and other misc
+> functionality
+> in the SoC. Linux support for the Clocks/Resets served by the RCPU
+> PRCM
+> was added in [1]. This PRCM model has been tested with a linux DT
+> that
+> enables the PRCM and sets the UART clk to the one provided by the
+> PRCM.
+> This DT will be sent out shortly.
+>=20
+> [1]
+> https://lore.kernel.org/linux-riscv/20260306-atlantis-clocks-v8-0-6c9b14a=
+4aa8e@oss.tenstorrent.com/
+>=20
+> Signed-off-by: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
 
-Use the new helper in s390_cpu_do_interrupt() and helper_exception().
+Thanks!
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
----
- target/s390x/cpu.h             |  2 ++
- target/s390x/cpu.c             |  1 +
- target/s390x/interrupt.c       | 18 ++++++++++++++++++
- target/s390x/tcg/excp_helper.c |  6 ++++--
- target/s390x/tcg/misc_helper.c |  3 ++-
- 5 files changed, 27 insertions(+), 3 deletions(-)
+Applied to riscv-to-apply.next
 
-diff --git a/target/s390x/cpu.h b/target/s390x/cpu.h
-index ef73b15218e..37b6e541312 100644
---- a/target/s390x/cpu.h
-+++ b/target/s390x/cpu.h
-@@ -437,6 +437,8 @@ QEMU_BUILD_BUG_ON(FLAG_MASK_PER_IFETCH_NULLIFY !=
- #define EXCP_IO  7 /* I/O interrupt */
- #define EXCP_MCHK 8 /* machine check */
- 
-+const char *s390x_exception_name(int excp);
-+
- #define INTERRUPT_EXT_CPU_TIMER          (1 << 3)
- #define INTERRUPT_EXT_CLOCK_COMPARATOR   (1 << 4)
- #define INTERRUPT_EXTERNAL_CALL          (1 << 5)
-diff --git a/target/s390x/cpu.c b/target/s390x/cpu.c
-index 85afc5dec9a..275cc6cd53b 100644
---- a/target/s390x/cpu.c
-+++ b/target/s390x/cpu.c
-@@ -408,6 +408,7 @@ static void s390_cpu_class_init(ObjectClass *oc, const void *data)
-                                        &scc->parent_phases);
- 
-     cc->class_by_name = s390_cpu_class_by_name;
-+    cc->exception_name = s390x_exception_name;
-     cc->list_cpus = s390_cpu_list;
-     cc->dump_state = s390_cpu_dump_state;
-     cc->query_cpu_fast = s390_query_cpu_fast;
-diff --git a/target/s390x/interrupt.c b/target/s390x/interrupt.c
-index d7e3fd45e4b..c02f7cd2e7d 100644
---- a/target/s390x/interrupt.c
-+++ b/target/s390x/interrupt.c
-@@ -19,6 +19,24 @@
- #include "hw/s390x/s390_flic.h"
- #endif
- 
-+const char *s390x_exception_name(int excp)
-+{
-+    static const char * const excp_names[] = {
-+        [EXCP_EXT]      = "external interrupt",
-+        [EXCP_SVC]      = "supervisor call",
-+        [EXCP_PGM]      = "program interruption",
-+        [EXCP_RESTART]  = "restart interrupt",
-+        [EXCP_STOP]     = "stop interrupt",
-+        [EXCP_IO]       = "I/O interrupt",
-+        [EXCP_MCHK]     = "machine check",
-+    };
-+
-+    if (excp < 0 || excp >= ARRAY_SIZE(excp_names) || !excp_names[excp]) {
-+        return "unknown";
-+    }
-+    return excp_names[excp];
-+}
-+
- /* Ensure to exit the TB after this call! */
- void trigger_pgm_exception(CPUS390XState *env, uint32_t code)
- {
-diff --git a/target/s390x/tcg/excp_helper.c b/target/s390x/tcg/excp_helper.c
-index d952bb20cf1..83fe65e1f8c 100644
---- a/target/s390x/tcg/excp_helper.c
-+++ b/target/s390x/tcg/excp_helper.c
-@@ -508,8 +508,10 @@ void s390_cpu_do_interrupt(CPUState *cs)
-     bool stopped = false;
-     uint64_t last_pc = cpu->env.psw.addr;
- 
--    qemu_log_mask(CPU_LOG_INT, "%s: %d at psw=%" PRIx64 ":%" PRIx64 "\n",
--                  __func__, cs->exception_index, env->psw.mask, env->psw.addr);
-+    qemu_log_mask(CPU_LOG_INT, "%s: %d (%s) at psw=%" PRIx64 ":%" PRIx64 "\n",
-+                  __func__, cs->exception_index,
-+                  s390x_exception_name(cs->exception_index),
-+                  env->psw.mask, env->psw.addr);
- 
- try_deliver:
-     /* handle machine checks */
-diff --git a/target/s390x/tcg/misc_helper.c b/target/s390x/tcg/misc_helper.c
-index f1c8563af00..a01c5d894e7 100644
---- a/target/s390x/tcg/misc_helper.c
-+++ b/target/s390x/tcg/misc_helper.c
-@@ -61,7 +61,8 @@ void HELPER(exception)(CPUS390XState *env, uint32_t excp)
- {
-     CPUState *cs = env_cpu(env);
- 
--    HELPER_LOG("%s: exception %d\n", __func__, excp);
-+    HELPER_LOG("%s: exception %d (%s)\n", __func__, excp,
-+               s390x_exception_name(excp));
-     cs->exception_index = excp;
-     cpu_loop_exit(cs);
- }
--- 
-2.55.0
+Alistair
 
+> ---
+> Changes in v4:
+> - Addressed style comments from Joel's review
+> - Added error handling for sysbus_realize calls
+> - Dropped redundant realize/ops setting lines for PRCM subclasses
+> - Updated PRCM min_access_size to allow byte accesses
+> - Added back clock-frequency prop to UART node to allow linux boots
+> without clk driver
+> - Added back bus clock-frequency prop to I2C node
+> - Link to v3:
+> https://lore.kernel.org/qemu-devel/20260904-atlantis_prcm-v3-0-8bf20795a3=
+81@oss.tenstorrent.com
+>=20
+> Changes in v3:
+> - Rebase on top of Joel's socify series v3
+> https://lore.kernel.org/qemu-riscv/20260903055131.257903-1-joel@jms.id.au=
+/T/#t
+> - I2C and UART now use clk provided by PRCM, and periph_clk is
+> dropped
+> - Addressed style edit comments from Joel (comment about clk IDs
+> coming from DT bindings,) and Alistair (drop size from trace prints,
+> move decalartions to top of function, use PRCM_DOMAIN enums)
+> - Link to v2:
+> https://lore.kernel.org/qemu-devel/20260817-atlantis_prcm-v2-0-ffba0b9444=
+19@oss.tenstorrent.com
+>=20
+> Changes in v2:
+> - Coding style edits based on Chao Liu's feedback
+> - Changed prcm to use Resettable inferface instead of legacy reset
+> - Edits requested by Daniel related to tracing, pll_en logic and
+> unnecessary switch/case statement
+> - Added comments to some of the magic numbers in the reset values for
+> PRCM registers
+> - Link to v1:
+> https://lore.kernel.org/qemu-devel/20260729-atlantis_prcm-v1-0-502882933e=
+51@oss.tenstorrent.com
+>=20
+> ---
+> Anirudh Srinivasan (3):
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 hw/misc: Add Tenstorrent Atlantis PRCM mod=
+el
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 hw/riscv/tt-atlantis: Add PRCMs to tt-atla=
+ntis model
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 hw/riscv/tt-atlantis: Update UART and I2C =
+to use clk from PRCM
+>=20
+> =C2=A0MAINTAINERS=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0 |=C2=A0=C2=A0 2 +
+> =C2=A0docs/system/riscv/tt_atlantis.rst=C2=A0 |=C2=A0=C2=A0 1 +
+> =C2=A0hw/misc/meson.build=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0=C2=A0 1 +
+> =C2=A0hw/misc/trace-events=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0=C2=A0 4 +
+> =C2=A0hw/misc/tt_atlantis_prcm.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0 | 428
+> +++++++++++++++++++++++++++++++++++++
+> =C2=A0hw/riscv/tt_atlantis.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 125 ++++++++++-
+> =C2=A0include/hw/misc/tt_atlantis_prcm.h |=C2=A0 51 +++++
+> =C2=A0include/hw/riscv/tt_atlantis.h=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 28 +=
+++
+> =C2=A08 files changed, 632 insertions(+), 8 deletions(-)
+> ---
+> base-commit: b23a62773a7856299cbb3782e64968b6a92c792f
+> change-id: 20260727-atlantis_prcm-b642cfb37d57
+>=20
+> Best regards,
+> --=C2=A0=20
+> Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
+>=20
 
