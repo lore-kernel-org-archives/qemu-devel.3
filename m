@@ -4,55 +4,138 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 117D5CA5FFC
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 14:36:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65315CA6007
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 14:36:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xESkL-0005nD-D6; Wed, 07 Oct 2026 10:35:54 -0400
+	id 1xESkk-00062u-69; Wed, 07 Oct 2026 10:36:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1xESjf-0005Qc-NI; Wed, 07 Oct 2026 10:35:18 -0400
-Received: from zero.eik.bme.hu ([152.66.115.2])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1xESjp-0005WN-3J
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 10:35:26 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1xESjc-0001SV-B6; Wed, 07 Oct 2026 10:35:11 -0400
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 2038D583224;
- Wed, 07 Oct 2026 16:35:06 +0200 (CEST)
-X-Virus-Scanned: amavis at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id O6kPRQADNTi0; Wed,  7 Oct 2026 16:35:03 +0200 (CEST)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id E176E5831F1; Wed, 07 Oct 2026 16:35:03 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id DEBFA5831F0;
- Wed, 07 Oct 2026 16:35:03 +0200 (CEST)
-Date: Wed, 7 Oct 2026 16:35:03 +0200 (CEST)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Utkarsh Verma <uverma@linux.ibm.com>
-cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, aik@amd.com, 
- nnmlinux@linux.ibm.com, avnish@linux.ibm.com, pbonzini@redhat.com, 
- th.huth@posteo.eu, sbhat@linux.ibm.com, harshpb@linux.ibm.com, 
- amachhiw@linux.ibm.com, rathc@linux.ibm.com, philmd@linaro.org, 
- npiggin@gmail.com, marcandre.lureau@redhat.com, fam@euphon.net, 
- alex.bennee@linaro.org, richard.henderson@linaro.org
-Subject: Re: [RFC PATCH v2 4/8] ppc/spapr: add VTY backend support to OF
- read/write/open services
-In-Reply-To: <20261002052605.605858-5-uverma@linux.ibm.com>
-Message-ID: <24e395cc-09f8-36aa-9f6c-51d90f5b7bd9@eik.bme.hu>
-References: <20261002052605.605858-1-uverma@linux.ibm.com>
- <20261002052605.605858-5-uverma@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1xESjn-0001UA-2Z
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 10:35:20 -0400
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 697BVNAS2364098
+ for <qemu-devel@nongnu.org>; Wed, 7 Oct 2026 14:35:17 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ WS+7B8EhKgR91/U78IbY1HcJHNLyIvYm9+e6clb68f4=; b=KJ1EWhZFb+gHzcGO
+ PA21reZGNq38VU+QerOOiSnWwb78ESlCoFucqBo+DlkqM7AZVpnzPFtmn0EKXyES
+ pb1NYxshwLyC0YxVaTiUqsd5a/RyB7VJdtzE5r3SVJNDwhJ5zyv9m3M00OB2gQDp
+ Wy8aQxCFSK40HRs2pCAXsO6Dd9cTt7LvLh7oxnM3ra6PdozYernyqD1XSQFrS7uK
+ anxjmK+e2GCy3Ed9gQFTuWHrFx4oFXlXnTB7VjvcpZ4+lPZ2134Mbc+CUKi/HX0j
+ JU3mOWQqvuHtQ1GQGDBQo4ecidBOzhAEgyqDHBNN+S1KyqZvEBZWusotMSxYuGl3
+ WJkU6Q==
+Received: from mail-dy1-f197.google.com (mail-dy1-f197.google.com
+ [74.125.82.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h5fw8suw2-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Wed, 07 Oct 2026 14:35:17 +0000 (GMT)
+Received: by mail-dy1-f197.google.com with SMTP id
+ 5a478bee46e88-3510d0baf63so8289732eec.1
+ for <qemu-devel@nongnu.org>; Wed, 07 Oct 2026 07:35:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1791383716; x=1791988516; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=WS+7B8EhKgR91/U78IbY1HcJHNLyIvYm9+e6clb68f4=;
+ b=gF0QpvS135qOpBWafaSbTZCkA9unkmVq697072XSZ3vWpQ6RyDqsu9+GThI11pFfvj
+ NWMOyFYCl/rimuFoxez28GVYJPvRLE1xbcgseXq76NIsdOtoQE8PA/0hb4xl5wAYqOks
+ HaX9RpUxmCHddjFZuSEKurb3E+oG5h7+L/RUoK7HrzSGP91uj8EYJ9O9gHm2vMwgoK6U
+ I8caMXzdEdlvLmSEhQ1fA8d/Ty9Oz/rSWF7PySlrYk6bDeJdAQSwcFpvX7LVcU5QCe2L
+ RyYwmUbxNEz2FmKAip92Bk2OkFfqJIXLtooJLr1LLWNdCaYfxKfZuV+CBsnfH7Lp3ojd
+ XgCw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1791383716; x=1791988516;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=WS+7B8EhKgR91/U78IbY1HcJHNLyIvYm9+e6clb68f4=;
+ b=KtsTCOf92nzpDmdctUjsMeKOlUHXFQa0MOapPOARV7rn9U/niIn1hdovf8fo4epVtf
+ eZCRhMuXpy0LeyCKVc7H7oC/I6XflPqRR3f4jKZFOvHXS3+hUw5Z8uvaFyTVbQpZcB+A
+ 6+hK9HvhTBbdDlKaEYSpGnGokZj/kFCwEZsHZvK41fQhYXDHOa9/5wI+RSeMZpUOSTJU
+ JybUNC/7Tlj0OM0GpfVd1HUI+XtZ05a2mLfyecdJ1JwHDR7gUSWtugDffL64t5EAQPZf
+ aunVVPuocaP/Wo1dDkcMFq3D31gIsyAqOwkAOfHJMzyqES5B4YmwIVxNog7h1OnJr9zX
+ o5Eg==
+X-Gm-Message-State: AFuF++kMWRgHwiTb7RecTmvYcyG23V5uue+Y/CcltWpf0gI833trrOni
+ tHdQCb0YQIS9l/5znXWGle3J72wjKc4ThLlbLqf698+bRb7Ul0m+rYVI6xjkn/DyDIokleXYgzd
+ yf+0oZFpS3NAnA/+O36S/jv6Grw0OLGNETbKo4f+d2OVntTwqSrkNnR2uSnI13aei9A==
+X-Gm-Gg: AYBFou0K5fxo3SkY8+efqx7I2g/EfqbJA16kELh1nmxKoopPdg4uWyAblklej7/4cG5
+ PGATjXm32Qdwt4avMO0QqGABHVmRPfZxfO9Zo3tci4je5BzBCbswwAcuUa1rg9jPm8bnI6r5UtH
+ VCjmo9uuGNe8d47gzRD2Tpk2gChDDFjcE4qTLav87iFzWiHwlW9BjkKAI9JAzbYbgD4ukPd2ht/
+ LY9F8+GZFvdDMLBaZbTXOcyeJb8KRfR2cpaidfv+pMUOcL5hQIP8HFZ+offbF0qurNDE00V34Vd
+ JfdMHyG8V1hzc2+xaxbGasbbuqr9XBfbZL84oRdPUmEBeUqQAaX4ch6nYxxlBFebAG9+piAjcV/
+ 38geIwIVxkNzqAyJRQjLYgenxiSFFfq6yWMWNIPtbiGDyAzp8Rq5RHyxATaZ3IcC++4zZiw==
+X-Received: by 2002:a05:7301:2124:b0:34b:d8dc:430b with SMTP id
+ 5a478bee46e88-3515def9611mr2289441eec.24.1791383715888; 
+ Wed, 07 Oct 2026 07:35:15 -0700 (PDT)
+X-Received: by 2002:a05:7301:2124:b0:34b:d8dc:430b with SMTP id
+ 5a478bee46e88-3515def9611mr2289405eec.24.1791383715065; 
+ Wed, 07 Oct 2026 07:35:15 -0700 (PDT)
+Received: from [192.168.1.199] (192-80-163-190.dyn.novuscom.net.
+ [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-3515af26f10sm9117302eec.13.2026.10.07.07.35.14
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 07 Oct 2026 07:35:14 -0700 (PDT)
+Message-ID: <a7d52187-776d-4a14-82b9-80e15bf12fa8@oss.qualcomm.com>
+Date: Wed, 7 Oct 2026 07:35:13 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 00/21] multi-target: add straightforward architectures
+To: qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+References: <20260930020108.217892-1-pierrick.bouvier@oss.qualcomm.com>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <20260930020108.217892-1-pierrick.bouvier@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA3MDA1OCBTYWx0ZWRfX4Re2pt2OBi7I
+ PnonV4eufIpZkzGk4QLi+16f4+3BrbfrFB31JJnBvVBxXcshC13jHZfMq5jerAJUGNRLgibHS/5
+ qPL6THOUoX8YNq4VcEohNrFIR8ezp6E=
+X-Proofpoint-ORIG-GUID: 58sh6n_wOs2LEPN4JyaFe1iWL54AEfQZ
+X-Proofpoint-GUID: 58sh6n_wOs2LEPN4JyaFe1iWL54AEfQZ
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA3MDA1OCBTYWx0ZWRfX5feG7L7beJn3
+ HAUvCOMh3huGn/x+ITCsOQbqrMObXyHOpwZl/c0X04zOZ9gpH4a52ug2KavoShR2AiRf3j4Gb51
+ y2urrtizKCN4YHKvChYA+RuodDqn75JD8xMxRt+gSvVuB0qgGNKSQR7f4Sgl35kx2LkyKO2/7s1
+ J1L2HWPwwXUYv9z4aS4OWqz2Pp12Yl2yGSUpBqJS0sNqJyxzc1TfYBuYVxjr5d72aoZ9aY45Fc6
+ Z380/YneS14hNMreaaxZ/kS5aXyRj34MNR9C0dXAcVtnzOMH1D0idNk0H0vn6G9WtmRX0frr6hw
+ 4bTl2+16UnKrLU4BKCwr6djVzLQzQgqhT8n/ig/l/Zww3Grhfo5lcOTieGPEysRs3pN4wBsNpDo
+ o+hFodbjbFPLBWdBeWpClBFql83Yoc+HDssisyNoNhMEHq7Lbw4LlJgaBS3WdUWySt+r1m1tDvH
+ O1yWP/kM6zHhyZh/PMg==
+X-Authority-Analysis: v=2.4 cv=Af0kjHXG c=1 sm=1 tr=0 ts=6ac658a5 cx=c_pps
+ a=Uww141gWH0fZj/3QKPojxA==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
+ a=AfxKsdDCOPCRk7pzva4A:9 a=QEXdDO2ut3YA:10 a=PxkB5W3o20Ba91AHUih5:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-10-07_04,2026-10-06_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 malwarescore=0 clxscore=1015 impostorscore=0 lowpriorityscore=0
+ adultscore=0 priorityscore=1501 spamscore=0 suspectscore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2610070058
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -69,231 +152,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 2 Oct 2026, uverma@linux.ibm.com wrote:
-> From: Utkarsh Verma <uverma@linux.ibm.com>
->
-> Extend the VOF client interface to support console I/O through the sPAPR VTY
-> device, which is needed by bootloaders such as GRUB during disk boot.
->
-> Add vof_read() to implement the OpenFirmware "read" client service, which was
-> previously missing.
->
-> Route the OF read and write services backed by vty_getchars() and vty_putchars()
->
-> Make vty_getchars() public similar to vty_putchars().
->
-> AI-used-for: code
-> Signed-off-by: Utkarsh Verma <uverma@linux.ibm.com>
-> ---
-> hw/char/spapr_vty.c        |  2 +-
-> hw/ppc/spapr_vof.c         |  2 +
-> hw/ppc/trace-events        |  2 +
-> hw/ppc/vof.c               | 84 ++++++++++++++++++++++++++++++++++++++
-> include/hw/ppc/spapr_vio.h |  1 +
-> 5 files changed, 90 insertions(+), 1 deletion(-)
->
-> diff --git a/hw/char/spapr_vty.c b/hw/char/spapr_vty.c
-> index 1dd9fb155c..2c97e0e027 100644
-> --- a/hw/char/spapr_vty.c
-> +++ b/hw/char/spapr_vty.c
-> @@ -52,7 +52,7 @@ static void vty_receive(void *opaque, const uint8_t *buf, int size)
->     }
-> }
->
-> -static int vty_getchars(SpaprVioDevice *sdev, uint8_t *buf, int max)
-> +int vty_getchars(SpaprVioDevice *sdev, uint8_t *buf, int max)
-> {
->     SpaprVioVty *dev = VIO_SPAPR_VTY_DEVICE(sdev);
->     int n = 0;
-> diff --git a/hw/ppc/spapr_vof.c b/hw/ppc/spapr_vof.c
-> index 78d5b7d5b5..3195c859a4 100644
-> --- a/hw/ppc/spapr_vof.c
-> +++ b/hw/ppc/spapr_vof.c
-> @@ -76,6 +76,8 @@ void spapr_vof_client_dt_finalize(SpaprMachineState *spapr, void *fdt)
->     if (stdout_path) {
->         _FDT(vof_client_open_store(fdt, spapr->vof, "/chosen", "stdout",
->                                    stdout_path));
-> +        _FDT(vof_client_open_store(fdt, spapr->vof, "/chosen", "stdin",
-> +                                   stdout_path));
->     }
-> }
->
-> diff --git a/hw/ppc/trace-events b/hw/ppc/trace-events
-> index 1f125ce841..dbdcfada26 100644
-> --- a/hw/ppc/trace-events
-> +++ b/hw/ppc/trace-events
-> @@ -79,6 +79,7 @@ vof_error_unknown_method(const char *method) "\"%s\""
-> vof_error_unknown_ihandle_close(uint32_t ih) "ih=0x%x"
-> vof_error_unknown_path(const char *path) "\"%s\""
-> vof_error_write(uint32_t ih) "ih=0x%x"
-> +vof_error_read(uint32_t ih) "ih=0x%x"
-> vof_finddevice(const char *path, uint32_t ph) "\"%s\" => ph=0x%x"
-> vof_claim(uint32_t virt, uint32_t size, uint32_t align, uint32_t ret) "virt=0x%x size=0x%x align=0x%x => 0x%x"
-> vof_release(uint32_t virt, uint32_t size, uint32_t ret) "virt=0x%x size=0x%x => 0x%x"
-> @@ -92,6 +93,7 @@ vof_package_to_path(uint32_t ph, const char *tmp, int ret) "ph=0x%x => %s len=%d
-> vof_instance_to_path(uint32_t ih, uint32_t ph, const char *tmp, int ret) "ih=0x%x ph=0x%x => %s len=%d"
-> vof_instance_to_package(uint32_t ih, uint32_t ph) "ih=0x%x => ph=0x%x"
-> vof_write(uint32_t ih, unsigned cb, const char *msg) "ih=0x%x [%u] \"%s\""
-> +vof_read(uint32_t ih, unsigned cb, const char *msg) "ih=0x%x [%u] \"%s\""
-> vof_avail(uint64_t start, uint64_t end, uint64_t size) "0x%"PRIx64"..0x%"PRIx64" size=0x%"PRIx64
-> vof_claimed(uint64_t start, uint64_t end, uint64_t size) "0x%"PRIx64"..0x%"PRIx64" size=0x%"PRIx64
->
-> diff --git a/hw/ppc/vof.c b/hw/ppc/vof.c
-> index 9ad1aa7626..6f6d424347 100644
-> --- a/hw/ppc/vof.c
-> +++ b/hw/ppc/vof.c
-> @@ -9,6 +9,7 @@
->  * SPDX-License-Identifier: GPL-2.0-or-later
->  */
->
-> +#include CONFIG_DEVICES /* CONFIG_PSERIES */
-> #include "qemu/osdep.h"
-> #include "qemu/ctype.h"
-> #include "qemu/timer.h"
-> @@ -23,6 +24,7 @@
-> #include "qom/qom-qobject.h"
-> #include "trace.h"
->
-> +#include "hw/ppc/spapr_vio.h"
-> #include <libfdt.h>
->
-> /*
-> @@ -45,6 +47,7 @@ typedef struct {
-> typedef struct {
->     char *path; /* the path used to open the instance */
->     uint32_t phandle;
-> +    void *vty;
-> } OfInstance;
->
-> static int readstr(hwaddr pa, char *buf, int size)
-> @@ -459,6 +462,28 @@ static uint32_t vof_do_open(void *fdt, Vof *vof, int offset, const char *path)
->     ++vof->of_instance_last;
->
->     inst->path = g_strdup(path);
-> +    inst->vty = NULL;
-> +
-> +#ifdef CONFIG_PSERIES
-> +    const char *node_name = fdt_get_name(fdt, offset, NULL);
-> +    if (node_name && strncmp(node_name, "vty", 3) == 0) {
-> +        uint8_t discard_buf[VOF_VTY_BUF_SIZE];
-> +        MachineState *ms = MACHINE(qdev_get_machine());
-> +        SpaprMachineState *spapr = SPAPR_MACHINE(ms);
-> +
-> +        if (spapr && spapr->vio_bus) {
-> +            inst->vty = spapr_vty_get_default(spapr->vio_bus);
-> +            if (inst->vty) {
-> +                /* Flush any stale data from the VTY input buffer */
-> +                while (vty_getchars(inst->vty, discard_buf,
-> +                                    sizeof(discard_buf)) > 0) {
-> +                    /* discard */
-> +                }
-> +            }
-> +        }
-> +    }
-> +#endif
-> +
->     g_hash_table_insert(vof->of_instances,
->                         GINT_TO_POINTER(vof->of_instance_last),
->                         inst);
-> @@ -577,6 +602,23 @@ static uint32_t vof_write(Vof *vof, uint32_t ihandle, uint32_t buf,
->         return PROM_ERROR;
->     }
->
-> +#ifdef CONFIG_PSERIES
-> +    if (inst->vty) {
-> +        uint32_t total_written = 0;
-> +
-> +        for ( ; len > 0; len -= cb) {
-> +            cb = MIN(len, sizeof(tmp));
-> +            if (VOF_MEM_READ(buf, tmp, cb) != MEMTX_OK) {
-> +                return PROM_ERROR;
-> +            }
-> +            vty_putchars(inst->vty, (uint8_t *)tmp, cb);
-> +            buf += cb;
-> +            total_written += cb;
-> +        }
-> +        return total_written;
-> +    }
-> +#endif
-> +
+On 9/29/2026 7:00 PM, Pierrick Bouvier wrote:
+> This series adds all architectures that only require stubs, basic helpers
+> renaming, or filtering to be included in multi-target binary.
+> 
+> List:
+> - alpha
+> - microblaze
+> - m68k
+> - hppa
+> - rx
+> - tricore
+> - or1k
+> 
+> Pierrick Bouvier (21):
+>   hw/arm/virt: make virt machines available for base arm targets only
+>   meson.build: subdir system before finalizing stubs library
+>   system/meson: use stub_ss for dtb stubs
+>   target/microblaze: prefix helper conflicting with other arch
+>   target-info: add target_m68k
+>   hw/m68k/virt: make machine available for m68k target only
+>   meson.build: add m68k to multi-target
+>   hw/pci-bridge: use stub_ss for pci_expander_bridge_stubs.c
+>   target/alpha: prefix divs helper
+>   meson.build: add alpha-softmmu to multi-target
+>   meson.build: add avr-softmmu to multi-target
+>   target/hppa: prefix helpers conflicting with other arch
+>   meson.build: add hppa-softmmu to multi-target
+>   target/rx: prefix helpers conflicting with other arch
+>   meson.build: add rx-softmmu to multi-target
+>   target/tricore: prefix helpers conflicting with other arch
+>   meson.build: add tricore-softmmu to multi-target
+>   target-info: add target_or1k
+>   hw/or1k/virt: make virt machine available for or1k target only
+>   target/or1k: prefix symbols conflicting with other arch
+>   meson.build: add or1k-softmmu to multi-target
+> 
+>  hw/arm/virt.c                  |  2 ++
+>  hw/m68k/virt.c                 | 10 ++++++----
+>  hw/or1k/virt.c                 |  1 +
+>  hw/pci-bridge/meson.build      |  4 ++--
+>  include/qemu/target-info.h     | 14 ++++++++++++++
+>  meson.build                    | 10 ++++++++--
+>  system/meson.build             |  4 ++--
+>  target-info.c                  | 10 ++++++++++
+>  target/alpha/fpu_helper.c      |  2 +-
+>  target/alpha/helper.h          |  2 +-
+>  target/alpha/translate.c       |  4 ++--
+>  target/hppa/helper.h           |  6 +++---
+>  target/hppa/op_helper.c        |  4 ++--
+>  target/hppa/sys_helper.c       |  8 ++++----
+>  target/hppa/translate.c        |  6 +++---
+>  target/microblaze/helper.h     | 10 +++++-----
+>  target/microblaze/op_helper.c  | 10 +++++-----
+>  target/microblaze/translate.c  | 10 +++++-----
+>  target/or1k/exception.c        |  2 +-
+>  target/or1k/exception.h        |  2 +-
+>  target/or1k/exception_helper.c |  2 +-
+>  target/or1k/helper.h           |  2 +-
+>  target/or1k/interrupt_helper.c |  2 +-
+>  target/or1k/sys_helper.c       |  6 +++---
+>  target/or1k/translate.c        |  2 +-
+>  target/rx/helper.h             | 12 ++++++------
+>  target/rx/op_helper.c          | 12 ++++++------
+>  target/rx/translate.c          | 14 +++++++-------
+>  target/tricore/fpu_helper.c    | 12 ++++++------
+>  target/tricore/helper.h        | 14 +++++++-------
+>  target/tricore/translate.c     | 14 +++++++-------
+>  31 files changed, 124 insertions(+), 89 deletions(-)
+> 
 
-Instead of adding #ifdefs in this file could these be implemented as some 
-functions exported by spapr_vof.c and called here without needing #ifdefs? 
-Maybe it could be part of VofMachineIfClass similar to setprop.
+This was merged into master (faf92d98e399320836f0db9bdf192593a8b56a71).
+Thank you for your contribution!
 
 Regards,
-BALATON Zoltan
-
->     for ( ; len > 0; len -= cb) {
->         cb = MIN(len, sizeof(tmp) - 1);
->         if (VOF_MEM_READ(buf, tmp, cb) != MEMTX_OK) {
-> @@ -594,6 +636,46 @@ static uint32_t vof_write(Vof *vof, uint32_t ihandle, uint32_t buf,
->     return len;
-> }
->
-> +static uint32_t vof_read(Vof *vof, uint32_t ihandle, uint32_t buf,
-> +                         uint32_t len)
-> +{
-> +    OfInstance *inst = (OfInstance *)
-> +        g_hash_table_lookup(vof->of_instances, GINT_TO_POINTER(ihandle));
-> +
-> +    if (!inst) {
-> +        trace_vof_error_read(ihandle);
-> +        return PROM_ERROR;
-> +    }
-> +
-> +#ifdef CONFIG_PSERIES
-> +    if (inst->vty) {
-> +        uint8_t tmp[VOF_VTY_BUF_SIZE];
-> +        unsigned cb = MIN(len, sizeof(tmp));
-> +        uint32_t bytes_read = vty_getchars(inst->vty, tmp, cb);
-> +        if (bytes_read > 0) {
-> +            if (VOF_MEM_WRITE(buf, tmp, bytes_read) != MEMTX_OK) {
-> +                trace_vof_error_read(ihandle);
-> +                return PROM_ERROR;
-> +            }
-> +        }
-> +        if (trace_event_get_state(TRACE_VOF_READ) &&
-> +            qemu_loglevel_mask(LOG_TRACE)) {
-> +            char trace_buf[VOF_VTY_BUF_SIZE + 1];
-> +            memcpy(trace_buf, tmp, bytes_read);
-> +            trace_buf[bytes_read] = '\0';
-> +            trace_vof_read(ihandle, bytes_read, trace_buf);
-> +        }
-> +        return bytes_read;
-> +    }
-> +#endif
-> +
-> +    /*
-> +     * For other devices, return 0 to indicate no data available.
-> +     * This allows GRUB to continue without blocking on input.
-> +     */
-> +    return 0;
-> +}
-> +
-> static void vof_claimed_dump(GArray *claimed)
-> {
->     int i;
-> @@ -906,6 +988,8 @@ static uint32_t vof_client_handle(MachineState *ms, void *fdt, Vof *vof,
->         ret = vof_instance_to_path(fdt, vof, args[0], args[1], args[2]);
->     } else if (cmpserv("write", 3, 1)) {
->         ret = vof_write(vof, args[0], args[1], args[2]);
-> +    } else if (cmpserv("read", 3, 1)) {
-> +        ret = vof_read(vof, args[0], args[1], args[2]);
->     } else if (cmpserv("claim", 3, 1)) {
->         uint64_t ret64 = vof_claim(vof, args[0], args[1], args[2]);
->
-> diff --git a/include/hw/ppc/spapr_vio.h b/include/hw/ppc/spapr_vio.h
-> index 0ea0dbae8b..81e7c0b91b 100644
-> --- a/include/hw/ppc/spapr_vio.h
-> +++ b/include/hw/ppc/spapr_vio.h
-> @@ -136,6 +136,7 @@ static inline int spapr_vio_dma_set(SpaprVioDevice *dev, uint64_t taddr,
-> int spapr_vio_send_crq(SpaprVioDevice *dev, uint8_t *crq);
->
-> SpaprVioDevice *vty_lookup(SpaprMachineState *spapr, target_ulong reg);
-> +int vty_getchars(SpaprVioDevice *sdev, uint8_t *buf, int max);
-> void vty_putchars(SpaprVioDevice *sdev, uint8_t *buf, int len);
-> void spapr_vty_create(SpaprVioBus *bus, Chardev *chardev);
-> void spapr_vlan_create(SpaprVioBus *bus, NICInfo *nd);
->
+Pierrick
 
