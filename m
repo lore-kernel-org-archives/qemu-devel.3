@@ -4,71 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 156F7CA5FF1
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 09:20:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE712CA6007
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 09:20:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xENZs-0006b0-4r; Wed, 07 Oct 2026 05:04:45 -0400
+	id 1xENeS-0004Al-5n; Wed, 07 Oct 2026 05:09:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <fuad.tabba@linux.dev>)
- id 1xEKv5-0004Wx-BE
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 02:14:40 -0400
-Received: from out-233.mta1.migadu.com ([2001:41d0:203:375::e9]
- helo=mta1.migadu.com)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1xEMY5-0003JA-1P
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 03:58:53 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <fuad.tabba@linux.dev>)
- id 1xEKv3-0002HW-MF
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 02:14:27 -0400
-X-Envelope-To: qemu-devel@nongnu.org
-DKIM-Signature: a=rsa-sha256; bh=aAN/XlWKe3vzezqMTFJTikdkacLxb9VQKFQPP6ebSgs=; 
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1791353664; v=1; x=1791958464;
- b=Q+hEI0R+i9HCXcVllauV3ZqBThoIOBFRUHTtqIoeMt1f9L2abONjLcma95Ugoh1p5ET756bI
- h6jhQ4nQg1Y71yaXTTnWSiSV5AmcUOn+Wwul28JIjGJPI47gTzhonF/hZ69il3YBAD+CISQhliL
- dVcoCTVUtR3I53MQKriqZp/8=
-X-Envelope-To: qemu-devel@nongnu.org
-Received: by smtp.migadu.com with ESMTPS id 0f4adb3fa138068d;
- Tue, 06 Oct 2026 13:21:17 +0000
-X-Mizu-Trace-ID: 0f4adb3fa138068d
-X-Migadu-Flow: FLOW_OUT
-Received: by mail-lf1-f46.google.com with SMTP id
- 2adb3069b0e04-5bcc04c71f5so7369e87.0
- for <qemu-devel@nongnu.org>; Tue, 06 Oct 2026 06:21:13 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1xEMY3-0002gO-DP
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 03:58:48 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-4a022fee0caso15304775e9.1
+ for <qemu-devel@nongnu.org>; Wed, 07 Oct 2026 00:58:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1791359925; x=1791964725; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=8mkEbBCaLJ+gheEJVDag3x/brWnUFiNaDEFeNGRTOHg=;
+ b=ClDJFu/0qu+FBexEbI0ro6XhJcGIrJ5lhKilKhGnNDRajCTMFJwyZeJr3crJ9di+QU
+ U1GX8qietvEiaY0c3we76D3ouoqpqG47FNuWYUXermKv5Gi2ao/qXPFOQg7h/QXC1ODJ
+ kENnzi1TaI0b2d5U8UMrPN3eH87LbK2gmV+5+5xEIVnk6JsVqOKGSrofCXAly07HK2U4
+ xM3LSkxTCww+JTG4ZtJ6geJPvh2RjBZxFG0GD3NjVOEwt2uFSo5r/qa6kTw9gDCa1ajm
+ Ty6qg5MWENzva/N+Hfxwb4u7iPNARuxsPh0yvcDhYEzCVwgLtm5ntjpU+pkXtf9RWJ5b
+ vp+w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1791359925; x=1791964725;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=8mkEbBCaLJ+gheEJVDag3x/brWnUFiNaDEFeNGRTOHg=;
+ b=jHhjBmyQnD/RkdRFQSxKw3tZlisiHcjL7w1YdKWoQDOZ6ItM8lvPhGs2mmKK826NxB
+ MtpynLSSLZQKz37cuBVnjBQpCCRdIEj+QW7/p9VJnecMoh1j/gaabPufH/+2h88zf7Zs
+ bzXYlDpuE4tV1SXQGzMa7T5qgXnTMFVMD7KiUdgLuG+tsVhEh8nDHC2CyaMgbHmRqt1k
+ hGqIYm7BFXuxGS1rTjiPqUBjQkLQYSMUG9BkWQdy8ZEoImQGXue1TNqzrXAHFL15jadT
+ 9lDMMrlK9oRZQyjBQc3Gioxfe8zpSiiRJCWHi4jDQKFVgr7dwFqahG7TtFAu89v6B8Ll
+ hIfA==
 X-Forwarded-Encrypted: i=1;
- AKwUvBw1wUj9P9qumufDsg7NbwLVUqov9TimUXrZJ77C7+vcvIQEV5Lcw3lol9GJaFapPYO0voCb8GjfxUKO@nongnu.org
-X-Gm-Message-State: AFq9FYJDehuTEdmGs+pt/FHk1YJMUOPZi7EpXgIwT33GJnXtJArRNNfp
- 3dN/LU0V79Q2dVr206nDQd94vrghwHihagkmOASmBxqLU+j5cD1SZX6XA1fpJKWLUZ6v8qTtUDN
- MzkZ4aWALRW4GE6vyV12SVXhG8r5ypNsiDO7qUcig
-X-Received: by 2002:a05:6512:a35b:b0:5bc:ce83:91ec with SMTP id
- 2adb3069b0e04-5bcce8392bdmr15395e87.1.1791292872633; Tue, 06 Oct 2026
- 06:21:12 -0700 (PDT)
+ AKwUvByj3JoKNz7LUgTCDanK0w2egUo6UfGgMQoclxp1IfgtjBty4REgccC3CwG6pINiJ3IdTtsXIZ7NSKi7@nongnu.org
+X-Gm-Message-State: AFuF++k68OGch+n/Jk0kygheOKwVBEXC+eLLPAK+sr7DCHNdYPOFdLCk
+ 4VvPCuWkqYIBGzEL0YMAG0HuRoJ9C1gIpmWUzkMvPdsPTw+V8c5EbJl8MtomZ8ojKrQ=
+X-Gm-Gg: AYBFou2pumPu0vxFxkosZqm0Zz/tJDjy5ZZLqs+yx+atiAZOJ8Lp+BMFdO9YGHsbOgx
+ 27olYqmjbExuriUwyOtSH95uQ9pkD7f1P9HhA7WFM4/o/uCLD86HlZH0/nWeLsRukpJ3bV+eRV7
+ DKZ/lIypXZq8qtXqnTArYjjwXgdKAfnbpk9uXAwc2tMaPiWu4GsRHDegQ1+tbhJ6mmDob/OZSL3
+ bamaKG95jl75q6RDonMLrb8aiVgGeKUUvlr0ftva5gZ0UPPR2s2ncPMMzEiMP9k+NSYM8L1IDRu
+ hg7mbRQoqvsxGoR5qrnIgK5B/m+yFKJtZ97J3V1xaHxt74l5v3u42/H7Tg9XXvTq0Ius3o63ORm
+ rCJd9oiy3g1HjukTzMs6qHJ6zfNblQ/Uftkd+bdKWkq7EpIn6LIMQ3VZiDLgrUZ5Eo2GdEjx9CI
+ mw19F+36Ec2/scAo3Qzu+z8bDjtVGfSX7QEvKB/oOfufnv/JFbDpubOyg7/X2PbJz96WGUW/8nY
+ DnBDUO5cPdf8Upw7MxVcrCVDYjQi8g5NTdFWEwDoxyhFA==
+X-Received: by 2002:a05:600c:34cd:b0:4a1:7c7d:8881 with SMTP id
+ 5b1f17b1804b1-4a180311361mr17539135e9.13.1791359920327; 
+ Wed, 07 Oct 2026 00:58:40 -0700 (PDT)
+Received: from [192.168.148.71] (90-182-211-1.rcp.o2.cz. [90.182.211.1])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4a178c40a28sm142968865e9.7.2026.10.07.00.58.39
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 07 Oct 2026 00:58:39 -0700 (PDT)
+Message-ID: <2bdb49ea-2e55-4991-ac6d-9f2d7d575de1@linaro.org>
+Date: Wed, 7 Oct 2026 09:58:37 +0200
 MIME-Version: 1.0
-References: <20261001175003.ttbr-baddr-52bit-0-fuad.tabba@linux.dev>
- <20261002070925.2627344-2-fuad.tabba@linux.dev>
- <CAFEAcA_+gr25p1gix=qto5DQzh=VAguhAUh6Una9uMLzNYWZmg@mail.gmail.com>
-In-Reply-To: <CAFEAcA_+gr25p1gix=qto5DQzh=VAguhAUh6Una9uMLzNYWZmg@mail.gmail.com>
-From: Fuad Tabba <fuad.tabba@linux.dev>
-Date: Tue, 6 Oct 2026 15:20:36 +0200
-X-Gmail-Original-Message-ID: <CA+EHjTwrmbaosLOX6qQdCJdREAw4Xt8z2JUJr0nJnDmiXYUJVQ@mail.gmail.com>
-X-Gm-Features: AclHuK8sHLIhdrV-DH-J8b3qI381NPEJMEuE98W1XlA_KVkx4d3n8CjDNXN_uKo
-Message-ID: <CA+EHjTwrmbaosLOX6qQdCJdREAw4Xt8z2JUJr0nJnDmiXYUJVQ@mail.gmail.com>
-Subject: Re: [PATCH 2/2] target/arm: Use the 52-bit TTBR base address layout
- when TCR.DS is set
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, 
- Richard Henderson <richard.henderson@linaro.org>, Will Deacon <will@kernel.org>,
- Itaru Kitayama <itaru.kitayama@linux.dev>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2001:41d0:203:375::e9;
- envelope-from=fuad.tabba@linux.dev; helo=mta1.migadu.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 0/5] hw/nvme queue
+To: Klaus Jensen <its@irrelevant.dk>, qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Klaus Jensen <k.jensen@samsung.com>
+References: <20261005115805.99042-1-its@irrelevant.dk>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20261005115805.99042-1-its@irrelevant.dk>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -85,43 +106,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Peter,
+On 10/5/26 13:58, Klaus Jensen wrote:
+> From: Klaus Jensen<k.jensen@samsung.com>
+> 
+> Hi,
+> 
+> The following changes since commit d7a65d1793d691d356a56833620f7d1e6f5d653b:
+> 
+>    Merge tag 'hppa-a400-updates-pull-request' ofhttps://github.com/hdeller/qemu-hppa into staging (2026-10-03 14:17:49 +0200)
+> 
+> are available in the Git repository at:
+> 
+>    https://gitlab.com/birkelund/qemu.git tags/pull-nvme-20261005
+> 
+> for you to fetch changes up to f6c0588fd7c22caefc5b31f485c8bb3ee994a58b:
+> 
+>    hw/nvme: fix firmware boot path when nvme-ns has a bootindex (2026-10-05 11:00:47 +0200)
+> 
+> ----------------------------------------------------------------
+> nvme queue
 
-On Tue, 06 Oct 2026 12:24:17 +0100, Peter Maydell
-<peter.maydell@linaro.org> wrote:
-[...]
-> >      /*
-> > -     * With a 52-bit OA (FEAT_LPA or FEAT_LPA2), bits [51:48] of descaddr are
-> > -     * in [5:2] of TTBR, and bits [5:0] of the base address are zero: a table
-> > -     * under 64 bytes is still 64-byte aligned (R_KBLCR).
-> > +     * With a 52-bit OA, or with TCR.DS, bits [51:48] of the base address are
-> > +     * in [5:2] of TTBR, and bits [5:0] of the base address are zero: the
-> > +     * table is at least 64-byte aligned.
->
-> You put that R_KBLCR reference into this comment in patch 1, so
-> why are you deleting it again in patch 2?
+Applied, thanks.
 
-I'll keep it in v2.
-
-> >       *
-> > -     * Otherwise, if the base address is out of range, raise AddressSizeFault.
-> > -     * In the pseudocode, this is !IsZero(baseregister<47:outputsize>),
-> > -     * but we've just cleared the bits above 47, so simplify the test.
-> > +     * If the base address is out of range, raise AddressSizeFault, as
-> > +     * AArch64_OAOutOfRange() does in the pseudocode.
->
-> Please don't drop information that's still relevant. This comment is
-> remarking that although the pseudocode is doing an IsZero check only
-> on the bits of the address between the max physaddr size and the
-> outputsize, QEMU is doing a check on all the upper bits, and saying
-> why that's OK. This is still the case, although the pseudocode has
-> changed a little so AArch64_OAOutOfRange()'s test is now:
->    return !IsZero(address[NUM_PABITS-1:oasize]);
-> (and NUM_PABITS is 56).
-
-I'll put it back in v2, updated to the current pseudocode. v2 will
-also have the test in its own patch, after the two fixes.
-
-Cheers,
-/fuad
+r~
 
