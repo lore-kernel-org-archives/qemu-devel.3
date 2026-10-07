@@ -4,55 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BCBACA5FFC
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 11:53:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74793CA5FFC
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 11:53:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xEQCl-0008L7-SF; Wed, 07 Oct 2026 07:53:03 -0400
+	id 1xEQD0-0008OQ-IV; Wed, 07 Oct 2026 07:53:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1xEQCi-0008Kn-3c; Wed, 07 Oct 2026 07:53:00 -0400
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1xEQCf-0007vT-Tn; Wed, 07 Oct 2026 07:52:59 -0400
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 2C2455835D6;
- Wed, 07 Oct 2026 13:52:53 +0200 (CEST)
-X-Virus-Scanned: amavis at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id GDi7I7KAsEOX; Wed,  7 Oct 2026 13:52:50 +0200 (CEST)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id ADCEC5835CA; Wed, 07 Oct 2026 13:52:50 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id AB5B4583581;
- Wed, 07 Oct 2026 13:52:50 +0200 (CEST)
-Date: Wed, 7 Oct 2026 13:52:50 +0200 (CEST)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Bin Meng <bin.meng@processmission.com>
-cc: QEMU <qemu-devel@nongnu.org>, Bernhard Beschow <shentey@gmail.com>, 
- =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@oss.qualcomm.com>, 
- qemu-stable@nongnu.org, Chinmay Rath <rathc@linux.ibm.com>, 
- Glenn Miles <milesg@linux.ibm.com>, 
- Harsh Prateek Bora <harshpb@linux.ibm.com>, 
- Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
-Subject: Re: [PATCH 01/17] target/ppc: Correct PIR write access on e500 cores
-In-Reply-To: <20261006094921.110871-2-bin.meng@processmission.com>
-Message-ID: <8c6780c7-0871-c5bf-5e2d-1778dd060efa@eik.bme.hu>
-References: <20261006094921.110871-1-bin.meng@processmission.com>
- <20261006094921.110871-2-bin.meng@processmission.com>
+ (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
+ id 1xEQCz-0008OF-9M
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 07:53:17 -0400
+Received: from mail-dl1-x1234.google.com ([2607:f8b0:4864:20::1234])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
+ id 1xEQCw-0007wl-EH
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 07:53:17 -0400
+Received: by mail-dl1-x1234.google.com with SMTP id
+ a92af1059eb24-14129667240so1599745c88.1
+ for <qemu-devel@nongnu.org>; Wed, 07 Oct 2026 04:53:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1791373993; x=1791978793; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=R+x4hTf6qxUwy8f4H8bB7cchxBiFqNNUr3In9D68Z5A=;
+ b=gxRaeipLTLexfzwYmC66NxwT7h2Az33kXbEezjI3hnELjVJV8BzTm7qzAZJ7aoOUXr
+ FdlzX2Kj9oIB+Q5328IVMsjDd5AkbtV1qZRtqKoY23JjpvKfOJfHKd5OI00jQxNtYwgl
+ pD6QiLrRP2MCzFxj4K6epvAX7ldOJeS6hfj97L9NZ5sIfK4Y1Cc7YHnjjZK6JY8M7At9
+ boXln+7pDf484wUSHGqLP1Wjn5c6l5mxce4dhoRhRM6Zyf5b+M7LAdrGrftCuOgFAQ3h
+ U5NLTmgBnyKNde1xk6hWfwBG8o11vp7D072QFM09zb5K65fV8Dbrf1DgaDZYybYtD5e1
+ TW7Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1791373993; x=1791978793;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=R+x4hTf6qxUwy8f4H8bB7cchxBiFqNNUr3In9D68Z5A=;
+ b=dhXUEaE0JqgL2agBPphVmOmwteDhTc5PI2UN2w0+JJfZb23+/9Xzq7pk6UVJlZhDG6
+ 5PU1Dh99qGniaj3WlFakql6UC03WQBjcY2kUuslisYya0NFrCMiJ1hdYGNvUmr2FBQsH
+ gfZ4HM4bxE5f2GckFmvGojlm23dzRRO7b42+Wos7Jvo0u5T54S38ffEMmsBkqStnNDcC
+ kBhNuM5WncvGbFAIghUYF4ohle2cjPl3RkjzmlAGm7aZqASX6BHbqaBLCB0jtvkSVdlQ
+ FXvmiibMh243Vbn0hZlZJCFz7TsMdH1IuyWxEi38BpZD0wtEt6p1fAQ0QAtQPD3IfPup
+ X+dw==
+X-Gm-Message-State: AFuF++kttwIkeDd/ibGwtnVjIzZ3Ltdc3g6cE54c7cnruaBh01MMJ8hT
+ ltomTPVYY4+b8UsI3U/cXGKclxM8AwA6eD1afaQ3Miwsm1dEnA7Sa5KwSr8x7s2X
+X-Gm-Gg: AYBFou2DRVmYmgPohauhGloZ/6AErksiZAzi0DjMmBj5uFrAVc466bwzh8cLlF6HyC3
+ 0ghIWmy8NQXh4NpBK1ZFxK0jIUOSFTCEhPrNrFYA7J90ocApmcVUZR9Cg9YEK3h5bFZvBKmjPWY
+ kNXX3nEwymRTI76X5L22jEsAn7tpYVbE5N7Dk1P5ZXlZUYEP6OUZYPh/qjm8OBm9RU4cARsT5Hv
+ +NdEo4LshpDDEIxuQpw2AssY6G6rTMSzMn78ynuAOG6iBb+iw8QMCAuHz1/rZRKHH8WFyr/kbP8
+ FOM4Zn+AL57XZG+vj1PssQQGM+yJxu6990hRT72cjV8PwNc/+LjAbHK+2yWBIQA4UzEXZjSVmGH
+ Rfz0pKlHJlui/hhtpQljz/MZDAG1mta6WTyIXKVhyPBSfgabbAMOz6rqcva51qzQ0aIcXcugwuC
+ MmGWHLMrooUSUTR8kXlC2vOAKaesVePwK48NH6pfz2wh5kLootma9whFereFFzhG231rvXz1i33
+ kTEbohnXK9JCtUi+g==
+X-Received: by 2002:a05:7022:699d:b0:14d:3c0c:79e9 with SMTP id
+ a92af1059eb24-162041de5bemr3275764c88.11.1791373992777; 
+ Wed, 07 Oct 2026 04:53:12 -0700 (PDT)
+Received: from DESKTOP-Q716RM7 ([103.94.185.75])
+ by smtp.googlemail.com with ESMTPSA id
+ a92af1059eb24-1616980c3b7sm6429520c88.16.2026.10.07.04.53.07
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 07 Oct 2026 04:53:12 -0700 (PDT)
+From: Yonggang Luo <luoyonggang@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Cleber Rosa <crosa@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+ Laurent Vivier <lvivier@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
+ John Snow <jsnow@redhat.com>, Laurent Vivier <laurent@vivier.eu>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Joel Stanley <joel@jms.id.au>, Fabiano Rosas <farosas@suse.de>,
+ Kane Chen <kane_chen@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Troy Lee <leetroy@gmail.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>, Stafford Horne <shorne@gmail.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-arm@nongnu.org,
+ Philippe Mathieu-Daude <philmd@mailo.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Steven Lee <steven_lee@aspeedtech.com>, Alexander Bulekov <alxndr@bu.edu>,
+ Darren Kenny <darren.kenny@oracle.com>
+Subject: [PATCH 1/8] configs/targets: remove target info definitions
+Date: Wed,  7 Oct 2026 19:47:58 +0800
+Message-ID: <20261007115253.328-2-luoyonggang@gmail.com>
+X-Mailer: git-send-email 2.55.0.windows.3
+In-Reply-To: <20261007115253.328-1-luoyonggang@gmail.com>
+References: <20261007115253.328-1-luoyonggang@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1234;
+ envelope-from=luoyonggang@gmail.com; helo=mail-dl1-x1234.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -68,32 +119,200 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 6 Oct 2026, Bin Meng wrote:
-> The BookE PIR registration reuses the classic PowerPC 604 write
-> callback, which writes SPR 1023 and masks the value to four bits.
-> BookE PIR is SPR 286; on e500, SPR 1023 is SVR, so a PIR write can
-> corrupt SVR while leaving PIR unchanged.
->
-> The e500v1/e500v2 manual defines PIR as read-only. The e500mc, e5500
-> and e6500 manuals allow hypervisor software to write PIR after reset.
-> Reject writes on e500v1/e500v2 and use the generic 32-bit SPR write
-> callback on the other three cores to update the correct register
-> without the four-bit restriction.
->
-> Reference:
-> - E500CORERM (Rev.1), section 2.5.2
->  https://www.nxp.com/docs/en/reference-manual/E500CORERM.pdf
-> - E500MCRM (Rev.3), section 2.9.7
->  https://www.nxp.com/docs/en/reference-manual/E500MCRM.pdf
-> - E5500RM (Rev.4), section 2.9.7
->  https://www.nxp.com/webapp/Download?colCode=E5500RM
-> - E6500RM (Rev.0), section 2.9.8
->  https://www.nxp.com/docs/en/reference-manual/E6500RM.pdf
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 
-I'm not sure about URLs in commit messages which might go stale. I think 
-the reference to title and section is enough without the URL but whatever 
-others prefer is fine with me too.
+Now that we remove machine_typename, we don't need to keep duplicated
+file per target anymore. So we can just rely on target-info-stub.c.
 
-Regards,
-BALATON Zoltan
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
+---
+ MAINTAINERS                       |  1 -
+ configs/targets/aarch64-softmmu.c | 25 -------------------------
+ configs/targets/arm-softmmu.c     | 25 -------------------------
+ configs/targets/meson.build       |  6 ------
+ configs/targets/riscv32-softmmu.c | 24 ------------------------
+ configs/targets/riscv64-softmmu.c | 24 ------------------------
+ meson.build                       |  7 +------
+ 7 files changed, 1 insertion(+), 111 deletions(-)
+ delete mode 100644 configs/targets/aarch64-softmmu.c
+ delete mode 100644 configs/targets/arm-softmmu.c
+ delete mode 100644 configs/targets/meson.build
+ delete mode 100644 configs/targets/riscv32-softmmu.c
+ delete mode 100644 configs/targets/riscv64-softmmu.c
+
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 1312bbd1bd8..cfe39dc2883 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -2148,7 +2148,6 @@ M: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+ S: Supported
+ F: include/qemu/target-info*.h
+ F: target-info*.c
+-F: configs/targets/*.c
+ F: tests/unit/test-multi-targets.c
+ 
+ Xtensa Machines
+diff --git a/configs/targets/aarch64-softmmu.c b/configs/targets/aarch64-softmmu.c
+deleted file mode 100644
+index fdebdcc3582..00000000000
+--- a/configs/targets/aarch64-softmmu.c
++++ /dev/null
+@@ -1,25 +0,0 @@
+-/*
+- * QEMU binary/target API (qemu-system-aarch64)
+- *
+- *  Copyright (c) Linaro
+- *
+- * SPDX-License-Identifier: GPL-2.0-or-later
+- */
+-
+-#include "qemu/osdep.h"
+-#include "qemu/target-info-impl.h"
+-#include "qemu/target-info-init.h"
+-#include "target/arm/cpu-qom.h"
+-#include "target/arm/cpu-param.h"
+-
+-static const TargetInfo target_info_aarch64_system = {
+-    .target_name = "aarch64",
+-    .target_arch = SYS_EMU_TARGET_AARCH64,
+-    .long_bits = 64,
+-    .cpu_type = TYPE_ARM_CPU,
+-    .endianness = ENDIAN_MODE_LITTLE,
+-    .page_bits_vary = true,
+-    .page_bits_init = TARGET_PAGE_BITS_LEGACY,
+-};
+-
+-target_info_init(target_info_aarch64_system)
+diff --git a/configs/targets/arm-softmmu.c b/configs/targets/arm-softmmu.c
+deleted file mode 100644
+index 2b98f65a0f8..00000000000
+--- a/configs/targets/arm-softmmu.c
++++ /dev/null
+@@ -1,25 +0,0 @@
+-/*
+- * QEMU binary/target API (qemu-system-arm)
+- *
+- *  Copyright (c) Linaro
+- *
+- * SPDX-License-Identifier: GPL-2.0-or-later
+- */
+-
+-#include "qemu/osdep.h"
+-#include "qemu/target-info-impl.h"
+-#include "qemu/target-info-init.h"
+-#include "target/arm/cpu-qom.h"
+-#include "target/arm/cpu-param.h"
+-
+-static const TargetInfo target_info_arm_system = {
+-    .target_name = "arm",
+-    .target_arch = SYS_EMU_TARGET_ARM,
+-    .long_bits = 32,
+-    .cpu_type = TYPE_ARM_CPU,
+-    .endianness = ENDIAN_MODE_LITTLE,
+-    .page_bits_vary = true,
+-    .page_bits_init = TARGET_PAGE_BITS_LEGACY,
+-};
+-
+-target_info_init(target_info_arm_system)
+diff --git a/configs/targets/meson.build b/configs/targets/meson.build
+deleted file mode 100644
+index 2ab4d27eaf5..00000000000
+--- a/configs/targets/meson.build
++++ /dev/null
+@@ -1,6 +0,0 @@
+-foreach target : [
+-      'arm-softmmu', 'aarch64-softmmu',
+-      'riscv32-softmmu', 'riscv64-softmmu'
+-  ]
+-  config_target_info += {target : files(target + '.c')}
+-endforeach
+diff --git a/configs/targets/riscv32-softmmu.c b/configs/targets/riscv32-softmmu.c
+deleted file mode 100644
+index 0829ab84de5..00000000000
+--- a/configs/targets/riscv32-softmmu.c
++++ /dev/null
+@@ -1,24 +0,0 @@
+-/*
+- * QEMU binary/target API (qemu-system-riscv32)
+- *
+- *  Copyright (c) rev.ng Labs Srl.
+- *
+- * SPDX-License-Identifier: GPL-2.0-or-later
+- */
+-
+-#include "qemu/osdep.h"
+-#include "qemu/target-info-impl.h"
+-#include "qemu/target-info-init.h"
+-#include "target/riscv/cpu-qom.h"
+-#include "target/riscv/cpu-param.h"
+-
+-static const TargetInfo target_info_riscv32_system = {
+-    .target_name = "riscv32",
+-    .target_arch = SYS_EMU_TARGET_RISCV32,
+-    .long_bits = 32,
+-    .cpu_type = TYPE_RISCV_CPU,
+-    .endianness = ENDIAN_MODE_LITTLE,
+-    .page_bits_init = TARGET_PAGE_BITS,
+-};
+-
+-target_info_init(target_info_riscv32_system)
+diff --git a/configs/targets/riscv64-softmmu.c b/configs/targets/riscv64-softmmu.c
+deleted file mode 100644
+index 553bd1f75fe..00000000000
+--- a/configs/targets/riscv64-softmmu.c
++++ /dev/null
+@@ -1,24 +0,0 @@
+-/*
+- * QEMU binary/target API (qemu-system-riscv64)
+- *
+- *  Copyright (c) rev.ng Labs Srl.
+- *
+- * SPDX-License-Identifier: GPL-2.0-or-later
+- */
+-
+-#include "qemu/osdep.h"
+-#include "qemu/target-info-impl.h"
+-#include "qemu/target-info-init.h"
+-#include "target/riscv/cpu-qom.h"
+-#include "target/riscv/cpu-param.h"
+-
+-static const TargetInfo target_info_riscv64_system = {
+-    .target_name = "riscv64",
+-    .target_arch = SYS_EMU_TARGET_RISCV64,
+-    .long_bits = 64,
+-    .cpu_type = TYPE_RISCV_CPU,
+-    .endianness = ENDIAN_MODE_LITTLE,
+-    .page_bits_init = TARGET_PAGE_BITS,
+-};
+-
+-target_info_init(target_info_riscv64_system)
+diff --git a/meson.build b/meson.build
+index 828100de816..64d3f7675f7 100644
+--- a/meson.build
++++ b/meson.build
+@@ -3754,7 +3754,6 @@ subdir('dump')
+ subdir('accel')
+ 
+ subdir('backends')
+-subdir('configs/targets')
+ subdir('disas')
+ subdir('migration')
+ subdir('monitor')
+@@ -4346,11 +4345,7 @@ foreach target : target_dirs
+     endif
+   endif
+ 
+-  if target in config_target_info
+-    arch_srcs += config_target_info[target]
+-  else
+-    arch_srcs += files('target-info-stub.c')
+-  endif
++  arch_srcs += files('target-info-stub.c')
+ 
+   if target_base_arch in target_arch
+     t = target_arch[target_base_arch].apply(config_target, strict: false)
+-- 
+2.55.0.windows.3
+
 
