@@ -4,95 +4,132 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C4A8CA6004
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 19:27:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2E43CA6002
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 19:39:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xEXHl-0003y2-4a; Wed, 07 Oct 2026 15:26:41 -0400
+	id 1xEXTC-0005h2-1H; Wed, 07 Oct 2026 15:38:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xEXHi-0003xX-Vc
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 15:26:38 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xEXHh-0006By-9w
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 15:26:38 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-4a0213948d3so14506175e9.2
- for <qemu-devel@nongnu.org>; Wed, 07 Oct 2026 12:26:36 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <manuele.conti@archimede-energia.com>)
+ id 1xEXT7-0005gm-Bs; Wed, 07 Oct 2026 15:38:26 -0400
+Received: from mail-northeuropeazlp170120005.outbound.protection.outlook.com
+ ([2a01:111:f403:c200::5] helo=DUZPR83CU001.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <manuele.conti@archimede-energia.com>)
+ id 1xEXT0-0007N0-SS; Wed, 07 Oct 2026 15:38:25 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=s4fcEnnnwkJmmG3UUVzZVapw7fbrWZtVNftVk13lGRfSvL74y+PNtD6KxzuXj9v+1xGQr72zSIBWJK8FRkjRc3CDywRcI4bsBJK3U9/6dK/QrRTEx0wm8+rEQEnzv00uyXX4v96AWMZ8HtNMtqTXhrhVQ/nDom4jDobX5aS1IhlJoVpNQtdSwMICmUYc0wGCXxThMAexYUc2P9bMG6afDSVSvw+KRseaIVOn9SwQ6cJAty5dzgTcKZPI2osaPeuY/c1HU+vkyOPidivHDeiYP+IxCpUpe11AIdgNjg1mufF+SixMSNYIJJb2hvcrw/urdwtM4yqulAomeFfGFqTeSA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=fcxwz7i3eGkFDSr1oYRGLMTcKP//Q/2dlXY5HM7/An0=;
+ b=cDJkSMcEdEn2WAFymCKnNtHnvQom/bKT4FFtUmhWW3H7TAEnPk+sgiwG2zR99G6oPyeAhlOx4/j8a9vTWib/6gZxB8yK0ApXiRZRxmfUQhmJ91CLIkqXdbpJhhPS0O+hvUZrUxz2Io/EpAHf8FYAfdA+lyRU7eWx9yj+ALvFU4EQQU3U2lOdDQl5p4tZg0cy6zYz2x/HgCUV4mwzK9NNqGMLUCC9i1Q0VF2j9muz5dDW1Pd6mkHucBhtpQTTJ4TAyMtZkjCL3222C1ymFnP97fFVZQFcyYa3NRg5GQfJqTPSQNNQsqv6m/EGNpDmt0tdVTK0gkvki4dSL5CMpZ4LaA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=archimede-energia.com; dmarc=pass action=none
+ header.from=archimede-energia.com; dkim=pass header.d=archimede-energia.com;
+ arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1791401195; x=1792005995; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id
- :references:in-reply-to:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=Um9PZavPCMADPIRC7deUkM9p970YLHb1nXB2YPmlTW4=;
- b=qBWcl6eRZ/cizUvzUHvFk/JBFQWUTR4Zksfccu7olWuIwkqnWZIcZJIdiTxpbEKWV5
- qXv+iAhLpmFYlZRN/HxTjHU/fhK/ssZRNp7CjyyywLd+03vxKkkBAoKO3Hn4Jclo+ycN
- G1NZK4JZGl5+e/00+VJg8zs3AH42jYn1M4dBWRagpKf8pLY1R4GIvrWYLllOW6YZtaaJ
- 4Ycwdj461w3FxLwfgO3yGVGGPkFeyJ/B+zIp0DKDDueMTlITKwQe/a2Ii7kbQdJzL+OI
- XIhu1Hn8ozx5K1No5YmHfyzxiU0agaeJV5qant1y3D3vWXqRvBvl3wTcA6rtCKsYJW8f
- OfKQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791401195; x=1792005995;
- h=content-transfer-encoding:content-type:mime-version:message-id
- :references:in-reply-to:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=Um9PZavPCMADPIRC7deUkM9p970YLHb1nXB2YPmlTW4=;
- b=Aou5TPhw8zwMOjpHBKyZjQ7aFgrZaYLW+oD229d4pbyaDpOmxWVP5QxUVT3p6mBexu
- We/HL0/pcB9vNMVtPRun8iTuqQ9bKBUAghyMUAlDGajrdhW4VTPmzJU5BlO97Ssq3uwb
- 6W3FWnGVAF3XZJlfqvTstPrzlL7jnMIr0XPK1uc974qgVy6zSmx8oIGiLM0UNQgxrpf7
- nzgvmt1/EYMNgmzCEif+C7rZv99weWuhJgg5EW735PJKWkddQJy6MOL8KJSE0VY6uvyu
- Xz7HwnkljsWTospn/d6C3KtMeaKh13XacQ33EYXFrg2V9EUf7E0vbsTHc/1ebJ81pjSB
- aMSg==
-X-Gm-Message-State: AFuF++mkbkDYX8QHMhBz3G87AR+jc9POCwT/4/wP/wds6mqj2fRPdaDF
- u1Rho/exqafhUQpSzCAdGNytRoRbpbLIvrL1HwYpUx18cJRLmzcMa45QnAzVGA==
-X-Gm-Gg: AYBFou3/aJdUEaFlbxv+5lk8orgnNks8u+xgy+0OS80sjl5ubLqDUKwUTypF4z8Gr79
- V70cYpi/xn/m5B9I8514kd6uTbuxP0IxAr8odn8h5YtHhti9E4KWLaqhQux+Cfq/RhIkd2Zod2S
- TsupDVoJ2MmleBW9c80Ctsi0HrcuT0v/gMoZ731Us6N7CpyiqZ6dG7471jXnjQjFqANa58XFEgx
- Nx/6NBzwwoK9DY4gt4NBYWLpZaXrE6gI/NgxHzXiy6EtdcRTUIFw6OfRyRi98r/N6BeoxsE05Be
- 1Up8M5VYdVxt++xixKWiQUjjn8v2/sam09+Lp4ociORkAM9mwr6J44cdgs1W77qj4aH9D9skFr0
- qedIF8dsHgv5eciV8VaC969tyoAuHXAffrsF5srijJHT94pMiQXzh0F8xKT62KU2tD23kpK1rWp
- zpn+wFrZ7bge+V/O7Jap4p2N3lVvbD0EHN+i+Mz52sSfletRnRA7B6N4bJRmhmcrqint9zl7UYJ
- 7eHb+mkpohYNaYYlwZRwhXzbsM2yrEwmVl3QG3FYtMxbaGWmcyhI/3xA6RSYHezf8yLlMk=
-X-Received: by 2002:a05:600c:468f:b0:49f:ce78:356d with SMTP id
- 5b1f17b1804b1-4a1806508edmr54031515e9.30.1791401195362; 
- Wed, 07 Oct 2026 12:26:35 -0700 (PDT)
-Received: from ehlo.thunderbird.net
- (p200300faaf09ae009c631109991f49ce.dip0.t-ipconnect.de.
- [2003:fa:af09:ae00:9c63:1109:991f:49ce])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a1843bd060sm16971695e9.14.2026.10.07.12.26.34
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 07 Oct 2026 12:26:34 -0700 (PDT)
-Date: Wed, 07 Oct 2026 19:26:32 +0000
-From: Bernhard Beschow <shentey@gmail.com>
-To: qemu-devel@nongnu.org,
- =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@oss.qualcomm.com>,
- John Snow <jsnow@redhat.com>, Luigi Leonardi <leonardi@redhat.com>,
- Ani Sinha <anisinha@redhat.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-CC: Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>
-Subject: Re: [PATCH] kvm: shuffle bios loading functions into kvm.c
-In-Reply-To: <c76a70ea-f788-47a6-8a0e-229694e6c571@oss.qualcomm.com>
-References: <20261007183545.1899945-1-jsnow@redhat.com>
- <c76a70ea-f788-47a6-8a0e-229694e6c571@oss.qualcomm.com>
-Message-ID: <D8D4269B-F7B1-4732-B649-B6EE544814CC@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
+ d=ARCHIMEDENERGIA.onmicrosoft.com;
+ s=selector1-ARCHIMEDENERGIA-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=fcxwz7i3eGkFDSr1oYRGLMTcKP//Q/2dlXY5HM7/An0=;
+ b=UiOYBPciPlOArSOs7byCDno6tUJoH1fUvJauSrokM1kk9XPxtsI+AAMxRNs+2E91Z/et9XNs+YixEpbWBVzbYamNB8xq/hIj20f5RN2m5INRDrUXEJwLtf1M0vJ72xehzSuGck6vxh7a9oIzAMuo90koMibUc92TEKSDeRAjB4w=
+Received: from AM7PPF9020C43FB.eurprd02.prod.outlook.com
+ (2603:10a6:20f:fff1::816) by DB3PR02MB10402.eurprd02.prod.outlook.com
+ (2603:10a6:10:439::8) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.451.23; Wed, 7 Oct
+ 2026 19:38:06 +0000
+Received: from AM7PPF9020C43FB.eurprd02.prod.outlook.com
+ ([fe80::d6fd:d61:e01f:727c]) by AM7PPF9020C43FB.eurprd02.prod.outlook.com
+ ([fe80::d6fd:d61:e01f:727c%3]) with mapi id 15.21.0496.010; Wed, 7 Oct 2026
+ 19:38:06 +0000
+From: Manuele Conti <manuele.conti@archimede-energia.com>
+To: "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+CC: "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "alistair@alistair23.me"
+ <alistair@alistair23.me>, "farosas@suse.de" <farosas@suse.de>,
+ "lvivier@redhat.com" <lvivier@redhat.com>, "pbonzini@redhat.com"
+ <pbonzini@redhat.com>
+Subject: [PATCH v2 0/2] STM32F405 timer and RCC fixes
+Thread-Topic: [PATCH v2 0/2] STM32F405 timer and RCC fixes
+Thread-Index: AQHdVpNftfLB/x7XS0armEsdLYl/UA==
+Date: Wed, 7 Oct 2026 19:38:05 +0000
+Message-ID: <C38CE953-7A98-42C7-AE35-443BED94674D@archimede-energia.com>
+Accept-Language: it-IT, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-mailer: Apple Mail (2.3864.700.51.1.1)
+authentication-results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=archimede-energia.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: AM7PPF9020C43FB:EE_|DB3PR02MB10402:EE_
+x-ms-office365-filtering-correlation-id: 9d01290b-acc9-4bc2-f3e3-08df24aa825f
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|1800799024|366016|376014|10070799003|23010399003|10067099003|56012099006|5023799004|3023799007|18002099003|38070700021;
+x-microsoft-antispam-message-info: aD0m2xO1K4vqXgt9UjspmcYKpj7WKj1vPz5c6/mXYM4YIa0LWtLueiUwQKdFZpxe8+P6mYo4/luICK977qrWpLzmXTaS1X9UjEXwqIEX/45Eq/n6ge9rFD04+UyIvnlYEz4CSDDqRPMAOZv95hJvBwz7BZoIw4cetScnple7p/PywJbAlxS0fRi6cSgCPIdiKKQKDe/E9Eve2sQ6iB/xP/QyfQfiB5lOXFFXYpjmnpL4pg6FA6yaA/YNHPuVdHjX/4DdHrbPj5hXKJuNBFPMacB+g6VH7f/uChqOIYlVd40NAmjjpBaidWDBiS27IK2JJ0ucyC1oR5wULwLLhKCdXCZCHPJd8TQ5W1qDsc+43VMgmeWxRzvxi5lKU5jTiQyTTcEPsYKwwZqe5cEuMiWgAI7+2ioRY0wl24UfDelCmzYCidLvJWTYwWJixmc63g9b73G+EqxzzVUt+TCw54zIDBge2LAH296vPeyPP9jBHcy5wd0oiaPcAgRxc05sZFwhDh4iqlqQoglnCqgPLuvO63YCEP/wYKu4axniElM3Nbql8o+7rsYQmAjWEC27G82mRFLrL8yLK0m4NHsZJaVtlezw4jGS8kIBow7R7RvO1T5gIqaeTVHvfQX58SBTk2Vf+E8I7LE9dMmUa9TBCvB7IfwESmE2rqq1FIEpg5QemkrikPsL1bFeFnOKa0Vn8rGGL5jPTNjP1LxdANmGZRxErg==
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:AM7PPF9020C43FB.eurprd02.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(366016)(376014)(10070799003)(23010399003)(10067099003)(56012099006)(5023799004)(3023799007)(18002099003)(38070700021);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata-chunkcount: 2
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?gTKJX+JOwkHjnNg9OENw9nP8nIKqtGybzCc5SAl2BojEWULPq1Dv9EMzW+HX?=
+ =?us-ascii?Q?rB/uKhpqaQdIgRzw+7adS04Z7J0u0Tdr5IqxBsRtJg13e871S0j14ZbIzpta?=
+ =?us-ascii?Q?YYWXou8iClZN0/QX9PX326wHplKE5qDNrZB9YUoRlRw4Pf3ez4HxatXR/GSG?=
+ =?us-ascii?Q?dTQ1tE3MomWn8QbrdZVPtIEhLEIx6kdQi1xKAVZjs6CSQ82SMKpN0Br9Y0GW?=
+ =?us-ascii?Q?iJcWm/nIeJjNnC0bZ+1xQpchwB4Hj2oOh/QVFpboGTk0bd6JFqvRdt35TsJX?=
+ =?us-ascii?Q?wyLH3+gcnXFSpp7foPgQJY3EQ0ZBbPMzydqUAE6/GqBMjaj2EOLWEvL9O3Mn?=
+ =?us-ascii?Q?Tn12eWDB7wKwetPbmveEJx+1szNY9hc9wXCj18KQPhaBTNbyNtLbqlyj5PS+?=
+ =?us-ascii?Q?X2ynh+tkrCf5c719tFh3m4EwHueIRBc+ZYZ89T1VUYLI2RWW8/J8F9+70FaX?=
+ =?us-ascii?Q?j2YsYf73qCjJdSAjacGORtzuNxcBJHRSWe6Z3EcMESNNc0Ycx4eYDdLTcysj?=
+ =?us-ascii?Q?xtCGeDhgJw0dc29CSej+zt8vF3PxHTqP1gMr8HxL528cDXC0Zn3Ab9AoLSre?=
+ =?us-ascii?Q?wefwrBihsjWA2Mnj3lt/Gpz4VZVn7nnNidPcmIBBmSXtrA8kb/M+i1wryzc3?=
+ =?us-ascii?Q?DnqohgGIRW1F9fA8VXZUU9vrxI80eCCXvMnVPxoQd9hlTIuAtfvkmeLHPyfr?=
+ =?us-ascii?Q?RGzIeYcfaSIWH3iJLKaO4Z0QpN+YtLV/etMjgEac9Ay8lZ4qFuvNBnVqRIeI?=
+ =?us-ascii?Q?ftKGpq2pHsv5IsmHhm8s/BN9ES29iOPfgOpr23Kqb8PTwf6w/l1UipV7U9xh?=
+ =?us-ascii?Q?AcGvkYhG5ORVvYBcJqrL1GzPU6IExdw1penuqWqwAJ1UPS051avhxmMR6HHS?=
+ =?us-ascii?Q?gEr4lnqWzmNY4lwylJ4cP1AUhm/7XxUDTCC9HkNBGJXQ9SweaxzVmv3E6vO3?=
+ =?us-ascii?Q?PvVNUaojTtEWN3iAPyCfOtMhALIHIfPhPfrVcQHd933EhZ5WPRnnn7Q5HqcN?=
+ =?us-ascii?Q?rGKiJdiZhMRja17eqeQWY7y3G2M6QjUots80RDs5yq3HpWTn2AhaL6giIG2e?=
+ =?us-ascii?Q?4Mz4zGggyRZpGmxPFHgq9udI3EA0Xu5NxQYFjlq82mqcFZi/1fOO216ctWHb?=
+ =?us-ascii?Q?GUUOq5VWttkHgvXLcSQgMLP4wq5BEicnN4fF/FjVCdlhpP+4dq7PjXRdJ9Wl?=
+ =?us-ascii?Q?z2aK83bm+jMvJk+/QfJRy3cWYScJ1P6RyYBb/PkFVtRENaOyvQDkX8iknFcK?=
+ =?us-ascii?Q?dDeoXiggrcV6f4OkMceKkxGcznY8YPpBj5aHP5qGOz/TGTc86/qrPHWWY0/s?=
+ =?us-ascii?Q?7B5/n1hFLXjZCPWQWeB6GPrtI4MO5XGXAwiHBkAn2q63tRQZWiyzvrOF+FxS?=
+ =?us-ascii?Q?qC44JfH5FcGLNcXURqM87CpOnTE/NrtEc/eBGsfr9ldNeSvYSpJtSKBH+cCv?=
+ =?us-ascii?Q?KuMwZwnbZUHWAUdHOX/NJAv8Oi4f68c8+oKbEDt+l29EpGdYkjwHEVv13WEf?=
+ =?us-ascii?Q?DWpEMNofbRgXM5NOEfkVKf3OttB0BnkH1shEZzJn2b+0NutqG4GfNHqB5ueK?=
+ =?us-ascii?Q?Rj1jhZHyjHh7WzMbHszI+z0jykgQvDfr8IFask9IhUHY7vvLE6VXPLcyTID3?=
+ =?us-ascii?Q?zaxdyi/w7VXO3PC/kt0Y8rmlT1FjUs7FQjw4iUUHdlOmrE8UmhVC0J4WgqC5?=
+ =?us-ascii?Q?SAsxPT1xhLtmQJroZgIuIhkQQn1evUKq/zJsmVf/oqlneqIpiD0D42uYyW1V?=
+ =?us-ascii?Q?1cQzUdP2l1TTXrdMYw64G/z1vGUvSYVnO+yPyK9nbiSsZOS/yQES0mp/FEXZ?=
+x-ms-exchange-antispam-messagedata-1: DOK99tuX4UKGOrZNnViHPRSjzqh+w2TCRbFpZ/3yBXECTV6U042J7KmG
+Content-Type: text/plain; charset="us-ascii"
+Content-ID: <DCECDDF93512C248AC1448A784DA4F2A@eurprd02.prod.outlook.com>
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=shentey@gmail.com; helo=mail-wm1-x333.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+MIME-Version: 1.0
+X-OriginatorOrg: archimede-energia.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: AM7PPF9020C43FB.eurprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 9d01290b-acc9-4bc2-f3e3-08df24aa825f
+X-MS-Exchange-CrossTenant-originalarrivaltime: 07 Oct 2026 19:38:06.0202 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 1f446eb6-a8f2-46bc-96fd-2665698112e8
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: kgk5TXyUs9WFyTwS5wTX2we8YKyOS4Y5gbdeTuum8c7p/SKNpL5WvZWmuLPriTc5RbGhVQzN3mB2Uy7/dZfGy6Z/HItdU6j0gY7QRL6P+JfKasnpXR7Dt6xXBGsosilp
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB3PR02MB10402
+Received-SPF: pass client-ip=2a01:111:f403:c200::5;
+ envelope-from=manuele.conti@archimede-energia.com;
+ helo=DUZPR83CU001.outbound.protection.outlook.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -109,46 +146,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi Peter,
 
+Here is the complete v2 series, resent as fresh emails with both patches
+inline.
 
-Am 7=2E Oktober 2026 19:01:06 UTC schrieb "Philippe Mathieu-Daud=C3=A9" <p=
-hilmd@oss=2Equalcomm=2Ecom>:
->Hi John!
->
->Cc'ing Ani / Luigi & Mark=2E
->
->On 2026-10-07 20:35, John Snow wrote:
->> Currently, these functions are located in kvm-common=2Ec=2E However, wh=
-en
->> configuring QEMU with `--without-default-devices`, we encounter a
->> linking error at final assembly time where these functions cannot be
->> located=2E
->>=20
->> As a quick hack, I've moved the functions into kvm=2Ec to allow
->> defaultless-compilations of x86_64 to succeed=2E This may not be the
->> correct or most elegant approach, but it does restore a compilation
->> feature that was working in v10=2E0=2E0 and broken by v11=2E0=2E0=2E
->>=20
->> Suggestions?
->>=20
->> Suggested-by: Paolo Bonzini <pbonzini@redhat=2Ecom>
->> Signed-off-by: John Snow <jsnow@redhat=2Ecom>
->> ---
->>   hw/i386/x86-common=2Ec | 125 ----------------------------------------=
--
->>   hw/i386/x86=2Ec        | 130 ++++++++++++++++++++++++++++++++++++++++=
-++-
->>   2 files changed, 129 insertions(+), 126 deletions(-)
->
->Can we move to a new hw/i386/x86-bios=2Ec file instead?
+Changes in v2:
+- Timer: make hit_time local, preserve stopped CNT verbatim, and set both
+  VMState version fields to 2.
+- RCC: mirror HSION into HSIRDY and PLLI2SON into PLLI2SRDY as well.
+- Extend the qtests for stopped CNT and the additional clock-ready bits.
 
-Yes, good idea=2E Please also fix the commit message to something along "h=
-w/i386: =2E=2E=2E" since this isn't specific to KVM=2E
+Manuele Conti (2):
+  hw/timer/stm32f2xx_timer: fix periodic mode and CEN handling
+  hw/misc/stm32_rcc: Mirror clock ready and switch status bits
 
-Best regards,
-Bernhard
+Thanks,
+Manuele
 
-> Otherwise:
->Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@oss=2Equalcomm=2Ecom>
->
 
