@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2380CA6004
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 14:05:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F9B1CA5FFC
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 14:05:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xESFn-0003b0-I1; Wed, 07 Oct 2026 10:04:23 -0400
+	id 1xESGY-00044j-0B; Wed, 07 Oct 2026 10:05:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
- id 1xES1i-0006WE-Nb
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 09:49:58 -0400
-Received: from mail-westcentralusazlp170130007.outbound.protection.outlook.com
- ([2a01:111:f403:c112::7] helo=CY3PR05CU001.outbound.protection.outlook.com)
+ id 1xES2V-0006sv-2b
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 09:50:46 -0400
+Received: from mail-westus3azlp170110003.outbound.protection.outlook.com
+ ([2a01:111:f403:c107::3] helo=PH0PR06CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
- id 1xES1e-00044L-Mp
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 09:49:44 -0400
+ id 1xES2S-0004Im-Sy
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 09:50:34 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=o2xgFHMDNonuwH/CAhKQ3TBDJ9m7mU8rTpXnQz2g/GZiCo1Tc8KL3G8s9TpAMVFLb1w6+bu9XBDNKFF8uVkA1qaCzseyxKuGIp4KpsvMoUjhTSMDCdRlbYGe+EUBWPaXz1rHDyrM+aUk2Hm2+cBLtdobnNd4MGNautlyaPkMgKQMHo2QXWnGvglEKq9QzxJmlDyRE2uZHpopTIV/6oi2zJucTYTuRRk6fYcDQYbrgFKJe5NYRnjPw+94nXO7hclAQ7KDbc5+vO4nj2Hup7ySQDfnZjLwx8WHUKJn3qVTl+1hKlhkZ4k0yuZk78EyVVeXc7oxsykrU0FOxHQdGhpI1g==
+ b=bjrvcPeQLgGviGCG7FPnCuCFlZuKo8iwjEfGJdMqsE7Vub7BJmw/Aws08rkRdw1de1nrTvVscAeTZZPT0K2cbhYUmSe7TJNJRyPTS/18cxzbVilCVgRc7tzI041ovhPXPvrfrR7eHSzpgv4RNQzqIVfR0dBa4cf8ZYkdDbIscn1dSl31qEdtYTEGWtovwoWUJWwioYw18XUU1UNrr/QMaUhCEdy0djI/UySUFPY2NVVA12alw8q99aBwH/i4P7r/5ZZN0Cf9dZqooztF8DC3mAysWZyAmjx3l1wmFqCYV+XqlpHlCJVUZDXQ93nzt2lwuPjE6fTnU7DS5xQHtwT5rw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=U5Tff8OOoFfLXT65qpb9PoBrQVKbxUnYu6b2F1KUZts=;
- b=XI7dABXKg+91sPCbhiv0j4QlEwTegKpvliwBTAzxb7rSH/QP2QYS76g45eatHdqtjK2xqNeIVjV3qndw6ZH6P606ZEiCpooL35P/AxnqV7DRDex2BD2lu1Ixo6JByN8cQ0NwjIrjUjCLm1f/tfCESGwS87eVjQPJv8b/5ZqK89HjiA02yCPiDev8hoB/pekXO14Nuez/AxRuLQAAeoiXD/KZR1VXeSSdPrH7udYbSumlLXG3PWUsXjl8QPKPnCHvLo9Qr57gtgJYFRhyDoV8LILevDASK3LPLKPF9vG6rKlTjDGrOo1qnuS60aS63Y9WPlegp9hD7XMQuMCu2oRSJw==
+ bh=P8FrZ3+Fy2e196Kcifl/Kgnvomb1xROz6PQEKbm3QSA=;
+ b=wqN4zZ0XW/oFlY0Kbl1HOu0MQTjKl+cfSMLynr6sBBXnTq4Ru6WZMh73iliQsRid2nrRV+ua9QH5CdZN29MHk0A2dOzXzPydeaxNp9aUEB0FeZrYrXz9AyoRD71ONqJzQSxU4exLS09cYs8ybGSDCg7MzafcW4N2CZyGstuAcfMWuyZYocHrzOIEhgF0nYyRBa7byBd+iWWYqTMpjD7YMIaxzTZfFk1kC5bxkfCxtZ6w7jLdsa5A9D1OHOCOHVKWMr08mSt+Vd8L6zcDQj0gwqZDLt5cMWmnC3dr6ubZKQV0zntYT9a+vEq7kwLZRNuF/NRDUxyw7bFmEm8naUZ3ZQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
  165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
  (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
  dkim=none (message not signed); arc=none (0)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=U5Tff8OOoFfLXT65qpb9PoBrQVKbxUnYu6b2F1KUZts=;
- b=gw1+GmnJbqYV+BsKRJy8ytIkw+AoRvvD7xBAqzewTcF3OyZ+sdh67195xiUTujimE5OiUEDpJLlPuaGazv3VTCqTI3MQb1K0UbLroBKulr3RuwC8GZDwcRryKSD4R2aStj4kCjEVYIKCluHgSJW2lidxmnvRNFYsxedJBsEP5xM=
-Received: from MW4PR04CA0059.namprd04.prod.outlook.com (2603:10b6:303:6a::34)
- by PH7PR12MB6537.namprd12.prod.outlook.com (2603:10b6:510:1f2::18)
+ bh=P8FrZ3+Fy2e196Kcifl/Kgnvomb1xROz6PQEKbm3QSA=;
+ b=cfhseGK/Nt5IHW3qSe+eQXSI5dOiGTon6vQxGVAIlmfjK/MKusV3Xscj16nckTfuGnu89ivM1LqWb9HAx78z48KX7+b1EgVR9SbUL/z/SjeZfidWrB8UFB6PnWjJIURhr4NNmhhIbryrP3Um3frpJ5MjmAuu7aSGOYxz80C2qAA=
+Received: from CH0PR03CA0408.namprd03.prod.outlook.com (2603:10b6:610:11b::9)
+ by CHXPR12MB999245.namprd12.prod.outlook.com (2603:10b6:610:2fc::10)
  with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.451.26; Wed, 7 Oct
- 2026 13:49:31 +0000
-Received: from BY1PEPF000264B3.namprd02.prod.outlook.com
- (2603:10b6:303:6a:cafe::93) by MW4PR04CA0059.outlook.office365.com
- (2603:10b6:303:6a::34) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.472.20 via Frontend Transport; Wed, 7
- Oct 2026 13:49:31 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.496.15; Wed, 7 Oct
+ 2026 13:50:26 +0000
+Received: from BL6PEPF00022570.namprd02.prod.outlook.com
+ (2603:10b6:610:11b:cafe::46) by CH0PR03CA0408.outlook.office365.com
+ (2603:10b6:610:11b::9) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.496.5 via Frontend Transport; Wed, 7
+ Oct 2026 13:50:25 +0000
 X-MS-Exchange-Authentication-Results: mx.microsoft.com 1; spf=pass (sender IP
  is 165.204.84.17) smtp.mailfrom=amd.com;
  dkim=none (message not signed)
@@ -54,23 +54,23 @@ Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
  165.204.84.17 as permitted sender) receiver=protection.outlook.com;
  client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
 Received: from satlexmb07.amd.com (165.204.84.17) by
- BY1PEPF000264B3.mail.protection.outlook.com (10.167.242.120) with Microsoft
+ BL6PEPF00022570.mail.protection.outlook.com (10.167.249.38) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.496.14 via Frontend Transport; Wed, 7 Oct 2026 13:49:30 +0000
+ 15.21.496.14 via Frontend Transport; Wed, 7 Oct 2026 13:50:25 +0000
 Received: from localhost (10.180.168.240) by satlexmb07.amd.com
  (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.49; Wed, 7 Oct
- 2026 08:49:21 -0500
+ 2026 08:50:23 -0500
 From: Michael Roth <michael.roth@amd.com>
 To: <qemu-devel@nongnu.org>
 CC: <kvm@vger.kernel.org>, <pbonzini@redhat.com>, <berrange@redhat.com>,
  <armbru@redhat.com>, <pankaj.gupta@amd.com>, <xiaoyao.li@intel.com>,
  <chao.p.peng@linux.intel.com>, <david@kernel.org>, <ashish.kalra@amd.com>,
  <ackerleytng@google.com>, <lpieralisi@kernel.org>
-Subject: [PATCH v3 05/19] accel/kvm: Use dedicated helper for creating
- private-only gmem instances
-Date: Wed, 7 Oct 2026 08:41:29 -0500
-Message-ID: <20261007134323.1606088-6-michael.roth@amd.com>
+Subject: [PATCH v3 08/19] system/memory: Re-use memory-backend-guest-memfd
+ inode for private memory
+Date: Wed, 7 Oct 2026 08:41:32 -0500
+Message-ID: <20261007134323.1606088-9-michael.roth@amd.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261007134323.1606088-1-michael.roth@amd.com>
 References: <20261007134323.1606088-1-michael.roth@amd.com>
@@ -82,39 +82,38 @@ X-ClientProxiedBy: satlexmb08.amd.com (10.181.42.217) To satlexmb07.amd.com
  (10.181.42.216)
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BY1PEPF000264B3:EE_|PH7PR12MB6537:EE_
-X-MS-Office365-Filtering-Correlation-Id: d5f32726-6780-4501-39ad-08df2479d002
+X-MS-TrafficTypeDiagnostic: BL6PEPF00022570:EE_|CHXPR12MB999245:EE_
+X-MS-Office365-Filtering-Correlation-Id: 9e86a633-6656-4ffa-f0d8-08df2479f050
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|36860700016|23010399003|82310400026|376014|1800799024|7416014|22082099003|18002099003|56012099006|11063799006|10067099003;
-X-Microsoft-Antispam-Message-Info: hBqb0T2/FmxtGmt5MuPCg6GfXbsbduXu1KGyO/rewcvkzqLB4v8kWMm8a84Umvl4AU8NRjGA/FqODh/5WP5ycCC+tRBxVXsWqokprkWdbr8YyKsKHvmOaUyH9dkbv/4viAY2NkyCUGns+JQ1E93ylAS0RY3Zf2dPX+d2wZ7TsljzCxg000BH0Zt2GWU8psV7VPJPO1hm7b85jUYQ6E0IEAN5u3rjnR0zb619R3cpXrCCEqAOdX/Rb2Njsk2nVhR8bKXtz4CKT8ygtLlawU/OxOMDV3QlrW2GFUXsf1Y+S/+MdtRFrGtvpukVeN1vgYDBwzAHxC3/n7pnDsAeU6ye8XF5sDNMwe3zmf4vbLuhJFmU7HdkI2fi066QLoG1+JqhmliAQXuHs0D9AMVfnxRMoi72+CYmNRgfUFyquI9lQzgvXRpsaQdUTAr78xzlJOzf2vCZl55RkFkyN0n2lnrF5iFuWM4QNoBuOlpMgF4LG95dGZbvK1/1Ep0r7M1FW56RsKnVXuSvFsx/jde5k+g9TpAt0Dgn4BnQJU1bz3DJ4/fTZ+NYUoIzRffCLF/3+bQfFOorffKlzrwDkh5DDZe5VVCnbqKrvVuKlTaYRoAh2PNjtRqa8jhCeDNm8q0Psse23BbRfD/dwZHmISkpH6gj1KgY/iCnb8LaCxmYKY1MBILEsXp5k/EX6tiv7SuVsOc2ZNOi1RBJjzQR8DriTvtIrw==
+ ARA:13230040|36860700016|82310400026|376014|7416014|1800799024|23010399003|22082099003|18002099003|10067099003|11063799006|56012099006;
+X-Microsoft-Antispam-Message-Info: CLerRd/DHar0X55FyKqH+o9KP3wawEJAt/OsRIOluD1nk2TZMN3Qa08rJS1UoxTxpwUh7wY1cK7llefZqi6vTc1ymzKUbFYpUDjppU4PueDJqax7lqOCg/dVuIBVPaV+L0C+D2a1xGY9c+7EMgp5skYfUDIEeqxlVbGskxKSyrFVol+F1C4XHokfMveZGnBmJFSJ2yILRx+8CdmUSr06rzbO7HRiRBtESqUEFwRLt7ckwSxLjsDybDjfkfzIl/RfPd49kpV6Cra3JJnwtxnFTLBfY4dFU9GtjD2pO9FIM8F0HZ6ovL4JbBMOtvkgXcOjGeT0hXlnwUcUzq24+/NRyAZ2a26cj+wlHBbYQU182fsIp+/ckFSoDB3EWWpHRXPjTD9R55yKxZ4myZAYba5EbiOUX4N3rFcDUTaQnpB59fjB+t9cA8bgPHYfImWPZa2xe7lS3tSCRCOuN94NI8z9NjTVG46508M3NA5okUnufV/iGmZG24tU1AC9wnDLOhmUBkQXNvYjxJC0wYJwOCUCd7F+dI4qec2WggXGrnZNQiNTPgtofj4QOxytUfo3GPqRAhA2WGdVvAQ2PAGbzqB9idco3ew1JThbdUC7K9rv2PvHaEAg/5IurXiPB8e7yhu12mv3AKdxHZw7PseslHPVK3V40OU2w43smSSjPwLKRtz8kOERbh5YbtMbupNTzO0FyuVX2WcMRfJaRTXbwN62BQ==
 X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(36860700016)(23010399003)(82310400026)(376014)(1800799024)(7416014)(22082099003)(18002099003)(56012099006)(11063799006)(10067099003);
+ SFS:(13230040)(36860700016)(82310400026)(376014)(7416014)(1800799024)(23010399003)(22082099003)(18002099003)(10067099003)(11063799006)(56012099006);
  DIR:OUT; SFP:1101; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: +EDqkLqSwNL3wlRGo6ptqiI4Z/5skLtEEE95iM62tpKQ+LQkJU6wSE0PTLQRG/GIdWi5DWYyls2y2bbZvLGZHCinKOV1701MlIySLI5yCOSaw24wXMWw9ATqkccSAu3WRzAlymOwGG2fUjAXngDJX0KrJxYLyLz8BhU9VBA0AoJ9/Uu41KoG1AvVEOF1XT3ZkQWCh1TAHlt9EhNFVak5VQ7tCdxwNtap3Qn1AFqje63jYHVuOfBueyqLqZDmyr1ew7iP8iOfllwpxIonAfZdsFa3FN2nAY0a2A6yG+6T/WOkr/Q5otrPMD05xm+sOheTIruip3Z+rWb28BDBrv88ZJSn9EwPohVZ5zaVj+vK7bgccObi7jCA8sUJg8s97dnjX3CwZsUyu6kkz3GjaG4lzoGIsLyYW1SLcXumVBj8wIkmk6y9313L33ELQdkN6N7K
+X-MS-Exchange-AntiSpam-MessageData-0: zX5xyAsk52ALaAGpVTDF5mI5Zr7+06keD7ne0VEJCb9eAZw+MYnXmNJvuCqfVqUd/lePN6rqDsK8n5Mj+NfvBQn/Idb7WAZ0HkmurCa6NCbekWM7G7pMTtVqBwLX2W4w0KZzFlKobklgg5B0HnQQtuHoJaNnLktjxtcjUUy+gQJHWTdEUJkjBWraTndpNUxlutc+6GttUnWJkTzZXOzCQv579w+l0hMm6+CHgnlFHcGFn9utoAyIb/6+3dXcOA5sd/gTSwn7G8dso7Zb3faIOtOau14W+itO1bmkOF56ki+GoEVjDqRO+XM1S1oY7gWQ0G0ruuD0c5qMqcEZj0uR8UDH0LbIqsCdf/W2SDGeSpmVfEbKLoNGv6o4L2CIyKnKJo+xILy4FcqQaV1hZZjyadVwRS2xMzOAS7bRDdLm5buVBn2+3ASST0cFV3JU5n5w
 X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Oct 2026 13:49:30.8085 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: d5f32726-6780-4501-39ad-08df2479d002
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Oct 2026 13:50:25.0933 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 9e86a633-6656-4ffa-f0d8-08df2479f050
 X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
  Helo=[satlexmb07.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: BY1PEPF000264B3.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthSource: BL6PEPF00022570.namprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB6537
-Received-SPF: permerror client-ip=2a01:111:f403:c112::7;
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CHXPR12MB999245
+Received-SPF: permerror client-ip=2a01:111:f403:c107::3;
  envelope-from=Michael.Roth@amd.com;
- helo=CY3PR05CU001.outbound.protection.outlook.com
+ helo=PH0PR06CU001.outbound.protection.outlook.com
 X-Spam_score_int: -22
 X-Spam_score: -2.3
 X-Spam_bar: --
 X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -130,112 +129,146 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently QEMU supports using guest_memfd internally (separately from
-user-specified memory backends) to handle private memory for
-confidential VMs. While KVM can switch between guest_memfd-backed
-private memory and non-guest_memfd-backed shared memory via
-KVM_SET_MEMORY_ATTRIBUTES, the memory in the guest_memfd inode can only
-ever be private memory.
+When convert-in-place=true, the guest_memfd instance created by
+memory-backend-memfd (when guest-memfd=on option is specified) should
+also be used internally for private memory.
 
-This is distinct from upcoming in-place conversion support, where
-guest_memfd inodes can contain both private/shared memory and can
-convert between the 2 in-place.
+Do this by dup()'ing the guest_memfd FD provided by the backend so the
+separate cleanup paths for shared vs. private FDs can be managed in the
+same way they are currently for convert-in-place=false (where shared
+memory must come from something other than guest_memfd).
 
-To help distinguish between these 2 uses of guest_memfd, add a dedicated
-helper to handle the private-only uses of guest_memfd, and add some
-additional sanity checks with that use-case in mind.
+Introduce a new RAM_GUEST_MEMFD_SHAREABLE flag that can be used to
+limit this dup()'ing to specific backend types like
+memory-backend-memfd.
 
 Signed-off-by: Michael Roth <michael.roth@amd.com>
 ---
- accel/kvm/kvm-all.c    | 15 +++++++++++++++
- accel/stubs/kvm-stub.c |  6 ++++++
- include/system/kvm.h   |  1 +
- system/physmem.c       |  6 +++---
- 4 files changed, 25 insertions(+), 3 deletions(-)
+ backends/hostmem-memfd.c |  1 +
+ include/system/memory.h  |  7 ++++++
+ system/physmem.c         | 50 +++++++++++++++++++++++++++++++++++++---
+ 3 files changed, 55 insertions(+), 3 deletions(-)
 
-diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index 2dfd14c257..f1deb458ec 100644
---- a/accel/kvm/kvm-all.c
-+++ b/accel/kvm/kvm-all.c
-@@ -794,6 +794,11 @@ static int kvm_mem_flags(MemoryRegion *mr)
-     }
-     if (memory_region_has_guest_memfd_private(mr)) {
-         assert(kvm_guest_memfd_supported);
-+        /*
-+         * memory_region_has_guest_memfd_private() is specifically pertaining to
-+         * using guest_memfd to handle private memory use cases.
-+         */
-+        assert(kvm_supported_memory_attributes & KVM_MEMORY_ATTRIBUTE_PRIVATE);
-         flags |= KVM_MEM_GUEST_MEMFD;
-     }
-     return flags;
-@@ -4873,3 +4878,13 @@ int kvm_create_guest_memfd(uint64_t size, uint64_t flags, Error **errp)
+diff --git a/backends/hostmem-memfd.c b/backends/hostmem-memfd.c
+index 666593ff6c..c1ea6eefbd 100644
+--- a/backends/hostmem-memfd.c
++++ b/backends/hostmem-memfd.c
+@@ -90,6 +90,7 @@ have_fd:
+     backend->aligned = true;
+     ram_flags = backend->share ? RAM_SHARED : RAM_PRIVATE;
+     ram_flags |= backend->reserve ? 0 : RAM_NORESERVE;
++    ram_flags |= RAM_GUEST_MEMFD_SHAREABLE;
+     ram_flags |= backend->guest_memfd_private ? RAM_GUEST_MEMFD_PRIVATE : 0;
+     return memory_region_init_ram_from_fd(&backend->mr, OBJECT(backend), name,
+                                           backend->size, ram_flags, fd, 0, errp);
+diff --git a/include/system/memory.h b/include/system/memory.h
+index 027ca81bd2..ef6c767021 100644
+--- a/include/system/memory.h
++++ b/include/system/memory.h
+@@ -274,6 +274,13 @@ typedef struct IOMMUTLBEvent {
+  */
+ #define RAM_PRIVATE (1 << 13)
  
-     return fd;
- }
++/*
++ * RAM is backed by a guest-memfd instance that supports being used as shared
++ * memory (as opposed to RAM_GUEST_MEMFD_PRIVATE which, by itself, entails
++ * the guest-memfd instance can only ever be used for private memory).
++ */
++#define RAM_GUEST_MEMFD_SHAREABLE   (1 << 14)
 +
-+int kvm_create_guest_memfd_private(uint64_t size, Error **errp)
-+{
-+    if (!(kvm_supported_memory_attributes & KVM_MEMORY_ATTRIBUTE_PRIVATE)) {
-+        error_setg(errp, "KVM does not support using guest_memfd for private memory");
+ static inline void iommu_notifier_init(IOMMUNotifier *n, IOMMUNotify fn,
+                                        IOMMUNotifierFlag flags,
+                                        hwaddr start, hwaddr end,
+diff --git a/system/physmem.c b/system/physmem.c
+index 86046d46df..b9b4864a94 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -59,6 +59,7 @@
+ #include "system/hostmem.h"
+ #include "system/hw_accel.h"
+ #include "system/xen-mapcache.h"
++#include "system/confidential-guest-support.h"
+ #include "trace.h"
+ 
+ #ifdef CONFIG_FALLOCATE_PUNCH_HOLE
+@@ -2187,6 +2188,8 @@ static void ram_block_add(RAMBlock *new_block, Error **errp)
+     if (new_block->flags & RAM_GUEST_MEMFD_PRIVATE) {
+         int ret;
+ 
++        assert(current_machine->cgs);
++
+         if (!kvm_enabled()) {
+             error_setg(errp, "cannot set up private guest memory for %s: KVM required",
+                        object_get_typename(OBJECT(current_machine->cgs)));
+@@ -2211,9 +2214,44 @@ static void ram_block_add(RAMBlock *new_block, Error **errp)
+             goto out_free;
+         }
+ 
+-        new_block->guest_memfd_private =
+-            kvm_create_guest_memfd_private(new_block->max_length, errp);
++        /*
++         * If both shared/private memory are handled by guest_memfd, make sure
++         * to re-use the guest_memfd inode that should have already been created
++         * for handling shared memory.
++         */
++        if (machine_require_guest_memfd_convert_in_place(current_machine)) {
++            if (!(new_block->flags & RAM_GUEST_MEMFD_SHAREABLE)) {
++                error_setg(errp, "configured memory backend is not compatible"
++                                 " with in-place conversion");
++                ram_block_coordinated_discard_require(false);
++                qemu_mutex_unlock_ramlist();
++                goto out_free;
++            }
++            assert(new_block->fd >= 0);
++
++            /*
++             * Current logic calculates guest_memfd_offset on the assumption
++             * that offset 0 corresponds to the first GPA that is backed by the
++             * RAM block/backend. For cases where the guest_memfd is only used
++             * for private memory and created internally as-needed this is
++             * always the case, but when re-using a guest_memfd that's also
++             * usable for shared memory (e.g. via memory-backend-guest-memfd)
++             * it's possible that guest_memfd might be mmap()'d starting at some
++             * non-zero offset. For now, this isn't a reachable condition, but
++             * assert this in case this ever changes and the logic needs to be
++             * updated to account for this.
++             */
++            assert(new_block->fd_offset == 0);
++
++            new_block->guest_memfd_private = qemu_dup(new_block->fd);
++        } else {
++            new_block->guest_memfd_private =
++                kvm_create_guest_memfd_private(new_block->max_length, &err);
++        }
++
+         if (new_block->guest_memfd_private < 0) {
++            error_propagate(errp, err);
++            ram_block_coordinated_discard_require(false);
+             qemu_mutex_unlock_ramlist();
+             goto out_free;
+         }
+@@ -2323,7 +2361,7 @@ RAMBlock *qemu_ram_alloc_from_fd(ram_addr_t size, ram_addr_t max_size,
+     assert((ram_flags & ~(RAM_SHARED | RAM_PMEM | RAM_NORESERVE |
+                           RAM_PROTECTED | RAM_NAMED_FILE | RAM_READONLY |
+                           RAM_READONLY_FD | RAM_GUEST_MEMFD_PRIVATE |
+-                          RAM_RESIZEABLE)) == 0);
++                          RAM_RESIZEABLE | RAM_GUEST_MEMFD_SHAREABLE)) == 0);
+     assert(max_size >= size);
+ 
+     if (xen_enabled()) {
+@@ -2835,6 +2873,12 @@ int ram_block_rebind(Error **errp)
+ {
+     RAMBlock *block;
+ 
++    if (machine_require_guest_memfd_convert_in_place(current_machine)) {
++        error_setg(errp,
++                   "rebind support is not yet enabled for in-place conversion");
 +        return -1;
 +    }
 +
-+    return kvm_create_guest_memfd(size, 0, errp);
-+}
-diff --git a/accel/stubs/kvm-stub.c b/accel/stubs/kvm-stub.c
-index acbd0785e0..9fe58efe91 100644
---- a/accel/stubs/kvm-stub.c
-+++ b/accel/stubs/kvm-stub.c
-@@ -145,6 +145,12 @@ int kvm_create_guest_memfd(uint64_t size, uint64_t flags, Error **errp)
-     return -ENOSYS;
- }
+     qemu_mutex_lock_ramlist();
  
-+int kvm_create_guest_memfd_private(uint64_t size, Error **errp)
-+{
-+    error_setg(errp, "KVM is not enabled");
-+    return -ENOSYS;
-+}
-+
- bool kvm_private_memory_attribute_supported(void)
- {
-     return false;
-diff --git a/include/system/kvm.h b/include/system/kvm.h
-index d29624034c..b1e43ddc93 100644
---- a/include/system/kvm.h
-+++ b/include/system/kvm.h
-@@ -548,6 +548,7 @@ void kvm_mark_guest_state_protected(void);
- bool kvm_hwpoisoned_mem(void);
- 
- int kvm_create_guest_memfd(uint64_t size, uint64_t flags, Error **errp);
-+int kvm_create_guest_memfd_private(uint64_t size, Error **errp);
- 
- int kvm_set_memory_attributes_private(hwaddr start, uint64_t size);
- int kvm_set_memory_attributes_shared(hwaddr start, uint64_t size);
-diff --git a/system/physmem.c b/system/physmem.c
-index db3dda563d..86046d46df 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -2212,7 +2212,7 @@ static void ram_block_add(RAMBlock *new_block, Error **errp)
-         }
- 
-         new_block->guest_memfd_private =
--            kvm_create_guest_memfd(new_block->max_length, 0, errp);
-+            kvm_create_guest_memfd_private(new_block->max_length, errp);
-         if (new_block->guest_memfd_private < 0) {
-             qemu_mutex_unlock_ramlist();
-             goto out_free;
-@@ -2842,8 +2842,8 @@ int ram_block_rebind(Error **errp)
-             if (block->guest_memfd_private >= 0) {
-                 close(block->guest_memfd_private);
-             }
--            block->guest_memfd_private = kvm_create_guest_memfd(
--                block->max_length, 0, errp);
-+            block->guest_memfd_private =
-+                kvm_create_guest_memfd_private(block->max_length, errp);
-             if (block->guest_memfd_private < 0) {
-                 qemu_mutex_unlock_ramlist();
-                 return -1;
+     RAMBLOCK_FOREACH(block) {
 -- 
 2.43.0
 
