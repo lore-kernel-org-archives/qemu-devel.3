@@ -4,92 +4,145 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45E50CA5FF1
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 08:57:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05086CA5FF1
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 08:57:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xENK5-00017G-Uw; Wed, 07 Oct 2026 04:48:27 -0400
+	id 1xENKe-0002fA-12; Wed, 07 Oct 2026 04:49:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yundi.eric.xu@gmail.com>)
- id 1xEJ4J-0002JK-S3
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 00:16:18 -0400
-Received: from mail-dy1-x1332.google.com ([2607:f8b0:4864:20::1332])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <yundi.eric.xu@gmail.com>)
- id 1xEJ4H-0007tT-Hy
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 00:15:51 -0400
-Received: by mail-dy1-x1332.google.com with SMTP id
- 5a478bee46e88-3515f9a5d25so613747eec.0
- for <qemu-devel@nongnu.org>; Tue, 06 Oct 2026 21:15:40 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xEK73-0003tG-0j
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 01:23:02 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xEK6v-0006cC-3H
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 01:22:40 -0400
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6974UH3T3388628
+ for <qemu-devel@nongnu.org>; Wed, 7 Oct 2026 05:22:34 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ zza/51v/r25niNDy1jv8Q7So154orbVWO1RmBXG8VxI=; b=NGdQ78wgpoqLjL5Y
+ qerdsX+EIiohg3PXFDtgP4ZkDdMBFlfbQNhL6WAcqvGavyOf4S5ADOEM+dZda6Jc
+ 6afmVmTlF+OaqfpKnOqQscO+L+lV8dMLnm1Mhrjbz37GZV1WbQVCI9CCkZlORV4z
+ x3G7S9hedEj2ieZs5wnJSDFAmlKJWLMs7QRRph1WEKKziKpnZa3Y7DSDpoR8gZSR
+ qU6YiynddDJgweatu41I2csUFa/0eHW5cGSfYOAv8QmM1ckbau33PZQSu4MTX5Wg
+ fd+O+rqB5y38WM/Vm5UgwDDf4dUwEfv8S8q+bnjoR4gy0DQjctOsXQEfBJhoVa9J
+ sgNKgQ==
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h4xwwv1c2-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Wed, 07 Oct 2026 05:22:34 +0000 (GMT)
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-93cbacbb996so590053785a.2
+ for <qemu-devel@nongnu.org>; Tue, 06 Oct 2026 22:22:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1791346540; x=1791951340; darn=nongnu.org;
- h=references:to:cc:in-reply-to:date:subject:mime-version:content-type
- :message-id:from:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=a7shD+Of3pCMm3lHwJzX3zAbeCuSad88ZRx98eK575I=;
- b=UvJsOHDoHjkrngoicmmUMy9hIq9ZatOAhuMBq9A5NlrDr8XMDZPXp3Q7GB99wqtq5R
- pvTvQiHdMJRNpUBVsswmB2ItvdLJhGKGltQJ6+v1o1iTFgzTQknWbwARIH5o3Mka3dhD
- 2x4AHh9+Dj70oSQbd1WTwep3v4lM1lksiApDrK8btnoHUpB/P9u85ViwO0d+y6ZnsNDn
- xD1hReA0j3lXuFnRaHDeBU0fVjtffYYJPsNLN06ohLzvMUXGssJN3A/5mekEBbGc/Mtg
- XzdoIlIwcrjVul9alOpoxAaPRu+Q+PSG4OnH8SrQIsHCLV+TNzODzLmigGa8SVqe/Nee
- LxeQ==
+ d=oss.qualcomm.com; s=google; t=1791350554; x=1791955354; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=zza/51v/r25niNDy1jv8Q7So154orbVWO1RmBXG8VxI=;
+ b=X8b7BWzLrhmEDffwU29y4UIBD5mHATXJYiJccyzUEMm6VNIQrdOLwjmm5wCcweHzql
+ VbbqqEOzmv9C+gtTFI5whYGB2y6vNu3IqbWm6QQflrpXLPEt2hyPRHVGOhb8Iwkucxvk
+ ZymZSvZR6bKkF9jgmNUIieKkz6Q6loZ7CiwSlIohEA5wk8+oOndY6FDw56lDBSL37hg/
+ tg/TdNeYJRcFNzuh+XMXWjNth/5nfWCeThpFamtzsi2+miKrn4a+vwhupKSZ5cxuDiHm
+ vqA1FMuzLkLEcnZfWbNG3fV8W8YO9umNmb5034nN/uyvj98Tv7H1oMq2+o/QsJiTFHEe
+ +tHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791346540; x=1791951340;
- h=references:to:cc:in-reply-to:date:subject:mime-version:content-type
- :message-id:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20260707; t=1791350554; x=1791955354;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=a7shD+Of3pCMm3lHwJzX3zAbeCuSad88ZRx98eK575I=;
- b=J8mIEi/Xx2mbsaIYvMcOi3dY8mms+su7ciGqGUcBSl7mF49gV39N5x2o0vk0p1fv+8
- lFt8Kb4D7ipwh44s3Q7K4RhWbcmLk9TJ4J/fjaRjpwztfOfTG+uPbPdnVQDfGI4WAIa4
- 2PvRUVSYFteWOA4mVhkbjEX9fjHY5CKIlJ+VIKXYZSvD3LbT5aEyLv6xAJ7NZknTBhWq
- xlGPZ6WbLMx9f4DXFprq+Qba9W20R+0MOzdrEy/1YdEFnvLpRaF9uEYYC5VlK3CwYxS1
- K43191yfAAnsxxjNmqTSOrtz3lQzO0N7dA/0KTOklqRR0wB64jxJKYINlhhq+AZqSzGc
- hq/Q==
-X-Gm-Message-State: AFq9FYLwPqH5G4Bhl3sQpU/EsM7u8EW61P6IUV6+WSCGm+j9pPXvWPyL
- c5UzQf7anV5/eKxMV/0eARNcLQ9Ov0RrAFXWv+h3noOaA08kx+0iivnjz9nKi/tq
-X-Gm-Gg: AYBFou3eWIaRVMUi2QqgWDxNZdNai+vlzsp1Ev3UT/4TWgx/U8W0QpS+lmrX3TcoYQg
- UxUFY05giKUfO/IaXXpOo77HQ3593iWHl20lPO5iSN/DXyVIpz72HKpkK7S5D2GOOTuNapodVnI
- LLxRJzGacN4UArtXYvnxjvyBI2uZLHmCjyfDJ287zyz5xwQPUgI5yIm/g6FKNYsDiLF5jfah7FN
- OspetfgJ7KU8Ewdd65IqA7w/AFWJPLNOq0zXmWLbsRl8QAQasz2UUujYS+i/f4zESZCvRHK10XT
- X8VlZHn8LA+cF81TXU5I/P6vqvl8Cbx2rYsRcvnju0ramL8kXojCeQBYtBDkk+7UrUsT7eW15E5
- WpwqSeTcrNhiAI1iR8A5Rf8tGygCHImmTabiHZ//VcEjBSlxJTStTIUnxsEWigxxEoJ+/Spfw5W
- OMRq7Ab0KQDqvM0A6y7eqLNLFb3yfAlhKxhf9dQebDUNCrrxXwpfO/jKOV6GsC5YJ0rSUewdcoc
- /hpVkmja9tJCxFKlWu1fmJgyTdEptPEOnLuGot6fU4Dh6RMd2U3iL19yiugXW8AVEzB2MMu31VT
- BbWdteWXgPH4h79JlYk3
-X-Received: by 2002:ad4:5c46:0:b0:919:5c8f:8fc0 with SMTP id
- 6a1803df08f44-919978297b2mr3026456d6.37.1791320581770; 
- Tue, 06 Oct 2026 14:03:01 -0700 (PDT)
-Received: from smtpclient.apple
- (host-183-232.ilcmi2.champaign.il.us.clients.pavlovmedia.net.
- [66.253.183.232]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-91996bad504sm3355766d6.1.2026.10.06.14.02.59
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Tue, 06 Oct 2026 14:03:01 -0700 (PDT)
-From: Yundi Xu <yundi.eric.xu@gmail.com>
-Message-Id: <FA33E2E2-28EB-4AA9-A069-9B70D292929B@gmail.com>
-Content-Type: multipart/alternative;
- boundary="Apple-Mail=_569CBFC4-46BC-4270-A161-A6500595CE56"
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.700.51.1.1\))
-Subject: Re: [PATCH] hw/display/apple: Fix obsolete PGDevice function
-Date: Tue, 6 Oct 2026 16:02:48 -0500
-In-Reply-To: <CAFEAcA_pVpXW+8g1tTY0dyJdXXzffO7sn0gqMZMBsc+SgbPu4Q@mail.gmail.com>
-Cc: qemu-devel@nongnu.org, Phil Dennis-Jordan <phil@philjordan.eu>,
- qemu-trivial@nongnu.org, Mohamed Mediouni <mohamed@unpredictable.fr>
-To: Peter Maydell <peter.maydell@linaro.org>
-References: <1e5b1f1f-1d7f-43cf-8883-0e0ab2ec88ce@gmail.com>
- <CAFEAcA_pVpXW+8g1tTY0dyJdXXzffO7sn0gqMZMBsc+SgbPu4Q@mail.gmail.com>
-X-Mailer: Apple Mail (2.3864.700.51.1.1)
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1332;
- envelope-from=yundi.eric.xu@gmail.com; helo=mail-dy1-x1332.google.com
-X-Spam_score_int: 5
-X-Spam_score: 0.5
-X-Spam_bar: /
-X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
- FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- URIBL_SBL=1.623 autolearn=no autolearn_force=no
+ bh=zza/51v/r25niNDy1jv8Q7So154orbVWO1RmBXG8VxI=;
+ b=ai673m8DvJ8s1S7vEGcmVmXjiufX0ZUGshI5GLDFXdpX6kMmIqSMEq0lxNx2QDUJqT
+ i7j6aUbpdxeqtKlGOte1fyKwaNcS6vid+NIHBxfv1IYpaY1JqBU3FlSrIMwrKbXGcsId
+ RNTlh/KXf0MUEOjGYWpOuas4K6+Wrg9kBqBNVZAGfxwcpfffVtL1dlU2JvxaByj+E6/4
+ 4LvlZpuY5M3dR/Xo6MPJCf7jREW+WmR6myg6codeT/m1WTo7LeJp1e/zIRlJBHARDopb
+ sNv/Ka8SnR3fEUxqA92mFvqKtOTYpUUewAbv2VzYrtBI6eGp2jpr+Ryc3hM3XktYhFqm
+ IXlQ==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBx15oYe5s9krEUFN6DJrwu3kj4wJyAzVgz47aDx7OBf7W4oKtOe5A1tErmEEq7zi5y+4WfgRUDd3f4w@nongnu.org
+X-Gm-Message-State: AFuF++ldoB1aioQKpqOwBHJYrPfPuG4cPFo8FLtOQyseGJX8EMZ70BDl
+ XHaR6ip4TaGk5YkW9AODBwLjNHbWZayFzAHw9mE7GbM8s/2H7nN3cWCXAQQ9JxgpdYMlFY0ihHi
+ 2+89z/tL6fR4vf9A5aQFBs9CW0k/sMyKNDvPeGqgZMiL/u2ai7IpIJcEg0tvf6/hQxEzD
+X-Gm-Gg: AYBFou2evSpdcBRm9pz4pcQqUSJ/JaS9fstO9rFsC013Km76bl8aEd9Viaa26jp7JOd
+ E9oGU1rrRyCSH0sM3+7FnN3Vtuqp3qYMSOBGUEZq+qUuxFcY8aRgd2uIjr7lxrPgoVX48UcsRLI
+ 0zycvKHvWbSpT3lkDIJX+m0sg75ycO4aS/tU8c3zOwpR+uP5a2p4cjOpPLg7goUEbLOkDzYATwW
+ lmgYtz06hvmzNucUY69wUYJ19/sKoBBkPYH36uwbxFoLyLuWfHjuM9N2aftTXxFY8ebpfjrynhu
+ vF7a0n/G95Yub1i4S+zd/CQv5Uo/EAHzVs0xddkVTwYIGiLMO3j6L69JlsIUXzvK8gLq6IECRcg
+ BuETgUlSRUQfkcRixi/UQFnMV7uQvdAoRBQ==
+X-Received: by 2002:a05:620a:3710:b0:93e:980a:2fff with SMTP id
+ af79cd13be357-93e9b85670emr234518085a.83.1791350553517; 
+ Tue, 06 Oct 2026 22:22:33 -0700 (PDT)
+X-Received: by 2002:a05:620a:3710:b0:93e:980a:2fff with SMTP id
+ af79cd13be357-93e9b85670emr234357585a.83.1791350516100; 
+ Tue, 06 Oct 2026 22:21:56 -0700 (PDT)
+Received: from [192.168.69.210] (pmd666.hd.free.fr. [88.187.86.199])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4a181aeaea2sm7939175e9.5.2026.10.06.22.21.55
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 06 Oct 2026 22:21:55 -0700 (PDT)
+Message-ID: <1540f830-c33f-4776-a94e-6ace7da14cf6@oss.qualcomm.com>
+Date: Wed, 7 Oct 2026 07:21:54 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] meson.build: export TARGET_ARCH_VARIANT in target
+ config
+Content-Language: en-US
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>
+References: <20261006182558.151956-1-pierrick.bouvier@oss.qualcomm.com>
+ <20261006182558.151956-2-pierrick.bouvier@oss.qualcomm.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <20261006182558.151956-2-pierrick.bouvier@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA3MDAyMSBTYWx0ZWRfX6ZgqW24k1Uw/
+ DTFxI1IReTqZYlNQ6jHhZl14kirdLWkG1eFFsS7lUD8wY2CrXRRobk8siG7b95jwDSwRYllOiwU
+ 92/bw2+MIgwCVSIv78pzk+ljMdnAcTVR5pQ9X7Uhil8bWfuYkfgbIKQXjAwSBLs825p2TqcRJND
+ H4h1Z9dHXBnaVu2mgmvYNYIMsqklQbQeGw57ILh21213MVUUqsf+gnBVMlDDMfOjfmVY0/4YZ1K
+ aAGl9PuKvoPbFr4A4J+NefXTRWgPIqJ/yKR6r/3ShYE4fbaJinqmuHxSubbB9D4uGqlXbMEOo/0
+ BzW49Ixy9XqQklR+1BaPc4L7NQOhyEAN1f/MDRp0uTM7WLJE9e6SxtXOsgW0Lt2+v9qkyf9C4GP
+ EqQfEfdOZQ5av69NO+5YeRmHV81rNptLDa/tl6KKr7zdVcZGuKHeLM4Ft2Q7EkUWURsmGgApL90
+ upIN1jBTCQYT850AUVw==
+X-Proofpoint-ORIG-GUID: YehDXKG9rLw1FAzbJFoe0J8BlxaBF6nT
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA3MDAyMSBTYWx0ZWRfXyTdo2eWrZnwf
+ 9bSeS+r5qZytg62mykJKieIaW+XenNzOzg4BDfQIQOlIXzZQL8w8cfkTfD3tWSc3DZOKkd/Rqtl
+ Ecgc/UkNQa1KmR5pE8ArE1rPK6xvCTw=
+X-Proofpoint-GUID: YehDXKG9rLw1FAzbJFoe0J8BlxaBF6nT
+X-Authority-Analysis: v=2.4 cv=SJXXx+vH c=1 sm=1 tr=0 ts=6ac5d71a cx=c_pps
+ a=qKBjSQ1v91RyAK45QCPf5w==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
+ a=EUspDBNiAAAA:8 a=1tSEMpTH9XP_W59IOagA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=NFOGd7dJGGMPyQGDc5-O:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-10-07_02,2026-10-06_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 priorityscore=1501 impostorscore=0 bulkscore=0
+ malwarescore=0 spamscore=0 phishscore=0 adultscore=0 clxscore=1015
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
+ definitions=main-2610070021
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,73 +158,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 6/10/26 20:25, Pierrick Bouvier wrote:
+> For now, TARGET_ARCH only contains 32 vs 64 bit arch. The variants,
+> based on endianness, are accessible through TARGET_NAME. However,
+> TARGET_NAME is a string, and thus can't be concatenated to generate code
+> and retrieve matching SYS_EMU_TARGET enum entry.
+> Thus, export this information in TARGET_ARCH_VARIANT as an unquoted
+> identifier.
+> 
+> There is one more subtlety, user binaries have extra targets that are
+> not present in SYS_EMU_TARGET, like armeb.
+> Thus, for user binaries, simply export TARGET_ARCH.
+> 
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+> ---
+>   meson.build | 11 +++++++++--
+>   1 file changed, 9 insertions(+), 2 deletions(-)
 
---Apple-Mail=_569CBFC4-46BC-4270-A161-A6500595CE56
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=utf-8
-
-Thanks, I hadn't spotted that series. Please disregard this patch.
-
-Yundi Xu
-
-> On Oct 6, 2026, at 4:06=E2=80=AFAM, Peter Maydell =
-<peter.maydell@linaro.org> wrote:
->=20
-> On Mon, 5 Oct 2026 at 22:52, Yundi Xu <yundi.eric.xu@gmail.com> wrote:
->>=20
->> PGNewDeviceWithDescriptor is obsolete. Replace with
->> PGCreateDeviceWIthDescriptor.
->>=20
->> Signed-off-by: Yundi Xu<yundi.eric.xu@gmail.com>
->> ---
->>  hw/display/apple-gfx.m | 17 +++++++++++++++++
->>  1 file changed, 17 insertions(+)
->=20
-> There's a somewhat more comprehensive set of changes to this
-> device that include something like this one already on the list:
->=20
-> =
-https://patchew.org/QEMU/20260916100021.73825-1-mohamed@unpredictable.fr/2=
-0260916100021.73825-6-mohamed@unpredictable.fr/
->=20
-> thanks
-> -- PMM
-
-
---Apple-Mail=_569CBFC4-46BC-4270-A161-A6500595CE56
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/html;
-	charset=utf-8
-
-<html aria-label=3D"message body"><head><meta http-equiv=3D"content-type" =
-content=3D"text/html; charset=3Dutf-8"></head><body =
-style=3D"overflow-wrap: break-word; -webkit-nbsp-mode: space; =
-line-break: after-white-space;"><code style=3D"white-space: pre-wrap; =
-color: rgb(20, 24, 31); background-image: none; background-position: 0% =
-0%; background-size: auto; background-repeat: repeat; =
-background-attachment: scroll; background-origin: padding-box; =
-background-clip: border-box; font-family: var(--font-mono);">Thanks, I =
-hadn't spotted that series. Please disregard this =
-patch.</code><div><font color=3D"#14181f"><span style=3D"caret-color: =
-rgb(20, 24, 31); white-space-collapse: =
-preserve;"><br></span></font></div><div><span style=3D"caret-color: =
-rgb(20, 24, 31); white-space-collapse: preserve; color: rgb(20, 24, =
-31);">Yundi Xu</span></div><div><div><br><blockquote type=3D"cite"><div>On=
- Oct 6, 2026, at 4:06=E2=80=AFAM, Peter Maydell =
-&lt;peter.maydell@linaro.org&gt; wrote:</div><br =
-class=3D"Apple-interchange-newline"><div><div>On Mon, 5 Oct 2026 at =
-22:52, Yundi Xu &lt;yundi.eric.xu@gmail.com&gt; wrote:<br><blockquote =
-type=3D"cite"><br>PGNewDeviceWithDescriptor is obsolete. Replace =
-with<br>PGCreateDeviceWIthDescriptor.<br><br>Signed-off-by: Yundi =
-Xu&lt;yundi.eric.xu@gmail.com&gt;<br>---<br> =
-&nbsp;hw/display/apple-gfx.m | 17 +++++++++++++++++<br> &nbsp;1 file =
-changed, 17 insertions(+)<br></blockquote><br>There's a somewhat more =
-comprehensive set of changes to this<br>device that include something =
-like this one already on the =
-list:<br><br>https://patchew.org/QEMU/20260916100021.73825-1-mohamed@unpre=
-dictable.fr/20260916100021.73825-6-mohamed@unpredictable.fr/<br><br>thanks=
-<br>-- PMM<br></div></div></blockquote></div><br></div></body></html>=
-
---Apple-Mail=_569CBFC4-46BC-4270-A161-A6500595CE56--
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 
