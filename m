@@ -4,113 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFE1ACA5FFC
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 14:36:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1D5BCA6007
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 14:38:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xESkK-0005mD-JH; Wed, 07 Oct 2026 10:35:52 -0400
+	id 1xESnB-0007ms-6t; Wed, 07 Oct 2026 10:38:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xESis-00057y-0L
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 10:34:27 -0400
-Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xESiq-0001Dh-7R
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 10:34:21 -0400
-Received: by mail-ed1-x52e.google.com with SMTP id
- 4fb4d7f45d1cf-6afe8d3980aso2112390a12.1
- for <qemu-devel@nongnu.org>; Wed, 07 Oct 2026 07:34:19 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1791383659; cv=none;
- d=google.com; s=arc-20260327;
- b=ZcGGktnwS1VSffUchk9SfX5NnC8VjXiKIKeQscRr5jcXk4J8gLQHrfPY+u0/HSHGxG
- D8ZNKcaW8w45H3rEDxDv55pluF2TkcuHq1x4iCB90PGsJL4M4ITDV1+axSb3ZTl23jh+
- gY7yApXRgb0hbLLiQ5kcj84elL6BzUDlbk2/YqHnXo5KKqQ+QSw8UWnZyAVuzPDIc8HB
- feq86kjK5NGjdZSSlSkKFWQUYg91+REU/CM6/8oPp+nR+1EgiwWTbLOgtMWJXtEWlRwO
- i7wBxNfADjlV/wKHy3XhKVo+cFAvjKwXo6wUYTwbHsi1iyEo/ak4THjjbVNTMRUWmVB/
- bzpg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :reply-to:in-reply-to:references:mime-version:dkim-signature;
- bh=7aWVtqBMa4m94OxObYDVRhoQtf5Of/nXKWd9uNK1Uzo=;
- fh=IXNTbRrH3GHXi9Cy438NOZXx7ypc1+hshH5k4e2YT3I=;
- b=iqdc9lJPKJbJGyG6zdnaxsXgBIzxw/FcIfE1t86mKPir1Gq6nozUuUS7O9CTHLrDXh
- aptdvx0ZJlzekjcDLoDtz36WJv0EC3QNnTMjUDWiSWQsj6CroxhmDGqkmToeg9Q9r0VX
- kUKDSePkhkxqdGTSpXiAG361jq1luXDxGB//kk8xWRcIl1Ubn/vwlRjtyZEDtEhBVm5p
- GytLhTC+2h8ftRRCbNKfMgUf3j2fxHazsImkJJqSVRoMS/1TTqKZ0mbjtPu29M7bZYyY
- nEUiXruGd0rI7syCRxvTbFxW46drZrnWf27y+asIOKCKuBkrRQwTX5bfh1GQmyqhpUXk
- +0jw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <tcalifano@redhat.com>)
+ id 1xESmB-0007Bt-5f
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 10:37:49 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <tcalifano@redhat.com>)
+ id 1xESm8-0001ri-1q
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 10:37:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1791383862;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=CS1tmpYBN5Sup1NVnBDTkyXL4JXmKmC9VGKVMnvnKN8=;
+ b=fPbNliWUiZfh26vt7ynoNcFfuDyxBx6bjnjOU96WncWrWv0Up0r7y373qvrzaXM8XrTmox
+ aLSuaYtMquci+UcNefpJ6GFN6pZPhzIvuy+JyXrWYt/P9BoukCWZBuM7sWufSQGRKaFxR3
+ XSZTS0Rig5gxBHfGaJuebiM6V1dkMAc=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-554-OFmNYfYGO5adWrhAnqQw-Q-1; Wed, 07 Oct 2026 10:37:41 -0400
+X-MC-Unique: OFmNYfYGO5adWrhAnqQw-Q-1
+X-Mimecast-MFC-AGG-ID: OFmNYfYGO5adWrhAnqQw-Q_1791383860
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4994d67d0e3so30947475e9.2
+ for <qemu-devel@nongnu.org>; Wed, 07 Oct 2026 07:37:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1791383659; x=1791988459; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:reply-to:in-reply-to:references:mime-version:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=7aWVtqBMa4m94OxObYDVRhoQtf5Of/nXKWd9uNK1Uzo=;
- b=XO1s65mOJrK+7yheqCquHpEO6rDypmIjqlR1/BnAP9GsMzYMa8XVfXBNZhqxsN/tHi
- Uw20sXog7qbyKlAsNPrmZom0IPi4wU/tZrTKNlCgPBfu/u4mSH/ur2c1eNm5WQYeldlR
- hUScNY/eS3vzTcPisWb7j+0Tr2/YNoRnkyFldt/8c7nnJEdRP8HbP0UMd/lryjljMfwW
- 6tPRZN4l2hoAhERNfpPbWR4zIeMEHFtXyVVqTpVy9QkZmWT3tyOKaUfwJHwNXJxK3eAu
- 7TFBScdTRj4qkWkyxKqW/Um6oiACAGFLQX/OmfqZI78lzbsRrsVWyKvW1FfpY16M028s
- mlHw==
+ d=redhat.com; s=google; t=1791383860; x=1791988660; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=CS1tmpYBN5Sup1NVnBDTkyXL4JXmKmC9VGKVMnvnKN8=;
+ b=TlpZ1WgjbSZxuqel07EjVSBqFbbcrjzto/klJB062XN/bQ5U6fYO8DibGv+r6Fi0vp
+ pUIzJtK2Gmph08nrtY4e3SlspjGARWq/07ZhJ6UdJuMyydvD6eREatBL/sRZ2Vnl8WI5
+ adZHSrilItu3KD31lmSqcJ9svAN5outY3veTc4IUzqYqo30/wpnamfiYkdAF6t0GuwgY
+ +nZBmKZwiUkE/oNhbt+7VoxnjWt6uO6KNqp9CMQL83ml12+Tje2oZ2JXFAqhjVbp8JUM
+ C3UdEFuN2BK2pk+08CePHdrV4deG7I6sCK7TLWIy3ZO32cabrvGi11ThBCogRi1nZ59A
+ H2cg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791383659; x=1791988459;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:reply-to:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=7aWVtqBMa4m94OxObYDVRhoQtf5Of/nXKWd9uNK1Uzo=;
- b=ViBLlS0XByxQBkHPYBXUYdmS1PPIPuJMsbfh37D/kSeZLnWsNOuYFkM+EbUzfTfjJk
- nZWJSS6W/fIuIl64lpqK8T7fVz6cOa0YkqxpZCrPpGxFekzq1GlldvZJobE8zT3XOcI7
- C0eylzwvdvdheXPCPRxy8Gvk3XWB31kCE3+Ki1j+Pe/wX//DAVYyw3RokKxksafmcF59
- mAkMBE5EnGVFxdUehxo/92P+VU/Cm7cRkwa4XhBwJxioXiLuznbjL9LJurdLRc9q8kbz
- u+GvmdBj9NMe3ounVNglElWARbr4G5Kkm5K/FG9pU/w5sbVJHLXjIIDh6OxbG0PjQzih
- eVhQ==
-X-Forwarded-Encrypted: i=1;
- AKwUvBwlUBmasNbP/pJxtUGNYwxMpv6/K2I8DGGiEVpctCCviHUskh/+fQ9NrQyJYy08xTqW1lVNhHFySx6b@nongnu.org
-X-Gm-Message-State: AFq9FYIi/oIGeBdKqP8eoV5mqhhnwQIzpAVhOXN2Jl/ZP3OqXYgNLhf/
- TMi552UnkMmOv0zO/nyvKiLTJi7dDgPCKKHHIX2c8+sgco1IS8iVNyEvhQNdwAzVsQJkIfL2fkW
- 25mFanAWXiPqMC6HYqRfYuppwwA7q2WI=
-X-Gm-Gg: AYBFou0FrcLN3CgDuQ5nUZYzcQzot+tmo7nytjjMuVGgdRad5ZPS0+kDNY6lhGRJaEG
- xzfo7O+uAG7wnhYFBY5NOtWlhc5X5OvaTqhe/1vz45ewm29AIiOog/VuKjgfbsaSA5//onlGzmE
- jpCLQhGz9dC6yWUIpiPe5EpzFGgKGiNw6CaBCWXNMOCZhrJY0KvZhK7Zw8gtFNG8Mpk7ZG6i97+
- FnLIgq2GryhbH+T8J0jRaWUr0rY6AxGpZM9FNYHZEK3hrc2ZuXtWljPB2vqkXNctC3wtVRozBnM
- mNCxd6CZ45lXi32/LbgOCkAwmKmOaqGxnxrCZMQ+qJj/cHFPpFiS9tM=
-X-Received: by 2002:a05:6402:4552:b0:6ac:6a3f:c626 with SMTP id
- 4fb4d7f45d1cf-6aff38f1bfdmr1846042a12.8.1791383658583; Wed, 07 Oct 2026
- 07:34:18 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1791383860; x=1791988660;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=CS1tmpYBN5Sup1NVnBDTkyXL4JXmKmC9VGKVMnvnKN8=;
+ b=UGmzc9Acy7tjBQrG5fjeekdtk4BJXwc4Y7Z1QewzWdUHXOgNVhQ0xzYHoFmii9nmBk
+ oavsRge+LFppZ5TExxIEex+P8pYJULslMnBgBUiUdqRi76KIFMgsr1cKbmkgOicB7bpP
+ 4+ZH7ecPiudIFBPdGH+1K/RR4hI0aSeqrq3awXFczRczRFbDMuwkyH8JGs7VFMih9ERk
+ EcITPsDU100CZEZ9X5FjG/GrvraEokx9LcP1tqiSi63CveNLsPFasOCAb8nBVDw2cQBW
+ NECzJQfgcXh+c78uspXERNyB0ezIKFEcHe4mp95VPXIDEtl+ZNguLkVpeAOUJkimwvwK
+ C/qA==
+X-Gm-Message-State: AFuF++nhuimZh92yJKfvVr29ayewUUY8BSVXDGOcs1pyrGlFZ/QbMGLb
+ 6emb5NdfDugpNa8LPSIkvCMflY2mPs/Ult70yWDwmlriQeWdj54Rpx1LMGYCdXsSP/qR+DAB5Fa
+ h+c0L8NMpmrjlW4zY3wf7vFyW481kVHEzOtEPNT6j3EOR1VUpM3NBO53Tsc5tS2ypdn3iBOu1E+
+ pew2K4PcimH9KgrcZeYgwNhFbHr2/r+YjRdFCHLmZ0cA==
+X-Gm-Gg: AYBFou3e3yXLR95Fr16tavku8Rzz3qedwoVthNFZoEqM3JdseVmlsHK1UAs1hgjAN6Z
+ QyGPtGwGcbH6kbghnOvCRFMkGLB33+E3y5O2FG/fDXaqIdZf3+awWhn3Kv3xfDfmFZ2p9yWZq4Y
+ 2BLqiW8tnlyBGjM+k66vTeSp5/AjALkcjvgZy9CPZyfE/ZMpOCN5prnGYoW/qoKGSQBXJr2fw3M
+ DHRI6WNQOuSUCbdx9c1RYYL7NFGjmufHCpinwuOiDP1tvonlUFklvUYpb6d6q/6Xr7R7vS195x8
+ UaG9QfZBp9bysTF3O+nwxNn5XK1XsNL6E5R08yhP30TWDnc92mux2TlteTrK1+2mMexs+qH2
+X-Received: by 2002:a05:600c:1551:b0:4a0:263c:704f with SMTP id
+ 5b1f17b1804b1-4a1804436c7mr38951995e9.16.1791383860042; 
+ Wed, 07 Oct 2026 07:37:40 -0700 (PDT)
+X-Received: by 2002:a05:600c:1551:b0:4a0:263c:704f with SMTP id
+ 5b1f17b1804b1-4a1804436c7mr38951495e9.16.1791383859579; 
+ Wed, 07 Oct 2026 07:37:39 -0700 (PDT)
+Received: from tcalifan-p1g8.csb ([213.175.37.14])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4a17f557bcbsm111043735e9.9.2026.10.07.07.37.38
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 07 Oct 2026 07:37:39 -0700 (PDT)
+From: Tommaso Califano <tcalifano@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Luigi Leonardi <leonardi@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Tommaso Califano <tcalifano@redhat.com>
+Subject: [PATCH v3] hw/usb/dev-mtp: Fix heap OOB read in
+ usb_mtp_write_metadata()
+Date: Wed,  7 Oct 2026 16:37:38 +0200
+Message-ID: <20261007143738.58509-1-tcalifano@redhat.com>
+X-Mailer: git-send-email 2.55.0
 MIME-Version: 1.0
-References: <20261007-rv-dedup-v2-0-8a2f0f296a7f@rev.ng>
- <20261007-rv-dedup-v2-14-8a2f0f296a7f@rev.ng>
- <17cb7c7c-5f22-4a03-8855-4d1ec91d347a@oss.qualcomm.com>
- <CAE2XoE9eXXKQGZZ0kvmex88+tjch1-+H_-MgB6JEu+4bdPZq8g@mail.gmail.com>
- <9bf8945c-6472-462e-a275-f0b74912d3ed@oss.qualcomm.com>
- <CAE2XoE9QzGda8J9QCQysRL8OoxBrR86Ft426Rf4TXJxnPm+Vsg@mail.gmail.com>
- <2874719a-ca6d-473f-a29f-e40f56016fc9@oss.qualcomm.com>
-In-Reply-To: <2874719a-ca6d-473f-a29f-e40f56016fc9@oss.qualcomm.com>
-From: Yonggang Luo <luoyonggang@gmail.com>
-Date: Wed, 7 Oct 2026 22:34:05 +0800
-X-Gm-Features: AclHuK_U3dIA-a4SjrKVS6p_GZp8NYJKGCIAy1KT89uzv6DGzNhQs71VPPPW9Ss
-Message-ID: <CAE2XoE_tc-UtfaRvczUsz5M11PP8mhDGMPUEYjN6Eb1v0VWB=Q@mail.gmail.com>
-Subject: Re: [PATCH v2 14/18] target/riscv: Compile pmp.c once
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
-Cc: Anton Johansson <anjo@rev.ng>, qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
- daniel.barboza@oss.qualcomm.com, pierrick.bouvier@oss.qualcomm.com, 
- palmer@dabbelt.com, alistair.francis@wdc.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
- envelope-from=luoyonggang@gmail.com; helo=mail-ed1-x52e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=tcalifano@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,131 +115,82 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: luoyonggang@gmail.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Oct 7, 2026 at 9:54=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
-<philmd@oss.qualcomm.com> wrote:
->
-> Phil.
->
-> Regards,
->
-> I missed it, but again Anton's comment were in this patch
-> description I wouldn't had barked.
->
-> How does this will work in heterogeneous binary with one
-> RV32 and another RV64 cores running together?
->
-> [we tend to avoid top-posting on technical lists]
->
+usb_mtp_write_metadata() computed the number of filename characters as
 
-Hi Phil
-From my point of view, it should be handled in the function
-target_long_bits instead for the future heterogeneous simulation.
-So in future target_long_bits can even return 128bit instead.
-We can ensure a single cpu can run on a single thread. That is, a
-single thread can not running
-two different CPU architectures, so we can use thread-local-storage
-for target_long_bits() to retrieve
-what the current thread's cpu bits are. Otherwise, heterogeneous
-simulation would be rather hard(my point of view).
+  filename_chars = dlen - offsetof(ObjectInfo, filename)
 
-> On 7/10/26 15:39, Yonggang Luo wrote:
-> > It's here https://lore.kernel.org/qemu-devel/ar9WZip2Q2G0qvQI@hive.loca=
-ldomain/
-> >
-> > From: Anton Johansson via qemu development <qemu-devel@nongnu.org>
-> >
-> >
-> > I wouldn't be surprised if that's the case, although I'm personally a
-> > bit scared of riscv_cpu_mxl_bits() since it returns 128 for MXL_128, so
-> > if it's not used carefully or on clear MXL_[32|64] paths you could easi=
-ly
-> > get UB.
-> >
-> >
-> > On Wed, Oct 7, 2026 at 9:26=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
-> > <philmd@oss.qualcomm.com> wrote:
-> >>
-> >> On 7/10/26 13:51, Yonggang Luo wrote:
-> >>> On Wed, Oct 7, 2026 at 6:25=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
-> >>> <philmd@oss.qualcomm.com> wrote:
-> >>>>
-> >>>> On 7/10/26 10:43, Anton Johansson wrote:
-> >>>>> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-> >>>>> Signed-off-by: Anton Johansson <anjo@rev.ng>
-> >>>>> ---
-> >>>>>     target/riscv/tcg/pmp.c       | 5 +++--
-> >>>>>     target/riscv/tcg/meson.build | 2 +-
-> >>>>>     2 files changed, 4 insertions(+), 3 deletions(-)
-> >>>>>
-> >>>>> diff --git a/target/riscv/tcg/pmp.c b/target/riscv/tcg/pmp.c
-> >>>>> index 99345d63dc..2d7194de10 100644
-> >>>>> --- a/target/riscv/tcg/pmp.c
-> >>>>> +++ b/target/riscv/tcg/pmp.c
-> >>>>> @@ -638,19 +638,20 @@ uint64_t pmpaddr_csr_read(CPURISCVState *env,=
- uint32_t addr_index)
-> >>>>>         if (addr_index < pmp_regions) {
-> >>>>>             val =3D env->pmp_state.pmp[addr_index].addr_reg;
-> >>>>>             int g =3D pmp_get_granularity_g(env);
-> >>>>> +        const unsigned long_bits =3D target_long_bits();
-> >>>>
-> >>>> We need to fetch this information from @env. Maybe riscv_cpu_mxl_bit=
-s()?
-> >>>
-> >>> discussed before, there is possible be 128bits
-> >>
-> >> Please point me to the discussion (directly, saving us a ping / pong),
-> >> as:
-> >>
-> >>     '''
-> >>     This was already discussed on v42:
-> >>
-> >>     https://lore.kernel.org/qemu-devel/some-message-id-v42-20128438/
-> >>     '''
-> >>
-> >> Having the discussion decision resumed in the patch description will
-> >> prevent further reviewers to ask again the same.
-> >>
-> >> What do you mean by "possible be 128bits"? If we want to cap the
-> >> value we can use MIN(64, riscv_cpu_mxl_bits(env)).
-> >>
-> >>>
-> >>>>>             switch (pmp_get_a_field(env->pmp_state.pmp[addr_index].=
-cfg_reg)) {
-> >>>>>             case PMP_AMATCH_OFF:
-> >>>>>                 /* fallthrough */
-> >>>>>             case PMP_AMATCH_TOR:
-> >>>>>                 /* Bit [g-1:0] read all zero */
-> >>>>> -            if (g >=3D 1 && g < TARGET_LONG_BITS) {
-> >>>>> +            if (g >=3D 1 && g < long_bits) {
-> >>>>>                     uint64_t granule =3D 1ULL << g;
-> >>>>>                     val =3D ROUND_DOWN(val, granule);
-> >>>>>                 }
-> >>>>>                 break;
-> >>>>>             case PMP_AMATCH_NAPOT:
-> >>>>>                 /* Bit [g-2:0] read all one */
-> >>>>> -            if (g >=3D 2 && g < TARGET_LONG_BITS) {
-> >>>>> +            if (g >=3D 2 && g < long_bits) {
-> >>>>>                     val =3D deposit64(val, 0, g - 1, -1ULL);
-> >>>>>                 }
-> >>>>>                 break;
-> >>>>
-> >>>
-> >>>
-> >>
-> >
-> >
->
+where dlen is the amount of data copied by the last USB packet of the
+transfer, not the size of the ObjectInfo dataset. If the final packet has
+fewer than 53 bytes, filename_chars underflows to SIZE_MAX, causing
+utf16_to_str() to read far beyond the heap buffer, leaking QEMU host
+process memory.
 
+Use d->length instead: it is the size of the buffer holding the dataset,
+and usb_mtp_write_metadata() is only reached once all d->length bytes
+have been received.
 
---=20
-         =E6=AD=A4=E8=87=B4
-=E7=A4=BC
-=E7=BD=97=E5=8B=87=E5=88=9A
-Yours
-    sincerely,
-Yonggang Luo
+d->length is guest-controlled, so reject datasets too small to hold the
+fixed part of ObjectInfo before dereferencing it. The check is "<="
+rather than "<" because a dataset of exactly offsetof(ObjectInfo,filename)
+bytes would yield an empty filename.
+
+Fixes: 90c1a74271ce ("usb-mtp: Limit filename to object information size")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3992
+Signed-off-by: Tommaso Califano <tcalifano@redhat.com>
+---
+
+V3:
+ - Restore guard due to guest-controlled d->length.
+ - Improve commit text for better readability.
+v2:
+ - Remove the dlen guard and variable in favor of using d->length.
+
+hw/usb/dev-mtp.c | 14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
+
+diff --git a/hw/usb/dev-mtp.c b/hw/usb/dev-mtp.c
+index 1d8cfd32dc..45641c3489 100644
+--- a/hw/usb/dev-mtp.c
++++ b/hw/usb/dev-mtp.c
+@@ -1696,7 +1696,7 @@ close:
+     s->write_pending = false;
+ }
+ 
+-static void usb_mtp_write_metadata(MTPState *s, uint64_t dlen)
++static void usb_mtp_write_metadata(MTPState *s)
+ {
+     MTPData *d = s->data_out;
+     ObjectInfo *dataset = (ObjectInfo *)d->data;
+@@ -1704,7 +1704,15 @@ static void usb_mtp_write_metadata(MTPState *s, uint64_t dlen)
+     MTPObject *o;
+     MTPObject *p = usb_mtp_object_lookup(s, s->dataset.parent_handle);
+     uint32_t next_handle = s->next_handle;
+-    size_t filename_chars = dlen - offsetof(ObjectInfo, filename);
++    size_t filename_chars;
++
++    if (d->length <= offsetof(ObjectInfo, filename)) {
++        usb_mtp_queue_result(s, RES_INVALID_OBJECTINFO, d->trans,
++                             0, 0, 0, 0);
++        return;
++    }
++
++    filename_chars = d->length - offsetof(ObjectInfo, filename);
+ 
+     /*
+      * filename is utf-16. We're intentionally doing
+@@ -1801,7 +1809,7 @@ static void usb_mtp_get_data(MTPState *s, mtp_container *container,
+         if (d->data_offset == d->length) {
+             /* The operation might have already failed */
+             if (!s->result) {
+-                usb_mtp_write_metadata(s, dlen);
++                usb_mtp_write_metadata(s);
+             }
+             usb_mtp_data_free(s->data_out);
+             s->data_out = NULL;
+-- 
+2.55.0
+
 
