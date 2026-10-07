@@ -4,92 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE712CA6007
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE6C7CA5FFF
 	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 09:20:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xENeS-0004Al-5n; Wed, 07 Oct 2026 05:09:28 -0400
+	id 1xENXe-0001Jm-DY; Wed, 07 Oct 2026 05:02:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xEMY5-0003JA-1P
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 03:58:53 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xEMY3-0002gO-DP
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 03:58:48 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-4a022fee0caso15304775e9.1
- for <qemu-devel@nongnu.org>; Wed, 07 Oct 2026 00:58:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1791359925; x=1791964725; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=8mkEbBCaLJ+gheEJVDag3x/brWnUFiNaDEFeNGRTOHg=;
- b=ClDJFu/0qu+FBexEbI0ro6XhJcGIrJ5lhKilKhGnNDRajCTMFJwyZeJr3crJ9di+QU
- U1GX8qietvEiaY0c3we76D3ouoqpqG47FNuWYUXermKv5Gi2ao/qXPFOQg7h/QXC1ODJ
- kENnzi1TaI0b2d5U8UMrPN3eH87LbK2gmV+5+5xEIVnk6JsVqOKGSrofCXAly07HK2U4
- xM3LSkxTCww+JTG4ZtJ6geJPvh2RjBZxFG0GD3NjVOEwt2uFSo5r/qa6kTw9gDCa1ajm
- Ty6qg5MWENzva/N+Hfxwb4u7iPNARuxsPh0yvcDhYEzCVwgLtm5ntjpU+pkXtf9RWJ5b
- vp+w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791359925; x=1791964725;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=8mkEbBCaLJ+gheEJVDag3x/brWnUFiNaDEFeNGRTOHg=;
- b=jHhjBmyQnD/RkdRFQSxKw3tZlisiHcjL7w1YdKWoQDOZ6ItM8lvPhGs2mmKK826NxB
- MtpynLSSLZQKz37cuBVnjBQpCCRdIEj+QW7/p9VJnecMoh1j/gaabPufH/+2h88zf7Zs
- bzXYlDpuE4tV1SXQGzMa7T5qgXnTMFVMD7KiUdgLuG+tsVhEh8nDHC2CyaMgbHmRqt1k
- hGqIYm7BFXuxGS1rTjiPqUBjQkLQYSMUG9BkWQdy8ZEoImQGXue1TNqzrXAHFL15jadT
- 9lDMMrlK9oRZQyjBQc3Gioxfe8zpSiiRJCWHi4jDQKFVgr7dwFqahG7TtFAu89v6B8Ll
- hIfA==
-X-Forwarded-Encrypted: i=1;
- AKwUvByj3JoKNz7LUgTCDanK0w2egUo6UfGgMQoclxp1IfgtjBty4REgccC3CwG6pINiJ3IdTtsXIZ7NSKi7@nongnu.org
-X-Gm-Message-State: AFuF++k68OGch+n/Jk0kygheOKwVBEXC+eLLPAK+sr7DCHNdYPOFdLCk
- 4VvPCuWkqYIBGzEL0YMAG0HuRoJ9C1gIpmWUzkMvPdsPTw+V8c5EbJl8MtomZ8ojKrQ=
-X-Gm-Gg: AYBFou2pumPu0vxFxkosZqm0Zz/tJDjy5ZZLqs+yx+atiAZOJ8Lp+BMFdO9YGHsbOgx
- 27olYqmjbExuriUwyOtSH95uQ9pkD7f1P9HhA7WFM4/o/uCLD86HlZH0/nWeLsRukpJ3bV+eRV7
- DKZ/lIypXZq8qtXqnTArYjjwXgdKAfnbpk9uXAwc2tMaPiWu4GsRHDegQ1+tbhJ6mmDob/OZSL3
- bamaKG95jl75q6RDonMLrb8aiVgGeKUUvlr0ftva5gZ0UPPR2s2ncPMMzEiMP9k+NSYM8L1IDRu
- hg7mbRQoqvsxGoR5qrnIgK5B/m+yFKJtZ97J3V1xaHxt74l5v3u42/H7Tg9XXvTq0Ius3o63ORm
- rCJd9oiy3g1HjukTzMs6qHJ6zfNblQ/Uftkd+bdKWkq7EpIn6LIMQ3VZiDLgrUZ5Eo2GdEjx9CI
- mw19F+36Ec2/scAo3Qzu+z8bDjtVGfSX7QEvKB/oOfufnv/JFbDpubOyg7/X2PbJz96WGUW/8nY
- DnBDUO5cPdf8Upw7MxVcrCVDYjQi8g5NTdFWEwDoxyhFA==
-X-Received: by 2002:a05:600c:34cd:b0:4a1:7c7d:8881 with SMTP id
- 5b1f17b1804b1-4a180311361mr17539135e9.13.1791359920327; 
- Wed, 07 Oct 2026 00:58:40 -0700 (PDT)
-Received: from [192.168.148.71] (90-182-211-1.rcp.o2.cz. [90.182.211.1])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a178c40a28sm142968865e9.7.2026.10.07.00.58.39
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 07 Oct 2026 00:58:39 -0700 (PDT)
-Message-ID: <2bdb49ea-2e55-4991-ac6d-9f2d7d575de1@linaro.org>
-Date: Wed, 7 Oct 2026 09:58:37 +0200
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1xEKjZ-0001oF-TJ
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 02:02:52 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1xEKjR-0001Rw-KQ
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 02:02:31 -0400
+Received: from h183.csg.ci.i.u-tokyo.ac.jp (h183.csg.ci.i.u-tokyo.ac.jp
+ [133.11.54.183]) (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 69761tqL048409
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Wed, 7 Oct 2026 15:02:01 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=KgLaGwzpffAEtPsyT40xetrRoR43bW6muopW6J6sCDQ=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=From:Message-Id:To:Subject:Date;
+ s=rs20250326; t=1791352921; v=1;
+ b=pJ7tOpcI97OHwIlROrQq4Am0MUMEyyTWS7u4nd8G9ox7OWrcRhOS4RFtugcuT1mA
+ crs4eksmyoxeq8xlNUP0T94KQfRoHKw7xewQ/Aqr5dWOxDzLGJD90us6YoIhhv84
+ TEBtjYZGs9BFITPiyrlmBpFjutUlnvZ981Ykj7XVgrpLIrMUecd83fQZJhA/+SUZ
+ eo7onXRdfzjnrnb3hngMTo0/W1iSf1vuoCXRezzhls6Ii8oOcD0R2oiic307kOCs
+ +n4Le4lR7z1Hg4AK5tjINNfTbLc0rWfEMvPs1SzpERO/ztkisJ+jcoTCItU5s+FK
+ JHXsnaRbqXk866po4Cga3A==
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Subject: [PATCH 0/2] contrib/plugins/bbv: Add region-of-interest selection
+Date: Wed, 07 Oct 2026 15:01:48 +0900
+Message-Id: <20261007-bbv-v1-0-a2f521a68fdf@rsg.ci.i.u-tokyo.ac.jp>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 0/5] hw/nvme queue
-To: Klaus Jensen <its@irrelevant.dk>, qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Klaus Jensen <k.jensen@samsung.com>
-References: <20261005115805.99042-1-its@irrelevant.dk>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20261005115805.99042-1-its@irrelevant.dk>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x329.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yXMwQ5AMBCE4VeRPWtSWxG8ijgog3VAWkQi3l1x/
+ JJ/5iIPJ/BURhc5HOJlmQOSOKJ2bOYBSrpgYs1ZojUraw8FhgHr1ORcUChXh17O76Wqf/vdTmi
+ 3d0r3/QC08i1xZwAAAA==
+X-Change-ID: 20261002-bbv-e2e3e2043829
+To: qemu-devel@nongnu.org
+Cc: =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Alexandre Iooss <erdnaxe@crans.org>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+X-Mailer: b4 0.17-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1229;
+ i=odaki@rsg.ci.i.u-tokyo.ac.jp; h=from:subject:message-id;
+ bh=wQ/NlRGwtAaS3GD5ZvzPpE5nCZ78wnFehBcamkomB0w=;
+ b=owGbwMvMwCWmMbc20y1CyJDxtFoSQ9bRB/7hce/m21nmLX3/bfPe7b33Zl8N33tk5sFfca+s+
+ rrudE9w6ChlYRDjYpAVU2RJKdrNrRFd+6kwIb4FZg4rE8gQBi5OAZjIw2uMDM3h+QUzqky2zFhX
+ nBDElW0q9YU5YUPpw117nzUXaz2T2MnIcGnR64Wrz9vEsjOu0408ZhS/ePuh0lP8Hu173S6FPJs
+ 7kwEA
+X-Developer-Key: i=odaki@rsg.ci.i.u-tokyo.ac.jp; a=openpgp;
+ fpr=AEDC03C9AF734F2EC26A7BFFA4BAEAA73536753C
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -106,27 +85,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/5/26 13:58, Klaus Jensen wrote:
-> From: Klaus Jensen<k.jensen@samsung.com>
-> 
-> Hi,
-> 
-> The following changes since commit d7a65d1793d691d356a56833620f7d1e6f5d653b:
-> 
->    Merge tag 'hppa-a400-updates-pull-request' ofhttps://github.com/hdeller/qemu-hppa into staging (2026-10-03 14:17:49 +0200)
-> 
-> are available in the Git repository at:
-> 
->    https://gitlab.com/birkelund/qemu.git tags/pull-nvme-20261005
-> 
-> for you to fetch changes up to f6c0588fd7c22caefc5b31f485c8bb3ee994a58b:
-> 
->    hw/nvme: fix firmware boot path when nvme-ns has a bootindex (2026-10-05 11:00:47 +0200)
-> 
-> ----------------------------------------------------------------
-> nvme queue
+Benchmarks can spend more time parsing input or initializing state than
+running the computation of interest. Generating basic block vectors for
+the whole execution can therefore give these setup phases too much
+weight in SimPoint analysis.
 
-Applied, thanks.
+This series adds optional begin=A and end=A markers to control BBV
+generation using guest instruction virtual addresses. Omitting begin
+starts generation at program startup; omitting end leaves it enabled
+until program exit. The markers let users focus collection on a region
+of interest.
 
-r~
+The first patch rejects non-positive intervals and values with trailing
+non-digit characters. The second adds the ROI options and documents
+their use.
+
+Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+---
+Akihiko Odaki (2):
+      contrib/plugins/bbv.c: Reject invalid intervals
+      contrib/plugins/bbv.c: Allow selecting ROI
+
+ docs/about/emulation.rst |  8 +++++
+ contrib/plugins/bbv.c    | 93 +++++++++++++++++++++++++++++++++++++++++++++---
+ 2 files changed, 97 insertions(+), 4 deletions(-)
+---
+base-commit: f7ada39edacaa5c26b30e98b94017b0b2ccbcf94
+change-id: 20261002-bbv-e2e3e2043829
+
+Best regards,
+--  
+Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+
 
