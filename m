@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80E94CA6004
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CA00CA6002
 	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 20:15:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xEY26-0004dH-IQ; Wed, 07 Oct 2026 16:14:35 -0400
+	id 1xEY1Z-0004Za-8P; Wed, 07 Oct 2026 16:14:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
- id 1xEY1b-0004aC-An
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 16:14:03 -0400
+ id 1xEY1W-0004Ye-GO
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 16:13:58 -0400
 Received: from mgamail.intel.com ([198.175.65.18])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
- id 1xEY1Z-0002B7-34
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 16:14:03 -0400
+ id 1xEY1U-0002B7-Dc
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 16:13:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1791404041; x=1822940041;
+ t=1791404037; x=1822940037;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=j5Y5Ol7gneFTBsVCADr0uA3bbbqU8zNP6j9n0Cubp4M=;
- b=D56R4wlnzW3gVT79Fd1hQqur15a13NHOfgQ3PnVbmKfJJowNps0JHVKZ
- GstDkdDzaceWXS/i9FxCTM6iW2dfaJCrL1fa5tU312p5i2ew0CI1SM5fo
- ilCUl1nyglJXumcBEQmsZVIXXiMGR888/E9UvqKSPZls+r6Qb9wl6cs6N
- LC58I0IKZ2qe0YUR3H7CH1Uqnnyc1DrLqDosoobiQOkBh+Jj1Vry5S2yI
- yfQBOJ48FGQA422iMwpPYHBwciR0uXb+GeKcu2zj7A4c4hZRmwGOZpUbJ
- q0ge5D7ea0hOt6prhPzoIjxRBA2sJbreoOSohIImYRvZhWDyH14XpTVFf w==;
-X-CSE-ConnectionGUID: VxdSNqJbTuWUBeCVSbgyig==
-X-CSE-MsgGUID: 2JyNYqdVT96sR0itdLULww==
-X-IronPort-AV: E=McAfee;i="6800,10657,11928"; a="178489"
+ bh=rwyE6cR6hgEBINtf7YjYhXPvHcIR4ULy5pnzxbrkrzE=;
+ b=WIRPFHeFE6Eav+zgokbAZhh0ohUKffslqL4lfFPewJnk4xFP5jec7XuT
+ O+2xefERJheiPyQL2P05+mOK6873M7uxquOr/YvBSPR9a5LsokJKa1mon
+ 8/TRWofyE2+brBLt5nVn3uKJBY8gWpNmi/0sKRSnU+swdxslPo6V8z+BK
+ QQ1GeA1w7pC8RNRvg//g4cI3kXDYZDeWW9WJH9ZQ1L/uzOnBcYSeDm+fo
+ B84scuWL02D2yuEtyW1lW97x87zD/H8F1G8bzqxom5nDH4snW83Otj2Na
+ xu5o/w+K8VGT6YDxxKBvZrrAZ/Oww6xSftpc2hRfpZigcHbGwSsdBep5R A==;
+X-CSE-ConnectionGUID: XSJ9EPm6Q4q44gVMvFBGRg==
+X-CSE-MsgGUID: QEPDyHTaTWCunO787NJibQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11928"; a="178462"
 X-IronPort-AV: E=Sophos;i="6.27,144,1787036400"; 
-   d="scan'208";a="178489"
+   d="scan'208";a="178462"
 Received: from fmviesa013.fm.intel.com ([10.60.135.153])
  by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 07 Oct 2026 13:13:49 -0700
-X-CSE-ConnectionGUID: mVA8jQE/S+CDjml634+J1Q==
-X-CSE-MsgGUID: NRnJrLvhQ4SLEFQ1BQdxaQ==
+ 07 Oct 2026 13:13:48 -0700
+X-CSE-ConnectionGUID: 66DRKZLGQvihknpMiOEeFg==
+X-CSE-MsgGUID: XjdN4wjqRS6TQHAQN9EF/g==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.27,144,1787036400"; 
-   d="scan'208";a="1564974"
+   d="scan'208";a="1564955"
 Received: from vkasired-desk1.fm.intel.com ([10.121.64.242])
  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
  07 Oct 2026 13:13:47 -0700
@@ -57,10 +57,9 @@ Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>,
  Dmitry Osipenko <dmitry.osipenko@collabora.com>,
  Alex Williamson <alex@shazbot.org>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v13 8/9] virtio-gpu-dmabuf: Improve error handling with 'Error
- **' and err enum
-Date: Wed,  7 Oct 2026 13:09:27 -0700
-Message-ID: <20261007201222.648687-9-vivek.kasireddy@intel.com>
+Subject: [PATCH v13 2/9] virtio-gpu: Rename udmabuf files and helpers to dmabuf
+Date: Wed,  7 Oct 2026 13:09:21 -0700
+Message-ID: <20261007201222.648687-3-vivek.kasireddy@intel.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261007201222.648687-1-vivek.kasireddy@intel.com>
 References: <20261007201222.648687-1-vivek.kasireddy@intel.com>
@@ -91,27 +90,8 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Make the error handling more robust in virtio_gpu_init_udmabuf()
-by introducing 'Error **' parameter to capture errors and using
-an enum from VFIO to categorize different errors. This allows for
-better error reporting and handling of errors from
-virtio_gpu_create_udmabuf() and virtio_gpu_remap_dmabuf().
-
-Furtheremore, the main reason for using the VFIO enum is to handle
-the special INVALID_IOV case which can happen in two scenarios:
-1) When the Blob resource's memory is backed by a VFIO region. This
-   would cause INVALID_IOV error when we try to create a dmabuf via
-   udmabuf driver but we can recover from this error by having the
-   dmabuf be created by the VFIO driver instead.
-2) When the Blob resource's memory is not backed by memfd or VFIO
-   region. In this case, since the error can be attributed to the
-   guest, we should use qemu_log_mask() instead of error_report_err()
-   and emit a message that can be used to debug the guest error.
-
-Note that, to diagnose errors, a common pattern is to return -errno
-to enable the caller to implement specific error handling. However, in
-this case, since we want to distinguish the INVALID_IOV error from other
-errors, using the VFIO enum allows us to do so and is very convenient.
+This is prep-work for adding the ability to create dmabuf fds from
+VFIO devices in addition to udmabuf.
 
 Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
 Cc: Alex Bennée <alex.bennee@linaro.org>
@@ -122,143 +102,158 @@ Cc: Cédric Le Goater <clg@redhat.com>
 Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
 ---
- hw/display/virtio-gpu-dmabuf.c | 69 ++++++++++++++++++++++------------
- 1 file changed, 46 insertions(+), 23 deletions(-)
+ include/hw/virtio/virtio-gpu.h                         |  6 +++---
+ ...o-gpu-udmabuf-stubs.c => virtio-gpu-dmabuf-stubs.c} |  4 ++--
+ .../{virtio-gpu-udmabuf.c => virtio-gpu-dmabuf.c}      | 10 +++++-----
+ hw/display/virtio-gpu.c                                |  8 ++++----
+ hw/display/meson.build                                 |  4 ++--
+ 5 files changed, 16 insertions(+), 16 deletions(-)
+ rename hw/display/{virtio-gpu-udmabuf-stubs.c => virtio-gpu-dmabuf-stubs.c} (79%)
+ rename hw/display/{virtio-gpu-udmabuf.c => virtio-gpu-dmabuf.c} (94%)
 
-diff --git a/hw/display/virtio-gpu-dmabuf.c b/hw/display/virtio-gpu-dmabuf.c
-index 6f05f367d0..c9de8e9ba3 100644
---- a/hw/display/virtio-gpu-dmabuf.c
+diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
+index 631dfc63a4..4f3a5c6fb3 100644
+--- a/include/hw/virtio/virtio-gpu.h
++++ b/include/hw/virtio/virtio-gpu.h
+@@ -388,10 +388,10 @@ bool virtio_gpu_scanout_blob_to_fb(struct virtio_gpu_framebuffer *fb,
+                                    struct virtio_gpu_set_scanout_blob *ss,
+                                    uint64_t blob_size);
+ 
+-/* virtio-gpu-udmabuf.c */
++/* virtio-gpu-dmabuf.c */
+ bool virtio_gpu_have_udmabuf(void);
+-bool virtio_gpu_init_udmabuf(struct virtio_gpu_simple_resource *res);
+-void virtio_gpu_fini_udmabuf(struct virtio_gpu_simple_resource *res);
++bool virtio_gpu_init_dmabuf(struct virtio_gpu_simple_resource *res);
++void virtio_gpu_fini_dmabuf(struct virtio_gpu_simple_resource *res);
+ int virtio_gpu_update_dmabuf(VirtIOGPU *g,
+                              uint32_t scanout_id,
+                              struct virtio_gpu_simple_resource *res,
+diff --git a/hw/display/virtio-gpu-udmabuf-stubs.c b/hw/display/virtio-gpu-dmabuf-stubs.c
+similarity index 79%
+rename from hw/display/virtio-gpu-udmabuf-stubs.c
+rename to hw/display/virtio-gpu-dmabuf-stubs.c
+index 1a9dfbdec1..83c3e16c23 100644
+--- a/hw/display/virtio-gpu-udmabuf-stubs.c
++++ b/hw/display/virtio-gpu-dmabuf-stubs.c
+@@ -7,13 +7,13 @@ bool virtio_gpu_have_udmabuf(void)
+     return false;
+ }
+ 
+-bool virtio_gpu_init_udmabuf(struct virtio_gpu_simple_resource *res)
++bool virtio_gpu_init_dmabuf(struct virtio_gpu_simple_resource *res)
+ {
+     /* nothing (stub) */
+     return false;
+ }
+ 
+-void virtio_gpu_fini_udmabuf(struct virtio_gpu_simple_resource *res)
++void virtio_gpu_fini_dmabuf(struct virtio_gpu_simple_resource *res)
+ {
+     /* nothing (stub) */
+ }
+diff --git a/hw/display/virtio-gpu-udmabuf.c b/hw/display/virtio-gpu-dmabuf.c
+similarity index 94%
+rename from hw/display/virtio-gpu-udmabuf.c
+rename to hw/display/virtio-gpu-dmabuf.c
+index 6d2bc8d977..c537ec0a8c 100644
+--- a/hw/display/virtio-gpu-udmabuf.c
 +++ b/hw/display/virtio-gpu-dmabuf.c
-@@ -18,6 +18,7 @@
- #include "ui/console.h"
- #include "hw/virtio/virtio-gpu.h"
- #include "hw/virtio/virtio-gpu-pixman.h"
-+#include "hw/vfio/vfio-device.h"
- #include "trace.h"
- #include "system/ramblock.h"
- #include "system/hostmem.h"
-@@ -27,28 +28,32 @@
- #include "standard-headers/linux/udmabuf.h"
- #include "standard-headers/drm/drm_fourcc.h"
- 
--static void virtio_gpu_create_udmabuf(struct virtio_gpu_simple_resource *res)
-+static int virtio_gpu_create_udmabuf(struct virtio_gpu_simple_resource *res,
-+                                     Error **errp)
- {
-     g_autofree struct udmabuf_create_list *list = NULL;
-     RAMBlock *rb;
-     ram_addr_t offset;
--    int udmabuf, i;
-+    int udmabuf, i, fd;
- 
-     udmabuf = udmabuf_fd();
-     if (udmabuf < 0) {
--        return;
-+        error_setg(errp, "udmabuf device not available or enabled");
-+        return VFIO_DMABUF_CREATE_ERR_UNSPEC;
-     }
- 
-     list = g_try_malloc0(sizeof(struct udmabuf_create_list) +
-                          sizeof(struct udmabuf_create_item) * res->iov_cnt);
-     if (!list) {
--        return;
-+        error_setg(errp, "failed to allocate udmabuf create list");
-+        return VFIO_DMABUF_CREATE_ERR_UNSPEC;
-     }
- 
-     for (i = 0; i < res->iov_cnt; i++) {
-         rb = qemu_ram_block_from_host(res->iov[i].iov_base, false, &offset);
-         if (!rb || rb->fd < 0) {
--            return;
-+            error_setg(errp, "IOV memory address incompatible with udmabuf ");
-+            return VFIO_DMABUF_CREATE_ERR_INVALID_IOV;
-         }
- 
-         list->list[i].memfd  = rb->fd;
-@@ -59,22 +64,28 @@ static void virtio_gpu_create_udmabuf(struct virtio_gpu_simple_resource *res)
-     list->count = res->iov_cnt;
-     list->flags = UDMABUF_FLAGS_CLOEXEC;
- 
--    res->dmabuf_fd = ioctl(udmabuf, UDMABUF_CREATE_LIST, list);
--    if (res->dmabuf_fd < 0) {
--        warn_report("%s: UDMABUF_CREATE_LIST: %s", __func__,
--                    strerror(errno));
-+    fd = ioctl(udmabuf, UDMABUF_CREATE_LIST, list);
-+    if (fd < 0) {
-+        error_setg_errno(errp, errno, "UDMABUF_CREATE_LIST: ioctl failed");
-+        if (errno == EINVAL || errno == EBADFD) {
-+            return VFIO_DMABUF_CREATE_ERR_INVALID_IOV;
-+        }
-+        return VFIO_DMABUF_CREATE_ERR_UNSPEC;
-     }
-+    return fd;
+@@ -71,7 +71,7 @@ static void virtio_gpu_create_udmabuf(struct virtio_gpu_simple_resource *res)
+     g_free(list);
  }
  
--static void virtio_gpu_remap_dmabuf(struct virtio_gpu_simple_resource *res)
-+static void *virtio_gpu_remap_dmabuf(struct virtio_gpu_simple_resource *res,
-+                                     Error **errp)
+-static void virtio_gpu_remap_udmabuf(struct virtio_gpu_simple_resource *res)
++static void virtio_gpu_remap_dmabuf(struct virtio_gpu_simple_resource *res)
  {
--    res->remapped = mmap(NULL, res->blob_size, PROT_READ,
--                         MAP_SHARED, res->dmabuf_fd, 0);
--    if (res->remapped == MAP_FAILED) {
--        warn_report("%s: dmabuf mmap failed: %s", __func__,
--                    strerror(errno));
--        res->remapped = NULL;
-+    void *map;
-+
-+    map = mmap(NULL, res->blob_size, PROT_READ, MAP_SHARED, res->dmabuf_fd, 0);
-+    if (map == MAP_FAILED) {
-+        error_setg_errno(errp, errno, "dmabuf mmap failed");
-+        return NULL;
+     res->remapped = mmap(NULL, res->blob_size, PROT_READ,
+                          MAP_SHARED, res->dmabuf_fd, 0);
+@@ -82,7 +82,7 @@ static void virtio_gpu_remap_udmabuf(struct virtio_gpu_simple_resource *res)
      }
-+    return map;
  }
  
- void virtio_gpu_fini_dmabuf(struct virtio_gpu_simple_resource *res)
-@@ -130,6 +141,7 @@ bool virtio_gpu_have_udmabuf(void)
- 
- bool virtio_gpu_init_dmabuf(struct virtio_gpu_simple_resource *res)
+-void virtio_gpu_fini_udmabuf(struct virtio_gpu_simple_resource *res)
++void virtio_gpu_fini_dmabuf(struct virtio_gpu_simple_resource *res)
  {
-+    Error *local_err = NULL;
+     if (res->remapped) {
+         munmap(res->remapped, res->blob_size);
+@@ -133,7 +133,7 @@ bool virtio_gpu_have_udmabuf(void)
+     return memfd_backend;
+ }
+ 
+-bool virtio_gpu_init_udmabuf(struct virtio_gpu_simple_resource *res)
++bool virtio_gpu_init_dmabuf(struct virtio_gpu_simple_resource *res)
+ {
      void *pdata = NULL;
  
-     res->dmabuf_fd = -1;
-@@ -137,17 +149,28 @@ bool virtio_gpu_init_dmabuf(struct virtio_gpu_simple_resource *res)
-         res->iov[0].iov_len < 4096) {
-         pdata = res->iov[0].iov_base;
-     } else if (res->blob_size) {
--        virtio_gpu_create_udmabuf(res);
-+        res->dmabuf_fd = virtio_gpu_create_udmabuf(res, &local_err);
-+        if (res->dmabuf_fd == VFIO_DMABUF_CREATE_ERR_INVALID_IOV) {
-+            error_free_or_abort(&local_err);
-+
-+            qemu_log_mask(LOG_GUEST_ERROR,
-+                          "Cannot create dmabuf: incompatible memory\n");
-+            return false;
-+        } else if (res->dmabuf_fd >= 0) {
-+            pdata = virtio_gpu_remap_dmabuf(res, &local_err);
-+            if (!pdata) {
-+                virtio_gpu_fini_dmabuf(res);
-+            }
-+        } else {
-+            res->dmabuf_fd = -1;
-+        }
-+
+@@ -146,9 +146,9 @@ bool virtio_gpu_init_udmabuf(struct virtio_gpu_simple_resource *res)
          if (res->dmabuf_fd < 0) {
--            return false;
--        }
--        virtio_gpu_remap_dmabuf(res);
--        if (!res->remapped) {
--            virtio_gpu_fini_dmabuf(res);
-+            error_report_err(local_err);
+             return false;
+         }
+-        virtio_gpu_remap_udmabuf(res);
++        virtio_gpu_remap_dmabuf(res);
+         if (!res->remapped) {
+-            virtio_gpu_fini_udmabuf(res);
++            virtio_gpu_fini_dmabuf(res);
              return false;
          }
          res->share_handle = res->dmabuf_fd;
--        pdata = res->remapped;
-+        res->remapped = pdata;
+diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
+index 386db05e5b..c7346c8c68 100644
+--- a/hw/display/virtio-gpu.c
++++ b/hw/display/virtio-gpu.c
+@@ -407,7 +407,7 @@ static void virtio_gpu_resource_create_blob(VirtIOGPU *g,
+             return;
+         }
+ 
+-        if (!virtio_gpu_init_udmabuf(res)) {
++        if (!virtio_gpu_init_dmabuf(res)) {
+             cmd->error = VIRTIO_GPU_RESP_ERR_UNSPEC;
+             virtio_gpu_cleanup_mapping(g, res);
+             g_free(res);
+@@ -1091,7 +1091,7 @@ void virtio_gpu_cleanup_mapping(VirtIOGPU *g,
+     res->addrs = NULL;
+ 
+     if (res->blob) {
+-        virtio_gpu_fini_udmabuf(res);
++        virtio_gpu_fini_dmabuf(res);
+     }
+ }
+ 
+@@ -1136,7 +1136,7 @@ virtio_gpu_resource_attach_backing(VirtIOGPU *g,
+         return;
      }
  
-     res->blob = pdata;
+-    if (!res->image && !virtio_gpu_init_udmabuf(res)) {
++    if (!res->image && !virtio_gpu_init_dmabuf(res)) {
+         cmd->error = VIRTIO_GPU_RESP_ERR_UNSPEC;
+         virtio_gpu_cleanup_mapping(g, res);
+     }
+@@ -1652,7 +1652,7 @@ static int virtio_gpu_blob_load(QEMUFile *f, void *opaque, size_t size,
+                 return -EINVAL;
+             }
+ 
+-            if (!virtio_gpu_init_udmabuf(res)) {
++            if (!virtio_gpu_init_dmabuf(res)) {
+                 virtio_gpu_cleanup_mapping(g, res);
+                 g_free(res);
+                 return -EINVAL;
+diff --git a/hw/display/meson.build b/hw/display/meson.build
+index d8b4e121fe..89b8f74b7d 100644
+--- a/hw/display/meson.build
++++ b/hw/display/meson.build
+@@ -73,9 +73,9 @@ if config_all_devices.has_key('CONFIG_VIRTIO_GPU')
+   virtio_gpu_ss.add(when: 'CONFIG_VIRTIO_GPU',
+                     if_true: [files('virtio-gpu-base.c', 'virtio-gpu.c'), pixman])
+   if host_os == 'linux'
+-    virtio_gpu_ss.add(files('virtio-gpu-udmabuf.c'))
++    virtio_gpu_ss.add(files('virtio-gpu-dmabuf.c'))
+   else
+-    virtio_gpu_ss.add(files('virtio-gpu-udmabuf-stubs.c'))
++    virtio_gpu_ss.add(files('virtio-gpu-dmabuf-stubs.c'))
+   endif
+   virtio_gpu_ss.add(when: 'CONFIG_VHOST_USER_GPU', if_true: files('vhost-user-gpu.c'))
+   hw_display_modules += {'virtio-gpu': virtio_gpu_ss}
 -- 
 2.53.0
 
