@@ -4,123 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC97ACA5FFF
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 20:50:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7388ECA5FFF
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 21:02:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xEYar-0005xI-Fi; Wed, 07 Oct 2026 16:50:29 -0400
+	id 1xEYlr-0007Bs-Cc; Wed, 07 Oct 2026 17:01:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xEYam-0005wl-BV
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 16:50:24 -0400
-Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
+ (Exim 4.90_1) (envelope-from <weqaar.janjua@packetfive.com>)
+ id 1xEYlZ-0007BK-Py
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 17:01:37 -0400
+Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xEYai-0005VQ-Te
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 16:50:24 -0400
-Received: by mail-ed1-x532.google.com with SMTP id
- 4fb4d7f45d1cf-6af9a90e4bbso2683119a12.0
- for <qemu-devel@nongnu.org>; Wed, 07 Oct 2026 13:50:20 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1791406219; cv=none;
- d=google.com; s=arc-20260327;
- b=WNOjjPxmW/8QJH+agW9Re52LTtSZlvbWzdRbxaqnNiREuWtTwdfNsUYMQTLCyWVuHr
- xslvcNw20boU3rz13V3aQwRa4sLM6MIE0m1FuvrxPhYIEzokXAG089lyhkea2B9ss84e
- igGMOXbAwqesuxR05tT+eksPpncIiOXPlzAU1hvNScchQyO2VNdPEYY7bIXMBP7vo7/s
- 3AMSwJrv8mbEFk8qavucp5CmbXsZRJj3UVi79cuhUeby43XUqHaZ1ano0mrfSTo0Y7oW
- ePWzvZLcSDoPl/HxefaK85JwQiTScj2UaqQIjGakvL9wBBcl4Yr/AvtemcRwLohLWPT5
- Ymsg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :reply-to:in-reply-to:references:mime-version:dkim-signature;
- bh=TJ4jkUWFTCfZVR9xXVV6RT4cScHQ9uYu6NOq08HuMso=;
- fh=4/wcS88II3VX6Ye4PZnRAhk86dIgygccFhqjRWP+6KY=;
- b=F5hDlvBMqZvfA6ywr7+2b+mcGoKMyDqk1QUZgLVA8ivhBhFv083ZyILZlMBtTpAKe7
- wINZrEpQcVJsEYfizFMm4/vjYGQZjBKsKbfxwY+ly8ishoC/0no9BBgXSgWskgOUC+B8
- OzQapZWMiZAbmd5D4YN6kWC0KFRCRn4MwLPWF11vLvK9vg3Na+WUak+iraXiOc/L9oKe
- dgXshjW7LfnZvuQXaWJVwHR76RT2p8RwTGzQ7Y5XJxKTN2XKciUJnxhOXIulyHvbwa7R
- HEPtqmRQF2WMAmj+4HFEm6zW4NwDvpCPp+zKiYGANlb+jRS/zmkipe9Eeqf5xsNzy9yK
- nnWg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <weqaar.janjua@packetfive.com>)
+ id 1xEYlW-0006Ll-Tw
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 17:01:33 -0400
+Received: by mail-ej1-x630.google.com with SMTP id
+ a640c23a62f3a-c2a832c6554so356518166b.2
+ for <qemu-devel@nongnu.org>; Wed, 07 Oct 2026 14:01:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1791406219; x=1792011019; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:reply-to:in-reply-to:references:mime-version:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=TJ4jkUWFTCfZVR9xXVV6RT4cScHQ9uYu6NOq08HuMso=;
- b=i3q2KsWeQJLuX/AJPhe4QgC3tMpcztMTCXzZXSoVyPS2nddGpkaq/KHY6Vy+k/+Ib1
- o6hjz5X5TxqXKdC1fX2wRe3vrxG8xngrahua5t0Rc6Q3WXR/Bp5F8FlWw+Gx+XxFaz2g
- O7QoF4loJ1eHVEx0NLZZcWhTE7o3zy4hKyc8HEm8CWFEyalHgWJGrgBzrIF8bCL5m7uC
- ahR40qU/yOkdCQwp51euCs33OABhW+miMpZZBNJk1l1KY3gglAjoJSihiqIuuY8d0gH4
- 99eS+Hi2Cu/AyBuLXg+rnjjVJtUMf1W0hs9Kdp9ctbSiiwPp9eKfaMj+j1kioXS3BxjH
- eEVQ==
+ d=packetfive-com.20251104.gappssmtp.com; s=20251104; t=1791406888; x=1792011688;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=x6A6EGB3o2xrtcu4CzxiU89cSOiPdlBPE+/1hul7RYs=;
+ b=fKIbUun6q/0kqrx+KZtBi/2FcJoAXw1i893fTt9ThQZDORO1LCIVLGWBliGWFcBq5T
+ WwbS6Dslxl8aslr8+ZPn2/CQqMxKYhilq5OvArVElu5O8taetD+yZGvvvsUYZVEIGFC+
+ hA+Tf0SlW7qolgrMtDwlnHc8WynBj72a3Ytlygp1ErjUPIxjKilWUK7yAyIOqBiwtoWu
+ 6CYdtYp8wCj8VWWOXTknvm3HUC5bJqgdopjkgor3zh2ZiWX6qjWfUGJSmK/JX/4fNlme
+ fjwBIs9evsyzlDrofY+L+n3IE41+uP1o1FvKDILUk3UgxZoX0RGfbh0eztnFn7KWrd9K
+ xqvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791406219; x=1792011019;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:reply-to:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=TJ4jkUWFTCfZVR9xXVV6RT4cScHQ9uYu6NOq08HuMso=;
- b=cpneEWd63uRG2Xde+NsjY7zu+A4mPgi6T7JCArglFmztczjmC5lENH/k//ImCDTYE4
- w7AwKKrmA+khZS9XPrCYvFHpy6a/CLcV/9ANgzCq1FKLWmB+7Ga7t8HoiheI9GEIGf06
- GottS8aSlZqnGsm1y9NYy/2nsgV4WNhRvMhK+6flQ6FMUg1HWOgWYrub8XVT8p8dwcss
- OkmH+ngbnKB0Mt84JSh0+5dIhAtAYCk+wEUcVoo+caDR4ylUbR2w/+yAvV/zIJZwgluQ
- FShvTvJm6pAZIOzoWhXx3UzrOPaLjSml6IuPiYF9DWLPI+T7II2tzSL/RRgdC+J/j+Fi
- CbGg==
-X-Gm-Message-State: AFq9FYITO3xcVdpTaM1oacOH3jlJfTmzp8fLzb7P8wUnL/GeJ2lWw3n/
- O6BxRYNuxvZHUKuxuKTdh1s6RQtc049EClsc9hCyGLDyJjNRK6vPVM7A0szbzYvsXApuv4uJWv/
- 23tlZ4/1mI4kVkI1xbECmlsZFDYIEdOw=
-X-Gm-Gg: AYBFou04W14xIpnW28Z5RBcmvo56O9M9vwN69Acn47KMTXWry0iULygAUCgGiNDrQpK
- Tuo2a/DSpV3actEDHqZ5YXGDvZUht5cVdscBDVNG7ZROdRo2dnLpzceE5CMi1AaVLtGdRL/1WQ9
- VMj8mtCCGCw3pbzef7Rn5PE8twW4o5TJIL6UOgbX13EzMDOF5GWyR8KuFT1CglDSNK2vXN3bPhk
- EjlzdOfdIDOtgsLBeO+Bam1adtr6jSeDJ8x+Hxp9/2wkE+qKXnjOga6b1+rizz1w7g0IYseFHU0
- 1l6jXwQ9hCIHTJQ7fWkNkKFzW4Pu46/TlY1NX1nBYzSsSDohZCSEfGQ=
-X-Received: by 2002:a05:6402:a0d4:b0:6aa:734b:1a2d with SMTP id
- 4fb4d7f45d1cf-6aff4575b77mr2791791a12.39.1791406218932; Wed, 07 Oct 2026
- 13:50:18 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1791406888; x=1792011688;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=x6A6EGB3o2xrtcu4CzxiU89cSOiPdlBPE+/1hul7RYs=;
+ b=qJsHkGnlKgGQJccw9/dOKHEo2U9px5ybQJrCpNaY5owpONv3z9Nm6XCLmxORJoEI7W
+ 3H5xTO5rSKyjgPmbTnUMtIICZx6WtsR/VO6dtiSANSAX1xwvDoKgN35YLVeWBUM6XdOM
+ 29HOC0Nkr7PKbJV4hoeyvAVR527B3bqg8PxocGoHRXA/ejX3i2V38kdRgMZEUOnV4kvl
+ imUl4zXBrhcxZw5cPpeZYrhAJQLT2JUt3+71sXteS1xolVsriLCRwf+IgVu+BTQSaE6e
+ w9qrGCzWkJmPCLK4qcxEe91yV3WAkhIL0SsucvMcWcE7v/GUgTFnk1YyaNz+7vOdJsFZ
+ REeA==
+X-Gm-Message-State: AFuF++mOX91fICRRNNa4gb2jghZFgAYWgOCTDR9k5MVnPMv/eie0MyFu
+ Hvsd8TATBC64psm5q/qaaLf6Xj31XfTMJiL8d7/YpfaMrNe+fdBCMFSOCyIwqyWqwGI=
+X-Gm-Gg: AYBFou1hDysjAxdFk+y1OCUYGapVW7Rrl9K7yk8X4PFbFI4ZEmOypzb29P6E+TqYFAI
+ OS+UzrIM7v/dA7KqZAu2bXbTMBtfe8E6yicuuJv+xd/M438vBTd65DWfJcMCfzFdkWmh1gOAYZD
+ BHi4AyPb3WsUHTrmYq3D1Gmwk4z4kwpXEi04biOr2R7CY+m97IxNq5RP1P/i/8N7/u8gUB55ojH
+ LyRiNkj3CX9hcBeaUBiyxsrgWMJjHynbEacmYjjBAC9B/j0Ic6D8UI4GicQ65wZBCzroM474dpS
+ 739L1zvqGqjgi+R1Wpkofr0I8U4m8FR2QQ6fQ9cix1he4INQC6VjDthgSpB+Lbu+NczuZ6kJO6V
+ 1K31Uihb2vY+uzdzqSgScVagPGh0VISIxaJtThU/dBTyNS41ncEnCXapM/YL+N9iHKmR77Y2S17
+ 3JzadWEcVKIc4Ak9JPvEUd2X/I2nbSM3KqPc/nlnvxR7QbULb7x4ZKS4aDVg5vK4MnqfLsMvaEl
+ xB9FkBQQ9vmsJE=
+X-Received: by 2002:a17:906:e107:10b0:c31:866c:9696 with SMTP id
+ a640c23a62f3a-c31866cb1a2mr163041066b.31.1791406888391; 
+ Wed, 07 Oct 2026 14:01:28 -0700 (PDT)
+Received: from node-dev.home ([2001:bb6:1895:f400:49df:f57b:ea5c:f31b])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-c318c822527sm47468166b.12.2026.10.07.14.01.26
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 07 Oct 2026 14:01:27 -0700 (PDT)
+From: Weqaar Janjua <weqaar.janjua@packetfive.com>
+To: peter.maydell@linaro.org
+Cc: qemu-devel@nongnu.org, kraxel@redhat.com, mst@redhat.com,
+ pierrick.bouvier@oss.qualcomm.com, jasowangio@gmail.com,
+ pbonzini@redhat.com, farosas@suse.de, lvivier@redhat.com
+Subject: Re: [PATCH v2 1/6] pci: Add device ID for CnuasNIC
+Date: Wed,  7 Oct 2026 21:01:24 +0000
+Message-ID: <20261007210124.1224135-1-weqaar.janjua@packetfive.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <CAFEAcA9AP3RrLY4fzvsc9Bx845tiP9NXYo1CJ5Fb_iVePQKc5g@mail.gmail.com>
+References: <CAFEAcA9AP3RrLY4fzvsc9Bx845tiP9NXYo1CJ5Fb_iVePQKc5g@mail.gmail.com>
 MIME-Version: 1.0
-References: <20261007115253.328-1-luoyonggang@gmail.com>
- <20261007115253.328-5-luoyonggang@gmail.com>
- <37275f1f-aee9-444b-aaed-3e0bf34b63cd@oss.qualcomm.com>
-In-Reply-To: <37275f1f-aee9-444b-aaed-3e0bf34b63cd@oss.qualcomm.com>
-From: Yonggang Luo <luoyonggang@gmail.com>
-Date: Thu, 8 Oct 2026 04:50:05 +0800
-X-Gm-Features: AclHuK9MxsL8JYnxf00H6d8XmG9AGJkIDPOcHxv45UdNwcWLvmH2PFtRgT5Tsrg
-Message-ID: <CAE2XoE_GmDbA5SSUb3k_9HwE+bxnBjK+kBj-RE5BonEBC=GpMw@mail.gmail.com>
-Subject: Re: [PATCH 4/8] target-info: replace QOM registration with a
- constructor list
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Cleber Rosa <crosa@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>, 
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
- Laurent Vivier <lvivier@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- John Snow <jsnow@redhat.com>, Laurent Vivier <laurent@vivier.eu>,
- Richard Henderson <richard.henderson@linaro.org>, 
- Joel Stanley <joel@jms.id.au>, Fabiano Rosas <farosas@suse.de>,
- Kane Chen <kane_chen@aspeedtech.com>, 
- Andrew Jeffery <andrew@codeconstruct.com.au>, Troy Lee <leetroy@gmail.com>, 
- Jamin Lin <jamin_lin@aspeedtech.com>, Stafford Horne <shorne@gmail.com>,
- qemu-arm@nongnu.org, Philippe Mathieu-Daude <philmd@mailo.com>,
- Peter Maydell <peter.maydell@linaro.org>, 
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Steven Lee <steven_lee@aspeedtech.com>, Alexander Bulekov <alxndr@bu.edu>, 
- Darren Kenny <darren.kenny@oracle.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::532;
- envelope-from=luoyonggang@gmail.com; helo=mail-ed1-x532.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: none client-ip=2a00:1450:4864:20::630;
+ envelope-from=weqaar.janjua@packetfive.com; helo=mail-ej1-x630.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -133,114 +99,22 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: luoyonggang@gmail.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Oct 8, 2026 at 4:29=E2=80=AFAM Pierrick Bouvier
-<pierrick.bouvier@oss.qualcomm.com> wrote:
->
-> On 10/7/2026 4:48 AM, Yonggang Luo wrote:
-> > Register target definitions through constructors instead of
-> > MODULE_INIT_TARGET_INFO, making target_info_list() and target_info()
-> > available on entry to main(), without explicit initialization or a
-> > call to module_call_init(MODULE_INIT_QOM).
-> >
-> > Keep the target list sorted by target_arch and default to its first
-> > entry. Provide an unknown TargetInfo fallback for target-independent
-> > tools such as qemu-img and unit tests that link no target-info-def.c
-> > objects.
-> >
-> > Remove the obsolete QOM target-info registration infrastructure and
-> > update the multi-target test to inspect target information before
-> > initializing QOM.
-> >
-> > Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
-> > ---
-> >  include/qemu/module.h           |  1 -
-> >  include/qemu/target-info-def.h  | 56 +++++++++++++++++++++++++++---
-> >  include/qemu/target-info-init.h | 53 ----------------------------
-> >  include/qemu/target-info-qom.h  | 31 -----------------
-> >  include/qemu/target-info.h      |  9 +++++
-> >  meson.build                     |  6 ++--
-> >  system/vl.c                     |  4 ---
-> >  target-info-def.c               |  1 -
-> >  target-info-qom.c               | 60 --------------------------------
-> >  target-info.c                   | 61 ++++++++++++++++++++++++++++++++-
-> >  tests/qtest/fuzz/fuzz.c         |  3 --
-> >  tests/unit/test-multi-target.c  | 12 +++----
-> >  12 files changed, 129 insertions(+), 168 deletions(-)
-> >  delete mode 100644 include/qemu/target-info-init.h
-> >  delete mode 100644 include/qemu/target-info-qom.h
-> >  delete mode 100644 target-info-qom.c
-> >
->
-> This approach (custom list based) was considered before implementing
-> things with QOM Types. The rationale I followed was that if everything
-> is in QOM, we might better follow that for consistency sake.
-> Yes, the compromise if that we need an extra init step, but it was not a
-> problem to add it.
-I have issue to add the init step for unit-tests, and hard to write the -ta=
-rget
-parse procedure and get it right. Not means this won't work. but for
-me, too much
-coupled.
+> I think it would be better to add the ref at the point where
+> the document it's linking to is added.
 
-If we treat target_info as a QOM, but QOM needs target_info to set
-up(is_avaible). That makes
-the init sequence too much of a burden.
+Thanks for the review. Fixed in v3: the documentation links are
+now added in the same patches as their target documents.
 
+https://lore.kernel.org/qemu-devel/20260929202358.725310-1-weqaar.janjua@packetfive.com/
 
-is_available is depends on target_arch
-And before this patch, target_arch depends on QOM, pulls user/softmmu becau=
-se
-target_info_init. By moving target-info to be a custom list based, we
-can decouple
-target-info from qom/softmmu/user. and target-info will always
-available once "main(argv, argc)" is entered. We also have the
-advantage of doing all sorts
-of tests against it.
+Regards,
 
+Weqaar Janjua
+Packet Five Networks Ltd.
+Dublin, Ireland
+https://www.packetfive.com
 
-Tools such as qemu-img and unit tests may link target-info.c without any
-target-info-def.c objects. Their target list remains empty, so use this
-fallback.
-
-
-static TypeImpl *type_register_internal(const TypeInfo *info)
-{
-    TypeImpl *ti;
-
-    if (!type_name_is_valid(info->name)) {
-        fprintf(stderr, "Registering '%s' with illegal type name\n",
-info->name);
-        abort();
-    }
-
-    if (info->is_available && !info->is_available()) {
-        return NULL;
-    }
-
-    ti =3D type_new(info);
-
-    type_table_add(ti);
-    return ti;
-}
-
->
-> Is there another good value this list approach brings compared to what
-> exists?
->
-> Regards,
-> Pierrick
-
-
-
---=20
-         =E6=AD=A4=E8=87=B4
-=E7=A4=BC
-=E7=BD=97=E5=8B=87=E5=88=9A
-Yours
-    sincerely,
-Yonggang Luo
 
