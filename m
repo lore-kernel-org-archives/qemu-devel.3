@@ -4,141 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9EE54CA5FFC
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 18:50:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35218CA6002
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 18:53:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xEWiP-0005G0-EF; Wed, 07 Oct 2026 14:50:11 -0400
+	id 1xEWla-0006r6-Vw; Wed, 07 Oct 2026 14:53:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xEWhu-0005Bb-Ou
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 14:49:39 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xEWlZ-0006qs-Ej
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 14:53:25 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xEWht-0002q4-1P
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 14:49:38 -0400
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 697IBDIT1494288
- for <qemu-devel@nongnu.org>; Wed, 7 Oct 2026 18:49:35 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- kloc7gsgUa5OSwcxDAb0SE8OIoaEqfgO7pIFkRL6yfY=; b=Iy6HQNAV91lrxL/k
- cRk9tG6uIG2wNXjV7OlWBZRB+l5LNZgnVfm0muFJFnDyTyDX/m50AsEMxvvOpuoL
- j/g2K5FwiexNpIYPLR/wxoPVJCF3ZFvkBFzkKtxc3AJfFnx0eXN3KzZUzOqF+Di9
- MnMgIuyyMr8frNjjBEvfFVFIf/iRMEWGJAqmu0dFYWbPI3X3lrukzIcLwqPD9hLB
- ZL/E8vl+zGoKhoVXti0rZMXnx218EAPP9GM3rGpfx/rL1co5Fv/lkCrkzl765S1i
- aGzanEE7hJNG6IB1eT0wNLZOEf7PA6t4DA8aiOdNpWoa/8gy5SryFbqPu3eRhMVS
- fgsYWQ==
-Received: from mail-dy1-f200.google.com (mail-dy1-f200.google.com
- [74.125.82.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h5fc5b1hm-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 07 Oct 2026 18:49:35 +0000 (GMT)
-Received: by mail-dy1-f200.google.com with SMTP id
- 5a478bee46e88-3515266f6eeso1621900eec.0
- for <qemu-devel@nongnu.org>; Wed, 07 Oct 2026 11:49:35 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xEWlW-0003DN-Tq
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 14:53:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1791399201;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=ZKl9d+pTSU7suVSd5m+FF4hXN8Ml7fhgVQFTZcBAn/M=;
+ b=c4In9cXpY9M+c8+ZgnWc4H3nlKCeVeNgnxmqYxHek1qxjOCIrtP1di7w3HFFLrJn2VNS75
+ grIMEQptqBTyjs0Lru9hF/OpvXQVLS7OZ50HtFcZz4QKeEqqsH/A0DjLB952vKnFt4WPEb
+ lmXnAF7vIJLY2+rIUGjd9/1zkeIegCY=
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
+ [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-394-pqweVvDfOU2Wdwb4csJ0Cw-1; Wed, 07 Oct 2026 14:53:20 -0400
+X-MC-Unique: pqweVvDfOU2Wdwb4csJ0Cw-1
+X-Mimecast-MFC-AGG-ID: pqweVvDfOU2Wdwb4csJ0Cw_1791399200
+Received: by mail-qt1-f197.google.com with SMTP id
+ d75a77b69052e-5347732a495so6689341cf.1
+ for <qemu-devel@nongnu.org>; Wed, 07 Oct 2026 11:53:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1791398975; x=1792003775; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+ d=redhat.com; s=google; t=1791399199; x=1792003999; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=kloc7gsgUa5OSwcxDAb0SE8OIoaEqfgO7pIFkRL6yfY=;
- b=RPphFF5FRtiGcSonjRLVD/ZwZcwuN0BduhiV5QImhseUvT3Ulq72lhqIkpZbUdCsuZ
- 848wOSd4PCRH4ZjCLVT7h313sTlTvN03yJNYEF/OBNcfGQWFDz4DQ4guNB+JCjc1QLon
- biZTbneCTKXB6AHLL/WQsv7sG+jWuIJEx3rhv7O0frTYxNH+294j2GPuwj3LQYwfaqvM
- GLdMbJorQFakjKkhNo/Xf+2oQW8e7LAawh8MA21mcxfuJYT1Ly8jyaxL2GtiZLmHsbWV
- jADWB7PquCWoUQr5k+ar/YggANnn3xotBoSyjK3fwR6/f5i5pyZV7FVTeMsPj+Cn5o6O
- KJ5Q==
+ bh=ZKl9d+pTSU7suVSd5m+FF4hXN8Ml7fhgVQFTZcBAn/M=;
+ b=a3ZyPUBivoCcviGkR68YgmFMW7wEFysilq5MmVfAPEqPgkj3kMDzAvhhhfkJqPaw88
+ zY3aD0W+buIN3wUyTd7wkGt+J0hA5m0bu0NhgGwJRvPMDlAu/+y3/IGC8VETBI0hjDma
+ e9XyD3DZBeHdQd75KAJ192WPBlUYIjc5GgfLvF4Ty+9cJrKi5+rqpz1BXfA34Erodlaa
+ zOpijfrrbabJWMqSWL+ogKJCEqsG55OrPbtZ0zWG2ApdDdya27+0AfWvlcJxvxp1g8lS
+ WtArnSyKWUGIcFFdtfsvKUAuvEg8sUPS9rfYi2e0praDfwsux5+gQwtouujwrG/i6uiG
+ /5sQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791398975; x=1792003775;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ d=1e100.net; s=20260707; t=1791399199; x=1792003999;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=kloc7gsgUa5OSwcxDAb0SE8OIoaEqfgO7pIFkRL6yfY=;
- b=lpcmdyII63UsPaK9t4Jk6csmwzmh0T40g9BWehon3dOUp3R5cs+8x/Ed01E9o+n9j/
- lpjYcPitQf5+UWyIRHbkX23fmBXL+lLpY8JgxpELUW7hS3kLziOYuf/NtYqNpL0kVHAS
- XpxSrYMRoNRC0B5m5kNUHCPSMZxeC6PV+wjgaRhb9+rFXmSIUkOFAfhtK0dV2j1dpdMy
- bmBhqbFOrjLncFbvMG4vH1jYVMCFPSJDWL9ecYr1ZmM1xsCGLLchUfoWpulvmkmqSjtu
- J2Znij2JghajyMpuCs4uB5lzdqbXAZmJ2mqQ2xbwdng/CZi8fxY4XjMhyAr3PIZSkJQV
- OZRQ==
-X-Gm-Message-State: AFuF++k0Z8qmKxr7KZrpcmxnVnGv5R1hervt9BE9qXjviPvCkOlcr8Nb
- 2kz6699Yq8LrcZ3GhfMByxvN4GJyEMcxBgV9zkzg2MK2S64FQgmnIRPY71VnEYYheW5BpLPcp4o
- k4yWnMzzP/qCbD+w9aR9oFmjhuc/M4phpb8+El3WKnTjKQeNgzpJEnkqCeyV7boH0LA==
-X-Gm-Gg: AYBFou1iUTrBcCh2mnyi9eJYSLWXE+bTt8gfgxc7Iav4EPWpUZS+iykJJWu9OS79iNt
- 5usxaCiX+G0GNPl3hywVMN/tlV7O6tlMotmFGFQ69SBM7uYfAKg8mSbs8q5VkxDG2bkfZXMF8zy
- XcVHlWpWdZTV/ZQyr/gPkTrROOvDD4Ywxx7uDStx817KjBNrSWdyN0SPzEdOCViZByIxQCfiiLT
- jqHAxgk6RsCjfJBOObqUoiRJbqnidV0wt6u6JEBGVQWYMO4lC3EAVspQDHuDqOBxHoXtsscUhi9
- Fk//0XIcHd1Es22gqCRyy/X0SMhbNvjqvWm4yVLnEbxJzBBh090n9n8/96Laavc0GsTiqNRxCb/
- yJ0G6Fxmp+md//OviZdnErkzzfgH+5ZX641y9xi/E9BZjZ6Q44R330vI3cfM8
-X-Received: by 2002:a05:7022:61a5:b0:14a:8cff:fbb8 with SMTP id
- a92af1059eb24-162076c4c3amr4559029c88.28.1791398973962; 
- Wed, 07 Oct 2026 11:49:33 -0700 (PDT)
-X-Received: by 2002:a05:7022:61a5:b0:14a:8cff:fbb8 with SMTP id
- a92af1059eb24-162076c4c3amr4559005c88.28.1791398973320; 
- Wed, 07 Oct 2026 11:49:33 -0700 (PDT)
-Received: from debian.qualcomm.com (192-80-163-190.dyn.novuscom.net.
- [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-1616b01c2b4sm7259158c88.20.2026.10.07.11.49.31
+ bh=ZKl9d+pTSU7suVSd5m+FF4hXN8Ml7fhgVQFTZcBAn/M=;
+ b=QKt31ZJFrHbz/qnnNlwsUESP0pRRmza+f8mALOMFpRnrgX8xuYiho9WHRaxARVb24z
+ QUm3I0OrVRsqRSLJ+tSi4pDzF32GR0+xiOh+Y+R59CPctt+CjBLau5uRaxVEnJYsUD5z
+ tHcLQEq0cDwmzrCT2YmGSYe293Y33rZBiYzpbW8D7MNb/mko0zBqh5Gf6DWZQECu4AtL
+ GnV+xzXbMEGcvZ+vWigiW9h3BNVP3hK9Mv/OPETxlOHXNXviZiudJrDwCpmt1qKvB4cG
+ iO9Dl2fC4VwtwIm8gcB3uBZWtsYndZWbEgUKxpkA0pRVs/tTOeUKxogcW+6XDVMHeLzC
+ MFRw==
+X-Gm-Message-State: AFuF++lN5CP/BaJRltQwJKOOtr1o33uyXj034fN74VK40ROJuOd7ZMQU
+ 4VfYbSksZEb+LHSfFLkefRonWH/VTNL877Rs6Cq81GX8dejD4x7zsQMIBDpLn99L11UtjCeAsQZ
+ VVudNx4lFhBGyR9ZooyeGWqfgZEPdJPKUgMs2tSoSAdj578WTBp+dRcLc
+X-Gm-Gg: AYBFou0IIwNt4C5O3lyyty80z81RwzVZnmKznkgySmY1DAiki6XrxkwmMAaLgz9kxVa
+ y26JPaydMGkduXqw2GZrN0IUeMrZ0YuUcgtiYyDWa7v0Q+hZB60bbUdE32xbOLPgTUbLDO5cjUK
+ yLbp0A6H/OYIVCja4jmOzuwy5PvO9eY8E8cNOFWhPAag1nfXQ1TSX4+sLfMth90VBAyXzi3Pb4C
+ 16YBApsxIo76YR375Moj3IEjuqzLXanlAZrBtzPPXeBGZM/UUVl0JuA6yLJR/wFKS48p9QC5N/V
+ WjG7Syc2dhsCqkWcMpVFOEzwqkAyyndea6UsZXDrJJFJe+Iju3v0XwuqpwLeYcU/IIws23I=
+X-Received: by 2002:a05:622a:8ce:b0:533:39eb:8d42 with SMTP id
+ d75a77b69052e-5358a8dbdbcmr732581cf.21.1791399199409; 
+ Wed, 07 Oct 2026 11:53:19 -0700 (PDT)
+X-Received: by 2002:a05:622a:8ce:b0:533:39eb:8d42 with SMTP id
+ d75a77b69052e-5358a8dbdbcmr732241cf.21.1791399198852; 
+ Wed, 07 Oct 2026 11:53:18 -0700 (PDT)
+Received: from localhost ([142.188.212.246]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-53571f162e7sm26789321cf.1.2026.10.07.11.53.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 07 Oct 2026 11:49:32 -0700 (PDT)
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-To: qemu-devel@nongnu.org, peter.maydell@linaro.org,
- richard.henderson@linaro.org, pbonzini@redhat.com, stefanha@redhat.com
-Cc: pierrick.bouvier@oss.qualcomm.com
-Subject: [PULL 2/3] target-info: use TARGET_ARCH_VARIANT
-Date: Wed,  7 Oct 2026 18:49:12 +0000
-Message-ID: <20261007184913.27052-3-pierrick.bouvier@oss.qualcomm.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20261007184913.27052-1-pierrick.bouvier@oss.qualcomm.com>
-References: <20261007184913.27052-1-pierrick.bouvier@oss.qualcomm.com>
+ Wed, 07 Oct 2026 11:53:18 -0700 (PDT)
+Date: Wed, 7 Oct 2026 14:53:17 -0400
+From: Peter Xu <peterx@redhat.com>
+To: "Denis V. Lunev" <den@openvz.org>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ Juraj Marcin <jmarcin@redhat.com>
+Subject: Re: [PATCH 1/4] migration/postcopy: report COMPLETED only after the
+ run BH has run
+Message-ID: <asaVHeTm2MljE2z0@zhexu-thinkpadt14gen5.rmtcaon.csb>
+References: <20261002110258.1835979-1-den@openvz.org>
+ <20261002110258.1835979-2-den@openvz.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA3MDA3NCBTYWx0ZWRfXyjDtLuLm6P25
- 2TmALsyJVODbCA8BZzSSMcpqzubovLnCIcba4nVaKWp/LWOp2enNEhzTS8guWYdu/Sav4pQYXIV
- n8H52Vo4iSNUYYROjjLQyshhwvQ54tU=
-X-Proofpoint-GUID: Bfttfz5_9qYsDXGQS0VIC5yGFT36HouU
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA3MDA3NCBTYWx0ZWRfX+SYwq2p1Ximt
- E2XMsn8FSR/ixbhu+SANd8mnZzBLGe/iHIwRsUaAqZDsLeN/Y6X+WdYcqBuJKvpNRgkgor+7PO0
- C/edF4BpXXj/4RcNk5YCgS+hj0Xn30sk0/gKMDRuPx5PEfNnwf4b+WNitWv+aipe0AYLe+1F+0S
- j7C6wH6/rpTdJxqUGwWBAz7tbRl03rr1azt4gLbXD4x7gw308/D0H1ysXmh6VSIu2RnzVAT2nzL
- h/h4eQNOnEMbWkBXAlYC4gyhGEcQlyIni3wn+rKCb7XzLXA1p972IV33F0wkvXOTrZ7Y2cb9X+z
- pSkv58L5Ili7yYq2zeQmWfdQe5oJyDhbUy5nsJ9kRE+x5JS7e9BW4uInNVxRMBLUPOwqEKRTC3K
- kdxd4P9gOkvFXh2NdE2m/9VPKr/1/NsmwD5OBfKIK9fGUk+OV66voTGEBu31jDk2AM/0YUfrxMI
- vNNSBJuP9MdlbbUp6vA==
-X-Proofpoint-ORIG-GUID: Bfttfz5_9qYsDXGQS0VIC5yGFT36HouU
-X-Authority-Analysis: v=2.4 cv=a6+lZkSF c=1 sm=1 tr=0 ts=6ac6943f cx=c_pps
- a=PfFC4Oe2JQzmKTvty2cRDw==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
- a=p0WdMEafAAAA:8 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=20KFwNOVAAAA:8
- a=pGLkceISAAAA:8 a=gua6CS0tsYA4MX_G184A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=6Ab_bkdmUrQuMsNx7PHu:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-10-07_06,2026-10-06_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 adultscore=0 suspectscore=0 malwarescore=0
- lowpriorityscore=0 bulkscore=0 spamscore=0 clxscore=1015 impostorscore=0
- phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
- definitions=main-2610070074
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20261002110258.1835979-2-den@openvz.org>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -154,34 +117,122 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-target_arch() will now return the full variant, per SYS_EMU_TARGET enum.
+On Fri, Oct 02, 2026 at 01:02:55PM +0200, Denis V. Lunev wrote:
+> From: Denis V. Lunev <den@openvz.org>
+> 
+> The postcopy listen thread waits for main_thread_load_event before it
+> reports COMPLETED. That event is set as soon as qemu_loadvm_state_main()
+> returns in the main thread, while the run state is changed later, in
+> loadvm_postcopy_handle_run_bh(). The listen thread can therefore report
+> COMPLETED while the VM is still in RUN_STATE_INMIGRATE, easily so in a
+> bitmap-only postcopy where it has little to load.
+> 
+> Management reacting to COMPLETED then finds the VM still incoming: a
+> blockdev-add creates an inactive node, since bds_tree_init() forces
+> BDRV_O_INACTIVE in RUN_STATE_INMIGRATE, and attaching a device to it
+> fails with "Block node is read-only". Precopy gets this right:
+> process_incoming_migration_bh() changes the run state before it reports
+> COMPLETED.
+> 
+> Set an event at the end of the run BH and wait for it in the listen
+> thread, unless loading failed before CMD_POSTCOPY_RUN and the BH was
+> never scheduled.
 
-Reported-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Suggested-by: Yonggang Luo <luoyonggang@gmail.com>
-Fixes: e934c624f3 ("target-info: Statically initialize target_arch")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4640
-Link: https://lore.kernel.org/qemu-devel/20261007184612.24073-3-pierrick.bouvier@oss.qualcomm.com
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
----
- target-info-stub.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+This in general looks reasonable, only some question to impl details,
 
-diff --git a/target-info-stub.c b/target-info-stub.c
-index d121b8c0170..b0079d44dcf 100644
---- a/target-info-stub.c
-+++ b/target-info-stub.c
-@@ -26,7 +26,7 @@ QEMU_BUILD_BUG_ON(TARGET_PAGE_BITS < TARGET_PAGE_BITS_MIN);
- 
- static const TargetInfo target_info_stub = {
-     .target_name = TARGET_NAME,
--    .target_arch = glue(SYS_EMU_TARGET_, TARGET_ARCH),
-+    .target_arch = glue(SYS_EMU_TARGET_, TARGET_ARCH_VARIANT),
-     .long_bits = TARGET_LONG_BITS,
-     .cpu_type = CPU_RESOLVING_TYPE,
-     .endianness = TARGET_BIG_ENDIAN ? ENDIAN_MODE_BIG : ENDIAN_MODE_LITTLE,
+> 
+> Signed-off-by: Denis V. Lunev <den@openvz.org>
+> Cc: Peter Xu <peterx@redhat.com>
+> Cc: Fabiano Rosas <farosas@suse.de>
+> Cc: Juraj Marcin <jmarcin@redhat.com>
+> ---
+>  migration/migration.c    | 2 ++
+>  migration/migration.h    | 2 ++
+>  migration/postcopy-ram.c | 4 ++++
+>  migration/savevm.c       | 1 +
+>  4 files changed, 9 insertions(+)
+> 
+> diff --git a/migration/migration.c b/migration/migration.c
+> index fab7949fe1..8944acf3cd 100644
+> --- a/migration/migration.c
+> +++ b/migration/migration.c
+> @@ -324,6 +324,7 @@ void migration_object_init(void)
+>      qemu_mutex_init(&current_incoming->rp_mutex);
+>      qemu_mutex_init(&current_incoming->postcopy_prio_thread_mutex);
+>      qemu_event_init(&current_incoming->main_thread_load_event, false);
+> +    qemu_event_init(&current_incoming->postcopy_run_event, false);
+>      qemu_sem_init(&current_incoming->postcopy_pause_sem_dst, 0);
+>      qemu_sem_init(&current_incoming->postcopy_pause_sem_fault, 0);
+>      qemu_sem_init(&current_incoming->postcopy_pause_sem_fast_load, 0);
+> @@ -493,6 +494,7 @@ void migration_incoming_state_destroy(void)
+>  
+>      migration_incoming_transport_cleanup(mis);
+>      qemu_event_reset(&mis->main_thread_load_event);
+> +    qemu_event_reset(&mis->postcopy_run_event);
+>  
+>      if (mis->page_requested) {
+>          g_tree_destroy(mis->page_requested);
+> diff --git a/migration/migration.h b/migration/migration.h
+> index 683bc7bdd5..c65212ff63 100644
+> --- a/migration/migration.h
+> +++ b/migration/migration.h
+> @@ -108,6 +108,8 @@ struct MigrationIncomingState {
+>       * loading state.
+>       */
+>      QemuEvent main_thread_load_event;
+> +    /* Set once the postcopy run BH has changed the run state */
+> +    QemuEvent postcopy_run_event;
+
+Can we just move main_thread_load_event post to be run_bh?  AFAIU that's
+the last thing postcopy does anyway, then the bh does whatever offloaded
+later.
+
+IOW, my read is the new run event should always be posted after the
+main_thread_load, then we don't need two.
+
+>  
+>      /* For network announces */
+>      AnnounceTimer  announce_timer;
+> diff --git a/migration/postcopy-ram.c b/migration/postcopy-ram.c
+> index 5509cbdcb8..fd2c139cfe 100644
+> --- a/migration/postcopy-ram.c
+> +++ b/migration/postcopy-ram.c
+> @@ -2443,6 +2443,10 @@ static void *postcopy_listen_thread(void *opaque)
+>       * state yet; wait for the end of the main thread.
+>       */
+>      qemu_event_wait(&mis->main_thread_load_event);
+> +    /* The VM run state is changed later, in loadvm_postcopy_handle_run_bh() */
+> +    if (postcopy_state_get() == POSTCOPY_INCOMING_RUNNING) {
+
+Why the condition, rather than always waiting for it?  If it happened
+already, the wait() will consume the posted.
+
+Thanks,
+
+> +        qemu_event_wait(&mis->postcopy_run_event);
+> +    }
+>  
+>      /*
+>       * Device load in the main thread has finished, we should be in
+> diff --git a/migration/savevm.c b/migration/savevm.c
+> index 4b590ea672..5ec09d4889 100644
+> --- a/migration/savevm.c
+> +++ b/migration/savevm.c
+> @@ -2263,6 +2263,7 @@ static void loadvm_postcopy_handle_run_bh(void *opaque)
+>      }
+>  
+>      trace_vmstate_downtime_checkpoint("dst-postcopy-bh-vm-started");
+> +    qemu_event_set(&mis->postcopy_run_event);
+>  }
+>  
+>  /* After all discards we can start running and asking for pages */
+> 
+> base-commit: f7ada39edacaa5c26b30e98b94017b0b2ccbcf94
+> -- 
+> 2.53.0
+> 
+
 -- 
-2.43.0
+Peter Xu
 
 
