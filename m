@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C281CA5FFC
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 13:55:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39B94CA5FFC
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 13:56:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xES6Z-0007wA-Vo; Wed, 07 Oct 2026 09:54:51 -0400
+	id 1xES7l-0008UW-CV; Wed, 07 Oct 2026 09:56:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
- id 1xERzs-00067a-UW
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 09:48:00 -0400
-Received: from mail-northcentralusazlp170100001.outbound.protection.outlook.com
- ([2a01:111:f403:c105::1] helo=CH1PR05CU001.outbound.protection.outlook.com)
+ id 1xES1s-0006XT-M4
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 09:50:08 -0400
+Received: from mail-northcentralusazlp170120005.outbound.protection.outlook.com
+ ([2a01:111:f403:c105::5] helo=CH5PR02CU005.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
- id 1xERzn-0003yD-FZ
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 09:47:49 -0400
+ id 1xES1q-00044q-3s
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 09:49:55 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=aqt/sP5TL/HsAabUYSIi9jKA8HqO9w/UFms8uZDsdtJmpDq2lCp1UxkX14F6mXYggWrMFgGPhdz1f4ikflo3kNJbx3IhNX4dHpwFnUVWFMl066u7NwofHWvDguSZ7Ti9DKcmfjX+/phVM/SId+TYBlnzBAzAqwH75eUvmMzO1F1IptCcxfw5kvwUEiGXHD5fBmubAdUTX1oRsMNQ5vLRKSCcWwQhWgvj0Q6UO1DT9ZmBEsIPwAhqEg7v+QqN/zMWANcPBIo/AC5xGwNqWOF48xxmQjprEa9ptvvlqyt35CEXitBEcUXLF8JNknQ9JofAUD2ArWRX7JF5A4JsrhXy8Q==
+ b=gN7IuPh1j3Yfa6nUBs68CwgESbR7CTb2Az4arfNnWkVaw9K3VK4Ry9OG9jlCJdc/z0oGl/taOPRJKR490S8yrahxmkc/FABCEy6zzxDVP3znzS2H+qe8Wk2kYXsbdITpMYKZapLOlRvmueMHYlD2A6cdV546azK3P/dARCI7s8/B4D/PNppafYZQTccdln0Xz9EvHluDwq26KPfztP5TxMXpU7EqHZuidgDSHSmbzw2FjJGHyP3HPctB3LW3mq+SHvAswOQkvWrLPiQ+vo/2vfa0QAvxEJg3NWY7I2GeTU6D0s+SR3orBeCPixdFa8hItb5aLJ36Faf7RHpBN7kz0Q==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=TA3BNPZUnrX60+4PCB//BWtHDdSBGd4H9sokr4s2wnE=;
- b=CYIXjMb3ddulQtCRZqGGpLkS8P7kCCPjJeMfZKPQmL4RkwGhK/vOS//uaBT3tT2gZQPKwgWDQtNxXgDshh6PEHxgAkoJ74RchUrsqODakXHzdB5LRt9pqb+A0wdNolqXRgRC5kp7gI1+P6K/wIaqseYcew0M6gLc7G73mkR5Xazd5dSkDP4hNEHiMdHvk9nlSYZLc2rvmbHtTjHC0AvfgS3LrN57P0nbqOg7Aya7KivQyG1GtCBfSqhblG8DSKMHSerY7W8qjSpkJnHUU92FD+On4F7O97WIbyraSOfZ8xp5pFazfesEGLB5z2z8b+cY8lTSX73rHhtJcuhqhS5v/g==
+ bh=4BwQLt9z9ccVGFNYc6uJj3gco7m9SnTGmnE91hDx3eU=;
+ b=JGLRzpDLCMf0V3nAyobWnQ7eh+FnVPTRJp+jllra4t3r0WudUJlLLP5LhvfCrhHEY/mfMdBwCHU6KK5gskvffeYRdbWO3Z3BKqkuYtFKTCWwsUFWDoWMBRyHygHAIGJ0bcmFTrr55zdSMfQO/7Vr9yCb0ne0zPY8pYm6u+xxdT4PXPhaiaAs3336rozhGIJsQujUj0syba8LZI3a/ywZ/vn/Qj7wnokaSEgb+gk02yjotlpPKqDzuwyWACDquTl29Irdt5lOT7PE+h9oWkLkgNCCNQqN/vbmATGTBLJbNONdqetAn/TuhYwxLuzQ0QpbQRRbvX8QucVrSAU8+wcrgQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
  165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
  (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
  dkim=none (message not signed); arc=none (0)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=TA3BNPZUnrX60+4PCB//BWtHDdSBGd4H9sokr4s2wnE=;
- b=hfL5GQqBKCbd/NL0VSoKZaP2tvGkpLkXMjGN8GUL8RcdM/hpO3+r9JsZjjnarkp8xOKU/09zUAAWfwkos+WP4LZNUr8VuVTce6KTv6KrtYSGWLpyA578qFlecsLDvj5bfOyH/Ictt3VpuBxPdMo1hj6pQ/S2LdfWqjvH09smYXI=
-Received: from PH7PR17CA0063.namprd17.prod.outlook.com (2603:10b6:510:325::27)
- by DS5PPFD22966BE3.namprd12.prod.outlook.com (2603:10b6:f:fc00::662)
+ bh=4BwQLt9z9ccVGFNYc6uJj3gco7m9SnTGmnE91hDx3eU=;
+ b=XzhIWOVg8QEuGpf1tjR0kec0m524uif9U2DfF6iXt4eky0Vv0Cz3yWSXEcnAj/MEa14WfdZO8onho7ukGJMZsB5D+AgGYiEj54K91aa7z1tNbRsGf3cIGryE1fLPPqgSyZ7C8HZjIRH96GpjP7/5KIFl8sKyfaaytabBnRp/gWs=
+Received: from MW4PR04CA0056.namprd04.prod.outlook.com (2603:10b6:303:6a::31)
+ by SJ0PR12MB6758.namprd12.prod.outlook.com (2603:10b6:a03:44a::18)
  with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.496.15; Wed, 7 Oct
- 2026 13:47:37 +0000
-Received: from BY1PEPF000264B0.namprd02.prod.outlook.com
- (2603:10b6:510:325:cafe::7e) by PH7PR17CA0063.outlook.office365.com
- (2603:10b6:510:325::27) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.472.20 via Frontend Transport; Wed, 7
- Oct 2026 13:47:36 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.451.26; Wed, 7 Oct
+ 2026 13:49:45 +0000
+Received: from BY1PEPF000264B3.namprd02.prod.outlook.com
+ (2603:10b6:303:6a:cafe::73) by MW4PR04CA0056.outlook.office365.com
+ (2603:10b6:303:6a::31) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.496.5 via Frontend Transport; Wed, 7
+ Oct 2026 13:49:44 +0000
 X-MS-Exchange-Authentication-Results: mx.microsoft.com 1; spf=pass (sender IP
  is 165.204.84.17) smtp.mailfrom=amd.com;
  dkim=none (message not signed)
@@ -54,23 +54,23 @@ Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
  165.204.84.17 as permitted sender) receiver=protection.outlook.com;
  client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
 Received: from satlexmb07.amd.com (165.204.84.17) by
- BY1PEPF000264B0.mail.protection.outlook.com (10.167.242.119) with Microsoft
+ BY1PEPF000264B3.mail.protection.outlook.com (10.167.242.120) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.496.14 via Frontend Transport; Wed, 7 Oct 2026 13:47:36 +0000
+ 15.21.496.14 via Frontend Transport; Wed, 7 Oct 2026 13:49:44 +0000
 Received: from localhost (10.180.168.240) by satlexmb07.amd.com
  (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.49; Wed, 7 Oct
- 2026 08:47:33 -0500
+ 2026 08:49:42 -0500
 From: Michael Roth <michael.roth@amd.com>
 To: <qemu-devel@nongnu.org>
 CC: <kvm@vger.kernel.org>, <pbonzini@redhat.com>, <berrange@redhat.com>,
  <armbru@redhat.com>, <pankaj.gupta@amd.com>, <xiaoyao.li@intel.com>,
  <chao.p.peng@linux.intel.com>, <david@kernel.org>, <ashish.kalra@amd.com>,
  <ackerleytng@google.com>, <lpieralisi@kernel.org>
-Subject: [PATCH v3 19/19] hostmem: Automatically select set guest-memfd=on for
- in-place conversion
-Date: Wed, 7 Oct 2026 08:41:43 -0500
-Message-ID: <20261007134323.1606088-20-michael.roth@amd.com>
+Subject: [PATCH v3 06/19] [NOT-FOR-MERGE] linux-headers: Update headers for
+ v13 of in-place conversion kernel support
+Date: Wed, 7 Oct 2026 08:41:30 -0500
+Message-ID: <20261007134323.1606088-7-michael.roth@amd.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261007134323.1606088-1-michael.roth@amd.com>
 References: <20261007134323.1606088-1-michael.roth@amd.com>
@@ -82,32 +82,32 @@ X-ClientProxiedBy: satlexmb08.amd.com (10.181.42.217) To satlexmb07.amd.com
  (10.181.42.216)
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BY1PEPF000264B0:EE_|DS5PPFD22966BE3:EE_
-X-MS-Office365-Filtering-Correlation-Id: 290f23e3-49a2-4e2c-db4e-08df24798bbb
+X-MS-TrafficTypeDiagnostic: BY1PEPF000264B3:EE_|SJ0PR12MB6758:EE_
+X-MS-Office365-Filtering-Correlation-Id: 6ea2edfb-61c4-4825-fe34-08df2479d832
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|23010399003|82310400026|36860700016|1800799024|7416014|376014|18002099003|260925022911599003|260925021311599003|260925021911599003|10067099003|56012099006|11063799006|6133799003|22082099003;
-X-Microsoft-Antispam-Message-Info: q0GdopUIaiQC4cv76KNlQH+MF7UEeFQp12kdKebgTQpbmbNT+BRDhSsDlwb+mwDZPzLLgO3M2YTPMYBvyfdTY/4FwK3XtRQgVI8DvFgBHEYnzHnVrKrj72vdts71NnlAU7A4c2ZqFpo4Adai+C7TiOykfS93OHbB9Sowq9wV+oTBoklhuevTRVygac8urU2+0M9fhdY5GsLgQA7jxxTqSRDTCMZ8MdP3xSPlUBdANG3Ela3kPB0PjO92IZsrU9St2g96troD8nJB8snoFfI/YHI6GtHEnnsiRLcG3BOFxzzV4MKwIknGUppaHyeTIY2ZcLNgg+vN55JycTXdLHMy0S8qImJxrnPNmkfbP8zNAIzZJ6vd9IlwXOeQ8hB8HUzFBVRWcFpCq29NvRoBAXyaL+73qLUeHpwd7qiUv3iR8EE16pAPShAVykn4+1wWJbVWK0sAmJvwNya9IU6s/Rm3NCE7c4AGRvnkE2gBDt79gMJASU6j0kXGW7zU3E3JhC9BABMBYGd+mT7+Woh30++3JJsRA9x5oOriS9z04DeuYrqzUYsayioqT99UWWYdxS1FA2kX6ALNAyEdw0v/ekqdbJ3itUPjRjiXdD7rQ4QrUzYCxa8UaJjsKTrnIO2a/O68vyTdpS5nbVoGTxOS0ZuZWDedejWlvj3dxvc6dhP3ZstS3yjQj10eb2AIoLdQk7rF8uKIYZ9fSWX/2OAWJSQxYA==
+ ARA:13230040|1800799024|36860700016|376014|82310400026|23010399003|7416014|10067099003|56012099006|11063799006|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info: rlk9Cf/4tgINQR3IZBxsVNZituRzJXzj2pueRyIGwp7JJlzR5XGWqF57RsDXmvcvYDOlVM2tWQU9KZydvp95U4SqlUgK6hF1pR3FJCbMRN6nbpOikeSDTHURM+w/UDliWNi4IG8uKeE3zQWpd2oFPbAcUjOrry25q6yM/aUZVsFfUygBNzCTGe9Zscf3+5MCzL3bxbrP1bMqf6l0YJ7aE2/bHW/0IxodHf4rerutkpVTJ/lF1HxIZa2OHeGLZACB6bDqjYRIARAZ6DzyEpI/zUfVI2yQZfAuC+g9+/Z58sghnR8eTGqmffYwNaQ6ariubVryZUyw7pwvzLF4wJa1IAQfif+NvgNVroP8hmzu2u9a/6/AGBaSWVD1DEeibM+OUcYDlj4l1W4M3wx7nV7eosBiGOqMOxZMKClDHyJX5izxy36XibpMhA101P899wIONSUtzN5wE6sVnzMoeiV+JmxH/nyjDRaEU6D3z/qa4nsRJJsWn8NKsnhLSZHSgHd1LKZw6EGMm8/VVT1hO4N1JpqKKdtegmPd+6WsNC35DanqI3Rd4OoObuoK6A+EDkt91a507qAmBEK8hjXkswI22s915uxXzhYubnQ8Kc8zPu6yJeeuDj93ddOj3m6bAmzkdM3spcs2dTfT8I3l96i4LF9KTasfKZ1jgLKdLZhmOX1P/sTNRhOQuNbuvMQt7L7jMJLVg9bEymwB6qjats9gEQ==
 X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(23010399003)(82310400026)(36860700016)(1800799024)(7416014)(376014)(18002099003)(260925022911599003)(260925021311599003)(260925021911599003)(10067099003)(56012099006)(11063799006)(6133799003)(22082099003);
+ SFS:(13230040)(1800799024)(36860700016)(376014)(82310400026)(23010399003)(7416014)(10067099003)(56012099006)(11063799006)(18002099003)(22082099003);
  DIR:OUT; SFP:1101; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: +P/Sfvp30Jwcga4Bvf55WAt7OefFbcnSV7yuINRrLqIX4kYm5B+vzPMvhLLTlvUyMEvrjL58jeeg5rkVh6aBkTUc1CssRYpEp+uemQfsPSAPlPerPUCtZEISAXjQykdjDZBkJNunB5eWiwcS3JW4lpu1KyO017yto2D9neM1Iruqpt58pCiEDi52sqDBFTLiQ6HgxKarlocFH8+VgH+aRisey/uP2BuVjh7esan75XPyDJ0h4sH8uegGpZL/Aemjklr5FAnOj6bVw6WTIgqkHAuKC502xhw8zxFwwBM/Tb+Z8DZsN4wTpSwaIWWgLDpkhQOKlbCM3PKV6ay/r/AUuu+o5Yi4daISe5jIIj1hNC8RxsudoMt2FCCjQm4DSi/wEtUp9TqllUF7J+NABsoijaquZA+l5zBTbvi3EhMwTl+J3pyWrqP/ea1vbsNzb5On
+X-MS-Exchange-AntiSpam-MessageData-0: JcMY/WkhUcKPtv+wte1TKhnreaXF1Fmfg5gLkPyGcGVDpZGPwzDHyxiz7xNnS09hk2vg/0bzc+X1/p2ukn0oGDy88MJmxVqHZVOS3sbVeXpl9KF36V9SWUs7qCSujKCmjYt3OkO95y/MfbzeMw6OMi2PR5b7YK+FcbSc5TdPUsFnnA/fgo1kTe3Lspe4D6MSvxPxVrRCvHbZus5Ix0JOiNKJFiN0iIs+LCNRr1jhUTWEc2DiPP3kiEDEbecBRGRsDQgVU8xazkiPjsg7SW9TBbddvieIeEpAIK4M4AjQ9eyuewDCQ07noCblQhsaj5xDGPcStORLb+ExLtXwx/xo8lnJh/6aKUKw8tPMHs9s1YypoFA97DYWl8YnTw9XBNC7noo3lywbBRlKaK9PUWYBvXSar6DgC6ezLAsKz3v3bfzizmF6WmB5xXdC0YfoMMHU
 X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Oct 2026 13:47:36.2621 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 290f23e3-49a2-4e2c-db4e-08df24798bbb
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Oct 2026 13:49:44.5501 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 6ea2edfb-61c4-4825-fe34-08df2479d832
 X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
  Helo=[satlexmb07.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: BY1PEPF000264B0.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthSource: BY1PEPF000264B3.namprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS5PPFD22966BE3
-Received-SPF: permerror client-ip=2a01:111:f403:c105::1;
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR12MB6758
+Received-SPF: permerror client-ip=2a01:111:f403:c105::5;
  envelope-from=Michael.Roth@amd.com;
- helo=CH1PR05CU001.outbound.protection.outlook.com
+ helo=CH5PR02CU005.outbound.protection.outlook.com
 X-Spam_score_int: -22
 X-Spam_score: -2.3
 X-Spam_bar: --
@@ -130,117 +130,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When in-place conversion is enabled, both the shared memory and private
-memory must come from the same guest_memfd instance. Thus, the
-memory-backend-memfd options must in turn correspond to a guest_memfd
-instance, e.g. guest-memfd=on must be specified. Since there is no
-use-case for enabling in-place conversion without setting
-guest-memfd=on, just set it automatically if in-place conversion is
-enabled (unless guest-memfd has been explicitly set to 'off', in which
-case generate an informative error message).
+v13 of kernel support for in-place conversion is now in kvm-x86 staging,
+but not yet fully upstream, so pull in just the header definitions
+needed for in-place conversion for now.
 
-Also update the 'guest-memfd' documentation to note this behavior.
+This patch should be replaced with a full kernel header sync once the
+kernel support fully lands.
 
 Signed-off-by: Michael Roth <michael.roth@amd.com>
 ---
- backends/hostmem-memfd.c    | 13 ++++++++++++-
- docs/system/guest-memfd.rst | 21 +++++++++++++++++++++
- qapi/qom.json               |  5 +++--
- 3 files changed, 36 insertions(+), 3 deletions(-)
+ linux-headers/linux/kvm.h | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/backends/hostmem-memfd.c b/backends/hostmem-memfd.c
-index d3b17232f0..11873b4e0e 100644
---- a/backends/hostmem-memfd.c
-+++ b/backends/hostmem-memfd.c
-@@ -21,6 +21,8 @@
- #include "system/kvm.h"
- #include <linux/kvm.h>
- #include "qapi/qapi-visit-common.h"
-+#include "hw/core/boards.h"
-+#include "hw/core/qdev.h"
+diff --git a/linux-headers/linux/kvm.h b/linux-headers/linux/kvm.h
+index aea4ab5c69..7850bd4642 100644
+--- a/linux-headers/linux/kvm.h
++++ b/linux-headers/linux/kvm.h
+@@ -987,6 +987,7 @@ struct kvm_enable_cap {
+ #define KVM_CAP_S390_VSIE_ESAMODE 248
+ #define KVM_CAP_S390_HPAGE_2G 249
+ #define KVM_CAP_PPC_COMPAT_CAPS 250
++#define KVM_CAP_GUEST_MEMFD_MEMORY_ATTRIBUTES 252
  
- OBJECT_DECLARE_SIMPLE_TYPE(HostMemoryBackendMemfd, MEMORY_BACKEND_MEMFD)
+ struct kvm_irq_routing_irqchip {
+ 	__u32 irqchip;
+@@ -1637,6 +1638,21 @@ struct kvm_memory_attributes {
+ 	__u64 flags;
+ };
  
-@@ -45,6 +47,7 @@ memfd_backend_memory_alloc(HostMemoryBackend *backend, Error **errp)
- {
-     HostMemoryBackendMemfd *m = MEMORY_BACKEND_MEMFD(backend);
-     g_autofree char *name = host_memory_backend_get_name(backend);
-+    MachineState *machine = MACHINE(qdev_get_machine());
-     int fd = cpr_find_fd(name, 0);
-     uint32_t ram_flags;
- 
-@@ -57,7 +60,9 @@ memfd_backend_memory_alloc(HostMemoryBackend *backend, Error **errp)
-         goto have_fd;
-     }
- 
--    if (m->guest_memfd == ON_OFF_AUTO_ON) {
-+    if (m->guest_memfd == ON_OFF_AUTO_ON ||
-+        (m->guest_memfd == ON_OFF_AUTO_AUTO &&
-+         machine_require_guest_memfd_convert_in_place(machine))) {
-         /*
-          * NOTE: guest-memfd ignores seal=on/off because it always
-          * implicitly seals the FD by definition.
-@@ -72,6 +77,12 @@ memfd_backend_memory_alloc(HostMemoryBackend *backend, Error **errp)
- 
-         fd = kvm_create_guest_memfd(backend->size, errp);
-     } else {
-+        if (machine_require_guest_memfd_convert_in_place(machine)) {
-+            error_setg(errp, "the current machine requires in-place conversion,"
-+                             " which is not compatible with setting"
-+                             " guest-memfd=off");
-+            return false;
-+        }
-         fd = qemu_memfd_create(TYPE_MEMORY_BACKEND_MEMFD, backend->size,
-                                m->hugetlb, m->hugetlbsize, m->seal ?
-                                F_SEAL_GROW | F_SEAL_SHRINK | F_SEAL_SEAL : 0,
-diff --git a/docs/system/guest-memfd.rst b/docs/system/guest-memfd.rst
-index d62a214a91..4477756424 100644
---- a/docs/system/guest-memfd.rst
-+++ b/docs/system/guest-memfd.rst
-@@ -53,6 +53,27 @@ exposed as an experimental for the time being:
-  * guest_memfd does not currently support the hugetlb=on option
-  * guest_memfd does not currently support Transparent Huge Pages
- 
-+In-place conversion
-+-------------------
++/* Available with KVM_CAP_GUEST_MEMFD_MEMORY_ATTRIBUTES */
++#define KVM_SET_MEMORY_ATTRIBUTES2              _IOWR(KVMIO,  0xd2, struct kvm_memory_attributes2)
 +
-+Newer kernels now support using a guest-memfd instance for both
-+private and shared memory at the same time by re-using the same
-+physical backing pages if a guest converts a GPA range between
-+shared and private. This is known as "in-place conversion".
++struct kvm_memory_attributes2 {
++	union {
++		__u64 address;
++		__u64 offset;
++	};
++	__u64 size;
++	__u64 attributes;
++	__u64 flags;
++	__u64 error_offset;
++	__u64 reserved[11];
++};
 +
-+For some confidential computing architectures, like SEV-SNP and
-+TDX, this mode offers better performance due to not needing to
-+deallocate/reallocate between 2 separate pools of shared vs. private
-+memory every time the guest converts memory between shared/private.
-+For other architectures, this is the only supported mode of
-+operation.
-+
-+When in-place conversion is enabled, it is necessary to use the
-+memory-backend-memfd backend with guest-memfd=on as shown in the
-+"Usage" section. Because of this, guest-memfd=auto (which is the
-+default) will result in the parameter being automatically enabled
-+if the confidential guest type enables in-place conversion.
-+
- References
- ----------
+ #define KVM_MEMORY_ATTRIBUTE_PRIVATE           (1ULL << 3)
  
-diff --git a/qapi/qom.json b/qapi/qom.json
-index 84166c2457..5d66e67087 100644
---- a/qapi/qom.json
-+++ b/qapi/qom.json
-@@ -756,8 +756,9 @@
- # @guest-memfd: if 'on', use guest-memfd to back the memory region.
- #     See the :doc:`/system/guest-memfd` documentation for more
- #     details.  If 'auto', the option will default to 'off'
--#     currently, but in the future it may result in the option being
--#     set to 'on' for QEMU configurations that explicitly require it.
-+#     unless the QEMU configuration explicitly requires it to be set,
-+#     e.g. if in-place conversion is enabled for confidential guest
-+#     types like sev-snp-guest.
- #     (default: auto, since: 11.2)
- #
- # Features:
+ #define KVM_CREATE_GUEST_MEMFD	_IOWR(KVMIO,  0xd4, struct kvm_create_guest_memfd)
 -- 
 2.43.0
 
