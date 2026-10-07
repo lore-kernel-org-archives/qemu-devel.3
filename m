@@ -4,140 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8096DCA6002
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 17:42:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8448CA5FFC
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 18:21:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xEVem-00040R-EP; Wed, 07 Oct 2026 13:42:20 -0400
+	id 1xEWFr-0004D9-6P; Wed, 07 Oct 2026 14:20:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tdave@nvidia.com>) id 1xEVek-0003zX-KH
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 13:42:18 -0400
-Received: from mail-northcentralusazlp170130007.outbound.protection.outlook.com
- ([2a01:111:f403:c105::7] helo=CH4PR04CU002.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1xEWFq-0004Ct-8V; Wed, 07 Oct 2026 14:20:38 -0400
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tdave@nvidia.com>) id 1xEVei-0004qd-PB
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 13:42:18 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=hkk+mnZXl7ows5XPxyPeXFUGvUam4fXWJztGNCWDdewDT0e6+M4eP+UaqU7TwjbW8ODfTpydK2D1E8feBXKuZvZK+rlDvpXY7rysao5D3wbTEcoyu+eqSv3lTUPJCMLhWi6Ofy4B6plils4P2BJy8BECNlEScg7ncmyrhEnZUHQoB8Y6xX2AiAXoXqmol55EfsNF//j6OS5F6ytHAFEEZrcXRK3oTbVgxAhIH9ZAjVqejI25acr+LS9+0kvrlmYcuEpsQrJfedn1QAXW+pq5dBF2BV9dF+xlToK6LiGpNFLvp7F1LyPnnFStxz5y0tAERHbEVEJazJsKHAN1Dmi4ZA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=dpsijXhyKZIZ1l0xuSx/wKOTVwXawVxA8rTUXa4IL+s=;
- b=wODLlZoM17ayM/HXK6AKRq05r0PSoDgee8DK5A4KD5Z6xIBzR3nagjKWonl+r42Uh2IaxHmnwWpL/sbld0A1UiJF0Mhg3vtwY48UItyAopFgynU+1R3X4X06KunrKVgZ2cfEojHx2kpN5S7B81shTG0vcrnugQG/09GVp9BpsglztlOTmYIJfVv4IbPrOGjKRrNY/3tOqFRh7bC8EXdsWgPyf85H294yqkZasMw4zggnf6Re4vCIWQK/6wxy/FyiUHX1NFsyXrINdw6gH4WYEtWnddkYFaJbK0VtcGTfE0Jvt6W94WcsLvmpd2VYKIgLozZMw8dZv+VVt4ra+jWqZw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=dpsijXhyKZIZ1l0xuSx/wKOTVwXawVxA8rTUXa4IL+s=;
- b=CXKoDvMYI9+dZoE9TJqMOs3i7SRDX9NH50YTP1hChCSbyk3d4DxJbmmnkIou90zyVOmB+N1zBdFo1XBLQqGtz1Xn8x1JW4Zb0MOW7rYf6R09cSf5/2UmdXqZbgRC8ijTT269KG0cgd4sNWYPCGzuc2SFTIsk9pcJ5v1icPvQ17xDysoBGGrtK3JDjuVW5XId0bJiSxt5JIftzh0JekQ0MA7Zg2bXojrPZXEF97YfJsCjUKWMc68fTr/PvNRD1TvMb3YIL0YSGKhAojVwfUcARtq9r8yduQAI9kSl0t47o8XA1RDlPWccssSeIscxPHuLAdhRZhl92Oyh47TBlZDDoQ==
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from IA3PR12MB923065.namprd12.prod.outlook.com
- (2603:10b6:208:627::17) by PH9PR12MB731475.namprd12.prod.outlook.com
- (2603:10b6:510:414::9) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.496.15; Wed, 7 Oct
- 2026 17:42:10 +0000
-Received: from IA3PR12MB923065.namprd12.prod.outlook.com
- ([fe80::1c83:bf47:4202:50b1]) by IA3PR12MB923065.namprd12.prod.outlook.com
- ([fe80::1c83:bf47:4202:50b1%5]) with mapi id 15.21.0496.010; Wed, 7 Oct 2026
- 17:42:10 +0000
-Message-ID: <a763c5ed-ea48-4922-bbce-8ca0f0d0b7ce@nvidia.com>
-Date: Wed, 7 Oct 2026 12:42:05 -0500
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/3] xio3130_downstream: Add ACS support for downstream
- PCIe ports
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: qemu-devel@nongnu.org, philmd@oss.qualcomm.com, zhao1.liu@intel.com,
- yishaih@nvidia.com, alwilliamson@nvidia.com, jgg@nvidia.com,
- skolothumtho@nvidia.com
-References: <20261006013133.3457555-1-tdave@nvidia.com>
- <20261006013133.3457555-2-tdave@nvidia.com>
- <20261006004605-mutt-send-email-mst@kernel.org>
-From: Tushar Dave <tdave@nvidia.com>
-Content-Language: en-US
-In-Reply-To: <20261006004605-mutt-send-email-mst@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: MW3PR05CA0025.namprd05.prod.outlook.com
- (2603:10b6:303:2b::30) To IA3PR12MB923065.namprd12.prod.outlook.com
- (2603:10b6:208:627::17)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1xEWFn-0008JX-27; Wed, 07 Oct 2026 14:20:38 -0400
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 7FF63583224;
+ Wed, 07 Oct 2026 20:20:31 +0200 (CEST)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id K8RK8uSJGcXG; Wed,  7 Oct 2026 20:20:29 +0200 (CEST)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 003065831F1; Wed, 07 Oct 2026 20:20:28 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id F250C5831F0;
+ Wed, 07 Oct 2026 20:20:28 +0200 (CEST)
+Date: Wed, 7 Oct 2026 20:20:28 +0200 (CEST)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Utkarsh Verma <uverma@linux.ibm.com>
+cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, aik@amd.com, 
+ nnmlinux@linux.ibm.com, avnish@linux.ibm.com, pbonzini@redhat.com, 
+ th.huth@posteo.eu, sbhat@linux.ibm.com, harshpb@linux.ibm.com, 
+ amachhiw@linux.ibm.com, rathc@linux.ibm.com, philmd@linaro.org, 
+ npiggin@gmail.com, marcandre.lureau@redhat.com, fam@euphon.net, 
+ alex.bennee@linaro.org, richard.henderson@linaro.org
+Subject: Re: [RFC PATCH v2 5/8] ppc/spapr: add block device backend to VOF
+ open/read/write/seek services
+In-Reply-To: <20261002052605.605858-6-uverma@linux.ibm.com>
+Message-ID: <ae59611f-fede-edf8-3824-ea04671276a9@eik.bme.hu>
+References: <20261002052605.605858-1-uverma@linux.ibm.com>
+ <20261002052605.605858-6-uverma@linux.ibm.com>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: IA3PR12MB923065:EE_|PH9PR12MB731475:EE_
-X-MS-Office365-Filtering-Correlation-Id: 01bdc30a-8fc8-4d0e-c220-08df249a502c
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|23010399003|366016|1800799024|6133799003|10067099003|18002099003|22082099003|4143699003|11063799006|56012099006|5023799004;
-X-Microsoft-Antispam-Message-Info: 4AWPEVmL0r0+HcfNfTCWT1Crlza1BjRPlCfHfIHMXvmbdXpb1QZNV4k4ra/qoisLw1xhfL3OPPO6CxajfrLRl8HvEHOJWyyjGpGQdrBAvVGRv9kdre+a23uH+aV2PlgnIUGH0O0ap5DxuvaDn4ymCdFuQv8edNE5QgJT3JaBz6GKbY2TyGyCYpEvQSDzVtC/9cjQP0ws+zNAfrc+FWNdxU4KmigWTjxKfFXnezK8QJribROg/wNrQDC4DxhF52NDXs6ujRP6bR5hKM+6y1eWoAgZRpowf0eXupIfzr7KSoe/fZL9uwWvE0Ig4t0ctkWk5CR92UOqo9FSSBidvtmm1eYsgVy1KLufElRdA2jAtEOW9gzYs1nwK+zJ+5lA3CKqR2/dOwUt7iHOtH7OgDUiKIUURIcWUckB4NJqNGY/q/PV4J6o+qnELBg6xpltObF8u6KgwL8nrNYMQV/BRBnQmP3sqlAFF4/i14mrID2g3qaN2HFevrc3MZPm0ghqSmvpsuCvIuaSNc35FgoCAWnyu11UqjUH3cCKT04SKBjYpP9DoogrMrxIUbvVskX41NTjLYK9kc/bZxOIsdZWR7dYhBcwSrjerOnScUuTh6it4RaU1apcplwDKPRPqN30XYJN1SRcHFl00yGBOT86cIrdqPak7Z4RtdRAPNEogZlxVwU=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:IA3PR12MB923065.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(23010399003)(366016)(1800799024)(6133799003)(10067099003)(18002099003)(22082099003)(4143699003)(11063799006)(56012099006)(5023799004);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?aEY0YjBGenZtU1pqVEcvaUk4Sk1DVUtWQnJ0ZVFwTGd6ckxDZ2NlcitoaWMx?=
- =?utf-8?B?dG8vc1FPeFdGTk9RY0xuSFFablRlNjFPT3c4TDVBeDIxU3pCYmwyMW03RTNw?=
- =?utf-8?B?Szc4eks0bVBpN3BOeEkrS0V3RUVham92Smk3Z0VrUkd6em1TVXp4RnVIc3lC?=
- =?utf-8?B?K1o0Zkh4Um5YRXRHMmFWSTZIN2NPcmJ2QkF2cTI0czRCdXJqbElRVHhuSHVV?=
- =?utf-8?B?TENYQVNiV29KZGhIOTNSTGpyZ0JtZW1PQVFxWTRBSHBsN1NnV2tnMVJ3Szc0?=
- =?utf-8?B?b28reFhscXpIdWdBbmF2Q2JHM3N6V1I0UWNJSmZzN0xFS25USTBqQWNpRC9O?=
- =?utf-8?B?aUpBdVJ5Rmd2empRamIwekdhTVRsaXFDR0JnMmFITWNQTEw5Nlg0SzlIazVQ?=
- =?utf-8?B?OG9SV1VobHRJU3BhR01COG5EWXd1VFpWYXI0WEY0Z2lZYzZrS3U3WnhISGRJ?=
- =?utf-8?B?bWIyMWpVZGVmR1U2azhBM3pqUW9sQjJFMW5kcDdXUkRTRUdlUmk2SEJzdVow?=
- =?utf-8?B?dDJBSlk0Umx3N3ZQWGJIbHVlbmQ3VjA4U2UwM1RlSW1HVS9NMlpYSzltamhT?=
- =?utf-8?B?SHpOWmRRNVFmaU14TDdaWXJSdy9NVVhpMWlGRUQ5UGdPeldxMi9aMk1GRVU0?=
- =?utf-8?B?cUVrMFUwZTBhZC9YWGY2T2h4M1FXUHQ3WVM5L0FOMXJKdmN3QTI1a0hHWkxm?=
- =?utf-8?B?akxSbGpNZGNMbXdRellpKzJ1bFpzWFhRRFErVzNTNytOdWEyOEk3VjluS2pp?=
- =?utf-8?B?aDdvTXlqL29ML0trTzMxOHJXZzExSkFxN1E0VTRKWHpadFJDRWRjVHZETGw0?=
- =?utf-8?B?SFpRT0hUQTJaNkMzYXhTNGVmV2ViUUJLNjJDWGVrSGV6TnZZVkhhMWVGY1ND?=
- =?utf-8?B?TEppcWFFa1cxR1psb0FZVGFBWGhxN25SU1VtS2wyR1FQNzBNOFFtZ0Y5dkdZ?=
- =?utf-8?B?RERQV2dmQzhiTlB5R1F0eWl3SWZtOWt4ZFdyUEd3SHJmZUtwSFh4TnhjVkFY?=
- =?utf-8?B?aFF3RmhiUjNFWHFtTm9aVHhwdG9IaEtPL0x5OEU0WDU1ZnNCTzZVZHhlNjUz?=
- =?utf-8?B?dzFyaWkyMFNIUW40NXNBWEdva3AxS25VZGp2YU9VeXpvYm0zUi9uSVMzdkxH?=
- =?utf-8?B?QWtBK0xOeTgyZWQ2UG9JUWF5UmFBbHVpUEZvdXV0OFdBMlNSTlp2RkI1QXdT?=
- =?utf-8?B?bkg1bGdmMDJSdk4zRzl3bFF3SzlqdFBpNFdVWHlKMXN4cE9ISXN2QmR6QVhE?=
- =?utf-8?B?Wlp0WExjWENLMVg2dmlHS1duNnl0ajZuNktTY09wMEZSbUM4eE5kelpBMG5W?=
- =?utf-8?B?SVdoUUo0M3dWekQzcWo5QWVnV0tmeCt4U3JWaHhPL1RlZ0lwRHRFQis1SGFv?=
- =?utf-8?B?amQzaUQwZzZZZXp5M2JvWUhQYk8vQ1FEeWJ4R3ZkT1RieC9ta3M0NTg0eXdl?=
- =?utf-8?B?S0RQSlFTMGdtdi9PNGZNdWxyRGpIdkU0Y1ZvRzhkWm8xT1VscXo1Sm1pd2xY?=
- =?utf-8?B?d3lCUHZnYXpEMFVYaUg4Vmo4cXhXbmY1ZXlITHp0S3dqRndWbHZ2U0N1SmtK?=
- =?utf-8?B?c2NVMmlKcW0ydWNkbmYvV3k4c3U3WnQrNDN5bTc4bFVyQkJrMEpxallVZWhG?=
- =?utf-8?B?Z2ZVV1Ztd1Y3OVBPbjlnTTBQS3huVGJ0RUZVSCt0OWg1Y1pUdEcvc1JaQURu?=
- =?utf-8?B?Q0xDazlFeG92dWNsNGhZMnRFYWJ5NFBsei9SL2Q5RmpMSVZ3djFpM1duWGZF?=
- =?utf-8?B?eVIvYTJyU3VyZGk3QVlhL01LQkFQMjFtblR5NHMrQ1JEMUVBTlVkRWMwcnpl?=
- =?utf-8?B?eHBkeER3SmdwWDJZT09tWWo3Mk0xV1QyWVBRbjcrdjMyRW1ScEhZRUp5RHpx?=
- =?utf-8?B?V2V1NXZ2dXNRVHpxSnJtZitNa3JKT3NzSVhHL3p0S0x6THJLSXloOW15MVha?=
- =?utf-8?B?ZzFMSjhaWGo1K2NZZkxzQkEzWU0rOVRwS091VElKbXNtZkNhQUM2d3QwWTFI?=
- =?utf-8?B?NDM1cndVaHhJeHh5SVlGOUF5MjI2alRuWVFDQlJUWFhERXBUSUNraG02azlw?=
- =?utf-8?B?K29BQjJySG1RTWl5WmxiZFo3MzJvUDNKT1NNSHNvY1ZtTzNFWnlBVDVsWHYv?=
- =?utf-8?B?NXNRRnByV09QQklxQnFHVmprSHlzSWo1VG5JcEltNEhiYVdBR2s0TWFOeUdq?=
- =?utf-8?B?bzZRZHROTU1Zc2NzM0VLZ2ZVSTM1SEZld3JmNjRocDhUTjhiQmsxVmFLOCtx?=
- =?utf-8?B?dW5hVGx6N1NTazZBWTZ1ZXlRVFYyMURUaEx6a1VNVDZwU2xqWmNPL3JON1Fm?=
- =?utf-8?Q?074s1TxY6zgYWxmRzc?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 01bdc30a-8fc8-4d0e-c220-08df249a502c
-X-MS-Exchange-CrossTenant-AuthSource: IA3PR12MB923065.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Oct 2026 17:42:09.9995 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: PpA+8z5zdVaLvGPB8lRyJCOeuwE33FtTVxz78ApwRMI9fye79pbPRq4X8WU6KxaelYuyOpWADBZOPOOIL71yHw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH9PR12MB731475
-Received-SPF: permerror client-ip=2a01:111:f403:c105::7;
- envelope-from=tdave@nvidia.com;
- helo=CH4PR04CU002.outbound.protection.outlook.com
-X-Spam_score_int: -12
-X-Spam_score: -1.3
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_NONE=0.001 autolearn=no autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -153,122 +69,417 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Fri, 2 Oct 2026, uverma@linux.ibm.com wrote:
+> From: Utkarsh Verma <uverma@linux.ibm.com>
+>
+> Extend the VOF client interface to support block device I/O through the
+> sPAPR SCSI disk, which is needed by bootloaders such as GRUB during VOF
+> disk boot.
+>
+> Add BlockBackend and position tracking fields to OfInstance and use them
+> in vof_seek(), vof_write() and vof_read() to extend their functionality
+> to handle block devices as well.
+>
+> In vof_do_open(), detect "disk" FDT nodes, extract the SRP LUN from the
+> path string, and use scsi_device_find() + blk_by_dev() to obtain the
+> matching BlockBackend.
+>
+> Add vof_seek() to implement the OpenFirmware "seek" client service,
+> which was previously missing.
+>
+> AI-used-for: code
+> Signed-off-by: Utkarsh Verma <uverma@linux.ibm.com>
+> ---
+> Changelog:
+> v2:
+> - vof_do_open(): replaced brute force blk_next() loop with
+>  vof_find_vscsi_bus() + scsi_device_find() + blk_by_dev() for a SCSI
+>  disk discovery.
+> - vof_write() block path: capped I/O to VOF_BLK_BUF_SIZE (64 KB) per
+>  iteration, checked blk_flush() return value, added bdrv_is_read_only()
+>  guard before any write attempt.
+> - vof_write() serial path: fixed an existing bug, which did not advance
+>  the buffer after each iteration and returned the remaining len instead
+>  of bytes written.
+> - vof_read() block path: added the same loop pattern as vof_write(),
+>  advancing buf and position correctly per iteration.
+> - path_offset(): added wildcard fallback so "disk@<srp-lun>" paths
+>  resolve to the parent's generic "disk" FDT subnode.
+> ---
+> hw/ppc/trace-events |   2 +
+> hw/ppc/vof.c        | 217 +++++++++++++++++++++++++++++++++++++++++++-
+> 2 files changed, 215 insertions(+), 4 deletions(-)
+>
+> diff --git a/hw/ppc/trace-events b/hw/ppc/trace-events
+> index dbdcfada26..a61398ecb2 100644
+> --- a/hw/ppc/trace-events
+> +++ b/hw/ppc/trace-events
+> @@ -78,6 +78,7 @@ vof_error_unknown_service(const char *service, int nargs, int nret) "\"%s\" args
+> vof_error_unknown_method(const char *method) "\"%s\""
+> vof_error_unknown_ihandle_close(uint32_t ih) "ih=0x%x"
+> vof_error_unknown_path(const char *path) "\"%s\""
+> +vof_error_seek(uint32_t ih) "ih=0x%x"
+> vof_error_write(uint32_t ih) "ih=0x%x"
+> vof_error_read(uint32_t ih) "ih=0x%x"
+> vof_finddevice(const char *path, uint32_t ph) "\"%s\" => ph=0x%x"
+> @@ -92,6 +93,7 @@ vof_interpret(const char *cmd, uint32_t param1, uint32_t param2, uint32_t ret, u
+> vof_package_to_path(uint32_t ph, const char *tmp, int ret) "ph=0x%x => %s len=%d"
+> vof_instance_to_path(uint32_t ih, uint32_t ph, const char *tmp, int ret) "ih=0x%x ph=0x%x => %s len=%d"
+> vof_instance_to_package(uint32_t ih, uint32_t ph) "ih=0x%x => ph=0x%x"
+> +vof_seek(uint32_t ih, uint64_t pos) "ih=0x%x pos=0x%"PRIx64
+> vof_write(uint32_t ih, unsigned cb, const char *msg) "ih=0x%x [%u] \"%s\""
+> vof_read(uint32_t ih, unsigned cb, const char *msg) "ih=0x%x [%u] \"%s\""
+> vof_avail(uint64_t start, uint64_t end, uint64_t size) "0x%"PRIx64"..0x%"PRIx64" size=0x%"PRIx64
+> diff --git a/hw/ppc/vof.c b/hw/ppc/vof.c
+> index 6f6d424347..d4b57b3b46 100644
+> --- a/hw/ppc/vof.c
+> +++ b/hw/ppc/vof.c
+> @@ -11,6 +11,7 @@
+>
+> #include CONFIG_DEVICES /* CONFIG_PSERIES */
+> #include "qemu/osdep.h"
+> +#include "qemu/cutils.h"
+> #include "qemu/ctype.h"
+> #include "qemu/timer.h"
+> #include "qemu/range.h"
+> @@ -25,6 +26,9 @@
+> #include "trace.h"
+>
+> #include "hw/ppc/spapr_vio.h"
+> +#include "hw/scsi/scsi.h"
+> +#include "system/block-backend.h"
+> +#include "block/block-io.h"
+> #include <libfdt.h>
+>
+> /*
+> @@ -38,6 +42,7 @@
+> #define VOF_MAX_METHODLEN   256
+> #define VOF_MAX_FORTHCODE   256
+> #define VOF_VTY_BUF_SIZE    256
+> +#define VOF_BLK_BUF_SIZE    (64 * 1024)
 
+* KiB instead of 1024?
 
-On 10/5/2026 11:49 PM, Michael S. Tsirkin wrote:
-> On Mon, Oct 05, 2026 at 08:31:31PM -0500, Tushar Dave wrote:
->> When a PASID-capable device is added behind the PCIe downstream port,
->> for example, an Nvidia GPU, the PCIe downstream ports must expose ACS
->> capability otherwise PASID won't get enabled.
->>
->> In addition, the other use case is GPUDirect RDMA using Data Direct
->> that must require special ACS controls at the PCIe downstream ports
->> for P2P communication.
->>
->> Gate it behind a new x-pcie-acs property (default on), following the
->> x-pcie-* compat-bit convention (x-pcie-ext-tag/x-pcie-err-unc-mask/
->> x-pcie-ari-nextfn-1), so older machine types can disable it via
->> hw_compat to preserve migration compatibility.
->>
->> Signed-off-by: Tushar Dave <tdave@nvidia.com>
-> 
-> Does TI X3130 have ACS? If not will the purpose be
-> served better by the new generic port recently proposed?
+>
+> typedef struct {
+>     uint64_t start;
+> @@ -47,6 +52,8 @@ typedef struct {
+> typedef struct {
+>     char *path; /* the path used to open the instance */
+>     uint32_t phandle;
+> +    BlockBackend *blk;
+> +    uint64_t pos; /* current position for seek operations */
+>     void *vty;
+> } OfInstance;
+>
+> @@ -138,6 +145,8 @@ static int path_offset(const void *fdt, const char *path)
+> {
+>     g_autofree char *p = NULL;
+>     char *at;
+> +    char *last_slash;
+> +    int offset;
+>
+>     /*
+>      * https://www.devicetree.org/open-firmware/bindings/ppc/release/ppc-2_1.html#HDR16
+> @@ -156,7 +165,76 @@ static int path_offset(const void *fdt, const char *path)
+>             }
+>     }
+>
+> -    return fdt_path_offset(fdt, p);
+> +    offset = fdt_path_offset(fdt, p);
+> +    if (offset >= 0) {
+> +        return offset;
+> +    }
+> +
+> +    /*
+> +     * Apply the OF wildcard rule for vSCSI disk paths. A path ending in
+> +     * disk@<srp-lun> has no per-LUN FDT node, instead the FDT contains a single
+> +     * generic "disk" child (no srp-lun appended to the path). The phandle is
+> +     * shared by all LUNs on the adapter, matching the Open Firmware behaviour.
+> +     */
+> +    last_slash = strrchr(p, '/');
+> +    if (last_slash && strncmp(last_slash + 1, "disk@", 5) == 0) {
+> +        int parent_off;
+> +
+> +        *last_slash = '\0';
+> +        parent_off = fdt_path_offset(fdt, p);
+> +        if (parent_off >= 0) {
+> +            int child_off = fdt_subnode_offset(fdt, parent_off, "disk");
 
+I'm not sure how this should work but what if there are multiple disk 
+nodes such as disk@0 disk@1 or similar? Should this look for the original 
+ending of the path instead of just "disk"?
 
-As per my search, the physical TI XIO3130 does not implement ACS.
+> +            if (child_off >= 0) {
+> +                return child_off;
+> +            }
+> +        }
+> +    }
+> +
+> +    return offset;
+> +}
+> +
+> +/*
+> + * Return the SCSIBus for a v-scsi@<reg> path, or NULL if not found.
+> + */
+> +static SCSIBus *vof_find_vscsi_bus(MachineState *ms, const char *path)
+> +{
+> +#ifdef CONFIG_PSERIES
+> +    SpaprMachineState *spapr = SPAPR_MACHINE(ms);
+> +    const char *at;
+> +    const char *endptr;
+> +    unsigned long reg;
+> +    SpaprVioDevice *vdev;
+> +    BusState *bus;
+> +
+> +    if (!spapr || !spapr->vio_bus) {
+> +        return NULL;
+> +    }
+> +
+> +    at = strstr(path, "v-scsi@");
+> +    if (!at) {
+> +        return NULL;
+> +    }
+> +    at = strchr(at, '@');
+> +    if (!at) {
+> +        return NULL;
+> +    }
+> +
+> +    if (qemu_strtoul(at + 1, &endptr, 16, &reg) || endptr == at + 1) {
+> +        return NULL;
+> +    }
+> +
+> +    vdev = spapr_vio_find_by_reg(spapr->vio_bus, (uint32_t)reg);
+> +    if (!vdev) {
+> +        return NULL;
+> +    }
+> +
+> +    QLIST_FOREACH(bus, &vdev->qdev.child_bus, sibling) {
+> +        if (object_dynamic_cast(OBJECT(bus), TYPE_SCSI_BUS)) {
+> +            return SCSI_BUS(bus);
+> +        }
+> +    }
+> +#endif /* CONFIG_PSERIES */
 
-I am not aware if the capabilities of the emulated XIO3130 are expected
-to exactly match those of the physical XIO3130. My assumption was that
-the emulated device can provide the PCIe capabilities needed to
-construct and configure the virtual topology, even if those capabilities
-are not present in the physical XIO3130.
+No #ifdefs. This vof.c file is the generic machine independent parts, so 
+this function should go to spapr_vof.c and maybe exported through the VOF 
+machine class interface. Pegasos2 has IDE disks so if I want to later add 
+support for this for that machine I should implement similar function 
+there and this one here should call the implementation supplied by the 
+machine not hard code spapr here. So this should be some generic find 
+block device for device node function that the machine implements.
 
-I added ACS to the XIO3130 devices because they are currently used to
-build PCIe topologies. I have not looked into the generic PCIe port
-support in detail yet, so I can't comment on whether it would be a
-better fit for these existing PCIe topology use cases.
+> +    return NULL;
+> }
+>
+> static uint32_t vof_finddevice(const void *fdt, uint32_t nodeaddr)
+> @@ -450,6 +528,8 @@ static uint32_t vof_do_open(void *fdt, Vof *vof, int offset, const char *path)
+> {
+>     uint32_t ret = PROM_ERROR;
+>     OfInstance *inst = NULL;
+> +    const char *node_name;
+> +    MachineState *ms = MACHINE(qdev_get_machine());
+>
+>     if (vof->of_instance_last == 0xFFFFFFFF) {
+>         /* We do not recycle ihandles yet */
+> @@ -462,13 +542,43 @@ static uint32_t vof_do_open(void *fdt, Vof *vof, int offset, const char *path)
+>     ++vof->of_instance_last;
+>
+>     inst->path = g_strdup(path);
+> +    inst->blk = NULL;
+> +    inst->pos = 0;
+>     inst->vty = NULL;
+>
+> +    node_name = fdt_get_name(fdt, offset, NULL);
+> +
+> +    /*
+> +     * vSCSI disk open.  The FDT contains only a generic "disk" child node (no
+> +     * srp-lun appended to the path), matching Open Firmware behaviour.
+> +     * Extract the LUN from the "disk@<hex>" component of the path string
+> +     * and use it to find the corresponding QEMU block backend.
+> +     */
+> +    if (node_name && strcmp(node_name, "disk") == 0) {
+> +        const char *disk_at = strstr(path, "/disk@");
+> +        const char *endptr;
+> +        uint64_t srp_lun;
+> +
+> +        if (disk_at &&
+> +            qemu_strtou64(disk_at + 6, &endptr, 16, &srp_lun) == 0) {
+> +            SCSIBus *sbus = vof_find_vscsi_bus(ms, path);
+> +
+> +            if (sbus) {
+> +                uint32_t target  = (srp_lun >> 56) & 0x3f;
+> +                uint32_t channel = (srp_lun >> 53) & 0x7;
+> +                uint32_t lun     = (srp_lun >> 48) & 0x1f;
+> +                SCSIDevice *sdev = scsi_device_find(sbus, (int)channel,
+> +                                                    (int)target, (int)lun);
+> +                if (sdev) {
+> +                    inst->blk = blk_by_dev(sdev);
+> +                }
+> +            }
+> +        }
+> +    }
+> +
 
-Thanks.
--Tushar
+This should be in spapr_vof.c too as it's specific to spapr. Just call the 
+machine function that returns the blk for the node here. The rest below 
+seems generic so those are OK to be here in vof.c.
 
+Regards,
+BALATON Zoltan
 
-> 
->> ---
->>  hw/core/machine.c                  | 1 +
->>  hw/pci-bridge/xio3130_downstream.c | 9 +++++++++
->>  include/hw/pci/pci.h               | 3 +++
->>  3 files changed, 13 insertions(+)
->>
->> diff --git a/hw/core/machine.c b/hw/core/machine.c
->> index d9ac4b419a..b1b3911430 100644
->> --- a/hw/core/machine.c
->> +++ b/hw/core/machine.c
->> @@ -43,6 +43,7 @@
->>  GlobalProperty hw_compat_11_1[] = {
->>      { "sysbus-ehci-usb", "x-migrate-fetch-addr-64bit", "off" },
->>      { "pci-ehci-usb", "x-migrate-fetch-addr-64bit", "off" },
->> +    { "xio3130-downstream", "x-pcie-acs", "off" },
->>  };
->>  const size_t hw_compat_11_1_len = G_N_ELEMENTS(hw_compat_11_1);
->>  
->> diff --git a/hw/pci-bridge/xio3130_downstream.c b/hw/pci-bridge/xio3130_downstream.c
->> index 0c3fed3053..6a9df5c174 100644
->> --- a/hw/pci-bridge/xio3130_downstream.c
->> +++ b/hw/pci-bridge/xio3130_downstream.c
->> @@ -40,6 +40,8 @@
->>  #define XIO3130_SSVID_SSID              0
->>  #define XIO3130_EXP_OFFSET              0x90
->>  #define XIO3130_AER_OFFSET              0x100
->> +#define XIO3130_ACS_OFFSET \
->> +    (XIO3130_AER_OFFSET + PCI_ERR_SIZEOF)
->>  
->>  static void xio3130_downstream_write_config(PCIDevice *d, uint32_t address,
->>                                           uint32_t val, int len)
->> @@ -60,6 +62,7 @@ static void xio3130_downstream_reset(DeviceState *qdev)
->>      pcie_cap_deverr_reset(d);
->>      pcie_cap_slot_reset(d);
->>      pcie_cap_arifwd_reset(d);
->> +    pcie_acs_reset(d);
->>      pci_bridge_reset(qdev);
->>  }
->>  
->> @@ -111,6 +114,10 @@ static void xio3130_downstream_realize(PCIDevice *d, Error **errp)
->>          goto err;
->>      }
->>  
->> +    if (d->cap_present & QEMU_PCIE_CAP_ACS) {
->> +        pcie_acs_init(d, XIO3130_ACS_OFFSET);
->> +    }
->> +
->>      return;
->>  
->>  err:
->> @@ -137,6 +144,8 @@ static void xio3130_downstream_exitfn(PCIDevice *d)
->>  static const Property xio3130_downstream_props[] = {
->>      DEFINE_PROP_BIT(COMPAT_PROP_PCP, PCIDevice, cap_present,
->>                      QEMU_PCIE_SLTCAP_PCP_BITNR, true),
->> +    DEFINE_PROP_BIT("x-pcie-acs", PCIDevice, cap_present,
->> +                    QEMU_PCIE_ACS_BITNR, true),
->>  };
->>  
->>  static const VMStateDescription vmstate_xio3130_downstream = {
->> diff --git a/include/hw/pci/pci.h b/include/hw/pci/pci.h
->> index f2448e941a..dd52b9639e 100644
->> --- a/include/hw/pci/pci.h
->> +++ b/include/hw/pci/pci.h
->> @@ -231,6 +231,9 @@ enum {
->>      QEMU_PCI_CAP_PM = (1 << QEMU_PCI_CAP_PM_BITNR),
->>  #define QEMU_PCI_SKIP_RESET_ON_CPR_BITNR 15
->>      QEMU_PCI_SKIP_RESET_ON_CPR = (1 << QEMU_PCI_SKIP_RESET_ON_CPR_BITNR),
->> +    /* PCIe ACS (Access Control Services) extended capability present */
->> +#define QEMU_PCIE_ACS_BITNR 16
->> +    QEMU_PCIE_CAP_ACS = (1 << QEMU_PCIE_ACS_BITNR),
->>  };
->>  
->>  typedef struct PCIINTxRoute {
->> -- 
->> 2.34.1
-> 
-
+> #ifdef CONFIG_PSERIES
+> -    const char *node_name = fdt_get_name(fdt, offset, NULL);
+>     if (node_name && strncmp(node_name, "vty", 3) == 0) {
+>         uint8_t discard_buf[VOF_VTY_BUF_SIZE];
+> -        MachineState *ms = MACHINE(qdev_get_machine());
+>         SpaprMachineState *spapr = SPAPR_MACHINE(ms);
+>
+>         if (spapr && spapr->vio_bus) {
+> @@ -602,6 +712,38 @@ static uint32_t vof_write(Vof *vof, uint32_t ihandle, uint32_t buf,
+>         return PROM_ERROR;
+>     }
+>
+> +    if (inst->blk) {
+> +        if (bdrv_is_read_only(blk_bs(inst->blk))) {
+> +            trace_vof_error_write(ihandle);
+> +            return PROM_ERROR;
+> +        }
+> +
+> +        g_autofree uint8_t *blkbuf = g_malloc(MIN(len, (uint32_t)VOF_BLK_BUF_SIZE));
+> +        uint32_t total = 0;
+> +
+> +        while (len > 0) {
+> +            cb = MIN(len, (uint32_t)VOF_BLK_BUF_SIZE);
+> +            if (VOF_MEM_READ(buf, blkbuf, cb) != MEMTX_OK) {
+> +                trace_vof_error_write(ihandle);
+> +                return PROM_ERROR;
+> +            }
+> +            if (blk_pwrite(inst->blk, inst->pos, cb, blkbuf, 0) < 0) {
+> +                trace_vof_error_write(ihandle);
+> +                return PROM_ERROR;
+> +            }
+> +            inst->pos += cb;
+> +            buf += cb;
+> +            len -= cb;
+> +            total += cb;
+> +        }
+> +        if (blk_flush(inst->blk) < 0) {
+> +            trace_vof_error_write(ihandle);
+> +            return PROM_ERROR;
+> +        }
+> +        trace_vof_write(ihandle, total, "(disk)");
+> +        return total;
+> +    }
+> +
+> #ifdef CONFIG_PSERIES
+>     if (inst->vty) {
+>         uint32_t total_written = 0;
+> @@ -619,6 +761,7 @@ static uint32_t vof_write(Vof *vof, uint32_t ihandle, uint32_t buf,
+>     }
+> #endif
+>
+> +    uint32_t total_traced = 0;
+>     for ( ; len > 0; len -= cb) {
+>         cb = MIN(len, sizeof(tmp) - 1);
+>         if (VOF_MEM_READ(buf, tmp, cb) != MEMTX_OK) {
+> @@ -631,9 +774,11 @@ static uint32_t vof_write(Vof *vof, uint32_t ihandle, uint32_t buf,
+>             tmp[cb] = '\0';
+>             trace_vof_write(ihandle, cb, tmp);
+>         }
+> +        buf += cb;
+> +        total_traced += cb;
+>     }
+>
+> -    return len;
+> +    return total_traced;
+> }
+>
+> static uint32_t vof_read(Vof *vof, uint32_t ihandle, uint32_t buf,
+> @@ -647,6 +792,33 @@ static uint32_t vof_read(Vof *vof, uint32_t ihandle, uint32_t buf,
+>         return PROM_ERROR;
+>     }
+>
+> +    if (inst->blk) {
+> +        g_autofree uint8_t *tmp = g_malloc(MIN(len, (uint32_t)VOF_BLK_BUF_SIZE));
+> +        uint32_t total = 0;
+> +
+> +        while (len > 0) {
+> +            unsigned cb = MIN(len, (uint32_t)VOF_BLK_BUF_SIZE);
+> +            int ret = blk_pread(inst->blk, inst->pos, cb, tmp, 0);
+> +            if (ret < 0) {
+> +                trace_vof_error_read(ihandle);
+> +                return PROM_ERROR;
+> +            }
+> +
+> +            if (VOF_MEM_WRITE(buf, tmp, cb) != MEMTX_OK) {
+> +                trace_vof_error_read(ihandle);
+> +                return PROM_ERROR;
+> +            }
+> +
+> +            inst->pos += cb;
+> +            buf += cb;
+> +            len -= cb;
+> +            total += cb;
+> +        }
+> +
+> +        trace_vof_read(ihandle, total, "(disk)");
+> +        return total;
+> +    }
+> +
+> #ifdef CONFIG_PSERIES
+>     if (inst->vty) {
+>         uint8_t tmp[VOF_VTY_BUF_SIZE];
+> @@ -676,6 +848,41 @@ static uint32_t vof_read(Vof *vof, uint32_t ihandle, uint32_t buf,
+>     return 0;
+> }
+>
+> +static uint32_t vof_seek(Vof *vof, uint32_t ihandle, uint32_t pos_hi,
+> +                         uint32_t pos_lo)
+> +{
+> +    OfInstance *inst = (OfInstance *)
+> +        g_hash_table_lookup(vof->of_instances, GINT_TO_POINTER(ihandle));
+> +    uint64_t pos = ((uint64_t)pos_hi << 32) | pos_lo;
+> +
+> +    if (!inst) {
+> +        trace_vof_error_seek(ihandle);
+> +        return PROM_ERROR;
+> +    }
+> +
+> +    if (inst->blk) {
+> +        int64_t size = blk_getlength(inst->blk);
+> +
+> +        if (size < 0) {
+> +            trace_vof_error_seek(ihandle);
+> +            return PROM_ERROR;
+> +        }
+> +
+> +        if (pos > (uint64_t)size) {
+> +            trace_vof_error_seek(ihandle);
+> +            return PROM_ERROR;
+> +        }
+> +
+> +        inst->pos = pos;
+> +        trace_vof_seek(ihandle, pos);
+> +        return 0;
+> +    }
+> +
+> +    /* VTY and other devices don't support seek */
+> +    trace_vof_error_seek(ihandle);
+> +    return PROM_ERROR;
+> +}
+> +
+> static void vof_claimed_dump(GArray *claimed)
+> {
+>     int i;
+> @@ -986,6 +1193,8 @@ static uint32_t vof_client_handle(MachineState *ms, void *fdt, Vof *vof,
+>         ret = vof_package_to_path(fdt, args[0], args[1], args[2]);
+>     } else if (cmpserv("instance-to-path", 3, 1)) {
+>         ret = vof_instance_to_path(fdt, vof, args[0], args[1], args[2]);
+> +    } else if (cmpserv("seek", 3, 1)) {
+> +        ret = vof_seek(vof, args[0], args[1], args[2]);
+>     } else if (cmpserv("write", 3, 1)) {
+>         ret = vof_write(vof, args[0], args[1], args[2]);
+>     } else if (cmpserv("read", 3, 1)) {
+>
 
