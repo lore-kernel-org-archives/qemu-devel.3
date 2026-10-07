@@ -4,122 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29219CA5FFF
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 10:07:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 598BCCA5FF1
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 10:09:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xEOXt-0005RC-A2; Wed, 07 Oct 2026 06:06:45 -0400
+	id 1xEOaX-0008Jn-IB; Wed, 07 Oct 2026 06:09:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
- id 1xEOWj-0005FT-DG
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 06:05:43 -0400
-Received: from fhigh-b8-smtp.messagingengine.com ([202.12.124.159])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
- id 1xEOWZ-0003hL-Sx
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 06:05:29 -0400
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
- by mailfhigh.stl.internal (Postfix) with ESMTP id CC29D7A0248
- for <qemu-devel@nongnu.org>; Wed,  7 Oct 2026 06:05:21 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
- by phl-compute-03.internal (MEProxy); Wed, 07 Oct 2026 06:05:21 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alistair23.me;
- h=cc:cc:content-transfer-encoding:content-type:content-type
- :date:date:from:from:in-reply-to:in-reply-to:message-id
- :mime-version:references:reply-to:subject:subject:to:to; s=fm2;
- t=1791367521; x=1791453921; bh=1ElQgkgTnRrbfU+LPnajfIpKhzbTjZaq
- CVJDX71zB7U=; b=SickJmIefC0g7m5ohcYFV1HPmLZpG7KIYMpTdWrwviQoNjFR
- 7G4UfuEPNf3w2S+QSYQqo27zprHkTUXv9zckr3Hgj1wyAv2zF7NIF6T2oME7uaAL
- j9VofwAdBYq8kiwDb6mmwajkDH8ZTcZLTdFDUoASdRop9k6+v5jh6fDbrqL9B4dg
- kcH4HIDral/9bC0NKDqIXTDzKi3ljyyteSE9G6if1yQNbS5lDUx7b2ompclTnu/9
- RXN7u1dv7Qsif3NicNWTZQsW5A0adqceUmIDgCOxnXGv1hArWI8KBFdGDqa9GExK
- yVEr+Sp9PyUvSjh3mTPlIaKHKqKKgWp/ZRAxNQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1791367521; x=
- 1791453921; bh=1ElQgkgTnRrbfU+LPnajfIpKhzbTjZaqCVJDX71zB7U=; b=X
- p39Wl7rqr2+rl452cbJuSZa86EwjrPzsR82b83zjikayv59GG5Z5APc9rQhRAGDL
- TJ+W6wYGCxEaf9xkQ0BFq+FYrZ1b31spVEgQqoBzVIILgZaCQVpBbGerHvN1alWc
- HH9R0lueyat8b8xDbajwPVx7x+6EYPrXWFA5UUxAgpihDvJnEiLpB/l55KZgfvqa
- w3YkBWjTiRziosAlB2ShHiDKuf2ARGo8jhuogmtU0Hy6MsLlLeRfJYZuLKnfYe9K
- jHv/PAF+coWIMr3kFZ1ocNutckMXF1LrEdxb2oOZw6UxyTQcVUSLIXpFYKaSXLlO
- Qna8pCVDFoscOWkEkUQHw==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
- repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
- action=sign d=alistair23.me a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1791367521; d=alistair23.me;
- mf=PGFsaXN0YWlyQGFsaXN0YWlyMjMubWU+;
- rt=PHFlbXUtZGV2ZWxAbm9uZ251Lm9yZz4=;
- s=fm2:rsa-sha256:jn44nDxD3aB6H/p0bunImRfdeNrjaOMnlr6yk1KdHcp8g62
- RU5qmJ0tAKomc4uvFPR1s9+J017XBDXtOWjfI8SPou4FDJggfaY6pWQICmNXjFsA
- mh2jWY9ZUOxr6J1q+x0JI/a0W9tVsUvOg7NddBvk2mIqaZtu6hY89cCTucueNswE
- nYHu13curK6nKwrnpBWpW22NfAwDTVfqtanjtN2HDOMwaNu2KiZU3K24PjO59QpP
- zbEbNvXDKjCEZg0oYheh/vyMELqR5VbDu64/hrh0PW6NJUApkQeZA52jixsLPA9P
- DqP2RiWNhN4UYs8fYH7a6is26A9FRHuWvADhNWA==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
- repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
- action=mi-m=1; hc=13;
- hn=cc,content-transfer-encoding,content-type,date,feedback-id,
- from,in-reply-to,message-id,mime-version,references,subject,to,
- user-agent;
-Message-Instance: m=1;
- h=sha256:uNN55SAwG0HvRWssl5S8vMepdWWS4OnZPp1skukjnQw=:1ElQgkgTnRrbfU+LPnajfIpKhzbTjZaqCVJDX71zB7U=;
-X-ME-Sender: <xms:YBnGavLmZ9joZ_EkvWkw3x1Q700mkiSABfMgO1puoH7j8x41tiOWJA>
- <xme:YBnGaiHG_dTCZucu1-h7YWOJzgv62cFs3rrfW1PDWTTpsHbF0SQ_YQcrPzJ0W28R6
- HdzghwNakfVIsDRwobcVopWS8QzHmbTZp-1P3i5I0wZI1hJA_UZQ1PE>
-X-ME-Received: <xmr:YBnGajx1JShv8Og81AjaJZI6CuTVjKGzYdsCzCQlUUIUInp1zPJK0-hgOtI_-yMRj-x9WC89Hlty>
-X-ME-Proxy-Cause: dmFkZTERQ3z818WTsXAmxJqTaoEOe6PosnZrz+nQYEGtCgjpTZc4BArGD/57VGZGkop1MX
- 0tQKdFAN5py1t4DXITuAG/dyuCZ383bF4v/ee3CpiuPROZKb08IH85guO4KlJe4yGfWs7i
- FzXgNlSCyGJHtaIhfjncoU+2CiUpTNzgl5iiz1orB1kQsAq4ZsE3iXb/rf3aXPsLe37+09
- 09KqYHfVeyzVCZ+HZyy5NE4ixSsuqT5MkVU9s7GjNBEmlgC0kRjzGQWkDhLrtb89JtZu2i
- au64gJ6BkaYREqEDspepFUxwOk/BUwgqArkje2/nA2CFyg8CcYdHj7TpDb61KTo3QiCFpF
- IkQEFVThjkozD8qbg2dA6gtlbKvJtZiJHYk8m//x77ljRpYUZzGcjse8I7pQqZBEle3Wji
- cXollIbvGtUwvrsOz2LnycFuNsXGfZrtDHRXTVkd9gAiSyKhfQI/wNz96dc0jxAgOkb0jw
- dQm/r/7CEEa/O3wTjWwYV4eW4IG21OSzZYLI4U5X+Laz4o0S/+0ZPdk/iEWHbtr55FY2aO
- Qex0qCtBH9YkK7fH8DY1AjOtn0hye1c28EZUkbk+ANbv+zwqpLoWxsvpS7g4g2Z6erno5M
- UmJdzOTLQx1Nx7bbdH1Tkx2HSRDQlpetlP+lRvEpdgXmzIDNyYmmFYSyLMnQ
-X-ME-Proxy: <xmx:YBnGar5Cejt957OCghVb_c5HjqO-Tom8rmIm_W7pNJ6szF9SVgVtiA>
- <xmx:YBnGaofuvswZ2Zr7J2k0UODYpucXK0Rttp074ztMniUOVfZ9YfbC6g>
- <xmx:YBnGaiHkt8gsMaJff4PGGpZkY57lZG11VeW4VTidxMsX86FdDSrVTQ>
- <xmx:YBnGao4nYU0CmRSZBgFK0up35oGhcK_XzFd37uklIx9dCfvycwdvvw>
- <xmx:YRnGauJgNuLZUZ-WPwTxyYcsXltUq5WTl1l2jvfgYt_nbED8wZAKLYCv>
-Feedback-ID: ifd214418:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 7 Oct 2026 06:05:10 -0400 (EDT)
-Message-ID: <ca89932e98ad61ca4f4baff2add53558ed6eb712.camel@alistair23.me>
-Subject: Re: [PATCH v4 0/3] Add Model for Tenstorrent Atlantis PRCM
-From: Alistair <alistair@alistair23.me>
-To: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>, 
- qemu-devel@nongnu.org
-Cc: Joel Stanley <joel@jms.id.au>, Nicholas Piggin <npiggin@gmail.com>, 
- Michael Ellerman	 <mpe@kernel.org>, Portia Stephens
- <portias@oss.tenstorrent.com>, 	qemu-riscv@nongnu.org, Pierrick Bouvier
- <pierrick.bouvier@oss.qualcomm.com>,  Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
- <liwei1518@gmail.com>,  Daniel Henrique Barboza
- <daniel.barboza@oss.qualcomm.com>, Liu Zhiwei
- <zhiwei_liu@linux.alibaba.com>, Chao Liu	 <chao.liu@processmission.com>
-Date: Wed, 07 Oct 2026 20:05:03 +1000
-In-Reply-To: <20261001-atlantis_prcm-v4-0-95d33c470eeb@oss.tenstorrent.com>
-References: <20261001-atlantis_prcm-v4-0-95d33c470eeb@oss.tenstorrent.com>
+ (Exim 4.90_1) (envelope-from <bmeng.cn@gmail.com>)
+ id 1xEOaW-0008Ii-0Y
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 06:09:28 -0400
+Received: from mail-yw1-x112f.google.com ([2607:f8b0:4864:20::112f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <bmeng.cn@gmail.com>)
+ id 1xEOaU-00045m-Hb
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 06:09:27 -0400
+Received: by mail-yw1-x112f.google.com with SMTP id
+ 00721157ae682-8aea7b7ca0cso16082577b3.2
+ for <qemu-devel@nongnu.org>; Wed, 07 Oct 2026 03:09:26 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1791367765; cv=none;
+ d=google.com; s=arc-20260327;
+ b=jImaGNw2DBPoXA2RR5mTqyvkD8FGGRXM2hZiHM8Ks1Tyelsw292werGvBoGMHIzPVt
+ D+XBnUfOF606kAfw0MzTrvbWZRom2zRr9rAJLxcM5Dy8PjVRH1I5SRWL/0AHszyYzXtJ
+ 32H5+iCnD02K0NrMnJqXhb5WRAgC9JFuKKfpI22znHKh3vZZwJPe06n8JGITl9oDBgvS
+ gpNTpWed22R0wfy8Lmf5Nk4T+l4KLm4t+tEduCMxDfMPAu0xe/lFVY6Rh4o/BEc5t4mw
+ 5bS3VWvaONHXy4KYwlpIjGZNqhLvKoZOG7NbApthqFhsDqd52MUpjQ2qcm2wW8FoL2xD
+ L6UA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=ZIgJ4Torh+ZfX/aU5V1SR2C2Y88pcVBPp0ItlG1t/C0=;
+ fh=lwZ1tDgvKxBvFCD1ogU9hoBYmLUvJI5VH4rKkBPnHgc=;
+ b=QH3jCKGSC1kJmmNVg3q3pji/YvFDGSQu/S51OgCiZXDlShv/X+2qnSl54c6ikgELhc
+ 1ei/VdtaLvrfK6f+NeFxf6S0qt39N2SD2B4pdIh8TSZB7y5XInm3ii6XJyGu9PWgCRsj
+ PtbpHUIhE1R0kTLgg3aid1Y5AFmBxG/sblSdsClnLaGuitFjD6hk52mScW0irexaeOx6
+ wOEXd5mEnmnuU5PE5xJogoBNeIT8UTnjVpfL6YzOj2mtkyLOClg7qgSCyaYWYOKO+Hlc
+ 2mRp3lDtPLWKVVF/nLcX5wQfgwDba5YZlUab4Emw/JvCRPD/qZotnvzjTtro+gJqkbca
+ mEow==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1791367765; x=1791972565; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=ZIgJ4Torh+ZfX/aU5V1SR2C2Y88pcVBPp0ItlG1t/C0=;
+ b=HHBxF019qTILRloQC+y9TTZAT02+Ox9igpSO+O7AMB+i6n3E8PRS+NOsDvoP3D3Zyn
+ 1HCYEJpAWe8ChJ1wEjyuAzoqWVe5PAhnbV5uUgUhTh4M3v3NGTMb32RhWdODsCXrvqvZ
+ Tc62PYMSRL0RSqn1uxXZCUzodnHclEc8rnehgJkyCDuqB1fMQxV2bgCJbaujU62Wjozw
+ qPJ/6kD0MYu/lLA++GmtLFuuUBTXnzkQj3taXUfcPHIWMAV++6Y/jRlpD470PV0bpe5c
+ 7inUCX2kR8cNWhkc/HJxuw/MtdUJ3O6eS8kr+/acgSw8g1uDSyJAaeRsQdAunG6Kc/jz
+ rjmQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1791367765; x=1791972565;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=ZIgJ4Torh+ZfX/aU5V1SR2C2Y88pcVBPp0ItlG1t/C0=;
+ b=xj9fVjyWbt/zjRTdKyOemXe+KY+69uEzYsrzxBIILV5HG/8KDbvWjrGAzDdqTu5V/O
+ u5YWyqMoqzb9jZQBUpq1fjFXwsm6u6sonLKueyK3h6eUoafn8gSPQSHw1WnRKtUahM9M
+ 9tW/s1h7K6OthigZEssJ6oatC22RFOw91REV40Vgx8zPvrbO1SvZavP8+C5DJnwXy+sD
+ h4wSzgtCO8VXw268gXLJvP6nhBGAQE09v2NmhLkP9QQBlz/MicdBRJkQ+woLTfbAzTvC
+ M2P66s1+Kb3A/obWwGf3+idT3FK8a1e5AQGqCvY+lo/Gxgo89ndk3GErkjxlThMZTx9Q
+ bfvA==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBypoVQJqvKT0DImbdOr3i2KjeyrZQqJt1MDFVuTmKLSw++NSPB2nViYbPjWjqLvtnLLT22fprUJJtKx@nongnu.org
+X-Gm-Message-State: AFq9FYKJlMn4CfaaKRBe2KiTcs/nRBHmhInSTeEZkNmtakF9ploAgB1+
+ mT8ZjmUa10Z2hTvGHsvIWoKODZJhKo1dDxQ/U7wAj5YzIXqnNCl6zJSZp415lKoiG3io45RgFHS
+ l4xpzo5bmuS2CaYEoBHN8rsFcwbU1RK4=
+X-Gm-Gg: AYBFou0PI1StilBs94D/rl6Zjxsi3+jXQu8egGoPLugpbZtrBfnyhMeiEphvSfEZpZD
+ Plr9LAlQWeChs39jjpGkf+j6S4hsfsEw0nAJSYf43ZvnFpMY8clSVAoNMy4e8gco6vmGqISg72G
+ B3VDeFb0P9aW4ApP09B1OjHI5kJsRSC4w/UaSbEj59BCotCu4jZ0KxCUNcpcg3qEqg+wrjMCDYu
+ HRe6Tgehl39OCOJFVkj6t8pj9JtG1tmVyP1frvgHCOdGsOEPdfiEdoG0wzOyN0njKO50+0Expgh
+ DD9qnjKC4a6nGT/3OEbmbQ33psReV/5MeNBypyNISaKWkN0Ir2cQkn4XiI3V2pcL7qbYLYRnGDw
+ JXenhHlrq8E0J35Y=
+X-Received: by 2002:a05:690c:10:b0:8ae:dfee:cd2d with SMTP id
+ 00721157ae682-8b05aff25bcmr13543247b3.66.1791367765124; Wed, 07 Oct 2026
+ 03:09:25 -0700 (PDT)
+MIME-Version: 1.0
+References: <20261004090500.3082641-1-bin.meng@processmission.com>
+ <20261004090500.3082641-2-bin.meng@processmission.com>
+ <CAFEAcA_U-Aoo1MmvAm61_HxhbA+1A-YX1g+oh=1THsi9QKBeOg@mail.gmail.com>
+In-Reply-To: <CAFEAcA_U-Aoo1MmvAm61_HxhbA+1A-YX1g+oh=1THsi9QKBeOg@mail.gmail.com>
+From: Bin Meng <bmeng.cn@gmail.com>
+Date: Wed, 7 Oct 2026 18:09:12 +0800
+X-Gm-Features: AclHuK-RAiyvgyHssYuZJo8Fm-r1oxm2Ng2UU8GMD6r6juHcb4JuJ9yaRlG7eF0
+Message-ID: <CAEUhbmWxS3XRfP4-Uj8MuMoeBb05YCyhHAzJc+_My6kj7L_qKA@mail.gmail.com>
+Subject: Re: [PATCH v3 01/10] hw/cpu: a15mpcore: Model the reserved page as
+ RAZ/WI
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Bin Meng <bin.meng@processmission.com>, QEMU <qemu-devel@nongnu.org>, 
+ qemu-arm@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.62.0 (by Flathub.org) 
-MIME-Version: 1.0
-Received-SPF: pass client-ip=202.12.124.159;
- envelope-from=alistair@alistair23.me; helo=fhigh-b8-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112f;
+ envelope-from=bmeng.cn@gmail.com; helo=mail-yw1-x112f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -135,100 +123,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 2026-10-01 at 08:52 -0500, Anirudh Srinivasan wrote:
-> This series adds a qemu model for the PRCM blocks present in
-> Tenstorrent
-> Atlantis. This block controls clock, reset and other misc
-> functionality
-> in the SoC. Linux support for the Clocks/Resets served by the RCPU
-> PRCM
-> was added in [1]. This PRCM model has been tested with a linux DT
-> that
-> enables the PRCM and sets the UART clk to the one provided by the
-> PRCM.
-> This DT will be sent out shortly.
->=20
-> [1]
-> https://lore.kernel.org/linux-riscv/20260306-atlantis-clocks-v8-0-6c9b14a=
-4aa8e@oss.tenstorrent.com/
->=20
-> Signed-off-by: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
+Hi Peter,
 
-Thanks!
+On Wed, Oct 7, 2026 at 4:41=E2=80=AFPM Peter Maydell <peter.maydell@linaro.=
+org> wrote:
+>
+> On Sun, 4 Oct 2026 at 10:05, Bin Meng <bin.meng@processmission.com> wrote=
+:
+> >
+> > U-Boot's shared i.MX6 identification code reads PERIPHBASE + 0x4 on
+> > MCIMX6UL-EVK. The first private peripheral page is currently unmapped,
+> > so that access causes a data abort before the console is ready.
+> >
+> > The GIC-400 register map reserves offsets 0x0000 through 0x0fff and
+> > specifies read-as-zero, write-ignored accesses to reserved locations.
+> > Model that page in the private peripheral device.
+> >
+> > Reference: GIC-400 TRM (ARM DDI 0471B), sections 3.1 and 3.2
+> > https://documentation-service.arm.com/static/5e8f15e27100066a414f7424
+>
+> The Cortex-A15's internal GIC isn't a GIC-400, as far as I know.
 
-Applied to riscv-to-apply.next
+The Linux kernel says it is a GIC-400 on i.MX6UL
+https://github.com/torvalds/linux/blob/master/arch/arm/boot/dts/nxp/imx/imx=
+6ul.dtsi#L158
 
-Alistair
+intc: interrupt-controller@a01000 {
+    compatible =3D "arm,gic-400", "arm,cortex-a7-gic";
 
-> ---
-> Changes in v4:
-> - Addressed style comments from Joel's review
-> - Added error handling for sysbus_realize calls
-> - Dropped redundant realize/ops setting lines for PRCM subclasses
-> - Updated PRCM min_access_size to allow byte accesses
-> - Added back clock-frequency prop to UART node to allow linux boots
-> without clk driver
-> - Added back bus clock-frequency prop to I2C node
-> - Link to v3:
-> https://lore.kernel.org/qemu-devel/20260904-atlantis_prcm-v3-0-8bf20795a3=
-81@oss.tenstorrent.com
->=20
-> Changes in v3:
-> - Rebase on top of Joel's socify series v3
-> https://lore.kernel.org/qemu-riscv/20260903055131.257903-1-joel@jms.id.au=
-/T/#t
-> - I2C and UART now use clk provided by PRCM, and periph_clk is
-> dropped
-> - Addressed style edit comments from Joel (comment about clk IDs
-> coming from DT bindings,) and Alistair (drop size from trace prints,
-> move decalartions to top of function, use PRCM_DOMAIN enums)
-> - Link to v2:
-> https://lore.kernel.org/qemu-devel/20260817-atlantis_prcm-v2-0-ffba0b9444=
-19@oss.tenstorrent.com
->=20
-> Changes in v2:
-> - Coding style edits based on Chao Liu's feedback
-> - Changed prcm to use Resettable inferface instead of legacy reset
-> - Edits requested by Daniel related to tracing, pll_en logic and
-> unnecessary switch/case statement
-> - Added comments to some of the magic numbers in the reset values for
-> PRCM registers
-> - Link to v1:
-> https://lore.kernel.org/qemu-devel/20260729-atlantis_prcm-v1-0-502882933e=
-51@oss.tenstorrent.com
->=20
-> ---
-> Anirudh Srinivasan (3):
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 hw/misc: Add Tenstorrent Atlantis PRCM mod=
-el
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 hw/riscv/tt-atlantis: Add PRCMs to tt-atla=
-ntis model
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 hw/riscv/tt-atlantis: Update UART and I2C =
-to use clk from PRCM
->=20
-> =C2=A0MAINTAINERS=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0 |=C2=A0=C2=A0 2 +
-> =C2=A0docs/system/riscv/tt_atlantis.rst=C2=A0 |=C2=A0=C2=A0 1 +
-> =C2=A0hw/misc/meson.build=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0=C2=A0 1 +
-> =C2=A0hw/misc/trace-events=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0=C2=A0 4 +
-> =C2=A0hw/misc/tt_atlantis_prcm.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0 | 428
-> +++++++++++++++++++++++++++++++++++++
-> =C2=A0hw/riscv/tt_atlantis.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 125 ++++++++++-
-> =C2=A0include/hw/misc/tt_atlantis_prcm.h |=C2=A0 51 +++++
-> =C2=A0include/hw/riscv/tt_atlantis.h=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 28 +=
-++
-> =C2=A08 files changed, 632 insertions(+), 8 deletions(-)
-> ---
-> base-commit: b23a62773a7856299cbb3782e64968b6a92c792f
-> change-id: 20260727-atlantis_prcm-b642cfb37d57
->=20
-> Best regards,
-> --=C2=A0=20
-> Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
->=20
+>
+> > Signed-off-by: Bin Meng <bin.meng@processmission.com>
+>
+> RAZ/WI doesn't match the documented behaviour of the Cortex-A15
+> for this region in its TRM:
+>
+> https://support.arm.com/documentation/ddi0438/i/generic-interrupt-control=
+ler/gic-functional-description/gic-memory-map?lang=3Den
+>
+> "Read access to reserved regions results in a Data Abort exception to
+> the requesting processor. Write access to reserved regions results in
+> the assertion of nINTERRIRQ."
+>
+
+It seems the A15 manual and GIC-400 manual are contradictory. I am not
+sure how to proceed.
+
+Regards,
+Bin
 
