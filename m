@@ -4,108 +4,159 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D73B5CA6009
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 22:27:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 807E8CA6002
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 22:31:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xEa6Y-0000C9-QC; Wed, 07 Oct 2026 18:27:18 -0400
+	id 1xEaAY-0000pU-Ks; Wed, 07 Oct 2026 18:31:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xEa6V-0000Bv-AB
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 18:27:15 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1xEaAW-0000os-Dq
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 18:31:24 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xEa6R-0004fD-P4
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 18:27:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1791412030;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=g3MBRz1uTkMTg24wkB54snQj9H81wh1+cqeH2HE7gO4=;
- b=eSJyk8juOG/M/mTWSYDK9WyFWB4fAYoqQgY7P5+1t9p/Rz/uvdK3socdQhbN6msWmkQ/nB
- acy9028zmoHk+AU0hvhQc+/z+A3PS3mI97DDS14srN5tr7Ni8qBYLzD/2UZP8ZCP4MSWkf
- 0x0r4aF6J5dvmkjr1FtaZzt8y3V4Qho=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-437-26C21riyMuGYVd6D5EbVuw-1; Wed, 07 Oct 2026 18:27:08 -0400
-X-MC-Unique: 26C21riyMuGYVd6D5EbVuw-1
-X-Mimecast-MFC-AGG-ID: 26C21riyMuGYVd6D5EbVuw_1791412027
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-48afe67dfc2so55585f8f.1
- for <qemu-devel@nongnu.org>; Wed, 07 Oct 2026 15:27:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1xEaAU-00054J-80
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 18:31:24 -0400
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 697Ltt4n1346072
+ for <qemu-devel@nongnu.org>; Wed, 7 Oct 2026 22:31:20 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ zHzuVP4G6vQWrt8lzNM2zSoGPyqDLFeHMWfNH3jIOSQ=; b=MC9ERxsSreH6sc0s
+ 0h3gRiligyoHm4z478DDlahgxGWlxW/LHNU5tF14BMv9N9FkrvIMNVk8pcOGgFHq
+ k8YlktyyyxDRb95C9cIdttf9yt5Je1/NvLw75BHFHIYN8B3clzBJAjurnz+u8m3d
+ jCiGwb4nhWf6ka4Yt6zst7rrso92YvO0orGVSAzHV2b/xp1KumCfEQzQNS9Kw/Tc
+ COtaDclstMCORvBHF71f12VViYPTjPCnc02sfkKiHcz3Xsnldno9AqJnmGYeiaUR
+ c3cukLAkiK+rUnGrmz+neAKdnYzEXR8DoxbfU7X0bQyX8mxz4RfO7QLfDHR30P3j
+ PedW6Q==
+Received: from mail-dy1-f198.google.com (mail-dy1-f198.google.com
+ [74.125.82.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h5xe803bk-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Wed, 07 Oct 2026 22:31:20 +0000 (GMT)
+Received: by mail-dy1-f198.google.com with SMTP id
+ 5a478bee46e88-3515266f6eeso1793399eec.0
+ for <qemu-devel@nongnu.org>; Wed, 07 Oct 2026 15:31:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1791412027; x=1792016827; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=g3MBRz1uTkMTg24wkB54snQj9H81wh1+cqeH2HE7gO4=;
- b=pMVGknhZ/8HeNh9BImpESXOgJoG/ISEi0vClZfzRqwhrFvhHP/5UtTTaEoIoNXRari
- fR2c486GvCLE3DKQjhbqnp4GZRFV1qN2pqbidIt7PJcQ4lDpvHY2+JfR8p37/V0DqHYz
- zPAu4kSulLb3cFtFQk0yF4JiVgi+4G9THnv+K89pSdJ9f/r4sfemx9FPtgJRfZ5huQD0
- chrgXOHLhLri31f99PBu89jxd/hRVDdBMDLME+qDl78mcOvQrhLi3AVunX/yxOGTFT7v
- i0UjDCwptav6HVXlDUl0PSiRbWHk2Xb036lndQkCW+1CHRVN5DcEm4wMsRpZ+r48+193
- iKTw==
+ d=oss.qualcomm.com; s=google; t=1791412279; x=1792017079; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=zHzuVP4G6vQWrt8lzNM2zSoGPyqDLFeHMWfNH3jIOSQ=;
+ b=a1N0p6N/ikYpt01+bh/WQCQqoRX6gtQETnLPMp2+MUbL8tlbFqpxXmHY6Ml0k1w1NL
+ Nozfv6FgWbGq3zyeG/X9t59s+0h+yW4CO2cqNfuXn66/XpLiSxNviStrHOT27aYdiFew
+ s1h6VQFchgoaXaZYitGpX7Od5Z8Yr4FIySR8mJ8yPfW7jGH1GA5n5X7gKTFzy9UnmucT
+ a4CjqKc6KGjeXwp5Y5DyNPM/ZYxPqatfnd3LHJQCjE09hgxUY/u7LULiWP7ZwVv84iYN
+ m9Pg9Q4GewKCTuaGmirDDnV+hyK+EFiBQlGYmjaZEC9aFHrsx8aOQHXRItSXc8/OhxMW
+ qpmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791412027; x=1792016827;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=g3MBRz1uTkMTg24wkB54snQj9H81wh1+cqeH2HE7gO4=;
- b=g/RyKDcvh9S0Y5zH2PUkX6n9A80Ck+RJLTcyA0TQSyLO4ELR9NNkLb+gy2cHJX2hl3
- 2gkk4l1xzXnBdTHxe9VtP2lXRYy7NNRo0c21v+6xm1thTLf1z7ENtCHwiz7oVXIG+m87
- z5CfK2o1+ETXbYbYggD+GDC6+EcfFtkJyNUECot53ECd4Xpo+zCnzepDeBpOqdmVU+oV
- IBKCcc0Yffxuc/ECLmO+diVertuwUuJD7dzERqc9ixomMSp1NC7dbzaYPLhjAtAu2CNj
- x4+H+XbrdSmYPibJvV9nDNaCXmplqNT5kgIaHzIPoj7eq+3WXPGFzgN3cjT+XXIiyXhN
- 41JA==
-X-Gm-Message-State: AFuF++niVYhChEqiBoGd0+jFccYxcGh9KkaU+hAThr5DUselCa58aMs4
- QYXbV5Dhky1W1a1sh0UdMlpfi8WrIJ1sKDt1toKzOp4aMbz7UfEj7Wvtq/AEQP3GoAa/nrbUzUG
- uhFIPAaYTEhewtHt5e4qpIgFD7S5R19ZVsWCyHT3fN7DkLYP5NVSpM59fb4kQ704m
-X-Gm-Gg: AYBFou2Zh4OwpK7nQsS7MQ2kMnxs2bl/SgoXSXPpynQqJKT/m5gCYJe6S/C0DielmdK
- IdHobp4eHPfZbKVxpaacXycz9OaKrB3Py4cFB/HO5bOVIfvzEWROrA125YBBg4Ld9nlO/Z+WlFR
- E3yRi+AIvlkpEmja+ZI8v6nxGetE71N0KiIqS03LyHT4uAdV4ZPRO4FTKQrI4pcysjJUjT9lT0H
- FXR0/CpXvXtfGNk39qlwx+eFFO1aAiCshexIUH8tKyJgGf/Zm6LoT2x9ayv/6FPHkPwl4j7w6XX
- p3odrjr+PVRw5IrwkWcF8N7cX+zfg11wPbhmf+b/N2z7VPqL7BbqKQsPDISxotX7SGki+zI=
-X-Received: by 2002:a05:600c:1553:b0:4a0:34a:588c with SMTP id
- 5b1f17b1804b1-4a1851c05admr10390855e9.14.1791412027186; 
- Wed, 07 Oct 2026 15:27:07 -0700 (PDT)
-X-Received: by 2002:a05:600c:1553:b0:4a0:34a:588c with SMTP id
- 5b1f17b1804b1-4a1851c05admr10390465e9.14.1791412026623; 
- Wed, 07 Oct 2026 15:27:06 -0700 (PDT)
-Received: from redhat.com ([2a0d:6fc0:3fd7:5300:3d6b:52a4:a23f:9d0b])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a1843d82f8sm24204865e9.9.2026.10.07.15.27.05
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 07 Oct 2026 15:27:05 -0700 (PDT)
-Date: Wed, 7 Oct 2026 18:27:03 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Tushar Dave <tdave@nvidia.com>
-Cc: qemu-devel@nongnu.org, philmd@oss.qualcomm.com, zhao1.liu@intel.com,
- yishaih@nvidia.com, alwilliamson@nvidia.com, jgg@nvidia.com,
- skolothumtho@nvidia.com
-Subject: Re: [PATCH v2 3/3] hw/pci: Make ACS Control read-only to guests
-Message-ID: <20261007182531-mutt-send-email-mst@kernel.org>
-References: <20261006013133.3457555-1-tdave@nvidia.com>
- <20261006013133.3457555-4-tdave@nvidia.com>
- <20261006004130-mutt-send-email-mst@kernel.org>
- <0dccf054-fe56-4ab5-98cf-1be764005851@nvidia.com>
+ d=1e100.net; s=20260707; t=1791412279; x=1792017079;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=zHzuVP4G6vQWrt8lzNM2zSoGPyqDLFeHMWfNH3jIOSQ=;
+ b=jfqMqnqaG55YA3TLavJjuXkxdzbwpEf1qVIoKlgRLV+f/OcArz9QcDY3tEE3EbJZA2
+ jnFLVZOUbi7MSlELHi1yJq1yKA2x++Oc5oeQ/O7uO+E2lw4Dom1usotboNidAadCrpP/
+ N+5+0EGpjtUvmVZCcAbL/aDDd4FklxF+2nTzsOLbN+8xdqiFxKVO35ew3TX6qJpDotmL
+ EjJKwBJA+zdmwvN7UCFDyFGUQ7/jJjeliR6WIzuO1QCct/AdFGQtHddFHI8dfNh3InXp
+ CzggSDo0dXtucsqjUYy4qV6fdlwkTiCkNWYvG1H0ZFSSwHu7MrW2FfoXfVR1UW5oCPtB
+ aFoQ==
+X-Gm-Message-State: AFuF++l9ICZ9A35chu8hNHYSdRMqpOWgT4F4eCdKG4V+gyWpLtMH0Oiz
+ ZNcXcM839z8IGbOui2IeMf2o2ySqh5HmySgzBr82z3QsD9HcFv+LNr6h6MUoJpHNjivXRmkHNmr
+ BuhdEJVtwYCSFM42xZ0J0ZTbaQBP0AIDt5CcHxXSOw9PDi23f2offdBIPWw==
+X-Gm-Gg: AYBFou3/fk4A80WYQ7d0h502mI4uMne9IU7bjhpI4954dEZU8WXDkqGxZUDPFkvi70p
+ Y/Pz13Eua3W5HZbceQ18zog/6bap3moYHuyt8Sa6PrBPJwnbUcZ49Y5UR4uNgIVglXC0otg1v+8
+ tAcyn/a5A5ZeTe2lD8oSn8F/KU61n6WqBPvsVgffHwps111SLZHTa5Zb96PP1ae9j6DGTCn/OKB
+ hSDIiQzC73Sk49BVOO9F48sxiRWBcnOodH51N9h+rETlsnTw5Rt6hROXN9FGtOG1XAuJ+E/0gfB
+ VyvkRJ5wjnV3+TbUp8Hmvk6u2R3BW9OzjQekbfcAB8wTFSb6wHCgFylFBqfqiUNKieMAMEZ1Qip
+ nKgGwvz9xt7wQtNKaDZvQJfNLhRi8zDXAirwvBPxmwJJEbZMU82lWvliqjw0j0Z21MX63iA==
+X-Received: by 2002:a05:701b:2302:b0:144:f4b9:9be4 with SMTP id
+ a92af1059eb24-162055138dbmr3863464c88.15.1791412279093; 
+ Wed, 07 Oct 2026 15:31:19 -0700 (PDT)
+X-Received: by 2002:a05:701b:2302:b0:144:f4b9:9be4 with SMTP id
+ a92af1059eb24-162055138dbmr3863405c88.15.1791412278433; 
+ Wed, 07 Oct 2026 15:31:18 -0700 (PDT)
+Received: from [192.168.1.199] (192-80-163-190.dyn.novuscom.net.
+ [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-163e3c5bed6sm3927485c88.7.2026.10.07.15.31.15
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 07 Oct 2026 15:31:16 -0700 (PDT)
+Message-ID: <919a1a75-78b9-42a9-93ed-9edf6757f707@oss.qualcomm.com>
+Date: Wed, 7 Oct 2026 15:31:14 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 4/8] target-info: replace QOM registration with a
+ constructor list
+To: luoyonggang@gmail.com
+Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>,
+ Cleber Rosa <crosa@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
+ Laurent Vivier <lvivier@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
+ John Snow <jsnow@redhat.com>, Laurent Vivier <laurent@vivier.eu>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Joel Stanley <joel@jms.id.au>, Fabiano Rosas <farosas@suse.de>,
+ Kane Chen <kane_chen@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Troy Lee <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>,
+ Stafford Horne <shorne@gmail.com>, qemu-arm@nongnu.org,
+ Philippe Mathieu-Daude <philmd@mailo.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Paolo Bonzini
+ <pbonzini@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@oss.qualcomm.com>, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
+ <marcandre.lureau@redhat.com>, Steven Lee <steven_lee@aspeedtech.com>,
+ Alexander Bulekov <alxndr@bu.edu>, Darren Kenny <darren.kenny@oracle.com>
+References: <20261007115253.328-1-luoyonggang@gmail.com>
+ <20261007115253.328-5-luoyonggang@gmail.com>
+ <37275f1f-aee9-444b-aaed-3e0bf34b63cd@oss.qualcomm.com>
+ <CAE2XoE_GmDbA5SSUb3k_9HwE+bxnBjK+kBj-RE5BonEBC=GpMw@mail.gmail.com>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <CAE2XoE_GmDbA5SSUb3k_9HwE+bxnBjK+kBj-RE5BonEBC=GpMw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <0dccf054-fe56-4ab5-98cf-1be764005851@nvidia.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA3MDA4OSBTYWx0ZWRfX6lfit0jrocWZ
+ 031yJeQDR9KY1EvUdhXSrsjHB0EfH+DZSisJSpLq0VcZRmclooK9o7UIjfLm2UZvmEdX/pLdaR5
+ oYg2+3V4wu5f+NcJ1/srPDkr8jEZYA07s2gBQD5dSL8awE3FVdLkhWbbDUyrYF6zT9PkwvCxmk3
+ sI1oNemGCztq1NpHxHFuda5eNfWGZMI5ly78ddWNUk4kMa/uURdfvd4/Z3cK/Up9gArH1OPfPgN
+ JfivsSsVkmr3G7tVpy2jQ254pzub1tIYR7CrRWG0vjEWgHIrg/qu5SYkJY3xqtlr5e9ai82tzYF
+ UvlJpKi+DoukZA1RL34U6EA/X4zYFeUeVrdZKUY7kt67CzgA42+myHBc3q7YHr+UFhb76l/vwKw
+ J1CuizKReMV9PPhwCpej9sT9ibUOjFIR9rE5lwaQTAojCCyBkFpLJXPk3Dtz0aMjsxxBIkFXYIQ
+ flJNnopVLMC8BVdM0Pg==
+X-Proofpoint-GUID: CsKTz9XpVI3a4TD2ThWRLEvvRbtvqCzt
+X-Proofpoint-ORIG-GUID: CsKTz9XpVI3a4TD2ThWRLEvvRbtvqCzt
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA3MDA4OSBTYWx0ZWRfX+DOqlucAKOMH
+ paskSHao0lebb4dcQci/70ahPU/9Ioudv5zmcDM6WfG0nble3x8zWCemvk77Y7/DOSFLlrNxIqt
+ xeUnVOY/coX50+BQ/7n1RtRaCkOWQ6o=
+X-Authority-Analysis: v=2.4 cv=MPT1C8Zl c=1 sm=1 tr=0 ts=6ac6c838 cx=c_pps
+ a=wEP8DlPgTf/vqF+yE6f9lg==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
+ a=p0WdMEafAAAA:8 a=EUspDBNiAAAA:8 a=pGLkceISAAAA:8 a=nRLft1YshIEh5o0YeFEA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=bBxd6f-gb0O0v-kibOvt:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-10-07_07,2026-10-06_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 bulkscore=0 adultscore=0 priorityscore=1501 suspectscore=0
+ malwarescore=0 phishscore=0 lowpriorityscore=0 clxscore=1015 impostorscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2610020000 definitions=main-2610070089
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -122,251 +173,152 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Oct 07, 2026 at 11:33:04AM -0500, Tushar Dave wrote:
-> 
-> 
-> On 10/5/2026 11:44 PM, Michael S. Tsirkin wrote:
-> > On Mon, Oct 05, 2026 at 08:31:33PM -0500, Tushar Dave wrote:
-> >> GPUDirect RDMA using data-direct requires a specific ACS configuration
-> >> on PCIe Root Ports and Downstream Ports.
-> >>
-> >> While ACS can be configured via QEMU's 'acs-ctrl' property, the guest
-> >> kernel may overwrite ACS during standard programming.
-> >>
-> >> This change blocks all guest writes to the PCIe ACS Control register and
-> >> preserves QEMU-provided ACS settings across device resets on PCIe Root Ports
-> >> and Downstream Ports.
-> > 
-> > Why is that a sensible thing to do?
-> 
-> 
-> It is sensible because it allows the administrator to define and
-> preserve the PCIe topology and P2P configuration from the QEMU command
-> line. The administrator can configure ACS on a Root Port or Downstream
-> Port as part of defining the desired PCIe topology and P2P behavior. If
-> the guest could modify the ACS Control register, it could change the
-> administrator-defined ACS configuration, which could prevent P2P from
-> working as expected.
-> 
-> > per pci express spec:
-> > 
-> > 7.16.3. ACS Control Register (Offset 06h)
-> > 
-> > Bit Location
-> > 0
-> > Register Description
-> > ACS Source Validation Enable (V) – When Set, the component
-> > validates the Bus Number from the Requester ID of Upstream
-> > Requests against the secondary/subordinate Bus Numbers.
-> > Attributes
-> > RW
-> > Default value of this bit is 0b. Must be hardwired to 0b if the ACS
-> > Source Validation functionality is not implemented.
-> > 
-> > 
-> > And this is repeated for every bit:
-> > 
-> > RW
-> > Default value of this bit is 0b. Must be hardwired to 0b if the ACS
-> > Source Validation functionality is not implemented.
-> > 
-> > 
-> > 
-> > Looks like your change would put us out of spec?
-> 
-> 
-> You are right that the ACS Control bits are defined as RW, and I am not
-> claiming otherwise. The intent is not to make ACS Control read-only in
-> general. The read-only behavior is tied to the acs-ctrl property:
-> 
-> - If acs-ctrl is not specified, ACS Control remains writable as it is
->   today.
-> - If acs-ctrl is explicitly specified, the administrator has requested a
->   specific ACS configuration. QEMU then preserves that configuration and
->   does not allow the guest to modify it.
-> 
-> This is an intentional virtualization policy. When the administrator
-> explicitly configures the ACS Control register, the guest should not be
-> able to change the ACS configuration and P2P behavior selected by the
-> administrator.
-> 
-> Thanks.
-> -Tushar
+On 10/7/2026 1:50 PM, Yonggang Luo wrote:
+> On Thu, Oct 8, 2026 at 4:29 AM Pierrick Bouvier
+> <pierrick.bouvier@oss.qualcomm.com> wrote:
+>>
+>> On 10/7/2026 4:48 AM, Yonggang Luo wrote:
+>>> Register target definitions through constructors instead of
+>>> MODULE_INIT_TARGET_INFO, making target_info_list() and target_info()
+>>> available on entry to main(), without explicit initialization or a
+>>> call to module_call_init(MODULE_INIT_QOM).
+>>>
+>>> Keep the target list sorted by target_arch and default to its first
+>>> entry. Provide an unknown TargetInfo fallback for target-independent
+>>> tools such as qemu-img and unit tests that link no target-info-def.c
+>>> objects.
+>>>
+>>> Remove the obsolete QOM target-info registration infrastructure and
+>>> update the multi-target test to inspect target information before
+>>> initializing QOM.
+>>>
+>>> Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
+>>> ---
+>>>  include/qemu/module.h           |  1 -
+>>>  include/qemu/target-info-def.h  | 56 +++++++++++++++++++++++++++---
+>>>  include/qemu/target-info-init.h | 53 ----------------------------
+>>>  include/qemu/target-info-qom.h  | 31 -----------------
+>>>  include/qemu/target-info.h      |  9 +++++
+>>>  meson.build                     |  6 ++--
+>>>  system/vl.c                     |  4 ---
+>>>  target-info-def.c               |  1 -
+>>>  target-info-qom.c               | 60 --------------------------------
+>>>  target-info.c                   | 61 ++++++++++++++++++++++++++++++++-
+>>>  tests/qtest/fuzz/fuzz.c         |  3 --
+>>>  tests/unit/test-multi-target.c  | 12 +++----
+>>>  12 files changed, 129 insertions(+), 168 deletions(-)
+>>>  delete mode 100644 include/qemu/target-info-init.h
+>>>  delete mode 100644 include/qemu/target-info-qom.h
+>>>  delete mode 100644 target-info-qom.c
+>>>
+>>
+>> This approach (custom list based) was considered before implementing
+>> things with QOM Types. The rationale I followed was that if everything
+>> is in QOM, we might better follow that for consistency sake.
+>> Yes, the compromise if that we need an extra init step, but it was not a
+>> problem to add it.
+> I have issue to add the init step for unit-tests, and hard to write the -target
+> parse procedure and get it right. Not means this won't work. but for
+> me, too much
+> coupled.
+>
 
-And then some guest writes the register, reads the value expecting to
-see what it wrote, and crashes.  I don't care that it happens to work
-for you, we are not doing this kind of thing.
+We already have such a test upstream:
+https://gitlab.com/qemu-project/qemu/-/blob/master/tests/unit/test-multi-target.c#L35
 
-> > 
-> > 
-> >> Signed-off-by: Tushar Dave <tdave@nvidia.com>
-> >> ---
-> >>  hw/pci-bridge/pcie_root_port.c     |  5 ++--
-> >>  hw/pci-bridge/xio3130_downstream.c |  5 ++--
-> >>  hw/pci/pcie.c                      | 46 ++++++++++++++++++++++++++++--
-> >>  include/hw/pci/pcie.h              |  3 ++
-> >>  include/hw/pci/pcie_port.h         |  1 +
-> >>  5 files changed, 54 insertions(+), 6 deletions(-)
-> >>
-> >> diff --git a/hw/pci-bridge/pcie_root_port.c b/hw/pci-bridge/pcie_root_port.c
-> >> index e7cce8c0ee..6ac64c8b2b 100644
-> >> --- a/hw/pci-bridge/pcie_root_port.c
-> >> +++ b/hw/pci-bridge/pcie_root_port.c
-> >> @@ -123,7 +123,7 @@ static void rp_realize(PCIDevice *d, Error **errp)
-> >>          if (rc < 0) {
-> >>              goto err;
-> >>          }
-> >> -    } else if (p->acs_ctrl) {
-> >> +    } else if (p->acs_ctrl_configured) {
-> >>          error_setg(errp, "acs-ctrl is not supported by this root port");
-> >>          goto err;
-> >>      }
-> >> @@ -159,7 +159,8 @@ static void rp_exit(PCIDevice *d)
-> >>  static const Property rp_props[] = {
-> >>      DEFINE_PROP_BIT(COMPAT_PROP_PCP, PCIDevice, cap_present,
-> >>                      QEMU_PCIE_SLTCAP_PCP_BITNR, true),
-> >> -    DEFINE_PROP_UINT16("acs-ctrl", PCIEPort, acs_ctrl, 0),
-> >> +    DEFINE_PROP_UNSIGNED_NODEFAULT("acs-ctrl", PCIEPort, acs_ctrl,
-> >> +                                   qdev_prop_acs_ctrl, uint16_t),
-> >>  };
-> >>  
-> >>  static void rp_instance_post_init(Object *obj)
-> >> diff --git a/hw/pci-bridge/xio3130_downstream.c b/hw/pci-bridge/xio3130_downstream.c
-> >> index e243dfdf7d..66d25098d7 100644
-> >> --- a/hw/pci-bridge/xio3130_downstream.c
-> >> +++ b/hw/pci-bridge/xio3130_downstream.c
-> >> @@ -120,7 +120,7 @@ static void xio3130_downstream_realize(PCIDevice *d, Error **errp)
-> >>          if (rc < 0) {
-> >>              goto err;
-> >>          }
-> >> -    } else if (p->acs_ctrl) {
-> >> +    } else if (p->acs_ctrl_configured) {
-> >>          error_setg(errp, "acs-ctrl requires x-pcie-acs to be on");
-> >>          goto err;
-> >>      }
-> >> @@ -154,7 +154,8 @@ static const Property xio3130_downstream_props[] = {
-> >>                      QEMU_PCIE_SLTCAP_PCP_BITNR, true),
-> >>      DEFINE_PROP_BIT("x-pcie-acs", PCIDevice, cap_present,
-> >>                      QEMU_PCIE_ACS_BITNR, true),
-> >> -    DEFINE_PROP_UINT16("acs-ctrl", PCIEPort, acs_ctrl, 0),
-> >> +    DEFINE_PROP_UNSIGNED_NODEFAULT("acs-ctrl", PCIEPort, acs_ctrl,
-> >> +                                   qdev_prop_acs_ctrl, uint16_t),
-> >>  };
-> >>  
-> >>  static const VMStateDescription vmstate_xio3130_downstream = {
-> >> diff --git a/hw/pci/pcie.c b/hw/pci/pcie.c
-> >> index af24ec7fd9..1fead3a053 100644
-> >> --- a/hw/pci/pcie.c
-> >> +++ b/hw/pci/pcie.c
-> >> @@ -1265,6 +1265,8 @@ int pcie_acs_init(PCIDevice *dev, uint16_t offset, uint16_t ctrl_bits,
-> >>  {
-> >>      bool is_downstream = pci_is_express_downstream_port(dev);
-> >>      uint16_t cap_bits = 0;
-> >> +    PCIEPort *p = (PCIEPort *)object_dynamic_cast(OBJECT(dev), TYPE_PCIE_PORT);
-> >> +    bool configured = p && p->acs_ctrl_configured;
-> >>  
-> >>      /* For endpoints, only multifunction devs may have an ACS capability: */
-> >>      assert(is_downstream ||
-> >> @@ -1286,7 +1288,7 @@ int pcie_acs_init(PCIDevice *dev, uint16_t offset, uint16_t ctrl_bits,
-> >>          cap_bits = PCI_ACS_SV | PCI_ACS_TB | PCI_ACS_RR |
-> >>              PCI_ACS_CR | PCI_ACS_UF | PCI_ACS_DT;
-> >>  
-> >> -        if (ctrl_bits & ~cap_bits) {
-> >> +        if (configured && (ctrl_bits & ~cap_bits)) {
-> >>              error_setg(errp,
-> >>                         "acs-ctrl 0x%hx has bits not supported by this port "
-> >>                         "(supported: 0x%hx)", ctrl_bits, cap_bits);
-> >> @@ -1295,7 +1297,17 @@ int pcie_acs_init(PCIDevice *dev, uint16_t offset, uint16_t ctrl_bits,
-> >>      }
-> >>  
-> >>      pci_set_word(dev->config + offset + PCI_ACS_CAP, cap_bits);
-> >> -    pci_set_word(dev->wmask + offset + PCI_ACS_CTRL, cap_bits);
-> >> +
-> >> +    if (is_downstream && configured) {
-> >> +        /*
-> >> +         * Block guest writes to ACS Control entirely to preserve QEMU
-> >> +         * ACS settings
-> >> +         */
-> >> +        pci_set_word(dev->wmask + offset + PCI_ACS_CTRL, 0);
-> >> +    } else {
-> >> +        pci_set_word(dev->wmask + offset + PCI_ACS_CTRL, cap_bits);
-> >> +    }
-> >> +
-> >>      pci_set_word(dev->config + offset + PCI_ACS_CTRL, ctrl_bits);
-> >>  
-> >>      return 0;
-> >> @@ -1308,6 +1320,36 @@ void pcie_acs_reset(PCIDevice *dev, uint16_t val)
-> >>      }
-> >>  }
-> >>  
-> >> +static void set_acs_ctrl(Object *obj, Visitor *v, const char *name,
-> >> +                         void *opaque, Error **errp)
-> >> +{
-> >> +    PCIEPort *p = PCIE_PORT(obj);
-> >> +    const Property *prop = opaque;
-> >> +    uint16_t *ptr = object_field_prop_ptr(obj, prop);
-> >> +
-> >> +    if (!visit_type_uint16(v, name, ptr, errp)) {
-> >> +        return;
-> >> +    }
-> >> +    p->acs_ctrl_configured = true;
-> >> +}
-> >> +
-> >> +static void get_acs_ctrl(Object *obj, Visitor *v, const char *name,
-> >> +                         void *opaque, Error **errp)
-> >> +{
-> >> +    const Property *prop = opaque;
-> >> +    uint16_t *ptr = object_field_prop_ptr(obj, prop);
-> >> +
-> >> +    visit_type_uint16(v, name, ptr, errp);
-> >> +}
-> >> +
-> >> +const PropertyInfo qdev_prop_acs_ctrl = {
-> >> +    .type = "uint16",
-> >> +    .description = "PCIe ACS ctrl configuration (if set, even to 0, "
-> >> +                   "makes ACS Control read-only to the guest)",
-> >> +    .get = get_acs_ctrl,
-> >> +    .set = set_acs_ctrl,
-> >> +};
-> >> +
-> >>  void pcie_pasid_common_init(PCIDevice *dev, uint16_t offset,
-> >>                              uint8_t pasid_width, bool exec_perm, bool priv_mod)
-> >>  {
-> >> diff --git a/include/hw/pci/pcie.h b/include/hw/pci/pcie.h
-> >> index 678ad73f7f..bbb11fd402 100644
-> >> --- a/include/hw/pci/pcie.h
-> >> +++ b/include/hw/pci/pcie.h
-> >> @@ -26,6 +26,7 @@
-> >>  #include "hw/pci/pcie_aer.h"
-> >>  #include "hw/pci/pcie_sriov.h"
-> >>  #include "hw/core/hotplug.h"
-> >> +#include "hw/core/qdev-properties.h"
-> >>  
-> >>  typedef struct PCIEPort PCIEPort;
-> >>  typedef struct PCIESlot PCIESlot;
-> >> @@ -86,6 +87,8 @@ struct PCIExpressDevice {
-> >>  
-> >>  #define COMPAT_PROP_PCP "power_controller_present"
-> >>  
-> >> +extern const PropertyInfo qdev_prop_acs_ctrl;
-> >> +
-> >>  /* PCI express capability helper functions */
-> >>  int pcie_cap_init(PCIDevice *dev, uint8_t offset, uint8_t type,
-> >>                    uint8_t port, Error **errp);
-> >> diff --git a/include/hw/pci/pcie_port.h b/include/hw/pci/pcie_port.h
-> >> index 2ad9a563d9..ef2c2ec2cd 100644
-> >> --- a/include/hw/pci/pcie_port.h
-> >> +++ b/include/hw/pci/pcie_port.h
-> >> @@ -37,6 +37,7 @@ struct PCIEPort {
-> >>      /* pci express switch port */
-> >>      uint8_t     port;
-> >>      uint16_t    acs_ctrl;
-> >> +    bool        acs_ctrl_configured;
-> >>  };
-> >>  
-> >>  void pcie_port_init_reg(PCIDevice *d);
-> >> -- 
-> >> 2.34.1
-> > 
+The init sequence is quite straightforward:
+
+```
+/* initialize target types, and only them */
+module_call_init(MODULE_INIT_TARGET_INFO);
+
+/* we can get the list if we want, for -target or any other purpose */
+g_autoptr(GSList) targets = object_class_get_list(TYPE_TARGET_INFO, false);
+
+/* set the global target info from any element in this list */
+TargetInfo* ti = ...;
+target_info_qom_set_target_info(ti);
+
+/* register rest of QOM types */
+module_call_init(MODULE_INIT_QOM);
+```
+
+It works fine to implement -target (if we would like to do it), since I
+implemented it myself. That was also my initial motivation by the way.
+
+Also, I appreciate that target-info is NULL by default, it crashes
+loudly when it has not been set, and make it easy to find who depends on it.
+
+> If we treat target_info as a QOM, but QOM needs target_info to set
+> up(is_avaible). That makes
+> the init sequence too much of a burden.
+>
+
+See sequence above, the solution is to initialize TARGET_INFO first,
+before the rest of QOM. You end up with the same result than with a
+statically initialized list.
+
+> 
+> is_available is depends on target_arch
+> And before this patch, target_arch depends on QOM, pulls user/softmmu because
+> target_info_init. By moving target-info to be a custom list based, we
+> can decouple
+> target-info from qom/softmmu/user. and target-info will always
+> available once "main(argv, argc)" is entered. We also have the
+> advantage of doing all sorts
+> of tests against it.
+>
+
+Which kind of tests are you trying to add?
+
+For now, the exact list of places where we need to do this initialize
+target dance are:
+- system/vl.c:    module_call_init(MODULE_INIT_TARGET_INFO);
+- tests/qtest/fuzz/fuzz.c:    module_call_init(MODULE_INIT_TARGET_INFO);
+- tests/unit/test-multi-target.c:
+module_call_init(MODULE_INIT_TARGET_INFO);
+
+If we want more tests, I'm totally ok to move this init code to
+target-info.c, and replace call sites if needed.
+
+> 
+> Tools such as qemu-img and unit tests may link target-info.c without any
+> target-info-def.c objects. Their target list remains empty, so use this
+> fallback.
+>
+
+Why should this tool get access to target list? qemu-img deals with disk
+images, and is unrelated to targets.
+
+> 
+> static TypeImpl *type_register_internal(const TypeInfo *info)
+> {
+>     TypeImpl *ti;
+> 
+>     if (!type_name_is_valid(info->name)) {
+>         fprintf(stderr, "Registering '%s' with illegal type name\n",
+> info->name);
+>         abort();
+>     }
+> 
+>     if (info->is_available && !info->is_available()) {
+>         return NULL;
+>     }
+> 
+>     ti = type_new(info);
+> 
+>     type_table_add(ti);
+>     return ti;
+> }
+> 
+>>
+>> Is there another good value this list approach brings compared to what
+>> exists?
+>>
+>> Regards,
+>> Pierrick
+> 
+> 
+> 
 
 
