@@ -4,72 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21326CA6002
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 07:41:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF0E4CA5FF1
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 07:42:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xEMFn-0004OJ-GS; Wed, 07 Oct 2026 03:40:09 -0400
+	id 1xEMH2-0004Zq-Ae; Wed, 07 Oct 2026 03:41:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1xEGdZ-0005T6-86
- for qemu-devel@nongnu.org; Tue, 06 Oct 2026 21:40:17 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1xEGdJ-0000it-1g
- for qemu-devel@nongnu.org; Tue, 06 Oct 2026 21:39:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1791337059;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=ZWt1RENlaja18bj4zAOHqkajKHTMTxvdPYvImNSEX4g=;
- b=LtF0YHLfJMR5mQJx9Qx9alejVhOApTjBXGvgOVpgficE/wOWWFbYh82NoqEBXo9Gc2Ixqr
- pUc63ZjJI3c5mMIQeV7Y659TkGsVFIunVsM71eMfU7f17EO6Qc2OsWofLA9EUOhSZf6VTv
- bIbvOnnQnTPD5NMkiLQDryBrzSJcC14=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-224-m7cn2nkOM3G3W1W5tiGFbw-1; Tue,
- 06 Oct 2026 10:29:10 -0400
-X-MC-Unique: m7cn2nkOM3G3W1W5tiGFbw-1
-X-Mimecast-MFC-AGG-ID: m7cn2nkOM3G3W1W5tiGFbw_1791296949
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9141E1967C50; Tue,  6 Oct 2026 14:29:08 +0000 (UTC)
-Received: from redhat.com (headnet05.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.117])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DECFC433; Tue,  6 Oct 2026 14:29:05 +0000 (UTC)
-Date: Tue, 6 Oct 2026 09:29:03 -0500
-From: Eric Blake <eblake@redhat.com>
-To: Fiona Ebner <f.ebner@proxmox.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, hreitz@redhat.com, 
- kwolf@redhat.com, qemu-stable@nongnu.org
-Subject: Re: [PATCH qemu 4/4] qemu-img: convert: flush target image after
- copying
-Message-ID: <asUDdHfFgP7RoMk5@redhat.com>
-References: <20260930132140.2342574-1-f.ebner@proxmox.com>
- <20260930132140.2342574-5-f.ebner@proxmox.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260930132140.2342574-5-f.ebner@proxmox.com>
-User-Agent: NeoMutt/20260616
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=eblake@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 10
-X-Spam_score: 1.0
-X-Spam_bar: +
-X-Spam_report: (1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
+ (Exim 4.90_1) (envelope-from
+ <3g43FagsKChI5s4s5yC3sB0y66y3w.u648w4C-vwDw3565y5C.69y@flex--namangulati.bounces.google.com>)
+ id 1xEGHw-0002Cm-Rs
+ for qemu-devel@nongnu.org; Tue, 06 Oct 2026 21:18:07 -0400
+Received: from mail-qk1-x748.google.com ([2607:f8b0:4864:20::748])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from
+ <3g43FagsKChI5s4s5yC3sB0y66y3w.u648w4C-vwDw3565y5C.69y@flex--namangulati.bounces.google.com>)
+ id 1xEGHp-0004zn-2b
+ for qemu-devel@nongnu.org; Tue, 06 Oct 2026 21:17:39 -0400
+Received: by mail-qk1-x748.google.com with SMTP id
+ af79cd13be357-934956beec8so749581885a.0
+ for <qemu-devel@nongnu.org>; Tue, 06 Oct 2026 18:15:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=google.com; s=20251104; t=1791335716; x=1791940516; darn=nongnu.org;
+ h=content-type:cc:to:from:subject:message-id:mime-version:date:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=e31mEJk7wVkRVPRqxeQrOAFPrcSiTyv/soKsmAttA6o=;
+ b=mFeVLgfiEEBl5cJSdkPIx6bMR99ctjihuWE0jjMLUxEm5jr7N1yN6owq5goQ+LsUyS
+ m6VJ9+KhLuBoOHBcEXZy2+THnPpzZidWlT4cUs+ttaeGU0QNNlU54AzD2Hkoc0MjQvXq
+ dtIU/AYTXxGG6m1g5Pyvwc5LnR9tH7hx1vpSVHCtEBf36X4FlqcPpsV5Vb36/HRlOqoe
+ t5P9FakXFYVnB+9U7K0tbOqKO2OosGIhi3ZWkeM1WWr89+x3axo5gwOrlLBXpAy3gRox
+ T04/gRTZq5+SezMtK1zZq8udXUUSGHyfCRRBuv54Suwh8qS+xK/DFHpLsfxF1m8GLfiq
+ HQnA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1791335716; x=1791940516;
+ h=content-type:cc:to:from:subject:message-id:mime-version:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=e31mEJk7wVkRVPRqxeQrOAFPrcSiTyv/soKsmAttA6o=;
+ b=JdzH1+GbaC/rDvUI1eujcmlUCSInQ/dzawkJXig2wAAtJN8UVO2ZkELvVkmejYKLE2
+ /1OIVIDuzLhmhd8avAKJfBOLBilCeFmoRSX9eSLaNI+Ljzodl00LPuCcvYdzEkuxdvzJ
+ 6thHRnTJMXXzaDyz1ZbKUpRV5aTEP34F9uSLGjOaShmG9/SyqwfQUefQlBsEf43bnqNb
+ akYbirZdD36SNyY3AM+qLn33k9wngryPWYGDRdgQWKTB4P63p/Ub581SHbMuhLizoRz/
+ mHGOmcZ01UnmYGJWep2c+gViJ5F4bvHUhMZJ1XI75uM090lFEoYiuURCP8exSM3up2Q4
+ uoqw==
+X-Gm-Message-State: AFuF++lnrEFMvbMQuBUw6ASngip0r+JkC7V344yGHfACgPC3LIriQ/1B
+ gWiyhv1fVlMLIw4E+C7hrHGDL8JyBssPGcEbCuunZ9wD3YiD5knHHi6MPLoB6pQ12AMIyqEHqtV
+ fa8lR274Il2ldGq/ISPx6Rd9ZrkoqnjG/5E3/F3Q08JUqNGZ37AztMRl1nfMomexYc0ce+OCPbK
+ llglA+/CmnnMChb3AVOZdbhNeBV6BSu8FyEzNfPR4NisHh12uOU3/43Dk0L+aUIg==
+X-Received: from qtjc4.prod.google.com ([2002:ac8:1104:0:b0:533:86e9:44e4])
+ (user=namangulati job=prod-delivery.src-stubby-dispatcher) by
+ 2002:ac8:7f44:0:b0:535:70b5:812 with SMTP id
+ d75a77b69052e-535755da404mr9097651cf.74.1791331715062; 
+ Tue, 06 Oct 2026 17:08:35 -0700 (PDT)
+Date: Wed,  7 Oct 2026 00:08:29 +0000
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.56.0.rc1.315.gc6ed9934b7-goog
+Message-ID: <20261007000833.2445641-1-namangulati@google.com>
+Subject: [PATCH v3 RESEND 0/4] vfio-user: support multiple FDs backing region
+ mmaps
+From: Naman Gulati <namangulati@google.com>
+To: qemu-devel@nongnu.org
+Cc: John Levon <john.levon@nutanix.com>,
+ Thanos Makatos <thanos.makatos@nutanix.com>, 
+ "=?UTF-8?q?C=C3=A9dric=20Le=20Goater?=" <clg@redhat.com>,
+ Alex Williamson <alex@shazbot.org>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Matt Evans <matt@ozlabs.org>, Naman Gulati <namangulati@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::748;
+ envelope-from=3g43FagsKChI5s4s5yC3sB0y66y3w.u648w4C-vwDw3565y5C.69y@flex--namangulati.bounces.google.com;
+ helo=mail-qk1-x748.google.com
+X-Spam_score_int: -95
+X-Spam_score: -9.6
+X-Spam_bar: ---------
+X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,54 +97,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Sep 30, 2026 at 03:19:25PM +0200, Fiona Ebner wrote:
-> With 'qemu-img convert', when using a cache mode with 'cache.no-flush
-> = off', the expectation is that the data is flushed to the disk, which
-> happens since commit 80ccf93b88 ("qemu-img: let 'qemu-img convert'
-> flush data"). This expectation also encompasses that failure to do so
-> is properly reported, so ensure that 'qemu-img convert' exits with a
-> non-zero status code when the target image cannot be flushed.
-> 
-> In particular, the reproducer below [0], based on a report by
-> Ing. Alfonso Kuen Arroyo [1], would result in
-> > rc=0
-> > Content mismatch at offset XYZ!
-> before this change, and in
-> > rc=1
-> > Content mismatch at offset XYZ!
-> after this change.
-> 
-> Note that this change does not affect the (default) 'unsafe' cache
-> mode, because bdrv_co_flush() still skips flush to disk for that cache
-> mode.
+This series extends the vfio-user protocol specification to allow
+servers to pass multiple file descriptors for different sparse memory
+areas to be mmap'ed within a single device region.
 
-Should we rethink the default? I get that during a long-running
-qemu-img convert, it makes sense to avoid intermediate calls to flush
-(the destination image is not going to be in use by a guest until the
-qemu-img process completes, so there is no need to slow down the
-conversion). But should we have a mode of operation where we guarantee
-that we flush before exiting qemu-img, while ginoring all other flush
-points in the middle (in between an explicit request for all
-intermediate flushes to be acted on, vs. an explicit request to not do
-any flushing at all), as as safer default going forward? That way, you
-have to explicitly opt in to a case where qemu-img convert might
-produce a corrupted copy due to an undiagnosed flush failure.
+This extension is intended for exposing paravirtualized PCI devices via
+a vfio-user server that may have multiple unique sub-regions in a BAR
+backed by some mmap'able buffers sourced from distinct file descriptors.
 
-But I think that question can be deferred to another day - this patch
-has merit of adding diagnosis for the setup of anyone explicitly
-requesting flush safety of some sort, even if it doesn't change
-behavior for the defaults when the user did not make an explicit flush
-request.
+This change introduces a new capability:
+  VFIO_REGION_INFO_CAP_SPARSE_MMAP_FDS
 
-Reviewed-by: Eric Blake <eblake@redhat.com>
+Unlike VFIO_REGION_INFO_CAP_SPARSE_MMAP (which maps all sparse areas
+from a single open file descriptor), this new capability defines an
+array of sparse mmap areas where each area contains an index into the
+array of file descriptors.
 
-This series caught my eyes because of the scenario you mentioned of an
-NBD connection dying before a flush can finalize; so I'm planning on
-queuing it through my NBD tree shortly.
+When all sparse areas share a single file descriptor, servers may
+continue to emit VFIO_REGION_INFO_CAP_SPARSE_MMAP and send exactly one
+file descriptor in SCM_RIGHTS for backwards compatibility with older
+clients.
+
+The extensions in this series also lays the groundwork to make use of
+the in-development series [1] extending vfio-pci to return distinct
+dmabuf FDs for discrete regions of a device's BAR. A vfio-user server
+may choose to return dmabuf FDs for various regions of a device's BAR to
+map a vfio passthrough device into the guest, in order to retain control
+of the device and be able to revoke mappings passed to the VM.
+
+libvfio-user server side changes WIP on github [2].
+
+
+[1] https://lore.kernel.org/all/20260715174737.15287-1-matt@ozlabs.org
+[2] https://github.com/NamanGulati/libvfio-user/tree/multi-region-fd
+
+---
+Changes from v2:
+  - As suggested by Cedric: kept core VFIO changes minimal by only
+    extending VFIOMMmap to hold each mmap subregion's fd & fd_offset.
+  - Moved multi-FD management and capability parsing into hw/vfio-user,
+    and using VFIOUserProxy to hold region multi-fds.
+  - Resend: rebased to head.
+  - Link to v2: https://lore.kernel.org/qemu-devel/20260826050039.2068138-1-namangulati@google.com
+
+Changes from RFC:
+  - Refactored the get_region_info callback to keep vbasedev constant
+    and take in a VFIORegionFDs* out parameter to store the received fds.
+  - Link to RFC: https://lore.kernel.org/qemu-devel/20260811233930.401797-1-namangulati@google.com
+---
+
+Naman Gulati (4):
+  vfio-user: add multi-fd region mmap capability
+  vfio: add 'fd' and 'fd_offset' to VFIOMmap
+  vfio: add setup_sparse_mmaps hook to VFIODeviceIOOps
+  vfio-user: support multiple FDs for sparse mmap regions
+
+ docs/interop/vfio-user.rst    | 71 +++++++++++++++++++++++++--
+ hw/vfio-user/protocol.h       | 22 +++++++++
+ hw/vfio-user/proxy.h          |  2 +
+ hw/vfio/vfio-region.h         |  9 +++-
+ include/hw/vfio/vfio-device.h | 16 +++++++
+ hw/vfio-user/device.c         | 90 ++++++++++++++++++++++++++++++++---
+ hw/vfio-user/proxy.c          | 32 +++++++++++--
+ hw/vfio/pci.c                 |  2 +
+ hw/vfio/region.c              | 51 ++++++++++++++++----
+ 9 files changed, 269 insertions(+), 26 deletions(-)
 
 -- 
-Eric Blake, Principal Software Engineer
-Red Hat, Inc.
-Virtualization:  qemu.org | libguestfs.org
+2.56.0.rc1.315.gc6ed9934b7-goog
 
 
