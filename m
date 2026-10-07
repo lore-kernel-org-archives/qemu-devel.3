@@ -4,109 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BAFC9CA5FF1
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 13:28:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D897ECA5FFC
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 13:40:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xERgq-00023W-2z; Wed, 07 Oct 2026 09:28:13 -0400
+	id 1xERsP-0004at-7u; Wed, 07 Oct 2026 09:40:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xERgT-000217-E7
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 09:27:52 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xERgQ-0001qO-R4
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 09:27:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1791379665;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=jy15Kr4sjtoYQF06amY55/UjTpIN+oIKG5ps7iCdezU=;
- b=Hb8k7KwY4RBUT+ceR14rzIl3wUBh+vzpA97ylEYslcJXLJoiHFhv5d5e0ONgCZmuG53RgP
- D9eyTQp1XNObieEtQFjFg+oNqlVH6Py9pkEsqsJU9FrnI+eBRWPRB/GKPHExlnMTOUq7sU
- eBxD0KCm6qp1qzn8Xnf5HeZa95Qrjek=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-656-6jGdvsFWNouSGQB86qRa-g-1; Wed, 07 Oct 2026 09:27:44 -0400
-X-MC-Unique: 6jGdvsFWNouSGQB86qRa-g-1
-X-Mimecast-MFC-AGG-ID: 6jGdvsFWNouSGQB86qRa-g_1791379664
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-939c30aa9a0so476560885a.0
- for <qemu-devel@nongnu.org>; Wed, 07 Oct 2026 06:27:44 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
+ id 1xERsN-0004aE-Tn
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 09:40:07 -0400
+Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
+ id 1xERsL-0003FE-Uk
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 09:40:07 -0400
+Received: by mail-ej1-x630.google.com with SMTP id
+ a640c23a62f3a-c2e6df2742cso252046666b.2
+ for <qemu-devel@nongnu.org>; Wed, 07 Oct 2026 06:40:05 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1791380404; cv=none;
+ d=google.com; s=arc-20260327;
+ b=azBqH4bAO8htDpVFzZKMENPmPmoyuJ5xqfdUv3VHdS3qxUvjCpodLdyJLftiWAC5AW
+ teorpGxhH28bNxtgrostcM+z2LlbfFjOsNviPxQrH9b2B+xKFbp3UKn04YlKJFNrHsM3
+ KT6QyBJHScyXMzaHOgm/0dhx4kInUVlANWFY8iIBZdBYYAYQjHXWmYQVbkFUsutG+ywR
+ +pvfNn+ORNnjFTS+BrmcX/n9rU/8gHwb04vogbb7w+/vo/svbNSjmyBMrMfsKQVqQRCz
+ oRS3RhHr80KuzLSkWuR6zRc88FiQsbiz/hzWk9+H1LPwMiBa/zmb3HfMXDXiPohLxQ5x
+ yXEA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :reply-to:in-reply-to:references:mime-version:dkim-signature;
+ bh=kijGPFj8mxU0eUyLnYHgGpuj3XE89WWVKq4eeg14sqE=;
+ fh=iYti4CcJ93nNzsiReDBFEg6yh3G3Qu7LLcikZd0Bn5I=;
+ b=L9yo1WJwnwS6WEidbIYhKnsdBVBCvyOfnq09oddzH8US/yY54TWWMO7VS2qjEJyLGB
+ zV6bfQmXtHaAiAhaUec3owAqMg7dzQ/AW4XFV+yOccqndz1cDXUdUw8JZ4iv+BIiEZi2
+ IrCrD72Ecm51gkd8gvwpIUF94binHdCbOr8V1ucTHJXoh0n6cfB4WHGSHbAV+9ctXFx6
+ AZAEbMgGH7Voq8wWtRbIYU/tXhninEAHYD73cjyOr4FQjfRbdzrf7lJNbsvEcdcuPogd
+ OBJSX6+jNkyqRqWCXifcTkr6aBrlmr2opQwyMfX2ff0fb+LAonEVYd10x5XkW7VJN0du
+ Mfwg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1791379664; x=1791984464; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=jy15Kr4sjtoYQF06amY55/UjTpIN+oIKG5ps7iCdezU=;
- b=ZTxzSpDvnOSj1iYkCYs4SznWxk7vN0Dck3sgJBGJXYl7eSy/k5k9VJAkg8GdEp/9Dd
- wqVAviqVMa+/z/+8mzyVeUlSs/qNDf4+dXewaPJr3KMiOsEcyDNwUaU/n/0oPc2i73z0
- x+YA5IcCTy7/RFp9tbxJDZ32xBOsC90LO5eXUYihJnFPVqD9Yk8PYdA2ceOW+Gj7e5ez
- /q6myRskLSBoLjWrdVSFPcTfyc7lHXiASl/m8+nXA7fdY/smV87lBSzHH7kboDvK8QC9
- e7XdwHFvsWk8E1zQizfe1hhroZ2ATXsDsvB+yLjwnuE85JZWM5jSPyn9KKv8kYL8luWC
- 6Drw==
+ d=gmail.com; s=20251104; t=1791380404; x=1791985204; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:reply-to:in-reply-to:references:mime-version:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=kijGPFj8mxU0eUyLnYHgGpuj3XE89WWVKq4eeg14sqE=;
+ b=jYAVK7C+Jfi1duK3M1Ldc01kpNT1FKJfEws0KhME0WBY3raSbLCg5/tBeXgEB4pFzD
+ 809KReJZmo0AH+IFOYnA31dkoLLoIQ1aLK7Gg/f/I1RwQI9EzfCwL29opSkMYYwo1ndR
+ cE7mVf8BeiWjP/6XAO1JAO/Dn8Zr0Z4D7780lgM/YoKoj1MxBTnKXcMqevIM+r6v8nCn
+ o6UN4BPe0A50fVlEdoIZtsaifZocsKfVkrhd08sDM948V4PU1r4LYVK9LiunOuPV2zBi
+ /ZaBxI91P5sMRg0cKCaWpu12SPrBpzhy0cHPMADTHw6/Ti8g2H9EYIxsF75uvqVJGy68
+ 0+sQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791379664; x=1791984464;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=jy15Kr4sjtoYQF06amY55/UjTpIN+oIKG5ps7iCdezU=;
- b=QkShM89qqcvxSyA/OFeYRI7ovChOcrXRJWluIUvqP5izwF6jqUwStSxVNGaPiFX4ar
- VbIQBJVDN0hhSggRdiVB+RoQaKMJ0p2DFcawDRpT8wKiTOahU19h+sL5wqyXMtDrZxsv
- p520xLzLw79ifiRBIixsCe4F/IZYKG2+ThG3GnYVFCi6nX6jUd4qZfOifYOq3/o8E2s/
- vL+jp5iVXfJ2HjmyyQ5uCLh4ObldCs5vhNDzkcMusMkkZdMeMraG7YmNYTRsvzSn870X
- FrWoSpR2CKuwsBtQF1BpF8aqajIgqjDjUyQsByZh/VnKW85i7xogQS1JWqLvpLaVxbWy
- wsPg==
-X-Gm-Message-State: AFuF++mvzyPAH/qfh1tTeKyyI+d8HPjmyqUUFpbeFQ1RrGOpOPpFxtln
- rWK2vWKLSsxoVY6y+aCx+jGdAbALHa/IDVhTAktP7OaBlB/lodLp4aVrxVHohteYdSU74vbwVhb
- sbhphxeoAMwv9uCMd8db5vovp1bBST3RlkpaSMQtJ1ZQaegWAeHuKZ5e3
-X-Gm-Gg: AYBFou19mIRF8F9pmzp/dJ2x5B657IFShCO3wSHud6DVA/wWfJLDE7b/zId0lf/uYQ/
- COxFmgRp4qS8Gd9+uN9e53S8XxgONmRA10f43PLYV+KpEdr+xcec3c4ab/53K5tKs9jnXViVXlt
- cIzsnxrIVu/Rqp/OP8IuKJ5TGwnwUsDU8eDqTfFJw/IzBgWp5RS/Ojpv6+Kl7tLTp/Fc77V6QZL
- iPMaLUQVCQVAcG0QC40HmpEEOT8P8Raq251C5YmHfnVpTHCXhJaz4DNUEdJPkWii8crIhJAfKq3
- WPMsiKTWVqZYPqRBeafLPwRL92wW/S8D2LnjWYEVn5z/0dYmQPwKXbPwGgZoOMJltofngC0=
-X-Received: by 2002:a05:620a:43aa:b0:93e:910c:5e65 with SMTP id
- af79cd13be357-93e9b7c6dcfmr442309885a.49.1791379663524; 
- Wed, 07 Oct 2026 06:27:43 -0700 (PDT)
-X-Received: by 2002:a05:620a:43aa:b0:93e:910c:5e65 with SMTP id
- af79cd13be357-93e9b7c6dcfmr442302885a.49.1791379662730; 
- Wed, 07 Oct 2026 06:27:42 -0700 (PDT)
-Received: from localhost ([142.188.212.246]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-93e98f6b4basm217156085a.6.2026.10.07.06.27.40
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 07 Oct 2026 06:27:41 -0700 (PDT)
-Date: Wed, 7 Oct 2026 09:27:39 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Alexander Mikhalitsyn <alexander@mihalicyn.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>,
- Jesper Devantier <foss@defmacro.it>,
- Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- "open list:nvme" <qemu-block@nongnu.org>
-Subject: Re: [RFC PATCH] tests/functional: add migration diagnostics and pace
- nvme activity (HACK!)
-Message-ID: <asZIy2Rm8QF4TSca@zhexu-thinkpadt14gen5.rmtcaon.csb>
-References: <20260921190345.1709227-1-alex.bennee@linaro.org>
+ d=1e100.net; s=20260707; t=1791380404; x=1791985204;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:reply-to:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=kijGPFj8mxU0eUyLnYHgGpuj3XE89WWVKq4eeg14sqE=;
+ b=XdNXfDIw2Brt5a1J1h6n5TlQ6BaEGH88x50h6jgcWHp4hmYb85AMVq79chM/gOZ5y7
+ x0eLDL8D3P6SsvCMx0buP7DbWFOrHi1fUczvT3DvaYCZsqrCBF5qp9FBB1/mV4dIQ8YF
+ qFSwWWaNT+/icMCQswaPzF4TJ4J210a1JcLxICTMSm+Y45f2KWCsR+VYH5B+mtTE1dBG
+ YR7Ze9m7t3pNQ5QFFfkDlvdjNhVtaNWlAorMyqKWTNH+31ALdyYWcARfIEsbj49Yc93b
+ ghUkFxwy7dSMuRqLVgXGtRWiWO70chAu7tj8iP2q6cTmZzySrr2toPsrxl/p7oepCWR3
+ M4NA==
+X-Forwarded-Encrypted: i=1;
+ AKwUvByYIFoE2j49v7DkQMURkGpwXYW5xdHT3hjUAOhBAjRjwdOHv7I2vpaMPGxK3iENs2L/5NW63GeWUTgh@nongnu.org
+X-Gm-Message-State: AFq9FYJLvNRofOnyA7NgDg1EWtr2vR1tjuhBFz9H0KhOnmKOXJZi9MXT
+ zYbtMTKoZUSeo7xg9Hn+vaukMOs5zffTr9DAA3QsEhg+lG+HIgyRfWxwdSsySMX0u+xYjuNPKho
+ 94Eq5Ya9rVmH1Y7tayP0pRJMRCi5u7Jg=
+X-Gm-Gg: AYBFou1gm84mU7zWKPMVqC11HMlLqYF5H7Lm4olWnX0drm4s6dPvIR7bGL7YWW8mfr0
+ Tt60ceRI/Y8UArHw5cSwtLkPCjf48vnSJR1tRProDynYeaEqEeiLF44fTyYXPr9KHizWF4PS22z
+ RZYafXnY4TZ0UJ54K/9nbF7FBjrt8Id0zO4eoIfMSHYTqvRC831dJ5fpwyfxaidEjNecJSjauhB
+ MAKMf28epzZWMjzgrKPOnazAOZka7HBzfUOjnLhqi5u3Hpj7PDEk8uVOVw89zILekxYtVruIOoo
+ aOt3ANtm56hQPs08z+2fWG4IPHcGAmsMF+NFhjWhmbtWSieHNEx0sd8=
+X-Received: by 2002:a17:907:6090:b0:c29:f5d5:5a97 with SMTP id
+ a640c23a62f3a-c317be5efa6mr220749466b.33.1791380404008; Wed, 07 Oct 2026
+ 06:40:04 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260921190345.1709227-1-alex.bennee@linaro.org>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
+References: <20261007-rv-dedup-v2-0-8a2f0f296a7f@rev.ng>
+ <20261007-rv-dedup-v2-14-8a2f0f296a7f@rev.ng>
+ <17cb7c7c-5f22-4a03-8855-4d1ec91d347a@oss.qualcomm.com>
+ <CAE2XoE9eXXKQGZZ0kvmex88+tjch1-+H_-MgB6JEu+4bdPZq8g@mail.gmail.com>
+ <9bf8945c-6472-462e-a275-f0b74912d3ed@oss.qualcomm.com>
+In-Reply-To: <9bf8945c-6472-462e-a275-f0b74912d3ed@oss.qualcomm.com>
+From: Yonggang Luo <luoyonggang@gmail.com>
+Date: Wed, 7 Oct 2026 21:39:49 +0800
+X-Gm-Features: AclHuK9eXu9v8s72KRA0zeVlJz0HvpGEORAabRshStrlJLOlK_G9Ts7ICmO9lA0
+Message-ID: <CAE2XoE9QzGda8J9QCQysRL8OoxBrR86Ft426Rf4TXJxnPm+Vsg@mail.gmail.com>
+Subject: Re: [PATCH v2 14/18] target/riscv: Compile pmp.c once
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
+Cc: Anton Johansson <anjo@rev.ng>, qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
+ daniel.barboza@oss.qualcomm.com, pierrick.bouvier@oss.qualcomm.com, 
+ palmer@dabbelt.com, alistair.francis@wdc.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::630;
+ envelope-from=luoyonggang@gmail.com; helo=mail-ej1-x630.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,146 +121,99 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: luoyonggang@gmail.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Sep 21, 2026 at 08:03:45PM +0100, Alex Bennée wrote:
-> This is a hacky patch for comment but I've included the diagnostic
-> hacks to the migration test as well as my workaround to get itworking.
-> 
-> This test was failing on my KVM system. On investigation I found the
-> nVME activity meant the migration never completed. I ended up
-> inserting some sleeps into the workload script until I was able to
-> get it to run.
+It's here https://lore.kernel.org/qemu-devel/ar9WZip2Q2G0qvQI@hive.localdom=
+ain/
 
-Indeed, I can reproduce it too:
+From: Anton Johansson via qemu development <qemu-devel@nongnu.org>
 
-$ ./run ../tests/functional/x86_64/test_nvme_migration.py X8664NVMeMigrationTest.test_migration_with_unix
-TAP version 13
-Traceback (most recent call last):
-  File "/home/zhexu/git/qemu/tests/functional/x86_64/test_nvme_migration.py", line 162, in test_migration_with_unix
-    self.migration_with_unix()
-    ~~~~~~~~~~~~~~~~~~~~~~~~^^
-  File "/home/zhexu/git/qemu/tests/functional/migration.py", line 98, in migration_with_unix
-    self.migrate(dst_uri)
-    ~~~~~~~~~~~~^^^^^^^^^
-  File "/home/zhexu/git/qemu/tests/functional/migration.py", line 78, in migrate
-    self.migrate_vms(dst_uri, src_uri, dst_vm, src_vm)
-    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/zhexu/git/qemu/tests/functional/migration.py", line 63, in migrate_vms
-    self.assert_dest_vm(dst_vm)
-    ~~~~~~~~~~~~~~~~~~~^^^^^^^^
-  File "/home/zhexu/git/qemu/tests/functional/x86_64/test_nvme_migration.py", line 128, in assert_dest_vm
-    self.exec_command_and_check(
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
-        "kill -0 $(cat /tmp/test_nvme_mig_workload.pid)", vm)
-        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/zhexu/git/qemu/tests/functional/x86_64/test_nvme_migration.py", line 48, in exec_command_and_check
-    wait_for_console_pattern(self, 'OK', failure_message="FAIL", vm=vm)
-    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/zhexu/git/qemu/tests/functional/qemu_test/cmd.py", line 191, in wait_for_console_pattern
-    return _console_interaction(test, success_message, failure_message,
-                                None, vm=vm)
-  File "/home/zhexu/git/qemu/tests/functional/qemu_test/cmd.py", line 134, in _console_interaction
-    done, line = _console_read_line_until_match(test, vm,
-                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
-                                                success_message_b,
-                                                ^^^^^^^^^^^^^^^^^^
-                                                failure_message_b)
-                                                ^^^^^^^^^^^^^^^^^^
-  File "/home/zhexu/git/qemu/tests/functional/qemu_test/cmd.py", line 70, in _console_read_line_until_match
-    test.fail(
-    ~~~~~~~~~^
-        f"'{failure}' found in console, expected '{success}'")
-        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-AssertionError: 'b'FAIL'' found in console, expected 'b'OK''
 
-not ok 1 test_nvme_migration.X8664NVMeMigrationTest.test_migration_with_unix
-1..1
+I wouldn't be surprised if that's the case, although I'm personally a
+bit scared of riscv_cpu_mxl_bits() since it returns 128 for MXL_128, so
+if it's not used carefully or on clear MXL_[32|64] paths you could easily
+get UB.
 
-Copy the author too (Alexander).
 
-> 
-> *NOTE*: obviously this can't be merged as is but I think we could
-> certainly do with more tracking in the test to see when things aren't
-> working with possibly the sleep as another patch.
-> 
-> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-> ---
->  tests/functional/migration.py                 | 37 +++++++++++++++----
->  .../functional/x86_64/test_nvme_migration.py  |  1 +
->  2 files changed, 31 insertions(+), 7 deletions(-)
-> 
-> diff --git a/tests/functional/migration.py b/tests/functional/migration.py
-> index 8d2428efc24..e51a82c22f4 100644
-> --- a/tests/functional/migration.py
-> +++ b/tests/functional/migration.py
-> @@ -22,18 +22,41 @@ class MigrationTest(QemuSystemTest):
->      timeout = 10
->  
->      @staticmethod
-> -    def migration_finished(vm):
-> -        return vm.cmd('query-migrate')['status'] in ('completed', 'failed')
-> +    def migration_finished(query):
-> +        return query['status'] in ('completed', 'failed')
->  
-> -    def assert_migration(self, src_vm, dst_vm):
-> +    def wait_for_vm(self, src_or_dst, vm):
-> +        "Track the state of one VM in the migration"
-> +        current_state = last_state = vm.cmd('query-migrate')
->  
-> -        end = time.monotonic() + self.timeout
-> -        while time.monotonic() < end and not self.migration_finished(src_vm):
-> -            time.sleep(0.1)
-> +        self.log.info(f"waiting for {src_or_dst} to complete")
->  
->          end = time.monotonic() + self.timeout
-> -        while time.monotonic() < end and not self.migration_finished(dst_vm):
-> +        while time.monotonic() < end:
-> +            if self.migration_finished(current_state):
-> +                break
-> +            else:
-> +                last_remain = last_state['remaining']
-> +                current_remain = current_state['remaining']
-> +
-> +                if current_remain > last_remain:
-> +                    self.log.warning(f"slow migration {current_remain} > {last_remain}")
-> +
->              time.sleep(0.1)
-> +            last_state = current_state
-> +            current_state = vm.cmd('query-migrate')
-> +
-> +
-> +    def assert_migration(self, src_vm, dst_vm):
-> +
-> +        self.wait_for_vm("src", src_vm)
-> +
-> +        # if we hit this we never completed...
-> +        self.assertEqual(src_vm.cmd('query-migrate')['status'], 'completed')
-> +
-> +        self.wait_for_vm("dst", dst_vm)
-> +
-> +        self.log.info("checking everything is OK")
->  
->          self.assertEqual(src_vm.cmd('query-migrate')['status'], 'completed')
->          self.assertEqual(dst_vm.cmd('query-migrate')['status'], 'completed')
-> diff --git a/tests/functional/x86_64/test_nvme_migration.py b/tests/functional/x86_64/test_nvme_migration.py
-> index 890f0aab6d6..58596f63cd3 100755
-> --- a/tests/functional/x86_64/test_nvme_migration.py
-> +++ b/tests/functional/x86_64/test_nvme_migration.py
-> @@ -109,6 +109,7 @@ def launch_source_vm(self, vm):
->                  rm -f /tmp/test_nvme_mig_workload.iter_finished; \
->                  echo 3 > /proc/sys/vm/drop_caches; \
->                  find /usr/bin -type f -exec cksum {} \\;; \
-> +                sleep 0.3; \
->                  touch /tmp/test_nvme_mig_workload.iter_finished; \
->              done) > /dev/null 2> /tmp/test_nvme_mig_workload.errors &",
->              prompt, vm=vm)
-> -- 
-> 2.47.3
-> 
+On Wed, Oct 7, 2026 at 9:26=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
+<philmd@oss.qualcomm.com> wrote:
+>
+> On 7/10/26 13:51, Yonggang Luo wrote:
+> > On Wed, Oct 7, 2026 at 6:25=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
+> > <philmd@oss.qualcomm.com> wrote:
+> >>
+> >> On 7/10/26 10:43, Anton Johansson wrote:
+> >>> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+> >>> Signed-off-by: Anton Johansson <anjo@rev.ng>
+> >>> ---
+> >>>    target/riscv/tcg/pmp.c       | 5 +++--
+> >>>    target/riscv/tcg/meson.build | 2 +-
+> >>>    2 files changed, 4 insertions(+), 3 deletions(-)
+> >>>
+> >>> diff --git a/target/riscv/tcg/pmp.c b/target/riscv/tcg/pmp.c
+> >>> index 99345d63dc..2d7194de10 100644
+> >>> --- a/target/riscv/tcg/pmp.c
+> >>> +++ b/target/riscv/tcg/pmp.c
+> >>> @@ -638,19 +638,20 @@ uint64_t pmpaddr_csr_read(CPURISCVState *env, u=
+int32_t addr_index)
+> >>>        if (addr_index < pmp_regions) {
+> >>>            val =3D env->pmp_state.pmp[addr_index].addr_reg;
+> >>>            int g =3D pmp_get_granularity_g(env);
+> >>> +        const unsigned long_bits =3D target_long_bits();
+> >>
+> >> We need to fetch this information from @env. Maybe riscv_cpu_mxl_bits(=
+)?
+> >
+> > discussed before, there is possible be 128bits
+>
+> Please point me to the discussion (directly, saving us a ping / pong),
+> as:
+>
+>    '''
+>    This was already discussed on v42:
+>
+>    https://lore.kernel.org/qemu-devel/some-message-id-v42-20128438/
+>    '''
+>
+> Having the discussion decision resumed in the patch description will
+> prevent further reviewers to ask again the same.
+>
+> What do you mean by "possible be 128bits"? If we want to cap the
+> value we can use MIN(64, riscv_cpu_mxl_bits(env)).
+>
+> >
+> >>>            switch (pmp_get_a_field(env->pmp_state.pmp[addr_index].cfg=
+_reg)) {
+> >>>            case PMP_AMATCH_OFF:
+> >>>                /* fallthrough */
+> >>>            case PMP_AMATCH_TOR:
+> >>>                /* Bit [g-1:0] read all zero */
+> >>> -            if (g >=3D 1 && g < TARGET_LONG_BITS) {
+> >>> +            if (g >=3D 1 && g < long_bits) {
+> >>>                    uint64_t granule =3D 1ULL << g;
+> >>>                    val =3D ROUND_DOWN(val, granule);
+> >>>                }
+> >>>                break;
+> >>>            case PMP_AMATCH_NAPOT:
+> >>>                /* Bit [g-2:0] read all one */
+> >>> -            if (g >=3D 2 && g < TARGET_LONG_BITS) {
+> >>> +            if (g >=3D 2 && g < long_bits) {
+> >>>                    val =3D deposit64(val, 0, g - 1, -1ULL);
+> >>>                }
+> >>>                break;
+> >>
+> >
+> >
+>
 
--- 
-Peter Xu
 
+--=20
+         =E6=AD=A4=E8=87=B4
+=E7=A4=BC
+=E7=BD=97=E5=8B=87=E5=88=9A
+Yours
+    sincerely,
+Yonggang Luo
 
