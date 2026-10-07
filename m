@@ -4,92 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82B76CA6002
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 20:03:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CAFBCA6002
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 20:14:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xEXqi-0002Zy-En; Wed, 07 Oct 2026 16:02:48 -0400
+	id 1xEY1X-0004Yp-Tc; Wed, 07 Oct 2026 16:13:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xEXqg-0002Zh-C9
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 16:02:46 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xEXqe-0001AU-GL
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 16:02:46 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-49d0da752ffso39744145e9.3
- for <qemu-devel@nongnu.org>; Wed, 07 Oct 2026 13:02:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1791403363; x=1792008163; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id
- :references:in-reply-to:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=8m8biAnsrsXE49Eg9RW+lARk9bHriS69duzfQr9yXfs=;
- b=AFJjgOjasq5mo8lzkLjrKutZXlbF0o1ybedR8pfyANPBUxTvFRvXoA1h9MdMnF77V+
- WXyz1nLaLomBstFnCvgXxDpldZ/ExElf1b1XA84pS7WCRVnu81p7DUhSy2PK41IwSAIw
- zxmMK+Pfw4vD25zrBzBDvg1ayFj2h5VwGGbO+capctM5NBLWk25R6Pbm/w/Vq9GNOKIv
- hqodNW6NiIlR82YMOxtJU072Xz2YWacQESmCsPlH4Rua5jqRPz3MY0qA2tHii+Gy1HEl
- lBrl7zDMtlUVC15KLTXa05hYNKn9md+LJEjz6S5tMfGjn0spYK1opQ4yAreZRWqALBgG
- ExRg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791403363; x=1792008163;
- h=content-transfer-encoding:content-type:mime-version:message-id
- :references:in-reply-to:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=8m8biAnsrsXE49Eg9RW+lARk9bHriS69duzfQr9yXfs=;
- b=yaWySzXVaojPvA2XG+hXkayWpgTdQSy+YTi/6/yJPcAlS+q7KYKbAwKPq93AADi0Wa
- DSmqKR5BASQVWvrc+Ugal6udkZaJEqJcMOIQnGy/FXRCNNG1Nn5X9pIqsdSqcEpoEGFp
- RahjWuFn7KCL1zqBze/sdb0W7c2Wnq5rjj8yqumnnhZcX3aG6Aj8VrDRS4t4wltJJBqW
- AUCTW+I9mQfM5wEJWVgOtw+OTh5Rkd2F+o6AXGZYCJYMV8X1g/mTLVWn/pXvCXF0y5Jp
- 2OtdOgzAhrq+7e/JYoMZiCcgdQSQ27hNQUJbBtbj2QiR3HzMNvWRDl/LtwXZ+EGoOqDL
- nxcQ==
-X-Gm-Message-State: AFuF++mvvatG+ucbNQqE4jfecs9BKSP0xXn/oVs9WuHy4IcNtWwRWn/D
- Xpyhi75KH49gGciINJbBAM9LVrzOlpoRWsgUunflJuve4CnRU0/NmMUUFXTgeQ==
-X-Gm-Gg: AYBFou2ERNuuSs0uSs13KJZ0du9+LPAMIUzRtZsTZd7BBqRnL/M0QRSz2au45rNGkB2
- wqBewQZ76ktx0+doeiwqU2xjqCIY3ZtV/oTHNINKcbNQ3Z3w9rrE4AtdVYg9tSOEct2iUaYHT3L
- uHAovabdCUuH/5G4kqh6ZBgE53iNn8tIquocwC9/w0VVbrw17nTR1oGaV1J8pVakTTcuE6+ikXq
- NSGCB/XPhVsREOGYtI9h4IucJoMbQ+WBmvIEEyYk9an22k7omqjbujeHD3wlQJ4hWAaJz9etCsc
- oMhv05U/rroMAzKRAcvjUWrpN2JDPpFG3FcNL3xiBunxMZG5hwBEXf6QmkqhlHxtSKfQeb1N0Bz
- DsFk9pWrelPA89iXosk65qABFdh8GD5R6ObLW3jpecTXS2Q/lbTos+RLE7sQLjtyOI9U3a2yHl+
- fkw0m/XTWQQB7zKVTxT9QQXzOhfwxx4pP/XyVrKbWLl40u+sZAbguqQpH9CiD889+iCMhWqjf5e
- UlPU0pU8OlUGl4I13H5n9DfZdhVwFaOxLTxokLrr9fo6PEymFDfIhNZjF+Ov7OMPS1exx4=
-X-Received: by 2002:a05:600c:c0dc:b0:4a0:2375:dc1a with SMTP id
- 5b1f17b1804b1-4a18043bc32mr42892395e9.21.1791403362859; 
- Wed, 07 Oct 2026 13:02:42 -0700 (PDT)
-Received: from ehlo.thunderbird.net
- (p200300faaf09ae009c631109991f49ce.dip0.t-ipconnect.de.
- [2003:fa:af09:ae00:9c63:1109:991f:49ce])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a1843cb261sm15691555e9.3.2026.10.07.13.02.42
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 07 Oct 2026 13:02:42 -0700 (PDT)
-Date: Wed, 07 Oct 2026 20:02:38 +0000
-From: Bernhard Beschow <shentey@gmail.com>
-To: qemu-devel@nongnu.org, Eric Farman <farman@linux.ibm.com>
-CC: qemu-s390x@nongnu.org, Matthew Rosato <mjrosato@linux.ibm.com>,
- Cornelia Huck <cohuck@redhat.com>, Zhuoying Cai <zycai@linux.ibm.com>
-Subject: =?US-ASCII?Q?Re=3A_=5BPULL_16/23=5D_tests/qtest=3A_Check_s?=
- =?US-ASCII?Q?390x_boot_device_support_in_pxe-test=2Ec?=
-In-Reply-To: <20260930152420.1956230-17-farman@linux.ibm.com>
-References: <20260930152420.1956230-1-farman@linux.ibm.com>
- <20260930152420.1956230-17-farman@linux.ibm.com>
-Message-ID: <B8BD07F5-B1AE-47A6-AD08-0B5E0151AFF6@gmail.com>
+ (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
+ id 1xEY1V-0004YL-DT
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 16:13:57 -0400
+Received: from mgamail.intel.com ([198.175.65.18])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
+ id 1xEY1T-0002As-NJ
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 16:13:57 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1791404036; x=1822940036;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=+81JZluoc451K3C7qHfpgLDs8MKCDGZLiInKCTqM3aI=;
+ b=D9irIDG02bYRmk+JdY73c8TdrdV0ZaD1Z24EJTwWwF7QMAMRsgOcHSBC
+ z/y60hCsXz8aMpJ8QjyNyAyz8NVQNSarOrbWt0Ft/KfnP8t056cQj+4/J
+ W/QI1ZUuwgkwd2FOrdQ40TG3zOv+YtzeQ2PQgDbJOBZF7M6lL3lOLFpIk
+ 3dYRQk44pkJEZRQOtM5EU53BPSXq+U8zXub7jeucWd4UAHtDJpr5YCewY
+ X3W6JtryYPA+3uruEMiXE5lgjOHEgSaH4RKG1X5MgpGKT6HaCDwx+B3ay
+ P5T7izXiME0dqmYfX6bXg2PruIcjeuoyycnFUeEFrKnegxHpUu0gX+K7Q w==;
+X-CSE-ConnectionGUID: a1WeVPRUQWu5QleksG2ZSw==
+X-CSE-MsgGUID: 06rGN9lFSsKWh9hJLsvxlQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11928"; a="178454"
+X-IronPort-AV: E=Sophos;i="6.27,144,1787036400"; 
+   d="scan'208";a="178454"
+Received: from fmviesa013.fm.intel.com ([10.60.135.153])
+ by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 07 Oct 2026 13:13:48 -0700
+X-CSE-ConnectionGUID: h0CgTnjiSR2N52HXIVMv9g==
+X-CSE-MsgGUID: Tdbl837hRuWFvDyC7fi8zA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,144,1787036400"; 
+   d="scan'208";a="1564953"
+Received: from vkasired-desk1.fm.intel.com ([10.121.64.242])
+ by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 07 Oct 2026 13:13:47 -0700
+From: Vivek Kasireddy <vivek.kasireddy@intel.com>
+To: qemu-devel@nongnu.org
+Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Alex Williamson <alex@shazbot.org>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PATCH v13 1/9] virtio-gpu: Find hva for Guest's DMA addr associated
+ with a ram device
+Date: Wed,  7 Oct 2026 13:09:20 -0700
+Message-ID: <20261007201222.648687-2-vivek.kasireddy@intel.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20261007201222.648687-1-vivek.kasireddy@intel.com>
+References: <20261007201222.648687-1-vivek.kasireddy@intel.com>
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=shentey@gmail.com; helo=mail-wm1-x333.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=198.175.65.18;
+ envelope-from=vivek.kasireddy@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -45
+X-Spam_score: -4.6
+X-Spam_bar: ----
+X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,176 +91,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+If the Guest provides a DMA address that is associated with a ram
+device (such as a VFIO PCI device region and not its system memory),
+then we can obtain the hva (host virtual address) by invoking
+address_space_translate() followed by memory_region_get_ram_ptr().
 
+We cannot use dma_memory_map() because for memory regions that do
+not support direct access, it would create bounce buffers instead
+of returning the actual hva, which is not desirable here. And, since
+VFIO device regions are not considered directly accessible (because
+they are mostly MMIO based), virtio-gpu cannot invoke dma_memory_map()
+to obtain the hva in this case.
 
-Am 30=2E September 2026 15:24:13 UTC schrieb Eric Farman <farman@linux=2Ei=
-bm=2Ecom>:
->From: Zhuoying Cai <zycai@linux=2Eibm=2Ecom>
->
->The pxe test for a net device does not fail gracefully when the
->s390-ccw=2Eimg in use was built without support for booting that device=
-=2E
->
->Add a boot_dev_support check that searches for a known string in the
->bios image to confirm boot support=2E If absent, the test is skipped
->gracefully instead of failing=2E
->
->Also re-enable pxe-test in qtests_s390x, which was accidentally
->removed by commit 973d97feca93=2E
->
->Signed-off-by: Zhuoying Cai <zycai@linux=2Eibm=2Ecom>
->Tested-by: Joshua Daley <jdaley@linux=2Eibm=2Ecom>
->Reviewed-by: Matthew Rosato <mjrosato@linux=2Eibm=2Ecom>
->Link: https://lore=2Ekernel=2Eorg/qemu-devel/20260924222949=2E147720-7-zy=
-cai@linux=2Eibm=2Ecom
->Signed-off-by: Eric Farman <farman@linux=2Eibm=2Ecom>
->---
-> tests/qtest/meson=2Ebuild |  1 +
-> tests/qtest/pxe-test=2Ec  | 85 ++++++++++++++++++++++++++++++++++++++++-
-> 2 files changed, 85 insertions(+), 1 deletion(-)
->
->diff --git a/tests/qtest/meson=2Ebuild b/tests/qtest/meson=2Ebuild
->index 33f58b0e95=2E=2E341f6ad1ba 100644
->--- a/tests/qtest/meson=2Ebuild
->+++ b/tests/qtest/meson=2Ebuild
->@@ -292,6 +292,7 @@ qtests_aarch64 =3D \
->    'migration-test']
->=20
-> qtests_s390x =3D \
->+  (slirp=2Efound() ? ['pxe-test'] : []) + \
->   qtests_filter + \
->   ['boot-serial-test',
->    'drive_del-test',
->diff --git a/tests/qtest/pxe-test=2Ec b/tests/qtest/pxe-test=2Ec
->index e85dec5a4e=2E=2E5c6415b936 100644
->--- a/tests/qtest/pxe-test=2Ec
->+++ b/tests/qtest/pxe-test=2Ec
->@@ -26,6 +26,7 @@ typedef struct testdef {
->     const char *machine;    /* Machine type */
->     const char *model;      /* NIC device model */
->     const char *extra;      /* Any additional parameters */
->+    bool (*boot_dev_support)(void); /* optional: boot device support che=
-ck */
-> } testdef_t;
->=20
-> static testdef_t x86_tests[] =3D {
->@@ -58,8 +59,80 @@ static testdef_t ppc64_tests_slow[] =3D {
->     { NULL },
-> };
->=20
->+static const char *s390_bios_load(gsize *len)
->+{
->+    static char *cached_contents;
->+    static gsize cached_len;
->+    const char *qemu_bin;
->+    g_autofree char *cmd =3D NULL;
->+    char dir[PATH_MAX];
->+    char *found =3D NULL;
->+    char *path =3D NULL;
->+    FILE *fp;
->+
->+    if (cached_contents) {
->+        g_test_message("Using cached bios contents");
->+        goto out;
->+    }
->+
->+    /* search the qemu binary's data directories for s390-ccw=2Eimg */
->+    qemu_bin =3D qtest_qemu_binary(NULL);
->+    cmd =3D g_strdup_printf("%s -L help", qemu_bin);
->+    fp =3D popen(cmd, "r");
->+
->+    if (!fp) {
->+        g_error("Failed to run '%s'", cmd);
->+    }
->+
->+    while (fgets(dir, sizeof(dir), fp) && !found) {
->+        dir[strcspn(dir, "\n")] =3D '\0';
->+        path =3D g_build_filename(dir, "s390-ccw=2Eimg", NULL);
->+        if (g_file_get_contents(path, &cached_contents, &cached_len, NUL=
-L)) {
->+            found =3D path;
->+        } else {
->+            g_free(path);
->+        }
->+    }
->+    pclose(fp);
->+
->+    if (!found) {
->+        g_error("s390-ccw=2Eimg not found");
->+    }
->+
->+    g_test_message("Loaded %s", found);
->+    g_free(found);
->+
->+out:
->+    *len =3D cached_len;
->+    return cached_contents;
->+}
->+
->+static bool s390_bios_has_string(const char *needle)
->+{
->+    const char *contents;
->+    gsize len;
->+    bool found;
->+
->+    contents =3D s390_bios_load(&len);
->+    found =3D memmem(contents, len, needle, strlen(needle)) !=3D NULL;
+Therefore, in order to handle addresses associated with VFIO devices,
+we need to use the address_space_translate() API to first identify
+the right memory region and the appropriate offset within that
+region and then use memory_region_get_ram_ptr() to get the hva.
+This approach also works for addresses associated with the system
+memory region.
 
-MinGW-w64 has no `memmem`, so this patch unfortunately breaks the MSYS2 bu=
-ild with GCC=2E We might need to provide our own implementation like we do =
-with other functions: https://lore=2Ekernel=2Eorg/qemu-devel/20260216102951=
-=2E150381-2-kkostiuk@redhat=2Ecom/ =2E
+Note that, although we take an explicit reference on the memory
+region, we would still rely on dma_memory_unmap() to drop that
+reference when the dma mapping is eventually unmapped.
 
-Best regards,
-Bernhard
+Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
+Cc: Alex Bennée <alex.bennee@linaro.org>
+Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Cc: Alex Williamson <alex@shazbot.org>
+Cc: Cédric Le Goater <clg@redhat.com>
+Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
+---
+ hw/display/virtio-gpu.c | 21 ++++++++++++++++++---
+ 1 file changed, 18 insertions(+), 3 deletions(-)
 
->+
->+    g_test_message("\"%s\" %s in bios", needle, found ? "found" : "not f=
-ound");
->+    return found;
->+}
->+
->+static bool s390_bios_has_net_ccw(void)
->+{
->+    /*
->+     * Assume that netboot support always includes virtio-net-ccw suppor=
-t=2E
->+     * Check only that netboot code exists, rather than probing virtio-n=
-et-ccw
->+     * support directly=2E
->+     */
->+    return s390_bios_has_string("Network boot starting=2E=2E=2E");
->+}
->+
-> static testdef_t s390x_tests[] =3D {
->-    { "s390-ccw-virtio", "virtio-net-ccw" },
->+    { "s390-ccw-virtio", "virtio-net-ccw",
->+      =2Eboot_dev_support =3D s390_bios_has_net_ccw },
->     { NULL },
-> };
->=20
->@@ -90,6 +163,11 @@ static void test_pxe_ipv4(gconstpointer data)
-> {
->     const testdef_t *test =3D data;
->=20
->+    if (test->boot_dev_support && !test->boot_dev_support()) {
->+        g_test_skip("The bios does not support booting this device");
->+        return;
->+    }
->+
->     test_pxe_one(test, false);
-> }
->=20
->@@ -97,6 +175,11 @@ static void test_pxe_ipv6(gconstpointer data)
-> {
->     const testdef_t *test =3D data;
->=20
->+    if (test->boot_dev_support && !test->boot_dev_support()) {
->+        g_test_skip("The bios does not support booting this device");
->+        return;
->+    }
->+
->     test_pxe_one(test, true);
-> }
->=20
+diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
+index bb0f41bb1e..386db05e5b 100644
+--- a/hw/display/virtio-gpu.c
++++ b/hw/display/virtio-gpu.c
+@@ -948,6 +948,23 @@ static void virtio_gpu_set_scanout_blob(VirtIOGPU *g,
+                               &fb, res, &ss.r, &cmd->error);
+ }
+ 
++static void *virtio_gpu_dma_memory_map(VirtIOGPU *g,
++                                       struct virtio_gpu_ctrl_command *cmd,
++                                       uint64_t a, hwaddr *len)
++{
++    MemoryRegion *mr;
++    hwaddr xlat;
++
++    mr = address_space_translate(VIRTIO_DEVICE(g)->dma_as, a, &xlat, len,
++                                 DMA_DIRECTION_TO_DEVICE,
++                                 MEMTXATTRS_UNSPECIFIED);
++    if (memory_region_is_ram(mr)) {
++        memory_region_ref(mr);
++        return memory_region_get_ram_ptr(mr) + xlat;
++    }
++    return NULL;
++}
++
+ int virtio_gpu_create_mapping_iov(VirtIOGPU *g,
+                                   uint32_t nr_entries, uint32_t offset,
+                                   struct virtio_gpu_ctrl_command *cmd,
+@@ -993,9 +1010,7 @@ int virtio_gpu_create_mapping_iov(VirtIOGPU *g,
+         /* TODO: a common DMA map SG helper */
+         do {
+             len = l;
+-            map = dma_memory_map(VIRTIO_DEVICE(g)->dma_as, a, &len,
+-                                 DMA_DIRECTION_TO_DEVICE,
+-                                 MEMTXATTRS_UNSPECIFIED);
++            map = virtio_gpu_dma_memory_map(g, cmd, a, &len);
+             if (!map) {
+                 qemu_log_mask(LOG_GUEST_ERROR, "%s: failed to map MMIO memory for"
+                               " element %d\n", __func__, e);
+-- 
+2.53.0
+
 
