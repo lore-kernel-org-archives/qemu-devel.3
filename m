@@ -4,145 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D39E7CA5FF1
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 08:10:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63473CA5FFF
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 08:11:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xEMiJ-0000l8-OB; Wed, 07 Oct 2026 04:09:23 -0400
+	id 1xEMiO-00016a-EM; Wed, 07 Oct 2026 04:09:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1xEHNQ-0003cs-Dg
- for qemu-devel@nongnu.org; Tue, 06 Oct 2026 22:27:39 -0400
-Received: from mail-northeuropeazlp170110003.outbound.protection.outlook.com
- ([2a01:111:f403:c200::3] helo=DU2PR03CU002.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1xEHN6-0000Xj-Hs
- for qemu-devel@nongnu.org; Tue, 06 Oct 2026 22:27:13 -0400
-Received: from MIWPR08MB285920.eurprd08.prod.outlook.com
- (2603:10a6:290:aa::21) by GVXPR08MB11009.eurprd08.prod.outlook.com
- (2603:10a6:150:1fb::14) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.522.5; Wed, 7 Oct 2026
- 01:08:31 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=gZ+F7zrwQLcjL2DZpepNTk0GOypKTSlEaI6VTsDk5yTxSIKgkkPpb1aJplm47dMjMgZtLhONpeo2fE1GBozGPD45PXBs0H6bZ7T3i9zUjD3TMTJQiy4ZxCgVeC9syLswLzF7pVeY0PblWoR2xRoxFGDsZGC8ArjM/bBMvjx/8b/Ay0aaNREt9dX50faYPkhlOeAwdPHAIlXXF9apYB8AwjTKapV8QApqvVjPZZZhq4eAGL/DkcgBWzx8SPwf0uSKqO8IaKZ/pAxC3/dE0PW79uTho/bUnUkJst0jdEJ08ImPdzeCSR6Oy5oAXpXn+moLWjQu6UssulXaXyYzJKs8yQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=YZSm7J9yrn0iU2AlFWhkLXTIIpmOicai0XjBV/pB3Qw=;
- b=W52pjjMllhQg2KFiISy2p1AZExZR2cP5TeBs1v8Awarwin57Psho/rpmdFk9BsclLxXQRtQ9wVJoH0TeFHMTYxybFuipRgLBKFYzHoW/m3REG+nB3wLSOIv/NCk91TyqjV9NyjWYGVF5lAfCw5p9LMyfAXImsFp/ZMLafedqbT+lowGsFB1ssD5z1YWmPFw6f+lM5KR7YSnLaakrDo8JdBkXPMcUYlZRgwhz4BHuVzT0wWzFVBpuSWG1/cHu0b+C0ILFN13tcJfgKjOyT3617M08BymmyqooCHzdUdfzLTOmAT3BevDuF9HvnypIUXul9m5S848GgReQvUgd1s7AJg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
- header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=YZSm7J9yrn0iU2AlFWhkLXTIIpmOicai0XjBV/pB3Qw=;
- b=w1UiLlVf2ewzYS68euPUTgPtqx8IbmpTiwYLSbGun2kW2D3SC7lW+mk9Z150p/R3ADrxVzOjeDUJNCTPpbhxtjvxTzpD3FW0ZBUIVZq43o5Q9+Ls175/mfLX9Y4oVuYOTQzSJA6dRPHDrTGhcWr+rZYGPF9yror5WpBQSDtb6F/zlQ5iAkl7OFRkjhjyWPt2p1p37EnIC9aSRljWNHfkfUTkgamATYj3tB2X3shHq+jMmSd82oK4jRbuV8I4/ves1Az8N8NUXoGZ+oJlP9hOeIZ5x54r797Sur2BYzjtKz0DVYTPZUXAE6Yqf0aQPza05cPA5sX3TMJKpzShjdPR9Q==
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=virtuozzo.com;
-Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
- (2603:10a6:800:20a::12) by MIWPR08MB285920.eurprd08.prod.outlook.com
- (2603:10a6:290:aa::21) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.496.15; Tue, 6 Oct
- 2026 13:59:01 +0000
-Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
- ([fe80::4e37:b189:ddcd:3dd8]) by VI0PR08MB10656.eurprd08.prod.outlook.com
- ([fe80::4e37:b189:ddcd:3dd8%7]) with mapi id 15.21.0496.010; Tue, 6 Oct 2026
- 13:59:01 +0000
-From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-Date: Tue, 06 Oct 2026 16:58:41 +0300
-Subject: [PATCH v13 18/22] vhost: release ownership on exit
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20261006-up-vsock-vhost-v5-v13-18-2ea78fd1b7ed@virtuozzo.com>
-References: <20261006-up-vsock-vhost-v5-v13-0-2ea78fd1b7ed@virtuozzo.com>
-In-Reply-To: <20261006-up-vsock-vhost-v5-v13-0-2ea78fd1b7ed@virtuozzo.com>
-To: qemu-devel@nongnu.org
-Cc: mst@redhat.com, maciej.szmigiero@oracle.com, peterx@redhat.com, 
- odaki@rsg.ci.i.u-tokyo.ac.jp, dwmw2@infradead.org, dongli.zhang@oracle.com, 
- bchaney@akamai.com, den@openvz.org, farosas@suse.de, 
- andrey.drobyshev@virtuozzo.com, clg@redhat.com, mark.kanda@oracle.com, 
- vsementsov@yandex-team.ru, philmd@oss.qualcomm.com, sgarzare@redhat.com
-X-Mailer: b4 0.16.0
-X-ClientProxiedBy: VI6PEPF00000229.AUTP296.PROD.OUTLOOK.COM
- (2603:10a6:808:1::8f3) To VI0PR08MB10656.eurprd08.prod.outlook.com
- (2603:10a6:800:20a::12)
+ (Exim 4.90_1) (envelope-from <gurchetan.singh.foss@gmail.com>)
+ id 1xEGu1-0007sv-4X
+ for qemu-devel@nongnu.org; Tue, 06 Oct 2026 21:57:12 -0400
+Received: from mail-oo1-xc2e.google.com ([2607:f8b0:4864:20::c2e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <gurchetan.singh.foss@gmail.com>)
+ id 1xEGtp-00039w-KD
+ for qemu-devel@nongnu.org; Tue, 06 Oct 2026 21:56:57 -0400
+Received: by mail-oo1-xc2e.google.com with SMTP id
+ 006d021491bc7-6dd059478dcso777590eaf.0
+ for <qemu-devel@nongnu.org>; Tue, 06 Oct 2026 18:53:22 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1791338002; cv=none;
+ d=google.com; s=arc-20260327;
+ b=IKwv9E3+FeuAymOmDQKjKLCw3AEk8XrXxsbjGUyFd7Xtf+YlKwpk2/J5WNaymdaFsE
+ ykWYwB/IlW8vMYjvXQqA/M0XP18l2dEFW7YxRRzvWQlZobpl2xiFc6XxSTTkX9OaMbpC
+ W6tAd+QjaLhWfwFXqaaDlUb50KVfn7ytwBuidpwSpSR+61poInASXj+LGZUV8TsVssR5
+ BiJ8639iOZQ9woNvYldwAAM1Fd3h8R7aupyabG2lGDbADgpGgA0/P1+bXBy2js39//8Q
+ J4XV9bA6j3hVyl0DGcUfV8+rXt9ZArCBrfYHKhuUz2oO9BlFFC8nJ4b3xu31QwQgsdKW
+ UJBw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=F4lucnjwCxfqaVVCKtNlRKJQGtD5ZiYFzDMOWAzt6Ss=;
+ fh=c1Utds+zz0DBjnUGk3nv1fd9mJxYfeSqyq0tD3pmGGU=;
+ b=Fsx6dK/NmpKWtFkxZ367zNAPixP/Nj+NkD8m2RC+qOgscxyqGhLATsPlCC83akHt1M
+ nzK4tDwaUYhVQDGCYa14oUS42bTzs4QbBiCLs1VfckupIgdOozQG3L8A/GUiNjZfG1B8
+ F1djM6agdw8jh9wA7U6555zYi88PA/K9DK8l+eLd5hy8amPD3YajHqyIneG5upRpBKd9
+ X3DWrm57hB8g61HT4oPNkKSdnEKwUMnN2PvDyTVmWHOJmvoWW/pxfZLW94PQ5D+/eVXI
+ nQzWnul7n69bi3ihdRloUUaO1MSpzZ0FIV24sY3N15lqndhpz1PHs8cNfJCURoKEG4gz
+ sudw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1791338002; x=1791942802; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=F4lucnjwCxfqaVVCKtNlRKJQGtD5ZiYFzDMOWAzt6Ss=;
+ b=L+Hq5jUoBP9UoFSmqSn4o9adRk8Xtg76d11NYRestn5HAyzBYmkUPLaY/4alyHQxQw
+ q2/8VgdKYtwFVCjE/XvDbqFwJshQUSq/Iszi8PZ+Sp9MIX5wumbYqY767X0sfvWq+wZC
+ 90TDZLOOIQcdTzt8gYaxFs08Sa8LeQHRMbTAKvE+fLKN8LVS29DhumuI/2KK1goDKIcm
+ YAHCHUjENixNJM5dteqqOdooaMbYWpO8K+ExBzHtPVON1JWHikD2Rm7BalFmdibmDhIp
+ 5xR7HNf4lOK2WS+Uy6p0yMwsoyhn24tb4+wOy2NUly1KXi7C3wb8z6FJTw5qzhnZLYs4
+ 3Vkw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1791338002; x=1791942802;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=F4lucnjwCxfqaVVCKtNlRKJQGtD5ZiYFzDMOWAzt6Ss=;
+ b=Un39MZiaXwf72esFhYmWtFGCGWMwdGge8cEa/2wEiG0CbrtZ5wnhjFrknMG2NYih/k
+ KnPvRTxbddV2cOZb2PC8XAYjaWWedR5Sdq2hqKu/tMxKSG8ezuym/pk/v0M7nCwoyvgR
+ qdvWQTZkipLs9DdsYwHhtjQNRXfOEKumtak0MdNiv5Gr8SwCJb5lBDc3DwXldLrUJiqn
+ K/9miGO9/1CfyoMzsiPH0Iso6I4wqjRoA1JPqKTaLQvUgyCHzxqVhVdf/CFTc75hCZa6
+ kkn2mgKaNsxiWugAMR/hPBLbcP+9dSU/vJWP6qix/tMwodsGCqbB1DsT08LvrNCW/nSd
+ hmJA==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBy6UnM2GTYN7ud3PZ49oAARH6kk3EaIThyIqIPxsL7nrZEANuFGQKgR3ODIIKVzAKDFz5NRxSfU1TEv@nongnu.org
+X-Gm-Message-State: AFuF++micta0BU6SpdsEytltMtBUYM8bHRAV3VQ7RznHT25zM5apxnEH
+ 47PkP4POHuiV8Lbdab01tWjdLSC2dxcPf8IZToK1dtk56Yqup/N2Or0vTTH3/UG/sr/WRPHv24C
+ m4Tp8dUYMp6L+zE11dc1n7bpEpdhUJ+J8f//V
+X-Gm-Gg: AYBFou2J+vassVLofKHNlqQec4df9wxgFLmFzWsSRzkJiOnX2iBiCcouCFSTL+gDIDj
+ c9URqsbsq6e16vR1/mJdOtTyceEPmW1mMnHN6PXb/TWNrf3GljmEege4z7o/R6Qrs1x4ygFiVvb
+ 64c0kMynjojrRF66eP5nWjiY1Pe/naJR3cu5ceGfaX5nGusH3KxtCFcNtXI0qaemTzE6jOuNK0K
+ nV1ME8mvBu9lOj3TLyGO1bxL5e1E1Fq4lZILESIR7tEuklGBUnArOvE6bEZLxgtcrGUMIUBZxOI
+ jflp0+J3GKUDFzrjhRLZm5ClAO1mCXR6JPtGdmw+01m6ukaB1ORXF9R2
+X-Received: by 2002:a05:6808:1825:b0:4f4:415:6f17 with SMTP id
+ 5614622812f47-4fc46471011mr1333418b6e.43.1791334331988; Tue, 06 Oct 2026
+ 17:52:11 -0700 (PDT)
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: VI0PR08MB10656:EE_|MIWPR08MB285920:EE_|GVXPR08MB11009:EE_
-X-MS-Office365-Filtering-Correlation-Id: b2151a60-a8c2-4698-79e0-08df23b1f928
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|366016|1800799024|376014|52116014|7416014|23010399003|38350700014|56012099006|10067099003|22082099003|18002099003;
-X-Microsoft-Antispam-Message-Info: OYoUvkNg22hNL7onH8754magC5wOMpBrHgXLxP41ivi36GAkh7SLNq+6W7MorIj4gUXG2JKr0wsr/ORwYbcQ7o9GNddLlgWfYbvkAcF5j9OvdQOy07eM2aQ1Q0w8ZkFCTvxNkOIvTgh1m3SCbeIO0ZLP2UAcmOd8lU0Amj8xq6MFV1l6/KUSk6y4JhANJaZGVmRN8TBTC5rTerU1HsZkn0UsLQCnZvmR4z8w6Vq+utoJIMuIU+FepjiXWCf5zgwrHXJwUe6AwcOT/TPKleIeC2sE4aEiTODkDnI2qmD78ArfxXI9PwRvZ4jro3Sdl7ouZWWzNvV32usAUl2MendsEZUPHYj7vsoOr4EKBFe0OXhbJmYnLs/fCehf2hDxproevSi+EVN6Q+xOsE1/M1tYWe8REAb2NnKePwcPUNjg4u4G2JIpFI+tPHBrMuK2pTAiRt6RTCnvOmIjPgA5PjqSZBVO3xedHXtfYGZ2YAGN81jSwt0OMemA26sGIyVO76iSy9O0V4va1fS/GOcxs1LQzW5GjB2/Ss1nmz8EL0cN3Ox3Fqh4v53ri0+wiIBK5CrLvxfb/19L3cBGcQHatmTBZwz++bR4IEid80diyLBL1YwSJGNiTxAW5JrLTJ1JptreKcog5gOYX57FOjfmSwOzlf82RWBd0sQdpKCsM3Bj3w9AzS1eFVYX4JTEVNfSzHi/qe4NxoBLjFjJlLNM/WD2d402h9HhMc6LQlaR/DwpfQI=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:VI0PR08MB10656.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(1800799024)(376014)(52116014)(7416014)(23010399003)(38350700014)(56012099006)(10067099003)(22082099003)(18002099003);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?Q0ZNUkIzei9adERZUUVDMXBId2FDbmdURXR1K2J4NGVkajYvKzJZdDlaZFht?=
- =?utf-8?B?OW1OdWJTTStweHJSMWsvS0JXVnZubm4wR0MzckJzMmpScU1NNXd0WlNURG9D?=
- =?utf-8?B?Z0FJSWxKZG9IbEhsNnBnTm8zM2xzMUZ5cWRVODhrYVZTaDFZcTN1aC9DS3hZ?=
- =?utf-8?B?a0Rla3lCbFlkQURablJZZEFrWjNIZGFaak9CQmJoUlRodzA0VnlFazJOU2Zq?=
- =?utf-8?B?Q1JDSUQ4OHpXRVdQaTNxU2xzVUVOc2kyYm45SzM2TDdFQVZJcmJ6TmxCSE13?=
- =?utf-8?B?eG11Rk9HeDA5b3UvazdWdENaVVpvTDF1d2FYcUJHbWI2YlRISS85SkRuM29n?=
- =?utf-8?B?cHhIMzN3anV0RytYdUVDOUliMjhHRno3N1Z1eUtON0JkZWw5cWZkeFI4Q3dM?=
- =?utf-8?B?a054bTNyMW9WRkx0ZnhhVUN1OUVYbkQ5NE91MndkcFN2TkJoeXFuMUNxdWJm?=
- =?utf-8?B?SmR1c3F2MCswZVlBbTdyMXJUVXcxMDBUNUVYMDJPZWQ5Q1pVc08wbDFoa0Vw?=
- =?utf-8?B?SnkxWG1rUkU5NENHQXU1VVFOWnY0Rlgzdlcxb0gwTE5QQU4wY3dWMFFHVlFu?=
- =?utf-8?B?am4vMDUyaEpHK2ltQkVPZUt4anUrS2RWRVB2Y0N2akg2ZU8zanJnZ2pVdE9H?=
- =?utf-8?B?SE5jYlVwaUxmd3p1T1htd0xHaHdaQVlSUGdYRmdTdXdQUk1SVGk4NWoyeS8x?=
- =?utf-8?B?TDl0Y3NsRDF1aEpxbUZPM3lHQVZPYy9TRjVEK3MzZ215MEN1UExlNUdHZnJW?=
- =?utf-8?B?S1R5T1ZmRkZ0amEwK2svZWswMzZHMHdabEs2V2U2NjhLS0lBRHV0WlV0YjYz?=
- =?utf-8?B?Q1VxanZPQ0RRNHEva3UwZFowRG15c0ZPRmdXVXN4TGRzWFcyUFRWSS93bnJB?=
- =?utf-8?B?eG9HN1hhYW5pSUtGWUpIdjdGc1JGTGhtb3p0a1pNUnhxYkxCYlZnUXM0QWVu?=
- =?utf-8?B?NDR0aWdueTlWTCtnaXZPMjlVTC96ZTJleExSdTU5R2JpRUxIQ0M3N09DTmJw?=
- =?utf-8?B?VkdUZ1p0VnVadlNsMU93ZUU2aTRpMC9ucXE5QUxYMmxRMTFCK3pXMnF0bk1H?=
- =?utf-8?B?UWM5Vng3N0ZHcEZoZXR0azFsS2RXOFVES3hWN3Z4WWFKM2tGWk9CNTNEaUVu?=
- =?utf-8?B?amhiNTlxaWlJdHZBeWIyRkpUVm04K2syRTMvSWQ2anh1VVI3RXYwaDFCNFhx?=
- =?utf-8?B?cDU4RmNHb3QwVzNBT3dRT3UxdUdaRlpYVnBRQW9IV2JZSzBubFdkcVA3Uk1r?=
- =?utf-8?B?cndXUUIwS0s3L0g2cTJ4dkQ0RDV6Zmd2SkY2YzB1ZUpxalBxaitYdzlocEkw?=
- =?utf-8?B?Y3JoWjRKQlFnVnVaRm9LczFzdDYwQXNubldBcWY0N2o4WTNVTmdlWGtXcVE5?=
- =?utf-8?B?NzV6ZFVDN1lLaTJ5d1RFSkh0em9zalJMTnhhbE04Y1dEQVB5OTRMYUhwazhQ?=
- =?utf-8?B?bnMxUURNeE1zeGNTUWpQRmJVemxOSWtwYTVqaGVlWnd1NUx2TUhEZjdROWxR?=
- =?utf-8?B?eUFDL3FJTUUzdUJWNy8rWTd5WjJHVXpqTTNLZ3liZWdHSTgrd1RUR3VPSHIz?=
- =?utf-8?B?eTZYQUIwa3Yyd0JyeUpHTVBxVFBnRDlVUGtzaitBMEF1U2RWZ0tzMFN3RS9O?=
- =?utf-8?B?c0pJN1B6ekM2ZUhqYXdKdUlTM0oraUh5VVExVHF6eGtFVWx1QzJQKzJoanBH?=
- =?utf-8?B?eE9sTHY2NVBzSEpjbjBjajQzM2h0aXFFczBrUGRFZzNzMlFDbTgyN1RVbVR4?=
- =?utf-8?B?S28rRklDL09pb1I3UUZTU3hDQmllc09OZSsyc3Z6NGl1N3U5M3NwdWgxMGVx?=
- =?utf-8?B?ZUQ3a1A1dkpJN3IwVzN3VVRuVVBYNEVUeTNBUlRqbiswNHZKN0habDBrOSt6?=
- =?utf-8?B?N29MaUw2NWJhN0doT0U0dGxVakgzNjlZOG9EZWhvUVpuYlNUd3JnNlhOMHBI?=
- =?utf-8?B?Y25CdTR4d25LdHE2TGVxQklaQmRzS2tDdjJwRWU0SWFGNkFzSmNLa2xlWEsv?=
- =?utf-8?B?dnQrcHBnQmZ3Q3YzNXhLQ1lhMUlrU3ExZDVSQ1BxaUZ5UVEwSEw0aXpiUXpO?=
- =?utf-8?B?bHg3UFFQM29HaDFRMzBnUHlnQUROSTkraEt2Q29QN0V6cFU1alNFRy92MzJ2?=
- =?utf-8?B?UDk0Q0VWRFgyT1RSaVBVYXpSVklDUThZam9MZUhwVU15bGh4ZHUzcHR3eEdE?=
- =?utf-8?B?Z3IyQm5QWElPRWllM3I2dndxellCQ2U1OVM1QXVHTVlSckJvVVBrSHJVZTMv?=
- =?utf-8?B?MGt1ZUZSNzB4T0VCU2d6b3d4TWtDaytwUyttN1JBWW0rVGVIbUp2SFowT2hM?=
- =?utf-8?B?NG1FWHY4K0l5UzJOb2xSMk9XaTJtdHU3Zi8yOW5xcTIrT2o5eXdKMWY1d0hu?=
- =?utf-8?Q?JdB8E+EAyQIuUPOs=3D?=
-X-MS-Exchange-CrossTenant-Network-Message-Id: b2151a60-a8c2-4698-79e0-08df23b1f928
-X-MS-Exchange-CrossTenant-AuthSource: VI0PR08MB10656.eurprd08.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Oct 2026 13:59:00.7702 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: Tl8Sue9TUAHxCwjMhD9/0xwoF9F4GXdyqM6OiTeQ0xmZ+23ObItQnWNpecqU4MvCaoYIFDVRgZd1BoPAArGzGAn5OyHKprkFjXWCV4BeOgc=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MIWPR08MB285920
-X-OriginatorOrg: virtuozzo.com
-Received-SPF: pass client-ip=2a01:111:f403:c200::3;
- envelope-from=andrey.drobyshev@virtuozzo.com;
- helo=DU2PR03CU002.outbound.protection.outlook.com
+References: <20261005174522.8663-1-gurchetan.singh.foss@gmail.com>
+ <CAJ+F1C+zTWt878LjRHn7wXQWn3aW8UvWD=E15yBwc1DiGWSmUg@mail.gmail.com>
+ <5f7a466d-3815-427e-98f7-94f48d8e9777@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <5f7a466d-3815-427e-98f7-94f48d8e9777@rsg.ci.i.u-tokyo.ac.jp>
+From: Gurchetan Singh <gurchetan.singh.foss@gmail.com>
+Date: Tue, 6 Oct 2026 17:51:59 -0700
+X-Gm-Features: AclHuK-jsCj2G6-X4076QkCAuUOxmThgV0Y5wcm8GQO1nRY2KTn66PCWtYTEQ-4
+Message-ID: <CAMW2r3KWeEURbq2FrQ7sn702-tVWZMruPU+mt+mqaEzXUucZag@mail.gmail.com>
+Subject: Re: [PATCH] virtio-gpu-rutabaga: make sure ctx_ids match
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Cc: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ qemu-devel@nongnu.org
+Content-Type: multipart/alternative; boundary="000000000000883fe2065d358642"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c2e;
+ envelope-from=gurchetan.singh.foss@gmail.com; helo=mail-oo1-xc2e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -159,96 +118,170 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-A CPR target that has taken the device ownership in post_load() doesn't
-always reach vhost_dev_cleanup(): a target which has loaded the state
-but hasn't been started yet, e.g. one started with -S, may be quit
-normally, with the source being resumed instead.  Devices aren't
-unrealized on quit, so the ownership stays with the dead process.  The
-source still holds the FD, so the kernel never releases the device, and
-the source can't take it back after being resumed -> SET_OWNER fails
-with EBUSY.
+--000000000000883fe2065d358642
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Add an exit notifier to each vhost_dev, registered for its lifetime,
-that releases the ownership if still held.  This covers every orderly
-exit.  A target killed with SIGKILL or crashing still leaves the device
-unrecoverable.
+On Tue, Oct 6, 2026 at 3:50=E2=80=AFAM Akihiko Odaki <odaki@rsg.ci.i.u-toky=
+o.ac.jp>
+wrote:
 
-Reported-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
----
- hw/virtio/vhost.c         | 22 ++++++++++++++++++++++
- include/hw/virtio/vhost.h |  2 ++
- 2 files changed, 24 insertions(+)
+> On 2026/10/06 4:22, Marc-Andr=C3=A9 Lureau wrote:
+> > Hi
+> >
+> > On Mon, Oct 5, 2026 at 11:00=E2=80=AFPM Gurchetan Singh
+> > <gurchetan.singh.foss@gmail.com> wrote:
+> >>
+> >> The ctx_ids need to match as well as the ring ids for
+> >> proper signaling.
+> >>
+> >> Fixes: 1dcc6adbc168 ("gfxstream + rutabaga: add initial support for
+> gfxstream")
+> >> Signed-off-by: Gurchetan Singh <gurchetan.singh.foss@gmail.com>
+> >> ---
+> >>   hw/display/virtio-gpu-rutabaga.c | 3 ++-
+> >>   1 file changed, 2 insertions(+), 1 deletion(-)
+> >>
+> >> diff --git a/hw/display/virtio-gpu-rutabaga.c
+> b/hw/display/virtio-gpu-rutabaga.c
+> >> index 3aafa4dc66..edf7b62703 100644
+> >> --- a/hw/display/virtio-gpu-rutabaga.c
+> >> +++ b/hw/display/virtio-gpu-rutabaga.c
+> >> @@ -902,7 +902,8 @@ virtio_gpu_rutabaga_aio_cb(void *opaque)
+> >>           }
+> >>
+> >>           if (signaled_ctx_specific &&
+> >> -           (cmd->cmd_hdr.ring_idx !=3D fence_data.ring_idx)) {
+> >> +           ((cmd->cmd_hdr.ctx_id !=3D fence_data.ctx_id) ||
+> >> +           (cmd->cmd_hdr.ring_idx !=3D fence_data.ring_idx))) {
+> >>               continue;
+> >>           }
+> >
+> > lgtm
+> >
+> > Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+>
+> Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+> >
+> >
+> > btw Gurchetan, do you remember why virtio-gpu-pci-rutabaga.c is using
+> > raw TypeInfo, and not VirtioPCIDeviceTypeInfo? Is it just an
+> > oversight? I can send a patch if it's the case
+>
 
-diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
-index 86e9a234638..35eaafa0f92 100644
---- a/hw/virtio/vhost.c
-+++ b/hw/virtio/vhost.c
-@@ -31,6 +31,7 @@
- #include "system/dma.h"
- #include "system/memory.h"
- #include "system/ramblock.h"
-+#include "system/system.h"
- #include "trace.h"
- 
- /* enabled until disconnected backend stabilizes */
-@@ -70,6 +71,21 @@ static void vhost_incoming_failure_notify(Notifier *notifier, void *data)
-     }
- }
- 
-+/*
-+ * Release the ownership of the vhost devices still held at exit(), so that
-+ * another process sharing the backend FDs (e.g. the CPR source) can take
-+ * them over.
-+ */
-+static void vhost_exit_notify(Notifier *notifier, void *data)
-+{
-+    struct vhost_dev *hdev = container_of(notifier, struct vhost_dev,
-+                                          exit_notifier);
-+
-+    if (hdev->owner) {
-+        vhost_dev_reset_owner(hdev);
-+    }
-+}
-+
- unsigned int vhost_get_max_memslots(void)
- {
-     unsigned int max = UINT_MAX;
-@@ -1840,6 +1856,8 @@ int vhost_dev_init(struct vhost_dev *hdev, void *opaque,
-     hdev->log_enabled = false;
-     hdev->started = false;
-     memory_listener_register(&hdev->memory_listener, &address_space_memory);
-+    hdev->exit_notifier.notify = vhost_exit_notify;
-+    qemu_add_exit_notifier(&hdev->exit_notifier);
-     hdev->incoming_failure_notifier.notify = vhost_incoming_failure_notify;
-     migration_incoming_add_failure_notifier(&hdev->incoming_failure_notifier);
-     QLIST_INSERT_HEAD(&vhost_devices, hdev, entry);
-@@ -1891,6 +1909,10 @@ void vhost_dev_cleanup(struct vhost_dev *hdev)
-         memory_listener_unregister(&hdev->memory_listener);
-         QLIST_REMOVE(hdev, entry);
-     }
-+    if (hdev->exit_notifier.notify) {
-+        qemu_remove_exit_notifier(&hdev->exit_notifier);
-+        hdev->exit_notifier.notify = NULL;
-+    }
-     if (hdev->incoming_failure_notifier.notify) {
-         migration_incoming_remove_failure_notifier(
-             &hdev->incoming_failure_notifier);
-diff --git a/include/hw/virtio/vhost.h b/include/hw/virtio/vhost.h
-index 6df012859a6..3f2b0635753 100644
---- a/include/hw/virtio/vhost.h
-+++ b/include/hw/virtio/vhost.h
-@@ -117,6 +117,8 @@ struct vhost_dev {
-      * Updated only by vhost_dev_set_owner()/vhost_dev_reset_owner()
-      */
-     bool owner;
-+    /* @exit_notifier: releases the ownership at exit, vhost_exit_notify() */
-+    Notifier exit_notifier;
-     /*
-      * @incoming_failure_notifier: releases the ownership when an incoming
-      * migration fails, vhost_incoming_failure_notify()
+I don't remember, but probably a random oversight yes.  Feel free to send
+the patch and I will test.
 
--- 
-2.47.1
 
+>
+> It looks like an oversight to me as well.
+>
+> Earlier revisions of the patch used VirtioPCIDeviceTypeInfo [1]. In v12,
+> the code was converted to use DEFINE_TYPES() [2], and
+> VirtioPCIDeviceTypeInfo was replaced with TypeInfo at the same time.
+
+[1]
+>
+> https://lore.kernel.org/qemu-devel/20230823012541.485-7-gurchetansingh@ch=
+romium.org/
+> [2]
+>
+> https://lore.kernel.org/qemu-devel/20230824234046.499-7-gurchetansingh@ch=
+romium.org/
+>
+> Regards,
+> Akihiko Odaki
+>
+
+--000000000000883fe2065d358642
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
+mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Oct 6, =
+2026 at 3:50=E2=80=AFAM Akihiko Odaki &lt;<a href=3D"mailto:odaki@rsg.ci.i.=
+u-tokyo.ac.jp">odaki@rsg.ci.i.u-tokyo.ac.jp</a>&gt; wrote:<br></div><blockq=
+uote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1p=
+x solid rgb(204,204,204);padding-left:1ex">On 2026/10/06 4:22, Marc-Andr=C3=
+=A9 Lureau wrote:<br>
+&gt; Hi<br>
+&gt; <br>
+&gt; On Mon, Oct 5, 2026 at 11:00=E2=80=AFPM Gurchetan Singh<br>
+&gt; &lt;<a href=3D"mailto:gurchetan.singh.foss@gmail.com" target=3D"_blank=
+">gurchetan.singh.foss@gmail.com</a>&gt; wrote:<br>
+&gt;&gt;<br>
+&gt;&gt; The ctx_ids need to match as well as the ring ids for<br>
+&gt;&gt; proper signaling.<br>
+&gt;&gt;<br>
+&gt;&gt; Fixes: 1dcc6adbc168 (&quot;gfxstream + rutabaga: add initial suppo=
+rt for gfxstream&quot;)<br>
+&gt;&gt; Signed-off-by: Gurchetan Singh &lt;<a href=3D"mailto:gurchetan.sin=
+gh.foss@gmail.com" target=3D"_blank">gurchetan.singh.foss@gmail.com</a>&gt;=
+<br>
+&gt;&gt; ---<br>
+&gt;&gt;=C2=A0 =C2=A0hw/display/virtio-gpu-rutabaga.c | 3 ++-<br>
+&gt;&gt;=C2=A0 =C2=A01 file changed, 2 insertions(+), 1 deletion(-)<br>
+&gt;&gt;<br>
+&gt;&gt; diff --git a/hw/display/virtio-gpu-rutabaga.c b/hw/display/virtio-=
+gpu-rutabaga.c<br>
+&gt;&gt; index 3aafa4dc66..edf7b62703 100644<br>
+&gt;&gt; --- a/hw/display/virtio-gpu-rutabaga.c<br>
+&gt;&gt; +++ b/hw/display/virtio-gpu-rutabaga.c<br>
+&gt;&gt; @@ -902,7 +902,8 @@ virtio_gpu_rutabaga_aio_cb(void *opaque)<br>
+&gt;&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
+&gt;&gt;<br>
+&gt;&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (signaled_ctx_specific =
+&amp;&amp;<br>
+&gt;&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0(cmd-&gt;cmd_hdr.ring_id=
+x !=3D fence_data.ring_idx)) {<br>
+&gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0((cmd-&gt;cmd_hdr.ctx_id=
+ !=3D fence_data.ctx_id) ||<br>
+&gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0(cmd-&gt;cmd_hdr.ring_id=
+x !=3D fence_data.ring_idx))) {<br>
+&gt;&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0continue;<br=
+>
+&gt;&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
+&gt; <br>
+&gt; lgtm<br>
+&gt; <br>
+&gt; Reviewed-by: Marc-Andr=C3=A9 Lureau &lt;<a href=3D"mailto:marcandre.lu=
+reau@redhat.com" target=3D"_blank">marcandre.lureau@redhat.com</a>&gt;<br>
+<br>
+Reviewed-by: Akihiko Odaki &lt;<a href=3D"mailto:odaki@rsg.ci.i.u-tokyo.ac.=
+jp" target=3D"_blank">odaki@rsg.ci.i.u-tokyo.ac.jp</a>&gt;<br>
+&gt; <br>
+&gt; <br>
+&gt; btw Gurchetan, do you remember why virtio-gpu-pci-rutabaga.c is using<=
+br>
+&gt; raw TypeInfo, and not VirtioPCIDeviceTypeInfo? Is it just an<br>
+&gt; oversight? I can send a patch if it&#39;s the case<br></blockquote><di=
+v><br></div><div><div>I don&#39;t remember, but probably a random oversight=
+ yes.=C2=A0 Feel free to send the patch and I will test.</div></div><div>=
+=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0=
+.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
+<br>
+It looks like an oversight to me as well.<br>
+<br>
+Earlier revisions of the patch used VirtioPCIDeviceTypeInfo [1]. In v12, <b=
+r>
+the code was converted to use DEFINE_TYPES() [2], and <br>
+VirtioPCIDeviceTypeInfo was replaced with TypeInfo at the same time.</block=
+quote><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;b=
+order-left:1px solid rgb(204,204,204);padding-left:1ex">
+[1] <br>
+<a href=3D"https://lore.kernel.org/qemu-devel/20230823012541.485-7-gurcheta=
+nsingh@chromium.org/" rel=3D"noreferrer" target=3D"_blank">https://lore.ker=
+nel.org/qemu-devel/20230823012541.485-7-gurchetansingh@chromium.org/</a><br=
+>
+[2] <br>
+<a href=3D"https://lore.kernel.org/qemu-devel/20230824234046.499-7-gurcheta=
+nsingh@chromium.org/" rel=3D"noreferrer" target=3D"_blank">https://lore.ker=
+nel.org/qemu-devel/20230824234046.499-7-gurchetansingh@chromium.org/</a><br=
+>
+<br>
+Regards,<br>
+Akihiko Odaki<br>
+</blockquote></div></div>
+
+--000000000000883fe2065d358642--
 
