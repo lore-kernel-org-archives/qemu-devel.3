@@ -4,105 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1D5BCA6007
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 14:38:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 967C1CA5FFC
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 14:41:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xESnB-0007ms-6t; Wed, 07 Oct 2026 10:38:49 -0400
+	id 1xESpM-00010j-1P; Wed, 07 Oct 2026 10:41:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tcalifano@redhat.com>)
- id 1xESmB-0007Bt-5f
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 10:37:49 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1xESp0-0000sM-3q
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 10:40:45 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tcalifano@redhat.com>)
- id 1xESm8-0001ri-1q
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 10:37:46 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1xESoy-0002MK-BC
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 10:40:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1791383862;
+ s=mimecast20190719; t=1791384038;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=CS1tmpYBN5Sup1NVnBDTkyXL4JXmKmC9VGKVMnvnKN8=;
- b=fPbNliWUiZfh26vt7ynoNcFfuDyxBx6bjnjOU96WncWrWv0Up0r7y373qvrzaXM8XrTmox
- aLSuaYtMquci+UcNefpJ6GFN6pZPhzIvuy+JyXrWYt/P9BoukCWZBuM7sWufSQGRKaFxR3
- XSZTS0Rig5gxBHfGaJuebiM6V1dkMAc=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-554-OFmNYfYGO5adWrhAnqQw-Q-1; Wed, 07 Oct 2026 10:37:41 -0400
-X-MC-Unique: OFmNYfYGO5adWrhAnqQw-Q-1
-X-Mimecast-MFC-AGG-ID: OFmNYfYGO5adWrhAnqQw-Q_1791383860
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-4994d67d0e3so30947475e9.2
- for <qemu-devel@nongnu.org>; Wed, 07 Oct 2026 07:37:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1791383860; x=1791988660; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=CS1tmpYBN5Sup1NVnBDTkyXL4JXmKmC9VGKVMnvnKN8=;
- b=TlpZ1WgjbSZxuqel07EjVSBqFbbcrjzto/klJB062XN/bQ5U6fYO8DibGv+r6Fi0vp
- pUIzJtK2Gmph08nrtY4e3SlspjGARWq/07ZhJ6UdJuMyydvD6eREatBL/sRZ2Vnl8WI5
- adZHSrilItu3KD31lmSqcJ9svAN5outY3veTc4IUzqYqo30/wpnamfiYkdAF6t0GuwgY
- +nZBmKZwiUkE/oNhbt+7VoxnjWt6uO6KNqp9CMQL83ml12+Tje2oZ2JXFAqhjVbp8JUM
- C3UdEFuN2BK2pk+08CePHdrV4deG7I6sCK7TLWIy3ZO32cabrvGi11ThBCogRi1nZ59A
- H2cg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791383860; x=1791988660;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=CS1tmpYBN5Sup1NVnBDTkyXL4JXmKmC9VGKVMnvnKN8=;
- b=UGmzc9Acy7tjBQrG5fjeekdtk4BJXwc4Y7Z1QewzWdUHXOgNVhQ0xzYHoFmii9nmBk
- oavsRge+LFppZ5TExxIEex+P8pYJULslMnBgBUiUdqRi76KIFMgsr1cKbmkgOicB7bpP
- 4+ZH7ecPiudIFBPdGH+1K/RR4hI0aSeqrq3awXFczRczRFbDMuwkyH8JGs7VFMih9ERk
- EcITPsDU100CZEZ9X5FjG/GrvraEokx9LcP1tqiSi63CveNLsPFasOCAb8nBVDw2cQBW
- NECzJQfgcXh+c78uspXERNyB0ezIKFEcHe4mp95VPXIDEtl+ZNguLkVpeAOUJkimwvwK
- C/qA==
-X-Gm-Message-State: AFuF++nhuimZh92yJKfvVr29ayewUUY8BSVXDGOcs1pyrGlFZ/QbMGLb
- 6emb5NdfDugpNa8LPSIkvCMflY2mPs/Ult70yWDwmlriQeWdj54Rpx1LMGYCdXsSP/qR+DAB5Fa
- h+c0L8NMpmrjlW4zY3wf7vFyW481kVHEzOtEPNT6j3EOR1VUpM3NBO53Tsc5tS2ypdn3iBOu1E+
- pew2K4PcimH9KgrcZeYgwNhFbHr2/r+YjRdFCHLmZ0cA==
-X-Gm-Gg: AYBFou3e3yXLR95Fr16tavku8Rzz3qedwoVthNFZoEqM3JdseVmlsHK1UAs1hgjAN6Z
- QyGPtGwGcbH6kbghnOvCRFMkGLB33+E3y5O2FG/fDXaqIdZf3+awWhn3Kv3xfDfmFZ2p9yWZq4Y
- 2BLqiW8tnlyBGjM+k66vTeSp5/AjALkcjvgZy9CPZyfE/ZMpOCN5prnGYoW/qoKGSQBXJr2fw3M
- DHRI6WNQOuSUCbdx9c1RYYL7NFGjmufHCpinwuOiDP1tvonlUFklvUYpb6d6q/6Xr7R7vS195x8
- UaG9QfZBp9bysTF3O+nwxNn5XK1XsNL6E5R08yhP30TWDnc92mux2TlteTrK1+2mMexs+qH2
-X-Received: by 2002:a05:600c:1551:b0:4a0:263c:704f with SMTP id
- 5b1f17b1804b1-4a1804436c7mr38951995e9.16.1791383860042; 
- Wed, 07 Oct 2026 07:37:40 -0700 (PDT)
-X-Received: by 2002:a05:600c:1551:b0:4a0:263c:704f with SMTP id
- 5b1f17b1804b1-4a1804436c7mr38951495e9.16.1791383859579; 
- Wed, 07 Oct 2026 07:37:39 -0700 (PDT)
-Received: from tcalifan-p1g8.csb ([213.175.37.14])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a17f557bcbsm111043735e9.9.2026.10.07.07.37.38
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 07 Oct 2026 07:37:39 -0700 (PDT)
-From: Tommaso Califano <tcalifano@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Luigi Leonardi <leonardi@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Tommaso Califano <tcalifano@redhat.com>
-Subject: [PATCH v3] hw/usb/dev-mtp: Fix heap OOB read in
- usb_mtp_write_metadata()
-Date: Wed,  7 Oct 2026 16:37:38 +0200
-Message-ID: <20261007143738.58509-1-tcalifano@redhat.com>
-X-Mailer: git-send-email 2.55.0
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Pna3zDyigt0LMOycn0Yh2jd82chqGVuc3gIoo8W+uFg=;
+ b=L9n7zXTD0KWZozGd1bhrQ6jdgmUI731cia0LIxgq1znUvfdCUOZV2FAJ4kHgl/UTbLQ7uk
+ nHn43Rghu9BvnzGghFIkd3+NirofzId1DIxdYCgyuKlKmqXJwG7YyB1uaQjkN/d8JD2vq9
+ GnSdqFimydnAgrNAm4eptiIFR7avnt4=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-147-Y6T5mleCPyCzzKUuU_g9MQ-1; Wed,
+ 7 Oct 2026 14:40:37 +0000
+X-MC-Unique: Y6T5mleCPyCzzKUuU_g9MQ-1
+X-Mimecast-MFC-AGG-ID: Y6T5mleCPyCzzKUuU_g9MQ_1791384036
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0D6C8180A8FD; Wed,  7 Oct 2026 14:40:36 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.32.219])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 300C0180058D; Wed,  7 Oct 2026 14:40:33 +0000 (UTC)
+Date: Wed, 7 Oct 2026 16:40:31 +0200
+From: Kevin Wolf <kwolf@redhat.com>
+To: Sanne Raymaekers <sraymaek@redhat.com>
+Cc: qemu-devel@nongnu.org, hreitz@redhat.com, fam@euphon.net
+Subject: Re: [PATCH 2/3] block/vmdk: skip RGD for stream optimized disks
+Message-ID: <asZZ3_1EptsU4Uk7@redhat.com>
+References: <20261005133316.198087-1-sraymaek@redhat.com>
+ <20261005133316.198087-2-sraymaek@redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=tcalifano@redhat.com;
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20261005133316.198087-2-sraymaek@redhat.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -22
 X-Spam_score: -2.3
 X-Spam_bar: --
 X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,79 +81,133 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-usb_mtp_write_metadata() computed the number of filename characters as
+Am 05.10.2026 um 15:33 hat Sanne Raymaekers geschrieben:
+> Stream optimized disks the spec notes: "The rgdOffset should be ignored
+> because bit 1 of the flags field is not set." Where bit 1 of the flags
+> field indicates a redundant grain directory (RGD).[^1]
+> 
+> In short, stream optimized disks should have the RGD offset set to 0,
+> and only write the main grain directory.
+> 
+> [^1] Virtual Disk Format 5.0 Technical Note.
+> 
+> Signed-off-by: Sanne Raymaekers <sraymaek@redhat.com>
+> ---
+>  block/vmdk.c | 76 +++++++++++++++++++++++++++++++---------------------
+>  1 file changed, 46 insertions(+), 30 deletions(-)
+> 
+> diff --git a/block/vmdk.c b/block/vmdk.c
+> index 3cdca06fff..040f38cd1d 100644
+> --- a/block/vmdk.c
+> +++ b/block/vmdk.c
+> @@ -2218,7 +2218,7 @@ vmdk_co_pwrite_zeroes(BlockDriverState *bs, int64_t offset, int64_t bytes,
+>  
+>  static int coroutine_fn GRAPH_UNLOCKED
+>  vmdk_init_extent(BlockBackend *blk, int64_t filesize, bool flat, bool compress,
+> -                 bool zeroed_grain, Error **errp)
+> +                 bool zeroed_grain, bool stream_optimized, Error **errp)
 
-  filename_chars = dlen - offsetof(ObjectInfo, filename)
+You changed quite a few functions to add a new stream_optimized
+parameter. This seems unnecessary as there is already a compress
+parameter, which originates in vmdk_co_do_create() like this:
 
-where dlen is the amount of data copied by the last USB packet of the
-transfer, not the size of the ObjectInfo dataset. If the final packet has
-fewer than 53 bytes, filename_chars underflows to SIZE_MAX, causing
-utf16_to_str() to read far beyond the heap buffer, leaking QEMU host
-process memory.
+    compress = subformat == BLOCKDEV_VMDK_SUBFORMAT_STREAMOPTIMIZED;
 
-Use d->length instead: it is the size of the buffer holding the dataset,
-and usb_mtp_write_metadata() is only reached once all d->length bytes
-have been received.
+So stream_optimized duplicates the same information.
 
-d->length is guest-controlled, so reject datasets too small to hold the
-fixed part of ObjectInfo before dereferencing it. The check is "<="
-rather than "<" because a dataset of exactly offsetof(ObjectInfo,filename)
-bytes would yield an empty filename.
+>  {
+>      int ret, i;
+>      VMDK4Header header;
+> @@ -2239,9 +2239,10 @@ vmdk_init_extent(BlockBackend *blk, int64_t filesize, bool flat, bool compress,
+>      } else {
+>          header.version = 1;
+>      }
+> -    header.flags = VMDK4_FLAG_RGD | VMDK4_FLAG_NL_DETECT
+> +    header.flags =  VMDK4_FLAG_NL_DETECT
 
-Fixes: 90c1a74271ce ("usb-mtp: Limit filename to object information size")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3992
-Signed-off-by: Tommaso Califano <tcalifano@redhat.com>
----
+Minor formatting issue: There are two spaces before VMDK4_FLAG_NL_DETECT.
 
-V3:
- - Restore guard due to guest-controlled d->length.
- - Improve commit text for better readability.
-v2:
- - Remove the dlen guard and variable in favor of using d->length.
+>                     | (compress ? VMDK4_FLAG_COMPRESS | VMDK4_FLAG_MARKER : 0)
+> -                   | (zeroed_grain ? VMDK4_FLAG_ZERO_GRAIN : 0);
+> +                   | (zeroed_grain ? VMDK4_FLAG_ZERO_GRAIN : 0)
+> +                   | (stream_optimized ? 0 : VMDK4_FLAG_RGD);
+>      header.compressAlgorithm = compress ? VMDK4_COMPRESSION_DEFLATE : 0;
+>      header.capacity = filesize / BDRV_SECTOR_SIZE;
+>      header.granularity = 128;
+> @@ -2255,8 +2256,15 @@ vmdk_init_extent(BlockBackend *blk, int64_t filesize, bool flat, bool compress,
+>  
+>      header.desc_offset = 1;
+>      header.desc_size = 20;
+> -    header.rgd_offset = header.desc_offset + header.desc_size;
+> -    header.gd_offset = header.rgd_offset + gd_sectors + (gt_size * gt_count);
+> +
+> +    if (stream_optimized) {
+> +        header.rgd_offset = 0;
+> +        header.gd_offset = header.desc_offset + header.desc_size;
+> +    } else {
+> +        header.rgd_offset = header.desc_offset + header.desc_size;
+> +        header.gd_offset = header.rgd_offset + gd_sectors + (gt_size * gt_count);
+> +    }
+> +
+>      header.grain_offset =
+>          ROUND_UP(header.gd_offset + gd_sectors + (gt_size * gt_count),
+>                   header.granularity);
+> @@ -2296,21 +2304,24 @@ vmdk_init_extent(BlockBackend *blk, int64_t filesize, bool flat, bool compress,
+>          goto exit;
+>      }
+>  
+> -    /* write grain directory */
+> +    /* write backup grain directory */
 
-hw/usb/dev-mtp.c | 14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+Heh, good point, the existing code had them reversed in the comments.
 
-diff --git a/hw/usb/dev-mtp.c b/hw/usb/dev-mtp.c
-index 1d8cfd32dc..45641c3489 100644
---- a/hw/usb/dev-mtp.c
-+++ b/hw/usb/dev-mtp.c
-@@ -1696,7 +1696,7 @@ close:
-     s->write_pending = false;
- }
- 
--static void usb_mtp_write_metadata(MTPState *s, uint64_t dlen)
-+static void usb_mtp_write_metadata(MTPState *s)
- {
-     MTPData *d = s->data_out;
-     ObjectInfo *dataset = (ObjectInfo *)d->data;
-@@ -1704,7 +1704,15 @@ static void usb_mtp_write_metadata(MTPState *s, uint64_t dlen)
-     MTPObject *o;
-     MTPObject *p = usb_mtp_object_lookup(s, s->dataset.parent_handle);
-     uint32_t next_handle = s->next_handle;
--    size_t filename_chars = dlen - offsetof(ObjectInfo, filename);
-+    size_t filename_chars;
-+
-+    if (d->length <= offsetof(ObjectInfo, filename)) {
-+        usb_mtp_queue_result(s, RES_INVALID_OBJECTINFO, d->trans,
-+                             0, 0, 0, 0);
-+        return;
-+    }
-+
-+    filename_chars = d->length - offsetof(ObjectInfo, filename);
- 
-     /*
-      * filename is utf-16. We're intentionally doing
-@@ -1801,7 +1809,7 @@ static void usb_mtp_get_data(MTPState *s, mtp_container *container,
-         if (d->data_offset == d->length) {
-             /* The operation might have already failed */
-             if (!s->result) {
--                usb_mtp_write_metadata(s, dlen);
-+                usb_mtp_write_metadata(s);
-             }
-             usb_mtp_data_free(s->data_out);
-             s->data_out = NULL;
--- 
-2.55.0
+It would be good to mention this in the commit message because it came
+as a surprise that you seemingly swapped them.
+
+>      gd_buf_size = gd_sectors * BDRV_SECTOR_SIZE;
+>      gd_buf = g_malloc0(gd_buf_size);
+> -    for (i = 0, tmp = le64_to_cpu(header.rgd_offset) + gd_sectors;
+> -         i < gt_count; i++, tmp += gt_size) {
+> -        gd_buf[i] = cpu_to_le32(tmp);
+> -    }
+> -    ret = blk_co_pwrite(blk, le64_to_cpu(header.rgd_offset) * BDRV_SECTOR_SIZE,
+> -                        gd_buf_size, gd_buf, 0);
+> -    if (ret < 0) {
+> -        error_setg_errno(errp, -ret, "failed to write VMDK grain directory");
+> -        goto exit;
+> +
+> +    if (!stream_optimized) {
+> +        for (i = 0, tmp = le64_to_cpu(header.rgd_offset) + gd_sectors;
+> +             i < gt_count; i++, tmp += gt_size) {
+> +            gd_buf[i] = cpu_to_le32(tmp);
+> +        }
+> +        ret = blk_co_pwrite(blk, le64_to_cpu(header.rgd_offset) * BDRV_SECTOR_SIZE,
+> +                            gd_buf_size, gd_buf, 0);
+> +        if (ret < 0) {
+> +            error_setg_errno(errp, -ret, "failed to write VMDK grain directory");
+
+This should probably be "failed to write VMDK backup grain directory"
+(you removed the "backup" below, but didn't add it here).
+
+> +            goto exit;
+> +        }
+>      }
+>  
+> -    /* write backup grain directory */
+> +    /* write grain directory */
+>      for (i = 0, tmp = le64_to_cpu(header.gd_offset) + gd_sectors;
+>           i < gt_count; i++, tmp += gt_size) {
+>          gd_buf[i] = cpu_to_le32(tmp);
+> @@ -2319,7 +2330,7 @@ vmdk_init_extent(BlockBackend *blk, int64_t filesize, bool flat, bool compress,
+>                          gd_buf_size, gd_buf, 0);
+>      if (ret < 0) {
+>          error_setg_errno(errp, -ret,
+> -                         "failed to write VMDK backup grain directory");
+> +                         "failed to write VMDK grain directory");
+>      }
+>  
+>      ret = 0;
+
+Kevin
 
 
