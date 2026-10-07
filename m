@@ -4,146 +4,162 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5AFD7CA6009
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 23:25:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A11DCA6009
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 23:25:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xEb05-0008CF-1P; Wed, 07 Oct 2026 19:24:41 -0400
+	id 1xEazh-0007sr-K8; Wed, 07 Oct 2026 19:24:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xEazv-00084p-Hs
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 19:24:31 -0400
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1xEazg-0007sN-7P
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 19:24:16 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xEazs-0001Po-LO
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 19:24:30 -0400
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1xEazd-0001PK-Dt
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 19:24:15 -0400
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 697LtXrP1466268
- for <qemu-devel@nongnu.org>; Wed, 7 Oct 2026 23:24:17 GMT
+ 697M5mZv875538
+ for <qemu-devel@nongnu.org>; Wed, 7 Oct 2026 23:24:12 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- sPCw/EvdFwhIRkHyh7pr3TPRAXD+Y54XtaA9bAUaGb8=; b=A0+A+1sdr4RqpJFA
- 3gjU/HwBszuZDOWfJ98a1FqlBblMJXUnUiFiIdrg5lfOYJPyk9g07XIa29gCZgzs
- EQ4ZonBoCmQD0IhS7wD2ttwjq9LUbQWU8BMtprHgJ4nwIsAU5SI04yQ9iFFRtcEQ
- /nsypqVaGYRnAwGiS+JoMA/MiOabyGuu2Qw85dn9u/KTndRcQiqcn507ALbFl9M0
- mnpm4jqFN0Fqt/gbGCqOLnHNZ/9H54X7+ivdTL72svqxf367yJ6dEymWWasjP17m
- z5Z9iB2sMG5+LgAI/cfdKuANuX9D1JkmvIbcczUjZwgnSO9FYR8dEgpPSp3f+cak
- xcK9bQ==
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h5xe409nw-1
+ iRTams5u3ThywoYayASBAHP286WCAaUpAMhGuQ+aWdE=; b=liTw01HtP9iyXauA
+ V6PZscA1i5NMkwbFWajhW3aD1l/H/O6YZ9K8lo+TzvH5uDOLEyUMhLaWhYzVuXSo
+ ovWVH9l1m+ppnpPoyow15vpNasv5Fi6TMLTuEEkYnrpu/8jB89BBxfHUiqR9W8n5
+ duBZePQr2dFsO+M9nlPsbByVSx3DZt+TwhEizXSISKazK36Ym5eyFBztKd6XQAbY
+ 8UOKbT2QWT2Abl7MkdkJzN/GyaT1LunR5yQXVKcOmDDHaVnZnoN1X4trPxDgYVaZ
+ XTiWVnUirAglLFcV8F7U+zWGReHa9ZYA8UNH7KaccznbpOzhhscuFIKcMWx345o+
+ KuSZoA==
+Received: from mail-dy1-f198.google.com (mail-dy1-f198.google.com
+ [74.125.82.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h5xe3ga29-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 07 Oct 2026 23:24:17 +0000 (GMT)
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-934956beec8so1000929585a.0
- for <qemu-devel@nongnu.org>; Wed, 07 Oct 2026 16:24:17 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Wed, 07 Oct 2026 23:24:12 +0000 (GMT)
+Received: by mail-dy1-f198.google.com with SMTP id
+ 5a478bee46e88-3515d2fc5ebso4885584eec.1
+ for <qemu-devel@nongnu.org>; Wed, 07 Oct 2026 16:24:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1791415457; x=1792020257; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=sPCw/EvdFwhIRkHyh7pr3TPRAXD+Y54XtaA9bAUaGb8=;
- b=RAR/0fxFqlgbuIkbqq6l+qEmE3Io2jr0r1Exwaulmz29jZxivwdJAIJGZ8gsi6g2ca
- r8A+g1+QnLZgFef3muV0sT7ZOODkD/7Ej+zk0OlEU3T4l0f0tPW5lKmC1qxVjrPuVX4D
- x1hNJJUKtpwO/Gcdt2ucI3x+QCIlE4K1eDoufnTdrwwVIYG1AoYEtd393L9PsfQ1u5dn
- 7/cBEjtGJDpsQcCWA+HW1sWLrUNxTMDexGOmWyZiv9H3ja0wTjBun0iwHslCSI6wiseI
- mW0UO9yYyxZSC5TnYkhREVF3bOPcZWBubemzPetSE2LHs9OKBx1HzTVNYUHpwSbPk5pB
- Xdcw==
+ d=oss.qualcomm.com; s=google; t=1791415451; x=1792020251; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=iRTams5u3ThywoYayASBAHP286WCAaUpAMhGuQ+aWdE=;
+ b=H4R4+WOBAhsMXOuGZE4SK6fPRtzX5bYRAgiwHJY5v0UBIBfaJal0NAYa6IA8UespeQ
+ uLdtgRanqCjIJyIMp9oJgCYDvmv2aO4qWrVDewoWO9ZajB/PQtYz47HJ8F6aZ1lnyn4d
+ L5Bcw7OvQOf5IA8Qj2iTZQqnFD3wBUp1sXBtKDkVokD/5TnncK5oAGLzHUKwLrcwPo0G
+ N+ueELHes5BGDhdcse/FCtRMMp01UM/B/Ubzi8kHda2B/r+72vwsIGgn5oBjkIEKSWVM
+ m+MDCVBZo79llI47AvWDDLMtKBIN3d+pCr5/UvZq0um6vugz2CvrPzcOUk2xsXNskb4M
+ DROw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791415457; x=1792020257;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=sPCw/EvdFwhIRkHyh7pr3TPRAXD+Y54XtaA9bAUaGb8=;
- b=czcQ6Fhgdy7gSoi77NN9bUpVqdrx7vIuOLZFJaJoX3DQtDdZ9TAgT9EVP1X03uVaAZ
- TQrZ6sSxwjpfd8Mlpw7mDBedAuNKDtAlI9eGYQ4QVFvh6AtTrW/ntIZgC2G8M/Is4Spg
- 0S2RuTw6sVxxiRljtFSPoL0BBbRM6ZN9EpEYuBUf5xpzyyET0OHTzwzZcto+hKcGKFgf
- FP8Bb+rha3BPBAnFH5qP6r8lEhvocQO02aNKNKAQKDEbCvt+Dpf/S2B1fvlNffA94+Km
- 3qab4OIZ8wTe1ycKGgAwfcaKI6yP/bIJjYiBd4Je5ArY3JIH8rrC4kkdXvmRmLh4S6fZ
- qS2Q==
-X-Gm-Message-State: AFuF++kAQd7gx1YKZedCasDFzj/4vZGrhtpkiu3gaOfGgXwLr8Cjmx+L
- XIZ9LBu+TB7fAJDoZiwpLFtFNjhdjuBava2AbXTDjLLIQNfwQQM2faiTushYnsF8zqYsH2rmUoF
- 8ZhzvuMiv0o530OGN084FfTF7NnE8okJKwxWmUiDbCeq0mqa6WzJMIWbs8IVNwrZdv8ep
-X-Gm-Gg: AYBFou38XG2PljkIs1lHn+W5FQIKwrVwitJINPT5DjDAZPFnJGBIzILeX26qJPtQseM
- AwEpD7kCn65AMRaqLfEfGr8+kh44NT3WL1sa7GL8eFKBXZL2Mq7YGdJIk8j6MatJggvATJvfDYB
- U47qrUQUb/j3xYDdD8I+CTglpBW/VKtlMPH3pQ6e8p4J9nHWEj6KcBO0tdAXFRuu5RZoBnGQGxC
- GydPuu2CUb4Ezig9eo3WAI7oK2iy7GzCWNZLOu60QHNBkz6qThhTF1E3c3r4bmudQ5VXasN9ot9
- MySKG4QBC69wtTS1uzxIhv6iOM/bBYaKoc/KzhL3Czr5AJEu/ubr4Dx/E/Zj3xJm8TntDfGikyz
- 2udnMKGVuoy7405AlRhKCN3XX6qNIPnybIWa5bPFl
-X-Received: by 2002:a05:620a:2a08:b0:93e:980a:88b9 with SMTP id
- af79cd13be357-93e9b895493mr749890885a.72.1791415456671; 
- Wed, 07 Oct 2026 16:24:16 -0700 (PDT)
-X-Received: by 2002:a05:620a:2a08:b0:93e:980a:88b9 with SMTP id
- af79cd13be357-93e9b895493mr749887285a.72.1791415456175; 
- Wed, 07 Oct 2026 16:24:16 -0700 (PDT)
-Received: from localhost.localdomain (pmd666.hd.free.fr. [88.187.86.199])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a1814ce9a0sm78762415e9.3.2026.10.07.16.24.14
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 07 Oct 2026 16:24:15 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-riscv@nongnu.org,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Anton Johansson <anjo@rev.ng>, qemu-ppc@nongnu.org,
- Yonggang Luo <luoyonggang@gmail.com>, Chinmay Rath <rathc@linux.ibm.com>,
- Nicholas Piggin <npiggin@gmail.com>, Glenn Miles <milesg@linux.ibm.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>
-Subject: [PATCH 06/10] target/ppc/gdbstub: Replace gdb_get_regl() by
- ppc_env_is_64bit()
-Date: Thu,  8 Oct 2026 01:23:21 +0200
-Message-ID: <20261007232326.66240-7-philmd@oss.qualcomm.com>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20261007232326.66240-1-philmd@oss.qualcomm.com>
-References: <20261007232326.66240-1-philmd@oss.qualcomm.com>
+ d=1e100.net; s=20260707; t=1791415451; x=1792020251;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=iRTams5u3ThywoYayASBAHP286WCAaUpAMhGuQ+aWdE=;
+ b=flwKV1I9KLfSGEX4VgyKqqiGgxRbSIIV8ehemfKin9YPaWdlQu9ECC7kNcr0t8UmCe
+ LIOq/EH2rzf2wMMyae2ntIEL7S4BBCpTtES9g3LVvDG6pyHcsbKIxz1Ie/6+nA1MtjWc
+ CmIj3znTidE5kCF4fPSkIU7g/LBZ3Eanl+F2+IyAFGVwd5VdI38IJtriqDwUilyPWkXx
+ /58TQc6cQWqIGLnqg0lk8bP6q8MhkE8xP8FZIOtwPWvpvve70yXZId0hSILKYM7eoykv
+ YZ9KGQTFxjhaInykBMX95fpJBV49xFDWgahXaThJBt/A39az8XOjQnGuCJKpI9EMgig0
+ 2vvQ==
+X-Gm-Message-State: AFuF++l+yVDeCWssYD0lXDWJGrFLbFtOSF8KzLW6R3IxNH6uFFQ/0iVh
+ nonb7xnS9C8pPyDSntx5wRF5nMpc/zXC5+BX0bLNx9DCWxJhwIOMqVJWu+O2HWG+StnnA0o3Hrf
+ MVJK0V86ZMdRfawkADd/aFnwzsJ/1S6r8k4/bSJxRwMRQNZqDA3HVBwIPzw==
+X-Gm-Gg: AYBFou11I2RbelPsiaJuQafIRvhq5CufY2Hn89rLZpRZ2YMk5f1mtYY9DnW7FTyHXXU
+ LqR1UbuCxMbh77ixG/wCmAe42jeVAXYidA/F558VkMvAIf3mCLRBSvGc/JizRG0Gi4yNrxw121z
+ Nxs3iYBn7w9pEoEwKCdI9mcIbCBCdpiYnEH5tsQqyEezX4WqsiKa9F1S9fbiVGunUWHAvONVVC7
+ BFccwY662F5JhZ4mLzjFUPxuODbfwVM3ZHzjbf0PCMIhFDesXusfrfnzgGfKSN13ac8n9OyUo10
+ d2C3sWP4FcJyjOuOIoFDQ9rp4g03lw25j/1rDAfAzBC7g9pOekqnZDTaBuzciOwDgst8aoDv3Jj
+ PF/o4mqmTDGXZ4E6CmFhgTRXJn0r7uV6Ws7l/TzDPP8ZnGNobCJTT1nNAr2ca15AMvKirJA==
+X-Received: by 2002:a05:7301:7d06:b0:341:d191:b838 with SMTP id
+ 5a478bee46e88-3515de82736mr3943163eec.31.1791415451166; 
+ Wed, 07 Oct 2026 16:24:11 -0700 (PDT)
+X-Received: by 2002:a05:7301:7d06:b0:341:d191:b838 with SMTP id
+ 5a478bee46e88-3515de82736mr3943095eec.31.1791415450282; 
+ Wed, 07 Oct 2026 16:24:10 -0700 (PDT)
+Received: from [192.168.1.199] (192-80-163-190.dyn.novuscom.net.
+ [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-3515af7ab9fsm9845032eec.18.2026.10.07.16.24.08
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 07 Oct 2026 16:24:09 -0700 (PDT)
+Message-ID: <578afeb7-d302-402e-bedf-43b29ef00d5b@oss.qualcomm.com>
+Date: Wed, 7 Oct 2026 16:24:07 -0700
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 4/8] target-info: replace QOM registration with a
+ constructor list
+To: luoyonggang@gmail.com
+Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>,
+ Cleber Rosa <crosa@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
+ Laurent Vivier <lvivier@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
+ John Snow <jsnow@redhat.com>, Laurent Vivier <laurent@vivier.eu>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Joel Stanley <joel@jms.id.au>, Fabiano Rosas <farosas@suse.de>,
+ Kane Chen <kane_chen@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Troy Lee <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>,
+ Stafford Horne <shorne@gmail.com>, qemu-arm@nongnu.org,
+ Philippe Mathieu-Daude <philmd@mailo.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Paolo Bonzini
+ <pbonzini@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@oss.qualcomm.com>, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
+ <marcandre.lureau@redhat.com>, Steven Lee <steven_lee@aspeedtech.com>,
+ Alexander Bulekov <alxndr@bu.edu>, Darren Kenny <darren.kenny@oracle.com>
+References: <20261007115253.328-1-luoyonggang@gmail.com>
+ <20261007115253.328-5-luoyonggang@gmail.com>
+ <37275f1f-aee9-444b-aaed-3e0bf34b63cd@oss.qualcomm.com>
+ <CAE2XoE_GmDbA5SSUb3k_9HwE+bxnBjK+kBj-RE5BonEBC=GpMw@mail.gmail.com>
+ <919a1a75-78b9-42a9-93ed-9edf6757f707@oss.qualcomm.com>
+ <CAE2XoE8G7Pyu-UaoW0BRxHqEX2aef_ak29mAkwwssSS5Rf_y5A@mail.gmail.com>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <CAE2XoE8G7Pyu-UaoW0BRxHqEX2aef_ak29mAkwwssSS5Rf_y5A@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: DUAhvMSidCpWar4ZutH6SgFCKmzC3Ppd
-X-Authority-Analysis: v=2.4 cv=AbwkjHXG c=1 sm=1 tr=0 ts=6ac6d4a1 cx=c_pps
- a=HLyN3IcIa5EE8TELMZ618Q==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
- a=EUspDBNiAAAA:8 a=ECGyvcmLiFpczC5RLToA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=bTQJ7kPSJx9SKPbeHEYW:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA3MDA5MyBTYWx0ZWRfX7kS+uNQ3xWbc
- xuICuKzWYEmXvVxh7lmbWl1aEH8ESZT0itmbU5Tp/wZbiX2IP2I9yPfzrqPSJyEpV37PfoYzMLx
- QF3ApTLYWTdpgHu3YuFcZRxxpU5IwNQ=
-X-Proofpoint-ORIG-GUID: DUAhvMSidCpWar4ZutH6SgFCKmzC3Ppd
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA3MDA5MyBTYWx0ZWRfXwFpFQVrESNbG
- PkEEtYoAZXox7wqFkQc65rYFuilVKAuK2Xydrq+Zz10bTIA8swn5XZiBvWIIh3QJSIaTVDCv+S6
- p7NbGQahmnKtKANfPpTrVLjWIkRfwu2FlUz7rneKA47CVM20uO/Ar+Z9YJ+nWdYx+kwOjq5DyN5
- uUf9LHGUn9dQml8snIL5ZT22bQjl3j1qUMWUQS9ynM3wEGeMSHWijUjHJIliGL5q1xOxsmIY/qD
- WDrBWfua7Nbi4lpu1/0sBBLs9AwNa8yDGSJfkmjONWco7rlbJYzTQ94c4Nn6gCqXsUWCH0oPcGo
- L5/JsPJwyvgPsL0eqn0pHJjMJ8PW3sYH/Yu18uZ7KviJVShf4EsPZWHpM+nAWZINkhUnUZm4iZI
- vUKTkP/iPlwJowfCIQRJowtRaedPB7dn9dph4jZ9HkMsA8Lel8K9WDp76p4jjgsQmspcw5v9vly
- +pzsMp3qDyU/z8msCgw==
+X-Authority-Analysis: v=2.4 cv=NchzRGD4 c=1 sm=1 tr=0 ts=6ac6d49c cx=c_pps
+ a=wEP8DlPgTf/vqF+yE6f9lg==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
+ a=p0WdMEafAAAA:8 a=EUspDBNiAAAA:8 a=pGLkceISAAAA:8 a=Rl23PAiG-ByDcM_D8rwA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=bBxd6f-gb0O0v-kibOvt:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA3MDA5MyBTYWx0ZWRfX7iARpsiBSesV
+ jqGcB/8TQ7hsIc65pDJGJz6lKIyUAlX/GlFrY04HR2SeFUt/mbnYPdRG3RvWvUL8ffAvx02MXn1
+ JL6SUmoytOUxTDhd69zWiGbnJ7qATcE=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA3MDA5MyBTYWx0ZWRfX0lVTutijnV83
+ gTkDrH3yBqN1enmouvo7gKKRZRAhebYDbsKDuLlmQXo7q5GmxH0KyoS56VtyTRDk4I7Oy+Qu0Xg
+ XxTzzSao/pVmAMI2H+VLDPcsPq9hH00AD0sxIB5xQew5aQ37qLCsyyGGptGmrhvvcuc9eAjbxT7
+ fkAF9F6d/hLXTjR2IFEoeNbBHTcXdcX/mp6OYtS3LUIELhYESurwWmChH7OBUgYG/kGMlr+3+VP
+ XpdZ/j3qHFWuXK1vMmI2qlfO4GxqpLQ0UPo7DXs2IJwa75eON1B2f2+Gi3ohIIKBqAmq17mDhHp
+ fdkxvK7qdSoyvcuX0CgO2VNwoeactUtnogtqD46ov5vsKw0t+nLmZxvg0JrJffLfuPOQ/I7WQjd
+ bvi5IjTcPgLM6CYdMZC59VAHBNmeYYcIb5b7IEPd3+D3yJJYfw+UqK7sgZ81F7gMqsJItaRuSRu
+ P5f0ExqEQ/XtOVdKGbw==
+X-Proofpoint-ORIG-GUID: xCxSOuL5f6QUoWEq2r3UYd_lvHgsooMJ
+X-Proofpoint-GUID: xCxSOuL5f6QUoWEq2r3UYd_lvHgsooMJ
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-10-07_07,2026-10-06_03,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 spamscore=0 lowpriorityscore=0 bulkscore=0 malwarescore=0
- clxscore=1015 suspectscore=0 priorityscore=1501 adultscore=0 phishscore=0
+ impostorscore=0 suspectscore=0 bulkscore=0 priorityscore=1501 spamscore=0
+ malwarescore=0 adultscore=0 lowpriorityscore=0 phishscore=0 clxscore=1015
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2610020000 definitions=main-2610070093
 Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -159,74 +175,218 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Inline the deprecated gdb_get_regl() as ppc_gdb_get_regl(),
-replacing the target_long_bits() check by a ppc_env_is_64bit()
-one.
+On 10/7/2026 3:54 PM, Yonggang Luo wrote:
+> On Thu, Oct 8, 2026 at 6:31 AM Pierrick Bouvier
+> <pierrick.bouvier@oss.qualcomm.com> wrote:
+>>
+>> On 10/7/2026 1:50 PM, Yonggang Luo wrote:
+>>> On Thu, Oct 8, 2026 at 4:29 AM Pierrick Bouvier
+>>> <pierrick.bouvier@oss.qualcomm.com> wrote:
+>>>>
+>>>> On 10/7/2026 4:48 AM, Yonggang Luo wrote:
+>>>>> Register target definitions through constructors instead of
+>>>>> MODULE_INIT_TARGET_INFO, making target_info_list() and target_info()
+>>>>> available on entry to main(), without explicit initialization or a
+>>>>> call to module_call_init(MODULE_INIT_QOM).
+>>>>>
+>>>>> Keep the target list sorted by target_arch and default to its first
+>>>>> entry. Provide an unknown TargetInfo fallback for target-independent
+>>>>> tools such as qemu-img and unit tests that link no target-info-def.c
+>>>>> objects.
+>>>>>
+>>>>> Remove the obsolete QOM target-info registration infrastructure and
+>>>>> update the multi-target test to inspect target information before
+>>>>> initializing QOM.
+>>>>>
+>>>>> Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
+>>>>> ---
+>>>>>  include/qemu/module.h           |  1 -
+>>>>>  include/qemu/target-info-def.h  | 56 +++++++++++++++++++++++++++---
+>>>>>  include/qemu/target-info-init.h | 53 ----------------------------
+>>>>>  include/qemu/target-info-qom.h  | 31 -----------------
+>>>>>  include/qemu/target-info.h      |  9 +++++
+>>>>>  meson.build                     |  6 ++--
+>>>>>  system/vl.c                     |  4 ---
+>>>>>  target-info-def.c               |  1 -
+>>>>>  target-info-qom.c               | 60 --------------------------------
+>>>>>  target-info.c                   | 61 ++++++++++++++++++++++++++++++++-
+>>>>>  tests/qtest/fuzz/fuzz.c         |  3 --
+>>>>>  tests/unit/test-multi-target.c  | 12 +++----
+>>>>>  12 files changed, 129 insertions(+), 168 deletions(-)
+>>>>>  delete mode 100644 include/qemu/target-info-init.h
+>>>>>  delete mode 100644 include/qemu/target-info-qom.h
+>>>>>  delete mode 100644 target-info-qom.c
+>>>>>
+>>>>
+>>>> This approach (custom list based) was considered before implementing
+>>>> things with QOM Types. The rationale I followed was that if everything
+>>>> is in QOM, we might better follow that for consistency sake.
+>>>> Yes, the compromise if that we need an extra init step, but it was not a
+>>>> problem to add it.
+>>> I have issue to add the init step for unit-tests, and hard to write the -target
+>>> parse procedure and get it right. Not means this won't work. but for
+>>> me, too much
+>>> coupled.
+>>>
+>>
+>> We already have such a test upstream:
+>> https://gitlab.com/qemu-project/qemu/-/blob/master/tests/unit/test-multi-target.c#L35
+>>
+>> The init sequence is quite straightforward:
+>>
+>> ```
+>> /* initialize target types, and only them */
+>> module_call_init(MODULE_INIT_TARGET_INFO);
+>>
+>> /* we can get the list if we want, for -target or any other purpose */
+>> g_autoptr(GSList) targets = object_class_get_list(TYPE_TARGET_INFO, false);
+>>
+>> /* set the global target info from any element in this list */
+>> TargetInfo* ti = ...;
+>> target_info_qom_set_target_info(ti);
+>>
+>> /* register rest of QOM types */
+>> module_call_init(MODULE_INIT_QOM);
+>> ```
+>>
+>> It works fine to implement -target (if we would like to do it), since I
+>> implemented it myself. That was also my initial motivation by the way.
+>>
+>> Also, I appreciate that target-info is NULL by default, it crashes
+>> loudly when it has not been set, and make it easy to find who depends on it.
+>>
+>>> If we treat target_info as a QOM, but QOM needs target_info to set
+>>> up(is_avaible). That makes
+>>> the init sequence too much of a burden.
+>>>
+>>
+>> See sequence above, the solution is to initialize TARGET_INFO first,
+>> before the rest of QOM. You end up with the same result than with a
+>> statically initialized list.
+>>
+>>>
+>>> is_available is depends on target_arch
+>>> And before this patch, target_arch depends on QOM, pulls user/softmmu because
+>>> target_info_init. By moving target-info to be a custom list based, we
+>>> can decouple
+>>> target-info from qom/softmmu/user. and target-info will always
+>>> available once "main(argv, argc)" is entered. We also have the
+>>> advantage of doing all sorts
+>>> of tests against it.
+>>>
+>>
+>> Which kind of tests are you trying to add?
+>>
+>> For now, the exact list of places where we need to do this initialize
+>> target dance are:
+>> - system/vl.c:    module_call_init(MODULE_INIT_TARGET_INFO);
+>> - tests/qtest/fuzz/fuzz.c:    module_call_init(MODULE_INIT_TARGET_INFO);
+>> - tests/unit/test-multi-target.c:
+>> module_call_init(MODULE_INIT_TARGET_INFO);
+>>
+>> If we want more tests, I'm totally ok to move this init code to
+>> target-info.c, and replace call sites if needed.
+>>
+>>>
+>>> Tools such as qemu-img and unit tests may link target-info.c without any
+>>> target-info-def.c objects. Their target list remains empty, so use this
+>>> fallback.
+>>>
+>>
+>> Why should this tool get access to target list? qemu-img deals with disk
+>> images, and is unrelated to targets.
+>>
+>>>
+>>> static TypeImpl *type_register_internal(const TypeInfo *info)
+>>> {
+>>>     TypeImpl *ti;
+>>>
+>>>     if (!type_name_is_valid(info->name)) {
+>>>         fprintf(stderr, "Registering '%s' with illegal type name\n",
+>>> info->name);
+>>>         abort();
+>>>     }
+>>>
+>>>     if (info->is_available && !info->is_available()) {
+>>>         return NULL;
+>>>     }
+>>>
+>>>     ti = type_new(info);
+>>>
+>>>     type_table_add(ti);
+>>>     return ti;
+>>> }
+>>>
+>>>>
+>>>> Is there another good value this list approach brings compared to what
+>>>> exists?
+> 
+> Sorry, I have to wait for your work to be done first.
+> I have too many patches depending on this, and it seems hard to
+> convince you. Let's just keep it as is.
+> Maybe you can work them out in an easier way.
+>
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
----
- target/ppc/gdbstub.c | 19 +++++++++++++------
- 1 file changed, 13 insertions(+), 6 deletions(-)
+I quit the effort of upstreaming a qemu-system binary some time ago,
+because it was not easy to get a consensus on what the new binary should
+be, and I'm happy you took the relay there. I try my best to help on the
+issues you bring, some of them being interesting problems that we need
+to solve.
 
-diff --git a/target/ppc/gdbstub.c b/target/ppc/gdbstub.c
-index ee02be63ce8..0071c2b3bab 100644
---- a/target/ppc/gdbstub.c
-+++ b/target/ppc/gdbstub.c
-@@ -53,6 +53,13 @@ static unsigned ppc_gdb_register_len(const CPUPPCState *env, int n)
-     }
- }
- 
-+static inline int ppc_gdb_get_regl(const CPUPPCState *env,
-+                                   GByteArray *buf, uint64_t val)
-+{
-+    return ppc_env_is_64bit(env) ? gdb_get_reg64(buf, val)
-+                                 : gdb_get_reg32(buf, val);
-+}
-+
- /*
-  * We need to present the registers to gdb in the "current" memory
-  * ordering.  For user-only mode we get this for free;
-@@ -98,14 +105,14 @@ int ppc_cpu_gdb_read_register(CPUState *cs, GByteArray *buf, int n)
- 
-     if (n < 32) {
-         /* gprs */
--        gdb_get_regl(buf, env->gpr[n]);
-+        ppc_gdb_get_regl(env, buf, env->gpr[n]);
-     } else {
-         switch (n) {
-         case 64:
--            gdb_get_regl(buf, env->nip);
-+            ppc_gdb_get_regl(env, buf, env->nip);
-             break;
-         case 65:
--            gdb_get_regl(buf, env->msr);
-+            ppc_gdb_get_regl(env, buf, env->msr);
-             break;
-         case 66:
-             {
-@@ -114,10 +121,10 @@ int ppc_cpu_gdb_read_register(CPUState *cs, GByteArray *buf, int n)
-                 break;
-             }
-         case 67:
--            gdb_get_regl(buf, env->lr);
-+            ppc_gdb_get_regl(env, buf, env->lr);
-             break;
-         case 68:
--            gdb_get_regl(buf, env->ctr);
-+            ppc_gdb_get_regl(env, buf, env->ctr);
-             break;
-         case 69:
-             gdb_get_reg32(buf, cpu_read_xer(env));
-@@ -281,7 +288,7 @@ static int gdb_get_spr_reg(CPUState *cs, GByteArray *buf, int n)
-     default:
-         val = env->spr[reg];
-     }
--    gdb_get_regl(buf, val);
-+    ppc_gdb_get_regl(env, buf, val);
- 
-     ppc_maybe_bswap_register(env, gdb_get_reg_ptr(buf, len), len);
-     return len;
--- 
-2.55.0
+Thanks to your work and persistence, it seems like conversation is
+starting to converge towards something: qemu-system with all
+devices/machines/cpus available.
 
+It's not what I had in my mind originally, but I'm happy to see progress
+on this, and open to accept this alternative!
+
+> My work is here.
+> https://gitlab.com/lygstate-qemu/qemu/-/tree/combined-binary-multi-targets?ref_type=heads
+> I am afraid of posting 300 pathces into threads to flood it(and
+> disturbing yours). So I'll wait for your work first. and resolving
+> conflicts later, that's really time-consuming.
+>
+
+It's indeed not possible to send 300 patches and expect this to work,
+whether it's on this mailing list, or any software forge also.
+It's also not possible to send a link, and expect anyone to take a look
+at the 373 commits sitting it on top of master. My name is not Claude.
+Instead, humans have to progress step by step, based on feedback. Yes it
+takes time and it can be frustrating. And yes, I've been there (and
+frustrated) also, I feel sorry for you.
+
+At the moment, if we want to make it move on, we need to focus on one
+single thing:
+"How to document/specify which targets a machine support".
+
+> I did many explanations before. seems my explanation is too bad and
+> not to give a clean picture for you, let's delay these first.
+>
+
+If I can suggest something politely here, IMHO, alternating between
+genuinely human written messages, and AI content sent as it is on email
+or commit messages is not helping on the receiver side.
+
+I would prefer anytime to deal with imperfect english (mine is imperfect
+too, I'm not a native speaker neither), compared to read what
+Claude/GPT/Deepseek generated that was pasted as it is.
+I understand it's a good tool for helping on the language side, and
+that's ok to fix grammar and sentence structure.
+But asking "Please generate a summary from those email threads and
+explain what the current series is doing", and paste this is doomed to fail.
+
+It also has a very detrimental side effect: it makes me start to wonder
+where the code is coming from also. Especially when seeing boilerplates
+with lengthy comments written in perfect english. My 2 cents is, use AI
+if you want/need, but make sure the result has this *human* touch.
+
+> I only sent these 8 patches for easier review. because too many
+> patches won't be accepted either.
+>
+
+This series is useful, thanks to your answer on last patch, I finally
+see where you're headed. I'll answer there to keep this moving forward.
+
+Regards,
+Pierrick
 
