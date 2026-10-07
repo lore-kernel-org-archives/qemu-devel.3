@@ -4,139 +4,141 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D82FCA5FFF
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 09:44:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6002CA5FF1
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 09:44:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xEO9k-0004gs-2J; Wed, 07 Oct 2026 05:41:48 -0400
+	id 1xENwb-0004cS-EG; Wed, 07 Oct 2026 05:28:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xENyV-0007w0-Vm
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 05:30:13 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
+ id 1xENCL-0001MW-40
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 04:40:32 -0400
+Received: from mail-westeuropeazlp170130006.outbound.protection.outlook.com
+ ([2a01:111:f403:c201::6] helo=AM0PR02CU008.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xENyS-0005Hp-MU
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 05:30:10 -0400
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6977jeA53298341
- for <qemu-devel@nongnu.org>; Wed, 7 Oct 2026 09:30:06 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:message-id
- :mime-version:subject:to; s=qcppdkim1; bh=peOisZFBpZ32NfgNzRqCOq
- BYF37h9kgf8/mExHACSj8=; b=Z3Hky59E4w3XAFutILqPUIF5ibcW7JUYKIcct3
- eTG9ugLUXYOqV8YKPkZ4MTs3/BCT+QrOHdt7UqsKmNz5Vsj9dwAVvrxU05A2F8zQ
- 4LCt9W+nRCb3eP0LMpgcKagGMEBLgSxWkOHKZfcOiFC+LGUFZW1V/vlDfvuIkyTe
- ku/BNxGtrvgqTlfXtYTHxiPF2wKXG5XdonX5+D3jLWwlE6EkR74inbtfEHTFwNcc
- 0tBrlmkb3605A8hrFKJpL988jlSoFzzMrgYL0F4/BHD968oIOWOq3VWqy6XnrECH
- b3T71LcaFpq289YdWqH9V5dD+6JlpPJqBPijRZFKPsPLAxPQ==
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h5hdcrf60-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 07 Oct 2026 09:30:06 +0000 (GMT)
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-939c30aa9a0so446641385a.0
- for <qemu-devel@nongnu.org>; Wed, 07 Oct 2026 02:30:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1791365406; x=1791970206; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=peOisZFBpZ32NfgNzRqCOqBYF37h9kgf8/mExHACSj8=;
- b=afJsEUvFwzOYQRd73AtNf1/DeOLk26WrjvfgpftUYiajsAz3sb6zI9SlPg7VLUWVDQ
- EcEMB6bcJ27O0jv5eX4A9ebimyGkkSD+U9JDYn8TwKsae37VS0MOJSmIf+57/uNVIjNI
- 7NwQuQq9eBK34QxuOI4GKf0zT/2TjyqtX2iuRfiKXyG57nZvvY+ni1bNqTaKSYrV3jOZ
- BqQuecjSxW/aoMojV9P3dW3lin3GmLIwbbuyavRcPJkzPFGXzkJIp9f3plRhw0TINdM7
- KWRE233LxnKS8qU6LrYql3AyDRDpE1xu9ItGLxcqw+YJW9t7N2xzKVtIYj6blA2aeA9M
- pEVQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791365406; x=1791970206;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=peOisZFBpZ32NfgNzRqCOqBYF37h9kgf8/mExHACSj8=;
- b=FOw7xnFNrAWJe/rj/MGIprAk6eiPKNcyuJGutjF0ffrQkc/N64kewMBS+3aHNVavNY
- ozWkVTlyFd3e9qZ4BXkwjNFOoP5t5+276DP40ddXpZ0ekNXU4vq1dzQjVHIDqqPIls/o
- x77TnTxI2Bz9nPRbnIrXERe0l5PXLRqOKnT9BFcurDRPRKW37wxY5kYlHRwOu1JDfQ1R
- 1Nditf6VHCw+pq+Tu6+e0RjiKozeWN2yq5opBPVffLHCKXhyMgkSvYgshQjMxXyNNtZn
- q03jv68WgeNr02jj0lkvGzQHaki1b8eM3UAErp+6QpwO3tJLg9+poSKBQPhwPdfNkSnT
- WCBg==
-X-Gm-Message-State: AFuF++mGiLphxxmgJ5TYBP9YgoFOatTyIhcwY7xI0529WJuI9Rm/+21A
- gbjfVeI6N8ZXHxDxHWqFcsX2N+1mc8dS0aPJZf3ddJZoZWXAQhn4YFF5xFY7vKIcGVX504B7CV0
- baeI/pmWpusqSSIRArZI1fgN96+cnMifctR/Ny1CBku94J1l/rpXdTM4at/QAS3Jp9GK2
-X-Gm-Gg: AYBFou04/ZFSQn4Sw+ayXrVEXXKVTj74DRMcgOvbg/qlq5Ggw1sNpxRAcI+hi06UKUF
- 9lKyzhzAa7VM85Ix0RRfz6IAWlbJmuObJnDXWJE86kITaQeQxK3y4rbNX2gfLBfZb8JmebPB5JC
- Oz+G7R+fM6/1n2/Urx6vDBEt3pFKuZw700vQj5luIUdS9+zu9uw1PZFfyJtVllN5skOl1YCgWOr
- f5uK257XSXhNPMd7n9wpJhiG1w4hfatLP8hs9UQxjfL0/E96SD2L/D/y9dPP9nQXnptd4pZsyJ5
- O9GROhrRvnzgzPKgkveoWkOOxITRLXShgp6ggsCtawNEGE32/Tw51p5UYFW5Up4N8BRB6nhwDTC
- Z9i+q0fcnKvGHgv0w45Imlg6JOoCzn5CoA/CAe8hL
-X-Received: by 2002:a05:620a:460f:b0:93c:ca09:aa34 with SMTP id
- af79cd13be357-93e9b7c2ac4mr328637085a.46.1791365405788; 
- Wed, 07 Oct 2026 02:30:05 -0700 (PDT)
-X-Received: by 2002:a05:620a:460f:b0:93c:ca09:aa34 with SMTP id
- af79cd13be357-93e9b7c2ac4mr328632385a.46.1791365404997; 
- Wed, 07 Oct 2026 02:30:04 -0700 (PDT)
-Received: from localhost.localdomain (pmd666.hd.free.fr. [88.187.86.199])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a180310c9fsm37495675e9.4.2026.10.07.02.30.02
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 07 Oct 2026 02:30:04 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+ (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
+ id 1xENCJ-0006kK-7P
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 04:40:24 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=srkjeDi06v7kqGl7ArRda0OWQ5N5Q3PtYp0e/ebuW55lYWfhfeC+z7H3VDOcWpFwIZgMR1V+uc2s5GK4qpt6O4Y2vNuAMeVfJDal9cGNjUTVh0tWIuNbIyvUZfPY/VaMN5q5gJetgLtlIdoqcxjYTAmjgrt41FJV7C978mHe4KOSOrPuT/S+y4m2s9M6WlM4Pg99hHocxB6XqPoqasjYoJnTltt0l/wEb1Gi7kfKAOtDS3wk/wFDvrXHjYMo68Hbc8hp6DdNAkUfhYPLQqlvvXZymVka1GWj7LpdmVjeVuErwuPBasAQvZJSQkQFynl5ZboZExZ3ob7hcWLJLwqlIg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=hFT3LiMQn8S1inTR3/7yiapL1srtQ+psgaRlzFZKuug=;
+ b=A9mA/gr2hWGmK1hiiYisSL6nuXbStpCaPj/h3paMBfIjdx+HdHqottwyzRxfFhi4RGO5eiqZSrtmCG9hdx1u6464hXrxsGAr3Amdwop4w6aGumaPbxu57iQfRfsr2JDBppHbgOsIKRfFNndE/L5QaG9uZl2KuV2NKKZybyUipptJQBDt/QwER0S2KT7R+xtFO2ypRIrvMWMEnaIa6ygWnjb6xRGtxLe1RH8lXwOtBpELrvcfqjOLQnYBg0zkF/cMMBTMsQE3WEfW3duccVTBbW/cAPA3vm6tQsz+aaC5GaP+6rIpewJettUqmK2nXW2k9+D8dCLVI9Fz3+L3zPrxVQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
+ header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=hFT3LiMQn8S1inTR3/7yiapL1srtQ+psgaRlzFZKuug=;
+ b=flIFEXvA4z2G2MaSyZHKUJMa3I0o3tZ99/QVebPNOyqvC5VGSCZTNLUfErsL4agKat78NTXD95pWKt9ZzmXnYw7cG8ceqJvjTfo0LjVusw/0n/4mpLQ7fx6o741x2EFyKG6vwDWuerO1WhpS48HeHNh9k8z4E0c4WXhvOhKj/b6NxBGCe5Lk1h9GW1pjKs9xsRw2qo4MTmYPEJkx2u24j3HEi7cz0rCMQfN2i2GIi3RWFUTrXmw6HZbLe2wlboFwmYj0CU0gz71qnc5fsmotltqhpRJ3gD1XZQCyPXxPf5Rxq24pL3bJRwyXSE+ta+lSsGUbuH9T0+3OUTZH25koVg==
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=virtuozzo.com;
+Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
+ (2603:10a6:800:20a::12) by DB3PR08MB9058.eurprd08.prod.outlook.com
+ (2603:10a6:10:430::21) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.496.15; Wed, 7 Oct
+ 2026 08:40:08 +0000
+Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
+ ([fe80::4e37:b189:ddcd:3dd8]) by VI0PR08MB10656.eurprd08.prod.outlook.com
+ ([fe80::4e37:b189:ddcd:3dd8%7]) with mapi id 15.21.0496.010; Wed, 7 Oct 2026
+ 08:40:08 +0000
+From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+Date: Wed, 07 Oct 2026 11:40:09 +0300
+Subject: [PATCH v14 16/22] migration: add MIG_EVENT_INCOMING_FAILED
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20261007-up-vsock-vhost-v5-v14-16-e16de9962df0@virtuozzo.com>
+References: <20261007-up-vsock-vhost-v5-v14-0-e16de9962df0@virtuozzo.com>
+In-Reply-To: <20261007-up-vsock-vhost-v5-v14-0-e16de9962df0@virtuozzo.com>
 To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Peter Xu <peterx@redhat.com>, Alexander Graf <agraf@csgraf.de>,
- "Scott J . Goldman" <scottjgo@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Peter Maydell <peter.maydell@linaro.org>,
- Mark Burton <mburton@qti.qualcomm.com>, qemu-stable@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: [PATCH] target/arm/hvf: Retry RAM write faults only for dirty logging
-Date: Wed,  7 Oct 2026 11:30:01 +0200
-Message-ID: <20261007093001.74476-1-philmd@oss.qualcomm.com>
-X-Mailer: git-send-email 2.55.0
+Cc: dwmw2@infradead.org, mst@redhat.com, vsementsov@yandex-team.ru, 
+ farosas@suse.de, peterx@redhat.com, dongli.zhang@oracle.com, den@openvz.org, 
+ andrey.drobyshev@virtuozzo.com, mark.kanda@oracle.com, sgarzare@redhat.com, 
+ maciej.szmigiero@oracle.com, odaki@rsg.ci.i.u-tokyo.ac.jp, 
+ philmd@oss.qualcomm.com, bchaney@akamai.com, clg@redhat.com
+X-Mailer: b4 0.16.0
+X-ClientProxiedBy: VI6PEPF00000236.AUTP296.PROD.OUTLOOK.COM
+ (2603:10a6:808:1::8ee) To VI0PR08MB10656.eurprd08.prod.outlook.com
+ (2603:10a6:800:20a::12)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: hTJzi_Q4hkHjh6zzr-YD1tKAR5XWPt_F
-X-Authority-Analysis: v=2.4 cv=aKFlOr9m c=1 sm=1 tr=0 ts=6ac6111e cx=c_pps
- a=HLyN3IcIa5EE8TELMZ618Q==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
- a=EUspDBNiAAAA:8 a=69wJf7TsAAAA:8 a=4iX3uDW9G_cJQgqnWakA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=bTQJ7kPSJx9SKPbeHEYW:22 a=Fg1AiH1G6rFz08G2ETeA:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA3MDAzNyBTYWx0ZWRfX/6Ezir8tXh4A
- Pa+JJybyYyG5doghJGcilGEUAOlHM9SMEmqHlODgNq6OyFYpQLaxqUY1J0xtG+QoglOBl1Pc0mr
- CfWILKopuljX5ATGC03fFlE+ch6cxtI=
-X-Proofpoint-ORIG-GUID: hTJzi_Q4hkHjh6zzr-YD1tKAR5XWPt_F
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA3MDAzNyBTYWx0ZWRfXyMsUtTKpafkr
- XerF9SXXEnwp337VpySDb5nYm8oJngb/EIYFc/AMPvUvOHdimkIYfArZZRNV9tWPB41w4Usn6hd
- NG6jLH/DBiSb7EFe866Mp3UmhJCkbDcGr3HfwR3H1YdNEgBrAtaBUfjI7FpxylmT6InRQvCuIDK
- pOTqEdAQniLdLBo3YOv5PqiUNMr29kk6VVQkOQ1YJ57d4yFVCsdiLRW5jEJVppNpuM6MNXPuV8I
- hDHmwtYctUzCUettnzOD8b+bgnfbwGyLOIDAun3LPoEeG9OshF+YTHR3+0SzuW+o/dKDCdMYq9d
- UUB4PC+9G7zDii1QvW2q5YVBha9YeDAzHcBemtrtyfKFPoPkBD3gFQTZhtBlqKD7M6hk3cIWrhs
- VL4ms3kaFkF3sohh+RR0nxFU66wZiwPOpwHwXkbMMrl/76kB7wsEKStGehAOsbxBCAMbOXlxzUe
- Zvrpg1fBnKq1GpTrV6Q==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-10-07_03,2026-10-06_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 phishscore=0 malwarescore=0 priorityscore=1501 impostorscore=0
- bulkscore=0 adultscore=0 lowpriorityscore=0 spamscore=0 clxscore=1015
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2610070037
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: VI0PR08MB10656:EE_|DB3PR08MB9058:EE_
+X-MS-Office365-Filtering-Correlation-Id: 61a93ece-0119-44b9-df09-08df244e97e8
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|52116014|7416014|376014|23010399003|366016|1800799024|10067099003|56012099006|6133799003|18002099003|22082099003|38350700014;
+X-Microsoft-Antispam-Message-Info: eP5wR/kUGZDlGsjC7X5X6ulv9Dj+2ysoWr7cu1WqO+4OrO+05os07mIeaO4d6O7QKmGyFT/s92gALIQ4gbcfObnKXTH3Fkx6JchZHr43aYASCB6wno+SwJHUU/hqQ4lI4WS2w/p0RWfOF33T/2nGba/mJINNTGqvjdUwtv8MRPqGRW4nd8Ej87341TX7U+aBEgnXc8hI1IGs1vOf/i9s4eInZeugNsZ1IqsLRIEvo/seN1QaITF4xs2CWZjsLm6qT4gClUGSfAZmas6PjPvpRkYdtQvpEWePVk1gRwFLoiGky5F95tvNHuxZOCb4qEZo842+lcfRcU+MQiWjln4uKdL80wdDyzqKrPqJoxQLAHo7hiCv0sol4oQ9HXSQlBDPH27l3ZNjkPyrY6HDx1NlZHyZkYFMO8wssf3AOratFEwdlZsMnYwDJ1ZwMqATOHpp/qVN3RQV35PMeHjGQKc2PXCAYXkJwedTURY2qblFo/AeiaaxO/udvCPBfybHDqMvzjbk7qS61vSuPuc/6/Rwv6bIWk2la2Lyi7EHpqS1x5PgrTPqgjIHRsIf6xs3m+pQ0vLE7oAbtUMiXk3P+Cdf6G5McLKDa7cNMzEZi566YpdQxkUvq/H9jxvXknTK9lHm+l/fVTgzn7Wk47TQbNm0zhxLv1cnOlYGo1smXp8Da2dQA0AweabalWwMIADRUBZ73tBVm9/XPY2X13zosZc5GsMDR0vlS0vGZzCZHr5EySg=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:VI0PR08MB10656.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(52116014)(7416014)(376014)(23010399003)(366016)(1800799024)(10067099003)(56012099006)(6133799003)(18002099003)(22082099003)(38350700014);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?NVVWL0pHcnpMdDFkR3VPQ1JCWlIzMlZsR0daMkRKSjRCTlhmd2RBdXhXOC9H?=
+ =?utf-8?B?VkNIU3NiQWY0V2xpa0w0NGpXTmVxMjg4MmVvdUFWazU2b3JidGw1elF3Z0Y2?=
+ =?utf-8?B?d2hNRG9CVHJFQXN0bVlGQTJ6U3RWdnVwNlBDaWZVeFpuMzZ1cWhjSytQZ20w?=
+ =?utf-8?B?WWYxZmF5ejhKenV6dzdTamx1MGdUN1ZxeUN4Si81OENBcERuWnRZR1gxYTBO?=
+ =?utf-8?B?M2pHRW1MN2ZTb0lOZmNLK1V4NkE0Q0dXTkp3dnZITzRnaE4xY2YxQSsxS3lI?=
+ =?utf-8?B?YXNQcG5Va3lXSjIxY1RxcEI1MnlVSU5QSjJkMWlVcGpXVHkwSUZyamdqdmdW?=
+ =?utf-8?B?cHA3RlJmU1hYcWZzMlk2MERDTVZsbFpubkRiUysxM2lmckV4U3NSWWw2RGor?=
+ =?utf-8?B?WlRHMkNRMEo5SUZuV0ZMMEZVemVDZ3JaZXp0OStYN3VFSkMxTFl1WjlLWE1D?=
+ =?utf-8?B?bEJmdEdYRWJRSERJQjZmYWs3NHhlbk9jaFAxRk93V2tlWlRDOWFtQ3dtL2xC?=
+ =?utf-8?B?RCtLVlRVZm1sYkZjNlFiZ2s0eUkrV3hGUVZRdGxOdFcweXNrTVpmZWRrdnk3?=
+ =?utf-8?B?Sjd5MGlKc2tTekFZcDNHbDE0bmRvaVFtVHkzclZLRjZMNmVHSnNYWXVvNVhD?=
+ =?utf-8?B?NnNxR3NQTVU4cFBZUEo2c3VicUlYNGNHWUQ4N28zc3lMYUYzWERtYVozWnRp?=
+ =?utf-8?B?L1VUTGU5OTJCSjh4Z0F0L2tjM3p2LzNVTmRkdEVuOWNRSmdBaklUTDZxbHlP?=
+ =?utf-8?B?azNwcU12bWZrZDJDV2l6aHI4YTBHRjV1dFR1QWdTRkUyTjkxZzdUdXBHVVpp?=
+ =?utf-8?B?SXJnUVltcyt4N1JFNDdNeE8rbldISVUwQkw5ME82cTBXMDg5ejdlNkwxN3pR?=
+ =?utf-8?B?R1N6Sit4bU5GZk13aE1BUHVlTkorUDVDMHd3ZVlSckVIaGwxRnpmSVlHRHRt?=
+ =?utf-8?B?bDB2UWh2SWRqV2licWg4anRZMm8venJqSVJ0MkVSSnh1NnoyaWZMcWkwTzlT?=
+ =?utf-8?B?WWlHc1h2VWFXa3piVGJOVlBneXFtc1NsQW94TDlYQVFDdHVZd28veVVxa01D?=
+ =?utf-8?B?ZzBCWVZtditVZksyRjBYbHVMQ1dEaTBzd0lmRERpRlc2V29wRFhoMHJUNFFP?=
+ =?utf-8?B?VVhsa0RYZmUxbVEwRFJSazV1US9WUEpSUEo0amZiUm1vVnhlci9mU0lXaGJX?=
+ =?utf-8?B?YkFzZ2hHUExQMG02ZEFkRkpDaURHOGFCbURld1lmY3RFdllIRmpzVFFPNlJr?=
+ =?utf-8?B?VXh1dUJVQzFiS3BhMDFMci8veWdtbUhhMTl5MStRWExSdE8xZVJnOVJOYjY3?=
+ =?utf-8?B?cTc4ZXZRL1lGWklPR3RsTGc5Uy9aZGxKN1ZaK0p0Z1RpZ1pGZkY2L3d2YUN4?=
+ =?utf-8?B?M2FYQTBFOXVyazJQRllhaldwOFBnK0xobks4Z3J0aVQzSzhwMlR2b3N6Rm1C?=
+ =?utf-8?B?SE9reDFwb3FpMTQxUUY4TVFEOExXbysxbzZnSVd4Yk5kR0JkSjRxUFFOazk0?=
+ =?utf-8?B?SEFBU3dsLzdSekZmTkphcmordlFwbUZZQ0k2aGU4cVNUZWNoU0NjbWNndGhj?=
+ =?utf-8?B?QnlwV01CclRTeFphVU9kcVVLemdGK1BJb1UwdXBzYml2ZzEvamQ2RDgvQUd6?=
+ =?utf-8?B?MzVIMEVyMS8yODdscTUzTmp6ZGdPYUtOcVpkTXF3R0JhcjVvQXAvUVkrYjll?=
+ =?utf-8?B?M3BmVUtURGFpU2hyc1dqTXMycENyMjF5QnhNWnVkUldmTE5GbG5wVCtlazlq?=
+ =?utf-8?B?a2ZJeENKZzVHTjRnVnMxNHdML1dwc094dENlSWl4L3Y3WU9zMGg1U3ZUUWpP?=
+ =?utf-8?B?U0YwQUdyZ21iR1djekFFRU5EVm9Pb2JaZ3lRZDhEd3JWY0c1ek82bXd4VXdv?=
+ =?utf-8?B?QWdObTkyOHQwUTNxUDRuZndtL3BnaHRZdFlhWTRjNkFzVTgwTXVKSDF0ZTlk?=
+ =?utf-8?B?Q21TODdpMy8rM25yMC9jSGN3SHIwUG80SUdxUXlhb1ptMVMrN2l3U0phY0Y0?=
+ =?utf-8?B?WFFuTXlRTzVUVUtZTk4ycjZ2MHErT0YyNk82TkVURC9pRjdNT2JGdC92RG1F?=
+ =?utf-8?B?eHJZSGxSM2NNRStETVRPbDh6MnkyVjZEU1dqZ00wMDBCaEhvamxlNDNNM25u?=
+ =?utf-8?B?MGc4Q3FTc2ZVNHl5WFdITGNRdEZSbUhhdm1zOTFQQXZDOEk4N0tTdFZYUDR4?=
+ =?utf-8?B?bGUzQlZDSlB3WndpdHBMK3FqL1JJTWt5OFJWY2IyR2xCRnV0NnpYUkNYemZS?=
+ =?utf-8?B?dlBYbFJ5LzVzR0loellBRUtWMDJVaHV5RmlSc0RUWmp5Vk5vL3NpU1EyY3FS?=
+ =?utf-8?B?Skx5clpFRTRJWmgvOTRXQk5kbFNlb3ltWUQxZmJSb1hxbDhlbnNwQ0M2TUQz?=
+ =?utf-8?Q?q4K+1U7c9cuuf4kM=3D?=
+X-OriginatorOrg: virtuozzo.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 61a93ece-0119-44b9-df09-08df244e97e8
+X-MS-Exchange-CrossTenant-AuthSource: VI0PR08MB10656.eurprd08.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Oct 2026 08:40:08.5659 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: PPNVMui46K1GDrJ5Cno6zLv3P+kJ9bhmN2DNp8y+lbpz3yDsZKfdcWGp6DXPerBsoNJ2BUKB9yaiY0Knb73HxlFcb1lUvIS0xXShABM1TUs=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB3PR08MB9058
+Received-SPF: pass client-ip=2a01:111:f403:c201::6;
+ envelope-from=andrey.drobyshev@virtuozzo.com;
+ helo=AM0PR02CU008.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -152,47 +154,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Mark Burton <mburton@qti.qualcomm.com>
+A device may take over a resource from the source in post_load(), e.g.
+vhost-vsock acquires the device ownership on a CPR target.  If the
+incoming migration fails afterwards, there's currently no way for the
+device to give that resource back before the failure is published, i.e.
+before the source is told about it over the return path and resumes, or
+the management sees the MIGRATION event on the target and resumes the
+source, or the target exits.
 
-Dirty-page logging handles a RAM write fault by marking the page dirty,
-restoring write permission, and retrying the guest instruction.
+Add a migration event for that, sent to the migration notifiers from
+the failure path of process_incoming_migration_co() before the failure
+is published.
 
-The handler also retried when the resolved RAM region had no dirty-log
-client.  This path neither restores permission nor advances the PC, so
-the instruction can repeatedly exit to QEMU.
-
-Retry only after marking the page dirty and restoring write permission.
-Otherwise, use the existing emulation path to complete the access and
-advance the guest PC.
-
-Cc: qemu-stable@nongnu.org
-Fixes: 58bc47fd1c ("target/arm/hvf: Implement dirty page tracking")
-Signed-off-by: Mark Burton <mburton@qti.qualcomm.com>
-[PMD: Reworded description]
-Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 ---
- target/arm/hvf/hvf.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ include/migration/misc.h |  5 +++++
+ migration/migration.c    | 10 ++++++++++
+ 2 files changed, 15 insertions(+)
 
-diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
-index b00a7e1a845..b6a2dba71bb 100644
---- a/target/arm/hvf/hvf.c
-+++ b/target/arm/hvf/hvf.c
-@@ -2427,10 +2427,10 @@ static int hvf_handle_exception(CPUState *cpu, hv_vcpu_exit_exception_t *excp)
-                 if (memory_region_get_dirty_log_mask(mr)) {
-                     memory_region_set_dirty(mr, xlat, page_size);
-                     hvf_unprotect_dirty_range(ipa_page, page_size);
--                }
+diff --git a/include/migration/misc.h b/include/migration/misc.h
+index 019717f4cda..86cc7eefd66 100644
+--- a/include/migration/misc.h
++++ b/include/migration/misc.h
+@@ -65,12 +65,17 @@ bool migration_thread_is_self(void);
+  *    - MIG_EVENT_SETUP [-> MIG_EVENT_POSTCOPY_START] -> MIG_EVENT_DONE
+  *    - MIG_EVENT_SETUP [-> MIG_EVENT_POSTCOPY_START] -> MIG_EVENT_FAILED
+  *    - MIG_EVENT_FAILED
++ *
++ * MIG_EVENT_INCOMING_FAILED is currently the only event sent on the
++ * incoming side, when the incoming migration fails and before the failure
++ * is published.
+  */
+ typedef enum MigrationEventType {
+     MIG_EVENT_SETUP,
+     MIG_EVENT_POSTCOPY_START,
+     MIG_EVENT_DONE,
+     MIG_EVENT_FAILED,
++    MIG_EVENT_INCOMING_FAILED,
+     MIG_EVENT_MAX
+ } MigrationEventType;
  
--                /* Retry with page writes enabled. */
--                break;
-+                    /* Retry with page writes enabled. */
-+                    break;
-+                }
-             }
-         }
+diff --git a/migration/migration.c b/migration/migration.c
+index fab7949fe11..82a8a252289 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -815,6 +815,16 @@ process_incoming_migration_co(void *opaque)
+     goto out;
  
+ fail:
++    /*
++     * Allow the devices which have registered their callbacks for
++     * migration target failure to undo the changes they may have
++     * done in post_load().
++     *
++     * Do that before the failure is published in any way: the MIGRATION
++     * event emitted by migrate_set_state() below, the return path (if
++     * present) in migration_incoming_state_destroy(), or the exit().
++     */
++    migration_call_notifiers(MIG_EVENT_INCOMING_FAILED, NULL);
+     migrate_set_state(&mis->state, MIGRATION_STATUS_ACTIVE,
+                       MIGRATION_STATUS_FAILED);
+     migrate_error_propagate(s, local_err);
+
 -- 
-2.55.0
+2.47.1
 
 
