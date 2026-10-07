@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0647ACA5FF1
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 11:54:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4962ECA5FFC
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 11:55:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xEQDd-0000Ql-3d; Wed, 07 Oct 2026 07:53:57 -0400
+	id 1xEQDu-0000cr-QF; Wed, 07 Oct 2026 07:54:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xEQDV-0000Ej-H8
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 07:53:52 -0400
+ id 1xEQDc-0000QT-Tc
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 07:53:56 -0400
 Received: from mail-dl1-x1231.google.com ([2607:f8b0:4864:20::1231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xEQDU-0007zu-0g
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 07:53:49 -0400
+ id 1xEQDa-00080S-Nu
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 07:53:56 -0400
 Received: by mail-dl1-x1231.google.com with SMTP id
- a92af1059eb24-15756f82e8aso1130837c88.1
- for <qemu-devel@nongnu.org>; Wed, 07 Oct 2026 04:53:47 -0700 (PDT)
+ a92af1059eb24-14fd9dafb0dso1437374c88.0
+ for <qemu-devel@nongnu.org>; Wed, 07 Oct 2026 04:53:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1791374026; x=1791978826; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1791374033; x=1791978833; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=3776CLp541OEwyOHu/UC1V9cuWUL7746DEpJsnTYqMk=;
- b=XfjUw1ENz/bqATs7+ggLntpdHtaCEUQ5hO0MU8D0Oxxao8acCB+ki8CftMx2B8qtPb
- r69sYA2T19vuwxcvqSSBXW7P6JN6U5e6tmCUo4gTEnQaUtq4Qz405odus2J64gILkZft
- meCc5jpdmLjDeV7uf849wKYUsufV7d4JvU0GYy0ifzBwjOdmUDIHit2r0XBjitPkNaF+
- 4ac1AFFXL5NxCmBkc5VK4m+ya4fhXgrIm8vyJMNputodeTmKZdr6+rBSE1TPpTD5D43q
- kcZuH0kTY0q61m8YNZZ2RT7s0yEHrpPkrhHmhgKcr48Jd1sFQaTsFfDa1KLuUCX/n8zP
- TEwA==
+ bh=JXP1wwbglr7bwoFgVgWKmD4MWSpM8h/BGl1nK6lxUug=;
+ b=VaTd4jn5XwjKKtnSMujrh+bFwlLGeYA/O5K+iUaQlvmUNphVGIiOBSjTP5g+VyXTwH
+ LxN4iEWMSAlKBgtXK+3HR/fF3020Qq8YZjTxZOggPGKOBeW197DhX5hQG/iWlJi797Q1
+ OO/0eorH6HuOma7/pSqIQoAm2HDQ07XD6eUyPX864v03st5oe+JeXEp4kBuVoDBMxKLZ
+ LJfYsExBkMtdlTtJikWY0ILkJ76zstB3UPyX73/GqE4F48pOORdbRFR50AbOlgh1/IBp
+ 8F4Oo36sbji3ljpFxj0IcmpVIqGgJTrf0aEMX8OqPsPHPVeNhpUmJ0Xc1f85SQy5oPK6
+ 2nJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791374026; x=1791978826;
+ d=1e100.net; s=20260707; t=1791374033; x=1791978833;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=3776CLp541OEwyOHu/UC1V9cuWUL7746DEpJsnTYqMk=;
- b=DS3mjweMsORROKWeVHgFJnx7XOW32aLV6DI59j4S+jyTImA9YRAnohT7/83p4kfjS/
- NNW7c7hU1b8SRODGVykEkxPkf4XqX47ryS0yQSp/ig2MmUESUfkvTysRL1CtFxkFsF9/
- xrCnnoy/gdBX0OO2hpyiSR7UJ54SblcRqvmokC6bd241oyyXJw6H0LdD7E2D28QiXsVP
- 46blM3WWHM1EbRHWfRHbBcePFpzUL9gaMXyuGU6jsn28Z5OoOuDeTZiDWJ6iMUT9reEc
- /LNucYKcvOAbwVzPzQkVo967beB05jySSgGU86xDUe70lcnmE8ipcLzX53qDGkmQwlSG
- eWJA==
-X-Gm-Message-State: AFuF++nYwZ1Jq2ND55Vr4I0+3s7j8rGFBMkle3xVEGgY7tmxdAFmFs4X
- SNmNcztXIW3oYpyAT0BQGpLyyTid1uwabJnUS6ECXt6Vj7WL3csrF51+6ZXi6zhg
-X-Gm-Gg: AYBFou1UZpQrYsiXU/9oszhQ0DOMkR38oJUFpQSROYr3GGSCpbuKtZ7mPi6DTIhnEsq
- xHPezk3729g18pSFvtEPsu0cw4tqi9BzYa08q3W0d290IEt7RLF8nJfedtcp028AHEOa1zFlUai
- 2Leb/gFPlVooiDOilo9h7xGvZB19HofyYYku4dKge5k6c9b6LOkL6f3dmfNzhD4uOKTOlkEY8Jb
- 8mK48lbaDlPUPBAVu62ecVBOMLcIJY0A6ZEgWaTLAeuuOu3MmQy/iNQ194DJYC/XZWN1ocmSepm
- ykRhVSWleObFXyZJfF5Je+jkZfGXiG7r6ZuW72A/vs0R2qb333MVnvj1cl4HZseTrUuX/c/qUcF
- hi06D7yeuPrnLyHZSRux0b3vX1DPLI00AheXGJhAlGv2n++N0S06K2um994honG7+41etDFqbe6
- iHO5OQCRKG5/n9TwmJCRID1rEkQa6oQcHO7cQMT2TsRl0O9T4pyoQwncmKrLjoD5UZcGB0I5lUA
- uV7FUb42FHAqBf+s6U=
-X-Received: by 2002:a05:7022:439b:b0:14a:a6dc:9cbf with SMTP id
- a92af1059eb24-16205044165mr2803386c88.4.1791374026296; 
- Wed, 07 Oct 2026 04:53:46 -0700 (PDT)
+ bh=JXP1wwbglr7bwoFgVgWKmD4MWSpM8h/BGl1nK6lxUug=;
+ b=jMFbsKEbclE3BnGE8BsIh10mA0cKW7HwOgOLKrZToF+9ar+IiWmxuIwFSV4eS91cgt
+ c5uncpzYgpeULcREyAVzcj5To/0oD7A8uzLamdjKUucbQZoyWRRfhMfgu2d7yktXB4qp
+ Bs5wj9p0W6xcBOM6qtxhuPmOwGBAFD2RL31eBbh4mWSv1Sz5RMJnskp4LMH4hsUqJqAl
+ jcyt6p1s994QmwqCpvGWl/lyMOGAB1s3pFDx0BTMc8L+meBH+B2S9e9+GMcWwpXqM3M9
+ xg+68/5y/NIFVvHdTZPvfzCwEF0Z6DcwlNEAiVhqlgXNTMQzG6Kp6vcYwdViE6/nzr0x
+ bWPg==
+X-Gm-Message-State: AFuF++mWt8lpMqqHrzaPEcZyxPZ16Hv7VBoKoreBTeEOznvCYNngrBAD
+ MWuGytha2qP8qXY9ngM4oy7DVNZlnUmt/TzT8co5kMpo0APD0APtmB7HxqV670sH
+X-Gm-Gg: AYBFou19NiJq+YN02a4kuuR81q+2AaIViHBMqDfR+N8n7fb2cr5sfHxdaUGP6jXV3jS
+ gwrIFcpt/ye15mlDMjsziMThMjKu7PTV5u54frgS+kJ60GazC8nD193L7925SxHjLEswGAqvI6p
+ POfbkSTDU2xisiGHpA/1prvcw5g7BPgXAgtj46hgpCrEVKlWeseCNH84+4MPv6XR332tN0cQMNJ
+ EyKVrqcXp9JpeIXGY/rLYgr+nOfUyDdlabmMKZstIptXvcVFoL9+t5QPKcBk/nZvHtbw8GXZmO3
+ c33VybnK5igAMS/kk30GjYjPCmAl30L2ZTxBgtSXBrjoJd/4+JZ+vaYy50yC5XocksW1oqUiAUL
+ 5hZaOhuTKYDzTSTydkYwiBzcIaQMSJYncvjI7zMI4M9UXJZYbyFfoa9DfH0OT583USj4/+uKewW
+ KDCimShaM8vtt5TNUIqkvU5+RZNUqNrxv40O0rhGP9IOCSkMkOD6+DLsR92OwYWiy/BpbOWlJVM
+ 5tnL3WvicYw975fDw==
+X-Received: by 2002:a05:7022:69a9:b0:143:2984:6517 with SMTP id
+ a92af1059eb24-1620966b83amr2987038c88.38.1791374033000; 
+ Wed, 07 Oct 2026 04:53:53 -0700 (PDT)
 Received: from DESKTOP-Q716RM7 ([103.94.185.75])
  by smtp.googlemail.com with ESMTPSA id
- a92af1059eb24-1616980c3b7sm6429520c88.16.2026.10.07.04.53.40
+ a92af1059eb24-1616980c3b7sm6429520c88.16.2026.10.07.04.53.47
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 07 Oct 2026 04:53:45 -0700 (PDT)
+ Wed, 07 Oct 2026 04:53:52 -0700 (PDT)
 From: Yonggang Luo <luoyonggang@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
@@ -85,9 +85,10 @@ Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Steven Lee <steven_lee@aspeedtech.com>, Alexander Bulekov <alxndr@bu.edu>,
  Darren Kenny <darren.kenny@oracle.com>
-Subject: [PATCH 6/8] meson: load all target .mak files into target_mak_all
-Date: Wed,  7 Oct 2026 19:48:03 +0800
-Message-ID: <20261007115253.328-7-luoyonggang@gmail.com>
+Subject: [PATCH 7/8] target-info: Replace handwritten architecture checks with
+ generated code
+Date: Wed,  7 Oct 2026 19:48:04 +0800
+Message-ID: <20261007115253.328-8-luoyonggang@gmail.com>
 X-Mailer: git-send-email 2.55.0.windows.3
 In-Reply-To: <20261007115253.328-1-luoyonggang@gmail.com>
 References: <20261007115253.328-1-luoyonggang@gmail.com>
@@ -101,7 +102,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,66 +118,316 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Load every configs/targets/*.mak once into target_mak_all, keyed by
-target_dirs_all, with TARGET_BASE_ARCH defaulted to TARGET_ARCH. The
-per-target loop now takes its config from target_mak_all instead of
-loading the file again.
+Add scripts/gen-target-info.py to generate declarations and definitions
+for exact-target and base-family architecture checks from system target
+names and their TARGET_BASE_ARCH values.
 
-target_dirs is still the --target-list filtered subset and is the only
-list built. target_mak_all is for later use by code that needs target
-properties independent of --target-list, such as generating
-TargetInfo helpers for every target.
+Provide target_is_<arch>() and target_is_base_<family>() checks for an
+explicit TargetInfo. Retain target_<arch>() and target_base_<family>()
+as wrappers using the current target.
+
+Wire the generator into Meson using all system target definitions so
+the available checks do not depend on --target-list.
 
 Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
 ---
- meson.build | 20 ++++++++++++++++----
- 1 file changed, 16 insertions(+), 4 deletions(-)
+ include/qemu/target-info.h | 76 ++++-------------------------
+ meson.build                | 16 ++++++
+ scripts/gen-target-info.py | 99 ++++++++++++++++++++++++++++++++++++++
+ target-info.c              | 62 +-----------------------
+ 4 files changed, 125 insertions(+), 128 deletions(-)
+ create mode 100644 scripts/gen-target-info.py
 
+diff --git a/include/qemu/target-info.h b/include/qemu/target-info.h
+index d1928cecf84..88aa80e918c 100644
+--- a/include/qemu/target-info.h
++++ b/include/qemu/target-info.h
+@@ -51,74 +51,16 @@ const char *target_cpu_type(void);
+  */
+ bool target_big_endian(void);
+ 
+-/**
+- * target_base_arm:
+- *
+- * Returns whether the target architecture is ARM or Aarch64.
+- */
+-bool target_base_arm(void);
+-
+-/**
+- * target_arm:
+- *
+- * Returns whether the target architecture is ARM (32-bit, not Aarch64).
+- */
+-bool target_arm(void);
+-
+-/**
+- * target_aarch64:
+- *
+- * Returns whether the target architecture is Aarch64.
+- */
+-bool target_aarch64(void);
+-
+-/**
+- * target_m68k:
+- *
+- * Returns whether the target architecture is M68K.
+- */
+-bool target_m68k(void);
+-
+-/**
+- * target_or1k:
+- *
+- * Returns whether the target architecture is OpenRISC 1000.
+- */
+-bool target_or1k(void);
+-
+-/**
+- * target_base_ppc:
+- *
+- * Returns whether the target architecture is PowerPC 32-bit or 64-bit.
+- */
+-bool target_base_ppc(void);
+-
+-/**
+- * target_ppc:
+- *
+- * Returns whether the target architecture is PowerPC 32-bit.
+- */
+-bool target_ppc(void);
+-
+-/**
+- * target_ppc64:
+- *
+- * Returns whether the target architecture is PowerPC 64-bit.
+- */
+-bool target_ppc64(void);
+-
+-/**
+- * target_s390x:
+- *
+- * Returns whether the target architecture is S390x.
+- */
+-bool target_s390x(void);
+-
+-/**
+- * target_riscv64:
++/*
++ * Exact-target and base-family helpers, generated by
++ * scripts/gen-target-info.py from the TARGET_BASE_ARCH of every
++ * system target:
+  *
+- * Returns whether the target architecture is riscv64
++ *   bool target_is_<arch>(const TargetInfo *ti);
++ *   bool target_<arch>(void);
++ *   bool target_is_base_<family>(const TargetInfo *ti);
++ *   bool target_base_<family>(void);
+  */
+-bool target_riscv64(void);
++#include "target-info-gen.h"
+ 
+ #endif
 diff --git a/meson.build b/meson.build
-index fd7a4f68389..d070dafe2a9 100644
+index d070dafe2a9..8799b3f6d51 100644
 --- a/meson.build
 +++ b/meson.build
-@@ -3239,6 +3239,21 @@ config_target_mak = {}
- config_base_arch_mak = {}
- config_target_info = {}
+@@ -3581,6 +3581,22 @@ foreach d : hx_headers
+ endforeach
+ genh += hxdep
  
-+# Load every configs/targets/*.mak unconditionally; target_dirs is the
-+# --target-list filtered subset of target_dirs_all.
-+target_dirs_all = run_command(python, '-c',
-+  'import os, sys; print(" ".join(sorted(f[:-4] for f in os.listdir(sys.argv[1]) if f.endswith(".mak"))))',
-+  meson.current_source_dir() / 'configs/targets',
-+  check: true).stdout().split()
-+target_mak_all = {}
-+foreach target : target_dirs_all
-+  mak = keyval.load('configs/targets' / target + '.mak')
-+  if 'TARGET_BASE_ARCH' not in mak
-+    mak += {'TARGET_BASE_ARCH': mak['TARGET_ARCH']}
++# Use target_mak_all, not target_dirs, so the generated helpers do not
++# depend on --target-list.
++target_info_gen_args = []
++foreach target, mak : target_mak_all
++  if target.endswith('-softmmu')
++    target_info_gen_args += ['--target',
++      target.split('-')[0] + '=' + mak['TARGET_BASE_ARCH']]
 +  endif
-+  target_mak_all += {target: mak}
 +endforeach
++target_info_gen = custom_target('target-info-gen',
++                      output: ['target-info-gen.h', 'target-info-gen.c.inc'],
++                      depend_files: files('scripts/qapi/common.py'),
++                      command: [python, files('scripts/gen-target-info.py'),
++                                target_info_gen_args, '@OUTDIR@'])
++genh += target_info_gen
 +
- disassemblers = {
-   'alpha' : ['CONFIG_ALPHA_DIS'],
-   'avr' : ['CONFIG_AVR_DIS'],
-@@ -3318,7 +3333,7 @@ foreach target : target_dirs
-     }
-   endif
+ ###############
+ # Trace files #
+ ###############
+diff --git a/scripts/gen-target-info.py b/scripts/gen-target-info.py
+new file mode 100644
+index 00000000000..a4c3474140f
+--- /dev/null
++++ b/scripts/gen-target-info.py
+@@ -0,0 +1,99 @@
++#!/usr/bin/env python3
++# SPDX-License-Identifier: GPL-2.0-or-later
++"""Generate TargetInfo target helpers and abstract machine parents.
++
++meson passes every system target with its TARGET_BASE_ARCH, independent
++of --target-list, as --target <name>=<base>.  <name> is a SysEmuTarget
++member; a target without one fails to compile.
++
++For every target <arch> and every base family <family>:
++    bool target_is_<arch>(const TargetInfo *ti);
++    bool target_<arch>(void);
++    bool target_is_base_<family>(const TargetInfo *ti);
++    bool target_base_<family>(void);
++    TYPE_TARGET_<ARCH>_MACHINE        "target-<arch>-machine"
++    TYPE_TARGET_BASE_<FAMILY>_MACHINE "target-base-<family>-machine"
++
++Machine parents are abstract and only registered when available.
++<arch> parents inherit their <family> parent, which inherits TYPE_MACHINE.
++"""
++
++import argparse
++import os
++import re
++import sys
++from typing import Dict, List
++
++sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
++from qapi.common import c_enum_const, c_name
++
++HEADER = "/* Generated by scripts/gen-target-info.py. Do not edit. */"
++C_IDENT = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*$")
++
++
++def parse_targets(pairs: List[str]) -> Dict[str, List[str]]:
++    """Return {family: [target, ...]}, both sorted."""
++    seen = set()
++    families: Dict[str, List[str]] = {}
++    for pair in pairs:
++        name, _, family = pair.partition("=")
++        if not name or not C_IDENT.match(family) or name in seen:
++            sys.exit(f"{sys.argv[0]}: bad or duplicate --target '{pair}'")
++        seen.add(name)
++        families.setdefault(family, []).append(name)
++    return {f: sorted(t) for f, t in sorted(families.items())}
++
++
++def write(path: str, lines: List[str]) -> None:
++    with open(path, "w", encoding="utf-8", newline="\n") as fh:
++        fh.write("\n".join([HEADER, ""] + lines + [""]))
++
++
++def predicate(fn: str, cases: List[str]) -> List[str]:
++    body = (["    switch (ti->target_arch) {"]
++            + [f"    case {c}:" for c in cases]
++            + ["        return true;", "    default:",
++               "        return false;", "    }"])
++    return [f"bool target_is_{fn}(const TargetInfo *ti)", "{", *body, "}",
++            "", f"bool target_{fn}(void)", "{",
++            f"    return target_is_{fn}(target_info());", "}", ""]
++
++
++def main() -> None:
++    parser = argparse.ArgumentParser(description=__doc__.split("\n")[0])
++    parser.add_argument("--target", action="append", required=True,
++                        metavar="NAME=TARGET_BASE_ARCH")
++    parser.add_argument("outdir")
++    args = parser.parse_args()
++    families = parse_targets(args.target)
++
++    # (helper suffix, QOM name, enum constants, parent macro or None)
++    entries = []
++    for family, targets in families.items():
++        consts = [c_enum_const("SysEmuTarget", t) for t in targets]
++        entries.append((f"base_{family}", f"target-base-{family}",
++                        consts, None))
++    for family, targets in families.items():
++        for t in targets:
++            entries.append((c_name(t, False), f"target-{t}",
++                            [c_enum_const("SysEmuTarget", t)],
++                            f"TYPE_TARGET_BASE_{family.upper()}_MACHINE"))
++
++    def macro(fn: str) -> str:
++        return f"TYPE_TARGET_{fn.upper()}_MACHINE"
++
++    header = ["#ifndef TARGET_INFO_GEN_H", "#define TARGET_INFO_GEN_H", "",
++              "typedef struct TargetInfo TargetInfo;", ""]
++    for fn, _, _, _ in entries:
++        header += [f"bool target_is_{fn}(const TargetInfo *ti);",
++                   f"bool target_{fn}(void);", ""]
++    write(os.path.join(args.outdir, "target-info-gen.h"),
++          header + ["#endif"])
++
++    source = []
++    for fn, _, consts, _ in entries:
++        source += predicate(fn, consts)
++    write(os.path.join(args.outdir, "target-info-gen.c.inc"), source)
++
++if __name__ == "__main__":
++    main()
+diff --git a/target-info.c b/target-info.c
+index 8ccb333e365..fec8ee7c08e 100644
+--- a/target-info.c
++++ b/target-info.c
+@@ -101,64 +101,4 @@ bool target_big_endian(void)
+     return target_endian_mode() == ENDIAN_MODE_BIG;
+ }
  
--  config_target += keyval.load('configs/targets' / target + '.mak')
-+  config_target += target_mak_all[target]
- 
-   target_kconfig = []
-   foreach sym: accelerators
-@@ -3348,9 +3363,6 @@ foreach target : target_dirs
- 
-   # Add default keys
-   config_target += { 'TARGET_' + config_target['TARGET_ARCH'].to_upper(): 'y' }
--  if 'TARGET_BASE_ARCH' not in config_target
--    config_target += {'TARGET_BASE_ARCH': config_target['TARGET_ARCH']}
--  endif
-   if 'TARGET_ABI_DIR' not in config_target
-     config_target += {'TARGET_ABI_DIR': config_target['TARGET_ARCH']}
-   endif
+-bool target_base_arm(void)
+-{
+-    switch (target_arch()) {
+-    case SYS_EMU_TARGET_ARM:
+-    case SYS_EMU_TARGET_AARCH64:
+-        return true;
+-    default:
+-        return false;
+-    }
+-}
+-
+-bool target_arm(void)
+-{
+-    return target_arch() == SYS_EMU_TARGET_ARM;
+-}
+-
+-bool target_aarch64(void)
+-{
+-    return target_arch() == SYS_EMU_TARGET_AARCH64;
+-}
+-
+-bool target_m68k(void)
+-{
+-    return target_arch() == SYS_EMU_TARGET_M68K;
+-}
+-
+-bool target_or1k(void)
+-{
+-    return target_arch() == SYS_EMU_TARGET_OR1K;
+-}
+-
+-bool target_base_ppc(void)
+-{
+-    switch (target_arch()) {
+-    case SYS_EMU_TARGET_PPC:
+-    case SYS_EMU_TARGET_PPC64:
+-        return true;
+-    default:
+-        return false;
+-    }
+-}
+-
+-bool target_ppc(void)
+-{
+-    return target_arch() == SYS_EMU_TARGET_PPC;
+-}
+-
+-bool target_ppc64(void)
+-{
+-    return target_arch() == SYS_EMU_TARGET_PPC64;
+-}
+-
+-bool target_s390x(void)
+-{
+-    return target_arch() == SYS_EMU_TARGET_S390X;
+-}
+-
+-bool target_riscv64(void)
+-{
+-    return target_arch() == SYS_EMU_TARGET_RISCV64;
+-}
++#include "target-info-gen.c.inc"
 -- 
 2.55.0.windows.3
 
