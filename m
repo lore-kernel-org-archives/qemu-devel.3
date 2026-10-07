@@ -4,142 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFFDBCA5FFF
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 09:07:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95AA6CA5FFF
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 09:08:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xENbz-0001lT-BJ; Wed, 07 Oct 2026 05:06:55 -0400
+	id 1xENLE-0004FP-0h; Wed, 07 Oct 2026 04:49:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xEMQp-0000P3-N3
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 03:51:20 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xEMQl-00028S-Mf
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 03:51:19 -0400
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6977jW732481348
- for <qemu-devel@nongnu.org>; Wed, 7 Oct 2026 07:51:13 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- ZQtqoVX/rTP4bKM66IQAHSm/v/EqNRjKbhfiVFETvRg=; b=R/fgwoGT9rbTmiBs
- Tjh7zX5tCUSINVddJFrOt9GW1WhDm+lz1z7Hgz9/bDMCQ/HqleYpOrbe8Lzp9el9
- gGRphch0bXaiiu1wwiwukLNgY9EdG3JmI+uugbAzFY23EDzU6sG3H+VxWAU8OuG9
- KJSCf8g7StK/UV8D8gi6xBZi9xbp7ZdGkljDybS4egIGyz+Pxo5wzshGcw4Ge1tU
- 1LGstr6DYByULdSvFTVTeVUKE9iPifTuOfL+VG//i6JwLAgkDpmh27KmhNLHFPfV
- 4t08gSusnFXTMNRmr1rFkPCpwc4k6M6etVtKfVsTZ7Ks1NV6EVHJZSnxrnFXm86r
- jNWC3g==
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h5c6u14qv-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 07 Oct 2026 07:51:13 +0000 (GMT)
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-93cc0b31ecaso806746385a.1
- for <qemu-devel@nongnu.org>; Wed, 07 Oct 2026 00:51:13 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <narimansayed28@gmail.com>)
+ id 1xEJt1-0001cw-72
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 01:08:32 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <narimansayed28@gmail.com>)
+ id 1xEJsu-0005KP-Fj
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 01:08:13 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-4a16c399641so14043025e9.2
+ for <qemu-devel@nongnu.org>; Tue, 06 Oct 2026 22:08:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1791359472; x=1791964272; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=ZQtqoVX/rTP4bKM66IQAHSm/v/EqNRjKbhfiVFETvRg=;
- b=jIU22Ir5OALjSfg34qDqgISRO8iF9grJWi3WsCHfnpWRDtKzRUYiI2d1QpAKqLWzuf
- nEKaaPHdzRvYdnf/qmIQ5k6i9PPiLUnlc9I6DTxbodrRMYo4Jl45AJRObwgiTTQK8t8X
- wvU6yYSJwDyoXDgdgz/8SAc2YQyJzlrQnBq5NnNFck6BlqUDvG/xq8mECDm3xDr9IK+8
- 859sNnSkbdYubukSv5buTM5jc9AAT0nZVf8Or4Vi5ihp3YvAaPxGYjqAEsLNVog1dDhI
- T8jSqUjO6Yt2EPc7F6YHPRjkJLkolNWjU+diSca8e0Znk6/3uFZUfG16cUha4B4aL7JG
- 2PTQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791359472; x=1791964272;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=gmail.com; s=20251104; t=1791349687; x=1791954487; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=ZQtqoVX/rTP4bKM66IQAHSm/v/EqNRjKbhfiVFETvRg=;
- b=r0zW6E36um6HoaQoW9L4oX5uvtyk4RBmcgdDqBm96KhQ8vVpVYYr9YAfH7vBW5BtmL
- itSxyNjYAAdo/D3SCHohP5u1BEd2uSgxxleXF/OHLg1F0uWk9tpf3uQRbNA5vzzKl2B3
- KFuRZcyNAtIJwRj+FUbTySNRCLC4ZQ9Bbz5DftQOemGXmtRIw9eeUBynAXJDDfHawxUI
- +b4bKng9p1sOVJqj2wLDNisF2+xFTyUjUhVGkB6QONLCWiSsm5CDZsHM1zGwFqgk2vrO
- CMGqx1wIt3ZHnJBS15DzJ2JyYnja18xmUR95cI6Jo+ABH5Ox2d0L7g3AXks77ptUUR2c
- ytIw==
-X-Forwarded-Encrypted: i=1;
- AKwUvBwHKQNCbb2tuLDQk+c5Iid38+gkstqgOaeYds1A6jeYRocZJGCh4zkUcMXUW1pT2bNEFt+3/Dbk7kET@nongnu.org
-X-Gm-Message-State: AFuF++ldHtgqwELel+PeV5dTILzEBjLqUEuuEaMouuronknjzX3WGMMY
- 6Bbq8LMML3VLx2gdikHRJrNI2HiOZXzjTDsXnKDo8g343vzduSCvMzO12YAQVY0SWPQAFlj3b36
- yZOqruPlW1el2IaIhmnps+ILphWhE4inVm6RZ+bhIDPyxip43og7MtLUxpA==
-X-Gm-Gg: AYBFou1+zP7GIYVN3a41JsQk/W+54PkpEsbPC2QRBaDyaDKNorzuQiKjUDbcYOV4Bm0
- oLYb+bgKgSj+RoodF/tf5MENBlzeDhu21dbPsL8vxvV7Xh6k7rTgyOi/QQv7QPyZKqWmCScwDTg
- 9A4Zz2qho4pudhvRx4AZ27wEytj3z/rYj6NNb5iVlN4Rbris1T8LrdAw5EFNTaIj0pCLV3UlQI4
- C+49ehwhPfrDT5qxMjgw7yMVjK1BxczCMirUhlItwejIVFVPi5u0avNiCYMn5nyAPMo5vFUsbxX
- d/hLe72BiiGisbYAN8RYdrvA/gncHi3aSRRLWrmnENSUfhlkCodE4BMk8GSACEwW/UNOAP/C72B
- aDljCN/RVFBTbcKSISmLmb/fS5f0J8Fvi1Q==
-X-Received: by 2002:a05:620a:6f0e:b0:939:de6c:cb45 with SMTP id
- af79cd13be357-93e9b7e3fa9mr255015685a.47.1791359472440; 
- Wed, 07 Oct 2026 00:51:12 -0700 (PDT)
-X-Received: by 2002:a05:620a:6f0e:b0:939:de6c:cb45 with SMTP id
- af79cd13be357-93e9b7e3fa9mr255012985a.47.1791359471874; 
- Wed, 07 Oct 2026 00:51:11 -0700 (PDT)
-Received: from [192.168.69.210] (pmd666.hd.free.fr. [88.187.86.199])
+ bh=gmuD2D7dO3jWUTvhm2jqXEfMN+iA6krFRyTGqZlQEkQ=;
+ b=X0JIbb6a1QLb5ITT6tiBmWtTxkxlyjUO0R0qE3AturSku6Q6ls/PkApi/yzeIBY/TX
+ MAKgQCWpg/nCSgkhgQaSeBYf4UW2xMzglsMsNYJ6gE+m8w5VllzvFd2oHpsW/tSB49nh
+ +zlH1BE7nAthg89WlP8lPe/PW/ys7tPWwUz9iQjZnjobk7datP0PWI2Q5NIYoPsAj/0y
+ jGaT4aSVbbquhQWVNqY/8567ZrGq4UvTYUrqH48xYtlZ2wvc0Cx5kcMTcE2Gp6sv/cDE
+ tK/FF5uq/ySj833CvtxJC25n362H1bS8j8hJQhFTuRUluCDpwuDP7S0KW7C9mgb4yUE0
+ iE6Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1791349687; x=1791954487;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=gmuD2D7dO3jWUTvhm2jqXEfMN+iA6krFRyTGqZlQEkQ=;
+ b=JNk1ioh8yI5yi15pqcSEnLSh12b3TCtM/pIO+p+F//5NuZ0Ume4EQYP/flu7u/MCbE
+ i9gMQAP0CHCtvrUrC9dG6GqjkEMOJuNOZGOGNrCrHdp02c93bJ0j+MC737jshK6GGtYB
+ j9UwM0A/AhYTHoCvuUGyJTtIxsCCcQEqYBi4ctpPzjlFhJjDAIYlYivGiVr7mndLUqqz
+ 6W9BFbPIwWKyVNT4LuaMrHL2ROaqXcrz2j5UlwSDcR0RQEEH7gcpw3CuWrOCugkqImSs
+ ZhWmRATvIgXfpVqhQKS3msak78z7p0iqKHKWABx2lCYKDzNXg/hXE/2+ul8PfXQRO9Wl
+ biEA==
+X-Gm-Message-State: AFuF++lVtedEc4gEndxk1gmNEHXZiw6eQNaLvOqCggysCHEH3SJ4jBEz
+ q2p/b51JpmqPkn4OL90WdRH+ziD11gkJ4uusuaXcivoaaMwQGCvah7RUHnvX/9T0lGQ=
+X-Gm-Gg: AYBFou0LbbbuKuJq/y2FRxIUPhelXbeiikuo4I5j+gSCgWkZMveEyeF20Zs49LqV3ib
+ R2DQkT2ZQR5Y0pbQTtmRL41kBB3PW3z+sADANTv/j3+c+HEoM/KX8VJYQNwtwZxHahgKG+yBGwu
+ Kq5+5Lh4DKQOr1vJlfmMyVA/rPf0NhTiZuvn/UUCEF9w/JxXUOKpiHI3E0unJt+0lG/1HyUsngj
+ B9RNDxZS8gHyVXbxNgCmlour2PXbkp7Ua8Ri/CECZFozv4vl78WZGn6KD6jLq3L1/WvaryyNPEN
+ Rlhi+1ObanGUSOrGD0GZosLCI0Vlq9AtqXyBQqa7ctwTqydSFz5HbTczUCDDlyytUHGLqMx07ky
+ 1OT2hDQxUIhqYos0+kRbyYcGpizb8TBxrosEeEiXUc/lvqWYs1IncotiOJ4yzy9JqtuzwjCIUJ7
+ B/XkOCsQ37jbKhlzhVdqYUgN+I9ccsB0JPm3ZfGWwd9ya+ZW/EhnMjInmUAhZuXmjfD//2VMjFo
+ IHidRf6XPBPpTfSuF+HJzKx
+X-Received: by 2002:a05:600c:83c4:b0:4a1:7cf8:5433 with SMTP id
+ 5b1f17b1804b1-4a1800d3d44mr12300545e9.3.1791349686951; 
+ Tue, 06 Oct 2026 22:08:06 -0700 (PDT)
+Received: from DESKTOP-2SK3BJA.localdomain ([197.49.190.197])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48c75b4e3b2sm1541459f8f.57.2026.10.07.00.51.10
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 07 Oct 2026 00:51:11 -0700 (PDT)
-Message-ID: <b0bcfbaf-e49a-4005-b40d-4e64678031d5@oss.qualcomm.com>
-Date: Wed, 7 Oct 2026 09:51:10 +0200
+ 5b1f17b1804b1-4a17f795f29sm33359315e9.11.2026.10.06.22.08.05
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 06 Oct 2026 22:08:06 -0700 (PDT)
+From: Nariman Sayed <narimansayed28@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: Jason Wang <jasowangio@gmail.com>, "Michael S . Tsirkin" <mst@redhat.com>,
+ Nariman Sayed <narimansayed28@gmail.com>,
+ Aniket Sahu <asahu1x@linux.ibm.com>
+Subject: [PATCH v2 3/3] virtio-net: add mtu-from-tap property for automatic
+ MTU detection
+Date: Wed,  7 Oct 2026 08:07:18 +0300
+Message-Id: <20261007050718.926-4-narimansayed28@gmail.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20261007050718.926-1-narimansayed28@gmail.com>
+References: <20260816043451.2547-1-narimansayed28@gmail.com>
+ <20261007050718.926-1-narimansayed28@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/display/apple: Fix obsolete PGDevice function
-Content-Language: en-US
-To: Yundi Xu <yundi.eric.xu@gmail.com>, qemu-devel@nongnu.org,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Cc: Phil Dennis-Jordan <phil@philjordan.eu>, qemu-trivial@nongnu.org,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Dennis Mueller <dmueller@qualcomm.com>, Joelle van Dyne <j@getutm.app>
-References: <1e5b1f1f-1d7f-43cf-8883-0e0ab2ec88ce@gmail.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <1e5b1f1f-1d7f-43cf-8883-0e0ab2ec88ce@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA3MDAzMSBTYWx0ZWRfX9RDcgBO2yaBT
- A9jFALz7Cq3JEmWkp5IsDTnu+eorcvfNmF03+tGXL3Jb5DGzcjtZJnJG9pRxbhjcr+fiyBQkug1
- sjlLKet7BXeqeQPAiNaOh4DYasZ8Wxw=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA3MDAzMSBTYWx0ZWRfX0fDPVO98lZNk
- grskkJnSYtNobckNqtCCEZgtny7a/f6IJIJdHBqKMesjUhQDwYdZjOetjYS65lwwl+to67zPDP4
- D5wM8U8JArOhh3upHke+02elhn5Sul87e5vf1EDZoyoZWWt9CjNwhfbuojmLTrjL45J+iNwZjkz
- TWPT7+S87/HWki+nViRTIkD8wz3aXjelLqTFR7SQ93i+ID9oZVKgONl8xzBYO8hz7ODjpJXG/Dk
- Nn4k4FN1Lpp/D+WS0mXBq9VnqSXV/ffaAUUPyPbDCM6KkZ8FjmkbldMkderZ+3flrS7ppVya2yU
- NBvWZ7UGJXs1eWItsWS/XEIAHIqh9lW83w1TFpIudIeiKYGSdHJsqzsgc+nKvUis2PDD3oQTZ8o
- S7NHSxqO0Q/s0KCOqhYAJjZ+DvNY61KCm/Vl8i9ThtGshdmHK+X3tVFJ1kxd6x485ZlMcjzdb3S
- u5WMgo1gHcfnlYQ1Wng==
-X-Proofpoint-ORIG-GUID: E8BFMqoBNlPOoVWlBuMPm3GO5uc4RZYv
-X-Authority-Analysis: v=2.4 cv=T5EZ3PKQ c=1 sm=1 tr=0 ts=6ac5f9f1 cx=c_pps
- a=HLyN3IcIa5EE8TELMZ618Q==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
- a=NEAV23lmAAAA:8 a=pGLkceISAAAA:8 a=0s5TjalLHGbX2h47szYA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=bTQJ7kPSJx9SKPbeHEYW:22
-X-Proofpoint-GUID: E8BFMqoBNlPOoVWlBuMPm3GO5uc4RZYv
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-10-07_03,2026-10-06_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 phishscore=0 priorityscore=1501 impostorscore=0 malwarescore=0
- clxscore=1015 bulkscore=0 adultscore=0 spamscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2610070031
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=narimansayed28@gmail.com; helo=mail-wm1-x32f.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -156,64 +105,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+Currently, exposing the host tap device's MTU to the guest via
+VIRTIO_NET_F_MTU requires manually specifying host_mtu= on the
+virtio-net-pci device, duplicating the MTU already configured on
+the host's tap interface.
 
-Cc'ing Akihiko and Marc-André.
+Add a new mtu-from-tap boolean property (default off, preserving
+existing behavior). When enabled, the netdev peer's MTU is queried
+via the generic qemu_get_mtu() and used to set net_conf.mtu and
+enable VIRTIO_NET_F_MTU, regardless of the backend's type.
 
-On 5/10/26 22:59, Yundi Xu wrote:
-> PGNewDeviceWithDescriptor is obsolete. Replace with
-> PGCreateDeviceWIthDescriptor.
+This detection must happen in virtio_net_device_realize(), before
+virtio_net_set_config_size() computes the virtio config space
+size from host_features. Performing the detection later (e.g. in
+the get_features_ex() callback, which runs after the NIC and its
+config space are already sized) results in the mtu config field
+falling outside the sized config space, and the guest reading
+back an unmapped garbage value (0xffff) instead of the intended
+MTU.
 
-Joelle did a similar fix, can you compare?
-https://github.com/helixml/qemu-utm/commit/b795d6de88fc52cb6ff061e0e034be51d8e9c474
+Since qemu_new_nic() has not yet been called at this point in
+realize(), the peer is accessed via n->nic_conf.peers.ncs[0]
+(populated during property parsing, before realize() runs, via
+the netdev= property) rather than through n->nic.
 
-> 
-> Signed-off-by: Yundi Xu<yundi.eric.xu@gmail.com>
-> ---
->   hw/display/apple-gfx.m | 17 +++++++++++++++++
->   1 file changed, 17 insertions(+)
-> 
-> diff --git a/hw/display/apple-gfx.m b/hw/display/apple-gfx.m
-> index be0061b9db..e730909c7e 100644
-> --- a/hw/display/apple-gfx.m
-> +++ b/hw/display/apple-gfx.m
-> @@ -767,7 +767,24 @@ bool apple_gfx_common_realize(AppleGFXState *s, 
-> DeviceState *dev,
-> 
->       s->cursor_show = true;
-> 
-> +    /*
-> +     * PGNewDeviceWithDescriptor() was deprecated in macOS 15.2 and 
-> removed
-> +     * in 27.0.
-> +     *
-> +     * It is replaced by PGCreateDeviceWithDescriptor(), which is 
-> available in
-> +     * >=15.2
-> +     */
-> +#if __MAC_OS_X_VERSION_MAX_ALLOWED >= 270000
-> +    s->pgdev = PGCreateDeviceWithDescriptor(desc);
-> +#elif __MAC_OS_X_VERSION_MAX_ALLOWED >= 150200
-> +    if (@available(macOS 15.2, *)) {
-> +        s->pgdev = PGCreateDeviceWithDescriptor(desc);
-> +    } else {
-> +        s->pgdev = PGNewDeviceWithDescriptor(desc);
-> +    }
-> +#else /* (__MAC_OS_X_VERSION_MAX_ALLOWED >= 150200) */
->       s->pgdev = PGNewDeviceWithDescriptor(desc);
-> +#endif /* (__MAC_OS_X_VERSION_MAX_ALLOWED >= 150200) */
-> 
->       disp_desc = apple_gfx_prepare_display_descriptor(s);
->       /*
-> 
-> ---
-> base-commit: f7ada39edacaa5c26b30e98b94017b0b2ccbcf94
-> change-id: 20261001-fix-pgcreatedevicewithdescriptor-3ec303c2500a
-> 
-> Best regards,
-> -- 
-> Yundi Xu<yundi.eric.xu@gmail.com>
-> 
-> 
+Signed-off-by: Nariman Sayed <narimansayed28@gmail.com>
+Tested-by: Aniket Sahu <asahu1x@linux.ibm.com>
+---
+ hw/net/virtio-net.c            | 10 ++++++++++
+ include/hw/virtio/virtio-net.h |  1 +
+ 2 files changed, 11 insertions(+)
+
+diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+index 814b99a43d..89fb3bad10 100644
+--- a/hw/net/virtio-net.c
++++ b/hw/net/virtio-net.c
+@@ -3901,6 +3901,15 @@ static void virtio_net_device_realize(DeviceState *dev, Error **errp)
+         n->host_features |= (1ULL << VIRTIO_NET_F_MTU);
+     }
+ 
++    if (n->net_conf.mtu_from_tap) {
++        NetClientState *peer = n->nic_conf.peers.ncs[0];
++        int mtu = qemu_get_mtu(peer);
++        if (mtu > 0) {
++            n->net_conf.mtu = mtu;
++            n->host_features |= (1ULL << VIRTIO_NET_F_MTU);
++        }
++    }
++
+     if (n->net_conf.duplex_str) {
+         if (strncmp(n->net_conf.duplex_str, "half", 5) == 0) {
+             n->net_conf.duplex = DUPLEX_HALF;
+@@ -4275,6 +4284,7 @@ static const Property virtio_net_properties[] = {
+     DEFINE_PROP_UINT16("tx_queue_size", VirtIONet, net_conf.tx_queue_size,
+                        VIRTIO_NET_TX_QUEUE_DEFAULT_SIZE),
+     DEFINE_PROP_UINT16("host_mtu", VirtIONet, net_conf.mtu, 0),
++    DEFINE_PROP_BOOL("mtu-from-tap", VirtIONet, net_conf.mtu_from_tap, false),
+     DEFINE_PROP_INT32("speed", VirtIONet, net_conf.speed, SPEED_UNKNOWN),
+     DEFINE_PROP_STRING("duplex", VirtIONet, net_conf.duplex_str),
+     DEFINE_PROP_BOOL("failover", VirtIONet, failover, false),
+diff --git a/include/hw/virtio/virtio-net.h b/include/hw/virtio/virtio-net.h
+index 371e376428..11044b6d27 100644
+--- a/include/hw/virtio/virtio-net.h
++++ b/include/hw/virtio/virtio-net.h
+@@ -52,6 +52,7 @@ typedef struct virtio_net_conf
+     uint16_t rx_queue_size;
+     uint16_t tx_queue_size;
+     uint16_t mtu;
++    bool mtu_from_tap;
+     int32_t speed;
+     char *duplex_str;
+     uint8_t duplex;
+-- 
+2.34.1
 
 
