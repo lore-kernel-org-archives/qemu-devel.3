@@ -4,111 +4,145 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AF0DCA5FFC
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 13:24:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AA8ACA5FFC
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 13:26:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xERcW-0000p7-6U; Wed, 07 Oct 2026 09:23:44 -0400
+	id 1xERfH-0001d7-PK; Wed, 07 Oct 2026 09:26:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bmeng.cn@gmail.com>)
- id 1xERcU-0000op-AR
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 09:23:42 -0400
-Received: from mail-yw1-x1136.google.com ([2607:f8b0:4864:20::1136])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <bmeng.cn@gmail.com>)
- id 1xERcS-0001QF-I3
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 09:23:42 -0400
-Received: by mail-yw1-x1136.google.com with SMTP id
- 00721157ae682-8ae8541a2f0so18650717b3.3
- for <qemu-devel@nongnu.org>; Wed, 07 Oct 2026 06:23:39 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1791379419; cv=none;
- d=google.com; s=arc-20260327;
- b=HJ0G2Jkh1ebexvW3W3X4B8HcNlNGC2/0G86z3g54z4Li6fHpJB7iAbCg5SzE/X/aT5
- mOYqTnEp7uxiyISVQbZ4XGg9jMs6wyodMYQFo8TQLPJyUYby1ME5Eb+TzGGcQhgLIx9O
- GZrDhK2UgsW5JPRHSlo5rQm2n69/NDtf5zV3DZHrMuj1OLAC7YZRGyheVQ/+t7B5T+BX
- vd8H4qv4AzCZfOV5PmObu5/0f4L7Qok3b+JodqjK5OMRfSTOE8EpfADkdfgWrWEuFCZ2
- tx8s10tf1K0KBtNfMOTN5Yzu5s3HKqCOQkcQmhdWWDJLH5xIaRqv9QOfczUB8PRBC313
- BbIw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=aUJ5IAi2AORpFFqWJB4T93SJdjQ02ynmxKXHuvOmbQA=;
- fh=bLLXV/PoH1ogoOYBOJONEMKqiD0ji/imS7rWyJEOc8w=;
- b=C2RaBM4r3Wt8JlKRapO+f1AiuTbeCyk6kd9x7F1IquGmS6MI43ngtctA3gX0HtbksF
- /Fn5dTiCrUrDdIcYOHWG7ZAg1m2iW8E9d1+OoZI156ZpAvJDqmF2F2u9+c3rNLc0wFya
- F7riFB33T8RSO1k5wklQrVMTzqdndyxxwZ+Brhor6PreEmvs3EH81Q0E4CH+HW4LhnMF
- xbYi52K089s/5Nzgy0nDV7M+x+qMCrlT3iWoARjv4sdn8tfuLhMdQLK7NlbRLzuSwr0q
- JnoVXF9xG76b/hph6tmuuWpVPB3XS1gjjP4IcIFtpYOZxhokiy/KTwBsWagMbngfchbS
- IxJw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xERfE-0001cc-97
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 09:26:32 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xERfC-0001lm-3f
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 09:26:31 -0400
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 697BVAQE2802316
+ for <qemu-devel@nongnu.org>; Wed, 7 Oct 2026 13:26:28 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ cHlk/u6Bu4e+cSEV+iEtuX9GoOkXp1n0O580VXi6hVA=; b=K5Ul4iRB1Ul6InK4
+ FeC+RF6nbg4J0MxV9QjVVtM/rv1getLrmTvB4JXjQ/GncRgjJe3Jf8/SuNVCR3WL
+ WogDErsBHMRv1VGxDd+7xOBMPuuuIVZOP9oRPoZlgOoIDn9SRoihtKxTGa3oXmk1
+ b9mvc92o2q81/aBZHJOSH2UGVtnQw7smzl23DOenJQlg0LR5xUYdtGmUSgf6RyaH
+ 5JglePW4tDNcgxCK4Bc29S//QzH5X416aYlXw8WXnvrqgiAU/SaBvFSQ5KSX8rKt
+ 2aZI6YlpDUS5Ym/F+xIdvJbvo9M5qmBmYx8YxGDLEetHpXVg6Ai1tPJF7WrOhSRM
+ s0Fn4w==
+Received: from mail-vs1-f69.google.com (mail-vs1-f69.google.com
+ [209.85.217.69])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h5mge0kt1-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Wed, 07 Oct 2026 13:26:28 +0000 (GMT)
+Received: by mail-vs1-f69.google.com with SMTP id
+ ada2fe7eead31-7bf71bbf197so3578873137.2
+ for <qemu-devel@nongnu.org>; Wed, 07 Oct 2026 06:26:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1791379419; x=1791984219; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=aUJ5IAi2AORpFFqWJB4T93SJdjQ02ynmxKXHuvOmbQA=;
- b=IkyKbsZQZ3r6zzG60INtYB1JNJlF4JitkPdzN8JlhvVKn87Ws9cLQ/BWbt1YHJLcgo
- j5+MaUyMSUnQK2S0TaFlqvrqV5nu0oTYJPNYir9ikFnVdPemexQAYIb+K2Ko/0qgdzBa
- AmVx2PiUkUjkR8VOu2sJORlsDbuD2jMLuD/Ia5VRfMV39SOd8JYzezpdvwQ820JXegqd
- QIedai6hovLR2ZkMa9pafD0a+r1rq6ugtx+Sj9Xu+EIxNUPUnfPpxHHEotbWbLS/YoW0
- YVKQbea4qsP+43D78bwqk2UcXEv/9lZV05xbWcrlWZL3rcFWk0kxKtj/1stPbM73kZHY
- NTxQ==
+ d=oss.qualcomm.com; s=google; t=1791379587; x=1791984387; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=cHlk/u6Bu4e+cSEV+iEtuX9GoOkXp1n0O580VXi6hVA=;
+ b=iOYlPqtwcPDeDPLMDxCetBJJLoPAtCI4IfrFdHqqUBcEw3TzmMy4NN2/hlJIUHAkW7
+ 7fmPbST2U06wwUBBvXysJfGRXGf2kT6tZpcKW7TCRoRQkGTR3q1EuBp82CjiBb4eZXya
+ mjcWv1Qx1M5iGMliMIs7Ix/8njbwxXisFiYtVNGGjun5c+G6TgipKzlYRifyRycVXNeX
+ CNEP2cEr4XTwD2A+UTl6mRuJV5lFRdAFk2fEfhmTDhO/gYabHz/dQ29jSbBumcRd3L/J
+ vukG9/cEe1NWQZ4d1/i9dKup1WcokaZRN/z0s46KaaPfGCM+rNh0QdZuT6PH7FEloRvA
+ J8ig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791379419; x=1791984219;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=aUJ5IAi2AORpFFqWJB4T93SJdjQ02ynmxKXHuvOmbQA=;
- b=l8H+VeEtFYqi2fDEojmJk4dGqEn51AwhDZCe3cEmDCQzpuFPm5IlP5INfZazvrJ3N9
- AdQEUfTY01ODx0Cqp3/YT0ztBNxSA5pboWDKVRh2vnMSXyfgMO7uiBq02Hgg7CoJHCDF
- VAmeqiaYGcqGRpT2Ihd1/qlVAV5Swl56nJIKuVQ0KWuMKa1HMQmTN1toNfREvVH8XlM1
- cfaEB3Gbm76SBRCXh4yul1+o0hQjcly+GCBo7cMKfOohDEpfLRtFuP13co9G9zJm09SE
- FQMzCxTeiNOLHqe0GmB95MeUl8udrtw758Pgyvn8vzl5quhFrlbOWQd0AlzmsA6mhwAq
- P5/g==
+ d=1e100.net; s=20260707; t=1791379587; x=1791984387;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=cHlk/u6Bu4e+cSEV+iEtuX9GoOkXp1n0O580VXi6hVA=;
+ b=o8qeU1RC0GAOQ2FuQiprPReWPZnXUm/x8nImOtjHy3bhVJODX/UdYweFI9TMIP65Mn
+ b0QfAnZ1P8P5FoKjiIYxcvHbVtH1CRMMCOzDSySQT5KZBK8JEecvi7c5vPPBqeMvLgIy
+ dwxYPC9ngWx8W8C1H9i1FILO/FCDeN89hSZs1pPNfZIrUYFEntKSKHTiYxvy183zBu/E
+ 38FQAtgTUVwunNVXGQ1NUPwKlzJcnfgeFW8Yhzn3MzUtY4qoMYOh71w/N1o3hW63jMiK
+ +P4vpF8Yr77bjSY94/fNJFd9Rf/1loMVRLpn29LLJo6nCX7lastj81n6oaWaS2SkWZ1v
+ lcVA==
 X-Forwarded-Encrypted: i=1;
- AKwUvBwkNOmvsnOu8UxGgtZ0hoxAe17ah9eyv8RmN75ZjtNpamzbOUoCgzCVhEoVZhM9IHID6ISqNm6PB8ws@nongnu.org
-X-Gm-Message-State: AFq9FYJbuwM6b/Stxpnbcjz93HBtgrAztMOkzmucfd1l7GSLuc3rJawS
- ywGwqVSrvHv9JdewGiPqBCnd4/M01CKjeDzh+pbwSKHoOwFnX/RNTDxmYiG1iGPF13uB8KCAehI
- f1uN6NhXkz5iywlF0uMaB8czGtWQhd80=
-X-Gm-Gg: AYBFou3Jb0QXMsoFcRtXZPhXL3Rj7nuC4zQta9ZRinAudgZnwZzPZFJIzJg7N8iqbIr
- fLUQgx1K5mTuUg/vMRFS7egSastIPwH24OHtF91M3obs32Ud7pOQiqV8ZvFi6tLJDmja7JohM0b
- 0c+Ma0uMrCC3AogkhOH2QYwglTEAbcSLLmxt9zuCjNj8IemHhHhkI2OGaRJbEqiacNnJm6LV+EZ
- FRKTMlMyOI+iS4YBuPfwjis2TVm36vppVM3YwHZO5ChRyYN2jkWqr1h+iMygDsJOtB7GW2d0QbZ
- /VVKP9QhxW46q4xlOTxhNSa/fqIeUBkuLsMRhfZlAB2z1MYTxNfaFzrPMXfA4WqbrezrZbPL6QF
- 3lw==
-X-Received: by 2002:a05:690c:580c:b0:887:f4fc:ee35 with SMTP id
- 00721157ae682-8b05b01c556mr14046337b3.19.1791379418877; Wed, 07 Oct 2026
- 06:23:38 -0700 (PDT)
+ AKwUvBw0YNBApCU2K2i5sUp56P09ZtlmVtNYyrZhxoiqmbzk9VHzt/3nOnERVf5hT1zongwi7kxRRTM5mnGy@nongnu.org
+X-Gm-Message-State: AFq9FYJwfa6Gwd/37+FShiVPf1b2xHnbW7wm6kYlmuzVF6valSFB4Eg+
+ 2QjM+xninVcWCTRy4qe2idLphWyRHRBnOL7moMTegFc4LqOPDqd0reu9b9LCm6ydVfYWI0UyZAl
+ fc5/MJ+pbVY5Bs359TFm9FNTKAqKUoKBMxamf3GrfuNJryMNZIh7LX2lT7Q==
+X-Gm-Gg: AYBFou3ncTRij8U/VC3M/NhT2JVCv5ET6CdyKL5mgcBhKDQUh5ZpnlSXAQd9YsNl/S5
+ cwSgtnjTYU9uqVsPaeDN3F0OYdE8+X/KbATjHMJC3smWrJHbkd1wOfBdGV2BvBcEgGQEdYZeFZg
+ 2Rh65/2aGYtgPEpr7yPuV1epNHU1AWdYCrLKITtPo4OfTQpuw2M6wRV3xLJJvEgMmqfkj5YFeXB
+ xTtIaDXAfaEtiXjR4SYi512kMXmKf2b6MjSKJHRzjKXNWsXtAaE412L2TJ6JXKvnTeH7OLYtIw2
+ jCG+fyBL9TraPQlpFMMdNt3rmyG+RC8r6NPDHsik7Ds0iLDKHOZtDLHroESABLoZbOXE5rmJu2R
+ sC8EF30Rmq5IbJPVLtJv+daxAc5/LbaJOMQ==
+X-Received: by 2002:a05:6102:5809:b0:7bf:6218:bc59 with SMTP id
+ ada2fe7eead31-7ca38e2032amr728345137.32.1791379587468; 
+ Wed, 07 Oct 2026 06:26:27 -0700 (PDT)
+X-Received: by 2002:a05:6102:5809:b0:7bf:6218:bc59 with SMTP id
+ ada2fe7eead31-7ca38e2032amr728321137.32.1791379586988; 
+ Wed, 07 Oct 2026 06:26:26 -0700 (PDT)
+Received: from [192.168.69.210] (pmd666.hd.free.fr. [88.187.86.199])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-48c71d1ffd2sm5375821f8f.34.2026.10.07.06.26.25
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 07 Oct 2026 06:26:26 -0700 (PDT)
+Message-ID: <9bf8945c-6472-462e-a275-f0b74912d3ed@oss.qualcomm.com>
+Date: Wed, 7 Oct 2026 15:26:25 +0200
 MIME-Version: 1.0
-References: <20261004090500.3082641-1-bin.meng@processmission.com>
- <20261004090500.3082641-2-bin.meng@processmission.com>
- <CAFEAcA_U-Aoo1MmvAm61_HxhbA+1A-YX1g+oh=1THsi9QKBeOg@mail.gmail.com>
- <CAEUhbmWxS3XRfP4-Uj8MuMoeBb05YCyhHAzJc+_My6kj7L_qKA@mail.gmail.com>
- <CAFEAcA_KfCt-K3jb1+AzM74FH7x_ZfuzT7puJ4S=-p_C8SCQVQ@mail.gmail.com>
-In-Reply-To: <CAFEAcA_KfCt-K3jb1+AzM74FH7x_ZfuzT7puJ4S=-p_C8SCQVQ@mail.gmail.com>
-From: Bin Meng <bmeng.cn@gmail.com>
-Date: Wed, 7 Oct 2026 21:23:27 +0800
-X-Gm-Features: AclHuK9ExQ-5XxgAgrc_en-t6L4XHk2apzH6Qu_YUppIP-yU8ZmcSAQyzMqYCP8
-Message-ID: <CAEUhbmVm=8Q5Q+yPnKtPEqUcHC5zk6JhopF-Q5nNGcz4tSki=Q@mail.gmail.com>
-Subject: Re: [PATCH v3 01/10] hw/cpu: a15mpcore: Model the reserved page as
- RAZ/WI
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Bin Meng <bin.meng@processmission.com>, QEMU <qemu-devel@nongnu.org>, 
- qemu-arm@nongnu.org, Tom Rini <trini@konsulko.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1136;
- envelope-from=bmeng.cn@gmail.com; helo=mail-yw1-x1136.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 14/18] target/riscv: Compile pmp.c once
+Content-Language: en-US
+To: luoyonggang@gmail.com
+Cc: Anton Johansson <anjo@rev.ng>, qemu-devel@nongnu.org,
+ qemu-riscv@nongnu.org, daniel.barboza@oss.qualcomm.com,
+ pierrick.bouvier@oss.qualcomm.com, palmer@dabbelt.com,
+ alistair.francis@wdc.com
+References: <20261007-rv-dedup-v2-0-8a2f0f296a7f@rev.ng>
+ <20261007-rv-dedup-v2-14-8a2f0f296a7f@rev.ng>
+ <17cb7c7c-5f22-4a03-8855-4d1ec91d347a@oss.qualcomm.com>
+ <CAE2XoE9eXXKQGZZ0kvmex88+tjch1-+H_-MgB6JEu+4bdPZq8g@mail.gmail.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <CAE2XoE9eXXKQGZZ0kvmex88+tjch1-+H_-MgB6JEu+4bdPZq8g@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA3MDA1MyBTYWx0ZWRfXwKLoAnBY3UqQ
+ gESnQDyOmUIlItLVV8H34mvpeWauLlGVpJFKfm2cQ8ImrVM3O0y1A9wI//AWVsin5Td5u8fvJoZ
+ GTTkj6poEfiu0AT529srVOAVU1rzl+s=
+X-Proofpoint-GUID: BsgCVtG1WaiWm1SrJNVCbxoMglA6pRwF
+X-Authority-Analysis: v=2.4 cv=PdJqFShd c=1 sm=1 tr=0 ts=6ac64884 cx=c_pps
+ a=5HAIKLe1ejAbszaTRHs9Ug==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=e__1z2AJ6xUVmuhKiqgA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=gYDTvv6II1OnSo0itH1n:22
+X-Proofpoint-ORIG-GUID: BsgCVtG1WaiWm1SrJNVCbxoMglA6pRwF
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA3MDA1MyBTYWx0ZWRfX05cUrAE82UDz
+ PfmQrxOVDiRV4ADIUqQAJ45npGO+QItgGasP7+X1E72lkoXBOJOYKdInrZsVzMhzIc2GcAZ3BfG
+ kM9vQFBL7l9VjdP8JgYaHIPUu2rYmFBN84AcnLHGOsrfKekMT8f/o5cVZ5RRkz+LbvzYrQjn2uU
+ gwQ+52uDVEmqCF7ln3SS0FecA8SEWAN8rOk3ZosV6UGei2yOkZnUxN5tUri0xdMG3/T8JugJaLE
+ r6CqXNh8Pxui/huiHRTnaPmrmJuQRFHMDJlAPeu6zvSyIYBmdQA2zT8uFRrwZcvN4+MYutPCyQJ
+ 8N22yxlicxta2v5BK4aFu+FuNO3CGYsdnPU/34RqPPEcGxlK/cin3d1OGSmvtQdQrBdxi7cUdwl
+ JZeOJMIW4e0XX3VI/f0PyGqoTyr2dAd/d/UCBpo2mv7cYV/ZlilZ+m+X8uyEwg4aQV9H6/hhgxa
+ xzQ8bGCS2v0odhvbcQw==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-10-07_04,2026-10-06_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 priorityscore=1501 phishscore=0 suspectscore=0 spamscore=0
+ lowpriorityscore=0 impostorscore=0 adultscore=0 bulkscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2610070053
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -125,110 +159,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Oct 7, 2026 at 8:49=E2=80=AFPM Peter Maydell <peter.maydell@linaro.=
-org> wrote:
->
-> On Wed, 7 Oct 2026 at 11:09, Bin Meng <bmeng.cn@gmail.com> wrote:
-> >
-> > Hi Peter,
-> >
-> > On Wed, Oct 7, 2026 at 4:41=E2=80=AFPM Peter Maydell <peter.maydell@lin=
-aro.org> wrote:
-> > >
-> > > On Sun, 4 Oct 2026 at 10:05, Bin Meng <bin.meng@processmission.com> w=
-rote:
-> > > >
-> > > > U-Boot's shared i.MX6 identification code reads PERIPHBASE + 0x4 on
-> > > > MCIMX6UL-EVK. The first private peripheral page is currently unmapp=
-ed,
-> > > > so that access causes a data abort before the console is ready.
-> > > >
-> > > > The GIC-400 register map reserves offsets 0x0000 through 0x0fff and
-> > > > specifies read-as-zero, write-ignored accesses to reserved location=
-s.
-> > > > Model that page in the private peripheral device.
-> > > >
-> > > > Reference: GIC-400 TRM (ARM DDI 0471B), sections 3.1 and 3.2
-> > > > https://documentation-service.arm.com/static/5e8f15e27100066a414f74=
-24
-> > >
-> > > The Cortex-A15's internal GIC isn't a GIC-400, as far as I know.
-> >
-> > The Linux kernel says it is a GIC-400 on i.MX6UL
-> > https://github.com/torvalds/linux/blob/master/arch/arm/boot/dts/nxp/imx=
-/imx6ul.dtsi#L158
-> >
-> > intc: interrupt-controller@a01000 {
-> >     compatible =3D "arm,gic-400", "arm,cortex-a7-gic";
->
-> Ah, is this a Cortex-A7? The TRM for the A7 says
->
-> https://support.arm.com/documentation/ddi0464/f/Generic-Interrupt-Control=
-ler/GIC-functional-description/GIC-memory-map?lang=3Den#CHDEBJAJ
->
-> "Access to reserved regions can result in a data abort exception to the
-> requesting processor."
->
-> I'm not sure why that vaguely says "can" rather than "will", or
-> whether it's significant that the language is softer than the
-> A15 TRM uses.
->
-> In any case, I think the DTB compat strings the kernel DTB uses
-> aren't necessarily indications of what the real hardware is.
-> See the commit message in kernel commit 61efb56e30:
->
->     The arm,gic-400 compatible is probably the best matching string for t=
-he
->     GIC in most modern SoCs, but was only introduced later into the kerne=
-l.
->     For historic reasons and to keep compatibility, some SoC DTs were thu=
-s
->     using a combination of this name and one of the older strings
->
-> [i.e. "arm,gic-400", "arm,cortex-a7-gic"]
->
-> Kernel code correctly using the DTB binding will never touch the
-> reserved area, so it's not important that the DTB binding be able
-> to distinguish whether it faults or not.
->
-> > > > Signed-off-by: Bin Meng <bin.meng@processmission.com>
-> > >
-> > > RAZ/WI doesn't match the documented behaviour of the Cortex-A15
-> > > for this region in its TRM:
-> > >
-> > > https://support.arm.com/documentation/ddi0438/i/generic-interrupt-con=
-troller/gic-functional-description/gic-memory-map?lang=3Den
-> > >
-> > > "Read access to reserved regions results in a Data Abort exception to
-> > > the requesting processor. Write access to reserved regions results in
-> > > the assertion of nINTERRIRQ."
-> > >
-> >
-> > It seems the A15 manual and GIC-400 manual are contradictory. I am not
-> > sure how to proceed.
->
-> Do we have real hardware where we can check what the actual
-> behaviour is? It's not unknown for TRMs to have errors, especially
-> in areas where the documentation is really saying "don't do this"
-> and the question is what exactly happens when software does
-> something it shouldn't. If we're confident the TRM documentation
-> is wrong we can follow the actual behaviour, as long as we have
-> some clear commentary about it.
->
+On 7/10/26 13:51, Yonggang Luo wrote:
+> On Wed, Oct 7, 2026 at 6:25 PM Philippe Mathieu-Daudé
+> <philmd@oss.qualcomm.com> wrote:
+>>
+>> On 7/10/26 10:43, Anton Johansson wrote:
+>>> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+>>> Signed-off-by: Anton Johansson <anjo@rev.ng>
+>>> ---
+>>>    target/riscv/tcg/pmp.c       | 5 +++--
+>>>    target/riscv/tcg/meson.build | 2 +-
+>>>    2 files changed, 4 insertions(+), 3 deletions(-)
+>>>
+>>> diff --git a/target/riscv/tcg/pmp.c b/target/riscv/tcg/pmp.c
+>>> index 99345d63dc..2d7194de10 100644
+>>> --- a/target/riscv/tcg/pmp.c
+>>> +++ b/target/riscv/tcg/pmp.c
+>>> @@ -638,19 +638,20 @@ uint64_t pmpaddr_csr_read(CPURISCVState *env, uint32_t addr_index)
+>>>        if (addr_index < pmp_regions) {
+>>>            val = env->pmp_state.pmp[addr_index].addr_reg;
+>>>            int g = pmp_get_granularity_g(env);
+>>> +        const unsigned long_bits = target_long_bits();
+>>
+>> We need to fetch this information from @env. Maybe riscv_cpu_mxl_bits()?
+> 
+> discussed before, there is possible be 128bits
 
-I don't have real hardware at hand right now, but I bet hardware
-doesn't data abort otherwise it won't sit in the U-Boot codes for
-years.
+Please point me to the discussion (directly, saving us a ping / pong),
+as:
 
-> Also, has anybody filed a bug against u-boot? This is clearly
-> a software bug to be trying to read this address at all. We
-> should record that bug issue number in the commit message here.
->
+   '''
+   This was already discussed on v42:
 
-I've just sent a patch to U-Boot upstream (Cc Tom)
-https://lore.kernel.org/u-boot/20261007110316.143181-1-bin.meng@processmiss=
-ion.com/T/#u
+   https://lore.kernel.org/qemu-devel/some-message-id-v42-20128438/
+   '''
 
-Regards,
-Bin
+Having the discussion decision resumed in the patch description will
+prevent further reviewers to ask again the same.
+
+What do you mean by "possible be 128bits"? If we want to cap the
+value we can use MIN(64, riscv_cpu_mxl_bits(env)).
+
+> 
+>>>            switch (pmp_get_a_field(env->pmp_state.pmp[addr_index].cfg_reg)) {
+>>>            case PMP_AMATCH_OFF:
+>>>                /* fallthrough */
+>>>            case PMP_AMATCH_TOR:
+>>>                /* Bit [g-1:0] read all zero */
+>>> -            if (g >= 1 && g < TARGET_LONG_BITS) {
+>>> +            if (g >= 1 && g < long_bits) {
+>>>                    uint64_t granule = 1ULL << g;
+>>>                    val = ROUND_DOWN(val, granule);
+>>>                }
+>>>                break;
+>>>            case PMP_AMATCH_NAPOT:
+>>>                /* Bit [g-2:0] read all one */
+>>> -            if (g >= 2 && g < TARGET_LONG_BITS) {
+>>> +            if (g >= 2 && g < long_bits) {
+>>>                    val = deposit64(val, 0, g - 1, -1ULL);
+>>>                }
+>>>                break;
+>>
+> 
+> 
+
 
