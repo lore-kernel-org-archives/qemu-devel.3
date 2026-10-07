@@ -4,139 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0739CA5FFF
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 09:27:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA399CA5FF1
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 09:28:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xENsh-0004ak-79; Wed, 07 Oct 2026 05:24:11 -0400
+	id 1xENrf-0003GP-Bf; Wed, 07 Oct 2026 05:23:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1xENC5-0001Dn-OB
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 04:40:23 -0400
-Received: from mail-francesouthazlp170110003.outbound.protection.outlook.com
- ([2a01:111:f403:c207::3] helo=MRWPR03CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>)
+ id 1xEN9u-00017o-Rj; Wed, 07 Oct 2026 04:37:55 -0400
+Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1xENC1-0006j4-Fq
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 04:40:08 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=fsEm9VfEqOSCBMukPASKyYIRIH1wIbNzIRqL6cfy7+QY+xIsdQSAKROHANdNqzQIC+BIBHUU33G5/S5VdPnITUY6GWfP8NOg22gls0HiJTC5IDKtC+H9/r34R1uxFTjzgfRpe1MgsVlePtOuLhN5HBST3UKMvU+HYPOt7OC7fjJ1JUhVEGF0/KDnLGxDNllzDehFmHZD5s2eWBNrM6EolHeTGr3nvtFBEToRP/OvoCcgwefurhC0pDWFVuShJ5d/o/ibGxORstMYQI1BcMFpqcxb3Qx10JRSWjuLelOc5I8nNR5fQCYovn0lediMh8GH+LvEmrrm8oE7Q/VDlnE0rg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=A9yq8EKPS6NjEkTsAZuw4fecmzOMCLwBXNUzcIDBGI8=;
- b=QlgmyLGvxlsj9nd5G9E1ljICtbjNinio/6PL+Vdt/vCG0iwoklG/nifeHDqbMR0+L1lczZkarW8iQ6uP5KmifWaK6f7YxxXxPBGhAoJB+PU4horCKfkn8EDhnq+KqU22AJ02LC+U9DdGxmud7n+ePbxg3aumEZY3FjRkkbtub8iIzhvXqhP1qKqLJF6/EvJtDbsiuWVu7zzieGbytpGq58G7POS4yoGQ+T6i2gvTaItTjo3eI7HX98CKshNGIhqdFxOu4EZGO418WwE1EBBlyKqLft67jY1F7DeMg6BeqY5L0JMaQI+wM26DBgjlBIm5RfJwulgShIRhB6PYMq4eHw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
- header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=A9yq8EKPS6NjEkTsAZuw4fecmzOMCLwBXNUzcIDBGI8=;
- b=GqpypQOO8dM+mzg2px4pncZSQi7cU07UZtqXIA8bV/Xx687YEBDO63+gXetStyoK7KGGroUPvoQ6v0SeZRQ8qMv5+cFKzXBmMqCGaUn/jGHaETL9wjWc0MxZa/8ktXsV4nwSDLEQE/lwew1+Z0RqjKOSYri8XQDeTlAv2GKLqi6/Ba/4SOzE0GmwKRPCVjG0KFVrS/Cqtd5iTtzchjluAIMKrsU4fXTYJ59tmHBS9U8qAgGiVOUajiDdaJ4XkTxXtj2jDVbOMNcB57P+Fqli7byPjd6i8QeNJfYu2Gdiib0jsPaA/6wSdGzZ7PxEqI1Okbhwamii29efHRqlTnlaWw==
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=virtuozzo.com;
-Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
- (2603:10a6:800:20a::12) by AM9PR08MB6292.eurprd08.prod.outlook.com
- (2603:10a6:20b:2d8::21) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.496.15; Wed, 7 Oct
- 2026 08:39:58 +0000
-Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
- ([fe80::4e37:b189:ddcd:3dd8]) by VI0PR08MB10656.eurprd08.prod.outlook.com
- ([fe80::4e37:b189:ddcd:3dd8%7]) with mapi id 15.21.0496.010; Wed, 7 Oct 2026
- 08:39:57 +0000
-From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-Subject: [PATCH v14 00/22] migration/cpr: support vhost-vsock devices
-Date: Wed, 07 Oct 2026 11:39:53 +0300
-Message-Id: <20261007-up-vsock-vhost-v5-v14-0-e16de9962df0@virtuozzo.com>
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>)
+ id 1xEN9s-0006Vx-Fg; Wed, 07 Oct 2026 04:37:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
+ s=dkim; h=Cc:To:In-Reply-To:References:Message-Id:Content-Transfer-Encoding:
+ Content-Type:MIME-Version:Subject:Date:From:Sender:Reply-To:Content-ID:
+ Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+ :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+ List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
+ List-Help; bh=90kJrzXKeW2gQ5phrCgvAcOrYXMsIgBsYY/SG/YHEks=; b=it5oYwcCqJcYfad
+ DOmrYShGDRAY1v8zropZgEYA1BD8Ca7UL+X/4szUHH4sISFr8Alsn8HUJn3uM1FvFMhCbXPdHAqiV
+ bglsf7CxvHdUqHFEtWbTSAbUhak7M8AwlfCETu/Skwx9t+gQ6P+bqfeXTgR5Wpu+XmFwarEqqCsDB
+ dA=;
+Date: Wed, 07 Oct 2026 10:43:07 +0200
+Subject: [PATCH v2 01/18] target/riscv: Make internals.h target agnostic
+MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAFkFxmoC/23RzW7DIAwA4FepOI/JBsJPT3uPaYdAYGXTmiqka
- GvVdx/ppglplrgYmc/YvrISlxwL2++ubIk1lzwfW4DqYcfCYTy+Rp6ndsEECA0OLD+feC1zeOf
- 1MJeV14EHY9FLlzDgyNq70xJT/ryjzy8/cTn7txjWDdoyDrms8/J1r1qHLe/XR0X47QCf0CghB
- +uSsk81L+t5vlzmxzB/sK1G1b0yUIpuipokejEFPaaJUkyvUL1W0xQdk4sJpAxyoBTbKcJRim0
- KCh/azMBbNVKK6xQJlOKaEh04nbRwxgClIPwxCIAUg9AcG8Apq2R01pMO9o4gHdy6smkEN1lhJ
- DlhFL1DLgrFtilALaSDoC05HZS9o0lHNkfE0dg0oTfx339ut9s35D94LwEDAAA=
-X-Change-ID: 20260908-up-vsock-vhost-v5-c781b39f1c1a
+Message-Id: <20261007-rv-dedup-v2-1-8a2f0f296a7f@rev.ng>
+References: <20261007-rv-dedup-v2-0-8a2f0f296a7f@rev.ng>
+In-Reply-To: <20261007-rv-dedup-v2-0-8a2f0f296a7f@rev.ng>
 To: qemu-devel@nongnu.org
-Cc: dwmw2@infradead.org, mst@redhat.com, vsementsov@yandex-team.ru, 
- farosas@suse.de, peterx@redhat.com, dongli.zhang@oracle.com, den@openvz.org, 
- andrey.drobyshev@virtuozzo.com, mark.kanda@oracle.com, sgarzare@redhat.com, 
- maciej.szmigiero@oracle.com, odaki@rsg.ci.i.u-tokyo.ac.jp, 
- philmd@oss.qualcomm.com, bchaney@akamai.com, clg@redhat.com
-X-Mailer: b4 0.16.0
-X-ClientProxiedBy: VI6PEPF00000236.AUTP296.PROD.OUTLOOK.COM
- (2603:10a6:808:1::8ee) To VI0PR08MB10656.eurprd08.prod.outlook.com
- (2603:10a6:800:20a::12)
-MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: VI0PR08MB10656:EE_|AM9PR08MB6292:EE_
-X-MS-Office365-Filtering-Correlation-Id: c37241e4-4503-4b7a-be7e-08df244e9131
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|366016|7416014|52116014|1800799024|23010399003|38350700014|56012099006|10067099003|18002099003;
-X-Microsoft-Antispam-Message-Info: TN8v+08S9E9nS8mS4HnYdw8RZpZnFgMy7QeKg2l8FEBskf6XlGAYnFJv58Z1FF5W4c781MaMZnFAtWxqqG0+6fO/MtKIZvSeA86n9njNawTAgD76eq9YielcJx73i2cyYX8a+jqMfncNoqljNkCYs+C91AWkhtry4awh3Er9lt9zMcuMMUbSmn+R42Mt17yaEwz2of8fWV844M8+uOs3FJ7dwDNqc1zbxjwaMF20GNM61RrtmNMRdZjfRzaVPn7UVyfi24FeSc0+4QGgPgXHEgpvbw1e4ht86yzSMZEUjEWZoUDVemYduu2J66TKfZsJzB1o6WzSB5oP4vr0Kz5McvbDGopOH2IPNkWO4PqdtYEYcMir8reVbQv8NMq7rFw4ug6mZi3tBC1hUlhziCDI5fRDEJX5HZLz6e/8ZMhbBWhLgYajx6GI8ro60+J+Z0kWpIIeFsUbRsp8gEvmQ8wSodR+8yttUPwMGSJX5F/8917czNNW4mXw5iBR5+CURJHtxvrgMWRG0v1to5kDMvIzc6rLa1/9jRuS06hlzMT/cj8It677pyc5mHdQk6MOlupfhbUNqX/vB+gd8KkxzYACi3LRiiNhoBUYiQ6Qd7oI+JzhqdNVNnrdhvxR1XuvMSAn14qVPC0mct1zd6sVjGH/TeP9k3gKGMxp0fGIy2XchOw=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:VI0PR08MB10656.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(366016)(7416014)(52116014)(1800799024)(23010399003)(38350700014)(56012099006)(10067099003)(18002099003);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?eXhSZWxJRkdBNXIxTnEzSkliY0ZGbk1nZUN1QzVLaytZOGxYWDRabmt3MWFW?=
- =?utf-8?B?enQ3ZGg1QXMvTU5Md1VpaVd2RTJKc3lxMnhVRGxld05ZNWRRSTRRZ2JtdWFX?=
- =?utf-8?B?eXlLOENJMzAwVmVSbGJOSm14cTg0bCtqbFVTWGtkMVdRKzVLRE9VSndKdVl3?=
- =?utf-8?B?aS9ncDloN1Q5MTBhU0IrQ2JZUmlMSkxaYXNtZVV1MUw2elMxSGlFVzNROUhL?=
- =?utf-8?B?L0VRLzJYRjdmSmgxeUhDSWNoaGJSc0ltQmtFMTg2L1R4UjFqdVRabGNETkxB?=
- =?utf-8?B?QUZ4dUNLTzgvT2gyR05nT29iN05ZcEVRRlFKZ2FJTHg1VVFseTlQTDNJM3lz?=
- =?utf-8?B?eU96d0xCSGFDZHVwbHpWaUJhbWJGbENtV3c1UU84RnJEYkxVR1QySWw4cWll?=
- =?utf-8?B?R1Q1dHJDRGxXL0NOWUdycUNHb2NqYWR4NjE5cnV1UURicmVKN2M4WUhZSHJ2?=
- =?utf-8?B?cXhlZzNkMWd4c0hVbS85clVKQitIQjVpaW5lN2pmd0o3YndFSkk4S3JCOW5m?=
- =?utf-8?B?cWhJNXJTYWl1ZFBUU0FqR1V2YmcySjJjV3NuWjBPWUFqZjlzdEFtMWJDTWgz?=
- =?utf-8?B?b3dGcVhqVU5EcnJDcmZjT1h5RG1sZ3JJREhpcndVSEh4M3FKdTRrblUzTElU?=
- =?utf-8?B?SWozMHFqY0hERzdTcHBwY0xKVHRGdXVmNTlVbWgxN1J2aGREWmtqaExlOFpP?=
- =?utf-8?B?UUdkektIYjVIWGc0SWsyN0o3U1pBejdIQk4zOHZtTnNrajE4T3NCc213VkFD?=
- =?utf-8?B?SjU1d1doZExQQnRCZElrMlRjVFNPeWl1NmovRmxXaHR5ay9aNWNFc0l4WGR1?=
- =?utf-8?B?MVlyM0VJbkZwSE12QUswN1RaUlloNXNEY1dXTmxrSlQ5bUpuMUUyMk1xQlFB?=
- =?utf-8?B?bkVjN3dwQlpsYW5UN0dwUnJXaFlCS1dmQVVrOVRDWXJCUWlMVnl1b1VzQ0Vl?=
- =?utf-8?B?YVg0b0FzTHJiV2tNeVFhQW55c29NcXN1UVUrT1F1L3ZvWFJUZ3lrNWxxRlVn?=
- =?utf-8?B?d2c4RytLUG5NWk92dE9LSUVzQmozUnpJWUlETzRHWml5N2VsL1pJQkd2SXpD?=
- =?utf-8?B?d2ZGYXloQzBhWTJsZTRNQm5GQUN5ai95UmZNMG1FLzYyRkdjZzNEY0VnamMv?=
- =?utf-8?B?cm56WlRaM0VhbFZVVXg4eENsNkg4Rkc3T3Jha3R1ZTZYYXlBQlpUYkt1ZTM5?=
- =?utf-8?B?akpFMlpGTUN0S1VzRTBRQi9sd3ZjMktUNkVndGtRaENJUis4VHpxS3Y2Z0NS?=
- =?utf-8?B?Z0VRVWVSaHdneUo5SnhtOTFXdlZXYVE5bmV0UkZGL3NaRWd1UXBCekllL05T?=
- =?utf-8?B?azl6WHFJY0hNUVU1V3NKSHRzVjZKSmpkYThXOHVHaTFaby9DcW1jQU44bFUy?=
- =?utf-8?B?SHJISFdLS2NGcDVhQ2ZHT2N2WkduKzk0VGxtbGFQT2xqSkdXTHIzbk1ucURK?=
- =?utf-8?B?V1pvQ1Mrb0VvSk8yaEFIUHpzTW5VM2dLNVJZMlorRFg4UFgxYW1LQkFybWR0?=
- =?utf-8?B?Qk9XdCt3ektBQlBueXZ1NmJUNksvTU5lOTZZYTBFK3g0RG93SVJ3eUpvZmN2?=
- =?utf-8?B?R3ZuVmR4anRmYk1GOWpNOVk0UTZJTGNpUUlqdzBIMWFFalUwOWNnOUVpOEJZ?=
- =?utf-8?B?THBjemlpRW5aYndaTnc3QXJPZXEzUjdnV0Y2MVlBSStBUCtBL2VqUURZQ3pq?=
- =?utf-8?B?OGloQndZVGdzU0IvK21xeHRoYVpHVHdCcHlTSmtselpaK1NMWU44MDdVem1N?=
- =?utf-8?B?Rmp6WVowNFFnMGNRcHZ1UzNyNlRXQk1jM2dFbC95WHJSV1Rrcm5tbmxMeDll?=
- =?utf-8?B?ZFM5RjdPcGo5VDlOL0x2eDAwV1dVNmdsRjVqSEVreXNIcHRVS0R1Q3plOUdR?=
- =?utf-8?B?dGJGZDM0NWdKUW9mV1FqNHkxajNYa0V4blRHRzZUZ1d1SmxJOFlSdG5wVlNZ?=
- =?utf-8?B?OVFEb0Y4RjhEbkNyUE5xcmVXdnVaYmMyK0Q1dVFHeVBkN25aVU0rSGdyODNM?=
- =?utf-8?B?Z3lLcHFUd0ZjVU5lcXVwaDlBVWN3ZFYxWXhKMkdGbUx3R3B0RWs2emZFV25j?=
- =?utf-8?B?QkRCRWVTVlpOL3loMzlKWnUzU0NXWTA1UStDdlI1ZWs4V1VCQy94UWM5ZGwy?=
- =?utf-8?B?Mmc4MXdzZjR4TVVNTW4yY0tYcFplbXg3RXV5U0ZhbmRlOXVOemtoM1JvUmFR?=
- =?utf-8?B?UGl0QXc0VGczSzYvOFFkSFhXR3JRbEJJdnJ4OFNvaUl5dzlaMVRRMnd6TTdp?=
- =?utf-8?B?UDFwTDlWaUYvanJja2R6aFBmZzV5S1BWMmRaR1FzMzVnNTlZNXQ3UXdBMlZ1?=
- =?utf-8?B?dVZ0RitsSkR2WlZqUi9heGxnNWhacllFYkN6dlJVTGJ3QWFxR3Z2Y1prRk1U?=
- =?utf-8?Q?UVnHoyYBGy2/ANsA=3D?=
-X-OriginatorOrg: virtuozzo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: c37241e4-4503-4b7a-be7e-08df244e9131
-X-MS-Exchange-CrossTenant-AuthSource: VI0PR08MB10656.eurprd08.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Oct 2026 08:39:57.3203 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: sTTuOOFLDYCNiaRaUrWV/aKedNjPIcJlH0Zk95hYszVG1bqJMC5w1TaOr7ee45wpPHf4D+C8utCRgzloQvBowgxUUmmPasi7qxck/afDot8=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM9PR08MB6292
-Received-SPF: pass client-ip=2a01:111:f403:c207::3;
- envelope-from=andrey.drobyshev@virtuozzo.com;
- helo=MRWPR03CU001.outbound.protection.outlook.com
+Cc: Anton Johansson <anjo@rev.ng>, qemu-riscv@nongnu.org, 
+ daniel.barboza@oss.qualcomm.com, philmd@oss.qualcomm.com, 
+ pierrick.bouvier@oss.qualcomm.com, palmer@dabbelt.com, 
+ alistair.francis@wdc.com, luoyonggang@gmail.com
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1791362619; l=9261;
+ i=anjo@rev.ng; s=20260210; h=from:subject:message-id;
+ bh=J8KLZpcqlWHHQAJUXicA4FUB2Btk89ebiXNEFg/f3Wo=;
+ b=qDEfJOMoT0oSTG+RhjIQFvStVt3FbC/waG1L98X7tooIUpLltC1j5wh9aOWKT2UkduWP6LjkD
+ eyv2PnTnOPHDyng7UAOnueC8mdCC11aCG5IZP1WVIW3BoF24wYLmoJu
+X-Developer-Key: i=anjo@rev.ng; a=ed25519;
+ pk=dKsZvj/g3kgDxnV1/SWg8a0YNGSpWtFGNsWIepQYKow=
+Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
+ helo=rev.ng
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -155,79 +68,272 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Anton Johansson <anjo@rev.ng>
+From:  Anton Johansson via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-v13 -> v14:
+Replaces uses of target_ulong with fixed-size integers, this is a
+prerequisite step to compiling cpu.c once for system-mode.
 
-  * Patches 16, 17:
-    - reworked per Peter's suggestion: instead of a dedicated notifier
-      list for the incoming migration failure, add MIG_EVENT_INCOMING_FAILED
-      to the existing migration notifiers and let vhost register for it;
+Note: the widening of target_long to int64_t in adjust_addr_body() is
+safe as rv32 is ruled out earlier in the function via the check
 
-  * Patches 15, 17, 18:
-    - report a failure to release the ownership instead of ignoring it.
+  /* do nothing for rv32 mode */
+  if (riscv_cpu_mxl(env) == MXL_RV32) {
+      return addr;
+  }
 
-v13: https://lore.kernel.org/qemu-devel/20261006-up-vsock-vhost-v5-v13-0-2ea78fd1b7ed@virtuozzo.com
+meaning target_long must be equal to int64_t anyway.
 
-Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+Duplicate includes between vector_helper.c and vector_internals.h are
+removed.
+
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Signed-off-by: Anton Johansson <anjo@rev.ng>
 ---
-Andrey Drobyshev (22):
-      migration/cpr: forbid saving duplicate CprFds into hash table
-      tests/unit: add test for duplicate keys in CPR FD table
-      migration: forbid snapshots in CPR migration modes
-      migration: forbid snapshots under Xen
-      tests/qtest/migration: add test for snapshot rejection in CPR modes
-      vhost-vsock: block CPR migration modes
-      vhost: add vhost_reset_owner op
-      vhost-vsock: don't reset connections during CPR
-      vhost-vsock: fix FD leak in realize()
-      vhost-vsock: preserve vhost FD during CPR
-      vhost: factor out vhost_dev_init_backend()
-      vhost: make vhost_dev_cleanup() safe on a partially initialized device
-      vhost: add vhost_dev_set_owner() / vhost_dev_reset_owner() helpers
-      vhost: add vhost_dev_is_initialized() helper
-      vhost: release ownership in vhost_dev_cleanup()
-      migration: add MIG_EVENT_INCOMING_FAILED
-      vhost: release ownership when the incoming migration fails
-      vhost: release ownership on exit
-      vhost-vsock: hand off device ownership across CPR
-      tests/qtest/migration: add vhost-vsock tests for cpr-transfer and cpr-exec
-      tests/functional: add vhost-vsock CPR test with a live guest
-      tests/functional: cover a cpr-transfer target going away with vhost-vsock
+ target/riscv/internals.h            | 31 +++++++++---------
+ target/riscv/tcg/vector_internals.h |  5 +--
+ target/riscv/tcg/vector_helper.c    | 64 +++++++++++++++++--------------------
+ 3 files changed, 47 insertions(+), 53 deletions(-)
 
- backends/hostmem-memfd.c                        |   5 +-
- backends/hostmem-shm.c                          |   5 +-
- backends/iommufd.c                              |   4 +-
- hw/vfio/container-legacy.c                      |   7 +-
- hw/vfio/cpr-legacy.c                            |  29 +-
- hw/vfio/cpr.c                                   |   6 +-
- hw/vfio/pci.c                                   |   5 +-
- hw/virtio/vhost-kernel.c                        |   6 +
- hw/virtio/vhost-vsock.c                         | 193 ++++++++++++-
- hw/virtio/vhost.c                               | 124 ++++++++-
- include/hw/vfio/vfio-cpr.h                      |   7 +-
- include/hw/virtio/vhost-backend.h               |   2 +
- include/hw/virtio/vhost-vsock.h                 |   1 +
- include/hw/virtio/vhost.h                       |  74 +++++
- include/migration/cpr.h                         |   2 +-
- include/migration/misc.h                        |   5 +
- migration/cpr.c                                 |  64 +++--
- migration/migration.c                           |  10 +
- migration/options.c                             |  13 +
- system/physmem.c                                |   5 +-
- tests/functional/x86_64/meson.build             |   2 +
- tests/functional/x86_64/test_vhost_vsock_cpr.py | 347 ++++++++++++++++++++++++
- tests/qtest/migration/cpr-tests.c               | 133 ++++++++-
- tests/unit/meson.build                          |   1 +
- tests/unit/test-cpr.c                           |  98 +++++++
- 25 files changed, 1067 insertions(+), 81 deletions(-)
----
-base-commit: f7ada39edacaa5c26b30e98b94017b0b2ccbcf94
-change-id: 20260908-up-vsock-vhost-v5-c781b39f1c1a
+diff --git a/target/riscv/internals.h b/target/riscv/internals.h
+index 1ee7e99e98..c963fae321 100644
+--- a/target/riscv/internals.h
++++ b/target/riscv/internals.h
+@@ -20,7 +20,6 @@
+ #define RISCV_CPU_INTERNALS_H
+ 
+ #include "exec/cpu-common.h"
+-#include "exec/target_long.h"
+ #include "hw/core/registerfields.h"
+ #include "fpu/softfloat-types.h"
+ #include "target/riscv/cpu_bits.h"
+@@ -98,10 +97,10 @@ FIELD(VDATA, NF, 7, 4)
+ FIELD(VDATA, WD, 7, 1)
+ 
+ /* float point classify helpers */
+-target_ulong fclass_h_bf16(uint64_t frs1);
+-target_ulong fclass_h(uint64_t frs1);
+-target_ulong fclass_s(uint64_t frs1);
+-target_ulong fclass_d(uint64_t frs1);
++uint16_t fclass_h_bf16(bfloat16 frs1);
++uint16_t fclass_h(float16 frs1);
++uint16_t fclass_s(float32 frs1);
++uint16_t fclass_d(float64 frs1);
+ 
+ #ifndef CONFIG_USER_ONLY
+ extern const VMStateDescription vmstate_riscv_cpu;
+@@ -185,7 +184,7 @@ static inline float16 check_nanbox_bf16(CPURISCVState *env, uint64_t f)
+     }
+ }
+ 
+-static inline target_ulong get_xepc_mask(CPURISCVState *env)
++static inline uint64_t get_xepc_mask(CPURISCVState *env)
+ {
+     RISCVCPU *cpu = env_archcpu(env);
+ 
+@@ -196,9 +195,9 @@ static inline target_ulong get_xepc_mask(CPURISCVState *env)
+     if (riscv_has_ext(env, RVC) || cpu->cfg.ext_zca ||
+         cpu->cfg.ext_zcb || cpu->cfg.ext_zcd || cpu->cfg.ext_zce ||
+         cpu->cfg.ext_zcf || cpu->cfg.ext_zcmp || cpu->cfg.ext_zcmt) {
+-        return ~(target_ulong)1;
++        return ~1ull;
+     } else {
+-        return ~(target_ulong)3;
++        return ~3ull;
+     }
+ }
+ 
+@@ -208,9 +207,9 @@ bool riscv_cpu_has_work(CPUState *cs);
+ #endif
+ 
+ /* Zjpm addr masking routine */
+-static inline target_ulong adjust_addr_body(CPURISCVState *env,
+-                                            target_ulong addr,
+-                                            bool is_virt_addr)
++static inline uint64_t adjust_addr_body(CPURISCVState *env,
++                                        uint64_t addr,
++                                        bool is_virt_addr)
+ {
+     RISCVPmPmm pmm = PMM_FIELD_DISABLED;
+     uint32_t pmlen = 0;
+@@ -239,7 +238,7 @@ static inline target_ulong adjust_addr_body(CPURISCVState *env,
+ 
+     /* sign/zero extend masked address by N-1 bit */
+     if (signext) {
+-        addr = (target_long)addr >> pmlen;
++        addr = (int64_t)addr >> pmlen;
+     } else {
+         addr = addr >> pmlen;
+     }
+@@ -247,14 +246,14 @@ static inline target_ulong adjust_addr_body(CPURISCVState *env,
+     return addr;
+ }
+ 
+-static inline target_ulong adjust_addr(CPURISCVState *env,
+-                                       target_ulong addr)
++static inline uint64_t adjust_addr(CPURISCVState *env,
++                                   uint64_t addr)
+ {
+     return adjust_addr_body(env, addr, false);
+ }
+ 
+-static inline target_ulong adjust_addr_virt(CPURISCVState *env,
+-                                            target_ulong addr)
++static inline uint64_t adjust_addr_virt(CPURISCVState *env,
++                                        uint64_t addr)
+ {
+     return adjust_addr_body(env, addr, true);
+ }
+diff --git a/target/riscv/tcg/vector_internals.h b/target/riscv/tcg/vector_internals.h
+index 5681b81815..7e186add2d 100644
+--- a/target/riscv/tcg/vector_internals.h
++++ b/target/riscv/tcg/vector_internals.h
+@@ -20,10 +20,11 @@
+ #define TARGET_RISCV_VECTOR_INTERNALS_H
+ 
+ #include "qemu/bitops.h"
++#include "exec/target_long.h"
+ #include "hw/core/registerfields.h"
+-#include "cpu.h"
++#include "target/riscv/cpu.h"
++#include "target/riscv/internals.h"
+ #include "tcg/tcg-gvec-desc.h"
+-#include "internals.h"
+ 
+ #define VSTART_CHECK_EARLY_EXIT(env, vl) do { \
+     if (env->vstart >= vl) {                  \
+diff --git a/target/riscv/tcg/vector_helper.c b/target/riscv/tcg/vector_helper.c
+index 0d1e4e0964..b4a07dbe13 100644
+--- a/target/riscv/tcg/vector_helper.c
++++ b/target/riscv/tcg/vector_helper.c
+@@ -19,7 +19,7 @@
+ #include "qemu/osdep.h"
+ #include "qemu/host-utils.h"
+ #include "qemu/bitops.h"
+-#include "cpu.h"
++#include "target/riscv/tcg/vector_internals.h"
+ #include "exec/memop.h"
+ #include "accel/tcg/cpu-ldst.h"
+ #include "accel/tcg/probe.h"
+@@ -29,8 +29,6 @@
+ #include "exec/target_page.h"
+ #include "fpu/softfloat.h"
+ #include "tcg/tcg-gvec-desc.h"
+-#include "internals.h"
+-#include "vector_internals.h"
+ #include <math.h>
+ 
+ static target_ulong vtype_reserved(CPURISCVState *env, target_ulong vtype)
+@@ -4852,77 +4850,73 @@ GEN_VEXT_CMP_VF(vmfge_vf_w, uint32_t, H4, vmfge32)
+ GEN_VEXT_CMP_VF(vmfge_vf_d, uint64_t, H8, vmfge64)
+ 
+ /* Vector Floating-Point Classify Instruction */
+-target_ulong fclass_h_bf16(uint64_t frs1)
++uint16_t fclass_h_bf16(bfloat16 frs1)
+ {
+-    bfloat16 f = frs1;
+-    bool sign = bfloat16_is_neg(f);
++    bool sign = bfloat16_is_neg(frs1);
+ 
+-    if (bfloat16_is_infinity(f)) {
++    if (bfloat16_is_infinity(frs1)) {
+         return sign ? 1 << 0 : 1 << 7;
+-    } else if (bfloat16_is_zero(f)) {
++    } else if (bfloat16_is_zero(frs1)) {
+         return sign ? 1 << 3 : 1 << 4;
+-    } else if (bfloat16_is_zero_or_denormal(f)) {
++    } else if (bfloat16_is_zero_or_denormal(frs1)) {
+         return sign ? 1 << 2 : 1 << 5;
+-    } else if (bfloat16_is_any_nan(f)) {
++    } else if (bfloat16_is_any_nan(frs1)) {
+         float_status s = { }; /* for snan_bit_is_one */
+-        return bfloat16_is_quiet_nan(f, &s) ? 1 << 9 : 1 << 8;
++        return bfloat16_is_quiet_nan(frs1, &s) ? 1 << 9 : 1 << 8;
+     } else {
+         return sign ? 1 << 1 : 1 << 6;
+     }
+ }
+ 
+-target_ulong fclass_h(uint64_t frs1)
++uint16_t fclass_h(float16 frs1)
+ {
+-    float16 f = frs1;
+-    bool sign = float16_is_neg(f);
++    bool sign = float16_is_neg(frs1);
+ 
+-    if (float16_is_infinity(f)) {
++    if (float16_is_infinity(frs1)) {
+         return sign ? 1 << 0 : 1 << 7;
+-    } else if (float16_is_zero(f)) {
++    } else if (float16_is_zero(frs1)) {
+         return sign ? 1 << 3 : 1 << 4;
+-    } else if (float16_is_zero_or_denormal(f)) {
++    } else if (float16_is_zero_or_denormal(frs1)) {
+         return sign ? 1 << 2 : 1 << 5;
+-    } else if (float16_is_any_nan(f)) {
++    } else if (float16_is_any_nan(frs1)) {
+         float_status s = { }; /* for snan_bit_is_one */
+-        return float16_is_quiet_nan(f, &s) ? 1 << 9 : 1 << 8;
++        return float16_is_quiet_nan(frs1, &s) ? 1 << 9 : 1 << 8;
+     } else {
+         return sign ? 1 << 1 : 1 << 6;
+     }
+ }
+ 
+-target_ulong fclass_s(uint64_t frs1)
++uint16_t fclass_s(float32 frs1)
+ {
+-    float32 f = frs1;
+-    bool sign = float32_is_neg(f);
++    bool sign = float32_is_neg(frs1);
+ 
+-    if (float32_is_infinity(f)) {
++    if (float32_is_infinity(frs1)) {
+         return sign ? 1 << 0 : 1 << 7;
+-    } else if (float32_is_zero(f)) {
++    } else if (float32_is_zero(frs1)) {
+         return sign ? 1 << 3 : 1 << 4;
+-    } else if (float32_is_zero_or_denormal(f)) {
++    } else if (float32_is_zero_or_denormal(frs1)) {
+         return sign ? 1 << 2 : 1 << 5;
+-    } else if (float32_is_any_nan(f)) {
++    } else if (float32_is_any_nan(frs1)) {
+         float_status s = { }; /* for snan_bit_is_one */
+-        return float32_is_quiet_nan(f, &s) ? 1 << 9 : 1 << 8;
++        return float32_is_quiet_nan(frs1, &s) ? 1 << 9 : 1 << 8;
+     } else {
+         return sign ? 1 << 1 : 1 << 6;
+     }
+ }
+ 
+-target_ulong fclass_d(uint64_t frs1)
++uint16_t fclass_d(float64 frs1)
+ {
+-    float64 f = frs1;
+-    bool sign = float64_is_neg(f);
++    bool sign = float64_is_neg(frs1);
+ 
+-    if (float64_is_infinity(f)) {
++    if (float64_is_infinity(frs1)) {
+         return sign ? 1 << 0 : 1 << 7;
+-    } else if (float64_is_zero(f)) {
++    } else if (float64_is_zero(frs1)) {
+         return sign ? 1 << 3 : 1 << 4;
+-    } else if (float64_is_zero_or_denormal(f)) {
++    } else if (float64_is_zero_or_denormal(frs1)) {
+         return sign ? 1 << 2 : 1 << 5;
+-    } else if (float64_is_any_nan(f)) {
++    } else if (float64_is_any_nan(frs1)) {
+         float_status s = { }; /* for snan_bit_is_one */
+-        return float64_is_quiet_nan(f, &s) ? 1 << 9 : 1 << 8;
++        return float64_is_quiet_nan(frs1, &s) ? 1 << 9 : 1 << 8;
+     } else {
+         return sign ? 1 << 1 : 1 << 6;
+     }
 
-Best regards,
---  
-Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+-- 
+2.52.0
 
 
