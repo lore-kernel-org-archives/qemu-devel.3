@@ -4,70 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E8C9CA5FFF
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 09:19:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F5D5CA5FFF
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 09:20:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xENYY-0002gP-KA; Wed, 07 Oct 2026 05:03:22 -0400
+	id 1xENbn-000196-SS; Wed, 07 Oct 2026 05:06:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1xEKjZ-0001oH-Vz
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 02:02:51 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1xELnF-0007F9-7q
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 03:10:34 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1xEKjR-0001Rv-KQ
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 02:02:33 -0400
-Received: from h183.csg.ci.i.u-tokyo.ac.jp (h183.csg.ci.i.u-tokyo.ac.jp
- [133.11.54.183]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 69761tqM048409
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Wed, 7 Oct 2026 15:02:01 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=2HUno62HsZaaCcmIrBgQRoldQXNh1TnWD02j631o4yM=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-Id:To:Subject:Date;
- s=rs20250326; t=1791352921; v=1;
- b=EN1l7ZWCoRLGF3c9qF4fBOYZbil7ixKdlv5Z+fgxLx06QF9ET/Wi9hUXyXyg5+Co
- o8UQaWZZRYtpeO60Gd3+sNllC9aOBLB4fSOtqBK8dsY9jZ4jHhQa4A8Zg4A3c3pa
- /XGcO+PCXbtVVUYkruDg4SJO1Y3zHo/9f/Q+yr57kGC8ak6jTd/lm2GLgw9BUP/K
- IWpJnHgrm8F0bIM/GOdT+dI/sjQMlrwXDUJ9sJLya/onO4hOnpCSKI+Wzd94orch
- Ek0xG6WFJ32Qj4dug63M5IJ2h1r34DVYBnA65HL77ZbvTDYVP8f3SievQMArsS47
- juSfEktmkPT+0mgkGo9Dqw==
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Wed, 07 Oct 2026 15:01:49 +0900
-Subject: [PATCH 1/2] contrib/plugins/bbv.c: Reject invalid intervals
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1xELn8-00074d-HX
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 03:10:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1791357015;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=aWh0wbF6Zv/X+tOJ7bKvAOheJyBs4qbpk+NJ84OUf1w=;
+ b=A5e+8sZ7HsdpskJW5YCbaxA7jCCQr31FGZw124QWFdiXq5lJkT7Lol90pXluUiBnEPWxX1
+ d2mNWCzRnTAi4P9Wv0rITDF2cUs3YsIBDd17EXZrE406+O2qOiEIJykJLsEKHbyyHHdA//
+ 1Ph91ANG4VlICoQllKq4nqSh5HNUN30=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-370-GnB5PImDPwab57bQ-By9bg-1; Wed,
+ 07 Oct 2026 03:10:12 -0400
+X-MC-Unique: GnB5PImDPwab57bQ-By9bg-1
+X-Mimecast-MFC-AGG-ID: GnB5PImDPwab57bQ-By9bg_1791357011
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2E68A18028BD; Wed,  7 Oct 2026 07:10:11 +0000 (UTC)
+Received: from redhat.com (headnet04.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.116])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 75788180057E; Wed,  7 Oct 2026 07:10:09 +0000 (UTC)
+Date: Wed, 7 Oct 2026 08:10:06 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH 2/2] target-info: use TARGET_ARCH_VARIANT
+Message-ID: <asXwTgsqjK1zbXin@redhat.com>
+References: <20261006182558.151956-1-pierrick.bouvier@oss.qualcomm.com>
+ <20261006182558.151956-3-pierrick.bouvier@oss.qualcomm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20261007-bbv-v1-1-a2f521a68fdf@rsg.ci.i.u-tokyo.ac.jp>
-References: <20261007-bbv-v1-0-a2f521a68fdf@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20261007-bbv-v1-0-a2f521a68fdf@rsg.ci.i.u-tokyo.ac.jp>
-To: qemu-devel@nongnu.org
-Cc: =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Alexandre Iooss <erdnaxe@crans.org>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-X-Mailer: b4 0.17-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1695;
- i=odaki@rsg.ci.i.u-tokyo.ac.jp; h=from:subject:message-id;
- bh=jHFs87XFImrn8wvBb3y27oUMigJjUsGayPlhwXLyz0E=;
- b=owGbwMvMwCWmMbc20y1CyJDxtFoSQ9bRB4FcD84aaHWpPbCu+7ghjK14vuyMhyxJCn/vrXrCq
- e17sy+ho5SFQYyLQVZMkSWlaDe3RnTtp8KE+BaYOaxMIEMYuDgFYCJVygx/hZ7qb1zppmFl8/Bz
- ZsnyGNmAWVY3ZqjMOOWnlyBaVrVoJyPDmTdsugZNsxgk/t+cqRd1rLLu0pwVy9Nv3+3WzjuvOP8
- 0BwA=
-X-Developer-Key: i=odaki@rsg.ci.i.u-tokyo.ac.jp; a=openpgp;
- fpr=AEDC03C9AF734F2EC26A7BFFA4BAEAA73536753C
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20261006182558.151956-3-pierrick.bouvier@oss.qualcomm.com>
+User-Agent: Mutt/2.4.2 (2026-08-30)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,54 +88,27 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-g_ascii_strtoull() accepts a leading minus sign, and returns the
-negation of the parsed number. It also accepts zero. Reject those
-non-positive values since their semantics is unclear.
+On Tue, Oct 06, 2026 at 06:25:58PM +0000, Pierrick Bouvier wrote:
+> target_arch() will now return the full variant, per SYS_EMU_TARGET enum.
+> 
+> Fixes: e934c624f3 ("target-info: Statically initialize target_arch")
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+> ---
+>  target-info-stub.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 
-Also reject interval values with trailing non-digit characters, such as
-interval=8a.
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
-Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
----
- contrib/plugins/bbv.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/contrib/plugins/bbv.c b/contrib/plugins/bbv.c
-index 0e6ec673d972..e5caf5d9543b 100644
---- a/contrib/plugins/bbv.c
-+++ b/contrib/plugins/bbv.c
-@@ -26,7 +26,7 @@ static GHashTable *bbs;
- static GRWLock bbs_lock;
- static char *filename;
- static struct qemu_plugin_scoreboard *vcpus;
--static uint64_t interval = 100000000;
-+static int64_t interval = 100000000;
- 
- static void plugin_exit(void *p)
- {
-@@ -138,7 +138,16 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
-         char *opt = argv[i];
-         g_auto(GStrv) tokens = g_strsplit(opt, "=", 2);
-         if (g_strcmp0(tokens[0], "interval") == 0) {
--            interval = g_ascii_strtoull(tokens[1], NULL, 10);
-+            char *endptr;
-+            interval = g_ascii_strtoll(tokens[1], &endptr, 10);
-+            if (*endptr) {
-+                fprintf(stderr, "malformed integer: %s\n", opt);
-+                return -1;
-+            }
-+            if (interval <= 0) {
-+                fprintf(stderr, "unexpected non-positive value: %s\n", opt);
-+                return -1;
-+            }
-         } else if (g_strcmp0(tokens[0], "outfile") == 0) {
-             filename = tokens[1];
-             tokens[1] = NULL;
-
+With regards,
+Daniel
 -- 
-2.55.0
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
 
