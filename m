@@ -4,40 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39035CA6007
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 10:13:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 055B8CA6007
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 10:13:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xEOcd-0004Tp-BM; Wed, 07 Oct 2026 06:11:39 -0400
+	id 1xEOce-0004Wh-N8; Wed, 07 Oct 2026 06:11:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaurav.sharma_7@nxp.com>)
- id 1xEOcH-00043C-1d; Wed, 07 Oct 2026 06:11:18 -0400
+ id 1xEOcT-0004I7-Ja; Wed, 07 Oct 2026 06:11:31 -0400
 Received: from inva020.nxp.com ([92.121.34.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaurav.sharma_7@nxp.com>)
- id 1xEOcF-0004Og-Gg; Wed, 07 Oct 2026 06:11:16 -0400
+ id 1xEOcR-0004R7-VK; Wed, 07 Oct 2026 06:11:29 -0400
 Received: from inva020.nxp.com (localhost [127.0.0.1])
- by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id 194C61A00A3;
- Wed,  7 Oct 2026 12:11:14 +0200 (CEST)
+ by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id 35A361A000F;
+ Wed,  7 Oct 2026 12:11:26 +0200 (CEST)
 Received: from aprdc01srsp001v.ap-rdc01.nxp.com
  (aprdc01srsp001v.ap-rdc01.nxp.com [165.114.16.16])
- by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id D920A1A00A0;
- Wed,  7 Oct 2026 12:11:13 +0200 (CEST)
+ by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id F3A811A000C;
+ Wed,  7 Oct 2026 12:11:25 +0200 (CEST)
 Received: from lsv031015.swis.in-blr01.nxp.com
  (lsv031015.swis.in-blr01.nxp.com [10.12.177.77])
- by aprdc01srsp001v.ap-rdc01.nxp.com (Postfix) with ESMTP id E3C88180023B;
- Wed,  7 Oct 2026 18:11:11 +0800 (+08)
+ by aprdc01srsp001v.ap-rdc01.nxp.com (Postfix) with ESMTP id 0A4151800226;
+ Wed,  7 Oct 2026 18:11:23 +0800 (+08)
 From: Gaurav Sharma <gaurav.sharma_7@nxp.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, pbonzini@redhat.com, peter.maydell@linaro.org,
  shentey@gmail.com, pierrick.bouvier@oss.qualcomm.com,
  Gaurav Sharma <gaurav.sharma_7@nxp.com>
-Subject: [PATCHv4 02/11] hw/arm: Rename FSL_IMX8MP_NUM_CPUS to
- FSL_IMX8MP_NUM_A53
-Date: Wed,  7 Oct 2026 15:40:56 +0530
-Message-Id: <20261007101105.3917771-3-gaurav.sharma_7@nxp.com>
+Subject: [PATCHv4 09/11] hw/arm: Add ITCM and DTCM memory regions to i.MX8MP
+Date: Wed,  7 Oct 2026 15:41:03 +0530
+Message-Id: <20261007101105.3917771-10-gaurav.sharma_7@nxp.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20261007101105.3917771-1-gaurav.sharma_7@nxp.com>
 References: <20261007101105.3917771-1-gaurav.sharma_7@nxp.com>
@@ -66,68 +65,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is a mechanical rename with no functional change.
-The existing CPU count and cpu array describe only the
-Cortex-A53 cores.
+Add the 128 KiB ITCM and DTCM used by the i.MX8MP Cortex-M7
+subsystem.
+
+Expose ITCM and DTCM using the system-bus windows available to the
+Cortex-A53, and add the Cortex-M7-visible aliases at 0x00000000
+and 0x20000000 respectively.
 
 Signed-off-by: Gaurav Sharma <gaurav.sharma_7@nxp.com>
 ---
- hw/arm/fsl-imx8mp.c         | 4 ++--
- hw/arm/imx8mp-evk.c         | 2 +-
- include/hw/arm/fsl-imx8mp.h | 4 ++--
- 3 files changed, 5 insertions(+), 5 deletions(-)
+ hw/arm/fsl-imx8mp.c         | 33 +++++++++++++++++++++++++++++++++
+ include/hw/arm/fsl-imx8mp.h |  4 ++++
+ 2 files changed, 37 insertions(+)
 
 diff --git a/hw/arm/fsl-imx8mp.c b/hw/arm/fsl-imx8mp.c
-index bcd91739d9..f599e5e0a2 100644
+index c168c97d1a..18d2b17ca8 100644
 --- a/hw/arm/fsl-imx8mp.c
 +++ b/hw/arm/fsl-imx8mp.c
-@@ -266,9 +266,9 @@ static void fsl_imx8mp_realize(DeviceState *dev, Error **errp)
-     const char *cpu_type = ms->cpu_type ?: ARM_CPU_TYPE_NAME("cortex-a53");
-     int i;
+@@ -779,6 +779,37 @@ static void fsl_imx8mp_realize(DeviceState *dev, Error **errp)
+                                 fsl_imx8mp_memmap[FSL_IMX8MP_OCRAM].addr,
+                                 &s->ocram);
  
--    if (ms->smp.cpus > FSL_IMX8MP_NUM_CPUS) {
-+    if (ms->smp.cpus > FSL_IMX8MP_NUM_A53) {
-         error_setg(errp, "%s: Only %d CPUs are supported (%d requested)",
--                   TYPE_FSL_IMX8MP, FSL_IMX8MP_NUM_CPUS, ms->smp.cpus);
-+                   TYPE_FSL_IMX8MP, FSL_IMX8MP_NUM_A53, ms->smp.cpus);
-         return;
-     }
- 
-diff --git a/hw/arm/imx8mp-evk.c b/hw/arm/imx8mp-evk.c
-index 3f376f86d9..f19d80b796 100644
---- a/hw/arm/imx8mp-evk.c
-+++ b/hw/arm/imx8mp-evk.c
-@@ -148,7 +148,7 @@ static void imx8mp_evk_machine_class_init(ObjectClass *oc, const void *data)
-     mc->desc = "NXP i.MX 8M Plus EVK Board";
-     mc->init = imx8mp_evk_init;
-     mc->default_cpus = 4;
--    mc->max_cpus = FSL_IMX8MP_NUM_CPUS;
-+    mc->max_cpus = FSL_IMX8MP_NUM_A53;
-     mc->default_ram_id = "imx8mp-evk.ram";
-     mc->default_ram_size = 6 * GiB;
-     mc->get_default_cpu_type = imx8mp_evk_get_default_cpu_type;
++    if (!memory_region_init_ram(&s->itcm, OBJECT(dev), "imx8mp.itcm",
++                                fsl_imx8mp_memmap[FSL_IMX8MP_TCM_ITCM].size,
++                                errp)) {
++        return;
++    }
++    memory_region_add_subregion(get_system_memory(),
++                                fsl_imx8mp_memmap[FSL_IMX8MP_TCM_ITCM].addr,
++                                &s->itcm);
++
++    if (!memory_region_init_ram(&s->dtcm, OBJECT(dev), "imx8mp.dtcm",
++                                fsl_imx8mp_memmap[FSL_IMX8MP_TCM_DTCM].size,
++                                errp)) {
++        return;
++    }
++    memory_region_add_subregion(get_system_memory(),
++                                fsl_imx8mp_memmap[FSL_IMX8MP_TCM_DTCM].addr,
++                                &s->dtcm);
++
++    /* M7-view aliases: ITCM@0x0, DTCM@0x20000000 */
++    memory_region_init_alias(&s->itcm_alias, OBJECT(dev), "imx8mp.itcm-alias",
++                             &s->itcm, 0,
++                             fsl_imx8mp_memmap[FSL_IMX8MP_TCM_ITCM].size);
++    memory_region_add_subregion_overlap(get_system_memory(),
++                                        0x00000000, &s->itcm_alias, 1);
++
++    memory_region_init_alias(&s->dtcm_alias, OBJECT(dev), "imx8mp.dtcm-alias",
++                             &s->dtcm, 0,
++                             fsl_imx8mp_memmap[FSL_IMX8MP_TCM_DTCM].size);
++    memory_region_add_subregion_overlap(get_system_memory(),
++                                        0x20000000, &s->dtcm_alias, 1);
++
+     /* Unimplemented devices */
+     for (i = 0; i < ARRAY_SIZE(fsl_imx8mp_memmap); i++) {
+         switch (i) {
+@@ -796,6 +827,8 @@ static void fsl_imx8mp_realize(DeviceState *dev, Error **errp)
+         case FSL_IMX8MP_IOMUXC_GPR:
+         case FSL_IMX8MP_MU_1_A ... FSL_IMX8MP_MU_3_B:
+         case FSL_IMX8MP_OCRAM:
++        case FSL_IMX8MP_TCM_ITCM:
++        case FSL_IMX8MP_TCM_DTCM:
+         case FSL_IMX8MP_PCIE1:
+         case FSL_IMX8MP_PCIE_PHY1:
+         case FSL_IMX8MP_RAM:
 diff --git a/include/hw/arm/fsl-imx8mp.h b/include/hw/arm/fsl-imx8mp.h
-index 2be3c51af5..6f9bd8d2ce 100644
+index f3e134cdc0..f547cbae42 100644
 --- a/include/hw/arm/fsl-imx8mp.h
 +++ b/include/hw/arm/fsl-imx8mp.h
-@@ -39,7 +39,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(FslImx8mpState, FSL_IMX8MP)
+@@ -90,6 +90,10 @@ struct FslImx8mpState {
+     FlexcanState       flexcan[FSL_IMX8MP_NUM_CANS];
+     OrIRQState         gpt5_gpt6_irq;
+     MemoryRegion       ocram;
++    MemoryRegion       itcm;
++    MemoryRegion       dtcm;
++    MemoryRegion       itcm_alias;
++    MemoryRegion       dtcm_alias;
  
- enum FslImx8mpConfiguration {
-     FSL_IMX8MP_NUM_CANS         = 2,
--    FSL_IMX8MP_NUM_CPUS         = 4,
-+    FSL_IMX8MP_NUM_A53          = 4,
-     FSL_IMX8MP_NUM_ECSPIS       = 3,
-     FSL_IMX8MP_NUM_GPIOS        = 5,
-     FSL_IMX8MP_NUM_GPTS         = 6,
-@@ -54,7 +54,7 @@ enum FslImx8mpConfiguration {
- struct FslImx8mpState {
-     SysBusDevice   parent_obj;
- 
--    ARMCPU             cpu[FSL_IMX8MP_NUM_CPUS];
-+    ARMCPU             cpu[FSL_IMX8MP_NUM_A53];
-     GICv3State         gic;
-     IMXGPTState        gpt[FSL_IMX8MP_NUM_GPTS];
-     IMXGPIOState       gpio[FSL_IMX8MP_NUM_GPIOS];
+     uint32_t           phy_num;
+     bool               phy_connected;
 -- 
 2.34.1
 
