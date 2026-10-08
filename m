@@ -4,117 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4FAECA600D
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Oct 2026 18:43:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 530F0CA600D
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Oct 2026 18:47:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xEt5E-00076X-OH; Thu, 08 Oct 2026 14:43:12 -0400
+	id 1xEt8j-0007qu-0g; Thu, 08 Oct 2026 14:46:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1xEt59-00074a-MS; Thu, 08 Oct 2026 14:43:07 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1xEt58-00050e-22; Thu, 08 Oct 2026 14:43:07 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 698HZQ5q197221; Thu, 8 Oct 2026 18:43:03 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:reply-to:subject:to; s=pp1;
- bh=bdFEie4P4Rfe4+nT4USX4cl8L21lZ+OcpPSzewK+ivc=; b=i/2OaFxuxKLq
- zsYkrP+j0Ea046dxLh+elbmIpgpIOGbiKxOrnYC/QgqidkOwU4iTJo+HWJfXbOdS
- DEJfrsLETrWufDB3M6tWwmKbj8vUcowK5/Iu1HZVbpdvTu1umiTVtpjkNEoUQ+4B
- 6RCHdW9RFHzAdoTMC4Jdk1GoZUhWulhBhEhregx5bNnMTtOgHqFBje4bFi0/yArR
- QC3qcUdBUVsA+nyUvBvFsBTDHeRYOTtimpFs2Q6Qs+yQmccZ/AmdQH9SId0Valhn
- 2Ts18o1AQnuymthgz1VZUN/2ZCqUaRWi8FX3VcsXO3MZiCYlk48OqzLWFHjqbfaP
- uEG18m1W1w==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4h5xjw5xmk-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Thu, 08 Oct 2026 18:43:02 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 698HldvN3802948; Thu, 8 Oct 2026 18:43:01 GMT
-Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4h5s34wex5-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 08 Oct 2026 18:43:01 +0000 (GMT)
-Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com
- [10.39.53.233])
- by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 698Ih0Ir32572064
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 8 Oct 2026 18:43:00 GMT
-Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 900455804E;
- Thu,  8 Oct 2026 18:43:00 +0000 (GMT)
-Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 85C585803F;
- Thu,  8 Oct 2026 18:42:59 +0000 (GMT)
-Received: from mambor8.rchland.ibm.com (unknown [9.10.239.198])
- by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Thu,  8 Oct 2026 18:42:59 +0000 (GMT)
-Message-ID: <2456f502c974d0fcc09e4e29e2756b4f26d23b3d.camel@linux.ibm.com>
-Subject: Re: [PATCH 06/10] target/ppc/gdbstub: Replace gdb_get_regl() by
- ppc_env_is_64bit()
-From: Miles Glenn <milesg@linux.ibm.com>
-To: Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?= <philmd@oss.qualcomm.com>,
- qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-riscv@nongnu.org, Pierrick
- Bouvier <pierrick.bouvier@oss.qualcomm.com>, Alex =?ISO-8859-1?Q?Benn=E9e?=
- <alex.bennee@linaro.org>, Richard Henderson <richard.henderson@linaro.org>,
- Anton Johansson <anjo@rev.ng>, qemu-ppc@nongnu.org, Yonggang Luo
- <luoyonggang@gmail.com>, Chinmay Rath <rathc@linux.ibm.com>, Nicholas
- Piggin <npiggin@gmail.com>, Harsh Prateek Bora <harshpb@linux.ibm.com>
-Date: Thu, 08 Oct 2026 13:42:59 -0500
-In-Reply-To: <20261007232326.66240-7-philmd@oss.qualcomm.com>
-References: <20261007232326.66240-1-philmd@oss.qualcomm.com>
- <20261007232326.66240-7-philmd@oss.qualcomm.com>
-Organization: IBM
+ (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
+ id 1xEt8b-0007qH-U6
+ for qemu-devel@nongnu.org; Thu, 08 Oct 2026 14:46:44 -0400
+Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
+ id 1xEt8Z-0005Km-RA
+ for qemu-devel@nongnu.org; Thu, 08 Oct 2026 14:46:41 -0400
+Received: by mail-ed1-x52f.google.com with SMTP id
+ 4fb4d7f45d1cf-6acb57c2b88so7904030a12.2
+ for <qemu-devel@nongnu.org>; Thu, 08 Oct 2026 11:46:39 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1791485198; cv=none;
+ d=google.com; s=arc-20260327;
+ b=bTvtO9wruKj7jwV3dJi//2/vLTzMbeldoWzI9MBoHxPnotfdG/IIvfDUPH4ROnsUAm
+ tsPfr8IGLBC9XKYiTcaQakv7IHAcitlennEB7ofB5DNGGFWK+N+GMJGIRgcwoaqE03Ql
+ Ur45Nqq+jKZvYefXj8HUaaHwf/FK2KYjopJplTeNg/q/qCkOvVhIRYia+zEf+PxuN1fF
+ /AYe3xiuQoKm/Xq++LmVEGtKrPYdUl+d6x3MrdcOt+3deDEX+6ZZl3cpj+xBv/bX8dTK
+ iIJmKLyx8nDsJdnTAQf6ffPkWD0UfU7tqya1wFKivORgfjDAtzJP5fPqeOhVKNFxsNei
+ HtAg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :reply-to:in-reply-to:references:mime-version:dkim-signature;
+ bh=dQQizFoFxXO7jmGRggCp+qtuDoi/Kuo2xU5Am4AjH/Q=;
+ fh=fcC5xiTM+92K8aIn1D3M8zZ4o+HUHgs5TohCXsve6Lc=;
+ b=GsHOLlf5h/QNyWIuk49BTPu4+2wnD3Bvrx97c92if9DfrPjxq/rXt//9GlISN7jfu0
+ Jmwk8JSyGwQnZO9PudybqvjsrbGndHTJrrjjpA7MAhSgfztD1D0aWnDY5RrzVeXRVAvS
+ dhJfPPzfOx0QF6CSEXaBV0/DXSaNZaUmy1tzqoHPmCkYIKwcX7dUun+RA9cp1zCZ7hFc
+ vileeK8viSdASvTyXmum1rMGAdhSrATgS/KSSQ7CMq3BF2qdll5aDJ+6FNnBr7xIe7rR
+ RPw0OO/AoUm25HBaMtUHDfiosj7y5rfm7Pa5rRXrMVqVRPDoHJvXTC6XjA6GartWc/vs
+ TgCA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1791485198; x=1792089998; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:reply-to:in-reply-to:references:mime-version:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=dQQizFoFxXO7jmGRggCp+qtuDoi/Kuo2xU5Am4AjH/Q=;
+ b=oy1BgvXKPuushkJ6TExy075vUcR/PP+6zWhDguqxIU3XvAL+2bRLYGZYaqX7hLJB3y
+ w4x0fvmqnKi0P9D7SdF9wOcuKxE1Bu4PovqBGZwyKR4feVFdp/V2pHI+7pp/IxgxxmzR
+ aPLiZE0Scwz4QgnVDdnnK//X/MHJm04HJNFezlFHzIRUxHttng/1sLmUriHEKhe7jr++
+ V7ZbYtwUGSDlnzFod2l5X+VxRdoqYzsjO/d073VnZh2HflIyF9oiC7sSLAW5yMISSkK6
+ +nS4CYb/APPbRvilFzL2kbfWxTr/0ecyL3d25K0O1y94FWLYiUKnaBnwGdQLWk6eq1Q/
+ sNtA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1791485198; x=1792089998;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:reply-to:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=dQQizFoFxXO7jmGRggCp+qtuDoi/Kuo2xU5Am4AjH/Q=;
+ b=dONjC9WysCjIB/wUT0jiCJjBDZyEisS/N3Ru0+GXbnIPbFPjaH0iNP9bwTUj+K5WNu
+ l8080NFrzB89h+e6wC0LrrDqjJTJrTTpi5LVWgYptLgu1dSwHsrdpFsxNoshBl9vwvuL
+ p6O2uZXcdxVeUpzYGgEXfk13qXBQd5RZyiT2oaxJpaQr9H6FGYHkga4EphazLNjqwHfP
+ H5b2zJndjBMtZvFRRRFpycJVSUCSvsyqFapXQeKT8yMvx9RfWGhOzqdr761nY0J3ZYfO
+ bTfAbyH//sb8aJ8mf4Z6tDs4CQpGNvj0647/e9565yt32zSe0p6MUksHhpLVfZz52B0n
+ tD6Q==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBx/5BPi+S22GHu25gmUfW/HksUtEQtgpcTddWHDqwZewaphqNRlHWpyDb1l6UsIR2te5Qjz3Xyk5znF@nongnu.org
+X-Gm-Message-State: AFq9FYLHCHrLwofLNKmMLLd2WR2H4Rp24uNiMpZ0Q3XT3FcYlPqgFFQU
+ GNVedAtyPS3Mm9wWg2lnXjGsY5lz721PC//bgSvmkyxFcvxXbbztiPhk73KGiLaigboEECx953I
+ lldBvOjn0X33iA/2ps+/i+7HwckFDzNQ=
+X-Gm-Gg: AYBFou3cjFQ3R+9gQARkd3sxVsAt6kPl+c5kYC3iGg1ext7g+5EVoyP3pKgSHt+pSpp
+ lNXIpfnFa3S4Ol9/PBPL82ghFmcacowbFgB7j9h4Q7+oeXlEsgSWjvhzZS322GOdEWqsM89cEUo
+ ECntZPtG/YZRVBHbSInEnTtZWRIK/cyakXxl2vBKztfm4G9TgUXlWgoCQFGbUm9jZXWrMpfcTuE
+ QBvlSotZb0RQZwoPgWfyWCoqa+1ZzcWwXpFgUdbKAHz1JdgIhEIZQJJ1SBC/PtEPTOJyBfWBLV3
+ lR5/MOtNTWX6/btQ9t0qnyCdiCeNVTg6iGiCBMtNkhTI8wNeNPFj0VNF
+X-Received: by 2002:a05:6402:11d0:b0:6a9:f88d:c092 with SMTP id
+ 4fb4d7f45d1cf-6aff2dacbabmr6153592a12.0.1791485197448; Thu, 08 Oct 2026
+ 11:46:37 -0700 (PDT)
+MIME-Version: 1.0
+References: <20261008153435.207538-1-zycai@linux.ibm.com>
+ <ase6pruX6UM-umNQ@redhat.com>
+In-Reply-To: <ase6pruX6UM-umNQ@redhat.com>
+From: Yonggang Luo <luoyonggang@gmail.com>
+Date: Fri, 9 Oct 2026 02:46:24 +0800
+X-Gm-Features: AclHuK9pXxDTNirNgeHjSpg9wUROW61urar-Nx_M4wUCOmYtz8ickPAyKQ_LTrw
+Message-ID: <CAE2XoE9Dg2CQGF9uQvM2=LEaXdGR+1Djt0DnYxntfASP-uD5OQ@mail.gmail.com>
+Subject: Re: [PATCH v1] test/qtest: Remove s390x boot device support check in
+ pxe-test.c
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Zhuoying Cai <zycai@linux.ibm.com>, qemu-devel@nongnu.org,
+ qemu-s390x@nongnu.org, 
+ shentey@gmail.com, cohuck@redhat.com, farman@linux.ibm.com, 
+ mjrosato@linux.ibm.com
 Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.28.5 (3.28.5-27.el8_10) 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-GUID: G2vvVZX4HaiZVmpu3vdphOgVrRiTEZd0
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA4MDA3NCBTYWx0ZWRfX/DZnkgwedx3I
- BiYHdkW2hq94BNy1s3GAiUkFcA0x5ZEE5xn2YqtfowgQgV+DLcqdUYEYJFU5FAQO0ho0477tArz
- k1kV8ZgtLrXB7JLktKRsN+k07q9bjotaxL3QgOifrJHPuvOge4xirK1jnlNPRsN3ZJRv6lbYbsr
- t5ZvSO8eJjEBEgWL7Je4BhpgFOgNFZRoaY4HpEMhQIFb0D24SgBMzhF7yJbh8/YmsAy4QCWJHAV
- RXvacWJAjnoVvbYI6FxqbiaTxIYLrBohDU6ZypsTkdkRbCLdHYZCPtipCYwQ48cVD1aJsuoJWMQ
- D/596qW/E4qGq5Z8B4bZNeb0n2s5Fgd0b7hxESlW9BqJrwjCndHgYnoWGWOk8d6fvqU+sAUTpcN
- KuFC7J2SW2I+fuIfsgo2DgqrXbr5zJoIodatlSTfq69iEaxoKC9em/L9BOnxADYaALLCsw8jutl
- YHFqo5UWeAVas3m3VGw==
-X-Authority-Analysis: v=2.4 cv=cIt1IVeN c=1 sm=1 tr=0 ts=6ac7e437 cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8
- a=EUspDBNiAAAA:8 a=faDQGt5goccKK3UQXQYA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA4MDA3NCBTYWx0ZWRfXxHTPvjWzIp1D
- fdwyybiXfAis4l0W8ZaAebFa4y9SGam5riKr2fFgtnipLNplpsRm69AmtDTKO+e73STBhJ3DiNq
- a90jGv3JPRSt0zdUADNXAmbLIF8pWbc=
-X-Proofpoint-ORIG-GUID: Y7q7is2_8rIjwERjJa5wfdiMDlh7a1hw
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-10-08_06,2026-10-08_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1011 malwarescore=0 priorityscore=1501 adultscore=0 impostorscore=0
- lowpriorityscore=0 suspectscore=0 spamscore=0 phishscore=0 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610020000 definitions=main-2610080074
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=milesg@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
+ envelope-from=luoyonggang@gmail.com; helo=mail-ed1-x52f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -128,83 +120,194 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: milesg@linux.ibm.com
+Reply-To: luoyonggang@gmail.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
+On Thu, Oct 8, 2026 at 11:47=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@r=
+edhat.com> wrote:
+>
+> On Thu, Oct 08, 2026 at 11:34:35AM -0400, Zhuoying Cai wrote:
+> > The s390x PXE tests used `memmem` to probe the s390-ccw.img firmware
+> > for device support strings before running each test. MinGW-w64 does
+> > not provide `memmem`, breaking the MSYS2/GCC build.
+> >
+> > Remove the check as a workaround.
+>
+> Removing the testing on every platform due to a Windows limitation
+> is rather a big hammer. Why not wrap the code in  #ifndef WIN32   ?
 
-Thanks,
+I did it in another way:
+[PATCH 0/2] tests/qtest: fix and gaurd PXE test build on MinGW
+https://lore.kernel.org/qemu-devel/20261008184119.142-1-luoyonggang@gmail.c=
+om/T/#t
 
-Glenn
 
-On Thu, 2026-10-08 at 01:23 +0200, Philippe Mathieu-Daudé wrote:
-> Inline the deprecated gdb_get_regl() as ppc_gdb_get_regl(),
-> replacing the target_long_bits() check by a ppc_env_is_64bit()
-> one.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-> ---
->  target/ppc/gdbstub.c | 19 +++++++++++++------
->  1 file changed, 13 insertions(+), 6 deletions(-)
-> 
-> diff --git a/target/ppc/gdbstub.c b/target/ppc/gdbstub.c
-> index ee02be63ce8..0071c2b3bab 100644
-> --- a/target/ppc/gdbstub.c
-> +++ b/target/ppc/gdbstub.c
-> @@ -53,6 +53,13 @@ static unsigned ppc_gdb_register_len(const CPUPPCState *env, int n)
->      }
->  }
->  
-> +static inline int ppc_gdb_get_regl(const CPUPPCState *env,
-> +                                   GByteArray *buf, uint64_t val)
-> +{
-> +    return ppc_env_is_64bit(env) ? gdb_get_reg64(buf, val)
-> +                                 : gdb_get_reg32(buf, val);
-> +}
-> +
->  /*
->   * We need to present the registers to gdb in the "current" memory
->   * ordering.  For user-only mode we get this for free;
-> @@ -98,14 +105,14 @@ int ppc_cpu_gdb_read_register(CPUState *cs, GByteArray *buf, int n)
->  
->      if (n < 32) {
->          /* gprs */
-> -        gdb_get_regl(buf, env->gpr[n]);
-> +        ppc_gdb_get_regl(env, buf, env->gpr[n]);
->      } else {
->          switch (n) {
->          case 64:
-> -            gdb_get_regl(buf, env->nip);
-> +            ppc_gdb_get_regl(env, buf, env->nip);
->              break;
->          case 65:
-> -            gdb_get_regl(buf, env->msr);
-> +            ppc_gdb_get_regl(env, buf, env->msr);
->              break;
->          case 66:
->              {
-> @@ -114,10 +121,10 @@ int ppc_cpu_gdb_read_register(CPUState *cs, GByteArray *buf, int n)
->                  break;
->              }
->          case 67:
-> -            gdb_get_regl(buf, env->lr);
-> +            ppc_gdb_get_regl(env, buf, env->lr);
->              break;
->          case 68:
-> -            gdb_get_regl(buf, env->ctr);
-> +            ppc_gdb_get_regl(env, buf, env->ctr);
->              break;
->          case 69:
->              gdb_get_reg32(buf, cpu_read_xer(env));
-> @@ -281,7 +288,7 @@ static int gdb_get_spr_reg(CPUState *cs, GByteArray *buf, int n)
->      default:
->          val = env->spr[reg];
->      }
-> -    gdb_get_regl(buf, val);
-> +    ppc_gdb_get_regl(env, buf, val);
->  
->      ppc_maybe_bswap_register(env, gdb_get_reg_ptr(buf, len), len);
->      return len;
+>
+> >
+> > Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
+> > Reported-by: Bernhard Beschow <shentey@gmail.com>
+> > ---
+> >  tests/qtest/pxe-test.c | 97 +-----------------------------------------
+> >  1 file changed, 2 insertions(+), 95 deletions(-)
+> >
+> > diff --git a/tests/qtest/pxe-test.c b/tests/qtest/pxe-test.c
+> > index 61c92a2df4..51e6bdac2a 100644
+> > --- a/tests/qtest/pxe-test.c
+> > +++ b/tests/qtest/pxe-test.c
+> > @@ -26,7 +26,6 @@ typedef struct testdef {
+> >      const char *machine;    /* Machine type */
+> >      const char *model;      /* NIC device model */
+> >      const char *extra;      /* Any additional parameters */
+> > -    bool (*boot_dev_support)(void); /* optional: boot device support c=
+heck */
+> >  } testdef_t;
+> >
+> >  static testdef_t x86_tests[] =3D {
+> > @@ -59,91 +58,9 @@ static testdef_t ppc64_tests_slow[] =3D {
+> >      { NULL },
+> >  };
+> >
+> > -static const char *s390_bios_load(gsize *len)
+> > -{
+> > -    static char *cached_contents;
+> > -    static gsize cached_len;
+> > -    const char *qemu_bin;
+> > -    g_autofree char *cmd =3D NULL;
+> > -    char dir[PATH_MAX];
+> > -    char *found =3D NULL;
+> > -    char *path =3D NULL;
+> > -    FILE *fp;
+> > -
+> > -    if (cached_contents) {
+> > -        g_test_message("Using cached bios contents");
+> > -        goto out;
+> > -    }
+> > -
+> > -    /* search the qemu binary's data directories for s390-ccw.img */
+> > -    qemu_bin =3D qtest_qemu_binary(NULL);
+> > -    cmd =3D g_strdup_printf("%s -L help", qemu_bin);
+> > -    fp =3D popen(cmd, "r");
+> > -
+> > -    if (!fp) {
+> > -        g_error("Failed to run '%s'", cmd);
+> > -    }
+> > -
+> > -    while (fgets(dir, sizeof(dir), fp) && !found) {
+> > -        dir[strcspn(dir, "\n")] =3D '\0';
+> > -        path =3D g_build_filename(dir, "s390-ccw.img", NULL);
+> > -        if (g_file_get_contents(path, &cached_contents, &cached_len, N=
+ULL)) {
+> > -            found =3D path;
+> > -        } else {
+> > -            g_free(path);
+> > -        }
+> > -    }
+> > -    pclose(fp);
+> > -
+> > -    if (!found) {
+> > -        g_error("s390-ccw.img not found");
+> > -    }
+> > -
+> > -    g_test_message("Loaded %s", found);
+> > -    g_free(found);
+> > -
+> > -out:
+> > -    *len =3D cached_len;
+> > -    return cached_contents;
+> > -}
+> > -
+> > -static bool s390_bios_has_string(const char *needle)
+> > -{
+> > -    const char *contents;
+> > -    gsize len;
+> > -    bool found;
+> > -
+> > -    contents =3D s390_bios_load(&len);
+> > -    found =3D memmem(contents, len, needle, strlen(needle)) !=3D NULL;
+> > -
+> > -    g_test_message("\"%s\" %s in bios", needle, found ? "found" : "not=
+ found");
+> > -    return found;
+> > -}
+> > -
+> > -static bool s390_bios_has_net_ccw(void)
+> > -{
+> > -    /*
+> > -     * Assume that netboot support always includes virtio-net-ccw supp=
+ort.
+> > -     * Check only that netboot code exists, rather than probing virtio=
+-net-ccw
+> > -     * support directly.
+> > -     */
+> > -    return s390_bios_has_string("Network boot starting...");
+> > -}
+> > -
+> > -static bool s390_bios_has_net_pci(void)
+> > -{
+> > -    /*
+> > -     * Check for a string unique to virtio-net-pci boot support in the=
+ bios
+> > -     * to determine if the binary was built with support for this devi=
+ce.
+> > -     */
+> > -    return s390_bios_has_string("Setup failed for virtio-net-pci");
+> > -}
+> > -
+> >  static testdef_t s390x_tests[] =3D {
+> > -    { "s390-ccw-virtio", "virtio-net-ccw",
+> > -      .boot_dev_support =3D s390_bios_has_net_ccw },
+> > -    { "s390-ccw-virtio", "virtio-net-pci",
+> > -      .boot_dev_support =3D s390_bios_has_net_pci },
+> > +    { "s390-ccw-virtio", "virtio-net-ccw"},
+> > +    { "s390-ccw-virtio", "virtio-net-pci"},
+> >      { NULL },
+> >  };
+> >
+> > @@ -174,11 +91,6 @@ static void test_pxe_ipv4(gconstpointer data)
+> >  {
+> >      const testdef_t *test =3D data;
+> >
+> > -    if (test->boot_dev_support && !test->boot_dev_support()) {
+> > -        g_test_skip("The bios does not support booting this device");
+> > -        return;
+> > -    }
+> > -
+> >      test_pxe_one(test, false);
+> >  }
+> >
+> > @@ -186,11 +98,6 @@ static void test_pxe_ipv6(gconstpointer data)
+> >  {
+> >      const testdef_t *test =3D data;
+> >
+> > -    if (test->boot_dev_support && !test->boot_dev_support()) {
+> > -        g_test_skip("The bios does not support booting this device");
+> > -        return;
+> > -    }
+> > -
+> >      test_pxe_one(test, true);
+> >  }
+> >
+> > --
+> > 2.56.0
+> >
+> >
+>
+> With regards,
+> Daniel
+> --
+> |: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+> |: https://libvirt.org          ~~          https://entangle-photo.org :|
+> |: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+>
+>
 
+
+--=20
+         =E6=AD=A4=E8=87=B4
+=E7=A4=BC
+=E7=BD=97=E5=8B=87=E5=88=9A
+Yours
+    sincerely,
+Yonggang Luo
 
