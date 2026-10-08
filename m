@@ -4,127 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C9B2CA6011
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Oct 2026 17:14:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C35CCCA6011
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Oct 2026 17:25:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xErgM-00084J-7K; Thu, 08 Oct 2026 13:13:26 -0400
+	id 1xErra-00011U-RO; Thu, 08 Oct 2026 13:25:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xErgK-00083n-Ho
- for qemu-devel@nongnu.org; Thu, 08 Oct 2026 13:13:24 -0400
-Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xErgI-00038n-I5
- for qemu-devel@nongnu.org; Thu, 08 Oct 2026 13:13:24 -0400
-Received: by mail-ed1-x532.google.com with SMTP id
- 4fb4d7f45d1cf-6af9a90e4bbso3762402a12.0
- for <qemu-devel@nongnu.org>; Thu, 08 Oct 2026 10:13:22 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1791479601; cv=none;
- d=google.com; s=arc-20260327;
- b=mrEp5K/417wGzIBTMQGtvfRxy3cl/pds228kJCUHm6CwGFgnsfk8afjW8+nLIelt4q
- 6rJtYwiiuCmA1Ul1lPEvKzzgwx3IllTZ65HlhGwGxddQW6XZ+bBL0UfzJ9BmVU5ANpRr
- cPP+GPEMPsXa15TBcJeqBPl49D5zIAjE9sTQ6gqT8bAowvklv+Wjy8gWARC+QVo2svzJ
- 6Z2Vd1CCPx4yCTkuJHztBUe7gJH1ZwfWEITm+TyxrDck5cy6zyHZOTSqVyE1Lxzz0XLs
- oE9pQ/tuySfnSfkgkfg8/FbdYuAvPMpLL+ql0XamX7DFqZiFmxhK1YW8USH9yrbsoE6h
- Wlxw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :reply-to:in-reply-to:references:mime-version:dkim-signature;
- bh=qHizU6jSNi8b80NXnXgXhGC92UoulxXTaBBxf0UADME=;
- fh=hZLh1xUAwZOD7mgeF+wNtnVeD7BcV+z2IlwkvfbaLEQ=;
- b=pVwxlbSYNqmbfJmD4ikCF4pyAzdiAQftsH/h4bT+dPLyzPxuAY7T3aM9lgILbXLCXI
- 4xCHBiyRK3no/o7GHJ2hpa/LQzSuNDjRgsg/3wzIIEHQC7GMhuhVk4o1gV9UkQdrmkgj
- X15PXhqOSvuMJ3Fshoht+9hY03+NDy+KEzxXJ2YisYHc0Ute0IoUfidEoc7RctqMMfeq
- yMI7eUuNHYnerFiQZPbJlRVgm2iLD/d9WoZz+LwbI6/M00DpT3nnxx4cWGqZwd4CTTP7
- INd6NGr2dp0D/O0qXAV823a3eLkdC4ZyGcxzfgwUsF/g9hu3WqN2yB8hzI8bJkFtEiFI
- KjoQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1791479601; x=1792084401; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:reply-to:in-reply-to:references:mime-version:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=qHizU6jSNi8b80NXnXgXhGC92UoulxXTaBBxf0UADME=;
- b=cPE3FKq8XVFCzfX6ZlYucCwbDIoAwDpFES2kn+5VMhtociUxhK5a6JaIizCEaubsbf
- M6A5G/a4C4Ar3GW9j6Tgtx7GBs8/DMzyeBLIaQQAsWui6LbXzUY1CJUFyL0tq9QjooiJ
- rxUI6pqQ8j5vVfu4DTgq8/t/vwS2lmOpgVovNRRHiHEZL+HV+k3WkqfqyXuTi1hyk73k
- eHk4Q1K7BTfVVNCxM4ASbWmuyHBdUB2IFIMxTu+VezpfzRQrT1owR1PJdZm8fjLm2Yxt
- eMipYbVrQ4XgBNl8XacSziYbX431xNlZih6pN1hV+3dxI72CYrgYogmGNbvV7zjsCA1w
- D+mg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791479601; x=1792084401;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:reply-to:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=qHizU6jSNi8b80NXnXgXhGC92UoulxXTaBBxf0UADME=;
- b=LBVzfelR6Ps7iWQ6tUVSWaASXqFDKitrQ74ij7G3JPvn2rCULG2I4k2KP7tmw8lGWF
- Zi4jYgAjs1OabW01FhWb/MDPo459rhZZeZUQ0HYZbNBxw0Q/z3r8RFz0wqvH7RLixDrY
- NpQ44PFrKXxDitUmuf3LVBTqsTMDGCCWFST3bznNBYN6JfXPHsf/aT0CmGElPt3YH7hL
- 5LmtQmCownxbaclckrJaVX0P+4xQzQiHahNfkPRTJlb5wiMto4cESxKcHxY7JHktw+V1
- R6q5O6q07XqvmSPBlEIFcnFQ6BM7ag4AhA4RtYZGZBwOXTJFjTRdaKUaxR80ZafRWfrl
- 8pwQ==
-X-Forwarded-Encrypted: i=1;
- AKwUvBy2et0fm1RBSR5+MFpACUJNbuam2ilyjvU9knz37IJDKJ4mOkUeGWtZ1Xr18V7JyIKegDEMyMSQQQwS@nongnu.org
-X-Gm-Message-State: AFq9FYK85fyzC+f6NcsJdRaPyJwEESstHDtsnr/LI8Swh0Mkn/fk1gfv
- qvESIkQYYyGUSqgTJNjKbB4uD26dvqhHXNu2ejfJAhStngDXJoTfa3AD8XgqI3040hW67dsLKHC
- UVi/ImN0u2KJ77mYjKVGAIhOxaQAJuKc=
-X-Gm-Gg: AYBFou1tWnJap35Hvlq4Ia2MLqqEmyKjT81QiK4k1TOnisTmAdkGZ1MPDGs4jqVcuDc
- PzGLGyX9Afd87++hNAHX76DBoQJVApUdxx0q+BeTHIgtol+V2crolyIbLEd9ZTjqDQUU9KBzbbG
- Db1WG4UxG07819vdgQ+l4B9o1KlAZuc9I2qeAi1Y6fThieVntSuykNFJBj9KfQAzffbNWXXaIiW
- vyEbTWBqqe3Y1W4DnSl2XBl78W0eyWgUaQ+14cAJyGOSAfFWBGBJ6WiYSe5dinmiu8BBZNLewGx
- iRXkLs+zmIVs6OAhSSaxHCawH3N/foAJ/kw3hJA5abCToJYny6B6bKo=
-X-Received: by 2002:a05:6402:c4e1:20b0:6b0:c1d:a7ce with SMTP id
- 4fb4d7f45d1cf-6b00c1da88emr2675938a12.12.1791479600657; Thu, 08 Oct 2026
- 10:13:20 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <andy0x48@linux.ibm.com>)
+ id 1xEqIx-00073j-0E; Thu, 08 Oct 2026 11:45:11 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <andy0x48@linux.ibm.com>)
+ id 1xEqIv-00023c-CH; Thu, 08 Oct 2026 11:45:10 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 698EZNpg1578199; Thu, 8 Oct 2026 15:45:02 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=pp1; bh=AULcUfuSy1hdbWKBZZlH7SIOAgQxL90v7S4mEM2SC
+ k0=; b=KKNkPkYGPoKltgdfMMiZmp2rRJ9dVAmVf/N8UkQpCecph6ZIewnLuHOd9
+ sWBu6QIvxKpzCVJdbn7+D6FKRSqTSJNGEW3rvKB+u1Ee9OPGd0WGafN/wta3b7GE
+ EBjuVrvP15yMiXik5UMLi5pezeckl7m+kVMCgtx5W8Hgc2tm/8NkGhgDsY91Xw2o
+ eqIlJYoxl1G5ZCJ6821n50DNMmdKU9/jbDn+/atnnohlrB5sdbj7/cp2sDLwnclE
+ ZIb/0CnDvnB/jVUbO1j8P8TT1OHPP8lb7sJ8TPm3RMAuLDFnC81fejU/aZas37aR
+ PDFqQ9uYxcDJIBT/hwrT6SfZEY3EQ==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4h5xjvcsfv-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Thu, 08 Oct 2026 15:45:02 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 698EXfJs3632381; Thu, 8 Oct 2026 15:45:01 GMT
+Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4h5a6dqs2w-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 08 Oct 2026 15:45:01 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
+ [10.20.54.105])
+ by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 698FiwF654460892
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 8 Oct 2026 15:44:58 GMT
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 0BAD720049;
+ Thu,  8 Oct 2026 15:44:58 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 52D802004B;
+ Thu,  8 Oct 2026 15:44:57 +0000 (GMT)
+Received: from li-4c4c4544-0051-4610-8046-b1c04f514634.ibm.com (unknown
+ [9.111.72.43]) by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Thu,  8 Oct 2026 15:44:57 +0000 (GMT)
+From: Andrew Holden <andy0x48@linux.ibm.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-s390x@nongnu.org, iii@linux.ibm.com, richard.henderson@linaro.org,
+ david@kernel.org, cohuck@redhat.com, freude@linux.ibm.com,
+ Andrew Holden <andy0x48@linux.ibm.com>
+Subject: [PATCH] target/s390x/tcg: fix register update on guest memory fault
+ in cpacf_aes_ecb
+Date: Thu,  8 Oct 2026 16:44:55 +0100
+Message-ID: <20261008154455.369004-1-andy0x48@linux.ibm.com>
+X-Mailer: git-send-email 2.56.0
 MIME-Version: 1.0
-References: <20261007115253.328-1-luoyonggang@gmail.com>
- <2390b3d7-6918-41e3-8532-c19de4cdd1ff@oss.qualcomm.com>
- <asdlbOZBSYIaCMIh@redhat.com>
- <CAE2XoE91XxoJRFpQ_1jhmX6LdxMyN16CF7RXxM62C5Ctkc1tig@mail.gmail.com>
- <42fd67c0-c20d-4bc4-bede-79073e4be4a1@oss.qualcomm.com>
-In-Reply-To: <42fd67c0-c20d-4bc4-bede-79073e4be4a1@oss.qualcomm.com>
-From: Yonggang Luo <luoyonggang@gmail.com>
-Date: Fri, 9 Oct 2026 01:13:06 +0800
-X-Gm-Features: AclHuK9csGmRw3GpXW4BwLyYvk1PCsDiAVec9g0e7PI-vvgWskxaPV32iVH4rIs
-Message-ID: <CAE2XoE-gN5-vmE8r00Ds_Z=E1WePSFi_MJXjmy9ZuXEU_=o31g@mail.gmail.com>
-Subject: Re: [PATCH 0/8] qom: pass TargetInfo to the is_available callback
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- qemu-devel@nongnu.org, Cleber Rosa <crosa@redhat.com>, 
- Stefan Hajnoczi <stefanha@redhat.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
- Laurent Vivier <lvivier@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- John Snow <jsnow@redhat.com>, Laurent Vivier <laurent@vivier.eu>,
- Richard Henderson <richard.henderson@linaro.org>, 
- Joel Stanley <joel@jms.id.au>, Fabiano Rosas <farosas@suse.de>,
- Kane Chen <kane_chen@aspeedtech.com>, 
- Andrew Jeffery <andrew@codeconstruct.com.au>, Troy Lee <leetroy@gmail.com>, 
- Jamin Lin <jamin_lin@aspeedtech.com>, Stafford Horne <shorne@gmail.com>,
- qemu-arm@nongnu.org, Philippe Mathieu-Daude <philmd@mailo.com>,
- Peter Maydell <peter.maydell@linaro.org>, 
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Steven Lee <steven_lee@aspeedtech.com>, Alexander Bulekov <alxndr@bu.edu>, 
- Darren Kenny <darren.kenny@oracle.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::532;
- envelope-from=luoyonggang@gmail.com; helo=mail-ed1-x532.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: xt_wqZIJJLD8gWtF4r-KedNoq-L5e_Sz
+X-Proofpoint-ORIG-GUID: xt_wqZIJJLD8gWtF4r-KedNoq-L5e_Sz
+X-Authority-Analysis: v=2.4 cv=H8NOUOYi c=1 sm=1 tr=0 ts=6ac7ba7e cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8 a=r6Tt9g7xu0lz_p5kHnAA:9
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA4MDA2MiBTYWx0ZWRfX45sj1B/0Rgpw
+ QPXRicdMf5FHk/lETRsC5+gJP6nphXZnnrESOhczsuWU5sGf4AIW2sZLi4cDaaKsWObapOCBP6o
+ Za3ncxJF4Oi+R0uY4+jk1odcqt0ojjMRo2TcC/bYzZBXrMgNQAH7pI8gWuYPVWwlGDpTVg4VfNn
+ jkhlV5D50oSYzyLuIniw365fK1dqbuAUvLuJyTwsqTPKqO8DH4Q3FFl2ymd62j+FDyxByqoEoGU
+ iHEd7M5kzNuUHyavkFBeCqnM3fSNZ4GuFIy+Mo/4HejpPyHHY+I7Sw1VdzTMAdIqzsxJv7wHq8M
+ YZSb37Jzq9g+lhd5j4GDPANeFIVY8CQoA58jM5NVmjzFIGG19bsYOihXGHA169ZjhvbRJpPQBVE
+ zfzpoF3ugcsPRLOfUUvdSw1hWSDR5PxFSir7c4nkcKHme+9UNSg67L0eUg8nUobQeQMe53OHabK
+ 4n628sVLfrrevXvo4rg==
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA4MDA2MiBTYWx0ZWRfX5fzkAOTdSUA2
+ yiOLiyCeFOS6sWmPZLBFf7q6pxxvF3Tl+jD0MyDM4/1yxjS6QzLZfUJLXardjwcnhV0tXiKJ5Y4
+ xoIkzTufdmoHTGuRjJK32HdJDc+oWBw=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-10-08_05,2026-10-08_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 adultscore=0 phishscore=0 lowpriorityscore=0 impostorscore=0
+ clxscore=1011 spamscore=0 priorityscore=1501 malwarescore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2610020000 definitions=main-2610080062
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=andy0x48@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Thu, 08 Oct 2026 13:25:01 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -136,143 +117,72 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: luoyonggang@gmail.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Oct 9, 2026 at 12:06=E2=80=AFAM Pierrick Bouvier
-<pierrick.bouvier@oss.qualcomm.com> wrote:
->
-> On 10/8/2026 2:46 AM, Yonggang Luo wrote:
-> > On Thu, Oct 8, 2026 at 5:42=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrang=
-e@redhat.com> wrote:
-> >>
-> >> On Wed, Oct 07, 2026 at 01:25:46PM -0700, Pierrick Bouvier wrote:
-> >>> On 10/7/2026 4:47 AM, Yonggang Luo wrote:
-> >>>> This allows a combined binary to register machine types from all its=
- targets.
-> >>>> Consequently, QMP `query-machines` can return machine entries from e=
-very
-> >>>> target, even when `none` is selected. For example, a client can quer=
-y the
-> >>>> combined machine list with:
-> >>>>
-> >>>> ```json
-> >>>> { "execute": "query-machines" }
-> >>>> ```
-> >>>>
-> >>>> The returned list includes the registered machine classes from all l=
-inked
-> >>>> targets. This is separate from selecting a machine: with `-target no=
-ne`,
-> >>>> `-M virt` reports the targets that provide `virt` instead of choosin=
-g one
-> >>>> arbitrarily:
-> >>>>
-> >>>> ```text
-> >>>> qemu-system -target none -M virt
-> >>>> unsupported machine type: "virt" for target "none"
-> >>>> Available for targets:
-> >>>>   aarch64
-> >>>>   arm
-> >>>> ```
-> >>>>
-> >>>
-> >>> From the long conversation on a previous thread, I thought we reached
-> >>> the conclusion that if we didn't expose any ambiguous name, then -tar=
-get
-> >>> option is unnecessary, or maybe I got lost on track of this thread.
-> >>>
-> >>> https://lore.kernel.org/qemu-devel/ar_coT44h5-zJPVV@redhat.com/
-> >>>
-> >>> I'm not sure which semantic we want to have with -target none. If the=
-re
-> >>> is no ambiguous name registered, we just don't need it at all. It's a
-> >>> win-win IMHO.
-> >>
-> >> Yes, if we expose unique names for every machine, then -target is then
-> >> redundant.
-> >
-> > so how to diff riscv32-virt and risv64-virt? oh so for this machine we
-> > needs two name?
-> > "virt" needs register twice for it? or register only a single time,
-> > but we prefix the target_name()
-> > automatically? for example machine::name =3D=3D=3D "virt", but we can u=
-se
-> > "riscv32-virt" "risv64-virt" to reach it?
-> >
->
-> Yes, ideally we should have different variant of virt for 32/64 bit.
-> Same goes for cpu max types.
->
-> QOM type is always registered unambiguously ("$arch-virt"). Then, for
-> the "alias" name, which is virt, in case multiple matches are found,
-> command line can return an error with list of unambiguous names to call i=
-t.
->
-> $ qemu-system -M virt
-> Multiple virt machines are available. Please choose one of them:
-> - aarch64-virt
-> - riscv64-virt
->
-> There is no "parsing" of the argument, it's just the real QOM type. Then
-> we can find which target it implements from mc->targets.
-> And then, we can automatically choose which cpus should be available
-> based on that, thanks to cpu->targets.
->
-> For existing binaries, nothing change.
+The KM instruction loop in cpacf_aes_ecb() updated the source pointer,
+destination pointer, and length registers only after the entire loop
+completed, using a 'done' accumulator. If a guest memory access fault
+fires mid-loop, siglongjmp unwinds the C stack before the register
+update is reached. The registers then reflect block 0 rather than the
+block being processed, causing the instruction to restart from the
+beginning on every fault. This results in quadratic reprocessing and
+violates the PoP requirement that registers reflect partial completion
+per block processed.
 
-Good, I think we found a clean way now, is_available should be
-removed, and TypeInfo::targets and TypeImpl::targets should be added.
-I think
-for "virt" we can add a shared hw/machine-virt.c instead, and forwarding to
-the $arch specific virt. so that we only have a single "virt" registered.
-And it's
-targets is
-QEMU_ARCH_I386 |
-QEMU_ARCH_ARM |
-QEMU_ARCH_RISCV |
-QEMU_ARCH_LOONGARCH |
-QEMU_ARCH_M68K |
-QEMU_ARCH_OR1K |
-QEMU_ARCH_XTENSA |
-QEMU_ARCH_HEXAGON
+Fix this by updating the registers inside the loop body after each
+successfully processed block, and removing the 'done' accumulator.
 
-So that we won't have a list of conflict QOM names for "virt" machines.
-As now we indeed have only a single "virt" machine that redirects to
-different targets.
+Signed-off-by: Andrew Holden <andy0x48@linux.ibm.com>
+---
+ target/s390x/tcg/cpacf_aes.c | 18 ++++++++----------
+ 1 file changed, 8 insertions(+), 10 deletions(-)
 
+diff --git a/target/s390x/tcg/cpacf_aes.c b/target/s390x/tcg/cpacf_aes.c
+index 92884c4120..41ebc57087 100644
+--- a/target/s390x/tcg/cpacf_aes.c
++++ b/target/s390x/tcg/cpacf_aes.c
+@@ -62,7 +62,7 @@ int cpacf_aes_ecb(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
+ {
+     enum { MAX_BLOCKS_PER_RUN = 8192 / AES_BLOCK_SIZE };
+     uint8_t in[AES_BLOCK_SIZE], out[AES_BLOCK_SIZE];
+-    uint64_t len = *src_len_reg, done = 0;
++    uint64_t len = *src_len_reg;
+     int i, keysize, addr_reg_size;
+     uint8_t key[32];
+     AES_KEY exkey;
+@@ -116,23 +116,21 @@ int cpacf_aes_ecb(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
+ 
+     /* process up to MAX_BLOCKS_PER_RUN aes blocks */
+     for (i = 0; i < MAX_BLOCKS_PER_RUN && len >= AES_BLOCK_SIZE; i++) {
+-        aes_read_block(env, mmu_idx, ra, *src_ptr_reg + done, in);
++        aes_read_block(env, mmu_idx, ra, *src_ptr_reg, in);
+         if (mod) {
+             AES_decrypt(in, out, &exkey);
+         } else {
+             AES_encrypt(in, out, &exkey);
+         }
+-        aes_write_block(env, mmu_idx, ra, *dst_ptr_reg + done, out);
++        aes_write_block(env, mmu_idx, ra, *dst_ptr_reg, out);
++        *src_ptr_reg = deposit64(*src_ptr_reg, 0, addr_reg_size,
++                                 *src_ptr_reg + AES_BLOCK_SIZE);
++        *dst_ptr_reg = deposit64(*dst_ptr_reg, 0, addr_reg_size,
++                                 *dst_ptr_reg + AES_BLOCK_SIZE);
++        *src_len_reg -= AES_BLOCK_SIZE;
+         len -= AES_BLOCK_SIZE;
+-        done += AES_BLOCK_SIZE;
+     }
+ 
+-    *src_ptr_reg = deposit64(*src_ptr_reg, 0, addr_reg_size,
+-                             *src_ptr_reg + done);
+-    *dst_ptr_reg = deposit64(*dst_ptr_reg, 0, addr_reg_size,
+-                             *dst_ptr_reg + done);
+-    *src_len_reg -= done;
+-
+     return !len ? 0 : 3;
+ }
+ 
+-- 
+2.56.0
 
-For other types also conflict can be handled in the same way, such as
-"-cpu host" "-cpu max"
-maybe others, but I think they all have the same way to deal with.
-
-
-That's why  TypeInfo::targets and TypeImpl::targets better than sole
-Machine::targets
-
->
-> >>
-> >> With regards,
-> >> Daniel
-> >> --
-> >> |: https://berrange.com       ~~        https://hachyderm.io/@berrange=
- :|
-> >> |: https://libvirt.org          ~~          https://entangle-photo.org=
- :|
-> >> |: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com=
- :|
-> >>
-> >
-> >
->
-
-
---=20
-         =E6=AD=A4=E8=87=B4
-=E7=A4=BC
-=E7=BD=97=E5=8B=87=E5=88=9A
-Yours
-    sincerely,
-Yonggang Luo
 
