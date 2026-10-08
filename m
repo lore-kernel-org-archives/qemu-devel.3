@@ -4,109 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE79FCA6016
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Oct 2026 21:34:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1E7CCA6015
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Oct 2026 21:36:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xEvjp-0001JH-73; Thu, 08 Oct 2026 17:33:34 -0400
+	id 1xEvmW-0002Kk-VH; Thu, 08 Oct 2026 17:36:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1xEveY-0000Mn-LO
- for qemu-devel@nongnu.org; Thu, 08 Oct 2026 17:27:57 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ id 1xEveT-0000MR-2J
+ for qemu-devel@nongnu.org; Thu, 08 Oct 2026 17:27:50 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1xEveR-0002pS-82
- for qemu-devel@nongnu.org; Thu, 08 Oct 2026 17:27:48 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ id 1xEveP-0002ow-U4
+ for qemu-devel@nongnu.org; Thu, 08 Oct 2026 17:27:44 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 698L5ak01222646; Thu, 8 Oct 2026 21:27:32 GMT
+ 698L5VYr2404947; Thu, 8 Oct 2026 21:27:27 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=KAS07V8uOnJRZoQQD
- NT6BmRaXEIVAEHIT8W5c2IhWOA=; b=D/SvZqVxZdX2XgaW2HMeszcRrQElERtaB
- IT4JhXem/AHYdgRlPVpFiqx6SbZye2ziiOs5umv+cMr/DrYwzKEDwDc06NDoblGo
- TcIiawluARKt41bz06pHBTNdEMzWpyckErEsTsXhquXwfDcEKt7QFCKMqCz5XGO1
- mThh8/lV/icwZ8ql9Hgn0cus4JxUdyAtFZpesbF85FPDj8Ndxg+JA+aYua2V97v6
- 19Ttf1FCaZ9Cymd7LP0i5tmP1QjfF8HKShNlG95sL3WYmxiQPdMRARw7rVK0Aa8g
- s4FKbUR7C1fMiNySyoGsnG3mr+krN9IoJ0bfhnIEw6setgLlWTIWw==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4h5xk1e85u-1
+ :mime-version:references:subject:to; s=pp1; bh=w48r8xaJHb1gxh025
+ tcVSNfCgZppbTcu/Di0Fdy9FxI=; b=rRYaXytI53LvIauLSBHRJwFR+oOeSRxOB
+ OPdP31r9WSQPwYmvylOQJeOGKvshRst1O2HjvIRJyYfnlSL9i3ONlEDxzaSJaY18
+ znn0jM9QBaf0+49ViZhyVEojkLK7rB+xjeuCB7zedYnpDvwt9Mpm660igcMFKAn1
+ EiXbShnZuATeHz/IMi9A9E/knMou5TjST9FZ67uEmbydcgjRTmGT/GOOlHt5vpBh
+ Y3ZRHtKzau9fWKtD4fuqpFGaJlIXBEfpPryf0ETij3Nt8OSj0Q0K3ECC3MJ+uR94
+ bY5O7ngCtlQF2xBJN/RvZCXbufYwH482Q1piyx/o6gs/ADABj5lkg==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4h5xjvepr0-1
  (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Thu, 08 Oct 2026 21:27:32 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 698L2sGA4039605; Thu, 8 Oct 2026 21:27:31 GMT
-Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4h58ek9f8t-1
+ Thu, 08 Oct 2026 21:27:27 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 698L2XkT4079100; Thu, 8 Oct 2026 21:27:26 GMT
+Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4h6hsng9kp-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 08 Oct 2026 21:27:31 +0000 (GMT)
+ Thu, 08 Oct 2026 21:27:26 +0000 (GMT)
 Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
  [10.39.53.230])
- by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 698LRVpP15401560
+ by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 698LRQpx60621208
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 8 Oct 2026 21:27:31 GMT
+ Thu, 8 Oct 2026 21:27:26 GMT
 Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id EDED15805C;
- Thu,  8 Oct 2026 21:27:30 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 2CD765805A;
+ Thu,  8 Oct 2026 21:27:26 +0000 (GMT)
 Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 76F0D58054;
- Thu,  8 Oct 2026 21:27:30 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id A6DA658064;
+ Thu,  8 Oct 2026 21:27:25 +0000 (GMT)
 Received: from sbct-3.pok.ibm.com (unknown [9.47.158.153])
  by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Thu,  8 Oct 2026 21:27:30 +0000 (GMT)
+ Thu,  8 Oct 2026 21:27:25 +0000 (GMT)
 From: Stefan Berger <stefanb@linux.ibm.com>
 To: qemu-devel@nongnu.org
 Cc: peter.maydell@linaro.org, Stefan Berger <stefanb@linux.ibm.com>,
  Arun Menon <armenon@redhat.com>
-Subject: [PULL v1 08/10] hw/tpm: crb: Implement tpm_ppi_uninit and use it in
- tpm_crb_unrealize
-Date: Thu,  8 Oct 2026 17:27:21 -0400
-Message-ID: <20261008212723.3679685-9-stefanb@linux.ibm.com>
+Subject: [PULL v1 01/10] tpm_util: Pass TPMVersion to function writing fatal
+ error response
+Date: Thu,  8 Oct 2026 17:27:14 -0400
+Message-ID: <20261008212723.3679685-2-stefanb@linux.ibm.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20261008212723.3679685-1-stefanb@linux.ibm.com>
 References: <20261008212723.3679685-1-stefanb@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=YtCa1IYX c=1 sm=1 tr=0 ts=6ac80ac4 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+X-Proofpoint-GUID: ezKTtcxK3GwyT6_QaI1nh9gjwX5o7Wuv
+X-Proofpoint-ORIG-GUID: ezKTtcxK3GwyT6_QaI1nh9gjwX5o7Wuv
+X-Authority-Analysis: v=2.4 cv=H8NOUOYi c=1 sm=1 tr=0 ts=6ac80abf cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
  a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=V8glGbnc2Ofi9Qvn3v5h:22 a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8 a=20KFwNOVAAAA:8
- a=NuoSX0e7hVvxVl9fKCIA:9
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA4MDA4NCBTYWx0ZWRfX9wRkg7uIfr7J
- nz8cfkNnAZ1Wy0CwI3h8hkmvjfcmncrZSr1vdKKAZHht1a2FMm+oEbyPlrAFtlxKxG17rkc3eVJ
- 4SQrB80uaDhuIBE3Vp+d5Kgkba1yiKogu1i/c134x8iwHkZz1QJEI0HTGUKVqZPRnI76viLy0MK
- yK+fVvwTX3Hht9JiZUJ0pmfEMTJoVfRcv9XPu02YJj09gasGPaR1uyM+6i1PWkoDWF11rGDeWZX
- x0p2vz+R5BGaN4uZ4az6fdyGZAdfw26mm1Qv0ObJGkuKt2UT+cNiYDpZ/jXp3uUKPTowY0mpUMs
- cMmM/w2tGsC+oK9KIxQqzbDmxRFdp8Bz5p52x7qrG/hdkHbf84Ef7J5QnjOIExq8dgTWR7Uq4T7
- 7PAkzNWEAsfFhBKwyO+gTybkEew+MANXNhPMGEvYlOG7EUbETgXD7Fm+tCDcGn1OInHSXQY25U2
- a2tEIjO6UQ4ubz7AO4g==
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA4MDA4NCBTYWx0ZWRfX9+SS8QZvcaRQ
- UF5y+786vY3WtooAAptP5YOb16VQWCmyIJ140DVwI0uvNZBXkoPXzN+XWdpfUqbRHIUmpwprjrG
- ceT4FqJgIMW6E4amXwbWO0YRgG1Bux4=
-X-Proofpoint-GUID: cT6MpoxgCDmj0WMEJvM-3jGlkvrlDeEW
-X-Proofpoint-ORIG-GUID: cT6MpoxgCDmj0WMEJvM-3jGlkvrlDeEW
+ a=U7nrCbtTmkRpXpFmAIza:22 a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8 a=20KFwNOVAAAA:8
+ a=ZdjYBk6P2T0J8aFbIr8A:9
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA4MDA4NCBTYWx0ZWRfXxFTxDYJCXixL
+ xHuoyuBvYo2OnblW3jkWgR4TwMk8miO7qOHtcSPKWPEcEWOP1YkF8Soj/ejKzbvUT1NblWd+Q8c
+ oGG916Bf+wLLzKMqDp45Cg81gPNUt4tV8Y7j8vwMpa+gSGIbcYZmpPYM67zqq3caYpuxCtT1IPt
+ nc9bvrg0oWhIc/Dca7ZmsiN6PS6srJxVGshVwkJMGWIObeo8OD+ijF2Pe1XPbHYHULxFt2FjhEx
+ mHAQ+4qRYZCLBtojHHdcQ8iq25ZyFHrhGQ2j+psomzWJaP4v3mX5P+4sJVz1Giew1y9RJxTf0jn
+ OwIsZeWuheObiZW4wDxygpKK2txgBaxs0XETNMYUSr3jEJz5ZTMQao32B3WDXI+ydc0xjjEeewV
+ fHCSwMHBGgbsIU6bXj6Skw//koP1SavMovevG+DAuw7RwUC67tAl0MoMxzozm/C0+4Rq7HAHEK2
+ Cxs+8ETqs6q+8vfxkCQ==
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA4MDA4NCBTYWx0ZWRfX3Dahv4MoYTT/
+ 08FkvQBAWu9swWP+awyGzzSl2HSBIcB5ET7M1sckHwZbfT75JmOGRkfze4Cf52DsCEol7VkbXDZ
+ vhsChWwTe2KPaY5Qz6s268Xh0tJAL6I=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-10-08_07,2026-10-08_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 phishscore=0 bulkscore=0 clxscore=1015 priorityscore=1501
- lowpriorityscore=0 suspectscore=0 malwarescore=0 adultscore=0 impostorscore=0
+ bulkscore=0 adultscore=0 phishscore=0 lowpriorityscore=0 impostorscore=0
+ clxscore=1015 spamscore=0 priorityscore=1501 malwarescore=0 suspectscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2610020000 definitions=main-2610080084
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=stefanb@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=stefanb@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -123,78 +123,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Implement tpm_ppi_uninit and use it for proper teardown of the PPI in
-tpm_crb_unrealize.
+Have tpm_util_write_fatal_error_response write a TPM version specific
+error response with error code TPM_FAIL for a TPM 1.2 and TPM_RC_FAILURE
+for a TPM 2. Adjust the callers.
 
 Reviewed-by: Arun Menon <armenon@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20261002142516.2063735-9-stefanb@linux.ibm.com
+Link: https://lore.kernel.org/qemu-devel/20261002142516.2063735-2-stefanb@linux.ibm.com
 Signed-off-by: Stefan Berger <stefanb@linux.ibm.com>
 ---
- hw/tpm/tpm_crb.c |  3 +++
- hw/tpm/tpm_ppi.c | 10 ++++++++++
- hw/tpm/tpm_ppi.h | 10 ++++++++++
- 3 files changed, 23 insertions(+)
+ backends/tpm/tpm_emulator.c    |  3 ++-
+ backends/tpm/tpm_passthrough.c |  2 +-
+ backends/tpm/tpm_util.c        | 17 ++++++++++++++---
+ include/system/tpm_util.h      |  3 ++-
+ 4 files changed, 19 insertions(+), 6 deletions(-)
 
-diff --git a/hw/tpm/tpm_crb.c b/hw/tpm/tpm_crb.c
-index cd46b2e888..5c50a79936 100644
---- a/hw/tpm/tpm_crb.c
-+++ b/hw/tpm/tpm_crb.c
-@@ -16,6 +16,7 @@
- 
- #include "qemu/osdep.h"
- 
-+#include "qemu/memalign.h"
- #include "qemu/module.h"
- #include "qemu/error-report.h"
- #include "qapi/error.h"
-@@ -527,6 +528,8 @@ static void tpm_crb_unrealize(DeviceState *dev)
-     if (s->migration_blocker) {
-         migrate_del_blocker(&s->migration_blocker);
+diff --git a/backends/tpm/tpm_emulator.c b/backends/tpm/tpm_emulator.c
+index 95d2de2f48..16ae44c8d7 100644
+--- a/backends/tpm/tpm_emulator.c
++++ b/backends/tpm/tpm_emulator.c
+@@ -270,7 +270,8 @@ static void tpm_emulator_handle_request(TPMBackend *tb, TPMBackendCmd *cmd,
+         tpm_emulator_unix_tx_bufs(tpm_emu, cmd->in, cmd->in_len,
+                                   cmd->out, cmd->out_len,
+                                   &cmd->selftest_done, errp) < 0) {
+-        tpm_util_write_fatal_error_response(cmd->out, cmd->out_len);
++        tpm_util_write_fatal_error_response(cmd->out, cmd->out_len,
++                                            TPM_EMULATOR(tb)->tpm_version);
      }
-+
-+    tpm_ppi_uninit(&s->ppi, get_system_memory(), OBJECT(s));
  }
  
- static void tpm_crb_class_init(ObjectClass *klass, const void *data)
-diff --git a/hw/tpm/tpm_ppi.c b/hw/tpm/tpm_ppi.c
-index f0c34291dc..35baa083f2 100644
---- a/hw/tpm/tpm_ppi.c
-+++ b/hw/tpm/tpm_ppi.c
-@@ -57,3 +57,13 @@ void tpm_ppi_init(TPMPPI *tpmppi, MemoryRegion *m,
+diff --git a/backends/tpm/tpm_passthrough.c b/backends/tpm/tpm_passthrough.c
+index a9f35ab7d6..8a4f8183c7 100644
+--- a/backends/tpm/tpm_passthrough.c
++++ b/backends/tpm/tpm_passthrough.c
+@@ -118,7 +118,7 @@ static void tpm_passthrough_unix_tx_bufs(TPMPassthruState *tpm_pt,
  
-     memory_region_add_subregion(m, addr, &tpmppi->ram);
+ err_exit:
+     if (ret < 0) {
+-        tpm_util_write_fatal_error_response(out, out_len);
++        tpm_util_write_fatal_error_response(out, out_len, tpm_pt->tpm_version);
+     }
+ 
+     tpm_pt->tpm_executing = false;
+diff --git a/backends/tpm/tpm_util.c b/backends/tpm/tpm_util.c
+index 264bff22a9..7019f7fd3e 100644
+--- a/backends/tpm/tpm_util.c
++++ b/backends/tpm/tpm_util.c
+@@ -87,12 +87,23 @@ const PropertyInfo qdev_prop_tpm = {
+ /*
+  * Write an error message in the given output buffer.
+  */
+-void tpm_util_write_fatal_error_response(uint8_t *out, uint32_t out_len)
++void tpm_util_write_fatal_error_response(uint8_t *out, uint32_t out_len,
++                                         TPMVersion tpm_version)
+ {
+     if (out_len >= sizeof(struct tpm_resp_hdr)) {
+-        tpm_cmd_set_tag(out, TPM_TAG_RSP_COMMAND);
++        switch (tpm_version) {
++        case TPM_VERSION_1_2:
++            tpm_cmd_set_tag(out, TPM_TAG_RSP_COMMAND);
++            tpm_cmd_set_error(out, TPM_FAIL);
++            break;
++        case TPM_VERSION_2_0:
++            tpm_cmd_set_tag(out, TPM2_ST_NO_SESSIONS);
++            tpm_cmd_set_error(out, TPM_RC_FAILURE);
++            break;
++        default:
++            g_assert_not_reached();
++        }
+         tpm_cmd_set_size(out, sizeof(struct tpm_resp_hdr));
+-        tpm_cmd_set_error(out, TPM_FAIL);
+     }
  }
-+
-+void tpm_ppi_uninit(TPMPPI *tpmppi, MemoryRegion *m, Object *obj)
-+{
-+    memory_region_del_subregion(m, &tpmppi->ram);
-+
-+    vmstate_unregister_ram(&tpmppi->ram, DEVICE(obj));
-+
-+    qemu_vfree(tpmppi->buf);
-+    tpmppi->buf = NULL;
-+}
-diff --git a/hw/tpm/tpm_ppi.h b/hw/tpm/tpm_ppi.h
-index 88f316ee95..c173889033 100644
---- a/hw/tpm/tpm_ppi.h
-+++ b/hw/tpm/tpm_ppi.h
-@@ -32,6 +32,16 @@ typedef struct TPMPPI {
- void tpm_ppi_init(TPMPPI *tpmppi, MemoryRegion *m,
-                   hwaddr addr, Object *obj);
  
-+/**
-+ * tpm_ppi_uninit:
-+ * @tpmppi: a TPMPPI
-+ * @m: the address-space / MemoryRegion to use
-+ * @obj: the owner object
-+ *
-+ * Function to unregister the TPM PPI region.
-+ */
-+void tpm_ppi_uninit(TPMPPI *tpmppi, MemoryRegion *m, Object *obj);
-+
- /**
-  * tpm_ppi_reset:
-  * @tpmppi: a TPMPPI
+diff --git a/include/system/tpm_util.h b/include/system/tpm_util.h
+index 1858693225..3ab2fe693d 100644
+--- a/include/system/tpm_util.h
++++ b/include/system/tpm_util.h
+@@ -25,7 +25,8 @@
+ #include "system/tpm.h"
+ #include "qemu/bswap.h"
+ 
+-void tpm_util_write_fatal_error_response(uint8_t *out, uint32_t out_len);
++void tpm_util_write_fatal_error_response(uint8_t *out, uint32_t out_len,
++                                         TPMVersion tpm_version);
+ 
+ bool tpm_util_is_selftest(const uint8_t *in, uint32_t in_len);
+ 
 -- 
 2.55.0
 
