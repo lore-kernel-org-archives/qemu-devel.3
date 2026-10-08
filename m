@@ -4,151 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8EA79CA6015
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Oct 2026 23:41:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93105CA6015
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Oct 2026 23:42:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xExj9-0004fA-4b; Thu, 08 Oct 2026 19:40:53 -0400
+	id 1xExkY-0004uI-JI; Thu, 08 Oct 2026 19:42:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xExhu-0004cm-7g
- for qemu-devel@nongnu.org; Thu, 08 Oct 2026 19:39:31 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xExj9-0004or-2J
+ for qemu-devel@nongnu.org; Thu, 08 Oct 2026 19:40:53 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xExhj-0005bs-VZ
- for qemu-devel@nongnu.org; Thu, 08 Oct 2026 19:39:24 -0400
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 698L05nQ3969601
- for <qemu-devel@nongnu.org>; Thu, 8 Oct 2026 23:39:13 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- JW59KKHXY5TCPBZslOxNy3iltfMtJb9sxjeS/HvvO6Y=; b=UGzJ4+fpWRv9Sp3K
- W1nI+Qtv4zX8pVn40cGbMnMo9BcWO8CicB7GsAwyehXKr6gziSLoX0xXyh93Bg+2
- rh73uRd/16XuCYFrfl0jZYuCHzspuyqjM4mV65C8OWs1CtgshglnrumEA7j9Zsgv
- ztMaUaNVzwT0bdx6RVvhhqPqfL1HIzycJwoOHPp5w6xTv7niPzCabiUZU2tEzRfK
- LIf6+EWzwJSZpzFGJqUjy2szTrTlete1iS+9GnIxWsKtZXO45xaL/97ORfL2n0sN
- fUopsHWiL4VVNId4z1WgXHp6miSw4UXC86emjiCILNdFF0oZSt0j7bP1abjjQV9A
- fnjpRw==
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h6fxk90s3-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 08 Oct 2026 23:39:13 +0000 (GMT)
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-93e92aad34aso750905385a.0
- for <qemu-devel@nongnu.org>; Thu, 08 Oct 2026 16:39:13 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xExj3-0005qL-7A
+ for qemu-devel@nongnu.org; Thu, 08 Oct 2026 19:40:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1791502831;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=CfD/DDaKlZe++ucTklHXuyA+Bii1X1o6I/kOwNlsK3k=;
+ b=HpHMk644+HpfAGuC6J9fKl/J1CA2dsQ5OwEr9QzMzJdY5i/cB8ysCb4zphwB+om8m8X81W
+ 3Ci6jvaRoJFobn/8Dbd5DDzYAsv3Pak6NIQ6oMC8WxzIYXKCBOaV8c9IkQOnmMhcA5pWAa
+ znHxIRG9evo5FlCR0Uqn6Z7dDvp2fdA=
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-465-VI-dodunMMa9bhgE8jzu1w-1; Thu, 08 Oct 2026 19:40:30 -0400
+X-MC-Unique: VI-dodunMMa9bhgE8jzu1w-1
+X-Mimecast-MFC-AGG-ID: VI-dodunMMa9bhgE8jzu1w_1791502830
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-93a082c014aso396031985a.0
+ for <qemu-devel@nongnu.org>; Thu, 08 Oct 2026 16:40:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1791502752; x=1792107552; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=JW59KKHXY5TCPBZslOxNy3iltfMtJb9sxjeS/HvvO6Y=;
- b=Y8eldYT1Wcjm1whnZLSZGfJ4tV9Y8nkb1aNvENIUux31x2eyGZbujS8I24qtm2eFe3
- +TAYR/K+mD1Fa2yj+kltzdm2Zf53nw7uTkcgh4b0QyH53Z6KsWPlY5VfRJ5AdYbXl7yN
- Po6SSxlDE9Fob3kai21gsepANKsH/MnnWhanPzqoWMutoERHK+ABSk9dYtVRBkl2vFPZ
- OB/vE7MjTCWgazILriOyDqtnzrLfdaB77oHK7bJqY5gbMBSTx5bHwtm8MAbvGOddnoCQ
- Q9Y9wgcoz94m0XKBkzBk0zfcO1JNCWGUngUCo8zdH2m+ivmdqPMBmk5gmdSRQ14xlarj
- GCdA==
+ d=redhat.com; s=google; t=1791502830; x=1792107630; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=CfD/DDaKlZe++ucTklHXuyA+Bii1X1o6I/kOwNlsK3k=;
+ b=Yvnnlg5l2rMi0lNbmpNwaGQa2+Hz3RMOpfdUOKUPCCOBPdwcOjW/Cvb5UzpubzG51M
+ ApK9/Z6ryzzbdEHsEO7GXFtYzQTgq+1yodWYdxsHruaPNLmSb8jDOaJ0XAeWQKRKhle1
+ zlqLPwotsZGcjgfO6MGsEYJy+eboIam/6RZb7AvUI37jjIx21blFn+f+C6RC6emHH5/S
+ kdSPohE+nSBN7J4tromLhuJhBK/1S3QehMbhAW/gQqSUF7D/tSCqtqco0eOHsq6fjgAY
+ 1CTw9l0inrov4MzcSr+LOnMSUlch7Lg+Hliww88NdHZDfYfEr7hKC0BoDGdHvuzZ+rGV
+ teuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791502752; x=1792107552;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=JW59KKHXY5TCPBZslOxNy3iltfMtJb9sxjeS/HvvO6Y=;
- b=xEy6r4aiNusLxcMI+ESgAaEPNQ2Izf43rZW6ZWR2L1wrBPtJTOcchPC8J1OOwZEtjd
- 3OEaEbfJH9xMdcumNddYntCHsNDNh05o8s7YKgYAvZt5wiJyHkXxc1qZOSYkA2vRSNRU
- jQdld2696nsjJC1k6Y9U2Tmy2I5iQER0SqrZv6adt1vtsA8SlDPn0uz7b8Dne7xWdT06
- Na+whSWlvZGlwpvyaZjUhzzUIQ4CtMC8mSTheGtMGNXu0m+f45dWvXrNBT3I5ioROmqV
- FCEOGsRjyroVNMaI8hus288FPIE+IbsRpzId4Co86fCj3TXg5RnhAY1xLMU23wOs2iyg
- wCoA==
-X-Forwarded-Encrypted: i=1;
- AKwUvBw418QrfYTwtMxBltU/oLmowjp37+P2aX2IS5PXdjy+Dz9/KDUpMQQpGtPmz1f6vGNYcWE0v9p5vtXz@nongnu.org
-X-Gm-Message-State: AFuF++k709aAwZpYEC/BLmr54IdqC0XtbuspMVJbdQ+v21CU1hipTsLc
- VRenJbsfKhnUUCEBaFNptCZ/HmfB1k3FGDRty0DU42/cvfIsbkI7XOVpjqRovRPJid4a3xPMKNl
- +M2CKcOh/rvYJfbX/5GJ4FJoNeUsJ1hBShZKp0iGYKiOUL4DZ9jMKUICq0A==
-X-Gm-Gg: AYBFou1l9WgFP4iPYjTBY8we0TUm9S7H6KatKugHU+3e/gBkqWKByUBRX2wZiw37aN+
- Aldppc5lYtmhz/hvcChS7OMRiIUZUSmvVOf/PFYK3+SNu5ltF8mXB9JDTBZYylqOSEXazHfiRZW
- omcvz9vZZy6nEtRy34xCSe1KdbNOdhjJUv3/Ueysp4gphGFRPnRbgjmsSWw+iEBkqkEafD9L7I8
- 2qqlSZoqGCoaIys+U9ckXvFGKCAfUCql5cBfxB9UzV95oe7E8rOEA1DtWCNCwVL5Mxuy6hFCdQn
- c2D6E0S3u9fO9XT024jwjQ3UlCsU9gCFbBaRKihhgWeCLK1amIeM1VuHHiV0c7pgif9TuPadI6J
- DB/jSEqEWXEdcK01B7ycSJeDFxv48wnlbeQ==
-X-Received: by 2002:a05:620a:2681:b0:939:bc7c:15c8 with SMTP id
- af79cd13be357-93ebd237079mr30598185a.45.1791502752487; 
- Thu, 08 Oct 2026 16:39:12 -0700 (PDT)
-X-Received: by 2002:a05:620a:2681:b0:939:bc7c:15c8 with SMTP id
- af79cd13be357-93ebd237079mr30588785a.45.1791502750815; 
- Thu, 08 Oct 2026 16:39:10 -0700 (PDT)
-Received: from [192.168.69.210] (pmd666.hd.free.fr. [88.187.86.199])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48db9acc936sm741567f8f.44.2026.10.08.16.38.52
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 08 Oct 2026 16:38:56 -0700 (PDT)
-Message-ID: <8460c0a8-f68c-403f-bc6f-0477430c31de@oss.qualcomm.com>
-Date: Fri, 9 Oct 2026 01:38:50 +0200
+ d=1e100.net; s=20260707; t=1791502830; x=1792107630;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=CfD/DDaKlZe++ucTklHXuyA+Bii1X1o6I/kOwNlsK3k=;
+ b=T8HYA8aw8g2qVimlptrahl+LnuJhFtVY/OlsMrl9TCZ9DL6RH0OAw37xF++pz9d4fe
+ EZ30kcHY9AKFfmd3bxZknB9K41RKskxToAA0xnyAQEfPhYZGOErpBGcKIyZgv9LAzDq2
+ iT4XhFdSZs3gZ4gIyDySVMFA4T18ArciyD97DyV4iHFGdTxwQQEc1jeviW2KIoSz3dkY
+ cuQ12CWTK2TURL7e5v1LbMBC3GdpnhpS+MdSXSc9j+gEY041p8LQS5SO5R2g85WxNsR+
+ cQaUfq5+YEo6S4c7SziqY1tfQqp9vI0k9V1YWYpca4ovXoPLWgxqpGF3tka/i2oES7TD
+ 3fyA==
+X-Gm-Message-State: AFq9FYIWgxryldjjh8Wy9lrLnUTm4Tu1fpX/0SPdUawdwC0IPxZVlBoo
+ S0tJompfmt6KBBD30wBJs1PGMp4/mtk40FnqrC8V/G5J9pgFGD38uOut/tOgNjYi6uPu+MCJ5BE
+ G43sGMSTvJtHWhbQH2bY1Fg8nzj8JSaChxjkdK6AMdlBHQL05P+nWWvJNOUrI1+lU
+X-Gm-Gg: AYBFou1CdaADo1WflkFG0qf7gb1uL9IUuTetIStbR56w63u5N0FCvsO5094i/k64P6N
+ etbKR0NnBVf4nixScl4YbD+1SMpVe0l9h5Sx+86LnJlQAa9oFG+Rv+6hBnb1lGa5oEs9LLF8wEC
+ Jg+JMaZjQMDf6foiUcDnSV86YYQ69D8ySZDQ2CDcd/77i5guLnMjSOY6/9Y3A4F1Ylrl0MUjpfn
+ kaDArNlGLFetDK0EfPf6YOs8WGvSDipPBKLm6/s6TS7MZtm492FJsQ8+HsBHxBdXKqYTryTYECw
+ txFIsHzvKDUP7qYZm3ShjIvOgMdQiIjqzm5oCHBoSjFagwhkuFMyjyP5E+z1eXYIo3pG7Yw=
+X-Received: by 2002:a05:620a:45a5:b0:93e:6db1:8a9f with SMTP id
+ af79cd13be357-93eb95e2a80mr114241885a.11.1791502829544; 
+ Thu, 08 Oct 2026 16:40:29 -0700 (PDT)
+X-Received: by 2002:a05:620a:45a5:b0:93e:6db1:8a9f with SMTP id
+ af79cd13be357-93eb95e2a80mr114239785a.11.1791502828941; 
+ Thu, 08 Oct 2026 16:40:28 -0700 (PDT)
+Received: from localhost ([142.188.212.246]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-93eb984889fsm52708385a.13.2026.10.08.16.40.27
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 08 Oct 2026 16:40:27 -0700 (PDT)
+Date: Thu, 8 Oct 2026 19:40:26 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, mjt@tls.msk.ru
+Subject: Re: [RFC] container images for migration-test
+Message-ID: <asgp6ld6Loz1xmJg@zhexu-thinkpadt14gen5.rmtcaon.csb>
+References: <8733vbtmge.fsf@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/arm/hvf: Retry RAM write faults only for dirty
- logging
-Content-Language: en-US
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Peter Xu <peterx@redhat.com>, Alexander Graf <agraf@csgraf.de>,
- "Scott J . Goldman" <scottjgo@gmail.com>, Paolo Bonzini
- <pbonzini@redhat.com>, qemu-arm@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>,
- Mark Burton <mburton@qti.qualcomm.com>, qemu-stable@nongnu.org,
- Mohamed Mediouni <mohamed@unpredictable.fr>
-References: <20261007093001.74476-1-philmd@oss.qualcomm.com>
- <f0c07762-c115-41a0-b713-a47bdaa1f218@rsg.ci.i.u-tokyo.ac.jp>
- <478c0311-b31e-4d38-af65-79508fca3021@oss.qualcomm.com>
- <6f694401-3cc9-4c76-aa2d-3625773823c7@oss.qualcomm.com>
- <be98c53b-d01f-4beb-8915-cc73f22e839a@rsg.ci.i.u-tokyo.ac.jp>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <be98c53b-d01f-4beb-8915-cc73f22e839a@rsg.ci.i.u-tokyo.ac.jp>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: 0Mk5w7bA1g4vW2jG2AwrkfYV5q08-mCg
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA4MDA5MyBTYWx0ZWRfX1nPeJyAHXBJL
- VVgfSTLqoPuw9aqr6PDnsnyZKuAGfaCJyH+YeF1w1y3J/EU4PJrNcZq+VhiqC9u1j6zEBzjF1RW
- nkc0pEUy2VpNW3AD7tzz8v7G3YiWD2s=
-X-Authority-Analysis: v=2.4 cv=Cs0q4X4D c=1 sm=1 tr=0 ts=6ac829a1 cx=c_pps
- a=50t2pK5VMbmlHzFWWp8p/g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
- a=EUspDBNiAAAA:8 a=_3kiw-qOTz70AaG6LiUA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=IoWCM6iH3mJn3m4BftBB:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA4MDA5MyBTYWx0ZWRfX2GD79D2ZxRtD
- n0Cr2O1daHVL5KdfNG51f3/3tiZuw7v2KYfvkSXs774tlkQmvxz29+clNS3X00XBv2ZfMeGt9Zs
- mBVgqsQQdIKwbzg0wGyTrG440FyvQ3hMrmfbc2WjJ8NUd0TorxHKPy1CVlyA0A0SGHbby1XhOE1
- EE4A5aM8RlqZLwaMzQAepNXfxyfC0uWKov5X7vE5b+qwlQgp0SjrwlWPIZhUhq4qCC6mFqXg+B8
- P83fAuY2qBsxLJCxUuA04cMvOrtadI4aG33yku/Wc31TJbUade0KffZ5Tv2vK9RcdbNawFyA7/h
- gajWGKDRu5cGE0F2DHKDUbqjmK1G+Tt0sJWXzNOpLb5fNZfO74J9iAiUAxls7ZUjWtIipmqUzlq
- htCZiUTKYnQaKW8MPmEpsE/0D5oerwifIC2UOzova8KNbpDPvlED4JRhKcIK9hbK1Cyu8ZRb4yD
- vtVKxqROywi39DmpTRg==
-X-Proofpoint-ORIG-GUID: 0Mk5w7bA1g4vW2jG2AwrkfYV5q08-mCg
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-10-08_07,2026-10-08_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 phishscore=0 bulkscore=0 clxscore=1015 adultscore=0
- priorityscore=1501 lowpriorityscore=0 impostorscore=0 spamscore=0
- suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610020000
- definitions=main-2610080093
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <8733vbtmge.fsf@suse.de>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -165,141 +114,243 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/10/26 07:52, Akihiko Odaki wrote:
-> On 2026/10/08 7:05, Philippe Mathieu-Daudé wrote:
->> On 7/10/26 21:50, Philippe Mathieu-DaudÃ© wrote:
->>> On 2026-10-07 16:50, Akihiko Odaki wrote:
->>>> On 2026/10/07 18:30, Philippe Mathieu-Daudé wrote:
->>>>> From: Mark Burton <mburton@qti.qualcomm.com>
->>>>>
->>>>> Dirty-page logging handles a RAM write fault by marking the page 
->>>>> dirty,
->>>>> restoring write permission, and retrying the guest instruction.
->>>>>
->>>>> The handler also retried when the resolved RAM region had no dirty-log
->>>>> client.  This path neither restores permission nor advances the PC, so
->>>>> the instruction can repeatedly exit to QEMU.
->>>>>
->>>>> Retry only after marking the page dirty and restoring write 
->>>>> permission.
->>>>> Otherwise, use the existing emulation path to complete the access and
->>>>> advance the guest PC.
->>>>
->>>> I can identify three cases of RAM write faults. The existing code
->>>> handles all three, but this patch breaks the third:
->>>>
->>>> 1. The RAM is read-only. assert(!mr->readonly) trips in this case.
->>>>
->>>> 2. Dirty logging is enabled. The vCPU marks the page dirty, restores
->>>>     write permission, and retries the write.
->>>>
->>>> 3. Dirty logging is enabled when the fault occurs, but another thread
->>>>     disables it before the vCPU acquires the BQL. The vCPU then 
->>>> observes
->>>>     a zero dirty-log mask. The write still needs to be retried because
->>>>     write permission has already been restored. The existing code does
->>>>     this correctly, but this patch falls through to emulation instead.
->>>>
->>>> This patch is useful only if there is another case that the existing
->>>> code does not handle correctly. Please describe that case and preserve
->>>> the retry behavior in case 3.
->>> Thanks for the deep review.
->>>
->>> The reporter said:
->>>
->>>    We reproduced is a level-2 translation fault, DFSC 0x06, on a
->>>    dynamic DMI RAM leaf that has no corresponding HVF mapping.
->>>    address_space_translate() resolves the leaf as RAM, but the dirty-log
->>>    mask is zero, no page is marked or unprotected, and the unconditional
->>>    retry makes no progress.
->>>
->>> That would be another case:
->>>
->>>    4. FlatView says RAM, but HVF has no mapping (nothing has changed
->>>       to make retry succeed).
->>>
->>> So to prevent retrying a known translation miss that cannot make any
->>> progress checking DFSC could be sufficient:
+On Mon, Sep 14, 2026 at 08:58:09PM -0300, Fabiano Rosas wrote:
+> Hi, I just wanted to share and ask for feedback on some container images
+> I've been building as part of my testing of migration pull-requests.
+> 
+> From a Dockerfile from ./tests/docker/dockerfiles/ I'm producing the
+> following:
+> 
+> $ docker images
+> qemu-build-base:11.0.0                        b6efa198e93a        5.8GB
+> qemu-rootfs-base:11.0.0                       72bcb5418f4d       4.08GB
+> qemu:11.0.0                                   018a3f0f4dcc          2GB
+> 
+> This last image is stripped (for size) of everything but a few libs and
+> binaries (qemu, gdb, migration-test, sh) and has an entrypoint of:
+> 
+>  CMD ["qemu-system-x86_64"]
+> 
+> The point is that I can wrap it in a script called qemu-system-x86_64
+> and run it interchangeably with any other qemu binary during
+> migration-test:
+> 
+>  QTEST_QEMU_BINARY_SRC=./build-11.0.0/qemu-system-x86_64 \
+>  QTEST_QEMU_BINARY=./build-master/qemu-system-x86_64 \
+>  ./tests/qtest/migration-test
+> 
+> (note that migration-test spawns the qemu binaries itself)
+> 
+> I run tests against the previous 3 QEMU releases. At every release I
+> build the container for the new release and at every PR I build the
+> container for that git hash using the latest tag as a base.
 
-(also reproduced DFSC 0x07, but now irrelevant).
-
-> Checking DFSC specifically for a translation fault feels arbitrary. The 
-> broader lesson from case 3 is that the faulting condition can be 
-> resolved concurrently before acquiring the BQL. That same race window 
-> applies to case 4. Instead of matching on DFSC, we should re-check 
-> whether the faulting condition persists after acquiring the BQL.
-
-I don't have direct contact with the reporter, so guessed from the
-"dynamic DMI RAM" report which misguided me (no clue what is DMI btw).
+I'm not a container person, e.g. I did test my recent channel fix on
+qemu-7.2 by simply building it with build-7.2/.. but after learning it the
+idea using a link to kickoff the container is very interesting on its own
+already.
 
 > 
-> Filtering out s1ptw also seems extraneous. If the page-table memory 
-> requires dirty logging, we should handle dirty-page tracking for it 
-> rather than skipping it with an additional guard.
-
-Done (IIUC) as a separate patch.
-
->> However I had to do this change in hvf_set_phys_mem():
->>
->> -- >8 --
->> diff --git a/accel/hvf/hvf-all.c b/accel/hvf/hvf-all.c
->> index 8bd9154a50b..7b34a5f586d 100644
->> --- a/accel/hvf/hvf-all.c
->> +++ b/accel/hvf/hvf-all.c
->> @@ -113,8 +113,14 @@ static void hvf_set_phys_mem(MemoryRegionSection 
->> *section, bool add)
->>
->>       if (!QEMU_IS_ALIGNED(size, page_size) ||
->>           !QEMU_IS_ALIGNED(gpa, page_size)) {
->> -        /* Not page aligned, so we can not map as RAM */
->> -        add = false;
->> +        return;
->>       }
-
->> hvf_vm_unmap paddr:0x0000000010001000 size:0x00001000
->> qemu-system-aarch64: Error: ret = HV_BAD_ARGUMENT (0xfae94003, 
->> at ../../ accel/hvf/hvf-all.c:123)
->> Abort trap: 6
-
-> The change to hvf_set_phys_mem() fixes error handling for misaligned
-> memory mappings and is worth submitting as a separate patch.
-
-Yep, done.
-
-> This also implies case 4 isn't fully understood yet. Ideally, whenever 
-> FlatView resolves a region as RAM, HVF should have a mapping for it. A 
-> host-page-misaligned region is one scenario where HVF cannot create a 
-> mapping, but that previously triggered an assert (HV_BAD_ARGUMENT), 
-> ruling it out as the reporter's original root cause.
+> The reasons that lead me to this solution are:
 > 
-> Please investigate why case 4 occurs and whether HVF can map the RAM
-> directly. If emulation is required, we should check for the specific
-> condition that requires it rather than treating a translation fault
-> alone as sufficient.
+> 1) Migration compat testing is special, the two migration peers can run
+> in different OS versions, so their QEMU builds can be quite different. I
+> cannot test using *just* my dev machine, neither using *just* a
+> container. I need two hosts. Or two containers running different OSes
+> that can both be reachable by the migration-test binary running in
+> either of the OSes.
+
+True..  One thing I want to make us on the same page is, this is about
+distro, not OS?  Say, the kernel is still the same.
+
+So we have three things (1) QEMU (2) distro (3) kernel/OS.  Here the extra
+coverage is (2) only.
+
+My gut feeling is distro specific thing causing migration failure is
+extremely rare; I can't even think of any in my work history.  Meanwhile,
+it's still not the "real migration", because kernel is shared.  Anything
+real will need to happen on two real and different hosts, ultimately, to
+make it cover all things.  It's more likely to me that the kernel
+difference may fail a migration than distro difference.
+
+So I still agree having such variance is better, though the hope is what we
+currently do e.g. with compat migration test is good enough.
+
+Said that, if part of this RFC is to see if we want to introduce that too
+for the compat test, no objections either.  Really, it's a matter of if it
+will help us find more bugs.
+
 > 
-> Please investigate why case 4 occurs in practice and consider adding a 
-> missing mapping rather than relying on emulation. If emulation is 
-> genuinely required, we should check for that specific condition rather 
-> than assuming it for a translation fault.
-Per the report QEMU v10.2.0 works and v11.0.0 doesn't. From there it was
-easy to test up to the 6d0a5a44560..58bc47fd1c6 range. Testing commits
-d1f4ba9d94c and 7d7654a643f was painful due to the amount of changes but
-in the end bisection pointed at commit 58bc47fd1c6.
+> 2) Neither the QEMU build nor the distro repos are reliable enough to
+> allow me to just "go back in time" and rebuild at any moment, I need to
+> keep the artifacts cached to avoid rebuilding. Otherwise it comes time
+> to send a PR and I discover that some python piece has changed or the
+> distro messed up the older repository.
 
-I followed your "Instead of matching on DFSC, we should re-check whether
-the faulting condition persists after acquiring the BQL" suggestion,
-since DFSC is only an indirect indication of a missing HVF mapping.
+This is definitely true.  While studying your test approach, I also noticed
+that there's a "toolbox" tool that should have done many of what your
+script did: "enter" the toolbox will transparently map many things (files
+under /dev/, or $HOME) automatically.  At least when thinking this as
+something I use personally, toolbox seems working.  But again I'm not
+container person, maybe there's some difference, just FYI.
 
-We are already with the BQL but now we assert it. Add added mapping
-tracking in hvf_set_phys_mem() using an IntervalTree so can check that
-back in the dabort handler before emulating. I am not checking vs
-FlatView because I don't understand yet if this is necessary. Also I
-need to implement the begin/commit MemoryListener handlers so the
-hvf_set_phys_mem() is protected, but I might leave that as TODO and
-post a v2. Testing is hard.
+> 
+> Any thoughts on this? Could it be useful to anyone? Maybe the stable
+> branch has some similar issues?
 
-Thanks for your review and guidance :)
+I'd be surprised if Michael would need to test stable branch migrations!
+That's IMHO too much work for him.. if it needs to be more than what CI
+covers.  After all, migration is only a submodule in stable maint pov.
 
-Phil.
+So, I'm not sure whether some of those should be in upstream repo, let me
+know your thoughts.  Besides, I'll definitely play more with toolbox and
+your scripts some day.
+
+Thanks for sharing!
+
+> 
+> I have a messy script that builds everything, but here are the important
+> pieces:
+> 
+> - Dockerfile.rootfs.base ==> qemu-rootfs-base-11.1.0
+> This is just ./tests/docker/dockerfiles/opensuse-leap.docker with a sed
+> to remove ncurses-devel (suse repo issue)
+> 
+> 
+> - Dockerfile.build.base ==> qemu-build-base:11.1.0
+> FROM qemu-rootfs-base:11.1.0
+> 
+> # actual source, mounted RO
+> RUN mkdir /src
+> 
+> # not the actual build dir, only the artifacts that are needed
+> RUN mkdir /build
+> 
+> WORKDIR /build-tmp-11.1.0
+> 
+> RUN --mount=type=cache,target=/build-tmp-11.1.0,rw \
+>     --mount=type=bind,from=qemu-src-11.1.0,target=/src,ro \
+>     /src/configure \
+>     --target-list=x86_64-softmmu,aarch64-softmmu,ppc64-softmmu,s390x-softmmu \
+>     --disable-plugins --disable-modules --enable-werror --enable-debug \
+>     --disable-docs --disable-tools && \
+>     make -j14 && { echo 'build ok'; } || { echo 'build failed'; exit 1; }; \
+>     cp -rL qemu-bundle /build && \
+>     cp -rL scripts /build && \
+>     find . -maxdepth 1 -name "qemu-system-*" -type f -exec cp {} /build \; && \
+>     find . -maxdepth 1 -name "tests" -type d -exec cp -r {} /build/tests \; ;
+> 
+> RUN --mount=type=cache,target=/build-tmp-11.1.0,rw \
+>     find /build -maxdepth 1 -name "qemu-system-*" -type f -exec cp -s {} /bin \; && \
+>     find /build/tests/qtest -maxdepth 1 -name "migration-test" -type f -exec ln -sfT {} /bin/migration-test \; ;
+> ---
+> 
+> 
+> - Dockerfile ==> qemu:11.1.0
+> FROM qemu-build-base:11.1.0 AS runtime
+> 
+> WORKDIR /build
+> 
+> # isolate the library dependencies of qemu, python and gdb
+> RUN mkdir /libs64 && \
+>     cp -L $(ldd qemu-system-x86_64 | awk '{print $3}' | xargs) /libs64 && \
+>     cp -L $(ldd /usr/bin/gdb | awk '{print $3}' | xargs) /libs64 && \
+>     cp -L $(ldd /usr/bin/python3 | awk '{print $3}' | xargs) /libs64 && \
+>     cp -L $(ldd /bin/sh | awk '{print $3}' | xargs) /libs64 && \
+>     cp -L $(ldd /bin/sh | grep ld-linux | awk '{print $1}' | xargs) /libs64 && \
+>     cp -L $(ldd /usr/lib64/$(readlink $(which python3))/site-packages/rpm/_rpm*.so | awk '{print $3}' | xargs) /libs64
+> # rpm stuff above is because gdb has its own python runtime
+> 
+> RUN mkdir -p /slash/usr/share && \
+>     cp -r /usr/lib64/python* /libs64 && \
+>     ln -sfT /lib64 /slash/usr/lib64
+> 
+> RUN mkdir /libs && \
+>     cp -r /usr/lib/rpm* /libs
+> 
+> # only these binaries in the image to keep it small
+> RUN mkdir /bins && \
+>     cp -L /bin/sh /bins/ && \
+>     cp -L /bin/ls /bins/ && \
+>     cp -L /bin/echo /bins/ && \
+>     cp -L /usr/bin/cat /bins/ && \
+>     cp -L /usr/bin/gdb /bins/ && \
+>     cp -L /usr/bin/python3 /bins/ && \
+>     cp -L /usr/bin/docker /bins/ && \
+>     cp -L /usr/bin/env /bins/ && \
+>     cp -rL /usr/share/gdb /slash/usr/share
+> 
+> # symlinks
+> RUN cp -d /bin/migration-test /bins/ && \
+>     cp -d /bin/qemu-system-* /bins/
+> 
+> FROM scratch
+> COPY --from=runtime /slash /
+> COPY --from=runtime /libs64 /lib64
+> COPY --from=runtime /libs /usr/lib
+> COPY --from=runtime /bins /bin
+> COPY --from=runtime /build /build
+> ENV PYTHONPATH="/lib64/python3.13"
+> ENV TMPDIR="/tmp/migtmp"
+> WORKDIR /build
+> 
+> # -version helps debugging, this is overriden when calling qemu with
+> # proper args
+> CMD ["qemu-system-x86_64", "-version"]
+> ---
+> 
+> 
+> - The wrappers. One for each of qemu-system-x86_64, sh, migration-test,
+>   these live in a build-<version> directory.
+> ---
+> #!/bin/sh
+> 
+> # pass the environment into the container 
+> echo > "/tmp/migtmp/envfile"
+> env | while IFS= read -r line; do
+>     case "$line" in
+>     QTEST*|QEMU*|PYTHON*)
+>         echo "$line" >> "/tmp/migtmp/envfile"
+>         ;;
+>     esac
+> done
+> 
+> bin=qemu-system-x86_64
+> exec docker run --rm -w /build \
+>                 -v /tmp/migtmp:/tmp/migtmp \
+>                 -v /home/farosas/archive:/archive \
+>                 -v /var/run/docker.sock:/var/run/docker.sock \
+>                 --network host \
+>                 --env-file /tmp/migtmp/envfile \
+>                 --cap-add=SYS_PTRACE \
+>                 --security-opt seccomp=unconfined \
+>                 --device /dev/kvm \
+>                 --device /dev/userfaultfd:/dev/userfaultfd \
+>                 -it qemu:11.1.0 $bin $(printf "%s\n" "$@")
+> ---
+> 
+> - The snippet of the test script that uses all of this:
+> 
+> cd ./archive/build-11.0.0
+> 
+> # container-relative
+> CURRENT_QEMU=/archive/build-latest
+> 
+> if [ $1 = "src" ]; then
+>      info "forward..."
+>      run_qtest PYTHON=/bin/python3 TMPDIR=/tmp/migtmp \
+>      QTEST_QEMU_BINARY=${CURRENT_QEMU}/qemu-system-${ARCH} \
+>      QTEST_QEMU_BINARY_SRC=./qemu-system-${ARCH} ./tests/qtest/${TEST}
+> else
+>      info "backward..."
+>      run_qtest PYTHON=/bin/python3 TMPDIR=/tmp/migtmp \
+>      QTEST_QEMU_BINARY=${CURRENT_QEMU}/qemu-system-${ARCH} \
+>      QTEST_QEMU_BINARY_DST=./qemu-system-${ARCH} ./tests/qtest/${TEST}
+> fi
+> ---
+> 
+
+-- 
+Peter Xu
 
 
