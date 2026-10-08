@@ -4,145 +4,145 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4BC4CA6007
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Oct 2026 02:37:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 547B5CA6004
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Oct 2026 02:43:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xEe0p-00013z-UJ; Wed, 07 Oct 2026 22:37:39 -0400
+	id 1xEe5q-0002Hz-DF; Wed, 07 Oct 2026 22:42:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1xEe0p-00013F-4A
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 22:37:39 -0400
+ id 1xEe5m-0002HO-Ev
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 22:42:46 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1xEe0n-0000mJ-FX
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 22:37:38 -0400
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+ id 1xEe5k-0001Bi-AP
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 22:42:46 -0400
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6981hO6Q1430961
- for <qemu-devel@nongnu.org>; Thu, 8 Oct 2026 02:37:36 GMT
+ 6981hX1g1824421
+ for <qemu-devel@nongnu.org>; Thu, 8 Oct 2026 02:42:42 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- MBY+aIIaAzpXS+KhuooLDIV0TmBRduUNY/3VyE6ugsM=; b=eeRIQYKjKUFci728
- Mzaq+lRC+SoKe/YZo5W9vX62QeWEw0z5vOcVdL7b44lCpVFEG7SlWpFnDVGFthqn
- d2yYvzWhM+iTFl7/9h+icqLcM9sp7aj2iECqIbEH9E2FR/cgQqhAhxy5EMIw9YKN
- izEEQbQRobcrbp5qNKdackj9aLx3BhDd+Dxgp+nLLWGBLMR4M9cewjzrMW4QCjCK
- qEwtSlwcZqDTvdQE6BL9uGSUV/no3hl6RF0vB3Lo84taRdDrPXI5CkE7Uy7Q91mE
- Hhv5rgkJP0oOvuCke0ZZzMPjgEHmuMKHR9QIH+qgxS/y+LNNRpthlNU77pzbT8gS
- eredrA==
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h5xe2rvbx-1
+ ghvqalr9VubbBF1UNB05zhxlvXYmpog5gp8+epdWL7o=; b=CuHmPqAhuhgA1S+j
+ uQkOGkoDZyaNbVPjzAReekViysmopoONlJWq66gstWtDjBLrzJTrDzeNEqqpm8sQ
+ FCsUGlSYelwkp1oi7P/ahYcwPwHRVIKdjAwesTWT0KLIhm/K/Jic3ITf0D8mV0ZF
+ il4bUMfa669/YaEwmr9HelvqGCnvBeTsZzg4YSEnCjE99Cwf/ku0owvdxBuJekri
+ m3LEbU6oEZ/MaPbawLyhib1dduZLu6r/8ELMAKfpTi8TWTmAKfE/FoxYKy/Qrvjs
+ x9Dh54+qbGJwlHOCUnUZIyPnktaK/81OOH2zY/3JDymUfQ+ITgCymzYPGUTv5YTL
+ wYZpSQ==
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
+ [209.85.160.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h5xe80r9u-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 08 Oct 2026 02:37:36 +0000 (GMT)
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-9179743a76eso7303736d6.1
- for <qemu-devel@nongnu.org>; Wed, 07 Oct 2026 19:37:36 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Thu, 08 Oct 2026 02:42:42 +0000 (GMT)
+Received: by mail-qt1-f197.google.com with SMTP id
+ d75a77b69052e-5350bf63ba3so126693531cf.3
+ for <qemu-devel@nongnu.org>; Wed, 07 Oct 2026 19:42:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1791427056; x=1792031856; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1791427361; x=1792032161; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=MBY+aIIaAzpXS+KhuooLDIV0TmBRduUNY/3VyE6ugsM=;
- b=BsxYFEnvInZ24bz4eW0lECXItoSudsFlmBRSuPBCE7kJP2y2MtTNo2N/dSaB/aZkun
- rJx7BxNomFB7Eu/2Iw7j3Fob3QiXb+w7VL8mHFcEScn7NgUr3MSC07SppZCeoKcQ6n/v
- HB3eQgYGHNrXviofIcZpc1FW+fHhjIjwfCw+jYIQ7+2VfLBizo/tnu8scL76cm/9URJo
- r3EXKTQEMkM+m5qZaLq2/Tm+w/OvpnSExWu2OVWlyBNe7hgvPJigaEnklhSmKNtV6iSS
- xiY+/A0nRYMGi0AjKnMHKfdVlDhPNTcAt3xev8/KTBJNaY+bQxA+zA1sNfJ4tfkYUpA+
- reuw==
+ bh=ghvqalr9VubbBF1UNB05zhxlvXYmpog5gp8+epdWL7o=;
+ b=aILvOvT+a+ZwoBhsgKD9t/FUFQkvwgBB2J1V6x6ps+0xoi1aBFrunmUsiq2rHRRGey
+ RYyad/jEBJLOPXqn+GZwAeLvXaiu++O09u6w0SqT+c/XqjeZEueZ/QFhsyOOEiW89dQC
+ pPRYnj2UT7bU5lSnj+pInTc0qwrgabg5w90i1H3MMxncTZ8OSJOKWJutCQ5nZ60kjl0n
+ p/mFVqweJAUgrpS+i/wGSOzdrBNO5jqhhh/M/v+976rNAE9u54vWvA0Cuuh6qcFzLwM6
+ JIrQnB3Pa0kx8aq9hKu7aSyzoeo9nsfgWxML2dG4d8zuR2F2kA1UUK6tm690OXMXlZdf
+ HCCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791427056; x=1792031856;
+ d=1e100.net; s=20260707; t=1791427361; x=1792032161;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=MBY+aIIaAzpXS+KhuooLDIV0TmBRduUNY/3VyE6ugsM=;
- b=QYSvVSSOybfbdfx1Sh8xHGIxhi4kMtRLU0aZM0sbuJlSw7M+DqT0ibsdwRBVkwSna8
- cCuONX1D4tkLseY3uvFaALiNRDRXT0EbEcLljX65vnRYbs+stNdEdkZsqDNlnmi99NO4
- Zw/9ZS8Om6EeQ/nCO3uhH9Z0UCiQamBevx+UHUYEZjCUULanut2gG5yBOITRWzciAqOz
- 7HYpj7Va41wVQNoFx3JvslHT6fzqQlOJ+ND/caU0f2a3kpYkl1F1D+47I7bbbNqSjkKu
- GYQocOWzedlGEtMknlZxR5BT1KtBklwH0DDr4UEscXJrZrvZ1ZZ/STZ5pexrfj9SI33m
- DfAA==
+ bh=ghvqalr9VubbBF1UNB05zhxlvXYmpog5gp8+epdWL7o=;
+ b=AIhGpUcCePNBJicbo7Oywtxe0QHX9ieX+mHbpP2jfuU4ConNlm6IKTPOlb1rSlcyw1
+ 6FkURg1h5XHmgeQKZqgsoNM1I1JDrJqaxvfSr3wTfXhORq8Re55KJQi4qtPe3lbl5cbO
+ W6kgrCv5FISHJxV5m2WlGZOSYP/y7ZKB96O5tDWfeUL0cY3DItAQd2/a7HindtGi7ggP
+ IViE20N16WBQSWzAufqqdU676rnJRsMg4d16i2/WRfHHOSqoEVh/mXaKzr7DYKieYalS
+ vqrPHw/Kt9npdt+HG7shgrpAjN5gC0g1CwgFj/AubZ98bZlpT/2mIXF+si7nxcsE2ULS
+ UhvQ==
 X-Forwarded-Encrypted: i=1;
- AKwUvByMLoYqS+BMeYV2b4nrUMy4rxqeMjvIKzpTx3B4qh9MAqB7DyuAMTbmvztIdsMBFHht9TeA9qUq4KWU@nongnu.org
-X-Gm-Message-State: AFuF++mr4YKzhJUYhKPjyROoZ/yEt3Cb5Z7xGCGw7938/2FLv4amsSqz
- lSLfGV3nkTxjTu8AKEXplm9tM9jHnuGw86yG9WXRlXLLy4zrixa6H5d8DzkhUlJpij1gI437DhO
- pMvnyyoafrvbfUke6PgJd4kttCZF/E42HNtkxSaZxf8fGbxM7wGNgH5WAiw==
-X-Gm-Gg: AYBFou2PchSMOkRgGYEHkg6Sch7202uc3Qt1Fjiu+QkbMj5rNTQ0GiU/MyOFuUatWqo
- bXCEAzEVZfF4lFT8/UwWbV0jVfDZpg3wjSp4ROf7o7EW6lTU5t2QiNU24RpZUd7deUbRKqOBtz/
- +G+T+JT0V4qjlEWRJrupcEc3VIeht+50Gnb6KL2GR7B6DjxM4PFZbEDIh7B5jR2dbIg+AxLUN1K
- FIE631xyYBSAF2a1FC+bKzRs3YqhqZqX7M9BWF2lAsck17LPgT/2md4TBxYK5V5tDKPLqAO5dFx
- toOdU6xk/PSi1XT1uin2xrAVaqSlLcDrgf9QJL+DRdMQ4apfBUz6ERCx6Ke8s9S+mvyLA2nPljr
- 4ZzGCkjQSFIGJ7WCiU50Noe/SihguxUBQ1eh4
-X-Received: by 2002:a05:6214:3018:b0:917:99d1:bda2 with SMTP id
- 6a1803df08f44-919aa745d0emr19526506d6.8.1791427055598; 
- Wed, 07 Oct 2026 19:37:35 -0700 (PDT)
-X-Received: by 2002:a05:6214:3018:b0:917:99d1:bda2 with SMTP id
- 6a1803df08f44-919aa745d0emr19525936d6.8.1791427054210; 
- Wed, 07 Oct 2026 19:37:34 -0700 (PDT)
+ AKwUvBx0Uok5+zQ7DeTnAVogK257Lw8n4V3TGMjSaUF2wWE0SyMiCtggyv44ull9TP2U2nT/EybShFjuJlle@nongnu.org
+X-Gm-Message-State: AFuF++n5JmLDmHTB0S7yyhs5CyZ7Ub5Hc5xPWwzZu5ejCdZtpbdWV9Y3
+ WCiUKT5Hb8KOAy4hBTHic5NFdNcrCbdn2s0dUkZry3a6GNNNpCJX9zmHmGIYHLcuoYaD5NHKKcn
+ k0KUR/dvaOAXlEc9Wnqk8gD63Z7Q1Rpx2+utKgNDDxsK6PAekG8/ZXwSIAw==
+X-Gm-Gg: AYBFou0l5jASgcWs6PCYU6IPeoDlBwuflr9z6U3JZnb2g33GDJPuYO/1Tuz8oOWac3/
+ QYXqRPAe+EzCBmeuphY/qACA/da+WcEDc2jNXmvgQwXRpQQ5jtL3loDEIuIX92T930BQHZ4gXYK
+ Cmjsnzb8SbawI52llV8AZSXqrh1r8ue8GQOmmj5pSK5AHjpPK+2KmY2w+yjvGZjXaiVY69ztqGv
+ zKmUgzj0B1gMVmT7olEVCZBYeQphc1nnt3DgmzO+3+MEKt2PAwsNiHJY0A29ouqGrSNLna+QiX8
+ ncU3AqaOEI09n0mOPIF/elS2s21nntj8cpBzhDjWqeB5tRxiaxtOdywXPReTwomRMDGooekDRb6
+ B6WLDCR7glsN749YZEjn0bR6SY2FYG6q7CS0O
+X-Received: by 2002:a05:622a:1b02:b0:535:52c:a2e7 with SMTP id
+ d75a77b69052e-535755c3374mr81312041cf.44.1791427361531; 
+ Wed, 07 Oct 2026 19:42:41 -0700 (PDT)
+X-Received: by 2002:a05:622a:1b02:b0:535:52c:a2e7 with SMTP id
+ d75a77b69052e-535755c3374mr81311761cf.44.1791427361042; 
+ Wed, 07 Oct 2026 19:42:41 -0700 (PDT)
 Received: from [192.168.10.208] ([185.243.168.149])
  by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-91997d66da0sm32830486d6.39.2026.10.07.19.37.31
+ d75a77b69052e-53571d0e9d4sm35011191cf.0.2026.10.07.19.42.39
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 07 Oct 2026 19:37:33 -0700 (PDT)
-Message-ID: <3913a329-c79e-4bff-a66a-ff6619e3539f@oss.qualcomm.com>
-Date: Wed, 7 Oct 2026 23:37:30 -0300
+ Wed, 07 Oct 2026 19:42:40 -0700 (PDT)
+Message-ID: <73bc69a4-a3e6-47c8-9c7f-92443706b250@oss.qualcomm.com>
+Date: Wed, 7 Oct 2026 23:42:36 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 05/11] target/riscv: Implement SMMPT fence instructions
+Subject: Re: [PATCH v8 00/11] target/riscv: Implement Smsdid and Smmpt
+ extension
 To: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-devel@nongnu.org
 Cc: palmer@dabbelt.com, alistair.francis@wdc.com, chao.liu.zevorn@gmail.com,
  liwei1518@gmail.com, qemu-riscv@nongnu.org, rahul@summations.net,
- xiangyi.zeng@linux.alibaba.com, cxx194832@alibaba-inc.com,
- Huang Tao <eric.huang@linux.alibaba.com>,
- TANG Tiancheng <lyndra@linux.alibaba.com>
+ xiangyi.zeng@linux.alibaba.com, cxx194832@alibaba-inc.com
 References: <20260723200325.24969-1-zhiwei_liu@linux.alibaba.com>
- <20260723200325.24969-6-zhiwei_liu@linux.alibaba.com>
 From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 Content-Language: en-US
-In-Reply-To: <20260723200325.24969-6-zhiwei_liu@linux.alibaba.com>
+In-Reply-To: <20260723200325.24969-1-zhiwei_liu@linux.alibaba.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=AbMkjHXG c=1 sm=1 tr=0 ts=6ac701f0 cx=c_pps
- a=UgVkIMxJMSkC9lv97toC5g==:117 a=Adc43iEMMYzOb2FTIT2GVQ==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA4MDAxMCBTYWx0ZWRfX++HbFIyCwKkz
+ 2HQ8VeFQB2RJ5wWqqGFsebLBfcTxFUAWNdLhRCrKqXEUFqp/Axbg26iAGOYgw2AP+H9vbyxa1vi
+ /TIPr8RzAsOtVVEHIdCoUsxp+OGc1Bxz6AEbk1xAbZDMMe7JXdcMa2PLYK8CejEmsN1t2XhWHjK
+ +aOrvomvnmFVW1TpDSeg7p08lMmZUd41NJuMIdWKcOt6bUgTVKEfaSRI3MmWSQNROVdYi/4adwx
+ vhWZ3n2rwKc8L2HpA9svW2Lj+ubkMMmrq8jrVIdDTrcDWvpgDao2YYN3NlidHWuuyVp3PNPNvIM
+ q3ChZkoRhjlqAwVLZapTOfRm7GaKrPx5KIWB7WXNjzrIMWIOHY60snlroXPhhUQVfctHg/WgklO
+ 0xizgJddCRGlWrwRcILPYLWlpwVz/Pk3uLAqhqDMJ2UrIkLMIBaqs0/Y51UnQjIZuuacVpOg4m2
+ gzY0xHfPPJqmD/lLPQw==
+X-Proofpoint-GUID: -dbC9wn5DgSN1zV5XOhaMqNFzhkcCQds
+X-Proofpoint-ORIG-GUID: -dbC9wn5DgSN1zV5XOhaMqNFzhkcCQds
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA4MDAxMCBTYWx0ZWRfXzuJne5JO/HR1
+ 04HWFCpFLdCRfTcYnXeooemiETn3xVbzD/S+5xYyMSupmpYgCLv1Z9LKFOekP6w0khnJTakcXEC
+ RvgfgMYtcUB4FKsesqK9wL6Mwe5yPHQ=
+X-Authority-Analysis: v=2.4 cv=MPT1C8Zl c=1 sm=1 tr=0 ts=6ac70322 cx=c_pps
+ a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=Adc43iEMMYzOb2FTIT2GVQ==:17
  a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
- a=SRrdq9N9AAAA:8 a=EUspDBNiAAAA:8 a=O0VJlaFw4OW4KJ8IkpEA:9 a=QEXdDO2ut3YA:10
- a=1HOtulTD9v-eNWfpl4qZ:22
-X-Proofpoint-GUID: wEUr6UkFTedXqoGT8xLzsSAq9ptsK20O
-X-Proofpoint-ORIG-GUID: wEUr6UkFTedXqoGT8xLzsSAq9ptsK20O
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA4MDAxMCBTYWx0ZWRfX6X79LkOuIdlT
- g0r9hJNZktRvtmZxxB7BDYtrOMbwOf/GPnIr0AIKnffeg5qhal8xF1pdy5PvnwKXpvEipN98UqS
- tG6y0zN/kUIYTdqtPCYvCw3VP2yf0wo=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA4MDAxMCBTYWx0ZWRfXw+OjZp+omv6F
- UT4GAzANB2vt5jGYluUCEYaFupNauzoZvjKVB/5YEyv2NlbgWJT+IYmXB7g/8eb5csNb1YAmQOV
- 6A8aSQnozX8XT813zWp1GiBtinm2I6auIL4VNOdeP1+nAzHhun6YDsQ6mZjpbQhZKNalAXhy7DZ
- dFHy0+FYmgIZoQQkJl43WzXKWKyDpv47TK/z/KApiB5sMnteRFTBQs2KWK6geOn88ahnn/ayK9h
- 4tByP4cDX7Xf5E0FslQUS9bRa3GyGYOVJgAc61epzAQO3R0ORJvN9zi0e4DCGzC55RPuGoPzIsR
- ahIY6mpoc3w9y0RLhxODlTwB5ZkcpUU8IO2V7mgGssw0E9ovDYWDZukjbwvDYAtFQ8opCeC6cwU
- U/W8jQLYLHlRjYPjI7UGd7cQbFdOCNFktQs8JJmP7nGF5Dz0SHVdNU95/gY6CCCX4uXb1LSD1nc
- Ux9cV/XVvpfWo3bYFhg==
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
+ a=xvfqbYfxAAAA:20 a=mDV3o1hIAAAA:8 a=JfrnYn6hAAAA:8 a=NEAV23lmAAAA:8
+ a=GaQpPoNlAAAA:8 a=SRrdq9N9AAAA:8 a=bHPTYyKsEsybeaz2o74A:9 a=QEXdDO2ut3YA:10
+ a=a_PwQJl-kcHnX1M80qC6:22 a=1CNFftbPRP8L7MoqJWF3:22 a=xF5q_uoM5gZT5J3czcBi:22
+ a=bA3UWDv6hWIuX7UZL3qL:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-10-08_01,2026-10-06_03,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 clxscore=1015 suspectscore=0 lowpriorityscore=0 spamscore=0
- impostorscore=0 malwarescore=0 adultscore=0 phishscore=0 priorityscore=1501
+ spamscore=0 bulkscore=0 adultscore=0 priorityscore=1501 suspectscore=0
+ malwarescore=0 phishscore=0 lowpriorityscore=0 clxscore=1015 impostorscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2610020000 definitions=main-2610080010
 Received-SPF: pass client-ip=205.220.180.131;
  envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_score_int: -11
+X-Spam_score: -1.2
+X-Spam_bar: -
+X-Spam_report: (-1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ URIBL_SBL=1.623 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -158,83 +158,148 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi Zhiwei,
 
+
+Sorry from taking this long to take a look at this work.  I am afraid I'll
+need to ask you to send a v9 due to the following upstream changes, aside
+from some review comments I made:
+
+- upstream changed how tcg tests are invoked (we use meson now), i.e. you
+need to add changes in tests/tcg/riscv64/system/meson.build instead of
+Makefile.softmmu-target;
+
+- upstream also changed how we declare things in disas/riscv.c.
+
+
+If you send a v9 I'll prioritize it for review.  We can get this done for
+11.2.
+
+
+Cheers,
+Daniel
 
 On 7/23/2026 5:03 PM, LIU Zhiwei wrote:
-> This patch completes the SMMPT implementation by adding support for the
-> new fence instructions: `mfence.pa` and `minval.pa`.
+> This patch set introduces support for the RISC-V Smsdid and Smmpt
+> (Supervisor Domain Identifier and Memory Protection Table) extensions
+> v0.4.9(https://github.com/riscv/riscv-smmtt/releases/tag/v0.4.9).
+> Smmpt provides a hardware mechanism for fine-grained memory protection,
+> checked after address translation, which is particularly useful for
+> supervisor-level sandboxing and security monitoring.
 > 
-> According to the specification, these instructions act as memory ordering
-> fences for MPT updates. In QEMU's TCG model, this is conservatively
-> implemented by flushing the entire TLB, which ensures that any subsequent
-> memory accesses will re-evaluate permissions and see the effects of any prior
-> MPT modifications.
+> The rfc patch set:
+> https://mail.gnu.org/archive/html/qemu-riscv/2025-09/msg00216.html
 > 
-> The instructions are privileged and will cause an illegal instruction
-> exception if executed outside of M-mode.
+> Rahul Pathak is working on SMMPT OpenSBI support -
+> https://lists.infradead.org/pipermail/opensbi/2026-July/010235.html
 > 
-> Co-authored-by: Huang Tao <eric.huang@linux.alibaba.com>
-> Co-authored-by: TANG Tiancheng <lyndra@linux.alibaba.com>
-> Signed-off-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-> ---
-
-
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-
->   target/riscv/insn32.decode                    |  2 ++
->   .../tcg/insn_trans/trans_privileged.c.inc     | 30 +++++++++++++++++++
->   2 files changed, 32 insertions(+)
+> based on his QEMU SMMPT branch -
+> https://github.com/pathakraul/qemu/tree/rpathak_smmpt_v1
 > 
-> diff --git a/target/riscv/insn32.decode b/target/riscv/insn32.decode
-> index 21272fdb50..f0917b7696 100644
-> --- a/target/riscv/insn32.decode
-> +++ b/target/riscv/insn32.decode
-> @@ -120,6 +120,8 @@ sret        0001000    00010 00000 000 00000 1110011
->   mret        0011000    00010 00000 000 00000 1110011
->   wfi         0001000    00101 00000 000 00000 1110011
->   sfence_vma  0001001    ..... ..... 000 00000 1110011 @sfence_vma
-> +mfence_pa   0011001    ..... ..... 000 00000 1110011 @sfence_vma
-> +minval_pa   0011011    ..... ..... 000 00000 1110011 @sfence_vma
->   
->   # *** NMI ***
->   mnret       0111000    00010 00000 000 00000 1110011
-> diff --git a/target/riscv/tcg/insn_trans/trans_privileged.c.inc b/target/riscv/tcg/insn_trans/trans_privileged.c.inc
-> index a8eaccef67..67f2e56034 100644
-> --- a/target/riscv/tcg/insn_trans/trans_privileged.c.inc
-> +++ b/target/riscv/tcg/insn_trans/trans_privileged.c.inc
-> @@ -160,3 +160,33 @@ static bool trans_sfence_vma(DisasContext *ctx, arg_sfence_vma *a)
->   #endif
->       return false;
->   }
-> +
-> +#define REQUIRE_SMSDID(ctx) do {          \
-> +    if (!ctx->cfg_ptr->ext_smsdid) {      \
-> +        return false;                     \
-> +    }                                     \
-> +} while (0)
-> +
-> +static bool do_mfence_pa(DisasContext *ctx)
-> +{
-> +#ifndef CONFIG_USER_ONLY
-> +    REQUIRE_SMSDID(ctx);
-> +    if (ctx->priv != PRV_M) {
-> +        return false;
-> +    }
-> +    decode_save_opc(ctx, 0);
-> +    gen_helper_tlb_flush_all(tcg_env);
-> +    return true;
-> +#endif
-> +    return false;
-> +}
-> +
-> +static bool trans_mfence_pa(DisasContext *ctx, arg_mfence_pa *a)
-> +{
-> +    return do_mfence_pa(ctx);
-> +}
-> +
-> +static bool trans_minval_pa(DisasContext *ctx, arg_minval_pa *a)
-> +{
-> +    return do_mfence_pa(ctx);
-> +}
+> As we all agree -
+> https://patchew.org/QEMU/20260715145016.17369-1-zhiwei._5Fliu@linux.alibaba.com/
+> , we will collaborate on this work and not duplicate efforts. Rahul will
+> focus on OpenSBI upstream and I will update the QEMU patch set to v8.
+> 
+> Xiangyi will review the OpenSBI SMMPT patch set and may collaborate to
+> upstream the other parts, such as SMSDIA and IOMPT.
+> 
+> v7->v8:
+>      1. Update the mfence.pa and minval.pa instruction encodings to match the
+>         upstream riscv-opcodes definition
+>         (https://github.com/riscv/riscv-opcodes/pull/389/): mfence.pa now uses
+>         funct7=0b0011001 and minval.pa uses funct7=0b0011011. The decoder,
+>         disassembler and the system test are updated accordingly.
+> 
+> v6->v7:
+>      The implementation is updated from the v0.3.4 specification to
+>      v0.4.9. The main changes are:
+>      1. Update the mmpt CSR number to 0x382 and msdcfg to 0x74E.
+>      2. Update the mmpt register layout: the SDID and PPN field positions
+>         changed and the RV64 PPN is now 44 bits.
+>      3. Rework the MPTE format: the N (NAPOT) bit now lives at bit 2, the
+>         non-leaf NAPOT form is removed, NAPOT leaf entries encode a single
+>         XWR tuple plus a G granularity field, and non-NAPOT leaf entries
+>         hold per-page XWR tuples.
+>      4. Treat XWR=000 as "no access" and a non-leaf entry with N=1 as a
+>         fault.
+>      5. Enforce the Smmpt64 root-table PPN alignment (low 3 bits zero).
+>      6. Rename the fence instructions mfence.spa/minval.spa to
+>         mfence.pa/minval.pa.
+>      7. Drop stale Reviewed-by tags on the substantially reworked patches.
+>      8. Introduce the configurable "smmpt-sdidlen" CPU property.
+>      9. Add disassembly support for the Smmpt.
+>      10. Add bare-metal M-mode system tests.
+>      11. Rebase to master.
+> 
+> v5->v6:
+>      1. Use explicitly bit fields extract instead of mpte_union_t.
+>      2. Use the same exception behavior for MPT valiation as PMP
+>         valiation.
+>      3. Use PAGE_* instead of MPT_ACCESS_* as they have same value.
+>      4. Use address_space_*_le instead of address_space_* for SMMPT.
+>      5. Only print SMMPT address check log when SMMPT is enabled.
+>      6. Add implied rule for SMMPT as it depends on SMSDID.
+>      7. Rebase to master.
+> 
+> v4->v5:
+>      1. Rebase to master.
+> v3->v4:
+>      1. Add missing review tags.
+> v2->v3:
+>      1. Fix build error in patch 2.
+>      2. Rebase to master.
+> 
+> rfc->v2:
+>      1. When ext_smmpt is false or BARE mode, make other fields in mmpt
+>         CSR zero.
+>      2. Add patch 5 to fix smrnmi ISA string order.
+>      3. Fix patch 6 smmpt and smsdid ISA string order.
+>      4. Make smmpt and smsdid experiment extensions.
+>      5. Add review tags.
+> 
+> LIU Zhiwei (11):
+>    target/riscv: Add basic definitions and CSRs for SMMPT
+>    target/riscv: Add smmpt-sdidlen property for the mmpt SDID field
+>    target/riscv: Implement core SMMPT lookup logic
+>    target/riscv: Integrate SMMPT checks into MMU and TLB fill
+>    target/riscv: Implement SMMPT fence instructions
+>    target/riscv: Fix smrnmi isa alphabetical order
+>    target/riscv: Add disassembly for Smmpt instructions and CSRs
+>    target/riscv: Enable SMMPT extension
+>    target/riscv: Add system test for SMMPT extension
+>    target/riscv: Add system tests for Smmpt52 and Smmpt64
+>    target/riscv: Add system test for Smmpt34
+> 
+>   disas/riscv.c                                 |   9 +-
+>   target/riscv/cpu.c                            |  60 +++-
+>   target/riscv/cpu.h                            |   8 +
+>   target/riscv/cpu_bits.h                       |  27 ++
+>   target/riscv/cpu_cfg_fields.h.inc             |   3 +
+>   target/riscv/insn32.decode                    |   2 +
+>   target/riscv/meson.build                      |   1 +
+>   target/riscv/riscv_smmpt.c                    | 339 ++++++++++++++++++
+>   target/riscv/riscv_smmpt.h                    |  26 ++
+>   target/riscv/tcg/cpu_helper.c                 | 119 +++++-
+>   target/riscv/tcg/csr.c                        | 106 ++++++
+>   .../tcg/insn_trans/trans_privileged.c.inc     |  30 ++
+>   target/riscv/tcg/pmp.h                        |   3 +
+>   tests/tcg/riscv64/Makefile.softmmu-target     |  12 +
+>   tests/tcg/riscv64/smmpt-common.S              | 257 +++++++++++++
+>   tests/tcg/riscv64/test-smmpt.S                |  85 +++++
+>   tests/tcg/riscv64/test-smmpt34.S              |  97 +++++
+>   tests/tcg/riscv64/test-smmpt52.S              |  91 +++++
+>   tests/tcg/riscv64/test-smmpt64.S              |  98 +++++
+>   19 files changed, 1354 insertions(+), 19 deletions(-)
+>   create mode 100644 target/riscv/riscv_smmpt.c
+>   create mode 100644 target/riscv/riscv_smmpt.h
+>   create mode 100644 tests/tcg/riscv64/smmpt-common.S
+>   create mode 100644 tests/tcg/riscv64/test-smmpt.S
+>   create mode 100644 tests/tcg/riscv64/test-smmpt34.S
+>   create mode 100644 tests/tcg/riscv64/test-smmpt52.S
+>   create mode 100644 tests/tcg/riscv64/test-smmpt64.S
+> 
+> 
+> base-commit: 499039798cdad7d86b787fec0eaf1da4151c0f05
 
 
