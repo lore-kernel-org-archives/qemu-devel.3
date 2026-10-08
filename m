@@ -4,130 +4,162 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 508ABCA600D
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Oct 2026 18:33:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9A4CCA6011
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Oct 2026 18:34:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xEsvt-0003Kp-99; Thu, 08 Oct 2026 14:33:33 -0400
+	id 1xEswg-0003hx-Qy; Thu, 08 Oct 2026 14:34:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xEsvr-0003KU-BN
- for qemu-devel@nongnu.org; Thu, 08 Oct 2026 14:33:31 -0400
-Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xEsvp-0003ys-Dv
- for qemu-devel@nongnu.org; Thu, 08 Oct 2026 14:33:31 -0400
-Received: by mail-ed1-x535.google.com with SMTP id
- 4fb4d7f45d1cf-6a601ba6870so9476545a12.0
- for <qemu-devel@nongnu.org>; Thu, 08 Oct 2026 11:33:29 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1791484408; cv=none;
- d=google.com; s=arc-20260327;
- b=NbsOpptpAAxrFhz90dPEV+ktuGxHPcbTKdb7G/Lufc0SE9Pa3u4vkTFuxrE2qb3Qh9
- wOtbf4EFQ4Whdi/c15qlP8b0SLqln/zaM7DVIuQIWMEEJZzok0/eNqcG/aSl/mKO2rwN
- +ayHo6pa3QNhiphUMpSLLWeE8cGqAWXRo5szF3PVl4tzpwwQvPG8OeUIW9gUXxHm8yiV
- U43B6MwlryX2lJgffNPtUUELzG1dNXCJF3XNcA1ojlsKXbu1USI3qtF4ydmZ69icWe+Y
- 2hMfDPTUPaKYqMA3zuVQPmymMUW8jJHdnkIahUcpipzji4XxEMBjby1Msx08k8yLPGUK
- ba9w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :reply-to:in-reply-to:references:mime-version:dkim-signature;
- bh=rmkbxQa0rdh+Tjjr/LjUtUecl6uqExJEPQ0OgA0qH4k=;
- fh=OKXZV+cJWBRaR/2WjFOwM1WdVezyE16CZJkjEXXaX9I=;
- b=kwGN9Sug+/uYqSeUqJiP9sgheTPC3aXZRbKxaF2aGSPqsyZFHND52CYNogMDBWnLrE
- 7iaTzvBy2prEmuyDDIgRL+GCTKdEdmnZ/n+WZzH2ewUY9dsdiqhKiGOuFCuT4w1H89cT
- rIycMxWwJLMBaGmtfZ/lr/CVHIK/CbJncg6I+5tc9e0+hE8YlkxKc1E+7mBpaakSjMgR
- ukAViiaQvxP3DCpKTZ+FM3ZaIecWvR69CYagHa8mqQV3xDQmhrm+oiVubLJ70saPyOrQ
- kVXVQPYz4wsBh4Z3dn+F2CZRdAnfKnm3VeMpve311pL1Q2dcDtMXXmyLJQO9D7SjvI07
- tHqA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1xEswZ-0003hO-9N
+ for qemu-devel@nongnu.org; Thu, 08 Oct 2026 14:34:15 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1xEswW-00041d-W6
+ for qemu-devel@nongnu.org; Thu, 08 Oct 2026 14:34:15 -0400
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 698HqQ6Z2975852
+ for <qemu-devel@nongnu.org>; Thu, 8 Oct 2026 18:34:10 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ I6RQDVToS6uGgYxhYq5AKIb8KaX7tucdYOEL6FCsKA4=; b=dIoLKXrJ5pBgnYhL
+ UCCq+Sq0N4ET5725740KZe1jnSr1F0Rj1MFbGZLspy5EW4b5JuvpJxLjjHz2wfW9
+ McqSMp39gazLaN1nX3LthkGqny2jMm4XC8Tp1fpbEWET9lrmtaiu6dpIihn3mqH6
+ /S1FFNxTWjJVz+jAGThn5TwLqAzTKixDSeybgXOtwhS8SYDXDA0Gw9V+mfpPMijy
+ Ig105gtvySGMyACRqrorDhcHQYFbJ9X5gq9HfubwnaqnL+RCGtNU+LXJniQSHG8Z
+ MDJgCuZYxWiarDNrGZX6kKCi/+XOuDIi77/0z4vwH5S7M2WKXFmKOqvG9oulK71q
+ uW3inQ==
+Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com
+ [209.85.215.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h6fxrr5xh-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 08 Oct 2026 18:34:10 +0000 (GMT)
+Received: by mail-pg1-f198.google.com with SMTP id
+ 41be03b00d2f7-cd0cf3b1c70so1825779a12.3
+ for <qemu-devel@nongnu.org>; Thu, 08 Oct 2026 11:34:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1791484408; x=1792089208; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:reply-to:in-reply-to:references:mime-version:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=rmkbxQa0rdh+Tjjr/LjUtUecl6uqExJEPQ0OgA0qH4k=;
- b=Gc+/WJ/25EaHCxHFL5dUQ5Slgk0LZRisycNbJBjBDXFyJQkCxFy+9U9FGpLhm/EWTl
- hPafJvN1zz6G+4BgJpeSawpUNXakrpZ3BqIjJ7X+OIgSw3QfLXuHsQYtA/tHvC3OMdOX
- BiaWJxA413pwph37ER6YfI1HN+BrQk+HvC7y+IIDSrXvRLs8GZeJuYbLaOHFntMYL1ZL
- GbpSHBrJOh2RLj168ezKs2gXG5Cjm9OGsVJE0eDWy6b+rDAaLYZxTeqfCNw0carAQkm5
- 3Zea0rbEkt0Fnblxb0+E5V11iQGhEqr8hAZavuKRc3lWmuQtiNT27otUEAATvBqdccxT
- YTcw==
+ d=oss.qualcomm.com; s=google; t=1791484450; x=1792089250; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=I6RQDVToS6uGgYxhYq5AKIb8KaX7tucdYOEL6FCsKA4=;
+ b=chiwQVDEwQfWtHW62kRKRqFgJAfP2Qx6f8CmFmu485tnOxF9dB/2rKqwPMMTsg6K02
+ wXBFFx8E7kVspN0KdgVGb8Wknn1DkqxA9ieJ8clORk+jc5U7gmz62Zp01KLuGLT4Uvfa
+ B/8O82BOm+UkrJWXFAiuLDch/NPC1iKizkXUsQAYpgmRKwz6RVJcLGtpNyDo4dng+6TN
+ KgUVTj38vvDWBiS2D6837gmwVUWq22+SsHXkjDO/1YZ8/3YKhz81nqgzP77qE+1LGMmf
+ wPA6wtMoJZ3YtmwnVjJFAbWHvNusfEpZXF6XUWYPlzHQwKgZk1kSTNIjeP+mD2nElmsz
+ ls9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791484408; x=1792089208;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:reply-to:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=rmkbxQa0rdh+Tjjr/LjUtUecl6uqExJEPQ0OgA0qH4k=;
- b=l+gGe9l4SUNnz0CMeCqjCrku+yylEaRBkGtEUxtlRIGY4tqiC44AxrH9ml9Z6+YYoC
- n6ojzBg/7k+a/6WghMyOG90dYXGn3AmP7ja5GVuz7hd7sCgG2qdKkheIIhawOwQe6gol
- OsurwzOpx5sYp3tIrPgIYjoVmhSphP+PBHu+xITkdvzh4Z3FEsBw0+DnnfYReBEysxiZ
- CwWgP+7ru1Wgra8aT/cfZCt8sDz0QaTMpaYfclwBA7NnQeEo/MGvSX2A+5D+U0ztOAtc
- AjlEwZAXzMA5vJ0pEHEJtgVGU6Y5AUOZeAq3/wI5LFQmH5q6f8+at+wU5p1+5qZHWk8N
- eSRA==
+ d=1e100.net; s=20260707; t=1791484450; x=1792089250;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=I6RQDVToS6uGgYxhYq5AKIb8KaX7tucdYOEL6FCsKA4=;
+ b=KQkYDPNvPFF4xh5AE5MA+Bim4gO1oOciRwyjepIUgwsj+kzp4ncBAR3N+Ylzy8D6My
+ NIiaxDtWcJsoSVWvtIiwYQDVaRcr3bwTVOwD1D+faNm6j9WR1IWnFnBdZkuvNg/JY6LM
+ XKEt6qYbi4MBfO5ygO93XmXvDwRWlgpz0fJaDANked5iKfirnnCn2OvArBM+wQxPk5e8
+ 1cSe3/XqhhHtUFyJngLlPh/iMzaNvj2X3hCU4uyz23an/0EviGzEtbFxsEWNN0ZEapWf
+ u5ZE0Mv93qVZAIQkv1Knb/vBP6r6DZ36i5Fr+Rtv4JVVeZIRUeCwdLh59wC2A08LyH1x
+ RvCg==
 X-Forwarded-Encrypted: i=1;
- AKwUvBxrw5thRAMx7BPS7b41uNiHZkfnFx8Xz4buYv9hHy5lkGPzeKZMipGKnRvBzcKQFEg6JTnzEENrP/vo@nongnu.org
-X-Gm-Message-State: AFq9FYKDSuAomj4hHHaSIMtbPDebT4dXY0IE4+A6WUHIvqkh2HVrwqy7
- /xHcDJIiSCGgrxvDOxVtOskUB+nBBEW2PHMYXhVbvpsQW/62dR+aqEvbNBo3bMF7Buh1o6u9RWY
- 6JVlCexTQ9SXV7Zs7asYqGBP70YF7l3w=
-X-Gm-Gg: AYBFou0pKjMmqXX8CI+wHQBx0dcwLqm1xOHL/D8t2HZ0fZTbhhHpzMc8z6bBMGemYIk
- WQHFjw7DffKkkwJXD6PeEEKUHwVG9ddINcMJs5vT0V5qxMaVqfEgkaSmlvdGsYwFIWbz5OGRAhb
- JF4stsXJ2oZeUNmrylNJNVT8hQ19LGW7zo7C51lEPKSLesmVv5WfP/U6ObIN6ZUQtIbDkEARO3Z
- OgOxQYNyWiXCDUm1s//efSZtx0Qn1mhyM5pIEB+P00jRRo7iXsKGySx39gFqZxnlAbwUaKjZs6P
- VYoN9+8sjQwBu2Q8TvLszYn/F2E+Xs84Q5JrIi3nS+uXJfVyCKUsAi8=
-X-Received: by 2002:a05:6402:50c7:b0:6af:bc82:e126 with SMTP id
- 4fb4d7f45d1cf-6aff47e145bmr5995886a12.44.1791484407522; Thu, 08 Oct 2026
- 11:33:27 -0700 (PDT)
+ AKwUvBw8qPNlfCviVx2G7aplnOGMzqpu8BO6DW0KFNDaDC7kxur80ztZP5WQloHzxXHevff4ZPGkyt03mV0t@nongnu.org
+X-Gm-Message-State: AFuF++m6C1kwzJBWGwW8ysjyZh8bL5dfzu1Di3aPzehBe29ZDGv5jvRq
+ IJuOsKaW5WiUc2TDMJ2U/ql20EKEa2bsL7QeHhBYKmEcxKWDIl7pOoFn6pqeRWB2cuM7C9xVRCu
+ YBrinh8kHM7TXxm+/i82+h3Qej9pKTc3ON12dgKONtpFLc8nQvtVAbJkShw==
+X-Gm-Gg: AYBFou1p79k53isThzLZixHuDIXzgq/0NQ9dxSPu7hNqQHCTxVtPc5vC/orXsHqqMYt
+ dnsAO7P0NUKoHABRBh4WHet1O0HY5G1D1y07yjuY4JPLy1pSB4Ny7DkY0iMokJQFxrz8srUYZ1R
+ y/JXnPk6n+ESydLXVByNK5b9siZBqgRtf5g/YInqH+DOBV+he7tFFcNEg5pRTWBhcmX1NuCasfv
+ KBTsTxoZBjAxwWYq4eV6A63YaXiUoYku7FATebX1CPRTp3HdRG2R5N2cWJFs/J6opyV0WVu/iwo
+ 2cS5Yqkp5ELx1oH8Gm7J2gbR8KSdZVJuV4cIqRPRdEvAVvam84abspk3Wo4DXKnD2IaTnio4fMq
+ A9QhhZAemxn5dDKR2iwJ6kEGnfmEtKD/zSzqouVc7/5qRqFioeSRKhL8A8y3oPldQfmSAjA==
+X-Received: by 2002:a05:6a21:489:b0:3dd:a195:fa12 with SMTP id
+ adf61e73a8af0-3e1340ec207mr5317406637.55.1791484449748; 
+ Thu, 08 Oct 2026 11:34:09 -0700 (PDT)
+X-Received: by 2002:a05:6a21:489:b0:3dd:a195:fa12 with SMTP id
+ adf61e73a8af0-3e1340ec207mr5317400637.55.1791484449240; 
+ Thu, 08 Oct 2026 11:34:09 -0700 (PDT)
+Received: from [192.168.1.199] (192-80-163-190.dyn.novuscom.net.
+ [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-cd3a5082926sm223288a12.2.2026.10.08.11.34.08
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 08 Oct 2026 11:34:08 -0700 (PDT)
+Message-ID: <3034c146-0697-4db7-acd4-8076b317a09e@oss.qualcomm.com>
+Date: Thu, 8 Oct 2026 11:34:07 -0700
 MIME-Version: 1.0
-References: <20261007115253.328-1-luoyonggang@gmail.com>
- <20261007115253.328-9-luoyonggang@gmail.com>
- <7fc0d377-a994-41f4-aa98-7ed56db11447@oss.qualcomm.com>
- <CAE2XoE8K+3e8h6H9NrPk1WWMmJfG807bN_Kh5qje-5pKWUUg5w@mail.gmail.com>
- <b2d89a92-0197-4873-b4ea-75bb21c0d0ae@oss.qualcomm.com>
- <asdkF80SJzF2W3sD@redhat.com>
- <CAE2XoE-Vc+CaE-3FerW3eXtTgspwxZJ6ZT0CZyg3ZYpoJ8xYXw@mail.gmail.com>
- <98644e74-9219-42f0-bcf7-8cd7f02353af@oss.qualcomm.com>
- <CAE2XoE8qSVczu5R1HTwOV+PhPo7_wWzB=KSqhJroqbgcP5GDRQ@mail.gmail.com>
- <8c3e6104-f59c-42d9-949a-1f0c7c8dd567@oss.qualcomm.com>
-In-Reply-To: <8c3e6104-f59c-42d9-949a-1f0c7c8dd567@oss.qualcomm.com>
-From: Yonggang Luo <luoyonggang@gmail.com>
-Date: Fri, 9 Oct 2026 02:33:14 +0800
-X-Gm-Features: AclHuK_G8Ryd0GxxqOeqsNJclc40M0YyQ3v710iK7vUlSdasODBiP_K5QC0eH-8
-Message-ID: <CAE2XoE9b3BW4+m_7o=C9wxk76wTE+aF0eJf91R5oQxhTMNiJ6A@mail.gmail.com>
-Subject: Re: [PATCH 8/8] qom: pass TargetInfo to is_available for later use
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- qemu-devel@nongnu.org, Cleber Rosa <crosa@redhat.com>, 
- Stefan Hajnoczi <stefanha@redhat.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/8] qom: pass TargetInfo to the is_available callback
+To: luoyonggang@gmail.com
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org, Cleber Rosa <crosa@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@kaod.org>,
  Laurent Vivier <lvivier@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
  John Snow <jsnow@redhat.com>, Laurent Vivier <laurent@vivier.eu>,
- Richard Henderson <richard.henderson@linaro.org>, 
+ Richard Henderson <richard.henderson@linaro.org>,
  Joel Stanley <joel@jms.id.au>, Fabiano Rosas <farosas@suse.de>,
- Kane Chen <kane_chen@aspeedtech.com>, 
- Andrew Jeffery <andrew@codeconstruct.com.au>, Troy Lee <leetroy@gmail.com>, 
- Jamin Lin <jamin_lin@aspeedtech.com>, Stafford Horne <shorne@gmail.com>,
- qemu-arm@nongnu.org, Philippe Mathieu-Daude <philmd@mailo.com>,
- Peter Maydell <peter.maydell@linaro.org>, 
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Steven Lee <steven_lee@aspeedtech.com>, Alexander Bulekov <alxndr@bu.edu>, 
- Darren Kenny <darren.kenny@oracle.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::535;
- envelope-from=luoyonggang@gmail.com; helo=mail-ed1-x535.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+ Kane Chen <kane_chen@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Troy Lee <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>,
+ Stafford Horne <shorne@gmail.com>, qemu-arm@nongnu.org,
+ Philippe Mathieu-Daude <philmd@mailo.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Paolo Bonzini
+ <pbonzini@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@oss.qualcomm.com>, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
+ <marcandre.lureau@redhat.com>, Steven Lee <steven_lee@aspeedtech.com>,
+ Alexander Bulekov <alxndr@bu.edu>, Darren Kenny <darren.kenny@oracle.com>
+References: <20261007115253.328-1-luoyonggang@gmail.com>
+ <2390b3d7-6918-41e3-8532-c19de4cdd1ff@oss.qualcomm.com>
+ <asdlbOZBSYIaCMIh@redhat.com>
+ <CAE2XoE91XxoJRFpQ_1jhmX6LdxMyN16CF7RXxM62C5Ctkc1tig@mail.gmail.com>
+ <42fd67c0-c20d-4bc4-bede-79073e4be4a1@oss.qualcomm.com>
+ <CAE2XoE-gN5-vmE8r00Ds_Z=E1WePSFi_MJXjmy9ZuXEU_=o31g@mail.gmail.com>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <CAE2XoE-gN5-vmE8r00Ds_Z=E1WePSFi_MJXjmy9ZuXEU_=o31g@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Authority-Analysis: v=2.4 cv=E+1YNqdl c=1 sm=1 tr=0 ts=6ac7e222 cx=c_pps
+ a=Qgeoaf8Lrialg5Z894R3/Q==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
+ a=VwQbUJbxAAAA:8 a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8 a=YVV9U6z2R0o8oJsJggoA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=x9snwWr2DeNwDh03kgHS:22
+X-Proofpoint-GUID: n0BEGVl1lFXyKm_57wVU_u3F0RQAn1ln
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA4MDA3MyBTYWx0ZWRfX0XAr2Ftgf2Cp
+ Jn3kwLokc0yY22OLsHXyhYi11JQYK9mYdox0fZMZivABP4JeLVZy9m480ka6CdDK0cUWh2yuT1Y
+ pZoAMxOYDjnTk4Xxa6diOvoqiejGIs32p1YzBasQRfAUk94kH/61sm9oF9dCY1FY+0Jprmo7yRF
+ fA5TP6fXykO+SFxo5F/KhOSPkBC3D38En1E8C9Mv7SWCnzC1tXFqHNvUjXTBNHsSdyH59VJuT6s
+ nfJmdGNPUp1Il8zPX8uKoKgUdWSTdBBVGuprZiOr4MW66pZseZ9J6Om01XngGSvSuTaLEw3THPO
+ 2pDj9BlepGqzcWUek4FTbvA3xlnLcdBfXUjzxx6XVmevEDTiY5jQgwSdu4wQIahdlHeKwGMjWSD
+ pTrpfDOcs+dUQLFfyB3yJq6himpXzmt/3yS/vYveRFGYAZwzqjQYD7+3KFGYhfo2IeygC/4Su0e
+ B1gs2pNgW5PE6aonG0Q==
+X-Proofpoint-ORIG-GUID: n0BEGVl1lFXyKm_57wVU_u3F0RQAn1ln
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA4MDA3MyBTYWx0ZWRfX2zJQMWI1iw67
+ MH6d98tP+TOP4g4UxY2AzcOraVkp4ed7KCokXnbHzSwrQTbWkBCZ3ODJEzcl7b94Z+2/mHBvAJt
+ 28kFg+oHfAc4lmlAKLqTYxPFoYbHfL0=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-10-08_06,2026-10-08_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 impostorscore=0 suspectscore=0 malwarescore=0 spamscore=0
+ phishscore=0 bulkscore=0 lowpriorityscore=0 clxscore=1015 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2610020000 definitions=main-2610080073
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -141,132 +173,132 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: luoyonggang@gmail.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Oct 9, 2026 at 2:27=E2=80=AFAM Pierrick Bouvier
-<pierrick.bouvier@oss.qualcomm.com> wrote:
->
-> On 10/8/2026 10:04 AM, Yonggang Luo wrote:
-> > On Fri, Oct 9, 2026 at 12:01=E2=80=AFAM Pierrick Bouvier
-> > <pierrick.bouvier@oss.qualcomm.com> wrote:
-> >>
-> >> On 10/8/2026 2:56 AM, Yonggang Luo wrote:
-> >>>>> How about letting machines (and machines only first), have a new fi=
-eld
-> >>>>> 'targets', being a uint32_t mask with an array of EMU_TARGET?
-> >>>>> machine->targets =3D EMU_TARGET_X | EMU_TARGET_Y;
-> >>>
-> >>> To be explicit state what, I give you a pseudo code to compute
-> >>> machine->targets from TypeInfo::is_available(TargetInfo*)
-> >>> let targets=3D0
-> >>> foreach ti of TargetInfo list:
-> >>>    if (machine::TypeImpl::is_avaible(ti))
-> >>>          targets |=3D 1 << ti->target_arch
-> >>>    fi
-> >>> endif
-> >>> So they basically have equivalent effect, and is_available will handl=
-e
-> >>> other code-needed condition properly such as
-> >>> CPU/AccelClass. not restrict to targets, we can also attach the
-> >>> KConfig into TargetInfo, so is_available(TargetInfo*)
-> >>> also works for Kconfig. that's why I insist this way, it's solved all
-> >>> the issues around.
-> >>>
-> >>> so  machine->targets =3D EMU_TARGET_X | EMU_TARGET_Y; is a good idea,
-> >>> and it can be implemented with TypeInfo::is_available(TargetInfo*)
-> >>> without much burden. and targets can be saved into a (machine or
-> >>> TypeImpl) for fast access when needed, we can compute it
-> >>> when the program starts.
-> >>>
-> >>
-> >> In what we described, there is no need to keep any kind of callback,
-> >> targets field is sufficient to filter any type declaratively.
-> >>
-> >> For the KConfig related types, I would really be keen to leave that
-> >> available for now, and add a proper error message later.
-> >
-> > Thanks, much clearer now, I was working for full KConfig related types =
-support
-> > because I am trying to keep qemu-system-$arch to be a symlink to qemu-s=
-ystem
-> > which will still work without breaking anything. If we do not keep this=
- then
-> > I machine::targets or TypeInfo::targets would be the best solution, I t=
-hink
-> > TypeInfo::targets is better, and copy it into TypeImpl::targets. and gi=
-ve a API
-> > to retrieve it, for example:
-> > uint64_t *object_class_get_targets(ObjectClass *klass);
-> >
->
-> We can exclude the goal to replace existing binaries with a symlink for n=
-ow.
->
-> Please do not add this to TypeInfo, but to MachineClass instead, as
-> explained in previous email.
+On 10/8/2026 10:13 AM, Yonggang Luo wrote:
+> On Fri, Oct 9, 2026 at 12:06 AM Pierrick Bouvier
+> <pierrick.bouvier@oss.qualcomm.com> wrote:
+>>
+>> On 10/8/2026 2:46 AM, Yonggang Luo wrote:
+>>> On Thu, Oct 8, 2026 at 5:42 PM Daniel P. Berrangé <berrange@redhat.com> wrote:
+>>>>
+>>>> On Wed, Oct 07, 2026 at 01:25:46PM -0700, Pierrick Bouvier wrote:
+>>>>> On 10/7/2026 4:47 AM, Yonggang Luo wrote:
+>>>>>> This allows a combined binary to register machine types from all its targets.
+>>>>>> Consequently, QMP `query-machines` can return machine entries from every
+>>>>>> target, even when `none` is selected. For example, a client can query the
+>>>>>> combined machine list with:
+>>>>>>
+>>>>>> ```json
+>>>>>> { "execute": "query-machines" }
+>>>>>> ```
+>>>>>>
+>>>>>> The returned list includes the registered machine classes from all linked
+>>>>>> targets. This is separate from selecting a machine: with `-target none`,
+>>>>>> `-M virt` reports the targets that provide `virt` instead of choosing one
+>>>>>> arbitrarily:
+>>>>>>
+>>>>>> ```text
+>>>>>> qemu-system -target none -M virt
+>>>>>> unsupported machine type: "virt" for target "none"
+>>>>>> Available for targets:
+>>>>>>   aarch64
+>>>>>>   arm
+>>>>>> ```
+>>>>>>
+>>>>>
+>>>>> From the long conversation on a previous thread, I thought we reached
+>>>>> the conclusion that if we didn't expose any ambiguous name, then -target
+>>>>> option is unnecessary, or maybe I got lost on track of this thread.
+>>>>>
+>>>>> https://lore.kernel.org/qemu-devel/ar_coT44h5-zJPVV@redhat.com/
+>>>>>
+>>>>> I'm not sure which semantic we want to have with -target none. If there
+>>>>> is no ambiguous name registered, we just don't need it at all. It's a
+>>>>> win-win IMHO.
+>>>>
+>>>> Yes, if we expose unique names for every machine, then -target is then
+>>>> redundant.
+>>>
+>>> so how to diff riscv32-virt and risv64-virt? oh so for this machine we
+>>> needs two name?
+>>> "virt" needs register twice for it? or register only a single time,
+>>> but we prefix the target_name()
+>>> automatically? for example machine::name === "virt", but we can use
+>>> "riscv32-virt" "risv64-virt" to reach it?
+>>>
+>>
+>> Yes, ideally we should have different variant of virt for 32/64 bit.
+>> Same goes for cpu max types.
+>>
+>> QOM type is always registered unambiguously ("$arch-virt"). Then, for
+>> the "alias" name, which is virt, in case multiple matches are found,
+>> command line can return an error with list of unambiguous names to call it.
+>>
+>> $ qemu-system -M virt
+>> Multiple virt machines are available. Please choose one of them:
+>> - aarch64-virt
+>> - riscv64-virt
+>>
+>> There is no "parsing" of the argument, it's just the real QOM type. Then
+>> we can find which target it implements from mc->targets.
+>> And then, we can automatically choose which cpus should be available
+>> based on that, thanks to cpu->targets.
+>>
+>> For existing binaries, nothing change.
+> 
+> Good, I think we found a clean way now, is_available should be
+> removed, and TypeInfo::targets and TypeImpl::targets should be added.
 
-I didn't see any simple way to do this, and don't know how, I am sorry.
-MachineClass init procedure is scattered, how would that be? I am
-afraid I am not
-able to get this done. If you can give some prepare work would be appreciat=
-ed
+It goes into MachineClass only for now.
 
-> If you want to reduce upcoming frustration, I would really recommend you
-> stick to this, and to a single machine to start. So we can validate the
-> series, review it, and then you can iterate.
->  > Add "targets" struct members as TypeInfo::targets and
-> TypeImpl::targets, and
-> > copy from TypeInfo into TypeImpl for later access with
-> > object_class_get_targets
-> > Then we can use it for filtering machines and cpus without burden.
-> >
-> > How to dealt with
-> > https://lore.kernel.org/qemu-devel/20261007-rv-dedup-v2-6-8a2f0f296a7f@=
-rev.ng/
-> >
-> > It's using is_available.
-> >
+> I think
+> for "virt" we can add a shared hw/machine-virt.c instead, and forwarding to
+> the $arch specific virt. so that we only have a single "virt" registered.
+> And it's
+> targets is
+> QEMU_ARCH_I386 |
+> QEMU_ARCH_ARM |
+> QEMU_ARCH_RISCV |
+> QEMU_ARCH_LOONGARCH |
+> QEMU_ARCH_M68K |
+> QEMU_ARCH_OR1K |
+> QEMU_ARCH_XTENSA |
+> QEMU_ARCH_HEXAGON
+> 
+> So that we won't have a list of conflict QOM names for "virt" machines.
+> As now we indeed have only a single "virt" machine that redirects to
+> different targets.
 >
-> .targets field can be conditioned by ifdef for config vs user, since
-> what we have everything needed in build system allows to duplicate
-> objects between user and system.
->
-> #ifdef CONFIG_USER_ONLY
->  .targets =3D ...
-> #else
->  .targets =3D ...
-> #endif
->
-> If that's not enough, it means the type has to be duplicated in some
-> ways to resolve ambiguity (especially for 32 vs 64 bits variants).
->
-> > Maybe all using the way like
-> > Subject: [PATCH v2 07/18] target/riscv: Runtime register MAX and BARE C=
-PUs
-> > https://lore.kernel.org/qemu-devel/20261007-rv-dedup-v2-7-8a2f0f296a7f@=
-rev.ng/
->
-> I would invite you to focus on a *single* machine first. See how to
-> declare it, and how to query which target it supports. Then we can see
-> what works/doesn't work, and (in a future series) we can do the same
-> thing for cpus.
->
-> You'll see that this iterative approach works much better than sending
-> huge series. You have my word I'll be reactive and present to help
-> continue this effort.
->
-> Regards,
-> Pierrick
 
+The idea looks appealing, but I don't think it solves the problem to
+have multiple virt variants available at the same time.
 
+The "alias" idea you introduced before is good, we just need to add a
+check if an alias is really unique, else return an error, as explained
+previously.
 
---=20
-         =E6=AD=A4=E8=87=B4
-=E7=A4=BC
-=E7=BD=97=E5=8B=87=E5=88=9A
-Yours
-    sincerely,
-Yonggang Luo
+If "-M aarch64-virt" works for both the new and existing binary, and -M
+virt only for existing binaries (and ambiguous for new one), I think
+that's a safe approach.
+
+> 
+> For other types also conflict can be handled in the same way, such as
+> "-cpu host" "-cpu max"
+> maybe others, but I think they all have the same way to deal with.
+> 
+> 
+> That's why  TypeInfo::targets and TypeImpl::targets better than sole
+> Machine::targets
+>
+
+One step at a time.
+Let's keep focused on declaring targets for a single machine first.
+Then we can iterate to solve the "virt" problem.
+Then convert all the existing machines and add a check in machine-target.c
+Then, and only then, we can see what happens with cpus.
+
+Regards,
+Pierrick
 
