@@ -4,99 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1E7CCA6015
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Oct 2026 21:36:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4CE0CA6015
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Oct 2026 21:38:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xEvmW-0002Kk-VH; Thu, 08 Oct 2026 17:36:10 -0400
+	id 1xEvnu-00030Q-Ty; Thu, 08 Oct 2026 17:37:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1xEveT-0000MR-2J
- for qemu-devel@nongnu.org; Thu, 08 Oct 2026 17:27:50 -0400
+ id 1xEveT-0000MS-2F
+ for qemu-devel@nongnu.org; Thu, 08 Oct 2026 17:27:48 -0400
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1xEveP-0002ow-U4
+ id 1xEveP-0002pY-Tz
  for qemu-devel@nongnu.org; Thu, 08 Oct 2026 17:27:44 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 698L5VYr2404947; Thu, 8 Oct 2026 21:27:27 GMT
+ 698L5PRJ2501580; Thu, 8 Oct 2026 21:27:33 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=w48r8xaJHb1gxh025
- tcVSNfCgZppbTcu/Di0Fdy9FxI=; b=rRYaXytI53LvIauLSBHRJwFR+oOeSRxOB
- OPdP31r9WSQPwYmvylOQJeOGKvshRst1O2HjvIRJyYfnlSL9i3ONlEDxzaSJaY18
- znn0jM9QBaf0+49ViZhyVEojkLK7rB+xjeuCB7zedYnpDvwt9Mpm660igcMFKAn1
- EiXbShnZuATeHz/IMi9A9E/knMou5TjST9FZ67uEmbydcgjRTmGT/GOOlHt5vpBh
- Y3ZRHtKzau9fWKtD4fuqpFGaJlIXBEfpPryf0ETij3Nt8OSj0Q0K3ECC3MJ+uR94
- bY5O7ngCtlQF2xBJN/RvZCXbufYwH482Q1piyx/o6gs/ADABj5lkg==
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=BKdb0B
+ FbELBhLuTQRgVyC/3G9YAF4URWbxTX9nz6VME=; b=cU0wW17ebnML+RJdBTvGnA
+ BMtuNqhtoD7StlxgHdpEvresHHu9rjJY8O9wd3f2uIXK1n4cWLdm0etjRvcztiQq
+ bVPXce62MfJtLNGwJZKT6n7CWhnSvBDopzYFWx61lHw9KdFpLAPXQ+NYn77VrEPr
+ wjkBduVaZxq3TQHPCMpdxIW8qjnHMWgZvIW5VDf9tAIUwmm37TKqUjHgrHhsFmeO
+ I3H1a2VrwdXrU32sGhhBjmi9cvE9Nr8xItyRXXSA26xJP/0iCdKGkCEBqOdKFQFD
+ p0N48D2rHWuey+y0P2ySOAV9L7lTz/k0iebvPK0fNDGW6hwdR4HXj3Va+ooDeYgg
+ ==
 Received: from ppma23.wdc07v.mail.ibm.com
  (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4h5xjvepr0-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4h5xjvxq0v-1
  (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Thu, 08 Oct 2026 21:27:27 +0000 (GMT)
+ Thu, 08 Oct 2026 21:27:33 +0000 (GMT)
 Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
  by ppma23.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 698L2XkT4079100; Thu, 8 Oct 2026 21:27:26 GMT
-Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4h6hsng9kp-1
+ 698L2Z0S4079111; Thu, 8 Oct 2026 21:27:32 GMT
+Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4h6hsng9m0-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 08 Oct 2026 21:27:26 +0000 (GMT)
+ Thu, 08 Oct 2026 21:27:32 +0000 (GMT)
 Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
  [10.39.53.230])
- by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 698LRQpx60621208
+ by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 698LRVnk32506610
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 8 Oct 2026 21:27:26 GMT
+ Thu, 8 Oct 2026 21:27:32 GMT
 Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2CD765805A;
- Thu,  8 Oct 2026 21:27:26 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 970305805C;
+ Thu,  8 Oct 2026 21:27:31 +0000 (GMT)
 Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A6DA658064;
- Thu,  8 Oct 2026 21:27:25 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 1F1C758054;
+ Thu,  8 Oct 2026 21:27:31 +0000 (GMT)
 Received: from sbct-3.pok.ibm.com (unknown [9.47.158.153])
  by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Thu,  8 Oct 2026 21:27:25 +0000 (GMT)
+ Thu,  8 Oct 2026 21:27:31 +0000 (GMT)
 From: Stefan Berger <stefanb@linux.ibm.com>
 To: qemu-devel@nongnu.org
 Cc: peter.maydell@linaro.org, Stefan Berger <stefanb@linux.ibm.com>,
- Arun Menon <armenon@redhat.com>
-Subject: [PULL v1 01/10] tpm_util: Pass TPMVersion to function writing fatal
- error response
-Date: Thu,  8 Oct 2026 17:27:14 -0400
-Message-ID: <20261008212723.3679685-2-stefanb@linux.ibm.com>
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Subject: [PULL v1 09/10] hw/tpm: crb: Consider response_buffer->len of
+ received response
+Date: Thu,  8 Oct 2026 17:27:22 -0400
+Message-ID: <20261008212723.3679685-10-stefanb@linux.ibm.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20261008212723.3679685-1-stefanb@linux.ibm.com>
 References: <20261008212723.3679685-1-stefanb@linux.ibm.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: ezKTtcxK3GwyT6_QaI1nh9gjwX5o7Wuv
-X-Proofpoint-ORIG-GUID: ezKTtcxK3GwyT6_QaI1nh9gjwX5o7Wuv
-X-Authority-Analysis: v=2.4 cv=H8NOUOYi c=1 sm=1 tr=0 ts=6ac80abf cx=c_pps
+X-Proofpoint-ORIG-GUID: q2UyC80urJgxwL1OsojaupFYvKS8zI62
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA4MDA4NCBTYWx0ZWRfX515MS3oD7LtK
+ Bowwt6e28quOeIvesGWWxc3B3oNTzGarInaqNl8tWw9L7tLmq0fZ9TOdNnVCGst+x9EGnQhFxTp
+ Lg+kIdbmTEAvx81hcaUrpnBezlINGYCrTmgq9u2KHo4446zC70ct3YWovkSHt8fNpMwmfgizf1k
+ IQOToEEmgmgXL12WFmbIDk6D66+UTgiOcGKzWZPPct68Qd16NbuxR0B+hzsF72hv9zO8SU0IYDy
+ rcE+OBpdL3gY2VLxiNuJged+c45DVrrm7r2e6b96N2rrwhCx8+h/AoXQCWAiAO4Sax8oXFalXGL
+ XY+qeZp3DHLes/lPBljoyclY9nHpydT8UyxEYS4OrdGQ1gmXHx/iFCBPnKXcrg9OXPingnpTQ93
+ /9m24dGR4xHnpdp6ASyuDtP+zmmSkU1KCBqtDVN73KCjskvuKcQkPBFCOLwnAoQCKjCQWJHJezL
+ iYly3XpOB4/51Edkp5A==
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA4MDA4NCBTYWx0ZWRfX/pp+MYBvGl+J
+ W5/Jv63r7NCdSZiq/xV+jKW4OOOkNs3l2dmWSdIQLci1hrUn/FcaQWWA/xGAeUlgAsTvggNt60R
+ pZuwW0QWyMevoJakpFGnv2q3TgDngEE=
+X-Proofpoint-GUID: q2UyC80urJgxwL1OsojaupFYvKS8zI62
+X-Authority-Analysis: v=2.4 cv=FLCOVOos c=1 sm=1 tr=0 ts=6ac80ac5 cx=c_pps
  a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=U7nrCbtTmkRpXpFmAIza:22 a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8 a=20KFwNOVAAAA:8
- a=ZdjYBk6P2T0J8aFbIr8A:9
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA4MDA4NCBTYWx0ZWRfXxFTxDYJCXixL
- xHuoyuBvYo2OnblW3jkWgR4TwMk8miO7qOHtcSPKWPEcEWOP1YkF8Soj/ejKzbvUT1NblWd+Q8c
- oGG916Bf+wLLzKMqDp45Cg81gPNUt4tV8Y7j8vwMpa+gSGIbcYZmpPYM67zqq3caYpuxCtT1IPt
- nc9bvrg0oWhIc/Dca7ZmsiN6PS6srJxVGshVwkJMGWIObeo8OD+ijF2Pe1XPbHYHULxFt2FjhEx
- mHAQ+4qRYZCLBtojHHdcQ8iq25ZyFHrhGQ2j+psomzWJaP4v3mX5P+4sJVz1Giew1y9RJxTf0jn
- OwIsZeWuheObiZW4wDxygpKK2txgBaxs0XETNMYUSr3jEJz5ZTMQao32B3WDXI+ydc0xjjEeewV
- fHCSwMHBGgbsIU6bXj6Skw//koP1SavMovevG+DAuw7RwUC67tAl0MoMxzozm/C0+4Rq7HAHEK2
- Cxs+8ETqs6q+8vfxkCQ==
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA4MDA4NCBTYWx0ZWRfX3Dahv4MoYTT/
- 08FkvQBAWu9swWP+awyGzzSl2HSBIcB5ET7M1sckHwZbfT75JmOGRkfze4Cf52DsCEol7VkbXDZ
- vhsChWwTe2KPaY5Qz6s268Xh0tJAL6I=
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VwQbUJbxAAAA:8
+ a=VnNF1IyMAAAA:8 a=20KFwNOVAAAA:8 a=rD1lyLEvv5Bxigb_1PMA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-10-08_07,2026-10-08_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 adultscore=0 phishscore=0 lowpriorityscore=0 impostorscore=0
- clxscore=1015 spamscore=0 priorityscore=1501 malwarescore=0 suspectscore=0
+ malwarescore=0 impostorscore=0 adultscore=0 priorityscore=1501 suspectscore=0
+ clxscore=1015 bulkscore=0 spamscore=0 phishscore=0 lowpriorityscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2610020000 definitions=main-2610080084
 Received-SPF: pass client-ip=148.163.156.1; envelope-from=stefanb@linux.ibm.com;
@@ -123,92 +126,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Have tpm_util_write_fatal_error_response write a TPM version specific
-error response with error code TPM_FAIL for a TPM 1.2 and TPM_RC_FAILURE
-for a TPM 2. Adjust the callers.
+When the CRB receives a TPM reponse from the backend, then reject responses
+that are shorter than the TPM_HEADER_SIZE. When determining the size of the
+reponse, also consider the length of the response_buffer as being possibly
+shorter than the negotiated backend buffer size or the size indicated in
+the response itself.
 
-Reviewed-by: Arun Menon <armenon@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20261002142516.2063735-2-stefanb@linux.ibm.com
+Fixes: 2a660ad67d15 ("hw/tpm: Implement TPM CRB chunking logic")
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Link: https://lore.kernel.org/qemu-devel/20261002142516.2063735-10-stefanb@linux.ibm.com
 Signed-off-by: Stefan Berger <stefanb@linux.ibm.com>
 ---
- backends/tpm/tpm_emulator.c    |  3 ++-
- backends/tpm/tpm_passthrough.c |  2 +-
- backends/tpm/tpm_util.c        | 17 ++++++++++++++---
- include/system/tpm_util.h      |  3 ++-
- 4 files changed, 19 insertions(+), 6 deletions(-)
+ hw/tpm/tpm_crb.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/backends/tpm/tpm_emulator.c b/backends/tpm/tpm_emulator.c
-index 95d2de2f48..16ae44c8d7 100644
---- a/backends/tpm/tpm_emulator.c
-+++ b/backends/tpm/tpm_emulator.c
-@@ -270,7 +270,8 @@ static void tpm_emulator_handle_request(TPMBackend *tb, TPMBackendCmd *cmd,
-         tpm_emulator_unix_tx_bufs(tpm_emu, cmd->in, cmd->in_len,
-                                   cmd->out, cmd->out_len,
-                                   &cmd->selftest_done, errp) < 0) {
--        tpm_util_write_fatal_error_response(cmd->out, cmd->out_len);
-+        tpm_util_write_fatal_error_response(cmd->out, cmd->out_len,
-+                                            TPM_EMULATOR(tb)->tpm_version);
+diff --git a/hw/tpm/tpm_crb.c b/hw/tpm/tpm_crb.c
+index 5c50a79936..78db220520 100644
+--- a/hw/tpm/tpm_crb.c
++++ b/hw/tpm/tpm_crb.c
+@@ -323,13 +323,15 @@ static void tpm_crb_request_completed(TPMIf *ti, int ret)
+     CRBState *s = CRB(ti);
+ 
+     ARRAY_FIELD_DP32(s->regs, CRB_CTRL_START, Start, 0);
+-    if (ret != 0) {
++    if (ret != 0 || s->response_buffer->len < TPM_HEADER_SIZE) {
+         ARRAY_FIELD_DP32(s->regs, CRB_CTRL_STS,
+                          tpmSts, 1); /* fatal error */
+         tpm_crb_clear_internal_buffers(s);
+     } else {
+         uint32_t actual_resp_size = tpm_cmd_get_size(s->response_buffer->data);
+         uint32_t total_resp_size = MIN(actual_resp_size, s->be_buffer_size);
++
++        total_resp_size = MIN(total_resp_size, s->response_buffer->len);
+         g_byte_array_set_size(s->response_buffer, total_resp_size);
+         s->response_offset = 0;
      }
- }
- 
-diff --git a/backends/tpm/tpm_passthrough.c b/backends/tpm/tpm_passthrough.c
-index a9f35ab7d6..8a4f8183c7 100644
---- a/backends/tpm/tpm_passthrough.c
-+++ b/backends/tpm/tpm_passthrough.c
-@@ -118,7 +118,7 @@ static void tpm_passthrough_unix_tx_bufs(TPMPassthruState *tpm_pt,
- 
- err_exit:
-     if (ret < 0) {
--        tpm_util_write_fatal_error_response(out, out_len);
-+        tpm_util_write_fatal_error_response(out, out_len, tpm_pt->tpm_version);
-     }
- 
-     tpm_pt->tpm_executing = false;
-diff --git a/backends/tpm/tpm_util.c b/backends/tpm/tpm_util.c
-index 264bff22a9..7019f7fd3e 100644
---- a/backends/tpm/tpm_util.c
-+++ b/backends/tpm/tpm_util.c
-@@ -87,12 +87,23 @@ const PropertyInfo qdev_prop_tpm = {
- /*
-  * Write an error message in the given output buffer.
-  */
--void tpm_util_write_fatal_error_response(uint8_t *out, uint32_t out_len)
-+void tpm_util_write_fatal_error_response(uint8_t *out, uint32_t out_len,
-+                                         TPMVersion tpm_version)
- {
-     if (out_len >= sizeof(struct tpm_resp_hdr)) {
--        tpm_cmd_set_tag(out, TPM_TAG_RSP_COMMAND);
-+        switch (tpm_version) {
-+        case TPM_VERSION_1_2:
-+            tpm_cmd_set_tag(out, TPM_TAG_RSP_COMMAND);
-+            tpm_cmd_set_error(out, TPM_FAIL);
-+            break;
-+        case TPM_VERSION_2_0:
-+            tpm_cmd_set_tag(out, TPM2_ST_NO_SESSIONS);
-+            tpm_cmd_set_error(out, TPM_RC_FAILURE);
-+            break;
-+        default:
-+            g_assert_not_reached();
-+        }
-         tpm_cmd_set_size(out, sizeof(struct tpm_resp_hdr));
--        tpm_cmd_set_error(out, TPM_FAIL);
-     }
- }
- 
-diff --git a/include/system/tpm_util.h b/include/system/tpm_util.h
-index 1858693225..3ab2fe693d 100644
---- a/include/system/tpm_util.h
-+++ b/include/system/tpm_util.h
-@@ -25,7 +25,8 @@
- #include "system/tpm.h"
- #include "qemu/bswap.h"
- 
--void tpm_util_write_fatal_error_response(uint8_t *out, uint32_t out_len);
-+void tpm_util_write_fatal_error_response(uint8_t *out, uint32_t out_len,
-+                                         TPMVersion tpm_version);
- 
- bool tpm_util_is_selftest(const uint8_t *in, uint32_t in_len);
- 
 -- 
 2.55.0
 
