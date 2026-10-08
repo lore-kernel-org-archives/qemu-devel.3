@@ -4,123 +4,145 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A036CA600C
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Oct 2026 16:37:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B22CCA600D
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Oct 2026 16:40:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xEr6r-0001aS-5b; Thu, 08 Oct 2026 12:36:45 -0400
+	id 1xErAM-0002VT-Se; Thu, 08 Oct 2026 12:40:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1xEr6q-0001aC-2M
- for qemu-devel@nongnu.org; Thu, 08 Oct 2026 12:36:44 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1xErAL-0002VK-46
+ for qemu-devel@nongnu.org; Thu, 08 Oct 2026 12:40:21 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1xEr6n-0007a7-Vx
- for qemu-devel@nongnu.org; Thu, 08 Oct 2026 12:36:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1791477400;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=z/UUmooO/7bIYSg6OS8d5DYV7eO6vqCdLpJnZY418WI=;
- b=cvuogL3ATCkSLWIa+905v9diX6DAEa/gtPFzv/Wv960UDOVDG+cFK3SLpHMovEC1hZzHnH
- sddxx0F/ooFNbv8lRQUYFeop7AQEEmrMLSSM5/+D60jEFw+18nbIM/rx+kkEB/XTc5hBEu
- 0CA7iYrQ/MnKJ4/S2rW3794NhZ4EzVE=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-302-Lw31-g6rPBmQbOQozP8Y0g-1; Thu, 8 Oct 2026 16:36:39 +0000
-X-MC-Unique: Lw31-g6rPBmQbOQozP8Y0g-1
-X-Mimecast-MFC-AGG-ID: Lw31-g6rPBmQbOQozP8Y0g_1791477398
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-49e6b5c5f44so80927845e9.2
- for <qemu-devel@nongnu.org>; Thu, 08 Oct 2026 09:36:38 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1xErAJ-0007xy-0p
+ for qemu-devel@nongnu.org; Thu, 08 Oct 2026 12:40:20 -0400
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 698EVPrY3121446
+ for <qemu-devel@nongnu.org>; Thu, 8 Oct 2026 16:40:17 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ atQvSf63HFOiAWQC91uK+FUQTgIxyBfYL9sEYwZR+6k=; b=cg5E93aO3Hihopux
+ aVNDOooSsxEVvc5xUHjYZBzxT8D/0Sk3+yuWwgnpXkchmVR0YpWpQNz8+BMHhyVK
+ lMDtBdtZrTCvsElAEHtjf9nvOOxmS74Pnx/FM2uSkvcY5+FqAkvTwV4aYou2curD
+ S3KKIYRIPk3/DXri0+KML8+R8jbN6Jgjjbyc1eGdEnhUwK05Cy/Cw2Qfdlls/p1J
+ Bi7hcgNMsu4IMJYjJCIbP3bptYdKB+u6KOB9+zFhDqtu3FO93X83MX7aNVACzbxJ
+ CnqlhUP/SVpZf700JwipmJ7j/4adaiUBWBskjIkPKTbgktY37I5j8k65wFfwCa8X
+ rRv7Dw==
+Received: from mail-dy1-f199.google.com (mail-dy1-f199.google.com
+ [74.125.82.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h5xe2uwqa-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 08 Oct 2026 16:40:17 +0000 (GMT)
+Received: by mail-dy1-f199.google.com with SMTP id
+ 5a478bee46e88-3535c27d880so319231eec.1
+ for <qemu-devel@nongnu.org>; Thu, 08 Oct 2026 09:40:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1791477616; x=1792082416; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=atQvSf63HFOiAWQC91uK+FUQTgIxyBfYL9sEYwZR+6k=;
+ b=Lcmb7ydg8JTJCyVMl8K3UHCebF50RHgSS8r3GDFpa6W4Vlp71Y8ia4cdN8AHY2nVql
+ 0wvc+dQu+IWEhh/wYcKiglIJZp/K8AXiQEQeJjjHaG4SdL1IdcMvLTMkZmCLiXNcdgym
+ oLM/o4xDqfJevaPGD/rUbPhlOPZT7abx9mnSOoaoDvqucJ4iMItW3RZ32fHN8Y+ZoyFE
+ sXWn0ACcarFxsCzEg5/FBXkInXPQFiafExa6in59jyJSJWm5FpXd2Le07o1GEtgmJrxs
+ EaNGsBdoPTbRZp0VjLlvspeOYYZASwzzikCf1pfrgWPquqo0N7x958N7+s9onJbztW4N
+ 0zDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791477398; x=1792082198;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:reply-to:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20260707; t=1791477616; x=1792082416;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=z/UUmooO/7bIYSg6OS8d5DYV7eO6vqCdLpJnZY418WI=;
- b=DK6UTDyy8nY1Hq/Q/Nth8QpVCQ5YMsKKht3TSAGpcmG8rOGI3nQkok0MgGhe1/a7LL
- MVhHP0Z5MKBN/MM03TTvH4HmElCrhIu9crMjUKCsnoQDppbeFNTTLHTwni3ff0Vfqbox
- cWBitrZZRE+CdV1dqDfW8jl00DT+OtWHP7S0M/C9VB9cpcuoXxU2bXcg0J7/NmmLlcze
- Tqna2P669I090Q/tWp+1LgmPGhmEoQJo7pgOAtFxsUNsQmm3ReL0Zg8T5jTl2aSXrgF9
- OaIzTM3Ljftt2xGoKQT1KrdDx4ZerLEfvfyZ56GWqOEN5WTz+CUQ+wjaSISiXwR/VCmu
- 57wg==
+ bh=atQvSf63HFOiAWQC91uK+FUQTgIxyBfYL9sEYwZR+6k=;
+ b=Lil4OSPyQW9O/JVFOCN/rcNzvtLj1lF9GfGWH4Qh4IKzYgW1J1A+EjDLfTngMS8OF8
+ fvMfUbvzKUWhvlyanBfq2f6pFZhjSzdtpwuQFWnVLveUtRR+UnjVmwQcppPlwnTZa8/Z
+ IreKbdb4hqI6jP3HrEXKu7PDRR3np7YRtyVejbXye7VkgCVHqgY2S0EKa2idHsty3G6F
+ GDZkOsjR6TANUfh0gOh00TdKgd6Sq+x03mbVhGPLEzv76JEm4PlkIdveZNnRKlTb2ZWI
+ c2QiwdKP41LCoIOUmurkJNoQYcZ4jJzhofaXJYZGkZPe48eV6jjk3zUodV4813PmCgPJ
+ ibKw==
 X-Forwarded-Encrypted: i=1;
- AKwUvBwDRtbvTtvztgQnMmsapQKanBFTjmxPWN0lgt3dgmHqusbrcRXTSyBm16KScj5KD+GaVK9HL405im2P@nongnu.org
-X-Gm-Message-State: AFuF++lQjsFx23z6LUOlqQZOFmUMdCX5bz4FWM3K/O+N8wnWl++S7soT
- kYC7PYVVFlodch/02MZZ9IGfCRFiFNsDmMS2QWdFbOs0prpZm923ZX9TmFKcFRvbcZiUni4u92M
- AUjJ4Sgu1ekUrfyIt5uKsOfi+TIZQbYgA7T3tXzYL3O+U2lTUwQ3FwtlL
-X-Gm-Gg: AYBFou2UQIOV1d4yBcAG9n7KZw1dTu9Pfmrme78Vx8rj/82rX7H9N+N02o3/LbvSdr6
- +9FqmI3LnQJKRMnIW7AMVQSHYa6cpOZ1+wfji7KLsdVguZvUSzOj1ap2RQBbPBsemDJNq0lqY0v
- Cnams0fMgg+xuRHIf/3E0UE0rN3JGq9LJmDCzfFfGOwr8AuvSsyKYf8fWb3z/t9OVAfl4X5Bgcw
- e7+b2/onE0CZV0Jhv+ZLNsIL0Zz544qsthsORMCXrwVx45CnlqospIiXmWH9iSUy84WShvimZhn
- qoeqwtCa9PJGVCOy9a5UECwTMX89ToqWVaGkt0IAPM5H3g3EJcytC7bXmwA+ZVtqwaA4xAURK1M
- iwxZIYG32l/vZVCe3tpdvcI6yqFj6rAfKtixIcLzZDKQi4CUM
-X-Received: by 2002:a05:600c:34cd:b0:4a1:7c7d:8881 with SMTP id
- 5b1f17b1804b1-4a180311361mr114214845e9.13.1791477397739; 
- Thu, 08 Oct 2026 09:36:37 -0700 (PDT)
-X-Received: by 2002:a05:600c:34cd:b0:4a1:7c7d:8881 with SMTP id
- 5b1f17b1804b1-4a180311361mr114214105e9.13.1791477397310; 
- Thu, 08 Oct 2026 09:36:37 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a18acf3a39sm1279535e9.4.2026.10.08.09.36.35
+ AKwUvBwzQwcP7qc4Yf83pAXTVmv95uAW0wYy3F2fMF2sREoM/N8EpzZDIGNUGGd+ujYGngY5jWde8t3ji8c+@nongnu.org
+X-Gm-Message-State: AFq9FYIXxm2Lgf1Db2QzCffezoHHtYCRFlr28c+wV99AN7aaaF+rTlPY
+ HrUn7gZZm7sE6G5rMRnFBXTe+gPRFZNlIMvv2x7WWY1tMV6j+Vj5ZDagd8nBHrQ+kobtHwHeDQH
+ qvZXqN0VJkoY8CrbaMnwp3OB4r+SkTYNYkCSiPGseOQ4fIWo+Rx2zB6Ys6nZaq4b6Nw==
+X-Gm-Gg: AYBFou3gpI5cVr9yPK9X7fhxR8VJ1v3j6mELtoPXbAHCWZ1xezt5nm0RRUuCX9FQSaE
+ 1rC8FWzLiNjpuEQtoB6gxUTqS4h0rzRc7ZTKHyFIeTd3HiCQtUtd4sXpiVJHCjh55g9iTg0hek7
+ d9DKdSDHwav6QI5oPaGTXx3qPMLOQrk0P9Qwu8VYbrjTKhYXsqE4Orc7XQWkwIQ3FmwfvkJM7dm
+ ZrIK8c4bbDDBnWNzTm9XLrPf41KmAMLcjJpdhsz1nMy66XRMUmKsg041gIfsNHu8BGgenOCDaaT
+ gr4U4SX+EcfZOyqLX7ABMKgve0pUKqnbrAlfDyrhYV+2ZMaBDxnNwehmEp+LQu5lnmNO1lRm4J1
+ dKh5LbyZwPUJmVjwmt/eOOfSBU5/JF4UPbVfAXUfhVWZHncNM8HL20B+ZIHpXoKSYYvdERQ==
+X-Received: by 2002:a05:7301:1707:b0:34e:9923:e372 with SMTP id
+ 5a478bee46e88-3515de444d5mr6795926eec.29.1791477615641; 
+ Thu, 08 Oct 2026 09:40:15 -0700 (PDT)
+X-Received: by 2002:a05:7301:1707:b0:34e:9923:e372 with SMTP id
+ 5a478bee46e88-3515de444d5mr6795874eec.29.1791477614686; 
+ Thu, 08 Oct 2026 09:40:14 -0700 (PDT)
+Received: from [192.168.1.199] (192-80-163-190.dyn.novuscom.net.
+ [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-3515b03da93sm15136929eec.29.2026.10.08.09.40.13
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 08 Oct 2026 09:36:36 -0700 (PDT)
-Message-ID: <5f053971-13a0-4130-ab57-eaf85bcef3a8@redhat.com>
-Date: Thu, 8 Oct 2026 18:36:35 +0200
+ Thu, 08 Oct 2026 09:40:14 -0700 (PDT)
+Message-ID: <2d7c2cdb-b5b9-41ed-9786-dd9b4876bdd8@oss.qualcomm.com>
+Date: Thu, 8 Oct 2026 09:40:12 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 17/26] target/arm/kvm: Add consistency checking for
- SYSREG props
+Subject: Re: [PATCH 2/2] contrib/plugins/bbv.c: Allow selecting ROI
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>
+References: <20261007-bbv-v1-0-a2f521a68fdf@rsg.ci.i.u-tokyo.ac.jp>
+ <20261007-bbv-v1-2-a2f521a68fdf@rsg.ci.i.u-tokyo.ac.jp>
+ <4eec19e6-db40-4658-b5b3-bc342473cffd@oss.qualcomm.com>
+ <f503ffbe-0900-4b8e-ae7b-dbfcc74eb5cc@rsg.ci.i.u-tokyo.ac.jp>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Content-Language: en-US
-To: Khushit Shah <khushit.shah@nutanix.com>
-Cc: "eric.auger.pro@gmail.com" <eric.auger.pro@gmail.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
- "kvmarm@lists.linux.dev" <kvmarm@lists.linux.dev>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
- Shaju Abraham <shaju.abraham@nutanix.com>,
- "yangjinqian1@huawei.com" <yangjinqian1@huawei.com>,
- "cohuck@redhat.com" <cohuck@redhat.com>,
- "richard.henderson@linaro.org" <richard.henderson@linaro.org>,
- "sebott@redhat.com" <sebott@redhat.com>,
- "skolothumtho@nvidia.com" <skolothumtho@nvidia.com>,
- "philmd@oss.qualcomm.com" <philmd@oss.qualcomm.com>,
- "maz@kernel.org" <maz@kernel.org>,
- "oliver.upton@linux.dev" <oliver.upton@linux.dev>,
- "pbonzini@redhat.com" <pbonzini@redhat.com>,
- "armbru@redhat.com" <armbru@redhat.com>,
- "berrange@redhat.com" <berrange@redhat.com>,
- "abologna@redhat.com" <abologna@redhat.com>,
- "jdenemar@redhat.com" <jdenemar@redhat.com>
-References: <20260916144721.751810-1-eric.auger@redhat.com>
- <20260916144721.751810-18-eric.auger@redhat.com>
- <CECAE32E-9A75-4D8D-827D-9F25D026F364@nutanix.com>
- <dc5aecf7-db4f-4b16-92fd-432d663ff900@redhat.com>
- <A5B31865-5901-45F3-B782-274DA54E8615@nutanix.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <A5B31865-5901-45F3-B782-274DA54E8615@nutanix.com>
+In-Reply-To: <f503ffbe-0900-4b8e-ae7b-dbfcc74eb5cc@rsg.ci.i.u-tokyo.ac.jp>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
+X-Authority-Analysis: v=2.4 cv=AbMkjHXG c=1 sm=1 tr=0 ts=6ac7c771 cx=c_pps
+ a=cFYjgdjTJScbgFmBucgdfQ==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
+ a=7TEdcREvdylIeB0XKtUA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=O8hF6Hzn-FEA:10 a=scEy_gLbYbu1JhEsrz4S:22
+X-Proofpoint-GUID: VnBnYtzY2Q89ndSOJZrabgbAOjaV2l6R
+X-Proofpoint-ORIG-GUID: VnBnYtzY2Q89ndSOJZrabgbAOjaV2l6R
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA4MDA2NiBTYWx0ZWRfX6kdqvN6xZYL/
+ 0ncCGPeV4HUHAHPVx1eGcMpHiPAaES7wDfwsWhX7mlxaVcCsVY3i5u2FmGlb0tkK1iTu39xw4hl
+ Sv0ECqASbY4cRpojfdLeh4xppsLi+VE=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA4MDA2NiBTYWx0ZWRfX2POQcoU9RgEv
+ D29PNrKnap3wIU8nTf963NfrXOuUCn2QQEiYW2npJEofeBM7Gvb6buJQLOaIVWFovtlgUkGSI+r
+ z+CW521q9FypcTQWFTGbyHVhstwScydP0csQFN02iYYQC73SkO0TDEPl8Edn2nGbi0yr2aoUFQJ
+ uZcb+v/XJER1w/2BD/G8aH8JltYpS+ZdfWkk/L4qs3+oSv7nXgRW2dZmA196W6tADqG9lMu44I2
+ G3PcDjZULnbZrC0tc/1QmoG7l9oQ1FyORRZwqbC/Q/Uad96a1+BHQlP6S9y5R+6oRGdw8fY4z7T
+ lz8jGTj9pEylbUQwL4ojkw2lemDWlJDUPDjFV2Zwtlpoq6gcPnJ/2QwHR3nJxtkdBw31wZpQmuh
+ 8bF9ZfUi886LeAo73Vr5RADO/i0OSCk9RyFi4XRdGS5reK/KYkrBgD5lYdvri5PIokT4Ry3jBKw
+ L5wX+dpxijgMSF4Cnag==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-10-08_05,2026-10-08_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 clxscore=1015 suspectscore=0 lowpriorityscore=0 spamscore=0
+ impostorscore=0 malwarescore=0 adultscore=0 phishscore=0 priorityscore=1501
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2610020000 definitions=main-2610080066
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -133,221 +155,180 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 10/8/26 11:36 AM, Khushit Shah wrote:
->
->> On 8 Oct 2026, at 1:18 PM, Eric Auger <eric.auger@redhat.com> wrote:
->>
->> !-------------------------------------------------------------------|
->>  CAUTION: External Email
->>
->> |-------------------------------------------------------------------!
->>
->> Hi Khushit,
->>
->> On 9/30/26 9:34 AM, Khushit Shah wrote:
->>>> On 16 Sep 2026, at 8:15 PM, Eric Auger <eric.auger@redhat.com> wrote:
->>>>
->>>> !-------------------------------------------------------------------|
->>>> CAUTION: External Email
->>>>
->>>> |-------------------------------------------------------------------!
->>>>
->>>> Since legacy composite options (such as SVE, virtualization, ...)
->>>> and new SYSREG props coexist, add some basic consistency checks.
->>>>
->>>> Those checks are performed both in kvm_arch_init_vcpu() before
->>>> applying the SYSREG props at the end of the initialization chain.
->>>>
->>>> Some ID reg fields corresponding to legacy composite option scope
->>>> are not writable. In that case we just check that the field has
->>>> not become writable.
->>>>
->>>> Signed-off-by: Eric Auger <eric.auger@redhat.com>
->>> Hi Eric,
+On 10/7/2026 11:11 PM, Akihiko Odaki wrote:
+> On 2026/10/08 10:08, Pierrick Bouvier wrote:
+>> On 10/6/2026 11:01 PM, Akihiko Odaki wrote:
+>>> A region of interest (ROI) often excludes the program startup and exit.
+>>> For example, a benchmark may parse a large input and then run a
+>>> computation kernel and the former may take longer than the latter;
+>>> basic block vectors generated for the whole execution will not properly
+>>> represent the latter.
 >>>
->>> Gave this another look. I suggest moving this to kvm_arm_expose_idreg_properties().
->>> What I suggest specifically is:
->>> - Have a list of ID register fields which conflicts with legacy props.
->> this depends on the definition of "conflict". For instance does 
->>
->> PMUVer conflicts with has_pmu?
->>
-> Yes, PMUVer = 0 is inconsistent with has_pmu=true 
->
->> Nevertheless your suggested approach could work for props below which in case they show up would trigger
->>        error_setg(errp, "%s is now exposed but qemu is not ready to support it",
->>                   propname);
-> I was thinking of not exposing these props because we know it conflicts. So instead of checking the set props in kvm_arm_vcpu_validate_sysreg, we never expose conflicts in kvm_arm_expose_idreg_properties
->
-> I am suggesting this way because for named CPU models, we will have to handle this conflicts differently.
-
-I am afraid this a bit aggressive as a defensive approach. I like the
-idea for fields that are not yet writable. We can easily switch to a
-skiplist on property generation. For others for which some valid
-combinations exist I would keep the existing check. But let's see how it
-goes with named vcpu models. If it appears this extra complexity is not
-needed we can simplify that if needed.
-
-Thanks
-
-Eric
->
->
-> I hope this makes sense.
->
->
-> Thanks,
-> Khushit
->
->> Thanks
->>
->> Eric
->>
->>> - in kvm_arm_expose_idreg_properties() (the new field based approach) never expose fields
->>>  which are part of the above list.
+>>> Add options to specify the beginning and the end of the ROI to bound
+>>> basic block vector generation to the ROI.
 >>>
->>> This way the same consistency logic you have will carry over to named models by just adding different
->>> setters for the above field.
+>>> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+>>> ---
+>>>   docs/about/emulation.rst |  8 +++++
+>>>   contrib/plugins/bbv.c    | 80 +++++++++++++++++++++++++++++++++++++
+>>> +++++++++--
+>>>   2 files changed, 86 insertions(+), 2 deletions(-)
 >>>
->>> What are your thoughts on this?
->>>
->>> Thanks,
->>> Khushit
->>>> — 
->>>> target/arm/kvm.c | 105 +++++++++++++++++++++++++++++++++++++++++++++++
->>>> 1 file changed, 105 insertions(+)
->>>>
->>>> diff --git a/target/arm/kvm.c b/target/arm/kvm.c
->>>> index ddf320d0e6..f52c03745e 100644
->>>> --- a/target/arm/kvm.c
->>>> +++ b/target/arm/kvm.c
->>>> @@ -340,6 +340,107 @@ static ARM64SysRegField *get_field(int i, ARM64SysReg *reg)
->>>>    return NULL;
->>>> }
->>>>
->>>> +
->>>> +/**
->>>> + * kvm_arm_vcpu_validate_sysreg:
->>>> + *
->>>> + * Validate a SYSREG field value is consistent with legacy composite options
->>>> + * Some checks are not implemented because the corresponding sysreg field
->>>> + * is not currently writable. In that case we make sure the field has not
->>>> + * become writable, which would mean the user had the capability to set the
->>>> + * corresponding property.
->>>> + *
->>>> + * return true if consistent. false if it is not, along with an error handle
->>>> + */
->>>> +static bool kvm_arm_vcpu_validate_sysreg(ARMCPU *cpu, ARM64SysRegField *field,
->>>> +                                         uint64_t value, Error **errp)
->>>> +{
->>>> +    const char *fieldname = field->name;
->>>> +    ARM64SysReg *sysregdesc = &arm64_id_regs[field->index];
->>>> +    const char *regname = sysregdesc->name;
->>>> +    g_autofree char *propname = g_strdup_printf("SYSREG_%s_%s", regname, fieldname);
->>>> +
->>>> +    /* virtualization */
->>>> +    if (!strcmp(propname, "SYSREG_ID_AA64PFR0_EL1_EL2")) {
->>>> +        /* consistency with machine virtualization property */
->>>> +        if (cpu->has_el2 && value == 0) {
->>>> +            error_setg(errp,
->>>> +                "Inconsistent -machine virtualization=on and "
->>>> +                "%s=0", propname);
->>>> +            return false;
->>>> +        } else if (!cpu->has_el2 && value > 0) {
->>>> +            error_setg(errp,
->>>> +                "Inconsistent -machine virtualization=off and "
->>>> +                "%s > 0", propname);
->>>> +            return false;
->>>> +        }
->>>> +    /* secure */
->>>> +    } else if (!strcmp(propname, "SYSREG_ID_AA64PFR0_EL1_EL3") && value > 0) {
->>>> +        /* consistency with machine secure property */
->>>> +        error_setg(errp, "%s is set but qemu is not ready to support it",
->>>> +                   propname);
->>>> +        return false;
->>>> +    /* MTE */
->>>> +    } else if (!strcmp(propname, "SYSREG_ID_AA64PFR1_EL1_MTE")) {
->>>> +        error_setg(errp, "%s is now exposed but qemu is not ready to support it",
->>>> +                   propname);
->>>> +        return false;
->>>> +    /* SVE */
->>>> +    } else if (!strcmp(propname, "SYSREG_ID_AA64PFR0_EL1_SVE")) {
->>>> +        error_setg(errp, "%s is now exposed but qemu is not ready to support it",
->>>> +                   propname);
->>>> +        return false;
->>>> +    } else if (!strcmp(propname, "SYSREG_ID_AA64ZFR0_EL1_SVEver")) {
->>>> +        if (cpu_isar_feature(aa64_sve, cpu) && value == 0) {
->>>> +            error_setg(errp, "sve is set but %s is set to 0", propname);
->>>> +            return false;
->>>> +        } else if (!cpu_isar_feature(aa64_sve, cpu) && value > 0) {
->>>> +            error_setg(errp, "sve is not set but %s is greater than 0",
->>>> +                       propname);
->>>> +            return false;
->>>> +        }
->>>> +    /* PAUTH */
->>>> +    } else if (!strcmp(propname, "SYSREG_ID_AA64ISAR1_EL1_APA")) {
->>>> +        /* PAUTH QARMA5 address authentification */
->>>> +        error_setg(errp, "%s is now exposed but qemu is not ready to support it",
->>>> +                   propname);
->>>> +        return false;
->>>> +    } else if (!strcmp(propname, "SYSREG_ID_AA64ISAR1_EL1_API")) {
->>>> +        /* PAUTH Impl Defined address authentification */
->>>> +        error_setg(errp, "%s is now exposed but qemu is not ready to support it",
->>>> +                   propname);
->>>> +        return false;
->>>> +    } else if (!strcmp(propname, "SYSREG_ID_AA64ISAR1_EL1_GPA")) {
->>>> +        /* QARMA5 generic code authentification */
->>>> +        error_setg(errp, "%s is now exposed but qemu is not ready to support it",
->>>> +                   propname);
->>>> +        return false;
->>>> +    } else if (!strcmp(propname, "SYSREG_ID_AA64ISAR1_EL1_GPI")) {
->>>> +        /* QARMA5 generic code authentification */
->>>> +        error_setg(errp, "%s is now exposed but qemu is not ready to support it",
->>>> +                   propname);
->>>> +        return false;
->>>> +    /* PMU */
->>>> +    } else if (!strcmp(propname, "SYSREG_ID_AA64DFR0_EL1_PMUVer")) {
->>>> +        if (cpu->has_pmu && value == 0) {
->>>> +            error_setg(errp, "%s is 0 whereas pmu is set", propname);
->>>> +            return false;
->>>> +        } else if (!cpu->has_pmu && value) {
->>>> +            error_setg(errp, "%s is non null whereas pmu is unset", propname);
->>>> +            return false;
->>>> +        }
->>>> +    /* aarch64 false */
->>>> +    } else if (!arm_feature(&cpu->env, ARM_FEATURE_AARCH64)) {
->>>> +        if ((!strcmp(propname, "SYSREG_ID_AA64PFR0_EL1_EL0") ||
->>>> +             !strcmp(propname, "SYSREG_ID_AA64PFR0_EL1_EL1") ||
->>>> +             !strcmp(propname, "SYSREG_ID_AA64PFR0_EL1_EL2")) && value < 2)
->>>> +            error_setg(errp, "%s is < 2 while aarch64 is set to off",
->>>> +                       propname);
->>>> +            return false;
->>>> +    }
->>>> +    return true;
->>>> +}
->>>> +
->>>> #define MAKE_IDREG_KEY(reg_idx, field_shift) \
->>>>    (((uint64_t)(reg_idx) << 8) | ((uint64_t)(field_shift) & 0xFF))
->>>>
->>>> @@ -2241,6 +2342,10 @@ static int kvm_arm_apply_sysreg_props(ARMCPU *cpu, Error **errp)
->>>>        uint64_t oldfv;
->>>>        int ret;
->>>>
->>>> +        if (!kvm_arm_vcpu_validate_sysreg(cpu, field, value, errp)) {
->>>> +            return -1;
->>>> +        }
->>>> +
->>>>        mask = MAKE_64BIT_MASK(lower, length);
->>>>        value = value << lower;
->>>>
->>>> -- 
->>>> 2.53.0
+>>> diff --git a/docs/about/emulation.rst b/docs/about/emulation.rst
+>>> index c58149086cdd..0566171b517b 100644
+>>> --- a/docs/about/emulation.rst
+>>> +++ b/docs/about/emulation.rst
+>>> @@ -284,6 +284,14 @@ The bbv plugin allows you to generate basic
+>>> block vectors for use with the
+>>>       * - Option
+>>>       - Description
+>>> +  * - begin=A
+>>> +    - The virtual address of the instruction that starts basic block
+>>> vector
+>>> +      generation. Generation starts from the beginning of the
+>>> execution if
+>>> +      not specified.
+>>> +  * - end=A
+>>> +    - The virtual address of the instruction that ends basic block
+>>> vector
+>>> +      generation. Generation continues until the endo of the
+>>> execution if
+>>
+>> small typo here: s/endo/end
+> 
+> Thanks for catching the typo.
+> 
+>>
+>>> +      not specified.
+>>>     * - interval=N
+>>>       - The interval to generate a basic block vector specified by
+>>> the number of
+>>>         instructions (Default: N = 100000000)
+>>> diff --git a/contrib/plugins/bbv.c b/contrib/plugins/bbv.c
+>>> index e5caf5d9543b..a2a779f7639e 100644
+>>> --- a/contrib/plugins/bbv.c
+>>> +++ b/contrib/plugins/bbv.c
+>>> @@ -5,6 +5,8 @@
+>>>    * SPDX-License-Identifier: GPL-2.0-or-later
+>>>    */
+>>>   +#include <stdbool.h>
+>>> +#include <stdint.h>
+>>>   #include <stdio.h>
+>>>   #include <glib.h>
+>>>   @@ -26,6 +28,10 @@ static GHashTable *bbs;
+>>>   static GRWLock bbs_lock;
+>>>   static char *filename;
+>>>   static struct qemu_plugin_scoreboard *vcpus;
+>>> +static bool begin_present;
+>>> +static uint64_t begin;
+>>> +static bool end_present;
+>>> +static uint64_t end;
+>>>   static int64_t interval = 100000000;
+>>>     static void plugin_exit(void *p)
+>>> @@ -66,6 +72,7 @@ static void vcpu_init(unsigned int vcpu_index, void
+>>> *userdata)
+>>>       Vcpu *vcpu = qemu_plugin_scoreboard_find(vcpus, vcpu_index);
+>>>         vcpu_filename = g_strdup_printf("%s.%u.bb", filename,
+>>> vcpu_index);
+>>> +    vcpu->count = begin_present ? INT64_MIN : -interval;
+>>
+>> Not sure which semantic we are trying to achieve with -interval here.
+>>
+>> The original logic was to increment this count, until reaching interval,
+>> after what we would reset it by using vcpu_count -= interval, to keep
+>> the extra insn that went in after the threshold.
+> 
+> The counter now starts at -interval and counts up to zero. Subtracting
+> interval after emitting a vector still preserves the extra instructions.
+> For example, with interval=100:
+> 
+>     initial count:       -100
+>     after 130 insns:       30  -> emit a vector
+>     subtract interval:    -70  -> 70 insns until the next vector
+> 
+>>
+>>>       vcpu->file = fopen(vcpu_filename, "w");
+>>>   }
+>>>   @@ -102,6 +109,22 @@ static void vcpu_interval_exec(unsigned int
+>>> vcpu_index, void *udata)
+>>>       fputc('\n', vcpu->file);
+>>>   }
+>>>   +static void vcpu_begin_insn_exec(unsigned int vcpu_index, void
+>>> *userdata)
+>>> +{
+>>> +    GHashTableIter iter;
+>>> +    void *value;
+>>> +
+>>> +    g_rw_lock_reader_lock(&bbs_lock);
+>>> +    g_hash_table_iter_init(&iter, bbs);
+>>> +
+>>> +    while (g_hash_table_iter_next(&iter, NULL, &value)) {
+>>> +        qemu_plugin_u64_set(bb_count_u64(value), vcpu_index, 0);
+>>> +    }
+>>> +
+>>> +    g_rw_lock_reader_unlock(&bbs_lock);
+>>> +    qemu_plugin_u64_set(count_u64(), vcpu_index, -interval);
+>>> +}
+>>> +
+>>>   static void vcpu_tb_trans(struct qemu_plugin_tb *tb, void *userdata)
+>>>   {
+>>>       uint64_t n_insns = qemu_plugin_tb_n_insns(tb);
+>>> @@ -119,6 +142,19 @@ static void vcpu_tb_trans(struct qemu_plugin_tb
+>>> *tb, void *userdata)
+>>>       }
+>>>       g_rw_lock_writer_unlock(&bbs_lock);
+>>>   +    for (size_t idx = 0; idx < n_insns; idx++) {
+>>> +        struct qemu_plugin_insn *insn = qemu_plugin_tb_get_insn(tb,
+>>> idx);
+>>> +        uint64_t insn_vaddr = qemu_plugin_insn_vaddr(insn);
+>>> +
+>>> +        if (begin_present && insn_vaddr == begin) {
+>>> +            qemu_plugin_register_vcpu_insn_exec_cb(
+>>> +                insn, vcpu_begin_insn_exec, QEMU_PLUGIN_CB_NO_REGS,
+>>> NULL);
+>>> +        } else if (end_present && insn_vaddr == end) {
+>>> +            qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu(
+>>> +                insn, QEMU_PLUGIN_INLINE_STORE_U64, count_u64(),
+>>> INT64_MIN);
+>>> +        }
+>>> +    }
+>>> +
+>>>       qemu_plugin_register_vcpu_tb_exec_inline_per_vcpu(
+>>>           tb, QEMU_PLUGIN_INLINE_ADD_U64, count_u64(), n_insns);
+>>>   @@ -127,7 +163,32 @@ static void vcpu_tb_trans(struct
+>>> qemu_plugin_tb *tb, void *userdata)
+>>>         qemu_plugin_register_vcpu_tb_exec_cond_cb(
+>>>           tb, vcpu_interval_exec, QEMU_PLUGIN_CB_NO_REGS,
+>>> -        QEMU_PLUGIN_COND_GE, count_u64(), interval, NULL);
+>>> +        QEMU_PLUGIN_COND_LT, count_u64(), INT64_MIN, NULL);
+>>> +}
+>>
+>> is INT64_MIN used as an arbitrary large value when interpreted as
+>> unsigned immediate? If yes, that's confusing to the reader.
+> 
+> The unsigned comparison count < (uint64_t)INT64_MIN is equivalent with
+> the signed comparison (int64_t)count >= 0. That is why this particular
+> value is used.
+> 
+> Setting count to INT64_MIN suppresses output for the next 2^63 counted
+> instructions, which is effectively disabled for this use. The begin
+> callback clears the BB counters and sets count to -interval; end sets it
+> back to INT64_MIN. The requested interval stays unchanged.
 >
 
+Ok I see better.
+Even though it works, it's pretty confusing to be honest. Inline
+operatons works with unsigned values, so with conversion and wrap
+around, it's safe, but really not intuitive.
+
+I would prefer if you could refactor this to keep a zero initialized
+count value, and add a specific instrumentation path for begin, end
+logic (COND_LT, UINT64_MAX - N) to keep the same behavior of "infinite
+interval".
+
+Thanks,
+Pierrick
 
