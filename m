@@ -4,145 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B22CCA600D
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Oct 2026 16:40:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31DA5CA600C
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Oct 2026 16:40:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xErAM-0002VT-Se; Thu, 08 Oct 2026 12:40:22 -0400
+	id 1xErAe-0002nX-7e; Thu, 08 Oct 2026 12:40:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xErAL-0002VK-46
- for qemu-devel@nongnu.org; Thu, 08 Oct 2026 12:40:21 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <gromero@redhat.com>)
+ id 1xErAc-0002hI-Nk
+ for qemu-devel@nongnu.org; Thu, 08 Oct 2026 12:40:38 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xErAJ-0007xy-0p
- for qemu-devel@nongnu.org; Thu, 08 Oct 2026 12:40:20 -0400
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 698EVPrY3121446
- for <qemu-devel@nongnu.org>; Thu, 8 Oct 2026 16:40:17 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- atQvSf63HFOiAWQC91uK+FUQTgIxyBfYL9sEYwZR+6k=; b=cg5E93aO3Hihopux
- aVNDOooSsxEVvc5xUHjYZBzxT8D/0Sk3+yuWwgnpXkchmVR0YpWpQNz8+BMHhyVK
- lMDtBdtZrTCvsElAEHtjf9nvOOxmS74Pnx/FM2uSkvcY5+FqAkvTwV4aYou2curD
- S3KKIYRIPk3/DXri0+KML8+R8jbN6Jgjjbyc1eGdEnhUwK05Cy/Cw2Qfdlls/p1J
- Bi7hcgNMsu4IMJYjJCIbP3bptYdKB+u6KOB9+zFhDqtu3FO93X83MX7aNVACzbxJ
- CnqlhUP/SVpZf700JwipmJ7j/4adaiUBWBskjIkPKTbgktY37I5j8k65wFfwCa8X
- rRv7Dw==
-Received: from mail-dy1-f199.google.com (mail-dy1-f199.google.com
- [74.125.82.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h5xe2uwqa-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 08 Oct 2026 16:40:17 +0000 (GMT)
-Received: by mail-dy1-f199.google.com with SMTP id
- 5a478bee46e88-3535c27d880so319231eec.1
- for <qemu-devel@nongnu.org>; Thu, 08 Oct 2026 09:40:16 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <gromero@redhat.com>)
+ id 1xErAb-0007yn-4E
+ for qemu-devel@nongnu.org; Thu, 08 Oct 2026 12:40:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1791477636;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=43g9C1RPFzAiuQZ1xBBbot1se3n7VApX0Cnv5nQBlxw=;
+ b=IbLNGQ4uBaZ/Ox7YxjY5RVjm8tBxeguSSkGRyRN1ZoIshsuW5hhLbV4M7FtEsaGuuKD2ID
+ TMg7q9DQ+VfDvFVbuT5cEOFK+TSqY15U73dYxPmVBt3reveLtd/VhVT+gXxNWJAM80HDQk
+ fI4YM5Xu4PsSlfShKswEBuXuMjJ9IMU=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-374-hxKTWxTAOWSRMIpMMuDm3g-1; Thu, 08 Oct 2026 12:40:33 -0400
+X-MC-Unique: hxKTWxTAOWSRMIpMMuDm3g-1
+X-Mimecast-MFC-AGG-ID: hxKTWxTAOWSRMIpMMuDm3g_1791477632
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-48af4a0bd0fso3087050f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 08 Oct 2026 09:40:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1791477616; x=1792082416; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=atQvSf63HFOiAWQC91uK+FUQTgIxyBfYL9sEYwZR+6k=;
- b=Lcmb7ydg8JTJCyVMl8K3UHCebF50RHgSS8r3GDFpa6W4Vlp71Y8ia4cdN8AHY2nVql
- 0wvc+dQu+IWEhh/wYcKiglIJZp/K8AXiQEQeJjjHaG4SdL1IdcMvLTMkZmCLiXNcdgym
- oLM/o4xDqfJevaPGD/rUbPhlOPZT7abx9mnSOoaoDvqucJ4iMItW3RZ32fHN8Y+ZoyFE
- sXWn0ACcarFxsCzEg5/FBXkInXPQFiafExa6in59jyJSJWm5FpXd2Le07o1GEtgmJrxs
- EaNGsBdoPTbRZp0VjLlvspeOYYZASwzzikCf1pfrgWPquqo0N7x958N7+s9onJbztW4N
- 0zDg==
+ d=redhat.com; s=google; t=1791477632; x=1792082432; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=43g9C1RPFzAiuQZ1xBBbot1se3n7VApX0Cnv5nQBlxw=;
+ b=biDnW0w2GO4BpXMBPm9v5qCEBWYCR11SipLWY4w0QjUN3HLqRJyL4WeVNd0S0QuE+s
+ fT7+QbgpDpLwjnrAQD/IhRk08nKdimC6WIsLz3TMVFgdGPkBtjgwbgtqzhOn2kZlpVl2
+ mw7kGLfFU0uc96X+N8HLJ2PTUtwPkJriqkEN2AQjBS+yEtV2lEqkp9aFdzRFWZxJHJDs
+ qSciOh7cgdU7gNdSyZHYnx+AktLWLPknZfrxMRAGEehBXf1C5yoiGO4qAAA7PSw59xPR
+ ECYtAbAbcRHZiLTnXEWOqnK8LuUCUTjYgwFbWKS6boazjl6d/uw/0+Cp9NUwSHsR+lCU
+ CMWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791477616; x=1792082416;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=atQvSf63HFOiAWQC91uK+FUQTgIxyBfYL9sEYwZR+6k=;
- b=Lil4OSPyQW9O/JVFOCN/rcNzvtLj1lF9GfGWH4Qh4IKzYgW1J1A+EjDLfTngMS8OF8
- fvMfUbvzKUWhvlyanBfq2f6pFZhjSzdtpwuQFWnVLveUtRR+UnjVmwQcppPlwnTZa8/Z
- IreKbdb4hqI6jP3HrEXKu7PDRR3np7YRtyVejbXye7VkgCVHqgY2S0EKa2idHsty3G6F
- GDZkOsjR6TANUfh0gOh00TdKgd6Sq+x03mbVhGPLEzv76JEm4PlkIdveZNnRKlTb2ZWI
- c2QiwdKP41LCoIOUmurkJNoQYcZ4jJzhofaXJYZGkZPe48eV6jjk3zUodV4813PmCgPJ
- ibKw==
+ d=1e100.net; s=20260707; t=1791477632; x=1792082432;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=43g9C1RPFzAiuQZ1xBBbot1se3n7VApX0Cnv5nQBlxw=;
+ b=GSCkEwNNuziwaH0xDt5HCccnfZcyipcGd2JW4K1fQRWTieeDMKWAlzzZgDQycFkvK+
+ 4KyitB2+3s84ygC0/9nJwxYr1ZOlKUunEoWibQpJ7ES35b616J/flr7UoJ5ncJLKigS1
+ pKA+UYSmJgvXyEWM45DbF48VclhEXlAIU6vusnhOO5LtzCfyknf+Py54WngnoAhMiJl9
+ 2jtzYMGfwV0+Henx+k66dlNQ6h9LuoRq/a3Hg9m1YdSQ2DvDAb24ANhnyXD+4XpeK1Gc
+ 8XzCNvBXxn+BDQ48ULt1wsK4WhRWId3rYbnbx3X5k3KJEv4/a2mstRF+ZW/Pih2T59tA
+ qCmA==
 X-Forwarded-Encrypted: i=1;
- AKwUvBwzQwcP7qc4Yf83pAXTVmv95uAW0wYy3F2fMF2sREoM/N8EpzZDIGNUGGd+ujYGngY5jWde8t3ji8c+@nongnu.org
-X-Gm-Message-State: AFq9FYIXxm2Lgf1Db2QzCffezoHHtYCRFlr28c+wV99AN7aaaF+rTlPY
- HrUn7gZZm7sE6G5rMRnFBXTe+gPRFZNlIMvv2x7WWY1tMV6j+Vj5ZDagd8nBHrQ+kobtHwHeDQH
- qvZXqN0VJkoY8CrbaMnwp3OB4r+SkTYNYkCSiPGseOQ4fIWo+Rx2zB6Ys6nZaq4b6Nw==
-X-Gm-Gg: AYBFou3gpI5cVr9yPK9X7fhxR8VJ1v3j6mELtoPXbAHCWZ1xezt5nm0RRUuCX9FQSaE
- 1rC8FWzLiNjpuEQtoB6gxUTqS4h0rzRc7ZTKHyFIeTd3HiCQtUtd4sXpiVJHCjh55g9iTg0hek7
- d9DKdSDHwav6QI5oPaGTXx3qPMLOQrk0P9Qwu8VYbrjTKhYXsqE4Orc7XQWkwIQ3FmwfvkJM7dm
- ZrIK8c4bbDDBnWNzTm9XLrPf41KmAMLcjJpdhsz1nMy66XRMUmKsg041gIfsNHu8BGgenOCDaaT
- gr4U4SX+EcfZOyqLX7ABMKgve0pUKqnbrAlfDyrhYV+2ZMaBDxnNwehmEp+LQu5lnmNO1lRm4J1
- dKh5LbyZwPUJmVjwmt/eOOfSBU5/JF4UPbVfAXUfhVWZHncNM8HL20B+ZIHpXoKSYYvdERQ==
-X-Received: by 2002:a05:7301:1707:b0:34e:9923:e372 with SMTP id
- 5a478bee46e88-3515de444d5mr6795926eec.29.1791477615641; 
- Thu, 08 Oct 2026 09:40:15 -0700 (PDT)
-X-Received: by 2002:a05:7301:1707:b0:34e:9923:e372 with SMTP id
- 5a478bee46e88-3515de444d5mr6795874eec.29.1791477614686; 
- Thu, 08 Oct 2026 09:40:14 -0700 (PDT)
-Received: from [192.168.1.199] (192-80-163-190.dyn.novuscom.net.
- [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-3515b03da93sm15136929eec.29.2026.10.08.09.40.13
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 08 Oct 2026 09:40:14 -0700 (PDT)
-Message-ID: <2d7c2cdb-b5b9-41ed-9786-dd9b4876bdd8@oss.qualcomm.com>
-Date: Thu, 8 Oct 2026 09:40:12 -0700
+ AKwUvBxNjv2UyEq1YcrS9TF4RRsbIZjFJ3EozbdijKYNoeuiv27AtRMGGfbsE2o1niWJeD96MWzT+5iHye0S@nongnu.org
+X-Gm-Message-State: AFq9FYJ+tIZDVH0gjJTnUJVwpFhVNI1ploc0kQi96tpQ/3LtamTqq+XV
+ 460Y/FvbMdjS4X1LO1FnlbNkF6vBbshiP5yLlc3Kfk9ac6ypsavfwZMzFCDPTZQkrvA6PmS9r/E
+ wbDzun63jlxU+nro5jw+zD1tQmLPMlXT52KgFJokmUAR8W8jPkcVxbcBD
+X-Gm-Gg: AYBFou19hjTscBjwv3KmagXc5uN31zYUD7kHtxVt91fUk2a09bZx0U4rO3evmosiiuD
+ qU2/DAh8GS8KYeypIB4dgs1hYnQDFu/l1Yy11FqsjPs5C73ntnHdiqICbiHxRAL2PHERAFtSJRs
+ n3QumSAFCVm8oq9N7VqJKbg75KagapXKzOkOVxe18f/mz9PHL+3eV0CKZJTHtbsJ71nre4yC9JW
+ NZDashA97Z3K2naAgM7xRTns9I1iP7bTtQdDaB7Namd79wCivC2QpDCPrOTKkKxBcx5TPQ9beNz
+ ZPw+sTant53fhh0yFwvu9BNfSvQtloXcRQO2BJTWqL2yv6CNtNGjCQSDGw==
+X-Received: by 2002:a05:6000:2f83:b0:488:8882:d514 with SMTP id
+ ffacd0b85a97d-48c72890fe7mr11904348f8f.49.1791477632475; 
+ Thu, 08 Oct 2026 09:40:32 -0700 (PDT)
+X-Received: by 2002:a05:6000:2f83:b0:488:8882:d514 with SMTP id
+ ffacd0b85a97d-48c72890fe7mr11904257f8f.49.1791477631683; 
+ Thu, 08 Oct 2026 09:40:31 -0700 (PDT)
+Received: from x1 ([151.67.89.12]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-48db63ce3f9sm452471f8f.2.2026.10.08.09.40.29
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 08 Oct 2026 09:40:30 -0700 (PDT)
+Date: Thu, 8 Oct 2026 18:40:27 +0200
+From: Gustavo Romero <gromero@redhat.com>
+To: Fuad Tabba <fuad.tabba@linux.dev>
+Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org, 
+ qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>, 
+ Will Deacon <will@kernel.org>, Itaru Kitayama <itaru.kitayama@linux.dev>
+Subject: Re: [PATCH v2 3/3] tests/tcg/aarch64: Add a test for the 52-bit TTBR
+ base address layout
+Message-ID: <3dqmrslvb3zrr3ndzmcmy2tv5vqovntordzdjqkp2vn2deklua@qkcedhe4owgv>
+References: <20261007080019.350315-1-fuad.tabba@linux.dev>
+ <20261007080019.350315-4-fuad.tabba@linux.dev>
+ <4ajscli4c4ef7agtizxzdiopjseck5qwa6s4n4mmwwjdrqlnby@xit5l76dxm2w>
+ <CA+EHjTxsC8K1Bw6fAMs6APaqVDpup8192dCeJs+vfeh2fN+6Aw@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] contrib/plugins/bbv.c: Allow selecting ROI
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>
-References: <20261007-bbv-v1-0-a2f521a68fdf@rsg.ci.i.u-tokyo.ac.jp>
- <20261007-bbv-v1-2-a2f521a68fdf@rsg.ci.i.u-tokyo.ac.jp>
- <4eec19e6-db40-4658-b5b3-bc342473cffd@oss.qualcomm.com>
- <f503ffbe-0900-4b8e-ae7b-dbfcc74eb5cc@rsg.ci.i.u-tokyo.ac.jp>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <f503ffbe-0900-4b8e-ae7b-dbfcc74eb5cc@rsg.ci.i.u-tokyo.ac.jp>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=AbMkjHXG c=1 sm=1 tr=0 ts=6ac7c771 cx=c_pps
- a=cFYjgdjTJScbgFmBucgdfQ==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
- a=7TEdcREvdylIeB0XKtUA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=O8hF6Hzn-FEA:10 a=scEy_gLbYbu1JhEsrz4S:22
-X-Proofpoint-GUID: VnBnYtzY2Q89ndSOJZrabgbAOjaV2l6R
-X-Proofpoint-ORIG-GUID: VnBnYtzY2Q89ndSOJZrabgbAOjaV2l6R
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA4MDA2NiBTYWx0ZWRfX6kdqvN6xZYL/
- 0ncCGPeV4HUHAHPVx1eGcMpHiPAaES7wDfwsWhX7mlxaVcCsVY3i5u2FmGlb0tkK1iTu39xw4hl
- Sv0ECqASbY4cRpojfdLeh4xppsLi+VE=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA4MDA2NiBTYWx0ZWRfX2POQcoU9RgEv
- D29PNrKnap3wIU8nTf963NfrXOuUCn2QQEiYW2npJEofeBM7Gvb6buJQLOaIVWFovtlgUkGSI+r
- z+CW521q9FypcTQWFTGbyHVhstwScydP0csQFN02iYYQC73SkO0TDEPl8Edn2nGbi0yr2aoUFQJ
- uZcb+v/XJER1w/2BD/G8aH8JltYpS+ZdfWkk/L4qs3+oSv7nXgRW2dZmA196W6tADqG9lMu44I2
- G3PcDjZULnbZrC0tc/1QmoG7l9oQ1FyORRZwqbC/Q/Uad96a1+BHQlP6S9y5R+6oRGdw8fY4z7T
- lz8jGTj9pEylbUQwL4ojkw2lemDWlJDUPDjFV2Zwtlpoq6gcPnJ/2QwHR3nJxtkdBw31wZpQmuh
- 8bF9ZfUi886LeAo73Vr5RADO/i0OSCk9RyFi4XRdGS5reK/KYkrBgD5lYdvri5PIokT4Ry3jBKw
- L5wX+dpxijgMSF4Cnag==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-10-08_05,2026-10-08_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 clxscore=1015 suspectscore=0 lowpriorityscore=0 spamscore=0
- impostorscore=0 malwarescore=0 adultscore=0 phishscore=0 priorityscore=1501
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610020000 definitions=main-2610080066
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CA+EHjTxsC8K1Bw6fAMs6APaqVDpup8192dCeJs+vfeh2fN+6Aw@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=gromero@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -158,177 +124,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/7/2026 11:11 PM, Akihiko Odaki wrote:
-> On 2026/10/08 10:08, Pierrick Bouvier wrote:
->> On 10/6/2026 11:01 PM, Akihiko Odaki wrote:
->>> A region of interest (ROI) often excludes the program startup and exit.
->>> For example, a benchmark may parse a large input and then run a
->>> computation kernel and the former may take longer than the latter;
->>> basic block vectors generated for the whole execution will not properly
->>> represent the latter.
->>>
->>> Add options to specify the beginning and the end of the ROI to bound
->>> basic block vector generation to the ROI.
->>>
->>> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
->>> ---
->>>   docs/about/emulation.rst |  8 +++++
->>>   contrib/plugins/bbv.c    | 80 +++++++++++++++++++++++++++++++++++++
->>> +++++++++--
->>>   2 files changed, 86 insertions(+), 2 deletions(-)
->>>
->>> diff --git a/docs/about/emulation.rst b/docs/about/emulation.rst
->>> index c58149086cdd..0566171b517b 100644
->>> --- a/docs/about/emulation.rst
->>> +++ b/docs/about/emulation.rst
->>> @@ -284,6 +284,14 @@ The bbv plugin allows you to generate basic
->>> block vectors for use with the
->>>       * - Option
->>>       - Description
->>> +  * - begin=A
->>> +    - The virtual address of the instruction that starts basic block
->>> vector
->>> +      generation. Generation starts from the beginning of the
->>> execution if
->>> +      not specified.
->>> +  * - end=A
->>> +    - The virtual address of the instruction that ends basic block
->>> vector
->>> +      generation. Generation continues until the endo of the
->>> execution if
->>
->> small typo here: s/endo/end
-> 
-> Thanks for catching the typo.
-> 
->>
->>> +      not specified.
->>>     * - interval=N
->>>       - The interval to generate a basic block vector specified by
->>> the number of
->>>         instructions (Default: N = 100000000)
->>> diff --git a/contrib/plugins/bbv.c b/contrib/plugins/bbv.c
->>> index e5caf5d9543b..a2a779f7639e 100644
->>> --- a/contrib/plugins/bbv.c
->>> +++ b/contrib/plugins/bbv.c
->>> @@ -5,6 +5,8 @@
->>>    * SPDX-License-Identifier: GPL-2.0-or-later
->>>    */
->>>   +#include <stdbool.h>
->>> +#include <stdint.h>
->>>   #include <stdio.h>
->>>   #include <glib.h>
->>>   @@ -26,6 +28,10 @@ static GHashTable *bbs;
->>>   static GRWLock bbs_lock;
->>>   static char *filename;
->>>   static struct qemu_plugin_scoreboard *vcpus;
->>> +static bool begin_present;
->>> +static uint64_t begin;
->>> +static bool end_present;
->>> +static uint64_t end;
->>>   static int64_t interval = 100000000;
->>>     static void plugin_exit(void *p)
->>> @@ -66,6 +72,7 @@ static void vcpu_init(unsigned int vcpu_index, void
->>> *userdata)
->>>       Vcpu *vcpu = qemu_plugin_scoreboard_find(vcpus, vcpu_index);
->>>         vcpu_filename = g_strdup_printf("%s.%u.bb", filename,
->>> vcpu_index);
->>> +    vcpu->count = begin_present ? INT64_MIN : -interval;
->>
->> Not sure which semantic we are trying to achieve with -interval here.
->>
->> The original logic was to increment this count, until reaching interval,
->> after what we would reset it by using vcpu_count -= interval, to keep
->> the extra insn that went in after the threshold.
-> 
-> The counter now starts at -interval and counts up to zero. Subtracting
-> interval after emitting a vector still preserves the extra instructions.
-> For example, with interval=100:
-> 
->     initial count:       -100
->     after 130 insns:       30  -> emit a vector
->     subtract interval:    -70  -> 70 insns until the next vector
-> 
->>
->>>       vcpu->file = fopen(vcpu_filename, "w");
->>>   }
->>>   @@ -102,6 +109,22 @@ static void vcpu_interval_exec(unsigned int
->>> vcpu_index, void *udata)
->>>       fputc('\n', vcpu->file);
->>>   }
->>>   +static void vcpu_begin_insn_exec(unsigned int vcpu_index, void
->>> *userdata)
->>> +{
->>> +    GHashTableIter iter;
->>> +    void *value;
->>> +
->>> +    g_rw_lock_reader_lock(&bbs_lock);
->>> +    g_hash_table_iter_init(&iter, bbs);
->>> +
->>> +    while (g_hash_table_iter_next(&iter, NULL, &value)) {
->>> +        qemu_plugin_u64_set(bb_count_u64(value), vcpu_index, 0);
->>> +    }
->>> +
->>> +    g_rw_lock_reader_unlock(&bbs_lock);
->>> +    qemu_plugin_u64_set(count_u64(), vcpu_index, -interval);
->>> +}
->>> +
->>>   static void vcpu_tb_trans(struct qemu_plugin_tb *tb, void *userdata)
->>>   {
->>>       uint64_t n_insns = qemu_plugin_tb_n_insns(tb);
->>> @@ -119,6 +142,19 @@ static void vcpu_tb_trans(struct qemu_plugin_tb
->>> *tb, void *userdata)
->>>       }
->>>       g_rw_lock_writer_unlock(&bbs_lock);
->>>   +    for (size_t idx = 0; idx < n_insns; idx++) {
->>> +        struct qemu_plugin_insn *insn = qemu_plugin_tb_get_insn(tb,
->>> idx);
->>> +        uint64_t insn_vaddr = qemu_plugin_insn_vaddr(insn);
->>> +
->>> +        if (begin_present && insn_vaddr == begin) {
->>> +            qemu_plugin_register_vcpu_insn_exec_cb(
->>> +                insn, vcpu_begin_insn_exec, QEMU_PLUGIN_CB_NO_REGS,
->>> NULL);
->>> +        } else if (end_present && insn_vaddr == end) {
->>> +            qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu(
->>> +                insn, QEMU_PLUGIN_INLINE_STORE_U64, count_u64(),
->>> INT64_MIN);
->>> +        }
->>> +    }
->>> +
->>>       qemu_plugin_register_vcpu_tb_exec_inline_per_vcpu(
->>>           tb, QEMU_PLUGIN_INLINE_ADD_U64, count_u64(), n_insns);
->>>   @@ -127,7 +163,32 @@ static void vcpu_tb_trans(struct
->>> qemu_plugin_tb *tb, void *userdata)
->>>         qemu_plugin_register_vcpu_tb_exec_cond_cb(
->>>           tb, vcpu_interval_exec, QEMU_PLUGIN_CB_NO_REGS,
->>> -        QEMU_PLUGIN_COND_GE, count_u64(), interval, NULL);
->>> +        QEMU_PLUGIN_COND_LT, count_u64(), INT64_MIN, NULL);
->>> +}
->>
->> is INT64_MIN used as an arbitrary large value when interpreted as
->> unsigned immediate? If yes, that's confusing to the reader.
-> 
-> The unsigned comparison count < (uint64_t)INT64_MIN is equivalent with
-> the signed comparison (int64_t)count >= 0. That is why this particular
-> value is used.
-> 
-> Setting count to INT64_MIN suppresses output for the next 2^63 counted
-> instructions, which is effectively disabled for this use. The begin
-> callback clears the BB counters and sets count to -interval; end sets it
-> back to INT64_MIN. The requested interval stays unchanged.
->
+Hi Fuad,
 
-Ok I see better.
-Even though it works, it's pretty confusing to be honest. Inline
-operatons works with unsigned values, so with conversion and wrap
-around, it's safe, but really not intuitive.
+On Wed, Oct 07, 2026 at 11:29:11PM +0200, Fuad Tabba wrote:
+> Hi Gustavo,
+> 
+> On Wed, 07 Oct 2026 17:56:30 +0100, Gustavo Romero <gromero@redhat.com> wrote:
+> [...]
+> > > With a 52-bit OA, walk a two-entry level 0 table through an IPA with
+> > > bit 50 set, which stage 2 maps back onto the table, so the walk
+> > > succeeds only if TTBR[4] is cleared from bit 4 of the base address.
+> > > With TCR.DS or VTCR.DS and a 48-bit OA, check that setting TTBR[5:2]
+> > > is a level 0 Address size fault.
+> >
+> > Maybe move this commit message to ttbr-baddr.c header and just replace it with
+> > something like "Add a test for checking if with a 52-bit OA a walk ...".
+> 
+> Sure, I'll move it to the file header in v3.
+> 
+> > I like better the test split done in v1. There there are two tests and the
+> > changes are clear, helping to understand which parts of the test are related to
+> > each fix.
+> >
+> > So the organization I think is better for this series is:
+> >
+> > Fix 0
+> > Test 0
+> > Fix 1
+> > Test 1
+> 
+> Ack.
+> 
+> [...]
+> 
+> > > +    /*
+> > > +     * 52-bit OA: TTBR[4] is base address bit 50. Through stage 2, the
+> > > +     * table at HIGH_IPA | s1_l0 is s1_l0, so the walk succeeds only if
+> >
+> > I struggled a bit to make sense of this part: "Through Stage 2, the table
+> > HIGH_IPA | s1_l0 is s1_l0 ...", not so much for the duplication of s1_l0 in the
+> > text but because Stage 2 uses the s2_l* tables. Any chance you could enhance a
+> > the explanation here?
+> 
+> The level 0 table address is an IPA, and the s2_l2_high mapping is
+> what brings it back to s1_l0. How about:
+> 
+>         /*
+>          * 52-bit OA: TTBR[4] is base address bit 50, so with it set the
+>          * level 0 table is at IPA HIGH_IPA | s1_l0. Stage 2 maps that IPA
+>          * onto s1_l0 (through s2_l2_high), so the walk succeeds only if
+>          * TTBR[4] does not also offset the two-entry table by 0x10.
+>          */
 
-I would prefer if you could refactor this to keep a zero initialized
-count value, and add a specific instrumentation path for begin, end
-logic (COND_LT, UINT64_MAX - N) to keep the same behavior of "infinite
-interval".
+Yep, that's good.
 
-Thanks,
-Pierrick
+However, I missed one thing that I think is important to mention and that
+confused me after a while not looking at these TCG tests:
+
+RAM_BASE is precisely defined as 1 << 30 because the way we link the tests based
+on the memory layout defined in tests/tcg/aarch64/system/kernel.ld, right?
+
+That's the bit that also confused me, like, how Stage 2 entries:
+
+s2_l2[RAM_BASE >> 29] = RAM_BASE | S2_BLOCK;
+s2_l2_high[RAM_BASE >> 29] = RAM_BASE | S2_BLOCK 
+
+are taking us back to s1_l0. How s1_l0 ends up related to RAM_BASE :)
+
+Hence, I think it's worth mentioning that relationship also in this text. How
+about something like:
+
+"RAM_BASE is chosen to match the memory layout defined in kernel.ld. As a
+result, s1_l0 resides at an offset from RAM_BASE after linking."
+
+Wdyt?
+
+
+> Thanks for the review. I'll respin once Richard and Peter have had a look.
+
+np! Sure ;)
+
+
+Cheers,
+Gustavo
+
 
