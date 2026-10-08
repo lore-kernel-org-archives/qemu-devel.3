@@ -4,99 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C755FCA6011
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Oct 2026 17:05:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C9B2CA6011
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Oct 2026 17:14:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xErXm-0006iN-OC; Thu, 08 Oct 2026 13:04:34 -0400
+	id 1xErgM-00084J-7K; Thu, 08 Oct 2026 13:13:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xErXc-0006eX-Ri
- for qemu-devel@nongnu.org; Thu, 08 Oct 2026 13:04:26 -0400
-Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
+ id 1xErgK-00083n-Ho
+ for qemu-devel@nongnu.org; Thu, 08 Oct 2026 13:13:24 -0400
+Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xErXa-00027X-Vh
- for qemu-devel@nongnu.org; Thu, 08 Oct 2026 13:04:24 -0400
-Received: by mail-ed1-x534.google.com with SMTP id
- 4fb4d7f45d1cf-6aa8d04fcddso2444941a12.0
- for <qemu-devel@nongnu.org>; Thu, 08 Oct 2026 10:04:22 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1791479061; cv=none;
+ id 1xErgI-00038n-I5
+ for qemu-devel@nongnu.org; Thu, 08 Oct 2026 13:13:24 -0400
+Received: by mail-ed1-x532.google.com with SMTP id
+ 4fb4d7f45d1cf-6af9a90e4bbso3762402a12.0
+ for <qemu-devel@nongnu.org>; Thu, 08 Oct 2026 10:13:22 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1791479601; cv=none;
  d=google.com; s=arc-20260327;
- b=evDWyUHsHpZ9WRpGJWKug+d/i0Uu+eEbclQTdYOARvnDmgTW1cWo2nV9u1JIJ56i+0
- o1pelpPLiF2OSkU/mSFXBjXPL6XoS77rQ8fh81yOlDgwkBABDlAdJ7h7BGqNIAhCPZTR
- tE4JITqA7wItEf7nJA1xpBLWhZItQBrsWUbsLJlDABQg/icBpN7fG9gkHR8HGotNLYWl
- 7D14Ux4nSPd2HQ+dGqf8lcizW6lL+c1TeHAgxO9MARxFl85C/LSAQupFpw8oEQPFiK5M
- f+pN0BoxFNYhPj8DJ8Y2LGnrXVq/27a8Ig4SLbSZZakGwvAYMQtU8D5w+Yk/WnbNbEnS
- aplw==
+ b=mrEp5K/417wGzIBTMQGtvfRxy3cl/pds228kJCUHm6CwGFgnsfk8afjW8+nLIelt4q
+ 6rJtYwiiuCmA1Ul1lPEvKzzgwx3IllTZ65HlhGwGxddQW6XZ+bBL0UfzJ9BmVU5ANpRr
+ cPP+GPEMPsXa15TBcJeqBPl49D5zIAjE9sTQ6gqT8bAowvklv+Wjy8gWARC+QVo2svzJ
+ 6Z2Vd1CCPx4yCTkuJHztBUe7gJH1ZwfWEITm+TyxrDck5cy6zyHZOTSqVyE1Lxzz0XLs
+ oE9pQ/tuySfnSfkgkfg8/FbdYuAvPMpLL+ql0XamX7DFqZiFmxhK1YW8USH9yrbsoE6h
+ Wlxw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :reply-to:in-reply-to:references:mime-version:dkim-signature;
- bh=q/bYKfAD33Pc7+//Tf4tEpE4XctjvZAfka6zrYLc9uc=;
- fh=7Gi7w6n8XAhHvTtLIpQeDDjFrgfIsXTbykVObwuH3mg=;
- b=DxtynPo4Uus2NmYTJQAPI6H1AQJ3/WRMcbnHZrxiG70Wk1k3l9aClWF/Rqd8z9uHbg
- 0AqR7fhwpZ8UPyrk0ODh4kv/yE7UPdtazPxUMghyroB4gQmEWOMx/ZPNTryN9/eaaeiQ
- Wi7Bo6zM1VbVPmBjsc/PrS4P4U3yI5As4Kbhp8NcJhTD/RZ0v6Fo+ZaAgTZCHRCfFObr
- +XPymtj9W18oNzkQtsyFitm7N47v+/UZeuKXVfjO1EDemmJlyA2hp1wTi3Yp/+bm/8rU
- A6kSmHoTDvlw3K1m5LE5hv+mnpi9XzFrYXwceco6YY60RbwoX8HWBuhfIhzwMME2mFCl
- e8Vg==; darn=nongnu.org
+ bh=qHizU6jSNi8b80NXnXgXhGC92UoulxXTaBBxf0UADME=;
+ fh=hZLh1xUAwZOD7mgeF+wNtnVeD7BcV+z2IlwkvfbaLEQ=;
+ b=pVwxlbSYNqmbfJmD4ikCF4pyAzdiAQftsH/h4bT+dPLyzPxuAY7T3aM9lgILbXLCXI
+ 4xCHBiyRK3no/o7GHJ2hpa/LQzSuNDjRgsg/3wzIIEHQC7GMhuhVk4o1gV9UkQdrmkgj
+ X15PXhqOSvuMJ3Fshoht+9hY03+NDy+KEzxXJ2YisYHc0Ute0IoUfidEoc7RctqMMfeq
+ yMI7eUuNHYnerFiQZPbJlRVgm2iLD/d9WoZz+LwbI6/M00DpT3nnxx4cWGqZwd4CTTP7
+ INd6NGr2dp0D/O0qXAV823a3eLkdC4ZyGcxzfgwUsF/g9hu3WqN2yB8hzI8bJkFtEiFI
+ KjoQ==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1791479061; x=1792083861; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1791479601; x=1792084401; darn=nongnu.org;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:reply-to:in-reply-to:references:mime-version:from:to:cc
  :subject:date:message-id:reply-to:content-type;
- bh=q/bYKfAD33Pc7+//Tf4tEpE4XctjvZAfka6zrYLc9uc=;
- b=q35JHIUEF2MmMKHdEyNNizxQyV9+vCboGPkgQD0qFp9f3hFnXfWxrrCSh0EguLDKia
- xTKKxASJFXsPZZmF0e69EQUEtBTxPvnNDHEy8wW76wj3Hlfv13BlYyGS5J5N5quY8/Un
- 4oPdmgwRv6JPbZWxLlNcfRF0Lq+6HAxbUcP6iZjKuYi744rsHEPeWNC1Vdd5PYrtLdVe
- 05U6FfwIjda4oUgArz3bYcncqOc10xv312jJNY4CZdgncVRFsP5NWN/+WVAbr461xAY7
- 0yJ7qe7VD96RJtAYqSM+CXkmd5L7/M8wnDJQepUeC3sRN1bDVxw/9ap8agSas2MkTuw2
- 2O9A==
+ bh=qHizU6jSNi8b80NXnXgXhGC92UoulxXTaBBxf0UADME=;
+ b=cPE3FKq8XVFCzfX6ZlYucCwbDIoAwDpFES2kn+5VMhtociUxhK5a6JaIizCEaubsbf
+ M6A5G/a4C4Ar3GW9j6Tgtx7GBs8/DMzyeBLIaQQAsWui6LbXzUY1CJUFyL0tq9QjooiJ
+ rxUI6pqQ8j5vVfu4DTgq8/t/vwS2lmOpgVovNRRHiHEZL+HV+k3WkqfqyXuTi1hyk73k
+ eHk4Q1K7BTfVVNCxM4ASbWmuyHBdUB2IFIMxTu+VezpfzRQrT1owR1PJdZm8fjLm2Yxt
+ eMipYbVrQ4XgBNl8XacSziYbX431xNlZih6pN1hV+3dxI72CYrgYogmGNbvV7zjsCA1w
+ D+mg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791479061; x=1792083861;
+ d=1e100.net; s=20260707; t=1791479601; x=1792084401;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:reply-to:in-reply-to:references:mime-version:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=q/bYKfAD33Pc7+//Tf4tEpE4XctjvZAfka6zrYLc9uc=;
- b=unsf1WqzRDblqzg119v3s8hs3FxQY38ajHY7EyeFdWeQkUzauMmTKpXI1VPLwvuFBC
- YW+dTHBVf7yeeCMPcx9+GUbi8hudQwytcF8WiB38ou02EaxDMjaSW5HrVyWAu1tnU58U
- BxGQt7M/fJyQli3qOQj7Ssa94RkhnMngA5njCsf2+SfsVFdeMaGvaVlMa16Do7SPzIZ3
- kZJ+jxk+6ZaZK5SBIAxIjKPmDR9QNoW8mUQJ3Ky5O6ut8a9/dCj/mlAIffiQodnT+Gen
- SM94z1MJvasyzIt+TxbO+1eIKnB71Q26jvmc2GkG0W9kcoE04iT9dktSZX5BDofanh06
- 5M/Q==
+ bh=qHizU6jSNi8b80NXnXgXhGC92UoulxXTaBBxf0UADME=;
+ b=LBVzfelR6Ps7iWQ6tUVSWaASXqFDKitrQ74ij7G3JPvn2rCULG2I4k2KP7tmw8lGWF
+ Zi4jYgAjs1OabW01FhWb/MDPo459rhZZeZUQ0HYZbNBxw0Q/z3r8RFz0wqvH7RLixDrY
+ NpQ44PFrKXxDitUmuf3LVBTqsTMDGCCWFST3bznNBYN6JfXPHsf/aT0CmGElPt3YH7hL
+ 5LmtQmCownxbaclckrJaVX0P+4xQzQiHahNfkPRTJlb5wiMto4cESxKcHxY7JHktw+V1
+ R6q5O6q07XqvmSPBlEIFcnFQ6BM7ag4AhA4RtYZGZBwOXTJFjTRdaKUaxR80ZafRWfrl
+ 8pwQ==
 X-Forwarded-Encrypted: i=1;
- AKwUvBx5pnB1wUrdeMZJXpfU8xidUNCD3oQjZ2k2JASt7AVr2lsMFo6ns9/8YWXFytAkeW+eWjoIYbzjfjMu@nongnu.org
-X-Gm-Message-State: AFq9FYKdzUX5IoXF8XXMxHceId1w1poaI53ywO5p/b2gljIvdmb9nJpf
- h5GowHjoqWzsc2X3UEWIHovqQBsD/TIuFCYZRcVIvWdyD5cx66+pFbS75JQ0iBwRyqZZ7eZBTwB
- 0zKHDFyh9kjhbfRdipQGWK7BBlhlgquI=
-X-Gm-Gg: AYBFou277J4hbLMH+JVM7VisgCvVmJMjXaKvrKnMEtVvJPC2L9EPMKvjVsv5GkakY5c
- Y5v0x1F/S2x7nED9F2VVHqZP3bjIpwlhsLTWAdiVkJV5/8jii7F49dFxrOLWgqNheYV5OQfKDka
- dMca2lmmzWhJtF2GvMN3Gt8Zt4TsMK1RsObGiOOejXXmqDSSgdBlv5TgwO+nWfgljtDYy6XVpez
- D7DoezbMhkKGGAKZsFnZ7ZhOYGJGZzhUZp1p/Fa/qUPFHwRpnSAiVpgHjyDZmoJw4nOeBlcpGH6
- VZU41MVL/UzvQv7JkdLr31QM59hHQvc3qoa1oYunxNcptZXqiW8LHUjqR06gEhN66A==
-X-Received: by 2002:aa7:c981:0:b0:6ac:8181:3194 with SMTP id
- 4fb4d7f45d1cf-6b011cc194dmr1953023a12.15.1791479060747; Thu, 08 Oct 2026
- 10:04:20 -0700 (PDT)
+ AKwUvBy2et0fm1RBSR5+MFpACUJNbuam2ilyjvU9knz37IJDKJ4mOkUeGWtZ1Xr18V7JyIKegDEMyMSQQQwS@nongnu.org
+X-Gm-Message-State: AFq9FYK85fyzC+f6NcsJdRaPyJwEESstHDtsnr/LI8Swh0Mkn/fk1gfv
+ qvESIkQYYyGUSqgTJNjKbB4uD26dvqhHXNu2ejfJAhStngDXJoTfa3AD8XgqI3040hW67dsLKHC
+ UVi/ImN0u2KJ77mYjKVGAIhOxaQAJuKc=
+X-Gm-Gg: AYBFou1tWnJap35Hvlq4Ia2MLqqEmyKjT81QiK4k1TOnisTmAdkGZ1MPDGs4jqVcuDc
+ PzGLGyX9Afd87++hNAHX76DBoQJVApUdxx0q+BeTHIgtol+V2crolyIbLEd9ZTjqDQUU9KBzbbG
+ Db1WG4UxG07819vdgQ+l4B9o1KlAZuc9I2qeAi1Y6fThieVntSuykNFJBj9KfQAzffbNWXXaIiW
+ vyEbTWBqqe3Y1W4DnSl2XBl78W0eyWgUaQ+14cAJyGOSAfFWBGBJ6WiYSe5dinmiu8BBZNLewGx
+ iRXkLs+zmIVs6OAhSSaxHCawH3N/foAJ/kw3hJA5abCToJYny6B6bKo=
+X-Received: by 2002:a05:6402:c4e1:20b0:6b0:c1d:a7ce with SMTP id
+ 4fb4d7f45d1cf-6b00c1da88emr2675938a12.12.1791479600657; Thu, 08 Oct 2026
+ 10:13:20 -0700 (PDT)
 MIME-Version: 1.0
 References: <20261007115253.328-1-luoyonggang@gmail.com>
- <20261007115253.328-9-luoyonggang@gmail.com>
- <7fc0d377-a994-41f4-aa98-7ed56db11447@oss.qualcomm.com>
- <CAE2XoE8K+3e8h6H9NrPk1WWMmJfG807bN_Kh5qje-5pKWUUg5w@mail.gmail.com>
- <b2d89a92-0197-4873-b4ea-75bb21c0d0ae@oss.qualcomm.com>
- <asdkF80SJzF2W3sD@redhat.com>
- <CAE2XoE-Vc+CaE-3FerW3eXtTgspwxZJ6ZT0CZyg3ZYpoJ8xYXw@mail.gmail.com>
- <98644e74-9219-42f0-bcf7-8cd7f02353af@oss.qualcomm.com>
-In-Reply-To: <98644e74-9219-42f0-bcf7-8cd7f02353af@oss.qualcomm.com>
+ <2390b3d7-6918-41e3-8532-c19de4cdd1ff@oss.qualcomm.com>
+ <asdlbOZBSYIaCMIh@redhat.com>
+ <CAE2XoE91XxoJRFpQ_1jhmX6LdxMyN16CF7RXxM62C5Ctkc1tig@mail.gmail.com>
+ <42fd67c0-c20d-4bc4-bede-79073e4be4a1@oss.qualcomm.com>
+In-Reply-To: <42fd67c0-c20d-4bc4-bede-79073e4be4a1@oss.qualcomm.com>
 From: Yonggang Luo <luoyonggang@gmail.com>
-Date: Fri, 9 Oct 2026 01:04:08 +0800
-X-Gm-Features: AclHuK-toIfuEvTxSU46Bjv9lFt2gOkyCwbGKxlmQhAYL_o5vMGUzzoN9GJqqGw
-Message-ID: <CAE2XoE8qSVczu5R1HTwOV+PhPo7_wWzB=KSqhJroqbgcP5GDRQ@mail.gmail.com>
-Subject: Re: [PATCH 8/8] qom: pass TargetInfo to is_available for later use
+Date: Fri, 9 Oct 2026 01:13:06 +0800
+X-Gm-Features: AclHuK9csGmRw3GpXW4BwLyYvk1PCsDiAVec9g0e7PI-vvgWskxaPV32iVH4rIs
+Message-ID: <CAE2XoE-gN5-vmE8r00Ds_Z=E1WePSFi_MJXjmy9ZuXEU_=o31g@mail.gmail.com>
+Subject: Re: [PATCH 0/8] qom: pass TargetInfo to the is_available callback
 To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
  qemu-devel@nongnu.org, Cleber Rosa <crosa@redhat.com>, 
@@ -118,15 +115,15 @@ Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  Darren Kenny <darren.kenny@oracle.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::534;
- envelope-from=luoyonggang@gmail.com; helo=mail-ed1-x534.google.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
- FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::532;
+ envelope-from=luoyonggang@gmail.com; helo=mail-ed1-x532.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -143,75 +140,132 @@ Reply-To: luoyonggang@gmail.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Oct 9, 2026 at 12:01=E2=80=AFAM Pierrick Bouvier
+On Fri, Oct 9, 2026 at 12:06=E2=80=AFAM Pierrick Bouvier
 <pierrick.bouvier@oss.qualcomm.com> wrote:
 >
-> On 10/8/2026 2:56 AM, Yonggang Luo wrote:
-> >>> How about letting machines (and machines only first), have a new fiel=
-d
-> >>> 'targets', being a uint32_t mask with an array of EMU_TARGET?
-> >>> machine->targets =3D EMU_TARGET_X | EMU_TARGET_Y;
+> On 10/8/2026 2:46 AM, Yonggang Luo wrote:
+> > On Thu, Oct 8, 2026 at 5:42=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrang=
+e@redhat.com> wrote:
+> >>
+> >> On Wed, Oct 07, 2026 at 01:25:46PM -0700, Pierrick Bouvier wrote:
+> >>> On 10/7/2026 4:47 AM, Yonggang Luo wrote:
+> >>>> This allows a combined binary to register machine types from all its=
+ targets.
+> >>>> Consequently, QMP `query-machines` can return machine entries from e=
+very
+> >>>> target, even when `none` is selected. For example, a client can quer=
+y the
+> >>>> combined machine list with:
+> >>>>
+> >>>> ```json
+> >>>> { "execute": "query-machines" }
+> >>>> ```
+> >>>>
+> >>>> The returned list includes the registered machine classes from all l=
+inked
+> >>>> targets. This is separate from selecting a machine: with `-target no=
+ne`,
+> >>>> `-M virt` reports the targets that provide `virt` instead of choosin=
+g one
+> >>>> arbitrarily:
+> >>>>
+> >>>> ```text
+> >>>> qemu-system -target none -M virt
+> >>>> unsupported machine type: "virt" for target "none"
+> >>>> Available for targets:
+> >>>>   aarch64
+> >>>>   arm
+> >>>> ```
+> >>>>
+> >>>
+> >>> From the long conversation on a previous thread, I thought we reached
+> >>> the conclusion that if we didn't expose any ambiguous name, then -tar=
+get
+> >>> option is unnecessary, or maybe I got lost on track of this thread.
+> >>>
+> >>> https://lore.kernel.org/qemu-devel/ar_coT44h5-zJPVV@redhat.com/
+> >>>
+> >>> I'm not sure which semantic we want to have with -target none. If the=
+re
+> >>> is no ambiguous name registered, we just don't need it at all. It's a
+> >>> win-win IMHO.
+> >>
+> >> Yes, if we expose unique names for every machine, then -target is then
+> >> redundant.
 > >
-> > To be explicit state what, I give you a pseudo code to compute
-> > machine->targets from TypeInfo::is_available(TargetInfo*)
-> > let targets=3D0
-> > foreach ti of TargetInfo list:
-> >    if (machine::TypeImpl::is_avaible(ti))
-> >          targets |=3D 1 << ti->target_arch
-> >    fi
-> > endif
-> > So they basically have equivalent effect, and is_available will handle
-> > other code-needed condition properly such as
-> > CPU/AccelClass. not restrict to targets, we can also attach the
-> > KConfig into TargetInfo, so is_available(TargetInfo*)
-> > also works for Kconfig. that's why I insist this way, it's solved all
-> > the issues around.
-> >
-> > so  machine->targets =3D EMU_TARGET_X | EMU_TARGET_Y; is a good idea,
-> > and it can be implemented with TypeInfo::is_available(TargetInfo*)
-> > without much burden. and targets can be saved into a (machine or
-> > TypeImpl) for fast access when needed, we can compute it
-> > when the program starts.
+> > so how to diff riscv32-virt and risv64-virt? oh so for this machine we
+> > needs two name?
+> > "virt" needs register twice for it? or register only a single time,
+> > but we prefix the target_name()
+> > automatically? for example machine::name =3D=3D=3D "virt", but we can u=
+se
+> > "riscv32-virt" "risv64-virt" to reach it?
 > >
 >
-> In what we described, there is no need to keep any kind of callback,
-> targets field is sufficient to filter any type declaratively.
+> Yes, ideally we should have different variant of virt for 32/64 bit.
+> Same goes for cpu max types.
 >
-> For the KConfig related types, I would really be keen to leave that
-> available for now, and add a proper error message later.
-
-Thanks, much clearer now, I was working for full KConfig related types supp=
-ort
-because I am trying to keep qemu-system-$arch to be a symlink to qemu-syste=
-m
-which will still work without breaking anything. If we do not keep this the=
-n
-I machine::targets or TypeInfo::targets would be the best solution, I think
-TypeInfo::targets is better, and copy it into TypeImpl::targets. and give a=
- API
-to retrieve it, for example:
-uint64_t *object_class_get_targets(ObjectClass *klass);
-
-Add "targets" struct members as TypeInfo::targets and TypeImpl::targets, an=
-d
-copy from TypeInfo into TypeImpl for later access with
-object_class_get_targets
-Then we can use it for filtering machines and cpus without burden.
-
-How to dealt with
-https://lore.kernel.org/qemu-devel/20261007-rv-dedup-v2-6-8a2f0f296a7f@rev.=
-ng/
-
-It's using is_available.
-
-Maybe all using the way like
-Subject: [PATCH v2 07/18] target/riscv: Runtime register MAX and BARE CPUs
-https://lore.kernel.org/qemu-devel/20261007-rv-dedup-v2-7-8a2f0f296a7f@rev.=
-ng/
+> QOM type is always registered unambiguously ("$arch-virt"). Then, for
+> the "alias" name, which is virt, in case multiple matches are found,
+> command line can return an error with list of unambiguous names to call i=
+t.
 >
-> Regards,
-> Pierrick
+> $ qemu-system -M virt
+> Multiple virt machines are available. Please choose one of them:
+> - aarch64-virt
+> - riscv64-virt
+>
+> There is no "parsing" of the argument, it's just the real QOM type. Then
+> we can find which target it implements from mc->targets.
+> And then, we can automatically choose which cpus should be available
+> based on that, thanks to cpu->targets.
+>
+> For existing binaries, nothing change.
 
+Good, I think we found a clean way now, is_available should be
+removed, and TypeInfo::targets and TypeImpl::targets should be added.
+I think
+for "virt" we can add a shared hw/machine-virt.c instead, and forwarding to
+the $arch specific virt. so that we only have a single "virt" registered.
+And it's
+targets is
+QEMU_ARCH_I386 |
+QEMU_ARCH_ARM |
+QEMU_ARCH_RISCV |
+QEMU_ARCH_LOONGARCH |
+QEMU_ARCH_M68K |
+QEMU_ARCH_OR1K |
+QEMU_ARCH_XTENSA |
+QEMU_ARCH_HEXAGON
+
+So that we won't have a list of conflict QOM names for "virt" machines.
+As now we indeed have only a single "virt" machine that redirects to
+different targets.
+
+
+For other types also conflict can be handled in the same way, such as
+"-cpu host" "-cpu max"
+maybe others, but I think they all have the same way to deal with.
+
+
+That's why  TypeInfo::targets and TypeImpl::targets better than sole
+Machine::targets
+
+>
+> >>
+> >> With regards,
+> >> Daniel
+> >> --
+> >> |: https://berrange.com       ~~        https://hachyderm.io/@berrange=
+ :|
+> >> |: https://libvirt.org          ~~          https://entangle-photo.org=
+ :|
+> >> |: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com=
+ :|
+> >>
+> >
+> >
+>
 
 
 --=20
