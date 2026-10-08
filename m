@@ -4,125 +4,146 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3437BCA6007
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Oct 2026 09:57:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C2B7CA600F
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Oct 2026 10:26:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xEks5-0007RR-1r; Thu, 08 Oct 2026 05:57:05 -0400
+	id 1xElJn-0003Dd-QH; Thu, 08 Oct 2026 06:25:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xEks0-0007Qe-Ph
- for qemu-devel@nongnu.org; Thu, 08 Oct 2026 05:57:00 -0400
-Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xEkry-0006Ow-LA
- for qemu-devel@nongnu.org; Thu, 08 Oct 2026 05:57:00 -0400
-Received: by mail-ed1-x52d.google.com with SMTP id
- 4fb4d7f45d1cf-6ab006eb282so7236044a12.0
- for <qemu-devel@nongnu.org>; Thu, 08 Oct 2026 02:56:58 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1791453417; cv=none;
- d=google.com; s=arc-20260327;
- b=B2G8wZOzamewDNPi0vwyipX5+UUtkidfzT/5X9qza0r4R18qg5v5bslHGcj3GsYNqR
- HFzw/NAZQBozlSZCuTNgIXPhNOt0LMlIVo5Jk+zaQc8kCWmxCK1DydEtsgmyjLxzXzjG
- zwa4GURXLJo4tuLR/6F7GcncnYmrmTjdb7QzSEa5HxB0woIjr64xqLjB7Az9k8iXPmSz
- LYxP1M2eWOR8ITnbvmFgEBc5I6UQbi1/26fwdX4521zAs6d8ZC7VNh52/+1tiIqi+HtP
- 5pegloQ3GXujC4HUmHv7zhOiHO6ibk4oYkX2HIQVNstZfNTHqs0u/4uhskRfXS5hRPBd
- vTiQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :reply-to:in-reply-to:references:mime-version:dkim-signature;
- bh=GMQtsqQ1FJDRF98PcaOkHl7URCcYm64RX1SkqUFOO9g=;
- fh=A4k036sXYQHlw40TlUzspd0/Yof+MScpYbmq/1f5Ye4=;
- b=C8ffYpOY/UBVPvAETpmPlzGsibTEhscMN2fIcsPVXpc5cadOSRx0OlAd3pYQk+gvot
- aY0QiUDfyIUzwOym2OVAn/QFYtxPV8cZLKzLgffSioxjAEoN9bei5xCqlyX1QDLNpg8z
- Mk5qCA86SNGAoAbgvpOh7Kx4RqtTMtrG5VGJ+CXKWf+UUoNRaC2bRszehu+kYCWwaw7D
- WoQI2iOWQIBBp/oItMQheYtRSiTjtyLaPYwAUvCTyOhEzkX+E3uyP+hiI7FJPGysihep
- ySN9LRxyOM8KtsvOn5r2sfFmGT/tBfIZDTYcf/1+ssev+i/gfjISrZ91SD/k/gng4qJw
- A3FA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1791453417; x=1792058217; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:reply-to:in-reply-to:references:mime-version:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=GMQtsqQ1FJDRF98PcaOkHl7URCcYm64RX1SkqUFOO9g=;
- b=Mo+wlr1ucu8MvqLTQOT9RujfRsfUSVZRlCpTRql45lumpEhRaCvSt2Cktd4NR4WzaF
- fGmBmNEJIBKUpldJ75N+xf8QRlipDvm4YiYR6StzO0jWnJ7YcE0qNHx9G21Qc4gnjPGy
- 7k0bTk683UcsIm5CpAQsiE9NKqnovII8uW17wCDYQwJ1yGaIw9UnLcBrwFU+63iff+HQ
- R/+3tju0vSs1DH4cUF6x9no67d07gWL45dVnOvdBRONxHkMPIPBm5WtWLSiweBzKSQgO
- l6sJvS198eZJHEvrYEN4beGzBbzzv+6JKILVd/qqrZ77ZlNHK6O2M9zSgdVO8VQoaIS0
- SQ3g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791453417; x=1792058217;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:reply-to:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=GMQtsqQ1FJDRF98PcaOkHl7URCcYm64RX1SkqUFOO9g=;
- b=10IWIG1/XHPbtAXn2dpiMH52fJepxp6sZsLOY7ICt2nJc5D9HSH0chxHfQnlVb3fI7
- TQy/KJdzK/OUnTfWKPBmMlRtC4fWkWAOSBdOunYeoY0ByNnxEWcCMF41AhlAprLLBhxr
- Tumtcy8oVSZ5X6KyNPhfKEiQ1HvtvxyA/b3jYAFVp5N1kweUHUuG1CQjbBKa2rPIoGug
- uwY+Q6lGpbMi/mXwUZtmC5i3SZKWSWeuxnbDX0SaEfF1Q7kfbubBJpv/qPK5mZwN/NwH
- +8r2bz31RQU/oVFw+nI/L2aQwJ3x8EEEb61s5dMvLe1/soQGLVJoG+KOKbafJ4dypptJ
- vx5A==
-X-Forwarded-Encrypted: i=1;
- AKwUvBwwaL6D5J/775Cj97/gWvv+5nhGUIaljfibQFm8S2ldMMlax1xlUVeZnjTeiB6wOdbWHuXUrSknKknN@nongnu.org
-X-Gm-Message-State: AFq9FYLFkJ+bVDQ8t5dtYiJBFnwb7IDpz4yFloh/OMtvEaDBowjBCWri
- +bYhU002IVcNN9qvr4xkuenC8ftNHYQiiaVGCSiP7dL9XfhBfDXdgVUKerWmebcDJV6WFb4rUXt
- HNcTQtmE+e/BlZmRojgA8XS1+MjdxIGE=
-X-Gm-Gg: AYBFou1Kf6ryvyBY7Qj40tozmLHgTFAKhEloqaqliUF8lXkL0R1CRupF5M3uJPOn63E
- T76lxwJlr+pkMsTuod2TNBL2EhYPRac1w0LGKn5T/BJR6Nwj52p+BKv9lEysSneUZ1+zJdOWX+r
- gDWAxJibuHzWY7OwF8m/h8fI08Q6rQPAOiMplaQU99HWeHEwd01JCRYxtk2BtDY8DDHQBh+o1mt
- DjklLpazuOWsbTrxtxQnZP4kwP96PkQMAeYf2XuTO1uPqNVbr+vCR+FRfyCafZeJ33t9guuXMgF
- pLKBXZndVTdwmdQV0pYyUGJE0Y5U/lA/GQkSjA97lLpcK5HGcjnmIns=
-X-Received: by 2002:a05:6402:21d6:b0:6ac:bbd3:5b42 with SMTP id
- 4fb4d7f45d1cf-6aff377cac9mr4180458a12.11.1791453416755; Thu, 08 Oct 2026
- 02:56:56 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
+ id 1xElJk-0003Cw-W2
+ for qemu-devel@nongnu.org; Thu, 08 Oct 2026 06:25:41 -0400
+Received: from mail-westeuropeazlp170100001.outbound.protection.outlook.com
+ ([2a01:111:f403:c201::1] helo=AM0PR83CU005.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
+ id 1xElJj-0000sa-6J
+ for qemu-devel@nongnu.org; Thu, 08 Oct 2026 06:25:40 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=gaqj4mt0QppM2p5y+MM0PPVUhJSK/dqi09D0fnyDAwuMhVi2ImHI0LLIwvfup/+Jax70L+iSrV5UPBgUg5q4H93kVuG/VQcr7vvVkZ7tSxWzc9v0U+yAH8KyEPWU+YrufyJiPqxaBodvoJ/fvO5EvuBKsQtgR2pqLFmMy0KexAv8gDfZTTtEunZBmlq1r8KNg5BqPS8J+U5xT7ieY8p1iBn5vvUH6CsAGmni3hcL+djV6fJ12HIg36xUrwhvp6vEMI/4AoI1GZnEWP0wNFqSxKBxCJMkxKdQ0wOxU2wXCYoqTTHAyTujhkLSzLPg8CSp+rdCzISHER8RaGEsPxwo1w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=G+K4eEstD5ia+fvFh2Nonr6oa7uouJaNzIX851kctj0=;
+ b=rLiMZC4AAZ5sTsFHkdg/faRuhc9RWltbXbD+9OM/atUi/vRZbi3WkDS9dymHSjQykvL9fpC4k/wG6l2XfELX22fOg3IAliPXSY0ZpYh6SFw/H0MmZtEgWH3md0CY1wqmYZzLqNoWj44LOvzCMYJAQiViy5tAskdal8AEcnPnOY04cKw6NpXbnfr4UPAFDMScQYOHdMYPhcBcIGT5EHUCYs9qRfmcMp6YTIM01gvkwDb0SEXfgtttk4ZAmTbU5JoO6ZujDxR7fl3lABKHCUchqX0bFNqDPEcJ9zvNGQdIXLRQDlRK0hQcDN1X1iZUbK2VBKobj4T6UVtQti7q8lPMYQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
+ header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=G+K4eEstD5ia+fvFh2Nonr6oa7uouJaNzIX851kctj0=;
+ b=g2e0/6Fi+CVW2oGTbFFvVi7XRUzIgL1QqOCVluR6KRThUQuyBxZlKzzMGT5GuOqYTR3aPgtZXeVRKY1EONfujRJNt7E6LIEqJ5ulzHt/jXaWuGi5Rqny2Pjbi+q6tlJOBueuNYKWqAU7dgaAe6Tnje/N+5XilmREeHuCQkqLvoE+1JoWA2M2MEWrvasgNF6Qca6JSONWHhF++pMyryNZSmQo+SIRsPqTTqfciPtbDvrc5I1Svj4L1zUxolBT0dKjqTsCqdUpLv+P4Btna1cOlaZzAvY58nRwul7yY9GR83FqmUN4ifNCFkCkrAeguyPuBRInU+dy6buN1zzRQP/Qhw==
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=virtuozzo.com;
+Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
+ (2603:10a6:800:20a::12) by PA6PR08MB10593.eurprd08.prod.outlook.com
+ (2603:10a6:102:3c8::18) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.496.15; Thu, 8 Oct
+ 2026 10:25:30 +0000
+Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
+ ([fe80::4e37:b189:ddcd:3dd8]) by VI0PR08MB10656.eurprd08.prod.outlook.com
+ ([fe80::4e37:b189:ddcd:3dd8%7]) with mapi id 15.21.0496.010; Thu, 8 Oct 2026
+ 10:25:30 +0000
+From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+Subject: [PATCH v15 00/22] migration/cpr: support vhost-vsock devices
+Date: Thu, 08 Oct 2026 13:25:24 +0300
+Message-Id: <20261008-up-vsock-vhost-v5-v15-0-301b73b3f843@virtuozzo.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAJRvx2oC/23RzW7DIAwH8FepOC+TDQRwT3uPaYfwtWbTmipJ0
+ daq7z7STRPSLHEBmZ/h76tY0jymRex3VzGnMi7jdKwb7B92IhyG42vqxlgPhARpgMB151NXlim
+ 8d+UwLWtX+i5Yh15RxoCDqPdOc8rj5x19fvnZL2f/lsK6QVvFYVzWaf66dy39Vvfro2b8uqCLa
+ LVUvaOs3VMZ5/U8XS7TY5g+xNajmFbpOcVURUeFXsZghhw5xbYK99diq2JSppRBqaB6TnGNIol
+ TXFVQ+lAzA+/0wCnUKAo4haqSCMhkI8la4BSEPwYBkGMQquMCkHZaJXKedbB1JOvg9iuXB6Dop
+ FVswihbhx0Uym1SgEYqgmAcmw6q1jGso6oj02Bdjuht4t+jW8eyjt5yRhMTkZEx/8v5drt9A9z
+ wVGFJAwAA
+X-Change-ID: 20260908-up-vsock-vhost-v5-c781b39f1c1a
+To: qemu-devel@nongnu.org
+Cc: andrey.drobyshev@virtuozzo.com, sgarzare@redhat.com, bchaney@akamai.com, 
+ den@openvz.org, farosas@suse.de, mark.kanda@oracle.com, 
+ maciej.szmigiero@oracle.com, dongli.zhang@oracle.com, dwmw2@infradead.org, 
+ peterx@redhat.com, philmd@oss.qualcomm.com, vsementsov@yandex-team.ru, 
+ odaki@rsg.ci.i.u-tokyo.ac.jp, clg@redhat.com, mst@redhat.com
+X-Mailer: b4 0.16.0
+X-ClientProxiedBy: VI1PR10CA0117.EURPRD10.PROD.OUTLOOK.COM
+ (2603:10a6:803:28::46) To VI0PR08MB10656.eurprd08.prod.outlook.com
+ (2603:10a6:800:20a::12)
 MIME-Version: 1.0
-References: <20261007115253.328-1-luoyonggang@gmail.com>
- <20261007115253.328-9-luoyonggang@gmail.com>
- <7fc0d377-a994-41f4-aa98-7ed56db11447@oss.qualcomm.com>
- <CAE2XoE8K+3e8h6H9NrPk1WWMmJfG807bN_Kh5qje-5pKWUUg5w@mail.gmail.com>
- <b2d89a92-0197-4873-b4ea-75bb21c0d0ae@oss.qualcomm.com>
- <asdkF80SJzF2W3sD@redhat.com>
-In-Reply-To: <asdkF80SJzF2W3sD@redhat.com>
-From: Yonggang Luo <luoyonggang@gmail.com>
-Date: Thu, 8 Oct 2026 17:56:42 +0800
-X-Gm-Features: AclHuK98ELtHsN7moD9Gh9l_YO5uyMakIWJzdpFSeXsEC2WYMYEMNGXjyRe2Y-Y
-Message-ID: <CAE2XoE-Vc+CaE-3FerW3eXtTgspwxZJ6ZT0CZyg3ZYpoJ8xYXw@mail.gmail.com>
-Subject: Re: [PATCH 8/8] qom: pass TargetInfo to is_available for later use
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org,
- Cleber Rosa <crosa@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>, 
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
- Laurent Vivier <lvivier@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- John Snow <jsnow@redhat.com>, Laurent Vivier <laurent@vivier.eu>,
- Richard Henderson <richard.henderson@linaro.org>, 
- Joel Stanley <joel@jms.id.au>, Fabiano Rosas <farosas@suse.de>,
- Kane Chen <kane_chen@aspeedtech.com>, 
- Andrew Jeffery <andrew@codeconstruct.com.au>, Troy Lee <leetroy@gmail.com>, 
- Jamin Lin <jamin_lin@aspeedtech.com>, Stafford Horne <shorne@gmail.com>,
- qemu-arm@nongnu.org, Philippe Mathieu-Daude <philmd@mailo.com>,
- Peter Maydell <peter.maydell@linaro.org>, 
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Steven Lee <steven_lee@aspeedtech.com>, Alexander Bulekov <alxndr@bu.edu>, 
- Darren Kenny <darren.kenny@oracle.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
- envelope-from=luoyonggang@gmail.com; helo=mail-ed1-x52d.google.com
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: VI0PR08MB10656:EE_|PA6PR08MB10593:EE_
+X-MS-Office365-Filtering-Correlation-Id: 21bb6f9e-9296-44ad-fbed-08df25267a34
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|366016|376014|7416014|52116014|23010399003|1800799024|10067099003|56012099006|38350700014|18002099003;
+X-Microsoft-Antispam-Message-Info: NlYvjT7fY5E55VTbXahJGsCk7juRtIWbEy2Hl52JlTypvYMd12plkhS0aMTVlz7BPj/yUMKETWqzN+e6uXo0VOZByRU6dEbe9moPmXs5uKfiq1NjT0h1+UF/ixPt6ptgMlEUzxTW3SfIG2G9/5BIZYhDO5myLld6SMBh6H3vmkVaXU5vE8zAiE0U5FgiD5iWY776MJ+Hgt/G4wIipKvWaLIPxfMKukeV80CVSiwkJ5h6dSnZlyNmscvCzMpum44fVsf4k2gwsdWpDF76RACPv2h2uqxUPxF4ZPljEYLxjtwa4TZMAfjMRgiFeHIOnEDOP5P2MJGES3ithpw0Qt9NxzFqtqeuNXWmDI/hOn321Biu6edvZLFRErowZ15InxtSG2unCUx0LvC1uR+ecQbpeEn9hooCFvVXynrHj60SP1BZ5aAU16DQX/plfxr7u/Ifn2+T7JgxywgH5xIWUpaOdIBs9KwAIA9nZDY0OMP82bdzjkcETcKO0W7KXnSbdQ/EMloaqZfQNIBhSUsKQCWXjOnGdj1ixWrZqmA//d/s0g7OwuaLilB24gQBqtR/9jGdxZoucMdDMVayZPJLtjCHqtIbjEHJK1Su586GUdZ0K5r0NN3FCxqvEnw2cwkDQ8WbeSzDRRB30dIS7WdMSLVcZy4Lqnq91hg43XnppSzDEJk=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:VI0PR08MB10656.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(376014)(7416014)(52116014)(23010399003)(1800799024)(10067099003)(56012099006)(38350700014)(18002099003);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?cDhIbHBFQnJUd0ltWjZhSHJML3luT0JtVnB3VmsrVm5FOStSOU5UVkxYVWNn?=
+ =?utf-8?B?ZHVBeUZWcy9oYXBtMlRKNjNReU1aaGVHaUFYS2U4aCsxODlNS0s3NmdRSXlk?=
+ =?utf-8?B?eEpHc2dFQlVhbEluUnpGeVJ1Ym5OdWRLTis4UEdxU3plMmZ2Q3hydk42aFlD?=
+ =?utf-8?B?UVpPM1ZwMldVTEp4RkZ2ZHFYbS85N1loL2xWa2Z5WUx1SVRwR0Raczh5VDhm?=
+ =?utf-8?B?Z2lOUndyN1RaQ1REa01aeWN5V09WNmQvODBkMHdtcFBqY3Ruams3b3lGRmJq?=
+ =?utf-8?B?YVBVQ2xRT0VzdGlzc0hUbTdlTE5kaFFZWDl5aXJNcVlBQ3V6aDZqT2JmOXBK?=
+ =?utf-8?B?ZWVYOThSRm9vM0RIcDY2WkdDd1BiOEZXZnE1eWxQTE1JWWl3eFdsNmZKQlRO?=
+ =?utf-8?B?WnRnUXlibXFlWkI4eDFzajV4ZlFzUUNMZVFOZVR6VGpuQTZ4bHVlaWFSS0N3?=
+ =?utf-8?B?eGozRDFoRnd4SVI2NERoTzhTWXU0djNDWm9GZ2VZR1p6UnZ4SWFjM3Q5Y3I2?=
+ =?utf-8?B?ZDhSSEp3UVAwUS9vT3JOUzZYZUg4aFVXNjBjVHRGbDFPRHRyUkRJb0FidTVu?=
+ =?utf-8?B?cklPYkhGR1VTbThNZkQ2Q25KYURJNUxaOWFIKzNZZTlvSEZqWlViOGJwZ0VC?=
+ =?utf-8?B?VHhValY1UUhVVmIzcnhjbVp1Nzd1aWFWdkRWV3U0U2MyS0QyTlc3SndqYW5h?=
+ =?utf-8?B?MklNZVgrUlhVTFhTWmpMU3F6bHRXSFE1RzZBKzFRUWJFTDlBVjRzL09pRWoz?=
+ =?utf-8?B?NXprRWliVnk0b2l1R0twY3FrWCs5d2czQ2xuK3BaNlJnSmd6L1F4UVUvWWRj?=
+ =?utf-8?B?YjRBNU1xczhhN2trTFdMVllieDNKb3k0azIwd1VkQ3A3ZFlYQ0VRSW5Vd3ZC?=
+ =?utf-8?B?MTg0WmwrSWsyRS9sMzQzMEpBK0lZVkt5cGxGcFJsSmhMWTlaa2s5VW9IS0Zl?=
+ =?utf-8?B?TkJHOXArZUgvNFljKytEQW9GSXFGcnVFYkIzS29wMy9UZ2M2eTk3RXZBdDNi?=
+ =?utf-8?B?ZGhkVklyTkc4Z0NLWmZyMTNhdGZxazNqZWRLZmUzRjVwOVNnYlplS2hQMGRZ?=
+ =?utf-8?B?QUlkZEQySEpoTFN4K2h2cEIrNzA3TlViK3VOU0Rvc05tK0xWbXNWR0tPKzlI?=
+ =?utf-8?B?dDVLQU83NDhnWjZwVlhjZExSbFlhRnRrUXFZL3hVaWZIK0J0cGhZZVRtUlAw?=
+ =?utf-8?B?RGlrd0t2eU01WmZjZFNtSlVCNEwvK3dBeDZEYmVpblM3MENjbFozTUtwbThT?=
+ =?utf-8?B?TENuNm1VenpJRVpNeUE3RUo5OFUvNklLL2QraE5kYVVtL0h2OWwxcWpDK3pY?=
+ =?utf-8?B?Z01INE1Ma1pkSnVRSmZMZmU0cWlHMGJyLzJRTHBOWk84d2ZZQzN6STFtb1BD?=
+ =?utf-8?B?c2lOallkYWZDRlhiTzBwSVdnOEdwTTk1VXMrekpJanVNVHZkdmlqTURibnV5?=
+ =?utf-8?B?UHQrT1E4QlpraUVrZXNNcWMrc2NaYzVpNlVmRmRxekNReGE5bXNLUER4Wmlm?=
+ =?utf-8?B?VitYREVXRnBJWmZ5VzlkanRGZEYwTDdlTjFTWFZFNFZhMTBvS0xmSGFOb3F6?=
+ =?utf-8?B?YnhWNmxGd0JrcG5XL3QxNUh1bysySUQwNENDL0ZtKzVkbjV3akdrOWNhMXZC?=
+ =?utf-8?B?L3VjR09QaFUwMUZReFlBMWdOUUtJTERrclRvL1MxTE5iNS9JaE8zbnY2L1Rw?=
+ =?utf-8?B?MHZCbjRjd0I2dkhtTXpGc1V2TVJJbVlnTEtDWXpiRkUzZWRLZTVBVysvdWlK?=
+ =?utf-8?B?eWZLaFRlcGNSZ3hDMktwelFEcmJ6dWFoUzlpUGVHRkMwSVkzKzVtOE9HbHJi?=
+ =?utf-8?B?VlhWMlM0bHBRZkJqaHFNQk1acUdqRS84cmpoVExrYWlQQ3pDTEtHL2xkR05i?=
+ =?utf-8?B?WklJR3RxK253VHRvT0dmdmdjR3dFWWo3RFJJSVlpTHRrNGRzLzVDU01aM3dJ?=
+ =?utf-8?B?eWV6Rjk0cGw3TkxGZjZKQ1FNWGorZjBab3YwOWRtYVNoOGw5VFZBTVNiQXVm?=
+ =?utf-8?B?OVN1YXcxYlNPTWNOL0VyeDdXVURudnFqTUVtaW5nZHdXSWlveTU2Q0QrdE9L?=
+ =?utf-8?B?RFRUS1BFY0kvSVo2MjV4eWR4Q3VTMzFWdmVSREwyVi9rcnRBZUU2Z0NTODJF?=
+ =?utf-8?B?OXhkaDR0QXpvV0tOdWY3TFZhM3ZHRTFDZ0trd0p2aCtJa0FybnhhL3lOVHZC?=
+ =?utf-8?B?azhLRVZweUxsZVhJMkNCNkFhaVpDR01xbjQ4cXZWb0dJS3haRUdacE51bHhE?=
+ =?utf-8?B?M0xOd3NkR3AwcTlLWlpaek5sM2cwRklZQVdFODNxaEVsK1pQVTJzeCtNdGgx?=
+ =?utf-8?B?N05zd2VzcVFjL2xDTmlVMnRiREZXQ1hobmxLanVicWZGOHJUVlNyek5id2Fz?=
+ =?utf-8?Q?kHTvyCo35sxPttfU=3D?=
+X-OriginatorOrg: virtuozzo.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 21bb6f9e-9296-44ad-fbed-08df25267a34
+X-MS-Exchange-CrossTenant-AuthSource: VI0PR08MB10656.eurprd08.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Oct 2026 10:25:30.0897 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 5fGvNCJwdkt2o/UKeMaxYWj9uWXDJoOJCvmymJaxZoMTLvTPahtqA0wEhrEkFQEJj0jGC4wWBkjuW8FlpPBP237I3Fl/B8c1RMPOPxOAnPo=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PA6PR08MB10593
+Received-SPF: pass client-ip=2a01:111:f403:c201::1;
+ envelope-from=andrey.drobyshev@virtuozzo.com;
+ helo=AM0PR83CU005.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -136,250 +157,75 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: luoyonggang@gmail.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Oct 8, 2026 at 5:36=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@re=
-dhat.com> wrote:
->
-> On Wed, Oct 07, 2026 at 05:00:06PM -0700, Pierrick Bouvier wrote:
-> > On 10/7/2026 2:42 PM, Yonggang Luo wrote:
-> > > On Thu, Oct 8, 2026 at 4:44=E2=80=AFAM Pierrick Bouvier
-> > > <pierrick.bouvier@oss.qualcomm.com> wrote:
-> > >>
-> > >> On 10/7/2026 4:48 AM, Yonggang Luo wrote:
-> > >>> Change TypeInfo.is_available to the new TypeIsAvailable type, which
-> > >>> takes a const TargetInfo *. Registration passes target_info(), so
-> > >>> behavior is unchanged. object.h only forward-declares TargetInfo.
-> > >>>
-> > >>> Switch the existing users (raspi, raspi4b, ast27x0 evb and fc) and =
-the
-> > >>> generated machine parents to the matching target_is_<arch> helpers.
-> > >>>
-> > >>> Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
-> > >>> ---
-> > >>>  hw/arm/aspeed_ast27x0-fc.c  |  2 +-
-> > >>>  hw/arm/aspeed_ast27x0_evb.c |  4 ++--
-> > >>>  hw/arm/raspi.c              |  4 ++--
-> > >>>  hw/arm/raspi4b.c            |  2 +-
-> > >>>  hw/arm/virt.c               |  4 ++--
-> > >>>  hw/m68k/virt.c              |  4 ++--
-> > >>>  hw/or1k/virt.c              |  2 +-
-> > >>>  include/qom/object.h        | 12 +++++++++++-
-> > >>>  qom/object.c                |  3 ++-
-> > >>>  9 files changed, 24 insertions(+), 13 deletions(-)
->
-> snip
->
-> > >>> @@ -167,7 +168,7 @@ static TypeImpl *type_register_internal(const T=
-ypeInfo *info)
-> > >>>          abort();
-> > >>>      }
-> > >>>
-> > >>> -    if (info->is_available && !info->is_available()) {
-> > >>> +    if (info->is_available && !info->is_available(target_info())) =
-{
-> > >>>          return NULL;
-> > >>>      }
-> > >>>
-> > >>
-> > >> ```
-> > >> info->is_available(target_info())
-> > >> ```
-> > >>
-> > >> or
-> > >>
-> > >> ```
-> > >> is_available() {
-> > >>   TargetInfo ti * =3D target_info();
-> > >>   ...
-> > >> }
-> > >> ```
-> > >>
-> > >> Are doing the exact same thing today.
-> > >>
-> > >> So what is the future goal requiring to introduce this?
-> > >
-> > > From Daniel P. Berrang=C3=A9's
-> > > requesthttps://lore.kernel.org/qemu-devel/apAszS1ewxM0Y1XU@redhat.com=
-/
-> > >         I forgot to mention that this is also pretty important for ma=
-king
-> > >         introspection work, as we need to be able to say
-> > >
-> > >           'qemu-system --machine none -qmp ...'
-> > >
-> > >         and connect to QMP to introspect the binary. Having to add a
-> > >         '--target <name>' into that mix is undesirable, as it creates
-> > >         a chicken & egg problem. You don't know what targets are buil=
-t
-> > >         into qemu-system without introspecting it and you can't
-> > >         introspect it without selecting a target to introspect.
-> > >
-> > > From Pierrick's review
-> > > https://lore.kernel.org/qemu-devel/557262df-b8e7-49b5-a245-ae46b8885b=
-30@oss.qualcomm.com/So,
-> > > for existing binary: -M virt works as before.
-> > >
-> > >         For new multi binary:
-> > >         $ qemu-system -M virt:
-> > >         Multiple machines were found, select one among:
-> > >         - aarch64-virt
-> > >         - riscv64-virt
-> > >
-> > >         Does it matches what you would expect?
-> > >
-> > > From Daniel's review
-> > > https://lore.kernel.org/qemu-devel/aro93NuZBXYGbD33@redhat.com/
-> > >         We already have  'QemuTargetInfo' struct which is used
-> > >         with 'query-target', that should also be used with the
-> > >         new 'query-targets' command.
-> > >
-> > >         We need to add the 'endianness' field to QemuTargetInfo.
-> > >
-> > >         I don't think that we need to report machines though.
-> > >         We already have 'query-machines' which gives much broader
-> > >         information on the machines. "MachineInfo" needs to
-> > >         gain
-> > >
-> > >         "targets": ["SysEmuTarget"]
-> > >
-> > >         to list which target(s) a machine can be used with.
-> > >
-> > >
-> > > To achieve these, we needs add TypeInfo parameter to it so that we ca=
-n do
-> > >
-> > > static void report_unsupported_machine_type(const char *name, Error *=
-*errp)
-> > > {
-> > >     g_autoptr(GSList) machines =3D machine_class_get_list(true);
-> > >     g_autoptr(GString) targets =3D g_string_new(NULL);
-> > >     TargetInfoNode *node;
-> > >     GSList *el;
-> > >
-> > >     error_setg(errp, "unsupported machine type: \"%s\" for target \"%=
-s\"",
-> > >                name, target_name());
-> > >     QLIST_FOREACH(node, target_info_list(), next) {
-> > >         for (el =3D machines; el; el =3D el->next) {
-> > >             MachineClass *mc =3D el->data;
-> > >
-> > >             if ((!strcmp(mc->name, name) || !g_strcmp0(mc->alias, nam=
-e)) &&
-> > >                 object_class_get_is_available(OBJECT_CLASS(mc))(node-=
->info)) {
-> > >                 g_string_append_printf(targets, "  %s\n",
-> > >                                        node->info->target_name);
-> > >                 break;
-> > >             }
-> > >         }
-> > >     }
-> > >     if (targets->len) {
-> > >         error_append_hint(errp, "Available for targets:\n%s", targets=
-->str);
-> > >     }
-> > > }
-> > >
-> > > That is we can iterate on all target-list, and check if it's can be f=
-itlered.
-> > >
-> >
-> > Ok, I finally see where this is going.
-> >
-> > So, based on all the previous conversations, we agreed to have a
-> > qemu-system binary with all the QOM types available (for all targets).
->
-> ack.
->
-> > I personally think that if we go this way, we should not have any
-> > -target option, and even less a -target none option.
->
-> If we don't have a compelling need for -target to exist now, then
-> dropping it as a concept is good.
->
-> > The current is_available() approach was made with filtering per target
-> > in mind, which predates where things are now. So, it's a good time to
-> > reevaluate how to do it.
-> >
-> > This leaves us with (at least) two options:
-> > - keep the callback and add TargetInfo parameter (what is done here)
-> > - remove is_available, and adopt a more declarative approach
-> >
-> > How about we (re)-explore the second one?
-> >
-> > It's what we did in the past
-> > (https://gitlab.com/qemu-project/qemu/-/commit/5de9216064d32eaac125dac4=
-de1878486c16d73e),
-> > and that I removed recently, in favor of is_available.
-> > My rationale was that it was incomplete, since we needed to filter type=
-s
-> > per config also, and not only target.
-> > Now that direction is to not filter anything, filter per config is
-> > unneeded, and switching back to declarative instead of callback makes
-> > total sense. Using interfaces like we did has its own issues, and I
-> > would not like to see this coming back.
-> >
-> > I'll do one very concrete proposal:
-> >
-> > ```
-> > How about letting machines (and machines only first), have a new field
-> > 'targets', being a uint32_t mask with an array of EMU_TARGET?
-> > machine->targets =3D EMU_TARGET_X | EMU_TARGET_Y;
+v14 -> v15:
 
-To be explicit state what, I give you a pseudo code to compute
-machine->targets from TypeInfo::is_available(TargetInfo*)
-let targets=3D0
-foreach ti of TargetInfo list:
-   if (machine::TypeImpl::is_avaible(ti))
-         targets |=3D 1 << ti->target_arch
-   fi
-endif
-So they basically have equivalent effect, and is_available will handle
-other code-needed condition properly such as
-CPU/AccelClass. not restrict to targets, we can also attach the
-KConfig into TargetInfo, so is_available(TargetInfo*)
-also works for Kconfig. that's why I insist this way, it's solved all
-the issues around.
+  * Patches 15, 17, 18:
+    - add vhost_dev_try_release_owner() helper for RESET_OWNER, ignore
+      -ENOSYS and -ENOTTY (Akihiko).
 
-so  machine->targets =3D EMU_TARGET_X | EMU_TARGET_Y; is a good idea,
-and it can be implemented with TypeInfo::is_available(TargetInfo*)
-without much burden. and targets can be saved into a (machine or
-TypeImpl) for fast access when needed, we can compute it
-when the program starts.
+v14: https://lore.kernel.org/qemu-devel/20261007-up-vsock-vhost-v5-v14-0-e16de9962df0@virtuozzo.com
 
+Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+---
+Andrey Drobyshev (22):
+      migration/cpr: forbid saving duplicate CprFds into hash table
+      tests/unit: add test for duplicate keys in CPR FD table
+      migration: forbid snapshots in CPR migration modes
+      migration: forbid snapshots under Xen
+      tests/qtest/migration: add test for snapshot rejection in CPR modes
+      vhost-vsock: block CPR migration modes
+      vhost: add vhost_reset_owner op
+      vhost-vsock: don't reset connections during CPR
+      vhost-vsock: fix FD leak in realize()
+      vhost-vsock: preserve vhost FD during CPR
+      vhost: factor out vhost_dev_init_backend()
+      vhost: make vhost_dev_cleanup() safe on a partially initialized device
+      vhost: add vhost_dev_set_owner() / vhost_dev_reset_owner() helpers
+      vhost: add vhost_dev_is_initialized() helper
+      vhost: release ownership in vhost_dev_cleanup()
+      migration: add MIG_EVENT_INCOMING_FAILED
+      vhost: release ownership when the incoming migration fails
+      vhost: release ownership on exit
+      vhost-vsock: hand off device ownership across CPR
+      tests/qtest/migration: add vhost-vsock tests for cpr-transfer and cpr-exec
+      tests/functional: add vhost-vsock CPR test with a live guest
+      tests/functional: cover a cpr-transfer target going away with vhost-vsock
 
-> > ```
-> >
-> > @Daniel, IIUC, this is exactly the approach you proposed a few weeks
-> > ago, just before I got frustrated and lost my patience against you. I
-> > think it's more clear for me where you wanted to go. Sorry it took such
-> > a large detour.
->
-> Not a problem. We were coming at the debate with different ideas of
-> where we were heading, so talking past each other at times.
->
-> >
-> > Yonggang, does that sounds good for you?
-> > Daniel, does that sounds good for you also?
->
-> Works for me.
->
-> With regards,
-> Daniel
-> --
-> |: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-> |: https://libvirt.org          ~~          https://entangle-photo.org :|
-> |: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
->
+ backends/hostmem-memfd.c                        |   5 +-
+ backends/hostmem-shm.c                          |   5 +-
+ backends/iommufd.c                              |   4 +-
+ hw/vfio/container-legacy.c                      |   7 +-
+ hw/vfio/cpr-legacy.c                            |  29 +-
+ hw/vfio/cpr.c                                   |   6 +-
+ hw/vfio/pci.c                                   |   5 +-
+ hw/virtio/vhost-kernel.c                        |   6 +
+ hw/virtio/vhost-vsock.c                         | 193 ++++++++++++-
+ hw/virtio/vhost.c                               | 136 +++++++++-
+ include/hw/vfio/vfio-cpr.h                      |   7 +-
+ include/hw/virtio/vhost-backend.h               |   2 +
+ include/hw/virtio/vhost-vsock.h                 |   1 +
+ include/hw/virtio/vhost.h                       |  74 +++++
+ include/migration/cpr.h                         |   2 +-
+ include/migration/misc.h                        |   5 +
+ migration/cpr.c                                 |  64 +++--
+ migration/migration.c                           |  10 +
+ migration/options.c                             |  13 +
+ system/physmem.c                                |   5 +-
+ tests/functional/x86_64/meson.build             |   2 +
+ tests/functional/x86_64/test_vhost_vsock_cpr.py | 347 ++++++++++++++++++++++++
+ tests/qtest/migration/cpr-tests.c               | 133 ++++++++-
+ tests/unit/meson.build                          |   1 +
+ tests/unit/test-cpr.c                           |  98 +++++++
+ 25 files changed, 1079 insertions(+), 81 deletions(-)
+---
+base-commit: f7ada39edacaa5c26b30e98b94017b0b2ccbcf94
+change-id: 20260908-up-vsock-vhost-v5-c781b39f1c1a
 
+Best regards,
+--  
+Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 
---=20
-         =E6=AD=A4=E8=87=B4
-=E7=A4=BC
-=E7=BD=97=E5=8B=87=E5=88=9A
-Yours
-    sincerely,
-Yonggang Luo
 
