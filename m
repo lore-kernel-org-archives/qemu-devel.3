@@ -4,119 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EAF1CA6007
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Oct 2026 09:25:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 142C5CA6007
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Oct 2026 09:37:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xEkNh-0000wX-Oq; Thu, 08 Oct 2026 05:25:41 -0400
+	id 1xEkYR-0002Rk-W7; Thu, 08 Oct 2026 05:36:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <uverma@linux.ibm.com>)
- id 1xEkNf-0000vu-Re; Thu, 08 Oct 2026 05:25:39 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1xEkYP-0002R5-PI
+ for qemu-devel@nongnu.org; Thu, 08 Oct 2026 05:36:45 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <uverma@linux.ibm.com>)
- id 1xEkNe-0003BO-85; Thu, 08 Oct 2026 05:25:39 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6987a0tc589874; Thu, 8 Oct 2026 09:25:25 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=ES1O42
- 3bWm7fcxqKEgjNK7bSHKgZ6oNiBlgo5a+KCF0=; b=f39YzsbnHyA556LY1Xp2uf
- 9C3P/jTth36OCuvTh/OaFrYj43Rq+njx2g6zGLQJS2LzC7/5/pYDhvtN6Gsq3RHX
- uXOZXP/GgSoU/xqTVxzEzfa/lVhiTYG8Fdj7jR28voZ1gRfQiOvxSnaxfmrc7zE1
- 4c93L2BBdFtsd5FJ44OvjrPn0U+yIRNplpn02j3LloR5oMzEdIdNDmm8DAya3PAC
- o6LZPeKajXcL0w/YyG8ZKyWOTVvfAxbVsoarBIxFBU5L6nmwfFVhRbc9JG1cls/Q
- JPIO0xuklXeeVFcnV0CTfNu+U+OlH2K5KVM+7N/6shOyFQ6ZMb6y4YbG33/Q26Eg
- ==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4h5xjw2eng-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Thu, 08 Oct 2026 09:25:24 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6987IZEH1873317; Thu, 8 Oct 2026 09:25:24 GMT
-Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4h5f3twgs4-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 08 Oct 2026 09:25:24 +0000 (GMT)
-Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
- [10.39.53.232])
- by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 6989PNkl7799500
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 8 Oct 2026 09:25:23 GMT
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id DDA2658066;
- Thu,  8 Oct 2026 09:25:22 +0000 (GMT)
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 06A415805F;
- Thu,  8 Oct 2026 09:25:17 +0000 (GMT)
-Received: from [9.123.12.1] (unknown [9.123.12.1])
- by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Thu,  8 Oct 2026 09:25:16 +0000 (GMT)
-Message-ID: <e189ed9f-e2af-4e3e-8baa-7b1f1c9311ac@linux.ibm.com>
-Date: Thu, 8 Oct 2026 14:55:15 +0530
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1xEkYN-0004OK-09
+ for qemu-devel@nongnu.org; Thu, 08 Oct 2026 05:36:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1791452201;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=IsS0Chl/KA5ceYU/kfxsYTHzuQjYvLUnD7UDhqYaDvI=;
+ b=XRSkjmmou7Drir0ckqb7w0aRdm3uHTAL7iNwpM/bidv/UuX3zQL21WPiZ2lRWdijfxicFW
+ 8WJHBaVIuztEXsXrBKQW7jX0FkZ+0NCyRWs1zKcXjfBK8Wwzb5rDHk7Au8p/r+8T7rABO6
+ OSsuKXbqTKsc+5eBz8rCh+HtzDjp+lI=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-475-Jy2fAp8AMDq5euAPviHQ3w-1; Thu,
+ 08 Oct 2026 05:36:37 -0400
+X-MC-Unique: Jy2fAp8AMDq5euAPviHQ3w-1
+X-Mimecast-MFC-AGG-ID: Jy2fAp8AMDq5euAPviHQ3w_1791452195
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E348919540DF; Thu,  8 Oct 2026 09:36:33 +0000 (UTC)
+Received: from redhat.com (headnet04.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.116])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8595C18002B7; Thu,  8 Oct 2026 09:36:26 +0000 (UTC)
+Date: Thu, 8 Oct 2026 10:36:23 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Cc: luoyonggang@gmail.com, qemu-devel@nongnu.org,
+ Cleber Rosa <crosa@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>,
+ Laurent Vivier <lvivier@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
+ John Snow <jsnow@redhat.com>, Laurent Vivier <laurent@vivier.eu>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Joel Stanley <joel@jms.id.au>, Fabiano Rosas <farosas@suse.de>,
+ Kane Chen <kane_chen@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Troy Lee <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>,
+ Stafford Horne <shorne@gmail.com>, qemu-arm@nongnu.org,
+ Philippe Mathieu-Daude <philmd@mailo.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Steven Lee <steven_lee@aspeedtech.com>, Alexander Bulekov <alxndr@bu.edu>,
+ Darren Kenny <darren.kenny@oracle.com>
+Subject: Re: [PATCH 8/8] qom: pass TargetInfo to is_available for later use
+Message-ID: <asdkF80SJzF2W3sD@redhat.com>
+References: <20261007115253.328-1-luoyonggang@gmail.com>
+ <20261007115253.328-9-luoyonggang@gmail.com>
+ <7fc0d377-a994-41f4-aa98-7ed56db11447@oss.qualcomm.com>
+ <CAE2XoE8K+3e8h6H9NrPk1WWMmJfG807bN_Kh5qje-5pKWUUg5w@mail.gmail.com>
+ <b2d89a92-0197-4873-b4ea-75bb21c0d0ae@oss.qualcomm.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v2 8/8] ppc/spapr: implement vscsi-report-luns
- call-method for PAPR vSCSI
-To: BALATON Zoltan <balaton@eik.bme.hu>
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, aik@amd.com,
- nnmlinux@linux.ibm.com, avnish@linux.ibm.com, pbonzini@redhat.com,
- th.huth@posteo.eu, sbhat@linux.ibm.com, harshpb@linux.ibm.com,
- amachhiw@linux.ibm.com, rathc@linux.ibm.com, philmd@linaro.org,
- npiggin@gmail.com, marcandre.lureau@redhat.com, fam@euphon.net,
- alex.bennee@linaro.org, richard.henderson@linaro.org
-References: <20261002052605.605858-1-uverma@linux.ibm.com>
- <20261002052605.605858-9-uverma@linux.ibm.com>
- <242e1462-9256-b115-e68c-f20aeb25dda4@eik.bme.hu>
-Content-Language: en-US, en-ZM
-From: Utkarsh Verma <uverma@linux.ibm.com>
-In-Reply-To: <242e1462-9256-b115-e68c-f20aeb25dda4@eik.bme.hu>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA4MDAzNiBTYWx0ZWRfXwYNYtNqOYGIL
- FrxRNpAYRuN+iPQzoJE1rW5WcSwNiUucxXGsnVz6s3deHrP9EVdJm3KLyuGNLjEKaTv4/Cqryq1
- K3NnRUalHFpJ2iBVyRn9lg4eiyBcxew=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA4MDAzNiBTYWx0ZWRfXx1e7H4+McQRw
- 55SBFWQEAKfYDXvgRY2vdgEf2en2F+afnFOIAxdYhNm/OCbfzut1Wk9/FVd2FgDZxdmWry3PD1a
- ii/om737+/7oV7SFBXju8Uwsj9ZFOOiZ+E3waqiH1KU+S5h6yDaY7hw0aG7yqqVJ00soWSBfgNd
- AWQO56f8BIe72jmP2py7Izw0jv5BiyzdMW2XZNAx/3l3/VZG7OAfD42mw9033NPJfEuprXA+t+p
- NkiAWUtYMweW/ljagDXVb+IpXXal53orGM5h9B6UmlbeFiMvEQEHeKWkE+ATspR8Jynt5k/pT3J
- u0QgsWWs2JYT1ofP+elZ9KJZ6dzaoRVbUWjpNLK5/nHGZ5kJs567A+WHhECtPlQHjEMnMTVe0eI
- ev3/q2pHNvwZ2MSj4xfA/awizS3XZ1adBNl6eHy6oINPKT+B0TGpcY2etSYs5ANG+iQpil+Vg7n
- oqq8B7NfTB/Zia7mp/w==
-X-Proofpoint-GUID: tjob6OficFRjOQ1YvuRWgwScodPRbrOR
-X-Proofpoint-ORIG-GUID: fAoWLfM_xN6KXjOabPPFxVEdYU_kmJ5U
-X-Authority-Analysis: v=2.4 cv=XcwcX455 c=1 sm=1 tr=0 ts=6ac76185 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VnNF1IyMAAAA:8
- a=zJ53bHn-92egte3Qg2oA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-10-08_03,2026-10-06_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 lowpriorityscore=0 priorityscore=1501 phishscore=0
- malwarescore=0 bulkscore=0 adultscore=0 spamscore=0 suspectscore=0
- impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610020000
- definitions=main-2610080036
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=uverma@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <b2d89a92-0197-4873-b4ea-75bb21c0d0ae@oss.qualcomm.com>
+User-Agent: Mutt/2.4.2 (2026-08-30)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 10
+X-Spam_score: 1.0
+X-Spam_bar: +
+X-Spam_report: (1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -129,33 +105,199 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Wed, Oct 07, 2026 at 05:00:06PM -0700, Pierrick Bouvier wrote:
+> On 10/7/2026 2:42 PM, Yonggang Luo wrote:
+> > On Thu, Oct 8, 2026 at 4:44 AM Pierrick Bouvier
+> > <pierrick.bouvier@oss.qualcomm.com> wrote:
+> >>
+> >> On 10/7/2026 4:48 AM, Yonggang Luo wrote:
+> >>> Change TypeInfo.is_available to the new TypeIsAvailable type, which
+> >>> takes a const TargetInfo *. Registration passes target_info(), so
+> >>> behavior is unchanged. object.h only forward-declares TargetInfo.
+> >>>
+> >>> Switch the existing users (raspi, raspi4b, ast27x0 evb and fc) and the
+> >>> generated machine parents to the matching target_is_<arch> helpers.
+> >>>
+> >>> Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
+> >>> ---
+> >>>  hw/arm/aspeed_ast27x0-fc.c  |  2 +-
+> >>>  hw/arm/aspeed_ast27x0_evb.c |  4 ++--
+> >>>  hw/arm/raspi.c              |  4 ++--
+> >>>  hw/arm/raspi4b.c            |  2 +-
+> >>>  hw/arm/virt.c               |  4 ++--
+> >>>  hw/m68k/virt.c              |  4 ++--
+> >>>  hw/or1k/virt.c              |  2 +-
+> >>>  include/qom/object.h        | 12 +++++++++++-
+> >>>  qom/object.c                |  3 ++-
+> >>>  9 files changed, 24 insertions(+), 13 deletions(-)
 
+snip
 
-On 10/8/26 12:01 AM, BALATON Zoltan wrote:
-> On Fri, 2 Oct 2026, uverma@linux.ibm.com wrote:
->> From: Utkarsh Verma <uverma@linux.ibm.com>
->>
->> GRUB (grub-core/disk/ieee1275/ofdisk.c) calls "vscsi-report-luns" on
->> any PAPR virtual SCSI controller ihandle to enumerate attached LUNs
->> before attempting to boot from disk. Without this method VOF returns
->> PROM_ERROR and GRUB cannot find vSCSI disks.
->>
->> Add vof_vscsi_report_luns() to build the LUN response table in guest
->> memory and wire it into vof_call_method().
+> >>> @@ -167,7 +168,7 @@ static TypeImpl *type_register_internal(const TypeInfo *info)
+> >>>          abort();
+> >>>      }
+> >>>
+> >>> -    if (info->is_available && !info->is_available()) {
+> >>> +    if (info->is_available && !info->is_available(target_info())) {
+> >>>          return NULL;
+> >>>      }
+> >>>
+> >>
+> >> ```
+> >> info->is_available(target_info())
+> >> ```
+> >>
+> >> or
+> >>
+> >> ```
+> >> is_available() {
+> >>   TargetInfo ti * = target_info();
+> >>   ...
+> >> }
+> >> ```
+> >>
+> >> Are doing the exact same thing today.
+> >>
+> >> So what is the future goal requiring to introduce this?
+> > 
+> > From Daniel P. Berrangé's
+> > requesthttps://lore.kernel.org/qemu-devel/apAszS1ewxM0Y1XU@redhat.com/
+> >         I forgot to mention that this is also pretty important for making
+> >         introspection work, as we need to be able to say
+> > 
+> >           'qemu-system --machine none -qmp ...'
+> > 
+> >         and connect to QMP to introspect the binary. Having to add a
+> >         '--target <name>' into that mix is undesirable, as it creates
+> >         a chicken & egg problem. You don't know what targets are built
+> >         into qemu-system without introspecting it and you can't
+> >         introspect it without selecting a target to introspect.
+> > 
+> > From Pierrick's review
+> > https://lore.kernel.org/qemu-devel/557262df-b8e7-49b5-a245-ae46b8885b30@oss.qualcomm.com/So,
+> > for existing binary: -M virt works as before.
+> > 
+> >         For new multi binary:
+> >         $ qemu-system -M virt:
+> >         Multiple machines were found, select one among:
+> >         - aarch64-virt
+> >         - riscv64-virt
+> > 
+> >         Does it matches what you would expect?
+> > 
+> > From Daniel's review
+> > https://lore.kernel.org/qemu-devel/aro93NuZBXYGbD33@redhat.com/
+> >         We already have  'QemuTargetInfo' struct which is used
+> >         with 'query-target', that should also be used with the
+> >         new 'query-targets' command.
+> > 
+> >         We need to add the 'endianness' field to QemuTargetInfo.
+> > 
+> >         I don't think that we need to report machines though.
+> >         We already have 'query-machines' which gives much broader
+> >         information on the machines. "MachineInfo" needs to
+> >         gain
+> > 
+> >         "targets": ["SysEmuTarget"]
+> > 
+> >         to list which target(s) a machine can be used with.
+> > 
+> > 
+> > To achieve these, we needs add TypeInfo parameter to it so that we can do
+> > 
+> > static void report_unsupported_machine_type(const char *name, Error **errp)
+> > {
+> >     g_autoptr(GSList) machines = machine_class_get_list(true);
+> >     g_autoptr(GString) targets = g_string_new(NULL);
+> >     TargetInfoNode *node;
+> >     GSList *el;
+> > 
+> >     error_setg(errp, "unsupported machine type: \"%s\" for target \"%s\"",
+> >                name, target_name());
+> >     QLIST_FOREACH(node, target_info_list(), next) {
+> >         for (el = machines; el; el = el->next) {
+> >             MachineClass *mc = el->data;
+> > 
+> >             if ((!strcmp(mc->name, name) || !g_strcmp0(mc->alias, name)) &&
+> >                 object_class_get_is_available(OBJECT_CLASS(mc))(node->info)) {
+> >                 g_string_append_printf(targets, "  %s\n",
+> >                                        node->info->target_name);
+> >                 break;
+> >             }
+> >         }
+> >     }
+> >     if (targets->len) {
+> >         error_append_hint(errp, "Available for targets:\n%s", targets->str);
+> >     }
+> > }
+> > 
+> > That is we can iterate on all target-list, and check if it's can be fitlered.
+> >
 > 
-> These should go to spapr_vof.c too as they are spapr specific.
+> Ok, I finally see where this is going.
 > 
-> Regards,
-> BALATON Zoltan
-> 
-Sure, will move all this implementation to spapr_vof.c and just add a 
-vscsi_report_luns kind of callback function in VofMachineIfClass and 
-just call that hook from here.
+> So, based on all the previous conversations, we agreed to have a
+> qemu-system binary with all the QOM types available (for all targets).
 
-Regards,
-Utkarsh
+ack.
+
+> I personally think that if we go this way, we should not have any
+> -target option, and even less a -target none option.
+
+If we don't have a compelling need for -target to exist now, then
+dropping it as a concept is good.
+
+> The current is_available() approach was made with filtering per target
+> in mind, which predates where things are now. So, it's a good time to
+> reevaluate how to do it.
+> 
+> This leaves us with (at least) two options:
+> - keep the callback and add TargetInfo parameter (what is done here)
+> - remove is_available, and adopt a more declarative approach
+> 
+> How about we (re)-explore the second one?
+> 
+> It's what we did in the past
+> (https://gitlab.com/qemu-project/qemu/-/commit/5de9216064d32eaac125dac4de1878486c16d73e),
+> and that I removed recently, in favor of is_available.
+> My rationale was that it was incomplete, since we needed to filter types
+> per config also, and not only target.
+> Now that direction is to not filter anything, filter per config is
+> unneeded, and switching back to declarative instead of callback makes
+> total sense. Using interfaces like we did has its own issues, and I
+> would not like to see this coming back.
+> 
+> I'll do one very concrete proposal:
+> 
+> ```
+> How about letting machines (and machines only first), have a new field
+> 'targets', being a uint32_t mask with an array of EMU_TARGET?
+> machine->targets = EMU_TARGET_X | EMU_TARGET_Y;
+> ```
+> 
+> @Daniel, IIUC, this is exactly the approach you proposed a few weeks
+> ago, just before I got frustrated and lost my patience against you. I
+> think it's more clear for me where you wanted to go. Sorry it took such
+> a large detour.
+
+Not a problem. We were coming at the debate with different ideas of
+where we were heading, so talking past each other at times.
+
+> 
+> Yonggang, does that sounds good for you?
+> Daniel, does that sounds good for you also?
+
+Works for me.
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
 
