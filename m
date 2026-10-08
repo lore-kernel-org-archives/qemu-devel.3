@@ -4,108 +4,142 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2283FCA6017
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Oct 2026 22:04:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32D08CA6017
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Oct 2026 22:27:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xEwDi-0000wD-Vf; Thu, 08 Oct 2026 18:04:20 -0400
+	id 1xEwZv-00055m-6g; Thu, 08 Oct 2026 18:27:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <walling@linux.ibm.com>)
- id 1xEwCV-0000s3-GP; Thu, 08 Oct 2026 18:03:00 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xEwZa-00054x-L9
+ for qemu-devel@nongnu.org; Thu, 08 Oct 2026 18:26:46 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <walling@linux.ibm.com>)
- id 1xEwCT-0006CF-Qm; Thu, 08 Oct 2026 18:02:55 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 698L5Oq3636173; Thu, 8 Oct 2026 22:02:33 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=pp1; bh=lu/nMzN8zlMetl7tvY6DCtneAx9q9oHyOnTJebEJI
- 48=; b=ScBYmHOm4OYgKlS9ESIW8y7zaIag/W0klWeSOWrTv+YCSU/WSwtOj8pFP
- QeqhZ9cspl/S7mjGUhPIEgoxZkQvA0o/WxmFrAxCzzfQeqmD+cQhRCJ+/mdmvcXa
- nVBlZne6kj0fSeC8yvJEaFMo1Y4lST+8gAhF+bbzd1ZIKYvUqxx+3rhQ0dWQ7P2m
- 1QjyJRfdQIqIcY9hjDBTgYN0UY7YiEhCfbNsIgq5xoU5+srFoa9CIyUIsbH+sXNF
- T+v/Vl5NTebkgDacEm3w1IlZfk0p48c1eDolr27t82zKFcrk/AGDY0PuqSK8L9CU
- QCcCI49sb3DeZJeYsYSSp5dZ1dg3A==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4h5xjw6vmy-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Thu, 08 Oct 2026 22:02:33 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 698L2Xqj4079100; Thu, 8 Oct 2026 22:02:32 GMT
-Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4h6hsngcts-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 08 Oct 2026 22:02:32 +0000 (GMT)
-Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
- [10.39.53.231])
- by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 698M2V3Y33817300
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 8 Oct 2026 22:02:31 GMT
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 64CE958052;
- Thu,  8 Oct 2026 22:02:31 +0000 (GMT)
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 6104C58045;
- Thu,  8 Oct 2026 22:02:30 +0000 (GMT)
-Received: from li-d664314c-3171-11b2-a85c-fa8047ef35bd.ibm.com.com (unknown
- [9.67.122.67]) by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Thu,  8 Oct 2026 22:02:30 +0000 (GMT)
-From: Collin Walling <walling@linux.ibm.com>
-To: qemu-devel@nongnu.org, qemu-s390x@nongnu.org
-Cc: Hendrik Brueckner <brueckner@linux.ibm.com>,
- David Hildenbrand <david@kernel.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>,
- Cornelia Huck <cohuck@redhat.com>, Eric Farman <farman@linux.ibm.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>
-Subject: [PATCH v1 0/2] s390: mark features that depend on deprecated features
- as deprecated
-Date: Thu,  8 Oct 2026 17:59:54 -0400
-Message-ID: <20261008215956.164881-1-walling@linux.ibm.com>
-X-Mailer: git-send-email 2.55.0
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xEwZX-0008Rr-As
+ for qemu-devel@nongnu.org; Thu, 08 Oct 2026 18:26:44 -0400
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 698L0DVm296644
+ for <qemu-devel@nongnu.org>; Thu, 8 Oct 2026 22:26:41 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ CVv8aMWcBfVexbcRUO23u+KIrFbU4urij+3AwRHx26k=; b=SusZVY8uPMm0UZ+Y
+ 0UTm0VjgjmgaJKwdxM8TqVnw0MdqCN/Ss4zz5NrWoMUfmwRW+wo6hgn79Wtx7cQy
+ V+G5QI2olV6GsJhOIFT4HC3tYexSxEt8K3mVcq0zg5XofShJdFJUi7R+/Op/6doL
+ JOr02eo4W/hCuFJjzW1cISMAD/YaafO4/ERuWQGxf06oD+CR+Oed2tcMbU459vrh
+ FzFhxEC+yfrhZF3uoV4hdAYYYEYPZ6OZx8cd+iJ6JkwLpOiyRplerR3bDDN/asiE
+ X6TRB6Xg1pFGg8/m1G96wxNjnLZSjMom3+lZNIcPk+4fEzw7Xd9b3n6leLhj3nJS
+ eKH04Q==
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h6ekv96r5-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 08 Oct 2026 22:26:41 +0000 (GMT)
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-93e834ff4d0so1119638185a.3
+ for <qemu-devel@nongnu.org>; Thu, 08 Oct 2026 15:26:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1791498401; x=1792103201; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=CVv8aMWcBfVexbcRUO23u+KIrFbU4urij+3AwRHx26k=;
+ b=Zvjj9CiD4vJ3AttYQzWHxAre5Ob0iuzIBnZrkqVbsErTo9rdusDaacX/8VcAbEPmRD
+ aiqSn+JG+sTWft2zsbzhpfjCbQ30h7AgqaxYiNKikncjW1DPuj5HQG8urcKRGn+sEPqT
+ 0swI+lABeFDzj5WpccoTPE8/c1p2pMxXmutpwlvcdVnmEOHfaD99AyCRkUvmFOuag7vV
+ k3jp0x7lyiNo2GCWR2Bg9EtqBY++mg71AefIN0dlionww/9YmWWu8IHxyprPICtOdoPU
+ pnVG1luWLCPYTQyhik1svvLqplODRSpKt5y0s2jfLhZX1Jw18L2md1Dj1M/1BB37l7Ja
+ GE2A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1791498401; x=1792103201;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=CVv8aMWcBfVexbcRUO23u+KIrFbU4urij+3AwRHx26k=;
+ b=zxpxZCB0iHNd2rqjo/n+ikyOGc90qkuxkPePieqqi/BoQXsX39MiraVV5phkp/UTiC
+ 9Yn44du5+7CvUVItoe9MCEuysW2HdVp1TUWXv0VNObAoBSksyK1UvaydD7dyqudp95sq
+ jkEMXQ/yHzb06cd4ulv9dPLbJY9bPkrd3D4nBjsDp5g7kBRF8qQK+LGOQpWqiqMSdxoe
+ ValwPDhhdKdq4RZT60gVx8opCmg3PWY1rYlQbu2ahqHSvKk16g1Zqi5cjd0JR9qRcz/Y
+ 7aHkTtkyw2aMdXaFOwsrgdDCt60ehO3+jYpPxgbM+/Wgo2HJR5Ul1qwiP6+HyNe+bYvf
+ KN6w==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBzZ7bQcLOfSuqaDgNIIpt/kEdu1hQhW2La3g20oe22J6P2wwXJdPZ3VF3/v/5xQtqNdM0DHpimUALre@nongnu.org
+X-Gm-Message-State: AFuF++ncwn1ARoA6EyebZUr9eqYydemYupD8jAB/URqLQStciEISDyIF
+ TYB+HjwWpgVerb+UgFaD3xatsQoTbOm+kxS0twL9zfx6UwHhTSa1xy+amskV0+GN6TCf/M+uS9D
+ IUnsbKJiFwQnUtGxZeQva90XIP0ROjUnwHUKe7Cj1s+EcaqBgoLHk7sygTQ==
+X-Gm-Gg: AYBFou32CRq2T8pW+0LLVCEHf9CYNfWy03W747+sL+xW0vzvYQTOukoYEFS1IVvgICX
+ mnyY51gQGMOAQjGWlYUl0Kr7kzs2oFq7KO3ZrijeIZDP57oPMuDjsmpRm/uj3HXnBGySeGl3vJ5
+ V2+4nP/D9plVS1stwI/qep1oYOOcTrsTZfQJ/be2cm6EQhFNKuRgOspT74vcvk84Df+RIXFACxr
+ bklZbUxzSVmmy0r6anjVlQ5ToLhSYLymG8kvDfYocKDz8GiWYDCJMQxvBqEPVAm1NHRHpGwpMgE
+ C1Xb4w+G6CBHe6iLX+ZifLOTTFEEU6kcYetq4jA3cw2x3+bL34gYVBdeyAN8SMx6VL9Ki9f9Gdq
+ Qxo3uzI1JAfYarIJJQnwGdE18cfSvSM3ApA==
+X-Received: by 2002:a05:620a:6405:b0:93d:e031:5ad with SMTP id
+ af79cd13be357-93ebd224911mr5203585a.17.1791498400701; 
+ Thu, 08 Oct 2026 15:26:40 -0700 (PDT)
+X-Received: by 2002:a05:620a:6405:b0:93d:e031:5ad with SMTP id
+ af79cd13be357-93ebd224911mr5200685a.17.1791498400253; 
+ Thu, 08 Oct 2026 15:26:40 -0700 (PDT)
+Received: from [192.168.69.210] (pmd666.hd.free.fr. [88.187.86.199])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4a18bf15691sm11112045e9.6.2026.10.08.15.26.39
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 08 Oct 2026 15:26:39 -0700 (PDT)
+Message-ID: <471263fb-bb06-47f6-83a9-764e603a7a68@oss.qualcomm.com>
+Date: Fri, 9 Oct 2026 00:26:38 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: asqkA2YS3sIQYT3eMI12ITZ2ypCc5bxt
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA4MDA4NiBTYWx0ZWRfXy4LJQbVjzAdD
- RSPgwExy2LwLFiJReaAlVXppjc0+uGvbpFiTUnknXj62vTGuM0yFYqUezdojd7AqukNfeznJyoZ
- sAI4ZREf0wsydrqRhptgqhN0NZD4mlCrgZywV1IcPCSrwijSb1+EDGTbhz5p5CNS9PeD5lp2SoM
- rJIoKyEUGcOCsjC25gTNhRb74fxVOEPHp4cxNcdForWMplE3DuPeXNpsnOlFYJ3agiKAJdomKZS
- BR/eANliqYB4ZHqFkbEY4xa1YEXQfg8fmK+fnD/ecaPy2bOsZQDjGtAQj2AlTq7jHQEjw1EZcVB
- d+ldOue+1/c81nLCKWaW1YOHxRYUjWIuUPCol0+BU2JPeh0CIvAqHgpXNf0EQux+vKr1YiWi/SX
- 8KaoYh2EgtcZZ0b8fUsNVVy7zEXl2aw+F48J2VgqwcTH/er2xdWynIO7NGu0APZVxkQMC5LQ0/q
- izm58hKk0zI29Mi7/HQ==
-X-Authority-Analysis: v=2.4 cv=cIt1IVeN c=1 sm=1 tr=0 ts=6ac812f9 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=uAbxVGIbfxUO_5tXvNgY:22 a=Yii7PyyUOqtlikobaqoA:9
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA4MDA4NiBTYWx0ZWRfXx1ZicKgLMcK2
- XxxewFdwt33CsLu38aeV25+1rPkMuY3PvRE82XBofeUPiEkHVpc64ttxbUBXHSMzq8IW6PIfTVd
- j4/h0xN0yOaB/YDXC0AYg2oF8Mpk0W4=
-X-Proofpoint-ORIG-GUID: asqkA2YS3sIQYT3eMI12ITZ2ypCc5bxt
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/4] target/hexagon: pass the packet PC to lock
+ implementations
+Content-Language: en-US
+To: Brian Cain <brian.cain@oss.qualcomm.com>, qemu-devel@nongnu.org
+Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ ltaylorsimpson@gmail.com
+References: <20261008211005.1853542-1-brian.cain@oss.qualcomm.com>
+ <20261008211005.1853542-2-brian.cain@oss.qualcomm.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <20261008211005.1853542-2-brian.cain@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-ORIG-GUID: X9_C03uNBMTlMAftLXpo4s34S-FReXdk
+X-Authority-Analysis: v=2.4 cv=csYOAF4i c=1 sm=1 tr=0 ts=6ac818a1 cx=c_pps
+ a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
+ a=EUspDBNiAAAA:8 a=YLznLUdcFbrBv5XlK9kA:9 a=QEXdDO2ut3YA:10
+ a=PEH46H7Ffwr30OY-TuGO:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA4MDA4OSBTYWx0ZWRfX74uvwgjjLSJN
+ IsLzbeCxQPTTICQ+fhVq8BQC+mT4NQ8XkOiomkTIWPlAl9/JIVFWaJOZ/YdKHoKw1CrHbsnus1W
+ 9m0C8VmQF4j1bx4d6YQEahvG/i23sY5ck/jnodkQo8QE/YNAt/JP5aS0wmU2AY+Cs5q52QXPBdt
+ 85AnVu/0O+KmwBOJsUV2Gj8qUsn/tJJWh4C3BVqx9wmUYFbBxYqsZQ1aX+W9OOHqKaPmHdb6gxM
+ tMxZq799in2uymfqIxL0yKbrJ5g+z5F366zxgYltTz7OBQEtRNXS9Vhd//ENUV987ZEbJpKPALX
+ mQyxeJXSmYRtaeoWrscJNPhcN3l63A1xT7HrX5BslSdo6WrgU9TFIAuRKSnaCxegpwFAjUkO0j9
+ +82u3bZ64iihZYzejJa6O4fQotYU2n7NxK+fXY+oVBJdavIBKA+nNk8g81jzaaji/fxSL34gSBD
+ vlKnFMwryA56hQPt8sg==
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA4MDA4OSBTYWx0ZWRfXya1Kl3Eenzo6
+ oGViwJD64lhuJuMlGJXsN39v2a3XSpqD1mhqU5FqFBisoEWd/aG+aY4U8H4oRdSZ4Nya2zk4+DR
+ QsQILsU+fyous5vvV++ETN8EPKYfqJA=
+X-Proofpoint-GUID: X9_C03uNBMTlMAftLXpo4s34S-FReXdk
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-10-08_07,2026-10-08_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1011 malwarescore=0 priorityscore=1501 adultscore=0 impostorscore=0
- lowpriorityscore=0 suspectscore=0 spamscore=0 phishscore=0 bulkscore=0
+ impostorscore=0 spamscore=0 clxscore=1015 priorityscore=1501 suspectscore=0
+ lowpriorityscore=0 adultscore=0 phishscore=0 bulkscore=0 malwarescore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610020000 definitions=main-2610080086
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=walling@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+ reason=mlx scancount=1 engine=8.22.0-2610020000 definitions=main-2610080089
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -122,60 +156,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When the CPU model deprecated-features work was completed in QEMU, features that
-have a dependency on a deprecated feature were not themselves marked deprecated.
-This patch series corrects that oversight.
+Hi Brian,
 
-Specifically, ineff_nc_tx depends on te, which has been deprecated. When a user
-starts a VM with deprecated features disabled, QEMU currently emits:
+On 8/10/26 23:10, Brian Cain wrote:
+> Hand the k0lock/tlblock lock implementation functions the packet PC as a
+> constant instead of relying on next_PC's opcode-dependent staging.
+> 
+> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+> ---
+>   target/hexagon/hex_mmu.h    |  2 +-
+>   target/hexagon/sys_macros.h |  4 ++--
+>   target/hexagon/hex_mmu.c    | 16 +++++++++-------
+>   target/hexagon/op_helper.c  | 16 +++++++++-------
+>   4 files changed, 21 insertions(+), 17 deletions(-)
+> 
 
-    warning: 'ineff_nc_tx' requires 'te'
+> -extern void hex_tlb_lock(CPUHexagonState *env);
+> +extern void hex_tlb_lock(CPUHexagonState *env, target_ulong PC);
 
-In most cases this is only a warning, but it can also cause the VM to fail to
-start entirely. One observed instance is virt-install aborting due to this warning.
+> -void hex_tlb_lock(CPUHexagonState *env)
+> +void hex_tlb_lock(CPUHexagonState *env, target_ulong PC)
 
-With these patches, query-cpu-model-expansion includes ineff_nc_tx in the
-deprecated-props array alongside the other deprecated features:
+> -static void hex_k0_lock(CPUHexagonState *env)
+> +static void hex_k0_lock(CPUHexagonState *env, target_ulong PC)
 
-{
-  "return": {
-    "deprecated-props": [
-      "ineff_nc_tx",
-      "bpb",
-      "te",
-      "cte",
-      "csske"
-    ],
-    "model": {
-      "name": "gen17a-base",
-      "props": { ... }
-    }
-  }
-}
+Please do not re-introduce more target_ulong uses.
 
-libvirt uses this response to determine which features to disable when the
-deprecated_features=on|off attribute is set. With these patches, ineff_nc_tx
-will be disabled along with the other deprecated features. The result can be
-verified with virsh domcapabilities:
-
-$ virsh domcapabilities --disable-deprecated-features \
-    --xpath "/domainCapabilities/cpu/mode[@name='host-model']/feature[@policy='disable']"
-<feature policy="disable" name="bpb"/>
-<feature policy="disable" name="csske"/>
-<feature policy="disable" name="cte"/>
-<feature policy="disable" name="ineff_nc_tx"/>
-<feature policy="disable" name="te"/>
-
-Collin L. Walling (2):
-  target/s390x: externalize feat dependency array
-  target/s390x: mark feats dependent on deprecated feats as deprecated
-
- target/s390x/cpu_features.c | 137 +++++++++++++++++++++++++++++++++++-
- target/s390x/cpu_features.h |   4 ++
- target/s390x/cpu_models.c   | 133 ++--------------------------------
- 3 files changed, 145 insertions(+), 129 deletions(-)
-
--- 
-2.55.0
-
+@next_PC was converted from target_ulong to uint32_t in commit
+613653e500c ("Hexagon Remove next_PC from runtime state").
 
