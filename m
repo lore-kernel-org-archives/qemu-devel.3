@@ -4,108 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C35CCCA6011
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Oct 2026 17:25:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 783BBCA600D
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Oct 2026 18:03:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xErra-00011U-RO; Thu, 08 Oct 2026 13:25:02 -0400
+	id 1xEsRo-0004Ye-AR; Thu, 08 Oct 2026 14:02:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andy0x48@linux.ibm.com>)
- id 1xEqIx-00073j-0E; Thu, 08 Oct 2026 11:45:11 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andy0x48@linux.ibm.com>)
- id 1xEqIv-00023c-CH; Thu, 08 Oct 2026 11:45:10 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 698EZNpg1578199; Thu, 8 Oct 2026 15:45:02 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=pp1; bh=AULcUfuSy1hdbWKBZZlH7SIOAgQxL90v7S4mEM2SC
- k0=; b=KKNkPkYGPoKltgdfMMiZmp2rRJ9dVAmVf/N8UkQpCecph6ZIewnLuHOd9
- sWBu6QIvxKpzCVJdbn7+D6FKRSqTSJNGEW3rvKB+u1Ee9OPGd0WGafN/wta3b7GE
- EBjuVrvP15yMiXik5UMLi5pezeckl7m+kVMCgtx5W8Hgc2tm/8NkGhgDsY91Xw2o
- eqIlJYoxl1G5ZCJ6821n50DNMmdKU9/jbDn+/atnnohlrB5sdbj7/cp2sDLwnclE
- ZIb/0CnDvnB/jVUbO1j8P8TT1OHPP8lb7sJ8TPm3RMAuLDFnC81fejU/aZas37aR
- PDFqQ9uYxcDJIBT/hwrT6SfZEY3EQ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4h5xjvcsfv-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Thu, 08 Oct 2026 15:45:02 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 698EXfJs3632381; Thu, 8 Oct 2026 15:45:01 GMT
-Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4h5a6dqs2w-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 08 Oct 2026 15:45:01 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
- [10.20.54.105])
- by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 698FiwF654460892
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 8 Oct 2026 15:44:58 GMT
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0BAD720049;
- Thu,  8 Oct 2026 15:44:58 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 52D802004B;
- Thu,  8 Oct 2026 15:44:57 +0000 (GMT)
-Received: from li-4c4c4544-0051-4610-8046-b1c04f514634.ibm.com (unknown
- [9.111.72.43]) by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Thu,  8 Oct 2026 15:44:57 +0000 (GMT)
-From: Andrew Holden <andy0x48@linux.ibm.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-s390x@nongnu.org, iii@linux.ibm.com, richard.henderson@linaro.org,
- david@kernel.org, cohuck@redhat.com, freude@linux.ibm.com,
- Andrew Holden <andy0x48@linux.ibm.com>
-Subject: [PATCH] target/s390x/tcg: fix register update on guest memory fault
- in cpacf_aes_ecb
-Date: Thu,  8 Oct 2026 16:44:55 +0100
-Message-ID: <20261008154455.369004-1-andy0x48@linux.ibm.com>
-X-Mailer: git-send-email 2.56.0
+ (Exim 4.90_1) (envelope-from <fuad.tabba@linux.dev>)
+ id 1xEsRm-0004Y7-Bc
+ for qemu-devel@nongnu.org; Thu, 08 Oct 2026 14:02:26 -0400
+Received: from out-233.mta0.migadu.com ([2001:41d0:1004:224b::e9]
+ helo=mta0.migadu.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <fuad.tabba@linux.dev>)
+ id 1xEsRk-00080v-FA
+ for qemu-devel@nongnu.org; Thu, 08 Oct 2026 14:02:26 -0400
+X-Envelope-To: qemu-devel@nongnu.org
+DKIM-Signature: a=rsa-sha256; bh=jU6GDQ0fJbLuacS3jddnGX6Gx21ZsLiy/RhDp+9bc88=; 
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1791482540; v=1; x=1792087340;
+ b=fZXWQdjw76bpfbAjHBsLkArGgU2omfEdH+dh9SqSxZyV1XUL473WnQgvspa1H8CeqYzNTpQ3
+ X+rwHTiw8IS246BJQYCe6RWLPCzvyZ7H1F1epV+5+XeK20vtgNoXOfZX00JT4jTVSYMnNzANfvI
+ gKEebU1BviXWNf/gETE33lB8=
+X-Envelope-To: qemu-devel@nongnu.org
+Received: by smtp.migadu.com with ESMTPS id fb66060a02026bdd;
+ Thu, 08 Oct 2026 18:02:19 +0000
+X-Mizu-Trace-ID: fb66060a02026bdd
+X-Migadu-Flow: FLOW_OUT
+Received: by mail-lf1-f52.google.com with SMTP id
+ 2adb3069b0e04-5ba429b64c5so1065e87.1
+ for <qemu-devel@nongnu.org>; Thu, 08 Oct 2026 11:02:18 -0700 (PDT)
+X-Forwarded-Encrypted: i=1;
+ AKwUvBwiN1AI7OmQN1qmRmJt0/vLRcwYrKzyoG+3i4WiLPmXqV36omaOOpszN/Hl+FcM+WZdNP4VsHXgLNgL@nongnu.org
+X-Gm-Message-State: AFq9FYJUWEkOUEqqqAWaIPxL/ee67yzXi/ZGhE6ipsNJ3jjx5EF9Mvez
+ KypXOuNJgNK0zxJ3p7OW63zJvTGpxE8eE1/IsooUVlyH8hQEeXvk6OWVEHmRkg1HgBiOVTSH+27
+ DpU2F/UkqpYgTYn2NjBrI7ppvfbQOHtNX1PGA8hrH
+X-Received: by 2002:a05:6512:3e0d:b0:5bb:27df:415f with SMTP id
+ 2adb3069b0e04-5bcd58a00b2mr166665e87.15.1791482537918; Thu, 08 Oct 2026
+ 11:02:17 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: xt_wqZIJJLD8gWtF4r-KedNoq-L5e_Sz
-X-Proofpoint-ORIG-GUID: xt_wqZIJJLD8gWtF4r-KedNoq-L5e_Sz
-X-Authority-Analysis: v=2.4 cv=H8NOUOYi c=1 sm=1 tr=0 ts=6ac7ba7e cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8 a=r6Tt9g7xu0lz_p5kHnAA:9
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA4MDA2MiBTYWx0ZWRfX45sj1B/0Rgpw
- QPXRicdMf5FHk/lETRsC5+gJP6nphXZnnrESOhczsuWU5sGf4AIW2sZLi4cDaaKsWObapOCBP6o
- Za3ncxJF4Oi+R0uY4+jk1odcqt0ojjMRo2TcC/bYzZBXrMgNQAH7pI8gWuYPVWwlGDpTVg4VfNn
- jkhlV5D50oSYzyLuIniw365fK1dqbuAUvLuJyTwsqTPKqO8DH4Q3FFl2ymd62j+FDyxByqoEoGU
- iHEd7M5kzNuUHyavkFBeCqnM3fSNZ4GuFIy+Mo/4HejpPyHHY+I7Sw1VdzTMAdIqzsxJv7wHq8M
- YZSb37Jzq9g+lhd5j4GDPANeFIVY8CQoA58jM5NVmjzFIGG19bsYOihXGHA169ZjhvbRJpPQBVE
- zfzpoF3ugcsPRLOfUUvdSw1hWSDR5PxFSir7c4nkcKHme+9UNSg67L0eUg8nUobQeQMe53OHabK
- 4n628sVLfrrevXvo4rg==
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA4MDA2MiBTYWx0ZWRfX5fzkAOTdSUA2
- yiOLiyCeFOS6sWmPZLBFf7q6pxxvF3Tl+jD0MyDM4/1yxjS6QzLZfUJLXardjwcnhV0tXiKJ5Y4
- xoIkzTufdmoHTGuRjJK32HdJDc+oWBw=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-10-08_05,2026-10-08_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 adultscore=0 phishscore=0 lowpriorityscore=0 impostorscore=0
- clxscore=1011 spamscore=0 priorityscore=1501 malwarescore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610020000 definitions=main-2610080062
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=andy0x48@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+References: <20261007080019.350315-1-fuad.tabba@linux.dev>
+ <20261007080019.350315-4-fuad.tabba@linux.dev>
+ <4ajscli4c4ef7agtizxzdiopjseck5qwa6s4n4mmwwjdrqlnby@xit5l76dxm2w>
+ <CA+EHjTxsC8K1Bw6fAMs6APaqVDpup8192dCeJs+vfeh2fN+6Aw@mail.gmail.com>
+ <3dqmrslvb3zrr3ndzmcmy2tv5vqovntordzdjqkp2vn2deklua@qkcedhe4owgv>
+In-Reply-To: <3dqmrslvb3zrr3ndzmcmy2tv5vqovntordzdjqkp2vn2deklua@qkcedhe4owgv>
+From: Fuad Tabba <fuad.tabba@linux.dev>
+Date: Thu, 8 Oct 2026 19:01:41 +0100
+X-Gmail-Original-Message-ID: <CA+EHjTwnpaFRFEzT8N34=t6JzKn+x=a6GUqa1U6vH2e+vW6C8g@mail.gmail.com>
+X-Gm-Features: AclHuK8yKj6g9Ofrj1aWGEVt6NjDny5SPHd9V97LWwmYXzLzRa1XNrjqqSOSOSk
+Message-ID: <CA+EHjTwnpaFRFEzT8N34=t6JzKn+x=a6GUqa1U6vH2e+vW6C8g@mail.gmail.com>
+Subject: Re: [PATCH v2 3/3] tests/tcg/aarch64: Add a test for the 52-bit TTBR
+ base address layout
+To: Gustavo Romero <gromero@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org, 
+ Richard Henderson <richard.henderson@linaro.org>, Will Deacon <will@kernel.org>,
+ Itaru Kitayama <itaru.kitayama@linux.dev>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2001:41d0:1004:224b::e9;
+ envelope-from=fuad.tabba@linux.dev; helo=mta0.migadu.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Thu, 08 Oct 2026 13:25:01 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -120,69 +88,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The KM instruction loop in cpacf_aes_ecb() updated the source pointer,
-destination pointer, and length registers only after the entire loop
-completed, using a 'done' accumulator. If a guest memory access fault
-fires mid-loop, siglongjmp unwinds the C stack before the register
-update is reached. The registers then reflect block 0 rather than the
-block being processed, causing the instruction to restart from the
-beginning on every fault. This results in quadratic reprocessing and
-violates the PoP requirement that registers reflect partial completion
-per block processed.
+Hi Gustavo,
 
-Fix this by updating the registers inside the loop body after each
-successfully processed block, and removing the 'done' accumulator.
+On Thu, 08 Oct 2026 17:40:27 +0100, Gustavo Romero <gromero@redhat.com> wrote:
+[...]
+> RAM_BASE is precisely defined as 1 << 30 because the way we link the tests based
+> on the memory layout defined in tests/tcg/aarch64/system/kernel.ld, right?
 
-Signed-off-by: Andrew Holden <andy0x48@linux.ibm.com>
----
- target/s390x/tcg/cpacf_aes.c | 18 ++++++++----------
- 1 file changed, 8 insertions(+), 10 deletions(-)
+Yes. The tables are static, so they're linked a few MB above RAM_BASE,
+inside the blocks both stages map at RAM_BASE (and stage 2 again at
+HIGH_IPA | RAM_BASE).
 
-diff --git a/target/s390x/tcg/cpacf_aes.c b/target/s390x/tcg/cpacf_aes.c
-index 92884c4120..41ebc57087 100644
---- a/target/s390x/tcg/cpacf_aes.c
-+++ b/target/s390x/tcg/cpacf_aes.c
-@@ -62,7 +62,7 @@ int cpacf_aes_ecb(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
- {
-     enum { MAX_BLOCKS_PER_RUN = 8192 / AES_BLOCK_SIZE };
-     uint8_t in[AES_BLOCK_SIZE], out[AES_BLOCK_SIZE];
--    uint64_t len = *src_len_reg, done = 0;
-+    uint64_t len = *src_len_reg;
-     int i, keysize, addr_reg_size;
-     uint8_t key[32];
-     AES_KEY exkey;
-@@ -116,23 +116,21 @@ int cpacf_aes_ecb(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
- 
-     /* process up to MAX_BLOCKS_PER_RUN aes blocks */
-     for (i = 0; i < MAX_BLOCKS_PER_RUN && len >= AES_BLOCK_SIZE; i++) {
--        aes_read_block(env, mmu_idx, ra, *src_ptr_reg + done, in);
-+        aes_read_block(env, mmu_idx, ra, *src_ptr_reg, in);
-         if (mod) {
-             AES_decrypt(in, out, &exkey);
-         } else {
-             AES_encrypt(in, out, &exkey);
-         }
--        aes_write_block(env, mmu_idx, ra, *dst_ptr_reg + done, out);
-+        aes_write_block(env, mmu_idx, ra, *dst_ptr_reg, out);
-+        *src_ptr_reg = deposit64(*src_ptr_reg, 0, addr_reg_size,
-+                                 *src_ptr_reg + AES_BLOCK_SIZE);
-+        *dst_ptr_reg = deposit64(*dst_ptr_reg, 0, addr_reg_size,
-+                                 *dst_ptr_reg + AES_BLOCK_SIZE);
-+        *src_len_reg -= AES_BLOCK_SIZE;
-         len -= AES_BLOCK_SIZE;
--        done += AES_BLOCK_SIZE;
-     }
- 
--    *src_ptr_reg = deposit64(*src_ptr_reg, 0, addr_reg_size,
--                             *src_ptr_reg + done);
--    *dst_ptr_reg = deposit64(*dst_ptr_reg, 0, addr_reg_size,
--                             *dst_ptr_reg + done);
--    *src_len_reg -= done;
--
-     return !len ? 0 : 3;
- }
- 
--- 
-2.56.0
+> That's the bit that also confused me, like, how Stage 2 entries:
+>
+> s2_l2[RAM_BASE >> 29] = RAM_BASE | S2_BLOCK;
+> s2_l2_high[RAM_BASE >> 29] = RAM_BASE | S2_BLOCK
+>
+> are taking us back to s1_l0. How s1_l0 ends up related to RAM_BASE :)
+>
+> Hence, I think it's worth mentioning that relationship also in this text. How
+> about something like:
+>
+> "RAM_BASE is chosen to match the memory layout defined in kernel.ld. As a
+> result, s1_l0 resides at an offset from RAM_BASE after linking."
+>
+> Wdyt?
 
+Agree. The stage 1 and VTCR.DS stage 2 mappings depend on it too, so
+I've put it on the RAM_BASE define for v3 rather than in that comment:
+
+        /*
+         * kernel.ld links the test at 1GB, so the tables below lie within the
+         * blocks mapped at RAM_BASE.
+         */
+        #define RAM_BASE    0x40000000UL
+
+Cheers,
+/fuad
 
