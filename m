@@ -4,95 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2CDDCA6009
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 23:28:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26856CA6002
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Oct 2026 00:01:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xEb3n-0004gj-42; Wed, 07 Oct 2026 19:28:31 -0400
+	id 1xEbYb-0008VK-C9; Wed, 07 Oct 2026 20:00:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xEb3j-0004gK-U5
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 19:28:29 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ id 1xEbYY-0008Uy-4X
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 20:00:18 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xEb3g-0001rI-4j
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 19:28:27 -0400
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+ id 1xEbYV-0005Dg-3n
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 20:00:17 -0400
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 697LtcVD1970919
- for <qemu-devel@nongnu.org>; Wed, 7 Oct 2026 23:28:22 GMT
+ 697M2UKw868109
+ for <qemu-devel@nongnu.org>; Thu, 8 Oct 2026 00:00:13 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 4iGpP1eqSrTJygk28lL0nxza/9rUyLn3v8Lar5FaX1g=; b=F7hc9VCkdx9xQq7u
- jIPETvPwLWUFShFqbb8C07wMhJJ1u+0Fb/E76m8A6/VGxRHBwvshofHF+Ar/j+Gf
- nuNu6PkLFArc37zhrqbdx0zrHe/yBbIjRdP34zzHwQIxeSImjB+nxF6okA/8zC/y
- xEcUCUN9Yzm8Sq6GPZ353s1pU6iRkzjQa5bunPzxvA0FA2hS/6DXs/vqx7X23kul
- 8k6Dpq5FI0crloOei9UnbxiE3A6jJ/n82l0NPnczpYsEFauBiw23OEgGL5Y7YWLU
- pIqiuyt1CW4+gP2mvuEJyvClCxwdKQbRz5T/1Tm+RH7q5aPvl8QILlVKO7iYJVDE
- j0UNrg==
-Received: from mail-dy1-f197.google.com (mail-dy1-f197.google.com
- [74.125.82.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h5xe688s6-1
+ vFAvB59rWae5boVLoincpVpKFZPDOupemCLENOZh+Co=; b=As8cvV8AwmwdjIeT
+ So9Uml8GfJl6lIcodPj1AOuBrsGD5e4tBrfihoVzNxwCbW+QlD2niL47rP/KOFCB
+ qJJpoyanVDb5eQAZv1v9Nsw/UlHzHl7scukUcNXbPv0E0FQoUoHhlpp7tX+2uG4Y
+ Vxhmn1YueI5l6U0w9TapfhsS3P4Rx71CrFltkGyhDFeTEb6epnw3s1NO+w5DUlLo
+ fhEEd+JPXoYKV3/2LaM+wJBx0W5NThGk3Rdm4lHHxDlFos1hV8ai6scQP9qYOAwC
+ 08dAW4dm4gZeyaJ7eDTcVzW9puccGzUse2ugAle4jgaM9/5p4dx7VE9v5ewTfwTM
+ lpJXVA==
+Received: from mail-dy1-f200.google.com (mail-dy1-f200.google.com
+ [74.125.82.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h5xe3gcg2-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 07 Oct 2026 23:28:22 +0000 (GMT)
-Received: by mail-dy1-f197.google.com with SMTP id
- 5a478bee46e88-3515d2fc5ebso4903691eec.1
- for <qemu-devel@nongnu.org>; Wed, 07 Oct 2026 16:28:22 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Thu, 08 Oct 2026 00:00:13 +0000 (GMT)
+Received: by mail-dy1-f200.google.com with SMTP id
+ 5a478bee46e88-3510562ef98so6150728eec.0
+ for <qemu-devel@nongnu.org>; Wed, 07 Oct 2026 17:00:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1791415701; x=1792020501; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1791417612; x=1792022412; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=4iGpP1eqSrTJygk28lL0nxza/9rUyLn3v8Lar5FaX1g=;
- b=TWlJ4ZJVsrC3n+VwgBfehIVlg5/8ykp+1t7/cPiMxlT2GFExRY3fE5VmI0yEb1qirN
- G0QZHOe6UA/GYPaGaH3d5Xt8FyeqFBVFhc1N8eAhrIc5PY0NIrvANXKRpDlZTQGykhJ6
- JklgHyRO7vVUs8rXuCtHt6YCBItTKrsPN7dUtYQpAW6RKVeGwnj2CO8w+tU1PyJJt0Zq
- xI2YiEtB7br1nQkGLg2ORFDISb11NTUVYig7s/aBKHwf///nL+b5KYfMq6jvDc05z/hX
- E+cBu0ascGKf4UaTHrrs/7sslQnPsGQz2WvcorqFnAxKfsq7p/X1AINdIiei3QVMkIMc
- XhMg==
+ bh=vFAvB59rWae5boVLoincpVpKFZPDOupemCLENOZh+Co=;
+ b=DQe/o03Ac9dGgX5vfGpJ7t9lfXYpdtU+rOzUZ5iFjyGmkNH5KVepK0oRuhRSmn/KkZ
+ vJ7tBmouIV7DD877VdReFx6OKVY5+bbpJEZWlwFAUIUe4/SlBWGm+9Fm87ZJYu9InPxd
+ uzFyjM9M/s4i+4tdF5UXE2/HOGyP4TrTg9QgzdLyVc4ckpc97oWdXCcXAFxxNM3rNBMb
+ HuW2gVGCLkRo/VhfYjh2FR3/RJR7z8jzcTXG9kaA7SSXsWLxH5oLQckku2+Mbb8hARvb
+ gr0gM0MhdSkcwBnZr0d0rdSQIOO079DCTtVwj+/0I5sWS9x+KqZU7oS2o8l7Zc1BCe93
+ 4uqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791415701; x=1792020501;
+ d=1e100.net; s=20260707; t=1791417612; x=1792022412;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=4iGpP1eqSrTJygk28lL0nxza/9rUyLn3v8Lar5FaX1g=;
- b=NKChyl4pgCar1g/Lxoqb6L6bNj/Ht/IpbauUqhhfMvxpEwZ9vCKft7769PiSyCi2vU
- OtUa6qGyYjR3Vn9O3x3PzejPZTev0GVrX76RsQnIL290LUX61MsYob6vgZEv/GIMv/ch
- h6FbYv7gtnluZvcTMJmclsbMhhzd808e38+LxxX8N+BGbdvKO/ivfPeOmTSNDnHfRLFV
- wefqOzkdC3/ccm9DnKXnApjh8otvTnlzn4JrGmjqPkHwju6C0TIFMcN6FmvaTTyD9lYd
- /j5O60PSHJdFSbGyknjUBcfmiXXIAn9ILF9NbCqqV175ujhnIpzltTMaxVgPbzP1EYiR
- eUqw==
-X-Gm-Message-State: AFuF++lxujqeuJjLu5ruNiw8InzZ007sJ6/V51C+nc9byA4C9aCxCT8O
- SZfaBUjzrwUYHYaJ9yPEmDPanEnn199qwK7Cl9bhBMHqkfnPN2L2IBmRyUGf3O3HzxZWgL0m6gw
- L5cl7pk3ZUzNyaKtbProq8gXxcLjJxZQrzPI75S4bAfrOxDW70YqBadMZvw==
-X-Gm-Gg: AYBFou2ul7gt3sjKGeZOUXkF+05pY8WPwJYFnwOJhXY1A+UawH9t6G5B1YgInWbB1SK
- 4BUzTgWyYuFh3zD42dSDnqbfJ0hyUEdOinH4KGzFPI9b6Y+pETxLhL9O3xyv0lednwgbZAkyHzA
- cdLSHrc9bZisjLI/AfeUuB8PUAdOpnn5ONrZyAh1URdjMjJAubY0mkMKm4NwrjocDP3sU0IUU+j
- j+TZj9BQhLF6l9RVxGE4XYd1kwAJTZQXPKyY1+dC5t1yKaGTwSONqyWlgzsQaU3AfQFpF/0p4r0
- 4Icfi50thKCtOhZovGTs+iO87gfN+L7VxmMRYF/rL43gn5p5H155auNeq4N2Y2NA2bUS/jNlnmr
- JtmoKlhxVeGcxxtk13ClS+Giy5Rc8oX5NmKeuLWKgXlV79XaPUVkU3+PlYSUQS8Mi2v0JRg==
-X-Received: by 2002:a05:7301:3d12:b0:342:645a:5cf with SMTP id
- 5a478bee46e88-3515dbd00c9mr6255127eec.1.1791415701321; 
- Wed, 07 Oct 2026 16:28:21 -0700 (PDT)
-X-Received: by 2002:a05:7301:3d12:b0:342:645a:5cf with SMTP id
- 5a478bee46e88-3515dbd00c9mr6255075eec.1.1791415700574; 
- Wed, 07 Oct 2026 16:28:20 -0700 (PDT)
+ bh=vFAvB59rWae5boVLoincpVpKFZPDOupemCLENOZh+Co=;
+ b=PcX5JatzUypV71eF57c/2CtRC3YbT10vyqQQw2Wit+AmtFpwvZxap5VQJfpHoJ/tXp
+ xixlczkLq7yj9UfAgF6zcme1Y2viuKB/EmoyJtfsXqYJasB2jbuGtIkNUuWuxKX8xGv/
+ z3DWFi1eMIZhBkNzGC2h1sjJfoPdYWY4qxlkfL9H0dm1QyLZtOfEii3HfWuAZmlh+l3i
+ PT0VHtPp1bs9pWZZn5s6NAvvjYj8ew/ZYr7/R7kHwoPd78vAYJPJkjUHDi8Vh5aVD9Qt
+ 7cB8CKT+/uCCS+LTcHBdrw66LgiaGH5yhVP/c4vkZ/UFYlP5LcfkI8+qkCX78DD38jUS
+ ryoQ==
+X-Gm-Message-State: AFuF++ndIs7Eh62+uPc04XKykQuEFQHa/bAiXmuh2Z1al5ctZDSsvZH+
+ meL+HN3O9bXTilsIV5IWr51m42M/azQi75JSSldOcWn5WBWHJ8VoIxF0q4tduq8V5Vi8OrNK7y8
+ 6W4PLJJLTfhiLo7WJzo78pe6QtpKmMo+H4RzD7L2HU+dU62W82sP8I9g2aA==
+X-Gm-Gg: AYBFou18zoI4MUSKU0S2UELqjLjuK5PHDJx02byp2rw2VaLe6efcE9Y+m+6Te3F3UCJ
+ jRbrxUYObqKXCTDa0rsfbP/K6/JFBm6Y0TTH+yGnZGsz5HMtFvPIL1QqUGGzL/SbduAEGrM9IkM
+ jXL2hPpwMiLqaRXr5Hgb+nHR0PXxskQ//xGIPDPBObR+OBr19OBrPom/2QdRk3DVRA1o1kv+bPW
+ +OE0xvBQAxyGDloZJht7UOtHrdEwKNDNgizZ4pKvERwGrrO8x4kSfAaUbS89dGQlXViLe/69pmA
+ 4jNY+eUXfr1oweLfaVQg1HqWx9rHda48omDoOyOsJ7qK/H73n9hXfNA4Iyx2fieE2GoEZWcrCDS
+ QL35lZkocTulQVPsEajXIKtX9ORxmTuHKfWJKWRCshL/SMAaf8a3l1BuaYdgJBXpMYI0E0A==
+X-Received: by 2002:a05:693c:4159:20b0:351:4a80:d94c with SMTP id
+ 5a478bee46e88-3515ddec552mr4876772eec.21.1791417610836; 
+ Wed, 07 Oct 2026 17:00:10 -0700 (PDT)
+X-Received: by 2002:a05:693c:4159:20b0:351:4a80:d94c with SMTP id
+ 5a478bee46e88-3515ddec552mr4876629eec.21.1791417609363; 
+ Wed, 07 Oct 2026 17:00:09 -0700 (PDT)
 Received: from [192.168.1.199] (192-80-163-190.dyn.novuscom.net.
  [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-3515aeb6076sm11386007eec.9.2026.10.07.16.28.18
+ 5a478bee46e88-3515af26f10sm11817604eec.13.2026.10.07.17.00.07
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 07 Oct 2026 16:28:20 -0700 (PDT)
-Message-ID: <72ed88c4-5f31-46c3-ab48-fdaa7c2743b7@oss.qualcomm.com>
-Date: Wed, 7 Oct 2026 16:28:17 -0700
+ Wed, 07 Oct 2026 17:00:08 -0700 (PDT)
+Message-ID: <b2d89a92-0197-4873-b4ea-75bb21c0d0ae@oss.qualcomm.com>
+Date: Wed, 7 Oct 2026 17:00:06 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/8] target-info: replace QOM registration with a
- constructor list
+Subject: Re: [PATCH 8/8] qom: pass TargetInfo to is_available for later use
 To: luoyonggang@gmail.com
 Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
  <berrange@redhat.com>,
@@ -113,48 +112,45 @@ Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
  <marcandre.lureau@redhat.com>, Steven Lee <steven_lee@aspeedtech.com>,
  Alexander Bulekov <alxndr@bu.edu>, Darren Kenny <darren.kenny@oracle.com>
 References: <20261007115253.328-1-luoyonggang@gmail.com>
- <20261007115253.328-5-luoyonggang@gmail.com>
- <37275f1f-aee9-444b-aaed-3e0bf34b63cd@oss.qualcomm.com>
- <CAE2XoE_GmDbA5SSUb3k_9HwE+bxnBjK+kBj-RE5BonEBC=GpMw@mail.gmail.com>
- <919a1a75-78b9-42a9-93ed-9edf6757f707@oss.qualcomm.com>
- <CAE2XoE-XeHnywvAGOCgxO30a_qCMgxbnBF5kjtStGa9=5D=Rkg@mail.gmail.com>
+ <20261007115253.328-9-luoyonggang@gmail.com>
+ <7fc0d377-a994-41f4-aa98-7ed56db11447@oss.qualcomm.com>
+ <CAE2XoE8K+3e8h6H9NrPk1WWMmJfG807bN_Kh5qje-5pKWUUg5w@mail.gmail.com>
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Content-Language: en-US
-In-Reply-To: <CAE2XoE-XeHnywvAGOCgxO30a_qCMgxbnBF5kjtStGa9=5D=Rkg@mail.gmail.com>
+In-Reply-To: <CAE2XoE8K+3e8h6H9NrPk1WWMmJfG807bN_Kh5qje-5pKWUUg5w@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: BEaXIORQXF3AjMh23_O_3ZWeK3xgeMLq
-X-Authority-Analysis: v=2.4 cv=HcWB3SE8 c=1 sm=1 tr=0 ts=6ac6d596 cx=c_pps
- a=Uww141gWH0fZj/3QKPojxA==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
+X-Authority-Analysis: v=2.4 cv=NchzRGD4 c=1 sm=1 tr=0 ts=6ac6dd0d cx=c_pps
+ a=PfFC4Oe2JQzmKTvty2cRDw==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
  a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
- a=p0WdMEafAAAA:8 a=VwQbUJbxAAAA:8 a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8
- a=gqMGv8y4M0eXLZAej-0A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=PxkB5W3o20Ba91AHUih5:22
-X-Proofpoint-GUID: BEaXIORQXF3AjMh23_O_3ZWeK3xgeMLq
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA3MDA5MyBTYWx0ZWRfXzxhAfxyxHckd
- MP+WbHEbf+rgS9vrDqabk7v2b2Mg5KmC7awEYDqEPdPhwtOGSjSZqnuQJ/02daifUHAMSoIKJHu
- c1CuSpL/pRWKs0A/iSY1hD4tUco6olYBT3BlaOon/dLvp/V/r1wzfld0i4ON7P2n+MyK3Ibp7yN
- IpVMcPSmo7qOYvhtb+1ip+4WPsx6m9Obgu1kTOm8N2A7jdOd0XA+X3+sBcz8vb7+xTEdPYP1P0h
- cURy/Ja8J6cE2p4bdfRccsO8Se4uazYmvoOFLNyoNe/jKkyZ2J47f018G/JOT+gjxBKUDZwhpGg
- S2+IPYXYUg59bApk8Vbe0ZW3cDAQPNv7iiNK4qAQztRTcLYKa5nm+hd7htVaIrvq0k9/Ss5Dgg/
- AUXSlUDIYkxGQMoi1YSxt+JwYtacynhkHXPv1desgTCbHVTzPUK47q2rlSFNp4xnbSRN1Ti4JGi
- SMa/64CAItryYdxSG+w==
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA3MDA5MyBTYWx0ZWRfXwvawOZBMRpxO
- D02Bb/XR8xmd7ZZw3bpSvUrfEZo8vDzXu0yq5vieW9RkrjYpUfVvxdJsz2W0uF56niDrqlfj4f4
- wGeNvZleplJ+SIZgYnUAe6bPJQMiJgk=
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
+ a=VwQbUJbxAAAA:8 a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8 a=p0WdMEafAAAA:8
+ a=pGLkceISAAAA:8 a=UHNr_4ddF-MpCdtsS6kA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=6Ab_bkdmUrQuMsNx7PHu:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA3MDA5NSBTYWx0ZWRfX1DX4dx0yPNX9
+ MiooDM2OLBLXgMDPyf36cKr/GF4FSjTeouJdlleRrcJcSScNFGsymRayy8ozFwlJoDMwj3MQEJC
+ Yu52+cv2BSUavCq422vDOwoioDnaSRg=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA3MDA5NSBTYWx0ZWRfX7ghthNmqn+Fn
+ V3teWKKFpbNqdzMLxxS48plHs/fAVjX+dOg1Zt0kq5TPu4mTDX6mhVlREzR4d2HFdWwNfEQ6GgO
+ DPaBC0hT8Q+21ziKCyhyIYtnf3k1IEV2t3Sz+687bXpiOweNUKky1md+5paWx11/ilCw++bhKlU
+ 3eH6NVxi4Htp/YH9PbYG91HEnBYmBeEwyyRHPOBDDvFQhvRFPvSffCbKKCHLqniqVK5o7oO7iRi
+ PcGU1rUrvrvdnJKz+HvxMboeB8d0P1G+z98jD07sVaxtsdr+48geZVeYd90UfYJ/nEGzdQAhwI/
+ VuprnfclCyeNjdsgFTy2PaXrlk8DXi4GYx9RxUBHwXN6lS0EKWQUnIFSJZ5i7cZheJNN5v6EqVv
+ n5cATamNYY2Dav4Z9V6hbANf+Un3+2lPIuXiR+wE1+C9XQsB/TGdV0fT2ryMbGx7HK/z6jUpkyH
+ 9FyqagayXKEGUG+Yj6g==
+X-Proofpoint-ORIG-GUID: 7TRJrRUS8KYvOp4eCQZVufJaMdf-k4y2
+X-Proofpoint-GUID: 7TRJrRUS8KYvOp4eCQZVufJaMdf-k4y2
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-10-07_07,2026-10-06_03,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 malwarescore=0 spamscore=0 bulkscore=0 adultscore=0
- priorityscore=1501 impostorscore=0 suspectscore=0 phishscore=0
- lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610020000
- definitions=main-2610070093
-Received-SPF: pass client-ip=205.220.168.131;
+ impostorscore=0 suspectscore=0 bulkscore=0 priorityscore=1501 spamscore=0
+ malwarescore=0 adultscore=0 lowpriorityscore=0 phishscore=0 clxscore=1015
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2610020000 definitions=main-2610070095
+Received-SPF: pass client-ip=205.220.180.131;
  envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
+ helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -177,197 +173,347 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/7/2026 4:02 PM, Yonggang Luo wrote:
-> On Thu, Oct 8, 2026 at 6:31 AM Pierrick Bouvier
+On 10/7/2026 2:42 PM, Yonggang Luo wrote:
+> On Thu, Oct 8, 2026 at 4:44 AM Pierrick Bouvier
 > <pierrick.bouvier@oss.qualcomm.com> wrote:
 >>
->> On 10/7/2026 1:50 PM, Yonggang Luo wrote:
->>> On Thu, Oct 8, 2026 at 4:29 AM Pierrick Bouvier
->>> <pierrick.bouvier@oss.qualcomm.com> wrote:
->>>>
->>>> On 10/7/2026 4:48 AM, Yonggang Luo wrote:
->>>>> Register target definitions through constructors instead of
->>>>> MODULE_INIT_TARGET_INFO, making target_info_list() and target_info()
->>>>> available on entry to main(), without explicit initialization or a
->>>>> call to module_call_init(MODULE_INIT_QOM).
->>>>>
->>>>> Keep the target list sorted by target_arch and default to its first
->>>>> entry. Provide an unknown TargetInfo fallback for target-independent
->>>>> tools such as qemu-img and unit tests that link no target-info-def.c
->>>>> objects.
->>>>>
->>>>> Remove the obsolete QOM target-info registration infrastructure and
->>>>> update the multi-target test to inspect target information before
->>>>> initializing QOM.
->>>>>
->>>>> Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
->>>>> ---
->>>>>  include/qemu/module.h           |  1 -
->>>>>  include/qemu/target-info-def.h  | 56 +++++++++++++++++++++++++++---
->>>>>  include/qemu/target-info-init.h | 53 ----------------------------
->>>>>  include/qemu/target-info-qom.h  | 31 -----------------
->>>>>  include/qemu/target-info.h      |  9 +++++
->>>>>  meson.build                     |  6 ++--
->>>>>  system/vl.c                     |  4 ---
->>>>>  target-info-def.c               |  1 -
->>>>>  target-info-qom.c               | 60 --------------------------------
->>>>>  target-info.c                   | 61 ++++++++++++++++++++++++++++++++-
->>>>>  tests/qtest/fuzz/fuzz.c         |  3 --
->>>>>  tests/unit/test-multi-target.c  | 12 +++----
->>>>>  12 files changed, 129 insertions(+), 168 deletions(-)
->>>>>  delete mode 100644 include/qemu/target-info-init.h
->>>>>  delete mode 100644 include/qemu/target-info-qom.h
->>>>>  delete mode 100644 target-info-qom.c
->>>>>
->>>>
->>>> This approach (custom list based) was considered before implementing
->>>> things with QOM Types. The rationale I followed was that if everything
->>>> is in QOM, we might better follow that for consistency sake.
->>>> Yes, the compromise if that we need an extra init step, but it was not a
->>>> problem to add it.
->>> I have issue to add the init step for unit-tests, and hard to write the -target
->>> parse procedure and get it right. Not means this won't work. but for
->>> me, too much
->>> coupled.
+>> On 10/7/2026 4:48 AM, Yonggang Luo wrote:
+>>> Change TypeInfo.is_available to the new TypeIsAvailable type, which
+>>> takes a const TargetInfo *. Registration passes target_info(), so
+>>> behavior is unchanged. object.h only forward-declares TargetInfo.
 >>>
->>
->> We already have such a test upstream:
->> https://gitlab.com/qemu-project/qemu/-/blob/master/tests/unit/test-multi-target.c#L35
->>
->> The init sequence is quite straightforward:
+>>> Switch the existing users (raspi, raspi4b, ast27x0 evb and fc) and the
+>>> generated machine parents to the matching target_is_<arch> helpers.
+>>>
+>>> Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
+>>> ---
+>>>  hw/arm/aspeed_ast27x0-fc.c  |  2 +-
+>>>  hw/arm/aspeed_ast27x0_evb.c |  4 ++--
+>>>  hw/arm/raspi.c              |  4 ++--
+>>>  hw/arm/raspi4b.c            |  2 +-
+>>>  hw/arm/virt.c               |  4 ++--
+>>>  hw/m68k/virt.c              |  4 ++--
+>>>  hw/or1k/virt.c              |  2 +-
+>>>  include/qom/object.h        | 12 +++++++++++-
+>>>  qom/object.c                |  3 ++-
+>>>  9 files changed, 24 insertions(+), 13 deletions(-)
+>>>
+>>> diff --git a/hw/arm/aspeed_ast27x0-fc.c b/hw/arm/aspeed_ast27x0-fc.c
+>>> index 73362b60d2a..8a7c6a116ac 100644
+>>> --- a/hw/arm/aspeed_ast27x0-fc.c
+>>> +++ b/hw/arm/aspeed_ast27x0-fc.c
+>>> @@ -234,7 +234,7 @@ static const TypeInfo ast2700fc_types[] = {
+>>>          .parent         = TYPE_MACHINE,
+>>>          .class_init     = ast2700fc_class_init,
+>>>          .instance_size  = sizeof(Ast2700FCState),
+>>> -        .is_available   = target_aarch64,
+>>> +        .is_available   = target_is_aarch64,
+>>>      },
+>>>  };
+>>>
+>>> diff --git a/hw/arm/aspeed_ast27x0_evb.c b/hw/arm/aspeed_ast27x0_evb.c
+>>> index 460c9ff0d2e..02a8cff1d9d 100644
+>>> --- a/hw/arm/aspeed_ast27x0_evb.c
+>>> +++ b/hw/arm/aspeed_ast27x0_evb.c
+>>> @@ -75,13 +75,13 @@ static const TypeInfo aspeed_ast27x0_evb_types[] = {
+>>>          .name          = MACHINE_TYPE_NAME("ast2700a1-evb"),
+>>>          .parent        = TYPE_ASPEED_MACHINE,
+>>>          .class_init    = aspeed_machine_ast2700a1_evb_class_init,
+>>> -        .is_available  = target_aarch64,
+>>> +        .is_available  = target_is_aarch64,
+>>>      },
+>>>      {
+>>>          .name          = MACHINE_TYPE_NAME("ast2700a2-evb"),
+>>>          .parent        = TYPE_ASPEED_MACHINE,
+>>>          .class_init    = aspeed_machine_ast2700a2_evb_class_init,
+>>> -        .is_available  = target_aarch64,
+>>> +        .is_available  = target_is_aarch64,
+>>>      }
+>>>  };
+>>>
+>>> diff --git a/hw/arm/raspi.c b/hw/arm/raspi.c
+>>> index fadbacb2534..22b06c6ca22 100644
+>>> --- a/hw/arm/raspi.c
+>>> +++ b/hw/arm/raspi.c
+>>> @@ -403,12 +403,12 @@ static const TypeInfo raspi_machine_types[] = {
+>>>          .name           = MACHINE_TYPE_NAME("raspi3ap"),
+>>>          .parent         = TYPE_RASPI_MACHINE,
+>>>          .class_init     = raspi3ap_machine_class_init,
+>>> -        .is_available   = target_aarch64,
+>>> +        .is_available   = target_is_aarch64,
+>>>      }, {
+>>>          .name           = MACHINE_TYPE_NAME("raspi3b"),
+>>>          .parent         = TYPE_RASPI_MACHINE,
+>>>          .class_init     = raspi3b_machine_class_init,
+>>> -        .is_available   = target_aarch64,
+>>> +        .is_available   = target_is_aarch64,
+>>>      }, {
+>>>          .name           = TYPE_RASPI_MACHINE,
+>>>          .parent         = TYPE_RASPI_BASE_MACHINE,
+>>> diff --git a/hw/arm/raspi4b.c b/hw/arm/raspi4b.c
+>>> index 566d64572db..a1dc477f25e 100644
+>>> --- a/hw/arm/raspi4b.c
+>>> +++ b/hw/arm/raspi4b.c
+>>> @@ -121,7 +121,7 @@ static const TypeInfo raspi4b_machine_type = {
+>>>      .parent         = TYPE_RASPI_BASE_MACHINE,
+>>>      .instance_size  = sizeof(Raspi4bMachineState),
+>>>      .class_init     = raspi4b_machine_class_init,
+>>> -    .is_available   = target_aarch64,
+>>> +    .is_available   = target_is_aarch64,
+>>>  };
+>>>
+>>>  static void raspi4b_machine_register_type(void)
+>>> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+>>> index 9d192515d85..18160f7fad3 100644
+>>> --- a/hw/arm/virt.c
+>>> +++ b/hw/arm/virt.c
+>>> @@ -132,7 +132,7 @@ static void arm_virt_compat_default_set(MachineClass *mc)
+>>>          .name = MACHINE_VER_TYPE_NAME("virt", __VA_ARGS__), \
+>>>          .parent = TYPE_VIRT_MACHINE, \
+>>>          .class_init = MACHINE_VER_SYM(class_init, virt, __VA_ARGS__), \
+>>> -        .is_available = target_base_arm, \
+>>> +        .is_available = target_is_base_arm, \
+>>>      }; \
+>>>      static void MACHINE_VER_SYM(register, virt, __VA_ARGS__)(void) \
+>>>      { \
+>>> @@ -4430,7 +4430,7 @@ static const TypeInfo virt_machine_info = {
+>>>           { TYPE_HOTPLUG_HANDLER },
+>>>           { }
+>>>      },
+>>> -    .is_available = target_base_arm,
+>>> +    .is_available = target_is_base_arm,
+>>>  };
+>>>
+>>>  static void machvirt_machine_init(void)
+>>> diff --git a/hw/m68k/virt.c b/hw/m68k/virt.c
+>>> index e52546e4fab..ad2a43ef3fb 100644
+>>> --- a/hw/m68k/virt.c
+>>> +++ b/hw/m68k/virt.c
+>>> @@ -327,7 +327,7 @@ static const TypeInfo virt_machine_info = {
+>>>      .parent       = TYPE_MACHINE,
+>>>      .abstract     = true,
+>>>      .class_init   = virt_machine_class_init,
+>>> -    .is_available = target_m68k,
+>>> +    .is_available = target_is_m68k,
+>>>  };
+>>>
+>>>  static void virt_machine_register_types(void)
+>>> @@ -355,7 +355,7 @@ type_init(virt_machine_register_types)
+>>>          .name = MACHINE_VER_TYPE_NAME("virt", __VA_ARGS__), \
+>>>          .parent = MACHINE_TYPE_NAME("virt"), \
+>>>          .class_init = MACHINE_VER_SYM(class_init, virt, __VA_ARGS__), \
+>>> -        .is_available = target_m68k, \
+>>> +        .is_available = target_is_m68k, \
+>>>      }; \
+>>>      static void MACHINE_VER_SYM(register, virt, __VA_ARGS__)(void) \
+>>>      { \
+>>> diff --git a/hw/or1k/virt.c b/hw/or1k/virt.c
+>>> index a3ff903839b..89fb786641f 100644
+>>> --- a/hw/or1k/virt.c
+>>> +++ b/hw/or1k/virt.c
+>>> @@ -559,7 +559,7 @@ static const TypeInfo or1ksim_machine_typeinfo = {
+>>>      .parent     = TYPE_MACHINE,
+>>>      .class_init = openrisc_virt_machine_init,
+>>>      .instance_size = sizeof(OR1KVirtState),
+>>> -    .is_available = target_or1k,
+>>> +    .is_available = target_is_or1k,
+>>>  };
+>>>
+>>>  static void or1ksim_machine_init_register_types(void)
+>>> diff --git a/include/qom/object.h b/include/qom/object.h
+>>> index 4c0645817a5..7d52a15f6b8 100644
+>>> --- a/include/qom/object.h
+>>> +++ b/include/qom/object.h
+>>> @@ -17,6 +17,7 @@
+>>>  #include "qapi/qapi-builtin-types.h"
+>>>  #include "qemu/module.h"
+>>>
+>>> +typedef struct TargetInfo TargetInfo;
+>>>  struct TypeImpl;
+>>>  typedef struct TypeImpl *Type;
+>>>
+>>> @@ -117,6 +118,15 @@ typedef void (ObjectUnparent)(Object *obj);
+>>>   */
+>>>  typedef void (ObjectFree)(void *obj);
+>>>
+>>> +/**
+>>> + * typedef TypeIsAvailable:
+>>> + * @ti: TargetInfo to test.
+>>> + *
+>>> + * Returns whether a type is available for @ti. Typical implementations
+>>> + * are target_is_*().
+>>> + */
+>>> +typedef bool (TypeIsAvailable)(const TargetInfo *ti);
+>>> +
+>>>  #define OBJECT_CLASS_CAST_CACHE 4
+>>>
+>>>  /**
+>>> @@ -498,7 +508,7 @@ struct TypeInfo
+>>>      void (*class_base_init)(ObjectClass *klass, const void *data);
+>>>      const void *class_data;
+>>>
+>>> -    bool (*is_available)(void);
+>>> +    TypeIsAvailable *is_available;
+>>>      const InterfaceInfo *interfaces;
+>>>  };
+>>>
+>>> diff --git a/qom/object.c b/qom/object.c
+>>> index 96498f3d001..253b9562b41 100644
+>>> --- a/qom/object.c
+>>> +++ b/qom/object.c
+>>> @@ -15,6 +15,7 @@
+>>>  #include "qom/compat-properties.h"
+>>>  #include "qom/object.h"
+>>>  #include "qom/object_interfaces.h"
+>>> +#include "qemu/target-info.h"
+>>>  #include "qemu/cutils.h"
+>>>  #include "qemu/memalign.h"
+>>>  #include "qapi/visitor.h"
+>>> @@ -167,7 +168,7 @@ static TypeImpl *type_register_internal(const TypeInfo *info)
+>>>          abort();
+>>>      }
+>>>
+>>> -    if (info->is_available && !info->is_available()) {
+>>> +    if (info->is_available && !info->is_available(target_info())) {
+>>>          return NULL;
+>>>      }
+>>>
 >>
 >> ```
->> /* initialize target types, and only them */
->> module_call_init(MODULE_INIT_TARGET_INFO);
->>
->> /* we can get the list if we want, for -target or any other purpose */
->> g_autoptr(GSList) targets = object_class_get_list(TYPE_TARGET_INFO, false);
->>
->> /* set the global target info from any element in this list */
->> TargetInfo* ti = ...;
->> target_info_qom_set_target_info(ti);
->>
->> /* register rest of QOM types */
->> module_call_init(MODULE_INIT_QOM);
+>> info->is_available(target_info())
 >> ```
 >>
->> It works fine to implement -target (if we would like to do it), since I
->> implemented it myself. That was also my initial motivation by the way.
+>> or
 >>
->> Also, I appreciate that target-info is NULL by default, it crashes
->> loudly when it has not been set, and make it easy to find who depends on it.
+>> ```
+>> is_available() {
+>>   TargetInfo ti * = target_info();
+>>   ...
+>> }
+>> ```
 >>
->>> If we treat target_info as a QOM, but QOM needs target_info to set
->>> up(is_avaible). That makes
->>> the init sequence too much of a burden.
->>>
+>> Are doing the exact same thing today.
 >>
->> See sequence above, the solution is to initialize TARGET_INFO first,
->> before the rest of QOM. You end up with the same result than with a
->> statically initialized list.
->>
->>>
->>> is_available is depends on target_arch
->>> And before this patch, target_arch depends on QOM, pulls user/softmmu because
->>> target_info_init. By moving target-info to be a custom list based, we
->>> can decouple
->>> target-info from qom/softmmu/user. and target-info will always
->>> available once "main(argv, argc)" is entered. We also have the
->>> advantage of doing all sorts
->>> of tests against it.
->>>
->>
->> Which kind of tests are you trying to add?
->>
->> For now, the exact list of places where we need to do this initialize
->> target dance are:
->> - system/vl.c:    module_call_init(MODULE_INIT_TARGET_INFO);
->> - tests/qtest/fuzz/fuzz.c:    module_call_init(MODULE_INIT_TARGET_INFO);
->> - tests/unit/test-multi-target.c:
+>> So what is the future goal requiring to introduce this?
 > 
-> # Multi targets test
-> if multi_target_objects != []
->   test('test-multi-target',
->        executable('test-multi-target',
->                   sources: [multi_target_crates, files('test-multi-target.c')],
->                   dependencies: multi_target_deps,
->                   objects: multi_target_objects,
->                   link_depends: [block_syms, qemu_syms],
->                   link_args: multi_target_link_args),
->        suite: ['unit'])
-> endif
+> From Daniel P. Berrangé's
+> requesthttps://lore.kernel.org/qemu-devel/apAszS1ewxM0Y1XU@redhat.com/
+>         I forgot to mention that this is also pretty important for making
+>         introspection work, as we need to be able to say
 > 
-> I see this test, I am trying to add tests that do not pull so many
-> multi_target_objects, as it would be huge.
-
-Agree, we should not add more binary.
-If you need truly multi targets test, this existing binary is a good
-place to start: just add a second test in it.
-
-> Just pull qom only.  And I am trying to call target_info() in
-> object.c, as inspect machines with
-> qemu-system is rejected, so maybe that's not an issue anymore
+>           'qemu-system --machine none -qmp ...'
+> 
+>         and connect to QMP to introspect the binary. Having to add a
+>         '--target <name>' into that mix is undesirable, as it creates
+>         a chicken & egg problem. You don't know what targets are built
+>         into qemu-system without introspecting it and you can't
+>         introspect it without selecting a target to introspect.
+> 
+> From Pierrick's review
+> https://lore.kernel.org/qemu-devel/557262df-b8e7-49b5-a245-ae46b8885b30@oss.qualcomm.com/So,
+> for existing binary: -M virt works as before.
+> 
+>         For new multi binary:
+>         $ qemu-system -M virt:
+>         Multiple machines were found, select one among:
+>         - aarch64-virt
+>         - riscv64-virt
+> 
+>         Does it matches what you would expect?
+> 
+> From Daniel's review
+> https://lore.kernel.org/qemu-devel/aro93NuZBXYGbD33@redhat.com/
+>         We already have  'QemuTargetInfo' struct which is used
+>         with 'query-target', that should also be used with the
+>         new 'query-targets' command.
+> 
+>         We need to add the 'endianness' field to QemuTargetInfo.
+> 
+>         I don't think that we need to report machines though.
+>         We already have 'query-machines' which gives much broader
+>         information on the machines. "MachineInfo" needs to
+>         gain
+> 
+>         "targets": ["SysEmuTarget"]
+> 
+>         to list which target(s) a machine can be used with.
+> 
+> 
+> To achieve these, we needs add TypeInfo parameter to it so that we can do
+> 
+> static void report_unsupported_machine_type(const char *name, Error **errp)
+> {
+>     g_autoptr(GSList) machines = machine_class_get_list(true);
+>     g_autoptr(GString) targets = g_string_new(NULL);
+>     TargetInfoNode *node;
+>     GSList *el;
+> 
+>     error_setg(errp, "unsupported machine type: \"%s\" for target \"%s\"",
+>                name, target_name());
+>     QLIST_FOREACH(node, target_info_list(), next) {
+>         for (el = machines; el; el = el->next) {
+>             MachineClass *mc = el->data;
+> 
+>             if ((!strcmp(mc->name, name) || !g_strcmp0(mc->alias, name)) &&
+>                 object_class_get_is_available(OBJECT_CLASS(mc))(node->info)) {
+>                 g_string_append_printf(targets, "  %s\n",
+>                                        node->info->target_name);
+>                 break;
+>             }
+>         }
+>     }
+>     if (targets->len) {
+>         error_append_hint(errp, "Available for targets:\n%s", targets->str);
+>     }
+> }
+> 
+> That is we can iterate on all target-list, and check if it's can be fitlered.
 >
 
-Seems like a good candidate for the multi-target.c test.
+Ok, I finally see where this is going.
 
-> 
-> I means Subject: [PATCH v3 00/10] machine: uniquify virt QOM names
-> https://lore.kernel.org/qemu-devel/20260926081551.29-1-luoyonggang@gmail.com/#r
-> 
-> So the current design always rejects types that do not belong to the
-> current target. Listing them
-> all is not an option at all. With this restriction, then these are
-> indeed not needed.
-> So I'll wait for your work first, otherwise it's always conflicting.
-> 
-> 
->> module_call_init(MODULE_INIT_TARGET_INFO);
->>
->> If we want more tests, I'm totally ok to move this init code to
->> target-info.c, and replace call sites if needed.
->>
->>>
->>> Tools such as qemu-img and unit tests may link target-info.c without any
->>> target-info-def.c objects. Their target list remains empty, so use this
->>> fallback.
->>>
->>
->> Why should this tool get access to target list? qemu-img deals with disk
->> images, and is unrelated to targets.
->>
->>>
->>> static TypeImpl *type_register_internal(const TypeInfo *info)
->>> {
->>>     TypeImpl *ti;
->>>
->>>     if (!type_name_is_valid(info->name)) {
->>>         fprintf(stderr, "Registering '%s' with illegal type name\n",
->>> info->name);
->>>         abort();
->>>     }
->>>
->>>     if (info->is_available && !info->is_available()) {
->>>         return NULL;
->>>     }
->>>
->>>     ti = type_new(info);
->>>
->>>     type_table_add(ti);
->>>     return ti;
->>> }
->>>
->>>>
->>>> Is there another good value this list approach brings compared to what
->>>> exists?
->>>>
->>>> Regards,
->>>> Pierrick
->>>
->>>
->>>
->>
-> 
-> 
+So, based on all the previous conversations, we agreed to have a
+qemu-system binary with all the QOM types available (for all targets).
 
+I personally think that if we go this way, we should not have any
+-target option, and even less a -target none option.
+
+The current is_available() approach was made with filtering per target
+in mind, which predates where things are now. So, it's a good time to
+reevaluate how to do it.
+
+This leaves us with (at least) two options:
+- keep the callback and add TargetInfo parameter (what is done here)
+- remove is_available, and adopt a more declarative approach
+
+How about we (re)-explore the second one?
+
+It's what we did in the past
+(https://gitlab.com/qemu-project/qemu/-/commit/5de9216064d32eaac125dac4de1878486c16d73e),
+and that I removed recently, in favor of is_available.
+My rationale was that it was incomplete, since we needed to filter types
+per config also, and not only target.
+Now that direction is to not filter anything, filter per config is
+unneeded, and switching back to declarative instead of callback makes
+total sense. Using interfaces like we did has its own issues, and I
+would not like to see this coming back.
+
+I'll do one very concrete proposal:
+
+```
+How about letting machines (and machines only first), have a new field
+'targets', being a uint32_t mask with an array of EMU_TARGET?
+machine->targets = EMU_TARGET_X | EMU_TARGET_Y;
+```
+
+@Daniel, IIUC, this is exactly the approach you proposed a few weeks
+ago, just before I got frustrated and lost my patience against you. I
+think it's more clear for me where you wanted to go. Sorry it took such
+a large detour.
+
+Yonggang, does that sounds good for you?
+Daniel, does that sounds good for you also?
+
+Regards,
+Pierrick
 
