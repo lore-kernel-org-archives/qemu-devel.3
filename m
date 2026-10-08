@@ -4,141 +4,125 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A097DCA600B
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Oct 2026 10:28:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5DB9CA600B
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Oct 2026 12:16:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xElKK-0003K7-Sx; Thu, 08 Oct 2026 06:26:16 -0400
+	id 1xEn1r-00029m-Jn; Thu, 08 Oct 2026 08:15:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1xElK1-0003GU-RE
- for qemu-devel@nongnu.org; Thu, 08 Oct 2026 06:26:00 -0400
-Received: from mail-westeuropeazlp170130006.outbound.protection.outlook.com
- ([2a01:111:f403:c201::6] helo=AM0PR02CU008.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <sraymaek@redhat.com>)
+ id 1xEn1q-00029P-5V
+ for qemu-devel@nongnu.org; Thu, 08 Oct 2026 08:15:18 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1xElK0-00015i-9s
- for qemu-devel@nongnu.org; Thu, 08 Oct 2026 06:25:57 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=P04uMX4fHgmP1RwFMybiN5dRojEOTSRlr7BlMoyi2MJCQsCMD5UcWerHR8gZVvVO3QU25GptFFFNRfkC+UTj204eJ1gxAYLBkcaFmTusgGZoYoXTlCxEds1m4ym06yX4eQCFNSOkJxx3NT+gNWiih7mOqn5FZO1MIG6Gj9qRnYL+zgnIJVDvGRgaChXBuplxBm/QC9HJ3n9Ba3fFF66IONY05DEk23eUVErtP3eKMDZZNT7Gfh2XEqY0nN5UbSRCIEYsuzxAHosNBdt/9t2C+RQbDxmddcszvkZ/3HpHt3Bh/+3MKnWNC3bbb7TXOTGx8LtU85RRJGPWj835lwcUlQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=iqFyiBMw7BGy2xf/Bhra5i6q6k7Q2873lM6tyUGhHq8=;
- b=RMECKWk6cdFMw5eAosuT8Q0fBs0kSTsfWmkuCHYLF9zrc1qtmAEO/cUHy7etgMi/EGrjPeJX3z7qTWLnHSoj5vZohL6Tro+Llsk0ciTQPUYbE8Naa+KXPGyFSaopglSbaCuxJ5SiwDMksrpbItpG5DjLK8y2hd/WIxIGIEM7k+F83/dhiz8OFbEF1vKvJZsbYIt1i+ISteGRW0H3O9DH9tDOTQwKthEfT01/ZhZ92E9llvgkhHZoUonH1ZA/jlzTxeLqnz2ougXHvGU6mg9uA4F2zl7Bphjr1VVcnRTlm+Bhzhv5uLwUDxvP1PssX1prGUHqNgc0SjBpstnGFCscAw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
- header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=iqFyiBMw7BGy2xf/Bhra5i6q6k7Q2873lM6tyUGhHq8=;
- b=DsJUfAExlKDh7VdthnaQ6ue4cLCiTqBo3b//7ir/oxlZLtZsXPOsBAe1nZALFInlXzbwfHqDM4fnEL6Z0DiXWO7GVTM9meYDoxXUrEdiAkTDhdlwv8kPbHJIbnmzOVVyL6L8xXE+tQ4a7UM9uo95wXUi8t7XxtMn35fAct3EBtGWysEGpIq8sZegskcd6I/0LoallzwSBBLkfxcLzDA4rb+eLr/ywzZUuj8EJsPvE7QPbHhrqDLdbRBAXWeEWiAXkZF6SGA6xFOWlKx0qcpOz3mJKQ1gWG/vRpkIuBRELUv5gVkGwb2GfzUcX6RhF7F6f5bIMtpBIiI1+mA/v5MpPg==
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=virtuozzo.com;
-Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
- (2603:10a6:800:20a::12) by AS8PR08MB10270.eurprd08.prod.outlook.com
- (2603:10a6:20b:637::5) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.496.14; Thu, 8 Oct
- 2026 10:25:47 +0000
-Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
- ([fe80::4e37:b189:ddcd:3dd8]) by VI0PR08MB10656.eurprd08.prod.outlook.com
- ([fe80::4e37:b189:ddcd:3dd8%7]) with mapi id 15.21.0496.010; Thu, 8 Oct 2026
- 10:25:47 +0000
-From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-Date: Thu, 08 Oct 2026 13:25:40 +0300
-Subject: [PATCH v15 16/22] migration: add MIG_EVENT_INCOMING_FAILED
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20261008-up-vsock-vhost-v5-v15-16-301b73b3f843@virtuozzo.com>
-References: <20261008-up-vsock-vhost-v5-v15-0-301b73b3f843@virtuozzo.com>
-In-Reply-To: <20261008-up-vsock-vhost-v5-v15-0-301b73b3f843@virtuozzo.com>
-To: qemu-devel@nongnu.org
-Cc: andrey.drobyshev@virtuozzo.com, sgarzare@redhat.com, bchaney@akamai.com, 
- den@openvz.org, farosas@suse.de, mark.kanda@oracle.com, 
- maciej.szmigiero@oracle.com, dongli.zhang@oracle.com, dwmw2@infradead.org, 
- peterx@redhat.com, philmd@oss.qualcomm.com, vsementsov@yandex-team.ru, 
- odaki@rsg.ci.i.u-tokyo.ac.jp, clg@redhat.com, mst@redhat.com
-X-Mailer: b4 0.16.0
-X-ClientProxiedBy: VI1PR10CA0117.EURPRD10.PROD.OUTLOOK.COM
- (2603:10a6:803:28::46) To VI0PR08MB10656.eurprd08.prod.outlook.com
- (2603:10a6:800:20a::12)
+ (Exim 4.90_1) (envelope-from <sraymaek@redhat.com>)
+ id 1xEn1m-0004PC-JS
+ for qemu-devel@nongnu.org; Thu, 08 Oct 2026 08:15:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1791461712;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=dZX6r4vKJ8FPoIU5CgN0q8Lbzo6PLIke90cpme6C594=;
+ b=Q64C7Jyi7BdNfcp7Dow3qoR/r8iuu0tSfntvlLBqEy3B/dirqMTMVeZHSIe4tgKAN0mSPq
+ Rj7XaikuHdNzWFU4Hu9zVZsrWVNEdmfKLSlNUnwZa7oARmrSpGmAc13AKeaEh/yg7ns480
+ WbXAAhyHmxaFmyCdZOTtP1gWWnBbWAc=
+Received: from mail-yx1-f70.google.com (mail-yx1-f70.google.com
+ [74.125.224.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-59-p3RvwND7O8-f4JhH7Oqa2w-1; Thu, 08 Oct 2026 08:15:10 -0400
+X-MC-Unique: p3RvwND7O8-f4JhH7Oqa2w-1
+X-Mimecast-MFC-AGG-ID: p3RvwND7O8-f4JhH7Oqa2w_1791461710
+Received: by mail-yx1-f70.google.com with SMTP id
+ 956f58d0204a3-677d10671b7so5459208d50.1
+ for <qemu-devel@nongnu.org>; Thu, 08 Oct 2026 05:15:10 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1791461710; cv=none;
+ d=google.com; s=arc-20260327;
+ b=gsi1RzEsprMVYdm2b6Z8HZLkDcA5pcn8+lAWi3yZzQxlK+OrNhyofTC6EgzlYiYYHU
+ JsHNETp2iQmr7rlU1qmZ9yZovehuuLw/TBLyLSEharq3+6g6myRzSPWd9J4rXhoIfw7i
+ uGiOJEFA1pqLGN89QPBNAuGkOanb8KPBTBP61dOyJ1OIZpycRFD+mVkxu1F4exqM3waQ
+ INexVcgqGsCaDtrh6nJ3clBV5sIDVulpGxhXXK32RdjzqFEA6v/DCJYSATz35rwCVm9D
+ stWOGG0WV9QfZeBp5Ii6Qysdj+PZF36izzkzIFptt/8ze8Wf1JdkJhfNGX6iRG+Cri6Q
+ fo0A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=dZX6r4vKJ8FPoIU5CgN0q8Lbzo6PLIke90cpme6C594=;
+ fh=Yjabpnh3+VZotmTrKhDwnmyrOWycwAvu3EkihPtu/IE=;
+ b=Nr3IP7XMmJE3xBbg5FPCk699P3/q3pBLQr5R5rdAx6CfAuSgu2gi41xrgqg+bTofaX
+ ttr1AnXAxD3P8CM3mJsl/4vcRj4g5yTsh9g1OdrmnurIqgq+uROqlGzSEcG0rwHU1nyd
+ pmP5oArNXagYGcVDrB9Xw9rPKlzBoxqJJItTpDZHTsXLW92JEJz9n4UepPNoo2JJ9yOr
+ TzXR7ztaQiibXCxQd7PjvVsS7/4oVmcGiVjYbztWuD/kN5SBpqQrFSkag9y/cJSAu+cC
+ Ah4y2vUpqVG8O9JQqB0wWfHVZibE8TQhGlECvH+h7BwK5zZllnxZ1lzw0i/5fatfVsTh
+ eGUg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1791461710; x=1792066510; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=dZX6r4vKJ8FPoIU5CgN0q8Lbzo6PLIke90cpme6C594=;
+ b=jNiZ+4b2WZQoTlcTH6h01dGMSiGAlnwyrY+iDvFvS0EcrUNmCECp1KkOFrRbvJtZFn
+ ojraBDkiJoyN0oDyTe0SHaCrjGWbRGkBGawbUjSjRYH0cOBSLhjdas+lr+G1D9dm6fr7
+ vsnBndDzmU8RcR77huI8PMPpj8JGiSzWLp5NJS8hUFqbnbED2xiLoCOr48EbnxoL/upP
+ iuN0Z/LHbMmsHoz8HrFRMZAFjwwjo4F/BvFvekHbkab4lENZ3OCGxOLy3yCgg0CUPIto
+ iFLRLzlv4A+QSqNLOdCljN0Bp3CQhKKJgPxQhd2lPxPp3n6QxZd4CdnI73fmx4hWVdWl
+ +c7g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1791461710; x=1792066510;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=dZX6r4vKJ8FPoIU5CgN0q8Lbzo6PLIke90cpme6C594=;
+ b=qH4DuNcseN8JotZfU32LVpNWgbQCPa0V46lasbGd5BkHwLxugYY/FLpMgaw9wnUqp+
+ OnGT40JFZSPnTf+I1ZNMyZgwE0MtSlkRvzIHs+4Rbg2l3AJEAMTWPJngKJGKnjubqBFB
+ s/g4cD9q4YbPdTjtVUOA6dFrK4pQE6ICqEAN8wENG4TGB5JtQSLgBmUS6dyAgUA+3Hqw
+ 9PpJq0Ajtfg+AObOrfeqcwA7uEfUgy4l5n8hIFvQMrBUEUhZc7QXIltwo8eR+Bh6FWba
+ oA9xvHWtZ0uGpb89/7TIH41J6Khl6dhppVQWs0SVn5WsSeHSinjIilFxBvQlmIPUP67Q
+ Eaaw==
+X-Gm-Message-State: AFq9FYKhn7VdETQRpZeWUxwYCU96Rf9XJBt/eXW1J/UqicSVI+WIkGc5
+ T3O5ldRxOQJS06qukM9tEjV3zaIH31G4DbiWUu3MVhF9UdXTjymLMBPN/wHAoQKeIabOSJoK+f4
+ yWuS4YMQUg7ZpwNn7GFbmjK7jhQo6spzlVQcrnKo99Jl5tpAiRmw7L7YZqG1xz+8DlUM6XlzXoZ
+ FnsiTqheuS0qoFVq0Gk8TmSG2CaQYz8xE=
+X-Gm-Gg: AYBFou2TUNdrwSAtM2MTkkF3QkTaBHvaDVnMBtzHrVUfDnTtMf2zUkl5as82uRS/0vt
+ lWaA8kfV1bR8DdbbegzbXKV3Zz02UKJnXqXe5IZxOQ23UI69zPyYhGqghslWLvEEO74gadJ1j5T
+ xs2FTxEud+Aj87aQOAv0TLmVNyPfSSpAy42uRIyvZvMx/rEPFQTIbLxr/YtLVs4eguynVg0IS5N
+ u0fhYHU02fZMv7RTQ==
+X-Received: by 2002:a05:690e:150d:b0:677:c303:464a with SMTP id
+ 956f58d0204a3-6790a288da1mr2988039d50.91.1791461709927; 
+ Thu, 08 Oct 2026 05:15:09 -0700 (PDT)
+X-Received: by 2002:a05:690e:150d:b0:677:c303:464a with SMTP id
+ 956f58d0204a3-6790a288da1mr2988029d50.91.1791461709437; Thu, 08 Oct 2026
+ 05:15:09 -0700 (PDT)
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: VI0PR08MB10656:EE_|AS8PR08MB10270:EE_
-X-MS-Office365-Filtering-Correlation-Id: 39bf50ce-5dc5-4143-2504-08df25268287
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|366016|1800799024|23010399003|376014|7416014|52116014|10067099003|56012099006|6133799003|22082099003|18002099003|38350700014;
-X-Microsoft-Antispam-Message-Info: nPaQL5qkXWKPo2ONsgwqa8trl/fGOqb2M6ET4Mim49+YhPpAOO+OllopTOrVKQ2l0M74Io26FHArJ/luulpV4NPXa8SRJLPYZDE/1fXhd4zdfFeX3dKt0hZeXYGrUX7ZgwV8zpXBSUdw46pF7MCL6MKb3Ynr54cXDnwelufXGkZwmJt+z1gHvaztJ/z4sr/gcNveQc1ka/XHWgzTVJsz9LXnwh9WQBD89oU5kqn8/PmBzFCNgCKPAwjyib4X7y8uwX1SKVIQdLad47x5DqePAIZoolkyqiS617o1V31jzitAaR4BPnt0XeG3KHEpNSHNJrwgmkbp3+EGWskkvsmxBFX9Fnf0VLf7MkVyBz9GB8wrXyK4qTU74kzeR1dqOR/fNRVXhfd6ronpg6vuG08WmG4JhNOs9zNq8N0zNpsETDhcFOb0UBlab0cAuVPMwefSSTDcF7NN+omQjU6ykGT/y/z3/EdCW6RnIReetJ19ePa18THt+OOtql7GPWKJ6jjhzzM/BvRxvYSJsqLOxEOOj93t60BGjZ8cBidGY09dWnTodF/Vvfx1odFE+YJilAAa/UHec2pLaAbFennVJ1PtqKAJWcSMHIT3Aikzd8GZhNwq8//vIHd/ZjAVNoIPj2cJkgZ/3//EEOqLXJ/RGMmGuBgJzOiQbXCbaGX4je2uFjwbqv3UYKPs/4wIsI1WqVO2XtaroSsr08DVL7zzACpcrxZ/pU0p3qaPQWX0KjLfrQQ=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:VI0PR08MB10656.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(1800799024)(23010399003)(376014)(7416014)(52116014)(10067099003)(56012099006)(6133799003)(22082099003)(18002099003)(38350700014);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?bHVwOUxodU9BWHRsam9sdzdPQlljUEtpMUtuSWVuWmlGcjBvbzgwUXF0eTFL?=
- =?utf-8?B?VmdGS0Z0ZzZickRqYzlJeW13OGdNOG9DenNqNHg1dEVldExBdk9JbWNMNjl3?=
- =?utf-8?B?aFVBbmRteFVnQ3l1UTIzZFpYbVBaYkRxM2FrSkR6Qk4zWnhiYy9rM2dRbS9F?=
- =?utf-8?B?ODYvZ1RvYkRpMm1GeGxCTkx5NkYweWdtNHErTGhYbER5NlMxZ1V4VkFWallS?=
- =?utf-8?B?Ry9mSkQ2U243TVhLZlZtZk1MSDRLeTc2Rm1uL3BDQXNuK0tGa1NTTlhvN014?=
- =?utf-8?B?SmplcjF4K2VpY1V1eHdybmNVZzduaXgzeEw5NkNldFprWmU1VlozSGNCM1p4?=
- =?utf-8?B?TC9FRldGeFhPb2JQWnk5NTZWZUsrL1hKb1NnMis4YWhHY1RXcHI5ZWFvQWI5?=
- =?utf-8?B?NnpPWi84REdMR1NKRVdpNHhmSThxcUpCdXF4Y2V6VVR1cVhwU2xERy9hS09l?=
- =?utf-8?B?S0VXcnlrWUZHMU5qR25Kd29qZTVzUitpZG02KzNMcWlwRENpTVo1eDZ4cDV5?=
- =?utf-8?B?SElZR01pazYxMUxzNnV2Ui9RYnNFU3dETHJDejluTE1SNG5uK3ZicU5vL3cr?=
- =?utf-8?B?UlM4ckgrV1ZqTmxIRzlZZXhLMjdnQUdiMDNUbFBVV1QyNHQvRldaL0JId29L?=
- =?utf-8?B?RndHUE1uSDlVcEJ4SnNvTmV0dkZWY29yU1BFbGIyUEhDYUJtWUF2bVcxcHRu?=
- =?utf-8?B?b0drYzkrdnRsdE1jYlAyMm4yYUVrQzFuR0FJTHltQnl6V2RkMlZVakJLR3Jt?=
- =?utf-8?B?Q2JFNHhxeTRqWEh5UEFzaGZsSHc5WlJiMlZISkFXTWZGMTQrUDVCSlM5Tjhi?=
- =?utf-8?B?dFJrdEhJZVIyem5uY3lJSkxWa2kxakFZOWhWVE1hUHp5bVA2Y2ZkSEZSc3Mx?=
- =?utf-8?B?cy9EV1RDSW1PR3JENGhkcExQOFZUdW1NaGZxRVZDTGNRcW1PeHVRVjRwUlpH?=
- =?utf-8?B?Sks2RndYbWltaTUwL0V3UDZLTCsva3YyV2szN1paMit1azkvMDNhaUNrU3pk?=
- =?utf-8?B?cUZsMlVvR2I2cmhheVR0bEhTdjBodTI2WUNVVHFtVVRxZ0FQYkZ2ZERFRzRW?=
- =?utf-8?B?SDJLZUdkVU1VdlUzOFZzQVdpWVBad3VGNWpHUVJGQ2JOVk9TM0Q4TnBDc3dY?=
- =?utf-8?B?WnNYbktYS2RqVVdYSDgxdUd1VmlYUW5pR1BLNWNHT2gzUVI4WWpkK25JVjBK?=
- =?utf-8?B?eGMvVStmV0hqZnE3YnFKbmVnUVRNZjZRbVExTFVPS1VOUllpUUxOY1F0UHhn?=
- =?utf-8?B?VXFmR1g2WHU2Vm1CeTVqRktRSVpSTCt1eWhJU3ZYSklUZHpOVGE5OEU5Q3VI?=
- =?utf-8?B?amVEZUdoemFVYWNKcjRhQmZaeFd1UWdUOGIvL1RLSWpjWDhsY0tRWHRTWHRV?=
- =?utf-8?B?TW9ja2l5MGluVHVZZzR3ZS83VG5xcnVUbGpZY1dPeUh0UlZSd2pvZC9mU240?=
- =?utf-8?B?bnJPdUZHWWIwWk5rTGhmVC9Bd3NZemtZb2tzakpIbHV1T0gxa3cxMCtjVGxX?=
- =?utf-8?B?ZjZRL3lpamlTVS8vTURLZ2FpeGVRdjhtdWwxMDJ0dHc1aUZDK0VsbVd1YStR?=
- =?utf-8?B?VEI4TVovblNwNHFnc2VINXo2Q2tadGYxNWJqelNFQTh5VS9Ldkp6SWNKVC9R?=
- =?utf-8?B?OGhtNjFHQVJIejFPNnNOeHN4M0VOaFpacWltRzhhdm1VWTRWbzFyV29NVU92?=
- =?utf-8?B?dGd6eGRPMWVpbXZRZ25qNWVoMlY0NWh2ekVxT1g2d0pyV1FENHF5R3VVdzVx?=
- =?utf-8?B?REVTWG5pTElYU0g2T1BmZ2Q4WEpST1hvK3M5THNmL1JuWm1LYk9NTjZ0VUZp?=
- =?utf-8?B?L3lHQmpLSEVpZUxHQTBYZjNPTlp2SktxdzQwMVkwZ0dLQW5lVkJ3LzYzQXVJ?=
- =?utf-8?B?Z0Q2R0hLSHpydWN4OEF4Vy9lU1B4RkQyYlFOaGpMekVRVTF3WExmVTNwek9x?=
- =?utf-8?B?QVlTbU5obnVkenlGc2lpUVRqWERUeHNMVjd1UWdLN0dEY2JiMjducDgycVRj?=
- =?utf-8?B?bGx2VmRBU0RGTUVnTTBmRG5qbW5iL0FFcEV2KzlQZ1o0Z1RucFJKV2VMTCtn?=
- =?utf-8?B?LzRtV0FrSlhhTks1U3RpZnFnTkR4N2ZJOUVuenhKbU5waktRVFJlOGtRVUQy?=
- =?utf-8?B?eC9Od2RobGUxWjFWNGF2Y2pDbFErN3ExK1lFcjU4ampTbkVwTnFMZmY2Kzk0?=
- =?utf-8?B?N3Jic1lQQk9IOEVQelVQK2RPWHRZNFYxVE1JbkUyVEQydXJmM2FQSlo5RmtP?=
- =?utf-8?B?UHBrdjdoRGJYQk5RSVlrSzVOUGQ1MDFkVUJmZTNvMlNWMkY3QnBMRm5ydkox?=
- =?utf-8?B?UHdjV0V6VnErcFJnUUZPRHBjQ1BRell5ZmQzdzJNalhXamhSV1ZLdzBrK0x5?=
- =?utf-8?Q?wvFWGHFEjStmnHeM=3D?=
-X-OriginatorOrg: virtuozzo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 39bf50ce-5dc5-4143-2504-08df25268287
-X-MS-Exchange-CrossTenant-AuthSource: VI0PR08MB10656.eurprd08.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Oct 2026 10:25:44.2144 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 9RhBt/QqBD7hXrPhVXydfodz3Cywopmicr07JYXXFVi1cPmtneg/nsnleSBG+oyeNKGT7SlfSfwbbGcPm2+XLLXZO8VHiJLlgeD/ET/HbAs=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS8PR08MB10270
-Received-SPF: pass client-ip=2a01:111:f403:c201::6;
- envelope-from=andrey.drobyshev@virtuozzo.com;
- helo=AM0PR02CU008.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20261005133316.198087-1-sraymaek@redhat.com>
+ <asZXGMSjDidiL-Yd@redhat.com>
+In-Reply-To: <asZXGMSjDidiL-Yd@redhat.com>
+From: Sanne Raymaekers <sraymaek@redhat.com>
+Date: Thu, 8 Oct 2026 14:14:32 +0200
+X-Gm-Features: AclHuK9PvRAbSV8X1a3KyYiVrzQ5QMOQi5U4sSDmA3WcPm3vz264xxD7_UkF-I4
+Message-ID: <CAHfd8XB8my63Gvk=O9uaOg5-xYtFE1A4uy-w28ZKcs2jspyVVg@mail.gmail.com>
+Subject: Re: [PATCH 1/3] block/vmdk: align stream optimized data grains on 512
+ byte chunks
+To: Kevin Wolf <kwolf@redhat.com>
+Cc: qemu-devel@nongnu.org, hreitz@redhat.com, fam@euphon.net
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=sraymaek@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -9
+X-Spam_score: -1.0
+X-Spam_bar: -
+X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_BL_SPAMCOP_NET=1.347, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -154,70 +138,135 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-A device may take over a resource from the source in post_load(), e.g.
-vhost-vsock acquires the device ownership on a CPR target.  If the
-incoming migration fails afterwards, there's currently no way for the
-device to give that resource back before the failure is published, i.e.
-before the source is told about it over the return path and resumes, or
-the management sees the MIGRATION event on the target and resumes the
-source, or the target exits.
+Hi Kevin,
 
-Add a migration event for that, sent to the migration notifiers from
-the failure path of process_incoming_migration_co() before the failure
-is published.
+Thank you for the review.
 
-Reviewed-by: Peter Xu <peterx@redhat.com>
-Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
----
- include/migration/misc.h |  5 +++++
- migration/migration.c    | 10 ++++++++++
- 2 files changed, 15 insertions(+)
+On Wed, Oct 7, 2026 at 4:28=E2=80=AFPM Kevin Wolf <kwolf@redhat.com> wrote:
+>
+> Am 05.10.2026 um 15:33 hat Sanne Raymaekers geschrieben:
+> > According to the spec: "Each marker and its associated block begin on a
+> > sector or 512=E2=80=90byte boundary... There are five types of markers:
+> > compressed grain markers,..." [^1]
+> >
+> > This means that instead of aligning grains on their typical size (64K),
+> > in stream optimized disks, grains should be aligned on 512 byte chunks.
+> >
+> > [^1] Virtual Disk Format 5.0 Technical Note.
+> >
+> > Signed-off-by: Sanne Raymaekers <sraymaek@redhat.com>
+>
+> One small thing about the series as a whole first: It's conventional for
+> QEMU patch series (with more than one patch) to include a cover letter
+> (i.e. [PATCH 0/3]) that gives you the chance to explain the big picture
+> and what the series is about, and others to distinguish what is a reply
+> to the series as a whole as opposed to the first patch specifically. Not
+> a big deal, but you can just use git format-patch --cover-letter for v2
+> and edit the cover letter file before sending the series.
 
-diff --git a/include/migration/misc.h b/include/migration/misc.h
-index 019717f4cda..86cc7eefd66 100644
---- a/include/migration/misc.h
-+++ b/include/migration/misc.h
-@@ -65,12 +65,17 @@ bool migration_thread_is_self(void);
-  *    - MIG_EVENT_SETUP [-> MIG_EVENT_POSTCOPY_START] -> MIG_EVENT_DONE
-  *    - MIG_EVENT_SETUP [-> MIG_EVENT_POSTCOPY_START] -> MIG_EVENT_FAILED
-  *    - MIG_EVENT_FAILED
-+ *
-+ * MIG_EVENT_INCOMING_FAILED is currently the only event sent on the
-+ * incoming side, when the incoming migration fails and before the failure
-+ * is published.
-  */
- typedef enum MigrationEventType {
-     MIG_EVENT_SETUP,
-     MIG_EVENT_POSTCOPY_START,
-     MIG_EVENT_DONE,
-     MIG_EVENT_FAILED,
-+    MIG_EVENT_INCOMING_FAILED,
-     MIG_EVENT_MAX
- } MigrationEventType;
- 
-diff --git a/migration/migration.c b/migration/migration.c
-index fab7949fe11..82a8a252289 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -815,6 +815,16 @@ process_incoming_migration_co(void *opaque)
-     goto out;
- 
- fail:
-+    /*
-+     * Allow the devices which have registered their callbacks for
-+     * migration target failure to undo the changes they may have
-+     * done in post_load().
-+     *
-+     * Do that before the failure is published in any way: the MIGRATION
-+     * event emitted by migrate_set_state() below, the return path (if
-+     * present) in migration_incoming_state_destroy(), or the exit().
-+     */
-+    migration_call_notifiers(MIG_EVENT_INCOMING_FAILED, NULL);
-     migrate_set_state(&mis->state, MIGRATION_STATUS_ACTIVE,
-                       MIGRATION_STATUS_FAILED);
-     migrate_error_propagate(s, local_err);
 
--- 
-2.47.1
+Ack, will add that in v2.
+
+>
+>
+> For this patch specifically, it shows a real problem in the VMDK code,
+> but I think the solution isn't quite right. What currently happens when
+> you write a compressed 64k cluster:
+>
+>     1. get_cluster_offset() finds that the offset is unallocated and
+>        gets a new cluster_offset
+>
+>     2. get_whole_cluster() is normally supposed to initialise those
+>        parts of a newly allocated cluster (with zeros or from the
+>        backing file) that won't be written to.
+>
+>        Because we pass skip_start_bytes =3D skip_end_bytes =3D 0 for
+>        compressed clusters, zeros are written to the whole 64k starting
+>        from cluster_offset.
+>
+>     3. vmdk_write_extent() writes the compressed data at cluster_offset,
+>        overwriting the zeros we just wrote in step 2. The data written
+>        here can be much smaller than 64k if it compresses well.
+>
+> If this happen near the end of the image, the 64k write has a side
+> effect of leaving the image larger than intended.
+>
+> Your patch replaces this with writing only 512 bytes of zeros in step 2,
+> however they are still immediately overwritten again by the real
+> compressed data. So it's not necessarily that the write has the wrong
+> size, but that it's completely unnecessary I/O - compressed writes
+> always cover the whole cluster, there is no rest that should get copied
+> from the backing file.
+
+So if I read this correctly, while vmdk_pwritev always passes the
+cluster size (128 (granularity) * 512 (sector size) =3D 64k) to
+vmdk_write_extent, vmdk_write_extent will still write variable length
+data grain markers.  This is in spite of the "n_bytes >
+(extent->cluster_sectors * SECTOR_SIZE) || (n_bytes <
+(extent->cluster_sectors * SECTOR_SIZE)" check at the start of
+vmdk_write_extent. vmdk_write_extent will just make sure it aligns the
+next sector on 512 bytes.
+
+>
+>
+> So I'm wondering if the better fix would be calling get_whole_cluster()
+> only if !extent->compressed in the first place, saving us the memory
+> allocation and the I/O that will be immediately overwritten again
+> anyway.
+>
+> You could also argue that skip_end_bytes should be passed as n_bytes or
+> extent->cluster_sectors * BDRV_SECTOR_SIZE for compressed extents,
+> indicating that there is nothing to be copied, but even then skipping
+> get_whole_cluster() would save us a useless memory allocation.
+
+
+So I think that makes sense. Because vmdk_write_extent ensures writes
+are always aligned on 512 byte chunks there's no reason to check and
+allocate it beforehand.
+
+>
+>
+> >  block/vmdk.c | 4 +++-
+> >  1 file changed, 3 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/block/vmdk.c b/block/vmdk.c
+> > index cd8b4ec7c8..3cdca06fff 100644
+> > --- a/block/vmdk.c
+> > +++ b/block/vmdk.c
+> > @@ -1460,9 +1460,11 @@ get_whole_cluster(BlockDriverState *bs, VmdkExte=
+nt *extent,
+> >      int64_t cluster_bytes;
+> >      uint8_t *whole_grain;
+> >      bool copy_from_backing;
+> > +    BDRVVmdkState *s =3D bs->opaque;
+> >
+> >      /* For COW, align request sector_num to cluster start */
+> > -    cluster_bytes =3D extent->cluster_sectors << BDRV_SECTOR_BITS;
+> > +    cluster_bytes =3D strcmp(s->create_type, "streamOptimized") =3D=3D=
+ 0 ? SECTOR_SIZE
+> > +      : extent->cluster_sectors << BDRV_SECTOR_BITS;
+>
+> Doing string comparisons for each request isn't great. I think
+> extent->compressed should have the same meaning.
+
+
+It makes sense to use compressed as a proxy. I wasn't 100% sure that no
+other VMDK formats include compressed extents, but I guess not.
+
+>
+>
+> >      offset =3D QEMU_ALIGN_DOWN(offset, cluster_bytes);
+> >      whole_grain =3D qemu_blockalign(bs, cluster_bytes);
+> >      copy_from_backing =3D bs->backing && !zeroed;
+>
+> Kevin
+>
+
+Thanks!
+
+
+--=20
+Kind regards,
+Sanne
 
 
