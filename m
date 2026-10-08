@@ -4,142 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55E79CA6016
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Oct 2026 21:13:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0F2CCA6016
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Oct 2026 21:30:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xEvR1-0007UB-Tg; Thu, 08 Oct 2026 17:13:52 -0400
+	id 1xEvfh-0000QA-IZ; Thu, 08 Oct 2026 17:29:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xEvQr-0007TK-Dr
- for qemu-devel@nongnu.org; Thu, 08 Oct 2026 17:13:43 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
+ id 1xEveT-0000MW-OQ
+ for qemu-devel@nongnu.org; Thu, 08 Oct 2026 17:27:47 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xEvQp-0001rv-ND
- for qemu-devel@nongnu.org; Thu, 08 Oct 2026 17:13:41 -0400
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 698L0FHr2534330
- for <qemu-devel@nongnu.org>; Thu, 8 Oct 2026 21:13:38 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- YBHCT/fAW01FtajcauNSEWQ1HSP4McWMe++TK7LIi3I=; b=kDuiHJqgyyoUXffr
- ruJddeMKjvWLC4LLvkAJ6nMElb/VlYySwg6wofLAgUPjg73sbXLm2ksiB/BWOpup
- Qk8BGfuIlSHs4p6LMdNAmZIf+mR717gYC1GBovqJl0/3bsvBqO3vAz/UO0t+qnIj
- clRn2REALfLEMtRqYCn0M8qwxgjYbU6osGsZlcmQHxkRPmE28hqiCUAr679tVn8F
- Up1b19S5kVkvNQ2RfLWph5SlG8MoopiZjNY7+33lBS2xr6QtQvkq88MRaB2gLl83
- 17UMQYLHpc8rbgeVFqCTzzS4uGltxlyIQmG/ZncaDgvX6lowvjnjMZ0OoEun+Rng
- O30cjQ==
-Received: from mail-dy1-f200.google.com (mail-dy1-f200.google.com
- [74.125.82.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h6ev58y67-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 08 Oct 2026 21:13:38 +0000 (GMT)
-Received: by mail-dy1-f200.google.com with SMTP id
- 5a478bee46e88-3515d2fc5ebso9144436eec.1
- for <qemu-devel@nongnu.org>; Thu, 08 Oct 2026 14:13:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1791494017; x=1792098817; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=YBHCT/fAW01FtajcauNSEWQ1HSP4McWMe++TK7LIi3I=;
- b=ThLSg8sbOpFelvw/rjlwB4MntmI4ZsKtinSwWMJiXW8qYbph6SPvQrVchVyMXTFx+Q
- y47TjnbJhG9U3P0xvycqcV4UCB/tvd8cUMfqqs98JZZFRhV45MDeAoQS26SvJOFSyXtb
- eXQVA+1E0RKw2Bz0hKQJ194d9/SW6WLDTQPcsmBGpk8IH8Wxg5T66JAV8aXqH7gW3/dp
- Cik4E5AQQv0DAtoIVRgbPpqWnHrsBymgCcOoZHQiuppqXgYtr5Hrw5AdDf7WFSSDH6QH
- URk2AP92Y7xEQfd1Hyr89Zj26K0fdDz2fc2AfOhLW4OA550xcIKwxQrOX+NfPhNrjiyU
- RjKw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791494017; x=1792098817;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=YBHCT/fAW01FtajcauNSEWQ1HSP4McWMe++TK7LIi3I=;
- b=rW4jRzZlZx+R5zVURqBgjUIHMTgubz/AXX7MPciPD+mi1Ni1wvpEVkE4sIHJif95pF
- +jNnerJcsBxyNVmgitP/YwdovDw4lOMpKp8x90s1iVbG+BdB/K8Sv+Z9mOpy5SWzm8T8
- n4yzGLWIiASC84sWzy6xcQViUjwAmF7GyL4pNRVNgVJ7+dz9cWkZUBtxnoD4be8HUJOe
- F2YbZERCzxz+f1MABYZH0vXdUoHnNL7m3VtY9BKuZNhd5FPbbkTqRTnnWOvhXzQkd43D
- mjQlDD5dUQTnmgZGwusDQid19ag3U6GJ4NpFrOFd+hYRH7WK1ZzDOJFosJPGnhHR2X15
- 8cfA==
-X-Forwarded-Encrypted: i=1;
- AKwUvBzkMM1p21bmBY6MIHE2Qd6yfhvWdqSgaRcBHodBACRRYBw3K7EPMGX7VDToH6HHSDHA/W2+RmfbFHEF@nongnu.org
-X-Gm-Message-State: AFuF++n5ahoQ7Od6KwmlC4OYHCY1maTk9+YtmL4gNTOD6XOjExn3HQL8
- 5nQIzw0LFSylQ4xvTiqDOXbkgBiyCEjVM6Vfju1EwE/dL+qS0ttntmFf8vYf0+PuJbQ/C3nI/ZJ
- jU1X9JaZp5ZMJgTigYM2kNjl/p7c6UiCGkWn48qBGT+ph7Gd+/ig2sj57Nw==
-X-Gm-Gg: AYBFou3hMXmxpOxcX089s0E/BmlZg7j2JCfFtVyWdZ/xNY+ig3FprFvroU1Rt4v5qnN
- QCnIv8R+EIa4SGoUZQvtbiGNAzNcLm9fz/+yvhdFcsN7teAxZ/uVRV5BlVwvxSASn56tYnGF0CJ
- vtTC8QQz7/DqfhWt9miDKk6aqNrbOD3pG3jMgkqKWIh90yeAaSBmgOCz4FJmpUdD5bXmozmrGZQ
- IaM7/gMg+dluGlsiqNrBre/FbejsfWMJPqgIefhMWfnxPV7f9IcGEnjS3Yyj51MKveNzNDf9oe1
- AERCOoembkmaUf6Djcxn+Vrei0wMvLJMGZ8KZPvfZ8MRCnIlsE9Ov7/INOYDUa5aIiiJwcPk8E5
- wBoKbDsqZidljTtDEqRDQyEDxl6OnKKt1YZLB4t3qjFY8Di6ghS0rQYe7SCMg44RU/H0g0w==
-X-Received: by 2002:a05:7300:a92:b0:351:4d5d:39b7 with SMTP id
- 5a478bee46e88-3537e0a4a27mr118191eec.38.1791494017356; 
- Thu, 08 Oct 2026 14:13:37 -0700 (PDT)
-X-Received: by 2002:a05:7300:a92:b0:351:4d5d:39b7 with SMTP id
- 5a478bee46e88-3537e0a4a27mr118155eec.38.1791494016748; 
- Thu, 08 Oct 2026 14:13:36 -0700 (PDT)
-Received: from [192.168.1.199] (192-80-163-190.dyn.novuscom.net.
- [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-3537cb6a2afsm625719eec.31.2026.10.08.14.13.35
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 08 Oct 2026 14:13:36 -0700 (PDT)
-Message-ID: <cf94e70c-65ab-4c94-ab40-9dcebd02aa43@oss.qualcomm.com>
-Date: Thu, 8 Oct 2026 14:13:35 -0700
+ (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
+ id 1xEveQ-0002oy-VY
+ for qemu-devel@nongnu.org; Thu, 08 Oct 2026 17:27:45 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 698L6E2i2502347; Thu, 8 Oct 2026 21:27:28 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=CLVaUn
+ RAOS8pZn74ZhIFTxpgOVjBFXp9m/vcXac7ObM=; b=GWl4m4W4988wXnPZF7/dde
+ INQRqOfirIBsqS+I0AAF1Zhlu1n0+t/6tc33R4HnDACij8h0SmTcundkWBDT9F4j
+ zyyptRbLMSwiYuH6cI9GZtxyo9Q1Z92QfvJh/7GnF0bHxHl8fS7YpoU6BXL5eTqf
+ IfZQfaFW8cOArzVRWCTHboRILjFIZ2A5w4qHjbhBFbW0Vq1zC+V8+YuV3GVMAiXU
+ eX5Vf6eRNxBHXZi8LzWhEDn/QjFosmrB2FI0mjqYfZ2dpv/Z4rFn4VVTXMtszYC8
+ vF5ZsSvrzZVEO7Hk3JeE5fHgGxhylY3F5IimjKcpgKKyn9Skl6YIDWhpQ0N39XBw
+ ==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4h5xjvxq0d-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Thu, 08 Oct 2026 21:27:28 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 698L2cdH4019512; Thu, 8 Oct 2026 21:27:27 GMT
+Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4h58d5sgua-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 08 Oct 2026 21:27:27 +0000 (GMT)
+Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
+ [10.39.53.230])
+ by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 698LRQJe64553278
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 8 Oct 2026 21:27:27 GMT
+Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D4F3658054;
+ Thu,  8 Oct 2026 21:27:26 +0000 (GMT)
+Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 5384A5805A;
+ Thu,  8 Oct 2026 21:27:26 +0000 (GMT)
+Received: from sbct-3.pok.ibm.com (unknown [9.47.158.153])
+ by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Thu,  8 Oct 2026 21:27:26 +0000 (GMT)
+From: Stefan Berger <stefanb@linux.ibm.com>
+To: qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org, Stefan Berger <stefanb@linux.ibm.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Subject: [PULL v1 02/10] tpm_emulator: Reject TPM responses whose size is too
+ small
+Date: Thu,  8 Oct 2026 17:27:15 -0400
+Message-ID: <20261008212723.3679685-3-stefanb@linux.ibm.com>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20261008212723.3679685-1-stefanb@linux.ibm.com>
+References: <20261008212723.3679685-1-stefanb@linux.ibm.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/4] target/hexagon: pass the packet PC to lock
- implementations
-To: Brian Cain <brian.cain@oss.qualcomm.com>, qemu-devel@nongnu.org
-Cc: ltaylorsimpson@gmail.com
-References: <20261008211005.1853542-1-brian.cain@oss.qualcomm.com>
- <20261008211005.1853542-2-brian.cain@oss.qualcomm.com>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <20261008211005.1853542-2-brian.cain@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA4MDA4NCBTYWx0ZWRfX90inRrWZpEph
- ur3tBoZULwr6LZ/UzW7o9Mae/QgOhWxWrbXJ8mgUgxnzoCKY0X1k0qXmZr1Yjdg/TcP/8MLgUYc
- GbpLD4HXCuftUraoyLsbziX0kCDzuBg=
-X-Authority-Analysis: v=2.4 cv=MMT1C8Zl c=1 sm=1 tr=0 ts=6ac80782 cx=c_pps
- a=PfFC4Oe2JQzmKTvty2cRDw==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
- a=EUspDBNiAAAA:8 a=vwnOIsNelQcLABv4K88A:9 a=QEXdDO2ut3YA:10
- a=6Ab_bkdmUrQuMsNx7PHu:22
-X-Proofpoint-GUID: 9KgkVV70mZAJNPyMfTN4xjkCXTNQ8hiG
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA4MDA4NCBTYWx0ZWRfX1hPDucABAzrq
- 3hqmKgazI9Nn5aarIViSKOQRb7M/GmdxT20IKkSfAD8pzvbh71sGEHVL02GrJAt+azUwOjlkA/N
- XQDLyH94u1BRJhUG0Z+3KuiQV3kZCN5xLWsK8V8oJ1icpPFl+5DcLmlncAaayQkwAK6v81Vb990
- tkQP8uEyhEjUcT52bYPQ13VEnbPNHqHPP/oF7nJxTkN7tn5pho7xvfDekW5zV9OXtuOcWl3+FGV
- kDdVjgvfXfX1MYJs+02o4RiJYhFdDY4/UithWFl5dK6QLDLOwGACNXwqEh/Vlw10/RO8l2Uz0ou
- s9550L9/kKpQKEBls7xzIfvuW9Ivr/h7WZogwgZcMl4dpjNpQLb4q5rBEkG9awmvN4rgXWxeFqk
- NylgPBRRNVyramDfih7HX48yIMW2EapB92I41+WUYiqmG1Rx0Qcr9/EVWnEtByNICFrjPPnFKQq
- h6yJNmvJodixfFKaiog==
-X-Proofpoint-ORIG-GUID: 9KgkVV70mZAJNPyMfTN4xjkCXTNQ8hiG
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: yipBoTaRXUiuBoBvdCj54GEDoCtVpHzO
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA4MDA4NCBTYWx0ZWRfX5k4SSGZfNoPC
+ yzdQtbgvMmrJAZ8aIdeCaUejCYDNDHvGBc4MCySVhmQnurYDo5O1YXpvbgo65ezJteyEYEg39vZ
+ swFzUU7yx7ebB4EHB70lihf+X3GOuaT6GeA0RYL+i30NWx8bbgEfWuslf/bz0qEWCY303bugcT+
+ okbt9qUW7sQ6ftO4xRwviUbDPobGXnNicKUOMyONJpFYgJx6EwkC7YwvG/DaJK+HVVZ0MiSl06o
+ 2Tp7G3Z4GnVb0pQalOB5nNA2kRdbvKIDqcNseh0Nqwkz11t81u8Z6rJkMo8sVicnyfHqJ90/pXl
+ 9rv8euMq9OvdYdOAHC1Nsm3DNjf8lyHN5/bAOIhpuLSaTS1I2MUUAbCPvHqF2BFO825cXY4Zk1d
+ AESJ14yRtv04ntsqU/EfDvNMBvCYfPpPM4t1FRAiyId5ed8ESpEIpM26dOXhJqGyZjiLOFrjA3k
+ lFIRLGaNJmjR3di9qrQ==
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA4MDA4NCBTYWx0ZWRfX1HNZhsNyfNTu
+ JXIE4N7chyuQ6csyYgmIy8B/vu/dIxCQ6Hl0J16XMZnzGEfEfusAcLGIvXk81D4lqqh1MGJVLOm
+ Vp7NSglT1ktZUPWgVaH5DmkQ7ttTiEo=
+X-Proofpoint-GUID: yipBoTaRXUiuBoBvdCj54GEDoCtVpHzO
+X-Authority-Analysis: v=2.4 cv=FLCOVOos c=1 sm=1 tr=0 ts=6ac80ac0 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VwQbUJbxAAAA:8
+ a=VnNF1IyMAAAA:8 a=20KFwNOVAAAA:8 a=luQVlvl-W8lCxKXVFxcA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-10-08_07,2026-10-08_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 impostorscore=0 phishscore=0 clxscore=1015 spamscore=0
- lowpriorityscore=0 adultscore=0 suspectscore=0 bulkscore=0 malwarescore=0
+ malwarescore=0 impostorscore=0 adultscore=0 priorityscore=1501 suspectscore=0
+ clxscore=1015 bulkscore=0 spamscore=0 phishscore=0 lowpriorityscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2610020000 definitions=main-2610080084
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=stefanb@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -156,18 +126,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/8/2026 2:10 PM, Brian Cain wrote:
-> Hand the k0lock/tlblock lock implementation functions the packet PC as a
-> constant instead of relying on next_PC's opcode-dependent staging.
-> 
-> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
-> ---
->  target/hexagon/hex_mmu.h    |  2 +-
->  target/hexagon/sys_macros.h |  4 ++--
->  target/hexagon/hex_mmu.c    | 16 +++++++++-------
->  target/hexagon/op_helper.c  | 16 +++++++++-------
->  4 files changed, 21 insertions(+), 17 deletions(-)
-> 
+Reject a response from the TPM emulator whose size field indicates that the
+response is smaller than the size of the header.
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Link: https://lore.kernel.org/qemu-devel/20261002142516.2063735-3-stefanb@linux.ibm.com
+Signed-off-by: Stefan Berger <stefanb@linux.ibm.com>
+---
+ backends/tpm/tpm_emulator.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/backends/tpm/tpm_emulator.c b/backends/tpm/tpm_emulator.c
+index 16ae44c8d7..9c95b4d878 100644
+--- a/backends/tpm/tpm_emulator.c
++++ b/backends/tpm/tpm_emulator.c
+@@ -202,13 +202,13 @@ static int tpm_emulator_unix_tx_bufs(TPMEmulator *tpm_emu,
+      * size)
+      */
+     to_read = tpm_cmd_get_size(out);
+-    if (to_read > out_len) {
++    if (to_read > out_len || to_read < sizeof(struct tpm_resp_hdr)) {
+         if (qio_channel_shutdown(tpm_emu->data_ioc, QIO_CHANNEL_SHUTDOWN_BOTH,
+                                  &local_err) < 0) {
+             error_report_err(local_err);
+         }
+         error_setg(errp, "tpm-emulator: Disconnected after receiving "
+-                   "unacceptable large response (%u > %u)",
++                   "unacceptable response size (%u max: %u)",
+                    to_read, out_len);
+         return -1;
+     }
+-- 
+2.55.0
+
 
