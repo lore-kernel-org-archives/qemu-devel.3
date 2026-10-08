@@ -4,143 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9753CA6007
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Oct 2026 01:09:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8425CA6004
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Oct 2026 01:31:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xEccc-0004EI-Sm; Wed, 07 Oct 2026 21:08:34 -0400
+	id 1xEcyf-0008D4-4g; Wed, 07 Oct 2026 21:31:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xEccb-0004E6-Dj
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 21:08:33 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xEccZ-000282-5a
- for qemu-devel@nongnu.org; Wed, 07 Oct 2026 21:08:33 -0400
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69810R8M1245562
- for <qemu-devel@nongnu.org>; Thu, 8 Oct 2026 01:08:29 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- XL44DljllqN/eMC+l69ZVdArlShb6M2zdQPUGOZ9ZHE=; b=CwzmdyZdTENlgjEJ
- IHmzHk8GD9Py6GK8VQ803+FoujDDkoOAeZHWdnVlJLjFRMxMzlX9qrG0FcUmyWSy
- od7N2HpDGrNJqHqP+s11Tl4+hlX6MhBmkv52rtlUyEtqK8Dy4QiicEn+tpk/nZ6I
- FmQEHw1LRrGHOqdNWyirIko3e7CwXydUqtaJ3WEV8j3wZZB/b9Tiza3+mCRmn99a
- 4GPgHoG/rTE0pH7YzVh55owPh8tRhtt63+6o3F8NFANp4+TKyiZgX10bp6Bf+YIU
- fImMy4IbAKJO86qblehBno3dRrh7kLZ3cMf3BpXnOEix2zh7dp0pT68Rvi+9D2YN
- O/86PQ==
-Received: from mail-dy1-f198.google.com (mail-dy1-f198.google.com
- [74.125.82.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h5xe3ghyc-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 08 Oct 2026 01:08:28 +0000 (GMT)
-Received: by mail-dy1-f198.google.com with SMTP id
- 5a478bee46e88-3510a481ae9so9027986eec.1
- for <qemu-devel@nongnu.org>; Wed, 07 Oct 2026 18:08:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1791421708; x=1792026508; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=XL44DljllqN/eMC+l69ZVdArlShb6M2zdQPUGOZ9ZHE=;
- b=dtG6ANa/FSRLqdq6JtCOjLEvfjzMk3wERM/D3MYKeYnFT7TDWvvgV0AZb9k/A+PgYC
- BwD5nIlchg3GY7UEYqAyKzTYmGSFE2UH7FX/x+yW9HIniTSR/bUk/UsyCqRvvHdzsSu3
- yZ3qvZKFSsQIi6akpgRWwUY6HTT2vcQe3FVa57HjB6XZ4aUTsPKg/s4ZV+lnu3SDWOpu
- iNjYd9D6QUJiOSR/6Hgr81pVBj20yOw3EFGqb+Bau7aETj/mtK3bsZTp5isfb/yH2yHh
- 1UE3bRXeAY0XO5CB3GPzWkNsZrXHHLIBHl7kfXN7CHXkAELWu2aphMtFSUBlPqEG+s94
- QqPg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791421708; x=1792026508;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=XL44DljllqN/eMC+l69ZVdArlShb6M2zdQPUGOZ9ZHE=;
- b=w+voKq+LL29kpbuw8apA1Xl9k6FFXKmoDISG/Z+vE0oo661FqtgvrIA3SVrKkcxCxB
- +hfLhWzMIgrenQr9brPp0AkmVG6FenVSpc6mwqQQpebo++LWptOLmnnJYnBN97BCfWpF
- SXgBt2ZrxUvMG91zsCYJ7kNb4Nq/lPcXdYguufQMnK5wi7NsmuGaZLtyxGkpyjP+saX7
- 1zYalywELIcNv0HSpHG+oTPRXPVlB83XoKqu9yZvGziZwt92ag8iloCyoREbM7dsGeuh
- XJL0UsD9sUzCHTd+uKkWd8HqIUJDmqGt6jxwGLWfypySd57AiMmUEWvt+B6SJcTPxyTk
- TgXg==
-X-Forwarded-Encrypted: i=1;
- AKwUvBxWXoiR1PR1ye1fat9KFeyS1Hh3xgzP2u2gJZnYisBB6mNyc5G9oszKPvRDpDREtT6oOF9goM/3n22L@nongnu.org
-X-Gm-Message-State: AFuF++kJdTo5ha9rMQf1Af9GyTDZyNGMj+10vinGel7WBsrPCkcLE6Ca
- dmuHkGSV0pLGjiYkxW+mD/ryfCek0NwEnyUCWxYzZNlL/+9gGx6xQw3MmArhtb53lAxRm8LYTCw
- URNL7ab3vKGCv2efsPAJB4ezqLxfZtWw9kFkR3TQkiV6UrzPpaN6ozqpYsw==
-X-Gm-Gg: AYBFou3NCWrs3JHZ2CoZNHuB2co3Si6GQlIF83SkPmBeOSEdbug3G4Gd6mHk5jRVUw3
- bGx5GAZwaie8DK2SUAodiVjg5W6g5QcPh3HK2JF8woYNc9gYRystTXQbPdRLBtkczGLG2GbqxZa
- CClkgmjT6ibeWLUsLk1r/h9bBhZu780nzU7ZQ6sfXHPjEmns80kouAIUbn/XN3JYr0g5/QLYOIS
- Jh33FQOh4wW+j4BBKbYqF0lWSQYRT8LN0sBEzHyRVNIU15JIbboEh1qwYEBt/gLb0VDf1mSBr4a
- fiyXGzPuWUYAyim24JyaNnuJPj/1HDz8A9uGwyrO3NnhU5pk7gHCF/stgslrbwk0O9dqO1fGxoP
- UAqaRx6l7GDyKLt/lwwJsSEDz7YXC0NPlOgOSxuktF0IfBCkw+X7CmyElFBoEymCpnxCzLA==
-X-Received: by 2002:a05:693c:8110:b0:351:1aac:31c0 with SMTP id
- 5a478bee46e88-3515dda8974mr4263075eec.17.1791421706897; 
- Wed, 07 Oct 2026 18:08:26 -0700 (PDT)
-X-Received: by 2002:a05:693c:8110:b0:351:1aac:31c0 with SMTP id
- 5a478bee46e88-3515dda8974mr4263032eec.17.1791421706165; 
- Wed, 07 Oct 2026 18:08:26 -0700 (PDT)
-Received: from [192.168.1.199] (192-80-163-190.dyn.novuscom.net.
- [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-3515aeb5c2esm10095696eec.10.2026.10.07.18.08.24
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 07 Oct 2026 18:08:25 -0700 (PDT)
-Message-ID: <4eec19e6-db40-4658-b5b3-bc342473cffd@oss.qualcomm.com>
-Date: Wed, 7 Oct 2026 18:08:24 -0700
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1xEcxj-00086n-Uf
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 21:30:25 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1xEcxf-0003qd-CC
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 21:30:22 -0400
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8CxQNEd8sZquI0TAA--.57801S3;
+ Thu, 08 Oct 2026 09:30:05 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by front1 (Coremail) with SMTP id qMiowJDxTs8a8sZqQ8spAA--.22973S2;
+ Thu, 08 Oct 2026 09:30:04 +0800 (CST)
+Subject: Re: [PATCH 10/27] target/loongarch: Register
+ CPUClass::exception_name() handler
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@oss.qualcomm.com>,
+ qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Peter Maydell
+ <peter.maydell@linaro.org>, Song Gao <17746591750@163.com>,
+ Xianglai Li <lixianglai@loongson.cn>
+References: <20261007094516.75732-1-philmd@oss.qualcomm.com>
+ <20261007094516.75732-11-philmd@oss.qualcomm.com>
+From: Bibo Mao <maobibo@loongson.cn>
+Message-ID: <fee64403-79ea-634f-76e6-e5cc4956463d@loongson.cn>
+Date: Thu, 8 Oct 2026 09:31:26 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] contrib/plugins/bbv.c: Allow selecting ROI
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>
-References: <20261007-bbv-v1-0-a2f521a68fdf@rsg.ci.i.u-tokyo.ac.jp>
- <20261007-bbv-v1-2-a2f521a68fdf@rsg.ci.i.u-tokyo.ac.jp>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+In-Reply-To: <20261007094516.75732-11-philmd@oss.qualcomm.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-In-Reply-To: <20261007-bbv-v1-2-a2f521a68fdf@rsg.ci.i.u-tokyo.ac.jp>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=NchzRGD4 c=1 sm=1 tr=0 ts=6ac6ed0c cx=c_pps
- a=wEP8DlPgTf/vqF+yE6f9lg==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
- a=KkNxjLnhI8JSR-4J52UA:9 a=QEXdDO2ut3YA:10 a=O8hF6Hzn-FEA:10
- a=bBxd6f-gb0O0v-kibOvt:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA4MDAwNCBTYWx0ZWRfX4ScAWItn5iWm
- Ab6SAI9HlCIUfpwLaVt7mmmVKzDKSL9w6ysVRENSfQFAjWrwdQclEf/0bCFSDaKs4A+y+yStBHC
- ynHeama2CBUJznV0pzxqRmlRegk9HZ4=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA4MDAwNCBTYWx0ZWRfX+/8NNOKivLcp
- V9VHd5pDYZMXk0VbyS0OUHDDk3SV+PIN0wcjTpx9k5nyarUjo6gef+kxeoDuibe9EXCvu2mCTDN
- cp8lJeeAgn4Xsm+xYexLq/RzG8467l6s5LZrrXpxFRTFrj9L9dO2upzkUAJDei/EhxE0H0l6buX
- G/LKhpHmewr5VS0aPyGNJTSFpifmVLyXAzqY2XVpiZ6bmUUQOdA9v2Taz6Ifopxrt0AMjdtdOsj
- rxoz9Mi43Uvxk42ZBpEvsARbS/rneRscXS0nFmk11joT1bca/2PHfise7EsitQ8JsdVaWEwMA1h
- pCtwbsiU08oKLa411aNOiAFvetZUg5wpCdHRlzqr8+IIPAgoK58SiGsHMr7EGdhflarJw65EamZ
- x4PqdYmyoaDz4buV4WCC9kosAfbXaHEaKLEGAn4rIe7EoWJry5fc1Jeg/6HHPXA2JaeweBUgPSs
- 0snTr0xBC+xWZZVvzcg==
-X-Proofpoint-ORIG-GUID: U34y_DTxakDp__TsZAA7RCN9Ii_bxPb9
-X-Proofpoint-GUID: U34y_DTxakDp__TsZAA7RCN9Ii_bxPb9
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-10-08_01,2026-10-06_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 suspectscore=0 bulkscore=0 priorityscore=1501 spamscore=0
- malwarescore=0 adultscore=0 lowpriorityscore=0 phishscore=0 clxscore=1015
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610020000 definitions=main-2610080004
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qMiowJDxTs8a8sZqQ8spAA--.22973S2
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoW3JrWDtF1fGr48KrWxXr4UJrc_yoW7Zr4xpF
+ s7C3srKF48J3srZrykJ3yYgF98Gr4UWr42k3Z7XayftFnYvr1vgF4ktayqgF13C3yDGr42
+ vF4rAryUta1rArgCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUv0b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
+ 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r106r15McIj6I8E87Iv67AK
+ xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
+ AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E
+ 14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIx
+ kGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAF
+ wI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r
+ 4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU8j-e5UU
+ UUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-0.591,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -156,154 +86,153 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/6/2026 11:01 PM, Akihiko Odaki wrote:
-> A region of interest (ROI) often excludes the program startup and exit.
-> For example, a benchmark may parse a large input and then run a
-> computation kernel and the former may take longer than the latter;
-> basic block vectors generated for the whole execution will not properly
-> represent the latter.
+On 2026/10/7 下午5:44, Philippe Mathieu-Daudé wrote:
+> Move loongarch_exception_name() out of tcg_cpu.c and expose
+> the prototype so non-TCG code path can access it. Register
+> it as the CPUClass::exception_name() handler, so the common
+> exception logging can resolve LoongArch exception codes to
+> names. Remove the qemu_log_mask() call in do_raise_exception()
+> because it would duplicate the one in log_raise_exception().
 > 
-> Add options to specify the beginning and the end of the ROI to bound
-> basic block vector generation to the ROI.
-> 
-> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 > ---
->  docs/about/emulation.rst |  8 +++++
->  contrib/plugins/bbv.c    | 80 ++++++++++++++++++++++++++++++++++++++++++++++--
->  2 files changed, 86 insertions(+), 2 deletions(-)
+>   target/loongarch/internals.h   |  2 ++
+>   target/loongarch/cpu.c         | 38 ++++++++++++++++++++++++++++
+>   target/loongarch/tcg/tcg_cpu.c | 45 ----------------------------------
+>   3 files changed, 40 insertions(+), 45 deletions(-)
 > 
-> diff --git a/docs/about/emulation.rst b/docs/about/emulation.rst
-> index c58149086cdd..0566171b517b 100644
-> --- a/docs/about/emulation.rst
-> +++ b/docs/about/emulation.rst
-> @@ -284,6 +284,14 @@ The bbv plugin allows you to generate basic block vectors for use with the
->  
->    * - Option
->      - Description
-> +  * - begin=A
-> +    - The virtual address of the instruction that starts basic block vector
-> +      generation. Generation starts from the beginning of the execution if
-> +      not specified.
-> +  * - end=A
-> +    - The virtual address of the instruction that ends basic block vector
-> +      generation. Generation continues until the endo of the execution if
-
-small typo here: s/endo/end
-
-> +      not specified.
->    * - interval=N
->      - The interval to generate a basic block vector specified by the number of
->        instructions (Default: N = 100000000)
-> diff --git a/contrib/plugins/bbv.c b/contrib/plugins/bbv.c
-> index e5caf5d9543b..a2a779f7639e 100644
-> --- a/contrib/plugins/bbv.c
-> +++ b/contrib/plugins/bbv.c
-> @@ -5,6 +5,8 @@
->   * SPDX-License-Identifier: GPL-2.0-or-later
->   */
->  
-> +#include <stdbool.h>
-> +#include <stdint.h>
->  #include <stdio.h>
->  #include <glib.h>
->  
-> @@ -26,6 +28,10 @@ static GHashTable *bbs;
->  static GRWLock bbs_lock;
->  static char *filename;
->  static struct qemu_plugin_scoreboard *vcpus;
-> +static bool begin_present;
-> +static uint64_t begin;
-> +static bool end_present;
-> +static uint64_t end;
->  static int64_t interval = 100000000;
->  
->  static void plugin_exit(void *p)
-> @@ -66,6 +72,7 @@ static void vcpu_init(unsigned int vcpu_index, void *userdata)
->      Vcpu *vcpu = qemu_plugin_scoreboard_find(vcpus, vcpu_index);
->  
->      vcpu_filename = g_strdup_printf("%s.%u.bb", filename, vcpu_index);
-> +    vcpu->count = begin_present ? INT64_MIN : -interval;
-
-Not sure which semantic we are trying to achieve with -interval here.
-
-The original logic was to increment this count, until reaching interval,
-after what we would reset it by using vcpu_count -= interval, to keep
-the extra insn that went in after the threshold.
-
->      vcpu->file = fopen(vcpu_filename, "w");
->  }
->  
-> @@ -102,6 +109,22 @@ static void vcpu_interval_exec(unsigned int vcpu_index, void *udata)
->      fputc('\n', vcpu->file);
->  }
->  
-> +static void vcpu_begin_insn_exec(unsigned int vcpu_index, void *userdata)
+> diff --git a/target/loongarch/internals.h b/target/loongarch/internals.h
+> index ff956823fd7..e7fed3afde5 100644
+> --- a/target/loongarch/internals.h
+> +++ b/target/loongarch/internals.h
+> @@ -42,6 +42,8 @@ bool loongarch_cpu_has_work(CPUState *cs);
+>   bool cpu_loongarch_hw_interrupts_pending(CPULoongArchState *env);
+>   #endif /* !CONFIG_USER_ONLY */
+>   
+> +const char *loongarch_exception_name(int exception);
+> +
+>   uint64_t read_fcc(CPULoongArchState *env);
+>   void write_fcc(CPULoongArchState *env, uint64_t val);
+>   
+> diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
+> index 54c26998979..fc9c5ab5ac2 100644
+> --- a/target/loongarch/cpu.c
+> +++ b/target/loongarch/cpu.c
+> @@ -835,6 +835,43 @@ static void loongarch_cpu_dump_state(CPUState *cs, FILE *f, int flags)
+>       }
+>   }
+>   
+> +static const struct {
+> +    int32_t exccode;
+> +    const char * const name;
+> +} excp_names[] = {
+> +    {EXCCODE_INT, "Interrupt"},
+> +    {EXCCODE_PIL, "Page invalid exception for load"},
+> +    {EXCCODE_PIS, "Page invalid exception for store"},
+> +    {EXCCODE_PIF, "Page invalid exception for fetch"},
+> +    {EXCCODE_PME, "Page modified exception"},
+> +    {EXCCODE_PNR, "Page Not Readable exception"},
+> +    {EXCCODE_PNX, "Page Not Executable exception"},
+> +    {EXCCODE_PPI, "Page Privilege error"},
+> +    {EXCCODE_ADEF, "Address error for instruction fetch"},
+> +    {EXCCODE_ADEM, "Address error for Memory access"},
+> +    {EXCCODE_SYS, "Syscall"},
+> +    {EXCCODE_BRK, "Break"},
+> +    {EXCCODE_INE, "Instruction Non-Existent"},
+> +    {EXCCODE_IPE, "Instruction privilege error"},
+> +    {EXCCODE_FPD, "Floating Point Disabled"},
+> +    {EXCCODE_FPE, "Floating Point Exception"},
+> +    {EXCCODE_DBP, "Debug breakpoint"},
+> +    {EXCCODE_BCE, "Bound Check Exception"},
+> +    {EXCCODE_SXD, "128 bit vector instructions Disable exception"},
+> +    {EXCCODE_ASXD, "256 bit vector instructions Disable exception"},
+> +    {EXCP_HLT, "EXCP_HLT"},
+> +};
+> +
+> +const char *loongarch_exception_name(int exception)
 > +{
-> +    GHashTableIter iter;
-> +    void *value;
-> +
-> +    g_rw_lock_reader_lock(&bbs_lock);
-> +    g_hash_table_iter_init(&iter, bbs);
-> +
-> +    while (g_hash_table_iter_next(&iter, NULL, &value)) {
-> +        qemu_plugin_u64_set(bb_count_u64(value), vcpu_index, 0);
-> +    }
-> +
-> +    g_rw_lock_reader_unlock(&bbs_lock);
-> +    qemu_plugin_u64_set(count_u64(), vcpu_index, -interval);
-> +}
-> +
->  static void vcpu_tb_trans(struct qemu_plugin_tb *tb, void *userdata)
->  {
->      uint64_t n_insns = qemu_plugin_tb_n_insns(tb);
-> @@ -119,6 +142,19 @@ static void vcpu_tb_trans(struct qemu_plugin_tb *tb, void *userdata)
->      }
->      g_rw_lock_writer_unlock(&bbs_lock);
->  
-> +    for (size_t idx = 0; idx < n_insns; idx++) {
-> +        struct qemu_plugin_insn *insn = qemu_plugin_tb_get_insn(tb, idx);
-> +        uint64_t insn_vaddr = qemu_plugin_insn_vaddr(insn);
-> +
-> +        if (begin_present && insn_vaddr == begin) {
-> +            qemu_plugin_register_vcpu_insn_exec_cb(
-> +                insn, vcpu_begin_insn_exec, QEMU_PLUGIN_CB_NO_REGS, NULL);
-> +        } else if (end_present && insn_vaddr == end) {
-> +            qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu(
-> +                insn, QEMU_PLUGIN_INLINE_STORE_U64, count_u64(), INT64_MIN);
+> +    for (size_t i = 0; i < ARRAY_SIZE(excp_names); i++) {
+> +        if (excp_names[i].exccode == exception) {
+> +            return excp_names[i].name;
 > +        }
 > +    }
-> +
->      qemu_plugin_register_vcpu_tb_exec_inline_per_vcpu(
->          tb, QEMU_PLUGIN_INLINE_ADD_U64, count_u64(), n_insns);
->  
-> @@ -127,7 +163,32 @@ static void vcpu_tb_trans(struct qemu_plugin_tb *tb, void *userdata)
->  
->      qemu_plugin_register_vcpu_tb_exec_cond_cb(
->          tb, vcpu_interval_exec, QEMU_PLUGIN_CB_NO_REGS,
-> -        QEMU_PLUGIN_COND_GE, count_u64(), interval, NULL);
-> +        QEMU_PLUGIN_COND_LT, count_u64(), INT64_MIN, NULL);
+> +    return "Unknown";
 > +}
+> +
+>   #ifndef CONFIG_USER_ONLY
+>   #include "hw/core/sysemu-cpu-ops.h"
+>   
+> @@ -875,6 +912,7 @@ static void loongarch_cpu_class_init(ObjectClass *c, const void *data)
+>                                          &lacc->parent_phases);
+>   
+>       cc->class_by_name = loongarch_cpu_class_by_name;
+> +    cc->exception_name = loongarch_exception_name;
+>       cc->dump_state = loongarch_cpu_dump_state;
+>       cc->set_pc = loongarch_cpu_set_pc;
+>       cc->get_pc = loongarch_cpu_get_pc;
+> diff --git a/target/loongarch/tcg/tcg_cpu.c b/target/loongarch/tcg/tcg_cpu.c
+> index 4b1d44a1644..933b9b2d221 100644
+> --- a/target/loongarch/tcg/tcg_cpu.c
+> +++ b/target/loongarch/tcg/tcg_cpu.c
+> @@ -18,57 +18,12 @@
+>   #include "tcg_loongarch.h"
+>   #include "internals.h"
+>   
+> -struct TypeExcp {
+> -    int32_t exccode;
+> -    const char * const name;
+> -};
+> -
+> -static const struct TypeExcp excp_names[] = {
+> -    {EXCCODE_INT, "Interrupt"},
+> -    {EXCCODE_PIL, "Page invalid exception for load"},
+> -    {EXCCODE_PIS, "Page invalid exception for store"},
+> -    {EXCCODE_PIF, "Page invalid exception for fetch"},
+> -    {EXCCODE_PME, "Page modified exception"},
+> -    {EXCCODE_PNR, "Page Not Readable exception"},
+> -    {EXCCODE_PNX, "Page Not Executable exception"},
+> -    {EXCCODE_PPI, "Page Privilege error"},
+> -    {EXCCODE_ADEF, "Address error for instruction fetch"},
+> -    {EXCCODE_ADEM, "Address error for Memory access"},
+> -    {EXCCODE_SYS, "Syscall"},
+> -    {EXCCODE_BRK, "Break"},
+> -    {EXCCODE_INE, "Instruction Non-Existent"},
+> -    {EXCCODE_IPE, "Instruction privilege error"},
+> -    {EXCCODE_FPD, "Floating Point Disabled"},
+> -    {EXCCODE_FPE, "Floating Point Exception"},
+> -    {EXCCODE_DBP, "Debug breakpoint"},
+> -    {EXCCODE_BCE, "Bound Check Exception"},
+> -    {EXCCODE_SXD, "128 bit vector instructions Disable exception"},
+> -    {EXCCODE_ASXD, "256 bit vector instructions Disable exception"},
+> -    {EXCP_HLT, "EXCP_HLT"},
+> -};
+> -
+> -static const char *loongarch_exception_name(int32_t exception)
+> -{
+> -    int i;
+> -
+> -    for (i = 0; i < ARRAY_SIZE(excp_names); i++) {
+> -        if (excp_names[i].exccode == exception) {
+> -            return excp_names[i].name;
+> -        }
+> -    }
+> -    return "Unknown";
+> -}
+> -
+>   void G_NORETURN do_raise_exception(CPULoongArchState *env,
+>                                      uint32_t exception,
+>                                      uintptr_t pc)
+>   {
+>       CPUState *cs = env_cpu(env);
+>   
+> -    qemu_log_mask(CPU_LOG_INT, "%s: exception: %d (%s)\n",
+> -                  __func__,
+> -                  exception,
+> -                  loongarch_exception_name(exception));
+>       cs->exception_index = exception;
+>   
+>       cpu_loop_exit_restore(cs, pc);
+> 
+Reviewed-by: Bibo Mao <maobibo@loongson.cn>
 
-is INT64_MIN used as an arbitrary large value when interpreted as
-unsigned immediate? If yes, that's confusing to the reader.
-It would be better to choose something like:
-UINT64_MAX - 1024, and assert than no tb has more than 1024 insn.
-
-From that and code above, it seems like we're trying to introduce a "run
-forever" logic as an arbitrary big interval when using begin/end features.
-
-Maybe it would be more obvious to use:
-- leave count initialization to 0
-- if using begin/end, set an arbitrary large interval (which will never
-be "fullfilled" by normal execution), like UINT64_MAX - 1024.
-
-Normal path is unmodified, and you can insert the begin/end logic
-accordingly.
-
-Maybe I missed the clever way it's supposed to work, but at this time of
-the day, my brain can't see it :). Feel free to explain if I missed
-anything obvious.
-
-Regards,
-Pierrick
 
