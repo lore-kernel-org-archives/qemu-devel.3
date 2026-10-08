@@ -4,113 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24589CA600B
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Oct 2026 14:36:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA4D3CA600B
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Oct 2026 15:03:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xEpDu-0001ni-PM; Thu, 08 Oct 2026 10:35:54 -0400
+	id 1xEpdi-0006fl-6V; Thu, 08 Oct 2026 11:02:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <foss@defmacro.it>) id 1xEpDs-0001nF-GP
- for qemu-devel@nongnu.org; Thu, 08 Oct 2026 10:35:52 -0400
-Received: from fhigh-a2-smtp.messagingengine.com ([103.168.172.153])
+ (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
+ id 1xEpdb-0006eS-AU; Thu, 08 Oct 2026 11:02:27 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <foss@defmacro.it>) id 1xEpDp-000243-Ko
- for qemu-devel@nongnu.org; Thu, 08 Oct 2026 10:35:51 -0400
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
- by mailfhigh.phl.internal (Postfix) with ESMTP id 200541400090
- for <qemu-devel@nongnu.org>; Thu,  8 Oct 2026 10:35:46 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
- by phl-compute-04.internal (MEProxy); Thu, 08 Oct 2026 10:35:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=defmacro.it; h=
- cc:cc:content-transfer-encoding:content-type:content-type:date
- :date:from:from:in-reply-to:message-id:mime-version:reply-to
- :subject:subject:to:to; s=fm2; t=1791470146; x=1791556546; bh=n6
- Wn4D3mzo4oYk7NQN/ID+j+joyxzsVXeARZWy/L05M=; b=qYmeV1vZvu1kFPWwSf
- l1AdsR2BUOfGeP4mMLo9NLrZI3gyklodMM9mA9/stHHH3QCY1urNR8z5p74LcRwd
- DLcnsxP2/xrYxTTqs84lvof3rHNMBB/2OPBVmEL4+ajmEli/f7z49dw8xDPpUNXq
- QeDCyn7IXP+EcoJCXmTrkn6BJs/9sPISXw114pI38B/ESq+vcuytvCZXD6t8S8m+
- nCxHMqfuT0ja6jKDT146qoxNu6u9zf2ajgn5wMLgHFMyEa6VZ4wz+PDJhxVF7pyI
- OUmE+s5hlD/qGgJubd8lJP3wJ/NagNy7/YKMjkoXbqt2UYs8KVcsjscvgZneTmFV
- RcqQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:message-id:mime-version:reply-to:subject
- :subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
- fm2; t=1791470146; x=1791556546; bh=n6Wn4D3mzo4oYk7NQN/ID+j+joyx
- zsVXeARZWy/L05M=; b=SiEMlkFdOUUCb1OBV0G9nNTlMzJ7nkvEEpisuAMVR0VG
- 3QmmduZGY0uaeBNdlzm88RcNNnDiGcOoW5HM6n5KeeOcHbO0o0onk1FGLyvfTsMK
- qo4Z+01JbqFXD2IZQXkqvsKOOABQ2lrKShcMWTRs4FlmFtpET/ffMPPIZ+pKPtkD
- +L2omlLezZBa7CXJc/Dk12P6rBdcONXj08+WDbrYlg8ner76wbAvopi6i2OdwBP0
- daAy3ceGhkUGd9TjgoCHWlfmxAN06vHQDwnux6QjyMRVuZ2ey6OnmAETqWc3VVo2
- GLLAVye91On1YnvjeS3cpf2N4xX4FZ5ZcR73cGdi/A==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
- repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
- action=sign d=defmacro.it a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1791470146; d=defmacro.it;
- mf=PGZvc3NAZGVmbWFjcm8uaXQ+;
- rt=PHFlbXUtZGV2ZWxAbm9uZ251Lm9yZz4=;
- s=fm2:rsa-sha256:aKV+Clb4A9JML48PDemUY5AcfS8YsPrfa/5QJcmqJaa5XCB
- eMv3MkwdTaXHT+3qouDBuZ3RkODLKCdXQ1Z9D7artWXHl8Vn2fXJ358b5XwgCN8s
- ADMG4fkFKSbrMZ/Eznx4RGL3qUhkj1xtWsxbkP0a4uQOwcedCFOCHXId4kINbkle
- fNlGtDTPlHXIp0bi83KTAHM7Hs8sEJ8MRLYfou5KSmODxwvM1k+l3k4bMJAfRBHg
- E7l4lrECvhDKanev87ZPMjZzXjPGdmFeBOOva0fJ/UV/8a9wgBM02tVe6V0KT1A7
- ED1wl4ihGCc+Lxy33lQFEGQiBbp2xuCAlMVipLw==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
- repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
- action=mi-m=1; hc=10;
- hn=cc,content-transfer-encoding,content-type,date,feedback-id,
- from,message-id,mime-version,subject,to;
-Message-Instance: m=1;
- h=sha256:5omnnN/AowpticViCXsksZmK3Wqommz0Tn16dtZYjZk=:mpnn2COmg3tpEiEj168ofxeSyF/obTN9b3x+12nYw/w=;
-X-ME-Sender: <xms:QarHarQ17BTVKGDNsT7S5IW9wi2J8cEJ9gCfyAD_JZ8FIACg8ChpAA>
- <xme:QarHalvvvr48-43oVAr7L5QX5f6i2b-L6dYKMONH9fb7RegO0QFpaekctkzEv2A8L
- wOmros1ysTYgQlFvsJH--RE9UB-sR5N0fGoczwZrYSBUcDEjEjyN-myJQ>
-X-ME-Received: <xmr:QarHasbzdKp8QnHZ0pD5b9XMpofeW6eSjreNXFj-D_DJH7LfRJC3tiY1CidNh6nNOg_Pc4MChGmo7BqwC7DFJrHCfUC89vmIXvbO>
-X-ME-Proxy-Cause: dmFkZTE+ctGgTnKvqBh2k/JVq6ZfE25a/Ap/llxMgKjGEIWDU8uOaqyLe6cdbrw9mgDsWC
- 4qhsXEJXVxxOTCKhpShhOcC7+JJEfWlosbQV5kDz+g/egwNDLAEHAPRhbk2m+shLfFKH/M
- x8dYXBLGBMbiVmOPTwX8/fmb77VwrQ+UHgTLf9YJhbcc+7CCUp1NuHAiWq04mmkp8/icFP
- zf/yPnU19vywwgl7bUx9Qk+0AC7aSi49XW6bT65DogNK/4UyzNZvbr+fW6jQYoAZqi9Zof
- 20dEfTzhWs+RJ6JeliS68K7/4io1hDr1mWgC0FiG7YcPc7mZkfMLP2TyL66MV0VZDX4DXM
- wkFWBWeh/LXrf2mqieYWE1BmrsdnU0/WeMdS2q4zgLBeQIAjqveZtY3u/vlnsQCZ7lRdEq
- tPHu1A5ROw3DgaaYTzn1jk1MoRKefHT6XaxWTv00NzG+t50Br1TnMHUsBlCiYyipa+pI+Q
- Ys2o5RPy8/7jWYsdBo/x+WLRmlLyiPJ+U3R1wtHTtffXBflrpW4Wf0cvEc7nv/xiYbr4+k
- yeg/rNrdQVNvUoFc5s/yTbpS445/te41uUbD2R80oQc02wOldpZi1+4uXqZogKzVsxu0WV
- m5FwZeqLmS/fLVaQGNazJDcDGTFz58AK8LoamRyol57wogL3ZZUDrhrcB1Og
-X-ME-Proxy: <xmx:QarHarHwyAzHrdqslYnSokY6agyQRQ8auGTylvtsk5bwOWYL0CM34Q>
- <xmx:QarHagzcvKNsq1lTHo7OUhlkruZQrSil0zYqjiFz4RXm_DNh3-6rEg>
- <xmx:QarHatnoGYzl5u5q2GTvaF_iXPPmtkyk_K3gu4Ocq_EY_qXsEjaIcg>
- <xmx:QarHapnpvCooM9aqZYE8OOlblmGc3-F8UKhomqaRe1dNR2VxWkIB8g>
- <xmx:QqrHag1HjlEQ-iGS8MExjOH_0-P-wFxeyIVaAqyF_PwibfPyy1dRSlHN>
-Feedback-ID: ic0014905:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 8 Oct 2026 10:35:44 -0400 (EDT)
-From: Jesper Devantier <foss@defmacro.it>
-Date: Thu, 08 Oct 2026 16:35:07 +0200
-Subject: [PATCH] hw/nvme: generate deterministic NS UUID if unspecified
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20261008-patch-review-20261008160517-b70-v1-1-05b7be840392@samsung.com>
-X-B4-Tracking: v=1; b=H4sIABqqx2oC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDIzNDAwML3YLEkuQMXZDS1HJdmKihmYGpoblukrmBbqKZeaKBYXJSarJlohL
- QlIKi1LTMCrAN0bG1tQC+LdY8cQAAAA==
-X-Change-ID: 20261008-patch-review-20261008160517-b70-a67a01cbec9a
-To: qemu-devel@nongnu.org, Keith Busch <kbusch@kernel.org>, 
- Klaus Jensen <its@irrelevant.dk>, Jesper Devantier <foss@defmacro.it>, 
- qemu-block@nongnu.org
-Cc: Jesper Wendel Devantier <j.devantier@samsung.com>
-X-Mailer: b4 0.14.3
-Received-SPF: pass client-ip=103.168.172.153; envelope-from=foss@defmacro.it;
- helo=fhigh-a2-smtp.messagingengine.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+ (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
+ id 1xEpdX-0005kB-Ru; Thu, 08 Oct 2026 11:02:26 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 698EZaFN1614859; Thu, 8 Oct 2026 15:02:19 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:reply-to:subject:to; s=pp1;
+ bh=0OWxaAn9CfZaghcr+qeZbFg/V6ncXwoD7CH4kJPou7s=; b=hnrRykcJnoH6
+ ccQdWS1oE7yf9O4OuO9pW/iK0UL2sN1SdRBUb0IZ39OE+jzj2AFdK8wCppXU8AKG
+ d24Lh6qUOV0qPcJseF7PC3T1cyhdzTCRwiTT87lzZGrmYVygkenIvsPHDnzxgJDG
+ 2RAB5VW/puyDBh6ZVECoxrBT5o9jJr3BBpRb2Ei4mDy+z+MMnopsG1A/+F+9VB1F
+ D391+z4ylk2kkpKNbWpdAi4pOgFkow+ydnHVyRskinC1TSOl2eT6vBiLaneoDjSM
+ lDwg5xlNmWnEgM1fGlS8Izv8YV147VuKBnvj5HMFshaokbULG5+aN+lcujkZFSV+
+ 00h/GDzQ0Q==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4h5xjvm67u-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Thu, 08 Oct 2026 15:02:18 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 698EXf6D3636939; Thu, 8 Oct 2026 15:02:18 GMT
+Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4h3dhh3p46-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 08 Oct 2026 15:02:18 +0000 (GMT)
+Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
+ [10.241.53.102])
+ by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 698F2HqP25428630
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 8 Oct 2026 15:02:17 GMT
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 1039758063;
+ Thu,  8 Oct 2026 15:02:17 +0000 (GMT)
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 6D30A58060;
+ Thu,  8 Oct 2026 15:02:16 +0000 (GMT)
+Received: from mambor8.rchland.ibm.com (unknown [9.10.239.198])
+ by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Thu,  8 Oct 2026 15:02:16 +0000 (GMT)
+Message-ID: <4e558b6e13f4ab9f3970294911138d6978a1098d.camel@linux.ibm.com>
+Subject: Re: [PATCH 04/10] target/ppc: Factor ppc_env_is_64bit() out
+From: Miles Glenn <milesg@linux.ibm.com>
+To: Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?= <philmd@oss.qualcomm.com>,
+ qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-riscv@nongnu.org, Pierrick
+ Bouvier <pierrick.bouvier@oss.qualcomm.com>, Alex =?ISO-8859-1?Q?Benn=E9e?=
+ <alex.bennee@linaro.org>, Richard Henderson <richard.henderson@linaro.org>,
+ Anton Johansson <anjo@rev.ng>, qemu-ppc@nongnu.org, Yonggang Luo
+ <luoyonggang@gmail.com>, Chinmay Rath <rathc@linux.ibm.com>, Nicholas
+ Piggin <npiggin@gmail.com>, Harsh Prateek Bora <harshpb@linux.ibm.com>
+Date: Thu, 08 Oct 2026 10:02:16 -0500
+In-Reply-To: <20261007232326.66240-5-philmd@oss.qualcomm.com>
+References: <20261007232326.66240-1-philmd@oss.qualcomm.com>
+ <20261007232326.66240-5-philmd@oss.qualcomm.com>
+Organization: IBM
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.28.5 (3.28.5-27.el8_10) 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-GUID: YyIG5dVCd90lNhUatYeEBZ99Flbxrc8G
+X-Proofpoint-ORIG-GUID: CJbijbOKLpmx2rU93dxAnw6pJyp6-z6I
+X-Authority-Analysis: v=2.4 cv=FoOQbGrq c=1 sm=1 tr=0 ts=6ac7b07b cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8
+ a=EUspDBNiAAAA:8 a=CoDvO8Mup1ZAVdhail0A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA4MDA1OCBTYWx0ZWRfX7p49zveoYX1s
+ Bk0md1ZU8uoNw9GL0fVvKn5uBjcsCabJwje3hO8YpsszhYozT0x3twkoyWsXYLmhv10yT6Vra6P
+ NkI8pWgr5XfSeZOmTH5c/Fh8O6EMYvg=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA4MDA1OCBTYWx0ZWRfX8uHh0iDPy6Eg
+ grNMqnjZdNeUNwgDe5aoF7XXgMAhrbdu1MORDZU56mjcrWEE9WG6xYrZ+twvt3ImGYm17xnVFiA
+ N+f3lHYwTkaoRHaE6pk/sjoWecM/xJhE9A1kVssqEbJ78qASsTl+lEZesB6u0RrcstDBCCgooyk
+ PSYVxBjtJVyhxTrt3UjJi6tNJ542i7C5SCFx2PqIT5+gmfM0DAsimB5vKL8wgoKDe1kB4FH2Gt2
+ OC+Jdn14Ren0kq/M6HKaWVj9oRP9KZUUbLjhIZnIuQSH0bmn08v6Lu1laNbZN9T4dfR/Qj/MO5x
+ sZBCkcMtBeJcXebucsGGWiLD5EVB/sGip76xbcni4qQPvmAiRIJLgP+1wOEX/chI0QtWg67lE4x
+ +rlmPcYgBqEz1ksHs7HdkUSCAvWQPg==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-10-08_05,2026-10-08_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 bulkscore=0 lowpriorityscore=0 adultscore=0 spamscore=0
+ phishscore=0 malwarescore=0 classifier=typeunknown authscore=0 authtc=
+ authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.22.0-2610020000 definitions=main-2610080058
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=milesg@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -124,227 +126,60 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: milesg@linux.ibm.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jesper Wendel Devantier <j.devantier@samsung.com>
+Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
 
-The base specification, from 1.4c to 2.4 states in the figure
-"Namespace Identification Descriptor", that a NS for which EUI64
-and NGUID are cleared, a descriptor of NIDT 3h containing the
-namespace UUID must be returned.
+Thanks,
 
-docs/system/devices/nvme.rst, under "Additional Namespaces", says
-that `uuid` defaults to an autogenerated value.
+Glenn
 
-This commit derives a deterministic UUID from controller
-VID/MN/SN fields and the Namespace's ID - provided the UUID was
-not explicitly provided.
-This change also ensures this UUID is returned in the NS
-descriptor list.
-
-Signed-off-by: Jesper Wendel Devantier <j.devantier@samsung.com>
----
- hw/nvme/ctrl.c |  6 ++--
- hw/nvme/ns.c   | 93 ++++++++++++++++++++++++++++++++++++++++++++++++++--------
- hw/nvme/nvme.h |  5 +++-
- 3 files changed, 87 insertions(+), 17 deletions(-)
-
-diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index 578421c217..0033d09e07 100644
---- a/hw/nvme/ctrl.c
-+++ b/hw/nvme/ctrl.c
-@@ -6145,10 +6145,10 @@ static uint16_t nvme_identify_ns_descr_list(NvmeCtrl *n, NvmeRequest *req)
-         return NVME_INVALID_FIELD | NVME_DNR;
-     }
- 
--    if (!qemu_uuid_is_null(&ns->params.uuid)) {
-+    if (!qemu_uuid_is_null(&ns->uuid)) {
-         uuid.hdr.nidt = NVME_NIDT_UUID;
-         uuid.hdr.nidl = NVME_NIDL_UUID;
--        memcpy(uuid.v, ns->params.uuid.data, NVME_NIDL_UUID);
-+        memcpy(uuid.v, ns->uuid.data, NVME_NIDL_UUID);
-         memcpy(pos, &uuid, sizeof(uuid));
-         pos += sizeof(uuid);
-     }
-@@ -9705,7 +9705,7 @@ static void nvme_realize(PCIDevice *pci_dev, Error **errp)
-         ns->ctrl = n;
-         ns->subsys = n->subsys;
- 
--        if (nvme_ns_setup(ns, errp)) {
-+        if (nvme_ns_setup(ns, n, errp)) {
-             return;
-         }
- 
-diff --git a/hw/nvme/ns.c b/hw/nvme/ns.c
-index 2ae26a9acb..e25191468f 100644
---- a/hw/nvme/ns.c
-+++ b/hw/nvme/ns.c
-@@ -18,6 +18,7 @@
- #include "qemu/error-report.h"
- #include "qapi/error.h"
- #include "qemu/bitops.h"
-+#include "qemu/xxhash.h"
- #include "system/system.h"
- #include "system/block-backend.h"
- #include "migration/vmstate.h"
-@@ -63,6 +64,66 @@ void nvme_ns_init_format(NvmeNamespace *ns)
-     id_ns_nvm->npdgl = npdg;
- }
- 
-+static uint64_t nvme_ns_hash_field(const uint8_t *field, size_t len)
-+{
-+    uint64_t h = QEMU_XXHASH_SEED;
-+
-+    /* fold `field` of `len` bytes into a 64bit hash value */
-+    while (len >= 8) {
-+        h = qemu_xxhash64_4(h, ldq_le_p(field), 0, 0);
-+        field += 8;
-+        len -= 8;
-+    }
-+
-+    while (len >= 4) {
-+        h = qemu_xxhash64_4(h, ldl_le_p(field), 0, 0);
-+        field += 4;
-+        len -= 4;
-+    }
-+
-+    while (len) {
-+        h = qemu_xxhash64_4(h, *field++, 0, 0);
-+        len--;
-+    }
-+
-+    return h;
-+}
-+
-+void nvme_ns_uuid_init(NvmeNamespace *ns, NvmeCtrl *n)
-+{
-+    uint64_t sn_hash, mn_hash, lo, hi;
-+    uint32_t tmp[4];
-+
-+    /* user-provided value is preferred */
-+    if (!qemu_uuid_is_null(&ns->params.uuid)) {
-+        ns->uuid = ns->params.uuid;
-+        return;
-+    }
-+
-+    /*
-+     * No uuid= given: derive one from the controller identity (VID/SN/MN)
-+     * and the namespace id.  This is deterministic, so an OS can use it
-+     * as a persistent disk identity across power cycles and resets.
-+     */
-+    sn_hash = nvme_ns_hash_field(n->id_ctrl.sn, sizeof(n->id_ctrl.sn));
-+    mn_hash = nvme_ns_hash_field(n->id_ctrl.mn, sizeof(n->id_ctrl.mn));
-+
-+    lo = qemu_xxhash64_4(le16_to_cpu(n->id_ctrl.vid), ns->params.nsid,
-+                         sn_hash, mn_hash);
-+    hi = qemu_xxhash64_4(ns->params.nsid, le16_to_cpu(n->id_ctrl.vid),
-+                         mn_hash, sn_hash);
-+
-+    tmp[0] = (uint32_t)(lo >> 32);
-+    tmp[1] = (uint32_t)lo;
-+    tmp[2] = (uint32_t)(hi >> 32);
-+    tmp[3] = (uint32_t)hi;
-+    memcpy(&ns->uuid, tmp, sizeof(tmp));
-+
-+    ns->uuid.data[8] = (ns->uuid.data[8] & 0x3f) | 0x80;
-+    /* RFC 9562 - version 8 UUID (custom) */
-+    ns->uuid.data[6] = (ns->uuid.data[6] & 0xf) | 0x80;
-+}
-+
- static int nvme_ns_init(NvmeNamespace *ns, Error **errp)
- {
-     static uint64_t ns_count;
-@@ -727,7 +788,7 @@ static int nvme_ns_check_constraints(NvmeNamespace *ns, Error **errp)
-     return 0;
- }
- 
--int nvme_ns_setup(NvmeNamespace *ns, Error **errp)
-+int nvme_ns_setup(NvmeNamespace *ns, NvmeCtrl *n, Error **errp)
- {
-     if (nvme_ns_check_constraints(ns, errp)) {
-         return -1;
-@@ -753,6 +814,8 @@ int nvme_ns_setup(NvmeNamespace *ns, Error **errp)
-         }
-     }
- 
-+    nvme_ns_uuid_init(ns, n);
-+
-     return 0;
- }
- 
-@@ -922,18 +985,10 @@ static void nvme_ns_realize(DeviceState *dev, Error **errp)
-     ns->subsys = subsys;
-     ns->endgrp = &subsys->endgrp;
- 
--    if (!nvme_ns_set_nsabp(n, ns, errp)) {
--        return;
--    }
--
--    if (!nvme_ns_set_nab(n, ns, errp)) {
--        return;
--    }
--
--    if (nvme_ns_setup(ns, errp)) {
--        return;
--    }
--
-+    /*
-+     * Resolve the namespace id before nvme_ns_setup(): the namespace UUID is
-+     * derived from it, so it has to be final by then.
-+     */
-     if (!nsid) {
-         for (i = 1; i <= NVME_MAX_NAMESPACES; i++) {
-             if (nvme_subsys_ns(subsys, i)) {
-@@ -953,6 +1008,18 @@ static void nvme_ns_realize(DeviceState *dev, Error **errp)
-         return;
-     }
- 
-+    if (!nvme_ns_set_nsabp(n, ns, errp)) {
-+        return;
-+    }
-+
-+    if (!nvme_ns_set_nab(n, ns, errp)) {
-+        return;
-+    }
-+
-+    if (nvme_ns_setup(ns, n, errp)) {
-+        return;
-+    }
-+
-     subsys->namespaces[nsid] = ns;
- 
-     ns->id_ns.endgid = cpu_to_le16(0x1);
-diff --git a/hw/nvme/nvme.h b/hw/nvme/nvme.h
-index a4b2c01a2c..477f7eeb4f 100644
---- a/hw/nvme/nvme.h
-+++ b/hw/nvme/nvme.h
-@@ -260,6 +260,8 @@ typedef struct NvmeNamespace {
-     int          attached;
-     uint8_t      pif;
- 
-+    QemuUUID     uuid;
-+
-     struct {
-         uint16_t zrwas;
-         uint16_t zrwafg;
-@@ -410,7 +412,8 @@ static inline void nvme_fdp_stat_inc(uint64_t *a, uint64_t b)
- }
- 
- void nvme_ns_init_format(NvmeNamespace *ns);
--int nvme_ns_setup(NvmeNamespace *ns, Error **errp);
-+int nvme_ns_setup(NvmeNamespace *ns, NvmeCtrl *n, Error **errp);
-+void nvme_ns_uuid_init(NvmeNamespace *ns, NvmeCtrl *n);
- void nvme_ns_drain(NvmeNamespace *ns);
- void nvme_ns_shutdown(NvmeNamespace *ns);
- void nvme_ns_cleanup(NvmeNamespace *ns);
-
----
-base-commit: f6c0588fd7c22caefc5b31f485c8bb3ee994a58b
-change-id: 20261008-patch-review-20261008160517-b70-a67a01cbec9a
-
-Best regards,
--- 
-Jesper Wendel Devantier <j.devantier@samsung.com>
+On Thu, 2026-10-08 at 01:23 +0200, Philippe Mathieu-Daudé wrote:
+> Replace the open-coded PPC_64B test in register_BookE206_sprs()
+> by a ppc_env_is_64bit() helper for re-use in the next commit.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+> ---
+>  target/ppc/internal.h | 11 +++++++++++
+>  target/ppc/cpu_init.c |  2 +-
+>  2 files changed, 12 insertions(+), 1 deletion(-)
+> 
+> diff --git a/target/ppc/internal.h b/target/ppc/internal.h
+> index a20a0f9f7e0..11476692616 100644
+> --- a/target/ppc/internal.h
+> +++ b/target/ppc/internal.h
+> @@ -23,6 +23,17 @@
+>  #include "hw/core/registerfields.h"
+>  #include "exec/page-protection.h"
+>  
+> +/**
+> + * ppc_env_is_64bit:
+> + * @env: the cpu context
+> + *
+> + * Return whether the CPU is a 64-bit implementation.
+> + */
+> +static inline bool ppc_env_is_64bit(const CPUPPCState *env)
+> +{
+> +    return env->insns_flags & PPC_64B;
+> +}
+> +
+>  static inline bool ppc_env_is_little_endian(const CPUPPCState *env)
+>  {
+>      return FIELD_EX64(env->msr, MSR, LE);
+> diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
+> index b711f9c0a85..a43ef47acd2 100644
+> --- a/target/ppc/cpu_init.c
+> +++ b/target/ppc/cpu_init.c
+> @@ -869,7 +869,7 @@ static void register_BookE206_sprs(CPUPPCState *env, uint32_t mas_mask,
+>              spr_register(env, mas_sprn[i], mas_names[i],
+>                           SPR_NOACCESS, SPR_NOACCESS,
+>                           &spr_read_generic,
+> -                         (i == 2 && (env->insns_flags & PPC_64B))
+> +                         (i == 2 && ppc_env_is_64bit(env))
+>                           ? &spr_write_generic : &spr_write_generic32,
+>                           0x00000000);
+>          }
 
 
