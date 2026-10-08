@@ -4,71 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07844CA600E
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Oct 2026 20:29:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 996D3CA600C
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Oct 2026 20:31:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xEuiu-0002My-I5; Thu, 08 Oct 2026 16:28:16 -0400
+	id 1xEum3-00034q-4b; Thu, 08 Oct 2026 16:31:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1xEuis-0002Me-JH; Thu, 08 Oct 2026 16:28:14 -0400
+ id 1xEull-000300-24
+ for qemu-devel@nongnu.org; Thu, 08 Oct 2026 16:31:26 -0400
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1xEuiq-0006MF-QX; Thu, 08 Oct 2026 16:28:14 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ id 1xEulj-0006ge-F8
+ for qemu-devel@nongnu.org; Thu, 08 Oct 2026 16:31:12 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 698HZXFV2005110; Thu, 8 Oct 2026 20:28:10 GMT
+ 698HZWLL784877; Thu, 8 Oct 2026 20:30:54 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=rmGexT
- BuNimV3UhyMFVCWa0E/7brc3ddzExXDMvXP6w=; b=fbnMUIaHjgf57MFkOC31Zp
- QO/fcRTfnqHOeMIWhnKYSzNmZPrXVUcgKVkEcgrskljkHvMSwrOUr24XJzhbMXEC
- HpmzbWDGgcPDaWvDajjbtKxjRcfmVUPK868Q59zBF/hUtd0B/8Mm9YTADPfPydck
- lkcUMXfNUFYfUFSu8Dws3KkWpxNQo+cjmZe3SoZF8gtBVdn20iOfSZj4mySz6C74
- BfAl8v+e9ydKpcYAK4nOu8MXymQBVaw1oqEDipo7VD0tPCDYH4Bd5ofhwL1fGNTy
- OPOw7gEKbYcOptZjv2Sef4paqtAZC4DWj2mX+cHPWW/lvYA+J+BpRxq3gk7vpqmA
+ :message-id:mime-version:references:subject:to; s=pp1; bh=B+n7ZP
+ Vp5D/j18kYFmVlKU/TlxvnhWxrw+9uWKEl938=; b=Rp14Adi7XsEWzwjf2w2iSL
+ hxOpiVyX399z2MhTAlcM+NNWb8FPDtPKzde6Lm5L8VpicfvkPowW3f1jtEk/TbFJ
+ g044qKKHemErdcdPyLFuAwU4yjLwLB98SFhA6a5QXe5jMzZ35GeAuIhsnVpzFT3N
+ RhE3O3+Y0uxubWZkI9zamho2+/e2rNfDNmMSao0yVofqRdH2wZQ9hLXmgTNsOpE2
+ c7F0ebR4VTsN/zDNQLaDYpWwtJbRgebEvBiWvUV0M8HWUORz7c85Fhx3n6fHdKj6
+ s9Voq0EP2xOlXLv4GxaCzYRtqS8LFBQaDfhgOf6HNG1jbxjNfz5daxUZaRTUsPxg
  ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4h5xjvp0y0-1
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4h5xk1e123-1
  (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Thu, 08 Oct 2026 20:28:09 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 698JvMfR4006257; Thu, 8 Oct 2026 20:28:09 GMT
-Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4h6hsng42r-1
+ Thu, 08 Oct 2026 20:30:53 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 698HWq1L3841977; Thu, 8 Oct 2026 20:30:53 GMT
+Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4h5a6ds01s-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 08 Oct 2026 20:28:09 +0000 (GMT)
+ Thu, 08 Oct 2026 20:30:53 +0000 (GMT)
 Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com
  [10.39.53.233])
- by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 698KS7hd5833234
+ by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 698KUqNL34013904
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 8 Oct 2026 20:28:08 GMT
+ Thu, 8 Oct 2026 20:30:52 GMT
 Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A0BAD58054;
- Thu,  8 Oct 2026 20:28:07 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 60F6E5804E;
+ Thu,  8 Oct 2026 20:30:52 +0000 (GMT)
 Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A84AD5804E;
- Thu,  8 Oct 2026 20:28:06 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 7C7C25803F;
+ Thu,  8 Oct 2026 20:30:51 +0000 (GMT)
 Received: from [9.61.5.156] (unknown [9.61.5.156])
  by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Thu,  8 Oct 2026 20:28:06 +0000 (GMT)
-Message-ID: <17e9327c-efdf-48bc-85f2-64a4b334fdbd@linux.ibm.com>
-Date: Thu, 8 Oct 2026 16:28:06 -0400
+ Thu,  8 Oct 2026 20:30:51 +0000 (GMT)
+Message-ID: <85d04515-9ccc-4479-a29a-aa63f6e85e6d@linux.ibm.com>
+Date: Thu, 8 Oct 2026 16:30:50 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] tests/qtest: Fix pxe-test build failure on Win32 due
- to missing memmem()
-To: Zhuoying Cai <zycai@linux.ibm.com>, qemu-devel@nongnu.org,
- qemu-s390x@nongnu.org
-Cc: shentey@gmail.com, cohuck@redhat.com, mjrosato@linux.ibm.com,
- farosas@suse.de, lvivier@redhat.com, pbonzini@redhat.com
-References: <20261008195158.289711-1-zycai@linux.ibm.com>
+Subject: Re: [PATCH 0/2] tests/qtest: fix and gaurd PXE test build on MinGW
+To: Yonggang Luo <luoyonggang@gmail.com>, qemu-devel@nongnu.org
+Cc: Philippe Mathieu-Daude <philmd@mailo.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Laurent Vivier <lvivier@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Fabiano Rosas <farosas@suse.de>
+References: <20261008184119.142-1-luoyonggang@gmail.com>
 Content-Language: en-US
 From: Eric Farman <farman@linux.ibm.com>
 Autocrypt: addr=farman@linux.ibm.com; keydata=
@@ -115,35 +118,35 @@ Autocrypt: addr=farman@linux.ibm.com; keydata=
  4HX/6RAR4Dbzry6/epWTTji+7ApzePzmJzPcuzD31ICsgT2dJ6ydxyxxXikBFJqx6BPOF+u+
  1BtKcTz1ek3I2sWvBM1V5CKaFw7iNXxS6HgS2scuAT2awKq+BQlt778/GfBWpXonfqixMvit
  y8m0x6unNti2MZIUMy0m2gcE
-In-Reply-To: <20261008195158.289711-1-zycai@linux.ibm.com>
+In-Reply-To: <20261008184119.142-1-luoyonggang@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-TM-AS-GCONF: 00
 X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-GUID: GSJDEQ_Qh10pC_R5SikUnwapqFm6V6I7
-X-Proofpoint-ORIG-GUID: jl68Hqx22IEDjxHfXSOGn_cV8OrVuSqC
-X-Authority-Analysis: v=2.4 cv=FoOQbGrq c=1 sm=1 tr=0 ts=6ac7fcda cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+X-Authority-Analysis: v=2.4 cv=YtCa1IYX c=1 sm=1 tr=0 ts=6ac7fd7e cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
  a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8
- a=pGLkceISAAAA:8 a=76ruLSv1XDkyJoVcLhcA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA4MDA4MCBTYWx0ZWRfX9v+FUlScHYR0
- CGbUFMVA+Voz7r9qRRVDyHUqPiXtUwbnO/acwDdUbTc3pLsclnoa/BsVr6iRAunpbFJs7WtT5GB
- ipz6MJw9FPi1GZFpVR6u3WAHhP39yJU=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA4MDA4MCBTYWx0ZWRfX9dicaQ84zjXN
- LFLgl66D4SW2Qboboyiw6IY8Z4nr+J5IC0Zj0L9PSMKrUOgEovC5BQhL27zwObP+a5MTOIZLjk4
- wrqcSZtJJFAkUWumgVFryLT2zfVPs8DBiRtWZtsOCuM+85iLn8sLS3trUzsefNoRbiKeI6Zre5Z
- bpJNGHnhvrn6f8RdasHW21viUoFYALuCO++MlgO4iwovKtaoUb11xl2eJ4ruU249dk+xiVqDNaX
- +Fn48ohPQnChcWhNLDHixWavPIvjmpLjeK7pUU4iGssLy9/gvp+z3I1xS5Z85cnkMTNKQ6akV8k
- lTiPpmNvBAj68iof+JaiMIXpmad2wUyZaC0QSFyYIHSNr+YZBRQ3U8+ExRwc8fHbZlNJ50sY0qW
- 5X6qiamNX3ZeyrJhkww02G3YGayqE6yFv0+RXs7og9Ec6epaTBmGDBRnSkUuU93as4E/J87FbbE
- pUBRfoeCValsiiJUtUQ==
+ a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VwQbUJbxAAAA:8
+ a=VnNF1IyMAAAA:8 a=-bYXH39Ph-bsz2cvq0YA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA4MDA4MCBTYWx0ZWRfX4+ncSwKUhKJp
+ llFBYJh5KZnFpdMlv/kQq5suSBZcYUw638m8M6Q/JrQGaRECaSvjIAVqH7rXWBeEQrum0DevKp9
+ zMXf4XYbu/Cl/4FuKiuZ8nOQu3JZjaz3ruOaMQGYi2P2qFdB2vebkj9TVoS1sfQolChTpitgpC+
+ zzY79dKwZzVW/hm2gWv0QGGrf6ZNANtWy638gX0W9zD4C6bvPK2LMl4Wfn7HfNw0K1JKFJwYWNG
+ Vml1bJUiwtmvmfCoq4cx8cxcKpi0Y+xrKNInWvZjP7HX6IWl6mYRfG6sUpuzYbfd+QQi1kefqyp
+ y1TMBh2/pO+/1N58BT7FR0gItouFtmML0i5FAtxJt68sJKqlEj7vZ2n9sxnYkCA8GOyUj5q4b/M
+ Kjs5KJNmMPkp690K1sT7j5q1QIpWTl8U6R/O5fo9TiL9YdkxE4DOMmTahY05QUlOtCabPGiAJ9H
+ Fj5alp8EzWY2Bpk92Jw==
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA4MDA4MCBTYWx0ZWRfX327b69PwIm7+
+ 2n64DPWao1qv2p/qbwrm1B84gVBrPnacHmFWMwTd22H3t6AH5+Zo1H5eDMKyUi38yUyt2IzB/oh
+ 9Lc+Ttz1OEXHYoMv9j2TdLv2rFvyNV4=
+X-Proofpoint-GUID: 5AB_ellfVBAuZv9PcGV75UUUmw5FDYeK
+X-Proofpoint-ORIG-GUID: 6DqjOInqBhnxKC6wKAGmoSCPTqKZPtFy
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-10-08_06,2026-10-08_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 suspectscore=0 clxscore=1015 lowpriorityscore=0 bulkscore=0
- adultscore=0 priorityscore=1501 spamscore=0 phishscore=0 malwarescore=0
+ spamscore=0 phishscore=0 bulkscore=0 clxscore=1015 priorityscore=1501
+ lowpriorityscore=0 suspectscore=0 malwarescore=0 adultscore=0 impostorscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2610020000 definitions=main-2610080080
 Received-SPF: pass client-ip=148.163.158.5; envelope-from=farman@linux.ibm.com;
@@ -172,63 +175,27 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-On 10/8/26 3:51 PM, Zhuoying Cai wrote:
-> The s390x PXE tests use memmem() to probe the s390-ccw.img firmware
-> for device support strings before running each test. MinGW-w64 does
-> not provide memmem(), breaking the MSYS2/GCC build.
+On 10/8/26 2:41 PM, Yonggang Luo wrote:
+> Replace MinGW-incompatible memmem() with a bounded memcmp() search of the
+> s390 BIOS image.
 > 
-> On Win32, skip the bios scan and return true; if the feature is absent
-> the test will time out rather than skip.
+> The Windows cross-build did not enable slirp, so it skipped building the PXE
+> test. The series enables slirp for that build, ensuring the test is compiled
+> and the MinGW portability issue is covered by CI.
 > 
-> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
-> Reported-by: Bernhard Beschow <shentey@gmail.com>
-> ---
->   tests/qtest/pxe-test.c | 11 +++++++++++
->   1 file changed, 11 insertions(+)
+> Yonggang Luo (2):
+>    tests/qtest: fix PXE test build on MinGW
+>    gitlab-ci: enable slirp in the Windows cross-build
+> 
+>   .gitlab-ci.d/crossbuilds.yml |  2 +-
+>   tests/qtest/pxe-test.c       | 12 ++++++++++--
+>   2 files changed, 11 insertions(+), 3 deletions(-)
+> 
 
-Either this or Yonggang Luo's series works for me...
+Joy's fix [1] also works for me, but perhaps this is a more robust fix.
 
 Tested-by: Eric Farman <farman@linux.ibm.com>
 
-> 
-> diff --git a/tests/qtest/pxe-test.c b/tests/qtest/pxe-test.c
-> index 61c92a2df4..03e4054c5e 100644
-> --- a/tests/qtest/pxe-test.c
-> +++ b/tests/qtest/pxe-test.c
-> @@ -59,6 +59,7 @@ static testdef_t ppc64_tests_slow[] = {
->       { NULL },
->   };
->   
-> +#ifndef _WIN32
->   static const char *s390_bios_load(gsize *len)
->   {
->       static char *cached_contents;
-> @@ -106,9 +107,18 @@ out:
->       *len = cached_len;
->       return cached_contents;
->   }
-> +#endif
->   
->   static bool s390_bios_has_string(const char *needle)
->   {
-> +#ifdef _WIN32
-> +    /*
-> +     * memmem() is not available on win32; assume the string is present.
-> +     * If it is not, the test will timeout instead of detecting missing support.
-> +     */
-> +    g_test_message("\"%s\" assumed in bios", needle);
-> +    return true;
-> +#else
->       const char *contents;
->       gsize len;
->       bool found;
-> @@ -118,6 +128,7 @@ static bool s390_bios_has_string(const char *needle)
->   
->       g_test_message("\"%s\" %s in bios", needle, found ? "found" : "not found");
->       return found;
-> +#endif
->   }
->   
->   static bool s390_bios_has_net_ccw(void)
-
+[1] 
+https://lore.kernel.org/qemu-devel/20261008195158.289711-1-zycai@linux.ibm.com/
 
