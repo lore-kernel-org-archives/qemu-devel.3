@@ -4,31 +4,31 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 735A8CA6018
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 439C3CA6015
 	for <qemu-devel@archiver.kernel.org>; Fri,  9 Oct 2026 03:07:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xF0wa-0004vu-LP; Thu, 08 Oct 2026 23:06:50 -0400
+	id 1xF0wh-0005KR-6W; Thu, 08 Oct 2026 23:06:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <prcups@krgm.moe>) id 1xF0vf-0004el-Aq
- for qemu-devel@nongnu.org; Thu, 08 Oct 2026 23:06:00 -0400
+ (Exim 4.90_1) (envelope-from <prcups@krgm.moe>) id 1xF0vW-0004dU-Iu
+ for qemu-devel@nongnu.org; Thu, 08 Oct 2026 23:05:42 -0400
 Received: from krgm.moe ([103.47.186.116])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <prcups@krgm.moe>) id 1xF0va-0005nI-Fw
- for qemu-devel@nongnu.org; Thu, 08 Oct 2026 23:05:49 -0400
+ (envelope-from <prcups@krgm.moe>) id 1xF0vU-0005mR-AA
+ for qemu-devel@nongnu.org; Thu, 08 Oct 2026 23:05:42 -0400
 Received: from yuno-loong (unknown
  [IPv6:2409:8900:2684:b82:443b:7baf:6228:2a79])
- by krgm.moe (Postfix) with ESMTPSA id 1C4B2DFC1;
- Fri, 09 Oct 2026 08:35:42 +0530 (IST)
+ by krgm.moe (Postfix) with ESMTPSA id E3C66DFC1;
+ Fri, 09 Oct 2026 08:35:37 +0530 (IST)
 From: SignKirigami <prcups@krgm.moe>
 To: qemu-devel@nongnu.org
 Cc: Bibo Mao <maobibo@loongson.cn>, SignKirigami <prcups@krgm.moe>,
  Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
-Subject: [PATCH v5 11/23] target/loongarch: add host TLBRet and handle
-Date: Fri,  9 Oct 2026 11:05:07 +0800
-Message-ID: <2937cd0017d9f82eeaaa99c202979e2dd6d6838b.1791514848.git.prcups@krgm.moe>
+Subject: [PATCH v5 07/23] target/loongarch: add LVZ guest interrupt state
+Date: Fri,  9 Oct 2026 11:05:03 +0800
+Message-ID: <9fefcc4b677adbcbc4860bec1793a15337eedb31.1791514848.git.prcups@krgm.moe>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <cover.1791514848.git.prcups@krgm.moe>
 References: <cover.1791514848.git.prcups@krgm.moe>
@@ -56,102 +56,227 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add host value in enum TLBRet, and use it in raise_mmu_exception().
+Route configured hardware interrupts into the guest CSR bank, track guest
+interrupt requests separately, and expose guest pending and enable checks
+to the TCG runtime.
 
 Signed-off-by: SignKirigami <prcups@krgm.moe>
 Signed-off-by: Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
 ---
- target/loongarch/cpu-mmu.h        |  8 ++++++++
- target/loongarch/tcg/tlb_helper.c | 18 ++++++++++++++++--
- 2 files changed, 24 insertions(+), 2 deletions(-)
+ target/loongarch/cpu.c            | 35 +++++++++++++++++++--------
+ target/loongarch/cpu.h            |  3 +++
+ target/loongarch/internals.h      |  4 ++--
+ target/loongarch/tcg/csr_helper.c |  2 +-
+ target/loongarch/tcg/tcg_cpu.c    | 39 ++++++++++++++++++++++---------
+ 5 files changed, 59 insertions(+), 24 deletions(-)
 
-diff --git a/target/loongarch/cpu-mmu.h b/target/loongarch/cpu-mmu.h
-index 54fb732d62..2b46e481bd 100644
---- a/target/loongarch/cpu-mmu.h
-+++ b/target/loongarch/cpu-mmu.h
-@@ -17,6 +17,14 @@ typedef enum TLBRet {
-     TLBRET_RI,
-     TLBRET_XI,
-     TLBRET_PE,
-+    TLBRET_HOST_MATCH,
-+    TLBRET_HOST_BADADDR,
-+    TLBRET_HOST_NOMATCH,
-+    TLBRET_HOST_INVALID,
-+    TLBRET_HOST_DIRTY,
-+    TLBRET_HOST_RI,
-+    TLBRET_HOST_XI,
-+    TLBRET_HOST_PE,
- } TLBRet;
+diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
+index 664763137d..5cef63a778 100644
+--- a/target/loongarch/cpu.c
++++ b/target/loongarch/cpu.c
+@@ -58,16 +58,20 @@ static vaddr loongarch_cpu_get_pc(CPUState *cs)
+ #ifndef CONFIG_USER_ONLY
+ #include "hw/loongarch/virt.h"
  
- typedef struct MMUContext {
-diff --git a/target/loongarch/tcg/tlb_helper.c b/target/loongarch/tcg/tlb_helper.c
-index 40cc076424..d1f1d233fd 100644
---- a/target/loongarch/tcg/tlb_helper.c
-+++ b/target/loongarch/tcg/tlb_helper.c
-@@ -49,15 +49,24 @@ static void raise_mmu_exception(CPULoongArchState *env, vaddr address,
-                                 MMUAccessType access_type, TLBRet tlb_error)
+-void loongarch_cpu_update_irq(LoongArchCPU *cpu)
++void loongarch_cpu_update_irq(LoongArchCPU *cpu, int vm_level)
  {
-     CPUState *cs = env_cpu(env);
+     CPULoongArchState *env = &cpu->env;
+     CPUState *cs = CPU(cpu);
 -    CPUSysState *sys = env_sys(env);
-+    bool real_guest;
-+
-+    if (env_vm_level(env) == VM_LEVEL1 && tlb_error > TLBRET_HOST_MATCH) {
-+        trigger_vm_exit(env);
-+    }
-+
-+    real_guest = !env->vm_exit && env_vm_level(env);
-+    CPUSysState *sys = get_sys(env, real_guest);
++    CPUSysState *sys = get_sys(env, vm_level);
++    int interrupt = vm_level ? CPU_INTERRUPT_GUEST : CPU_INTERRUPT_HARD;
  
-     switch (tlb_error) {
-     default:
-     case TLBRET_BADADDR:
-+    case TLBRET_HOST_BADADDR:
-         cs->exception_index = access_type == MMU_INST_FETCH
-                               ? EXCCODE_ADEF : EXCCODE_ADEM;
-         break;
-     case TLBRET_NOMATCH:
-+    case TLBRET_HOST_NOMATCH:
-         /* No TLB match for a mapped address */
-         if (access_type == MMU_DATA_LOAD) {
-             cs->exception_index = EXCCODE_PIL;
-@@ -69,6 +78,7 @@ static void raise_mmu_exception(CPULoongArchState *env, vaddr address,
-         sys->CSR_TLBRERA = FIELD_DP64(sys->CSR_TLBRERA, CSR_TLBRERA, ISTLBR, 1);
-         break;
-     case TLBRET_INVALID:
-+    case TLBRET_HOST_INVALID:
-         /* TLB match with no valid bit */
-         if (access_type == MMU_DATA_LOAD) {
-             cs->exception_index = EXCCODE_PIL;
-@@ -79,24 +89,28 @@ static void raise_mmu_exception(CPULoongArchState *env, vaddr address,
-         }
-         break;
-     case TLBRET_DIRTY:
-+    case TLBRET_HOST_DIRTY:
-         /* TLB match but 'D' bit is cleared */
-         cs->exception_index = EXCCODE_PME;
-         break;
-     case TLBRET_XI:
-+    case TLBRET_HOST_XI:
-         /* Execute-Inhibit Exception */
-         cs->exception_index = EXCCODE_PNX;
-         break;
-     case TLBRET_RI:
-+    case TLBRET_HOST_RI:
-         /* Read-Inhibit Exception */
-         cs->exception_index = EXCCODE_PNR;
-         break;
-     case TLBRET_PE:
-+    case TLBRET_HOST_PE:
-         /* Privileged Exception */
-         cs->exception_index = EXCCODE_PPI;
-         break;
++    if (vm_level == VM_LEVEL1 && env_vm_level(env) != VM_LEVEL1) {
++        return;
++    }
+     if (FIELD_EX64(sys->CSR_ESTAT, CSR_ESTAT, IS)) {
+-        cpu_interrupt(cs, CPU_INTERRUPT_HARD);
++        cpu_interrupt(cs, interrupt);
+     } else {
+-        cpu_reset_interrupt(cs, CPU_INTERRUPT_HARD);
++        cpu_reset_interrupt(cs, interrupt);
+     }
+ }
+ 
+@@ -75,21 +79,28 @@ static void loongarch_cpu_self_set_irq(CPUState *cs, run_on_cpu_data data)
+ {
+     LoongArchCPU *cpu = LOONGARCH_CPU(cs);
+     CPULoongArchState *env = cpu_env(cs);
+-    CPUSysState *sys = env_sys(env);
++    CPUSysState *sys;
++    int vm_level = 0;
+     int irq, level;
+ 
+     irq = data.host_int & ~BIT(31);
+     level = (data.host_int >> 31) & 1;
++    if (irq >= N_IRQS) {
++        irq -= N_IRQS;
++        vm_level = 1;
++    }
++    sys = get_sys(env, vm_level);
+     sys->CSR_ESTAT = deposit64(sys->CSR_ESTAT, irq, 1, level != 0);
+-    loongarch_cpu_update_irq(cpu);
++    loongarch_cpu_update_irq(cpu, vm_level);
+ }
+ 
+ void loongarch_cpu_set_irq(void *opaque, int irq, int level)
+ {
+     LoongArchCPU *cpu = opaque;
+     CPUState *cs = CPU(cpu);
++    CPULoongArchState *env = cpu_env(cs);
+ 
+-    if (irq < 0 || irq >= N_IRQS) {
++    if (irq < 0 || irq >= (cpu_has_lvz(env) ? N_VIRQS : N_IRQS)) {
+         return;
      }
  
--    if (tlb_error == TLBRET_NOMATCH) {
-+    if (tlb_error == TLBRET_NOMATCH || tlb_error == TLBRET_HOST_NOMATCH) {
-         sys->CSR_TLBRBADV = address;
-         if (is_la64(env)) {
-             sys->CSR_TLBREHI = FIELD_DP64(sys->CSR_TLBREHI, CSR_TLBREHI_64,
+@@ -103,11 +114,11 @@ void loongarch_cpu_set_irq(void *opaque, int irq, int level)
+ }
+ 
+ /* Check if there is pending and not masked out interrupt */
+-bool cpu_loongarch_hw_interrupts_pending(CPULoongArchState *env)
++bool cpu_loongarch_hw_interrupts_pending(CPULoongArchState *env, int vm_level)
+ {
+     uint32_t pending;
+     uint32_t status;
+-    CPUSysState *sys = env_sys(env);
++    CPUSysState *sys = get_sys(env, vm_level);
+ 
+     pending = FIELD_EX64(sys->CSR_ESTAT, CSR_ESTAT, IS);
+     status  = FIELD_EX64(sys->CSR_ECFG, CSR_ECFG, LIE);
+@@ -122,7 +133,11 @@ bool loongarch_cpu_has_work(CPUState *cs)
+     bool has_work = false;
+ 
+     if (cpu_test_interrupt(cs, CPU_INTERRUPT_HARD) &&
+-        cpu_loongarch_hw_interrupts_pending(cpu_env(cs))) {
++        cpu_loongarch_hw_interrupts_pending(cpu_env(cs), VM_LEVEL0)) {
++        has_work = true;
++    }
++    if (cpu_test_interrupt(cs, CPU_INTERRUPT_GUEST) &&
++        cpu_loongarch_hw_interrupts_pending(cpu_env(cs), VM_LEVEL1)) {
+         has_work = true;
+     }
+ 
+diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
+index 9eea1badaf..8939dbc748 100644
+--- a/target/loongarch/cpu.h
++++ b/target/loongarch/cpu.h
+@@ -20,6 +20,8 @@
+ #include "cpu-csr.h"
+ #include "cpu-qom.h"
+ 
++#define CPU_INTERRUPT_GUEST CPU_INTERRUPT_TGT_EXT_0
++
+ #define FCSR0_M1    0x1f         /* FCSR1 mask, Enables */
+ #define FCSR0_M2    0x1f1f0000   /* FCSR2 mask, Cause and Flags */
+ #define FCSR0_M3    0x300        /* FCSR3 mask, Round Mode */
+@@ -242,6 +244,7 @@ extern const char * const fregnames[32];
+ #define IRQ_TIMER   11
+ #define IRQ_IPI     12
+ #define INT_DMSI    14
++#define N_VIRQS     (N_IRQS * 2)
+ 
+ #define MAX_PERF_EVENTS        16
+ #define LOONGARCH_STLB         2048 /* 2048 STLB */
+diff --git a/target/loongarch/internals.h b/target/loongarch/internals.h
+index ff956823fd..c11cefc4ee 100644
+--- a/target/loongarch/internals.h
++++ b/target/loongarch/internals.h
+@@ -31,7 +31,7 @@ void restore_fp_status(CPULoongArchState *env);
+ #ifndef CONFIG_USER_ONLY
+ extern const VMStateDescription vmstate_loongarch_cpu;
+ 
+-void loongarch_cpu_update_irq(LoongArchCPU *cpu);
++void loongarch_cpu_update_irq(LoongArchCPU *cpu, int vm_level);
+ void loongarch_cpu_set_irq(void *opaque, int irq, int level);
+ 
+ void cpu_loongarch_timer_cb(void *opaque);
+@@ -39,7 +39,7 @@ uint64_t cpu_loongarch_get_timer_counter(CPUTimerState *timer);
+ uint64_t cpu_loongarch_get_timer_ticks(CPUTimerState *timer);
+ void cpu_loongarch_set_timer_config(CPUTimerState *timer, uint64_t value);
+ bool loongarch_cpu_has_work(CPUState *cs);
+-bool cpu_loongarch_hw_interrupts_pending(CPULoongArchState *env);
++bool cpu_loongarch_hw_interrupts_pending(CPULoongArchState *env, int vm_level);
+ #endif /* !CONFIG_USER_ONLY */
+ 
+ uint64_t read_fcc(CPULoongArchState *env);
+diff --git a/target/loongarch/tcg/csr_helper.c b/target/loongarch/tcg/csr_helper.c
+index 1a6919417f..ecfba63228 100644
+--- a/target/loongarch/tcg/csr_helper.c
++++ b/target/loongarch/tcg/csr_helper.c
+@@ -111,7 +111,7 @@ target_ulong helper_csrwr_estat(CPULoongArchState *env, target_ulong val)
+      */
+     if (sys->CSR_ESTAT != old_v) {
+         bql_lock();
+-        loongarch_cpu_update_irq(env_archcpu(env));
++        loongarch_cpu_update_irq(env_archcpu(env), false);
+         bql_unlock();
+     }
+ 
+diff --git a/target/loongarch/tcg/tcg_cpu.c b/target/loongarch/tcg/tcg_cpu.c
+index b60d9e7cf8..101fe6fc7a 100644
+--- a/target/loongarch/tcg/tcg_cpu.c
++++ b/target/loongarch/tcg/tcg_cpu.c
+@@ -238,30 +238,47 @@ static void loongarch_cpu_do_transaction_failed(CPUState *cs, hwaddr physaddr,
+     }
+ }
+ 
+-static inline bool cpu_loongarch_hw_interrupts_enabled(CPULoongArchState *env)
++static inline bool cpu_loongarch_hw_interrupts_enabled(CPULoongArchState *env, int vm_level)
+ {
+     bool ret = 0;
+-    CPUSysState *sys = env_sys(env);
++    CPUSysState *sys = get_sys(env, vm_level);
++    CPUSysState *host = get_sys(env, VM_LEVEL0);
+ 
+     ret = (FIELD_EX64(sys->CSR_CRMD, CSR_CRMD, IE) &&
+-          !(FIELD_EX64(sys->CSR_DBG, CSR_DBG, DST)));
++          !(FIELD_EX64(host->CSR_DBG, CSR_DBG, DST)));
+ 
+     return ret;
+ }
+ 
+ static bool loongarch_cpu_exec_interrupt(CPUState *cs, int interrupt_request)
+ {
++    CPULoongArchState *env = cpu_env(cs);
++    bool has_interrupt = false;
++
+     if (interrupt_request & CPU_INTERRUPT_HARD) {
+-        CPULoongArchState *env = cpu_env(cs);
+-
+-        if (cpu_loongarch_hw_interrupts_enabled(env) &&
+-            cpu_loongarch_hw_interrupts_pending(env)) {
+-            /* Raise it */
+-            cs->exception_index = EXCCODE_INT;
+-            loongarch_cpu_do_interrupt(cs);
+-            return true;
++
++        if (cpu_loongarch_hw_interrupts_enabled(env, VM_LEVEL0) &&
++            cpu_loongarch_hw_interrupts_pending(env, VM_LEVEL0)) {
++            if (env_vm_level(env) != VM_LEVEL0) {
++                trigger_vm_exit(env);
++            }
++            has_interrupt = true;
+         }
++    } else if (interrupt_request & CPU_INTERRUPT_GUEST) {
++        if (cpu_loongarch_hw_interrupts_enabled(env, VM_LEVEL1) &&
++            cpu_loongarch_hw_interrupts_pending(env, VM_LEVEL1) &&
++            env_vm_level(env) == VM_LEVEL1) {
++            has_interrupt = true;
++        }
++    }
++
++    if (has_interrupt) {
++        /* Raise it */
++        cs->exception_index = EXCCODE_INT;
++        loongarch_cpu_do_interrupt(cs);
++        return true;
+     }
++
+     return false;
+ }
+ 
 -- 
 2.55.0
 
