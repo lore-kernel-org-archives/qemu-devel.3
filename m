@@ -4,32 +4,31 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62EDECA5FED
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Oct 2026 03:10:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C44BCA5FED
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Oct 2026 03:10:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xF0wy-0005kR-W9; Thu, 08 Oct 2026 23:07:15 -0400
+	id 1xF0wu-0005ay-7Z; Thu, 08 Oct 2026 23:07:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <prcups@krgm.moe>) id 1xF0vy-0004hx-BE
- for qemu-devel@nongnu.org; Thu, 08 Oct 2026 23:06:11 -0400
+ (Exim 4.90_1) (envelope-from <prcups@krgm.moe>) id 1xF0vg-0004f7-RV
+ for qemu-devel@nongnu.org; Thu, 08 Oct 2026 23:06:00 -0400
 Received: from krgm.moe ([103.47.186.116])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <prcups@krgm.moe>) id 1xF0vu-0005np-G3
- for qemu-devel@nongnu.org; Thu, 08 Oct 2026 23:06:10 -0400
+ (envelope-from <prcups@krgm.moe>) id 1xF0vc-0005mR-K9
+ for qemu-devel@nongnu.org; Thu, 08 Oct 2026 23:05:52 -0400
 Received: from yuno-loong (unknown
  [IPv6:2409:8900:2684:b82:443b:7baf:6228:2a79])
- by krgm.moe (Postfix) with ESMTPSA id 7458DE003;
- Fri, 09 Oct 2026 08:35:54 +0530 (IST)
+ by krgm.moe (Postfix) with ESMTPSA id B12B7E001;
+ Fri, 09 Oct 2026 08:35:45 +0530 (IST)
 From: SignKirigami <prcups@krgm.moe>
 To: qemu-devel@nongnu.org
 Cc: Bibo Mao <maobibo@loongson.cn>, SignKirigami <prcups@krgm.moe>,
  Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
-Subject: [PATCH v5 18/23] target/loongarch: add gcsr instructions and vm level
- 1 csr management
-Date: Fri,  9 Oct 2026 11:05:14 +0800
-Message-ID: <6e609bcae12b73d8ddc7a7291afa2ba1b74ea4d0.1791514848.git.prcups@krgm.moe>
+Subject: [PATCH v5 13/23] target/loongarch: add LVZ parameters to TLB functions
+Date: Fri,  9 Oct 2026 11:05:09 +0800
+Message-ID: <21a6bf0c2a00333ecf6d936afe89e116b8988076.1791514848.git.prcups@krgm.moe>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <cover.1791514848.git.prcups@krgm.moe>
 References: <cover.1791514848.git.prcups@krgm.moe>
@@ -57,475 +56,780 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add gcsrrd, gcsrwr and gcsrxchg. Make all csr helper be used by both vm level
-0 and 1.
+Add parameters related to LVZ (mainly vm_level) to statements and definitions
+of TLB, so that LVZ patches to TLB can be divided into parts later.
 
 Signed-off-by: SignKirigami <prcups@krgm.moe>
 Signed-off-by: Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
 ---
- target/loongarch/disas.c                      |   3 +
- target/loongarch/insns.decode                 |   6 +
- target/loongarch/tcg/csr_helper.c             |  78 +++++++-----
- target/loongarch/tcg/helper.h                 |  22 ++--
- .../tcg/insn_trans/trans_privileged.c.inc     | 111 ++++++++++++++----
- 5 files changed, 161 insertions(+), 59 deletions(-)
+ target/loongarch/cpu-mmu.h                    |  24 ++--
+ target/loongarch/cpu_helper.c                 |  40 +++---
+ target/loongarch/tcg/helper.h                 |  22 +--
+ .../tcg/insn_trans/trans_privileged.c.inc     |  48 ++++---
+ target/loongarch/tcg/tcg_loongarch.h          |   3 +-
+ target/loongarch/tcg/tlb_helper.c             | 133 ++++++++++--------
+ 6 files changed, 153 insertions(+), 117 deletions(-)
 
-diff --git a/target/loongarch/disas.c b/target/loongarch/disas.c
-index 03d1e560dd..2436c9eec3 100644
---- a/target/loongarch/disas.c
-+++ b/target/loongarch/disas.c
-@@ -682,6 +682,9 @@ INSN(bgeu,         rr_offs)
- INSN(csrrd,        r_csr)
- INSN(csrwr,        r_csr)
- INSN(csrxchg,      rr_csr)
-+INSN(gcsrrd,        r_csr)
-+INSN(gcsrwr,        r_csr)
-+INSN(gcsrxchg,      rr_csr)
- INSN(iocsrrd_b,    rr)
- INSN(iocsrrd_h,    rr)
- INSN(iocsrrd_w,    rr)
-diff --git a/target/loongarch/insns.decode b/target/loongarch/insns.decode
-index 3089d42044..4612af9433 100644
---- a/target/loongarch/insns.decode
-+++ b/target/loongarch/insns.decode
-@@ -493,6 +493,12 @@ bgeu            0110 11 ................ ..... .....     @rr_offs16
-   csrxchg           0000 0100 .............. ..... .....     @rr_csr
+diff --git a/target/loongarch/cpu-mmu.h b/target/loongarch/cpu-mmu.h
+index 2b46e481bd..4d76d96ee5 100644
+--- a/target/loongarch/cpu-mmu.h
++++ b/target/loongarch/cpu-mmu.h
+@@ -38,18 +38,19 @@ typedef struct MMUContext {
+     uint64_t      pte_buddy[2];
+ } MMUContext;
+ 
+-static inline bool cpu_has_ptw(CPULoongArchState *env)
++static inline bool cpu_has_ptw(CPULoongArchState *env, int vm_level)
+ {
+     CPUSysState *sys = env_sys(env);
+ 
+     return !!FIELD_EX64(sys->CSR_PWCH, CSR_PWCH, HPTW_EN);
  }
  
-+{
-+  gcsrrd            0000 0101 .............. 00000 .....     @r_csr
-+  gcsrwr            0000 0101 .............. 00001 .....     @r_csr
-+  gcsrxchg          0000 0101 .............. ..... .....     @rr_csr
-+}
-+
- iocsrrd_b        0000 01100100 10000 00000 ..... .....    @rr
- iocsrrd_h        0000 01100100 10000 00001 ..... .....    @rr
- iocsrrd_w        0000 01100100 10000 00010 ..... .....    @rr
-diff --git a/target/loongarch/tcg/csr_helper.c b/target/loongarch/tcg/csr_helper.c
-index ecfba63228..7ef0032f5d 100644
---- a/target/loongarch/tcg/csr_helper.c
-+++ b/target/loongarch/tcg/csr_helper.c
-@@ -18,9 +18,10 @@
- #include "cpu-csr.h"
- #include "cpu-mmu.h"
- 
--target_ulong helper_csrwr_stlbps(CPULoongArchState *env, target_ulong val)
-+target_ulong helper_csrwr_stlbps(CPULoongArchState *env,
-+                                 target_ulong val, uint32_t vm_level)
+-static inline bool pte_present(CPULoongArchState *env, uint64_t entry)
++static inline bool pte_present(CPULoongArchState *env, uint64_t entry,
++                               int vm_level)
  {
--    CPUSysState *sys = env_sys(env);
-+    CPUSysState *sys = get_sys(env, vm_level);
-     int64_t old_v = sys->CSR_STLBPS;
+     uint8_t present;
  
-     /*
-@@ -40,10 +41,10 @@ target_ulong helper_csrwr_stlbps(CPULoongArchState *env, target_ulong val)
-     return old_v;
+-    if (cpu_has_ptw(env)) {
++    if (cpu_has_ptw(env, vm_level)) {
+         present = FIELD_EX64(entry, TLBENTRY, P);
+     } else {
+         present = FIELD_EX64(entry, TLBENTRY, V);
+@@ -58,11 +59,12 @@ static inline bool pte_present(CPULoongArchState *env, uint64_t entry)
+     return !!present;
  }
  
--target_ulong helper_csrrd_pgd(CPULoongArchState *env)
-+target_ulong helper_csrrd_pgd(CPULoongArchState *env, uint32_t vm_level)
+-static inline bool pte_write(CPULoongArchState *env, uint64_t entry)
++static inline bool pte_write(CPULoongArchState *env, uint64_t entry,
++                             int vm_level)
  {
-     int64_t v;
--    CPUSysState *sys = env_sys(env);
-+    CPUSysState *sys = get_sys(env, vm_level);
+     uint8_t writable;
  
-     if (sys->CSR_TLBRERA & 0x1) {
-         v = sys->CSR_TLBRBADV;
-@@ -60,25 +61,30 @@ target_ulong helper_csrrd_pgd(CPULoongArchState *env)
-     return v;
+-    if (cpu_has_ptw(env)) {
++    if (cpu_has_ptw(env, vm_level)) {
+         writable = FIELD_EX64(entry, TLBENTRY, W);
+     } else {
+         writable = FIELD_EX64(entry, TLBENTRY, D);
+@@ -99,14 +101,18 @@ static inline bool pte_dirty(uint64_t entry)
+ 
+ bool check_ps(CPULoongArchState *ent, uint8_t ps);
+ TLBRet loongarch_check_pte(CPULoongArchState *env, MMUContext *context,
+-                           MMUAccessType access_type, int mmu_idx);
++                           MMUAccessType access_type, int mmu_idx, int vm_level);
+ TLBRet get_physical_address(CPULoongArchState *env, MMUContext *context,
+                             MMUAccessType access_type, int mmu_idx,
+-                            int is_debug);
++                            int is_debug, uintptr_t retaddr);
+ TLBRet loongarch_ptw(CPULoongArchState *env, MMUContext *context,
+-                     int access_type, int mmu_idx, int debug);
++                     int access_type, int mmu_idx, int debug, int vm_level,
++                     uintptr_t retaddr);
+ void get_dir_base_width(CPULoongArchState *env, uint64_t *dir_base,
+-                        uint64_t *dir_width, unsigned int level);
++                        uint64_t *dir_width, unsigned int level, int vm_level);
++TLBRet loongarch_map_address(CPULoongArchState *env, MMUContext *context,
++                             MMUAccessType access_type, int mmu_idx,
++                             int is_debug, int vm_level, uintptr_t retaddr);
+ hwaddr loongarch_cpu_get_phys_addr_debug(CPUState *cpu, vaddr addr);
+ uint64_t loongarch_palen_mask(CPULoongArchState *env);
+ 
+diff --git a/target/loongarch/cpu_helper.c b/target/loongarch/cpu_helper.c
+index 123cad3d93..8eabb4a9dc 100644
+--- a/target/loongarch/cpu_helper.c
++++ b/target/loongarch/cpu_helper.c
+@@ -19,7 +19,7 @@
+ #include "tcg/tcg_loongarch.h"
+ 
+ void get_dir_base_width(CPULoongArchState *env, uint64_t *dir_base,
+-                        uint64_t *dir_width, unsigned int level)
++                        uint64_t *dir_width, unsigned int level, int vm_level)
+ {
+     CPUSysState *sys = env_sys(env);
+ 
+@@ -49,7 +49,7 @@ void get_dir_base_width(CPULoongArchState *env, uint64_t *dir_base,
  }
  
--target_ulong helper_csrrd_cpuid(CPULoongArchState *env)
-+target_ulong helper_csrrd_cpuid(CPULoongArchState *env, uint32_t vm_level)
+ TLBRet loongarch_check_pte(CPULoongArchState *env, MMUContext *context,
+-                           MMUAccessType access_type, int mmu_idx)
++                           MMUAccessType access_type, int mmu_idx, int vm_level)
  {
-     LoongArchCPU *lac = env_archcpu(env);
--    CPUSysState *sys = env_sys(env);
-+    CPUSysState *sys = get_sys(env, vm_level);
-+
-+    if (vm_level) {
-+        return sys->CSR_CPUID;
-+    }
+     uint64_t plv = mmu_idx;
+     uint64_t tlb_entry, tlb_ppn;
+@@ -58,8 +58,8 @@ TLBRet loongarch_check_pte(CPULoongArchState *env, MMUContext *context,
  
-     sys->CSR_CPUID = CPU(lac)->cpu_index;
- 
-     return sys->CSR_CPUID;
+     tlb_entry = context->pte;
+     tlb_ps = context->ps;
+-    tlb_v = pte_present(env, tlb_entry);
+-    tlb_d = pte_write(env, tlb_entry);
++    tlb_v = pte_present(env, tlb_entry, vm_level);
++    tlb_d = pte_write(env, tlb_entry, vm_level);
+     tlb_plv = FIELD_EX64(tlb_entry, TLBENTRY, PLV);
+     if (is_la64(env)) {
+         tlb_ppn = FIELD_EX64(tlb_entry, TLBENTRY_64, PPN);
+@@ -147,7 +147,8 @@ static MemTxResult loongarch_cmpxchg_phys(CPUState *cs, hwaddr phys,
  }
  
--target_ulong helper_csrrd_tval(CPULoongArchState *env)
-+target_ulong helper_csrrd_tval(CPULoongArchState *env, uint32_t vm_level)
+ TLBRet loongarch_ptw(CPULoongArchState *env, MMUContext *context,
+-                     int access_type, int mmu_idx, int debug)
++                     int access_type, int mmu_idx, int debug, int vm_level,
++                     uintptr_t retaddr)
  {
--    return cpu_loongarch_get_timer_ticks(env_timer(env));
-+    CPUTimerState *timer = vm_level ? env_guest_timer(env) : env_timer(env);
-+    return cpu_loongarch_get_timer_ticks(timer);
- }
+     const MemTxAttrs attrs = MEMTXATTRS_UNSPECIFIED;
+     CPUState *cs = env_cpu(env);
+@@ -170,7 +171,7 @@ TLBRet loongarch_ptw(CPULoongArchState *env, MMUContext *context,
+     base &= palen_mask;
  
--target_ulong helper_csrrd_msgir(CPULoongArchState *env)
-+target_ulong helper_csrrd_msgir(CPULoongArchState *env, uint32_t vm_level)
- {
-     int irq, new;
--    CPUSysState *sys = env_sys(env);
-+    CPUSysState *sys = get_sys(env, vm_level);
+     for (level = 4; level >= 0; level--) {
+-        get_dir_base_width(env, &dir_base, &dir_width, level);
++        get_dir_base_width(env, &dir_base, &dir_width, level, vm_level);
  
-     irq = find_first_bit((unsigned long *)sys->CSR_MSGIS, 256);
-     if (irq < 256) {
-@@ -97,13 +103,23 @@ target_ulong helper_csrrd_msgir(CPULoongArchState *env)
-     return irq;
- }
+         if (dir_width == 0) {
+             continue;
+@@ -208,7 +209,7 @@ restart:
+         context->pte_buddy[index] = base;
+         context->pte_buddy[1 - index] = base + BIT_ULL(dir_base);
+         base += (BIT_ULL(dir_base) & address);
+-    } else if (cpu_has_ptw(env)) {
++    } else if (cpu_has_ptw(env, vm_level)) {
+         uint64_t val;
  
--target_ulong helper_csrwr_estat(CPULoongArchState *env, target_ulong val)
-+target_ulong helper_csrwr_estat(CPULoongArchState *env,
-+                                target_ulong val, uint32_t vm_level)
- {
--    CPUSysState *sys = env_sys(env);
-+    CPUSysState *sys = get_sys(env, vm_level);
-     int64_t old_v = sys->CSR_ESTAT;
+         index &= 1;
+@@ -220,7 +221,7 @@ restart:
  
--    /* Only IS[1:0] can be written */
-+    /* When guest = 0, only IS[1:0] can be written.
-+     * When guest = 1, ecode and esubcode of
-+     * VM_LEVEL1 can be written by VM_LEVEL0.
-+     */
-     sys->CSR_ESTAT = deposit64(sys->CSR_ESTAT, 0, 2, val);
-+    if (vm_level) {
-+        sys->CSR_ESTAT = deposit64(sys->CSR_ESTAT, 2, 11,
-+                                   extract64(val, 2, 11));
-+        sys->CSR_ESTAT = deposit64(sys->CSR_ESTAT, 16, 15,
-+                                   extract64(val, 16, 15));
-+    }
-     /*
-      * Software interrupts (SWI0/SWI1) are latched in CSR.ESTAT.IS[1:0].
-      * Make sure the CPU interrupt request state tracks the pending bits,
-@@ -111,16 +127,17 @@ target_ulong helper_csrwr_estat(CPULoongArchState *env, target_ulong val)
+     context->ps = dir_base;
+     context->pte = base;
+-    ret = loongarch_check_pte(env, context, access_type, mmu_idx);
++    ret = loongarch_check_pte(env, context, access_type, mmu_idx, vm_level);
+     if (debug) {
+         return ret;
+     }
+@@ -231,7 +232,7 @@ restart:
+      * Need atomic compchxg operation with pte update, other vCPUs may
+      * update pte at the same time.
       */
-     if (sys->CSR_ESTAT != old_v) {
-         bql_lock();
--        loongarch_cpu_update_irq(env_archcpu(env), false);
-+        loongarch_cpu_update_irq(env_archcpu(env), vm_level);
-         bql_unlock();
+-    if (ret == TLBRET_MATCH && cpu_has_ptw(env)) {
++    if (ret == TLBRET_MATCH && cpu_has_ptw(env, vm_level)) {
+         if (access_type == MMU_DATA_STORE && pte_dirty(base)) {
+             return ret;
+         }
+@@ -273,15 +274,15 @@ restart:
+     return ret;
+ }
+ 
+-static TLBRet loongarch_map_address(CPULoongArchState *env,
+-                                    MMUContext *context,
+-                                    MMUAccessType access_type, int mmu_idx,
+-                                    int is_debug)
++TLBRet loongarch_map_address(CPULoongArchState *env, MMUContext *context,
++                             MMUAccessType access_type, int mmu_idx,
++                             int is_debug, int vm_level, uintptr_t retaddr)
+ {
+     TLBRet ret;
+ 
+     if (tcg_enabled()) {
+-        ret = loongarch_get_addr_from_tlb(env, context, access_type, mmu_idx);
++        ret = loongarch_get_addr_from_tlb(env, context, access_type, mmu_idx,
++                                          vm_level);
+         if (ret != TLBRET_NOMATCH) {
+             return ret;
+         }
+@@ -293,7 +294,8 @@ static TLBRet loongarch_map_address(CPULoongArchState *env,
+          * legal mapping, even if the mapping is not yet in TLB. return 0 if
+          * there is a valid map, else none zero.
+          */
+-        return loongarch_ptw(env, context, access_type, mmu_idx, is_debug);
++        return loongarch_ptw(env, context, access_type, mmu_idx, is_debug,
++                             vm_level, retaddr);
      }
  
-     return old_v;
- }
+     return TLBRET_NOMATCH;
+@@ -312,10 +314,11 @@ static hwaddr dmw_va2pa(CPULoongArchState *env, vaddr va, uint64_t dmw)
  
--target_ulong helper_csrwr_asid(CPULoongArchState *env, target_ulong val)
-+target_ulong helper_csrwr_asid(CPULoongArchState *env,
-+                               target_ulong val, uint32_t vm_level)
+ TLBRet get_physical_address(CPULoongArchState *env, MMUContext *context,
+                             MMUAccessType access_type, int mmu_idx,
+-                            int is_debug)
++                            int is_debug, uintptr_t retaddr)
  {
--    CPUSysState *sys = env_sys(env);
-+    CPUSysState *sys = get_sys(env, vm_level);
-     int64_t old_v = sys->CSR_ASID;
- 
-     /* Only ASID filed of CSR_ASID can be written */
-@@ -131,9 +148,10 @@ target_ulong helper_csrwr_asid(CPULoongArchState *env, target_ulong val)
-     return old_v;
- }
- 
--target_ulong helper_csrwr_tcfg(CPULoongArchState *env, target_ulong val)
-+target_ulong helper_csrwr_tcfg(CPULoongArchState *env,
-+                               target_ulong val, uint32_t vm_level)
- {
--    CPUTimerState *timer = env_timer(env);
-+    CPUTimerState *timer = vm_level ? env_guest_timer(env) : env_timer(env);
-     CPUSysState *sys = container_of(timer, CPUSysState, timer_state);
-     int64_t old_v = sys->CSR_TCFG;
- 
-@@ -142,9 +160,10 @@ target_ulong helper_csrwr_tcfg(CPULoongArchState *env, target_ulong val)
-     return old_v;
- }
- 
--target_ulong helper_csrwr_ticlr(CPULoongArchState *env, target_ulong val)
-+target_ulong helper_csrwr_ticlr(CPULoongArchState *env,
-+                                target_ulong val, uint32_t vm_level)
- {
--    CPUTimerState *timer = env_timer(env);
-+    CPUTimerState *timer = vm_level ? env_guest_timer(env) : env_timer(env);
-     int64_t old_v = 0;
- 
-     if (val & 0x1) {
-@@ -155,10 +174,11 @@ target_ulong helper_csrwr_ticlr(CPULoongArchState *env, target_ulong val)
-     return old_v;
- }
- 
--target_ulong helper_csrwr_pwcl(CPULoongArchState *env, target_ulong val)
-+target_ulong helper_csrwr_pwcl(CPULoongArchState *env,
-+                               target_ulong val, uint32_t vm_level)
- {
-     uint8_t shift, ptbase;
--    CPUSysState *sys = env_sys(env);
-+    CPUSysState *sys = get_sys(env, vm_level);
-     int64_t old_v = sys->CSR_PWCL;
- 
-     /*
-@@ -180,18 +200,20 @@ target_ulong helper_csrwr_pwcl(CPULoongArchState *env, target_ulong val)
-     return old_v;
- }
- 
--target_ulong helper_csrwr_pwch(CPULoongArchState *env, target_ulong val)
-+target_ulong helper_csrwr_pwch(CPULoongArchState *env,
-+                               target_ulong val, uint32_t vm_level)
- {
--    uint8_t has_ptw;
--    CPUSysState *sys = env_sys(env);
-+    uint8_t host_has_ptw;
-+    CPUSysState *sys = get_sys(env, vm_level);
-     int64_t old_v = sys->CSR_PWCH;
- 
-     val = FIELD_DP64(val, CSR_PWCH, RESERVE, 0);
--    has_ptw = FIELD_EX32(env->cpucfg[2], CPUCFG2, HPTW);
--    if (!has_ptw) {
-+    //TODO: host can't read guest cpucfg
-+    host_has_ptw = FIELD_EX32(env->cpucfg[2], CPUCFG2, HPTW);
-+    if (!host_has_ptw) {
-         val = FIELD_DP64(val, CSR_PWCH, HPTW_EN, 0);
+     int user_mode = mmu_idx == MMU_USER_IDX;
+     int kernel_mode = mmu_idx == MMU_KERNEL_IDX;
++    int vm_level = env_vm_level(env);
+     uint32_t plv, base_c, base_v;
+     int64_t addr_high;
+     CPUSysState *sys = env_sys(env);
+@@ -360,7 +363,8 @@ TLBRet get_physical_address(CPULoongArchState *env, MMUContext *context,
      }
  
-     sys->CSR_PWCH = val;
-     return old_v;
-- }
-+}
+     /* Mapped address */
+-    return loongarch_map_address(env, context, access_type, mmu_idx, is_debug);
++    return loongarch_map_address(env, context, access_type, mmu_idx, is_debug,
++                                 vm_level, retaddr);
+ }
+ 
+ hwaddr loongarch_cpu_get_phys_addr_debug(CPUState *cs, vaddr addr)
+@@ -370,7 +374,7 @@ hwaddr loongarch_cpu_get_phys_addr_debug(CPUState *cs, vaddr addr)
+ 
+     context.addr = addr;
+     if (get_physical_address(env, &context, MMU_DATA_LOAD,
+-                             cpu_mmu_index(cs, false), 1) != TLBRET_MATCH) {
++                             cpu_mmu_index(cs, false), 1, 0) != TLBRET_MATCH) {
+         return -1;
+     }
+     return context.physical;
 diff --git a/target/loongarch/tcg/helper.h b/target/loongarch/tcg/helper.h
-index a27b80b087..bce5f46dc2 100644
+index e76c73c775..a27b80b087 100644
 --- a/target/loongarch/tcg/helper.h
 +++ b/target/loongarch/tcg/helper.h
-@@ -93,17 +93,17 @@ DEF_HELPER_1(rdtime_d, i64, env)
+@@ -114,17 +114,17 @@ DEF_HELPER_3(iocsrwr_w, void, env, tl, tl)
+ DEF_HELPER_3(iocsrwr_d, void, env, tl, tl)
  
- #ifndef CONFIG_USER_ONLY
- /* CSRs helper */
--DEF_HELPER_1(csrrd_pgd, i64, env)
--DEF_HELPER_1(csrrd_cpuid, i64, env)
--DEF_HELPER_1(csrrd_tval, i64, env)
--DEF_HELPER_1(csrrd_msgir, i64, env)
--DEF_HELPER_2(csrwr_stlbps, i64, env, tl)
--DEF_HELPER_2(csrwr_estat, i64, env, tl)
--DEF_HELPER_2(csrwr_asid, i64, env, tl)
--DEF_HELPER_2(csrwr_tcfg, i64, env, tl)
--DEF_HELPER_2(csrwr_ticlr, i64, env, tl)
--DEF_HELPER_2(csrwr_pwcl, i64, env, tl)
--DEF_HELPER_2(csrwr_pwch, i64, env, tl)
-+DEF_HELPER_2(csrrd_pgd, i64, env, i32)
-+DEF_HELPER_2(csrrd_cpuid, i64, env, i32)
-+DEF_HELPER_2(csrrd_tval, i64, env, i32)
-+DEF_HELPER_2(csrrd_msgir, i64, env, i32)
-+DEF_HELPER_3(csrwr_stlbps, i64, env, tl, i32)
-+DEF_HELPER_3(csrwr_estat, i64, env, tl, i32)
-+DEF_HELPER_3(csrwr_asid, i64, env, tl, i32)
-+DEF_HELPER_3(csrwr_tcfg, i64, env, tl, i32)
-+DEF_HELPER_3(csrwr_ticlr, i64, env, tl, i32)
-+DEF_HELPER_3(csrwr_pwcl, i64, env, tl, i32)
-+DEF_HELPER_3(csrwr_pwch, i64, env, tl, i32)
- DEF_HELPER_2(iocsrrd_b, i64, env, tl)
- DEF_HELPER_2(iocsrrd_h, i64, env, tl)
- DEF_HELPER_2(iocsrrd_w, i64, env, tl)
+ /* TLB helper */
+-DEF_HELPER_1(tlbwr, void, env)
+-DEF_HELPER_1(tlbfill, void, env)
+-DEF_HELPER_1(tlbsrch, void, env)
+-DEF_HELPER_1(tlbrd, void, env)
+-DEF_HELPER_1(tlbclr, void, env)
+-DEF_HELPER_1(tlbflush, void, env)
+-DEF_HELPER_1(invtlb_all, void, env)
+-DEF_HELPER_2(invtlb_all_g, void, env, i32)
+-DEF_HELPER_2(invtlb_all_asid, void, env, tl)
+-DEF_HELPER_3(invtlb_page_asid, void, env, tl, tl)
+-DEF_HELPER_3(invtlb_page_asid_or_g, void, env, tl, tl)
++DEF_HELPER_2(tlbwr, void, env, i32)
++DEF_HELPER_2(tlbfill, void, env, i32)
++DEF_HELPER_2(tlbsrch, void, env, i32)
++DEF_HELPER_2(tlbrd, void, env, i32)
++DEF_HELPER_2(tlbclr, void, env, i32)
++DEF_HELPER_2(tlbflush, void, env, i32)
++DEF_HELPER_4(invtlb_all, void, env, tl, i32, i32)
++DEF_HELPER_4(invtlb_all_g, void, env, tl, i32, i32)
++DEF_HELPER_3(invtlb_all_asid, void, env, tl, i32)
++DEF_HELPER_4(invtlb_page_asid, void, env, tl, tl, i32)
++DEF_HELPER_4(invtlb_page_asid_or_g, void, env, tl, tl, i32)
+ 
+ DEF_HELPER_4(lddir, tl, env, tl, i32, i32)
+ DEF_HELPER_4(ldpte, void, env, tl, tl, i32)
 diff --git a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
-index 00e8f61e42..139dbd6e2a 100644
+index 7ee3bb8e27..493ed7f24b 100644
 --- a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
 +++ b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
-@@ -39,11 +39,14 @@ GEN_FALSE_TRANS(lddir)
- GEN_FALSE_TRANS(ertn)
- GEN_FALSE_TRANS(dbcl)
- GEN_FALSE_TRANS(idle)
-+GEN_FALSE_TRANS(gcsrrd)
-+GEN_FALSE_TRANS(gcsrwr)
-+GEN_FALSE_TRANS(gcsrxchg)
- 
- #else
- 
--typedef void (*GenCSRRead)(TCGv dest, TCGv_ptr env);
--typedef void (*GenCSRWrite)(TCGv dest, TCGv_ptr env, TCGv src);
-+typedef void (*GenCSRRead)(TCGv dest, TCGv_ptr env, TCGv_i32 vm_level);
-+typedef void (*GenCSRWrite)(TCGv dest, TCGv_ptr env, TCGv src, TCGv_i32 vm_level);
- 
- static bool check_plv(DisasContext *ctx)
- {
-@@ -88,10 +91,14 @@ void loongarch_csr_translate_init(void)
- }
- #undef SET_CSR_FUNC
- 
--static bool check_csr_flags(DisasContext *ctx, const CSRInfo *csr, bool write)
-+static bool check_csr_flags(DisasContext *ctx, const CSRInfo *csr,
-+                            bool write, int vm_level)
- {
-     if ((csr->flags & CSRFL_READONLY) && write) {
--        return false;
-+        /* host writes guest read-only CSRs is allowed */
-+        if (is_guest_mmu_idx(ctx->mem_idx) || vm_level == VM_LEVEL0) {
-+            return false;
-+        }
+@@ -260,7 +260,8 @@ static bool trans_tlbsrch(DisasContext *ctx, arg_tlbsrch *a)
+     if (check_plv(ctx)) {
+         return false;
      }
-     if ((csr->flags & CSRFL_IO) && translator_io_start(&ctx->base)) {
-         ctx->base.is_jmp = DISAS_EXIT_UPDATE;
-@@ -101,7 +108,7 @@ static bool check_csr_flags(DisasContext *ctx, const CSRInfo *csr, bool write)
+-    gen_helper_tlbsrch(tcg_env);
++    gen_helper_tlbsrch(tcg_env,
++                       tcg_constant_i32(is_guest_mmu_idx(ctx->mem_idx)));
      return true;
  }
  
--static bool trans_csrrd(DisasContext *ctx, arg_csrrd *a)
-+static bool trans_csrrd_impl(DisasContext *ctx, arg_r_csr *a, int vm_level)
+@@ -269,7 +270,8 @@ static bool trans_tlbrd(DisasContext *ctx, arg_tlbrd *a)
+     if (check_plv(ctx)) {
+         return false;
+     }
+-    gen_helper_tlbrd(tcg_env);
++    gen_helper_tlbrd(tcg_env,
++                     tcg_constant_i32(is_guest_mmu_idx(ctx->mem_idx)));
+     return true;
+ }
+ 
+@@ -278,7 +280,8 @@ static bool trans_tlbwr(DisasContext *ctx, arg_tlbwr *a)
+     if (check_plv(ctx)) {
+         return false;
+     }
+-    gen_helper_tlbwr(tcg_env);
++    gen_helper_tlbwr(tcg_env,
++                     tcg_constant_i32(is_guest_mmu_idx(ctx->mem_idx)));
+     check_mmu_idx(ctx);
+     return true;
+ }
+@@ -288,7 +291,8 @@ static bool trans_tlbfill(DisasContext *ctx, arg_tlbfill *a)
+     if (check_plv(ctx)) {
+         return false;
+     }
+-    gen_helper_tlbfill(tcg_env);
++    gen_helper_tlbfill(tcg_env,
++                       tcg_constant_i32(is_guest_mmu_idx(ctx->mem_idx)));
+     check_mmu_idx(ctx);
+     return true;
+ }
+@@ -298,7 +302,8 @@ static bool trans_tlbclr(DisasContext *ctx, arg_tlbclr *a)
+     if (check_plv(ctx)) {
+         return false;
+     }
+-    gen_helper_tlbclr(tcg_env);
++    gen_helper_tlbclr(tcg_env,
++                      tcg_constant_i32(is_guest_mmu_idx(ctx->mem_idx)));
+     check_mmu_idx(ctx);
+     return true;
+ }
+@@ -308,7 +313,8 @@ static bool trans_tlbflush(DisasContext *ctx, arg_tlbflush *a)
+     if (check_plv(ctx)) {
+         return false;
+     }
+-    gen_helper_tlbflush(tcg_env);
++    gen_helper_tlbflush(tcg_env,
++                        tcg_constant_i32(is_guest_mmu_idx(ctx->mem_idx)));
+     check_mmu_idx(ctx);
+     return true;
+ }
+@@ -323,24 +329,28 @@ static bool trans_invtlb(DisasContext *ctx, arg_invtlb *a)
+     }
+ 
+     switch (a->imm) {
+-    case 0:
+-    case 1:
+-        gen_helper_invtlb_all(tcg_env);
++    case 0x0:
++    case 0x1:
++        gen_helper_invtlb_all(tcg_env, rj, tcg_constant_i32(a->imm),
++                              tcg_constant_i32(0));
+         break;
+-    case 2:
+-        gen_helper_invtlb_all_g(tcg_env, tcg_constant_i32(1));
++    case 0x2:
++        gen_helper_invtlb_all_g(tcg_env, rj, tcg_constant_i32(1),
++                                tcg_constant_i32(0));
+         break;
+-    case 3:
+-        gen_helper_invtlb_all_g(tcg_env, tcg_constant_i32(0));
++    case 0x3:
++        gen_helper_invtlb_all_g(tcg_env, rj, tcg_constant_i32(0),
++                                tcg_constant_i32(0));
+         break;
+-    case 4:
+-        gen_helper_invtlb_all_asid(tcg_env, rj);
++    case 0x4:
++        gen_helper_invtlb_all_asid(tcg_env, rj, tcg_constant_i32(0));
+         break;
+-    case 5:
+-        gen_helper_invtlb_page_asid(tcg_env, rj, rk);
++    case 0x5:
++        gen_helper_invtlb_page_asid(tcg_env, rj, rk, tcg_constant_i32(0));
+         break;
+-    case 6:
+-        gen_helper_invtlb_page_asid_or_g(tcg_env, rj, rk);
++    case 0x6:
++        gen_helper_invtlb_page_asid_or_g(tcg_env, rj, rk,
++                                         tcg_constant_i32(0));
+         break;
+     default:
+         return false;
+diff --git a/target/loongarch/tcg/tcg_loongarch.h b/target/loongarch/tcg/tcg_loongarch.h
+index 7fb627f2d6..6c0080c2b3 100644
+--- a/target/loongarch/tcg/tcg_loongarch.h
++++ b/target/loongarch/tcg/tcg_loongarch.h
+@@ -18,6 +18,7 @@ bool loongarch_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+ 
+ TLBRet loongarch_get_addr_from_tlb(CPULoongArchState *env,
+                                    MMUContext *context,
+-                                   MMUAccessType access_type, int mmu_idx);
++                                   MMUAccessType access_type, int mmu_idx,
++                                   int vm_level);
+ 
+ #endif  /* TARGET_LOONGARCH_TCG_LOONGARCH_H */
+diff --git a/target/loongarch/tcg/tlb_helper.c b/target/loongarch/tcg/tlb_helper.c
+index 821aa26328..aabb463e4d 100644
+--- a/target/loongarch/tcg/tlb_helper.c
++++ b/target/loongarch/tcg/tlb_helper.c
+@@ -132,7 +132,7 @@ static void raise_mmu_exception(CPULoongArchState *env, vaddr address,
+    }
+ }
+ 
+-static void invalidate_tlb_entry(CPULoongArchState *env, int index)
++static void invalidate_tlb_entry(CPULoongArchState *env, int index, int vm_level)
  {
-     TCGv dest;
-     const CSRInfo *csr;
-@@ -116,21 +123,29 @@ static bool trans_csrrd(DisasContext *ctx, arg_csrrd *a)
-         /* CSR is undefined: read as 0. */
-         dest = tcg_constant_tl(0);
+     target_ulong addr, mask, pagesize;
+     uint8_t tlb_ps;
+@@ -147,20 +147,20 @@ static void invalidate_tlb_entry(CPULoongArchState *env, int index)
+     addr = (tlb_vppn << R_TLB_MISC_VPPN_SHIFT) & ~mask;
+     addr = sextract64(addr, 0, TARGET_VIRT_ADDR_SPACE_BITS);
+ 
+-    tlb_v = pte_present(env, tlb->tlb_entry0);
++    tlb_v = pte_present(env, tlb->tlb_entry0, vm_level);
+     if (tlb_v) {
+         tlb_flush_range_by_mmuidx(env_cpu(env), addr, pagesize,
+                                   idxmap, TARGET_LONG_BITS);
+     }
+ 
+-    tlb_v = pte_present(env, tlb->tlb_entry1);
++    tlb_v = pte_present(env, tlb->tlb_entry1, vm_level);
+     if (tlb_v) {
+         tlb_flush_range_by_mmuidx(env_cpu(env), addr + pagesize, pagesize,
+                                   idxmap, TARGET_LONG_BITS);
+     }
+ }
+ 
+-static void invalidate_tlb(CPULoongArchState *env, int index)
++static void invalidate_tlb(CPULoongArchState *env, int index, int vm_level)
+ {
+     LoongArchTLB *tlb;
+     uint16_t csr_asid, tlb_asid, tlb_g;
+@@ -181,11 +181,12 @@ static void invalidate_tlb(CPULoongArchState *env, int index)
+     if (tlb_g == 0 && tlb_asid != csr_asid) {
+         return;
+     }
+-    invalidate_tlb_entry(env, index);
++    invalidate_tlb_entry(env, index, vm_level);
+ }
+ 
+ /* Prepare tlb entry information in software PTW mode */
+-static void sptw_prepare_context(CPULoongArchState *env, MMUContext *context)
++static void sptw_prepare_context(CPULoongArchState *env, MMUContext *context,
++                                 int vm_level)
+ {
+     uint64_t lo0, lo1, csr_vppn;
+     uint8_t csr_ps;
+@@ -218,7 +219,7 @@ static void sptw_prepare_context(CPULoongArchState *env, MMUContext *context)
+ }
+ 
+ static void fill_tlb_entry(CPULoongArchState *env, LoongArchTLB *tlb,
+-                           MMUContext *context)
++                           MMUContext *context, int vm_level)
+ {
+     uint64_t lo0, lo1, csr_vppn;
+     uint16_t csr_asid;
+@@ -257,9 +258,11 @@ static uint32_t get_random_tlb(uint32_t low, uint32_t high)
+  * field in tlb entry contains bit[47:13], so need adjust.
+  * virt_vpn = vaddr[47:13]
+  */
+-static const LoongArchTLB *
+-loongarch_tlb_search_cb(CPULoongArchState *env, vaddr vaddr,
+-                        int csr_asid, tlb_match func)
++
++static const LoongArchTLB *loongarch_tlb_search_cb(CPULoongArchState *env,
++                                             vaddr vaddr, int csr_asid,
++                                             tlb_match func, int vm_level,
++                                             uint8_t gid)
+ {
+     const LoongArchTLB *tlb;
+     uint16_t tlb_asid, stlb_idx;
+@@ -311,7 +314,7 @@ loongarch_tlb_search_cb(CPULoongArchState *env, vaddr vaddr,
+ }
+ 
+ static bool loongarch_tlb_search(CPULoongArchState *env, vaddr vaddr,
+-                                 int *index)
++                                 int *index, int vm_level, uint8_t gid)
+ {
+     int csr_asid;
+     tlb_match func;
+@@ -320,7 +323,7 @@ static bool loongarch_tlb_search(CPULoongArchState *env, vaddr vaddr,
+ 
+     func = tlb_match_any;
+     csr_asid = FIELD_EX64(sys->CSR_ASID, CSR_ASID, ASID);
+-    tlb = loongarch_tlb_search_cb(env, vaddr, csr_asid, func);
++    tlb = loongarch_tlb_search_cb(env, vaddr, csr_asid, func, vm_level, gid);
+     if (tlb) {
+         *index = tlb - env->tlb;
+         return true;
+@@ -329,15 +332,17 @@ static bool loongarch_tlb_search(CPULoongArchState *env, vaddr vaddr,
+     return false;
+ }
+ 
+-void helper_tlbsrch(CPULoongArchState *env)
++void helper_tlbsrch(CPULoongArchState *env, uint32_t vm_level)
+ {
+     int index, match;
+     CPUSysState *sys = env_sys(env);
+ 
+     if (FIELD_EX64(sys->CSR_TLBRERA, CSR_TLBRERA, ISTLBR)) {
+-        match = loongarch_tlb_search(env, sys->CSR_TLBREHI, &index);
++        match = loongarch_tlb_search(env, sys->CSR_TLBREHI,
++                                     &index, vm_level, get_tgid(env));
      } else {
--        check_csr_flags(ctx, csr, false);
--        dest = gpr_dst(ctx, a->rd, EXT_NONE);
--        readfn = (GenCSRRead)csr->readfn;
--        if (readfn) {
--            readfn(dest, tcg_env);
-+        check_csr_flags(ctx, csr, false, vm_level);
-+        if (vm_level && (csr->flags & CSRFL_GSPR)) {
-+            if (is_guest_mmu_idx(ctx->mem_idx)) {
-+                generate_exception(ctx, EXCCODE_GSPR);
-+                return true;
-+            }
-+            dest = tcg_constant_tl(0);
-         } else {
--            offset = get_csr_offset(csr, 0);
--            tcg_gen_ld_tl(dest, tcg_env, offset);
-+            dest = gpr_dst(ctx, a->rd, EXT_NONE);
-+            readfn = (GenCSRRead)csr->readfn;
-+            if (readfn) {
-+                readfn(dest, tcg_env, tcg_constant_i32(vm_level));
-+            } else {
-+                offset = get_csr_offset(csr, vm_level);
-+                tcg_gen_ld_tl(dest, tcg_env, offset);
-+            }
+-        match = loongarch_tlb_search(env, sys->CSR_TLBEHI, &index);
++        match = loongarch_tlb_search(env, sys->CSR_TLBEHI,
++                                     &index, vm_level, get_tgid(env));
+     }
+ 
+     if (match) {
+@@ -349,7 +354,7 @@ void helper_tlbsrch(CPULoongArchState *env)
+     sys->CSR_TLBIDX = FIELD_DP64(sys->CSR_TLBIDX, CSR_TLBIDX, NE, 1);
+ }
+ 
+-void helper_tlbrd(CPULoongArchState *env)
++void helper_tlbrd(CPULoongArchState *env, uint32_t vm_level)
+ {
+     LoongArchTLB *tlb;
+     int index;
+@@ -382,18 +387,18 @@ void helper_tlbrd(CPULoongArchState *env)
+ }
+ 
+ static void update_tlb_index(CPULoongArchState *env, MMUContext *context,
+-                             int index)
++                             int index, int vm_level)
+ {
+     LoongArchTLB *old, new = {};
+     bool skip_inv = false, tlb_v0, tlb_v1;
+ 
+     old = env->tlb + index;
+-    fill_tlb_entry(env, &new, context);
++    fill_tlb_entry(env, &new, context, vm_level);
+     /* Check whether ASID/VPPN is the same */
+     if (old->tlb_misc == new.tlb_misc) {
+         /* Check whether both even/odd pages is the same or invalid */
+-        tlb_v0 = pte_present(env, old->tlb_entry0);
+-        tlb_v1 = pte_present(env, old->tlb_entry1);
++        tlb_v0 = pte_present(env, old->tlb_entry0, vm_level);
++        tlb_v1 = pte_present(env, old->tlb_entry1, vm_level);
+         if ((!tlb_v0 || new.tlb_entry0 == old->tlb_entry0) &&
+             (!tlb_v1 || new.tlb_entry1 == old->tlb_entry1)) {
+             skip_inv = true;
+@@ -402,29 +407,29 @@ static void update_tlb_index(CPULoongArchState *env, MMUContext *context,
+ 
+     /* flush tlb before updating the entry */
+     if (!skip_inv) {
+-        invalidate_tlb(env, index);
++        invalidate_tlb(env, index, vm_level);
+     }
+ 
+     *old = new;
+ }
+ 
+-void helper_tlbwr(CPULoongArchState *env)
++void helper_tlbwr(CPULoongArchState *env, uint32_t vm_level)
+ {
+     CPUSysState *sys = env_sys(env);
+     int index = FIELD_EX64(sys->CSR_TLBIDX, CSR_TLBIDX, INDEX);
+     MMUContext context;
+ 
+     if (FIELD_EX64(sys->CSR_TLBIDX, CSR_TLBIDX, NE)) {
+-        invalidate_tlb(env, index);
++        invalidate_tlb(env, index, vm_level);
+         return;
+     }
+ 
+-    sptw_prepare_context(env, &context);
+-    update_tlb_index(env, &context, index);
++    sptw_prepare_context(env, &context, vm_level);
++    update_tlb_index(env, &context, index, vm_level);
+ }
+ 
+ static int get_tlb_random_index(CPULoongArchState *env, vaddr addr,
+-                                int pagesize)
++                                int pagesize, int vm_level)
+ {
+     uint64_t address;
+     int index, set, i, stlb_idx;
+@@ -488,7 +493,7 @@ static int get_tlb_random_index(CPULoongArchState *env, vaddr addr,
+     return index;
+ }
+ 
+-void helper_tlbfill(CPULoongArchState *env)
++void helper_tlbfill(CPULoongArchState *env, uint32_t vm_level)
+ {
+     vaddr entryhi;
+     int index, pagesize;
+@@ -505,13 +510,13 @@ void helper_tlbfill(CPULoongArchState *env)
+         pagesize = FIELD_EX64(sys->CSR_TLBIDX, CSR_TLBIDX, PS);
+     }
+ 
+-    sptw_prepare_context(env, &context);
+-    index = get_tlb_random_index(env, entryhi, pagesize);
+-    invalidate_tlb(env, index);
+-    fill_tlb_entry(env, env->tlb + index, &context);
++    sptw_prepare_context(env, &context, vm_level);
++    index = get_tlb_random_index(env, entryhi, pagesize, vm_level);
++    invalidate_tlb(env, index, vm_level);
++    fill_tlb_entry(env, env->tlb + index, &context, vm_level);
+ }
+ 
+-void helper_tlbclr(CPULoongArchState *env)
++void helper_tlbclr(CPULoongArchState *env, uint32_t vm_level)
+ {
+     LoongArchTLB *tlb;
+     int i, index;
+@@ -546,7 +551,7 @@ void helper_tlbclr(CPULoongArchState *env)
+     tlb_flush(env_cpu(env));
+ }
+ 
+-void helper_tlbflush(CPULoongArchState *env)
++void helper_tlbflush(CPULoongArchState *env, uint32_t vm_level)
+ {
+     int i, index;
+     CPUSysState *sys = env_sys(env);
+@@ -571,7 +576,8 @@ void helper_tlbflush(CPULoongArchState *env)
+     tlb_flush(env_cpu(env));
+ }
+ 
+-void helper_invtlb_all(CPULoongArchState *env)
++void helper_invtlb_all(CPULoongArchState *env, target_ulong info, uint32_t op,
++                       uint32_t to_guest)
+ {
+     for (int i = 0; i < LOONGARCH_TLB_MAX; i++) {
+         env->tlb[i].tlb_misc = FIELD_DP64(env->tlb[i].tlb_misc,
+@@ -580,7 +586,8 @@ void helper_invtlb_all(CPULoongArchState *env)
+     tlb_flush(env_cpu(env));
+ }
+ 
+-void helper_invtlb_all_g(CPULoongArchState *env, uint32_t g)
++void helper_invtlb_all_g(CPULoongArchState *env, target_ulong info, uint32_t g,
++                         uint32_t to_guest)
+ {
+     for (int i = 0; i < LOONGARCH_TLB_MAX; i++) {
+         LoongArchTLB *tlb = &env->tlb[i];
+@@ -593,7 +600,8 @@ void helper_invtlb_all_g(CPULoongArchState *env, uint32_t g)
+     tlb_flush(env_cpu(env));
+ }
+ 
+-void helper_invtlb_all_asid(CPULoongArchState *env, target_ulong info)
++void helper_invtlb_all_asid(CPULoongArchState *env, target_ulong info,
++                            uint32_t to_guest)
+ {
+     uint16_t asid = info & R_CSR_ASID_ASID_MASK;
+ 
+@@ -610,43 +618,45 @@ void helper_invtlb_all_asid(CPULoongArchState *env, target_ulong info)
+ }
+ 
+ void helper_invtlb_page_asid(CPULoongArchState *env, target_ulong info,
+-                             target_ulong addr)
++                             target_ulong addr, uint32_t to_guest)
+ {
+     int asid = info & 0x3ff;
+     const LoongArchTLB *tlb;
+     tlb_match func;
+ 
+     func = tlb_match_asid;
+-    tlb = loongarch_tlb_search_cb(env, addr, asid, func);
++    tlb = loongarch_tlb_search_cb(env, addr, asid, func, to_guest, 0);
+     if (tlb) {
+-        invalidate_tlb(env, tlb - env->tlb);
++        invalidate_tlb(env, tlb - env->tlb, to_guest);
+     }
+ }
+ 
+-void helper_invtlb_page_asid_or_g(CPULoongArchState *env,
+-                                  target_ulong info, target_ulong addr)
++void helper_invtlb_page_asid_or_g(CPULoongArchState *env, target_ulong info,
++                                  target_ulong addr, uint32_t to_guest)
+ {
+     int asid = info & 0x3ff;
+     const LoongArchTLB *tlb;
+     tlb_match func;
+ 
+     func = tlb_match_any;
+-    tlb = loongarch_tlb_search_cb(env, addr, asid, func);
++    tlb = loongarch_tlb_search_cb(env, addr, asid, func,
++                                  to_guest, 0);
+     if (tlb) {
+-        invalidate_tlb(env, tlb - env->tlb);
++        invalidate_tlb(env, tlb - env->tlb, to_guest);
+     }
+ }
+ 
+-static void ptw_update_tlb(CPULoongArchState *env, MMUContext *context)
++static void ptw_update_tlb(CPULoongArchState *env, MMUContext *context,
++                           int vm_level)
+ {
+     int index;
+ 
+     index = context->tlb_index;
+     if (index < 0) {
+-        index = get_tlb_random_index(env, context->addr, context->ps);
++        index = get_tlb_random_index(env, context->addr, context->ps, vm_level);
+     }
+ 
+-    update_tlb_index(env, context, index);
++    update_tlb_index(env, context, index, vm_level);
+ }
+ 
+ bool loongarch_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+@@ -655,6 +665,7 @@ bool loongarch_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+ {
+     CPULoongArchState *env = cpu_env(cs);
+     hwaddr physical;
++    int vm_level = env_vm_level(env);
+     int prot;
+     MMUContext context;
+     TLBRet ret;
+@@ -662,9 +673,9 @@ bool loongarch_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+     /* Data access */
+     context.addr = address;
+     context.tlb_index = -1;
+-    ret = get_physical_address(env, &context, access_type, mmu_idx, 0);
++    ret = get_physical_address(env, &context, access_type, mmu_idx, 0, retaddr);
+     if (ret == TLBRET_MATCH && context.mmu_index != MMU_DA_IDX
+-        && cpu_has_ptw(env)) {
++        && cpu_has_ptw(env, vm_level)) {
+         bool need_update = true;
+ 
+         if (access_type == MMU_DATA_STORE && pte_dirty(context.pte)) {
+@@ -688,15 +699,15 @@ bool loongarch_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
          }
      }
-     gen_set_gpr(a->rd, dest, EXT_NONE);
-     return true;
+ 
+-    if (ret != TLBRET_MATCH && cpu_has_ptw(env)) {
++    if (ret != TLBRET_MATCH && cpu_has_ptw(env, vm_level)) {
+         /* Take HW PTW if TLB missed or bit P is zero */
+         if (ret == TLBRET_NOMATCH || ret == TLBRET_INVALID) {
+-            ret = loongarch_ptw(env, &context, access_type, mmu_idx, 0);
++            ret = loongarch_ptw(env, &context, access_type, mmu_idx, 0, vm_level, retaddr);
+             if (ret == TLBRET_MATCH) {
+-                ptw_update_tlb(env, &context);
++                ptw_update_tlb(env, &context, vm_level);
+             }
+         } else if (context.tlb_index >= 0) {
+-            invalidate_tlb(env, context.tlb_index);
++            invalidate_tlb(env, context.tlb_index, vm_level);
+         }
+     }
+ 
+@@ -770,7 +781,8 @@ target_ulong helper_lddir(CPULoongArchState *env, target_ulong base,
+ 
+     badvaddr = sys->CSR_TLBRBADV;
+     base = base & palen_mask;
+-    get_dir_base_width(env, &dir_base, &dir_width, level);
++    get_dir_base_width(env, &dir_base, &dir_width, level,
++                       env_vm_level(env));
+     index = (badvaddr >> dir_base) & ((1 << dir_width) - 1);
+     phys = base | index << 3;
+     val = address_space_ldq_le(cs->as, phys, MEMTXATTRS_UNSPECIFIED, NULL);
+@@ -808,7 +820,8 @@ void helper_ldpte(CPULoongArchState *env, target_ulong base, target_ulong odd,
+          * Move HGLOBAL bit to GLOBAL bit.
+          */
+         get_dir_base_width(env, &dir_base, &dir_width,
+-                           FIELD_EX64(base, TLBENTRY, LEVEL));
++                           FIELD_EX64(base, TLBENTRY, LEVEL),
++                           env_vm_level(env));
+ 
+         base = FIELD_DP64(base, TLBENTRY, LEVEL, 0);
+         base = FIELD_DP64(base, TLBENTRY, HUGE, 0);
+@@ -859,7 +872,7 @@ void helper_ldpte(CPULoongArchState *env, target_ulong base, target_ulong odd,
+ static TLBRet loongarch_map_tlb_entry(CPULoongArchState *env,
+                                       MMUContext *context,
+                                       MMUAccessType access_type, int index,
+-                                      int mmu_idx)
++                                      int mmu_idx, int vm_level)
+ {
+     const LoongArchTLB *tlb = &env->tlb[index];
+     uint8_t tlb_ps, n;
+@@ -869,19 +882,21 @@ static TLBRet loongarch_map_tlb_entry(CPULoongArchState *env,
+     context->pte = n ? tlb->tlb_entry1 : tlb->tlb_entry0;
+     context->ps = tlb_ps;
+     context->tlb_index = index;
+-    return loongarch_check_pte(env, context, access_type, mmu_idx);
++    return loongarch_check_pte(env, context, access_type, mmu_idx, vm_level);
  }
  
--static bool trans_csrwr(DisasContext *ctx, arg_csrwr *a)
-+static bool trans_csrwr_impl(DisasContext *ctx, arg_r_csr *a, int vm_level)
+ TLBRet loongarch_get_addr_from_tlb(CPULoongArchState *env,
+                                    MMUContext *context,
+-                                   MMUAccessType access_type, int mmu_idx)
++                                   MMUAccessType access_type, int mmu_idx,
++                                   int vm_level)
  {
-     TCGv dest, src1;
-     const CSRInfo *csr;
-@@ -146,18 +161,26 @@ static bool trans_csrwr(DisasContext *ctx, arg_csrwr *a)
-         gen_set_gpr(a->rd, tcg_constant_tl(0), EXT_NONE);
-         return true;
-     }
--    if (!check_csr_flags(ctx, csr, true)) {
-+    if (!check_csr_flags(ctx, csr, true, vm_level)) {
-         /* CSR is readonly: trap. */
-         return false;
-     }
-+    if (vm_level && (csr->flags & CSRFL_GSPR)) {
-+        if (is_guest_mmu_idx(ctx->mem_idx)) {
-+            generate_exception(ctx, EXCCODE_GSPR);
-+            return true;
-+        }
-+        gen_set_gpr(a->rd, tcg_constant_tl(0), EXT_NONE);
-+        return true;
-+    }
-     src1 = gpr_src(ctx, a->rd, EXT_NONE);
-     writefn = (GenCSRWrite)csr->writefn;
-     if (writefn) {
-         dest = gpr_dst(ctx, a->rd, EXT_NONE);
--        writefn(dest, tcg_env, src1);
-+        writefn(dest, tcg_env, src1, tcg_constant_i32(vm_level));
-     } else {
-         dest = tcg_temp_new();
--        offset = get_csr_offset(csr, 0);
-+        offset = get_csr_offset(csr, vm_level);
-         tcg_gen_ld_tl(dest, tcg_env, offset);
-         tcg_gen_st_tl(src1, tcg_env, offset);
-     }
-@@ -165,7 +188,7 @@ static bool trans_csrwr(DisasContext *ctx, arg_csrwr *a)
-     return true;
- }
+     int index, match;
  
--static bool trans_csrxchg(DisasContext *ctx, arg_csrxchg *a)
-+static bool trans_csrxchg_impl(DisasContext *ctx, arg_rr_csr *a, int vm_level)
- {
-     TCGv src1, mask, oldv, newv, temp;
-     const CSRInfo *csr;
-@@ -182,11 +205,20 @@ static bool trans_csrxchg(DisasContext *ctx, arg_csrxchg *a)
-         return true;
+-    match = loongarch_tlb_search(env, context->addr, &index);
++    match = loongarch_tlb_search(env, context->addr, &index,
++                                 vm_level, get_tgid(env));
+     if (match) {
+         return loongarch_map_tlb_entry(env, context, access_type, index,
+-                                       mmu_idx);
++                                       mmu_idx, vm_level);
      }
  
--    if (!check_csr_flags(ctx, csr, true)) {
-+    if (!check_csr_flags(ctx, csr, true, vm_level)) {
-         /* CSR is readonly: trap. */
-         return false;
-     }
- 
-+    if (vm_level && (csr->flags & CSRFL_GSPR)) {
-+        if (is_guest_mmu_idx(ctx->mem_idx)) {
-+            generate_exception(ctx, EXCCODE_GSPR);
-+            return true;
-+        }
-+        gen_set_gpr(a->rd, tcg_constant_tl(0), EXT_NONE);
-+        return true;
-+    }
-+
-     /* So far only readonly csrs have readfn. */
-     assert(csr->readfn == NULL);
- 
-@@ -196,7 +228,7 @@ static bool trans_csrxchg(DisasContext *ctx, arg_csrxchg *a)
-     newv = tcg_temp_new();
-     temp = tcg_temp_new();
- 
--    offset = get_csr_offset(csr, 0);
-+    offset = get_csr_offset(csr, vm_level);
-     tcg_gen_ld_tl(oldv, tcg_env, offset);
-     tcg_gen_and_tl(newv, src1, mask);
-     tcg_gen_andc_tl(temp, oldv, mask);
-@@ -204,7 +236,7 @@ static bool trans_csrxchg(DisasContext *ctx, arg_csrxchg *a)
- 
-     writefn = (GenCSRWrite)csr->writefn;
-     if (writefn) {
--        writefn(oldv, tcg_env, newv);
-+        writefn(oldv, tcg_env, newv, tcg_constant_i32(vm_level));
-     } else {
-         tcg_gen_st_tl(newv, tcg_env, offset);
-     }
-@@ -212,6 +244,45 @@ static bool trans_csrxchg(DisasContext *ctx, arg_csrxchg *a)
-     return true;
- }
- 
-+static bool trans_csrrd(DisasContext *ctx, arg_csrrd *a)
-+{
-+    return trans_csrrd_impl(ctx, a, is_guest_mmu_idx(ctx->mem_idx));
-+}
-+
-+static bool trans_csrwr(DisasContext *ctx, arg_csrwr *a)
-+{
-+    return trans_csrwr_impl(ctx, a, is_guest_mmu_idx(ctx->mem_idx));
-+}
-+
-+static bool trans_csrxchg(DisasContext *ctx, arg_csrxchg *a)
-+{
-+    return trans_csrxchg_impl(ctx, a, is_guest_mmu_idx(ctx->mem_idx));
-+}
-+
-+static bool trans_gcsrrd(DisasContext *ctx, arg_gcsrrd *a)
-+{
-+    if (!avail_LVZ(ctx) || is_guest_mmu_idx(ctx->mem_idx)) {
-+        return false;
-+    }
-+    return trans_csrrd_impl(ctx, a, VM_LEVEL1);
-+}
-+
-+static bool trans_gcsrwr(DisasContext *ctx, arg_gcsrwr *a)
-+{
-+    if (!avail_LVZ(ctx) || is_guest_mmu_idx(ctx->mem_idx)) {
-+        return false;
-+    }
-+    return trans_csrwr_impl(ctx, a, VM_LEVEL1);
-+}
-+
-+static bool trans_gcsrxchg(DisasContext *ctx, arg_gcsrxchg *a)
-+{
-+    if (!avail_LVZ(ctx) || is_guest_mmu_idx(ctx->mem_idx)) {
-+        return false;
-+    }
-+    return trans_csrxchg_impl(ctx, a, VM_LEVEL1);
-+}
-+
- static bool gen_iocsrrd(DisasContext *ctx, arg_rr *a,
-                         void (*func)(TCGv, TCGv_ptr, TCGv))
- {
+     return TLBRET_NOMATCH;
 -- 
 2.55.0
 
