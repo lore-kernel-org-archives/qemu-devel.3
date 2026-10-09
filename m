@@ -4,42 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8C03CA5FED
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Oct 2026 03:11:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BA70CA6018
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Oct 2026 03:34:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xF0xI-0006YU-Ia; Thu, 08 Oct 2026 23:07:32 -0400
+	id 1xF1N9-00079G-Pf; Thu, 08 Oct 2026 23:34:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <prcups@krgm.moe>) id 1xF0vi-0004fD-Nm
- for qemu-devel@nongnu.org; Thu, 08 Oct 2026 23:06:05 -0400
-Received: from krgm.moe ([103.47.186.116])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <prcups@krgm.moe>) id 1xF0vf-0005np-1y
- for qemu-devel@nongnu.org; Thu, 08 Oct 2026 23:05:53 -0400
-Received: from yuno-loong (unknown
- [IPv6:2409:8900:2684:b82:443b:7baf:6228:2a79])
- by krgm.moe (Postfix) with ESMTPSA id 3E79CDFE8;
- Fri, 09 Oct 2026 08:35:48 +0530 (IST)
-From: SignKirigami <prcups@krgm.moe>
-To: qemu-devel@nongnu.org
-Cc: Bibo Mao <maobibo@loongson.cn>, SignKirigami <prcups@krgm.moe>,
- Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
-Subject: [PATCH v5 14/23] target/loongarch: add LVZ to TLB functions
-Date: Fri,  9 Oct 2026 11:05:10 +0800
-Message-ID: <0a5d9f323283586d3ca7bb34763ad761a62e52c9.1791514848.git.prcups@krgm.moe>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <cover.1791514848.git.prcups@krgm.moe>
-References: <cover.1791514848.git.prcups@krgm.moe>
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1xF1My-00078i-5p
+ for qemu-devel@nongnu.org; Thu, 08 Oct 2026 23:34:08 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1xF1Mt-0008Eg-9h
+ for qemu-devel@nongnu.org; Thu, 08 Oct 2026 23:34:03 -0400
+Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 6993XfWq063032
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Fri, 9 Oct 2026 12:33:42 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=hTAIy6gwPKCI3rlNmOgWwlecc29oPmZqXlF80TsgEgw=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=From:Message-ID:To:Subject:Date;
+ s=rs20250326; t=1791516822; v=1;
+ b=J7qbtQxHEnOeXsxtCeLaPEzgEsILljTtNPOOYVJU39QkYnrU3/MyFYIv/faQCNlq
+ ZsM4s+Fr2gbW5jNOL7oziaEJvhNkQbwEZ45ZNCCnaz4Jf49oijgDHcGVWX5KlOhv
+ JSBiLUmDxeFdz9F+yDn9X+Ck0EQbgWh40o0rDWPV2syrbJCzOgm/E/L0p7Y8sXnN
+ CUq+68Jvr8HjsCgQ8BgjMD4X+843ESeZz6xgBIkv4JoMX57crZjHdRGSb/MCdQ5L
+ +kB7jx3oUdMOlMJaya1BM2QyweUj3NBPOu/6GYSs6ZDhkdH6gBA4F5zBUCG44/n5
+ Ew/2DbpclxmPK0Z6kAu+aw==
+Message-ID: <65391825-ef44-4771-99b4-ad3a47279762@rsg.ci.i.u-tokyo.ac.jp>
+Date: Fri, 9 Oct 2026 12:33:41 +0900
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] contrib/plugins/bbv.c: Allow selecting ROI
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>
+References: <20261007-bbv-v1-0-a2f521a68fdf@rsg.ci.i.u-tokyo.ac.jp>
+ <20261007-bbv-v1-2-a2f521a68fdf@rsg.ci.i.u-tokyo.ac.jp>
+ <4eec19e6-db40-4658-b5b3-bc342473cffd@oss.qualcomm.com>
+ <f503ffbe-0900-4b8e-ae7b-dbfcc74eb5cc@rsg.ci.i.u-tokyo.ac.jp>
+ <2d7c2cdb-b5b9-41ed-9786-dd9b4876bdd8@oss.qualcomm.com>
+ <9cda6271-aed9-4a2b-b88f-bca8371d753e@rsg.ci.i.u-tokyo.ac.jp>
+ <0b392aaf-7ce1-46bb-b39b-47744ea1e6f9@oss.qualcomm.com>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <0b392aaf-7ce1-46bb-b39b-47744ea1e6f9@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=103.47.186.116; envelope-from=prcups@krgm.moe;
- helo=krgm.moe
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_PASS=-0.001,
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -56,419 +79,230 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add LVZ to most TLB handler, except invtlb and ptw.
+On 2026/10/09 11:30, Pierrick Bouvier wrote:
+> On 10/8/2026 5:57 PM, Akihiko Odaki wrote:
+>> On 2026/10/09 1:40, Pierrick Bouvier wrote:
+>>> On 10/7/2026 11:11 PM, Akihiko Odaki wrote:
+>>>> On 2026/10/08 10:08, Pierrick Bouvier wrote:
+>>>>> On 10/6/2026 11:01 PM, Akihiko Odaki wrote:
+>>>>>> A region of interest (ROI) often excludes the program startup and
+>>>>>> exit.
+>>>>>> For example, a benchmark may parse a large input and then run a
+>>>>>> computation kernel and the former may take longer than the latter;
+>>>>>> basic block vectors generated for the whole execution will not
+>>>>>> properly
+>>>>>> represent the latter.
+>>>>>>
+>>>>>> Add options to specify the beginning and the end of the ROI to bound
+>>>>>> basic block vector generation to the ROI.
+>>>>>>
+>>>>>> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+>>>>>> ---
+>>>>>>     docs/about/emulation.rst |  8 +++++
+>>>>>>     contrib/plugins/bbv.c    | 80 +++++++++++++++++++++++++++++++++++++
+>>>>>> +++++++++--
+>>>>>>     2 files changed, 86 insertions(+), 2 deletions(-)
+>>>>>>
+>>>>>> diff --git a/docs/about/emulation.rst b/docs/about/emulation.rst
+>>>>>> index c58149086cdd..0566171b517b 100644
+>>>>>> --- a/docs/about/emulation.rst
+>>>>>> +++ b/docs/about/emulation.rst
+>>>>>> @@ -284,6 +284,14 @@ The bbv plugin allows you to generate basic
+>>>>>> block vectors for use with the
+>>>>>>         * - Option
+>>>>>>         - Description
+>>>>>> +  * - begin=A
+>>>>>> +    - The virtual address of the instruction that starts basic block
+>>>>>> vector
+>>>>>> +      generation. Generation starts from the beginning of the
+>>>>>> execution if
+>>>>>> +      not specified.
+>>>>>> +  * - end=A
+>>>>>> +    - The virtual address of the instruction that ends basic block
+>>>>>> vector
+>>>>>> +      generation. Generation continues until the endo of the
+>>>>>> execution if
+>>>>>
+>>>>> small typo here: s/endo/end
+>>>>
+>>>> Thanks for catching the typo.
+>>>>
+>>>>>
+>>>>>> +      not specified.
+>>>>>>       * - interval=N
+>>>>>>         - The interval to generate a basic block vector specified by
+>>>>>> the number of
+>>>>>>           instructions (Default: N = 100000000)
+>>>>>> diff --git a/contrib/plugins/bbv.c b/contrib/plugins/bbv.c
+>>>>>> index e5caf5d9543b..a2a779f7639e 100644
+>>>>>> --- a/contrib/plugins/bbv.c
+>>>>>> +++ b/contrib/plugins/bbv.c
+>>>>>> @@ -5,6 +5,8 @@
+>>>>>>      * SPDX-License-Identifier: GPL-2.0-or-later
+>>>>>>      */
+>>>>>>     +#include <stdbool.h>
+>>>>>> +#include <stdint.h>
+>>>>>>     #include <stdio.h>
+>>>>>>     #include <glib.h>
+>>>>>>     @@ -26,6 +28,10 @@ static GHashTable *bbs;
+>>>>>>     static GRWLock bbs_lock;
+>>>>>>     static char *filename;
+>>>>>>     static struct qemu_plugin_scoreboard *vcpus;
+>>>>>> +static bool begin_present;
+>>>>>> +static uint64_t begin;
+>>>>>> +static bool end_present;
+>>>>>> +static uint64_t end;
+>>>>>>     static int64_t interval = 100000000;
+>>>>>>       static void plugin_exit(void *p)
+>>>>>> @@ -66,6 +72,7 @@ static void vcpu_init(unsigned int vcpu_index, void
+>>>>>> *userdata)
+>>>>>>         Vcpu *vcpu = qemu_plugin_scoreboard_find(vcpus, vcpu_index);
+>>>>>>           vcpu_filename = g_strdup_printf("%s.%u.bb", filename,
+>>>>>> vcpu_index);
+>>>>>> +    vcpu->count = begin_present ? INT64_MIN : -interval;
+>>>>>
+>>>>> Not sure which semantic we are trying to achieve with -interval here.
+>>>>>
+>>>>> The original logic was to increment this count, until reaching
+>>>>> interval,
+>>>>> after what we would reset it by using vcpu_count -= interval, to keep
+>>>>> the extra insn that went in after the threshold.
+>>>>
+>>>> The counter now starts at -interval and counts up to zero. Subtracting
+>>>> interval after emitting a vector still preserves the extra instructions.
+>>>> For example, with interval=100:
+>>>>
+>>>>       initial count:       -100
+>>>>       after 130 insns:       30  -> emit a vector
+>>>>       subtract interval:    -70  -> 70 insns until the next vector
+>>>>
+>>>>>
+>>>>>>         vcpu->file = fopen(vcpu_filename, "w");
+>>>>>>     }
+>>>>>>     @@ -102,6 +109,22 @@ static void vcpu_interval_exec(unsigned int
+>>>>>> vcpu_index, void *udata)
+>>>>>>         fputc('\n', vcpu->file);
+>>>>>>     }
+>>>>>>     +static void vcpu_begin_insn_exec(unsigned int vcpu_index, void
+>>>>>> *userdata)
+>>>>>> +{
+>>>>>> +    GHashTableIter iter;
+>>>>>> +    void *value;
+>>>>>> +
+>>>>>> +    g_rw_lock_reader_lock(&bbs_lock);
+>>>>>> +    g_hash_table_iter_init(&iter, bbs);
+>>>>>> +
+>>>>>> +    while (g_hash_table_iter_next(&iter, NULL, &value)) {
+>>>>>> +        qemu_plugin_u64_set(bb_count_u64(value), vcpu_index, 0);
+>>>>>> +    }
+>>>>>> +
+>>>>>> +    g_rw_lock_reader_unlock(&bbs_lock);
+>>>>>> +    qemu_plugin_u64_set(count_u64(), vcpu_index, -interval);
+>>>>>> +}
+>>>>>> +
+>>>>>>     static void vcpu_tb_trans(struct qemu_plugin_tb *tb, void
+>>>>>> *userdata)
+>>>>>>     {
+>>>>>>         uint64_t n_insns = qemu_plugin_tb_n_insns(tb);
+>>>>>> @@ -119,6 +142,19 @@ static void vcpu_tb_trans(struct qemu_plugin_tb
+>>>>>> *tb, void *userdata)
+>>>>>>         }
+>>>>>>         g_rw_lock_writer_unlock(&bbs_lock);
+>>>>>>     +    for (size_t idx = 0; idx < n_insns; idx++) {
+>>>>>> +        struct qemu_plugin_insn *insn = qemu_plugin_tb_get_insn(tb,
+>>>>>> idx);
+>>>>>> +        uint64_t insn_vaddr = qemu_plugin_insn_vaddr(insn);
+>>>>>> +
+>>>>>> +        if (begin_present && insn_vaddr == begin) {
+>>>>>> +            qemu_plugin_register_vcpu_insn_exec_cb(
+>>>>>> +                insn, vcpu_begin_insn_exec, QEMU_PLUGIN_CB_NO_REGS,
+>>>>>> NULL);
+>>>>>> +        } else if (end_present && insn_vaddr == end) {
+>>>>>> +            qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu(
+>>>>>> +                insn, QEMU_PLUGIN_INLINE_STORE_U64, count_u64(),
+>>>>>> INT64_MIN);
+>>>>>> +        }
+>>>>>> +    }
+>>>>>> +
+>>>>>>         qemu_plugin_register_vcpu_tb_exec_inline_per_vcpu(
+>>>>>>             tb, QEMU_PLUGIN_INLINE_ADD_U64, count_u64(), n_insns);
+>>>>>>     @@ -127,7 +163,32 @@ static void vcpu_tb_trans(struct
+>>>>>> qemu_plugin_tb *tb, void *userdata)
+>>>>>>           qemu_plugin_register_vcpu_tb_exec_cond_cb(
+>>>>>>             tb, vcpu_interval_exec, QEMU_PLUGIN_CB_NO_REGS,
+>>>>>> -        QEMU_PLUGIN_COND_GE, count_u64(), interval, NULL);
+>>>>>> +        QEMU_PLUGIN_COND_LT, count_u64(), INT64_MIN, NULL);
+>>>>>> +}
+>>>>>
+>>>>> is INT64_MIN used as an arbitrary large value when interpreted as
+>>>>> unsigned immediate? If yes, that's confusing to the reader.
+>>>>
+>>>> The unsigned comparison count < (uint64_t)INT64_MIN is equivalent with
+>>>> the signed comparison (int64_t)count >= 0. That is why this particular
+>>>> value is used.
+>>>>
+>>>> Setting count to INT64_MIN suppresses output for the next 2^63 counted
+>>>> instructions, which is effectively disabled for this use. The begin
+>>>> callback clears the BB counters and sets count to -interval; end sets it
+>>>> back to INT64_MIN. The requested interval stays unchanged.
+>>>>
+>>>
+>>> Ok I see better.
+>>> Even though it works, it's pretty confusing to be honest. Inline
+>>> operatons works with unsigned values, so with conversion and wrap
+>>> around, it's safe, but really not intuitive.
+>>>
+>>> I would prefer if you could refactor this to keep a zero initialized
+>>> count value, and add a specific instrumentation path for begin, end
+>>> logic (COND_LT, UINT64_MAX - N) to keep the same behavior of "infinite
+>>> interval".
+>>
+>> We cannot choose a separate instrumentation path based on whether
+>> execution is inside the ROI. Instrumentation is installed when a TB is
+>> translated, but the same TB may execute both inside and outside the ROI.
+>>
+>> I will preserve this logic and add code comments for clarification.
+>>
+> 
+> I took some time to read again how bbv works. Indeed, my idea to modify
+> interval was a non sense, and not what is expected.
+> 
+> The current instrumentation per tb is always done unconditionally, and
+> the only need thing to do is to snapshot bbs hashtable to keep track of
+> the correct data only when being inside the ROI. The rest of existing
+> logic stays the same.
+> 
+> - On enter, set vcpu->count to 0 (fresh start) and restore bb table from
+> previous exit (empty table if there was no exit yet).
+> - On exit, duplicate the bb table to allow to restore it next time we
+> enter in ROI.
+> Key idea is that we keep on adding things in bb table, but save/restore
+> when leaving/entering ROI.
+> 
+> I think for robustness you should also add detection of those expected
+> transitions: Out of ROI -> Enter ROI -> Exit ROI -> Enter ROI -> ...
+> 
+> Nothing is currently done to detect if if we meet enter/exit address
+> multiple times, without having the correct sequence. I don't know if we
+> want to report an error or handle reentrance correctly in this case.
+> 
+> Also, should count be reset on each entrance, or do we want to keep
+> track of it also, and save/restore that on exit/enter? I tend to think
+> the idea is create a "virtual" interval than only is alive when being
+> inside the ROI. In this case, we should keep track of this value also.
 
-Signed-off-by: SignKirigami <prcups@krgm.moe>
-Signed-off-by: Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
----
- target/loongarch/cpu-mmu.h        |   2 +
- target/loongarch/cpu.h            |   1 +
- target/loongarch/cpu_helper.c     |  10 +--
- target/loongarch/tcg/tlb_helper.c | 132 ++++++++++++++++++++++++------
- 4 files changed, 115 insertions(+), 30 deletions(-)
+The current design that resets the bb table is intentional. A "virtual" 
+interval spanning multiple ROIs would be misleading because it mixes 
+different sections of execution.
 
-diff --git a/target/loongarch/cpu-mmu.h b/target/loongarch/cpu-mmu.h
-index 4d76d96ee5..29b0c109fb 100644
---- a/target/loongarch/cpu-mmu.h
-+++ b/target/loongarch/cpu-mmu.h
-@@ -110,6 +110,8 @@ TLBRet loongarch_ptw(CPULoongArchState *env, MMUContext *context,
-                      uintptr_t retaddr);
- void get_dir_base_width(CPULoongArchState *env, uint64_t *dir_base,
-                         uint64_t *dir_width, unsigned int level, int vm_level);
-+hwaddr loongarch_get_host_address(CPULoongArchState *env, hwaddr gpa,
-+                                  uintptr_t retaddr);
- TLBRet loongarch_map_address(CPULoongArchState *env, MMUContext *context,
-                              MMUAccessType access_type, int mmu_idx,
-                              int is_debug, int vm_level, uintptr_t retaddr);
-diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
-index a42c5fe170..995e8f5a7f 100644
---- a/target/loongarch/cpu.h
-+++ b/target/loongarch/cpu.h
-@@ -262,6 +262,7 @@ FIELD(TLB_MISC, ASID, 1, 10)
- FIELD(TLB_MISC, VPPN, 13, 35)
- FIELD(TLB_MISC, PS, 48, 6)
- FIELD(TLB_MISC, GID, 54, 8)
-+FIELD(TLB_MISC, VM_LEVEL, 62, 1)
- 
- /*Msg interrupt registers */
- #define N_MSGIS                4
-diff --git a/target/loongarch/cpu_helper.c b/target/loongarch/cpu_helper.c
-index 8eabb4a9dc..23d26385c6 100644
---- a/target/loongarch/cpu_helper.c
-+++ b/target/loongarch/cpu_helper.c
-@@ -21,7 +21,7 @@
- void get_dir_base_width(CPULoongArchState *env, uint64_t *dir_base,
-                         uint64_t *dir_width, unsigned int level, int vm_level)
- {
--    CPUSysState *sys = env_sys(env);
-+    CPUSysState *sys = get_sys(env, vm_level);
- 
-     switch (level) {
-     case 1:
-@@ -51,7 +51,7 @@ void get_dir_base_width(CPULoongArchState *env, uint64_t *dir_base,
- TLBRet loongarch_check_pte(CPULoongArchState *env, MMUContext *context,
-                            MMUAccessType access_type, int mmu_idx, int vm_level)
- {
--    uint64_t plv = mmu_idx;
-+    uint64_t plv = mmu_idx_to_plv(mmu_idx);
-     uint64_t tlb_entry, tlb_ppn;
-     uint8_t tlb_ps, tlb_plv, tlb_nx, tlb_nr, tlb_rplv;
-     bool tlb_v, tlb_d;
-@@ -316,12 +316,12 @@ TLBRet get_physical_address(CPULoongArchState *env, MMUContext *context,
-                             MMUAccessType access_type, int mmu_idx,
-                             int is_debug, uintptr_t retaddr)
- {
--    int user_mode = mmu_idx == MMU_USER_IDX;
--    int kernel_mode = mmu_idx == MMU_KERNEL_IDX;
-+    int user_mode = mmu_idx_to_plv(mmu_idx) == MMU_USER_IDX;
-+    int kernel_mode = mmu_idx_to_plv(mmu_idx) == MMU_KERNEL_IDX;
-     int vm_level = env_vm_level(env);
-     uint32_t plv, base_c, base_v;
-     int64_t addr_high;
--    CPUSysState *sys = env_sys(env);
-+    CPUSysState *sys = get_sys(env, vm_level);
-     uint8_t da = FIELD_EX64(sys->CSR_CRMD, CSR_CRMD, DA);
-     uint8_t pg = FIELD_EX64(sys->CSR_CRMD, CSR_CRMD, PG);
-     vaddr address;
-diff --git a/target/loongarch/tcg/tlb_helper.c b/target/loongarch/tcg/tlb_helper.c
-index aabb463e4d..60c7193283 100644
---- a/target/loongarch/tcg/tlb_helper.c
-+++ b/target/loongarch/tcg/tlb_helper.c
-@@ -18,6 +18,8 @@
- #include "exec/target_page.h"
- #include "accel/tcg/cpu-ldst.h"
- #include "accel/tcg/cpu-loop.h"
-+#include "accel/tcg/probe.h"
-+#include "exec/tlb-flags.h"
- #include "exec/log.h"
- #include "cpu-csr.h"
- #include "tcg/tcg_loongarch.h"
-@@ -40,9 +42,15 @@ static inline bool tlb_entry_matches_gid(const LoongArchTLB *tlb, uint8_t gid)
-     return FIELD_EX64(tlb->tlb_misc, TLB_MISC, GID) == gid;
- }
- 
-+static inline bool tlb_entry_matches_vm_level(const LoongArchTLB *tlb,
-+                                              uint8_t vm_level)
-+{
-+    return FIELD_EX64(tlb->tlb_misc, TLB_MISC, VM_LEVEL) == vm_level;
-+}
-+
- bool check_ps(CPULoongArchState *env, uint8_t tlb_ps)
- {
--    CPUSysState *sys = env_sys(env);
-+    CPUSysState *sys = get_sys(env, VM_LEVEL0);
- 
-     if (tlb_ps >= 64) {
-         return false;
-@@ -137,7 +145,9 @@ static void invalidate_tlb_entry(CPULoongArchState *env, int index, int vm_level
-     target_ulong addr, mask, pagesize;
-     uint8_t tlb_ps;
-     LoongArchTLB *tlb = &env->tlb[index];
--    int idxmap = BIT(MMU_KERNEL_IDX) | BIT(MMU_USER_IDX);
-+    int bit_offset = vm_level ? MMU_GUEST_IDX : 0;
-+    int idxmap = (BIT(MMU_KERNEL_IDX + bit_offset)
-+                  | BIT(MMU_USER_IDX + bit_offset));
-     uint64_t tlb_vppn = FIELD_EX64(tlb->tlb_misc, TLB_MISC, VPPN);
-     bool tlb_v;
- 
-@@ -165,7 +175,7 @@ static void invalidate_tlb(CPULoongArchState *env, int index, int vm_level)
-     LoongArchTLB *tlb;
-     uint16_t csr_asid, tlb_asid, tlb_g;
-     uint8_t tlb_e;
--    CPUSysState *sys = env_sys(env);
-+    CPUSysState *sys = get_sys(env, vm_level);
- 
-     csr_asid = FIELD_EX64(sys->CSR_ASID, CSR_ASID, ASID);
-     tlb = &env->tlb[index];
-@@ -190,7 +200,7 @@ static void sptw_prepare_context(CPULoongArchState *env, MMUContext *context,
- {
-     uint64_t lo0, lo1, csr_vppn;
-     uint8_t csr_ps;
--    CPUSysState *sys = env_sys(env);
-+    CPUSysState *sys = get_sys(env, vm_level);
- 
-     if (FIELD_EX64(sys->CSR_TLBRERA, CSR_TLBRERA, ISTLBR)) {
-         csr_ps = FIELD_EX64(sys->CSR_TLBREHI, CSR_TLBREHI, PS);
-@@ -224,7 +234,7 @@ static void fill_tlb_entry(CPULoongArchState *env, LoongArchTLB *tlb,
-     uint64_t lo0, lo1, csr_vppn;
-     uint16_t csr_asid;
-     uint8_t csr_ps;
--    CPUSysState *sys = env_sys(env);
-+    CPUSysState *sys = get_sys(env, vm_level);
- 
-     csr_vppn = context->addr >> R_TLB_MISC_VPPN_SHIFT;
-     csr_ps   = context->ps;
-@@ -237,6 +247,8 @@ static void fill_tlb_entry(CPULoongArchState *env, LoongArchTLB *tlb,
-     tlb->tlb_misc = FIELD_DP64(tlb->tlb_misc, TLB_MISC, E, 1);
-     csr_asid = FIELD_EX64(sys->CSR_ASID, CSR_ASID, ASID);
-     tlb->tlb_misc = FIELD_DP64(tlb->tlb_misc, TLB_MISC, ASID, csr_asid);
-+    tlb->tlb_misc = FIELD_DP64(tlb->tlb_misc, TLB_MISC, GID, get_tgid(env));
-+    tlb->tlb_misc = FIELD_DP64(tlb->tlb_misc, TLB_MISC, VM_LEVEL, vm_level);
- 
-     tlb->tlb_entry0 = lo0;
-     tlb->tlb_entry1 = lo1;
-@@ -270,7 +282,7 @@ static const LoongArchTLB *loongarch_tlb_search_cb(CPULoongArchState *env,
-     bool tlb_g;
-     int i, compare_shift;
-     uint64_t vpn, tlb_vppn;
--    CPUSysState *sys = env_sys(env);
-+    CPUSysState *sys = get_sys(env, vm_level);
- 
-     stlb_ps = FIELD_EX64(sys->CSR_STLBPS, CSR_STLBPS, PS);
-     vpn = (vaddr & TARGET_VIRT_MASK) >> (stlb_ps + 1);
-@@ -287,6 +299,8 @@ static const LoongArchTLB *loongarch_tlb_search_cb(CPULoongArchState *env,
-             tlb_g = !!FIELD_EX64(tlb->tlb_entry0, TLBENTRY, G);
- 
-             if (func(tlb_g, csr_asid, tlb_asid) &&
-+                tlb_entry_matches_gid(tlb, gid) &&
-+                tlb_entry_matches_vm_level(tlb, vm_level) &&
-                 (vpn == (tlb_vppn >> compare_shift))) {
-                 return tlb;
-             }
-@@ -305,6 +319,8 @@ static const LoongArchTLB *loongarch_tlb_search_cb(CPULoongArchState *env,
-             compare_shift = tlb_ps + 1 - R_TLB_MISC_VPPN_SHIFT;
-             vpn = (vaddr & TARGET_VIRT_MASK) >> (tlb_ps + 1);
-             if (func(tlb_g, csr_asid, tlb_asid) &&
-+                tlb_entry_matches_gid(tlb, gid) &&
-+                tlb_entry_matches_vm_level(tlb, vm_level) &&
-                 (vpn == (tlb_vppn >> compare_shift))) {
-                 return tlb;
-             }
-@@ -319,7 +335,7 @@ static bool loongarch_tlb_search(CPULoongArchState *env, vaddr vaddr,
-     int csr_asid;
-     tlb_match func;
-     const LoongArchTLB *tlb;
--    CPUSysState *sys = env_sys(env);
-+    CPUSysState *sys = get_sys(env, vm_level);
- 
-     func = tlb_match_any;
-     csr_asid = FIELD_EX64(sys->CSR_ASID, CSR_ASID, ASID);
-@@ -335,7 +351,7 @@ static bool loongarch_tlb_search(CPULoongArchState *env, vaddr vaddr,
- void helper_tlbsrch(CPULoongArchState *env, uint32_t vm_level)
- {
-     int index, match;
--    CPUSysState *sys = env_sys(env);
-+    CPUSysState *sys = get_sys(env, vm_level);
- 
-     if (FIELD_EX64(sys->CSR_TLBRERA, CSR_TLBRERA, ISTLBR)) {
-         match = loongarch_tlb_search(env, sys->CSR_TLBREHI,
-@@ -359,7 +375,7 @@ void helper_tlbrd(CPULoongArchState *env, uint32_t vm_level)
-     LoongArchTLB *tlb;
-     int index;
-     uint8_t tlb_ps, tlb_e;
--    CPUSysState *sys = env_sys(env);
-+    CPUSysState *sys = get_sys(env, vm_level);
- 
-     index = FIELD_EX64(sys->CSR_TLBIDX, CSR_TLBIDX, INDEX);
-     tlb = &env->tlb[index];
-@@ -415,7 +431,7 @@ static void update_tlb_index(CPULoongArchState *env, MMUContext *context,
- 
- void helper_tlbwr(CPULoongArchState *env, uint32_t vm_level)
- {
--    CPUSysState *sys = env_sys(env);
-+    CPUSysState *sys = get_sys(env, vm_level);
-     int index = FIELD_EX64(sys->CSR_TLBIDX, CSR_TLBIDX, INDEX);
-     MMUContext context;
- 
-@@ -436,7 +452,7 @@ static int get_tlb_random_index(CPULoongArchState *env, vaddr addr,
-     uint16_t asid, tlb_asid, stlb_ps;
-     LoongArchTLB *tlb;
-     uint8_t tlb_e, tlb_g;
--    CPUSysState *sys = env_sys(env);
-+    CPUSysState *sys = get_sys(env, vm_level);
- 
-     /* Validity of stlb_ps is checked in helper_csrwr_stlbps() */
-     stlb_ps = FIELD_EX64(sys->CSR_STLBPS, CSR_STLBPS, PS);
-@@ -456,7 +472,8 @@ static int get_tlb_random_index(CPULoongArchState *env, vaddr addr,
- 
-             tlb_asid = FIELD_EX64(tlb->tlb_misc, TLB_MISC, ASID);
-             tlb_g = FIELD_EX64(tlb->tlb_entry0, TLBENTRY, G);
--            if (tlb_g == 0 && asid != tlb_asid) {
-+            if (tlb_g == 0 && asid != tlb_asid &&
-+                tlb_entry_matches_gid(tlb, get_tgid(env))) {
-                 set = i;
-             }
-         }
-@@ -480,7 +497,8 @@ static int get_tlb_random_index(CPULoongArchState *env, vaddr addr,
- 
-             tlb_asid = FIELD_EX64(tlb->tlb_misc, TLB_MISC, ASID);
-             tlb_g = FIELD_EX64(tlb->tlb_entry0, TLBENTRY, G);
--            if (tlb_g == 0 && asid != tlb_asid) {
-+            if (tlb_g == 0 && asid != tlb_asid &&
-+                tlb_entry_matches_gid(tlb, get_tgid(env))) {
-                 index = i;
-             }
-         }
-@@ -498,7 +516,7 @@ void helper_tlbfill(CPULoongArchState *env, uint32_t vm_level)
-     vaddr entryhi;
-     int index, pagesize;
-     MMUContext context;
--    CPUSysState *sys = env_sys(env);
-+    CPUSysState *sys = get_sys(env, vm_level);
- 
-     if (FIELD_EX64(sys->CSR_TLBRERA, CSR_TLBRERA, ISTLBR)) {
-         entryhi = sys->CSR_TLBREHI;
-@@ -521,7 +539,7 @@ void helper_tlbclr(CPULoongArchState *env, uint32_t vm_level)
-     LoongArchTLB *tlb;
-     int i, index;
-     uint16_t csr_asid, tlb_asid, tlb_g;
--    CPUSysState *sys = env_sys(env);
-+    CPUSysState *sys = get_sys(env, vm_level);
- 
-     csr_asid = FIELD_EX64(sys->CSR_ASID, CSR_ASID, ASID);
-     index = FIELD_EX64(sys->CSR_TLBIDX, CSR_TLBIDX, INDEX);
-@@ -532,7 +550,8 @@ void helper_tlbclr(CPULoongArchState *env, uint32_t vm_level)
-             tlb = &env->tlb[i * 256 + (index % 256)];
-             tlb_asid = FIELD_EX64(tlb->tlb_misc, TLB_MISC, ASID);
-             tlb_g = FIELD_EX64(tlb->tlb_entry0, TLBENTRY, G);
--            if (!tlb_g && tlb_asid == csr_asid) {
-+            if (!tlb_g && tlb_asid == csr_asid &&
-+                tlb_entry_matches_gid(tlb, get_tgid(env))) {
-                 tlb->tlb_misc = FIELD_DP64(tlb->tlb_misc, TLB_MISC, E, 0);
-             }
-         }
-@@ -542,7 +561,8 @@ void helper_tlbclr(CPULoongArchState *env, uint32_t vm_level)
-             tlb = &env->tlb[i];
-             tlb_asid = FIELD_EX64(tlb->tlb_misc, TLB_MISC, ASID);
-             tlb_g = FIELD_EX64(tlb->tlb_entry0, TLBENTRY, G);
--            if (!tlb_g && tlb_asid == csr_asid) {
-+            if (!tlb_g && tlb_asid == csr_asid &&
-+                tlb_entry_matches_gid(tlb, get_tgid(env))) {
-                 tlb->tlb_misc = FIELD_DP64(tlb->tlb_misc, TLB_MISC, E, 0);
-             }
-         }
-@@ -554,7 +574,7 @@ void helper_tlbclr(CPULoongArchState *env, uint32_t vm_level)
- void helper_tlbflush(CPULoongArchState *env, uint32_t vm_level)
- {
-     int i, index;
--    CPUSysState *sys = env_sys(env);
-+    CPUSysState *sys = get_sys(env, vm_level);
- 
-     index = FIELD_EX64(sys->CSR_TLBIDX, CSR_TLBIDX, INDEX);
- 
-@@ -659,15 +679,25 @@ static void ptw_update_tlb(CPULoongArchState *env, MMUContext *context,
-     update_tlb_index(env, context, index, vm_level);
- }
- 
-+static TLBRet loongarch_map_host_address(CPULoongArchState *env, MMUContext *context,
-+                                  MMUAccessType access_type, uintptr_t retaddr)
-+{
-+    TLBRet ret;
-+
-+    ret = loongarch_map_address(env, context, access_type, MMU_KERNEL_IDX,
-+                                false, false, retaddr);
-+    return TLBRET_HOST_MATCH + ret;
-+}
-+
- bool loongarch_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
-                             MMUAccessType access_type, int mmu_idx,
-                             bool probe, uintptr_t retaddr)
- {
-     CPULoongArchState *env = cpu_env(cs);
--    hwaddr physical;
-     int vm_level = env_vm_level(env);
--    int prot;
--    MMUContext context;
-+    hwaddr physical;
-+    int prot, host_prot;
-+    MMUContext context, host_context;
-     TLBRet ret;
- 
-     /* Data access */
-@@ -714,12 +744,30 @@ bool loongarch_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
-     if (ret == TLBRET_MATCH) {
-         physical = context.physical;
-         prot = context.prot;
-+        if (vm_level) {
-+            host_context.addr = physical;
-+            host_context.tlb_index = -1;
-+            ret = loongarch_map_host_address(env, &host_context, access_type,
-+                                             retaddr);
-+            if (ret != TLBRET_HOST_MATCH) {
-+                if (probe) {
-+                    return false;
-+                }
-+                raise_mmu_exception(env, physical, access_type, ret);
-+                cpu_loop_exit_restore(cs, retaddr);
-+                return false;
-+            }
-+            physical = host_context.physical;
-+            host_prot = host_context.prot;
-+            prot &= host_prot;
-+        }
-         tlb_set_page(cs, address & TARGET_PAGE_MASK,
-                      physical & TARGET_PAGE_MASK, prot,
-                      mmu_idx, TARGET_PAGE_SIZE);
-         qemu_log_mask(CPU_LOG_MMU,
-                       "%s address=%" VADDR_PRIx " physical " HWADDR_FMT_plx
--                      " prot %d\n", __func__, address, physical, prot);
-+                      " prot %d guest %d\n", __func__, address, physical,
-+                      prot, is_guest_mmu_idx(mmu_idx));
-         return true;
-     } else {
-         qemu_log_mask(CPU_LOG_MMU,
-@@ -748,6 +796,31 @@ static inline uint64_t loongarch_sanitize_hw_pte(CPULoongArchState *env,
-     return (pte & ~ppn_mask) | ((pte & ppn_mask) & palen_mask);
- }
- 
-+hwaddr loongarch_get_host_address(CPULoongArchState *env, hwaddr gpa,
-+                                  uintptr_t retaddr)
-+{
-+    MMUContext host_context;
-+    TLBRet ret;
-+    CPUTLBEntryFull *full;
-+    int flags = probe_access_full_mmu(env, gpa, 1, MMU_DATA_LOAD,
-+                                      MMU_KERNEL_IDX + MMU_GUEST_IDX, NULL, &full);
-+    if (!(flags & TLB_INVALID_MASK)) {
-+        return (full->phys_addr & TARGET_PAGE_MASK) | (gpa & ~TARGET_PAGE_MASK);
-+    }
-+
-+    host_context.addr = gpa;
-+    host_context.tlb_index = -1;
-+    ret = loongarch_map_host_address(env, &host_context, MMU_DATA_LOAD,
-+                                     retaddr);
-+
-+    if (ret != TLBRET_HOST_MATCH) {
-+        raise_mmu_exception(env, gpa, MMU_DATA_LOAD, ret);
-+        cpu_loop_exit_restore(env_cpu(env), retaddr);
-+    }
-+
-+    return host_context.physical;
-+}
-+
- target_ulong helper_lddir(CPULoongArchState *env, target_ulong base,
-                           uint32_t level, uint32_t mem_idx)
- {
-@@ -785,7 +858,12 @@ target_ulong helper_lddir(CPULoongArchState *env, target_ulong base,
-                        env_vm_level(env));
-     index = (badvaddr >> dir_base) & ((1 << dir_width) - 1);
-     phys = base | index << 3;
--    val = address_space_ldq_le(cs->as, phys, MEMTXATTRS_UNSPECIFIED, NULL);
-+    val = address_space_ldq_le(
-+        cs->as,
-+        env_vm_level(env) == VM_LEVEL1 ?
-+        loongarch_get_host_address(env, phys, GETPC()) :
-+                            phys,
-+        MEMTXATTRS_UNSPECIFIED, NULL);
- 
-     return val & palen_mask;
- }
-@@ -855,8 +933,12 @@ void helper_ldpte(CPULoongArchState *env, target_ulong base, target_ulong odd,
-         ptoffset0 = ptindex << 3;
-         ptoffset1 = (ptindex + 1) << 3;
-         phys = base | (odd ? ptoffset1 : ptoffset0);
--        pte_raw = address_space_ldq_le(cs->as, phys,
--                                       MEMTXATTRS_UNSPECIFIED, NULL);
-+        pte_raw = address_space_ldq_le(
-+            cs->as,
-+            env_vm_level(env) == VM_LEVEL1 ?
-+            loongarch_get_host_address(env, phys, GETPC()) :
-+                                phys,
-+            MEMTXATTRS_UNSPECIFIED, NULL);
-         tmp0 = loongarch_sanitize_hw_pte(env, pte_raw);
-         ps = ptbase;
-     }
--- 
-2.55.0
+I don't think we need to add a special handling to enforce a particular 
+order of transitions. This patch performs the same action for the begin 
+and end addresses and that makes the behavior predictable.
 
+Perhaps we can extend the documentation to clarify the "begin" marker to 
+tell that it resets the bb table, making the behavior clear regardless 
+of transition order.
+
+Regards,
+Akihiko Odaki
 
