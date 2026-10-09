@@ -4,110 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36441CA6019
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Oct 2026 11:10:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED208CA9EBB
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Oct 2026 11:58:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xF8U8-0006K3-5r; Fri, 09 Oct 2026 07:09:56 -0400
+	id 1xF9EJ-0004hj-OS; Fri, 09 Oct 2026 07:57:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sraymaek@redhat.com>)
- id 1xF8U5-0006JV-2Z
- for qemu-devel@nongnu.org; Fri, 09 Oct 2026 07:09:54 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sraymaek@redhat.com>)
- id 1xF8U3-0004KQ-Iq
- for qemu-devel@nongnu.org; Fri, 09 Oct 2026 07:09:52 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1791544190;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=THbHmPcOnWna3rDRL3qlDBa4vGxL3Q3ZNaUJ270cj4E=;
- b=MNpT4o53B+fnrDOqzb6aMtqlQbU4Xp9h7i2RfXkk2HEYQ4RAYurbki86tB3dujOMM6VXl0
- 8ke6VXoq8Cx/oQvuhYYKnd+iTSf7cNUmitqPhyOIf7G+s26ZHE4oJXR8BmPlN59anW/rT3
- rh7H7YE0UrM01D/ljPE4/Lkbsk771x4=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-672-SDsz--VYNjaNrcLmuSUEiw-1; Fri, 9 Oct 2026 11:09:48 +0000
-X-MC-Unique: SDsz--VYNjaNrcLmuSUEiw-1
-X-Mimecast-MFC-AGG-ID: SDsz--VYNjaNrcLmuSUEiw_1791544188
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4a01d1fb07bso63924685e9.2
- for <qemu-devel@nongnu.org>; Fri, 09 Oct 2026 04:09:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1791544187; x=1792148987; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=THbHmPcOnWna3rDRL3qlDBa4vGxL3Q3ZNaUJ270cj4E=;
- b=GsZl0d/CRVi67JLNwu02krc1QGbBsvEXFqUE5le6XR0f9+FCxpMEJUZGxDSqdUw2KS
- T+0Is4wEAfeFsLGXia7/EOT1T84o3euL2P5p/1fRVKvx8UrbD/ZwGkngxr84YRto/c9I
- kzxw9ipaxJ4Yoiud+rZ8riJ+xgojpIRq760MmS2CWhxCxskZCNPJaVNlwTu1ob//8O3F
- faVCDVHu15VGT3q7JERCWO1k5FPnL2DxUm086qcoMJ/UuIiZVASzBV/IC+T5FSF5ugZE
- 7qdlb3ZGqowd233TBzWtMoTT8ZZDZMOfvbV/AerCs6DTtfSOdljUjFObXk8ZYUPEu5y+
- 9PKw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791544187; x=1792148987;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=THbHmPcOnWna3rDRL3qlDBa4vGxL3Q3ZNaUJ270cj4E=;
- b=iX9iOM2eyZvt77M0CTsqqjTyEOda1pH8SQ0L2EImKCMT3JaSxttd6+P9G2HEypjrip
- PkhoO5oGDQpzfvZSG6t5PCeK64/IERwufOE4ZWrrkRrSA1lQncfJaeq8oLFfZ4DlkORa
- A083Dqenhwn1Rz+kIREwZAuthKfqjWCpHsMPGRZBsuKPtROApRp3dlmcu8YxTb5v4AqJ
- qOXw/KPgCuOP2c3OMLNwHUSxSccLjfr8lfWRIe9O7oHri8vwuRR4ohEiRUrKd+nfTiPJ
- P1GXE5Q0zK1joumD9dcW9Hq25uCKdhNDMYz3UVmPENCOc7x6WB2M6R0wJyrRddsTMlWT
- onQg==
-X-Gm-Message-State: AFuF++m1WjBkRkQ0YvIFbrEUiy2V1ON1jWXY8DCZhw7wDiyRq3rYJ1e0
- 4jvCmTwBJfBsPv/S2r055diNZTZVa1YqzKzJJ+z/H7VzJ5+8iCh12aYixL/x636gU4R+bkq5uqM
- FStMsPM0T2lzEBSRxcfjB4LokDm75RPAE2t0YEh++cmAS6bA4YA8Sr+LYzIduPTr6oV19iLHHn8
- 4VmoANK9U8rKo6tnNvMSkmNWcuzi/BQo+OLrKpTyKV
-X-Gm-Gg: AYBFou3Mdn5G+K6mh0wn8xfdBdL5uzYD1oI2u/V4hwKDwQQVnurnVvijU2Dpgmn99ZN
- htmswHJ+WFVhlsUiAmiv2IJa9fJYHFbKxjLJphbqK53qwL9EwE4Rv4PZXYVs61rfotHfTlcSQf1
- g7YKfcFyzQcvkwyLJbai2d7RJKR+UqeMF+io6Pg0ebjpvvMKG4h1itI8g83riwrynuMWHL/zaVu
- JF0Exk2E/CmgXtrBTszFGEn5nBtjLag6vx0mHmIlRasZPRSl9WwteQ1PekErmFNZfEk8OIQTGnY
- /eDsMMmRMP1bb9zBE65sqK+6/P+7QXt9eZZCdpIU/oGkiyDnn2wU4JUYivasGTpDYxkxo6k+HV/
- kWvzZiD9gXV3H4B9B4Bw4dgke8bjWW9LfsOG0UW0ja+Fgyp5dB4F2/KIMCk+4X/Wck6ArA+d98h
- V/7FcUuKBsCj+Qi7ULYPtnDJEqHV2xcySI
-X-Received: by 2002:a05:600c:4ec9:b0:4a1:7739:f9ab with SMTP id
- 5b1f17b1804b1-4a18e4ca953mr27318385e9.20.1791544187444; 
- Fri, 09 Oct 2026 04:09:47 -0700 (PDT)
-X-Received: by 2002:a05:600c:4ec9:b0:4a1:7739:f9ab with SMTP id
- 5b1f17b1804b1-4a18e4ca953mr27318005e9.20.1791544187016; 
- Fri, 09 Oct 2026 04:09:47 -0700 (PDT)
-Received: from sraymaek-thinkpadx1nanogen2.rmtbe.csb
- (2a02-1811-d30-6f00-217b-1d12-f4f3-7e56.ip6.access.telenet.be.
- [2a02:1811:d30:6f00:217b:1d12:f4f3:7e56])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48db94e530esm3295680f8f.13.2026.10.09.04.09.45
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 09 Oct 2026 04:09:46 -0700 (PDT)
-From: Sanne Raymaekers <sraymaek@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, fam@euphon.net, kwolf@redhat.com, hreitz@redhat.com,
- Sanne Raymaekers <sraymaek@redhat.com>
-Subject: [PATCH v2 3/3] block/vmdk: add eos marker for stream optimized disks
-Date: Fri,  9 Oct 2026 13:09:05 +0200
-Message-ID: <20261009110905.905070-4-sraymaek@redhat.com>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20261009110905.905070-1-sraymaek@redhat.com>
-References: <20261009110905.905070-1-sraymaek@redhat.com>
+ (Exim 4.90_1) (envelope-from <fuad.tabba@linux.dev>)
+ id 1xF9EF-0004fA-MB
+ for qemu-devel@nongnu.org; Fri, 09 Oct 2026 07:57:35 -0400
+Received: from out-176.mta1.migadu.com ([2001:41d0:203:375::b0]
+ helo=mta1.migadu.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <fuad.tabba@linux.dev>)
+ id 1xF9EC-0001V1-3A
+ for qemu-devel@nongnu.org; Fri, 09 Oct 2026 07:57:35 -0400
+X-Envelope-To: qemu-devel@nongnu.org
+DKIM-Signature: a=rsa-sha256; bh=PN0MwabTWdHDK05npWgcgVp7NlQKE7gBOn9MMfY0TpU=; 
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1791547048; v=1; x=1792151848;
+ b=CMwns47XeBA/UhSBNk/CNXgz+HTx6DcPft4KYFnQfMsavQ2pfJmbwv1VqfoAvPWi0mtWA4QS
+ p5yy+DhBA2ZkJlF7/2+EXeerKTyBuea12HG7yXuCwuKZ6q6yQ0U1rK1ASKz59qobVjJbyYk/xMR
+ op8CDB1bB9S9S665D0KEiG5E=
+X-Envelope-To: qemu-devel@nongnu.org
+Received: by smtp.migadu.com with ESMTPS id 16d55751bf6ed352;
+ Fri, 09 Oct 2026 11:57:28 +0000
+X-Mizu-Trace-ID: 16d55751bf6ed352
+X-Migadu-Flow: FLOW_OUT
+From: Fuad Tabba <fuad.tabba@linux.dev>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Gustavo Romero <gromero@redhat.com>,
+ Itaru Kitayama <itaru.kitayama@linux.dev>, Will Deacon <will@kernel.org>,
+ Fuad Tabba <tabba@google.com>
+Subject: [PATCH v3 0/4] target/arm: Fix the TTBR table base address in its
+ 52-bit layout
+Date: Fri,  9 Oct 2026 12:57:24 +0100
+Message-Id: <20261009115728.1299384-1-fuad.tabba@linux.dev>
+X-Mailer: git-send-email 2.39.5
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=sraymaek@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
+Received-SPF: pass client-ip=2001:41d0:203:375::b0;
+ envelope-from=fuad.tabba@linux.dev; helo=mta1.migadu.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,94 +72,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The end of stream marker should be at the very end of a stream optimized
-disk. It consists of a regular marker struct with `val`, `size` and
-`type` set to 0. It is then padded with more 0s to fill out a
-sector. This effectively results in 512 zero bytes.[^1]
+Hi folks,
 
-[^1] Virtual Disk Format 5.0 Technical Note.
+Changes since v2 [1]:
+  - Each fix is now followed by its own test, and the test description
+    moved from the commit message into the file header. (Gustavo)
+  - Clarified the stage 2 comment in the test. (Gustavo)
+  - Noted that RAM_BASE matches the address kernel.ld links the test
+    at. (Gustavo)
+  - Collected Reviewed-by from Gustavo on all patches. (thanks!)
 
-Signed-off-by: Sanne Raymaekers <sraymaek@redhat.com>
----
- block/vmdk.c | 46 ++++++++++++++++++++++++++--------------------
- 1 file changed, 26 insertions(+), 20 deletions(-)
+Two fixes to how get_phys_addr_lpae() forms the initial table base
+address when TTBR uses its 52-bit layout, each followed by a TCG test.
 
-diff --git a/block/vmdk.c b/block/vmdk.c
-index 68eebd4a78..4811928595 100644
---- a/block/vmdk.c
-+++ b/block/vmdk.c
-@@ -195,6 +195,13 @@ typedef struct VmdkGrainMarker {
-     uint8_t  data[];
- } QEMU_PACKED VmdkGrainMarker;
- 
-+typedef struct EosMarker {
-+   uint64_t val;
-+   uint32_t size;
-+   uint32_t type;
-+   uint8_t pad[512 - 16];
-+} QEMU_PACKED EosMarker;
-+
- enum {
-     MARKER_END_OF_STREAM    = 0,
-     MARKER_GRAIN_TABLE      = 1,
-@@ -987,12 +994,7 @@ vmdk_open_vmdk4(BlockDriverState *bs, BdrvChild *file, int flags,
-             VMDK4Header header;
-             uint8_t pad[512 - 4 - sizeof(VMDK4Header)];
- 
--            struct {
--                uint64_t val;
--                uint32_t size;
--                uint32_t type;
--                uint8_t pad[512 - 16];
--            } QEMU_PACKED eos_marker;
-+            EosMarker eos_marker;
-         } QEMU_PACKED footer;
- 
-         ret = bdrv_pread(file, bs->file->bs->total_sectors * 512 - 1536,
-@@ -2180,24 +2182,28 @@ vmdk_co_pwritev_compressed(BlockDriverState *bs, int64_t offset, int64_t bytes,
-                            QEMUIOVector *qiov)
- {
-     if (bytes == 0) {
--        /* The caller will write bytes 0 to signal EOF.
--         * When receive it, we align EOF to a sector boundary. */
-+        /* The caller will write bytes 0 to signal EOF. */
-         BDRVVmdkState *s = bs->opaque;
--        int i, ret;
-+        int ret;
-         int64_t length;
-+        QEMU_AUTO_VFREE EosMarker *eos_marker = NULL;
- 
--        for (i = 0; i < s->num_extents; i++) {
--            length = bdrv_co_getlength(s->extents[i].file->bs);
--            if (length < 0) {
--                return length;
--            }
--            length = QEMU_ALIGN_UP(length, BDRV_SECTOR_SIZE);
--            ret = bdrv_co_truncate(s->extents[i].file, length, false,
--                                   PREALLOC_MODE_OFF, 0, NULL);
--            if (ret < 0) {
--                return ret;
--            }
-+        /* Stream optimized disks should only contain a single extent. */
-+        assert(s->num_extents == 1);
-+
-+        /* Stream optimized disks end with an EOS marker, consisting of 512 null bytes. */
-+        eos_marker = qemu_blockalign0(bs, sizeof(EosMarker));
-+        length = bdrv_co_getlength(s->extents[0].file->bs);
-+        if (length < 0) {
-+            return length;
-         }
-+        length = QEMU_ALIGN_UP(length, BDRV_SECTOR_SIZE);
-+        ret = bdrv_co_pwrite(s->extents[0].file, length, sizeof(EosMarker),
-+                             eos_marker, 0);
-+        if (ret < 0) {
-+            return ret;
-+        }
-+
-         return 0;
-     }
-     return vmdk_co_pwritev(bs, offset, bytes, qiov, 0);
+The first stops TTBR[5:4] leaking into the base address of a table
+smaller than 64 bytes. KVM's page_fault_test hangs on it under TCG in
+its 16KB, 52-bit PA guest mode. Itaru reported the 16KB hang on kvmarm
+last year [2].
+
+The second uses the 52-bit layout whenever TCR.DS is set, as the
+architecture does, where QEMU used it only with a 52-bit OA. With a
+smaller OA a non-zero TTBR[5:2] is then an Address size fault.
+
+Based on QEMU master (f7ada39eda).
+
+Cheers,
+/fuad
+
+[1] https://lore.kernel.org/r/20261007080019.350315-1-fuad.tabba@linux.dev
+[2] https://lore.kernel.org/r/B4C0AC3E-6A4F-4A7B-B7BC-81207539115E@linux.dev
+
+Fuad Tabba (4):
+  target/arm: Clear TTBR[5:0] from a 52-bit table base address
+  tests/tcg/aarch64: Add a test for a two-entry 52-bit TTBR table
+  target/arm: Use the 52-bit TTBR base address layout when TCR.DS is set
+  tests/tcg/aarch64: Test the TTBR layout with TCR.DS and a 48-bit OA
+
+ target/arm/ptw.c                      |  18 ++-
+ tests/tcg/aarch64/system/meson.build  |   6 +
+ tests/tcg/aarch64/system/ttbr-baddr.c | 208 ++++++++++++++++++++++++++
+ 3 files changed, 226 insertions(+), 6 deletions(-)
+ create mode 100644 tests/tcg/aarch64/system/ttbr-baddr.c
+
+
+base-commit: f7ada39edacaa5c26b30e98b94017b0b2ccbcf94
 -- 
-2.55.0
+2.39.5
 
 
