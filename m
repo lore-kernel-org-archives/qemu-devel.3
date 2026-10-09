@@ -4,32 +4,31 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 548D3CA6015
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Oct 2026 03:09:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B32F6CA6015
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Oct 2026 03:09:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xF0xK-0006if-1J; Thu, 08 Oct 2026 23:07:34 -0400
+	id 1xF0xI-0006UT-9c; Thu, 08 Oct 2026 23:07:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <prcups@krgm.moe>) id 1xF0vz-0004iD-Rb
- for qemu-devel@nongnu.org; Thu, 08 Oct 2026 23:06:13 -0400
+ (Exim 4.90_1) (envelope-from <prcups@krgm.moe>) id 1xF0vw-0004hE-8u
+ for qemu-devel@nongnu.org; Thu, 08 Oct 2026 23:06:09 -0400
 Received: from krgm.moe ([103.47.186.116])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <prcups@krgm.moe>) id 1xF0vy-0005of-2w
- for qemu-devel@nongnu.org; Thu, 08 Oct 2026 23:06:11 -0400
+ (envelope-from <prcups@krgm.moe>) id 1xF0vu-0005oG-Bv
+ for qemu-devel@nongnu.org; Thu, 08 Oct 2026 23:06:08 -0400
 Received: from yuno-loong (unknown
  [IPv6:2409:8900:2684:b82:443b:7baf:6228:2a79])
- by krgm.moe (Postfix) with ESMTPSA id B26E9E002;
- Fri, 09 Oct 2026 08:35:57 +0530 (IST)
+ by krgm.moe (Postfix) with ESMTPSA id E62E6E001;
+ Fri, 09 Oct 2026 08:35:52 +0530 (IST)
 From: SignKirigami <prcups@krgm.moe>
 To: qemu-devel@nongnu.org
 Cc: Bibo Mao <maobibo@loongson.cn>, SignKirigami <prcups@krgm.moe>,
  Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
-Subject: [PATCH v5 20/23] target/loongarch: translate LVZ guest TLB
- instructions
-Date: Fri,  9 Oct 2026 11:05:16 +0800
-Message-ID: <626719625c086992885e28b019c0db2e33e2f79a.1791514848.git.prcups@krgm.moe>
+Subject: [PATCH v5 17/23] target/loongarch: add LVZ migration state
+Date: Fri,  9 Oct 2026 11:05:13 +0800
+Message-ID: <5cf464e11a8c902b3c87c82b1cdf24fad7ddba69.1791514848.git.prcups@krgm.moe>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <cover.1791514848.git.prcups@krgm.moe>
 References: <cover.1791514848.git.prcups@krgm.moe>
@@ -57,137 +56,151 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Decode, disassemble and translate GTLBSRCH, GTLBRD, GTLBWR, GTLBFILL,
-GTLBCLR and GTLBFLUSH for host LVZ execution.
+Migrate the host LVZ controls, guest CSR and TLB banks, and restore the
+active VM level, guest timer and interrupt request after loading state.
 
 Signed-off-by: SignKirigami <prcups@krgm.moe>
 Signed-off-by: Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
 ---
- target/loongarch/disas.c                      |  6 ++
- target/loongarch/insns.decode                 |  7 +++
- .../tcg/insn_trans/trans_privileged.c.inc     | 60 +++++++++++++++++++
- 3 files changed, 73 insertions(+)
+ target/loongarch/machine.c | 104 +++++++++++++++++++++++++++++++++++++
+ 1 file changed, 104 insertions(+)
 
-diff --git a/target/loongarch/disas.c b/target/loongarch/disas.c
-index 2436c9eec3..6425dea17c 100644
---- a/target/loongarch/disas.c
-+++ b/target/loongarch/disas.c
-@@ -700,6 +700,12 @@ INSN(tlbfill,      empty)
- INSN(tlbclr,       empty)
- INSN(tlbflush,     empty)
- INSN(invtlb,       i_rr)
-+INSN(gtlbclr,      empty)
-+INSN(gtlbflush,    empty)
-+INSN(gtlbsrch,     empty)
-+INSN(gtlbrd,       empty)
-+INSN(gtlbwr,       empty)
-+INSN(gtlbfill,     empty)
- INSN(cacop,        cop_r_i)
- INSN(lddir,        rr_i)
- INSN(ldpte,        j_i)
-diff --git a/target/loongarch/insns.decode b/target/loongarch/insns.decode
-index 4612af9433..cbcc30c31f 100644
---- a/target/loongarch/insns.decode
-+++ b/target/loongarch/insns.decode
-@@ -499,6 +499,13 @@ bgeu            0110 11 ................ ..... .....     @rr_offs16
-   gcsrxchg          0000 0101 .............. ..... .....     @rr_csr
- }
+diff --git a/target/loongarch/machine.c b/target/loongarch/machine.c
+index 931a5ca5ba..7c14f7d92e 100644
+--- a/target/loongarch/machine.c
++++ b/target/loongarch/machine.c
+@@ -7,6 +7,7 @@
  
-+gtlbclr          0000 01100100 10000 01000 00000 00001    @empty
-+gtlbflush        0000 01100100 10000 01001 00000 00001    @empty
-+gtlbsrch         0000 01100100 10000 01010 00000 00001    @empty
-+gtlbrd           0000 01100100 10000 01011 00000 00001    @empty
-+gtlbwr           0000 01100100 10000 01100 00000 00001    @empty
-+gtlbfill         0000 01100100 10000 01101 00000 00001    @empty
+ #include "qemu/osdep.h"
+ #include "cpu.h"
++#include "internals.h"
+ #include "migration/vmstate.h"
+ #include "system/tcg.h"
+ #include "vec.h"
+@@ -205,13 +206,115 @@ static const VMStateDescription vmstate_tlb = {
+         VMSTATE_END_OF_LIST()
+     }
+ };
 +
- iocsrrd_b        0000 01100100 10000 00000 ..... .....    @rr
- iocsrrd_h        0000 01100100 10000 00001 ..... .....    @rr
- iocsrrd_w        0000 01100100 10000 00010 ..... .....    @rr
-diff --git a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
-index 37b7ef13dc..ae481aa83f 100644
---- a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
-+++ b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
-@@ -42,6 +42,12 @@ GEN_FALSE_TRANS(idle)
- GEN_FALSE_TRANS(gcsrrd)
- GEN_FALSE_TRANS(gcsrwr)
- GEN_FALSE_TRANS(gcsrxchg)
-+GEN_FALSE_TRANS(gtlbclr)
-+GEN_FALSE_TRANS(gtlbflush)
-+GEN_FALSE_TRANS(gtlbsrch)
-+GEN_FALSE_TRANS(gtlbrd)
-+GEN_FALSE_TRANS(gtlbwr)
-+GEN_FALSE_TRANS(gtlbfill)
++static const VMStateDescription vmstate_lvz_sys = {
++    .name = "cpu/lvz-sys",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .fields = (const VMStateField[]) {
++        VMSTATE_UINT64(CSR_CRMD, CPUSysState),
++        VMSTATE_UINT64(CSR_PRMD, CPUSysState),
++        VMSTATE_UINT64(CSR_EUEN, CPUSysState),
++        VMSTATE_UINT64(CSR_MISC, CPUSysState),
++        VMSTATE_UINT64(CSR_ECFG, CPUSysState),
++        VMSTATE_UINT64(CSR_ESTAT, CPUSysState),
++        VMSTATE_UINT64(CSR_ERA, CPUSysState),
++        VMSTATE_UINT64(CSR_BADV, CPUSysState),
++        VMSTATE_UINT64(CSR_BADI, CPUSysState),
++        VMSTATE_UINT64(CSR_EENTRY, CPUSysState),
++        VMSTATE_UINT64(CSR_TLBIDX, CPUSysState),
++        VMSTATE_UINT64(CSR_TLBEHI, CPUSysState),
++        VMSTATE_UINT64(CSR_TLBELO0, CPUSysState),
++        VMSTATE_UINT64(CSR_TLBELO1, CPUSysState),
++        VMSTATE_UINT64(CSR_ASID, CPUSysState),
++        VMSTATE_UINT64(CSR_PGDL, CPUSysState),
++        VMSTATE_UINT64(CSR_PGDH, CPUSysState),
++        VMSTATE_UINT64(CSR_PGD, CPUSysState),
++        VMSTATE_UINT64(CSR_PWCL, CPUSysState),
++        VMSTATE_UINT64(CSR_PWCH, CPUSysState),
++        VMSTATE_UINT64(CSR_STLBPS, CPUSysState),
++        VMSTATE_UINT64(CSR_RVACFG, CPUSysState),
++        VMSTATE_UINT64(CSR_CPUID, CPUSysState),
++        VMSTATE_UINT64(CSR_PRCFG1, CPUSysState),
++        VMSTATE_UINT64(CSR_PRCFG2, CPUSysState),
++        VMSTATE_UINT64(CSR_PRCFG3, CPUSysState),
++        VMSTATE_UINT64_ARRAY(CSR_SAVE, CPUSysState, 16),
++        VMSTATE_UINT64(CSR_TID, CPUSysState),
++        VMSTATE_UINT64(CSR_TCFG, CPUSysState),
++        VMSTATE_UINT64(CSR_TVAL, CPUSysState),
++        VMSTATE_UINT64(CSR_CNTC, CPUSysState),
++        VMSTATE_UINT64(CSR_TICLR, CPUSysState),
++        VMSTATE_UINT64(CSR_LLBCTL, CPUSysState),
++        VMSTATE_UINT64(CSR_IMPCTL1, CPUSysState),
++        VMSTATE_UINT64(CSR_IMPCTL2, CPUSysState),
++        VMSTATE_UINT64(CSR_TLBRENTRY, CPUSysState),
++        VMSTATE_UINT64(CSR_TLBRBADV, CPUSysState),
++        VMSTATE_UINT64(CSR_TLBRERA, CPUSysState),
++        VMSTATE_UINT64(CSR_TLBRSAVE, CPUSysState),
++        VMSTATE_UINT64(CSR_TLBRELO0, CPUSysState),
++        VMSTATE_UINT64(CSR_TLBRELO1, CPUSysState),
++        VMSTATE_UINT64(CSR_TLBREHI, CPUSysState),
++        VMSTATE_UINT64(CSR_TLBRPRMD, CPUSysState),
++        VMSTATE_UINT64(CSR_MERRCTL, CPUSysState),
++        VMSTATE_UINT64(CSR_MERRINFO1, CPUSysState),
++        VMSTATE_UINT64(CSR_MERRINFO2, CPUSysState),
++        VMSTATE_UINT64(CSR_MERRENTRY, CPUSysState),
++        VMSTATE_UINT64(CSR_MERRERA, CPUSysState),
++        VMSTATE_UINT64(CSR_MERRSAVE, CPUSysState),
++        VMSTATE_UINT64(CSR_CTAG, CPUSysState),
++        VMSTATE_UINT64_ARRAY(CSR_DMW, CPUSysState, 4),
++        VMSTATE_UINT64(CSR_DBG, CPUSysState),
++        VMSTATE_UINT64(CSR_DERA, CPUSysState),
++        VMSTATE_UINT64(CSR_DSAVE, CPUSysState),
++        VMSTATE_UINT64(CSR_GSTAT, CPUSysState),
++        VMSTATE_UINT64(CSR_GCFG, CPUSysState),
++        VMSTATE_UINT64(CSR_GINTC, CPUSysState),
++        VMSTATE_UINT64(CSR_GCNTC, CPUSysState),
++        VMSTATE_UINT64(CSR_GTLBC, CPUSysState),
++        VMSTATE_END_OF_LIST()
++    },
++};
++
++static bool lvz_needed(void *opaque)
++{
++    LoongArchCPU *cpu = opaque;
++    return FIELD_EX64(cpu->env.cpucfg[2], CPUCFG2, LVZ);
++}
++
++static const VMStateDescription vmstate_lvz = {
++    .name = "cpu/lvz",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .needed = lvz_needed,
++    .fields = (const VMStateField[]) {
++        VMSTATE_UINT64(env.sys_states[0].CSR_GSTAT, LoongArchCPU),
++        VMSTATE_UINT64(env.sys_states[0].CSR_GCFG, LoongArchCPU),
++        VMSTATE_UINT64(env.sys_states[0].CSR_GINTC, LoongArchCPU),
++        VMSTATE_UINT64(env.sys_states[0].CSR_GCNTC, LoongArchCPU),
++        VMSTATE_UINT64(env.sys_states[0].CSR_GTLBC, LoongArchCPU),
++        VMSTATE_STRUCT(env.sys_states[1], LoongArchCPU, 0,
++                       vmstate_lvz_sys, CPUSysState),
++        VMSTATE_END_OF_LIST()
++    },
++};
+ #endif
  
- #else
- 
-@@ -339,6 +345,15 @@ static bool trans_tlbsrch(DisasContext *ctx, arg_tlbsrch *a)
-     return true;
- }
- 
-+static bool trans_gtlbsrch(DisasContext *ctx, arg_gtlbsrch *a)
++static int loongarch_cpu_post_load(void *opaque, int version_id)
 +{
-+    if (check_plv(ctx) || !avail_LVZ(ctx) || is_guest_mmu_idx(ctx->mem_idx)) {
-+        return false;
-+    }
-+    gen_helper_tlbsrch(tcg_env, tcg_constant_i32(1));
-+    return true;
++    LoongArchCPU *cpu = opaque;
++    CPULoongArchState *env = &cpu->env;
++    CPUSysState *host = get_sys(env, VM_LEVEL0);
++    bool guest = FIELD_EX64(host->CSR_GSTAT, CSR_GSTAT, VM);
++    set_sys(env, guest);
++    return 0;
 +}
 +
- static bool trans_tlbrd(DisasContext *ctx, arg_tlbrd *a)
- {
-     if (check_plv(ctx)) {
-@@ -393,6 +408,51 @@ static bool trans_tlbflush(DisasContext *ctx, arg_tlbflush *a)
-     return true;
- }
- 
-+static bool trans_gtlbrd(DisasContext *ctx, arg_gtlbrd *a)
-+{
-+    if (check_plv(ctx) || !avail_LVZ(ctx) || is_guest_mmu_idx(ctx->mem_idx)) {
-+        return false;
-+    }
-+    gen_helper_tlbrd(tcg_env, tcg_constant_i32(1));
-+    return true;
-+}
-+
-+static bool trans_gtlbwr(DisasContext *ctx, arg_gtlbwr *a)
-+{
-+    if (check_plv(ctx) || !avail_LVZ(ctx) || is_guest_mmu_idx(ctx->mem_idx)) {
-+        return false;
-+    }
-+    gen_helper_tlbwr(tcg_env, tcg_constant_i32(1));
-+    return true;
-+}
-+
-+static bool trans_gtlbfill(DisasContext *ctx, arg_gtlbfill *a)
-+{
-+    if (check_plv(ctx) || !avail_LVZ(ctx) || is_guest_mmu_idx(ctx->mem_idx)) {
-+        return false;
-+    }
-+    gen_helper_tlbfill(tcg_env, tcg_constant_i32(1));
-+    return true;
-+}
-+
-+static bool trans_gtlbclr(DisasContext *ctx, arg_gtlbclr *a)
-+{
-+    if (check_plv(ctx) || !avail_LVZ(ctx) || is_guest_mmu_idx(ctx->mem_idx)) {
-+        return false;
-+    }
-+    gen_helper_tlbclr(tcg_env, tcg_constant_i32(1));
-+    return true;
-+}
-+
-+static bool trans_gtlbflush(DisasContext *ctx, arg_gtlbflush *a)
-+{
-+    if (check_plv(ctx) || !avail_LVZ(ctx) || is_guest_mmu_idx(ctx->mem_idx)) {
-+        return false;
-+    }
-+    gen_helper_tlbflush(tcg_env, tcg_constant_i32(1));
-+    return true;
-+}
-+
- static bool trans_invtlb(DisasContext *ctx, arg_invtlb *a)
- {
-     TCGv rj = gpr_src(ctx, a->rj, EXT_NONE);
+ /* LoongArch CPU state */
+ const VMStateDescription vmstate_loongarch_cpu = {
+     .name = "cpu",
+     .version_id = 4,
+     .minimum_version_id = 4,
++    .post_load = loongarch_cpu_post_load,
+     .fields = (const VMStateField[]) {
+         VMSTATE_UINT64_ARRAY(env.gpr, LoongArchCPU, 32),
+         VMSTATE_UINT64(env.pc, LoongArchCPU),
+@@ -285,6 +388,7 @@ const VMStateDescription vmstate_loongarch_cpu = {
+         &vmstate_lasx,
+ #if defined(CONFIG_TCG) && !defined(CONFIG_USER_ONLY)
+         &vmstate_tlb,
++        &vmstate_lvz,
+ #endif
+         &vmstate_lbt,
+         &vmstate_msgint,
 -- 
 2.55.0
 
