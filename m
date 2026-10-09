@@ -4,106 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AED9CA6019
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Oct 2026 14:59:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D18DCA601D
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Oct 2026 15:13:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xFC3E-0005N8-Hb; Fri, 09 Oct 2026 10:58:24 -0400
+	id 1xFCGr-0007QX-MY; Fri, 09 Oct 2026 11:12:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1xFC31-0005Mx-TB
- for qemu-devel@nongnu.org; Fri, 09 Oct 2026 10:58:12 -0400
-Received: from mail-yx1-xb131.google.com ([2607:f8b0:4864:20::b131])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1xFCE3-0006x1-PN
+ for qemu-devel@nongnu.org; Fri, 09 Oct 2026 11:09:39 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1xFC30-0004dv-Ap
- for qemu-devel@nongnu.org; Fri, 09 Oct 2026 10:58:11 -0400
-Received: by mail-yx1-xb131.google.com with SMTP id
- 956f58d0204a3-677aec6ddfcso4140506d50.3
- for <qemu-devel@nongnu.org>; Fri, 09 Oct 2026 07:58:08 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1791557887; cv=none;
- d=google.com; s=arc-20260327;
- b=Zkzz4zNYR1AcEUYhTmx5PuAyybHozCrAK/0zM3A8scmZS9eI2RwEjSO/3O3nAQ7DLD
- xLKbK3C8KjwxNWodVEdmiga88upxmtvokWDuPEGTgDTjfk1H/GIozuuabeSc4QVRXbgd
- 5pxiuA1Fr1V9YeudgTG8qVLs4x+978nUY1L+zGQsO6oLW23v+PO1TnfbwWMCL71Isg6e
- lIIUx733NtzxDQBn7F6NB9hFPMpuqa6tGHQ4vZQxaZZWs6EweSN4hSs6jwGI3INw49sx
- bYVQtmqVtBr148V4wx1NwzvZJrI3ijDGfdJwzErTN4e9dQlBicx+opA5YbkH72opAcSy
- GhSg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=hxWlM3FRg6l6JvGnQKpB+iYnErWGfjGugnZ8MuA8dHA=;
- fh=lW8xzSdEwaBIy9TNvG7wkGxSxV7QyaPtYtghnU5h7Fs=;
- b=oxRpBIEoqlvagu9G+w38WsAeo9C3JOr3mrEIuoclcpPM5sOD4h8NPdXDOmlU+ETmfo
- 7xPqnY0AoSReVc7boW4w/0Fo0aHrpq3eMMr3nJqL/MxO++4L6DRtpgEfeaxG6lGfnEVo
- b+OLH+ew4DzpcA5iG9dMX6tNfsKr7UVyRdmoMeVQwtoPYpCH1UUAKC+VyeCEpnHuLYR9
- gPuqlNb35DIRTynPUwiq0nAKpxx/bMPOJ7loh95vsEkUvRxlPDeVbyfC/T2Sm/gglst4
- xEUKlB9aLLBzLZUi+0hTpWUBjlI4w5+BfSIgTVCTcH3v2eWSkmqZjLplprPn1AMeLkVJ
- l42Q==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1xFCDx-0005xa-PZ
+ for qemu-devel@nongnu.org; Fri, 09 Oct 2026 11:09:33 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-4a022fee0caso40979085e9.1
+ for <qemu-devel@nongnu.org>; Fri, 09 Oct 2026 08:09:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1791557887; x=1792162687; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=hxWlM3FRg6l6JvGnQKpB+iYnErWGfjGugnZ8MuA8dHA=;
- b=hJdM41ddVDe7DSvS5ZaI882sp33CWyKMZIWtMCe4EOZgL1R2O3PicDEc4eqj8+fgu7
- ggHONfkliaHuWjH8/pS/mmmLLo2AkRkHfjeocTweqU1tiG9KupRiXl1UxGeyClrrp97C
- X/ZSJn+Niy9k5t1J+pIcZbItbSsXJ8vvFRwgiJMH9rU7s7sLr9fZz1IzcHdeecsWDziJ
- Oa1iz/ujf04vEXuEL0FlDdT0ij0PfcB0Fz91nA4e44opgU7OWThBte4DcDtFC4lRCYCt
- bPG4NbQhY80s/GYQAwALZHQcZiR5rOf+B0yiY8A5Hbh1fLiK1WUlRTqJ4liHU3QqFxpp
- eWZA==
+ d=linaro.org; s=google; t=1791558565; x=1792163365; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=F2KW6dznVqnEht1y+F7rtwx2UD/9slOEMe+Zxd3r+rE=;
+ b=DhXFbOCaKzmP6t+ICbPx8R5MmsxOKaZBptF58KkJfy+856yftC1CXnD+VmJalE8ely
+ DB2aVBboZgOKG56yqoliKy2f+6PSPM4zj03lo9fcCiptmvu6wB9ruy1f/6g8qxXSG9uQ
+ amZ4lTrAjhO9Kzn7Rhc203szyDhQ2gYtBPtUpUz0pu6sndD0v9xxNFKfTQnm7n6bpIfS
+ 6LQ/+tJ35hVWwjsr2OfgU3XpOLqXq/j6eVcVTOx3MlAkOgNRG1J2NezuICUV6idjfd4P
+ hmQyjYirmJjAEBJv2esSbFgXyuMg/k5N504mxFabcNjduX5C6eGHKpKIBsfsaKdfKX+4
+ Xs7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791557887; x=1792162687;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
+ d=1e100.net; s=20260707; t=1791558565; x=1792163365;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=hxWlM3FRg6l6JvGnQKpB+iYnErWGfjGugnZ8MuA8dHA=;
- b=MFRyihgf2Xumk4Rb8TqqSb86436raglaBmbdJ/RQQ6CYJRuuPZGoUBv72pkWBBmIbI
- WNiSn1lqaKy+STBRDPF2UK2drUoau0kNwufxyKYtg4xC59FqxAnJV0wvdORnBG14Ss71
- fy3I79YKtinp/wZN7R1gsnM2VBJvNxB+x2ACwsIV4UEGrRi/FoOMaieyuwWz+J4dmMhv
- c8y2SGQ6GcCw0KQ2LafLFisJENpSDpR9j446EkcFPZ6LHvd0QojjdD3c0gUxDOHf1C6R
- N4gwadjGaReoz4tcl2+Wex++ImRAoicXNoDmAIpO/hf5LdQRMN8IOMUHfEpLSnwLREs/
- qx4g==
-X-Gm-Message-State: AFq9FYKRwGmdir8oIAo/RHJO2xRukzwpkSju6ih/g3rVyyJJdR75cg2q
- D+s7C0fLaZFXgLg9C3MLrq335REt0AUo9Ot/bpMw1pyk+tQxq0hM4jULvVuUqoHlA/H575WUY2o
- o8x2RjU7/jQ+1AqqM2DOdeSiOfGvzlaM=
-X-Gm-Gg: AYBFou2pi5cM7fEUFyuMWh85VLs9VaDVcLbRP7Onf6S9fsKhG80kXhyeHWkQQaAYRyj
- quoXc+VWH/GkamxMDT6lb10yLMQKNCWm87nOP4FaXukoCg6XKe0ITW5Gc5k+s8hXmjbv8MXxMte
- CuDvz9hcsTxyIo4v/4KEPLgEkYiAAe2s9q9GSBnh3oLOAS1E2enCoeL2l8muArpe/X/B4PNmuMo
- JLCTjFXpXqOOJmWndpZO3vAb5XEcWQWRoPmAPrrj1WyqtGG+mYah1W4U2bRDutQfRR+aN+gsTiu
- ZM8wUbEQ6TKFo/Hje/RyAUVjwTEH2eNzFvvs48L2OWmapTdw0QbkYNxQb3ULg6wjRcjIdIt65AZ
- xYluVWJpWucM=
-X-Received: by 2002:a05:690e:bc5:b0:677:d79c:f6b7 with SMTP id
- 956f58d0204a3-67935f17bf1mr646174d50.6.1791557887008; Fri, 09 Oct 2026
- 07:58:07 -0700 (PDT)
+ bh=F2KW6dznVqnEht1y+F7rtwx2UD/9slOEMe+Zxd3r+rE=;
+ b=Gf7KgJWEX3V2UgmtWuPXvzKJ3FjuAaOwk7RZ5k7dDD7tIL54bjvZcTPb2uFWVP0Lyb
+ FTlaVxCaQa67tZihKS8OOotGYFPg53iOEH45VR61P4DJoHPvEUWcSPR4EsR9dlnX/m4L
+ vrGXusKFzljC7U6CgVyRmIfD4EYZwITbDKOD64cqzFVYpRwo41BRAozdQm2u+zvNrZJ6
+ ap/jJn5sFqws1NrE5yNJ92p1XATwZhMx7yOIWQdVdULaCh7LUAw0CUNyKiSS5dE6lC2B
+ 8hL0qKnI6IwvneMRox1OoTgx9QH/GKM7/fWfYHw5EnFMg9ugNRAwLK9bv0uLjslf+D/w
+ foNA==
+X-Forwarded-Encrypted: i=1;
+ AKwUvByX3oiHyQC4uHjL+EpvADHGOVTb4jnUnGXz3N2PHAk25CTEUG3jxcD7hcSd6XEYGsOx6emY7S3q6e97@nongnu.org
+X-Gm-Message-State: AFuF++ntcPBw2+3L04daDh1tAHHPqnp6lldPj+9BQH1GO6fZFDuUBxPD
+ X0HW7JsCUiuBudDQn2Xv0KpQ0gqLagRHXQ3hMU978Zx/53zjazZjxp9a2IGMKd+O8udvhLTsPTH
+ 93EZic9A=
+X-Gm-Gg: AYBFou1cCgOD+fJJkOmwzXGEkLhF3arfqqawl9Oq2jVm6IXG7Qy/KOyubYi0ah6EW5c
+ HV8iEG+/6WhzjuIlxBplde/jNY6uoW63UVBw/FGBXliajPcVtTcBrQhkCxzpwhMfrewUO9tIA6t
+ W/jRUmQ4T7VvS/BY61DAc8DDnyUxzyXJdd6jGUFwOkAqwkJVM5kEyRSeVp5ZNb43Sj3fGPno6Sr
+ r0bA8G+jWTSi5FOxGdifGnouj9alUdHpPPH84k+7ogivdTKwUSIrJL1LL82txSFNKn2qPcEJBhh
+ Z5Q8dgIoISyuhvS9EN6kfnZo44KxcILsGgdYtLqqAP7lBV/6u+1pYTWmHhb71aVtsCHXLDIBRMq
+ fKyWdEnxg8PTHd+nLrMhiCcK75FybC9ltwFPB6qtcoRBRa9GK7dXvPwRQO5dMvezzAepQ77+l6J
+ dNZ7DitVEI0WtHduJEyXBpTWq/Bvmj2jxB2jH/Cz1Vb1z6+GurOzLhJB/yW+jk9zMVrnmnhQSYQ
+ M0JikYOOQ==
+X-Received: by 2002:a05:600c:8b0a:b0:4a1:6992:f861 with SMTP id
+ 5b1f17b1804b1-4a18e446db6mr42510975e9.1.1791558565148; 
+ Fri, 09 Oct 2026 08:09:25 -0700 (PDT)
+Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4a18bf2caf4sm70316235e9.10.2026.10.09.08.09.22
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 09 Oct 2026 08:09:22 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 05F105F8BB;
+ Fri, 09 Oct 2026 16:09:22 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: Peter Xu <peterx@redhat.com>,  Pierrick Bouvier
+ <pierrick.bouvier@oss.qualcomm.com>,  qemu-devel@nongnu.org, mjt@tls.msk.ru
+Subject: Re: [RFC] container images for migration-test
+In-Reply-To: <87tsmv6ne9.fsf@suse.de> (Fabiano Rosas's message of "Fri, 09 Oct
+ 2026 09:58:54 -0300")
+References: <8733vbtmge.fsf@suse.de>
+ <asgp6ld6Loz1xmJg@zhexu-thinkpadt14gen5.rmtcaon.csb>
+ <87tsmv6ne9.fsf@suse.de>
+User-Agent: mu4e 1.14.4-pre5; emacs 30.1
+Date: Fri, 09 Oct 2026 16:09:21 +0100
+Message-ID: <878q463o7y.fsf@draig.linaro.org>
 MIME-Version: 1.0
-References: <20261009140431.3175479-1-armbru@redhat.com>
-In-Reply-To: <20261009140431.3175479-1-armbru@redhat.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Fri, 9 Oct 2026 18:57:54 +0400
-X-Gm-Features: AclHuK-mubu29gieO6qaig_SsfXe1MwMH3nbUQeQs3F4S2sjVN-pXGSjbyjvDlg
-Message-ID: <CAJ+F1CKqDbV0xVkL6Q_++qHk4iNstWC_y2raPXy8BovUyPQzdQ@mail.gmail.com>
-Subject: Re: [RFC PATCH 0/6] qapi: Preliminary work for better QOM
- introspection
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, michael.roth@amd.com, jsnow@redhat.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b131;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-yx1-xb131.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
- FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.25,
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,52 +111,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Markus
+Fabiano Rosas <farosas@suse.de> writes:
 
-On Fri, Oct 9, 2026 at 6:05=E2=80=AFPM Markus Armbruster <armbru@redhat.com=
-> wrote:
+> Peter Xu <peterx@redhat.com> writes:
 >
-> Marc-Andr=C3=A9 Lureau has patches to improve QOM introspection.  Latest
-> version is
+>> On Mon, Sep 14, 2026 at 08:58:09PM -0300, Fabiano Rosas wrote:
+>>> Hi, I just wanted to share and ask for feedback on some container images
+>>> I've been building as part of my testing of migration pull-requests.
+>>>=20
+>>> From a Dockerfile from ./tests/docker/dockerfiles/ I'm producing the
+>>> following:
+>>>=20
+>>> $ docker images
+>>> qemu-build-base:11.0.0                        b6efa198e93a        5.8GB
+>>> qemu-rootfs-base:11.0.0                       72bcb5418f4d       4.08GB
+>>> qemu:11.0.0                                   018a3f0f4dcc          2GB
+>>>=20
+>>> This last image is stripped (for size) of everything but a few libs and
+>>> binaries (qemu, gdb, migration-test, sh) and has an entrypoint of:
+>>>=20
+>>>  CMD ["qemu-system-x86_64"]
+>>>=20
+>>> The point is that I can wrap it in a script called qemu-system-x86_64
+>>> and run it interchangeably with any other qemu binary during
+>>> migration-test:
+>>>=20
+>>>  QTEST_QEMU_BINARY_SRC=3D./build-11.0.0/qemu-system-x86_64 \
+>>>  QTEST_QEMU_BINARY=3D./build-master/qemu-system-x86_64 \
+>>>  ./tests/qtest/migration-test
+>>>=20
+>>> (note that migration-test spawns the qemu binaries itself)
+>>>=20
+>>> I run tests against the previous 3 QEMU releases. At every release I
+>>> build the container for the new release and at every PR I build the
+>>> container for that git hash using the latest tag as a base.
+>>
+>> I'm not a container person,
 >
->     Subject: [PATCH v5 00/62] qom/qdev: associate properties with QAPI sc=
-hema types
->     Date: Fri, 11 Sep 2026 20:34:34 +0400
->     Message-Id: <20260911-qom-qapi-v5-0-7732a55b7760@redhat.com>
->     https://lore.kernel.org/qemu-devel/20260911-qom-qapi-v5-0-7732a55b776=
-0@redhat.com/
+> Me neither, lol. Last container work I did was back when multiarch
+> manifests were being added to docker. Maybe 2016? I (clearly) haven't
+> kept up with the progress in the area.
 >
-> The first few patches make the QAPI code generator emit type
-> information for use by QOM introspection commands.  They refactor code
-> to gain access to masked type names, and to make query-qmp-schema not
-> elide types QOM introspection might want to refer to.
+>> e.g. I did test my recent channel fix on
+>> qemu-7.2 by simply building it with build-7.2/.. but after learning it t=
+he
+>> idea using a link to kickoff the container is very interesting on its own
+>> already.
+>>
 >
-> My series does this in a different way I find simpler.  It is RFC
-> because merging it only makes sense if Marc-Andr=C3=A9 finds it useful.
-> Marc-Andr=C3=A9, please have a look.
+> Yeah, the issue is that `git checkout <old version>` and try to build it
+> is pretty hit or miss.
+>
+>>>=20
+>>> The reasons that lead me to this solution are:
+>>>=20
+>>> 1) Migration compat testing is special, the two migration peers can run
+>>> in different OS versions, so their QEMU builds can be quite different. I
+>>> cannot test using *just* my dev machine, neither using *just* a
+>>> container. I need two hosts. Or two containers running different OSes
+>>> that can both be reachable by the migration-test binary running in
+>>> either of the OSes.
+>>
+>> True..  One thing I want to make us on the same page is, this is about
+>> distro, not OS?  Say, the kernel is still the same.
+>>
+>
+> Yes, it's about what it takes to get a working QEMU binary. I'm not
+> trying to cover a realistic migration scenario, I'm simply trying to
+> test across QEMU versions *somehow*.
 
-This is essentially doing the same introspection changes but at a
-different level. If you ask me, since it's essentially code cleanup at
-this point, I would rather merge my changes first and iterate on top.
-But you are the gate keeper, so I wouldn't hold it, we need to move
-on... I can rebase on top of your refactoring if you prefer.
+You could just consider using the system qemu if installed and then we
+get the variance between versions from which OS's we build on. That
+would work outside the container and we could include qemu-system in the
+containers as well.
 
+It would cover the migrations from the various LTS qemu's to current
+master which should be the majority of common use cases.
 
-> Markus Armbruster (6):
->   qapi/schema: Rename .lookup_entity() and tighten return type
->   qapi: Ease access to introspection names
->   qapi/introspect: Simplify masked name comment emission slighly
->   qapi/introspect: Don't elide types
->   qapi: QAPISchemaVisitor.visit_needed() is now unused, drop
->   qapi/introspect: Tweak integer type masking
->
->  docs/sphinx/qapidoc.py     |  2 +-
->  scripts/qapi/introspect.py | 74 ++++++++++----------------------------
->  scripts/qapi/schema.py     | 57 +++++++++++++++++++++++------
->  3 files changed, 67 insertions(+), 66 deletions(-)
->
-> --
-> 2.55.0
->
->
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
