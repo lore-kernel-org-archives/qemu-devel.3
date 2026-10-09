@@ -4,43 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E76CFCA6015
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Oct 2026 03:07:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A640CA6017
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Oct 2026 03:07:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xF0wS-0004te-43; Thu, 08 Oct 2026 23:06:40 -0400
+	id 1xF0wd-0005DI-4O; Thu, 08 Oct 2026 23:06:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <prcups@krgm.moe>) id 1xF0vY-0004dm-TK
- for qemu-devel@nongnu.org; Thu, 08 Oct 2026 23:05:44 -0400
-Received: from krgm.moe ([103.47.186.116])
+ (Exim 4.90_1) (envelope-from <prcups@krgm.moe>) id 1xF0vU-0004d3-U2
+ for qemu-devel@nongnu.org; Thu, 08 Oct 2026 23:05:42 -0400
+Received: from [2a14:640:1:12b5::1] (helo=krgm.moe)
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <prcups@krgm.moe>) id 1xF0vW-0005m1-4D
- for qemu-devel@nongnu.org; Thu, 08 Oct 2026 23:05:43 -0400
+ (envelope-from <prcups@krgm.moe>) id 1xF0vT-0005m7-5M
+ for qemu-devel@nongnu.org; Thu, 08 Oct 2026 23:05:40 -0400
 Received: from yuno-loong (unknown
  [IPv6:2409:8900:2684:b82:443b:7baf:6228:2a79])
- by krgm.moe (Postfix) with ESMTPSA id 34CF2E001;
- Fri, 09 Oct 2026 08:35:39 +0530 (IST)
+ by krgm.moe (Postfix) with ESMTPSA id D7526E005;
+ Fri, 09 Oct 2026 08:35:36 +0530 (IST)
 From: SignKirigami <prcups@krgm.moe>
 To: qemu-devel@nongnu.org
 Cc: Bibo Mao <maobibo@loongson.cn>, SignKirigami <prcups@krgm.moe>,
  Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
-Subject: [PATCH v5 08/23] target/loongarch: add LVZ guest timer
-Date: Fri,  9 Oct 2026 11:05:04 +0800
-Message-ID: <519eadd31f0af84ce49794e1922527d7c8d99104.1791514848.git.prcups@krgm.moe>
+Subject: [PATCH v5 06/23] target/loongarch: add definition about guest mmu_idx
+Date: Fri,  9 Oct 2026 11:05:02 +0800
+Message-ID: <59b45ba32b5b18dad94f39b0a9047a5d36812ead.1791514848.git.prcups@krgm.moe>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <cover.1791514848.git.prcups@krgm.moe>
 References: <cover.1791514848.git.prcups@krgm.moe>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=103.47.186.116; envelope-from=prcups@krgm.moe;
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 2a14:640:1:12b5::1 (failed)
+Received-SPF: pass client-ip=2a14:640:1:12b5::1; envelope-from=prcups@krgm.moe;
  helo=krgm.moe
-X-Spam_score_int: -18
-X-Spam_score: -1.9
+X-Spam_score_int: -10
+X-Spam_score: -1.1
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, RDNS_NONE=0.793,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -56,67 +57,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a separate guest timer and IRQ_VTIMER.
+Add MMU_GUEST_IDX and MMU_GUEST_DA_IDX. Provide is_guest_mmu idx() and
+mmu_idx_to_plv to calculate plv with new mmu_idx.
 
 Signed-off-by: SignKirigami <prcups@krgm.moe>
 Signed-off-by: Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
 ---
- target/loongarch/cpu.c | 8 +++++++-
- target/loongarch/cpu.h | 6 ++++++
- 2 files changed, 13 insertions(+), 1 deletion(-)
+ target/loongarch/cpu.h                         | 18 ++++++++++++++++++
+ .../tcg/insn_trans/trans_privileged.c.inc      |  2 +-
+ target/loongarch/tcg/tcg_cpu.c                 |  7 +++++++
+ target/loongarch/tcg/translate.c               |  3 +++
+ 4 files changed, 29 insertions(+), 1 deletion(-)
 
-diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
-index 5cef63a778..8e759a2987 100644
---- a/target/loongarch/cpu.c
-+++ b/target/loongarch/cpu.c
-@@ -770,7 +770,7 @@ static void loongarch_cpu_init(Object *obj)
-     LoongArchCPU *cpu = LOONGARCH_CPU(obj);
- #ifdef CONFIG_TCG
-     CPULoongArchState *env = &cpu->env;
--    CPUTimerState *timer;
-+    CPUTimerState *timer, *guest_timer;
- #endif
- 
-     qdev_init_gpio_in(DEVICE(cpu), loongarch_cpu_set_irq, N_IRQS);
-@@ -778,8 +778,14 @@ static void loongarch_cpu_init(Object *obj)
-     timer = env_timer(env);
-     timer->irq = IRQ_TIMER;
-     timer->cs  = CPU(obj);
-+    guest_timer = env_guest_timer(env);
-+    guest_timer->irq = IRQ_VTIMER;
-+    guest_timer->cs = CPU(obj);
-+
-     timer_init_ns(&timer->timer, QEMU_CLOCK_VIRTUAL,
-                   &cpu_loongarch_timer_cb, timer);
-+    timer_init_ns(&guest_timer->timer, QEMU_CLOCK_VIRTUAL,
-+                  &cpu_loongarch_timer_cb, guest_timer);
- #endif
- #endif
- }
 diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
-index 8939dbc748..ba28d80272 100644
+index 183210efd8..9eea1badaf 100644
 --- a/target/loongarch/cpu.h
 +++ b/target/loongarch/cpu.h
-@@ -245,6 +245,7 @@ extern const char * const fregnames[32];
- #define IRQ_IPI     12
- #define INT_DMSI    14
- #define N_VIRQS     (N_IRQS * 2)
-+#define IRQ_VTIMER  (N_IRQS + IRQ_TIMER)
- 
- #define MAX_PERF_EVENTS        16
- #define LOONGARCH_STLB         2048 /* 2048 STLB */
-@@ -577,6 +578,11 @@ static inline CPUTimerState *env_timer(CPULoongArchState *env)
-     return &env->sys_states[0].timer_state;
- }
- 
-+static inline CPUTimerState *env_guest_timer(CPULoongArchState *env)
+@@ -513,6 +513,24 @@ struct LoongArchCPUClass {
+ #define MMU_KERNEL_IDX   MMU_PLV_KERNEL
+ #define MMU_USER_IDX     MMU_PLV_USER
+ #define MMU_DA_IDX       4
++#define MMU_GUEST_IDX    5
++#define MMU_GUEST_DA_IDX 9
++
++static inline bool is_guest_mmu_idx(int mmu_idx)
 +{
-+    return &env->sys_states[1].timer_state;
++    return mmu_idx >= MMU_GUEST_IDX;
 +}
 +
- static inline bool is_la64(CPULoongArchState *env)
++static inline int mmu_idx_to_plv(int mmu_idx)
++{
++    if (mmu_idx == MMU_DA_IDX || mmu_idx == MMU_GUEST_DA_IDX) {
++        return 0;
++    }
++    if (is_guest_mmu_idx(mmu_idx)) {
++        return mmu_idx - MMU_GUEST_IDX;
++    }
++    return mmu_idx;
++}
+ 
+ static inline CPUSysState *env_sys(CPULoongArchState *env)
  {
-     return FIELD_EX32(env->cpucfg[1], CPUCFG1, ARCH) == CPUCFG1_ARCH_LA64;
+diff --git a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
+index 6728ce5ec9..7ee3bb8e27 100644
+--- a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
++++ b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
+@@ -249,7 +249,7 @@ TRANS64(iocsrwr_d, IOCSR, gen_iocsrwr, gen_helper_iocsrwr_d)
+ 
+ static void check_mmu_idx(DisasContext *ctx)
+ {
+-    if (ctx->mem_idx != MMU_DA_IDX) {
++    if (ctx->mem_idx != MMU_DA_IDX && ctx->mem_idx != MMU_GUEST_DA_IDX) {
+         tcg_gen_movi_tl(cpu_pc, ctx->base.pc_next + 4);
+         ctx->base.is_jmp = DISAS_EXIT;
+     }
+diff --git a/target/loongarch/tcg/tcg_cpu.c b/target/loongarch/tcg/tcg_cpu.c
+index 14fa5f5809..b60d9e7cf8 100644
+--- a/target/loongarch/tcg/tcg_cpu.c
++++ b/target/loongarch/tcg/tcg_cpu.c
+@@ -309,6 +309,13 @@ static int loongarch_cpu_mmu_index(CPUState *cs, bool ifetch)
+     CPULoongArchState *env = cpu_env(cs);
+     CPUSysState *sys = env_sys(env);
+ 
++    if (env_vm_level(env) == VM_LEVEL1) {
++        if (FIELD_EX64(sys->CSR_CRMD, CSR_CRMD, PG)) {
++            return MMU_GUEST_IDX + FIELD_EX64(sys->CSR_CRMD, CSR_CRMD, PLV);
++        }
++        return MMU_GUEST_DA_IDX;
++    }
++
+     if (FIELD_EX64(sys->CSR_CRMD, CSR_CRMD, PG)) {
+         return FIELD_EX64(sys->CSR_CRMD, CSR_CRMD, PLV);
+     }
+diff --git a/target/loongarch/tcg/translate.c b/target/loongarch/tcg/translate.c
+index 124dce6269..4ab06b48da 100644
+--- a/target/loongarch/tcg/translate.c
++++ b/target/loongarch/tcg/translate.c
+@@ -129,6 +129,9 @@ static void loongarch_tr_init_disas_context(DisasContextBase *dcbase,
+     } else {
+         ctx->mem_idx = MMU_DA_IDX;
+     }
++    if (ctx->base.tb->flags & HW_FLAGS_GUEST_MODE) {
++        ctx->mem_idx += MMU_GUEST_IDX;
++    }
+ 
+     /* Bound the number of insns to execute to those left on the page.  */
+     bound = -(ctx->base.pc_first | TARGET_PAGE_MASK) / 4;
 -- 
 2.55.0
 
