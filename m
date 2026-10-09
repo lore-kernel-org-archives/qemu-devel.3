@@ -4,187 +4,149 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFF9DCA6015
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Oct 2026 06:07:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3ADA2CA6012
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Oct 2026 06:38:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xF3km-0005MI-9j; Fri, 09 Oct 2026 02:06:48 -0400
+	id 1xF4FB-0003tf-Gv; Fri, 09 Oct 2026 02:38:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thanos.makatos@nutanix.com>)
- id 1xF3kg-0005Lq-Ro
- for qemu-devel@nongnu.org; Fri, 09 Oct 2026 02:06:42 -0400
-Received: from mx0a-002c1b01.pphosted.com ([148.163.151.68])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1xF4Eu-0003sp-A2
+ for qemu-devel@nongnu.org; Fri, 09 Oct 2026 02:37:58 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thanos.makatos@nutanix.com>)
- id 1xF3ke-0008OE-7x
- for qemu-devel@nongnu.org; Fri, 09 Oct 2026 02:06:42 -0400
-Received: from pps.filterd (m0127840.ppops.net [127.0.0.1])
- by mx0a-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6993K2bW1072036; Thu, 8 Oct 2026 23:06:32 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1xF4Er-0003mm-KR
+ for qemu-devel@nongnu.org; Fri, 09 Oct 2026 02:37:56 -0400
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6993HijQ3323358
+ for <qemu-devel@nongnu.org>; Fri, 9 Oct 2026 06:37:49 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=
- proofpoint20171006; bh=E1XaXcBUjj+lADuZnUtGU4ffL4GVnMtJU+ulUvpfK
- 7E=; b=Tx0vak5rrW6rqLxWQ59qlIbm9qWvFn/P+v6gh/VWFPinRCW3ClowCb8w+
- rqAB166hCJ3pWqjdaJvA/zctGVOExG4KDGwMQIdnthyOuriiXs319QG4jO47CfPj
- nncYeYZuxoQpzND4KXvGyTraetHx04QSx0nufPpKblL6zJCx50cUHXTfgzLUnr/0
- uBqFoUKVQl83otK8+PUggB7Spz3JoNyNkVL4iWNheG0V6KZRBP1cHIbYC3kN9ard
- mNnPIqRch1CwnaX2oNWIXML91smP+/F6fmqT2aAjZz0GaS38R0oXMaJC+R3HDKyI
- 6lJcYhEDSedApyAEDjBGPhLuJrgMQ==
-Received: from ph0pr06cu001.outbound.protection.outlook.com
- (mail-westus3azon11021076.outbound.protection.outlook.com [40.107.208.76])
- by mx0a-002c1b01.pphosted.com (PPS) with ESMTPS id 4h5xe13tmu-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Thu, 08 Oct 2026 23:06:32 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=XH1DZ5zKdOjIJBHjcEGxKzq00psBNYGvqmwf133rgpojehlGTBucw2WgGW0LLDPfd6u0d64WXIdt+/s5Q+4Ngor0ARdFxd3+pNMu2UJhE+9IW0/u1iGaI37lMMK7VTaqT8SGrOlCpOUJADnNz29Q7wCr+zDHKRVdjIJhTyux/knf7yG/J66hvxN8AUAhrdomZUcm03UuRFxRc3Pu6K006icCuAjeTIuMPPKR60C1Dd59M+CaEVrKSHShcfB59mJ9++lGDUXx92L37oFRdU+Zj9EZOcYL6n01tuMh7R+7DG59TB37/+wYM578SL5H9+zfL3k6fuEqKb5QVau4OozZSQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=E1XaXcBUjj+lADuZnUtGU4ffL4GVnMtJU+ulUvpfK7E=;
- b=V+rhgqJ2LAGo3oJXwKRVmVu8eRC88TUlEcuYQofOl89mo69kqNV1r5/vbTn8b2G3Dx3BjfdmiRRfFGY11dCZPjLi44Fnr1KHddoLTExBMpcrpk+90kV3cSIQOBfNE/8n70hoTPwLpV3UEtbN7wfy2Pxn5JsYM8qOlOWhF3o9Lbj5ZTCgZzHesXItKskBDFeYMBvT4HiBA+o8vFBOJ72TQQ8dp3L59LOfYfiet7c0etQLd4ir9dzYaP1FcqjLrjODz4y2kFFVnIUt+a0C8f2a0Pw+SMNKQezsEOdQ7g/Iq0EWjZbU4tcbW1NM+g4u81Obim50QWdqgVBcIA1Ce6fJ8A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
- dkim=pass header.d=nutanix.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=E1XaXcBUjj+lADuZnUtGU4ffL4GVnMtJU+ulUvpfK7E=;
- b=YPverquLDknGUWsA0sDADX99EdiCThgloORM9cpAVRmZIKV+v1YG1sBo8P5tF/OZ5NqmJBLaCxKI+NVaxmKKTvi9pByNm/gcYchLanrcJ4I3DeDBWWw/4pE+1Dhf4W97dr6N0MYfmcm2k7anduX3QtsO1TolW8hprb2hzNgnpFJ4hJGnL+9qhc9DUkbhy0ZGzeT3iBDzDqri7Kfugu3m5iEt/WNdK1F4+SRdn//eTe46tdfC9DcunHHi637Pw1qDpK82rvMjWEKAsooAtvUXztvNNIZsSSh038OjVELHRygoC6LTARSnOLh0EWlotJQlQ0kzX5JF2jMsU9x2b11LvA==
-Received: from IA0PR02MB9462.namprd02.prod.outlook.com (2603:10b6:208:406::6)
- by DS7PR02MB9578.namprd02.prod.outlook.com (2603:10b6:8:ed::9) with
- Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.496.17; Fri, 9 Oct 2026 06:06:29 +0000
-Received: from IA0PR02MB9462.namprd02.prod.outlook.com
- ([fe80::c493:aabb:b834:f53d]) by IA0PR02MB9462.namprd02.prod.outlook.com
- ([fe80::c493:aabb:b834:f53d%4]) with mapi id 15.21.0496.015; Fri, 9 Oct 2026
- 06:06:28 +0000
-From: Thanos Makatos <thanos.makatos@nutanix.com>
-To: Naman Gulati <namangulati@google.com>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>
-CC: John Levon <john.levon@nutanix.com>, =?utf-8?B?Q8OpZHJpYyBMZSBHb2F0ZXI=?=
- <clg@redhat.com>, Alex Williamson <alex@shazbot.org>, Pierrick Bouvier
- <pierrick.bouvier@oss.qualcomm.com>, Matt Evans <matt@ozlabs.org>
-Subject: RE: [PATCH v3 RESEND 1/4] vfio-user: add multi-fd region mmap
- capability
-Thread-Topic: [PATCH v3 RESEND 1/4] vfio-user: add multi-fd region mmap
- capability
-Thread-Index: AQHdVfACl3nCs3953kackZ5RCgjQ2bb0thbw
-Date: Fri, 9 Oct 2026 06:06:28 +0000
-Message-ID: <IA0PR02MB9462517F10C4C9915364ADB98B922@IA0PR02MB9462.namprd02.prod.outlook.com>
-References: <20261007000833.2445641-1-namangulati@google.com>
- <20261007000833.2445641-2-namangulati@google.com>
-In-Reply-To: <20261007000833.2445641-2-namangulati@google.com>
-Accept-Language: en-GB, en-US
-Content-Language: en-GB
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nutanix.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: IA0PR02MB9462:EE_|DS7PR02MB9578:EE_
-x-ms-office365-filtering-correlation-id: 2b576ecd-5ac0-497c-05a9-08df25cb7577
-x-proofpoint-crosstenant: true
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|376014|23010399003|366016|1800799024|38070700021|4143699003|56012099006|10067099003|22082099003|3023799007|6133799003|18002099003;
-x-microsoft-antispam-message-info: lSaAbsh7fPyM2qrFCKRPhk8n7X9DhMeYB3jjm0xQJZ+xm2JZhxOhZP2ngtn/8hi9HbkzTsxFgZ5NBFUqXi2crdaFCgM9fk9kkonQF1BOV4Gq24iSZvc+q5ryIHYQAe8KPpAza9Sv7MKOQZKkIF0tWZPlXi+jwRnqxqa5GKvivAXi5cphi1BKT4CSptNsM5XDWSli16L05j/xsOX/loamEf8j3LbEFUF6c+QMfa3BJg0RO/5VdxOzHGL39C7MnnbyN19Er0sFfE+6N2e4ElliynWZsrBAfc+bTlJszfawq93uZtNocMUC+UkYwP0Q9RMBlE/qdH3qhZCUNuFZ/HwZujGaTcSFDerXqLsQFsfeO7jNxNqs90CYopmkjGE5I6+N5pZ7nw84oam0WOHaAVRMDgA0OWHs1cXEVoqqQC7KPHfAwQfHmj2bY1Kra5PAfTV5NCxohhI/H22TU7kfiGPlGidv6VD4YP8RnfGsFQdKrd8iEpdfQp+nbka8cC79puhSoXn14oY6fu1lOk24bxN8fv3gh3kuGL7SJS+SMZfvE+1tXvjvT4ev0LvHfMS6EcmFQLC7+sEyHVERSOKt5bnTOS5Y02UkqcU1WiNZfNydrJI23odKPeUVFtV14PxdXWA801NgI7dgMJpHeg10ByrB4ufEm30AvoewtmlLOIN1kQ2nfZ1YCz6irv/yPuV0rXpMmoajq8sRGXhCfrEBkMmkS1VMO5sXPkvGtFdAuVf04K0=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:IA0PR02MB9462.namprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(23010399003)(366016)(1800799024)(38070700021)(4143699003)(56012099006)(10067099003)(22082099003)(3023799007)(6133799003)(18002099003);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?YjA3c2NzUHRrd3k4UWdGMzNrOUNSaUxndUdlcEZFNjYrdU9xeHVpdDZPSldC?=
- =?utf-8?B?MVhNdFkwYmZ2TVRHT1RVVlphT3RML24ydGhsUkFOV3U1VzByc2FFQytWZVZI?=
- =?utf-8?B?dHNRbk95MU5wYUJIR3NVV3krbXY4ajhnTkp3NUNaNVpkY1NZcEZORytIT0k1?=
- =?utf-8?B?d1JjTzZwckZLYmV6THVVcVhhYlFnR3pFWkJId01aek5BRkl2dlB2RDAwY0pE?=
- =?utf-8?B?QUNhbmxueUF1ajNxME9waERDTFdXTm14dzlsQ3lwUjFVVWRSSVdMZUN4WEx3?=
- =?utf-8?B?QVVUWVZJYTQzanVWQVplL0hCTXlzUkowejl5SjMrVU9hcWhPTXUrRXhJSDZo?=
- =?utf-8?B?MXNQMVhzQXhLUUlrNGtuUFBXWDV4YnRXcFFySGhrbGhqdkVua1Z1K200RnB5?=
- =?utf-8?B?anFwWDNCRWtLNVQvanFqQXpZbzEwbXlaMzJHWmtCT2hiK2Y2NWwvRzdMV2xG?=
- =?utf-8?B?MTBybXh4WHNnR3lvZm9lZ0J6NWVldmpYdHU5bE1UV1NBWFdUblgza2gwaEVu?=
- =?utf-8?B?a3R5L24wSDYwVGJoa0lUazJrcTVySzlRUlVHTi9LdnhtcU5WWHJiUGN0bGRt?=
- =?utf-8?B?YUt6NG0wSGErTml1ajUxR21xc0J6dzZsekRZM1kvWmZoMG8yT3g2eHQ4T2ww?=
- =?utf-8?B?RUJsOWFkTVBqVzdpcDFrMEVzdG5pa3RhNTN0WWFrejBtMVY3NWxmZVgyRUI0?=
- =?utf-8?B?dUhjZUcvMEpjTEVBVWpaUVNSbDNQSHprWC91ZG5HZU03dGhjaWtDejdqSGJw?=
- =?utf-8?B?d3RBd1MvSVpXOFJqVE9tM1dwamFBU1ZHTU5QYlFCUFNTNzZtV0hieWY1Q084?=
- =?utf-8?B?QzBoaVRyS2Vqb3BwL1pZMEs5MThVUFptcGZvTnBvSTJOaG1OTGdNV0JlUVZF?=
- =?utf-8?B?aU9HUmZkOHlHb2N6VDlFbkIwZ2ZuOWlvTWNtRXBqZURWZVhkNGYwNGpsWWRE?=
- =?utf-8?B?QjBra3FNQlpWblZjK1N0alp3bW10T1FFcVRvS2FtNWhvM1BQd09aaFp1K3NB?=
- =?utf-8?B?VG43OHI1cW9aL2lwbkU5d3haVVNRMmNUSitkNFVVc2NxejhPZUsvMEJHM3lk?=
- =?utf-8?B?YXRTMFpCekpkSWQwcG5jSlpTZDRuMld1SUs2V3JMd1VjcEJrZTVCdUJRdFBF?=
- =?utf-8?B?M1A5WkpyZko3YlVaNmpFYURTQzdpbTJJZ1pWdlE0ZjRHa0hTMDM3QWN2alM1?=
- =?utf-8?B?MitwWHZzOURBTVRjbTBRc0hMQnB6RFhRUTRNS3ZET3VKdThQNThtZHdtSUUv?=
- =?utf-8?B?VThURU5TY3lDUG9UbWs1M25QVnlIV0dDTURrUWlyRTg4SXBiNmpHRkI0NE9M?=
- =?utf-8?B?RG1PcGt1Q1o3US9xdlh5TWZkNCtiRTg3QnY4QTM1OW9ISzFiVS9JRUpJR1hR?=
- =?utf-8?B?WVNsTUpnakptWlYzeDZCMDFTUjJYRXovMHl0NmpkOVZTWXBYa0dFUzVVcFFw?=
- =?utf-8?B?eHI4d3g5cXBNck1MQU5qdGR0VHY5ZkZ1WGZVdCtBOE80QXhJTndQOTBxNnFP?=
- =?utf-8?B?eGFYZFpyREtyQWNFWHdzSEJPRjRDWUlGbjJNRUt4YjAxNDNPSGZPNlRka2pG?=
- =?utf-8?B?UjBGZG1waWpSNnB6cmhoUnU5SGFSZk9lMUs4TDZvVVNIWjNrZ2hYdVRrRjdS?=
- =?utf-8?B?Ly93VWJYLzdpb3JDOFFCeW9LbGQ5dUcyVzAzRjJvSjFoNG14eUsrbEMvZTAz?=
- =?utf-8?B?OU1QcVI3d2tzUFh4SDN5MnpKQy8xTnFDaVR3dWtxMUZBNXdzSGRaaHhwODFS?=
- =?utf-8?B?UDBmcytyUFpzQTdmdkc5TkJsMm1TNkxyYXZ3MHowdnpvTnJCMlVGK0Q1aUh2?=
- =?utf-8?B?VGN5N1BmcHpSWVJnd2I3a2V4SjlnU2xPU2tXcm9ONXNMNElKcFV4RlVhdEJv?=
- =?utf-8?B?UUhxdkRVcnN1R0Y3R2J6WWxIZXZQZHpPaUMzaHRwSVFTM3VEZ3NoTmt5RXFD?=
- =?utf-8?B?dVBCNldsTzk0T3lMVFgyZzc3ZmpPcnJiQWs1eHZrdWsrQ0NoaGd3bHpocE1C?=
- =?utf-8?B?dVRTNkNSdm1LeHFNYVNBMFJIbXNjbkFGano1S0N4dGxGS2V4VnlsRkNQcGdo?=
- =?utf-8?B?VWo4Q1c4UHZLYjF6b00xUFRjS2dhTm53WUgrL2Znd0VCN3lvZEJNZVFOd1RB?=
- =?utf-8?B?RUJHY2RzMTJSYVZpTUVDNWVTTWxaWnVhYmdRR3NRQnFiSjhuODhjemhkaHFn?=
- =?utf-8?B?c3hsRTZLYW44QytZUmJtWTVQN3F4MVJGZlVwZVlvSWR6WmNUcmtJL3d2LzJH?=
- =?utf-8?B?czlVZm91cS9VaEZDYXJyZXh6Tk9QMUZRakxDTU5xcmowa2N2SWIyRXVxT2dB?=
- =?utf-8?B?TEdsZ09ybE50ZlE3UXpOVnZ0Wno2YUdaMGozWXVCdU5WVFlVMHJ1Zz09?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ oAQMkdOFwtWjvM0mjdBInOpZ9gebzQECGaSS27oC1QQ=; b=I72XliPYeWvtt8q7
+ TEoaMaUMWeHKgv2MJhy/bBVjub36kazNvSTNOG+kS5CfYR/cFQxXospeHemyxHYZ
+ vrkmXisMw6XN81oQR7cyGSteuU9h//CHVkfklsTAPy3BYkCRaU7na6ww79jxx3Tm
+ drjxJKyQQwbxuo1ryvINdPCmP7L/RJ0Yr4z3B/GkWZjdxR6tEFAiS/+RGVbcVg67
+ yELJp85aWupwYfj8I9XZoF79W7lTsitN59zaVNUZHH+u6TxUG+RZTjHviNQaLND7
+ hFrNjgH8Xm/ruZjq45S+4rYPmMC8oonzdXwljY+xK6FPnWQjHea2uaHg4/Ol10Xo
+ REulhQ==
+Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
+ [209.85.216.72])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h6ev5ahyk-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Fri, 09 Oct 2026 06:37:49 +0000 (GMT)
+Received: by mail-pj1-f72.google.com with SMTP id
+ 98e67ed59e1d1-3a7d2f25f65so1052617a91.0
+ for <qemu-devel@nongnu.org>; Thu, 08 Oct 2026 23:37:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1791527869; x=1792132669; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=oAQMkdOFwtWjvM0mjdBInOpZ9gebzQECGaSS27oC1QQ=;
+ b=gpCGwbuTxSXcUFoYj9LwKm3dEn2ln28nVbw1DJmKzaCnBlimjdqlpV3zDp0lyzBvxT
+ tWu22PydUk0dHZ0ovZaC4Mq3liSq6DyhSe+Adug06LGtP1nDkbOMyGW/0G547Li63YZM
+ 2pPq+uns10UCO4dLGRjseTXwBXNSgZ6KZkvPjSUzUwOPLbcESDgqpKLJBzOfMH9H0V4u
+ mD5EyiXsBZiYJjJrMAen34RDaTsRwO9LkFdkebhPBm/KJh+uk5bm/VGyy0VVacfqI2d9
+ S+5HwZYu0WBgNEhVhStISvKrNWp45CHc5NWRbDLPq5Wq/dWjLjzmgbJM8dmsyFqQr0zW
+ 567g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1791527869; x=1792132669;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=oAQMkdOFwtWjvM0mjdBInOpZ9gebzQECGaSS27oC1QQ=;
+ b=XjYcuuPQVbXP16xOSsVo4kijNF6p8SomXdQO5wKA0kAnuMsTtaZljAfFMpODT4oEMM
+ HE+Yd2iAtq/VAuLAaPF01k5/4pwqGwp9R5XGJXTjKLvJNPUM4RzSUG97NAUOWrhU+1+U
+ f/awTCF2W/8sfVdnG50TLERzeaYAPDygCWE5PcaMTvbc+cxscGUabWkLivvLS1EJnzAa
+ FWxMpFtJfcOOAglyD5IQe8ZqtEBqKtxqQsOvmukzZjcnX0qVR0pivBCtctJokb3QSjU/
+ uEWlhlG0VNhxFvPY5NnQOZo2YXt/JEKc488BAhpM4MZx0X7iLWIgW9hVlxEFnbWORFUa
+ gLQw==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBxC59cGPP2OZs6Q+MxxSncsXhXeEC+u8qGEKep2uyvS8Gxcl6p0CfumVw9b4o/4usHOEjkxMjR56+UW@nongnu.org
+X-Gm-Message-State: AFq9FYJJukSNcuFmHYz4OnYoXxPVku2vt+2LVQLdAVpnyN/8wDF5GBDi
+ 1cAI5BrBdETB0IQt3aC4bVbh7YI8o7ukC7/OTXeBeHR8ESJFMofBb1SL9YKuPo4viX2mbJpv5Qc
+ 9reEbOduuOXwWjO3n0gl9zdem92M5Dc4JkkFHQvTWrEN26S2jRfhwHqQXgQ==
+X-Gm-Gg: AYBFou3C/K23zC0SAoO/TNbxq2hN0zpqvEqcHhTYTu+mBFdumO5U9U9NHYfhd/VZqDP
+ FsxA0wgdexx3zQ0PGm/9YrvFBzE5iZYMir7sSsCus7QzpIzRn5tyVtfIJVHSkzxCj2IozHEgJOo
+ I7v9XYmNCa4/9kkKSYhJeU56MKcJt203oyV7xgMpr8RxmvZRqSQ90ya3sV1c0RXsX+Ekv6Z2My5
+ Y2a140RjD2SqPUaAqRpQPCyK7adO7OTRrbbedXpg9urxTF6yMH5/3gYCyE/cBQcAnuxIOMgegp+
+ YbO3itZsh+j4OFPAQccVnroLhFsua/7ABsdazcktgvI3u8uGOgVy1t0ExU70BE1CF1IAJCjNN6B
+ DH8eO3kfUrigeOLOfyEF5tUOSR8bGVGtwtdqVrJs5/UDAyw+ZsnvrnD8/
+X-Received: by 2002:a17:90a:ec84:b0:3a0:eaf4:a435 with SMTP id
+ 98e67ed59e1d1-3ab36ec0a84mr820716a91.46.1791527868570; 
+ Thu, 08 Oct 2026 23:37:48 -0700 (PDT)
+X-Received: by 2002:a17:90a:ec84:b0:3a0:eaf4:a435 with SMTP id
+ 98e67ed59e1d1-3ab36ec0a84mr820694a91.46.1791527867230; 
+ Thu, 08 Oct 2026 23:37:47 -0700 (PDT)
+Received: from [192.168.1.169] (192-80-163-190.dyn.novuscom.net.
+ [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-cd3d9e1ee81sm448988a12.12.2026.10.08.23.37.46
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 08 Oct 2026 23:37:46 -0700 (PDT)
+Message-ID: <6b00ed2c-e78a-4ac7-9e5b-34d4aebefbbf@oss.qualcomm.com>
+Date: Thu, 8 Oct 2026 23:37:46 -0700
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked: HdFlBk0AM1gPg8uvWkR/DJDEO5LcRQbgd/e4THE9VSNVmWYu5O2wTZMtPRZScpBoTbzePbuG3ejEBkjxf69Zk7ezAhhvJnL+Z/AYfaBH/1E8N93L2qseR/KEfCixnpStUr4L4issaqrF52p37mjWQ2B+LXA7xs0Ea9tZBJVuc+TzVWTB5dr/CHYktm9rUKAOXY4fBwTjqgujXa0fNdg/W5XnqImHmT9cEHvZFxmiwdXMwl8wuCjFmfX+t6AIWnEn2eqAcBxuyMWWKGJKrNkPEswYLDf56GH5M4ouPxsPb0eiwoXJVOz3RY+DBP8MrTvNIpattJK51Nbw6L07Zub4YQ==
-X-OriginatorOrg: nutanix.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: IA0PR02MB9462.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 2b576ecd-5ac0-497c-05a9-08df25cb7577
-X-MS-Exchange-CrossTenant-originalarrivaltime: 09 Oct 2026 06:06:28.9150 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: bb047546-786f-4de1-bd75-24e5b6f79043
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: 5ua5MEd6j3NHpEJPfvNxBJVmyqeNXIudrCu21K3UMXYQeyul6K2mecYP2r2H5peWx8KvYmcoCghJQACspK8nOdnAxY98qD21uHeWnPX69t4=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS7PR02MB9578
-X-Authority-Analysis: v=2.4 cv=VORIDNPX c=1 sm=1 tr=0 ts=6ac88468 cx=c_pps
- a=Jf/U7KFl3YoH1y/TBsSIlw==:117 a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19
- a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
- a=660iZSQnnn4A:10 a=0kUYKlekyDsA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=VofLwUrZ8Iiv6rRUPXIb:22 a=_-M8LpHI31CeLmyZm6wg:22 a=1XWaLZrsAAAA:8
- a=69wJf7TsAAAA:8 a=64Cc0HZtAAAA:8 a=20KFwNOVAAAA:8 a=r1p2_3pzAAAA:8
- a=EUspDBNiAAAA:8 a=voM4FWlXAAAA:8 a=NWOmliP1RGvJIievoe4A:9 a=QEXdDO2ut3YA:10
- a=Fg1AiH1G6rFz08G2ETeA:22 a=r_pkcD-q9-ctt7trBg_g:22 a=IC2XNlieTeVoXbcui8wp:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA5MDAyNCBTYWx0ZWRfX1tsgJg8K/ySh
- Qvr1SL8LB4bq99CtkFUqXAdlalDzoGK4NfQ0TZ2I6CzzdMyPFlpVNRcLIq1vK0CAkzem3jW+FII
- 8al+8ZvW1/fp+A3mrkAmmxIeLAl1Nr8=
-X-Proofpoint-GUID: 1R19bL1Cjl3SzF2EMv5NdYoF8lUpSXDX
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA5MDAyNCBTYWx0ZWRfX21Pm2qrLSNg7
- Tg3pnWvY/RH5YIQRued7GS+xlZaYGSCqEtX3SiziVhzqbnOZY0UcPTHuaefDOretUiwVuczmOJ2
- SY9Tm7z3188r1qE7WULxjn9SmuW9f+37ZifGE7NcFsW3DcXcoq4MubFXNw8yEBn/FHak9I0rvzz
- NsTuVbZfpkny+fjlSLd9FD5sSaWofkR9KDvVmBePBMcydtU5/SpTyaKMUQKv3l1r6VoBIY6zSrr
- c1x787NJbw9QbkoI/bbmDCd559qa/tEJkdl0W9ppPHjSQu9Y2TwM3uMdDpBLHDrp/W0oZw+dRR/
- lnemTJDeN+Iokc6HkS9sX7OPuXF4j38e6Ew3MQ2a3PFI5YGUay6iQTdNT93RxGHMyTKN57018as
- 0NjxswMw5sbi1oifxYafalZaKEsLWOt4etqBQAmylZ54QX87GXruEFxYPM5Kwgp5QYl+ulkFZZk
- itq6kQupoPIsg32V+Lw==
-X-Proofpoint-ORIG-GUID: 1R19bL1Cjl3SzF2EMv5NdYoF8lUpSXDX
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] contrib/plugins/bbv.c: Allow selecting ROI
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>
+References: <20261007-bbv-v1-0-a2f521a68fdf@rsg.ci.i.u-tokyo.ac.jp>
+ <20261007-bbv-v1-2-a2f521a68fdf@rsg.ci.i.u-tokyo.ac.jp>
+ <4eec19e6-db40-4658-b5b3-bc342473cffd@oss.qualcomm.com>
+ <f503ffbe-0900-4b8e-ae7b-dbfcc74eb5cc@rsg.ci.i.u-tokyo.ac.jp>
+ <2d7c2cdb-b5b9-41ed-9786-dd9b4876bdd8@oss.qualcomm.com>
+ <9cda6271-aed9-4a2b-b88f-bca8371d753e@rsg.ci.i.u-tokyo.ac.jp>
+ <0b392aaf-7ce1-46bb-b39b-47744ea1e6f9@oss.qualcomm.com>
+ <65391825-ef44-4771-99b4-ad3a47279762@rsg.ci.i.u-tokyo.ac.jp>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <65391825-ef44-4771-99b4-ad3a47279762@rsg.ci.i.u-tokyo.ac.jp>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA5MDAyNiBTYWx0ZWRfX/aaua6ITKLOo
+ gFGKF+Kzogr/y8pokumX/cdBOTx379hWZo+/YlmPwZNOd0QJZKUnZ1qZiuIr8ZaNnR2P6MVuIYu
+ qUNrDFNGNjTRdD4NhS5uGSEZHWgRG6c=
+X-Authority-Analysis: v=2.4 cv=MMT1C8Zl c=1 sm=1 tr=0 ts=6ac88bbd cx=c_pps
+ a=RP+M6JBNLl+fLTcSJhASfg==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
+ a=5mQuFtH1dfYGMfFDJH8A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=O8hF6Hzn-FEA:10 a=iS9zxrgQBfv6-_F4QbHw:22
+X-Proofpoint-GUID: -uGGnzqJWEEGUcdtKTmDIGN_BffIOwaq
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA5MDAyNiBTYWx0ZWRfX5lnDXj3AXXmy
+ uU/xxkGiLmRUOJGqY/oZh1gn7mB+lPxGb1A0b+HQfgqnh59HCCt/Rj6mns4W1IbYMRomWv+IgaF
+ cd93xCY3zIMCgtjRNj2pVgt0InIiuk91kA55YphCyd6Cln/vrjN+76zGuyggtZGdQzJoPvyH8Q1
+ +6XsyyKDtTy3BHackXKOW+qp47I2gu6QtGqybqPH3aSoSgVT92xcU68PU5eydqA11PZzd7y2Cmy
+ 0p9uTTsFUhNl4Ne4jJEnzsrxZ3jFvMJEW+lr9yK7bAYJ15VXIe8o2xhGjJmvnL9if8vqQ0iMjsV
+ 3UQDFfKrs+MX2UGHixbXGaQmcb1v+EFM9EUgEgqLguASk72Bcwu9EbqpD5aNWZ1QXw9eFP0JelU
+ 1K8CIE6Vkxj0d7zr80m5qBT/XSrEcxpsUflRZc5EpdgUKEIpOhSnSUroJkuOvfKB7YxZ1HcqWt5
+ MzdDkIFPNgj8uFTElCA==
+X-Proofpoint-ORIG-GUID: -uGGnzqJWEEGUcdtKTmDIGN_BffIOwaq
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-10-09_02,2026-10-08_01,2025-10-01_01
-X-Proofpoint-Spam-Reason: safe
-Received-SPF: pass client-ip=148.163.151.68;
- envelope-from=thanos.makatos@nutanix.com; helo=mx0a-002c1b01.pphosted.com
-X-Spam_score_int: -29
-X-Spam_score: -3.0
-X-Spam_bar: ---
-X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- WEIRD_QUOTING=0.001 autolearn=ham autolearn_force=no
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 impostorscore=0 phishscore=0 clxscore=1015 spamscore=0
+ lowpriorityscore=0 adultscore=0 suspectscore=0 bulkscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2610020000 definitions=main-2610090026
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -200,140 +162,287 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-PiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPiBGcm9tOiBOYW1hbiBHdWxhdGkgPG5hbWFu
-Z3VsYXRpQGdvb2dsZS5jb20+DQo+IFNlbnQ6IDA3IE9jdG9iZXIgMjAyNiAwMTowOQ0KPiBUbzog
-cWVtdS1kZXZlbEBub25nbnUub3JnDQo+IENjOiBKb2huIExldm9uIDxqb2huLmxldm9uQG51dGFu
-aXguY29tPjsgVGhhbm9zIE1ha2F0b3MNCj4gPHRoYW5vcy5tYWthdG9zQG51dGFuaXguY29tPjsg
-Q8OpZHJpYyBMZSBHb2F0ZXIgPGNsZ0ByZWRoYXQuY29tPjsgQWxleA0KPiBXaWxsaWFtc29uIDxh
-bGV4QHNoYXpib3Qub3JnPjsgUGllcnJpY2sgQm91dmllcg0KPiA8cGllcnJpY2suYm91dmllckBv
-c3MucXVhbGNvbW0uY29tPjsgTWF0dCBFdmFucyA8bWF0dEBvemxhYnMub3JnPjsNCj4gTmFtYW4g
-R3VsYXRpIDxuYW1hbmd1bGF0aUBnb29nbGUuY29tPg0KPiBTdWJqZWN0OiBbUEFUQ0ggdjMgUkVT
-RU5EIDEvNF0gdmZpby11c2VyOiBhZGQgbXVsdGktZmQgcmVnaW9uIG1tYXANCj4gY2FwYWJpbGl0
-eQ0KPiANCj4gIS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS18DQo+ICAgQ0FVVElPTjogRXh0ZXJuYWwgRW1haWwNCj4gDQo+
-IHwtLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tIQ0KPiANCj4gRXh0ZW5kIHRoZSB2ZmlvLXVzZXIgcHJvdG9jb2wgc3BlY2lm
-aWNhdGlvbiB0byBhbGxvdyBzZXJ2ZXJzIHRvIHBhc3MNCj4gbXVsdGlwbGUgZmlsZSBkZXNjcmlw
-dG9ycyBmb3IgZGlmZmVyZW50IHNwYXJzZSBtZW1vcnkgYXJlYXMgd2l0aGluIGENCj4gc2luZ2xl
-IGRldmljZSByZWdpb24gd2l0aCBjYXBhYmlsaXR5DQo+IFZGSU9fUkVHSU9OX0lORk9fQ0FQX1NQ
-QVJTRV9NTUFQX0ZEUy4NCj4gDQo+IFZGSU9fUkVHSU9OX0lORk9fQ0FQX1NQQVJTRV9NTUFQX0ZE
-UyBkZWZpbmVzIGFuIGFycmF5IG9mIHNwYXJzZSBtbWFwDQo+IGFyZWFzIHdoZXJlIGVhY2ggYXJl
-YSBjb250YWluczoNCj4gLSBvZmZzZXQ6IFN0YXJ0IG9mIHRoZSBhcmVhIHdpdGhpbiB0aGUgZGV2
-aWNlIHJlZ2lvbiAoQkFSKS4NCj4gLSBmZF9vZmZzZXQ6IFN0YXJ0IG9mIHRoZSBtYXBwaW5nIHdp
-dGhpbiB0aGUgYmFja2luZyBmaWxlIGRlc2NyaXB0b3IuDQo+IC0gc2l6ZTogU2l6ZSBvZiB0aGUg
-bWFwcGFibGUgYXJlYS4NCj4gLSBmZF9pbmRleDogWmVyby1iYXNlZCBpbmRleCBpbnRvIHRoZSBh
-cnJheSBvZiBmaWxlIGRlc2NyaXB0b3JzDQo+ICAgcmVjZWl2ZWQgaW4gdGhlIFNDTV9SSUdIVFMg
-YW5jaWxsYXJ5IGRhdGEgb2YgdGhlDQo+ICAgVkZJT19VU0VSX0RFVklDRV9HRVRfUkVHSU9OX0lO
-Rk8gcmVwbHkgbWVzc2FnZS4NCg0KRG9uJ3Qgd2UgbmVlZCBhIG5ldyBjYXBhYmlsaXR5IGluIFZG
-SU9fVVNFUl9WRVJTSU9OIHNvIHRoYXQgdGhlIHNlcnZlciBrbm93cyB3aGV0aGVyIHRoZSBjbGll
-bnQgc3VwcG9ydHMgVkZJT19SRUdJT05fSU5GT19DQVBfU1BBUlNFX01NQVBfRkRTIGJlZm9yZSBl
-dmVuIHNlbmRpbmcgaXQ/DQoNCj4gDQo+IFNpZ25lZC1vZmYtYnk6IE5hbWFuIEd1bGF0aSA8bmFt
-YW5ndWxhdGlAZ29vZ2xlLmNvbT4NCj4gLS0tDQo+ICBkb2NzL2ludGVyb3AvdmZpby11c2VyLnJz
-dCB8IDcxICsrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrLS0NCj4gLQ0KPiAgMSBm
-aWxlIGNoYW5nZWQsIDY3IGluc2VydGlvbnMoKyksIDQgZGVsZXRpb25zKC0pDQo+IA0KPiBkaWZm
-IC0tZ2l0IGEvZG9jcy9pbnRlcm9wL3ZmaW8tdXNlci5yc3QgYi9kb2NzL2ludGVyb3AvdmZpby11
-c2VyLnJzdA0KPiBpbmRleCAxYzkyZjQ0MmQyLi41NzQ0ZjU4ZTMxIDEwMDY0NA0KPiAtLS0gYS9k
-b2NzL2ludGVyb3AvdmZpby11c2VyLnJzdA0KPiArKysgYi9kb2NzL2ludGVyb3AvdmZpby11c2Vy
-LnJzdA0KPiBAQCAtMTI1LDcgKzEyNSwxMCBAQCBTcGFyc2UgUmVnaW9ucw0KPiAgQSByZWdpb24g
-Y2FuIGJlIG1lbW9yeS1tYXBwYWJsZSBpbiB3aG9sZSBvciBpbiBwYXJ0LiBXaGVuIG9ubHkgYQ0K
-PiBzdWJzZXQgb2YgYQ0KPiAgcmVnaW9uIGNhbiBiZSBtYXBwZWQgYnkgdGhlIGNsaWVudCwgYQ0K
-PiBgYFZGSU9fUkVHSU9OX0lORk9fQ0FQX1NQQVJTRV9NTUFQYGANCj4gIGNhcGFiaWxpdHkgaXMg
-aW5jbHVkZWQgaW4gdGhlIHJlZ2lvbiBpbmZvIHJlcGx5LiBUaGlzIGNhcGFiaWxpdHkNCj4gZGVz
-Y3JpYmVzDQo+IC13aGljaCBwb3J0aW9ucyBjYW4gYmUgbWFwcGVkIGJ5IHRoZSBjbGllbnQuDQo+
-ICt3aGljaCBwb3J0aW9ucyBjYW4gYmUgbWFwcGVkIGJ5IHRoZSBjbGllbnQuIFdoZW4gc3BhcnNl
-IG1tYXAgYXJlYXMNCj4gYXJlIGJhY2tlZA0KPiArYnkgbXVsdGlwbGUgZGlzdGluY3QgZmlsZSBk
-ZXNjcmlwdG9ycywgYQ0KPiArYGBWRklPX1JFR0lPTl9JTkZPX0NBUF9TUEFSU0VfTU1BUF9GRFNg
-YCBjYXBhYmlsaXR5IGlzIGluY2x1ZGVkIGluDQo+IHRoZSByZWdpb24NCj4gK2luZm8gcmVwbHkg
-aW5zdGVhZC4NCg0KSXQncyBwcm9iYWJseSBvYnZpb3VzIGJ1dCBJIGRvbid0IHNlZSBhbnkgaGFy
-bSBpbiBjbGVhcmx5IHN0YXRpbmcgdGhhdCBib3RoIFZGSU9fUkVHSU9OX0lORk9fQ0FQX1NQQVJT
-RV9NTUFQIGFuZCBWRklPX1JFR0lPTl9JTkZPX0NBUF9TUEFSU0VfTU1BUF9GRFMgY2Fubm90IGJl
-IHNwZWNpZmllZCBmb3IgdGhlIHNhbWUgcmVnaW9uLCBhbmQgdGhhdCBzb21lIHJlZ2lvbnMgY2Fu
-IHVzZSBWRklPX1JFR0lPTl9JTkZPX0NBUF9TUEFSU0VfTU1BUCB3aGlsZSBvdGhlcnMgVkZJT19S
-RUdJT05fSU5GT19DQVBfU1BBUlNFX01NQVBfRkRTLg0KDQo+IA0KPiAgLi4gTm90ZTo6DQo+ICAg
-ICBGb3IgZXhhbXBsZSwgaW4gYSB2aXJ0dWFsIE5WTWUgY29udHJvbGxlciwgc3BhcnNlIHJlZ2lv
-bnMgY2FuIGJlDQo+IHVzZWQgc28NCj4gQEAgLTg1OSw5ICs4NjIsOSBAQCBSZXBseQ0KPiAgICAq
-IGBgVkZJT19SRUdJT05fSU5GT19GTEFHX1JFQURgYCBhbGxvd3MgY2xpZW50IHJlYWQgYWNjZXNz
-IHRvIHRoZQ0KPiByZWdpb24uDQo+ICAgICogYGBWRklPX1JFR0lPTl9JTkZPX0ZMQUdfV1JJVEVg
-YCBhbGxvd3MgY2xpZW50IHdyaXRlIGFjY2VzcyB0byB0aGUNCj4gcmVnaW9uLg0KPiAgICAqIGBg
-VkZJT19SRUdJT05fSU5GT19GTEFHX01NQVBgYCBzcGVjaWZpZXMgdGhlIGNsaWVudCBjYW4gbW1h
-cCgpDQo+IHRoZSByZWdpb24uDQo+IC0gICAgV2hlbiB0aGlzIGZsYWcgaXMgc2V0LCB0aGUgcmVw
-bHkgd2lsbCBpbmNsdWRlIGEgZmlsZSBkZXNjcmlwdG9yDQo+IGluIGl0cw0KPiAtICAgIG1ldGEt
-ZGF0YS4gT24gYGBBRl9VTklYYGAgc29ja2V0cywgdGhlIGZpbGUgZGVzY3JpcHRvcnMgd2lsbCBi
-ZQ0KPiBwYXNzZWQgYXMNCj4gLSAgICBgYFNDTV9SSUdIVFNgYCB0eXBlIGFuY2lsbGFyeSBkYXRh
-Lg0KPiArICAgIFdoZW4gdGhpcyBmbGFnIGlzIHNldCwgdGhlIHJlcGx5IHdpbGwgaW5jbHVkZSBv
-bmUgb3IgbW9yZSBmaWxlDQo+IGRlc2NyaXB0b3JzDQo+ICsgICAgaW4gaXRzIG1ldGEtZGF0YS4g
-T24gYGBBRl9VTklYYGAgc29ja2V0cywgdGhlIGZpbGUgZGVzY3JpcHRvcnMNCj4gd2lsbCBiZSBw
-YXNzZWQNCj4gKyAgICBhcyBgYFNDTV9SSUdIVFNgYCB0eXBlIGFuY2lsbGFyeSBkYXRhLg0KDQpT
-ZW5kaW5nIG1vcmUgRkRzIHRoYW4gc3ViLXJlZ2lvbnMgc2hvdWxkbid0IGJlIHBlcm1pdHRlZCwg
-cmlnaHQ/IElmIHNvLCBjYW4gd2UgY2xhcmlmeSB0aGlzPw0KDQo+ICAgICogYGBWRklPX1JFR0lP
-Tl9JTkZPX0ZMQUdfQ0FQU2BgIGluZGljYXRlcyBhZGRpdGlvbmFsIGNhcGFiaWxpdGllcw0KPiBm
-b3VuZCBpbiB0aGUNCj4gICAgICByZXBseS4NCj4gDQo+IEBAIC05NTAsNiArOTUzLDY2IEBAIFRo
-ZSBWRklPIHNwYXJzZSBtbWFwIGFyZWEgaXMgZGVmaW5lZCBpbg0KPiBgYDxsaW51eC92ZmlvLmg+
-YGAgKGBgc3RydWN0DQo+ICB2ZmlvX3JlZ2lvbl9pbmZvX2NhcF9zcGFyc2VfbW1hcGBgKS4NCj4g
-DQo+IA0KPiArVkZJTyBzcGFyc2UgbW1hcCBmZHMgY2FwIGhlYWRlcg0KPiArIiIiIiIiIiIiIiIi
-IiIiIiIiIiIiIiIiIiIiIiIiIg0KPiArDQo+ICsrLS0tLS0tLS0tLS0tLS0tLS0tLS0tLSstLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLSsNCj4gK3wgTmFtZSAgICAgICAgICAg
-ICAgICAgfCBWYWx1ZSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgfA0KPiArKz09PT09
-PT09PT09PT09PT09PT09PT0rPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0r
-DQo+ICt8IGlkICAgICAgICAgICAgICAgICAgIHwgVkZJT19SRUdJT05fSU5GT19DQVBfU1BBUlNF
-X01NQVBfRkRTIHwNCj4gKystLS0tLS0tLS0tLS0tLS0tLS0tLS0tKy0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tKw0KPiArfCB2ZXJzaW9uICAgICAgICAgICAgICB8IDB4MSAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICB8DQo+ICsrLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLSstLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLSsNCj4gK3wgbmV4dCAg
-ICAgICAgICAgICAgICAgfCA8bmV4dD4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgfA0K
-PiArKy0tLS0tLS0tLS0tLS0tLS0tLS0tLS0rLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0rDQo+ICt8IHNwYXJzZSBtbWFwIGZkcyBpbmZvIHwgVkZJTyByZWdpb24gaW5mbyBz
-cGFyc2UgbW1hcCBmZHMgICAgIHwNCj4gKystLS0tLS0tLS0tLS0tLS0tLS0tLS0tKy0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tKw0KPiArDQo+ICtUaGlzIGNhcGFiaWxpdHkg
-aXMgZGVmaW5lZCB3aGVuIGEgcmVnaW9uIHN1cHBvcnRzIGRpcmVjdCBhY2Nlc3MgYnkNCj4gdGhl
-IGNsaWVudA0KPiArdmlhIG1tYXAoKSB3aGVyZSBkaWZmZXJlbnQgc3BhcnNlIG1tYXAgYXJlYXMg
-YXJlIGJhY2tlZCBieSBkaXN0aW5jdA0KPiBmaWxlDQo+ICtkZXNjcmlwdG9ycyBpbiB0aGUgYGBT
-Q01fUklHSFRTYGAgYW5jaWxsYXJ5IGRhdGEgYXJyYXkuIENhcGFiaWxpdHkgSUQNCj4gK2BgVkZJ
-T19SRUdJT05fSU5GT19DQVBfU1BBUlNFX01NQVBfRkRTYGAgaXMgZGVmaW5lZCBhcyAxNiAoMHgx
-MCkgdG8NCj4gYXZvaWQNCg0KSSdtIG5vdCBzdXJlIDB4MTAgd2lsbCBhdm9pZCBjbGFzaGVzIGlu
-IHRoZSBmdXR1cmUsIGN1cnJlbnQgaGlnaGVzdCBWRklPIGNhcGFiaWxpdHkgaXMgNSAoVkZJT19S
-RUdJT05fSU5GT19DQVBfTlZMSU5LMl9MTktTUCkgc28gd2UgbWlnaHQgY2xhc2ggc29vbmVyIHRo
-YW4gd2UgdGhpbmsuIFVzaW5nIGEgbXVjaCBoaWdoZXIgdmFsdWUgKGUuZy4gMHgxMDAwKSBjb3Vs
-ZCBiZSBhIGJpdCBiZXR0ZXIuIElkZWFsbHksIHdlIHNob3VsZCBoYXZlIHNvbWUgYWdyZWVtZW50
-IHdpdGggdGhlIFZGSU8gbWFpbnRhaW5lcnMgYWJvdXQgdGhpcywgaG93IGFib3V0IHJlc2Vydmlu
-ZyB0aGUgaGlnaGVzdCBiaXQgZm9yIFZGSU8gImV4dGVuc2lvbnMiPw0KDQo+ICtjbGFzaGluZyB3
-aXRoIGtlcm5lbCBWRklPIGNhcGFiaWxpdGllcy4NCj4gKw0KPiArVkZJTyByZWdpb24gaW5mbyBj
-YXAgc3BhcnNlIG1tYXAgZmRzDQo+ICsiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIi
-IiINCj4gKw0KPiArKy0tLS0tLS0tLS0tKy0tLS0tLS0tKy0tLS0tLSsNCj4gK3wgTmFtZSAgICAg
-IHwgT2Zmc2V0IHwgU2l6ZSB8DQo+ICsrPT09PT09PT09PT0rPT09PT09PT0rPT09PT09Kw0KPiAr
-fCBucl9hcmVhcyAgfCAwICAgICAgfCA0ICAgIHwNCj4gKystLS0tLS0tLS0tLSstLS0tLS0tLSst
-LS0tLS0rDQo+ICt8IHJlc2VydmVkICB8IDQgICAgICB8IDQgICAgfA0KPiArKy0tLS0tLS0tLS0t
-Ky0tLS0tLS0tKy0tLS0tLSsNCj4gK3wgb2Zmc2V0ICAgIHwgOCAgICAgIHwgOCAgICB8DQo+ICsr
-LS0tLS0tLS0tLS0rLS0tLS0tLS0rLS0tLS0tKw0KPiArfCBmZF9vZmZzZXQgfCAxNiAgICAgfCA4
-ICAgIHwNCj4gKystLS0tLS0tLS0tLSstLS0tLS0tLSstLS0tLS0rDQo+ICt8IHNpemUgICAgICB8
-IDI0ICAgICB8IDggICAgfA0KPiArKy0tLS0tLS0tLS0tKy0tLS0tLS0tKy0tLS0tLSsNCj4gK3wg
-ZmRfaW5kZXggIHwgMzIgICAgIHwgNCAgICB8DQo+ICsrLS0tLS0tLS0tLS0rLS0tLS0tLS0rLS0t
-LS0tKw0KPiArfCBwYWQgICAgICAgfCAzNiAgICAgfCA0ICAgIHwNCj4gKystLS0tLS0tLS0tLSst
-LS0tLS0tLSstLS0tLS0rDQo+ICt8IC4uLiAgICAgICB8ICAgICAgICB8ICAgICAgfA0KPiArKy0t
-LS0tLS0tLS0tKy0tLS0tLS0tKy0tLS0tLSsNCj4gKw0KPiArKiAqbnJfYXJlYXMqIGlzIHRoZSBu
-dW1iZXIgb2Ygc3BhcnNlIG1tYXAgYXJlYXMgaW4gdGhlIHJlZ2lvbi4NCj4gKyogKm9mZnNldCos
-ICpmZF9vZmZzZXQqLCAqc2l6ZSosIGFuZCAqZmRfaW5kZXgqIGRlc2NyaWJlIGEgc2luZ2xlDQo+
-IGFyZWEgdGhhdCBjYW4gYmUNCg0KQ291bGQgeW91IGNsYXJpZnkgdGhhdCB6ZXJvLXNpemVkIHJl
-Z2lvbnMgYXJlIG5vdCBwZXJtaXR0ZWQ/DQoNCkFsc28sIEkgdGhpbmsgaXQncyBvYnZpb3VzIGJ1
-dCBiZXN0IHRvIGNsYXJpZnkgYW55d2F5IG9mZnNldCArIHNpemUgY2Fubm90IGV4Y2VlZCB0aGUg
-cmVnaW9uIHNpemUuDQoNCj4gKyAgbWFwcGVkIGJ5IHRoZSBjbGllbnQuIFRoZXJlIHdpbGwgYmUg
-Km5yX2FyZWFzKiB0dXBsZXMgb2Ygb2Zmc2V0LA0KPiBmZF9vZmZzZXQsIHNpemUsDQo+ICsgIGZk
-X2luZGV4LCBhbmQgcGFkLg0KPiArKiAqb2Zmc2V0KiBzcGVjaWZpZXMgdGhlIHN0YXJ0IG9mIHRo
-ZSBhcmVhIHdpdGhpbiB0aGUgZGV2aWNlIHJlZ2lvbg0KPiAoQkFSKS4NCj4gKyogKmZkX29mZnNl
-dCogc3BlY2lmaWVzIHRoZSBzdGFydCBvZiB0aGUgbWFwcGluZyB3aXRoaW4gdGhlIGJhY2tpbmcN
-Cj4gZmlsZSBkZXNjcmlwdG9yDQo+ICsgIHJlZmVyZW5jZWQgYnkgKmZkX2luZGV4Ki4NCj4gKyog
-KmZkX2luZGV4KiBpcyB0aGUgemVyby1iYXNlZCBpbmRleCBpbnRvIHRoZSBhcnJheSBvZiBmaWxl
-DQo+IGRlc2NyaXB0b3JzDQo+ICsgIHJlY2VpdmVkIGluIHRoZSBgYFNDTV9SSUdIVFNgYCBhbmNp
-bGxhcnkgZGF0YSBvZiB0aGUNCj4gKyAgYGBWRklPX1VTRVJfREVWSUNFX0dFVF9SRUdJT05fSU5G
-T2BgIHJlcGx5IG1lc3NhZ2UuDQo+ICsNCj4gK0lmIGFsbCBzcGFyc2UgbW1hcCBhcmVhcyBhcmUg
-YmFja2VkIGJ5IGEgc2luZ2xlIGZpbGUgZGVzY3JpcHRvciwgdGhlDQo+IHNlcnZlcg0KPiArbWF5
-IGluc3RlYWQgc2VuZCBgYFZGSU9fUkVHSU9OX0lORk9fQ0FQX1NQQVJTRV9NTUFQYGAgYW5kIGV4
-YWN0bHkgb25lDQo+IGZpbGUNCj4gK2Rlc2NyaXB0b3IgaW4gYGBTQ01fUklHSFRTYGAgZm9yIGNv
-bXBhdGliaWxpdHkgd2l0aCBvbGRlciBjbGllbnRzLg0KPiArDQoNCkNhbiBzdWNoIGFyZWFzIG92
-ZXJsYXA/IEZvciBWRklPX1JFR0lPTl9JTkZPX0NBUF9TUEFSU0VfTU1BUCwgSSBkb24ndCBzZWUg
-aG93IGl0IGNvdWxkIGJlIHVzZWZ1bCBidXQgQUZBSUsgaXQgY2FuJ3QgYnJlYWsgYW55dGhpbmcs
-IGJ1dCB3aGVuIG11bHRpcGxlIEZEcyBhcmUgaW52b2x2ZWQgaXQncyBub3QgYXMgY2xlYXIuDQoN
-Cj4gKw0KPiAgYGBWRklPX1VTRVJfREVWSUNFX0dFVF9SRUdJT05fSU9fRkRTYGANCj4gIC0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQo+IA0KPiAtLQ0KPiAyLjU2LjAucmMx
-LjMxNS5nYzZlZDk5MzRiNy1nb29nDQoNCg==
+On 10/8/26 8:33 PM, Akihiko Odaki wrote:
+> On 2026/10/09 11:30, Pierrick Bouvier wrote:
+>> On 10/8/2026 5:57 PM, Akihiko Odaki wrote:
+>>> On 2026/10/09 1:40, Pierrick Bouvier wrote:
+>>>> On 10/7/2026 11:11 PM, Akihiko Odaki wrote:
+>>>>> On 2026/10/08 10:08, Pierrick Bouvier wrote:
+>>>>>> On 10/6/2026 11:01 PM, Akihiko Odaki wrote:
+>>>>>>> A region of interest (ROI) often excludes the program startup and
+>>>>>>> exit.
+>>>>>>> For example, a benchmark may parse a large input and then run a
+>>>>>>> computation kernel and the former may take longer than the latter;
+>>>>>>> basic block vectors generated for the whole execution will not
+>>>>>>> properly
+>>>>>>> represent the latter.
+>>>>>>>
+>>>>>>> Add options to specify the beginning and the end of the ROI to bound
+>>>>>>> basic block vector generation to the ROI.
+>>>>>>>
+>>>>>>> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+>>>>>>> ---
+>>>>>>>      docs/about/emulation.rst |  8 +++++
+>>>>>>>      contrib/plugins/bbv.c    | 80 +++++++++++++++++++++++++++++++++++++
+>>>>>>> +++++++++--
+>>>>>>>      2 files changed, 86 insertions(+), 2 deletions(-)
+>>>>>>>
+>>>>>>> diff --git a/docs/about/emulation.rst b/docs/about/emulation.rst
+>>>>>>> index c58149086cdd..0566171b517b 100644
+>>>>>>> --- a/docs/about/emulation.rst
+>>>>>>> +++ b/docs/about/emulation.rst
+>>>>>>> @@ -284,6 +284,14 @@ The bbv plugin allows you to generate basic
+>>>>>>> block vectors for use with the
+>>>>>>>          * - Option
+>>>>>>>          - Description
+>>>>>>> +  * - begin=A
+>>>>>>> +    - The virtual address of the instruction that starts basic block
+>>>>>>> vector
+>>>>>>> +      generation. Generation starts from the beginning of the
+>>>>>>> execution if
+>>>>>>> +      not specified.
+>>>>>>> +  * - end=A
+>>>>>>> +    - The virtual address of the instruction that ends basic block
+>>>>>>> vector
+>>>>>>> +      generation. Generation continues until the endo of the
+>>>>>>> execution if
+>>>>>>
+>>>>>> small typo here: s/endo/end
+>>>>>
+>>>>> Thanks for catching the typo.
+>>>>>
+>>>>>>
+>>>>>>> +      not specified.
+>>>>>>>        * - interval=N
+>>>>>>>          - The interval to generate a basic block vector specified by
+>>>>>>> the number of
+>>>>>>>            instructions (Default: N = 100000000)
+>>>>>>> diff --git a/contrib/plugins/bbv.c b/contrib/plugins/bbv.c
+>>>>>>> index e5caf5d9543b..a2a779f7639e 100644
+>>>>>>> --- a/contrib/plugins/bbv.c
+>>>>>>> +++ b/contrib/plugins/bbv.c
+>>>>>>> @@ -5,6 +5,8 @@
+>>>>>>>       * SPDX-License-Identifier: GPL-2.0-or-later
+>>>>>>>       */
+>>>>>>>      +#include <stdbool.h>
+>>>>>>> +#include <stdint.h>
+>>>>>>>      #include <stdio.h>
+>>>>>>>      #include <glib.h>
+>>>>>>>      @@ -26,6 +28,10 @@ static GHashTable *bbs;
+>>>>>>>      static GRWLock bbs_lock;
+>>>>>>>      static char *filename;
+>>>>>>>      static struct qemu_plugin_scoreboard *vcpus;
+>>>>>>> +static bool begin_present;
+>>>>>>> +static uint64_t begin;
+>>>>>>> +static bool end_present;
+>>>>>>> +static uint64_t end;
+>>>>>>>      static int64_t interval = 100000000;
+>>>>>>>        static void plugin_exit(void *p)
+>>>>>>> @@ -66,6 +72,7 @@ static void vcpu_init(unsigned int vcpu_index, void
+>>>>>>> *userdata)
+>>>>>>>          Vcpu *vcpu = qemu_plugin_scoreboard_find(vcpus, vcpu_index);
+>>>>>>>            vcpu_filename = g_strdup_printf("%s.%u.bb", filename,
+>>>>>>> vcpu_index);
+>>>>>>> +    vcpu->count = begin_present ? INT64_MIN : -interval;
+>>>>>>
+>>>>>> Not sure which semantic we are trying to achieve with -interval here.
+>>>>>>
+>>>>>> The original logic was to increment this count, until reaching
+>>>>>> interval,
+>>>>>> after what we would reset it by using vcpu_count -= interval, to keep
+>>>>>> the extra insn that went in after the threshold.
+>>>>>
+>>>>> The counter now starts at -interval and counts up to zero. Subtracting
+>>>>> interval after emitting a vector still preserves the extra instructions.
+>>>>> For example, with interval=100:
+>>>>>
+>>>>>        initial count:       -100
+>>>>>        after 130 insns:       30  -> emit a vector
+>>>>>        subtract interval:    -70  -> 70 insns until the next vector
+>>>>>
+>>>>>>
+>>>>>>>          vcpu->file = fopen(vcpu_filename, "w");
+>>>>>>>      }
+>>>>>>>      @@ -102,6 +109,22 @@ static void vcpu_interval_exec(unsigned int
+>>>>>>> vcpu_index, void *udata)
+>>>>>>>          fputc('\n', vcpu->file);
+>>>>>>>      }
+>>>>>>>      +static void vcpu_begin_insn_exec(unsigned int vcpu_index, void
+>>>>>>> *userdata)
+>>>>>>> +{
+>>>>>>> +    GHashTableIter iter;
+>>>>>>> +    void *value;
+>>>>>>> +
+>>>>>>> +    g_rw_lock_reader_lock(&bbs_lock);
+>>>>>>> +    g_hash_table_iter_init(&iter, bbs);
+>>>>>>> +
+>>>>>>> +    while (g_hash_table_iter_next(&iter, NULL, &value)) {
+>>>>>>> +        qemu_plugin_u64_set(bb_count_u64(value), vcpu_index, 0);
+>>>>>>> +    }
+>>>>>>> +
+>>>>>>> +    g_rw_lock_reader_unlock(&bbs_lock);
+>>>>>>> +    qemu_plugin_u64_set(count_u64(), vcpu_index, -interval);
+>>>>>>> +}
+>>>>>>> +
+>>>>>>>      static void vcpu_tb_trans(struct qemu_plugin_tb *tb, void
+>>>>>>> *userdata)
+>>>>>>>      {
+>>>>>>>          uint64_t n_insns = qemu_plugin_tb_n_insns(tb);
+>>>>>>> @@ -119,6 +142,19 @@ static void vcpu_tb_trans(struct qemu_plugin_tb
+>>>>>>> *tb, void *userdata)
+>>>>>>>          }
+>>>>>>>          g_rw_lock_writer_unlock(&bbs_lock);
+>>>>>>>      +    for (size_t idx = 0; idx < n_insns; idx++) {
+>>>>>>> +        struct qemu_plugin_insn *insn = qemu_plugin_tb_get_insn(tb,
+>>>>>>> idx);
+>>>>>>> +        uint64_t insn_vaddr = qemu_plugin_insn_vaddr(insn);
+>>>>>>> +
+>>>>>>> +        if (begin_present && insn_vaddr == begin) {
+>>>>>>> +            qemu_plugin_register_vcpu_insn_exec_cb(
+>>>>>>> +                insn, vcpu_begin_insn_exec, QEMU_PLUGIN_CB_NO_REGS,
+>>>>>>> NULL);
+>>>>>>> +        } else if (end_present && insn_vaddr == end) {
+>>>>>>> +            qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu(
+>>>>>>> +                insn, QEMU_PLUGIN_INLINE_STORE_U64, count_u64(),
+>>>>>>> INT64_MIN);
+>>>>>>> +        }
+>>>>>>> +    }
+>>>>>>> +
+>>>>>>>          qemu_plugin_register_vcpu_tb_exec_inline_per_vcpu(
+>>>>>>>              tb, QEMU_PLUGIN_INLINE_ADD_U64, count_u64(), n_insns);
+>>>>>>>      @@ -127,7 +163,32 @@ static void vcpu_tb_trans(struct
+>>>>>>> qemu_plugin_tb *tb, void *userdata)
+>>>>>>>            qemu_plugin_register_vcpu_tb_exec_cond_cb(
+>>>>>>>              tb, vcpu_interval_exec, QEMU_PLUGIN_CB_NO_REGS,
+>>>>>>> -        QEMU_PLUGIN_COND_GE, count_u64(), interval, NULL);
+>>>>>>> +        QEMU_PLUGIN_COND_LT, count_u64(), INT64_MIN, NULL);
+>>>>>>> +}
+>>>>>>
+>>>>>> is INT64_MIN used as an arbitrary large value when interpreted as
+>>>>>> unsigned immediate? If yes, that's confusing to the reader.
+>>>>>
+>>>>> The unsigned comparison count < (uint64_t)INT64_MIN is equivalent with
+>>>>> the signed comparison (int64_t)count >= 0. That is why this particular
+>>>>> value is used.
+>>>>>
+>>>>> Setting count to INT64_MIN suppresses output for the next 2^63 counted
+>>>>> instructions, which is effectively disabled for this use. The begin
+>>>>> callback clears the BB counters and sets count to -interval; end sets it
+>>>>> back to INT64_MIN. The requested interval stays unchanged.
+>>>>>
+>>>>
+>>>> Ok I see better.
+>>>> Even though it works, it's pretty confusing to be honest. Inline
+>>>> operatons works with unsigned values, so with conversion and wrap
+>>>> around, it's safe, but really not intuitive.
+>>>>
+>>>> I would prefer if you could refactor this to keep a zero initialized
+>>>> count value, and add a specific instrumentation path for begin, end
+>>>> logic (COND_LT, UINT64_MAX - N) to keep the same behavior of "infinite
+>>>> interval".
+>>>
+>>> We cannot choose a separate instrumentation path based on whether
+>>> execution is inside the ROI. Instrumentation is installed when a TB is
+>>> translated, but the same TB may execute both inside and outside the ROI.
+>>>
+>>> I will preserve this logic and add code comments for clarification.
+>>>
+>>
+>> I took some time to read again how bbv works. Indeed, my idea to modify
+>> interval was a non sense, and not what is expected.
+>>
+>> The current instrumentation per tb is always done unconditionally, and
+>> the only need thing to do is to snapshot bbs hashtable to keep track of
+>> the correct data only when being inside the ROI. The rest of existing
+>> logic stays the same.
+>>
+>> - On enter, set vcpu->count to 0 (fresh start) and restore bb table from
+>> previous exit (empty table if there was no exit yet).
+>> - On exit, duplicate the bb table to allow to restore it next time we
+>> enter in ROI.
+>> Key idea is that we keep on adding things in bb table, but save/restore
+>> when leaving/entering ROI.
+>>
+>> I think for robustness you should also add detection of those expected
+>> transitions: Out of ROI -> Enter ROI -> Exit ROI -> Enter ROI -> ...
+>>
+>> Nothing is currently done to detect if if we meet enter/exit address
+>> multiple times, without having the correct sequence. I don't know if we
+>> want to report an error or handle reentrance correctly in this case.
+>>
+>> Also, should count be reset on each entrance, or do we want to keep
+>> track of it also, and save/restore that on exit/enter? I tend to think
+>> the idea is create a "virtual" interval than only is alive when being
+>> inside the ROI. In this case, we should keep track of this value also.
+> 
+> The current design that resets the bb table is intentional. A "virtual"
+> interval spanning multiple ROIs would be misleading because it mixes
+> different sections of execution.
+>
+
+Ok.
+
+> I don't think we need to add a special handling to enforce a particular
+> order of transitions. This patch performs the same action for the begin
+> and end addresses and that makes the behavior predictable.
+> 
+> Perhaps we can extend the documentation to clarify the "begin" marker to
+> tell that it resets the bb table, making the behavior clear regardless
+> of transition order.
+>
+
+I'm fine to keep a simple model, but I'll ask you to remove the logic 
+involving negative numbers, it's just too confusing. Please remove:
+vcpu->count = begin_present ? INT64_MIN : -interval;
+and
+QEMU_PLUGIN_COND_LT, count_u64(), INT64_MIN, NULL);
+
+Instead, let's add a new boolean "tracking_region" in struct Vcpu, that 
+is set to true when entering ROI (or true by default if no begin 
+parameter was given).
+
+Then, modify instrumentation to replace:
+```
+else if (end_present && insn_vaddr == end) {
+             qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu(
+                 insn, QEMU_PLUGIN_INLINE_STORE_U64, count_u64(), 
+INT64_MIN);
+```
+with:
+```
+else if (end_present && insn_vaddr == end) {
+    qemu_plugin_register_vcpu_insn_exec_cb(insn, vcpu_exit_region, 
+QEMU_PLUGIN_CB_NO_REGS, NULL);
+}
+
+static void vcpu_exit_region(unsigned int vcpu_index, void *userdata)
+{
+    Vcpu *vcpu = qemu_plugin_scoreboard_find(vcpus, vcpu_index);
+    vcpu_interval_exec(vcpu_index, NULL);
+    vcpu->tracking_region = false;
+}
+```
+
+In addition, let's rename s/vcpu_begin_insn_exec/vcpu_enter_region, to 
+be consistent and explicit on what it's doing.
+
+And finally, the last piece:
+static void vcpu_interval_exec(unsigned int vcpu_index, void *udata)
+{
+     Vcpu *vcpu = qemu_plugin_scoreboard_find(vcpus, vcpu_index);
+     if (!vcpu->tracking) {
+       return;
+     }
+     ...
+
+The impact performance of calling vcpu_interval_exec + one if every N 
+instructions is invisible, and at least, it's a piece of code we can 
+read in 6 months, and understand in less than 2 min without any 
+additional doc.
+
+> Regards,
+> Akihiko Odaki
+
+Thanks,
+Pierrick
 
