@@ -4,112 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86487CA601E
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Oct 2026 16:55:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 697F2CA601E
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Oct 2026 17:53:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xFDrN-00039s-RL; Fri, 09 Oct 2026 12:54:17 -0400
+	id 1xFEm4-0000Lj-0n; Fri, 09 Oct 2026 13:52:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <namangulati@google.com>)
- id 1xFDrM-00039X-10
- for qemu-devel@nongnu.org; Fri, 09 Oct 2026 12:54:16 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
+ id 1xFEly-0000LI-7n
+ for qemu-devel@nongnu.org; Fri, 09 Oct 2026 13:52:47 -0400
+Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <namangulati@google.com>)
- id 1xFDrJ-00006f-QJ
- for qemu-devel@nongnu.org; Fri, 09 Oct 2026 12:54:15 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-4a021c28046so47625e9.1
- for <qemu-devel@nongnu.org>; Fri, 09 Oct 2026 09:54:11 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1791564850; cv=none;
+ (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
+ id 1xFElv-0006D2-UL
+ for qemu-devel@nongnu.org; Fri, 09 Oct 2026 13:52:45 -0400
+Received: by mail-ej1-x635.google.com with SMTP id
+ a640c23a62f3a-c2e6df2742cso17416166b.2
+ for <qemu-devel@nongnu.org>; Fri, 09 Oct 2026 10:52:42 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1791568361; cv=none;
  d=google.com; s=arc-20260327;
- b=YihZvyPfeeJh//74cEq8l5fyl640fl+DA1YOsnjHiNYVyj5fK3jwViPUppkAfQvwpb
- 5Gfa+6PUTlRS7DV9v6lESCgm3BLBbEXCArWJ1FPtiHcSVGq+nBQHIVl04vC8jQ+gxW+j
- SmDxsHrrr4gO47VU/G4V3eOYYBAAovebAdQ0P4JLf0ZlLq39xeCEgo6gDpqgfHSKwh25
- zEcoVflfB9kEG0GM3UeOjOhWsN4MssLmzU1bZlmKrivmWREybpxYR8hQHwCcJyBhxT1q
- loJ0UP7Mvi2Ym6MHjJI0FSPrIPRU2jpbyfxZH6+sgXnAkO+Hc1I/kck8jqqahTpiNnyz
- Qteg==
+ b=BiKqv6KBRQIwiVy6f0db9065gzEOz/pA5o/M4bwo5LZ7RPk39eTeC5DKyJTcOOxzNh
+ 766HtAefsS1tWjwBtX5oAgF5KbZeCz6J/Z7mwcOguVlpAxrJI1fMzOVuMJZ59L2ZDcty
+ P4rhh1hZPjKwFFY0ZTXOggUP2BFexhNcHpKl86N3NXwsBM3PWgU9HGFXzGUY645KJKak
+ Qj5b3jGKb4LDwZbZGk0YJeAXTE3LYWnH1NIGvltLXP+9bpRCBxySwKSL839F/ZHw4TOk
+ uxlPJ7yPxaMcuCAXYYReoUKcLYEiU2auCvaUKt2qNHhIZ4JozXxxuGSFuL4RNKyO9SBa
+ v69g==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=9ll7CfR+LouhS3MJXdh3uKfiv12hpi7tqWGIz7Aq1Ng=;
- fh=kIMaH1p4WQKPaRtcLyk8jxVqnyj9ufCg+8lQuf1IepY=;
- b=ebllrrnQiiYl0XLqR89NqdRNZaX871TaWrN27LAzDKVGawU1+xx/H64yAxV7qt0MXl
- JQIYpVmVLvjCZNBy8Qm4uWjFeIoufj8muPg1TAPF910Ofln6nLE+w1YyA192GWJsbtdq
- q4cpvQxdGfttotjaiNyZpq9vkoeQAhYwrDVid+Nt3en4C092F6rUY7KUgb8jYEoV3RMb
- j0Rdz3vL83195rOAuunjtGOyNOlPDK4usKglxWmGLvUx+EeG9S9N0J5NNlZ0vSzYYPSm
- JMLmUDl24LekR/xhiwqRjjFiZbPxmuHGd+fMlhEygWhCZEybkbmzOmEdAe6pv/Jo0TSn
- 0VVA==; darn=nongnu.org
+ bh=frOKFNFhxa5Nubq4E6Tr81P9hlMUQIcVmTYqoQRSvno=;
+ fh=g69kuaC+sP227QrWiGLgRGewvEeYhj4aGz+XGsNhpls=;
+ b=TY5OaFxlugYZNPUJoswl945I+Uz4BHT4qlFqktvPVV94+PPzOKEaW4H882fCr/fBh1
+ njhxuCn9ezNKFC1MV7DgY9+s+mAcLWJqfJV6y4XVRDnYwCnHaSZ7kJTFuQNmas7UKu2O
+ yYo2Pcwu4MF2uG4dT2OiyiSF2uQkoPEskkzLTdXmtDscnUbGaOTB3GYd3swqfSMOTnNE
+ LvC9orljb7FFLexkFd2CT1hsU+r3afUWyS9nAUJ7I9Vk0jftGzE14VefQ1dJ720JDYbM
+ Zhy/wDVCPvke82WcEcl53x9/536C/XXOH+mgoB5tDzUFaUqKdXPxn+w4KEv+JRI22lFl
+ TG1A==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20251104; t=1791564850; x=1792169650; darn=nongnu.org;
+ d=mihalicyn.com; s=mihalicyn; t=1791568361; x=1792173161; darn=nongnu.org;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=9ll7CfR+LouhS3MJXdh3uKfiv12hpi7tqWGIz7Aq1Ng=;
- b=IMjxE8+qUEC81udJr62UNXsPWK8U5EF47HK7VlcLzq/K4R/gYpxC26Xh9D3H/4YF6R
- pnoUFputsfOLLoVh/aPPrGeJwlB7Mcji0/1Ob4mEdODsFkvPUkNIzzkBL2QWuzOBZ8lz
- qcfN1UMD4dr+T2m/pm8WZUujOlojc090vZIsOBX+lYe791OMINhmD2PINFYGiOuW/Bxb
- xRVegIbePiDTO3yXN5aT2EoAqqKIkTrkk2ou5HPnfrWKLZcLaa6Gki1MjX50AGFUOLEu
- L8kWj4ihxmiGYrQCHVg6CtGJQ0tqw6ejtlsJ/Ovm43PCCnIU3KZad7VcgN6/2Bg8JzOA
- bkJg==
+ bh=frOKFNFhxa5Nubq4E6Tr81P9hlMUQIcVmTYqoQRSvno=;
+ b=O7F7XWI4ri4tDKVI5lT8lHWj/JWXCYa1ogFn7/InCAw7SxgtkK3dPTwPCUqne0WRF/
+ PU263jyTA0jBQvHiRZddzGYl/MUCJn3m5nmuWDp7ipFP2I6ZNO1z3xmxG1iRsUy+xeqw
+ PTKO81SZRbJ4JsJZqqhptBEahasNrTmKGNycQ=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791564850; x=1792169650;
+ d=1e100.net; s=20260707; t=1791568361; x=1792173161;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=9ll7CfR+LouhS3MJXdh3uKfiv12hpi7tqWGIz7Aq1Ng=;
- b=D1nKYAMGIfleIK8FMs7Xvh6iClmkUF0tg7lPw4RSmrFV+NGdHyMjNX9MKO5ScoEeWq
- Vk3c9gXhvhnlrvzlWOaopI+7SaL2detR6HtQjqKR5iDrwfCIzNdjKx8o8PVCzUM1AEPH
- uRewZmpYoNlTLiLdS7tFjIsYbbwbVPxC7UAAF83+c5/1y68s5xugZaXxVnLNyINXXDdx
- R0PKWP59udBMs2DCKQsl/CSB5S99TXbmFZRpi9EejaokK0IpQCZW283sAVsS34opk3Xu
- 2omQYd2TGA3Szk3NvrstNnj+RCOFPcMJ2Ej2Fan0TcOjUYCjhs9uLUtWEGCwU9+cB6IO
- 5Uiw==
-X-Gm-Message-State: AFuF++nIDxye8eMb7PLEPCiVALOrouSjB9Pfw8geRAaGynWI3y2Uf3hr
- VE/BAzHN+pANYL5rmP0ysMx2B2m4ecX7+u7b3RUUJBC+OdKc8Tg+jqr5hETkQljV+2UaU8bNfrC
- bAfmDzjNbqyVc0lOcR3qIWbIfNyWc+rpN76Nx06gh
-X-Gm-Gg: AYBFou3vGofsf/sa8z4sVuLpLHSOVs3/cKkZS92HurMXMBfSJlL3cWs+ppCfu4IgNMQ
- p7vgiz04cs3dB3x8S/NxT50/4MfTnO9gamAJzsZL5GvePaUt6ZuzNdJNp/0KBZe6qGdottr0eP7
- d7subKXW7VUxn6x67fpVHmvlFNsIzJuOULa2mjjxyQqoBrLhjRT88mSVH7Jn4rP8Yj7uTIBnwfe
- S0KUGn2elrZXT+WbNDDLf5qE5V2kFZxjmwRGdaYqcA8M+RRAkV/HCA2AqIbgm8A74MM43RC41aK
- TbZqEeBlofFqxvRlTgA/z7C54h4dMjRIULVdEbnB1su28OXC8h/2DLzh
-X-Received: by 2002:a05:600c:c047:b0:4a1:63f1:937e with SMTP id
- 5b1f17b1804b1-4a18df547e0mr471195e9.11.1791564849990; Fri, 09 Oct 2026
- 09:54:09 -0700 (PDT)
+ bh=frOKFNFhxa5Nubq4E6Tr81P9hlMUQIcVmTYqoQRSvno=;
+ b=h+XhZw5APa/hugJr4qmMeqbFA5CAxRuFgge4elRFgvqjjwh9nx3eUZBpk+thIdq2ra
+ nWzeoIksc4v1EYFYMrSR/cwEeGJm+Yn/bay5LFgWAQExGksJd1MGQt5S3ThvL7Hqr6e+
+ w7QI+tSNBVMIVdpHo697qEm5wjEqMIhzJXQybHdYdato8efOIKuSsscNVMQKd/N0vCoE
+ xNqZ2EQhqkZltc1sA4+rjX0QsHb5R/vj5+iUEN0symvA+kOM1pG2Nc/hHp6ykNLyVyAH
+ mrN4EsgkHfFZd9jPlQmAjLw6uS/RLnI0aeJCsfPNnHWIacY0ebiZDMzd2gpPk9Z2d/uK
+ 5knA==
+X-Forwarded-Encrypted: i=1;
+ AKwUvByqVYpvM8bdHHxk5JBE7UIAF2c6uQs9Zxoni3t22UVQvDGTtdSlKigjHFmF9UTooWClpTYv7K2fIqlm@nongnu.org
+X-Gm-Message-State: AFq9FYIikDdSnJJ2S3bDXuS0oT/uoNmc6SfDFrbIyJvowQEJiTTMcSDB
+ Hfm0qMt9QEsbFYjJ1uIiyBz8L1VzMHmYm2t9rJDyJuCJbRtlYKQTHlHB8gk4EjGk/KgJK+xHqVA
+ ZGeonN1+GTTxz/+X3tLgDfKiXdftMFwXEmq2/IL7CBA==
+X-Gm-Gg: AYBFou3JQxxNi5/werxUR3XaIdHQVATv6AU3tIl9xXlT4f6RHNWjFY1hbxDU96ZEwr7
+ r6/SmC9oGpc+j3uL94WFpWN48TUPflvZAwYryjntTYwcX6K8r4+xYD12MyqroyBAVJJn/knoJ4J
+ iu4uCatB/nIRydYUhe5ui+ArlDTcKbP4qhCeDmclR+BJ0RxLzBOOD8OWuLcScnQoHvwbr7R0eWg
+ iVej8iGqGO4BeGl3C6+FOU3F3keew8O42hUf8tx1php6kOg0ucEhvZXx0z5Oge1LNPAhT2gUmGm
+ 8seNSaIMe2eCy9RVow5vdtrW41JPPtHva3T2CI6QNAGm6TfnFUR2bOMR3/HlblY/OTJ1UFzr6Sl
+ lF4Z0NXf19PU=
+X-Received: by 2002:a17:907:cf93:b0:c2e:7e0a:335d with SMTP id
+ a640c23a62f3a-c31a9a04e4bmr263860266b.2.1791568360986; Fri, 09 Oct 2026
+ 10:52:40 -0700 (PDT)
 MIME-Version: 1.0
-References: <20261007000833.2445641-1-namangulati@google.com>
- <20261007000833.2445641-2-namangulati@google.com>
- <IA0PR02MB9462517F10C4C9915364ADB98B922@IA0PR02MB9462.namprd02.prod.outlook.com>
-In-Reply-To: <IA0PR02MB9462517F10C4C9915364ADB98B922@IA0PR02MB9462.namprd02.prod.outlook.com>
-From: Naman Gulati <namangulati@google.com>
-Date: Fri, 9 Oct 2026 09:53:57 -0700
-X-Gm-Features: AclHuK_pZtbDHFfRSYil-2VPFaHOGI7O3_oIr1FdSKZJPbbWLxfjZei_mNNaH7E
-Message-ID: <CAMP57yUa93O1mUprFJnzoNfpd2L3mOYmbgAc2wcZ4mcpOyy+cQ@mail.gmail.com>
-Subject: Re: [PATCH v3 RESEND 1/4] vfio-user: add multi-fd region mmap
- capability
-To: Thanos Makatos <thanos.makatos@nutanix.com>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- John Levon <john.levon@nutanix.com>, 
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
- Alex Williamson <alex@shazbot.org>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- Matt Evans <matt@ozlabs.org>
+References: <20260921190345.1709227-1-alex.bennee@linaro.org>
+ <asZIy2Rm8QF4TSca@zhexu-thinkpadt14gen5.rmtcaon.csb>
+In-Reply-To: <asZIy2Rm8QF4TSca@zhexu-thinkpadt14gen5.rmtcaon.csb>
+From: Alexander Mikhalitsyn <alexander@mihalicyn.com>
+Date: Fri, 9 Oct 2026 19:52:29 +0200
+X-Gm-Features: AclHuK9pUYlQnk7RYNRbDCr--rT34FQqaPrJQXFB5iIdktoaaYtXJV8CQU05t3I
+Message-ID: <CAJqdLrqxJF4tgfRYrm27rGivP-HyLUX=YCNUiaFqq4nDq0a5pQ@mail.gmail.com>
+Subject: Re: [RFC PATCH] tests/functional: add migration diagnostics and pace
+ nvme activity (HACK!)
+To: Peter Xu <peterx@redhat.com>
+Cc: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ Keith Busch <kbusch@kernel.org>, 
+ Klaus Jensen <its@irrelevant.dk>, Jesper Devantier <foss@defmacro.it>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>, 
+ "open list:nvme" <qemu-block@nongnu.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=namangulati@google.com; helo=mail-wm1-x32f.google.com
-X-Spam_score_int: -175
-X-Spam_score: -17.6
-X-Spam_bar: -----------------
-X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5, USER_IN_DEF_SPF_WL=-7.5,
- WEIRD_QUOTING=0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::635;
+ envelope-from=alexander@mihalicyn.com; helo=mail-ej1-x635.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,235 +123,210 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Oct 8, 2026 at 11:06=E2=80=AFPM Thanos Makatos
-<thanos.makatos@nutanix.com> wrote:
+Am Mi., 7. Okt. 2026 um 15:27 Uhr schrieb Peter Xu <peterx@redhat.com>:
 >
-> > -----Original Message-----
-> > From: Naman Gulati <namangulati@google.com>
-> > Sent: 07 October 2026 01:09
-> > To: qemu-devel@nongnu.org
-> > Cc: John Levon <john.levon@nutanix.com>; Thanos Makatos
-> > <thanos.makatos@nutanix.com>; C=C3=A9dric Le Goater <clg@redhat.com>; A=
-lex
-> > Williamson <alex@shazbot.org>; Pierrick Bouvier
-> > <pierrick.bouvier@oss.qualcomm.com>; Matt Evans <matt@ozlabs.org>;
-> > Naman Gulati <namangulati@google.com>
-> > Subject: [PATCH v3 RESEND 1/4] vfio-user: add multi-fd region mmap
-> > capability
+> On Mon, Sep 21, 2026 at 08:03:45PM +0100, Alex Benn=C3=A9e wrote:
+> > This is a hacky patch for comment but I've included the diagnostic
+> > hacks to the migration test as well as my workaround to get itworking.
 > >
-> > !-------------------------------------------------------------------|
-> >   CAUTION: External Email
-> >
-> > |-------------------------------------------------------------------!
-> >
-> > Extend the vfio-user protocol specification to allow servers to pass
-> > multiple file descriptors for different sparse memory areas within a
-> > single device region with capability
-> > VFIO_REGION_INFO_CAP_SPARSE_MMAP_FDS.
-> >
-> > VFIO_REGION_INFO_CAP_SPARSE_MMAP_FDS defines an array of sparse mmap
-> > areas where each area contains:
-> > - offset: Start of the area within the device region (BAR).
-> > - fd_offset: Start of the mapping within the backing file descriptor.
-> > - size: Size of the mappable area.
-> > - fd_index: Zero-based index into the array of file descriptors
-> >   received in the SCM_RIGHTS ancillary data of the
-> >   VFIO_USER_DEVICE_GET_REGION_INFO reply message.
+> > This test was failing on my KVM system. On investigation I found the
+> > nVME activity meant the migration never completed. I ended up
+> > inserting some sleeps into the workload script until I was able to
+> > get it to run.
 >
-> Don't we need a new capability in VFIO_USER_VERSION so that the server kn=
-ows whether the client supports VFIO_REGION_INFO_CAP_SPARSE_MMAP_FDS before=
- even sending it?
+> Indeed, I can reproduce it too:
 
-Thanks for the review. Good catch, missed adding this. Will add a
-capability in the documentation, and update the code to advertise it
-in v4.
+Hi Peter,
+
+thank you checking on your system and sharing a stacktrace.
+Unfortunately, I wasn't able to reproduce this failure on my system,
+but I think I have a good theory what's going on there. I think it is
+because we use `snapshot=3Don` for a disk device and at the same time
+keep important stuff like `/tmp/test_nvme_mig_workload.pid` on a root
+filesystem. Easy fix is to use tmpfs for /tmp, so all data is actually
+migrated.
+
+Please, can you try the following patch and let me know if this fixes
+the issue or not:
+
+--- a/tests/functional/x86_64/test_nvme_migration.py
++++ b/tests/functional/x86_64/test_nvme_migration.py
+@@ -75,6 +75,11 @@ def configure_machine(self, vm):
+     def launch_source_vm(self, vm):
+         vm.launch()
+
++        vm.cmd('migrate-set-parameters', **{
++            'downtime-limit': 2000000,
++            'max-bandwidth': 10 * 1024**3,
++        })
++
+         self.wait_for_console_pattern('Entering emergency mode.', vm)
+         prompt =3D '# '
+         self.wait_for_console_pattern(prompt, vm)
+@@ -94,6 +99,8 @@ def launch_source_vm(self, vm):
+                                           prompt, vm=3Dvm)
+         exec_command_and_wait_for_pattern(self, 'mount -t sysfs sysfs /sys=
+',
+                                           prompt, vm=3Dvm)
++        exec_command_and_wait_for_pattern(self, 'mount -t tmpfs tmpfs /tmp=
+',
++                                          prompt, vm=3Dvm)
+
+         # Run workload before migration to check if it continues
+         # to run properly after migration.
+
+Kind regards,
+Alex
 
 >
+> $ ./run ../tests/functional/x86_64/test_nvme_migration.py X8664NVMeMigrat=
+ionTest.test_migration_with_unix
+> TAP version 13
+> Traceback (most recent call last):
+>   File "/home/zhexu/git/qemu/tests/functional/x86_64/test_nvme_migration.=
+py", line 162, in test_migration_with_unix
+>     self.migration_with_unix()
+>     ~~~~~~~~~~~~~~~~~~~~~~~~^^
+>   File "/home/zhexu/git/qemu/tests/functional/migration.py", line 98, in =
+migration_with_unix
+>     self.migrate(dst_uri)
+>     ~~~~~~~~~~~~^^^^^^^^^
+>   File "/home/zhexu/git/qemu/tests/functional/migration.py", line 78, in =
+migrate
+>     self.migrate_vms(dst_uri, src_uri, dst_vm, src_vm)
+>     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+>   File "/home/zhexu/git/qemu/tests/functional/migration.py", line 63, in =
+migrate_vms
+>     self.assert_dest_vm(dst_vm)
+>     ~~~~~~~~~~~~~~~~~~~^^^^^^^^
+>   File "/home/zhexu/git/qemu/tests/functional/x86_64/test_nvme_migration.=
+py", line 128, in assert_dest_vm
+>     self.exec_command_and_check(
+>     ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+>         "kill -0 $(cat /tmp/test_nvme_mig_workload.pid)", vm)
+>         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+>   File "/home/zhexu/git/qemu/tests/functional/x86_64/test_nvme_migration.=
+py", line 48, in exec_command_and_check
+>     wait_for_console_pattern(self, 'OK', failure_message=3D"FAIL", vm=3Dv=
+m)
+>     ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+>   File "/home/zhexu/git/qemu/tests/functional/qemu_test/cmd.py", line 191=
+, in wait_for_console_pattern
+>     return _console_interaction(test, success_message, failure_message,
+>                                 None, vm=3Dvm)
+>   File "/home/zhexu/git/qemu/tests/functional/qemu_test/cmd.py", line 134=
+, in _console_interaction
+>     done, line =3D _console_read_line_until_match(test, vm,
+>                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+>                                                 success_message_b,
+>                                                 ^^^^^^^^^^^^^^^^^^
+>                                                 failure_message_b)
+>                                                 ^^^^^^^^^^^^^^^^^^
+>   File "/home/zhexu/git/qemu/tests/functional/qemu_test/cmd.py", line 70,=
+ in _console_read_line_until_match
+>     test.fail(
+>     ~~~~~~~~~^
+>         f"'{failure}' found in console, expected '{success}'")
+>         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> AssertionError: 'b'FAIL'' found in console, expected 'b'OK''
+>
+> not ok 1 test_nvme_migration.X8664NVMeMigrationTest.test_migration_with_u=
+nix
+> 1..1
+>
+> Copy the author too (Alexander).
+>
 > >
-> > Signed-off-by: Naman Gulati <namangulati@google.com>
+> > *NOTE*: obviously this can't be merged as is but I think we could
+> > certainly do with more tracking in the test to see when things aren't
+> > working with possibly the sleep as another patch.
+> >
+> > Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
 > > ---
-> >  docs/interop/vfio-user.rst | 71 +++++++++++++++++++++++++++++++++++--
-> > -
-> >  1 file changed, 67 insertions(+), 4 deletions(-)
+> >  tests/functional/migration.py                 | 37 +++++++++++++++----
+> >  .../functional/x86_64/test_nvme_migration.py  |  1 +
+> >  2 files changed, 31 insertions(+), 7 deletions(-)
 > >
-> > diff --git a/docs/interop/vfio-user.rst b/docs/interop/vfio-user.rst
-> > index 1c92f442d2..5744f58e31 100644
-> > --- a/docs/interop/vfio-user.rst
-> > +++ b/docs/interop/vfio-user.rst
-> > @@ -125,7 +125,10 @@ Sparse Regions
-> >  A region can be memory-mappable in whole or in part. When only a
-> > subset of a
-> >  region can be mapped by the client, a
-> > ``VFIO_REGION_INFO_CAP_SPARSE_MMAP``
-> >  capability is included in the region info reply. This capability
-> > describes
-> > -which portions can be mapped by the client.
-> > +which portions can be mapped by the client. When sparse mmap areas
-> > are backed
-> > +by multiple distinct file descriptors, a
-> > +``VFIO_REGION_INFO_CAP_SPARSE_MMAP_FDS`` capability is included in
-> > the region
-> > +info reply instead.
->
-> It's probably obvious but I don't see any harm in clearly stating that bo=
-th VFIO_REGION_INFO_CAP_SPARSE_MMAP and VFIO_REGION_INFO_CAP_SPARSE_MMAP_FD=
-S cannot be specified for the same region, and that some regions can use VF=
-IO_REGION_INFO_CAP_SPARSE_MMAP while others VFIO_REGION_INFO_CAP_SPARSE_MMA=
-P_FDS.
-
-Makes sense, will add that clarification, and also add a check in the
-code to return an error when the user specifies
-VFIO_REGION_INFO_CAP_SPARSE_MMAP and
-VFIO_REGION_INFO_CAP_SPARSE_MMAP_FDS for the same region.
-
->
+> > diff --git a/tests/functional/migration.py b/tests/functional/migration=
+.py
+> > index 8d2428efc24..e51a82c22f4 100644
+> > --- a/tests/functional/migration.py
+> > +++ b/tests/functional/migration.py
+> > @@ -22,18 +22,41 @@ class MigrationTest(QemuSystemTest):
+> >      timeout =3D 10
 > >
-> >  .. Note::
-> >     For example, in a virtual NVMe controller, sparse regions can be
-> > used so
-> > @@ -859,9 +862,9 @@ Reply
-> >    * ``VFIO_REGION_INFO_FLAG_READ`` allows client read access to the
-> > region.
-> >    * ``VFIO_REGION_INFO_FLAG_WRITE`` allows client write access to the
-> > region.
-> >    * ``VFIO_REGION_INFO_FLAG_MMAP`` specifies the client can mmap()
-> > the region.
-> > -    When this flag is set, the reply will include a file descriptor
-> > in its
-> > -    meta-data. On ``AF_UNIX`` sockets, the file descriptors will be
-> > passed as
-> > -    ``SCM_RIGHTS`` type ancillary data.
-> > +    When this flag is set, the reply will include one or more file
-> > descriptors
-> > +    in its meta-data. On ``AF_UNIX`` sockets, the file descriptors
-> > will be passed
-> > +    as ``SCM_RIGHTS`` type ancillary data.
->
-> Sending more FDs than sub-regions shouldn't be permitted, right? If so, c=
-an we clarify this?
-
-Will do.
-
->
-> >    * ``VFIO_REGION_INFO_FLAG_CAPS`` indicates additional capabilities
-> > found in the
-> >      reply.
+> >      @staticmethod
+> > -    def migration_finished(vm):
+> > -        return vm.cmd('query-migrate')['status'] in ('completed', 'fai=
+led')
+> > +    def migration_finished(query):
+> > +        return query['status'] in ('completed', 'failed')
 > >
-> > @@ -950,6 +953,66 @@ The VFIO sparse mmap area is defined in
-> > ``<linux/vfio.h>`` (``struct
-> >  vfio_region_info_cap_sparse_mmap``).
+> > -    def assert_migration(self, src_vm, dst_vm):
+> > +    def wait_for_vm(self, src_or_dst, vm):
+> > +        "Track the state of one VM in the migration"
+> > +        current_state =3D last_state =3D vm.cmd('query-migrate')
 > >
+> > -        end =3D time.monotonic() + self.timeout
+> > -        while time.monotonic() < end and not self.migration_finished(s=
+rc_vm):
+> > -            time.sleep(0.1)
+> > +        self.log.info(f"waiting for {src_or_dst} to complete")
 > >
-> > +VFIO sparse mmap fds cap header
-> > +"""""""""""""""""""""""""""""""
+> >          end =3D time.monotonic() + self.timeout
+> > -        while time.monotonic() < end and not self.migration_finished(d=
+st_vm):
+> > +        while time.monotonic() < end:
+> > +            if self.migration_finished(current_state):
+> > +                break
+> > +            else:
+> > +                last_remain =3D last_state['remaining']
+> > +                current_remain =3D current_state['remaining']
 > > +
-> > ++----------------------+--------------------------------------+
-> > +| Name                 | Value                                |
-> > ++=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D+=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D+
-> > +| id                   | VFIO_REGION_INFO_CAP_SPARSE_MMAP_FDS |
-> > ++----------------------+--------------------------------------+
-> > +| version              | 0x1                                  |
-> > ++----------------------+--------------------------------------+
-> > +| next                 | <next>                               |
-> > ++----------------------+--------------------------------------+
-> > +| sparse mmap fds info | VFIO region info sparse mmap fds     |
-> > ++----------------------+--------------------------------------+
+> > +                if current_remain > last_remain:
+> > +                    self.log.warning(f"slow migration {current_remain}=
+ > {last_remain}")
 > > +
-> > +This capability is defined when a region supports direct access by
-> > the client
-> > +via mmap() where different sparse mmap areas are backed by distinct
-> > file
-> > +descriptors in the ``SCM_RIGHTS`` ancillary data array. Capability ID
-> > +``VFIO_REGION_INFO_CAP_SPARSE_MMAP_FDS`` is defined as 16 (0x10) to
-> > avoid
->
-> I'm not sure 0x10 will avoid clashes in the future, current highest VFIO =
-capability is 5 (VFIO_REGION_INFO_CAP_NVLINK2_LNKSP) so we might clash soon=
-er than we think. Using a much higher value (e.g. 0x1000) could be a bit be=
-tter. Ideally, we should have some agreement with the VFIO maintainers abou=
-t this, how about reserving the highest bit for VFIO "extensions"?
-
-Sounds good, I can add this capability at 0x8000. If needed I can send
-a follow-up patch adding some documentation in
-include/uapi/linux/vfio.h specifying that capability IDs >=3D 0x8000 are
-reserved for "userspace VFIO extensions".
-
->
-> > +clashing with kernel VFIO capabilities.
+> >              time.sleep(0.1)
+> > +            last_state =3D current_state
+> > +            current_state =3D vm.cmd('query-migrate')
 > > +
-> > +VFIO region info cap sparse mmap fds
-> > +""""""""""""""""""""""""""""""""""""
 > > +
-> > ++-----------+--------+------+
-> > +| Name      | Offset | Size |
-> > ++=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D+=3D=3D=3D=3D=3D=3D=3D=3D+=3D=3D=3D=
-=3D=3D=3D+
-> > +| nr_areas  | 0      | 4    |
-> > ++-----------+--------+------+
-> > +| reserved  | 4      | 4    |
-> > ++-----------+--------+------+
-> > +| offset    | 8      | 8    |
-> > ++-----------+--------+------+
-> > +| fd_offset | 16     | 8    |
-> > ++-----------+--------+------+
-> > +| size      | 24     | 8    |
-> > ++-----------+--------+------+
-> > +| fd_index  | 32     | 4    |
-> > ++-----------+--------+------+
-> > +| pad       | 36     | 4    |
-> > ++-----------+--------+------+
-> > +| ...       |        |      |
-> > ++-----------+--------+------+
+> > +    def assert_migration(self, src_vm, dst_vm):
 > > +
-> > +* *nr_areas* is the number of sparse mmap areas in the region.
-> > +* *offset*, *fd_offset*, *size*, and *fd_index* describe a single
-> > area that can be
->
-> Could you clarify that zero-sized regions are not permitted?
->
-> Also, I think it's obvious but best to clarify anyway offset + size canno=
-t exceed the region size.
-
-Will do.
-
->
-> > +  mapped by the client. There will be *nr_areas* tuples of offset,
-> > fd_offset, size,
-> > +  fd_index, and pad.
-> > +* *offset* specifies the start of the area within the device region
-> > (BAR).
-> > +* *fd_offset* specifies the start of the mapping within the backing
-> > file descriptor
-> > +  referenced by *fd_index*.
-> > +* *fd_index* is the zero-based index into the array of file
-> > descriptors
-> > +  received in the ``SCM_RIGHTS`` ancillary data of the
-> > +  ``VFIO_USER_DEVICE_GET_REGION_INFO`` reply message.
+> > +        self.wait_for_vm("src", src_vm)
 > > +
-> > +If all sparse mmap areas are backed by a single file descriptor, the
-> > server
-> > +may instead send ``VFIO_REGION_INFO_CAP_SPARSE_MMAP`` and exactly one
-> > file
-> > +descriptor in ``SCM_RIGHTS`` for compatibility with older clients.
+> > +        # if we hit this we never completed...
+> > +        self.assertEqual(src_vm.cmd('query-migrate')['status'], 'compl=
+eted')
 > > +
->
-> Can such areas overlap? For VFIO_REGION_INFO_CAP_SPARSE_MMAP, I don't see=
- how it could be useful but AFAIK it can't break anything, but when multipl=
-e FDs are involved it's not as clear.
-
-I don't see a reason why these regions would need to overlap and the
-code already returns an error when the user specifies overlapping
-regions. Will add some text enforcing that these regions do not
-overlap.
-
->
+> > +        self.wait_for_vm("dst", dst_vm)
 > > +
-> >  ``VFIO_USER_DEVICE_GET_REGION_IO_FDS``
-> >  --------------------------------------
+> > +        self.log.info("checking everything is OK")
 > >
+> >          self.assertEqual(src_vm.cmd('query-migrate')['status'], 'compl=
+eted')
+> >          self.assertEqual(dst_vm.cmd('query-migrate')['status'], 'compl=
+eted')
+> > diff --git a/tests/functional/x86_64/test_nvme_migration.py b/tests/fun=
+ctional/x86_64/test_nvme_migration.py
+> > index 890f0aab6d6..58596f63cd3 100755
+> > --- a/tests/functional/x86_64/test_nvme_migration.py
+> > +++ b/tests/functional/x86_64/test_nvme_migration.py
+> > @@ -109,6 +109,7 @@ def launch_source_vm(self, vm):
+> >                  rm -f /tmp/test_nvme_mig_workload.iter_finished; \
+> >                  echo 3 > /proc/sys/vm/drop_caches; \
+> >                  find /usr/bin -type f -exec cksum {} \\;; \
+> > +                sleep 0.3; \
+> >                  touch /tmp/test_nvme_mig_workload.iter_finished; \
+> >              done) > /dev/null 2> /tmp/test_nvme_mig_workload.errors &"=
+,
+> >              prompt, vm=3Dvm)
 > > --
-> > 2.56.0.rc1.315.gc6ed9934b7-goog
+> > 2.47.3
+> >
+>
+> --
+> Peter Xu
 >
 
