@@ -4,94 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEFFCCA601E
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Oct 2026 13:50:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DD0DCA6019
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Oct 2026 14:05:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xFAyc-0006iy-Ql; Fri, 09 Oct 2026 09:49:34 -0400
+	id 1xFBDI-0000sM-5V; Fri, 09 Oct 2026 10:04:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xFAyX-0006ib-S4
- for qemu-devel@nongnu.org; Fri, 09 Oct 2026 09:49:30 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xFAyW-0005zv-6h
- for qemu-devel@nongnu.org; Fri, 09 Oct 2026 09:49:29 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-4a018dc1f98so35609635e9.3
- for <qemu-devel@nongnu.org>; Fri, 09 Oct 2026 06:49:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1791553765; x=1792158565; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=zDw4a1OhACcIY5arZQeRAvTDSvNMCEH+foflxe0rcJY=;
- b=noGLHxSS4+WBtUpLIIvnlqMc1qThPsAGPuTq+4/DrQlWNC405qYitIRwUOHkdFozx0
- 6bbIGE9G6Ez+KDxbG1y09WZMAmknLbvuPLdoCAPxkb2ea12/BoBanYKh1gNUoZrAWHdy
- PPUpfIUvWr9pUtACrcJ9jo6/34Ku563HiwAvu1Oqmz8zYJJBY4f2qYQyiawqZoXmpkSw
- J7od/WloROaaB4ip9j0C2qgyXFf6WJR//1DD7ahklSvCU8GxqeNe3T3iDfSi6p2pD7h/
- TF+fqQw274ogYAHw951OqjYIEF4aOleNF9d8/4T/7bUEwa4Og2ZhHPw+nQEW2NVXzkCr
- CujA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791553765; x=1792158565;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=zDw4a1OhACcIY5arZQeRAvTDSvNMCEH+foflxe0rcJY=;
- b=xwXboiLpdqsW0UTb7JuAY49oGsTYfaPTIB3ppK5fBjTrm9SjyhO298ajF/PalzVheC
- N5tBfHOd/of2Y/E+lorsyMQipBoH62liOnrIoYp08DMgA/423ck7hu1q3iepOfqc9DPE
- vRQB/QIh75HAhWwpli7rtMVUQxFLsMjZ1F0BPiEqBGOKyfTOuR+bWlJmA3vnuyAzbZbP
- kZSW8T5I8BR1ok/0nFJkeIfnidVA4DX/XTj9nVcj9iQeqeycTIRiMcm3CMwJ8baKARdJ
- IgSsPe8VKSsvwSZPqLZadRjIxeI7ouaIWSsWQGKfY/tXW9VOLnB839IPyZqc5TeWH7AF
- YHMA==
-X-Forwarded-Encrypted: i=1;
- AKwUvBwCoASNPIkg/FgM+zIs6qUU3chmzg0nliXpcJpUqiiJgr+RIVbPVwM3m0kWh9coWpBpM3Z4fE5ss4o7@nongnu.org
-X-Gm-Message-State: AFuF++mCd0r4ONqrhGgB9VVyKpDadcc+57kN8RiaeNsJQVYyaiVwQ+vK
- zRXeKgPccUVcZxeHTVFLq2gepPI2XsVLfzz1n2ECHT/0OsVuQJiOSm650Yw9P3xs9E4=
-X-Gm-Gg: AYBFou2OPn3I5HzmctS+WNTAKuJGwm+OmCAH7y9rFsjngnQQZpO/KFlBbXVyQomwRsL
- DYmSSJ8LTDv8ZEEQPcvy66Hw+4qxMZ5HqASDt1Lso/OzFRO0v4pkmeWFiBaipLPTmzrqbqEWA2p
- YeMbKdlYS2xooWsWBI989ELKYM0DkSnu4h3JsWWpYxpoP4iYuHLyntdBICH/Op5msnP8WOTXRNV
- 1zn1OKrHm2G1jUEmDIViTGliMjkUvfMDt8rKS66dgCiqG3VNVyjjApQhpbWpe7DwQyj9hJlXxnV
- /yyPWPnnQVIZ5hV4qX6ydlMg3FcZ8i0Ank0sInG1poLD89yVHpq8S+NaBg3mC3Nvd2YFGPA3f4l
- D5ely9uLnxwBJQ82VCikC/YI5jhDqxS8b/gdORkog3RC7tk6m4OGH5W7/nAFJxnqbX/QFvcZNGt
- puF2kojgtEYJc6OV2xMowpJ6Oi7+Mq7w8x7l6Yz4xvhoGh5hcsa1X6Ks1HOOIRDdnoKqy9/OriQ
- KNWoRJqiKsZjNRHW/JugsG8HdEcjrlt906w2SBvn8huiMYDt9xdK9yIl9+yNUp1JbIvMmMi5PTg
- hg==
-X-Received: by 2002:a05:600c:3488:b0:49f:e941:d6e with SMTP id
- 5b1f17b1804b1-4a18e4c05d9mr38903215e9.21.1791553764971; 
- Fri, 09 Oct 2026 06:49:24 -0700 (PDT)
-Received: from [10.86.151.227]
- (ipservice-092-208-245-012.092.208.pools.vodafone-ip.de. [92.208.245.12])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a18c85009csm44672085e9.2.2026.10.09.06.49.23
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 09 Oct 2026 06:49:23 -0700 (PDT)
-Message-ID: <9fc1f626-3b86-4fa3-9738-f64b6e06b572@linaro.org>
-Date: Fri, 9 Oct 2026 15:49:21 +0200
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xFBDF-0000rk-Ln
+ for qemu-devel@nongnu.org; Fri, 09 Oct 2026 10:04:41 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xFBDD-0007T1-CG
+ for qemu-devel@nongnu.org; Fri, 09 Oct 2026 10:04:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1791554677;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=r7j/xoTFi8J56u7Lizjo2qLZPXawPskxyd5srOi+aZY=;
+ b=W7+kdRlIXQSI11K5Z7ihvi9kvuZW7a8jdysmmevFmF44rgHb2tL4koXc1qNaYN4vBI/3sB
+ 1AF/YlVa40/5tzeELsHW55i7QOmGV0brDblMbzCRsmgc1+yZkB6enL5PBVFsclwtu2aNMo
+ LqKCuuTcmydpdubETPJMCzANV0n/uiU=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-171-GtE3I6CVM5queF__KBVoMQ-1; Fri,
+ 9 Oct 2026 14:04:35 +0000
+X-MC-Unique: GtE3I6CVM5queF__KBVoMQ-1
+X-Mimecast-MFC-AGG-ID: GtE3I6CVM5queF__KBVoMQ_1791554674
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 33CFD1955F71; Fri,  9 Oct 2026 14:04:34 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.2])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 972B730001BB; Fri,  9 Oct 2026 14:04:33 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 5619821E6883; Fri, 09 Oct 2026 16:04:31 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: marcandre.lureau@redhat.com,
+	michael.roth@amd.com,
+	jsnow@redhat.com
+Subject: [RFC PATCH 4/6] qapi/introspect: Don't elide types
+Date: Fri,  9 Oct 2026 16:04:29 +0200
+Message-ID: <20261009140431.3175479-5-armbru@redhat.com>
+In-Reply-To: <20261009140431.3175479-1-armbru@redhat.com>
+References: <20261009140431.3175479-1-armbru@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL v1 00/10] Merge tpm 2026/10/08 v1
-To: Stefan Berger <stefanb@linux.ibm.com>, qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org
-References: <20261008212723.3679685-1-stefanb@linux.ibm.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20261008212723.3679685-1-stefanb@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x333.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 10
+X-Spam_score: 1.0
+X-Spam_bar: +
+X-Spam_report: (1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,24 +85,119 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/8/26 23:27, Stefan Berger wrote:
-> The following changes since commit f9587d4045c67cd0d8d8bdcd5d0bb5b6b395b63c:
-> 
->    Merge tag 'pbouvier/pr/plugins-20261005' ofhttps://gitlab.com/p-b-o/qemu into staging (2026-10-06 11:26:40 +0200)
-> 
-> are available in the Git repository at:
-> 
->    https://github.com/stefanberger/qemu-tpm.git tags/pull-tpm-2026-10-08-1
-> 
-> for you to fetch changes up to 0c2f2309cddf6dcb5a340e7838e2b37e3fc22bf8:
-> 
->    tests: Add tests with commands with bad length (2026-10-08 17:18:31 -0400)
-> 
-> ----------------------------------------------------------------
-> 
-> This PR fixes a couple of issues in TPM-related code.
+query-qmp-schema elides types not reachable from commands and events.
+It currently emits 1251 out of 1385 definitions, and elides 134 types.
+Whether that's worthwhile is debatable.
 
-Applied, thanks.
+Marc-André Lureau would like to make QOM introspection (qom-list &
+friends) refer to QAPI types.  We additionally need types reachable
+from QOM properties.
 
-r~
+Unfortunately, the QAPI generator knows nothing about QOM properties.
+
+We could manually mark the QAPI types to elide, or the QAPI types not
+to elide even though they are not reachable from commands and events.
+Feels very much not worthwhile to me.
+
+We could conservatively approximate "reachable from QOM properties" by
+"available for use with QOM properties".  These are the built-in and
+user-defined types, and their arrays.  With that, we'd elide just 38
+out of 1385 definitions.  Too few to be worthwhile.
+
+Simply emit everything.
+
+Output of query-qmp-schema grows from 247KiB to 274KiB for me.
+
+Signed-off-by: Markus Armbruster <armbru@redhat.com>
+---
+ scripts/qapi/introspect.py | 31 ++++---------------------------
+ 1 file changed, 4 insertions(+), 27 deletions(-)
+
+diff --git a/scripts/qapi/introspect.py b/scripts/qapi/introspect.py
+index 49d1ed2897..15302ecf15 100644
+--- a/scripts/qapi/introspect.py
++++ b/scripts/qapi/introspect.py
+@@ -28,9 +28,7 @@
+ from .schema import (
+     QAPISchema,
+     QAPISchemaAlternatives,
+-    QAPISchemaArrayType,
+     QAPISchemaBranches,
+-    QAPISchemaEntity,
+     QAPISchemaEnumMember,
+     QAPISchemaFeature,
+     QAPISchemaIfCond,
+@@ -175,7 +173,6 @@ def __init__(self, prefix: str, unmask: bool):
+         self._unmask = unmask
+         self._schema: Optional[QAPISchema] = None
+         self._trees: List[Annotated[SchemaInfo]] = []
+-        self._used_types: List[QAPISchemaType] = []
+         self._genc.add(mcgen('''
+ #include "qemu/osdep.h"
+ #include "%(prefix)sqapi-introspect.h"
+@@ -187,10 +184,6 @@ def visit_begin(self, schema: QAPISchema) -> None:
+         self._schema = schema
+ 
+     def visit_end(self) -> None:
+-        # visit the types that are actually used
+-        for typ in self._used_types:
+-            typ.visit(self)
+-        # generate C
+         name = c_name(self._prefix, protect=False) + 'qmp_schema_qlit'
+         self._genh.add(mcgen('''
+ #include "qobject/qlit.h"
+@@ -205,32 +198,12 @@ def visit_end(self) -> None:
+                              c_string=_tree_to_qlit(self._trees)))
+         self._schema = None
+         self._trees = []
+-        self._used_types = []
+-
+-    def visit_needed(self, entity: QAPISchemaEntity) -> bool:
+-        # Ignore types on first pass; visit_end() will pick up used types
+-        return not isinstance(entity, QAPISchemaType)
+ 
+     def _name(self, name: str) -> str:
+         assert self._schema
+         return self._schema.definition_introspection_name(name, self._unmask)
+ 
+     def _use_type(self, typ: QAPISchemaType) -> str:
+-        assert self._schema is not None
+-
+-        # Map the various integer types to plain int
+-        if typ.json_type() == 'int':
+-            type_int = self._schema.lookup_type('int')
+-            assert type_int
+-            typ = type_int
+-        elif (isinstance(typ, QAPISchemaArrayType) and
+-              typ.element_type.json_type() == 'int'):
+-            type_intlist = self._schema.lookup_type('intList')
+-            assert type_intlist
+-            typ = type_intlist
+-        # Add type to work queue if new
+-        if typ not in self._used_types:
+-            self._used_types.append(typ)
+         return self._name(typ.name)
+ 
+     @staticmethod
+@@ -295,6 +268,8 @@ def _gen_variant(self, variant: QAPISchemaVariant
+ 
+     def visit_builtin_type(self, name: str, info: Optional[QAPISourceInfo],
+                            json_type: str) -> None:
++        if json_type == 'int' and name != 'int':
++            return
+         self._gen_tree(name, 'builtin', {'json-type': json_type})
+ 
+     def visit_enum_type(self, name: str, info: Optional[QAPISourceInfo],
+@@ -312,6 +287,8 @@ def visit_enum_type(self, name: str, info: Optional[QAPISourceInfo],
+     def visit_array_type(self, name: str, info: Optional[QAPISourceInfo],
+                          ifcond: QAPISchemaIfCond,
+                          element_type: QAPISchemaType) -> None:
++        if element_type.json_type() == 'int' and name != 'intList':
++            return
+         element = self._use_type(element_type)
+         self._gen_tree(name, 'array', {'element-type': element}, ifcond)
+ 
+-- 
+2.55.0
+
 
