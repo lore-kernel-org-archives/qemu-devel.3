@@ -4,66 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 271F1CA601F
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Oct 2026 17:54:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03B45CA601E
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Oct 2026 17:54:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xFEnU-0000h7-5S; Fri, 09 Oct 2026 13:54:20 -0400
+	id 1xFEn5-0000V6-Mh; Fri, 09 Oct 2026 13:53:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <3LirJagsKCgUsfrfslzqfynlttlqj.htrvjrz-ij0jqstslsz.twl@flex--namangulati.bounces.google.com>)
- id 1xFEn5-0000V2-F2
- for qemu-devel@nongnu.org; Fri, 09 Oct 2026 13:53:55 -0400
-Received: from mail-qv1-xf47.google.com ([2607:f8b0:4864:20::f47])
+ <3LCrJagsKCgMqdpdqjxodwljrrjoh.frpthpx-ghyhoqrqjqx.ruj@flex--namangulati.bounces.google.com>)
+ id 1xFEn2-0000UH-6j
+ for qemu-devel@nongnu.org; Fri, 09 Oct 2026 13:53:53 -0400
+Received: from mail-qv1-xf48.google.com ([2607:f8b0:4864:20::f48])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from
- <3LirJagsKCgUsfrfslzqfynlttlqj.htrvjrz-ij0jqstslsz.twl@flex--namangulati.bounces.google.com>)
- id 1xFEn3-0006FD-28
- for qemu-devel@nongnu.org; Fri, 09 Oct 2026 13:53:55 -0400
-Received: by mail-qv1-xf47.google.com with SMTP id
- 6a1803df08f44-917a2de2cc1so1399566d6.1
- for <qemu-devel@nongnu.org>; Fri, 09 Oct 2026 10:53:51 -0700 (PDT)
+ <3LCrJagsKCgMqdpdqjxodwljrrjoh.frpthpx-ghyhoqrqjqx.ruj@flex--namangulati.bounces.google.com>)
+ id 1xFEn0-0006F5-CG
+ for qemu-devel@nongnu.org; Fri, 09 Oct 2026 13:53:51 -0400
+Received: by mail-qv1-xf48.google.com with SMTP id
+ 6a1803df08f44-919879b09b7so2075826d6.3
+ for <qemu-devel@nongnu.org>; Fri, 09 Oct 2026 10:53:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20251104; t=1791568431; x=1792173231; darn=nongnu.org;
- h=content-type:cc:to:from:subject:message-id:references:mime-version
- :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=FppzXirk5nbi9kcMOQQwDE1EGZz6Q2GpCC2ECGaKeOQ=;
- b=WnAdPo+wVSnt6K0X0Ap+f32VUcsY9j4b7l4JCXMYMbqpT+dIujpECn632YZiuBHVMM
- BHce5UriMJoIbScB7nD3Js0uX8qh3hqkKbRoZW5EP8ZUwmYO0HXeEoTm+Sc5HB3H/ep/
- TtueyI9yamMwTtP7GHw+CNkkG/8dK2k9uEjGSRQ6N6U5RcebpSnWSj0pZ26W4ewnSFY9
- Akc/2rutUbvKz6drdt3vO3oMz+oZKUpwq1k+f7gWfeokGWDzyAmwyTysgClWko5CPw/1
- dv4hzZhSN9smQAg+zS8RRgZ0VRgjd6im128c+BkzBdaTNpaVYCjIEjnCAt8RO5uiz2RU
- CkPw==
+ d=google.com; s=20251104; t=1791568429; x=1792173229; darn=nongnu.org;
+ h=content-type:cc:to:from:subject:message-id:mime-version:date:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=awmqhE6ssk9Lk7Tf7KVONrpGfiblTmIXxTCh/rWeUuo=;
+ b=jwHG8rOIUjv33mSxReLivQI4VjxcrXGwld62slqPNNZj7r4WkG1qEk76GKDkTF+231
+ ldlLzsKwzf2Hlq46PLCJrKJOTHUWiQK9TPzg3hq5UnD4MUzor9Jf/+2lmF7115esEa2M
+ 5Os2IgqwruwDI1Yk0wpD/QK/dGvPhjDb8leEVM2PQ9WNsNYokfbif33t0Sq3f6qwpXmw
+ 9lmhWOQvzjrOXK/+IvqdZ4ViOIMFfvadPJTGC/RsQD9jUXgW0AzPcXJvcb3aQVS5ZIfk
+ aNa22WMrDalv6Mw9UxF02qOLXA8nmq+B39ZE1sZYFEdJSrGUuguhnZMdufU62ByPHl2R
+ vs5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791568431; x=1792173231;
- h=content-type:cc:to:from:subject:message-id:references:mime-version
- :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=FppzXirk5nbi9kcMOQQwDE1EGZz6Q2GpCC2ECGaKeOQ=;
- b=cnj6abxkMHurDo7lzOYKXrm8exE83OEFKa39s0hQevpMeaVV5hH/K6lR9b0qq3iA0G
- n/Jsb8KF4P4+2dVm15dhprCVHu3wQ6w4bhqYAryG49gEvHh+SK2f/NPulPkTSPvS/7J0
- JwcLI01baYKZaj1uJXd04qDe4B7naLL95VxJ/zENRCdUed8zsuTKu/cYcV7QoDrjdwJR
- XaXM0m3LNt2Z0gp+9jbsziTUU7B5VmJojBHMRY2nx1NtMpOz6T4FL/HTn4Ngxfx427af
- n/3AIqFDQqwb5dsLy+hKsEJ3p2ch5eBepV+5UF9uvHI68OV9jd8QynnYLchnMafyu32f
- //cg==
-X-Gm-Message-State: AFq9FYIJ5pTZCsK1hp8Ijd/tqnACEPCKSPnO87VdcDWuitm23QS6z/lt
- LbID7/egJfbaOHBFWrTi+6R8DudUhUXbhLazTE8eBXyUnpsff9spswYAeuyB5uU3pBmOz5MnJ4x
- 67WeLiGIHrVtFIMnMjMUxSB3zG9+iAp4Op9lj9/JSshxBt1DC7TLwjSZIfx8QkJ/pMsbHqiL6QH
- 8DUHVSeStP/2rHfT3P0v7cmjAgcU3EBa0GnqfX+L7T2YmGCoQWuM69auUrdcmeWQ==
-X-Received: from qtbkc3.prod.google.com ([2002:a05:622a:44c3:b0:535:27c9:d69f])
+ d=1e100.net; s=20260707; t=1791568429; x=1792173229;
+ h=content-type:cc:to:from:subject:message-id:mime-version:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=awmqhE6ssk9Lk7Tf7KVONrpGfiblTmIXxTCh/rWeUuo=;
+ b=vujboeA33v8Sjb9bSIWSGftfJB67LTILDDPZg4QrUw5yCqGfTdbxXlj7IOEi7nIWOR
+ 9p1GLpUQwX8Y3RMukGApQV5uBW+4dMA+/osrdIt8LdU9XeEmJtiX448V6Ma7hX0dgFnz
+ swRyGiWEg2EWkBddzn2EHduDnI+jMnY5hBgnrTxrcLAykVeQPG8Mut/AtIfBfkMhmDix
+ /LIc+wtsO+eZajkAk76aG+EZeCl+s96WXTgO8LokNukVaydTK/oeogy8VUmIA6bgELpi
+ F8hkXFTW0AKENm+0OzCu4P5mPRhFNYSKtSVjZDaB6IOuF9i6b+IrFku+WuvEVpcfkxtU
+ m24A==
+X-Gm-Message-State: AFq9FYI1FHkWckSj6mMAsRfOdJXMbwYhZoJLVpeaOtPT2yUAgwqbsjv3
+ ozknFja+JiFNQAu01+8sUiza/DdxWvAcR9SLrOdVRIdiax3swm4eXVedVJCc/CWFqZSc0Iauirh
+ ASTlxq5k7TDyJuelxe4N98jdFv/a5qAfGfsuRkpLHArcHhDiE6we/xzKg8/hdOenenZov77o4ar
+ J7LA3j1Ve6p4OGuLW/CPzzBXG6+OSJ9c2ho+qzZ1KN1H8P7uebDodwVILRFg/jpQ==
+X-Received: from qvc20.prod.google.com ([2002:a05:6214:8114:b0:919:96a4:7b33])
  (user=namangulati job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:622a:1c15:b0:533:21c6:f4e2 with SMTP id
- d75a77b69052e-5359fa9087cmr41452201cf.20.1791568430294; 
- Fri, 09 Oct 2026 10:53:50 -0700 (PDT)
-Date: Fri,  9 Oct 2026 17:53:12 +0000
-In-Reply-To: <20261009175314.1823347-1-namangulati@google.com>
+ 2002:a05:6214:cc2:b0:913:efc3:6ffc with SMTP id
+ 6a1803df08f44-91b557c5f4cmr43714656d6.22.1791568428114; 
+ Fri, 09 Oct 2026 10:53:48 -0700 (PDT)
+Date: Fri,  9 Oct 2026 17:53:10 +0000
 Mime-Version: 1.0
-References: <20261009175314.1823347-1-namangulati@google.com>
 X-Mailer: git-send-email 2.56.0.385.gd3acb90ef8-goog
-Message-ID: <20261009175314.1823347-3-namangulati@google.com>
-Subject: [PATCH v4 2/4] vfio: add 'fd' and 'fd_offset' to VFIOMmap
+Message-ID: <20261009175314.1823347-1-namangulati@google.com>
+Subject: [PATCH v4 0/4] vfio-user: support multiple FDs backing region mmaps
 From: Naman Gulati <namangulati@google.com>
 To: qemu-devel@nongnu.org
 Cc: John Levon <john.levon@nutanix.com>,
@@ -73,9 +71,9 @@ Cc: John Levon <john.levon@nutanix.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Matt Evans <matt@ozlabs.org>, Naman Gulati <namangulati@google.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::f47;
- envelope-from=3LirJagsKCgUsfrfslzqfynlttlqj.htrvjrz-ij0jqstslsz.twl@flex--namangulati.bounces.google.com;
- helo=mail-qv1-xf47.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::f48;
+ envelope-from=3LCrJagsKCgMqdpdqjxodwljrrjoh.frpthpx-ghyhoqrqjqx.ruj@flex--namangulati.bounces.google.com;
+ helo=mail-qv1-xf48.google.com
 X-Spam_score_int: -95
 X-Spam_score: -9.6
 X-Spam_bar: ---------
@@ -98,132 +96,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Allow each sparse mmap subregion to specify its own file descriptor and
-file offset for the mmap call.
+This series extends the vfio-user protocol specification to allow
+servers to pass multiple file descriptors for different sparse memory
+areas to be mmap'ed within a single device region.
 
-Add 'fd' (set to -1 when the region fd should be used) and 'fd_offset'
-to VFIOMmap, and update vfio_region_mmap() to use them.
+This extension is intended for exposing paravirtualized PCI devices via
+a vfio-user server that may have multiple unique sub-regions in a BAR
+backed by some mmap'able buffers sourced from distinct file descriptors.
 
-Reviewed-by: Thanos Makatos <thanos.makatos@nutanix.com>
-Signed-off-by: Naman Gulati <namangulati@google.com>
+This change introduces a new capability:
+  VFIO_REGION_INFO_CAP_SPARSE_MMAP_FDS
+
+Unlike VFIO_REGION_INFO_CAP_SPARSE_MMAP (which maps all sparse areas
+from a single open file descriptor), this new capability defines an
+array of sparse mmap areas where each area contains an index into the
+array of file descriptors.
+
+When all sparse areas share a single file descriptor, servers may
+continue to emit VFIO_REGION_INFO_CAP_SPARSE_MMAP and send exactly one
+file descriptor in SCM_RIGHTS for backwards compatibility with older
+clients.
+
+The extensions in this series also lays the groundwork to make use of
+the in-development series [1] extending vfio-pci to return distinct
+dmabuf FDs for discrete regions of a device's BAR. A vfio-user server
+may choose to return dmabuf FDs for various regions of a device's BAR to
+map a vfio passthrough device into the guest, in order to retain control
+of the device and be able to revoke mappings passed to the VM.
+
+libvfio-user server side changes WIP on github [2].
+
+
+[1] https://lore.kernel.org/all/20260715174737.15287-1-matt@ozlabs.org
+[2] https://github.com/NamanGulati/libvfio-user/tree/multi-region-fd
+
 ---
- hw/vfio/vfio-region.h |  4 +++-
- hw/vfio/pci.c         |  2 ++
- hw/vfio/region.c      | 26 +++++++++++++++++++-------
- 3 files changed, 24 insertions(+), 8 deletions(-)
+Changes from v3:
+  - Added "sparse_mmap_fds" capability to VFIO_USER_VERSION so servers
+    know whether the client supports
+    VFIO_REGION_INFO_CAP_SPARSE_MMAP_FDS. (Thanos)
+  - Changed VFIO_REGION_INFO_CAP_SPARSE_MMAP_FDS capability ID to 0x8001. (Thanos)
+  - Clarified and enforced that VFIO_REGION_INFO_CAP_SPARSE_MMAP and
+    VFIO_REGION_INFO_CAP_SPARSE_MMAP_FDS are mutually exclusive per region,
+    number of FDs in SCM_RIGHTS must not exceed nr_areas, zero-sized areas
+    are not permitted, offset + size must not exceed the region size, and
+    areas must not overlap. (Thanos)
+  - Link to v3: https://lore.kernel.org/qemu-devel/20261007000833.2445641-1-namangulati@google.com
 
-diff --git a/hw/vfio/vfio-region.h b/hw/vfio/vfio-region.h
-index 58b236f113..9f6a5cf7d5 100644
---- a/hw/vfio/vfio-region.h
-+++ b/hw/vfio/vfio-region.h
-@@ -14,8 +14,10 @@
- typedef struct VFIOMmap {
-     MemoryRegion mem;
-     void *mmap;
--    off_t offset;
-+    off_t offset;       /* offset within the region */
-     size_t size;
-+    int fd;             /* per-mmap fd, or -1 to use the region fd */
-+    uint64_t fd_offset; /* offset within fd for the mmap call */
- } VFIOMmap;
- 
- typedef struct VFIODevice VFIODevice;
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index 428ab2f069..f851082114 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -1623,6 +1623,7 @@ static void vfio_pci_fixup_msix_region(VFIOPCIDevice *vdev)
-                                   vdev->msix->table_bar, 0, 0);
-         } else {
-             region->mmaps[0].offset = end;
-+            region->mmaps[0].fd_offset += end;
-             region->mmaps[0].size = region->size - end;
-             trace_vfio_msix_fixup(vdev->vbasedev.name,
-                               vdev->msix->table_bar, region->mmaps[0].offset,
-@@ -1649,6 +1650,7 @@ static void vfio_pci_fixup_msix_region(VFIOPCIDevice *vdev)
-                               region->mmaps[0].offset + region->mmaps[0].size);
- 
-         region->mmaps[1].offset = end;
-+        region->mmaps[1].fd_offset += end;
-         region->mmaps[1].size = region->size - end;
-         trace_vfio_msix_fixup(vdev->vbasedev.name,
-                               vdev->msix->table_bar, region->mmaps[1].offset,
-diff --git a/hw/vfio/region.c b/hw/vfio/region.c
-index 54ad11a6c8..16efed2fce 100644
---- a/hw/vfio/region.c
-+++ b/hw/vfio/region.c
-@@ -189,6 +189,9 @@ static int vfio_setup_region_sparse_mmaps(VFIORegion *region,
-                                             sparse->areas[i].size - 1);
-             region->mmaps[j].offset = sparse->areas[i].offset;
-             region->mmaps[j].size = sparse->areas[i].size;
-+            region->mmaps[j].fd = -1;
-+            region->mmaps[j].fd_offset = region->fd_offset +
-+                                         sparse->areas[i].offset;
-             j++;
-         }
-     }
-@@ -262,6 +265,8 @@ int vfio_region_setup(Object *obj, VFIODevice *vbasedev, VFIORegion *region,
-                 region->mmaps = g_new0(VFIOMmap, region->nr_mmaps);
-                 region->mmaps[0].offset = 0;
-                 region->mmaps[0].size = region->size;
-+                region->mmaps[0].fd = -1;
-+                region->mmaps[0].fd_offset = region->fd_offset;
-             } else if (ret) {
-                 return ret;
-             }
-@@ -354,7 +359,6 @@ int vfio_region_mmap(VFIORegion *region)
-     off_t map_offset = 0;
-     size_t align;
-     char *name;
--    int fd;
- 
-     if (!region->mem || !region->nr_mmaps) {
-         return 0;
-@@ -391,8 +395,6 @@ int vfio_region_mmap(VFIORegion *region)
-         return ret;
-     }
- 
--    fd = vfio_device_get_region_fd(region->vbasedev, region->nr);
--
-     map_align = (void *)ROUND_UP((uintptr_t)map_base, (uintptr_t)align);
-     munmap(map_base, map_align - map_base);
-     munmap(map_align + region->size,
-@@ -404,12 +406,22 @@ int vfio_region_mmap(VFIORegion *region)
-      * offsets being in ascending order.
-      */
-     for (i = 0; i < region->nr_mmaps; i++) {
-+        int fd = region->mmaps[i].fd;
-+
-+        if (fd < 0) {
-+            fd = vfio_device_get_region_fd(region->vbasedev, region->nr);
-+        }
-+        if (fd < 0) {
-+            ret = -EINVAL;
-+            munmap(map_align + map_offset, region->size - map_offset);
-+            goto no_mmap;
-+        }
-+
-         munmap(map_align + map_offset, region->mmaps[i].offset - map_offset);
-         region->mmaps[i].mmap = mmap(map_align + region->mmaps[i].offset,
-                                      region->mmaps[i].size, prot,
-                                      MAP_SHARED | MAP_FIXED, fd,
--                                     region->fd_offset +
--                                     region->mmaps[i].offset);
-+                                     region->mmaps[i].fd_offset);
-         if (region->mmaps[i].mmap == MAP_FAILED) {
-             ret = -errno;
-             /*
-@@ -454,8 +466,8 @@ int vfio_region_mmap(VFIORegion *region)
- 
- no_mmap:
-     trace_vfio_region_mmap_fault(memory_region_name(region->mem), i,
--                                 region->fd_offset + region->mmaps[i].offset,
--                                 region->fd_offset + region->mmaps[i].offset +
-+                                 region->mmaps[i].fd_offset,
-+                                 region->mmaps[i].fd_offset +
-                                  region->mmaps[i].size - 1, ret);
- 
-     region->mmaps[i].mmap = NULL;
+Changes from v2:
+  - As suggested by Cedric: kept core VFIO changes minimal by only
+    extending VFIOMMmap to hold each mmap subregion's fd & fd_offset.
+  - Moved multi-FD management and capability parsing into hw/vfio-user,
+    and using VFIOUserProxy to hold region multi-fds.
+  - Resend: rebased to head.
+  - Link to v2: https://lore.kernel.org/qemu-devel/20260826050039.2068138-1-namangulati@google.com
+
+Changes from RFC:
+  - Refactored the get_region_info callback to keep vbasedev constant
+    and take in a VFIORegionFDs* out parameter to store the received fds.
+  - Link to RFC: https://lore.kernel.org/qemu-devel/20260811233930.401797-1-namangulati@google.com
+---
+
+Naman Gulati (4):
+  vfio-user: add multi-fd region mmap capability
+  vfio: add 'fd' and 'fd_offset' to VFIOMmap
+  vfio: add setup_sparse_mmaps hook to VFIODeviceIOOps
+  vfio-user: support multiple FDs for sparse mmap regions
+
+ docs/interop/vfio-user.rst    |  86 +++++++++++++++++++++++++++++++++--
+ hw/vfio-user/protocol.h       |  35 ++++++++++++---
+ hw/vfio-user/proxy.h          |   2 +
+ hw/vfio/vfio-region.h         |   9 +++-
+ include/hw/vfio/vfio-device.h |  16 +++++++
+ hw/vfio-user/device.c         | 102 +++++++++++++++++++++++++++++++++++++++---
+ hw/vfio-user/proxy.c          |  46 +++++++++++++++++--
+ hw/vfio/pci.c                 |   2 +
+ hw/vfio/region.c              |  51 ++++++++++++++++-----
+ 9 files changed, 317 insertions(+), 32 deletions(-)
+
 -- 
 2.56.0.385.gd3acb90ef8-goog
 
