@@ -4,31 +4,31 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 962D8CA6015
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A26C8CA6018
 	for <qemu-devel@archiver.kernel.org>; Fri,  9 Oct 2026 03:08:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xF0wV-0004vR-P9; Thu, 08 Oct 2026 23:06:45 -0400
+	id 1xF0wf-0005Ho-EU; Thu, 08 Oct 2026 23:06:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <prcups@krgm.moe>) id 1xF0vb-0004eF-23
- for qemu-devel@nongnu.org; Thu, 08 Oct 2026 23:05:49 -0400
+ (Exim 4.90_1) (envelope-from <prcups@krgm.moe>) id 1xF0vw-0004hD-5p
+ for qemu-devel@nongnu.org; Thu, 08 Oct 2026 23:06:09 -0400
 Received: from krgm.moe ([103.47.186.116])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <prcups@krgm.moe>) id 1xF0vY-0005mR-Lj
- for qemu-devel@nongnu.org; Thu, 08 Oct 2026 23:05:46 -0400
+ (envelope-from <prcups@krgm.moe>) id 1xF0vs-0005nI-Gp
+ for qemu-devel@nongnu.org; Thu, 08 Oct 2026 23:06:07 -0400
 Received: from yuno-loong (unknown
  [IPv6:2409:8900:2684:b82:443b:7baf:6228:2a79])
- by krgm.moe (Postfix) with ESMTPSA id DE82CDFE8;
- Fri, 09 Oct 2026 08:35:41 +0530 (IST)
+ by krgm.moe (Postfix) with ESMTPSA id 92EEADFC1;
+ Fri, 09 Oct 2026 08:35:51 +0530 (IST)
 From: SignKirigami <prcups@krgm.moe>
 To: qemu-devel@nongnu.org
 Cc: Bibo Mao <maobibo@loongson.cn>, SignKirigami <prcups@krgm.moe>,
  Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
-Subject: [PATCH v5 10/23] target/loongarch: handle LVZ exception and vm_exit
-Date: Fri,  9 Oct 2026 11:05:06 +0800
-Message-ID: <dd6bcea43f94cc6bbb21294289d211324654fdb5.1791514848.git.prcups@krgm.moe>
+Subject: [PATCH v5 16/23] target/loongarch: add LVZ to ptw
+Date: Fri,  9 Oct 2026 11:05:12 +0800
+Message-ID: <f9a04abe5b4eb0dd5b8590fe7fb16cf7f2444b45.1791514848.git.prcups@krgm.moe>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <cover.1791514848.git.prcups@krgm.moe>
 References: <cover.1791514848.git.prcups@krgm.moe>
@@ -56,102 +56,201 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add EXCCODE_GSPR and EXCCODE_HVC macros. Execute real vm exit at end of
-loongarch_cpu_do_interrupt().
+Add function loongarch_try_ptw() and use it in both vm level 0 and 1 address
+mapping.
 
 Signed-off-by: SignKirigami <prcups@krgm.moe>
 Signed-off-by: Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
 ---
- target/loongarch/cpu.h         |  2 ++
- target/loongarch/tcg/tcg_cpu.c | 28 ++++++++++++++++++++--------
- 2 files changed, 22 insertions(+), 8 deletions(-)
+ target/loongarch/cpu-mmu.h        |  2 +-
+ target/loongarch/cpu_helper.c     | 23 ++++++---
+ target/loongarch/tcg/tlb_helper.c | 82 +++++++++++++++++--------------
+ 3 files changed, 64 insertions(+), 43 deletions(-)
 
-diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
-index 891eea47bd..3e3ae2bfa7 100644
---- a/target/loongarch/cpu.h
-+++ b/target/loongarch/cpu.h
-@@ -95,6 +95,8 @@ FIELD(FCSR0, CAUSE, 24, 5)
- #define  EXCCODE_WPEM                EXCODE(19, 1)
- #define  EXCCODE_BTD                 EXCODE(20, 0)
- #define  EXCCODE_BTE                 EXCODE(21, 0)
-+#define  EXCCODE_GSPR                EXCODE(22, 0)
-+#define  EXCCODE_HVC                 EXCODE(23, 0)
- #define  EXCCODE_DBP                 EXCODE(26, 0) /* Reserved subcode used for debug */
+diff --git a/target/loongarch/cpu-mmu.h b/target/loongarch/cpu-mmu.h
+index 29b0c109fb..bad05a5a9c 100644
+--- a/target/loongarch/cpu-mmu.h
++++ b/target/loongarch/cpu-mmu.h
+@@ -40,7 +40,7 @@ typedef struct MMUContext {
  
- /* cpucfg[0] bits */
-diff --git a/target/loongarch/tcg/tcg_cpu.c b/target/loongarch/tcg/tcg_cpu.c
-index 101fe6fc7a..6f1ba12edb 100644
---- a/target/loongarch/tcg/tcg_cpu.c
-+++ b/target/loongarch/tcg/tcg_cpu.c
-@@ -44,6 +44,8 @@ static const struct TypeExcp excp_names[] = {
-     {EXCCODE_BCE, "Bound Check Exception"},
-     {EXCCODE_SXD, "128 bit vector instructions Disable exception"},
-     {EXCCODE_ASXD, "256 bit vector instructions Disable exception"},
-+    {EXCCODE_GSPR, "Guest Sensitive and Privileged Resources"},
-+    {EXCCODE_HVC, "Hypervisor call"},
-     {EXCP_HLT, "EXCP_HLT"},
- };
- 
-@@ -78,9 +80,11 @@ void G_NORETURN do_raise_exception(CPULoongArchState *env,
- static void loongarch_cpu_do_interrupt(CPUState *cs)
+ static inline bool cpu_has_ptw(CPULoongArchState *env, int vm_level)
  {
-     CPULoongArchState *env = cpu_env(cs);
 -    CPUSysState *sys = env_sys(env);
-     bool update_badinstr = 1;
-     int cause = -1;
-+    bool real_guest = !env->vm_exit && env_vm_level(env);
-+    CPUSysState *sys = get_sys(env, real_guest);
-+    CPUSysState *host = get_sys(env, VM_LEVEL0);
-     bool tlbfill = FIELD_EX64(sys->CSR_TLBRERA, CSR_TLBRERA, ISTLBR);
-     uint32_t vec_size = FIELD_EX64(sys->CSR_ECFG, CSR_ECFG, VS);
-     uint64_t last_pc = env->pc;
-@@ -96,17 +100,17 @@ static void loongarch_cpu_do_interrupt(CPUState *cs)
++    CPUSysState *sys = get_sys(env, vm_level);
  
-     switch (cs->exception_index) {
-     case EXCCODE_DBP:
--        sys->CSR_DBG = FIELD_DP64(sys->CSR_DBG, CSR_DBG, DCL, 1);
--        sys->CSR_DBG = FIELD_DP64(sys->CSR_DBG, CSR_DBG, ECODE, 0xC);
-+        host->CSR_DBG = FIELD_DP64(sys->CSR_DBG, CSR_DBG, DCL, 1);
-+        host->CSR_DBG = FIELD_DP64(sys->CSR_DBG, CSR_DBG, ECODE, 0xC);
-         goto set_DERA;
-     set_DERA:
--        sys->CSR_DERA = env->pc;
--        sys->CSR_DBG = FIELD_DP64(sys->CSR_DBG, CSR_DBG, DST, 1);
--        set_pc(env, sys->CSR_EENTRY + 0x480);
-+        host->CSR_DERA = env->pc;
-+        host->CSR_DBG = FIELD_DP64(sys->CSR_DBG, CSR_DBG, DST, 1);
-+        set_pc(env, host->CSR_EENTRY + 0x480);
-         break;
-     case EXCCODE_INT:
--        if (FIELD_EX64(sys->CSR_DBG, CSR_DBG, DST)) {
--            sys->CSR_DBG = FIELD_DP64(sys->CSR_DBG, CSR_DBG, DEI, 1);
-+        if (FIELD_EX64(host->CSR_DBG, CSR_DBG, DST)) {
-+            host->CSR_DBG = FIELD_DP64(host->CSR_DBG, CSR_DBG, DEI, 1);
-             goto set_DERA;
-         }
-         QEMU_FALLTHROUGH;
-@@ -117,6 +121,8 @@ static void loongarch_cpu_do_interrupt(CPUState *cs)
-         update_badinstr = 0;
-         break;
-     case EXCCODE_BCE:
-+    case EXCCODE_GSPR:
-+    case EXCCODE_HVC:
-         sys->CSR_BADV = env->pc;
-         QEMU_FALLTHROUGH;
-     case EXCCODE_SYS:
-@@ -218,6 +224,12 @@ static void loongarch_cpu_do_interrupt(CPUState *cs)
-         qemu_plugin_vcpu_exception_cb(cs, last_pc);
+     return !!FIELD_EX64(sys->CSR_PWCH, CSR_PWCH, HPTW_EN);
+ }
+diff --git a/target/loongarch/cpu_helper.c b/target/loongarch/cpu_helper.c
+index 23d26385c6..4ba991aaff 100644
+--- a/target/loongarch/cpu_helper.c
++++ b/target/loongarch/cpu_helper.c
+@@ -160,7 +160,7 @@ TLBRet loongarch_ptw(CPULoongArchState *env, MMUContext *context,
+     vaddr address;
+     TLBRet ret;
+     MemTxResult ret1;
+-    CPUSysState *sys = env_sys(env);
++    CPUSysState *sys = get_sys(env, vm_level);
+ 
+     address = context->addr;
+     if ((address >> 63) & 0x1) {
+@@ -180,7 +180,10 @@ TLBRet loongarch_ptw(CPULoongArchState *env, MMUContext *context,
+         /* get next level page directory */
+         index = (address >> dir_base) & ((1 << dir_width) - 1);
+         phys = base | index << 3;
+-        base = address_space_ldq_le(cs->as, phys, attrs, NULL);
++        base = address_space_ldq_le(
++            cs->as,
++            vm_level ? loongarch_get_host_address(env, phys, retaddr) : phys,
++            attrs, NULL);
+         if (level) {
+             if (FIELD_EX64(base, TLBENTRY, HUGE)) {
+                 /* base is a huge pte */
+@@ -214,8 +217,11 @@ restart:
+ 
+         index &= 1;
+         context->pte_buddy[index] = base;
+-        val = address_space_ldq_le(cs->as, phys + 8 * (1 - 2 * index),
+-                                   attrs, NULL);
++        val = address_space_ldq_le(
++            cs->as,
++            (vm_level ? loongarch_get_host_address(env, phys, retaddr) : phys) +
++                8 * (1 - 2 * index),
++            attrs, NULL);
+         context->pte_buddy[1 - index] = val;
      }
-     cs->exception_index = -1;
-+    if (env->vm_exit) {
-+        host->CSR_GSTAT = FIELD_DP64(host->CSR_GSTAT, CSR_GSTAT, VM, 0);
-+        set_sys(env, VM_LEVEL0);
-+        cpu_reset_interrupt(cs, CPU_INTERRUPT_GUEST);
-+    }
-+    env->vm_exit = false;
+ 
+@@ -245,10 +251,15 @@ restart:
+         if (access_type == MMU_DATA_STORE) {
+             base = pte_mkdirty(base);
+         }
+-        ret1 = loongarch_cmpxchg_phys(cs, phys, pte, base);
++        ret1 = loongarch_cmpxchg_phys(
++            cs, vm_level ? loongarch_get_host_address(env, phys, retaddr) : phys,
++            pte, base);
+         /* PTE updated by other CPU, reload PTE entry */
+         if (ret1 == MEMTX_DECODE_ERROR) {
+-            base = address_space_ldq_le(cs->as, phys, attrs, NULL);
++            base = address_space_ldq_le(
++                cs->as,
++                vm_level ? loongarch_get_host_address(env, phys, retaddr) : phys,
++                attrs, NULL);
+             goto restart;
+         }
+ 
+diff --git a/target/loongarch/tcg/tlb_helper.c b/target/loongarch/tcg/tlb_helper.c
+index c02b7c2472..41d6138828 100644
+--- a/target/loongarch/tcg/tlb_helper.c
++++ b/target/loongarch/tcg/tlb_helper.c
+@@ -724,6 +724,46 @@ static TLBRet loongarch_map_host_address(CPULoongArchState *env, MMUContext *con
+     return TLBRET_HOST_MATCH + ret;
  }
  
- static void loongarch_cpu_do_transaction_failed(CPUState *cs, hwaddr physaddr,
++static void loongarch_try_ptw(CPULoongArchState *env, MMUContext *context,
++                              MMUAccessType access_type, int mmu_index,
++                              TLBRet *status, bool guest, uintptr_t retaddr)
++{
++    if ((*status == TLBRET_MATCH || *status == TLBRET_HOST_MATCH) &&
++        context->mmu_index != MMU_DA_IDX &&
++        context->mmu_index != MMU_GUEST_DA_IDX && cpu_has_ptw(env, guest)) {
++        bool need_update = true;
++
++        if (access_type == MMU_DATA_STORE && pte_dirty(context->pte)) {
++            need_update = false;
++        } else if (access_type != MMU_DATA_STORE && pte_access(context->pte)) {
++            need_update = false;
++        }
++
++        if (need_update) {
++            *status = (env_vm_level(env) == VM_LEVEL1 &&
++                       !guest) ?
++                      TLBRET_HOST_NOMATCH : TLBRET_NOMATCH;
++        }
++    }
++
++    if (*status != TLBRET_MATCH && *status != TLBRET_HOST_MATCH &&
++        cpu_has_ptw(env, guest)) {
++        if (*status == TLBRET_NOMATCH || *status == TLBRET_INVALID ||
++            *status == TLBRET_HOST_NOMATCH || *status == TLBRET_HOST_INVALID) {
++            *status = ((env_vm_level(env) == VM_LEVEL1 &&
++                        !guest) ?
++                       TLBRET_HOST_MATCH : TLBRET_MATCH) +
++                      loongarch_ptw(env, context, access_type, mmu_index, 0,
++                                    guest, retaddr);
++            if (*status == TLBRET_MATCH || *status == TLBRET_HOST_MATCH) {
++                ptw_update_tlb(env, context, guest);
++            }
++        } else if (context->tlb_index >= 0) {
++            invalidate_tlb(env, context->tlb_index, guest);
++        }
++    }
++}
++
+ bool loongarch_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+                             MMUAccessType access_type, int mmu_idx,
+                             bool probe, uintptr_t retaddr)
+@@ -739,42 +779,8 @@ bool loongarch_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+     context.addr = address;
+     context.tlb_index = -1;
+     ret = get_physical_address(env, &context, access_type, mmu_idx, 0, retaddr);
+-    if (ret == TLBRET_MATCH && context.mmu_index != MMU_DA_IDX
+-        && cpu_has_ptw(env, vm_level)) {
+-        bool need_update = true;
+-
+-        if (access_type == MMU_DATA_STORE && pte_dirty(context.pte)) {
+-            need_update = false;
+-        } else if (access_type != MMU_DATA_STORE && pte_access(context.pte)) {
+-            need_update = false;
+-
+-            /*
+-             * FIXME: should context.prot be set without PAGE_WRITE with
+-             * pte_write(context.pte) && !pte_dirty(context.pte)??
+-             *
+-             * Otherwise there will be no loongarch_cpu_tlb_fill() function call
+-             * for MMU_DATA_STORE access_type in future since QEMU TLB with
+-             * prot PAGE_WRITE is added already
+-             */
+-        }
+-
+-        if (need_update) {
+-            /* Need update bit A/D in PTE entry, take PTW again */
+-            ret = TLBRET_NOMATCH;
+-        }
+-    }
+-
+-    if (ret != TLBRET_MATCH && cpu_has_ptw(env, vm_level)) {
+-        /* Take HW PTW if TLB missed or bit P is zero */
+-        if (ret == TLBRET_NOMATCH || ret == TLBRET_INVALID) {
+-            ret = loongarch_ptw(env, &context, access_type, mmu_idx, 0, vm_level, retaddr);
+-            if (ret == TLBRET_MATCH) {
+-                ptw_update_tlb(env, &context, vm_level);
+-            }
+-        } else if (context.tlb_index >= 0) {
+-            invalidate_tlb(env, context.tlb_index, vm_level);
+-        }
+-    }
++    loongarch_try_ptw(env, &context, access_type, mmu_idx, &ret, vm_level,
++                      retaddr);
+ 
+     if (ret == TLBRET_MATCH) {
+         physical = context.physical;
+@@ -784,6 +790,8 @@ bool loongarch_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+             host_context.tlb_index = -1;
+             ret = loongarch_map_host_address(env, &host_context, access_type,
+                                              retaddr);
++            loongarch_try_ptw(env, &host_context, access_type, MMU_KERNEL_IDX,
++                              &ret, false, retaddr);
+             if (ret != TLBRET_HOST_MATCH) {
+                 if (probe) {
+                     return false;
+@@ -847,6 +855,8 @@ hwaddr loongarch_get_host_address(CPULoongArchState *env, hwaddr gpa,
+     host_context.tlb_index = -1;
+     ret = loongarch_map_host_address(env, &host_context, MMU_DATA_LOAD,
+                                      retaddr);
++    loongarch_try_ptw(env, &host_context, MMU_DATA_LOAD, MMU_KERNEL_IDX,
++                      &ret, false, retaddr);
+ 
+     if (ret != TLBRET_HOST_MATCH) {
+         raise_mmu_exception(env, gpa, MMU_DATA_LOAD, ret);
 -- 
 2.55.0
 
