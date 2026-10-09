@@ -4,110 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 697F2CA601E
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Oct 2026 17:53:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0197CCA601F
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Oct 2026 17:54:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xFEm4-0000Lj-0n; Fri, 09 Oct 2026 13:52:53 -0400
+	id 1xFEnG-0000WK-TY; Fri, 09 Oct 2026 13:54:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
- id 1xFEly-0000LI-7n
- for qemu-devel@nongnu.org; Fri, 09 Oct 2026 13:52:47 -0400
-Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
+ (Exim 4.90_1) (envelope-from
+ <3MCrJagsKCgcuhthun1sh0pnvvnsl.jvtxlt1-kl2lsuvunu1.vyn@flex--namangulati.bounces.google.com>)
+ id 1xFEn6-0000VN-IT
+ for qemu-devel@nongnu.org; Fri, 09 Oct 2026 13:54:00 -0400
+Received: from mail-qt1-x847.google.com ([2607:f8b0:4864:20::847])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
- id 1xFElv-0006D2-UL
- for qemu-devel@nongnu.org; Fri, 09 Oct 2026 13:52:45 -0400
-Received: by mail-ej1-x635.google.com with SMTP id
- a640c23a62f3a-c2e6df2742cso17416166b.2
- for <qemu-devel@nongnu.org>; Fri, 09 Oct 2026 10:52:42 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1791568361; cv=none;
- d=google.com; s=arc-20260327;
- b=BiKqv6KBRQIwiVy6f0db9065gzEOz/pA5o/M4bwo5LZ7RPk39eTeC5DKyJTcOOxzNh
- 766HtAefsS1tWjwBtX5oAgF5KbZeCz6J/Z7mwcOguVlpAxrJI1fMzOVuMJZ59L2ZDcty
- P4rhh1hZPjKwFFY0ZTXOggUP2BFexhNcHpKl86N3NXwsBM3PWgU9HGFXzGUY645KJKak
- Qj5b3jGKb4LDwZbZGk0YJeAXTE3LYWnH1NIGvltLXP+9bpRCBxySwKSL839F/ZHw4TOk
- uxlPJ7yPxaMcuCAXYYReoUKcLYEiU2auCvaUKt2qNHhIZ4JozXxxuGSFuL4RNKyO9SBa
- v69g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=frOKFNFhxa5Nubq4E6Tr81P9hlMUQIcVmTYqoQRSvno=;
- fh=g69kuaC+sP227QrWiGLgRGewvEeYhj4aGz+XGsNhpls=;
- b=TY5OaFxlugYZNPUJoswl945I+Uz4BHT4qlFqktvPVV94+PPzOKEaW4H882fCr/fBh1
- njhxuCn9ezNKFC1MV7DgY9+s+mAcLWJqfJV6y4XVRDnYwCnHaSZ7kJTFuQNmas7UKu2O
- yYo2Pcwu4MF2uG4dT2OiyiSF2uQkoPEskkzLTdXmtDscnUbGaOTB3GYd3swqfSMOTnNE
- LvC9orljb7FFLexkFd2CT1hsU+r3afUWyS9nAUJ7I9Vk0jftGzE14VefQ1dJ720JDYbM
- Zhy/wDVCPvke82WcEcl53x9/536C/XXOH+mgoB5tDzUFaUqKdXPxn+w4KEv+JRI22lFl
- TG1A==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from
+ <3MCrJagsKCgcuhthun1sh0pnvvnsl.jvtxlt1-kl2lsuvunu1.vyn@flex--namangulati.bounces.google.com>)
+ id 1xFEn4-0006FT-Ca
+ for qemu-devel@nongnu.org; Fri, 09 Oct 2026 13:53:56 -0400
+Received: by mail-qt1-x847.google.com with SMTP id
+ d75a77b69052e-53397338004so183464331cf.2
+ for <qemu-devel@nongnu.org>; Fri, 09 Oct 2026 10:53:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mihalicyn.com; s=mihalicyn; t=1791568361; x=1792173161; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=frOKFNFhxa5Nubq4E6Tr81P9hlMUQIcVmTYqoQRSvno=;
- b=O7F7XWI4ri4tDKVI5lT8lHWj/JWXCYa1ogFn7/InCAw7SxgtkK3dPTwPCUqne0WRF/
- PU263jyTA0jBQvHiRZddzGYl/MUCJn3m5nmuWDp7ipFP2I6ZNO1z3xmxG1iRsUy+xeqw
- PTKO81SZRbJ4JsJZqqhptBEahasNrTmKGNycQ=
+ d=google.com; s=20251104; t=1791568433; x=1792173233; darn=nongnu.org;
+ h=content-type:cc:to:from:subject:message-id:references:mime-version
+ :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=neFlIRomAUzJHtB2qDbjA3qGPB5L9JPvsWNz4Rrq2mo=;
+ b=XQVckcX4FotB5bR2RnEYmFZrGRC4wbldcjPTxY23Q268CmndgNjmnZr3MeQMlcnrYZ
+ qn7ThEpCueJYbm6JbIHKoxNHbCQmAhngWDTTzxapUJ4ud6DYjbupjEmHrvwHCh/MoyYU
+ i3/L6ySFh2fqugSmmprFgNTEBcMrz9oILFXHAd8KSZymLD+maQs7FQ66tPkqYI7qaEL9
+ LDnGKxhHiZTzy9Cp4+dLI64cunzeWEELGRzfQ8uFGFnVOrf6X0WWPiGJ897cENJswJGY
+ Uywg5maiE0gULuXg+pL9BooEhJoH529K5xN7Qj5qw1TxFVs043Xo5kXBsyuRLXt1xBsU
+ luNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791568361; x=1792173161;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=frOKFNFhxa5Nubq4E6Tr81P9hlMUQIcVmTYqoQRSvno=;
- b=h+XhZw5APa/hugJr4qmMeqbFA5CAxRuFgge4elRFgvqjjwh9nx3eUZBpk+thIdq2ra
- nWzeoIksc4v1EYFYMrSR/cwEeGJm+Yn/bay5LFgWAQExGksJd1MGQt5S3ThvL7Hqr6e+
- w7QI+tSNBVMIVdpHo697qEm5wjEqMIhzJXQybHdYdato8efOIKuSsscNVMQKd/N0vCoE
- xNqZ2EQhqkZltc1sA4+rjX0QsHb5R/vj5+iUEN0symvA+kOM1pG2Nc/hHp6ykNLyVyAH
- mrN4EsgkHfFZd9jPlQmAjLw6uS/RLnI0aeJCsfPNnHWIacY0ebiZDMzd2gpPk9Z2d/uK
- 5knA==
-X-Forwarded-Encrypted: i=1;
- AKwUvByqVYpvM8bdHHxk5JBE7UIAF2c6uQs9Zxoni3t22UVQvDGTtdSlKigjHFmF9UTooWClpTYv7K2fIqlm@nongnu.org
-X-Gm-Message-State: AFq9FYIikDdSnJJ2S3bDXuS0oT/uoNmc6SfDFrbIyJvowQEJiTTMcSDB
- Hfm0qMt9QEsbFYjJ1uIiyBz8L1VzMHmYm2t9rJDyJuCJbRtlYKQTHlHB8gk4EjGk/KgJK+xHqVA
- ZGeonN1+GTTxz/+X3tLgDfKiXdftMFwXEmq2/IL7CBA==
-X-Gm-Gg: AYBFou3JQxxNi5/werxUR3XaIdHQVATv6AU3tIl9xXlT4f6RHNWjFY1hbxDU96ZEwr7
- r6/SmC9oGpc+j3uL94WFpWN48TUPflvZAwYryjntTYwcX6K8r4+xYD12MyqroyBAVJJn/knoJ4J
- iu4uCatB/nIRydYUhe5ui+ArlDTcKbP4qhCeDmclR+BJ0RxLzBOOD8OWuLcScnQoHvwbr7R0eWg
- iVej8iGqGO4BeGl3C6+FOU3F3keew8O42hUf8tx1php6kOg0ucEhvZXx0z5Oge1LNPAhT2gUmGm
- 8seNSaIMe2eCy9RVow5vdtrW41JPPtHva3T2CI6QNAGm6TfnFUR2bOMR3/HlblY/OTJ1UFzr6Sl
- lF4Z0NXf19PU=
-X-Received: by 2002:a17:907:cf93:b0:c2e:7e0a:335d with SMTP id
- a640c23a62f3a-c31a9a04e4bmr263860266b.2.1791568360986; Fri, 09 Oct 2026
- 10:52:40 -0700 (PDT)
-MIME-Version: 1.0
-References: <20260921190345.1709227-1-alex.bennee@linaro.org>
- <asZIy2Rm8QF4TSca@zhexu-thinkpadt14gen5.rmtcaon.csb>
-In-Reply-To: <asZIy2Rm8QF4TSca@zhexu-thinkpadt14gen5.rmtcaon.csb>
-From: Alexander Mikhalitsyn <alexander@mihalicyn.com>
-Date: Fri, 9 Oct 2026 19:52:29 +0200
-X-Gm-Features: AclHuK9pUYlQnk7RYNRbDCr--rT34FQqaPrJQXFB5iIdktoaaYtXJV8CQU05t3I
-Message-ID: <CAJqdLrqxJF4tgfRYrm27rGivP-HyLUX=YCNUiaFqq4nDq0a5pQ@mail.gmail.com>
-Subject: Re: [RFC PATCH] tests/functional: add migration diagnostics and pace
- nvme activity (HACK!)
-To: Peter Xu <peterx@redhat.com>
-Cc: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- Keith Busch <kbusch@kernel.org>, 
- Klaus Jensen <its@irrelevant.dk>, Jesper Devantier <foss@defmacro.it>, 
- Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>, 
- "open list:nvme" <qemu-block@nongnu.org>
+ d=1e100.net; s=20260707; t=1791568433; x=1792173233;
+ h=content-type:cc:to:from:subject:message-id:references:mime-version
+ :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=neFlIRomAUzJHtB2qDbjA3qGPB5L9JPvsWNz4Rrq2mo=;
+ b=pJQ6yi1HwwugwRCiq8FGk2l6hj8yw4Pfipsi3La8YPyaFNqH+ll0ilbn9XAyqxGI0X
+ QuW+fpMjuQ59wTIBceW1Ha+qMBo98uQPqQRnhfnVctCr2adUvrys1oojQvdn9LZh6QnO
+ l4k+9MT7KswdgEYlNAs+PSv47Uweu76vf0S+OjjNPNZ70KZCnhg/WY7hWb9MWOFKZVRS
+ w+GGQA/Fi/PB68CT6PRKPtE9WGvrNxySBJF5hi5+OUsAvAdmo73bMq1vOtOyulhe1NnL
+ lN49i1RraMUt2GbDZ69q1bOp7l+pjleEQI6iGIIvwhTTvixb5ttetGdAcuWTv1hNV+22
+ zY/A==
+X-Gm-Message-State: AFq9FYJUWJ0TFTa4GZZzLswQza9yxLto0anUD3b6gWyj6qTcM05xZ0/+
+ V0ZZlOka+mL9tw+A/UniW9UwDbDf45mjbtM6CTm7I9eV+hZkTvH4N/thE0oYoWEi4CaqJAvS1pa
+ 5YQB7tP25OPHuzk/SJ5iUxp/95kaCtSor7JfIdn+ktZjPh090SwlqBL2I6ZxeX/sBrcb8XXpjeO
+ xFwBpTqhbjG27w3gguR2B5x2Sk0pUQSj/2Mts8jo26eMUbGYC2IoZgu6XyA/1bqw==
+X-Received: from qtbp17-n2.prod.google.com
+ ([2002:a05:622b:d1:20b0:535:7a68:6636])
+ (user=namangulati job=prod-delivery.src-stubby-dispatcher) by
+ 2002:a05:622b:97:20b0:535:a5f8:a5c9 with SMTP id
+ d75a77b69052e-535a5f8b5bemr22008941cf.73.1791568432502; 
+ Fri, 09 Oct 2026 10:53:52 -0700 (PDT)
+Date: Fri,  9 Oct 2026 17:53:14 +0000
+In-Reply-To: <20261009175314.1823347-1-namangulati@google.com>
+Mime-Version: 1.0
+References: <20261009175314.1823347-1-namangulati@google.com>
+X-Mailer: git-send-email 2.56.0.385.gd3acb90ef8-goog
+Message-ID: <20261009175314.1823347-5-namangulati@google.com>
+Subject: [PATCH v4 4/4] vfio-user: support multiple FDs for sparse mmap regions
+From: Naman Gulati <namangulati@google.com>
+To: qemu-devel@nongnu.org
+Cc: John Levon <john.levon@nutanix.com>,
+ Thanos Makatos <thanos.makatos@nutanix.com>, 
+ "=?UTF-8?q?C=C3=A9dric=20Le=20Goater?=" <clg@redhat.com>,
+ Alex Williamson <alex@shazbot.org>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Matt Evans <matt@ozlabs.org>, Naman Gulati <namangulati@google.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::635;
- envelope-from=alexander@mihalicyn.com; helo=mail-ej1-x635.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::847;
+ envelope-from=3MCrJagsKCgcuhthun1sh0pnvvnsl.jvtxlt1-kl2lsuvunu1.vyn@flex--namangulati.bounces.google.com;
+ helo=mail-qt1-x847.google.com
+X-Spam_score_int: -95
+X-Spam_score: -9.6
+X-Spam_bar: ---------
+X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,210 +99,369 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am Mi., 7. Okt. 2026 um 15:27 Uhr schrieb Peter Xu <peterx@redhat.com>:
->
-> On Mon, Sep 21, 2026 at 08:03:45PM +0100, Alex Benn=C3=A9e wrote:
-> > This is a hacky patch for comment but I've included the diagnostic
-> > hacks to the migration test as well as my workaround to get itworking.
-> >
-> > This test was failing on my KVM system. On investigation I found the
-> > nVME activity meant the migration never completed. I ended up
-> > inserting some sleeps into the workload script until I was able to
-> > get it to run.
->
-> Indeed, I can reproduce it too:
+Add client support for capability VFIO_REGION_INFO_CAP_SPARSE_MMAP_FDS
+(capability ID 0x8001) in vfio-user, and advertise support via the
+"sparse_mmap_fds" capability in VFIO_USER_VERSION.
 
-Hi Peter,
+Update vfio_user_device_io_get_region_info() to receive multiple file
+descriptors passed in SCM_RIGHTS ancillary data for a region, store them
+in VFIOUserProxy, and implement setup_sparse_mmaps in
+vfio_user_device_io_ops_sock to validate and populate per-area file
+descriptors and fd_offset values.
 
-thank you checking on your system and sharing a stacktrace.
-Unfortunately, I wasn't able to reproduce this failure on my system,
-but I think I have a good theory what's going on there. I think it is
-because we use `snapshot=3Don` for a disk device and at the same time
-keep important stuff like `/tmp/test_nvme_mig_workload.pid` on a root
-filesystem. Easy fix is to use tmpfs for /tmp, so all data is actually
-migrated.
+Signed-off-by: Naman Gulati <namangulati@google.com>
+---
+ hw/vfio-user/protocol.h |  35 +++++++++++---
+ hw/vfio-user/proxy.h    |   2 +
+ hw/vfio-user/device.c   | 102 +++++++++++++++++++++++++++++++++++++---
+ hw/vfio-user/proxy.c    |  46 ++++++++++++++++--
+ 4 files changed, 168 insertions(+), 17 deletions(-)
 
-Please, can you try the following patch and let me know if this fixes
-the issue or not:
-
---- a/tests/functional/x86_64/test_nvme_migration.py
-+++ b/tests/functional/x86_64/test_nvme_migration.py
-@@ -75,6 +75,11 @@ def configure_machine(self, vm):
-     def launch_source_vm(self, vm):
-         vm.launch()
-
-+        vm.cmd('migrate-set-parameters', **{
-+            'downtime-limit': 2000000,
-+            'max-bandwidth': 10 * 1024**3,
-+        })
+diff --git a/hw/vfio-user/protocol.h b/hw/vfio-user/protocol.h
+index c478d1353f..b823689254 100644
+--- a/hw/vfio-user/protocol.h
++++ b/hw/vfio-user/protocol.h
+@@ -15,6 +15,8 @@
+  * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+ 
++#define VFIO_USER_MAX_REGIONS 100
 +
-         self.wait_for_console_pattern('Entering emergency mode.', vm)
-         prompt =3D '# '
-         self.wait_for_console_pattern(prompt, vm)
-@@ -94,6 +99,8 @@ def launch_source_vm(self, vm):
-                                           prompt, vm=3Dvm)
-         exec_command_and_wait_for_pattern(self, 'mount -t sysfs sysfs /sys=
-',
-                                           prompt, vm=3Dvm)
-+        exec_command_and_wait_for_pattern(self, 'mount -t tmpfs tmpfs /tmp=
-',
-+                                          prompt, vm=3Dvm)
+ typedef struct {
+     uint16_t id;
+     uint16_t command;
+@@ -69,12 +71,13 @@ typedef struct {
+ #define VFIO_USER_CAP           "capabilities"
+ 
+ /* "capabilities" members */
+-#define VFIO_USER_CAP_MAX_FDS   "max_msg_fds"
+-#define VFIO_USER_CAP_MAX_XFER  "max_data_xfer_size"
+-#define VFIO_USER_CAP_PGSIZES   "pgsizes"
+-#define VFIO_USER_CAP_MAP_MAX   "max_dma_maps"
+-#define VFIO_USER_CAP_MIGR      "migration"
+-#define VFIO_USER_CAP_MULTI     "write_multiple"
++#define VFIO_USER_CAP_MAX_FDS           "max_msg_fds"
++#define VFIO_USER_CAP_MAX_XFER          "max_data_xfer_size"
++#define VFIO_USER_CAP_PGSIZES           "pgsizes"
++#define VFIO_USER_CAP_MAP_MAX           "max_dma_maps"
++#define VFIO_USER_CAP_MIGR              "migration"
++#define VFIO_USER_CAP_MULTI             "write_multiple"
++#define VFIO_USER_CAP_SPARSE_MMAP_FDS   "sparse_mmap_fds"
+ 
+ /* "migration" members */
+ #define VFIO_USER_CAP_PGSIZE            "pgsize"
+@@ -166,6 +169,26 @@ typedef struct {
+     uint64_t offset;
+ } VFIOUserRegionInfo;
+ 
++/*
++ * VFIO_REGION_INFO_CAP_SPARSE_MMAP_FDS
++ */
++#define VFIO_REGION_INFO_CAP_SPARSE_MMAP_FDS 0x8001
++
++struct vfio_region_sparse_mmap_fd_area {
++    uint64_t offset;
++    uint64_t fd_offset;
++    uint64_t size;
++    uint32_t fd_index;
++    uint32_t pad;
++};
++
++struct vfio_region_info_cap_sparse_mmap_fds {
++    struct vfio_info_cap_header header;
++    uint32_t nr_areas;
++    uint32_t reserved;
++    struct vfio_region_sparse_mmap_fd_area areas[];
++};
++
+ /*
+  * VFIO_USER_DEVICE_GET_IRQ_INFO
+  * imported from struct vfio_irq_info
+diff --git a/hw/vfio-user/proxy.h b/hw/vfio-user/proxy.h
+index 7b97460cc5..4b9834a436 100644
+--- a/hw/vfio-user/proxy.h
++++ b/hw/vfio-user/proxy.h
+@@ -72,6 +72,7 @@ typedef struct VFIOUserProxy {
+     AioContext *ctx;
+     QEMUBH *req_bh;
+     bool async_ops;
++    VFIOUserFDs *region_fds[VFIO_USER_MAX_REGIONS];
+ 
+     /*
+      * above only changed when BQL is held
+@@ -111,6 +112,7 @@ bool vfio_user_validate_version(VFIOUserProxy *proxy, Error **errp);
+ 
+ VFIOUserFDs *vfio_user_getfds(int numfds);
+ void vfio_user_putfds(VFIOUserMsg *msg);
++void vfio_user_free_fds(VFIOUserFDs *fds);
+ 
+ void vfio_user_disable_posted_writes(VFIOUserProxy *proxy);
+ 
+diff --git a/hw/vfio-user/device.c b/hw/vfio-user/device.c
+index 1a01e748cd..5c63c83a7c 100644
+--- a/hw/vfio-user/device.c
++++ b/hw/vfio-user/device.c
+@@ -14,12 +14,14 @@
+ 
+ #include "hw/vfio-user/device.h"
+ #include "hw/vfio-user/trace.h"
++#include "hw/vfio/vfio-region.h"
++#include "hw/vfio/vfio-helpers.h"
++#include "hw/vfio/trace.h"
+ 
+ /*
+  * These are to defend against a malign server trying
+  * to force us to run out of memory.
+  */
+-#define VFIO_USER_MAX_REGIONS   100
+ #define VFIO_USER_MAX_IRQS      50
+ 
+ bool vfio_user_get_device_info(VFIOUserProxy *proxy,
+@@ -209,14 +211,17 @@ static int vfio_user_device_io_get_region_info(VFIODevice *vbasedev,
+                                                struct vfio_region_info *info,
+                                                int *fd)
+ {
+-    VFIOUserFDs fds = { 0, 1, fd};
+-    int ret;
++    int fds[VFIO_USER_MAX_MAX_FDS];
++    VFIOUserFDs user_fds = { 0, VFIO_USER_MAX_MAX_FDS, fds };
++    int i, ret;
++
++    *fd = -1;
+ 
+     if (info->index > vbasedev->num_initial_regions) {
+         return -EINVAL;
+     }
+ 
+-    ret = vfio_user_get_region_info(vbasedev->proxy, info, &fds);
++    ret = vfio_user_get_region_info(vbasedev->proxy, info, &user_fds);
+     if (ret) {
+         return ret;
+     }
+@@ -225,10 +230,29 @@ static int vfio_user_device_io_get_region_info(VFIODevice *vbasedev,
+     if ((info->flags & VFIO_REGION_INFO_FLAG_CAPS) &&
+         (info->cap_offset < sizeof(*info)
+          || info->cap_offset + sizeof(struct vfio_info_cap_header) > info->argsz)) {
+-        return -EINVAL;
++        ret = -EINVAL;
++    } else if (vfio_get_region_info_cap(info,
++                                        VFIO_REGION_INFO_CAP_SPARSE_MMAP_FDS)) {
++        if (info->index < VFIO_USER_MAX_REGIONS && user_fds.recv_fds > 0) {
++            VFIOUserFDs *saved = vfio_user_getfds(user_fds.recv_fds);
++
++            saved->recv_fds = user_fds.recv_fds;
++            memcpy(saved->fds, fds, user_fds.recv_fds * sizeof(int));
++            vfio_user_free_fds(vbasedev->proxy->region_fds[info->index]);
++            vbasedev->proxy->region_fds[info->index] = saved;
++            return 0;
++        }
++    } else if (user_fds.recv_fds > 0) {
++        *fd = fds[0];
++        fds[0] = -1;
+     }
+ 
+-    return 0;
++    for (i = 0; i < user_fds.recv_fds; i++) {
++        if (fds[i] >= 0) {
++            close(fds[i]);
++        }
++    }
++    return ret;
+ }
+ 
+ static int vfio_user_device_io_get_irq_info(VFIODevice *vbasedev,
+@@ -518,12 +542,76 @@ static int vfio_user_device_io_region_write(VFIODevice *vbasedev, uint8_t index,
+ /*
+  * Socket-based io_ops
+  */
++static int vfio_user_device_io_setup_sparse_mmaps(VFIORegion *region,
++                                                  struct vfio_region_info *info,
++                                                  Error **errp)
++{
++    struct vfio_info_cap_header *hdr;
++    struct vfio_region_info_cap_sparse_mmap_fds *sparse_fds;
++    VFIOUserFDs *user_fds = NULL;
++    int i;
++
++    hdr = vfio_get_region_info_cap(info, VFIO_REGION_INFO_CAP_SPARSE_MMAP_FDS);
++    if (!hdr) {
++        return vfio_default_setup_sparse_mmaps(region, info, errp);
++    }
++
++    if (vfio_get_region_info_cap(info, VFIO_REGION_INFO_CAP_SPARSE_MMAP)) {
++        error_setg(errp, "%s: region %d cannot specify both "
++                   "SPARSE_MMAP and SPARSE_MMAP_FDS", __func__, region->nr);
++        return -EINVAL;
++    }
++
++    sparse_fds = container_of(hdr, struct vfio_region_info_cap_sparse_mmap_fds,
++                              header);
++
++    trace_vfio_region_sparse_mmap_header(region->vbasedev->name,
++                                         region->nr, sparse_fds->nr_areas);
++
++    if (region->nr < VFIO_USER_MAX_REGIONS) {
++        user_fds = region->vbasedev->proxy->region_fds[region->nr];
++    }
++    if (!user_fds || user_fds->recv_fds > sparse_fds->nr_areas) {
++        error_setg(errp, "%s: invalid fd count %d for %u sparse mmap areas "
++                   "in region %d", __func__,
++                   user_fds ? user_fds->recv_fds : 0,
++                   sparse_fds->nr_areas, region->nr);
++        return -EINVAL;
++    }
++
++    region->mmaps = g_new0(VFIOMmap, sparse_fds->nr_areas);
++
++    for (i = 0; i < sparse_fds->nr_areas; i++) {
++        struct vfio_region_sparse_mmap_fd_area *area = &sparse_fds->areas[i];
++
++        if (area->size == 0 || area->offset > region->size ||
++            area->size > region->size - area->offset ||
++            area->fd_index >= user_fds->recv_fds) {
++            error_setg(errp, "%s: invalid sparse mmap area %d in region %d",
++                       __func__, i, region->nr);
++            g_free(region->mmaps);
++            region->mmaps = NULL;
++            return -EINVAL;
++        }
++
++        trace_vfio_region_sparse_mmap_entry(i, area->offset,
++                                            area->offset + area->size - 1);
++        region->mmaps[i].offset = area->offset;
++        region->mmaps[i].fd_offset = area->fd_offset;
++        region->mmaps[i].size = area->size;
++        region->mmaps[i].fd = user_fds->fds[area->fd_index];
++    }
++
++    region->nr_mmaps = sparse_fds->nr_areas;
++    return 0;
++}
++
+ VFIODeviceIOOps vfio_user_device_io_ops_sock = {
+     .device_feature = vfio_user_device_io_device_feature,
+     .get_region_info = vfio_user_device_io_get_region_info,
++    .setup_sparse_mmaps = vfio_user_device_io_setup_sparse_mmaps,
+     .get_irq_info = vfio_user_device_io_get_irq_info,
+     .set_irqs = vfio_user_device_io_set_irqs,
+     .region_read = vfio_user_device_io_region_read,
+     .region_write = vfio_user_device_io_region_write,
+-
+ };
+diff --git a/hw/vfio-user/proxy.c b/hw/vfio-user/proxy.c
+index 197aee07bf..44e2a839b0 100644
+--- a/hw/vfio-user/proxy.c
++++ b/hw/vfio-user/proxy.c
+@@ -363,6 +363,8 @@ static int vfio_user_recv_one(VFIOUserProxy *proxy, Error **errp)
+         }
+ 
+         memcpy(msg->fds->fds, fdp, numfds * sizeof(int));
++    } else if (msg->fds != NULL) {
++        msg->fds->recv_fds = 0;
+     }
+ 
+     /*
+@@ -740,6 +742,10 @@ bool vfio_user_send_wait(VFIOUserProxy *proxy, VFIOUserHdr *hdr,
+ 
+     qemu_mutex_unlock(&proxy->lock);
+ 
++    if (!ok && fds != NULL) {
++        fds->recv_fds = 0;
++    }
++
+     return ok;
+ }
+ 
+@@ -867,17 +873,30 @@ void vfio_user_send_error(VFIOUserProxy *proxy, VFIOUserHdr *hdr, int error)
+ }
+ 
+ /*
+- * Close FDs erroneously received in an incoming request.
++ * Close and free received FDs.
+  */
+-void vfio_user_putfds(VFIOUserMsg *msg)
++void vfio_user_free_fds(VFIOUserFDs *fds)
+ {
+-    VFIOUserFDs *fds = msg->fds;
+     int i;
+ 
++    if (!fds) {
++        return;
++    }
++
+     for (i = 0; i < fds->recv_fds; i++) {
+-        close(fds->fds[i]);
++        if (fds->fds[i] >= 0) {
++            close(fds->fds[i]);
++        }
+     }
+     g_free(fds);
++}
++
++/*
++ * Close FDs erroneously received in an incoming request.
++ */
++void vfio_user_putfds(VFIOUserMsg *msg)
++{
++    vfio_user_free_fds(msg->fds);
+     msg->fds = NULL;
+ }
+ 
+@@ -967,6 +986,7 @@ void vfio_user_set_handler(VFIODevice *vbasedev,
+ void vfio_user_disconnect(VFIOUserProxy *proxy)
+ {
+     VFIOUserMsg *r1, *r2;
++    int i;
+ 
+     qemu_mutex_lock(&proxy->lock);
+ 
+@@ -1027,6 +1047,10 @@ void vfio_user_disconnect(VFIOUserProxy *proxy)
+         vfio_user_iothread = NULL;
+     }
+ 
++    for (i = 0; i < VFIO_USER_MAX_REGIONS; i++) {
++        vfio_user_free_fds(proxy->region_fds[i]);
++    }
++
+     g_free(proxy->sockname);
+     g_free(proxy);
+ }
+@@ -1214,6 +1238,18 @@ static bool check_multi(VFIOUserProxy *proxy, QObject *qobj, Error **errp)
+     return true;
+ }
+ 
++static bool check_sparse_mmap_fds(VFIOUserProxy *proxy, QObject *qobj,
++                                  Error **errp)
++{
++    QBool *qb = qobject_to(QBool, qobj);
++
++    if (qb == NULL) {
++        error_setg(errp, "malformed %s", VFIO_USER_CAP_SPARSE_MMAP_FDS);
++        return false;
++    }
++    return true;
++}
++
+ static struct cap_entry caps_cap[] = {
+     { VFIO_USER_CAP_MAX_FDS, check_max_fds },
+     { VFIO_USER_CAP_MAX_XFER, check_max_xfer },
+@@ -1221,6 +1257,7 @@ static struct cap_entry caps_cap[] = {
+     { VFIO_USER_CAP_MAP_MAX, check_max_dma },
+     { VFIO_USER_CAP_MIGR, check_migr },
+     { VFIO_USER_CAP_MULTI, check_multi },
++    { VFIO_USER_CAP_SPARSE_MMAP_FDS, check_sparse_mmap_fds },
+     { NULL }
+ };
+ 
+@@ -1280,6 +1317,7 @@ static GString *caps_json(void)
+     qdict_put_int(capdict, VFIO_USER_CAP_PGSIZES, VFIO_USER_DEF_PGSIZE);
+     qdict_put_int(capdict, VFIO_USER_CAP_MAP_MAX, VFIO_USER_DEF_MAP_MAX);
+     qdict_put_bool(capdict, VFIO_USER_CAP_MULTI, true);
++    qdict_put_bool(capdict, VFIO_USER_CAP_SPARSE_MMAP_FDS, true);
+ 
+     qdict_put_obj(dict, VFIO_USER_CAP, QOBJECT(capdict));
+ 
+-- 
+2.56.0.385.gd3acb90ef8-goog
 
-         # Run workload before migration to check if it continues
-         # to run properly after migration.
-
-Kind regards,
-Alex
-
->
-> $ ./run ../tests/functional/x86_64/test_nvme_migration.py X8664NVMeMigrat=
-ionTest.test_migration_with_unix
-> TAP version 13
-> Traceback (most recent call last):
->   File "/home/zhexu/git/qemu/tests/functional/x86_64/test_nvme_migration.=
-py", line 162, in test_migration_with_unix
->     self.migration_with_unix()
->     ~~~~~~~~~~~~~~~~~~~~~~~~^^
->   File "/home/zhexu/git/qemu/tests/functional/migration.py", line 98, in =
-migration_with_unix
->     self.migrate(dst_uri)
->     ~~~~~~~~~~~~^^^^^^^^^
->   File "/home/zhexu/git/qemu/tests/functional/migration.py", line 78, in =
-migrate
->     self.migrate_vms(dst_uri, src_uri, dst_vm, src_vm)
->     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
->   File "/home/zhexu/git/qemu/tests/functional/migration.py", line 63, in =
-migrate_vms
->     self.assert_dest_vm(dst_vm)
->     ~~~~~~~~~~~~~~~~~~~^^^^^^^^
->   File "/home/zhexu/git/qemu/tests/functional/x86_64/test_nvme_migration.=
-py", line 128, in assert_dest_vm
->     self.exec_command_and_check(
->     ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
->         "kill -0 $(cat /tmp/test_nvme_mig_workload.pid)", vm)
->         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
->   File "/home/zhexu/git/qemu/tests/functional/x86_64/test_nvme_migration.=
-py", line 48, in exec_command_and_check
->     wait_for_console_pattern(self, 'OK', failure_message=3D"FAIL", vm=3Dv=
-m)
->     ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
->   File "/home/zhexu/git/qemu/tests/functional/qemu_test/cmd.py", line 191=
-, in wait_for_console_pattern
->     return _console_interaction(test, success_message, failure_message,
->                                 None, vm=3Dvm)
->   File "/home/zhexu/git/qemu/tests/functional/qemu_test/cmd.py", line 134=
-, in _console_interaction
->     done, line =3D _console_read_line_until_match(test, vm,
->                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
->                                                 success_message_b,
->                                                 ^^^^^^^^^^^^^^^^^^
->                                                 failure_message_b)
->                                                 ^^^^^^^^^^^^^^^^^^
->   File "/home/zhexu/git/qemu/tests/functional/qemu_test/cmd.py", line 70,=
- in _console_read_line_until_match
->     test.fail(
->     ~~~~~~~~~^
->         f"'{failure}' found in console, expected '{success}'")
->         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-> AssertionError: 'b'FAIL'' found in console, expected 'b'OK''
->
-> not ok 1 test_nvme_migration.X8664NVMeMigrationTest.test_migration_with_u=
-nix
-> 1..1
->
-> Copy the author too (Alexander).
->
-> >
-> > *NOTE*: obviously this can't be merged as is but I think we could
-> > certainly do with more tracking in the test to see when things aren't
-> > working with possibly the sleep as another patch.
-> >
-> > Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
-> > ---
-> >  tests/functional/migration.py                 | 37 +++++++++++++++----
-> >  .../functional/x86_64/test_nvme_migration.py  |  1 +
-> >  2 files changed, 31 insertions(+), 7 deletions(-)
-> >
-> > diff --git a/tests/functional/migration.py b/tests/functional/migration=
-.py
-> > index 8d2428efc24..e51a82c22f4 100644
-> > --- a/tests/functional/migration.py
-> > +++ b/tests/functional/migration.py
-> > @@ -22,18 +22,41 @@ class MigrationTest(QemuSystemTest):
-> >      timeout =3D 10
-> >
-> >      @staticmethod
-> > -    def migration_finished(vm):
-> > -        return vm.cmd('query-migrate')['status'] in ('completed', 'fai=
-led')
-> > +    def migration_finished(query):
-> > +        return query['status'] in ('completed', 'failed')
-> >
-> > -    def assert_migration(self, src_vm, dst_vm):
-> > +    def wait_for_vm(self, src_or_dst, vm):
-> > +        "Track the state of one VM in the migration"
-> > +        current_state =3D last_state =3D vm.cmd('query-migrate')
-> >
-> > -        end =3D time.monotonic() + self.timeout
-> > -        while time.monotonic() < end and not self.migration_finished(s=
-rc_vm):
-> > -            time.sleep(0.1)
-> > +        self.log.info(f"waiting for {src_or_dst} to complete")
-> >
-> >          end =3D time.monotonic() + self.timeout
-> > -        while time.monotonic() < end and not self.migration_finished(d=
-st_vm):
-> > +        while time.monotonic() < end:
-> > +            if self.migration_finished(current_state):
-> > +                break
-> > +            else:
-> > +                last_remain =3D last_state['remaining']
-> > +                current_remain =3D current_state['remaining']
-> > +
-> > +                if current_remain > last_remain:
-> > +                    self.log.warning(f"slow migration {current_remain}=
- > {last_remain}")
-> > +
-> >              time.sleep(0.1)
-> > +            last_state =3D current_state
-> > +            current_state =3D vm.cmd('query-migrate')
-> > +
-> > +
-> > +    def assert_migration(self, src_vm, dst_vm):
-> > +
-> > +        self.wait_for_vm("src", src_vm)
-> > +
-> > +        # if we hit this we never completed...
-> > +        self.assertEqual(src_vm.cmd('query-migrate')['status'], 'compl=
-eted')
-> > +
-> > +        self.wait_for_vm("dst", dst_vm)
-> > +
-> > +        self.log.info("checking everything is OK")
-> >
-> >          self.assertEqual(src_vm.cmd('query-migrate')['status'], 'compl=
-eted')
-> >          self.assertEqual(dst_vm.cmd('query-migrate')['status'], 'compl=
-eted')
-> > diff --git a/tests/functional/x86_64/test_nvme_migration.py b/tests/fun=
-ctional/x86_64/test_nvme_migration.py
-> > index 890f0aab6d6..58596f63cd3 100755
-> > --- a/tests/functional/x86_64/test_nvme_migration.py
-> > +++ b/tests/functional/x86_64/test_nvme_migration.py
-> > @@ -109,6 +109,7 @@ def launch_source_vm(self, vm):
-> >                  rm -f /tmp/test_nvme_mig_workload.iter_finished; \
-> >                  echo 3 > /proc/sys/vm/drop_caches; \
-> >                  find /usr/bin -type f -exec cksum {} \\;; \
-> > +                sleep 0.3; \
-> >                  touch /tmp/test_nvme_mig_workload.iter_finished; \
-> >              done) > /dev/null 2> /tmp/test_nvme_mig_workload.errors &"=
-,
-> >              prompt, vm=3Dvm)
-> > --
-> > 2.47.3
-> >
->
-> --
-> Peter Xu
->
 
