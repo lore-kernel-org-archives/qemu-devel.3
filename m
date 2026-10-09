@@ -4,89 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFD58CA6012
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Oct 2026 09:32:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5271CA6019
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Oct 2026 09:49:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xF6xy-0002PR-0q; Fri, 09 Oct 2026 05:32:38 -0400
+	id 1xF7Du-00045K-Ol; Fri, 09 Oct 2026 05:49:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xF6xw-0002Or-2i
- for qemu-devel@nongnu.org; Fri, 09 Oct 2026 05:32:36 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
+ id 1xF7Dq-00044Z-Ul
+ for qemu-devel@nongnu.org; Fri, 09 Oct 2026 05:49:04 -0400
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xF6xu-0003Ro-71
- for qemu-devel@nongnu.org; Fri, 09 Oct 2026 05:32:35 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-4a172eb31f0so32871335e9.1
- for <qemu-devel@nongnu.org>; Fri, 09 Oct 2026 02:32:33 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
+ id 1xF7Dp-0004e8-Lf
+ for qemu-devel@nongnu.org; Fri, 09 Oct 2026 05:49:02 -0400
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-48b02b1b4cfso1102989f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 09 Oct 2026 02:49:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1791538352; x=1792143152; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=nXMnABsLVhQcouyZTVCpK7268L+zO7BcHPMDvI6NMyA=;
- b=fjeevgsMxzRhcsbxOKyT+SXunwiWEKSboo42And1Iz3gF0oapdWOA+VOf0cpCRWAqy
- mLwLBjOaKIPGJAyCXVnU/9wEY4sPDCRjbrZzCYwAArTXk5xJ73BvlxGoOoTs5He5Ecdv
- xKHkawul7M5WVuTDFe+IgES3W6evPMuV4pTqj8lRLoHK7HS+2a4P/SGavjQadS5lA6IH
- CRra6c4dsu5LGIaUJdag8WuSdZ0N+fjNSM+UE+RRoAaK63iVYoq/vWHhQ6ntDqwKfDm1
- BmP2uE8O1H5RiDy0bc5rXq2sOmm3HjikMMlcickjmea9kY6+31ulKv/eC2TskhDx7kS4
- ZWaQ==
+ d=linaro.org; s=google; t=1791539339; x=1792144139; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=iekTtIyfqhClx8lzdggH837LZU04iv0fatAxdMHhpQI=;
+ b=pE16jzaODkiiBiSYbnx8h97bZgqd3eC+VN9sSa51cx95ZH+LRB4X0rpXK+cn4XUKKC
+ 49P3nv8PaZfeaotYKZggcR7B0wYPObhNe75+1ydaizsiw7BBTg4KQA4HpxIFoUhl3Ro7
+ vNvsurrgou7tFy1pUTh2ulpxwefV7gavF7+Dw4bbfRGOvKNkcXFrPC86evmZXv0jPR/R
+ mmHmadn/5Tbd+UYUssNKkOqyNAF+gkLpOctmndFXPLo2xN07buLj5HAPVWqRdcTMdd/4
+ MFVMe50uiZ/2If1ovSo9bjr43EphUfLtYT34Gqm6hmTp8YPOZaeEJBj/j9N6a7cKlWfD
+ Lggw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791538352; x=1792143152;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=nXMnABsLVhQcouyZTVCpK7268L+zO7BcHPMDvI6NMyA=;
- b=dXV5CIvXEOfiWS7zyJMZsJ3JkZubSVZ8Ro4X/mCDe9Xn1aLSYYEvbfqOAPGLFS1R4S
- oJWW0LgT91vifdNSdZAdmDj0RaGHpIplmpbKXpqCi3yeYVQgoe8m80exy8cX6fP6pl5e
- pu8CaHP3j/8x5J4efn/KD2Y+hWHhXIfD8U1SAVWbGRhUMpLkbeq8i4k5yZG7tw/8Pj+N
- B3qYt/qu5z0tcRAOCtucgw8wllC2XBg0ZzID+zp7//sBMr0KAmCpwJJJFld9CxftFV6I
- s/vJDs+zJpea8DlgzasirNcs4z7ObppdcwaqWoN6bN/jkYO1enbqkAF00Gz2V/X9LC0l
- qVtQ==
-X-Forwarded-Encrypted: i=1;
- AKwUvBwHaBYMtEjic/zwhLR3FWtlXtfIsupQq2wHjRDOAjGtZvIcwC0gFLm0g4NZBpK89WAl/KOpVWZhpepE@nongnu.org
-X-Gm-Message-State: AFuF++lTS755wfXBlKBjU1ghzAGy3b82FQX72v9UVy1miLMgz7f/SFAV
- faJQqVyeSVpiVVnuDuwpqV6awDS0+K9GNBKniSrJnZzuqbEwNXErGfci5CTYM6hRDBU=
-X-Gm-Gg: AYBFou3amKzClbdly+S2G9oAq/WqAeWackkPKBN9xi4zrG5zodkNgX4KkShKZIuX+B8
- 8dBUeIb13vnfDqp+8xjncTrWfw928D6HkScjOOPtZdZCKAaKYWHOq4tTIaplTcf7EVim7w7EFoY
- TilO6nQ2QMyYBxUjaRGsme22mnRjQjjOClQaIXKpKPKWMwm/EdMDiplVtL98eoN83PpLNyFSlm0
- WduEAcCq8lWvXwUf4ypOkORmbBQQjH+zhP66oJGRzUxy3WEZZuLctX94T43u3S+9GBykau/srAE
- 4gz8og0DX0guG4NXVFUxvjhzBFPe4eMt8YJJs5LUDYXXg5go9q7DVkVSIB2M2JJihYlFvxPZFRL
- K5LlyKAgwl3AwqsI0+ofz+IGHGtHQx3vEVM71tEtPy/UBWw6zY+evOSxltKHNdnf5vAEqLx9GGN
- 7Z87yxNIBv+wTKCwGvxF7jwXEJLa5dDLyaZQ3QlNjqCVBSrFeZlA/8kiSawa364nh8t2TboQORI
- j60KfHI2nf1vJnGCHkKixvQG+TxRdtIw9KCyuLb5bKMJnmaiC9pM1ljeSeULJlU3g8kBJB3avMr
- hg==
-X-Received: by 2002:a05:600c:46cf:b0:4a1:7e1f:21bc with SMTP id
- 5b1f17b1804b1-4a18e4d6636mr23347745e9.29.1791538352045; 
- Fri, 09 Oct 2026 02:32:32 -0700 (PDT)
-Received: from [10.86.151.227]
- (ipservice-092-208-245-012.092.208.pools.vodafone-ip.de. [92.208.245.12])
+ d=1e100.net; s=20260707; t=1791539339; x=1792144139;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=iekTtIyfqhClx8lzdggH837LZU04iv0fatAxdMHhpQI=;
+ b=psaDcOCVIGf81wHm/Qd8QBTg/sJEhYqDnohEDeOFsoDjjqIE/tsUkPZOcMPu8pq8NB
+ 6OheKc5s8danzhEl69yX2Q7pQJzxx39KkUh/L3ssNUhDOGPfUcsqlDq4XDMxaXWiXuzZ
+ zbqkT9lvei9yzAv87qIugOl1pcULmCOBbE8qKTJ4qUi3U/6Kvs01mF26KRYGyhB+Pf0e
+ BV8ctlh6/2PdI1VKw9grR4WOJ5iYcQR57G/KHOUZvZTyMBvo6Es++Nm/btB0aNVNirpt
+ hhLmk64P0RSvRDH5PPf7uPXsmVMhcQ1xO8J57TtcsdigZw7AspjMD5ePK27hLOypmIiU
+ 0q/w==
+X-Gm-Message-State: AFq9FYKV1ggYyVth30CuqzwYcXPAFBicOpd9YfB0Jg4JZ+g9doTQRVcM
+ eIcY4Mzixzjb7Pk4bIydZGPbeUkOOnWv65ur7NjSjJjxLZ8lvTahyC1XkiZDW0fZBfd/06EY181
+ 7D0SSUXM=
+X-Gm-Gg: AYBFou1Kuq1ZlLBA5CE1PpwqcW8bBKWwFkFlGP90XLxu6EtkjPEcvUcZyxIqroNKoC6
+ Q6nFW83mFVjuw95VQIeGCldZGf286lMjMgPjMLUGMUNZ4Fxhg7TZIR5GTog8aqkY/WCqhFaWLv8
+ /yaEKc6fTUgko7EuezCoAIeFH+4SNdJvHshEV36HviKfmw0XRw66YLjzZ9uj8PfF2bYqYdxKa12
+ gaHQcvNMJ/pnNW1xkMLYoRgh2shMW2oFsDqpbOf20RZSZ39gMoeZLY6Li1LrqKGkHwSyWi/qzHb
+ c7X3F+91gOFQTmlXN32vnbwxVfG2vpR2bg6EkgJ4RO50iHa2RygS1iey66lkgMEu/Dudhzmjiw3
+ ko1FRCukH7GJD33FhpYC6FRszdpIMmFwstY1h41hiThfaSTzQxzoA9VCqQm0LQ6DXnSbW+eg1A0
+ LXZpsFxUvdMoCNFXR4VObEmD9MPt1vTLnoJrGMVQEolU+wRtEL7oX041F1/6VlFeTit/BbCG72C
+ Crm8XrMPfE=
+X-Received: by 2002:a05:6000:298d:20b0:48b:469:b562 with SMTP id
+ ffacd0b85a97d-48dba7b3284mr1939816f8f.2.1791539339035; 
+ Fri, 09 Oct 2026 02:48:59 -0700 (PDT)
+Received: from linaro.org ([2a10:d582:31e:0:fde2:547b:5069:256e])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48db9ad56a6sm2702184f8f.52.2026.10.09.02.32.30
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 09 Oct 2026 02:32:31 -0700 (PDT)
-Message-ID: <9764ac74-ad13-4694-9a7e-de22dc067b37@linaro.org>
-Date: Fri, 9 Oct 2026 11:32:28 +0200
+ ffacd0b85a97d-48db9aca657sm2981436f8f.43.2026.10.09.02.48.58
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 09 Oct 2026 02:48:58 -0700 (PDT)
+Date: Fri, 9 Oct 2026 10:48:57 +0100
+From: Jim MacArthur <jim.macarthur@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: philmd@oss.qualcomm.com
+Subject: Re: [PATCH] hw/intc/arm_gicv5: Make IRS_IDR0 reads return actual
+ value, not 0
+Message-ID: <asi4iR9eMPPgQIkS@linaro.org>
+References: <20261008092327.4036856-1-peter.maydell@linaro.org>
+ <5d81e092-86f2-4459-a34b-460d69009568@oss.qualcomm.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 00/11] MSHV changes for 2026-10-06
-To: Magnus Kulke <magnuskulke@linux.microsoft.com>, qemu-devel@nongnu.org
-Cc: Wei Liu <wei.liu@kernel.org>,
- =?UTF-8?Q?Doru_Bl=C3=A2nzeanu?= <dblanzeanu@linux.microsoft.com>,
- Magnus Kulke <magnuskulke@microsoft.com>, Paolo Bonzini <pbonzini@redhat.com>
-References: <20261006164905.776466-1-magnuskulke@linux.microsoft.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20261006164905.776466-1-magnuskulke@linux.microsoft.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x32c.google.com
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <5d81e092-86f2-4459-a34b-460d69009568@oss.qualcomm.com>
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=jim.macarthur@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,33 +105,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/6/26 18:48, Magnus Kulke wrote:
-> Various minor fixes and a feature (gdb debugger support) for the Microsoft
-> Hypervisor (mshv) accelerator. The changes have been rebased and re-tested
-> individually.
+On Thu, Oct 08, 2026 at 11:36:59AM +0200, Philippe Mathieu-Daudé wrote:
+> On 8/10/26 11:23, Peter Maydell wrote:
+> > IN the code for handling reads of IRS_IDR0, we carefully construct
+> > the correct value starting with cs->irs_idr0 and adjusting it.
+> > However, we never actually write the final value into *data, so
+> > the guest will always see zero.
+> > 
+> > We didn't notice this before, because Linux happens to not care
+> > about this register value except to check for the presence of
+> > virtualization.
+> > 
+> > Cc: qemu-stable@nongnu.org
+> > Fixes: 405ad2e76f13254 ("hw/intc/arm_gicv5: Implement IRS ID regs")
+> > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> > ---
+> >   hw/intc/arm_gicv5.c | 1 +
+> >   1 file changed, 1 insertion(+)
+> > 
+> > diff --git a/hw/intc/arm_gicv5.c b/hw/intc/arm_gicv5.c
+> > index 08878193dfc..ebfb0878af3 100644
+> > --- a/hw/intc/arm_gicv5.c
+> > +++ b/hw/intc/arm_gicv5.c
+> > @@ -1433,6 +1433,7 @@ static bool config_readl(GICv5 *s, GICv5Domain domain, hwaddr offset,
+> >               /* ...which means VIRT_ONE_N is also RES0 */
+> >               v &= ~R_IRS_IDR0_VIRT_ONE_N_MASK;
+> >           }
 > 
-> My public certificate is available at:
-> https://mkulke.github.io/magnuskulke.asc
-> 
-> Primary key fingerprint:
-> 5255 B617 7982 9168 7022 31CA 68D9 BB56 DD17 8417
-> 
-> The following changes since commit 3377670ee96b5a68361016680a95b9013709d4b7:
-> 
->    Merge tag 'linux-user-next-pull-request' ofhttps://github.com/hdeller/qemu-hppa into staging (2026-10-05 07:14:51 +0200)
-> 
-> are available in the Git repository at:
-> 
->    https://github.com/mkulke/qemu.git tags/mkulke-pull-20261006
-> 
-> for you to fetch changes up to 7d42b0a4f52d57cd2d9e0a9ceb8ad5102219a801:
-> 
->    target/i386/mshv: support single-stepping (2026-10-06 18:14:35 +0200)
-> 
-> ----------------------------------------------------------------
-> mshv changes for 2026-10-06
+> Looking at the code path it is obvious, I wonder why compilers or
+> coverity didn't warned 'v' is set but not used...
 
-Applied, thanks.
+AFAICT, 'param @= RHS' counts as a use with -Wunused-but-set-variable in GCC up to version 15; GCC 16.1 adds an exception for this and should warn.
 
-r~
+Jim
 
