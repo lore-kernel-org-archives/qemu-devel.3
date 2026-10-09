@@ -4,99 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38C33CA601E
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Oct 2026 18:30:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3699BCA601E
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Oct 2026 18:30:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xFFKl-0000Ss-0N; Fri, 09 Oct 2026 14:28:43 -0400
+	id 1xFFL5-0000gA-9l; Fri, 09 Oct 2026 14:29:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1xFFKj-0000SD-BR; Fri, 09 Oct 2026 14:28:41 -0400
+ id 1xFFKt-0000Yd-1a; Fri, 09 Oct 2026 14:28:52 -0400
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1xFFKh-0001fA-DK; Fri, 09 Oct 2026 14:28:41 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ id 1xFFKr-0001hD-Bs; Fri, 09 Oct 2026 14:28:50 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 699HZtUe592640; Fri, 9 Oct 2026 18:28:38 GMT
+ 699Ha4Xi3714688; Fri, 9 Oct 2026 18:28:48 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=/R1jV4bvhICiNXxcx
- u5gq03iIy7JoIeiYQZy5TolR+Y=; b=OylqPIM4CVkQVQsBOa/w/zq7kk+JXYQ6l
- K2UDHdhAiXd3ryaTvkUASJR6cy+hjnZcV2QzGFINC6zfybgkCLyduV/SQ8Y0l1nE
- dWJoFyaF+I+qUuQpUpgq+BKt4Zerp8M6dfJJ3NIHPXNgctHpjvGG1giP4wZQ3RG9
- gT2HoeQVgsaL+Thor7H5aup+uQw88dCsl7Pl62pAr8hPNhPGZq/9IdyQHjAPnHUe
- MJK1VlMOFUzEId4nYK6QD3rHp6v6ok/MHpS/oOcNly+a7f9hm6EZpWoUE0/fXF0b
- 2okJPbADxTYi8wCEb+bJWJR+E4oLn1f/byL8xCUiiUpAWkmyWCj8g==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4h74tdg8b1-1
+ :mime-version:references:subject:to; s=pp1; bh=ZRPgz6qR933JQAUhf
+ JnauJMw5nsKnr1kch91eypDPkg=; b=Pa9/ionLOXWf07LDTRZw0Mz2FiGiYgETi
+ 7EDEXlJE/t4pIHETFvWJpBXozUZS5mm4KDkc9RS5pjpmgNTWCrLPQRqHeZw5v8M+
+ 6SboBQvZITxovw+rud74+mEWMZyHmMMV3S1n/SVlBfvETXfIQRGvuOxPFbPCIGu8
+ Ud74WFsNhzQFU/LoQvjP6UkWOBPdwp8yHdm8Q44vMQNDNspPSfeqr/9hmFBZuR5h
+ Wuzgfydwi3JI/oc9ygLbn8+R6uLKk5W0cDGN7QG4AcRFfbjYi8AaohIo829Qb/fv
+ 3mV9XrkeA684savzLm1He+mznnlRJx26WDr3HydwRLZ8n6AmMsDig==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4h74ter88f-1
  (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Fri, 09 Oct 2026 18:28:38 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 699H8OsO1207063; Fri, 9 Oct 2026 18:28:37 GMT
-Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4h6hsnm7nn-1
+ Fri, 09 Oct 2026 18:28:47 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 699H8OIl4125988; Fri, 9 Oct 2026 18:28:47 GMT
+Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4h5f3u45nb-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 09 Oct 2026 18:28:37 +0000 (GMT)
+ Fri, 09 Oct 2026 18:28:47 +0000 (GMT)
 Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
  [10.39.53.230])
- by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 699ISaej12387062
+ by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 699ISjCs197260
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 9 Oct 2026 18:28:36 GMT
+ Fri, 9 Oct 2026 18:28:45 GMT
 Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 049C25805D;
- Fri,  9 Oct 2026 18:28:36 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id B1D385805A;
+ Fri,  9 Oct 2026 18:28:45 +0000 (GMT)
 Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0B8885805A;
- Fri,  9 Oct 2026 18:28:35 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id D55D958054;
+ Fri,  9 Oct 2026 18:28:44 +0000 (GMT)
 Received: from li-479af74c-31f9-11b2-a85c-e4ddee11713b.ibm.com.com (unknown
  [9.61.5.156]) by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Fri,  9 Oct 2026 18:28:34 +0000 (GMT)
+ Fri,  9 Oct 2026 18:28:44 +0000 (GMT)
 From: Eric Farman <farman@linux.ibm.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-s390x@nongnu.org, Matthew Rosato <mjrosato@linux.ibm.com>,
  Cornelia Huck <cohuck@redhat.com>,
  Konstantin Shkolnyy <kshk@linux.ibm.com>,
  Eric Farman <farman@linux.ibm.com>
-Subject: [PULL 07/19] s390x/pci: Move/rename enabled from S390PCIIOMMU to
- S390PCIBusDevice
-Date: Fri,  9 Oct 2026 14:28:13 -0400
-Message-ID: <20261009182825.148054-8-farman@linux.ibm.com>
+Subject: [PULL 15/19] s390x/pci: Provide each zpci device with a unique stable
+ bus "path"
+Date: Fri,  9 Oct 2026 14:28:21 -0400
+Message-ID: <20261009182825.148054-16-farman@linux.ibm.com>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261009182825.148054-1-farman@linux.ibm.com>
 References: <20261009182825.148054-1-farman@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA5MDA3MiBTYWx0ZWRfX3I3DTTSxPhT1
- V8c4qyqguAEx5xi9PbX1Nl2lHXF4DMWfTjju4V9VGxZCn4pcUBUzaBx2aRRhtTlueeIR3YuUFV9
- BACDtNykaBLu4bo7hKMYBZ9AvkVi1kwo/A7O0IQ4XuTyOE6rwaAPYWbzEhrc+tIkG0xG721rcCa
- TKwF7e2cX1sI9TAI0HK4nXabSEKbPa26Xv2mrQUEMndYqNdj/3crWuCQ1I5ZlzZNheLfO/DGBhg
- dcCsCEti/UtbyV6FhfuXGbhb83EDnyk2EOq3A8afcb/Y5jfZbgE6RmweCEiSuxuXJZB800G8OBa
- i7ay6DL2nwxee6P9tY+KSCpetbjlNCe62hVYp1uhXHF9SdrsYljhwi1K3D9Ex+RJx+ISsMxaoBJ
- D2p0uRQnR7OJQQ2tS/u2IeYMlw0KIxgaFCN/lfqsk46Xg2b1fLqjBIQUxECPaOUKxX0eR3dTL71
- 1YP+fXU121olKFUmjMw==
-X-Authority-Analysis: v=2.4 cv=FqWQbGrq c=1 sm=1 tr=0 ts=6ac93256 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+X-Proofpoint-ORIG-GUID: QdWxz4K78jNG_kSja1XQyc3OUh6jD8g4
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA5MDA3MiBTYWx0ZWRfXwj4ES9EtUoEE
+ 07QJUtnEVbEeDmgheuRT8OjOq4EOxPhdPLaIkTcG45Myw0MoUFlAb0TEz07LHIoY179aHmeM75O
+ loomHWUuYZvY4laU5aeAfB1Suwd9pbiKFyTbc7L+OUJTe1hU53rhxvseh5bgjuDQYNqCk0vdJH2
+ 1ufgQ9oIRREjIvyQtbUvkeckTPJQZoR6tHXjMlxIXuU90c10iKybvsvey3MK3aYcaYN9j8WHB6I
+ wt3ieE+nbgwuUYaVplgx50+oSpu6lfQrZPxypggTJGsWJBMezhYxBgfErJEud/phzimqIcX0QWh
+ LDjfHPvWVHaZkN1+EHwEsP+ob2UB3oyvRPc+u+VbNNWKA8kzsHdkxRmFw3yBXqq/1iZ+v7nwkM1
+ 9mwy33gm6sU1xGkwR7eQWrYZXzrKkRlql7aW6WaLvH8X6ld2ipZ0kwHmYi7ncagYEbMtFu2gPy7
+ lttWoyqYOI9pxWHi3eA==
+X-Proofpoint-GUID: QdWxz4K78jNG_kSja1XQyc3OUh6jD8g4
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA5MDA3MiBTYWx0ZWRfX8VRf9sM4DvZC
+ nOMTzl8EItkRaOTPcycIfoIumlx8GFYPy1/fThbWiYr+6lCn5IV4+59CeV0mVrSbwI/V1NB+Uhg
+ lD++0HDUeNgMkvsu4KxBWDIypJDNnlQ=
+X-Authority-Analysis: v=2.4 cv=Nf1zRGD4 c=1 sm=1 tr=0 ts=6ac93260 cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
  a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8
- a=i0DCopz73FH-yKe2uwYA:9
-X-Proofpoint-GUID: s0zYXpoLDsFYTPHVfSAUG1U9Y-IHBYbh
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA5MDA3MiBTYWx0ZWRfXy4F1U+Q+GidC
- LNxNKYGBWsP2OzV7QEQk/EP9TFfu/1KMU0bASA71SNyKm+ZTnTMr+Z684jguv8lWorQ4KE6w0V1
- tDa6sJHgREQObbia7hDfjrVYXzdh+5A=
-X-Proofpoint-ORIG-GUID: s0zYXpoLDsFYTPHVfSAUG1U9Y-IHBYbh
+ a=V8glGbnc2Ofi9Qvn3v5h:22 a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8
+ a=X9i1E-zOIupQ93g3ad8A:9
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-10-09_05,2026-10-09_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 spamscore=0 suspectscore=0 priorityscore=1501 impostorscore=0
- adultscore=0 lowpriorityscore=0 bulkscore=0 phishscore=0 clxscore=1015
+ phishscore=0 bulkscore=0 priorityscore=1501 clxscore=1015 malwarescore=0
+ lowpriorityscore=0 impostorscore=0 adultscore=0 suspectscore=0 spamscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2610080000 definitions=main-2610090072
 Received-SPF: pass client-ip=148.163.158.5; envelope-from=farman@linux.ibm.com;
@@ -125,150 +125,62 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Konstantin Shkolnyy <kshk@linux.ibm.com>
 
-This field is only used when S390PCIBusDevice exists, so it can be moved
-there to simplify S390PCIIOMMU towards a structure that contains only the IOMMU
-container information needed by the PCI layer for a given slot.
+This is necessary for the follow-on migration support. The new unique
+UID-based bus "path" is used as part of idstr in the migration stream,
+making idstr unique and instance_id always 0.
 
-This also allows to save/restore this field during migration.
+For migration to succeed, (idstr+instance_id) must match those generated
+during QEMU start. Without unique idstr, QEMU will generate variable
+instance_id to distinguish devices, and that instance_id can change
+if a device is unplugged and plugged back, preventing migration.
 
+Signed-off-by: Konstantin Shkolnyy <kshk@linux.ibm.com>
 Reviewed-by: Farhan Ali <alifm@linux.ibm.com>
 Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Signed-off-by: Konstantin Shkolnyy <kshk@linux.ibm.com>
-Link: https://lore.kernel.org/qemu-devel/20261006001643.420929-8-kshk@linux.ibm.com
+Link: https://lore.kernel.org/qemu-devel/20261006001643.420929-16-kshk@linux.ibm.com
 Signed-off-by: Eric Farman <farman@linux.ibm.com>
 ---
- hw/s390x/s390-pci-bus.c         | 14 +++++++-------
- hw/s390x/s390-pci-inst.c        |  8 ++++----
- include/hw/s390x/s390-pci-bus.h |  2 +-
- 3 files changed, 12 insertions(+), 12 deletions(-)
+ hw/s390x/s390-pci-bus.c | 23 +++++++++++++++++++++++
+ 1 file changed, 23 insertions(+)
 
 diff --git a/hw/s390x/s390-pci-bus.c b/hw/s390x/s390-pci-bus.c
-index d74d0c4925..3a071eab54 100644
+index 799e596fec..7dff771ee6 100644
 --- a/hw/s390x/s390-pci-bus.c
 +++ b/hw/s390x/s390-pci-bus.c
-@@ -206,7 +206,7 @@ void s390_pci_sclp_deconfigure(SCCB *sccb)
-         } else if (pbdev->summary_ind) {
-             pci_dereg_irqs(pbdev);
-         }
--        if (pbdev->iommu->enabled) {
-+        if (pbdev->iommu_enabled) {
-             pci_dereg_ioat(pbdev);
-         }
-         pbdev->state = ZPCI_FS_STANDBY;
-@@ -555,7 +555,7 @@ static IOMMUTLBEntry s390_translate_iommu(IOMMUMemoryRegion *mr, hwaddr addr,
-     switch (pbdev->state) {
-     case ZPCI_FS_ENABLED:
-     case ZPCI_FS_BLOCKED:
--        if (!iommu->enabled) {
-+        if (!pbdev->iommu_enabled) {
-             return ret;
-         }
-         break;
-@@ -794,7 +794,7 @@ void s390_pci_iommu_enable(S390PCIBusDevice *pbdev)
-     memory_region_init_iommu(&pbdev->iommu_mr, sizeof(pbdev->iommu_mr),
-                              TYPE_S390_IOMMU_MEMORY_REGION, OBJECT(&iommu->mr),
-                              name, iommu->pal + 1);
--    iommu->enabled = true;
-+    pbdev->iommu_enabled = true;
-     memory_region_add_subregion(&iommu->mr, 0, MEMORY_REGION(&pbdev->iommu_mr));
-     g_free(name);
- }
-@@ -817,7 +817,7 @@ void s390_pci_iommu_direct_map_enable(S390PCIBusDevice *pbdev)
-     memory_region_init_alias(pbdev->dm_mr, OBJECT(&iommu->mr), name,
-                              get_system_memory(), 0,
-                              s390_get_memory_limit(s390ms));
--    iommu->enabled = true;
-+    pbdev->iommu_enabled = true;
-     memory_region_add_subregion(&iommu->mr, pbdev->zpci_fn.sdma,
-                                 pbdev->dm_mr);
- }
-@@ -825,7 +825,7 @@ void s390_pci_iommu_direct_map_enable(S390PCIBusDevice *pbdev)
- void s390_pci_iommu_disable(S390PCIBusDevice *pbdev)
- {
-     S390PCIIOMMU *iommu = pbdev->iommu;
--    iommu->enabled = false;
-+    pbdev->iommu_enabled = false;
-     g_hash_table_remove_all(pbdev->iotlb);
-     if (pbdev->dm_mr) {
-         memory_region_del_subregion(&iommu->mr, pbdev->dm_mr);
-@@ -1434,7 +1434,7 @@ static void s390_pcihost_reset(DeviceState *dev)
-             } else if (pbdev->summary_ind) {
-                 pci_dereg_irqs(pbdev);
-             }
--            if (pbdev->iommu->enabled) {
-+            if (pbdev->iommu_enabled) {
-                 pci_dereg_ioat(pbdev);
-             }
-             pbdev->state = ZPCI_FS_STANDBY;
-@@ -1575,7 +1575,7 @@ static void s390_pci_device_reset(DeviceState *dev)
-     } else if (pbdev->summary_ind) {
-         pci_dereg_irqs(pbdev);
+@@ -1474,10 +1474,33 @@ static const TypeInfo s390_pcihost_info = {
      }
--    if (pbdev->iommu->enabled) {
-+    if (pbdev->iommu_enabled) {
-         pci_dereg_ioat(pbdev);
-     }
+ };
  
-diff --git a/hw/s390x/s390-pci-inst.c b/hw/s390x/s390-pci-inst.c
-index 30114abd43..c1d9be232a 100644
---- a/hw/s390x/s390-pci-inst.c
-+++ b/hw/s390x/s390-pci-inst.c
-@@ -1299,7 +1299,7 @@ int mpcifc_service_call(S390CPU *cpu, uint8_t r1, uint64_t fiba, uint8_t ar,
-         if (dmaas != 0) {
-             cc = ZPCI_PCI_LS_ERR;
-             s390_set_status_code(env, r1, ZPCI_MOD_ST_DMAAS_INVAL);
--        } else if (pbdev->iommu->enabled) {
-+        } else if (pbdev->iommu_enabled) {
-             cc = ZPCI_PCI_LS_ERR;
-             s390_set_status_code(env, r1, ZPCI_MOD_ST_SEQUENCE);
-         } else if (reg_ioat(env, pbdev, fib, ra)) {
-@@ -1311,7 +1311,7 @@ int mpcifc_service_call(S390CPU *cpu, uint8_t r1, uint64_t fiba, uint8_t ar,
-         if (dmaas != 0) {
-             cc = ZPCI_PCI_LS_ERR;
-             s390_set_status_code(env, r1, ZPCI_MOD_ST_DMAAS_INVAL);
--        } else if (!pbdev->iommu->enabled) {
-+        } else if (!pbdev->iommu_enabled) {
-             cc = ZPCI_PCI_LS_ERR;
-             s390_set_status_code(env, r1, ZPCI_MOD_ST_SEQUENCE);
-         } else {
-@@ -1322,7 +1322,7 @@ int mpcifc_service_call(S390CPU *cpu, uint8_t r1, uint64_t fiba, uint8_t ar,
-         if (dmaas != 0) {
-             cc = ZPCI_PCI_LS_ERR;
-             s390_set_status_code(env, r1, ZPCI_MOD_ST_DMAAS_INVAL);
--        } else if (!pbdev->iommu->enabled) {
-+        } else if (!pbdev->iommu_enabled) {
-             cc = ZPCI_PCI_LS_ERR;
-             s390_set_status_code(env, r1, ZPCI_MOD_ST_SEQUENCE);
-         } else {
-@@ -1452,7 +1452,7 @@ int stpcifc_service_call(S390CPU *cpu, uint8_t r1, uint64_t fiba, uint8_t ar,
-         /* fallthrough */
-     case ZPCI_FS_ENABLED:
-         fib.fc |= 0x80;
--        if (pbdev->iommu->enabled) {
-+        if (pbdev->iommu_enabled) {
-             fib.fc |= 0x10;
-         }
-         if (!(fh & FH_MASK_ENABLE)) {
-diff --git a/include/hw/s390x/s390-pci-bus.h b/include/hw/s390x/s390-pci-bus.h
-index d67daeb34d..b851295b44 100644
---- a/include/hw/s390x/s390-pci-bus.h
-+++ b/include/hw/s390x/s390-pci-bus.h
-@@ -276,7 +276,6 @@ struct S390PCIIOMMU {
-     Object parent_obj;
-     AddressSpace as;
-     MemoryRegion mr;
--    bool enabled;
-     uint64_t g_iota;
-     uint64_t pba;
-     uint64_t pal;
-@@ -351,6 +350,7 @@ struct S390PCIBusDevice {
-     S390MsixInfo msix;
-     AdapterRoutes routes;
-     S390PCIIOMMU *iommu;
-+    bool iommu_enabled;
-     IOMMUMemoryRegion iommu_mr;
-     MemoryRegion *dm_mr;
-     GHashTable *iotlb;
++/* Return a unique bus "path" for zpci device */
++static char *s390_pci_bus_get_dev_path(DeviceState *dev)
++{
++    S390PCIBusDevice *pbdev = S390_PCI_DEVICE(dev);
++    return g_strdup_printf("uid-%04x", pbdev->uid);
++}
++
++static void s390_pcibus_class_init(ObjectClass *oc, const void *data)
++{
++    BusClass *bc = BUS_CLASS(oc);
++    bc->get_dev_path = s390_pci_bus_get_dev_path;
++}
++
+ static const TypeInfo s390_pcibus_info = {
+     .name = TYPE_S390_PCI_BUS,
+     .parent = TYPE_BUS,
+     .instance_size = sizeof(S390PCIBus),
++    /*
++     * Implement get_dev_path() to provide each zpci device with a unique
++     * stable UID-based bus "path". The "path" is used as part of idstr in the
++     * migration stream, making idstr unique and instance_id always 0.
++     * For migration to succeed, (idstr+instance_id) must match those generated
++     * during QEMU start. Without unique idstr, QEMU will generate variable
++     * instance_id to distinguish devices, and that instance_id can change
++     * if a device is unplugged and plugged back, preventing migration.
++     */
++    .class_init = s390_pcibus_class_init,
+ };
+ 
+ static uint16_t s390_pci_generate_uid(S390pciState *s)
 -- 
 2.56.0
 
