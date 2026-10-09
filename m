@@ -4,97 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F147CA601F
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Oct 2026 11:10:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36441CA6019
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Oct 2026 11:10:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xF8U6-0006JY-8t; Fri, 09 Oct 2026 07:09:54 -0400
+	id 1xF8U8-0006K3-5r; Fri, 09 Oct 2026 07:09:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <sraymaek@redhat.com>)
- id 1xF8U2-0006Ip-Mf
- for qemu-devel@nongnu.org; Fri, 09 Oct 2026 07:09:50 -0400
+ id 1xF8U5-0006JV-2Z
+ for qemu-devel@nongnu.org; Fri, 09 Oct 2026 07:09:54 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <sraymaek@redhat.com>)
- id 1xF8U0-0004K2-I4
- for qemu-devel@nongnu.org; Fri, 09 Oct 2026 07:09:50 -0400
+ id 1xF8U3-0004KQ-Iq
+ for qemu-devel@nongnu.org; Fri, 09 Oct 2026 07:09:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1791544187;
+ s=mimecast20190719; t=1791544190;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=24tljc/ou8F6cXiORt1Rv6xohs99S9vsUVPTcgCJQI8=;
- b=KwHhgfpz0JaYC+qeZSV46dNUg8Mlx6SndyPMWBd5QGZdHXLeXskTojUDq2nCJ0+e0My18S
- cq3ZNWPrIXxq5aEDs5h1RjuLUXhMGH/l3JhwwY1Zo9qXb0hae6QPtahmoml6Sm4kK3FX75
- chzbHBUJCv8/nEiCdBhQc/eNgVR3LUk=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=THbHmPcOnWna3rDRL3qlDBa4vGxL3Q3ZNaUJ270cj4E=;
+ b=MNpT4o53B+fnrDOqzb6aMtqlQbU4Xp9h7i2RfXkk2HEYQ4RAYurbki86tB3dujOMM6VXl0
+ 8ke6VXoq8Cx/oQvuhYYKnd+iTSf7cNUmitqPhyOIf7G+s26ZHE4oJXR8BmPlN59anW/rT3
+ rh7H7YE0UrM01D/ljPE4/Lkbsk771x4=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-528-suTxljnyOzmgkiq26TsXoQ-1; Fri, 9 Oct 2026 11:09:45 +0000
-X-MC-Unique: suTxljnyOzmgkiq26TsXoQ-1
-X-Mimecast-MFC-AGG-ID: suTxljnyOzmgkiq26TsXoQ_1791544185
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-48af4046a3bso5318826f8f.2
- for <qemu-devel@nongnu.org>; Fri, 09 Oct 2026 04:09:45 -0700 (PDT)
+ us-mta-672-SDsz--VYNjaNrcLmuSUEiw-1; Fri, 9 Oct 2026 11:09:48 +0000
+X-MC-Unique: SDsz--VYNjaNrcLmuSUEiw-1
+X-Mimecast-MFC-AGG-ID: SDsz--VYNjaNrcLmuSUEiw_1791544188
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4a01d1fb07bso63924685e9.2
+ for <qemu-devel@nongnu.org>; Fri, 09 Oct 2026 04:09:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1791544184; x=1792148984; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=24tljc/ou8F6cXiORt1Rv6xohs99S9vsUVPTcgCJQI8=;
- b=fzdpo3pCqXPOb68pK96wj1Sq17suFKVcMlscguYKuaabMoGlMMepjDo16aYRZVXZum
- EoSt+b6qL/qBsGIeV+gZM0/xw4lI6NBPiG96nlpfDNCqy8z9c87DOMcNNaPjBglg9lEb
- oARyRL4paBhaYb95bJx8SEpJ0AAvuPVQlhLfnSWf0GyudX+a7gPs7ABbxeJkFXlvVDwj
- gpG/KXFl4v3P0zTWTI7YYnpvw6cIKsN77xyCtZJtn6YdfyLxZDVQEIpUYwO47lz1YS3G
- dlFFKSPfXndNs0kno+ghB3Ct5pSLIIPDYnf5SGpC8ux7LWVgSn0I5HRFuxuy0dSEQ5CY
- P1JA==
+ d=redhat.com; s=google; t=1791544187; x=1792148987; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=THbHmPcOnWna3rDRL3qlDBa4vGxL3Q3ZNaUJ270cj4E=;
+ b=GsZl0d/CRVi67JLNwu02krc1QGbBsvEXFqUE5le6XR0f9+FCxpMEJUZGxDSqdUw2KS
+ T+0Is4wEAfeFsLGXia7/EOT1T84o3euL2P5p/1fRVKvx8UrbD/ZwGkngxr84YRto/c9I
+ kzxw9ipaxJ4Yoiud+rZ8riJ+xgojpIRq760MmS2CWhxCxskZCNPJaVNlwTu1ob//8O3F
+ faVCDVHu15VGT3q7JERCWO1k5FPnL2DxUm086qcoMJ/UuIiZVASzBV/IC+T5FSF5ugZE
+ 7qdlb3ZGqowd233TBzWtMoTT8ZZDZMOfvbV/AerCs6DTtfSOdljUjFObXk8ZYUPEu5y+
+ 9PKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791544184; x=1792148984;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=24tljc/ou8F6cXiORt1Rv6xohs99S9vsUVPTcgCJQI8=;
- b=b3a8SrIkMU8I0BXcE7JjfLcyux7siKxlQfTPa9KAEad4EF3LSAot1M5gWt9h3GM+V4
- Eii7ER3Fth9igvnT6OeOo5/sLjYBp+DSb2+tAkGoFxEYCvB7yop0rc77F/ZqYFewJIZk
- srh+Z6BE5U7kuw8R4ratQGfbckBM/qHa5w4p8A9wqNM5M6VVbYr4Gl3X/8pKTTnbwK8K
- mvf5/wOb6RLY7f6GsZVbXO4DpkniKbO+AS5Ir7ufomc5OUr/o7EMlqFLZvOBxKxwO1Ch
- x0yE8C2NHzcepMqiwgPJSq94WInaX78NLF3nxEDI6LKBeVd4/a6RgEq0ZP5BDYMqZrEo
- +ErQ==
-X-Gm-Message-State: AFq9FYIDGJNuIMjVSiYlcxIx+Jfq0LmwT06D4OhyLiuye6jWWv5pu1nH
- xS6MZJb8Hi6WXrcqInazvTzalxVF2IozDez1lj+sjLLIL7PaNYDn16Hn9k7AZP3UYb9o55vKoi6
- ZPl6bR6EjRq/iO0AaSfw77q8p10CKB/SSSvbfhknLCmZ5V3Dnnblr/QkwbfbhDEkjpamcpIqWDG
- sBYPLTBqgyERn7POSaMLSbS+2fbat8DH/JXZWicMBs
-X-Gm-Gg: AYBFou2yqxsRTZKLvtNc0jk0kbOfRO+6DaBW8nO4S60mo0X5vA+JIp1o4b8KTvqAlYh
- +dduHrzCTURtctGSizEPo06OU85+WbcnHiOL4GMztFXBOPPNQrID84bAkYBpiV64oIMetBpOu14
- xcnegX8iFFke3rCfjMGuabARVcKKJvln+vi0/2NWyu1bpLyUR0Ote9ETSRsbWF/kcuyinR+rcyY
- o9V5TN0Glg/9ZJrQWXdKDQ8D2xIAgv6nob+PqJtBsEtHQKAqB2ZnyBGKKMUTUCBuzp+JvoQNOVN
- iWOEIGLotkVxh6J5CgSAQJVXQ0hEN4zq5OcYtX0Po40YX3lj1KzTYncU1oXUVtewQHVYS++ML7R
- Ldg45pUnlm++NaQCogRtjAF5Cd7GWnFAFb6oqGgkvnu5KossLyzAl5Dgp8AoWLf4GWsvO6S1Q4E
- kIXpMKYlGJWrESLd10ZDhfe8gc/EGbw+Gn
-X-Received: by 2002:a5d:4b4e:0:b0:48c:6958:ad6b with SMTP id
- ffacd0b85a97d-48dbacd9de0mr2197898f8f.44.1791544184509; 
- Fri, 09 Oct 2026 04:09:44 -0700 (PDT)
-X-Received: by 2002:a5d:4b4e:0:b0:48c:6958:ad6b with SMTP id
- ffacd0b85a97d-48dbacd9de0mr2197849f8f.44.1791544184029; 
- Fri, 09 Oct 2026 04:09:44 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1791544187; x=1792148987;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=THbHmPcOnWna3rDRL3qlDBa4vGxL3Q3ZNaUJ270cj4E=;
+ b=iX9iOM2eyZvt77M0CTsqqjTyEOda1pH8SQ0L2EImKCMT3JaSxttd6+P9G2HEypjrip
+ PkhoO5oGDQpzfvZSG6t5PCeK64/IERwufOE4ZWrrkRrSA1lQncfJaeq8oLFfZ4DlkORa
+ A083Dqenhwn1Rz+kIREwZAuthKfqjWCpHsMPGRZBsuKPtROApRp3dlmcu8YxTb5v4AqJ
+ qOXw/KPgCuOP2c3OMLNwHUSxSccLjfr8lfWRIe9O7oHri8vwuRR4ohEiRUrKd+nfTiPJ
+ P1GXE5Q0zK1joumD9dcW9Hq25uCKdhNDMYz3UVmPENCOc7x6WB2M6R0wJyrRddsTMlWT
+ onQg==
+X-Gm-Message-State: AFuF++m1WjBkRkQ0YvIFbrEUiy2V1ON1jWXY8DCZhw7wDiyRq3rYJ1e0
+ 4jvCmTwBJfBsPv/S2r055diNZTZVa1YqzKzJJ+z/H7VzJ5+8iCh12aYixL/x636gU4R+bkq5uqM
+ FStMsPM0T2lzEBSRxcfjB4LokDm75RPAE2t0YEh++cmAS6bA4YA8Sr+LYzIduPTr6oV19iLHHn8
+ 4VmoANK9U8rKo6tnNvMSkmNWcuzi/BQo+OLrKpTyKV
+X-Gm-Gg: AYBFou3Mdn5G+K6mh0wn8xfdBdL5uzYD1oI2u/V4hwKDwQQVnurnVvijU2Dpgmn99ZN
+ htmswHJ+WFVhlsUiAmiv2IJa9fJYHFbKxjLJphbqK53qwL9EwE4Rv4PZXYVs61rfotHfTlcSQf1
+ g7YKfcFyzQcvkwyLJbai2d7RJKR+UqeMF+io6Pg0ebjpvvMKG4h1itI8g83riwrynuMWHL/zaVu
+ JF0Exk2E/CmgXtrBTszFGEn5nBtjLag6vx0mHmIlRasZPRSl9WwteQ1PekErmFNZfEk8OIQTGnY
+ /eDsMMmRMP1bb9zBE65sqK+6/P+7QXt9eZZCdpIU/oGkiyDnn2wU4JUYivasGTpDYxkxo6k+HV/
+ kWvzZiD9gXV3H4B9B4Bw4dgke8bjWW9LfsOG0UW0ja+Fgyp5dB4F2/KIMCk+4X/Wck6ArA+d98h
+ V/7FcUuKBsCj+Qi7ULYPtnDJEqHV2xcySI
+X-Received: by 2002:a05:600c:4ec9:b0:4a1:7739:f9ab with SMTP id
+ 5b1f17b1804b1-4a18e4ca953mr27318385e9.20.1791544187444; 
+ Fri, 09 Oct 2026 04:09:47 -0700 (PDT)
+X-Received: by 2002:a05:600c:4ec9:b0:4a1:7739:f9ab with SMTP id
+ 5b1f17b1804b1-4a18e4ca953mr27318005e9.20.1791544187016; 
+ Fri, 09 Oct 2026 04:09:47 -0700 (PDT)
 Received: from sraymaek-thinkpadx1nanogen2.rmtbe.csb
  (2a02-1811-d30-6f00-217b-1d12-f4f3-7e56.ip6.access.telenet.be.
  [2a02:1811:d30:6f00:217b:1d12:f4f3:7e56])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48db94e530esm3295680f8f.13.2026.10.09.04.09.43
+ ffacd0b85a97d-48db94e530esm3295680f8f.13.2026.10.09.04.09.45
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 09 Oct 2026 04:09:43 -0700 (PDT)
+ Fri, 09 Oct 2026 04:09:46 -0700 (PDT)
 From: Sanne Raymaekers <sraymaek@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, fam@euphon.net, kwolf@redhat.com, hreitz@redhat.com,
  Sanne Raymaekers <sraymaek@redhat.com>
-Subject: [PATCH v2 0/3] block/vmdk: fixes for stream optimized disks
-Date: Fri,  9 Oct 2026 13:09:02 +0200
-Message-ID: <20261009110905.905070-1-sraymaek@redhat.com>
+Subject: [PATCH v2 3/3] block/vmdk: add eos marker for stream optimized disks
+Date: Fri,  9 Oct 2026 13:09:05 +0200
+Message-ID: <20261009110905.905070-4-sraymaek@redhat.com>
 X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20261009110905.905070-1-sraymaek@redhat.com>
+References: <20261009110905.905070-1-sraymaek@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=sraymaek@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -104,7 +107,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,37 +123,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The stream optimized disks produced by qemu-img did not quite adhere to
-the specification. This could trip up other software consuming these
-disks. The goal of these patches is to get the VMDKs produced by QEMU to
-better match the specification, the Virtual Disk Format 5.0 Technical
-Note.
+The end of stream marker should be at the very end of a stream optimized
+disk. It consists of a regular marker struct with `val`, `size` and
+`type` set to 0. It is then padded with more 0s to fill out a
+sector. This effectively results in 512 zero bytes.[^1]
 
-For instance, when packaging the VMDK up in an OVA archive (a ustar
-archive containing an OVF, a manifest and a VMDK), errors occur when
-importing that OVA into VMWare Workstation. Specifically the digest in
-the manifest does not match the digest of the VMDK, because Workstation
-reads (and parses) the disk contents and then makes a digest, rather
-than making a digest of the whole VMDK file. Extra null bytes at the
-very end will trip it up, as they are ignored in the digest made by
-Workstation, but are included in the digest produced by something like
-shasum.
-
-Note that stream optimized disks, while not adhering to the
-specification fully, are still useable by VMWare tooling, with some
-workarounds where needed. For instance, VSphere does not have the same
-issue as Workstation.
+[^1] Virtual Disk Format 5.0 Technical Note.
 
 Signed-off-by: Sanne Raymaekers <sraymaek@redhat.com>
+---
+ block/vmdk.c | 46 ++++++++++++++++++++++++++--------------------
+ 1 file changed, 26 insertions(+), 20 deletions(-)
 
-Sanne Raymaekers (3):
-  block/vmdk: align stream optimized data grains on 512 byte chunks
-  block/vmdk: skip RGD for stream optimized disks
-  block/vmdk: add eos marker for stream optimized disks
-
- block/vmdk.c | 117 ++++++++++++++++++++++++++++++---------------------
- 1 file changed, 70 insertions(+), 47 deletions(-)
-
+diff --git a/block/vmdk.c b/block/vmdk.c
+index 68eebd4a78..4811928595 100644
+--- a/block/vmdk.c
++++ b/block/vmdk.c
+@@ -195,6 +195,13 @@ typedef struct VmdkGrainMarker {
+     uint8_t  data[];
+ } QEMU_PACKED VmdkGrainMarker;
+ 
++typedef struct EosMarker {
++   uint64_t val;
++   uint32_t size;
++   uint32_t type;
++   uint8_t pad[512 - 16];
++} QEMU_PACKED EosMarker;
++
+ enum {
+     MARKER_END_OF_STREAM    = 0,
+     MARKER_GRAIN_TABLE      = 1,
+@@ -987,12 +994,7 @@ vmdk_open_vmdk4(BlockDriverState *bs, BdrvChild *file, int flags,
+             VMDK4Header header;
+             uint8_t pad[512 - 4 - sizeof(VMDK4Header)];
+ 
+-            struct {
+-                uint64_t val;
+-                uint32_t size;
+-                uint32_t type;
+-                uint8_t pad[512 - 16];
+-            } QEMU_PACKED eos_marker;
++            EosMarker eos_marker;
+         } QEMU_PACKED footer;
+ 
+         ret = bdrv_pread(file, bs->file->bs->total_sectors * 512 - 1536,
+@@ -2180,24 +2182,28 @@ vmdk_co_pwritev_compressed(BlockDriverState *bs, int64_t offset, int64_t bytes,
+                            QEMUIOVector *qiov)
+ {
+     if (bytes == 0) {
+-        /* The caller will write bytes 0 to signal EOF.
+-         * When receive it, we align EOF to a sector boundary. */
++        /* The caller will write bytes 0 to signal EOF. */
+         BDRVVmdkState *s = bs->opaque;
+-        int i, ret;
++        int ret;
+         int64_t length;
++        QEMU_AUTO_VFREE EosMarker *eos_marker = NULL;
+ 
+-        for (i = 0; i < s->num_extents; i++) {
+-            length = bdrv_co_getlength(s->extents[i].file->bs);
+-            if (length < 0) {
+-                return length;
+-            }
+-            length = QEMU_ALIGN_UP(length, BDRV_SECTOR_SIZE);
+-            ret = bdrv_co_truncate(s->extents[i].file, length, false,
+-                                   PREALLOC_MODE_OFF, 0, NULL);
+-            if (ret < 0) {
+-                return ret;
+-            }
++        /* Stream optimized disks should only contain a single extent. */
++        assert(s->num_extents == 1);
++
++        /* Stream optimized disks end with an EOS marker, consisting of 512 null bytes. */
++        eos_marker = qemu_blockalign0(bs, sizeof(EosMarker));
++        length = bdrv_co_getlength(s->extents[0].file->bs);
++        if (length < 0) {
++            return length;
+         }
++        length = QEMU_ALIGN_UP(length, BDRV_SECTOR_SIZE);
++        ret = bdrv_co_pwrite(s->extents[0].file, length, sizeof(EosMarker),
++                             eos_marker, 0);
++        if (ret < 0) {
++            return ret;
++        }
++
+         return 0;
+     }
+     return vmdk_co_pwritev(bs, offset, bytes, qiov, 0);
 -- 
 2.55.0
 
