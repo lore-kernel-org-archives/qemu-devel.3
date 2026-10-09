@@ -4,91 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BB71CA6019
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Oct 2026 09:18:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 960F2CA6012
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Oct 2026 09:26:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xF6kU-0000AY-LR; Fri, 09 Oct 2026 05:18:42 -0400
+	id 1xF6rz-0001VS-NS; Fri, 09 Oct 2026 05:26:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
- id 1xF6kS-00009g-Ey
- for qemu-devel@nongnu.org; Fri, 09 Oct 2026 05:18:40 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
- id 1xF6kQ-0001v1-Uh
- for qemu-devel@nongnu.org; Fri, 09 Oct 2026 05:18:40 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-4a16aaf2067so70312185e9.0
- for <qemu-devel@nongnu.org>; Fri, 09 Oct 2026 02:18:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1791537517; x=1792142317; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=8IUik2nJ1sLoZODUFHtsZRmPOdkekH+V32LDN7J+VHQ=;
- b=odVbzv6JwXXPGLubcS/TPor3eU9B5F2KXcWMu3q+D1jVbah+DvkRAAZaMttW6fOhvv
- oGtEoHdIn2YqL33m/KwTl+SFVDiU7BGpsjXTVlrCPY6JBlsVSlqDIOwitbYcyjRJpIdM
- UKaG/d9TbZbfzs5HxjB+qseOtFTDGbqqzMLFje0cC59SVQddxw+D5U4Pv88KU+343AiO
- +7haMvec3DorTtjhSk9W1TB4FsyQaQ/I2/KROVHsVYBkpcQgql2hFEsTJIJGVwgovx3M
- mSkMzlTP0B+3XbIPM/cDfXDgajCR7fMd/gjkWkfW+xpVG6OonE9dDe1ashwxzE+2g316
- ll5A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791537517; x=1792142317;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=8IUik2nJ1sLoZODUFHtsZRmPOdkekH+V32LDN7J+VHQ=;
- b=0OOgeIFA4RzGPt6FGaMRC2zfuSce9qfZxUYtzXb7TJ+6xDAq7uj+KgAv1va/ea9nRn
- idAIBAE5GZrQX9AxJBYi977Fn+1v0vloJISxy5SkG8gEquFhr7OjDAadCjHVLSmvRh56
- Zedcs3+XC4xV2KnKP7ZbcYz+U0ZMJMc0fvShPp/Yr8L14eYh/HxLhxTzIWZXeJmDlZU5
- zlEZYHvg1UFbFpMIPJEFjECo5xPBujG8pOfvfVln0U4xnzQpu8/KN/Qre9CVt9tn9uFh
- tA2L0qTH1CY9XRF7nYxTlKmbcukCPN8/PgJmVnibJ8K0xh53ET7UKeqcACYjlOVDx7f8
- 1hxA==
-X-Forwarded-Encrypted: i=1;
- AKwUvBwaoNp44vxWUMtcHNTIGS1c/gjEUvMYHm/KtLBQWLS7FHHMbClrJMX4vfG7z905w0htY+0VpEYKjPwZ@nongnu.org
-X-Gm-Message-State: AFuF++lX3golPIYrh4ik/VVZP6KWzfas+Yq1Vr0MevzibHBvNzzqNfNm
- Ay8C80/yWfTlxa3NIg/qwDq3trguhPTyuQ0N4KYzoF3Eaj/LFOCHDIgxyCUKKs0Id0M=
-X-Gm-Gg: AYBFou1lxDOG16yH8/NZvw/AO70NBtZIn9PfRjDc82Mte+2Z8R2rRd42HGu9dMYVcuW
- NYPlMxoQjiaEe8NphikuubD9m03eKZhuyAXQLmqGtFUC7AX/4gt0qZKmK9+Fg2KfkkJAWB8CR2N
- JUo8yyqtpHlK1q3EWhpX8+EBgRayOpzstU2OzzcbJJyNiJLRGuAjLPJ8XxuiewmkvGdxTPIM076
- eZbE+fStStBFv0inM4Z+sCT1wh5YzcZeiI4p0RK+38bXD3ltL00ZyIAiFSPTWCW7fp2Lu4nGaXF
- cfzQng87u4Hc5ZGHLsXSoPjA4lEXykry6B65P5PVgXjHRd9lWo3d5N38LE6OfRPZrF4ow8e958C
- kELa6NbvhRLCUg3DeBTclU6d7wJNAIWPHw0vwcZMN1SSwruqg2bcyB+TmspNOaFyUSFddwJTRQ6
- sRaCyGqAnuB25J6DGd6MH7HdeYGYyniHLiVoLVbfdTTEeyYr/6VGGs9ik8dbQ96n/X3F4hlE744
- 4ZrV2VJkyY=
-X-Received: by 2002:a05:600c:a01:b0:49f:ce72:e931 with SMTP id
- 5b1f17b1804b1-4a18e4fe3e1mr22535255e9.35.1791537516785; 
- Fri, 09 Oct 2026 02:18:36 -0700 (PDT)
-Received: from linaro.org ([2a10:d582:31e:0:fde2:547b:5069:256e])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a18bf135fasm39591195e9.5.2026.10.09.02.18.36
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 09 Oct 2026 02:18:36 -0700 (PDT)
-Date: Fri, 9 Oct 2026 10:18:34 +0100
-From: Jim MacArthur <jim.macarthur@linaro.org>
-To: qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org
-Subject: Re: [PATCH] hw/intc/arm_gicv5: Make IRS_IDR0 reads return actual
- value, not 0
-Message-ID: <asixaoIo55u7LDXt@linaro.org>
-References: <20261008092327.4036856-1-peter.maydell@linaro.org>
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1xF6rs-0001VG-Jb
+ for qemu-devel@nongnu.org; Fri, 09 Oct 2026 05:26:21 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1xF6rn-0002lI-0G
+ for qemu-devel@nongnu.org; Fri, 09 Oct 2026 05:26:19 -0400
+Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 6999Q50H020788
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Fri, 9 Oct 2026 18:26:05 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=L8T71NZemyC0NfUGwy3a35O5SY82LrW4JzPbqaL+q7k=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=From:Message-ID:To:Subject:Date;
+ s=rs20250326; t=1791537965; v=1;
+ b=a0FtdM1QAW4d2QSAgNT9xvhsVzNHpMXtPlOW4bv8prpjPh2+/LEOs8LNYl+aVw6J
+ HS1Ooe1qtmyVnwCsBuhXqV1s9ClhPzvtrzBx8+h8oyZ6evzZho9tNueQoWd+CQ7l
+ DHXZfhv8rVmhti46+nh/QIUtNI7Db7Gi+aN1fLgRDFHrMW6JMj4wXZs8tkjUwy1P
+ QMcclzTuLstfOv3eVzMfyr0tz55pQqmFkBEq2R2DsqaXnP8GyIIfyD3OShV9vaG/
+ 8hspZZsy7MWomQ1CHNz3otw7gVfSXVUyXnXV7qh2UOD1H8e2fZH8jG43leMAysX7
+ kGl3iLVviqJc17FXouI2/g==
+Message-ID: <8da0d6fa-fe2e-4356-bf30-e17f07243ca6@rsg.ci.i.u-tokyo.ac.jp>
+Date: Fri, 9 Oct 2026 18:26:04 +0900
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20261008092327.4036856-1-peter.maydell@linaro.org>
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=jim.macarthur@linaro.org; helo=mail-wm1-x32d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v13 1/9] virtio-gpu: Find hva for Guest's DMA addr
+ associated with a ram device
+To: "Kasireddy, Vivek" <vivek.kasireddy@intel.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Alex Williamson <alex@shazbot.org>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@redhat.com>
+References: <20261007201222.648687-1-vivek.kasireddy@intel.com>
+ <20261007201222.648687-2-vivek.kasireddy@intel.com>
+ <7ee490fc-7311-48a5-aa6a-434935ca0a84@rsg.ci.i.u-tokyo.ac.jp>
+ <IA0PR11MB718508A4AD2A92CEB7A56B97F8922@IA0PR11MB7185.namprd11.prod.outlook.com>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <IA0PR11MB718508A4AD2A92CEB7A56B97F8922@IA0PR11MB7185.namprd11.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,36 +81,155 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Oct 08, 2026 at 10:23:27AM +0100, Peter Maydell wrote:
-> IN the code for handling reads of IRS_IDR0, we carefully construct
-> the correct value starting with cs->irs_idr0 and adjusting it.
-> However, we never actually write the final value into *data, so
-> the guest will always see zero.
+On 2026/10/09 13:32, Kasireddy, Vivek wrote:
+> Hi Akihiko,
 > 
-> We didn't notice this before, because Linux happens to not care
-> about this register value except to check for the presence of
-> virtualization.
+>> Subject: Re: [PATCH v13 1/9] virtio-gpu: Find hva for Guest's DMA addr
+>> associated with a ram device
+>>
+>> On 2026/10/08 5:09, Vivek Kasireddy wrote:
+>>> If the Guest provides a DMA address that is associated with a ram
+>>> device (such as a VFIO PCI device region and not its system memory),
+>>> then we can obtain the hva (host virtual address) by invoking
+>>> address_space_translate() followed by memory_region_get_ram_ptr().
+>>>
+>>> We cannot use dma_memory_map() because for memory regions that
+>> do
+>>> not support direct access, it would create bounce buffers instead
+>>> of returning the actual hva, which is not desirable here. And, since
+>>> VFIO device regions are not considered directly accessible (because
+>>> they are mostly MMIO based), virtio-gpu cannot invoke
+>> dma_memory_map()
+>>> to obtain the hva in this case.
+>>>
+>>> Therefore, in order to handle addresses associated with VFIO devices,
+>>> we need to use the address_space_translate() API to first identify
+>>> the right memory region and the appropriate offset within that
+>>> region and then use memory_region_get_ram_ptr() to get the hva.
+>>> This approach also works for addresses associated with the system
+>>> memory region.
+>>>
+>>> Note that, although we take an explicit reference on the memory
+>>> region, we would still rely on dma_memory_unmap() to drop that
+>>> reference when the dma mapping is eventually unmapped.
+>>>
+>>> Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
+>>> Cc: Alex Bennée <alex.bennee@linaro.org>
+>>> Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+>>> Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+>>> Cc: Alex Williamson <alex@shazbot.org>
+>>> Cc: Cédric Le Goater <clg@redhat.com>
+>>> Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+>>> Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
+>>> ---
+>>>    hw/display/virtio-gpu.c | 21 ++++++++++++++++++---
+>>>    1 file changed, 18 insertions(+), 3 deletions(-)
+>>>
+>>> diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
+>>> index bb0f41bb1e..386db05e5b 100644
+>>> --- a/hw/display/virtio-gpu.c
+>>> +++ b/hw/display/virtio-gpu.c
+>>> @@ -948,6 +948,23 @@ static void
+>> virtio_gpu_set_scanout_blob(VirtIOGPU *g,
+>>>                                  &fb, res, &ss.r, &cmd->error);
+>>>    }
+>>>
+>>> +static void *virtio_gpu_dma_memory_map(VirtIOGPU *g,
+>>> +                                       struct virtio_gpu_ctrl_command *cmd,
+>>> +                                       uint64_t a, hwaddr *len)
+>>> +{
+>>> +    MemoryRegion *mr;
+>>> +    hwaddr xlat;
+>>> +
+>>> +    mr = address_space_translate(VIRTIO_DEVICE(g)->dma_as, a,
+>> &xlat, len,
+>>> +                                 DMA_DIRECTION_TO_DEVICE,
+>>> +                                 MEMTXATTRS_UNSPECIFIED);
+>>> +    if (memory_region_is_ram(mr)) {
+>>> +        memory_region_ref(mr);
+>>> +        return memory_region_get_ram_ptr(mr) + xlat;
+>>
+>> On rechecking this, I don't think it is safe with Xen.
+>>
+>> memory_region_get_ram_ptr(mr) + xlat assumes a contiguous host
+>> mapping
+>> of the entire region. Xen maps guest RAM on demand through its
+>> mapcache.
+>> Here, memory_region_get_ram_ptr() obtains a mapping at offset zero
+>> without pinning the cache entry, and adding xlat afterward does not
+>> ensure that the requested range is mapped.
+>>
+>> The MemoryRegion reference keeps the region alive, but does not
+>> prevent
+>> the mapcache entry from being reused. Resource backing can therefore
+>> receive an invalid or unpinned pointer.
+>>
+>> I think we need to extend dma_memory_map() for this use case instead
+>> of
+>> replacing it, preserving its mapping and unmapping semantics.
+> I am not sure if extending dma_memory_map() might be a better/cleaner
+> solution for this use-case. If obtaining the hva/host ptr via
+> memory_region_get_ram_ptr(mr) + xlat for guest RAM is not safe with
+> Xen, then would it not make more sense to go back to using dma_memory_map()
+> for Guest RAM and memory_region_get_ram_ptr(mr) + xlat for VFIO
+> backed regions? That is, doing the following:
 > 
-> Cc: qemu-stable@nongnu.org
-> Fixes: 405ad2e76f13254 ("hw/intc/arm_gicv5: Implement IRS ID regs")
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
->  hw/intc/arm_gicv5.c | 1 +
->  1 file changed, 1 insertion(+)
+> static void *virtio_gpu_dma_memory_map(VirtIOGPU *g,
+>                                         struct virtio_gpu_ctrl_command *cmd,
+>                                         uint64_t a, hwaddr *len)
+> {
+>      MemoryRegion *mr = NULL;
+>      hwaddr xlat;
 > 
-> diff --git a/hw/intc/arm_gicv5.c b/hw/intc/arm_gicv5.c
-> index 08878193dfc..ebfb0878af3 100644
-> --- a/hw/intc/arm_gicv5.c
-> +++ b/hw/intc/arm_gicv5.c
-> @@ -1433,6 +1433,7 @@ static bool config_readl(GICv5 *s, GICv5Domain domain, hwaddr offset,
->              /* ...which means VIRT_ONE_N is also RES0 */
->              v &= ~R_IRS_IDR0_VIRT_ONE_N_MASK;
->          }
-> +        *data = v;
->          return true;
->  
->      case A_IRS_IDR1:
+>      mr = address_space_translate(VIRTIO_DEVICE(g)->dma_as, a, &xlat, len,
+>                                   DMA_DIRECTION_TO_DEVICE,
+>                                   MEMTXATTRS_UNSPECIFIED);
+>      if (memory_region_is_ram_device(mr)) {
+>          memory_region_ref(mr);
+>          return memory_region_get_ram_ptr(mr) + xlat;
+>      }
+> 
+>      return dma_memory_map(VIRTIO_DEVICE(g)->dma_as, a, len,
+>                            DMA_DIRECTION_TO_DEVICE,
+>                            MEMTXATTRS_UNSPECIFIED);
+> }
 
-Reviewed-by: Jim MacArthur <jim.macarthur@linaro.org>
+Checking this logic again, I found this patch is not necessary since 
+commit ff77a515113f ("system/memory: Make ram device region directly 
+accessible"). We can just drop it.
+
+Regards,
+Akihiko Odaki
+
+> 
+> Thanks,
+> Vivek
+> 
+>>
+>> Regards,
+>> Akihiko Odaki
+>>
+>>> +    }
+>>> +    return NULL;
+>>> +}
+>>> +
+>>>    int virtio_gpu_create_mapping_iov(VirtIOGPU *g,
+>>>                                      uint32_t nr_entries, uint32_t offset,
+>>>                                      struct virtio_gpu_ctrl_command *cmd,
+>>> @@ -993,9 +1010,7 @@ int virtio_gpu_create_mapping_iov(VirtIOGPU
+>> *g,
+>>>            /* TODO: a common DMA map SG helper */
+>>>            do {
+>>>                len = l;
+>>> -            map = dma_memory_map(VIRTIO_DEVICE(g)->dma_as, a,
+>> &len,
+>>> -                                 DMA_DIRECTION_TO_DEVICE,
+>>> -                                 MEMTXATTRS_UNSPECIFIED);
+>>> +            map = virtio_gpu_dma_memory_map(g, cmd, a, &len);
+>>>                if (!map) {
+>>>                    qemu_log_mask(LOG_GUEST_ERROR, "%s: failed to map
+>> MMIO memory for"
+>>>                                  " element %d\n", __func__, e);
+> 
 
 
