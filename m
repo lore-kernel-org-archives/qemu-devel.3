@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBD5CCA6019
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Oct 2026 14:17:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF988CA6015
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Oct 2026 14:17:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xFBOP-0005Ea-Fs; Fri, 09 Oct 2026 10:16:32 -0400
+	id 1xFBOy-0005Rq-4K; Fri, 09 Oct 2026 10:16:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <antikostya2@gmail.com>)
- id 1xFBGk-0003SM-QX
- for qemu-devel@nongnu.org; Fri, 09 Oct 2026 10:08:22 -0400
-Received: from mail-lj1-x234.google.com ([2a00:1450:4864:20::234])
+ id 1xFBH8-0003Uy-HH
+ for qemu-devel@nongnu.org; Fri, 09 Oct 2026 10:08:47 -0400
+Received: from mail-lj1-x232.google.com ([2a00:1450:4864:20::232])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <antikostya2@gmail.com>)
- id 1xFBGa-0007yM-2K
- for qemu-devel@nongnu.org; Fri, 09 Oct 2026 10:08:16 -0400
-Received: by mail-lj1-x234.google.com with SMTP id
- 38308e7fff4ca-3a76ac0bdafso14879161fa.1
- for <qemu-devel@nongnu.org>; Fri, 09 Oct 2026 07:08:07 -0700 (PDT)
+ id 1xFBH6-00080O-FS
+ for qemu-devel@nongnu.org; Fri, 09 Oct 2026 10:08:41 -0400
+Received: by mail-lj1-x232.google.com with SMTP id
+ 38308e7fff4ca-3a49a022221so30720361fa.3
+ for <qemu-devel@nongnu.org>; Fri, 09 Oct 2026 07:08:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1791554886; x=1792159686; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1791554919; x=1792159719; darn=nongnu.org;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :content-type:mime-version:subject:date:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=G4q3w1GbxfDtauogl7QvFhXf4+K7SEEens2HfxEHj9M=;
- b=rms3lzj/CIYrVO9s9qfdXjZeuDxUchQLjTL4HfWGMn6rsnuwY3N5j9pKxt7xs46fEf
- VMHySseQgBfVqBgEESoVugYQRknpVVYQVDOhpj+FsWbsDQuld09WFJl9s8nZMHWkkXec
- UgOcqK60RJqXAnf+VtRoN5bbPaI2t482u2gaDlp6QfZNohb5Q6DY6GD3gydxVlSY4hI1
- jieiWaJ0XgrEmUMCAglv+YQEVSV3i/QyK8c/2KfVAhOJEqfmoJQ4wsc0FYSVgjkUhZwE
- +DByBiDPLZsb6JdOTIa0KOjtx0+VNuHafeCTCcBFeg6pXRPj7OqLSxud9E9Gg1gXnEl6
- Ro6g==
+ bh=ft0tcGu2gGawbMzaoRRdiqTE5DGODgbTUY11kMyRl2g=;
+ b=fTWz6pSE43s3kcESoIbdmuchF0boc/PVypAoP2KqOVTRFwsL7xGyuGQ9UH50umZnk+
+ 3WWDiJSFKV/h6jvuSnxDNRVkYJnKvtnrr4GuMJUtRXtkXFyqxRKz4RzJoQTiQ8DODdHl
+ y/7zBptxk2F/2wXqyEFx5rysqPy38bC9vzulV3oTabyGRFRnkT0sarXns8rX7Z/cTaCU
+ YGJVQ+YG3F+RpoAwQ7v4lqJnn4F3DDg62KVKrXf1KmN4bM8VBY3eIM7ZreVm18qZvJbl
+ MnLME+/CZbCn+D1i6Knu5EtJhTkT2f24mNicTv3WwpTa9fMiAMBdFaBf3dYiYAx5GkOw
+ ZQeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791554886; x=1792159686;
+ d=1e100.net; s=20260707; t=1791554919; x=1792159719;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :content-type:mime-version:subject:date:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=G4q3w1GbxfDtauogl7QvFhXf4+K7SEEens2HfxEHj9M=;
- b=q5nY4l/hfBgSUkSsgiwdEbFSPu6drlKVbreC9pO1k9+Ku0X4iCGLdlZGI5DuWbZVT1
- LGFVimKsu01fDSWX0T7ag35F3lexiVxma7LOrn2OOlPvMqkKy14CcldzOzXc3lnSlkcT
- b8OYaw4yb6a9qjHhWrFog3w+b7/adaIyYufFafzoDznMDXwU9YGdWsk2m4fOX5BIdJCD
- m4dFU+kW0WwJnl7uNmtZh8+irJM6fcDTEpYbx7m+5xDOrnqYVHsO6ywp59Aoq59bjBFr
- yVA5gjQu93xZFuQF45VA8Msq86SS05w4XDDjwkGFv70E5NVrDpZbrOMxf+7qlaJaOcTX
- ZR1Q==
-X-Gm-Message-State: AFq9FYKDeC0vVWYyAQCrkvNIDwfuZ31+mSZPYzjhMAqflZ5XR5bfrYLl
- FMfBkzk/8HBlEspdnOsW+AymiWGF/x6nKmWnQ+P5n86xy4v+mGed/H13fzf/5jUfWyQ=
-X-Gm-Gg: AYBFou3N42MTv90LSHfNKvec5N5bSmC18G+2R9BB/024NDTCt+B2DK9jvm0CxTVqMbE
- ICUA/PsfDq0X7vLQHK5psGi+taBl3V82iV5gRhKi2rvOsXqrNym13dtxVS4DqNPxvv34agGBZ4g
- 504f7S5vqWIrvDjk7EHhjwRpUbYkg4DaehHuZX4pxD+Gc5VTuzR0Wr1yqDBRB+AsUzMNXCQu070
- nZn2/Yg/ueHDB1cZYCW1DLvodbzgs1jG7af9DzQrk/V3XrcTNS0L0fDM23g6DP7TwkcHW/WR7N/
- gSXMtuVvEA1zJD5InrLWIv2mPQuBMQ+tXxtu8kZT/KPOyuWx+9cTfDXscd1Ma/oz48WPKcUE4Sw
- CFnFZdgtfk0VNGoOoDNo6VBqHDJUkY6OuNHk3n8EPub/jLnM1UL7+YGF3WqOJFACAQE/uDpCdfC
- 3To4HGSlchWTRPVfCNBz3fHbIb85lFOZ6NbbrykRcz0ywXc29wNfihpKDupNBLE7ctzzB67zJHW
- WAMsUDBVG2RhgW7deWASfb/CPVKT1dixKfW9g==
-X-Received: by 2002:a2e:a585:0:b0:3a8:7db9:3b2b with SMTP id
- 38308e7fff4ca-3a9c4ebcd13mr3971881fa.1.1791554886346; 
- Fri, 09 Oct 2026 07:08:06 -0700 (PDT)
+ bh=ft0tcGu2gGawbMzaoRRdiqTE5DGODgbTUY11kMyRl2g=;
+ b=uQeCOk/ch0nKNXYSr1zyN/X2FkfaDX54ikC4JHmrJUaOY0Cfz/UZT68+pyRf/79Sw5
+ Ywh5bGTUgWC6qW545HqPPkRpBWs0VWS7Tvrl6p1ess4yTnXxm49ENwm71VEo6ZpBFRHg
+ SKQNahhekfDGtt+v/NRU0mIZTSEG1LJ+qHe8ybAv1x4qH7krpQexQQ84Fk/glD/lc/eX
+ jMTjRSry+sJJOfonQy/9i5zGmj3vt29e4xHsQhCgDOLeLfBBlyGA+EhObZrRA8OpLOQg
+ i0nanqZbdjYDz5m/jW0xiML3VeABQfFkhTuO9z8H3ndO50zbPPh0LHqmVqY2CAOJxXm8
+ i4zw==
+X-Gm-Message-State: AFq9FYKZmT130z7oDKRNUkPO4GqtkJH5BroJ+YkMSx1V3p7S2+z8DQx1
+ xwNpUVMOo0wsBvcvdsGtXi0FytCXxYn4ofXBUmHeS6UvZI7N74+yVAw/UbFYrAfPNes=
+X-Gm-Gg: AYBFou2Ew83r8TN71ZCT52y2/4ZPWItmhC3jEXkdZgt6lsnZGCVpSwmBisaA+kqnDeR
+ h98UQveGENGMGz4PCF50hESUY6UHwUulGmvjTiE4XFlIrGeLJfEDxdhzqbMmSQ5iJGla2YUbOkj
+ Mk7vnZP5Iwt7maR6B/OQdKW3Vct1C+eOXcu0Ik1eLA3P9+L3nM0yUvnaESkQ60qGziiGmZ7UGpX
+ 8dLumiafuKm+y9akJTzmD5fkeaXAIXfPh+OW+gozZpmOr0mJfnXvqqABKZRN0eXlJQOTKSut2EF
+ 26d+83Z7yrX+HcVTS4vZtF2H4yHVKXculqyGO4IV6kD9/Yi+Tfvhp7xmHHjgUTcgHUWyTEu5pCW
+ kIB1IQRxZWQrC8wv0kPM0evov6Hx6CFXDFCKeRT6dhlwceHUAMiUDRbahzE3srkjXJng5b8ffCi
+ 8SrzWNrHV/ZotFZsAYzJC9w+tA/ucsVFEahseowcvSea90g3JgnvMr28Oa7GrhGLtIGHdGdAdzF
+ Qw+jXuMuDjf/niFZ2Ea83WMvPF+nhprWd/zsVrb9PfNYIj8
+X-Received: by 2002:a05:6512:3c90:b0:5bc:b531:51d7 with SMTP id
+ 2adb3069b0e04-5bcde6b3fbemr697761e87.12.1791554918479; 
+ Fri, 09 Oct 2026 07:08:38 -0700 (PDT)
 Received: from localhost (broadband-5-228-114-10.ip.moscow.rt.ru.
  [5.228.114.10]) by smtp.gmail.com with ESMTPSA id
- 38308e7fff4ca-3a9c3cf5903sm7368481fa.42.2026.10.09.07.08.05
+ 2adb3069b0e04-5bcddecfc20sm655991e87.84.2026.10.09.07.08.37
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 09 Oct 2026 07:08:05 -0700 (PDT)
+ Fri, 09 Oct 2026 07:08:37 -0700 (PDT)
 From: Konstantin Semichastnov <antikostya2@gmail.com>
-Date: Fri, 09 Oct 2026 17:03:02 +0300
-Subject: [PATCH 1/6] hw/riscv/trace-encoder.c: move trace_running setting
- location
+Date: Fri, 09 Oct 2026 17:03:07 +0300
+Subject: [PATCH 6/6] hw/riscv/trace-encoder.c: emit PTC message when trace
+ started disabled
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261009-upstream-ntrace_filter-v1-1-8f061c9b24da@gmail.com>
+Message-Id: <20261009-upstream-ntrace_filter-v1-6-8f061c9b24da@gmail.com>
 References: <20261009-upstream-ntrace_filter-v1-0-8f061c9b24da@gmail.com>
 In-Reply-To: <20261009-upstream-ntrace_filter-v1-0-8f061c9b24da@gmail.com>
 To: qemu-devel@nongnu.org
@@ -85,33 +85,33 @@ Cc: Palmer Dabbelt <palmer@dabbelt.com>,
  Alexei Filippov <halip0503@gmail.com>, 
  Grigoriy Bereznyakov <gregoriy93.gb@gmail.com>
 X-Mailer: b4 0.16.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1589; i=antikostya2@gmail.com; 
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2352; i=antikostya2@gmail.com; 
  h=from:subject:message-id;
- bh=gGeyDS2hFxpV5iufNNIMTw2ovv0h2LPsg5wL6NWTroo=; 
- b=owEBbQKS/ZANAwAKAUiKpW6lUN52AcsmYgBqyPQWG181IfDiseaFYPEyZPv/XjgHzpIN8UmC6
- gWNsfI1v4uJAjMEAAEKAB0WIQRMBWLx2o+linEPEBhIiqVupVDedgUCasj0FgAKCRBIiqVupVDe
- dvwkD/9XMmCGBWEdCBPegg3WJIr8V2t9AOMf0iJapFAoDrG3IbDh2QjHMvSUxUYRZGDRpQ3JZGe
- dDxa6EhghQKqS0Kj/O64YyZVM+/Jd5E36RhMetM8mMv72i1u8Ze+Sqbp7YXFm3VQHhZdXd8B2gN
- XArlcrKKUB4vyK7F1fM/vzp+mcvaVdEN/ycFvkKwpTMS+HXYRUNjDXy2FC+mUq/DHK9F+wRKloo
- 1+jANuRKBgfGhgMtrUOHsxMepu5PDvLrqUTh+GqkteV3Etz71v6duZPVWRRRoRRkpLRjDIRfeLg
- sWSfio45ELl8fSdjjdkb1tC4gp698qwNDkCpYCRDoP2+6iLSJNhnnHxR6sdfUXXPqkJKAQz6MiX
- EEqvJFzmBT7TKoaHpC9lOzxbSw+dIJuIvozWp3xfz97/dqbLsFGItPzVOnFdhF+IwHbtsv87M7a
- 48D3FaMT0bPsJsFKu9PsEH4dwYyfxnUXDDmT/w6opQuJ/lKEJngIeKwXM63VOelaKzWR1/QmYQ/
- T80/aW1U0etgtFrIyqdNtTiPxcGLRHpWOBrWhYtH6OMS+RbWibEs1yLguAN9AJp5zKmCkjZWMtu
- VkSI49C6j5/w2m8yUlfp5WrM0FQbc4OqqSWypec60iSVAa7PGLVr2mcSw0OQ/NJbniV7AdZ4wil
- BAjh/zvftBZ4MPw==
+ bh=hmvihcwYPu69+wUJJkFwl77m6Awy3R/i9UzfXrnluqQ=; 
+ b=owEBbQKS/ZANAwAKAUiKpW6lUN52AcsmYgBqyPQWFssTDmJO68YDYwr34WnSfp+ZM60PtMaCA
+ SZmQpRXhHKJAjMEAAEKAB0WIQRMBWLx2o+linEPEBhIiqVupVDedgUCasj0FgAKCRBIiqVupVDe
+ drIkEAC+eP50uXN994TEd5F1mJPa5oxIxYxHqebs5IXniaFN77Dg3KV8Iv0uTkmSLamcIVYfBZt
+ P6hNHPvwipS5cb9Wqhm3eWR6HIX8nTWlqjXRfDzjrbMU4BxyMidQ5hIK6gCobtZ9EoV1fphIQvn
+ Nrvh1j5TJOWD8B2TB9Hh/ImKYwYg+QgxlSsj0UoYRBafZd9bXtpCTroyH9x+NehcqLs+7R9Mod4
+ X3UwIol6XnQOuUcBUI/CD6Pssq6ZEKYwJusTYxCs+YYgdC7yk/qkn2ewFyPI2OWyGTNeGwgsl5x
+ Xd8ioTMbQJMEzMEDgqu3ISGv6lN/SANkhknklnQlh6K9W/tO4wEOOcDCEVfvtaa3KyRPTu7g2+y
+ VbaPpt4MUC47p6urhrYyToHb5dokNan1Ag37ED6nCGF8KIilaIXrrEk5p/DuIsCWFsqaSuZZHXW
+ wsygMfdcVdtIi5WML6aCPMMqem8HDvO+psCjzYXTlKc1O6P5oYRQ1Yeng5KDbIUm3VRFreOIbIQ
+ uW7rVREvAgy+i5wsHKhiIoxcJmjpeeBSQtsgUK7q/5aU8qbEDLN03ZqZ+BXKRgaxbetP7uta6+J
+ +FOZwQhL3PDcWbEI+m5vW4nxpIWzDwHEi4mrTO6SVPdTQA2dHu23fIHF5al6kTO/37d+GI/zIIw
+ RtYmmWAr4atxjEg==
 X-Developer-Key: i=antikostya2@gmail.com; a=openpgp;
  fpr=4C0562F1DA8FA58A710F1018488AA56EA550DE76
-Received-SPF: pass client-ip=2a00:1450:4864:20::234;
- envelope-from=antikostya2@gmail.com; helo=mail-lj1-x234.google.com
-X-Spam_score_int: -7
-X-Spam_score: -0.8
-X-Spam_bar: /
-X-Spam_report: (-0.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
+Received-SPF: pass client-ip=2a00:1450:4864:20::232;
+ envelope-from=antikostya2@gmail.com; helo=mail-lj1-x232.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,48 +127,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Let's set trace_running to false after last trace emitted and to true
-before first trace message emitted.
+If we will enable filtering and enable tracing, we will see
+nothing, but according to RISC-V N-Trace (Nexus-based Trace)
+Specification v 1.0 p.8.6 Table 26 - if Trace starts disabled
+ProgTraceCorrelation with EVCODE=4(Trace Disabled) should be emitted.
+So, lets do that.
 
 Signed-off-by: Alexei Filippov <halip0503@gmail.com>
 ---
- hw/riscv/trace-encoder.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ hw/riscv/trace-encoder.c | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
 diff --git a/hw/riscv/trace-encoder.c b/hw/riscv/trace-encoder.c
-index d83bc95f35..11b07b0f3d 100644
+index e42c92d03a..71feefecd9 100644
 --- a/hw/riscv/trace-encoder.c
 +++ b/hw/riscv/trace-encoder.c
-@@ -350,6 +350,9 @@ static void trencoder_te_ctrl_postw(RegisterInfo *reg, uint64_t val)
-             trencoder_send_prog_trace_correlation(OBJECT(te), env->pc, inst_len,
-                                                   CORRELATION_TRACE_DISABLED);
-         }
-+
-+        te->trace_running = false;
-+        env->trace_running = false;
-     }
+@@ -43,6 +43,7 @@ static void rv_ntrace_update_sync_msg_cnt(TraceEncoder *trencoder);
+ static void rv_ntrace_update_sync_icnt(TraceEncoder *trencoder, uint64_t icnt);
+ static uint32_t rv_ntrace_get_source_transmission_msg(TraceEncoder *trencoder,
+                                                       uint32_t *src);
++static void trencoder_send_empty_prog_trace_correlation(TraceEncoder *te);
  
-     te->ntrace = (trTeFormat == TR_TE_CONTROL_FORMAT_NTRACE);
-@@ -359,6 +362,9 @@ static void trencoder_te_ctrl_postw(RegisterInfo *reg, uint64_t val)
-         te->ramsink_ramstart = trencoder_read_ramsink_writep(te);
-         te->ramsink_ramlimit = trencoder_read_ramsink_ramlimit(te);
- 
-+        te->trace_running = true;
-+        env->trace_running = true;
-+
-         if (te->ntrace) {
-             /*
-              * N-Trace require to trace from very first instruction,
-@@ -373,9 +379,6 @@ static void trencoder_te_ctrl_postw(RegisterInfo *reg, uint64_t val)
+ static TracePrivLevel trencoder_get_curr_priv_level(TraceEncoder *te)
+ {
+@@ -449,6 +450,8 @@ static void trencoder_te_ctrl_postw(RegisterInfo *reg, uint64_t val)
+             if (trencoder_filters_match(te, INSTRUCTION_FILTERING,
+                                         env->pc, env->pc)) {
+                 trencoder_send_prog_trace_sync(OBJECT(te), env->pc);
++            } else {
++                trencoder_send_empty_prog_trace_correlation(te);
+             }
+         } else {
              te->trace_next_insn = true;
-         }
-     }
--
--    te->trace_running = trTeInstTracing;
--    env->trace_running = trTeInstTracing;
+@@ -1317,6 +1320,19 @@ static uint32_t rv_ntrace_get_and_reset_icnt(TraceEncoder *trencoder,
+     return icnt;
  }
  
- static RegisterAccessInfo trencoder_regs_info[] = {
++static void trencoder_send_empty_prog_trace_correlation(TraceEncoder *te)
++{
++    uint32_t src_msg;
++    uint8_t msg_size;
++    g_autofree uint8_t *msg = g_malloc0(TRACE_MSG_MAX_SIZE);
++    uint32_t src_width = rv_ntrace_get_source_transmission_msg(te, &src_msg);
++
++    msg_size = rv_ntrace_gen_encoded_prog_trace_correlation_msg(
++        msg, CORRELATION_TRACE_DISABLED, 0, 1, src_msg, src_width);
++
++    trencoder_send_message_smem(te, msg, msg_size);
++}
++
+ void trencoder_send_prog_trace_correlation(Object *trencoder_obj, uint64_t pc,
+                                            uint32_t inst_len,
+                                            TraceStopReason evcode)
 
 -- 
 2.43.0
