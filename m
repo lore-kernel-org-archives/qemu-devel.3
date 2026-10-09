@@ -4,103 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 053EFCA6019
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07A1ECA601D
 	for <qemu-devel@archiver.kernel.org>; Fri,  9 Oct 2026 11:10:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xF8UB-0006Kq-UB; Fri, 09 Oct 2026 07:09:59 -0400
+	id 1xF8UI-0006Nz-R9; Fri, 09 Oct 2026 07:10:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <sraymaek@redhat.com>)
- id 1xF8U8-0006K0-0K
- for qemu-devel@nongnu.org; Fri, 09 Oct 2026 07:09:56 -0400
+ id 1xF8UF-0006LT-NV
+ for qemu-devel@nongnu.org; Fri, 09 Oct 2026 07:10:04 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <sraymaek@redhat.com>)
- id 1xF8U6-0004Ky-Gg
- for qemu-devel@nongnu.org; Fri, 09 Oct 2026 07:09:55 -0400
+ id 1xF8UE-0004M4-42
+ for qemu-devel@nongnu.org; Fri, 09 Oct 2026 07:10:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1791544193;
+ s=mimecast20190719; t=1791544201;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=SP3jzlyEfhQ2lSBO4QpbitBdHt12HNDEPoatt7VqxiI=;
- b=eyCVGVd0ICYbX9F9HAthbF1oC1RbFx5sILmMUDLAzfysWmL6lOu8D1T6xOXuOSbB2izJe/
- 8fbQIw6APZWCZ/ftUoYFP+tmkZneXLYHaIyajMECoJGlV6vhXFj48jKwfgW8MDW1deIHB3
- 5396hEDCTj84z5geMNQeJdBKugXmWX8=
+ bh=JC+nI275e75z787S60ejsvVaEWp5q4sOLxvzrk+zmYQ=;
+ b=hzGC8+OZ57azhUB1GgNygVNufhdLioZZFCpN2VSM6Pod2E1HLTnzFlVkGB0/T1067Pk7PX
+ Rq7kNI26TJKXrKcynLvND1mNQIRvE3Jkj1Q7p13Cj2La8zptmPwxg3t6Dpmmkqx31DqXFK
+ 4Q0i0Cv/bv1OnFRfWzFskJ2MI0t+2J8=
 Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
  [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-537-JUwBsMJRODK9jpWowQiiQg-1; Fri, 9 Oct 2026 11:09:46 +0000
-X-MC-Unique: JUwBsMJRODK9jpWowQiiQg-1
-X-Mimecast-MFC-AGG-ID: JUwBsMJRODK9jpWowQiiQg_1791544185
+ us-mta-295-9RRVceU0M_adcfi5cnZEng-1; Fri, 9 Oct 2026 11:09:48 +0000
+X-MC-Unique: 9RRVceU0M_adcfi5cnZEng-1
+X-Mimecast-MFC-AGG-ID: 9RRVceU0M_adcfi5cnZEng_1791544187
 Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-48b02d63407so4148518f8f.0
- for <qemu-devel@nongnu.org>; Fri, 09 Oct 2026 04:09:46 -0700 (PDT)
+ ffacd0b85a97d-48c46582442so3354478f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 09 Oct 2026 04:09:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1791544185; x=1792148985; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=SP3jzlyEfhQ2lSBO4QpbitBdHt12HNDEPoatt7VqxiI=;
- b=FpW8+Zpo3gJ5jE0B9o5jWfWBpNjd/c7YfSYMNgAtOfdG7TYqy09uKe5Uo9EpIMPyrb
- EM7brCLZ5Z0ztl7hIhao1SyEHQHxt/Iz6kvItSchwtFBiTz3PcITz8Aj6PDtSHyAxQKs
- g+DV7pSPZw9Lc0760bWZMFwLooAJccqFvYMg/JN2zxeq00BsUBTpfDMpxMMOcYhng/v4
- YB7F4MDASLuVpQvU1GTuMhMa8AQpW9GP3C+RgvstuS1xAvOnhZrg06vWcgLTNCAgAL0/
- sXHU447hKj93fStRjXysrUMhljH0EJvpWio9Wzfes0ugdeUaygzbNtWaErjZ9gKKNy9D
- 641w==
+ d=redhat.com; s=google; t=1791544187; x=1792148987; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=JC+nI275e75z787S60ejsvVaEWp5q4sOLxvzrk+zmYQ=;
+ b=MZOTlxX3kqadiI7GRRO4k87Oh9feV4bklB1SoDgBDhocgnfBE5UHKz9Cwj8B+jCPeO
+ gXCo88TH+hDL5t7WzC4LaSoeoo8j47Xgaqo1NbQb8jbCcCAviS+iphDGhwEkBKppwGiA
+ njqEm1VJg/RXHjp8OyWxSjOVUDka/JmriWPp7S4za21DiPIuqN6hVXe4LfE/NqB+8FOl
+ 8Yyqm7Q/2Cz/JgkOgiGdeDZ/s3AAMflY5gP5TwUOEclcmgVxgwD8S/h+J/k2n9XpsDUO
+ IlW3x4XnKLU9YnUoQgkpA8Fpjl2y6D5G0RX+tWIPJwGBw2d5F/MuZbVqx3eoDkCMT2pK
+ ygtQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791544185; x=1792148985;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=SP3jzlyEfhQ2lSBO4QpbitBdHt12HNDEPoatt7VqxiI=;
- b=FaZDloFY37cgbFjnoKRfQMnEswOCk4/M/4DecgHLiGjqLYGDqAxUtrBZtZ3/5W6JFT
- ukFNVSCtcgXiO8Z8V11xPEh33vYBUffVO5kVezbj2SKta4g1WbzoOqW4NzaqCwf210Nf
- MrJayBGDgeywhdi8BTS3aOUtyhKXC4XSI3y1pQExyajEY6rFH1DmVSSZEHBMJQJDFOXX
- YW+g8+oWWQgxbL+ehGAlW04nzjFcSXh1iEn5CS5Ae9+XApbf3tNAmPC/xXj6gH43/cME
- 0BHRczjrrhLCkocdJv3SAsrzFtXBhLAZ8Nu1/KXlNpTlOnB7Rodzmh9taQzym2/ofhoc
- QOMQ==
-X-Gm-Message-State: AFq9FYK0Vn8VEcMtXje4zxaiJIjTWW4ZUhuF87MzjvkZpHFgEJ4CRWqO
- 5PpdlfWn0qwKFEDsdviiL0AyNHBgCO4+CUykWdxlOgHpCkYqspI2ImbpB0hHFTuYxLnjlx6J4qP
- GPA2lQ5egpzlqo593ltBootF7UQEgSWDqVpAijDR2F09Sc5DiECjfqGiMEpWEJWLESBJ4Uvui+Q
- 7f1DgaFtyZ90bJumU7G7z2XKb0yqhm5PXfiP5NOddi
-X-Gm-Gg: AYBFou1DaFEFgge6PAXSedWlpgMWauuzHzXkEQtM6J9mxEVKVZjfbw4M3l6BJMaXVWe
- MahaMT5e5P5gNxDyo9tUdCs9zA5oepU5pbb/B2RqDYx7VerMXDnMzXkSsN+zFZ9fVy5U1KVcSj+
- LMuJSus7rzJW0g5UAI+YsMGDhKarrl/ofJjKaGO3odNUGbznWcMVyey2RyQLg+1LrRiuJ/oyVCh
- 1hBWeaoU42keTV7ZdHSrSxvcZosFWeraHvm3U9bVgS6gZxWbHHn6NqjlzH01vfAUNvlrLFoqmOS
- sbAgkdKzPVmy7j+qN7F+BtIxUmzWUyAalTxvSnex98bClt1yPh0OMZWVDWUnCeqnNjZEzvnjwa/
- /Al9nUrf/6DeYC4hHN07Xsj1se7Wk/XC/JQeP/MYQEee7JW13JJ5CxnrtqWxuwaBdFJ+Nf5ftrJ
- 4dyIfxJqBRU0ulmR5Z4PZoFPt4j5i2gjVP
-X-Received: by 2002:adf:e009:0:10b0:48c:7dac:8957 with SMTP id
- ffacd0b85a97d-48dbacda6b7mr2006160f8f.32.1791544185274; 
+ d=1e100.net; s=20260707; t=1791544187; x=1792148987;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=JC+nI275e75z787S60ejsvVaEWp5q4sOLxvzrk+zmYQ=;
+ b=nuJv3XT6T/hEiaWxVr22sEt8rRHM6niuLdpML8XdqqJFBPmJyujJHDQfKKeOFmUYGt
+ PzkD6XHS84SToESaf41HvK9aP5uayYX6f9i0XyCx50Ehzw+nhhtfqMMqIwGLCAD2z904
+ cPcZ/q90If8VXwZB9C7AarNkmXWvK33o1O4Gk26fNpXZ2g2DcBT1yI/kFcgS4JC9iBcA
+ x0zGsXxIn2WqQyia3jWyyGBPgAACi0wvredo5r8EkmGCb+dZj+RXJ2HXmysYrf3bEWN+
+ UKZPBuTAjBnFFqa+Z1gsNvFoflRJZe/DYASDiwOM40Ps+RQe3H0WYd2jBGB7j0wX1e1n
+ CHiA==
+X-Gm-Message-State: AFq9FYICkn1/dwnNSTmG6oRAfOJlGO9s5ZbIUaGNnhXmf3yJMMymUDAL
+ gF4X63jmlbES/VRNPkoyrt4EogqeEUo2YsJs30LepcTVEI7HTvGVOnwsUl7wQFQarNNn+l25tOK
+ SiV23fnqfIjaLfYPeioUfW0ub9sTMkiasQVlPr0bIC4wOCeQjk4e+Rsp/xOv5mJcVG62W1pwWUk
+ XP9Ag8fF1NSZcdIwy2bpv6oFab7XmCa7mUKgaABd3T
+X-Gm-Gg: AYBFou2qF168MRHc95lqHZLJT8LeY2deh4qYYlkno2IOD4M2OA2fhMm1afFlhlabb4I
+ c7xHhWEJhEvncQV7Ll50Fzd4EGHY6egm7+zqFhdwYdX9F8/+S+9oAlNxC1/83JRZEfV5RPyDWK8
+ pmSOX6ypIynwwg6UmJvjxUnUW/ljgznhpcEMUewuawwjmTFuw5oKoiC8PsA457vv3/UsE/BXSIt
+ PCHwRsRgw86QAem3v1mjFoR5RempACE98tOStJO/qz1Q/PeqegatYQcjLmJHzDIMrTUtN8RVME8
+ y3JjZvO1qsAqpEwlWI8llh1rdRjFFoVzXMWmVhZy3yrcOt/0YhYl6/dDs0JagtVug49FF2vATmX
+ oL9CDXbnNKuBcJL3k/vx44/e6v2WKyyWNPw8KmQkYkeGjmRWxE4JYqf+r++dpP7vYqOeYqcEcm6
+ wNWqbad0yKzEbd6PyKdwcWxzjfYaoDtyJ7
+X-Received: by 2002:a05:6000:41c8:b0:488:8132:141b with SMTP id
+ ffacd0b85a97d-48dba9bdc8bmr2969757f8f.20.1791544187112; 
+ Fri, 09 Oct 2026 04:09:47 -0700 (PDT)
+X-Received: by 2002:a05:6000:41c8:b0:488:8132:141b with SMTP id
+ ffacd0b85a97d-48dba9bdc8bmr2969634f8f.20.1791544185715; 
  Fri, 09 Oct 2026 04:09:45 -0700 (PDT)
-X-Received: by 2002:adf:e009:0:10b0:48c:7dac:8957 with SMTP id
- ffacd0b85a97d-48dbacda6b7mr2006113f8f.32.1791544184804; 
- Fri, 09 Oct 2026 04:09:44 -0700 (PDT)
 Received: from sraymaek-thinkpadx1nanogen2.rmtbe.csb
  (2a02-1811-d30-6f00-217b-1d12-f4f3-7e56.ip6.access.telenet.be.
  [2a02:1811:d30:6f00:217b:1d12:f4f3:7e56])
  by smtp.gmail.com with ESMTPSA id
  ffacd0b85a97d-48db94e530esm3295680f8f.13.2026.10.09.04.09.44
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 09 Oct 2026 04:09:44 -0700 (PDT)
+ Fri, 09 Oct 2026 04:09:45 -0700 (PDT)
 From: Sanne Raymaekers <sraymaek@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, fam@euphon.net, kwolf@redhat.com, hreitz@redhat.com,
  Sanne Raymaekers <sraymaek@redhat.com>
-Subject: [PATCH v2 1/3] block/vmdk: align stream optimized data grains on 512
- byte chunks
-Date: Fri,  9 Oct 2026 13:09:03 +0200
-Message-ID: <20261009110905.905070-2-sraymaek@redhat.com>
+Subject: [PATCH v2 2/3] block/vmdk: skip RGD for stream optimized disks
+Date: Fri,  9 Oct 2026 13:09:04 +0200
+Message-ID: <20261009110905.905070-3-sraymaek@redhat.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20261009110905.905070-1-sraymaek@redhat.com>
 References: <20261009110905.905070-1-sraymaek@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=sraymaek@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -110,7 +107,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,64 +123,113 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-According to the spec: "Each marker and its associated block begin on a
-sector or 512‐byte boundary... There are five types of markers:
-compressed grain markers,..." [^1]
+Stream optimized disks the spec notes: "The rgdOffset should be ignored
+because bit 1 of the flags field is not set." Where bit 1 of the flags
+field indicates a redundant grain directory (RGD).[^1]
 
-This means that instead of aligning grains on their typical size (64K),
-in stream optimized disks, grains should be aligned on 512 byte chunks.
+In short, stream optimized disks should have the RGD offset set to 0,
+and only write the main grain directory.
+
+This patch also corrects the comments around the code writing the grain
+directories, and it makes the error thrown when it fails to write the
+backup grain directory more explicit.
 
 [^1] Virtual Disk Format 5.0 Technical Note.
 
 Signed-off-by: Sanne Raymaekers <sraymaek@redhat.com>
 ---
- block/vmdk.c | 25 ++++++++++++++++---------
- 1 file changed, 16 insertions(+), 9 deletions(-)
+ block/vmdk.c | 46 ++++++++++++++++++++++++++++------------------
+ 1 file changed, 28 insertions(+), 18 deletions(-)
 
 diff --git a/block/vmdk.c b/block/vmdk.c
-index cd8b4ec7c8..c70c73515c 100644
+index c70c73515c..68eebd4a78 100644
 --- a/block/vmdk.c
 +++ b/block/vmdk.c
-@@ -1730,16 +1730,22 @@ get_cluster_offset(BlockDriverState *bs, VmdkExtent *extent,
-         cluster_sector = extent->next_cluster_sector;
-         extent->next_cluster_sector += extent->cluster_sectors;
- 
--        /* First of all we write grain itself, to avoid race condition
--         * that may to corrupt the image.
--         * This problem may occur because of insufficient space on host disk
--         * or inappropriate VM shutdown.
-+        /* Stream optimized (compressed) extents do not have to be
-+         * pre-allocated, as compressed writes always cover the whole
-+         * cluster, and will align on 512 byte chunks.
-          */
--        ret = get_whole_cluster(bs, extent, cluster_sector * BDRV_SECTOR_SIZE,
--                                offset, skip_start_bytes, skip_end_bytes,
--                                zeroed);
--        if (ret) {
--            return ret;
-+        if (!extent->compressed) {
-+            /* First of all we write grain itself, to avoid race condition
-+             * that may to corrupt the image.
-+             * This problem may occur because of insufficient space on host disk
-+             * or inappropriate VM shutdown.
-+             */
-+            ret = get_whole_cluster(bs, extent, cluster_sector * BDRV_SECTOR_SIZE,
-+                                    offset, skip_start_bytes, skip_end_bytes,
-+                                    zeroed);
-+            if (ret) {
-+                return ret;
-+            }
-         }
-         if (m_data) {
-             m_data->new_allocation = true;
-@@ -1891,6 +1897,7 @@ vmdk_write_extent(VmdkExtent *extent, int64_t cluster_offset,
- 
-     write_end_sector = DIV_ROUND_UP(write_offset + n_bytes, BDRV_SECTOR_SIZE);
- 
-+    /* Stream optimized (compressed) clusters should be aligned on 512 byte chunks. */
-     if (extent->compressed) {
-         extent->next_cluster_sector = write_end_sector;
+@@ -2244,8 +2244,8 @@ vmdk_init_extent(BlockBackend *blk, int64_t filesize, bool flat, bool compress,
      } else {
+         header.version = 1;
+     }
+-    header.flags = VMDK4_FLAG_RGD | VMDK4_FLAG_NL_DETECT
+-                   | (compress ? VMDK4_FLAG_COMPRESS | VMDK4_FLAG_MARKER : 0)
++    header.flags =  VMDK4_FLAG_NL_DETECT
++                   | (compress ? VMDK4_FLAG_COMPRESS | VMDK4_FLAG_MARKER : VMDK4_FLAG_RGD)
+                    | (zeroed_grain ? VMDK4_FLAG_ZERO_GRAIN : 0);
+     header.compressAlgorithm = compress ? VMDK4_COMPRESSION_DEFLATE : 0;
+     header.capacity = filesize / BDRV_SECTOR_SIZE;
+@@ -2260,8 +2260,15 @@ vmdk_init_extent(BlockBackend *blk, int64_t filesize, bool flat, bool compress,
+ 
+     header.desc_offset = 1;
+     header.desc_size = 20;
+-    header.rgd_offset = header.desc_offset + header.desc_size;
+-    header.gd_offset = header.rgd_offset + gd_sectors + (gt_size * gt_count);
++
++    if (compress) {
++        header.rgd_offset = 0;
++        header.gd_offset = header.desc_offset + header.desc_size;
++    } else {
++        header.rgd_offset = header.desc_offset + header.desc_size;
++        header.gd_offset = header.rgd_offset + gd_sectors + (gt_size * gt_count);
++    }
++
+     header.grain_offset =
+         ROUND_UP(header.gd_offset + gd_sectors + (gt_size * gt_count),
+                  header.granularity);
+@@ -2301,21 +2308,24 @@ vmdk_init_extent(BlockBackend *blk, int64_t filesize, bool flat, bool compress,
+         goto exit;
+     }
+ 
+-    /* write grain directory */
++    /* write backup grain directory */
+     gd_buf_size = gd_sectors * BDRV_SECTOR_SIZE;
+     gd_buf = g_malloc0(gd_buf_size);
+-    for (i = 0, tmp = le64_to_cpu(header.rgd_offset) + gd_sectors;
+-         i < gt_count; i++, tmp += gt_size) {
+-        gd_buf[i] = cpu_to_le32(tmp);
+-    }
+-    ret = blk_co_pwrite(blk, le64_to_cpu(header.rgd_offset) * BDRV_SECTOR_SIZE,
+-                        gd_buf_size, gd_buf, 0);
+-    if (ret < 0) {
+-        error_setg_errno(errp, -ret, "failed to write VMDK grain directory");
+-        goto exit;
++
++    if (!compress) {
++        for (i = 0, tmp = le64_to_cpu(header.rgd_offset) + gd_sectors;
++             i < gt_count; i++, tmp += gt_size) {
++            gd_buf[i] = cpu_to_le32(tmp);
++        }
++        ret = blk_co_pwrite(blk, le64_to_cpu(header.rgd_offset) * BDRV_SECTOR_SIZE,
++                            gd_buf_size, gd_buf, 0);
++        if (ret < 0) {
++            error_setg_errno(errp, -ret, "failed to write VMDK backup grain directory");
++            goto exit;
++        }
+     }
+ 
+-    /* write backup grain directory */
++    /* write grain directory */
+     for (i = 0, tmp = le64_to_cpu(header.gd_offset) + gd_sectors;
+          i < gt_count; i++, tmp += gt_size) {
+         gd_buf[i] = cpu_to_le32(tmp);
+@@ -2324,7 +2334,7 @@ vmdk_init_extent(BlockBackend *blk, int64_t filesize, bool flat, bool compress,
+                         gd_buf_size, gd_buf, 0);
+     if (ret < 0) {
+         error_setg_errno(errp, -ret,
+-                         "failed to write VMDK backup grain directory");
++                         "failed to write VMDK grain directory");
+     }
+ 
+     ret = 0;
+@@ -2591,8 +2601,8 @@ vmdk_co_do_create(int64_t size,
+     extent_idx = 1;
+     while (created_size < size) {
+         int64_t cur_size = MIN(size - created_size, extent_size);
+-        extent_blk = extent_fn(cur_size, extent_idx, flat, split, compress,
+-                               zeroed_grain, opaque, errp);
++        extent_blk = extent_fn(cur_size, extent_idx, flat, split, compress, zeroed_grain,
++                               opaque, errp);
+         if (!extent_blk) {
+             ret = -EINVAL;
+             goto exit;
 -- 
 2.55.0
 
