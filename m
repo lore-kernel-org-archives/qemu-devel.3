@@ -4,31 +4,32 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 534D4CA6015
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Oct 2026 03:09:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 548D3CA6015
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Oct 2026 03:09:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xF0xu-0007Bz-CN; Thu, 08 Oct 2026 23:08:18 -0400
+	id 1xF0xK-0006if-1J; Thu, 08 Oct 2026 23:07:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <prcups@krgm.moe>) id 1xF0vy-0004hu-2t
- for qemu-devel@nongnu.org; Thu, 08 Oct 2026 23:06:11 -0400
+ (Exim 4.90_1) (envelope-from <prcups@krgm.moe>) id 1xF0vz-0004iD-Rb
+ for qemu-devel@nongnu.org; Thu, 08 Oct 2026 23:06:13 -0400
 Received: from krgm.moe ([103.47.186.116])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <prcups@krgm.moe>) id 1xF0vw-0005m1-Br
- for qemu-devel@nongnu.org; Thu, 08 Oct 2026 23:06:09 -0400
+ (envelope-from <prcups@krgm.moe>) id 1xF0vy-0005of-2w
+ for qemu-devel@nongnu.org; Thu, 08 Oct 2026 23:06:11 -0400
 Received: from yuno-loong (unknown
  [IPv6:2409:8900:2684:b82:443b:7baf:6228:2a79])
- by krgm.moe (Postfix) with ESMTPSA id 325E6DFE8;
- Fri, 09 Oct 2026 08:35:56 +0530 (IST)
+ by krgm.moe (Postfix) with ESMTPSA id B26E9E002;
+ Fri, 09 Oct 2026 08:35:57 +0530 (IST)
 From: SignKirigami <prcups@krgm.moe>
 To: qemu-devel@nongnu.org
 Cc: Bibo Mao <maobibo@loongson.cn>, SignKirigami <prcups@krgm.moe>,
  Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
-Subject: [PATCH v5 19/23] target/loongarch: add LVZ CSRs
-Date: Fri,  9 Oct 2026 11:05:15 +0800
-Message-ID: <abde9ec73f3e76479d42733da54716f5c2312fc5.1791514848.git.prcups@krgm.moe>
+Subject: [PATCH v5 20/23] target/loongarch: translate LVZ guest TLB
+ instructions
+Date: Fri,  9 Oct 2026 11:05:16 +0800
+Message-ID: <626719625c086992885e28b019c0db2e33e2f79a.1791514848.git.prcups@krgm.moe>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <cover.1791514848.git.prcups@krgm.moe>
 References: <cover.1791514848.git.prcups@krgm.moe>
@@ -56,105 +57,137 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add gstat, gtlbc and gintc definitions and corresponding helpers.
+Decode, disassemble and translate GTLBSRCH, GTLBRD, GTLBWR, GTLBFILL,
+GTLBCLR and GTLBFLUSH for host LVZ execution.
 
 Signed-off-by: SignKirigami <prcups@krgm.moe>
 Signed-off-by: Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
 ---
- target/loongarch/tcg/csr_helper.c             | 53 +++++++++++++++++++
- target/loongarch/tcg/helper.h                 |  3 ++
- .../tcg/insn_trans/trans_privileged.c.inc     |  3 ++
- 3 files changed, 59 insertions(+)
+ target/loongarch/disas.c                      |  6 ++
+ target/loongarch/insns.decode                 |  7 +++
+ .../tcg/insn_trans/trans_privileged.c.inc     | 60 +++++++++++++++++++
+ 3 files changed, 73 insertions(+)
 
-diff --git a/target/loongarch/tcg/csr_helper.c b/target/loongarch/tcg/csr_helper.c
-index 7ef0032f5d..f113097046 100644
---- a/target/loongarch/tcg/csr_helper.c
-+++ b/target/loongarch/tcg/csr_helper.c
-@@ -217,3 +217,56 @@ target_ulong helper_csrwr_pwch(CPULoongArchState *env,
-     sys->CSR_PWCH = val;
-     return old_v;
+diff --git a/target/loongarch/disas.c b/target/loongarch/disas.c
+index 2436c9eec3..6425dea17c 100644
+--- a/target/loongarch/disas.c
++++ b/target/loongarch/disas.c
+@@ -700,6 +700,12 @@ INSN(tlbfill,      empty)
+ INSN(tlbclr,       empty)
+ INSN(tlbflush,     empty)
+ INSN(invtlb,       i_rr)
++INSN(gtlbclr,      empty)
++INSN(gtlbflush,    empty)
++INSN(gtlbsrch,     empty)
++INSN(gtlbrd,       empty)
++INSN(gtlbwr,       empty)
++INSN(gtlbfill,     empty)
+ INSN(cacop,        cop_r_i)
+ INSN(lddir,        rr_i)
+ INSN(ldpte,        j_i)
+diff --git a/target/loongarch/insns.decode b/target/loongarch/insns.decode
+index 4612af9433..cbcc30c31f 100644
+--- a/target/loongarch/insns.decode
++++ b/target/loongarch/insns.decode
+@@ -499,6 +499,13 @@ bgeu            0110 11 ................ ..... .....     @rr_offs16
+   gcsrxchg          0000 0101 .............. ..... .....     @rr_csr
  }
+ 
++gtlbclr          0000 01100100 10000 01000 00000 00001    @empty
++gtlbflush        0000 01100100 10000 01001 00000 00001    @empty
++gtlbsrch         0000 01100100 10000 01010 00000 00001    @empty
++gtlbrd           0000 01100100 10000 01011 00000 00001    @empty
++gtlbwr           0000 01100100 10000 01100 00000 00001    @empty
++gtlbfill         0000 01100100 10000 01101 00000 00001    @empty
 +
-+target_ulong helper_csrwr_gstat(CPULoongArchState *env,
-+                                target_ulong val, uint32_t vm_level)
-+{
-+    CPUSysState *sys = get_sys(env, VM_LEVEL0);
-+    int64_t old_v = sys->CSR_GSTAT;
-+    uint8_t old_gid = FIELD_EX64(sys->CSR_GSTAT, CSR_GSTAT, GID);
-+
-+    sys->CSR_GSTAT = FIELD_DP64(sys->CSR_GSTAT, CSR_GSTAT, PVM,
-+                                 FIELD_EX64(val, CSR_GSTAT, PVM));
-+    sys->CSR_GSTAT = FIELD_DP64(sys->CSR_GSTAT, CSR_GSTAT, GID,
-+                                 FIELD_EX64(val, CSR_GSTAT, GID));
-+
-+    if (old_gid != FIELD_EX64(sys->CSR_GSTAT, CSR_GSTAT, GID)) {
-+        tlb_flush(env_cpu(env));
-+    }
-+
-+    return old_v;
-+}
-+
-+target_ulong helper_csrwr_gtlbc(CPULoongArchState *env,
-+                                target_ulong val, uint32_t vm_level)
-+{
-+    CPUSysState *sys = get_sys(env, VM_LEVEL0);
-+    int64_t old_v = sys->CSR_GTLBC;
-+    uint8_t old_use_tgid = FIELD_EX64(old_v, CSR_GTLBC, USETGID);
-+    uint8_t old_tgid = FIELD_EX64(old_v, CSR_GTLBC, TGID);
-+
-+    sys->CSR_GTLBC = val;
-+    if (old_use_tgid != FIELD_EX64(sys->CSR_GTLBC, CSR_GTLBC, USETGID) ||
-+        old_tgid != FIELD_EX64(sys->CSR_GTLBC, CSR_GTLBC, TGID)) {
-+        tlb_flush(env_cpu(env));
-+    }
-+
-+    return old_v;
-+}
-+
-+target_ulong helper_csrwr_gintc(CPULoongArchState *env,
-+                                target_ulong val, uint32_t vm_level)
-+{
-+    CPUSysState *host = get_sys(env, VM_LEVEL0);
-+    CPUSysState *guest = get_sys(env, VM_LEVEL1);
-+    int64_t old_v = host->CSR_GINTC;
-+    uint8_t hwis = FIELD_EX64(val, CSR_GINTC, HWIS);
-+    /* TODO: hwip and hwic support */
-+
-+    host->CSR_GINTC = val & 0xffff00;
-+    guest->CSR_ESTAT = deposit64(guest->CSR_ESTAT, 2, 8,
-+                                 hwis);
-+
-+    return old_v;
-+}
-+
-diff --git a/target/loongarch/tcg/helper.h b/target/loongarch/tcg/helper.h
-index bce5f46dc2..84eaee208c 100644
---- a/target/loongarch/tcg/helper.h
-+++ b/target/loongarch/tcg/helper.h
-@@ -104,6 +104,9 @@ DEF_HELPER_3(csrwr_tcfg, i64, env, tl, i32)
- DEF_HELPER_3(csrwr_ticlr, i64, env, tl, i32)
- DEF_HELPER_3(csrwr_pwcl, i64, env, tl, i32)
- DEF_HELPER_3(csrwr_pwch, i64, env, tl, i32)
-+DEF_HELPER_3(csrwr_gstat, i64, env, tl, i32)
-+DEF_HELPER_3(csrwr_gtlbc, i64, env, tl, i32)
-+DEF_HELPER_3(csrwr_gintc, i64, env, tl, i32)
- DEF_HELPER_2(iocsrrd_b, i64, env, tl)
- DEF_HELPER_2(iocsrrd_h, i64, env, tl)
- DEF_HELPER_2(iocsrrd_w, i64, env, tl)
+ iocsrrd_b        0000 01100100 10000 00000 ..... .....    @rr
+ iocsrrd_h        0000 01100100 10000 00001 ..... .....    @rr
+ iocsrrd_w        0000 01100100 10000 00010 ..... .....    @rr
 diff --git a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
-index 139dbd6e2a..37b7ef13dc 100644
+index 37b7ef13dc..ae481aa83f 100644
 --- a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
 +++ b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
-@@ -88,6 +88,9 @@ void loongarch_csr_translate_init(void)
-     SET_CSR_FUNC(TVAL,  gen_helper_csrrd_tval, NULL);
-     SET_CSR_FUNC(TICLR, NULL, gen_helper_csrwr_ticlr);
-     SET_CSR_FUNC(MSGIR, gen_helper_csrrd_msgir, NULL);
-+    SET_CSR_FUNC(GSTAT, NULL, gen_helper_csrwr_gstat);
-+    SET_CSR_FUNC(GTLBC, NULL, gen_helper_csrwr_gtlbc);
-+    SET_CSR_FUNC(GINTC, NULL, gen_helper_csrwr_gintc);
- }
- #undef SET_CSR_FUNC
+@@ -42,6 +42,12 @@ GEN_FALSE_TRANS(idle)
+ GEN_FALSE_TRANS(gcsrrd)
+ GEN_FALSE_TRANS(gcsrwr)
+ GEN_FALSE_TRANS(gcsrxchg)
++GEN_FALSE_TRANS(gtlbclr)
++GEN_FALSE_TRANS(gtlbflush)
++GEN_FALSE_TRANS(gtlbsrch)
++GEN_FALSE_TRANS(gtlbrd)
++GEN_FALSE_TRANS(gtlbwr)
++GEN_FALSE_TRANS(gtlbfill)
  
+ #else
+ 
+@@ -339,6 +345,15 @@ static bool trans_tlbsrch(DisasContext *ctx, arg_tlbsrch *a)
+     return true;
+ }
+ 
++static bool trans_gtlbsrch(DisasContext *ctx, arg_gtlbsrch *a)
++{
++    if (check_plv(ctx) || !avail_LVZ(ctx) || is_guest_mmu_idx(ctx->mem_idx)) {
++        return false;
++    }
++    gen_helper_tlbsrch(tcg_env, tcg_constant_i32(1));
++    return true;
++}
++
+ static bool trans_tlbrd(DisasContext *ctx, arg_tlbrd *a)
+ {
+     if (check_plv(ctx)) {
+@@ -393,6 +408,51 @@ static bool trans_tlbflush(DisasContext *ctx, arg_tlbflush *a)
+     return true;
+ }
+ 
++static bool trans_gtlbrd(DisasContext *ctx, arg_gtlbrd *a)
++{
++    if (check_plv(ctx) || !avail_LVZ(ctx) || is_guest_mmu_idx(ctx->mem_idx)) {
++        return false;
++    }
++    gen_helper_tlbrd(tcg_env, tcg_constant_i32(1));
++    return true;
++}
++
++static bool trans_gtlbwr(DisasContext *ctx, arg_gtlbwr *a)
++{
++    if (check_plv(ctx) || !avail_LVZ(ctx) || is_guest_mmu_idx(ctx->mem_idx)) {
++        return false;
++    }
++    gen_helper_tlbwr(tcg_env, tcg_constant_i32(1));
++    return true;
++}
++
++static bool trans_gtlbfill(DisasContext *ctx, arg_gtlbfill *a)
++{
++    if (check_plv(ctx) || !avail_LVZ(ctx) || is_guest_mmu_idx(ctx->mem_idx)) {
++        return false;
++    }
++    gen_helper_tlbfill(tcg_env, tcg_constant_i32(1));
++    return true;
++}
++
++static bool trans_gtlbclr(DisasContext *ctx, arg_gtlbclr *a)
++{
++    if (check_plv(ctx) || !avail_LVZ(ctx) || is_guest_mmu_idx(ctx->mem_idx)) {
++        return false;
++    }
++    gen_helper_tlbclr(tcg_env, tcg_constant_i32(1));
++    return true;
++}
++
++static bool trans_gtlbflush(DisasContext *ctx, arg_gtlbflush *a)
++{
++    if (check_plv(ctx) || !avail_LVZ(ctx) || is_guest_mmu_idx(ctx->mem_idx)) {
++        return false;
++    }
++    gen_helper_tlbflush(tcg_env, tcg_constant_i32(1));
++    return true;
++}
++
+ static bool trans_invtlb(DisasContext *ctx, arg_invtlb *a)
+ {
+     TCGv rj = gpr_src(ctx, a->rj, EXT_NONE);
 -- 
 2.55.0
 
