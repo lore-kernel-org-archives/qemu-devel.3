@@ -4,31 +4,31 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69018CA6017
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Oct 2026 03:08:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 962D8CA6015
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Oct 2026 03:08:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xF0wp-0005NC-T0; Thu, 08 Oct 2026 23:07:05 -0400
+	id 1xF0wV-0004vR-P9; Thu, 08 Oct 2026 23:06:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <prcups@krgm.moe>) id 1xF0w0-0004iR-VR
- for qemu-devel@nongnu.org; Thu, 08 Oct 2026 23:06:13 -0400
+ (Exim 4.90_1) (envelope-from <prcups@krgm.moe>) id 1xF0vb-0004eF-23
+ for qemu-devel@nongnu.org; Thu, 08 Oct 2026 23:05:49 -0400
 Received: from krgm.moe ([103.47.186.116])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <prcups@krgm.moe>) id 1xF0vz-0005oj-7d
- for qemu-devel@nongnu.org; Thu, 08 Oct 2026 23:06:12 -0400
+ (envelope-from <prcups@krgm.moe>) id 1xF0vY-0005mR-Lj
+ for qemu-devel@nongnu.org; Thu, 08 Oct 2026 23:05:46 -0400
 Received: from yuno-loong (unknown
  [IPv6:2409:8900:2684:b82:443b:7baf:6228:2a79])
- by krgm.moe (Postfix) with ESMTPSA id C60FCE004;
- Fri, 09 Oct 2026 08:35:58 +0530 (IST)
+ by krgm.moe (Postfix) with ESMTPSA id DE82CDFE8;
+ Fri, 09 Oct 2026 08:35:41 +0530 (IST)
 From: SignKirigami <prcups@krgm.moe>
 To: qemu-devel@nongnu.org
 Cc: Bibo Mao <maobibo@loongson.cn>, SignKirigami <prcups@krgm.moe>,
  Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
-Subject: [PATCH v5 21/23] target/loongarch: translate LVZ guest traps and HVC
-Date: Fri,  9 Oct 2026 11:05:17 +0800
-Message-ID: <6c1f6c89f9392be3a45963cf0aca0bc7aadceb9f.1791514848.git.prcups@krgm.moe>
+Subject: [PATCH v5 10/23] target/loongarch: handle LVZ exception and vm_exit
+Date: Fri,  9 Oct 2026 11:05:06 +0800
+Message-ID: <dd6bcea43f94cc6bbb21294289d211324654fdb5.1791514848.git.prcups@krgm.moe>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <cover.1791514848.git.prcups@krgm.moe>
 References: <cover.1791514848.git.prcups@krgm.moe>
@@ -56,161 +56,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Raise GSPR when a guest accesses IOCSR, debug, idle and cpucfg resources,
-and decode HVC for guest PLV0.
+Add EXCCODE_GSPR and EXCCODE_HVC macros. Execute real vm exit at end of
+loongarch_cpu_do_interrupt().
 
 Signed-off-by: SignKirigami <prcups@krgm.moe>
 Signed-off-by: Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
 ---
- target/loongarch/disas.c                      |  1 +
- target/loongarch/insns.decode                 |  1 +
- target/loongarch/tcg/helper.h                 |  2 +-
- .../tcg/insn_trans/trans_extra.c.inc          |  5 +++
- .../tcg/insn_trans/trans_privileged.c.inc     | 32 +++++++++++++++++++
- target/loongarch/tcg/op_helper.c              |  3 ++
- 6 files changed, 43 insertions(+), 1 deletion(-)
+ target/loongarch/cpu.h         |  2 ++
+ target/loongarch/tcg/tcg_cpu.c | 28 ++++++++++++++++++++--------
+ 2 files changed, 22 insertions(+), 8 deletions(-)
 
-diff --git a/target/loongarch/disas.c b/target/loongarch/disas.c
-index 6425dea17c..7d47fc0151 100644
---- a/target/loongarch/disas.c
-+++ b/target/loongarch/disas.c
-@@ -706,6 +706,7 @@ INSN(gtlbsrch,     empty)
- INSN(gtlbrd,       empty)
- INSN(gtlbwr,       empty)
- INSN(gtlbfill,     empty)
-+INSN(hvcl,         i)
- INSN(cacop,        cop_r_i)
- INSN(lddir,        rr_i)
- INSN(ldpte,        j_i)
-diff --git a/target/loongarch/insns.decode b/target/loongarch/insns.decode
-index cbcc30c31f..b40fabe9d7 100644
---- a/target/loongarch/insns.decode
-+++ b/target/loongarch/insns.decode
-@@ -505,6 +505,7 @@ gtlbsrch         0000 01100100 10000 01010 00000 00001    @empty
- gtlbrd           0000 01100100 10000 01011 00000 00001    @empty
- gtlbwr           0000 01100100 10000 01100 00000 00001    @empty
- gtlbfill         0000 01100100 10000 01101 00000 00001    @empty
-+hvcl             0000 0000 0010 1011 1 ...............    @i15
+diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
+index 891eea47bd..3e3ae2bfa7 100644
+--- a/target/loongarch/cpu.h
++++ b/target/loongarch/cpu.h
+@@ -95,6 +95,8 @@ FIELD(FCSR0, CAUSE, 24, 5)
+ #define  EXCCODE_WPEM                EXCODE(19, 1)
+ #define  EXCCODE_BTD                 EXCODE(20, 0)
+ #define  EXCCODE_BTE                 EXCODE(21, 0)
++#define  EXCCODE_GSPR                EXCODE(22, 0)
++#define  EXCCODE_HVC                 EXCODE(23, 0)
+ #define  EXCCODE_DBP                 EXCODE(26, 0) /* Reserved subcode used for debug */
  
- iocsrrd_b        0000 01100100 10000 00000 ..... .....    @rr
- iocsrrd_h        0000 01100100 10000 00001 ..... .....    @rr
-diff --git a/target/loongarch/tcg/helper.h b/target/loongarch/tcg/helper.h
-index 84eaee208c..be1573af9d 100644
---- a/target/loongarch/tcg/helper.h
-+++ b/target/loongarch/tcg/helper.h
-@@ -10,7 +10,7 @@ DEF_HELPER_FLAGS_3(asrtgt_d, TCG_CALL_NO_WG, void, env, tl, tl)
+ /* cpucfg[0] bits */
+diff --git a/target/loongarch/tcg/tcg_cpu.c b/target/loongarch/tcg/tcg_cpu.c
+index 101fe6fc7a..6f1ba12edb 100644
+--- a/target/loongarch/tcg/tcg_cpu.c
++++ b/target/loongarch/tcg/tcg_cpu.c
+@@ -44,6 +44,8 @@ static const struct TypeExcp excp_names[] = {
+     {EXCCODE_BCE, "Bound Check Exception"},
+     {EXCCODE_SXD, "128 bit vector instructions Disable exception"},
+     {EXCCODE_ASXD, "256 bit vector instructions Disable exception"},
++    {EXCCODE_GSPR, "Guest Sensitive and Privileged Resources"},
++    {EXCCODE_HVC, "Hypervisor call"},
+     {EXCP_HLT, "EXCP_HLT"},
+ };
  
- DEF_HELPER_FLAGS_3(crc32, TCG_CALL_NO_RWG_SE, tl, tl, tl, tl)
- DEF_HELPER_FLAGS_3(crc32c, TCG_CALL_NO_RWG_SE, tl, tl, tl, tl)
--DEF_HELPER_FLAGS_2(cpucfg, TCG_CALL_NO_RWG_SE, tl, env, tl)
-+DEF_HELPER_FLAGS_2(cpucfg, TCG_CALL_NO_WG_SE, tl, env, tl)
- 
- /* Floating-point helper */
- DEF_HELPER_FLAGS_3(fadd_s, TCG_CALL_NO_WG, i64, env, i64, i64)
-diff --git a/target/loongarch/tcg/insn_trans/trans_extra.c.inc b/target/loongarch/tcg/insn_trans/trans_extra.c.inc
-index 655dce329e..275755a1f0 100644
---- a/target/loongarch/tcg/insn_trans/trans_extra.c.inc
-+++ b/target/loongarch/tcg/insn_trans/trans_extra.c.inc
-@@ -82,6 +82,11 @@ static bool trans_rdtime_d(DisasContext *ctx, arg_rdtime_d *a)
- 
- static bool trans_cpucfg(DisasContext *ctx, arg_cpucfg *a)
+@@ -78,9 +80,11 @@ void G_NORETURN do_raise_exception(CPULoongArchState *env,
+ static void loongarch_cpu_do_interrupt(CPUState *cs)
  {
-+    if (is_guest_mmu_idx(ctx->mem_idx)) {
-+        generate_exception(ctx, EXCCODE_GSPR);
-+        return true;
-+    }
-+
-     TCGv dest = gpr_dst(ctx, a->rd, EXT_NONE);
-     TCGv src1 = gpr_src(ctx, a->rj, EXT_NONE);
+     CPULoongArchState *env = cpu_env(cs);
+-    CPUSysState *sys = env_sys(env);
+     bool update_badinstr = 1;
+     int cause = -1;
++    bool real_guest = !env->vm_exit && env_vm_level(env);
++    CPUSysState *sys = get_sys(env, real_guest);
++    CPUSysState *host = get_sys(env, VM_LEVEL0);
+     bool tlbfill = FIELD_EX64(sys->CSR_TLBRERA, CSR_TLBRERA, ISTLBR);
+     uint32_t vec_size = FIELD_EX64(sys->CSR_ECFG, CSR_ECFG, VS);
+     uint64_t last_pc = env->pc;
+@@ -96,17 +100,17 @@ static void loongarch_cpu_do_interrupt(CPUState *cs)
  
-diff --git a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
-index ae481aa83f..bd50e91422 100644
---- a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
-+++ b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
-@@ -48,6 +48,7 @@ GEN_FALSE_TRANS(gtlbsrch)
- GEN_FALSE_TRANS(gtlbrd)
- GEN_FALSE_TRANS(gtlbwr)
- GEN_FALSE_TRANS(gtlbfill)
-+GEN_FALSE_TRANS(hvcl)
- 
- #else
- 
-@@ -301,6 +302,10 @@ static bool gen_iocsrrd(DisasContext *ctx, arg_rr *a,
-     if (check_plv(ctx)) {
-         return false;
+     switch (cs->exception_index) {
+     case EXCCODE_DBP:
+-        sys->CSR_DBG = FIELD_DP64(sys->CSR_DBG, CSR_DBG, DCL, 1);
+-        sys->CSR_DBG = FIELD_DP64(sys->CSR_DBG, CSR_DBG, ECODE, 0xC);
++        host->CSR_DBG = FIELD_DP64(sys->CSR_DBG, CSR_DBG, DCL, 1);
++        host->CSR_DBG = FIELD_DP64(sys->CSR_DBG, CSR_DBG, ECODE, 0xC);
+         goto set_DERA;
+     set_DERA:
+-        sys->CSR_DERA = env->pc;
+-        sys->CSR_DBG = FIELD_DP64(sys->CSR_DBG, CSR_DBG, DST, 1);
+-        set_pc(env, sys->CSR_EENTRY + 0x480);
++        host->CSR_DERA = env->pc;
++        host->CSR_DBG = FIELD_DP64(sys->CSR_DBG, CSR_DBG, DST, 1);
++        set_pc(env, host->CSR_EENTRY + 0x480);
+         break;
+     case EXCCODE_INT:
+-        if (FIELD_EX64(sys->CSR_DBG, CSR_DBG, DST)) {
+-            sys->CSR_DBG = FIELD_DP64(sys->CSR_DBG, CSR_DBG, DEI, 1);
++        if (FIELD_EX64(host->CSR_DBG, CSR_DBG, DST)) {
++            host->CSR_DBG = FIELD_DP64(host->CSR_DBG, CSR_DBG, DEI, 1);
+             goto set_DERA;
+         }
+         QEMU_FALLTHROUGH;
+@@ -117,6 +121,8 @@ static void loongarch_cpu_do_interrupt(CPUState *cs)
+         update_badinstr = 0;
+         break;
+     case EXCCODE_BCE:
++    case EXCCODE_GSPR:
++    case EXCCODE_HVC:
+         sys->CSR_BADV = env->pc;
+         QEMU_FALLTHROUGH;
+     case EXCCODE_SYS:
+@@ -218,6 +224,12 @@ static void loongarch_cpu_do_interrupt(CPUState *cs)
+         qemu_plugin_vcpu_exception_cb(cs, last_pc);
      }
-+    if (is_guest_mmu_idx(ctx->mem_idx)) {
-+        generate_exception(ctx, EXCCODE_GSPR);
-+        return true;
+     cs->exception_index = -1;
++    if (env->vm_exit) {
++        host->CSR_GSTAT = FIELD_DP64(host->CSR_GSTAT, CSR_GSTAT, VM, 0);
++        set_sys(env, VM_LEVEL0);
++        cpu_reset_interrupt(cs, CPU_INTERRUPT_GUEST);
 +    }
-     func(dest, tcg_env, src1);
-     return true;
- }
-@@ -314,6 +319,10 @@ static bool gen_iocsrwr(DisasContext *ctx, arg_rr *a,
-     if (check_plv(ctx)) {
-         return false;
-     }
-+    if (is_guest_mmu_idx(ctx->mem_idx)) {
-+        generate_exception(ctx, EXCCODE_GSPR);
-+        return true;
-+    }
-     func(tcg_env, addr, val);
-     return true;
- }
-@@ -584,6 +593,10 @@ static bool trans_dbcl(DisasContext *ctx, arg_dbcl *a)
-     if (check_plv(ctx)) {
-         return false;
-     }
-+    if (is_guest_mmu_idx(ctx->mem_idx)) {
-+        generate_exception(ctx, EXCCODE_GSPR);
-+        return true;
-+    }
-     generate_exception(ctx, EXCCODE_DBP);
-     return true;
- }
-@@ -594,9 +607,28 @@ static bool trans_idle(DisasContext *ctx, arg_idle *a)
-         return false;
-     }
- 
-+    if (is_guest_mmu_idx(ctx->mem_idx)) {
-+        generate_exception(ctx, EXCCODE_GSPR);
-+        return true;
-+    }
-+
-     tcg_gen_movi_tl(cpu_pc, ctx->base.pc_next + 4);
-     gen_helper_idle(tcg_env);
-     ctx->base.is_jmp = DISAS_NORETURN;
-     return true;
- }
-+
-+static bool trans_hvcl(DisasContext *ctx, arg_hvcl *a)
-+{
-+    if (!avail_LVZ(ctx) || !is_guest_mmu_idx(ctx->mem_idx)) {
-+        return false;
-+    }
-+
-+    if (check_plv(ctx)) {
-+        return false;
-+    }
-+
-+    generate_exception(ctx, EXCCODE_HVC);
-+    return true;
-+}
- #endif
-diff --git a/target/loongarch/tcg/op_helper.c b/target/loongarch/tcg/op_helper.c
-index 3035dfa08d..e2fe4b212f 100644
---- a/target/loongarch/tcg/op_helper.c
-+++ b/target/loongarch/tcg/op_helper.c
-@@ -20,6 +20,9 @@
- /* Exceptions helpers */
- void helper_raise_exception(CPULoongArchState *env, uint32_t exception)
- {
-+    if (exception == EXCCODE_GSPR || exception == EXCCODE_HVC) {
-+        trigger_vm_exit(env);
-+    }
-     do_raise_exception(env, exception, GETPC());
++    env->vm_exit = false;
  }
  
+ static void loongarch_cpu_do_transaction_failed(CPUState *cs, hwaddr physaddr,
 -- 
 2.55.0
 
