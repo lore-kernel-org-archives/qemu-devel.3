@@ -4,31 +4,32 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B32F6CA6015
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Oct 2026 03:09:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62EDECA5FED
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Oct 2026 03:10:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xF0xI-0006UT-9c; Thu, 08 Oct 2026 23:07:32 -0400
+	id 1xF0wy-0005kR-W9; Thu, 08 Oct 2026 23:07:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <prcups@krgm.moe>) id 1xF0vw-0004hE-8u
- for qemu-devel@nongnu.org; Thu, 08 Oct 2026 23:06:09 -0400
+ (Exim 4.90_1) (envelope-from <prcups@krgm.moe>) id 1xF0vy-0004hx-BE
+ for qemu-devel@nongnu.org; Thu, 08 Oct 2026 23:06:11 -0400
 Received: from krgm.moe ([103.47.186.116])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <prcups@krgm.moe>) id 1xF0vu-0005oG-Bv
- for qemu-devel@nongnu.org; Thu, 08 Oct 2026 23:06:08 -0400
+ (envelope-from <prcups@krgm.moe>) id 1xF0vu-0005np-G3
+ for qemu-devel@nongnu.org; Thu, 08 Oct 2026 23:06:10 -0400
 Received: from yuno-loong (unknown
  [IPv6:2409:8900:2684:b82:443b:7baf:6228:2a79])
- by krgm.moe (Postfix) with ESMTPSA id E62E6E001;
- Fri, 09 Oct 2026 08:35:52 +0530 (IST)
+ by krgm.moe (Postfix) with ESMTPSA id 7458DE003;
+ Fri, 09 Oct 2026 08:35:54 +0530 (IST)
 From: SignKirigami <prcups@krgm.moe>
 To: qemu-devel@nongnu.org
 Cc: Bibo Mao <maobibo@loongson.cn>, SignKirigami <prcups@krgm.moe>,
  Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
-Subject: [PATCH v5 17/23] target/loongarch: add LVZ migration state
-Date: Fri,  9 Oct 2026 11:05:13 +0800
-Message-ID: <5cf464e11a8c902b3c87c82b1cdf24fad7ddba69.1791514848.git.prcups@krgm.moe>
+Subject: [PATCH v5 18/23] target/loongarch: add gcsr instructions and vm level
+ 1 csr management
+Date: Fri,  9 Oct 2026 11:05:14 +0800
+Message-ID: <6e609bcae12b73d8ddc7a7291afa2ba1b74ea4d0.1791514848.git.prcups@krgm.moe>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <cover.1791514848.git.prcups@krgm.moe>
 References: <cover.1791514848.git.prcups@krgm.moe>
@@ -56,151 +57,475 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Migrate the host LVZ controls, guest CSR and TLB banks, and restore the
-active VM level, guest timer and interrupt request after loading state.
+Add gcsrrd, gcsrwr and gcsrxchg. Make all csr helper be used by both vm level
+0 and 1.
 
 Signed-off-by: SignKirigami <prcups@krgm.moe>
 Signed-off-by: Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
 ---
- target/loongarch/machine.c | 104 +++++++++++++++++++++++++++++++++++++
- 1 file changed, 104 insertions(+)
+ target/loongarch/disas.c                      |   3 +
+ target/loongarch/insns.decode                 |   6 +
+ target/loongarch/tcg/csr_helper.c             |  78 +++++++-----
+ target/loongarch/tcg/helper.h                 |  22 ++--
+ .../tcg/insn_trans/trans_privileged.c.inc     | 111 ++++++++++++++----
+ 5 files changed, 161 insertions(+), 59 deletions(-)
 
-diff --git a/target/loongarch/machine.c b/target/loongarch/machine.c
-index 931a5ca5ba..7c14f7d92e 100644
---- a/target/loongarch/machine.c
-+++ b/target/loongarch/machine.c
-@@ -7,6 +7,7 @@
+diff --git a/target/loongarch/disas.c b/target/loongarch/disas.c
+index 03d1e560dd..2436c9eec3 100644
+--- a/target/loongarch/disas.c
++++ b/target/loongarch/disas.c
+@@ -682,6 +682,9 @@ INSN(bgeu,         rr_offs)
+ INSN(csrrd,        r_csr)
+ INSN(csrwr,        r_csr)
+ INSN(csrxchg,      rr_csr)
++INSN(gcsrrd,        r_csr)
++INSN(gcsrwr,        r_csr)
++INSN(gcsrxchg,      rr_csr)
+ INSN(iocsrrd_b,    rr)
+ INSN(iocsrrd_h,    rr)
+ INSN(iocsrrd_w,    rr)
+diff --git a/target/loongarch/insns.decode b/target/loongarch/insns.decode
+index 3089d42044..4612af9433 100644
+--- a/target/loongarch/insns.decode
++++ b/target/loongarch/insns.decode
+@@ -493,6 +493,12 @@ bgeu            0110 11 ................ ..... .....     @rr_offs16
+   csrxchg           0000 0100 .............. ..... .....     @rr_csr
+ }
  
- #include "qemu/osdep.h"
- #include "cpu.h"
-+#include "internals.h"
- #include "migration/vmstate.h"
- #include "system/tcg.h"
- #include "vec.h"
-@@ -205,13 +206,115 @@ static const VMStateDescription vmstate_tlb = {
-         VMSTATE_END_OF_LIST()
++{
++  gcsrrd            0000 0101 .............. 00000 .....     @r_csr
++  gcsrwr            0000 0101 .............. 00001 .....     @r_csr
++  gcsrxchg          0000 0101 .............. ..... .....     @rr_csr
++}
++
+ iocsrrd_b        0000 01100100 10000 00000 ..... .....    @rr
+ iocsrrd_h        0000 01100100 10000 00001 ..... .....    @rr
+ iocsrrd_w        0000 01100100 10000 00010 ..... .....    @rr
+diff --git a/target/loongarch/tcg/csr_helper.c b/target/loongarch/tcg/csr_helper.c
+index ecfba63228..7ef0032f5d 100644
+--- a/target/loongarch/tcg/csr_helper.c
++++ b/target/loongarch/tcg/csr_helper.c
+@@ -18,9 +18,10 @@
+ #include "cpu-csr.h"
+ #include "cpu-mmu.h"
+ 
+-target_ulong helper_csrwr_stlbps(CPULoongArchState *env, target_ulong val)
++target_ulong helper_csrwr_stlbps(CPULoongArchState *env,
++                                 target_ulong val, uint32_t vm_level)
+ {
+-    CPUSysState *sys = env_sys(env);
++    CPUSysState *sys = get_sys(env, vm_level);
+     int64_t old_v = sys->CSR_STLBPS;
+ 
+     /*
+@@ -40,10 +41,10 @@ target_ulong helper_csrwr_stlbps(CPULoongArchState *env, target_ulong val)
+     return old_v;
+ }
+ 
+-target_ulong helper_csrrd_pgd(CPULoongArchState *env)
++target_ulong helper_csrrd_pgd(CPULoongArchState *env, uint32_t vm_level)
+ {
+     int64_t v;
+-    CPUSysState *sys = env_sys(env);
++    CPUSysState *sys = get_sys(env, vm_level);
+ 
+     if (sys->CSR_TLBRERA & 0x1) {
+         v = sys->CSR_TLBRBADV;
+@@ -60,25 +61,30 @@ target_ulong helper_csrrd_pgd(CPULoongArchState *env)
+     return v;
+ }
+ 
+-target_ulong helper_csrrd_cpuid(CPULoongArchState *env)
++target_ulong helper_csrrd_cpuid(CPULoongArchState *env, uint32_t vm_level)
+ {
+     LoongArchCPU *lac = env_archcpu(env);
+-    CPUSysState *sys = env_sys(env);
++    CPUSysState *sys = get_sys(env, vm_level);
++
++    if (vm_level) {
++        return sys->CSR_CPUID;
++    }
+ 
+     sys->CSR_CPUID = CPU(lac)->cpu_index;
+ 
+     return sys->CSR_CPUID;
+ }
+ 
+-target_ulong helper_csrrd_tval(CPULoongArchState *env)
++target_ulong helper_csrrd_tval(CPULoongArchState *env, uint32_t vm_level)
+ {
+-    return cpu_loongarch_get_timer_ticks(env_timer(env));
++    CPUTimerState *timer = vm_level ? env_guest_timer(env) : env_timer(env);
++    return cpu_loongarch_get_timer_ticks(timer);
+ }
+ 
+-target_ulong helper_csrrd_msgir(CPULoongArchState *env)
++target_ulong helper_csrrd_msgir(CPULoongArchState *env, uint32_t vm_level)
+ {
+     int irq, new;
+-    CPUSysState *sys = env_sys(env);
++    CPUSysState *sys = get_sys(env, vm_level);
+ 
+     irq = find_first_bit((unsigned long *)sys->CSR_MSGIS, 256);
+     if (irq < 256) {
+@@ -97,13 +103,23 @@ target_ulong helper_csrrd_msgir(CPULoongArchState *env)
+     return irq;
+ }
+ 
+-target_ulong helper_csrwr_estat(CPULoongArchState *env, target_ulong val)
++target_ulong helper_csrwr_estat(CPULoongArchState *env,
++                                target_ulong val, uint32_t vm_level)
+ {
+-    CPUSysState *sys = env_sys(env);
++    CPUSysState *sys = get_sys(env, vm_level);
+     int64_t old_v = sys->CSR_ESTAT;
+ 
+-    /* Only IS[1:0] can be written */
++    /* When guest = 0, only IS[1:0] can be written.
++     * When guest = 1, ecode and esubcode of
++     * VM_LEVEL1 can be written by VM_LEVEL0.
++     */
+     sys->CSR_ESTAT = deposit64(sys->CSR_ESTAT, 0, 2, val);
++    if (vm_level) {
++        sys->CSR_ESTAT = deposit64(sys->CSR_ESTAT, 2, 11,
++                                   extract64(val, 2, 11));
++        sys->CSR_ESTAT = deposit64(sys->CSR_ESTAT, 16, 15,
++                                   extract64(val, 16, 15));
++    }
+     /*
+      * Software interrupts (SWI0/SWI1) are latched in CSR.ESTAT.IS[1:0].
+      * Make sure the CPU interrupt request state tracks the pending bits,
+@@ -111,16 +127,17 @@ target_ulong helper_csrwr_estat(CPULoongArchState *env, target_ulong val)
+      */
+     if (sys->CSR_ESTAT != old_v) {
+         bql_lock();
+-        loongarch_cpu_update_irq(env_archcpu(env), false);
++        loongarch_cpu_update_irq(env_archcpu(env), vm_level);
+         bql_unlock();
      }
- };
-+
-+static const VMStateDescription vmstate_lvz_sys = {
-+    .name = "cpu/lvz-sys",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_UINT64(CSR_CRMD, CPUSysState),
-+        VMSTATE_UINT64(CSR_PRMD, CPUSysState),
-+        VMSTATE_UINT64(CSR_EUEN, CPUSysState),
-+        VMSTATE_UINT64(CSR_MISC, CPUSysState),
-+        VMSTATE_UINT64(CSR_ECFG, CPUSysState),
-+        VMSTATE_UINT64(CSR_ESTAT, CPUSysState),
-+        VMSTATE_UINT64(CSR_ERA, CPUSysState),
-+        VMSTATE_UINT64(CSR_BADV, CPUSysState),
-+        VMSTATE_UINT64(CSR_BADI, CPUSysState),
-+        VMSTATE_UINT64(CSR_EENTRY, CPUSysState),
-+        VMSTATE_UINT64(CSR_TLBIDX, CPUSysState),
-+        VMSTATE_UINT64(CSR_TLBEHI, CPUSysState),
-+        VMSTATE_UINT64(CSR_TLBELO0, CPUSysState),
-+        VMSTATE_UINT64(CSR_TLBELO1, CPUSysState),
-+        VMSTATE_UINT64(CSR_ASID, CPUSysState),
-+        VMSTATE_UINT64(CSR_PGDL, CPUSysState),
-+        VMSTATE_UINT64(CSR_PGDH, CPUSysState),
-+        VMSTATE_UINT64(CSR_PGD, CPUSysState),
-+        VMSTATE_UINT64(CSR_PWCL, CPUSysState),
-+        VMSTATE_UINT64(CSR_PWCH, CPUSysState),
-+        VMSTATE_UINT64(CSR_STLBPS, CPUSysState),
-+        VMSTATE_UINT64(CSR_RVACFG, CPUSysState),
-+        VMSTATE_UINT64(CSR_CPUID, CPUSysState),
-+        VMSTATE_UINT64(CSR_PRCFG1, CPUSysState),
-+        VMSTATE_UINT64(CSR_PRCFG2, CPUSysState),
-+        VMSTATE_UINT64(CSR_PRCFG3, CPUSysState),
-+        VMSTATE_UINT64_ARRAY(CSR_SAVE, CPUSysState, 16),
-+        VMSTATE_UINT64(CSR_TID, CPUSysState),
-+        VMSTATE_UINT64(CSR_TCFG, CPUSysState),
-+        VMSTATE_UINT64(CSR_TVAL, CPUSysState),
-+        VMSTATE_UINT64(CSR_CNTC, CPUSysState),
-+        VMSTATE_UINT64(CSR_TICLR, CPUSysState),
-+        VMSTATE_UINT64(CSR_LLBCTL, CPUSysState),
-+        VMSTATE_UINT64(CSR_IMPCTL1, CPUSysState),
-+        VMSTATE_UINT64(CSR_IMPCTL2, CPUSysState),
-+        VMSTATE_UINT64(CSR_TLBRENTRY, CPUSysState),
-+        VMSTATE_UINT64(CSR_TLBRBADV, CPUSysState),
-+        VMSTATE_UINT64(CSR_TLBRERA, CPUSysState),
-+        VMSTATE_UINT64(CSR_TLBRSAVE, CPUSysState),
-+        VMSTATE_UINT64(CSR_TLBRELO0, CPUSysState),
-+        VMSTATE_UINT64(CSR_TLBRELO1, CPUSysState),
-+        VMSTATE_UINT64(CSR_TLBREHI, CPUSysState),
-+        VMSTATE_UINT64(CSR_TLBRPRMD, CPUSysState),
-+        VMSTATE_UINT64(CSR_MERRCTL, CPUSysState),
-+        VMSTATE_UINT64(CSR_MERRINFO1, CPUSysState),
-+        VMSTATE_UINT64(CSR_MERRINFO2, CPUSysState),
-+        VMSTATE_UINT64(CSR_MERRENTRY, CPUSysState),
-+        VMSTATE_UINT64(CSR_MERRERA, CPUSysState),
-+        VMSTATE_UINT64(CSR_MERRSAVE, CPUSysState),
-+        VMSTATE_UINT64(CSR_CTAG, CPUSysState),
-+        VMSTATE_UINT64_ARRAY(CSR_DMW, CPUSysState, 4),
-+        VMSTATE_UINT64(CSR_DBG, CPUSysState),
-+        VMSTATE_UINT64(CSR_DERA, CPUSysState),
-+        VMSTATE_UINT64(CSR_DSAVE, CPUSysState),
-+        VMSTATE_UINT64(CSR_GSTAT, CPUSysState),
-+        VMSTATE_UINT64(CSR_GCFG, CPUSysState),
-+        VMSTATE_UINT64(CSR_GINTC, CPUSysState),
-+        VMSTATE_UINT64(CSR_GCNTC, CPUSysState),
-+        VMSTATE_UINT64(CSR_GTLBC, CPUSysState),
-+        VMSTATE_END_OF_LIST()
-+    },
-+};
-+
-+static bool lvz_needed(void *opaque)
-+{
-+    LoongArchCPU *cpu = opaque;
-+    return FIELD_EX64(cpu->env.cpucfg[2], CPUCFG2, LVZ);
-+}
-+
-+static const VMStateDescription vmstate_lvz = {
-+    .name = "cpu/lvz",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .needed = lvz_needed,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_UINT64(env.sys_states[0].CSR_GSTAT, LoongArchCPU),
-+        VMSTATE_UINT64(env.sys_states[0].CSR_GCFG, LoongArchCPU),
-+        VMSTATE_UINT64(env.sys_states[0].CSR_GINTC, LoongArchCPU),
-+        VMSTATE_UINT64(env.sys_states[0].CSR_GCNTC, LoongArchCPU),
-+        VMSTATE_UINT64(env.sys_states[0].CSR_GTLBC, LoongArchCPU),
-+        VMSTATE_STRUCT(env.sys_states[1], LoongArchCPU, 0,
-+                       vmstate_lvz_sys, CPUSysState),
-+        VMSTATE_END_OF_LIST()
-+    },
-+};
- #endif
  
-+static int loongarch_cpu_post_load(void *opaque, int version_id)
+     return old_v;
+ }
+ 
+-target_ulong helper_csrwr_asid(CPULoongArchState *env, target_ulong val)
++target_ulong helper_csrwr_asid(CPULoongArchState *env,
++                               target_ulong val, uint32_t vm_level)
+ {
+-    CPUSysState *sys = env_sys(env);
++    CPUSysState *sys = get_sys(env, vm_level);
+     int64_t old_v = sys->CSR_ASID;
+ 
+     /* Only ASID filed of CSR_ASID can be written */
+@@ -131,9 +148,10 @@ target_ulong helper_csrwr_asid(CPULoongArchState *env, target_ulong val)
+     return old_v;
+ }
+ 
+-target_ulong helper_csrwr_tcfg(CPULoongArchState *env, target_ulong val)
++target_ulong helper_csrwr_tcfg(CPULoongArchState *env,
++                               target_ulong val, uint32_t vm_level)
+ {
+-    CPUTimerState *timer = env_timer(env);
++    CPUTimerState *timer = vm_level ? env_guest_timer(env) : env_timer(env);
+     CPUSysState *sys = container_of(timer, CPUSysState, timer_state);
+     int64_t old_v = sys->CSR_TCFG;
+ 
+@@ -142,9 +160,10 @@ target_ulong helper_csrwr_tcfg(CPULoongArchState *env, target_ulong val)
+     return old_v;
+ }
+ 
+-target_ulong helper_csrwr_ticlr(CPULoongArchState *env, target_ulong val)
++target_ulong helper_csrwr_ticlr(CPULoongArchState *env,
++                                target_ulong val, uint32_t vm_level)
+ {
+-    CPUTimerState *timer = env_timer(env);
++    CPUTimerState *timer = vm_level ? env_guest_timer(env) : env_timer(env);
+     int64_t old_v = 0;
+ 
+     if (val & 0x1) {
+@@ -155,10 +174,11 @@ target_ulong helper_csrwr_ticlr(CPULoongArchState *env, target_ulong val)
+     return old_v;
+ }
+ 
+-target_ulong helper_csrwr_pwcl(CPULoongArchState *env, target_ulong val)
++target_ulong helper_csrwr_pwcl(CPULoongArchState *env,
++                               target_ulong val, uint32_t vm_level)
+ {
+     uint8_t shift, ptbase;
+-    CPUSysState *sys = env_sys(env);
++    CPUSysState *sys = get_sys(env, vm_level);
+     int64_t old_v = sys->CSR_PWCL;
+ 
+     /*
+@@ -180,18 +200,20 @@ target_ulong helper_csrwr_pwcl(CPULoongArchState *env, target_ulong val)
+     return old_v;
+ }
+ 
+-target_ulong helper_csrwr_pwch(CPULoongArchState *env, target_ulong val)
++target_ulong helper_csrwr_pwch(CPULoongArchState *env,
++                               target_ulong val, uint32_t vm_level)
+ {
+-    uint8_t has_ptw;
+-    CPUSysState *sys = env_sys(env);
++    uint8_t host_has_ptw;
++    CPUSysState *sys = get_sys(env, vm_level);
+     int64_t old_v = sys->CSR_PWCH;
+ 
+     val = FIELD_DP64(val, CSR_PWCH, RESERVE, 0);
+-    has_ptw = FIELD_EX32(env->cpucfg[2], CPUCFG2, HPTW);
+-    if (!has_ptw) {
++    //TODO: host can't read guest cpucfg
++    host_has_ptw = FIELD_EX32(env->cpucfg[2], CPUCFG2, HPTW);
++    if (!host_has_ptw) {
+         val = FIELD_DP64(val, CSR_PWCH, HPTW_EN, 0);
+     }
+ 
+     sys->CSR_PWCH = val;
+     return old_v;
+- }
++}
+diff --git a/target/loongarch/tcg/helper.h b/target/loongarch/tcg/helper.h
+index a27b80b087..bce5f46dc2 100644
+--- a/target/loongarch/tcg/helper.h
++++ b/target/loongarch/tcg/helper.h
+@@ -93,17 +93,17 @@ DEF_HELPER_1(rdtime_d, i64, env)
+ 
+ #ifndef CONFIG_USER_ONLY
+ /* CSRs helper */
+-DEF_HELPER_1(csrrd_pgd, i64, env)
+-DEF_HELPER_1(csrrd_cpuid, i64, env)
+-DEF_HELPER_1(csrrd_tval, i64, env)
+-DEF_HELPER_1(csrrd_msgir, i64, env)
+-DEF_HELPER_2(csrwr_stlbps, i64, env, tl)
+-DEF_HELPER_2(csrwr_estat, i64, env, tl)
+-DEF_HELPER_2(csrwr_asid, i64, env, tl)
+-DEF_HELPER_2(csrwr_tcfg, i64, env, tl)
+-DEF_HELPER_2(csrwr_ticlr, i64, env, tl)
+-DEF_HELPER_2(csrwr_pwcl, i64, env, tl)
+-DEF_HELPER_2(csrwr_pwch, i64, env, tl)
++DEF_HELPER_2(csrrd_pgd, i64, env, i32)
++DEF_HELPER_2(csrrd_cpuid, i64, env, i32)
++DEF_HELPER_2(csrrd_tval, i64, env, i32)
++DEF_HELPER_2(csrrd_msgir, i64, env, i32)
++DEF_HELPER_3(csrwr_stlbps, i64, env, tl, i32)
++DEF_HELPER_3(csrwr_estat, i64, env, tl, i32)
++DEF_HELPER_3(csrwr_asid, i64, env, tl, i32)
++DEF_HELPER_3(csrwr_tcfg, i64, env, tl, i32)
++DEF_HELPER_3(csrwr_ticlr, i64, env, tl, i32)
++DEF_HELPER_3(csrwr_pwcl, i64, env, tl, i32)
++DEF_HELPER_3(csrwr_pwch, i64, env, tl, i32)
+ DEF_HELPER_2(iocsrrd_b, i64, env, tl)
+ DEF_HELPER_2(iocsrrd_h, i64, env, tl)
+ DEF_HELPER_2(iocsrrd_w, i64, env, tl)
+diff --git a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
+index 00e8f61e42..139dbd6e2a 100644
+--- a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
++++ b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
+@@ -39,11 +39,14 @@ GEN_FALSE_TRANS(lddir)
+ GEN_FALSE_TRANS(ertn)
+ GEN_FALSE_TRANS(dbcl)
+ GEN_FALSE_TRANS(idle)
++GEN_FALSE_TRANS(gcsrrd)
++GEN_FALSE_TRANS(gcsrwr)
++GEN_FALSE_TRANS(gcsrxchg)
+ 
+ #else
+ 
+-typedef void (*GenCSRRead)(TCGv dest, TCGv_ptr env);
+-typedef void (*GenCSRWrite)(TCGv dest, TCGv_ptr env, TCGv src);
++typedef void (*GenCSRRead)(TCGv dest, TCGv_ptr env, TCGv_i32 vm_level);
++typedef void (*GenCSRWrite)(TCGv dest, TCGv_ptr env, TCGv src, TCGv_i32 vm_level);
+ 
+ static bool check_plv(DisasContext *ctx)
+ {
+@@ -88,10 +91,14 @@ void loongarch_csr_translate_init(void)
+ }
+ #undef SET_CSR_FUNC
+ 
+-static bool check_csr_flags(DisasContext *ctx, const CSRInfo *csr, bool write)
++static bool check_csr_flags(DisasContext *ctx, const CSRInfo *csr,
++                            bool write, int vm_level)
+ {
+     if ((csr->flags & CSRFL_READONLY) && write) {
+-        return false;
++        /* host writes guest read-only CSRs is allowed */
++        if (is_guest_mmu_idx(ctx->mem_idx) || vm_level == VM_LEVEL0) {
++            return false;
++        }
+     }
+     if ((csr->flags & CSRFL_IO) && translator_io_start(&ctx->base)) {
+         ctx->base.is_jmp = DISAS_EXIT_UPDATE;
+@@ -101,7 +108,7 @@ static bool check_csr_flags(DisasContext *ctx, const CSRInfo *csr, bool write)
+     return true;
+ }
+ 
+-static bool trans_csrrd(DisasContext *ctx, arg_csrrd *a)
++static bool trans_csrrd_impl(DisasContext *ctx, arg_r_csr *a, int vm_level)
+ {
+     TCGv dest;
+     const CSRInfo *csr;
+@@ -116,21 +123,29 @@ static bool trans_csrrd(DisasContext *ctx, arg_csrrd *a)
+         /* CSR is undefined: read as 0. */
+         dest = tcg_constant_tl(0);
+     } else {
+-        check_csr_flags(ctx, csr, false);
+-        dest = gpr_dst(ctx, a->rd, EXT_NONE);
+-        readfn = (GenCSRRead)csr->readfn;
+-        if (readfn) {
+-            readfn(dest, tcg_env);
++        check_csr_flags(ctx, csr, false, vm_level);
++        if (vm_level && (csr->flags & CSRFL_GSPR)) {
++            if (is_guest_mmu_idx(ctx->mem_idx)) {
++                generate_exception(ctx, EXCCODE_GSPR);
++                return true;
++            }
++            dest = tcg_constant_tl(0);
+         } else {
+-            offset = get_csr_offset(csr, 0);
+-            tcg_gen_ld_tl(dest, tcg_env, offset);
++            dest = gpr_dst(ctx, a->rd, EXT_NONE);
++            readfn = (GenCSRRead)csr->readfn;
++            if (readfn) {
++                readfn(dest, tcg_env, tcg_constant_i32(vm_level));
++            } else {
++                offset = get_csr_offset(csr, vm_level);
++                tcg_gen_ld_tl(dest, tcg_env, offset);
++            }
+         }
+     }
+     gen_set_gpr(a->rd, dest, EXT_NONE);
+     return true;
+ }
+ 
+-static bool trans_csrwr(DisasContext *ctx, arg_csrwr *a)
++static bool trans_csrwr_impl(DisasContext *ctx, arg_r_csr *a, int vm_level)
+ {
+     TCGv dest, src1;
+     const CSRInfo *csr;
+@@ -146,18 +161,26 @@ static bool trans_csrwr(DisasContext *ctx, arg_csrwr *a)
+         gen_set_gpr(a->rd, tcg_constant_tl(0), EXT_NONE);
+         return true;
+     }
+-    if (!check_csr_flags(ctx, csr, true)) {
++    if (!check_csr_flags(ctx, csr, true, vm_level)) {
+         /* CSR is readonly: trap. */
+         return false;
+     }
++    if (vm_level && (csr->flags & CSRFL_GSPR)) {
++        if (is_guest_mmu_idx(ctx->mem_idx)) {
++            generate_exception(ctx, EXCCODE_GSPR);
++            return true;
++        }
++        gen_set_gpr(a->rd, tcg_constant_tl(0), EXT_NONE);
++        return true;
++    }
+     src1 = gpr_src(ctx, a->rd, EXT_NONE);
+     writefn = (GenCSRWrite)csr->writefn;
+     if (writefn) {
+         dest = gpr_dst(ctx, a->rd, EXT_NONE);
+-        writefn(dest, tcg_env, src1);
++        writefn(dest, tcg_env, src1, tcg_constant_i32(vm_level));
+     } else {
+         dest = tcg_temp_new();
+-        offset = get_csr_offset(csr, 0);
++        offset = get_csr_offset(csr, vm_level);
+         tcg_gen_ld_tl(dest, tcg_env, offset);
+         tcg_gen_st_tl(src1, tcg_env, offset);
+     }
+@@ -165,7 +188,7 @@ static bool trans_csrwr(DisasContext *ctx, arg_csrwr *a)
+     return true;
+ }
+ 
+-static bool trans_csrxchg(DisasContext *ctx, arg_csrxchg *a)
++static bool trans_csrxchg_impl(DisasContext *ctx, arg_rr_csr *a, int vm_level)
+ {
+     TCGv src1, mask, oldv, newv, temp;
+     const CSRInfo *csr;
+@@ -182,11 +205,20 @@ static bool trans_csrxchg(DisasContext *ctx, arg_csrxchg *a)
+         return true;
+     }
+ 
+-    if (!check_csr_flags(ctx, csr, true)) {
++    if (!check_csr_flags(ctx, csr, true, vm_level)) {
+         /* CSR is readonly: trap. */
+         return false;
+     }
+ 
++    if (vm_level && (csr->flags & CSRFL_GSPR)) {
++        if (is_guest_mmu_idx(ctx->mem_idx)) {
++            generate_exception(ctx, EXCCODE_GSPR);
++            return true;
++        }
++        gen_set_gpr(a->rd, tcg_constant_tl(0), EXT_NONE);
++        return true;
++    }
++
+     /* So far only readonly csrs have readfn. */
+     assert(csr->readfn == NULL);
+ 
+@@ -196,7 +228,7 @@ static bool trans_csrxchg(DisasContext *ctx, arg_csrxchg *a)
+     newv = tcg_temp_new();
+     temp = tcg_temp_new();
+ 
+-    offset = get_csr_offset(csr, 0);
++    offset = get_csr_offset(csr, vm_level);
+     tcg_gen_ld_tl(oldv, tcg_env, offset);
+     tcg_gen_and_tl(newv, src1, mask);
+     tcg_gen_andc_tl(temp, oldv, mask);
+@@ -204,7 +236,7 @@ static bool trans_csrxchg(DisasContext *ctx, arg_csrxchg *a)
+ 
+     writefn = (GenCSRWrite)csr->writefn;
+     if (writefn) {
+-        writefn(oldv, tcg_env, newv);
++        writefn(oldv, tcg_env, newv, tcg_constant_i32(vm_level));
+     } else {
+         tcg_gen_st_tl(newv, tcg_env, offset);
+     }
+@@ -212,6 +244,45 @@ static bool trans_csrxchg(DisasContext *ctx, arg_csrxchg *a)
+     return true;
+ }
+ 
++static bool trans_csrrd(DisasContext *ctx, arg_csrrd *a)
 +{
-+    LoongArchCPU *cpu = opaque;
-+    CPULoongArchState *env = &cpu->env;
-+    CPUSysState *host = get_sys(env, VM_LEVEL0);
-+    bool guest = FIELD_EX64(host->CSR_GSTAT, CSR_GSTAT, VM);
-+    set_sys(env, guest);
-+    return 0;
++    return trans_csrrd_impl(ctx, a, is_guest_mmu_idx(ctx->mem_idx));
 +}
 +
- /* LoongArch CPU state */
- const VMStateDescription vmstate_loongarch_cpu = {
-     .name = "cpu",
-     .version_id = 4,
-     .minimum_version_id = 4,
-+    .post_load = loongarch_cpu_post_load,
-     .fields = (const VMStateField[]) {
-         VMSTATE_UINT64_ARRAY(env.gpr, LoongArchCPU, 32),
-         VMSTATE_UINT64(env.pc, LoongArchCPU),
-@@ -285,6 +388,7 @@ const VMStateDescription vmstate_loongarch_cpu = {
-         &vmstate_lasx,
- #if defined(CONFIG_TCG) && !defined(CONFIG_USER_ONLY)
-         &vmstate_tlb,
-+        &vmstate_lvz,
- #endif
-         &vmstate_lbt,
-         &vmstate_msgint,
++static bool trans_csrwr(DisasContext *ctx, arg_csrwr *a)
++{
++    return trans_csrwr_impl(ctx, a, is_guest_mmu_idx(ctx->mem_idx));
++}
++
++static bool trans_csrxchg(DisasContext *ctx, arg_csrxchg *a)
++{
++    return trans_csrxchg_impl(ctx, a, is_guest_mmu_idx(ctx->mem_idx));
++}
++
++static bool trans_gcsrrd(DisasContext *ctx, arg_gcsrrd *a)
++{
++    if (!avail_LVZ(ctx) || is_guest_mmu_idx(ctx->mem_idx)) {
++        return false;
++    }
++    return trans_csrrd_impl(ctx, a, VM_LEVEL1);
++}
++
++static bool trans_gcsrwr(DisasContext *ctx, arg_gcsrwr *a)
++{
++    if (!avail_LVZ(ctx) || is_guest_mmu_idx(ctx->mem_idx)) {
++        return false;
++    }
++    return trans_csrwr_impl(ctx, a, VM_LEVEL1);
++}
++
++static bool trans_gcsrxchg(DisasContext *ctx, arg_gcsrxchg *a)
++{
++    if (!avail_LVZ(ctx) || is_guest_mmu_idx(ctx->mem_idx)) {
++        return false;
++    }
++    return trans_csrxchg_impl(ctx, a, VM_LEVEL1);
++}
++
+ static bool gen_iocsrrd(DisasContext *ctx, arg_rr *a,
+                         void (*func)(TCGv, TCGv_ptr, TCGv))
+ {
 -- 
 2.55.0
 
