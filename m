@@ -4,133 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEB8ECA6018
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Oct 2026 00:51:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20DF4CA6018
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Oct 2026 00:58:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xEyp3-0004Ej-TF; Thu, 08 Oct 2026 20:50:54 -0400
+	id 1xEywN-0005px-Pg; Thu, 08 Oct 2026 20:58:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xEyos-0004DA-HO
- for qemu-devel@nongnu.org; Thu, 08 Oct 2026 20:50:42 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1xEywJ-0005ou-5h
+ for qemu-devel@nongnu.org; Thu, 08 Oct 2026 20:58:23 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xEyop-0003fT-3O
- for qemu-devel@nongnu.org; Thu, 08 Oct 2026 20:50:42 -0400
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6990Pvhh1348603
- for <qemu-devel@nongnu.org>; Fri, 9 Oct 2026 00:50:35 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:message-id
- :mime-version:subject:to; s=qcppdkim1; bh=7S17So41dZKXCLqI0ubdd3
- siyx/Q79XJ6H9LVz8gctM=; b=WY5pu/Ywwe5Iqm19cyo1EPeSfOcndi4LQldRqU
- B4RSy/RSNKFzb+MNL3492GcNfPV55BWqJxw5mdyaEx6bJPyF1tKF7k03bZxXHO8K
- l1TASzrM5zVCzjubt+blhSBa7oy2kNwU5qHNwxvm+hMGMElMBjrget1E/27nsc06
- tTuZHXbJ2AKe7Euk3Dd2TscvKvPXU0arP480BnkRZFxCPcYUqyVH5QFFOoNAvsX3
- 0g+RIcRfJ+ARxaSvG+mMXAdafyTK6voXDr31oThQlkWt0qelKQmngpuzrA3YmQOz
- LcDxFafZ9D+oNtNvehJ55UDBAuABFsFooogU2ZQh5uObYn3g==
-Received: from mail-dl1-f72.google.com (mail-dl1-f72.google.com [74.125.82.72])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h6fxw97wk-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 09 Oct 2026 00:50:35 +0000 (GMT)
-Received: by mail-dl1-f72.google.com with SMTP id
- a92af1059eb24-149e8e8ad71so2223606c88.1
- for <qemu-devel@nongnu.org>; Thu, 08 Oct 2026 17:50:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1791507035; x=1792111835; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=7S17So41dZKXCLqI0ubdd3siyx/Q79XJ6H9LVz8gctM=;
- b=jEUiQF4G0fxv0U/WfPiHLS3XHjk8wdirArkqDq5AJ7LQHM05YR7iTREqaHeXSADKfa
- htOoPyqTJ7UpmNC5rJE3OrpLQq9PEJgrNf6JMclX2a1MyRxczMF6f2rwdeyrqlIE5HMP
- ncKiCtBKRfTk5YmGpBVF0PUXn/XWLs5CMV9+SQwM1PFT/7NnU6bN7Rs9I36hGLNIcbzr
- LRTHaDJVpjK5eIbUZFM5yROyGWo9ClLiHZibdPkh5SKnjfcPiYeAn4/dlZId3QWXIeYy
- 0m95WCV90BUfmE0iTgSXIGiCtxiayuJg633HFaETF3NYtazXugEEvsxXz1Op/M5E5ebN
- OgXw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791507035; x=1792111835;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=7S17So41dZKXCLqI0ubdd3siyx/Q79XJ6H9LVz8gctM=;
- b=oSkx320RlQxphuXjITryaXW9795KSvWmHgYDpFlrmDlRlV+iAnkAX+AbI8aS3gTvto
- GSKVcAQ1ULCQq8BwsUaCZcfYJEgIisQWGLn6l2aYYEbWCG/EEtE+W3UF7UWKMmCz6o1A
- 5oGK8IBezNnB5xlsddOBQfStJM+U+KM8fXOLelpv8MTjP67Db1+2boL2pA3SmOdI5oXN
- 88iRkRa9oHuL5hjYrvKuHqFgOTw3VcwO+h3ZmEhs/+OZDy+LKA7UcQ3Xkbd6dNMa5g2N
- kGCv3zyrN1XSqJdOborv3GUO8k9LsVHoieVf+VuSu35HAPdtc9EN2tVAFXVZD77b977a
- A+ZA==
-X-Gm-Message-State: AFuF++kGSvLeOULfAqG47SQTWiiFNzzSzvbjFNlehs6bzJPnVpmBmM4Q
- xEOsE+mKJM0WU0UzGvJe0l3o7eudCdh8aJVa5DDmgrdADuERHDoNLVATb6tCgduXvFtOL9emtbX
- VeLW/wjFeTM4TpaQRZLElo7bv5Sk0nppxQOVao8I2axaT3a8KYqNrjmDZL1xUph2diQ==
-X-Gm-Gg: AYBFou22LZsSJa0XSBkyA4ydan2E/Xb7qap7Utn0p5SjflaUNO2PN2NLQ43fLfPmk8z
- WelNeQpBFUcHiZTyYzSYRQ9s0b3liCIIGsXNI0hry19SU2JpXdFKZiErbEI4gzKN1eqV27ED5ZE
- iUaS9853dPbcd1tbZ7/wkeqK/wlwd2jdvY4em3bqYnxoDXtUUbVi1K3OPm/7XffnBywyU+IYPI9
- 1PpbYN62KDJc4kGmb3leWdHTQM/iCEnHz3ib7w7CzQaDuBFV+Rd/29qTX89d5vyfgbX9DMSLysc
- SLGTMh0HXhign2peT0X6QemLF/vlPBKlh3xqybXyUbefmJ3bVWMucuo6jTCtQIZMkufr37oYK0u
- b7hJqmKBflAKptx+v22afCQ1muirid07fPfgrjiuF3giXtOPo3vZ+ZUmvmRld
-X-Received: by 2002:a05:701b:2512:b0:149:1feb:6da4 with SMTP id
- a92af1059eb24-16a6250bc3emr385783c88.32.1791507034655; 
- Thu, 08 Oct 2026 17:50:34 -0700 (PDT)
-X-Received: by 2002:a05:701b:2512:b0:149:1feb:6da4 with SMTP id
- a92af1059eb24-16a6250bc3emr385756c88.32.1791507034041; 
- Thu, 08 Oct 2026 17:50:34 -0700 (PDT)
-Received: from debian.qualcomm.com (192-80-163-190.dyn.novuscom.net.
- [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-169a4429603sm1604616c88.17.2026.10.08.17.50.33
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 08 Oct 2026 17:50:33 -0700 (PDT)
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-To: qemu-devel@nongnu.org, peter.maydell@linaro.org,
- richard.henderson@linaro.org, pbonzini@redhat.com, stefanha@redhat.com
-Cc: pierrick.bouvier@oss.qualcomm.com
-Subject: [PULL 0/2] Build fix 20261008
-Date: Fri,  9 Oct 2026 00:50:15 +0000
-Message-ID: <20261009005017.61989-1-pierrick.bouvier@oss.qualcomm.com>
-X-Mailer: git-send-email 2.43.0
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1xEywF-0004FP-AZ
+ for qemu-devel@nongnu.org; Thu, 08 Oct 2026 20:58:22 -0400
+Received: from [192.168.10.153] (p865013-ipoe.ipoe.ocn.ne.jp [153.242.222.12])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 6990vvDH010888
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Fri, 9 Oct 2026 09:57:57 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=upj19MO24tvRVbYbwNrV7Hw8dYWmUh9rVEZFPbnGZE0=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=From:Message-ID:To:Subject:Date;
+ s=rs20250326; t=1791507477; v=1;
+ b=sPCpUFeJnASQyXhhfH7a7z4IP/fF48wfizw+rq6fBHPQ7NR9+Nm32chA2QloJICR
+ 3AODw6ovlQgoyXGzRokxykW0ZGAKJ1jP7JhNuLW+rWPAbsq21K1cVc0Uc9a5GRN2
+ SgDr9MaFhdFV6C112Xxd+tGmShGZTuC8KSdop3+6dkizjpaIOvp7d0mydMIoFdTX
+ HLDnz6Z8fqR8HYU/+RbvIgZb/J4l8bDOCbpPMj7LokodTzU0xVPWR5gC5CNaJlHX
+ 1QuZbvOhC6kv5Q4SLScxpL8XAb9SmoAUElfoBzohFs+zw45SXmBGYjaDUZUbv6gZ
+ QviMztIlup/76AFBBSuzPw==
+Message-ID: <9cda6271-aed9-4a2b-b88f-bca8371d753e@rsg.ci.i.u-tokyo.ac.jp>
+Date: Fri, 9 Oct 2026 09:57:57 +0900
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] contrib/plugins/bbv.c: Allow selecting ROI
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>
+References: <20261007-bbv-v1-0-a2f521a68fdf@rsg.ci.i.u-tokyo.ac.jp>
+ <20261007-bbv-v1-2-a2f521a68fdf@rsg.ci.i.u-tokyo.ac.jp>
+ <4eec19e6-db40-4658-b5b3-bc342473cffd@oss.qualcomm.com>
+ <f503ffbe-0900-4b8e-ae7b-dbfcc74eb5cc@rsg.ci.i.u-tokyo.ac.jp>
+ <2d7c2cdb-b5b9-41ed-9786-dd9b4876bdd8@oss.qualcomm.com>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <2d7c2cdb-b5b9-41ed-9786-dd9b4876bdd8@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA5MDAwMyBTYWx0ZWRfX1seZDBoFn+Qt
- /LAUxud0K7r5/h3ZB9YT1AaXmts/ibOnKgFtTjB0CyAhh2SzVG7STzQMNesAuNFdO2hbbM3piFP
- IvrJ/QzD5lZVEx5gjUzrJ9YClXB3hlFOvuNnvFmooPLhqO9cptikBpWdkx9nznuffXgmB/ETYco
- 9zcSzMGVinAVpTOEeTo6V5bzRFSafq0zw6dfn+WoC0PyOFvVlED5utvNd5zvLCYXkVMnIv28AvE
- 2MXToM3UeVFBf+WRPGlrvCoeDeXLAn0a0J+E442snKQOkSMkubPDiKoCzJhbEcRRIKgdtyrximn
- uqep7RM7i+PMAE1C9Q9eNvKxsUMIoUstyi/0q6ePVaHzbPPiBUHVUpcMH3/TzW45H7gEHbGeYUQ
- lNfVpRhPj76hk1rWZ3JOkS0Oc847SvMJQliTn4TIWIOoFgKQk+BXEoUZIv7bqZddNtKL7dYF4tk
- DN5Vvyf4Rj0rYvb/i3Q==
-X-Proofpoint-GUID: K0hL1RcVQd1smmf89rrYgGFq0Hro4BIh
-X-Authority-Analysis: v=2.4 cv=cMB1IVeN c=1 sm=1 tr=0 ts=6ac83a5b cx=c_pps
- a=bS7HVuBVfinNPG3f6cIo3Q==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
- a=p0WdMEafAAAA:8 a=VwQbUJbxAAAA:8 a=pGLkceISAAAA:8 a=dM0neqjTbBrA9FJYkHsA:9
- a=QEXdDO2ut3YA:10 a=vBUdepa8ALXHeOFLBtFW:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA5MDAwMyBTYWx0ZWRfXy/qyukf8QgTG
- PMYlZa9WYEYbjGc7eeYVmX/IoMbDY3Y+KGyszN12KWuHIO4e+tF0/6x/qd63QdwJy5yT0iAN211
- fHS6HPqcD7FnoeWhoWa/gWGF8l6JePU=
-X-Proofpoint-ORIG-GUID: K0hL1RcVQd1smmf89rrYgGFq0Hro4BIh
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-10-09_01,2026-10-08_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 suspectscore=0 spamscore=0 lowpriorityscore=0
- malwarescore=0 adultscore=0 bulkscore=0 impostorscore=0 phishscore=0
- clxscore=1015 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610020000
- definitions=main-2610090003
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -147,29 +77,184 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit f9587d4045c67cd0d8d8bdcd5d0bb5b6b395b63c:
+On 2026/10/09 1:40, Pierrick Bouvier wrote:
+> On 10/7/2026 11:11 PM, Akihiko Odaki wrote:
+>> On 2026/10/08 10:08, Pierrick Bouvier wrote:
+>>> On 10/6/2026 11:01 PM, Akihiko Odaki wrote:
+>>>> A region of interest (ROI) often excludes the program startup and exit.
+>>>> For example, a benchmark may parse a large input and then run a
+>>>> computation kernel and the former may take longer than the latter;
+>>>> basic block vectors generated for the whole execution will not properly
+>>>> represent the latter.
+>>>>
+>>>> Add options to specify the beginning and the end of the ROI to bound
+>>>> basic block vector generation to the ROI.
+>>>>
+>>>> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+>>>> ---
+>>>>    docs/about/emulation.rst |  8 +++++
+>>>>    contrib/plugins/bbv.c    | 80 +++++++++++++++++++++++++++++++++++++
+>>>> +++++++++--
+>>>>    2 files changed, 86 insertions(+), 2 deletions(-)
+>>>>
+>>>> diff --git a/docs/about/emulation.rst b/docs/about/emulation.rst
+>>>> index c58149086cdd..0566171b517b 100644
+>>>> --- a/docs/about/emulation.rst
+>>>> +++ b/docs/about/emulation.rst
+>>>> @@ -284,6 +284,14 @@ The bbv plugin allows you to generate basic
+>>>> block vectors for use with the
+>>>>        * - Option
+>>>>        - Description
+>>>> +  * - begin=A
+>>>> +    - The virtual address of the instruction that starts basic block
+>>>> vector
+>>>> +      generation. Generation starts from the beginning of the
+>>>> execution if
+>>>> +      not specified.
+>>>> +  * - end=A
+>>>> +    - The virtual address of the instruction that ends basic block
+>>>> vector
+>>>> +      generation. Generation continues until the endo of the
+>>>> execution if
+>>>
+>>> small typo here: s/endo/end
+>>
+>> Thanks for catching the typo.
+>>
+>>>
+>>>> +      not specified.
+>>>>      * - interval=N
+>>>>        - The interval to generate a basic block vector specified by
+>>>> the number of
+>>>>          instructions (Default: N = 100000000)
+>>>> diff --git a/contrib/plugins/bbv.c b/contrib/plugins/bbv.c
+>>>> index e5caf5d9543b..a2a779f7639e 100644
+>>>> --- a/contrib/plugins/bbv.c
+>>>> +++ b/contrib/plugins/bbv.c
+>>>> @@ -5,6 +5,8 @@
+>>>>     * SPDX-License-Identifier: GPL-2.0-or-later
+>>>>     */
+>>>>    +#include <stdbool.h>
+>>>> +#include <stdint.h>
+>>>>    #include <stdio.h>
+>>>>    #include <glib.h>
+>>>>    @@ -26,6 +28,10 @@ static GHashTable *bbs;
+>>>>    static GRWLock bbs_lock;
+>>>>    static char *filename;
+>>>>    static struct qemu_plugin_scoreboard *vcpus;
+>>>> +static bool begin_present;
+>>>> +static uint64_t begin;
+>>>> +static bool end_present;
+>>>> +static uint64_t end;
+>>>>    static int64_t interval = 100000000;
+>>>>      static void plugin_exit(void *p)
+>>>> @@ -66,6 +72,7 @@ static void vcpu_init(unsigned int vcpu_index, void
+>>>> *userdata)
+>>>>        Vcpu *vcpu = qemu_plugin_scoreboard_find(vcpus, vcpu_index);
+>>>>          vcpu_filename = g_strdup_printf("%s.%u.bb", filename,
+>>>> vcpu_index);
+>>>> +    vcpu->count = begin_present ? INT64_MIN : -interval;
+>>>
+>>> Not sure which semantic we are trying to achieve with -interval here.
+>>>
+>>> The original logic was to increment this count, until reaching interval,
+>>> after what we would reset it by using vcpu_count -= interval, to keep
+>>> the extra insn that went in after the threshold.
+>>
+>> The counter now starts at -interval and counts up to zero. Subtracting
+>> interval after emitting a vector still preserves the extra instructions.
+>> For example, with interval=100:
+>>
+>>      initial count:       -100
+>>      after 130 insns:       30  -> emit a vector
+>>      subtract interval:    -70  -> 70 insns until the next vector
+>>
+>>>
+>>>>        vcpu->file = fopen(vcpu_filename, "w");
+>>>>    }
+>>>>    @@ -102,6 +109,22 @@ static void vcpu_interval_exec(unsigned int
+>>>> vcpu_index, void *udata)
+>>>>        fputc('\n', vcpu->file);
+>>>>    }
+>>>>    +static void vcpu_begin_insn_exec(unsigned int vcpu_index, void
+>>>> *userdata)
+>>>> +{
+>>>> +    GHashTableIter iter;
+>>>> +    void *value;
+>>>> +
+>>>> +    g_rw_lock_reader_lock(&bbs_lock);
+>>>> +    g_hash_table_iter_init(&iter, bbs);
+>>>> +
+>>>> +    while (g_hash_table_iter_next(&iter, NULL, &value)) {
+>>>> +        qemu_plugin_u64_set(bb_count_u64(value), vcpu_index, 0);
+>>>> +    }
+>>>> +
+>>>> +    g_rw_lock_reader_unlock(&bbs_lock);
+>>>> +    qemu_plugin_u64_set(count_u64(), vcpu_index, -interval);
+>>>> +}
+>>>> +
+>>>>    static void vcpu_tb_trans(struct qemu_plugin_tb *tb, void *userdata)
+>>>>    {
+>>>>        uint64_t n_insns = qemu_plugin_tb_n_insns(tb);
+>>>> @@ -119,6 +142,19 @@ static void vcpu_tb_trans(struct qemu_plugin_tb
+>>>> *tb, void *userdata)
+>>>>        }
+>>>>        g_rw_lock_writer_unlock(&bbs_lock);
+>>>>    +    for (size_t idx = 0; idx < n_insns; idx++) {
+>>>> +        struct qemu_plugin_insn *insn = qemu_plugin_tb_get_insn(tb,
+>>>> idx);
+>>>> +        uint64_t insn_vaddr = qemu_plugin_insn_vaddr(insn);
+>>>> +
+>>>> +        if (begin_present && insn_vaddr == begin) {
+>>>> +            qemu_plugin_register_vcpu_insn_exec_cb(
+>>>> +                insn, vcpu_begin_insn_exec, QEMU_PLUGIN_CB_NO_REGS,
+>>>> NULL);
+>>>> +        } else if (end_present && insn_vaddr == end) {
+>>>> +            qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu(
+>>>> +                insn, QEMU_PLUGIN_INLINE_STORE_U64, count_u64(),
+>>>> INT64_MIN);
+>>>> +        }
+>>>> +    }
+>>>> +
+>>>>        qemu_plugin_register_vcpu_tb_exec_inline_per_vcpu(
+>>>>            tb, QEMU_PLUGIN_INLINE_ADD_U64, count_u64(), n_insns);
+>>>>    @@ -127,7 +163,32 @@ static void vcpu_tb_trans(struct
+>>>> qemu_plugin_tb *tb, void *userdata)
+>>>>          qemu_plugin_register_vcpu_tb_exec_cond_cb(
+>>>>            tb, vcpu_interval_exec, QEMU_PLUGIN_CB_NO_REGS,
+>>>> -        QEMU_PLUGIN_COND_GE, count_u64(), interval, NULL);
+>>>> +        QEMU_PLUGIN_COND_LT, count_u64(), INT64_MIN, NULL);
+>>>> +}
+>>>
+>>> is INT64_MIN used as an arbitrary large value when interpreted as
+>>> unsigned immediate? If yes, that's confusing to the reader.
+>>
+>> The unsigned comparison count < (uint64_t)INT64_MIN is equivalent with
+>> the signed comparison (int64_t)count >= 0. That is why this particular
+>> value is used.
+>>
+>> Setting count to INT64_MIN suppresses output for the next 2^63 counted
+>> instructions, which is effectively disabled for this use. The begin
+>> callback clears the BB counters and sets count to -interval; end sets it
+>> back to INT64_MIN. The requested interval stays unchanged.
+>>
+> 
+> Ok I see better.
+> Even though it works, it's pretty confusing to be honest. Inline
+> operatons works with unsigned values, so with conversion and wrap
+> around, it's safe, but really not intuitive.
+> 
+> I would prefer if you could refactor this to keep a zero initialized
+> count value, and add a specific instrumentation path for begin, end
+> logic (COND_LT, UINT64_MAX - N) to keep the same behavior of "infinite
+> interval".
 
-  Merge tag 'pbouvier/pr/plugins-20261005' of https://gitlab.com/p-b-o/qemu into staging (2026-10-06 11:26:40 +0200)
+We cannot choose a separate instrumentation path based on whether 
+execution is inside the ROI. Instrumentation is installed when a TB is 
+translated, but the same TB may execute both inside and outside the ROI.
 
-are available in the Git repository at:
+I will preserve this logic and add code comments for clarification.
 
-  https://gitlab.com/p-b-o/qemu tags/pbouvier/pr/build_tests-20261009
-
-for you to fetch changes up to 39dc3b12f6ec1aef0ed2df761735c1fddfa7c779:
-
-  gitlab-ci: enable slirp in the Windows cross-build (2026-10-08 20:58:30 +0000)
-
-----------------------------------------------------------------
-Changes:
-- [PATCH 0/2] tests/qtest: fix and gaurd PXE test build on MinGW (Yonggang Luo <luoyonggang@gmail.com>)
-  Link: https://lore.kernel.org/qemu-devel/20261008184119.142-1-luoyonggang@gmail.com
-
-----------------------------------------------------------------
-Yonggang Luo (2):
-      tests/qtest: fix PXE test build on MinGW
-      gitlab-ci: enable slirp in the Windows cross-build
-
- .gitlab-ci.d/crossbuilds.yml |  2 +-
- tests/qtest/pxe-test.c       | 12 ++++++++++--
- 2 files changed, 11 insertions(+), 3 deletions(-)
+Regards,
+Akihiko Odaki
 
