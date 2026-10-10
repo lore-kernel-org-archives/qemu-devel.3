@@ -4,107 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 100E2CA9EC1
-	for <qemu-devel@archiver.kernel.org>; Sat, 10 Oct 2026 20:05:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8E37CA9EC1
+	for <qemu-devel@archiver.kernel.org>; Sat, 10 Oct 2026 20:25:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xFdJd-0007Nm-6w; Sat, 10 Oct 2026 16:05:09 -0400
+	id 1xFdcB-0001TN-0U; Sat, 10 Oct 2026 16:24:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <54weasels@gmail.com>)
- id 1xFdJa-0007N2-Ur
- for qemu-devel@nongnu.org; Sat, 10 Oct 2026 16:05:06 -0400
-Received: from mail-oa1-x2f.google.com ([2001:4860:4864:20::2f])
+ (Exim 4.90_1) (envelope-from <dennylin0707@gmail.com>)
+ id 1xFche-0000T4-M7
+ for qemu-devel@nongnu.org; Sat, 10 Oct 2026 15:25:54 -0400
+Received: from mail-dy2-x0b.google.com ([2607:f8b0:4864:36::b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <54weasels@gmail.com>)
- id 1xFdJY-0004wN-Ki
- for qemu-devel@nongnu.org; Sat, 10 Oct 2026 16:05:06 -0400
-Received: by mail-oa1-x2f.google.com with SMTP id
- 586e51a60fabf-4932b13c4ccso527737fac.3
- for <qemu-devel@nongnu.org>; Sat, 10 Oct 2026 13:05:04 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1791662703; cv=none;
- d=google.com; s=arc-20260327;
- b=SwwkumS5v/1O8drNCP/Mefa0CTSZj7UE5LoF2Avs2tGRtRy4cTx/3vX82J2DmttvuI
- sEszQdWzM46jDoab7NhGepet4aCDc1bq1Af4vBadbGcfLvrhtoH2o3BgKmruNgZ/C+zZ
- XGImI9bxPnuRjmBTCQXo7taLQRJ4/7yNnYckfEhtc61W8dzsNKK8hxM1kshyVRC8YCJv
- 5MBoQ2UtjQYfltNty3lM4b2zb0FHpOAJYey/kO5BVw5a/XRzuCjdvRiC0O9PtjVuPr0h
- 2rXW5QUCTKY1xukH2d7pP1umGCopx88PbGD78fKq0WgjjeTNSt228R/4kj1N3Zr1fsZn
- 67Sg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=98ZgHJSzU8wJ1MHjR1hg28VvYxexzd/TMp4IT85S9M8=;
- fh=6czfcAJfDmmN3XL32rileFAc4KWn6CYOehApDowJF/Q=;
- b=j2kUVu2kTlJRsv8UbWvJkTbEN/5I3OZA4uako4dgjbvmZRiBEN/C6ErVTNk3IPBXMn
- el0cEOryVyMP4zokM0i4GvREudlVgxKUakDTRdlWmASLl9Ls0Op0ld+G58EADLfOUmkW
- Kx0BEwuidWHUaea616UYzo/Ko3KjKlTJYigHdXgvy16DZDJxYjHHXipkzGelQ4Bc4TzV
- HOsKMHfQdyX29uraE1phoxnDUei3QIgssdBckRZaNp/a669dPLWrWlU2YqwN5akkd2/B
- 0kvU9/suw4VdOhIPOgB0n6u8MT8915j92GUe221S6LNQaVXXz0afSI6DQbn/jsAKsNN7
- RNKw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <dennylin0707@gmail.com>)
+ id 1xFchd-0001pv-2b
+ for qemu-devel@nongnu.org; Sat, 10 Oct 2026 15:25:54 -0400
+Received: by mail-dy2-x0b.google.com with SMTP id
+ 5a478bee46e88-350783faf89so386665eec.1
+ for <qemu-devel@nongnu.org>; Sat, 10 Oct 2026 12:25:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1791662703; x=1792267503; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=98ZgHJSzU8wJ1MHjR1hg28VvYxexzd/TMp4IT85S9M8=;
- b=UgIJG0kZ6rj0AZob1cuREnDD+Fn5ck2bVsSnleeKMiWwVCASk4hRerv4MwrnxTUiyZ
- KcNBf7mYIMn0IVa6gsn2tyhp7h3HKBo2pHnR9KbErVI6j/T2mPl7+GRs0uuL6ya5RrSO
- qbNo7cjnJ9HaTlZSNKftH8YjVJOXlXIwjFbJqeY004V311cULZCuJBrHQJwsdx2p+LXm
- 45mQpAic+ghDcyD5uPxyXaIeqXoqnl7ry4j41cs/i85xyxDo8wPFqCI/AHmTCAKAvScS
- VLNzfcGI7tqljRmqjOR1KdUAiGG22Jd8e348OCZlCmcYrY4u5x01UmyAJ/8xeYwXjITf
- Xihg==
+ d=gmail.com; s=20251104; t=1791660326; x=1792265126; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=jtgb0WEDD8R68F5sBUSNy8Zg/SR8IbLbKdGk12ymBAw=;
+ b=PWlUshT02h6vPKjvxPICzRuc7nGW5do6wXL5fiKSSKdB2qs2ZX7g6wIjGuKNz8kOoa
+ luL1tYciTAYy0Y0lWVCXSNV/x53yT8rDcd29c3QJd8iZU8wXad1/ZRFZyQRoGpxxpyV3
+ ze4NaGsEGHkb0ID27j1Lo7kHNV5uSa2F/l9PAmQRg4SFu2nS3Tl+vFNfh2kPzG9DyNAI
+ J7hVy09BSiSQ23ghMrccizXzrCeQ9SdOU2HEYi8T7LPGv8pLniTCntoYpI77KOuppTEI
+ 6NgBSQSMhwoqT8PDFhaZSSOPIq6spiWi5a/3otJ/AcugB2NBBvmOxnfnosGDDMdmtmfW
+ yGcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791662703; x=1792267503;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=98ZgHJSzU8wJ1MHjR1hg28VvYxexzd/TMp4IT85S9M8=;
- b=IWeDg4r8NkjzhQlb524w/+lOChRbp8DThS8gYDt3pBb9HqoD2omxKO3s1LFWyg2Qkr
- rPMizcVSUSrHFJrV9nV/VeKh0pBQF6HbiE3qIdo5IgfyCCxyXnX1PUfSQfAkO/PwIh/N
- 4nWyAJ2nL2Z1sQpGws5OXhY+WbIAFZEuep3Lv2ALPDl9GyYvZRD576ZsZlO5zdtMA1P/
- ottCK9WjBE7Hy3j8R2I0G+2eIT0z2BTtIrjjn/QItDbs6sbbSPYUtQ25l5Y84SIzJ+/0
- w+8Vhv48mQJJ0oXVqmVWNcXT6jf/ahjPTTOLP/u/2pS0ZY+trHsIk4DyLypN3hdInKe9
- /GXA==
-X-Gm-Message-State: AFq9FYJnWbJVHGr2b+eVz41/KZ3SWnefQfOfj3vHDurNJxLvfkpgkyjL
- PzQLGQ6WEKt/kGJdKrmf9FIJLMS546AYTe2B75muH/sAWSASTUMvBjPw3Mn0LLqw7Hf+MUyfIp5
- rpbQVZpmib34yuO0jBoXNJU99A0jyfyg=
-X-Gm-Gg: AYBFou0T1YS91e+85fzTTgNt+NvmLqqKeLHaTf/129rGaKKcuujftdbwbw3/V+wl53t
- i892a/StXR36Lfl+dZzAs5bjXL81CGh79IHTcy9qazYF+UfvNexDfTPa7Yb15YkcFamzD871M4C
- wlZkswa2HE1P3OfuEdTc21lckeqv0xLQU/Io3Y3iROQyW2bDaHih9Jbhk/FRFNkjeTFlTz7qM4d
- a65SN4RuiNwUk5jGqPH6xM8SzEZWGRbZaqZK2zFtGR56AyqF0A28LzYDoRQRb23Ofch1aSg3UPI
- L/RodDpJ5YCQAd+sBfgt80rW3JPFXMQ8R/eFwEOq80P7Izu0YZgaxg==
-X-Received: by 2002:a05:6870:70a8:b0:4a2:647d:9233 with SMTP id
- 586e51a60fabf-4a2a89dc9b1mr4820863fac.18.1791662702808; Sat, 10 Oct 2026
- 13:05:02 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1791660326; x=1792265126;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=jtgb0WEDD8R68F5sBUSNy8Zg/SR8IbLbKdGk12ymBAw=;
+ b=rt+t/tf9T47wSdRpOx628LfC6WKx7Qy7FPn1HB42zvRkUuI2bvQ/+5+jvOjfYya/CJ
+ 76gkIft2uQwpTxPKrSMe1rAwVVcgL0bGQq5g51cm/PtlLwcWAqlIj37CtXhhrWdtqNEh
+ sMTQsZF4T4O1DgAZ3eymFqqtHz34AIBtoKeJMeDov+kI41HHENDuf9m+LNXH3tzxR5UD
+ 09bmiL4tBkLYyeoudjjrjYhKASxJE5F1NJ4n8XMCXfDbJ545I33bgajAGTL8dG0QlmuW
+ uiATQws/QXNKRMcYGKJ2lYWdluYPpwlR+iGAxBNFza6UzKi49bbdNv1rCYrFYTFQrc+h
+ y5qw==
+X-Gm-Message-State: AFq9FYKHIYkCtlfgK6O9GdsFNYUJ6kRJvJXswZqzNa78/RmZ20Cfwy7B
+ 9jQSEU3tALGSajVWLtYXRR6LC6p24JJrAf/NeAqqEGRMCIBW/+vLWrNoax8bBxQJIfI=
+X-Gm-Gg: AYBFou1ckkVxOz9TDni2aR/AJJ/HfmCgJxYeaFYFA/tOZ5+Ft0KRqf5L8vY8pGR6mhq
+ uCL0oEtxwv9xX2fXivXupxlotAl3PYrZSqWJddrn7CFY7xfHG4rE7KuqUZAv/bHE9ReyFUZpeZo
+ 7MQNGYcfje32PTUhwfTD31uWxLtTFlO6LJaIqQbMtRaolzXRo3COu4ypmTrLgGZiYPuxfMOQqWA
+ Jgy9fo/xW4nur9VmPH6jLS9yfx9AnlW6J9tA12FUN9QiWVp0Q3Dm6aXfhsfGmp2LuZkEaoZLCap
+ +hDR0nHjrjOmMAS9ZuFoWN1+WrTbULZ+Amf8n5jcm7qWL93g0YbyljLPidaR4l4zfChPzGTC8tA
+ WbsPc/PNJKusGdVNoPrWP2LW0QH5IpG9G7owqWJQz8kNRLsnqjQTTd66cnyN0/SJ8a8r1fss5gv
+ JzwLw7rS2OPMwj0mD51rSmauX3l4vWrtptGzt7btdiHkV89TTA28UZgeA9V0uDNUbeLA5QF4Hb+
+ O83SO//aqMRLfyQMv4C7w==
+X-Received: by 2002:a05:693c:80db:b0:353:5d25:1de7 with SMTP id
+ 5a478bee46e88-3537e0abb18mr8603434eec.33.1791660325487; 
+ Sat, 10 Oct 2026 12:25:25 -0700 (PDT)
+Received: from Mac.lan ([2603:8002:4200:2724:745e:5e73:30b8:9f24])
+ by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-3537cb2fd33sm16690421eec.28.2026.10.10.12.25.23
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Sat, 10 Oct 2026 12:25:24 -0700 (PDT)
+From: Hungyu Lin <dennylin0707@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: pbonzini@redhat.com,
+	richard.henderson@linaro.org
+Subject: [PATCH] target/i386/tcg: Clear cc_op_dirty after UCOMI
+Date: Sat, 10 Oct 2026 12:25:20 -0700
+Message-ID: <20261010192520.37355-1-dennylin0707@gmail.com>
+X-Mailer: git-send-email 2.50.1
 MIME-Version: 1.0
-References: <20260903044626.24453-1-54weasels@gmail.com>
- <CAFWf6u8rjCECp+cdP21kfB7QUYff3crQiE1v5DnHXcMVzWan9w@mail.gmail.com>
- <8310b400-544e-4ed5-8eb6-e0797a924a8d@ilande.co.uk>
- <CAFWf6u86nFtQNfD=NFwUPamRKpt+EJg0vYhc1AALkGHJwtqZ+w@mail.gmail.com>
- <CAFWf6u-WJu6fh_Kc1aFo+fy4ffJzv7u25F8xVo4ZhtOxv2EgmQ@mail.gmail.com>
-In-Reply-To: <CAFWf6u-WJu6fh_Kc1aFo+fy4ffJzv7u25F8xVo4ZhtOxv2EgmQ@mail.gmail.com>
-From: Purr Box <54weasels@gmail.com>
-Date: Sat, 10 Oct 2026 23:04:53 +0300
-X-Gm-Features: AclHuK8SLqtewY1CuDBuC8kw2m89mYU5qTPbFrOBU02M50bdhhc6RfHyvagtOpo
-Message-ID: <CAFWf6u-XwAdVNg-1Q5EuHQQSJL-h1qsnzhdgeOYTQGciMu9Gzw@mail.gmail.com>
-Subject: Re: [PATCH v5 0/6] Implement missing functionality and hooks in m68k
- to support upcoming Sun-3 implementation
-To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Cc: qemu-devel@nongnu.org, laurent@vivier.eu, 
- BALATON Zoltan <balaton@eik.bme.hu>
-Content-Type: multipart/alternative; boundary="000000000000f552ef065d81fa86"
-Received-SPF: pass client-ip=2001:4860:4864:20::2f;
- envelope-from=54weasels@gmail.com; helo=mail-oa1-x2f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:36::b;
+ envelope-from=dennylin0707@gmail.com; helo=mail-dy2-x0b.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Sat, 10 Oct 2026 16:24:17 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -119,241 +99,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000f552ef065d81fa86
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+A self-XOR can leave cc_op_dirty set when UCOMI keeps the CC_OP_EFLAGS
+selector, causing a redundant store to cpu_cc_op. The UCOMI helper
+already writes CC_OP_EFLAGS, so clear the dirty flag after assume_cc_op()
+to avoid emitting that store.
 
-Hi folks - gentle ping. After the 68k patches it's all other devices so the
-patch train should move easier. I also have SCSI support and others pending=
-.
+Signed-off-by: Hungyu Lin <dennylin0707@gmail.com>
+---
+ target/i386/tcg/emit.c.inc | 1 +
+ 1 file changed, 1 insertion(+)
 
-Thank you very much in advance,
-Dan.
+diff --git a/target/i386/tcg/emit.c.inc b/target/i386/tcg/emit.c.inc
+index 531398d..918122b 100644
+--- a/target/i386/tcg/emit.c.inc
++++ b/target/i386/tcg/emit.c.inc
+@@ -4914,6 +4914,7 @@ static void gen_VUCOMI(DisasContext *s, X86DecodedInsn *decode)
+     fn = s->prefix & PREFIX_DATA ? gen_helper_ucomisd : gen_helper_ucomiss;
+     fn(tcg_env, OP_PTR1, OP_PTR2);
+     assume_cc_op(s, CC_OP_EFLAGS);
++    s->cc_op_dirty = false;
+ }
+ 
+ static void gen_VZEROALL(DisasContext *s, X86DecodedInsn *decode)
+-- 
+2.43.0
 
-On Sat, Sep 26, 2026, 09:30 Purr Box <54weasels@gmail.com> wrote:
-
-> Hi and quick ping if you could take a look at the series.
->
-> Thanks,
-> Dan.
->
-> On Fri, Sep 18, 2026 at 8:11=E2=80=AFAM Purr Box <54weasels@gmail.com> wr=
-ote:
->
->> Thank you very much in advance! I'm looking forward to getting sun3
->> supported.
->>
->> Dan.
->>
->> On Fri, Sep 18, 2026 at 6:32=E2=80=AFAM Mark Cave-Ayland <
->> mark.cave-ayland@ilande.co.uk> wrote:
->>
->>> On 09/09/2026 19:54, Purr Box wrote:
->>>
->>> > Gentle ping on this series. v5 addresses Zoltan's review feedback fro=
-m
->>> v4 (fsave
->>> > simplification, NMI edge-trigger rationale, added Signed-off-by).
->>> Would appreciate
->>> > any review when you have a chance.
->>>
->>> Apologies for the delay: I will have quick look through the series over
->>> the next few
->>> days, although I suspect I'd need to defer to Laurent's greater 68k
->>> knowledge here.
->>>
->>> > Dan.
->>> >
->>> > On Wed, Sep 2, 2026 at 9:46=E2=80=AFPM 54weasels <54weasels@gmail.com
->>> > <mailto:54weasels@gmail.com>> wrote:
->>> >
->>> >     This series adds M68020/030-specific features to the m68k target
->>> that
->>> >     are required by the Sun-3 machine (series C) and its PROM/SunOS
->>> guests:
->>> >
->>> >        1/6: CAAR register stub for 68020/030 cache control
->>> >        2/6: fsave/frestore fix for 68881 (non-68040) FPU frames
->>> >        3/6: Edge-triggered NMI semantics for Level 7 interrupts
->>> >        4/6: Function code extraction during TLB fills
->>> >        5/6: Custom MMU intercept hook for Sun-3 transparent translati=
-on
->>> >        6/6: Physical Bus Error and M68020 Format 0xB stack frames
->>> >
->>> >     Changes since v4:
->>> >        - Added Signed-off-by to all patches.
->>> >        - Patch 2/6 (fsave): Addressed Zoltan's review =E2=80=94 repla=
-ced
->>> redundant
->>> >          M68040||FPU check with just M68K_FEATURE_FPU, removed
->>> unnecessary
->>> >          if/else in frestore, moved Context: below --- separator.
->>> >        - Patch 3/6 (NMI): Addressed Zoltan's review =E2=80=94 nmi_pen=
-ding
->>> cannot be
->>> >          replaced by testing pending_level =3D=3D 7. The flag capture=
-s the
->>> edge
->>> >          transition (level < 7 =E2=86=92 7) required by Motorola's NM=
-I
->>> specification,
->>> >          while pending_level only reflects the current interrupt leve=
-l.
->>> >          Testing pending_level alone would produce level-triggered
->>> behavior,
->>> >          firing on every interrupt check rather than once per edge.
->>> >        - Rebased on current master.
->>> >
->>> >     54weasels (6):
->>> >        target/m68k: Add dummy CAAR register
->>> >        target/m68k: Fix fsave/frestore for 68881 FPU
->>> >        target/m68k: Fix NMI pending for Level 7 interrupts
->>> >        target/m68k: Extract Function Codes during TLB fills
->>> >        target/m68k: Implement custom MMU intercept hook
->>> >        target/m68k: Implement Physical Bus Error and Stack
->>> >
->>> >       target/m68k/cpu.c       |   4 +-
->>> >       target/m68k/cpu.h       |  21 ++++-
->>> >       target/m68k/helper.c    | 130 ++++++++++++++++++++++++++++-
->>> >       target/m68k/op_helper.c | 175
->>> ++++++++++++++++++++++++++--------------
->>> >       target/m68k/translate.c |  30 ++++---
->>> >       5 files changed, 280 insertions(+), 80 deletions(-)
->>> >
->>> >     --
->>> >     2.50.1 (Apple Git-155)
->>>
->>>
->>> ATB,
->>>
->>> Mark.
->>>
->>>
-
---000000000000f552ef065d81fa86
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"auto">Hi folks - gentle ping. After the 68k patches it&#39;s al=
-l other devices so the patch train should move easier. I also have SCSI sup=
-port and others pending.<div dir=3D"auto"><br></div><div dir=3D"auto">Thank=
- you very much in advance,</div><div dir=3D"auto">Dan.</div></div><br><div =
-class=3D"gmail_quote gmail_quote_container"><div dir=3D"ltr" class=3D"gmail=
-_attr">On Sat, Sep 26, 2026, 09:30 Purr Box &lt;<a href=3D"mailto:54weasels=
-@gmail.com">54weasels@gmail.com</a>&gt; wrote:<br></div><blockquote class=
-=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padd=
-ing-left:1ex"><div dir=3D"ltr">Hi and quick ping if you could take a look a=
-t the series.<div><br></div><div>Thanks,</div><div>Dan.</div></div><br><div=
- class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, Sep 18=
-, 2026 at 8:11=E2=80=AFAM Purr Box &lt;<a href=3D"mailto:54weasels@gmail.co=
-m" target=3D"_blank" rel=3D"noreferrer">54weasels@gmail.com</a>&gt; wrote:<=
-br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8e=
-x;border-left:1px solid rgb(204,204,204);padding-left:1ex"><div dir=3D"ltr"=
->Thank you very much in advance! I&#39;m looking forward to getting sun3 su=
-pported.<div><br></div><div>Dan.</div><div></div></div><br><div class=3D"gm=
-ail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, Sep 18, 2026 at 6:=
-32=E2=80=AFAM Mark Cave-Ayland &lt;<a href=3D"mailto:mark.cave-ayland@iland=
-e.co.uk" target=3D"_blank" rel=3D"noreferrer">mark.cave-ayland@ilande.co.uk=
-</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:=
-0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">=
-On 09/09/2026 19:54, Purr Box wrote:<br>
-<br>
-&gt; Gentle ping on this series. v5 addresses Zoltan&#39;s review feedback =
-from v4 (fsave <br>
-&gt; simplification, NMI edge-trigger rationale, added Signed-off-by). Woul=
-d appreciate <br>
-&gt; any review when you have a chance.<br>
-<br>
-Apologies for the delay: I will have quick look through the series over the=
- next few <br>
-days, although I suspect I&#39;d need to defer to Laurent&#39;s greater 68k=
- knowledge here.<br>
-<br>
-&gt; Dan.<br>
-&gt; <br>
-&gt; On Wed, Sep 2, 2026 at 9:46=E2=80=AFPM 54weasels &lt;<a href=3D"mailto=
-:54weasels@gmail.com" target=3D"_blank" rel=3D"noreferrer">54weasels@gmail.=
-com</a> <br>
-&gt; &lt;mailto:<a href=3D"mailto:54weasels@gmail.com" target=3D"_blank" re=
-l=3D"noreferrer">54weasels@gmail.com</a>&gt;&gt; wrote:<br>
-&gt; <br>
-&gt;=C2=A0 =C2=A0 =C2=A0This series adds M68020/030-specific features to th=
-e m68k target that<br>
-&gt;=C2=A0 =C2=A0 =C2=A0are required by the Sun-3 machine (series C) and it=
-s PROM/SunOS guests:<br>
-&gt; <br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 1/6: CAAR register stub for 68020/030 cache=
- control<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 2/6: fsave/frestore fix for 68881 (non-6804=
-0) FPU frames<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 3/6: Edge-triggered NMI semantics for Level=
- 7 interrupts<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 4/6: Function code extraction during TLB fi=
-lls<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 5/6: Custom MMU intercept hook for Sun-3 tr=
-ansparent translation<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 6/6: Physical Bus Error and M68020 Format 0=
-xB stack frames<br>
-&gt; <br>
-&gt;=C2=A0 =C2=A0 =C2=A0Changes since v4:<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 - Added Signed-off-by to all patches.<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 - Patch 2/6 (fsave): Addressed Zoltan&#39;s=
- review =E2=80=94 replaced redundant<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 M68040||FPU check with just M68K_FEA=
-TURE_FPU, removed unnecessary<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if/else in frestore, moved Context: =
-below --- separator.<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 - Patch 3/6 (NMI): Addressed Zoltan&#39;s r=
-eview =E2=80=94 nmi_pending cannot be<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 replaced by testing pending_level =
-=3D=3D 7. The flag captures the edge<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 transition (level &lt; 7 =E2=86=92 7=
-) required by Motorola&#39;s NMI specification,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 while pending_level only reflects th=
-e current interrupt level.<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 Testing pending_level alone would pr=
-oduce level-triggered behavior,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 firing on every interrupt check rath=
-er than once per edge.<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 - Rebased on current master.<br>
-&gt; <br>
-&gt;=C2=A0 =C2=A0 =C2=A054weasels (6):<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 target/m68k: Add dummy CAAR register<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 target/m68k: Fix fsave/frestore for 68881 F=
-PU<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 target/m68k: Fix NMI pending for Level 7 in=
-terrupts<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 target/m68k: Extract Function Codes during =
-TLB fills<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 target/m68k: Implement custom MMU intercept=
- hook<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 target/m68k: Implement Physical Bus Error a=
-nd Stack<br>
-&gt; <br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0target/m68k/cpu.c=C2=A0 =C2=A0 =C2=A0 =C2=A0=
-|=C2=A0 =C2=A04 +-<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0target/m68k/cpu.h=C2=A0 =C2=A0 =C2=A0 =C2=A0=
-|=C2=A0 21 ++++-<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0target/m68k/helper.c=C2=A0 =C2=A0 | 130 ++++=
-++++++++++++++++++++++++-<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0target/m68k/op_helper.c | 175 ++++++++++++++=
-++++++++++++--------------<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0target/m68k/translate.c |=C2=A0 30 ++++---<b=
-r>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A05 files changed, 280 insertions(+), 80 delet=
-ions(-)<br>
-&gt; <br>
-&gt;=C2=A0 =C2=A0 =C2=A0-- <br>
-&gt;=C2=A0 =C2=A0 =C2=A02.50.1 (Apple Git-155)<br>
-<br>
-<br>
-ATB,<br>
-<br>
-Mark.<br>
-<br>
-</blockquote></div>
-</blockquote></div>
-</blockquote></div>
-
---000000000000f552ef065d81fa86--
 
