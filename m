@@ -4,50 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D62ACCA6017
-	for <qemu-devel@archiver.kernel.org>; Sat, 10 Oct 2026 13:42:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F568CA9EBE
+	for <qemu-devel@archiver.kernel.org>; Sat, 10 Oct 2026 13:43:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xFXIZ-0004Hl-06; Sat, 10 Oct 2026 09:39:39 -0400
+	id 1xFXGn-0001WE-K3; Sat, 10 Oct 2026 09:37:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1xFXIT-00041N-SP
- for qemu-devel@nongnu.org; Sat, 10 Oct 2026 09:39:34 -0400
+ id 1xFXGl-0001VO-E5
+ for qemu-devel@nongnu.org; Sat, 10 Oct 2026 09:37:47 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1xFXIR-0004ih-MK
- for qemu-devel@nongnu.org; Sat, 10 Oct 2026 09:39:32 -0400
+ id 1xFXGj-0004WJ-Ix
+ for qemu-devel@nongnu.org; Sat, 10 Oct 2026 09:37:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1791639570;
+ s=mimecast20190719; t=1791639465;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=I182iXUY+xPUHsg/tWpxySUU31EcXiYq269W9BRBUwM=;
- b=UQRiFaVVnmsAiWxECRXmCQTmgDHOVrHeSYk9Msou1gxpBGnRMXjxrTpuv1h+hoVvKJUyk/
- 55ptrzqkY8C2MW3ErRQEwAkWU8MmfgeqfeqcCwcdjvhPSHXGZGe+rD5sCj6+o437IPN2mS
- vCgcg/0vfLXLN+r2nzdSX8Tz1nMXoQw=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=cv1mnVaaa2py2bLoOqax63rfmn2rgM5Tmv6Vdfg/Z40=;
+ b=Iw4jGazI/52HM67xrYhRusZvqNIbg/TIqIIh4idlfvESLJ79rviGq/pgwYr/kCV96b0ZKX
+ Q2oA0+8QvZbZdOGKfrNdHsAkJdeG48PM13tgdIG1x+Uv/PTRtVBWQYiyYjlF9W7+enqpDI
+ KP0o6sXmjy9Ocj69UOE9eVDsFz2EjXc=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-546-bqol17HYOlSzvKJOAYfmiw-1; Sat,
- 10 Oct 2026 13:39:27 +0000
-X-MC-Unique: bqol17HYOlSzvKJOAYfmiw-1
-X-Mimecast-MFC-AGG-ID: bqol17HYOlSzvKJOAYfmiw_1791639565
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-616-AyibHwLoMQ63QlWei9-4Tw-1; Sat,
+ 10 Oct 2026 13:37:42 +0000
+X-MC-Unique: AyibHwLoMQ63QlWei9-4Tw-1
+X-Mimecast-MFC-AGG-ID: AyibHwLoMQ63QlWei9-4Tw_1791639460
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5B2DE180ACC7; Sat, 10 Oct 2026 13:39:25 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 75EAF1944B01; Sat, 10 Oct 2026 13:37:39 +0000 (UTC)
 Received: from laptop.redhat.corp (headnet03.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.114])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 7431930000E5; Sat, 10 Oct 2026 13:39:20 +0000 (UTC)
+ id 2E2D630001BB; Sat, 10 Oct 2026 13:37:33 +0000 (UTC)
 From: Eric Auger <eric.auger@redhat.com>
 To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
  qemu-arm@nongnu.org, kvmarm@lists.linux.dev, peter.maydell@linaro.org,
@@ -57,10 +57,9 @@ To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
 Cc: maz@kernel.org, oliver.upton@linux.dev, pbonzini@redhat.com,
  armbru@redhat.com, berrange@redhat.com, abologna@redhat.com,
  jdenemar@redhat.com
-Subject: [PATCH v10 22/26] target/arm/kvm: Add an error handle to
- kvm_arm_create_scratch_host_vcpu
-Date: Sat, 10 Oct 2026 15:36:26 +0200
-Message-ID: <20261010133725.642498-23-eric.auger@redhat.com>
+Subject: [PATCH v10 01/26] target/arm: Move REVIDR into isar.idregs[] storage
+Date: Sat, 10 Oct 2026 15:36:05 +0200
+Message-ID: <20261010133725.642498-2-eric.auger@redhat.com>
 In-Reply-To: <20261010133725.642498-1-eric.auger@redhat.com>
 References: <20261010133725.642498-1-eric.auger@redhat.com>
 MIME-Version: 1.0
@@ -68,13 +67,14 @@ Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
-X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
+X-Spam_score_int: 10
+X-Spam_score: 1.0
+X-Spam_bar: +
+X-Spam_report: (1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,116 +90,233 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This allows to report a precise error message if any error occurs.
+Move REVIDR into the isar.idregs[] array as other ID registers.
+This will allow to overwrite it as others.
 
 Signed-off-by: Eric Auger <eric.auger@redhat.com>
 ---
- target/arm/kvm_arm.h |  3 ++-
- target/arm/kvm.c     | 15 ++++++++++++---
- 2 files changed, 14 insertions(+), 4 deletions(-)
+ target/arm/cpu.h             |  1 -
+ target/arm/cpu-sysregs.h.inc |  1 +
+ hw/intc/armv7m_nvic.c        |  2 +-
+ target/arm/cpu-max.c         |  2 +-
+ target/arm/cpu64.c           |  2 +-
+ target/arm/helper.c          |  2 +-
+ target/arm/tcg/cpu-v7m.c     |  4 ++--
+ target/arm/tcg/cpu32.c       |  4 ++--
+ target/arm/tcg/cpu64.c       | 20 ++++++++++----------
+ 9 files changed, 19 insertions(+), 19 deletions(-)
 
-diff --git a/target/arm/kvm_arm.h b/target/arm/kvm_arm.h
-index 25a1dec095..ccab33e571 100644
---- a/target/arm/kvm_arm.h
-+++ b/target/arm/kvm_arm.h
-@@ -106,6 +106,7 @@ struct kvm_vcpu_init;
-  * @init: filled in with the necessary values for creating a host
-  * vcpu. If NULL is provided, will not init the vCPU (though the cpufd
-  * will still be set up).
-+ * @errp: Error handle
-  *
-  * Create a scratch vcpu in its own VM of the type preferred by the host
-  * kernel (as would be used for '-cpu host'), for purposes of probing it
-@@ -115,7 +116,7 @@ struct kvm_vcpu_init;
-  * false on failure (and fdarray and init are not valid).
-  */
- bool kvm_arm_create_scratch_host_vcpu(int *fdarray,
--                                      struct kvm_vcpu_init *init);
-+                                      struct kvm_vcpu_init *init, Error **errp);
- 
- /**
-  * kvm_arm_destroy_scratch_host_vcpu:
-diff --git a/target/arm/kvm.c b/target/arm/kvm.c
-index 82ffcac7e3..1f6f9ba586 100644
---- a/target/arm/kvm.c
-+++ b/target/arm/kvm.c
-@@ -107,13 +107,14 @@ static int kvm_arm_vcpu_finalize(ARMCPU *cpu, int feature)
- }
- 
- bool kvm_arm_create_scratch_host_vcpu(int *fdarray,
--                                      struct kvm_vcpu_init *init)
-+                                      struct kvm_vcpu_init *init, Error **errp)
- {
-     int ret = 0, kvmfd = -1, vmfd = -1, cpufd = -1;
-     int max_vm_pa_size;
- 
-     kvmfd = qemu_open_old("/dev/kvm", O_RDWR);
-     if (kvmfd < 0) {
-+        error_setg(errp, "Failed opening /dev/kvm");
-         goto err;
-     }
-     max_vm_pa_size = ioctl(kvmfd, KVM_CHECK_EXTENSION, KVM_CAP_ARM_VM_IPA_SIZE);
-@@ -124,6 +125,7 @@ bool kvm_arm_create_scratch_host_vcpu(int *fdarray,
-         vmfd = ioctl(kvmfd, KVM_CREATE_VM, max_vm_pa_size);
-     } while (vmfd == -1 && errno == EINTR);
-     if (vmfd < 0) {
-+        error_setg(errp, "Failed creating the scratch VM");
-         goto err;
-     }
- 
-@@ -143,6 +145,7 @@ bool kvm_arm_create_scratch_host_vcpu(int *fdarray,
- 
-     cpufd = ioctl(vmfd, KVM_CREATE_VCPU, 0);
-     if (cpufd < 0) {
-+        error_setg(errp, "Failed creating the scratch VCPU");
-         goto err;
-     }
- 
-@@ -156,12 +159,14 @@ bool kvm_arm_create_scratch_host_vcpu(int *fdarray,
- 
-         ret = ioctl(vmfd, KVM_ARM_PREFERRED_TARGET, &preferred);
-         if (ret < 0) {
-+            error_setg(errp, "Failed getting the preferred target");
-             goto err;
+diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+index 06ebed4a8f..b2af36a8c3 100644
+--- a/target/arm/cpu.h
++++ b/target/arm/cpu.h
+@@ -1124,7 +1124,6 @@ struct ArchCPU {
+         uint64_t idregs[NUM_ID_IDX];
+     } isar;
+     uint64_t midr;
+-    uint32_t revidr;
+     uint32_t reset_fpsid;
+     uint64_t ctr;
+     uint32_t reset_sctlr;
+diff --git a/target/arm/cpu-sysregs.h.inc b/target/arm/cpu-sysregs.h.inc
+index b5c7970971..580d88d1f4 100644
+--- a/target/arm/cpu-sysregs.h.inc
++++ b/target/arm/cpu-sysregs.h.inc
+@@ -44,3 +44,4 @@ DEF(ID_PFR2_EL1, 3, 0, 0, 3, 4)
+ DEF(MVFR0_EL1, 3, 0, 0, 3, 0)
+ DEF(MVFR1_EL1, 3, 0, 0, 3, 1)
+ DEF(MVFR2_EL1, 3, 0, 0, 3, 2)
++DEF(REVIDR_EL1, 3, 0, 0, 0, 6)
+diff --git a/hw/intc/armv7m_nvic.c b/hw/intc/armv7m_nvic.c
+index 6bc392b0e3..1f56fff046 100644
+--- a/hw/intc/armv7m_nvic.c
++++ b/hw/intc/armv7m_nvic.c
+@@ -1051,7 +1051,7 @@ static uint32_t nvic_readl(NVICState *s, uint32_t offset, MemTxAttrs attrs)
+         if (!arm_feature(&cpu->env, ARM_FEATURE_V8_1M)) {
+             goto bad_offset;
          }
-         init->target = preferred.target;
+-        return cpu->revidr;
++        return GET_IDREG(isar, REVIDR);
+     case 0xd00: /* CPUID Base.  */
+         return cpu->midr;
+     case 0xd04: /* Interrupt Control State (ICSR) */
+diff --git a/target/arm/cpu-max.c b/target/arm/cpu-max.c
+index 2ed1cfef9b..b4e57a167d 100644
+--- a/target/arm/cpu-max.c
++++ b/target/arm/cpu-max.c
+@@ -37,7 +37,7 @@ void aarch64_aa32_a57_init(ARMCPU *cpu, bool aarch64_enabled)
+         cpu->kvm_target = QEMU_KVM_ARM_TARGET_CORTEX_A57;
      }
-     ret = ioctl(cpufd, KVM_ARM_VCPU_INIT, init);
-     if (ret < 0) {
-+        error_setg(errp, "Failed the init of the scratch vcpu");
-         goto err;
-     }
+     cpu->midr = 0x411fd070;
+-    cpu->revidr = 0x00000000;
++    SET_IDREG(isar, REVIDR, 0);
+     cpu->reset_fpsid = 0x41034070;
+     cpu->isar.mvfr0 = 0x10110222;
+     cpu->isar.mvfr1 = 0x12111111;
+diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
+index dcd0d698b3..80c9c9e5b3 100644
+--- a/target/arm/cpu64.c
++++ b/target/arm/cpu64.c
+@@ -717,7 +717,7 @@ static void aarch64_a53_initfn(Object *obj)
+     set_feature(&cpu->env, ARM_FEATURE_PMU);
+     cpu->kvm_target = QEMU_KVM_ARM_TARGET_CORTEX_A53;
+     cpu->midr = 0x410fd034;
+-    cpu->revidr = 0x00000100;
++    SET_IDREG(isar, REVIDR, 0x00000100);
+     cpu->reset_fpsid = 0x41034070;
+     cpu->isar.mvfr0 = 0x10110222;
+     cpu->isar.mvfr1 = 0x12111111;
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index ff0b766b73..41c0d0df12 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -7415,7 +7415,7 @@ void register_cp_regs_for_features(ARMCPU *cpu)
+               .access = PL1_R,
+               .accessfn = access_tid1,
+               .fgt = FGT_REVIDR_EL1,
+-              .type = ARM_CP_CONST, .resetvalue = cpu->revidr },
++              .type = ARM_CP_CONST, .resetvalue = GET_IDREG(&cpu->isar, REVIDR) },
+         };
+         ARMCPRegInfo id_v8_midr_alias_cp_reginfo = {
+             .name = "MIDR", .type = ARM_CP_ALIAS | ARM_CP_CONST | ARM_CP_NO_GDB,
+diff --git a/target/arm/tcg/cpu-v7m.c b/target/arm/tcg/cpu-v7m.c
+index 48b31d5eac..e7c61d3c31 100644
+--- a/target/arm/tcg/cpu-v7m.c
++++ b/target/arm/tcg/cpu-v7m.c
+@@ -211,7 +211,7 @@ static void cortex_m55_initfn(Object *obj)
+     set_feature(&cpu->env, ARM_FEATURE_M_SECURITY);
+     set_feature(&cpu->env, ARM_FEATURE_THUMB_DSP);
+     cpu->midr = 0x410fd221; /* r0p1 */
+-    cpu->revidr = 0;
++    SET_IDREG(isar, REVIDR, 0);
+     cpu->pmsav7_dregion = 16;
+     cpu->sau_sregion = 8;
+     /* These are the MVFR* values for the FPU + full MVE configuration */
+@@ -249,7 +249,7 @@ static void cortex_m85_initfn(Object *obj)
+     set_feature(&cpu->env, ARM_FEATURE_M_SECURITY);
+     set_feature(&cpu->env, ARM_FEATURE_THUMB_DSP);
+     cpu->midr = 0x411fd231; /* r1p1 */
+-    cpu->revidr = 0;
++    SET_IDREG(isar, REVIDR, 0);
+     cpu->pmsav7_dregion = 16;
+     cpu->sau_sregion = 8;
+     /* These are the MVFR* values for the FPU + full MVE configuration */
+diff --git a/target/arm/tcg/cpu32.c b/target/arm/tcg/cpu32.c
+index f95051458d..c02b737fc0 100644
+--- a/target/arm/tcg/cpu32.c
++++ b/target/arm/tcg/cpu32.c
+@@ -456,7 +456,7 @@ static void cortex_a15_initfn(Object *obj)
+     set_feature(&cpu->env, ARM_FEATURE_PMU);
+     /* r4p0 cpu, not requiring expensive tlb flush errata */
+     cpu->midr = 0x414fc0f0;
+-    cpu->revidr = 0x0;
++    SET_IDREG(isar, REVIDR, 0);
+     cpu->reset_fpsid = 0x410430f0;
+     cpu->isar.mvfr0 = 0x10110222;
+     cpu->isar.mvfr1 = 0x11111111;
+@@ -647,7 +647,7 @@ static void cortex_r52_initfn(Object *obj)
+     set_feature(&cpu->env, ARM_FEATURE_CBAR_RO);
+     set_feature(&cpu->env, ARM_FEATURE_AUXCR);
+     cpu->midr = 0x411fd133; /* r1p3 */
+-    cpu->revidr = 0x00000000;
++    SET_IDREG(isar, REVIDR, 0);
+     cpu->reset_fpsid = 0x41034023;
+     cpu->isar.mvfr0 = 0x10110222;
+     cpu->isar.mvfr1 = 0x12111111;
+diff --git a/target/arm/tcg/cpu64.c b/target/arm/tcg/cpu64.c
+index 59692dddcf..ac1dace1e4 100644
+--- a/target/arm/tcg/cpu64.c
++++ b/target/arm/tcg/cpu64.c
+@@ -48,7 +48,7 @@ static void aarch64_a35_initfn(Object *obj)
  
-@@ -380,6 +385,7 @@ kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
-     bool el2_supported;
-     bool pmu_supported = false;
-     uint64_t features = 0;
-+    Error *local_err = NULL;
-     int err;
+     /* From B2.2 AArch64 identification registers. */
+     cpu->midr = 0x411fd040;
+-    cpu->revidr = 0;
++    SET_IDREG(isar, REVIDR, 0);
+     cpu->ctr = 0x84448004;
+     SET_IDREG(isar, ID_PFR0, 0x00000131);
+     SET_IDREG(isar, ID_PFR1, 0x00011011);
+@@ -248,7 +248,7 @@ static void aarch64_a55_initfn(Object *obj)
+     SET_IDREG(isar, ID_PFR1, 0x00011011);
+     SET_IDREG(isar, ID_PFR2, 0x00000011);
+     cpu->midr = 0x412FD050;          /* r2p0 */
+-    cpu->revidr = 0;
++    SET_IDREG(isar, REVIDR, 0);
  
-     ahcf->target = QEMU_KVM_ARM_TARGET_NONE;
-@@ -427,7 +433,8 @@ kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
-         features |= 1ULL << ARM_FEATURE_PMU;
-     }
+     /* From B2.23 CCSIDR_EL1 */
+     /* 32KB L1 dcache */
+@@ -292,7 +292,7 @@ static void aarch64_a72_initfn(Object *obj)
+     set_feature(&cpu->env, ARM_FEATURE_EL3);
+     set_feature(&cpu->env, ARM_FEATURE_PMU);
+     cpu->midr = 0x410fd083;
+-    cpu->revidr = 0x00000000;
++    SET_IDREG(isar, REVIDR, 0);
+     cpu->reset_fpsid = 0x41034080;
+     cpu->isar.mvfr0 = 0x10110222;
+     cpu->isar.mvfr1 = 0x12111111;
+@@ -383,7 +383,7 @@ static void aarch64_a76_initfn(Object *obj)
+     SET_IDREG(isar, ID_PFR1, 0x00010000); /* GIC filled in later */
+     SET_IDREG(isar, ID_PFR2, 0x00000011);
+     cpu->midr = 0x414fd0b1;          /* r4p1 */
+-    cpu->revidr = 0;
++    SET_IDREG(isar, REVIDR, 0);
  
--    if (!kvm_arm_create_scratch_host_vcpu(fdarray, &init)) {
-+    if (!kvm_arm_create_scratch_host_vcpu(fdarray, &init, &local_err)) {
-+        error_report_err(local_err);
-         return;
-     }
+     /* From B2.18 CCSIDR_EL1 */
+     /* 64KB L1 dcache */
+@@ -456,7 +456,7 @@ static void aarch64_a78ae_initfn(Object *obj)
+     SET_IDREG(isar, ID_PFR1, 0x00010000); /* GIC filled in later */
+     SET_IDREG(isar, ID_PFR2, 0x00000011);
+     cpu->midr = 0x410fd423;          /* r0p3 */
+-    cpu->revidr = 0;
++    SET_IDREG(isar, REVIDR, 0);
  
-@@ -2838,8 +2845,10 @@ void arm_cpu_kvm_set_irq(void *arm_cpu, int irq, int level)
- void arm_gic_cap_kvm_probe(GICCapability *v2, GICCapability *v3)
- {
-     int fdarray[3];
-+    Error *err = NULL;
+     /* From 3.2.33 CCSIDR_EL1 */
+     /* 64KB L1 dcache */
+@@ -501,7 +501,7 @@ static void aarch64_a64fx_initfn(Object *obj)
+     set_feature(&cpu->env, ARM_FEATURE_EL3);
+     set_feature(&cpu->env, ARM_FEATURE_PMU);
+     cpu->midr = 0x461f0010;
+-    cpu->revidr = 0x00000000;
++    SET_IDREG(isar, REVIDR, 0);
+     cpu->ctr = 0x86668006;
+     cpu->reset_sctlr = 0x30000180;
+     SET_IDREG(isar, ID_AA64PFR0, 0x0000000101111111); /* No RAS Extensions */
+@@ -707,7 +707,7 @@ static void aarch64_neoverse_n1_initfn(Object *obj)
+     SET_IDREG(isar, ID_PFR1, 0x00010000); /* GIC filled in later */
+     SET_IDREG(isar, ID_PFR2, 0x00000011);
+     cpu->midr = 0x414fd0c1;          /* r4p1 */
+-    cpu->revidr = 0;
++    SET_IDREG(isar, REVIDR, 0);
  
--    if (!kvm_arm_create_scratch_host_vcpu(fdarray, NULL)) {
-+    if (!kvm_arm_create_scratch_host_vcpu(fdarray, NULL, &err)) {
-+        error_report_err(err);
-         return;
-     }
+     /* From B2.23 CCSIDR_EL1 */
+     /* 64KB L1 dcache */
+@@ -787,7 +787,7 @@ static void aarch64_neoverse_v1_initfn(Object *obj)
+     SET_IDREG(isar, ID_PFR1, 0x00010000); /* GIC filled in later */
+     SET_IDREG(isar, ID_PFR2, 0x00000011);
+     cpu->midr = 0x411FD402;          /* r1p2 */
+-    cpu->revidr = 0;
++    SET_IDREG(isar, REVIDR, 0);
  
+     /*
+      * The Neoverse-V1 r1p2 TRM lists 32-bit format CCSIDR_EL1 values,
+@@ -984,7 +984,7 @@ static void aarch64_a710_initfn(Object *obj)
+ 
+     /* Ordered by Section B.4: AArch64 registers */
+     cpu->midr          = 0x412FD471; /* r2p1 */
+-    cpu->revidr        = 0;
++    SET_IDREG(isar, REVIDR, 0);
+     SET_IDREG(isar, ID_PFR0, 0x21110131);
+     SET_IDREG(isar, ID_PFR1, 0x00010000); /* GIC filled in later */
+     SET_IDREG(isar, ID_DFR0, 0x16011099);
+@@ -1087,7 +1087,7 @@ static void aarch64_neoverse_n2_initfn(Object *obj)
+ 
+     /* Ordered by Section B.5: AArch64 ID registers */
+     cpu->midr          = 0x410FD493; /* r0p3 */
+-    cpu->revidr        = 0;
++    SET_IDREG(isar, REVIDR, 0);
+     SET_IDREG(isar, ID_PFR0, 0x21110131);
+     SET_IDREG(isar, ID_PFR1, 0x00010000); /* GIC filled in later */
+     SET_IDREG(isar, ID_DFR0, 0x16011099);
 -- 
 2.53.0
 
