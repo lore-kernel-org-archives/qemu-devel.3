@@ -4,50 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F4E2CA6017
-	for <qemu-devel@archiver.kernel.org>; Sat, 10 Oct 2026 13:40:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12A8ACA9EBE
+	for <qemu-devel@archiver.kernel.org>; Sat, 10 Oct 2026 13:41:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xFXI5-0002rm-3D; Sat, 10 Oct 2026 09:39:09 -0400
+	id 1xFXHR-0001rc-1w; Sat, 10 Oct 2026 09:38:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1xFXHz-0002Zg-Vp
- for qemu-devel@nongnu.org; Sat, 10 Oct 2026 09:39:04 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1xFXHO-0001lq-89
+ for qemu-devel@nongnu.org; Sat, 10 Oct 2026 09:38:26 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1xFXHx-0004e2-NO
- for qemu-devel@nongnu.org; Sat, 10 Oct 2026 09:39:03 -0400
+ id 1xFXHJ-0004ZL-Bh
+ for qemu-devel@nongnu.org; Sat, 10 Oct 2026 09:38:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1791639541;
+ s=mimecast20190719; t=1791639500;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=CK2GlJKkJbYvE/Gn79cZJFY9O5WDQZCgKh0S+ObHI8s=;
- b=cgcSrjHmKaV5YswO5avD8mN5JuKWW40Y4+ngXkOg/frZEZSLdI/nnK0uhw+tVHn/bzpySi
- HGy/3uPnhW9ooc4IENsWaVbD7AI6cNgJWbaAXuUWEXWJ40PfVvcQ6+9npTbWg1LdCv1Jw8
- /+l9i2vUI8khHZ2bzufbjCKTJkJG8cg=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=jCS2297zz90dKq9kmo+5S/qHDOXKjEj1vLBEZvlvhDk=;
+ b=YTF8CyulGb5Q2+1i22A2hRKBPVnn6nn4UycpdyrA+r9MIB4sf/Iwqfx85BQ5s3mmHoKwg2
+ thVOLo0RsYVMlHdZdSvXZ5bgS01SQ2aC+cfes2QrHaoDHlovRkczHieu5QoFZfUnPfF2bd
+ baAZlOFqd4ZD+gMQ62Oa+5+1rbtZrs0=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-286-8j3PY1W7N1q75mvzP-GnTg-1; Sat,
- 10 Oct 2026 13:38:57 +0000
-X-MC-Unique: 8j3PY1W7N1q75mvzP-GnTg-1
-X-Mimecast-MFC-AGG-ID: 8j3PY1W7N1q75mvzP-GnTg_1791639535
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-75-DqpaUcTjN6KZcDgK0Aw1YQ-1; Sat,
+ 10 Oct 2026 13:38:17 +0000
+X-MC-Unique: DqpaUcTjN6KZcDgK0Aw1YQ-1
+X-Mimecast-MFC-AGG-ID: DqpaUcTjN6KZcDgK0Aw1YQ_1791639495
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 843F1195D022; Sat, 10 Oct 2026 13:38:55 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 31A301801321; Sat, 10 Oct 2026 13:38:15 +0000 (UTC)
 Received: from laptop.redhat.corp (headnet03.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.114])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 1E8B930000E5; Sat, 10 Oct 2026 13:38:50 +0000 (UTC)
+ id C022A30000E5; Sat, 10 Oct 2026 13:38:10 +0000 (UTC)
 From: Eric Auger <eric.auger@redhat.com>
 To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
  qemu-arm@nongnu.org, kvmarm@lists.linux.dev, peter.maydell@linaro.org,
@@ -57,25 +57,24 @@ To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
 Cc: maz@kernel.org, oliver.upton@linux.dev, pbonzini@redhat.com,
  armbru@redhat.com, berrange@redhat.com, abologna@redhat.com,
  jdenemar@redhat.com
-Subject: [PATCH v10 16/26] target/arm/kvm: Pass an Error handle to
- kvm_arch_init_vcpu
-Date: Sat, 10 Oct 2026 15:36:20 +0200
-Message-ID: <20261010133725.642498-17-eric.auger@redhat.com>
+Subject: [PATCH v10 08/26] target/arm/cpu-idregs.h.inc: Generate reserved
+ fields
+Date: Sat, 10 Oct 2026 15:36:12 +0200
+Message-ID: <20261010133725.642498-9-eric.auger@redhat.com>
 In-Reply-To: <20261010133725.642498-1-eric.auger@redhat.com>
 References: <20261010133725.642498-1-eric.auger@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124;
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 10
-X-Spam_score: 1.0
-X-Spam_bar: +
-X-Spam_report: (1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
+X-Spam_score_int: -22
+X-Spam_score: -2.3
+X-Spam_bar: --
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ UPPERCASE_50_75=0.008 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,384 +90,612 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The 2 callers of kvm_arch_init_vcpu(), namely kvm_rebind_vcpus()
-and kvm_init_vcpu() are passed an Error handle. So it is a pity
-not using it in kvm_arch_init_vcpu(). Also some functions called
-within kvm_arch_init_vcpu() could get benefit from it, especially
-on ARM. This will happen in subsequent patches.
+Extract reserved fields: RES0, RES1, RAZ, ...
+
+The extra complexity comes from the fact several reserved
+fields may exist in the register, as opposed to named fields.
 
 Signed-off-by: Eric Auger <eric.auger@redhat.com>
----
- include/system/kvm.h       |  2 +-
- accel/kvm/kvm-all.c        | 15 +++++++--------
- target/arm/kvm.c           | 14 +++++++++-----
- target/i386/kvm/kvm.c      | 22 ++++++++++++----------
- target/loongarch/kvm/kvm.c | 27 +++++++++------------------
- target/ppc/kvm.c           |  6 +++---
- target/riscv/kvm/kvm-cpu.c |  3 ++-
- target/s390x/kvm/kvm.c     |  2 +-
- 8 files changed, 44 insertions(+), 47 deletions(-)
 
-diff --git a/include/system/kvm.h b/include/system/kvm.h
-index d29624034c..26d55cc699 100644
---- a/include/system/kvm.h
-+++ b/include/system/kvm.h
-@@ -358,7 +358,7 @@ int kvm_arch_get_default_type(MachineState *ms);
- int kvm_arch_init(MachineState *ms, KVMState *s);
+---
+
+v7 -> v8:
+- fix WithShifts issue
+---
+ target/arm/cpu-idregs.h.inc                   | 65 ++++++++++++++
+ .../update-aarch64-cpu-sysreg-properties.py   | 85 +++++++++++++++----
+ 2 files changed, 134 insertions(+), 16 deletions(-)
+
+diff --git a/target/arm/cpu-idregs.h.inc b/target/arm/cpu-idregs.h.inc
+index be3540d41b..b9beda484b 100644
+--- a/target/arm/cpu-idregs.h.inc
++++ b/target/arm/cpu-idregs.h.inc
+@@ -13,16 +13,20 @@ IDREG_START(AIDR_EL1)
+ IDREG_END(AIDR_EL1)
  
- int kvm_arch_pre_create_vcpu(CPUState *cpu, Error **errp);
--int kvm_arch_init_vcpu(CPUState *cpu);
-+int kvm_arch_init_vcpu(CPUState *cpu, Error **errp);
- int kvm_arch_destroy_vcpu(CPUState *cpu);
+ IDREG_START(CCSIDR2_EL1)
++    IDREG_FIELD(CCSIDR2_EL1, RES0, 24, 40)
+     IDREG_FIELD(CCSIDR2_EL1, NumSets, 0, 24)
+ IDREG_END(CCSIDR2_EL1)
  
- #ifdef TARGET_KVM_HAVE_RESET_PARKED_VCPU
-diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index db52bb9ffb..7c0d12e4f1 100644
---- a/accel/kvm/kvm-all.c
-+++ b/accel/kvm/kvm-all.c
-@@ -493,11 +493,11 @@ static int kvm_rebind_vcpus(Error **errp)
-             }
-         }
+ IDREG_START(CCSIDR_EL1)
++    IDREG_FIELD(CCSIDR_EL1, RES0, 56, 8)
+     IDREG_FIELD(CCSIDR_EL1, NumSets, 32, 24)
++    IDREG_FIELD(CCSIDR_EL1, RES0, 24, 8)
+     IDREG_FIELD(CCSIDR_EL1, Associativity, 3, 21)
+     IDREG_FIELD(CCSIDR_EL1, LineSize, 0, 3)
+ IDREG_END(CCSIDR_EL1)
  
--        ret = kvm_arch_init_vcpu(cpu);
-+        ret = kvm_arch_init_vcpu(cpu, errp);
-         if (ret < 0) {
--            error_setg_errno(errp, -ret,
--                             "kvm_init_vcpu: kvm_arch_init_vcpu failed (%lu)",
--                             vcpu_id);
-+            error_prepend(errp,
-+                          "kvm_init_vcpu: kvm_arch_init_vcpu failed (%lu)",
-+                          vcpu_id);
-         }
+ IDREG_START(CLIDR_EL1)
++    IDREG_FIELD(CLIDR_EL1, RES0, 47, 17)
+     IDREG_FIELD(CLIDR_EL1, Ttype7, 45, 2)
+     IDREG_FIELD(CLIDR_EL1, Ttype6, 43, 2)
+     IDREG_FIELD(CLIDR_EL1, Ttype5, 41, 2)
+@@ -46,7 +50,10 @@ IDREG_START(CLIDR_EL1)
+ IDREG_END(CLIDR_EL1)
  
-         close(cpu->kvm_vcpu_stats_fd);
-@@ -740,11 +740,10 @@ int kvm_init_vcpu(CPUState *cpu, Error **errp)
-         }
-     }
+ IDREG_START(CTR_EL0)
++    IDREG_FIELD(CTR_EL0, RES0, 38, 26)
+     IDREG_FIELD(CTR_EL0, TminLine, 32, 6)
++    IDREG_FIELD(CTR_EL0, RES1, 31, 1)
++    IDREG_FIELD(CTR_EL0, RES0, 30, 1)
+     IDREG_FIELD_ENUM(CTR_EL0, DIC, 29, 1,
+                  IDREG_ARCH_VALUE_RANGE(0, 1)
+     )
+@@ -59,10 +66,12 @@ IDREG_START(CTR_EL0)
+     IDREG_FIELD_ENUM(CTR_EL0, L1Ip, 14, 2,
+                  IDREG_ARCH_VALUE_RANGE(0, 3)
+     )
++    IDREG_FIELD(CTR_EL0, RES0, 4, 10)
+     IDREG_FIELD(CTR_EL0, IminLine, 0, 4)
+ IDREG_END(CTR_EL0)
  
--    ret = kvm_arch_init_vcpu(cpu);
-+    ret = kvm_arch_init_vcpu(cpu, errp);
-     if (ret < 0) {
--        error_setg_errno(errp, -ret,
--                         "kvm_init_vcpu: kvm_arch_init_vcpu failed (%lu)",
--                         kvm_arch_vcpu_id(cpu));
-+        error_prepend(errp, "kvm_init_vcpu: kvm_arch_init_vcpu failed (%lu)",
-+                      kvm_arch_vcpu_id(cpu));
-     }
-     cpu->kvm_vcpu_stats_fd = kvm_vcpu_ioctl(cpu, KVM_GET_STATS_FD, NULL);
+ IDREG_START(DCZID_EL0)
++    IDREG_FIELD(DCZID_EL0, RES0, 9, 55)
+     IDREG_FIELD(DCZID_EL0, TBS, 5, 4)
+     IDREG_FIELD_ENUM(DCZID_EL0, DZP, 4, 1,
+                  IDREG_ARCH_VALUE_RANGE(0, 1)
+@@ -71,13 +80,16 @@ IDREG_START(DCZID_EL0)
+ IDREG_END(DCZID_EL0)
  
-diff --git a/target/arm/kvm.c b/target/arm/kvm.c
-index f2b79c0a34..6c15d8522f 100644
---- a/target/arm/kvm.c
-+++ b/target/arm/kvm.c
-@@ -2105,7 +2105,7 @@ int kvm_arch_pre_create_vcpu(CPUState *cpu, Error **errp)
-     return 0;
- }
+ IDREG_START(GMID_EL1)
++    IDREG_FIELD(GMID_EL1, RES0, 4, 60)
+     IDREG_FIELD(GMID_EL1, BS, 0, 4)
+ IDREG_END(GMID_EL1)
  
--int kvm_arch_init_vcpu(CPUState *cs)
-+int kvm_arch_init_vcpu(CPUState *cs, Error **errp)
- {
-     int ret;
-     uint64_t mpidr;
-@@ -2114,7 +2114,7 @@ int kvm_arch_init_vcpu(CPUState *cs)
-     uint64_t psciver;
+ IDREG_START(ID_AA64AFR0_EL1)
++    IDREG_FIELD(ID_AA64AFR0_EL1, RES0, 32, 32)
+ IDREG_END(ID_AA64AFR0_EL1)
  
-     if (cpu->kvm_target == QEMU_KVM_ARM_TARGET_NONE) {
--        error_report("KVM is not supported for this guest CPU type");
-+        error_setg(errp, "KVM is not supported for this guest CPU type");
-         return -EINVAL;
-     }
+ IDREG_START(ID_AA64AFR1_EL1)
++    IDREG_FIELD(ID_AA64AFR1_EL1, RES0, 0, 64)
+ IDREG_END(ID_AA64AFR1_EL1)
  
-@@ -2153,16 +2153,19 @@ int kvm_arch_init_vcpu(CPUState *cs)
-     /* Do KVM_ARM_VCPU_INIT ioctl */
-     ret = kvm_arm_vcpu_init(cpu);
-     if (ret) {
-+        error_setg(errp, "failed kvm_arm_vcpu_init (%d)", ret);
-         return ret;
-     }
+ IDREG_START(ID_AA64DFR0_EL1)
+@@ -110,6 +122,7 @@ IDREG_START(ID_AA64DFR0_EL1)
+     IDREG_FIELD_ENUM(ID_AA64DFR0_EL1, CTX_CMPs, 28, 4,
+                  IDREG_ARCH_VALUE_RANGE(0, 15)
+     )
++    IDREG_FIELD(ID_AA64DFR0_EL1, RES0, 24, 4)
+     IDREG_FIELD_ENUM(ID_AA64DFR0_EL1, WRPs, 20, 4,
+                  IDREG_ARCH_VALUE_RANGE(1, 15)
+     )
+@@ -169,6 +182,7 @@ IDREG_START(ID_AA64DFR1_EL1)
+ IDREG_END(ID_AA64DFR1_EL1)
  
-     if (cpu_isar_feature(aa64_sve, cpu)) {
-         ret = kvm_arm_sve_set_vls(cpu);
-         if (ret) {
-+            error_setg(errp, "failed kvm_arm_sve_set_vls (%d)", ret);
-             return ret;
-         }
-         ret = kvm_arm_vcpu_finalize(cpu, KVM_ARM_VCPU_SVE);
-         if (ret) {
-+            error_setg(errp, "failed kvm_arm_vcpu_finalize (%d)", ret);
-             return ret;
-         }
-     }
-@@ -2171,11 +2174,11 @@ int kvm_arch_init_vcpu(CPUState *cs)
-         psciver = cpu->psci_version;
-         ret = kvm_set_one_reg(cs, KVM_REG_ARM_PSCI_VERSION, &psciver);
-         if (ret) {
--            error_report("KVM in this kernel does not support PSCI version %d.%d",
-+            error_setg(errp, "KVM in this kernel does not support PSCI version %d.%d",
-                          (int) PSCI_VERSION_MAJOR(psciver),
-                          (int) PSCI_VERSION_MINOR(psciver));
--            error_printf("Consider setting the kvm-psci-version property on the "
--                         "migration source.\n");
-+            error_append_hint(errp, "Consider setting the kvm-psci-version property "
-+                              "on the migration source.\n");
-             return ret;
-         }
-     }
-@@ -2197,6 +2200,7 @@ int kvm_arch_init_vcpu(CPUState *cs)
-      */
-     ret = kvm_get_one_reg(cs, ARM64_SYS_REG(ARM_CPU_ID_MPIDR), &mpidr);
-     if (ret) {
-+        error_setg(errp, "failed retrieving PMIDR value");
-         return ret;
-     }
-     SET_IDREG(&cpu->isar, MPIDR, mpidr);
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index a72b6e6b74..0f5b848e48 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -2218,7 +2218,7 @@ static void kvm_init_pmu_info(struct kvm_cpuid2 *cpuid, X86CPU *cpu)
-     }
- }
+ IDREG_START(ID_AA64DFR2_EL1)
++    IDREG_FIELD(ID_AA64DFR2_EL1, RES0, 28, 36)
+     IDREG_FIELD_ENUM(ID_AA64DFR2_EL1, TRBE_EXC, 24, 4,
+                  IDREG_ARCH_VALUE_RANGE(0, 1)
+     )
+@@ -178,6 +192,7 @@ IDREG_START(ID_AA64DFR2_EL1)
+     IDREG_FIELD_ENUM(ID_AA64DFR2_EL1, SPE_EXC, 16, 4,
+                  IDREG_ARCH_VALUE_RANGE(0, 1)
+     )
++    IDREG_FIELD(ID_AA64DFR2_EL1, RES0, 8, 8)
+     IDREG_FIELD_ENUM(ID_AA64DFR2_EL1, BWE, 4, 4,
+                  IDREG_ARCH_VALUE_RANGE(0, 2)
+     )
+@@ -187,6 +202,7 @@ IDREG_START(ID_AA64DFR2_EL1)
+ IDREG_END(ID_AA64DFR2_EL1)
  
--int kvm_arch_init_vcpu(CPUState *cs)
-+int kvm_arch_init_vcpu(CPUState *cs, Error **errp)
- {
-     struct {
-         struct kvm_cpuid2 cpuid;
-@@ -2240,12 +2240,12 @@ int kvm_arch_init_vcpu(CPUState *cs)
-     int kvm_base = KVM_CPUID_SIGNATURE;
-     int max_nested_state_len;
-     int r;
--    Error *local_err = NULL;
+ IDREG_START(ID_AA64FPFR0_EL1)
++    IDREG_FIELD(ID_AA64FPFR0_EL1, RES0, 32, 32)
+     IDREG_FIELD_ENUM(ID_AA64FPFR0_EL1, F8CVT, 31, 1,
+                  IDREG_ARCH_VALUE_RANGE(0, 1)
+     )
+@@ -205,9 +221,12 @@ IDREG_START(ID_AA64FPFR0_EL1)
+     IDREG_FIELD_ENUM(ID_AA64FPFR0_EL1, F8MM4, 26, 1,
+                  IDREG_ARCH_VALUE_RANGE(0, 1)
+     )
++    IDREG_FIELD(ID_AA64FPFR0_EL1, RES0, 16, 10)
+     IDREG_FIELD_ENUM(ID_AA64FPFR0_EL1, F16MM2, 15, 1,
+                  IDREG_ARCH_VALUE_RANGE(0, 1)
+     )
++    IDREG_FIELD(ID_AA64FPFR0_EL1, RES0, 8, 7)
++    IDREG_FIELD(ID_AA64FPFR0_EL1, RAZ, 2, 6)
+     IDREG_FIELD_ENUM(ID_AA64FPFR0_EL1, F8E4M3, 1, 1,
+                  IDREG_ARCH_VALUE_RANGE(0, 1)
+     )
+@@ -244,6 +263,7 @@ IDREG_START(ID_AA64ISAR0_EL1)
+     IDREG_FIELD_ENUM(ID_AA64ISAR0_EL1, RDM, 28, 4,
+                  IDREG_ARCH_VALUE_RANGE(0, 1)
+     )
++    IDREG_FIELD(ID_AA64ISAR0_EL1, RES0, 24, 4)
+     IDREG_FIELD_ENUM(ID_AA64ISAR0_EL1, Atomic, 20, 4,
+                  IDREG_ARCH_VALUE_RANGE(0, 0),
+                  IDREG_ARCH_VALUE_RANGE(2, 3)
+@@ -260,6 +280,7 @@ IDREG_START(ID_AA64ISAR0_EL1)
+     IDREG_FIELD_ENUM(ID_AA64ISAR0_EL1, AES, 4, 4,
+                  IDREG_ARCH_VALUE_RANGE(0, 2)
+     )
++    IDREG_FIELD(ID_AA64ISAR0_EL1, RES0, 0, 4)
+ IDREG_END(ID_AA64ISAR0_EL1)
  
-     if (current_machine->cgs) {
-         r = x86_confidential_guest_check_features(
-                 X86_CONFIDENTIAL_GUEST(current_machine->cgs), cs);
-         if (r < 0) {
-+            error_setg(errp, "failed x86_confidential_guest_check_features (%d)", r);
-             return r;
-         }
-     }
-@@ -2258,6 +2258,7 @@ int kvm_arch_init_vcpu(CPUState *cs)
+ IDREG_START(ID_AA64ISAR1_EL1)
+@@ -366,6 +387,7 @@ IDREG_START(ID_AA64ISAR2_EL1)
+ IDREG_END(ID_AA64ISAR2_EL1)
  
-     r = kvm_arch_set_tsc_khz(cs);
-     if (r < 0) {
-+        error_setg(errp, "failed setting tsc_khz (%d)", r);
-         return r;
-     }
+ IDREG_START(ID_AA64ISAR3_EL1)
++    IDREG_FIELD(ID_AA64ISAR3_EL1, RES0, 48, 16)
+     IDREG_FIELD_ENUM(ID_AA64ISAR3_EL1, LSCP, 44, 4,
+                  IDREG_ARCH_VALUE_RANGE(0, 1)
+     )
+@@ -411,6 +433,7 @@ IDREG_START(ID_AA64MMFR0_EL1)
+     IDREG_FIELD_ENUM(ID_AA64MMFR0_EL1, FGT, 56, 4,
+                  IDREG_ARCH_VALUE_RANGE(0, 2)
+     )
++    IDREG_FIELD(ID_AA64MMFR0_EL1, RES0, 48, 8)
+     IDREG_FIELD_ENUM(ID_AA64MMFR0_EL1, ExS, 44, 4,
+                  IDREG_ARCH_VALUE_RANGE(0, 1)
+     )
+@@ -517,6 +540,7 @@ IDREG_START(ID_AA64MMFR2_EL1)
+     IDREG_FIELD_ENUM(ID_AA64MMFR2_EL1, TTL, 48, 4,
+                  IDREG_ARCH_VALUE_RANGE(0, 1)
+     )
++    IDREG_FIELD(ID_AA64MMFR2_EL1, RES0, 44, 4)
+     IDREG_FIELD_ENUM(ID_AA64MMFR2_EL1, FWB, 40, 4,
+                  IDREG_ARCH_VALUE_RANGE(0, 1)
+     )
+@@ -562,6 +586,7 @@ IDREG_START(ID_AA64MMFR3_EL1)
+     IDREG_FIELD_ENUM(ID_AA64MMFR3_EL1, SDERR, 52, 4,
+                  IDREG_ARCH_VALUE_RANGE(0, 3)
+     )
++    IDREG_FIELD(ID_AA64MMFR3_EL1, RES0, 48, 4)
+     IDREG_FIELD_ENUM(ID_AA64MMFR3_EL1, ANERR, 44, 4,
+                  IDREG_ARCH_VALUE_RANGE(0, 3)
+     )
+@@ -739,6 +764,7 @@ IDREG_START(ID_AA64PFR1_EL1)
+     IDREG_FIELD_ENUM(ID_AA64PFR1_EL1, SME, 24, 4,
+                  IDREG_ARCH_VALUE_RANGE(0, 2)
+     )
++    IDREG_FIELD(ID_AA64PFR1_EL1, RES0, 20, 4)
+     IDREG_FIELD_ENUM(ID_AA64PFR1_EL1, MPAM_frac, 16, 4,
+                  IDREG_ARCH_VALUE_RANGE(0, 1)
+     )
+@@ -757,6 +783,7 @@ IDREG_START(ID_AA64PFR1_EL1)
+ IDREG_END(ID_AA64PFR1_EL1)
  
-@@ -2285,14 +2286,14 @@ int kvm_arch_init_vcpu(CPUState *cs)
-      * can still proceed and check/expand Hyper-V enlightenments here so legacy
-      * behavior is preserved.
-      */
--    if (!kvm_hyperv_expand_features(cpu, &local_err)) {
--        error_report_err(local_err);
-+    if (!kvm_hyperv_expand_features(cpu, errp)) {
-         return -ENOSYS;
-     }
+ IDREG_START(ID_AA64PFR2_EL1)
++    IDREG_FIELD(ID_AA64PFR2_EL1, RES0, 48, 16)
+     IDREG_FIELD_ENUM(ID_AA64PFR2_EL1, VMTETCL, 44, 4,
+                  IDREG_ARCH_VALUE_RANGE(0, 1)
+     )
+@@ -799,6 +826,7 @@ IDREG_START(ID_AA64SMFR0_EL1)
+     IDREG_FIELD_ENUM(ID_AA64SMFR0_EL1, FA64, 63, 1,
+                  IDREG_ARCH_VALUE_RANGE(0, 1)
+     )
++    IDREG_FIELD(ID_AA64SMFR0_EL1, RES0, 62, 1)
+     IDREG_FIELD_ENUM(ID_AA64SMFR0_EL1, LUT6, 61, 1,
+                  IDREG_ARCH_VALUE_RANGE(0, 1)
+     )
+@@ -812,6 +840,7 @@ IDREG_START(ID_AA64SMFR0_EL1)
+                  IDREG_ARCH_VALUE_RANGE(0, 0),
+                  IDREG_ARCH_VALUE_RANGE(15, 15)
+     )
++    IDREG_FIELD(ID_AA64SMFR0_EL1, RES0, 49, 3)
+     IDREG_FIELD_ENUM(ID_AA64SMFR0_EL1, F64F64, 48, 1,
+                  IDREG_ARCH_VALUE_RANGE(0, 1)
+     )
+@@ -847,6 +876,7 @@ IDREG_START(ID_AA64SMFR0_EL1)
+     IDREG_FIELD_ENUM(ID_AA64SMFR0_EL1, F32F32, 32, 1,
+                  IDREG_ARCH_VALUE_RANGE(0, 1)
+     )
++    IDREG_FIELD(ID_AA64SMFR0_EL1, RES0, 31, 1)
+     IDREG_FIELD_ENUM(ID_AA64SMFR0_EL1, SF8FMA, 30, 1,
+                  IDREG_ARCH_VALUE_RANGE(0, 1)
+     )
+@@ -856,6 +886,7 @@ IDREG_START(ID_AA64SMFR0_EL1)
+     IDREG_FIELD_ENUM(ID_AA64SMFR0_EL1, SF8DP2, 28, 1,
+                  IDREG_ARCH_VALUE_RANGE(0, 1)
+     )
++    IDREG_FIELD(ID_AA64SMFR0_EL1, RES0, 26, 2)
+     IDREG_FIELD_ENUM(ID_AA64SMFR0_EL1, SBitPerm, 25, 1,
+                  IDREG_ARCH_VALUE_RANGE(0, 1)
+     )
+@@ -865,15 +896,18 @@ IDREG_START(ID_AA64SMFR0_EL1)
+     IDREG_FIELD_ENUM(ID_AA64SMFR0_EL1, SFEXPA, 23, 1,
+                  IDREG_ARCH_VALUE_RANGE(0, 1)
+     )
++    IDREG_FIELD(ID_AA64SMFR0_EL1, RES0, 17, 6)
+     IDREG_FIELD_ENUM(ID_AA64SMFR0_EL1, STMOP, 16, 1,
+                  IDREG_ARCH_VALUE_RANGE(0, 1)
+     )
++    IDREG_FIELD(ID_AA64SMFR0_EL1, RES0, 1, 15)
+     IDREG_FIELD_ENUM(ID_AA64SMFR0_EL1, SMOP4, 0, 1,
+                  IDREG_ARCH_VALUE_RANGE(0, 1)
+     )
+ IDREG_END(ID_AA64SMFR0_EL1)
  
-     if (hyperv_enabled(cpu)) {
-         r = hyperv_init_vcpu(cpu);
-         if (r) {
-+            error_setg(errp, "failed hyperv_init_vcpu (%d)", r);
-             return r;
-         }
+ IDREG_START(ID_AA64ZFR0_EL1)
++    IDREG_FIELD(ID_AA64ZFR0_EL1, RES0, 60, 4)
+     IDREG_FIELD_ENUM(ID_AA64ZFR0_EL1, F64MM, 56, 4,
+                  IDREG_ARCH_VALUE_RANGE(0, 1)
+     )
+@@ -889,9 +923,11 @@ IDREG_START(ID_AA64ZFR0_EL1)
+     IDREG_FIELD_ENUM(ID_AA64ZFR0_EL1, SM4, 40, 4,
+                  IDREG_ARCH_VALUE_RANGE(0, 1)
+     )
++    IDREG_FIELD(ID_AA64ZFR0_EL1, RES0, 36, 4)
+     IDREG_FIELD_ENUM(ID_AA64ZFR0_EL1, SHA3, 32, 4,
+                  IDREG_ARCH_VALUE_RANGE(0, 1)
+     )
++    IDREG_FIELD(ID_AA64ZFR0_EL1, RES0, 28, 4)
+     IDREG_FIELD_ENUM(ID_AA64ZFR0_EL1, B16B16, 24, 4,
+                  IDREG_ARCH_VALUE_RANGE(0, 3)
+     )
+@@ -904,6 +940,7 @@ IDREG_START(ID_AA64ZFR0_EL1)
+     IDREG_FIELD_ENUM(ID_AA64ZFR0_EL1, EltPerm, 12, 4,
+                  IDREG_ARCH_VALUE_RANGE(0, 1)
+     )
++    IDREG_FIELD(ID_AA64ZFR0_EL1, RES0, 8, 4)
+     IDREG_FIELD_ENUM(ID_AA64ZFR0_EL1, AES, 4, 4,
+                  IDREG_ARCH_VALUE_RANGE(0, 3)
+     )
+@@ -913,9 +950,11 @@ IDREG_START(ID_AA64ZFR0_EL1)
+ IDREG_END(ID_AA64ZFR0_EL1)
  
-@@ -2371,6 +2372,7 @@ int kvm_arch_init_vcpu(CPUState *cs)
+ IDREG_START(ID_AFR0_EL1)
++    IDREG_FIELD(ID_AFR0_EL1, RES0, 0, 64)
+ IDREG_END(ID_AFR0_EL1)
  
-         r = kvm_xen_init_vcpu(cs);
-         if (r) {
-+            error_setg(errp, "failed kvm_xen_init_vcpu (%d)", r);
-             return r;
-         }
+ IDREG_START(ID_DFR0_EL1)
++    IDREG_FIELD(ID_DFR0_EL1, RES0, 32, 32)
+     IDREG_FIELD_ENUM(ID_DFR0_EL1, TraceFilt, 28, 4,
+                  IDREG_ARCH_VALUE_RANGE(0, 1)
+     )
+@@ -944,6 +983,7 @@ IDREG_START(ID_DFR0_EL1)
+ IDREG_END(ID_DFR0_EL1)
  
-@@ -2419,12 +2421,12 @@ int kvm_arch_init_vcpu(CPUState *cs)
+ IDREG_START(ID_DFR1_EL1)
++    IDREG_FIELD(ID_DFR1_EL1, RES0, 8, 56)
+     IDREG_FIELD_ENUM(ID_DFR1_EL1, HPMN0, 4, 4,
+                  IDREG_ARCH_VALUE_RANGE(0, 1)
+     )
+@@ -954,6 +994,7 @@ IDREG_START(ID_DFR1_EL1)
+ IDREG_END(ID_DFR1_EL1)
  
-         ret = kvm_get_mce_cap_supported(cs->kvm_state, &mcg_cap, &banks);
-         if (ret < 0) {
--            fprintf(stderr, "kvm_get_mce_cap_supported: %s", strerror(-ret));
-+            error_setg(errp, "kvm_get_mce_cap_supported: %s", strerror(-ret));
-             return ret;
-         }
+ IDREG_START(ID_ISAR0_EL1)
++    IDREG_FIELD(ID_ISAR0_EL1, RES0, 28, 36)
+     IDREG_FIELD_ENUM(ID_ISAR0_EL1, Divide, 24, 4,
+                  IDREG_ARCH_VALUE_RANGE(0, 2)
+     )
+@@ -978,6 +1019,7 @@ IDREG_START(ID_ISAR0_EL1)
+ IDREG_END(ID_ISAR0_EL1)
  
-         if (banks < (env->mcg_cap & MCG_CAP_BANKS_MASK)) {
--            error_report("kvm: Unsupported MCE bank count (QEMU = %d, KVM = %d)",
-+            error_setg(errp, "kvm: Unsupported MCE bank count (QEMU = %d, KVM = %d)",
-                          (int)(env->mcg_cap & MCG_CAP_BANKS_MASK), banks);
-             return -ENOTSUP;
-         }
-@@ -2432,7 +2434,7 @@ int kvm_arch_init_vcpu(CPUState *cs)
-         unsupported_caps = env->mcg_cap & ~(mcg_cap | MCG_CAP_BANKS_MASK);
-         if (unsupported_caps) {
-             if (unsupported_caps & MCG_LMCE_P) {
--                error_report("kvm: LMCE not supported");
-+                error_setg(errp, "kvm: LMCE not supported");
-                 return -ENOTSUP;
-             }
-             warn_report("Unsupported MCG_CAP bits: 0x%" PRIx64,
-@@ -2442,7 +2444,7 @@ int kvm_arch_init_vcpu(CPUState *cs)
-         env->mcg_cap &= mcg_cap | MCG_CAP_BANKS_MASK;
-         ret = kvm_vcpu_ioctl(cs, KVM_X86_SETUP_MCE, &env->mcg_cap);
-         if (ret < 0) {
--            fprintf(stderr, "KVM_X86_SETUP_MCE: %s", strerror(-ret));
-+            error_setg(errp, "KVM_X86_SETUP_MCE: %s", strerror(-ret));
-             return ret;
-         }
-     }
-@@ -2470,9 +2472,8 @@ int kvm_arch_init_vcpu(CPUState *cs)
-             error_setg(&invtsc_mig_blocker,
-                        "State blocked by non-migratable CPU device"
-                        " (invtsc flag)");
--            r = migrate_add_blocker(&invtsc_mig_blocker, &local_err);
-+            r = migrate_add_blocker(&invtsc_mig_blocker, errp);
-             if (r < 0) {
--                error_report_err(local_err);
-                 return r;
-             }
-         }
-@@ -2501,6 +2502,7 @@ int kvm_arch_init_vcpu(CPUState *cs)
-     cpuid_data.cpuid.padding = 0;
-     r = kvm_vcpu_ioctl(cs, KVM_SET_CPUID2, &cpuid_data);
-     if (r) {
-+        error_setg(errp, "KVM_SET_CPUID2 failed (%m)");
-         goto fail;
-     }
-     kvm_init_xsave(env);
-diff --git a/target/loongarch/kvm/kvm.c b/target/loongarch/kvm/kvm.c
-index 941142305e..d5bf3a2d83 100644
---- a/target/loongarch/kvm/kvm.c
-+++ b/target/loongarch/kvm/kvm.c
-@@ -1299,11 +1299,10 @@ int kvm_arch_pre_create_vcpu(CPUState *cpu, Error **errp)
-     return 0;
- }
+ IDREG_START(ID_ISAR1_EL1)
++    IDREG_FIELD(ID_ISAR1_EL1, RES0, 32, 32)
+     IDREG_FIELD_ENUM(ID_ISAR1_EL1, Jazelle, 28, 4,
+                  IDREG_ARCH_VALUE_RANGE(0, 1)
+     )
+@@ -1005,6 +1047,7 @@ IDREG_START(ID_ISAR1_EL1)
+ IDREG_END(ID_ISAR1_EL1)
  
--int kvm_arch_init_vcpu(CPUState *cs)
-+int kvm_arch_init_vcpu(CPUState *cs, Error **errp)
- {
-     uint64_t val;
-     int ret;
--    Error *local_err = NULL;
-     LoongArchCPU *cpu = LOONGARCH_CPU(cs);
+ IDREG_START(ID_ISAR2_EL1)
++    IDREG_FIELD(ID_ISAR2_EL1, RES0, 32, 32)
+     IDREG_FIELD_ENUM(ID_ISAR2_EL1, Reversal, 28, 4,
+                  IDREG_ARCH_VALUE_RANGE(0, 2)
+     )
+@@ -1032,6 +1075,7 @@ IDREG_START(ID_ISAR2_EL1)
+ IDREG_END(ID_ISAR2_EL1)
  
-     cpu->vmsentry = qemu_add_vm_change_state_handler(
-@@ -1313,51 +1312,43 @@ int kvm_arch_init_vcpu(CPUState *cs)
-         brk_insn = val;
-     }
+ IDREG_START(ID_ISAR3_EL1)
++    IDREG_FIELD(ID_ISAR3_EL1, RES0, 32, 32)
+     IDREG_FIELD_ENUM(ID_ISAR3_EL1, T32EE, 28, 4,
+                  IDREG_ARCH_VALUE_RANGE(0, 1)
+     )
+@@ -1060,6 +1104,7 @@ IDREG_START(ID_ISAR3_EL1)
+ IDREG_END(ID_ISAR3_EL1)
  
--    ret = kvm_cpu_check_lsx(cs, &local_err);
-+    ret = kvm_cpu_check_lsx(cs, errp);
-     if (ret < 0) {
--        error_report_err(local_err);
-         return ret;
-     }
+ IDREG_START(ID_ISAR4_EL1)
++    IDREG_FIELD(ID_ISAR4_EL1, RES0, 32, 32)
+     IDREG_FIELD_ENUM(ID_ISAR4_EL1, SWP_frac, 28, 4,
+                  IDREG_ARCH_VALUE_RANGE(0, 1)
+     )
+@@ -1089,12 +1134,14 @@ IDREG_START(ID_ISAR4_EL1)
+ IDREG_END(ID_ISAR4_EL1)
  
--    ret = kvm_cpu_check_lasx(cs, &local_err);
-+    ret = kvm_cpu_check_lasx(cs, errp);
-     if (ret < 0) {
--        error_report_err(local_err);
-         return ret;
-     }
+ IDREG_START(ID_ISAR5_EL1)
++    IDREG_FIELD(ID_ISAR5_EL1, RES0, 32, 32)
+     IDREG_FIELD_ENUM(ID_ISAR5_EL1, VCMA, 28, 4,
+                  IDREG_ARCH_VALUE_RANGE(0, 1)
+     )
+     IDREG_FIELD_ENUM(ID_ISAR5_EL1, RDM, 24, 4,
+                  IDREG_ARCH_VALUE_RANGE(0, 1)
+     )
++    IDREG_FIELD(ID_ISAR5_EL1, RES0, 20, 4)
+     IDREG_FIELD_ENUM(ID_ISAR5_EL1, CRC32, 16, 4,
+                  IDREG_ARCH_VALUE_RANGE(0, 1)
+     )
+@@ -1113,6 +1160,7 @@ IDREG_START(ID_ISAR5_EL1)
+ IDREG_END(ID_ISAR5_EL1)
  
--    ret = kvm_cpu_check_lbt(cs, &local_err);
-+    ret = kvm_cpu_check_lbt(cs, errp);
-     if (ret < 0) {
--        error_report_err(local_err);
-         return ret;
-     }
+ IDREG_START(ID_ISAR6_EL1)
++    IDREG_FIELD(ID_ISAR6_EL1, RES0, 32, 32)
+     IDREG_FIELD_ENUM(ID_ISAR6_EL1, CLRBHB, 28, 4,
+                  IDREG_ARCH_VALUE_RANGE(0, 1)
+     )
+@@ -1140,6 +1188,7 @@ IDREG_START(ID_ISAR6_EL1)
+ IDREG_END(ID_ISAR6_EL1)
  
--    ret = kvm_cpu_check_pmu(cs, &local_err);
-+    ret = kvm_cpu_check_pmu(cs, errp);
-     if (ret < 0) {
--        error_report_err(local_err);
-         return ret;
-     }
+ IDREG_START(ID_MMFR0_EL1)
++    IDREG_FIELD(ID_MMFR0_EL1, RES0, 32, 32)
+     IDREG_FIELD_ENUM(ID_MMFR0_EL1, InnerShr, 28, 4,
+                  IDREG_ARCH_VALUE_RANGE(0, 1),
+                  IDREG_ARCH_VALUE_RANGE(15, 15)
+@@ -1169,6 +1218,7 @@ IDREG_START(ID_MMFR0_EL1)
+ IDREG_END(ID_MMFR0_EL1)
  
--    ret = kvm_cpu_check_pv_features(cs, &local_err);
-+    ret = kvm_cpu_check_pv_features(cs, errp);
-     if (ret < 0) {
--        error_report_err(local_err);
-         return ret;
-     }
+ IDREG_START(ID_MMFR1_EL1)
++    IDREG_FIELD(ID_MMFR1_EL1, RES0, 32, 32)
+     IDREG_FIELD_ENUM(ID_MMFR1_EL1, BPred, 28, 4,
+                  IDREG_ARCH_VALUE_RANGE(0, 4)
+     )
+@@ -1196,6 +1246,7 @@ IDREG_START(ID_MMFR1_EL1)
+ IDREG_END(ID_MMFR1_EL1)
  
--    ret = kvm_cpu_check_ptw(cs, &local_err);
-+    ret = kvm_cpu_check_ptw(cs, errp);
-     if (ret < 0) {
--        error_report_err(local_err);
-         return ret;
-     }
+ IDREG_START(ID_MMFR2_EL1)
++    IDREG_FIELD(ID_MMFR2_EL1, RES0, 32, 32)
+     IDREG_FIELD_ENUM(ID_MMFR2_EL1, HWAccFlg, 28, 4,
+                  IDREG_ARCH_VALUE_RANGE(0, 1)
+     )
+@@ -1221,6 +1272,7 @@ IDREG_START(ID_MMFR2_EL1)
+ IDREG_END(ID_MMFR2_EL1)
  
--    ret = kvm_cpu_check_msgint(cs, &local_err);
-+    ret = kvm_cpu_check_msgint(cs, errp);
-     if (ret < 0) {
--        error_report_err(local_err);
-         return ret;
-     }
+ IDREG_START(ID_MMFR3_EL1)
++    IDREG_FIELD(ID_MMFR3_EL1, RES0, 32, 32)
+     IDREG_FIELD_ENUM(ID_MMFR3_EL1, Supersec, 28, 4,
+                  IDREG_ARCH_VALUE_RANGE(0, 0),
+                  IDREG_ARCH_VALUE_RANGE(15, 15)
+@@ -1249,6 +1301,7 @@ IDREG_START(ID_MMFR3_EL1)
+ IDREG_END(ID_MMFR3_EL1)
  
--    ret = kvm_cpu_check_misc_v1_1(cs, &local_err);
-+    ret = kvm_cpu_check_misc_v1_1(cs, errp);
-     if (ret < 0) {
--        error_report_err(local_err);
-         return ret;
-     }
+ IDREG_START(ID_MMFR4_EL1)
++    IDREG_FIELD(ID_MMFR4_EL1, RES0, 32, 32)
+     IDREG_FIELD_ENUM(ID_MMFR4_EL1, EVT, 28, 4,
+                  IDREG_ARCH_VALUE_RANGE(0, 2)
+     )
+@@ -1276,6 +1329,7 @@ IDREG_START(ID_MMFR4_EL1)
+ IDREG_END(ID_MMFR4_EL1)
  
-diff --git a/target/ppc/kvm.c b/target/ppc/kvm.c
-index 8e89a6c665..d90e904f90 100644
---- a/target/ppc/kvm.c
-+++ b/target/ppc/kvm.c
-@@ -484,7 +484,7 @@ int kvm_arch_pre_create_vcpu(CPUState *cpu, Error **errp)
-     return 0;
- }
+ IDREG_START(ID_MMFR5_EL1)
++    IDREG_FIELD(ID_MMFR5_EL1, RES0, 8, 56)
+     IDREG_FIELD_ENUM(ID_MMFR5_EL1, nTLBPA, 4, 4,
+                  IDREG_ARCH_VALUE_RANGE(0, 1)
+     )
+@@ -1285,6 +1339,7 @@ IDREG_START(ID_MMFR5_EL1)
+ IDREG_END(ID_MMFR5_EL1)
  
--int kvm_arch_init_vcpu(CPUState *cs)
-+int kvm_arch_init_vcpu(CPUState *cs, Error **errp)
- {
-     PowerPCCPU *cpu = POWERPC_CPU(cs);
-     CPUPPCState *cenv = &cpu->env;
-@@ -494,8 +494,8 @@ int kvm_arch_init_vcpu(CPUState *cs)
-     ret = kvm_arch_sync_sregs(cpu);
-     if (ret) {
-         if (ret == -EINVAL) {
--            error_report("Register sync failed... If you're using kvm-hv.ko,"
--                         " only \"-cpu host\" is possible");
-+            error_setg(errp, "Register sync failed... If you're using kvm-hv.ko,"
-+                       " only \"-cpu host\" is possible");
-         }
-         return ret;
-     }
-diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
-index 68e1501b21..d09048c522 100644
---- a/target/riscv/kvm/kvm-cpu.c
-+++ b/target/riscv/kvm/kvm-cpu.c
-@@ -1544,7 +1544,7 @@ int kvm_arch_pre_create_vcpu(CPUState *cpu, Error **errp)
-     return 0;
- }
+ IDREG_START(ID_PFR0_EL1)
++    IDREG_FIELD(ID_PFR0_EL1, RES0, 32, 32)
+     IDREG_FIELD_ENUM(ID_PFR0_EL1, RAS, 28, 4,
+                  IDREG_ARCH_VALUE_RANGE(0, 3)
+     )
+@@ -1313,6 +1368,7 @@ IDREG_START(ID_PFR0_EL1)
+ IDREG_END(ID_PFR0_EL1)
  
--int kvm_arch_init_vcpu(CPUState *cs)
-+int kvm_arch_init_vcpu(CPUState *cs, Error **errp)
- {
-     int ret = 0;
-     RISCVCPU *cpu = RISCV_CPU(cs);
-@@ -1554,6 +1554,7 @@ int kvm_arch_init_vcpu(CPUState *cs)
-     if (!object_dynamic_cast(OBJECT(cpu), TYPE_RISCV_CPU_HOST)) {
-         ret = kvm_vcpu_set_machine_ids(cpu, cs);
-         if (ret != 0) {
-+            error_setg(errp, "failed setting machine id (%d)", ret);
-             return ret;
-         }
-     }
-diff --git a/target/s390x/kvm/kvm.c b/target/s390x/kvm/kvm.c
-index dc67e84886..76dd1e67c0 100644
---- a/target/s390x/kvm/kvm.c
-+++ b/target/s390x/kvm/kvm.c
-@@ -403,7 +403,7 @@ int kvm_arch_pre_create_vcpu(CPUState *cpu, Error **errp)
-     return 0;
- }
+ IDREG_START(ID_PFR1_EL1)
++    IDREG_FIELD(ID_PFR1_EL1, RES0, 32, 32)
+     IDREG_FIELD_ENUM(ID_PFR1_EL1, GIC, 28, 4,
+                  IDREG_ARCH_VALUE_RANGE(0, 1),
+                  IDREG_ARCH_VALUE_RANGE(3, 3)
+@@ -1342,6 +1398,7 @@ IDREG_START(ID_PFR1_EL1)
+ IDREG_END(ID_PFR1_EL1)
  
--int kvm_arch_init_vcpu(CPUState *cs)
-+int kvm_arch_init_vcpu(CPUState *cs, Error **errp)
- {
-     unsigned int max_cpus = MACHINE(qdev_get_machine())->smp.max_cpus;
-     S390CPU *cpu = S390_CPU(cs);
+ IDREG_START(ID_PFR2_EL1)
++    IDREG_FIELD(ID_PFR2_EL1, RES0, 12, 52)
+     IDREG_FIELD_ENUM(ID_PFR2_EL1, RAS_frac, 8, 4,
+                  IDREG_ARCH_VALUE_RANGE(0, 1)
+     )
+@@ -1375,10 +1432,13 @@ IDREG_START(MIDR_EL1)
+ IDREG_END(MIDR_EL1)
+ 
+ IDREG_START(MPIDR_EL1)
++    IDREG_FIELD(MPIDR_EL1, RES0, 40, 24)
+     IDREG_FIELD(MPIDR_EL1, Aff3, 32, 8)
++    IDREG_FIELD(MPIDR_EL1, RES1, 31, 1)
+     IDREG_FIELD_ENUM(MPIDR_EL1, U, 30, 1,
+                  IDREG_ARCH_VALUE_RANGE(0, 1)
+     )
++    IDREG_FIELD(MPIDR_EL1, RES0, 25, 5)
+     IDREG_FIELD_ENUM(MPIDR_EL1, MT, 24, 1,
+                  IDREG_ARCH_VALUE_RANGE(0, 1)
+     )
+@@ -1388,6 +1448,7 @@ IDREG_START(MPIDR_EL1)
+ IDREG_END(MPIDR_EL1)
+ 
+ IDREG_START(MVFR0_EL1)
++    IDREG_FIELD(MVFR0_EL1, RES0, 32, 32)
+     IDREG_FIELD_ENUM(MVFR0_EL1, FPRound, 28, 4,
+                  IDREG_ARCH_VALUE_RANGE(0, 1)
+     )
+@@ -1415,6 +1476,7 @@ IDREG_START(MVFR0_EL1)
+ IDREG_END(MVFR0_EL1)
+ 
+ IDREG_START(MVFR1_EL1)
++    IDREG_FIELD(MVFR1_EL1, RES0, 32, 32)
+     IDREG_FIELD_ENUM(MVFR1_EL1, SIMDFMAC, 28, 4,
+                  IDREG_ARCH_VALUE_RANGE(0, 1)
+     )
+@@ -1442,6 +1504,7 @@ IDREG_START(MVFR1_EL1)
+ IDREG_END(MVFR1_EL1)
+ 
+ IDREG_START(MVFR2_EL1)
++    IDREG_FIELD(MVFR2_EL1, RES0, 8, 56)
+     IDREG_FIELD_ENUM(MVFR2_EL1, FPMisc, 4, 4,
+                  IDREG_ARCH_VALUE_RANGE(0, 4)
+     )
+@@ -1454,6 +1517,7 @@ IDREG_START(REVIDR_EL1)
+ IDREG_END(REVIDR_EL1)
+ 
+ IDREG_START(SMIDR_EL1)
++    IDREG_FIELD(SMIDR_EL1, RES0, 60, 4)
+     IDREG_FIELD_ENUM(SMIDR_EL1, NSMC, 56, 4,
+                  IDREG_ARCH_VALUE_RANGE(0, 15)
+     )
+@@ -1479,6 +1543,7 @@ IDREG_START(SMIDR_EL1)
+     IDREG_FIELD_ENUM(SMIDR_EL1, SH, 13, 2,
+                  IDREG_ARCH_VALUE_RANGE(0, 3)
+     )
++    IDREG_FIELD(SMIDR_EL1, RES0, 12, 1)
+     IDREG_FIELD(SMIDR_EL1, Affinity, 0, 12)
+ IDREG_END(SMIDR_EL1)
+ 
+diff --git a/scripts/update-aarch64-cpu-sysreg-properties.py b/scripts/update-aarch64-cpu-sysreg-properties.py
+index b4b548a6e2..86a2d2db84 100644
+--- a/scripts/update-aarch64-cpu-sysreg-properties.py
++++ b/scripts/update-aarch64-cpu-sysreg-properties.py
+@@ -78,9 +78,13 @@ def collect_fields(fieldset, bit_offset=0):
+ 
+     # Field Types
+     leaf_types = ['Fields.Field', 'Fields.ConstantField',
+-                  'Fields.EnumeratedField', 'Fields.Bitfield']
++                  'Fields.EnumeratedField', 'Fields.Bitfield', 'Fields.Reserved']
+     if _type in leaf_types:
+         field_copy = fieldset.copy()
++
++        if _type == 'Fields.Reserved' and not field_copy.get('name'):
++            field_copy['name'] = fieldset.get('value', 'RES0')
++
+         if field_copy.get('rangeset'):
+             new_ranges = []
+             for r in field_copy['rangeset']:
+@@ -92,7 +96,7 @@ def collect_fields(fieldset, bit_offset=0):
+         return fields
+ 
+     # Traverse the hierarchy for other cases
+-    for key in ['fields', 'values', 'fieldsets']:
++    for key in ['fields', 'values', 'fieldsets', 'constants']:
+         for nested in fieldset.get(key, []):
+             fields.extend(collect_fields(nested, bit_offset))
+ 
+@@ -210,43 +214,92 @@ def generate_sysreg_properties_from_registers_json(idregs, raw_json_path):
+ 
+         final_output += f"IDREG_START({reg_name})\n"
+ 
+-        unique_fields = {}
++        fieldset_variants = []
++
+         for fieldset in register.get('fieldsets', []):
++            current_fieldset_fields = {}
+             candidates = collect_fields(fieldset)
++
+             for val in candidates:
+-                name = (val.get('name') or val.get('label', '')).strip()
+-                if not name or "RESERVED" in name.upper():
++                # reserved fields may leave the 'name' empty or set to None and use
++                # value or label instead. Last '' garantees we fall back to an empty
++                # string and prevent the next line from cashing
++                raw_name = val.get('name') or val.get('label') or val.get('value') or ''
++                name = raw_name.strip()
++                if not name:
+                     continue
++
++                name_upper = name.upper()
++
++                base_reserved = None
++                for r_type in ["RES0", "RES1", "RAZ", "RAO", "WI", "UNKNOWN"]:
++                    if r_type == name_upper:
++                        # Turn UNKNOWN to RES0
++                        base_reserved = "RES0" if r_type == "UNKNOWN" else r_type
++                        break
++
++                if base_reserved:
++                    name = base_reserved
++                elif "RESERVED" in name_upper:
++                    continue
++
+                 for r in val.get('rangeset', []):
+                     lsb = int(r.get('start'))
+                     width = r.get('width')
+                     msb = lsb + int(width) - 1
+ 
+-                    # In json, some idregs may have multiple fielsets, depending
+-                    # on some architecture configurations. If this happens, pick
+-                    # up a single one with the largest msb (known one is CCSIDR
+-                    # which is currently skipped)
+-                    if name not in unique_fields or msb > unique_fields[name]['msb']:
+-                        # extract enum values if any
++                    if base_reserved:
++                        # reserved fields have same name so append their lsb
++                        # to prevent fields from overriding each other
++                        unique_key = f"{name}_{lsb}"
++                    else:
++                        unique_key = name
++
++                    # within the same fieldset we can have fields with the
++                    # same name and different msbs. Keep the largest.
++                    if unique_key not in current_fieldset_fields or \
++                       msb > current_fieldset_fields[unique_key]['msb']:
+                         enums = extract_field_enums(val)
+-                        unique_fields[name] = \
+-                            {'lsb': lsb, 'msb': msb, 'width': width, 'enums': enums}
++                        current_fieldset_fields[unique_key] = {
++                            'raw_name': name,
++                            'lsb': lsb,
++                            'msb': msb,
++                            'width': width,
++                            'enums': enums
++                        }
++
++            if current_fieldset_fields:
++                fieldset_variants.append(current_fieldset_fields)
++
++        best_fieldset = {}
++        max_total_width = -1
++
++        # among several variants of a fieldset keep the largest one
++        for variant in fieldset_variants:
++            total_width = sum(f['width'] for f in variant.values())
++
++            if total_width > max_total_width:
++                max_total_width = total_width
++                best_fieldset = variant
++
++        unique_fields = best_fieldset
+ 
+         # Sort by decreasing lsbs
+         sorted_fields = sorted(unique_fields.items(),
+                                key=lambda x: x[1]['lsb'], reverse=True)
+ 
+-        for name, bits in sorted_fields:
++        for unique_key, bits in sorted_fields:
+             enums_list = bits.get('enums', [])
++            clean_name = bits.get('raw_name', unique_key)
+ 
+             if enums_list:
+                 final_output += format_field_enum(
+-                    reg_name, name, bits['lsb'], bits['width'],
++                    reg_name, clean_name, bits['lsb'], bits['width'],
+                     merge_enum_ranges(enums_list))
+             else:
+                 final_output += (
+                     f"    IDREG_FIELD({reg_name}, "
+-                    f"{name}, {bits['lsb']}, {bits['width']})\n"
++                    f"{clean_name}, {bits['lsb']}, {bits['width']})\n"
+                 )
+ 
+         final_output += f"IDREG_END({reg_name})\n"
 -- 
 2.53.0
 
