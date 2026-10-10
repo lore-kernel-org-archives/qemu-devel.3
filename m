@@ -4,95 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22A45CA6017
-	for <qemu-devel@archiver.kernel.org>; Sat, 10 Oct 2026 07:30:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64A31CA6017
+	for <qemu-devel@archiver.kernel.org>; Sat, 10 Oct 2026 07:31:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xFRWi-00068n-4V; Sat, 10 Oct 2026 03:29:52 -0400
+	id 1xFRXb-0006OL-Bq; Sat, 10 Oct 2026 03:30:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xFRWc-00068Q-Aq; Sat, 10 Oct 2026 03:29:47 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xFRWY-0002rn-5o; Sat, 10 Oct 2026 03:29:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1791617376; bh=rBU/PCy6X+eimuNaV7io4mVvwOpmIR46BkOn/VqMfZ4=;
- h=Date:Subject:To:References:From:In-Reply-To;
- b=M64edtn19W5gLPtXHff88yksRJp7JQYEtHVH5nKuyPWm0hAsxV67jPzo18go2qS/S
- 1eCyUsKYzg13BIAAxoKXGrAFvCQJ5iOxr4VtlW8vrGQOB27YqNo9OutJIZiiQF/SyG
- nMMLW4hj8vk6jhIPMT6AFo+jgQznPz3Gdw6MlobKoDOLUu0nmrK4uNIr+we9lqhvgh
- KI7EBdJXmT36qFGxqt3mBpKV0moVs1aHE8NoPjmL7RWrsdMlPsYT5yqlCcd+I9eA3A
- Uo86v2EqNDhMGCaanFIS53Hjt/FmnR/BPshPKu9wx7rdNQNf3KY206caC/cAwlfaXA
- RZ2BIpxG86EFw==
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by isrv.corpit.ru (Postfix) with ESMTP id D14EE1DC5A0;
- Sat, 10 Oct 2026 10:29:35 +0300 (MSK)
-Message-ID: <113ff524-4789-43a7-8d2f-bde474f3a413@tls.msk.ru>
-Date: Sat, 10 Oct 2026 10:29:34 +0300
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1xFRXP-0006MJ-KV
+ for qemu-devel@nongnu.org; Sat, 10 Oct 2026 03:30:38 -0400
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1xFRXN-00035Q-Bw
+ for qemu-devel@nongnu.org; Sat, 10 Oct 2026 03:30:35 -0400
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-48b02a2359aso383483f8f.0
+ for <qemu-devel@nongnu.org>; Sat, 10 Oct 2026 00:30:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1791617430; x=1792222230; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=aK63pA/LNxSEeNG3ry2eSOzxpvVrxY874ImE72FDeHo=;
+ b=zOFHpik/C5C7tmhmsjeq+/VX9BYUKOVUMMaZqqfzImxnZZ2DCH/Fh2iD5OSYKenBH4
+ oSSFzyncPxTKFSrJXpido3E1nEVKyyTNaNHEW/mocdlg8AHkYXGSMCF0PVoGho77FPhn
+ 3VShYNK6C1fstgV6fZsfVyOSqZi4N7DjwfPZrwAW549S1JlCv62ooldyp2H2GSTkmr81
+ qOaXpCXTBsVrFNcWb6So6jetzeLj7iMifZmwDkzqv/V4ZxvVevbXbljFVVbRvvcSTrib
+ zupow9//Lhv72wo2ltKdvd1UZbjpISn2C9tW+bqTA4dEroZAOTildcdgt7CU8nUSL7PD
+ ytVg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1791617430; x=1792222230;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=aK63pA/LNxSEeNG3ry2eSOzxpvVrxY874ImE72FDeHo=;
+ b=ARCWA7kO9PIHC4sWHqIzhNacdfpS6GSvtH9D1KvGlysZMF6YcCjeDkwqSsWcQF6mmz
+ bLzrHJNfdTma9tIWf8Ip17nzhQFW68j4VpO7vCVxJooGiNV8zIVLT9Lh+YTh4pHnUKv6
+ 2m5janVyYaa9BZYZ7gCn94z1UzDKaATY5JEYQRD5b07Vq3xdM82PK4G5lm5PXfzL995o
+ +fFUQYYMt9UGiDHwxjgVLwyCuiAP8+LEs3r5xFJmuwvJf+IFhLUJRDvILHQgD7hLhIvJ
+ KR+Eean9HjC4fsEL8iWVL5ppgiOFk/RbQw8oeZHJKmIvIoLTcFlTN+6pZQ1QuCwkEr/L
+ awgg==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBwMEWaLeyWAL1bZ04jexewncaFSlwReMTlox5TS5MqpcTFXcGl4EWN5jvXLq2G8ip5L8ANqoJwcnkh1@nongnu.org
+X-Gm-Message-State: AFq9FYKiF/SoThkjuYo75nlH3x/tPsSUPueSzqAyrDRGLnTOJkAkVRlS
+ oioRpBHMc+cknb9kqhMraK+TNC4daNJPBJddoYyyoaPKYBD+x7h1XbWS4FWvebB5jJw=
+X-Gm-Gg: AYBFou2uNf1O7oBhjM6qtO9UwKxriFgKI8tafgHAZM1p8GgvI0fkLCVaXLV7pOByYfA
+ lmxOdEuTtD5iqKWl6dZVFbZDw/86vxBoNfVTFE2TXow0DaJx6iYRqy0lnU3CqJFFcG/EYOcKStI
+ PxiAFREHh6YVu1hOStqIqJbBVdMVqiWki4UJl/eX2mNqTKjnmOzUK69c8gJnF6HmzRZqKjAKcf8
+ FUE7hCUPexlWINtMrbuf3nEZaoDa8Fbmv0fuyxK5kiE8x7asdyr99hRc+mQSj06WhVGiukuJp64
+ jOGJDt5xoB/mGVvwUxv9GbpEmJqNdzLScyJXG+YYSgJ7RAnvTrLVc92C66iFzm9/YIXchA83EO0
+ SAOqFnrSsy5Rb/QFNQd3oCjm+4ZdQNXMUFdwG8lkv8sMpcRGiOF1jkTcIsaznrn6Uyn3zp2w5Rc
+ bojOCxKaCYxjUOhcpb88RW9wFt5UrdbVQo2T5hs87D5ZCfn1hgyrOBiXoCpw81/0Yf9gHZkg9Ah
+ FkryKLK2Gb2kBsTYyy/3Sy/pWHDnDwV9FTa5oQcWusF2hmSg839ZS0=
+X-Received: by 2002:a05:6000:61c:b0:48c:58b9:f17c with SMTP id
+ ffacd0b85a97d-48db947461fmr8735195f8f.12.1791617430054; 
+ Sat, 10 Oct 2026 00:30:30 -0700 (PDT)
+Received: from ?IPV6:2a00:1e:e082:2901:a2d3:66fa:95e6:7d81?
+ ([2a00:1e:e082:2901:a2d3:66fa:95e6:7d81])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-48db97ce3aasm7739256f8f.21.2026.10.10.00.30.28
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sat, 10 Oct 2026 00:30:29 -0700 (PDT)
+Message-ID: <764a9ecd-6856-4309-9ae3-8f878a9b1d8a@linaro.org>
+Date: Sat, 10 Oct 2026 09:30:27 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 0/4] Misc fixes patches
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org, QEMU Stable <qemu-stable@nongnu.org>
-References: <20261006083451.956881-1-berrange@redhat.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <20261006083451.956881-1-berrange@redhat.com>
+Subject: Re: [RFC] target/sparc: crypto instructions for Linux kernel testing
+To: Stian Halseth <stian@itx.no>, qemu-devel@nongnu.org
+Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Artyom Tarasenko <atar4qemu@gmail.com>, Eric Biggers <ebiggers@kernel.org>
+References: <63d84da88caec4176900e535116d64b1c4cffffb.camel@itx.no>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <63d84da88caec4176900e535116d64b1c4cffffb.camel@itx.no>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=richard.henderson@linaro.org; helo=mail-wr1-x433.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -109,44 +107,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 06.10.2026 11:34, Daniel P. Berrangé wrote:
-> The following changes since commit d7a65d1793d691d356a56833620f7d1e6f5d653b:
+On 9/30/26 20:32, Stian Halseth wrote:
+> Hi all,
 > 
->    Merge tag 'hppa-a400-updates-pull-request' of https://github.com/hdeller/qemu-hppa into staging (2026-10-03 14:17:49 +0200)
+> QEMU doesn't implement the SPARC crypto instructions, so the kernel's
+> crypto tests cannot execute optimized SPARC code.
 > 
-> are available in the Git repository at:
+> See this issue[1] raised by Eric Biggers.
 > 
->    https://gitlab.com/berrange/qemu tags/misc-fixes-pull-request
+> I became involved in this after submitting a patch[2] for native SPARC
+> XTS support. Since the kernel devs currently have no way of testing
+> this, outside of real hardware, the motivation is to make this possible
+> with the help of QEMU.
 > 
-> for you to fetch changes up to f33fb19cab412ffbc19e3b7914a320ae1d73709c:
+> I've done some reading into the QEMU code, and might be able to
+> contribute an implementation.
 > 
->    seccomp: fix blocking of setns/execveat/unshare (2026-10-06 09:17:43 +0100)
+> Before investing time in it, I would appreciate some feedback from the
+> maintainers.
 > 
-> ----------------------------------------------------------------
-> Merge USB, I/O and seccomp fixes
+> I'm thinking about adding a "crypto" CPU feature to sun4u which enables
+> the missing instructions.
 > 
-> * Fix seccomp to use errno action for setns/execveat/unshare
->    instead of killing the thread
-> * Improve TLS performance and avoid test suite timeouts by
->    corking TLS writes to increase packet size
-> * Fix websocket server unbounded read of client data
->    CVE-2026-101291
-> * Avoid use-after-free in MTP device during object delete
+> Why sun4u and not sun4v? Because it would allow a direct -kernel image
+> boot without the OpenSPARC firmware, which QEMU doesn't ship.
 > 
-> ----------------------------------------------------------------
+> This would mean adding SPARC T4(+) instructions on sun4u CPU models.
+> This combo does not really exist, so I want to know if that is
+> acceptable, or if you would rather have this done differently.
 > 
-> Daniel P. Berrangé (3):
->    io: prevent unbounded read of websocket data from client
->    io: cork TLS writes to avoid small TLS records
->    seccomp: fix blocking of setns/execveat/unshare
+> Since the kernel currently learns about the instructions from the sun4v
+> machine description's hwcap-list, a small kernel patch would be
+> required to read a hwcap-list property from the OF CPU node instead.
+> OpenBIOS could set that property for a CPU that has the feature.
 > 
-> Tommaso Califano (1):
->    hw/usb: Fix USB MTP Use-After-Free in usb_mtp_deletefn List Iteration
+> If this is not desirable, it can also be implemented for sun4v with
+> OpenSPARC firmware. Kernel developers would need that firmware and a
+> boot disk image, since niagara cannot boot with -kernel.
+> 
+> I have a T4-1 and a T7-1 (M7) to check the instructions against.
+> 
+> [1] https://github.com/sparclinux/issues/issues/77
+> [2] https://lore.kernel.org/all/20260929211218.4194135-1-stian@itx.no/
+> 
+> Looking forward to hearing your thoughts,
+When I implemented the VIS{3,4} stuff a couple of years ago, I tried to 
+add a newer cpu (though I forget which model).  I couldn't get a kernel 
+to boot with that and sun4u, so in the end I left the cpu out and left 
+the extensions as plain cpu features.
 
-I'm picking the 3 out of 4 changes here for qemu-stable - omitting
-the "cork" one.  Please let me know if I should not.
+The biggest problem with sun4v is that it's incomplete.  It has the most 
+promise as an emulation platform because it is explicitly a hypervisor 
+platform.  In the ideal case, QEMU would not faithfully model the 
+hardware, but would instead model the hypervisor interface.  Which would 
+make lots of stuff far easier and quicker to emulate -- most notably the 
+TLB.
 
-Thanks,
+But it's a big packet of work and no one has done it.
 
-/mjt
+
+r~
 
