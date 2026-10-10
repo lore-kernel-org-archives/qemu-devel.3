@@ -4,96 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C3D4CA6004
-	for <qemu-devel@archiver.kernel.org>; Sat, 10 Oct 2026 11:52:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C746CA9EC5
+	for <qemu-devel@archiver.kernel.org>; Sat, 10 Oct 2026 13:38:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xFVbs-00060N-Jm; Sat, 10 Oct 2026 07:51:28 -0400
+	id 1xFXGj-0001Um-1Q; Sat, 10 Oct 2026 09:37:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xFVbp-000608-Bu
- for qemu-devel@nongnu.org; Sat, 10 Oct 2026 07:51:25 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xFVbn-00024O-NY
- for qemu-devel@nongnu.org; Sat, 10 Oct 2026 07:51:25 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-4a161d9b8c7so3447775e9.3
- for <qemu-devel@nongnu.org>; Sat, 10 Oct 2026 04:51:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1791633081; x=1792237881; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=7wAIcA5lNwzgNhb1RI98AiVDnxNrFm5x/TNXElweJy4=;
- b=pkTEyKPL2xbmTdW7/PFFbBSODc2LbrqfAza/On5lasA9N7Dt+NSvTsSOjbA4AX5c0Y
- hCmYXu+6daXQd/rulLRKk3f5hIbB+sqLZQiF8PDA5yr4JVAJVty13EgY+jp1ZCIP0p7b
- rUh9gjtC/4cFJlyt+QJvgWSor5pZKG+VwdH7iL+SiNSpyWvB/SugoVsl5BdWusSzo7Ci
- XzWdrgoou5s1rWG/gYE8wkx/33v1ODVzTz7GZZXvsxPeYP5eOJcBzKbghziZ0IJV5Dwl
- b7QyeljJPoVSavJCdukz1yqDfrUcUlbvLGGHsQ9oiaNBS11JrxlMdzceY1ADOBmi5NQO
- WsZw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791633081; x=1792237881;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=7wAIcA5lNwzgNhb1RI98AiVDnxNrFm5x/TNXElweJy4=;
- b=vuaR37H1jMWPtccjXGrhtWKYT1pZ/3/xA0nc/dgExhOfsarksInJWwfX15eGdjFD/g
- /CAD+uDVTNLvzvdzoXR02a0xXmvQgwzFYCH2nGQqzTCheJUEpe3Go061Pz7qVscbHaDl
- h+loU4hNSMqUl1pbC/YDf/cO7OQsk+40pej5E7w2BOqhfiLcaG6L9AEYUxLsjwaDpAwU
- Mkx5F2NA7dZQryePDvPPV0qRb/xhNnEJQnB90FLq2ohMSntiNu1kG8j3qL6A/D9sOcLL
- 9lT/r9Klub/FgL55/HiQZ9d1elvOskuHSu6jT6gVR8ziiwI1zX/wQEG86amQiRx1DuYe
- SE+w==
-X-Forwarded-Encrypted: i=1;
- AKwUvByErZc6E5zmpQ3EVVIXAdYGV++QxKQNwlBHBSYKKZ3DzzkS9aX9JoeCeM6g+ZYraO3ag9nPpXE2cdds@nongnu.org
-X-Gm-Message-State: AFq9FYLnIoqudcpqIkCrfZWjHfSDkeU4GXEPp8SgXVfzAgKZa24txsj9
- jB3plTfx1Fmi8wtNo5D1mb3VBpuouOEdc0kCX9IJNdESWaWm2qd3exqJYcWVII6iao4=
-X-Gm-Gg: AYBFou3aaRyUoQhHCOO5/9jvA5qGL6Rh0UQdMGXapfD2SQJWZ1rG8lKhshgGve4Dq3n
- 7v8AjFmgVRzsnzU+3gIAy/s6vk4TEQV10gyK1HX8DcOOVDd+0AudSsfsd91kQrOpjonXVPwUTaK
- wNDj1ZfAQrPXZ8zzlGHNhub/IYwV2NeK5RjHN9ywag1zYnPpNgVoasQqYEKW7mZ8KpdPPi1EvZ1
- 0/11EoPvfDManNd2aUUzykXKD37K8A4FSkr3IuV2wHxvG7fNsXxJmqUMdbuBJ9AL9BDLQFxql4Z
- JfAKw5N905sMQVYmG0VQDF3Yw39cUedizNNYL1PasbEoLMduW3jzvNWojfbCsInqFgxtDkBu3ZH
- g4mJkMaYlEdEZ4nvbkFTWgoHCfMlSYgcUG7KXzffsp5kNF/7ZNs5fgz8OeN/mSXcI/PV5JuZT+B
- cLRuF5RC7e4aLRb95hl7GbkLg8LD7mPIkG14jqMc1vsONohHLvsorsJojOdv+xbZ3GjISxN2PVS
- Gg+2ParJ/laHpgiRYS5X4aqzwt6Kjc/ueFFj+LZ1UlYeLUXhJUdR6M=
-X-Received: by 2002:a05:600c:3e8f:b0:4a0:1c0e:b057 with SMTP id
- 5b1f17b1804b1-4a18e44653cmr90628935e9.4.1791633081454; 
- Sat, 10 Oct 2026 04:51:21 -0700 (PDT)
-Received: from ?IPV6:2a00:1e:e082:2901:5ea3:cc86:f483:9740?
- ([2a00:1e:e082:2901:5ea3:cc86:f483:9740])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a18be8c5e7sm173620375e9.4.2026.10.10.04.51.20
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 10 Oct 2026 04:51:21 -0700 (PDT)
-Message-ID: <f89fc94b-ef64-4421-b369-4845780077ca@linaro.org>
-Date: Sat, 10 Oct 2026 13:51:18 +0200
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1xFXGh-0001UT-LE
+ for qemu-devel@nongnu.org; Sat, 10 Oct 2026 09:37:43 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1xFXGf-0004Vx-1N
+ for qemu-devel@nongnu.org; Sat, 10 Oct 2026 09:37:43 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1791639458;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=OmQRkZaRefWX9vEaWYuPJGOsveEoUMffw7qGb8MUp1A=;
+ b=R9DxexJ8MoIEnIPB5KDapsvcduGH/dyu1ZMHp25k0IJ5ytOoVkjKrycAslYza/HMbiTJh3
+ adITlds60EOiGEz4vmKTHTHCt3LHLJ72TuYKwSSSeo2MwKDEVCcmbe4e/28QT3LNiw/c7L
+ ppQhTCeyHjE1gv1c8Z7oP+woP+Uhzds=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-594-7r4Zq5NpNrimLB4f2b4X6w-1; Sat,
+ 10 Oct 2026 13:37:36 +0000
+X-MC-Unique: 7r4Zq5NpNrimLB4f2b4X6w-1
+X-Mimecast-MFC-AGG-ID: 7r4Zq5NpNrimLB4f2b4X6w_1791639454
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C906F1809CA0; Sat, 10 Oct 2026 13:37:33 +0000 (UTC)
+Received: from laptop.redhat.corp (headnet03.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.114])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 53E4930000E5; Sat, 10 Oct 2026 13:37:27 +0000 (UTC)
+From: Eric Auger <eric.auger@redhat.com>
+To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, kvmarm@lists.linux.dev, peter.maydell@linaro.org,
+ shaju.abraham@nutanix.com, khushit.shah@nutanix.com,
+ yangjinqian1@huawei.com, cohuck@redhat.com, richard.henderson@linaro.org,
+ sebott@redhat.com, skolothumtho@nvidia.com, philmd@oss.qualcomm.com
+Cc: maz@kernel.org, oliver.upton@linux.dev, pbonzini@redhat.com,
+ armbru@redhat.com, berrange@redhat.com, abologna@redhat.com,
+ jdenemar@redhat.com
+Subject: [PATCH v10 00/26] kvm/arm: Introduce a customizable aarch64 KVM host
+ model
+Date: Sat, 10 Oct 2026 15:36:04 +0200
+Message-ID: <20261010133725.642498-1-eric.auger@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tcg/riscv64: Remove vector min/max ops with immediates
-To: Aurelien Jarno <aurelien@aurel32.net>, Palmer Dabbelt
- <palmer@dabbelt.com>, Alistair Francis <Alistair.Francis@wdc.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- "open list:RISC-V TCG target" <qemu-riscv@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-References: <20261008181611.3015838-1-aurelien@aurel32.net>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20261008181611.3015838-1-aurelien@aurel32.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x32e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,21 +87,157 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/8/26 20:16, Aurelien Jarno wrote:
-> RVV 1.0 only defines vmin, vminu, vmax and vmaxu instructions for the
-> vector-vector and vector-scalar case, not the for vector-immediate case.
-> Remove the immediate variant from TCG code generation.
-> 
-> Fixes: 1631f19b04fe ("tcg/riscv: Implement vector min/max ops")
-> Signed-off-by: Aurelien Jarno<aurelien@aurel32.net>
-> ---
->   tcg/riscv64/tcg-target.c.inc | 20 ++++++++------------
->   1 file changed, 8 insertions(+), 12 deletions(-)
+This series enhances the current host KVM model with capability to
+set writable ID reg fields.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Since v6.7 kernel, KVM/arm allows the userspace to overwrite the values
+of a subset of ID regs. The list of writable fields continues to grow.
+The feature ID range is defined as the AArch64 System register space
+with op0==3, op1=={0, 1, 3}, CRn==0, CRm=={0-7}, op2=={0-7}.
+  
+The end goal is to get more flexibility when migrating guests
+between different host hardware. This series is a prerequisite for
+aarch64 named vcpu models.
 
-Thanks, queued to tcg-next.
+QEMU retrieves the writable ID fields from KVM UAPI and
+match them against a generated description of ID regs and their
+named fields that stem from AARCHMRS Registers.json file.
+Current description is based on latest 2026-03 edition.
+The content of the generated files was compared against kernel
+linux/arch/arm64/tools/sysreg file. It is not straightforward
+to have unit tests for python scripts as there are many cases for
+field extraction.
+  
+For each writable named field a uint64 property is created
+following the "SYSREG_<REG>_<FIELD>" naming convention. REG and
+FIELD names are those described in ARM ARM Reference manual.
+
+SYSREG properties are applied at the end of the initialization
+chain, after legacy composite options (sve, pauth, ...). They
+do not substitute to them because legacy options do more than
+just changing the value of ID registers. They may also interact
+with KVM to init the vcpu with specific features or set some
+VM capabilities. SYSREG properties just affect the corresponding
+ID register field. Some checks are performed to make sure their
+value is not inconsistent with legacy composite options.
+
+The list of SYSREG properties can be retrieved through the qmp
+monitor using query-cpu-model-expansion. They return the current
+value for the corresponding field. The qmp command also allows to
+test  setting new values. In static mode, they are tested at qemu
+level only, against field length, arch enum values if any and
+consistency with legacy composite options. With full expansion,
+the values are tested against KVM using a scratch vcpu initialized
+with the right legacy composite property values.
+
+Connie & Eric
+
+This series can be found at:
+https://github.com/eauger/qemu/tree/arm-cpu-model-v10
+
+History:
+--------
+v9 -> v10:
+addressed all Khushit's comments/suggestions. Here is the
+list of main changes.
+
+- MIDR, REVIDIR, MPIDR storage move (this may be sent as a
+  separate prerequisite series)
+- rebase on demux register handler that has just landed
+  - update the json extractor accordingly
+- Generate conditional enum values
+- reorganize script patches to have the generated header
+  in the same patch which is much easier to maintain
+- New macro to encode arch enum value and ValueRanges which
+  gives a much more compact header. Also enabled to remove
+  check-patch error
+- Put a maximum of code in cpu64.c instead of kvm.c to
+  pave the way for other acceleration support. Also
+  changed the consistency check handling by skipping potential
+  new props that are known to collide with legacy composite options
+- add writable_only param to pave the way for exposing all fields
+  as props
+- fixes in the qmp expansion code
 
 
-r~
+Cornelia Huck (3):
+  target/arm/kvm: Retrieve writable ID reg map
+  arm-qmp-cmds: introspection for ID register props
+  arm/cpu-features: Document ID reg properties
+
+Eric Auger (22):
+  target/arm: Move REVIDR into isar.idregs[] storage
+  target/arm: Move MIDR into isar.idregs[] storage
+  target/arm: Enforce MPIDR into isar.idregs[] storage
+  target/arm/cpu-sysregs.h.inc: Update with automatic generation
+  arm/cpu: Add infra to handle generated ID register definitions
+  target/arm/cpu-idregs.h.inc: Generate with script
+  target/arm/cpu-idregs.h.inc: Generate enum values
+  target/arm/cpu-idregs.h.inc: Generate reserved fields
+  hw/arm/virt: Make sure virt_get_caches() keeps on reading CLIDR_EL1 as
+    0
+  arm/kvm: Initialize isar.idregs[] with all writable host ID regs
+  target/arm/cpu64: Add properties for writable IDReg fields
+  target/arm/kvm: Implement SYSREG property setter and getter
+  target/arm/kvm: Let kvm_arm_init_cpreg_list propagate an error handle
+  target/arm/kvm: Pass an Error handle to kvm_arch_init_vcpu
+  target/arm/kvm: Introduce kvm_arm_override_idreg_field helper
+  target/arm/cpu64: Introduce arm_cpu_apply_sysreg_props
+  target/arm/kvm: Apply SYSREG props
+  target/arm/kvm: Add consistency checking for SYSREG props
+  target/arm/cpu64: Add helper to test SYSREG props against a scratch
+    vcpu
+  target/arm/kvm: Add an error handle to
+    kvm_arm_create_scratch_host_vcpu
+  target/arm/kvm: Introduce kvm_arm_vcpu_prepare_init_features helper
+  target/arm/kvm: Introduce kvm_arm_create_init_scratch_vcpu()
+
+Shaju Abraham (1):
+  target/arm/cpu_idregs: Generate tables for Arm64 ID registers and
+    fields
+
+ docs/system/arm/cpu-features.rst              |  111 +-
+ include/system/kvm.h                          |    2 +-
+ target/arm/cpu-idregs.h                       |   76 +
+ target/arm/cpu.h                              |   12 +-
+ target/arm/kvm_arm.h                          |   26 +-
+ target/arm/cpu-idregs.h.inc                   | 1549 +++++++++++++++++
+ target/arm/cpu-sysregs.h.inc                  |   13 +
+ accel/kvm/kvm-all.c                           |   15 +-
+ hw/arm/virt.c                                 |   11 +
+ hw/intc/armv7m_nvic.c                         |    4 +-
+ target/arm/arm-qmp-cmds.c                     |  130 +-
+ target/arm/cpu-idregs.c                       |   93 +
+ target/arm/cpu-max.c                          |    4 +-
+ target/arm/cpu.c                              |   24 +-
+ target/arm/cpu64.c                            |  330 +++-
+ target/arm/helper.c                           |   29 +-
+ target/arm/hvf/hvf.c                          |    6 +-
+ target/arm/kvm-stub.c                         |   17 +
+ target/arm/kvm.c                              |  277 ++-
+ target/arm/tcg/cpu-v7m.c                      |   18 +-
+ target/arm/tcg/cpu32.c                        |   37 +-
+ target/arm/tcg/cpu64.c                        |   42 +-
+ target/arm/whpx/whpx-all.c                    |    6 +-
+ target/i386/kvm/kvm.c                         |   22 +-
+ target/loongarch/kvm/kvm.c                    |   27 +-
+ target/ppc/kvm.c                              |    6 +-
+ target/riscv/kvm/kvm-cpu.c                    |    3 +-
+ target/s390x/kvm/kvm.c                        |    2 +-
+ scripts/aarch64_sysreg_helpers.py             |  118 ++
+ .../update-aarch64-cpu-sysreg-properties.py   |  331 ++++
+ scripts/update-aarch64-cpu-sysregs-header.py  |   59 +
+ target/arm/meson.build                        |    1 +
+ target/arm/trace-events                       |    9 +
+ 33 files changed, 3232 insertions(+), 178 deletions(-)
+ create mode 100644 target/arm/cpu-idregs.h
+ create mode 100644 target/arm/cpu-idregs.h.inc
+ create mode 100644 target/arm/cpu-idregs.c
+ create mode 100644 scripts/aarch64_sysreg_helpers.py
+ create mode 100644 scripts/update-aarch64-cpu-sysreg-properties.py
+ create mode 100755 scripts/update-aarch64-cpu-sysregs-header.py
+
+-- 
+2.53.0
+
 
