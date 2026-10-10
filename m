@@ -4,130 +4,136 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9859CA9ECA
-	for <qemu-devel@archiver.kernel.org>; Sat, 10 Oct 2026 23:18:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DA80CA9ECA
+	for <qemu-devel@archiver.kernel.org>; Sat, 10 Oct 2026 23:20:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xFgJS-0001EU-EH; Sat, 10 Oct 2026 19:17:10 -0400
+	id 1xFgMJ-0002cI-KH; Sat, 10 Oct 2026 19:20:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xFgJJ-0001DW-PA
- for qemu-devel@nongnu.org; Sat, 10 Oct 2026 19:17:02 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ id 1xFgM3-0002Vs-FU
+ for qemu-devel@nongnu.org; Sat, 10 Oct 2026 19:19:51 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xFgJH-0003qi-PO
- for qemu-devel@nongnu.org; Sat, 10 Oct 2026 19:17:01 -0400
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+ id 1xFgM1-000416-8z
+ for qemu-devel@nongnu.org; Sat, 10 Oct 2026 19:19:51 -0400
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69AMBSOn1608947
- for <qemu-devel@nongnu.org>; Sat, 10 Oct 2026 23:16:57 GMT
+ 69AMAcsw2794008
+ for <qemu-devel@nongnu.org>; Sat, 10 Oct 2026 23:19:47 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:message-id
- :mime-version:subject:to; s=qcppdkim1; bh=Sitl/4dVQNnYjNIuPtW0h1
- UL87WGJEF4jOclucZi1qw=; b=SHlzibFWMtdcVw6O+lJWxy4iYrbnhOElVEezIq
- tRz3XoBMl0hLfhk739QPtnQ1oq9BOcj4RdY7V0h9M4IAq5Hz0TOsgR/lAwMSRTv/
- X/go3IcE7RzQCMR8B5dqT6WNiR/i8KG5FmmnhKnv2ccyc5kq03PsPjc8pCp0Lui1
- B2KJWgMPXNFS+iMFIJBl/x95Mp7W9Dix/w7IEU9zuxjzYkY8bdNK1HcK0ep0WTRs
- 9lnQtlHxYraz5Pv1mij9TokJw4xFAMIl6MMyWf1UPsOvul+VCxi7tyrN1y7OA1La
- bZrZURy8LYhXkOqTRpXf1XW75PGkXuwb/vUl8NLtRqydXp9w==
-Received: from mail-dy1-f199.google.com (mail-dy1-f199.google.com
- [74.125.82.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h7aqmtbws-1
+ content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ dVdcNH1TlNO81tWMpX9TsvBmIDZIjedVZN4rflzkdAY=; b=mlO2nOScRBVmYCkZ
+ a4G37tiL92dHAf7bYoxcdSAqlFA7X7bBPqEXVN6erUOKIr6OYTKyYvYoQQrUqyMv
+ AtArbGctOhhk3R57s/j8K/7XlXskTqEj6fIE1qAUhoD3teFqbpg3ghYYe25nvQoB
+ /nZmzMGtJsSldijGnbXoHTocdf9TVbl4s51syueWWdi+qySEmAsKzHhKvWrDdz4J
+ TKOtqabovFOYLox0VtRGXiqaGpkFP9gNCwbcarOA0KBfINnWFtc+44Y3LZg/436q
+ nIHFi9Z8rH/7oKrA9BNgw+ou3WY42npfPwrue1Uqwp8VN/vW8oLhRIY7NUa16Yif
+ Um961Q==
+Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
+ [209.85.216.70])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h7casa4jh-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Sat, 10 Oct 2026 23:16:56 +0000 (GMT)
-Received: by mail-dy1-f199.google.com with SMTP id
- 5a478bee46e88-34e676375d9so1068094eec.0
- for <qemu-devel@nongnu.org>; Sat, 10 Oct 2026 16:16:56 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Sat, 10 Oct 2026 23:19:47 +0000 (GMT)
+Received: by mail-pj1-f70.google.com with SMTP id
+ 98e67ed59e1d1-3a8ae5154e7so610675a91.1
+ for <qemu-devel@nongnu.org>; Sat, 10 Oct 2026 16:19:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1791674216; x=1792279016; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:content-type:message-id:date
- :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=Sitl/4dVQNnYjNIuPtW0h1UL87WGJEF4jOclucZi1qw=;
- b=J9bItswwRLwOipDLQR9DyclM+FG98c6jtksGwwsFXZt1RCc2oqIe3NeGPRmo6HyGgv
- YF0kX+Z4fHb0kuhvSKRwIFcY/7QexnpKkJWP4juMnBOTblsqUjXh93UyZAJM012x0k/y
- S2qfrazwQb4c3skEqKXDwRBj3BKUdoZHN9YvkBKEinPrpL7VRFm+Mv/Uw8Lufo1Ay2xB
- ihYOQ51nCOXhSJ6bslPpx8P9A4wLe8YFYHshHVvTWBQtsgTY0+91Yye7ci9jIgA63VN/
- KvObUId0mNgR64VX8+Z56pel17XyJCoPgK8uscqGxSvGVasBGk8/Zz5mnl01a5f9Hy6M
- LA1g==
+ d=oss.qualcomm.com; s=google; t=1791674386; x=1792279186; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:references:to
+ :from:content-language:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=dVdcNH1TlNO81tWMpX9TsvBmIDZIjedVZN4rflzkdAY=;
+ b=SoAjpyJE4cFfmn4zNh9g0Zqc/a+Kb57C5VMi5lDZjQAyhjL9o9GVmAEnLYOm23p8Zk
+ OJAaFNR5WOddgUrarNd6G9eAZAsIOGFgy1Su2Zg60fsUUDu7IyEZKPosdO3G7DsQWKOl
+ v0+p7MLJTqoMfnltNnqcXGxSQoHc4E/apwGl8/15KC9Xy782g6z9HbYiKb6Di4c89Ng3
+ B6yWnJnucaWifQ919nreoUHRFedBLJcUzW8cKLULXCuk1wXRpQlCBmdFlLdeaVRDE/FY
+ jQx8POikwaMDfDnFgrwYJy3+IkpoyMVVy8NeqwDeTcRgIwTczXsoE7OQsvD4ZsLQfTQX
+ oviA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791674216; x=1792279016;
- h=content-transfer-encoding:mime-version:content-type:message-id:date
- :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=Sitl/4dVQNnYjNIuPtW0h1UL87WGJEF4jOclucZi1qw=;
- b=NktrdjgefWXX9KKhfq94sxjaF8bN4fuOlJLAVpjn6SX2tbimJK5r1IF/38vpCinXaZ
- 5TPpQC64S6pcZWG6A2kcCiFXbZVVGSXfK3VtYwZkstTmJVObhDA1tLYS7kavtR8+z31A
- PmDGAYkmPFOJvyLhAVnvxZ7PabYPmb9ifW6ealbOZlQQ+g5bjT/VILktcaeVtKErA6o/
- KzMlajLgNyQmXqfV3uebV9SC8UgOhqUyQdcCBNj81mM7sUzijkCZBwHBuIAnDPFjfm3h
- DPoWj/Q93GXkj6QO0FEHmAN7H5SvEUviDCVb8aByMWY4FeNO0kZcSbVgXT/i1AAIEUKz
- mdsA==
-X-Gm-Message-State: AFq9FYIosDJ5Orel+/xi4XBtpeTGkZSJ55lmyMbHWXTRt2OMqxaA/Ln6
- yeAavfylqqdZm9CtorSMg+ea91Ei9FhYCSDEkqw6HB71q/2/yncbjijvi0fk6TPtiNZa3IekGUv
- RAqE8baH1avPatxp+5Q3kb8T2IIpkoNOb7gjEAZAB+9+E7tKhriu7SEts+TB19xl3aA==
-X-Gm-Gg: AYBFou2Gm5TGVPDPzKfcYiasEXwDU+8v409gp7+t1qDVznlv772KQmc9QdsLLLSAF+L
- 9Igp/uVH53/0QwJkVGB0xiCZD/eVbuLnf3/jX5Klp18r+tqllv8/kg6K/dPnNrB3ashb+Fy0tMv
- q7hqCA5zus4pFgWnH+Rx4LSFNE+LOOkUV+FETaPAxn9IKKZrhngqbJs2TjHRlYXj+gwief1j/Jl
- blRJ4GK/0Wdx4UUNXlvHZB6UQA+ObspsOw+1JiZfS54klSUIdn7SD5O7JVr3ujsoqyyyhXKy3Lg
- OMs2sZuEEqETcepBQqudMmcQ0nYmHf14oc0QwASWpdRnIj+YPT03FWJDof4EwyB2ymGMhW6yR5Y
- EAzoihaDYhC9RUPDyYhaWYOMBnuqv2M+BzxBLtU1hltX0N0qZyM63UX9fmgpG
-X-Received: by 2002:a05:693c:8818:b0:353:7d3a:1959 with SMTP id
- 5a478bee46e88-3537d3a1aa5mr8357942eec.26.1791674215654; 
- Sat, 10 Oct 2026 16:16:55 -0700 (PDT)
-X-Received: by 2002:a05:693c:8818:b0:353:7d3a:1959 with SMTP id
- 5a478bee46e88-3537d3a1aa5mr8357914eec.26.1791674214823; 
- Sat, 10 Oct 2026 16:16:54 -0700 (PDT)
-Received: from debian.qualcomm.com (192-80-163-190.dyn.novuscom.net.
+ d=1e100.net; s=20260707; t=1791674386; x=1792279186;
+ h=content-transfer-encoding:content-type:in-reply-to:references:to
+ :from:content-language:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=dVdcNH1TlNO81tWMpX9TsvBmIDZIjedVZN4rflzkdAY=;
+ b=tcavldZ8/RncaCoEa6F8gWIqNMdtdtbMAU6f0nPvl/Q6a6VfBvRfEgnvbTLYTIj3Mp
+ eOZ8UYrAPTsF4s+JuDplyp388DepAtni+DDiBgZmvfMd4vJSijpod2tMHBI+EQ6iR4pW
+ 5MlcrbtmOE1jjrLCK0FOSKXwVMGaXV7TxDPinw8XqgfXhL9necToW5nBqqISGrzQ2ZQO
+ E18wHwy4dAYw/TcEFPsbC/Rrqfm9V29/ZVL+9EejXPLKw7/nTtZgg4zPhrw8Jy2YQ+tJ
+ QlN4xYMalw0sNEcCan6tC2FKqLxAhd4vCwBYOixf3XZMHOnGzhBg8AhxuH+i5bsl4D6b
+ pDKw==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBxVojlkE4dM1uypcUQ9b7Pih0EI/XXE+TARIz5ahLZKWleQ2Cj70BEGXqdBxOAys01CGI/HQjXaqG7P@nongnu.org
+X-Gm-Message-State: AFq9FYKhZPCBJh9fxHRGmylXTIPgbnItvePVVuvClX0J52WwfxR+NIJI
+ TfeyKhsFOHbDg0sOaL67jPzHLYv2X6aXd/rniNttuS8qStF2aD/7yVnS58P2Cp0cGSWCUINNYfp
+ o98gNKGE+gTOv4dndJib4O4AuK8/mkoteeFx24dd0n40816X67872I7WRDg==
+X-Gm-Gg: AYBFou1JUK1sRFNwkWlXePXkLiWHzghm+NAVdxA4KEWgHThbVDokRzP501C0LcqwPwU
+ 9renqjCctW+fS813A32mSMyWnWf7WsVSu/xKoPMhu8YV4GWA39oMd2a8OwHweaQNND/8PKq/qtS
+ hO0bAflXezfQUGa7ezGAK9KxQGVgqSvQdhMtC9P9WBj3iQITfL2xAzGdZIWMnkcDNXILoITx7ng
+ zmhL0OdG5cvhV8F9Klcpo54trtaylFGzjeu0T+A7VEekBYt2pUD4eAMRUjuHsFReypeZLQhkWyi
+ 6Rd2WjS/mj2OTl/186MCB6ytlMq6/LArJl67piHgcbyJ6cVsDKno15nLAshnTAYpvyGTUj5nXA0
+ nFAF4dhElQH5zrJxp9mEHcWKRE/LLDX5WvGYWnGXgH5I6WHPJXVe4GXTh
+X-Received: by 2002:a17:90b:5186:b0:3a2:b036:ed63 with SMTP id
+ 98e67ed59e1d1-3ab3ac9bed8mr4414431a91.38.1791674386250; 
+ Sat, 10 Oct 2026 16:19:46 -0700 (PDT)
+X-Received: by 2002:a17:90b:5186:b0:3a2:b036:ed63 with SMTP id
+ 98e67ed59e1d1-3ab3ac9bed8mr4414418a91.38.1791674385565; 
+ Sat, 10 Oct 2026 16:19:45 -0700 (PDT)
+Received: from [192.168.1.169] (192-80-163-190.dyn.novuscom.net.
  [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-3537ca67b21sm18285396eec.11.2026.10.10.16.16.53
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 10 Oct 2026 16:16:54 -0700 (PDT)
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Fabiano Rosas <farosas@suse.de>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, mjt@tls.msk.ru,
- peterx@redhat.com
-Subject: [PATCH 0/3] releases: build and run any QEMU release easily!
-Date: Sat, 10 Oct 2026 23:16:45 +0000
-Message-ID: <20261010231648.3105-1-pierrick.bouvier@oss.qualcomm.com>
-X-Mailer: git-send-email 2.43.0
-Content-Type: text/plain; charset="utf-8"
+ 41be03b00d2f7-cd3d9e557b1sm2505938a12.27.2026.10.10.16.19.43
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sat, 10 Oct 2026 16:19:43 -0700 (PDT)
+Message-ID: <5be73bbc-f53d-47e0-8276-2ec1a17af0ff@oss.qualcomm.com>
+Date: Sat, 10 Oct 2026 16:19:42 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDEwMDA5MiBTYWx0ZWRfX2if9CGCa06WT
- a1nZtQSGtPjy2M/legZcXpv8Hn/NvFV1nHZw9igrctq2J287KPv9j9epgI1tvBOHAmUpIwSeCuZ
- a1sovAu7tk2S0eY7v8bqhZoV7hVrOQ0=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDEwMDA5MiBTYWx0ZWRfX6aqasURkMMNf
- nVYE3aut+KvHgvWzPn4Ru4FZW+e0IXqX4d5Ib7L+8Ey7v/V19+WgCiPLH6B4AKLO85gpAVB0E3Z
- MIfh5pupPTgN7iHAySY0vqkY2QoIn2bgmiXYNQUx19VfEO/Kj6UcXSjjwqJtCKwbtIScEPPWF93
- RKiQ5Bjrt/cM06s5SttLs1L1NPbUMRCvt/zD22M+oNRgnu+bpEzkn5nw5rOvlRX+RLjHcbdYZfX
- kzgP+hufZUGgzv64XA/avm0mnPE8Mkk+P2Pq4um8tnPQjkNc6Cl2HcUouT7WcOgdgV93KQIzMWD
- QxgvWs42gi9T6SSUVCZE3/a0/MoqhiuEc3yjh4CuYGtvCu9uTqkLsCqRcpi9sBeI5wjP/AenRD4
- sgUgKrYnwMj+KnvcawV2WiHlh7o7eD3UWeg+dw06VDF7PTZ4PH4BXOcyinMFAIklquorcZFo3RM
- itkrdBd3hg55NspEKWg==
-X-Authority-Analysis: v=2.4 cv=Uq32pOwB c=1 sm=1 tr=0 ts=6acac769 cx=c_pps
- a=cFYjgdjTJScbgFmBucgdfQ==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC] container images for migration-test
+Content-Language: en-US
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+To: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org, peterx@redhat.com, 
+ mjt@tls.msk.ru
+References: <8733vbtmge.fsf@suse.de>
+ <bf76b7cc-9de7-4baa-9a56-d638c68a78a9@oss.qualcomm.com>
+In-Reply-To: <bf76b7cc-9de7-4baa-9a56-d638c68a78a9@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDEwMDA5MyBTYWx0ZWRfXyayCxSRp41gU
+ I2/qjRktx2xQhxKF+twkMBDBgISfGEmZAbBIK0+HmNRAfGSeBGEwX2EPo7rmHbl0MvEK6Frrq79
+ sP3WgIHZsIihwHPce0GnRfg/ImL6RAI=
+X-Proofpoint-ORIG-GUID: kl_Rs75cpAeiZb3Yi_Yiksf7v2TJ4DKq
+X-Proofpoint-GUID: kl_Rs75cpAeiZb3Yi_Yiksf7v2TJ4DKq
+X-Authority-Analysis: v=2.4 cv=eMWGH3p1 c=1 sm=1 tr=0 ts=6acac813 cx=c_pps
+ a=0uOsjrqzRL749jD1oC5vDA==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
  a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=4DlUO2TMUbiEHNw8gdkA:9 a=QEXdDO2ut3YA:10
- a=scEy_gLbYbu1JhEsrz4S:22
-X-Proofpoint-ORIG-GUID: sJFzapVLceM-7_7IzkzZIBGHbpJxKPb_
-X-Proofpoint-GUID: sJFzapVLceM-7_7IzkzZIBGHbpJxKPb_
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=WNWKCTwgbzpqJ4DELLoA:9 a=QEXdDO2ut3YA:10
+ a=mQ_c8vxmzFEMiUWkPHU9:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDEwMDA5MyBTYWx0ZWRfX8eQz4PpD1nv6
+ ERDyzRubZQSY1nErZ3TseaimYJizQ37A1Ye9J1FZCIZM6GBw00bI0yHxoDVfAOALbtveIILj2BM
+ SHD2FUgLNtRF0okvSyhUAXnYIc2ibG2d8xiuj+RieTmWXfvN9jqf7372Xw+bReETzE2PZmTBrj4
+ F7cOS8CI6BHLiJ8utl701aSJqNWqMGTLmYWn++mpu21B3PefE3y8+cCmvBqQzQ2GA+tN8Rg/vdZ
+ ms9D1FRwt+AIqsPLhiC9tto0M71QudFQCmk+XrHz1/w9diE3jYC4aAynQBY5xpcX5QKLpIlLYeg
+ p8UGlsve+49ExQYU+Ex6dlWwiybfoDlPF4N6HNwhJSYIzZFAI/HCDpd8Dgu7g3mMPdjWOkvEH0H
+ 2xAwttlZZMUruqxA2tz2DC4nr65uhGBwR1wwyBLUrENCP+GmVG8oGiyLQTyEvkdk4zSv1RcIgbF
+ w7DLUtAewnjeo5urh8w==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-10-10_05,2026-10-09_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 phishscore=0 priorityscore=1501 malwarescore=0 spamscore=0
- bulkscore=0 adultscore=0 impostorscore=0 suspectscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610080000 definitions=main-2610100092
-Received-SPF: pass client-ip=205.220.180.131;
+ adultscore=0 spamscore=0 phishscore=0 clxscore=1015 impostorscore=0
+ suspectscore=0 lowpriorityscore=0 priorityscore=1501 bulkscore=0
+ malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610080000
+ definitions=main-2610100093
+Received-SPF: pass client-ip=205.220.168.131;
  envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0b-0031df01.pphosted.com
+ helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -150,58 +156,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series was inspired by a recent post from Fabiano to provide container
-images for migration tests:
-https://lore.kernel.org/qemu-devel/24d04a1f-344d-4b90-a307-b582dd9a1128@oss.qualcomm.com/T/#m353f119dc1a24fa437dde8a96d1891629e64303c
+On 10/8/26 5:48 PM, Pierrick Bouvier wrote:
+> On 9/14/2026 4:58 PM, Fabiano Rosas wrote:
+>> Hi, I just wanted to share and ask for feedback on some container images
+>> I've been building as part of my testing of migration pull-requests.
+>>
+>>  From a Dockerfile from ./tests/docker/dockerfiles/ I'm producing the
+>> following:
+>>
+>> $ docker images
+>> qemu-build-base:11.0.0                        b6efa198e93a        5.8GB
+>> qemu-rootfs-base:11.0.0                       72bcb5418f4d       4.08GB
+>> qemu:11.0.0                                   018a3f0f4dcc          2GB
+>>
+>> This last image is stripped (for size) of everything but a few libs and
+>> binaries (qemu, gdb, migration-test, sh) and has an entrypoint of:
+>>
+>>   CMD ["qemu-system-x86_64"]
+>>
+>> The point is that I can wrap it in a script called qemu-system-x86_64
+>> and run it interchangeably with any other qemu binary during
+>> migration-test:
+>>
+>>   QTEST_QEMU_BINARY_SRC=./build-11.0.0/qemu-system-x86_64 \
+>>   QTEST_QEMU_BINARY=./build-master/qemu-system-x86_64 \
+>>   ./tests/qtest/migration-test
+>>
+>> (note that migration-test spawns the qemu binaries itself)
+>>
+>> I run tests against the previous 3 QEMU releases. At every release I
+>> build the container for the new release and at every PR I build the
+>> container for that git hash using the latest tag as a base.
+>>
+>> The reasons that lead me to this solution are:
+>>
+>> 1) Migration compat testing is special, the two migration peers can run
+>> in different OS versions, so their QEMU builds can be quite different. I
+>> cannot test using *just* my dev machine, neither using *just* a
+>> container. I need two hosts. Or two containers running different OSes
+>> that can both be reachable by the migration-test binary running in
+>> either of the OSes.
+>>
+>> 2) Neither the QEMU build nor the distro repos are reliable enough to
+>> allow me to just "go back in time" and rebuild at any moment, I need to
+>> keep the artifacts cached to avoid rebuilding. Otherwise it comes time
+>> to send a PR and I discover that some python piece has changed or the
+>> distro messed up the older repository.
+>>
+>> Any thoughts on this? Could it be useful to anyone? Maybe the stable
+>> branch has some similar issues?
+>>
+> 
+> That's a good approach.
+> 
+> If you want to go further, you could directly host it on dockerhub, for
+> debian or fedora hosts, so other don't need to rebuild anything.
+> And everytime there is a new release, we would just add the new image.
+> 
+> $ ./scripts/qemu-time-machine.sh qemu-system-aarch64 11.1.2 "$@"
+> podman run -it --rm \
+> -w $(pwd) -v $(pwd):$(pwd) \
+> docker.io/qemu-releases/qemu-system-aarch64:11.1.2 \
+> /usr/bin/qemu-system-aarch64 "$@"
+> 
+> You can drastically optimize size by using multi-stage builds.
+> All images can be based on a common deps image, which contain all
+> libraries qemu depend on (~140MB from what I can see on my debian
+> system), and then all qemu-* images would be FROM:deps, and they only
+> add a single binary inside.
+> 
+> Final result would be 140MB for base deps + binary size per image on
+> top, (from 3MB to 40MB) per binary. And we could have the whole
+> collection of qemu binaries available for everyone with a single script.
+>
 
-The idea to be able to build and run any QEMU (past) release with containers was
-in my mind for some time, so I gave it a shot. Finally, it was easier than
-expected to obtain a single dockerfile (with a few hacks) that works over all
-our releases.
+I gave a try to this, see:
+https://lore.kernel.org/qemu-devel/20261010231648.3105-1-pierrick.bouvier@oss.qualcomm.com/T/#t
 
-The oldest functional distro we can find nowadays is ubuntu 14.04. Because of
-this, the oldest QEMU release we can build is v1.6.1. Previous ones require an
-environment we can't get easily today.
-
-Images have the absolute minimal content possible. It's only qemu binaries,
-artifacts (roms, keymap, ...), and libraries. There is no shell or any other
-tool included. As a result, images have a size from 240MB (v1.6.1) to ~1GB
-(v11.0.0).
-
-This series adds 3 pieces:
-- a unique dockerfile to build any QEMU release. User has to provide an explicit
-  Ubuntu version when building a given QEMU version.
-- A script build_release_container.sh which automatically detects which ubuntu
-  version a given release should be buildable on (based on date). It works
-  great, and the heuristic works for all our versions.
-- a script generate_release_links.sh which creates wrapper scripts automatically
-  using prebuilt images (hosted on my dockerhub).
-
-TLDR:
-$ ./scripts/build_release_container.sh v1.6.1
-$ podman run -it --rm qemu/v1.6.1 qemu-system-arm --version
-
-$ ./script/generate_release_links.sh qemu-time-machine
-$ ./qemu-time-machine/v1.6.1/qemu-system-arm --version
-QEMU emulator version 1.6.1, Copyright (c) 2003-2008 Fabrice Bellard
-$ ./qemu-time-machine/v11.0.0/qemu-system-arm --version
-QEMU emulator version 11.0.0 (v11.0.0)
-Copyright (c) 2003-2026 Fabrice Bellard and the QEMU Project developers
-
-Pierrick Bouvier (3):
-  tests/docker/dockerfiles: add release.docker
-  scripts: add build_release_container.sh
-  scripts: add generate_release_links.sh
-
- scripts/build_release_container.sh      | 59 ++++++++++++++++++++++
- scripts/generate_release_links.sh       | 66 ++++++++++++++++++++++++
- tests/docker/dockerfiles/release.docker | 67 +++++++++++++++++++++++++
- 3 files changed, 192 insertions(+)
- create mode 100755 scripts/build_release_container.sh
- create mode 100755 scripts/generate_release_links.sh
- create mode 100644 tests/docker/dockerfiles/release.docker
-
--- 
-2.43.0
-
+Regards,
+Pierrick
 
