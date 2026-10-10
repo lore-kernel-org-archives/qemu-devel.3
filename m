@@ -4,40 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2005ECA6004
-	for <qemu-devel@archiver.kernel.org>; Sat, 10 Oct 2026 06:07:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3426CA9EBE
+	for <qemu-devel@archiver.kernel.org>; Sat, 10 Oct 2026 06:07:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xFQDS-0002xm-J4; Sat, 10 Oct 2026 02:05:54 -0400
+	id 1xFQEH-0003We-Qc; Sat, 10 Oct 2026 02:06:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <lyndra@linux.alibaba.com>)
- id 1xFQCo-0002fh-Lr; Sat, 10 Oct 2026 02:05:14 -0400
-Received: from [115.124.30.130] (helo=out30-130.freemail.mail.aliyun.com)
+ id 1xFQCr-0002gz-5f; Sat, 10 Oct 2026 02:05:18 -0400
+Received: from [115.124.30.131] (helo=out30-131.freemail.mail.aliyun.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <lyndra@linux.alibaba.com>)
- id 1xFQCj-00040n-0K; Sat, 10 Oct 2026 02:05:14 -0400
+ id 1xFQCk-00040j-UL; Sat, 10 Oct 2026 02:05:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linux.alibaba.com; s=default;
- t=1791612287; h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To;
- bh=MELVbowdWiev70Cun12vPpWrPlhqRKU1+hqAi740rCE=;
- b=AJQExVswiYQ9G9cOn/2D4rTzvXCnSBd8CBP44NlanhnbzNVUxNonurWl4iqg5vhM7YgdYQWr4EyLEThG1glYELjT6/jynV5NXtUyEU3cPhgAF84bnYlpCyQXB9WyvIiK5oO48jO4CIuFleHATypyzWb/IJJit1zsb2fprAsvX8Y=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R111e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033037026112;
+ t=1791612285; h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To;
+ bh=uEnoJ2+HKDI+H989hoikaVDHX83cQyYMPDT81TBNlB0=;
+ b=ioGKpT4VKdszcXUa2zbw+bfNzQmGKKVr+7f3D04MaVhCG51jX+/gkcYIoBGtm3WzoPfF6fXtYJWjmZRR/yufIunWCuF7PFyy9drJuyDcy5ZDhk7x2lOlVLErT5/wffqFHdN2KylW0cVmdetnVZ2pd1OmfHDlpa+5KW83lIQiy7Q=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R811e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033037009110;
  MF=lyndra@linux.alibaba.com; NM=1; PH=DS; RN=13; SR=0;
- TI=SMTPD_---0XCVKGtk_1791612286; 
+ TI=SMTPD_---0XCVKGsh_1791612283; 
 Received: from ea134-sw06.eng.xrvm.cn(mailfrom:lyndra@linux.alibaba.com
- fp:SMTPD_---0XCVKGtk_1791612286 cluster:ay36) by smtp.aliyun-inc.com;
- Sat, 10 Oct 2026 14:04:46 +0800
+ fp:SMTPD_---0XCVKGsh_1791612283 cluster:ay36) by smtp.aliyun-inc.com;
+ Sat, 10 Oct 2026 14:04:44 +0800
 From: TANG Tiancheng <lyndra@linux.alibaba.com>
-Date: Sat, 10 Oct 2026 14:04:32 +0800
-Subject: [PATCH v3 08/14] target/riscv: Require Sscofpmf for non-fixed
- event overflow
+Date: Sat, 10 Oct 2026 14:04:28 +0800
+Subject: [PATCH v3 04/14] target/riscv: Preserve MINH on delegated config reads
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261010-riscv-pmu-correctness-v3-8-712bf814a7be@linux.alibaba.com>
+Message-Id: <20261010-riscv-pmu-correctness-v3-4-712bf814a7be@linux.alibaba.com>
 References: <20261010-riscv-pmu-correctness-v3-0-712bf814a7be@linux.alibaba.com>
 In-Reply-To: <20261010-riscv-pmu-correctness-v3-0-712bf814a7be@linux.alibaba.com>
 To: qemu-devel@nongnu.org
@@ -53,17 +52,17 @@ Cc: Zephyr Li <fritchleybohrer@gmail.com>,
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, 
  TANG Tiancheng <lyndra@linux.alibaba.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1791612280; l=4742;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1791612280; l=7977;
  i=lyndra@linux.alibaba.com; s=20250909; h=from:subject:message-id;
- bh=KJ1kJpiccmMcFfiPhpzaI4VLK1Nhx/C5cSDsw+TFC64=;
- b=ECSYopXr99AqVMOBxUQfo9W35OB9j1A4jAsCGHS89B+SuhM8LIyz5ZrbpjZK01317afkCh08m
- LujbH1LCPu1CiGhnofknngVKCvZqfay5AafUGFPxaodANZFP73hrl56
+ bh=cbL3lJppujAQrnNB6q7k1oSrTUIXw032qiqAYhIqIWg=;
+ b=K2N8/hKNPdXOtVVH8xar7oONF/KTCZegSlW/E3uLJtpbCStanGrVE/W9/1ETKvqq2sLWHP0oN
+ FiynOz86sD9AfMLXIFspET18Dw3uQlTBVuQId1voW/OE9OvyEM5gpXU
 X-Developer-Key: i=lyndra@linux.alibaba.com; a=ed25519;
  pk=GQh4uOSLVucXGkaZfEuQ956CrYS14cn1TA3N8AiIjBw=
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.130 (deferred)
-Received-SPF: pass client-ip=115.124.30.130;
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.131 (deferred)
+Received-SPF: pass client-ip=115.124.30.131;
  envelope-from=lyndra@linux.alibaba.com;
- helo=out30-130.freemail.mail.aliyun.com
+ helo=out30-131.freemail.mail.aliyun.com
 X-Spam_score_int: -166
 X-Spam_score: -16.7
 X-Spam_bar: ----------------
@@ -87,129 +86,138 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-riscv_pmu_incr_ctr() sets OF and LCOFIP on wrap even when Sscofpmf is
-disabled. Use the shared overflow helper to require Sscofpmf and suppress
-notifications while OF is set without stopping the counter.
+Smcdeleg requires MINH to read as zero through sireg*. The RV64 callback
+masks it by modifying the machine register; the RV32 high-half callback
+does not mask it.
 
-Test DTLB overflow with Sscofpmf enabled and disabled, including
-notification suppression and continued counting.
+Return a masked copy without changing mcyclecfg or minstretcfg. Test both
+configuration registers on RV32 and RV64.
 
-Fixes: 14664483457b ("target/riscv: Add sscofpmf extension support")
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Fixes: d9fa41e10156 ("target/riscv: Bugfix make bit 62 read-only 0 for sireg* cfg CSR read")
+Reviewed-by: Chao Liu <chao.liu@processmission.com>
 Signed-off-by: TANG Tiancheng <lyndra@linux.alibaba.com>
 ---
- target/riscv/tcg/pmu.c                      |   6 +-
- tests/tcg/riscv64/sscofpmf-event-overflow.S | 103 ++++++++++++++++++++++++++++
- tests/tcg/riscv64/system/meson.build        |  15 ++++
- 3 files changed, 119 insertions(+), 5 deletions(-)
+ target/riscv/tcg/csr.c                 |  8 ++--
+ tests/tcg/riscv32/smcdeleg-minh-rv32.S | 78 ++++++++++++++++++++++++++++++++++
+ tests/tcg/riscv32/system/meson.build   |  7 +++
+ tests/tcg/riscv64/smcdeleg-minh.S      | 78 ++++++++++++++++++++++++++++++++++
+ tests/tcg/riscv64/system/meson.build   |  7 +++
+ 5 files changed, 174 insertions(+), 4 deletions(-)
 
-diff --git a/target/riscv/tcg/pmu.c b/target/riscv/tcg/pmu.c
-index 16942e53489cd5a2d2dd055fdffef07d04d59465..2f600c5a0fc2d7ba380ef34f89af6366e3e27884 100644
---- a/target/riscv/tcg/pmu.c
-+++ b/target/riscv/tcg/pmu.c
-@@ -448,11 +448,7 @@ int riscv_pmu_incr_ctr(RISCVCPU *cpu, enum riscv_pmu_event_idx event_idx)
-         counter = &env->pmu_ctrs[ctr_idx];
-         if (counter->mhpmcounter_val == max_val) {
-             counter->mhpmcounter_val = 0;
--            /* Generate interrupt only if OF bit is clear */
--            if (!(env->mhpmevent_val[ctr_idx] & MHPMEVENT_BIT_OF)) {
--                env->mhpmevent_val[ctr_idx] |= MHPMEVENT_BIT_OF;
--                riscv_cpu_update_mip(env, MIP_LCOFIP, BOOL_TO_MASK(1));
--            }
-+            riscv_pmu_set_overflow(env, ctr_idx);
+diff --git a/target/riscv/tcg/csr.c b/target/riscv/tcg/csr.c
+index f2fe7700fdc64600eff1bb0aef28a0ca212d687c..32c8282dfcb3ec578150f107ccc8bd753085a050 100644
+--- a/target/riscv/tcg/csr.c
++++ b/target/riscv/tcg/csr.c
+@@ -1610,7 +1610,7 @@ static int rmw_cd_ctr_cfg(CPURISCVState *env, int cfg_index, target_ulong *val,
+             wr_mask &= ~MCYCLECFG_BIT_MINH;
+             env->mcyclecfg = (new_val & wr_mask) | (env->mcyclecfg & ~wr_mask);
          } else {
-             counter->mhpmcounter_val++;
+-            *val = env->mcyclecfg &= ~MHPMEVENT_BIT_MINH;
++            *val = env->mcyclecfg & ~MCYCLECFG_BIT_MINH;
          }
-diff --git a/tests/tcg/riscv64/sscofpmf-event-overflow.S b/tests/tcg/riscv64/sscofpmf-event-overflow.S
+         break;
+     case 2:             /* INSTRETCFG */
+@@ -1619,7 +1619,7 @@ static int rmw_cd_ctr_cfg(CPURISCVState *env, int cfg_index, target_ulong *val,
+             env->minstretcfg = (new_val & wr_mask) |
+                                (env->minstretcfg & ~wr_mask);
+         } else {
+-            *val = env->minstretcfg &= ~MHPMEVENT_BIT_MINH;
++            *val = env->minstretcfg & ~MINSTRETCFG_BIT_MINH;
+         }
+         break;
+     default:
+@@ -1645,7 +1645,7 @@ static int rmw_cd_ctr_cfgh(CPURISCVState *env, int cfg_index, target_ulong *val,
+             cfgh = (new_val & wr_mask) | (cfgh & ~wr_mask);
+             env->mcyclecfg = deposit64(env->mcyclecfg, 32, 32, cfgh);
+         } else {
+-            *val = cfgh;
++            *val = cfgh & ~MCYCLECFGH_BIT_MINH;
+         }
+         break;
+     case 2:          /* INSTRETCFGH */
+@@ -1655,7 +1655,7 @@ static int rmw_cd_ctr_cfgh(CPURISCVState *env, int cfg_index, target_ulong *val,
+             cfgh = (new_val & wr_mask) | (cfgh & ~wr_mask);
+             env->minstretcfg = deposit64(env->minstretcfg, 32, 32, cfgh);
+         } else {
+-            *val = cfgh;
++            *val = cfgh & ~MINSTRETCFGH_BIT_MINH;
+         }
+         break;
+     default:
+diff --git a/tests/tcg/riscv32/smcdeleg-minh-rv32.S b/tests/tcg/riscv32/smcdeleg-minh-rv32.S
 new file mode 100644
-index 0000000000000000000000000000000000000000..cce06da10f9c7c20c18c7863b58b6dd724c45182
+index 0000000000000000000000000000000000000000..db467b95cf1441e3440f59097401cf6956d294d3
 --- /dev/null
-+++ b/tests/tcg/riscv64/sscofpmf-event-overflow.S
-@@ -0,0 +1,103 @@
++++ b/tests/tcg/riscv32/smcdeleg-minh-rv32.S
+@@ -0,0 +1,78 @@
 +/* SPDX-License-Identifier: GPL-2.0-or-later */
 +
-+/* Non-fixed event overflow with and without Sscofpmf. */
-+
-+#ifndef EXPECT_SSCOFPMF
-+#define EXPECT_SSCOFPMF 1
-+#endif
++/* CSR numbers for older assemblers. */
++#define CSR_SISELECT         0x150
++#define CSR_SIREG5           0x156
++#define CSR_MENVCFGH         0x31a
++#define CSR_MCYCLECFGH       0x721
++#define CSR_MINSTRETCFGH     0x722
 +
 +	.option	norvc
 +	.option	norelax
 +
 +	.text
-+	.global _start
++	.global	_start
 +_start:
-+	/* Unexpected exceptions report the current check number. */
-+	li	t4, 1
-+	lla	t0, exit
-+	csrw	mtvec, t0
-+	csrw	mie, zero
-+	csrw	mip, zero
-+	csrw	mcountinhibit, zero
-+	csrw	mhpmevent3, zero
-+	li	t0, -1
-+	csrw	mhpmcounter3, t0
-+	li	t0, 0x10019		/* DTLB read miss */
-+	csrw	mhpmevent3, t0
-+
-+	/* One load after flushing the TLB must wrap the counter to zero. */
-+	sfence.vma
-+	lla	t0, first_page
-+	lw	t1, 0(t0)
-+	csrr	t0, mhpmcounter3
-+	bnez	t0, exit
-+
-+	/* Only Sscofpmf turns that wrap into OF and LCOFIP. */
-+	li	t4, 2
-+	csrr	t0, mhpmevent3
-+	srli	t0, t0, 63
-+	li	t1, EXPECT_SSCOFPMF
-+	bne	t0, t1, exit
-+	li	t4, 3
-+	csrr	t0, mip
-+	srli	t0, t0, 13
-+	andi	t0, t0, 1
-+	bne	t0, t1, exit
-+
-+	/* Clearing LCOFIP alone must not re-enable overflow notification. */
-+	li	t0, 1 << 13
-+	csrc	mip, t0
-+	li	t0, -1
-+	csrw	mhpmcounter3, t0
-+	sfence.vma
-+	lla	t0, second_page
-+	lw	t1, 0(t0)
-+	li	t4, 4
-+	csrr	t0, mhpmcounter3
-+	bnez	t0, exit
-+	li	t4, 5
-+	csrr	t0, mhpmevent3
-+	srli	t0, t0, 63
-+	li	t1, EXPECT_SSCOFPMF
-+	bne	t0, t1, exit
-+	li	t4, 6
-+	csrr	t0, mip
-+	li	t1, 1 << 13
-+	and	t0, t0, t1
-+	bnez	t0, exit
-+
-+	/* Overflow notification must not stop event counting. */
-+	sfence.vma
-+	lla	t0, third_page
-+	lw	t1, 0(t0)
-+	li	t4, 7
-+	csrr	t0, mhpmcounter3
-+	li	t1, 1
-+	bne	t0, t1, exit
++	/*
++	 * Failure bits:
++	 * 0: delegated cyclecfgh exposes MINH
++	 * 1: reading delegated cyclecfgh clears mcyclecfgh.MINH
++	 * 2: delegated instretcfgh exposes MINH
++	 * 3: reading delegated instretcfgh clears minstretcfgh.MINH
++	 */
 +	li	t4, 0
++	li	t0, 1
++	slli	t0, t0, 30		/* MINH in the high half */
++	csrw	CSR_MCYCLECFGH, t0
++	csrw	CSR_MINSTRETCFGH, t0
++	li	t1, 1
++	slli	t1, t1, 28		/* menvcfgh.CDE */
++	csrw	CSR_MENVCFGH, t1
++	li	t1, 5			/* Delegate cycle and instret. */
++	csrw	mcounteren, t1
 +
-+exit:
++	/* Check the delegated view, then the underlying machine register. */
++	li	t1, 0x40		/* siselect: cycle */
++	csrw	CSR_SISELECT, t1
++	csrr	t1, CSR_SIREG5
++	and	t1, t1, t0
++	sltu	t1, zero, t1
++	or	t4, t4, t1
++	csrr	t1, CSR_MCYCLECFGH
++	and	t1, t1, t0
++	sltu	t1, zero, t1
++	xori	t1, t1, 1
++	slli	t1, t1, 1
++	or	t4, t4, t1
++
++	li	t1, 0x42		/* siselect: instret */
++	csrw	CSR_SISELECT, t1
++	csrr	t1, CSR_SIREG5
++	and	t1, t1, t0
++	sltu	t1, zero, t1
++	slli	t1, t1, 2
++	or	t4, t4, t1
++	csrr	t1, CSR_MINSTRETCFGH
++	and	t1, t1, t0
++	sltu	t1, zero, t1
++	xori	t1, t1, 1
++	slli	t1, t1, 3
++	or	t4, t4, t1
++
 +	lla	a1, semiargs
 +	li	t0, 0x20026		/* ADP_Stopped_ApplicationExit */
-+	sd	t0, 0(a1)
-+	sd	t4, 8(a1)
++	sw	t0, 0(a1)
++	sw	t4, 4(a1)
 +	li	a0, 0x20		/* TARGET_SYS_EXIT_EXTENDED */
++
++	/* Semihosting call sequence. */
 +	.balign	16
 +	slli	zero, zero, 0x1f
 +	ebreak
@@ -217,44 +225,129 @@ index 0000000000000000000000000000000000000000..cce06da10f9c7c20c18c7863b58b6dd7
 +	j	.
 +
 +	.data
-+	.balign	4096
-+first_page:
-+	.word	0
-+	.balign	4096
-+second_page:
-+	.word	0
-+	.balign	4096
-+third_page:
-+	.word	0
 +	.balign	16
 +semiargs:
-+	.space	16
-diff --git a/tests/tcg/riscv64/system/meson.build b/tests/tcg/riscv64/system/meson.build
-index 6f13ee95b798250d7b4f8f82344aa550c794888f..3ad251586d11a728ea989859889751bd58198dd2 100644
---- a/tests/tcg/riscv64/system/meson.build
-+++ b/tests/tcg/riscv64/system/meson.build
-@@ -99,6 +99,21 @@ tests += {
++	.space	8
+diff --git a/tests/tcg/riscv32/system/meson.build b/tests/tcg/riscv32/system/meson.build
+index f8e55ad3d4e6b64dc4a59e048b9cce71fdce120c..09e2c4fc8c6f356dc27ae9299f3231e2e3356891 100644
+--- a/tests/tcg/riscv32/system/meson.build
++++ b/tests/tcg/riscv32/system/meson.build
+@@ -22,6 +22,13 @@ tests += {
    },
  }
  
 +tests += {
-+  'sscofpmf-event-overflow.S': {
++  'smcdeleg-minh-rv32.S': {
 +    'cflags': cflags,
 +    'qemu_args': ['-cpu', 'max', qemu_args],
 +  },
 +}
 +
+ if 'qemu-system-riscv32' in emulators
+   tcg_tests += {
+     'riscv32-softmmu': {
+diff --git a/tests/tcg/riscv64/smcdeleg-minh.S b/tests/tcg/riscv64/smcdeleg-minh.S
+new file mode 100644
+index 0000000000000000000000000000000000000000..38d3c30f0afaa416a46322f2b892e5969172a60f
+--- /dev/null
++++ b/tests/tcg/riscv64/smcdeleg-minh.S
+@@ -0,0 +1,78 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++
++/* CSR numbers for older assemblers. */
++#define CSR_SISELECT         0x150
++#define CSR_SIREG2           0x152
++#define CSR_MENVCFG          0x30a
++#define CSR_MCYCLECFG        0x321
++#define CSR_MINSTRETCFG      0x322
++
++	.option	norvc
++	.option	norelax
++
++	.text
++	.global	_start
++_start:
++	/*
++	 * Failure bits:
++	 * 0: delegated cyclecfg exposes MINH
++	 * 1: reading delegated cyclecfg clears mcyclecfg.MINH
++	 * 2: delegated instretcfg exposes MINH
++	 * 3: reading delegated instretcfg clears minstretcfg.MINH
++	 */
++	li	t4, 0
++	li	t0, 1
++	slli	t0, t0, 62		/* MINH */
++	csrw	CSR_MCYCLECFG, t0
++	csrw	CSR_MINSTRETCFG, t0
++	li	t1, 1
++	slli	t1, t1, 60		/* menvcfg.CDE */
++	csrw	CSR_MENVCFG, t1
++	li	t1, 5			/* Delegate cycle and instret. */
++	csrw	mcounteren, t1
++
++	/* Check the delegated view, then the underlying machine register. */
++	li	t1, 0x40		/* siselect: cycle */
++	csrw	CSR_SISELECT, t1
++	csrr	t1, CSR_SIREG2
++	and	t1, t1, t0
++	sltu	t1, zero, t1
++	or	t4, t4, t1
++	csrr	t1, CSR_MCYCLECFG
++	and	t1, t1, t0
++	sltu	t1, zero, t1
++	xori	t1, t1, 1
++	slli	t1, t1, 1
++	or	t4, t4, t1
++
++	li	t1, 0x42		/* siselect: instret */
++	csrw	CSR_SISELECT, t1
++	csrr	t1, CSR_SIREG2
++	and	t1, t1, t0
++	sltu	t1, zero, t1
++	slli	t1, t1, 2
++	or	t4, t4, t1
++	csrr	t1, CSR_MINSTRETCFG
++	and	t1, t1, t0
++	sltu	t1, zero, t1
++	xori	t1, t1, 1
++	slli	t1, t1, 3
++	or	t4, t4, t1
++
++	lla	a1, semiargs
++	li	t0, 0x20026		/* ADP_Stopped_ApplicationExit */
++	sd	t0, 0(a1)
++	sd	t4, 8(a1)
++	li	a0, 0x20		/* TARGET_SYS_EXIT_EXTENDED */
++
++	/* Semihosting call sequence. */
++	.balign	16
++	slli	zero, zero, 0x1f
++	ebreak
++	srai	zero, zero, 0x7
++	j	.
++
++	.data
++	.balign	16
++semiargs:
++	.space	16
+diff --git a/tests/tcg/riscv64/system/meson.build b/tests/tcg/riscv64/system/meson.build
+index 3108e6595d4e91e6a941e006206992a41ddbe436..6af497a1a41debe58dfa329060510bd896c88ac7 100644
+--- a/tests/tcg/riscv64/system/meson.build
++++ b/tests/tcg/riscv64/system/meson.build
+@@ -75,6 +75,13 @@ tests += {
+   },
+ }
+ 
 +tests += {
-+  'sscofpmf-event-overflow.S': {
-+    'exe_name': 'sscofpmf-event-overflow-off',
-+    'cflags': cflags + ['-DEXPECT_SSCOFPMF=0'],
-+    'qemu_args': ['-cpu', 'max,sscofpmf=false', qemu_args],
++  'smcdeleg-minh.S': {
++    'cflags': cflags,
++    'qemu_args': ['-cpu', 'max', qemu_args],
 +  },
 +}
 +
- tests += {
-   'sscofpmf-cycle-overflow.S': {
-     'cflags': cflags,
+ if 'qemu-system-riscv64' in emulators
+   tcg_tests += {
+     'riscv64-softmmu': {
 
 -- 
 2.43.0
