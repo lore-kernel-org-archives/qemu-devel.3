@@ -4,104 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C59ACA9EC1
-	for <qemu-devel@archiver.kernel.org>; Sat, 10 Oct 2026 16:42:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F41A3CA9EC1
+	for <qemu-devel@archiver.kernel.org>; Sat, 10 Oct 2026 17:49:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xFa8Y-0006XB-1o; Sat, 10 Oct 2026 12:41:42 -0400
+	id 1xFbBQ-00005D-49; Sat, 10 Oct 2026 13:48:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1xFa6Q-000688-8G
- for qemu-devel@nongnu.org; Sat, 10 Oct 2026 12:39:34 -0400
-Received: from mail-pg1-x531.google.com ([2607:f8b0:4864:20::531])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1xFa6O-0003rc-Iz
- for qemu-devel@nongnu.org; Sat, 10 Oct 2026 12:39:17 -0400
-Received: by mail-pg1-x531.google.com with SMTP id
- 41be03b00d2f7-cc7d154ec4fso223546a12.0
- for <qemu-devel@nongnu.org>; Sat, 10 Oct 2026 09:39:15 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1791650354; cv=none;
- d=google.com; s=arc-20260327;
- b=dkMyTULXvZzeuXbvSAbOtKMZ3Tggq9kSM25cXT6VwvyZSBQOTThHZWGWHtX+f1QxrQ
- I3NNECJatBoHrkHDfSriKWA4aLTEsyKplugXiP50oyJTqwqpzymgqkVhj+UNC52CJrZ2
- WIH7I1LJG3yuQCOOW5DhPbbihm8eNYdEQISGx9wqW4s9YDOjoDyDyY98BeQdeTbHR7u1
- RUkSVPQ72vc+ODfUiM+Eu37neYtqktiiM+xC8d6airT7/+CGecryvRGSy6hFQLR8bwEx
- fvAqA9QIzSzgA0sVVNvU+Ywa9jpZec99C7dmOdXe7T6Cr7lqGEoe/Yz4ZkD3rRpKmFvX
- m55A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=zNm3WtNHWZQADNQjEMrygTzNnfitUnKGPIErXx0AduQ=;
- fh=AvdUgREFPBGnLKtDjjPes0731VMeA8MKp16N55VMDg4=;
- b=mcH5qFdiQd4WdrjqHkGqzxCFUl3XNd6/mL516B2eyIidrrxo84368PVWy7r+vp55eS
- dkJv9QN5G7uYf1MTXu+cbsGHI0k8TQU9dWO0AL65J8CJsy00CmCIZbXcnLcaFS6Oeg/w
- eilqX5Z75ycuhO6exqVEsdqgVXfIObXL8MM5+u4kWWstZjce8zzxL9mBVVUcxU6ylf8Y
- 3btggNmAt5LIkll94orXQC25tMTTho0uhc92Qnzz2Z5Gvq7LAEw5lU8CjVIKArSRD5Of
- tkl2hLxhS5hC3j4vXEaO49RKq6E7h4/5WJfPQxwmO3P1ZXKxRPJpE6Yq3q5y7PnecZQz
- XSDw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1791650354; x=1792255154; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=zNm3WtNHWZQADNQjEMrygTzNnfitUnKGPIErXx0AduQ=;
- b=lTb+JJpjBcPYhp4POfCEo20bQeDq3C4tDKe+BiR9vWio0e+hAMcbwADm51EWYk6ana
- Y6UskfUw+a9myn7VHG6Gcena0r4CuvkLIV2uwxs9/5Av+eF33objnQGSYLJhHDWBuHO4
- bNCoa9HaGE2F1nGgSsNwlYz0HCIgKNvG0do39sZqQ3DvR2mtOWb/nonUlnv4gpq6RTqZ
- kjHvNG9D0bmpWJhznH5GnP4Ai/KK9+duMql+sK7FvB2iqcfIjQdI52+qLowAaMdA6eot
- K7KnttJ36/YzHQZ1yx3/qp+kGvo6moxK6sK3ac3GkJV6Pvu98FGey2BU8pfigkK2xC/C
- jDMQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791650354; x=1792255154;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=zNm3WtNHWZQADNQjEMrygTzNnfitUnKGPIErXx0AduQ=;
- b=axULg4gHZ3EbuN0mzvJYLaEkIW7U1MFmB1Woem98lRkvOhFOkn4aPMtoKVnWAyw7BL
- dL0PckEuhS0xcbPTKGCLJGeyB8Hhprs7/y2+b8Xka9FYUM8NrhY6cMOzGaQ9m83ilgjD
- +fG71s16UoN2LGayOa2WWCNw1J0HveT+9Poy6f0S3byXeyK826tfZfQ4ks4Q4wpiV4o+
- R1e3iHKBa+LICEuUgO1LL24Yle5rA60QZYNX/I98qt6VBFJ0pLoF7zl0ml2gwAZo4V9V
- a777sgCJQ1PWXXwl05H6WB8VOK8ibaOHVoHTQiUybrhOB5fHB0dg26BXD/6V7n8+CtIX
- X1/A==
-X-Gm-Message-State: AFq9FYKr/ptRq9weoj8lee88adr5RnzdTK/Q7mwKVyif2cbp6OwIM+Uh
- lkQswMa1nZG1R7BHP1wLmC/ie0bkvG2XIjr7Y1L6uLAudiv3cRIIbwPuB4ybnm8WxFrztnUPG7n
- qQe8jcNifcPF0i2W4GUR5HoIvgKnnSZk=
-X-Gm-Gg: AYBFou37O4y6xO1VLlPBPgNhUnBmUQl/NKkCbITTNNdTBIeUWoiklmPDMsj43SOtKiF
- tAKwy8xmY5UpdspHMuJEVJt9va1NdwwPb2aySN2ZKymAW8WnuPHCYDQ7gl8EhIuKdhZnGyq58Wz
- T5TGiQsyRbY7H0BWC3ncu98SqmsmXpPM+QkIFHBKDJkfsqNgY7HyxUPus4y+p+8nEZ+di5yKXYW
- Nz+sIxRl0Y1SedAwRKhPWHHzhcP8hKEjCbswgKyxeFGCD6XMONxGIS9l7YpZYhbv6E/DN4U3yqf
- MacCd3p+08cp7rMHUgvHKkLRxcPP34ciFtK/7duni0wwBzP6vbyhulfiqCiq8h5Ojsa8vTO418U
- n58PV+8CrTg==
-X-Received: by 2002:a17:90b:5343:b0:3a8:cc4f:3475 with SMTP id
- 98e67ed59e1d1-3ab3ace463bmr5019957a91.60.1791650354182; Sat, 10 Oct 2026
- 09:39:14 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <aurelien@aurel32.net>)
+ id 1xFbB2-0008V1-5A; Sat, 10 Oct 2026 13:48:08 -0400
+Received: from hall.aurel32.net ([2001:bc8:30d7:100::1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <aurelien@aurel32.net>)
+ id 1xFbAz-00025a-4e; Sat, 10 Oct 2026 13:48:07 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=aurel32.net
+ ; s=202004.hall;
+ h=Content-Transfer-Encoding:MIME-Version:Message-ID:Date:
+ Subject:Cc:To:From:Content-Type:From:Reply-To:Subject:Content-ID:
+ Content-Description:In-Reply-To:References:X-Debbugs-Cc;
+ bh=X/sV+QCHPh6WttKn04ZfRvNXuIvy+Kh7Y9N5OnH/H4o=; b=d8QdobJiXX1S1erIhwDFfz2CFS
+ YGYANlSHWq8a54X94kw6jkvsVdzgDpGmtz0WipEPoDM/6eAcr/bqMi9kZR2d+09gTXluuo4ud/biE
+ lfUJLbnfL2sUKphJrdZRkwLoyVfJnWVwkaQ6oX7O1XL1dYsEs+H7tp1alYfYwyAXysvErQwl7J8tQ
+ pDwm8fuGuZy5WCJqlGFzytdbZeOCk+qNdVaeWBaStCkWPQFBDqo2l3kpoSP2RBCVjTGY+rVGMp+9n
+ emiSGIIsiITC1VnhQ61J9DqVCL4rJLEspWt02N/VJrXnpYenfdywK768Ze73kJTAX+POPUloseJc6
+ 8U8ip1Gg==;
+Received: from authenticated user by hall.aurel32.net with esmtpsa (TLS1.3) tls
+ TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.98.2)
+ (envelope-from <aurelien@aurel32.net>) id 1xFbAm-0000000DYvr-1XuC;
+ Sat, 10 Oct 2026 19:47:52 +0200
+From: Aurelien Jarno <aurelien@aurel32.net>
+To: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <Alistair.Francis@wdc.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ qemu-riscv@nongnu.org (open list:RISC-V TCG target),
+ qemu-devel@nongnu.org (open list:All patches CC here)
+Cc: Aurelien Jarno <aurelien@aurel32.net>
+Subject: [PATCH v2] tcg/riscv64: Fix vector constant matching for logical ops
+Date: Sat, 10 Oct 2026 19:46:55 +0200
+Message-ID: <20261010174742.3552498-1-aurelien@aurel32.net>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-References: <20261008211005.1853542-1-brian.cain@oss.qualcomm.com>
- <20261008211005.1853542-2-brian.cain@oss.qualcomm.com>
-In-Reply-To: <20261008211005.1853542-2-brian.cain@oss.qualcomm.com>
-From: Taylor Simpson <ltaylorsimpson@gmail.com>
-Date: Sat, 10 Oct 2026 10:39:01 -0600
-X-Gm-Features: AclHuK9h-fDmCgGeYGzZDSwZj_d0vIBlDoBiaR5W3D63b998Cb9TxRuqrwk3R7w
-Message-ID: <CAATN3Nr8CAMDNUtuVaPe31GDoSq6XVTQVwqTnaPsQLUC=09_Qw@mail.gmail.com>
-Subject: Re: [PATCH v2 1/4] target/hexagon: pass the packet PC to lock
- implementations
-To: Brian Cain <brian.cain@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Type: multipart/alternative; boundary="000000000000ec3db9065d7f1a21"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::531;
- envelope-from=ltaylorsimpson@gmail.com; helo=mail-pg1-x531.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2001:bc8:30d7:100::1;
+ envelope-from=aurelien@aurel32.net; helo=hall.aurel32.net
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,52 +71,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000ec3db9065d7f1a21
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+For logical vector operations (in the case of the RISC-V backend that
+corresponds to and_vec, or_vec and xor_vec), VECE is unused. However,
+tcg_target_const_match() always treat it as an element size to extract
+the corresponding constant element from the whole constant.
 
-On Thu, Oct 8, 2026 at 3:10=E2=80=AFPM Brian Cain <brian.cain@oss.qualcomm.=
-com>
-wrote:
+This causes the following aarch64 instruction
+  bic v4.8h, #0xf0
+to be translated into the following op:
+  ...
+  and_vec v128,e8,tmp5,tmp4,v128$0xff0fff0fff0fff0f
+  ...
+which is then translated to the following RISC-V instruction:
+  vand.vi v1,v1,15
 
-> Hand the k0lock/tlblock lock implementation functions the packet PC as a
-> constant instead of relying on next_PC's opcode-dependent staging.
->
-> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
-> ---
->  target/hexagon/hex_mmu.h    |  2 +-
->  target/hexagon/sys_macros.h |  4 ++--
->  target/hexagon/hex_mmu.c    | 16 +++++++++-------
->  target/hexagon/op_helper.c  | 16 +++++++++-------
->  4 files changed, 21 insertions(+), 17 deletions(-)
->
+Fix that by, when VECE is 0 aka MO_8, only extracting the element if the
+it can actually be represented as a duplicated constant.
 
-Reviewed-by: Taylor Simpson <ltaylorsimpson@gmail.com>
+Fixes: 5a63f5998791 ("tcg/riscv: Add support for basic vector opcodes")
+Signed-off-by: Aurelien Jarno <aurelien@aurel32.net>
+---
+ tcg/riscv64/tcg-target.c.inc | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
---000000000000ec3db9065d7f1a21
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Changes v1 -> v2:
+- Use dup_const() instead of open coding the constant duplication.
 
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
-mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, Oct 8, =
-2026 at 3:10=E2=80=AFPM Brian Cain &lt;<a href=3D"mailto:brian.cain@oss.qua=
-lcomm.com">brian.cain@oss.qualcomm.com</a>&gt; wrote:<br></div><blockquote =
-class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px sol=
-id rgb(204,204,204);padding-left:1ex">Hand the k0lock/tlblock lock implemen=
-tation functions the packet PC as a<br>
-constant instead of relying on next_PC&#39;s opcode-dependent staging.<br>
-<br>
-Signed-off-by: Brian Cain &lt;<a href=3D"mailto:brian.cain@oss.qualcomm.com=
-" target=3D"_blank">brian.cain@oss.qualcomm.com</a>&gt;<br>
----<br>
-=C2=A0target/hexagon/hex_mmu.h=C2=A0 =C2=A0 |=C2=A0 2 +-<br>
-=C2=A0target/hexagon/sys_macros.h |=C2=A0 4 ++--<br>
-=C2=A0target/hexagon/hex_mmu.c=C2=A0 =C2=A0 | 16 +++++++++-------<br>
-=C2=A0target/hexagon/op_helper.c=C2=A0 | 16 +++++++++-------<br>
-=C2=A04 files changed, 21 insertions(+), 17 deletions(-)<br></blockquote><d=
-iv><br></div><div>Reviewed-by: Taylor Simpson &lt;<a href=3D"mailto:ltaylor=
-simpson@gmail.com">ltaylorsimpson@gmail.com</a>&gt;</div><div>=C2=A0</div><=
-/div></div>
+diff --git a/tcg/riscv64/tcg-target.c.inc b/tcg/riscv64/tcg-target.c.inc
+index 14a397117a..1262b71a62 100644
+--- a/tcg/riscv64/tcg-target.c.inc
++++ b/tcg/riscv64/tcg-target.c.inc
+@@ -392,8 +392,15 @@ static bool tcg_target_const_match(int64_t val, int ct,
+         return 1;
+     }
+     if (type >= TCG_TYPE_V64) {
+-        /* Val is replicated by VECE; extract the highest element. */
+-        val >>= (-8 << vece) & 63;
++        /*
++         * For vector logical operations, VECE is unused and equals to 0, so
++         * we need to check that the constant can properly be represented after
++         * replication.
++         */
++        if ((vece != MO_8) || (val == dup_const(vece, val))) {
++            /* Val is replicated by VECE; extract the highest element. */
++            val >>= (-8 << vece) & 63;
++        }
+     }
+     /*
+      * Sign extended from 12 bits: [-0x800, 0x7ff].
+-- 
+2.53.0
 
---000000000000ec3db9065d7f1a21--
 
