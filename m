@@ -4,112 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C16AFCA601E
-	for <qemu-devel@archiver.kernel.org>; Sat, 10 Oct 2026 00:05:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 794A2CA6004
+	for <qemu-devel@archiver.kernel.org>; Sat, 10 Oct 2026 03:19:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xFKZu-0007sp-9m; Fri, 09 Oct 2026 20:04:42 -0400
+	id 1xFNc4-0008Gu-6B; Fri, 09 Oct 2026 23:19:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xFKZs-0007sg-Gx
- for qemu-devel@nongnu.org; Fri, 09 Oct 2026 20:04:40 -0400
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xFKZq-0008T5-GI
- for qemu-devel@nongnu.org; Fri, 09 Oct 2026 20:04:40 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 86C901F387;
- Sat, 10 Oct 2026 00:04:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1791590674; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=NA77qGZ1u7mtRESYMjXLC/SY0ljs3nTNYKoKcNgafbM=;
- b=OAUbApy7w8/llqROO6fepoE1e4Njq9qn9I1MavmE4As/G5eip7KDIrQ8PIY2dEYOl+x+uB
- lbZ5gtYK+PI2yrBTd226OT5LsUzwddoLZdJpxh2zpbC4MbuuOaEjd3SleaSoFdRBonrFK6
- r3cGGcSSNqrF6l9T/55qzzMw0gVYZqs=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1791590674;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=NA77qGZ1u7mtRESYMjXLC/SY0ljs3nTNYKoKcNgafbM=;
- b=FUo67uVBM4UM1hpOJHfoNXmooQVrhqcP3cj3Cn9ZqJ+rp/ysdkeFE9LDaryXR3RTjme5/n
- etDC+XfWsagJJECg==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=OAUbApy7;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=FUo67uVB
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1791590674; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=NA77qGZ1u7mtRESYMjXLC/SY0ljs3nTNYKoKcNgafbM=;
- b=OAUbApy7w8/llqROO6fepoE1e4Njq9qn9I1MavmE4As/G5eip7KDIrQ8PIY2dEYOl+x+uB
- lbZ5gtYK+PI2yrBTd226OT5LsUzwddoLZdJpxh2zpbC4MbuuOaEjd3SleaSoFdRBonrFK6
- r3cGGcSSNqrF6l9T/55qzzMw0gVYZqs=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1791590674;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=NA77qGZ1u7mtRESYMjXLC/SY0ljs3nTNYKoKcNgafbM=;
- b=FUo67uVBM4UM1hpOJHfoNXmooQVrhqcP3cj3Cn9ZqJ+rp/ysdkeFE9LDaryXR3RTjme5/n
- etDC+XfWsagJJECg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id DAF18136BA;
- Sat, 10 Oct 2026 00:04:33 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id 8gQaHxGByWoucwAAD6G6ig
- (envelope-from <farosas@suse.de>); Sat, 10 Oct 2026 00:04:33 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, =?utf-8?Q?Daniel_P_=2E_Berrang=C3=A9?=
- <berrange@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, Kevin Wolf
- <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>
-Subject: Re: [PATCH v2 03/11] qemu-option: Remove short form options support
-In-Reply-To: <874iew7qhw.fsf@pond.sub.org>
-References: <20260930221105.2262063-1-farosas@suse.de>
- <20260930221105.2262063-4-farosas@suse.de> <87h5iyasxn.fsf@pond.sub.org>
- <87y0c97kbs.fsf@suse.de> <874iew7qhw.fsf@pond.sub.org>
-Date: Fri, 09 Oct 2026 21:04:22 -0300
-Message-ID: <87qzhy775l.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1xFNc1-0008Gg-Da
+ for qemu-devel@nongnu.org; Fri, 09 Oct 2026 23:19:05 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1xFNbx-0006gP-G9
+ for qemu-devel@nongnu.org; Fri, 09 Oct 2026 23:19:05 -0400
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8Bx69GYrslqgF8UAA--.59095S3;
+ Sat, 10 Oct 2026 11:18:48 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by front1 (Coremail) with SMTP id qMiowJDxTs+VrslqSLcqAA--.24814S2;
+ Sat, 10 Oct 2026 11:18:47 +0800 (CST)
+Subject: Re: [PATCH v5 03/23] target/loongarch: add LVZ feature switcher
+To: SignKirigami <prcups@krgm.moe>, qemu-devel@nongnu.org
+Cc: Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
+References: <cover.1791514848.git.prcups@krgm.moe>
+ <7c70892a1a7155a2ad3fe1495cdf29168ec6fe5b.1791514848.git.prcups@krgm.moe>
+From: Bibo Mao <maobibo@loongson.cn>
+Message-ID: <bbfa3413-20cd-2d5c-0720-6fe445cc9453@loongson.cn>
+Date: Sat, 10 Oct 2026 11:20:08 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-X-Rspamd-Queue-Id: 86C901F387
-X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; ARC_NA(0.00)[]; TO_DN_SOME(0.00)[];
- MID_RHS_MATCH_FROM(0.00)[]; MIME_TRACE(0.00)[0:+];
- RCVD_VIA_SMTP_AUTH(0.00)[]; MISSING_XM_UA(0.00)[];
- RCVD_TLS_ALL(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- RCPT_COUNT_FIVE(0.00)[6]; RCVD_COUNT_TWO(0.00)[2];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,suse.de:email,suse.de:dkim];
- DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received,2a07:de40:b281:104:10:150:64:97:from];
- DKIM_TRACE(0.00)[suse.de:+]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+In-Reply-To: <7c70892a1a7155a2ad3fe1495cdf29168ec6fe5b.1791514848.git.prcups@krgm.moe>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qMiowJDxTs+VrslqSLcqAA--.24814S2
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoWxWrWUWF45Gw17Wr15tw45CFX_yoWrZF1rpr
+ W7CF4Y9FWUtFZ7Zwsxtay5Krn5Xr4xWr42qF1fGrZ7uFs8JF1xXFykJ39rAFW8A34UJrW0
+ gF4rAa98WFsxtFcCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUvFb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVWxJVW8Jr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
+ 6r4UJVWxJr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27w
+ Aqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_JrI_JrylYx0Ex4A2jsIE
+ 14v26r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1c
+ AE67vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8C
+ rVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUXVWUAw
+ CIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x02
+ 67AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr
+ 0_Gr1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxU70Pf
+ DUUUU
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-0.591,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,150 +81,127 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Markus Armbruster <armbru@redhat.com> writes:
 
-> Fabiano Rosas <farosas@suse.de> writes:
->
->> Markus Armbruster <armbru@redhat.com> writes:
->>
->>> Fabiano Rosas <farosas@suse.de> writes:
->>>
->>>> Option parameters without a value (i.e. key vs. key=val) are
->>>> deprecated. The missing value is currently implied to be either "on"
->>>> or "off" depending on whether the parameter name starts with "no".
->>>
->>> Commit ccd3b3b811 (qemu-option: warn for short-form boolean options,
->>> 2020-11-09).  Six years of warnings should suffice.
->>>
->>>> Remove the implied behavior and start rejecting option parameters
->>>> without values by emitting the error message:
->>>>
->>>>  "Parameter 'foo' without a value."
->>>>
->>>> Two special cases remain:
->>>>
->>>> 1) The 'help' parameter is special and still supported. Keep a
->>>>    positive value attached to it ("on").
->>>>
->>>>    Note that currently there is no validation for the value (if any)
->>>>    attached to the help parameter. help, help=on, help=off, help=foo
->>>>    all result in the help text being emitted. This is not changed by
->>>>    this patch.
->>>
->>> Really?
->>>
->>>     $ qemu-system-x86_64 -chardev help=foo
->>>     qemu-system-x86_64: -chardev help=foo: Invalid parameter 'help'
->>>
->>
->> Ah, ok, it depends on whether the option accepts any parameter
->> (i.e. opts_accepts_any()). Here's -object failing to reject the bogus
->> value:
->>
->> $ qemu-system-x86_64 -object memory-backend-ram,id=m1,help=foo
->> memory-backend-ram options:
->>   dump=<bool>            - Set to 'off' to exclude from core dump
->>   host-nodes=<[uint16]>  - Binds memory to the list of NUMA host nodes
->>   merge=<bool>           - Mark memory as mergeable
->>   policy=<HostMemPolicy> - Set the NUMA policy
->>   prealloc-context=<link<thread-context>> - Context to use for creating CPU threads for preallocation
->>   prealloc-threads=<int> - Number of CPU threads to use for prealloc
->>   prealloc=<bool>        - Preallocate memory
->>   reserve=<bool>         - Reserve swap space (or huge pages) if applicable
->>   share=<bool>           - Mark the memory as private to QEMU or shared
->>   size=<size>            - Size of the memory region (ex: 500M)
->>   x-use-canonical-path-for-ramblock-id=<bool>
->
-> Bizarre :)
->
->>>> 2) The empty value is allowed if the key is also empty. This can be
->>>>    achieved in the command line by adding commas.
->>>>    E.g.: share=on,, is parsed as:
->>>>      key:"share" value:"on" and
->>>>      key:"" value:"on"
->>>
->>> I don't think so:
->>>
->>>     $ qemu-system-x86_64 -object memory-backend-ram,id=mem0,share=on,,
->>>     qemu-system-x86_64: -object memory-backend-ram,id=mem0,share=on,,: Parameter 'share' expects 'on' or 'off'
->>>
->>
->> Bah, I wrote the example for the commit message but haven't tried
->> it. I'm trying to refer to the single leading comma scenario, we have a
->> test for it:
->>
->>     /* Except when it isn't */
->>     opts = qemu_opts_parse(&opts_list_03, ",", false, &error_abort);
->>     g_assert_cmpuint(opts_count(opts), ==, 1);
->>     g_assert_cmpstr(qemu_opt_get(opts, ""), ==, "on");
->
-> The "except when it isn't" comment refers to the test right above:
->
->       /* Trailing comma is ignored */
->       opts = qemu_opts_parse(&opts_list_03, "x=y,", false, &error_abort);
->       g_assert_cmpuint(opts_count(opts), ==, 1);
->       g_assert_cmpstr(qemu_opt_get(opts, "x"), ==, "y");
->
-> This is about trailing comma.  Is the exception is only possible when
-> the trailing comma is also the leading comma?
->
->> The following are parsed as valid and only reject the empty key further
->> down the line:
->>
->> $ qemu-system-x86_64 -drive ,
->> qemu-system-x86_64: -drive ,: warning: short-form boolean option '' deprecated
->> Please use =on instead
->> qemu-system-x86_64: -drive ,: Must specify either driver or file
->>
->> $ qemu-system-x86_64 -drive ,file=dummy
->> qemu-system-x86_64: -drive ,file=dummy: warning: short-form boolean option '' deprecated
->> Please use =on instead
->
-> Looks like the answer is no.  The tests could be clearer there.  Might
-> not matter after your series.
->
->> WARNING: Image format was not specified for 'dummy' and probing guessed raw.
->>          Automatically detecting the format is dangerous for raw images, write operations on block 0 will be restricted.
->>          Specify the 'raw' format explicitly to remove the restrictions.
->> qemu-system-x86_64: -drive ,file=dummy: Block format 'raw' does not support the option ''
->
-> The entire parser should be burned with fire.
->
-> What are the remaining differences to the keyval.c parser after your
-> series?  Can we deprecate them?
->
 
-I ran a few of the qemu-opts tests with the keyval code and it differs
-mostly in the handling of empty (non-implied) key and implied key +
-empty value. I'll take a close look next week but I think we should
-deprecate them anyway.
+On 2026/10/9 上午11:04, SignKirigami wrote:
+> Add LVZ property and AVAIL_LVZ macro based on cpucfg.
+> 
+> Signed-off-by: SignKirigami <prcups@krgm.moe>
+> Signed-off-by: Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
+> ---
+>   target/loongarch/cpu.c       | 33 +++++++++++++++++++++++++++++++--
+>   target/loongarch/cpu.h       |  6 ++++++
+>   target/loongarch/translate.h |  1 +
+>   3 files changed, 38 insertions(+), 2 deletions(-)
+> 
+> diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
+> index e1245235be..664763137d 100644
+> --- a/target/loongarch/cpu.c
+> +++ b/target/loongarch/cpu.c
+> @@ -267,11 +267,33 @@ static void loongarch_set_ptw(Object *obj, bool value, Error **errp)
+>       cpu->env.cpucfg[2] = FIELD_DP32(cpu->env.cpucfg[2], CPUCFG2, HPTW, value);
+>   }
+>   
+> +static bool loongarch_get_lvz(Object *obj, Error **errp)
+> +{
+> +    return LOONGARCH_CPU(obj)->lvz != ON_OFF_AUTO_OFF;
+> +}
+> +
+> +static void loongarch_set_lvz(Object *obj, bool value, Error **errp)
+> +{
+> +    LoongArchCPU *cpu = LOONGARCH_CPU(obj);
+> +
+> +    cpu->lvz = value ? ON_OFF_AUTO_ON : ON_OFF_AUTO_OFF;
+> +
+> +    if (kvm_enabled()) {
+> +        /* lvz can not be only enabled in kvm mode currently */
+> +        return;
+> +    }
+This can be removed if tcg_enabled() is added lvz option.
+> +
+> +    cpu->env.cpucfg[2] = FIELD_DP32(cpu->env.cpucfg[2], CPUCFG2, LVZ, value);
+> +    cpu->env.cpucfg[2] = FIELD_DP32(cpu->env.cpucfg[2], CPUCFG2, LVZ_VER,
+> +                                    value ? 1 : 0);
+> +}
+> +
+>   static void loongarch_cpu_post_init(Object *obj)
+>   {
+>       LoongArchCPU *cpu = LOONGARCH_CPU(obj);
+>   
+>       cpu->lbt = ON_OFF_AUTO_OFF;
+> +    cpu->lvz = ON_OFF_AUTO_AUTO;
+>       cpu->pmu = ON_OFF_AUTO_OFF;
+>       cpu->lsx = ON_OFF_AUTO_AUTO;
+>       cpu->lasx = ON_OFF_AUTO_AUTO;
+> @@ -283,6 +305,9 @@ static void loongarch_cpu_post_init(Object *obj)
+>                                loongarch_set_msgint);
+>       object_property_add_bool(obj, "ptw", loongarch_get_ptw,
+>                                loongarch_set_ptw);
+> +    object_property_add_bool(obj, "lvz", loongarch_get_lvz,
+> +                             loongarch_set_lvz);
+> +
+how about adding if (tcg_enabled()) with lvz property.
 
-It looks easy to add a flag to keyval_parse_one() to turn its errors
-into deprecation warnings ("warning: madness deprecated"). We could then
-gradually make the conversion without having to wait for the deprecated
-parts to be removed. The child is almost 10 years old.
+>       /* lbt is enabled only in kvm mode, not supported in tcg mode */
+>   
+>       if (kvm_enabled()) {
+> @@ -336,8 +361,12 @@ static void loongarch_la464_initfn(Object *obj)
+>       data = FIELD_DP32(data, CPUCFG2, FP_SP, 1);
+>       data = FIELD_DP32(data, CPUCFG2, FP_DP, 1);
+>       data = FIELD_DP32(data, CPUCFG2, FP_VER, 1);
+> -    data = FIELD_DP32(data, CPUCFG2, LSX, 1),
+> -    data = FIELD_DP32(data, CPUCFG2, LASX, 1),
+> +    data = FIELD_DP32(data, CPUCFG2, LSX, 1);
+> +    data = FIELD_DP32(data, CPUCFG2, LASX, 1);
+Good catch, thanks for change , with ;   :=)
 
-  d454dbe0ee3 ("keyval: New keyval_parse()")
-  Author: Markus Armbruster <armbru@redhat.com>
-  Date:   Tue Feb 28 22:26:49 2017 +0100
+The others look good to me.
 
->>> Set a breakpoint on qapi_bool_parse() to see the actual value.  It's
->>> "on,".  In QemuOpts syntax, double comma is an escape, so you can put
->>> comma in values.
->>>
->>>> One effect of this change that might not be obvious is that parameter
->>>> combinations of the form:
->>>>
->>>>  id=mem0,share,help
->>>>
->>>> no longer produce the help output. The lack of value for the 'share'
->>>> parameter is reported with precedence. Users will need to either use a
->>>> valid value or omit the parameter entirely:
->>>>
->>>>  id=mem0,share=on,help
->>>>  id=mem0,help
->>>
->>> That's unfortunate.
->>>
->>> [...]
+Regards
+Bibo Mao
+> +    if (tcg_enabled()) {
+> +        data = FIELD_DP32(data, CPUCFG2, LVZ, 1);
+> +        data = FIELD_DP32(data, CPUCFG2, LVZ_VER, 1);
+> +    }
+>       data = FIELD_DP32(data, CPUCFG2, LLFTP, 1);
+>       data = FIELD_DP32(data, CPUCFG2, LLFTP_VER, 1);
+>       data = FIELD_DP32(data, CPUCFG2, LSPW, 1);
+> diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
+> index c0edcc9065..918378ee9a 100644
+> --- a/target/loongarch/cpu.h
+> +++ b/target/loongarch/cpu.h
+> @@ -460,6 +460,7 @@ struct ArchCPU {
+>       CPULoongArchState env;
+>       uint32_t  phy_id;
+>       OnOffAuto lbt;
+> +    OnOffAuto lvz;
+>       OnOffAuto pmu;
+>       OnOffAuto ptw;
+>       OnOffAuto lsx;
+> @@ -520,6 +521,11 @@ static inline CPUSysState *get_sys(CPULoongArchState *env, int vm_level)
+>       return &env->sys_states[vm_level];
+>   }
+>   
+> +static inline bool cpu_has_lvz(CPULoongArchState *env)
+> +{
+> +    return FIELD_EX32(env->cpucfg[2], CPUCFG2, LVZ);
+> +}
+> +
+>   static inline CPUTimerState *env_timer(CPULoongArchState *env)
+>   {
+>       return &env->sys_states[0].timer_state;
+> diff --git a/target/loongarch/translate.h b/target/loongarch/translate.h
+> index 8aa8325dc6..a7c165982c 100644
+> --- a/target/loongarch/translate.h
+> +++ b/target/loongarch/translate.h
+> @@ -24,6 +24,7 @@
+>   #define avail_FP(C)     (FIELD_EX32((C)->cpucfg2, CPUCFG2, FP))
+>   #define avail_FP_SP(C)  (FIELD_EX32((C)->cpucfg2, CPUCFG2, FP_SP))
+>   #define avail_FP_DP(C)  (FIELD_EX32((C)->cpucfg2, CPUCFG2, FP_DP))
+> +#define avail_LVZ(C)    (FIELD_EX32((C)->cpucfg2, CPUCFG2, LVZ))
+>   #define avail_LSPW(C)   (FIELD_EX32((C)->cpucfg2, CPUCFG2, LSPW))
+>   #define avail_LAM(C)    (FIELD_EX32((C)->cpucfg2, CPUCFG2, LAM))
+>   #define avail_LAM_BH(C) (FIELD_EX32((C)->cpucfg2, CPUCFG2, LAM_BH))
+> 
+
 
