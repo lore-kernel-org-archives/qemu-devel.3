@@ -4,41 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BA1ECA6004
-	for <qemu-devel@archiver.kernel.org>; Sat, 10 Oct 2026 06:07:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33C65CA9EBE
+	for <qemu-devel@archiver.kernel.org>; Sat, 10 Oct 2026 06:08:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xFQCx-0002jm-MJ; Sat, 10 Oct 2026 02:05:23 -0400
+	id 1xFQCu-0002iD-Qc; Sat, 10 Oct 2026 02:05:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <lyndra@linux.alibaba.com>)
- id 1xFQCp-0002g7-Nm; Sat, 10 Oct 2026 02:05:16 -0400
-Received: from [115.124.30.98] (helo=out30-98.freemail.mail.aliyun.com)
+ id 1xFQCn-0002eE-1d; Sat, 10 Oct 2026 02:05:13 -0400
+Received: from [115.124.30.124] (helo=out30-124.freemail.mail.aliyun.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <lyndra@linux.alibaba.com>)
- id 1xFQCj-00040w-Iy; Sat, 10 Oct 2026 02:05:15 -0400
+ id 1xFQCj-00040g-0u; Sat, 10 Oct 2026 02:05:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linux.alibaba.com; s=default;
- t=1791612290; h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To;
- bh=5DrCunXh3Mnoz5vi+sz9rjIXbH4QKO/PGk+/Z2zmiuc=;
- b=k8MRWsCMC8UxgV8bcVt29FJr1BvWhAvaSlsQ9sYMDk4JY1ZtsEbOYRuOTKhUs1IVE21GvhbQO7mbgKXt0fJz2/s/Kw1Coj4cyUzI+tiw5tW7VjUxpNzfTMc55yhc5Dzwf3zNA4bj0gJld3uG9a8kKOP32yc1DmvbYpNS0RTVuxw=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R171e4; CH=green; DM=||false|;
+ t=1791612284; h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To;
+ bh=vuSlMMWwSFUfzpPAx7aSNr6R6o6NsQjcAOGvvWfOWMU=;
+ b=aTzMVW3fIGvYUBD0scuNGpvFf/9eY/2iPKCnUpAQzO+Wu4IXZZJCFrL23hjjLsluLSq23RAYvasTO9PcuSr8eOmqoA9kboD7c/z4PpkwUv0it7PLUkAcKvAfpsnjwsOsPuozvCBG41HOM7ZwMyxvFPfB5uHfvpxMdMOnkN+wtf8=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R321e4; CH=green; DM=||false|;
  DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033037009110;
  MF=lyndra@linux.alibaba.com; NM=1; PH=DS; RN=13; SR=0;
- TI=SMTPD_---0XCVKGuy_1791612289; 
+ TI=SMTPD_---0XCVKGql_1791612279; 
 Received: from ea134-sw06.eng.xrvm.cn(mailfrom:lyndra@linux.alibaba.com
- fp:SMTPD_---0XCVKGuy_1791612289 cluster:ay36) by smtp.aliyun-inc.com;
- Sat, 10 Oct 2026 14:04:50 +0800
+ fp:SMTPD_---0XCVKGql_1791612279 cluster:ay36) by smtp.aliyun-inc.com;
+ Sat, 10 Oct 2026 14:04:41 +0800
 From: TANG Tiancheng <lyndra@linux.alibaba.com>
-Date: Sat, 10 Oct 2026 14:04:37 +0800
-Subject: [PATCH v3 13/14] target/riscv: Clear virtualization mode on reset
+Subject: [PATCH v3 00/14] RISC-V TCG PMU correctness fixes
+Date: Sat, 10 Oct 2026 14:04:24 +0800
+Message-Id: <20261010-riscv-pmu-correctness-v3-0-712bf814a7be@linux.alibaba.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261010-riscv-pmu-correctness-v3-13-712bf814a7be@linux.alibaba.com>
-References: <20261010-riscv-pmu-correctness-v3-0-712bf814a7be@linux.alibaba.com>
-In-Reply-To: <20261010-riscv-pmu-correctness-v3-0-712bf814a7be@linux.alibaba.com>
+X-B4-Tracking: v=1; b=H4sIAGnVyWoC/3WPS27DIBRFt2IxLtYDgwNWVGUfVQd8YyR/UrCtR
+ JH3XkwmHTQTpIv0zj33iZKLwSXUVU8U3RZSmKccmo8KmV5NV4eDzRlRoC0IesIxJLPh27hiM8f
+ ozDK5lLBXQoC30jBhUb69RefDvXC/vl85up8145fXJ9IquYwYx7B0lZdcnCwDxk17MhassEJbY
+ 7kFrbludSPz25gDPeY+Vby66nxoEQABDSccakppgwn2MSymH9xDz30uvlxHFYY6l32iQ6YPaZn
+ jo2zeSLEp8yS8m7cRDJh74hlhXEghL0OY1nuthqCVVge6kDf6h0bgHY0eNKuyslRgWvYfbd/3X
+ 4uACKSdAQAA
+X-Change-ID: 20260827-riscv-pmu-correctness-fa880fd9c48d
 To: qemu-devel@nongnu.org
 Cc: Zephyr Li <fritchleybohrer@gmail.com>, 
  Palmer Dabbelt <palmer@dabbelt.com>, 
@@ -52,16 +57,17 @@ Cc: Zephyr Li <fritchleybohrer@gmail.com>,
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, 
  TANG Tiancheng <lyndra@linux.alibaba.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1791612281; l=975;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1791612280; l=5287;
  i=lyndra@linux.alibaba.com; s=20250909; h=from:subject:message-id;
- bh=JS71On3psWzq91UjodAexeVVNtRIeOpZ4KJAs9agxYQ=;
- b=GB2C9OcR7X/fMFhdWJavrPYKUJGyVtYKhOFmxJDUaEma8rqZtrKcqYONSbasrOFz1TAyy/dB5
- KgVmXDEr8b6CS8vbiSf0hheQttNq51liyKs9chhKvovEQLgazwXglfD
+ bh=s2U6pnU34o9MgaAOeQItSKVqqmy7QYZoe00EEGwOHEU=;
+ b=24k/+3gcijJmZqCA5lhVDmahjTGLyNJth61cEexL8FADYYElf7tXSAojYdWSnMfoPvMCQvydH
+ g56M3qxBRGzAK2PfReQ0Cnxgu2q7bFVLAiZiq7oSI87npPvKg2Ah9rg
 X-Developer-Key: i=lyndra@linux.alibaba.com; a=ed25519;
  pk=GQh4uOSLVucXGkaZfEuQ956CrYS14cn1TA3N8AiIjBw=
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.98 (deferred)
-Received-SPF: pass client-ip=115.124.30.98;
- envelope-from=lyndra@linux.alibaba.com; helo=out30-98.freemail.mail.aliyun.com
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.124 (deferred)
+Received-SPF: pass client-ip=115.124.30.124;
+ envelope-from=lyndra@linux.alibaba.com;
+ helo=out30-124.freemail.mail.aliyun.com
 X-Spam_score_int: -166
 X-Spam_score: -16.7
 X-Spam_bar: ----------------
@@ -85,31 +91,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reset enters M-mode without clearing virt_enabled, leaving an invalid
-M-mode, V=1 state after a reset from virtual mode. Clear virt_enabled
-alongside the privilege reset.
+This series fixes RISC-V TCG PMU accounting, overflow notification, and
+migration. It is based on v3 of Zephyr Li's "target/riscv: fix RV32
+fixed counter accesses" [1], which is not included here.
 
-Fixes: ef6bb7b62682 ("target/riscv: Add the virtulisation mode")
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+The patches allow multiple HPM counters to select the same event and
+preserve counts across selector, privilege-filter, and inhibit writes.
+They use consistent cycle/instruction sources and compute the shared
+overflow deadline from all eligible counters. Timer callbacks queue
+checks on the owner vCPU instead of racing MTTCG execution.
+
+Migration saves counter values including pending increments and restores
+destination-local source baselines, event mappings, and overflow
+scheduling. A new cpu/pmu-fixed subsection carries mcyclecfg/minstretcfg
+and identifies this format. All TCG CPUs require the subsection; loading
+older TCG streams without it is rejected. Source and destination still
+need compatible CPU configurations. KVM PMU migration is unchanged.
+
+The reset changes preserve the final counts in the old privilege/V mode
+before entering M-mode with V=0.
+
+TCG tests cover RV32/RV64 counter accesses, delegated registers, selector
+and filter changes, multiple counters per event, overflow notification
+with and without Sscofpmf, instruction exceptions, and reset. The RV32
+HPM tests also cover full-width accesses through the shared counter path.
+
+[1] https://lore.kernel.org/qemu-devel/20261008035150.2223-1-fritchleybohrer@gmail.com/
+Based-on: <20261008035150.2223-1-fritchleybohrer@gmail.com>
+
 Signed-off-by: TANG Tiancheng <lyndra@linux.alibaba.com>
 ---
- target/riscv/cpu.c | 1 +
- 1 file changed, 1 insertion(+)
+Changes in v3:
+- Rebase on master f9587d4045c6 and Zephyr Li's RV32 fix v3.
+- Replace "Earlier expiries" with "Timer expirations before the flag
+  is cleared" in patch 11's commit message.
+- Add a Fixes trailer to the virtualization-reset fix (patch 13).
+- Link to v2: https://lore.kernel.org/qemu-devel/20260910-riscv-pmu-correctness-v2-0-5da5159a0c64@linux.alibaba.com
 
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index da4c1a090b9b74c5b11dac94987fe573cc1aed5c..34422d0204e7c1532c3424626c70d33f805833d5 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -980,6 +980,7 @@ static void riscv_cpu_reset_hold(Object *obj, ResetType type)
- #ifndef CONFIG_USER_ONLY
-     env->misa_mxl = mcc->def->misa_mxl_max;
-     env->priv = PRV_M;
-+    env->virt_enabled = false;
-     env->mstatus &= ~(MSTATUS_MIE | MSTATUS_MPRV);
-     if (env->misa_mxl > MXL_RV32) {
-         /*
+Changes in v2:
+- Rebase on current master and Zephyr Li's RV32 fix v2.
+- Register the system TCG tests with Meson and use -bios loading.
+- Merge smcdeleg-counter-rv32.S and smcdeleg-event-rv32.S into
+  smcdeleg-rv32.S (patch 6).
+- Use CSR names or local CSR-number macros in tests.
+- Use UINT32_MAX for delegated high-half write-mask checks (patch 6).
+  The caller already requires XLEN=32.
+- Link to v1: https://lore.kernel.org/qemu-devel/20260907-riscv-pmu-correctness-v1-0-5f1f41458989@linux.alibaba.com
 
+---
+TANG Tiancheng (14):
+      target/riscv: Preserve PMU state across event selector writes
+      target/riscv: Support multiple counters per PMU event
+      target/riscv: Use VM-elapsed sources for fixed PMU events
+      target/riscv: Preserve MINH on delegated config reads
+      target/riscv: Preserve minstretcfgh on RV32 minstretcfg writes
+      target/riscv: Fix RV32 accesses to delegated PMU registers
+      target/riscv: Preserve fixed counters across PMU state changes
+      target/riscv: Require Sscofpmf for non-fixed event overflow
+      target/riscv: Rebuild fixed-event PMU overflow deadlines
+      target/riscv: Apply minstret exception accounting to HPM counters
+      target/riscv: Process PMU timer expiry on the owner vCPU
+      target/riscv: Migrate fixed PMU counter state
+      target/riscv: Clear virtualization mode on reset
+      target/riscv: Preserve fixed PMU state across reset
+
+ system/cpu-timers.c                         |   4 +-
+ system/cpus.c                               |   6 +-
+ target/riscv/cpu.c                          |  17 +
+ target/riscv/cpu.h                          |  14 +-
+ target/riscv/machine.c                      |  92 +++-
+ target/riscv/tcg/cpu_helper.c               |   2 +
+ target/riscv/tcg/csr.c                      | 278 +++-------
+ target/riscv/tcg/pmu.c                      | 793 +++++++++++++++++++---------
+ target/riscv/tcg/pmu.h                      |  29 +-
+ target/riscv/tcg/tcg-cpu.c                  |  10 +
+ tests/tcg/riscv32/pmu-fixed-rv32.S          |  90 ++++
+ tests/tcg/riscv32/pmu-minstretcfg-rv32.S    |  52 ++
+ tests/tcg/riscv32/smcdeleg-minh-rv32.S      |  78 +++
+ tests/tcg/riscv32/smcdeleg-rv32.S           | 115 ++++
+ tests/tcg/riscv32/sscofpmf-event-rv32.S     |  99 ++++
+ tests/tcg/riscv32/system/meson.build        |  35 ++
+ tests/tcg/riscv64/pmu-cycle-controls.S      | 107 ++++
+ tests/tcg/riscv64/pmu-lpad.S                |  72 +++
+ tests/tcg/riscv64/pmu-reset-vs.S            | 105 ++++
+ tests/tcg/riscv64/smcdeleg-minh.S           |  78 +++
+ tests/tcg/riscv64/smcdeleg-sxl32.S          | 233 ++++++++
+ tests/tcg/riscv64/sscofpmf-cycle-overflow.S |  58 ++
+ tests/tcg/riscv64/sscofpmf-event-overflow.S | 103 ++++
+ tests/tcg/riscv64/sscofpmf-overflow.S       | 134 +++++
+ tests/tcg/riscv64/system/meson.build        |  88 +++
+ tests/tcg/riscv64/test-minstret-ecall.S     |  26 +
+ 26 files changed, 2252 insertions(+), 466 deletions(-)
+---
+base-commit: f9587d4045c67cd0d8d8bdcd5d0bb5b6b395b63c
+change-id: 20260827-riscv-pmu-correctness-fa880fd9c48d
+prerequisite-message-id: <20261008035150.2223-1-fritchleybohrer@gmail.com>
+prerequisite-patch-id: fc09febb37e6eff15ef860aa49a5d4f85a0f2ee9
+
+Best regards,
 -- 
-2.43.0
+TANG Tiancheng <lyndra@linux.alibaba.com>
 
 
