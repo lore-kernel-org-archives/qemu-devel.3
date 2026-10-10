@@ -4,109 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCC57CA6017
-	for <qemu-devel@archiver.kernel.org>; Sat, 10 Oct 2026 07:46:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49522CA9EBE
+	for <qemu-devel@archiver.kernel.org>; Sat, 10 Oct 2026 08:31:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xFRmB-0001Fb-TY; Sat, 10 Oct 2026 03:45:51 -0400
+	id 1xFSTV-0000ql-2B; Sat, 10 Oct 2026 04:30:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xFRm8-0001EN-Uj
- for qemu-devel@nongnu.org; Sat, 10 Oct 2026 03:45:48 -0400
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xFRm6-0004rs-8G
- for qemu-devel@nongnu.org; Sat, 10 Oct 2026 03:45:48 -0400
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-48afe75f055so410800f8f.2
- for <qemu-devel@nongnu.org>; Sat, 10 Oct 2026 00:45:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1791618344; x=1792223144; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=6rEbUZT8JrIgjKe9a62xSWCSsdjW4XckhpXsYtq7+MU=;
- b=h1gM6/ESiDKbG3Z5HZtz3Ig2gmpRW284aDnLGTRWozvU3Gf88GVcnBICcWAlthRAAk
- lLJazlCwJVwzJtDcKW3Uy2abYlmUJINsS5bHzFiYAXUvEiLn216OHT0qA/zRCqEBl5Zp
- j8Sv0c+UXS0hfiYOw4XndxxiGOfj966cizJrepiZgDMAAK6MnWFgQCNihB5fD/HMAZJW
- JUNrljmAPzQA/eIJGXPaaRkqqBYcRGygEhKFXyRudLQLYy2PTqZ5zjg0//2P4mTmMxdt
- J077tUSp9q/cdPJnGEOlr0ClJO/2wYoJ5FE1fL0UVij+rgwssBh6SwW7by951A0MuqV4
- Lr3A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791618344; x=1792223144;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=6rEbUZT8JrIgjKe9a62xSWCSsdjW4XckhpXsYtq7+MU=;
- b=t8DrPtWw5X0eRV8tErVcAW45vvJ4FglbxpytlI0YjrsBa8azcA1TvdvQ8ERNDn7oDn
- +A3Q6Nxqzh67ZZM90QhgxP1SO8Dl8an7MnLW1wBT0T/wGUwa285lgOxzmKow3UPu2QOV
- kP8BYD3qx9eQnh5+U3vqg4VqxKvEmy3qnHyx8JLRvpFbQzPyEagUrC7WcmZi4bjDT0Ns
- O+wPKl+d1sgzEva96gdsmdSDlCzajhSumXuuvF53VRrQN4xRqoTM/u6DIh7iUZhahA4X
- 9VpxYxT19GIqykLOhfCGd6Qb3JEj79EyD9HyfWyEj4e3eptsX3AA+N2cV+kDPbgLrCCR
- wHLQ==
-X-Forwarded-Encrypted: i=1;
- AKwUvBzPIwwlzv8cKiSJ0g5acLapu2eHzrcB8l/GRA1zqjPihM+jayNKeItf1vacipaJ+2YooquCgXvdYKv+@nongnu.org
-X-Gm-Message-State: AFq9FYKX55Apz7S1UVbh9wPQT73Bf3mANBwL5mdf9k9j+vTu0QjVEty4
- 2EWf0i48I+LbJRljbuEo8sMFp1dKSbiz/lINZwS3GZUhF812gVyGMvk1Pn4kZl7dEfc=
-X-Gm-Gg: AYBFou1IqO7OvrdasfEPZLE9TAZ2pn2uYY7DHXgW9rGYAp8i2R087tZnDRJvKp0d52I
- fnWct8nbiTUocpnZotZaKNp56w8cEVw6Jkl6ldfKnJFAqRN0Ckphg6lU7tht00ZoyCE+WxBh6FC
- KMShtKv6bDgPf25BiZTdjUvNGQjnychIQoDgJyXuIYEHHwhpcrMEbfVQdPv2SxTAmMVQmt3ZmM5
- At2tSf1LGDSz/nh7rbRsIMPPA0wyib19s1tDcxWYIwZhS0qh6Tzdg/rwvKA9zfdhr4KMqNkPybX
- Ki+e0bgJq+xD3FSebwJoJwTkJ/Jc1Y3VNwGLkpdzm7ipLNKYAO9hr8GibYcVofWcUx7oTsPLVwE
- abXV7+ev1lBY4IMDldBjXGVHKpWGVTBy59W964OOV87NmDxYWiM6kKhlRr56q9VJTjFBRisgXfx
- YV5qT5WhIVT9OQTqLKbT4C27fEqO4JC+M/H3VtNtpirRvVwGo9su6iKSYMxZkF23R+N58dgqyAn
- GxRsXdBX0GJsjZRcO+oPcoHSTVtEpqiwpVA10ajS++F7LTu+iUzJ6E=
-X-Received: by 2002:a05:600c:4ecb:b0:4a1:6916:798 with SMTP id
- 5b1f17b1804b1-4a18e4a3f69mr77392505e9.14.1791618343890; 
- Sat, 10 Oct 2026 00:45:43 -0700 (PDT)
-Received: from ?IPV6:2a00:1e:e082:2901:a2d3:66fa:95e6:7d81?
- ([2a00:1e:e082:2901:a2d3:66fa:95e6:7d81])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48db9462ebcsm8451254f8f.8.2026.10.10.00.45.41
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 10 Oct 2026 00:45:42 -0700 (PDT)
-Message-ID: <f8ea6e43-2e6e-48b7-a61c-d9ec2200872c@linaro.org>
-Date: Sat, 10 Oct 2026 09:45:40 +0200
+ (Exim 4.90_1) (envelope-from <stian@itx.no>) id 1xFSTF-0000gx-0l
+ for qemu-devel@nongnu.org; Sat, 10 Oct 2026 04:30:27 -0400
+Received: from itx-kvm-14.itxnorge.no ([91.189.121.228] helo=mx.itxnorge.no)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <stian@itx.no>) id 1xFSTC-0000FW-9F
+ for qemu-devel@nongnu.org; Sat, 10 Oct 2026 04:30:19 -0400
+Message-ID: <0fe42d81618fc6e7a229c9c3efcbf9310987f89d.camel@itx.no>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=itx.no; s=mx.itx.no;
+ t=1791621007;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=cSkXk3kF81GRdS/pcArbC+c54Jy/Bf6hKdphUw/vZ8Q=;
+ b=LCXN0A9nOkd1HCKb0XQXzL74e324lApDrPsqoSdS+OO09gchL/gN20pZGsyWyu9/P58a2l
+ gCXGs6++qLEV/NLoiM57im//ff8RGLK2onh+m87wEYk/kG3PH/9YpcID504U2VJ75azWrj
+ Z9gr0TRCRa+aJouQSXzMclCMHSzNh/E=
+Subject: Re: [RFC] target/sparc: crypto instructions for Linux kernel testing
+From: Stian Halseth <stian@itx.no>
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, Artyom Tarasenko
+ <atar4qemu@gmail.com>, Eric Biggers <ebiggers@kernel.org>
+Date: Sat, 10 Oct 2026 10:30:02 +0200
+In-Reply-To: <764a9ecd-6856-4309-9ae3-8f878a9b1d8a@linaro.org>
+References: <63d84da88caec4176900e535116d64b1c4cffffb.camel@itx.no>
+ <764a9ecd-6856-4309-9ae3-8f878a9b1d8a@linaro.org>
+Content-Type: multipart/signed; micalg="pgp-sha512";
+ protocol="application/pgp-signature"; boundary="=-uEtGwWdR/kam5/vm0+lC"
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 4/6] tcg: namespace target helper symbols for combined
- builds
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Yonggang Luo <luoyonggang@gmail.com>, qemu-devel@nongnu.org
-Cc: Song Gao <17746591750@163.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Alistair Francis <alistair.francis@wdc.com>,
- Peter Maydell <peter.maydell@linaro.org>, Paolo Bonzini
- <pbonzini@redhat.com>, Weiwei Li <liwei1518@gmail.com>,
- Sunil V L <sunilvl@ventanamicro.com>,
- Philippe Mathieu-Daude <philmd@mailo.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-riscv@nongnu.org,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Chao Liu <chao.liu@processmission.com>, Igor Mammedov <imammedo@redhat.com>,
- Ani Sinha <anisinha@redhat.com>, qemu-arm@nongnu.org,
- "Michael S. Tsirkin" <mst@redhat.com>
-References: <20260930073935.712-1-luoyonggang@gmail.com>
- <20260930073935.712-5-luoyonggang@gmail.com>
- <374ba010-b530-4310-b20f-65ada56cda6b@oss.qualcomm.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <374ba010-b530-4310-b20f-65ada56cda6b@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=richard.henderson@linaro.org; helo=mail-wr1-x42a.google.com
+Received-SPF: pass client-ip=91.189.121.228; envelope-from=stian@itx.no;
+ helo=mx.itxnorge.no
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,28 +63,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/1/26 18:51, Pierrick Bouvier wrote:
-> On 9/30/2026 12:39 AM, Yonggang Luo wrote:
->> Use target-specific assembler names and helper metadata for TCG helpers
->> when multiple targets share a binary. The generated prototype maps the
->> generic C helper name to a target-specific linker symbol, for example:
->>
->>      helper_raise_exception
->>          __asm__("helper_i386_raise_exception")
->>
->> This lets target helper definitions keep generic C names while avoiding
->> linker symbol collisions between targets.
->>
-> Hi Richard, do you have an opinion on this patch?
-> 
-> We are trying to see if we do renaming per helper, or if we introduce a
-> "generic" way to deal with it. I don't have a strong opinion, renaming
-> things or adding more macros and build system soup are both ok on my
-> side, so direction would depend on your culinary taste.
-I think the general direction is good.  Perhaps the specifics need 
-adjustment.  In particular, using __asm__ to rename symbols is suspect 
-and likely non-portable to non-ELF hosts like Darwin and Windows.
+
+--=-uEtGwWdR/kam5/vm0+lC
+Content-Type: text/plain; charset="ISO-8859-1"
+Content-Transfer-Encoding: quoted-printable
+
+Hi Richard,
+
+On Sat, 2026-10-10 at 09:30 +0200, Richard Henderson wrote:
+>=20
+> When I implemented the VIS{3,4} stuff a couple of years ago, I tried
+> to add a newer cpu (though I forget which model).=A0 I couldn't get a
+> kernel to boot with that and sun4u, so in the end I left the cpu out
+> and left the extensions as plain cpu features.
+>=20
+> The biggest problem with sun4v is that it's incomplete.=A0 It has the
+> most promise as an emulation platform because it is explicitly a
+> hyper<v<isor platform.=A0 In the ideal case, QEMU would not faithfully
+> model the hardware, but would instead model the hypervisor
+> interface.=A0 Which would make lots of stuff far easier and quicker to
+> emulate -- most notably the TLB.
 
 
-r~
+I agree. I looked into the sun4v hypervisor first, as that sounded like
+the ideal approach. I did however come to realize, as you say, that it
+would be a lot of work. Also there is the requirement for bundling the
+OpenSPARC firmware and building a boot image (no -kernel), which is a
+bit overkill for kernel testing.=20
+
+Based on that reasoning I've already done some experimenting, by
+writing the crypto code for sun4u. Much of the code would be shared
+either way, so if the sun4u approach was rejected, I would still be
+able to use much of it.
+I've managed to get it working well enough to exercise the crypto
+tests. It's not in a upstreamable state yet, still work in progress. I
+took some shortcuts just to get to a proof of concept, and I wasn't
+sure it would every be finished with this approach.
+
+>=20
+> But it's a big packet of work and no one has done it.
+>=20
+
+Indeed, and much more than what is needed to achieve the goal of
+getting the crypto tests running, so would be out of scope for me, at
+least.
+
+If you would be willing to accept a contribution based on my described
+sun4u approach, I could spend some time cleaning it up and run more
+thorough tests to iron out any remaining issues (which I'm sure there
+are).
+
+Mark, for this to work Linux needs a hwcap-list property on the cpu
+node before it uses the instructions. =A0What are your thougts about QEMU
+passing the list in a fw_cfg file, with OpenBIOS adding the property in
+cpu_generic_init()?=A0
+
+/Stian
+
+--=-uEtGwWdR/kam5/vm0+lC
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQTK1ph9OaYoND1R57zoeAEuJe36VgUCasn3igAKCRDoeAEuJe36
+VpH8APwJmC/gE0t1Lp3Y9wx71G7EXVzYFtaFlj4PC3zgpWqc9wEAjMEdJtgaq3HD
+F1/GWv0DsL85OsrNTxfa4beaNC7YUAo=
+=AvUP
+-----END PGP SIGNATURE-----
+
+--=-uEtGwWdR/kam5/vm0+lC--
 
