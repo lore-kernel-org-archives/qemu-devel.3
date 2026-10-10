@@ -4,50 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E83F2CA6017
-	for <qemu-devel@archiver.kernel.org>; Sat, 10 Oct 2026 13:42:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1436BCA6017
+	for <qemu-devel@archiver.kernel.org>; Sat, 10 Oct 2026 13:42:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xFXHr-0002K8-9U; Sat, 10 Oct 2026 09:38:55 -0400
+	id 1xFXID-0003Dj-2f; Sat, 10 Oct 2026 09:39:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1xFXHg-0002H0-Cb
- for qemu-devel@nongnu.org; Sat, 10 Oct 2026 09:38:44 -0400
+ id 1xFXIA-000370-7U
+ for qemu-devel@nongnu.org; Sat, 10 Oct 2026 09:39:14 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1xFXHe-0004bb-D7
- for qemu-devel@nongnu.org; Sat, 10 Oct 2026 09:38:44 -0400
+ id 1xFXI8-0004f7-HK
+ for qemu-devel@nongnu.org; Sat, 10 Oct 2026 09:39:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1791639521;
+ s=mimecast20190719; t=1791639551;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=InNpy/fUH23ypsNkCh7xC1ndZPiRh9XsgEv/1J5P96c=;
- b=G2oxcbgqMYN9AkqcKv+XKBMO4jp5PuRIGq75A7apGTYcl99/YnTiiTyjjGdGwcTz9c3T+H
- bnWFC4zxOGR9pknbUgYfjEQ7J3ADv8f0pAp4s5e3wKm8vpRpFJlIazuvm5RqkIQSmUeLoS
- sJyWm8uH4kxUbNyEmue5WGcKmnViwZ4=
+ bh=5ahJOvaYHs21/JKqAABHSIlAiPcEjA+M5FAHkRnQW3k=;
+ b=DvI71/UtIWngj9vceE6DdV1yxtvA13ang78G2i3bYdysYIPGEdgvM5NWbL9tgTvrdq4vQI
+ Sx7nsE5OBDPHKy+iW2nU4nTJNpQm9J0wM83pwf9vWS6jqOlFcRC3nvtxTkjIbgrEiGK5/E
+ iMYgtUZVon6r3xa2UKSCu7iIF5At2as=
 Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-314-DUR5OHDDMySzgg9fJ2vOaw-1; Sat,
- 10 Oct 2026 13:38:37 +0000
-X-MC-Unique: DUR5OHDDMySzgg9fJ2vOaw-1
-X-Mimecast-MFC-AGG-ID: DUR5OHDDMySzgg9fJ2vOaw_1791639515
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-536-kcQYT6ZWMpy_MzRG2OuGFw-1; Sat,
+ 10 Oct 2026 13:39:02 +0000
+X-MC-Unique: kcQYT6ZWMpy_MzRG2OuGFw-1
+X-Mimecast-MFC-AGG-ID: kcQYT6ZWMpy_MzRG2OuGFw_1791639540
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B0D9A1809C9F; Sat, 10 Oct 2026 13:38:35 +0000 (UTC)
+ id A9FDB180ACCE; Sat, 10 Oct 2026 13:39:00 +0000 (UTC)
 Received: from laptop.redhat.corp (headnet03.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.114])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 4D61230000E5; Sat, 10 Oct 2026 13:38:31 +0000 (UTC)
+ id DB74430000E5; Sat, 10 Oct 2026 13:38:55 +0000 (UTC)
 From: Eric Auger <eric.auger@redhat.com>
 To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
  qemu-arm@nongnu.org, kvmarm@lists.linux.dev, peter.maydell@linaro.org,
@@ -57,10 +57,10 @@ To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
 Cc: maz@kernel.org, oliver.upton@linux.dev, pbonzini@redhat.com,
  armbru@redhat.com, berrange@redhat.com, abologna@redhat.com,
  jdenemar@redhat.com
-Subject: [PATCH v10 12/26] arm/kvm: Initialize isar.idregs[] with all writable
- host ID regs
-Date: Sat, 10 Oct 2026 15:36:16 +0200
-Message-ID: <20261010133725.642498-13-eric.auger@redhat.com>
+Subject: [PATCH v10 17/26] target/arm/kvm: Introduce
+ kvm_arm_override_idreg_field helper
+Date: Sat, 10 Oct 2026 15:36:21 +0200
+Message-ID: <20261010133725.642498-18-eric.auger@redhat.com>
 In-Reply-To: <20261010133725.642498-1-eric.auger@redhat.com>
 References: <20261010133725.642498-1-eric.auger@redhat.com>
 MIME-Version: 1.0
@@ -90,136 +90,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-kvm_arm_get_host_cpu_features() already retrieves the values of some
-host id registers to analyze the available vcpu features.
+Introduce kvm_arm_override_idreg_field() helper that allows
+to read an ID register value from a vcpu fd, override a
+given field value and reinject the new register value in the
+guest vcpu.
 
-Eventually we want to be able to allow the user to change the value
-of writable ID reg fields. So we need to store the initial value of all
-writable ID regs into isar.idregs[].
-
-Introduce a new get_host_cpu_idregs() helper that populates isar.idregs[]
-and call it from kvm_arm_get_host_cpu_features.
-
-This patch has no impact on cpreg values. isar.idregs[] is only
-used as a temporary storage for register values to be updated in place
-later.  Also it does not handle the writeback of isar.idregs[] into cpreg
-value list after user update. This will be handled separately.
-
-Note the host values are retrieved from the scratch vcpu initialized with
-all the available capabilities exposed by KVM, independently on the
-final vcpu features made by the user through the legacy composite
-options such as sve, pauth, virtualization, ...
-
-At the moment, the only caller sets writable to true. Named vcpu models
-will use the writable=false mode. Note this will require some extra
-handling for ID regs that cannot be read from KVM.
+The helper is not used yet, hence the G_GNUC_UNUSED marker.
+It will be used in subsequent patch to apply a new field
+value set through SYSREG property.
 
 Signed-off-by: Eric Auger <eric.auger@redhat.com>
-Signed-off-by: Cornelia Huck <cohuck@redhat.com>
-
 ---
-v9 -> v10:
-- get rid of spurious kvm_arm_writable_idregs_to_cpreg_list trace point
-- add a writable parameter to get_host_cpu_idregs
-- some code cleanup
-
-v8 -> v9:
-- improve the commit msg. Only initialize in this patch and move the
-  write back to cpreg value list in a different patch.
-- Do not hack CLIDR here. The correct way to fix that temporarily is to
-  do that in the machine instead.
-
-v7 -> v8
-- fix indent and added Khushit's R-b
-
-v6 -> v7
-- remove vcpu from prototypes (Khushit)
-
-v5 -> v6
-- do not check writable_map anymore
----
- target/arm/kvm.c        | 44 ++++++++++++++++++++++++++++++++++++++++-
+ target/arm/kvm.c        | 48 ++++++++++++++++++++++++++++++++++++++++-
  target/arm/trace-events |  1 +
- 2 files changed, 44 insertions(+), 1 deletion(-)
+ 2 files changed, 48 insertions(+), 1 deletion(-)
 
 diff --git a/target/arm/kvm.c b/target/arm/kvm.c
-index 2e68130611..ac4f307276 100644
+index 6c15d8522f..c6c9ea03a5 100644
 --- a/target/arm/kvm.c
 +++ b/target/arm/kvm.c
-@@ -43,6 +43,7 @@
- #include "hw/acpi/ghes.h"
- #include "target/arm/gtimer.h"
- #include "migration/blocker.h"
-+#include "cpu-idregs.h"
- 
- const KVMCapabilityInfo kvm_arch_required_capabilities[] = {
-     KVM_CAP_INFO(DEVICE_CTRL),
-@@ -329,7 +330,45 @@ static int kvm_feature_idx_to_idregs_idx(int kidx)
-     return get_sysreg_idx(sysreg);
+@@ -1247,6 +1247,50 @@ bool kvm_arm_cpu_post_load(ARMCPU *cpu)
+     return true;
  }
  
--static void kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
-+/*
-+ * get_host_cpu_idregs: Read all the ID register values from KVM
-+ * vcpu fd and populate @ahcf->isar.idregs[] with those values
-+ *
-+ * Need to be called once the writable mask has been populated
-+ * if @writable is set
-+ *
-+ * @fd: vcpu fd
-+ * @ahcf: ARMHostCPUFeatures whose @ahcf->isar.idregs[] will be
-+ *        populated
-+ * @writable: if set, only writable ID regs are read
-+ */
-+static int get_host_cpu_idregs(int fd, ARMHostCPUFeatures *ahcf, bool writable)
++static int G_GNUC_UNUSED
++kvm_arm_override_idreg_field(int fd, ARM64SysRegField *field,
++                             uint64_t newfv, Error **errp)
 +{
-+    for (int i = 0; i < NUM_ID_IDX; i++) {
-+        ARM64SysReg *sysregdesc = &arm64_id_regs[i];
-+        ARMSysRegs sysreg = id_register_sysreg[i];
-+        uint64_t *reg;
-+        int ret;
++    uint64_t current, currentfv, value;
++    struct kvm_one_reg kvm_reg;
++    int index = field->index;
++    int length = field->length;
++    int lower = field->shift;
++    ARM64SysReg *reg;
++    uint64_t kvm_idx;
++    int ret;
 +
-+        if (writable && !sysregdesc->writable_mask) {
-+            continue;
-+        }
++    reg = &arm64_id_regs[index];
 +
-+        reg = &ahcf->isar.idregs[i];
-+        ret = read_sys_reg64(fd, reg, idregs_sysreg_to_kvm_reg(sysreg));
++    kvm_idx = idregs_sysreg_to_kvm_reg(id_register_sysreg[index]);
++
++    ret = read_sys_reg64(fd, &current, kvm_idx);
++    if (ret) {
++        error_setg(errp, "failed to read %s current value", reg->name);
++        return ret;
++    }
++    currentfv = extract64(current, lower, length);
++
++    if (currentfv != newfv) {
++        value = deposit64(current, lower, length, newfv);
++        kvm_reg.id = kvm_idx;
++        kvm_reg.addr = (uintptr_t)&value;
++
++        ret = ioctl(fd, KVM_SET_ONE_REG, &kvm_reg);
 +        if (ret) {
-+            error_report("%s error reading value of host %s register (%m)",
-+                         __func__, sysregdesc->name);
++            error_setg(errp,
++                       "ID register field %s.%s: fail to apply new value=0x%"
++                       PRIx64" (current is 0x%"PRIx64"): %m",
++                       reg->name, field->name, newfv, currentfv);
 +
 +            return ret;
 +        }
-+        trace_get_host_cpu_idregs(sysregdesc->name, *reg);
 +    }
++    trace_kvm_arm_override_idreg_field(reg->name, field->name,
++                                       currentfv, newfv);
 +    return 0;
 +}
 +
-+static void
-+kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+ void kvm_arm_reset_vcpu(ARMCPU *cpu)
  {
-     /* Identify the feature bits corresponding to the host CPU, and
-      * fill out the ARMHostCPUClass fields accordingly. To do this
-@@ -415,6 +454,9 @@ static void kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
-         SET_IDREG(&ahcf->isar, ID_AA64PFR0, 0x00000011); /* EL1&0, AArch64 only */
-         err = 0;
-     } else {
-+        /* Make sure all writable ID reg values are initialized */
-+        err |= get_host_cpu_idregs(fd, ahcf, true);
+     int ret;
+@@ -1259,6 +1303,7 @@ void kvm_arm_reset_vcpu(ARMCPU *cpu)
+         fprintf(stderr, "kvm_arm_vcpu_init failed: %s\n", strerror(-ret));
+         abort();
+     }
 +
-         err |= get_host_cpu_reg(fd, ahcf, ID_AA64PFR1_EL1_IDX);
-         err |= get_host_cpu_reg(fd, ahcf, ID_AA64PFR2_EL1_IDX);
-         err |= get_host_cpu_reg(fd, ahcf, ID_AA64SMFR0_EL1_IDX);
+     if (!write_kvmstate_to_list(cpu)) {
+         fprintf(stderr, "write_kvmstate_to_list failed\n");
+         abort();
+@@ -2204,7 +2249,8 @@ int kvm_arch_init_vcpu(CPUState *cs, Error **errp)
+         return ret;
+     }
+     SET_IDREG(&cpu->isar, MPIDR, mpidr);
+-    cpu->mp_affinity = mpidr & ARM64_AFFINITY_MASK;
++
++    cpu->mp_affinity = GET_IDREG(&cpu->isar, MPIDR) & ARM64_AFFINITY_MASK;
+ 
+     return kvm_arm_init_cpreg_list(cpu, errp);
+ }
 diff --git a/target/arm/trace-events b/target/arm/trace-events
-index 8502fb3265..8c7faf57c7 100644
+index ddc79eb666..81564f1d96 100644
 --- a/target/arm/trace-events
 +++ b/target/arm/trace-events
-@@ -13,6 +13,7 @@ arm_gt_update_irq(int timer, int irqstate) "gt_update_irq: timer %d irqstate %d"
- 
+@@ -14,6 +14,7 @@ arm_gt_update_irq(int timer, int irqstate) "gt_update_irq: timer %d irqstate %d"
  # kvm.c
  kvm_arm_fixup_msi_route(uint64_t iova, uint64_t gpa) "MSI iova = 0x%"PRIx64" is translated into 0x%"PRIx64
-+get_host_cpu_idregs(const char *name, uint64_t value) "scratch vcpu host value for %s is 0x%"PRIx64
+ get_host_cpu_idregs(const char *name, uint64_t value) "scratch vcpu host value for %s is 0x%"PRIx64
++kvm_arm_override_idreg_field(const char *reg_name, const char *field_name, uint64_t currentfv, uint64_t newfv) "%s.%s current=0x%"PRIx64" new=0x%"PRIx64
  
  # cpu.c
  arm_cpu_reset(uint64_t mp_aff) "cpu %" PRIu64
