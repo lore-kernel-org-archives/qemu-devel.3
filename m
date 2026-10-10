@@ -4,50 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6673CA9EC5
-	for <qemu-devel@archiver.kernel.org>; Sat, 10 Oct 2026 13:40:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFDB9CA9EC5
+	for <qemu-devel@archiver.kernel.org>; Sat, 10 Oct 2026 13:40:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xFXIM-0003hz-2x; Sat, 10 Oct 2026 09:39:27 -0400
+	id 1xFXIG-0003WV-RV; Sat, 10 Oct 2026 09:39:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1xFXIK-0003gk-Ic
- for qemu-devel@nongnu.org; Sat, 10 Oct 2026 09:39:24 -0400
+ id 1xFXIE-0003Jo-Hv
+ for qemu-devel@nongnu.org; Sat, 10 Oct 2026 09:39:18 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1xFXII-0004gP-Al
- for qemu-devel@nongnu.org; Sat, 10 Oct 2026 09:39:23 -0400
+ id 1xFXIC-0004fo-P1
+ for qemu-devel@nongnu.org; Sat, 10 Oct 2026 09:39:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1791639560;
+ s=mimecast20190719; t=1791639555;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=1P6OGS90P5wwSpHO8d6e35D+/9E59SZZDqpt+CKzk0c=;
- b=bmkpThEezqoEBx6guZ9OQ3YKUyNwxkLoiYbWdIDTdDxFA3U7+fzk14MpUTsslqIKLuPSSm
- eOO9PHCV6p2yv81KSikB9759mRmjC423a9GZcRawInjvc8/OP91YKsfL35NhQJIJ4ETFf0
- pFAdwFplMjyige8CexMckjeHkkbXd3E=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=2e+3CcNTBkD4MMGpHP73g186a5p7lV5juXn4lBjmR0Q=;
+ b=f7cWgZ9anaO8Fhx8IZ3ocxjDqbfh9ZN112YEGYgw1InHI8erhKuvGGVG+0FeyJyQvI6shZ
+ CiLhCAJx8ROPbG4DRiuOc7E02azYIEi1ZiWFWWP/KdZWdO5S24bsI4w8c8IHPSQBeFB7WY
+ 6UDbbiSrFGrBAPcso6I1E4WWqANHSDA=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-194-aSmS0IB0ObCGGaOYOF72ig-1; Sat,
- 10 Oct 2026 13:39:17 +0000
-X-MC-Unique: aSmS0IB0ObCGGaOYOF72ig-1
-X-Mimecast-MFC-AGG-ID: aSmS0IB0ObCGGaOYOF72ig_1791639555
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-312-HXkgVivpOn-D1dziElzKEQ-1; Sat,
+ 10 Oct 2026 13:39:12 +0000
+X-MC-Unique: HXkgVivpOn-D1dziElzKEQ-1
+X-Mimecast-MFC-AGG-ID: HXkgVivpOn-D1dziElzKEQ_1791639550
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5244A195418F; Sat, 10 Oct 2026 13:39:15 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 88E081944DF3; Sat, 10 Oct 2026 13:39:10 +0000 (UTC)
 Received: from laptop.redhat.corp (headnet03.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.114])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id E258930000E5; Sat, 10 Oct 2026 13:39:10 +0000 (UTC)
+ id 1C48330000E5; Sat, 10 Oct 2026 13:39:05 +0000 (UTC)
 From: Eric Auger <eric.auger@redhat.com>
 To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
  qemu-arm@nongnu.org, kvmarm@lists.linux.dev, peter.maydell@linaro.org,
@@ -57,10 +57,9 @@ To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
 Cc: maz@kernel.org, oliver.upton@linux.dev, pbonzini@redhat.com,
  armbru@redhat.com, berrange@redhat.com, abologna@redhat.com,
  jdenemar@redhat.com
-Subject: [PATCH v10 20/26] target/arm/kvm: Add consistency checking for SYSREG
- props
-Date: Sat, 10 Oct 2026 15:36:24 +0200
-Message-ID: <20261010133725.642498-21-eric.auger@redhat.com>
+Subject: [PATCH v10 19/26] target/arm/kvm: Apply SYSREG props
+Date: Sat, 10 Oct 2026 15:36:23 +0200
+Message-ID: <20261010133725.642498-20-eric.auger@redhat.com>
 In-Reply-To: <20261010133725.642498-1-eric.auger@redhat.com>
 References: <20261010133725.642498-1-eric.auger@redhat.com>
 MIME-Version: 1.0
@@ -91,187 +90,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since legacy composite options (such as SVE, virtualization, ...)
-and new SYSREG props coexist, add some basic consistency checks.
-
-Those checks are performed in kvm_arch_init_vcpu() before
-applying the SYSREG props at the end of the initialization chain.
-
-Some ID reg fields corresponding to legacy composite option scope
-are not (yet) writable (EL3, MTE, SVE, ...). As such they are not
-supposed to be exposed through SYSREG properties. However in the
-hypothesis they would become writable, and thus would be exposed
-and attempted to be set, we need to reject any setting because no
-consistency check is implemented yet.
-
-The function is exported because it will be used on the qmp
-expansion path too.
+Now the infrastructure is in place let's trigger the
+SYSREG prop update in the KVM code. This is done in both
+kvm_arch_init_vcpu() and kvm_arm_reset_vcpu() after the final
+vcpu has been initialized with the proper kvm init settings and
+before kvmstate is synced back to the cpreg list.
 
 Signed-off-by: Eric Auger <eric.auger@redhat.com>
 
 ---
 
 v9 -> v10
-- improve commit description
-- fix return in !arm_feature(&cpu->env, ARM_FEATURE_AARCH64) block
-- removed cpu_isar_feature(aa64_sve, cpu) && value == 0 check
+- use ValueRange
 ---
- target/arm/cpu-idregs.h | 17 ++++++++
- target/arm/cpu64.c      | 94 +++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 111 insertions(+)
+ target/arm/cpu64.c |  9 +++++----
+ target/arm/kvm.c   | 20 +++++++++++++++++++-
+ 2 files changed, 24 insertions(+), 5 deletions(-)
 
-diff --git a/target/arm/cpu-idregs.h b/target/arm/cpu-idregs.h
-index 56c2324359..465ec83c97 100644
---- a/target/arm/cpu-idregs.h
-+++ b/target/arm/cpu-idregs.h
-@@ -56,4 +56,21 @@ typedef int (*ARMSysregPropApplyFn)(ARMCPU *cpu, ARM64SysRegField *field,
- int arm_cpu_apply_sysreg_props(ARMCPU *cpu, ARMSysregPropApplyFn accel_apply_fn,
-                                Error **errp);
- 
-+/**
-+ * arm_cpu_validate_sysreg_prop:
-+ *
-+ * accelerator agnostic validation of a field value (especially regarding
-+ * the consistency with legacy composite options such as virtualization, pmu,
-+ * sve ...)
-+ *
-+ * @cpu: vcpu the field value is validated against
-+ * @field: field the value is applied to
-+ * @value: field value to be validated
-+ * @errp: error handle set if validation fails
-+ *
-+ * returns true if validation succeeds
-+ */
-+bool arm_cpu_validate_sysreg_prop(ARMCPU *cpu, ARM64SysRegField *field,
-+                                  uint64_t value, Error **errp);
-+
- #endif
 diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
-index ff178bcaf5..b7c0a27b16 100644
+index 26baee102c..ff178bcaf5 100644
 --- a/target/arm/cpu64.c
 +++ b/target/arm/cpu64.c
-@@ -821,6 +821,63 @@ static ARM64SysRegField *arm_sysreg_get_field(ARM64SysReg *reg, int bit)
-     return NULL;
+@@ -883,10 +883,11 @@ static void set_sysreg_prop(Object *obj, Visitor *v,
+         return;
+     }
+ 
+-    if (field->arch_vals) {
+-        /* this field has some enum values */
+-        for (int i = 0; i < field->arch_vals_count; i++) {
+-            if (value == field->arch_vals[i]) {
++    if (field->arch_value_ranges) {
++        for (uint32_t i = 0; i < field->arch_value_ranges_count; i++) {
++            const ARM64SysRegArchValueRange *r = &field->arch_value_ranges[i];
++
++            if (value >= r->lo && value <= r->hi) {
+                 goto valid;
+             }
+         }
+diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+index c6c9ea03a5..0c7e80aea8 100644
+--- a/target/arm/kvm.c
++++ b/target/arm/kvm.c
+@@ -1247,7 +1247,7 @@ bool kvm_arm_cpu_post_load(ARMCPU *cpu)
+     return true;
  }
  
-+/**
-+ * arm_cpu_validate_sysreg_prop:
-+ *
-+ * Validate a SYSREG field value against legacy composite options
-+ * (virtualization, pmu, sve, aarch64, ...). Some other fields are known
-+ * to conflict but they are not writable yet. For those we just skip them
-+ * in aarch64_add_one_idreg_properties() in the hypothesis their property
-+ * shows up.
-+ */
-+bool arm_cpu_validate_sysreg_prop(ARMCPU *cpu, ARM64SysRegField *field,
-+                                  uint64_t value, Error **errp)
-+{
-+    ARM64SysReg *sysregdesc = &arm64_id_regs[field->index];
-+    g_autofree char *propname =
-+        g_strdup_printf("SYSREG_%s_%s", sysregdesc->name, field->name);
-+
-+    /* virtualization */
-+    if (!strcmp(propname, "SYSREG_ID_AA64PFR0_EL1_EL2")) {
-+        if (cpu->has_el2 && value == 0) {
-+            error_setg(errp,
-+                       "Inconsistent -machine virtualization=on and %s=0",
-+                       propname);
-+            return false;
-+        } else if (!cpu->has_el2 && value > 0) {
-+            error_setg(errp,
-+                       "Inconsistent -machine virtualization=off and %s > 0",
-+                       propname);
-+            return false;
-+        }
-+    } else if (!strcmp(propname, "SYSREG_ID_AA64ZFR0_EL1_SVEver")) {
-+        if (!cpu_isar_feature(aa64_sve, cpu) && value > 0) {
-+            error_setg(errp, "sve is not set but %s is greater than 0",
-+                       propname);
-+            return false;
-+        }
-+    /* PMU */
-+    } else if (!strcmp(propname, "SYSREG_ID_AA64DFR0_EL1_PMUVer")) {
-+        if (cpu->has_pmu && value == 0) {
-+            error_setg(errp, "%s is 0 whereas pmu is set", propname);
-+            return false;
-+        } else if (!cpu->has_pmu && value) {
-+            error_setg(errp, "%s is non null whereas pmu is unset", propname);
-+            return false;
-+        }
-+    /* aarch64=off */
-+    } else if (!arm_feature(&cpu->env, ARM_FEATURE_AARCH64)) {
-+        if ((!strcmp(propname, "SYSREG_ID_AA64PFR0_EL1_EL0") ||
-+             !strcmp(propname, "SYSREG_ID_AA64PFR0_EL1_EL1") ||
-+             !strcmp(propname, "SYSREG_ID_AA64PFR0_EL1_EL2")) && value < 2) {
-+            error_setg(errp, "%s is < 2 while aarch64 is set to off",
-+                       propname);
-+            return false;
-+        }
-+    }
-+    return true;
-+}
-+
- /**
-  * arm_cpu_apply_sysreg_props:
-  *
-@@ -850,6 +907,10 @@ int arm_cpu_apply_sysreg_props(ARMCPU *cpu, ARMSysregPropApplyFn accel_apply_fn,
-             return -EINVAL;
-         }
- 
-+        if (!arm_cpu_validate_sysreg_prop(cpu, field, newfv, errp)) {
-+            return -EINVAL;
-+        }
-+
-         ret = accel_apply_fn(cpu, field, newfv, errp);
-         if (ret) {
-             return ret;
-@@ -934,6 +995,35 @@ static void get_sysreg_prop(Object *obj, Visitor *v,
-     trace_get_sysreg_prop(name, value);
+-static int G_GNUC_UNUSED
++static int
+ kvm_arm_override_idreg_field(int fd, ARM64SysRegField *field,
+                              uint64_t newfv, Error **errp)
+ {
+@@ -1291,6 +1291,17 @@ kvm_arm_override_idreg_field(int fd, ARM64SysRegField *field,
+     return 0;
  }
  
-+/*
-+ * SYSREG properties that are not exposed yet because the fields
-+ * are not yet writable and which are known to conflict with legacy
-+ * composite options (EL3, MTE, SVE, pauth, ...). In case the
-+ * associated fields would become exposed, we skip them when registering
-+ * the properties.
-+ */
-+static const char * const aarch64_sysreg_prop_skip_list[] = {
-+    "SYSREG_ID_AA64PFR0_EL1_EL3",
-+    "SYSREG_ID_AA64PFR1_EL1_MTE",
-+    "SYSREG_ID_AA64PFR0_EL1_SVE",
-+    "SYSREG_ID_AA64ISAR1_EL1_APA",
-+    "SYSREG_ID_AA64ISAR1_EL1_API",
-+    "SYSREG_ID_AA64ISAR1_EL1_GPA",
-+    "SYSREG_ID_AA64ISAR1_EL1_GPI",
-+    "SYSREG_ID_AA64ISAR2_EL1_APA3",
-+    "SYSREG_ID_AA64ISAR2_EL1_GPA3",
-+};
-+
-+static bool aarch64_sysreg_prop_skipped(const char *prop_name)
++static int kvm_arm_apply_one_sysreg_prop(ARMCPU *cpu, ARM64SysRegField *field,
++                                         uint64_t newfv, Error **errp)
 +{
-+    for (int i = 0; i < ARRAY_SIZE(aarch64_sysreg_prop_skip_list); i++) {
-+        if (g_str_equal(prop_name, aarch64_sysreg_prop_skip_list[i])) {
-+            return true;
-+        }
-+    }
-+    return false;
++    return kvm_arm_override_idreg_field(CPU(cpu)->kvm_fd, field, newfv, errp);
 +}
 +
- /**
-  * aarch64_add_idreg_properties: Add SYSREG_<REG>_<FIELD> properties
-  * for named fields of an ID register
-@@ -985,6 +1075,10 @@ aarch64_add_one_idreg_properties(Object *obj, ARM64SysReg *reg,
-         }
++static int kvm_arm_apply_sysreg_props(ARMCPU *cpu, Error **errp)
++{
++    return arm_cpu_apply_sysreg_props(cpu, kvm_arm_apply_one_sysreg_prop, errp);
++}
++
+ void kvm_arm_reset_vcpu(ARMCPU *cpu)
+ {
+     int ret;
+@@ -1304,6 +1315,8 @@ void kvm_arm_reset_vcpu(ARMCPU *cpu)
+         abort();
+     }
  
-         prop_name = g_strdup_printf("SYSREG_%s_%s", reg->name, field->name);
-+        if (aarch64_sysreg_prop_skipped(prop_name)) {
-+            g_free(prop_name);
-+            continue;
-+        }
-         object_property_add(obj, prop_name, "uint64",
-                             get_sysreg_prop, set_sysreg_prop, NULL, field);
-         trace_add_idreg_property(prop_name, lower, upper, field_writable_mask);
++    kvm_arm_apply_sysreg_props(cpu, &error_abort);
++
+     if (!write_kvmstate_to_list(cpu)) {
+         fprintf(stderr, "write_kvmstate_to_list failed\n");
+         abort();
+@@ -2250,6 +2263,11 @@ int kvm_arch_init_vcpu(CPUState *cs, Error **errp)
+     }
+     SET_IDREG(&cpu->isar, MPIDR, mpidr);
+ 
++    ret = kvm_arm_apply_sysreg_props(cpu, errp);
++    if (ret) {
++        return ret;
++    }
++
+     cpu->mp_affinity = GET_IDREG(&cpu->isar, MPIDR) & ARM64_AFFINITY_MASK;
+ 
+     return kvm_arm_init_cpreg_list(cpu, errp);
 -- 
 2.53.0
 
