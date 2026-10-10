@@ -4,49 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49522CA9EBE
-	for <qemu-devel@archiver.kernel.org>; Sat, 10 Oct 2026 08:31:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0B0DCA9EBE
+	for <qemu-devel@archiver.kernel.org>; Sat, 10 Oct 2026 08:51:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xFSTV-0000ql-2B; Sat, 10 Oct 2026 04:30:37 -0400
+	id 1xFSnH-00043A-HV; Sat, 10 Oct 2026 04:51:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stian@itx.no>) id 1xFSTF-0000gx-0l
- for qemu-devel@nongnu.org; Sat, 10 Oct 2026 04:30:27 -0400
-Received: from itx-kvm-14.itxnorge.no ([91.189.121.228] helo=mx.itxnorge.no)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stian@itx.no>) id 1xFSTC-0000FW-9F
- for qemu-devel@nongnu.org; Sat, 10 Oct 2026 04:30:19 -0400
-Message-ID: <0fe42d81618fc6e7a229c9c3efcbf9310987f89d.camel@itx.no>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=itx.no; s=mx.itx.no;
- t=1791621007;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=cSkXk3kF81GRdS/pcArbC+c54Jy/Bf6hKdphUw/vZ8Q=;
- b=LCXN0A9nOkd1HCKb0XQXzL74e324lApDrPsqoSdS+OO09gchL/gN20pZGsyWyu9/P58a2l
- gCXGs6++qLEV/NLoiM57im//ff8RGLK2onh+m87wEYk/kG3PH/9YpcID504U2VJ75azWrj
- Z9gr0TRCRa+aJouQSXzMclCMHSzNh/E=
-Subject: Re: [RFC] target/sparc: crypto instructions for Linux kernel testing
-From: Stian Halseth <stian@itx.no>
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, Artyom Tarasenko
- <atar4qemu@gmail.com>, Eric Biggers <ebiggers@kernel.org>
-Date: Sat, 10 Oct 2026 10:30:02 +0200
-In-Reply-To: <764a9ecd-6856-4309-9ae3-8f878a9b1d8a@linaro.org>
-References: <63d84da88caec4176900e535116d64b1c4cffffb.camel@itx.no>
- <764a9ecd-6856-4309-9ae3-8f878a9b1d8a@linaro.org>
-Content-Type: multipart/signed; micalg="pgp-sha512";
- protocol="application/pgp-signature"; boundary="=-uEtGwWdR/kam5/vm0+lC"
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1xFSnD-00040e-3c
+ for qemu-devel@nongnu.org; Sat, 10 Oct 2026 04:50:59 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1xFSnA-0002Bm-QK
+ for qemu-devel@nongnu.org; Sat, 10 Oct 2026 04:50:58 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-4a17baef589so3463015e9.0
+ for <qemu-devel@nongnu.org>; Sat, 10 Oct 2026 01:50:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1791622254; x=1792227054; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=G+tz0bKnxIdUUmEqjeK+D65iiI9pOg+Ler1x1SpkwIM=;
+ b=JbsmQjCOt8IQyj0Gr1IJripIze4cvlpHof3KyjIYtjCgJZwbrULhs6JglntC60cQZs
+ 4E3pLWPkcVa053fL1yIv9O+N/TrCioZqIpAlshAPIjx6+cImzs3xcmwaeEIIZWuN9594
+ HncsSTbBcn4NEjTIDbRg41uCYUk8pTw9zaaxDeNaj0Nwf3cbllVz9ECG4aq3vMnaR3oW
+ W5bKulkrsAxglSyl9rZUEme77Uj++oFAftw3YlWKqWAWYa80QU2WGFqrQmweAuqJXmQ5
+ wTa6S7tDBZ0kwb6Dh+ZCwNLzp6+f2OoTFguc2QNKJNfdyFNosKgMy6kJMag0oABFKobu
+ u9HQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1791622254; x=1792227054;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=G+tz0bKnxIdUUmEqjeK+D65iiI9pOg+Ler1x1SpkwIM=;
+ b=1erXKYsX2HK9sO7/YRomDHAWbyDz688SlshmLqpIKB50rHcv1CjPlpwAlAhb9YrKaK
+ ZSqW0j2BFJJtwsjjxcdsMwpBtYp3QaVAkmmYifofPFvgWMuWhb9XyYZq7pzHmhjovbTd
+ vWShHX3ewg9pgmy02GhT9JGmUWucoxOPZ7BXlBx+GSZSE0hhnhU3mqDXMcsfq1cAmIoc
+ LbWlaXc1iYwqm6JOyPHeghZbjF89dSvANj/STp9JJO7giADWudito7PJMxdZHPEr6zt6
+ tHuM9slgc6KOMkQJlPRZOchFoH39uRDyad9et0dVuJBzxGLl9rIacWFnURTrfc558Dfl
+ PTLg==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBwSN0ASJeomffFrsi0KEryt/qaufAZl34C3irZ6p22ylvv8IvSi1F409CPLECpErTx4fABeDHHxscgD@nongnu.org
+X-Gm-Message-State: AFq9FYKesiIBLux32VhuXi+aGlWfG+rJVKE2FgysdL9Yp1w1nG+AhdyH
+ c1X6kxSqEeWF+YueJdXKpXUWrFWcfAk84sZBfd4x1BtCWeUUqp3MjQGwJQGwrOYsrL0=
+X-Gm-Gg: AYBFou2moUYKtKr0TJZt7jsLR1v2fZNjVYY2pviga3mI9gv6nUGIij5ksmj2kexdR3E
+ xxHdUNMzTXbGz/iRBEVRgSYrVDCQWBtF6NbaMTohCAdkHM4Ug11qxykDFhz7MW1lG4Hx76cvo3q
+ nkOANPfMr1feegVRNAPEb0g9NZjvoV+Kkla8guhN+TcKRXhz+wWrgrrunIFbNlQKOcLNz7ytpD4
+ jivGmwCJYgqH4cyi20Sc0cX5DQB3ffVpmrPKhx6UOWn8vauZQZkGUAMEnNyKAVxlouKceIq7dLn
+ 0x+xn6qtaBncA0hBSi24px4suMlTLhl3kkgJpKtb7Mmuk7X9fj1Gogqo1uoKANI+EgP5p7XekX1
+ kix4ytFfdA+0ihsF8USQ5kfIwxD2RWFxbkScoP0mwCeXnlYXqULWouyf8uHoIOm03plNcyZ+mpe
+ GkeOqEq+m+CSVjW5lZWnsnwhvgRQDmhIq4pCXkaGwxcSS/jOMbzIBRpAoD2XB8ejh7Z3J5RoGRx
+ 5BWm7T9rNNbzIrBvpUT7aphDgfDdD3krrzjemAr5j/FZUN3gUx3vcs=
+X-Received: by 2002:a05:600c:4747:b0:4a1:77db:45d9 with SMTP id
+ 5b1f17b1804b1-4a18e47aa9amr85372485e9.6.1791622254409; 
+ Sat, 10 Oct 2026 01:50:54 -0700 (PDT)
+Received: from ?IPV6:2a00:1e:e082:2901:a2d3:66fa:95e6:7d81?
+ ([2a00:1e:e082:2901:a2d3:66fa:95e6:7d81])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4a18c198134sm117269455e9.15.2026.10.10.01.50.52
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sat, 10 Oct 2026 01:50:54 -0700 (PDT)
+Message-ID: <cfeb85d4-57af-4aa5-a265-a6ac46cf1f22@linaro.org>
+Date: Sat, 10 Oct 2026 10:50:51 +0200
 MIME-Version: 1.0
-Received-SPF: pass client-ip=91.189.121.228; envelope-from=stian@itx.no;
- helo=mx.itxnorge.no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] common-user: Skip the identity map when qemu is loaded low
+To: Rick Richard <rick@sloservers.com>, qemu-devel@nongnu.org
+Cc: laurent@vivier.eu, deller@gmx.de, pierrick.bouvier@oss.qualcomm.com,
+ imp@bsdimp.com, kevans@freebsd.org
+References: <605bc800-4263-40af-b8d9-18305d25f3cf@sloservers.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <605bc800-4263-40af-b8d9-18305d25f3cf@sloservers.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -63,74 +107,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 10/2/26 12:52, Rick Richard wrote:
+> A non-PIE qemu is loaded below 4 GiB. That includes every static
+> build on FreeBSD and Linux builds configured with --disable-pie.
+> With the identity map (guest_base 0), a non-PIE guest program can
+> be mapped over qemu.
+> 
+> Only use the identity map when qemu is loaded at 4 GiB or higher.
+> Non-PIE programs are normally linked below 4 GiB, and PIE programs
+> are loaded at or above it (ppc64 Linux loads them at exactly 4 GiB).
+> 
+> Signed-off-by: Rick Richard <rick@sloservers.com>
+> ---
+> On FreeBSD a static qemu can't be PIE, so bsd-user is always loaded
+> at 0x200000. pgb_dynamic() picks guest_base 0 because the initial
+> image doesn't overlap qemu, but rtld later maps a non-PIE executable
+> at its link address on top of qemu's own text.
+> 
+> This isn't BSD specific, I was able to reproduce on Linux as well by
+> disabling PIE.
+> 
+> I tested the fix on Linux with static-pie and --disable-pie builds,
+> and on FreeBSD with aarch64, riscv64 and x86_64 guests. When qemu is
+> loaded high it still uses the identity map. When it's loaded low it
+> picks a non-zero guest_base and the guest runs normally.
+> 
+> I couldn't find an existing way in qemu to get its own load address,
+> so I used __executable_start, which both GNU ld and lld provide. If
+> there's a better way I'm happy to change it.
 
---=-uEtGwWdR/kam5/vm0+lC
-Content-Type: text/plain; charset="ISO-8859-1"
-Content-Transfer-Encoding: quoted-printable
+There should be no need for this at all.  The probe sequence should 
+notice conflicting addresses and adjust.
 
-Hi Richard,
-
-On Sat, 2026-10-10 at 09:30 +0200, Richard Henderson wrote:
->=20
-> When I implemented the VIS{3,4} stuff a couple of years ago, I tried
-> to add a newer cpu (though I forget which model).=A0 I couldn't get a
-> kernel to boot with that and sun4u, so in the end I left the cpu out
-> and left the extensions as plain cpu features.
->=20
-> The biggest problem with sun4v is that it's incomplete.=A0 It has the
-> most promise as an emulation platform because it is explicitly a
-> hyper<v<isor platform.=A0 In the ideal case, QEMU would not faithfully
-> model the hardware, but would instead model the hypervisor
-> interface.=A0 Which would make lots of stuff far easier and quicker to
-> emulate -- most notably the TLB.
+What's your failure case?
 
 
-I agree. I looked into the sun4v hypervisor first, as that sounded like
-the ideal approach. I did however come to realize, as you say, that it
-would be a lot of work. Also there is the requirement for bundling the
-OpenSPARC firmware and building a boot image (no -kernel), which is a
-bit overkill for kernel testing.=20
-
-Based on that reasoning I've already done some experimenting, by
-writing the crypto code for sun4u. Much of the code would be shared
-either way, so if the sun4u approach was rejected, I would still be
-able to use much of it.
-I've managed to get it working well enough to exercise the crypto
-tests. It's not in a upstreamable state yet, still work in progress. I
-took some shortcuts just to get to a proof of concept, and I wasn't
-sure it would every be finished with this approach.
-
->=20
-> But it's a big packet of work and no one has done it.
->=20
-
-Indeed, and much more than what is needed to achieve the goal of
-getting the crypto tests running, so would be out of scope for me, at
-least.
-
-If you would be willing to accept a contribution based on my described
-sun4u approach, I could spend some time cleaning it up and run more
-thorough tests to iron out any remaining issues (which I'm sure there
-are).
-
-Mark, for this to work Linux needs a hwcap-list property on the cpu
-node before it uses the instructions. =A0What are your thougts about QEMU
-passing the list in a fw_cfg file, with OpenBIOS adding the property in
-cpu_generic_init()?=A0
-
-/Stian
-
---=-uEtGwWdR/kam5/vm0+lC
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQTK1ph9OaYoND1R57zoeAEuJe36VgUCasn3igAKCRDoeAEuJe36
-VpH8APwJmC/gE0t1Lp3Y9wx71G7EXVzYFtaFlj4PC3zgpWqc9wEAjMEdJtgaq3HD
-F1/GWv0DsL85OsrNTxfa4beaNC7YUAo=
-=AvUP
------END PGP SIGNATURE-----
-
---=-uEtGwWdR/kam5/vm0+lC--
+r~
 
