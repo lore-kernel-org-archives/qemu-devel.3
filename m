@@ -4,136 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48B8BCA9EC5
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Oct 2026 22:54:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C16AFCA601E
+	for <qemu-devel@archiver.kernel.org>; Sat, 10 Oct 2026 00:05:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xFJSc-0006Yn-D6; Fri, 09 Oct 2026 18:53:06 -0400
+	id 1xFKZu-0007sp-9m; Fri, 09 Oct 2026 20:04:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xFJSC-0006VO-C5
- for qemu-devel@nongnu.org; Fri, 09 Oct 2026 18:52:41 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xFJS5-0002cB-Mf
- for qemu-devel@nongnu.org; Fri, 09 Oct 2026 18:52:36 -0400
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 699Khq5A2870995
- for <qemu-devel@nongnu.org>; Fri, 9 Oct 2026 22:52:31 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:message-id
- :mime-version:subject:to; s=qcppdkim1; bh=o25ggg4HEkpCJkdP1Ippwk
- h+I4AyWiWp8oamyC9YcEA=; b=CdPZ0mVI04rofpUAV2I9JB8UZoMF1m0+lechpY
- sjAg3Al3a45uWgvvMzBfuGhSRqCDBMNUTvG+WM5hcRhHo0pmfYFP0/CwunXs8kl2
- xh7zpq5u0JJthtglL4OiALRvIynqme9Lo3kJEJaLfadNeei6AKe4qVhjTPT7f0tT
- WV6+9z3kS0x4ZhNjy1/KWwVH/BTrQpaZIete/H6tL8I7MzvFzr651w8ImTqaiCbD
- yC+epLrBldeOJXf4MU1aPBuL8m2bgNVfORIIMRWByyMjm4hXHZwSqTnWAShzHDs8
- 61WI5yxND8aAeOcYeaUiEM/abJy90I2duSFG4tC1Xy0YyOqA==
-Received: from mail-dl1-f72.google.com (mail-dl1-f72.google.com [74.125.82.72])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h74t8h0ew-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 09 Oct 2026 22:52:30 +0000 (GMT)
-Received: by mail-dl1-f72.google.com with SMTP id
- a92af1059eb24-1663fb7e005so268145c88.0
- for <qemu-devel@nongnu.org>; Fri, 09 Oct 2026 15:52:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1791586350; x=1792191150; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:content-type:message-id:date
- :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=o25ggg4HEkpCJkdP1Ippwkh+I4AyWiWp8oamyC9YcEA=;
- b=N+LK9kdopw7sTopy1qwjJ/ks6lHSWoOcRva175k6bZ4ZEeSC80ThYmlQ41AUwaYC8G
- 7cL5zN9BXpwuvvfggUubi4pq9mRB2xVDEjCbs858PIruI+P3lGA2j1G9+X3bPLsLNyBR
- qPevb3eu265eoG4B718ALhTLc1Puy/0bAU0XHKbNp32X3xAv4J6d+LOdhkTWi7kaByf+
- W04WhwZtMXnUT85oNM8Up9uW3BD81Bt3TiKJasi6CdE78LdCmVXB7PU9Tnt9kqzYuevL
- hxmXq0FTYAGNO39GfXp7LXCjIEGpJieZvQU2YY1EJIeE8PNGWG91zUIYJH+DdRisCfYh
- zarQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791586350; x=1792191150;
- h=content-transfer-encoding:mime-version:content-type:message-id:date
- :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=o25ggg4HEkpCJkdP1Ippwkh+I4AyWiWp8oamyC9YcEA=;
- b=x8D1wmBZ3LNeTjnvK89FRI2kAVq9uM+5F0c0qfao7VLw/w9sm1ECj/SKjk7iOg3lAW
- D4M6ANniJMS36g7AEukRD+41JI6pYk2mICCorKADC21I5OP0Iyo3wfSF+BWHAY/jrnLH
- wS17wuMkM5GeJyNjZLVducRsszr5UOavEU351MhVN0Sk7PG3+KLnMKPco3huc4mesOWN
- fXZYiz48kCdjdeIUA2bHr071Z11frNge4UteeszXsyaUVjI2yH1u9NvCSQ74H2DBjeip
- YSQEVvxmoW5SB145RYuEzxnJDHQwc2en96A1wv7vD/BuPpxNTFRUCKIHDEij0JOD6hQB
- u6SQ==
-X-Gm-Message-State: AFq9FYI6Mdr6apkttxrG+B/a2yEhDovy3WuYp5uNDA0G04m+rtitwODv
- XMj1NrKlPliCKGSWjTXfVLU9E/iCB5n/muSV6tFBeh/SPYkWpdSGPqR7c2ThIH/7Ouhn3H7v0a9
- X2UQLdV1BEyuqw5PFWNr/FxlH/H4biRMhowIAC43P1QIJ/ZojkADG2zdm1Qcl8XWXAg==
-X-Gm-Gg: AYBFou2S/nofdquldzaDq68FjJBNe8rfIRLeuwSGmo6RSHsqdXnrw/dKB3ReTtQQued
- BykJ7aFTPcNWAcZ6QFGz/riM7TnsbVMtZaxrK7ei+MJLKNtFF9agt2IYc2+3ijMtXWDbdtXw8aZ
- hyQH3X5GJkQs+Ra3NPpAI8EOrTsDvblspBKxvWXwNfOrEsRhaaDSush4UC9VyglZGEmxUZsSa+v
- oqU8jemSXhUlMYvs0/iHLAdAAj78eQAG5t8BJFp6IYGhW/Xf2WGMpHNDJZ8stP16pSmgzalTWHd
- JJTGxaPSx9h9tlki9mQxUxXqUwQXf2JAVN5IcUwpXc6oPbrqZIA/wcoe1jBFeGvvcH4O+TZESno
- yog5Ptt+k+UV7+uzIsp7CmpmbbqcKjcB3J6052j5u//Up6Kh8sjLOrk61THYx
-X-Received: by 2002:a05:7022:3a8d:b0:15c:1679:1cc7 with SMTP id
- a92af1059eb24-16a63099055mr5238644c88.37.1791586350241; 
- Fri, 09 Oct 2026 15:52:30 -0700 (PDT)
-X-Received: by 2002:a05:7022:3a8d:b0:15c:1679:1cc7 with SMTP id
- a92af1059eb24-16a63099055mr5238608c88.37.1791586349533; 
- Fri, 09 Oct 2026 15:52:29 -0700 (PDT)
-Received: from debian.qualcomm.com (192-80-163-190.dyn.novuscom.net.
- [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-169a5866477sm8443977c88.22.2026.10.09.15.52.28
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 09 Oct 2026 15:52:29 -0700 (PDT)
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-To: qemu-devel@nongnu.org
-Cc: Brian Cain <brian.cain@oss.qualcomm.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Alistair Francis <alistair.francis@wdc.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: [PATCH 00/11] multi-target: add hexagon
-Date: Fri,  9 Oct 2026 22:52:15 +0000
-Message-ID: <20261009225226.10657-1-pierrick.bouvier@oss.qualcomm.com>
-X-Mailer: git-send-email 2.43.0
-Content-Type: text/plain; charset="utf-8"
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xFKZs-0007sg-Gx
+ for qemu-devel@nongnu.org; Fri, 09 Oct 2026 20:04:40 -0400
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xFKZq-0008T5-GI
+ for qemu-devel@nongnu.org; Fri, 09 Oct 2026 20:04:40 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 86C901F387;
+ Sat, 10 Oct 2026 00:04:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1791590674; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=NA77qGZ1u7mtRESYMjXLC/SY0ljs3nTNYKoKcNgafbM=;
+ b=OAUbApy7w8/llqROO6fepoE1e4Njq9qn9I1MavmE4As/G5eip7KDIrQ8PIY2dEYOl+x+uB
+ lbZ5gtYK+PI2yrBTd226OT5LsUzwddoLZdJpxh2zpbC4MbuuOaEjd3SleaSoFdRBonrFK6
+ r3cGGcSSNqrF6l9T/55qzzMw0gVYZqs=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1791590674;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=NA77qGZ1u7mtRESYMjXLC/SY0ljs3nTNYKoKcNgafbM=;
+ b=FUo67uVBM4UM1hpOJHfoNXmooQVrhqcP3cj3Cn9ZqJ+rp/ysdkeFE9LDaryXR3RTjme5/n
+ etDC+XfWsagJJECg==
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=OAUbApy7;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=FUo67uVB
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1791590674; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=NA77qGZ1u7mtRESYMjXLC/SY0ljs3nTNYKoKcNgafbM=;
+ b=OAUbApy7w8/llqROO6fepoE1e4Njq9qn9I1MavmE4As/G5eip7KDIrQ8PIY2dEYOl+x+uB
+ lbZ5gtYK+PI2yrBTd226OT5LsUzwddoLZdJpxh2zpbC4MbuuOaEjd3SleaSoFdRBonrFK6
+ r3cGGcSSNqrF6l9T/55qzzMw0gVYZqs=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1791590674;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=NA77qGZ1u7mtRESYMjXLC/SY0ljs3nTNYKoKcNgafbM=;
+ b=FUo67uVBM4UM1hpOJHfoNXmooQVrhqcP3cj3Cn9ZqJ+rp/ysdkeFE9LDaryXR3RTjme5/n
+ etDC+XfWsagJJECg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id DAF18136BA;
+ Sat, 10 Oct 2026 00:04:33 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id 8gQaHxGByWoucwAAD6G6ig
+ (envelope-from <farosas@suse.de>); Sat, 10 Oct 2026 00:04:33 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, =?utf-8?Q?Daniel_P_=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, Kevin Wolf
+ <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>
+Subject: Re: [PATCH v2 03/11] qemu-option: Remove short form options support
+In-Reply-To: <874iew7qhw.fsf@pond.sub.org>
+References: <20260930221105.2262063-1-farosas@suse.de>
+ <20260930221105.2262063-4-farosas@suse.de> <87h5iyasxn.fsf@pond.sub.org>
+ <87y0c97kbs.fsf@suse.de> <874iew7qhw.fsf@pond.sub.org>
+Date: Fri, 09 Oct 2026 21:04:22 -0300
+Message-ID: <87qzhy775l.fsf@suse.de>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=ONOyTiaB c=1 sm=1 tr=0 ts=6ac9702e cx=c_pps
- a=bS7HVuBVfinNPG3f6cIo3Q==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
- a=lAAgIVWG3TJcsid9O94A:9 a=QEXdDO2ut3YA:10 a=vBUdepa8ALXHeOFLBtFW:22
-X-Proofpoint-GUID: izVG98M0QERolOMQJXpF_bhi0VYMtchU
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA5MDA5MSBTYWx0ZWRfX7bjAe78NYMLK
- inmtWUvYZERYVY3ZlyLL31cqU1Go7V/cpUBVznPeHn7t7uBmbhXWKqc5aN+yOocZ18pnEBIMosK
- I4x8QUx2XsmAcZY++9LH50XATrfxaSA=
-X-Proofpoint-ORIG-GUID: izVG98M0QERolOMQJXpF_bhi0VYMtchU
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA5MDA5MSBTYWx0ZWRfX6w8omLwKDhyC
- bMGJWOfESGLMhRbDtb4q3S+ofcji1epyiR9NtLHhUNr00PKtXjPySHFvLXUXRMY8u8h6Io4N94P
- xuYipbm6z6n5Kqr6uZVvNy9O1HNs3xyKt9DS1BRafsf62N7tJsV/MzkmBpcKIMEGR9/doI1KMGt
- jULwQI7DZg8lkxUfNBw7bGn4R2I0eLNu+1kjmLF6rfiUFkRAeWe4O715Oy3BmiXvJHUYmcUxxCk
- jRYeRr4NZV+2dMc5Rv5ZcA8do0A+OO1PEDMCx3gTQQaz9RUnJvzABZ5alsvN40clMpygZIV5G2D
- Uk0Fq0/hURV94TBmTLS2+VVND/UkljJUysNezVG9ZZj52KpmSbUup12Nw1Fill38hUEYN6SLKzT
- BuT0TMv1geIhERsDdNMgrHXxP3S7sqQmqQ0r8l4LtZSgy5tlYOadSGURVBVITE47ZUrIRHgOMFh
- De2npqEzcCo+2lk5hmw==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-10-09_06,2026-10-09_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 bulkscore=0 adultscore=0 clxscore=1015 suspectscore=0
- lowpriorityscore=0 priorityscore=1501 spamscore=0 impostorscore=0
- malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610080000
- definitions=main-2610090091
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+X-Rspamd-Queue-Id: 86C901F387
+X-Rspamd-Action: no action
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; ARC_NA(0.00)[]; TO_DN_SOME(0.00)[];
+ MID_RHS_MATCH_FROM(0.00)[]; MIME_TRACE(0.00)[0:+];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; MISSING_XM_UA(0.00)[];
+ RCVD_TLS_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ RCPT_COUNT_FIVE(0.00)[6]; RCVD_COUNT_TWO(0.00)[2];
+ TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,suse.de:email,suse.de:dkim];
+ DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received,2a07:de40:b281:104:10:150:64:97:from];
+ DKIM_TRACE(0.00)[suse.de:+]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -150,50 +125,150 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series makes hexagon compatible with the other ones we already integrated.
+Markus Armbruster <armbru@redhat.com> writes:
 
-The biggest change is to introduce a semihosting interface, since existing arm
-symbols conflict with hexagon ones. This is also need for when we'll integrate
-riscv soon.
+> Fabiano Rosas <farosas@suse.de> writes:
+>
+>> Markus Armbruster <armbru@redhat.com> writes:
+>>
+>>> Fabiano Rosas <farosas@suse.de> writes:
+>>>
+>>>> Option parameters without a value (i.e. key vs. key=val) are
+>>>> deprecated. The missing value is currently implied to be either "on"
+>>>> or "off" depending on whether the parameter name starts with "no".
+>>>
+>>> Commit ccd3b3b811 (qemu-option: warn for short-form boolean options,
+>>> 2020-11-09).  Six years of warnings should suffice.
+>>>
+>>>> Remove the implied behavior and start rejecting option parameters
+>>>> without values by emitting the error message:
+>>>>
+>>>>  "Parameter 'foo' without a value."
+>>>>
+>>>> Two special cases remain:
+>>>>
+>>>> 1) The 'help' parameter is special and still supported. Keep a
+>>>>    positive value attached to it ("on").
+>>>>
+>>>>    Note that currently there is no validation for the value (if any)
+>>>>    attached to the help parameter. help, help=on, help=off, help=foo
+>>>>    all result in the help text being emitted. This is not changed by
+>>>>    this patch.
+>>>
+>>> Really?
+>>>
+>>>     $ qemu-system-x86_64 -chardev help=foo
+>>>     qemu-system-x86_64: -chardev help=foo: Invalid parameter 'help'
+>>>
+>>
+>> Ah, ok, it depends on whether the option accepts any parameter
+>> (i.e. opts_accepts_any()). Here's -object failing to reject the bogus
+>> value:
+>>
+>> $ qemu-system-x86_64 -object memory-backend-ram,id=m1,help=foo
+>> memory-backend-ram options:
+>>   dump=<bool>            - Set to 'off' to exclude from core dump
+>>   host-nodes=<[uint16]>  - Binds memory to the list of NUMA host nodes
+>>   merge=<bool>           - Mark memory as mergeable
+>>   policy=<HostMemPolicy> - Set the NUMA policy
+>>   prealloc-context=<link<thread-context>> - Context to use for creating CPU threads for preallocation
+>>   prealloc-threads=<int> - Number of CPU threads to use for prealloc
+>>   prealloc=<bool>        - Preallocate memory
+>>   reserve=<bool>         - Reserve swap space (or huge pages) if applicable
+>>   share=<bool>           - Mark the memory as private to QEMU or shared
+>>   size=<size>            - Size of the memory region (ex: 500M)
+>>   x-use-canonical-path-for-ramblock-id=<bool>
+>
+> Bizarre :)
+>
+>>>> 2) The empty value is allowed if the key is also empty. This can be
+>>>>    achieved in the command line by adding commas.
+>>>>    E.g.: share=on,, is parsed as:
+>>>>      key:"share" value:"on" and
+>>>>      key:"" value:"on"
+>>>
+>>> I don't think so:
+>>>
+>>>     $ qemu-system-x86_64 -object memory-backend-ram,id=mem0,share=on,,
+>>>     qemu-system-x86_64: -object memory-backend-ram,id=mem0,share=on,,: Parameter 'share' expects 'on' or 'off'
+>>>
+>>
+>> Bah, I wrote the example for the commit message but haven't tried
+>> it. I'm trying to refer to the single leading comma scenario, we have a
+>> test for it:
+>>
+>>     /* Except when it isn't */
+>>     opts = qemu_opts_parse(&opts_list_03, ",", false, &error_abort);
+>>     g_assert_cmpuint(opts_count(opts), ==, 1);
+>>     g_assert_cmpstr(qemu_opt_get(opts, ""), ==, "on");
+>
+> The "except when it isn't" comment refers to the test right above:
+>
+>       /* Trailing comma is ignored */
+>       opts = qemu_opts_parse(&opts_list_03, "x=y,", false, &error_abort);
+>       g_assert_cmpuint(opts_count(opts), ==, 1);
+>       g_assert_cmpstr(qemu_opt_get(opts, "x"), ==, "y");
+>
+> This is about trailing comma.  Is the exception is only possible when
+> the trailing comma is also the leading comma?
+>
+>> The following are parsed as valid and only reject the empty key further
+>> down the line:
+>>
+>> $ qemu-system-x86_64 -drive ,
+>> qemu-system-x86_64: -drive ,: warning: short-form boolean option '' deprecated
+>> Please use =on instead
+>> qemu-system-x86_64: -drive ,: Must specify either driver or file
+>>
+>> $ qemu-system-x86_64 -drive ,file=dummy
+>> qemu-system-x86_64: -drive ,file=dummy: warning: short-form boolean option '' deprecated
+>> Please use =on instead
+>
+> Looks like the answer is no.  The tests could be clearer there.  Might
+> not matter after your series.
+>
+>> WARNING: Image format was not specified for 'dummy' and probing guessed raw.
+>>          Automatically detecting the format is dangerous for raw images, write operations on block 0 will be restricted.
+>>          Specify the 'raw' format explicitly to remove the restrictions.
+>> qemu-system-x86_64: -drive ,file=dummy: Block format 'raw' does not support the option ''
+>
+> The entire parser should be burned with fire.
+>
+> What are the remaining differences to the keyval.c parser after your
+> series?  Can we deprecate them?
+>
 
-Pierrick Bouvier (11):
-  target/hexagon: prefix helpers conflicting with other arch
-  target-info: add target_hexagon
-  hw/hexagon/virt: make machine available for hexagon target only
-  hw/core/cpu: restrict tcg_ops to CONFIG_TCG only
-  semihosting: declare semihosting cpu ops
-  target/riscv: declare semihosting ops
-  target/hexagon: declare semihosting ops
-  target/arm: declare semihosting ops
-  semihosting: use new semihosting ops
-  semihosting: remove common_* functions
-  meson.build: add hexagon-softmmu to multi-target
+I ran a few of the qemu-opts tests with the keyval code and it differs
+mostly in the handling of empty (non-implied) key and implied key +
+empty value. I'll take a close look next week but I think we should
+deprecate them anyway.
 
- hw/hexagon/virt.c                   |  2 ++
- include/hw/core/cpu.h               |  8 +++++
- include/qemu/target-info.h          |  7 ++++
- include/semihosting/common-semi.h   | 24 +++++++++----
- meson.build                         |  1 +
- semihosting/arm-compat-semi.c       | 56 ++++++++++++++---------------
- target-info.c                       |  5 +++
- target/arm/common-semi-target.c     | 29 ++++++++++-----
- target/arm/cpu.c                    |  4 +++
- target/arm/internals.h              |  2 ++
- target/hexagon/common-semi-target.c | 26 +++++++++-----
- target/hexagon/cpu.c                |  2 ++
- target/hexagon/gen_tcg_sys.h        |  2 +-
- target/hexagon/helper.h             |  4 +--
- target/hexagon/hex_mmu.c            |  2 +-
- target/hexagon/hex_mmu.h            |  2 +-
- target/hexagon/internal.h           |  2 ++
- target/hexagon/op_helper.c          |  4 +--
- target/hexagon/translate.c          |  4 +--
- target/riscv/common-semi-target.c   | 29 ++++++++++-----
- target/riscv/cpu.c                  |  4 +++
- target/riscv/internals.h            |  2 ++
- 22 files changed, 151 insertions(+), 70 deletions(-)
+It looks easy to add a flag to keyval_parse_one() to turn its errors
+into deprecation warnings ("warning: madness deprecated"). We could then
+gradually make the conversion without having to wait for the deprecated
+parts to be removed. The child is almost 10 years old.
 
--- 
-2.43.0
+  d454dbe0ee3 ("keyval: New keyval_parse()")
+  Author: Markus Armbruster <armbru@redhat.com>
+  Date:   Tue Feb 28 22:26:49 2017 +0100
 
+>>> Set a breakpoint on qapi_bool_parse() to see the actual value.  It's
+>>> "on,".  In QemuOpts syntax, double comma is an escape, so you can put
+>>> comma in values.
+>>>
+>>>> One effect of this change that might not be obvious is that parameter
+>>>> combinations of the form:
+>>>>
+>>>>  id=mem0,share,help
+>>>>
+>>>> no longer produce the help output. The lack of value for the 'share'
+>>>> parameter is reported with precedence. Users will need to either use a
+>>>> valid value or omit the parameter entirely:
+>>>>
+>>>>  id=mem0,share=on,help
+>>>>  id=mem0,help
+>>>
+>>> That's unfortunate.
+>>>
+>>> [...]
 
