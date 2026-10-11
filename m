@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 449E4CA9EBD
-	for <qemu-devel@archiver.kernel.org>; Sun, 11 Oct 2026 20:24:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68112CA9ECF
+	for <qemu-devel@archiver.kernel.org>; Sun, 11 Oct 2026 20:33:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xG04p-0002Xt-7E; Sun, 11 Oct 2026 16:23:24 -0400
+	id 1xG0E1-0003d7-DU; Sun, 11 Oct 2026 16:32:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xG04h-0002XY-CS
- for qemu-devel@nongnu.org; Sun, 11 Oct 2026 16:23:15 -0400
-Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
+ id 1xG0Dz-0003cl-4M
+ for qemu-devel@nongnu.org; Sun, 11 Oct 2026 16:32:51 -0400
+Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xG04f-0000sk-9E
- for qemu-devel@nongnu.org; Sun, 11 Oct 2026 16:23:15 -0400
-Received: by mail-ed1-x52b.google.com with SMTP id
- 4fb4d7f45d1cf-6a642495d81so1689413a12.2
- for <qemu-devel@nongnu.org>; Sun, 11 Oct 2026 13:23:12 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1791750191; cv=none;
+ id 1xG0Dv-0001jN-ST
+ for qemu-devel@nongnu.org; Sun, 11 Oct 2026 16:32:49 -0400
+Received: by mail-ed1-x530.google.com with SMTP id
+ 4fb4d7f45d1cf-6ac76a02368so1102128a12.2
+ for <qemu-devel@nongnu.org>; Sun, 11 Oct 2026 13:32:47 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1791750765; cv=none;
  d=google.com; s=arc-20260327;
- b=E8z4mmW5OAJsX85R+QKRK1G5DMX0MLoEQ0UfLpoCTsVsa83AX9+aBe6ged1HtsQfhK
- wg4XkOGFZ4HcgoCDak/BtQeEZazy2KW7K9FSiY6CKVidPzFYcIF4pK3IWA4F5hPYdzOI
- sx9oGcuKU0nzQuyHrO9qWvjEyOM1luNLaQBfqVbGWZSabm7OdSHSxTznaqn8CfTtksxi
- MIQeLu7duMeasLu3FAqGPnSPSCYznWOYz1uh5rUmU3xK/LWHNlH/MiijYOmXw3rZ91Xb
- hjMt2JqAIq+LZf0aD1cCi5wxUI1xdaPJ6tUGrAhq/eFl77ZciqfA7giaw6hOEIBm8qX4
- 8sBg==
+ b=LDXWuzEuoHWlmrKEbv9Ow6XG1rH9vUoitEammyj8B/pZ5bO1Dyqg07QaD5k2QxQYBQ
+ hXIhzzvr9nLeVFuSjAIUsrvpjBhXDEZ64vzSLKkyyfxd9D+U+nD39aX3Slt5X6ggbTfB
+ flAyZkGNOmPG8RF9XKFfkjTnljU7Ttb8N93yQ5y7+h/8ERfEjAh79h24AODCaWWbRyPT
+ gmDRbKBFpDXWkJsnbc40I4kTJAx75BQFtO7dLZoD1KfdP+LWbNUwKSb6DuFZFpAsDrMZ
+ VC0l8lIrVxf7AnxcGo7BTcO2ArsXvIOdcOGMnw2L7xoZ/It4W7WZqwwcs9g50gJ/9pfz
+ KCGw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :reply-to:in-reply-to:references:mime-version:dkim-signature;
- bh=kfE7/eBkbup7NiJ69iRwL+0r1oKf+aElQ+buEAkb1Lo=;
- fh=s+LSWDWzft1XkbyPe10sCppG6/+qTCNbXfsCqU5RyaM=;
- b=GArcVEWmIwvl76sCmLxLnBdGsRpyPBfR07MMc2+pHbNFkfZ7tgyJdtsAK2bR5o4hNn
- 1pJjRfIJImn24qSoYtjuWzFwismXpuLq94gVjgyn7q5imW9g0zPqmfbsT2Df0b7odL4y
- t5aIErLrcg6jtQILczC37GcwYfYvzYvG2HiU1ww6Wt8jYGk/uidb+oIZ2E65EQC3LDnK
- fPVqD2jB6zV2nst2NnKRgk3sGlsMyYclIVVzmo7yx0yTrRjewGRr4FXKCw1i/OT9yI22
- kbbEVJg1dfe/Kv0st1uCsHGA2twaP/D6M4d+uuBakI0B8BrBWIAT+Y/LdDVXuSGeWKEr
- GV8g==; darn=nongnu.org
+ bh=cEIGX/lN2ilyLErZ7Upx2nuXbBDLMHMN1r7odP0Mjo8=;
+ fh=lAN1XCLZ9lAIsAGNaiTyC3g0Z2KnSxoipppU4o4IrWk=;
+ b=qx6fyESfeWkLqNTWLhkmM/wzJ1S66aDoprI86jADl6ATS3jtC5l0FcY7brtYZWqNNn
+ 45BXi+ACeiYEi0LYHZyhWjXgwIWfi0K4UMXJOgKaXArRwsBJN50lkNy/A3uloAAKa0B6
+ DDbc5/IepF+s5CnkoNkH0SvrnM5svJj8Fl8pRWjJWUyaNESA1D27JWO7MKpTjg0kF/R2
+ nivr4eeSTvsNmjoeRwbRGGmYay+gJu33WpwOwHZJMbP+ZHfZl6t8hL6XPnqMBmNHEHya
+ 726elGn2hrqjO+YRj6PuS/rPOS6svWBvXsHUtJevqBUz9Q2fVhubFNJDsKtMMG8s0xjT
+ FxxA==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1791750191; x=1792354991; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1791750765; x=1792355565; darn=nongnu.org;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:reply-to:in-reply-to:references:mime-version:from:to:cc
  :subject:date:message-id:reply-to:content-type;
- bh=kfE7/eBkbup7NiJ69iRwL+0r1oKf+aElQ+buEAkb1Lo=;
- b=mc8cTRu3Z+jm53d59YpilPLvjmSWgYHyiWSOENcjKk6yaDhD1dngo9CQVYW5OT+T1t
- cWFrqfjggzYn1nQkiEya771/5YQXK9GpXvJH/SB6j42JByLNNF+1dmPWsw9sJ8+6Af+Q
- FE8QZLwx7R4vJ1FArFfIyYKJJ1bjCDvLbT0NfmHWr/oPLVNufHOTHhL4HWVrxq1rk+gG
- 6f5bSixgoEf1ekKCOvlwVXsp9ExRTnpdAYpwnQvWA8TWeCRLZ9TM1MZ5d2azyaoMwVXZ
- nrT0vCzzTF9ggXsBPOGT56qaPupUd3i4BSH+AdH/h5M643YDX+gCXZjPMUlZCYDPUw7j
- qxAg==
+ bh=cEIGX/lN2ilyLErZ7Upx2nuXbBDLMHMN1r7odP0Mjo8=;
+ b=WjKMrQ4sp3Jvv2TvZGOvzLv4alKRiN1VrhkW3gFzlFrsy4fTh16y7dq1T3r3GzfjHA
+ dYNvSEq4xc9I0DNcUiP7R1qBADLs42uaH0SBIFK/ZE2fPEXcbcFnzKteKVKw0Trio6y0
+ V5jMYLtUGZT/Jf/ZxkN+lh2TSvKIjPv2ThJ8VAHqD4H3xYp3JplJ56xiPXFpk2t+mxfd
+ 0CzM5cRZtJ99sQR8qCb9NLuXvO0Qs24md1KTk5Cz/ReDQdZJ+EX90fzJdPInqTaoCFyd
+ 9YBFraIx67892OecbowizLLy2AmJT9JBw/fjgJ4jTc/sUoXJtGROQJqttWg6eqF1/f7Q
+ 1mFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791750191; x=1792354991;
+ d=1e100.net; s=20260707; t=1791750765; x=1792355565;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:reply-to:in-reply-to:references:mime-version:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=kfE7/eBkbup7NiJ69iRwL+0r1oKf+aElQ+buEAkb1Lo=;
- b=FzO1I/7KrDurtOPKYftspalZTbZYHjRF6HRqbAxuQ+/9r/8SiMBy6qmlLdP9Nx2Yte
- xIJbt/PajeqkjBlhyPBbcJkGgXX1f558GeonvH0Wjs/VBatAU/bVl5RwyEpmRYkdOAfB
- OLymyz48m0mtJFA4Lno2Jg+tFCpv8pN+b9kSOBQexfPP/l193BQzruxFyYInlzlhT0LJ
- 8MF7tsB6Ddv9e2BPoJRTOrd3JnZx/aW1lQBvlLr1aypHu6uFKW/QwlYt+Mdl5J6oO8M8
- 5Nqho5pRMWnFst+LRaq1HZFdgYS4qEZKhMf1cDUcoRSq8OjKqOzey3vZqtOy47jdQY9T
- FO/A==
+ bh=cEIGX/lN2ilyLErZ7Upx2nuXbBDLMHMN1r7odP0Mjo8=;
+ b=XJXQ0lCDTZbaVT4ThpInn+qEAm1Sc1iKLPWyt8z6x7uu+P3BiLXiQhxgGtbbx2Dzi1
+ vJ/k9KASw9VJZjtYg6eiwg1baoNp0o4gFi6d8yGKhe+6ntHvmI4fEjN4/PnTUYreOww1
+ +q06qEq/P8YPn9SqZQNvAB0tqGIe7TD36oGxbyN1P06DkstM6he4tBf7pnOnDdkEXOm3
+ R2yzY1eSDYtISA0WLiEhlfUHpmXUQFRQnhp79Tz2qZwLZo2bnARSFbKJo4ZAiG+TH7Hv
+ C05hEpAw+BJGXYGIEoOOF4xQunlmRnFkSfvWhBhhvgte2fkvSCatPtiMNMvuhVpha7ZF
+ Xzxw==
 X-Forwarded-Encrypted: i=1;
- AKwUvByqpCCA5TaSg3lQ7+XKvhySlYYIECbEk9PpcSGbkx8wAi+RbmAoQ0e+oZRnOJT3+kJ4upeSN/t1kS3x@nongnu.org
-X-Gm-Message-State: AFq9FYKDP13XJqMFAxCE1BvgqBiH5qOLvkObbvvX6XAQTPGW5wOr4he8
- K4Rv8Y9g/OiosYrWnuYUyPnZMIKgB87OSfX1gHWGLOBcz9a90onYAjwzNCfxYIl0p2Nnfpnx22j
- TJ6102kUPQeS6RrYAMP8pnU70ARTNPxM=
-X-Gm-Gg: AYBFou2pBnNLqKpKalgSMjKhM2zxWLeEOhRHJdLH8CyEW0X+OA0Vj+hO3bEIiv/8x2M
- cTzAMVIH9eNdDXUh0cMQ90eTUmsEO5PjDPOR1y9IDwNnsUvkQjN3zRHHyYjatI8jQrAI1XRmxHs
- 3J1wpzRTKOFPjF/TzBo3tEx2oA9w6sKsirLF8RpYG5jbxL4DueuEi4Grdfgtn5Q6/uipcqmSgX/
- l/98poOdH3T4OVP9sB+Dujvkf/h1VtAxE6wLr0N8kDoag3oAWVcFHR64t5+d+ywsjm6PZZxMdhJ
- USehlU6ljgi5FbhJm1mb3RX0alMwOKHjUGlejBFw4Tp/Y0CGetj72SE=
-X-Received: by 2002:a05:6402:44cc:b0:6b1:b97b:745 with SMTP id
- 4fb4d7f45d1cf-6b1b97b0ab0mr1267030a12.29.1791750190402; Sun, 11 Oct 2026
- 13:23:10 -0700 (PDT)
+ AKwUvBwLsTGCnEg7ykPeQXzEOwyZyCXTou3+DaLqXdmrwhSoCrerXVcr2g5ktfGEo8Z9E8C6//lyMyPQR9j6@nongnu.org
+X-Gm-Message-State: AFq9FYIKP3wNI6txyG1CwZQ9nxGiOq2FV/oibXF0ZleR8B/3gubPbLfO
+ siNvmnKbjYnAp4B5fWYi4k7+qPqRkq4MzHBmXYZHPqz2KrS4AxOSdHwrqdF4uN1iv9/kVHif8Pe
+ 76VkwFYAPXZWP+4cb5e0mN4qCq4uTKBg=
+X-Gm-Gg: AYBFou3//nDiUiv7PniSqdmTuPR5W6+o1swK3m65XcJ/R0hoAGIJXvsH2FMm6hsuHv5
+ bo7vWWn+7Cn20rpHdrBxrrG/8mfxi3XeqbeYYg+/MaUE+OAqSBMsYzHyFJPUnjFDkI6xjAWYG4m
+ CD072Lj4ch/hMBe1u6GXQn96rYG1jWMwOzOqoYb5CWQzn4jf0WZELl3EShQ2E4z5kJ+UakvnOvL
+ cR+/A5xKl9wF4ZSIJbONK+QIMb59R9d2x9nYPW4edmAmeyBVCIhgEnN7m/We7zsWomXpOxiyOh1
+ ddk6OSYfINtw2Wc2ARdkPTO9fmF5ELAbSmxMs5isn0qDT0tleXtmge3i
+X-Received: by 2002:a05:6402:2347:b0:6b1:b75e:e0ba with SMTP id
+ 4fb4d7f45d1cf-6b1b75ee465mr1857977a12.28.1791750764936; Sun, 11 Oct 2026
+ 13:32:44 -0700 (PDT)
 MIME-Version: 1.0
 References: <20261007115253.328-1-luoyonggang@gmail.com>
  <2390b3d7-6918-41e3-8532-c19de4cdd1ff@oss.qualcomm.com>
@@ -92,9 +92,9 @@ References: <20261007115253.328-1-luoyonggang@gmail.com>
  <3034c146-0697-4db7-acd4-8076b317a09e@oss.qualcomm.com>
 In-Reply-To: <3034c146-0697-4db7-acd4-8076b317a09e@oss.qualcomm.com>
 From: Yonggang Luo <luoyonggang@gmail.com>
-Date: Mon, 12 Oct 2026 04:22:57 +0800
-X-Gm-Features: AclHuK--KRtqN_khFMKx1iUr7GPeS69W5S4eguEq-loH2D8D0iZx-2WWsU_VIgs
-Message-ID: <CAE2XoE-gCTrpEeCROz9JMpPnTQXQ+AnBTR4RwdQhYizkExjK9w@mail.gmail.com>
+Date: Mon, 12 Oct 2026 04:32:31 +0800
+X-Gm-Features: AclHuK-DbvKsBc31ioL7oMP1d7zCCHbO-PJVsXFTLKscW8NwOYJGAoqTVGqD64A
+Message-ID: <CAE2XoE9aUkRPO=+1VQHGfkjnBLXMTbp_OqNZpu7xtGciB+Z8pg@mail.gmail.com>
 Subject: Re: [PATCH 0/8] qom: pass TargetInfo to the is_available callback
 To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
@@ -117,8 +117,8 @@ Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  Darren Kenny <darren.kenny@oracle.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
- envelope-from=luoyonggang@gmail.com; helo=mail-ed1-x52b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::530;
+ envelope-from=luoyonggang@gmail.com; helo=mail-ed1-x530.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -286,18 +286,95 @@ d.
 > Then convert all the existing machines and add a check in machine-target.=
 c
 > Then, and only then, we can see what happens with cpus.
-
-I tried this idea, but I faced a fatal error, because the
-target_info() is not available until
-the machine selected(the target arch will be select just along with
-the machine selected), so basically
-all calls to target_info() would raise an error(null pointer), how to
-deal with it?
-
 >
 > Regards,
 > Pierrick
 
+Hi Pierrick,
+this is something I have to do, please have a look
+
+ target-info.c | 32 +++++++++++++++++++-------------
+ 1 file changed, 19 insertions(+), 13 deletions(-)
+
+diff --git a/target-info.c b/target-info.c
+index 6c5c732eba9..b5d0dce1a87 100644
+--- a/target-info.c
++++ b/target-info.c
+@@ -43,55 +43,61 @@ bool target_big_endian(void)
+     return target_endian_mode() =3D=3D ENDIAN_MODE_BIG;
+ }
+
++static bool target_arch_matches(uint64_t mask)
++{
++    return target_combined_binary() ||
++           (mask & (1ULL << target_arch())) !=3D 0;
++}
++
+ bool target_base_arm(void)
+ {
+-    return (QEMU_ARCH_ARM & (1ULL << target_arch())) !=3D 0;
++    return target_arch_matches(QEMU_ARCH_ARM);
+ }
+
+ bool target_arm(void)
+ {
+-    return target_arch() =3D=3D EMU_TARGET_ARM ||
+-           target_arch() =3D=3D EMU_TARGET_ARMEB;
++    return target_arch_matches((1ULL << EMU_TARGET_ARM) |
++                               (1ULL << EMU_TARGET_ARMEB));
+ }
+
+ bool target_aarch64(void)
+ {
+-    return target_arch() =3D=3D EMU_TARGET_AARCH64 ||
+-           target_arch() =3D=3D EMU_TARGET_AARCH64_BE;
++    return target_arch_matches((1ULL << EMU_TARGET_AARCH64) |
++                               (1ULL << EMU_TARGET_AARCH64_BE));
+ }
+
+ bool target_m68k(void)
+ {
+-    return target_arch() =3D=3D EMU_TARGET_M68K;
++    return target_arch_matches(1ULL << EMU_TARGET_M68K);
+ }
+
+ bool target_or1k(void)
+ {
+-    return target_arch() =3D=3D EMU_TARGET_OR1K;
++    return target_arch_matches(1ULL << EMU_TARGET_OR1K);
+ }
+
+ bool target_base_ppc(void)
+ {
+-    return (QEMU_ARCH_PPC & (1ULL << target_arch())) !=3D 0;
++    return target_arch_matches(QEMU_ARCH_PPC);
+ }
+
+ bool target_ppc(void)
+ {
+-    return target_arch() =3D=3D EMU_TARGET_PPC;
++    return target_arch_matches(1ULL << EMU_TARGET_PPC);
+ }
+
+ bool target_ppc64(void)
+ {
+-    return target_arch() =3D=3D EMU_TARGET_PPC64 ||
+-           target_arch() =3D=3D EMU_TARGET_PPC64LE;
++    return target_arch_matches((1ULL << EMU_TARGET_PPC64) |
++                               (1ULL << EMU_TARGET_PPC64LE));
+ }
+
+ bool target_s390x(void)
+ {
+-    return target_arch() =3D=3D EMU_TARGET_S390X;
++    return target_arch_matches(1ULL << EMU_TARGET_S390X);
+ }
+
+ bool target_riscv64(void)
+ {
+-    return target_arch() =3D=3D EMU_TARGET_RISCV64;
++    return target_arch_matches(1ULL << EMU_TARGET_RISCV64);
+ }
 
 
 --=20
