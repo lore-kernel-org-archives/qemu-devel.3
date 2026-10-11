@@ -4,43 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60AA0CA9EC7
-	for <qemu-devel@archiver.kernel.org>; Sun, 11 Oct 2026 07:26:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2386ACA9EBD
+	for <qemu-devel@archiver.kernel.org>; Sun, 11 Oct 2026 07:36:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xFnvx-0005Cp-LK; Sun, 11 Oct 2026 03:25:26 -0400
+	id 1xFo67-0006mH-6g; Sun, 11 Oct 2026 03:35:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xFnvu-0005CW-LR; Sun, 11 Oct 2026 03:25:22 -0400
+ id 1xFo65-0006ll-8i; Sun, 11 Oct 2026 03:35:53 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xFnvp-0002ET-Pv; Sun, 11 Oct 2026 03:25:22 -0400
+ id 1xFo63-00038M-P7; Sun, 11 Oct 2026 03:35:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1791703500; bh=ZysG5SsE4nKJmv+Wk4rkDhd4h9Z8kqLxdRgyF9qkzMs=;
+ t=1791704149; bh=gv8A4dQBK1pb13KdoFuK7/rw7nezyAMy/62jR7iuvs4=;
  h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=svadBif5pDqsQLo8nNvJ6xmLMjYQYXlLkm9rn6wZ4hj5ntvlToDaJ0OOm7kkyJUkW
- I07UDXxfBB6PV+Ebxqgi8I3XBNA/z4GV3qkBH+0Ry0kFwiRius3yCi1ywsmPGG7X5/
- zccoD2HwMiYl7cIS9r1Gqec+Q3WEyjlp+loUxaY9ih7qxTKuVWd9a/lK3KvBR2Pha7
- OiLfFafg6VtYMofoJ4FtjWB3OkzAdhBqRSsdEbA3wawGwp/DlQ3s5mpL9PQ5jUm58p
- HJrYebbVAYE5hm8tJuZ19S7A1w+2T6zijZ4cFYIhip8pA870wYHgLlUKaFDoLR2w3l
- HO9+9v40SiFPQ==
+ b=Rc2oaODNG14XKZTe98+SUzVhn1rTbYW4hg+D6wopVQqzLjqhfzy/ohrXXHYac/IE5
+ Qxl0pmBJcy3tqmnTzqAONQhezJaHeKmbOuxNfno3zjSI3axUCIj/ZYJ+p2RvXLPfPE
+ kdAE91DvVFhibIZ+Clx+OQ0vqZSxQmV1CvMIpyDSxke66mB/zygRMCNLPSRPVGSSOV
+ GxmKeIQCw5JieEf7JgaJH3Y+rGkwhDDhr7/Tv2ZSBRshK1DJnzkUgDCdC65iJDyNB4
+ f3rakAaxLmX6+DVjcdIA1JM6pEWk/vMMG1TS8vopTQ5vprt2Ibu6x1g1UZOo5nD+UO
+ 2cxwr9Ybx6rHA==
 Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by isrv.corpit.ru (Postfix) with ESMTP id 060C71DC812;
- Sun, 11 Oct 2026 10:24:58 +0300 (MSK)
-Message-ID: <ae9c6c15-f071-47b4-8d2c-f6113c24aff3@tls.msk.ru>
-Date: Sun, 11 Oct 2026 10:24:58 +0300
+ by isrv.corpit.ru (Postfix) with ESMTP id 25B151DC816;
+ Sun, 11 Oct 2026 10:35:48 +0300 (MSK)
+Message-ID: <6f16a062-0c52-4cf3-8f6f-b1ab1b6b9c5d@tls.msk.ru>
+Date: Sun, 11 Oct 2026 10:35:48 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 00/11] MSHV changes for 2026-10-06
-To: Magnus Kulke <magnuskulke@linux.microsoft.com>, qemu-devel@nongnu.org
-Cc: Wei Liu <wei.liu@kernel.org>,
- =?UTF-8?Q?Doru_Bl=C3=A2nzeanu?= <dblanzeanu@linux.microsoft.com>,
- Magnus Kulke <magnuskulke@microsoft.com>, Paolo Bonzini
- <pbonzini@redhat.com>, qemu-stable <qemu-stable@nongnu.org>
-References: <20261006164905.776466-1-magnuskulke@linux.microsoft.com>
+Subject: Re: [PULL v1 00/10] Merge tpm 2026/10/08 v1
+To: Stefan Berger <stefanb@linux.ibm.com>, qemu-devel@nongnu.org
+Cc: qemu-stable <qemu-stable@nongnu.org>
+References: <20261008212723.3679685-1-stefanb@linux.ibm.com>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -86,9 +83,9 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20261006164905.776466-1-magnuskulke@linux.microsoft.com>
+In-Reply-To: <20261008212723.3679685-1-stefanb@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
 X-Spam_score_int: -19
@@ -112,52 +109,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 06.10.2026 19:48, Magnus Kulke wrote:
-> Various minor fixes and a feature (gdb debugger support) for the Microsoft
-> Hypervisor (mshv) accelerator. The changes have been rebased and re-tested
-> individually.
-> 
-> My public certificate is available at:
-> https://mkulke.github.io/magnuskulke.asc
-> 
-> Primary key fingerprint:
-> 5255 B617 7982 9168 7022 31CA 68D9 BB56 DD17 8417
-> 
-> The following changes since commit 3377670ee96b5a68361016680a95b9013709d4b7:
-> 
->    Merge tag 'linux-user-next-pull-request' of https://github.com/hdeller/qemu-hppa into staging (2026-10-05 07:14:51 +0200)
-> 
-> are available in the Git repository at:
-> 
->    https://github.com/mkulke/qemu.git tags/mkulke-pull-20261006
-> 
-> for you to fetch changes up to 7d42b0a4f52d57cd2d9e0a9ceb8ad5102219a801:
-> 
->    target/i386/mshv: support single-stepping (2026-10-06 18:14:35 +0200)
-> 
-> ----------------------------------------------------------------
-> mshv changes for 2026-10-06
-> 
-> ----------------------------------------------------------------
-> Doru Blânzeanu (9):
->        target/i386/mshv: fix read/write memory across the page boundary
->        include/hw/hyperv: move hv_vp_register_page struct definition
->        target/i386/mshv: abort when hv_vp_register_page setup fails
->        target/i386/mshv: remove fallback for register page get registers
->        target/i386/mshv: remove fallback for register page set registers
->        target/i386/mshv: fix pio handlers clobbering device-modified registers
->        include/hw/hyperv: add ABI for exception intercepts and pending events
->        accel/mshv: add gdbstub software breakpoint support
->        target/i386/mshv: support single-stepping
-> 
-> Magnus Kulke (2):
->        target/i386/mshv: zero-init msr hvcall args
->        target/i386/mshv: Fix cpu feature-leak from host
+On 09.10.2026 00:27, Stefan Berger wrote:
+> This PR fixes a couple of issues in TPM-related code.
 
-Is there anything in this patch set to be picked up for the currently
-active stable qemu series (10.0.x lts and 11.1.x)?
+> Stefan Berger (10):
+>    tpm_util: Pass TPMVersion to function writing fatal error response
+>    tpm_emulator: Reject TPM responses whose size is too small
+>    tpm_emulator: Reject sending commands smaller than the request header
+>    hw/tpm: tis: Only read from response buffer if rw_offset < len
+>    hw/tpm: tis: Use uint32_t for len to avoid truncating size of command
+>    hw/tpm: crb: Do not clear internal buffers when backend is busy
+>    hw/tpm: crb: Avoid potential integer underflow
+>    hw/tpm: crb: Implement tpm_ppi_uninit and use it in tpm_crb_unrealize
+>    hw/tpm: crb: Consider response_buffer->len of received response
+>    tests: Add tests with commands with bad length
 
-Or do we skip mshv updates in there still?
+Hi!
+
+Is there anything in there worth picking up for current qemu-stable
+series (10.0.x & 11.1.x)?  It feels like whole pullreq is, but I'm
+not sure :)
 
 Thanks,
 
