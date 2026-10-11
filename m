@@ -4,98 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 726DDCA9EBD
-	for <qemu-devel@archiver.kernel.org>; Sun, 11 Oct 2026 03:24:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA88BCA9EC7
+	for <qemu-devel@archiver.kernel.org>; Sun, 11 Oct 2026 04:07:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xFkAG-0002ro-Tu; Sat, 10 Oct 2026 23:23:57 -0400
+	id 1xFkpV-0007ly-QX; Sun, 11 Oct 2026 00:06:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xFkAE-0002rI-Qd; Sat, 10 Oct 2026 23:23:54 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xFkAB-00076H-W2; Sat, 10 Oct 2026 23:23:54 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1791689025; bh=uwDah6Ch0FucIt+Rhtp5DiX9g/+bQldnqY6EQIWxtNI=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=I7zWGcbOFxGxLAaGr+/BSbtuwg/jIqu/ThtG3HY3PfTpHhxoJIgUFFXt3ZjdLwTCy
- e64j27nUUT+fKkzjVdHm6m0Fni2U2yMYHRNlzNSYZA9enrxF5lohSkUmvf/Y/3aab4
- nrPnjlWtt5thJ/HrX7m/XT2hS+TJwgyDewslS7WNCZnEBQALZqNrm1njXJZGMAgj/e
- te7RqNnoZHOZdXMRVqhwNMN7VnLJnEtWgrNUyhruIBBNOoJFCWAIOh77Dx5a1oz0Jn
- HmrHS7jwCS9UPcuGi5CXjX9hJwQBXHYqEsyy+cHz8bhE5itxhTfHnaDXoTIJNOFIyW
- he+X1+TuxkHSg==
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by isrv.corpit.ru (Postfix) with ESMTP id DA8891DC743;
- Sun, 11 Oct 2026 06:23:44 +0300 (MSK)
-Message-ID: <2b96563a-f432-4ba5-bd6b-16a63ad87005@tls.msk.ru>
-Date: Sun, 11 Oct 2026 06:23:43 +0300
+ (Exim 4.90_1) (envelope-from <sebasjosue84@gmail.com>)
+ id 1xFkpS-0007l5-85
+ for qemu-devel@nongnu.org; Sun, 11 Oct 2026 00:06:30 -0400
+Received: from mail-vk1-xa2e.google.com ([2607:f8b0:4864:20::a2e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <sebasjosue84@gmail.com>)
+ id 1xFkpQ-0002Yy-9T
+ for qemu-devel@nongnu.org; Sun, 11 Oct 2026 00:06:29 -0400
+Received: by mail-vk1-xa2e.google.com with SMTP id
+ 71dfb90a1353d-5e4d95e3e55so327739e0c.2
+ for <qemu-devel@nongnu.org>; Sat, 10 Oct 2026 21:06:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1791691586; x=1792296386; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=D14PHYKTzv+vsB1RTM6RUy2ukdlwKgLV0dDbuBxWFyc=;
+ b=jNtd6WH8mVpf2Qeicn70JRnl03gZi4ljrOWMuQ6bAxD1CaFm4okvuO2cp/hGs3uWGp
+ G7+fPcc8A9OvsOc9gAqqnxttTElMxtP0EPs+mjTsVFKbEitsQB1wztLYavSr8gI5aT7a
+ UsahzkKUxcWvfYhk9dXh3HR6oFjRGQ0uRlaKHur+XNsl8emS6ispuYK3/t+f73ZnbdBK
+ u4Q+df4eFeGNDqTHAe+oPo/g9iajDsbBRoRm9b2Y2xAbaSnCJkCkF44+us8yQo6WinCT
+ u5Cujy+RrNYgzJS7/fC2zPHwASgNTwT/YfFpk2z2mtG66KiYjklbs7rq9do/0kLfm+Gh
+ 1HsQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1791691586; x=1792296386;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=D14PHYKTzv+vsB1RTM6RUy2ukdlwKgLV0dDbuBxWFyc=;
+ b=dFADAW6sXvPOMeToXbS/X7LrC4Q0Chu5oEJn2ZkXeMybbj7jFsRDmzLk4gXKAQmbug
+ ym9w5I5teeERJw6azOg/DGVVJr1L1QDaADcSmmZmuXkyoVy0HXf7EbVhnbNRpRGbZkaj
+ ERtHRnp6m0uTiFkTFvHcvhLscYB4Ohc9EHtni9SsvL9E/nB3GkwMfvi2my2oylIW7dOr
+ S9yzbeLYWMiPZYNM5CvUaF342B2NFlEfjx9ysAziUCgZ03HBQUdHfP5llxlKU/PygXuZ
+ JZQYpsjdGGG9f0nmdwHq/nvm7sSeeoBS0nZaWJ8wVqf6mAbI7oby0M+kqIpWAt3tOkhZ
+ v6WA==
+X-Gm-Message-State: AFq9FYIpPAFidyTE6w5G8EJhvel8uBzdT1WRLxG1tvxIb/mXjNhqiK3q
+ zPPLrOzBvZpA7BvThK9TZssqZl6n2g/DlTzN2EjjV48JD4mp7svaZgr8FLGttb6roUtGDQ==
+X-Gm-Gg: AYBFou0/e2mybKGfF+gIvlasjlfCcQF956NqM2yqZZVeoIMxOQmXPxtc9zOGRJeZU0A
+ LcB/A72axy7uOXHXX4K6qIodiowivQqidiJaYuBf+0wthSuZWk1MfxJEBTw/uiX70TTCSqywghb
+ EiXuKtXqFNiOAOlyuIwS3R6uaC6yPeSYu1vENcwSSyAHkmT9DxWID6kEY7VWQFTyB1H95uPPL+s
+ +yHx5Oy0IPgrr6RgUF6Vk6/vc/sKdVnQo/KYVpfRPesTKaNDsYO2Ursw1odt6Z78MTJrzeUrtcc
+ cBiliN2MyeAoieeQXK7gLpUbZ4b/BLnqvUbILAG61x+4GViou+4Trwx/P+/3jznW0eHF5UeBDCW
+ nUR9jnIHeeRnjneHSxSnSKNEw9h6CwoghYFnO4Ewf9KZfjl71J9VdVvvgRFp/tlvVUEQW40Iq9t
+ IzgdEFr1RyTNHgIvh5SX2P8A2rFSh8dHD0Yotm52x6Edvgq4MPfrWTgotuMD0uLwMXhgDMCkOvC
+ Vkj+GOK/fughwJ5g8AMbH6A+G5SwxnD0tYQI6lymVKTiNgkFf6OkaGH9ROibHo=
+X-Received: by 2002:a05:6102:5cca:b0:7c4:a0e4:1a79 with SMTP id
+ ada2fe7eead31-7cb37317ab0mr1312754137.19.1791691586437; 
+ Sat, 10 Oct 2026 21:06:26 -0700 (PDT)
+Received: from localhost.localdomain ([186.151.100.62])
+ by smtp.gmail.com with ESMTPSA id
+ ada2fe7eead31-7cb354016d6sm4743918137.8.2026.10.10.21.06.23
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 10 Oct 2026 21:06:24 -0700 (PDT)
+From: Sebastian Alba Vives <sebasjosue84@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
+ liwei1518@gmail.com, daniel.barboza@oss.qualcomm.com,
+ zhiwei_liu@linux.alibaba.com, chao.liu@processmission.com,
+ richard.henderson@linaro.org, Sebastian Alba Vives <sebasjosue84@gmail.com>
+Subject: [PATCH v2] target/riscv: pmp: clear the entire PMP state on reset
+Date: Sat, 10 Oct 2026 22:06:17 -0600
+Message-ID: <20261011040617.807504-1-sebasjosue84@gmail.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260916034331.2390427-1-sebasjosue84@gmail.com>
+References: <20260916034331.2390427-1-sebasjosue84@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] file-posix: add statx(STATX_DIOALIGN) support
-To: Stefan Hajnoczi <stefanha@redhat.com>, qemu-devel@nongnu.org
-Cc: Hanna Reitz <hreitz@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- qemu-block@nongnu.org, nsoffer@redhat.com, Eric Biggers
- <ebiggers@google.com>, qemu-stable <qemu-stable@nongnu.org>
-References: <20260922154351.226540-1-stefanha@redhat.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <20260922154351.226540-1-stefanha@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a2e;
+ envelope-from=sebasjosue84@gmail.com; helo=mail-vk1-xa2e.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,36 +104,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 22.09.2026 18:43, Stefan Hajnoczi wrote:
-> Linux v6.1 commit 825cf206ed51 ("statx: add direct I/O alignment
-> information") added an interface to fetch O_DIRECT alignment values for
-> block devices and file systems.
-> 
-> Prefer STATX_DIOALIGN to older interfaces and probing, but keep them as
-> fallbacks in case STATX_DIOALIGN cannot provide the information.
-> 
-> STATX_DIOALIGN support as of Linux 6.1:
-> - btrfs: no
-> - ext4: yes
-> - XFS: yes
-> - block devices: yes
-> - dm-crypt: yes
-> 
-> This change fixes #1290 ("IO alignment probing delivers incorrect
-> results on Linux when used with e.g. dm-crypt") on Linux host kernel
-> version 6.1 or later by avoiding the problematic probing code in
-> raw_probe_alignment(). It would be nice to fix the probing code but I
-> have not been able to reproduce it. Stable/LTS distros ship Linux 6.1+,
-> so the number of users without STATX_DIOALIGN is becoming small.
-> 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/1290
-> Cc: Eric Biggers <ebiggers@google.com>
-> Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+pmp_unlock_entries() bounded its loop with pmp_get_num_rules(), which
+returns the number of entries whose A field is not OFF rather than the
+number of implemented entries. With a sparse configuration the loop
+stops early: with entries 0 and 1 OFF and entries 2 and 3 locked,
+num_rules is 2, the loop covers i = 0 and i = 1, and entries 2 and 3
+keep their lock and address-match bits across reset.
 
-I'm picking this up for the currently active qemu stable series too,
-it should be a nice addition there.
+riscv_cpu_reset_hold() clears mseccfg, and with it RLB, before calling
+this, so pmp_is_readonly() then silently discards every subsequent
+pmpcfg write to those entries. The stale rules survive for the
+lifetime of the machine.
 
-Thanks,
+Clearing only PMP_LOCK and PMP_AMATCH is not enough either. The priv
+spec only mandates that the A and L fields be reset, but QEMU keeps
+derived state next to the architectural registers: pmp_state.addr[]
+and pmp_state.num_rules are recomputed from the pmpaddr and pmpcfg
+write paths only, never at reset. pmp_is_in_range() compares against
+addr[].sa and addr[].ea without consulting the A field, and the
+partially-inside check in pmp_hart_has_privs() runs before the A
+field is tested, so a range left over from before the reset can still
+deny an access that straddles its boundary once the guest configures
+any entry again.
 
-/mjt
+Zero the whole structure instead. Zero is the correct reset value for
+every field: a cfg_reg of 0 is A=OFF with no permissions, and a
+num_rules of 0 restores the no-rules short cut. Rename the function
+since it no longer only unlocks entries.
+
+Fixes: 4bf501dc0118 ("target/riscv: pmp: Clear pmp/smepmp bits on reset")
+Suggested-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Sebastian Alba Vives <sebasjosue84@gmail.com>
+---
+Changes in v2:
+- Zero the whole env->pmp_state instead of masking PMP_LOCK and
+  PMP_AMATCH over a bounded set of entries, as suggested by Richard.
+  v1 also left pmp_state.addr[] and pmp_state.num_rules stale across
+  reset, which the memset covers as well.
+
+v1: https://lore.kernel.org/qemu-devel/20260916034331.2390427-1-sebasjosue84@gmail.com/
+
+ target/riscv/cpu.c     | 4 ++--
+ target/riscv/tcg/pmp.c | 9 ++-------
+ target/riscv/tcg/pmp.h | 2 +-
+ 3 files changed, 5 insertions(+), 10 deletions(-)
+
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index da4c1a090b..0b71196507 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -1048,7 +1048,7 @@ static void riscv_cpu_reset_hold(Object *obj, ResetType type)
+     }
+ 
+     /*
+-     * Clear mseccfg and unlock all the PMP entries upon reset.
++     * Clear mseccfg and the PMP state upon reset.
+      * This is required as per the priv, smepmp, and other security
+      * extension specifications that share this CSR, and is needed
+      * to clear stale entries across reboots.
+@@ -1060,7 +1060,7 @@ static void riscv_cpu_reset_hold(Object *obj, ResetType type)
+         env->mseccfg = 0;
+     }
+ 
+-    pmp_unlock_entries(env);
++    pmp_reset(env);
+ #endif /* ifdef CONFIG_TCG */
+ #else
+     env->priv = PRV_U;
+diff --git a/target/riscv/tcg/pmp.c b/target/riscv/tcg/pmp.c
+index 41b55519a8..437e0ff2af 100644
+--- a/target/riscv/tcg/pmp.c
++++ b/target/riscv/tcg/pmp.c
+@@ -199,14 +199,9 @@ static bool pmp_write_cfg(CPURISCVState *env, uint32_t pmp_index, uint8_t val)
+     return false;
+ }
+ 
+-void pmp_unlock_entries(CPURISCVState *env)
++void pmp_reset(CPURISCVState *env)
+ {
+-    uint32_t pmp_num = pmp_get_num_rules(env);
+-    int i;
+-
+-    for (i = 0; i < pmp_num; i++) {
+-        env->pmp_state.pmp[i].cfg_reg &= ~(PMP_LOCK | PMP_AMATCH);
+-    }
++    memset(&env->pmp_state, 0, sizeof(env->pmp_state));
+ }
+ 
+ static void pmp_decode_napot(hwaddr a, hwaddr *sa, hwaddr *ea)
+diff --git a/target/riscv/tcg/pmp.h b/target/riscv/tcg/pmp.h
+index 4c95c2767a..99546934fc 100644
+--- a/target/riscv/tcg/pmp.h
++++ b/target/riscv/tcg/pmp.h
+@@ -79,7 +79,7 @@ void pmp_update_rule_addr(CPURISCVState *env, uint32_t pmp_index);
+ void pmp_update_rule_nums(CPURISCVState *env);
+ uint32_t pmp_get_num_rules(CPURISCVState *env);
+ int pmp_priv_to_page_prot(pmp_priv_t pmp_priv);
+-void pmp_unlock_entries(CPURISCVState *env);
++void pmp_reset(CPURISCVState *env);
+ 
+ #define MSECCFG_MML_ISSET(env) get_field(env->mseccfg, MSECCFG_MML)
+ #define MSECCFG_MMWP_ISSET(env) get_field(env->mseccfg, MSECCFG_MMWP)
+-- 
+2.43.0
+
 
