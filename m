@@ -4,159 +4,146 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86F1ACA9ECF
-	for <qemu-devel@archiver.kernel.org>; Sun, 11 Oct 2026 17:40:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E9F1CA9ED0
+	for <qemu-devel@archiver.kernel.org>; Sun, 11 Oct 2026 18:27:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xFxWh-0004Ty-Io; Sun, 11 Oct 2026 13:40:01 -0400
+	id 1xFyFb-000320-Ux; Sun, 11 Oct 2026 14:26:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1xFxWX-0004TZ-2G
- for qemu-devel@nongnu.org; Sun, 11 Oct 2026 13:39:50 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <sunil.laxminarasimha@oss.qualcomm.com>)
+ id 1xFyFO-0002ws-1W
+ for qemu-devel@nongnu.org; Sun, 11 Oct 2026 14:26:10 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1xFxWV-0004PG-BI
- for qemu-devel@nongnu.org; Sun, 11 Oct 2026 13:39:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1791740386;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=4nsupO1hYHvGbTu7rv7mZw5DFJ3OvrDT9/wWccfeIwc=;
- b=YGzKQdS/5vbAwrmH8TtLkX0tVzP23XAsge0rh/CDGXXAOV131Eyb6EkqFCAAKLS390jWQs
- l7MoA4JGUl7I8sMqrhCD/7cxboJnJ80ge3LtQbhmZD1CbtqwgJVsorslDj75Keg/IstNWy
- nNrJ2QAUzFy+xto31eC0zKJVc1SD1ts=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-343-6Zk1UROrNgeB0s_CWU4mdQ-1; Sun, 11 Oct 2026 17:39:43 +0000
-X-MC-Unique: 6Zk1UROrNgeB0s_CWU4mdQ-1
-X-Mimecast-MFC-AGG-ID: 6Zk1UROrNgeB0s_CWU4mdQ_1791740382
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-48afcecb035so174825f8f.0
- for <qemu-devel@nongnu.org>; Sun, 11 Oct 2026 10:39:42 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <sunil.laxminarasimha@oss.qualcomm.com>)
+ id 1xFyFM-0008SI-G8
+ for qemu-devel@nongnu.org; Sun, 11 Oct 2026 14:26:09 -0400
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 69BILOQk2746330
+ for <qemu-devel@nongnu.org>; Sun, 11 Oct 2026 18:26:06 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:sender:subject:to; s=qcppdkim1; bh=QPCf
+ QitHy5Wwi73PjMU3Xhy12JKS7TYpBYVzAmtUj5o=; b=b6pUcsZ5ujBjFRLODwit
+ z2hnBw3KF8UTCuYbxML+Mn3P2I4wFe6BuYYvMtusYudSHicI1yGLFj2QAySOTuzb
+ ODvOj70AfDeRfKv9eS3jbXos7JOyIcdRvWQkgRPQWSASvMOsQRVE+ot4vOh/s2bZ
+ GYA80KK/RBKvfkFw2mzQ1W3rIMX/uP9gMY/baT1IVfI1TkqjW7qChlGeAZXMyA11
+ bYY5hMXW8RPKHmQNIKapt1MPRPSrTgcVo2a5YuX97p9FeJw6xCcdZEkyka1IliTL
+ D8/e+iU61gGVOThmeK8aoKTIANIKQRH5JvamsYgKN3Lyxft+3Dhygv3HFr2gdTtR
+ Hg==
+Received: from mail-dl1-f69.google.com (mail-dl1-f69.google.com [74.125.82.69])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h7ehjkea9-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Sun, 11 Oct 2026 18:26:06 +0000 (GMT)
+Received: by mail-dl1-f69.google.com with SMTP id
+ a92af1059eb24-152d1363a29so5910339c88.1
+ for <qemu-devel@nongnu.org>; Sun, 11 Oct 2026 11:26:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1791740382; x=1792345182; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:autocrypt
- :content-language:from:references:cc:to:subject:user-agent
- :mime-version:date:message-id:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=4nsupO1hYHvGbTu7rv7mZw5DFJ3OvrDT9/wWccfeIwc=;
- b=PP7bQ4wBuCTOfeI4jH7osvs121Vpe9PbyAPzqdbDtIcCytelCGOrERcEjqq2RwVyDi
- 1AxshwvAS6iIdrms0x4L2iYQ6xPS4LwBwlyY/sZKCWN+UttyNtxoXEK+R+14b0Pt22ZF
- ozl7hiHwT5wYoG8vWz0Y2S1QApuJVgsw69QdvC8dxsGhLaNLW0OsKfitzFF6WKlbrzJG
- tgDFzd86DXFs7EOWUPDryp3xqwLyScLO90hF+xMboFiZrQekk+pUT5UWLzOy+tesenIn
- vPVxc796pcQ/bOwexHHhy5j1A7PTrOEveRrXG0n5opccVEbyLIEzX8qxBEVSONnc5thX
- DyNg==
+ d=oss.qualcomm.com; s=google; t=1791743166; x=1792347966; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:sender:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=QPCfQitHy5Wwi73PjMU3Xhy12JKS7TYpBYVzAmtUj5o=;
+ b=WhXKq0dB03jfykcRiVCTfteB0xgVhq+bxgO/9s5hkRnUjImrGNOw1Se6HAqw8w9Rid
+ SaAQaKYUwe1EnNjJJetYJufjLg3Zc0CpSU1sIIemApUDEZMqdUB/EeXw5oD+zVKnvkgM
+ 3aCn5ATG2YKdJb69CBHKIp7k53+nJ3TyNhwmpUVaaISKCgd+Z3Sc1okFfE5xnRpeV1Ta
+ kp4sUIKbKvrzEvi5endv0b4wZRXdlvSKEQ+tAJxcTKmXpRfAZVyo5/eWQ+YvA4yCkAKy
+ shiopJpNKPVVrqlJosOIg9+FdkW522u83lzJt46zgPsz4WcJsLV10u8xtpzhYmS7Sinn
+ lWgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791740382; x=1792345182;
- h=content-transfer-encoding:content-type:in-reply-to:autocrypt
- :content-language:from:references:cc:to:subject:user-agent
- :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=4nsupO1hYHvGbTu7rv7mZw5DFJ3OvrDT9/wWccfeIwc=;
- b=hteXvF3OykvGty3sqIck/GfzFC5MWsCH7CpsADArMOvzYHbQg8a87aTjKOQm4AqFPJ
- bqZA++VjLoTZ9JZtMrCvLtyWyOPHZTgyqzPvSc1pKj5L9vJiJ3YAOPHDwZbaCBz6oYWH
- 22vzHk5yswg42t40fXNiVV6VWq71SikfRHGgQIU6cImUpm/Y+Wca3mSOsxz9HKSgQye7
- opC/Yfzocln43zVxavag3zt2QvHjUVmkQ2EhVu6Z7f4Kmwf9NZMG5FNLvpLmstQjL6wM
- XKJOmRfqp9nQhsI+Dlhdatd5MbKepOuJ0ytSMhLlt/SIG2nsqIjgGxhk+PlKiBS14+JR
- gMDw==
-X-Forwarded-Encrypted: i=1;
- AKwUvByUcogYndK8z4M+RH4UIErYETK6kBXiKkZ6nh2sxVfdL1jisHEHWDGAtVfZ1VQsA0Zdc2dzmI8TLcPz@nongnu.org
-X-Gm-Message-State: AFq9FYKdHPwgNdlzDf6wq3W2J7MXc0XuH5akZm7cIgQZXOgx+OpIdGex
- sGp2rC5qSxereWnZDr8eEG5gxHH9FnZ22HaTH5EwbQ7uTxilkBzrzaT26tibKbQBLgmFDOPpgm1
- GlLX1aLql+CYFTwcVhTP5J7Xi1mSCIsKtia/IthHR47JZga3nTffyI6W3
-X-Gm-Gg: AYBFou1IpC3jeGS1/ytGvCXp8AkljPcMkEJ42c5vas/izdDruzBhfaHaFFTxDOVb9Tl
- jdEC/tijbw2YQ4EjnLKJnvRAfMdnbhuwlk53Az9GfmltngWM+8iIetBzHN6lESd51iFinUcGRBR
- 6LMSYnrhUzv8QXWlWICMO1+XqMs+B6J+WoAFvhAqeG3vMLqJE1AjvLKlF4Cob8VzpVCMKQABAs2
- +pkAMMaH6cma4EcSLGS3GLqFSEkD9pMOEjaDoucViw6cJx413cMq5msdqNgjzKJ9WKDPGqIV4jq
- oxipKCjlGftceKEga60H0O8PlfIlmwoVSJjR/O+GCRs1WnYfEXm6fXWPyAQL/cf8oXrb++z+FLe
- NOY9uCzDUelvV++CuvjY+nA7v6AyjLxc9IpUv/Rpm
-X-Received: by 2002:a05:6000:188a:b0:48c:72fc:3644 with SMTP id
- ffacd0b85a97d-48dbacf555bmr16339320f8f.22.1791740381566; 
- Sun, 11 Oct 2026 10:39:41 -0700 (PDT)
-X-Received: by 2002:a05:6000:188a:b0:48c:72fc:3644 with SMTP id
- ffacd0b85a97d-48dbacf555bmr16339279f8f.22.1791740380972; 
- Sun, 11 Oct 2026 10:39:40 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:1292:d530:578a:3c67:6721:1232?
- ([2a01:e0a:1292:d530:578a:3c67:6721:1232])
+ d=1e100.net; s=20260707; t=1791743166; x=1792347966;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:sender:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=QPCfQitHy5Wwi73PjMU3Xhy12JKS7TYpBYVzAmtUj5o=;
+ b=xRI3QIgEL/aDO31AISQHt+RstyeIo833tb7xm13jmTzDRiWZzIcXd2L+URcn/U8bXm
+ WLIfuf5w3I39Ky6a/D7DNw5XMJ4PXprgHHXwNioJoTnddBhZCOZR55UwAldk6HpAbSPF
+ ZAbB2KZpB1YOput1xZIwhcuG89fXvX8l8gsx/OgKwBE73NmkmwN4lPg7zBgLQiiu7r1u
+ JPv/elueXzHzAUnXDJOx9neLOfmGwNnfauq2cua7SW8qz/RC+dXDVdchmoxO8Q1tCv0Q
+ oSye37TQ1qEJ8WX64C03IwaFUbFRu8ofJXbhhhP++cU9gl+/sdUQMBdg9Df5lSNr/VD2
+ 9adw==
+X-Gm-Message-State: AFq9FYJPchBUPGDMOxG97vegG62c7lmJwRf9PwXchc4Mtnh1Tq/G/CKb
+ /kE30J9ZuOn79Wx0YXTvBShPMbXSN0Ph4Ehu7IUD/n/DU73LLvngtl0wU6p8F/3N68yLCypxL9i
+ rdokE6SW80SdU92cK9Bt7/iIsJofzkWUHAacHR923OSljKLu0oZxpuvwTCQtivj1K+w==
+X-Gm-Gg: AYBFou1A5EjmdagjW3fyAq8AF9BthedPCP+lmr7+j/FKaf3JFMkXJ+NqXiPZ2I0x1+U
+ yiHW1goz/hQccmO0VuuxWmGCu8Wa/K4PfL2tGTQE62Flru1eexl3PJXvrz7xPlg08GgkYyiKCRh
+ A/XZ8cjNxm6bvFes8wdpRaAO/zgdSfCq8kEt8lEIOv3vVu36JRj8gkBhAJmJw1ZE0W3iwwECPKA
+ mYqGhnOW+Z54oVEoag0E3rKUY7BKjzWTkN8iVLbiuYPcS14DlvuUgKXMAgd/hUB3B3IKIiG6Ny1
+ WbbXThpagaHxByQ/6mcq20VU/ioQhN2vJhZ0Keo2UzfS3GO+PkJhzqIUWOgiJDtrmPKT2qWiNL7
+ jIk66JEfhcyRQUygvDTkpmlOkqO+7oAkIZQ2fHF5EKdfyLiEIqA2cJO4=
+X-Received: by 2002:a05:701b:241a:b0:164:475f:1a07 with SMTP id
+ a92af1059eb24-16a55f1e60bmr10830864c88.1.1791743165710; 
+ Sun, 11 Oct 2026 11:26:05 -0700 (PDT)
+X-Received: by 2002:a05:701b:241a:b0:164:475f:1a07 with SMTP id
+ a92af1059eb24-16a55f1e60bmr10830832c88.1.1791743165183; 
+ Sun, 11 Oct 2026 11:26:05 -0700 (PDT)
+Received: from hu-sunilvl-blr.qualcomm.com
+ (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com. [103.229.18.19])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48db99b820asm16319122f8f.24.2026.10.11.10.39.38
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 11 Oct 2026 10:39:39 -0700 (PDT)
-Message-ID: <9bfb90b4-7ed5-4400-abf6-d01e110e840d@redhat.com>
-Date: Sun, 11 Oct 2026 19:39:38 +0200
+ a92af1059eb24-169a5866477sm22505284c88.22.2026.10.11.11.26.00
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 11 Oct 2026 11:26:04 -0700 (PDT)
+X-Google-Original-From: Sunil V L <sunilvl@oss.qualcomm.com
+To: qemu-devel@nongnu.org, qemu-riscv@nongnu.org
+Cc: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu@processmission.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>,
+ Anup Patel <anup.patel@oss.qualcomm.com>,
+ Drew Fustini <fustini@kernel.org>, Sunil V L <sunilvl@oss.qualcomm.com>
+Subject: [PATCH 1/4] tests/qtest/bios-tables-test: Allow PPTT for RISC-V
+Date: Sun, 11 Oct 2026 23:55:49 +0530
+Message-ID: <20261011182552.1071742-2-sunilvl@oss.qualcomm.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20261011182552.1071742-1-sunilvl@oss.qualcomm.com>
+References: <20261011182552.1071742-1-sunilvl@oss.qualcomm.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 3/4] vfio: add setup_sparse_mmaps hook to
- VFIODeviceIOOps
-To: Naman Gulati <namangulati@google.com>, qemu-devel@nongnu.org
-Cc: John Levon <john.levon@nutanix.com>,
- Thanos Makatos <thanos.makatos@nutanix.com>,
- Alex Williamson <alex@shazbot.org>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Matt Evans <matt@ozlabs.org>
-References: <20261009175314.1823347-1-namangulati@google.com>
- <20261009175314.1823347-4-namangulati@google.com>
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Content-Language: en-US, fr
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20261009175314.1823347-4-namangulati@google.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDExMDA3MyBTYWx0ZWRfX8+vuS8a9oybI
+ +S1uzFYYhVg5CgOZNesSOTzKyP6XikGrg5XSSMncIisBzkvuXUxJbaPMCwnd/pWyEhrmtWlQlfh
+ /G2X/us0E6TCncfF3gWhLijviXskGh9Leog4MIawWdxEI0bq2YV/c96GpE4GtSWvsqbH5j6O5LM
+ fDc0CGu+yTmIvebcj/vN/+IPV+HzY8hJFcXQX5EoBH0kUoo2rDxU/aU0agOr0ClTvq+GvGtoG1A
+ c4z0EWL19GEW5wA4FmHI6Tf7y4dqK4n96Z/u6efHLnKATmnhDXmTUUUUIa6HyFHXJ5JjZQTz/RZ
+ j31PMf9piVM2fYsQ9/41QdbpqupP1kK6BBTzR9eiA5JyFc1qxA4GlBWKwl4HeGvIOa5F5fm7yzi
+ OxkTEK6xYdVMtq2/siFjvIQL/9BTdldeSMUf2DcqirdR9Qf5xETU31MbXuB4iT8G7CQJthoX2D/
+ fdsXE2SBIDQzc8rhWtA==
+X-Proofpoint-ORIG-GUID: a4Bf5Wix__dS1zHp-nv_V4HOSGjEv3vI
+X-Authority-Analysis: v=2.4 cv=MpTHeGae c=1 sm=1 tr=0 ts=6acbd4be cx=c_pps
+ a=kVLUcbK0zfr7ocalXnG1qA==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
+ a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22 a=EUspDBNiAAAA:8
+ a=ou02Ivcb4NLdwMP0g4sA:9 a=vr4QvYf-bLy2KjpDp97w:22
+X-Proofpoint-GUID: a4Bf5Wix__dS1zHp-nv_V4HOSGjEv3vI
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDExMDA3MyBTYWx0ZWRfX92kdkyM8FO9M
+ UpS39GaKHURlOBIDfDRMjTSTQvRqfYtJ3O+2UENpdUhI50UDXkEfeBtqcf476gSRyj2gPJrm6NP
+ ceVe3nQsI8tGsBnRM6PLEoGhObmWZh8=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-10-11_04,2026-10-09_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 malwarescore=0 spamscore=0 adultscore=0 bulkscore=0
+ suspectscore=0 clxscore=1015 priorityscore=1501 lowpriorityscore=0
+ impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610080000
+ definitions=main-2610110073
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=sunil.laxminarasimha@oss.qualcomm.com;
+ helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -169,123 +156,33 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Sunil V L <sunilvl@oss.qualcomm.com>
+From:  Sunil V L via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/9/26 19:53, Naman Gulati wrote:
-> Add a setup_sparse_mmaps callback to VFIODeviceIOOps so transport
-> backends (such as vfio-user) can parse custom sparse mmap capabilities,
-> falling back to vfio_default_setup_sparse_mmaps() to process shared
-> VFIO mmap capabilities.
-> 
-> Signed-off-by: Naman Gulati <namangulati@google.com>
-> ---
->   hw/vfio/vfio-region.h         |  5 +++++
->   include/hw/vfio/vfio-device.h | 16 ++++++++++++++++
->   hw/vfio/region.c              | 25 ++++++++++++++++++++++---
->   3 files changed, 43 insertions(+), 3 deletions(-)
-> 
-> diff --git a/hw/vfio/vfio-region.h b/hw/vfio/vfio-region.h
-> index 9f6a5cf7d5..a0c9533f9f 100644
-> --- a/hw/vfio/vfio-region.h
-> +++ b/hw/vfio/vfio-region.h
-> @@ -46,4 +46,9 @@ void vfio_region_mmaps_set_enabled(VFIORegion *region, bool enabled);
->   void vfio_region_exit(VFIORegion *region);
->   void vfio_region_finalize(VFIORegion *region);
->   
-> +struct vfio_region_info;
-> +int vfio_default_setup_sparse_mmaps(VFIORegion *region,
-> +                                    struct vfio_region_info *info,
-> +                                    Error **errp);
-> +
->   #endif /* HW_VFIO_REGION_H */
-> diff --git a/include/hw/vfio/vfio-device.h b/include/hw/vfio/vfio-device.h
-> index 8472420d3f..3136e152f2 100644
-> --- a/include/hw/vfio/vfio-device.h
-> +++ b/include/hw/vfio/vfio-device.h
-> @@ -43,6 +43,7 @@ enum {
->   
->   typedef struct VFIODeviceOps VFIODeviceOps;
->   typedef struct VFIODeviceIOOps VFIODeviceIOOps;
-> +typedef struct VFIORegion VFIORegion;
->   typedef struct VFIOMigration VFIOMigration;
->   
->   typedef struct IOMMUFDBackend IOMMUFDBackend;
-> @@ -218,6 +219,21 @@ struct VFIODeviceIOOps {
->       int (*get_region_info)(VFIODevice *vdev,
->                              struct vfio_region_info *info, int *fd);
->   
-> +    /**
-> +     * @setup_sparse_mmaps
-> +     *
-> +     * Parse sparse mmap capabilities for a region and initialize region->mmaps.
-> +     *
-> +     * @region: #VFIORegion to set up
-> +     * @info: region info struct containing capabilities
-> +     * @errp: pointer to Error*, to store an error if it happens
-> +     *
-> +     * Returns 0 on success, -ENODEV if not sparse, or negative error code.
-> +     */
-> +    int (*setup_sparse_mmaps)(VFIORegion *region,
-> +                              struct vfio_region_info *info,
-> +                              Error **errp);
-> +
->       /**
->        * @get_irq_info
->        *
-> diff --git a/hw/vfio/region.c b/hw/vfio/region.c
-> index 16efed2fce..d6cd5d4743 100644
-> --- a/hw/vfio/region.c
-> +++ b/hw/vfio/region.c
-> @@ -162,9 +162,9 @@ static int vfio_mmap_compare_offset(const void *a, const void *b)
->       return 0;
->   }
->   
-> -static int vfio_setup_region_sparse_mmaps(VFIORegion *region,
-> -                                          struct vfio_region_info *info,
-> -                                          Error **errp)
-> +int vfio_default_setup_sparse_mmaps(VFIORegion *region,
-> +                                    struct vfio_region_info *info,
-> +                                    Error **errp)
->   {
->       struct vfio_info_cap_header *hdr;
->       struct vfio_region_info_cap_sparse_mmap *sparse;
-> @@ -198,6 +198,25 @@ static int vfio_setup_region_sparse_mmaps(VFIORegion *region,
->   
->       region->nr_mmaps = j;
->       region->mmaps = g_realloc(region->mmaps, j * sizeof(VFIOMmap));
-> +    return 0;
-> +}
-> +
-> +static int vfio_setup_region_sparse_mmaps(VFIORegion *region,
-> +                                          struct vfio_region_info *info,
-> +                                          Error **errp)
-> +{
-> +    int ret, i;
-> +
-> +    if (region->vbasedev->io_ops &&
-> +        region->vbasedev->io_ops->setup_sparse_mmaps) {
+From: Sunil V L <sunilvl@oss.qualcomm.com>
 
-Every other hook is a mandatory field. This should add :
-  
-   .setup_sparse_mmaps = vfio_default_setup_sparse_mmaps
+Allow changes to the riscv64 virt board to add PPTT support.
 
-in the kernel VFIO io_ops to be consistent with the rest of the code.
+Signed-off-by: Sunil V L <sunilvl@oss.qualcomm.com>
+---
+ tests/data/acpi/riscv64/virt/PPTT           | 0
+ tests/qtest/bios-tables-test-allowed-diff.h | 1 +
+ 2 files changed, 1 insertion(+)
+ create mode 100644 tests/data/acpi/riscv64/virt/PPTT
 
-Thanks,
-
-C.
-
-> +        ret = region->vbasedev->io_ops->setup_sparse_mmaps(region, info, errp);
-> +    } else {
-> +        ret = vfio_default_setup_sparse_mmaps(region, info, errp);
-> +    }
-> +
-> +    if (ret) {
-> +        return ret;
-> +    }
->   
->       /*
->        * Sort sparse mmaps by offset to ensure proper handling of gaps
+diff --git a/tests/data/acpi/riscv64/virt/PPTT b/tests/data/acpi/riscv64/virt/PPTT
+new file mode 100644
+index 000000000000..e69de29bb2d1
+diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
+index dfb8523c8bf4..94be7a69a22e 100644
+--- a/tests/qtest/bios-tables-test-allowed-diff.h
++++ b/tests/qtest/bios-tables-test-allowed-diff.h
+@@ -1 +1,2 @@
+ /* List of comma-separated changed AML files to ignore */
++"tests/data/acpi/riscv64/virt/PPTT",
+-- 
+2.43.0
 
 
