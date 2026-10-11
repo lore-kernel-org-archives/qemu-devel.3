@@ -4,89 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E9F1CA9ED0
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CBD0CA9EC7
 	for <qemu-devel@archiver.kernel.org>; Sun, 11 Oct 2026 18:27:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xFyFb-000320-Ux; Sun, 11 Oct 2026 14:26:24 -0400
+	id 1xFyFa-000321-GL; Sun, 11 Oct 2026 14:26:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <sunil.laxminarasimha@oss.qualcomm.com>)
- id 1xFyFO-0002ws-1W
- for qemu-devel@nongnu.org; Sun, 11 Oct 2026 14:26:10 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ id 1xFyFT-0002yP-9V
+ for qemu-devel@nongnu.org; Sun, 11 Oct 2026 14:26:16 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <sunil.laxminarasimha@oss.qualcomm.com>)
- id 1xFyFM-0008SI-G8
- for qemu-devel@nongnu.org; Sun, 11 Oct 2026 14:26:09 -0400
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+ id 1xFyFR-0008T2-Cs
+ for qemu-devel@nongnu.org; Sun, 11 Oct 2026 14:26:14 -0400
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69BILOQk2746330
- for <qemu-devel@nongnu.org>; Sun, 11 Oct 2026 18:26:06 GMT
+ 69BILP51420170
+ for <qemu-devel@nongnu.org>; Sun, 11 Oct 2026 18:26:12 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:sender:subject:to; s=qcppdkim1; bh=QPCf
- QitHy5Wwi73PjMU3Xhy12JKS7TYpBYVzAmtUj5o=; b=b6pUcsZ5ujBjFRLODwit
- z2hnBw3KF8UTCuYbxML+Mn3P2I4wFe6BuYYvMtusYudSHicI1yGLFj2QAySOTuzb
- ODvOj70AfDeRfKv9eS3jbXos7JOyIcdRvWQkgRPQWSASvMOsQRVE+ot4vOh/s2bZ
- GYA80KK/RBKvfkFw2mzQ1W3rIMX/uP9gMY/baT1IVfI1TkqjW7qChlGeAZXMyA11
- bYY5hMXW8RPKHmQNIKapt1MPRPSrTgcVo2a5YuX97p9FeJw6xCcdZEkyka1IliTL
- D8/e+iU61gGVOThmeK8aoKTIANIKQRH5JvamsYgKN3Lyxft+3Dhygv3HFr2gdTtR
- Hg==
-Received: from mail-dl1-f69.google.com (mail-dl1-f69.google.com [74.125.82.69])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h7ehjkea9-1
+ :mime-version:references:sender:subject:to; s=qcppdkim1; bh=m6oF
+ uiTVb24CD7SBzXo9f+RpEjr4Z1iVgWhANPx/q8M=; b=o7A5xUV8JUXWlaouRwY4
+ 3/ViNRDfxZtmeIuQDCXrSmAYepNA9RPYF6UiaHNIWPamk0cDZbMFC6/qWFtOd1D9
+ hrMGl/tWKNi+TSBLtwFr6mSWWuInJotyvBUrTMpOqfBvKqB8+Z3pinSn3o+X856M
+ g+EYMnigrFJjLYMlBzTMyvc7XUGRZ5VtLCP3D1k7BourLoGt0VdMhZgwQ0cgSIkn
+ LfJe57n1UoatBpghcY/KOLUQACNYvsk80VGTiH3P44sPk8t6VuJBwMpkJ4pJrzu7
+ DDsdOsErUWX0E3v1wDPN2PL6LLDj4Tort1ZB8RUPf7zWGNoBF6+/94E6s2sytkSM
+ CQ==
+Received: from mail-dy1-f198.google.com (mail-dy1-f198.google.com
+ [74.125.82.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h7cc6bpy2-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Sun, 11 Oct 2026 18:26:06 +0000 (GMT)
-Received: by mail-dl1-f69.google.com with SMTP id
- a92af1059eb24-152d1363a29so5910339c88.1
- for <qemu-devel@nongnu.org>; Sun, 11 Oct 2026 11:26:06 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Sun, 11 Oct 2026 18:26:12 +0000 (GMT)
+Received: by mail-dy1-f198.google.com with SMTP id
+ 5a478bee46e88-30c0d568830so3045345eec.1
+ for <qemu-devel@nongnu.org>; Sun, 11 Oct 2026 11:26:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1791743166; x=1792347966; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1791743171; x=1792347971; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:sender:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=QPCfQitHy5Wwi73PjMU3Xhy12JKS7TYpBYVzAmtUj5o=;
- b=WhXKq0dB03jfykcRiVCTfteB0xgVhq+bxgO/9s5hkRnUjImrGNOw1Se6HAqw8w9Rid
- SaAQaKYUwe1EnNjJJetYJufjLg3Zc0CpSU1sIIemApUDEZMqdUB/EeXw5oD+zVKnvkgM
- 3aCn5ATG2YKdJb69CBHKIp7k53+nJ3TyNhwmpUVaaISKCgd+Z3Sc1okFfE5xnRpeV1Ta
- kp4sUIKbKvrzEvi5endv0b4wZRXdlvSKEQ+tAJxcTKmXpRfAZVyo5/eWQ+YvA4yCkAKy
- shiopJpNKPVVrqlJosOIg9+FdkW522u83lzJt46zgPsz4WcJsLV10u8xtpzhYmS7Sinn
- lWgA==
+ bh=m6oFuiTVb24CD7SBzXo9f+RpEjr4Z1iVgWhANPx/q8M=;
+ b=PjE/giA8Uady6jZW8iMyd6wnuBMbeA+Q9RmFeyTqKtQ66BiNKXCG85s4I4W3h4y1Gw
+ feMhflM0bgxjVgGR1W/kZmBr7lctAncjoKDAZ3q22uhJZSzs5mlyknuEKOxy7iKzaA+o
+ FnjH3MRGGtlEAewDWgAe69qt5QPMy7NeORv67sckNCkpsKfuuuPD0KfgUSmsS/YIn5le
+ 6FmTIi3ZB9FRPJ2KKFla/iBPMwEp/n12zCR9RJA3wadP0sHDKTN8wNm22oAWdWhdLRFF
+ MT62MUhJz+4zhBGd8B+NL/0ibzkwRQgJUK3zIwX+pTg3DgPuIjGkSKACV03pRwflq5Zh
+ TGig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791743166; x=1792347966;
+ d=1e100.net; s=20260707; t=1791743171; x=1792347971;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:sender:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=QPCfQitHy5Wwi73PjMU3Xhy12JKS7TYpBYVzAmtUj5o=;
- b=xRI3QIgEL/aDO31AISQHt+RstyeIo833tb7xm13jmTzDRiWZzIcXd2L+URcn/U8bXm
- WLIfuf5w3I39Ky6a/D7DNw5XMJ4PXprgHHXwNioJoTnddBhZCOZR55UwAldk6HpAbSPF
- ZAbB2KZpB1YOput1xZIwhcuG89fXvX8l8gsx/OgKwBE73NmkmwN4lPg7zBgLQiiu7r1u
- JPv/elueXzHzAUnXDJOx9neLOfmGwNnfauq2cua7SW8qz/RC+dXDVdchmoxO8Q1tCv0Q
- oSye37TQ1qEJ8WX64C03IwaFUbFRu8ofJXbhhhP++cU9gl+/sdUQMBdg9Df5lSNr/VD2
- 9adw==
-X-Gm-Message-State: AFq9FYJPchBUPGDMOxG97vegG62c7lmJwRf9PwXchc4Mtnh1Tq/G/CKb
- /kE30J9ZuOn79Wx0YXTvBShPMbXSN0Ph4Ehu7IUD/n/DU73LLvngtl0wU6p8F/3N68yLCypxL9i
- rdokE6SW80SdU92cK9Bt7/iIsJofzkWUHAacHR923OSljKLu0oZxpuvwTCQtivj1K+w==
-X-Gm-Gg: AYBFou1A5EjmdagjW3fyAq8AF9BthedPCP+lmr7+j/FKaf3JFMkXJ+NqXiPZ2I0x1+U
- yiHW1goz/hQccmO0VuuxWmGCu8Wa/K4PfL2tGTQE62Flru1eexl3PJXvrz7xPlg08GgkYyiKCRh
- A/XZ8cjNxm6bvFes8wdpRaAO/zgdSfCq8kEt8lEIOv3vVu36JRj8gkBhAJmJw1ZE0W3iwwECPKA
- mYqGhnOW+Z54oVEoag0E3rKUY7BKjzWTkN8iVLbiuYPcS14DlvuUgKXMAgd/hUB3B3IKIiG6Ny1
- WbbXThpagaHxByQ/6mcq20VU/ioQhN2vJhZ0Keo2UzfS3GO+PkJhzqIUWOgiJDtrmPKT2qWiNL7
- jIk66JEfhcyRQUygvDTkpmlOkqO+7oAkIZQ2fHF5EKdfyLiEIqA2cJO4=
-X-Received: by 2002:a05:701b:241a:b0:164:475f:1a07 with SMTP id
- a92af1059eb24-16a55f1e60bmr10830864c88.1.1791743165710; 
- Sun, 11 Oct 2026 11:26:05 -0700 (PDT)
-X-Received: by 2002:a05:701b:241a:b0:164:475f:1a07 with SMTP id
- a92af1059eb24-16a55f1e60bmr10830832c88.1.1791743165183; 
- Sun, 11 Oct 2026 11:26:05 -0700 (PDT)
+ bh=m6oFuiTVb24CD7SBzXo9f+RpEjr4Z1iVgWhANPx/q8M=;
+ b=1fst3claOcKndu/PUzMKgjJKfIkRs6/kDug1hr5omVtadVFAolHwSTbXpFGV9JVDwl
+ r6skoDqZn8S8xGIWJxSRFo5b7To3+cKJXZlXvmGP+g20u7bHtIfvvFxXU8UQKIzPz+UC
+ qBe2xsZ/WaufMnJ8bkTSmEQgaVVInAp67roMzhdrGCBdki7r16t+xHC32aXoXf8VGwiP
+ oOnDNuP9DT317zlaO7hEeNVzJ4OLpZcAxz6HFqUI4gDyfOPetdAxxRqnuY09nZKaFl0I
+ aUOGYDfcY54M/babk8PvgxtUakPCkujH1+4yCUeGQ/pfEUOqq5gua2zfaQ+M1EPUHJZL
+ n0fg==
+X-Gm-Message-State: AFq9FYLclflr0PELyJICAxdDhSUmnx/8C+rF+kKuGZQ5GxyRozstN1wM
+ 43PQvOxL6thJK9Z8Xpu4XHDQ/u0hrV1tnBfa4BrgidDo89M9v4nIKVcTTo1MFcT6lvj04jSkeW7
+ l7LnbFZDBlwRnLkuWHvuMH26Wpu5XrVB8OPR/n81GshhJayLu11tpLQqyvMXI3fEOGg==
+X-Gm-Gg: AYBFou0ePZsh4r2646lPveMMHSxigwbWgBOoQtI1QMngjvXNKJB2viPK4PM2ydCDetB
+ nRpiF5V4k+rNrCu1Ihc7jLE1Kfbkb5fATyQo4OHSlYUlwBiwefgbyRVsh0YGZaiZXgGWh/Ar4/l
+ B7XgmVKhlFCyS0ubgTAgd1HZAl1fGDhNIeVQ+lbVwI2eWG3BzrB9+VkWlTs0s6VY4YNIw7p3Cl7
+ bewJOxT3QD0oy9X4ND5XD0QkjaQLesWXPIwQWQn8grnEiVAmdKo1lPUnoGaDaEeZK384J9R591o
+ 6HsdJ/Xbe2Mi9IIng3CdD5IuME97YAygr6M5TaWaq8abULuYlaQ3RPOdFxwskPiSewQddfdIKke
+ i8vUdd0Re/I4RqVeR2J3zm09MXBFjsEj7ncfiimGwUmucRZQBvBPr1Lk=
+X-Received: by 2002:a05:701b:4508:10b0:154:fa0b:6df1 with SMTP id
+ a92af1059eb24-16a5e49d6c9mr9218483c88.37.1791743170949; 
+ Sun, 11 Oct 2026 11:26:10 -0700 (PDT)
+X-Received: by 2002:a05:701b:4508:10b0:154:fa0b:6df1 with SMTP id
+ a92af1059eb24-16a5e49d6c9mr9218444c88.37.1791743170328; 
+ Sun, 11 Oct 2026 11:26:10 -0700 (PDT)
 Received: from hu-sunilvl-blr.qualcomm.com
  (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com. [103.229.18.19])
  by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-169a5866477sm22505284c88.22.2026.10.11.11.26.00
+ a92af1059eb24-169a5866477sm22505284c88.22.2026.10.11.11.26.05
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 11 Oct 2026 11:26:04 -0700 (PDT)
+ Sun, 11 Oct 2026 11:26:09 -0700 (PDT)
 X-Google-Original-From: Sunil V L <sunilvl@oss.qualcomm.com
 To: qemu-devel@nongnu.org, qemu-riscv@nongnu.org
 Cc: Palmer Dabbelt <palmer@dabbelt.com>,
@@ -98,52 +99,54 @@ Cc: Palmer Dabbelt <palmer@dabbelt.com>,
  "Michael S . Tsirkin" <mst@redhat.com>,
  Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>,
  Anup Patel <anup.patel@oss.qualcomm.com>,
- Drew Fustini <fustini@kernel.org>, Sunil V L <sunilvl@oss.qualcomm.com>
-Subject: [PATCH 1/4] tests/qtest/bios-tables-test: Allow PPTT for RISC-V
-Date: Sun, 11 Oct 2026 23:55:49 +0530
-Message-ID: <20261011182552.1071742-2-sunilvl@oss.qualcomm.com>
+ Drew Fustini <fustini@kernel.org>, Sunil V L <sunilvl@oss.qualcomm.com>,
+ Sia Jee Heng <jeeheng.sia@starfivetech.com>
+Subject: [PATCH 2/4] hw/riscv/virt: Add ACPI PPTT table
+Date: Sun, 11 Oct 2026 23:55:50 +0530
+Message-ID: <20261011182552.1071742-3-sunilvl@oss.qualcomm.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261011182552.1071742-1-sunilvl@oss.qualcomm.com>
 References: <20261011182552.1071742-1-sunilvl@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDExMDA3MyBTYWx0ZWRfX8+vuS8a9oybI
- +S1uzFYYhVg5CgOZNesSOTzKyP6XikGrg5XSSMncIisBzkvuXUxJbaPMCwnd/pWyEhrmtWlQlfh
- /G2X/us0E6TCncfF3gWhLijviXskGh9Leog4MIawWdxEI0bq2YV/c96GpE4GtSWvsqbH5j6O5LM
- fDc0CGu+yTmIvebcj/vN/+IPV+HzY8hJFcXQX5EoBH0kUoo2rDxU/aU0agOr0ClTvq+GvGtoG1A
- c4z0EWL19GEW5wA4FmHI6Tf7y4dqK4n96Z/u6efHLnKATmnhDXmTUUUUIa6HyFHXJ5JjZQTz/RZ
- j31PMf9piVM2fYsQ9/41QdbpqupP1kK6BBTzR9eiA5JyFc1qxA4GlBWKwl4HeGvIOa5F5fm7yzi
- OxkTEK6xYdVMtq2/siFjvIQL/9BTdldeSMUf2DcqirdR9Qf5xETU31MbXuB4iT8G7CQJthoX2D/
- fdsXE2SBIDQzc8rhWtA==
-X-Proofpoint-ORIG-GUID: a4Bf5Wix__dS1zHp-nv_V4HOSGjEv3vI
-X-Authority-Analysis: v=2.4 cv=MpTHeGae c=1 sm=1 tr=0 ts=6acbd4be cx=c_pps
- a=kVLUcbK0zfr7ocalXnG1qA==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
+X-Proofpoint-GUID: CiSgojXSnJ9oDYdG0uF9-ue1Qmg1L7PZ
+X-Authority-Analysis: v=2.4 cv=XdQcX455 c=1 sm=1 tr=0 ts=6acbd4c4 cx=c_pps
+ a=wEP8DlPgTf/vqF+yE6f9lg==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
  a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22 a=EUspDBNiAAAA:8
- a=ou02Ivcb4NLdwMP0g4sA:9 a=vr4QvYf-bLy2KjpDp97w:22
-X-Proofpoint-GUID: a4Bf5Wix__dS1zHp-nv_V4HOSGjEv3vI
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDExMDA3MyBTYWx0ZWRfX92kdkyM8FO9M
- UpS39GaKHURlOBIDfDRMjTSTQvRqfYtJ3O+2UENpdUhI50UDXkEfeBtqcf476gSRyj2gPJrm6NP
- ceVe3nQsI8tGsBnRM6PLEoGhObmWZh8=
+ a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22 a=EUspDBNiAAAA:8
+ a=Bq6zwJu1AAAA:8 a=bgGojp78X7_NmGY_0FYA:9 a=bBxd6f-gb0O0v-kibOvt:22
+ a=KQ6X2bKhxX7Fj2iT9C4S:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDExMDA3MyBTYWx0ZWRfXyMtDGjymnWBd
+ T/aazgChUJG8OUpij7chrcs1FCt5fRNev5ykY/mZKzDAu8S5JGLpCI13EZRyHGEB+JkYLOWDtgB
+ Nlo3lf+zwNZrfwmZXRNcZjV6Uuq5ZoGVAz/3N/XKh3S1lK3AT5pc5L+H0QJ4jZuBk0LWRpI3r+C
+ AwBExDbj0oqb/9mIcmMvLS5c7hLxKiqZHhXZp+E2voe6zGZFlqOtSBeOhprhUOp71hMOjQ+xKUj
+ OVa32tEOvq1VsU6FBgx8uWgxUz1PXk+skMsXHrGyxB9/UXHYgTyybXHWnmB7F7YDOVPXrGBGHe4
+ qlT1hut59VnSorRSitE6DYgvHJXfwbSpCuWTIZNBCVlgF+04/W3Fk107nv6Dsx/FQwei/TK3qXp
+ YHZVMJSCBRaI9Tivmt73EB3ql6cQOWtFskPF/vlugKF+EOMmaP99bvqG8jwXUmX2lrmzwHBNOQZ
+ zuiXACP4d3qP+mcIp4g==
+X-Proofpoint-ORIG-GUID: CiSgojXSnJ9oDYdG0uF9-ue1Qmg1L7PZ
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDExMDA3MyBTYWx0ZWRfXwCTBt+PfErPU
+ Okzwt3T4+VrcbZ/fPdcICwG30FPru+L+6L8rPoIQP/O9YcwryxQnsWVno4Xs4FTlE8gTyPYkwrj
+ jlFQab3ygnsZc8nKJh6KsWUpOisjLys=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-10-11_04,2026-10-09_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 malwarescore=0 spamscore=0 adultscore=0 bulkscore=0
- suspectscore=0 clxscore=1015 priorityscore=1501 lowpriorityscore=0
- impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ clxscore=1015 malwarescore=0 spamscore=0 adultscore=0 phishscore=0
+ bulkscore=0 lowpriorityscore=0 suspectscore=0 impostorscore=0
+ priorityscore=1501 classifier=typeunknown authscore=0 authtc= authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610080000
  definitions=main-2610110073
-Received-SPF: pass client-ip=205.220.168.131;
+Received-SPF: pass client-ip=205.220.180.131;
  envelope-from=sunil.laxminarasimha@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
+ helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -163,25 +166,145 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Sunil V L <sunilvl@oss.qualcomm.com>
 
-Allow changes to the riscv64 virt board to add PPTT support.
+Generate the Processor Properties Topology Table (PPTT) for the RISC-V
+virt machine.
+
+Describe the machine using separate L1 data and instruction caches plus
+unified L2 and L3 caches, and enable the corresponding cache and cluster
+SMP properties.
 
 Signed-off-by: Sunil V L <sunilvl@oss.qualcomm.com>
+Signed-off-by: Sia Jee Heng <jeeheng.sia@starfivetech.com>
 ---
- tests/data/acpi/riscv64/virt/PPTT           | 0
- tests/qtest/bios-tables-test-allowed-diff.h | 1 +
- 2 files changed, 1 insertion(+)
- create mode 100644 tests/data/acpi/riscv64/virt/PPTT
+ hw/riscv/virt-acpi-build.c |  7 +++++
+ hw/riscv/virt.c            | 54 ++++++++++++++++++++++++++++++++++++++
+ include/hw/riscv/virt.h    |  4 +++
+ 3 files changed, 65 insertions(+)
 
-diff --git a/tests/data/acpi/riscv64/virt/PPTT b/tests/data/acpi/riscv64/virt/PPTT
-new file mode 100644
-index 000000000000..e69de29bb2d1
-diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
-index dfb8523c8bf4..94be7a69a22e 100644
---- a/tests/qtest/bios-tables-test-allowed-diff.h
-+++ b/tests/qtest/bios-tables-test-allowed-diff.h
-@@ -1 +1,2 @@
- /* List of comma-separated changed AML files to ignore */
-+"tests/data/acpi/riscv64/virt/PPTT",
+diff --git a/hw/riscv/virt-acpi-build.c b/hw/riscv/virt-acpi-build.c
+index 0475dcb5c601..3c72a03dadb6 100644
+--- a/hw/riscv/virt-acpi-build.c
++++ b/hw/riscv/virt-acpi-build.c
+@@ -882,7 +882,10 @@ static void virt_acpi_build(RISCVVirtState *s, AcpiBuildTables *tables)
+     unsigned dsdt, xsdt;
+     GArray *tables_blob = tables->table_data;
+     MachineState *ms = MACHINE(s);
++    CPUCoreCaches caches[CPU_MAX_CACHES];
++    unsigned int num_caches;
+ 
++    num_caches = virt_get_caches(caches);
+     table_offsets = g_array_new(false, true,
+                                 sizeof(uint32_t));
+ 
+@@ -915,6 +918,10 @@ static void virt_acpi_build(RISCVVirtState *s, AcpiBuildTables *tables)
+         spcr_setup(tables_blob, tables->linker, s);
+     }
+ 
++    acpi_add_table(table_offsets, tables_blob);
++    build_pptt(tables_blob, tables->linker, ms, s->oem_id,
++               s->oem_table_id, num_caches, caches);
++
+     acpi_add_table(table_offsets, tables_blob);
+     {
+         AcpiMcfgInfo mcfg = {
+diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+index d4b501802f60..245651fbbd13 100644
+--- a/hw/riscv/virt.c
++++ b/hw/riscv/virt.c
+@@ -109,6 +109,45 @@ static const MemMapEntry virt_memmap[] = {
+     [VIRT_DRAM] =         { 0x80000000,           0x0 },
+ };
+ 
++CPUCoreCaches virt_caches[] = {
++    {
++        .type = DATA_CACHE,
++        .sets = 256,
++        .size = 64 * KiB,
++        .level = 1,
++        .linesize = 64,
++        .attributes = 0x0,
++        .associativity = 4,
++    },
++    {
++        .type = INSTRUCTION_CACHE,
++        .sets = 256,
++        .size = 64 * KiB,
++        .level = 1,
++        .linesize = 64,
++        .attributes = 0x0,
++        .associativity = 4,
++    },
++    {
++        .type = UNIFIED_CACHE,
++        .sets = 4096,
++        .size = 2048 * KiB,
++        .level = 2,
++        .linesize = 64,
++        .attributes = 0x0,
++        .associativity = 8,
++    },
++    {
++        .type = UNIFIED_CACHE,
++        .sets = 8192,
++        .size = 4096 * KiB,
++        .level = 3,
++        .linesize = 64,
++        .attributes = 0x0,
++        .associativity = 8,
++    },
++};
++
+ /* PCIe high mmio is fixed for RV32 */
+ #define VIRT32_HIGH_PCIE_MMIO_BASE  0x300000000ULL
+ #define VIRT32_HIGH_PCIE_MMIO_SIZE  (4 * GiB)
+@@ -140,6 +179,15 @@ static void virt_flash_map(RISCVVirtState *s,
+                          sysmem, VIRT_FLASH_SECTOR_SIZE);
+ }
+ 
++unsigned int virt_get_caches(CPUCoreCaches *caches)
++{
++    for (int i = 0; i < ARRAY_SIZE(virt_caches); i++) {
++        caches[i] = virt_caches[i];
++    }
++
++    return ARRAY_SIZE(virt_caches);
++}
++
+ static void create_fdt_socket_plic(RISCVVirtState *s,
+                                    int socket,
+                                    uint32_t *phandle, uint32_t *intc_phandles,
+@@ -1144,6 +1192,12 @@ static void virt_machine_class_init(ObjectClass *oc, const void *data)
+     mc->cpu_index_to_instance_props = riscv_numa_cpu_index_to_props;
+     mc->get_default_cpu_node_id = riscv_numa_get_default_cpu_node_id;
+     mc->numa_mem_supported = true;
++    mc->smp_props.clusters_supported = true;
++    mc->smp_props.cache_supported[CACHE_LEVEL_AND_TYPE_L1D] = true;
++    mc->smp_props.cache_supported[CACHE_LEVEL_AND_TYPE_L1I] = true;
++    mc->smp_props.cache_supported[CACHE_LEVEL_AND_TYPE_L2] = true;
++    mc->smp_props.cache_supported[CACHE_LEVEL_AND_TYPE_L3] = true;
++
+     /* platform instead of architectural choice */
+     mc->cpu_cluster_has_numa_boundary = true;
+     mc->default_ram_id = "riscv_virt_board.ram";
+diff --git a/include/hw/riscv/virt.h b/include/hw/riscv/virt.h
+index e516898f9ad9..1e498a4f5f6e 100644
+--- a/include/hw/riscv/virt.h
++++ b/include/hw/riscv/virt.h
+@@ -121,10 +121,14 @@ enum {
+ #define VIRT_PLIC_SIZE(__num_context) \
+     (VIRT_PLIC_CONTEXT_BASE + (__num_context) * VIRT_PLIC_CONTEXT_STRIDE)
+ 
++#define CPU_MAX_CACHES 16
++
+ bool virt_is_acpi_enabled(RISCVVirtState *s);
+ bool virt_is_iommu_sys_enabled(RISCVVirtState *s);
+ void virt_acpi_setup(RISCVVirtState *vms);
+ 
++unsigned int virt_get_caches(CPUCoreCaches *caches);
++
+ /*
+  * The virt machine physical address space used by some of the devices
+  * namely ACLINT, PLIC, APLIC, and IMSIC depend on number of Sockets,
 -- 
 2.43.0
 
