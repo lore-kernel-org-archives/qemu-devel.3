@@ -4,84 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 497FECA9EC9
-	for <qemu-devel@archiver.kernel.org>; Sun, 11 Oct 2026 08:16:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D471CA9ECA
+	for <qemu-devel@archiver.kernel.org>; Sun, 11 Oct 2026 08:49:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xFoj4-0004n0-Ri; Sun, 11 Oct 2026 04:16:12 -0400
+	id 1xFpEE-0000xx-7j; Sun, 11 Oct 2026 04:48:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <christian@quante.one>)
- id 1xFoib-0004lY-Eo; Sun, 11 Oct 2026 04:15:43 -0400
-Received: from nx32.node02.secure-mailgate.com ([192.162.87.32])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1xFpEA-0000xc-6t
+ for qemu-devel@nongnu.org; Sun, 11 Oct 2026 04:48:18 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <christian@quante.one>)
- id 1xFoiX-0007zf-VU; Sun, 11 Oct 2026 04:15:40 -0400
-Received: from web279.dogado.net ([31.47.255.59])
- by node02.secure-mailgate.com with esmtps (TLS1.3) tls TLS_AES_256_GCM_SHA384
- (Exim 4.94.2) (envelope-from <christian@quante.one>)
- id 1xFoiQ-006Bkm-RI; Sun, 11 Oct 2026 10:15:32 +0200
-Received: from Zeuss.fritz.box (p57b2f030.dip0.t-ipconnect.de [87.178.240.48])
- (Authenticated sender: christian@quante.one)
- by web279.dogado.net (Postfix) with ESMTPSA id 6A6902822BF;
- Sun, 11 Oct 2026 10:15:27 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quante.one;
- s=cloudpit; t=1791706530;
- bh=N9CW0umtO5jHS1FKkB4i45mVJvOBd+DrUfypt5Lfr60=;
- h=From:To:Cc:Subject:Date:From;
- b=j5uD7n06nbr0OUQHppMaY2HTUJMwR4ZslwVaeTeRe5EXZ2JncKJck3LOVYeJ37fk1
- hzrFNUxsKglqQTnlikz0/RX1t907uAuELP8KxBpYJZknLlfyvgPUTlhkXc6A4L5xAw
- Y34MIDi7xwzHddjk39qDNxUaVyE9wsXQxN12E9GM=
-X-SecureMailgate-Identity: christian@quante.one;web279.dogado.net
-From: Christian Quante <christian@quante.one>
-To: Kevin Wolf <kwolf@redhat.com>
-Cc: John Snow <jsnow@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- qemu-block@nongnu.org, qemu-devel@nongnu.org
-Subject: [PATCH] tests/qtest/fdc-test: check block accounting of non-DMA reads
-Date: Sun, 11 Oct 2026 10:14:23 +0200
-Message-ID: <20261011081433.73397-1-christian@quante.one>
-X-Mailer: git-send-email 2.53.0
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1xFpE7-0002Z2-Cg
+ for qemu-devel@nongnu.org; Sun, 11 Oct 2026 04:48:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1791708490; bh=0JRAU4tt4cbx6c6e8Pw1iOyhzNp43yIRn0LDkl7ui8k=;
+ h=Date:Subject:To:References:From:In-Reply-To;
+ b=Yuf+GkdrPRGw9PyrkSYMLwLDof0tchxEx85CHelc0eV+JqIgAiiAEU7hJ/t/Ax+41
+ +ZkWhGFBUMPyDI3IwWnt0s7Nzkal+CYwopFSFwBYngLGo7vhsN7ewdyZ7v4jb2uIYw
+ sReNWuXEa5+tsEqlRysTGMsKLdGO47kg6pvOUOYmcV7WdbellVxstlo/MteSa7UVvd
+ aFVQGOYhS/pSroUWrnEYi3v8LOfM4HAWoFsjdi+zzbOcwASVRVM0r50Cj6hUS9XzP6
+ YS+5qAUFygMgsDh1qJLMa36XNSUw9CM7bWFsljqmI/Xz/HM/OUQtmRI0L3yS2L1Uvg
+ 7/Zy9RdUaDzJw==
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by isrv.corpit.ru (Postfix) with ESMTP id 335871DC84D;
+ Sun, 11 Oct 2026 11:48:09 +0300 (MSK)
+Message-ID: <be26d9c4-f209-4ccf-908d-e97e7863332d@tls.msk.ru>
+Date: Sun, 11 Oct 2026 11:48:08 +0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-PPP-Message-ID: <179170652962.461305.5772288224786867367@web279.dogado.net>
-X-PPP-Vhost: quante.one
-X-Originating-IP: 31.47.255.59
-X-SecureMailgate-Domain: web279.dogado.net
-X-SecureMailgate-Username: 31.47.255.59
-Authentication-Results: secure-mailgate.com;
- auth=pass smtp.auth=31.47.255.59@web279.dogado.net
-X-SecureMailgate-Outgoing-Class: ham
-X-SecureMailgate-Outgoing-Evidence: SB/global_tokens (0.000809823774037)
-X-Recommended-Action: accept
-X-Filter-ID: 9kzQTOBWQUFZTohSKvQbgI7ZDo5ubYELi59AwcWUnuVjurkRo2qtXosESzvqMEMVm/WLvIrIKqE+
- sN+qrxiXRSu2SmbhJN1U9FKs8X3+Nt1HOctZ5X+40a9IXddeG3M38JQYgcgjsac3uQcQdCX4ROfH
- zJ6mVE7ewsipSVIfs4bYmmOs//ygbGr8eLVtMExwS5+h1uiHzk/Rfxfh461YLyu3RZI1CD15pCOE
- 1vk99RMjhCsHWm9UVSw2wJDtNO9+dOtYechJ/ikE1WgRg4cS6A6B6pTstltS07kaQJ8I9sYal0h7
- 43VOpKNY+4MjijihZK0EMmf3P50Ajf/tIX00Fuu2beRqilmjgQ6jA3UwYgm3QTha208ypFqQwBFb
- xm4JX7semJdl8Weuy8+tlMSTQwhoy9D5QZ6a84vJal7pM1XhlAOd290vPXa7Loma0jth+x0iJ0NX
- 07iZIeUSWePdS78HF9DWBc0WhbQl3RlROHMl5OjAPt7LlMbhgG9BOAmXwBM2j5REykHorDckk/GS
- XOeJ+u+yrSHikBnwQI7OhPtOt12UKwWWu0uRyF+HHpfXfr5pxnekR5gKyX+MMXIWKOkgxlD67q1I
- Gx5c0htKd4nZUthSv47vkSPENH+ftmELJxpLJ3Xc+Mv8qa2UQxOJ7ZnRFg37IGw7dk2dYrO1zkmH
- CpwS2oZfMuFqjF2RVWG3hy/E+UX+2HRZAwqk+0mElDSRI7NMK5S50kjVVp4t0URWpqFpLVefeduZ
- N+JHmMpG0x9NEum6+ayztSJ+2CI/y5AKvo1HkBEmDLlSM9m2plnfARM40/5kvSvjPlK9O7dFaIfV
- aCHpEB6cFH6WJxE4ZtnMSo/WKlRNZzf4XVeCGinmRmCJWk4HLhMwFIOYGQXuduMQtc9+zeM/bn6i
- zqBlxYgWIjAfssmYooOojbMVMkKJo3dG96axRy+iXygDw2+Bm+JDUQg6tT9MLS0x/f6bZfTkD6Gr
- 5MDzFdkrr3JxFjrsNjMV9Ofg1ecGMS6f0O9nWShVoZrkssanAkdYnqPukWYYHCxVMyzsJd+YpoKs
- GdJH0Xy50uUJhMQ8Rx8ikSDcs2jZfddmferlOspaJYe9WqCSNqEnoVfavZrdfSy9x20RFhzyp4dK
- iG0rpA0WSV5yoHDFJZLqjzsPy9CtBkGhUMOpyKA69LF1Ge2GaGfxmfrvYx9wAiRqmOW8oSbE6cLC
- SuWjiWw7Q/zMGXa1uX3ak8AmaAdePjOfvAeIcA+vxeovAu21kK656rT9uyJ/sjgT/6bByKmsrCbi
- xnqDMpbNOpXQ8IocMdGcSaiMqwNDMscPOKPwWY9jlVwvLaNUlXdN
-X-Report-Abuse-To: spam@node04.secure-mailgate.com
-X-Complaints-To: abuse@node01.secure-mailgate.com
-Received-SPF: pass client-ip=192.162.87.32; envelope-from=christian@quante.one;
- helo=nx32.node02.secure-mailgate.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 0/4] isa-serial: acpi: declare shared IRQs for COM1/3
+ and COM2/4
+To: Mark Cave-Ayland <mark.caveayland@nutanix.com>, mst@redhat.com,
+ imammedo@redhat.com, anisinha@redhat.com, pbonzini@redhat.com,
+ marcandre.lureau@redhat.com, qemu-devel@nongnu.org
+References: <20260515150634.2637533-1-mark.caveayland@nutanix.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <20260515150634.2637533-1-mark.caveayland@nutanix.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -98,96 +111,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since commit 9c4c09d2a663 ("hw/block/fdc: account for read and write
-requests"), the floppy reports its reads and writes in query-blockstats.
-Check this for the existing non-DMA reads: send_read_no_dma_command()
-now compares rd_operations and rd_bytes before and after the command,
-one 512-byte request for every sector the test reads through the FIFO.
+On 15.05.2026 18:05, Mark Cave-Ayland wrote:
+>>From Windows 8.1 onwards ISA serial IRQs cannot be shared when ACPI Revision
+> 3.0 is used in the FACP table. The reason for this is that if a 2-byte IRQ
+> Descriptor is used then the interrupt is considered to be high true, edge
+> sensitive, non-shareable. Since legacy serial ports COM1/3 and COM2/4 share
+> an IRQ then if more than 2 serial ports are added, Windows indicates a
+> conflict in Device Manager and these combinations cannot be used together.
+> 
+> Add a new 3-byte IRQ Descriptor to the _CRS resource indicating that the
+> ISA serial IRQ is low true, level sensitive and shareable. This enables all 4
+> legacy serial ports to be used in Windows without conflict.
+> 
+> Tested on Windows 8.1 and Windows 11 with 4 instances of -serial on the command
+> line and copying data simultaneously across serial ports COM1/3 and COM2/4:
+> 
+>    ./build/qemu-system-x86_64 \
+>      -accel kvm \
+>      -M q35,hpet=off \
+>      -m 4G \
+>      -cpu host \
+>      -drive file=win81.iso,format=raw,if=ide,bus=2,unit=0,media=cdrom \
+>      -drive file=win81.qcow2,format=qcow2,if=ide,bus=0,unit=0 \
+>      -device VGA \
+>      -serial tcp::4001,server=on,wait=off \
+>      -serial tcp::4002,server=on,wait=off \
+>      -serial tcp::4003,server=on,wait=off \
+>      -serial tcp::4004,server=on,wait=off
+> 
+> Note that with this series applied, if extra ISA serial ports are added to an
+> existing VM then it is necessary to go to Device Manager, select "Add legacy
+> hardware" from the "Action" menu, and then reboot the VM for the serial ports
+> to be detected correctly without Device Manager indicating a conflict.
+> 
+> Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+> 
+> v4
+> - Rebase onto master
+> - Redefine IRQ as Active-Low-Level-Triggered as otherwise Windows 8.1 will detect the
+>    serial ports but mark them as having a resource conflict. Retested again on both
+>    Windows 8.1 and Windows 11
+> - Add R-b and A-b tags from Ani and Igor
+> 
+> v3
+> - Rebase onto master
+> - Define IRQ as Active-High-Edge-Triggered (as seen by the PIC) to ensure compliance
+>    with the ACPI specification section 6.4.2.1.
+> 
+> v2
+> - Remove _PRS changes (including AML build changes that are no longer required)
+>    and compatibility property as suggested by Igor
+> 
+> 
+> Mark Cave-Ayland (4):
+>    hw/acpi/aml-build.c: add aml_irq() representing the 3-byte IRQ
+>      descriptor
+>    tests/acpi: allow DSDT acpi table changes
+>    hw/char/serial-isa.c: declare IRQ as shared in ACPI IRQ descriptor
+>    tests: data: update x86 ACPI tables
 
-Without the accounting, read_no_dma_1, read_no_dma_18 and
-read_no_dma_19 fail with rd_operations at 0 instead of 2, 36 and 38.
+It looks like this patchset broke earlier windows versions (vista and
+XP), -- especially the "declare IRQ as shared" commit.  Please see
+https://bugs.debian.org/1149858 for details with bisection.
 
-Suggested-by: Kevin Wolf <kwolf@redhat.com>
-Signed-off-by: Christian Quante <christian@quante.one>
----
- tests/qtest/fdc-test.c | 42 ++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 42 insertions(+)
+We're investigating still.
 
-diff --git a/tests/qtest/fdc-test.c b/tests/qtest/fdc-test.c
-index 33d1b83aeb..a10951f204 100644
---- a/tests/qtest/fdc-test.c
-+++ b/tests/qtest/fdc-test.c
-@@ -27,6 +27,7 @@
- 
- #include "libqtest-single.h"
- #include "qobject/qdict.h"
-+#include "qobject/qlist.h"
- 
- #define DRIVE_FLOPPY_BLANK \
-     "-drive if=floppy,file=null-co://,file.read-zeroes=on,format=raw,size=1440k"
-@@ -177,6 +178,34 @@ static uint8_t send_read_command(uint8_t cmd)
-     return ret;
- }
- 
-+/* Returns a counter that query-blockstats reports for floppy0 */
-+static int64_t floppy_blockstat(const char *counter)
-+{
-+    QDict *response;
-+    QList *list;
-+    QListEntry *entry;
-+    QDict *stats = NULL;
-+    int64_t value;
-+
-+    response = qtest_qmp(global_qtest, "{'execute': 'query-blockstats'}");
-+    g_assert(response && qdict_haskey(response, "return"));
-+    list = qdict_get_qlist(response, "return");
-+
-+    QLIST_FOREACH_ENTRY(list, entry) {
-+        QDict *entry_dict = qobject_to(QDict, entry->value);
-+
-+        if (!g_strcmp0(qdict_get_try_str(entry_dict, "qdev"), "floppy0")) {
-+            stats = qdict_get_qdict(entry_dict, "stats");
-+            break;
-+        }
-+    }
-+
-+    g_assert(stats);
-+    value = qdict_get_int(stats, counter);
-+    qobject_unref(response);
-+    return value;
-+}
-+
- static uint8_t send_read_no_dma_command(int nb_sect, uint8_t expected_st0)
- {
-     uint8_t drive = 0;
-@@ -193,6 +222,9 @@ static uint8_t send_read_no_dma_command(int nb_sect, uint8_t expected_st0)
- 
-     uint8_t ret = 0;
- 
-+    int64_t rd_ops_before = floppy_blockstat("rd_operations");
-+    int64_t rd_bytes_before = floppy_blockstat("rd_bytes");
-+
-     floppy_send(CMD_READ);
-     floppy_send(head << 2 | drive);
-     g_assert(!get_irq(FLOPPY_IRQ));
-@@ -248,6 +280,16 @@ static uint8_t send_read_no_dma_command(int nb_sect, uint8_t expected_st0)
-     assert_bit_set(msr, RQM);
-     g_assert(!get_irq(FLOPPY_IRQ));
- 
-+    /*
-+     * The non-DMA loop above has read 2 * nb_sect sectors through the FIFO,
-+     * and the controller fetches each of them from the image with a request
-+     * of its own.
-+     */
-+    g_assert_cmpint(floppy_blockstat("rd_operations") - rd_ops_before, ==,
-+                    2 * nb_sect);
-+    g_assert_cmpint(floppy_blockstat("rd_bytes") - rd_bytes_before, ==,
-+                    512 * 2 * nb_sect);
-+
-     return ret;
- }
- 
--- 
-2.53.0
+Thanks,
 
+/mjt
 
