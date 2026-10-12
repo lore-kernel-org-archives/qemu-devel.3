@@ -4,93 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C63F3CA9ED0
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Oct 2026 20:58:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1838CA9ED0
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Oct 2026 21:00:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGN41-0004Se-M7; Mon, 12 Oct 2026 16:56:05 -0400
+	id 1xGN86-0006fJ-5s; Mon, 12 Oct 2026 17:00:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1xGN3D-0003sR-BP; Mon, 12 Oct 2026 16:55:15 -0400
-Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1xGN3B-0006Wd-0X; Mon, 12 Oct 2026 16:55:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
- In-Reply-To:From:References:To:MIME-Version:Date:Message-ID:Sender:Reply-To:
- Cc:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
- Resent-To:Resent-Cc:Resent-Message-ID;
- bh=ipgsKY2Shmfrw7hQyu9AObRAmoU59Q5iI9FYpvZtX9A=; b=TQlsqdJ6es/xyMMTA6s9oKLHpV
- y2qJm1pHCIwKeB2Wxc6jZwvRW/UrWoGlHC13TxllCF4of/z3Iyh0MkmJFd3l1Yt8mGC/89ItzvXsM
- 3qmjTLYmaVEVlY0MvjarryHZMLcjSFsY0cDY06DrDD9q0ffXvTAvYHAOUsG9dEGWx4LfcFrf34yiK
- MqMWgxcEbJRJ44gaTZlvSIRut/OIqcUgLKW3dykxqSX3quSW3hdA+Ju0AFLClXkkpaf/cWcBit9S2
- cIF8GKS8T+109RihheeeGj1MfOOumxfnkKTg/lRxejrvzZ7dMN+bi+OibMO8lsyKw9UaXHLJi5Cjo
- fwRKD4YEfwbj0zed0tyKU/MULZGfpGlqWAr/WW9V6zD1ficAEhO2uzOuENkDyuobFl5lgAtmirIeu
- FNOD0QmyogIMqObNwVyZFtfVgdemrF9DbLoLTXs7fvKWYJb+HkvcIMDvGi+TrtKqJ/X/lr9rs+v9p
- nDF6RzA3enYhMdWQ/RfAMVHW+0UFS52uBv4MFudDURGJ5u18kr5NqC1c7z5Q1Wozh6z5cw43Mxc5H
- kT80Xa6RFJb/AdtmMNv9JWII2Dq0UY7TFkGls62ue2vk65A1yMU0yZxW/jqypwKME+GVc0kilZDys
- PfYb2Co7UL7dl2dgD6B7DkVBGUDRTUTEA3rryH0Fo=;
-Received: from [2a02:8012:2f01:0:8476:43c8:da7d:456]
- by mail.ilande.co.uk with esmtpsa (TLS1.3) tls
- TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (Exim 4.94.2)
- (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1xGN2R-001PKa-3k; Mon, 12 Oct 2026 21:54:31 +0100
-Message-ID: <e5c0b66a-0c1c-4369-837f-04f8562eeec3@ilande.co.uk>
-Date: Mon, 12 Oct 2026 21:55:01 +0100
+ (Exim 4.90_1) (envelope-from <filip.hejsek@gmail.com>)
+ id 1xGN84-0006ew-09
+ for qemu-devel@nongnu.org; Mon, 12 Oct 2026 17:00:16 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <filip.hejsek@gmail.com>)
+ id 1xGN82-00083K-6n
+ for qemu-devel@nongnu.org; Mon, 12 Oct 2026 17:00:15 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-49fbb2acc90so18517905e9.2
+ for <qemu-devel@nongnu.org>; Mon, 12 Oct 2026 14:00:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1791838812; x=1792443612; darn=nongnu.org;
+ h=mime-version:user-agent:content-transfer-encoding:content-type
+ :references:in-reply-to:date:cc:to:from:subject:message-id:from:to
+ :cc:subject:date:message-id:reply-to:content-type;
+ bh=GrtPc/3Yr+GEGva/aXJ3+/Un3nvtpMeG8JuAULk4QDk=;
+ b=JtE2dhtcehFQE6plDIaWxpU/U27rcE/M17K34k1yijsjReyE6RU78wOhC97sBa2aYG
+ MlmCRweNVwmWROI4IMd9oI/BnR+uBAZ6cDDHdrlwJ36dD8UoE/FJpzLOwz+n16h8CQL4
+ mwdw9idPggw6dWcbhkhRIoJQzizSnieB0KZsKUPes1Zh3i8xxAKTF1t2am+/PFcqTq/I
+ IzUxIvwgElIY0aUxeK+ZJc2X6uX0tRuweQQtWXC/6eDaVE0ASiaqdPFfYbZSh98/zYUJ
+ tYj7kVbVQDom9rw01UrYs/sI+O3GX1XcdpHCKnZwLERcjp8IpsvOqq2sFZZBisvgNmRB
+ S0sA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1791838812; x=1792443612;
+ h=mime-version:user-agent:content-transfer-encoding:content-type
+ :references:in-reply-to:date:cc:to:from:subject:message-id:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=GrtPc/3Yr+GEGva/aXJ3+/Un3nvtpMeG8JuAULk4QDk=;
+ b=jmjNNvF90NTmmuy3SbSqoA+mgUxRvDHqt0yw6T3UtaX67QWrd/5MHtz9RDaPjAbxUj
+ +AucGFcTdMP+v4EZR7x33a0y3SN/2Tgtno9JAekmPqrm2K6qVdrJgW/3LXkQUdt3fMPf
+ YSRL5Pf7aW8d1GYldZdV8inNJeoD5ig9iqs69tOU1aB6+qZjCTPOVK6AfOrCu+NZn/Aw
+ /MzcofdzDSgpEwE+Z2wKUr5sih7wMZyPamBnvzZnoCYNC9vtbE3D8Zv5EpunR0RUk6UD
+ Ixhka2XNTQA7baon2dXKya+zZX1B40VoTxpdpQagbxRflOmrU4z7Bg3W4jDZe0wvMjjh
+ z9AA==
+X-Gm-Message-State: AFq9FYLwigb21lqv6Q0mR14USN7Q95EVuHsVYLC5IjaiP81FN/Xa+TBj
+ 09dVeGJqjUDzG49ZRDJyVYvc4ouYOgUqPpgSN5nUQLxn9tamxMPdo+hw
+X-Gm-Gg: AYBFou2BeKDgsL8z3Qr3ASOgXAwJwjNCSHMI+KVNN5fhoKEI17pjB2pduGj8GvxMW23
+ MB0W3zkuLxxGYxbTN8yxTtbIcZw6ROo1BN+TbCFkgaxJiCL3n1iYbCs1HujIUsKFi+omuPIcq/w
+ LbjaW85VEWidzMRtkfORKHjBe6JlB2wZ8Er6nRh2unzaGeR7ExvJzusv3rf5x57BYza3wdliCXy
+ TgsIetqf0HNVSwqdPHLlN9nfE2y5QKJ/7nlmF7k1B7s+Vh9Wr5/S9+HVAyCZBzZ0g9o5+4KgMOI
+ fkYdwm7YxZQR/byMzm50ZB1G8bfI8H6uVmHNWTrgAP9K2xZBcZ03DIwBcXva10K2MimtQrPr0Vq
+ M+dJeHbVrA51ucZTdjNyFDoCJhinKRphWGZzLy9uwyYxuJZOoICFoqdM3spnTnTKR6W4K1ERjJP
+ SmrHdAjGAAa3URGFzjZn4ZA+YwU2DgDKzoJAVCh+HFDvNCtX31UGeb0RsDmcdhGKIMfz5NSUoo0
+ qamDsx0KFtUZ9rm0IMhxmec50fK/RLAHA==
+X-Received: by 2002:a05:600c:4ecd:b0:4a1:96cd:2f60 with SMTP id
+ 5b1f17b1804b1-4a19ecf4c20mr81981365e9.3.1791838812449; 
+ Mon, 12 Oct 2026 14:00:12 -0700 (PDT)
+Received: from [10.33.80.40] (mem-185.47.220.165.jmnet.cz. [185.47.220.165])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4a1a571294fsm3649315e9.3.2026.10.12.14.00.10
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 12 Oct 2026 14:00:11 -0700 (PDT)
+Message-ID: <a7348b0ecf66d8027955774e84e57c9f4065f9fb.camel@gmail.com>
+Subject: Re: [PATCH TRIVIAL] treewide: use qemu_dup() instead of dup()
+From: Filip Hejsek <filip.hejsek@gmail.com>
+To: =?ISO-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>
+Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>, "Daniel
+ P." =?ISO-8859-1?Q?Berrang=E9?=	 <berrange@redhat.com>, Paolo Bonzini
+ <pbonzini@redhat.com>, Michael Tokarev	 <mjt@tls.msk.ru>, Laurent Vivier
+ <laurent@vivier.eu>, qemu-trivial@nongnu.org
+Date: Mon, 12 Oct 2026 23:00:09 +0200
+In-Reply-To: <90fe897aa35405fbada7a440c3fab848d81ea2b0.camel@gmail.com>
+References: <20261012-use-qemu-dup-v1-1-03d94852a6c8@gmail.com>
+ <CAMxuvazc5iHk=GDysFHVFN0xtf-g75AobhoKdPXaR6_Qz=dDNg@mail.gmail.com>
+ <90fe897aa35405fbada7a440c3fab848d81ea2b0.camel@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.60.2 
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: "Kirill A. Korinsky" <kirill@korins.ky>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Chinmay Rath <rathc@linux.ibm.com>, Nicholas Piggin <npiggin@gmail.com>,
- qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
- Anushree Mathur <anushree.mathur@linux.ibm.com>,
- BALATON Zoltan <balaton@eik.bme.hu>, Miles Glenn <milesg@linux.ibm.com>
-References: <20261001230058.11465-1-kirill@korins.ky>
- <20261001230058.11465-6-kirill@korins.ky>
-Content-Language: en-US
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
- xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
- 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
- E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
- PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
- PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
- AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
- eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
- NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
- mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
- z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
- T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
- DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
- y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
- 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
- 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
- YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
- Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
- BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
- opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
- NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
- Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
- KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
- imgcU9TTGC5qd9g=
-In-Reply-To: <20261001230058.11465-6-kirill@korins.ky>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:8476:43c8:da7d:456
-X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH v3 5/5] tests/functional: Boot OpenBSD on mac99
-X-SA-Exim-Version: 4.2.1 (built Sat, 13 Feb 2021 17:57:42 +0000)
-X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
-Received-SPF: pass client-ip=2001:41c9:1:41f::167;
- envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=filip.hejsek@gmail.com; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -107,101 +107,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 01/10/2026 23:59, Kirill A. Korinsky wrote:
+On Mon, 2026-10-12 at 22:12 +0200, Filip Hejsek wrote:
+> I've actually intentionally left some dup()s unchanged for exactly this
+> reason. They are the ones in qemu-nbd.c, migration/cpr-exec.c, and
+> under linux-user/ and bsd-user/. I also didn't touch the tests, as I
+> didn't consider evaluating them to be worth the effort.
 
-> From: "Kirill A. Korinsky" <kirill@korins.ky>
-> 
-> OpenBSD device discovery exercises CTPR masking, zero decrementer
-> writes, and CUDA reply timing and layout; regressions in any of these
-> paths stall the guest before the installer starts.
-> 
-> Signed-off-by: Kirill A. Korinsky <kirill@korins.ky>
-> Tested-by: Anushree Mathur <anushree.mathur@linux.ibm.com>
-> Tested-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-> ---
->   tests/functional/ppc/meson.build     |  2 ++
->   tests/functional/ppc/test_openbsd.py | 46 ++++++++++++++++++++++++++++
->   2 files changed, 48 insertions(+)
->   create mode 100755 tests/functional/ppc/test_openbsd.py
-> 
-> diff --git a/tests/functional/ppc/meson.build b/tests/functional/ppc/meson.build
-> index ae061fe5a6..1055cdaa17 100644
-> --- a/tests/functional/ppc/meson.build
-> +++ b/tests/functional/ppc/meson.build
-> @@ -2,6 +2,7 @@
->   
->   test_ppc_timeouts = {
->     '40p' : 240,
-> +  'openbsd' : 240,
->   }
->   
->   tests_ppc_system_quick = [
-> @@ -15,6 +16,7 @@ tests_ppc_system_thorough = [
->     'bamboo',
->     'mac',
->     'mpc8544ds',
-> +  'openbsd',
->     'ppe42',
->     'replay',
->     'sam460ex',
-> diff --git a/tests/functional/ppc/test_openbsd.py b/tests/functional/ppc/test_openbsd.py
-> new file mode 100755
-> index 0000000000..73fa328b1f
-> --- /dev/null
-> +++ b/tests/functional/ppc/test_openbsd.py
-> @@ -0,0 +1,46 @@
-> +#!/usr/bin/env python3
-> +#
-> +# Test that OpenBSD boots on mac99 and reaches the installer.
-> +#
-> +# SPDX-License-Identifier: GPL-2.0-or-later
-> +
-> +from qemu_test import QemuSystemTest, Asset
-> +from qemu_test import wait_for_console_pattern
-> +
-> +
-> +class OpenBSDMac99(QemuSystemTest):
-> +
-> +    ASSET_CD = Asset(
-> +        'https://ftp.eu.openbsd.org/pub/OpenBSD/7.9/macppc/cd79.iso',
-> +        '227fef3d5089d56ce8376d8bfa28181ce5b19f0eceef0a6d82d58d8e52832b24')
-> +
-> +    def test_openbsd_79_installer(self):
-> +        self.set_machine('mac99')
-> +        self.require_accelerator('tcg')
-> +        cdrom_path = self.ASSET_CD.fetch()
-> +
-> +        self.vm.set_console()
-> +        self.vm.add_args('-M', 'via=cuda,graphics=off,usb=off',
-> +                         '-cpu', '7400',
-> +                         '-accel', 'tcg,thread=single',
-> +                         '-smp', '1',
-> +                         '-m', '2g',
-> +                         '-nic', 'none',
-> +                         '-device', 'VGA',
-> +                         '-global', 'cuda.x-sr-delay-ns=0',
-> +                         '-prom-env', 'input-device=ttya',
-> +                         '-prom-env', 'output-device=ttya',
-> +                         '-cdrom', cdrom_path,
-> +                         '-boot', 'd',
-> +                         '-no-reboot')
-> +        self.vm.launch()
-> +
-> +        wait_for_console_pattern(self, 'OpenBSD 7.9 (RAMDISK)', 'panic:')
-> +        wait_for_console_pattern(
-> +            self,
-> +            '(I)nstall, (U)pgrade, (A)utoinstall or (S)hell?',
-> +            'panic:')
-> +
-> +
-> +if __name__ == '__main__':
-> +    QemuSystemTest.main()
+Now that I think about it again, the use in qemu-nbd.c should probably
+be replaced too... I'll probably send a v2.
 
-Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-
-
-ATB,
-
-Mark.
-
+Filip
 
