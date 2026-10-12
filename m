@@ -4,56 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6EF48CA9ED0
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Oct 2026 20:37:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C041CCA9ED2
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Oct 2026 20:37:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGMkI-00044t-3w; Mon, 12 Oct 2026 16:35:42 -0400
+	id 1xGMkL-0004KY-RM; Mon, 12 Oct 2026 16:35:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xGMjy-0003eP-0V
- for qemu-devel@nongnu.org; Mon, 12 Oct 2026 16:35:22 -0400
+ id 1xGMk3-0003gQ-OD
+ for qemu-devel@nongnu.org; Mon, 12 Oct 2026 16:35:28 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xGMjv-0003Ov-TO
- for qemu-devel@nongnu.org; Mon, 12 Oct 2026 16:35:21 -0400
+ id 1xGMjy-0003PY-El
+ for qemu-devel@nongnu.org; Mon, 12 Oct 2026 16:35:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1791837319;
+ s=mimecast20190719; t=1791837321;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=5H/haMw6tiIt2E7cR+zPeNBh8CmooHi6puFYTBy0SvU=;
- b=LVRiV7fyJnOJLrjrv5WZiLZkqLF0vsojv0VQrC+zpz5T0gEJrjGGvhvU2nWPVYhq/VxaUU
- yl1Wfv0RA4sDvasSOEgMfLQMqG8FXsf2rIftR0uVyzIdHXaK/fXU5BT4Jg5yUvwtEzigmn
- 9pRhn32LgjzxKV0ngC2OAHSz97ZB9fw=
-X-MC-Rep: binary re single
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=ylzV0Bc3H/C0kOdwreoojkYALggNTzrD9Dl8vcWbD2E=;
+ b=IQQAomuVbfrxcM57Ow/73Ud38Ihg/sz8DRfPe1r5LRkiqOVZQFvobwMehkbqMtoouYRL2T
+ oqism9BI3str1XBGWgh/65rykov3yn+nuePy9/FK6NaZ9uLBfg1z30AeeYzahhdikpsOUb
+ KW/zITTOJ6ifiM+RB++Sp6CCbkXFnR4=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-1-_JxoJYqxMjeoRXqwfDpHWA-1; Mon,
- 12 Oct 2026 20:35:13 +0000
-X-MC-Unique: _JxoJYqxMjeoRXqwfDpHWA-1
-X-Mimecast-MFC-AGG-ID: _JxoJYqxMjeoRXqwfDpHWA_1791837309
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-139-2ew-TTRPM_2I85krkwmafw-1; Mon,
+ 12 Oct 2026 20:35:15 +0000
+X-MC-Unique: 2ew-TTRPM_2I85krkwmafw-1
+X-Mimecast-MFC-AGG-ID: 2ew-TTRPM_2I85krkwmafw_1791837312
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9541D1955EB9; Mon, 12 Oct 2026 20:35:09 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BB61A180059E; Mon, 12 Oct 2026 20:35:12 +0000 (UTC)
 Received: from localhost (headnet03.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.114])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 6BFDC180034C; Mon, 12 Oct 2026 20:35:08 +0000 (UTC)
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id D3000195608F; Mon, 12 Oct 2026 20:35:11 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Tue, 13 Oct 2026 00:34:11 +0400
-Subject: [PATCH v2 08/10] target/riscv: bypass smstateen check in debugger mode
+Date: Tue, 13 Oct 2026 00:34:12 +0400
+Subject: [PATCH v2 09/10] target/riscv: expose register aliases via GDB
 MIME-Version: 1.0
-Message-Id: <20261013-query-reg-v2-8-6f95a2e139a9@redhat.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Message-Id: <20261013-query-reg-v2-9-6f95a2e139a9@redhat.com>
 References: <20261013-query-reg-v2-0-6f95a2e139a9@redhat.com>
 In-Reply-To: <20261013-query-reg-v2-0-6f95a2e139a9@redhat.com>
 To: qemu-devel@nongnu.org
@@ -77,38 +78,34 @@ Cc: "Dr. David Alan Gilbert" <dave@treblig.org>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
  Warner Losh <imp@bsdimp.com>, Kyle Evans <kevans@freebsd.org>, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=898;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=26233;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=roAD8lZ3bak3GtYlRrCGDQC517ZgrKZMcWsjgpCj3lM=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqzURBPZi4c03VMIsQ7QXKN83zWjtSrW00UwCAS
- IWxDK5e/QCJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCas1EQQAKCRDa6OEJdZac
- 5XgVD/kBaNVNAPd/djIRnyHtGpHUwV4vt7qxOdMWWAQQe8qKHD1XI7y++EkftMEnBOUWrwtmAKI
- MoE89ox7eBXN/iy+jlTvT/NvU5jieQ1GAUa9qvU62/AFh9Z/s1b3+OAJWKcS7HAiEn0a9A2BJrw
- kfvCZGCay4kSrDzuNBwCq+r5MlSpV/deXN2mmZfa2UM1nbjnjzi5IMTLis0vVTD2zzCEUQIcP6v
- hG/1wPJsK+xLbA079JnymTPszy16FS561CmGhFKV60DHeV+MHoFRhv2R7qzt7lE6B52S/y950z0
- gIGdPtfwFxNhrVV9IU0hDoeUzAqokF5yx6CBVtB55gbiWalWSaOrskZAE6cm+uF9k8ANS0Yr+mq
- 8X1haxU5VfWvn6+ULBSbyLIjDWtBHBZ9qHXs6Xdr8/Tiw4a9xdCK8CNbdUNINlvwoyncALH1Uqt
- 7kAEpjUehDs5qEDEEPhIZ7Du4URKH7k3dPtHDWkfjEA4wvF+8DaYVqjkYIT8w83VXWucV8JQK4S
- QJ65biDJXNawcsjZHEYa+gvKTh+YVmBd6jTqOWZsC+W0DlnFN0PQWmileGYWp5XUNItMj5EBLXU
- 87KGw4d969576r1KJdeLSCh9ScopqBptn6QNaOJHtIA58wpiomQZHLp94uUAI318pp7RMtEG/kF
- GLOcGaFJo2p2/8A==
+ bh=5RuOjUNyaDEDL5nBL66I/LpUP+P269OjTlXEVv1zuew=;
+ b=kA0DAAoB2ujhCXWWnOUByyZiAGrNREGganj2NF03DTbLm9oZjvtUOaPdc+cN3Q38t0rV1+/EJ
+ YkCMwQAAQoAHRYhBIepvZM/h8YG0nb2Ldro4Ql1lpzlBQJqzURBAAoJENro4Ql1lpzlBN0P/3Z9
+ YtabG0oLC52uljA6LBFjqOEGRcWT2y4UlbnS/dr5H3LXubGKYkqVAocMD6Mu/YRwhkl6+YU79Nd
+ QAq+8/EvmXBMtj2kmvykhuHSnlgiFZzw+O9dk0DJFzshgR5KXbRf8dmX8XT/b/8EeN7E0lC++F6
+ wGAZqlibE9eYao5WDSL6k54NmqnwTjt0GTZ9EhQlOBiOasJ7VFNMqSE+BsbnTAphamWxJq3Jqz2
+ KfZHn/XLfvgV6pYIhqJfejBapavKIVg1T+2uED+M53qXnKjMlaL6fFdHq54+XCh7ZO3wQ7+qSRa
+ JsWUaSeY9yLPb9e6mnnjhbgJgUZblB7UNvvM26Vu8tI1CTQmGXo8lXY0+w2wOr+Dc1Ei3dOr2dQ
+ DFYpJy835eFp+1fCJuXnHuIooaffbNkPV/15IzbT946RL3JSyOJys9HsiYfUKLCmNFdMFkrRiiF
+ n5hPYm51QqGNc8zjQx7BIrn2bt3jhfI7ousr0pQ4zMUtx3Cvjqlw1ATyBLpp+7j5UNDhx1zLrmn
+ 7Vr635AgebrEUySaz7D/7AtLqPOYKdLOotfMKZXY6g6DRUcpzWDsUr0+F0np9/SGdEjqS0UKqxg
+ EYWF5CuievVb4KmFGAzFRHzyDxruZdZF1MpMufwW2Del32y/UUEuI4cOcaXd+ENbmEZXxjRQzeN
+ 1IJSr
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-X-Mimecast-MFC-PROC-ID: x1lF7UrRPtxfakKIlqslkF3NB-Q6NsnoUEhurBFsIns_1791837309
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 10
-X-Spam_score: 1.0
-X-Spam_bar: +
-X-Spam_report: (1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
+X-Spam_score_int: -22
+X-Spam_score: -2.3
+X-Spam_bar: --
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,29 +121,483 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Allow to read CSRs gated by Smstateen extension when env->debugger.
+The core GDB XML uses ABI names (zero, ra, sp, fp, ft0, fs0, etc.)
+but users also refer to registers by their numeric names (x0-x31,
+f0-f31) and the s0 alias for fp. The legacy MonitorDef mechanism
+supported both via split "x0/zero" name matching.
 
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Reviewed-by: Chao Liu <chao.liu@processmission.com>
+Register a feature that maps:
+ - x0-x31 and s0 to the corresponding core integer registers
+ - x0h-x31h and their ABI aliases (zeroh, rah, ...) to env->gprh[]
+ - f0-f31 to the corresponding FPU registers (when FPU is present)
+
+This preserves full HMP $register compatibility after the MonitorDef
+removal.
+
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- target/riscv/tcg/csr.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ configs/targets/riscv32-linux-user.mak    |   2 +-
+ configs/targets/riscv32-softmmu.mak       |   2 +-
+ configs/targets/riscv64-bsd-user.mak      |   2 +-
+ configs/targets/riscv64-linux-user.mak    |   2 +-
+ configs/targets/riscv64-softmmu.mak       |   2 +-
+ gdbstub/gdb-xml/riscv-32bit-alias.xml     | 105 ++++++++++++++++++++++++++++++
+ gdbstub/gdb-xml/riscv-32bit-fpu-alias.xml |  40 ++++++++++++
+ gdbstub/gdb-xml/riscv-64bit-alias.xml     | 105 ++++++++++++++++++++++++++++++
+ gdbstub/gdb-xml/riscv-64bit-fpu-alias.xml |  46 +++++++++++++
+ target/riscv/gdbstub.c                    |  47 +++++++++++++
+ 10 files changed, 348 insertions(+), 5 deletions(-)
 
-diff --git a/target/riscv/tcg/csr.c b/target/riscv/tcg/csr.c
-index 061bc9db77b3..9da05a0507d5 100644
---- a/target/riscv/tcg/csr.c
-+++ b/target/riscv/tcg/csr.c
-@@ -53,7 +53,8 @@ RISCVException smstateen_acc_ok(CPURISCVState *env, int index, uint64_t bit)
+diff --git a/configs/targets/riscv32-linux-user.mak b/configs/targets/riscv32-linux-user.mak
+index d88fdf5e1b2f..8ee14fa14383 100644
+--- a/configs/targets/riscv32-linux-user.mak
++++ b/configs/targets/riscv32-linux-user.mak
+@@ -1,7 +1,7 @@
+ TARGET_ARCH=riscv32
+ TARGET_BASE_ARCH=riscv
+ TARGET_ABI_DIR=riscv
+-TARGET_XML_FILES= riscv-32bit-cpu.xml riscv-32bit-fpu.xml riscv-64bit-fpu.xml riscv-32bit-virtual.xml
++TARGET_XML_FILES= riscv-32bit-cpu.xml riscv-32bit-fpu.xml riscv-64bit-fpu.xml riscv-32bit-virtual.xml riscv-32bit-alias.xml riscv-32bit-fpu-alias.xml riscv-64bit-fpu-alias.xml
+ CONFIG_SEMIHOSTING=y
+ CONFIG_ARM_COMPATIBLE_SEMIHOSTING=y
+ TARGET_SYSTBL_ABI=32
+diff --git a/configs/targets/riscv32-softmmu.mak b/configs/targets/riscv32-softmmu.mak
+index 5d5016d00832..c717940344f0 100644
+--- a/configs/targets/riscv32-softmmu.mak
++++ b/configs/targets/riscv32-softmmu.mak
+@@ -1,6 +1,6 @@
+ TARGET_ARCH=riscv32
+ TARGET_BASE_ARCH=riscv
+-TARGET_XML_FILES= riscv-32bit-cpu.xml riscv-32bit-fpu.xml riscv-64bit-fpu.xml riscv-32bit-virtual.xml
++TARGET_XML_FILES= riscv-32bit-cpu.xml riscv-32bit-fpu.xml riscv-64bit-fpu.xml riscv-32bit-virtual.xml riscv-32bit-alias.xml riscv-32bit-fpu-alias.xml riscv-64bit-fpu-alias.xml
+ # needed by boot.c
+ TARGET_NEED_FDT=y
+ TARGET_LONG_BITS=32
+diff --git a/configs/targets/riscv64-bsd-user.mak b/configs/targets/riscv64-bsd-user.mak
+index 5b4e138099fc..1d37e018c871 100644
+--- a/configs/targets/riscv64-bsd-user.mak
++++ b/configs/targets/riscv64-bsd-user.mak
+@@ -1,6 +1,6 @@
+ TARGET_ARCH=riscv64
+ TARGET_BASE_ARCH=riscv
+ TARGET_ABI_DIR=riscv
+-TARGET_XML_FILES= riscv-64bit-cpu.xml riscv-32bit-fpu.xml riscv-64bit-fpu.xml riscv-64bit-virtual.xml
++TARGET_XML_FILES= riscv-64bit-cpu.xml riscv-32bit-fpu.xml riscv-64bit-fpu.xml riscv-64bit-virtual.xml riscv-64bit-alias.xml riscv-32bit-fpu-alias.xml riscv-64bit-fpu-alias.xml
+ TARGET_LONG_BITS=64
+ TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API=y
+diff --git a/configs/targets/riscv64-linux-user.mak b/configs/targets/riscv64-linux-user.mak
+index 35621520c560..564d15aaca8c 100644
+--- a/configs/targets/riscv64-linux-user.mak
++++ b/configs/targets/riscv64-linux-user.mak
+@@ -1,7 +1,7 @@
+ TARGET_ARCH=riscv64
+ TARGET_BASE_ARCH=riscv
+ TARGET_ABI_DIR=riscv
+-TARGET_XML_FILES= riscv-64bit-cpu.xml riscv-32bit-fpu.xml riscv-64bit-fpu.xml riscv-64bit-virtual.xml
++TARGET_XML_FILES= riscv-64bit-cpu.xml riscv-32bit-fpu.xml riscv-64bit-fpu.xml riscv-64bit-virtual.xml riscv-64bit-alias.xml riscv-32bit-fpu-alias.xml riscv-64bit-fpu-alias.xml
+ CONFIG_SEMIHOSTING=y
+ CONFIG_ARM_COMPATIBLE_SEMIHOSTING=y
+ TARGET_SYSTBL_ABI=64
+diff --git a/configs/targets/riscv64-softmmu.mak b/configs/targets/riscv64-softmmu.mak
+index a10dc03c04c8..28bfcdc575fb 100644
+--- a/configs/targets/riscv64-softmmu.mak
++++ b/configs/targets/riscv64-softmmu.mak
+@@ -1,7 +1,7 @@
+ TARGET_ARCH=riscv64
+ TARGET_BASE_ARCH=riscv
+ TARGET_KVM_HAVE_GUEST_DEBUG=y
+-TARGET_XML_FILES= riscv-64bit-cpu.xml riscv-32bit-fpu.xml riscv-64bit-fpu.xml riscv-64bit-virtual.xml riscv-32bit-cpu.xml riscv-32bit-virtual.xml
++TARGET_XML_FILES= riscv-64bit-cpu.xml riscv-32bit-fpu.xml riscv-64bit-fpu.xml riscv-64bit-virtual.xml riscv-32bit-cpu.xml riscv-32bit-virtual.xml riscv-32bit-alias.xml riscv-64bit-alias.xml riscv-32bit-fpu-alias.xml riscv-64bit-fpu-alias.xml
+ # needed by boot.c
+ TARGET_NEED_FDT=y
+ TARGET_LONG_BITS=64
+diff --git a/gdbstub/gdb-xml/riscv-32bit-alias.xml b/gdbstub/gdb-xml/riscv-32bit-alias.xml
+new file mode 100644
+index 000000000000..a00a86ebdf95
+--- /dev/null
++++ b/gdbstub/gdb-xml/riscv-32bit-alias.xml
+@@ -0,0 +1,105 @@
++<?xml version="1.0"?>
++<!--
++  SPDX-License-Identifier: GPL-2.0-or-later
++-->
++
++<!DOCTYPE feature SYSTEM "gdb-target.dtd">
++<feature name="org.qemu.gdb.riscv.alias">
++  <reg name="x0" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="x1" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="x2" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="x3" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="x4" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="x5" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="x6" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="x7" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="x8" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="x9" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="x10" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="x11" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="x12" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="x13" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="x14" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="x15" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="x16" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="x17" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="x18" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="x19" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="x20" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="x21" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="x22" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="x23" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="x24" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="x25" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="x26" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="x27" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="x28" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="x29" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="x30" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="x31" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="s0" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="x0h" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="zeroh" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="x1h" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="rah" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="x2h" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="sph" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="x3h" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="gph" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="x4h" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="tph" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="x5h" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="t0h" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="x6h" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="t1h" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="x7h" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="t2h" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="x8h" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="s0h" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="x9h" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="s1h" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="x10h" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="a0h" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="x11h" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="a1h" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="x12h" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="a2h" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="x13h" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="a3h" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="x14h" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="a4h" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="x15h" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="a5h" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="x16h" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="a6h" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="x17h" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="a7h" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="x18h" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="s2h" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="x19h" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="s3h" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="x20h" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="s4h" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="x21h" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="s5h" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="x22h" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="s6h" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="x23h" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="s7h" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="x24h" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="s8h" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="x25h" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="s9h" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="x26h" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="s10h" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="x27h" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="s11h" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="x28h" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="t3h" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="x29h" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="t4h" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="x30h" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="t5h" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="x31h" bitsize="32" type="int" group="qemu-debug"/>
++  <reg name="t6h" bitsize="32" type="int" group="qemu-debug"/>
++</feature>
+diff --git a/gdbstub/gdb-xml/riscv-32bit-fpu-alias.xml b/gdbstub/gdb-xml/riscv-32bit-fpu-alias.xml
+new file mode 100644
+index 000000000000..3935f72ea289
+--- /dev/null
++++ b/gdbstub/gdb-xml/riscv-32bit-fpu-alias.xml
+@@ -0,0 +1,40 @@
++<?xml version="1.0"?>
++<!--
++  SPDX-License-Identifier: GPL-2.0-or-later
++-->
++
++<!DOCTYPE feature SYSTEM "gdb-target.dtd">
++<feature name="org.qemu.gdb.riscv.fpu-alias">
++  <reg name="f0" bitsize="32" type="ieee_single" group="qemu-debug"/>
++  <reg name="f1" bitsize="32" type="ieee_single" group="qemu-debug"/>
++  <reg name="f2" bitsize="32" type="ieee_single" group="qemu-debug"/>
++  <reg name="f3" bitsize="32" type="ieee_single" group="qemu-debug"/>
++  <reg name="f4" bitsize="32" type="ieee_single" group="qemu-debug"/>
++  <reg name="f5" bitsize="32" type="ieee_single" group="qemu-debug"/>
++  <reg name="f6" bitsize="32" type="ieee_single" group="qemu-debug"/>
++  <reg name="f7" bitsize="32" type="ieee_single" group="qemu-debug"/>
++  <reg name="f8" bitsize="32" type="ieee_single" group="qemu-debug"/>
++  <reg name="f9" bitsize="32" type="ieee_single" group="qemu-debug"/>
++  <reg name="f10" bitsize="32" type="ieee_single" group="qemu-debug"/>
++  <reg name="f11" bitsize="32" type="ieee_single" group="qemu-debug"/>
++  <reg name="f12" bitsize="32" type="ieee_single" group="qemu-debug"/>
++  <reg name="f13" bitsize="32" type="ieee_single" group="qemu-debug"/>
++  <reg name="f14" bitsize="32" type="ieee_single" group="qemu-debug"/>
++  <reg name="f15" bitsize="32" type="ieee_single" group="qemu-debug"/>
++  <reg name="f16" bitsize="32" type="ieee_single" group="qemu-debug"/>
++  <reg name="f17" bitsize="32" type="ieee_single" group="qemu-debug"/>
++  <reg name="f18" bitsize="32" type="ieee_single" group="qemu-debug"/>
++  <reg name="f19" bitsize="32" type="ieee_single" group="qemu-debug"/>
++  <reg name="f20" bitsize="32" type="ieee_single" group="qemu-debug"/>
++  <reg name="f21" bitsize="32" type="ieee_single" group="qemu-debug"/>
++  <reg name="f22" bitsize="32" type="ieee_single" group="qemu-debug"/>
++  <reg name="f23" bitsize="32" type="ieee_single" group="qemu-debug"/>
++  <reg name="f24" bitsize="32" type="ieee_single" group="qemu-debug"/>
++  <reg name="f25" bitsize="32" type="ieee_single" group="qemu-debug"/>
++  <reg name="f26" bitsize="32" type="ieee_single" group="qemu-debug"/>
++  <reg name="f27" bitsize="32" type="ieee_single" group="qemu-debug"/>
++  <reg name="f28" bitsize="32" type="ieee_single" group="qemu-debug"/>
++  <reg name="f29" bitsize="32" type="ieee_single" group="qemu-debug"/>
++  <reg name="f30" bitsize="32" type="ieee_single" group="qemu-debug"/>
++  <reg name="f31" bitsize="32" type="ieee_single" group="qemu-debug"/>
++</feature>
+diff --git a/gdbstub/gdb-xml/riscv-64bit-alias.xml b/gdbstub/gdb-xml/riscv-64bit-alias.xml
+new file mode 100644
+index 000000000000..28781b230226
+--- /dev/null
++++ b/gdbstub/gdb-xml/riscv-64bit-alias.xml
+@@ -0,0 +1,105 @@
++<?xml version="1.0"?>
++<!--
++  SPDX-License-Identifier: GPL-2.0-or-later
++-->
++
++<!DOCTYPE feature SYSTEM "gdb-target.dtd">
++<feature name="org.qemu.gdb.riscv.alias">
++  <reg name="x0" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="x1" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="x2" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="x3" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="x4" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="x5" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="x6" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="x7" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="x8" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="x9" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="x10" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="x11" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="x12" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="x13" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="x14" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="x15" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="x16" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="x17" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="x18" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="x19" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="x20" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="x21" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="x22" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="x23" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="x24" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="x25" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="x26" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="x27" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="x28" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="x29" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="x30" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="x31" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="s0" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="x0h" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="zeroh" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="x1h" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="rah" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="x2h" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="sph" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="x3h" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="gph" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="x4h" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="tph" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="x5h" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="t0h" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="x6h" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="t1h" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="x7h" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="t2h" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="x8h" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="s0h" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="x9h" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="s1h" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="x10h" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="a0h" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="x11h" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="a1h" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="x12h" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="a2h" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="x13h" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="a3h" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="x14h" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="a4h" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="x15h" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="a5h" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="x16h" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="a6h" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="x17h" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="a7h" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="x18h" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="s2h" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="x19h" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="s3h" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="x20h" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="s4h" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="x21h" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="s5h" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="x22h" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="s6h" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="x23h" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="s7h" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="x24h" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="s8h" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="x25h" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="s9h" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="x26h" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="s10h" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="x27h" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="s11h" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="x28h" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="t3h" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="x29h" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="t4h" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="x30h" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="t5h" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="x31h" bitsize="64" type="int" group="qemu-debug"/>
++  <reg name="t6h" bitsize="64" type="int" group="qemu-debug"/>
++</feature>
+diff --git a/gdbstub/gdb-xml/riscv-64bit-fpu-alias.xml b/gdbstub/gdb-xml/riscv-64bit-fpu-alias.xml
+new file mode 100644
+index 000000000000..13e6b341a0f8
+--- /dev/null
++++ b/gdbstub/gdb-xml/riscv-64bit-fpu-alias.xml
+@@ -0,0 +1,46 @@
++<?xml version="1.0"?>
++<!--
++  SPDX-License-Identifier: GPL-2.0-or-later
++-->
++
++<!DOCTYPE feature SYSTEM "gdb-target.dtd">
++<feature name="org.qemu.gdb.riscv.fpu-alias">
++
++  <union id="riscv_double">
++    <field name="float" type="ieee_single"/>
++    <field name="double" type="ieee_double"/>
++  </union>
++
++  <reg name="f0" bitsize="64" type="riscv_double" group="qemu-debug"/>
++  <reg name="f1" bitsize="64" type="riscv_double" group="qemu-debug"/>
++  <reg name="f2" bitsize="64" type="riscv_double" group="qemu-debug"/>
++  <reg name="f3" bitsize="64" type="riscv_double" group="qemu-debug"/>
++  <reg name="f4" bitsize="64" type="riscv_double" group="qemu-debug"/>
++  <reg name="f5" bitsize="64" type="riscv_double" group="qemu-debug"/>
++  <reg name="f6" bitsize="64" type="riscv_double" group="qemu-debug"/>
++  <reg name="f7" bitsize="64" type="riscv_double" group="qemu-debug"/>
++  <reg name="f8" bitsize="64" type="riscv_double" group="qemu-debug"/>
++  <reg name="f9" bitsize="64" type="riscv_double" group="qemu-debug"/>
++  <reg name="f10" bitsize="64" type="riscv_double" group="qemu-debug"/>
++  <reg name="f11" bitsize="64" type="riscv_double" group="qemu-debug"/>
++  <reg name="f12" bitsize="64" type="riscv_double" group="qemu-debug"/>
++  <reg name="f13" bitsize="64" type="riscv_double" group="qemu-debug"/>
++  <reg name="f14" bitsize="64" type="riscv_double" group="qemu-debug"/>
++  <reg name="f15" bitsize="64" type="riscv_double" group="qemu-debug"/>
++  <reg name="f16" bitsize="64" type="riscv_double" group="qemu-debug"/>
++  <reg name="f17" bitsize="64" type="riscv_double" group="qemu-debug"/>
++  <reg name="f18" bitsize="64" type="riscv_double" group="qemu-debug"/>
++  <reg name="f19" bitsize="64" type="riscv_double" group="qemu-debug"/>
++  <reg name="f20" bitsize="64" type="riscv_double" group="qemu-debug"/>
++  <reg name="f21" bitsize="64" type="riscv_double" group="qemu-debug"/>
++  <reg name="f22" bitsize="64" type="riscv_double" group="qemu-debug"/>
++  <reg name="f23" bitsize="64" type="riscv_double" group="qemu-debug"/>
++  <reg name="f24" bitsize="64" type="riscv_double" group="qemu-debug"/>
++  <reg name="f25" bitsize="64" type="riscv_double" group="qemu-debug"/>
++  <reg name="f26" bitsize="64" type="riscv_double" group="qemu-debug"/>
++  <reg name="f27" bitsize="64" type="riscv_double" group="qemu-debug"/>
++  <reg name="f28" bitsize="64" type="riscv_double" group="qemu-debug"/>
++  <reg name="f29" bitsize="64" type="riscv_double" group="qemu-debug"/>
++  <reg name="f30" bitsize="64" type="riscv_double" group="qemu-debug"/>
++  <reg name="f31" bitsize="64" type="riscv_double" group="qemu-debug"/>
++</feature>
+diff --git a/target/riscv/gdbstub.c b/target/riscv/gdbstub.c
+index f279f4ab2461..cc7f17491efb 100644
+--- a/target/riscv/gdbstub.c
++++ b/target/riscv/gdbstub.c
+@@ -336,10 +336,42 @@ static GDBFeature *ricsv_gen_dynamic_vector_feature(CPUState *cs, int base_reg)
+     return &cpu->dyn_vreg_feature;
+ }
+ 
++/* x0-x31, s0, then pairs of numeric and ABI high-half aliases. */
++static int riscv_gdb_get_alias(CPUState *cs, GByteArray *buf, int n)
++{
++    RISCVCPU *cpu = RISCV_CPU(cs);
++    uint64_t val;
++
++    if (n < 33) {
++        return riscv_cpu_gdb_read_register(cs, buf, n == 32 ? 8 : n);
++    }
++
++    val = cpu->env.gprh[(n - 33) / 2];
++    if (riscv_cpu_is_32bit(cpu)) {
++        return gdb_get_reg32(buf, val);
++    }
++    return gdb_get_reg64(buf, val);
++}
++
++static int riscv_gdb_set_alias(CPUState *cs, uint8_t *buf, int n)
++{
++    RISCVCPU *cpu = RISCV_CPU(cs);
++    CPURISCVState *env = &cpu->env;
++    const unsigned regsz = riscv_cpu_is_32bit(cpu) ? 4 : 8;
++
++    if (n < 33) {
++        return riscv_cpu_gdb_write_register(cs, buf, n == 32 ? 8 : n);
++    }
++
++    env->gprh[(n - 33) / 2] = ldn(env, buf, regsz);
++    return regsz;
++}
++
+ void riscv_cpu_register_gdb_regs_for_features(CPUState *cs)
  {
-     bool virt = env->virt_enabled;
- 
--    if (env->priv == PRV_M || !riscv_cpu_cfg(env)->ext_smstateen) {
-+    if (env->debugger || env->priv == PRV_M ||
-+        !riscv_cpu_cfg(env)->ext_smstateen) {
-         return RISCV_EXCP_NONE;
+     RISCVCPU *cpu = RISCV_CPU(cs);
+     CPURISCVState *env = &cpu->env;
++
+     if (env->misa_ext & RVD) {
+         gdb_register_coprocessor(cs, riscv_gdb_get_fpu, riscv_gdb_set_fpu,
+                                  gdb_find_static_feature("riscv-64bit-fpu.xml"));
+@@ -380,4 +412,19 @@ void riscv_cpu_register_gdb_regs_for_features(CPUState *cs)
+                                  feature);
      }
- 
+ #endif
++
++    gdb_register_internal_coprocessor(cs, riscv_gdb_get_alias, riscv_gdb_set_alias,
++        gdb_find_static_feature(riscv_cpu_is_32bit(cpu) ?
++            "riscv-32bit-alias.xml" :
++            "riscv-64bit-alias.xml"));
++
++    if (env->misa_ext & RVD) {
++        gdb_register_internal_coprocessor(cs, riscv_gdb_get_fpu,
++            riscv_gdb_set_fpu,
++            gdb_find_static_feature("riscv-64bit-fpu-alias.xml"));
++    } else if (env->misa_ext & RVF) {
++        gdb_register_internal_coprocessor(cs, riscv_gdb_get_fpu,
++            riscv_gdb_set_fpu,
++            gdb_find_static_feature("riscv-32bit-fpu-alias.xml"));
++    }
+ }
 
 -- 
 2.56.0.116.g6de20f6092dc
