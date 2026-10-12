@@ -4,164 +4,135 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC1D1CA9EBD
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Oct 2026 02:14:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AF5ECA9ECF
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Oct 2026 02:17:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xG5XO-0005lK-9B; Sun, 11 Oct 2026 22:13:14 -0400
+	id 1xG5az-0006PM-4V; Sun, 11 Oct 2026 22:16:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xG5XM-0005l5-IK
- for qemu-devel@nongnu.org; Sun, 11 Oct 2026 22:13:12 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1xG5at-0006O7-Tr; Sun, 11 Oct 2026 22:16:51 -0400
+Received: from mail-koreacentralazlp170130006.outbound.protection.outlook.com
+ ([2a01:111:f403:c40f::6] helo=SEYPR02CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xG5XK-0004SN-7m
- for qemu-devel@nongnu.org; Sun, 11 Oct 2026 22:13:12 -0400
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69C1lJ0J4078236
- for <qemu-devel@nongnu.org>; Mon, 12 Oct 2026 02:13:07 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- Q6/+JgKm8jY0VKquYWA7r+k5EnTN0P7KXKaFlGhrKAg=; b=Shy2tZ70W0IY6mN7
- 1K3EtDQD6wELSTsS+FUj0K+eRiVGf9qUFBbPI9X2P4NxSc5S2ckg5U/QOIRLikQy
- e/KJbXuJHaVyETX5pV2eUGwM2Y33zqx4Y+6ZwMjRQXx5I7Au71gRb4WkL+UVL4iA
- ur6ARyyD3fEE4RUzBc83Q2XlyfPBfDCQkbLWhXHUNvd/crXckikwqj3zldCzAjkW
- iALkRl4ob7FPd58coSW9ng+l7v1YYDvcXm2mkN6EKmeIb1BRewyoCz9KGsKRU4iX
- 6nUEj/wjrTO5UzKEe/Y4CzXMjfxTHYgPDNScdz/eNtUSielpEzkKm4blCuZPMS+c
- fklhzA==
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
- [209.85.216.70])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h8j6dghj2-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 12 Oct 2026 02:13:07 +0000 (GMT)
-Received: by mail-pj1-f70.google.com with SMTP id
- 98e67ed59e1d1-3ab2395f104so1036108a91.2
- for <qemu-devel@nongnu.org>; Sun, 11 Oct 2026 19:13:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1791771186; x=1792375986; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=Q6/+JgKm8jY0VKquYWA7r+k5EnTN0P7KXKaFlGhrKAg=;
- b=gczGH0BVis0MLY53xrlZ2/dboX1W/QiKnMLkxAHEChNVIa1DFgcn6OPeFmANrXUb+c
- jVvOP6BDDaDoNUeeQ2+ObKQtT5rL7D2Inyg1TGa3ugC3yOdV33yvzPA07zR9rV/CDFvi
- 326i1V4wLkt5Gpcy9Rdl4wNO6F2tDJJ3Iu83+RDRsE9ENdKXhM5i8w3JmJgDcP85t4Tb
- L3jcibk33XW9TP8LwK5WuQ+oVrr5DRYyWu72ePRctz4zWIyIdd1ZmZ2K8x7UqxtWDtNb
- 25bSYOYuNiNhJyUhmLTrR1lsHxMiRPyA2H42o7xS/Ci2YcJXBZNcFQWjv0ygOdqdZd48
- a2Hg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791771186; x=1792375986;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=Q6/+JgKm8jY0VKquYWA7r+k5EnTN0P7KXKaFlGhrKAg=;
- b=H7xZGbxD0Bd6jf8JCLnGjwNZ8cqnC1t8VVRmKaaC5zE1M5fxrt11ozJPi6ylIpw9v/
- nAQEP6yoVrEUPugzjpYnM303bWLHHGgIo9sqneT6X29ogpMwkJ7RgViK5BfIJV/6kKlk
- tVGrAIta9Jryk6O/u2KkuxRbaiE55OoU0hslXiVoWMlVs0WHjAmeYc46aDTTPGTpDRrf
- MDeWHBgpIbmeKnt4FwVUWSSkmlxDTALUi1leky4Q5+i2/vaNnlw3vZ+LzIywP5mtXipt
- DjnihLHbEM5dFO33xObGsKIfeA75NqsW8D2hyEr+g6qfT+xpgdmY0diSF8cFjbS1820C
- biQA==
-X-Forwarded-Encrypted: i=1;
- AKwUvBzbnrg2+7hbce/tAdJoxx6xwkZOKn8cBArxgcHipFhg6gPdAU2DPS4+nazyz7cRfHSj+Z4IyjIwp3PR@nongnu.org
-X-Gm-Message-State: AFq9FYLJvCQmz6sGGLq0IaFanyVbIP82+kcC+xDJHC2yinngmMOmVWOi
- y0xtvOJ4fwCY1qD3qdX0zxC5FdHcHPyBpLoVT2izLO0/WtBuIPke1Tho23yvFZnWq0t/o1dzN9u
- la+XMn/+Zzify/2++0a8aT5pOyqsV2VkUMH1Y4F2TSJVreEObm1vjGhVqjw==
-X-Gm-Gg: AYBFou2lwidtzwlbYCJh6WyuKvseUlUltQvr9EWJHKt6zNAtzL78YI+I8Z+B4Q1TEaa
- 1WpH+f+kE9QhqmMoUqfj00uPTd+o8th24++vC5k1eKvL0Go4yQankIqyoOC6w7dGMjTbompG6wZ
- aTWLTRN0Bv0PguThNa/o4hpkPr9IHfDnZF21ppSE9DixJfPFUooKorKCsjdDaOxWoWzugwhCReV
- yehAQKnUcuAH6+or3qMT1vaher171EBMCNOlT4TxHRJAq5z7Zyr4A8jAo5IgeL1wYpZ1CIGJHSL
- nNDJTtuPeTRQCzsqdyjBX5ypU0q8ZSG/SVX0urU24L1/DnHZW5PUDwqVcQg7YsWBLe1kH3b0Llg
- BFo3LRREuq8Wmr8JNMPw3yY6yhaaLG7HM2mQY/H4fd6+y3wz9UmBUd1M4
-X-Received: by 2002:a17:90b:562c:b0:3a4:b3ac:904c with SMTP id
- 98e67ed59e1d1-3ab3ac775bdmr6697289a91.51.1791771186132; 
- Sun, 11 Oct 2026 19:13:06 -0700 (PDT)
-X-Received: by 2002:a17:90b:562c:b0:3a4:b3ac:904c with SMTP id
- 98e67ed59e1d1-3ab3ac775bdmr6697252a91.51.1791771185499; 
- Sun, 11 Oct 2026 19:13:05 -0700 (PDT)
-Received: from [192.168.1.169] (192-80-163-190.dyn.novuscom.net.
- [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3ab38fc9e52sm14130427a91.13.2026.10.11.19.13.04
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 11 Oct 2026 19:13:04 -0700 (PDT)
-Message-ID: <8cb24445-b659-4bd4-9497-888ce152e82d@oss.qualcomm.com>
-Date: Sun, 11 Oct 2026 19:13:04 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/8] qom: pass TargetInfo to the is_available callback
-To: luoyonggang@gmail.com
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org, Cleber Rosa <crosa@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@kaod.org>,
- Laurent Vivier <lvivier@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- John Snow <jsnow@redhat.com>, Laurent Vivier <laurent@vivier.eu>,
- Richard Henderson <richard.henderson@linaro.org>,
- Joel Stanley <joel@jms.id.au>, Fabiano Rosas <farosas@suse.de>,
- Kane Chen <kane_chen@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>,
- Troy Lee <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>,
- Stafford Horne <shorne@gmail.com>, qemu-arm@nongnu.org,
- Philippe Mathieu-Daude <philmd@mailo.com>,
- Peter Maydell <peter.maydell@linaro.org>, Paolo Bonzini
- <pbonzini@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@oss.qualcomm.com>, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
- <marcandre.lureau@redhat.com>, Steven Lee <steven_lee@aspeedtech.com>,
- Alexander Bulekov <alxndr@bu.edu>, Darren Kenny <darren.kenny@oracle.com>
-References: <20261007115253.328-1-luoyonggang@gmail.com>
- <2390b3d7-6918-41e3-8532-c19de4cdd1ff@oss.qualcomm.com>
- <asdlbOZBSYIaCMIh@redhat.com>
- <CAE2XoE91XxoJRFpQ_1jhmX6LdxMyN16CF7RXxM62C5Ctkc1tig@mail.gmail.com>
- <42fd67c0-c20d-4bc4-bede-79073e4be4a1@oss.qualcomm.com>
- <CAE2XoE-gN5-vmE8r00Ds_Z=E1WePSFi_MJXjmy9ZuXEU_=o31g@mail.gmail.com>
- <3034c146-0697-4db7-acd4-8076b317a09e@oss.qualcomm.com>
- <CAE2XoE-gCTrpEeCROz9JMpPnTQXQ+AnBTR4RwdQhYizkExjK9w@mail.gmail.com>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1xG5as-0004md-1T; Sun, 11 Oct 2026 22:16:51 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=kPgxsWzBDMScrZ1KFIUDkzYC6IZSd4wvs64WHp6vGjT1Z0wXIIddiqa/nnac2xNsKysecYc2imXN6WIEUt/jZf62GDmD3i9gehCL1hJj8j0lIvaF25LUVblL9P8nv0lglPp8psZiikzLIttaewacHsI4gnxF2cRj0E0iGII+lZK3geaKS1F944r0E02WABFOmV7ZtGbgzNPvy1RRzBaORqb8n+yODHe48eGMiLDR+l45NoqfnnE+y4nggecXAO0zO9gQpva2V1YNvWg7HQpJ9p8h39HAYobCzHvl9/ZSqDJALzcDGNCJGTfMU98Eyu07xOkVhg6pZ/fqC1/Q/YcslQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=08so2F6U1KYknCKa+AXt5x9EoU/qtcbzb805arRbJxg=;
+ b=ZQWg9QODhpQulKBSn+ENbUDPi7bdwwZFdoC4a89L5RZnJWJDrQASWr4GjuS7iOlQ5QezM7frq/qU1EsxqXE6s7sP+25iGnSz1cH1BLxKwHJ1Ehgp+xTtEx2w5aHMAXS+Xr10rJZ1xH3SPdNbVRQKVb8pOTp2e8xOQekzA5n16uLgfd6ffX4nFNkIwEj6dY6sVoIJIJSoCCDO6fCoBr/L9SoBal7M8S9BObp2OhJF7ckX0/dE0Aor6WjE/U9KlC+HGHiYN0NzwjEsW2P65c3A08hWHJrEN/yFuU4Q/s/N3RcH5us4HSWD3DkxnFEuxm7sLui3sYKGiBOOxAWNgmj5wA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
+ header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=08so2F6U1KYknCKa+AXt5x9EoU/qtcbzb805arRbJxg=;
+ b=RngkhYbnpazfq4+lF/c4fzdInMvFbzSzS4MQpbmcVtRrS9s/yzc0bq3JpNlVR9ZCDsotFA/ci3+iFpLyy3xnrMIAz5nrpytBpJgAtwoaL0DssKVeRNGefP/DOUGX6/OpzTmFMTD7SpedCHhjS29+nnKAJA4Wp7G9NvkLLlU1T3RG8pM9yOgWBVhGmAJx0VPB4XNsNxNtXPCFf3RrRtjAaMORm4ar880vV+OQjAXfhXs1Ty2qneCV5P4DcBKXVKx1JgIBXX3oNqvGB3eaSbpVp/0YEHWPps9taOPjyGvocyvuvhm004NEjKQKfS7xBMS+oZRsLf+7qxYYeuyvFRyi0g==
+Received: from SEZPR06MB7362.apcprd06.prod.outlook.com (2603:1096:101:253::10)
+ by SEYPR06MB5398.apcprd06.prod.outlook.com (2603:1096:101:8f::11)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.496.19; Mon, 12 Oct
+ 2026 02:16:36 +0000
+Received: from SEZPR06MB7362.apcprd06.prod.outlook.com
+ ([fe80::cd2d:35d2:a702:1de6]) by SEZPR06MB7362.apcprd06.prod.outlook.com
+ ([fe80::cd2d:35d2:a702:1de6%4]) with mapi id 15.21.0496.020; Mon, 12 Oct 2026
+ 02:16:36 +0000
+From: Jamin Lin <jamin_lin@aspeedtech.com>
+To: =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@kaod.org>, Peter Maydell
+ <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
+ <leetroy@gmail.com>, Kane Chen <kane_chen@aspeedtech.com>, Andrew Jeffery
+ <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, "open
+ list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
+ <qemu-devel@nongnu.org>
+CC: Jamin Lin <jamin_lin@aspeedtech.com>, Troy Lee <troy_lee@aspeedtech.com>, 
+ =?iso-8859-1?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>
+Subject: [PATCH v3 1/8] hw/usb/bus: Let a bus opt out of automatic hub
+ insertion
+Thread-Topic: [PATCH v3 1/8] hw/usb/bus: Let a bus opt out of automatic hub
+ insertion
+Thread-Index: AQHdWe+1b5T4oNA+yE68f74FLmdQFA==
+Date: Mon, 12 Oct 2026 02:16:36 +0000
+Message-ID: <20261012021634.2006424-2-jamin_lin@aspeedtech.com>
+References: <20261012021634.2006424-1-jamin_lin@aspeedtech.com>
+In-Reply-To: <20261012021634.2006424-1-jamin_lin@aspeedtech.com>
+Accept-Language: zh-TW, en-US
 Content-Language: en-US
-In-Reply-To: <CAE2XoE-gCTrpEeCROz9JMpPnTQXQ+AnBTR4RwdQhYizkExjK9w@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDEyMDAwOCBTYWx0ZWRfXzaY3OA84Iayw
- /Sd8f/iPoRzvWItbvF2WH/BLqE1tsBjP8EFtmfl9Xwh4PCdJuV7VZYsx6YKpDAHXXn7Ur5VsHAl
- W0JN4TG6FUzUfB5oViIrmU4A2X9GZj9w0Q3SPi8Wc6pXxrSpZgCHeiG0CIro8Nrs38njeZgIJMK
- pzYnt3LV7PMqNRt8lfgdwdVzO5XrwHmWB86Ucd82claBWvBFjG4nojJR9BOb7HVU8uIDePHBAVN
- vZdrRzkd+DQhlXk7FeZy5xn5b3NXz4zpHjkJYYR0m7y7nAtixdOdhZdfocvckDfsvsb9erhTFyJ
- cP4bNnNbrlgpvma9PQcF1Twv+ljEkWlI1EWosHa71X9pENKY3RBXJI78JX2ts7+19SiS3k7A10+
- 7dG8MH+b/XmQ9rlzEAdjYz519BL2bHD765n/MPqKw5p4vVc8UlfO1HBWnOa5MoQP3YcEV+Tpnqr
- hfIUHgcUskARTyj4gJg==
-X-Authority-Analysis: v=2.4 cv=aK5lOr9m c=1 sm=1 tr=0 ts=6acc4233 cx=c_pps
- a=0uOsjrqzRL749jD1oC5vDA==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
- a=VwQbUJbxAAAA:8 a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8 a=B-3GWC4AWTgxg7b-HyEA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=mQ_c8vxmzFEMiUWkPHU9:22
-X-Proofpoint-GUID: hHt_8JI9rXUB6lm1K3I6F_6Q9VU2_xOt
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDEyMDAwOCBTYWx0ZWRfX087C42261J/j
- FxVSIbCjRTuEXpPdfA58R2xqidZMG/FRCn13KU8wLAtgLRFIqcuDD5zsky/gWqd9tSKXidmmGXX
- Ip2ZD5vXi0vF+nSAuKoO2ahp/VlWiK8=
-X-Proofpoint-ORIG-GUID: hHt_8JI9rXUB6lm1K3I6F_6Q9VU2_xOt
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-10-12_01,2026-10-09_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 phishscore=0 bulkscore=0 impostorscore=0 spamscore=0
- suspectscore=0 lowpriorityscore=0 clxscore=1015 adultscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610080000 definitions=main-2610120008
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=aspeedtech.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SEZPR06MB7362:EE_|SEYPR06MB5398:EE_
+x-ms-office365-filtering-correlation-id: 41ec4b49-0dd2-424d-a095-08df2806d7f8
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|366016|1800799024|376014|23010399003|22082099003|18002099003|10067099003|38070700021|56012099006;
+x-microsoft-antispam-message-info: wTlamE3tdHO6giEu2a7VlOsazeLZjRiUQILZgfKwkMmtvppYYqD5k4zX2uEHAm6EuJvhqLGODS5zuW+md7UtRO/AwGbCp5gYpSEFO6de8v0995wLBumAMNCKY7nrXaEc9tcQaSMteVtpcBs0oWFC3zDw0q/KQlhEPtyvaZ0benU4PCPJOeCpuHhkKziZa8h0ek19D7DafB2pVLnG3Vdy/GFIaMG5QWtsMk9XEFiv75RdhhJQ5hjaL04A6sIQloT25m8re3QeBSZUYmv5Dqrw8MXjzjO3z9PWGEUm78Ck2fuQ0CzyZGMpHmmnBAurbj0XTUekN9DzdpcEyX5WAGaQw7Gy+C5asNDx4MWaHIEDuHPajW6cp/2vuasL4DRgCNVzXgmNSKNx3Ar/N8iZA518uqGrbWIzwTOSDLkRawaNgK7pLmCZIrqdVEEO7mah3Qky1BNl3zt9BtnwnnUzSDrgI4BF4kTw5yUFx4CUu5jb33qKFIZv6Jey2rKNTpU3joZZ3K4WunlME71mbsV3KnnCqq9dfPB7D6JFRLnD2v58lsLpAi8s7DfSOTkQBBjkdYplpaXWXLSqk8FHWhAB2VEZgHuoxA9vRidM48uh0tTaDav5vXZNnf6Pn8jP7R59EAifcepsWrolvbtjLs6/aAv8qA0/wVBtkZHFWZLESZEq/kalnyKTSbfoz2opjsY2LKEQBUxOdyqw2NtAofC3SI0zU0Gl+hMpMVxjIeHRt3nlyCI=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SEZPR06MB7362.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(1800799024)(376014)(23010399003)(22082099003)(18002099003)(10067099003)(38070700021)(56012099006);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?YjJc9c45QERmfC/Mp2JnCNFeLS3ePXJqgfSYyjXaf9qjeHpklkzj10q8YZ?=
+ =?iso-8859-1?Q?I0sPUi9Ny4pLVfkVR1Di9wJlqcBQUBAF3fiRIdEShewbv1AUUubjanAQa6?=
+ =?iso-8859-1?Q?dG1nI0zLHGy0THCS0eYNzf6at/IAT7ta7j3eG0PogbYkQ+um9+i7lmb92j?=
+ =?iso-8859-1?Q?BktbLrkx+Le/0FRZ7m9/1hprLjVZr5X+lXqHjc7gLnAAx+x2R6tSCiTmnm?=
+ =?iso-8859-1?Q?GcvmeMoYdwPDCEL7GUqD1Ii4qfJ9xjtsGW3u4DC3PlUiZDPMSaQqlUvR5S?=
+ =?iso-8859-1?Q?8w8EZe9i1zBWtPR1ZjoDdJFynmQQw2slfr/4w8xETzjDEQIV0j7wVgG5Nc?=
+ =?iso-8859-1?Q?zawgvZt12IuQbYYBH3MwkeyZe1PGAEnJvm4hi9ehHD+dLAonNyqRDL3B2S?=
+ =?iso-8859-1?Q?EhwecuKtZUa2waFlX+o/e+YRF8tuZqza9r41Mu4OzyeEOL8gCOlwaXQkWJ?=
+ =?iso-8859-1?Q?mPyyax4GaXHbWT6dZ3XocDzIrnKeqEyUgLx1q1V+b4/RFICYllKUsk4Cre?=
+ =?iso-8859-1?Q?E0fkkojplzp6HMmekJsiW4HloyqeJF+FbF6eSlwc+l37tX6XqB+xT0sieq?=
+ =?iso-8859-1?Q?VbLikL1JspKv202r38xg8qeOSV3uU4KDTTlQ6K27uBF8cRg2bPiPaGpprn?=
+ =?iso-8859-1?Q?SQvJbvhmb8vtYgwHpVUTeYakd6Kz+U/yjt18+9rxUmR0T5c+Q1ADrWLM72?=
+ =?iso-8859-1?Q?KjP9J/ocxnbZ2t/dRBb5w6Oh5SUMXX0Nu6F/dhaz36y/Ka4YCvFg/dDQZ9?=
+ =?iso-8859-1?Q?iydKlMk/WMpbpjK9ifiyV8eGi/w43ETUXGzsmss52Nm8hQbdJhKXH8qUVq?=
+ =?iso-8859-1?Q?uQhv+ZdlBEDPfNajNeJZdW1TXiVK5CnvScvR3Sf0rl1V6gQ3ERn9FHuEE1?=
+ =?iso-8859-1?Q?xegcS/tcMvBnXX5/PCqUIQ+zjlueFY1p8C/IiYlah1SeD71zaJkxnPRyiW?=
+ =?iso-8859-1?Q?PVGzoXlf9teyhVwXPnxZCB51iEyRbADFP0a/CBsoAWhJf5BtwZ98q7S9Sr?=
+ =?iso-8859-1?Q?cnFS0Yc5F3KEnhxiPkOoV9e7xmGA+UdLBtsKV92saCnn7kFMS6lThbcOb4?=
+ =?iso-8859-1?Q?djZLyWliUrAvN97PviaGT95KJuz9g2KssAmqoldRjDRRlhfntv6zNWQEYT?=
+ =?iso-8859-1?Q?WBev6Ebag7p3I8nRhspVF5P8CXkwLNJzEGWI7I9u3NDE02meoz6MSKUY/l?=
+ =?iso-8859-1?Q?N0tbVnZqlBoSTX9OtufQgXcAZ7KX5De0SmQF827rcQ3C+g6o8o5/uFiiGQ?=
+ =?iso-8859-1?Q?3FsoshqyQXvk0AUAUX+XxRM9fo5YLkz9pnrn+w6jagxMzlI/rWyN7lWLfn?=
+ =?iso-8859-1?Q?XqwawUrLD49SUIdbAGvrcn/rRJqjlnJQnfeupKER3JgrX8Qvy0jVvDqtGf?=
+ =?iso-8859-1?Q?4YX26AyoTIntLqmnQWZrlxTYRE6aXBU8IzT1dO77aQwUVWVCYtTY+ksFTx?=
+ =?iso-8859-1?Q?reRtwyiDErKzjvfxoUS8hfqDJzzoexeYyvL7TrYd+HC3z6iOzcmfMHLA6r?=
+ =?iso-8859-1?Q?uhF/cPJDC+3ynvmQB9VdKYHSHfbQeA13MdvJMiUds6aavn2rH+AHVuLueu?=
+ =?iso-8859-1?Q?/SVwenkPQxxagMfVUjXUwItYmY+qpvhdaagEhPM34xl2dMHATkCa5UH4m4?=
+ =?iso-8859-1?Q?4ShpXD3BWskQCm7EutSNW1bEBkWn4Ia6YERfSHlYbsRdsxzFJK7WJt+qds?=
+ =?iso-8859-1?Q?NOySn7dkJGEzwvsaM+g7ZS89uJ4JJ8BakEnyuoqzdoH1KOnI9pev78rj3j?=
+ =?iso-8859-1?Q?aZneaoD+ZcZJSOsluZyLjuU3SH+lmoMcxcz6cb3/ARulSnj8vGwY3FR6bj?=
+ =?iso-8859-1?Q?yr76hINcZA=3D=3D?=
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+X-Exchange-RoutingPolicyChecked: BtXZjVyvNLO5U0rOU8aladAXW/ajBPOs6SdDpjqIzpOOlsRKm/72wGeqGvMQgWZ31oHE/z4SAq1hm1pgqDzXbfAD44xk7So17ZJx0mXUZzPSnx2wzF2bev3eWz2WSFAVBZ60Tdihl1UzuacC53L4nA64p0l1p9OMjqZ9idErZv0milR504848gVVJyoIzx2B2hJ0IrMndNgg2o3egqCIQAPJrZ9NUj9wk5/pcUn0oATM/hkbT/olnFxOaxc52kQqkKn+Z4mzH7DM01nNlEYKikTf+lz7uUmdUyN8w49LyY+isbjjOGnz28/1wnjAduL1AUqBxskwaci19T4ftqZIqg==
+X-OriginatorOrg: aspeedtech.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SEZPR06MB7362.apcprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 41ec4b49-0dd2-424d-a095-08df2806d7f8
+X-MS-Exchange-CrossTenant-originalarrivaltime: 12 Oct 2026 02:16:36.8146 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: rWFt8QRj6jvNUX0ORqimzXZfkIpi/GGhJWwS1/7cLU0aU0ds2yxNq4SzoCzvdItyFpkSyLKAvy5d6Dq8qcOFkzSkQqEGfF3OYcpmW34ttZk=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEYPR06MB5398
+Received-SPF: pass client-ip=2a01:111:f403:c40f::6;
+ envelope-from=jamin_lin@aspeedtech.com;
+ helo=SEYPR02CU001.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -178,154 +149,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/11/26 1:22 PM, Yonggang Luo wrote:
-> On Fri, Oct 9, 2026 at 2:34 AM Pierrick Bouvier
-> <pierrick.bouvier@oss.qualcomm.com> wrote:
->>
->> On 10/8/2026 10:13 AM, Yonggang Luo wrote:
->>> On Fri, Oct 9, 2026 at 12:06 AM Pierrick Bouvier
->>> <pierrick.bouvier@oss.qualcomm.com> wrote:
->>>>
->>>> On 10/8/2026 2:46 AM, Yonggang Luo wrote:
->>>>> On Thu, Oct 8, 2026 at 5:42 PM Daniel P. Berrangé <berrange@redhat.com> wrote:
->>>>>>
->>>>>> On Wed, Oct 07, 2026 at 01:25:46PM -0700, Pierrick Bouvier wrote:
->>>>>>> On 10/7/2026 4:47 AM, Yonggang Luo wrote:
->>>>>>>> This allows a combined binary to register machine types from all its targets.
->>>>>>>> Consequently, QMP `query-machines` can return machine entries from every
->>>>>>>> target, even when `none` is selected. For example, a client can query the
->>>>>>>> combined machine list with:
->>>>>>>>
->>>>>>>> ```json
->>>>>>>> { "execute": "query-machines" }
->>>>>>>> ```
->>>>>>>>
->>>>>>>> The returned list includes the registered machine classes from all linked
->>>>>>>> targets. This is separate from selecting a machine: with `-target none`,
->>>>>>>> `-M virt` reports the targets that provide `virt` instead of choosing one
->>>>>>>> arbitrarily:
->>>>>>>>
->>>>>>>> ```text
->>>>>>>> qemu-system -target none -M virt
->>>>>>>> unsupported machine type: "virt" for target "none"
->>>>>>>> Available for targets:
->>>>>>>>    aarch64
->>>>>>>>    arm
->>>>>>>> ```
->>>>>>>>
->>>>>>>
->>>>>>>  From the long conversation on a previous thread, I thought we reached
->>>>>>> the conclusion that if we didn't expose any ambiguous name, then -target
->>>>>>> option is unnecessary, or maybe I got lost on track of this thread.
->>>>>>>
->>>>>>> https://lore.kernel.org/qemu-devel/ar_coT44h5-zJPVV@redhat.com/
->>>>>>>
->>>>>>> I'm not sure which semantic we want to have with -target none. If there
->>>>>>> is no ambiguous name registered, we just don't need it at all. It's a
->>>>>>> win-win IMHO.
->>>>>>
->>>>>> Yes, if we expose unique names for every machine, then -target is then
->>>>>> redundant.
->>>>>
->>>>> so how to diff riscv32-virt and risv64-virt? oh so for this machine we
->>>>> needs two name?
->>>>> "virt" needs register twice for it? or register only a single time,
->>>>> but we prefix the target_name()
->>>>> automatically? for example machine::name === "virt", but we can use
->>>>> "riscv32-virt" "risv64-virt" to reach it?
->>>>>
->>>>
->>>> Yes, ideally we should have different variant of virt for 32/64 bit.
->>>> Same goes for cpu max types.
->>>>
->>>> QOM type is always registered unambiguously ("$arch-virt"). Then, for
->>>> the "alias" name, which is virt, in case multiple matches are found,
->>>> command line can return an error with list of unambiguous names to call it.
->>>>
->>>> $ qemu-system -M virt
->>>> Multiple virt machines are available. Please choose one of them:
->>>> - aarch64-virt
->>>> - riscv64-virt
->>>>
->>>> There is no "parsing" of the argument, it's just the real QOM type. Then
->>>> we can find which target it implements from mc->targets.
->>>> And then, we can automatically choose which cpus should be available
->>>> based on that, thanks to cpu->targets.
->>>>
->>>> For existing binaries, nothing change.
->>>
->>> Good, I think we found a clean way now, is_available should be
->>> removed, and TypeInfo::targets and TypeImpl::targets should be added.
->>
->> It goes into MachineClass only for now.
->>
->>> I think
->>> for "virt" we can add a shared hw/machine-virt.c instead, and forwarding to
->>> the $arch specific virt. so that we only have a single "virt" registered.
->>> And it's
->>> targets is
->>> QEMU_ARCH_I386 |
->>> QEMU_ARCH_ARM |
->>> QEMU_ARCH_RISCV |
->>> QEMU_ARCH_LOONGARCH |
->>> QEMU_ARCH_M68K |
->>> QEMU_ARCH_OR1K |
->>> QEMU_ARCH_XTENSA |
->>> QEMU_ARCH_HEXAGON
->>>
->>> So that we won't have a list of conflict QOM names for "virt" machines.
->>> As now we indeed have only a single "virt" machine that redirects to
->>> different targets.
->>>
->>
->> The idea looks appealing, but I don't think it solves the problem to
->> have multiple virt variants available at the same time.
->>
->> The "alias" idea you introduced before is good, we just need to add a
->> check if an alias is really unique, else return an error, as explained
->> previously.
->>
->> If "-M aarch64-virt" works for both the new and existing binary, and -M
->> virt only for existing binaries (and ambiguous for new one), I think
->> that's a safe approach.
->>
->>>
->>> For other types also conflict can be handled in the same way, such as
->>> "-cpu host" "-cpu max"
->>> maybe others, but I think they all have the same way to deal with.
->>>
->>>
->>> That's why  TypeInfo::targets and TypeImpl::targets better than sole
->>> Machine::targets
->>>
->>
->> One step at a time.
->> Let's keep focused on declaring targets for a single machine first.
->> Then we can iterate to solve the "virt" problem.
->> Then convert all the existing machines and add a check in machine-target.c
->> Then, and only then, we can see what happens with cpus.
-> 
-> I tried this idea, but I faced a fatal error, because the
-> target_info() is not available until
-> the machine selected(the target arch will be select just along with
-> the machine selected), so basically
-> all calls to target_info() would raise an error(null pointer), how to
-> deal with it?
->
-
-I see. Indeed, since we can't set a target before registering all types, 
-it implies that all the types class_init can't use target_* functions.
-
-
-- register_accel_target_type
-- cpu_max_v8_register_type
-
-
->>
->> Regards,
->> Pierrick
-> 
-> 
-> 
-
+usb_claim_port() inserts a usb-hub when a device is plugged in and only=0A=
+one port is still free, so that more devices can follow. That is what a=0A=
+host controller with root ports wants.=0A=
+=0A=
+It is wrong for a transport that carries exactly one device. The hub=0A=
+takes the last port, and the device that was being plugged in ends up=0A=
+behind the hub instead of on the port the controller watches.=0A=
+=0A=
+Add no_auto_hub for such a bus. It keeps the ports it registered, and=0A=
+-device fails with "no free ports" once they are used up.=0A=
+=0A=
+Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>=0A=
+Reviewed-by: Marc-Andr=E9 Lureau <marcandre.lureau@redhat.com>=0A=
+---=0A=
+ include/hw/usb/usb.h | 1 +=0A=
+ hw/usb/bus.c         | 3 ++-=0A=
+ 2 files changed, 3 insertions(+), 1 deletion(-)=0A=
+=0A=
+diff --git a/include/hw/usb/usb.h b/include/hw/usb/usb.h=0A=
+index cbd4711933..ab96812adb 100644=0A=
+--- a/include/hw/usb/usb.h=0A=
++++ b/include/hw/usb/usb.h=0A=
+@@ -484,6 +484,7 @@ struct USBBus {=0A=
+     int busnr;=0A=
+     int nfree;=0A=
+     int nused;=0A=
++    bool no_auto_hub;=0A=
+     QTAILQ_HEAD(, USBPort) free;=0A=
+     QTAILQ_HEAD(, USBPort) used;=0A=
+     QTAILQ_ENTRY(USBBus) next;=0A=
+diff --git a/hw/usb/bus.c b/hw/usb/bus.c=0A=
+index 5cc5ffec33..8a24b1837a 100644=0A=
+--- a/hw/usb/bus.c=0A=
++++ b/hw/usb/bus.c=0A=
+@@ -413,7 +413,8 @@ void usb_claim_port(USBDevice *dev, Error **errp)=0A=
+             return;=0A=
+         }=0A=
+     } else {=0A=
+-        if (bus->nfree =3D=3D 1 && strcmp(object_get_typename(OBJECT(dev))=
+, "usb-hub") !=3D 0) {=0A=
++        if (bus->nfree =3D=3D 1 && !bus->no_auto_hub &&=0A=
++            strcmp(object_get_typename(OBJECT(dev)), "usb-hub") !=3D 0) {=
+=0A=
+             /* Create a new hub and chain it on */=0A=
+             hub =3D USB_DEVICE(qdev_try_new("usb-hub"));=0A=
+             if (hub) {=0A=
+-- =0A=
+2.53.0=0A=
 
