@@ -4,69 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D67E3CA9ED1
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Oct 2026 10:12:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C916CA9ED1
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Oct 2026 10:28:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGD12-0004cs-UG; Mon, 12 Oct 2026 06:12:27 -0400
+	id 1xGDFy-0007Ky-Al; Mon, 12 Oct 2026 06:27:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xGD0e-0004aE-Ef
- for qemu-devel@nongnu.org; Mon, 12 Oct 2026 06:11:59 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xGD0Z-00030F-7k
- for qemu-devel@nongnu.org; Mon, 12 Oct 2026 06:11:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1791799909;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=+ZBjrXnt7O3rGxeMvln+JI2KQkcDn982QMSpt3d7j5g=;
- b=May4TJE8iM1GdmQLluz40J6hsQz5n3uzeJv9dx4Mc/mZSAPpvq3MrdZrG0lTZo2QEMyu41
- MBiasu1FfL+xbjS7bpB5IbKH6/8Ebg9PDYdhMuNW8vgowlPMMqlPj7EY5a2hwv/uTnxQjK
- NF8EfOxkztkOnRoc2SoWg5fHeauaOpE=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-282-RhV86F72O9mPz_BL3T4TJQ-1; Mon,
- 12 Oct 2026 10:11:47 +0000
-X-MC-Unique: RhV86F72O9mPz_BL3T4TJQ-1
-X-Mimecast-MFC-AGG-ID: RhV86F72O9mPz_BL3T4TJQ_1791799906
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D5DFC18000A3
- for <qemu-devel@nongnu.org>; Mon, 12 Oct 2026 10:11:46 +0000 (UTC)
-Received: from berrange.csb (headnet03.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.114])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 2459A472; Mon, 12 Oct 2026 10:11:45 +0000 (UTC)
-From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH] seccomp: really fix blocking of setns/execveat/unshare
-Date: Mon, 12 Oct 2026 11:11:44 +0100
-Message-ID: <20261012101144.58085-1-berrange@redhat.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xGDFl-0007JW-Vy
+ for qemu-devel@nongnu.org; Mon, 12 Oct 2026 06:27:36 -0400
+Received: from mail-yw1-x112e.google.com ([2607:f8b0:4864:20::112e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xGDFj-00057P-6z
+ for qemu-devel@nongnu.org; Mon, 12 Oct 2026 06:27:32 -0400
+Received: by mail-yw1-x112e.google.com with SMTP id
+ 00721157ae682-8b094046a7aso1698077b3.1
+ for <qemu-devel@nongnu.org>; Mon, 12 Oct 2026 03:27:27 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1791800846; cv=none;
+ d=google.com; s=arc-20260327;
+ b=eAV+vSgOquEwzbWfTplp8NFtopXRRxlcDA+uxphxjlSWjz7bTiRNq/R6PQ8QejC9fq
+ PF6MYYh9S/nRupR9JOiNdQsOnu/GtJFUwqMMGuqG/ZIKjwhpUWjTATydq+C0cY1a7Dni
+ AOyrbUa9aW5dOLJVxR5UsXqfSb2DgbA9S0xQvHP32Ymb1TSGs400fg6kdJ8NrHYDFt/Y
+ ed0GYDhRM8MPGGBZawe+nlhxpJqpXUmwbt0JRjvjBYB4kBaiiZoF3R+COsLZLMCRjX6s
+ Rbt/Lo6pEcmXNvM1isypKtC2X4FhY5BcqEbs8IlULN7Nsky7E3NgWGDpj4eg1FMepmO+
+ 88yg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=aW1fhbUGu6OqgjQI+qSffpqhlyHcxg/42Q5aUE4TzTA=;
+ fh=z46AiCw+RUjdSv5Wn7hePQs1Ez3oK8s9me4u1FuvHzM=;
+ b=kQ71NuBi/ri/7UP5D61YpRMQTk3dViAF2C3CF8fw3HWWgk9vuM2lr2V8jE3JZGFRyi
+ XjwBTDZBX8uOXx0Rs7mlTT6VSp1OpjnBULYToxW7eX6d3+R2ltSRQM0Z0OGU837juDPB
+ haslGxDyJCTPzJ52TPs0ou1im9pOmkycWZd5jBX5pec8TcsXjA117vQQlNXK4ZddA3sZ
+ sXSuu9AZdcAgc/CrImws3sHRbl01SI+TD94LK5Wu/BUMkPOKefqhz0cDqnXsiizx7Yli
+ JLp2kA0avkGdOP8fbIaOnyaErp3fj7xl2MHblWj9BXyWY4YYHIEWDNCuD+Ytnrn/U5Hf
+ WPMA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1791800846; x=1792405646; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=aW1fhbUGu6OqgjQI+qSffpqhlyHcxg/42Q5aUE4TzTA=;
+ b=N19mDcPKvhYgbKTJMBWmfZzvOnh+rwioUop7zZkT8mCKlDxFkF/9d9IktUSriT6pLC
+ KQmEcn8sZtX3wsF8nqcScenexxGUVYBKnyLIYkAsRn0vHrcOeoqdjr3knohAzA+yu4n3
+ LOxXj8Nz1ffooj9BOVmUo27eLVwWIYlUm/mwTb+sPQhymvZSJvQWhGZERZqjsQbdh1ga
+ nLXpjxN3o8tDj0+xPRAPhuvcdHd1Bjqc5bJj0yvoBiS1IsjCUImjWzUaSibidsg5aJFN
+ aBIYzjPqxNIwF+99cQsNYWEgpHZm/kjwH8eIDkNRNyTscnBec/CMZ/yilovDGvUs2S2b
+ 5mXA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1791800846; x=1792405646;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=aW1fhbUGu6OqgjQI+qSffpqhlyHcxg/42Q5aUE4TzTA=;
+ b=FWgSwAh+BmZ9/kzpj3J2uw6kqidgW2Ch+Mv/NyZNkVQQ9xdqApXB42soXQI1uw3mvc
+ 0sAAy6I72Ks0xhcbNc8xx+zojTEutbbWKTF5l7HG2aWS1B/FaO5oC+0xIuqW4mHXuH2V
+ OnOwpX5U44oAGokq9rEY08HbvyoNsPJ2msIdPZbXSYcQPaaRGzr6QIIt1Z6TnFDQhMAC
+ 2kRwLQjecEbJZrhIFAQq3rSbOsQ2Eo9HVakYDBCvSCQV7Vvojfe5/n91oUb1wfqU/EiN
+ 6lE9nR8VkJfS7fmwfvpZnlY6hRCzjH8f2MXh86iBs6IjJmlI1CdD8RAoHxLem/5ycvbb
+ ui6w==
+X-Gm-Message-State: AFq9FYJhiy1wD9oh7ILM4R38iRYM9dtIaTVZpyr6qxhR3tehjKkv2qYQ
+ jJCn024YIQZsh0DBMx+Vct74g4LrnCEDpaB2BhcVjj0fSwPr7Ly3JNYTea2sh24wD9kyvYtrsPU
+ GpzK3sCy6YZYfhZa8oK7Hbc3pgVwg93Cmm/I7Yuzc7Q==
+X-Gm-Gg: AYBFou1BQ79o3MgYZLzchBkjT80m0BOUL6HnsSWXOF53kGYLo7FCu8jnA9sLt6RYnds
+ JuxHyIuEMSS18cgd0ZrArHiHoIFI31lYS1Sy5bf9NX5aoITztvwK5/lVCGxzeNvF19HMR7euJHF
+ 3VYx0/rHaK0sh5JCUJVVeB6PjlXOUWsppamUQwDyouKxgiD2wK8jc1R6gEyQIUv3biaCqZ/qszB
+ mWZiU8XpurDjY5NGTslTc0otJhRfAjpvhZaFFjRzXX3g3iCgPiWR8gFHc/K+GGcnBpvfkE635Ee
+ sBhpaDVhI29RekuV1WkPZFoH9Jdrpklie3pIPDiuldq/sAbGjCeg//bGrWs1WNDGinp0aalTdYZ
+ 2GlpVowJlOBaTYta+tJ+n2tz8wCxZzupF5UidgX8WXmRPdmj+KA==
+X-Received: by 2002:a05:690c:6182:b0:8a9:a921:13c7 with SMTP id
+ 00721157ae682-8b07ee5880cmr30824607b3.44.1791800846408; Mon, 12 Oct 2026
+ 03:27:26 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
+References: <C38CE953-7A98-42C7-AE35-443BED94674D@archimede-energia.com>
+In-Reply-To: <C38CE953-7A98-42C7-AE35-443BED94674D@archimede-energia.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 12 Oct 2026 11:27:14 +0100
+X-Gm-Features: AclHuK8qEJqKaQPW0mxOYfZgMRkvdQZ65BCP00AZQHP82bo0Kh9kMzPMwOuJeu4
+Message-ID: <CAFEAcA8d-jepdKubizqZKXPafY1jbLdbB8YjxcZ9MR38f_zp7A@mail.gmail.com>
+Subject: Re: [PATCH v2 0/2] STM32F405 timer and RCC fixes
+To: Manuele Conti <manuele.conti@archimede-energia.com>
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, 
+ "alistair@alistair23.me" <alistair@alistair23.me>,
+ "farosas@suse.de" <farosas@suse.de>, 
+ "lvivier@redhat.com" <lvivier@redhat.com>,
+ "pbonzini@redhat.com" <pbonzini@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,38 +119,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The previous fix for setns/execveat/unshare mistakenly copy and
-pasted the clone_args filter, which is inappropriate for these
-syscalls and had the effect of weakening the seccomp filter.
+On Wed, 7 Oct 2026 at 20:38, Manuele Conti
+<manuele.conti@archimede-energia.com> wrote:
+>
+> Hi Peter,
+>
+> Here is the complete v2 series, resent as fresh emails with both patches
+> inline.
+>
 
-Fixes: f33fb19cab (seccomp: fix blocking of setns/execveat/unshare)
-Fixes: https://gitlab.com/qemu-project/qemu/-/work_items/4671
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
----
- system/qemu-seccomp.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+Thanks. I've applied this to target-arm.next.
 
-diff --git a/system/qemu-seccomp.c b/system/qemu-seccomp.c
-index 3889d48b4f2..cd2c1b0b747 100644
---- a/system/qemu-seccomp.c
-+++ b/system/qemu-seccomp.c
-@@ -250,12 +250,12 @@ static const struct QemuSeccompSyscall denylist[] = {
- #endif
- #ifdef __SNR_execveat
-     { SCMP_SYS(execveat),               QEMU_SECCOMP_SET_SPAWN,
--      ARRAY_SIZE(clone_arg_none), clone_arg_none, SCMP_ACT_ERRNO(EPERM) },
-+      0, NULL, SCMP_ACT_ERRNO(EPERM) },
- #endif
-     { SCMP_SYS(setns),                  QEMU_SECCOMP_SET_SPAWN,
--      ARRAY_SIZE(clone_arg_none), clone_arg_none, SCMP_ACT_ERRNO(EPERM) },
-+      0, NULL, SCMP_ACT_ERRNO(EPERM) },
-     { SCMP_SYS(unshare),                QEMU_SECCOMP_SET_SPAWN,
--      ARRAY_SIZE(clone_arg_none), clone_arg_none, SCMP_ACT_ERRNO(EPERM) },
-+      0, NULL, SCMP_ACT_ERRNO(EPERM) },
-     /* resource control */
-     { SCMP_SYS(setpriority),            QEMU_SECCOMP_SET_RESOURCECTL,
-       0, NULL, SCMP_ACT_ERRNO(EPERM) },
--- 
-2.56.0
+Something seems to have gone wrong with the threading on this series:
+the individual patches should be followups to the cover letter.
+This was OK in the first version of this series, but not for this v2.
+I picked the patches up manually, but the threading being wrong
+breaks the automated tooling, so you might want to look into that
+for next time. git format-patch produces a cover letter and patch
+emails that have the right headers to thread together.
 
+thanks
+-- PMM
 
