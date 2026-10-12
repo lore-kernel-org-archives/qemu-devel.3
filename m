@@ -4,111 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B111CA9ED1
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Oct 2026 14:07:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC00ECA9ED1
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Oct 2026 14:09:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGGeR-0008VM-4v; Mon, 12 Oct 2026 10:05:15 -0400
+	id 1xGGiA-0006En-Lb; Mon, 12 Oct 2026 10:09:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <filip.hejsek@gmail.com>)
- id 1xGGeP-0008Uf-5t
- for qemu-devel@nongnu.org; Mon, 12 Oct 2026 10:05:13 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <filip.hejsek@gmail.com>)
- id 1xGGeN-0005vQ-5L
- for qemu-devel@nongnu.org; Mon, 12 Oct 2026 10:05:12 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-4a180fbeef5so17731135e9.1
- for <qemu-devel@nongnu.org>; Mon, 12 Oct 2026 07:05:10 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <tcalifano@redhat.com>)
+ id 1xGGhu-0006Ce-9f
+ for qemu-devel@nongnu.org; Mon, 12 Oct 2026 10:08:51 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <tcalifano@redhat.com>)
+ id 1xGGhq-0006Xv-BL
+ for qemu-devel@nongnu.org; Mon, 12 Oct 2026 10:08:48 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1791814124;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=4h7fXse9RVQRZxyK0yLlaCI7WbRxLw/1BbkPgxyQFvs=;
+ b=LpuijEW7hp/HOzOEFmk9KgF6wz6maSv4sGfvw8n7as+UyOoFbW6VYuLeJLXG27JnGgsmIF
+ peGI5jkHZuj2k+9xCoa0s4NPBPfru4eECnqkHin/YHMmNCDkj+qZHx991UffFoF0sskU5n
+ g7cVIkMQXyQ4s4ldtykuktNHn6NtVT4=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-292-jycZrxLhOOOPNpbbwV_4bA-1; Mon, 12 Oct 2026 14:08:42 +0000
+X-MC-Unique: jycZrxLhOOOPNpbbwV_4bA-1
+X-Mimecast-MFC-AGG-ID: jycZrxLhOOOPNpbbwV_4bA_1791814121
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4a19df2328cso13920485e9.3
+ for <qemu-devel@nongnu.org>; Mon, 12 Oct 2026 07:08:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1791813909; x=1792418709; darn=nongnu.org;
- h=cc:to:content-transfer-encoding:content-type:mime-version
- :message-id:date:subject:from:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=H1kBJpb5K/8c39yXgw1RJtCNzQ8kubIxC951Rpn+/iM=;
- b=FQzsoh3wq94uTeTIRTIX21DfW7t/dTyi7L+Hr6vEezwvf1hToqmTu2nCEUTALDXwQi
- 57LUBdyNDSIvSVPzrBFa+9dS71o59f+2HlWIHBYDACqT0MG0VUaVv7UPprfss8GlFusl
- BMf6cwQYdHsNRa/VBxIMMZ/FW1l2RyNg/TcdGMlfFDtOV2ZhD2d7LZKBo5Syh6CLJ2KL
- SeznoX7VTutZX/NicCqzBFYqWn5DEwYRVj73aWpMjBIdq3bFX31XP5yOQ6HjwdJLzhyo
- 7NYEqnVkSmr8hCd0Sxrx1gnfk9eAwKJXHMiWnwICzd3YQXlUr3HiW+sxbFAhFHXFB3td
- 5oag==
+ d=redhat.com; s=google; t=1791814121; x=1792418921; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=4h7fXse9RVQRZxyK0yLlaCI7WbRxLw/1BbkPgxyQFvs=;
+ b=LGvHZPuq00xmM715ndJfoSQJRk3DMYaoXGZ8UhawQ1ptEJZksJNJeFpSxGulGVU0Ad
+ Pldh1Sv2oBMQkzDtykFRIg3sxwC5UMlIDNiXofbKfZKL8pLCbIk6Ju/Hw9mL9rdFF+QT
+ PVqMfh1U2WeJQg7eykYOuEmnlhpLRgKq5SNhYnsQnxjhFTL8dbqlHYTtp2SH98hWvPVG
+ YH6LzdKtrMp+ir85IvSV8+BZnomneVC+Vxr3VtFwOcUOGSYXnpDbW5eyUFcdiy2wrSmf
+ 9cLIfASNCdZ8lRBOdiPU/0+NSubirPUZATz4xJtQhxmFkjxUYmNff0mk+yT+OwLiyJrK
+ uKEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791813909; x=1792418709;
- h=cc:to:content-transfer-encoding:content-type:mime-version
- :message-id:date:subject:from:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=H1kBJpb5K/8c39yXgw1RJtCNzQ8kubIxC951Rpn+/iM=;
- b=Use4UU+fZ1QDERseelIrwSxuUmZzIjDstVMmkHvAo+FzJPRPVGk+1mzEK0sfI3MFoi
- yzLABvGzzNQPESL22xRCDRq+Gs80tyN4kdGZplHVgdM8Qufb8AtTs04ZUGUJpyTq8ApH
- wHAF9f0fBxr33Z+qg3Uz5WtlRV8i1i50r8ZHyuRAxRKQDJvqAmnn1h4IJ0r8i7s5m1j+
- HU1dkk4+eG47EO4bQEgHiVV3Zx4LeGEpwGhGKCbjufLBNnVg3Kc25iyMNyX44hf8WXe9
- TbZmiXY92FSUzmW/iXqHpGKbRcV6GDPqJ53BqO8sfW/kWztlJjp9I6+umrBk22e9rtdd
- EJEA==
-X-Gm-Message-State: AFq9FYIYPTBUR+cj/cbVwIJ1zi/opFbfGLwzaxOm6Lu+DJtibuRD+G3j
- K5eSC8mREVticc3f0NARUbXMiRrf6Lc1/weXBsw/P1UqoxeAnHxp1psg
-X-Gm-Gg: AYBFou3daHl8JmwkZiQ905SGWqhry097/FRqnEciuqQ7MAM+VcWoHpEi0UM8M1IBZZN
- 7UjCbq8Q+a+JV7dUwoWXRSuKScGcVx5P7FWsZVcu8TMsbXGd3KRUL7DBC5UqmW9p00YKpg6Xxn/
- WTOQBr/mJMFQ0CmQ/bvAXYRxI5J5gIgA3srXfDqlZ3XYRtnRrp8Mx80/z8JDvpbTgDz0fxzoU1P
- jJ5srpKkMrTXSohz91S6o+Y3UoMfk0VcF58i2NFG1SLJqWmhUZZg0pUb9hXTQXh3uBHUTRvXFFC
- qMYG7xxz/9eyF+vw2zDJ9zLepd1SGoGHWnkRNtD8FraLOAT49q7kAg3BdRsvJcyBcT45278BcPs
- 2ZfncWBbW0SD6SaeF+aAb3ptoAxWHe9PsvtXCJ9B1fzTYaTwNhOIVlOzZ16V6j8RVyN8QzwupQn
- 0xemV5nViEifblqQbrB5SaV9JfwEWwSS3gJ9t9CJ+la+38dUW1Rgyj+QZ1SKw3aeECFAyJ6kV//
- HzASp4LNo/t70M6g0mvCFdwDw==
-X-Received: by 2002:a05:600c:4e89:b0:4a1:96cd:2f64 with SMTP id
- 5b1f17b1804b1-4a196cd312cmr127090715e9.1.1791813909312; 
- Mon, 12 Oct 2026 07:05:09 -0700 (PDT)
-Received: from localhost (ip-78-44-39-34.bb.vodafone.cz. [78.44.39.34])
+ d=1e100.net; s=20260707; t=1791814121; x=1792418921;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=4h7fXse9RVQRZxyK0yLlaCI7WbRxLw/1BbkPgxyQFvs=;
+ b=qXGseqtUJSE93TncW0urq8jiQ1EKoWHV1MmZ5d+TOkPwGxgqlJ7nDAn86UckarJlOP
+ b01jcbLsoC09XKq7HwdD93bpCOkjy3dhj7pWS6oj+F3EE8u4uHa2OGwXKtwoi10xao6s
+ Nzg5NbgWGNAbt24uEBHPmvUarxFiS4z5RnmhZGsQyk03mXQyagsAf0TonGAqyftaWQUn
+ GzW+eTZoNa9fnWtwxEJ/LjZNg3s4rd0p+UTqEemjjiPq91I5d3LgKUZM33a96xRU3fC8
+ WCOzTCDbqq3KVLzU/yFCo115azIFZifIcQ9WamHEmH2hZcO4iaQbMO7gF8zSfNsX6aDf
+ 0n0A==
+X-Gm-Message-State: AFq9FYKS6bBxyS8QHsLoc9hXbQdf9g6ccDKbLq4lLmSCllG8v3KCYVPB
+ mqfp6I2eM7sZ+NccDmAS9BvPEfzoc9elmHzldGSHXfCNS3XuvkYGCnnd+VAiEM8nlEaOKNtAIas
+ vQ/wv/O07ajqU7m2kk9DGtZx2BIPVib6DEyRn1EN96f1CfZqUO/cYY1kK4RZsof4j2U1CTyBrUg
+ WrOxch+csXO2mIn0qyA8nWh4jBtrh6QUPwH7ydDmlisg==
+X-Gm-Gg: AYBFou0N4lzVdrnHqVwJrjWD+kZ50N3nOn3yX6Tw8HJ19uu7pFXI6DlpnSszQetD8bz
+ V/DFogEhC8SWtxVjFuEbhyM72FWHTR0CxPkmdlHHuS43uU25K90LFr6fPQ0uPi+mFylGKYdyYb8
+ QjWXC+lk3IGcAHTlHs6G9WKmMqC1cXtX46996436hXWsvW7nuOd+xZQUCcYeOXkZUTUgWAEJYIV
+ vRuN8XwwUJJ4HRVHKXWXr8z+4nozdUWa++/9zVvrIsNXMRNfEs4lh+mgga52jBzTKQC73Bkr60G
+ u7Pqt3QQ3AK60FA0y5kE9W0KgskpWVQsQGRZ1tWKrKerd2lpBNVLRO/AYhrnzjXauHMxIPzW
+X-Received: by 2002:a05:600c:3b2a:b0:4a0:2540:b46 with SMTP id
+ 5b1f17b1804b1-4a18e4aca94mr175142265e9.12.1791814121053; 
+ Mon, 12 Oct 2026 07:08:41 -0700 (PDT)
+X-Received: by 2002:a05:600c:3b2a:b0:4a0:2540:b46 with SMTP id
+ 5b1f17b1804b1-4a18e4aca94mr175141615e9.12.1791814120520; 
+ Mon, 12 Oct 2026 07:08:40 -0700 (PDT)
+Received: from tcalifan-p1g8.csb ([213.175.46.86])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a19471edd5sm352905815e9.11.2026.10.12.07.05.08
+ 5b1f17b1804b1-4a18bea0f1csm420181095e9.9.2026.10.12.07.08.39
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 12 Oct 2026 07:05:08 -0700 (PDT)
-From: Filip Hejsek <filip.hejsek@gmail.com>
-Subject: [PATCH v10 00/12] virtio-console: notify about the terminal size
-Date: Mon, 12 Oct 2026 16:04:59 +0200
-Message-Id: <20261012-console-resize-v10-0-2c3b10d829b3@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/3XRTWrDMBAF4KsEr6swM/rvqvcoXciKFAsSK0jBt
- A25e+VAmmC3yxF8jzejS1dDSaF2r5tLV8KUaspjGxBeNp0f3LgPLO3aQ0dAEiwS83ms+RBYCTV
- 9B2aVF4QCegema+hUQkyft8T3jzbHko/sPJTg7jEAiiwqAQK3QpMkw5CNeRBDrW/7o0uHrc/HO
- WtI9ZzL163cJObEf2tMggHTlmQQQrjoxVPSXGOST5xwxWXjxgbulSYNCpZc3bkCRLviqnHOne6
- Bc3DaLbl+cAVrrhsHLyXEnQ8e5ZKbB7e05qZxitGi4dFouSpvfznCH6ez8+67XhtO7RsNPvPr9
- foD+PHpvSQCAAA=
-X-Change-ID: 20250912-console-resize-96c42140ba08
+ Mon, 12 Oct 2026 07:08:40 -0700 (PDT)
+From: Tommaso Califano <tcalifano@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, 
- Laurent Vivier <lvivier@redhat.com>, Amit Shah <amit@kernel.org>, 
- Markus Armbruster <armbru@redhat.com>, Eric Blake <eblake@redhat.com>, 
- Eduardo Habkost <eduardo@habkost.net>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
- Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>, 
- =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Maximilian Immanuel Brandtner <maxbr@linux.ibm.com>, 
- Dominique Martinet <asmadeus@codewreck.org>, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, 
- Szymon Lukasz <noh4hss@gmail.com>
-X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1791813907; l=6030;
- i=filip.hejsek@gmail.com; s=20250912; h=from:subject:message-id;
- bh=wZGSMRoiTh20OaW0/LwUuZ8TwverPjRCfaRZOOmSBKw=;
- b=M7s/yEBoOAZ4SMcAmi7AHnjORRHj8JIe4kzK/OCfBn7Z/oAKBvbygSy+GE3qNZDXxLaFc591l
- wXz97/Uhv3WBkcLRfAM+4f10wUA+fbQiXrC05t/6MGlUzVMqPeWA0q2
-X-Developer-Key: i=filip.hejsek@gmail.com; a=ed25519;
- pk=nakB8gEK3oi+Q/5dBTMCy/LgZL47NP60z1jeDR6O/WU=
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=filip.hejsek@gmail.com; helo=mail-wm1-x335.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Cc: qemu-stable@nongnu.org, Junjie Cao <junjie.cao@intel.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Abizer Lokhandwala <abizerlokhandwalastd10@gmail.com>,
+ Thomas Huth <thuth@redhat.com>, Tommaso Califano <tcalifano@redhat.com>
+Subject: [PATCH] hw/usb/dev-mtp: Fix assert crash on undersized BULK IN
+Date: Mon, 12 Oct 2026 16:08:38 +0200
+Message-ID: <20261012140839.93559-1-tcalifano@redhat.com>
+X-Mailer: git-send-email 2.56.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=tcalifano@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,153 +117,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Summary of the Series
----------------------
+The EP_DATA_IN result path serializes the queued response as a 12
+byte MTP container header followed by one 4 byte word per result
+argument (12 + 4 * argc bytes).  The entry check at the top of the
+function only verifies that the guest-provided transfer buffer holds
+at least the 12 byte header.
 
-This series adds terminal size support to the virtio-console device.
-The goal is to make it possible to get a resizable terminal into a guest
-without using e.g. ssh.
+If the queued result carries arguments, e.g. RES_SESSION_ALREADY_OPEN
+which returns the existing session ID, the second usb_packet_copy()
+writes past the end of the guest-declared buffer and trips the
+p->actual_length + bytes <= iov->size assertion, aborting QEMU.  A
+guest can control the transfer size freely, e.g. TBYTES in the qTD
+of an EHCI BULK IN.
 
-Support for detecting terminal size is added to stdio and vc backends,
-but not pty and serial, because for the later it's unfortunately
-impossible to get resize notifications.
+A device must not send more data than the initiator signaled it would
+accept. Stall the transfer instead, and keep the result queued so that
+a subsequent BULK IN with a sufficient buffer size delivers the full
+response.
 
-A QMP command is added for notifying QEMU about the terminal size
-of any chardev. This can be used by clients to support resizing for
-devices where QEMU is not able to detect the size by itself (e.g. virsh
-console).
-
-There was a bug in Linux versions prior to 6.15 which caused the
-dimensions to be interpreted incorrectly by the guest. The fix has
-been backported to currently supported kernels, but to avoid making the
-terminal harder to use on out of date guests, the feature is disabled
-by default and must be enabled with the console-size property.
-
-Limitations
------------
-
-There is no documentation for the virtio-serial device. I'm working on
-this and will submit it separately.
-
-Resizing support for the spice version of 'vc' chardev is still missing.
-
-After migration, the guest is not informed about the new console size.
-I propably won't fix this any time soon unless someone helps me with
-migration stream changes.
-
-Full Changelog
---------------
-
-v10:
-- Fix build error on win32
-- Link to v9: https://lore.kernel.org/qemu-devel/20261012-console-resize-v9-0-8db78320ba81@gmail.com
-
-v9:
-- Clean up SIGWINCH notifier when stdio or curses chardev is destroyed
-- Link to v8: https://lore.kernel.org/qemu-devel/20260929-console-resize-v8-0-2ff9183f8750@gmail.com
-
-v8:
-- Rebased
-- Fixed uninitialized buffer in send_console_resize
-- "Since: 11.1" -> "Since: 11.2"
-- Link to v7: https://lore.kernel.org/qemu-devel/20260609-console-resize-v7-0-0c550fdcec15@gmail.com
-
-v7:
-- Rebased
-- Renamed some functions
-- Made virtio size support disabled by default
-- "Since: 11.0" -> "Since: 11.1"
-- Dropped "must exist" from chardev id param description in qmp docs
-- Link to v6: https://lore.kernel.org/qemu-devel/20260119-console-resize-v6-0-33a7b0330a7a@gmail.com
-
-v6:
-- Rebased (renaming CharBackend -> CharFrontend)
-- Virtio resize message code rewritten to fix corner cases
-- Updated version numbers ('Since: 11.0', hw_compat_10_2)
-- Added note to CHR_EVENT_RESIZE definition comment, explaining
-  that only the focused frontend gets the event
-- Fixed checkpatch warning (line length)
-- Link to v5: https://lore.kernel.org/qemu-devel/20250921-console-resize-v5-0-89e3c6727060@gmail.com
-
-v5:
-- Rename chardev-resize -> chardev-window-size-changed
-- Improve chardev-window-size-changed documentation
-- Add partial implementation for 'vc' chardev
-- Config space now returns port 0 size if multiport
-- Console-size property completely disables size support
-- Fix misnamed variables in char-win-stdio
-- Link to v4: https://lore.kernel.org/qemu-devel/20250912-console-resize-v4-0-7925e444afc4@gmail.com
-
-v4:
-- Changed order of rows and cols fields
-- Added support for terminal size on Windows
-- Trace event is also emitted for legacy (non-multiport) drivers
-- Minor fixes required because of changes in QEMU (DECLARE_INSTANCE_CHECKER, qmp-example)
-- Updated version numbers ('Since: 10.2', hw_compat_10_1)
-- Link to v3: https://lore.kernel.org/qemu-devel/20200629164041.472528-1-noh4hss@gmail.com
-
-v3:
-- Add resize messages over QMP, as suggested by Daniel
-
-v2:
-- Fix adding a new virtio feature bit to the virtio console device
-
+Fixes: 840a178c94db ("usb: mtp filesharing")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3386
+Signed-off-by: Tommaso Califano <tcalifano@redhat.com>
 ---
-Filip Hejsek (4):
-      char-win-stdio: add support for terminal size
-      ui/console-vc: forward text console size to vc chardev
-      ui/gtk: forward gtk console size to vc chardev
-      virtio-serial-bus: add terminal resize messages
+ hw/usb/dev-mtp.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-Szymon Lukasz (8):
-      chardev: add cols, rows fields
-      chardev: add CHR_EVENT_RESIZE
-      chardev: add qemu_chr_resize()
-      char-mux: add support for the terminal size
-      main-loop: change the handling of SIGWINCH
-      char-stdio: add support for the terminal size
-      qmp: add chardev-window-size-changed command
-      virtio-console: notify the guest about terminal resizes
-
- backends/cryptodev-vhost-user.c   |  1 +
- chardev/char-fe.c                 | 13 +++++++
- chardev/char-mux.c                | 19 ++++++++-
- chardev/char-stdio.c              | 33 ++++++++++++++++
- chardev/char-win-stdio.c          | 19 +++++++++
- chardev/char.c                    | 26 +++++++++++++
- hw/block/vhost-user-blk.c         |  1 +
- hw/char/terminal3270.c            |  1 +
- hw/char/trace-events              |  1 +
- hw/char/virtio-console.c          | 35 +++++++++++++++--
- hw/char/virtio-serial-bus.c       | 81 ++++++++++++++++++++++++++++++++++++++-
- hw/display/vhost-user-media.c     |  1 +
- hw/ipmi/ipmi_bmc_extern.c         |  1 +
- hw/scsi/vhost-user-scsi.c         |  1 +
- hw/usb/ccid-card-passthru.c       |  1 +
- hw/usb/dev-serial.c               |  1 +
- hw/usb/redirect.c                 |  1 +
- hw/virtio/vhost-user-base.c       |  1 +
- hw/virtio/vhost-user-scmi.c       |  1 +
- include/chardev/char-fe.h         | 10 +++++
- include/chardev/char.h            |  9 +++++
- include/hw/virtio/virtio-serial.h |  7 ++++
- include/qemu/main-loop.h          |  5 +++
- monitor/hmp.c                     |  1 +
- monitor/qmp.c                     |  1 +
- net/passt.c                       |  1 +
- net/vhost-user.c                  |  1 +
- qapi/char.json                    | 31 +++++++++++++++
- ui/console-vc.c                   |  8 ++++
- ui/curses.c                       | 21 +++++++---
- ui/gtk.c                          | 28 ++++++++++++++
- util/main-loop.c                  | 33 ++++++++++++++++
- 32 files changed, 382 insertions(+), 12 deletions(-)
----
-base-commit: 615ece3c406b262996e569f29ea6eed0d81c4d8d
-change-id: 20250912-console-resize-96c42140ba08
-
-Best regards,
---  
-Filip Hejsek <filip.hejsek@gmail.com>
+diff --git a/hw/usb/dev-mtp.c b/hw/usb/dev-mtp.c
+index c2d36a73cf..cbc2be3317 100644
+--- a/hw/usb/dev-mtp.c
++++ b/hw/usb/dev-mtp.c
+@@ -1905,6 +1905,13 @@ static void usb_mtp_handle_data(USBDevice *dev, USBPacket *p)
+         } else if (s->result != NULL) {
+             MTPControl *r = s->result;
+             int length = sizeof(container) + r->argc * sizeof(uint32_t);
++
++            if (p->iov.size < length) {
++                trace_usb_mtp_stall(s->dev.addr,
++                                    "packet too small to send response");
++                p->status = USB_RET_STALL;
++                return;
++            }
+             if (r->code == RES_OK) {
+                 trace_usb_mtp_success(s->dev.addr, r->trans,
+                                       (r->argc > 0) ? r->argv[0] : 0,
+-- 
+2.56.0
 
 
