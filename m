@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FCF7CA9EDD
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Oct 2026 17:01:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F223CA9ED1
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Oct 2026 17:01:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGJNP-0000MX-7R; Mon, 12 Oct 2026 12:59:51 -0400
+	id 1xGJNL-0000CQ-J0; Mon, 12 Oct 2026 12:59:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gilles.grimaud@univ-lille.fr>)
- id 1xGJMV-00080N-Vm; Mon, 12 Oct 2026 12:58:58 -0400
-Received: from smtp-out-1.univ-lille.fr ([194.254.129.82])
+ id 1xGJN7-0008Fd-NE; Mon, 12 Oct 2026 12:59:34 -0400
+Received: from smtp-out-2.univ-lille.fr ([194.254.129.106])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gilles.grimaud@univ-lille.fr>)
- id 1xGJMT-0006D6-T7; Mon, 12 Oct 2026 12:58:55 -0400
+ id 1xGJN4-0006JP-Hg; Mon, 12 Oct 2026 12:59:32 -0400
 Received: from smtp01.univ-lille.fr (smtp01.univ-lille.fr [194.254.129.95])
- by smtp-out-1.univ-lille.fr (Postfix) with ESMTPS id 4j3Nw22n5JzBqmm;
- Mon, 12 Oct 2026 18:58:42 +0200 (CEST)
+ by smtp-out-2.univ-lille.fr (Postfix) with ESMTPS id 4j3Nw36C6qz8BVL;
+ Mon, 12 Oct 2026 18:58:43 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=univ-lille.fr;
- s=dkim; t=1791824322;
- bh=GdzwaCUEbqkr6BJ+PYfkIGMYuR2E6mJzYvUTYXJ8ue0=;
+ s=dkim; t=1791824323;
+ bh=vz13J9qe9FL7TAPGBQHYiICwl3Y6kaxotqUC9vUcfmw=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=FrtBXjnhD2YcbFwo1du0k3vFY3Fcm95IrgTa1kEWI8XwZJ/xmhlRvDaBANi5dfuij
- o1gi/efG6F5y1eNGFzPDQx3VLqG0ISFZ5vNzg9BjjXJVzTzARQfZkSbYM4doxHL2Vp
- bpMJ6YfIKcT4FZWpQfJFGuFzo884r7KeHg8Fhgzr4G3uUGrXS9xQz5+eC6FIFSeirT
- Q+DJKqjVUMHzgg0nUF9E/kQ4nqQUf8DAebiRle/o1K/yLwE8ns6/KSPvrxrMOtn+GB
- gFhryCaH41j0YMVtyNLB/wBk1mCvaIM8wXZ9KHV1xv2XLYdY6ujyyjMvHZrs2sOXEP
- FRc3kRz4tz/xA==
+ b=vQpHiybypuDa9gLEY2dGD/bcomR56NX/Naz8MyEqqf9ybfZPreuSR7KT+2sjEu6A6
+ BdvPlH1dHymiy9FyU9ADHCmtWh+yEiFDJiPG2v49iPncw84ztsC9akjtV0rn0amodl
+ 3sCWadh4r22r/eF9I8ULxSUb1JK56WSZcP8DMpVJW+8rOkoWHQHGFVkN7S1tWzQ6s1
+ /BpHBHXshkK4gXLs5PuNl+uz9L9HWuutN7JLpd3bUpZEWjdaFjR6fkPr1u5TPU8JlK
+ Qd3pMN4fFCb7A41uAqkbIQ1k+RD2uLws100o/ufbEL1VBfxtw7L8hJxvd2i4OaTLbv
+ tcoCAOYQ3tShw==
 Received: from localhost.localdomain (unknown [134.206.205.113])
  (Authenticated sender: gilles.grimaud)
- by smtp01.univ-lille.fr (Postfix) with ESMTPSA id 4j3Nw20tsJz83nb;
- Mon, 12 Oct 2026 18:58:42 +0200 (CEST)
+ by smtp01.univ-lille.fr (Postfix) with ESMTPSA id 4j3Nw34ljHz83nY;
+ Mon, 12 Oct 2026 18:58:43 +0200 (CEST)
 From: Gilles Grimaud <gilles.grimaud@univ-lille.fr>
 To: qemu-devel@nongnu.org
 Cc: alex.bennee@linaro.org, Gilles Grimaud <gilles.grimaud@univ-lille.fr>,
  Peter Maydell <peter.maydell@linaro.org>, Fabiano Rosas <farosas@suse.de>,
  Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  qemu-arm@nongnu.org (open list:ARM TCG CPUs)
-Subject: [RFC PATCH 6/9] hw/misc: add RP2040 SYSINFO
-Date: Mon, 12 Oct 2026 18:58:36 +0200
-Message-ID: <20261012165840.99050-7-gilles.grimaud@univ-lille.fr>
+Subject: [RFC PATCH 9/9] hw/misc: add RP2040 testbench manager
+Date: Mon, 12 Oct 2026 18:58:39 +0200
+Message-ID: <20261012165840.99050-10-gilles.grimaud@univ-lille.fr>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20261012165840.99050-1-gilles.grimaud@univ-lille.fr>
 References: <20261012165840.99050-1-gilles.grimaud@univ-lille.fr>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=194.254.129.82;
- envelope-from=gilles.grimaud@univ-lille.fr; helo=smtp-out-1.univ-lille.fr
+Received-SPF: pass client-ip=194.254.129.106;
+ envelope-from=gilles.grimaud@univ-lille.fr; helo=smtp-out-2.univ-lille.fr
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -73,107 +73,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Model the read-only RP2040 identification and platform registers. The
-platform register reports an ASIC implementation, while CHIP_ID and the Git
-revision retain stable zero values.
+Model the RP2040 testbench manager PLATFORM register.
 
-Add a focused qtest for the documented register values.
+Return the documented ASIC platform value.
 
 Signed-off-by: Gilles Grimaud <gilles.grimaud@univ-lille.fr>
 ---
- hw/arm/rp2040.c                   |   8 ++-
- hw/misc/meson.build               |   1 +
- hw/misc/rp2040_sysinfo.c          | 102 ++++++++++++++++++++++++++++++
- include/hw/arm/rp2040.h           |   2 +
- include/hw/misc/rp2040_sysinfo.h  |  25 ++++++++
- tests/qtest/meson.build           |   2 +
- tests/qtest/rp2040-sysinfo-test.c |  37 +++++++++++
- 7 files changed, 176 insertions(+), 1 deletion(-)
- create mode 100644 hw/misc/rp2040_sysinfo.c
- create mode 100644 include/hw/misc/rp2040_sysinfo.h
- create mode 100644 tests/qtest/rp2040-sysinfo-test.c
+ hw/arm/rp2040.c                 |  6 +++
+ hw/misc/meson.build             |  1 +
+ hw/misc/rp2040_tbman.c          | 88 +++++++++++++++++++++++++++++++++
+ include/hw/arm/rp2040.h         |  2 +
+ include/hw/misc/rp2040_tbman.h  | 29 +++++++++++
+ tests/qtest/meson.build         |  1 +
+ tests/qtest/rp2040-tbman-test.c | 29 +++++++++++
+ 7 files changed, 156 insertions(+)
+ create mode 100644 hw/misc/rp2040_tbman.c
+ create mode 100644 include/hw/misc/rp2040_tbman.h
+ create mode 100644 tests/qtest/rp2040-tbman-test.c
 
 diff --git a/hw/arm/rp2040.c b/hw/arm/rp2040.c
-index d5398e67e4..55554f72e9 100644
+index 0af99aed7e..f5ee31392e 100644
 --- a/hw/arm/rp2040.c
 +++ b/hw/arm/rp2040.c
-@@ -49,7 +49,6 @@ static const struct {
-     hwaddr base;
-     hwaddr size;
- } rp2040_unimplemented[] = {
--    { "rp2040.sysinfo",  0x40000000, 0x4000 },
-     { "rp2040.syscfg",   0x40004000, 0x4000 },
-     { "rp2040.clocks",   0x40008000, 0x4000 },
-     { "rp2040.resets",   0x4000c000, 0x4000 },
-@@ -110,6 +109,8 @@ static void rp2040_soc_init(Object *obj)
-                                   "chardev");
-     }
+@@ -143,6 +143,7 @@ static void rp2040_soc_init(Object *obj)
  
-+    object_initialize_child(obj, "sysinfo", &s->sysinfo, TYPE_RP2040_SYSINFO);
-+
-     s->sysclk = clock_new(obj, "sysclk");
-     clock_set_hz(s->sysclk, RP2040_SYSCLK_FRQ);
- }
-@@ -222,6 +223,11 @@ static void rp2040_soc_realize(DeviceState *dev, Error **errp)
-         }
-     }
+     object_initialize_child(obj, "syscfg", &s->syscfg, TYPE_RP2040_SYSCFG);
+     object_initialize_child(obj, "sysinfo", &s->sysinfo, TYPE_RP2040_SYSINFO);
++    object_initialize_child(obj, "tbman", &s->tbman, TYPE_RP2040_TBMAN);
+     object_initialize_child(obj, "vreg", &s->vreg, TYPE_RP2040_VREG);
  
-+    if (!sysbus_realize(SYS_BUS_DEVICE(&s->sysinfo), errp)) {
+     s->irq = qemu_allocate_irqs(rp2040_set_irq, s, RP2040_NUM_IRQS);
+@@ -277,6 +278,11 @@ static void rp2040_soc_realize(DeviceState *dev, Error **errp)
+     }
+     sysbus_mmio_map(SYS_BUS_DEVICE(&s->sysinfo), 0, RP2040_SYSINFO_BASE);
+ 
++    if (!sysbus_realize(SYS_BUS_DEVICE(&s->tbman), errp)) {
 +        return;
 +    }
-+    sysbus_mmio_map(SYS_BUS_DEVICE(&s->sysinfo), 0, RP2040_SYSINFO_BASE);
++    sysbus_mmio_map(SYS_BUS_DEVICE(&s->tbman), 0, RP2040_TBMAN_BASE);
 +
-     for (i = 0; i < ARRAY_SIZE(s->uart); i++) {
-         qdev_connect_clock_in(DEVICE(&s->uart[i]), "clk", s->sysclk);
-         if (!sysbus_realize(SYS_BUS_DEVICE(&s->uart[i]), errp)) {
+     if (!sysbus_realize(SYS_BUS_DEVICE(&s->vreg), errp)) {
+         return;
+     }
 diff --git a/hw/misc/meson.build b/hw/misc/meson.build
-index 9790afa104..ca9b951e3e 100644
+index ea89f26b88..349b6c126e 100644
 --- a/hw/misc/meson.build
 +++ b/hw/misc/meson.build
-@@ -98,6 +98,7 @@ system_ss.add(when: 'CONFIG_RASPI', if_true: files(
-   'bcm2835_cprman.c',
-   'bcm2835_powermgt.c',
+@@ -100,6 +100,7 @@ system_ss.add(when: 'CONFIG_RASPI', if_true: files(
  ))
-+system_ss.add(when: 'CONFIG_RP2040', if_true: files('rp2040_sysinfo.c'))
+ system_ss.add(when: 'CONFIG_RP2040', if_true: files('rp2040_syscfg.c'))
+ system_ss.add(when: 'CONFIG_RP2040', if_true: files('rp2040_sysinfo.c'))
++system_ss.add(when: 'CONFIG_RP2040', if_true: files('rp2040_tbman.c'))
+ system_ss.add(when: 'CONFIG_RP2040', if_true: files('rp2040_vreg.c'))
  system_ss.add(when: 'CONFIG_SLAVIO', if_true: files('slavio_misc.c'))
  system_ss.add(when: 'CONFIG_ZYNQ', if_true: files('zynq_slcr.c'))
- system_ss.add(when: 'CONFIG_XLNX_ZYNQ_DDRC', if_true: files('xlnx-zynq-ddrc.c'))
-diff --git a/hw/misc/rp2040_sysinfo.c b/hw/misc/rp2040_sysinfo.c
+diff --git a/hw/misc/rp2040_tbman.c b/hw/misc/rp2040_tbman.c
 new file mode 100644
-index 0000000000..a35b867698
+index 0000000000..f55a80e514
 --- /dev/null
-+++ b/hw/misc/rp2040_sysinfo.c
-@@ -0,0 +1,102 @@
++++ b/hw/misc/rp2040_tbman.c
+@@ -0,0 +1,88 @@
 +/*
-+ * RP2040 sysinfo emulation
++ * RP2040 testbench manager emulation
 + *
 + * SPDX-License-Identifier: GPL-2.0-or-later
 + */
 +
 +#include "qemu/osdep.h"
-+#include "hw/misc/rp2040_sysinfo.h"
++#include "hw/misc/rp2040_tbman.h"
 +#include "migration/vmstate.h"
 +#include "qemu/log.h"
 +#include "qemu/module.h"
 +
-+#define SYSINFO_CHIP_ID        0x00
-+#define SYSINFO_PLATFORM       0x04
-+#define SYSINFO_GITREF_RP2040  0x40
-+
-+#define SYSINFO_PLATFORM_ASIC  BIT(1)
-+
-+static uint64_t rp2040_sysinfo_read(void *opaque, hwaddr addr, unsigned size)
++static uint64_t rp2040_tbman_read(void *opaque, hwaddr addr, unsigned size)
 +{
 +    hwaddr offset = addr & 0xfff;
 +    uint64_t value;
 +
 +    switch (offset) {
-+    case SYSINFO_CHIP_ID:
-+    case SYSINFO_GITREF_RP2040:
-+        value = 0;
-+        break;
-+    case SYSINFO_PLATFORM:
-+        value = SYSINFO_PLATFORM_ASIC;
++    case A_RP2040_TBMAN_PLATFORM:
++        value = R_RP2040_TBMAN_PLATFORM_ASIC_MASK;
 +        break;
 +    default:
 +        value = 0;
@@ -186,21 +165,17 @@ index 0000000000..a35b867698
 +    return value;
 +}
 +
-+static void rp2040_sysinfo_write(void *opaque, hwaddr addr,
-+                                 uint64_t value, unsigned size)
++static void rp2040_tbman_write(void *opaque, hwaddr addr,
++                               uint64_t value64, unsigned size)
 +{
-+    hwaddr offset = addr & 0xfff;
-+
-+    qemu_log_mask(LOG_GUEST_ERROR, "rp2040.sysinfo: write to read-only "
-+                  "register (size %d, addr 0x%08" HWADDR_PRIx
-+                  ", offset 0x%04" HWADDR_PRIx
-+                  ", value 0x%0*" PRIx64 ")\n",
-+                  size, RP2040_SYSINFO_BASE + addr, offset, size << 1, value);
++    qemu_log_mask(LOG_UNIMP,
++                  "%s: unimplemented write at offset 0x%"
++                  HWADDR_PRIx "\n", __func__, addr & 0xfff);
 +}
 +
-+static const MemoryRegionOps rp2040_sysinfo_ops = {
-+    .read = rp2040_sysinfo_read,
-+    .write = rp2040_sysinfo_write,
++static const MemoryRegionOps rp2040_tbman_ops = {
++    .read = rp2040_tbman_read,
++    .write = rp2040_tbman_write,
 +    .endianness = DEVICE_LITTLE_ENDIAN,
 +    .valid = {
 +        .min_access_size = 4,
@@ -208,17 +183,17 @@ index 0000000000..a35b867698
 +    },
 +};
 +
-+static void rp2040_sysinfo_init(Object *obj)
++static void rp2040_tbman_init(Object *obj)
 +{
-+    RP2040SysInfoState *s = RP2040_SYSINFO(obj);
++    RP2040TbmanState *s = RP2040_TBMAN(obj);
 +
-+    memory_region_init_io(&s->iomem, obj, &rp2040_sysinfo_ops, s,
-+                          "rp2040.sysinfo", RP2040_SYSINFO_SIZE);
++    memory_region_init_io(&s->iomem, obj, &rp2040_tbman_ops, s,
++                          "rp2040.tbman", RP2040_TBMAN_SIZE);
 +    sysbus_init_mmio(SYS_BUS_DEVICE(obj), &s->iomem);
 +}
 +
-+static const VMStateDescription rp2040_sysinfo_vmstate = {
-+    .name = TYPE_RP2040_SYSINFO,
++static const VMStateDescription rp2040_tbman_vmstate = {
++    .name = TYPE_RP2040_TBMAN,
 +    .version_id = 1,
 +    .minimum_version_id = 1,
 +    .fields = (const VMStateField[]) {
@@ -226,71 +201,75 @@ index 0000000000..a35b867698
 +    }
 +};
 +
-+static void rp2040_sysinfo_class_init(ObjectClass *klass, const void *data)
++static void rp2040_tbman_class_init(ObjectClass *klass, const void *data)
 +{
 +    DeviceClass *dc = DEVICE_CLASS(klass);
 +
-+    dc->vmsd = &rp2040_sysinfo_vmstate;
++    dc->vmsd = &rp2040_tbman_vmstate;
 +}
 +
-+static const TypeInfo rp2040_sysinfo_info = {
-+    .name          = TYPE_RP2040_SYSINFO,
++static const TypeInfo rp2040_tbman_info = {
++    .name          = TYPE_RP2040_TBMAN,
 +    .parent        = TYPE_SYS_BUS_DEVICE,
-+    .instance_size = sizeof(RP2040SysInfoState),
-+    .instance_init = rp2040_sysinfo_init,
-+    .class_init    = rp2040_sysinfo_class_init,
++    .instance_size = sizeof(RP2040TbmanState),
++    .instance_init = rp2040_tbman_init,
++    .class_init    = rp2040_tbman_class_init,
 +};
 +
-+static void rp2040_sysinfo_register_types(void)
++static void rp2040_tbman_register_types(void)
 +{
-+    type_register_static(&rp2040_sysinfo_info);
++    type_register_static(&rp2040_tbman_info);
 +}
-+type_init(rp2040_sysinfo_register_types)
++type_init(rp2040_tbman_register_types)
 diff --git a/include/hw/arm/rp2040.h b/include/hw/arm/rp2040.h
-index ccab548275..7e7d8f5c95 100644
+index 4b6f7c2faa..e4370b90fd 100644
 --- a/include/hw/arm/rp2040.h
 +++ b/include/hw/arm/rp2040.h
-@@ -13,6 +13,7 @@
- #include "hw/char/pl011.h"
- #include "hw/core/clock.h"
+@@ -15,6 +15,7 @@
  #include "hw/core/sysbus.h"
-+#include "hw/misc/rp2040_sysinfo.h"
+ #include "hw/misc/rp2040_sysinfo.h"
+ #include "hw/misc/rp2040_syscfg.h"
++#include "hw/misc/rp2040_tbman.h"
+ #include "hw/misc/rp2040_vreg.h"
  #include "qom/object.h"
  
- #define TYPE_RP2040 "rp2040"
-@@ -35,6 +36,7 @@ struct RP2040State {
- 
-     ARMv7MState armv7m[RP2040_NUM_CORES];
+@@ -40,6 +41,7 @@ struct RP2040State {
      PL011State uart[2];
-+    RP2040SysInfoState sysinfo;
+     RP2040SysCfgState syscfg;
+     RP2040SysInfoState sysinfo;
++    RP2040TbmanState tbman;
+     RP2040VregState vreg;
  
      MemoryRegion *board_memory;
-     MemoryRegion cpu_memory[RP2040_NUM_CORES];
-diff --git a/include/hw/misc/rp2040_sysinfo.h b/include/hw/misc/rp2040_sysinfo.h
+diff --git a/include/hw/misc/rp2040_tbman.h b/include/hw/misc/rp2040_tbman.h
 new file mode 100644
-index 0000000000..d521659488
+index 0000000000..d89deb726c
 --- /dev/null
-+++ b/include/hw/misc/rp2040_sysinfo.h
-@@ -0,0 +1,25 @@
++++ b/include/hw/misc/rp2040_tbman.h
+@@ -0,0 +1,29 @@
 +/*
-+ * RP2040 sysinfo emulation
++ * RP2040 testbench manager emulation
 + *
 + * SPDX-License-Identifier: GPL-2.0-or-later
 + */
 +
-+#ifndef HW_MISC_RP2040_SYSINFO_H
-+#define HW_MISC_RP2040_SYSINFO_H
++#ifndef HW_MISC_RP2040_TBMAN_H
++#define HW_MISC_RP2040_TBMAN_H
 +
++#include "hw/core/registerfields.h"
 +#include "hw/core/sysbus.h"
 +#include "qom/object.h"
 +
-+#define TYPE_RP2040_SYSINFO "rp2040-sysinfo"
-+OBJECT_DECLARE_SIMPLE_TYPE(RP2040SysInfoState, RP2040_SYSINFO)
++#define TYPE_RP2040_TBMAN "rp2040-tbman"
++OBJECT_DECLARE_SIMPLE_TYPE(RP2040TbmanState, RP2040_TBMAN)
 +
-+#define RP2040_SYSINFO_BASE 0x40000000
-+#define RP2040_SYSINFO_SIZE 0x4000
++#define RP2040_TBMAN_BASE 0x4006c000
++#define RP2040_TBMAN_SIZE 0x4000
 +
-+struct RP2040SysInfoState {
++REG32(RP2040_TBMAN_PLATFORM, 0x00)
++    FIELD(RP2040_TBMAN_PLATFORM, ASIC, 0, 1)
++
++struct RP2040TbmanState {
 +    SysBusDevice parent_obj;
 +
 +    MemoryRegion iomem;
@@ -298,49 +277,40 @@ index 0000000000..d521659488
 +
 +#endif
 diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index 200abf6f36..8079fcee28 100644
+index 4e8b753536..ad5c877bb5 100644
 --- a/tests/qtest/meson.build
 +++ b/tests/qtest/meson.build
-@@ -253,6 +253,8 @@ qtests_exynos4210 = \
-   ['exynos4210_uart_fifo-test']
- 
- qtests_arm = \
-+  (config_all_devices.has_key('CONFIG_RP2040') ?
-+   ['rp2040-sysinfo-test'] : []) + \
-   (config_all_devices.has_key('CONFIG_MPS2') ? ['sse-timer-test'] : []) + \
-   (config_all_devices.has_key('CONFIG_CMSDK_APB_DUALTIMER') ? ['cmsdk-apb-dualtimer-test'] : []) + \
-   (config_all_devices.has_key('CONFIG_CMSDK_APB_TIMER') ? ['cmsdk-apb-timer-test'] : []) + \
-diff --git a/tests/qtest/rp2040-sysinfo-test.c b/tests/qtest/rp2040-sysinfo-test.c
+@@ -268,6 +268,7 @@ qtests_arm = \
+   (config_all_devices.has_key('CONFIG_RP2040') ?
+    ['rp2040-syscfg-test',
+     'rp2040-sysinfo-test',
++    'rp2040-tbman-test',
+     'rp2040-vreg-test'] : []) + \
+   (config_all_devices.has_key('CONFIG_STM32L4X5_SOC') ? qtests_stm32l4x5 : []) + \
+   (config_all_devices.has_key('CONFIG_FSI_APB2OPB_ASPEED') ? ['aspeed_fsi-test'] : []) + \
+diff --git a/tests/qtest/rp2040-tbman-test.c b/tests/qtest/rp2040-tbman-test.c
 new file mode 100644
-index 0000000000..7775842420
+index 0000000000..d654aabba3
 --- /dev/null
-+++ b/tests/qtest/rp2040-sysinfo-test.c
-@@ -0,0 +1,37 @@
++++ b/tests/qtest/rp2040-tbman-test.c
+@@ -0,0 +1,29 @@
 +/*
-+ * QTest testcase for the RP2040 SYSINFO block.
++ * QTest testcase for the RP2040 testbench manager block.
 + *
 + * SPDX-License-Identifier: GPL-2.0-or-later
 + */
 +
 +#include "qemu/osdep.h"
++#include "hw/misc/rp2040_tbman.h"
 +#include "libqtest.h"
-+#include "qemu/bitops.h"
 +
-+#define SYSINFO_BASE          0x40000000
-+#define SYSINFO_CHIP_ID       0x00
-+#define SYSINFO_PLATFORM      0x04
-+#define SYSINFO_GITREF_RP2040 0x40
-+#define SYSINFO_PLATFORM_ASIC BIT(1)
-+
-+static void test_sysinfo_read_values(void)
++static void test_tbman_platform(void)
 +{
 +    QTestState *qts = qtest_init("-machine raspi-pico");
 +
-+    g_assert_cmphex(qtest_readl(qts, SYSINFO_BASE + SYSINFO_CHIP_ID), ==, 0);
-+    g_assert_cmphex(qtest_readl(qts, SYSINFO_BASE + SYSINFO_PLATFORM), ==,
-+                    SYSINFO_PLATFORM_ASIC);
-+    g_assert_cmphex(qtest_readl(qts, SYSINFO_BASE + SYSINFO_GITREF_RP2040),
-+                    ==, 0);
++    g_assert_cmphex(qtest_readl(qts,
++                    RP2040_TBMAN_BASE + A_RP2040_TBMAN_PLATFORM), ==,
++                    R_RP2040_TBMAN_PLATFORM_ASIC_MASK);
 +
 +    qtest_quit(qts);
 +}
@@ -349,7 +319,7 @@ index 0000000000..7775842420
 +{
 +    g_test_init(&argc, &argv, NULL);
 +
-+    qtest_add_func("/rp2040-sysinfo/read-values", test_sysinfo_read_values);
++    qtest_add_func("/rp2040-tbman/platform", test_tbman_platform);
 +
 +    return g_test_run();
 +}
