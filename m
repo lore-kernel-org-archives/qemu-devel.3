@@ -4,134 +4,129 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A3FDCA9ECF
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Oct 2026 02:19:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95330CA9EBD
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Oct 2026 02:21:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xG5dh-0001DH-AZ; Sun, 11 Oct 2026 22:19:45 -0400
+	id 1xG5fU-0002Oc-Ie; Sun, 11 Oct 2026 22:21:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1xG5dY-00010C-Hi; Sun, 11 Oct 2026 22:19:36 -0400
-Received: from mail-koreacentralazlp170130006.outbound.protection.outlook.com
- ([2a01:111:f403:c40f::6] helo=SEYPR02CU001.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1xG5dW-0004uw-6M; Sun, 11 Oct 2026 22:19:36 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=lTDO4Sdk8KElshVx5P+IVR/JXHwqzAHstCAqQeFcd4WDEMGfHuPP4Gabm0qoK0mPO1AP0AZ8xHvZUj+j9Dp6nsSsD8RLg7yP9jU7x7CX7Yrnvcsmh0ZEsD8sAtXY/GPt40Ca+zRcaDJYLTF4+lLU0GD538UGtnprDOPDMjoARGjtw6lZUcfCANHvTs9wJ6ZrOiRdU8YTjNOx+OIehwrFO5YqK77VL7Vq087SdqJ34WFK3nsLeuut2R71/iu/LBYIETQzFtjlgEqpHCfTfvPKvfXnls7WjY7LcKsd2nNG3w4KOGTZis/ZtWMJswXe9y0iFgnRJI0jQ+VST9d3Aa2wnA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=VQNMuyI5DlrwPepwXuu8gmKQadQ9mUrwuCcDsQYzSSo=;
- b=jyWEkH03WTI8rH48qGpxM+4+pxroL6IpGrl7kH8ky8lMGQ2y6v+e5CWjWKbbXPN0ZXdIwB1u8UZT2XyTw5miF7nXKgD05CmuiF15nus+K18PM7VNZ5A5H7BVg69DprQ6US4WXXfzo8KVmkqTKEiSdFlzyLJPfeMApGMy4cnF2pvtN08A4ILAi2E0nf/kV4xjqHzbJLap/Fr5yILzoUqAlo5325dBEmgFYot83ur31VmXwl//WJKpD7dhM6zuKr6Ddy3s2uau1KwIY/A2GjKgprcPj6d+OhGM3vy2fbY4VfzgQ4OfzcbeUQlHOAapu1Gwptp9C7mRCzJ+cXbjK2sJuw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
- header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=VQNMuyI5DlrwPepwXuu8gmKQadQ9mUrwuCcDsQYzSSo=;
- b=Rwth28/C0Eg8vzDXCQ7H6nIBP7d7CtzcNr7XDh1rYkWEHxhX52CwdUXp9Vu6aFFTnUM1C8kLM3pyJQacM5voBU9gku6Dx/MgAxilCvGskz8TB+coVupf5MksNx3sKbWJCXZMzpuvl3F8BOlKxWHfCSEeuwdDN26kfZRXcv2Nc9cc4BTVKy0m+xMsUNLySS/6UUTaUezI6/gt3QiLDUSmUv5xwAT0mzBwRV1RH8wnZD8QM1eMpuVhOweNdTCshfZ0C3tXvovkVcdVJIiTK8yKlyKt+Jzc7Mq6W8KLG6ty10b/QpSgvF518yLwoLj3MKpugNErk6pJtAMei326Bex61Q==
-Received: from SEZPR06MB7362.apcprd06.prod.outlook.com (2603:1096:101:253::10)
- by KUXPR06MB8293.apcprd06.prod.outlook.com (2603:1096:d10:5f::9) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.496.21; Mon, 12 Oct
- 2026 02:19:27 +0000
-Received: from SEZPR06MB7362.apcprd06.prod.outlook.com
- ([fe80::cd2d:35d2:a702:1de6]) by SEZPR06MB7362.apcprd06.prod.outlook.com
- ([fe80::cd2d:35d2:a702:1de6%4]) with mapi id 15.21.0496.020; Mon, 12 Oct 2026
- 02:19:26 +0000
-From: Jamin Lin <jamin_lin@aspeedtech.com>
-To: =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@kaod.org>, Peter Maydell
- <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
- <leetroy@gmail.com>, Kane Chen <kane_chen@aspeedtech.com>, Andrew Jeffery
- <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, "open
- list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
- <qemu-devel@nongnu.org>, "marcandre.lureau@redhat.com"
- <marcandre.lureau@redhat.com>
-CC: Troy Lee <troy_lee@aspeedtech.com>
-Subject: RE: [PATCH v3 0/8] hw/usb: Add a usbredir server transport
-Thread-Topic: [PATCH v3 0/8] hw/usb: Add a usbredir server transport
-Thread-Index: AQHdWe+0scw4Tjcj60yshy0Jz4Mc/Lb5K91A
-Date: Mon, 12 Oct 2026 02:19:26 +0000
-Message-ID: <SEZPR06MB7362253969B582A50E53B0B1FC9F2@SEZPR06MB7362.apcprd06.prod.outlook.com>
-References: <20261012021634.2006424-1-jamin_lin@aspeedtech.com>
-In-Reply-To: <20261012021634.2006424-1-jamin_lin@aspeedtech.com>
-Accept-Language: zh-TW, en-US
-Content-Language: zh-TW
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=aspeedtech.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SEZPR06MB7362:EE_|KUXPR06MB8293:EE_
-x-ms-office365-filtering-correlation-id: 8cc42a3b-3023-4308-7eda-08df28073cf9
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|376014|1800799024|366016|23010399003|38070700021|921020|56012099006|261009223027099003|10067099003|22082099003|18002099003|6133799003|3023799007;
-x-microsoft-antispam-message-info: jtSvUNPrDTq2BtgUAtqdHraJIhzZmVwEpnOzV02vm0CX9Vd92OhG0PMdn+/7Sc6zuYchimZxIY9qFMwPNasw1CC0pOSaKGXeFR6oSfy+D8Hb9xdjJxiaglxgO8mZp2/FcnoNdSmWmu3c1okDdBV9kYjEa3dZcI43oONTtkWAsllhCgxT3irta+jvqdja7NcFh+zAD0MpNrQla8YSzJ19UN1FnztHyrgvQp3zNpMj6VM7PebeAs6Cexq9RJXX0Tr6T5pPUdTX6basM0ww/DFPSUZPUmmAf3qT5oCDyoqC2ZYq0dXULi3tPHMZ+Ifo6tSX8oB5uyFWIxSOpc6xwrnR7wS0VLq8FlM7xdOzWwT/cUyNpvrLHcvsjQj/NxTFB20+QXvW/TKqcNyM3GUi/5LuLN0kMw1ikVADhMqYy5Lwd6TonIp50Qd/aa6Etwqdeh9o+XLtczJscZfxEFDO2CX4eCDH7YkAIfYPprcwd2vnPTP/xOewZbwuZnUTvf4TssEq+i6lyHVuuwagkPa2AFBbnS/jncomi32LkhcAb48mJCwH4J3ukgesKKuv+sF18rOW74kM8+5WQoDydoXExX4Iaj5sNpTMNbFhugYyTwkeitt1SI/CJZxmPyJS8Oo4+DsN22lAvDyY1ZmhIT/UWtVnwSGEcUwRnqj3L0nIzOwbbq2B8AwD5sMppqNBUHHmNH83
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:zh-tw; SCL:1;
- SRV:; IPV:NLI; SFV:NSPM; H:SEZPR06MB7362.apcprd06.prod.outlook.com; PTR:;
- CAT:NONE;
- SFS:(13230040)(376014)(1800799024)(366016)(23010399003)(38070700021)(921020)(56012099006)(261009223027099003)(10067099003)(22082099003)(18002099003)(6133799003)(3023799007);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?75Mlc2nL1to6Maznjx7Xu7SyTNLwpU5UYXdbpq7ItQmDrjz7GNz9r/ZAi4?=
- =?iso-8859-1?Q?OsyE9VKHNaI8GfZ/rQqiSbtXwMZp235enEed4f1yw/66hq/OKbrrMtAOuH?=
- =?iso-8859-1?Q?+T5+u044M5eT+rQ1FxHzvHJZ1yckM8BvotGwpwFQh3obSTrnZSME3fdfk9?=
- =?iso-8859-1?Q?1Xdd3DA15x5H8/OCLIvsfhcRJgXxg+AA3257FvhH+im3p1zS+z3cLbVWpi?=
- =?iso-8859-1?Q?p+i+o/x9ZwCKtHg+mQ/nJC6pWsgqqCZbvgsapfX1JyQ3fSAXvPny03FlfV?=
- =?iso-8859-1?Q?9O88LgbErHLe/97VVjyTiBLTFrpdO4W2ooYWEq47ba8dD/OELTHeFTDze/?=
- =?iso-8859-1?Q?bDOKoS89hFxyCWumuZdju3m0P/joa71+vKpUkl+K4vlN4fkcCI3wlVNmDg?=
- =?iso-8859-1?Q?tT2+g/xODTdKSEHNKBuN2lY3R0QkrNO2DPUSMSBDOMTWIkKvdOX6NFLWGD?=
- =?iso-8859-1?Q?fg1MM9L8D2F+EGvA44WpeMaxyxxAaphPW9Dtdtj7e2Swfhog5CbCbZufjk?=
- =?iso-8859-1?Q?tE5LGO5SP7wQGl7LN+5d7N6pOc6SzbzrJ/9K/5ByYa6CEl3wnSlMNjeKAu?=
- =?iso-8859-1?Q?oONUCUZbyBvHMkv/rudOZErmWpqRLRXW2djhDceollYpueC9Kn8iyw3vHe?=
- =?iso-8859-1?Q?IA/TBZgvmQQfqShIWbo6jI2fepda2NR4qU+P5PNPTek0VVlxrmBgzd2f+a?=
- =?iso-8859-1?Q?JU30jrG/tJykCGXtg8tzfvp1lvxpu2uSTnbwtcAy93nXBpyypsf5kr2hIp?=
- =?iso-8859-1?Q?BRaskBRMKPAsgX8dvx/4n8I0RADj47PHHWs0JSAZlnJCzX9GaL8UpRPJQ1?=
- =?iso-8859-1?Q?To4AB5bAZ79QigmHgs2y59jG/S1cWeSgcmvslpl7lWzuLAFDXM9zrCqihc?=
- =?iso-8859-1?Q?mvNhjL3bwz/s3BHTjgaj3ogvUGdwLnp/bCuRP5ZUSVycRHN6fxe9hFVmo/?=
- =?iso-8859-1?Q?vjqvDm72h1D1s9JmL30rNbcQaPAt4r2SIY0FK2lSz+++XEn1tKm9/D4bZL?=
- =?iso-8859-1?Q?E02wYXPfppcTw21V5HZXBstOYdLpIb5WB0WkhmG8mkFzfEWkXXcXR8jgux?=
- =?iso-8859-1?Q?KqM0xpq266zCQvJ+90FyXEaFfvbidOezX2yRNaj0LWQy8VCGobf8Ar2CZJ?=
- =?iso-8859-1?Q?rqZoMIOAY8Er1XJrtNeO9GlJRHX9Rojd/YcI9Y3Lyd5g74rS2N639ST+z2?=
- =?iso-8859-1?Q?GJQM2Cu8oVI0aAUsVd6EQdSE48NQ/eSM1xuEJeNhsTBJTtGT22V2V8Jdh3?=
- =?iso-8859-1?Q?/2e8B1wRuKjBZJeh2BI4H6VbOcemFK4ihLgrMDy4Fqhm7M1wBoeR2MMuUP?=
- =?iso-8859-1?Q?3tNa3J+xbZrIdlBEH/+jCWAgCNEFbiLzpR5PuVTG45NhNh78cdKA0j4f1B?=
- =?iso-8859-1?Q?eBrNhl2zv6GkzhAAVLfPE3uIlqbdYJyS938+TlCKhcMXi5aE4GBmjRXvtv?=
- =?iso-8859-1?Q?DCjrWecVCZyBScoCvuqM6EMbDyoBAPZ4tkfqMylTndvzncdzdpTu/xT9bI?=
- =?iso-8859-1?Q?pIpeDJpVN2Ez6c/GOf8MqfMgHjz3h87/SGIV+mF5BdP3oFUb27S4RNnfBP?=
- =?iso-8859-1?Q?0KxltTxARfizgzxpRV3jOP3j/FDnoowCY4Xg/DHmW7KqioUYnk8FRqGou9?=
- =?iso-8859-1?Q?QxEjF9JBA0lEOcVYJShUjlxh19sPpRuj4BIDg5hd1RuFmThn8uLIDUrJcs?=
- =?iso-8859-1?Q?I3+n1ZE8MQSkJM1gxc7gqnQT3NAiBImTdAz+YWiYph/wNrQwGMDXN3xXpN?=
- =?iso-8859-1?Q?gRl7OarC0XxN6KAYfWp/5zOKbFu4Am41pY4dmMwbMUUFSD6ClZHif5mwnL?=
- =?iso-8859-1?Q?ra8iEhKYuQ=3D=3D?=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
+ id 1xG5fC-0002LQ-RC
+ for qemu-devel@nongnu.org; Sun, 11 Oct 2026 22:21:22 -0400
+Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
+ id 1xG5fA-0005BH-GX
+ for qemu-devel@nongnu.org; Sun, 11 Oct 2026 22:21:18 -0400
+Received: by mail-ed1-x52b.google.com with SMTP id
+ 4fb4d7f45d1cf-6b1afcd2d23so794525a12.1
+ for <qemu-devel@nongnu.org>; Sun, 11 Oct 2026 19:21:15 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1791771675; cv=none;
+ d=google.com; s=arc-20260327;
+ b=g8K953ex6oaCcz3T4Lop+5oDu+jAZHe2iW9IPsFfYjaWnmNRStuWtnESg8ew6ygoXZ
+ f97ZWWS+F+fyN2eUm1RbYwac2ZwFvrDLlY405DY1hVgzZJLRisJNl1GHf9wptkKqBLvJ
+ LSo5ivlV/znLKNKlcDNKoWNjF2H8Y+bRAQrzxjP+5aNCrh4yIYxVgQrlX8/NMhJQ7jOb
+ GwpBWvoZ6+ksGCjbgHiuDytA1J408FQyk8N1wy/mcU/3+otwGWyJrNXOp71UYHPLQawH
+ kAEsXFcFpDbWaOW3ZXU6+LqYBEoJSuDl9pfsDj0Sk+icZ6yzwtAfC4N8U6Y8OZu+Nk5G
+ IOvQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :reply-to:in-reply-to:references:mime-version:dkim-signature;
+ bh=ovQ/oJNPl4ewc3byDU6T9X6sfX9a5IpLb3zhsfLiI8Y=;
+ fh=L72Db3obxlifReEXQb+uH6frX4M3iTm6DtZ0aNaqQBY=;
+ b=QCj9QQEVi8rdOqsEEM5sH0DJyW3QKps43FSi5EMWFKbtlQ6L9IhYR4JWnYEKV+D6SN
+ C4z4UDrNGG+w9CR6u8urAnDhesMeEmniaeHq4D/MTZ35ZTRPs9uSNZ5uf/EeFKoHUM9E
+ JH0QhlrOO5I3lxMK6NHdg5q/x7a5nADR+F8UHu0n+1Jh8PrypiWfMJ2aUkZxF/6cghA8
+ ZHFOZzb99nSweLQXVSjM5GYWDKi+3tiYn4k1xDqCXXhsbKPsht10gyqErV6w9FgDgMby
+ gDkvBFaIpldxiLfBdRew42U3wQ7NDR3UxV7b/ii9YsKBFH7zhQoc9BeUw3ohdM37X8mZ
+ 2e5w==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1791771675; x=1792376475; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:reply-to:in-reply-to:references:mime-version:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=ovQ/oJNPl4ewc3byDU6T9X6sfX9a5IpLb3zhsfLiI8Y=;
+ b=MH51EROv5QRiObZkFrssr+dZh7TFzYqHVGLiTIlT3y4XX5YGbyPWyeAdPje3M0vpoW
+ BzIpz/8rF6KkrnZ27bMCakz9CPgMLj5Z/p70EHBpOJqo7KwawI4+APYrZhtuNPmMbeCt
+ 3VnZS+yDTOPbsTHKIGOBCly5GYOksdGW8v8ii6Uiqx4tQZYtOTx0ipDToXNbXcQpyOrl
+ kN4myflZAkNifZewjeaVk2CpwCIzh/3VTQpVnTqSFJvSk3+hg+95FpN8N88KOXWQ1ALk
+ K3hmr0i84Dry7KyLnU49qjIUM0DiYNE1zhjp/SIW+lnCtyXKwPDUZDQ9DzUe/GGkxI8e
+ i7AA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1791771675; x=1792376475;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:reply-to:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=ovQ/oJNPl4ewc3byDU6T9X6sfX9a5IpLb3zhsfLiI8Y=;
+ b=oHWOXeHk62ylk3GBwwnJ1XCR/1e9JjTFI+c9u5OmbOReeN97fFAJElBLlTqoXB56Zt
+ 0wVUs9cDXZVMpEOnbfHA00vyYWQTTUR+/BYlsDWvWuPWVzBz6ueeMZ7j++98Lr/sqVt5
+ /bNVxGnHt5KyYX05HLadzc+AtcmP+bOLaE3R726rTmZVSVDkqDl16zhygvUas4/vlRG+
+ x05BmCT72XGt83IJN9LAZEG1ealig0MFGj68nFmbuYPt4g/6uUxestZvP4wGY8EOK4oh
+ YSAHxDDCdr/hl2GKgypsXniAGyFgC62xJWtbg+6YupTHw4REZaRLy0Y5r/yyhd3yaIUg
+ MAdQ==
+X-Forwarded-Encrypted: i=1;
+ AKwUvByXWdCgy1eET01zvpuXTgmTmnYT2swmdD+gzb+rbTQD4LssVfg41RRFzLakRCgtnuehvnyxekxWn0LD@nongnu.org
+X-Gm-Message-State: AFq9FYLWtF6nivpyEF9mK3byxwV+cw2gxOPaRh+yUKiCtMSBgXJFTpug
+ 4SiKVE6WbOmFu4bW1wzcArnTmX+Ytyzyop6SfxXVadPk1xY3GWWjwjNGA2nNSj9jl5O/NVfTrMm
+ Ij7SwSexxcBh06w1GexZJbJ/YHodlhuA=
+X-Gm-Gg: AYBFou2flmaaGeVgPEsQtI2DAwcw+0ABEUCoHW93u9cojTG9QC7l1j8JoSr1ntrioJ4
+ 57xvgKCibCTjuWbizLT401/uE4K8cmZV7JcI9e7ygE0hfWP3iu33Ir2616o2/TpMkax4uAqT8s4
+ iLhRbdAplILFMXmY83J9L5QSZEegTvtDoIH3NCSPDUR3bxrdjtSYKSxVCqMJ/iURnsg3O+RRRLF
+ RYnqkdgNzhmYupywWE0S8vtw2gc3F/D8HX3QwlGMlpnBEzwYj2BFOLLJoyCfOa7ySS8kltjZuCT
+ 15/BtP6yPjtdXJL9XwEmryZzkiIviyFNx1iViMeZIDq3EnbpaeJpwHLw
+X-Received: by 2002:a05:6402:46c6:b0:6b1:c265:a5ad with SMTP id
+ 4fb4d7f45d1cf-6b1c265a835mr1088089a12.32.1791771674461; Sun, 11 Oct 2026
+ 19:21:14 -0700 (PDT)
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked: Jgul1m34xmwg7cPik8Ao+FKh/XsTqI3+m2HJTp2aNmhsTGn9etlNTXp+TRmUUVQnW03YYipjHWuKZaJXwjbKO6Za+nrICJpuayhSiLqTIbcv4C3EN6qUBioyS2neKeovESDAafO4MNbJAsY7FPglbrfdAP7erdc0HihRe/eB7h55tPHHT8Qe5aEeasSAcl30mD8ki+3Szt+pNSicX36qAZMCyIw30lVMSNFcKuC0Bvni/N3MADpZYOdIIilPRAvSCAmfxA4dlIvw7azmREI2beD/IRTw82noFnrO+iqRoHwDIDzX5/MxNE9R0gLcZigcz33XqmTOJpmUghAC4Jzq3w==
-X-OriginatorOrg: aspeedtech.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SEZPR06MB7362.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 8cc42a3b-3023-4308-7eda-08df28073cf9
-X-MS-Exchange-CrossTenant-originalarrivaltime: 12 Oct 2026 02:19:26.2414 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: ygDWZwDqSCg4reHjkGntdE5ohvpx13sKG39MC/G/rQQ9k0N9QMuEKPYa6PLX8GuPkA6Nx8/2Ga4vlb4jrVKypYzDiM3U6sDlvWhTcwDAbac=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: KUXPR06MB8293
-Received-SPF: pass client-ip=2a01:111:f403:c40f::6;
- envelope-from=jamin_lin@aspeedtech.com;
- helo=SEYPR02CU001.outbound.protection.outlook.com
+References: <20261007115253.328-1-luoyonggang@gmail.com>
+ <2390b3d7-6918-41e3-8532-c19de4cdd1ff@oss.qualcomm.com>
+ <asdlbOZBSYIaCMIh@redhat.com>
+ <CAE2XoE91XxoJRFpQ_1jhmX6LdxMyN16CF7RXxM62C5Ctkc1tig@mail.gmail.com>
+ <42fd67c0-c20d-4bc4-bede-79073e4be4a1@oss.qualcomm.com>
+ <CAE2XoE-gN5-vmE8r00Ds_Z=E1WePSFi_MJXjmy9ZuXEU_=o31g@mail.gmail.com>
+ <3034c146-0697-4db7-acd4-8076b317a09e@oss.qualcomm.com>
+ <CAE2XoE-gCTrpEeCROz9JMpPnTQXQ+AnBTR4RwdQhYizkExjK9w@mail.gmail.com>
+ <8cb24445-b659-4bd4-9497-888ce152e82d@oss.qualcomm.com>
+In-Reply-To: <8cb24445-b659-4bd4-9497-888ce152e82d@oss.qualcomm.com>
+From: Yonggang Luo <luoyonggang@gmail.com>
+Date: Mon, 12 Oct 2026 10:21:01 +0800
+X-Gm-Features: AclHuK8fDYqLvheVbFYZWZMEHuUoQ3qrUAbW2GNHe2LS3LWycroaN8fd7hP9lrI
+Message-ID: <CAE2XoE98=8yCac1-Q=gghGWqAScDMvJD_Os6fNf=aJzhZMfnTQ@mail.gmail.com>
+Subject: Re: [PATCH 0/8] qom: pass TargetInfo to the is_available callback
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ qemu-devel@nongnu.org, Cleber Rosa <crosa@redhat.com>, 
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
+ Laurent Vivier <lvivier@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
+ John Snow <jsnow@redhat.com>, Laurent Vivier <laurent@vivier.eu>,
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Joel Stanley <joel@jms.id.au>, Fabiano Rosas <farosas@suse.de>,
+ Kane Chen <kane_chen@aspeedtech.com>, 
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Troy Lee <leetroy@gmail.com>, 
+ Jamin Lin <jamin_lin@aspeedtech.com>, Stafford Horne <shorne@gmail.com>,
+ qemu-arm@nongnu.org, Philippe Mathieu-Daude <philmd@mailo.com>,
+ Peter Maydell <peter.maydell@linaro.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Steven Lee <steven_lee@aspeedtech.com>, Alexander Bulekov <alxndr@bu.edu>, 
+ Darren Kenny <darren.kenny@oracle.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
+ envelope-from=luoyonggang@gmail.com; helo=mail-ed1-x52b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -145,201 +140,308 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: luoyonggang@gmail.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Sorry lost to add Marc-Andr=E9 Lureau <marcandre.lureau@redhat.com>
-
-> -----Original Message-----
-> From: Jamin Lin
-> Sent: Monday, October 12, 2026 10:17 AM
-> To: C=E9dric Le Goater <clg@kaod.org>; Peter Maydell
-> <peter.maydell@linaro.org>; Steven Lee <steven_lee@aspeedtech.com>; Troy
-> Lee <leetroy@gmail.com>; Kane Chen <kane_chen@aspeedtech.com>;
-> Andrew Jeffery <andrew@codeconstruct.com.au>; Joel Stanley
-> <joel@jms.id.au>; open list:ASPEED BMCs <qemu-arm@nongnu.org>; open
-> list:All patches CC here <qemu-devel@nongnu.org>
-> Cc: Jamin Lin <jamin_lin@aspeedtech.com>; Troy Lee
-> <troy_lee@aspeedtech.com>
-> Subject: [PATCH v3 0/8] hw/usb: Add a usbredir server transport
->=20
-> This series adds a usbredir server transport to redirect a USB device emu=
-lated
-> in one QEMU instance to a USB host controller emulated in another one ove=
+On Mon, Oct 12, 2026 at 10:13=E2=80=AFAM Pierrick Bouvier
+<pierrick.bouvier@oss.qualcomm.com> wrote:
+>
+> On 10/11/26 1:22 PM, Yonggang Luo wrote:
+> > On Fri, Oct 9, 2026 at 2:34=E2=80=AFAM Pierrick Bouvier
+> > <pierrick.bouvier@oss.qualcomm.com> wrote:
+> >>
+> >> On 10/8/2026 10:13 AM, Yonggang Luo wrote:
+> >>> On Fri, Oct 9, 2026 at 12:06=E2=80=AFAM Pierrick Bouvier
+> >>> <pierrick.bouvier@oss.qualcomm.com> wrote:
+> >>>>
+> >>>> On 10/8/2026 2:46 AM, Yonggang Luo wrote:
+> >>>>> On Thu, Oct 8, 2026 at 5:42=E2=80=AFPM Daniel P. Berrang=C3=A9 <ber=
+range@redhat.com> wrote:
+> >>>>>>
+> >>>>>> On Wed, Oct 07, 2026 at 01:25:46PM -0700, Pierrick Bouvier wrote:
+> >>>>>>> On 10/7/2026 4:47 AM, Yonggang Luo wrote:
+> >>>>>>>> This allows a combined binary to register machine types from all=
+ its targets.
+> >>>>>>>> Consequently, QMP `query-machines` can return machine entries fr=
+om every
+> >>>>>>>> target, even when `none` is selected. For example, a client can =
+query the
+> >>>>>>>> combined machine list with:
+> >>>>>>>>
+> >>>>>>>> ```json
+> >>>>>>>> { "execute": "query-machines" }
+> >>>>>>>> ```
+> >>>>>>>>
+> >>>>>>>> The returned list includes the registered machine classes from a=
+ll linked
+> >>>>>>>> targets. This is separate from selecting a machine: with `-targe=
+t none`,
+> >>>>>>>> `-M virt` reports the targets that provide `virt` instead of cho=
+osing one
+> >>>>>>>> arbitrarily:
+> >>>>>>>>
+> >>>>>>>> ```text
+> >>>>>>>> qemu-system -target none -M virt
+> >>>>>>>> unsupported machine type: "virt" for target "none"
+> >>>>>>>> Available for targets:
+> >>>>>>>>    aarch64
+> >>>>>>>>    arm
+> >>>>>>>> ```
+> >>>>>>>>
+> >>>>>>>
+> >>>>>>>  From the long conversation on a previous thread, I thought we re=
+ached
+> >>>>>>> the conclusion that if we didn't expose any ambiguous name, then =
+-target
+> >>>>>>> option is unnecessary, or maybe I got lost on track of this threa=
+d.
+> >>>>>>>
+> >>>>>>> https://lore.kernel.org/qemu-devel/ar_coT44h5-zJPVV@redhat.com/
+> >>>>>>>
+> >>>>>>> I'm not sure which semantic we want to have with -target none. If=
+ there
+> >>>>>>> is no ambiguous name registered, we just don't need it at all. It=
+'s a
+> >>>>>>> win-win IMHO.
+> >>>>>>
+> >>>>>> Yes, if we expose unique names for every machine, then -target is =
+then
+> >>>>>> redundant.
+> >>>>>
+> >>>>> so how to diff riscv32-virt and risv64-virt? oh so for this machine=
+ we
+> >>>>> needs two name?
+> >>>>> "virt" needs register twice for it? or register only a single time,
+> >>>>> but we prefix the target_name()
+> >>>>> automatically? for example machine::name =3D=3D=3D "virt", but we c=
+an use
+> >>>>> "riscv32-virt" "risv64-virt" to reach it?
+> >>>>>
+> >>>>
+> >>>> Yes, ideally we should have different variant of virt for 32/64 bit.
+> >>>> Same goes for cpu max types.
+> >>>>
+> >>>> QOM type is always registered unambiguously ("$arch-virt"). Then, fo=
 r
-> the usbredir protocol.
->=20
-> The v1 series included both the usbredir server transport and the ASPEED
-> AST1030 USB Device Controller (UDC) support. Following review feedback, t=
-his
-> series contains only the usbredir server transport. The ASPEED
-> AST1030 UDC support will be sent separately.
->=20
-> This work is part of a larger plan to model USB device-side support on AS=
-PEED
-> BMC/BIC SoCs, which has three goals:
->=20
-> 1. Model the ASPEED UDC (AST2600 / AST1030). The AST2600 also has USB
-> host
->    (EHCI) controllers, so that work targets the AST2600 UDC: its gadget c=
-an
->    be attached to the SoC's own EHCI bus, letting the guest enumerate its
->    own gadget and exercise the UDC end-to-end.  [Done]
->=20
-> https://lore.kernel.org/qemu-devel/20260902021542.3194812-1-jamin_lin@as
-> peedtech.com/
->=20
-> 2. AST1030 UDC. The AST1030 has no USB host controller, so testing its UD=
-C
->    needs a second QEMU instance. The UDC gadget is redirected out of the
->    guest with libusbredir and attached to another QEMU that runs a USB ho=
-st
->    (a VMM, or an AST2600 / AST2700 guest).  [this series]
->=20
-> 3. ASPEED vHub, as a longer-term goal towards BMC KVM / Virtual Media
->    support in QEMU.  [future]
->=20
-> This series implements goal 2.
->=20
-> The transport
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
->=20
-> x-usb-redir-server exports a locally emulated USB device to a remote USB =
-host
-> over the usbredir protocol, so a device emulated in one QEMU instance can=
- be
-> enumerated by a host controller emulated in another one.
->=20
-> The left column is a request going to the device. The right column is the
-> answer coming back. The middle hop carries usbredir messages over a socke=
-t.
-> The top and bottom hops carry USBPackets inside QEMU.
->=20
->     remote QEMU: guest driver -> EHCI/XHCI
->              |                     ^
->    USBPacket |                     | USBPacket
->              v                     |
->     "usb-redir" (the client)
->              |                     ^
->     usbredir |   chardev socket    | usbredir
->              v                     |
->     x-usb-redir-server (the server, this series)
->              |                     ^
->    USBPacket |                     | USBPacket
->              v                     |
->     any USBDevice, "-device <dev>,bus=3D<id>.0"
->=20
-> "usb-redir" (hw/usb/redirect.c) is the client:
->   - it takes a USBPacket from the remote guest and writes it to the socke=
-t
->     as a usbredir message
->   - it reads the answer from the socket and completes the USBPacket
->=20
-> x-usb-redir-server is the server. It does the same thing, but backwards:
->   - it reads a usbredir message from the socket and runs it as a USBPacke=
-t
->     on the bus below
->   - it takes the result of that USBPacket and writes it back to the same
->     socket as a usbredir message, for the client to read
->=20
-> A USB device has to sit on a USB bus, and in QEMU a USB bus is always mad=
-e
-> by a host controller. So x-usb-redir-server makes one and acts as the hos=
-t
-> controller on this side. It models no real chip: its cable is the chardev=
- socket.
-> The real host is in the other QEMU.
->=20
-> The type name has an "x-" prefix because the device is experimental. It h=
-as to
-> sit on the sysbus so that "-device <dev>,bus=3D<id>.0" can find the USB b=
-us it
-> provides, and that may change later.
->=20
-> usbredir carries one device, not a bus. A hub cannot be exported: the pro=
-tocol
-> has no device address field. To export several devices, run one
-> x-usb-redir-server per device, each with its own chardev.
->=20
-> Testing
-> =3D=3D=3D=3D=3D=3D=3D
->=20
-> A plain usb-storage device was used to test the transport. The storage de=
-vice is
-> attached to x-usb-redir-server and exported over a Unix socket:
->=20
-> $ qemu-system-aarch64 ...
-> -chardev socket,id=3Dusbredir0,path=3D/tmp/usbredir0.sock,server=3Don,wai=
-t=3Doff
-> -device x-usb-redir-server,id=3Dusbredir0,chardev=3Dusbredir0
-> -drive id=3Dusbdisk,if=3Dnone,file=3Dimage0.ext4,format=3Draw
-> -device usb-storage,bus=3Dusbredir0.0,id=3Dmystorage,drive=3Dusbdisk
->=20
-> The exported device can then be attached to EHCI bus 3 of an AST2700 gues=
-t
-> using the existing usb-redir client:
->=20
->     -chardev socket,id=3Dstorage,path=3D/tmp/usbredir0.sock,reconnect-ms=
-=3D1000
-> \
->     -device usb-redir,chardev=3Dstorage,bus=3Dusb-bus.3
->=20
-> The AST2700 Linux guest enumerates the redirected USB storage device:
->=20
-> root@ast2700-default:~# lsusb
-> unable to initialize usb spec
-> Bus 001 Device 001: ID 1d6b:0001 Linux 6.18.36-v00.08.03-gaf2f426c5786
-> uhci_hcd Generic UHCI Host Controller Bus 002 Device 001: ID 1d6b:0002
-> Linux 6.18.36-v00.08.03-gaf2f426c5786 ehci_hcd EHCI Host Controller Bus 0=
-02
-> Device 002: ID 46f4:0001 QEMU QEMU USB HARDDRIVE
->=20
-> This also demonstrates that x-usb-redir-server is not specific to the ASP=
-EED
-> UDC. Any USBDevice can be attached to its USB bus and exported to a host
-> controller in another QEMU instance.
->=20
-> v1:
->   1. Add a usbredir server device
->   2. Announce the exported device
->   3. Implement control transfers
->   4. Implement bulk and interrupt transfers
->   5. Stream interrupt IN endpoints
->=20
-> v2:
->   1. Split the original series into USB and ASPEED parts as suggested
->      during review.
->   2. Keep this series focused on the usbredir server transport.
->   3. Move the ASPEED UDC changes, AST1030 UDC support and its functional
->      test to a separate series.
->=20
-> v3:
->    1. Move include/hw/usb/redirect-server.h into redirect-server.c.
->    2. Drop the announce timer. The firmware does not toggle the pull-up,
->       and the delay would be machine specific anyway.
->    3. Rename the type to "x-usb-redir-server" to mark it experimental.
->=20
->=20
-> Jamin Lin (8):
->   hw/usb/bus: Let a bus opt out of automatic hub insertion
->   hw/usb/redirect-server: Add a usbredir server device
->   hw/usb/redirect-server: Connect usbredirparser to a chardev
->   hw/usb/redirect-server: Announce the exported device
->   hw/usb/redirect-server: Implement control transfers
->   hw/usb/redirect-server: Implement bulk and interrupt transfers
->   hw/usb/redirect-server: Stream interrupt IN endpoints
->   hw/arm/aspeed: Enable the usbredir server transport
->=20
->  include/hw/usb/usb.h     |    1 +
->  hw/arm/aspeed.c          |    7 +
->  hw/usb/bus.c             |    3 +-
->  hw/usb/redirect-server.c | 1669
-> ++++++++++++++++++++++++++++++++++++++
->  hw/usb/meson.build       |    3 +-
->  hw/usb/trace-events      |   27 +
->  6 files changed, 1708 insertions(+), 2 deletions(-)  create mode 100644
-> hw/usb/redirect-server.c
->=20
-> --
-> 2.53.0
+> >>>> the "alias" name, which is virt, in case multiple matches are found,
+> >>>> command line can return an error with list of unambiguous names to c=
+all it.
+> >>>>
+> >>>> $ qemu-system -M virt
+> >>>> Multiple virt machines are available. Please choose one of them:
+> >>>> - aarch64-virt
+> >>>> - riscv64-virt
+> >>>>
+> >>>> There is no "parsing" of the argument, it's just the real QOM type. =
+Then
+> >>>> we can find which target it implements from mc->targets.
+> >>>> And then, we can automatically choose which cpus should be available
+> >>>> based on that, thanks to cpu->targets.
+> >>>>
+> >>>> For existing binaries, nothing change.
+> >>>
+> >>> Good, I think we found a clean way now, is_available should be
+> >>> removed, and TypeInfo::targets and TypeImpl::targets should be added.
+> >>
+> >> It goes into MachineClass only for now.
+> >>
+> >>> I think
+> >>> for "virt" we can add a shared hw/machine-virt.c instead, and forward=
+ing to
+> >>> the $arch specific virt. so that we only have a single "virt" registe=
+red.
+> >>> And it's
+> >>> targets is
+> >>> QEMU_ARCH_I386 |
+> >>> QEMU_ARCH_ARM |
+> >>> QEMU_ARCH_RISCV |
+> >>> QEMU_ARCH_LOONGARCH |
+> >>> QEMU_ARCH_M68K |
+> >>> QEMU_ARCH_OR1K |
+> >>> QEMU_ARCH_XTENSA |
+> >>> QEMU_ARCH_HEXAGON
+> >>>
+> >>> So that we won't have a list of conflict QOM names for "virt" machine=
+s.
+> >>> As now we indeed have only a single "virt" machine that redirects to
+> >>> different targets.
+> >>>
+> >>
+> >> The idea looks appealing, but I don't think it solves the problem to
+> >> have multiple virt variants available at the same time.
+> >>
+> >> The "alias" idea you introduced before is good, we just need to add a
+> >> check if an alias is really unique, else return an error, as explained
+> >> previously.
+> >>
+> >> If "-M aarch64-virt" works for both the new and existing binary, and -=
+M
+> >> virt only for existing binaries (and ambiguous for new one), I think
+> >> that's a safe approach.
+> >>
+> >>>
+> >>> For other types also conflict can be handled in the same way, such as
+> >>> "-cpu host" "-cpu max"
+> >>> maybe others, but I think they all have the same way to deal with.
+> >>>
+> >>>
+> >>> That's why  TypeInfo::targets and TypeImpl::targets better than sole
+> >>> Machine::targets
+> >>>
+> >>
+> >> One step at a time.
+> >> Let's keep focused on declaring targets for a single machine first.
+> >> Then we can iterate to solve the "virt" problem.
+> >> Then convert all the existing machines and add a check in machine-targ=
+et.c
+> >> Then, and only then, we can see what happens with cpus.
+> >
+> > I tried this idea, but I faced a fatal error, because the
+> > target_info() is not available until
+> > the machine selected(the target arch will be select just along with
+> > the machine selected), so basically
+> > all calls to target_info() would raise an error(null pointer), how to
+> > deal with it?
+> >
+>
+> I see. Indeed, since we can't set a target before registering all types,
+> it implies that all the types class_init can't use target_* functions.
+>
+>
+> - register_accel_target_type
+> - cpu_max_v8_register_type
+
+Hi Pierrick
+
+These two I can handle it properly, only for the "virt" machine I can
+not handle it properly
+What you suggest, it's a must-be requirement now.
+
+
+for example, cpu_max_v8_register_type can be handle in such way:
+
+ target/arm/tcg/cpu-max-v8.c | 17 +++++++++++++----
+ 1 file changed, 13 insertions(+), 4 deletions(-)
+
+diff --git a/target/arm/tcg/cpu-max-v8.c b/target/arm/tcg/cpu-max-v8.c
+index 65f851f2006..d7323ab431c 100644
+--- a/target/arm/tcg/cpu-max-v8.c
++++ b/target/arm/tcg/cpu-max-v8.c
+@@ -119,12 +119,21 @@ void aarch32_max_v8_tcg_initfn(Object *obj)
+ #endif
+ }
+
++static void max_v8_tcg_initfn(Object *obj)
++{
++    if (target_aarch64()) {
++        aarch64_max_v8_tcg_initfn(obj);
++    } else {
++        aarch32_max_v8_tcg_initfn(obj);
++    }
++}
++
+ static void cpu_max_v8_register_type(void)
+ {
+-    static const ARMCPUInfo max_v8[2] =3D {
+-        { .name =3D "max-v8", .initfn =3D aarch32_max_v8_tcg_initfn },
+-        { .name =3D "max-v8", .initfn =3D aarch64_max_v8_tcg_initfn },
++    static const ARMCPUInfo max_v8 =3D {
++        .name =3D "max-v8",
++        .initfn =3D max_v8_tcg_initfn,
+     };
+-    arm_cpu_register(&max_v8[target_aarch64()]);
++    arm_cpu_register(&max_v8);
+ }
+ type_init(cpu_max_v8_register_type)
+
+
+
+register_accel_target_type:
+
+ accel/accel-common.c             | 21 ++++++---------------
+ include/accel/accel-cpu-target.h |  3 +--
+ include/accel/accel-cpu.h        |  2 ++
+ 3 files changed, 9 insertions(+), 17 deletions(-)
+
+diff --git a/accel/accel-common.c b/accel/accel-common.c
+index 00a400243f0..c4c365f38c7 100644
+--- a/accel/accel-common.c
++++ b/accel/accel-common.c
+@@ -126,21 +126,12 @@ static const TypeInfo accel_types[] =3D {
+         .instance_size  =3D sizeof(AccelState),
+         .abstract       =3D true,
+     },
++    {
++        .name           =3D TYPE_ACCEL_CPU,
++        .parent         =3D TYPE_OBJECT,
++        .abstract       =3D true,
++        .class_size     =3D sizeof(AccelCPUClass),
++    },
+ };
+
+ DEFINE_TYPES(accel_types)
+-
+-static void register_accel_target_type(void)
+-{
+-    g_autofree char *name =3D g_strconcat("accel-", target_cpu_type(), NUL=
+L);
+-    const TypeInfo accel_cpu_type =3D {
+-        .name =3D name,
+-        .parent =3D TYPE_OBJECT,
+-        .abstract =3D true,
+-        .class_size =3D sizeof(AccelCPUClass),
+-    };
+-
+-    type_register_static(&accel_cpu_type);
+-}
+-
+-type_init(register_accel_target_type);
+diff --git a/include/accel/accel-cpu-target.h b/include/accel/accel-cpu-tar=
+get.h
+index 6feb344e29b..cf33ebd79fc 100644
+--- a/include/accel/accel-cpu-target.h
++++ b/include/accel/accel-cpu-target.h
+@@ -24,8 +24,7 @@
+ #include "accel/accel-cpu.h"
+ #include "cpu.h"
+
+-#define TYPE_ACCEL_CPU "accel-" CPU_RESOLVING_TYPE
+-#define ACCEL_CPU_NAME(name) (name "-" TYPE_ACCEL_CPU)
++#define ACCEL_CPU_NAME(name) (name "-accel-" CPU_RESOLVING_TYPE)
+ DECLARE_CLASS_CHECKERS(AccelCPUClass, ACCEL_CPU, TYPE_ACCEL_CPU)
+
+ #endif /* ACCEL_CPU_H */
+diff --git a/include/accel/accel-cpu.h b/include/accel/accel-cpu.h
+index 9e7eede7c3c..5cfc2b24223 100644
+--- a/include/accel/accel-cpu.h
++++ b/include/accel/accel-cpu.h
+@@ -12,6 +12,8 @@
+ #include "qom/object.h"
+ #include "hw/core/cpu.h"
+
++#define TYPE_ACCEL_CPU "accel-cpu"
++
+ typedef struct AccelCPUClass {
+     ObjectClass parent_class;
+
+
+>
+>
+> >>
+> >> Regards,
+> >> Pierrick
+> >
+> >
+> >
+>
+
+
+--=20
+         =E6=AD=A4=E8=87=B4
+=E7=A4=BC
+=E7=BD=97=E5=8B=87=E5=88=9A
+Yours
+    sincerely,
+Yonggang Luo
 
