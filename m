@@ -4,145 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8873BCA9EDF
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8850DCA9EDC
 	for <qemu-devel@archiver.kernel.org>; Mon, 12 Oct 2026 14:02:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGGbP-00071I-GQ; Mon, 12 Oct 2026 10:02:07 -0400
+	id 1xGGb2-0006w9-JS; Mon, 12 Oct 2026 10:01:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1xGGbN-000716-6D
- for qemu-devel@nongnu.org; Mon, 12 Oct 2026 10:02:05 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1xGGay-0006u1-9s
+ for qemu-devel@nongnu.org; Mon, 12 Oct 2026 10:01:41 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1xGGbL-0005d7-6N
- for qemu-devel@nongnu.org; Mon, 12 Oct 2026 10:02:04 -0400
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69CC0atE2679908
- for <qemu-devel@nongnu.org>; Mon, 12 Oct 2026 14:02:01 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- NIuU6LrfdtuSmc9/nEQ0rKSBZ4Dqle6faEvnPayMiIA=; b=gNz0cbT+cSj0ycbo
- RwqKEKOK8QYzvce3oQ+wx6du7rgPR/iMj4zW959PVL4Z3P96XB7+1aBc+wOYmub5
- x7Mv+DfF1553bftoN4IV5msBaLvyCFA43p55IsGYvQhcEVs4a8M/0AvGCSQp0oTE
- iA9JkisLg2oyczidqZ+r/Cyof5X3EDssyn/qIoxSRRmqqCahJgzUFvtWMW4YIjMp
- qdhiyTzv5SZIxUmvXVbXbb7/pj70BOyXV2kZlADUV+UFUHy9T/pywiyv3nBfRPV1
- O/75xVRIQiUxQJ5T38BtFwqtAlzAfJSGQbfVbTOo147uCFAeFQW7Xl0UjVe2Co/5
- OcKTrw==
-Received: from mail-vs1-f70.google.com (mail-vs1-f70.google.com
- [209.85.217.70])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h8sd1t8pj-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 12 Oct 2026 14:02:00 +0000 (GMT)
-Received: by mail-vs1-f70.google.com with SMTP id
- ada2fe7eead31-7c39a674d83so4059957137.1
- for <qemu-devel@nongnu.org>; Mon, 12 Oct 2026 07:02:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1791813720; x=1792418520; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=NIuU6LrfdtuSmc9/nEQ0rKSBZ4Dqle6faEvnPayMiIA=;
- b=DX5YNdCEfLv+bpgLinz3f1BwMpvqUA3J6wQ/jrGarEYMl5Sm6q6NLJ73JqdRMiLQVo
- UI4u4/YjAktRk1WHZd9RGLnrVSnUCD7RkpxWQUGB+5bEG0KoGzAS8JjgXh7Z6T8I6j1q
- pyjJp9tZ6AKdJ1BgEfKoQ36OccDa/BQvRs4siq+ltHSJDWnoOTES+whc6o9fTxk+kyVn
- KHaz5FB4/Jz+U9scDb5uwmNqD11KWhKPAkgG1vhL4RF3tUoq7qaQV9Jir/bBAsWjPU6m
- SEmqypABEvXZ7uvUxjPUZ70evL3sWzN03KqEBUwsx63FuRNqxEkFNM7WwbLJruIpmAXo
- rfdQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791813720; x=1792418520;
- h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=NIuU6LrfdtuSmc9/nEQ0rKSBZ4Dqle6faEvnPayMiIA=;
- b=fogFzaR1n5YUmUNNQLa1v9W8oCunwwxbl5fqt0g9Ns+gHlsooOpXwra6evV/70ZVNF
- pZOXf8fup3PCTKPIrnX3hzro/mNFNltheKA45Q71luW2gj6A4J6bqqtGHhtFJCrNNLoS
- bIA9gErl7lnD9bXMIEQDtLGIDHro69/+Drr8pom/grJ7Nlo191wnTf9qpIkPqBja8jtL
- WdOqxkigR1pnU0TuObW0pLbUtQoxI2KHtWmB9WADJ8Wdbnddt2Ypsy4xKnfzWyimGMAL
- nXQzEJbuqBf5+DEgod9hntBnpzDkMQ6hIvRIJ/bde3zt6NQPxpFp5EFjvcjasqtjcEO0
- 20Jg==
-X-Forwarded-Encrypted: i=1;
- AKwUvByZcA5PfRmWvOuDIkgEojpZnWepDt36XDFdrZDAU+b/Mbz9S4ObNE5yuK1levx8Hu2uee/C/GlIbYV7@nongnu.org
-X-Gm-Message-State: AFq9FYLJFWGiiLX9gnZ8zK5f7k7yPbWUc2z5taq6y3VhVyUMVr2KsYr2
- PKLK5zrD0BEm3QWXvnWscBo4ubrc8yCwMKXspUOiMnv67uu1Fa6kbJdW5esMGy/xMYOdTuL5FlF
- H/Gw2hp4Y4fUO1GbDGUb9owK131nDr59jhax+7eF2vm8dfzXZhd2XXMCuew==
-X-Gm-Gg: AYBFou2c2y+M5bxtwVvHIn8DrikjAnrS+ty3A3NJ6YiTK/PlXxhE1TeKoBXMeov3J/d
- FWRVb5VfBuFETeB/JzBjqBSQ89U+c02qMTO3bCteteQp7HP88lBA2lLMmRmChnETFJepW0RSYKC
- j73uI3kdUzCzzy6nn7pdGcQd8rLvrmL4znpRr+Vn9yx98G2Y8f2yfK8jpDw2HtjD7Bjzq8IZlm8
- VcIg8PD6sonNiAf3YGShzxRydRBRdMIs4RCSYb86CsfNul7APTYT6d38hOzSnYqPTWuWgHjd3/S
- vIIVvMEsf7EaXMVGi7r4XC/D6veXkq6VCSLaCNpz14XMFVSxfnmeKsiHIA1Mh9wn/xHc41X+Egh
- pS33x/8/WzXRpDUl98Oo/GRGQGbT/L/EajITkFSIamwfwJ8G3xgAovUKGWbRQsmxwC6yi3SupxP
- qUiZQ=
-X-Received: by 2002:a05:6102:3084:b0:7ca:5626:11e with SMTP id
- ada2fe7eead31-7cb3a10e7d8mr1457515137.36.1791813720212; 
- Mon, 12 Oct 2026 07:02:00 -0700 (PDT)
-X-Received: by 2002:a05:6102:3084:b0:7ca:5626:11e with SMTP id
- ada2fe7eead31-7cb3a10e7d8mr1457483137.36.1791813719683; 
- Mon, 12 Oct 2026 07:01:59 -0700 (PDT)
-Received: from [192.168.1.199] (104-54-226-75.lightspeed.austtx.sbcglobal.net.
- [104.54.226.75]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-91b550ce8a5sm95938436d6.40.2026.10.12.07.01.58
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 12 Oct 2026 07:01:59 -0700 (PDT)
-Message-ID: <9b2e0d72-d0d7-40d2-9c48-b5878f1245dd@oss.qualcomm.com>
-Date: Mon, 12 Oct 2026 09:01:57 -0500
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1xGGav-0005ar-Lk
+ for qemu-devel@nongnu.org; Mon, 12 Oct 2026 10:01:40 -0400
+Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 69CE1Set079703
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Mon, 12 Oct 2026 23:01:28 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=UgccqkC644zlF1XLnbCYTDkTktpq2gecEQBRdaPEr2Q=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=From:Message-ID:To:Subject:Date;
+ s=rs20250326; t=1791813688; v=1;
+ b=pezPJW2DvHWqICas7+HE2itSHx2OZO+ujA8pTH9kUQsD4asN+KRR5WZuQbWmmVGx
+ +5ELl3V59HzjUrOUMG8U1mqcX0b6d/ffvUpEIRFTa4ARqbakjOnW2KDHvpjEW1IA
+ fWMGQI5eNPc0Z60/YEmIxjo8bmBYbs3hMb+AwK1AJQG8hINcUESeevZwvYHVuzkR
+ XfpBYTQr3rVsmE2xsMVywIWFJ1oMec2odoJB2DzQ0MFpsVEK2H//bxZpapN5vBKW
+ BOC0LQIZrmKuzhw3RkKJPf0nQmekVQLRXgIb/l88zx1Sl4IhbZFkSzIdxGphcrkS
+ 1cM0Eu8MxX9CFFLqdZzJiA==
+Message-ID: <98667ef2-8931-497a-bb76-04097a2aa43b@rsg.ci.i.u-tokyo.ac.jp>
+Date: Mon, 12 Oct 2026 23:01:27 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 04/11] hw/core/cpu: restrict tcg_ops to CONFIG_TCG only
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Alistair Francis <alistair.francis@wdc.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-References: <20261009225226.10657-1-pierrick.bouvier@oss.qualcomm.com>
- <20261009225226.10657-5-pierrick.bouvier@oss.qualcomm.com>
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Subject: Re: [PATCH v13 6/9] vfio/device: Add support for creating dmabuf from
+ multiple ranges
+To: "Kasireddy, Vivek" <vivek.kasireddy@intel.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: Alex Williamson <alex@shazbot.org>
+References: <20261007201222.648687-1-vivek.kasireddy@intel.com>
+ <20261007201222.648687-7-vivek.kasireddy@intel.com>
+ <306e36da-31eb-4e54-8b47-afb5ae55a6c9@redhat.com>
+ <IA0PR11MB7185A1C516474E6EA317F8E9F89F2@IA0PR11MB7185.namprd11.prod.outlook.com>
 Content-Language: en-US
-From: Brian Cain <brian.cain@oss.qualcomm.com>
-In-Reply-To: <20261009225226.10657-5-pierrick.bouvier@oss.qualcomm.com>
+In-Reply-To: <IA0PR11MB7185A1C516474E6EA317F8E9F89F2@IA0PR11MB7185.namprd11.prod.outlook.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: Q6NBABGtO5EVplrDa8btzFF2LB6VHHoM
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDEyMDA1NSBTYWx0ZWRfXzxxjYDmADQGk
- FLZMvXrq6NBmPE1igg6BLy7VUvCqhkWf+0ihuAJcX0SWc8fzjBmVsnDoUGhFMEFQhUBJDaS6Tp9
- +g+PmOvYyra/LKqa576A125wo+BZzLE=
-X-Authority-Analysis: v=2.4 cv=QtHLTlyd c=1 sm=1 tr=0 ts=6acce858 cx=c_pps
- a=N1BjEkVkxJi3uNfLdpvX3g==:117 a=x6rl1zRT+JsLSO7OGbGBKQ==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
- a=EUspDBNiAAAA:8 a=iyC_-DbmcBz2VEbKfY0A:9 a=QEXdDO2ut3YA:10
- a=crWF4MFLhNY0qMRaF8an:22
-X-Proofpoint-GUID: Q6NBABGtO5EVplrDa8btzFF2LB6VHHoM
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDEyMDA1NSBTYWx0ZWRfX7a6T4ikVTPi+
- Ar89wLFsardwh1ahfxZ3gX/AinOkskV9dKZe9zen/XfZNlO0rmz/55V4s7RSJLyUEkpo1HvsmO5
- KdkK5fRjdzrfMgls3nq0Xa2uKoIuWhVvobIwgHdGK2+qE7slZFgy6dxS1WUHFnMp5dOKeSjab6v
- u+//qIz0beiVTQfALxMCyHiL4ljIO1eXPcmNmAXH8m/zlvTyIo+HpqocR1ydm4VJaiSM+PEhzEQ
- Y5ptUWb1F8mdSAgl9Kiemul+Ge94nwv5BrvjsiK5k2v62Pu1G0VI+WA/Fvs4c/em1OYzj/sC0ld
- 0e5TxSSuniWeMFAuk6kDXRhWPZO1yUMOi2r5yZ37avMgQSzcgg4sQCXJBkCovPug44fKEh9v06A
- aO8Mb9cxTIMVAjjBmyIyWFlTHaPXI/NLV/qzqLDMjZfD+vzczLUcCvIpXBqmrHXtDA+/yNCypys
- 5InO53gJbygReKueCAQ==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-10-12_04,2026-10-09_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 malwarescore=0 bulkscore=0 clxscore=1015
- lowpriorityscore=0 suspectscore=0 impostorscore=0 phishscore=0 adultscore=0
- spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2610080000
- definitions=main-2610120055
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -159,33 +78,354 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 2026/10/12 15:27, Kasireddy, Vivek wrote:
+> Hi Akihiko,
+> 
+>> Subject: Re: [PATCH v13 6/9] vfio/device: Add support for creating dmabuf
+>> from multiple ranges
+>>
+>>> In order to create a dmabuf associated with a buffer that spans
+>>> multiple ranges, we first need to identify the VFIO region and
+>>> index the buffer (represented by iovec) belongs to and then
+>>> translate its addresses to offsets within that region.
+>>>
+>>> The qemu_ram_block_from_host() API gives us both the region and
+>>> the offset info we need to populate the dma ranges so that we can
+>>> invoke the VFIO_DEVICE_FEATURE_DMA_BUF feature to create the
+>> dmabuf.
+>>>
+>>> Also, instead of iterating over all QOM devices to find the
+>>> VFIODevice associated with a memory region, introduce a helper
+>>> to just use the vfio_device_list to lookup the VFIODevice.
+>>> And, introduce another helper to lookup the VFIO region given an
+>>> address.
+>>>
+>>> Lastly, introduce an enum to return the type of error encountered
+>>> while creating the dmabuf fd.
+>>>
+>>> Cc: Alex Williamson <alex@shazbot.org>
+>>> Cc: Cédric Le Goater <clg@redhat.com>
+>>> Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
+>>> ---
+>>>    include/hw/vfio/vfio-device.h |  22 +++++++
+>>>    hw/vfio/device.c              | 109 ++++++++++++++++++++++++++++++++++
+>>>    hw/vfio/dmabuf-stubs.c        |  17 ++++++
+>>>    hw/vfio/meson.build           |   1 +
+>>>    4 files changed, 149 insertions(+)
+>>>    create mode 100644 hw/vfio/dmabuf-stubs.c
+>>>
+>>> diff --git a/include/hw/vfio/vfio-device.h b/include/hw/vfio/vfio-
+>> device.h
+>>> index 8472420d3f..c05430be8a 100644
+>>> --- a/include/hw/vfio/vfio-device.h
+>>> +++ b/include/hw/vfio/vfio-device.h
+>>> @@ -41,6 +41,13 @@ enum {
+>>>        VFIO_DEVICE_TYPE_AP = 3,
+>>>    };
+>>>
+>>> +enum {
+>>> +    /* The Guest passed addresses stored in IOV are invalid */
+>>> +    VFIO_DMABUF_CREATE_ERR_INVALID_IOV = -1,
+>>> +    /* Guest or Host may be at fault for this type of error */
+>>> +    VFIO_DMABUF_CREATE_ERR_UNSPEC = -2,
+>>> +};
+>>
+>> Nack.
+>>
+>> As said a few times already : it's a VFIO-specific enum leaking
+>> into vfio-device.h to serve virtio-gpu's fallback logic. The
+>> cleanest alternative is to use standard -errno returns and
+>> make the fd an output parameter.
+> It looks like Cedric remains unconvinced about the value or usefulness
+> of this error enum. Therefore, to make progress, I intend to adopt his
+> suggestion to use standard -errno returns for the next version, considering
+> that this series has been stuck for a year.
+> 
+> AFAICS, dropping this error enum means that we would not be able to
+> clearly identify and log (or attribute) Guest vs Host errors in virtio-gpu,
+> particularly the INVALID_IOV case. I am not sure if this can be considered
+> a significant limitation. However, if there is a reasonable middle ground
+> solution or an alternative that you can think of that does not involve
+> using VFIO error enums in virtio-gpu, then I would like to pursue that
+> instead.
 
-On 10/9/2026 5:52 PM, Pierrick Bouvier wrote:
-> We introduce this since upcoming semihosting ops will be in the same
-> ifdef.
->
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-> ---
+Cédric's comment is a reiteration of previous points, but his concrete 
+code suggestion is new and brings to light some challenges with errno 
+propagation.
 
+First, errno does not precisely match the required semantics. We need to 
+distinguish lookup failures from the other errors. However, with your 
+suggestion, lookup failures become -EINVAL and vfio_device_get_feature() 
+also returns the same value when the backend lacks the operation, making 
+it impossible to distinguish them.
 
-Reviewed-by: Brian Cain <brian.cain@oss.qualcomm.com>
+Propagating errno also requires extra care to preserve it when 
+necessary. For patch "[PATCH v13 8/9] virtio-gpu-dmabuf: Improve error 
+handling with 'Error **' and err enum", you suggested to add the 
+"saved_errno" variable to save errno before error_setg_errno(). That is 
+redundant because error_setg_errno() preserves errno. Realizing that 
+requires careful attention.
 
->   include/hw/core/cpu.h | 2 ++
->   1 file changed, 2 insertions(+)
->
-> diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-> index 328e30045ce..8160a301978 100644
-> --- a/include/hw/core/cpu.h
-> +++ b/include/hw/core/cpu.h
-> @@ -183,8 +183,10 @@ struct CPUClass {
->       /* when system emulation is not available, this pointer is NULL */
->       const struct SysemuCPUOps *sysemu_ops;
->   
-> +#ifdef CONFIG_TCG
->       /* when TCG is not available, this pointer is NULL */
->       const TCGCPUOps *tcg_ops;
-> +#endif
->   
->       /*
->        * Keep non-pointer data at the end to minimize holes.
+While we could spend effort fixing these issues, we can simply avoid the 
+churn by not using errno.
+
+In any case, I agree keeping this stuck is not ideal while I don't think 
+I can provide any further insights. So I'm inviting Markus Armbruster to 
+this discussion. This is an area better handled by him, who maintains 
+the error reporting facility, including include/qapi/error.h, which 
+extensively documents codebase-wide error-handling convention.
+
+Markus, could you advise on the appropriate convention for returning
+this kind of classification alongside Error **? Your perspective
+across the codebase may help us settle on a consistent approach
+beyond the individual subsystems involved here. Perhaps you may improve 
+the documentation according to a design decision made here.
+
+If anyone else has a clean middle-ground solution in the meantime, I 
+would greatly appreciate your input as well.
+
+Regards,
+Akihiko Odaki
+
+> 
+> Thanks,
+> Vivek
+>>
+>>
+>>>    typedef struct VFIODeviceOps VFIODeviceOps;
+>>>    typedef struct VFIODeviceIOOps VFIODeviceIOOps;
+>>>    typedef struct VFIOMigration VFIOMigration;
+>>> @@ -323,6 +330,21 @@ bool vfio_device_has_region_cap(VFIODevice
+>> *vbasedev, int region, uint16_t cap_t
+>>>
+>>>    int vfio_device_get_irq_info(VFIODevice *vbasedev, int index,
+>>>                                    struct vfio_irq_info *info);
+>>> +
+>>> +/**
+>>> + * Create a dmabuf fd by first translating the addresses in the
+>>> + * iovec array into VFIO region offsets and then invoking the
+>>> + * VFIO_DEVICE_FEATURE_DMA_BUF feature.
+>>> + *
+>>> + * @iov: array of iovec entries associated with a buffer
+>>> + * @iov_cnt: number of entries in the iovec array
+>>> + * @errp: pointer to Error*, to store an error if it happens.
+>>> + *
+>>> + * Returns the created dmabuf fd or either
+>> VFIO_DMABUF_CREATE_ERR_UNSPEC
+>>> + * or VFIO_DMABUF_CREATE_ERR_INVALID_IOV on error.
+>>> + */
+>>> +int vfio_device_create_dmabuf_fd(struct iovec *iov, unsigned int
+>> iov_cnt,
+>>> +                                 Error **errp);
+>>>    #endif
+>>>
+>>>    /* Returns 0 on success, or a negative errno. */
+>>> diff --git a/hw/vfio/device.c b/hw/vfio/device.c
+>>> index 4f11959633..d95503a5f1 100644
+>>> --- a/hw/vfio/device.c
+>>> +++ b/hw/vfio/device.c
+>>> @@ -21,7 +21,9 @@
+>>>    #include "qemu/osdep.h"
+>>>    #include <sys/ioctl.h>
+>>>
+>>> +#include "system/ramblock.h"
+>>>    #include "hw/vfio/vfio-device.h"
+>>> +#include "hw/vfio/vfio-region.h"
+>>>    #include "hw/vfio/pci.h"
+>>>    #include "hw/core/iommu.h"
+>>>    #include "trace.h"
+>>> @@ -667,3 +669,110 @@ static VFIODeviceIOOps
+>> vfio_device_io_ops_ioctl = {
+>>>        .region_read = vfio_device_io_region_read,
+>>>        .region_write = vfio_device_io_region_write,
+>>>    };
+>>> +
+>>> +/*
+>>> + * This helper looks up the VFIODevice corresponding to the given iov.
+>> It
+>>> + * can be useful to determinine if a buffer (represented by the iov)
+>> belongs
+>>> + * to a VFIO device or not. This is mainly invoked when external
+>> components
+>>> + * such as virtio-gpu request creation of dmabuf fds for buffers that may
+>>> + * belong to a VFIO device.
+>>> + */
+>>> +static bool vfio_device_lookup(struct iovec *iov, VFIODevice
+>> **vbasedevp,
+>>> +                               RAMBlock **first_rbp, Error **errp)
+>>> +{
+>>> +    VFIODevice *vbasedev;
+>>> +    RAMBlock *first_rb;
+>>> +    ram_addr_t offset;
+>>> +
+>>> +    first_rb = qemu_ram_block_from_host(iov[0].iov_base, false,
+>> &offset);
+>>> +    if (!first_rb) {
+>>> +        error_setg(errp, "Could not find first ramblock\n");
+>>
+>> no \n
+>>
+>>
+>>> +        return false;
+>>> +    }
+>>> +
+>>> +    *first_rbp = first_rb;
+>>> +    QLIST_FOREACH(vbasedev, &vfio_device_list, next) {
+>>
+>> wrong list : global_next.
+>>
+>>
+>>> +        if (vbasedev->dev == first_rb->mr->dev) {
+>>> +            *vbasedevp = vbasedev;
+>>> +            return true;
+>>> +        }
+>>> +    }
+>>> +    error_setg(errp, "No VFIO device found to create dmabuf from\n");
+>>
+>> no \n
+>>
+>>> +    return false;
+>>> +}
+>>> +
+>>> +/*
+>>> + * This helper looks up the VFIORegion corresponding to the given
+>> address.
+>>> + * It also verifies that the RAMBlock associated with the address is the
+>>> + * same as the first_rb passed in. This is to ensure that all addresses
+>>> + * in the iov belong to the same region.
+>>> + */
+>>> +static bool vfio_region_lookup(void *addr, VFIORegion **regionp,
+>>> +                               RAMBlock *first_rb, ram_addr_t *offsetp,
+>>> +                               Error **errp)
+>>> +{
+>>> +    VFIORegion *region;
+>>> +    RAMBlock *rb;
+>>> +
+>>> +    rb = qemu_ram_block_from_host(addr, false, offsetp);
+>>> +    if (!rb || rb != first_rb) {
+>>> +        error_setg(errp, "Dmabuf segments must belong to the same
+>> region\n");
+>>
+>> remove \n
+>>
+>>> +        return false;
+>>> +    }
+>>> +
+>>> +    region = vfio_get_region_from_mr(rb->mr);
+>>> +    if (region) {
+>>> +        *regionp = region;
+>>> +        return true;
+>>> +    }
+>>> +    error_setg(errp, "Could not find valid region for dmabuf segment\n");
+>>
+>> here too.
+>>
+>>> +    return false;
+>>> +}
+>>> +
+>>> +int vfio_device_create_dmabuf_fd(struct iovec *iov, unsigned int
+>> iov_cnt,
+>>> +                                 Error **errp)
+>>> +{
+>>> +    g_autofree struct vfio_device_feature *feature = NULL;
+>>> +    struct vfio_device_feature_dma_buf *dma_buf;
+>>> +    RAMBlock *first_rb = NULL;
+>>> +    VFIODevice *vbasedev;
+>>> +    VFIORegion *region;
+>>> +    ram_addr_t offset;
+>>> +    size_t argsz;
+>>> +    int i, ret;
+>>> +
+>>> +    if (!vfio_device_lookup(iov, &vbasedev, &first_rb, errp)) {
+>>> +        return VFIO_DMABUF_CREATE_ERR_INVALID_IOV;
+>>
+>> return -EINVAL;
+>>
+>>> +    }
+>>> +
+>>> +    argsz = sizeof(*feature) + sizeof (*dma_buf) +
+>>> +            sizeof(struct vfio_region_dma_range) * iov_cnt;
+>>> +    feature = g_malloc0(argsz);
+>>> +    *feature = (struct vfio_device_feature) {
+>>> +        .argsz = argsz,
+>>> +        .flags = VFIO_DEVICE_FEATURE_GET |
+>> VFIO_DEVICE_FEATURE_DMA_BUF,
+>>> +    };
+>>> +    dma_buf = (struct vfio_device_feature_dma_buf *)feature->data;
+>>> +
+>>> +    for (i = 0; i < iov_cnt; i++) {
+>>> +        if (!vfio_region_lookup(iov[i].iov_base, &region,
+>>> +                                first_rb, &offset, errp)) {
+>>> +            return VFIO_DMABUF_CREATE_ERR_INVALID_IOV;
+>>
+>> return -EINVAL;
+>>
+>>> +        }
+>>> +
+>>> +        dma_buf->region_index = region->nr;
+>>> +        dma_buf->dma_ranges[i].offset = offset;
+>>> +        dma_buf->dma_ranges[i].length = iov[i].iov_len;
+>>> +    }
+>>> +
+>>> +    dma_buf->nr_ranges = iov_cnt;
+>>> +    dma_buf->open_flags = O_RDONLY | O_CLOEXEC;
+>>> +
+>>> +    ret = vfio_device_get_feature(vbasedev, feature);
+>>> +    if (ret < 0) {
+>>> +        error_setg_errno(errp, -ret,
+>>> +                         "Could not create dmabuf fd via VFIO device");
+>>> +        return VFIO_DMABUF_CREATE_ERR_UNSPEC;
+>>
+>> return ret;
+>>
+>>> +    }
+>>> +    return ret;
+>>> +}
+>>> diff --git a/hw/vfio/dmabuf-stubs.c b/hw/vfio/dmabuf-stubs.c
+>>> new file mode 100644
+>>> index 0000000000..fb5318e929
+>>> --- /dev/null
+>>> +++ b/hw/vfio/dmabuf-stubs.c
+>>
+>> Fails to build on MinGW/Windows.
+>>
+>>       hw/vfio/dmabuf-stubs.c:12:5: error: no previous prototype for
+>>            'vfio_device_create_dmabuf_fd'
+>>        hw/vfio/dmabuf-stubs.c:19:7: error: no previous prototype for
+>>            'vfio_device_mmap_dmabuf'
+>>
+>>
+>>> @@ -0,0 +1,17 @@
+>>> +/*
+>>> + * Copyright (c) 2026 Intel and/or its affiliates.
+>>> + *
+>>> + * SPDX-License-Identifier: GPL-2.0-or-later
+>>> + */
+>>> +
+>>> +#include "qemu/osdep.h"
+>>> +#include "qemu/error-report.h"
+>>> +#include "qemu/iov.h"
+>>> +#include "hw/vfio/vfio-device.h"
+>>> +
+>>> +int vfio_device_create_dmabuf_fd(struct iovec *iov, unsigned int
+>> iov_cnt,
+>>> +                                 Error **errp)
+>>> +{
+>>> +    error_setg(errp, "VFIO dmabuf support is not enabled");
+>>> +    return VFIO_DMABUF_CREATE_ERR_UNSPEC;
+>>
+>> return -ENOTSUP;
+>>
+>>
+>>> +}
+>>> diff --git a/hw/vfio/meson.build b/hw/vfio/meson.build
+>>> index c7c31b78f6..aa6f4bc1b4 100644
+>>> --- a/hw/vfio/meson.build
+>>> +++ b/hw/vfio/meson.build
+>>> @@ -38,3 +38,4 @@ stub_ss.add(files('iommufd-stubs.c'))
+>>>    system_ss.add(when: 'CONFIG_VFIO_PCI', if_true: files(
+>>>      'display.c',
+>>>    ))
+>>> +system_ss.add(when: 'CONFIG_VFIO', if_false: files('dmabuf-stubs.c'))
+> 
 
