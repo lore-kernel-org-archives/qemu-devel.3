@@ -4,181 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FDBBCA9ED1
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Oct 2026 10:56:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD993CA9ED0
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Oct 2026 10:59:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGDhc-0005FD-Vz; Mon, 12 Oct 2026 06:56:21 -0400
+	id 1xGDju-0005gh-JS; Mon, 12 Oct 2026 06:58:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
- id 1xGDhX-0005Ez-Ou
- for qemu-devel@nongnu.org; Mon, 12 Oct 2026 06:56:15 -0400
-Received: from mx0a-002c1b01.pphosted.com ([148.163.151.68])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
- id 1xGDhV-0000ka-1T
- for qemu-devel@nongnu.org; Mon, 12 Oct 2026 06:56:15 -0400
-Received: from pps.filterd (m0127838.ppops.net [127.0.0.1])
- by mx0a-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69C8N3iK2871788; Mon, 12 Oct 2026 03:56:07 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
- content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=
- proofpoint20171006; bh=9PbDKC4vT+XiL45+78fY0qxlHYofxfvtdk1UEY6yg
- q0=; b=j37p6BzvMvyYEx1lSxQ/FVu/GvyimXW5RrTm+izUPanLwqG0z0pxYbcmZ
- 4AyrMQcptV2hUeKuVroNYYnZjuLveAZYTPrroC9QE/rHyS0OldmS527T5pir5ux+
- 43MdxhHkLrV+y/g2AM9yZvtpZtrZ97l0k9x/9R0KqhefTpTLCuzJzBa+SV5+0NPo
- zAYF03GxaGGefKY2Skr6R5/FsbT4HXOJTrdg4b6zor/lOrKNskvnK55w0UvUyJrf
- fWiRhxjbiQW4CvUadkgKzLgkv+w0Cm9m8lrRYyXffAhKKBY6XsS2Q1Gk6BAUi641
- OE9VVn9u1QKpdkgGq2GGux4TX0pDA==
-Received: from byapr05cu005.outbound.protection.outlook.com
- (mail-westusazon11020106.outbound.protection.outlook.com [52.101.85.106])
- by mx0a-002c1b01.pphosted.com (PPS) with ESMTPS id 4h7mwwk0sw-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Mon, 12 Oct 2026 03:56:06 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=wME294+q2s0fVO41xiEIm9KujJ7HWu9zeLEXh7Dn3sVIQv3dpnT/2MAKoTdQEBODs1xENKX/52kbTLD572y9seItShHQ1sR14peFcDX1EauzXvxX6p9DSpgo0UztH/WKIW1xxpKUZEkjvvgDPg0Di+B4U+LiCCHtOnsgaNh+HxQ35qxGLdZYCVh0//e8qutmDiRu8d8reYjKpSux2FEWbBns6jux1XjxJuvUmV2QM0ca8OML/WmJU+8qCt+wDl7/fpykTIgVHVeWkbmmt8dM/OgAD9g5YxoYZTglw7KPrpI4UYOer25yMZ4GUn8aHxjS/Lvmex3oCDsXT5qzA++zeQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=9PbDKC4vT+XiL45+78fY0qxlHYofxfvtdk1UEY6ygq0=;
- b=B644WgCQ9rJtbwnoXNRw/4lMYAAS1T6qEEhWksjHqemm43sVGfXFgytPm0L8bUx4HIpxxm49vUGVKIdBBI/DkGPVHjRDtGekPAxUjpC6t1PhGWyv4jkvr9MDgr/h93r8nY2SkzA6Fkm4QAC6ZF+iz3ky99RIaNKZWcrjCmTt5fFWXF42XgujAyc8YRHcGpL2Mi54OQ0GEw3bKgnuDtTvCTwBjj7NrIyCcx32YtuWTemyvyYS1kI96xNKAq/u5anRFev8IhK8/7ynyuByScJc0U0itM4LTjCB+deMIQ1x1MYjKquRHBw2O0ZcXgZv7uqdXBOUUSXkNBw2vcYFtqAGhg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
- dkim=pass header.d=nutanix.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=9PbDKC4vT+XiL45+78fY0qxlHYofxfvtdk1UEY6ygq0=;
- b=IrJgxNRM+U8+47L58RKyAj2Y9iSrOqdZ8RgB77oDqKeJs55ot0waUz8punpJDPynzxP26amcFCYOPcmALipmjREBFh911p7ZbHDi5gkb37QmTkVRg+Wtfa4KD4PkRCQuur696FwK07/24HTG+/xbo8sop3yHDAiHVHzdXu2b+BRsRuLxZ1a0KODHdqmKh5SBl4OGsPZCXzukiqnqiI/6ASspBGbhnUeLt1PG0pPcQ6skBiJbDZ89KlJDnhq0Vjubx+ZcNCgQSEgXXqliL1V6+dMFhKtHaOUOkmWiyuOJqmxkeE7/hfNX92WaFLe84xpCS5sZoC4XXxAOnYEhWXzBcw==
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nutanix.com;
-Received: from PH0PR02MB7159.namprd02.prod.outlook.com (2603:10b6:510:16::8)
- by SA2PR02MB7529.namprd02.prod.outlook.com (2603:10b6:806:135::5) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.496.21; Mon, 12 Oct
- 2026 10:56:04 +0000
-Received: from PH0PR02MB7159.namprd02.prod.outlook.com
- ([fe80::8e97:bc32:822c:b250]) by PH0PR02MB7159.namprd02.prod.outlook.com
- ([fe80::8e97:bc32:822c:b250%4]) with mapi id 15.21.0496.020; Mon, 12 Oct 2026
- 10:56:04 +0000
-Message-ID: <2f3b174c-243d-4988-a3b5-ef4cc20a2494@nutanix.com>
-Date: Mon, 12 Oct 2026 11:56:00 +0100
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/intc/ioapic: deprecate version property
-From: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-To: mst@redhat.com, pbonzini@redhat.com, zhao1.liu@intel.com,
- khushit.shah@nutanix.com, qemu-devel@nongnu.org
-References: <20260821145104.364283-1-mark.caveayland@nutanix.com>
- <64588f90-a94e-4ae6-b326-58536c714b8a@nutanix.com>
-Content-Language: en-US
-In-Reply-To: <64588f90-a94e-4ae6-b326-58536c714b8a@nutanix.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: BY5PR04CA0007.namprd04.prod.outlook.com
- (2603:10b6:a03:1d0::17) To PH0PR02MB7159.namprd02.prod.outlook.com
- (2603:10b6:510:16::8)
+ (Exim 4.90_1) (envelope-from <jeuk20.kim@gmail.com>)
+ id 1xGDjm-0005e6-Lw
+ for qemu-devel@nongnu.org; Mon, 12 Oct 2026 06:58:36 -0400
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <jeuk20.kim@gmail.com>)
+ id 1xGDji-0000wc-Ri
+ for qemu-devel@nongnu.org; Mon, 12 Oct 2026 06:58:34 -0400
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-2dd9ec41bc4so9196595ad.2
+ for <qemu-devel@nongnu.org>; Mon, 12 Oct 2026 03:58:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1791802709; x=1792407509; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=fwi0iXujdLHTAusPZjEirlwrKNPsdESWzCH86y8wZho=;
+ b=m9KffEpt1K9G4XpNUlz9RkKCUcDlyerNBKtPptW9BfYcs9/s1rm6GSVh4lahwMiejp
+ MVlWdc3w5iaEj4qfQuwVAfzVUHyjSibzX127HN0LocAqQfu+Io4HB4NdWTHpld6ncHpR
+ 5G0AUN02S/Hkj45fUqsRYiLVgMSMDUotnYmFjudQxJzqjKbRyYerrjWfAyHf4oKPmu5L
+ qeCh0lj/0aYx/mBUkHizSzySupxlyv3cNPZkf2kwgF6eyqjNuU/0qX5H7xp9vcOJCXew
+ 8Shmet3WmDOD9SPJgo942zmYMt+UyaDYYwXvCkRIavSWEJ3VDS9n3B1Gk9Fx8BowkqMZ
+ u1Lg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1791802709; x=1792407509;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=fwi0iXujdLHTAusPZjEirlwrKNPsdESWzCH86y8wZho=;
+ b=wI+/bx5dpkwDkdDVTG8O8B6hHOOVnQtYw5s0rTIPlLa+K3O+UNEtOIxBocNKEj2zIf
+ Ji+XXiHZKOaChA2UWLaxyCw2F9Ywd+UL30vMTz/eqDXppwEn4BsPrafK/QwiM2XKoiqt
+ yPZP0sm9fgMkk1ydJSmDBiBND6SYt3dUHsGvTMYgnEOrgf66a/DyZfWHWywibTiPT2Nb
+ FPNVD8wU6PZUxc9fIqJ2h3qalFiQQ1RWTyAwpEP0lbdPDpZMtCE9R848z79ez120xB3d
+ 5iNBxT3ka1JZCuQh/MkwShmMVMLwSYKNcZsBjxE+X12Svm/849xkI6s44iESSD7loO8q
+ kHcA==
+X-Gm-Message-State: AFq9FYKTRzm3NqTNqwVi0zaM+ib19dTaburON45nbRdCSY14Mq5BAkyg
+ Up0TRylZ+c7f0BggSYk/+TyUKNSAVkUwNIaBUI4oVISGec+yqZyHzptvg474tA==
+X-Gm-Gg: AYBFou03zvp/p1hjQ9JVskUenvAxG0nI+p4T5VfxZmWigR0qO9M84ZRKU1og0QqGt03
+ UcD5EOtJXxLJObwK8NJ9GWEUmTe0AryxXxuRx2FcyHOyUSaH5bJY/qoqj2uVACUonpoBlXKlHW1
+ nKaAPt7O6CMRVVAnMNAXEXSb1iDeBbeipmB4uKe0CemJgJnkckq9SGLaNwtfMRB/tYdoRDF/CQK
+ gJcXlHxdVyVcZ3fly19LMRrcHvVVYRPFcVnbl8sivKNCUZeV6HCIOBCjsbV7cINGvM+Wcr4/fDW
+ 49l6XKX9jMbBJ1r598eOAEJpAFhfxkTjNruZfbj4Jbp8JKcVKyRmLGEGVzAY7h3S1XkNwlsiUjZ
+ RskgZRUmSSRVtCLARNTXQKfoIbrrHzfWkkxRf79tvFKiOYDBbuFv5UvRwSeF1BBBxUyce/Gb7C6
+ BWunpDXKHt7LK2+PicDQooy6Je2YOMgKxvCkhrWkuJ+bcg/cg4t7RLHH28nZhBKFfNJx/2WE8Uc
+ BYzXHJzTZoxKys=
+X-Received: by 2002:a17:903:19ef:b0:2e8:b20a:88cb with SMTP id
+ d9443c01a7336-2e8b20a89e2mr29204275ad.13.1791802709424; 
+ Mon, 12 Oct 2026 03:58:29 -0700 (PDT)
+Received: from jeuk-MS-7D42.. ([211.226.54.223])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2e84219e6aasm41220305ad.18.2026.10.12.03.58.26
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 12 Oct 2026 03:58:29 -0700 (PDT)
+From: Jeuk Kim <jeuk20.kim@gmail.com>
+To: qemu-devel@nongnu.org,
+	richard.henderson@linaro.org
+Cc: stanleyjhu@google.com, pierrick.bouvier@oss.qualcomm.com, kwolf@redhat.com,
+ hreitz@redhat.com, pbonzini@redhat.com, qemu-block@nongnu.org,
+ jeuk20.kim@samsung.com, j-young.choi@samsung.com
+Subject: [PULL 3/5] hw/ufs: Implement Task Management Request (TMR) handling
+Date: Mon, 12 Oct 2026 19:58:05 +0900
+Message-ID: <5791c5832fead3fcbcd09592f93262477fc9fb2c.1791802312.git.jeuk20.kim@samsung.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <cover.1791802312.git.jeuk20.kim@samsung.com>
+References: <cover.1791802312.git.jeuk20.kim@samsung.com>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PH0PR02MB7159:EE_|SA2PR02MB7529:EE_
-X-MS-Office365-Filtering-Correlation-Id: d171331b-c4de-4e06-dff0-08df284f68f9
-x-proofpoint-crosstenant: true
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|366016|1800799024|23010399003|4143699003|56012099006|18002099003|22082099003|261009223027099003|4133799003|10067099003;
-X-Microsoft-Antispam-Message-Info: JCQT5vtuW+xKqs4jYG0F77INJytVWn5W4/zDY20NzFSABeULeAnIqkgy2RvU4bZurI5plgTrAGlOkxe5BUpoJZrwEIOhK9Sj6LTH72y0+r4wcS8TN4aBWDGRoxizYBPsQnbvg51f6ioAEmBO/IpRZ0avKB+KggiGZgeT2iVT9PVisVF0jNbUszpqe6kbBKbZ7KI+dF5fGVddrNIYJYxM+NeAOUQ1Dssk5kkP2NFhsJo2Ecs4ExCtrLX0XTxbY8RizH3OvDkPTQaBDo4/COU4rJqJCmfPQkPAtw/CXQ94StW6fDDoCMc0lgyWaaQc2YsC26gXnG7si+HTb0LOPKIDvGikx01Fppx5iY4lQiuA4s4d0SpcbWRovkIw3CYJs4+rg+MVTD+z811V6UsEK3ZB39Wzwbink2hbTD5zpe3Bew9G8Oky+2w6lrT6xm0DeBA9swB+ZTtphMUAmEyjxVLQq6R8zhW8D9CUlOsphdYcuFbtFaOIy2RXDGo/ryZEsAlmEs2enNcqDkrfeokOzrl5v1oAWVThoLUeFRESLWP9AcSO85jpC0Nv79EE7n58m8HlcD5v7/R/AgHj2InJnzWXdJBp+e8QMD8sfR/6CbXjk2hmR1Vx0M6Gnh6iiATJYlXF
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:PH0PR02MB7159.namprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(366016)(1800799024)(23010399003)(4143699003)(56012099006)(18002099003)(22082099003)(261009223027099003)(4133799003)(10067099003);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?TmFGcUhqQUhjbDJCZnhXN2NWSnFlMm5qNUNnRVVzV3JxWThWRlF3c09OS0RH?=
- =?utf-8?B?b1l3VCtXbmpUTVBOTDRKcU9nTHpHZUhmT1ZET0E5YkxjcmphOUlPL3hXdS9i?=
- =?utf-8?B?aC9qaVJ2N0dkeE9aU2dzNnNNRXkyRVB6Y1FqQ1hGdThrck9YN0NMWUk4bUFJ?=
- =?utf-8?B?QTdQVW02Q09rWG94eHQvbXNtUGUvVXF2RGkvSHFkNThiazdNTUFldlhqejI2?=
- =?utf-8?B?NWRoOEFhV1VIS2x1Qm1iRjFmenVOYkZXOWlxa0kyTkNHRm8vSnowN0d4Q0Nn?=
- =?utf-8?B?Z1ZTSEY1dTJzWGIvRU9FSHNORUs3b2dEUHEyaUprWVUzYi8yc0wya213cnRL?=
- =?utf-8?B?aytKZkt1YU9hV2kyL25sT3FGTzRmaUM2LzZ1bXYzWlowTlg5cEQ3VmFpWlJ3?=
- =?utf-8?B?T2JoUHBBSFBiNTlqZ2F3dzQ5VUZ0bXBTN1N6M1BSWGhGM1IxOWhqRjZJdUNE?=
- =?utf-8?B?MnI2VURWZXBJS1VkblptUitQT2lGV3ZCMWRDb0FrU0lZQXJJcFEvUmxiMHZt?=
- =?utf-8?B?a3BsSkZ6Vyt4RjYzdEtjaXNXMlNVN1FmVVM0M0pTRW5RcGJYRkFGWmhsWHgz?=
- =?utf-8?B?NWF5YTRmZStzU0pwT1p4QlN5enVoRE9BOTZYSTNSMHNLVmpEUTZvbG1zMUs4?=
- =?utf-8?B?MnNwWkhSakNIK2JtQzVFWUVVMEUzVVlIRjhmK01xK1NBQnoyKzFCM2VtQ2tn?=
- =?utf-8?B?cEZKTnJrMXRrakNxZnRYRi8zQWRiUjNxcjFxVXAwNTRIQklZZGI3d3hmZXJ4?=
- =?utf-8?B?ZlZmam5vQjZEV2xVSHRycEV3SFZQZ1N6c0YwREgyM1JlelBGMURKMW0zK1BV?=
- =?utf-8?B?bGE2cHE1Y1BGWnBPYnBmR2E0UUpwdy9XVExYZnZmZmVwYzZwZjlHQVFjdkxY?=
- =?utf-8?B?LzVwZ0ZiZWJqMGN5TjdCbGViN3cvOVNyTmdYMGRsamRaR3BQSkFSZDhpZ09D?=
- =?utf-8?B?b0JTVjhSbUhxSDg3VzRTaGtNTzUwdVRqR1dMWnVkNms1UGdjdTM0RzlaQVZ2?=
- =?utf-8?B?bDN4dkI5QU56Q04vVjMvZ1NoQjIzd1QyWXNQSGxlWHA0VDgzNEQya2FtRmFH?=
- =?utf-8?B?NS95UVRDN0JaWnBrQVphTDREdEM0TVlOeVcwYkVnRFRYaFM4NGpWU2s2am5m?=
- =?utf-8?B?b3ljTmZSQ015Y1JqOFpQMGJlVVRnSXRpbFpDTTE5enRsSmdUUmlYSVhDVlB2?=
- =?utf-8?B?ZUpvZk1TR1d1dGZuNkR0NWVTUVR1bk44aTNnTDB0VzNtSGVnTW4zZUNtb1V2?=
- =?utf-8?B?UUEyN3Jsb3ZkcEw4OXp2V0Q2QU1DUytNT1NSdjZsdmlqQmdBQVdaSzFWbXU0?=
- =?utf-8?B?UXJXNG1TdjFVeWxUdDV0QVh4c2ZEQWRkQWpQYnhXc3FwZlRSdnhaRG9BYlhp?=
- =?utf-8?B?UC95bnozN3ZFMldZSGVOWVFxSlRFT2d3dlM4NVNrT1FzMVhCSXhQUGZKUUdu?=
- =?utf-8?B?T3lTLyt5ZHkzQ3RLaEg2OGtwZDN2Ty9QYzYweCsxSWpUV044Qks4U0x0aTd0?=
- =?utf-8?B?OHdua0NsSjJlck9IVkFoR05OVkFGekM3OHBPTDQzSlVIeUVOY3U5M0QrWUVh?=
- =?utf-8?B?RjNpNDRuaStRWU0vNXJuK1h2U3dFRzFKTitmZjQwM09wZ3p2R21GV2k1SStL?=
- =?utf-8?B?WEJqK2FqcEpTeXo1TzdMdWU4aThaYmo3ajhCUEY1emlWbzZVUjlVN0ZyRm1O?=
- =?utf-8?B?TzBWNEduMUlic0s1cEc5OXY2T2IvSm9pTzQ2bmpHNTRvYVFsTk9HQjFSVHhY?=
- =?utf-8?B?MmlIQkg5UTJudFI3T3V1T09nUko1YjhRTEdDZEgrWUNRdGV2K0J6UkhrN1M3?=
- =?utf-8?B?REN6QXZJdE5WOUpGZ2JQOERvcWhjK3FNcnU4TnN6WFBNd0VIVzkwQnRhVzh0?=
- =?utf-8?B?TkdCY3BYVm9QQmNnSXNFRm1UaFI0eTZCWW8yRzNYS0phTEVUT3pMd0pmNGQz?=
- =?utf-8?B?bWttZkRZWlZzaEpYSHNpMHpmclY0YzRiSkdUT1U5TFRsSTFWaEJqQi9NbzMx?=
- =?utf-8?B?WldwZkRjOEhGYitlWXpSQzM0NlZ2aXdCTk5KZGpMcGZNZm5LMXF6Vjk4UUJF?=
- =?utf-8?B?TWhCdlpycUR6VkgxTkE0N1A3blF0RTk3MUt2cndHSjF3R29kUDlaTjl0R3VU?=
- =?utf-8?B?WWVGdTJrWjdvcERoNXhoNjc1eHg4Sk94SW01TFAwVEtOcnJwTGlaM21YTG5F?=
- =?utf-8?B?TDhaKzBTMWNSYkVTQmVzWEJWWXhQcUFZNW4reEZpdzQ0UnpEOGtqVEZZQ2xw?=
- =?utf-8?B?VXVJdUVJcmwzbGJYbmthbnBkc0V4eGhmNjlVRVJYdjBqZnQ5cnNOcXA3UFFk?=
- =?utf-8?B?U0F5UWdMUSt3TFoxYW9LZDBBYWIwN21ZU0ZQYVlQRENYNE5MeDNjOHhiWkZC?=
- =?utf-8?Q?Nprxn9EH96XDrC8I=3D?=
-X-Exchange-RoutingPolicyChecked: u2Lq8HHPvAjzA18UKSCDC1ujed9H+oazFlWuyk+J6wzZwZRXh6BUlvzAbY8mtmp1dvWmpAZOPZgtknqlN6039Di+XxaCqUPhN69Dc6S7dsEPvL3Hqjvt6Z+YLmCHOJQNnUFBcPktdSUKswI+8MW4S0OzVs3RhBn5nWz8wLG0ClLytLb3v1JLjxpdzOccX0PK03M77Xen8ZbjbWbbdNMlQVP0E676UI+LGEOM9Jazlfiq4KWOKIGdYPOLNhg/GdRI8elKdoGMjuxF97YCAQecLHRf/lnadI4C6JM3/yof976GH4/IFEoZwTFKlnuSSuRhYGJ4SxkOgAzxvchQDHU5XA==
-X-OriginatorOrg: nutanix.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: d171331b-c4de-4e06-dff0-08df284f68f9
-X-MS-Exchange-CrossTenant-AuthSource: PH0PR02MB7159.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Oct 2026 10:56:04.1344 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: lxxBT87VSel3ww79/p6xq+lQWIAtHGM34xHLZs5x+xksfb02aZVa+b09s/btf6wuKZvFzKOF3BBcILLMQ+FgS1rd9TzXBaS0zgTTevwJH2Q=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA2PR02MB7529
-X-Authority-Analysis: v=2.4 cv=Aol7T+9P c=1 sm=1 tr=0 ts=6accbcc6 cx=c_pps
- a=cFfp9J6W/iLkiH+l/RQb5w==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
- a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
- a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=0kUYKlekyDsA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=VofLwUrZ8Iiv6rRUPXIb:22 a=1L6crL_YRTbalZ11mEUO:22
- a=RpNjiQI2AAAA:8 a=64Cc0HZtAAAA:8 a=XZfvVDbsn2TsmWtDp7oA:9 a=lqcHg5cX4UMA:10
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=z2U-W3hJrleVIN9YIjzO:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDEyMDA0MyBTYWx0ZWRfX8i3aLrpR4HOw
- TpE8InqPknk3hqht9n6X0AUpn9gYBwixqhSLm966IpeH8eXGBoPW943MT9Ic83gVEkzReApz5Ui
- fJ3KH5jZiLrLlItpuG7exlE/JOPpBcQ=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDEyMDA0MyBTYWx0ZWRfXyZNx20WcZwSr
- 39f1RBPVaEDz64uJ3XhAAaWLHJ2s7LKBpSrKX1tMQbxrZt5XhVulu6P0ON/ry4uwXNkQM0/wybe
- A+eTK0/XOQUZZlzrZbPmGJTurDlK3yUi1NpjzUPb8as4h3vKljhFncNZlgv2WNpt9aSRPwup7Ir
- x+intN1NMo8dCLoQzS+H0MhTZcgPP5ZXGyzYQSPVSpjcItUfhieTnwUa59T0yttrGvuHh/4xr/t
- KWeMAMR+Sr6yJN5S1QtPXYLqhmsGDbT4P6v1qkMdG67TeaWyr2bKXPeQzoyxN5+2YSZHmgs6iMG
- wxY4iALis6AXqO9b6yahkSX2TmklbRRUzi/9ZHF6HdNgF+yCpo5qj6bKfKVrT7yCafuIvKowtxE
- P6x6neI0KbnjfNz+sPvLSJ+K1KlMXzf3FNMxVseoRdjuvYV+UCanQPRmorakI08UOlGrgXkbr7a
- JWpfk+rP01CsCGBT+Bw==
-X-Proofpoint-GUID: Ers0r0b9gi50EqGM4vBHgT4N6TU2n0bK
-X-Proofpoint-ORIG-GUID: Ers0r0b9gi50EqGM4vBHgT4N6TU2n0bK
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-10-12_03,2026-10-09_01,2025-10-01_01
-X-Proofpoint-Spam-Reason: safe
-Received-SPF: pass client-ip=148.163.151.68;
- envelope-from=mark.caveayland@nutanix.com; helo=mx0a-002c1b01.pphosted.com
-X-Spam_score_int: -29
-X-Spam_score: -3.0
-X-Spam_bar: ---
-X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=jeuk20.kim@gmail.com; helo=mail-pl1-x635.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_PDS_OTHER_BAD_TLD=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -194,71 +103,217 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 16/09/2026 14:45, Mark Cave-Ayland wrote:
+From: Stanley Jhu <stanleyjhu@google.com>
 
-> On 21/08/2026 15:49, Mark Cave-Ayland wrote:
-> 
->> The version property used to specify the IOAPIC version was originally 
->> set to
->> 0x11 when it was first introduced, but has been set to 0x20 since 
->> v2.8. Since
->> all machines before to v4.2 have now been removed, this parameter is 
->> no longer
->> required so mark it as deprecated pending future removal.
->>
->> Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
->> ---
->>   docs/about/deprecated.rst | 10 ++++++++++
->>   1 file changed, 10 insertions(+)
->>
->> Following on from the discussion at https://urldefense.proofpoint.com/ 
->> v2/url? 
->> u=https-3A__lists.gnu.org_archive_html_qemu-2Ddevel_2025-2D05_msg03027.html&d=DwIDAg&c=s883GpUCOChKOHiocYtGcg&r=c23RpsaH4D2MKyD3EPJTDa0BAxz6tV8aUJqVSoytEiY&m=VQIG-iu-1g3JyKdn64SEj6Y6dVqbYfE1Qg5Y_tIeWrwR2OCa24MKUVV00MIY_5Pz&s=zH9Je8Y209R_2E3w533VXDqbRP-uhhuILVcvmoCkXdM&e=
->> it was suggested that the ioapic version property should be 
->> deprecated. A patch to deprecate the
->> property was proposed at https://urldefense.proofpoint.com/v2/url? 
->> u=https-3A__patchew.org_QEMU_20260210032348.987549-2D1-2Dzhao1.liu-40intel.com_20260210032348.987549-2D18-2Dzhao1.liu-40intel.com_&d=DwIDAg&c=s883GpUCOChKOHiocYtGcg&r=c23RpsaH4D2MKyD3EPJTDa0BAxz6tV8aUJqVSoytEiY&m=VQIG-iu-1g3JyKdn64SEj6Y6dVqbYfE1Qg5Y_tIeWrwR2OCa24MKUVV00MIY_5Pz&s=yWQKfxQqB_u6jU-CM9IYW1HqfEV6C3rUvz1pWzavjTc&e=
->> but was never merged.
->>
->> In the context of Khushit's patch at https:// 
->> urldefense.proofpoint.com/v2/url? 
->> u=https-3A__patchew.org_QEMU_20260804091827.3203086-2D1-2Dkhushit.shah-40nutanix.com_&d=DwIDAg&c=s883GpUCOChKOHiocYtGcg&r=c23RpsaH4D2MKyD3EPJTDa0BAxz6tV8aUJqVSoytEiY&m=VQIG-iu-1g3JyKdn64SEj6Y6dVqbYfE1Qg5Y_tIeWrwR2OCa24MKUVV00MIY_5Pz&s=rM6OQKsZNIdWJwPgdGzV6Y5ngrZQIxJecIlXXX8Wr9k&e=
->> it makes sense to formally deprecate the ioapic version property.
->>
->>
->> diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
->> index 0c656a968f..bfe7240040 100644
->> --- a/docs/about/deprecated.rst
->> +++ b/docs/about/deprecated.rst
->> @@ -305,6 +305,16 @@ the addition of volatile memory support, it is 
->> now necessary to distinguish
->>   between persistent and volatile memory backends.  As such, memdev is 
->> deprecated
->>   in favor of persistent-memdev.
->> +``ioapic.version=xxxx`` (since 11.2)
->> +''''''''''''''''''''''''''''''''''''
->> +
->> +The ``ioapic`` device ``version`` property configures the IOAPIC 
->> version for x86
->> +machines and is typically set from the command line using
->> +``-global`` as it is an in-built device. It was originally set to 
->> 0x11 but since
->> +version 2.8 all x86 machines have defaulted to using 0x20. As all 
->> machines prior
->> +to v4.2 have now been removed, this property is no longer required. 
->> Deprecate the
->> +``ioapic`` device ``version`` property so that it can be removed in a 
->> future QEMU
->> +release.
->>   RISC-V CPU properties which start with capital 'Z' (since 8.2)
->>   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-> 
-> Ping?
-Ping again?
+Implement UTP Task Management Request List (UTMRL) doorbell and TMR
+processing per JEDEC UFSHCI:
 
+- Support UTMRLDBR, UTMRLCLR (clear-on-zero), and UTMRLRSR registers,
+  and gate IS.UTMRCS interrupt assertion on the UTMRD Interrupt (I)
+  bit.
+- Handle UFS_QUERY_TASK and UFS_ABORT_TASK across legacy UTRL and MCQ
+  queues, reporting overall Target Success/Failure in
+  rsp_header.response and the TM Service Response in output_param1.
+  For MCQ, UFS_ABORT_TASK cancels the active SCSIRequest and defers
+  CQE posting (OCS = UFS_OCS_ABORTED) and slot recycling to subsequent
+  SQRTC.ICU cleanup.
+- Reset UTMRLRSR on HCE reset.
 
-ATB,
+Signed-off-by: Stanley Jhu <stanleyjhu@google.com>
+Reviewed-by: Jeuk Kim <jeuk20.kim@samsung.com>
+Signed-off-by: Jeuk Kim <jeuk20.kim@samsung.com>
+---
+ hw/ufs/trace-events |   1 +
+ hw/ufs/ufs.c        | 133 +++++++++++++++++++++++++++++++++++++++++++-
+ include/block/ufs.h |   1 +
+ 3 files changed, 134 insertions(+), 1 deletion(-)
 
-Mark.
+diff --git a/hw/ufs/trace-events b/hw/ufs/trace-events
+index d8173b12b6c..5e5a54a3fb3 100644
+--- a/hw/ufs/trace-events
++++ b/hw/ufs/trace-events
+@@ -15,6 +15,7 @@ ufs_mcq_complete_req(uint8_t qid) "sqid %"PRIu8""
+ ufs_mcq_create_sq(uint8_t sqid, uint8_t cqid, uint64_t addr, uint16_t size) "mcq create sq sqid %"PRIu8", cqid %"PRIu8", addr 0x%"PRIx64", size %"PRIu16""
+ ufs_mcq_create_cq(uint8_t cqid, uint64_t addr, uint16_t size) "mcq create cq cqid %"PRIu8", addr 0x%"PRIx64", size %"PRIu16""
+ ufs_write_mcq_op_reg(uint8_t qid, uint32_t offset, uint32_t data) "qid %"PRIu8", offset 0x%"PRIx32", data 0x%"PRIx32""
++ufs_process_tmr(uint8_t func, uint32_t tag, uint8_t resp) "query_func 0x%"PRIx8", task_tag %"PRIu32", tm_resp 0x%"PRIx8""
+ ufs_hce_reset(void) "HCE 1 -> 0 reset: cancelling BHs, resetting MCQ and request lists"
+ 
+ # error condition
+diff --git a/hw/ufs/ufs.c b/hw/ufs/ufs.c
+index 956ef9c878e..4c505e0bffe 100644
+--- a/hw/ufs/ufs.c
++++ b/hw/ufs/ufs.c
+@@ -772,6 +772,7 @@ static void ufs_hce_reset(UfsHc *u)
+     u->reg.utmrldbr = 0;
+     u->reg.utrlcnr = 0;
+     u->reg.utrlrsr = 0;
++    u->reg.utmrlrsr = 0;
+     u->reg.is = 0;
+ 
+     /* 4. Free MCQ Queues and reset MCQ dynamic registers */
+@@ -809,6 +810,126 @@ static void ufs_hce_reset(UfsHc *u)
+     ufs_irq_check(u);
+ }
+ 
++static UfsRequest *ufs_find_req_by_tag(UfsHc *u, uint8_t lun, uint32_t task_tag)
++{
++    if (task_tag < u->params.nutrs) {
++        UfsRequest *req = &u->req_list[task_tag];
++        if ((req->state == UFS_REQUEST_RUNNING ||
++             req->state == UFS_REQUEST_READY) &&
++            req->req_upiu.header.lun == lun &&
++            req->req_upiu.header.task_tag == task_tag) {
++            return req;
++        }
++    }
++
++    if (u->params.mcq) {
++        for (int q = 0; q < ARRAY_SIZE(u->sq); q++) {
++            UfsSq *sq = u->sq[q];
++            if (!sq) {
++                continue;
++            }
++            for (int i = 0; i < sq->size; i++) {
++                UfsRequest *req = &sq->req[i];
++                if (req->state == UFS_REQUEST_RUNNING &&
++                    req->req_upiu.header.lun == lun &&
++                    req->req_upiu.header.task_tag == task_tag) {
++                    return req;
++                }
++            }
++        }
++    }
++
++    return NULL;
++}
++
++static void ufs_process_tmr(UfsHc *u, uint32_t val)
++{
++    hwaddr base_addr = (((hwaddr)u->reg.utmrlbau) << 32) + u->reg.utmrlba;
++    uint32_t completed_int_mask = 0;
++
++    u->reg.utmrldbr |= val;
++
++    for (int i = 0; i < u->params.nutmrs; i++) {
++        if (val & (1 << i)) {
++            uint64_t desc_addr = base_addr + i * sizeof(UtpTaskReqDesc);
++            UtpTaskReqDesc desc;
++            uint8_t tm_func, tm_resp, lun;
++            uint32_t task_tag;
++
++            if (ufs_addr_read(u, desc_addr, &desc, sizeof(desc))) {
++                continue;
++            }
++
++            tm_func = desc.upiu_req.req_header.query_func;
++            lun = desc.upiu_req.req_header.lun;
++            task_tag = be32_to_cpu(desc.upiu_req.input_param2);
++
++            if (tm_func == UFS_QUERY_TASK) {
++                UfsRequest *req = ufs_find_req_by_tag(u, lun, task_tag);
++
++                if (req) {
++                    tm_resp = UFS_UPIU_TASK_MANAGEMENT_FUNC_SUCCEEDED;
++                } else {
++                    tm_resp = UFS_UPIU_TASK_MANAGEMENT_FUNC_COMPL;
++                }
++            } else if (tm_func == UFS_ABORT_TASK) {
++                UfsRequest *req = ufs_find_req_by_tag(u, lun, task_tag);
++
++                if (req) {
++                    if (ufs_mcq_req(req)) {
++                        if (req->sreq != NULL) {
++                            SCSIRequest *sreq = req->sreq;
++                            req->sreq = NULL;
++                            scsi_req_cancel(sreq);
++                        }
++                        req->state = UFS_REQUEST_ERROR;
++                    } else {
++                        ufs_clear_req(req);
++                        req->state = UFS_REQUEST_IDLE;
++                        u->reg.utrldbr &= ~(1 << req->slot);
++                    }
++                }
++                tm_resp = UFS_UPIU_TASK_MANAGEMENT_FUNC_COMPL;
++            } else {
++                tm_resp = UFS_UPIU_TASK_MANAGEMENT_FUNC_NOT_SUPPORTED;
++            }
++
++            memset(&desc.upiu_rsp, 0, sizeof(desc.upiu_rsp));
++            desc.header.dword_2 = cpu_to_le32(
++                (le32_to_cpu(desc.header.dword_2) & ~UFS_MASK_OCS) |
++                UFS_OCS_SUCCESS);
++            desc.upiu_rsp.rsp_header.trans_type =
++                UFS_UPIU_TRANSACTION_TASK_RSP;
++            desc.upiu_rsp.rsp_header.flags = 0;
++            desc.upiu_rsp.rsp_header.lun = desc.upiu_req.req_header.lun;
++            desc.upiu_rsp.rsp_header.task_tag =
++                desc.upiu_req.req_header.task_tag;
++            if (tm_resp == UFS_UPIU_TASK_MANAGEMENT_FUNC_COMPL ||
++                tm_resp == UFS_UPIU_TASK_MANAGEMENT_FUNC_SUCCEEDED) {
++                desc.upiu_rsp.rsp_header.response = UFS_COMMAND_RESULT_SUCCESS;
++            } else {
++                desc.upiu_rsp.rsp_header.response = UFS_COMMAND_RESULT_FAIL;
++            }
++            desc.upiu_rsp.output_param1 = cpu_to_be32(tm_resp);
++
++            if (ufs_addr_write(u, desc_addr, &desc, sizeof(desc))) {
++                continue;
++            }
++
++            trace_ufs_process_tmr(tm_func, task_tag, tm_resp);
++            u->reg.utmrldbr &= ~(1 << i);
++            if (le32_to_cpu(desc.header.dword_0) & UFS_UTP_REQ_DESC_INT_CMD) {
++                completed_int_mask |= (1 << i);
++            }
++        }
++    }
++
++    if (completed_int_mask) {
++        u->reg.is = FIELD_DP32(u->reg.is, IS, UTMRCS, 1);
++        ufs_irq_check(u);
++    }
++}
++
+ static void ufs_write_reg(UfsHc *u, hwaddr offset, uint32_t data, unsigned size)
+ {
+     switch (offset) {
+@@ -871,10 +992,20 @@ static void ufs_write_reg(UfsHc *u, hwaddr offset, uint32_t data, unsigned size)
+     case A_MCQCONFIG:
+         u->reg.mcqconfig = data;
+         break;
+-    case A_UTRLCLR:
+     case A_UTMRLDBR:
++        if (!FIELD_EX32(u->reg.hce, HCE, HCE) ||
++            !FIELD_EX32(u->reg.utmrlrsr, UTMRLRSR, UTMRLRSR)) {
++            break;
++        }
++        ufs_process_tmr(u, data);
++        break;
+     case A_UTMRLCLR:
++        u->reg.utmrldbr &= data;
++        break;
+     case A_UTMRLRSR:
++        u->reg.utmrlrsr = data;
++        break;
++    case A_UTRLCLR:
+         trace_ufs_err_unsupport_register_offset(offset);
+         break;
+     default:
+diff --git a/include/block/ufs.h b/include/block/ufs.h
+index b72403c478e..b0515325f92 100644
+--- a/include/block/ufs.h
++++ b/include/block/ufs.h
+@@ -141,6 +141,7 @@ REG32(UTMRLBAU, offsetof(UfsReg, utmrlbau))
+ REG32(UTMRLDBR, offsetof(UfsReg, utmrldbr))
+ REG32(UTMRLCLR, offsetof(UfsReg, utmrlclr))
+ REG32(UTMRLRSR, offsetof(UfsReg, utmrlrsr))
++    FIELD(UTMRLRSR, UTMRLRSR, 0, 1)
+ REG32(UICCMD, offsetof(UfsReg, uiccmd))
+ REG32(UCMDARG1, offsetof(UfsReg, ucmdarg1))
+ REG32(UCMDARG2, offsetof(UfsReg, ucmdarg2))
+-- 
+2.43.0
 
 
