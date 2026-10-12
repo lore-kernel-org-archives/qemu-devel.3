@@ -4,79 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C149ACA9ED2
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8888CA9ED0
 	for <qemu-devel@archiver.kernel.org>; Mon, 12 Oct 2026 11:54:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGEak-0001Ph-7A; Mon, 12 Oct 2026 07:53:18 -0400
+	id 1xGEaj-0001PY-9d; Mon, 12 Oct 2026 07:53:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <waysorrypub@gmail.com>)
- id 1xGEOG-0007Hr-NG
- for qemu-devel@nongnu.org; Mon, 12 Oct 2026 07:40:25 -0400
-Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
+ id 1xGEPW-0007el-6R
+ for qemu-devel@nongnu.org; Mon, 12 Oct 2026 07:41:43 -0400
+Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <waysorrypub@gmail.com>)
- id 1xGEOF-0007zW-29
- for qemu-devel@nongnu.org; Mon, 12 Oct 2026 07:40:24 -0400
-Received: by mail-pj1-x102e.google.com with SMTP id
- 98e67ed59e1d1-3ab8309dcbaso1225478a91.1
- for <qemu-devel@nongnu.org>; Mon, 12 Oct 2026 04:40:21 -0700 (PDT)
+ id 1xGEPU-00088O-G8
+ for qemu-devel@nongnu.org; Mon, 12 Oct 2026 07:41:41 -0400
+Received: by mail-pj1-x1029.google.com with SMTP id
+ 98e67ed59e1d1-3a80d1c98f5so996255a91.0
+ for <qemu-devel@nongnu.org>; Mon, 12 Oct 2026 04:41:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1791805220; x=1792410020; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=CRtsmf4dp1yLdO1IThIeVYTpKJ/JnbXZagFUSD8OlUk=;
- b=Lb5Q9kEmNtspUD2PO0cbU+cvTHjUu1s1aJ0l72zwSC4u1KeOps998Wi5ufGV1fPp0s
- G0quPXsDgs1wZAjpNjbDxyGbZlNsZvo0JQ5FnuKBDcAehTDLVQJsXRNPQZrJWoQWBm/4
- 7VFXh+Fns2TNW+86tynbyPceikMzaEP1GYMlAFE7MPn0S/w6jkNIdc66AiozWCalBzIc
- hEeS4y7/tCHK38W8oDrY62BwTPK4k9yVuoK++Ow+0SAtDaZUK5sTlDvcFALMxJwVlghZ
- uz0AN/5nX0UY/pJLptJYOz1zS1JmqohWlGMz6UkwmEEXbZqrESb45SN27GL/uIlDq9ts
- bk9A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791805220; x=1792410020;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=gmail.com; s=20251104; t=1791805299; x=1792410099; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=CRtsmf4dp1yLdO1IThIeVYTpKJ/JnbXZagFUSD8OlUk=;
- b=qBvfnP+44+tScRau/RYW9+tZK9L1iMhL+tBQRpokV6vxP4CaBLIPOesPArZJPRw+yd
- kD2YCwDVG8yJoS0en6JAHHwOsRkU6kHbLNMGmjwIKLNpOJNS/xvx8cdrN4pdqpbb0b/9
- D+zhsCeeTsqqBkYNyzTqUo3CXamO+1R9SrtkDg+6F5KyBVs49fINdgSpZ2f911d3hCmD
- HHlJIR4YqnnU/m7TKBsmvnttCeJENIkN3achehEhkng3Jad9Rl04DIvUOQmLoXRZb5GI
- sNjVXcVmmzHblljtvLTcVUGjX1MgsDeoFVS8Wj2VNYGHsgAvwasMIXqAS48KQmRbeyHW
- tu0w==
-X-Gm-Message-State: AFq9FYIELEjzwxughXTFVFZpKVZvbvhtHSqjTe1zEw91c9ng8BWHsYVX
- MDhFYkYtoJEHjDvKXXo1fxG/TrIjEBe9Uq6fwDAdbaFnCxyj2apL7+HsYyhz2KAE/4TPbg==
-X-Gm-Gg: AYBFou3RVjQa73got3Hhs1OfIbR3Kw+EzTYLFZsFOk+xF12Y9hQybmKCiiF0pZ22zlM
- KfLUAJZVZJLBR6OxBk93YcnTxUHGkGtIEzr9sTBBgnZvrBMbDtPh5qsiQtzZeQkehcNtWG8WmpV
- Uq2OgoZZ5nUCAY/Gcbc+R7V/P3F26jU5v2x9nQ+FjtPWOdQKqqzp1d7zXP6LeONrjiZb1KjmtPH
- cZ6rS6VUlO6H3npAWZ4e57uiRiHN/5tana8j3t60SoVHotj7qma4xRPT7rNtm6oYgq4Qc4M8kKn
- xa3Kv8sODw3GTpvYBnBSMROVHto592RlafLKspGFK9QuhBbGpt61iw31hgHht4o9wBPMDUq93bP
- O8cBBk4dNc1LiRdoj/V4Or3UIdo2Z9T7CUkwPB1enSVEtl+9apJf6KzqE/lI7nlmwrIqaUvaPHH
- 5ocHnPfg7km4mzHoQY5d8NZiLQK+QzxyaLXhuqJkN0Tw0vL1YYdmv92ryQ14YGtb7ls7UqQhk+C
- A==
-X-Received: by 2002:a17:90b:1d4f:b0:3a2:b4a6:9299 with SMTP id
- 98e67ed59e1d1-3ab36d6f783mr6333534a91.26.1791805220331; 
- Mon, 12 Oct 2026 04:40:20 -0700 (PDT)
+ bh=F+xnFkEsgbhMSblobVfa2gVolg6q1b2Mo+aPU6vOhQQ=;
+ b=gTj0rGkKnYld9Jzl6M6iKRvXr8kyKA7M5lGcjTFIzPqNVixBWp2QhYdVcIdFIgNjIF
+ 1wMODQPJ9kqo1sFkk0cBVSFqFByARtDM3KmhBDLlTh4ganap6nQEQFuFt8abafrSAsS9
+ D91OwKTGs00B3MFxQHc7buoVowfDP5WozeKSScirrj2gHt1hnclMRlamfPMsL+psrM9q
+ Nuu8RvZgUL0pitmircmyRvhQdGuh8ZmPuUgpLMAO8tiIncZm+mxr+oKGChyhLHOx2V1U
+ ZOoG8WlC4IuCbxuKE38x98WM/VGyh0LNRoD9X0/byWvZnKkQM2avb7nXuDfS7+8JYZME
+ IH3A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1791805299; x=1792410099;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=F+xnFkEsgbhMSblobVfa2gVolg6q1b2Mo+aPU6vOhQQ=;
+ b=By9oX1ZeMVJKP/bxA2RQ7uq8OpRq+YQSRWtbfhom7//xM5Qqe2hmijE5nKxLHwizAz
+ qblYpBDluR2JRKDJjEEQ8MoZ7/w1EgGRlz1uR6AwyLRzoGJRZbHNtV9gCFz9MrZkWRr7
+ P4/ZonNXLRGpGnXd1h2CTYwCIGfVoJ2Rqu70OdFsvlBSq2cvkef9uBfHPch2U7+e1HAb
+ vSeBlI4q+Ec6TZtACZqt7XRfYXKRwLNEcGEbGPWQ2XzoVKef34xvrXHb9fcg03D40tJn
+ 5lI6A6CqEFQekO27lHJX+Bpj1L9iuruEjsRpxMGJDGt85Fdi5FORcnpSAvMSzblrlVFh
+ 3xhQ==
+X-Gm-Message-State: AFq9FYLL6SfMeOEkW05QyUe4H5VBZ5YMx8EyRUrN1ftGjeN8BQZj171f
+ fFk83EVcua8mlFcM9llCvP282Y60qdzslr6EF2HGJtSZNIE8jNXtObAZvMNXejYBdikVdw==
+X-Gm-Gg: AYBFou1Xzuc4B3z9m1YyhP50wqyDjSs5vv7i2qHX/JFDFmkdc/ROoP3tq6qMEsa5CCe
+ c44RnnjqAC1IHHJbcX97hfVLxntlDEpQjBx8iJ6bEjaRYTYND8mGEYnLDdiXuCrOD2qvYfJXFrT
+ e+cZ737KvEZDu9zCTkrhA2kTE3rWF9HprsbXNtBXas9blqJ8nKelDFAo4LRoJ+Da6e3EAAWr8u9
+ UBnExQ0aI7hLuAmp/YBdwdOimp5AyJaWFh43oONuIW+BG2Q91VHOrl1cyR+oXnx9tzUM0bTi8WI
+ 6lwW4ZI02P6mx1zmGQhWGVTx8K2dLeGzqffGFjhjkeGLTaHQsFycJ/+1AF+HLV6Fi4PgOupg1s3
+ 7V/oVNOX2dP3LpzpD8xWK4Yo4D7dsIidN6ZOQ3n0wWr/Dcw2MWrLf5aG2QQlnQ82JZhQMt1QDkR
+ LrjWKVBrdLxayJ3nUPjtVG1/mNt/G/O0Y9LXQDc1/PleGe0RPwve9ToYrt1xoAaIDqboQTNRinA
+ g==
+X-Received: by 2002:a17:90b:4e8f:b0:3ab:c6c:51b8 with SMTP id
+ 98e67ed59e1d1-3ab3ac91ba9mr7109445a91.57.1791805298829; 
+ Mon, 12 Oct 2026 04:41:38 -0700 (PDT)
 Received: from archlinux ([2409:8949:4c50:eb:9b22:b05b:94dc:7aa0])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3ab421566acsm8614008a91.3.2026.10.12.04.40.13
+ 98e67ed59e1d1-3ab421566acsm8614008a91.3.2026.10.12.04.41.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 12 Oct 2026 04:40:17 -0700 (PDT)
+ Mon, 12 Oct 2026 04:41:38 -0700 (PDT)
 From: pillow <waysorrypub@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: 17746591750@163.com, maobibo@loongson.cn, lixianglai@loongson.cn,
  jiaxun.yang@flygoat.com, mst@redhat.com, imammedo@redhat.com,
  anisinha@redhat.com, pillow <waysorrypub@gmail.com>
-Subject: [PATCH 0/3] hw/loongarch/virt: Fix clock property name typo and order
-Date: Mon, 12 Oct 2026 19:39:55 +0800
-Message-ID: <cover.1791803914.git.waysorrypub@gmail.com>
+Subject: [PATCH 2/3] hw/loongarch/virt: Fix clock property name typo and order
+Date: Mon, 12 Oct 2026 19:39:57 +0800
+Message-ID: <8e36ee3baff3e6abef94cda37d564aeb690b161b.1791803914.git.waysorrypub@gmail.com>
 X-Mailer: git-send-email 2.56.0
+In-Reply-To: <cover.1791803914.git.waysorrypub@gmail.com>
+References: <cover.1791803914.git.waysorrypub@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
- envelope-from=waysorrypub@gmail.com; helo=mail-pj1-x102e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
+ envelope-from=waysorrypub@gmail.com; helo=mail-pj1-x1029.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,22 +103,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The property was incorrectly named "clock-frenquency" and is now corrected to "clock-frequency". The order between the property name and its frequency value has also been adjusted for consistency.
+The original code had a typo in the clock preperty name, and the
+property name and frequency value were in reversed order.
+According to the _DSD format rules, the property name string comes
+first, followed by the property value:
+https://github.com/UEFI/DSD-Guide/blob/main/src/dsd-guide.adoc#data-format-definition
 
-pillow (3):
-  bios-tables-test-allowed-diff.h: Allow LoongArch DSDT.*
-  hw/loongarch/virt: Fix clock property name typo and order
-  tests/data/acpi/loongarch64: Update expected DSDT.*
+Signed-off-by: pillow <waysorrypub@gmail.com>
+---
+ hw/loongarch/virt-acpi-build.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
- hw/loongarch/virt-acpi-build.c                |   2 +-
- tests/data/acpi/loongarch64/virt/DSDT         | Bin 4603 -> 4599 bytes
- tests/data/acpi/loongarch64/virt/DSDT.memhp   | Bin 5824 -> 5820 bytes
- tests/data/acpi/loongarch64/virt/DSDT.numamem | Bin 4609 -> 4605 bytes
- .../data/acpi/loongarch64/virt/DSDT.topology  | Bin 4905 -> 4901 bytes
- 5 files changed, 1 insertion(+), 1 deletion(-)
-
-
-base-commit: 615ece3c406b262996e569f29ea6eed0d81c4d8d
+diff --git a/hw/loongarch/virt-acpi-build.c b/hw/loongarch/virt-acpi-build.c
+index 54965f0..4081730 100644
+--- a/hw/loongarch/virt-acpi-build.c
++++ b/hw/loongarch/virt-acpi-build.c
+@@ -336,8 +336,8 @@ static void build_uart_device_aml(Aml *table, int index)
+                                   AML_SHARED, &uart_irq, 1));
+     aml_append(dev, aml_name_decl("_CRS", crs));
+     pkg0 = aml_package(0x2);
++    aml_append(pkg0, aml_string("clock-frequency"));
+     aml_append(pkg0, aml_int(0x05F5E100));
+-    aml_append(pkg0, aml_string("clock-frenquency"));
+     pkg1 = aml_package(0x1);
+     aml_append(pkg1, pkg0);
+     pkg2 = aml_package(0x2);
 -- 
 2.56.0
 
