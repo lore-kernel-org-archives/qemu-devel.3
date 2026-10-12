@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBAD4CA9EDA
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C2B2CA9ED6
 	for <qemu-devel@archiver.kernel.org>; Mon, 12 Oct 2026 06:45:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xG9mO-0001iw-W0; Mon, 12 Oct 2026 02:45:01 -0400
+	id 1xG9mS-0001jt-Fv; Mon, 12 Oct 2026 02:45:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1xG9mK-0001iU-Bi; Mon, 12 Oct 2026 02:44:56 -0400
-Received: from mail-japanwestazlp170120003.outbound.protection.outlook.com
- ([2a01:111:f403:c406::3] helo=OS8PR02CU002.outbound.protection.outlook.com)
+ id 1xG9mM-0001ii-Is; Mon, 12 Oct 2026 02:45:00 -0400
+Received: from mail-japaneastazlp170130007.outbound.protection.outlook.com
+ ([2a01:111:f403:c405::7] helo=TYDPR03CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1xG9mI-0006M1-9h; Mon, 12 Oct 2026 02:44:56 -0400
+ id 1xG9mK-0006MT-I1; Mon, 12 Oct 2026 02:44:58 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Wt7tlEYfybBhsLmUwXSDnJwpzqNne0L1lCTmYpVgAuCcGl6PQtBo86pmF8vj4PPO1VgNfaXjmYIOkTJFzT0ijBJcEaagXiPChWR/zbvLmJD08f5pDVP5RuuCpQ80Wypum9pywMbweonkHziuwa0GKpieAGhRRKnv3vRRUDI1bnujfc4X6eUqBI/y4tnF5S6Ug2OMhZBDO17mrPf/OfUQREPNqw54Wybv91Mzf9eMQ3BOLZMGPVOBv7dTtS00aXl3U2uQdL42PCRnGwk8V2jchRNW23f07Oh/1Ema4Bg+cRGL9ofHMmlyOq19e06ZMfQKt2OUYE8Gw8O4yZGxqb3gEA==
+ b=kCqMji+yFyD6vM0oH/G405cHPbcwHyzpPwKef2hOut5k0py1tadGjDxFAkNszsjze/oMkn6FLpItO1pQJC6KUwEWYD9rDYGpSIMpKwjNQsChlTsg4UXNKMbXWjFVNaRWtuTwOXwo7bm6Zl7g7bUR+nR8frIPIjClZYOaB418zs21/booOT5HeVUXrS4HT8ZlEH9zBaDLXoe4wzPQ5byjBwKZK9fSqbjFNWkMq0zC2Go7+PiPET/JMuIG/+9OyU9rBLWd8dTLny9090kUkT8yxLGuFFBKQLVCWBMZ95U+6uek2oabxwnB+LkdUQV7lZmLeCOPZ3kI6znQm8KPymnCTA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=uHQcjjIFsKLs+Vev4ri8qrPxCMe5G9Yf12M5FybPQD8=;
- b=hJ5o/Lj4/259qjM8s5zHKQLbCKxsH7/J/NA7KCT6xnOleB3wowAc+NzNxTfk2I3X7Q7M0wb+HcIErLccYoIX1FOJ53i1zVbcUxICRWOQCO/glpzb7lf5hpx51jleJa/v2uDjBklgMr4PxGOJPKSLck1VaW+Dc7/MfVtxp1DNT4kp7HsTF3eqPVpncVBPXX+Yd2e/Y604C3ylNr6qvzaTuDoPvj4f99OKGAVVOaz7QnCbOLQWHGkD6AAqMvofAMDJFhBT2sUCSq4ZAW15V0czFdSOJDuib4QsOauHP1rP17J/7RU1wXPIBVjPAcvKRnt4tEPTzivjq7Wj8oCnqTiyMA==
+ bh=9OY27Qx08dW8Zys0s0KmIAxX730KvsQ8Jrawdepy6vQ=;
+ b=cYlI/H0q4a9MOEaA67XvyZ2MGW1cS4dizF1ayvAZ/URtFVFu5rfnFO96KaAN3/T/kktYJe5PpAVf23jNEvc5P4QipAC0bJ4X55qS4lIlwalQ67aJmxGgySnXhEz+FnFqtWfQR6otZNEe0tP35vYbGEemOFa/kWfVwDlMaxvlA6Z7xeagcKADzD7QZG2uVqTZbQWIyYEZ9HHZ05jFGj3RVOR88tV0AgQTZreCov45J2j+jX4MLEF04QMEMsu8Sv6xMVnIPDEc8S1Ij+P+JB+2/O/C7l8IjW5Z7p4dxfzy78HZPXL5w2PqioRatI95VLAeA0ox7T3TCtsgjwasc3zlCw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
  header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=uHQcjjIFsKLs+Vev4ri8qrPxCMe5G9Yf12M5FybPQD8=;
- b=NtR7137DuL3JZCt6Jjt6oNXR81fH4VrbpRR5qwV6SGaTQge1tMyAGwrIN/pNzuBZWFW/R9cYLuY+/NPG5UAGcOOB261dmzpk/O7RIyy8HuHCB5aMzPjbEYOtMVOUtZxQLhUisc05ZvuF855EUFvrewoMYNLvQV7RNImdUcUu15AV3IVQZcpzH0XGe/eOYcbsUQVnFoo1Du5Rbg3uyiOZ80G+AA36EX4IxDkYHZTL5Tny+jDjZRxR1VRjmfJKe+9YM2sk4GAIEV89Xjx4T8S63pXQ0i6IBqVPjcDix43zHEylzh2b9lyRhoagT3BX+9ef6DA7FdjHRD6orGUlVF4U+A==
+ bh=9OY27Qx08dW8Zys0s0KmIAxX730KvsQ8Jrawdepy6vQ=;
+ b=E230XVgyYhKVk9QQIeAK/n+7Om5gIWVOIwpVV7vNWUqvOGIEQ062kLjqk0WxDyfdc17nWDpYTC1Y3c/zYSBlgm3I3Loe/9JTnHXKPy9J6J9TqQmEa3cWmrpWkRzU9Bf/n/cDgeDjlKoe8OVtqBzfb2pgRuCMmSikst0VusrEPjUz6x/Na4lYm3mcNegFad+QYoGvktJDt7G8vZUPhIiMy9WJq0C+nUqqrx0Mp4uEJDTRrG+Qpw54NWtZNIiIo+fi4gYuXZvTMg5k3amltE2K+ubyNY0iqYFHqqyNrbi2rxLMdyGYfNlGhUPt8W6ZOfhTiKGUYi0FrWCdEBpudZCY/Q==
 Received: from SEZPR06MB7362.apcprd06.prod.outlook.com (2603:1096:101:253::10)
- by SI3PR06MB8707.apcprd06.prod.outlook.com (2603:1096:4:2a5::16) with
+ by SI6PR06MB7244.apcprd06.prod.outlook.com (2603:1096:4:243::7) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.496.21; Mon, 12 Oct
- 2026 06:44:46 +0000
+ 2026 06:44:47 +0000
 Received: from SEZPR06MB7362.apcprd06.prod.outlook.com
  ([fe80::cd2d:35d2:a702:1de6]) by SEZPR06MB7362.apcprd06.prod.outlook.com
  ([fe80::cd2d:35d2:a702:1de6%4]) with mapi id 15.21.0496.020; Mon, 12 Oct 2026
- 06:44:46 +0000
+ 06:44:47 +0000
 From: Jamin Lin <jamin_lin@aspeedtech.com>
 To: "philmd@oss.qualcomm.com" <philmd@oss.qualcomm.com>,
  =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@kaod.org>, Peter Maydell
@@ -52,12 +52,15 @@ To: "philmd@oss.qualcomm.com" <philmd@oss.qualcomm.com>,
  <anisinha@redhat.com>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open
  list:All patches CC here" <qemu-devel@nongnu.org>
 CC: Jamin Lin <jamin_lin@aspeedtech.com>, Troy Lee <troy_lee@aspeedtech.com>
-Subject: [PATCH v2 00/12] hw/arm/aspeed: Use a table for unimplemented devices
-Thread-Topic: [PATCH v2 00/12] hw/arm/aspeed: Use a table for unimplemented
- devices
-Thread-Index: AQHdWhUrrD+J4XRe+EaNz4FMQh3dwA==
-Date: Mon, 12 Oct 2026 06:44:45 +0000
-Message-ID: <20261012064445.2571633-1-jamin_lin@aspeedtech.com>
+Subject: [PATCH v2 01/12] hw/misc/unimp: Add create_unimplemented_devices()
+ helper
+Thread-Topic: [PATCH v2 01/12] hw/misc/unimp: Add
+ create_unimplemented_devices() helper
+Thread-Index: AQHdWhUsNiuZTkRDnU+UXALkHv/p8g==
+Date: Mon, 12 Oct 2026 06:44:47 +0000
+Message-ID: <20261012064445.2571633-2-jamin_lin@aspeedtech.com>
+References: <20261012064445.2571633-1-jamin_lin@aspeedtech.com>
+In-Reply-To: <20261012064445.2571633-1-jamin_lin@aspeedtech.com>
 Accept-Language: zh-TW, en-US
 Content-Language: en-US
 X-MS-Has-Attach: 
@@ -65,71 +68,72 @@ X-MS-TNEF-Correlator:
 authentication-results: mx.microsoft.com 1; dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=aspeedtech.com;
 x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SEZPR06MB7362:EE_|SI3PR06MB8707:EE_
-x-ms-office365-filtering-correlation-id: 7f0054ee-8bd5-4b39-ef98-08df282c4dd4
+x-ms-traffictypediagnostic: SEZPR06MB7362:EE_|SI6PR06MB7244:EE_
+x-ms-office365-filtering-correlation-id: 377113dd-cd0f-450d-eca2-08df282c4e8b
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
 x-microsoft-antispam: BCL:0;
- ARA:13230040|23010399003|376014|1800799024|366016|10067099003|18002099003|921020|38070700021|261009223027099003|261009221227099003|56012099006;
-x-microsoft-antispam-message-info: 9OgIPvZd6WA+3AAHI84cBbedzYgbYv9eQ7RnQit4uMM82JXOI8tyD+Sw+anqHvfO5re4HjOtnQqzDKulBz4LnUcV07xOSqIbt22djp2ySiVbK7V2O6HxtcaNRhE5PtMj0kcX/2Fd05mH8qHxrjxOg1Je7y0O1KzmdF1vEp0bVp32lccuNUeiKHmdvI2CuyN1kxt3uO1gILJx1vxqknXENbXveXzAJQUzT3onX1UrmzbFzpIxfXc00PnTa3wd6LbwxCV+vFogqdT8DpBlqW66E7MXawOxzko+Y52L9/RwSljgWso2xS4WK4uO86F56luT5SZSmqZQrjxKm5tgBaLe0jsvLbpjV/zBdNMdxpOPdmiknOxAkCUBiLcR/7HQHhHoqU4HDLTLT76wk0IHhwZ77JOwBcJdPig6eZ9CV5JwJVujn5x7RhvdmENDFn3J63DJFrPVQQCab8lhtUSJsQ1/ig3rQ6FtdMX/jpRKbgqRAmeoarfUzTU0W8hJqVUEgT5LKuQMyG5Q8cKKZXOriQ3oriuCzYkFeiE9K+1UCpLna3hJi24b2ZoZ+iSq7itZMyI6z/jFvEmGfhvxHa+CT/+aKMUdWJ2CGqVNe1Cav17v2JPzcSX2RgSvFNWk5L2Z4DlouYarjCjV0q84dFI9HyeTMn36YONvpSWRpidV5gz3yj4+sMOt8Gq3KGqHqHacN4gxMNPJ/9oplDUPE6HmJbsVYhQRXJbGqe3nVKcwucQvnafxij9VIycaTp4c5y44aeNs
+ ARA:13230040|23010399003|1800799024|366016|376014|10067099003|261009220027099003|261009223327099003|261009221227099003|261009221727099003|261009223027099003|38070700021|921020|22082099003|18002099003|56012099006;
+x-microsoft-antispam-message-info: /r3B926Pmu0p8Sqh1nSBVqkUztlqDRjBCp4kjZZxtRw1baLUhhc8SyuFGjKcq3CKzaA+FjHZeZr7tWXDLg2NqqS+D3iJwe0MNsQctENqLIcfdB1DBMbOQEtbAoiFb3gemfK/NyYAjC7+vPSIF0yOq3wUlnWOTvWyJMaL5G8mjXNxKLU6siavr4O7Hjm8YamAgh++8mZUmcHOKIZvJs1DCbYqfwrKkJhAlpPtfBZZtt7XZg8JYsNIS9QQoMpSz61xxHdvBdEyhxkK63h8jDpXK9nNpYi73K/3WwO/w5hZCw+EdjLN0oZ4OhaZy9mTkXdiextaGyAQzI8vXaSpBgHZsd4qIaGSzzNuYhDC1B+pNPxew9yYFWU+8gAfh+GseUfK+RO6slCTsN2v2QXN2cGHFrAnvjfTr4tME8/YsgoIUtbA9RWlAwSljHscDw/EwBsgRhmdIyfKmM1lbmEAJ9WqvzFTdNtTKD14BQr5gaDYqVvlMTCKcWB4qOTdZLST6fW3ZnAPo66vNWYx08hFNKI65L0A/a2dRxlohMNnrncG8/nA/cDIyVIhcKK0Pegidx7Jmp1jFrdt5MCQJKfDbqidN6OpNALpMYC3HylNS0a5SA1h1H3RWpIkFIfJsntW/S/JEu6XWTT82xivbpWah8ZTXdsAh8J81+VGBqucM5qzmCF56DcDEg2Ue02bgsujDp09ifxqv0leO3wS+0EH9BTnGL/072C2WrsaWrioSzkNFXUrwfE3h5KjvqXvJJaUFV2F
 x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:SEZPR06MB7362.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(23010399003)(376014)(1800799024)(366016)(10067099003)(18002099003)(921020)(38070700021)(261009223027099003)(261009221227099003)(56012099006);
+ SFS:(13230040)(23010399003)(1800799024)(366016)(376014)(10067099003)(261009220027099003)(261009223327099003)(261009221227099003)(261009221727099003)(261009223027099003)(38070700021)(921020)(22082099003)(18002099003)(56012099006);
  DIR:OUT; SFP:1102; 
 x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?bSyiBM3xe0wJjz5m5jYlz0kj/U6y7ZIXa9D8UnVbhhLmk/f/njLDrS6W44?=
- =?iso-8859-1?Q?g61cgknsxZ6N/N8fAu3sIFdZJi2Wasx73FVdxvNGmf3RH8YoPgQPH9tBcI?=
- =?iso-8859-1?Q?12Tg4jOS03oImg+wXPSLk5qwcTM0I2F/U5tuoMgeXlSBCHQdVkviZSOceW?=
- =?iso-8859-1?Q?wjGlF7TjWEaaqvUNzPFaGUlEI/mDgkpBJDs/QNe1sgH4edYKJZY2US/n0t?=
- =?iso-8859-1?Q?Kpbg5oWangPoHXxiRK/VAjbuSflSpdOYjaS4NQeJ7qZfB7/CARWdl2HrDl?=
- =?iso-8859-1?Q?6RVyFF81sDCYJcdyd22UdfI+0EaX6h17ljta+Jn8CmAw9mvuAfo/9GzLX0?=
- =?iso-8859-1?Q?kE5wUyLPkljHlmmNLEC2mUuV+rOwuSh12K7vweYfjcOh/N/phA8bya2p2S?=
- =?iso-8859-1?Q?DVdNke/bQPGiwMiE5CmDp4EXZLeFQhGO+1MN1/rHnVIWTmCKcxKan1W2G2?=
- =?iso-8859-1?Q?2es7VHM0LMyLxqJk+kWSlfBn2MjZsnT+ZVSfFDE/HE481BzchEkU7x6EED?=
- =?iso-8859-1?Q?eEQVrzmLI1pWu7dvXhh+AtYfJzDtMnI3asmyjb0DUrFIRhAgrSjPxSYEzl?=
- =?iso-8859-1?Q?81CkGjPHBMPdFES+teJdOdnnEuAhwAntnzZkTriHp3KM9qSSh6ExoUDXsU?=
- =?iso-8859-1?Q?H3j+YYOL3kTL1iOSvmmHOjqyQptNdtMaPN0MB0jy6iE2QHlXJRtYbNF+cx?=
- =?iso-8859-1?Q?xkoOoZ89iW5ZVVDuWRDycdpRpbT2EnXn5IcVDV4+EbVzd5zQpRO3wJIy2Z?=
- =?iso-8859-1?Q?g4jYISdDAInIR9X/Gp0nDlwVrASnZGT9+PpEU3M9X28f1YR1aXW8QCUd9h?=
- =?iso-8859-1?Q?K5uXiu9QzKjrIHDD7kB3pYAqWor3nr3gGTwij36r1+f21sQtPspRA9vxr4?=
- =?iso-8859-1?Q?GjnwtLvGAT80Au0EG2iVijAF8A4dnUz3acTav2NHfQaYSOcEGjPQkRB/jS?=
- =?iso-8859-1?Q?+FykHvPWkfRfBDbpWLWKgjU5bufS3/sYtiBMMRYhkDGMg1qsvlLPzEDTH7?=
- =?iso-8859-1?Q?JXlsnSy2+dfBJNxyQhhSCDScto+n2bCGOqrI7z/V0uf57aBTdMmNWq8jrp?=
- =?iso-8859-1?Q?D9kX8WNE/7R000qMOWI1k6lwliUchh6uBkv4+1b0ljCCkh8odC9F2yi5yf?=
- =?iso-8859-1?Q?DlZ8SSJH0hKw1hiLUbeRjUix9pKZ65ZHd92Od1uu21GCHtF+t9z3n5e9z4?=
- =?iso-8859-1?Q?8zpcCCb85hhFUQUjqaqtqEqgsTxVLnEvdItU4rtHKG22F2V0u1zZMgXdQD?=
- =?iso-8859-1?Q?CzMJ1s+6za5U7zcDe/nqTqXtmraO7CU5fJy0ysSau/MGye8sMqnmRV+D7p?=
- =?iso-8859-1?Q?G27FXC/xmWLH5xeG2bZ2VU8GiTQ35qq7VULUii5XPyvzd9OEBSgzeFcheM?=
- =?iso-8859-1?Q?rv4Ev87zX35dLFHg4VvQxXJk2shoXyYPgkxkUI+OZ3MIYW3KkfDIiKiGP/?=
- =?iso-8859-1?Q?NFtvNknSEM9QQ62WJjaMPRNfayrlsMYxIYF3IIVtXc29F4Q2oexmUAwkY1?=
- =?iso-8859-1?Q?qKu6kjRNFDmevYyU+gM+q1rHsqBVb7XbXgmhS9CbbJxaRLMoMo24NftyzY?=
- =?iso-8859-1?Q?MeU88Cgn7klZx4TkbGYByetSxGLaA3PvJvVdgQApgKLwMW/rJmAGZaB5gp?=
- =?iso-8859-1?Q?qXBCvlxH4X9Hkb+XLAGlK3nu5cuXhyzoz315Mq2vi7PuHFsHR0QOXKpUmw?=
- =?iso-8859-1?Q?ObbBUWqnvKS1O0sutrdBxnDldI4noR1I1pr6lN/xEbMDeEVTqifsQ0MqgL?=
- =?iso-8859-1?Q?2+n7lfHXa8Wqc+/xyp/AuCOZ1wDSshrshZ1q1a6fIoHlUT0BprLVnpd+HP?=
- =?iso-8859-1?Q?18kFdh4Q9A=3D=3D?=
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?HaGTO3UxQ9xBQRw7UgMzDzTHtQWWOcq4ZM7MPwc3QkqG2GYvSxg90e+OWz?=
+ =?iso-8859-1?Q?Kyv2uQKk7x6CZHDPZmo2h3raX5puVY2ZeiXjlk3HU2313Du/o6A+ZAZ13O?=
+ =?iso-8859-1?Q?kxa9gsWVXGxUqRyYkqmT/wFsi751uH8Ah5M47FdSM4I4QcCG6SPDeZVyQF?=
+ =?iso-8859-1?Q?RRFo+WGo7bgbfZiYkZdzlX5ZTBq3HHE5aoccUX6y3mKGjw/Te24/i6whh3?=
+ =?iso-8859-1?Q?5W9CQiPd9UsaNKCtah8Ibcyv9P4FOdN/aGJy6I6JywSW4JWnl4VhmCmWlj?=
+ =?iso-8859-1?Q?fQ8FrXptK2HBnPipUlo+dn5086+H9YdMBYvklJ8TtNMtDFifQOiPa74uYw?=
+ =?iso-8859-1?Q?aJ13JJ7575YFye0PNyPPy7aGb8RyBBH6gkyeKIpHQZ0ikhdsvZnLJgBFwb?=
+ =?iso-8859-1?Q?uhTKR3BuRx376SdGWfx+UMzIpKIUNzUOd8+5X7bhMhkjEwVhRJRSh4hMyP?=
+ =?iso-8859-1?Q?++NNVMcCjR2l85v9ZYPA+WOrcIywtwxZ/PNrZfMIVMY6WOMd9QIZVH860c?=
+ =?iso-8859-1?Q?Vu/WcIh2M2jdBeWQF7bzQSWe49lX3fYo23jUMtlh9nlZ4s9gdomo16kbyc?=
+ =?iso-8859-1?Q?YGuNd8WnSijTYsa9brEYxQlyxWCfySQof2HffGxa2JP/am2I/vyyxaAJF5?=
+ =?iso-8859-1?Q?CfHuWawR4OYtYhM9IIHYwJ22M7DmXlFv8E3B0f3OW/7/0QasGy450nxmhw?=
+ =?iso-8859-1?Q?Jb8HjuTjlEUTJt2+/EO9RdE4yzP2GNk3BhIdYTy1GEEvjX+O913ycGX8ro?=
+ =?iso-8859-1?Q?GDf6WO6mAew3pF31TPJKVDN4LoCkzwsLfWWnsfJxLy1K3/viB6eF1Lookb?=
+ =?iso-8859-1?Q?cW73BrjIshkLBf5Gc8FwDg20idiO7yCPcWur20S5gVohmTEghzHkKz+b+/?=
+ =?iso-8859-1?Q?BaiXnSDl5yanhvuwK7zCI06DzJaIpL4LmC61ZFib0oyQT883S6/6/lgmmx?=
+ =?iso-8859-1?Q?w2UHPgLVpYIXu/cV4mVaxM6q71SCl+U4eAYgO7+xCgcSaMPz3V8ITkFZcj?=
+ =?iso-8859-1?Q?LphuxlOM817r94sn78j3UQKI4prlyF0KHytI/6lTk4Q4E4p+r752hcKcZj?=
+ =?iso-8859-1?Q?xEb+8TQhabyLHlORHZA8iEy/Fu7iueRCQLn7Bc7Hwc0waG2otw7LwAviMP?=
+ =?iso-8859-1?Q?WWjZWJBQJSdlsHEeVOlOyMASbwDCICeD8ygiTnJqcbcM5qD+afjKiWvC8J?=
+ =?iso-8859-1?Q?NlcM/D5fO1E4ys/GiJToYGrUUMrTOBPtW10qTslTa/BIriJRBfbdnW6fdR?=
+ =?iso-8859-1?Q?GM/lMlMGaMXCY530Y2KH3TcUJmcqj6wpijYOTMZq9Obac4j2xM+4+T0ZW9?=
+ =?iso-8859-1?Q?aEnT4JiB7wEpiPbe67SzToB1PiSJIsFkxcBW2qreDGwtFhToQDjzJaWgA+?=
+ =?iso-8859-1?Q?AfsS5IAdHFzMSJF2jnhfSKFdPuu0YfZZ9CnjhqCvfni1qRLvsPnUdspm0K?=
+ =?iso-8859-1?Q?dwyipmO4JVhBlJ1kqg5IQCcUVc0f+bRn6WUfunFYmWEi2ag4t8Qsl7IsVw?=
+ =?iso-8859-1?Q?yO2DBn4bKc528vlq3U/pumUfosi9ncsp/DEC5YUZXxLJXsp07APDuJMySu?=
+ =?iso-8859-1?Q?G7jvPcSpjd3enIAwWqD1O2IpXo9NY1GRSDXoixV+xKk98yjmsodtTwXtDr?=
+ =?iso-8859-1?Q?KjTnfLjtvkWH3+lPO10AsxEOEvwo5jjXExMZa7De8L3ggEChjgh8v1ut4g?=
+ =?iso-8859-1?Q?Te3SE4rCbshtAmxgqI2xm1sZQQhVWRqa1bRu1vxPk1IEB95qRbm4fYThUQ?=
+ =?iso-8859-1?Q?GskGL0rIHERLAs+GXVVQO06CI4aTneIMGGw75w4/NYpm7NgxoCwUZR9ndr?=
+ =?iso-8859-1?Q?27SUoohoCA=3D=3D?=
 Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked: bQP1EPMNL1hb9A/d5frrO8mT4CswYu+Bd3vrkruQmDSGFhRdCQTLKCBZ9A8PpRXl5zEi0XSCKRefx+jObQR6jPMYvfuWk2VrkqUEqL5nyFplLtZ+jPKxkjvWzcIAL09dXLHv4cXBdiE/lqiPtoly9Hon9GJ3tqXFYHP/2ywnJaznu8xLB0eEHUzM4vhlsrMDctS8RfjN16DIGZK8qcWwNz0n8p6auZ87Kt+YKQItSKqb5m8+ylVcWvh5DoLkcwYpLW4QGDJN+hpZ9XSconsjeXjiS39UwA/kiMIQ0wBw3h8eEfQ7Q1M7LZI0pGhdVHsJ9w5UHqnd6XySt9M4vulbgw==
+X-Exchange-RoutingPolicyChecked: MQieRVqGVrIY6fe1sQMr80cW4OZ9WWVwL7pb/l0SDaCiFmNYgOC0TVTcjxGAnk+NPvUv5BICp4UKTeJH9pum1gY/BIDwPFUc6zS0YwgkY1UVrkvsvn06xrFYBH5SCPtVYB96AgVrtDSvKNJeXDghf3MwkclDOBN2Ectpn7KOCIqEG67T6g9ztII78mwV4T6Xck9dUuoqo8is7sGPXQCrDPyJTId4YGDLWJ+lTu8rtR2p0tFXe4IlKdBCXS5GaOLCuIkuejKWv1272ZO7bgOWeuVPr5GhdqYhJU23BtKSE+ku/IdjiTu3YOEjxUg4ovU4o0BZg1evGNzhnpG0v8tFTA==
 X-OriginatorOrg: aspeedtech.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
 X-MS-Exchange-CrossTenant-AuthSource: SEZPR06MB7362.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 7f0054ee-8bd5-4b39-ef98-08df282c4dd4
-X-MS-Exchange-CrossTenant-originalarrivaltime: 12 Oct 2026 06:44:45.9300 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 377113dd-cd0f-450d-eca2-08df282c4e8b
+X-MS-Exchange-CrossTenant-originalarrivaltime: 12 Oct 2026 06:44:47.0750 (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: U3yYSSNMwjlnTVpTUqFdVe1GAvnmbCd7pk/1V1zDVG+9TrVFi2rcr5omZqnsbksoL8v//gEiRhZhn5+j0pDCuRiQFnUugcTlwhNe8ByAaao=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SI3PR06MB8707
-Received-SPF: pass client-ip=2a01:111:f403:c406::3;
+X-MS-Exchange-CrossTenant-userprincipalname: drm0RmvWDjbGMmaoqXed3Ikkg0HLg4mEuwHN9ML3RPpHHLRdNMJgK4UbXuYqAaZszHrbZ6vu4aDqVLHrJcRQOG6qrLVp90m+x6T5qcbpMcM=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SI6PR06MB7244
+Received-SPF: pass client-ip=2a01:111:f403:c405::7;
  envelope-from=jamin_lin@aspeedtech.com;
- helo=OS8PR02CU002.outbound.protection.outlook.com
+ helo=TYDPR03CU002.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -146,49 +150,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-v1:=0A=
- 1. Use unimp array and table for unimplemented devices=0A=
- 2. Sort device IDs alphabetically=0A=
+Several boards and SoCs create many unimplemented devices. Each of them=0A=
+uses its own structure and helper to describe and map these devices.=0A=
 =0A=
-v2:=0A=
- 1. Add a common create_unimplemented_devices() helper and=0A=
-    UnimplementedDeviceConfig in hw/misc/unimp, as suggested by Philippe.=
+Add an UnimplementedDeviceConfig structure and a=0A=
+create_unimplemented_devices() helper. The helper creates an=0A=
+unimplemented device for each entry of a table, adds it as a QOM child=0A=
+of the parent object, and maps it in a memory region container with=0A=
+the given priority. The table is terminated by an empty entry.=0A=
 =0A=
- 2. Define the unimplemented device table at the SoC class level=0A=
- 3. Drop the "unimp" array and the AspeedUnimpDevice table.=0A=
- 4. Remove aspeed_mmio_map_unimplemented(), which is not used anymore.=0A=
+Suggested-by: Philippe Mathieu-Daud=E9 <philmd@oss.qualcomm.com>=0A=
+Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>=0A=
+---=0A=
+ include/hw/misc/unimp.h | 21 +++++++++++++++++++++=0A=
+ hw/misc/unimp.c         | 20 ++++++++++++++++++++=0A=
+ 2 files changed, 41 insertions(+)=0A=
+=0A=
+diff --git a/include/hw/misc/unimp.h b/include/hw/misc/unimp.h=0A=
+index 77a5077511..073575159d 100644=0A=
+--- a/include/hw/misc/unimp.h=0A=
++++ b/include/hw/misc/unimp.h=0A=
+@@ -25,6 +25,27 @@ struct UnimplementedDeviceState {=0A=
+     uint64_t size;=0A=
+ };=0A=
  =0A=
-Jamin Lin (12):=0A=
-  hw/misc/unimp: Add create_unimplemented_devices() helper=0A=
-  hw/arm/aspeed_ast2400: Use a table for unimplemented devices=0A=
-  hw/arm/aspeed_ast2600: Use a table for unimplemented devices=0A=
-  hw/arm/aspeed_ast27x0: Use a table for unimplemented devices=0A=
-  hw/arm/aspeed_ast10x0: Use a table for unimplemented devices=0A=
-  hw/arm/aspeed_ast1040: Use a table for unimplemented devices=0A=
-  hw/arm/aspeed: Remove unused unimplemented device fields=0A=
-  hw/arm/aspeed_ast27x0: Use a table for unimplemented devices for=0A=
-    SSP/TSP=0A=
-  hw/arm/aspeed_coprocessor: Remove unused unimplemented device fields=0A=
-  hw/arm/aspeed_ast1700: Use a table for unimplemented devices=0A=
-  hw/arm/aspeed_ast1700: Remove unused unimplemented device field=0A=
-  hw/arm/aspeed: Remove unused aspeed_mmio_map_unimplemented()=0A=
++typedef struct UnimplementedDeviceConfig {=0A=
++    const char *qom_name;=0A=
++    const char *region_name;=0A=
++    uint64_t offset;=0A=
++    uint64_t size;=0A=
++    int priority;=0A=
++} UnimplementedDeviceConfig;=0A=
++=0A=
++/**=0A=
++ * create_unimplemented_devices:=0A=
++ * @parentobj: the parent object=0A=
++ * @container: a #MemoryRegion within which @addr is a relative address=0A=
++ * @devconfigs: NULL terminated array of #UnimplementedDeviceConfig=0A=
++ *=0A=
++ * For each entries in @devconfigs, create a TYPE_UNIMPLEMENTED_DEVICE=0A=
++ * and mmap it in @container at UnimplementedDeviceConfig::offset.=0A=
++ * @container is expected to be a QOM child of @parentobj.=0A=
++ */=0A=
++void create_unimplemented_devices(Object *parentobj, MemoryRegion *contain=
+er,=0A=
++                                  const UnimplementedDeviceConfig *devconf=
+igs);=0A=
++=0A=
+ /**=0A=
+  * create_unimplemented_device: create and map a dummy device=0A=
+  * @name: name of the device for debug logging=0A=
+diff --git a/hw/misc/unimp.c b/hw/misc/unimp.c=0A=
+index 521b84bf20..4c8dcbdff3 100644=0A=
+--- a/hw/misc/unimp.c=0A=
++++ b/hw/misc/unimp.c=0A=
+@@ -96,3 +96,23 @@ static void unimp_register_types(void)=0A=
+ }=0A=
+ =0A=
+ type_init(unimp_register_types)=0A=
++=0A=
++void create_unimplemented_devices(Object *parentobj, MemoryRegion *contain=
+er,=0A=
++                                  const UnimplementedDeviceConfig *devconf=
+igs)=0A=
++{=0A=
++    const UnimplementedDeviceConfig *cfg;=0A=
++=0A=
++    for (cfg =3D devconfigs; cfg->qom_name; cfg++) {=0A=
++        DeviceState *dev =3D qdev_new(TYPE_UNIMPLEMENTED_DEVICE);=0A=
++        SysBusDevice *sbd =3D SYS_BUS_DEVICE(dev);=0A=
++=0A=
++        object_property_add_child(parentobj, cfg->qom_name, OBJECT(dev));=
 =0A=
- include/hw/arm/aspeed_ast1700.h     |  2 --=0A=
- include/hw/arm/aspeed_coprocessor.h |  5 +--=0A=
- include/hw/arm/aspeed_soc.h         | 14 +-------=0A=
- include/hw/misc/unimp.h             | 21 +++++++++++=0A=
- hw/arm/aspeed_ast1040.c             | 40 +++++++--------------=0A=
- hw/arm/aspeed_ast10x0.c             | 55 ++++++++---------------------=0A=
- hw/arm/aspeed_ast1700.c             | 21 +++++------=0A=
- hw/arm/aspeed_ast2400.c             | 25 ++++++-------=0A=
- hw/arm/aspeed_ast2600.c             | 44 +++++++----------------=0A=
- hw/arm/aspeed_ast27x0-ssp.c         | 44 +++++++----------------=0A=
- hw/arm/aspeed_ast27x0-tsp.c         | 44 +++++++----------------=0A=
- hw/arm/aspeed_ast27x0.c             | 41 +++++++--------------=0A=
- hw/arm/aspeed_soc_common.c          | 11 ------=0A=
- hw/misc/unimp.c                     | 20 +++++++++++=0A=
- 14 files changed, 138 insertions(+), 249 deletions(-)=0A=
-=0A=
++        qdev_prop_set_string(dev, "name", cfg->region_name);=0A=
++        qdev_prop_set_uint64(dev, "size", cfg->size);=0A=
++        sysbus_realize_and_unref(sbd, &error_fatal);=0A=
++=0A=
++        memory_region_add_subregion_overlap(container, cfg->offset,=0A=
++                                            sysbus_mmio_get_region(sbd, 0)=
+,=0A=
++                                            cfg->priority);=0A=
++    }=0A=
++}=0A=
 -- =0A=
 2.53.0=0A=
 
