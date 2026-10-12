@@ -4,96 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B4B6CA9ED0
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C55CCA9ED1
 	for <qemu-devel@archiver.kernel.org>; Mon, 12 Oct 2026 09:32:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGCNi-00023n-K4; Mon, 12 Oct 2026 05:31:43 -0400
+	id 1xGCNv-00026a-6y; Mon, 12 Oct 2026 05:31:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1xGCNZ-00023K-HF
- for qemu-devel@nongnu.org; Mon, 12 Oct 2026 05:31:33 -0400
+ id 1xGCNt-00025k-Lc
+ for qemu-devel@nongnu.org; Mon, 12 Oct 2026 05:31:53 -0400
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1xGCNX-0006Mr-Lc
- for qemu-devel@nongnu.org; Mon, 12 Oct 2026 05:31:33 -0400
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+ id 1xGCNr-0006Oi-Ve
+ for qemu-devel@nongnu.org; Mon, 12 Oct 2026 05:31:53 -0400
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69C8ckd9955321
- for <qemu-devel@nongnu.org>; Mon, 12 Oct 2026 09:31:28 GMT
+ 69C8K5sq2796055
+ for <qemu-devel@nongnu.org>; Mon, 12 Oct 2026 09:31:50 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- TX/7V7xOoiIPdv1vbvtIuRfbrLc4dgAZqSMhUWTu3CI=; b=g4m7BGnTd4wJxui2
- avPFPBkL+3asLbKK270Dw8BpQGTG4DePkYo5JA5BPriA/ZjTSZzNeKguqs9OI1bm
- X4wAXYFZW7vfEY7sEWwfiT3D6O6abflC8ioEHI/pguHECG1C+exfLK+e638JDVXh
- uxhrjo141SqT5CBn4VAApezyGHlGSpN5vPf4vB5fBzkqbPIx7UVgdkerJQhr6cA4
- kIAIODVjerLzItL4DonyKVo5zktUdWgWGcq1Wk/A41/o9HAlDbT42sm3cQGfCDs9
- 3q6pGhVrU5gniaSb/VtJWok831m+yX61t2/MgnlP90qDQrZl8yoUmqQTjEdovOUR
- C1d4xA==
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h8v7kr764-1
+ d9kPjBTMGYmbCIRQNwoeHyOtgJ1qFU6TnXtSul0RM9s=; b=FJKLP51VaQ+JeTr7
+ zrxx8uanhoV2cNeYdOhvzBe08H6yWrtSXhBxBD0YIXngie7euwBfcVNpDoRYfAAR
+ YwqLNb/EVWNmbhRdRR5AKYChQj1g4wI1cYZOQ1kj7qtMXvvTixA0HbWa2zQqMADV
+ +ZISW+AjyjUn0tAXlS45ZRfll9qE3hM19LxeGnxF24gwM5XZuRgORY+fVpe/OSnP
+ C2RXF/lvx8jutqOkxejWvHCQOedrX2XFo47yNOtnXC2UGAuGF+kIS+RIZpFDBdce
+ UkYS+Qn2eZlvcraWh1Crhlk9S4xhNVkTyuJNoS21J5RPVArRSj6GfVg32LSPUFEu
+ eJU0dw==
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h8uh3ge2t-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 12 Oct 2026 09:31:28 +0000 (GMT)
-Received: by mail-qv1-f70.google.com with SMTP id
- 6a1803df08f44-9179a556c43so40567646d6.3
- for <qemu-devel@nongnu.org>; Mon, 12 Oct 2026 02:31:28 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Mon, 12 Oct 2026 09:31:50 +0000 (GMT)
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-93e49a1d3b1so435376485a.2
+ for <qemu-devel@nongnu.org>; Mon, 12 Oct 2026 02:31:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1791797487; x=1792402287; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1791797509; x=1792402309; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=TX/7V7xOoiIPdv1vbvtIuRfbrLc4dgAZqSMhUWTu3CI=;
- b=OM1Jfvjp3PAUKa6OZl3okongKv1qrjIVyE2tOJ+Fsu9dvWLgzu1nCdV6YoD/RCiih7
- EvC0ypwyFPQfUxvQepThcGq3Z9vuswoafEF0w5At93micH/vI0l/zCR4L+UoB24zdMm3
- akVmWvm3RbGGAXHDlNGbX7IL35YwVyzRzOJIBVPjB7hfVlzrf5Y+I5p7obUb0q7S6oTY
- Q+yO9SipEafMyEmwdNnny8xSPxm9NKmQSiV1KCcCPPlNW2WMlAadXCriYr1s9lK/5cOd
- X4Y8VRxHcrOfpytORmfooPG8fbEOgi7CR2qSQZc4w/Gh8zhkmYtLGBBkPCo7+deivmR0
- xqAg==
+ bh=d9kPjBTMGYmbCIRQNwoeHyOtgJ1qFU6TnXtSul0RM9s=;
+ b=i8RKjvYl+u7tYLblQotTiqjYw5cb94qEAdeBiMczB6glA9pOO+/dpANh+BxcoRwASP
+ J2pJgEROhPWTAz16kKuJ7WTmO81JVmXpFuHT05UiFzgKMUuFc4CpuvHHk9bh548KA79+
+ XnZXbhqDBuwU/0m9u7wh3gAHhGMGPL2RB5nyhvynHpjoYy9D6PYeROtd7oFcFt8nIjRq
+ Ppnd6ktGZwKjMDMB7xlRWq24zetajcX8Ie4rngoFRlh9CnOAYIbceIc/GsDBIsrlhKm9
+ CrBZt3EVyPqChtJbrZvIhp8tnp7Bqfl/2c6na8StLPDSudwbqg1oMka1fTkhq92wrhDZ
+ TepA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791797487; x=1792402287;
+ d=1e100.net; s=20260707; t=1791797509; x=1792402309;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=TX/7V7xOoiIPdv1vbvtIuRfbrLc4dgAZqSMhUWTu3CI=;
- b=uz16IpXHdsyoSmV8dB9u66g2mkMZKTS845l1Af3IlGzt8Q0Qf15XPFHkMN8650aadl
- NSSsK4C5snpzmXa6Ef/hkXcdB8qAvj/OvlhH4khob81VAKSv8S02wg1AHdNOPUAu1yLk
- /pzPsLzzEtobCIVmL0tCisKrGZaau8Icn36EkT/HBURKaU1OMdCJCdiPSMYVBE8UtMAR
- Zxk8nd6IMXDn8CieEDGVyJ+Xn45FruTHmkKcbv+24FlE3dfus+TGruUXQo+Pw1DwCDBh
- mewghiT/kGgRAIPkWgHQkckcHpKlKDeQLzUhsq8U/0mzWsarTHrcgAMVwEp1D8b63frT
- xJRA==
+ bh=d9kPjBTMGYmbCIRQNwoeHyOtgJ1qFU6TnXtSul0RM9s=;
+ b=EoDuFhpeEVEUgpsHhL3YQV0T/OpCmBDaaFE+poglSNce//OF+LsTaZrMxUNaXr+9vQ
+ OqPaCP0wsyP/SvrXNLnKPEtq/6RZaPQjAj1m4SUACUTihFX4wphcQA0e2FboUEms+HkJ
+ bMXhm/BgFoVCL4xweV3OYcMtZyBadSqFuFBmC0eXTO/79yyjVylKXemVUfEUYjgv5wWH
+ QCSe4RTQIaUZPIZUC/STo4NVm2L7QJavlYW1pIxv34jcJ500+/lbOASjTMBvjp8BAiC3
+ 2DRVQ/IMAm7VQdPkIpSONDwTPPEqqt8zZbV2KTRzU57BuVebjdOjfw5DvJhlAwePn2fP
+ I6lw==
 X-Forwarded-Encrypted: i=1;
- AKwUvBybOYoAhLi1IeOpsB0IafElsDOdgO0XZ4ncSds1WY6zgzctnvzvOWigX1EWyffchfpobqBe6rTyI9Ht@nongnu.org
-X-Gm-Message-State: AFq9FYL5GCeYqY3H79c2ej+VuJVgASUjc8o6S7ve+xuNfgWmDRnNel+T
- TMsEX9eTR8hSH7XF1szbnALexnycCQzcP8HJXTUDS5VO5xTqBwZdWtzriYaIDcSMQ02rkJlHKA4
- tArHJYEe9O2i58t/uV5PYuanCPpfLloyIyGVTqrJtB87Bn4nU/k9LhNpVCg==
-X-Gm-Gg: AYBFou1ahS5OVf5N2Sor5WYo1lD6tE7RSXvhAIdSny5IuEeyWxqlakKkGWDn5Y8QBWO
- x55ay9utVwg9z0IV6pdfKLggG3bucEX7SmJybZ0J0DVY3qTI8a2+G8UYNIVQFmoOWMBr8u3mGbf
- jLNkelMdq5XOJQMXQrldbEoqXiC7DPAhFJ+3c9/WH/wE1x6KGU+49Rvp3YXLPLUHcg13yrZZ/RA
- ujUuOE82d490MpnCejF2p22wqYXsGsoB9E+Vip7sj5iFMCPFvLZAtoLKd81QN3sVQByJ3LYg5KV
- LQtYynd2iDVvShAMT53/EmuT9iihW53flTrl7c8/B3ZyJDj8OaMrE+Ogck8IC9/8b5VWaHwJto9
- l+OvDaIkNBS2GUiG0V9+rbY39v6Dk+Y177xk=
-X-Received: by 2002:ad4:5943:0:b0:91b:5d3b:4aca with SMTP id
- 6a1803df08f44-91b5d3b4df8mr157364466d6.51.1791797487530; 
- Mon, 12 Oct 2026 02:31:27 -0700 (PDT)
-X-Received: by 2002:ad4:5943:0:b0:91b:5d3b:4aca with SMTP id
- 6a1803df08f44-91b5d3b4df8mr157364256d6.51.1791797487075; 
- Mon, 12 Oct 2026 02:31:27 -0700 (PDT)
+ AKwUvBx0P3HNAqzdrGUjwQ560U1EH2tKySZja7wuxcWy05J/TlKUJewbH5/sCON8SD6Gqm9Rfxg5zHO7uAi8@nongnu.org
+X-Gm-Message-State: AFq9FYJLAa/R2fLOBwzClmoqkQEj9s47olSvL6YcFzwhQsddNLCftGmt
+ Squ7Z/nZu4u6zyD4S6d59pl01cNVwH1QeMcMUm9SoXlyPY40WWj9YOZb7Lu14aSBZndvxDxHpd+
+ r00+e/SuYgw/i6ajd2ylvvVZOjHf5L0IzRO7ygapWuwfVkNR0z59MtS08tw==
+X-Gm-Gg: AYBFou1ecuBI7tSsFfpLaUutPlNO3aCcjzSktXU2DV82/O1uICHaAznpAV6Jqlu2XYH
+ v0F9bKvAi6HlkloL+3R/0ZvS/1Qs5+XMwusmgIQyFTs4jC6xAZQ6/hMIZFAydrG0vFkFT1hm5n9
+ l9/YO2hMrULYst6KLrQG036Q8DBSGC2R8FDk9000on550BDrtHMls3QI0VCzHP9iNyCMr5XQOvN
+ R0LHmSeYU0nYkcbPFlkIAWmS8rhgNeoGxWFElNla0U4EFxC7QVNZ3J9aB16tx8mPixT0NhLn7Uq
+ 3RIGL7Ia+IA4ZbeUorUbXWI+tNQgeyxGuzXLonS9ggCSRKgTgCGzGBTseaYL8ZNUBEI/8wxOp7T
+ ie20vNV6g7hB+QxeytPkkvXFoTMnJwHZZ6n4=
+X-Received: by 2002:a05:620a:2303:10b0:93e:c68b:5fd1 with SMTP id
+ af79cd13be357-93ec68b5fe2mr847427285a.24.1791797509509; 
+ Mon, 12 Oct 2026 02:31:49 -0700 (PDT)
+X-Received: by 2002:a05:620a:2303:10b0:93e:c68b:5fd1 with SMTP id
+ af79cd13be357-93ec68b5fe2mr847424085a.24.1791797508982; 
+ Mon, 12 Oct 2026 02:31:48 -0700 (PDT)
 Received: from [192.168.68.107] ([152.234.126.58])
  by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-91b815fd211sm21655216d6.48.2026.10.12.02.31.23
+ af79cd13be357-93eb98c7e8bsm815243285a.37.2026.10.12.02.31.45
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 12 Oct 2026 02:31:25 -0700 (PDT)
-Message-ID: <03ec34ad-6dcd-4ac2-aed4-65b03cacc775@oss.qualcomm.com>
-Date: Mon, 12 Oct 2026 06:31:21 -0300
+ Mon, 12 Oct 2026 02:31:48 -0700 (PDT)
+Message-ID: <50b6effb-3245-47c4-b23f-370c34c165fd@oss.qualcomm.com>
+Date: Mon, 12 Oct 2026 06:31:43 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/4] tests/qtest/bios-tables-test: Allow PPTT for RISC-V
+Subject: Re: [PATCH 3/4] tests/qtest/bios-tables-test: Update riscv64 virt
+ PPTT golden reference
 To: Sunil V L <sunilvl@oss.qualcomm.com>, qemu-devel@nongnu.org,
  qemu-riscv@nongnu.org
 Cc: Palmer Dabbelt <palmer@dabbelt.com>,
@@ -104,40 +105,39 @@ Cc: Palmer Dabbelt <palmer@dabbelt.com>,
  Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>,
  Anup Patel <anup.patel@oss.qualcomm.com>, Drew Fustini <fustini@kernel.org>
 References: <20261011182552.1071742-1-sunilvl@oss.qualcomm.com>
- <20261011182552.1071742-2-sunilvl@oss.qualcomm.com>
+ <20261011182552.1071742-4-sunilvl@oss.qualcomm.com>
 From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 Content-Language: en-US
-In-Reply-To: <20261011182552.1071742-2-sunilvl@oss.qualcomm.com>
+In-Reply-To: <20261011182552.1071742-4-sunilvl@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDEyMDAzNyBTYWx0ZWRfX4RYzvEe6qbWL
- b7xh8U6eegRE7ViLOlwPZtc0dwMsNKomGEkSr5kBQ/qD7kYtHjINBBAeSNXupBxSRCtZNhk+9y7
- 0dJROqSWLRznMxk7ZIBzK6fjVOZmRU9nAHULY+DNGpljSNBu+AG4AFHrq5Y0LdNfpPJ8hpZtwe9
- oCq8sudGmZv70HHcu5LP6LbFWo2r9tngyfcbvftJCVfOrSpwr4gU26VmuZUe0UoPUSHJq+q4q+2
- pAKiUEaa7oPVSKbDAPHLTcaDbsp3FfiZ1Nl2c9U0De6hRk78gzWT0zIxFHANV1+u9MgRheAfd8W
- wXCvAYWOHTqoRCGxeHdvuUBbJ3KBxlJn0hi6QpyOtvGZgZeZCspD8+2DYFf7mxv98U6WcYumhqc
- CH94t5f40U2WMl/2j1YtlIoaXmxxCYy3CVXHTSVBngupUner/VfZP7wGiWgpOLfYV28RBsmEtiL
- ubWEWa+EvjSY1h9v3Mg==
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDEyMDAzNyBTYWx0ZWRfX5qQRIMdvrVlt
- LH9xYI4e2kLeEKqksMnqKzW5IYkxR+NtvozVDHwMxYjj9Q1s7+ADBexELIhiDtpOJiHWnFl3u9T
- nVTIiS0cIOCTngmKnMtGFAxp3oJg67Q=
-X-Authority-Analysis: v=2.4 cv=VOtIDNPX c=1 sm=1 tr=0 ts=6acca8f0 cx=c_pps
- a=oc9J++0uMp73DTRD5QyR2A==:117 a=XIBTAJF/fpiF5bhQ2IRv1g==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDEyMDAzNyBTYWx0ZWRfXy8agItq9zuPz
+ g0/GDcs4Cumc1HjZXdrql4Vs3MUJFcHhLMr+XMhx7k3e2WUPiUy8gnM1HFpDd/+uzQ+iveX3V+8
+ WSb8W4iaHOgN7Fu7ayMPhv/AU8uah1+WwGnej+e8S+sMXp+Ar9LYEer05s5YBR+s82lMOqknw0k
+ qT+PuE84soF4ciE1pJEHkOvH/Pxz6gwugzVghw+owUOETlJtzRV5BRqd7cMER8IUiIfVwKE6eQF
+ 8HwaA1r447VjFq4tnm6V180QqzfCu5UNSvTFt37IFL7ZS6YyF3qEJK8OZsuvvDdj1KqO8xycYVO
+ 16I1azNTQPVxRpxP9Ae5qtlUNFmiVbczLAr7dkncdPpM2FqAbgVQMWlotPniHZA3z97RY1nUHBM
+ IILAYP+DVfpZqaLazkb5Rb7OAP22C3kb3itRaRAa76Y/MFXw9cvQS5//neVlaAB/EG28p3gSY8n
+ wXxh5ejAcE/a7CLOF9g==
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDEyMDAzNyBTYWx0ZWRfX0nxqoZytHVNK
+ dbWXrXP0zYjjPdsyMyzsj59J0CalImP41DfhHUMoofwvP2BraqCh4mO+ZiZ9g4eaoWyJxp4+xdp
+ kBLUA7aHnSwh4hNqzt1k11vi7zQM6Rw=
+X-Authority-Analysis: v=2.4 cv=QO391QLL c=1 sm=1 tr=0 ts=6acca906 cx=c_pps
+ a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=XIBTAJF/fpiF5bhQ2IRv1g==:17
  a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
- a=EUspDBNiAAAA:8 a=x5d5dAMOWgx-vAMA7G8A:9 a=QEXdDO2ut3YA:10
- a=iYH6xdkBrDN1Jqds4HTS:22
-X-Proofpoint-GUID: kqq_pqv9sJU2Ymc5lSuMyP5zjqER5QbM
-X-Proofpoint-ORIG-GUID: kqq_pqv9sJU2Ymc5lSuMyP5zjqER5QbM
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
+ a=EUspDBNiAAAA:8 a=RvFTSsev-OqHwqxihHQA:9 a=QEXdDO2ut3YA:10
+ a=PEH46H7Ffwr30OY-TuGO:22
+X-Proofpoint-ORIG-GUID: dMn95FVU1izri3FPbCZWZSH5lfPgEqIC
+X-Proofpoint-GUID: dMn95FVU1izri3FPbCZWZSH5lfPgEqIC
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-10-12_03,2026-10-09_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 adultscore=0 clxscore=1015 bulkscore=0 phishscore=0
- spamscore=0 suspectscore=0 priorityscore=1501 impostorscore=0
- lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610080000
- definitions=main-2610120037
+ lowpriorityscore=0 bulkscore=0 spamscore=0 malwarescore=0 suspectscore=0
+ priorityscore=1501 impostorscore=0 phishscore=0 adultscore=0 clxscore=1015
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2610080000 definitions=main-2610120037
 Received-SPF: pass client-ip=205.220.168.131;
  envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
@@ -146,7 +146,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -167,27 +167,107 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 10/11/2026 3:25 PM, Sunil V L wrote:
 > From: Sunil V L <sunilvl@oss.qualcomm.com>
 > 
-> Allow changes to the riscv64 virt board to add PPTT support.
+> Update the riscv64 virt SPCR golden reference file to have the fix for
+> the UART register width.
+> 
+> Diffs from iasl:
+> 
+> +/*
+> + * Intel ACPI Component Architecture
+> + * AML/ASL+ Disassembler version 20230628 (64-bit version)
+> + * Copyright (c) 2000 - 2023 Intel Corporation
+> + *
+> + * Disassembly of /tmp/aml-DN3NW3, Sun Oct 11 23:01:04 2026
+> + *
+> + * ACPI Data Table [PPTT]
+> + *
+> + * Format: [HexOffset DecimalOffset ByteLength]  FieldName : FieldValue (in hex)
+> + */
+> +
+> +[000h 0000 004h]                   Signature : "PPTT"    [Processor Properties Topology Table]
+> +[004h 0004 004h]                Table Length : 00000060
+> +[008h 0008 001h]                    Revision : 02
+> +[009h 0009 001h]                    Checksum : 27
+> +[00Ah 0010 006h]                      Oem ID : "BOCHS "
+> +[010h 0016 008h]                Oem Table ID : "BXPC    "
+> +[018h 0024 004h]                Oem Revision : 00000001
+> +[01Ch 0028 004h]             Asl Compiler ID : "BXPC"
+> +[020h 0032 004h]       Asl Compiler Revision : 00000001
+> +
+> +
+> +[024h 0036 001h]               Subtable Type : 00 [Processor Hierarchy Node]
+> +[025h 0037 001h]                      Length : 14
+> +[026h 0038 002h]                    Reserved : 0000
+> +[028h 0040 004h]       Flags (decoded below) : 00000011
+> +                            Physical package : 1
+> +                     ACPI Processor ID valid : 0
+> +                       Processor is a thread : 0
+> +                              Node is a leaf : 0
+> +                    Identical Implementation : 1
+> +[02Ch 0044 004h]                      Parent : 00000000
+> +[030h 0048 004h]           ACPI Processor ID : 00000000
+> +[034h 0052 004h]     Private Resource Number : 00000000
+> +
+> +[038h 0056 001h]               Subtable Type : 00 [Processor Hierarchy Node]
+> +[039h 0057 001h]                      Length : 14
+> +[03Ah 0058 002h]                    Reserved : 0000
+> +[03Ch 0060 004h]       Flags (decoded below) : 00000011
+> +                            Physical package : 1
+> +                     ACPI Processor ID valid : 0
+> +                       Processor is a thread : 0
+> +                              Node is a leaf : 0
+> +                    Identical Implementation : 1
+> +[040h 0064 004h]                      Parent : 00000024
+> +[044h 0068 004h]           ACPI Processor ID : 00000000
+> +[048h 0072 004h]     Private Resource Number : 00000000
+> +
+> +[04Ch 0076 001h]               Subtable Type : 00 [Processor Hierarchy Node]
+> +[04Dh 0077 001h]                      Length : 14
+> +[04Eh 0078 002h]                    Reserved : 0000
+> +[050h 0080 004h]       Flags (decoded below) : 0000000A
+> +                            Physical package : 0
+> +                     ACPI Processor ID valid : 1
+> +                       Processor is a thread : 0
+> +                              Node is a leaf : 1
+> +                    Identical Implementation : 0
+> +[054h 0084 004h]                      Parent : 00000038
+> +[058h 0088 004h]           ACPI Processor ID : 00000000
+> +[05Ch 0092 004h]     Private Resource Number : 00000000
+> +
+> +Raw Table Data: Length 96 (0x60)
+> +
+> +    0000: 50 50 54 54 60 00 00 00 02 27 42 4F 43 48 53 20  // PPTT`....'BOCHS
+> +    0010: 42 58 50 43 20 20 20 20 01 00 00 00 42 58 50 43  // BXPC    ....BXPC
+> +    0020: 01 00 00 00 00 14 00 00 11 00 00 00 00 00 00 00  // ................
+> +    0030: 00 00 00 00 00 00 00 00 00 14 00 00 11 00 00 00  // ................
+> +    0040: 24 00 00 00 00 00 00 00 00 00 00 00 00 14 00 00  // $...............
+> +    0050: 0A 00 00 00 38 00 00 00 00 00 00 00 00 00 00 00  // ....8...........
 > 
 > Signed-off-by: Sunil V L <sunilvl@oss.qualcomm.com>
 > ---
 
 Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 
->   tests/data/acpi/riscv64/virt/PPTT           | 0
->   tests/qtest/bios-tables-test-allowed-diff.h | 1 +
->   2 files changed, 1 insertion(+)
->   create mode 100644 tests/data/acpi/riscv64/virt/PPTT
+>   tests/data/acpi/riscv64/virt/PPTT           | Bin 0 -> 96 bytes
+>   tests/qtest/bios-tables-test-allowed-diff.h |   1 -
+>   2 files changed, 1 deletion(-)
 > 
 > diff --git a/tests/data/acpi/riscv64/virt/PPTT b/tests/data/acpi/riscv64/virt/PPTT
-> new file mode 100644
-> index 000000000000..e69de29bb2d1
+> index e69de29bb2d1d6434b8b29ae775ad8c2e48c5391..15598a9b8a3cc0cdd50bc1f77c73ae0ba728a272 100644
+> GIT binary patch
+> literal 96
+> zcmWFt2nk7GU|?WUck*}k2v%^42yj*a0!E-1hz+6{L>L$ZK{PUeim9N9aRK=jNMZmJ
+> Cwg&+K
+> 
+> literal 0
+> HcmV?d00001
+> 
 > diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
-> index dfb8523c8bf4..94be7a69a22e 100644
+> index 94be7a69a22e..dfb8523c8bf4 100644
 > --- a/tests/qtest/bios-tables-test-allowed-diff.h
 > +++ b/tests/qtest/bios-tables-test-allowed-diff.h
-> @@ -1 +1,2 @@
+> @@ -1,2 +1 @@
 >   /* List of comma-separated changed AML files to ignore */
-> +"tests/data/acpi/riscv64/virt/PPTT",
+> -"tests/data/acpi/riscv64/virt/PPTT",
 
 
