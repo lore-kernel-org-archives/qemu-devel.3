@@ -4,58 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64E2BCA9ED2
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 00:00:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46A6BCA9ED0
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 00:00:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGPuA-0005iz-5G; Mon, 12 Oct 2026 19:58:06 -0400
+	id 1xGPu3-0005fT-IJ; Mon, 12 Oct 2026 19:57:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dongli.zhang@oracle.com>)
- id 1xGPu4-0005gq-RX
- for qemu-devel@nongnu.org; Mon, 12 Oct 2026 19:58:00 -0400
-Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
+ id 1xGPtz-0005cy-5H
+ for qemu-devel@nongnu.org; Mon, 12 Oct 2026 19:57:55 -0400
+Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dongli.zhang@oracle.com>)
- id 1xGPu2-0006HM-Uz
- for qemu-devel@nongnu.org; Mon, 12 Oct 2026 19:58:00 -0400
-Received: from pps.filterd (m0246617.ppops.net [127.0.0.1])
+ id 1xGPtv-0006EY-09
+ for qemu-devel@nongnu.org; Mon, 12 Oct 2026 19:57:54 -0400
+Received: from pps.filterd (m0246632.ppops.net [127.0.0.1])
  by mx0b-00069f02.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69CMg8qM2685330; Mon, 12 Oct 2026 23:57:54 GMT
+ 69CMidcF2859531; Mon, 12 Oct 2026 23:57:44 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=corp-2025-04-25; bh=GyJN2
- +ifLHYy8//Fw4Lwqf8Z8LeIUb9LbzqArGFsDKM=; b=Cz2h3wbL/jP+2dT7Q/n4T
- 0X3gjEvCcovt6pHB4aMAJ1pjnQRkUQ27ACuUTxcwq0YYIA2+vzXQMleC7BUaOiG4
- VlqyJz7YvyX9h2bEutCIOSIu6rNrYvJtgb4e39jflE2XWSAu2+BTnz1q7GWX7LYG
- paIqLe9VJ1I7z4kOxlz02xLc+TsLPbjwvzD8UuKgXQACfrJ3a0RqVjjPsmACfspp
- 0e35O5+y4uEbmTL53WVR2EnYpWVDLCQ4mFRSnVoksSN9qFvZ4t/TvMGpNHNRhy1E
- FY7siIztxvrp3sSsQYp1woUnpkIBVWrvGqUPYhGHYssfTy10jxeniYp+pmH3IB5m
- Q==
+ :mime-version:references:subject:to; s=corp-2025-04-25; bh=hqRfU
+ PnhtX0Bed/56TAdAIJetvyLh26h3k2vBq9Tac0=; b=n6MLV7N1B8TNE1DoaIx6O
+ 4CwHqwuPLD8pw7lldJPUiE1wnFagqsuDin8BStlLdc6VMlxfsqJMfd8NIaHOePoe
+ 8siQpLlagwDTNnTPtCGizscsKI3TyhYFDIj28c2pKWOgYBPDYBYgZqgX9wTcu/mH
+ rwWjSeksRW24OZ4+lIUmEBubukkm2FCJ7gUi93x+ZAIKd21aix/hi1yHuEKh6RY+
+ /lrgj8oZkLzYbJjJkZSChJ17XRGd4M3hgNu5VFw16UrvUhD9cUhzsjePkjdTacwK
+ ZyJVGH/VCd2PEN+LwT8o8BeXBzt2T4qdkhTHvJRWY1bgamPf/iHj2/K8SaJCDIdY
+ w==
 Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta01.appoci.oracle.com [130.35.100.223])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4h7dwtb597-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4h7demk5v7-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 12 Oct 2026 23:57:54 +0000 (GMT)
+ Mon, 12 Oct 2026 23:57:44 +0000 (GMT)
 Received: from pps.filterd
  (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
  by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.7/8.18.1.7)
- with ESMTP id 69CNpevP015071; Mon, 12 Oct 2026 23:57:53 GMT
+ with ESMTP id 69CNpeFL015082; Mon, 12 Oct 2026 23:57:44 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 4h7btnuhvn-1
+ 4h7btnuhs2-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 12 Oct 2026 23:57:53 +0000 (GMT)
+ Mon, 12 Oct 2026 23:57:43 +0000 (GMT)
 Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.18.1.12/8.18.1.12) with ESMTP id 69CNvfHh025328;
- Mon, 12 Oct 2026 23:57:52 GMT
+ by pps.reinject (8.18.1.12/8.18.1.12) with ESMTP id 69CNvfHB025328;
+ Mon, 12 Oct 2026 23:57:43 GMT
 Received: from donglzha-e6-vfio-setup.osdevelopmeniad.oraclevcn.com
  (donglzha-e6-vfio-setup.allregionaliads.osdevelopmeniad.oraclevcn.com
  [100.100.255.69])
  by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTP id
- 4h7btnuhra-19; Mon, 12 Oct 2026 23:57:52 +0000 (GMT)
+ 4h7btnuhra-3; Mon, 12 Oct 2026 23:57:43 +0000 (GMT)
 From: Dongli Zhang <dongli.zhang@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: david@kernel.org, imammedo@redhat.com, maciej.szmigiero@oracle.com,
@@ -65,9 +65,9 @@ Cc: david@kernel.org, imammedo@redhat.com, maciej.szmigiero@oracle.com,
  eric.auger@redhat.com, zhenzhong.duan@intel.com, mst@redhat.com,
  cohuck@redhat.com, pbonzini@redhat.com, armbru@redhat.com,
  eblake@redhat.com
-Subject: [PATCH 18/21] system/physmem: add cpr-luo blocker
-Date: Mon, 12 Oct 2026 23:56:14 +0000
-Message-ID: <20261012235727.398133-19-dongli.zhang@oracle.com>
+Subject: [PATCH 02/21] migration/cpr: move CprFd definition to header file
+Date: Mon, 12 Oct 2026 23:55:58 +0000
+Message-ID: <20261012235727.398133-3-dongli.zhang@oracle.com>
 X-Mailer: git-send-email 2.43.7
 In-Reply-To: <20261012235727.398133-1-dongli.zhang@oracle.com>
 References: <20261012235727.398133-1-dongli.zhang@oracle.com>
@@ -80,33 +80,33 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0
  spamscore=0 adultscore=0 bulkscore=0 malwarescore=0 mlxscore=0
  lowpriorityscore=0 suspectscore=0 mlxlogscore=999 classifier=spam adjust=0
  reason=mlx scancount=1 engine=8.19.0-2610020000 definitions=main-2610120095
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDEyMDA5NSBTYWx0ZWRfX2cjhJ4EdGzjR
- 3xQTPzHDI4vKraqIHnIuglF3eD2giZ5IuWKxdaIwrRZVNnOz91bMhcD5yVjWQkJ9dcbkE3qei5e
- DEjevyJdcgVsI466tIHuA5wCuf7XtspU8Wq6LcDE/0fVFB3gYMD2wEjPCo2zrusWhZzFpVsxNeH
- V+MWJtptmzYdRb5+YfdS5bQ2uhtA7PzvgdQ44EWsxcNpLCcRsxug2b0ap9IWN699c00t5TPIcKz
- 96zIjNsj1hZ8JPfhH8UCSa730uQhfP+ZjIWQj5F24wRxrM6POhy8l8JhcHB8yvzRilJ6cEbP2WJ
- LW1HmOlaloPTPbyACdYO+P78KoXms7WM7Ka7Ge5FWMjbQKOHMe02yt+Zjh+qZ+oBE4vNQHkBZzl
- fSo6HNJDnfTEx4YzDFpivbBa1WrN9R8iKmQh8qV5JuW/Q68v6wWVOBLwMmsKjzR14aNqpkVsrsc
- dbmwHgcpC1ZZcr4AFA6qc3KGxTAX65T7jsXzOA4w=
-X-Authority-Analysis: v=2.4 cv=Kp7YSmWN c=1 sm=1 tr=0 ts=6acd7402 b=1 cx=c_pps
+X-Authority-Analysis: v=2.4 cv=CoEq4X4D c=1 sm=1 tr=0 ts=6acd73f8 b=1 cx=c_pps
  a=zPCbziy225d3KhSqZt3L1A==:117
  a=zPCbziy225d3KhSqZt3L1A==:17
  a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22 a=jiCTI4zE5U7BLdzWsZGv:22
- a=7Gl3-_t3PgB9XO-mQDs3:22 a=yPCof4ZbAAAA:8 a=6nePy_Ue8WTw2CsEWrAA:9
+ a=3I1J8UUJPc9JN9BFgKH3:22 a=yPCof4ZbAAAA:8 a=HSzY4yhsOYPL0Ecqzf0A:9
  a=5yU3S35YU4bGjq-dph-N:22 a=Bho9c0fBagfJEIQBS7DQ:22 cc=ntf awl=host:12107
-X-Proofpoint-ORIG-GUID: KEKd4TCPRS72HUrL-kqP6KlG0Jnmbqo1
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDEyMDA5NSBTYWx0ZWRfX+S1BdOOEv3XF
- xAqAPQlZ/9A467K4Viz+OoXF4ceNalaO3sck1KLTP3o/b8MJtWPMstib8lSCOhrDiZkRXY5903y
- ZsdnQWBYU7V/eKTSXmoi792FUIGpJSiDcg6ievxAos8RF2k2tN9n
-X-Proofpoint-GUID: KEKd4TCPRS72HUrL-kqP6KlG0Jnmbqo1
-Received-SPF: pass client-ip=205.220.165.32;
- envelope-from=dongli.zhang@oracle.com; helo=mx0a-00069f02.pphosted.com
+X-Proofpoint-GUID: zFthHOEoypMUluxB5yU4zG2D0yFTsX1H
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDEyMDA5NSBTYWx0ZWRfX3qYXQY0qMbG2
+ U4x6fPwP3C7SP5tMGrW/q6yVjs++XnuOujtrs8x1Ns9H0O1yqVdC9GLFPa2W4Fb8ZvRbErlm9/K
+ atcaRhc9scp+OVub/dN72lp7gOTBd1lk3zpW+bi2gFaGkIRd0LLU
+X-Proofpoint-ORIG-GUID: zFthHOEoypMUluxB5yU4zG2D0yFTsX1H
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDEyMDA5NSBTYWx0ZWRfX65Plhv18C8FR
+ 8eRl87z9dOobyXrlU55quDZ68qLzUKqcDTlfmHDzXT02jLkkSWlLOxyrYC+0uxn+xHmJKbtcztZ
+ 3vXl7kh0jFkMKZjZ471o8mNWLLIL+dT87jFYk/MCPvKQObTOq9wQQlwBc05MzkHCrgH9jclPBbN
+ EMwIlhaUja2upfLaxCAWAP/DZ/KBIvnSVYxmc3zVca87dUK/kyKaKu9GQCxV9lL6Cu+FvqmEbC2
+ ZATXYFvZu5y9ih+BdTLj+/1xa79JZhpGUlWgpAmbb9GVnqVy82S0CRq/PoGDy2smMk/+vjcgwyV
+ I/Sl+jmwRg3S2FsDS1eFg8cm/5jRgYICkEOCc/saqJ5c8nwdfsbk37P3jqZ5DPHTOijELie3uXm
+ FIY73z2xc3edmtSZwECfQ07Iyf5QCfZEgW2yaUGVZl3LFPeJF+Tk3OVjOLJtuslyWO1xukyUMsH
+ xnPj5KrmzjS22Ptyao8+q/3P1TwA6rRndbiJ32q4=
+Received-SPF: pass client-ip=205.220.177.32;
+ envelope-from=dongli.zhang@oracle.com; helo=mx0b-00069f02.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -123,53 +123,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a cpr-luo migration blocker for anonymous memory. cpr-luo requires
-shared memory, and therefore cannot use memory-backend-ram,
-memory-backend-memfd, or memory-backend-shm when "share=on" or
-"aux-ram-share=on" is unavailable.
-
-Here is an example if I use regular "-m 8G".
-
-(qemu) migrate_set_parameter mode cpr-luo
-(qemu) migrate file:cpr-luo.state
-Error: Memory region pc.ram is not compatible with CPR. share=on is
-  required for memory-backend objects, and aux-ram-share=on is required.
+Move the definition of struct CprFd to a header file so that it can be
+referenced from more source files.
 
 Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
 ---
-MIG_MODE_CPR_EXEC is missing from some existing blockers found with cscope
-"cs find s MIG_MODE_CPR_TRANSFER". I may fix them and send the changes as
-an independent patchset.
+ include/migration/cpr.h | 8 ++++++++
+ migration/cpr.c         | 8 --------
+ 2 files changed, 8 insertions(+), 8 deletions(-)
 
- system/physmem.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
-
-diff --git a/system/physmem.c b/system/physmem.c
-index 263acb5727..fcf40ca3f8 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -2246,7 +2246,8 @@ static void ram_block_add(RAMBlock *new_block, Error **errp)
-                        "which is not supported with CPR.",
-                        memory_region_name(new_block->mr));
-             migrate_add_blocker_modes(&new_block->cpr_blocker,
--                                      BIT(MIG_MODE_CPR_TRANSFER), errp);
-+                    BIT(MIG_MODE_CPR_TRANSFER) | BIT(MIG_MODE_CPR_LUO),
-+                    errp);
-         }
-     }
+diff --git a/include/migration/cpr.h b/include/migration/cpr.h
+index 56fb67e6b4..e33eaf588b 100644
+--- a/include/migration/cpr.h
++++ b/include/migration/cpr.h
+@@ -18,6 +18,14 @@
+ #define QEMU_CPR_FILE_VERSION   0x00000001
+ #define CPR_STATE "CprState"
  
-@@ -4539,8 +4540,9 @@ void ram_block_add_cpr_blocker(RAMBlock *rb, Error **errp)
-                "Memory region %s is not compatible with CPR. share=on is "
-                "required for memory-backend objects, and aux-ram-share=on is "
-                "required.", memory_region_name(rb->mr));
--    migrate_add_blocker_modes(&rb->cpr_blocker, BIT(MIG_MODE_CPR_TRANSFER),
--                              errp);
-+    migrate_add_blocker_modes(&rb->cpr_blocker,
-+            BIT(MIG_MODE_CPR_TRANSFER) | BIT(MIG_MODE_CPR_LUO),
-+            errp);
- }
++typedef struct CprFd {
++    char *name;
++    unsigned int namelen;
++    int id;
++    int fd;
++    QLIST_ENTRY(CprFd) next;
++} CprFd;
++
+ typedef QLIST_HEAD(CprFdList, CprFd) CprFdList;
+ typedef QLIST_HEAD(CprVFIODeviceList, CprVFIODevice) CprVFIODeviceList;
  
- void ram_block_del_cpr_blocker(RAMBlock *rb)
+diff --git a/migration/cpr.c b/migration/cpr.c
+index bca43e9bf3..33ac74c1f3 100644
+--- a/migration/cpr.c
++++ b/migration/cpr.c
+@@ -28,14 +28,6 @@ static GHashTable *cpr_fds_hash;
+ 
+ /****************************************************************************/
+ 
+-typedef struct CprFd {
+-    char *name;
+-    unsigned int namelen;
+-    int id;
+-    int fd;
+-    QLIST_ENTRY(CprFd) next;
+-} CprFd;
+-
+ static const VMStateDescription vmstate_cpr_fd = {
+     .name = "cpr fd",
+     .version_id = 1,
 -- 
 2.43.5
 
