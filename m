@@ -4,58 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61F41CA9EC5
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Oct 2026 23:58:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A013CA9ED0
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Oct 2026 23:59:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGPuD-0005kj-LS; Mon, 12 Oct 2026 19:58:09 -0400
+	id 1xGPu9-0005ip-39; Mon, 12 Oct 2026 19:58:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dongli.zhang@oracle.com>)
- id 1xGPu4-0005gs-VY
- for qemu-devel@nongnu.org; Mon, 12 Oct 2026 19:58:00 -0400
+ id 1xGPu1-0005en-Ro
+ for qemu-devel@nongnu.org; Mon, 12 Oct 2026 19:57:58 -0400
 Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dongli.zhang@oracle.com>)
- id 1xGPu3-0006He-Ar
- for qemu-devel@nongnu.org; Mon, 12 Oct 2026 19:58:00 -0400
-Received: from pps.filterd (m0333521.ppops.net [127.0.0.1])
+ id 1xGPu0-0006Fx-0X
+ for qemu-devel@nongnu.org; Mon, 12 Oct 2026 19:57:57 -0400
+Received: from pps.filterd (m0246617.ppops.net [127.0.0.1])
  by mx0b-00069f02.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69CMfsFC3711556; Mon, 12 Oct 2026 23:57:55 GMT
+ 69CMgGZQ2685917; Mon, 12 Oct 2026 23:57:52 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=corp-2025-04-25; bh=HTpmy
- 4Za/uk3yOF6I99gRPk/DOqGiadLde8Qg8kOmPs=; b=DZFehU4GHkJ1wxtWbYMuq
- rZiD+LdxhUMAW3eOzkifLuKYM1aF1ZQRsWzPEfhIFs0Luph2zgJD0sAyeuvJ234h
- QLD3BI1Fd/xJkyv1PNnnE0wYz5IlsVjHkxJizA7rZCN5hLWbb5vb2IAskSeye6/H
- zscVPUsrPHaFrLZtNdhppkUBi0DFqDco7MXT71VWVi7k0Qq8XKPFLhl8e6wnazwG
- G5fhROmPxeO7JCO6rRdh218YioreDLsBAs4tKBSHIvWQS5ZyqX6SesRt9GotDMIf
- 7cf26jTDOkBGF5ObXSxMyqo0mdB4OaIpbVfcgrALOvSf5wOZxbrUP8mKJ5TDbO0+
- g==
+ :mime-version:references:subject:to; s=corp-2025-04-25; bh=Q/WNW
+ xAWfn5RfBiI1OuDlUw6/QBloRRA+0bNXR2Ravk=; b=gO0SfbkOUQEzUSbDGPx9E
+ YSxPfKVD2wAUclROIk/gVaIFDvJIZaGLWYGDIpyp4b93xF/R943HomcI1z8f6xwO
+ aZMOHaqapMCjLqLU5MgmhdE1V+rcg1pRTO7/YS7sdZBm+mBczhQDGssnAC3KKLOj
+ auYOTlr9CJJM+MwkiEq9EdDMrz6jBy/jC4ets3tMGogPE434D9Ujy8L3xvA/FGwC
+ jWMlpLwx8oaHU46HwkskwiBpzIszvZ8TeQfNkecgn+wy8HzP/TdjbKjZzCn1jl9v
+ SaGGckLcs5/+q1k87H0FU0cPs9Q2e5wM7x5LR5KXsrvOzY1/HO9cxN1gTpiNQP1n
+ w==
 Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta01.appoci.oracle.com [130.35.100.223])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4h7dbkk695-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4h7dwtb596-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 12 Oct 2026 23:57:55 +0000 (GMT)
+ Mon, 12 Oct 2026 23:57:51 +0000 (GMT)
 Received: from pps.filterd
  (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
  by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.7/8.18.1.7)
- with ESMTP id 69CNpfeJ015139; Mon, 12 Oct 2026 23:57:53 GMT
+ with ESMTP id 69CNpdl5015063; Mon, 12 Oct 2026 23:57:50 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 4h7btnuhvx-1
+ 4h7btnuhuc-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 12 Oct 2026 23:57:53 +0000 (GMT)
+ Mon, 12 Oct 2026 23:57:50 +0000 (GMT)
 Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.18.1.12/8.18.1.12) with ESMTP id 69CNvfHj025328;
- Mon, 12 Oct 2026 23:57:53 GMT
+ by pps.reinject (8.18.1.12/8.18.1.12) with ESMTP id 69CNvfHX025328;
+ Mon, 12 Oct 2026 23:57:49 GMT
 Received: from donglzha-e6-vfio-setup.osdevelopmeniad.oraclevcn.com
  (donglzha-e6-vfio-setup.allregionaliads.osdevelopmeniad.oraclevcn.com
  [100.100.255.69])
  by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTP id
- 4h7btnuhra-20; Mon, 12 Oct 2026 23:57:53 +0000 (GMT)
+ 4h7btnuhra-14; Mon, 12 Oct 2026 23:57:49 +0000 (GMT)
 From: Dongli Zhang <dongli.zhang@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: david@kernel.org, imammedo@redhat.com, maciej.szmigiero@oracle.com,
@@ -65,9 +65,9 @@ Cc: david@kernel.org, imammedo@redhat.com, maciej.szmigiero@oracle.com,
  eric.auger@redhat.com, zhenzhong.duan@intel.com, mst@redhat.com,
  cohuck@redhat.com, pbonzini@redhat.com, armbru@redhat.com,
  eblake@redhat.com
-Subject: [PATCH 19/21] monitor/qmp: close LUO session when resuming source QEMU
-Date: Mon, 12 Oct 2026 23:56:15 +0000
-Message-ID: <20261012235727.398133-20-dongli.zhang@oracle.com>
+Subject: [PATCH 13/21] migration/cpr: add more arguments for cpr_walk_fd()
+Date: Mon, 12 Oct 2026 23:56:09 +0000
+Message-ID: <20261012235727.398133-14-dongli.zhang@oracle.com>
 X-Mailer: git-send-email 2.43.7
 In-Reply-To: <20261012235727.398133-1-dongli.zhang@oracle.com>
 References: <20261012235727.398133-1-dongli.zhang@oracle.com>
@@ -80,25 +80,26 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0
  spamscore=0 adultscore=0 bulkscore=0 malwarescore=0 mlxscore=0
  lowpriorityscore=0 suspectscore=0 mlxlogscore=999 classifier=spam adjust=0
  reason=mlx scancount=1 engine=8.19.0-2610020000 definitions=main-2610120095
-X-Authority-Analysis: v=2.4 cv=Ra0FmFtv c=1 sm=1 tr=0 ts=6acd7403 b=1 cx=c_pps
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDEyMDA5NSBTYWx0ZWRfX1TrsG/d3Q+Dy
+ zCbv2aPlbD9yTujqOZ2Wl+154ERh0++Z6cb+78BDXepFTj4WT42RL7zbhT9lRQlAobNqxXfcVpk
+ hIKMKclJGTWOEHFrh2/N+cAJza42Ei4ZoylnYSkh+cVpkVoXscBsM2IDB6LraNZVqBoPADZ1qvY
+ NLfUXY7E2d5NNaXCAzHGMRfTQXCCsFwmcXYXlGoK2WkWWQvSNAQDqdFEJJ45xm0L8cs3J+Ofdot
+ P7ZgkW6HHK3PupU9UC0ISQvlgM4w3snx9mkAXwbbl+XEc4dVVMzIfhRPAA6oH+4pjnU5NVYmEBF
+ IwOYF8NubDrGbIeDfCO0NW3K6zpSamjkALeV+Q2DnlIgvgz4DJdUCf7JMsRId/nn7iOVEv1Un/Y
+ Y6AOBJ3RvFCSc//OU5lr6s4h8hxMJaf6WfqEKk4rFvdGrWmy4vT6U9qZWPW5DnvlEgitet8AfIG
+ Eo78MDEzkN1YASqU6b6qD/aR4++ZREwAiPQXWoIg=
+X-Authority-Analysis: v=2.4 cv=Kp7YSmWN c=1 sm=1 tr=0 ts=6acd73ff b=1 cx=c_pps
  a=zPCbziy225d3KhSqZt3L1A==:117
  a=zPCbziy225d3KhSqZt3L1A==:17
  a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22 a=jiCTI4zE5U7BLdzWsZGv:22
- a=x0eKOSpe3m1H3M0S9YoZ:22 a=yPCof4ZbAAAA:8 a=q5NCwYa1t9B0Pme7qj8A:9
- a=5yU3S35YU4bGjq-dph-N:22 a=Bho9c0fBagfJEIQBS7DQ:22 cc=ntf awl=host:12107
-X-Proofpoint-GUID: nnJ84_ANNxDC6uf6od7cntryyrY-3d9I
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDEyMDA5NSBTYWx0ZWRfX890eYamr5KxR
- FQOLhyvQuIt3NNOIBFUY/ebtwfGJa7KoR/9f7kT3h0G3ZJLng+CCKjNiu7T3DJ/eelrQCdUA5vz
- XYG9ZyMzVvQErjw1oH2fnLz9B/UiZSXwi2OyJzzKaqyW4q+u+0+TGBfy3lz6qalJlE4yEpiHohO
- HD706IO/3r9gDBH/Swu4MlQC6eI5ro9oWEyeMGvQxpqi3gE8Z7LPfH+ltLSsAtejh8V6M/s/d5J
- /3PbdpOeKX0NvmBLEXwHeoylJjBV8nHdBupnqCaUD2b607yu2gCQXMVjAZRAfcJU0yazwP0YIck
- 49gwChY9TFEVeeqZ4fc5sqN2lZbv29EBMIsEsYt8oVZUh5OGoQA11G/kh/OwV0qNHZJMJvcQsi5
- 3QycDmj7BzNg8fSJ12ZG1Ykx+i7mER6sjG9qwQpSFlUOLI6Lb79PH3o/5avNgtj/8wc7F6X3jVG
- +tm55+c6SKKv69EMMwn0lxWkIOQUCZfvrTEq7jDM=
-X-Proofpoint-ORIG-GUID: nnJ84_ANNxDC6uf6od7cntryyrY-3d9I
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDEyMDA5NSBTYWx0ZWRfXwV2XE95wmLZQ
- 9F4gxry47mxOvyqtZG20tFhco20pYLwGicZKZvOIVmP67xu5OOyFNMIsZQoOsz94iaLUG7RnYho
- ApVR7utaViV3YgYlQdJm19+zSEtVJjzQiOxeo6eygx/YdyPioxDE
+ a=7Gl3-_t3PgB9XO-mQDs3:22 a=yPCof4ZbAAAA:8 a=a0vYn-nyonuW8HCG9-gA:9
+ a=O8hF6Hzn-FEA:10 a=5yU3S35YU4bGjq-dph-N:22 a=Bho9c0fBagfJEIQBS7DQ:22 cc=ntf
+ awl=host:12107
+X-Proofpoint-ORIG-GUID: J56M05EUMBL8mEwpzUJxRj4O0KxZT9TF
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDEyMDA5NSBTYWx0ZWRfX7CbQ+B/xYbek
+ /FM4/QK4Ddg3r8TwQHH3jMV/sLyPhogeiiLqGarN/HhfYNIUe6m32W+KKKhJgfQZUx1Y1nUDser
+ IIBLyeOUpo2zZjfl9FyDJt4tmjbXsQLcHK0D7c5SgaU7IzWwe1B/
+X-Proofpoint-GUID: J56M05EUMBL8mEwpzUJxRj4O0KxZT9TF
 Received-SPF: pass client-ip=205.220.165.32;
  envelope-from=dongli.zhang@oracle.com; helo=mx0a-00069f02.pphosted.com
 X-Spam_score_int: -27
@@ -123,41 +124,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-After a successful cpr-luo migration, the source QEMU remains paused and
-keeps the LUO session open for the upcoming kexec. If the user instead
-resumes the source QEMU with the cont command, close the LUO session
-before restarting the VM.
+cpr-luo requires walking through each LUO-supported fd to preserve it.
+Unlike cpr-exec or cpr-transfer, which only require the fd value, cpr-luo
+requires additional information, such as a token, to preserve an fd.
+
+In addition, we may want to return more values, such as a retrieved fd
+based on a session fd and token, and pass errp when an error occurs.
+
+Therefore, rework cpr_walk_fd() by adding more arguments for
+flexibility.
+
+Remove the assertion on elem->fd, since cpr-luo does not save or load the
+fd itself, only its name, ID, and token.
 
 Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
 ---
- monitor/qmp-cmds.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ include/migration/cpr.h |  4 ++--
+ migration/cpr-exec.c    | 12 ++++++------
+ migration/cpr.c         |  5 ++---
+ 3 files changed, 10 insertions(+), 11 deletions(-)
 
-diff --git a/monitor/qmp-cmds.c b/monitor/qmp-cmds.c
-index 7525a88e04..fc66618c47 100644
---- a/monitor/qmp-cmds.c
-+++ b/monitor/qmp-cmds.c
-@@ -32,6 +32,7 @@
- #include "qapi/type-helpers.h"
- #include "hw/mem/memory-device.h"
- #include "hw/intc/intc.h"
-+#include "migration/cpr.h"
- #include "migration/misc.h"
+diff --git a/include/migration/cpr.h b/include/migration/cpr.h
+index 4897d302f1..775f584368 100644
+--- a/include/migration/cpr.h
++++ b/include/migration/cpr.h
+@@ -49,8 +49,8 @@ void cpr_resave_fd(const char *name, int id, int fd);
+ int cpr_open_fd(const char *path, int flags, const char *name, int id,
+                 Error **errp);
  
- NameInfo *qmp_query_name(Error **errp)
-@@ -113,6 +114,12 @@ void qmp_cont(Error **errp)
-             error_propagate(errp, local_err);
-             return;
-         }
-+        /*
-+         * If the user resumes the source QEMU after a completed cpr-luo
-+         * migration, close the LUO session fd. This is a nop for other
-+         * migration modes or regular operation.
-+         */
-+        cpr_luo_abort();
-         vm_start();
-     }
+-typedef bool (*cpr_walk_fd_cb)(int fd);
+-bool cpr_walk_fd(cpr_walk_fd_cb cb);
++typedef bool (*cpr_walk_fd_cb)(CprFd *fd, Error **errp);
++bool cpr_walk_fd(cpr_walk_fd_cb cb, Error **errp);
+ 
+ MigMode cpr_get_incoming_mode(void);
+ void cpr_set_incoming_mode(MigMode mode);
+diff --git a/migration/cpr-exec.c b/migration/cpr-exec.c
+index b31ec3e59f..06cbced7e0 100644
+--- a/migration/cpr-exec.c
++++ b/migration/cpr-exec.c
+@@ -94,26 +94,26 @@ QEMUFile *cpr_exec_input(Error **errp)
+     return cpr_file_new_fd_input(mfd, CPR_EXEC_STATE_NAME);
  }
+ 
+-static bool preserve_fd(int fd)
++static bool preserve_fd(CprFd *elem, Error **errp)
+ {
+-    qemu_clear_cloexec(fd);
++    qemu_clear_cloexec(elem->fd);
+     return true;
+ }
+ 
+-static bool unpreserve_fd(int fd)
++static bool unpreserve_fd(CprFd *elem, Error **errp)
+ {
+-    qemu_set_cloexec(fd);
++    qemu_set_cloexec(elem->fd);
+     return true;
+ }
+ 
+ static void cpr_exec_preserve_fds(void)
+ {
+-    cpr_walk_fd(preserve_fd);
++    cpr_walk_fd(preserve_fd, NULL);
+ }
+ 
+ void cpr_exec_unpreserve_fds(void)
+ {
+-    cpr_walk_fd(unpreserve_fd);
++    cpr_walk_fd(unpreserve_fd, NULL);
+ }
+ 
+ static void cpr_exec_cb(void *opaque)
+diff --git a/migration/cpr.c b/migration/cpr.c
+index 2253fddb42..bc4d1e979d 100644
+--- a/migration/cpr.c
++++ b/migration/cpr.c
+@@ -230,15 +230,14 @@ int cpr_open_fd(const char *path, int flags, const char *name, int id,
+     return fd;
+ }
+ 
+-bool cpr_walk_fd(cpr_walk_fd_cb cb)
++bool cpr_walk_fd(cpr_walk_fd_cb cb, Error **errp)
+ {
+     GHashTableIter iter;
+     CprFd *elem;
+ 
+     g_hash_table_iter_init(&iter, get_cpr_fds_hash());
+     while (g_hash_table_iter_next(&iter, (gpointer *)&elem, NULL)) {
+-        g_assert(elem->fd >= 0);
+-        if (!cb(elem->fd)) {
++        if (!cb(elem, errp)) {
+             return false;
+         }
+     }
 -- 
 2.43.5
 
