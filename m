@@ -4,56 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29B4FCA9ED1
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Oct 2026 10:30:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5D9FCA9ED2
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Oct 2026 10:30:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGDHy-0000BP-I1; Mon, 12 Oct 2026 06:29:50 -0400
+	id 1xGDHs-0008KD-0L; Mon, 12 Oct 2026 06:29:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1xGDHE-0007eu-HH
- for qemu-devel@nongnu.org; Mon, 12 Oct 2026 06:29:09 -0400
+ id 1xGDHA-0007dm-5c
+ for qemu-devel@nongnu.org; Mon, 12 Oct 2026 06:29:04 -0400
 Received: from mail-francesouthazlp170110003.outbound.protection.outlook.com
  ([2a01:111:f403:c207::3] helo=MRWPR03CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1xGDHC-0005FA-UZ
- for qemu-devel@nongnu.org; Mon, 12 Oct 2026 06:29:04 -0400
+ id 1xGDH6-0005FA-SY
+ for qemu-devel@nongnu.org; Mon, 12 Oct 2026 06:28:58 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=ZW/J6PhbUPijkS8wm0ZwdNmOqaZ73D1FSN0M1QdD2m+6hf2IztkKyoLAq09IgGyOraZ+dId7fzO90kT/SA261fz3NuJ8i7BIADZa+mloPXdvTK4NFOKekUsUQvVewuSboIJQUe2Ff9FdXiRw6/5YFs7Dwb2TCQBNsYNAMtUBjf8CR12zPEIIz4BtuDRIQfS4+VHVUWJq72HzEqjQ+CWxFiKaPhLHhI3IhSPjokXZViD5ACICt3vItEC4Mnaqt+0+JKUv8qB8M6Hq2Ta2m+7UHyfbLzbKFk6nB86WbQ3FO4QbeDbzP6IN7BgSy9sJZl/IzkgJWj4v/bzX79ISy8UBTA==
+ b=nPOcdDMR8TRsAcBe6TGQCKTiF86Q0VU+U64tN03HqZZxVxKPpjJwWvippdudBwjxxn3PFZXy3DEN8/r/8a5aiId5odzzxYWIuItXDjSvAsfjjOoeap3qxYKTku1lW/Dvcl6/33tGhujQCyt5llERyFVog2XoJgxF2XhsNkLL6gwC1atjTEi4HUloqo2/3uqjw/wI6UOb99PA3RA0+O80FjG864P7WlanF7hBq6lrFNmnn4x0oSGcTdVwWN/4+qZiqVrmfYkV62I5B2K4u24QNMLed34EwHvo/57QDI5fo6C0PQD/h9Zk0Pcu3pXdOS8fKldlNuBeBUt5DGsk05V0Qw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=ZsVXvvvzwqJ72NVYywAYrq/LWoyKs50mmgOws/1FLo0=;
- b=ao7nZ1pPur32QOqSWPvEliOJuZzsYG0AI0UX4Krp0YWbdaD6c9XM3nK2l/DO1gWQ04A35nK2/WaMZfI//IzgnzoxeUITVseXGIb+fWoi6O0W8jRBmHqjjDDhtBHVVA8n7HbwP0T/kTtQNXFp3h8b5/7SiB4AjQ92ZVvNRMH+xHHf5XGOpH2WTuC+8WaOZ/MZutfEy0S7nycyXpyB+/MRtyWI4giNCG7Dp21segnLBV2kXWEVA6CYQdVkhU3hJPYxPdqwax9y8i6VqNcfdRKiKW6XT5KFAeV54kAXqyJNxbIURloeMKMw7Y4xY5jSLMXODi2ZAlhK6EtmK1Qoy4di7A==
+ bh=3zZJ89Z45bQcI+MDgmQM5LzF7kuk0PxBH91uljpEleQ=;
+ b=h43ucVEKuLTkgDrhLvC//ptGEfMwhAqB7cEdXEb2NGdR8Mhj6B4TACKd3HMorgrPqA0yJIEt0JuZvlUHVWpCzRy4pb5pDxmfAAsryStG8FePNeioU4zq/iO4rGqMyaoQD/+2yvVENpHq0IFzvG7Ouqt6693l7QXYgnYKzJnNPWGPz15BMDEtNddVg/c4aOhgKmfLQP2NZFqqmPENFHatWjzoUrT3zCTYAEUlg7hkqGj34nLGRfl4zqKhYNWo8lqzvOcaAX5HFkcouBjU+a10Le42EQYf49OQHRsMX2gvY9OCVdOAinGdQ0TDnjyUb7sJ9nCbxuRX7VF2gW5j4RMZrw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
  header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=ZsVXvvvzwqJ72NVYywAYrq/LWoyKs50mmgOws/1FLo0=;
- b=vEn0x4SojQ9wSHUl+nt+233Aqxz90bXtwZd4AmbyoUQEN3L38snGYKz3we50nh00/DpfhMUJ03rG52TGe2juziMuiv9avIh4TnxSydyFhHBL2qi1T00M1dkZw2knbwgVHUi0uxnXp0O2EiX5bqUxdHqFxC0cfPcNFM1Khe4L4dPS4xvmXqpnZgAXEayt3EO25wCQJ1Mek4NLaPJBCSnIwM0FipscWXqE8sMVmq00RstYV1Bk7a89O1SFP5xyxbNPak/w74EGyzBpg3NclHm95PVmYiMqNPFTX7xPRsKd+5FS/LqLhIkByBHLTzIzhx4G+HiQzG7vKXaRMWluBbatxA==
+ bh=3zZJ89Z45bQcI+MDgmQM5LzF7kuk0PxBH91uljpEleQ=;
+ b=uza3Wkf3Oci90vlBLyXPhqJ9+8cP7epMOl8lx5+UytCHwnavSv6XYrpXUPXrVNnamnM60fM4YbWhntds4qJ8SVW0/fGnu0qyJvRNytHdQc5W3cf8EV9iaWX8392/cU8gytqnlQ25jGCE3Myb5LwEzL2UkA/kxR9wn+NrilXx6Wtavyh9CH3ex/ae2coJYMGaJRsF64xnMdOgTg574I0WghTdTzb2DUad2rwN5aomTy3ASHoWEBIjRTW6DEs4xnn7XR9dT08Wwmy0+aDiymTRAIW5LotdhjAJWTTf7iKwOTW6Nb0oBQO4aVzBx5LZK1ktfw0dOnlkusZnnkk0eZ6CRQ==
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=virtuozzo.com;
 Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
  (2603:10a6:800:20a::12) by AM0PR08MB5523.eurprd08.prod.outlook.com
  (2603:10a6:208:17f::17) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.522.11; Mon, 12 Oct
- 2026 10:28:41 +0000
+ 2026 10:28:40 +0000
 Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
  ([fe80::4e37:b189:ddcd:3dd8]) by VI0PR08MB10656.eurprd08.prod.outlook.com
  ([fe80::4e37:b189:ddcd:3dd8%7]) with mapi id 15.21.0522.008; Mon, 12 Oct 2026
- 10:28:41 +0000
+ 10:28:40 +0000
 From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-Date: Mon, 12 Oct 2026 13:28:21 +0300
-Subject: [PATCH v16 13/22] vhost: add vhost_dev_set_owner() /
- vhost_dev_reset_owner() helpers
+Date: Mon, 12 Oct 2026 13:28:19 +0300
+Subject: [PATCH v16 11/22] vhost: factor out vhost_dev_init_backend()
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261012-up-vsock-vhost-v5-v16-13-36c38bd15ffc@virtuozzo.com>
+Message-Id: <20261012-up-vsock-vhost-v5-v16-11-36c38bd15ffc@virtuozzo.com>
 References: <20261012-up-vsock-vhost-v5-v16-0-36c38bd15ffc@virtuozzo.com>
 In-Reply-To: <20261012-up-vsock-vhost-v5-v16-0-36c38bd15ffc@virtuozzo.com>
 To: qemu-devel@nongnu.org
@@ -69,66 +68,66 @@ X-ClientProxiedBy: VI1PR03CA0043.eurprd03.prod.outlook.com
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: VI0PR08MB10656:EE_|AM0PR08MB5523:EE_
-X-MS-Office365-Filtering-Correlation-Id: 3413c97e-e101-4636-2f8b-08df284b9615
+X-MS-Office365-Filtering-Correlation-Id: 839b8b69-ef46-4d81-7cab-08df284b9531
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
  ARA:13230040|7416014|376014|52116014|1800799024|23010399003|366016|10067099003|22082099003|18002099003|261009223027099003|56012099006|38350700014;
-X-Microsoft-Antispam-Message-Info: CQJwmlt2g+DJ6r9yicv/aYwlCgBdNYzaqqNBMIUndLhHLjXmvu/ZOayzy2lmziT8OtDLhaFTBDetRU+js3bpapwJLOlZD4hdpcYvfbPyzXHGQpHnzLLu2tFsCnNWwSw/MNcs0zx1iCiHjLJ0C4pl8Yc4mQVzql6AdzjbmN7bLznvjzDPUfWrMxi7v/yuEap7jcwJ7Zr1CfZPX7epTM2YgsjIsZrRYGEQ/cnKq3AIqQrT+tJE58rYrmbavOPCmnTwGNOWV6LWLVVvtpYrzrYZ2JbrtdeJDlU5GOt3TZB1lHgQ7Kf4ZiP2dq9+cIsfhutDDN72JTdPmLY0z2YdVkGcsAVXF5egsodcg+9iasDyw6qsEquaLnTCQhQ4I/tjC3OSxMG2L6ouw86hvo3bKYLziTA+aiS5jk+ISVUobd2D6MUmLa+lpkNWMy1Z1tU5NrZohnumwYYVW7kSCEebkzTTANRIIFu4OveJ+NadWfGY4bo2fopM4yTCSmNOQ8txubUcm4cXcoQRe4i7JxX9B6FslAD4GmQ6MifXng0CP57sDedAEJUkXrQJUw0zwfuaEbcrewOcEN8b8Voj1c+dLBFPdWydGxrd7vY6ymAH/mQ9JJf2HaO74wSWY/Pjz2Xsad+lFA46xL6erJUDICckVYP/xpMpLDX+R0TaYfsARPCQBR8oeXf3bxYRZdn5lTehOA8QkINuUMuRLpGIIgoY3ZqB4f73DWzzw44HQauv7Ro7tjs=
+X-Microsoft-Antispam-Message-Info: 7TQ8vIuQWQfbanLFDtKYjooozGCZ7IF5MkYqL2WdbcSVSv1jy1iC/7Gkg/08I/80BI30IDKmTRdd067zWpD+28sjUinufdqQeKgm1TjPPDOpVQLcPcYC7MxTKJpkU/P77CMGP8dsqpXoWWwJo1PD+WlYtUOjulqlt5nO7dgnCht2e0yvRhkaG3Iq+IWnhdmSKdOYzLeqcrUrrNFBJPhiiUEsUF0NaMlUBWhCmgdSdx+jCS7eU1cX23lvIwBK7JU7YbAmkutpnTGM0QAL6Hv6pV4mAqoTPWsYI7z+l/o6/HSRWLKPvaTHhv6cc8nZj1TnTLlRt8ytuPIhdFX0JledRiZKVkj9y2pwiuwZLyiAeCkER38IurBksL2rlJ05g5PXpLOC79PomxSDNSbp2mUs9F8Xb+wHwiPqZcojwE06SaYqCHB00eHNwcXjmAKxDBEKiHQnzX+3ypVUPMamSTtKnCrSSQ0kYrIGTh7mWfcm7JIP+AZC63PAAa/o1cFt/uHM5JvdaxBpumRD/hmSmNu0PPsnVNpm2XF3MCOY0dYVyXRMVnQdQcLjWtN0aPpeT5fs8SYKCRVRvQRf6NxD2K/vfLDVgO8LI2JLmZS32mChhPAROSJjwHugwIYh7u8LCNVefYrYQSQr/Jo7w6Cjd0myNwEpu/mH+gcdx8WTeSSFqVhttP8Pn39+yD2fsRE48hh8bq/KZyg5ZweC5ue7tJcbIS+CMyzXSTUt1lfwfZn9JMc=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:VI0PR08MB10656.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
  SFS:(13230040)(7416014)(376014)(52116014)(1800799024)(23010399003)(366016)(10067099003)(22082099003)(18002099003)(261009223027099003)(56012099006)(38350700014);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?MGV2cGs3aE1IZ1VaZmU2VERoTXhoY1ZmaGtqdHpCZlR2M2JGZEQxaUFVT1FH?=
- =?utf-8?B?d2NIdVBhc2tPeCtqRU9ub2tRZmxpMC9xNVNNV1dMNmpMQmhEdTl6NWREQVpG?=
- =?utf-8?B?M1JaWnFNT3lzTmRrL2RGS3JvRzhEZnBEdU9pNC9yVE94bGJ4WTdubjBrSGVB?=
- =?utf-8?B?dnBOMU5LWEFjTll1RFM3b1g5dlk0TUdiZmxsdnpQSjZBU25MVUpjK2NHZ2N4?=
- =?utf-8?B?bTZjYjYyT3B6dmMvYTBvZGJIOGZvWmJtY3owVEsvQ0xxSG1mS2lsOFZJcVVr?=
- =?utf-8?B?ckZFZG96dlNVcjk4N2x3bFVHNEE5T202cTRiRDlDL2ZDWjl0ZUlLRFdGUnlL?=
- =?utf-8?B?bzdoRTFwTitpb01VWDIxL24xb2w4MHdmcEVhZ3hiaER1TitBejlRb0pPZTgx?=
- =?utf-8?B?RDQ0R1F0NzJLVC8vaWlGMFltbVFZbS9QenhmZ2JDSGtwV0daSitmRGxLWWNE?=
- =?utf-8?B?ZmR0V05Cb3RvUk9MMUwrSFdUbUxYd2RCZkV0ZVJiRHplaG1SVllsNlkrQjh5?=
- =?utf-8?B?cVdBNDBQOHE5SzI4ekV6alo2VG81d2V1R3pXcWtDaEp2Q1RZZ0JCbFRoQ0Ft?=
- =?utf-8?B?NElvVXpNZVJzMjB3N3NaU25paG1Da1JFcXJSaGtCcWZIMzlvWVVMUmtuUEpp?=
- =?utf-8?B?cTd3TUFWWFR6M0M4M1Q0NU5YR0J1NVpabE1Tc2x1cm1lL21aQ1FHN05UMEcr?=
- =?utf-8?B?SFlNWTN2TEFPYXptclBGY2w2aVRUSjlwT0NXYUhTMk1FY3UzU2g4R245NEUr?=
- =?utf-8?B?ZGFkQUUxUUdMTkFZTVc5ODNGeWplU25ENUsybjBNQ2tXVVkxY1pvYXBjaVh5?=
- =?utf-8?B?YlhxT096R2t2YktkTFlZZm50OGNvNHF2R3Q2OEg2REtzaXZ2bmxDdE9tZHNG?=
- =?utf-8?B?MDZQL2J0RXlGL0xIOUgreVBHNi9zckZaZXhNUC9MMGpKL21LUlVLK0k0NjVS?=
- =?utf-8?B?SllxbHJUQUZzUVE5TGJTbThXY0RlWXdkdmNMcDZUTVFibEd5MkNYN1ZBRjhO?=
- =?utf-8?B?M3JOdTl0ZEZoRXdXM2NxNFhac3JkSVJjTDFSdWxhNkhoMzBTWXhrVTNDUy82?=
- =?utf-8?B?dFVCdnJpdUUrSmh1TUxhdzNVcCswUXdKVXpBSS94UXY5czRaeXY3YldmTDBL?=
- =?utf-8?B?SjVNT3EzeUwyT01naWpjOUYyVDdkSjlMcEx5WFF1eTN1VTdpenBGaHhucEVn?=
- =?utf-8?B?WisxVGpQRFFRMDhUNXhhVGhlbFhkZ0UvM2luU3dZMDFaNDdBd0I4ZEdXRUJD?=
- =?utf-8?B?bSs0aEtta0FNeXlURS9wNXVkZDJ3TVFKa2lFSmlEalFJaW1DMDhGWGt5bjh4?=
- =?utf-8?B?NXlHbXY5ZDlITGNmb0JTQ2lzTTUrbzNXT0JlN0VyRm90eXROMVR6UjRpdEhD?=
- =?utf-8?B?RnNqbG5nRHNsZmM3bmo5eHFNS2RDRFk3K2NiRTZ6RXk1QzhXUGV0QUtxNUF1?=
- =?utf-8?B?Q0xkbTB4RXgwQWJxMGk1R0IwMXRLNGFHUEdNUkIzbTg2VHZQS3RZYktDL284?=
- =?utf-8?B?bkxjSnBqNnlBOStDazNiTDdlZmZPc1pWcGlrcyt1SVB3VXgvQ0lxQS9SdUgv?=
- =?utf-8?B?cTJjWGtJekxKbTlxaVNiZVEvSUJhZmJ0NlhVRXdhbkl1RnlCQW9TZnlXYjFO?=
- =?utf-8?B?OEZoKy94UE9IOENtbGEvWkhlWi82R2RCc0d5K0wvS3FyZmIzck1OK25ZeDVO?=
- =?utf-8?B?QVo2Rk5SR0g5S2s2aHVZTXFDUzdiSjQwVmU0a29XQ3czR3dRak0xSUFZN0tR?=
- =?utf-8?B?bDF4UXRGTDB4WlF0M043c1VldjBkdWozWDBKczFwUEN0QUFvOGpqdWRWK0lX?=
- =?utf-8?B?NmJ3VEVIajlVVjQrU2cvOUNOaXNpRHVMSDZjU2ZtYThzN2QvQ2pEZTBQRkdo?=
- =?utf-8?B?VUdJVWFkclphVDNiTkdENTREelJkWVBoK1RSOG1DK2VzMUhVU3V6Qk54UWsx?=
- =?utf-8?B?UUprOUJkVkFlRGUrS2JiNkpnT2l0VSttR09sRWhnTGRadXZMWmhPM1FPMm5Q?=
- =?utf-8?B?NW9BRGJlSXRoV0lHL1hhNzJjdkk3dnhHYVJGTzM5QVlZWno4TUtJSzE3UjVy?=
- =?utf-8?B?OWtRMHhHRTNjWGpNeVBuUHQxZWIwbmdiN3dyOVN5VHo5UktOWm9jeXM5aU1C?=
- =?utf-8?B?UU11bHVaZjBmKzZhTUZxSitEZk8yS2RleHpRbGZ5U0xVT3NGYkhickNCV1BV?=
- =?utf-8?B?TjVKVk9BaCtVN3ZsUzFDNVY4NTR5U0FqY2IrVVdrVWtDa1Q4bmlQaW42YVZ5?=
- =?utf-8?B?Ty9OaGF2czBKcFluTjViODNGNkM5TGZ6ejFQWEZiOThOUGZuMG1Xdmg0KytU?=
- =?utf-8?B?M0t5ejExUlZTeVQwaWJkUThQdXRlVDNwa1VJNVhmNmE3UmJoVU02bnpJdHN4?=
- =?utf-8?Q?MMmX+ObWHbJ3lLv4=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?WDRIVmlwSml4anErVUxzZnFXaWR2N0JvdnNROXZ3YTAxVjJ6ZXlKR2VIeDcv?=
+ =?utf-8?B?V0M1ZXM3ZGNtbTlYZTJGYWhJWTNIM1Z4WEtXSWV1eS9BOHR6M2Q5b21vZThs?=
+ =?utf-8?B?bzJKRkhYaHFzeWJyQXMzTnRKd0NkVGMyZnVSeThFVmpWZktqUUcrVks2MkV4?=
+ =?utf-8?B?Vm8wM3NrdTYvZnY5cjNQbHp6V0Nmc0dBWFcrOENleFdQQVgrVnoxK3U3MXE3?=
+ =?utf-8?B?bWZPaWZXVmJla20zRUY1UmVkZW1QZndKT20vSDUvbkN1VVd4T3pzcHA5MlBM?=
+ =?utf-8?B?QUxnYVUzb3ArUHVkSXdLSnJncnJaK1U0UmtUck9OcTNSdGt2VWpmMUpBdDRq?=
+ =?utf-8?B?NlVWZ0VDRFpXTDFzYU5meGc4emkxWEtIUnA4NmJ3bjY5ck5qREZJSXFFcFh3?=
+ =?utf-8?B?UjlpQldhZDVWQkdRWlkwL0l2R3R4VlpWOGx5U0NDTGw0aFYzcTBUSldIL3F3?=
+ =?utf-8?B?UExmdm84M1FQMzhibkVhRVRpTTN4elhPWmRyb1YxK3ZRcHd1YlphL3VITVZY?=
+ =?utf-8?B?MmlXTzUrVGRpbTV3WEplM3k1MERCcDQvTFlqNXMrNVRZUHgyaTBYSzRQckY5?=
+ =?utf-8?B?WUlmNzVLOUk1U0I0aWcrL3BVelA4U3lmUmEzeXVsTHdRU3pVbjkrNGQxRmRU?=
+ =?utf-8?B?RzRSSEF2amdWTUxkRXltM1JJSmF1UTJBWlcyUzNvcnQ2dm5aWlBpdFp4ZU1J?=
+ =?utf-8?B?OVFod3BiOEliNnl0Z200VnpvcUV0YVNHTGJHYlZja0VaSFVXOU1LNkxoRnRa?=
+ =?utf-8?B?M2QxTXBwdFBRSmpmbnFRblRseUhEYW1VTkNDM2JLT0k0aTRvWHU4eXJVZHA4?=
+ =?utf-8?B?Yk40cDQxQ3Q2ajh2Q3J3SkxvVnQrK1VGcmhQVjJJdnYvQWtRbjMzaVdOYWVw?=
+ =?utf-8?B?Y0k5UjE0KzRhZjROdm1tVEZoZkdZeWJQODdCL1A4Q3B4MlpaUDhIdCs2bHFN?=
+ =?utf-8?B?UmxOR002KzZwQ3FhaTJVeS9wZ21NR1MyMHR5RUMyNUt5ZXlxRHdVT3ZtOWl1?=
+ =?utf-8?B?b0ROQS82cHZYUU12UjUvc3JMN1JIVVlMaHEvZnRBcFNoSE1lZnVqMXJsTWxC?=
+ =?utf-8?B?Z3dxSzNEM2lzN0ZBRGxrVXI4Y05zaVV0T2Z0cTdpOC9NVzZMQnhHYzJZdmpF?=
+ =?utf-8?B?MlVWeFUvamtDanQ0dHAxbGhHd3RING1mZHB4NVJ2RTJoeVo1Z3Uva2t0TGhr?=
+ =?utf-8?B?a1BEWU5yYnJIK1pRVldUdURjU0gwMTdrbFQ0ajZkY0QzcEo0cktjaWxNVWVP?=
+ =?utf-8?B?cnpTdUl2aThESGtPdStWUkJvZGpNdXl3aC9jUzZTU2ZiV1hhVW5objB0YUht?=
+ =?utf-8?B?TCtHNEFUaTM0ME1vem1vNUs1ajhvaHk1Q3JyNWEyQmllN3FlNVNzdi80V28w?=
+ =?utf-8?B?TjE1L2RaUGpVN1hYdE8vSTRKS2VOaUxHUGRNZXU2NU9oN1RYYXJhWmtPK29o?=
+ =?utf-8?B?MFp3ekZ0TGxJZTBjREY0TlVyV2dzTXhRMVdjVThsVjd1MlpoQnVCUTU3a2NS?=
+ =?utf-8?B?Z0N3OFdNS2hqYURhdCtzTnd5cEZWTEczakhYbFBwUTdrZzBiRnFBVld5VWI1?=
+ =?utf-8?B?ZXQ2RmJubmpPOWdSbCszYlhJVEQ3QUNxVHc0VTM4SzdLOE9jM2xjenJCQ3h0?=
+ =?utf-8?B?OVFyUWwxSWwyaUd5dER0bHZzcjNvUkx5TmVCM1NwbjVNWVNnc2g1WVlzMFBv?=
+ =?utf-8?B?VkFmeThPRkN1ckNHZHlOZm1iMXRHbXNxTENrT3dVeUhhSE1JNXlJWHBVUUJv?=
+ =?utf-8?B?LzZmZzRmS1doKzduZnRETTZpMU9rVi91aGdnWkRtMEFxZ2k1OUNkaVhtd1Bu?=
+ =?utf-8?B?cDZzQ1dXcUpBM0JZcS9ON09KMldMcEwxSHJNbXVkc2tMcFYwZlJIWnh1bHVI?=
+ =?utf-8?B?WDZqTHJjcEpDV2x6QlFZb21oOXBrQTFkVy9XdEVENDFlMDc0R0NtSVlnRER1?=
+ =?utf-8?B?Skw5ekxYYi91MUdLQjFEalB5NFlUalBWaFFPVG1oL2lxTUw1KzJ6aDZYUHRW?=
+ =?utf-8?B?dGxkb0RsS3pTUXlGL1ZURXg5TStCUTF3K292WnFnNTNYb0dGMzBROXNJYXY1?=
+ =?utf-8?B?MnQ2R0lHZ3Z1WmZiQkxuc3YzNVJOQlQrQ1BFSnhXRXhLNFBSTU8wOVlsTjZi?=
+ =?utf-8?B?cWJBOVN0azVOeVVRMDhCME1NV2tmb1UrT2ZZZTNMbU1IcGh3NVgzTGhqQ3NN?=
+ =?utf-8?B?UnJMSjl1WFdGWjFDVWYxdDJpRS9oTEFwL2w4MlRoeXpmbkQ3L0hOYnhlU0M1?=
+ =?utf-8?B?cXBxVEZrcWRIdSt2c2VjcmRqaFNqQnFPZlZtRFFlTTZZQndhaC9FNUovcVAy?=
+ =?utf-8?B?anY0c09rTGlubEtTUGJQZFdCa2tYOXJBWnN5Uk1BUkR3QXRqMDZBZzVJTTlM?=
+ =?utf-8?Q?2NHj7hdj+vSDdDI0=3D?=
 X-OriginatorOrg: virtuozzo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 3413c97e-e101-4636-2f8b-08df284b9615
+X-MS-Exchange-CrossTenant-Network-Message-Id: 839b8b69-ef46-4d81-7cab-08df284b9531
 X-MS-Exchange-CrossTenant-AuthSource: VI0PR08MB10656.eurprd08.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Oct 2026 10:28:41.7310 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Oct 2026 10:28:40.2512 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: tqxbzycS5u4guc6nR3JGbjAjKTem7637pzJeeWtvugmRLtv4kBUBDa1UjpJcp8dYL2xO8y7vog6KcwWNcAQwwz7bRqrk0b7VWGGbX3qLwaA=
+X-MS-Exchange-CrossTenant-UserPrincipalName: xhk+Lod43P513iWdwanzs+a+LJNE2FGi/tT3Fj+IkVB/I7bmSAuQKaZop7g9FzbACzdZkOzus0zD84vmQms16dLluKxp2sTSeMAvRh4XphQ=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM0PR08MB5523
 Received-SPF: pass client-ip=2a01:111:f403:c207::3;
  envelope-from=andrey.drobyshev@virtuozzo.com;
@@ -154,91 +153,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Wrap the set_owner/reset_owner backend ops in dev-level helpers, matching
-other vhost_dev_* wrappers, so device code can take or release ownership
-without reaching into vhost_ops directly.  vhost_dev_init() now uses
-vhost_dev_set_owner(). Both return -ENOSYS if the backend has no such op.
+Split the first part of vhost_dev_init(): selecting the backend, calling
+its .vhost_init() and reading the supported features - into a new
+vhost_dev_init_backend() helper, and call it from vhost_dev_init().
 
-No functional change.  These are used by the following vhost-vsock patch to
-hand a device between owners during CPR.
+This is in preparation for CPR restore of vhost-vsock, which needs to learn
+the backend's features at realize time to negotiate them when loading the
+incoming virtio state, but also must defer taking ownership of the device
+to post_load.  vhost_dev_init_backend() does exactly the pre-ownership part.
+
+As a result VHOST_SET_OWNER now follows the feature query rather than
+precedes it.  This should be safe, as no backend requires ownership before
+VHOST_GET_FEATURES - the kernel and vdpa backends do not check ownership
+for it, and vhost-user already does query features from its .vhost_init()
+before set_owner().
 
 Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
 Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 ---
- hw/virtio/vhost.c         | 20 +++++++++++++++++++-
- include/hw/virtio/vhost.h | 25 +++++++++++++++++++++++++
- 2 files changed, 44 insertions(+), 1 deletion(-)
+ hw/virtio/vhost.c         | 33 +++++++++++++++++++++++----------
+ include/hw/virtio/vhost.h | 22 ++++++++++++++++++++++
+ 2 files changed, 45 insertions(+), 10 deletions(-)
 
 diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
-index dfdfd49da3f..56fa4345886 100644
+index 68a8e404818..99561ac5868 100644
 --- a/hw/virtio/vhost.c
 +++ b/hw/virtio/vhost.c
-@@ -1703,6 +1703,24 @@ int vhost_dev_init_backend(struct vhost_dev *hdev, void *opaque,
-     return 0;
+@@ -1681,6 +1681,28 @@ static int vhost_dev_init_features(struct vhost_dev *hdev)
+     return r;
  }
  
-+int vhost_dev_set_owner(struct vhost_dev *hdev)
++int vhost_dev_init_backend(struct vhost_dev *hdev, void *opaque,
++                           VhostBackendType backend_type, Error **errp)
 +{
-+    assert(hdev->vhost_ops);
-+    if (!hdev->vhost_ops->vhost_set_owner) {
-+        return -ENOSYS;
-+    }
-+    return hdev->vhost_ops->vhost_set_owner(hdev);
-+}
++    int r;
 +
-+int vhost_dev_reset_owner(struct vhost_dev *hdev)
-+{
-+    assert(hdev->vhost_ops);
-+    if (!hdev->vhost_ops->vhost_reset_owner) {
-+        return -ENOSYS;
++    r = vhost_set_backend_type(hdev, backend_type);
++    assert(r >= 0);
++
++    r = hdev->vhost_ops->vhost_init(hdev, opaque, errp);
++    if (r < 0) {
++        return r;
 +    }
-+    return hdev->vhost_ops->vhost_reset_owner(hdev);
++
++    r = vhost_dev_init_features(hdev);
++    if (r < 0) {
++        error_setg_errno(errp, -r, "vhost_init_features failed");
++        return r;
++    }
++
++    return 0;
 +}
 +
  int vhost_dev_init(struct vhost_dev *hdev, void *opaque,
                     VhostBackendType backend_type, uint32_t busyloop_timeout,
                     Error **errp)
-@@ -1720,7 +1738,7 @@ int vhost_dev_init(struct vhost_dev *hdev, void *opaque,
+@@ -1693,10 +1715,7 @@ int vhost_dev_init(struct vhost_dev *hdev, void *opaque,
+     hdev->vdev = NULL;
+     hdev->migration_blocker = NULL;
+ 
+-    r = vhost_set_backend_type(hdev, backend_type);
+-    assert(r >= 0);
+-
+-    r = hdev->vhost_ops->vhost_init(hdev, opaque, errp);
++    r = vhost_dev_init_backend(hdev, opaque, backend_type, errp);
+     if (r < 0) {
+         goto fail;
+     }
+@@ -1707,12 +1726,6 @@ int vhost_dev_init(struct vhost_dev *hdev, void *opaque,
          goto fail;
      }
  
--    r = hdev->vhost_ops->vhost_set_owner(hdev);
-+    r = vhost_dev_set_owner(hdev);
-     if (r < 0) {
-         error_setg_errno(errp, -r, "vhost_set_owner failed");
-         goto fail;
+-    r = vhost_dev_init_features(hdev);
+-    if (r < 0) {
+-        error_setg_errno(errp, -r, "vhost_init_features failed");
+-        goto fail;
+-    }
+-
+     limit = hdev->vhost_ops->vhost_memslots_limit(hdev);
+     if (limit < MEMORY_DEVICES_SAFE_MAX_MEMSLOTS &&
+         memory_devices_memslot_auto_decision_active()) {
 diff --git a/include/hw/virtio/vhost.h b/include/hw/virtio/vhost.h
-index b2b644c0d1c..8127a9a5a2c 100644
+index 0a322efec1d..b2b644c0d1c 100644
 --- a/include/hw/virtio/vhost.h
 +++ b/include/hw/virtio/vhost.h
-@@ -178,6 +178,31 @@ int vhost_dev_init(struct vhost_dev *hdev, void *opaque,
- int vhost_dev_init_backend(struct vhost_dev *hdev, void *opaque,
-                            VhostBackendType backend_type, Error **errp);
+@@ -156,6 +156,28 @@ int vhost_dev_init(struct vhost_dev *hdev, void *opaque,
+                    VhostBackendType backend_type,
+                    uint32_t busyloop_timeout, Error **errp);
  
 +/**
-+ * vhost_dev_set_owner() - take ownership of a vhost device
++ * vhost_dev_init_backend() - set up the backend and query its features
 + * @hdev: the common vhost_dev structure
++ * @opaque: opaque ptr passed to backend (vhost/vhost-user/vdpa)
++ * @backend_type: type of backend
++ * @errp: error handle
 + *
-+ * Issue VHOST_SET_OWNER on a device that has already been set up, e.g. to
-+ * complete a CPR handoff on the destination, or to take the device back on
-+ * the source after a failed CPR.
++ * Select the backend, initialise the backend instance and read its supported
++ * features into @hdev, without issuing VHOST_SET_OWNER, setting up the
++ * virtqueues or registering the memory listener.  This is the part of
++ * vhost_dev_init() that precedes taking ownership; it can be used on its own
++ * so feature negotiation can happen before ownership is acquired (e.g. by CPR
++ * restore).
 + *
-+ * Return: 0 on success, -ENOSYS if the backend has no such op, negative
-+ * errno on failure.
++ * On failure the backend may be left partially initialised; the caller must
++ * still call vhost_dev_cleanup() to release it.
++ *
++ * Return: 0 on success, non-zero on error while setting errp.
 + */
-+int vhost_dev_set_owner(struct vhost_dev *hdev);
-+
-+/**
-+ * vhost_dev_reset_owner() - release ownership of a vhost device
-+ * @hdev: the common vhost_dev structure
-+ *
-+ * Issue VHOST_RESET_OWNER so that another process can take the device over
-+ * with vhost_dev_set_owner(), e.g. on the CPR source once the VM is stopped.
-+ *
-+ * Return: 0 on success, -ENOSYS if the backend has no such op, negative
-+ * errno on failure.
-+ */
-+int vhost_dev_reset_owner(struct vhost_dev *hdev);
++int vhost_dev_init_backend(struct vhost_dev *hdev, void *opaque,
++                           VhostBackendType backend_type, Error **errp);
 +
  /**
   * vhost_dev_cleanup() - tear down and cleanup vhost interface
