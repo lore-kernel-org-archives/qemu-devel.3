@@ -4,102 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CF61CA9ED1
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Oct 2026 10:37:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35E82CA9ED1
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Oct 2026 10:37:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGDP4-0008UE-Q8; Mon, 12 Oct 2026 06:37:11 -0400
+	id 1xGDOt-0008T7-R8; Mon, 12 Oct 2026 06:36:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1xGDOz-0008Tr-D9
- for qemu-devel@nongnu.org; Mon, 12 Oct 2026 06:37:05 -0400
-Received: from mail-dy1-x1333.google.com ([2607:f8b0:4864:20::1333])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xGDOq-0008SB-Mh
+ for qemu-devel@nongnu.org; Mon, 12 Oct 2026 06:36:56 -0400
+Received: from mail-yw1-x112c.google.com ([2607:f8b0:4864:20::112c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1xGDOx-0006T3-Lw
- for qemu-devel@nongnu.org; Mon, 12 Oct 2026 06:37:05 -0400
-Received: by mail-dy1-x1333.google.com with SMTP id
- 5a478bee46e88-3514b90bb89so3302021eec.1
- for <qemu-devel@nongnu.org>; Mon, 12 Oct 2026 03:37:02 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1791801421; cv=none;
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xGDOo-0006Ro-Ox
+ for qemu-devel@nongnu.org; Mon, 12 Oct 2026 06:36:55 -0400
+Received: by mail-yw1-x112c.google.com with SMTP id
+ 00721157ae682-8ae8607e8afso10173007b3.3
+ for <qemu-devel@nongnu.org>; Mon, 12 Oct 2026 03:36:54 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1791801413; cv=none;
  d=google.com; s=arc-20260327;
- b=U9SH4/AF+iVucNJMPx3zu0TuJ9xtZ4sJBwtxz55Kwh2uPYrt3+zxXDrqO+Jt2poPnG
- 4CvpZxCfKSaN8wvkeF6SpYilEpM9w0twAcQg/wzAGIX/mYf/RoJ8H+pZKxma8sdrWzeB
- lMGmllmN5oEMy5CcVmuXnN3RY9wYEtFI5UIoxsfykdJIZBJNTuZMTE49XP6KMbBFc98B
- iW/jfebtuADvmexXDf2B4rorYugfnxpN+YCJBHC/nnwJnZHhMcNrXibpvp5JeO9gTEmg
- xe0i5PnANhtnOR2oeGRRj8yI26M/2EW9VvsXp091TryHofQKkzzSZhOkOGUunHVH0fxm
- gZ/g==
+ b=bqAD9dUAvhstYVbv84c6fB7+LkGZ6Gmxir4UxG5nLujlcTWEsFFVKXBbwcaKKcIcfK
+ j15UZZEIeEXGD1Mjdqb0MUP5goZqLwej76IiyU3bld+NXCdb8Z5ebHQamkK48UMyBR6e
+ SBt1h8eRQhUK7nMwN4Y63KlO8k7wtyfqI3nrArK4ADLAaOfu+0N+ld2WNSc0sPOUg9TX
+ FUjBd1gEpY4dUDiJlPQjnE5jdSJX7RtdTk5z9YzXsu2VH6yFM16ner7Io3ef/X7weSDU
+ bQzVQgiqW5X24bwjKrarfdhMckGv05Bc8LZJnPp1r2QB+L3PoMgxd5YHlhuuD8mxrdEa
+ yo5Q==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=zG3e2mRUDgwR/RY10ns2nc31lnhibDYIbUcTE6ZvAyI=;
- fh=Qpl77bHkcE0bYSjiKXT9vs9obKUyn+uhBwvH7ERnfRM=;
- b=LOZZNx4/jtr+Jmmd+XhV1s6SLiUedf+umOklCq6PFjlzco/Sfnm3ybaafAbxw7Wp+7
- HNVdalekbMcP8eR4h8Vgq1lSUDA/VYkDJZUGTkO4VEs0vyso97b3GkfMeWXNNZySOB2t
- XUmNOQPr3tLg1abLq1PetKKantefd5xVJgVfLb1KmKPG3VUfXNde99Iv0RcnBBFV/H0s
- ekdE4YdFbpQvVJgaOmbQWZ7HZ16ucoDUNSTD8rv6e/UJE/EtBzhqi1tiS+rCs3HbCXKI
- E3f9YV68xZSErg9CeZwXzKeWxXYeEWJL5SIvjE6NWppFoAgyo3wqUpWbJ+5mQ+e7I48j
- /x3A==; darn=nongnu.org
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=Q4Pwj0umhNYnhJcqSnnypcfIwnJ9p2Z4oUzUhn6fJ4Y=;
+ fh=/ftcwOPYeEIhzseC7WF42kR+xVR/IJiWpLC1+A7SOWQ=;
+ b=eBW//FKuBJLiz0YFclOoqUh3f86UxtT6JekgTeBJvD+9xW6PIncV9UAElI1W0sguID
+ GOjBcP9mzfNX/oa/4WHf1ish/B1LB4+ZAyPNpLOfdOvVyzXLxYRl2PXbjkyJ5jkbrapy
+ TH2A/jbcPgorbtkBBnCviAyolqto2JxWRZ0qoOtaN2lfWzNQA/kKphGF7bMdQeniH0Dk
+ 8wBUoxdq7g8kh0eMkMTTuy0KeRm9TcI3Xnlz7i8ZP2sPEj/AOxEfkkiCxhwWdjTuRFX4
+ CtvQlnKz1CcgYNbeBWfepDUIlWfzre/gJsg6/uFrpAdSxAPRTm2UEzHkwzaTlOyy6sjJ
+ Ygog==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1791801421; x=1792406221; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=zG3e2mRUDgwR/RY10ns2nc31lnhibDYIbUcTE6ZvAyI=;
- b=WUC0KqvX88TA8nPxJr6h/pYXdL3ae3budEDk5/70g9N4QjVzdZW+M54oyJ9dzhX+cy
- x0S4trEpovXzDBOhenXoIMzIxmGOFuQgiXHc/mM9OdBL1Duw0BHUoRU7DU4+1EFF7WQD
- BA9mhS5j0T7tmPE/rNEcEcpSEt2pqwAvYm5YcEqgjG1mj5nanaz3Vu0rtsGvNOTqcrVR
- NNg/dGtWeAoOaEhxkKUR/XeTdRrzFJX1gES9uyLzB3OkZPm8ALMWBAIR81EjAUXnXng2
- 4XyLWZ0V8nHb1+KS0IHwXiBXFaX3XSSyg6RtDu9EVb2kuOOAZgvtRyU8ivhzFZn+9wro
- cyIg==
+ d=linaro.org; s=google; t=1791801413; x=1792406213; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=Q4Pwj0umhNYnhJcqSnnypcfIwnJ9p2Z4oUzUhn6fJ4Y=;
+ b=PxLO/FOnj/wMShCPNG1Dp2eTzF6svOpzRVNqpuXuY8mRjWqE745PcE6H8bkQtNQfOe
+ 64VrPfkV0YKo5FtjnjL8taoE+JeF7BANMs1esp5RW80KmyYcNxWj2MxP9vGTF+EXWhpg
+ ZYNsFSIeY51yp3vhP+lt8YI281z97Qar0dG+tay9KTURVO7PTHzIchyeJk4YW64Ul99y
+ DoOjj5L5ImLpHQWZSQE7z5+beosst4NGaXzxBZAqqs+KJDQxlkuBw8pNzDGrlct28Q/g
+ lX9Y3IDoppuDsh1AwrRaPZCOpBXdkeRAjE6MuLeks23hU63Nfw0xr39AHiZ9uHMoWhRQ
+ A9wA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791801421; x=1792406221;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=zG3e2mRUDgwR/RY10ns2nc31lnhibDYIbUcTE6ZvAyI=;
- b=Q5at7e6xxtqTXYM1LdC/eaAwYgM7k9rxUoSdxjCX9ogovPNLoR7mdDrIO1yPro1J+V
- 7z/m9hD65BDiNoTbCY61rDvk+z8Bk3aMmbHQ/5PbuLIuq/HfcEWKhJZv8H7ZZR4apSxH
- 6r2e5g9H4JDsNmPFfeITX+kPqg2d/9P/rHrUbL/YmsiK2qNFpg/EGm6HoVu1U27GvsQn
- g9IalB+Pt47zZV6Y0h412Q1bIvBS582EW4Xoyy/Y5p1RngTMSHVNF5vBQDK9+xemM94Q
- ozQ4fXI7K5am6fhriJdcP7BzBRERDC0JnqimJlsO+XQqlRaGmKps41i69HM3087ckRhm
- m+4A==
-X-Gm-Message-State: AFq9FYKuBjuoLWeAgWg6iZOM2UxMCIYvFbtnw79Vj3W4sOn55AeuMePF
- Q07cU8diiZoRhSIlV0GsJLjyh+k631NT7CuxcZ/5YGKNLts/dMVtmuVBtCAfSFyyLlhqQ/qCOp9
- ZAUnTKciKpXob/QZPgrM+R6ED+bpL/18=
-X-Gm-Gg: AYBFou3u4VozdzMfmy6WS1RQKVvjBeI6FMEHxUuAnJAdRYBvBMUGm1QjbH2q7V3stfi
- epQd/Vr6Tn88XOvAkd0CnzOCC+ZX4OtolAZxvxU9TWoWk5IQiJkUsQXEV1RiEfIRyTdoRJCzzr8
- 8hPzgh7K0IeAzv/JNLgYc+jXUUyhxhtwWN7Zv0RVGIJnvwPCLnOzw/6xiP9BTymrWA1SoO9GuXc
- GDpza1/JZErVSWaoWvA4BCr2DhNnsZT1+cCQ8jOxlPEkAEMvLnWDn4yo0Bcd6bg5igJ+irz6DE9
- 5VyoSO82uHDd9oXMz9VBEZXgQAPF/Z6VxPv4Gv2ZBzION7dWo69yyvLs41LO95XgSMAAw0nP2bP
- yjjBvh0LcZ0U=
-X-Received: by 2002:a05:693c:895c:20b0:351:bb8f:540c with SMTP id
- 5a478bee46e88-3537e04f58fmr13984795eec.35.1791801421304; Mon, 12 Oct 2026
- 03:37:01 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1791801413; x=1792406213;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=Q4Pwj0umhNYnhJcqSnnypcfIwnJ9p2Z4oUzUhn6fJ4Y=;
+ b=ShwgZMi8+ROzg2co3BFowvNMQa0kuK64XbxaEL6lihOTN0BNeHE437ohg3gtOGxJe9
+ xn7+2kaH3ZWHYzfVKkc+72p3DCHtBGXy+jZmP6MKeAk1/9t54iAgrPjdl3WSXPUPaQ4h
+ egKgGaxQVTSu1IZHKws5qX/ppU6gzaOqHk461pI6M2CcHEcB4ixq8wELWBzCskHRIbas
+ 1+hzZFnBp1nfcqJ59V/MD6T3+cUtJSd0HcabedoSntXOlCiYVSZ8hoI5xfDJONkwAtVn
+ l/aPpU6wtY5wmtfOikJS/uZtJuFYWYCAE9jYdEKHV0B57Kv0Xnpo3Q8lim3VFnMAw27O
+ W9Ow==
+X-Gm-Message-State: AFq9FYJtPv/Q4fRyM2GQAH3krQ0/AwSquXHVkqZIxxrAPqoT3Qh1rolD
+ fXP1+Fp3ZLG2dRpvX9g9NQY4cmpHmoDwbsgBf8j1+CS8wEq5ymY9fw+vSQ/Eu9oqe9NSojnll1E
+ qYydDGus5JLf99FoopVQB6zZijoQFltIWX/hUQ7lYBA==
+X-Gm-Gg: AYBFou1AmjgCvEh7nhLYH3VUQvy6d5dEMP6pKgA7kVGMor4xM/9f3MshRXcQFcdKIcv
+ rV90OMWbpMrEDTbJ/afdKyoTBsl7FU246xFmIQ0Hy0RIuAmi3JlxUaR/rMnLhA5WIvhqKbgtorm
+ /h/qQ/7LdfSb9TJHxvdwqtryKUAv6RgJ/AlHMb6EBGkH3ArLij3yFLF8XtKIHeN5oa2hqu0eToN
+ WiSgpzQJsAWXGaZQQ/SCAt2tyHi2hf/HaaTNhp3/fxBSg3QugHpC2wLgaG3nydHTOdwxvmfcijH
+ AzcCqQIJ3Wd0E/cF1KqpwwIOSl+EARCuVQSJJplARU4bFRIfzlmmJNRsuPL5igW3nGTWKk9Lc88
+ LXgyF3Pyc92p+8V5gBnYDVTs6718b0u4E0/nv7hMZ
+X-Received: by 2002:a05:690c:6509:b0:8ab:3dc2:a4d7 with SMTP id
+ 00721157ae682-8b07ed90e24mr30426327b3.22.1791801413399; Mon, 12 Oct 2026
+ 03:36:53 -0700 (PDT)
 MIME-Version: 1.0
-References: <20261012101144.58085-1-berrange@redhat.com>
-In-Reply-To: <20261012101144.58085-1-berrange@redhat.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Mon, 12 Oct 2026 14:36:48 +0400
-X-Gm-Features: AclHuK81cZNgLYSNN8QbZoDRNU8QZ0TexPXZgDnMuLioANIfkCvTMqtbGKmxZLo
-Message-ID: <CAJ+F1CLMi6rXfpd3SvdEYV+GtQ2Z8B_og_K5+SxcCQd+ydi=Ag@mail.gmail.com>
-Subject: Re: [PATCH] seccomp: really fix blocking of setns/execveat/unshare
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org
+References: <20261010070952.323466-1-richard.henderson@linaro.org>
+In-Reply-To: <20261010070952.323466-1-richard.henderson@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 12 Oct 2026 11:36:40 +0100
+X-Gm-Features: AclHuK-20_kwZsKo7IVLn4oF9imCQm3d7Q-BGTahwP9XSW9HzvoyA4LdWoYWips
+Message-ID: <CAFEAcA92eOaY_39yN9H-vXZ7A9=CSPK6LEOxbbKxREv_HYw_qg@mail.gmail.com>
+Subject: Re: [PATCH v4 0/6] target/arm: Implement FEAT_IDTE3
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1333;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-dy1-x1333.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -117,53 +114,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Oct 12, 2026 at 2:13=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@r=
-edhat.com> wrote:
+On Sat, 10 Oct 2026 at 08:10, Richard Henderson
+<richard.henderson@linaro.org> wrote:
 >
-> The previous fix for setns/execveat/unshare mistakenly copy and
-> pasted the clone_args filter, which is inappropriate for these
-> syscalls and had the effect of weakening the seccomp filter.
->
-> Fixes: f33fb19cab (seccomp: fix blocking of setns/execveat/unshare)
-> Fixes: https://gitlab.com/qemu-project/qemu/-/work_items/4671
-> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
-
-Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-
-> ---
->  system/qemu-seccomp.c | 6 +++---
->  1 file changed, 3 insertions(+), 3 deletions(-)
->
-> diff --git a/system/qemu-seccomp.c b/system/qemu-seccomp.c
-> index 3889d48b4f2..cd2c1b0b747 100644
-> --- a/system/qemu-seccomp.c
-> +++ b/system/qemu-seccomp.c
-> @@ -250,12 +250,12 @@ static const struct QemuSeccompSyscall denylist[] =
-=3D {
->  #endif
->  #ifdef __SNR_execveat
->      { SCMP_SYS(execveat),               QEMU_SECCOMP_SET_SPAWN,
-> -      ARRAY_SIZE(clone_arg_none), clone_arg_none, SCMP_ACT_ERRNO(EPERM) =
-},
-> +      0, NULL, SCMP_ACT_ERRNO(EPERM) },
->  #endif
->      { SCMP_SYS(setns),                  QEMU_SECCOMP_SET_SPAWN,
-> -      ARRAY_SIZE(clone_arg_none), clone_arg_none, SCMP_ACT_ERRNO(EPERM) =
-},
-> +      0, NULL, SCMP_ACT_ERRNO(EPERM) },
->      { SCMP_SYS(unshare),                QEMU_SECCOMP_SET_SPAWN,
-> -      ARRAY_SIZE(clone_arg_none), clone_arg_none, SCMP_ACT_ERRNO(EPERM) =
-},
-> +      0, NULL, SCMP_ACT_ERRNO(EPERM) },
->      /* resource control */
->      { SCMP_SYS(setpriority),            QEMU_SECCOMP_SET_RESOURCECTL,
->        0, NULL, SCMP_ACT_ERRNO(EPERM) },
-> --
-> 2.56.0
+> Changes for v4:
+>   - Squash accessfn when we don't need it.
+>     Rather than confusingly add el0 to the access_tid3 switch,
+>     complete the kernel emulation by squashing away the call.
 >
 >
+> r~
+>
+>
+> Richard Henderson (6):
+>   target/arm: Rename isar_feature_aa64_idst
+>   target/arm: Enable writes to SCR_EL3.TID{3,5}
+>   target/arm: Squash accessfn in modify_arm_cp_regs_with_len
+>   target/arm: Implement SCR_EL3.TID3
+>   target/arm: Implement SCR_EL3.TID5
+>   target/arm: Enable FEAT_IDTE3 for -cpu max
 
 
---=20
-Marc-Andr=C3=A9 Lureau
+
+
+Applied to target-arm.next, thanks.
+
+-- PMM
 
