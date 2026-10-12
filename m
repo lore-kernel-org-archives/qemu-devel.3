@@ -4,72 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62A0ECA9EC5
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Oct 2026 21:30:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2082FCA9ED0
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Oct 2026 21:53:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGNbA-0003kO-Rw; Mon, 12 Oct 2026 17:30:20 -0400
+	id 1xGNwz-0000Ns-6C; Mon, 12 Oct 2026 17:52:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1xGNb8-0003fk-KR
- for qemu-devel@nongnu.org; Mon, 12 Oct 2026 17:30:18 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1xGNwx-0000NU-Gb
+ for qemu-devel@nongnu.org; Mon, 12 Oct 2026 17:52:51 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1xGNb6-0003Eq-G4
- for qemu-devel@nongnu.org; Mon, 12 Oct 2026 17:30:18 -0400
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1xGNwv-0006MV-EJ
+ for qemu-devel@nongnu.org; Mon, 12 Oct 2026 17:52:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1791840615;
+ s=mimecast20190719; t=1791841968;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Ky8MADd1Pd3TWpWCB/Tz5Bvya/ocv4ofBGptLf2bJBY=;
- b=cfkbMbmVb3JwnvVnIgdL8LqqZQNWWNrK+3ixJv1GaJFc3tDJTB6wkUPjJCENZpAoYUIDAA
- w5PDXb31xSHzR1NhA1VZvKiR0PJPs38hn462hN4ov345eKzALjDcYI/T9pT9sMRFaeSxav
- 1WUjsheJz2d7RQLg9m0ExwKVXydven4=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=RxQB1sM7af+oFptqOhZchGtszmFNNtnttK9TRJLWLW0=;
+ b=T5ruANjI55R/Swx4iG02EgLnuy9jRgd5ugx4HwqzNsm83frGux/7cRevrahHYNUynB9t9s
+ Lo5Gg4bDW2ZYs0Sgs+hbRcV42uvXr4WH2NXSDFAD5tGh0ki+kYw3w1S5IW5KooRUYAChFg
+ Q1gprlyabVylZH1EeDiTV1Kzzc52uLQ=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-125-wSopUJN5M8et4nLRePZ8mg-1; Mon,
- 12 Oct 2026 21:30:08 +0000
-X-MC-Unique: wSopUJN5M8et4nLRePZ8mg-1
-X-Mimecast-MFC-AGG-ID: wSopUJN5M8et4nLRePZ8mg_1791840607
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-652-NZUiTZTfOwme4zqucp-TMQ-1; Mon,
+ 12 Oct 2026 21:52:42 +0000
+X-MC-Unique: NZUiTZTfOwme4zqucp-TMQ-1
+X-Mimecast-MFC-AGG-ID: NZUiTZTfOwme4zqucp-TMQ_1791841959
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A90DB195607B; Mon, 12 Oct 2026 21:30:06 +0000 (UTC)
-Received: from eblake.csb (headnet03.pony-001.prod.iad2.dc.redhat.com
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id ACAB5180A9FE; Mon, 12 Oct 2026 21:52:37 +0000 (UTC)
+Received: from localhost (headnet03.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.114])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 2D66A1800473; Mon, 12 Oct 2026 21:30:02 +0000 (UTC)
-From: Eric Blake <eblake@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- qemu-block@nongnu.org (open list:Network Block Dev...)
-Subject: [PULL v2 02/15] qemu-nbd: Support -s and -l at the same time
-Date: Mon, 12 Oct 2026 16:29:06 -0500
-Message-ID: <20261012212945.84275-19-eblake@redhat.com>
-In-Reply-To: <20261012212945.84275-17-eblake@redhat.com>
-References: <20261012212945.84275-17-eblake@redhat.com>
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 8CEE5472; Mon, 12 Oct 2026 21:52:34 +0000 (UTC)
 MIME-Version: 1.0
-Content-type: text/plain
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=eblake@redhat.com;
+Subject: Re: [PATCH v2 04/16] tests/functional: allow tuxrun tests to be
+ passed "accel"
+From: marcandre.lureau@redhat.com
+To: =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, 
+ Zhao Liu <zhao1.liu@intel.com>, Kyle Evans <kevans@freebsd.org>, 
+ =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Brian Cain <brian.cain@oss.qualcomm.com>, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Brad Smith <brad@comstyle.com>, Ani Sinha <anisinha@redhat.com>, 
+ Christian Borntraeger <borntraeger@linux.ibm.com>, 
+ Thomas Huth <th.huth+qemu@posteo.eu>, Keith Busch <kbusch@kernel.org>, 
+ Matthew Rosato <mjrosato@linux.ibm.com>, Cornelia Huck <cohuck@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Halil Pasic <pasic@linux.ibm.com>, 
+ John Snow <jsnow@redhat.com>, Eric Farman <farman@linux.ibm.com>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
+ Anders Roxell <anders.roxell@linaro.org>, 
+ =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, Warner Losh <imp@bsdimp.com>, 
+ qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>, 
+ Yoshinori Sato <yoshinori.sato@nifty.com>, Peter Xu <peterx@redhat.com>, 
+ Klaus Jensen <its@irrelevant.dk>, Song Gao <gaosong@loongson.cn>, 
+ qemu-s390x@nongnu.org, Laurent Vivier <laurent@vivier.eu>, 
+ Ilya Leoshkevich <iii@linux.ibm.com>
+In-Reply-To: <20261012170330.1144446-5-alex.bennee@linaro.org>
+References: <20261012170330.1144446-1-alex.bennee@linaro.org>
+ <20261012170330.1144446-5-alex.bennee@linaro.org>
+Date: Tue, 13 Oct 2026 01:52:29 +0400
+Message-Id: <179184194927.2190936.10183175705507398275.b4-review@b4>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=452;
+ i=marcandre.lureau@redhat.com; h=from:subject:message-id;
+ bh=30MMr+NFtF7pN1P10FoXx2B7yyau+JXJGSwsduxjtY0=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqzVaeuslcz4AW2CQUHzqs+v3g+tpvLcyY74coI
+ blM0GibQciJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCas1WngAKCRDa6OEJdZac
+ 5U9qD/oCv2449GDP7csPosnWjFXzfR26aEbTqqdwHB8fQ3+tmWX7YXiNIRT0FpddR7VQXqOSFdX
+ t4EfnN37br7dNqg/Ht20irv+jH8xl3QkpNGqNK3vc1sFCDWliZfjoZ37LbuOnqepPrNMWsIhewx
+ pei6mwPzX6q8dLclCgSkhAr/7zNoLZ7++0jhEIoHkMdqo1jjI5aanqTgqat3pSXAnhKusDCZKv4
+ k9pBXvIBOTbe66P48LVz02EIE8tdXkz8Z5QF1LYcVWB6lXGYrBp2xPI8ZlhutZ68qZ4oKsCC5hE
+ izqdueG/7kfV+PAUipxMSMMcexK0dJbDPU0s2jKE4FfpymgghwAJI3o4lc9O/3sqnSi9fmJxRxP
+ IIoYVB8lJrP01MsUb7bZwlJ7X/cozHaN9DWRsTacz/riAgWixb0h0uzm+bDuwjrlwNxJNZEjdni
+ uR4Moy2/DJkrjyyTMfdVvmVFyeeEqJCq1hHyQMxvOYT4WHz+AfyYymkengAxkS2ce9fPSTF++Qr
+ e0DqiEp2aJ6VYvc19HoZgmv0n1t2AfDtQpXTQMvNyzbLgQjnl624zPZDTr/SS4x7W6TnHo7Ld3f
+ U8aFoD5PRwdscs8oqyT6eL8AiW3Kt2/h2/Y9eLUbnWK6ZUI7/fp5gKt/s1z1FkQuTWC1nQLKCpX
+ eEh8CneV8LlDIow==
+X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
+ fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 10
-X-Spam_score: 1.0
-X-Spam_bar: +
-X-Spam_report: (1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
+X-Spam_score_int: -22
+X-Spam_score: -2.3
+X-Spam_bar: --
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,241 +124,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-qemu-nbd already has the ability to wrap a read-write layer on top of
-the export of a read-only image (-s) and the ability to export an
-internal snapshot rather than the main image in a qcow2 file (-l
-SNAPID).  But it gave a confusing error message when trying to mix the
-two, because the snapshot overlay created first no longer has access
-to the internal snapshots of the image being wrapped.
+On Mon, 12 Oct 2026 18:03:18 +0100, Alex Bennée <alex.bennee@linaro.org> wrote:
+> For some tests we are about to add we want the flexibility to force
+> "kvm" so give them that ability.
+> 
+> Message-ID: <20260930164649.433573-7-alex.bennee@linaro.org>
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+> 
+> 
+> [...]
 
-WIth a bit of finesse, this useful scenario is now supported.
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-https://gitlab.com/qemu-project/qemu/-/work_items/159
-
-Signed-off-by: Eric Blake <eblake@redhat.com>
-Message-ID: <20260408021636.794794-2-eblake@redhat.com>
-Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-[eblake: improve test with Vladimir's suggestions, add lock to satisfy TSAN]
-Signed-off-by: Eric Blake <eblake@redhat.com>
----
- docs/tools/qemu-nbd.rst                       |  7 +-
- qemu-nbd.c                                    | 22 ++++-
- tests/qemu-iotests/tests/qemu-nbd-snapshots   | 81 +++++++++++++++++++
- .../qemu-iotests/tests/qemu-nbd-snapshots.out | 39 +++++++++
- 4 files changed, 143 insertions(+), 6 deletions(-)
- create mode 100755 tests/qemu-iotests/tests/qemu-nbd-snapshots
- create mode 100644 tests/qemu-iotests/tests/qemu-nbd-snapshots.out
-
-diff --git a/docs/tools/qemu-nbd.rst b/docs/tools/qemu-nbd.rst
-index f82ea5fd77b..336b4aa46e7 100644
---- a/docs/tools/qemu-nbd.rst
-+++ b/docs/tools/qemu-nbd.rst
-@@ -95,9 +95,10 @@ driver options if :option:`--image-opts` is specified.
-
- .. option:: -l, --load-snapshot=SNAPSHOT_PARAM
-
--  Load an internal snapshot inside *filename* and export it
--  as an read-only device, SNAPSHOT_PARAM format is
--  ``snapshot.id=[ID],snapshot.name=[NAME]`` or ``[ID_OR_NAME]``
-+  Load an internal snapshot inside *filename* and export it.
-+  SNAPSHOT_PARAM format is ``snapshot.id=[ID],snapshot.name=[NAME]``
-+  or ``[ID_OR_NAME]``. The export is read-only unless ``-s`` is also
-+  in use.
-
- .. option:: --cache=CACHE
-
-diff --git a/qemu-nbd.c b/qemu-nbd.c
-index ed5895861bb..fcca88932a3 100644
---- a/qemu-nbd.c
-+++ b/qemu-nbd.c
-@@ -534,6 +534,7 @@ int main(int argc, char **argv)
- {
-     BlockBackend *blk;
-     BlockDriverState *bs;
-+    BlockDriverState *orig_bs;
-     uint64_t dev_offset = 0;
-     bool readonly = false;
-     bool disconnect = false;
-@@ -716,7 +717,7 @@ int main(int argc, char **argv)
-             } else {
-                 sn_id_or_name = optarg;
-             }
--            /* fall through */
-+            break;
-         case 'r':
-             readonly = true;
-             flags &= ~BDRV_O_RDWR;
-@@ -1110,6 +1111,15 @@ int main(int argc, char **argv)
-     bdrv_init();
-     atexit(qemu_nbd_shutdown);
-
-+    /*
-+     * -s and -l can be used together to create read-write wrapper
-+     * around an internal snapshot. Otherwise, -l in isolation implies
-+     * read-only.
-+     */
-+    if ((sn_opts || sn_id_or_name) && (flags & BDRV_O_SNAPSHOT) == 0) {
-+        readonly = true;
-+        flags &= ~BDRV_O_RDWR;
-+    }
-     opts.srcpath = argv[optind];
-     if (imageOpts) {
-         QemuOpts *o;
-@@ -1155,13 +1165,19 @@ int main(int argc, char **argv)
-
-     blk_set_enable_write_cache(blk, !writethrough);
-
-+    orig_bs = bs;
-+    if (flags & BDRV_O_SNAPSHOT) {
-+        WITH_GRAPH_RDLOCK_GUARD() {
-+            orig_bs = bs->backing->bs;
-+        }
-+    }
-     if (sn_opts) {
--        ret = bdrv_snapshot_load_tmp(bs,
-+        ret = bdrv_snapshot_load_tmp(orig_bs,
-                                      qemu_opt_get(sn_opts, SNAPSHOT_OPT_ID),
-                                      qemu_opt_get(sn_opts, SNAPSHOT_OPT_NAME),
-                                      &local_err);
-     } else if (sn_id_or_name) {
--        ret = bdrv_snapshot_load_tmp_by_id_or_name(bs, sn_id_or_name,
-+        ret = bdrv_snapshot_load_tmp_by_id_or_name(orig_bs, sn_id_or_name,
-                                                    &local_err);
-     }
-     if (ret < 0) {
-diff --git a/tests/qemu-iotests/tests/qemu-nbd-snapshots b/tests/qemu-iotests/tests/qemu-nbd-snapshots
-new file mode 100755
-index 00000000000..ce62e97877b
---- /dev/null
-+++ b/tests/qemu-iotests/tests/qemu-nbd-snapshots
-@@ -0,0 +1,81 @@
-+#!/usr/bin/env bash
-+# group: rw quick
-+#
-+# Test qemu-nbd snapshot handling
-+#
-+# Copyright (C) Red Hat, Inc.
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+
-+seq="$(basename $0)"
-+echo "QA output created by $seq"
-+
-+status=1 # failure is the default!
-+
-+_cleanup()
-+{
-+    _cleanup_test_img
-+    nbd_server_stop
-+}
-+trap "_cleanup; exit \$status" 0 1 2 3 15
-+
-+# get standard environment, filters and checks
-+cd ..
-+. ./common.rc
-+. ./common.filter
-+. ./common.nbd
-+
-+_supported_fmt qcow2
-+_supported_proto file
-+_supported_os Linux
-+_require_command QEMU_NBD
-+
-+echo
-+echo "=== Initial image setup ==="
-+echo
-+
-+# Create qcow2 image with one internal snapshot
-+_make_test_img 10M
-+$QEMU_IO -c 'w -P 1 3M 1M' -f $IMGFMT "$TEST_IMG" | _filter_qemu_io
-+$QEMU_IMG snapshot -c snap -f $IMGFMT "$TEST_IMG" | _filter_qemu_img
-+$QEMU_IO -c 'w -P 2 3M 1M' -f $IMGFMT "$TEST_IMG" | _filter_qemu_io
-+
-+echo
-+echo "=== Main image in snapshot mode ==="
-+echo
-+
-+nbd_server_start_unix_socket -s -f qcow2 "$TEST_IMG"
-+$QEMU_IO -c 'r -P 2 3M 1M' -c 'w -P 3 3M 1M' -c 'r -P 3 3M 1M' -f raw \
-+  nbd:unix:$nbd_unix_socket | _filter_qemu_io
-+nbd_server_stop
-+
-+echo
-+echo "=== Read-only snapshot access ==="
-+echo
-+
-+nbd_server_start_unix_socket -l snap -f qcow2 "$TEST_IMG"
-+$QEMU_IO -r -c 'r -P 1 3M 1M' -f raw \
-+  nbd:unix:$nbd_unix_socket | _filter_qemu_io
-+$QEMU_IO -c 'r -P 1 3M 1M' -f raw \
-+  nbd:unix:$nbd_unix_socket 2>&1 | _filter_qemu_io | _filter_testdir
-+nbd_server_stop
-+
-+echo
-+echo "=== Combine -s and -l for read-write internal snapshot access ==="
-+echo
-+
-+nbd_server_start_unix_socket -s -l snap -f qcow2 "$TEST_IMG"
-+$QEMU_IO -c 'r -P 1 3M 1M' -c 'w -P 3 3M 1M' -c 'r -P 3 3M 1M' -f raw \
-+  nbd:unix:$nbd_unix_socket | _filter_qemu_io
-+nbd_server_stop
-+
-+echo
-+echo "=== Check that original image is unchanged ==="
-+echo
-+
-+$QEMU_IO -c 'r -P 2 3M 1M' -f $IMGFMT "$TEST_IMG" | _filter_qemu_io
-+
-+# success, all done
-+echo '*** done'
-+rm -f $seq.full
-+status=0
-diff --git a/tests/qemu-iotests/tests/qemu-nbd-snapshots.out b/tests/qemu-iotests/tests/qemu-nbd-snapshots.out
-new file mode 100644
-index 00000000000..47289c30f1d
---- /dev/null
-+++ b/tests/qemu-iotests/tests/qemu-nbd-snapshots.out
-@@ -0,0 +1,39 @@
-+QA output created by qemu-nbd-snapshots
-+
-+=== Initial image setup ===
-+
-+Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=10485760
-+wrote 1048576/1048576 bytes at offset 3145728
-+1 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+wrote 1048576/1048576 bytes at offset 3145728
-+1 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+
-+=== Main image in snapshot mode ===
-+
-+read 1048576/1048576 bytes at offset 3145728
-+1 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+wrote 1048576/1048576 bytes at offset 3145728
-+1 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+read 1048576/1048576 bytes at offset 3145728
-+1 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+
-+=== Read-only snapshot access ===
-+
-+read 1048576/1048576 bytes at offset 3145728
-+1 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+qemu-io: can't open device nbd:unix:SOCK_DIR/qemu-nbd.sock: Could not open image: Permission denied
-+
-+=== Combine -s and -l for read-write internal snapshot access ===
-+
-+read 1048576/1048576 bytes at offset 3145728
-+1 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+wrote 1048576/1048576 bytes at offset 3145728
-+1 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+read 1048576/1048576 bytes at offset 3145728
-+1 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+
-+=== Check that original image is unchanged ===
-+
-+read 1048576/1048576 bytes at offset 3145728
-+1 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+*** done
 -- 
-2.56.0
+Marc-André Lureau <marcandre.lureau@redhat.com>
 
 
