@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B34ACA9ED1
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Oct 2026 17:06:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E493CA9ED1
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Oct 2026 17:07:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGJSZ-00065e-JX; Mon, 12 Oct 2026 13:05:11 -0400
+	id 1xGJSk-0006SC-Tx; Mon, 12 Oct 2026 13:05:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1xGJRX-0005GE-0L
- for qemu-devel@nongnu.org; Mon, 12 Oct 2026 13:04:11 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ id 1xGJRS-0005FE-7d
+ for qemu-devel@nongnu.org; Mon, 12 Oct 2026 13:04:05 -0400
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1xGJRR-000794-Oz
- for qemu-devel@nongnu.org; Mon, 12 Oct 2026 13:04:06 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-4a16c399641so21522635e9.2
- for <qemu-devel@nongnu.org>; Mon, 12 Oct 2026 10:03:59 -0700 (PDT)
+ id 1xGJRL-00076V-R1
+ for qemu-devel@nongnu.org; Mon, 12 Oct 2026 13:04:01 -0400
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-48c4649b3aaso1254730f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 12 Oct 2026 10:03:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1791824638; x=1792429438; darn=nongnu.org;
+ d=linaro.org; s=google; t=1791824632; x=1792429432; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=CiTT7hmsFgBNHFF5MEXRqamjB+JugaFDKLZU8ZIdj9U=;
- b=dViOCJ7dkk4v8/JGuDxesNoF1KbtNFlfUdNaGaCxI85cM4jaIqCJTahc2deJLPhsdA
- qWC3xuFmTTCW+93/2lRfRysHEyZM2ZFowjOQe1+oqO02vlZ2a3mHuVFp5/kiAXARarE+
- potwgrbXsA5fa+PW12Adha3Gs5tMzNF6x9rz8QXf67PNsZ7p4L2EE8zBdGuY0/nQa9zn
- VFxeG1Rbu7TgFotGmGp8sj6qtUGn65Qoel9dJ8SgT+gRi30thEZh5CrKD47xlimm6BiK
- 5cAn9kN2rl0nR0h1tDePlPyJh1jL0KW4SNvFr971qrf2Lctp4IvikpfO/ufMCjtRrGNi
- K5jg==
+ bh=EPqkEo+REEQvki6c4nWZaj2y2OF71gOMMkGDiVxPDRA=;
+ b=YfUScW2EkztQ7HkHNXP+1MD2DqQBw5ualw4X6blXAm15tgQ9UXLdGk0xRLc+f50FmE
+ yHkCz4gxP59HqKPntMrkc7TsPsHt2uVu351Sh5kwdhNTI81gjy0MeXEE8u6VDfiYmfY1
+ 3P5igEHhuL1dvtJwblYjZ3Kjunh9xbFROBLovjH6ei81uFnfZPOucyA6tvaW8qhMKjM7
+ kR5/bDTGL8wvO3CTUUoECcs2DNgB+pxJN1vXeA1Vq/z2l5gmEgFhcKwzw/1RI+uWg8eQ
+ zQxwsyTRL5HMFaw21QYXK8FKNi6XkFpRNOoOwo6IJhQ4SUWvl+Gg5K0wdLq1y7akENpw
+ KzKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791824638; x=1792429438;
+ d=1e100.net; s=20260707; t=1791824632; x=1792429432;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=CiTT7hmsFgBNHFF5MEXRqamjB+JugaFDKLZU8ZIdj9U=;
- b=d80q7cGpvLvEsPQBe0I2VX3gFPLIFv5fvsM4oGEqFYhfS86TC7+VF71kX6lxAlxF2G
- D2RbCe3PtzKpGaoyqGa26VPOdi0LYXFp88o+7EUBKXrkRrykg/vc4pk/PDz1epKqEJJ+
- AcxhPHSNhgRzhLdnxnqXDABiH++JOs2MLn3qVcCwxPtiHY6+9kEPnls0lGzWO3coym6f
- hoXNDEB+IIGiJdhAwXnkrYkEbpNR5Uz0ekT3B4QhXN3PLtwfDcsJixqktp3/c4tzfbGh
- AsibiHKzt5rUYs1aTAwzKoy2Qh4GIKEOzRcZoopuaDpDTKrmpBRVISZXYkqbv5iAiCKt
- jFag==
-X-Gm-Message-State: AFq9FYJP5fZFv+OE7nMyFciJR+8kiAVlOlTdaasXmHDfThxCck7LhRib
- tyzGcZZ9L9u0wv4h30yFgGGG67feQVnet3W4QwINyn3zZH5Ee+PLqILCqmFS63hveaI=
-X-Gm-Gg: AYBFou25S7x9LUBwahQEaNcCM/P0kcU+PEyn2gHWMHWXfEMdYGnHWESyTfQaBuIE7nj
- IfotdaziRywq9T4U3+59ZgXUgEj6Q6LQkBVBU5Ukcv8WWD/zX8qVmvt2E1iZ5RiuJi2KOshRAhW
- hQbBF80gNzCl48TX20R2o60vx2tk2FJcvAU5kcJNH1wkdEsySKyCUpRrNO+W6az4YFbyulvWEWC
- +rW3KO/DggLsGvcgBokBEd5dffoh4hq0f1WIBpncydRiuWfzhzKYq00s+D6OsvX8k1g39Zi2Fjk
- PBFzRQOEA23EGL4qZJmP+DkQWVGxeIfGdZyvDMeGvpn1LdTRm/V2pohjr3VGqSIxRNCTEnr1vFC
- BWY6qfFaMWFW2mBwT3+diI6DYjvPsrvU90LunmBNs4HV2ZsLnu6SZk5ulpPthWvZ/Mo1FDfR3EF
- bfj/QoRZgHWraZLjk3xHTXPjW2GlJIsmkpAfB7s73l9NHvHBv1J/GDpcK3SNiqaxSU999J1A==
-X-Received: by 2002:a05:600c:548f:b0:4a1:a39b:e71e with SMTP id
- 5b1f17b1804b1-4a1a39becefmr41130545e9.5.1791824638287; 
- Mon, 12 Oct 2026 10:03:58 -0700 (PDT)
+ bh=EPqkEo+REEQvki6c4nWZaj2y2OF71gOMMkGDiVxPDRA=;
+ b=TAKcmLrovl7qF/EJ1bdttl9SsZ2FtwEC7UFX5GuG57FEURA3bUTVRk0BKzPk/l6KzK
+ UViMxp/Kqwxg+or4VxPp1jQ7uOv88IIsZrEyK40rDJe+pRjzQNvTGrDLx9kej7UvgAdE
+ 7CvZrSS+nLog3FQ/RTCueL9xBYUThqoDmLi7+WsPcltGv1iTmIAz0elXjtSgMUGeHQBc
+ WxyFC0/vhKbOd9/Tyh7EtvvVKRN+3g1Mrrxq1Xt+GSuJrIz//dxng4mocAzJLx8+UzyS
+ YIF4zxYGBdFMyr8IBFNViFYSLb4mXgxTDt8+sF8TdBpjnDThXVKvRPDfLFSuEnf7tARx
+ pYPA==
+X-Gm-Message-State: AFq9FYId97HNQeCNDa35FZwpLiP1o7zNuNlsEwGaIMwYTF5qEgYAPzpI
+ cUYnihpXBaF9lGRwxDjR4qp4Luh8YhcF8qniY8kFHqQCut3KWWz7w5mnG7Eny1yz164=
+X-Gm-Gg: AYBFou1vL4qjmFsMuwKB87M1O0Fs2mpkhXjrLHxREOpb/XbopS0EJegj39wLd7fa5QA
+ M1Z9fLa1+UGz4xf/lQQ+Y0sMW64M1+3lcu2E79AfK0lqBY0g7nzv9oYZ6SNMMOu6rgGJ1mlKU3l
+ 35xrlxSS9qFEJKJ0ULLAqY0CBoQLnqCACWf0eKF1lE0zLaazpdFp62z+qlijb632WPEDhoJ2Tnn
+ pw0Wp+05hkbIb+eX49BGSTTt7d/WCj3rqsRskWpQajtLAfKni5upN/1KWZx4d3SoGuqrP/Aad+2
+ QQSd3kiKLbBZPc62AiLoy6g7vK7kp+Z6iQpNPCcE53tVnGq3Olj/ixDo6J8Swmog0lvMucYEWrx
+ vaD+EcBES7rLbDkHpVzELbnARQ44GJidipO4gWejq+TnrOeV+JHQ6/zmt9qCT54PJrJkTyy8wjV
+ tfv6FSjBWlD+P3kQLYXf00pejqgSq81tAA1D3IJlpcxMgDgvpXc7mRlQgwUnLFkktRDRMPTVc=
+X-Received: by 2002:a05:6000:22c9:b0:48d:cbf4:6df3 with SMTP id
+ ffacd0b85a97d-48dcbf46ebbmr11655127f8f.25.1791824631995; 
+ Mon, 12 Oct 2026 10:03:51 -0700 (PDT)
 Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a18bf1358asm305657555e9.4.2026.10.12.10.03.52
+ ffacd0b85a97d-48de0ac3ac5sm454124f8f.38.2026.10.12.10.03.45
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 12 Oct 2026 10:03:57 -0700 (PDT)
+ Mon, 12 Oct 2026 10:03:50 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 9CCBC6211D;
- Mon, 12 Oct 2026 18:03:32 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 86D215FA3D;
+ Mon, 12 Oct 2026 18:03:31 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
@@ -90,24 +90,25 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Klaus Jensen <its@irrelevant.dk>, Song Gao <gaosong@loongson.cn>,
  qemu-s390x@nongnu.org, Laurent Vivier <laurent@vivier.eu>,
  Ilya Leoshkevich <iii@linux.ibm.com>
-Subject: [PATCH v2 16/16] tests/functional: add tuxrun kvm gdb test for s390x
-Date: Mon, 12 Oct 2026 18:03:30 +0100
-Message-ID: <20261012170330.1144446-17-alex.bennee@linaro.org>
+Subject: [PATCH v2 05/16] tests/functional: split x86_64 tuxrun into tcg and
+ kvm run
+Date: Mon, 12 Oct 2026 18:03:19 +0100
+Message-ID: <20261012170330.1144446-6-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20261012170330.1144446-1-alex.bennee@linaro.org>
 References: <20261012170330.1144446-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,68 +124,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-As with x86_64 we now have the bits to add a KVM gdb test. One minor
-wrinkle is the s390x only supports WP_WRITE watch points so we skip
-the other watch point tests lest we get confusing messages about
-failing to insert HW breakpoints.
+Add an explicit "kvm" run to the tuxrun tests. Although running on an
+x86_64 host would probably have defaulted to "kvm" anyway we want to
+exercise specific features later.
 
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Message-ID: <20260930164649.433573-8-alex.bennee@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- tests/functional/gdb-scripts/kernel_gdb_test.py | 10 ++++++----
- tests/functional/s390x/test_tuxrun.py           | 14 ++++++++++++++
- 2 files changed, 20 insertions(+), 4 deletions(-)
+ tests/functional/x86_64/test_tuxrun.py | 17 ++++++++++++++++-
+ 1 file changed, 16 insertions(+), 1 deletion(-)
 
-diff --git a/tests/functional/gdb-scripts/kernel_gdb_test.py b/tests/functional/gdb-scripts/kernel_gdb_test.py
-index 2d62fe01f10..56f0514c943 100644
---- a/tests/functional/gdb-scripts/kernel_gdb_test.py
-+++ b/tests/functional/gdb-scripts/kernel_gdb_test.py
-@@ -107,11 +107,13 @@ def do_one_watch(sym, wtype, text):
- def check_watches(sym_name):
-     "Watch a symbol for any access."
+diff --git a/tests/functional/x86_64/test_tuxrun.py b/tests/functional/x86_64/test_tuxrun.py
+index fcbc62b1b0f..729f6447d05 100755
+--- a/tests/functional/x86_64/test_tuxrun.py
++++ b/tests/functional/x86_64/test_tuxrun.py
+@@ -24,13 +24,28 @@ class TuxRunX86Test(TuxRunBaselineTest):
+         '4b8b2a99117519c5290e1202cb36eb6c7aaba92b357b5160f5970cf5fb78a751')
  
--    # Should hit for any read
--    do_one_watch(sym_name, gdb.WP_ACCESS, "awatch")
-+    # s390 only supports write watchpoints
-+    if "s390" not in gdb.selected_frame().architecture().name():
-+        # Should hit for any read
-+        do_one_watch(sym_name, gdb.WP_ACCESS, "awatch")
- 
--    # Again should hit for reads
--    do_one_watch(sym_name, gdb.WP_READ, "rwatch")
-+        # Again should hit for reads
-+        do_one_watch(sym_name, gdb.WP_READ, "rwatch")
- 
-     # Finally when it is written
-     do_one_watch(sym_name, gdb.WP_WRITE, "watch")
-diff --git a/tests/functional/s390x/test_tuxrun.py b/tests/functional/s390x/test_tuxrun.py
-index 8e0261e2b7f..528af3c08ff 100755
---- a/tests/functional/s390x/test_tuxrun.py
-+++ b/tests/functional/s390x/test_tuxrun.py
-@@ -19,6 +19,9 @@ class TuxRunS390xTest(TuxRunBaselineTest):
-     ASSET_S390X_KERNEL = Asset(
-         'https://storage.tuxboot.com/kernels/6.18.54/s390/bzImage',
-         '5efeb31754b211440e1595ab11355bb006fe78a2c0604ed0a8c55c4598b71aec')
-+    ASSET_S390X_VMLINUX = Asset(
-+        'https://storage.tuxboot.com/kernels/6.18.54/s390/vmlinux.xz',
-+        '5bbd4d34e0950f88053a9bfd16078896df4b1ee1696fc2ad62488e681a6bdd8e')
-     ASSET_S390X_ROOTFS = Asset(
-         'https://storage.tuxboot.com/buildroot/20260924/s390/rootfs.ext4.zst',
-         '5ba18c4d18831c50a0c743990f7bdee1d3b520629d423c55b668d8fbbac9c6f5')
-@@ -42,5 +45,16 @@ def test_s390_kvm(self):
-                            haltmsg="Requesting system halt",
-                            accel="kvm")
- 
-+    def test_s390_kvm_gdb(self):
-+        self.set_machine('s390-ccw-virtio')
-+        self.require_accelerator('kvm')
-+        self.wait_for_shutdown=False
-+        self.common_tuxrun_gdb(kernel_asset=self.ASSET_S390X_KERNEL,
-+                               vmlinux_asset=self.ASSET_S390X_VMLINUX,
-+                               rootfs_asset=self.ASSET_S390X_ROOTFS,
-+                               drive="virtio-blk-ccw",
-+                               haltmsg="Requesting system halt",
-+                               accel="kvm")
+     def test_x86_64(self):
++        self.require_accelerator("tcg")
 +
++        self.set_machine('q35')
++        self.cpu="Nehalem"
++        self.root='sda'
++        self.wait_for_shutdown=False
++        self.common_tuxrun(kernel_asset=self.ASSET_X86_64_KERNEL,
++                           rootfs_asset=self.ASSET_X86_64_ROOTFS,
++                           drive="driver=ide-hd,bus=ide.0,unit=0",
++                           accel="tcg")
++
++    def test_x86_64_kvm(self):
++        self.require_accelerator("kvm")
++
+         self.set_machine('q35')
+         self.cpu="Nehalem"
+         self.root='sda'
+         self.wait_for_shutdown=False
+         self.common_tuxrun(kernel_asset=self.ASSET_X86_64_KERNEL,
+                            rootfs_asset=self.ASSET_X86_64_ROOTFS,
+-                           drive="driver=ide-hd,bus=ide.0,unit=0")
++                           drive="driver=ide-hd,bus=ide.0,unit=0",
++                           accel="kvm")
+ 
  if __name__ == '__main__':
      TuxRunBaselineTest.main()
 -- 
