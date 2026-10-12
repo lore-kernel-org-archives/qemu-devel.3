@@ -4,103 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47531CA9ED1
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Oct 2026 09:53:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82F93CA9ED1
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Oct 2026 10:02:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGChl-0006td-Pu; Mon, 12 Oct 2026 05:52:25 -0400
+	id 1xGCqu-0008LN-2O; Mon, 12 Oct 2026 06:01:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xGChg-0006sw-0P
- for qemu-devel@nongnu.org; Mon, 12 Oct 2026 05:52:21 -0400
-Received: from mail-yw1-x1132.google.com ([2607:f8b0:4864:20::1132])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xGChe-0000GQ-Iy
- for qemu-devel@nongnu.org; Mon, 12 Oct 2026 05:52:19 -0400
-Received: by mail-yw1-x1132.google.com with SMTP id
- 00721157ae682-8ab395abf79so10083167b3.0
- for <qemu-devel@nongnu.org>; Mon, 12 Oct 2026 02:52:17 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1791798736; cv=none;
- d=google.com; s=arc-20260327;
- b=EwSEcf5WgiMt02BnpPSk8ElECrxN5Cqg0yP2BrK56vyTslyrUhvr/NMGiY79QQipPW
- NbWIOHXQcrYoFHSJLrvUV3goPNIcmqu3a7ai8s1EB+yS0TLMdL3cpv0/o7pf1xeIXM6A
- fKVz44ohiW0VD15Acu6MR2V1O6/322AE3vcRftzV2YokpSRwB4TC+Qonro9P0/wAtLeU
- 9crwrAChEsPrUrAB5HnriBO1D7Y7uBwqxanZj4PG7UzFVIAj6FMtpKxVXCzs8n5akcLW
- FpSL+T6GzzZXwU23OkHhvDpZsJBHtn1GkQqCJhxgS3w6DKa3ajdGmyeq3miWR5SYvA7E
- 4vVw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=+umfz3SlzoeSCqX3h1F92tiHRLs6umtF0IR1GJmbNcg=;
- fh=kFF/XFhhDVgLJL7VfSWMbraE0OC3Zj7WmtDurJ861Mg=;
- b=WuJ0Z+sLvl8boYeqEbNoMCSACkUVBEpe2xdnL/xt5P2zkTC+XeUA9xmzRggcIkCc83
- v64RuWNGf7UC1cmDZjuyvmdsO7OzfXtmB1SS0faB+9NJC10JHkKQ08AYidUGbAj/BboR
- J7ssDxREvnXgd+EEnRNVRQ70tJxYV3yR6BxiciQvu4yrM5iJd363/haVxGFOSKSCgIER
- cHjfdaaD76SIL2JCGxV0ai6VE1e4uj0mdb93Uu0cNxd5BOcbrf2P5KR/152DB+BRyLKV
- 2N8tUl50OQZt4Id2JWDoyNHDoVarNvjSYBSmL6uVYX2+unG9bIHD/Vxy3JRcW7PNpT0P
- l5kg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1791798736; x=1792403536; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=+umfz3SlzoeSCqX3h1F92tiHRLs6umtF0IR1GJmbNcg=;
- b=nlOjGBLh+rH1FFgCV2//dLNmzJyJy7o+SFfyefGZUcd0lft7gtb4BmIa2DTONu5puR
- IloLHMWUV0NmuO6u0V/HeKnzaTTrDjpYXZ3xCE+/Vt+Xdp3qeey9SeN5z17fYmpcwFBN
- TIS0zR0oIBpKTvZUIHBmqlLyKCSh5Y/ojuaOvJCSJ8E6wkRY4jGkNuxAG5zGO0L3SliL
- mQFRiNM6+qiWNfgXe+pXpE+i1xPJnumEBeLNAw963+xrZ/C5+MbCKVG+r17apBxWhfPP
- 3eMPD6XSWw3P5fyyh7nK1WfqYGSjthFCT0NHR5QZ9TSxZapuBRudbMkRgRixch857wjb
- WOIg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791798736; x=1792403536;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=+umfz3SlzoeSCqX3h1F92tiHRLs6umtF0IR1GJmbNcg=;
- b=dYBbXXxh5L/Ku/bsI81IA8DuSyNqwvCmgqiEUdj4nFHFkLt76Av+2Nn2PNQgcygMtr
- vRAC6rCQkrYMvsZrSNwuFDitgtAZmYAgLH2wP3v26dlhvbnFOnsvxfr7cue3UjFjDXtY
- 5yLrVwYtqezfiHOI0dwoQ+QM6ayreX0oomDObDZAD7zAIeAQg3C4bC0unl2v90uJG8SI
- /5DzfapVXqSiL+/ETtloQ8y/mPBGg06/qGxE3MkJVSfkN0IrxFUiiyA8hxo8pqbfCKdw
- FF4zdWjgshE7x3vvtNw7IJDSAHtUA83xcmwGagR9ylYLw3+S6PE0iIbFDDX45crs+b/U
- DoNg==
-X-Forwarded-Encrypted: i=1;
- AKwUvBz+M0G+d+DqgUM/jp7UQ1WK4pDBBQGb2QhVyVI6mP6DwJuiu+VmXHI4jgfsqqB/7b8uo9oT7oAxbkuU@nongnu.org
-X-Gm-Message-State: AFq9FYJDxyifuY3XBk5GS7F2SS2zohCkFLcHfRkcAi4PUgqMFIyoFPdf
- s6dcnaXArPBvIMEpgs95ghd5gLPfQMEo1cYbbvUE9/2eXGuIoNZAq+ywsEnVKkkFttHAlsc6CHf
- DxVdD0AOpGTZCYFsWIgpzvgrFjvoNErZo5DK/NF99tw==
-X-Gm-Gg: AYBFou1+Q5QjvkQFN2U2Ezjd+sGmlHo8Gy4YSWn1yrl/PBz+E7Zn7FbfvZQeV5btU57
- 3+0B02736+aRmM+TA9kXzhlpsIN0+0TcjVncd3JCcTXtMDndIRFha0d0FiNHXLbwtDlsd4BlqdF
- VONfeyXSE8ivzk5g4WkBifOxpRAmpd2Lnu3Uc435//QItzUWGyV1bfLaolZLDkBH77TCagjX/9D
- Hp2mE/JWecxIoqraDWnRa12kOsrWt9PBhPfAfNlN1QKiyGcX6Z9+E6JODu6PZrrGnY6Bk/3PoB3
- oB+RTfxsb7zE5q/uRw7Ff+q2I8gXQAc3vRWhO/WEdxsbDnf69HVy0lseY+W8BQRLB+JJsL6wgpu
- ll5R/54rUZoGxj/uhz+sX+rqhZ75rYqUHFPmTJnTj
-X-Received: by 2002:a05:690e:43c1:b0:674:1f9a:9e88 with SMTP id
- 956f58d0204a3-67936acb407mr1939692d50.90.1791798736281; Mon, 12 Oct 2026
- 02:52:16 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1xGCqd-0008JY-34
+ for qemu-devel@nongnu.org; Mon, 12 Oct 2026 06:01:36 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1xGCqb-0001an-5d
+ for qemu-devel@nongnu.org; Mon, 12 Oct 2026 06:01:34 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1791799290;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=/NgcmBD/bL+V8EjyCp92u62sKVnVWXEGGSokH6CcobU=;
+ b=ErS8IM9TLrzdybu8Jvj7orGJYdi42rlQa0hiZlsukmPgk1Gz9ep1RMglAJgHWOJq7heTVt
+ KF20wc4Uxn5oHnHTqkfC2gT2k9m/9/Mr65cUeD0ZxBLlXxrXCktg1ItPELAuHYvurETQxa
+ G17PH9pCHxzsWekzjTA3YU67Ax8dH1Y=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-513-eoI6tAkpM_yj-zSvtyZHlw-1; Mon,
+ 12 Oct 2026 10:01:22 +0000
+X-MC-Unique: eoI6tAkpM_yj-zSvtyZHlw-1
+X-Mimecast-MFC-AGG-ID: eoI6tAkpM_yj-zSvtyZHlw_1791799281
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id ADD91195BDFE; Mon, 12 Oct 2026 10:01:19 +0000 (UTC)
+Received: from localhost (headnet03.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.114])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 925E61955F73; Mon, 12 Oct 2026 10:01:16 +0000 (UTC)
 MIME-Version: 1.0
-References: <20261009121545.241772-1-gromero@redhat.com>
-In-Reply-To: <20261009121545.241772-1-gromero@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 12 Oct 2026 10:52:05 +0100
-X-Gm-Features: AclHuK9RLXsSqv7VU1vONq2feiFPvBZ-rtgPd-WOxV9mzRxIL9uTZScCcXCFVeo
-Message-ID: <CAFEAcA93it=-W+aSf=n=TcaX12DnVbkbjJRbPkiue4oChvAArw@mail.gmail.com>
-Subject: Re: [PATCH] hw/arm/virt: Use TAG_GRANULE when creating tag memory
-To: Gustavo Romero <gromero@redhat.com>
-Cc: richard.henderson@linaro.org, qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1132;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1132.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH v3 2/8] hw/usb/redirect-server: Add a usbredir server
+ device
+From: marcandre.lureau@redhat.com
+To: Jamin Lin <jamin_lin@aspeedtech.com>
+Cc: =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
+ Peter Maydell <peter.maydell@linaro.org>, 
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>, 
+ Kane Chen <kane_chen@aspeedtech.com>, 
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, 
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>, 
+ "open list:All patches CC here" <qemu-devel@nongnu.org>, 
+ Troy Lee <troy_lee@aspeedtech.com>
+In-Reply-To: <20261012021634.2006424-3-jamin_lin@aspeedtech.com>
+References: <20261012021634.2006424-1-jamin_lin@aspeedtech.com>
+ <20261012021634.2006424-3-jamin_lin@aspeedtech.com>
+Date: Mon, 12 Oct 2026 14:01:11 +0400
+Message-Id: <179179927143.1642373.5714306428472142574.b4-review@b4>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=610;
+ i=marcandre.lureau@redhat.com; h=from:subject:message-id;
+ bh=oomY2FdthtOx3LeQd3wPN4ncpU4G1vEaHqCTcJdXk1I=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqzK/oZk8y3OJvf0GAwvGcpc0G49b+IT1QlCTMc
+ NDlIq/6ivWJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCasyv6AAKCRDa6OEJdZac
+ 5ReTD/4sxs2a86NQowu0bfRcNgCqHT4kp9HNen6CcnalZbI7Erv9asoMox6cXfwBzMQV9NDKWrz
+ flEh/ATWVR5xTq84Z5jTGuui8IeCLjlJDrJg3LU/Y67vx/sr0FSKLlX31HW28kVrkisWe3ypqoL
+ 4G9A/2unL200KU9IVGYkqojsFYCd8R6gb97Ot/OpGfCTVzUDKKBn8n7FUm5PA8kje/WxbUlteAD
+ ednbitbVS5paf2O7AU++DKXPs31iy2VsxXBFh5LEsDEVWBuaz1nTMx/bT+1YCMpaZqf5HE/870U
+ TViwFmAqEWvxhy2bve8O6YWlLyKsDm/fiMOaF0it2M5CEPROnTKVGY9kErIL0UN+UsO64EKKc1n
+ /RGzxIs7QDbZ24twVsnB6myhyfLepD2jqcLSovLPv85D//5xixrL1Ef5RILTsa1+C9Na4ZLmR6Z
+ sQy0OwPM2DgsxcG135cGtnUAKNZ1o345awjJ+tUtH0AkC/whuEtAFqL0DJsPVRqpH3UR1ibvMLy
+ Mz3LHdsURHVnteMDGnXbtB5sL8Zj8XblytThCpovuiDn2rWNJz0+JavkhaPkGMKHwz5+hkYzq9n
+ ujOdUd+BYGcHrkuvkZBtNrJMKjazQa8rBG18VN31fjowA24WdXohi+R9sRHWaLATfkA3R3ytJY2
+ wykR8mKfsQpWVVg==
+X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
+ fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=marcandre.lureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 10
+X-Spam_score: 1.0
+X-Spam_bar: +
+X-Spam_report: (1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,19 +111,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 9 Oct 2026 at 13:16, Gustavo Romero <gromero@redhat.com> wrote:
->
-> Use TAG_GRANULE definition when creating the memory region where the
-> FEAT_MTE tags are stored.
->
-> Signed-off-by: Gustavo Romero <gromero@redhat.com>
-> ---
->  hw/arm/virt.c | 6 ++++--
->  1 file changed, 4 insertions(+), 2 deletions(-)
+On Mon, 12 Oct 2026 02:16:37 +0000, Jamin Lin <jamin_lin@aspeedtech.com> wrote:
+> Add "x-usb-redir-server". It exports a USB device from this QEMU to a
+> USB host in another QEMU, using the usbredir protocol. The other side is
+> the existing "usb-redir" device.
+> 
+> The name has an "x-" prefix because the device is experimental. It has
+> to sit on the sysbus so that qdev can find the USB bus it provides, and
+> that may change later, so the name is not fixed yet.
+> 
+> [...]
 
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 
+-- 
+Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Applied to target-arm.next, thanks.
-
--- PMM
 
