@@ -4,47 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D41ACA9ED0
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Oct 2026 16:59:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4777ECA9ED0
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Oct 2026 16:59:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGJMa-0007zK-55; Mon, 12 Oct 2026 12:59:05 -0400
+	id 1xGJNJ-00007R-U1; Mon, 12 Oct 2026 12:59:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gilles.grimaud@univ-lille.fr>)
- id 1xGJMN-0007yi-1T
- for qemu-devel@nongnu.org; Mon, 12 Oct 2026 12:58:48 -0400
+ id 1xGJMn-00084n-Ma; Mon, 12 Oct 2026 12:59:15 -0400
 Received: from smtp-out-2.univ-lille.fr ([194.254.129.106])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gilles.grimaud@univ-lille.fr>)
- id 1xGJMK-0006BN-M9
- for qemu-devel@nongnu.org; Mon, 12 Oct 2026 12:58:46 -0400
+ id 1xGJMd-0006ES-Vl; Mon, 12 Oct 2026 12:59:12 -0400
 Received: from smtp01.univ-lille.fr (smtp01.univ-lille.fr [194.254.129.95])
- by smtp-out-2.univ-lille.fr (Postfix) with ESMTPS id 4j3Nw11xMCz80nX;
+ by smtp-out-2.univ-lille.fr (Postfix) with ESMTPS id 4j3Nw16dW0z8BNx;
  Mon, 12 Oct 2026 18:58:41 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=univ-lille.fr;
  s=dkim; t=1791824321;
- bh=1Bo0ps4CqwtgLRYhCjF/w8rRAvaXGLn7VYfzfFfik0s=;
- h=From:To:Cc:Subject:Date:From;
- b=yoRx6cw4MKZJ8McPjnN00hBT6LpUIakmIsKz5Mb2Tb29qHnMHuBMqcWQa7O86lM6g
- rL3yZpKNJHydNq4kmmqa5SqVUk3w1wxYsUgsu8lu7B9RJXi8ZihPgnA2NTJusIGFGI
- xfTW/XDb1KqfvbtU4rP5IqG9A5/qstbPLAJfUrgZ6hDN47GwxJQRSPSTIU/vdHglVc
- ZlFQYD7ojFnAtXLpe82HaHTUbOwXaYZna61uc16LFhiVFlR8m/uATojrJQQBzBggnQ
- t/te3CINBea0iftgCY8BnYudRqEth0JKd5AMPMJmEHqMGw3TdLyPg4PV+RSlFQfwc0
- jSdtTMKGdXvIw==
+ bh=n/Rh9NOT0tf2DdviPPLi8SSJK4fnxZ0dt0bXhGsBWso=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=kOLkPSIbzxlNsAvrpyWo7JI3ZL7BANs+gKEqB33sLOX/CzXn8BwLIarimqk5FvOjF
+ /6Gh3gt+uyPcK5EScd/AihovH7XX6nzEWQ5+gfyqSEO2942flfcXU0axz68GIqeRmO
+ xyvg+kTwOKOQ4q7J4UjtzVuANMk8XTaTxc3oIzunROouR0pbhYUDrFKAoQefJ8JgGY
+ 1A5Jzxy6ocqT60o65lX3ZYSSzEE9O8FGttEGwAOihNZNELPmlG+7N0DX2DJIqmWRge
+ dwa51Rfu1z4zWY6fQ2uG8K2YLOC4DBr6MUAh0MH54413EC+doISwm2RvrsLHPG/Syg
+ SBXUgKxyV2kaA==
 Received: from localhost.localdomain (unknown [134.206.205.113])
  (Authenticated sender: gilles.grimaud)
- by smtp01.univ-lille.fr (Postfix) with ESMTPSA id 4j3Nw117SVz83nY;
+ by smtp01.univ-lille.fr (Postfix) with ESMTPSA id 4j3Nw15YZNz83nc;
  Mon, 12 Oct 2026 18:58:41 +0200 (CEST)
 From: Gilles Grimaud <gilles.grimaud@univ-lille.fr>
 To: qemu-devel@nongnu.org
-Cc: alex.bennee@linaro.org,
-	Gilles Grimaud <gilles.grimaud@univ-lille.fr>
-Subject: [RFC PATCH 0/9] hw/arm: add Raspberry Pi Pico machine foundation
-Date: Mon, 12 Oct 2026 18:58:30 +0200
-Message-ID: <20261012165840.99050-1-gilles.grimaud@univ-lille.fr>
+Cc: alex.bennee@linaro.org, Gilles Grimaud <gilles.grimaud@univ-lille.fr>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ qemu-arm@nongnu.org (open list:ARM TCG CPUs)
+Subject: [RFC PATCH 4/9] tests/tcg/arm: add Raspberry Pi Pico smoke tests
+Date: Mon, 12 Oct 2026 18:58:34 +0200
+Message-ID: <20261012165840.99050-5-gilles.grimaud@univ-lille.fr>
 X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20261012165840.99050-1-gilles.grimaud@univ-lille.fr>
+References: <20261012165840.99050-1-gilles.grimaud@univ-lille.fr>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=194.254.129.106;
@@ -71,86 +72,205 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series introduces the minimal SoC and machine foundation for supporting
-the Raspberry Pi Pico (RP2040) and its Arm Cortex-M0+ core. It reuses the work
-originally presented in RFC by Alex Bennee in 2022 [1], but has been fully
-adapted to current QEMU APIs and split into focused, reviewable pieces.
+Build Cortex-M0+ guest programs from assembly sources to exercise the
+minimal Pico boot path, UART0 output, and the Cortex-M0+ MPU. Keep the
+vector table at the XIP base so these tests match the initial synthetic
+boot stub without depending on boot2 or the later flash controller model.
 
-The Armv6-M MPU series [2] and the follow-up privilege extension patch [3] are
-now upstream. As requested by Peter Maydell, the cortex-m0plus CPU type,
-previously submitted as a standalone patch [4], is now the first patch of this
-series, together with the machine that uses it. Its initialization has been
-made fully autonomous, with no call to cortex_m0_initfn(), as requested in that
-review.
+Signed-off-by: gilles grimaud <gilles.grimaud@univ-lille.fr>
+---
+ tests/tcg/arm/system/meson.build       | 14 +++++++
+ tests/tcg/arm/system/rp2040-boot.S     | 30 +++++++++++++++
+ tests/tcg/arm/system/rp2040-minimal.ld | 40 +++++++++++++++++++
+ tests/tcg/arm/system/rp2040-uart.S     | 53 ++++++++++++++++++++++++++
+ tests/tcg/arm/system/rp2040-uart.ref   |  1 +
+ 5 files changed, 138 insertions(+)
+ create mode 100644 tests/tcg/arm/system/rp2040-boot.S
+ create mode 100644 tests/tcg/arm/system/rp2040-minimal.ld
+ create mode 100644 tests/tcg/arm/system/rp2040-uart.S
+ create mode 100644 tests/tcg/arm/system/rp2040-uart.ref
 
-The remaining patches build a minimal but functional RP2040 SoC and Raspberry
-Pi Pico machine, sufficient to run minimal firmware (ELF loaded via -kernel)
-and execute the initial boot sequence, though it does not yet emulate the
-RP2040 mask ROM. They include:
-
-cortex-m0plus CPU type - explicit architectural initialization.
-Common RP2040 peripheral definitions - shared constants and helper for APB
-atomic alias windows.
-RP2040 SoC and Raspberry Pi Pico machine - basic skeleton with UART, flash,
-RAM, and minimal interconnect.
-TCG smoke tests (patch 4): basic boot test (ELF load, reset vector, UART
-output). MPU validation tests (patch 5): TCG-level checks for Cortex-M0+
-MPU regions. Supporting peripherals (patches 6-9): SYSINFO, SYSCFG, VREG, and
-TBMAN (testbench manager).
-
-At the end of this series, the machine can:
-
-Boot from QEMU's -kernel with an ELF firmware;
-Execute code in RAM or via a simple ROM-mapped XIP window (before full XIP/SSI
-and pinmux models are added);
-Output via UART0 (PL011, directly connected, before pin multiplexing is
-implemented);
-Validate the Cortex-M0+ MPU via TCG tests.
-What remains outside this series (and will be submitted separately) is:
-
-Clocking (clksrc, xosc, pll),
-GPIO controller and SIO (including interrupt handling),
-XIP controller and flash interface,
-DMA engine,
-ROM service stubs (e.g., rom_pio_clock, rom_flash_exit_xip).
-These components are necessary to extend this minimal boot foundation into a
-more complete and functionally accurate RP2040 model.
-
-Patch statistics
-
- configs/devices/arm-softmmu/default.mak |   1 +
- hw/arm/Kconfig                          |  12 +
- hw/arm/meson.build                      |   2 +
- hw/arm/raspi_pico.c                     |  83 +++++++
- hw/arm/rp2040.c                         | 330 +++++++++++++++++++++++++++
- hw/misc/meson.build                     |   4 +
- hw/misc/rp2040_syscfg.c                 | 220 ++++++++++++++++++
- hw/misc/rp2040_sysinfo.c                | 102 +++++++++
- hw/misc/rp2040_tbman.c                  |  88 ++++++++
- hw/misc/rp2040_vreg.c                   | 149 +++++++++++++
- include/hw/arm/rp2040.h                 |  62 ++++++
- include/hw/misc/rp2040.h                |  32 +++
- include/hw/misc/rp2040_syscfg.h         |  41 ++++
- include/hw/misc/rp2040_sysinfo.h        |  25 +++
- include/hw/misc/rp2040_tbman.h          |  29 +++
- include/hw/misc/rp2040_vreg.h           |  46 ++++
- target/arm/tcg/cpu-v7m.c                |  33 +++
- tests/qtest/meson.build                 |   5 +
- tests/qtest/rp2040-syscfg-test.c        |  97 ++++++++
- tests/qtest/rp2040-sysinfo-test.c       |  37 ++++
- tests/qtest/rp2040-tbman-test.c         |  29 +++
- tests/qtest/rp2040-vreg-test.c          |  79 +++++++
- tests/tcg/arm/system/meson.build        |  19 ++
- tests/tcg/arm/system/rp2040-boot.S      |  30 +++
- tests/tcg/arm/system/rp2040-minimal.ld  |  40 ++++
- tests/tcg/arm/system/rp2040-mpu.S       | 356 ++++++++++++++++++++++++++++++
- tests/tcg/arm/system/rp2040-mpu.ref     |  10 +
- tests/tcg/arm/system/rp2040-uart.S      |  53 +++++
- tests/tcg/arm/system/rp2040-uart.ref    |   1 +
- 29 files changed, 2015 insertions(+)
-[1] https://lore.kernel.org/qemu-devel/20220110175104.2908956-1-alex.bennee@linaro.org/
-[2] https://lore.kernel.org/qemu-devel/20260914192323.29250-1-gilles.grimaud@univ-lille.fr/
-[3] https://lore.kernel.org/qemu-devel/20260920220722.73501-1-gilles.grimaud@univ-lille.fr/
-[4] https://lore.kernel.org/qemu-devel/20260930094603.35969-1-gilles.grimaud@univ-lille.fr/
+diff --git a/tests/tcg/arm/system/meson.build b/tests/tcg/arm/system/meson.build
+index 80c5461e62..29b03b64d0 100644
+--- a/tests/tcg/arm/system/meson.build
++++ b/tests/tcg/arm/system/meson.build
+@@ -15,6 +15,11 @@ qemu_base_args = ['-display', 'none',
+                   '-semihosting-config', 'enable=on',
+                   '-kernel']
+ qemu_def_args = ['-M', 'virt', '-cpu', 'max', qemu_base_args]
++rp2040_cflags = ['-mcpu=cortex-m0plus', '-mthumb', '-mfloat-abi=soft',
++                 '-nostdlib', '-Wl,--build-id=none',
++                 '-T', files('rp2040-minimal.ld')]
++rp2040_qemu_args = ['-M', 'raspi-pico', '-monitor', 'none',
++                    qemu_base_args]
+ 
+ # Multi arch tests
+ multi_src = []
+@@ -51,6 +56,15 @@ tests += {
+                '-T', files('test-armv6m-undef.ld')],
+     'qemu_args': ['-M', 'microbit', qemu_base_args],
+   },
++  'rp2040-boot.S': {
++    'cflags': rp2040_cflags,
++    'qemu_args': rp2040_qemu_args,
++  },
++  'rp2040-uart.S': {
++    'cflags': rp2040_cflags,
++    'qemu_args': ['-serial', 'stdio', rp2040_qemu_args],
++    'expected_output': 'rp2040-uart.ref',
++  },
+   'semiconsole.c': {
+     'cflags': cflags,
+     'qemu_args': ['-serial', 'none', '-chardev', 'stdio,mux=on,id=stdio0',
+diff --git a/tests/tcg/arm/system/rp2040-boot.S b/tests/tcg/arm/system/rp2040-boot.S
+new file mode 100644
+index 0000000000..0537a54d44
+--- /dev/null
++++ b/tests/tcg/arm/system/rp2040-boot.S
+@@ -0,0 +1,30 @@
++/*
++ * Raspberry Pi Pico boot smoke test.
++ *
++ * Copyright 2026 Gilles Grimaud
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++.syntax unified
++.cpu cortex-m0plus
++.thumb
++
++#define SRAM_END 0x20042000
++#define SYS_EXIT 0x18
++#define ADP_STOPPED_APPLICATION_EXIT 0x20026
++
++.section .vectors, "a", %progbits
++vector_table:
++    .word SRAM_END
++    .word reset_handler + 1
++
++.section .text, "ax", %progbits
++.thumb_func
++.global reset_handler
++reset_handler:
++    movs r0, SYS_EXIT
++    ldr r1, =ADP_STOPPED_APPLICATION_EXIT
++    bkpt 0xab
++
++1:
++    b 1b
+diff --git a/tests/tcg/arm/system/rp2040-minimal.ld b/tests/tcg/arm/system/rp2040-minimal.ld
+new file mode 100644
+index 0000000000..ebfbac8cf2
+--- /dev/null
++++ b/tests/tcg/arm/system/rp2040-minimal.ld
+@@ -0,0 +1,40 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++
++ENTRY(reset_handler)
++
++MEMORY
++{
++    FLASH (rx) : ORIGIN = 0x10000000, LENGTH = 2M
++    SRAM (rwx) : ORIGIN = 0x20000000, LENGTH = 264K
++}
++
++SECTIONS
++{
++    .vectors ORIGIN(FLASH) :
++    {
++        KEEP(*(.vectors))
++    } > FLASH
++
++    .text :
++    {
++        *(.text*)
++        *(.rodata*)
++    } > FLASH
++
++    .data :
++    {
++        *(.data*)
++    } > SRAM AT > FLASH
++
++    .bss (NOLOAD) :
++    {
++        *(.bss*)
++        *(COMMON)
++    } > SRAM
++
++    /DISCARD/ :
++    {
++        *(.ARM.attributes)
++        *(.comment)
++    }
++}
+diff --git a/tests/tcg/arm/system/rp2040-uart.S b/tests/tcg/arm/system/rp2040-uart.S
+new file mode 100644
+index 0000000000..bdb58cc7f2
+--- /dev/null
++++ b/tests/tcg/arm/system/rp2040-uart.S
+@@ -0,0 +1,53 @@
++/*
++ * Raspberry Pi Pico UART boot smoke test.
++ *
++ * Copyright 2026 Gilles Grimaud
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++.syntax unified
++.cpu cortex-m0plus
++.thumb
++
++#define SRAM_END 0x20042000
++#define UART0_DR 0x40034000
++#define SYS_EXIT 0x18
++#define ADP_STOPPED_APPLICATION_EXIT 0x20026
++
++.section .vectors, "a", %progbits
++vector_table:
++    .word SRAM_END
++    .word reset_handler + 1
++    .word default_handler + 1
++    .word default_handler + 1
++
++.section .text, "ax", %progbits
++.thumb_func
++.global reset_handler
++reset_handler:
++    ldr r0, =UART0_DR
++    ldr r1, =message
++
++1:
++    ldrb r2, [r1]
++    cmp r2, 0
++    beq 2f
++    str r2, [r0]
++    adds r1, 1
++    b 1b
++
++2:
++    movs r0, SYS_EXIT
++    ldr r1, =ADP_STOPPED_APPLICATION_EXIT
++    bkpt 0xab
++
++3:
++    b 3b
++
++.thumb_func
++default_handler:
++    b default_handler
++
++.section .rodata, "a", %progbits
++message:
++    .asciz "PICO TCG UART OK\n"
+diff --git a/tests/tcg/arm/system/rp2040-uart.ref b/tests/tcg/arm/system/rp2040-uart.ref
+new file mode 100644
+index 0000000000..1ef16e8299
+--- /dev/null
++++ b/tests/tcg/arm/system/rp2040-uart.ref
+@@ -0,0 +1 @@
++PICO TCG UART OK
+-- 
+2.55.0
 
 
