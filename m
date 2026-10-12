@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 411CECA9ED6
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11FE1CA9EC5
 	for <qemu-devel@archiver.kernel.org>; Mon, 12 Oct 2026 06:29:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xG9WA-0004uj-Hr; Mon, 12 Oct 2026 02:28:14 -0400
+	id 1xG9WB-0004uw-Cx; Mon, 12 Oct 2026 02:28:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1xG9W7-0004t9-3k
- for qemu-devel@nongnu.org; Mon, 12 Oct 2026 02:28:11 -0400
-Received: from smtpout1.mo538.mail-out.ovh.net ([51.210.91.30])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1xG9W9-0004uD-Fy
+ for qemu-devel@nongnu.org; Mon, 12 Oct 2026 02:28:13 -0400
+Received: from smtpout9.mo537.mail-out.ovh.net ([51.210.91.28])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1xG9W4-0005Af-BE
- for qemu-devel@nongnu.org; Mon, 12 Oct 2026 02:28:10 -0400
-Received: from director6.derp.mail-out.ovh.net
- (director6.derp.mail-out.ovh.net [79.137.60.226])
- by mo538.mail-out.ovh.net (Postfix) with ESMTPS id 4j36wG0S15z5xTL;
- Mon, 12 Oct 2026 06:27:57 +0000 (UTC)
-Received: from director6.derp.mail-out.ovh.net
- (director6.derp.mail-out.ovh.net. [127.0.0.1])
- by director6.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
- for <jamin_lin@aspeedtech.com>; Mon, 12 Oct 2026 06:27:57 +0000 (UTC)
-Received: from mta11.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.109.249.162])
- by director6.derp.mail-out.ovh.net (Postfix) with ESMTPS id 4j36wF2sW0z46Xg;
- Mon, 12 Oct 2026 06:27:57 +0000 (UTC)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1xG9W7-0005Bd-BW
+ for qemu-devel@nongnu.org; Mon, 12 Oct 2026 02:28:13 -0400
+Received: from director1.derp.mail-out.ovh.net
+ (director1.derp.mail-out.ovh.net [79.137.60.221])
+ by mo537.mail-out.ovh.net (Postfix) with ESMTPS id 4j36wT2B3Bz48m7;
+ Mon, 12 Oct 2026 06:28:08 +0000 (UTC)
+Received: from director1.derp.mail-out.ovh.net
+ (director1.derp.mail-out.ovh.net. [127.0.0.1])
+ by director1.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
+ for <jamin_lin@aspeedtech.com>; Mon, 12 Oct 2026 06:28:08 +0000 (UTC)
+Received: from mta11.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.109.231.224])
+ by director1.derp.mail-out.ovh.net (Postfix) with ESMTPS id 4j36wS4PsCz6MbW;
+ Mon, 12 Oct 2026 06:28:08 +0000 (UTC)
 Received: from kaod.org (unknown [10.1.6.0])
  (Authenticated sender: clg@kaod.org)
  by mta11.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id
- 11AC22402C97; Mon, 12 Oct 2026 06:27:56 +0000 (UTC)
+ 7F6C92402C97; Mon, 12 Oct 2026 06:28:07 +0000 (UTC)
 Authentication-Results: garm.ovh; auth=pass
- (GARM-111S005d4d8aa55-6d1a-48d2-839e-ce36a59ff65f,
+ (GARM-96R00156d1074d-e0c6-4b92-ad43-662dbc15a164,
  A46244FAB654B0099A82D276BA68AD972340DB92) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 82.64.250.170
-Message-ID: <6fda4b41-9c70-4312-8e58-35690af36e1b@kaod.org>
-Date: Mon, 12 Oct 2026 08:27:55 +0200
+Message-ID: <6883032f-8627-423f-9d84-526102a92d33@kaod.org>
+Date: Mon, 12 Oct 2026 08:28:07 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 02/11] hw/usb/aspeed-udc: Mask the reserved bits on
- register writes
+Subject: Re: [PATCH v2 04/11] hw/usb/aspeed-udc: Rename the transfer helpers
+ after their DMA mode
 To: Jamin Lin <jamin_lin@aspeedtech.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
@@ -52,7 +52,7 @@ To: Jamin Lin <jamin_lin@aspeedtech.com>,
  "open list:All patches CC here" <qemu-devel@nongnu.org>
 Cc: Troy Lee <troy_lee@aspeedtech.com>
 References: <20261005064418.3060881-1-jamin_lin@aspeedtech.com>
- <20261005064418.3060881-3-jamin_lin@aspeedtech.com>
+ <20261005064418.3060881-5-jamin_lin@aspeedtech.com>
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Content-Language: en-US, fr
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -97,28 +97,29 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20261005064418.3060881-3-jamin_lin@aspeedtech.com>
+In-Reply-To: <20261005064418.3060881-5-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-x-ovh-tracer-id: 9073908828282858507
+x-ovh-tracer-id: 9077005052301782027
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTGiAXR8Ifyh3wPP9AAtd2qH1u9lmye61BdmBwEWKdch04gisrlgLmuw3IEbF5uLpFHrk/uRdlOVR+kDsI+xu3nKO/fuVVjLG3PX2zxWCLwDgNCdKzoId2UfguIikkocDaGek3KRESdjB3ye3EDci79JTh6LPNu/Rghgk0abhqqr80Pea4nucPYwHMVVg0Eaf8zTI+2acLY2ARg8HmR48hjdSZpvFhw0Vl0zTGjx2Ms9ajql6SFHcaPjL4Jw9oXgCpnc2T02IAJ+ZUfVKk1AvDf5wTzVePQapJcczEAVacoOUY6Gy14P9ClMXgBs8K7cujMg/a9cD0lNXPrB82s9yi9GAT1yy5bDESdN4xSO995F20DrNaIKHYdh5MOCAbCMoFJ2lGixPL3xD1zGpDLWRADhMhEjh3Z9O/fd025Fi+aATmkZQRnyYqlTq7fLfix+EE6DPKYZlqw8Z031aOp2Ksq+JXl1jKKkjHAa4xJwfjD3WsKtkbNOMrPrs49LgFVPXfLabfdMxHVFScGoFcav6SVtU1CLNlUNIBsM+bYcvdoIS9Q+Lz1pouoAUpYQMYIi5jSiaIxUDpyYxyQ3oq0BEPnW2CX/EkyNFLKyXwVwwPQ84ImICVvuddo6aDm1ms81g9JxJMv6xaDiInns5w2hUir9x25oh+P2w9ES+hSBW5xD5w
-DKIM-Signature: a=rsa-sha256; bh=g5CEs4ABQUum+ZXeW7UVbzw7MPGexFZJkFnjqPZpikc=; 
+X-VR-SPAMCAUSE: dmFkZTGiAXR8Ifyh3wPP9AAtd2qH1u9lmye61BdmBwEWKdch04gisrlgLmuw3IEbF5uLpFHrk/uRdlOVR+kDsI+xu3nKO/fuVVjLG3PX2zxWCLwDgNCdKzoId2UfguIikkocDaGek3KRESdjB3ye3EDci79JTh6LPNu/Rghgk0abhqqr80Pea4nucPYwHMVVg0Eaf8zTI+2acLY2ARg8HmR48hjdSZpvFhw0Vl0zTGjx2Ms9ajql6SFHcaPjL4Jw9oXgCpnc2T02IAJ+ZUfVKk1AvDf5wTzVePQapJcczEAVacoOUY6Gy14P9ClMXgBs8K7cujMg/a9cD0lNXPrB82s9yi9GOJ6gnjL971gwAwLXjCaM46Fz3qfuOhME9DlsByg6aE8N9bsG+nFXQVaRvboeONZ+FIoxPX5p88ys2VRGygQXtbeAZLpabjloSSUCF+n4rVw3Ept43iRQLSLaqmPKfjvLNE3xRTH+MWnBLCBrRUYcYNrXyaeCcIfcmtz7lOUw2L228QXKABjtQL83JhDC33/FNYDqWmrAtmRogC2sP0DDfGx5OzHUHwl5uEW+9VdSpbIkeY84Q5m3MQ6HkQrQKntETQpokkb52mlLo43/ddbb0HKbr/k3AjmZeGphimeU9hI/TOP0/FADphdAESB2J31Nt0BkWfwgQ1zwhv1O2kcbcQ
+DKIM-Signature: a=rsa-sha256; bh=fK5I1tadekQyP4Q3H2P4oSoqm7E5N4j80yXoQ6UHan8=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1791786479; v=1;
- b=l5PEJ6PrwkBw6+VGdHD8g69DZzqftUykyNbdY8RUKa0hb72DqAkJF12hxfh+5kkOC7YF0C3x
- F7FU/KZkIpPZQ26Q+KKsWB7+iEmhMGfWkFJkq6MxO6Ao8JvBvCdGXMvCmqFLTIpOFbRzaeAYzRb
- FlNwoqwBhLrKizQGUVfTsGGYrUOmWrSOq4svYH/SBm9V7Eo3tJq9piXTvXdSi5OhKRQ9l5Qtehs
- XpJRYPpKuXzGhxi6R7Oc9QAn0A/ve6MmyinnOarPW1WL5kmDTuuZLYRtqFs7teRjISUuuVJCrBF
- 4IKyIbRXw5nJitcfZ+C6VLbubD6tUuTOykRYU1Zv7jBiA==
-Received-SPF: pass client-ip=51.210.91.30; envelope-from=clg@kaod.org;
- helo=smtpout1.mo538.mail-out.ovh.net
+ t=1791786489; v=1;
+ b=uM3sSFlzgfpLf9p0sXnkOMMdLIVde6tZVPR822LxhMLwKFF0WK2gaJd3OcMFnjipwrQu50DI
+ AsnWdPJB7IHj6ZQwSB0GsC1as0aM//3N2HsF59VJ122TBeg61tshL6e7mf/zfvS83dkskNv5UWU
+ 2Z+SWLhymEuovlXsgLIaJg1uuGdWBP62f7AIzHHerkC69lkNdyeev5sNj9nX8JZ9w/PKouyrBG4
+ CNySxww/Jd53XSCFPNxAU1pGOctTo2ZRxkawrw/CdyuIqoXnK3R/wQhQAI6Z+VB6lT3c8YrKiWv
+ Gind2hJVmGb6WJpEOkOjxPi7/N+7u8crcyo6+4sWld9/A==
+Received-SPF: pass client-ip=51.210.91.28; envelope-from=clg@kaod.org;
+ helo=smtpout9.mo537.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -136,55 +137,136 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 10/5/26 08:44, Jamin Lin wrote:
-> Writes to the interrupt registers were not masked, so a guest could set
-> a reserved bit and read it back. The hardware returns 0 for those.
+> The controller can run an endpoint in descriptor list mode or in single
+> stage mode. Put the mode in the helper names. That makes the code
+> easier to read.
 > 
-> Mask each one to the bits the datasheet marks read/write:
-> 
->    UDC_IER         17, 16, 8:6, 4:0
->    UDC_ISR         8:6, 4:0
->    UDC_EP_ACK_IER  3:0
->    UDC_EP_NAK_IER  3:0
->    UDC_EP_ACK_ISR  3:0
->    UDC_EP_NAK_ISR  3:0
-> 
-> UDC_ISR bits 17 and 16 summarise the endpoint pool. They are read only,
-> so a write cannot clear them.
+> No functional change.
 > 
 > Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 > ---
->   hw/usb/aspeed-udc.c | 12 +++++++++++-
->   1 file changed, 11 insertions(+), 1 deletion(-)
+>   hw/usb/aspeed-udc.c | 30 +++++++++++++++---------------
+>   1 file changed, 15 insertions(+), 15 deletions(-)
 > 
 > diff --git a/hw/usb/aspeed-udc.c b/hw/usb/aspeed-udc.c
-> index 355512822b..95fe823534 100644
+> index bdbd1a78b8..b43f077c2d 100644
 > --- a/hw/usb/aspeed-udc.c
 > +++ b/hw/usb/aspeed-udc.c
-> @@ -319,14 +319,24 @@ static void aspeed_udc_write(void *opaque, hwaddr offset, uint64_t data,
->           s->regs[R_UDC_FUNC_CTRL] = val;
+> @@ -459,8 +459,8 @@ static bool aspeed_udc_ep_copy_to_pkt(AspeedUDCState *s, int ep, uint32_t addr,
+>    * This function raises the endpoint ACK by itself when the ring becomes empty
+>    * or when a descriptor asks for an interrupt.
+>    */
+> -static AspeedUDCXferResult aspeed_udc_ep_xfer_in(AspeedUDCState *s, int ep,
+> -                                                 USBPacket *p)
+> +static AspeedUDCXferResult aspeed_udc_ep_xfer_in_desc(AspeedUDCState *s,
+> +                                                      int ep, USBPacket *p)
+>   {
+>       QEMUIOVector *pktiov = p->combined ? &p->combined->iov : &p->iov;
+>       AspeedUDCEP *e = &s->ep[ep];
+> @@ -568,15 +568,15 @@ static AspeedUDCXferResult aspeed_udc_ep_xfer_in(AspeedUDCState *s, int ep,
+>   
+>   /*
+>    * OUT transfer: receive data from the host by copying its OUT packet into the
+> - * buffer the guest gadget driver set up (single-stage mode).
+> + * buffer the guest gadget driver set up.
+>    *
+>    * A host packet can be bigger than one buffer, so we copy at most PKT_SIZE
+>    * bytes per call, continuing from where the last call stopped
+>    * (p->actual_length). The caller keeps the packet parked until it is fully
+>    * copied.
+>    */
+> -static AspeedUDCXferResult aspeed_udc_ep_xfer_out(AspeedUDCState *s, int ep,
+> -                                                  USBPacket *p)
+> +static AspeedUDCXferResult aspeed_udc_ep_xfer_out_single(AspeedUDCState *s,
+> +                                                         int ep, USBPacket *p)
+>   {
+>       AspeedUDCEP *e = &s->ep[ep];
+>       uint32_t chunk = FIELD_EX32(e->regs[R_EP_DMA_STS], EP_DMA_STS, PKT_SIZE);
+> @@ -619,7 +619,7 @@ static AspeedUDCXferResult aspeed_udc_ep_xfer_out(AspeedUDCState *s, int ep,
+>    * If the request needs more data than was queued, keep it parked and wait for
+>    * the next kick.
+>    */
+> -static void aspeed_udc_ep_in_kick(AspeedUDCState *s, int ep, uint32_t val)
+> +static void aspeed_udc_ep_in_kick_desc(AspeedUDCState *s, int ep, uint32_t val)
+>   {
+>       AspeedUDCEP *e = &s->ep[ep];
+>       uint32_t cur_rptr = FIELD_EX32(e->regs[R_EP_DMA_STS], EP_DMA_STS, RPTR);
+> @@ -649,7 +649,7 @@ static void aspeed_udc_ep_in_kick(AspeedUDCState *s, int ep, uint32_t val)
+>           return;
+>       }
+>   
+> -    switch (aspeed_udc_ep_xfer_in(s, ep, p)) {
+> +    switch (aspeed_udc_ep_xfer_in_desc(s, ep, p)) {
+>       case ASPEED_UDC_XFER_DONE:
+>           e->pkt = NULL;
+>           p->status = USB_RET_SUCCESS;
+> @@ -671,7 +671,7 @@ static void aspeed_udc_ep_in_kick(AspeedUDCState *s, int ep, uint32_t val)
+>    * buffer before), copy its data into the buffer now and finish it. If the
+>    * packet has more data than fits, keep it parked and wait for the next buffer.
+>    */
+> -static void aspeed_udc_ep_out_kick(AspeedUDCState *s, int ep)
+> +static void aspeed_udc_ep_out_kick_single(AspeedUDCState *s, int ep)
+>   {
+>       AspeedUDCEP *e = &s->ep[ep];
+>       USBPacket *p = e->pkt;
+> @@ -681,7 +681,7 @@ static void aspeed_udc_ep_out_kick(AspeedUDCState *s, int ep)
+>           return;
+>       }
+>   
+> -    switch (aspeed_udc_ep_xfer_out(s, ep, p)) {
+> +    switch (aspeed_udc_ep_xfer_out_single(s, ep, p)) {
+>       case ASPEED_UDC_XFER_DONE:
+>           e->pkt = NULL;
+>           p->status = USB_RET_SUCCESS;
+> @@ -727,11 +727,11 @@ static void aspeed_udc_ep_write(void *opaque, hwaddr offset, uint64_t data,
+>           val &= 0x77ffffff;
+>           if (FIELD_EX32(e->regs[R_EP_DMA_CTRL], EP_DMA_CTRL, DESC_OP_EN)) {
+>               /* IN, descriptor-list mode */
+> -            aspeed_udc_ep_in_kick(s, e->index, val);
+> +            aspeed_udc_ep_in_kick_desc(s, e->index, val);
+>           } else {
+>               /* OUT, single-stage mode */
+>               e->regs[reg] = val;
+> -            aspeed_udc_ep_out_kick(s, e->index);
+> +            aspeed_udc_ep_out_kick_single(s, e->index);
+>           }
 >           break;
->       case R_UDC_IER:
-> +        val &= 0x000301df;
-> +        s->regs[reg] = val;
-> +        aspeed_udc_update_irq(s);
-> +        break;
-> +    case R_UDC_ISR:
-> +        val &= 0x000001df;
-> +        s->regs[reg] &= ~val;
-> +        aspeed_udc_update_irq(s);
-> +        break;
->       case R_UDC_EP_ACK_IER:
->       case R_UDC_EP_NAK_IER:
-> +        val &= 0x0000000f;
->           s->regs[reg] = val;
->           aspeed_udc_update_irq(s);
+>       default:
+> @@ -895,7 +895,7 @@ static void aspeed_udc_ep_data_in(AspeedUDCState *s, int ep, USBPacket *p)
+>           /*
+>            * No IN data is queued yet. Save the packet and return ASYNC
+>            * instead of NAK. A NAK would make the host retry slowly.
+> -         * aspeed_udc_ep_in_kick() serves and completes this packet later,
+> +         * aspeed_udc_ep_in_kick_desc() serves and completes this packet later,
+>            * once the guest gadget driver queues descriptors.
+>            */
+>           e->pkt = p;
+> @@ -903,7 +903,7 @@ static void aspeed_udc_ep_data_in(AspeedUDCState *s, int ep, USBPacket *p)
+>           return;
+>       }
+>   
+> -    switch (aspeed_udc_ep_xfer_in(s, ep, p)) {
+> +    switch (aspeed_udc_ep_xfer_in_desc(s, ep, p)) {
+>       case ASPEED_UDC_XFER_DONE:
+>           p->status = USB_RET_SUCCESS;
 >           break;
-> -    case R_UDC_ISR:
->       case R_UDC_EP_ACK_ISR:
->       case R_UDC_EP_NAK_ISR:
-> +        val &= 0x0000000f;
->           s->regs[reg] &= ~val;
->           aspeed_udc_update_irq(s);
+> @@ -931,7 +931,7 @@ static void aspeed_udc_ep_data_out(AspeedUDCState *s, int ep, USBPacket *p)
+>            * No OUT buffer is ready yet. Save the packet and return ASYNC
+>            * instead of NAK. Writing now could use an old buffer address and
+>            * lose the data (for example a mass-storage CBW). A NAK would make
+> -         * the host retry slowly. aspeed_udc_ep_out_kick() delivers this
+> +         * the host retry slowly. aspeed_udc_ep_out_kick_single() delivers this
+>            * packet later, once the guest gadget driver sets up a buffer.
+>            */
+>           e->pkt = p;
+> @@ -939,7 +939,7 @@ static void aspeed_udc_ep_data_out(AspeedUDCState *s, int ep, USBPacket *p)
+>           return;
+>       }
+>   
+> -    switch (aspeed_udc_ep_xfer_out(s, ep, p)) {
+> +    switch (aspeed_udc_ep_xfer_out_single(s, ep, p)) {
+>       case ASPEED_UDC_XFER_DONE:
+>           p->status = USB_RET_SUCCESS;
 >           break;
 
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
