@@ -4,53 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 603FBCA9EDD
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7488ECA9EDE
 	for <qemu-devel@archiver.kernel.org>; Mon, 12 Oct 2026 17:00:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGJNQ-0000WT-L5; Mon, 12 Oct 2026 12:59:52 -0400
+	id 1xGJNJ-00005P-O6; Mon, 12 Oct 2026 12:59:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gilles.grimaud@univ-lille.fr>)
- id 1xGJMc-00081H-6K; Mon, 12 Oct 2026 12:59:12 -0400
-Received: from smtp-out-1.univ-lille.fr ([194.254.129.82])
+ id 1xGJMW-00080b-ML; Mon, 12 Oct 2026 12:59:01 -0400
+Received: from smtp-out-2.univ-lille.fr ([194.254.129.106])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gilles.grimaud@univ-lille.fr>)
- id 1xGJMY-0006De-44; Mon, 12 Oct 2026 12:59:00 -0400
+ id 1xGJMU-0006D5-2T; Mon, 12 Oct 2026 12:58:56 -0400
 Received: from smtp01.univ-lille.fr (smtp01.univ-lille.fr [194.254.129.95])
- by smtp-out-1.univ-lille.fr (Postfix) with ESMTPS id 4j3Nw321G1zBqmn;
- Mon, 12 Oct 2026 18:58:43 +0200 (CEST)
+ by smtp-out-2.univ-lille.fr (Postfix) with ESMTPS id 4j3Nw15VJ9z8BMd;
+ Mon, 12 Oct 2026 18:58:41 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=univ-lille.fr;
- s=dkim; t=1791824323;
- bh=4nMCyH95a9yeNXw/h8rLUbU/Orduycph7hf1HolxLDc=;
+ s=dkim; t=1791824321;
+ bh=Y4dIddh8wrXNQIag2FJxhCu0Ew2R8fkEe1PbPB0nr1E=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=oZHqxF/QUN2qenYpga0YmUWnkEJUlzRGQfcJvCwQKfL2Fuh5nvj2d2Fxo4zrkcDoC
- MhAnOQKhCAfijU4tWgWVITrFltKErTphMf6EYE8RwhbTDG6WSH5ueClKMwo/Kxffs6
- al+9s5M0D1p7HqPnmrPPMPCpKLPQtR15/9JDfZiLcWF5UlM/Dkmvx8lfc6F0ovwblH
- dk33gLJr6gIL9IKeZu8Pbh2UMj0n0mxE9sqeeDE0AcMDlRaEYJ10yRmXbXOV9042Rq
- c5eRQw0WhWr/v0BszHLWaeBfmiG9PJtyxu36AQdfmzMxshjQCb+0Cy2BkFg/c+OXiV
- XZzU7qGhWBpTA==
+ b=kY1JQc4dS1522jPy11gmUEF1Fr1vCTy3U+xDeDcMdTJPQw5ziuNVI5++xD7iqN/BY
+ 9DTvYYxvrzH6Nxa8adS7pB42WStso+/cVWtE3X4y5ddBecJJEvVhMmfLiE6CwX5HXI
+ 48qcg6NFamsV4Jts95ACLyoKNjfUdDwCG+4g9A+EeKrDk4bAz4vSG4n5fqJEbCFxNL
+ HZZtbW8spa37eLq+vJxHFAdLuZvuczofx5QvV6shB0kX9OLxbBl2QPUZtBB34eJmNG
+ QNj+V0H21fWZv99Vv0RgQ/+XZJJxtAwIaq7QCrCKF5KUZzTnRXbkiPzkb0j65pVODP
+ Fx1XjpyDJCHpw==
 Received: from localhost.localdomain (unknown [134.206.205.113])
  (Authenticated sender: gilles.grimaud)
- by smtp01.univ-lille.fr (Postfix) with ESMTPSA id 4j3Nw22zzsz83nY;
- Mon, 12 Oct 2026 18:58:42 +0200 (CEST)
+ by smtp01.univ-lille.fr (Postfix) with ESMTPSA id 4j3Nw13zzdz83nb;
+ Mon, 12 Oct 2026 18:58:41 +0200 (CEST)
 From: Gilles Grimaud <gilles.grimaud@univ-lille.fr>
 To: qemu-devel@nongnu.org
 Cc: alex.bennee@linaro.org, Gilles Grimaud <gilles.grimaud@univ-lille.fr>,
- Peter Maydell <peter.maydell@linaro.org>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  qemu-arm@nongnu.org (open list:ARM TCG CPUs)
-Subject: [RFC PATCH 7/9] hw/misc: add RP2040 SYSCFG
-Date: Mon, 12 Oct 2026 18:58:37 +0200
-Message-ID: <20261012165840.99050-8-gilles.grimaud@univ-lille.fr>
+Subject: [RFC PATCH 3/9] hw/arm: add RP2040 SoC and Raspberry Pi Pico machine
+Date: Mon, 12 Oct 2026 18:58:33 +0200
+Message-ID: <20261012165840.99050-4-gilles.grimaud@univ-lille.fr>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20261012165840.99050-1-gilles.grimaud@univ-lille.fr>
 References: <20261012165840.99050-1-gilles.grimaud@univ-lille.fr>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=194.254.129.82;
- envelope-from=gilles.grimaud@univ-lille.fr; helo=smtp-out-1.univ-lille.fr
+Received-SPF: pass client-ip=194.254.129.106;
+ envelope-from=gilles.grimaud@univ-lille.fr; helo=smtp-out-2.univ-lille.fr
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -73,571 +75,490 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Model the RP2040 system configuration registers, documented reset and write
-masks, and APB atomic aliases.
+Continue the Raspberry Pi Pico machine model introduced by Alex Bennée's
+2022 RFC on current QEMU APIs. Add the RP2040 QOM skeleton, internal ROM and
+SRAM map, the board XIP window, two PL011-backed UARTs, and explicit
+unimplemented-device placeholders for the remaining MMIO blocks.
 
-Route each peripheral interrupt to the normal IRQ input or NMI input of each
-Cortex-M0+ according to PROC0_NMI_MASK and PROC1_NMI_MASK. MEMPOWERDOWN
-retains its documented register state without inventing behavior for
-accesses to powered-down memory banks.
+Instantiate both Cortex-M0+ cores from the initial machine model. Give each
+core a separate memory container over the shared SoC address map so later
+patches can add per-core views for banked peripherals. Keep core 1 powered
+off until SIO and the boot ROM launch protocol are implemented.
 
-Add focused qtests for reset values, write masks, and atomic aliases.
-
-Signed-off-by: Gilles Grimaud <gilles.grimaud@univ-lille.fr>
+Signed-off-by: gilles grimaud <gilles.grimaud@univ-lille.fr>
 ---
- hw/arm/rp2040.c                  |  57 +++++++-
- hw/misc/meson.build              |   1 +
- hw/misc/rp2040_syscfg.c          | 220 +++++++++++++++++++++++++++++++
- include/hw/arm/rp2040.h          |   7 +
- include/hw/misc/rp2040_syscfg.h  |  41 ++++++
- tests/qtest/meson.build          |   2 +-
- tests/qtest/rp2040-syscfg-test.c |  97 ++++++++++++++
- 7 files changed, 421 insertions(+), 4 deletions(-)
- create mode 100644 hw/misc/rp2040_syscfg.c
- create mode 100644 include/hw/misc/rp2040_syscfg.h
- create mode 100644 tests/qtest/rp2040-syscfg-test.c
+ configs/devices/arm-softmmu/default.mak |   1 +
+ hw/arm/Kconfig                          |  12 ++
+ hw/arm/meson.build                      |   2 +
+ hw/arm/raspi_pico.c                     |  83 ++++++++
+ hw/arm/rp2040.c                         | 263 ++++++++++++++++++++++++
+ include/hw/arm/rp2040.h                 |  49 +++++
+ 6 files changed, 410 insertions(+)
+ create mode 100644 hw/arm/raspi_pico.c
+ create mode 100644 hw/arm/rp2040.c
+ create mode 100644 include/hw/arm/rp2040.h
 
-diff --git a/hw/arm/rp2040.c b/hw/arm/rp2040.c
-index 55554f72e9..47a0ef220f 100644
---- a/hw/arm/rp2040.c
-+++ b/hw/arm/rp2040.c
-@@ -13,6 +13,7 @@
- #include "hw/core/loader.h"
- #include "hw/core/qdev-clock.h"
- #include "hw/core/qdev-properties.h"
-+#include "hw/core/irq.h"
- #include "hw/misc/unimp.h"
- #include "qemu/datadir.h"
- #include "target/arm/cpu-qom.h"
-@@ -49,7 +50,6 @@ static const struct {
-     hwaddr base;
-     hwaddr size;
- } rp2040_unimplemented[] = {
--    { "rp2040.syscfg",   0x40004000, 0x4000 },
-     { "rp2040.clocks",   0x40008000, 0x4000 },
-     { "rp2040.resets",   0x4000c000, 0x4000 },
-     { "rp2040.psm",      0x40010000, 0x4000 },
-@@ -83,6 +83,40 @@ static const struct {
-     { "rp2040.sio",      0xd0000000, 0x1000 },
- };
+diff --git a/configs/devices/arm-softmmu/default.mak b/configs/devices/arm-softmmu/default.mak
+index 22caa6a63e..11a5cac093 100644
+--- a/configs/devices/arm-softmmu/default.mak
++++ b/configs/devices/arm-softmmu/default.mak
+@@ -32,6 +32,7 @@
+ # CONFIG_OLIMEX_STM32_H405=n
+ # CONFIG_MPS2=n
+ # CONFIG_RASPI=n
++CONFIG_RASPI_PICO=y
+ # CONFIG_DIGIC=n
+ # CONFIG_SABRELITE=n
+ # CONFIG_EMCRAFT_SF2=n
+diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+index 4445f16f45..73faefb1d7 100644
+--- a/hw/arm/Kconfig
++++ b/hw/arm/Kconfig
+@@ -353,6 +353,18 @@ config RASPI
+     select BCM2835_SPI
+     select BCM2835_I2C
  
-+static void rp2040_update_nmi(RP2040State *s)
-+{
-+    unsigned core;
++config RASPI_PICO
++    bool
++    default y
++    depends on TCG && ARM
++    select RP2040
 +
-+    for (core = 0; core < RP2040_NUM_CORES; core++) {
-+        uint32_t nmi_mask = rp2040_syscfg_get_nmi_mask(&s->syscfg, core);
-+        bool nmi_level = false;
-+        int irq;
++config RP2040
++    bool
++    select ARM_V7M
++    select PL011
++    select UNIMP
 +
-+        for (irq = 0; irq < RP2040_NUM_IRQS; irq++) {
-+            bool route_to_nmi = nmi_mask & BIT(irq);
-+
-+            qemu_set_irq(s->cpu_irq[core][irq],
-+                         s->irq_level[irq] && !route_to_nmi);
-+            nmi_level |= s->irq_level[irq] && route_to_nmi;
-+        }
-+        qemu_set_irq(s->nmi_irq[core], nmi_level);
-+    }
-+}
-+
-+static void rp2040_syscfg_update(void *opaque)
-+{
-+    rp2040_update_nmi(opaque);
-+}
-+
-+static void rp2040_set_irq(void *opaque, int irq, int level)
-+{
-+    RP2040State *s = opaque;
-+
-+    assert(irq >= 0 && irq < RP2040_NUM_IRQS);
-+    s->irq_level[irq] = level;
-+    rp2040_update_nmi(s);
-+}
-+
- static void rp2040_soc_init(Object *obj)
- {
-     RP2040State *s = RP2040(obj);
-@@ -109,8 +143,11 @@ static void rp2040_soc_init(Object *obj)
-                                   "chardev");
-     }
- 
-+    object_initialize_child(obj, "syscfg", &s->syscfg, TYPE_RP2040_SYSCFG);
-     object_initialize_child(obj, "sysinfo", &s->sysinfo, TYPE_RP2040_SYSINFO);
- 
-+    s->irq = qemu_allocate_irqs(rp2040_set_irq, s, RP2040_NUM_IRQS);
-+
-     s->sysclk = clock_new(obj, "sysclk");
-     clock_set_hz(s->sysclk, RP2040_SYSCLK_FRQ);
- }
-@@ -221,8 +258,21 @@ static void rp2040_soc_realize(DeviceState *dev, Error **errp)
-         if (!sysbus_realize(SYS_BUS_DEVICE(&s->armv7m[i]), errp)) {
-             return;
-         }
-+
-+        for (int irq = 0; irq < RP2040_NUM_IRQS; irq++) {
-+            s->cpu_irq[i][irq] =
-+                qdev_get_gpio_in(DEVICE(&s->armv7m[i]), irq);
-+        }
-+        s->nmi_irq[i] = qdev_get_gpio_in_named(DEVICE(&s->armv7m[i]),
-+                                               "NMI", 0);
-     }
- 
-+    if (!sysbus_realize(SYS_BUS_DEVICE(&s->syscfg), errp)) {
-+        return;
-+    }
-+    sysbus_mmio_map(SYS_BUS_DEVICE(&s->syscfg), 0, RP2040_SYSCFG_BASE);
-+    rp2040_syscfg_set_update_callback(&s->syscfg, rp2040_syscfg_update, s);
-+
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->sysinfo), errp)) {
-         return;
-     }
-@@ -235,9 +285,10 @@ static void rp2040_soc_realize(DeviceState *dev, Error **errp)
-         }
-         sysbus_mmio_map(SYS_BUS_DEVICE(&s->uart[i]), 0, uart_base[i]);
-         sysbus_connect_irq(SYS_BUS_DEVICE(&s->uart[i]), 0,
--                           qdev_get_gpio_in(DEVICE(&s->armv7m[0]),
--                                            uart_irq[i]));
-+                           s->irq[uart_irq[i]]);
-     }
-+
-+    rp2040_update_nmi(s);
- }
- 
- static const Property rp2040_soc_properties[] = {
-diff --git a/hw/misc/meson.build b/hw/misc/meson.build
-index ca9b951e3e..c26442fdcc 100644
---- a/hw/misc/meson.build
-+++ b/hw/misc/meson.build
-@@ -98,6 +98,7 @@ system_ss.add(when: 'CONFIG_RASPI', if_true: files(
-   'bcm2835_cprman.c',
-   'bcm2835_powermgt.c',
+ config STM32F100_SOC
+     bool
+     select ARM_V7M
+diff --git a/hw/arm/meson.build b/hw/arm/meson.build
+index bcc068de04..a61a45840b 100644
+--- a/hw/arm/meson.build
++++ b/hw/arm/meson.build
+@@ -31,6 +31,8 @@ arm_common_ss.add(when: 'CONFIG_RASPI', if_true: files(
+   'raspi.c',
+   'raspi4b.c'
  ))
-+system_ss.add(when: 'CONFIG_RP2040', if_true: files('rp2040_syscfg.c'))
- system_ss.add(when: 'CONFIG_RP2040', if_true: files('rp2040_sysinfo.c'))
- system_ss.add(when: 'CONFIG_SLAVIO', if_true: files('slavio_misc.c'))
- system_ss.add(when: 'CONFIG_ZYNQ', if_true: files('zynq_slcr.c'))
-diff --git a/hw/misc/rp2040_syscfg.c b/hw/misc/rp2040_syscfg.c
++arm_common_ss.add(when: 'CONFIG_RP2040', if_true: files('rp2040.c'))
++arm_common_ss.add(when: 'CONFIG_RASPI_PICO', if_true: files('raspi_pico.c'))
+ arm_common_ss.add(when: 'CONFIG_STM32F100_SOC', if_true: files('stm32f100_soc.c'))
+ arm_common_ss.add(when: 'CONFIG_STM32F205_SOC', if_true: files('stm32f205_soc.c'))
+ arm_common_ss.add(when: 'CONFIG_STM32F405_SOC', if_true: files('stm32f405_soc.c'))
+diff --git a/hw/arm/raspi_pico.c b/hw/arm/raspi_pico.c
 new file mode 100644
-index 0000000000..9f907194ed
+index 0000000000..dff897085a
 --- /dev/null
-+++ b/hw/misc/rp2040_syscfg.c
-@@ -0,0 +1,220 @@
++++ b/hw/arm/raspi_pico.c
+@@ -0,0 +1,83 @@
 +/*
-+ * RP2040 syscfg emulation
++ * Raspberry Pi Pico machine
++ *
++ * Copyright (c) 2021 Linaro Ltd
 + *
 + * SPDX-License-Identifier: GPL-2.0-or-later
 + */
 +
 +#include "qemu/osdep.h"
-+#include "hw/misc/rp2040.h"
-+#include "hw/misc/rp2040_syscfg.h"
-+#include "migration/vmstate.h"
-+#include "qemu/log.h"
-+#include "qemu/module.h"
++#include "qemu/units.h"
++#include "qapi/error.h"
++#include "hw/arm/boot.h"
++#include "hw/arm/rp2040.h"
++#include "hw/core/boards.h"
++#include "hw/core/qdev-properties.h"
++#include "system/address-spaces.h"
++#include "system/system.h"
++#include "qom/object.h"
 +
-+#define SYSCFG_PROC0_NMI_MASK          0x00
-+#define SYSCFG_PROC1_NMI_MASK          0x04
-+#define SYSCFG_PROC_CONFIG             0x08
-+#define SYSCFG_PROC_IN_SYNC_BYPASS     0x0c
-+#define SYSCFG_PROC_IN_SYNC_BYPASS_HI  0x10
-+#define SYSCFG_DBGFORCE                0x14
-+#define SYSCFG_MEMPOWERDOWN            0x18
++#define TYPE_RASPI_PICO_MACHINE MACHINE_TYPE_NAME("raspi-pico")
++OBJECT_DECLARE_SIMPLE_TYPE(RaspiPicoMachineState, RASPI_PICO_MACHINE)
 +
-+#define PROC_CONFIG_RW_MASK            0xff000000
-+#define PROC_CONFIG_RESET              0x10000000
-+#define PROC_IN_SYNC_BYPASS_MASK       0x3fffffff
-+#define PROC_IN_SYNC_BYPASS_HI_MASK    0x0000003f
-+#define DBGFORCE_RW_MASK               0x000000ee
-+#define DBGFORCE_RESET                 0x00000066
-+#define MEMPOWERDOWN_MASK              0x000000ff
++#define PICO_FLASH_SIZE (2 * MiB)
 +
-+static void rp2040_syscfg_update(RP2040SysCfgState *s)
-+{
-+    if (s->update) {
-+        s->update(s->update_opaque);
-+    }
-+}
++struct RaspiPicoMachineState {
++    MachineState parent_obj;
 +
-+void rp2040_syscfg_set_update_callback(RP2040SysCfgState *s,
-+                                       RP2040SysCfgUpdateFn update,
-+                                       void *opaque)
-+{
-+    s->update = update;
-+    s->update_opaque = opaque;
-+}
-+
-+uint32_t rp2040_syscfg_get_nmi_mask(RP2040SysCfgState *s, unsigned core)
-+{
-+    assert(core < 2);
-+    return core ? s->proc1_nmi_mask : s->proc0_nmi_mask;
-+}
-+
-+static uint64_t rp2040_syscfg_read(void *opaque, hwaddr addr, unsigned size)
-+{
-+    RP2040SysCfgState *s = opaque;
-+    hwaddr offset = addr & 0xfff;
-+    uint64_t value;
-+
-+    switch (offset) {
-+    case SYSCFG_PROC0_NMI_MASK:
-+        value = s->proc0_nmi_mask;
-+        break;
-+    case SYSCFG_PROC1_NMI_MASK:
-+        value = s->proc1_nmi_mask;
-+        break;
-+    case SYSCFG_PROC_CONFIG:
-+        value = s->proc_config;
-+        break;
-+    case SYSCFG_PROC_IN_SYNC_BYPASS:
-+        value = s->proc_in_sync_bypass;
-+        break;
-+    case SYSCFG_PROC_IN_SYNC_BYPASS_HI:
-+        value = s->proc_in_sync_bypass_hi;
-+        break;
-+    case SYSCFG_DBGFORCE:
-+        value = s->dbgforce;
-+        break;
-+    case SYSCFG_MEMPOWERDOWN:
-+        value = s->mempowerdown;
-+        break;
-+    default:
-+        value = 0;
-+        qemu_log_mask(LOG_UNIMP,
-+                      "%s: unimplemented read at offset 0x%"
-+                      HWADDR_PRIx "\n", __func__, addr & 0xfff);
-+        break;
-+    }
-+
-+    return value;
-+}
-+
-+static void rp2040_syscfg_write(void *opaque, hwaddr addr,
-+                                uint64_t value64, unsigned size)
-+{
-+    RP2040SysCfgState *s = opaque;
-+    hwaddr alias = addr & RP2040_ATOMIC_ALIAS_MASK;
-+    hwaddr offset = addr & 0xfff;
-+    uint32_t value = value64;
-+
-+    switch (offset) {
-+    case SYSCFG_PROC0_NMI_MASK:
-+        s->proc0_nmi_mask =
-+            rp2040_atomic_update(s->proc0_nmi_mask, value, alias);
-+        rp2040_syscfg_update(s);
-+        break;
-+    case SYSCFG_PROC1_NMI_MASK:
-+        s->proc1_nmi_mask =
-+            rp2040_atomic_update(s->proc1_nmi_mask, value, alias);
-+        rp2040_syscfg_update(s);
-+        break;
-+    case SYSCFG_PROC_CONFIG:
-+        s->proc_config =
-+            rp2040_atomic_update(s->proc_config, value, alias) &
-+            PROC_CONFIG_RW_MASK;
-+        break;
-+    case SYSCFG_PROC_IN_SYNC_BYPASS:
-+        s->proc_in_sync_bypass =
-+            rp2040_atomic_update(s->proc_in_sync_bypass, value, alias) &
-+            PROC_IN_SYNC_BYPASS_MASK;
-+        break;
-+    case SYSCFG_PROC_IN_SYNC_BYPASS_HI:
-+        s->proc_in_sync_bypass_hi =
-+            rp2040_atomic_update(s->proc_in_sync_bypass_hi, value, alias) &
-+            PROC_IN_SYNC_BYPASS_HI_MASK;
-+        break;
-+    case SYSCFG_DBGFORCE:
-+        s->dbgforce =
-+            rp2040_atomic_update(s->dbgforce, value, alias) &
-+            DBGFORCE_RW_MASK;
-+        break;
-+    case SYSCFG_MEMPOWERDOWN:
-+        s->mempowerdown =
-+            rp2040_atomic_update(s->mempowerdown, value, alias) &
-+            MEMPOWERDOWN_MASK;
-+        break;
-+    default:
-+        qemu_log_mask(LOG_UNIMP,
-+                      "%s: unimplemented write at offset 0x%"
-+                      HWADDR_PRIx "\n", __func__, addr & 0xfff);
-+        break;
-+    }
-+}
-+
-+static const MemoryRegionOps rp2040_syscfg_ops = {
-+    .read = rp2040_syscfg_read,
-+    .write = rp2040_syscfg_write,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
-+    .valid = {
-+        .min_access_size = 4,
-+        .max_access_size = 4,
-+    },
++    RP2040State soc;
++    MemoryRegion flash;
 +};
 +
-+static void rp2040_syscfg_reset(DeviceState *dev)
++static void raspi_pico_init(MachineState *machine)
 +{
-+    RP2040SysCfgState *s = RP2040_SYSCFG(dev);
++    RaspiPicoMachineState *s = RASPI_PICO_MACHINE(machine);
++    MemoryRegion *system_memory = get_system_memory();
 +
-+    s->proc0_nmi_mask = 0;
-+    s->proc1_nmi_mask = 0;
-+    s->proc_config = PROC_CONFIG_RESET;
-+    s->proc_in_sync_bypass = 0;
-+    s->proc_in_sync_bypass_hi = 0;
-+    s->dbgforce = DBGFORCE_RESET;
-+    s->mempowerdown = 0;
-+    rp2040_syscfg_update(s);
-+}
-+
-+static int rp2040_syscfg_post_load(void *opaque, int version_id)
-+{
-+    RP2040SysCfgState *s = opaque;
-+
-+    rp2040_syscfg_update(s);
-+    return 0;
-+}
-+
-+static void rp2040_syscfg_init(Object *obj)
-+{
-+    RP2040SysCfgState *s = RP2040_SYSCFG(obj);
-+
-+    memory_region_init_io(&s->iomem, obj, &rp2040_syscfg_ops, s,
-+                          "rp2040.syscfg", RP2040_SYSCFG_SIZE);
-+    sysbus_init_mmio(SYS_BUS_DEVICE(obj), &s->iomem);
-+}
-+
-+static const VMStateDescription rp2040_syscfg_vmstate = {
-+    .name = TYPE_RP2040_SYSCFG,
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .post_load = rp2040_syscfg_post_load,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_UINT32(proc0_nmi_mask, RP2040SysCfgState),
-+        VMSTATE_UINT32(proc1_nmi_mask, RP2040SysCfgState),
-+        VMSTATE_UINT32(proc_config, RP2040SysCfgState),
-+        VMSTATE_UINT32(proc_in_sync_bypass, RP2040SysCfgState),
-+        VMSTATE_UINT32(proc_in_sync_bypass_hi, RP2040SysCfgState),
-+        VMSTATE_UINT32(dbgforce, RP2040SysCfgState),
-+        VMSTATE_UINT32(mempowerdown, RP2040SysCfgState),
-+        VMSTATE_END_OF_LIST()
++    object_initialize_child(OBJECT(machine), "soc", &s->soc, TYPE_RP2040);
++    qdev_prop_set_chr(DEVICE(&s->soc), "serial0", serial_hd(0));
++    qdev_prop_set_chr(DEVICE(&s->soc), "serial1", serial_hd(1));
++    if (machine->firmware) {
++        qdev_prop_set_string(DEVICE(&s->soc), "bootrom-file",
++                             machine->firmware);
 +    }
++    object_property_set_link(OBJECT(&s->soc), "memory",
++                             OBJECT(system_memory), &error_fatal);
++
++    memory_region_init_rom(&s->flash, NULL, "raspi-pico.flash",
++                           PICO_FLASH_SIZE, &error_fatal);
++    memory_region_add_subregion(system_memory, RP2040_XIP_BASE, &s->flash);
++
++    sysbus_realize(SYS_BUS_DEVICE(&s->soc), &error_fatal);
++
++    armv7m_load_kernel(s->soc.armv7m[0].cpu, machine->kernel_filename,
++                       RP2040_XIP_BASE, PICO_FLASH_SIZE);
++}
++
++static void raspi_pico_machine_class_init(ObjectClass *oc, const void *data)
++{
++    MachineClass *mc = MACHINE_CLASS(oc);
++
++    mc->desc = "Raspberry Pi Pico (Cortex-M0+)";
++    mc->init = raspi_pico_init;
++    mc->default_cpus = RP2040_NUM_CORES;
++    mc->min_cpus = RP2040_NUM_CORES;
++    mc->max_cpus = RP2040_NUM_CORES;
++    mc->default_ram_size = 0;
++    mc->no_parallel = 1;
++    mc->no_floppy = 1;
++    mc->no_cdrom = 1;
++}
++
++static const TypeInfo raspi_pico_machine_info = {
++    .name = TYPE_RASPI_PICO_MACHINE,
++    .parent = TYPE_MACHINE,
++    .instance_size = sizeof(RaspiPicoMachineState),
++    .class_init = raspi_pico_machine_class_init,
 +};
 +
-+static void rp2040_syscfg_class_init(ObjectClass *klass, const void *data)
++static void raspi_pico_machine_init(void)
++{
++    type_register_static(&raspi_pico_machine_info);
++}
++type_init(raspi_pico_machine_init)
+diff --git a/hw/arm/rp2040.c b/hw/arm/rp2040.c
+new file mode 100644
+index 0000000000..d5398e67e4
+--- /dev/null
++++ b/hw/arm/rp2040.c
+@@ -0,0 +1,263 @@
++/*
++ * RP2040 SoC emulation
++ *
++ * Copyright (c) 2021 Linaro Ltd
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "qemu/units.h"
++#include "qapi/error.h"
++#include "hw/arm/rp2040.h"
++#include "hw/core/loader.h"
++#include "hw/core/qdev-clock.h"
++#include "hw/core/qdev-properties.h"
++#include "hw/misc/unimp.h"
++#include "qemu/datadir.h"
++#include "target/arm/cpu-qom.h"
++
++#define RP2040_SYSCLK_FRQ 125000000
++
++#define RP2040_UART0_BASE 0x40034000
++#define RP2040_UART0_IRQ  20
++#define RP2040_UART1_BASE 0x40038000
++#define RP2040_UART1_IRQ  21
++
++/*
++ * Temporary boot ROM used until the synthetic ROM is introduced. It loads
++ * the reset handler from a vector table at the base of the XIP window.
++ */
++static const uint8_t rp2040_bootrom[] = {
++    0x00, 0x20, 0x04, 0x20, /* initial SP: 0x20042000 */
++    0x09, 0x00, 0x00, 0x00, /* reset handler: 0x00000009 */
++    0x03, 0x48,             /* ldr r0, vtor */
++    0x04, 0x49,             /* ldr r1, xip_base */
++    0x01, 0x60,             /* str r1, [r0] */
++    0x04, 0x48,             /* ldr r0, xip_reset_vector */
++    0x01, 0x68,             /* ldr r1, [r0] */
++    0x08, 0x47,             /* bx r1 */
++    0xfe, 0xe7,             /* b . */
++    0xc0, 0x46,             /* nop */
++    0x08, 0xed, 0x00, 0xe0, /* VTOR: 0xe000ed08 */
++    0x00, 0x00, 0x00, 0x10, /* XIP base: 0x10000000 */
++    0x04, 0x00, 0x00, 0x10, /* XIP reset vector: 0x10000004 */
++};
++
++static const struct {
++    const char *name;
++    hwaddr base;
++    hwaddr size;
++} rp2040_unimplemented[] = {
++    { "rp2040.sysinfo",  0x40000000, 0x4000 },
++    { "rp2040.syscfg",   0x40004000, 0x4000 },
++    { "rp2040.clocks",   0x40008000, 0x4000 },
++    { "rp2040.resets",   0x4000c000, 0x4000 },
++    { "rp2040.psm",      0x40010000, 0x4000 },
++    { "rp2040.iobank0",  0x40014000, 0x4000 },
++    { "rp2040.ioqspi",   0x40018000, 0x4000 },
++    { "rp2040.padsbank0", 0x4001c000, 0x4000 },
++    { "rp2040.padsqspi", 0x40020000, 0x4000 },
++    { "rp2040.xosc",     0x40024000, 0x4000 },
++    { "rp2040.pll_sys",  0x40028000, 0x4000 },
++    { "rp2040.pll_usb",  0x4002c000, 0x4000 },
++    { "rp2040.busctrl",  0x40030000, 0x4000 },
++    { "rp2040.uart0_aliases", 0x40035000, 0x3000 },
++    { "rp2040.uart1_aliases", 0x40039000, 0x3000 },
++    { "rp2040.spi0",     0x4003c000, 0x4000 },
++    { "rp2040.spi1",     0x40040000, 0x4000 },
++    { "rp2040.i2c0",     0x40044000, 0x4000 },
++    { "rp2040.i2c1",     0x40048000, 0x4000 },
++    { "rp2040.adc",      0x4004c000, 0x4000 },
++    { "rp2040.pwm",      0x40050000, 0x4000 },
++    { "rp2040.timer",    0x40054000, 0x4000 },
++    { "rp2040.watchdog", 0x40058000, 0x4000 },
++    { "rp2040.rtc",      0x4005c000, 0x4000 },
++    { "rp2040.rosc",     0x40060000, 0x4000 },
++    { "rp2040.vreg_and_chip_reset", 0x40064000, 0x4000 },
++    { "rp2040.tbman",    0x4006c000, 0x4000 },
++    { "rp2040.dma",      0x50000000, 0x1000 },
++    { "rp2040.usbctrl_dpram", 0x50100000, 0x10000 },
++    { "rp2040.usbctrl_regs",  0x50110000, 0x10000 },
++    { "rp2040.pio0",     0x50200000, 0x10000 },
++    { "rp2040.pio1",     0x50300000, 0x10000 },
++    { "rp2040.sio",      0xd0000000, 0x1000 },
++};
++
++static void rp2040_soc_init(Object *obj)
++{
++    RP2040State *s = RP2040(obj);
++    int i;
++
++    for (i = 0; i < RP2040_NUM_CORES; i++) {
++        g_autofree char *name = g_strdup_printf("proc%d", i);
++
++        object_initialize_child(obj, name, &s->armv7m[i], TYPE_ARMV7M);
++        qdev_prop_set_string(DEVICE(&s->armv7m[i]), "cpu-type",
++                             ARM_CPU_TYPE_NAME("cortex-m0plus"));
++        qdev_prop_set_uint32(DEVICE(&s->armv7m[i]), "num-irq",
++                             RP2040_NUM_IRQS);
++        qdev_prop_set_uint32(DEVICE(&s->armv7m[i]), "mpu-ns-regions", 8);
++    }
++    qdev_prop_set_bit(DEVICE(&s->armv7m[1]), "start-powered-off", true);
++
++    for (i = 0; i < ARRAY_SIZE(s->uart); i++) {
++        g_autofree char *name = g_strdup_printf("uart%d", i);
++        g_autofree char *property = g_strdup_printf("serial%d", i);
++
++        object_initialize_child(obj, name, &s->uart[i], TYPE_PL011);
++        object_property_add_alias(obj, property, OBJECT(&s->uart[i]),
++                                  "chardev");
++    }
++
++    s->sysclk = clock_new(obj, "sysclk");
++    clock_set_hz(s->sysclk, RP2040_SYSCLK_FRQ);
++}
++
++static bool rp2040_init_memory(RP2040State *s, Error **errp)
++{
++    int i;
++
++    if (!memory_region_init_rom(&s->rom, OBJECT(s), "rp2040.rom",
++                                RP2040_ROM_SIZE, errp)) {
++        return false;
++    }
++    memory_region_add_subregion(s->board_memory, RP2040_ROM_BASE, &s->rom);
++
++    for (i = 0; i < 4; i++) {
++        g_autofree char *name = g_strdup_printf("rp2040.sram%d", i);
++
++        if (!memory_region_init_ram(&s->sram[i], OBJECT(s), name,
++                                    RP2040_SRAM_BANK_SIZE, errp)) {
++            return false;
++        }
++        memory_region_add_subregion(s->board_memory,
++                                    RP2040_SRAM_BASE +
++                                    i * RP2040_SRAM_BANK_SIZE,
++                                    &s->sram[i]);
++    }
++
++    if (!memory_region_init_ram(&s->sram[4], OBJECT(s), "rp2040.sram4",
++                                RP2040_SRAM_HI_SIZE, errp)) {
++        return false;
++    }
++    memory_region_add_subregion(s->board_memory, RP2040_SRAM4_BASE,
++                                &s->sram[4]);
++
++    if (!memory_region_init_ram(&s->sram[5], OBJECT(s), "rp2040.sram5",
++                                RP2040_SRAM_HI_SIZE, errp)) {
++        return false;
++    }
++    memory_region_add_subregion(s->board_memory, RP2040_SRAM5_BASE,
++                                &s->sram[5]);
++
++    return true;
++}
++
++static bool rp2040_load_bootrom(RP2040State *s, Error **errp)
++{
++    g_autofree char *filename = NULL;
++
++    if (!s->bootrom_file) {
++        rom_add_blob_fixed("rp2040.bootrom", rp2040_bootrom,
++                           sizeof(rp2040_bootrom), RP2040_ROM_BASE);
++        return true;
++    }
++
++    filename = qemu_find_file(QEMU_FILE_TYPE_BIOS, s->bootrom_file);
++    if (!filename) {
++        error_setg(errp, "could not find RP2040 boot ROM image '%s'",
++                   s->bootrom_file);
++        return false;
++    }
++
++    return load_image_targphys(filename, RP2040_ROM_BASE,
++                               RP2040_ROM_SIZE, errp) >= 0;
++}
++
++static void rp2040_soc_realize(DeviceState *dev, Error **errp)
++{
++    RP2040State *s = RP2040(dev);
++    static const hwaddr uart_base[] = { RP2040_UART0_BASE, RP2040_UART1_BASE };
++    static const int uart_irq[] = { RP2040_UART0_IRQ, RP2040_UART1_IRQ };
++    Error *err = NULL;
++    int i;
++
++    if (!s->board_memory) {
++        error_setg(errp, "memory property was not set");
++        return;
++    }
++    if (!rp2040_init_memory(s, errp) || !rp2040_load_bootrom(s, errp)) {
++        return;
++    }
++
++    for (i = 0; i < ARRAY_SIZE(rp2040_unimplemented); i++) {
++        create_unimplemented_device(rp2040_unimplemented[i].name,
++                                    rp2040_unimplemented[i].base,
++                                    rp2040_unimplemented[i].size);
++    }
++
++    for (i = 0; i < RP2040_NUM_CORES; i++) {
++        g_autofree char *memory_name =
++            g_strdup_printf("rp2040.proc%d-memory", i);
++        g_autofree char *alias_name =
++            g_strdup_printf("rp2040.proc%d-board-memory", i);
++
++        memory_region_init(&s->cpu_memory[i], OBJECT(dev), memory_name,
++                           UINT64_C(1) << 32);
++        memory_region_init_alias(&s->cpu_board_alias[i], OBJECT(dev),
++                                 alias_name, s->board_memory, 0,
++                                 UINT64_C(1) << 32);
++        memory_region_add_subregion(&s->cpu_memory[i], 0,
++                                    &s->cpu_board_alias[i]);
++        qdev_connect_clock_in(DEVICE(&s->armv7m[i]), "cpuclk", s->sysclk);
++        object_property_set_link(OBJECT(&s->armv7m[i]), "memory",
++                                 OBJECT(&s->cpu_memory[i]), &err);
++        if (err) {
++            error_propagate(errp, err);
++            return;
++        }
++        if (!sysbus_realize(SYS_BUS_DEVICE(&s->armv7m[i]), errp)) {
++            return;
++        }
++    }
++
++    for (i = 0; i < ARRAY_SIZE(s->uart); i++) {
++        qdev_connect_clock_in(DEVICE(&s->uart[i]), "clk", s->sysclk);
++        if (!sysbus_realize(SYS_BUS_DEVICE(&s->uart[i]), errp)) {
++            return;
++        }
++        sysbus_mmio_map(SYS_BUS_DEVICE(&s->uart[i]), 0, uart_base[i]);
++        sysbus_connect_irq(SYS_BUS_DEVICE(&s->uart[i]), 0,
++                           qdev_get_gpio_in(DEVICE(&s->armv7m[0]),
++                                            uart_irq[i]));
++    }
++}
++
++static const Property rp2040_soc_properties[] = {
++    DEFINE_PROP_LINK("memory", RP2040State, board_memory, TYPE_MEMORY_REGION,
++                     MemoryRegion *),
++    DEFINE_PROP_STRING("bootrom-file", RP2040State, bootrom_file),
++};
++
++static void rp2040_soc_class_init(ObjectClass *klass, const void *data)
 +{
 +    DeviceClass *dc = DEVICE_CLASS(klass);
 +
-+    device_class_set_legacy_reset(dc, rp2040_syscfg_reset);
-+    dc->vmsd = &rp2040_syscfg_vmstate;
++    dc->realize = rp2040_soc_realize;
++    device_class_set_props(dc, rp2040_soc_properties);
 +}
 +
-+static const TypeInfo rp2040_syscfg_info = {
-+    .name          = TYPE_RP2040_SYSCFG,
-+    .parent        = TYPE_SYS_BUS_DEVICE,
-+    .instance_size = sizeof(RP2040SysCfgState),
-+    .instance_init = rp2040_syscfg_init,
-+    .class_init    = rp2040_syscfg_class_init,
++static const TypeInfo rp2040_soc_info = {
++    .name = TYPE_RP2040,
++    .parent = TYPE_SYS_BUS_DEVICE,
++    .instance_size = sizeof(RP2040State),
++    .instance_init = rp2040_soc_init,
++    .class_init = rp2040_soc_class_init,
 +};
 +
-+static void rp2040_syscfg_register_types(void)
++static void rp2040_soc_types(void)
 +{
-+    type_register_static(&rp2040_syscfg_info);
++    type_register_static(&rp2040_soc_info);
 +}
-+type_init(rp2040_syscfg_register_types)
++type_init(rp2040_soc_types)
 diff --git a/include/hw/arm/rp2040.h b/include/hw/arm/rp2040.h
-index 7e7d8f5c95..f6050f255d 100644
---- a/include/hw/arm/rp2040.h
-+++ b/include/hw/arm/rp2040.h
-@@ -14,6 +14,7 @@
- #include "hw/core/clock.h"
- #include "hw/core/sysbus.h"
- #include "hw/misc/rp2040_sysinfo.h"
-+#include "hw/misc/rp2040_syscfg.h"
- #include "qom/object.h"
- 
- #define TYPE_RP2040 "rp2040"
-@@ -36,6 +37,7 @@ struct RP2040State {
- 
-     ARMv7MState armv7m[RP2040_NUM_CORES];
-     PL011State uart[2];
-+    RP2040SysCfgState syscfg;
-     RP2040SysInfoState sysinfo;
- 
-     MemoryRegion *board_memory;
-@@ -45,6 +47,11 @@ struct RP2040State {
-     MemoryRegion sram[6];
-     char *bootrom_file;
- 
-+    qemu_irq *irq;
-+    qemu_irq cpu_irq[RP2040_NUM_CORES][RP2040_NUM_IRQS];
-+    qemu_irq nmi_irq[RP2040_NUM_CORES];
-+    bool irq_level[RP2040_NUM_IRQS];
-+
-     Clock *sysclk;
- };
- 
-diff --git a/include/hw/misc/rp2040_syscfg.h b/include/hw/misc/rp2040_syscfg.h
 new file mode 100644
-index 0000000000..0e02e4ad81
+index 0000000000..ccab548275
 --- /dev/null
-+++ b/include/hw/misc/rp2040_syscfg.h
-@@ -0,0 +1,41 @@
++++ b/include/hw/arm/rp2040.h
+@@ -0,0 +1,49 @@
 +/*
-+ * RP2040 syscfg emulation
++ * RP2040 SoC emulation
++ *
++ * Copyright (c) 2021 Linaro Ltd
 + *
 + * SPDX-License-Identifier: GPL-2.0-or-later
 + */
 +
-+#ifndef HW_MISC_RP2040_SYSCFG_H
-+#define HW_MISC_RP2040_SYSCFG_H
++#ifndef HW_ARM_RP2040_H
++#define HW_ARM_RP2040_H
 +
++#include "hw/arm/armv7m.h"
++#include "hw/char/pl011.h"
++#include "hw/core/clock.h"
 +#include "hw/core/sysbus.h"
 +#include "qom/object.h"
 +
-+#define TYPE_RP2040_SYSCFG "rp2040-syscfg"
-+OBJECT_DECLARE_SIMPLE_TYPE(RP2040SysCfgState, RP2040_SYSCFG)
++#define TYPE_RP2040 "rp2040"
++OBJECT_DECLARE_SIMPLE_TYPE(RP2040State, RP2040)
 +
-+#define RP2040_SYSCFG_BASE 0x40004000
-+#define RP2040_SYSCFG_SIZE 0x4000
++#define RP2040_ROM_BASE       0x00000000
++#define RP2040_ROM_SIZE       (16 * KiB)
++#define RP2040_XIP_BASE       0x10000000
++#define RP2040_SRAM_BASE      0x20000000
++#define RP2040_SRAM_BANK_SIZE (64 * KiB)
++#define RP2040_SRAM4_BASE     0x20040000
++#define RP2040_SRAM5_BASE     0x20041000
++#define RP2040_SRAM_HI_SIZE   (4 * KiB)
 +
-+typedef void (*RP2040SysCfgUpdateFn)(void *opaque);
++#define RP2040_NUM_CORES      2
++#define RP2040_NUM_IRQS       32
 +
-+struct RP2040SysCfgState {
++struct RP2040State {
 +    SysBusDevice parent_obj;
 +
-+    MemoryRegion iomem;
-+    RP2040SysCfgUpdateFn update;
-+    void *update_opaque;
-+    uint32_t proc0_nmi_mask;
-+    uint32_t proc1_nmi_mask;
-+    uint32_t proc_config;
-+    uint32_t proc_in_sync_bypass;
-+    uint32_t proc_in_sync_bypass_hi;
-+    uint32_t dbgforce;
-+    uint32_t mempowerdown;
++    ARMv7MState armv7m[RP2040_NUM_CORES];
++    PL011State uart[2];
++
++    MemoryRegion *board_memory;
++    MemoryRegion cpu_memory[RP2040_NUM_CORES];
++    MemoryRegion cpu_board_alias[RP2040_NUM_CORES];
++    MemoryRegion rom;
++    MemoryRegion sram[6];
++    char *bootrom_file;
++
++    Clock *sysclk;
 +};
 +
-+void rp2040_syscfg_set_update_callback(RP2040SysCfgState *s,
-+                                       RP2040SysCfgUpdateFn update,
-+                                       void *opaque);
-+uint32_t rp2040_syscfg_get_nmi_mask(RP2040SysCfgState *s, unsigned core);
-+
 +#endif
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index 8079fcee28..dbd2e4f4a7 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -254,7 +254,7 @@ qtests_exynos4210 = \
- 
- qtests_arm = \
-   (config_all_devices.has_key('CONFIG_RP2040') ?
--   ['rp2040-sysinfo-test'] : []) + \
-+   ['rp2040-syscfg-test', 'rp2040-sysinfo-test'] : []) + \
-   (config_all_devices.has_key('CONFIG_MPS2') ? ['sse-timer-test'] : []) + \
-   (config_all_devices.has_key('CONFIG_CMSDK_APB_DUALTIMER') ? ['cmsdk-apb-dualtimer-test'] : []) + \
-   (config_all_devices.has_key('CONFIG_CMSDK_APB_TIMER') ? ['cmsdk-apb-timer-test'] : []) + \
-diff --git a/tests/qtest/rp2040-syscfg-test.c b/tests/qtest/rp2040-syscfg-test.c
-new file mode 100644
-index 0000000000..b1a0738bd2
---- /dev/null
-+++ b/tests/qtest/rp2040-syscfg-test.c
-@@ -0,0 +1,97 @@
-+/*
-+ * QTest testcase for the RP2040 SYSCFG block.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "libqtest.h"
-+#include "hw/misc/rp2040.h"
-+#include "qemu/bitops.h"
-+
-+#define SYSCFG_BASE                   0x40004000
-+#define SYSCFG_PROC0_NMI_MASK         0x00
-+#define SYSCFG_PROC1_NMI_MASK         0x04
-+#define SYSCFG_PROC_CONFIG            0x08
-+#define SYSCFG_PROC_IN_SYNC_BYPASS    0x0c
-+#define SYSCFG_PROC_IN_SYNC_BYPASS_HI 0x10
-+#define SYSCFG_DBGFORCE               0x14
-+#define SYSCFG_MEMPOWERDOWN           0x18
-+
-+#define PROC_CONFIG_RESET             0x10000000
-+#define DBGFORCE_RESET                0x00000066
-+
-+static QTestState *rp2040_start(void)
-+{
-+    return qtest_init("-machine raspi-pico");
-+}
-+
-+static void test_syscfg_reset_values(void)
-+{
-+    QTestState *qts = rp2040_start();
-+
-+    g_assert_cmphex(qtest_readl(qts, SYSCFG_BASE + SYSCFG_PROC0_NMI_MASK),
-+                    ==, 0);
-+    g_assert_cmphex(qtest_readl(qts, SYSCFG_BASE + SYSCFG_PROC1_NMI_MASK),
-+                    ==, 0);
-+    g_assert_cmphex(qtest_readl(qts, SYSCFG_BASE + SYSCFG_PROC_CONFIG), ==,
-+                    PROC_CONFIG_RESET);
-+    g_assert_cmphex(qtest_readl(qts, SYSCFG_BASE + SYSCFG_DBGFORCE), ==,
-+                    DBGFORCE_RESET);
-+
-+    qtest_quit(qts);
-+}
-+
-+static void test_syscfg_rw_masks(void)
-+{
-+    QTestState *qts = rp2040_start();
-+
-+    qtest_writel(qts, SYSCFG_BASE + SYSCFG_PROC0_NMI_MASK, 0xa5a5a5a5);
-+    qtest_writel(qts, SYSCFG_BASE + SYSCFG_PROC1_NMI_MASK, 0x5a5a5a5a);
-+    g_assert_cmphex(qtest_readl(qts, SYSCFG_BASE + SYSCFG_PROC0_NMI_MASK),
-+                    ==, 0xa5a5a5a5);
-+    g_assert_cmphex(qtest_readl(qts, SYSCFG_BASE + SYSCFG_PROC1_NMI_MASK),
-+                    ==, 0x5a5a5a5a);
-+
-+    qtest_writel(qts, SYSCFG_BASE + SYSCFG_PROC_IN_SYNC_BYPASS, 0xffffffff);
-+    qtest_writel(qts, SYSCFG_BASE + SYSCFG_PROC_IN_SYNC_BYPASS_HI,
-+                 0xffffffff);
-+    qtest_writel(qts, SYSCFG_BASE + SYSCFG_MEMPOWERDOWN, 0xffffffff);
-+    g_assert_cmphex(qtest_readl(qts,
-+                                SYSCFG_BASE + SYSCFG_PROC_IN_SYNC_BYPASS),
-+                    ==, 0x3fffffff);
-+    g_assert_cmphex(qtest_readl(qts,
-+                                SYSCFG_BASE + SYSCFG_PROC_IN_SYNC_BYPASS_HI),
-+                    ==, 0x0000003f);
-+    g_assert_cmphex(qtest_readl(qts, SYSCFG_BASE + SYSCFG_MEMPOWERDOWN), ==,
-+                    0x000000ff);
-+
-+    qtest_quit(qts);
-+}
-+
-+static void test_syscfg_atomic_aliases(void)
-+{
-+    QTestState *qts = rp2040_start();
-+
-+    qtest_writel(qts, SYSCFG_BASE + SYSCFG_PROC0_NMI_MASK, 0);
-+    qtest_writel(qts, SYSCFG_BASE + RP2040_ATOMIC_SET +
-+                 SYSCFG_PROC0_NMI_MASK, 0x0000000f);
-+    qtest_writel(qts, SYSCFG_BASE + RP2040_ATOMIC_CLR +
-+                 SYSCFG_PROC0_NMI_MASK, 0x00000003);
-+    g_assert_cmphex(qtest_readl(qts, SYSCFG_BASE + SYSCFG_PROC0_NMI_MASK),
-+                    ==, 0x0000000c);
-+
-+    qtest_quit(qts);
-+}
-+
-+int main(int argc, char **argv)
-+{
-+    g_test_init(&argc, &argv, NULL);
-+
-+    qtest_add_func("/rp2040-syscfg/reset-values", test_syscfg_reset_values);
-+    qtest_add_func("/rp2040-syscfg/rw-masks", test_syscfg_rw_masks);
-+    qtest_add_func("/rp2040-syscfg/atomic-aliases",
-+                   test_syscfg_atomic_aliases);
-+
-+    return g_test_run();
-+}
 -- 
 2.55.0
 
