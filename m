@@ -4,58 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 968E0CA9EC5
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 00:00:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C33ABCA9ED0
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 00:00:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGPu1-0005ei-K9; Mon, 12 Oct 2026 19:57:58 -0400
+	id 1xGPu3-0005fP-7b; Mon, 12 Oct 2026 19:57:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dongli.zhang@oracle.com>)
- id 1xGPtz-0005dg-Lw
- for qemu-devel@nongnu.org; Mon, 12 Oct 2026 19:57:55 -0400
+ id 1xGPu1-0005eJ-0W
+ for qemu-devel@nongnu.org; Mon, 12 Oct 2026 19:57:57 -0400
 Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dongli.zhang@oracle.com>)
- id 1xGPtv-0006Eh-2p
- for qemu-devel@nongnu.org; Mon, 12 Oct 2026 19:57:55 -0400
-Received: from pps.filterd (m0246627.ppops.net [127.0.0.1])
+ id 1xGPty-0006FX-Kr
+ for qemu-devel@nongnu.org; Mon, 12 Oct 2026 19:57:56 -0400
+Received: from pps.filterd (m0246629.ppops.net [127.0.0.1])
  by mx0b-00069f02.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69CMfx2O1093104; Mon, 12 Oct 2026 23:57:46 GMT
+ 69CMgg5N3087997; Mon, 12 Oct 2026 23:57:50 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=corp-2025-04-25; bh=vqedG
- 3+jBZtOvhml73WOIUucqB4+jJYx8Pl6sqIoliE=; b=XthlFW0QNVbAJ1DqlLxl2
- EYXANfRG7WicIWjNQrJZhR6tnQ9cb5G0KHBNy9MQmK2DOc+UmvMqjrPOAJb3l6+d
- Hp7HoPLmXzAY72HQaOEkpSTlps5al0VcPKfRM6AbqPoNLO7ABwjFC7cXyKviawlZ
- c19/gqKJv9SQuW3tDEdrCfOVJ38oPc6GlA7eDm9FVI1pjFOkgAEW7lUF9wsoY5LI
- H7l7P8RkP/5utLIp/MefOvI42lEx8RWm9T2qw92jr3qvWEV0xi5ewXsF3qx4Dwzk
- Cen8XQPi4QRlimtGiFJOxOIiv5qhW4RIjPRvaSZyAK/rA6DJXgA95zNad50mP43F
- A==
+ :mime-version:references:subject:to; s=corp-2025-04-25; bh=BVOej
+ UXav0jxA+HEffEKWSyMlhQNfpFPuBn+c6g38DQ=; b=SLB3FVLWbccQvI8qUjScZ
+ JNji8ToVtYXnF/4vcYsS3g8+kc1fsf+pOVZNCOJI+QC1HxdmEm5RpMbVNVCqVTnv
+ sAjB5wiFxDrx5gc8ewfp6Kq/1UxzKeKX2/6dXrhC9+iA0ffDzVzWgUvc8A2IYPI9
+ 1Jy4Nf6jqp7qUTpTdU4SBTFvsb7KaemB27CNrTcjgb0nyF5I2LO8qEdKMcBzt3Q0
+ zINYBQ2oBYYjPsildRdCBcw/QNDCrGTV6Q7B9IFmpbFZAH0EWXaOQZ6sThT+IMnp
+ Obcx5JTENNBkAqZ4glBmjCIr2nR7H50SOnaXsNtWQRIpOUHE+0RB4n0BwVssQGX7
+ Q==
 Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta01.appoci.oracle.com [130.35.100.223])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4h7df7u5np-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4h7de1k554-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 12 Oct 2026 23:57:46 +0000 (GMT)
+ Mon, 12 Oct 2026 23:57:49 +0000 (GMT)
 Received: from pps.filterd
  (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
  by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.7/8.18.1.7)
- with ESMTP id 69CNpeJO015113; Mon, 12 Oct 2026 23:57:45 GMT
+ with ESMTP id 69CNpgrD015202; Mon, 12 Oct 2026 23:57:48 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 4h7btnuhse-1
+ 4h7btnuhth-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 12 Oct 2026 23:57:45 +0000 (GMT)
+ Mon, 12 Oct 2026 23:57:48 +0000 (GMT)
 Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.18.1.12/8.18.1.12) with ESMTP id 69CNvfHF025328;
- Mon, 12 Oct 2026 23:57:44 GMT
+ by pps.reinject (8.18.1.12/8.18.1.12) with ESMTP id 69CNvfHR025328;
+ Mon, 12 Oct 2026 23:57:47 GMT
 Received: from donglzha-e6-vfio-setup.osdevelopmeniad.oraclevcn.com
  (donglzha-e6-vfio-setup.allregionaliads.osdevelopmeniad.oraclevcn.com
  [100.100.255.69])
  by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTP id
- 4h7btnuhra-5; Mon, 12 Oct 2026 23:57:44 +0000 (GMT)
+ 4h7btnuhra-11; Mon, 12 Oct 2026 23:57:47 +0000 (GMT)
 From: Dongli Zhang <dongli.zhang@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: david@kernel.org, imammedo@redhat.com, maciej.szmigiero@oracle.com,
@@ -65,9 +65,9 @@ Cc: david@kernel.org, imammedo@redhat.com, maciej.szmigiero@oracle.com,
  eric.auger@redhat.com, zhenzhong.duan@intel.com, mst@redhat.com,
  cohuck@redhat.com, pbonzini@redhat.com, armbru@redhat.com,
  eblake@redhat.com
-Subject: [PATCH 04/21] linux-headers: import liveupdate UAPI header
-Date: Mon, 12 Oct 2026 23:56:00 +0000
-Message-ID: <20261012235727.398133-5-dongli.zhang@oracle.com>
+Subject: [PATCH 10/21] migration/cpr-luo: add tokens for LUO fds
+Date: Mon, 12 Oct 2026 23:56:06 +0000
+Message-ID: <20261012235727.398133-11-dongli.zhang@oracle.com>
 X-Mailer: git-send-email 2.43.7
 In-Reply-To: <20261012235727.398133-1-dongli.zhang@oracle.com>
 References: <20261012235727.398133-1-dongli.zhang@oracle.com>
@@ -80,26 +80,25 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0
  spamscore=0 adultscore=0 bulkscore=0 malwarescore=0 mlxscore=0
  lowpriorityscore=0 suspectscore=0 mlxlogscore=999 classifier=spam adjust=0
  reason=mlx scancount=1 engine=8.19.0-2610020000 definitions=main-2610120095
-X-Authority-Analysis: v=2.4 cv=N+a8hG9B c=1 sm=1 tr=0 ts=6acd73fa b=1 cx=c_pps
+X-Authority-Analysis: v=2.4 cv=O9SsLx9W c=1 sm=1 tr=0 ts=6acd73fd b=1 cx=c_pps
  a=zPCbziy225d3KhSqZt3L1A==:117
  a=zPCbziy225d3KhSqZt3L1A==:17
  a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22 a=jiCTI4zE5U7BLdzWsZGv:22
- a=RD47p0oAkeU5bO7t-o6f:22 a=yPCof4ZbAAAA:8 a=7ipKWUHlAAAA:8
- a=zPfqItpXYxLiZjyEIrsA:9 a=gpc5p9EgBqZVLdJeV_V1:22 a=5yU3S35YU4bGjq-dph-N:22
- a=Bho9c0fBagfJEIQBS7DQ:22 cc=ntf awl=host:12107
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDEyMDA5NSBTYWx0ZWRfX4XscOCoTr9YS
- iuZb28t7ppQDLRcZZFEJI4p/1W+LkwTSuGO5aQfjSAoBHOGDiWhKtv5/eC6e32WfCiHk71ob0Vb
- hJKZjtprTwi3YuCQEncerkppqrFIFryxIXOCQiCTNQdIY3Wd2XU6tX72sIpL9hGUvOBZxTqLY7Q
- FL3GOkrfUTS46klt4Q0QoQ6ptnvzNSZfFbQHE7kpVhd9pQg2vafGwj155WfJZztQ5Bc+Qh0/xlH
- 2UZv9AvtC4hQeWd2UwBZoJFLFeE0hoPSELvakFzop7XOSMqcvDPPh3XZD/lVJr3IGXlyJ0g69T7
- WtBMFf+2/zVyaY+KHr5barB2qK8/FDerWHCZmzLObeKYwVVC6aXW3wqD4jGcps1GwKoeHPlVjxo
- 5j/Nd2K+hLm8R1XqePDFZ6DTaJHgrqIQ64OzzFf+YNfDvRM9vVvyNlgAWc4HYjJrhSAB/IKzn7p
- 5DWJ5bXEVI4GtilEunL/cMcQmPWk5zC8Uexs/VOE=
-X-Proofpoint-ORIG-GUID: WCFefjYC4R7QUhsd9qcBW2S-Oas2kFhz
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDEyMDA5NSBTYWx0ZWRfX/6i+HYxJ6KHh
- I1BkmY0ozSwIRh8qGZ/xk9l3bS1Z2goAYh7pkZ21qZRsIVuswVx2O88F4BZiRznRjIX5Zggz39R
- wwwf4n8hcVGaywEIXcr8d2cVBVp67eAHDsR5R+V+7wGMwVBtLqDk
-X-Proofpoint-GUID: WCFefjYC4R7QUhsd9qcBW2S-Oas2kFhz
+ a=EIcjfB9IiI4px24ztqRk:22 a=yPCof4ZbAAAA:8 a=tetSL9Y0ncEMf86toeEA:9
+ a=5yU3S35YU4bGjq-dph-N:22 a=Bho9c0fBagfJEIQBS7DQ:22 cc=ntf awl=host:12107
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDEyMDA5NSBTYWx0ZWRfXzaOs91N2eD4Y
+ J9tgMfAyLR5Dv6eIAuuUytWCe9Gx2jn3yVdMvZLsDecNaqA6Syk9deFRw5IlNHoS7wRR6661OWl
+ lcQ403cGqYks77vzWvFytjs8+Rh6m0bRGc0FCYi7hOtqDp6AhuMX
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDEyMDA5NSBTYWx0ZWRfXzx2zw6Z8r5qw
+ rJf8AQilOYvRz/UT/KvRgbN2yu73uTBeWT4syMOT2QLNHB8XC1z6CIaP0B/y0+LYwavxlWPZgV0
+ hREn6krDZ58ZePRdOfXyWFrw6dI6ZXO86gbrhZIeVilaxALa2beyM9XpeGPD0bJR4/icWDWY7IJ
+ nbfIphTo5EGrpiJrXOcESTclX0IN6NG658cs1usizg6KMn+V37i0KV8H4zfhF5DStm5nW96d0AO
+ lcSiOp5hewkc67cAXHnILZG4fEGXHl9kZ1YYxN/YP86zgeEKhW9xAMz3JSlUFW+GOavOcShF3ID
+ zhV8V0i4n/Wa/tw82kfwvane0RjEkuGBndVjA7uPHL/ifqZ+4yE2+oPEnQ+DioYb0vU/KbNCrV2
+ BYbQDZfAhXO9h8OAuYBC1wtbAh/OBl8G6F+Xl9lZu2KcHtbgxsgEqMQcnP7erGdqZFOULe+9R0D
+ bPz4+5+1zMUXMUmVCUHOzjSNpONiOmT92MPw2KYo=
+X-Proofpoint-GUID: VWedBxC-l1V4Vbqr5y7UgAjl_1PgmOXJ
+X-Proofpoint-ORIG-GUID: VWedBxC-l1V4Vbqr5y7UgAjl_1PgmOXJ
 Received-SPF: pass client-ip=205.220.165.32;
  envelope-from=dongli.zhang@oracle.com; helo=mx0a-00069f02.pphosted.com
 X-Spam_score_int: -27
@@ -124,263 +123,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Import the Linux liveupdate UAPI header for cpr-luo support.
-QEMU uses this header to issue the ioctls for session and file descriptor
-preservation and retrieval.
+LUO tokens are required as keys to preserve and retrieve LUO fds.
 
-It is from Linux kernel include/uapi/linux/liveupdate.h.
+Instead of assigning LUO tokens during fd creation, assign monotonically
+increasing LUO tokens to each CprFd only when serializing the CprFd.
+
+We reserve token 1 for the CPR LUO state for later use. Therefore, regular
+LUO fd tokens start at 2.
 
 Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
 ---
- linux-headers/linux/liveupdate.h | 239 +++++++++++++++++++++++++++++++
- 1 file changed, 239 insertions(+)
- create mode 100644 linux-headers/linux/liveupdate.h
+ include/migration/cpr.h | 2 ++
+ migration/cpr.c         | 7 +++++++
+ 2 files changed, 9 insertions(+)
 
-diff --git a/linux-headers/linux/liveupdate.h b/linux-headers/linux/liveupdate.h
-new file mode 100644
-index 0000000000..4043d40387
---- /dev/null
-+++ b/linux-headers/linux/liveupdate.h
-@@ -0,0 +1,239 @@
-+/* SPDX-License-Identifier: GPL-2.0 WITH Linux-syscall-note */
+diff --git a/include/migration/cpr.h b/include/migration/cpr.h
+index 3bfe91f10f..77e753a278 100644
+--- a/include/migration/cpr.h
++++ b/include/migration/cpr.h
+@@ -18,6 +18,7 @@
+ #define QEMU_CPR_FILE_VERSION   0x00000001
+ #define CPR_STATE "CprState"
+ #define CPR_LUO_STATE "CprLuoState"
++#define CPR_LUO_STATE_TOKEN 1
+ 
+ typedef struct CprFd {
+     char *name;
+@@ -25,6 +26,7 @@ typedef struct CprFd {
+     int id;
+     int fd;
+     bool luo;
++    uint64_t luo_token;
+     QLIST_ENTRY(CprFd) next;
+ } CprFd;
+ 
+diff --git a/migration/cpr.c b/migration/cpr.c
+index eaaca6d47d..700e833003 100644
+--- a/migration/cpr.c
++++ b/migration/cpr.c
+@@ -49,6 +49,7 @@ static const VMStateDescription vmstate_cpr_luo_fd = {
+         VMSTATE_UINT32(namelen, CprFd),
+         VMSTATE_VBUFFER_ALLOC_UINT32(name, CprFd, 0, NULL, namelen),
+         VMSTATE_INT32(id, CprFd),
++        VMSTATE_UINT64(luo_token, CprFd),
+         VMSTATE_END_OF_LIST()
+     }
+ };
+@@ -98,6 +99,7 @@ static int cpr_fd_pre_save(void *opaque)
+     GHashTableIter iter;
+     CprFd *elem;
+     MigMode mode = migrate_mode();
++    uint64_t luo_token = CPR_LUO_STATE_TOKEN + 1;
+ 
+     QLIST_INIT(&state->fds);
+ 
+@@ -107,6 +109,10 @@ static int cpr_fd_pre_save(void *opaque)
+             continue;
+         }
+ 
++        if (mode == MIG_MODE_CPR_LUO) {
++            elem->luo_token = luo_token++;
++        }
 +
-+/*
-+ * Userspace interface for /dev/liveupdate
-+ * Live Update Orchestrator
-+ *
-+ * Copyright (c) 2025, Google LLC.
-+ * Pasha Tatashin <pasha.tatashin@soleen.com>
-+ */
-+
-+#ifndef _UAPI_LIVEUPDATE_H
-+#define _UAPI_LIVEUPDATE_H
-+
-+#include <linux/ioctl.h>
-+#include <linux/types.h>
-+
-+/**
-+ * DOC: General ioctl format
-+ *
-+ * The ioctl interface follows a general format to allow for extensibility. Each
-+ * ioctl is passed in a structure pointer as the argument providing the size of
-+ * the structure in the first u32. The kernel checks that any structure space
-+ * beyond what it understands is 0. This allows userspace to use the backward
-+ * compatible portion while consistently using the newer, larger, structures.
-+ *
-+ * ioctls use a standard meaning for common errnos:
-+ *
-+ *  - ENOTTY: The IOCTL number itself is not supported at all
-+ *  - E2BIG: The IOCTL number is supported, but the provided structure has
-+ *    non-zero in a part the kernel does not understand.
-+ *  - EOPNOTSUPP: The IOCTL number is supported, and the structure is
-+ *    understood, however a known field has a value the kernel does not
-+ *    understand or support.
-+ *  - EINVAL: Everything about the IOCTL was understood, but a field is not
-+ *    correct.
-+ *  - ENOENT: A provided token does not exist.
-+ *  - ENOMEM: Out of memory.
-+ *  - EOVERFLOW: Mathematics overflowed.
-+ *
-+ * As well as additional errnos, within specific ioctls.
-+ */
-+
-+/* The ioctl type, documented in ioctl-number.rst */
-+#define LIVEUPDATE_IOCTL_TYPE		0xBA
-+
-+/* The maximum length of session name including null termination */
-+#define LIVEUPDATE_SESSION_NAME_LENGTH 64
-+
-+/* The /dev/liveupdate ioctl commands */
-+enum {
-+	LIVEUPDATE_CMD_BASE = 0x00,
-+	LIVEUPDATE_CMD_CREATE_SESSION = LIVEUPDATE_CMD_BASE,
-+	LIVEUPDATE_CMD_RETRIEVE_SESSION = 0x01,
-+};
-+
-+/* ioctl commands for session file descriptors */
-+enum {
-+	LIVEUPDATE_CMD_SESSION_BASE = 0x40,
-+	LIVEUPDATE_CMD_SESSION_PRESERVE_FD = LIVEUPDATE_CMD_SESSION_BASE,
-+	LIVEUPDATE_CMD_SESSION_RETRIEVE_FD = 0x41,
-+	LIVEUPDATE_CMD_SESSION_FINISH = 0x42,
-+	LIVEUPDATE_CMD_SESSION_GET_NAME = 0x43,
-+};
-+
-+/**
-+ * struct liveupdate_ioctl_create_session - ioctl(LIVEUPDATE_IOCTL_CREATE_SESSION)
-+ * @size:	Input; sizeof(struct liveupdate_ioctl_create_session)
-+ * @fd:		Output; The new file descriptor for the created session.
-+ * @name:	Input; A null-terminated string for the session name, max
-+ *		length %LIVEUPDATE_SESSION_NAME_LENGTH including termination
-+ *		character.
-+ *
-+ * Creates a new live update session for managing preserved resources.
-+ * This ioctl can only be called on the main /dev/liveupdate device.
-+ *
-+ * Return: 0 on success, negative error code on failure.
-+ */
-+struct liveupdate_ioctl_create_session {
-+	__u32		size;
-+	__s32		fd;
-+	__u8		name[LIVEUPDATE_SESSION_NAME_LENGTH];
-+};
-+
-+#define LIVEUPDATE_IOCTL_CREATE_SESSION					\
-+	_IO(LIVEUPDATE_IOCTL_TYPE, LIVEUPDATE_CMD_CREATE_SESSION)
-+
-+/**
-+ * struct liveupdate_ioctl_retrieve_session - ioctl(LIVEUPDATE_IOCTL_RETRIEVE_SESSION)
-+ * @size:    Input; sizeof(struct liveupdate_ioctl_retrieve_session)
-+ * @fd:      Output; The new file descriptor for the retrieved session.
-+ * @name:    Input; A null-terminated string identifying the session to retrieve.
-+ *           The name must exactly match the name used when the session was
-+ *           created in the previous kernel.
-+ *
-+ * Retrieves a handle (a new file descriptor) for a preserved session by its
-+ * name. This is the primary mechanism for a userspace agent to regain control
-+ * of its preserved resources after a live update.
-+ *
-+ * The userspace application provides the null-terminated `name` of a session
-+ * it created before the live update. If a preserved session with a matching
-+ * name is found, the kernel instantiates it and returns a new file descriptor
-+ * in the `fd` field. This new session FD can then be used for all file-specific
-+ * operations, such as restoring individual file descriptors with
-+ * LIVEUPDATE_SESSION_RETRIEVE_FD.
-+ *
-+ * It is the responsibility of the userspace application to know the names of
-+ * the sessions it needs to retrieve. If no session with the given name is
-+ * found, the ioctl will fail with -ENOENT.
-+ *
-+ * This ioctl can only be called on the main /dev/liveupdate device when the
-+ * system is in the LIVEUPDATE_STATE_UPDATED state.
-+ */
-+struct liveupdate_ioctl_retrieve_session {
-+	__u32		size;
-+	__s32		fd;
-+	__u8		name[LIVEUPDATE_SESSION_NAME_LENGTH];
-+};
-+
-+#define LIVEUPDATE_IOCTL_RETRIEVE_SESSION \
-+	_IO(LIVEUPDATE_IOCTL_TYPE, LIVEUPDATE_CMD_RETRIEVE_SESSION)
-+
-+/* Session specific IOCTLs */
-+
-+/**
-+ * struct liveupdate_session_preserve_fd - ioctl(LIVEUPDATE_SESSION_PRESERVE_FD)
-+ * @size:  Input; sizeof(struct liveupdate_session_preserve_fd)
-+ * @fd:    Input; The user-space file descriptor to be preserved.
-+ * @token: Input; An opaque, unique token for preserved resource.
-+ *
-+ * Holds parameters for preserving a file descriptor.
-+ *
-+ * User sets the @fd field identifying the file descriptor to preserve
-+ * (e.g., memfd, kvm, iommufd, VFIO). The kernel validates if this FD type
-+ * and its dependencies are supported for preservation. If validation passes,
-+ * the kernel marks the FD internally and *initiates the process* of preparing
-+ * its state for saving. The actual snapshotting of the state typically occurs
-+ * during the subsequent %LIVEUPDATE_IOCTL_PREPARE execution phase, though
-+ * some finalization might occur during freeze.
-+ * On successful validation and initiation, the kernel uses the @token
-+ * field with an opaque identifier representing the resource being preserved.
-+ * This token confirms the FD is targeted for preservation and is required for
-+ * the subsequent %LIVEUPDATE_SESSION_RETRIEVE_FD call after the live update.
-+ *
-+ * Return: 0 on success (validation passed, preservation initiated), negative
-+ * error code on failure (e.g., unsupported FD type, dependency issue,
-+ * validation failed).
-+ */
-+struct liveupdate_session_preserve_fd {
-+	__u32		size;
-+	__s32		fd;
-+	__aligned_u64	token;
-+};
-+
-+#define LIVEUPDATE_SESSION_PRESERVE_FD					\
-+	_IO(LIVEUPDATE_IOCTL_TYPE, LIVEUPDATE_CMD_SESSION_PRESERVE_FD)
-+
-+/**
-+ * struct liveupdate_session_retrieve_fd - ioctl(LIVEUPDATE_SESSION_RETRIEVE_FD)
-+ * @size:  Input; sizeof(struct liveupdate_session_retrieve_fd)
-+ * @fd:    Output; The new file descriptor representing the fully restored
-+ *         kernel resource.
-+ * @token: Input; An opaque, token that was used to preserve the resource.
-+ *
-+ * Retrieve a previously preserved file descriptor.
-+ *
-+ * User sets the @token field to the value obtained from a successful
-+ * %LIVEUPDATE_IOCTL_FD_PRESERVE call before the live update. On success,
-+ * the kernel restores the state (saved during the PREPARE/FREEZE phases)
-+ * associated with the token and populates the @fd field with a new file
-+ * descriptor referencing the restored resource in the current (new) kernel.
-+ * This operation must be performed *before* signaling completion via
-+ * %LIVEUPDATE_IOCTL_FINISH. If a retrieve of a token fails, subsequent
-+ * attempts to retrieve the token fail with the same error code. Failed
-+ * retrieves are not retried.
-+ *
-+ * Return: 0 on success, negative error code on failure (e.g., invalid token).
-+ */
-+struct liveupdate_session_retrieve_fd {
-+	__u32		size;
-+	__s32		fd;
-+	__aligned_u64	token;
-+};
-+
-+#define LIVEUPDATE_SESSION_RETRIEVE_FD					\
-+	_IO(LIVEUPDATE_IOCTL_TYPE, LIVEUPDATE_CMD_SESSION_RETRIEVE_FD)
-+
-+/**
-+ * struct liveupdate_session_finish - ioctl(LIVEUPDATE_SESSION_FINISH)
-+ * @size:     Input; sizeof(struct liveupdate_session_finish)
-+ * @reserved: Input; Must be zero. Reserved for future use.
-+ *
-+ * Signals the completion of the restoration process for a retrieved session.
-+ * This is the final operation that should be performed on a session file
-+ * descriptor after a live update.
-+ *
-+ * This ioctl must be called once all required file descriptors for the session
-+ * have been successfully retrieved (using %LIVEUPDATE_SESSION_RETRIEVE_FD) and
-+ * are fully restored from the userspace and kernel perspective.
-+ *
-+ * Upon success, the kernel releases its ownership of the preserved resources
-+ * associated with this session. This allows internal resources to be freed,
-+ * typically by decrementing reference counts on the underlying preserved
-+ * objects.
-+ *
-+ * If this operation fails, the resources remain preserved in memory. Userspace
-+ * may attempt to call finish again. The resources will otherwise be reset
-+ * during the next live update cycle.
-+ *
-+ * Return: 0 on success, negative error code on failure.
-+ */
-+struct liveupdate_session_finish {
-+	__u32		size;
-+	__u32		reserved;
-+};
-+
-+#define LIVEUPDATE_SESSION_FINISH					\
-+	_IO(LIVEUPDATE_IOCTL_TYPE, LIVEUPDATE_CMD_SESSION_FINISH)
-+
-+/**
-+ * struct liveupdate_session_get_name - ioctl(LIVEUPDATE_SESSION_GET_NAME)
-+ * @size:  Input; sizeof(struct liveupdate_session_get_name)
-+ * @reserved: Input; Must be zero. Reserved for future use.
-+ * @name:  Output; A null-terminated string with the full session name.
-+ *
-+ * Retrieves the full name of the session associated with this file descriptor.
-+ * This is useful because the kernel may truncate the name shown in /proc.
-+ *
-+ * Return: 0 on success, negative error code on failure.
-+ */
-+struct liveupdate_session_get_name {
-+	__u32		size;
-+	__u32		reserved;
-+	__u8		name[LIVEUPDATE_SESSION_NAME_LENGTH];
-+};
-+
-+#define LIVEUPDATE_SESSION_GET_NAME					\
-+	_IO(LIVEUPDATE_IOCTL_TYPE, LIVEUPDATE_CMD_SESSION_GET_NAME)
-+
-+#endif /* _UAPI_LIVEUPDATE_H */
+         QLIST_INSERT_HEAD(&state->fds, elem, next);
+     }
+ 
+@@ -149,6 +155,7 @@ void cpr_save_fd(const char *name, int id, int fd)
+     elem->namelen = strlen(name) + 1;
+     elem->id = id;
+     elem->fd = fd;
++    elem->luo_token = 0;
+     cpr_fd_hash_insert(elem);
+ }
+ 
 -- 
 2.43.5
 
