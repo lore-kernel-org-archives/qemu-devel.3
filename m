@@ -4,54 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CBC7CA9EDD
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Oct 2026 15:45:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 236DACA9ED1
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Oct 2026 16:28:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGICv-00072Z-HT; Mon, 12 Oct 2026 11:44:57 -0400
+	id 1xGIsa-0007zT-By; Mon, 12 Oct 2026 12:28:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dblanzeanu@linux.microsoft.com>)
- id 1xGICr-000723-HJ
- for qemu-devel@nongnu.org; Mon, 12 Oct 2026 11:44:54 -0400
-Received: from linux.microsoft.com ([13.77.154.182])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <dblanzeanu@linux.microsoft.com>) id 1xGICo-0004ab-JB
- for qemu-devel@nongnu.org; Mon, 12 Oct 2026 11:44:51 -0400
-Received: from laptop.localdomain (unknown [81.196.141.65])
- by linux.microsoft.com (Postfix) with ESMTPSA id 203AD20B7168;
- Mon, 12 Oct 2026 08:44:42 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 203AD20B7168
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1791819885;
- bh=13K1se4bqn0DyJ1HRzZGaSm0ZfeG5b4yDYnXEq4capI=;
- h=From:To:Cc:Subject:Date:From;
- b=OqqXsV2gz2yrE82FB3bzb6QIjj9TGlkvBvjj8NxlZPQ3moanM5ZPCLNcfQCuV6X2U
- lL+ZMWNIFRpQ8SfpBmMQGl5qKV7rzEFcDR36nVdZYH11AgfsMizNgxhmGGmum11Ami
- OWBW7sbxeiVVFkxgtneKp5Wl3ePUQuIooxGKyolM=
-From: =?UTF-8?q?Doru=20Bl=C3=A2nzeanu?= <dblanzeanu@linux.microsoft.com>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Doru=20Bl=C3=A2nzeanu?= <dblanzeanu@microsoft.com>,
- Wei Liu <liuwe@microsoft.com>,
- Magnus Kulke <magnuskulke@linux.microsoft.com>,
- Magnus Kulke <magnuskulke@microsoft.com>, Zhao Liu <zhao1.liu@intel.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Wei Liu <wei.liu@kernel.org>,
- =?UTF-8?q?Doru=20Bl=C3=A2nzeanu?= <dblanzeanu@linux.microsoft.com>
-Subject: [PATCH 0/2] Add CPU topology extension support for mshv guests
-Date: Mon, 12 Oct 2026 18:44:40 +0300
-Message-ID: <20261012154442.306511-1-dblanzeanu@linux.microsoft.com>
-X-Mailer: git-send-email 2.53.0
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1xGIs2-0007qq-VK
+ for qemu-devel@nongnu.org; Mon, 12 Oct 2026 12:27:31 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1xGIs1-0001lG-4y
+ for qemu-devel@nongnu.org; Mon, 12 Oct 2026 12:27:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1791822444;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=8qUAnI8acTN2uvO49satRDiIRVik09nJpUJ+5G4veTM=;
+ b=UOYuCW9EFuBdyus1JAI6TpzEQXrZgJ1Tny1dZTF01KgLfpJbUSXeSSeUKwOuBFLVanFdyc
+ zKcuR+f38p6rfgCp5X7wOrKSmApBSKzMJjniTDGjPYec1fGiOWA8w2Hgp5A6sHcZeyKbnk
+ kEqrUsXSrNXFHJ9mIHlgT7W+FcNYjN8=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-643-fhwyy5h7N0SXJk2QRPAHOQ-1; Mon,
+ 12 Oct 2026 16:27:19 +0000
+X-MC-Unique: fhwyy5h7N0SXJk2QRPAHOQ-1
+X-Mimecast-MFC-AGG-ID: fhwyy5h7N0SXJk2QRPAHOQ_1791822438
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 291A218052C5; Mon, 12 Oct 2026 16:27:18 +0000 (UTC)
+Received: from [100.90.56.12] (headnet04.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.116])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 3102330000E7; Mon, 12 Oct 2026 16:27:15 +0000 (UTC)
+Message-ID: <b5d07378-d5c4-4186-aae9-9252a08852fd@redhat.com>
+Date: Mon, 12 Oct 2026 18:27:13 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH] target/arm: hold bql when SEV sets the event_register
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ "open list:ARM TCG CPUs" <qemu-arm@nongnu.org>
+References: <20261012134840.1051969-1-alex.bennee@linaro.org>
+ <87fqybx97c.fsf@draig.linaro.org>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ xsEhBFRCcBIBDqDGsz4K0zZun3jh+U6Z9wNGLKQ0kSFyjN38gMqU1SfP+TUNQepFHb/Gc0E2
+ CxXPkIBTvYY+ZPkoTh5xF9oS1jqI8iRLzouzF8yXs3QjQIZ2SfuCxSVwlV65jotcjD2FTN04
+ hVopm9llFijNZpVIOGUTqzM4U55sdsCcZUluWM6x4HSOdw5F5Utxfp1wOjD/v92Lrax0hjiX
+ DResHSt48q+8FrZzY+AUbkUS+Jm34qjswdrgsC5uxeVcLkBgWLmov2kMaMROT0YmFY6A3m1S
+ P/kXmHDXxhe23gKb3dgwxUTpENDBGcfEzrzilWueOeUWiOcWuFOed/C3SyijBx3Av/lbCsHU
+ Vx6pMycNTdzU1BuAroB+Y3mNEuW56Yd44jlInzG2UOwt9XjjdKkJZ1g0P9dwptwLEgTEd3Fo
+ UdhAQyRXGYO8oROiuh+RZ1lXp6AQ4ZjoyH8WLfTLf5g1EKCTc4C1sy1vQSdzIRu3rBIjAvnC
+ tGZADei1IExLqB3uzXKzZ1BZ+Z8hnt2og9hb7H0y8diYfEk2w3R7wEr+Ehk5NQsT2MPI2QBd
+ wEv1/Aj1DgUHZAHzG1QN9S8wNWQ6K9DqHZTBnI1hUlkp22zCSHK/6FwUCuYp1zcAEQEAAc0j
+ UGFvbG8gQm9uemluaSA8cGJvbnppbmlAcmVkaGF0LmNvbT7CwU0EEwECACMFAlRCcBICGwMH
+ CwkIBwMCAQYVCAIJCgsEFgIDAQIeAQIXgAAKCRB+FRAMzTZpsbceDp9IIN6BIA0Ol7MoB15E
+ 11kRz/ewzryFY54tQlMnd4xxfH8MTQ/mm9I482YoSwPMdcWFAKnUX6Yo30tbLiNB8hzaHeRj
+ jx12K+ptqYbg+cevgOtbLAlL9kNgLLcsGqC2829jBCUTVeMSZDrzS97ole/YEez2qFpPnTV0
+ VrRWClWVfYh+JfzpXmgyhbkuwUxNFk421s4Ajp3d8nPPFUGgBG5HOxzkAm7xb1cjAuJ+oi/K
+ CHfkuN+fLZl/u3E/fw7vvOESApLU5o0icVXeakfSz0LsygEnekDbxPnE5af/9FEkXJD5EoYG
+ SEahaEtgNrR4qsyxyAGYgZlS70vkSSYJ+iT2rrwEiDlo31MzRo6Ba2FfHBSJ7lcYdPT7bbk9
+ AO3hlNMhNdUhoQv7M5HsnqZ6unvSHOKmReNaS9egAGdRN0/GPDWr9wroyJ65ZNQsHl9nXBqE
+ AukZNr5oJO5vxrYiAuuTSd6UI/xFkjtkzltG3mw5ao2bBpk/V/YuePrJsnPFHG7NhizrxttB
+ nTuOSCMo45pfHQ+XYd5K1+Cv/NzZFNWscm5htJ0HznY+oOsZvHTyGz3v91pn51dkRYN0otqr
+ bQ4tlFFuVjArBZcapSIe6NV8C4cEiSTOwE0EVEJx7gEIAMeHcVzuv2bp9HlWDp6+RkZe+vtl
+ KwAHplb/WH59j2wyG8V6i33+6MlSSJMOFnYUCCL77bucx9uImI5nX24PIlqT+zasVEEVGSRF
+ m8dgkcJDB7Tps0IkNrUi4yof3B3shR+vMY3i3Ip0e41zKx0CvlAhMOo6otaHmcxr35sWq1Jk
+ tLkbn3wG+fPQCVudJJECvVQ//UAthSSEklA50QtD2sBkmQ14ZryEyTHQ+E42K3j2IUmOLriF
+ dNr9NvE1QGmGyIcbw2NIVEBOK/GWxkS5+dmxM2iD4Jdaf2nSn3jlHjEXoPwpMs0KZsgdU0pP
+ JQzMUMwmB1wM8JxovFlPYrhNT9MAEQEAAcLBMwQYAQIACQUCVEJx7gIbDAAKCRB+FRAMzTZp
+ sadRDqCctLmYICZu4GSnie4lKXl+HqlLanpVMOoFNnWs9oRP47MbE2wv8OaYh5pNR9VVgyhD
+ OG0AU7oidG36OeUlrFDTfnPYYSF/mPCxHttosyt8O5kabxnIPv2URuAxDByz+iVbL+RjKaGM
+ GDph56ZTswlx75nZVtIukqzLAQ5fa8OALSGum0cFi4ptZUOhDNz1onz61klD6z3MODi0sBZN
+ Aj6guB2L/+2ZwElZEeRBERRd/uommlYuToAXfNRdUwrwl9gRMiA0WSyTb190zneRRDfpSK5d
+ usXnM/O+kr3Dm+Ui+UioPf6wgbn3T0o6I5BhVhs4h4hWmIW7iNhPjX1iybXfmb1gAFfjtHfL
+ xRUr64svXpyfJMScIQtBAm0ihWPltXkyITA92ngCmPdHa6M1hMh4RDX+Jf1fiWubzp1voAg0
+ JBrdmNZSQDz0iKmSrx8xkoXYfA3bgtFN8WJH2xgFL28XnqY4M6dLhJwV3z08tPSRqYFm4NMP
+ dRsn0/7oymhneL8RthIvjDDQ5ktUjMe8LtHr70OZE/TT88qvEdhiIVUogHdo4qBrk41+gGQh
+ b906Dudw5YhTJFU3nC6bbF2nrLlB4C/XSiH76ZvqzV0Z/cAMBo5NF/w=
+In-Reply-To: <87fqybx97c.fsf@draig.linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=13.77.154.182;
- envelope-from=dblanzeanu@linux.microsoft.com; helo=linux.microsoft.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -68,34 +126,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch changes how MSHV constructs and registers the guest CPUID table.
-It consists of two commits:
+On 10/12/26 16:52, Alex Bennée wrote:
+>> diff --git a/target/arm/tcg/op_helper.c b/target/arm/tcg/op_helper.c
+>> index af56eff9f18..7c1fdab79d7 100644
+>> --- a/target/arm/tcg/op_helper.c
+>> +++ b/target/arm/tcg/op_helper.c
+>> @@ -471,6 +471,9 @@ void HELPER(wfit)(CPUARMState *env, uint32_t rd)
+>>   void HELPER(sev)(CPUARMState *env)
+>>   {
+>>       CPUState *cs = env_cpu(env);
+>> +
+>> +    BQL_LOCK_GUARD();
+>> +
+>>       CPU_FOREACH(cs) {
+>>           ARMCPU *target_cpu = ARM_CPU(cs);
+>>           target_cpu->env.event_register = true;
+Reviewed-by: Paolo Bonzini <pbonzini@redhat.com>
 
-1. i386/cpu.c: Adjust minimum xlevel to 0x8000_001E when TOPOEXT is enabled
-2. mshv/mshv-cpu.c: Collect all Intel topology subleaves and AMD cache subleaves
+The use of cmpxchg in wfxt_timer_cb is fishy though.
 
-The first commit changes the extended CPUID level to 0x8000_001E when the TOPOEXT
-feature is enabled.
-This fix correctly reports CPU topology and cache leaves when TOPOEXT is
-enabled.
+Clearing HALT_WFE should be the task of the target CPU, not the timer. 
+The timer_mod() should be *after* halt_reason(*), and then you can just 
+do a qatomic_read() instead of a cmpxchg(**) in wfxt_timer_cb().
 
-Previous to the second commit, `collect_cpuid_entries` treated `0x0b` and `0x1f`
-like ordinary leaves and collected only sub-leaf zero. But these Intel topology
-leaves contain one sub-leaf per topology level.
-With this patch, now it repeatedly calls `cpu_x86_cpuid` and stores every
-result until ECX[15:8] becomes zero (same as kvm does).
+However, I don't understand at all why wfxt_timer_cb needs to set 
+event_register to true.  It seems to me that a wfet + wfe sequence, 
+where the first wfet times out, *should* halt again on the second wfe; 
+but as the code is written it doesn't.
 
-Doru Blânzeanu (2):
-  i386/cpu.c: Adjust minimum xlevel to 0x8000_001E when TOPOEXT is
-    enabled
-  mshv/mshv-cpu.c: Collect all Intel topology subleaves and AMD cache
-    subleaves
+I think wfxt_timer_cb only needs to call cpu_interrupt().
 
- target/i386/cpu.c           |  5 +++++
- target/i386/mshv/mshv-cpu.c | 41 +++++++++++++++++++++++++++++--------
- 2 files changed, 38 insertions(+), 8 deletions(-)
+Thanks,
 
--- 
-2.53.0
+Paolo
+
+(*) always, even if the halt reason is not HALT_WFE, if only for consistency
+
+(**) you don't need a lock or acquire/release here, because the timer 
+callback always sees everything that happened before timer_mod().  In a 
+sense, timer_mod() *is* the release operation and starting the callback 
+is the acquire operation.
 
 
