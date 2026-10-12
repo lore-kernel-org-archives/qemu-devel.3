@@ -4,58 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3429BCA9ED0
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 00:00:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D10A6CA9ED0
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 00:00:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGPu1-0005ej-KU; Mon, 12 Oct 2026 19:57:58 -0400
+	id 1xGPu0-0005e2-47; Mon, 12 Oct 2026 19:57:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dongli.zhang@oracle.com>)
- id 1xGPtz-0005cx-5d
+ id 1xGPtz-0005cu-4v
  for qemu-devel@nongnu.org; Mon, 12 Oct 2026 19:57:55 -0400
-Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
+Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dongli.zhang@oracle.com>)
- id 1xGPtv-0006EN-7V
+ id 1xGPtw-0006Ew-H0
  for qemu-devel@nongnu.org; Mon, 12 Oct 2026 19:57:54 -0400
-Received: from pps.filterd (m0333521.ppops.net [127.0.0.1])
+Received: from pps.filterd (m0333520.ppops.net [127.0.0.1])
  by mx0b-00069f02.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69CMgYtE3713163; Mon, 12 Oct 2026 23:57:44 GMT
+ 69CMgp8h335869; Mon, 12 Oct 2026 23:57:48 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=corp-2025-04-25; bh=2SmRr
- HWahGu4IcKt0wFvUXhPB5XElnWlM1YNXqXYSGw=; b=bog5rZZT9Qr2+vT7FTkxe
- CefG7nYAb74M4BXklDvvW8YkFbl0nLpkAvq08ENanOCRVGrn+nP/8p00pgLTW48A
- 8KNUc0MDDfck5re7rE0D7sgApG0Yqud2VUr3rn+asTMIcslXZJmK54lX3Ix0xpGg
- DNMJlz0c3ZgJC3idg/AwDUZ2ZU/7elG0Ek1y8pudqS8961qaRYDe6OwnIdYXm8ka
- c5fsQVGBbre6JKukOC7CIZQxTCBs1WLo09KhXtrXM/Y6AtYYz76Edk+JCGmmaBfG
- UZYntrXco67fk8HwmNZe3cSeWAULpBfnwL1h49m3zcAKFXKg4f04SFMjA/xrQosv
- w==
+ :mime-version:references:subject:to; s=corp-2025-04-25; bh=iqqAi
+ qOggl+FdokUW4MvN0/Ddwp2nsKGVlE7PbY+Frc=; b=lysj8kOcGqbgkIo94XRR8
+ X6ToQpKCqirIOKATSi9/uWzw3wwYxxv7e9Vllnmwj+7RF5BUmJcwrWp17brdkTob
+ CwB0d+ZUwbZ6lYHPGBa6w49GMvwvXp14otSKFnNRfFzAx0KwBQxbU1ExhUnDehpW
+ aV+xtPpwNnhZ0LQ3LssHzu5jqR5Z4WRU9+PPyc7YVkfj/pLlunHU3m6XnGUdnE+3
+ bWRCT09yGPalT1KBBoeva77vCHoqbaX+WqBL0jr12/6apfvf1LCRZaPOFNO6Zliv
+ 2kBc+pYqMxPyvAB5WoS5gXbup6WnQISx+YEkG1KyI/NvNb5xfHMK8AJ3P0227g9n
+ g==
 Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta01.appoci.oracle.com [130.35.100.223])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4h7dbkk691-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4h7dddu7t8-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 12 Oct 2026 23:57:44 +0000 (GMT)
+ Mon, 12 Oct 2026 23:57:48 +0000 (GMT)
 Received: from pps.filterd
  (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
  by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.7/8.18.1.7)
- with ESMTP id 69CNpf4Z015146; Mon, 12 Oct 2026 23:57:43 GMT
+ with ESMTP id 69CNpeFM015082; Mon, 12 Oct 2026 23:57:47 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 4h7btnuhrv-1
+ 4h7btnuht4-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 12 Oct 2026 23:57:43 +0000 (GMT)
+ Mon, 12 Oct 2026 23:57:47 +0000 (GMT)
 Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.18.1.12/8.18.1.12) with ESMTP id 69CNvfH9025328;
- Mon, 12 Oct 2026 23:57:42 GMT
+ by pps.reinject (8.18.1.12/8.18.1.12) with ESMTP id 69CNvfHN025328;
+ Mon, 12 Oct 2026 23:57:46 GMT
 Received: from donglzha-e6-vfio-setup.osdevelopmeniad.oraclevcn.com
  (donglzha-e6-vfio-setup.allregionaliads.osdevelopmeniad.oraclevcn.com
  [100.100.255.69])
  by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTP id
- 4h7btnuhra-2; Mon, 12 Oct 2026 23:57:42 +0000 (GMT)
+ 4h7btnuhra-9; Mon, 12 Oct 2026 23:57:46 +0000 (GMT)
 From: Dongli Zhang <dongli.zhang@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: david@kernel.org, imammedo@redhat.com, maciej.szmigiero@oracle.com,
@@ -65,9 +65,9 @@ Cc: david@kernel.org, imammedo@redhat.com, maciej.szmigiero@oracle.com,
  eric.auger@redhat.com, zhenzhong.duan@intel.com, mst@redhat.com,
  cohuck@redhat.com, pbonzini@redhat.com, armbru@redhat.com,
  eblake@redhat.com
-Subject: [PATCH 01/21] qapi/migration: add cpr-luo migration mode
-Date: Mon, 12 Oct 2026 23:55:57 +0000
-Message-ID: <20261012235727.398133-2-dongli.zhang@oracle.com>
+Subject: [PATCH 08/21] migration/cpr-luo: track LUO fds
+Date: Mon, 12 Oct 2026 23:56:04 +0000
+Message-ID: <20261012235727.398133-9-dongli.zhang@oracle.com>
 X-Mailer: git-send-email 2.43.7
 In-Reply-To: <20261012235727.398133-1-dongli.zhang@oracle.com>
 References: <20261012235727.398133-1-dongli.zhang@oracle.com>
@@ -80,33 +80,33 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0
  spamscore=0 adultscore=0 bulkscore=0 malwarescore=0 mlxscore=0
  lowpriorityscore=0 suspectscore=0 mlxlogscore=999 classifier=spam adjust=0
  reason=mlx scancount=1 engine=8.19.0-2610020000 definitions=main-2610120095
-X-Authority-Analysis: v=2.4 cv=Ra0FmFtv c=1 sm=1 tr=0 ts=6acd73f8 b=1 cx=c_pps
+X-Proofpoint-GUID: dsuToRXu0Vr7ALMmjpEmc9dJFjY74pxU
+X-Proofpoint-ORIG-GUID: dsuToRXu0Vr7ALMmjpEmc9dJFjY74pxU
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDEyMDA5NSBTYWx0ZWRfXzqRKISyFd345
+ wFiDT59XBs7kTYtAFvhcto3oe9E4asM3Bu8Q3u9g6qm38rB+1iv8rKgv8o151+KHghcS4Fp7m6H
+ 2kxqrSKrQRdmx70tgbv/A5ogJakc5TkuzK2M2k1LeqxzbfjbJc+6
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDEyMDA5NSBTYWx0ZWRfX6hjQGHxsHIDp
+ RpvKMdnRLOm2zlmfQ5qCCHGVROgNB8lLIkFRuqetfOQbIs42/cBuThONXU0KEJCq7QREMrfzS81
+ u4+CE9L5CeJ9VXoAnunSu7v9HjFlhfj5fvQodytXixvYS6lwjJo1brHh4z4m64cMxY3BCT/35BT
+ w5kKKIHl12rZB7kbNXfR1dQ1o5PoQUAWgjUfIh6DnuQ70JQqt5peaM6vY4RG4S06yb5+2NZ8L0Q
+ gFwVw2ZoxLsnWn9EkV54fMCUV3Ry5+7EvlmxBjNhbaUe2pKxtolqYXHdChB1cydyLaE7IuSKG+t
+ xyb6a7ii8avQ9o73iV/J2dzCeYz4x2JxN2EcHoPzNLgOevTj+maoRtVtC0zuFvr03xYf3pBWHnL
+ z6DXPvQ9wfzDs0nJEdTCSm9XeOb4cSnDHYgOtyBltd5HGOxvEcmZFiAvNXcteIdfa5RUgonI9ag
+ 6tJh11beGFJvwRkx13VQu46UECMFFUpfCz28UZ8c=
+X-Authority-Analysis: v=2.4 cv=J/8/fwnS c=1 sm=1 tr=0 ts=6acd73fc b=1 cx=c_pps
  a=zPCbziy225d3KhSqZt3L1A==:117
  a=zPCbziy225d3KhSqZt3L1A==:17
  a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22 a=jiCTI4zE5U7BLdzWsZGv:22
- a=x0eKOSpe3m1H3M0S9YoZ:22 a=yPCof4ZbAAAA:8 a=DI37mbQq3CLBlZ2vXzEA:9
+ a=BqU2WV_vvsyTyxaotp0D:22 a=yPCof4ZbAAAA:8 a=5oX6RG7t2f6SuAMBXUgA:9
  a=5yU3S35YU4bGjq-dph-N:22 a=Bho9c0fBagfJEIQBS7DQ:22 cc=ntf awl=host:12107
-X-Proofpoint-GUID: euGK1cEcLEs-5rNUoNdmsYJFQNLALCpl
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDEyMDA5NSBTYWx0ZWRfX8YKPOozTAJhI
- RxjOm9H6Z7OASNjkobq7av+8G91oaLiLNKbN6vPl2CHYRlIvG2Ac8lSNWFS6r3SCsLSmxemvCzA
- MQOPqquBhNkYpLrBumKIieXSnGntWbbhT8/KZYNGicfFU+yH9f5pAqWQ6LNPULQ/ofV/DpV+oJO
- p3bmh+EmR/FtwiLcnQG9+iT1XDE0qU79de4c/vM315UUIgh+/ugMiPFW2axsRHoGvX5DCRl4jbR
- xRZsLrbTlrDqjQ3lzbHvkNSKQ3gnUmau/dqW2Tpaldb1hVLhIoUczIWyQ/uTwPIWIWb6gxv7arM
- GXPi7gRgIKuiNE7Gq4Mh7djeO+L3VEXBL9aF/kvImXqjPb8FyNpFOz+EQ92yHlNcYUghnJolHd+
- kHs5bsdTSlBpsk0qUbMsH2ouqiKGaE6vrSqfuO8F5eIy04ER8WhoZxmq6ryd5XU+e2vN+jetQBQ
- Xnd3Zw+KzOtkfvyEs901+YtKWmc4cyidHZFJKbVM=
-X-Proofpoint-ORIG-GUID: euGK1cEcLEs-5rNUoNdmsYJFQNLALCpl
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDEyMDA5NSBTYWx0ZWRfX7uZl3ztKNJpX
- QqLSMF2TOOHji4Wf16K87GFSf4JJIcmMu5mkHHnMndE6dyttzJ8Z9p08GiiWW6IUltpz+5KRNaW
- BzQvJWaSCH77lytexj8KrLDZDipRWa/FJ/LM51+GxAMzhepZPNBe
-Received-SPF: pass client-ip=205.220.165.32;
- envelope-from=dongli.zhang@oracle.com; helo=mx0a-00069f02.pphosted.com
+Received-SPF: pass client-ip=205.220.177.32;
+ envelope-from=dongli.zhang@oracle.com; helo=mx0b-00069f02.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -123,39 +123,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add the cpr-luo migration mode for CPR through the Linux Live Update
-Orchestrator (LUO). Subsequent changes preserve CPR state and RAMBlock
-backing file descriptors in an LUO session across a host kernel update.
+Track whether saved CPR file descriptors can be used for LUO. Currently,
+only RAMBlock fds (RAM or device/firmware related memory) are used for LUO.
+
+To find the locations to mark a CprFd as LUO, I simply searched for all
+direct and indirect callers of cpr_save_fd(). Most of them are for VFIO
+and can be ignored.
+
+Another option is to introduce additional argument to existing
+cpr_save_fd(). Just add additional function for simplicity.
 
 Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
 ---
- qapi/migration.json | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ backends/hostmem-memfd.c | 1 +
+ backends/hostmem-shm.c   | 1 +
+ include/migration/cpr.h  | 2 ++
+ migration/cpr.c          | 8 ++++++++
+ system/physmem.c         | 1 +
+ 5 files changed, 13 insertions(+)
 
-diff --git a/qapi/migration.json b/qapi/migration.json
-index 889a9b89c2..ab117c3897 100644
---- a/qapi/migration.json
-+++ b/qapi/migration.json
-@@ -712,9 +712,18 @@
- #     with the '-machine aux-ram-share=on' option.
- #
- #     (since 10.2)
-+#
-+# @cpr-luo: A CPR mode that preserves guest RAM backing file
-+#     descriptors and CPR state through the Linux Live Update
-+#     Orchestrator (LUO) across a host kernel update.
-+#
-+#     This mode requires Linux with LUO support.
-+#
-+#     (since 11.2)
- ##
- { 'enum': 'MigMode',
--  'data': [ 'normal', 'cpr-reboot', 'cpr-transfer', 'cpr-exec' ] }
-+  'data': [ 'normal', 'cpr-reboot', 'cpr-transfer', 'cpr-exec',
-+            'cpr-luo' ] }
+diff --git a/backends/hostmem-memfd.c b/backends/hostmem-memfd.c
+index 666593ff6c..c47bb09ba2 100644
+--- a/backends/hostmem-memfd.c
++++ b/backends/hostmem-memfd.c
+@@ -85,6 +85,7 @@ memfd_backend_memory_alloc(HostMemoryBackend *backend, Error **errp)
+         return false;
+     }
+     cpr_save_fd(name, 0, fd);
++    cpr_mark_fd_luo(name, 0);
  
- ##
- # @ZeroPageDetection:
+ have_fd:
+     backend->aligned = true;
+diff --git a/backends/hostmem-shm.c b/backends/hostmem-shm.c
+index 4766db6aad..77ec329f70 100644
+--- a/backends/hostmem-shm.c
++++ b/backends/hostmem-shm.c
+@@ -49,6 +49,7 @@ shm_backend_memory_alloc(HostMemoryBackend *backend, Error **errp)
+         return false;
+     }
+     cpr_save_fd(backend_name, 0, fd);
++    cpr_mark_fd_luo(backend_name, 0);
+ 
+ have_fd:
+     /* Let's do the same as memory-backend-ram,share=on would do. */
+diff --git a/include/migration/cpr.h b/include/migration/cpr.h
+index 5f30df7ec8..425f6ee956 100644
+--- a/include/migration/cpr.h
++++ b/include/migration/cpr.h
+@@ -23,6 +23,7 @@ typedef struct CprFd {
+     unsigned int namelen;
+     int id;
+     int fd;
++    bool luo;
+     QLIST_ENTRY(CprFd) next;
+ } CprFd;
+ 
+@@ -37,6 +38,7 @@ typedef struct CprState {
+ extern CprState cpr_state;
+ 
+ void cpr_save_fd(const char *name, int id, int fd);
++void cpr_mark_fd_luo(const char *name, int id);
+ void cpr_delete_fd(const char *name, int id);
+ int cpr_find_fd(const char *name, int id);
+ void cpr_resave_fd(const char *name, int id, int fd);
+diff --git a/migration/cpr.c b/migration/cpr.c
+index 33ac74c1f3..9b6b85cedd 100644
+--- a/migration/cpr.c
++++ b/migration/cpr.c
+@@ -141,6 +141,14 @@ static CprFd *find_fd(const char *name, int id)
+     return g_hash_table_lookup(get_cpr_fds_hash(), &key);
+ }
+ 
++void cpr_mark_fd_luo(const char *name, int id)
++{
++    CprFd *elem = find_fd(name, id);
++
++    g_assert(elem);
++    elem->luo = true;
++}
++
+ void cpr_delete_fd(const char *name, int id)
+ {
+     CprFd key = {
+diff --git a/system/physmem.c b/system/physmem.c
+index db3dda563d..263acb5727 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -2458,6 +2458,7 @@ static int qemu_ram_get_shared_fd(const char *name, bool *reused, Error **errp)
+ 
+     if (fd >= 0) {
+         cpr_save_fd(name, 0, fd);
++        cpr_mark_fd_luo(name, 0);
+     }
+     *reused = false;
+     return fd;
 -- 
 2.43.5
 
