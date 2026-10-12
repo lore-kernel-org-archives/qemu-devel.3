@@ -4,145 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28776CA9ED5
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Oct 2026 04:47:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4449CA9ED5
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Oct 2026 05:18:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xG7ws-00078v-Rz; Mon, 12 Oct 2026 00:47:42 -0400
+	id 1xG8QM-0002PS-Uz; Mon, 12 Oct 2026 01:18:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1xG7wr-00078m-Iu
- for qemu-devel@nongnu.org; Mon, 12 Oct 2026 00:47:41 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1xG7wp-0004RH-NM
- for qemu-devel@nongnu.org; Mon, 12 Oct 2026 00:47:40 -0400
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69C1lGuO892995
- for <qemu-devel@nongnu.org>; Mon, 12 Oct 2026 04:47:38 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 4a0eRgRWsn/RomkcNbrkGdhq81XveZxOqrrM7pggk5c=; b=Rd86tEZdYVb1qPHl
- +9hoskJyy+Q6mLyW59Tu/R3oL9gkxrQKQ4ZnO8QNiynQgFATz9h7jhThe26CkowQ
- SRGOYVC9sAnUiUJkWfElN4YW/9nMDSjrWBn19V1wxNjYhQ6knNlcHTpjg5Xy+i0R
- aceAaBTRFdjOpsAvNk8hChmBMtIQ+mK10ky4V0IJvVN41Tb+67NcVhRdORaUryG+
- soWDS0u717hRDRppIqEfnEjMatVaZ5vca8Thgozv5HiiIFYLpQuDuj5AIO8oynAL
- 5+UM27cAYEfGzkmJ9nqU0bMIZa1AwAqezMMmYHkCTd2Ur+577BL7l43weSZNPNPu
- mhhMGw==
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h8j710wmq-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 12 Oct 2026 04:47:38 +0000 (GMT)
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-93a1de6d5c3so382146585a.3
- for <qemu-devel@nongnu.org>; Sun, 11 Oct 2026 21:47:38 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jeuk20.kim@gmail.com>)
+ id 1xG8QL-0002PK-TF
+ for qemu-devel@nongnu.org; Mon, 12 Oct 2026 01:18:09 -0400
+Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <jeuk20.kim@gmail.com>)
+ id 1xG8QK-0007UX-0F
+ for qemu-devel@nongnu.org; Mon, 12 Oct 2026 01:18:09 -0400
+Received: by mail-pj1-x102a.google.com with SMTP id
+ 98e67ed59e1d1-3856d6fbcb3so711163a91.2
+ for <qemu-devel@nongnu.org>; Sun, 11 Oct 2026 22:18:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1791780458; x=1792385258; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=4a0eRgRWsn/RomkcNbrkGdhq81XveZxOqrrM7pggk5c=;
- b=HvnlCwc5OuOeKzEkTuKYvifXTcLqk7gJexZI8ULjTkb5LhCzfaiFfVf8uvJQKoxdu1
- CeJaSE1TxWfsKkEAeY0GcCR9AwGAGWv2lKSx3EW1243HvXMzy6fvJ7vp9ZsLWB01pzWC
- Wpz0Q659t7zBIgt5gAHZcxknvRR7ZNw+E/nChLxHTSzWQJK7cr5//MyFxXl//bm4qCGp
- MOio55CAy01Uc/4R3fSIpxnGUNl3BErzfX9Ms/6FTrMCN2FYUDkHaH1A51z06Cu/R+QN
- mluzjO+yo1ZxIT8+7/9IWgX2Nj4nK94ObS3YVTG/1ZkrslaXmG4GXAoktYmla/IEnQDR
- zVEA==
+ d=gmail.com; s=20251104; t=1791782285; x=1792387085; darn=nongnu.org;
+ h=message-id:date:references:in-reply-to:cc:to:subject
+ :content-transfer-encoding:content-type:mime-version:from:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=lwgjeRydJST696IHSeHuaYzCpV5/DSxHH6p9N6Ffcm4=;
+ b=F+gVWavIyCiOl5v8eHUfS3M9Mu2fMq1b+3yayk49Po96z0X8XAiWbrkKQI1PuT3I4T
+ xppxX1BSefZV3fW4D0GROOO2pxrb8M7+elMkjHfgw2cEpl6+vF5ifc+0/U9E/cQMRveY
+ l3daPBJBWrBccK40jAz7jI9bXxtpAeHODfCup+IiF9Dnr3DXGPJau6rqU7ICUEl3yBO0
+ rAS0VfeQHTHJM/YqHVtdxBAS60eEOoy8dK7lc04LvsxfkoFYp43AV8tNDfYD+P0QHw6P
+ DjguN1s+W8MDzXexFpm9xsNJT4vq04FZEi98JNNBsNgPWak9lguBEJgWTjm9tABJe6ml
+ Wolw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791780458; x=1792385258;
- h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=4a0eRgRWsn/RomkcNbrkGdhq81XveZxOqrrM7pggk5c=;
- b=FOrPxRewNgJcVKB0fTUR8rIN5raEJ4UUH9/kNjrAGl+OiifMb5mSgnB4Le1Q0koGEG
- VQ/kWXWI94FEZN1fsbhJPsWeUY5E3on5VNgQNvi0q2gB+zzc+tkqGEp26/tM5DP+tK6h
- tBdzOFMc29OfLIX3PglWe9N9K9tnbmJilZ2O0m+c7U+KGRLAxutwz2NXDORIrge3V9tj
- V6oQH/zeh5OGNZHavpzb2t2KnBbKmQkBZM6ed9HGAw9UvBDTAUH0r9jfsWp2YsvdtLnC
- dZ2/x2Km64qPjKQ2UcJNeFwtuqO46oSbjwTfRSaeINYSswuLNzU+Hnn6+m6bJ+lNbLSg
- EWCA==
+ d=1e100.net; s=20260707; t=1791782285; x=1792387085;
+ h=message-id:date:references:in-reply-to:cc:to:subject
+ :content-transfer-encoding:content-type:mime-version:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=lwgjeRydJST696IHSeHuaYzCpV5/DSxHH6p9N6Ffcm4=;
+ b=HXM/0swWezLNttKE+i6nr6nmG3OzOdKFrt/7kDRuOgNTYd34cux00aEnysnmdSW54E
+ HE8vo4xeCZHCGWKb5suOMHaqcdkWcoiW7PcJ3f9uIEz5pOqJgrnoPrpvbDGlvONd7znJ
+ zB6l4CqBEdsuMCsPKxzlBuegRN0o59gpcNhtpoFxYPRtCMAti/U9ZXTm6Z9aFdMCF+W8
+ Jd1M6JtoKPopeaS8CKeJLehabktyVNAJwpaHQKCb9YIEAN5o3EayWv2v5qXyfSPv03lM
+ ahFrl1XaShqvW/6k/OOUNnU63Jf5iKJFHb3bF3gaCckw7+OzHvHh97cWNVBe8i+YaT94
+ nehw==
 X-Forwarded-Encrypted: i=1;
- AKwUvBxbG0Q719zF4oXPSM9jgJT4BUnKgL2tKYE9ykzv+lNpqRhXGegsaSzbew8qZJ+Z234Tl5mMnqhD8SXc@nongnu.org
-X-Gm-Message-State: AFq9FYJsblV5JedfWvjns2k4I9yvTn8Nc/6VVl0uzYa2aTXHlelHs2DM
- KuA8iIYk/t+lgxY8iV3sc1+u6E2r2uWSc6WPBnYS38aCNOY8iH7Gy1Hp5twpchq9U4lW7jOKMGs
- byazE3TFAqs+xpjT6qLzLNo//9uhCCEfux9h7DopKeXxPW/lunCb4dIR2rQ==
-X-Gm-Gg: AYBFou3ZkITuYJzZjdH96IgdF6Gr/0IKdbIdTkm9n1+983iVUCZOWhVo7erSJm7IMbv
- xU8wbJLsVl8OmwsqIpY/vgeV/T7WA1Jj+AtDx7cRXfwP8qjlQb6pZVdglvXVYXOc0kJqtERJgKF
- Cq5ZtMfa0LeleZCxc4S5bNQqgxqCn5hj24iUsbEZjBLcAfsfubo4KwV5fGJr75EJ29fsjvs13Kf
- dAx5e6kJbImpdYHf1/YfxTtkOs3vxP30JgI4ePxfb582FWSYMFEyu3BAdpbivK6JTox4PiGlepG
- hXDYBjqshx1vvDP4T8IJX1kvFbRdglLytEF3c6EfdVtEnQS+W2NrRfSW7yzlRjiRcrXNUDRSJU7
- OGFY6Mw4R2RRJUbZbri9er+CjO9prZw48B9PRj5dMdqw0fs9KCGXNFyIBB20X71Les9IfjRLkWs
- OvqxU=
-X-Received: by 2002:a05:620a:7118:b0:93e:54d2:2285 with SMTP id
- af79cd13be357-93ebd249076mr1372486685a.33.1791780458004; 
- Sun, 11 Oct 2026 21:47:38 -0700 (PDT)
-X-Received: by 2002:a05:620a:7118:b0:93e:54d2:2285 with SMTP id
- af79cd13be357-93ebd249076mr1372484285a.33.1791780457582; 
- Sun, 11 Oct 2026 21:47:37 -0700 (PDT)
-Received: from [192.168.1.199] (104-54-226-75.lightspeed.austtx.sbcglobal.net.
- [104.54.226.75]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-93eb98cd599sm774683485a.39.2026.10.11.21.47.34
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 11 Oct 2026 21:47:35 -0700 (PDT)
-Message-ID: <35ff35a1-42ba-4358-b6bf-7635503dfbcf@oss.qualcomm.com>
-Date: Sun, 11 Oct 2026 23:47:32 -0500
+ AKwUvBzcjoQ9QMEe8daPnceTbiKfjOtlbY9ac8dQNO4LZ0UweqXuzCwQEVqIOWtKN+ReIPTe3O8Bw64iYTz0@nongnu.org
+X-Gm-Message-State: AFq9FYLNiWVprwjVGzu3fW8/ZDXmbJFhCri5CdZRNxXdhissyWzExrua
+ MkoG90rlTatUJ/gWOKZX37skaLsCvHiwu/MO3LToGKzJsbbbWmNLcbS3HNIIhw==
+X-Gm-Gg: AYBFou07q7yg/VwefERYA5NVmaegOF68sXUwfEzhfe/Spujs3saMG8JKJgY39EN6wzd
+ SsEZ8dB3TM4xZ1kYZF+UvIZeZHNUGGJr7l8Rher2JOPHLu9pql6Pzi0fVt24Mt7YhT9rOMuKdt6
+ feRJxjDHtu9Si8qlh9IAlTLDUGE48dEsm6YFoHT5o+/b2kzdAJkSt7KyTLIIAvogZCfyzOnhva/
+ dM/9xD82sdPxR5lgkSLjnhzax03JFt4tIOfY/4gyIhradgjD40wBK8b/R/4ysYvH2JgKEtiRMp9
+ XwY6+EREh+y33mhCOVWfFAD2lgMQ7xoLUYHyH09BRkn2t0vqgCrk/R25clItelu5P8M1koyaRgQ
+ eZK16jqNIArNvEczuXfAbuktYmu/VU1TltW+jiO2mWWv9FR4YHhR1tYzqgPySTSHQqEtzZDXO9K
+ kF4D1ZtirK0k5BWs2UloE8WMgyKQsd7D/UcGioECxE+ckUA5FP5IRrQyUmWpNFs10et7vRx2D7j
+ g==
+X-Received: by 2002:a17:90b:2784:b0:3ab:9cb:b5a5 with SMTP id
+ 98e67ed59e1d1-3ab3a74739dmr7000642a91.18.1791782284926; 
+ Sun, 11 Oct 2026 22:18:04 -0700 (PDT)
+Received: from [127.0.1.1] ([211.226.54.223]) by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-3ab37139b59sm14924328a91.13.2026.10.11.22.18.02
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 11 Oct 2026 22:18:04 -0700 (PDT)
+From: Jeuk Kim <jeuk20.kim@gmail.com>
+X-Google-Original-From: Jeuk Kim <jeuk20.kim@samsung.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 03/11] hw/hexagon/virt: make machine available for hexagon
- target only
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Alistair Francis <alistair.francis@wdc.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-References: <20261009225226.10657-1-pierrick.bouvier@oss.qualcomm.com>
- <20261009225226.10657-4-pierrick.bouvier@oss.qualcomm.com>
-Content-Language: en-US
-From: Brian Cain <brian.cain@oss.qualcomm.com>
-In-Reply-To: <20261009225226.10657-4-pierrick.bouvier@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDEyMDAxOCBTYWx0ZWRfX1Hm92d1S2HU7
- ZO0GihQGzsO3cLD9FDNnZbXe/l0zEaJXnRJttoYM3IyOpeF+hc2qgrsPVYQuuXYTFbsSbJp5EQA
- H8wEfQG4z3FeSeFiJBCCW2D69Rnby8A=
-X-Proofpoint-GUID: kjNiRxD94dCNcsOR9PRxiiSUM2f3JQ_G
-X-Proofpoint-ORIG-GUID: kjNiRxD94dCNcsOR9PRxiiSUM2f3JQ_G
-X-Authority-Analysis: v=2.4 cv=ePGGH3p1 c=1 sm=1 tr=0 ts=6acc666a cx=c_pps
- a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=x6rl1zRT+JsLSO7OGbGBKQ==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
- a=EUspDBNiAAAA:8 a=zq3j2UT3UYmOdI0FYFAA:9 a=QEXdDO2ut3YA:10
- a=PEH46H7Ffwr30OY-TuGO:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDEyMDAxOCBTYWx0ZWRfX+nmm0UyWk0Qd
- Nps6jFSUsayBt+M9qz1DNa1QShW0HpJF1qVJOvAFq1ZWhQ6wjG0fNS9PdUGreJ0TcE3fDtsCZE6
- 9DySUOa6HBnyAX5knbpSkWnyaYpVhYGMRBxAY1hKxNruZdypHEv8ZY/iN3k6/s6x9tSbI9L02C0
- FdCq6FZY3Np6yKiu84OI2Y/tRwLJsLkz3zwRp1xoungv2TwCRaKwp1xJwo4WLriOc1Ua7Cv+1kg
- /4XRRaz/CMe1OCqKbgcc0a8hZQpJ4fdhcOVirJhvtGZZ0Pwk5+oxsprYqavEgC94mmvodcF3DAG
- Vb0XatTzw5ibfpv9CjpcW4hpLpohfzJHKFBzlORHw74v4195pMJJcIkrS6PLLa4cjPZyz8Wre4Y
- Whk4fd7YneMvD1hfnGTrIgjGGrWwNKK6a7+AQmaWA8RU9NkSZyG5inV1EEwETazG2YUJAx24tQn
- ZYFCODQOmHfhmKnAkVw==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-10-12_01,2026-10-09_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 clxscore=1015 impostorscore=0 malwarescore=0 adultscore=0
- bulkscore=0 phishscore=0 priorityscore=1501 suspectscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610080000 definitions=main-2610120018
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Subject: Re: [PATCH] docs/system: Add UFS emulation page
+To: Jeuk Kim <jeuk20.kim@samsung.com>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, stanleyjhu@google.com
+Cc: Bart Van Assche <bvanassche@acm.org>, qemu-devel@nongnu.org, 
+ qemu-block@nongnu.org, jeuk20.kim@gmail.com, j-young.choi@samsung.com
+In-Reply-To: <20261011122053.1250706-1-stanleyjhu@google.com>
+References: <20261011122053.1250706-1-stanleyjhu@google.com>
+Date: Mon, 12 Oct 2026 14:17:44 +0900
+Message-Id: <179178226448.110507.9534627472462542283.b4-review@b4>
+X-Mailer: b4 0.16.1-dev
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
+ envelope-from=jeuk20.kim@gmail.com; helo=mail-pj1-x102a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -159,34 +106,145 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-On 10/9/2026 5:52 PM, Pierrick Bouvier wrote:
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+> The UFS host controller and logical unit devices have no user
+> documentation. Their properties and the way the two devices fit
+> together can only be found by reading hw/ufs/.
+> 
+> Add docs/system/devices/ufs.rst with an example command line, the
+> device properties, and current limitations, and list it under the UFS
+> entry in MAINTAINERS.
+> 
+> Signed-off-by: Stanley Jhu <stanleyjhu@google.com>
 > ---
-
-Reviewed-by: Brian Cain <brian.cain@oss.qualcomm.com>
-
->   hw/hexagon/virt.c | 2 ++
->   1 file changed, 2 insertions(+)
+>  MAINTAINERS                      |  1 +
+>  docs/system/device-emulation.rst |  1 +
+>  docs/system/devices/ufs.rst      | 88 ++++++++++++++++++++++++++++++++
+>  3 files changed, 90 insertions(+)
+>  create mode 100644 docs/system/devices/ufs.rst
 >
-> diff --git a/hw/hexagon/virt.c b/hw/hexagon/virt.c
-> index 64d8366d27d..b601cd77a92 100644
-> --- a/hw/hexagon/virt.c
-> +++ b/hw/hexagon/virt.c
-> @@ -20,6 +20,7 @@
->   #include "hw/core/register.h"
->   #include "qemu/error-report.h"
->   #include "qemu/guest-random.h"
-> +#include "qemu/target-info.h"
->   #include "qemu/units.h"
->   #include "machine_cfg_v68n_1024.h.inc"
->   #include "system/address-spaces.h"
-> @@ -379,6 +380,7 @@ static const TypeInfo virt_machine_types[] = { {
->       .parent = TYPE_HEXAGON_COMMON_MACHINE,
->       .instance_size = sizeof(HexagonVirtMachineState),
->       .class_init = virt_class_init,
-> +    .is_available = target_hexagon,
->   } };
->   
->   DEFINE_TYPES(virt_machine_types)
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 1312bbd1bd..c7f65a5a77 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -2758,6 +2758,7 @@ S: Supported
+>  F: hw/ufs/*
+>  F: include/block/ufs.h
+>  F: tests/qtest/ufs-test.c
+> +F: docs/system/devices/ufs.rst
+>  
+>  megasas
+>  L: qemu-block@nongnu.org
+> diff --git a/docs/system/device-emulation.rst b/docs/system/device-emulation.rst
+> index 40054bb7df..a7d247a270 100644
+> --- a/docs/system/device-emulation.rst
+> +++ b/docs/system/device-emulation.rst
+> @@ -96,6 +96,7 @@ Emulated Devices
+>     devices/net.rst
+>     devices/nvme.rst
+>     devices/scsi/index.rst
+> +   devices/ufs.rst
+>     devices/usb-u2f.rst
+>     devices/usb.rst
+>     devices/vfio-user.rst
+> diff --git a/docs/system/devices/ufs.rst b/docs/system/devices/ufs.rst
+> new file mode 100644
+> index 0000000000..d3482e9299
+> --- /dev/null
+> +++ b/docs/system/devices/ufs.rst
+> @@ -0,0 +1,88 @@
+> +.. SPDX-License-Identifier: GPL-2.0-or-later
+> +
+> +=============
+> +UFS Emulation
+> +=============
+> +
+> +QEMU emulates a Universal Flash Storage (UFS) host controller and the
+> +logical units behind it. The host controller follows the UFSHCI
+> +register interface and reports UFS version 4.1 to the guest.
+> +
+> +Two devices are involved:
+> +
+> +``ufs``
+> +  The host controller on the PCI bus. A ``sysbus-ufs`` variant exists
+> +  for boards that place the controller on the system bus; it cannot be
+> +  created with ``-device``.
+> +
+> +``ufs-lu``
+> +  A logical unit attached to a host controller through ``bus=``. Each
+> +  logical unit is backed by a block device.
+> +
+> +The well-known logical units (REPORT LUNS, UFS Device, Boot and RPMB)
+> +are created by the host controller and need no configuration.
+> +
+> +Adding a UFS Device
+> +===================
+> +
+> +The following adds a host controller with MCQ enabled and one logical
+> +unit backed by ``ufs.img``:
+> +
+> +.. code-block:: console
+> +
+> +    -drive file=ufs.img,if=none,id=lu0,format=raw \
+> +    -device ufs,id=ufs0,serial=0001,mcq=on \
+> +    -device ufs-lu,drive=lu0,bus=ufs0,lun=0
+> +
+> +Add more ``ufs-lu`` devices with different ``lun`` values to create
+> +more logical units. On top of the architecture defconfig, a Linux
+> +guest needs ``CONFIG_SCSI_UFSHCD``, ``CONFIG_SCSI_UFSHCD_PCI`` and
+> +``CONFIG_BLK_DEV_SD``; each logical unit then appears as a SCSI disk.
+> +
+> +Host Controller Properties
+> +==========================
+> +
+> +``serial``
+> +  Serial number string. It is accepted but not reported to the guest
+> +  yet; the serial number string descriptor reads back empty.
+> +
+> +``nutrs`` (default 32, maximum 32)
+> +  Number of UTP transfer request slots.
+> +
+> +``nutmrs`` (default 8, maximum 8)
+> +  Number of UTP task management request slots advertised to the guest.
+> +  Task management requests are not processed yet (see Limitations).
+> +
+> +``mcq`` (default off)
+> +  Advertise Multi-Circular Queue (MCQ) support. When off, the guest
+> +  uses the single doorbell transfer request list.
+> +
+> +``mcq-maxq`` (default 2, maximum 31)
+> +  Number of MCQ submission and completion queue pairs.
+> +
+> +``wb-max-size``, ``wb-min-size`` (default 0x400 and 0x100)
+> +  Maximum and minimum WriteBooster buffer size, in allocation units.
+> +  ``wb-min-size`` must not exceed ``wb-max-size``.
+> +
+> +Logical Unit Properties
+> +=======================
+> +
+> +``drive``
+> +  Backing block device.
+> +
+> +``lun`` (default 0)
+> +  Logical unit number, 0 to 31. A host controller accepts up to 32
+> +  logical units.
+> +
+> +Limitations
+> +===========
+> +
+> +* UniPro and M-PHY are not modelled. Only the UIC commands needed for
+> +  link startup, DME attribute access and hibernation are handled; DME
+> +  reads return fixed values, and DME writes, power mode changes and
+> +  hibernation do not change any link state.
+> +* UTP task management requests are not processed, so a guest that
+> +  tries to abort a command or reset a logical unit gets no completion.
+> +* The Boot and RPMB well-known logical units only answer basic SCSI
+> +  commands such as INQUIRY; boot and RPMB data access are not emulated.
+> +* The device cannot be migrated.
+
+Thank you for writing this UFS guide.
+
+Reviewed-by: Jeuk Kim <jeuk20.kim@samsung.com>
+
+-- 
+Jeuk Kim <jeuk20.kim@samsung.com>
 
