@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7756CA9ED1
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Oct 2026 11:58:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13673CA9EC5
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Oct 2026 11:58:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGEf7-00048e-Mw; Mon, 12 Oct 2026 07:57:49 -0400
+	id 1xGEeE-0003Xe-11; Mon, 12 Oct 2026 07:56:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <filip.hejsek@gmail.com>)
- id 1xGEe8-0003Wx-Ci
- for qemu-devel@nongnu.org; Mon, 12 Oct 2026 07:56:48 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ id 1xGEdy-0003So-N0
+ for qemu-devel@nongnu.org; Mon, 12 Oct 2026 07:56:39 -0400
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <filip.hejsek@gmail.com>)
- id 1xGEe6-0002Os-SF
- for qemu-devel@nongnu.org; Mon, 12 Oct 2026 07:56:48 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-4a0e1b0681bso12808555e9.3
- for <qemu-devel@nongnu.org>; Mon, 12 Oct 2026 04:56:46 -0700 (PDT)
+ id 1xGEdx-0002MY-7V
+ for qemu-devel@nongnu.org; Mon, 12 Oct 2026 07:56:38 -0400
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-48afcd7ba9bso1000374f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 12 Oct 2026 04:56:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1791806205; x=1792411005; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1791806196; x=1792410996; darn=nongnu.org;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :content-type:mime-version:subject:date:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=5abru1t+vazWM9nKbwfMNV+88Moa82g0st8C9nL0o4c=;
- b=S4RlZv1iTd42+uR0rrU4ZkaJrLD4m8LhTOSirnV8E3OVnrN/I30Kx/nbA+C74gooqa
- Q4saBapZ9YkVa/S+C6qid+EJDEBgoAFoGeLkBH9YCWctA8MnToNWf0byo5JuMOPEWVxY
- VCVztE1GxY95cFwrw4cxp4XuDZWd897oq8lD5As3aXrRMCCpx29KeLalW8a1WmqyuGy0
- PdAajzu1WMTer9mU0WIorwcVrNQJxUJycboMAy9amHMbbswyuT+WukEY/w7ef6ITIFNv
- DxYAufaX1fchQNmcpqIkbr3k/L7arYIA63fvWZ7BEbKCxungUcquFwDn2HI4+DofTeoh
- U/Xw==
+ bh=pNtIniH1QJel5ZvqyD5P6odHkDoTjuMTi4f2c38EAug=;
+ b=WR7U144xcD2qqWh4Mz/C7E3PynPWIXNMQ54gMIpqQpjzZ6Hd+4ay/xY8+ApisKmiH+
+ 4A92CyxpXkIwcoKz5YyBEC3p6xgbjk5QOY7DtoGx2il9AFmS6t1+TxJYB23mxM0K/cGU
+ EmtIS6V+kwSglyYwgsOKo868OGbZr9voJ3Hsbdvs0KWJuyYl5vk8TP72Pa6sbM+JKKGu
+ 2XMi2NiPd+as+kfBVGG0rjNZTP25bCV82qs39Ut/4mLpfcQ6WoIJVOorw/Ysvl7vVxdS
+ jStHWUIknE4uZlv9utzueraoKryrtkUYIQjwrYhpau17JxpffI7kBrYX07hzSWwhronQ
+ HCXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791806205; x=1792411005;
+ d=1e100.net; s=20260707; t=1791806196; x=1792410996;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :content-type:mime-version:subject:date:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=5abru1t+vazWM9nKbwfMNV+88Moa82g0st8C9nL0o4c=;
- b=wFrj0XKSBO0X9QeKm+8wOdupjyd+oyPS69WC/bgM3ofbHgbNAdPT0dvrTLCWbQMlZX
- VK2/kB6k3URZNPm8DYIr1zW5QVpnixl0AHgcvYGit1LSibotmZDjll1EQAo+Z4X/kl9O
- AZmjFOmZeW7DteTEinZt6S73YKTU84UlWKMWs88yXXb+tJbJviIN8TBm2Q4oxXBFTxKv
- UGWwWFaUv+MoVp6+e9qQPDmH9dkmXCMvhzuvBCBSZgAbsOgGUPozf0nvH+yTRQaW47kC
- D1AXD1ynp08wj7D3jmUo6cwfr05kLOMUYOaRzyxnhULqpPGw5RtHic+GzX/riXWEbXAu
- JerQ==
-X-Gm-Message-State: AFq9FYLBDdLYgPfOitqMMbaRGNunyVSOJu9QSit1jANh9Ly8hfq5Nzot
- 16rr+nvyNqRJthtrQo9BS2oT7ygQu/Wc2UbAeJsshR3q4ru0jr8N8Bc7
-X-Gm-Gg: AYBFou3Df12GNycDE+t80+IrrSd4lRn0SczuKnEnApmbx2Tszc+oAbW9in05AfSt9EG
- oJRTPmz7uSf4QWOnGHkicQdDhwQ2sfp1Qkvjf8HJ4lbpDEGOMODq9KYI8ilhH+buXgfXD64wav+
- u2b46jgDhjh2OsaOBy9BGB1wKkgqVBygYUyZ5uDb7RfxqIKGrP1cWMblTXmNz3MR7Gg47TQbVKg
- bI7131brE7ho8GIEoHq6X8cV7gWSpk+hurVarQsaOzayuSUuFpsHXM4Q+WoMPWJiOB6QvbcGAaL
- XolWTORyGF37b7vkN/T9EVQJGLGu0o1e3iHK5/QjA4hfnx0juJpEQDixkQ+bYVGIa94/vSEd/Lj
- p/boGxrr5kc5UmJ5j7xaxA/eXoKB5/o5pG0LayBCUKqG+CXRMJQ8kfUw0g7SfI0sMYX+GBzrED5
- fcBz9ZiCjPomayMqtL1f2IQnizhZZvDmpS6VKpLYLq5ywJPmAMDsO2UibdzPOhoXR8WBsELBH4e
- AxorcAgMauSxF40rCbn72sE9Ok=
-X-Received: by 2002:a05:600c:8105:b0:49f:fdca:c361 with SMTP id
- 5b1f17b1804b1-4a18e483818mr177230995e9.12.1791806205442; 
- Mon, 12 Oct 2026 04:56:45 -0700 (PDT)
+ bh=pNtIniH1QJel5ZvqyD5P6odHkDoTjuMTi4f2c38EAug=;
+ b=ADDosOWbOA9vCenBRx7grf9cIHkrpwVTJAJ8pbSRoqhJkJ8OfvqpnYu9cl3pUOvL7O
+ NUy9SMKGWrFXu8R2DFz1MjJI/ZyESOLwUCxV68mU3M/zJFuX3KF7/jAwGhtFllZWCadn
+ Cvhf5bvg6ve2BZAOPp+gYQuW+XObWq90UhMJChzzL2hw8W1dBjN6EqpnEf/qCHtLOQ37
+ G+PMrGUiM50qImYlaFk4ZQNFK43OMOTRUm9fNONroNoxEDcmQa9o5nSlsM9dKaDmCiuv
+ i6VLnNYDkE1DsG4b2vQJOapbdaDY6+tbjxoh6nAMn10jBH3hYVeXQdCc4kBZ2HMbfY8R
+ 9o5A==
+X-Gm-Message-State: AFq9FYKrDQd062G5so7dlq129THjjlmqTp3rXe5SfQY328HpQ86d4vy/
+ opLmWoh3VdVUzrsgEtTvoJSKgCiIChnn7jiKF+vHYKsZVeakJ2gIgU17
+X-Gm-Gg: AYBFou0e7NCWD0jUkSOG6sQi/o3QOSxEPob+XsZH0CqtP845Up7WDuR06cJtRGNYPOL
+ 0lXtOXqm0kks2sGxsZINAVT6Cms57KA4b/SJ3eGTvx5hxuT5EApdWp4xeV9SWaLGh0ZzF3t3do1
+ Gqem8/rlPuKSiHi4ub+XUcMOkWHNlClFmTQcN9FLxpVVJQRfkCCmfjzqDdoYIFKIfLf7pM2paR3
+ gTYz9rIfoLIQZr3acVHZaC5p28IZAuENOGKLmRDzSbTh4ivScf2wQH+1/Rl7P7s6uZqjNqSkc1p
+ DBLgQ3UQgfkHOx7L62x0uTb0W7qdUgIDS+7hlTflX/JII/RKpKwr3JXOiqPovvit0CJgWY3xQYS
+ OWvt/joTsZrIyrk1DZCOS1XENgjR6VUK75h9+f9tAEHH11Yw53478XPoV5oESq56uOPR62zZaW2
+ QOcn+yvD+410WH/8iwJI2MGtOLMbWDUQi1VnOb64oW5VsP5S8R+olhAAfBSSxLHgjiIHkZrDeFo
+ 5KaP0QqWqh+dhk02h16k4GzKYE=
+X-Received: by 2002:a05:6000:4714:b0:48b:1bf:ffb1 with SMTP id
+ ffacd0b85a97d-48dbacf713fmr15682753f8f.54.1791806195461; 
+ Mon, 12 Oct 2026 04:56:35 -0700 (PDT)
 Received: from localhost (mem-185.47.220.165.jmnet.cz. [185.47.220.165])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48db9ac02cfsm18145130f8f.39.2026.10.12.04.56.44
+ ffacd0b85a97d-48db94e33d2sm20220487f8f.9.2026.10.12.04.56.34
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 12 Oct 2026 04:56:44 -0700 (PDT)
+ Mon, 12 Oct 2026 04:56:35 -0700 (PDT)
 From: Filip Hejsek <filip.hejsek@gmail.com>
-Date: Mon, 12 Oct 2026 13:56:01 +0200
-Subject: [PATCH v9 10/12] qmp: add chardev-window-size-changed command
+Date: Mon, 12 Oct 2026 13:55:54 +0200
+Subject: [PATCH v9 03/12] chardev: add qemu_chr_resize()
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20261012-console-resize-v9-10-8db78320ba81@gmail.com>
+Message-Id: <20261012-console-resize-v9-3-8db78320ba81@gmail.com>
 References: <20261012-console-resize-v9-0-8db78320ba81@gmail.com>
 In-Reply-To: <20261012-console-resize-v9-0-8db78320ba81@gmail.com>
 To: qemu-devel@nongnu.org
@@ -89,15 +89,15 @@ Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, 
  Szymon Lukasz <noh4hss@gmail.com>
 X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1791806189; l=2664;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1791806189; l=1613;
  i=filip.hejsek@gmail.com; s=20250912; h=from:subject:message-id;
- bh=dkeeOHTveAXdNI/kP6dedj3UwMWp2MfG7Z9cA4CDGA0=;
- b=uYfseG+NkFrN578qMixlkIC9iFS8qIm1p7bMSUcfmTY1uJCNSU7Dh0igjQ3z0gZTeGo6SkqJP
- 266eY4GuxXEAyDOTsamObwjkt8mq1rUiQaXDRAKbER5etr/Ii3Fuibr
+ bh=nKK+EFv63K2JxuitDhYbnijeqT/iaRN7xTg5XKak+Xo=;
+ b=mbyCltjMJDe/rpF9iRDPhi9mn1TfsmOuEdlYSGZWkNry1nP/PIxbTYHLIWOW0vtg4v384nLNS
+ LP9/AlovFk0AbT5RdJfxYAYCKW7Zs0uCwdP5O6brzkomk2Omf4V6YAT
 X-Developer-Key: i=filip.hejsek@gmail.com; a=ed25519;
  pk=nakB8gEK3oi+Q/5dBTMCy/LgZL47NP60z1jeDR6O/WU=
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=filip.hejsek@gmail.com; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=filip.hejsek@gmail.com; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -122,89 +122,52 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Szymon Lukasz <noh4hss@gmail.com>
 
-The managment software can use this command to notify QEMU about the
-size of the terminal connected to a chardev, QEMU can then forward this
-information to the guest if the chardev is connected to a virtio console
-device.
+This function should be called whenever we learn about a new size of
+the terminal connected to a chardev.
 
 Signed-off-by: Szymon Lukasz <noh4hss@gmail.com>
-Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
-[Filip: rename command, change documentation]
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Acked-by: Markus Armbruster <armbru@redhat.com>
 Signed-off-by: Filip Hejsek <filip.hejsek@gmail.com>
 ---
- chardev/char.c | 14 ++++++++++++++
- qapi/char.json | 31 +++++++++++++++++++++++++++++++
- 2 files changed, 45 insertions(+)
+ chardev/char.c         | 11 +++++++++++
+ include/chardev/char.h |  2 ++
+ 2 files changed, 13 insertions(+)
 
 diff --git a/chardev/char.c b/chardev/char.c
-index 8c8386e5b5..fe513ae962 100644
+index 40d2180ce7..8c8386e5b5 100644
 --- a/chardev/char.c
 +++ b/chardev/char.c
-@@ -1347,6 +1347,20 @@ bool qmp_add_client_char(int fd, bool has_skipauth, bool skipauth,
-     return true;
+@@ -386,6 +386,17 @@ int qemu_chr_wait_connected(Chardev *chr, Error **errp)
+     return 0;
  }
  
-+void qmp_chardev_window_size_changed(const char *id, uint16_t cols,
-+                                     uint16_t rows, Error **errp)
++void qemu_chr_resize(Chardev *chr, uint16_t cols, uint16_t rows)
 +{
-+    Chardev *chr;
-+
-+    chr = qemu_chr_find(id);
-+    if (chr == NULL) {
-+        error_setg(errp, "Chardev '%s' not found", id);
-+        return;
++    if (cols != chr->cols || rows != chr->rows) {
++        chr->cols = cols;
++        chr->rows = rows;
++        if (chr->be_open) {
++            qemu_chr_be_event(chr, CHR_EVENT_RESIZE);
++        }
 +    }
-+
-+    qemu_chr_resize(chr, cols, rows);
 +}
 +
- /*
-  * Add a timeout callback for the chardev (in milliseconds), return
-  * the GSource object created. Please use this to add timeout hook for
-diff --git a/qapi/char.json b/qapi/char.json
-index 7ae67eedff..842e003194 100644
---- a/qapi/char.json
-+++ b/qapi/char.json
-@@ -862,6 +862,37 @@
- { 'command': 'chardev-send-break',
-   'data': { 'id': 'str' } }
+ QemuOpts *qemu_chr_parse_compat(const char *label, const char *filename,
+                                 bool permit_mux_mon)
+ {
+diff --git a/include/chardev/char.h b/include/chardev/char.h
+index ee9f24038b..2616c19cc0 100644
+--- a/include/chardev/char.h
++++ b/include/chardev/char.h
+@@ -235,6 +235,8 @@ int qemu_chr_write(Chardev *s, const uint8_t *buf, int len, bool write_all);
+ #define qemu_chr_write_all(s, buf, len) qemu_chr_write(s, buf, len, true)
+ int qemu_chr_wait_connected(Chardev *chr, Error **errp);
  
-+##
-+# @chardev-window-size-changed:
-+#
-+# Notifies a chardev about the current size of the terminal connected
-+# to this chardev.  The information will be forwarded to the guest if
-+# the chardev is connected to a virtio console device.
-+#
-+# The initial size is 0x0, which should be interpreted as an unknown
-+# size.
-+#
-+# Some backends detect the terminal size automatically, in which case
-+# the size may unpredictably revert to the detected one at any time.
-+#
-+# @id: the chardev's ID
-+#
-+# @cols: the number of columns
-+#
-+# @rows: the number of rows
-+#
-+# Since: 11.2
-+#
-+# .. qmp-example::
-+#
-+#     -> { "execute": "chardev-window-size-changed", "arguments": { "id": "foo", "cols": 80, "rows": 24 } }
-+#     <- { "return": {} }
-+##
-+{ 'command': 'chardev-window-size-changed',
-+  'data': { 'id': 'str',
-+            'cols': 'uint16',
-+            'rows': 'uint16' } }
++void qemu_chr_resize(Chardev *chr, uint16_t cols, uint16_t rows);
 +
- ##
- # @VSERPORT_CHANGE:
- #     Emitted when the guest opens or closes a virtio-serial port.
+ #define TYPE_CHARDEV "chardev"
+ OBJECT_DECLARE_TYPE(Chardev, ChardevClass, CHARDEV)
+ 
 
 -- 
 2.56.0
