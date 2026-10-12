@@ -4,67 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05A1CCA9EC5
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Oct 2026 21:30:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62A0ECA9EC5
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Oct 2026 21:30:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGNau-0003bF-3B; Mon, 12 Oct 2026 17:30:04 -0400
+	id 1xGNbA-0003kO-Rw; Mon, 12 Oct 2026 17:30:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1xGNas-0003as-R3
- for qemu-devel@nongnu.org; Mon, 12 Oct 2026 17:30:02 -0400
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1xGNb8-0003fk-KR
+ for qemu-devel@nongnu.org; Mon, 12 Oct 2026 17:30:18 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1xGNaq-00030t-GP
- for qemu-devel@nongnu.org; Mon, 12 Oct 2026 17:30:02 -0400
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1xGNb6-0003Eq-G4
+ for qemu-devel@nongnu.org; Mon, 12 Oct 2026 17:30:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1791840598;
+ s=mimecast20190719; t=1791840615;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=XT793vklqmSo2T3E3CWSkTETJk6AC5LloBLJ6i2TzHQ=;
- b=PYfVyOWx/F48GBlEt5bbaUAD/NnbTRa0ZCzR4hIDpj/PEkcUH+bhYqpgNM6Wq2Lto5WS6X
- qg9XOT0GFQKu5hru1HE4neaAHDWn9dWTGuJtHfF6gwYtAkJ/ALDwG8FK3aZ/0S139q/eCJ
- /+sNqT8dWD0VcHPxnV8ELyMEtGKLdnY=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Ky8MADd1Pd3TWpWCB/Tz5Bvya/ocv4ofBGptLf2bJBY=;
+ b=cfkbMbmVb3JwnvVnIgdL8LqqZQNWWNrK+3ixJv1GaJFc3tDJTB6wkUPjJCENZpAoYUIDAA
+ w5PDXb31xSHzR1NhA1VZvKiR0PJPs38hn462hN4ov345eKzALjDcYI/T9pT9sMRFaeSxav
+ 1WUjsheJz2d7RQLg9m0ExwKVXydven4=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-679-Iq7JN1tbMimbjRZeOtKs6w-1; Mon,
- 12 Oct 2026 21:29:57 +0000
-X-MC-Unique: Iq7JN1tbMimbjRZeOtKs6w-1
-X-Mimecast-MFC-AGG-ID: Iq7JN1tbMimbjRZeOtKs6w_1791840596
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-125-wSopUJN5M8et4nLRePZ8mg-1; Mon,
+ 12 Oct 2026 21:30:08 +0000
+X-MC-Unique: wSopUJN5M8et4nLRePZ8mg-1
+X-Mimecast-MFC-AGG-ID: wSopUJN5M8et4nLRePZ8mg_1791840607
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 463311806D38
- for <qemu-devel@nongnu.org>; Mon, 12 Oct 2026 21:29:56 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A90DB195607B; Mon, 12 Oct 2026 21:30:06 +0000 (UTC)
 Received: from eblake.csb (headnet03.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.114])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 47B9F180057E
- for <qemu-devel@nongnu.org>; Mon, 12 Oct 2026 21:29:54 +0000 (UTC)
+ id 2D66A1800473; Mon, 12 Oct 2026 21:30:02 +0000 (UTC)
 From: Eric Blake <eblake@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL v2 00/15] NBD patches through 2026-10-08
-Date: Mon, 12 Oct 2026 16:29:04 -0500
-Message-ID: <20261012212945.84275-17-eblake@redhat.com>
+Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ qemu-block@nongnu.org (open list:Network Block Dev...)
+Subject: [PULL v2 02/15] qemu-nbd: Support -s and -l at the same time
+Date: Mon, 12 Oct 2026 16:29:06 -0500
+Message-ID: <20261012212945.84275-19-eblake@redhat.com>
+In-Reply-To: <20261012212945.84275-17-eblake@redhat.com>
+References: <20261012212945.84275-17-eblake@redhat.com>
 MIME-Version: 1.0
 Content-type: text/plain
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=eblake@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
-X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
+X-Spam_score_int: 10
+X-Spam_score: 1.0
+X-Spam_bar: +
+X-Spam_report: (1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,95 +85,240 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 615ece3c406b262996e569f29ea6eed0d81c4d8d:
+qemu-nbd already has the ability to wrap a read-write layer on top of
+the export of a read-only image (-s) and the ability to export an
+internal snapshot rather than the main image in a qcow2 file (-l
+SNAPID).  But it gave a confusing error message when trying to mix the
+two, because the snapshot overlay created first no longer has access
+to the internal snapshots of the image being wrapped.
 
-  Merge tag 'for-upstream' of https://gitlab.com/bonzini/qemu into staging (2026-10-09 15:49:53 +0200)
+WIth a bit of finesse, this useful scenario is now supported.
 
-are available in the Git repository at:
+https://gitlab.com/qemu-project/qemu/-/work_items/159
 
-  https://gitlab.com/ebblake/qemu.git tags/pull-nbd-2026-10-08-v2
-
-for you to fetch changes up to 3d794bcd554c3dc196685faf382fdffe7243e674:
-
-  iotests/iothreads-nbd-export: Skip on s390 (2026-10-12 16:23:50 -0500)
-
-[v2: sending only the updated cover letter and patch 2/15]
-
-----------------------------------------------------------------
-NBD patches through 2026-10-08
-
-Several fixes, including:
-- Eric Blake: Update MAINTAINERS, support qemu-nbd -s -l
-- Fiona Ebner: Report flush error on qemu-img convert
-- Guillaume Vinke: Fix NBD client on dead connection
-- Denis V. Lunev: Fix postcopy dirty bitmap migration
-- Eric Farman: Several iotest improvements
-
-----------------------------------------------------------------
-Denis V. Lunev (3):
-      migration: add QEMU_COUNTED_STRING_SIZE for counted string buffers
-      migration/block-dirty-bitmap: fix postcopy abort with bitmaps on several nodes
-      iotests/migrate-bitmaps-postcopy-test: add a bitmap on a second node
-
-Eric Blake (2):
-      maint: Update eblake's staging repo
-      qemu-nbd: Support -s and -l at the same time
-
-Eric Farman (4):
-      iotests/nbd-in-qcow2-chain: use default machine
-      iotests/nbd-tls-iothread: skip on non-x86 hardware
-      iotests/fuse-truncate: skip if FUSE is not usable
-      iotests/iothreads-nbd-export: Skip on s390
-
-Fiona Ebner (4):
-      iotests: add test cases for failing flush after qemu-img convert
-      iotests.py: add filter_qemu()
-      block: report flush error during bdrv_close()
-      qemu-img: convert: flush target image after copying
-
-Guillaume Vincke (2):
-      nbd/client-connection: Fix client returning a closed channel
-      iotests: Add coverage for NBD connect thread start delay
-
- docs/tools/qemu-nbd.rst                            |  7 +-
- include/migration/qemu-file-types.h                |  6 +-
- block.c                                            | 13 +++-
- migration/block-dirty-bitmap.c                     | 62 ++++++++++++++--
- migration/qemu-file.c                              |  5 +-
- nbd/client-connection.c                            | 32 +++++++++
- qemu-img.c                                         |  8 ++-
- qemu-nbd.c                                         | 22 +++++-
- MAINTAINERS                                        |  4 +-
- tests/qemu-iotests/026                             | 10 +--
- tests/qemu-iotests/026.out                         | 84 ++++++++++++++++++++++
- tests/qemu-iotests/071                             |  2 +-
- tests/qemu-iotests/071.out                         |  2 +
- tests/qemu-iotests/080.out                         |  2 +
- tests/qemu-iotests/098.out                         |  4 ++
- tests/qemu-iotests/122                             | 33 +++++++++
- tests/qemu-iotests/122.out                         | 17 +++++
- tests/qemu-iotests/244                             |  2 +-
- tests/qemu-iotests/244.out                         |  1 +
- tests/qemu-iotests/iotests.py                      |  4 ++
- tests/qemu-iotests/tests/file-io-error             |  2 +-
- tests/qemu-iotests/tests/file-io-error.out         |  2 +
- tests/qemu-iotests/tests/fuse-truncate             |  9 ++-
- tests/qemu-iotests/tests/iothreads-nbd-export      |  5 ++
- .../tests/migrate-bitmaps-postcopy-test            | 21 ++++++
- tests/qemu-iotests/tests/nbd-in-qcow2-chain        |  2 +-
- tests/qemu-iotests/tests/nbd-stale-connection      | 62 ++++++++++++++++
- tests/qemu-iotests/tests/nbd-stale-connection.out  | 17 +++++
- tests/qemu-iotests/tests/nbd-tls-iothread          |  4 ++
- tests/qemu-iotests/tests/qemu-nbd-snapshots        | 81 +++++++++++++++++++++
- tests/qemu-iotests/tests/qemu-nbd-snapshots.out    | 39 ++++++++++
- tests/qemu-iotests/tests/qsd-migrate               |  5 +-
- tests/qemu-iotests/tests/qsd-migrate.out           |  1 +
- 33 files changed, 537 insertions(+), 33 deletions(-)
- create mode 100755 tests/qemu-iotests/tests/nbd-stale-connection
- create mode 100644 tests/qemu-iotests/tests/nbd-stale-connection.out
+Signed-off-by: Eric Blake <eblake@redhat.com>
+Message-ID: <20260408021636.794794-2-eblake@redhat.com>
+Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+[eblake: improve test with Vladimir's suggestions, add lock to satisfy TSAN]
+Signed-off-by: Eric Blake <eblake@redhat.com>
+---
+ docs/tools/qemu-nbd.rst                       |  7 +-
+ qemu-nbd.c                                    | 22 ++++-
+ tests/qemu-iotests/tests/qemu-nbd-snapshots   | 81 +++++++++++++++++++
+ .../qemu-iotests/tests/qemu-nbd-snapshots.out | 39 +++++++++
+ 4 files changed, 143 insertions(+), 6 deletions(-)
  create mode 100755 tests/qemu-iotests/tests/qemu-nbd-snapshots
  create mode 100644 tests/qemu-iotests/tests/qemu-nbd-snapshots.out
 
+diff --git a/docs/tools/qemu-nbd.rst b/docs/tools/qemu-nbd.rst
+index f82ea5fd77b..336b4aa46e7 100644
+--- a/docs/tools/qemu-nbd.rst
++++ b/docs/tools/qemu-nbd.rst
+@@ -95,9 +95,10 @@ driver options if :option:`--image-opts` is specified.
+
+ .. option:: -l, --load-snapshot=SNAPSHOT_PARAM
+
+-  Load an internal snapshot inside *filename* and export it
+-  as an read-only device, SNAPSHOT_PARAM format is
+-  ``snapshot.id=[ID],snapshot.name=[NAME]`` or ``[ID_OR_NAME]``
++  Load an internal snapshot inside *filename* and export it.
++  SNAPSHOT_PARAM format is ``snapshot.id=[ID],snapshot.name=[NAME]``
++  or ``[ID_OR_NAME]``. The export is read-only unless ``-s`` is also
++  in use.
+
+ .. option:: --cache=CACHE
+
+diff --git a/qemu-nbd.c b/qemu-nbd.c
+index ed5895861bb..fcca88932a3 100644
+--- a/qemu-nbd.c
++++ b/qemu-nbd.c
+@@ -534,6 +534,7 @@ int main(int argc, char **argv)
+ {
+     BlockBackend *blk;
+     BlockDriverState *bs;
++    BlockDriverState *orig_bs;
+     uint64_t dev_offset = 0;
+     bool readonly = false;
+     bool disconnect = false;
+@@ -716,7 +717,7 @@ int main(int argc, char **argv)
+             } else {
+                 sn_id_or_name = optarg;
+             }
+-            /* fall through */
++            break;
+         case 'r':
+             readonly = true;
+             flags &= ~BDRV_O_RDWR;
+@@ -1110,6 +1111,15 @@ int main(int argc, char **argv)
+     bdrv_init();
+     atexit(qemu_nbd_shutdown);
+
++    /*
++     * -s and -l can be used together to create read-write wrapper
++     * around an internal snapshot. Otherwise, -l in isolation implies
++     * read-only.
++     */
++    if ((sn_opts || sn_id_or_name) && (flags & BDRV_O_SNAPSHOT) == 0) {
++        readonly = true;
++        flags &= ~BDRV_O_RDWR;
++    }
+     opts.srcpath = argv[optind];
+     if (imageOpts) {
+         QemuOpts *o;
+@@ -1155,13 +1165,19 @@ int main(int argc, char **argv)
+
+     blk_set_enable_write_cache(blk, !writethrough);
+
++    orig_bs = bs;
++    if (flags & BDRV_O_SNAPSHOT) {
++        WITH_GRAPH_RDLOCK_GUARD() {
++            orig_bs = bs->backing->bs;
++        }
++    }
+     if (sn_opts) {
+-        ret = bdrv_snapshot_load_tmp(bs,
++        ret = bdrv_snapshot_load_tmp(orig_bs,
+                                      qemu_opt_get(sn_opts, SNAPSHOT_OPT_ID),
+                                      qemu_opt_get(sn_opts, SNAPSHOT_OPT_NAME),
+                                      &local_err);
+     } else if (sn_id_or_name) {
+-        ret = bdrv_snapshot_load_tmp_by_id_or_name(bs, sn_id_or_name,
++        ret = bdrv_snapshot_load_tmp_by_id_or_name(orig_bs, sn_id_or_name,
+                                                    &local_err);
+     }
+     if (ret < 0) {
+diff --git a/tests/qemu-iotests/tests/qemu-nbd-snapshots b/tests/qemu-iotests/tests/qemu-nbd-snapshots
+new file mode 100755
+index 00000000000..ce62e97877b
+--- /dev/null
++++ b/tests/qemu-iotests/tests/qemu-nbd-snapshots
+@@ -0,0 +1,81 @@
++#!/usr/bin/env bash
++# group: rw quick
++#
++# Test qemu-nbd snapshot handling
++#
++# Copyright (C) Red Hat, Inc.
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
++
++seq="$(basename $0)"
++echo "QA output created by $seq"
++
++status=1 # failure is the default!
++
++_cleanup()
++{
++    _cleanup_test_img
++    nbd_server_stop
++}
++trap "_cleanup; exit \$status" 0 1 2 3 15
++
++# get standard environment, filters and checks
++cd ..
++. ./common.rc
++. ./common.filter
++. ./common.nbd
++
++_supported_fmt qcow2
++_supported_proto file
++_supported_os Linux
++_require_command QEMU_NBD
++
++echo
++echo "=== Initial image setup ==="
++echo
++
++# Create qcow2 image with one internal snapshot
++_make_test_img 10M
++$QEMU_IO -c 'w -P 1 3M 1M' -f $IMGFMT "$TEST_IMG" | _filter_qemu_io
++$QEMU_IMG snapshot -c snap -f $IMGFMT "$TEST_IMG" | _filter_qemu_img
++$QEMU_IO -c 'w -P 2 3M 1M' -f $IMGFMT "$TEST_IMG" | _filter_qemu_io
++
++echo
++echo "=== Main image in snapshot mode ==="
++echo
++
++nbd_server_start_unix_socket -s -f qcow2 "$TEST_IMG"
++$QEMU_IO -c 'r -P 2 3M 1M' -c 'w -P 3 3M 1M' -c 'r -P 3 3M 1M' -f raw \
++  nbd:unix:$nbd_unix_socket | _filter_qemu_io
++nbd_server_stop
++
++echo
++echo "=== Read-only snapshot access ==="
++echo
++
++nbd_server_start_unix_socket -l snap -f qcow2 "$TEST_IMG"
++$QEMU_IO -r -c 'r -P 1 3M 1M' -f raw \
++  nbd:unix:$nbd_unix_socket | _filter_qemu_io
++$QEMU_IO -c 'r -P 1 3M 1M' -f raw \
++  nbd:unix:$nbd_unix_socket 2>&1 | _filter_qemu_io | _filter_testdir
++nbd_server_stop
++
++echo
++echo "=== Combine -s and -l for read-write internal snapshot access ==="
++echo
++
++nbd_server_start_unix_socket -s -l snap -f qcow2 "$TEST_IMG"
++$QEMU_IO -c 'r -P 1 3M 1M' -c 'w -P 3 3M 1M' -c 'r -P 3 3M 1M' -f raw \
++  nbd:unix:$nbd_unix_socket | _filter_qemu_io
++nbd_server_stop
++
++echo
++echo "=== Check that original image is unchanged ==="
++echo
++
++$QEMU_IO -c 'r -P 2 3M 1M' -f $IMGFMT "$TEST_IMG" | _filter_qemu_io
++
++# success, all done
++echo '*** done'
++rm -f $seq.full
++status=0
+diff --git a/tests/qemu-iotests/tests/qemu-nbd-snapshots.out b/tests/qemu-iotests/tests/qemu-nbd-snapshots.out
+new file mode 100644
+index 00000000000..47289c30f1d
+--- /dev/null
++++ b/tests/qemu-iotests/tests/qemu-nbd-snapshots.out
+@@ -0,0 +1,39 @@
++QA output created by qemu-nbd-snapshots
++
++=== Initial image setup ===
++
++Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=10485760
++wrote 1048576/1048576 bytes at offset 3145728
++1 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++wrote 1048576/1048576 bytes at offset 3145728
++1 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++
++=== Main image in snapshot mode ===
++
++read 1048576/1048576 bytes at offset 3145728
++1 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++wrote 1048576/1048576 bytes at offset 3145728
++1 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++read 1048576/1048576 bytes at offset 3145728
++1 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++
++=== Read-only snapshot access ===
++
++read 1048576/1048576 bytes at offset 3145728
++1 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++qemu-io: can't open device nbd:unix:SOCK_DIR/qemu-nbd.sock: Could not open image: Permission denied
++
++=== Combine -s and -l for read-write internal snapshot access ===
++
++read 1048576/1048576 bytes at offset 3145728
++1 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++wrote 1048576/1048576 bytes at offset 3145728
++1 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++read 1048576/1048576 bytes at offset 3145728
++1 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++
++=== Check that original image is unchanged ===
++
++read 1048576/1048576 bytes at offset 3145728
++1 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++*** done
 -- 
 2.56.0
 
