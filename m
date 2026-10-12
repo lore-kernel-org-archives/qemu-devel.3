@@ -4,94 +4,144 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CED4CA9ED1
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Oct 2026 15:23:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3EF61CA9EC5
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Oct 2026 15:24:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGHrt-0008VN-Q9; Mon, 12 Oct 2026 11:23:13 -0400
+	id 1xGHsi-0000gI-EP; Mon, 12 Oct 2026 11:24:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblot.ml@gmail.com>)
- id 1xGHrr-0008UX-RQ
- for qemu-devel@nongnu.org; Mon, 12 Oct 2026 11:23:11 -0400
-Received: from mail-wr1-f53.google.com ([209.85.221.53])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <eblot.ml@gmail.com>)
- id 1xGHro-00019H-UX
- for qemu-devel@nongnu.org; Mon, 12 Oct 2026 11:23:11 -0400
-Received: by mail-wr1-f53.google.com with SMTP id
- ffacd0b85a97d-48c4be28b82so1952166f8f.2
- for <qemu-devel@nongnu.org>; Mon, 12 Oct 2026 08:23:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1xGHsd-0000bz-Bd
+ for qemu-devel@nongnu.org; Mon, 12 Oct 2026 11:23:59 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1xGHsb-0001ER-Kk
+ for qemu-devel@nongnu.org; Mon, 12 Oct 2026 11:23:59 -0400
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 69CC0Wth2252698
+ for <qemu-devel@nongnu.org>; Mon, 12 Oct 2026 15:23:56 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ uYJhBKxKrp647X5WvhxR/lgNGjvDyTF5ragrJ/x+nQU=; b=poAQ0bsB6c9RZSIL
+ 1UTAbWO9P3liEUmCXnjF6zFJiq1DQR8RcF8H8ppbXm0Jd/CR0j+k/CeWhKXf5ON5
+ 6Rpg7ka8kT8mhwzp6i15cCquvzXrujf/4WjAiv8tkMnn0HjvUVsNreI4V/0wrJPM
+ q/j7kZhQqIJVJAamA1ltcz1Rb4iFA05PDhSOew2XbmguOcrA9F1GhS8pmUtQ0kel
+ bsFwjSkDCR0y9e6AMiWbZR0U6J5kz5Ksuupk1fniPAsPJS0EEyqCi4yhAJZT0fk1
+ xavArUMJhc7QEinjBeZv/GubTP4uHnU/ppJI6Xj8txX7+GOSls2LVLDYmui3tSz8
+ ZkoktQ==
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h8j713p8v-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 12 Oct 2026 15:23:56 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-93909014c85so398341485a.0
+ for <qemu-devel@nongnu.org>; Mon, 12 Oct 2026 08:23:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1791818636; x=1792423436; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=uYJhBKxKrp647X5WvhxR/lgNGjvDyTF5ragrJ/x+nQU=;
+ b=P3eHOWvhzQqmi13c710+bbx0gFpiGGWdQhmhNGwdG+sK/GBs1VOrEY/DGqhZ4lmZck
+ AKf3rMpC6inmCEd+ulKu8sgvUmn5XwDlS29nDaXsDO3v+9xN3rzlstH2y3YPKyO9TyXs
+ /izRv4IpDbV1CLNxaeXM60UmPPBIuaXo5T6x40spG9+xP1xSy6A48qTzSsdRKa6a0HKr
+ Fcarq9zU36cwN4BN912RcLmm24S1/1cNmCksERDbuEMJm0cAp72Mqd7KSHY2/dvJDmr+
+ lGdXuDACqsFf+rz5H1/xGhn0HcSOWAoyi7d3kfN96sT52u78yrlYheNXf/hDC4m9UB/g
+ TivA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791818587; x=1792423387;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :content-type:mime-version:subject:date:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=UwwxETLAztE1k6Pih+RsWxpK5u/uYELdrNm5CxCbYqw=;
- b=sy9z1jvkFcmW+THnbWXG44MsYifWnyewm2NaC+Sc9MeuIRsIHy6VpdN/xmduRbP13W
- d+q+f6UVNrBQEBtkKJR++cDru6dFvUFA/NOBh8l2Qb55WicXeSY2dwSiboQBH5MW1CS8
- 54/brqQmNBi/fZnQIBYYGxE6h4IAyGO9NIBCLBueZ12pjoNFjNpRnjH1ONPIIbvuOeTn
- jZBLDS5PHzPxmjfOYmivbbXfIPAzHOSlU4wnt06cF/ktjP6IYL5cqf7TgNEyDsyBb9/V
- cUv5xq57K+Jf9dyZ0K3wx4TuD1PUlFviLenDDlCTm4eF0qi/i0/6L+m0HlxFoTUNiOxv
- uIWA==
-X-Gm-Message-State: AFq9FYLVA4VXmDpoCPYlL0bWA8kMBjWXiYY475YHavi7gT7/0VbILERw
- J04fefXAwO/cgiONh9dseew+BDkM2OILNcP+PHCd+wxbzom08gi1Nt4ZQ9hjzS5K
-X-Gm-Gg: AYBFou2OkCHp5jkVUR+Z6JYTHjq2IE/YWB3bxGo+rceOzeCl7ZZVuv+wXsy8V4/gJf9
- 2ApCn+zw/jKc3Fpj53ipKoSlCfrKl4kQJvLgXP336rf4HQrOCkf1xP+1VPBTFHXCBMc6I2V5fxw
- 9pLVemZFEG+PAcfJrbrrklj0NIJGZSEa8I7I2KR1QH9MU4zu8w+msn+jCulLnykkfI+y88xpJYE
- tAP/f4D0Cv7r2lA17VDPIIHZOw9VC8NdNdjxlVIsNX0147zXGn29eV1YB90ZKvMhBlFkL2gS3Zb
- zJS0NP2n2ndZe+EJbOosFc7Zo7x8kBT9ylpNLBURbRvMZlrPhF0ElsEGndVMvvVas9/QXhVBQSd
- /a8iHpwiFMIFOd2GUOOHeZfV95JlPmekL/oCigauPYLcEgLKffkpumsPvYAiKgbKw56T8MOP4Mf
- f6JhuqW4DGB1EntrC1ZJxz1wlWLHeIHKaGMIKoLcipQRGfIl1IQhtc7MGob2YmSc4hpxod/p4Pv
- ECk49+OycLarwcuAQTV8FJzwq9M774EQSFd156zSphHQQ==
-X-Received: by 2002:a05:6000:1ace:b0:48c:571a:a1aa with SMTP id
- ffacd0b85a97d-48dba9dacf6mr20300737f8f.19.1791818587322; 
- Mon, 12 Oct 2026 08:23:07 -0700 (PDT)
-Received: from localhost (89-93-216-19.hfc.dyn.abo.bbox.fr. [89.93.216.19])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48de0ab48a7sm31524f8f.24.2026.10.12.08.23.06
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 12 Oct 2026 08:23:06 -0700 (PDT)
-Date: Mon, 12 Oct 2026 16:32:23 +0200
-Subject: [PATCH v2 30/50] tests/qtest: ds1339: cover persist-on-reset
+ d=1e100.net; s=20260707; t=1791818636; x=1792423436;
+ h=content-transfer-encoding:content-type:in-reply-to:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=uYJhBKxKrp647X5WvhxR/lgNGjvDyTF5ragrJ/x+nQU=;
+ b=nGITb8Uos6rV1S5LbE2HSouV9y0Tb+R4f/UuRaXkv/saET6qS99kd4YOHN4Kv/2wp2
+ lHr6PV1tI7LHe3YgzSVwp7KSu0OYVjW/22fWUCP3KcQtcUB8MLjnR+z3ixXOEwzvjFAq
+ 9Um10nOf6RwPKgPm9jlmxdJdOyr83h+n90WZwyDHCdWfrJPaWkSTBWw9gkdc218oR1yL
+ LcvSD9lUhk60BLKJ5fwK+VYTsIFM0z8oRANRsJXqNkBnHxq+2ICox+HpnhFwM0+Fj320
+ GVkidEY6mJCecY0eCVk6Kj9JGRLLbZV327n4pT/fwXcEmDO3GFJhFM/+c7J0XKJshebf
+ +pug==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBxG53SgVSKlWt7N5u2KiH49cvYE3WTLtdcp3TQaUJXhgUfBHSnvy4dXfOmPybpfLOTA3yBhu5LAKqdw@nongnu.org
+X-Gm-Message-State: AFq9FYIdYVxk4cU5oSc4ZelhhgCisAbn0n+bB9OdF3/V+MQfph6Qj1YK
+ eGTQ+bMHJ0VjXVjGCLuZm3ujl5aXFG+SSNLnPev35VnI5apJg6peu6ZhUu0hiv4Gus3ejlpFFh/
+ UeDkQZhiSIEmHMW+HNiZ4MIm3vDg7UAw/ew2ToVLO4gE2Q/MtwulIQ1yHzg==
+X-Gm-Gg: AYBFou30mH03JIsEAHA/EhR1xumvHBJ240lQZX1o8LuDx476mVnBIJLTZTIrCYpMCwM
+ Hv/q6KqwyzCUOo/rFVzKkP+Adsjqtb/ZjvBmKb8gGceQuqiKd7oG7THl+ZEUYEhMYrFdIZAFkRR
+ NN8vZsr0czIQJgLEDnaY/OhloTZQ7DTVcyuS/wWGwsnb5GIL3NgD648EqXk9fpnpy+lizdSgGfl
+ DD3aYqxzJeUskFDLFnofuO6SvgEuXwBtGmKZexc7jDfDAJPnOoLgd+18GuAMkbEhiqzj44Z3cH5
+ 1IRKq+5XqEcY6BI0SeBOdKP20SERRTZeNiDWYRm87OB0X+MYmm5xM2Y+q6PHkwbH31CzvigqxRd
+ eNcdijlnwAqlhp1MwH6sRgFxHKMFkCD38YGcMmOnTPmghT7DulWUThFruUF1p9Jwo
+X-Received: by 2002:a05:620a:a0cd:10b0:93e:c12c:f127 with SMTP id
+ af79cd13be357-93ec12d079fmr1029278785a.83.1791818635690; 
+ Mon, 12 Oct 2026 08:23:55 -0700 (PDT)
+X-Received: by 2002:a05:620a:a0cd:10b0:93e:c12c:f127 with SMTP id
+ af79cd13be357-93ec12d079fmr1029274785a.83.1791818635098; 
+ Mon, 12 Oct 2026 08:23:55 -0700 (PDT)
+Received: from [10.222.168.219] (Global_NAT1_IAD_FW.qualcomm.com.
+ [129.46.232.65]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-93ef5086fe3sm8395485a.37.2026.10.12.08.23.53
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 12 Oct 2026 08:23:54 -0700 (PDT)
+Message-ID: <215ee4da-7c9b-42b0-bba1-3326e69e2130@oss.qualcomm.com>
+Date: Mon, 12 Oct 2026 10:23:53 -0500
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 10/11] semihosting: remove common_* functions
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+References: <20261009225226.10657-1-pierrick.bouvier@oss.qualcomm.com>
+ <20261009225226.10657-11-pierrick.bouvier@oss.qualcomm.com>
+Content-Language: en-US
+From: Brian Cain <brian.cain@oss.qualcomm.com>
+In-Reply-To: <20261009225226.10657-11-pierrick.bouvier@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261012-bmc-minerva-v2-30-4c3dff084ec9@free.fr>
-References: <20261012-bmc-minerva-v2-0-4c3dff084ec9@free.fr>
-In-Reply-To: <20261012-bmc-minerva-v2-0-4c3dff084ec9@free.fr>
-To: qemu-devel@nongnu.org
-Cc: =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
- Peter Maydell <peter.maydell@linaro.org>, 
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>, 
- Jamin Lin <jamin_lin@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>, 
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-arm@nongnu.org, 
- Patrick Leis <venture@google.com>, Fabiano Rosas <farosas@suse.de>, 
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- qemu-ppc@nongnu.org, qemu-riscv@nongnu.org, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, 
- Emmanuel Blot <emmanuel.blot@free.fr>
-X-Mailer: b4 0.16.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1791815521; l=3347;
- i=emmanuel.blot@free.fr; s=20260602; h=from:subject:message-id;
- bh=40jEbTSK65E3MsKCMaeknpjZMmqbQRo2Y3v73NUToek=;
- b=kcRzjDxjALOy3ssy8xfSwO6TSEFkSkA6pMvfUJLNuyInT+kHRJRipoqafXS6LlQlBb1JKQDoU
- Ej+9jnT/xftATiqrtNUOu2D0fgmTKgWMBuToQ3ywFhKXP9v7t3UAGig
-X-Developer-Key: i=emmanuel.blot@free.fr; a=ed25519;
- pk=0qFrZ21FAAN8OfVsSoVcCFTk/NMYOWzxJz4paSAVm0g=
-Received-SPF: pass client-ip=209.85.221.53; envelope-from=eblot.ml@gmail.com;
- helo=mail-wr1-f53.google.com
-X-Spam_score_int: -15
-X-Spam_score: -1.6
-X-Spam_bar: -
-X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9,
- FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
- HEADER_FROM_DIFFERENT_DOMAINS=0.25, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDEyMDA2MSBTYWx0ZWRfXySS2Uf31ZapD
+ YDEM5TKjwyGXw/JTQM7fqUeVzUUnRLYmUH9tH/o4e6Kz7f29A0uxW2ELaLiHQI7rjcQ0u4euN4g
+ jIDzQ4u88fJDD/8qPClw3KbmrOiq2c8=
+X-Proofpoint-GUID: it2seAh5FZLkIn8dJ12S9KFissdPvt4g
+X-Proofpoint-ORIG-GUID: it2seAh5FZLkIn8dJ12S9KFissdPvt4g
+X-Authority-Analysis: v=2.4 cv=ePGGH3p1 c=1 sm=1 tr=0 ts=6accfb8c cx=c_pps
+ a=HLyN3IcIa5EE8TELMZ618Q==:117 a=C3Dk8TwHQYyIj7nOf9RCJw==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
+ a=EUspDBNiAAAA:8 a=LthiD6cAUoPiOF7c2bgA:9 a=QEXdDO2ut3YA:10
+ a=bTQJ7kPSJx9SKPbeHEYW:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDEyMDA2MSBTYWx0ZWRfXyRSoD3CptJgH
+ N9k1j0T/lJPddaEP4YvZtsiAfGkMPG5owQAAXxcdJGqQDNVzal1rdI5gfL/CkGwBj0yDJakBVYg
+ o6TIaZ4+BTf8suo3Xa7kRxgBV0AFG5qvrQd4A18Lf90v6fE6Rh5Y0QAHWVx+eY2XuqQM04xt8pA
+ y/vqgrA+RDHdSpOcFHx6Fk5iML1jM8ctLkeBWn89kH6cmWGf0EJA55pory9S7hdI2ZDrAvmiD52
+ uHa9E5pJdVBToGK74COMPA6NlhGEdVxiLr0KcBj1+Ofh5hg+GlGUjWJddoa1IxifFLjg+x73lYy
+ z4Dmw5qw4ALN01vDJPVadldfETngV8T06eVD/7tvAg/MnBX5PrD+k8lvhKppxoHoHqNt0LawVKC
+ RxaWeh0ObO32KLip4znzF9vU50lHRVYU0tBMmT+bi5acI15exBydTjioIbwx49tpwN5N0buPm39
+ hkT3+l6dzuZ0fnf4Lkg==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-10-12_04,2026-10-09_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 clxscore=1015 impostorscore=0 malwarescore=0 adultscore=0
+ bulkscore=0 phishscore=0 priorityscore=1501 suspectscore=0 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2610080000 definitions=main-2610120061
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,102 +154,173 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Emmanuel Blot <emmanuel.blot@free.fr>
-From:  Emmanuel Blot via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The property was untested on this variant.
 
-Signed-off-by: Emmanuel Blot <emmanuel.blot@free.fr>
----
- tests/qtest/ds1339-test.c | 56 +++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 56 insertions(+)
+On 10/9/2026 5:52 PM, Pierrick Bouvier wrote:
+> Now that both targets and semihosting implementation both use the
+> semihosting ops interface, we can remove all common_* functions.
+> This allows us to link together the three targets concerned: arm,
+> hexagon and riscv.
+>
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+> ---
 
-diff --git a/tests/qtest/ds1339-test.c b/tests/qtest/ds1339-test.c
-index 12562eff5f..a1b5afb331 100644
---- a/tests/qtest/ds1339-test.c
-+++ b/tests/qtest/ds1339-test.c
-@@ -8,7 +8,10 @@
- 
- #include "qemu/osdep.h"
- #include "qemu/bcd.h"
-+#include "libqtest.h"
-+#include "libqtest-single.h"
- #include "libqos/i2c.h"
-+#include "qobject/qdict.h"
- 
- #define DS1339_ADDR 0x68
- 
-@@ -426,6 +429,52 @@ static void test_alarm_registers(void *obj, void *data,
-     }
- }
- 
-+/* A reset restores the power-on state, unless persist-on-reset is set. */
-+static void check_reset(QI2CDevice *i2cdev, bool persists)
-+{
-+    uint8_t year = i2c_get8(i2cdev, DS1339_YEAR);
-+    /* A year the clock is not already showing, so the check discriminates. */
-+    uint8_t marker = year == 0x42 ? 0x77 : 0x42;
-+    QDict *rsp;
-+
-+    i2c_set8(i2cdev, DS1339_ALARM1, 0xa5);
-+    i2c_set8(i2cdev, DS1339_STATUS, 0x00);
-+    i2c_set8(i2cdev, DS1339_YEAR, marker);
-+    g_assert_cmphex(i2c_get8(i2cdev, DS1339_ALARM1), ==, 0xa5);
-+    g_assert_cmphex(i2c_get8(i2cdev, DS1339_STATUS), ==, 0x00);
-+    g_assert_cmphex(i2c_get8(i2cdev, DS1339_YEAR), ==, marker);
-+
-+    rsp = qmp("{ 'execute': 'system_reset' }");
-+    g_assert(qdict_haskey(rsp, "return"));
-+    qobject_unref(rsp);
-+    qmp_eventwait("RESET");
-+
-+    if (persists) {
-+        g_assert_cmphex(i2c_get8(i2cdev, DS1339_ALARM1), ==, 0xa5);
-+        g_assert_cmphex(i2c_get8(i2cdev, DS1339_STATUS), ==, 0x00);
-+        g_assert_cmphex(i2c_get8(i2cdev, DS1339_YEAR), ==, marker);
-+    } else {
-+        g_assert_cmphex(i2c_get8(i2cdev, DS1339_ALARM1), ==, 0x00);
-+        g_assert_cmphex(i2c_get8(i2cdev, DS1339_CONTROL), ==, 0x18);
-+        g_assert_cmphex(i2c_get8(i2cdev, DS1339_STATUS), ==,
-+                        DS1339_STATUS_OSF);
-+        /* Back on host time, which is where the year came from. */
-+        g_assert_cmphex(i2c_get8(i2cdev, DS1339_YEAR), ==, year);
-+    }
-+}
-+
-+/* Without persist-on-reset, a reset takes the part back to power-on. */
-+static void test_reset_clears(void *obj, void *data, QGuestAllocator *alloc)
-+{
-+    check_reset((QI2CDevice *)obj, false);
-+}
-+
-+/* With persist-on-reset, the registers and the clock survive a reset. */
-+static void test_reset_persists(void *obj, void *data, QGuestAllocator *alloc)
-+{
-+    check_reset((QI2CDevice *)obj, true);
-+}
-+
- static void ds1339_register_nodes(void)
- {
-     QOSGraphEdgeOptions opts = {
-@@ -459,6 +508,13 @@ static void ds1339_register_nodes(void)
-     qos_add_test("block-wrap", "ds1339", test_block_wrap, NULL);
-     qos_add_test("alarm-registers", "ds1339", test_alarm_registers,
-                  NULL);
-+    qos_add_test("reset-clears", "ds1339", test_reset_clears, NULL);
-+
-+    opts.extra_device_opts = "address=0x68,persist-on-reset=on";
-+    qos_node_create_driver_named("ds1339-persist", "ds1339", i2c_device_create);
-+    qos_node_consumes("ds1339-persist", "i2c-bus", &opts);
-+
-+    qos_add_test("reset-persists", "ds1339-persist", test_reset_persists, NULL);
- }
- 
- libqos_init(ds1339_register_nodes);
 
--- 
-2.50.1
+Reviewed-by: Brian Cain <brian.cain@oss.qualcomm.com>
 
+
+>   include/semihosting/common-semi.h   |  7 ------
+>   target/arm/common-semi-target.c     | 35 -----------------------------
+>   target/hexagon/common-semi-target.c | 35 -----------------------------
+>   target/riscv/common-semi-target.c   | 35 -----------------------------
+>   4 files changed, 112 deletions(-)
+>
+> diff --git a/include/semihosting/common-semi.h b/include/semihosting/common-semi.h
+> index 618f60f76e7..8875aec3c86 100644
+> --- a/include/semihosting/common-semi.h
+> +++ b/include/semihosting/common-semi.h
+> @@ -53,12 +53,5 @@ typedef struct SemihostingCPUOps {
+>   
+>   void common_semi_cb(CPUState *cs, uint64_t ret, int err);
+>   void do_common_semihosting(CPUState *cs);
+> -uint64_t common_semi_arg(CPUState *cs, int argno);
+> -void common_semi_set_ret(CPUState *cs, uint64_t ret);
+> -void common_semi_set_err(CPUState *cs, int err);
+> -bool is_64bit_semihosting(CPUArchState *env);
+> -bool common_semi_sys_exit_is_extended(CPUState *cs);
+> -uint64_t common_semi_stack_bottom(CPUState *cs);
+> -bool common_semi_has_synccache(CPUArchState *env);
+>   
+>   #endif /* COMMON_SEMI_H */
+> diff --git a/target/arm/common-semi-target.c b/target/arm/common-semi-target.c
+> index 5263c0435a8..aa5190ee16c 100644
+> --- a/target/arm/common-semi-target.c
+> +++ b/target/arm/common-semi-target.c
+> @@ -71,38 +71,3 @@ const SemihostingCPUOps arm_semihosting_ops = {
+>       .stack_bottom = arm_semi_stack_bottom,
+>       .has_synccache = arm_semi_has_synccache,
+>   };
+> -
+> -uint64_t common_semi_arg(CPUState *cs, int argno)
+> -{
+> -    return arm_semi_arg(cs, argno);
+> -}
+> -
+> -void common_semi_set_ret(CPUState *cs, uint64_t ret)
+> -{
+> -    arm_semi_set_ret(cs, ret);
+> -}
+> -
+> -void common_semi_set_err(CPUState *cs, int err)
+> -{
+> -    arm_semi_set_err(cs, err);
+> -}
+> -
+> -bool is_64bit_semihosting(CPUArchState *env)
+> -{
+> -    return arm_semi_is_64bit(env_cpu(env));
+> -}
+> -
+> -bool common_semi_sys_exit_is_extended(CPUState *cs)
+> -{
+> -    return arm_semi_sys_exit_is_extended(cs);
+> -}
+> -
+> -uint64_t common_semi_stack_bottom(CPUState *cs)
+> -{
+> -    return arm_semi_stack_bottom(cs);
+> -}
+> -
+> -bool common_semi_has_synccache(CPUArchState *env)
+> -{
+> -    return arm_semi_has_synccache(env_cpu(env));
+> -}
+> diff --git a/target/hexagon/common-semi-target.c b/target/hexagon/common-semi-target.c
+> index b97ed6796f8..0a33b872e3a 100644
+> --- a/target/hexagon/common-semi-target.c
+> +++ b/target/hexagon/common-semi-target.c
+> @@ -59,38 +59,3 @@ const SemihostingCPUOps hexagon_semihosting_ops = {
+>       .stack_bottom = hexagon_semi_stack_bottom,
+>       .has_synccache = hexagon_semi_has_synccache,
+>   };
+> -
+> -uint64_t common_semi_arg(CPUState *cs, int argno)
+> -{
+> -    return hexagon_semi_arg(cs, argno);
+> -}
+> -
+> -void common_semi_set_ret(CPUState *cs, uint64_t ret)
+> -{
+> -    hexagon_semi_set_ret(cs, ret);
+> -}
+> -
+> -void common_semi_set_err(CPUState *cs, int err)
+> -{
+> -    hexagon_semi_set_err(cs, err);
+> -}
+> -
+> -bool is_64bit_semihosting(CPUArchState *env)
+> -{
+> -    return hexagon_semi_is_64bit(env_cpu(env));
+> -}
+> -
+> -bool common_semi_sys_exit_is_extended(CPUState *cs)
+> -{
+> -    return hexagon_semi_sys_exit_is_extended(cs);
+> -}
+> -
+> -uint64_t common_semi_stack_bottom(CPUState *cs)
+> -{
+> -    return hexagon_semi_stack_bottom(cs);
+> -}
+> -
+> -bool common_semi_has_synccache(CPUArchState *env)
+> -{
+> -    return hexagon_semi_has_synccache(env_cpu(env));
+> -}
+> diff --git a/target/riscv/common-semi-target.c b/target/riscv/common-semi-target.c
+> index 7fa3bef6883..24c42254558 100644
+> --- a/target/riscv/common-semi-target.c
+> +++ b/target/riscv/common-semi-target.c
+> @@ -62,38 +62,3 @@ const SemihostingCPUOps riscv_semihosting_ops = {
+>       .stack_bottom = riscv_semi_stack_bottom,
+>       .has_synccache = riscv_semi_has_synccache,
+>   };
+> -
+> -uint64_t common_semi_arg(CPUState *cs, int argno)
+> -{
+> -    return riscv_semi_arg(cs, argno);
+> -}
+> -
+> -void common_semi_set_ret(CPUState *cs, uint64_t ret)
+> -{
+> -    riscv_semi_set_ret(cs, ret);
+> -}
+> -
+> -void common_semi_set_err(CPUState *cs, int err)
+> -{
+> -    riscv_semi_set_err(cs, err);
+> -}
+> -
+> -bool is_64bit_semihosting(CPUArchState *env)
+> -{
+> -    return riscv_semi_is_64bit(env_cpu(env));
+> -}
+> -
+> -bool common_semi_sys_exit_is_extended(CPUState *cs)
+> -{
+> -    return riscv_semi_sys_exit_is_extended(cs);
+> -}
+> -
+> -uint64_t common_semi_stack_bottom(CPUState *cs)
+> -{
+> -    return riscv_semi_stack_bottom(cs);
+> -}
+> -
+> -bool common_semi_has_synccache(CPUArchState *env)
+> -{
+> -    return riscv_semi_has_synccache(env_cpu(env));
+> -}
 
