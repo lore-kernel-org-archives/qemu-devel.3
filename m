@@ -4,112 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 236DACA9ED1
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Oct 2026 16:28:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8DF2CA9ED1
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Oct 2026 16:35:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGIsa-0007zT-By; Mon, 12 Oct 2026 12:28:00 -0400
+	id 1xGIyf-0001Vq-Ju; Mon, 12 Oct 2026 12:34:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1xGIs2-0007qq-VK
- for qemu-devel@nongnu.org; Mon, 12 Oct 2026 12:27:31 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1xGIs1-0001lG-4y
- for qemu-devel@nongnu.org; Mon, 12 Oct 2026 12:27:26 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1791822444;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=8qUAnI8acTN2uvO49satRDiIRVik09nJpUJ+5G4veTM=;
- b=UOYuCW9EFuBdyus1JAI6TpzEQXrZgJ1Tny1dZTF01KgLfpJbUSXeSSeUKwOuBFLVanFdyc
- zKcuR+f38p6rfgCp5X7wOrKSmApBSKzMJjniTDGjPYec1fGiOWA8w2Hgp5A6sHcZeyKbnk
- kEqrUsXSrNXFHJ9mIHlgT7W+FcNYjN8=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-643-fhwyy5h7N0SXJk2QRPAHOQ-1; Mon,
- 12 Oct 2026 16:27:19 +0000
-X-MC-Unique: fhwyy5h7N0SXJk2QRPAHOQ-1
-X-Mimecast-MFC-AGG-ID: fhwyy5h7N0SXJk2QRPAHOQ_1791822438
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 291A218052C5; Mon, 12 Oct 2026 16:27:18 +0000 (UTC)
-Received: from [100.90.56.12] (headnet04.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.116])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 3102330000E7; Mon, 12 Oct 2026 16:27:15 +0000 (UTC)
-Message-ID: <b5d07378-d5c4-4186-aae9-9252a08852fd@redhat.com>
-Date: Mon, 12 Oct 2026 18:27:13 +0200
+ (Exim 4.90_1) (envelope-from <filip.hejsek@gmail.com>)
+ id 1xGIye-0001VE-48
+ for qemu-devel@nongnu.org; Mon, 12 Oct 2026 12:34:16 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <filip.hejsek@gmail.com>)
+ id 1xGIyb-0002b8-R5
+ for qemu-devel@nongnu.org; Mon, 12 Oct 2026 12:34:15 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-4a161d9b8c7so14393925e9.3
+ for <qemu-devel@nongnu.org>; Mon, 12 Oct 2026 09:34:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1791822852; x=1792427652; darn=nongnu.org;
+ h=cc:to:message-id:content-transfer-encoding:content-type
+ :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=m3tuILlDJ7A9cBDe6X5WRWk+S7xXVHPkR7syxJi6tRU=;
+ b=T64jFGf6QVoYx15Xk3STpfN7FKnon4XRcCStwBI/YhvpZHaeR1CVJQvN0KsAqith0C
+ nynCpwsLYwSY0EeB0vAUfs7OEM5FeU59OynuIseHC0cKHYB7gYwUe+jy9ff1c0Ls8tW7
+ YukQ2PkpHrcurBbVCm4bKplIHk7doctd0xMgGri9ypc6+IUay68ubBh/zCa7o/bLDZrt
+ 5T41Zhz0H+YXMbuE1grGWQQXg3/AFCyTx5APsu2A8FEgUvh/yUMs96GfGjs/O/joKb1A
+ YKViDq9+xEW+a+UE4wu6owejCTIYe0k36fP+bTf8+GtnVjHslF97peAyxEPEu8+Heu+u
+ XERg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1791822852; x=1792427652;
+ h=cc:to:message-id:content-transfer-encoding:content-type
+ :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to:content-type;
+ bh=m3tuILlDJ7A9cBDe6X5WRWk+S7xXVHPkR7syxJi6tRU=;
+ b=bDhmtyjLniIXuZcZJ4XaGFYO38LvIjcFULWd/ZSPWksdTZQUhdqItdOGqokrE3JxRK
+ kiJ6Ev0ibH+EUteV2rmLZeCVDSee6ezpkorFmeN5sZ2umtEN+VkdkdHFg8BEYZknH3NC
+ l5cowrKApFL6FXVwRXgao7sM4v2S9V8M/4ffn9t6EBZuhN7TWqNMht4OJnAb1MkE5U4Q
+ 0/MqOIhuzYq0jLvvIqOoS7DaO3XnCOi3Jl8XEiFM1KJrND1ddoW2zTuTu0WxjYJeagsL
+ hx63WOzMBTn7Pr7R8ReCaB2xuMc15bkJ0TCrNqhXBb0zavOkdHUvlHiaosV/nXrHlUcv
+ eoQA==
+X-Gm-Message-State: AFq9FYJnCDB2cpgnvc/fjk3SunBCFHoppMWYzHDFrBjDqoYpQd5754xN
+ +ab0oqX0HbR1QsD2P3c+zHjaFP5/0Lu3endNR+TZX9hxnsP0orIwfpek
+X-Gm-Gg: AYBFou3GvdeDvwaOvvOapTycu+iEFCs9LJeFRmSdUdzYx/WRHpBfkLgqZq/2BgY5kqa
+ wxxBsbAx+Oiw5nQhqnF41BTmce2EEwceaMjMclF7cJ+Uvd29rdIj0ieV0ACifLyw68uMxvX8ae/
+ XIGsbHlSodM6X+i7/Vh+5LI7PaeokvFiL6B5l5vHVgDF+9AVA0/Z6Z4e1IynN2oAcyR+VEADTn7
+ 5tNVUtUhB2pL38Brt9UBmybxIv6zTibBY3MkE5cXy+xw2SbYK9vG48cHMwW4JnCgs85JSUVeQ7L
+ jzaaHzfUvHREby3hnLfwKbBsLFiao9h5cIPq1DXjkMw20Ky0kbN+6jcX/7uu1+Qyme4kwMSpshL
+ VBvhCmMCBS8QFtu/yykmouN1itmsWloRnQXvnrx3S9d2Gu/SW/bgrV9k/8kjMYO0IQuie5rxkAM
+ nqRJSx2IuMtHIbcjv9T5BHoguFRG4XUgHiAI9YU8cvwU7mRw8PWSzz9qctiipdWmKSuJ+GMWmLy
+ bvzf3sVa3W76x/YlGKTvz7eO1g=
+X-Received: by 2002:a05:600c:524d:b0:4a1:702f:c736 with SMTP id
+ 5b1f17b1804b1-4a18e446461mr198588435e9.3.1791822851791; 
+ Mon, 12 Oct 2026 09:34:11 -0700 (PDT)
+Received: from localhost (mem-185.47.220.165.jmnet.cz. [185.47.220.165])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4a18bf2e0dbsm318115155e9.11.2026.10.12.09.34.11
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 12 Oct 2026 09:34:11 -0700 (PDT)
+From: Filip Hejsek <filip.hejsek@gmail.com>
+Date: Mon, 12 Oct 2026 18:33:20 +0200
+Subject: [PATCH TRIVIAL] docs: fix a few typos
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH] target/arm: hold bql when SEV sets the event_register
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- "open list:ARM TCG CPUs" <qemu-arm@nongnu.org>
-References: <20261012134840.1051969-1-alex.bennee@linaro.org>
- <87fqybx97c.fsf@draig.linaro.org>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <87fqybx97c.fsf@draig.linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20261012-typos-in-docs-v1-1-75f2e1cd888e@gmail.com>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIzNDAwMz3ZLKgvxi3cw83ZT85GJdY7PktJSkpFRToxRjJaCegqLUtMwKsHn
+ RSiFBnmGejj5KsRCJ4tKkrNTkEpBpSrW1ALka0Jh6AAAA
+X-Change-ID: 20261006-typos-in-docs-36cfdbbe52d3
+To: qemu-devel@nongnu.org
+Cc: Luc Michel <luc@lmichel.fr>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
+ John Snow <jsnow@redhat.com>, Peter Maydell <peter.maydell@linaro.org>, 
+ Mauro Carvalho Chehab <mchehab+huawei@kernel.org>, 
+ Jason Wang <jasowangio@gmail.com>, Yuri Benditovich <ybendito@redhat.com>, 
+ Elena Ufimtseva <elena.ufimtseva@oracle.com>, 
+ Jagannathan Raman <jag.raman@oracle.com>, 
+ =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, 
+ =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Markus Armbruster <armbru@redhat.com>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, 
+ John Levon <john.levon@nutanix.com>, 
+ Thanos Makatos <thanos.makatos@nutanix.com>, 
+ =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
+ Nicholas Piggin <npiggin@gmail.com>, 
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, 
+ Amit Machhiwal <amachhiw@linux.ibm.com>, Glenn Miles <milesg@linux.ibm.com>, 
+ Gautam Menghani <gautam@linux.ibm.com>, Michael Tokarev <mjt@tls.msk.ru>, 
+ Laurent Vivier <laurent@vivier.eu>, qemu-ppc@nongnu.org, 
+ qemu-trivial@nongnu.org
+X-Mailer: b4 0.15.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1791822850; l=8624;
+ i=filip.hejsek@gmail.com; s=20250912; h=from:subject:message-id;
+ bh=16QmF9OW4eu5qk8bc+ZouDAxDNZ5AImmaRZA0CGJGnc=;
+ b=c0muxBsmMvmlYxJRFyBDFgxaAbncnf+WzKxii4i/MpXdFR0NaBV85EY0QDYetJyqCXMtaYQIC
+ 0Uxw/HB3BsFBnLs24GvN8S8gttmFea6JNvylenGZI41W/dpNnsX2zKQ
+X-Developer-Key: i=filip.hejsek@gmail.com; a=ed25519;
+ pk=nakB8gEK3oi+Q/5dBTMCy/LgZL47NP60z1jeDR6O/WU=
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=filip.hejsek@gmail.com; helo=mail-wm1-x334.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -126,45 +129,189 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/12/26 16:52, Alex Bennée wrote:
->> diff --git a/target/arm/tcg/op_helper.c b/target/arm/tcg/op_helper.c
->> index af56eff9f18..7c1fdab79d7 100644
->> --- a/target/arm/tcg/op_helper.c
->> +++ b/target/arm/tcg/op_helper.c
->> @@ -471,6 +471,9 @@ void HELPER(wfit)(CPUARMState *env, uint32_t rd)
->>   void HELPER(sev)(CPUARMState *env)
->>   {
->>       CPUState *cs = env_cpu(env);
->> +
->> +    BQL_LOCK_GUARD();
->> +
->>       CPU_FOREACH(cs) {
->>           ARMCPU *target_cpu = ARM_CPU(cs);
->>           target_cpu->env.event_register = true;
-Reviewed-by: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Filip Hejsek <filip.hejsek@gmail.com>
+---
+ docs/devel/clocks.rst                 | 2 +-
+ docs/devel/control-flow-integrity.rst | 2 +-
+ docs/devel/docs.rst                   | 2 +-
+ docs/devel/ebpf_rss.rst               | 2 +-
+ docs/devel/multi-process.rst          | 6 +++---
+ docs/devel/submitting-a-patch.rst     | 2 +-
+ docs/interop/vfio-user.rst            | 2 +-
+ docs/specs/ppc-spapr-hcalls.rst       | 2 +-
+ docs/specs/ppc-spapr-xive.rst         | 2 +-
+ docs/system/security.rst              | 2 +-
+ docs/user/main.rst                    | 2 +-
+ 11 files changed, 13 insertions(+), 13 deletions(-)
 
-The use of cmpxchg in wfxt_timer_cb is fishy though.
+diff --git a/docs/devel/clocks.rst b/docs/devel/clocks.rst
+index 16de32147b..997b09c6a4 100644
+--- a/docs/devel/clocks.rst
++++ b/docs/devel/clocks.rst
+@@ -280,7 +280,7 @@ so you can use this to model clock controller devices which
+ have guest-programmable frequency multipliers or dividers.
+ 
+ Similarly to ``clock_set()``, ``clock_set_mul_div()`` returns ``true`` if
+-the clock state was modified; that is, if the multiplier or the diviser
++the clock state was modified; that is, if the multiplier or the divisor
+ or both were changed by the call.
+ 
+ Note that ``clock_set_mul_div()`` does not automatically call
+diff --git a/docs/devel/control-flow-integrity.rst b/docs/devel/control-flow-integrity.rst
+index 3d5702fa4c..466888bdf1 100644
+--- a/docs/devel/control-flow-integrity.rst
++++ b/docs/devel/control-flow-integrity.rst
+@@ -39,7 +39,7 @@ are planning to also enable fuzzing, then Clang 11+ is needed (more on this
+ later).
+ 
+ Given the use of LTO, a version of AR that supports LLVM IR is required.
+-The easies way of doing this is by selecting the AR provided by LLVM::
++The easiest way of doing this is by selecting the AR provided by LLVM::
+ 
+  AR=llvm-ar-9 CC=clang-9 CXX=clang++-9 /path/to/configure --enable-cfi
+ 
+diff --git a/docs/devel/docs.rst b/docs/devel/docs.rst
+index a7768b5311..7fe7e44429 100644
+--- a/docs/devel/docs.rst
++++ b/docs/devel/docs.rst
+@@ -5,7 +5,7 @@ QEMU Documentation
+ 
+ QEMU's documentation is written in reStructuredText format and
+ built using the Sphinx documentation generator. We generate both
+-the HTML manual and the manpages from the some documentation sources.
++the HTML manual and the manpages from the same documentation sources.
+ 
+ hxtool and .hx files
+ --------------------
+diff --git a/docs/devel/ebpf_rss.rst b/docs/devel/ebpf_rss.rst
+index ed5d33767b..85ef547623 100644
+--- a/docs/devel/ebpf_rss.rst
++++ b/docs/devel/ebpf_rss.rst
+@@ -31,7 +31,7 @@ Not for all packets, the hash can/should be calculated.
+ 
+ Note: currently, eBPF RSS does not support hash reporting.
+ 
+-eBPF RSS turned on by different combinations of vhost-net, vitrio-net and tap configurations:
++eBPF RSS turned on by different combinations of vhost-net, virtio-net and tap configurations:
+ 
+ - eBPF is used:
+ 
+diff --git a/docs/devel/multi-process.rst b/docs/devel/multi-process.rst
+index 4ef539c0b0..cafe2aaba7 100644
+--- a/docs/devel/multi-process.rst
++++ b/docs/devel/multi-process.rst
+@@ -158,7 +158,7 @@ IOMMUs introduce another level of complexity, since the address given to
+ the guest virtio device to DMA to or from is not a guest physical
+ address. This case is handled by having vhost code within QEMU register
+ as a listener for IOMMU mapping changes. The vhost application maintains
+-a cache of IOMMMU translations: sending translation requests back to
++a cache of IOMMU translations: sending translation requests back to
+ QEMU on cache misses, and in turn receiving flush requests from QEMU
+ when mappings are purged.
+ 
+@@ -573,7 +573,7 @@ live migration
+ When a remote process receives a live migration indication from QEMU, it
+ will set up a channel using the received file descriptor with
+ ``qio_channel_socket_new_fd()``. This channel will be used to create a
+-*QEMUfile* that can be passed to ``qemu_save_device_state()`` to send
++*QEMUFile* that can be passed to ``qemu_save_device_state()`` to send
+ the process's device state back to QEMU. This method will be reversed on
+ restore - the channel will be passed to ``qemu_loadvm_state()`` to
+ restore the device state.
+@@ -853,7 +853,7 @@ intx irq descriptor
+ 
+ The irq descriptors are created by the proxy object
+ ``using event_notifier_init()`` to create the irq and re-sampling
+-*eventds*, and ``kvm_vm_ioctl(KVM_IRQFD)`` to bind them to an interrupt.
++*eventfds*, and ``kvm_vm_ioctl(KVM_IRQFD)`` to bind them to an interrupt.
+ The interrupt route can be found with
+ ``pci_device_route_intx_to_irq()``.
+ 
+diff --git a/docs/devel/submitting-a-patch.rst b/docs/devel/submitting-a-patch.rst
+index 5ccd09a397..cd08881dfb 100644
+--- a/docs/devel/submitting-a-patch.rst
++++ b/docs/devel/submitting-a-patch.rst
+@@ -241,7 +241,7 @@ Use B4
+ ~~~~~~
+ 
+ The `b4`_ tool, used for Linux kernel development, can also be used for QEMU
+-development. It is packaged in most distros and PyPi. The QEMU source tree
++development. It is packaged in most distros and PyPI. The QEMU source tree
+ includes a ``b4`` project configuration file at the root: ``.b4-config``.
+ 
+ Example workflow to prepare a patch series:
+diff --git a/docs/interop/vfio-user.rst b/docs/interop/vfio-user.rst
+index 1c92f442d2..3428241dae 100644
+--- a/docs/interop/vfio-user.rst
++++ b/docs/interop/vfio-user.rst
+@@ -1505,7 +1505,7 @@ Neither the request or reply have a payload.
+ --------------------------------
+ 
+ This message can be used to coalesce multiple device write operations
+-into a single messgage.  It is only used as an optimization when the
++into a single message.  It is only used as an optimization when the
+ outgoing message queue is relatively full.
+ 
+ Request
+diff --git a/docs/specs/ppc-spapr-hcalls.rst b/docs/specs/ppc-spapr-hcalls.rst
+index 6cdcef2026..550026ea55 100644
+--- a/docs/specs/ppc-spapr-hcalls.rst
++++ b/docs/specs/ppc-spapr-hcalls.rst
+@@ -20,7 +20,7 @@ to an implementation specific range in PAPR.
+ ``H_RTAS (0xf000)``
+ ===================
+ 
+-RTAS stands for Run-Time Abstraction Sercies and is a set of runtime services
++RTAS stands for Run-Time Abstraction Services and is a set of runtime services
+ generally provided by the firmware inside the guest to the operating system. It
+ predates the existence of hypervisors (it was originally an extension to Open
+ Firmware) and is still used by PAPR and LoPAR to provide various services that
+diff --git a/docs/specs/ppc-spapr-xive.rst b/docs/specs/ppc-spapr-xive.rst
+index f47f739e01..8b83942a29 100644
+--- a/docs/specs/ppc-spapr-xive.rst
++++ b/docs/specs/ppc-spapr-xive.rst
+@@ -171,7 +171,7 @@ native exploitation mode* is selected should contain:
+ - ``reg``
+ 
+   contains the base address and size of the thread interrupt
+-  managnement areas (TIMA), for the User level and for the Guest OS
++  management areas (TIMA), for the User level and for the Guest OS
+   level. Only the Guest OS level is taken into account today.
+ 
+ - ``ibm,xive-eq-sizes``
+diff --git a/docs/system/security.rst b/docs/system/security.rst
+index 75e39caede..1bd8423866 100644
+--- a/docs/system/security.rst
++++ b/docs/system/security.rst
+@@ -107,7 +107,7 @@ an issue as a normal bug.
+   possibility of large memory peaks and apply countermeasures to
+   provide continuity of host operations. It is typical for the Linux
+   OOM killer to reap the process triggering host memory overcommit
+-  in the case of exccessive usage, offering a degree of protection.
++  in the case of excessive usage, offering a degree of protection.
+   As such, bugs which can lead to excessive/unbounded memory allocations
+   will usually not be classified as security flaws, but should be
+   fixed as hardening bugs.
+diff --git a/docs/user/main.rst b/docs/user/main.rst
+index a8ddf91424..aef33bfd9a 100644
+--- a/docs/user/main.rst
++++ b/docs/user/main.rst
+@@ -23,7 +23,7 @@ System call translation
+ System calls are the principle interface between user-space and the
+ kernel. Generally the same system calls exist on all versions of the
+ kernel so QEMU includes a generic system call translator. The
+-translator takes care of adjusting endianess, 32/64 bit parameter size
++translator takes care of adjusting endianness, 32/64 bit parameter size
+ and then calling the equivalent host system call.
+ 
+ QEMU can also adjust device specific ``ioctl()`` calls in a similar
 
-Clearing HALT_WFE should be the task of the target CPU, not the timer. 
-The timer_mod() should be *after* halt_reason(*), and then you can just 
-do a qatomic_read() instead of a cmpxchg(**) in wfxt_timer_cb().
+---
+base-commit: d7a65d1793d691d356a56833620f7d1e6f5d653b
+change-id: 20261006-typos-in-docs-36cfdbbe52d3
 
-However, I don't understand at all why wfxt_timer_cb needs to set 
-event_register to true.  It seems to me that a wfet + wfe sequence, 
-where the first wfet times out, *should* halt again on the second wfe; 
-but as the code is written it doesn't.
-
-I think wfxt_timer_cb only needs to call cpu_interrupt().
-
-Thanks,
-
-Paolo
-
-(*) always, even if the halt reason is not HALT_WFE, if only for consistency
-
-(**) you don't need a lock or acquire/release here, because the timer 
-callback always sees everything that happened before timer_mod().  In a 
-sense, timer_mod() *is* the release operation and starting the callback 
-is the acquire operation.
+Best regards,
+--  
+Filip Hejsek <filip.hejsek@gmail.com>
 
 
