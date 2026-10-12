@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8AF4CA9EC5
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Oct 2026 14:06:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4005DCA9ED1
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Oct 2026 14:06:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGGep-0000Yq-F2; Mon, 12 Oct 2026 10:05:39 -0400
+	id 1xGGei-0000Ie-9s; Mon, 12 Oct 2026 10:05:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <filip.hejsek@gmail.com>)
- id 1xGGek-0000QU-Fr
- for qemu-devel@nongnu.org; Mon, 12 Oct 2026 10:05:34 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ id 1xGGee-0000GA-NR
+ for qemu-devel@nongnu.org; Mon, 12 Oct 2026 10:05:29 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <filip.hejsek@gmail.com>)
- id 1xGGei-0006AV-Pa
- for qemu-devel@nongnu.org; Mon, 12 Oct 2026 10:05:34 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-4a02718da81so14829595e9.1
- for <qemu-devel@nongnu.org>; Mon, 12 Oct 2026 07:05:32 -0700 (PDT)
+ id 1xGGed-00069B-1i
+ for qemu-devel@nongnu.org; Mon, 12 Oct 2026 10:05:28 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-49e73611928so24888295e9.1
+ for <qemu-devel@nongnu.org>; Mon, 12 Oct 2026 07:05:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1791813931; x=1792418731; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1791813925; x=1792418725; darn=nongnu.org;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :content-type:mime-version:subject:date:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=i7D8m4p5d44A3c6h9sfrKhYabzXBklBQd1u3SRQCaDA=;
- b=JHDAw38gk9ukmZmToZcFkjAz2enbKIRx/WArpvgj4jHg6SoRKr0LVNChFBCuhTujto
- jIwa1di3LUX4rXV3qrt16tYKt+1yNi9wSHjFJo7GAhUxNOuqN3prJBQbb21f1zqOjltl
- MxlBQCuKwSlUtx81c2DMgUChOJk2pVil2137PDssMKBIqjy4o9dN8F1U3bFA/0dzZtA5
- ZcgFTZr8R7+iU1GTKGkJtN/BiQNEHgc9Pd5FRYE3FBd4j8Z5bD4tPpeMS4mOxEId5eh3
- xEZ25x5mdBgOtasbx8B8VkSFN/xB0kiORp17iICgZcNVE5kv6lFXNL9VvieRmKys6NBb
- MhvA==
+ bh=HSrF1Uf2SYNIft95MB9XFCC5nKQU5xHB3kHJUqzeVuY=;
+ b=S4EggUzQeRzvPNNshkD2qo7HZ3vcMhzeeKhpfJYxmOcaTSxXQb/AOsK86LbKm0UqfT
+ KLUbtNaC1lVGwwjFfbGkkbKMApUY9WUuZ47ZyelzZIUx0a/4pGWMU7j7eHJiK01Bw0uE
+ s91hfnk0uMlbMiPFhsQcFVEGTvfOYYnfEfsTrkWJ3arj1PCn4ZfOH0Xo9304tLnDUhFV
+ M1zwOu8GvmgUspavoKWRauk+aNSaeup3OTPbACH7APpj9miR8Wk9fVtGDdM4pIgSAYFt
+ 7RvSQ77LL+wXKKILOkCIeHa3LEXs/rKX8yiVX5a2HhSoE14mStV0EhsOZNeqbWvfgaJz
+ y/RQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791813931; x=1792418731;
+ d=1e100.net; s=20260707; t=1791813925; x=1792418725;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :content-type:mime-version:subject:date:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=i7D8m4p5d44A3c6h9sfrKhYabzXBklBQd1u3SRQCaDA=;
- b=dkkrGRG9Yg0YiOUpi2iTL2jTuhuGUYp3LuE1GHsc4FUfF+AuV4x4j8bRvt3i9ZNibX
- GUdgPnm7674ZAebRGPhi1m3Lj4txc1dTbIz/nNP8u3OcfHHBU60TH30jRjXe/vJKdvlA
- X+L9giYRxay4mp3sr1IogwOZ+ynI5tTbZLDPEaYTmvJcLkngrPV6O0RWKbpdVpqq3bwN
- n0yThUjpSZHOFel8sFi4yeQluT9UNalKy6jII+0/ZNcWRAHfEoCCuy1jGfLNLQZllnp+
- saa7P8+iRpeOESZHZD1KzPQ0CTQJFiCU2Duy5IC2AcVq8LkvNWCWpF4EJZKIQ+bjLE24
- x7/Q==
-X-Gm-Message-State: AFq9FYIfdIzt+NsGmRUDd8th1oQ+3L43FcftRengJkhgfaWyusPJm/Ah
- h9aOMqhhJyxDiRpPzl3LOUdjhaeknoeagbt0M4DsHeoVSyCyRL48sPAs
-X-Gm-Gg: AYBFou1f2RfOBEMew1IDL/55YZlwnc2+N88PiFKtmH5QLiCaPwdIeFHnh/FyW6PJYwh
- DpzWuSilhBM2SCeY7J550644Boos928OsMgPFQRRLPXCVvLo1jPPBuynIPXK6rlEdzWVj74NgaZ
- Gb553lO2QIuxmcVDt46hP7AuW695mRXShDe+NNri9paMMEI1uYFqLvoOpRpdeaax3V75afFKOUx
- lFTn8P558qcFuQj9zRgRvamL19pu60CPKaiwLb0kaCkG/KeoI591eWsaO4wK/4SQ9i9WuCufeqG
- bIl0c3mNU+nM1+WZYqX6zYkqCLf+zZxNUxBPoufpHB3eIdTVADJlqmn0hSRL94viKE6vpS6Wf8/
- N8s6EAstdxkn4uyU/P7HNwT0OL2f+H9haD5nmFuLxDhpzuXgzlMSmIrgDYrd7+6Dm3A/Kme174K
- uxxanwXPdbmmUnl9o0TTubWIx5A+YZhHuIVI+9lMnJjlniYjtcmW+fSe4mgbaCBh0TiMfTOIkN5
- 8sgC2oARcoLKLC98BoI+uPm4A==
-X-Received: by 2002:a05:600c:3146:b0:49d:1fd8:b874 with SMTP id
- 5b1f17b1804b1-4a18e4af3a8mr193838655e9.19.1791813930746; 
- Mon, 12 Oct 2026 07:05:30 -0700 (PDT)
+ bh=HSrF1Uf2SYNIft95MB9XFCC5nKQU5xHB3kHJUqzeVuY=;
+ b=LWK9N6qRTsudxOC4xtHMQnwim8AvKSaF+yYNoseo43gEYdOmVUnop2dA0oWwLOvKnp
+ RIYhTSsbn9j6FVxWwmCTGNe7+8G90OP9ragETL6LzUTmy+xjetHEye5Nxa8ZyGwSx1cz
+ a5OuIp0NVJyk3qdG+b4CmUAebQG/7vfWGMYBSafrHJSJ4PjamzpYr0WgRyHRclrkv+f5
+ 8F6N2BlkLxcs0nypJK01MnuHmVnEUzC7BSF64S0saHiPb5Cezm4WTJn5n5mtW3giFuKK
+ qLV6R/YY3RjhMYUceey5HosOI0t3Ve4sM4WWPVbw4QxbKgrhF52SbDzkLMvO8IcdiK8w
+ 62ZQ==
+X-Gm-Message-State: AFq9FYKOlPlwMPnPvJpsLBRMr4ushapyZCK/qSnN7hNNe6cjSYoZpMBf
+ aiw1dkUyoETphgA5Pj3B/ejp2aOX85Zp52dJGFHI6qufpfhzZpqAlKpU
+X-Gm-Gg: AYBFou2+ofNNohcXUZ7KpJzoxjBOdE5Yipb+RzZD+2FD4F/dk5RYO4ClcXbGZALIytD
+ KPA84BeRbPraSGqC78N19EH81HxPLZrrh2xlBpOBYX/+Ed3Nna3tE9RRMVV0OIre12n7ZkOJYlU
+ Vw8ytyhFEKMrDkcEOtVHnG3iGaWLtctQS0DCkw+e9s+xBKYY5pGiu9BKka4Sm5VeKXnMy5DdzFY
+ y2qhxSZhMxD5LO2dw+5j2ZOTX938R1ZnZ0R+yFmpbTCbaebcL/m9wbqijWOTmcA7ji/Q71HdTEK
+ wxf+lMddppgAeKYoCLmaxY4rfLGdvOFwUvronLnx1NHP1MwM/lLxXTA6MRF9cf+9wta2vBKRb1N
+ +9jijkt5d+xoM2N1/K/rfFftnxC+bNuEwUll5F50OJWfTUD2iTDjLsONySKq/ofCCWt0utRDyid
+ D1kqjRHFa86LWPvACMIaydXmlDoTstN/PQFOzPJSGvskczkz3Q7X7cDWeA4mCTKkr1T4nRAemCV
+ GbV1vcSYpj+IZMGItIG6y6guQ==
+X-Received: by 2002:a05:600c:3b0a:b0:4a1:8963:b865 with SMTP id
+ 5b1f17b1804b1-4a18e447e9emr190837805e9.1.1791813925111; 
+ Mon, 12 Oct 2026 07:05:25 -0700 (PDT)
 Received: from localhost (ip-78-44-39-34.bb.vodafone.cz. [78.44.39.34])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a18bf2343asm540736965e9.9.2026.10.12.07.05.30
+ 5b1f17b1804b1-4a18c198134sm290960965e9.15.2026.10.12.07.05.24
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 12 Oct 2026 07:05:30 -0700 (PDT)
+ Mon, 12 Oct 2026 07:05:24 -0700 (PDT)
 From: Filip Hejsek <filip.hejsek@gmail.com>
-Date: Mon, 12 Oct 2026 16:05:11 +0200
-Subject: [PATCH v10 12/12] virtio-console: notify the guest about terminal
- resizes
+Date: Mon, 12 Oct 2026 16:05:07 +0200
+Subject: [PATCH v10 08/12] ui/console-vc: forward text console size to vc
+ chardev
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261012-console-resize-v10-12-2c3b10d829b3@gmail.com>
+Message-Id: <20261012-console-resize-v10-8-2c3b10d829b3@gmail.com>
 References: <20261012-console-resize-v10-0-2c3b10d829b3@gmail.com>
 In-Reply-To: <20261012-console-resize-v10-0-2c3b10d829b3@gmail.com>
 To: qemu-devel@nongnu.org
@@ -87,18 +87,17 @@ Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
  Maximilian Immanuel Brandtner <maxbr@linux.ibm.com>, 
  Dominique Martinet <asmadeus@codewreck.org>, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, 
- Szymon Lukasz <noh4hss@gmail.com>
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1791813907; l=3302;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1791813907; l=1675;
  i=filip.hejsek@gmail.com; s=20250912; h=from:subject:message-id;
- bh=2Jg6Y1T5V2e9cTsZrGPksLAGaFCZH0boAkiX4p5Ls9o=;
- b=Xv9KOfooAAUjJcNUvh7ohzON6uvO+8FSxLjkuNj+HQTWuiPYSBYC+soOV7enqvR+CSBZhtTBM
- aIW3/5hZUuqAcMSNSZclGvQRZBI4i2bGv4/tHZke2Jm9v7FS3Pz6CsZ
+ bh=+THDUz5FDYTrq+3UbYN01djura7EAPA8bWNZTUjGcf0=;
+ b=8rfMawnH5kKVABlU54oiv3ChzlhUVUHXqPY7VqLobpLq+CGSmmENDZ+k+PtM6ace7RpriSyOU
+ 5oE5age8xDcBzKLu5C0MoV3/Lw4Qf7JWLM8obXPjBcneZPgw7f01HkC
 X-Developer-Key: i=filip.hejsek@gmail.com; a=ed25519;
  pk=nakB8gEK3oi+Q/5dBTMCy/LgZL47NP60z1jeDR6O/WU=
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=filip.hejsek@gmail.com; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=filip.hejsek@gmail.com; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -121,91 +120,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Szymon Lukasz <noh4hss@gmail.com>
+Update the vc chardev size when initializing the console and after
+changing the surface image.
 
-If a virtio serial port is a console port, forward terminal resize
-messages from the chardev backend to the guest.
+NOTE: There seems to be a bug in the code where the dpy_text_resize
+      callback is not called when the size changes due to changing the
+      surface image. (Though it doesn't cause any problem in practice
+      because the callback is only used by ui/ncurses for fixed
+      consoles, whose size never changes.)
 
-Signed-off-by: Szymon Lukasz <noh4hss@gmail.com>
-[Filip: rename things, remove logic that is now handled in virtio-serial-bus.c]
 Signed-off-by: Filip Hejsek <filip.hejsek@gmail.com>
 ---
- hw/char/virtio-console.c | 34 +++++++++++++++++++++++++++++++---
- 1 file changed, 31 insertions(+), 3 deletions(-)
+ ui/console-vc.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/hw/char/virtio-console.c b/hw/char/virtio-console.c
-index 36ad2ddc3f..db9d8ca797 100644
---- a/hw/char/virtio-console.c
-+++ b/hw/char/virtio-console.c
-@@ -107,6 +107,15 @@ static ssize_t flush_buf(VirtIOSerialPort *port,
-     return ret;
+diff --git a/ui/console-vc.c b/ui/console-vc.c
+index 53d9e9d39b..99cc8f09c8 100644
+--- a/ui/console-vc.c
++++ b/ui/console-vc.c
+@@ -115,12 +115,19 @@ static int vc_chr_write(Chardev *chr, const uint8_t *buf, int len)
+     return vt100_input(&s->vt, buf, len);
  }
  
-+static void virtconsole_update_size(VirtIOSerialPort *port)
++static void text_console_chr_resize(QemuTextConsole *s)
 +{
-+    uint16_t cols, rows;
-+    VirtConsole *vcon = VIRTIO_CONSOLE(port);
-+
-+    qemu_chr_fe_get_winsize(&vcon->chr, &cols, &rows);
-+    virtio_serial_resize_console(port, cols, rows);
++    qemu_chr_resize(s->chr, s->vt.width, s->vt.height);
 +}
 +
- /* Callback function that's called when the guest opens/closes the port */
- static void set_guest_connected(VirtIOSerialPort *port, int guest_connected)
+ static void text_console_invalidate(void *opaque)
  {
-@@ -171,6 +180,23 @@ static void chr_event(void *opaque, QEMUChrEvent event)
+     QemuTextConsole *s = QEMU_TEXT_CONSOLE(opaque);
+ 
+     if (!QEMU_IS_FIXED_TEXT_CONSOLE(s)) {
+         vt100_set_image(&s->vt, QEMU_CONSOLE(s)->surface->image);
++        text_console_chr_resize(s);
++        /* XXX Shouldn't qemu_text_console_update_size() also be called here? */
      }
+     vt100_refresh(&s->vt);
  }
+@@ -254,6 +261,7 @@ static bool vc_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
+         s->vt.t_attrib = TEXT_ATTRIBUTES_DEFAULT;
+     }
  
-+static void chr_event_console(void *opaque, QEMUChrEvent event)
-+{
-+    VirtConsole *vcon = opaque;
-+    VirtIOSerialPort *port = VIRTIO_SERIAL_PORT(vcon);
-+
-+    trace_virtio_console_chr_event(port->id, event);
-+    switch (event) {
-+    case CHR_EVENT_OPENED:
-+    case CHR_EVENT_MUX_IN:
-+    case CHR_EVENT_RESIZE:
-+        virtconsole_update_size(port);
-+        break;
-+    default:
-+        break;
-+    }
-+}
-+
- static int chr_be_change(void *opaque)
- {
-     VirtConsole *vcon = opaque;
-@@ -179,7 +205,9 @@ static int chr_be_change(void *opaque)
- 
-     if (k->is_console) {
-         qemu_chr_fe_set_handlers(&vcon->chr, chr_can_read, chr_read,
--                                 NULL, chr_be_change, vcon, NULL, true);
-+                                 chr_event_console, chr_be_change,
-+                                 vcon, NULL, true);
-+        virtconsole_update_size(port);
-     } else {
-         qemu_chr_fe_set_handlers(&vcon->chr, chr_can_read, chr_read,
-                                  chr_event, chr_be_change, vcon, NULL, false);
-@@ -207,7 +235,7 @@ static void virtconsole_enable_backend(VirtIOSerialPort *port, bool enable)
-         VirtIOSerialPortClass *k = VIRTIO_SERIAL_PORT_GET_CLASS(port);
- 
-         qemu_chr_fe_set_handlers(&vcon->chr, chr_can_read, chr_read,
--                                 k->is_console ? NULL : chr_event,
-+                                 k->is_console ? chr_event_console : chr_event,
-                                  chr_be_change, vcon, NULL, false);
-     } else {
-         qemu_chr_fe_set_handlers(&vcon->chr, NULL, NULL, NULL,
-@@ -239,7 +267,7 @@ static void virtconsole_realize(DeviceState *dev, Error **errp)
-          */
-         if (k->is_console) {
-             qemu_chr_fe_set_handlers(&vcon->chr, chr_can_read, chr_read,
--                                     NULL, chr_be_change,
-+                                     chr_event_console, chr_be_change,
-                                      vcon, NULL, true);
-             virtio_serial_open(port);
-         } else {
++    text_console_chr_resize(s);
+     qemu_chr_be_event(chr, CHR_EVENT_OPENED);
+     qemu_console_notify(QEMU_CONSOLE_ADDED, QEMU_CONSOLE(s));
+     return true;
 
 -- 
 2.56.0
