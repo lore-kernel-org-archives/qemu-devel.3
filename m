@@ -4,57 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DC94CA9ED0
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 00:00:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F26B4CA9EC5
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 00:00:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGPu1-0005e8-4o; Mon, 12 Oct 2026 19:57:57 -0400
+	id 1xGPuA-0005jZ-LZ; Mon, 12 Oct 2026 19:58:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dongli.zhang@oracle.com>)
- id 1xGPtx-0005cZ-Q2
- for qemu-devel@nongnu.org; Mon, 12 Oct 2026 19:57:54 -0400
+ id 1xGPu3-0005fU-93
+ for qemu-devel@nongnu.org; Mon, 12 Oct 2026 19:57:59 -0400
 Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dongli.zhang@oracle.com>)
- id 1xGPtv-0006ET-1T
- for qemu-devel@nongnu.org; Mon, 12 Oct 2026 19:57:53 -0400
-Received: from pps.filterd (m0333520.ppops.net [127.0.0.1])
+ id 1xGPu1-0006Gx-Ck
+ for qemu-devel@nongnu.org; Mon, 12 Oct 2026 19:57:59 -0400
+Received: from pps.filterd (m0246630.ppops.net [127.0.0.1])
  by mx0b-00069f02.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69CMgScq334361; Mon, 12 Oct 2026 23:57:43 GMT
+ 69CMiQQi2767894; Mon, 12 Oct 2026 23:57:53 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=corp-2025-04-25; bh=0w9lpz+Rn3OIouaA9U4uy5mNDhLQg
- O5kx0EUAyAVgT8=; b=pFZaNPrFnbPMeUafxa9jyo2zwZA4EahaJcgO/THELy5S6
- 8b/qaVcv97RIoZenAocM2XBUC7JI7mxkVqfiOPHzhIEwzt/Is+X//g36AvYSK8gh
- 0hvEHtrHBxcco/qxIF9JWAGEnqfOrI00L67hjv+EJftBEEwDrAvIdx36wBrghtGn
- PfuhbgfpvTrqP+tjHJCrgzNOvyT37yafjYoCLqhnQWDwaylXrxuPZaAlzdIei2Zr
- YVcRGdUETaANZqSi1XRNNvJTJmYI3gfINtKuIcIiwJpzYG1HAGagXZU3bN3budhJ
- /3YYi8M16Q/qwgYhSewrceMBQ/o6iDyS6lXSsSf6A==
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=corp-2025-04-25; bh=8g5hC
+ MLaziZjWn+8JMsZ3Y9zpfWMj7P/RzwSrO34/gY=; b=eFL43x2Uzp14XKwWZOl6G
+ WWqg/brj2AfvXC984oymiGmJM5NLfy9zRcaGl3Fnt1CydoCZfdTuWJbrNH0UsUbn
+ x/wNKQViYjlI/bxAw8EAC/ODwHnj3ZgQgnIM/SlN7L3YoJGnv6YqsmkW+pAfSEFh
+ bHV6K0+vY5sxSDQrErZRG/3PcBqBRfk8zsYkvGMD+8pk1UvBzfubTkYk10bp0bOi
+ WD14MzTOFwbd2728BQPzbRBlQuZMM2qz0rw9SQROHNhrROI/Uu0ksia7U9fvfItR
+ JxZAyi4L5PZuvX4uOlsF52uHgkJOxxwQkR4JWQL9axh0pdT/Hdf7M4FuVbCvUqTm
+ w==
 Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta01.appoci.oracle.com [130.35.100.223])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4h7dddu7t6-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4h7ddgk6rs-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 12 Oct 2026 23:57:43 +0000 (GMT)
+ Mon, 12 Oct 2026 23:57:52 +0000 (GMT)
 Received: from pps.filterd
  (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
  by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.7/8.18.1.7)
- with ESMTP id 69CNpimr015375; Mon, 12 Oct 2026 23:57:42 GMT
+ with ESMTP id 69CNpeAN015093; Mon, 12 Oct 2026 23:57:52 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 4h7btnuhrj-1
+ 4h7btnuhv6-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 12 Oct 2026 23:57:42 +0000 (GMT)
+ Mon, 12 Oct 2026 23:57:52 +0000 (GMT)
 Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.18.1.12/8.18.1.12) with ESMTP id 69CNvfH7025328;
- Mon, 12 Oct 2026 23:57:42 GMT
+ by pps.reinject (8.18.1.12/8.18.1.12) with ESMTP id 69CNvfHd025328;
+ Mon, 12 Oct 2026 23:57:51 GMT
 Received: from donglzha-e6-vfio-setup.osdevelopmeniad.oraclevcn.com
  (donglzha-e6-vfio-setup.allregionaliads.osdevelopmeniad.oraclevcn.com
  [100.100.255.69])
  by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTP id
- 4h7btnuhra-1; Mon, 12 Oct 2026 23:57:41 +0000 (GMT)
+ 4h7btnuhra-17; Mon, 12 Oct 2026 23:57:51 +0000 (GMT)
 From: Dongli Zhang <dongli.zhang@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: david@kernel.org, imammedo@redhat.com, maciej.szmigiero@oracle.com,
@@ -64,10 +65,13 @@ Cc: david@kernel.org, imammedo@redhat.com, maciej.szmigiero@oracle.com,
  eric.auger@redhat.com, zhenzhong.duan@intel.com, mst@redhat.com,
  cohuck@redhat.com, pbonzini@redhat.com, armbru@redhat.com,
  eblake@redhat.com
-Subject: [PATCH 00/21] migration/cpr: introduce cpr-luo mode to support KHO/LUO
-Date: Mon, 12 Oct 2026 23:55:56 +0000
-Message-ID: <20261012235727.398133-1-dongli.zhang@oracle.com>
+Subject: [PATCH 16/21] migration/cpr-luo: enable cpr-luo mode for target side
+ retrieval
+Date: Mon, 12 Oct 2026 23:56:12 +0000
+Message-ID: <20261012235727.398133-17-dongli.zhang@oracle.com>
 X-Mailer: git-send-email 2.43.7
+In-Reply-To: <20261012235727.398133-1-dongli.zhang@oracle.com>
+References: <20261012235727.398133-1-dongli.zhang@oracle.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Proofpoint-Virus-Version: vendor=baseguard
@@ -77,26 +81,25 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0
  spamscore=0 adultscore=0 bulkscore=0 malwarescore=0 mlxscore=0
  lowpriorityscore=0 suspectscore=0 mlxlogscore=999 classifier=spam adjust=0
  reason=mlx scancount=1 engine=8.19.0-2610020000 definitions=main-2610120095
-X-Proofpoint-GUID: dWIXUWXQ1fiXHz1bw1din-TpWTvK0gk8
-X-Proofpoint-ORIG-GUID: dWIXUWXQ1fiXHz1bw1din-TpWTvK0gk8
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDEyMDA5NSBTYWx0ZWRfX1fibiE/4LEyL
- FGrYozmOirRNR7fKU4VipyNZ1U1LNsUMpI1GC8feIh9fn+WCCaXnfUh5+xYCEvnaZm7U6dzmWnH
- sc38J0BLDkHOzd7iv7ntGP86ve5VfxZPRiOtKQhjedxKzCo4NbYN
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDEyMDA5NSBTYWx0ZWRfXxwwvsY+ezLd1
- Ptgbwk8wR2dKW48aPN+EavwLceFPfICZ/p1p8yV3h2E8ZMzzOuFF5uY+YC8k0jV2tSEePssvP7+
- qUH8mKsaqenUSHo+gGlyrQCeN9/GuI8IGnCfJoCGQvpwebyEBHFT0YF/VH7KymImc27Fr2ILGjb
- AoxD8Vxb98zk9867EzSfympFnVuAMh39Wdh+BECJpPss/f0s7k6rmIb77MFYUkxyguzrqCILc3r
- h9SmNRHaYuA62iJW+ay+MymBkyrJQgTY/p7ZklyrovNp/10IIRu+fqGWF0XrKMQp33qXpTTW5KB
- PdU1bSvl1ivNOZ48M70Vu3XJ1uTimO9oNOX9lVtK0fzm8x82LxexdPlrb3pzMiYDAqDhZrSmX3M
- TimHJ81Ln3FqURyhvFPNo2dwRXGKvJQBW2PMUPBFIJBK9IXlNb1a0lk44DOQGW4ViOCmxRDy/4v
- AkYrEOc7c2Iwb4QbRUTz7TaCBw32QxPFgxeLgQUc=
-X-Authority-Analysis: v=2.4 cv=J/8/fwnS c=1 sm=1 tr=0 ts=6acd73f7 b=1 cx=c_pps
+X-Authority-Analysis: v=2.4 cv=EeZd0/mC c=1 sm=1 tr=0 ts=6acd7400 b=1 cx=c_pps
  a=zPCbziy225d3KhSqZt3L1A==:117
  a=zPCbziy225d3KhSqZt3L1A==:17
  a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22 a=jiCTI4zE5U7BLdzWsZGv:22
- a=BqU2WV_vvsyTyxaotp0D:22 a=VwQbUJbxAAAA:8 a=TYBLyS7eAAAA:8
- a=OtX6MG2v1n8ZmfsIG88A:9 a=zvYvwCWiE4KgVXXeO06c:22 a=5yU3S35YU4bGjq-dph-N:22
- a=Bho9c0fBagfJEIQBS7DQ:22 cc=ntf awl=host:12107
+ a=x4eqshVgHu-cdnggieHk:22 a=yPCof4ZbAAAA:8 a=JP3hYnA4LxdAF3hJH0IA:9
+ a=5yU3S35YU4bGjq-dph-N:22 a=Bho9c0fBagfJEIQBS7DQ:22 cc=ntf awl=host:12107
+X-Proofpoint-ORIG-GUID: UgPRK4MAM8Gb-43YjX7U4ykrcUZn-Iu1
+X-Proofpoint-GUID: UgPRK4MAM8Gb-43YjX7U4ykrcUZn-Iu1
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDEyMDA5NSBTYWx0ZWRfX2ICcz0a65YCC
+ PuO1f2G3Gs32OejZ1h+Q8gCFMuqHE3vR51gSGz9q0MPspkN8bxheMbnPV2zFg4Rbs8cfmz5Ok0r
+ TEAkya/LW38mDBsNxFhcYXcQqCBxcrF4bhJ/aXVLWRv+VahvlUUC
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDEyMDA5NSBTYWx0ZWRfX9xkC1RixzgxK
+ gu2FFg6NnGwkr49FSDcuWKkw7OizX3V79N/uRHk9Seiosd5IfosR3UNmxuaYBQRdokY4DdsGr8p
+ y0NOrekTEvS7svkNA9EfRNMJ+HiJ+Ybib+YRJCaDV4wkZCDcayBsg3N0Z0AtREc/9XALRFFqcBB
+ xw502Yqnmyesq5IZmIML7pUmhq+lVi0VuUnaSgQiTxutz/dt/Ygm9hJps+bFBZr7PdN+FjJOzit
+ OySt3fFStXr6iXHo3BzwhP41j/z8r97A2QIGYPeHWZX7eoB+Ro2QVwshG6SP7OHWTXibtd1Q8bz
+ ioZw5V2VJc6aUkkePrCYUcnza1SkqylVpLvgDSC2f4l7n9yF1f7R+mbnSCF4al7IvREL5sflo6L
+ /3ly0e8eiRfgk3NmsRrhpLx2EJrh/jS1PB0XlOKWTYbC9uGJ44rK6DwuFucO4ySeh7NmHQDJbgi
+ UTmBLJg1ahkx37j3CxhqKrf1fbwGjhPB+xsSAjmk=
 Received-SPF: pass client-ip=205.220.177.32;
  envelope-from=dongli.zhang@oracle.com; helo=mx0b-00069f02.pphosted.com
 X-Spam_score_int: -27
@@ -121,159 +124,215 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series introduces cpr-luo, a CPR migration mode that uses the Linux
-Live Update Orchestrator (LUO) and Kexec Handover (KHO) to support KVM host
-kernel updates through kexec.
+As with cpr-exec and cpr-transfer, call the cpr-luo APIs to retrieve the
+LUO session and its state memfd before device creation. After loading the
+LUO CPR state, retrieve the preserved file descriptors by token.
 
-On the outgoing side, QEMU saves CPR state in a memfd and preserves that fd
-together with the RAMBlock backing fds in LUO. KHO carries the preserved LUO
-state into the new kernel. The incoming QEMU retrieves the CPR state and
-RAMBlock backing fds from LUO after kexec.
+Finish the LUO session after the incoming migration successfully loads.
 
-The regular migration stream carries device vmstate.
+Accept "-incoming cpr-luo:defer" for deferred incoming migration and
+"-incoming cpr-luo:<URI>" to start an incoming migration immediately.
 
-Although VFIO is currently blocked, I have an offline implementation that
-skips cpr-luo mode in cpr_is_incoming(), skips precopy, and carefully handles
-monitor_fd_param() although I never use it, so that VFIO is always
-reconstructed. It works with both iommufd and legacy for mlx5_vfio_pci by
-saving the VFIO and vendor specific state in vmstate as well.
+Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
+---
+The mode management in existing code may need cleanup. There are
+duplicate cpr_set_incoming_mode(). There are unnecessary call of
+migrate_mode().
 
-The result is that guest RAM remains available across a kexec-based host
-kernel update without copying its contents through the migration stream.
+ include/migration/cpr.h  |  2 ++
+ migration/cpr-luo-stub.c | 10 ++++++++++
+ migration/cpr-luo.c      | 35 +++++++++++++++++++++++++++++++++++
+ migration/cpr.c          | 24 ++++++++++++++++++++----
+ migration/migration.c    |  2 ++
+ system/vl.c              |  9 +++++++++
+ 6 files changed, 78 insertions(+), 4 deletions(-)
 
-Here is the main idea of the patchset:
-
-1. Introduce the new cpr-luo mode.
-2. Use a UUID to identify a LUO session.
-3. Introduce APIs to create, preserve, and retrieve sessions and fds.
-4. As LUO uses the name, id, and token instead of an fd, create an
-independent VMStateDescription rather than reuse the one for cpr-exec and
-cpr-transfer.
-5. Compute the token when transforming entries from the hash table into the
-list.
-6. Preserve fds on the source. Follow the approach used in cpr-exec and
-cpr-transfer.
-7. Retrieve fds on the target. Follow the approach used in cpr-exec and
-cpr-transfer. The tricky part is where to set the cpr incoming mode.
-8. There is no need to modify save_fd() or load_fd(), as we only need to
-migrate the corresponding name and token, not the fds.
-9. Handle corner-case errors.
-10. Block VFIO.
-
-I may need to rebase the current patchset on top of the patches below,
-from which I learned quite a lot in each iteration. While working on this
-patchset, I identified some cleanup and code issues in cpr-exec and
-cpr-transfer. I may send fixes for them separately.
-
-[PATCH v16 00/22] migration/cpr: support vhost-vsock devices
-https://lore.kernel.org/all/20261012-up-vsock-vhost-v5-v16-0-36c38bd15ffc@virtuozzo.com/
-
-Example:
-
-Add "kho=on liveupdate=on" to host kernel cmdline.
-
-Create QEMU instance with memfd.
-
-qemu-system-x86_64 \
--uuid 6f1b9f5a-6b92-4a5d-ae57-7a0ddabc1234 \
--machine q35,dump-guest-core=off,memory-backend=ram0,aux-ram-share=on \
--accel kvm -cpu host \
--name debug-threads=on \
--m 8G -smp 4 \
--object memory-backend-memfd,id=ram0,size=8G,share=on \
--device virtio-blk-pci,drive=drive0,id=virtblk0,num-queues=4 \
--drive file=boot.qcow2,if=none,id=drive0 \
--netdev user,id=net0,hostfwd=tcp::5028-:22 \
--device virtio-net-pci,netdev=net0 \
--vnc :8 -monitor stdio
-
-Don't terminate QEMU process after cpr-luo migration.
-
-(qemu) migrate_set_parameter mode cpr-luo
-(qemu) migrate -d file:cpr-luo.state
-(qemu) info status
-VM status: paused (postmigrate)
-
-Use kexec to reboot the KVM host.
-
-host# kexec -s -l /boot/vmlinuz-$(uname -r) --initrd=/boot/initramfs-$(uname -r).img --reuse-cmdline
-host# sync
-host# kexec -e
-
-Resume QEMU instance after kexec reboot.
-
-qemu-system-x86_64 \
--uuid 6f1b9f5a-6b92-4a5d-ae57-7a0ddabc1234 \
--machine q35,dump-guest-core=off,memory-backend=ram0,aux-ram-share=on \
--accel kvm -cpu host \
--name debug-threads=on \
--m 8G -smp 4 \
--object memory-backend-memfd,id=ram0,size=8G,share=on \
--device virtio-blk-pci,drive=drive0,id=virtblk0,num-queues=4 \
--drive file=boot.qcow2,if=none,id=drive0 \
--netdev user,id=net0,hostfwd=tcp::5028-:22 \
--device virtio-net-pci,netdev=net0 \
--vnc :8 -monitor stdio \
--incoming cpr-luo:defer
-
-(qemu) migrate_incoming file:cpr-luo.state
-(qemu) info status
-VM status: running
-
-
-Dongli Zhang (21):
-  qapi/migration: add cpr-luo migration mode
-  migration/cpr: move CprFd definition to header file
-  scripts/update-linux-headers: Add liveupdate.h
-  linux-headers: import liveupdate UAPI header
-  migration/cpr-luo: require a non-null machine UUID
-  migration/cpr-luo: add LUO session management
-  migration/cpr-luo: add LUO fd management helpers
-  migration/cpr-luo: track LUO fds
-  migration/cpr-luo: add LUO fd VMStateDescription
-  migration/cpr-luo: add tokens for LUO fds
-  migration/cpr: move QEMUFile fd helpers to common code
-  migration/cpr-luo: add state fd helpers
-  migration/cpr: add more arguments for cpr_walk_fd()
-  migration/cpr-luo: add helpers to preserve and retrieve all LUO fds
-  migration/cpr-luo: enable cpr-luo mode for source side preservation
-  migration/cpr-luo: enable cpr-luo mode for target side retrieval
-  migration/cpr-luo: abort session when migration fails
-  system/physmem: add cpr-luo blocker
-  monitor/qmp: close LUO session when resuming source QEMU
-  vfio: block cpr-luo migration
-  migration: cpr-luo documentation
-
- backends/hostmem-memfd.c         |   1 +
- backends/hostmem-shm.c           |   1 +
- docs/devel/migration/CPR.rst     |  64 +++++++
- hw/vfio/cpr-iommufd.c            |  17 +-
- hw/vfio/cpr-legacy.c             |   8 +
- include/hw/vfio/vfio-cpr.h       |   1 +
- include/migration/cpr.h          |  37 +++-
- include/system/iommufd.h         |   1 +
- include/system/system.h          |   2 +
- linux-headers/linux/liveupdate.h | 239 +++++++++++++++++++++++++
- migration/cpr-exec.c             |  32 +---
- migration/cpr-luo-stub.c         |  78 ++++++++
- migration/cpr-luo.c              | 328 ++++++++++++++++++++++++++++++++++
- migration/cpr.c                  | 126 +++++++++++--
- migration/meson.build            |   6 +
- migration/migration.c            |  12 +-
- migration/options.c              |   6 +
- migration/ram.c                  |   1 +
- monitor/qmp-cmds.c               |   7 +
- qapi/migration.json              |  11 +-
- scripts/update-linux-headers.sh  |   2 +-
- system/globals.c                 |   5 +
- system/physmem.c                 |   9 +-
- system/vl.c                      |   9 +
- 24 files changed, 950 insertions(+), 53 deletions(-)
-
-base-commit: 3377670ee96b5a68361016680a95b9013709d4b7
-
-Thank you very much!
-
-Dongli Zhang
+diff --git a/include/migration/cpr.h b/include/migration/cpr.h
+index 62426bd3e0..96529ab3a1 100644
+--- a/include/migration/cpr.h
++++ b/include/migration/cpr.h
+@@ -95,5 +95,7 @@ bool cpr_luo_persist_state(int session_fd, QEMUFile *f, Error **errp);
+ bool cpr_luo_preserve_fds(Error **errp);
+ bool cpr_luo_retrieve_fds(Error **errp);
+ bool cpr_luo_save(QEMUFile *f, Error **errp);
++QEMUFile *cpr_luo_load(Error **errp);
++void cpr_luo_incoming_finish(void);
+ void cpr_luo_abort(void);
+ #endif
+diff --git a/migration/cpr-luo-stub.c b/migration/cpr-luo-stub.c
+index 04a5bd816a..22a7037c20 100644
+--- a/migration/cpr-luo-stub.c
++++ b/migration/cpr-luo-stub.c
+@@ -59,6 +59,16 @@ bool cpr_luo_save(QEMUFile *f, Error **errp)
+     return cpr_luo_unsupported(errp);
+ }
+ 
++QEMUFile *cpr_luo_load(Error **errp)
++{
++    cpr_luo_unsupported(errp);
++    return NULL;
++}
++
++void cpr_luo_incoming_finish(void)
++{
++}
++
+ void cpr_luo_abort(void)
+ {
+ }
+diff --git a/migration/cpr-luo.c b/migration/cpr-luo.c
+index 1d112e7865..d9aba3bfc5 100644
+--- a/migration/cpr-luo.c
++++ b/migration/cpr-luo.c
+@@ -261,6 +261,41 @@ fail:
+     return false;
+ }
+ 
++QEMUFile *cpr_luo_load(Error **errp)
++{
++    char name[LIVEUPDATE_SESSION_NAME_LENGTH];
++    int session_fd;
++
++    if (!cpr_luo_session_name(name, errp)) {
++        return NULL;
++    }
++
++    session_fd = cpr_luo_retrieve_session(name, errp);
++    if (session_fd < 0) {
++        return NULL;
++    }
++
++    cpr_state.luo_session_fd = session_fd;
++    return cpr_luo_input(session_fd, errp);
++}
++
++void cpr_luo_incoming_finish(void)
++{
++    struct liveupdate_session_finish finish = { .size = sizeof(finish) };
++    int session_fd = cpr_state.luo_session_fd;
++
++    if (cpr_get_incoming_mode() != MIG_MODE_CPR_LUO || session_fd < 0) {
++        return;
++    }
++
++    if (ioctl(session_fd, LIVEUPDATE_SESSION_FINISH, &finish) < 0) {
++        warn_report("failed to finish LUO session: %s", strerror(errno));
++    }
++
++    close(session_fd);
++    cpr_state.luo_session_fd = -1;
++}
++
+ void cpr_luo_abort(void)
+ {
+     int session_fd = cpr_state.luo_session_fd;
+diff --git a/migration/cpr.c b/migration/cpr.c
+index b91f2fdcd7..fdbb684798 100644
+--- a/migration/cpr.c
++++ b/migration/cpr.c
+@@ -391,11 +391,15 @@ bool cpr_state_load(MigrationChannel *channel, Error **errp)
+         mode = MIG_MODE_CPR_TRANSFER;
+         cpr_set_incoming_mode(mode);
+         f = cpr_transfer_input(channel, errp);
++    } else if (cpr_get_incoming_mode() == MIG_MODE_CPR_LUO) {
++        mode = MIG_MODE_CPR_LUO;
++        f = cpr_luo_load(errp);
+     } else {
+         return true;
+     }
++
+     if (!f) {
+-        return false;
++        goto fail;
+     }
+ 
+     trace_cpr_state_load(MigMode_str(mode));
+@@ -405,23 +409,28 @@ bool cpr_state_load(MigrationChannel *channel, Error **errp)
+     if (v != QEMU_CPR_FILE_MAGIC) {
+         error_setg(errp, "Not a migration stream (bad magic %x)", v);
+         qemu_fclose(f);
+-        return false;
++        goto fail;
+     }
+     v = qemu_get_be32(f);
+     if (v != QEMU_CPR_FILE_VERSION) {
+         error_setg(errp, "Unsupported migration stream version %d", v);
+         qemu_fclose(f);
+-        return false;
++        goto fail;
+     }
+ 
+     if (!vmstate_load_vmsd(f, cpr_state_vmsd(mode), &cpr_state, 1, errp)) {
+         qemu_fclose(f);
+-        return false;
++        goto fail;
+     }
+ 
+     if (migrate_mode() == MIG_MODE_CPR_EXEC) {
+         /* Set cloexec to prevent fd leaks from fork until the next cpr-exec */
+         cpr_exec_unpreserve_fds();
++    } else if (mode == MIG_MODE_CPR_LUO) {
++        if (!cpr_luo_retrieve_fds(errp)) {
++            qemu_fclose(f);
++            goto fail;
++        }
+     }
+ 
+     /*
+@@ -431,6 +440,13 @@ bool cpr_state_load(MigrationChannel *channel, Error **errp)
+     cpr_state_file = f;
+ 
+     return true;
++
++fail:
++    if (mode == MIG_MODE_CPR_LUO) {
++        cpr_luo_abort();
++    }
++
++    return false;
+ }
+ 
+ void cpr_state_close(void)
+diff --git a/migration/migration.c b/migration/migration.c
+index c8055a1d98..7c2bb982a5 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -687,6 +687,8 @@ static void process_incoming_migration_bh(void *opaque)
+ 
+     dirty_bitmap_mig_before_vm_start();
+ 
++    cpr_luo_incoming_finish();
++
+     if (runstate_is_live(migration_get_target_runstate())) {
+         if (autostart) {
+             /*
+diff --git a/system/vl.c b/system/vl.c
+index 468a9fc247..b40f4803e1 100644
+--- a/system/vl.c
++++ b/system/vl.c
+@@ -1840,12 +1840,21 @@ static void incoming_option_parse(const char *str)
+ {
+     MigrationChannelType type = MIGRATION_CHANNEL_TYPE_MAIN;
+     MigrationChannel *channel;
++    const char *uri;
+     Visitor *v;
+ 
+     if (!strcmp(str, "defer")) {
+         channel = NULL;
+     } else if (migrate_is_uri(str)) {
+         migrate_uri_parse(str, &channel, &error_fatal);
++    } else if (strstart(str, "cpr-luo:", &uri)) {
++        cpr_set_incoming_mode(MIG_MODE_CPR_LUO);
++        if (!strcmp(uri, "defer")) {
++            channel = NULL;
++            str = "defer";
++        } else {
++            migrate_uri_parse(uri, &channel, &error_fatal);
++        }
+     } else {
+         v = qobject_input_visitor_new_str(str, "channel-type", &error_fatal);
+         visit_type_MigrationChannel(v, NULL, &channel, &error_fatal);
+-- 
+2.43.5
 
 
