@@ -4,60 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80801CA9ED1
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC233CA9EC5
 	for <qemu-devel@archiver.kernel.org>; Mon, 12 Oct 2026 14:02:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGGaz-0006uK-Nd; Mon, 12 Oct 2026 10:01:41 -0400
+	id 1xGGas-0006qP-2R; Mon, 12 Oct 2026 10:01:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1xGGaT-0006nX-0k
- for qemu-devel@nongnu.org; Mon, 12 Oct 2026 10:01:09 -0400
+ id 1xGGaV-0006ns-B0
+ for qemu-devel@nongnu.org; Mon, 12 Oct 2026 10:01:13 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1xGGaP-0005XI-LN
- for qemu-devel@nongnu.org; Mon, 12 Oct 2026 10:01:08 -0400
+ id 1xGGaQ-0005Yd-6Z
+ for qemu-devel@nongnu.org; Mon, 12 Oct 2026 10:01:09 -0400
 Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
  (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 69CE0tNq079581
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 69CE0aID079462
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Mon, 12 Oct 2026 23:00:55 +0900 (JST)
+ Mon, 12 Oct 2026 23:00:37 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=9wFRP9jdSfjp2OELoVhqhlrsfZAgHkQ5Ic+1K52UuE8=; 
+DKIM-Signature: a=rsa-sha256; bh=FzIacIRpxzsq9/cGq8KqU99vwnNfUUECLTLWEcuae1g=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1791813656; v=1;
- b=MS1eammcNpBMiOGBtvPF2dSQv0mZL6Cf3XBI05mQPI3pF9oH20JsBR6IMjoGXcCt
- ymEk22J1I96trgCLgUbx5r8D3pGIIw3idyNHbIKm3wxxIXNOMKONGP0+Lan1DVBi
- 1RtOMRxIUeMEpla6lwKilj0Vb2I0Ppt2ctw00T0BABvN7uwCgUsfckrIYwUv50Uj
- zeht8sJFgvU4XjskHmbvtw+b3bLOXmAaEgy8WgSzIQjEzzgJrPJGqaayj5A0p0/o
- o2fFmG2hzRkfkNgSxCr7RGaydM4AOehY0Qy1zN0yJvWJLMk5WvitZe9Do+Lg+Hdq
- OpftVlJyHDSl9/iQ+g7zzg==
-Message-ID: <3c5fa056-d696-42e5-96df-2d36a485e28f@rsg.ci.i.u-tokyo.ac.jp>
-Date: Mon, 12 Oct 2026 23:00:55 +0900
+ s=rs20250326; t=1791813637; v=1;
+ b=BFStqhEzFfERR6ORGitw2FhNFLoOcd3wkTKO+A78skWWF9sG5abj4v1TE89iJ63G
+ qmsj7OVg9tkvxUBHffqB7ETYkC9VGzStf4vK7vFI5Nql5D3HPXVhhfcyVXt+sMRm
+ Qa8LzxD05lcl3qiUcRJ0M2TlxHjK1a0jtMGUaAT3cOt5w6Sr3J+o2UlOW5Tjv3Z3
+ huNGFHPt+aRTGp5CpqwwStf9G7pjfBdeAc72Wu0si2YKJHu8a1b7p5kLLl3NTKcT
+ GJ8BmtItNU86RsIi6UScmEAhm0F+AiiWhBYhGsAN22CLswEIzuTlUz+YfWqlQivv
+ BnACMR9s0m9J+JGQ12mB3g==
+Message-ID: <ea052c05-88bb-4640-801e-8b9937bc5955@rsg.ci.i.u-tokyo.ac.jp>
+Date: Mon, 12 Oct 2026 23:00:36 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Subject: Re: [PATCH v13 9/9] virtio-gpu-dmabuf: Create dmabuf for blobs
- associated with VFIO devices
-To: "Kasireddy, Vivek" <vivek.kasireddy@intel.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Alex Williamson <alex@shazbot.org>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@redhat.com>
-References: <20261007201222.648687-1-vivek.kasireddy@intel.com>
- <20261007201222.648687-10-vivek.kasireddy@intel.com>
- <b87b6288-4226-442e-8802-d9bf31f5a7dd@rsg.ci.i.u-tokyo.ac.jp>
- <IA0PR11MB71857E6DC18C3B4B74CE235EF8922@IA0PR11MB7185.namprd11.prod.outlook.com>
- <7bd99ac0-b126-43b4-870a-9211914a9701@rsg.ci.i.u-tokyo.ac.jp>
- <IA0PR11MB7185E449EA1B948028DCD31EF89F2@IA0PR11MB7185.namprd11.prod.outlook.com>
+Subject: Re: [PATCH 2/2] contrib/plugins/bbv.c: Allow selecting ROI
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>
+References: <20261007-bbv-v1-0-a2f521a68fdf@rsg.ci.i.u-tokyo.ac.jp>
+ <20261007-bbv-v1-2-a2f521a68fdf@rsg.ci.i.u-tokyo.ac.jp>
+ <4eec19e6-db40-4658-b5b3-bc342473cffd@oss.qualcomm.com>
+ <f503ffbe-0900-4b8e-ae7b-dbfcc74eb5cc@rsg.ci.i.u-tokyo.ac.jp>
+ <2d7c2cdb-b5b9-41ed-9786-dd9b4876bdd8@oss.qualcomm.com>
+ <9cda6271-aed9-4a2b-b88f-bca8371d753e@rsg.ci.i.u-tokyo.ac.jp>
+ <0b392aaf-7ce1-46bb-b39b-47744ea1e6f9@oss.qualcomm.com>
+ <65391825-ef44-4771-99b4-ad3a47279762@rsg.ci.i.u-tokyo.ac.jp>
+ <6b00ed2c-e78a-4ac7-9e5b-34d4aebefbbf@oss.qualcomm.com>
 Content-Language: en-US
-In-Reply-To: <IA0PR11MB7185E449EA1B948028DCD31EF89F2@IA0PR11MB7185.namprd11.prod.outlook.com>
+In-Reply-To: <6b00ed2c-e78a-4ac7-9e5b-34d4aebefbbf@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=49.212.243.89;
@@ -83,141 +81,343 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/10/12 15:14, Kasireddy, Vivek wrote:
-> Hi Akihiko,
-> 
->> Subject: Re: [PATCH v13 9/9] virtio-gpu-dmabuf: Create dmabuf for blobs
->> associated with VFIO devices
->>>
->>>>> In addition to memfd, a blob resource can also have its backing
->>>>> storage in a VFIO device region. Since, there is no effective way
->>>>> to determine where the backing storage is located, we first try to
->>>>> create a dmabuf assuming it is in memfd. If that fails, we try to
->>>>> create a dmabuf assuming it is in VFIO device region.
+On 2026/10/09 15:37, Pierrick Bouvier wrote:
+> On 10/8/26 8:33 PM, Akihiko Odaki wrote:
+>> On 2026/10/09 11:30, Pierrick Bouvier wrote:
+>>> On 10/8/2026 5:57 PM, Akihiko Odaki wrote:
+>>>> On 2026/10/09 1:40, Pierrick Bouvier wrote:
+>>>>> On 10/7/2026 11:11 PM, Akihiko Odaki wrote:
+>>>>>> On 2026/10/08 10:08, Pierrick Bouvier wrote:
+>>>>>>> On 10/6/2026 11:01 PM, Akihiko Odaki wrote:
+>>>>>>>> A region of interest (ROI) often excludes the program startup and
+>>>>>>>> exit.
+>>>>>>>> For example, a benchmark may parse a large input and then run a
+>>>>>>>> computation kernel and the former may take longer than the latter;
+>>>>>>>> basic block vectors generated for the whole execution will not
+>>>>>>>> properly
+>>>>>>>> represent the latter.
+>>>>>>>>
+>>>>>>>> Add options to specify the beginning and the end of the ROI to 
+>>>>>>>> bound
+>>>>>>>> basic block vector generation to the ROI.
+>>>>>>>>
+>>>>>>>> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+>>>>>>>> ---
+>>>>>>>>      docs/about/emulation.rst |  8 +++++
+>>>>>>>>      contrib/plugins/bbv.c    | 80 +++++++++++++++++++++++++++++ 
+>>>>>>>> ++++++++
+>>>>>>>> +++++++++--
+>>>>>>>>      2 files changed, 86 insertions(+), 2 deletions(-)
+>>>>>>>>
+>>>>>>>> diff --git a/docs/about/emulation.rst b/docs/about/emulation.rst
+>>>>>>>> index c58149086cdd..0566171b517b 100644
+>>>>>>>> --- a/docs/about/emulation.rst
+>>>>>>>> +++ b/docs/about/emulation.rst
+>>>>>>>> @@ -284,6 +284,14 @@ The bbv plugin allows you to generate basic
+>>>>>>>> block vectors for use with the
+>>>>>>>>          * - Option
+>>>>>>>>          - Description
+>>>>>>>> +  * - begin=A
+>>>>>>>> +    - The virtual address of the instruction that starts basic 
+>>>>>>>> block
+>>>>>>>> vector
+>>>>>>>> +      generation. Generation starts from the beginning of the
+>>>>>>>> execution if
+>>>>>>>> +      not specified.
+>>>>>>>> +  * - end=A
+>>>>>>>> +    - The virtual address of the instruction that ends basic block
+>>>>>>>> vector
+>>>>>>>> +      generation. Generation continues until the endo of the
+>>>>>>>> execution if
+>>>>>>>
+>>>>>>> small typo here: s/endo/end
+>>>>>>
+>>>>>> Thanks for catching the typo.
+>>>>>>
+>>>>>>>
+>>>>>>>> +      not specified.
+>>>>>>>>        * - interval=N
+>>>>>>>>          - The interval to generate a basic block vector 
+>>>>>>>> specified by
+>>>>>>>> the number of
+>>>>>>>>            instructions (Default: N = 100000000)
+>>>>>>>> diff --git a/contrib/plugins/bbv.c b/contrib/plugins/bbv.c
+>>>>>>>> index e5caf5d9543b..a2a779f7639e 100644
+>>>>>>>> --- a/contrib/plugins/bbv.c
+>>>>>>>> +++ b/contrib/plugins/bbv.c
+>>>>>>>> @@ -5,6 +5,8 @@
+>>>>>>>>       * SPDX-License-Identifier: GPL-2.0-or-later
+>>>>>>>>       */
+>>>>>>>>      +#include <stdbool.h>
+>>>>>>>> +#include <stdint.h>
+>>>>>>>>      #include <stdio.h>
+>>>>>>>>      #include <glib.h>
+>>>>>>>>      @@ -26,6 +28,10 @@ static GHashTable *bbs;
+>>>>>>>>      static GRWLock bbs_lock;
+>>>>>>>>      static char *filename;
+>>>>>>>>      static struct qemu_plugin_scoreboard *vcpus;
+>>>>>>>> +static bool begin_present;
+>>>>>>>> +static uint64_t begin;
+>>>>>>>> +static bool end_present;
+>>>>>>>> +static uint64_t end;
+>>>>>>>>      static int64_t interval = 100000000;
+>>>>>>>>        static void plugin_exit(void *p)
+>>>>>>>> @@ -66,6 +72,7 @@ static void vcpu_init(unsigned int vcpu_index, 
+>>>>>>>> void
+>>>>>>>> *userdata)
+>>>>>>>>          Vcpu *vcpu = qemu_plugin_scoreboard_find(vcpus, 
+>>>>>>>> vcpu_index);
+>>>>>>>>            vcpu_filename = g_strdup_printf("%s.%u.bb", filename,
+>>>>>>>> vcpu_index);
+>>>>>>>> +    vcpu->count = begin_present ? INT64_MIN : -interval;
+>>>>>>>
+>>>>>>> Not sure which semantic we are trying to achieve with -interval 
+>>>>>>> here.
+>>>>>>>
+>>>>>>> The original logic was to increment this count, until reaching
+>>>>>>> interval,
+>>>>>>> after what we would reset it by using vcpu_count -= interval, to 
+>>>>>>> keep
+>>>>>>> the extra insn that went in after the threshold.
+>>>>>>
+>>>>>> The counter now starts at -interval and counts up to zero. 
+>>>>>> Subtracting
+>>>>>> interval after emitting a vector still preserves the extra 
+>>>>>> instructions.
+>>>>>> For example, with interval=100:
+>>>>>>
+>>>>>>        initial count:       -100
+>>>>>>        after 130 insns:       30  -> emit a vector
+>>>>>>        subtract interval:    -70  -> 70 insns until the next vector
+>>>>>>
+>>>>>>>
+>>>>>>>>          vcpu->file = fopen(vcpu_filename, "w");
+>>>>>>>>      }
+>>>>>>>>      @@ -102,6 +109,22 @@ static void 
+>>>>>>>> vcpu_interval_exec(unsigned int
+>>>>>>>> vcpu_index, void *udata)
+>>>>>>>>          fputc('\n', vcpu->file);
+>>>>>>>>      }
+>>>>>>>>      +static void vcpu_begin_insn_exec(unsigned int vcpu_index, 
+>>>>>>>> void
+>>>>>>>> *userdata)
+>>>>>>>> +{
+>>>>>>>> +    GHashTableIter iter;
+>>>>>>>> +    void *value;
+>>>>>>>> +
+>>>>>>>> +    g_rw_lock_reader_lock(&bbs_lock);
+>>>>>>>> +    g_hash_table_iter_init(&iter, bbs);
+>>>>>>>> +
+>>>>>>>> +    while (g_hash_table_iter_next(&iter, NULL, &value)) {
+>>>>>>>> +        qemu_plugin_u64_set(bb_count_u64(value), vcpu_index, 0);
+>>>>>>>> +    }
+>>>>>>>> +
+>>>>>>>> +    g_rw_lock_reader_unlock(&bbs_lock);
+>>>>>>>> +    qemu_plugin_u64_set(count_u64(), vcpu_index, -interval);
+>>>>>>>> +}
+>>>>>>>> +
+>>>>>>>>      static void vcpu_tb_trans(struct qemu_plugin_tb *tb, void
+>>>>>>>> *userdata)
+>>>>>>>>      {
+>>>>>>>>          uint64_t n_insns = qemu_plugin_tb_n_insns(tb);
+>>>>>>>> @@ -119,6 +142,19 @@ static void vcpu_tb_trans(struct 
+>>>>>>>> qemu_plugin_tb
+>>>>>>>> *tb, void *userdata)
+>>>>>>>>          }
+>>>>>>>>          g_rw_lock_writer_unlock(&bbs_lock);
+>>>>>>>>      +    for (size_t idx = 0; idx < n_insns; idx++) {
+>>>>>>>> +        struct qemu_plugin_insn *insn = 
+>>>>>>>> qemu_plugin_tb_get_insn(tb,
+>>>>>>>> idx);
+>>>>>>>> +        uint64_t insn_vaddr = qemu_plugin_insn_vaddr(insn);
+>>>>>>>> +
+>>>>>>>> +        if (begin_present && insn_vaddr == begin) {
+>>>>>>>> +            qemu_plugin_register_vcpu_insn_exec_cb(
+>>>>>>>> +                insn, vcpu_begin_insn_exec, 
+>>>>>>>> QEMU_PLUGIN_CB_NO_REGS,
+>>>>>>>> NULL);
+>>>>>>>> +        } else if (end_present && insn_vaddr == end) {
+>>>>>>>> +            qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu(
+>>>>>>>> +                insn, QEMU_PLUGIN_INLINE_STORE_U64, count_u64(),
+>>>>>>>> INT64_MIN);
+>>>>>>>> +        }
+>>>>>>>> +    }
+>>>>>>>> +
+>>>>>>>>          qemu_plugin_register_vcpu_tb_exec_inline_per_vcpu(
+>>>>>>>>              tb, QEMU_PLUGIN_INLINE_ADD_U64, count_u64(), n_insns);
+>>>>>>>>      @@ -127,7 +163,32 @@ static void vcpu_tb_trans(struct
+>>>>>>>> qemu_plugin_tb *tb, void *userdata)
+>>>>>>>>            qemu_plugin_register_vcpu_tb_exec_cond_cb(
+>>>>>>>>              tb, vcpu_interval_exec, QEMU_PLUGIN_CB_NO_REGS,
+>>>>>>>> -        QEMU_PLUGIN_COND_GE, count_u64(), interval, NULL);
+>>>>>>>> +        QEMU_PLUGIN_COND_LT, count_u64(), INT64_MIN, NULL);
+>>>>>>>> +}
+>>>>>>>
+>>>>>>> is INT64_MIN used as an arbitrary large value when interpreted as
+>>>>>>> unsigned immediate? If yes, that's confusing to the reader.
+>>>>>>
+>>>>>> The unsigned comparison count < (uint64_t)INT64_MIN is equivalent 
+>>>>>> with
+>>>>>> the signed comparison (int64_t)count >= 0. That is why this 
+>>>>>> particular
+>>>>>> value is used.
+>>>>>>
+>>>>>> Setting count to INT64_MIN suppresses output for the next 2^63 
+>>>>>> counted
+>>>>>> instructions, which is effectively disabled for this use. The beginEmulation
+>>>>>> callback clears the BB counters and sets count to -interval; end 
+>>>>>> sets it
+>>>>>> back to INT64_MIN. The requested interval stays unchanged.
+>>>>>>
 >>>>>
->>>>> So, we first call virtio_gpu_create_udmabuf() to check if the blob's
->>>>> backing storage is located in a memfd or not. If it is not, we invoke
->>>>> the vfio_device_create_dmabuf_fd() API which identifies the right
->>>>> VFIO device and eventually creates a dmabuf fd.
+>>>>> Ok I see better.
+>>>>> Even though it works, it's pretty confusing to be honest. Inline
+>>>>> operatons works with unsigned values, so with conversion and wrap
+>>>>> around, it's safe, but really not intuitive.
 >>>>>
->>>>> Note that, for mmapping the dmabuf, we directly call mmap() if the
->>>>> dmabuf fd was created via virtio_gpu_create_udmabuf() since we
->>>> know
->>>>> that the udmabuf driver supports mmap(). However, if the dmabuf
->>>> was
->>>>> created via vfio_device_create_dmabuf_fd(), we use the
->>>>> vfio_device_mmap_dmabuf() API to get a mapping for the dmabuf.
->>>>>
->>>>> Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
->>>>> Cc: Alex Bennée <alex.bennee@linaro.org>
->>>>> Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
->>>>> Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
->>>>> Cc: Alex Williamson <alex@shazbot.org>
->>>>> Cc: Cédric Le Goater <clg@redhat.com>
->>>>> Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
->>>>> Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
->>>>> ---
->>>>>     hw/display/virtio-gpu-dmabuf.c | 22 +++++++++++++++++++---
->>>>>     1 file changed, 19 insertions(+), 3 deletions(-)
->>>>>
->>>>> diff --git a/hw/display/virtio-gpu-dmabuf.c b/hw/display/virtio-gpu-
->>>> dmabuf.c
->>>>> index c9de8e9ba3..f59a5e76ff 100644
->>>>> --- a/hw/display/virtio-gpu-dmabuf.c
->>>>> +++ b/hw/display/virtio-gpu-dmabuf.c
->>>>> @@ -153,9 +153,25 @@ bool virtio_gpu_init_dmabuf(struct
->>>> virtio_gpu_simple_resource *res)
->>>>>             if (res->dmabuf_fd ==
->>>> VFIO_DMABUF_CREATE_ERR_INVALID_IOV) {
->>>>>                 error_free_or_abort(&local_err);
->>>>>
->>>>> -            qemu_log_mask(LOG_GUEST_ERROR,
->>>>> -                          "Cannot create dmabuf: incompatible memory\n");
->>>>> -            return false;
->>>>> +            res->dmabuf_fd = vfio_device_create_dmabuf_fd(res->iov,
->>>>> +                                                          res->iov_cnt,
->>>>> +                                                          &local_err);
->>>>> +            if (res->dmabuf_fd ==
->>>> VFIO_DMABUF_CREATE_ERR_INVALID_IOV) {
->>>>> +                error_free_or_abort(&local_err);
->>>>> +                qemu_log_mask(LOG_GUEST_ERROR,
->>>>> +                              "Cannot create dmabuf: incompatible memory\n");
->>>>> +                return false;
->>>>> +            }
->>>>> +
->>>>> +            if (res->dmabuf_fd >= 0) {
->>>>> +                pdata = vfio_device_mmap_dmabuf(res->iov, res->iov_cnt,
->>>>> +                                                &local_err);
+>>>>> I would prefer if you could refactor this to keep a zero initialized
+>>>>> count value, and add a specific instrumentation path for begin, end
+>>>>> logic (COND_LT, UINT64_MAX - N) to keep the same behavior of "infinite
+>>>>> interval".
 >>>>
->>>> This maps the complete IOV size, while virtio_gpu_fini_dmabuf()
->>>> unmaps
->>>> only blob_size. Create and attach accept backing larger than the blob,
->>>> so excess pages remain mapped after detach, unref or reset.
->>> Good catch. I'll add a check in virtio_gpu_fini_dmabuf() to determine if
->>> IOV size > blob_size, then do munmap(res->remapped, IOV size);
->>> I think this should be safe even if the mapping (created with mmap)
->>> size is blob_size. Or, is there a better solution you can think of such as
->>> tracking the exact mapping size in res object?
+>>>> We cannot choose a separate instrumentation path based on whether
+>>>> execution is inside the ROI. Instrumentation is installed when a TB is
+>>>> translated, but the same TB may execute both inside and outside the 
+>>>> ROI.
+>>>>
+>>>> I will preserve this logic and add code comments for clarification.
+>>>>
+>>>
+>>> I took some time to read again how bbv works. Indeed, my idea to modify
+>>> interval was a non sense, and not what is expected.
+>>>
+>>> The current instrumentation per tb is always done unconditionally, and
+>>> the only need thing to do is to snapshot bbs hashtable to keep track of
+>>> the correct data only when being inside the ROI. The rest of existing
+>>> logic stays the same.
+>>>
+>>> - On enter, set vcpu->count to 0 (fresh start) and restore bb table from
+>>> previous exit (empty table if there was no exit yet).
+>>> - On exit, duplicate the bb table to allow to restore it next time we
+>>> enter in ROI.
+>>> Key idea is that we keep on adding things in bb table, but save/restore
+>>> when leaving/entering ROI.
+>>>
+>>> I think for robustness you should also add detection of those expected
+>>> transitions: Out of ROI -> Enter ROI -> Exit ROI -> Enter ROI -> ...
+>>>
+>>> Nothing is currently done to detect if if we meet enter/exit address
+>>> multiple times, without having the correct sequence. I don't know if we
+>>> want to report an error or handle reentrance correctly in this case.
+>>>
+>>> Also, should count be reset on each entrance, or do we want to keep
+>>> track of it also, and save/restore that on exit/enter? I tend to think
+>>> the idea is create a "virtual" interval than only is alive when being
+>>> inside the ROI. In this case, we should keep track of this value also.
 >>
->> Unmapping the IOV size is not safe if only blob_size was mapped:
->> munmap() can also remove unrelated mappings in the excess range.
-> Ok, got it.
+>> The current design that resets the bb table is intentional. A "virtual"
+>> interval spanning multiple ROIs would be misleading because it mixes
+>> different sections of execution.
+>>
 > 
+> Ok.
+> 
+>> I don't think we need to add a special handling to enforce a particular
+>> order of transitions. This patch performs the same action for the begin
+>> and end addresses and that makes the behavior predictable.
 >>
->> A cleaner fix is to update vfio_device_mmap_dmabuf() to take the size to
->> map (or cap it to blob_size).
-> Currently, vfio_device_mmap_dmabuf() creates an IOV sized mapping, so it
-> is going to need extra logic to cap it to blob_size, which needs to be explicitly
-> passed in. So, are you ok with this given that you previously did not like the
-> idea of passing in blob_size as a parameter?
+>> Perhaps we can extend the documentation to clarify the "begin" marker to
+>> tell that it resets the bb table, making the behavior clear regardless
+>> of transition order.
+>>
+> 
+> I'm fine to keep a simple model, but I'll ask you to remove the logic 
+> involving negative numbers, it's just too confusing. Please remove:
+> vcpu->count = begin_present ? INT64_MIN : -interval;
+> and
+> QEMU_PLUGIN_COND_LT, count_u64(), INT64_MIN, NULL);
+> 
+> Instead, let's add a new boolean "tracking_region" in struct Vcpu, that 
+> is set to true when entering ROI (or true by default if no begin 
+> parameter was given).
 
-Yes, I am fine with a mapping-length parameter for this purpose.
-I should have made the distinction clearer.
+The flag may look simpler in isolation, but streamlining the 
+interactions with the counter requires more careful thought. Please see 
+below.
 
-Previously, total_size was required to equal the IOV size, adding
-blob-specific validation to the VFIO helper. That validation belongs
-in virtio-gpu.
+> 
+> Then, modify instrumentation to replace:
+> ```
+> else if (end_present && insn_vaddr == end) {
+>              qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu(
+>                  insn, QEMU_PLUGIN_INLINE_STORE_U64, count_u64(), 
+> INT64_MIN);
+> ```
+> with:
+> ```
+> else if (end_present && insn_vaddr == end) {
+>     qemu_plugin_register_vcpu_insn_exec_cb(insn, vcpu_exit_region, 
+> QEMU_PLUGIN_CB_NO_REGS, NULL);
+> }
+> 
+> static void vcpu_exit_region(unsigned int vcpu_index, void *userdata)
+> {
+>     Vcpu *vcpu = qemu_plugin_scoreboard_find(vcpus, vcpu_index);
+>     vcpu_interval_exec(vcpu_index, NULL);
+>     vcpu->tracking_region = false;
+> }
+> ```
 
-Here, the parameter specifies how much of the IOV to map, which can
-be less than its total size. That is a generic mapping operation;
-the helper does not need to know about blobs. We can name the
-parameter length and have virtio-gpu pass res->blob_size.
+vcpu_exit_region should only disable tracking. Calling 
+vcpu_interval_exec directly bypasses its count >= interval precondition: 
+it subtracts interval even when count is smaller, wrapping the unsigned 
+counter, and emits a partial vector or potentially an empty one.
 
-The extra logic to stop at that length and shorten the final mapped
-segment as necessary is appropriate. This lets mapping and unmapping
-use the same length without additional tracking.
+> 
+> In addition, let's rename s/vcpu_begin_insn_exec/vcpu_enter_region, to 
+> be consistent and explicit on what it's doing.
+> 
+> And finally, the last piece:
+> static void vcpu_interval_exec(unsigned int vcpu_index, void *udata)
+> {
+>      Vcpu *vcpu = qemu_plugin_scoreboard_find(vcpus, vcpu_index);
+>      if (!vcpu->tracking) {
+>        return;
+>      }
+>      ...
+
+The early return must come after vcpu->count -= interval. Otherwise, 
+once count reaches interval outside the ROI, it remains above the 
+threshold and invokes the callback on every subsequent TB, rather than 
+once per interval.
+
+> 
+> The impact performance of calling vcpu_interval_exec + one if every N 
+> instructions is invisible, and at least, it's a piece of code we can 
+> read in 6 months, and understand in less than 2 min without any 
+> additional doc.
+
+I agree the performance impact is negligible, but at least you need to 
+consider about that to be sure. Adding another flag requires those 
+additional considerations.
+
+More broadly, I don't think it's ideal to introduce application-specific 
+logic for this. Looking at the bigger picture, a counting timer with 
+variable expiration is a common pattern that should ideally be supported 
+generally.
+
+An alternative option is to have signed integer variants of 
+qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu() and similar 
+functions to support for that. However, I don't think those are 
+necessary either. Taking at an even broader perspective, C allows 
+avoiding such specialization by letting unsigned variables hold signed 
+values in a well-defined manner; even the underlying implementation of 
+the inline op uses signed and unsigned types interchangeably.
+
+Although it might not be immediately obvious that an unsigned variable 
+is storing a signed value, adding a brief clarifying comment is still 
+simpler than introducing another variable overall.
 
 Regards,
 Akihiko Odaki
-
-> 
-> Thanks,
-> Vivek
-> 
->> This keeps it symmetric with the udmabuf
->> path and allows virtio_gpu_fini_dmabuf() to continue unmapping
->> blob_size
->> without needing extra tracking variables.
->>
->> Regards,
->> Akihiko Odaki
->>
->>>
->>> Thanks,
->>> Vivek
->>>>
->>>> Regards,
->>>> Akihiko Odaki
->>>>
->>>>> +                if (!pdata) {
->>>>> +                    virtio_gpu_fini_dmabuf(res);
->>>>> +                }
->>>>> +            } else {
->>>>> +                res->dmabuf_fd = -1;
->>>>> +            }
->>>>>             } else if (res->dmabuf_fd >= 0) {
->>>>>                 pdata = virtio_gpu_remap_dmabuf(res, &local_err);
->>>>>                 if (!pdata) {
->>>
-> 
 
