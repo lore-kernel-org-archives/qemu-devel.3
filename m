@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25329CA9EC5
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Oct 2026 06:12:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6EC03CA9EC5
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Oct 2026 06:15:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xG9Fr-0007og-Gb; Mon, 12 Oct 2026 02:11:23 -0400
+	id 1xG9JJ-0000ul-3d; Mon, 12 Oct 2026 02:14:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
- id 1xG9FY-0007nR-7O
- for qemu-devel@nongnu.org; Mon, 12 Oct 2026 02:11:07 -0400
-Received: from mgamail.intel.com ([192.198.163.9])
+ id 1xG9JI-0000uB-1U
+ for qemu-devel@nongnu.org; Mon, 12 Oct 2026 02:14:56 -0400
+Received: from mgamail.intel.com ([198.175.65.18])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
- id 1xG9FV-0003s5-KM
- for qemu-devel@nongnu.org; Mon, 12 Oct 2026 02:11:03 -0400
+ id 1xG9JF-00040q-UA
+ for qemu-devel@nongnu.org; Mon, 12 Oct 2026 02:14:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1791785461; x=1823321461;
+ t=1791785694; x=1823321694;
  h=from:to:cc:subject:date:message-id:references:
  in-reply-to:content-transfer-encoding:mime-version;
- bh=Sia12l4BfrO/02/0iMZjreIZtEXvr2ekgVyZqq8Gxs4=;
- b=mes8Q2NwugueDRGt2W64/0nkG86veDQZyYSq6TkFRB2ckXBtoYkXISrK
- /YIwC33/Von1/eRsjWvH4dyUsNHTA6uq/ccwxyfPdfwaHzzZt+HiJMC6+
- iuzVQizz0Tuh/9JdQGVoPx0WZVJ1MUKgjriyVYCn3q98V5/MqS6FYeCYe
- JpW2UXyyK2huY0p22XtHjA1vT1QResrwHX5I5Z6A+dBWXvqo6yk/+87OY
- hi58VV/Jy+mNL2t++XQ3wfq4Myzy9o17E7LP7UXizmzu/ngGooM6oZLlt
- d2NepjZb1g2/PC7RhpfttKixGzLXBV1vdEPacINtlKRDoKCv1QrbYZHl3 A==;
-X-CSE-ConnectionGUID: mYhzgFn/Ss+W6KmsSWeV4g==
-X-CSE-MsgGUID: AZfkFGTYTBOQNanaJnsSpQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11932"; a="385633"
+ bh=GGNyGHJ6cUoqNhkr4xBKqB+qFZ4rGSRI3xpFdSxj5Go=;
+ b=GkxlBtPSx53iXzjrX6Q5JjcT3NIXqy5V/syBRXQAvDcd1jyx+fuqwyUk
+ qncZvuTVfK1ZiXWEvdC0Cx29CaU5ZeIPCh95qrndDfx5yxfYz5SzKGBwJ
+ vT9Gnful+8++/Gsc/CK0ZbEeLOmj+rRgd+a4VDKfs0Y/T/j4iH6qlhUFL
+ 8aXeEkvFgxXdGnMQdMEkWEhDCNL7qBaBZ0Mg53LnDWG61Mik0k7bxFfZv
+ ypZIa9avnbBCak4SKw5a8mwxBkOFK61Chf6kO7rhl7NNE1qEeKNDUEX7+
+ 7TZNQjXCGwY+RP6D1D8zMTTgGITzfK+V3d9KJDtHdf2KvwEfBsWZRG1eI Q==;
+X-CSE-ConnectionGUID: fTsgHr3sTQuLan8D+JvsNA==
+X-CSE-MsgGUID: IVaGp4EjRaOBDTHkObzVBg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11932"; a="488745"
 X-IronPort-AV: E=Sophos;i="6.27,153,1787036400"; 
-   d="scan'208";a="385633"
-Received: from orviesa009.jf.intel.com ([10.64.159.149])
- by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 11 Oct 2026 23:10:39 -0700
-X-CSE-ConnectionGUID: 3K5XTUKrQcOo46thfY9Y2Q==
-X-CSE-MsgGUID: uuEQblxxSsudtBSCmtuo4Q==
+   d="scan'208";a="488745"
+Received: from fmviesa012.fm.intel.com ([10.60.135.152])
+ by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 11 Oct 2026 23:14:50 -0700
+X-CSE-ConnectionGUID: KbXhafqnTaya4/LchCtcWQ==
+X-CSE-MsgGUID: jOOoHnwERqWlThNKwxz0wA==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.27,153,1787036400"; 
-   d="scan'208";a="744540"
-Received: from orsmsx903.amr.corp.intel.com ([10.22.229.25])
- by orviesa009.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 11 Oct 2026 23:10:39 -0700
-Received: from ORSMSX903.amr.corp.intel.com (10.22.229.25) by
- ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
+   d="scan'208";a="2619573"
+Received: from fmsmsx903.amr.corp.intel.com ([10.18.126.92])
+ by fmviesa012.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 11 Oct 2026 23:14:49 -0700
+Received: from FMSMSX901.amr.corp.intel.com (10.18.126.90) by
+ fmsmsx903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.49; Sun, 11 Oct 2026 23:10:38 -0700
-Received: from ORSEDG903.ED.cps.intel.com (10.7.248.13) by
- ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
+ 15.2.2562.49; Sun, 11 Oct 2026 23:14:49 -0700
+Received: from fmsedg903.ED.cps.intel.com (10.1.192.145) by
+ FMSMSX901.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.49 via Frontend Transport; Sun, 11 Oct 2026 23:10:38 -0700
-Received: from PH0PR06CU001.outbound.protection.outlook.com (40.107.208.32) by
- edgegateway.intel.com (134.134.137.113) with Microsoft SMTP Server
+ 15.2.2562.49 via Frontend Transport; Sun, 11 Oct 2026 23:14:49 -0700
+Received: from CH5PR02CU005.outbound.protection.outlook.com (40.107.200.22) by
+ edgegateway.intel.com (192.55.55.83) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.49; Sun, 11 Oct 2026 23:10:38 -0700
+ 15.2.2562.49; Sun, 11 Oct 2026 23:14:49 -0700
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=wZQpKZ9DWwgVbbPEBP6W4gg7BZp3nWvAwM0ZltbD97/yywk/611bsLvPkoJHXU6MOqpHiUxKjI0h30bPTFbg3wAbGL1pqViGT9SfM6vRbqoSmImNnDoypAnlxYeckoYPknhDnyaDv0WEtCnjopEnikeoWhfMZQZ0CCbGOlTANM6hYr8Yhk0NiJ8/7BiaJJX2ub1+dtc2GOpo4Fp54pHquXN/GCe5XZRXMtZmHojuZfPF6/fBkTixTV61qitDIEcQz8n7KjgCioZUTrdiMYPK3WJB/m1/sJJqETlRnqunLQk8lxdL1QAswIMDBA/4lGbjlRJiR/hTU+n08n0WtmilRw==
+ b=shrEFi9X0EkLVvs4dehbitu18vIPYZeXbTltOmo1IGOmSwDQ7UHnjEw4R47lDqx59EaLryCjVd2ZWKEgvfqyWDSZHTdJWBWpeKIWCw8I/BidVPZrurEIbeSNeCKVnpACZd3WLVcD2qZ2U8EhqTOFG4TBUc2x4d1PSTAqhcMvoKaViiqg7KS5UwGgqebIitXYMbZQ/zO3gqrbXIm9pPDjGkFHhJwfSlc00iUmlJuxX9VWl4dAtMuslW9QSaJs+WgGPBOhFt3GsIMJOl58d1Ua3OmebATY6Pqk0LIi859FiZnySiLSohSeCNTTAczpjezA95Q+EvPb2W4gugWsPg6XUw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Z9oHQLEvq1/vZfpjAQSqHCfjbKhznFv2DK4hJLi92+k=;
- b=LWMokbdv4JQsYYOLBQp+YjAzUIJWO1UY0/HR9l4o7yZivZ3bD+Xg1Zxm39ZZe25RKt3OZf4xZYk7SHMmz7uHfMsKCxqnDe9t9WjN/qLUKjwVGLFrpOqGRGFytDJA7YvtACck+GhmVE3KSMk73ZZtj2kHVVBej1UjOYsYt9uMwOlsvfhwjQNibPMWYNVAmKX9Ze1NSldZUUHVlW3ES64OIKp26WQbraoczCY8wE2Rt28C3MBFHcgXxJxkIYFByn4a+DzuC+vjraoke+KHZLTCfMUOaankfUKX8mW1IXtOgvX+ONLELdsKiPv+c+VIrLtwWRr7/1d5XFYMDOJe40jFAw==
+ bh=KdyjMjwsJvOADN2P97Hb/SPOMBvOj7dutzI27Tr0qvc=;
+ b=ivTDljvqEqNLoRs9DNQhEWXONwLh+HqYoSboR9Sl6k4Hnq8APmDEgj9jHJCX6YszxsSnfjDwPqF4SDOwCrByN0whmCa/4SMiJMLanD50XVwc/sBwo4lU8dru0v4dKUJj+ebAubBJYVufGZOUuXVsO9+h/4kO3tFx1BxqjWUJtnYVFySmD9nNs8gOVJwPIY5jHh0WybO3snPEQ8kLT6QcpXMTjlkFKHcIHS1kAsTfa1rJN5LSuhiDqg4/AaLTDSCTPJHXBWuqSn3DNgHNbS2EQU0ckgilgk73Vv/ReJd4nFEhnS1W5rVQ6DLlevjujgXrqP+htUTvuJf9pY8Kmokxkg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
  dkim=pass header.d=intel.com; arc=none
 Received: from IA0PR11MB7185.namprd11.prod.outlook.com (2603:10b6:208:432::20)
- by BL4PR11MB8797.namprd11.prod.outlook.com (2603:10b6:208:5a7::8)
+ by IA1PR11MB6076.namprd11.prod.outlook.com (2603:10b6:208:3d4::11)
  with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.496.15; Mon, 12 Oct
- 2026 06:10:36 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.496.20; Mon, 12 Oct
+ 2026 06:14:45 +0000
 Received: from IA0PR11MB7185.namprd11.prod.outlook.com
  ([fe80::9f37:cb81:5463:300e]) by IA0PR11MB7185.namprd11.prod.outlook.com
  ([fe80::9f37:cb81:5463:300e%4]) with mapi id 15.21.0496.010; Mon, 12 Oct 2026
- 06:10:36 +0000
+ 06:14:45 +0000
 From: "Kasireddy, Vivek" <vivek.kasireddy@intel.com>
 To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, "qemu-devel@nongnu.org"
  <qemu-devel@nongnu.org>
@@ -86,19 +86,19 @@ CC: =?iso-8859-1?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>,
  =?iso-8859-1?Q?Alex_Benn=E9e?= <alex.bennee@linaro.org>, Dmitry Osipenko
  <dmitry.osipenko@collabora.com>, Alex Williamson <alex@shazbot.org>,
  =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@redhat.com>
-Subject: RE: [PATCH v13 1/9] virtio-gpu: Find hva for Guest's DMA addr
- associated with a ram device
-Thread-Topic: [PATCH v13 1/9] virtio-gpu: Find hva for Guest's DMA addr
- associated with a ram device
-Thread-Index: AQHdVphmDwVGKGE8Yk6FSLwoadjfhbbzWl4AgACY8oCAAP/oAIAEDx4Q
-Date: Mon, 12 Oct 2026 06:10:36 +0000
-Message-ID: <IA0PR11MB718525569086211FC8E93AA6F89F2@IA0PR11MB7185.namprd11.prod.outlook.com>
+Subject: RE: [PATCH v13 9/9] virtio-gpu-dmabuf: Create dmabuf for blobs
+ associated with VFIO devices
+Thread-Topic: [PATCH v13 9/9] virtio-gpu-dmabuf: Create dmabuf for blobs
+ associated with VFIO devices
+Thread-Index: AQHdVphjmjD/24Tm10GKCqp8WfcGzLbzXLIAgACjmZCAAPn1AIAD/qBA
+Date: Mon, 12 Oct 2026 06:14:45 +0000
+Message-ID: <IA0PR11MB7185E449EA1B948028DCD31EF89F2@IA0PR11MB7185.namprd11.prod.outlook.com>
 References: <20261007201222.648687-1-vivek.kasireddy@intel.com>
- <20261007201222.648687-2-vivek.kasireddy@intel.com>
- <7ee490fc-7311-48a5-aa6a-434935ca0a84@rsg.ci.i.u-tokyo.ac.jp>
- <IA0PR11MB718508A4AD2A92CEB7A56B97F8922@IA0PR11MB7185.namprd11.prod.outlook.com>
- <8da0d6fa-fe2e-4356-bf30-e17f07243ca6@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <8da0d6fa-fe2e-4356-bf30-e17f07243ca6@rsg.ci.i.u-tokyo.ac.jp>
+ <20261007201222.648687-10-vivek.kasireddy@intel.com>
+ <b87b6288-4226-442e-8802-d9bf31f5a7dd@rsg.ci.i.u-tokyo.ac.jp>
+ <IA0PR11MB71857E6DC18C3B4B74CE235EF8922@IA0PR11MB7185.namprd11.prod.outlook.com>
+ <7bd99ac0-b126-43b4-870a-9211914a9701@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <7bd99ac0-b126-43b4-870a-9211914a9701@rsg.ci.i.u-tokyo.ac.jp>
 Accept-Language: en-US
 Content-Language: en-US
 X-MS-Has-Attach: 
@@ -106,64 +106,64 @@ X-MS-TNEF-Correlator:
 authentication-results: mx.microsoft.com 1; dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=intel.com;
 x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: IA0PR11MB7185:EE_|BL4PR11MB8797:EE_
-x-ms-office365-filtering-correlation-id: 88b2fde4-797a-46b3-f846-08df28278813
+x-ms-traffictypediagnostic: IA0PR11MB7185:EE_|IA1PR11MB6076:EE_
+x-ms-office365-filtering-correlation-id: 3e45a8b8-5c78-411e-cccc-08df28281cc4
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
 x-microsoft-antispam: BCL:0;
- ARA:13230040|1800799024|23010399003|366016|376014|18002099003|10067099003|56012099006|11063799006|4143699003|6133799003|261009221227099003|5023799004|22082099003|261009223027099003|38070700021;
-x-microsoft-antispam-message-info: 3bgZdtziwAaywWB4iPSQCyvc9UBNENRv1uVkRkpt9tQsiWFmbYOO/3V3FqZ30q2oDtYtj+3Wi2QT3j1N87Qz3s/l1MCmKuP6V1igqUp5qr+MHOmfJvcbhHh+UYpPLT2Q2YJqRktPJgJvyAaOFrWktS7kOuRdBTfLpH8heBiEV+ILgUU4meN7yqjrgJaM029iAl9CdDF+6dv5k/euEalBRji/gZMz0Md6ICb7Fj2Q9oHRs6Zs/8R2yXYOVMouIgBXoUzHEAAlbsv7ed5b4gILeCDOxGTCKwxa1hM/AhfO+iPbXCHxFJMIwsc46zQHm6XgSyuZewpEpHNXtmq5b1xThrOwii2xSoc+vy9bQSUPGbU/O2ETeX50B1BHHcSiEXcufUXxCsQyq4x/EqOlqhl050wmsBqKuKm1gf8lhjmbLLnZJZYxzTMExeFfTOqLp5yw39N2U1NG8ZH/KfdiNHfavCCGSrhpMdWTHM9B50u/x1KPtidzXA3r41j/vliYur/l0iicxXFyV9XSeqe1zx8ETotvhTzCge2E2gqnVEMDdLFeJvK5fIBxtH2rftj/BaDbcaOV48YgxkWlaOIgNNdRADRSbaU1QRVBxVX+XDoiIA/VAFWXmshiYUJPr0XG6QR3fS53sdPepPceGwvwzZPFLjAWoO8PQX42k7gCOu+UV1Owl/GJ4/PxDUkbyX79GNQSQaz35eL3EZgAw+KZZx5IjtW/1I9GOKbAsQS88LeSJ/8=
+ ARA:13230040|376014|366016|1800799024|23010399003|38070700021|56012099006|5023799004|11063799006|4143699003|261009223027099003|10067099003|18002099003|22082099003|6133799003;
+x-microsoft-antispam-message-info: n5xHpESBcdOkNl3XyvWdDansTXB/BqOHkpMlLKkCVbe2ylnsCW3Q85/ocX2zd8d6VHLGX0nOBzjHlVKq+6gBgPNBHsgKnTGr3+sIC5zYHn/lWpm6qYRtI0zcMIKKnScvIAmqpBH4EUf/KNSZMFZRJrYl8b+Yxc5DeEUCkQlV6YegFRgZIoDfMm+CsqbxLUJXJgM3PywyhL4S9UyTSiDyuOYqcSeaaphndkowvSb230gFr3tvgqELiVdPrWi2ejbhnuQSTUES/qPqXQODDyzSkW3tquafzaVZNk8VyOr9JiUt63o44oW0LZ49g2Ye/Zwrz+W0wwZMpPwBrf3AWnKY/qhdzjk03ERki+rPOzyl+6TbIn6oqZS6hwQfQlaTAJ13fZuuFgHB7PMvD7Nt4SB/5sBcec48r9B82NYOlq1p/GVKEmq/2yn24eS3KXOBsaMyuWfrWkxWzBV8EspluzDLz5ihwskSM473BRCp9Ujm5ZODoqqw58haFOjcoTmmWb2nHK1Vflv0h4LHe1tf5DlHzexQAyXQ36TyEj+iD9GcZGfCk3uZIdsvA3KcKTBrwgLOGOluR/dgmgyO/yEPXMqivR/RLrLbruHBXLhJ0YrJnyboCYOeg7UCcPVIIdIqZbQm8wXqSwzi0xLJNDyeCpAdJCkZ6doNEu/Ld4FZhds4YRG64MGvXsZlSUGTK+nUWcztrm+USOnySB8f40XpGpELz0YT47PW5rqGuGnGT6PKrrU=
 x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:IA0PR11MB7185.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(23010399003)(366016)(376014)(18002099003)(10067099003)(56012099006)(11063799006)(4143699003)(6133799003)(261009221227099003)(5023799004)(22082099003)(261009223027099003)(38070700021);
+ SFS:(13230040)(376014)(366016)(1800799024)(23010399003)(38070700021)(56012099006)(5023799004)(11063799006)(4143699003)(261009223027099003)(10067099003)(18002099003)(22082099003)(6133799003);
  DIR:OUT; SFP:1101; 
 x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?w9odPFflbYURgnc37FC/tRzI++Og5GlJRAEa7uj9SIYzdkCrGsF/RrGmwj?=
- =?iso-8859-1?Q?KFC1irF1Bic9x8m+yF9a46muPMXrgkcgF4UStAsC7QBlGGFhU6x3azZo9J?=
- =?iso-8859-1?Q?btsuC1Cg3k+DnEkehP8MbxNYZm1aROxc0nZWa/HhP1uuzc3YeWlGXmpIif?=
- =?iso-8859-1?Q?30Z1nHJ4ue5DRYp+UwGtej2qpZN6RVE4iUzOtJ0Wrn3laJbDbuq4shmDsX?=
- =?iso-8859-1?Q?/E6QQ1/hXHyELOoT90/WQtNbgbtHvM61btxbSeLC4dzbPY9bTYffh3uX2h?=
- =?iso-8859-1?Q?EF1FyAktGdHOzB1XId3JCV/RF+xTcTSlqJJImwyN/NsmxMObeo57ER7pWJ?=
- =?iso-8859-1?Q?1wygJJ8ZLFgtMYOEoQTmCVXyEtul1tJ1LmetVI7NsYv3awioSl+ap1XgOG?=
- =?iso-8859-1?Q?tVRZeFhDOF+dYuEhZm8K3H6K6o2B9AW4B97OLqfBxbyMim7UN9P6BSKNhd?=
- =?iso-8859-1?Q?aiPI3nWQM8HFNC+U1nmUedP3ANri7Y3GENo+7UwsKwwtXGpDYCVyl//lX7?=
- =?iso-8859-1?Q?4u6PsUEBLGTdQV3Tk1WdH52gSDuaH3VkNdPxC/XfO4TGCdCdqIjdLobQYF?=
- =?iso-8859-1?Q?SP/ZVfQswI/0vI5+jWUiN4myfay1hklgeVSlGrf43P5ZFAW2Pz5BDBcvHk?=
- =?iso-8859-1?Q?PnpyHzReLldUKFYNEHUgNOybxvFFaBnYcmTf3g4xI+KrwZhtPjHa6c6O6U?=
- =?iso-8859-1?Q?INg9ecf8xbUIE2e/ywCS4vWmn7ihkiPXzDPrzPEwExME1MwRs8Ua5CmD/q?=
- =?iso-8859-1?Q?ZrJQB+Hf7z8ZXcWvMlPFgWfwcpenhZSl1d4VoYuAxB/FkUEBRaU4+kqnRH?=
- =?iso-8859-1?Q?1WZ+hMil1JFvxKTA+1hDYgXBDm8qanm9DJH6ADrJD4Mf44M3W9NPlyliGC?=
- =?iso-8859-1?Q?IEtdYcxjMQrx93lI7hPWGxcp0GWdNFCoNbwN2YH+QtsMPlXRVTkOLg31fM?=
- =?iso-8859-1?Q?J1Jc0iC8EXwdeUQPOgG0Ay2hKfLXhVnz3cWGKKf7oAfrSy4JGqIq9wrREO?=
- =?iso-8859-1?Q?8Axo6nKMhC/hFKLjQZd7el7kuiJx8GeZnvqjAde+X9xgNlSajtlKuGJm+h?=
- =?iso-8859-1?Q?J4q/Xpsrr4p0JJYDiVhjZIxGYsUunsTMUb/EBU8GDOyuqaGOnt1irZWG5b?=
- =?iso-8859-1?Q?RUSubTfTEmX6vF696oRnxUtWmJKoYEVMgR7oCHig1Qbvy/hGo9WRqTGx6T?=
- =?iso-8859-1?Q?20S1hbTBNUvHpnODdPCoeUE/J9/5KRhkDuiVlGFW6BtIQX4XmkirRCaBVF?=
- =?iso-8859-1?Q?ETKXr+VD3iBkZWwLJX8REbBnMuNcBAH7jEh6mzWcxo+41mBrz4JQLvlEYb?=
- =?iso-8859-1?Q?neI/xHw2QnhSYJg/IIHaU9HkgBLLTqgJj+2GY9skhm1fzq58hCD+cZcBdM?=
- =?iso-8859-1?Q?a8l2pdyWo5XyHXoKbWb70cw7pZGmnZpwe5Hx0pJ/DzP89XwKesDmjteiYB?=
- =?iso-8859-1?Q?hUYk/ghrfnEHqBpcwnKCXZbyO1tj5mR4h1UaoeFME5vf0vinDJ7ZY9aVot?=
- =?iso-8859-1?Q?qLSALchQj0D7M8OhxZdQ4xuSK0NbiW83Q3DcylOfKw/uol5GZ6n+Y1Zh9w?=
- =?iso-8859-1?Q?ACMBxnG/BlYOPaHKSi+HMOcUOIbAs/BwzTLr+ZiyMwT2clhIO6c3ZZWlEN?=
- =?iso-8859-1?Q?JxalR0ObTyCmIZcEATtDoE+EUa0gcFy4QTS12899PppieNUv6ITXLaeepZ?=
- =?iso-8859-1?Q?VGWD22CFTLETyq0rxwrwb7TFxuKF9j0K8ff6gSGxwEF/FYdxWFfWNG7+JP?=
- =?iso-8859-1?Q?pgiYfC4JhTVGJxuX5r05FReNLlHwrJocI1GpjXd4Jydk2hWa5Zrol/WF6Q?=
- =?iso-8859-1?Q?Cx+Gez9Q2A=3D=3D?=
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?LVOF4xzbagsnmMxGry5WeBtBFMa4i7KLR0Q8VxvaOwSw6eTUpK+CRPHZnQ?=
+ =?iso-8859-1?Q?sprU9zJq3oVbBkRKfHBt3l2GViO7DwPjDyJ7yhaIFObMlhKzJ90f0jTg+V?=
+ =?iso-8859-1?Q?MPNCeWlyxHjZa1HauQCHwlr8PEvIy411pXMNAfwXWY6fFgeLCl7wW4B2lm?=
+ =?iso-8859-1?Q?9FQhBx6tUWDnJfwUA4jDjE6vUh13TtX74S+czSQHn+T88rRa/LegJk+hLb?=
+ =?iso-8859-1?Q?cJvfIAeQhH/IVmeUFzJgcQZtuzGImdqkVlPnhwTyPcas0Hd3xM5SW7eF/8?=
+ =?iso-8859-1?Q?coLm78VuQuvi//HCxmPoVPJ1edKTuMakhg1C18NL+XZvGs+L/X0EYTkh1L?=
+ =?iso-8859-1?Q?Z1Fr5WLdDBwbYZTx2Gq36DUzgYOMod0IfaCvaFFHngthqBG2pomLBkzCZv?=
+ =?iso-8859-1?Q?ua+f7gEUBdrwYNb0vN7eklFCiUE/rdceWv+DUXyBAAt7Y53O6nyGwlil7l?=
+ =?iso-8859-1?Q?AAgNf3imbS7Yg05+Iq+FA2unmEbCEEOH9YKbNkQkuY29+jFdEEbillhcew?=
+ =?iso-8859-1?Q?SuJLJEzgudtEsqVB4Zb/W8xnv8awosdFsrBzZbDvBmnf0rYUB213iTc39u?=
+ =?iso-8859-1?Q?eyPl+Jj0lr6FamGP5OSS/ekfXMU5d4INdfpppxqKpaN319JPsiy+61vrqj?=
+ =?iso-8859-1?Q?jnIBmCohD230j/LFJSj3HfHFIOk+FaKg2YhZbyagL8SOux41P3eqlRtm+d?=
+ =?iso-8859-1?Q?WD17GhK22xKMxRHJV3suHyeedS6glcY6VgNe3D3sux8OGnditQzdxk4g4j?=
+ =?iso-8859-1?Q?ia3DcmRbK/bUnFrf/BMU5aYbmMrVatDzwIftNLPWn/O7jwX1E7gS9gfqCk?=
+ =?iso-8859-1?Q?CqyQRz1L351T6+OL+ZJHgkTTLcRomwM8hZMP8DpjlT+a2SdCiANJ/71jyc?=
+ =?iso-8859-1?Q?fOZlakuZOJDLGVY9P/JX2h1+swHnUybo/7NOm2yhad/GaMdtKHmlZNHQK0?=
+ =?iso-8859-1?Q?NxJt5kNVE8298j1+rZrEE0UZ9BCmj4nH459inLNDIVeemFbUMen+pStt5g?=
+ =?iso-8859-1?Q?/wVVvXAPA3S3RYB/H+K7kJBc5RKoki1m4rv/lNOM7yh7cq/RG8okIPPENX?=
+ =?iso-8859-1?Q?xrEbbt0DQZRQwWPFAf4ly/CdrYgyTQyuLMMuWmaxI0Y8GDU6ZkyWubZP+E?=
+ =?iso-8859-1?Q?ozM7GZD5Zi0l+B/LNdfJt+SyANHVJ7GEpYRHRUswUaMNNl1TA333P32x2c?=
+ =?iso-8859-1?Q?r4MD3cWnjG/taQ2UlcqjnfhXLf8kxpbG1vF6kGPBi/4ZEG8RM7SLBIXMZI?=
+ =?iso-8859-1?Q?tfmK1Uzpl7z6Ft63pewNBcw69Lo/Ha4x7LoETGeWNDkPWHhUMpAzdaNLtT?=
+ =?iso-8859-1?Q?aHrZSJByvWgjOULPgV8C78ue9yb19hmHfrwQO1YExZ6pFJvYXi8z5qTFgS?=
+ =?iso-8859-1?Q?lpn69os6AkZoRRzkPSj7WdxGZkg0V+MViGOtf6hV7goHhc2yhXmoEIpojV?=
+ =?iso-8859-1?Q?nr6tWS+SAIlevcqg2t2HqrtSa65sJSSAtirMOuCkBWjQ9Tp3DCn6gkn+3c?=
+ =?iso-8859-1?Q?5DP+/ZCX7fGgzS38YTjMOTD8IZemv/xmMGyisG1jR6xrgBL7cQOg3Yu/pB?=
+ =?iso-8859-1?Q?f58itOS2veHqtHzzRXgpYeihamuRA+aYt+KrCFfnhyo7r+1A5orr6gm4Th?=
+ =?iso-8859-1?Q?v7Awl7LrC7kw4IXOEKj9lPKczM4xDpF/H9KR9lzGBr71QibjCqfRQZ3Dg/?=
+ =?iso-8859-1?Q?QPHKaVpH2FKE6qwr89gNb6htcqA6gtYvQI6b2ZFDk7xxND33qNQE8iJvSy?=
+ =?iso-8859-1?Q?m4R2BAEq1X60Dv+dggxcM7wxg88R9Wa2WLTaZ1P0NsguKdfBGtCJFcXHJH?=
+ =?iso-8859-1?Q?CV0EAAVKDw=3D=3D?=
 Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked: kqmNfUIzR/oPOklnJLPwqZ3wyG+BaRRBZuO2dByPx2zB96aN348bBbbawlKpUWu4GEUhmpHBWBsrJtnyilRyZM9a8S4rxWu4n1vl9L12xrlyECFl1t9WIGoQgLcznAqeAnzfh4D/Qxj8Mf8NoJYT8l/MrnaqL3opahalz6wA77xYu+cgPTBDfO1/2a+pUtJ08bedbiYFiZY4B95SjEXlBj2kqrR8+f3BQIDH1q+HIGJwOEDjynnIZyr4rkTny19e3lMw+KTA5NhTdNTVbzFUhUB0GRdpVt4/yG2oZbd61zzY2iY5Aqva9yN/ybGn6PA/THijGyRB1HOsh38GHPSjmg==
+X-Exchange-RoutingPolicyChecked: yFtGi4Azej1d9fcU3HyxUT32/2n2EVMVi2EnKVFFdylfpJ6Y3C3SyGzTGZBMy2S+wHpP+N+4TLigyDN0bh7LPqzJ2VxgIorj2/JL0YmgIuvYbjxLegkpSg+m0ISmXx2/J4n7Eh2ya9qTfTJsZ0Z77RTVO9DkB0Pcmp4YuvtDyuSdKoG+xZd90/Qslbj17W+bEmOTLPtjQPkaHD7h9B4Xhifo/TC1cTfNnEe4u3Cc/FXIUtcUK+Eeuhegm7XNYRInDyB0qWY3BeYQql2Z+f5nA+3hxDGt/MSCEz4vKztH09U4AwMIQI4LyoPJl3dWS/g8LdqzqY47Fy7cYk+J2k0lMQ==
 X-MS-Exchange-CrossTenant-AuthAs: Internal
 X-MS-Exchange-CrossTenant-AuthSource: IA0PR11MB7185.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 88b2fde4-797a-46b3-f846-08df28278813
-X-MS-Exchange-CrossTenant-originalarrivaltime: 12 Oct 2026 06:10:36.1613 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 3e45a8b8-5c78-411e-cccc-08df28281cc4
+X-MS-Exchange-CrossTenant-originalarrivaltime: 12 Oct 2026 06:14:45.5937 (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: sCm4lhmwmeC0xuHknda/csz31kqEkyXSihxRDifvAG1c4YY4xTr4MDOfqe+HqFYzJrHdLIRfRZMrje9m501wiQnJ9BoXyK2y4Sa19Ef3vaE=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL4PR11MB8797
+X-MS-Exchange-CrossTenant-userprincipalname: z32+EsHY6/kdFTbgfDlbXEaNIBUXMNnYjS4yAGe9q9B43V32Y0e6vJMnO4l0CgMrZcqkm1367OaLggD7IJhWZWddkpCCVOf4jkA7SsGGHPU=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR11MB6076
 X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=192.198.163.9;
+Received-SPF: pass client-ip=198.175.65.18;
  envelope-from=vivek.kasireddy@intel.com; helo=mgamail.intel.com
 X-Spam_score_int: -45
 X-Spam_score: -4.6
@@ -189,34 +189,27 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Hi Akihiko,
 
-> Subject: Re: [PATCH v13 1/9] virtio-gpu: Find hva for Guest's DMA addr
-> associated with a ram device
->=20
-> >>> If the Guest provides a DMA address that is associated with a ram
-> >>> device (such as a VFIO PCI device region and not its system memory),
-> >>> then we can obtain the hva (host virtual address) by invoking
-> >>> address_space_translate() followed by
-> memory_region_get_ram_ptr().
+> Subject: Re: [PATCH v13 9/9] virtio-gpu-dmabuf: Create dmabuf for blobs
+> associated with VFIO devices
+> >
+> >>> In addition to memfd, a blob resource can also have its backing
+> >>> storage in a VFIO device region. Since, there is no effective way
+> >>> to determine where the backing storage is located, we first try to
+> >>> create a dmabuf assuming it is in memfd. If that fails, we try to
+> >>> create a dmabuf assuming it is in VFIO device region.
 > >>>
-> >>> We cannot use dma_memory_map() because for memory regions that
-> >> do
-> >>> not support direct access, it would create bounce buffers instead
-> >>> of returning the actual hva, which is not desirable here. And, since
-> >>> VFIO device regions are not considered directly accessible (because
-> >>> they are mostly MMIO based), virtio-gpu cannot invoke
-> >> dma_memory_map()
-> >>> to obtain the hva in this case.
+> >>> So, we first call virtio_gpu_create_udmabuf() to check if the blob's
+> >>> backing storage is located in a memfd or not. If it is not, we invoke
+> >>> the vfio_device_create_dmabuf_fd() API which identifies the right
+> >>> VFIO device and eventually creates a dmabuf fd.
 > >>>
-> >>> Therefore, in order to handle addresses associated with VFIO devices,
-> >>> we need to use the address_space_translate() API to first identify
-> >>> the right memory region and the appropriate offset within that
-> >>> region and then use memory_region_get_ram_ptr() to get the hva.
-> >>> This approach also works for addresses associated with the system
-> >>> memory region.
-> >>>
-> >>> Note that, although we take an explicit reference on the memory
-> >>> region, we would still rely on dma_memory_unmap() to drop that
-> >>> reference when the dma mapping is eventually unmapped.
+> >>> Note that, for mmapping the dmabuf, we directly call mmap() if the
+> >>> dmabuf fd was created via virtio_gpu_create_udmabuf() since we
+> >> know
+> >>> that the udmabuf driver supports mmap(). However, if the dmabuf
+> >> was
+> >>> created via vfio_device_create_dmabuf_fd(), we use the
+> >>> vfio_device_mmap_dmabuf() API to get a mapping for the dmabuf.
 > >>>
 > >>> Cc: Marc-Andr=E9 Lureau <marcandre.lureau@redhat.com>
 > >>> Cc: Alex Benn=E9e <alex.bennee@linaro.org>
@@ -227,93 +220,77 @@ Hi Akihiko,
 > >>> Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 > >>> Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
 > >>> ---
-> >>>    hw/display/virtio-gpu.c | 21 ++++++++++++++++++---
-> >>>    1 file changed, 18 insertions(+), 3 deletions(-)
+> >>>    hw/display/virtio-gpu-dmabuf.c | 22 +++++++++++++++++++---
+> >>>    1 file changed, 19 insertions(+), 3 deletions(-)
 > >>>
-> >>> diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
-> >>> index bb0f41bb1e..386db05e5b 100644
-> >>> --- a/hw/display/virtio-gpu.c
-> >>> +++ b/hw/display/virtio-gpu.c
-> >>> @@ -948,6 +948,23 @@ static void
-> >> virtio_gpu_set_scanout_blob(VirtIOGPU *g,
-> >>>                                  &fb, res, &ss.r, &cmd->error);
-> >>>    }
+> >>> diff --git a/hw/display/virtio-gpu-dmabuf.c b/hw/display/virtio-gpu-
+> >> dmabuf.c
+> >>> index c9de8e9ba3..f59a5e76ff 100644
+> >>> --- a/hw/display/virtio-gpu-dmabuf.c
+> >>> +++ b/hw/display/virtio-gpu-dmabuf.c
+> >>> @@ -153,9 +153,25 @@ bool virtio_gpu_init_dmabuf(struct
+> >> virtio_gpu_simple_resource *res)
+> >>>            if (res->dmabuf_fd =3D=3D
+> >> VFIO_DMABUF_CREATE_ERR_INVALID_IOV) {
+> >>>                error_free_or_abort(&local_err);
 > >>>
-> >>> +static void *virtio_gpu_dma_memory_map(VirtIOGPU *g,
-> >>> +                                       struct virtio_gpu_ctrl_comman=
-d *cmd,
-> >>> +                                       uint64_t a, hwaddr *len)
-> >>> +{
-> >>> +    MemoryRegion *mr;
-> >>> +    hwaddr xlat;
+> >>> -            qemu_log_mask(LOG_GUEST_ERROR,
+> >>> -                          "Cannot create dmabuf: incompatible memory=
+\n");
+> >>> -            return false;
+> >>> +            res->dmabuf_fd =3D vfio_device_create_dmabuf_fd(res->iov=
+,
+> >>> +                                                          res->iov_c=
+nt,
+> >>> +                                                          &local_err=
+);
+> >>> +            if (res->dmabuf_fd =3D=3D
+> >> VFIO_DMABUF_CREATE_ERR_INVALID_IOV) {
+> >>> +                error_free_or_abort(&local_err);
+> >>> +                qemu_log_mask(LOG_GUEST_ERROR,
+> >>> +                              "Cannot create dmabuf: incompatible me=
+mory\n");
+> >>> +                return false;
+> >>> +            }
 > >>> +
-> >>> +    mr =3D address_space_translate(VIRTIO_DEVICE(g)->dma_as, a,
-> >> &xlat, len,
-> >>> +                                 DMA_DIRECTION_TO_DEVICE,
-> >>> +                                 MEMTXATTRS_UNSPECIFIED);
-> >>> +    if (memory_region_is_ram(mr)) {
-> >>> +        memory_region_ref(mr);
-> >>> +        return memory_region_get_ram_ptr(mr) + xlat;
+> >>> +            if (res->dmabuf_fd >=3D 0) {
+> >>> +                pdata =3D vfio_device_mmap_dmabuf(res->iov, res->iov=
+_cnt,
+> >>> +                                                &local_err);
 > >>
-> >> On rechecking this, I don't think it is safe with Xen.
-> >>
-> >> memory_region_get_ram_ptr(mr) + xlat assumes a contiguous host
-> >> mapping
-> >> of the entire region. Xen maps guest RAM on demand through its
-> >> mapcache.
-> >> Here, memory_region_get_ram_ptr() obtains a mapping at offset zero
-> >> without pinning the cache entry, and adding xlat afterward does not
-> >> ensure that the requested range is mapped.
-> >>
-> >> The MemoryRegion reference keeps the region alive, but does not
-> >> prevent
-> >> the mapcache entry from being reused. Resource backing can therefore
-> >> receive an invalid or unpinned pointer.
-> >>
-> >> I think we need to extend dma_memory_map() for this use case instead
-> >> of
-> >> replacing it, preserving its mapping and unmapping semantics.
-> > I am not sure if extending dma_memory_map() might be a
-> better/cleaner
-> > solution for this use-case. If obtaining the hva/host ptr via
-> > memory_region_get_ram_ptr(mr) + xlat for guest RAM is not safe with
-> > Xen, then would it not make more sense to go back to using
-> dma_memory_map()
-> > for Guest RAM and memory_region_get_ram_ptr(mr) + xlat for VFIO
-> > backed regions? That is, doing the following:
-> >
-> > static void *virtio_gpu_dma_memory_map(VirtIOGPU *g,
-> >                                         struct virtio_gpu_ctrl_command =
-*cmd,
-> >                                         uint64_t a, hwaddr *len)
-> > {
-> >      MemoryRegion *mr =3D NULL;
-> >      hwaddr xlat;
-> >
-> >      mr =3D address_space_translate(VIRTIO_DEVICE(g)->dma_as, a, &xlat,
-> len,
-> >                                   DMA_DIRECTION_TO_DEVICE,
-> >                                   MEMTXATTRS_UNSPECIFIED);
-> >      if (memory_region_is_ram_device(mr)) {
-> >          memory_region_ref(mr);
-> >          return memory_region_get_ram_ptr(mr) + xlat;
-> >      }
-> >
-> >      return dma_memory_map(VIRTIO_DEVICE(g)->dma_as, a, len,
-> >                            DMA_DIRECTION_TO_DEVICE,
-> >                            MEMTXATTRS_UNSPECIFIED);
-> > }
+> >> This maps the complete IOV size, while virtio_gpu_fini_dmabuf()
+> >> unmaps
+> >> only blob_size. Create and attach accept backing larger than the blob,
+> >> so excess pages remain mapped after detach, unref or reset.
+> > Good catch. I'll add a check in virtio_gpu_fini_dmabuf() to determine i=
+f
+> > IOV size > blob_size, then do munmap(res->remapped, IOV size);
+> > I think this should be safe even if the mapping (created with mmap)
+> > size is blob_size. Or, is there a better solution you can think of such=
+ as
+> > tracking the exact mapping size in res object?
 >=20
-> Checking this logic again, I found this patch is not necessary since
-> commit ff77a515113f ("system/memory: Make ram device region directly
-> accessible"). We can just drop it.
-You are right, this patch is no longer necessary in light of ff77a515113f.
-I dropped it from this series and re-tested my use-case again and everythin=
-g
-seems to work as expected.
+> Unmapping the IOV size is not safe if only blob_size was mapped:
+> munmap() can also remove unrelated mappings in the excess range.
+Ok, got it.
+
+>=20
+> A cleaner fix is to update vfio_device_mmap_dmabuf() to take the size to
+> map (or cap it to blob_size).
+Currently, vfio_device_mmap_dmabuf() creates an IOV sized mapping, so it
+is going to need extra logic to cap it to blob_size, which needs to be expl=
+icitly
+passed in. So, are you ok with this given that you previously did not like =
+the
+idea of passing in blob_size as a parameter?
 
 Thanks,
 Vivek
+
+> This keeps it symmetric with the udmabuf
+> path and allows virtio_gpu_fini_dmabuf() to continue unmapping
+> blob_size
+> without needing extra tracking variables.
 >=20
 > Regards,
 > Akihiko Odaki
@@ -321,35 +298,19 @@ Vivek
 > >
 > > Thanks,
 > > Vivek
-> >
 > >>
 > >> Regards,
 > >> Akihiko Odaki
 > >>
-> >>> +    }
-> >>> +    return NULL;
-> >>> +}
-> >>> +
-> >>>    int virtio_gpu_create_mapping_iov(VirtIOGPU *g,
-> >>>                                      uint32_t nr_entries, uint32_t of=
-fset,
-> >>>                                      struct virtio_gpu_ctrl_command *=
-cmd,
-> >>> @@ -993,9 +1010,7 @@ int
-> virtio_gpu_create_mapping_iov(VirtIOGPU
-> >> *g,
-> >>>            /* TODO: a common DMA map SG helper */
-> >>>            do {
-> >>>                len =3D l;
-> >>> -            map =3D dma_memory_map(VIRTIO_DEVICE(g)->dma_as, a,
-> >> &len,
-> >>> -                                 DMA_DIRECTION_TO_DEVICE,
-> >>> -                                 MEMTXATTRS_UNSPECIFIED);
-> >>> +            map =3D virtio_gpu_dma_memory_map(g, cmd, a, &len);
-> >>>                if (!map) {
-> >>>                    qemu_log_mask(LOG_GUEST_ERROR, "%s: failed to map
-> >> MMIO memory for"
-> >>>                                  " element %d\n", __func__, e);
+> >>> +                if (!pdata) {
+> >>> +                    virtio_gpu_fini_dmabuf(res);
+> >>> +                }
+> >>> +            } else {
+> >>> +                res->dmabuf_fd =3D -1;
+> >>> +            }
+> >>>            } else if (res->dmabuf_fd >=3D 0) {
+> >>>                pdata =3D virtio_gpu_remap_dmabuf(res, &local_err);
+> >>>                if (!pdata) {
 > >
 
 
