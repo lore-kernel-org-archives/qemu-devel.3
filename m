@@ -4,114 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35861CC6B0E
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 16:50:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBBA8CC6B0E
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 16:53:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGfhl-0000ro-D9; Tue, 13 Oct 2026 12:50:21 -0400
+	id 1xGfk8-0001Nq-9w; Tue, 13 Oct 2026 12:52:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xGfhj-0000r7-Ga
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 12:50:20 -0400
-Received: from mail-yw1-x112d.google.com ([2607:f8b0:4864:20::112d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xGfhh-0000Ye-JD
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 12:50:19 -0400
-Received: by mail-yw1-x112d.google.com with SMTP id
- 00721157ae682-885cf67963eso25010387b3.0
- for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 09:50:17 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1791910216; cv=none;
- d=google.com; s=arc-20260327;
- b=A/Dbe977N7Kx1ghCtsVUDDVOWoeBLkWOCCIDOMo0G8lIK0e/U2Ga73/jkVTyx7rlSG
- /b5HMW6wwqhMBk+UCrqVBXQ5OZkEMLpl2BZ4zVgZGJcF2tnyhHF1Lre7RM1VbKDQ6H/y
- MVkqPzbUl+U73ycR5vwwejdm7+h42a1BjbqrdbDeOKQe7IWyFtXS6i8vrHNcDXafqsFn
- wGk1SeFdjDYD/e1UhxLCIvarytFcXy/OfiDYtLWdzZuYVNptcuHRml9yzSRRFlCpXr5f
- PW2Ycd1G35Fa8V1XQN1Yah9Q3ZejE0B8jABLuidcwNK2l9jHjy4Goq2SLKbF5HuviGTM
- WrSQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=PIzUdYY4W2ouyygmVnyaVLbSOVBNraxuMdBlCjFXaJU=;
- fh=STFjNyXLj0lfgNvlZzFLUS1rWfs5JAUbmS2H0sDlju8=;
- b=edVP90i6hB+loZjsatEWHegtP2NiVL79buD+50HaLYfuU2s/BeTapv/lgiXKHyjtt4
- 9kN0MMJow9MPucJRjqjFBtFdgGVG5Z5J+nIpmoD4fY40X0fInFeu/ZGJ6A0I0ZK7McPE
- tBIAX81NrKa+j/pcHV18n26ANbYU4aB1JI4tM3mkyJLXDBrVZ8OrYgQJRwM8PlIO3Hds
- 6mk6q6LR7PY3i4ngMC4QbBr35g/3Mnm80KnOfvvieibXQMrN6QtYnEUcCpGTHcdUmiIT
- Tw4PQKA0WJUQJXLcDFd0yQjmuKrWxZ0p8IAQROuBHtgoARRS7Yp1WRG7fzm7pB6EBgcZ
- pbmw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1791910216; x=1792515016; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=PIzUdYY4W2ouyygmVnyaVLbSOVBNraxuMdBlCjFXaJU=;
- b=FpmfOCtAdg0FJ81uss7O2foxLLVb0J4mNt4XtRgF3sjSlqP515l0Vdp0UVQKA6fNs0
- lsw3QjmanS1Y29d+yj8zfMLq5aZqFfvuh+gDf3RRMD2yfCdUHBBPbhnuadWcV5YIEI3D
- YddPw6AYfaoQqBT7sZa6hBr0H0Jpi2QQhykGTWwf/tBVgd+GtEfaW+FVhsyb6cP56yb9
- YGCg+IPht1V15hhrbrbqxyqFEwQ6bZFX1dP0d3glSQVV30QSWeO7IT8SfUqP525+4xhu
- H7s7DoXCUF9IDUG7vtWQLMm6vU9sfJ2Bdj3hbJk9y6/ICNUZv+wCGI50IC3qsnbNYwpY
- cvKA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791910216; x=1792515016;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=PIzUdYY4W2ouyygmVnyaVLbSOVBNraxuMdBlCjFXaJU=;
- b=vNXExr7EbX1jMBJMypBmBW93zuY7Txa5PP+UjoCGZTks0yi96u0CRTRGozHOu6kv9z
- XejzWMHZjb+0E0LtCLG/BnnfgF3tmsGLKJT3YSh3+ds/4pEuadDOjhef97zSJuGmyKGn
- XyPWT0yDL21wgUd3cghiqZtbp9W5yMDSzjVNpGdkzf8HXrykAF9DtxDNYAmVjExyLeWh
- dgUAcE7X+a/sXZiNMTrsuSXiCiWVlXbSqV59dHwhdTW/wBfnSy7+GjP6nRm9rvCrlPmk
- ikMn/t/KkOgCQOfFWWZyz7FCvePfIbW9vV0ZAtfmff/v9LxYpJycepN/cThKp7tN+qWi
- 0C8g==
-X-Gm-Message-State: AFq9FYLBeuLbvQjMP7644p5REQgdiyADLfwRvIcQXO7iyZHdltxrNxSi
- IuLxabWpiibtVUEo1vHb3nHp7unbV36YxOpjOGoDHgiAwStlz4xqG48zHMZPuScQs173/iOnliG
- Myb6+I8BofiKBK+yhi+m5hfYw/qyweex+OLZh0XAz8w==
-X-Gm-Gg: AYBFou3FEre1XwNXkPhTUOVJDCebr0eEyWW5+i9ySwTFgzBgFXWXnfiBXAcrzw8FItj
- rKxCXLtMq//8pqAsLJO6SWCeb0+ulrIHh8mQWjmaj+DknMlhdaeDvahCP4oOPQUFmTeyFiuXywN
- LDrIAaXFRaqcvjX7tb/8eg1mOywCSOGikQrAriTpBmZWEcOI5NSWfTTanDIb6KTDhtpwpZDBtTj
- 8HUkWdCd4+Qsbcmu7aNK7V7/qWBRdmwQtGEcNXEx9j4fESGTvyT+y0nuz2z3+9SImBvU9/ZKVSh
- GPKQjdGkoTYtv4VJ7oajsfORlVMBtz+DaSBS9cWnuwKjFu8HslBJ8L+f9I3evJW+qcdX5kcw3If
- tJa+gRSvNYnsZrnGGMIAGHgpsvHpmY1A85AEzJn8=
-X-Received: by 2002:a05:690c:4d81:b0:8aa:fbe8:8926 with SMTP id
- 00721157ae682-8b07eebd73cmr52433707b3.69.1791910214804; Tue, 13 Oct 2026
- 09:50:14 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1xGfk5-0001Ni-Jr
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 12:52:46 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1xGfk4-0000in-13
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 12:52:45 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 69DDgrCB149139; Tue, 13 Oct 2026 16:52:38 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=JynduI
+ vWV/Lxeo1IKu+uM4rwlr5RVFQ5+bMezhi7r2M=; b=nFGsnP7qMWgq0QXE6Z1Uep
+ lm4gjoBUfywQjmTmU13PlyW7hubZYb7xEWP5P10uQH8bkp/7qOjryAxcOZ6BwUVH
+ 02e7JQfsRQ/dy4E4u7kVo927vKN5F7b6tZMAeKLJtjB+XrFgN+9e3V6Csnc2exdL
+ LQUbPfcszFvsrpuRd/9WNfdENiHPHUBRcB1yla4QuXQrusrmGmptGsa9V9F9Hap+
+ shlFOdq5lnnGw0UsPaRJjrYSphzebOGG/E36O/tvViu5yA8f4KFN5xDgtQBjkFkN
+ PAW/2V0+Z+UOtbseUplM8Rq3uXIRSbU/n0juAri/W7F/xvYYR4TjREAs6+ex26WA
+ ==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4h7dwhfjh6-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Tue, 13 Oct 2026 16:52:38 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 69DFZ1Pv2709317; Tue, 13 Oct 2026 16:52:37 GMT
+Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4h816h304n-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 13 Oct 2026 16:52:37 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
+ [10.20.54.102])
+ by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 69DGqZPN50921774
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 13 Oct 2026 16:52:35 GMT
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 3C7442004D;
+ Tue, 13 Oct 2026 16:52:35 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 051C320043;
+ Tue, 13 Oct 2026 16:52:35 +0000 (GMT)
+Received: from [0.0.0.0] (unknown [9.111.35.59])
+ by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 13 Oct 2026 16:52:34 +0000 (GMT)
+Message-ID: <9a21eb8c-47ca-47e7-8685-d9fb9c20e971@linux.ibm.com>
+Date: Tue, 13 Oct 2026 18:52:34 +0200
 MIME-Version: 1.0
-References: <20261001-mshv_accel_arm64_supp-v6-0-aefe5e76a0e3@linux.microsoft.com>
- <20261001-mshv_accel_arm64_supp-v6-11-aefe5e76a0e3@linux.microsoft.com>
-In-Reply-To: <20261001-mshv_accel_arm64_supp-v6-11-aefe5e76a0e3@linux.microsoft.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 13 Oct 2026 17:50:03 +0100
-X-Gm-Features: AclHuK_Io2BTarONqqWtYxaBJWwxe3rnQ5jHfWC3nmKtuvEs7aIE4FfWSMISC1g
-Message-ID: <CAFEAcA9xPn2MRjC_d9Gdb=d4-GHmcXPpsLP+WUOgCUhaPbZ2BQ@mail.gmail.com>
-Subject: Re: [PATCH v6 11/14] target/arm/mshv: add vCPU run loop
-To: Aastha Rawat <aastharawat@linux.microsoft.com>
-Cc: qemu-devel@nongnu.org, Magnus Kulke <magnuskulke@linux.microsoft.com>, 
- Wei Liu <wei.liu@kernel.org>,
- =?UTF-8?Q?Doru_Bl=C3=A2nzeanu?= <dblanzeanu@linux.microsoft.com>, 
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- Anirudh Rayabharam <anirudh@anirudhrb.com>, qemu-arm@nongnu.org, 
- Alexander Graf <agraf@csgraf.de>, Pedro Barbuda <pbarbuda@microsoft.com>, 
- Mohamed Mediouni <mohamed@unpredictable.fr>,
- "Michael S. Tsirkin" <mst@redhat.com>, 
- Richard Henderson <richard.henderson@linaro.org>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112d;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 0/2] Fix PVH entrypoint parsing
+To: Ard Biesheuvel <ardb@kernel.org>, qemu-devel@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, pbonzini@redhat.com,
+ Richard Henderson <richard.henderson@linaro.org>
+References: <20240929180659.3598-1-ardb@kernel.org>
+Content-Language: en-US
+From: Ilya Leoshkevich <iii@linux.ibm.com>
+In-Reply-To: <20240929180659.3598-1-ardb@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDEzMDA2NiBTYWx0ZWRfX1TO5ktWh4tz6
+ kweHurDvyoMXMrSjRZt38eJruzEFfp8YCIZonv8q4X10PatWxwcX3cB65v1vIBSrTIfW2uchESe
+ WmficVRMfZP95CoSkwWsX7NoiPvOd98=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDEzMDA2NiBTYWx0ZWRfX1fWdeM8eDLtZ
+ WZjAMZulcX5LJ+rtcy1MHmkDtc1VYYuqjnjUfRthgV/nBulLT/D9W1HvYn9id5z0DT/vwB+D8ta
+ cqmEAfZz18jddkskSgvA8cynFOFDosbGSjnYSgc/iOb4CCz8v/yK06D8hGxJMLVecBsKhEdRess
+ 8gVdrYr0iOB5VshsV7s/h3czqfxKPxOomNltOiDLKD5uUWlrjhtmF3bA3TydcgNxFo8ruAIay4L
+ TSuPbtzMX5jxwbZ1p9zhb0Cfm8zikwZkIlxH8JXnX/nW37vim4zoWl5oSYp5qAb6wl/QV0QxuOH
+ TvTxuo2VUH2CvsMAniyYwtktCUjzpGJ0kjvIaLLJB0jZ8I+8l8YXeyD9HahJSf5Fz8E1OspKJkp
+ 6lDc39unKOxrVI7Q6JRSiSNF4EzfqV4n/vRfEd8SkpZF03fSzyvLCwgJTlJQWpv6S/G+NBRkSqA
+ Bu4Uz+c4OvHGqqXv5wA==
+X-Proofpoint-GUID: fKiC4icHIA1qU8YNrduNqrSKfu5dABp0
+X-Authority-Analysis: v=2.4 cv=RoFQvymK c=1 sm=1 tr=0 ts=6ace61d6 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=czFtBru75hg9k7Pz9dEA:9
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: fKiC4icHIA1qU8YNrduNqrSKfu5dABp0
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-10-13_01,2026-10-09_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 spamscore=0 phishscore=0 adultscore=0 bulkscore=0
+ impostorscore=0 suspectscore=0 malwarescore=0 clxscore=1011
+ lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610080000
+ definitions=main-2610130066
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,45 +124,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 1 Oct 2026 at 11:52, Aastha Rawat
-<aastharawat@linux.microsoft.com> wrote:
->
-> From: "Anirudh Rayabharam (Microsoft)" <anirudh@anirudhrb.com>
->
-> Add the main vCPU run loop for MSHV using the MSHV_RUN_VP_IOCTL.
->
-> Handle MMIO exits by emulating the instruction using the syndrome
-> information from ESR_EL2.
->
-> Signed-off-by: Anirudh Rayabharam (Microsoft) <anirudh@anirudhrb.com>
-> ---
->  include/hw/hyperv/hvgdk_mini.h |  44 +++++++++++++++++
->  target/arm/mshv/mshv-all.c     | 107 +++++++++++++++++++++++++++++++++++++++++
->  2 files changed, 151 insertions(+)
->
-> diff --git a/include/hw/hyperv/hvgdk_mini.h b/include/hw/hyperv/hvgdk_mini.h
-> index 33c9e4f3e0..53dc58813e 100644
-> --- a/include/hw/hyperv/hvgdk_mini.h
-> +++ b/include/hw/hyperv/hvgdk_mini.h
-> @@ -896,6 +896,50 @@ struct hv_x64_memory_intercept_message {
->      uint8_t instruction_bytes[16];
->  } QEMU_PACKED;
->
-> +union hv_arm64_vp_execution_state {
-> +    uint16_t as_uint16;
-> +    struct {
-> +        uint16_t cpl:2;
-> +        uint16_t debug_active:1;
-> +        uint16_t interruption_pending:1;
-> +        uint16_t vtl:4;
-> +        uint16_t virtualization_fault_active:1;
-> +        uint16_t reserved:7;
-> +    };
-> +};
 
-This is an mshv specific file, but I would still recommend against
-bitfields-in-a-union as generally bad style.
 
-thanks
--- PMM
+On 9/29/24 20:06, Ard Biesheuvel wrote:
+> Fix the handling of the ELF note that describes the PVH entrypoint
+> 
+> v2: fix broken ELF note handling on big endian hosts
+> 
+> Ard Biesheuvel (2):
+>    hw/elf_ops: Implement missing endian swabbing for ELF notes
+>    hw/x86: Always treat the PVH entrypoint as a 32-bit LE field
+> 
+>   hw/i386/x86-common.c     |  7 ++-----
+>   include/hw/elf_ops.h.inc | 19 +++++++++++++++++--
+>   2 files changed, 19 insertions(+), 7 deletions(-)
+
++Cc: Michael and Richard.
+
+Gentle ping.
 
