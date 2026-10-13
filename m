@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88840CC6B03
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 13:28:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A8F4CA9ED2
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 13:28:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGcXX-0006ve-18; Tue, 13 Oct 2026 09:27:35 -0400
+	id 1xGcXH-0004nZ-UC; Tue, 13 Oct 2026 09:27:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xGcVQ-0002zo-4S
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 09:25:32 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1xGcVE-0002pz-8r
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 09:25:16 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xGcVO-0004p3-HK
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 09:25:23 -0400
+ id 1xGcVA-0004ni-O3
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 09:25:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1791897921;
+ s=mimecast20190719; t=1791897907;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=B8guiPiutqO1bWlLBvrv1sXzBZcH0sq11If75yHCDGs=;
- b=WQ75OZyTOHHEGqQ6To/RnY6qbRhbckWBb4/7auBsEmgEoBjp7eVRTYiZ98Rk5vJM0oFJxA
- egw9dKO8d2lBLknV2MRWfOkkg11IV0BHFbOIHfbLD8Fy7AhmmOCfTCvyDmy3rDZs1z37O/
- nOoQ7PBIWGex4WcBRhugUpQkqzTPqmc=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=+mgV+pOyhaSqOdlETzKmECBc0xP9NThN4srLaPVRQp4=;
+ b=bO5SvXiyV4XwCuO13BXuU1RWdbHWOspHo/0Cf74mxcAxw+7/nU8gt+W566NhxdTC5ByRn4
+ 8E4STo3EQb/Lw9A/caoFHRwYf0+LCWRO6NUihnLfIaFwWRfg5q2RyjZ8noDNHVzhCQvu7/
+ OPaoANwR8JJG2bpyk1K3BxiHAlK5Ag0=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-48-GFGBzOngOGuR9zL3yJuwDQ-1; Tue,
- 13 Oct 2026 13:25:12 +0000
-X-MC-Unique: GFGBzOngOGuR9zL3yJuwDQ-1
-X-Mimecast-MFC-AGG-ID: GFGBzOngOGuR9zL3yJuwDQ_1791897911
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-599-ox7gmP9xOBaQj3pAepYdQw-1; Tue,
+ 13 Oct 2026 13:24:58 +0000
+X-MC-Unique: ox7gmP9xOBaQj3pAepYdQw-1
+X-Mimecast-MFC-AGG-ID: ox7gmP9xOBaQj3pAepYdQw_1791897897
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9B9E4193E88A; Tue, 13 Oct 2026 13:25:11 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 53E9419539A2; Tue, 13 Oct 2026 13:24:57 +0000 (UTC)
 Received: from localhost (headnet03.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.114])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 9ED8C427; Tue, 13 Oct 2026 13:25:10 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 5CCCB1800361; Tue, 13 Oct 2026 13:24:56 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Tue, 13 Oct 2026 17:23:27 +0400
-Subject: [GIT PULL 30/40] ui/clipboard: clean up vm change state handler on
- last peer unregister
+Date: Tue, 13 Oct 2026 17:23:23 +0400
+Subject: [GIT PULL 26/40] audio/pwaudio: handle negative avail in qpw_write
+ and qpw_buffer_get_free
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20261013-ui-v1-30-92da3082ad96@redhat.com>
+Message-Id: <20261013-ui-v1-26-92da3082ad96@redhat.com>
 References: <20261013-ui-v1-0-92da3082ad96@redhat.com>
 In-Reply-To: <20261013-ui-v1-0-92da3082ad96@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org, 
+Cc: peter.maydell@linaro.org, Gerd Hoffmann <kraxel@redhat.com>, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1055;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1393;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=XI80s0mXsyM2ofXVtXwcZJPgJ0P1pxUp8mQPbVnrJao=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqzjDEb9SDKL2g7+UD2ZlWX1rDtFFvZCNczPeFq
- SHg8DHeJiWJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCas4wxAAKCRDa6OEJdZac
- 5QaYD/9YcFVORJ9Pg91wbOJYerKiV2CXQ6CVOIZdbQFcTcLdDdj733CuaBQKxwMbIACaATYds88
- yOilH6+3wtEjh4+VXnFA4U2JVd2AyTN8+E3seIPHTF3Sy9mUSvasUdy2Emr8eot+bhIm57jWfBX
- iHPSghLiXVZWahC6jd4UTw4WZ3UlSgC1o6N6A9galhO8afrU4ljcczSTjuVdRfuUS4T+k/sBbDq
- MP7CQDVOCU+BuVhR7RA9B8+36I2/V5WH29O7jKhEmVjIoSQ2PRBHTVwbOQ5ZBIxqju761IKkUPo
- mZlZ4P5fg4cxHmFcYmxdU1if39eMXh7Pde7G+3Eu1nvfdmd+5Qr/m+uw7/++WhZy6XqEox3dni2
- GE3wv0fTgJOvrm8onI2Gz+LpBAKoN38D0f/SFGQ4FH8rtJkdh2Q30gYDNzEmGoNxCJxbWzJYV5h
- MJowjqJngMdmrX1x9K2brTiBEPwtmGbWaKja1SRUQiu0+It8tQ3vZmsdFyKZB92tn0wvMhwVZtF
- GtaMkTLQOHk77OWIjVG4u9O7r2mnFjPNc+7lotJuI7y3lHCAG3FjixzDt+lCWAluJg9+hr4f9Ho
- eQdMgN2E6Pyq/+QV86IaUieJDuq3AI2+kRXWPHt8Laz9fB44eD+6Dps8p7XZWY3MIoiMGnByH11
- tApaSFQ0j1eoCKg==
+ bh=p0lb8Mwe8uuREq+fFVP6SqVdaJ211mRE+uLP2texcAE=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqzjDDW/cOvooJrChhZ0qILMvVQAlTTYPXb4kKQ
+ f32ztHUbvWJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCas4wwwAKCRDa6OEJdZac
+ 5VZcEACFiuRSSEDxpJblcSMSYMkA6mkOaR8WXXKcAmyriprPHfPaeuyyXnjN0lf2a11hv+vDrJW
+ jg3FvtSl58jPpjOghj1pDtmyt34YeOImumA6k7vwe7hLhpQghLAOOFPQbZNKJEvUHJWZe/j4OT0
+ Zj1SclZv/vvQdwutbLwa5dK/vhgLACWhYe1THRZPOl0uAEy1M0XjUOei9M8ss+VmN1CG1RkNS3/
+ h5yFuPzqAlXC0YyDN7z6MuW5m93X1mNCLV3iC3KCIzKS0W/thVrE+RPqJRMf/edLMmm1O55CcqD
+ BLUmKeEIORTLvU1WTKWmAZ/cdackLL11rADyHuEgof4Dpp86asJhumqtDq50AS6TZGSA8Z8EOkk
+ mdDZeCiolUMnAX8yn4psurCMWSLVuWGZAVFXtSBqkvjGRuWcqPcVVtWLR5ukq6gJBceucX2AS1Y
+ KfxJ2CGzacYRROu7WOiHnqootahci0BCtZsLdb/lqOp8Q2jjz8SLJtODS/JAnrmf+CohWeoYK1t
+ WNU4k7G2ah12f550A9Pne5nNqVC+zZxv3kSQfIyu7iT8fxyOkSQ3sivRk7sb9gD5eD51rvIEDZC
+ xoK4Pk7fCAlu7Ndqn5rrWZsA2FvBeHjwYnAexDlLntq2hHS42oh1QLoePceRgilgQLmvcaeG2xF
+ FTAFkEb4Ht2JphQ==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.133.124;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 10
@@ -87,8 +87,7 @@ X-Spam_score: 1.0
 X-Spam_bar: +
 X-Spam_report: (1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -105,33 +104,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When the last clipboard peer unregisters, the vm change state handler
-is left dangling. Remove it to avoid stale callbacks after all peers
-are gone.
+qpw_write() and qpw_buffer_get_free() do not handle negative avail
+(highwater_mark - filled), which can occur transiently. In
+qpw_buffer_get_free(), clamp to zero. In qpw_write(), bail out early
+and fix the signed/unsigned comparison with len.
 
-Fixes: c967ff606b99 ("ui/clipboard: delay clipboard update when not running")
 Reported-by: Hui Peng <benquike@gmail.com>
+Fixes: c2d3d1c29415 ("audio/pwaudio.c: Add Pipewire audio backend for QEMU")
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-ID: <20261004-issue-4560-v1-13-ccbef537cbeb@redhat.com>
+Message-ID: <20261004-issue-4560-v1-9-ccbef537cbeb@redhat.com>
 ---
- ui/clipboard.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ audio/pwaudio.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/ui/clipboard.c b/ui/clipboard.c
-index e3d8a31ba9f7..46e602dfef43 100644
---- a/ui/clipboard.c
-+++ b/ui/clipboard.c
-@@ -76,6 +76,10 @@ void qemu_clipboard_peer_unregister(QemuClipboardPeer *peer)
-         qemu_clipboard_peer_release(peer, i);
-     }
-     notifier_remove(&peer->notifier);
-+    if (QLIST_EMPTY(&clipboard_notifiers.notifiers)) {
-+        g_clear_pointer(&cb_change_state_entry,
-+                        qemu_del_vm_change_state_handler);
-+    }
- }
+diff --git a/audio/pwaudio.c b/audio/pwaudio.c
+index a8c18b9ecf85..8b3faae8a907 100644
+--- a/audio/pwaudio.c
++++ b/audio/pwaudio.c
+@@ -286,6 +286,9 @@ static size_t qpw_buffer_get_free(HWVoiceOut *hw)
  
- bool qemu_clipboard_peer_owns(QemuClipboardPeer *peer,
+     filled = spa_ringbuffer_get_write_index(&v->ring, &index);
+     avail = v->highwater_mark - filled;
++    if (avail < 0) {
++        avail = 0;
++    }
+ 
+ done_unlock:
+     pw_thread_loop_unlock(c->thread_loop);
+@@ -312,8 +315,12 @@ qpw_write(HWVoiceOut *hw, void *data, size_t len)
+     avail = v->highwater_mark - filled;
+ 
+     trace_pw_write(filled, avail, index, len);
++    if (avail <= 0) {
++        len = 0;
++        goto done_unlock;
++    }
+ 
+-    if (len > avail) {
++    if (len > (size_t)avail) {
+         len = avail;
+     }
+ 
 
 -- 
 2.56.0.116.g6de20f6092dc
