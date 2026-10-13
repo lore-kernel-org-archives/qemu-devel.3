@@ -4,78 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7430BCC6B03
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 08:51:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DE26CC6B03
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 08:51:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGY6A-0003TK-A1; Tue, 13 Oct 2026 04:43:02 -0400
+	id 1xGY3i-0007mb-Gv; Tue, 13 Oct 2026 04:40:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xGY3z-0008UT-7d
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 04:40:47 -0400
+ id 1xGY3U-0007Ct-An
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 04:40:16 -0400
 Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xGY3v-00081e-PU
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 04:40:46 -0400
+ id 1xGY3P-0007qQ-M4
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 04:40:15 -0400
 Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-4a021c809e3so26438185e9.0
- for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 01:40:43 -0700 (PDT)
+ 5b1f17b1804b1-4a17baef589so22013365e9.0
+ for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 01:40:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1791880842; x=1792485642; darn=nongnu.org;
+ d=linaro.org; s=google; t=1791880810; x=1792485610; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=smZTZM7oZW8bOZkpZTb5qADBZ0m6LNtjYEMi2pmMLN4=;
- b=ZZHUJqgcWHO/TfiVA+aekEDb0AZ17g9wY31hC4vfIzr73PEFogN66asFaZzMpertps
- Nw4qbhfDevQTLJq6W6f4v6v52sC0I7da8mR24427jsyY0TsijLSC1kLqekrMenRCKz6S
- YYTiGN7l21y8gdjie6zcJLCBnuD2plt34WUGD9xwdE0rkHtshHd+R9vuHhOxH5qBGYF8
- 5GfEu8sbWhZVm+4v9jhUVNQJPGkpG3yIJNtdewAODE32h2qHpo+6pOYhgkif0FAy8YdU
- dv1y+6/Tu7yonITQD4g/oyIYMHZdpRynsa/pIKfqB64jejWNHuEYQu+tjAKYmd2qtpKm
- 3heA==
+ bh=FFC15qOUGo6FRd9B9ir9SIKtB3uGsFYdGz30HW4TUIA=;
+ b=XUNuV036M96mWPGF1NzPF0kUO2AI05+bNbKx5rf97nfyXxHXM8Hi2Usuk68H96RKQZ
+ D4CBQjR+wRNhHiXfvg6hOTScpaH+bEv2h5RZwuU4kFeV/hFmW3uPX6ERn4MUuDkfZu11
+ e+XghbbdZLwE71SmRLgR29NYIbD2AF6Rvo4XRgcbdM2eVefrDHm7uNnWZsBsgpgKrybY
+ B3nkxw1DskrbtzVDiKP5JAh5jEl82n3vvyuGPj+MMqSTzyKD8l1MP+Q5spnISNTLowOL
+ W0ZD6wcv0q/17cTAmOseJrpUsQk5w1fs5FTs7TKFJ1Yow8qOPxUykTPkkOgex7alDFYC
+ I5gA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791880842; x=1792485642;
+ d=1e100.net; s=20260707; t=1791880810; x=1792485610;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to:content-type;
- bh=smZTZM7oZW8bOZkpZTb5qADBZ0m6LNtjYEMi2pmMLN4=;
- b=S62uOF8sASJsnDmvx8fSYd9T0HOuwh009Uj961c/yDhE+U13q9uVi/PEp9vRAhRkWa
- QNtXOZT7MyZlmnZHUuyWp+ercIkfgZ52FftvUZtPU96jriT8kuG9jgToEhkq0dRrer53
- KX31btRHSYgabuoXynwJiYyrNN/SQDopYtl1H35RWJNNk883aaKC3TNcRHBsfjAX5JHy
- s9U2YtTdcWplYVWvYhhemW0VXu/1rYBYeA1dWNJFxOudzFh//p/iSjrTZHQhpuoZm3DD
- AoOgSyHLH8ptEFbuvPnBiTwdU6nirHnekX+n9H4ABNZ+10kwkD2GRzZhj5IhNTBnOOU2
- Hbpg==
+ bh=FFC15qOUGo6FRd9B9ir9SIKtB3uGsFYdGz30HW4TUIA=;
+ b=IpNFSg5vLgCPOBJQOPtLCh2VE3Ylf4l2rRtEz9AHvAu0DumZ20/hKtKcTX//dEEuc2
+ e3HYZjnlFKatxuwRzO5tWB1WUVuL9FunxAjBdPD+PUpuCOXWk5+EElGNiziXMWp/cguc
+ PJIkCc4lkwk80gL8JVqmDDXikYimdQ5FDo+L/t6iD65v/nNnOD8Y+XuBvzdddGbDhBqS
+ FYU51eT3h1wuobXtwj0Cc+e7bvEIkWDXV0RRJsAnlgXNUTN7w6h18LWI6tjmn7Zi9K7V
+ SXW6qd1Ml7EqZ1I/S1+wNMKHHmpDdytX7Z4X7Jyqk5GGcoQJrinZzBXdelomXAPNhPMq
+ 6wiQ==
 X-Forwarded-Encrypted: i=1;
- AKwUvBwhKRBjT+QhnC7+QFvPPG/UqGL+UCkhVO5NxGJIOZrjc1c8ysIxPP8n4L+YjrcRfTbW0t5OiAxNtjog@nongnu.org
-X-Gm-Message-State: AFq9FYKffwDzT1cL4T+OhRTTuyqBvcK6xMaedqJxCJH1iusu+m7eL5ta
- kAJJIXkJS0e0UzJVgxJYyIHjUIo3zbxdWDDix5dA/Glji0kXBxuOCbA/ZAQPJgElX7267e3MAKx
- Z6R0JkaY=
-X-Gm-Gg: AYBFou3GgpOmq1R+z4CBUNLMKNGWz1xi9m7hGQ3o2TXYUFFAJgXfzwVWThUyO9XTlMb
- 5ZU+K8Qrsfvw9daoUevTfm8P37Lp194MCnxd3DcVlfV1L7Kqo+Qco/TSIBQxwE57AGiClb21Uxa
- 0dfMMYYBw33fw7ngfQOeQ9dm3dPwU+n4yZZ6C5P+Ajl0fi2MyZTVHYGpCTI6lcKsZHtB7HGgmjc
- JPDn62RF/o+RMJqQ1Kh3rKxHvf2oou6F/NWICm59cn3z+1hBfbAHB/AlPI13hzvbvzhzXiywvkd
- W65V8ntdHXe3cBoLFkn4rR8/kJDS8uWXASkwLNyggzdHF0rF9OnOif95OVVAwbJ/Q5AOuY1VFIl
- h/P6j1YCAwOzepYXFTIeiYM+Mm/IyQ7SKscX2Ag1UwEmlKMqh9Sje/SxygkLbuVnKRL9iJyaRPV
- 1aESFZGaxuVr6lhVrcO+53hFQvASnfXgZ2bMPEjjOs1vmLiCwTnCW68BKrhq4JJodoqslrsJp2g
- 9d0173BWJnsGKuMk5NGfSQBrs/rKtkcZtF8TX95cB3Wjin9estVpFZaAc2mQEumIDVzk2EhzLpw
- 1LO2duqYYFGQCw==
-X-Received: by 2002:a05:600c:6097:b0:49f:bd3c:bc24 with SMTP id
- 5b1f17b1804b1-4a18e4b8885mr219382515e9.31.1791880842127; 
- Tue, 13 Oct 2026 01:40:42 -0700 (PDT)
+ AKwUvBwSttYNnftvm3KflW8RhzmbCrgj39DYXhTkOwiHMe6OzJj6eUX2V7RTkZAxKbLDBA4Gt/BbGz2KTKfL@nongnu.org
+X-Gm-Message-State: AFq9FYKBq6S56zyybsC+ee9Gq5YAyFlB5o0WKoVEEVpLvaCEjz3eNv+R
+ KLwtPNeq541NHOBq88HDbdSk10gAdZ3oArYCu43KyCMM4lFBm1CxOLr9uAY2+mdYdTq6SJWlZVJ
+ 9HZTZRY4=
+X-Gm-Gg: AYBFou0zRcq2jQqiaGjTsAdo7FhCDpFQH+33++dFUIzlF0eQ3b2+htMFHNvTdTRhzBk
+ 7ZKrSEs9cAHIgyhrxzkYUWKLIwdJRVPzzZGWtlxTMJfxMTwNj0WnOq87/OQ+jL9oRghpf2YCzH2
+ +Gqv4yBLcl1Rl0oREBzP8hoSIJXvqmomS+sHRx65sKqv0bCg2sFpPKWmviOuICvNZYF2b1MjwSp
+ r1fMF+lSbZWzxxFFUdLCtoTNdXbqZEQetHvFDrF8FSTUpXdUzVF/GZ3XrPnc+FFKam2GXjrO2pt
+ bxhetIdzHZRGS86E8nqmu5ECWjXdiKJoXNhl8jXJM42Ej12Q3r1lkvLRNkGwAPiPXciEHu4AITA
+ OfV11OgTDqELC3qrvGtw2477uG87Sz07+PvLZCwvDZKy01HCyB3Kdjbyuog0GNny/SGFKXvUjNJ
+ ZdqOHbz3xqJ/scd0QbjDzgIw6cX58WkOv+lU8Sh8vHgS38LP7HL9bHbgotJfz6RGcCVn9w7fK6x
+ awSsnixe4EzTAdXe112PNxT5HGqQW94D04r9qnSrJPxs6Ae6qi9gFD5md5/F4Kf7nz8Kn4zcVVQ
+ i9g=
+X-Received: by 2002:a05:600c:4504:b0:49c:fc6e:a3da with SMTP id
+ 5b1f17b1804b1-4a18e4a7839mr250549645e9.25.1791880807540; 
+ Tue, 13 Oct 2026 01:40:07 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a18be96549sm495086735e9.6.2026.10.13.01.40.41
+ 5b1f17b1804b1-4a18be96549sm495086735e9.6.2026.10.13.01.40.06
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 13 Oct 2026 01:40:41 -0700 (PDT)
+ Tue, 13 Oct 2026 01:40:06 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Subject: [PATCH 49/86] hw/intc: Move GICv5 register and data definitions into
- a header
-Date: Tue, 13 Oct 2026 09:38:56 +0100
-Message-ID: <20261013083933.1024405-50-peter.maydell@linaro.org>
+Subject: [PATCH 24/86] target/arm: GICv5 cpuif: Implement ICV_CR0_EL1
+Date: Tue, 13 Oct 2026 09:38:31 +0100
+Message-ID: <20261013083933.1024405-25-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261013083933.1024405-1-peter.maydell@linaro.org>
 References: <20261013083933.1024405-1-peter.maydell@linaro.org>
@@ -88,8 +87,8 @@ X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UPPERCASE_50_75=0.008 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,600 +104,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We put the definitions of GICv5 IRS registers and guest-memory data
-structures directly into arm_gicv5.c.  It turns out that there are a
-few cases where we would like them outside that file (for instance
-register reset is handled in arm_gicv5_common.c).
-
-Move the definitions to their own header file.
+Implement the redirection of the ICC_CR0_EL1 encoding to the
+hypervisor guest's view ICV_CR0_EL1.  This has only one bit in it,
+the enable (EN) bit, which is stored in ICH_VMCR_EL2.EN at the
+same bit location (0).
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/intc/arm_gicv5.c              | 270 +----------------------------
- include/hw/intc/arm_gicv5_regs.h | 286 +++++++++++++++++++++++++++++++
- 2 files changed, 287 insertions(+), 269 deletions(-)
- create mode 100644 include/hw/intc/arm_gicv5_regs.h
+ target/arm/tcg/gicv5-cpuif.c | 41 +++++++++++++++++++++++++-----------
+ 1 file changed, 29 insertions(+), 12 deletions(-)
 
-diff --git a/hw/intc/arm_gicv5.c b/hw/intc/arm_gicv5.c
-index d503d8db426..289a3afaeae 100644
---- a/hw/intc/arm_gicv5.c
-+++ b/hw/intc/arm_gicv5.c
-@@ -15,6 +15,7 @@
- #include "hw/core/registerfields.h"
- #include "hw/intc/arm_gicv5.h"
- #include "hw/intc/arm_gicv5_stream.h"
-+#include "hw/intc/arm_gicv5_regs.h"
- #include "qapi/error.h"
- #include "qemu/log.h"
- #include "trace.h"
-@@ -48,275 +49,6 @@ static const char *inttype_name(GICv5IntType t)
-     return names[t];
+diff --git a/target/arm/tcg/gicv5-cpuif.c b/target/arm/tcg/gicv5-cpuif.c
+index b183c8a6e79..247cefd9e68 100644
+--- a/target/arm/tcg/gicv5-cpuif.c
++++ b/target/arm/tcg/gicv5-cpuif.c
+@@ -67,6 +67,9 @@ FIELD(ICC_HPPIR_EL1, ID, 0, 24)
+ FIELD(ICC_HPPIR_EL1, TYPE, 29, 3)
+ FIELD(ICC_HPPIR_EL1, HPPIV, 32, 1)
+ 
++FIELD(ICH_VMCR_EL2, EN, 0, 1)
++FIELD(ICH_VMCR_EL2, VMPR, 27, 5)
++
+ /*
+  * We implement 24 bits of interrupt ID, the mandated 5 bits of priority,
+  * and no legacy GICv3.3 vcpu interface (yet)
+@@ -564,24 +567,38 @@ static void gic_icc_apr_el1_reset(CPUARMState *env, const ARMCPRegInfo *ri)
+ /* ICC_CR0_EL1 is also banked */
+ static uint64_t gic_icc_cr0_el1_read(CPUARMState *env, const ARMCPRegInfo *ri)
+ {
+-    GICv5Domain domain = gicv5_logical_domain(env);
+-    return env->gicv5_cpuif.icc_cr0[domain];
++    if (gicv5_icv_access(env)) {
++        /* ICV_CR0_EL1 has only an EN bit, stored in ICH_VMCR_EL2.EN */
++        return FIELD_EX64(env->gicv5_cpuif.ich_vmcr_el2, ICH_VMCR_EL2, EN);
++    } else {
++        GICv5Domain domain = gicv5_logical_domain(env);
++        return env->gicv5_cpuif.icc_cr0[domain];
++    }
  }
  
--REG32(IRS_IDR0, 0x0)
--    FIELD(IRS_IDR0, INT_DOM, 0, 2)
--    FIELD(IRS_IDR0, PA_RANGE, 2, 4)
--    FIELD(IRS_IDR0, VIRT, 6, 1)
--    FIELD(IRS_IDR0, ONE_N, 7, 1)
--    FIELD(IRS_IDR0, VIRT_ONE_N, 8, 1)
--    FIELD(IRS_IDR0, SETLPI, 9, 1)
--    FIELD(IRS_IDR0, MEC, 10, 1)
--    FIELD(IRS_IDR0, MPAM, 11, 1)
--    FIELD(IRS_IDR0, SWE, 12, 1)
--    FIELD(IRS_IDR0, IRSID, 16, 16)
--
--REG32(IRS_IDR1, 0x4)
--    FIELD(IRS_IDR1, PE_CNT, 0, 16)
--    FIELD(IRS_IDR1, IAFFID_BITS, 16, 4)
--    FIELD(IRS_IDR1, PRI_BITS, 20, 3)
--
--REG32(IRS_IDR2, 0x8)
--    FIELD(IRS_IDR2, ID_BITS, 0, 5)
--    FIELD(IRS_IDR2, LPI, 5, 1)
--    FIELD(IRS_IDR2, MIN_LPI_ID_BITS, 6, 4)
--    FIELD(IRS_IDR2, IST_LEVELS, 10, 1)
--    FIELD(IRS_IDR2, IST_L2SZ, 11, 3)
--    FIELD(IRS_IDR2, IST_MD, 14, 1)
--    FIELD(IRS_IDR2, ISTMD_SZ, 15, 5)
--
--REG32(IRS_IDR3, 0xc)
--    FIELD(IRS_IDR3, VMD, 0, 1)
--    FIELD(IRS_IDR3, VMD_SZ, 1, 4)
--    FIELD(IRS_IDR3, VM_ID_BITS, 5, 5)
--    FIELD(IRS_IDR3, VMT_LEVELS, 10, 1)
--
--REG32(IRS_IDR4, 0x10)
--    FIELD(IRS_IDR4, VPED_SZ, 0, 6)
--    FIELD(IRS_IDR4, VPE_ID_BITS, 6, 4)
--
--REG32(IRS_IDR5, 0x14)
--    FIELD(IRS_IDR5, SPI_RANGE, 0, 25)
--
--REG32(IRS_IDR6, 0x18)
--    FIELD(IRS_IDR6, SPI_IRS_RANGE, 0, 25)
--
--REG32(IRS_IDR7, 0x1c)
--    FIELD(IRS_IDR7, SPI_BASE, 0, 24)
--
--REG32(IRS_IIDR, 0x40)
--    FIELD(IRS_IIDR, IMPLEMENTER, 0, 12)
--    FIELD(IRS_IIDR, REVISION, 12, 4)
--    FIELD(IRS_IIDR, VARIANT, 16, 4)
--    FIELD(IRS_IIDR, PRODUCTID, 20, 12)
--
--REG32(IRS_AIDR, 0x44)
--    FIELD(IRS_AIDR, ARCHMINORREV, 0, 4)
--    FIELD(IRS_AIDR, ARCHMAJORREV, 4, 4)
--    FIELD(IRS_AIDR, COMPONENT, 8, 4)
--
--REG32(IRS_CR0, 0x80)
--    FIELD(IRS_CR0, IRSEN, 0, 1)
--    FIELD(IRS_CR0, IDLE, 1, 1)
--
--REG32(IRS_CR1, 0x84)
--    FIELD(IRS_CR1, SH, 0, 2)
--    FIELD(IRS_CR1, OC, 2, 2)
--    FIELD(IRS_CR1, IC, 4, 2)
--    FIELD(IRS_CR1, IST_RA, 6, 1)
--    FIELD(IRS_CR1, IST_WA, 7, 1)
--    FIELD(IRS_CR1, VMT_RA, 8, 1)
--    FIELD(IRS_CR1, VMT_WA, 9, 1)
--    FIELD(IRS_CR1, VPET_RA, 10, 1)
--    FIELD(IRS_CR1, VPET_WA, 11, 1)
--    FIELD(IRS_CR1, VMD_RA, 12, 1)
--    FIELD(IRS_CR1, VMD_WA, 13, 1)
--    FIELD(IRS_CR1, VPED_RA, 14, 1)
--    FIELD(IRS_CR1, VPED_WA, 15, 1)
--
--REG32(IRS_SYNCR, 0xc0)
--    FIELD(IRS_SYNCR, SYNC, 31, 1)
--
--REG32(IRS_SYNC_STATUSR, 0xc4)
--    FIELD(IRS_SYNC_STATUSR, IDLE, 0, 1)
--
--REG64(IRS_SPI_VMR, 0x100)
--    FIELD(IRS_SPI_VMR, VM_ID, 0, 16)
--    FIELD(IRS_SPI_VMR, VIRT, 63, 1)
--
--REG32(IRS_SPI_SELR, 0x108)
--    FIELD(IRS_SPI_SELR, ID, 0, 24)
--
--REG32(IRS_SPI_DOMAINR, 0x10c)
--    FIELD(IRS_SPI_DOMAINR, DOMAIN, 0, 2)
--
--REG32(IRS_SPI_RESAMPLER, 0x110)
--    FIELD(IRS_SPI_RESAMPLER, SPI_ID, 0, 24)
--
--REG32(IRS_SPI_CFGR, 0x114)
--    FIELD(IRS_SPI_CFGR, TM, 0, 1)
--
--REG32(IRS_SPI_STATUSR, 0x118)
--    FIELD(IRS_SPI_STATUSR, IDLE, 0, 1)
--    FIELD(IRS_SPI_STATUSR, V, 1, 1)
--
--REG32(IRS_PE_SELR, 0x140)
--    FIELD(IRS_PE_SELR, IAFFID, 0, 16)
--
--REG32(IRS_PE_STATUSR, 0x144)
--    FIELD(IRS_PE_STATUSR, IDLE, 0, 1)
--    FIELD(IRS_PE_STATUSR, V, 1, 1)
--    FIELD(IRS_PE_STATUSR, ONLINE, 2, 1)
--
--REG32(IRS_PE_CR0, 0x148)
--    FIELD(IRS_PE_CR0, DPS, 0, 1)
--
--REG64(IRS_IST_BASER, 0x180)
--    FIELD(IRS_IST_BASER, VALID, 0, 1)
--    FIELD(IRS_IST_BASER, ADDR, 6, 50)
--
--REG32(IRS_IST_CFGR, 0x190)
--    FIELD(IRS_IST_CFGR, LPI_ID_BITS, 0, 5)
--    FIELD(IRS_IST_CFGR, L2SZ, 5, 2)
--    FIELD(IRS_IST_CFGR, ISTSZ, 7, 2)
--    FIELD(IRS_IST_CFGR, STRUCTURE, 16, 1)
--
--REG32(IRS_IST_STATUSR, 0x194)
--    FIELD(IRS_IST_STATUSR, IDLE, 0, 1)
--
--REG32(IRS_MAP_L2_ISTR, 0x1c0)
--    FIELD(IRS_MAP_L2_ISTR, ID, 0, 24)
--
--REG64(IRS_VMT_BASER, 0x200)
--    FIELD(IRS_VMT_BASER, VALID, 0, 1)
--    FIELD(IRS_VMT_BASER, ADDR, 3, 53)
--
--REG32(IRS_VMT_CFGR, 0x210)
--    FIELD(IRS_VMT_CFGR, VM_ID_BITS, 0, 5)
--    FIELD(IRS_VMT_CFGR, STRUCTURE, 16, 1)
--
--REG32(IRS_VMT_STATUSR, 0x124)
--    FIELD(IRS_VMT_STATUSR, IDLE, 0, 1)
--
--REG64(IRS_VPE_SELR, 0x240)
--    FIELD(IRS_VPE_SELR, VM_ID, 0, 16)
--    FIELD(IRS_VPE_SELR, VPE_ID, 32, 16)
--    FIELD(IRS_VPE_SELR, S, 63, 1)
--
--REG64(IRS_VPE_DBR, 0x248)
--    FIELD(IRS_VPE_DBR, INTID, 0, 24)
--    FIELD(IRS_VPE_DBR, DBPM, 32, 5)
--    FIELD(IRS_VPE_DBR, REQ_DB, 62, 1)
--    FIELD(IRS_VPE_DBR, DBV, 63, 1)
--
--REG32(IRS_VPE_HPPIR, 0x250)
--    FIELD(IRS_VPE_HPPIR, ID, 0, 24)
--    FIELD(IRS_VPE_HPPIR, TYPE, 29, 3)
--    FIELD(IRS_VPE_HPPIR, HPPIV, 32, 1)
--
--REG32(IRS_VPE_CR0, 0x258)
--    FIELD(IRS_VPE_CR0, DPS, 0, 1)
--
--REG32(IRS_VPE_STATUSR, 0x25c)
--    FIELD(IRS_VPE_STATUSR, IDLE, 0, 1)
--    FIELD(IRS_VPE_STATUSR, V, 1, 1)
--
--REG64(IRS_VM_DBR, 0x280)
--    FIELD(IRS_VM_DBR, VPE_ID, 0, 16)
--    FIELD(IRS_VM_DBR, EN, 63, 1)
--
--REG32(IRS_VM_SELR, 0x288)
--    FIELD(IRS_VM_SELR, VM_ID, 0, 16)
--
--REG32(IRS_VM_STATUSR, 0x28c)
--    FIELD(IRS_VM_STATUSR, IDLE, 0, 1)
--    FIELD(IRS_VM_STATUSR, V, 1, 1)
--
--REG64(IRS_VMAP_L2_VMTR, 0x2c0)
--    FIELD(IRS_VMAP_L2_VMTR, VM_ID, 0, 16)
--    FIELD(IRS_VMAP_L2_VMTR, M, 63, 1)
--
--REG64(IRS_VMAP_VMR, 0x2c8)
--    FIELD(IRS_VMAP_VMR, VM_ID, 0, 16)
--    FIELD(IRS_VMAP_VMR, U, 62, 1)
--    FIELD(IRS_VMAP_VMR, M, 63, 1)
--
--REG64(IRS_VMAP_VISTR, 0x2d0)
--    FIELD(IRS_VMAP_VISTR, TYPE, 29, 3)
--    FIELD(IRS_VMAP_VISTR, VM_ID, 32, 16)
--    FIELD(IRS_VMAP_VISTR, U, 62, 1)
--    FIELD(IRS_VMAP_VISTR, M, 63, 1)
--
--REG64(IRS_VMAP_L2_VISTR, 0x2d8)
--    FIELD(IRS_VMAP_L2_VISTR, ID, 0, 24)
--    FIELD(IRS_VMAP_L2_VISTR, TYPE, 29, 3)
--    FIELD(IRS_VMAP_L2_VISTR, VM_ID, 32, 16)
--    FIELD(IRS_VMAP_L2_VISTR, M, 63, 1)
--
--REG64(IRS_VMAP_VPER, 0x2e0)
--    FIELD(IRS_VMAP_VPER, VPE_ID, 0, 16)
--    FIELD(IRS_VMAP_VPER, VM_ID, 32, 16)
--    FIELD(IRS_VMAP_VPER, M, 63, 1)
--
--REG64(IRS_SAVE_VMR, 0x300)
--    FIELD(IRS_SAVE_VMR, VM_ID, 0, 16)
--    FIELD(IRS_SAVE_VMR, Q, 62, 1)
--    FIELD(IRS_SAVE_VMR, S, 63, 1)
--
--REG32(IRS_SAVE_VM_STATUSR, 0x308)
--    FIELD(IRS_SAVE_VM_STATUSR, IDLE, 0, 1)
--    FIELD(IRS_SAVE_VM_STATUSR, Q, 1, 1)
--
--REG32(IRS_MEC_IDR, 0x340)
--    FIELD(IRS_MEC_IDR, MECIDSIZE, 0, 4)
--
--REG32(IRS_MEC_MECID_R, 0x344)
--    FIELD(IRS_MEC_MICID_R, MECID, 0, 16)
--
--REG32(IRS_MPAM_IDR, 0x380)
--    FIELD(IRS_MPAM_IDR, PARTID_MAX, 0, 16)
--    FIELD(IRS_MPAM_IDR, PMG_MAX, 16, 8)
--    FIELD(IRS_MPAM_IDR, HAS_MPAM_SP, 24, 1)
--
--REG32(IRS_MPAM_PARTID_R, 0x384)
--    FIELD(IRS_MPAM_IDR, PARTID, 0, 16)
--    FIELD(IRS_MPAM_IDR, PMG, 16, 8)
--    FIELD(IRS_MPAM_IDR, MPAM_SP, 24, 2)
--    FIELD(IRS_MPAM_IDR, IDLE, 31, 1)
--
--REG64(IRS_SWERR_STATUSR, 0x3c0)
--    FIELD(IRS_SWERR_STATUSR, V, 0, 1)
--    FIELD(IRS_SWERR_STATUSR, S0V, 1, 1)
--    FIELD(IRS_SWERR_STATUSR, S1V, 2, 1)
--    FIELD(IRS_SWERR_STATUSR, OF, 3, 1)
--    FIELD(IRS_SWERR_STATUSR, EC, 16, 8)
--    FIELD(IRS_SWERR_STATUSR, IMP_EC, 24, 8)
--
--REG64(IRS_SWERR_SYNDROMER0, 0x3c8)
--    FIELD(IRS_SWERR_SYNDROMER0, VM_ID, 0, 16)
--    FIELD(IRS_SWERR_SYNDROMER0, ID, 32, 24)
--    FIELD(IRS_SWERR_SYNDROMER0, TYPE, 60, 3)
--    FIELD(IRS_SWERR_SYNDROMER0, VIRTUAL, 63, 1)
--
--REG64(IRS_SWERR_SYNDROMER1, 0x3d0)
--    FIELD(IRS_SWERR_SYNDROMER2, ADDR, 3, 53)
--
--REG32(IRS_IDREGS, 0xffd0)
--REG32(IRS_DEVARCH, 0xffbc)
--
--FIELD(L1_ISTE, VALID, 0, 1)
--FIELD(L1_ISTE, L2_ADDR, 12, 44)
--
--FIELD(L2_ISTE, PENDING, 0, 1)
--FIELD(L2_ISTE, ACTIVE, 1, 1)
--FIELD(L2_ISTE, HM, 2, 1)
--FIELD(L2_ISTE, ENABLE, 3, 1)
--FIELD(L2_ISTE, IRM, 4, 1)
--FIELD(L2_ISTE, HWU, 9, 2)
--FIELD(L2_ISTE, PRIORITY, 11, 5)
--FIELD(L2_ISTE, IAFFID, 16, 16)
--
--/*
-- * Format used for gicv5_request_config() return value, which matches
-- * the ICC_ICSR_EL1 bit layout.
-- */
--FIELD(ICSR, F, 0, 1)
--FIELD(ICSR, ENABLED, 1, 1)
--FIELD(ICSR, PENDING, 2, 1)
--FIELD(ICSR, IRM, 3, 1)
--FIELD(ICSR, ACTIVE, 4, 1)
--FIELD(ICSR, HM, 5, 1)
--FIELD(ICSR, PRIORITY, 11, 5)
--FIELD(ICSR, IAFFID, 32, 16)
+ static void gic_icc_cr0_el1_write(CPUARMState *env, const ARMCPRegInfo *ri,
+                                   uint64_t value)
+ {
+-    /*
+-     * For our implementation the link to the IRI is always connected,
+-     * so LINK and LINK_IDLE are always 1. Without EL3, PID and IPPT
+-     * are RAZ/WI, so the only writeable bit is the main enable bit EN.
+-     */
+-    GICv5Domain domain = gicv5_logical_domain(env);
+-    value &= R_ICC_CR0_EN_MASK;
+-    value |= R_ICC_CR0_LINK_MASK | R_ICC_CR0_LINK_IDLE_MASK;
++    if (gicv5_icv_access(env)) {
++        /* Only the EN bit is writeable, and it lives in ICH_VMCR_EL2 */
++        uint64_t vmcr = env->gicv5_cpuif.ich_vmcr_el2;
  
- #define IRS_DEVARCH_VALUE ((0x23b << 31) | (0x1 << 20) | 0x5a19)
+-    env->gicv5_cpuif.icc_cr0[domain] = value;
+-    gicv5_update_irq_fiq(env);
++        vmcr = FIELD_DP64(vmcr, ICH_VMCR_EL2, EN,
++                          FIELD_EX64(value, ICC_CR0, EN));
++        env->gicv5_cpuif.ich_vmcr_el2 = vmcr;
++    } else {
++        /*
++         * For our implementation the link to the IRI is always connected,
++         * so LINK and LINK_IDLE are always 1. Without EL3, PID and IPPT
++         * are RAZ/WI, so the only writeable bit is the main enable bit EN.
++         */
++        GICv5Domain domain = gicv5_logical_domain(env);
++        value &= R_ICC_CR0_EN_MASK;
++        value |= R_ICC_CR0_LINK_MASK | R_ICC_CR0_LINK_IDLE_MASK;
++
++        env->gicv5_cpuif.icc_cr0[domain] = value;
++        gicv5_update_irq_fiq(env);
++    }
+ }
  
-diff --git a/include/hw/intc/arm_gicv5_regs.h b/include/hw/intc/arm_gicv5_regs.h
-new file mode 100644
-index 00000000000..275fee315b5
---- /dev/null
-+++ b/include/hw/intc/arm_gicv5_regs.h
-@@ -0,0 +1,286 @@
-+/*
-+ * ARM GICv5 emulation: Interrupt Routing Service (IRS) registers
-+ *
-+ * Copyright (c) 2025 Linaro Limited
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ * This file has definitions of IRS register layouts and
-+ * in-guest-memory data structures, that shouldn't be needed
-+ * outside the IRS implementation.
-+ */
-+
-+#ifndef HW_INTC_ARM_GICV5_REGS_H
-+#define HW_INTC_ARM_GICV5_REGS_H
-+
-+REG32(IRS_IDR0, 0x0)
-+    FIELD(IRS_IDR0, INT_DOM, 0, 2)
-+    FIELD(IRS_IDR0, PA_RANGE, 2, 4)
-+    FIELD(IRS_IDR0, VIRT, 6, 1)
-+    FIELD(IRS_IDR0, ONE_N, 7, 1)
-+    FIELD(IRS_IDR0, VIRT_ONE_N, 8, 1)
-+    FIELD(IRS_IDR0, SETLPI, 9, 1)
-+    FIELD(IRS_IDR0, MEC, 10, 1)
-+    FIELD(IRS_IDR0, MPAM, 11, 1)
-+    FIELD(IRS_IDR0, SWE, 12, 1)
-+    FIELD(IRS_IDR0, IRSID, 16, 16)
-+
-+REG32(IRS_IDR1, 0x4)
-+    FIELD(IRS_IDR1, PE_CNT, 0, 16)
-+    FIELD(IRS_IDR1, IAFFID_BITS, 16, 4)
-+    FIELD(IRS_IDR1, PRI_BITS, 20, 3)
-+
-+REG32(IRS_IDR2, 0x8)
-+    FIELD(IRS_IDR2, ID_BITS, 0, 5)
-+    FIELD(IRS_IDR2, LPI, 5, 1)
-+    FIELD(IRS_IDR2, MIN_LPI_ID_BITS, 6, 4)
-+    FIELD(IRS_IDR2, IST_LEVELS, 10, 1)
-+    FIELD(IRS_IDR2, IST_L2SZ, 11, 3)
-+    FIELD(IRS_IDR2, IST_MD, 14, 1)
-+    FIELD(IRS_IDR2, ISTMD_SZ, 15, 5)
-+
-+REG32(IRS_IDR3, 0xc)
-+    FIELD(IRS_IDR3, VMD, 0, 1)
-+    FIELD(IRS_IDR3, VMD_SZ, 1, 4)
-+    FIELD(IRS_IDR3, VM_ID_BITS, 5, 5)
-+    FIELD(IRS_IDR3, VMT_LEVELS, 10, 1)
-+
-+REG32(IRS_IDR4, 0x10)
-+    FIELD(IRS_IDR4, VPED_SZ, 0, 6)
-+    FIELD(IRS_IDR4, VPE_ID_BITS, 6, 4)
-+
-+REG32(IRS_IDR5, 0x14)
-+    FIELD(IRS_IDR5, SPI_RANGE, 0, 25)
-+
-+REG32(IRS_IDR6, 0x18)
-+    FIELD(IRS_IDR6, SPI_IRS_RANGE, 0, 25)
-+
-+REG32(IRS_IDR7, 0x1c)
-+    FIELD(IRS_IDR7, SPI_BASE, 0, 24)
-+
-+REG32(IRS_IIDR, 0x40)
-+    FIELD(IRS_IIDR, IMPLEMENTER, 0, 12)
-+    FIELD(IRS_IIDR, REVISION, 12, 4)
-+    FIELD(IRS_IIDR, VARIANT, 16, 4)
-+    FIELD(IRS_IIDR, PRODUCTID, 20, 12)
-+
-+REG32(IRS_AIDR, 0x44)
-+    FIELD(IRS_AIDR, ARCHMINORREV, 0, 4)
-+    FIELD(IRS_AIDR, ARCHMAJORREV, 4, 4)
-+    FIELD(IRS_AIDR, COMPONENT, 8, 4)
-+
-+REG32(IRS_CR0, 0x80)
-+    FIELD(IRS_CR0, IRSEN, 0, 1)
-+    FIELD(IRS_CR0, IDLE, 1, 1)
-+
-+REG32(IRS_CR1, 0x84)
-+    FIELD(IRS_CR1, SH, 0, 2)
-+    FIELD(IRS_CR1, OC, 2, 2)
-+    FIELD(IRS_CR1, IC, 4, 2)
-+    FIELD(IRS_CR1, IST_RA, 6, 1)
-+    FIELD(IRS_CR1, IST_WA, 7, 1)
-+    FIELD(IRS_CR1, VMT_RA, 8, 1)
-+    FIELD(IRS_CR1, VMT_WA, 9, 1)
-+    FIELD(IRS_CR1, VPET_RA, 10, 1)
-+    FIELD(IRS_CR1, VPET_WA, 11, 1)
-+    FIELD(IRS_CR1, VMD_RA, 12, 1)
-+    FIELD(IRS_CR1, VMD_WA, 13, 1)
-+    FIELD(IRS_CR1, VPED_RA, 14, 1)
-+    FIELD(IRS_CR1, VPED_WA, 15, 1)
-+
-+REG32(IRS_SYNCR, 0xc0)
-+    FIELD(IRS_SYNCR, SYNC, 31, 1)
-+
-+REG32(IRS_SYNC_STATUSR, 0xc4)
-+    FIELD(IRS_SYNC_STATUSR, IDLE, 0, 1)
-+
-+REG64(IRS_SPI_VMR, 0x100)
-+    FIELD(IRS_SPI_VMR, VM_ID, 0, 16)
-+    FIELD(IRS_SPI_VMR, VIRT, 63, 1)
-+
-+REG32(IRS_SPI_SELR, 0x108)
-+    FIELD(IRS_SPI_SELR, ID, 0, 24)
-+
-+REG32(IRS_SPI_DOMAINR, 0x10c)
-+    FIELD(IRS_SPI_DOMAINR, DOMAIN, 0, 2)
-+
-+REG32(IRS_SPI_RESAMPLER, 0x110)
-+    FIELD(IRS_SPI_RESAMPLER, SPI_ID, 0, 24)
-+
-+REG32(IRS_SPI_CFGR, 0x114)
-+    FIELD(IRS_SPI_CFGR, TM, 0, 1)
-+
-+REG32(IRS_SPI_STATUSR, 0x118)
-+    FIELD(IRS_SPI_STATUSR, IDLE, 0, 1)
-+    FIELD(IRS_SPI_STATUSR, V, 1, 1)
-+
-+REG32(IRS_PE_SELR, 0x140)
-+    FIELD(IRS_PE_SELR, IAFFID, 0, 16)
-+
-+REG32(IRS_PE_STATUSR, 0x144)
-+    FIELD(IRS_PE_STATUSR, IDLE, 0, 1)
-+    FIELD(IRS_PE_STATUSR, V, 1, 1)
-+    FIELD(IRS_PE_STATUSR, ONLINE, 2, 1)
-+
-+REG32(IRS_PE_CR0, 0x148)
-+    FIELD(IRS_PE_CR0, DPS, 0, 1)
-+
-+REG64(IRS_IST_BASER, 0x180)
-+    FIELD(IRS_IST_BASER, VALID, 0, 1)
-+    FIELD(IRS_IST_BASER, ADDR, 6, 50)
-+
-+REG32(IRS_IST_CFGR, 0x190)
-+    FIELD(IRS_IST_CFGR, LPI_ID_BITS, 0, 5)
-+    FIELD(IRS_IST_CFGR, L2SZ, 5, 2)
-+    FIELD(IRS_IST_CFGR, ISTSZ, 7, 2)
-+    FIELD(IRS_IST_CFGR, STRUCTURE, 16, 1)
-+
-+REG32(IRS_IST_STATUSR, 0x194)
-+    FIELD(IRS_IST_STATUSR, IDLE, 0, 1)
-+
-+REG32(IRS_MAP_L2_ISTR, 0x1c0)
-+    FIELD(IRS_MAP_L2_ISTR, ID, 0, 24)
-+
-+REG64(IRS_VMT_BASER, 0x200)
-+    FIELD(IRS_VMT_BASER, VALID, 0, 1)
-+    FIELD(IRS_VMT_BASER, ADDR, 3, 53)
-+
-+REG32(IRS_VMT_CFGR, 0x210)
-+    FIELD(IRS_VMT_CFGR, VM_ID_BITS, 0, 5)
-+    FIELD(IRS_VMT_CFGR, STRUCTURE, 16, 1)
-+
-+REG32(IRS_VMT_STATUSR, 0x124)
-+    FIELD(IRS_VMT_STATUSR, IDLE, 0, 1)
-+
-+REG64(IRS_VPE_SELR, 0x240)
-+    FIELD(IRS_VPE_SELR, VM_ID, 0, 16)
-+    FIELD(IRS_VPE_SELR, VPE_ID, 32, 16)
-+    FIELD(IRS_VPE_SELR, S, 63, 1)
-+
-+REG64(IRS_VPE_DBR, 0x248)
-+    FIELD(IRS_VPE_DBR, INTID, 0, 24)
-+    FIELD(IRS_VPE_DBR, DBPM, 32, 5)
-+    FIELD(IRS_VPE_DBR, REQ_DB, 62, 1)
-+    FIELD(IRS_VPE_DBR, DBV, 63, 1)
-+
-+REG32(IRS_VPE_HPPIR, 0x250)
-+    FIELD(IRS_VPE_HPPIR, ID, 0, 24)
-+    FIELD(IRS_VPE_HPPIR, TYPE, 29, 3)
-+    FIELD(IRS_VPE_HPPIR, HPPIV, 32, 1)
-+
-+REG32(IRS_VPE_CR0, 0x258)
-+    FIELD(IRS_VPE_CR0, DPS, 0, 1)
-+
-+REG32(IRS_VPE_STATUSR, 0x25c)
-+    FIELD(IRS_VPE_STATUSR, IDLE, 0, 1)
-+    FIELD(IRS_VPE_STATUSR, V, 1, 1)
-+
-+REG64(IRS_VM_DBR, 0x280)
-+    FIELD(IRS_VM_DBR, VPE_ID, 0, 16)
-+    FIELD(IRS_VM_DBR, EN, 63, 1)
-+
-+REG32(IRS_VM_SELR, 0x288)
-+    FIELD(IRS_VM_SELR, VM_ID, 0, 16)
-+
-+REG32(IRS_VM_STATUSR, 0x28c)
-+    FIELD(IRS_VM_STATUSR, IDLE, 0, 1)
-+    FIELD(IRS_VM_STATUSR, V, 1, 1)
-+
-+REG64(IRS_VMAP_L2_VMTR, 0x2c0)
-+    FIELD(IRS_VMAP_L2_VMTR, VM_ID, 0, 16)
-+    FIELD(IRS_VMAP_L2_VMTR, M, 63, 1)
-+
-+REG64(IRS_VMAP_VMR, 0x2c8)
-+    FIELD(IRS_VMAP_VMR, VM_ID, 0, 16)
-+    FIELD(IRS_VMAP_VMR, U, 62, 1)
-+    FIELD(IRS_VMAP_VMR, M, 63, 1)
-+
-+REG64(IRS_VMAP_VISTR, 0x2d0)
-+    FIELD(IRS_VMAP_VISTR, TYPE, 29, 3)
-+    FIELD(IRS_VMAP_VISTR, VM_ID, 32, 16)
-+    FIELD(IRS_VMAP_VISTR, U, 62, 1)
-+    FIELD(IRS_VMAP_VISTR, M, 63, 1)
-+
-+REG64(IRS_VMAP_L2_VISTR, 0x2d8)
-+    FIELD(IRS_VMAP_L2_VISTR, ID, 0, 24)
-+    FIELD(IRS_VMAP_L2_VISTR, TYPE, 29, 3)
-+    FIELD(IRS_VMAP_L2_VISTR, VM_ID, 32, 16)
-+    FIELD(IRS_VMAP_L2_VISTR, M, 63, 1)
-+
-+REG64(IRS_VMAP_VPER, 0x2e0)
-+    FIELD(IRS_VMAP_VPER, VPE_ID, 0, 16)
-+    FIELD(IRS_VMAP_VPER, VM_ID, 32, 16)
-+    FIELD(IRS_VMAP_VPER, M, 63, 1)
-+
-+REG64(IRS_SAVE_VMR, 0x300)
-+    FIELD(IRS_SAVE_VMR, VM_ID, 0, 16)
-+    FIELD(IRS_SAVE_VMR, Q, 62, 1)
-+    FIELD(IRS_SAVE_VMR, S, 63, 1)
-+
-+REG32(IRS_SAVE_VM_STATUSR, 0x308)
-+    FIELD(IRS_SAVE_VM_STATUSR, IDLE, 0, 1)
-+    FIELD(IRS_SAVE_VM_STATUSR, Q, 1, 1)
-+
-+REG32(IRS_MEC_IDR, 0x340)
-+    FIELD(IRS_MEC_IDR, MECIDSIZE, 0, 4)
-+
-+REG32(IRS_MEC_MECID_R, 0x344)
-+    FIELD(IRS_MEC_MICID_R, MECID, 0, 16)
-+
-+REG32(IRS_MPAM_IDR, 0x380)
-+    FIELD(IRS_MPAM_IDR, PARTID_MAX, 0, 16)
-+    FIELD(IRS_MPAM_IDR, PMG_MAX, 16, 8)
-+    FIELD(IRS_MPAM_IDR, HAS_MPAM_SP, 24, 1)
-+
-+REG32(IRS_MPAM_PARTID_R, 0x384)
-+    FIELD(IRS_MPAM_IDR, PARTID, 0, 16)
-+    FIELD(IRS_MPAM_IDR, PMG, 16, 8)
-+    FIELD(IRS_MPAM_IDR, MPAM_SP, 24, 2)
-+    FIELD(IRS_MPAM_IDR, IDLE, 31, 1)
-+
-+REG64(IRS_SWERR_STATUSR, 0x3c0)
-+    FIELD(IRS_SWERR_STATUSR, V, 0, 1)
-+    FIELD(IRS_SWERR_STATUSR, S0V, 1, 1)
-+    FIELD(IRS_SWERR_STATUSR, S1V, 2, 1)
-+    FIELD(IRS_SWERR_STATUSR, OF, 3, 1)
-+    FIELD(IRS_SWERR_STATUSR, EC, 16, 8)
-+    FIELD(IRS_SWERR_STATUSR, IMP_EC, 24, 8)
-+
-+REG64(IRS_SWERR_SYNDROMER0, 0x3c8)
-+    FIELD(IRS_SWERR_SYNDROMER0, VM_ID, 0, 16)
-+    FIELD(IRS_SWERR_SYNDROMER0, ID, 32, 24)
-+    FIELD(IRS_SWERR_SYNDROMER0, TYPE, 60, 3)
-+    FIELD(IRS_SWERR_SYNDROMER0, VIRTUAL, 63, 1)
-+
-+REG64(IRS_SWERR_SYNDROMER1, 0x3d0)
-+    FIELD(IRS_SWERR_SYNDROMER2, ADDR, 3, 53)
-+
-+REG32(IRS_IDREGS, 0xffd0)
-+REG32(IRS_DEVARCH, 0xffbc)
-+
-+FIELD(L1_ISTE, VALID, 0, 1)
-+FIELD(L1_ISTE, L2_ADDR, 12, 44)
-+
-+FIELD(L2_ISTE, PENDING, 0, 1)
-+FIELD(L2_ISTE, ACTIVE, 1, 1)
-+FIELD(L2_ISTE, HM, 2, 1)
-+FIELD(L2_ISTE, ENABLE, 3, 1)
-+FIELD(L2_ISTE, IRM, 4, 1)
-+FIELD(L2_ISTE, HWU, 9, 2)
-+FIELD(L2_ISTE, PRIORITY, 11, 5)
-+FIELD(L2_ISTE, IAFFID, 16, 16)
-+
-+/*
-+ * Format used for gicv5_request_config() return value, which matches
-+ * the ICC_ICSR_EL1 bit layout.
-+ */
-+FIELD(ICSR, F, 0, 1)
-+FIELD(ICSR, ENABLED, 1, 1)
-+FIELD(ICSR, PENDING, 2, 1)
-+FIELD(ICSR, IRM, 3, 1)
-+FIELD(ICSR, ACTIVE, 4, 1)
-+FIELD(ICSR, HM, 5, 1)
-+FIELD(ICSR, PRIORITY, 11, 5)
-+FIELD(ICSR, IAFFID, 32, 16)
-+
-+#endif
+ static void gic_icc_cr0_el1_reset(CPUARMState *env, const ARMCPRegInfo *ri)
 -- 
 2.43.0
 
