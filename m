@@ -4,100 +4,132 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90A1ECC6B1A
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 19:31:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8167ECC6B1A
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 19:32:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGiDq-0004m8-Vo; Tue, 13 Oct 2026 15:31:39 -0400
+	id 1xGiE4-0004qf-6v; Tue, 13 Oct 2026 15:31:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xGiDo-0004lx-S4
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 15:31:36 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
+ id 1xGiE1-0004pe-Hg; Tue, 13 Oct 2026 15:31:50 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xGiDn-0000AX-HA
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 15:31:36 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1791919894;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=54cI+TbebtbYzP9tOpi+g3qgcHvLrs3s3ZIHYn5ThLI=;
- b=jPL9kmGgs8MWDBpntJYIQna5RSIE8gTIz8yg+SApwob8OKoR9mbvK85xDRULENjxKhcxGf
- hEW+aIjEzbETIrEwrJHduzEAnilRbFsQMDq1LiijTJ9QXtUZqgwY7im1P0h+cOSSxeDMUU
- x+FBtGmzn5Pw34LLi5G9J4T2peDJSgA=
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-599-E6bED_1wPPKiQubzI6H7Qw-1; Tue, 13 Oct 2026 19:31:33 +0000
-X-MC-Unique: E6bED_1wPPKiQubzI6H7Qw-1
-X-Mimecast-MFC-AGG-ID: E6bED_1wPPKiQubzI6H7Qw_1791919892
-Received: by mail-qv1-f69.google.com with SMTP id
- 6a1803df08f44-917bab67568so103660106d6.1
- for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 12:31:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1791919892; x=1792524692; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=54cI+TbebtbYzP9tOpi+g3qgcHvLrs3s3ZIHYn5ThLI=;
- b=ZWvKNd0yAgufc0OJOoo4YrlwcWdJwjTPUtJ2iskJwx7ZcylxNwsPSVyxnP/dR+HsRR
- uj07v9zlMJ4BKyni0/I7brHJOyEZ0u9CNt0xWufEG/akwDFl4bXcuNRMrHByf/QYFo5W
- MxjWM5MEDoMlu2thk3lUp5qoJ+BAzdM2xihVz25pudq1HObFu1GMNHv4xNA6H455RASl
- N/qbV2wc8H2+i7KMALXygFUcd1p8QkSkDrww7fGI7DqEAKcirN+iNeDkxJo4edYoE2vA
- VkcN6NAD1ghHQfFM1V4PWaSPwISArLaXxEU7WgLA6cLpK7azxqzz02FLLGulGggoLEgH
- yMPw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791919892; x=1792524692;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=54cI+TbebtbYzP9tOpi+g3qgcHvLrs3s3ZIHYn5ThLI=;
- b=qDfLmCqCVaLNr8/DgevTk9l8dT774YjTixo8kQyn6nH1D/n861S27UtJ3ENarQtnR7
- Zj9Yg3m1dvopo8afxH5x6MRnpBD9dv2POpsEA7sNzoe2LiwCLfjvnXUM5zdiL5JSnwNJ
- YL89oLfT3MmWRRLORRMF6u8l6kDRMkWNu3Z+FBRGZXBX3Smb7e9Tv8arFCSGkEGYT6QX
- mp85dkJ0GeqsXEbvtV5WlDr/0KkmyoenlElPAqqLsA0eNDVx418QauaJATi0ogZmKCO9
- HA/nf3aR0ks1DxSWLh+uheFJ0wS+FMdx/oQNe/ERtrHRkL44PHsL3FdsdxZQ6jzraBJ7
- yPNA==
-X-Gm-Message-State: AFq9FYJLqMkjBdWPsPdoIq3/qmtGuII87s7rkSwc9A2s84rS5AIW1jzC
- u0K4+owbpcSV8Ax5pJyihEYJ7yX0biPHxfLTOdOmg+QMtlz+A/67pUJ/wOx93sFqMYzQmoDlwv5
- 0Jb4p/cganBsTWEbDhl4Owev/e0ktcZO/SQfMdnuIGbTaRS1TXhok160N
-X-Gm-Gg: AYBFou0Wud9oA8QLbhrSxIb8IN+KwD9yVxXcoS27DJGmqsmFOz7744VzIHqTBPLO6OM
- 7UmCSE+yZZk7dbAie73Jr3Xi3VBEuSFcprDwGjSVsV+GKoqQwJhqAh6nchbnUVghid+nWdc6IEl
- wTnp3uSgF93pkjO10aGqjpsy+XNhnB65+GKC4MT0PrZxPqGKQIq5NMDNGQYBaJtb4ZrMCbTmxiD
- /12DbgaycL9Cr3KU8ulVtmJqUR5jzWfT3sxSrTVxksr9+BHMOO+g3Z2VMLWD0PSHtUqGcMTJjBK
- iHbD6Z5HyOm6OQg6MD827X95yvy44ddOBKtp9bDxKCKsmKRQ+VpUfZtCb8r8K3HwB6d/n5A=
-X-Received: by 2002:a05:6214:194b:b0:919:85a3:313e with SMTP id
- 6a1803df08f44-91b554c3f01mr237877336d6.17.1791919892379; 
- Tue, 13 Oct 2026 12:31:32 -0700 (PDT)
-X-Received: by 2002:a05:6214:194b:b0:919:85a3:313e with SMTP id
- 6a1803df08f44-91b554c3f01mr237876846d6.17.1791919891815; 
- Tue, 13 Oct 2026 12:31:31 -0700 (PDT)
-Received: from localhost ([142.188.212.246]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-91b97b3bb33sm32875346d6.15.2026.10.13.12.31.30
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 13 Oct 2026 12:31:30 -0700 (PDT)
-Date: Tue, 13 Oct 2026 15:31:29 -0400
-From: Peter Xu <peterx@redhat.com>
-To: yuanminghao <yuanmh12@chinatelecom.cn>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>
-Subject: Re: [PATCH 1/1] migration: shorten dst snapshot load thread name
-Message-ID: <as6HEejBaZT4EK28@zhexu-thinkpadt14gen5.rmtcaon.csb>
-References: <20261012084245.30635-1-yuanmh12@chinatelecom.cn>
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
+ id 1xGiE0-0000At-7B; Tue, 13 Oct 2026 15:31:49 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 69DE6utU1774676; Tue, 13 Oct 2026 19:31:30 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=wDX4wi
+ W8zy2G/353cDrzlRTJ1TqPsfPhXDgmnUjog1E=; b=ehgUTfCb5fCuNJs1XMOnnr
+ ASETNSpZUopgsCKQ8uosA27LDedco1YxBAZJNpSrHEHSXuBNzDgRBJL8XQrUcnLR
+ Eii5Q9lbffCHdhH9i8TRnDHL4NtGHuKavgrbwbUmGMUk5TDLm1famlMzeyyqKIIX
+ TwrAEhWxvthuGYqiW1CT4t9Wc2idp8e6qewog2qPVckWyP5r8/hhNv7N6XR5VGvE
+ K3SmTrvqmYCKz2d8KwTy8US/OFV+v+fXvgzx0hZOdDJVAEcaDH51Wn6SyKcGXMtB
+ 0eNLBgaxaXtQY0m4KsGb65urURvdKYDWD7cbt2vw9I4l7Xhoj0dzYm/eva+15K6Q
+ ==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4h7dwj03dw-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Tue, 13 Oct 2026 19:31:30 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 69DIAPPE2667524; Tue, 13 Oct 2026 19:31:29 GMT
+Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4h802vv1fv-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 13 Oct 2026 19:31:29 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
+ [10.20.54.105])
+ by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 69DJVPMk30146930
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 13 Oct 2026 19:31:25 GMT
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 378D720049;
+ Tue, 13 Oct 2026 19:31:25 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 26A7C20040;
+ Tue, 13 Oct 2026 19:31:24 +0000 (GMT)
+Received: from [0.0.0.0] (unknown [9.111.35.59])
+ by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 13 Oct 2026 19:31:24 +0000 (GMT)
+Message-ID: <56a6a19c-2087-4a38-9012-25a996911674@linux.ibm.com>
+Date: Tue, 13 Oct 2026 21:31:23 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20261012084245.30635-1-yuanmh12@chinatelecom.cn>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 15/16] tests/functional: update s390x tuxrun images
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Kyle Evans <kevans@freebsd.org>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Brian Cain <brian.cain@oss.qualcomm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Brad Smith <brad@comstyle.com>, Ani Sinha <anisinha@redhat.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Thomas Huth <th.huth+qemu@posteo.eu>, Keith Busch <kbusch@kernel.org>,
+ Matthew Rosato <mjrosato@linux.ibm.com>,
+ Cornelia Huck <cohuck@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Halil Pasic <pasic@linux.ibm.com>, John Snow <jsnow@redhat.com>,
+ Eric Farman <farman@linux.ibm.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Anders Roxell <anders.roxell@linaro.org>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Warner Losh <imp@bsdimp.com>,
+ qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Yoshinori Sato <yoshinori.sato@nifty.com>,
+ Peter Xu <peterx@redhat.com>, Klaus Jensen <its@irrelevant.dk>,
+ Song Gao <gaosong@loongson.cn>, qemu-s390x@nongnu.org,
+ Laurent Vivier <laurent@vivier.eu>
+References: <20261012170330.1144446-1-alex.bennee@linaro.org>
+ <20261012170330.1144446-16-alex.bennee@linaro.org>
+Content-Language: en-US
+From: Ilya Leoshkevich <iii@linux.ibm.com>
+In-Reply-To: <20261012170330.1144446-16-alex.bennee@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDEzMDA3NiBTYWx0ZWRfX47rYlvtf+LOS
+ hVFq1DmNEQKrLzMaIyW2m10OMVCMC+5dzM1cvwx5vezT2CntPlE4vyMU93H2949vWjq3ZBtBJw3
+ znmUKtPNdBoJXyAvR25ko8Xnom6pUIanhvHtGQu3lBu3+ZsA2ZBEqgH3yCcITukbtTCFs22P/YV
+ BXFX1bo5j+KRvHxOS+bqa7dAGwNBDsmQFaNC7Yjchbxfmq2++956yTaE+xzNX7RHBgtCNv2pkSk
+ OtcGZiZxlPYsqheWQTBtdi3ftMemhc1M79WobC3qCqmeTZFeyZ+hR0kGGB7h0vxTiaGLWX10XKF
+ Gi1b+/MsINcwjGOh3XQYtiWsQgVy8LFi6w1Y9CcFefN0I6aWloUgDsL8QV1WaKxeKp7mFtGSg8c
+ nR367V6hA0TVGuUeVpq6yh1Ty9hsdR0oFysSBpX3oizb/giuT5VNs6J+rIuQC1SQY3I7a46viSc
+ CaMjDDewkLhrwOC6f5w==
+X-Proofpoint-GUID: fNEoas7DTWDteFpNJZC82r7qf_42qi23
+X-Proofpoint-ORIG-GUID: fNEoas7DTWDteFpNJZC82r7qf_42qi23
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDEzMDA3NiBTYWx0ZWRfX2p32qRqvnK3k
+ /EIZMmr/hgkoZVsPiIn2P6fdg0Sto7pm+csP2EfPsUBt3AdQoTaOA91s6sSCLRj7q377ONCWxqA
+ xP3OvgIF1/+1NtcktNrCfOvPquGIK5c=
+X-Authority-Analysis: v=2.4 cv=btHZl0ai c=1 sm=1 tr=0 ts=6ace8712 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=KKAkSRfTAAAA:8
+ a=VnNF1IyMAAAA:8 a=0FnjAz-au7Urrj2KuSUA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=zZCYzV9kfG8A:10 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-10-13_01,2026-10-09_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 malwarescore=0 phishscore=0 impostorscore=0 adultscore=0
+ lowpriorityscore=0 priorityscore=1501 clxscore=1015 spamscore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610080000
+ definitions=main-2610130076
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -114,19 +146,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Oct 12, 2026 at 04:42:45PM +0800, yuanminghao wrote:
-> pthread_setname_np() fails with ERANGE if the name is longer than
-> 15 characters, so "mig/dst/snapshot_load" (21 characters) is
-> rejected and the thread keeps its default name.
-> 
-> Shorten it to "mig/dst/snapld" (15 characters) so the name is
-> actually applied.
-> 
-> Signed-off-by: yuanminghao <yuanmh12@chinatelecom.cn>
 
-Reviewed-by: Peter Xu <peterx@redhat.com>
 
--- 
-Peter Xu
+On 10/12/26 19:03, Alex Bennée wrote:
+> We now split the fetching of the buildroot image from the kernel
+> itself. This is because we will want to access additional metadata in
+> future tests.
+> 
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+> ---
+>   tests/functional/s390x/test_tuxrun.py | 8 ++++----
+>   1 file changed, 4 insertions(+), 4 deletions(-)
+
+Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
 
 
