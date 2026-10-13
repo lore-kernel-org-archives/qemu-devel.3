@@ -4,92 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3EFB9CC6B08
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 08:46:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C926CC6B10
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 08:46:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGY3a-0007Sw-SU; Tue, 13 Oct 2026 04:40:22 -0400
+	id 1xGY3Z-0007RT-FS; Tue, 13 Oct 2026 04:40:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xGY3P-00071c-Sp
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 04:40:13 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ id 1xGY33-0006pm-Ug
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 04:39:49 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xGY3K-0007d1-Fz
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 04:40:09 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-49ff680331aso21710605e9.3
- for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 01:40:00 -0700 (PDT)
+ id 1xGY32-0007a4-3l
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 04:39:49 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-49ff680331aso21708255e9.3
+ for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 01:39:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1791880799; x=1792485599; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=7xlfYHyIYxKoALR890FGz7sTstMZUZWDOD7rBywE0fs=;
- b=vF8XZMNfRabwmEJeKKFs9YYjE+l+gRDlxofuaZJYBecBDRR9OiYros4kQZ9JnH8bos
- Ae6WiueLaGGMFdizoY+rYXQ1zRqisqnIGqVciA/WLA6bmTzPgDvUWE4jaoG/v4IJLqxK
- xKF1aXE1vpbptyl1DVEnnLQWrPTDREaSX5LDJtUSoQ+8ZbNAb0DPOUnoO6ffiE8t4aqV
- HbogZ6P67LRLQsh9CTdC58CtOqJcZvY8hDxWaN4z2G5QaZbgPUd5ERQYJ4pt+J/fZYtO
- 7Z2giW1uV4hG0o2oIC/9ExNxbMIedPnE8m0YKATXBsN6nORFXxry1L4gnLUQzafMYe1m
- lUow==
+ d=linaro.org; s=google; t=1791880786; x=1792485586; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=OaiC0A3kyB7u1DNetaci/CV68nbx8shGZnFz0+Agagc=;
+ b=SM7FturrB2CnLG8ip++Ru1u8lJc/0KOc3eWiZF/m+rB+qhWsU4wYDpZdO6d3lKDEW2
+ I/W7xXz4ZgT9zDaVxNJXdaekyUbvNdxVCJpdSRoQrprrkOM+WpcDOD5rPmiM53V6gMS0
+ oshtz5XWuYMhWQ3quLtH54A/SHro4XTasDnx0Tw5tRNtYGYzyQCz22mqZJ5sLvDFtok4
+ QEwrOseuxWdFfDfE+aoxVf6SVQCxQfyxjSZzvzOaZYVFxitfsgHD400IiM/aBrVVN9LP
+ 8g8hLN2ij9y77paGIIdrMMiMPPw0haBBWdwda6RB8AszYSPiCiQPzEkJGx71GVZicIFt
+ TqDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791880799; x=1792485599;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to:content-type;
- bh=7xlfYHyIYxKoALR890FGz7sTstMZUZWDOD7rBywE0fs=;
- b=CBK24vnIafoVf+zCEVmFIElkQq9qfTS1MwWZPdQtf6C5oB5fK+AqqAXmu6cuLLsFd+
- CVeiCE5gAxaxiwYPoMCHluSIl+v/Nq7BFrldFu1hb8/ZoseFz+lErwPsPfN1Bqf/lpI4
- YL2VQpesZlr8imjYF9l3WGulMcQZv4b2E5mRDGxA9vU630l/I98xQTlm0F1VB2z7Z/2e
- Y2iMcFNF6k1HDffc3tDO+vb8+21PvHlF8qwg6fUfVV0Td/X3KlEk62zNsXFd7CfxGGeW
- +8i1FwK7cCc4yLbGgrIBEEbZkPnDg2p7L/J2R4HNEV5bPn8iT+pViLfS9kQPBzB95WAF
- sTMQ==
+ d=1e100.net; s=20260707; t=1791880786; x=1792485586;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=OaiC0A3kyB7u1DNetaci/CV68nbx8shGZnFz0+Agagc=;
+ b=mb6IsnDsfai5Qd4w2+Ynr/364jiYutjZqgYgbBXZeoFrnhN+cKt8BGTj9R/jF2rqu0
+ dZan2Hqz44+gggpNfFUg/w069Gef7Uifi6PAYZ+5rMxjXLH2YODVwxyaHKhZ0aB/sLGg
+ s9FoITd/JeU287ShPah3D9ouoam9y92OR8nWWZFs2qGq+0Ha8NHH4Noqtw766XQsd9PG
+ AI5IKijersfsnljiUCYZX/zCAjNZHOpFgduXQ5Iscu6OpdyWO5+TZ09rrGQvWrH2NyQq
+ 7m+oVlen7n8tqiAOTCNzsmvcsZFWDvJ+oRitxKXMMTKfjBUB/vWevCHXRrG+1iOrPFSU
+ vG0A==
 X-Forwarded-Encrypted: i=1;
- AKwUvByS4xyOjAtB8LLV+pdwKtAd+i6+aF3fGx4wkhEvrDYlo9g8US7vsqW+r7aKCQQnadjP+CGCdBDo9Fcj@nongnu.org
-X-Gm-Message-State: AFq9FYL6ZFc6Z/041ME8u+1IwmBmPnAw1VADzqy6F/l4RaavY5+ClHMq
- QLW/03IbQU7SGrzh2/kHPZ21k2hB7UIec+e8iE1kb78xerKh9qbbXJ6xUBmurKMOUyU51IGaL8E
- tDb9ubxk=
-X-Gm-Gg: AYBFou0DpUDHlP1hjFBldW2PrRjWbVm2ElBy4Bkg8l8Bbhe8reoD1tBWSQU+GRN/99e
- Rcmwf37v7kUdQbU2psZU7Qq3bS3t2X5FSySbCFpIiUGLiHHHF522JvTh06jAl/AFgV/M4eH+rH5
- pvAj3cfIIGOImYnhJe0S4bpBzuQ6r+yXWK/XV1EiVRLyMVKojsfY1ZyO0bnRE491bngot1zoA/C
- cjGSMa6qYaRzF4txFldInZKftDKBPub0XGJMh0QkVvtXHhECO9lUqJjHtsTDzwRP7tXgaVFs9Cq
- oQVULRWbNQqvD3/4DDkrfTFypDsMm7RVGQYXVRqjISmEq0TjXNFSMuCgozrs2SXC967HhvT8XwV
- ydmlQ5ufvBY0LYJ68jJJTYhea/TLlTeaQXhdThO4SvKpn5h6ZUajlYZB3zXPC9lL6pdW69VDqra
- u8TLnrpxSrIG1aYMoiwSdNvw4uyo2FU2GMJZlaqZ3xQ3JqPmWg8KLFpXKhU1ykfmfbgNzLsdHCo
- rClszQIZ4QMwg/jTtsoVuePH63cwuaKfYz1R9ALKmWAUJM3b8Q5IMj+X1JDoQc3OrIpRzsf/T2/
- tJCjXhHUn8IjVA==
-X-Received: by 2002:a05:600c:4593:b0:4a1:7ed5:99e8 with SMTP id
- 5b1f17b1804b1-4a18e49bffbmr230919965e9.22.1791880799246; 
- Tue, 13 Oct 2026 01:39:59 -0700 (PDT)
+ AKwUvBzh0ZP4R7NyfZ8tte8CiC1WqGWP1ovTWabemgW+Ub/Al3HuVh6gRi8uJmpG3pp7mS6I0swHy+T/I/D/@nongnu.org
+X-Gm-Message-State: AFq9FYKM1i3pjfevtBgxB98IdfYDNdH8dkXDVKbmLiAUGR6HfGK8v1dD
+ ZrR17o/5iRVvn2HqB4umUk26GW7svcqoa1ARJSXphUGHkwGt5gm48J2pe0v798Ep5TlxON58ESp
+ DS4KDOgM=
+X-Gm-Gg: AYBFou31VT9nRvyvidastMomJQr2WOHm9USi+kWC+QoFiDeUYHAC1PQvuOCBDjG4oB+
+ mZm6LKQJBJIC9+xHON4mE+XIRoqpx27lWURsru+4GGQQM1iaCcosG1rlfqZZF5buxDL8hdSgR1a
+ tbGgK2xO5GjD1V+KrKSmGvoyExwsnMZGHNZuglys/h/j0dVs0K37EmOzK3mLLkxbJMSJtagGgxs
+ javp2EuV1icz4DT5nyi+qe2wQ1LRc15AzOKq1dQCX4I9vSZohw29hrMhG0JGC+Xy3LqBJLeNBZ1
+ 2D+w+d9hHPhkfcNT4IXKz+F11+ytPbnPqcpWTE62eiR2eqNV8RpE6AOKXM8xZ/bz4g5KL99mjq8
+ LRC/rEzYcJfGpM1LD7VIZFUGxcps3eIw1y7bZ6a14qk6dgAvfkpLJB7LoVmloZCR7NHhP6XzTT6
+ 2xlI/+smcOz3w2LEo9akq2yWUritB8j3v2DxAxBvaiK08t6d4jEZIYTVUgvrKzosz3YED0mgyUH
+ td2rvOE4LcPPE4l92q9KlTtKht6KjKNDiOvDtNqROk9aLn2cxg+E9pCmrO4/HTDEnBkR0pIakz7
+ O84=
+X-Received: by 2002:a05:600c:c167:b0:4a1:a3cc:3c5c with SMTP id
+ 5b1f17b1804b1-4a1a3cc3c71mr70054675e9.16.1791880786633; 
+ Tue, 13 Oct 2026 01:39:46 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a18be96549sm495086735e9.6.2026.10.13.01.39.58
+ 5b1f17b1804b1-4a18be96549sm495086735e9.6.2026.10.13.01.39.45
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 13 Oct 2026 01:39:58 -0700 (PDT)
+ Tue, 13 Oct 2026 01:39:45 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Subject: [PATCH 18/86] target/arm: GICv5 cpuif: Implement GIC fine-grained
- trap registers
-Date: Tue, 13 Oct 2026 09:38:25 +0100
-Message-ID: <20261013083933.1024405-19-peter.maydell@linaro.org>
+Subject: [PATCH 07/86] target/arm: GICv5 cpuif: Use arm_cpu_set_irq() to set
+ IRQ/FIQ status
+Date: Tue, 13 Oct 2026 09:38:14 +0100
+Message-ID: <20261013083933.1024405-8-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261013083933.1024405-1-peter.maydell@linaro.org>
 References: <20261013083933.1024405-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,206 +107,153 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The GICv5 cpu interface includes a set of fine-grained trap registers
-which allow a hypervisor to trap guest accesses to the various GIC
-cpu interface registers and instructions.  We implement this using
-the existing fine-grained-trap mechanism.
+Currently the GICv5 cpu interface directly calls cpu_interrupt() and
+cpu_reset_interrupt() to raise and lower IRQ and FIQ.  This is almost
+but not exactly what we do for GICv2/GICv3 external GPIO IRQ/FIQ line
+changes.  Those are handled by arm_cpu_set_irq(), and as well as
+calling cpu_interrupt() or cpu_reset_interrupt() they also update
+env->irq_line_state.
 
-This commit provides the definitions of the FGT register bits and the
-registers themselves; we will mark up the cpreg definitions with the
-fgt trap information in the following commit.
+For IRQ and FIQ it doesn't matter whether we set and clear the bits
+in irq_line_state, because nothing looks at them.  But for VIRQ and
+VFIQ it will matter, because VIRQ and VFIQ are the logical OR of the
+line state and some bits in HCR_EL2.  We're going to need to call
+arm_cpu_set_irq() for VIRQ and VFIQ; for consistency, handle IRQ and
+FIQ that way too.
 
-Note that because FGWTE3 has only write-traps and the indexes into
-fgt_read[] and fgt_write[] have to line up, we leave a gap in the
-fgt_read[] array for the unused slot.  We could have moved FGTWE3 to
-the end of the array, since the array location isn't encoded in the
-migration stream, but that only saves us 8 bytes in the CPU struct
-size and leaves the possibility that we forget about the need to
-align the read/write indexes next time we add an FGT feature.
+Since arm_cpu_set_irq() is now a function called from other parts of
+the CPU code, we make its first argument a properly typed one, with a
+wrapper taking void* for when we need to use it as a
+qemu_irq_handler.
 
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/cpregs.h          | 85 +++++++++++++++++++++++++++++++++++-
- target/arm/cpu.h             | 10 +++--
- target/arm/tcg/gicv5-cpuif.c | 22 ++++++++++
- 3 files changed, 111 insertions(+), 6 deletions(-)
+ target/arm/cpu.c             | 14 +++++++++++---
+ target/arm/internals.h       | 14 ++++++++++++++
+ target/arm/tcg/gicv5-cpuif.c | 35 ++++-------------------------------
+ 3 files changed, 29 insertions(+), 34 deletions(-)
 
-diff --git a/target/arm/cpregs.h b/target/arm/cpregs.h
-index ce651a4faa6..e46c8c979e1 100644
---- a/target/arm/cpregs.h
-+++ b/target/arm/cpregs.h
-@@ -389,12 +389,16 @@ typedef enum CPAccessResult {
- /* Indexes into fgt_read[] */
- #define FGTREG_HFGRTR 0
- #define FGTREG_HDFGRTR 1
--/* Indexes into fgt_write[] */
-+/* 2 unused: FGWTE3 doesn't have read-traps */
-+#define FGTREG_ICH_HFGRTR 3 /* GICv5 */
-+/* Indexes into fgt_write[]; these must align with the fgt_read[] ones */
- #define FGTREG_HFGWTR 0
- #define FGTREG_HDFGWTR 1
- #define FGTREG_FGWTE3 2
--/* Indexes into fgt_exec[] */
-+#define FGTREG_ICH_HFGWTR 3 /* GICv5 */
-+/* Indexes into fgt_exec[] (these don't have to line up with read/write) */
- #define FGTREG_HFGITR 0
-+#define FGTREG_ICH_HFGITR 1 /* GICv5 */
+diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+index 10ac6c98318..014ec6a945e 100644
+--- a/target/arm/cpu.c
++++ b/target/arm/cpu.c
+@@ -808,9 +808,8 @@ void arm_emulate_firmware_reset(CPUState *cpustate, int target_el)
  
- FIELD(HFGRTR_EL2, AFSR0_EL1, 0, 1)
- FIELD(HFGRTR_EL2, AFSR1_EL1, 1, 1)
-@@ -720,6 +724,45 @@ FIELD(FGWTE3_EL3, TTBR0_EL3, 20, 1)
- FIELD(FGWTE3_EL3, VBAR_EL3, 21, 1)
- FIELD(FGWTE3_EL3, GPCBW_EL3, 22, 1)
  
-+/* These are the GICv5 fine-grained trap registers */
-+FIELD(ICH_HFGRTR_EL2, ICC_APR_EL1, 0, 1)
-+FIELD(ICH_HFGRTR_EL2, ICC_IDRN_EL1, 1, 1)
-+FIELD(ICH_HFGRTR_EL2, ICC_CR0_EL1, 2, 1)
-+/* Bit 3 is RES1 */
-+FIELD(ICH_HFGRTR_EL2, ICC_HPPIR_EL1, 4, 1)
-+FIELD(ICH_HFGRTR_EL2, ICC_PCR_EL1, 5, 1)
-+FIELD(ICH_HFGRTR_EL2, ICC_ICSR_EL1, 6, 1)
-+FIELD(ICH_HFGRTR_EL2, ICC_IAFFIDR_EL1, 7, 1)
-+FIELD(ICH_HFGRTR_EL2, ICC_PPI_HMRN_EL1, 16, 1)
-+FIELD(ICH_HFGRTR_EL2, ICC_PPI_ENABLERN_EL1, 17, 1)
-+FIELD(ICH_HFGRTR_EL2, ICC_PPI_PENDRN_EL1, 18, 1)
-+FIELD(ICH_HFGRTR_EL2, ICC_PPI_PRIORITYRN_EL1, 19, 1)
-+FIELD(ICH_HFGRTR_EL2, ICC_PPI_ACTIVERN_EL1, 20, 1)
-+/* All RES1 bits in this register */
-+#define ICH_HFGRTR_EL2_RES1_MASK (1 << 3)
-+
-+/* Matches ICH_HFGRTR_EL2, but bits for RO regs are RES0 */
-+FIELD(ICH_HFGWTR_EL2, ICC_APR_EL1, 0, 1)
-+FIELD(ICH_HFGWTR_EL2, ICC_CR0_EL1, 2, 1)
-+FIELD(ICH_HFGWTR_EL2, ICC_PCR_EL1, 5, 1)
-+FIELD(ICH_HFGWTR_EL2, ICC_ICSR_EL1, 6, 1)
-+FIELD(ICH_HFGWTR_EL2, ICC_PPI_ENABLERN_EL1, 17, 1)
-+FIELD(ICH_HFGWTR_EL2, ICC_PPI_PENDRN_EL1, 18, 1)
-+FIELD(ICH_HFGWTR_EL2, ICC_PPI_PRIORITYRN_EL1, 19, 1)
-+FIELD(ICH_HFGWTR_EL2, ICC_PPI_ACTIVERN_EL1, 20, 1)
-+
-+FIELD(ICH_HFGITR_EL2, GICCDEN, 0, 1);
-+FIELD(ICH_HFGITR_EL2, GICCDDIS, 1, 1);
-+FIELD(ICH_HFGITR_EL2, GICCDPRI, 2, 1);
-+FIELD(ICH_HFGITR_EL2, GICCDAFF, 3, 1);
-+FIELD(ICH_HFGITR_EL2, GICCDPEND, 4, 1);
-+FIELD(ICH_HFGITR_EL2, GICCDRCFG, 5, 1);
-+FIELD(ICH_HFGITR_EL2, GICCDHM, 6, 1);
-+FIELD(ICH_HFGITR_EL2, GICCDEOI, 7, 1);
-+FIELD(ICH_HFGITR_EL2, GICCDDI, 8, 1);
-+FIELD(ICH_HFGITR_EL2, GICRCDIA, 9, 1);
-+FIELD(ICH_HFGITR_EL2, GICRCDNMIA, 10, 1);
-+
- FIELD(FGT, NXS, 13, 1) /* Honour HCR_EL2.FGTnXS to suppress FGT */
- /* Which fine-grained trap bit register to check, if any */
- FIELD(FGT, TYPE, 10, 3)
-@@ -798,6 +841,9 @@ typedef enum FGTBit {
-     FGT_HDFGWTR = FGT_W | (FGTREG_HDFGWTR << R_FGT_IDX_SHIFT),
-     FGT_HFGITR = FGT_EXEC | (FGTREG_HFGITR << R_FGT_IDX_SHIFT),
-     FGT_FGWTE3 = FGT_W | (FGTREG_FGWTE3 << R_FGT_IDX_SHIFT),
-+    FGT_ICH_HFGRTR = FGT_RW | (FGTREG_ICH_HFGRTR << R_FGT_IDX_SHIFT),
-+    FGT_ICH_HFGWTR = FGT_W | (FGTREG_ICH_HFGWTR << R_FGT_IDX_SHIFT),
-+    FGT_ICH_HFGITR = FGT_EXEC | (FGTREG_ICH_HFGITR << R_FGT_IDX_SHIFT),
+ #ifndef CONFIG_USER_ONLY
+-static void arm_cpu_set_irq(void *opaque, int irq, int level)
++void arm_cpu_set_irq(ARMCPU *cpu, int irq, int level)
+ {
+-    ARMCPU *cpu = opaque;
+     CPUARMState *env = &cpu->env;
+     CPUState *cs = CPU(cpu);
+     static const int mask[] = {
+@@ -862,6 +861,15 @@ static void arm_cpu_set_irq(void *opaque, int irq, int level)
+     }
+ }
  
-     /* Trap bits in HFGRTR_EL2 / HFGWTR_EL2, starting from bit 0. */
-     DO_BIT(HFGRTR, AFSR0_EL1),
-@@ -955,6 +1001,41 @@ typedef enum FGTBit {
-     DO_EL3_BIT(FGWTE3, TTBR0_EL3),
-     DO_EL3_BIT(FGWTE3, VBAR_EL3),
-     DO_EL3_BIT(FGWTE3, GPCBW_EL3),
++/*
++ * Wrapper of arm_cpu_set_irq with the right argument types to be a
++ * qemu_irq_handler function for our inbound GPIO lines.
++ */
++static void arm_cpu_gpio_set_irq(void *opaque, int irq, int level)
++{
++    arm_cpu_set_irq(opaque, irq, level);
++}
 +
-+    /*
-+     * Trap bits in ICH_HFGRTR_EL2 / ICH_HFGWTR_EL2, starting from bit 0.
-+     * These are all "trap on 0, don't trap on 1" and don't follow the
-+     * "name starts with 'n' if sense is reversed" convention of the
-+     * main FEAT_FGT registers.
-+     */
-+    DO_REV_BIT(ICH_HFGRTR, ICC_APR_EL1),
-+    DO_REV_BIT(ICH_HFGRTR, ICC_IDRN_EL1),
-+    DO_REV_BIT(ICH_HFGRTR, ICC_CR0_EL1),
-+    DO_REV_BIT(ICH_HFGRTR, ICC_HPPIR_EL1),
-+    DO_REV_BIT(ICH_HFGRTR, ICC_PCR_EL1),
-+    DO_REV_BIT(ICH_HFGRTR, ICC_ICSR_EL1),
-+    DO_REV_BIT(ICH_HFGRTR, ICC_IAFFIDR_EL1),
-+    DO_REV_BIT(ICH_HFGRTR, ICC_PPI_HMRN_EL1),
-+    DO_REV_BIT(ICH_HFGRTR, ICC_PPI_ENABLERN_EL1),
-+    DO_REV_BIT(ICH_HFGRTR, ICC_PPI_PENDRN_EL1),
-+    DO_REV_BIT(ICH_HFGRTR, ICC_PPI_PRIORITYRN_EL1),
-+    DO_REV_BIT(ICH_HFGRTR, ICC_PPI_ACTIVERN_EL1),
-+
-+    /*
-+     * Trap bits in ICH_HFGITR_EL2, starting from bit 0.  These also
-+     * are all "trap on 0".
-+     */
-+    DO_REV_BIT(ICH_HFGITR, GICCDEN),
-+    DO_REV_BIT(ICH_HFGITR, GICCDDIS),
-+    DO_REV_BIT(ICH_HFGITR, GICCDPRI),
-+    DO_REV_BIT(ICH_HFGITR, GICCDAFF),
-+    DO_REV_BIT(ICH_HFGITR, GICCDPEND),
-+    DO_REV_BIT(ICH_HFGITR, GICCDRCFG),
-+    DO_REV_BIT(ICH_HFGITR, GICCDHM),
-+    DO_REV_BIT(ICH_HFGITR, GICCDEOI),
-+    DO_REV_BIT(ICH_HFGITR, GICCDDI),
-+    DO_REV_BIT(ICH_HFGITR, GICRCDIA),
-+    DO_REV_BIT(ICH_HFGITR, GICRCDNMIA),
- } FGTBit;
- 
- #undef DO_BIT
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index 4e7076a5339..276466d2b84 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -550,11 +550,13 @@ typedef struct CPUArchState {
-          * Fine-Grained Trap registers. We store these as arrays so the
-          * access checking code doesn't have to manually select
-          * HFGRTR_EL2 vs HFDFGRTR_EL2 etc when looking up the bit to test.
--         * FEAT_FGT2 will add more elements to these arrays.
-+         * These include the trap registers for all features which have
-+         * FGT-style trapping: FEAT_FGT, FEAT_FGWTE3. GICv5, and (when we
-+         * implement it) FEAT_FGT2.
+ static bool arm_cpu_internal_is_big_endian(CPUState *cs)
+ {
+     ARMCPU *cpu = ARM_CPU(cs);
+@@ -1265,7 +1273,7 @@ static void arm_cpu_initfn(Object *obj)
           */
--        uint64_t fgt_read[2]; /* HFGRTR, HDFGRTR */
--        uint64_t fgt_write[3]; /* HFGWTR, HDFGWTR, FGWTE3 */
--        uint64_t fgt_exec[1]; /* HFGITR */
-+        uint64_t fgt_read[4]; /* HFGRTR, HDFGRTR, unused, ICH_HFGRTR */
-+        uint64_t fgt_write[4]; /* HFGWTR, HDFGWTR, FGWTE3, ICH_HFGWTR */
-+        uint64_t fgt_exec[2]; /* HFGITR, ICH_HFGITR */
+         qdev_init_gpio_in(DEVICE(cpu), arm_cpu_kvm_set_irq, 6);
+     } else {
+-        qdev_init_gpio_in(DEVICE(cpu), arm_cpu_set_irq, 6);
++        qdev_init_gpio_in(DEVICE(cpu), arm_cpu_gpio_set_irq, 6);
+     }
  
-         /* RME registers */
-         uint64_t gpccr_el3;
+     qdev_init_gpio_out(DEVICE(cpu), cpu->gt_timer_outputs,
+diff --git a/target/arm/internals.h b/target/arm/internals.h
+index c41fa5225c7..9d817961c67 100644
+--- a/target/arm/internals.h
++++ b/target/arm/internals.h
+@@ -1886,6 +1886,20 @@ void define_gcs_cpregs(ARMCPU *cpu);
+ /* Add the cpreg definitions for OMAP CP15 regs */
+ void define_omap_cp_regs(ARMCPU *cpu);
+ 
++#ifndef CONFIG_USER_ONLY
++/**
++ * arm_cpu_set_irq: Assert or clear an IRQ/FIQ/etc interrupt line
++ * @cpu: CPU to set interrupt on
++ * @irq: one of the ARM_CPU_IRQ/ARM_CPU_FIQ/ARM_CPU_VIRQ/etc values
++ * @level: 0 to deassert, non-zero to assert
++ *
++ * This function is called by the qemu_irq_handler function
++ * when IRQ etc are real inbound GPIO lines; it is also called
++ * directly by the GICv5 CPU interface.
++ */
++void arm_cpu_set_irq(ARMCPU *cpu, int irq, int level);
++#endif
++
+ /* Add the cpreg definitions for the GICv5 CPU interface */
+ void define_gicv5_cpuif_regs(ARMCPU *cpu);
+ 
 diff --git a/target/arm/tcg/gicv5-cpuif.c b/target/arm/tcg/gicv5-cpuif.c
-index ac667c84c2f..55dc2e3b3b2 100644
+index a6e6c440849..517c780d1f7 100644
 --- a/target/arm/tcg/gicv5-cpuif.c
 +++ b/target/arm/tcg/gicv5-cpuif.c
-@@ -979,6 +979,28 @@ static const ARMCPRegInfo gicv5_cpuif_reginfo[] = {
-         .accessfn = access_gicv5_ich_reg,
-         .fieldoffset = offsetof(CPUARMState, gicv5_cpuif.ich_apr_el2),
-     },
-+    {   .name = "ICH_HFGRTR_EL2", .state = ARM_CP_STATE_AA64,
-+        .opc0 = 3, .opc1 = 4, .crn = 12, .crm = 9, .opc2 = 4,
-+        .access = PL2_RW, .type = ARM_CP_NO_RAW,
-+        .nv2_redirect_offset = 0xb10,
-+        .accessfn = access_gicv5_ich_reg,
-+        .fieldoffset = offsetof(CPUARMState, cp15.fgt_read[FGTREG_ICH_HFGRTR]),
-+        .resetvalue = ICH_HFGRTR_EL2_RES1_MASK,
-+    },
-+    {   .name = "ICH_HFGWTR_EL2", .state = ARM_CP_STATE_AA64,
-+        .opc0 = 3, .opc1 = 4, .crn = 12, .crm = 9, .opc2 = 6,
-+        .access = PL2_RW, .type = ARM_CP_NO_RAW,
-+        .nv2_redirect_offset = 0xb10,
-+        .accessfn = access_gicv5_ich_reg,
-+        .fieldoffset = offsetof(CPUARMState, cp15.fgt_write[FGTREG_ICH_HFGWTR]),
-+    },
-+    {   .name = "ICH_HFGITR_EL2", .state = ARM_CP_STATE_AA64,
-+        .opc0 = 3, .opc1 = 4, .crn = 12, .crm = 9, .opc2 = 7,
-+        .access = PL2_RW, .type = ARM_CP_NO_RAW,
-+        .nv2_redirect_offset = 0xb10,
-+        .accessfn = access_gicv5_ich_reg,
-+        .fieldoffset = offsetof(CPUARMState, cp15.fgt_exec[FGTREG_ICH_HFGITR]),
-+    },
+@@ -173,33 +173,6 @@ static GICv5PendingIrq gic_hppi(CPUARMState *env, GICv5Domain domain)
+     return best;
+ }
+ 
+-static void cpu_interrupt_update(CPUARMState *env, int irqtype, bool new_state)
+-{
+-    CPUState *cs = env_cpu(env);
+-
+-    /*
+-     * OPT: calling cpu_interrupt() and cpu_reset_interrupt() has the
+-     * correct behaviour, but is not optimal for the case where we're
+-     * setting the interrupt line to the same level it already has.
+-     *
+-     * Clearing an already clear interrupt is free (it's just doing an
+-     * atomic AND operation). Signalling an already set interrupt is a
+-     * bit less ideal (it might unnecessarily kick the CPU).
+-     *
+-     * We could potentially use cpu_test_interrupt(), like
+-     * arm_cpu_update_{virq,vfiq,vinmi,vserr}, since we always hold
+-     * the BQL here; or perhaps there is an abstraction we could
+-     * provide in the core code that all these places could call.
+-     *
+-     * For now, this is simple and definitely correct.
+-     */
+-    if (new_state) {
+-        cpu_interrupt(cs, irqtype);
+-    } else {
+-        cpu_reset_interrupt(cs, irqtype);
+-    }
+-}
+-
+ static void gicv5_update_irq_fiq(CPUARMState *env)
+ {
      /*
-      * Note that DVIR bits RAZ/WI when the PPI isn't assigned to the
-      * current domain, so we will need to mask them when we implement
+@@ -243,12 +216,12 @@ static void gicv5_update_irq_fiq(CPUARMState *env)
+     /*
+      * Unlike a GICv3 or GICv2, there is no external IRQ or FIQ line
+      * to the CPU. Instead we directly signal the interrupt via
+-     * cpu_interrupt()/cpu_reset_interrupt().
++     * arm_cpu_set_irq().
+      */
+     trace_gicv5_update_irq_fiq(irq, fiq, superpriority);
+-    cpu_interrupt_update(env, CPU_INTERRUPT_HARD, irq);
+-    cpu_interrupt_update(env, CPU_INTERRUPT_FIQ, fiq);
+-    cpu_interrupt_update(env, CPU_INTERRUPT_NMI, superpriority);
++    arm_cpu_set_irq(env_archcpu(env), ARM_CPU_IRQ, irq);
++    arm_cpu_set_irq(env_archcpu(env), ARM_CPU_FIQ, fiq);
++    arm_cpu_set_irq(env_archcpu(env), ARM_CPU_NMI, superpriority);
+ }
+ 
+ static void gic_recalc_ppi_hppi(CPUARMState *env)
 -- 
 2.43.0
 
