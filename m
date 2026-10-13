@@ -4,91 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36AE2CC6B03
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 08:45:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B14DCA9ED2
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 08:45:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGY6G-0003yp-6F; Tue, 13 Oct 2026 04:43:09 -0400
+	id 1xGY6a-0004vX-Fa; Tue, 13 Oct 2026 04:43:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xGY42-00007M-KV
+ id 1xGY42-00007I-JQ
  for qemu-devel@nongnu.org; Tue, 13 Oct 2026 04:40:52 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xGY3z-000834-Lx
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 04:40:50 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-49fbb2acc90so22382585e9.2
- for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 01:40:47 -0700 (PDT)
+ id 1xGY3y-00082f-PY
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 04:40:48 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-4a17baef589so22018805e9.0
+ for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 01:40:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1791880846; x=1792485646; darn=nongnu.org;
+ d=linaro.org; s=google; t=1791880845; x=1792485645; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=RpxSc5E6JZ85OCnxoQbmovvqMsjQZ6XLtXXpnhtsTUk=;
- b=XDOLGvT1ait4uHOStt0udr0pzwZGGkH5QCs4eIqjvm7Y+XUYNG5Pkhb8AnvoVAKak4
- EjkWRFf9qLiPbcXVXC4GaTql+39aKVfhnDaKHRV0I6726YNEaGVDrviqk2bbwl0g1/AF
- gPgaiVhOUZRLGbyQTOEMdkdj0ZApam8CAxBh8LQeyvrKZzKaKGsvwrAF8piXzy1hPhXa
- n37BggokmgyGNTRgWy8ZONR9vY3M2dit4QQamkMrSp4zzSGxHC1UZK7ifV9OrkFZoSev
- XhlMi3CjTttOb/fYYzTikJVQmXZK7nk5h2pY7u/wlw/NHv1tOxNw+pAW01VNeO4IBgu3
- jgeQ==
+ bh=xKfVzycXN3xlTRcOP3v+QXWexvZM2B043jlT18XjlT4=;
+ b=A8eKHNlBeSKcKJt44bta4eckTmUG4HgoJJzFo5NQg37Ck/+GcEbNssxFoNPPUaeJX7
+ b6XaF2zReHCIb+/gdtDIN4ZyQ57pwspvgB+oDJ2Ml98BaxOdcV20JH82B1p0rgF4rzoI
+ yn6uDYjgQ3ipqBiQQqa7+xtz8vQctDCw8dUxC8mrnfIt/lwo65szewQYbM9SypuGM23A
+ 66Ef2VK1VaC2Jbci33kWnLGvieTA5mm1wZyhM6TeOugFsoi76NPoxb7J1Uh+riwqZMBW
+ isvkMaVvJ5i4JmQyGn+REWePC1MEu9LCP+ikM8wKOVbEsfi3GtdEbj7xhw66gCmwCLEN
+ tuNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791880846; x=1792485646;
+ d=1e100.net; s=20260707; t=1791880845; x=1792485645;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to:content-type;
- bh=RpxSc5E6JZ85OCnxoQbmovvqMsjQZ6XLtXXpnhtsTUk=;
- b=xa/j5udoDJdF7OR6L1rO/MpgqFV+Eq1AfPyK/x8gmhbB49xDAp/jlFfP2ZtAS3i3g9
- aJOv3qrjMJbBwxQaUIDZyq2jVMV3dj/XSMMbBk9t2MdXezDx5iURL3maOTLQZQe006En
- Ctx+b+wtFZT5Iy5t5hd1wCqFFzYto3b02SkILNLA3xk006BvvR0gf1JD+pD+bxPQTBsk
- KENGOurF1SygdhlQCch9ckGEfj6WxaZfzrUg5LMqLSPQlkVeXtXmIrJ8eOILVsx15j/p
- PZIQpOc2Cw1g6wqALuBKFBPZhIlEj4/3Hqp0o0KR5wiuDoEsFE8pmA6Dfotfe1JfF/S0
- pm3w==
+ bh=xKfVzycXN3xlTRcOP3v+QXWexvZM2B043jlT18XjlT4=;
+ b=wYB/mz2HjPqgoTEgZlfsnfZ8bwahyrRyehpzd7vVsiCy3IQD0A6FnhEe3m0TRKZymR
+ pbu8dPpQ/qJcAYZtVfcaYEYpxbByYefvgvXZusDVYp0j//SCmtpyPFEGWRSA32fJDPDP
+ Jdy+VxcNLkfQiUX/K5XdGLn9gdamfa3gCB3XLmFO0xVjOkyX90u7NLoL0Wl3wPKa61Py
+ VUA0AQqWxVQ9tpQdZwyjVPZ4lpprxUOUYDxU0tHJ0vkHOMUkBWl18PS+G55cOsmo5yv4
+ o+IP9Ht0S70Hn8xehXMHdnExDeaoRhziM7EY8U2w492rvfSVQ3G1HD80RASNc4PnDlK8
+ HoeA==
 X-Forwarded-Encrypted: i=1;
- AKwUvBxBaMnWS642sgysXxZbSlzJQ4h7f3QWqKsuu+SvCKWgvsTjVIldIDr1kyM6ZiIQE0qU3lfikLHOB5bd@nongnu.org
-X-Gm-Message-State: AFq9FYJ+A//5XSXA83/7tCSL/KtNHRx4ORoq1eVPyH5hIhlug1BV6XPA
- KYoidHbVV1CoKnalQbKIFBgaXGCvRGqTb9od4qLa4O+sxNDfrMrMW156drW98Ym7rwQ=
-X-Gm-Gg: AYBFou1ugQu7CqcIrX0xvDMlyFHpnKXJOF1M8+B4NyZ8xFE7W+QfV25jjY+ROG+s+7h
- hkbwi1uAw2vtkN6gZmWleTJ4wWjKDWaTEJwdCFfY/m7hPJ9/Lqu37el6144Rwh/ahk114cVbLWK
- raOIS4hRs867w1Q+DDJqdmxZtsVWlmwQgm8nfKIo5BVPl+Ijo0tmrUX726mo/CgpMTdGl7GhBZG
- YA/m+6wxfO12SbwARaKonoW/0u12O35PhUTxOZi6bPMStWDEYFtSPtJbwiCiSYHsvSOsk6qBuNq
- q1n/HzoW1SWptcRaLblx+y1nyiD6WvZVUsp4Qmxh3NZqxpcP1TKgADJnylPWRIaLZJXA/reCej3
- kNDQJHqRmqiiup06Y9i+qSJSU9isRxIKshB0v9Ft1Ic7ptd6pH8NOChM/P7jEMxxEVoM5IPmtRM
- V43EGBqIqxMsgxfPX2LOwdUx+Fp+//+ByBoWZnNJZtn0Q4oFkjgEE/2NBxOWZJIY1CjZmZUnyWm
- D8xCPSMEExV5TYzfgIIP9yTWhir3Lt/ZWLXbLCFry5XwIXOE8OaQKBU+nt2rx3iHSDESFXEYvub
- Wx4=
-X-Received: by 2002:a05:600c:3e8d:b0:4a1:7701:f863 with SMTP id
- 5b1f17b1804b1-4a18e4aeae4mr216049495e9.15.1791880846024; 
- Tue, 13 Oct 2026 01:40:46 -0700 (PDT)
+ AKwUvBxWFuOrh6ayWvzr4RTlys66OCPCS94B4hatBosGaLYnc8AlPtqBUUHiCEv8B26kSzGsdH99OpyebEbI@nongnu.org
+X-Gm-Message-State: AFq9FYJUjRzLA9psmWHUn1NNraEvoK1DLGm8mSx2Hbuk2gYA1QMnOyF8
+ MDeGtqspk9SZdByQM+MEOQ+Grv17peGB504MOMQt9v9CmHxu7YrkjWY/bztqP2M/6TqIGt0X6Bk
+ kUSZ8tMI=
+X-Gm-Gg: AYBFou2DLlzcLdrbygU9rAMnI7HgUARgwJ60T6CzJamDgWYpJ7Ci9/p+k3h7dnJVW2O
+ 5w/2AalvzwPAqPDJIDMVNEVNWvQWvhbWfpZ4yBGsxlHx0IOJn8ne67TXKdHQcOW539M4rqokF77
+ /W5WFmcBN/ZBBe5hm/VGd7Ei89r7rSBzyaSRk9tzTqRvqxskZygSMyg+zPEqUEKGm0LCXIavkhd
+ a7I3IHy3PcpVLwOUAuk9qsioQPDrgSIjYnVZXwCHNKhI7fNR73a5GqGh63/8HthVMLFTZn8XoEQ
+ Po17uS+6YJh2XWZK96Io7zZI3sQ21L7yXeJj244ZPL9Kl6TYBM1gcpG6vSPSX5MVN+rOpqEaMl4
+ Cmr1CQVTyhOp5znTB4uT8HfC7a27vhh4XEGzBQy2G/wwn3T5sjqoiRUED3z2WWsWQqsUoPuC74H
+ RBi+9LZBAwb1X9D5iqbU6/8yr9NB4nvJh96lon6uoB7IgxKmlmhGCNYIEErcf2iEZx8X860jFKh
+ +Yz6/NeYQR6ZIn/V9o3L4SOejgqkKyNe9kOdH9TkPrH5EgOIhoRqzaJ0q6ZvnwaIi/peABN4hKZ
+ Pws=
+X-Received: by 2002:a05:600c:4fd5:b0:4a0:5b:7bc0 with SMTP id
+ 5b1f17b1804b1-4a18e49a7e3mr237514455e9.21.1791880845027; 
+ Tue, 13 Oct 2026 01:40:45 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a18be96549sm495086735e9.6.2026.10.13.01.40.45
+ 5b1f17b1804b1-4a18be96549sm495086735e9.6.2026.10.13.01.40.44
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 13 Oct 2026 01:40:45 -0700 (PDT)
+ Tue, 13 Oct 2026 01:40:44 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Subject: [PATCH 53/86] hw/intc/arm_gicv5: Implement IRS_VMT_BASER and
- IRS_VMT_STATUSR
-Date: Tue, 13 Oct 2026 09:39:00 +0100
-Message-ID: <20261013083933.1024405-54-peter.maydell@linaro.org>
+Subject: [PATCH 52/86] hw/intc/arm_gicv5: Indicate virtualization in ID
+ registers
+Date: Tue, 13 Oct 2026 09:38:59 +0100
+Message-ID: <20261013083933.1024405-53-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261013083933.1024405-1-peter.maydell@linaro.org>
 References: <20261013083933.1024405-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,177 +105,137 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Implement the GICv5 IRS_VMT_BASER register, which holds the base
-address of the VM table.  This is very similar to the IRS_IST_BASER
-register: it is 64 bits wide but can be accessed as two 32 bit
-pieces, it has a valid bit which the guest sets to make the table
-valid, and there is an associated IRS_VMT_STATUSR register which has
-an IDLE bit which the guest can read to find out when the write to
-VALID has completed.
-
-Implement IRS_VMT_BASER and IRS_VMT_STATUSR, using the same pattern
-we have for IRS_IST_BASER and IRS_IST_STATUSR.
+When has_virt is true, report virtualization support in the IRS ID
+registers.  This includes reporting various specifics of our
+implementation.  We choose to implement the maximum possible sizes
+for VM and VPE IDs.  We don't need to store any implementation state
+in the IMPDEF guest memory VM descriptor and VPE descriptor
+structures, so we indicate that we have no VM descriptors and that
+the VPE descriptor is the smallest size the spec allows.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/intc/arm_gicv5.c                | 73 ++++++++++++++++++++++++++++++
- hw/intc/arm_gicv5_common.c         |  4 ++
- hw/intc/trace-events               |  2 +
- include/hw/intc/arm_gicv5_common.h |  1 +
- 4 files changed, 80 insertions(+)
+ hw/intc/arm_gicv5.c                | 40 +++++++++++++++++++++++-------
+ include/hw/intc/arm_gicv5_common.h | 25 +++++++++++++++++++
+ 2 files changed, 56 insertions(+), 9 deletions(-)
 
 diff --git a/hw/intc/arm_gicv5.c b/hw/intc/arm_gicv5.c
-index 63e4a165eea..05c6b9c57fc 100644
+index 289a3afaeae..63e4a165eea 100644
 --- a/hw/intc/arm_gicv5.c
 +++ b/hw/intc/arm_gicv5.c
-@@ -1166,6 +1166,36 @@ static void irs_ist_baser_write(GICv5 *s, GICv5Domain domain, uint64_t value)
-     }
+@@ -75,6 +75,16 @@ static uint32_t gicv5_idreg(int regoffset)
+     return gic_ids[regoffset];
  }
  
-+static void irs_vmt_baser_write(GICv5 *s, GICv5Domain domain, uint64_t value)
++static bool gicv5_domain_has_virt(GICv5Common *cs, GICv5Domain domain)
 +{
-+    GICv5Common *cs = ARM_GICV5_COMMON(s);
-+
-+    if (!gicv5_domain_has_virt(cs, domain)) {
-+        return;
-+    }
-+
-+    if (FIELD_EX64(cs->irs_vmt_baser[domain], IRS_VMT_BASER, VALID)) {
-+        /* If VALID is set, ADDR is RO and we can only update VALID */
-+        bool valid = FIELD_EX64(value, IRS_VMT_BASER, VALID);
-+
-+        if (valid) {
-+            /* Ignore 1->1 transition */
-+            return;
-+        }
-+        cs->irs_vmt_baser[domain] = FIELD_DP64(cs->irs_vmt_baser[domain],
-+                                               IRS_VMT_BASER, VALID, valid);
-+        trace_gicv5_vmt_invalid(domain_name[domain]);
-+        return;
-+    }
-+
-+    cs->irs_vmt_baser[domain] = value;
-+
-+    if (FIELD_EX64(cs->irs_vmt_baser[domain], IRS_VMT_BASER, VALID)) {
-+        trace_gicv5_vmt_valid(domain_name[domain],
-+                              cs->irs_vmt_baser[domain] & R_IRS_VMT_BASER_ADDR_MASK);
-+    }
++    /*
++     * Return true if this domain implements virtualization.
++     * EL3 never does; if any CPU connected to the IRS has EL2
++     * then all other domains must implement virtualization (R_KDSPG)
++     */
++    return cs->has_virt && domain != GICV5_ID_EL3;
 +}
 +
- static void spi_sample(GICv5SPIState *spi)
+ static GICv5SPIState *spi_for_selr(GICv5Common *cs, GICv5Domain domain)
  {
      /*
-@@ -1271,6 +1301,31 @@ static bool config_readl(GICv5 *s, GICv5Domain domain, hwaddr offset,
-     case A_IRS_IST_CFGR:
-         *data = cs->irs_ist_cfgr[domain];
+@@ -1208,8 +1218,8 @@ static bool config_readl(GICv5 *s, GICv5Domain domain, hwaddr offset,
+             /* MEC field RES0 except for the Realm domain */
+             v &= ~R_IRS_IDR0_MEC_MASK;
+         }
+-        if (domain == GICV5_ID_EL3) {
+-            /* VIRT is RES0 for EL3 domain */
++        if (!gicv5_domain_has_virt(cs, domain)) {
++            /* VIRT is RES0 for this domain */
+             v &= ~R_IRS_IDR0_VIRT_MASK;
+             /* ...which means VIRT_ONE_N is also RES0 */
+             v &= ~R_IRS_IDR0_VIRT_ONE_N_MASK;
+@@ -1223,12 +1233,12 @@ static bool config_readl(GICv5 *s, GICv5Domain domain, hwaddr offset,
+         *data = cs->irs_idr2;
          return true;
-+    case A_IRS_VMT_BASER:
-+        if (gicv5_domain_has_virt(cs, domain)) {
-+            *data = extract64(cs->irs_vmt_baser[domain], 0, 32);
-+        } else {
-+            *data = 0;
-+        }
-+        return true;
-+    case A_IRS_VMT_BASER + 4:
-+        if (gicv5_domain_has_virt(cs, domain)) {
-+            *data = extract64(cs->irs_vmt_baser[domain], 32, 32);
-+        } else {
-+            *data = 0;
-+        }
-+        return true;
-+    case A_IRS_VMT_STATUSR:
-+        /*
-+         * QEMU writes to IRS_VMT_BASER and IRS_VMAP_* take effect
-+         * instantaneously, so the guest can never see the IDLE bit as 0.
-+         */
-+        if (gicv5_domain_has_virt(cs, domain)) {
-+            *data = R_IRS_VMT_STATUSR_IDLE_MASK;
-+        } else {
-+            *data = 0;
-+        }
-+        return true;
-     case A_IRS_SPI_STATUSR:
-         /*
-          * QEMU writes to IRS_SPI_{CFGR,DOMAINR,SELR,VMR} take effect
-@@ -1373,6 +1428,14 @@ static bool config_writel(GICv5 *s, GICv5Domain domain, hwaddr offset,
-     case A_IRS_MAP_L2_ISTR:
-         irs_map_l2_istr_write(s, domain, data);
+     case A_IRS_IDR3:
+-        /* In EL3 IDR0.VIRT is 0 so this is RES0 */
+-        *data = domain == GICV5_ID_EL3 ? 0 : cs->irs_idr3;
++        /* All fields are RES0 if domain doesn't have virt */
++        *data = gicv5_domain_has_virt(cs, domain) ? cs->irs_idr3 : 0;
          return true;
-+    case A_IRS_VMT_BASER:
-+        irs_vmt_baser_write(s, domain,
-+                            deposit64(cs->irs_vmt_baser[domain], 0, 32, data));
-+        return true;
-+    case A_IRS_VMT_BASER + 4:
-+        irs_vmt_baser_write(s, domain,
-+                            deposit64(cs->irs_vmt_baser[domain], 32, 32, data));
-+        return true;
-     case A_IRS_SPI_SELR:
-         cs->irs_spi_selr[domain] = data;
+     case A_IRS_IDR4:
+-        /* In EL3 IDR0.VIRT is 0 so this is RES0 */
+-        *data = domain == GICV5_ID_EL3 ? 0 : cs->irs_idr4;
++        /* All fields are RES0 if domain doesn't have virt */
++        *data = gicv5_domain_has_virt(cs, domain) ? cs->irs_idr4 : 0;
          return true;
-@@ -1457,6 +1520,13 @@ static bool config_readll(GICv5 *s, GICv5Domain domain, hwaddr offset,
-     case A_IRS_IST_BASER:
-         *data = cs->irs_ist_baser[domain];
-         return true;
-+    case A_IRS_VMT_BASER:
-+        if (gicv5_domain_has_virt(cs, domain)) {
-+            *data = cs->irs_vmt_baser[domain];
-+        } else {
-+            *data = 0;
-+        }
-+        return true;
-     }
+     case A_IRS_IDR5:
+         *data = cs->irs_idr5;
+@@ -1636,6 +1646,7 @@ static void gicv5_set_idregs(GICv5Common *cs)
+      * for 56 bits of physical address space.
+      */
+     v = FIELD_DP32(v, IRS_IDR0, PA_RANGE, 7);
++    v = FIELD_DP32(v, IRS_IDR0, VIRT, cs->has_virt);
+     v = FIELD_DP32(v, IRS_IDR0, IRSID, cs->irsid);
+     cs->irs_idr0 = v;
  
-     return false;
-@@ -1469,6 +1539,9 @@ static bool config_writell(GICv5 *s, GICv5Domain domain, hwaddr offset,
-     case A_IRS_IST_BASER:
-         irs_ist_baser_write(s, domain, data);
-         return true;
-+    case A_IRS_VMT_BASER:
-+        irs_vmt_baser_write(s, domain, data);
-+        return true;
-     }
+@@ -1655,9 +1666,20 @@ static void gicv5_set_idregs(GICv5Common *cs)
+     /* Our impl does not need IST metadata, so ISTMD and ISTMD_SZ are 0 */
+     cs->irs_idr2 = v;
  
-     return false;
-diff --git a/hw/intc/arm_gicv5_common.c b/hw/intc/arm_gicv5_common.c
-index 17fd67b5ccd..89669493b83 100644
---- a/hw/intc/arm_gicv5_common.c
-+++ b/hw/intc/arm_gicv5_common.c
-@@ -104,6 +104,10 @@ static void gicv5_common_reset_hold(Object *obj, ResetType type)
-          */
-         cs->irs_spi_selr[i] = cs->spi_base + cs->spi_irs_range;
-     }
-+
+-    /* We don't implement virtualization yet, so these are zero */
+-    cs->irs_idr3 = 0;
+-    cs->irs_idr4 = 0;
++    v = 0;
 +    if (cs->has_virt) {
-+        memset(cs->irs_vmt_baser, 0, sizeof(cs->irs_vmt_baser));
++        /* Our impl doesn't need a VM descriptor, so VMD and VMD_SZ are zero. */
++        v = FIELD_DP32(v, IRS_IDR3, VM_ID_BITS, QEMU_GICV5_VM_ID_BITS);
++        v = FIELD_DP32(v, IRS_IDR3, VMT_LEVELS, 1);
 +    }
- }
++    cs->irs_idr3 = v;
++
++    v = 0;
++    if (cs->has_virt) {
++        v = FIELD_DP32(v, IRS_IDR4, VPED_SZ, QEMU_GICV5_VPED_SZ);
++        v = FIELD_DP32(v, IRS_IDR4, VPE_ID_BITS, QEMU_GICV5_VPE_ID_BITS - 1);
++    }
++    cs->irs_idr4 = v;
  
- static void gicv5_common_init(Object *obj)
-diff --git a/hw/intc/trace-events b/hw/intc/trace-events
-index 6681e32d1b7..3c7619cf3cd 100644
---- a/hw/intc/trace-events
-+++ b/hw/intc/trace-events
-@@ -246,6 +246,8 @@ gicv5_deactivate(const char *domain, const char *type, bool virtual, uint32_t id
- gicv5_spi_state(uint32_t spi_id, bool level, bool pending, bool active) "GICv5 IRS SPI ID %u now level %d pending %d active %d"
- gicv5_irs_recalc_hppi_fail(const char *domain, uint32_t iaffid, const char *reason) "GICv5 IRS %s IAFFID %u: no HPPI: %s"
- gicv5_irs_recalc_hppi(const char *domain, uint32_t iaffid, uint32_t id, uint8_t prio) "GICv5 IRS %s IAFFID %u: new HPPI ID 0x%x prio %u"
-+gicv5_vmt_valid(const char *domain, uint64_t base) "GICv5 IRS %s VM table now valid: base 0x%" PRIx64
-+gicv5_vmt_invalid(const char *domain) "GICv5 IRS %s VM table no longer valid"
- 
- # arm_gicv5_common.c
- gicv5_common_realize(uint32_t irsid, uint32_t num_cpus, uint32_t spi_base, uint32_t spi_irs_range, uint32_t spi_range) "GICv5 IRS realized: IRS ID %u, %u CPUs, SPI base %u, SPI IRS range %u, SPI range %u"
+     /* These three have just one field each */
+     cs->irs_idr5 = FIELD_DP32(0, IRS_IDR5, SPI_RANGE, cs->spi_range);
 diff --git a/include/hw/intc/arm_gicv5_common.h b/include/hw/intc/arm_gicv5_common.h
-index 7b24cad211b..f134602d66e 100644
+index d8f6f5d5db9..7b24cad211b 100644
 --- a/include/hw/intc/arm_gicv5_common.h
 +++ b/include/hw/intc/arm_gicv5_common.h
-@@ -89,6 +89,7 @@ struct GICv5Common {
-     uint32_t irs_cr0[NUM_GICV5_DOMAINS];
-     uint32_t irs_cr1[NUM_GICV5_DOMAINS];
-     uint32_t irs_pe_selr[NUM_GICV5_DOMAINS];
-+    uint64_t irs_vmt_baser[NUM_GICV5_DOMAINS];
+@@ -153,6 +153,31 @@ struct GICv5CommonClass {
+ #define QEMU_GICV5_IAFFID_BITS 16
+ /* Number of priority bits supported in the IRS */
+ #define QEMU_GICV5_PRI_BITS 5
++/* Number of VM ID bits */
++#define QEMU_GICV5_VM_ID_BITS 16
++/* Number of VPE ID bits */
++#define QEMU_GICV5_VPE_ID_BITS 16
++
++/*
++ * The VPE descriptor is IMPDEF in size and contents; it stores
++ *  - the VPE's residency status and location
++ *  - VPE doorbell settings
++ *  - metadata tracking pending interrupts for the VPE
++ * In a real hardware implementation, the IRS will keep its per-VPE data
++ * in guest memory with a cache so it isn't actually doing full memory
++ * accesses all the time. For QEMU we will keep the per-VPE data in
++ * host-side data structures, which don't have any size limitations.
++ * The specification doesn't define any situations where the IRS
++ * must write its state back out to guest memory, except for the
++ * entirely IMPDEF and optional power-management suspend/resume.
++ * QEMU's IRS doesn't implement power-management, so we will never
++ * write out anything to the VPE descriptors in guest memory.
++ * We therefore define them to the smallest size the spec permits,
++ * which is 8 bytes.
++ * (We similarly do not use VM descriptors, but for those the spec
++ * permits an implementation to tell software it does not use them.)
++ */
++#define QEMU_GICV5_VPED_SZ 3
  
-     /*
-      * Pointer to an array of state information for the SPIs.  Array
+ /*
+  * There are no TRMs currently published for hardware implementations
 -- 
 2.43.0
 
