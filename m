@@ -4,126 +4,121 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0549CC6B12
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 15:21:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 386C0CC6B12
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 15:25:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGeJb-0004eS-At; Tue, 13 Oct 2026 11:21:19 -0400
+	id 1xGeNA-0005Ty-QF; Tue, 13 Oct 2026 11:25:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1xGeJX-0004dx-OO
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 11:21:16 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <wesley.hershberger@canonical.com>)
+ id 1xGeN9-0005Sb-1Z
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 11:24:59 -0400
+Received: from smtp-relay-internal-0.canonical.com ([185.125.188.122])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1xGeJV-0001hT-3r
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 11:21:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1791904871;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Iw0msJZcqsJB/r+u+/gjGJBTHk2Bao323p5IUYaoW08=;
- b=LaG/rcAjVaat1eU9T2Ooo8aLuqWfKb7cSaJv5qKM4KCJuyWu9svruhDMidoJWn9TL+yQlf
- 32VwYzXyUx1wDuhj4kswqEMeVA46nSvllloeDvNNXlNs45TvYso3LwGVJs0emc5k87aEDM
- arXhRjmzX6QGz/YS9PhBQj1GiPMN5+I=
-Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
- [209.85.216.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-38-u1jKdOoWN9q1wVy8I--tLQ-1; Tue, 13 Oct 2026 15:21:09 +0000
-X-MC-Unique: u1jKdOoWN9q1wVy8I--tLQ-1
-X-Mimecast-MFC-AGG-ID: u1jKdOoWN9q1wVy8I--tLQ_1791904869
-Received: by mail-pj1-f71.google.com with SMTP id
- 98e67ed59e1d1-3ac54ecd5f0so398402a91.0
- for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 08:21:09 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1791904869; cv=none;
- d=google.com; s=arc-20260327;
- b=Sizyowlp9gfXB0RQWH1Z+9zyf+UyHObyN+Fq/fw2pC9rKmQ4cXOPueo2Rnrd42YHa2
- SJyYIwvO8ONrU7W+JpWyhIYxU8URdQlspBXHNxMx1tgbKt8ugOxCf8ccAFuCgigcFPbv
- ILJphgFTx6xBBJL+5GWPoL+7oixyaMJYloZyyqaXSeV5GAeiglBMmhaK3Ys9ldDvLCPn
- UsSIdFsmFjFvQ1AJ1UH8xp1AOmJqynRRBuEY6KoFEu/XYAdixOBt4JNLX5AVnaZJgXeO
- Ec8C6pB2MJk8tsCcDSKvNLxFCRojtOIHoGyU8oBPkV+kKmXM9NQuvH6t0oZnjTaklTi2
- G6Kg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=Iw0msJZcqsJB/r+u+/gjGJBTHk2Bao323p5IUYaoW08=;
- fh=lW8xzSdEwaBIy9TNvG7wkGxSxV7QyaPtYtghnU5h7Fs=;
- b=fi+5VCmtZ3NRiJPHGK4VptaElrVN0aSLQHkx2vOc7EyJiFNlF3ndxfQUSOTNtpwzVk
- LOcwgrRD4FSDLJ/ZGJBy2yW+kRhOCefzyVH7Vu5xncVeJW+OJLW0HVaRDy7Kbk5EATeQ
- g8RP2fKitPOPLzEXIuF7ojC/8F9fkkOsiocfXmu/XYDkQ4pUF0yFjO7vlvDk4ClugEPI
- a1oRGJTnz94IURRhOMVHzHxPo2sfBVpubU0tODI8euc5O3E81JgvFM1qKdc6/KKSMyW7
- fKBndNKoQ4KfxdJ4XQN1he0QUvjggW6zSYgcefTAWeBTw61dSiI3e83NcmGZWd5/CcWu
- LahA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1791904869; x=1792509669; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=Iw0msJZcqsJB/r+u+/gjGJBTHk2Bao323p5IUYaoW08=;
- b=Q+ExdwnN6DoUL85wluc3wZF2qxtjurz6seVJsopFJA0GEq7UcLlfz2v5HPGFl/zd/F
- 9X3ze1xLHCY0QBr8pEA8g/6ugmVMmSlwDR4ZPKtRI/JdaRViM7GvRphngEbAfhng/OC6
- EDIJ8n3OHHv3CrC8S9h/SOrYCVBB2bOsYW4MYBCzEXq0d18LC5yWGlcgPYt2XkRkOXYX
- qkWlMDLTOmZgn+YQ1vNDnqyr3uulDGL0zIYznygkLGgpU0QpMdTEeB0t27dyD/3QNEuT
- kCGoYmJtAER6rrx+AQOvQATzL0rASn/JXRPGvzUvGz5sdFp2UUeHktBJwV1nrB9w17lL
- RODg==
+ (Exim 4.90_1) (envelope-from <wesley.hershberger@canonical.com>)
+ id 1xGeN6-0001va-RR
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 11:24:58 -0400
+Received: from mail-yw1-f198.google.com (mail-yw1-f198.google.com
+ [209.85.128.198])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-relay-internal-0.canonical.com (Postfix) with ESMTPS id C9C9A3F5AF
+ for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 15:24:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+ s=20251003; t=1791905094;
+ bh=6jiNeAliYafa4bUs0pjZT8uFVXO/wLtW5yB9yhn8PPQ=;
+ h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc;
+ b=n/dxbnnKOAxFFoHHHlVobOYVSt26TVszgegE0ePAYhS7L4Y+AOfbJsKxAjMrTZ5UU
+ FLfJCNbYCW+E9ExlQiujg2ihRSBWBpGAg1wODZr9H2lsdE74f4M2Vix9YAQXJunQyw
+ Oc+brMh8VGJcSM+iLbZ55ALOtJHvPBXW8TF1gAN2RzaHoBQEngAagaFqLmX40PdhE2
+ PubhY8nGhZRpuY1trhfTwDvE8ubnZDJECurz591Q4IE97xPlXB1+9Ip1204gXKK5Yj
+ ogYUQdYX/86sT/zZopu3hIC1A6zof59xmhONxx/KClYy6+vfeWtvcF4k8e/rnXFkCo
+ OX2zOJpLTMr674oSN2wig9vz7CH4lT6wz5pN4Iv6V1Ll6k7krlBWGs43soySyCCv+N
+ jS198L+BYsI2Jz3PXBRRIdE8gTWH+ZD/OQG2TaKLTkkw6IofhWhSyYDbflV8vG1u6D
+ UD3HSz67al8Je64NgZEhBiaFH5r3RavNwQThFNkwbw8UsATiK/Mu/r91CSPsy9S2sI
+ GKqURF74R+QTnxLwMCpMydPjkVHHmG/YN07dh1p7fSfVtmtbXX3NHykMS3eIkHjN/w
+ iIbHOwG/kZS5N9WybnsgZhf3oXS1Gg8GHVJUZsN0cMTcNCJFzObhqY4UK4UM2U++qW
+ 7bsiobuu58M7r+i2NKysjUMY=
+Received: by mail-yw1-f198.google.com with SMTP id
+ 00721157ae682-8b0ab72a6e8so21160097b3.0
+ for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 08:24:54 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791904869; x=1792509669;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=Iw0msJZcqsJB/r+u+/gjGJBTHk2Bao323p5IUYaoW08=;
- b=cXiU7HjJGCwbEdVIvgwoXtnkazBjrCNi1h9JEJHGJOTEtQ5Ti1r/UynTqtCJHljHgr
- 2GVliBEqYCzKAnd0mOKzpCbq7kMxrf8F68OEe63RKIfJtwOMtxeCbmcKZjKyPouNf3Wd
- q21ISYgN+fNtHFO3cWlJfGUCsqD3/IW8uiMIzBRwmI9kEjHHLt60TKNb1eGsl/JDavZc
- CSYKG0tkBSkaGPbYftYnDwgkL8Jby05JT8sUEp51KtXdwo5JsdzYJc+52grudOvZt7nO
- OB+KJPK7WtSqgXUHGrVAZrKvpaxnZdXojk2GTR3tgEPEd4UrR4G+rrNSxFOjB+VfPJht
- Tz1w==
-X-Gm-Message-State: AFq9FYIVXadHeyqb4CHx0OAHOGYcqdjc8TojBbvcA7Jm8EyWpyo3L4tA
- 1HS3Unzy/NO+tuVJedIDxnbcBhkJqNJJyF0r9IyzWtxEi5Pd6yIggNi2tUgW4mtozJLHYMLOKUP
- SJ7VebPXEJ1TFdw61oknYHBej6R4HeC5BQbF7Zub4JMQk9HA6g1vhULvV/KYSp06kV0MAjETBXL
- 1kdVeq6hvlHaPvHbw+NOYAQGi780wB5Og=
-X-Gm-Gg: AYBFou1aX+3vEPpcWsLN3whcO6/llk6Qmgsqoyg+Ozlzu7OSklNfjZe+e0umLgi4vva
- jX9s11kHDlZJ3C4rpnqy7651lp/XzmN8FGxwhFPcfDGquwqKvwr7DLWzpIs7jJU5Un/YfLHKw3v
- Uvc3nMoW27m7n/+LCVRGZ2cI6jWq0NdP8HOMwozMwncjWfJcJMrzC5OhL/RZms0c0kwqJgxKo0Z
- SheQBQXFfxfsNPn71QJGDAg85VmEeIqvFEZJ/fLRwXZRvRVV8HFl6QTQjPbZcXaV5IiyzYywKtr
- Pg==
-X-Received: by 2002:a17:90b:2d86:b0:3ab:2d46:1dd6 with SMTP id
- 98e67ed59e1d1-3ab3a33d959mr11529388a91.4.1791904867510; 
- Tue, 13 Oct 2026 08:21:07 -0700 (PDT)
-X-Received: by 2002:a17:90b:2d86:b0:3ab:2d46:1dd6 with SMTP id
- 98e67ed59e1d1-3ab3a33d959mr11529270a91.4.1791904865192; Tue, 13 Oct 2026
- 08:21:05 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1791905093; x=1792509893;
+ h=cc:to:content-transfer-encoding:content-type:mime-version
+ :message-id:date:subject:from:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=6jiNeAliYafa4bUs0pjZT8uFVXO/wLtW5yB9yhn8PPQ=;
+ b=Xy/mTFZT23pdxXHkr5BZHdzBAwgb90YYK0p1fKtsrAjExxwao/n1CycLThTkU8ZuT8
+ BmKjCrvoMkPz1iK4+pQ8ZLCTDPCEkTVrqklAbykkbv6WzG8KBi4JdpcvMxxJaXMt3Ayb
+ Xkh2zydLE0FSlSkMeW0pJnAI/ZbGjrbfOxIZbROmLSzzAcS3jmy/lt/k4a7OyLzX3H2m
+ G5v5aE6lid59/4Rp2N78JP7OXHkDEt/Pw5zv6K04u2qmkki0uOy2WGKgFlfzgzJN2rVF
+ iRi6wU9w9NV63fAdhvaxr0igfebNeeWmLN49wGzaYEIflAkhkabbG53L48abSsIuHp9h
+ 7FFQ==
+X-Gm-Message-State: AFq9FYI+ijRJNr16utXa4qkcd2SiO1j+BrfA7f5R5qioJnqMPUIA/3/n
+ fEoWg3nObkoeDF+IEi37Mx47VOkDHkqCOsFHGMXcmijccg8rCm67g0zT9EVmBBaVPqX0N5pKVfL
+ 4HuLHG9YVUiN0pijjOeY3JEERnznNdb7Iusrb1qtNIDK6Xc7A1pFz4+X3pSsCjVZAf5tR/oq6
+X-Gm-Gg: AYBFou3S8e8Wd7laHOPmlYByD/i6ZwrLyNgXnXxZrHF6AY6T1ZiJzwIkSxNJTHGnJE5
+ t8gfYjXyXN1AEMZyZM9ffTfbRmLmAnvIdvmC2fsNPnhKLKnu+RNj0Nnzp97mLwSMK/5oQUGM2Qp
+ laWn16uPERTwZPTJHGAdJK5KHL/Du3tBRpgU6qDn4iS8Vkt8WMNgfptdO1Xb2L8jIVNonwsb7wS
+ V3m5enT2+00qvD1JKEgNEUULwSAKJVE7JR5Gt0ANi9LHJXHlxSqNIUma46yG8AoUuHwviZucXHF
+ KwlW7atiADdAH26zPSKRAf+KshJbPL9EeKJrDKnS9+QcaWV5Ji+rojl9ge7rzo1dCd6oOzbwYDM
+ GvrW2bpULfA4+GNjJWiees2Kl82qKgpA+AGzXu9EbGoIdcg==
+X-Received: by 2002:a05:690c:e1d9:10b0:8ae:dfee:cd30 with SMTP id
+ 00721157ae682-8b07ee80677mr32226517b3.56.1791905093120; 
+ Tue, 13 Oct 2026 08:24:53 -0700 (PDT)
+X-Received: by 2002:a05:690c:e1d9:10b0:8ae:dfee:cd30 with SMTP id
+ 00721157ae682-8b07ee80677mr32226377b3.56.1791905092639; 
+ Tue, 13 Oct 2026 08:24:52 -0700 (PDT)
+Received: from [127.0.1.1] ([97.87.60.46]) by smtp.gmail.com with ESMTPSA id
+ 00721157ae682-8b07ee8603fsm47203617b3.4.2026.10.13.08.24.51
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 13 Oct 2026 08:24:52 -0700 (PDT)
+From: Wesley Hershberger <wesley.hershberger@canonical.com>
+Subject: [PATCH v2 0/2] util/coroutine: Reduce default idle pool max size
+Date: Tue, 13 Oct 2026 10:21:57 -0500
+Message-Id: <20261013-set-default-pool-size-v2-0-f4fd6f2a3303@canonical.com>
 MIME-Version: 1.0
-References: <20261009140431.3175479-1-armbru@redhat.com>
- <CAJ+F1CKqDbV0xVkL6Q_++qHk4iNstWC_y2raPXy8BovUyPQzdQ@mail.gmail.com>
- <871p9tya83.fsf@pond.sub.org>
-In-Reply-To: <871p9tya83.fsf@pond.sub.org>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Tue, 13 Oct 2026 19:20:52 +0400
-X-Gm-Features: AclHuK8kn9AAtdSQG2Nyyk4XKPrphiIdIQhmqrf5gHdmtFh9gi2Jiwmn15e-b00
-Message-ID: <CAMxuvaxyrOtn5uXuWSuRL4KUTyAVZFAinniG-YZQfo4_ngizrA@mail.gmail.com>
-Subject: Re: [RFC PATCH 0/6] qapi: Preliminary work for better QOM
- introspection
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, michael.roth@amd.com, jsnow@redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mlureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
-X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/4WNQQ6CMBBFr0Jm7Zi2GEBX3sOwKMNUJsGWtEhUw
+ t2tXMDle8l/f4XEUTjBpVgh8iJJgs9gDgXQYP2dUfrMYJSptNIlJp6xZ2ef44xTCCMm+TA2nal
+ JObINl5C3U2Qnr717azMPkuYQ3/vNon/2X3HRqLHuWJ9PylhX0ZWsD17IjkcKD2i3bfsCI9dDh
+ 74AAAA=
+X-Change-ID: 20261013-set-default-pool-size-8b27c0fca8e3
+To: qemu-devel@nongnu.org
+Cc: Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>, 
+ Hector Cao <hector.cao@canonical.com>, 
+ Wesley Hershberger <wesley.hershberger@canonical.com>, 
+ alex.ramirez@canonical.com, 
+ =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=985;
+ i=wesley.hershberger@canonical.com; h=from:subject:message-id;
+ bh=mDL9GCPRQPEirMsTYd9ZFnXZh6IABrb63axVsVjs2EM=;
+ b=kA0DAAoB+SiArOI6HbkByyZiAGrOTUKg6JTfKN8tBEDJcor8rJ0BLJkiJmjzi9XxFAx2cUPWd
+ okBswQAAQoAHRYhBCwgfEUvCl6HERtDyvkogKziOh25BQJqzk1CAAoJEPkogKziOh251fEMAIwA
+ KaqBSuL/B3+kTyJ65FgrnGo/I31pcN5PojZ169NHbZXPnS7M7am0WADMTkip+LXi9uhQizB5orl
+ 7zC73UnNRjBxmCSKd0MHKbu9B/ogkvO0nfDfWUs2/on2N4jr43ie6x5ju3AruHfdEVHDs4012jG
+ esecFbjwJ/CbN34vMb5uXmX7c3NbYSLVnkOtXUbkg/sH+IDCuTbvhYI50O8KOraOfwFqQvfRDKX
+ 62CoEh/57lyD463Rita0PaCln9SxMP60pLgI0Hj6mkLboT+/w2vdBB4tQWlUTrhw9tN4sawUzuV
+ wvICP00YDn9CpeoLAMsmYk34R4owJO4N30bgpnBGs0yEmV/HIrTFy9+Ra6HO51gney0UX+RYHe8
+ vM0COQaNk2Um1W5KBieQwMDr7tD3Mke0jGCZ5e78oDmgqBSkHpUDFgY1Npc3LmaB2D3qqoyiXAk
+ fXFb+GGQYxhZgRR/d1koIJewa0YIGCDy/dIVEn52OjUrrqv9WWq/SHsRs/UA==
+X-Developer-Key: i=wesley.hershberger@canonical.com; a=openpgp;
+ fpr=2C207C452F0A5E87111B43CAF92880ACE23A1DB9
+Received-SPF: pass client-ip=185.125.188.122;
+ envelope-from=wesley.hershberger@canonical.com;
+ helo=smtp-relay-internal-0.canonical.com
+X-Spam_score_int: -45
+X-Spam_score: -4.6
+X-Spam_bar: ----
+X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -139,77 +134,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
+Adding Hector's patch since mine depends on it; please let me know if
+a different approach to sending this would have been preferred.
 
-On Tue, Oct 13, 2026 at 5:57=E2=80=AFPM Markus Armbruster <armbru@redhat.co=
-m> wrote:
->
-> Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com> writes:
->
-> > Hi Markus
-> >
-> > On Fri, Oct 9, 2026 at 6:05=E2=80=AFPM Markus Armbruster <armbru@redhat=
-.com> wrote:
-> >>
-> >> Marc-Andr=C3=A9 Lureau has patches to improve QOM introspection.  Late=
-st
-> >> version is
-> >>
-> >>     Subject: [PATCH v5 00/62] qom/qdev: associate properties with QAPI=
- schema types
-> >>     Date: Fri, 11 Sep 2026 20:34:34 +0400
-> >>     Message-Id: <20260911-qom-qapi-v5-0-7732a55b7760@redhat.com>
-> >>     https://lore.kernel.org/qemu-devel/20260911-qom-qapi-v5-0-7732a55b=
-7760@redhat.com/
-> >>
-> >> The first few patches make the QAPI code generator emit type
-> >> information for use by QOM introspection commands.  They refactor code
-> >> to gain access to masked type names, and to make query-qmp-schema not
-> >> elide types QOM introspection might want to refer to.
-> >>
-> >> My series does this in a different way I find simpler.  It is RFC
-> >> because merging it only makes sense if Marc-Andr=C3=A9 finds it useful=
-.
-> >> Marc-Andr=C3=A9, please have a look.
-> >
-> > This is essentially doing the same introspection changes but at a
-> > different level. If you ask me, since it's essentially code cleanup at
-> > this point, I would rather merge my changes first and iterate on top.
-> > But you are the gate keeper, so I wouldn't hold it, we need to move
-> > on... I can rebase on top of your refactoring if you prefer.
->
-> A rebase gives me a cleaner git history, which I like.  Asking you to do
-> it feels a bit unfair, so I did it:
->
->     https://repo.or.cz/qemu/armbru.git/shortlog/refs/heads/qom-props-qapi=
--types-v5-rebased
+Apologies for submitting twice.
 
-Awesome, I am happy with that! If you want to resubmit on ML or send
-PR, up to you
+Signed-off-by: Wesley Hershberger <wesley.hershberger@canonical.com>
+---
+Changes in v2:
+- Rebase on Hector's patch
+- Link to v1: https://lore.kernel.org/qemu-devel/20261013-set-default-pool-size-v1-1-7be19402af6c@canonical.com
 
-I think the only local change I had (with the collected review
-trailers), was BootCertificatesList conversion. But that can be a
-follow up.
+To: qemu-devel@nongnu.org
+Cc: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: Kevin Wolf <kwolf@redhat.com>
 
->
-> I had to change "qapi: add type-infos generator" quite a bit (commit
-> 465ae98da2).  Slightly simpler now.
->t
+---
+Hector Cao (1):
+      util/coroutine: trim sysctl's max_map_count newline before parsing
 
-ok
+Wesley Hershberger (1):
+      util/coroutine: Reduce default idle pool max size
 
-> I resolved a rebase conflict in "qom: convert scalar properties to
-> QAPI-aware registration".
->
-> I dropped "qapi: expose integer signedness and width in introspection"
-> because I don't agree with it, and couldn't be bothered to resolve the
-> conflict (iirc).
->
+ util/qemu-coroutine.c | 15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
+---
+base-commit: 615ece3c406b262996e569f29ea6eed0d81c4d8d
+change-id: 20261013-set-default-pool-size-8b27c0fca8e3
 
-Ok, let's discuss this separately
-
-> I dropped "qapi: select introspectable types directly", because it's not
-> needed anymore.
->
+Best regards,
+-- 
+Wesley Hershberger <wesley.hershberger@canonical.com>
 
 
