@@ -4,96 +4,123 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A4F8CC6B03
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 12:49:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 413C5CC6B03
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 13:03:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGbuy-0006oO-L6; Tue, 13 Oct 2026 08:47:44 -0400
+	id 1xGc8s-0002WE-Ly; Tue, 13 Oct 2026 09:02:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alexander.hansen@9elements.com>)
- id 1xGbut-0006ne-Cz
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 08:47:39 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1xGc87-0002QH-58
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 09:01:28 -0400
+Received: from mail-dy1-x1332.google.com ([2607:f8b0:4864:20::1332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alexander.hansen@9elements.com>)
- id 1xGbup-0008R9-6o
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 08:47:38 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-4a018792ab3so24565495e9.0
- for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 05:47:34 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1xGc83-0001rk-2F
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 09:01:18 -0400
+Received: by mail-dy1-x1332.google.com with SMTP id
+ 5a478bee46e88-35943f55c06so2456888eec.0
+ for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 06:01:14 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1791896473; cv=none;
+ d=google.com; s=arc-20260327;
+ b=KseaizAc/AQyqhR7aNQXEbxVh5UAPkhLeDMuFCeTPIBCXLCbgYGKMFjY7hPOAs/24o
+ zsSCnPL57h490yT4P1vZ5pw0xdYWiP0FfgRVpycaP6yuGVMgrcQci8dZzT5s/8VQC9rB
+ a+K2DuP4rw3lFZMg5rUitTM1rwPVI8lW66OpHXAJ8+LNXo58RF7KsTzhWwVXIGrb65py
+ WX1SVTOWfm6LwZeyZZpPaUtBvNfFMxKJC5fDj1xiENTYERJapCUXykE7918/J0FZFKyL
+ vHVw+v/APhwNPSFh2v9pnStzTZtOBAMUuvTtiTG2YizBZ3TrGbsvCBvzGESjrF3yBAuf
+ 4u6Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=PGY+6jZg5SqUd4l7AQTPRlEv3Ac2ljFgLNWX6rF802E=;
+ fh=QYdzeczGEPk5yMcK3tlyBegDLNI6jcIbMSru5gMZ3ok=;
+ b=R2ONCzCilxykH21Axc75qkjitMWw8hwTCMjw6cs8VG8bQZX5RGzLCBezYWuhYapzay
+ CK/Rzkt+R2XgmCLOKjUTltg18Je4EFoZp0kgvt6d6Btn7dCfJm3xPCdcbwZO7N66/FZL
+ LjebtNLElrnYbMWGckH20Xx/vhFwE7lvgVF9iaPLkgmQ5aYqszMVYuTiPnFU+UOWHMFa
+ IsyYGTJxOZ6iTe1VMzMl5qAmj+ZvJcN7mSSBgvBxrii+lSp/bSAHZMHBTo0Tptg+Q2IY
+ T2gG3LuVWA4Q4hj4EdfiI35MKYM8F8uLu9Mwqn0iCMwONiDSMSxPlU7mHVzmHR1WIigo
+ jQ9g==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=9elements.com; s=google; t=1791895653; x=1792500453; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+ d=redhat.com; s=google; t=1791896473; x=1792501273; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=W0qLBGT/ni2GA1G/LlHRVXUZ6eR3v0vePEgZTdaYQIs=;
- b=HnwySVtDFJNS0RpJd/FYNXcEWPVKUYf+pg2sBurd6qXH/vxKMST1CDP1NTB43+xSWa
- guYqtq5A2B7rAJZ21jjNvHlIrReATj7j6Zgvs0dgZz4IgMUShgmQkstUlRdfOZMHpHHI
- g9gWdwimlXwvRSa2xd+JiXMt82HtVn0RzcmTFWW80+d4tOBAuRc93Z8LA9p8ABMtz5kv
- EGNgfRsdxfqWznD8Zk9wLw6+56t51EMUJ8WepuKkBpMDnlBhWM7mUNvm/ji3BF9owyVZ
- u9ZCIuB58t0iA637XVnMgE8RNkO5pzcA/6zQgGEU3D0uuMt0b14AZDcsSB8UspDyizUg
- fqmw==
+ bh=PGY+6jZg5SqUd4l7AQTPRlEv3Ac2ljFgLNWX6rF802E=;
+ b=LSuu6ve0vPwQb/oQjwAPPXgPmACPFsusqMi4Gj0Egcen9WUS7bp3tiFyWP68JpBDEB
+ VtLWgV25QeqjikqIc9MYhQKuN8jOilt6FF0g3tBcQSyNADCg5TzlFyj4DQr793sZJypv
+ sFwjdieXJaijYj1BNe1lO6NXNAY7//MNDFVkyU1wWYAbpjWvi3NkKEbWxEZJ2/wJAiUt
+ xxiNf7LT6Zr8gfkb62s1ipLdZuZ0CD2W+6WI7Mg2NHO+SoOE5KmCda6O9tIz8kPF+uMR
+ 4GKyUPJbLBlkZ0r9M/n2jaRtMZMh8N8jb9amXtLpsGy34wh6zt4xbO5TU+c9cGIC6Dkh
+ 3JYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791895653; x=1792500453;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ d=1e100.net; s=20260707; t=1791896473; x=1792501273;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=W0qLBGT/ni2GA1G/LlHRVXUZ6eR3v0vePEgZTdaYQIs=;
- b=PCVeak98LkVez2SZv3sVsz8KIyK/f2nKkPSkbSpPXfR6VxGiszTBMT2dQv/dlCm2t+
- SQXlgtr0uhbnNtwIDUzMBAFSN7TJTAJVTyT+56YvIIwa3lrOvcRd/dkp4MkGMtrXt+kn
- Dq/MUZBc6RNl2b38O4wagUZ8u6nuBD+9P2z7/705NG2+Fc0yjR8Jp1tSHOVcoeUBHakk
- FtS0DxPJrRZLF3xOG8SHeTLSUiYyT56dQK/2nf7+j/mpT+r+/DKUmyjgWbejZxp3AUZw
- kia/FgLAKtTLc4OHmCkuIf/KB0ACGv4GtqQeq8Pzv1UO1YWutpjQzXioGsFo6g9hl9k2
- jTaQ==
-X-Gm-Message-State: AFq9FYI8GhXowZsPhk8OmQHk3RKxgpGEVRsBxF62lQXTNmrsxLfcH2FL
- dlFvjN00/Ix6wvbYWLCcI6sindrNUqAC/vY7dc2JCrxjx3SmYNTbY7yL/nAPBFo3zGz6T3/QWVg
- schVh
-X-Gm-Gg: AYBFou2H5I0zMG9rbkBDeagmi41wIUn9F7ixKtBYHdAX/zU98OCdijOzAGE+1iF4Sw9
- Nb/oimjp39z+35L+wyWxwmNJwaaxuZztnxyXFzzUJkfangWjmLKzqLABnsvtTs3CjomdWt7Vb5V
- 7z0jGdMpqs5dZTJ++AsDXjLh3ydW02uF0/bDO38kgQ9aPTBT4sMcbgfkqZO0/xrtpVRbprCSuTZ
- qXy3OwTBRYrFmW3burEJeBOVqpffhR3SOuhsuEeuvD+DMcco2jw24kcXRS16kQozGfmxny0njPz
- xeC1+Sh59uEtbRVq9zFEwIy2gC9cv+A2D5GakNBJLG6eNaphUvInVxH0PQkEIIuXdlO2W7dmqzg
- ewvlDm7atQYqL7p7QEmr+LAlAl1tkz+0DytOX774+GN3GFuyYPrppNDbuQRQt/OeSPZ2XdLBKX3
- 4/A05P3tk5YWolci+UBrj0W8O7e6ZOf5tJA0rH9nSTGUdw56sHNUcs/i92aBFYClkH5ieof7bEi
- 1bh++wHBTP5NDS7EMMflc4=
-X-Received: by 2002:a05:600c:4f14:b0:4a0:89:6727 with SMTP id
- 5b1f17b1804b1-4a18e4adc5cmr250259535e9.16.1791895653405; 
- Tue, 13 Oct 2026 05:47:33 -0700 (PDT)
-Received: from localhost.localdomain ([188.111.3.154])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48de0bc4ebbsm4768847f8f.45.2026.10.13.05.47.32
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 13 Oct 2026 05:47:33 -0700 (PDT)
-From: <alexander.hansen@9elements.com>
-To: qemu-devel@nongnu.org
-Cc: eblot@meta.com, titusr@google.com, clg@kaod.org,
- Alexander Hansen <alexander.hansen@9elements.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>,
- Joel Stanley <joel@jms.id.au>, qemu-arm@nongnu.org
-Subject: [PATCH v8 2/5] ast2600: yosemite4 initial support
-Date: Tue, 13 Oct 2026 14:46:46 +0200
-Message-ID: <20261013124649.194808-3-alexander.hansen@9elements.com>
-X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261013124649.194808-1-alexander.hansen@9elements.com>
-References: <20261013124649.194808-1-alexander.hansen@9elements.com>
+ bh=PGY+6jZg5SqUd4l7AQTPRlEv3Ac2ljFgLNWX6rF802E=;
+ b=AGYoS9m2Hp3fNE48tNnqCwBISBMRIFHPx1N3CAlZipNxWn3mv3PGP1fJ9ToQXLpqXT
+ ywyR21GOGn004ujPeJzl/yVpu1Cyk2rJMOH7mJ039XLMlkiQ83Agu4l7/64euGA77tfx
+ QDYybwkURf9/WV3ICEhcmwDdMZR7McCnYvC1PGW0mG9BYN4Dinu0lzXr4w8Wj1/IeZII
+ UUervc6h2POCA15kyXaaEenPGP8xK3eXrFmL8SF6UgR5Oi8dPQTaGMJ//cuRmRXjiMmc
+ Jar6ZjbAasqLdXMihQJ/4jwoChvmenh5u7sxAo5UKH3SH9n4DVuo6FURtXVPzP5VJLve
+ 4WbA==
+X-Gm-Message-State: AFq9FYIRrlPWCwvXWbZR+AU9Pi8DW2ripdNBT0wwe2TojZuf0TSR54J/
+ t2TeNh7znfXYZGomDxs4M9owxkKJRz1SUjPea4PBStxdKzH9UaphzMOGMYnOZRpRjeQ6vvEQFjr
+ zCQmJyjiCheC//CIc0G/3qtuOUmLt9MA=
+X-Gm-Gg: AYBFou2GRX9aVGA6fpCbY+fzVl2LKKxi654USYvKawOtXWJhgPoK7y+z38RNV7Iz9L9
+ mEu+LI2EdSL38B/ZAmFwtWnOBPQ2Z0XKzdi5kdF1s7/nX1xgjyqNl13dciYFH7vaLcFBIPlsq5U
+ W2HpB2RQbi+OntCvw7/tEHkNkxmftnIJ9vpiehTe8ReJA4YhcLL8wNznXsGknT+lv/XTfT8+vgf
+ r0++/x4R65zFlfSdTVOiMokKWqzQxo20FTDlYKX3JdRdhpT0b/EbA+vUdUvZteyEA5GVDus2t6u
+ CuE7yEQRSfRaOFDXuNiYl9T2fadOw+Be8Am8lAzRxdHc0cSgCiXl8U35mDz841pwrEzrQLwyf+L
+ pMn4QQsM5+kA=
+X-Received: by 2002:a05:693c:811a:b0:351:7e5d:3caf with SMTP id
+ 5a478bee46e88-3537dfb8c44mr17683397eec.7.1791896472825; Tue, 13 Oct 2026
+ 06:01:12 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=alexander.hansen@9elements.com; helo=mail-wm1-x329.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+References: <20261013-query-reg-v2-0-6f95a2e139a9@redhat.com>
+ <20261013-query-reg-v2-4-6f95a2e139a9@redhat.com>
+ <87ik36gfe6.fsf@draig.linaro.org>
+In-Reply-To: <87ik36gfe6.fsf@draig.linaro.org>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Date: Tue, 13 Oct 2026 17:00:59 +0400
+X-Gm-Features: AclHuK_blaIwYzH5KQnLuLReYYXS7Ov9FVamAZSe3X0WjS8D3Um413MnIE6moeg
+Message-ID: <CAJ+F1CK938-GciwPJj_KjtvKZ04fvKhi8UcSHHORmoboVURzeQ@mail.gmail.com>
+Subject: Re: [PATCH v2 04/10] gdbstub: add gdb_register_internal_coprocessor()
+To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, "Dr. David Alan Gilbert" <dave@treblig.org>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
+ Zhao Liu <zhao1.liu@intel.com>, Peter Maydell <peter.maydell@linaro.org>, 
+ Chinmay Rath <rathc@linux.ibm.com>, Nicholas Piggin <npiggin@gmail.com>, 
+ Glenn Miles <milesg@linux.ibm.com>, Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ Chao Liu <chao.liu@processmission.com>, Max Filippov <jcmvbkbc@gmail.com>,
+ qemu-arm@nongnu.org, qemu-ppc@nongnu.org, qemu-riscv@nongnu.org, 
+ Paolo Bonzini <pbonzini@redhat.com>, Laurent Vivier <laurent@vivier.eu>, 
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Artyom Tarasenko <atar4qemu@gmail.com>, Helge Deller <deller@gmx.de>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
+ Warner Losh <imp@bsdimp.com>, Kyle Evans <kevans@freebsd.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1332;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-dy1-x1332.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
+ FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.25,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,385 +136,280 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alexander Hansen <alexander.hansen@9elements.com>
+Hi
 
-Initial patch based on [1] to support yosemite v4 bmc emulation.
+On Tue, Oct 13, 2026 at 12:51=E2=80=AFPM Alex Benn=C3=A9e <alex.bennee@lina=
+ro.org> wrote:
+>
+> Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com> writes:
+>
+> > Add support for registering coprocessor features that are only visible
+> > to QEMU's internal APIs (HMP monitor $register expressions, plugins) bu=
+t
+> > hidden from GDB's target description XML.
+> >
+> > When a feature is registered as internal:
+> > - It is excluded from the target.xml sent to GDB
+> > - Its XML is not served via qXfer:features:read
+> > - 'p'/'P' packets for internal register numbers return E14
+> >
+> > This is useful for exposing system registers to the HMP monitor without
+> > affecting GDB's register namespace. Exposing aliases or synthetic
+> > registers through GDB's target description can cause problems: name
+> > collisions with GDB's pseudo-registers, independent register caching,
+> > and missing DWARF unwind rules.
+>
+> Hmm are they *that* useful for HMP then?
+>
+> The front-ends do limit what they export to gdb (see for example
+> ARM_CP_NO_GDB) generally because reading them causes side-effects. Those
+> restrictions are also a reason to limit them from the HMP interface.
 
-The goal of this machine support is to support OpenBMC development.
+I am not a user, but I can imagine they are useful for developers.
 
-Reference linux devicetree from openbmc linux is [2].
+I would like to be able to implement "info registers" purely based on
+QMP for ex.
 
-Status:
-- Enclosure FRU:         showing up
-- Management Board FRU:  showing up
-- Blade Board FRU:       showing up
-- Blade Board sensors:   not implemented
-- Blade Chassis FRU:     showing up
-- Fan Board FRU:         both showing up
-- Fan Board sensors:     supported
-
-Overall the emulation is incomplete but already helpful in development
-and testing.
-
-The focus of this initial support is on the FRU eeproms and fanboard
-sensors.
-
-Tested: booted an OpenBMC image for yosemite4 target.
-
-References:
-[1] https://github.com/9elements/qemu/commit/32139f913c2bd0ebe4bd26c46765861f6f9f2d49
-[2] arch/arm/boot/dts/aspeed/aspeed-bmc-facebook-yosemite4.dts
-[3] https://github.com/legoater/qemu-aspeed-boot/pull/5
-
-Cc: Emmanuel Blot <eblot@meta.com>
-Cc: Titus Rwantare <titusr@google.com>
-Cc: "Cédric Le Goater" <clg@kaod.org> (maintainer:ASPEED BMCs)
-Cc: Peter Maydell <peter.maydell@linaro.org> (maintainer:ASPEED BMCs)
-Cc: Steven Lee <steven_lee@aspeedtech.com> (reviewer:ASPEED BMCs)
-Cc: Troy Lee <leetroy@gmail.com> (reviewer:ASPEED BMCs)
-Cc: Jamin Lin <jamin_lin@aspeedtech.com> (reviewer:ASPEED BMCs)
-Cc: Kane Chen <kane_chen@aspeedtech.com> (reviewer:ASPEED BMCs)
-Cc: Andrew Jeffery <andrew@codeconstruct.com.au> (reviewer:ASPEED BMCs)
-Cc: Joel Stanley <joel@jms.id.au> (reviewer:ASPEED BMCs)
-Cc: qemu-arm@nongnu.org (open list:ASPEED BMCs)
-Cc: qemu-devel@nongnu.org (open list:All patches CC here)
-Signed-off-by: Alexander Hansen <alexander.hansen@9elements.com>
----
- docs/system/arm/aspeed.rst   |   5 +-
- hw/arm/aspeed_ast2600_fby4.c | 290 +++++++++++++++++++++++++++++++++++
- hw/arm/meson.build           |   1 +
- 3 files changed, 294 insertions(+), 2 deletions(-)
- create mode 100644 hw/arm/aspeed_ast2600_fby4.c
-
-diff --git a/docs/system/arm/aspeed.rst b/docs/system/arm/aspeed.rst
-index 2d51ceeb84..f719a5cebb 100644
---- a/docs/system/arm/aspeed.rst
-+++ b/docs/system/arm/aspeed.rst
-@@ -1,5 +1,5 @@
--Aspeed family boards (``anacapa-bmc``, ``ast2500-evb``, ``ast2600-evb``, ``bletchley-bmc``, ``fuji-bmc``, ``gb200nvl-bmc``, ``fby35-bmc``, ``g220a-bmc``, ``palmetto-bmc``, ``quanta-q71l-bmc``, ``rainier-bmc``, ``romulus-bmc``, ``supermicrox11-bmc``, ``supermicrox11spi-bmc``, ``tiogapass-bmc``, ``witherspoon-bmc``, ``yosemitev2-bmc``)
--===============================================================================================================================================================================================================================================================================================================================================
-+Aspeed family boards (``anacapa-bmc``, ``ast2500-evb``, ``ast2600-evb``, ``bletchley-bmc``, ``fuji-bmc``, ``gb200nvl-bmc``, ``fby35-bmc``, ``fby4-bmc``, ``g220a-bmc``, ``palmetto-bmc``, ``quanta-q71l-bmc``, ``rainier-bmc``, ``romulus-bmc``, ``supermicrox11-bmc``, ``supermicrox11spi-bmc``, ``tiogapass-bmc``, ``witherspoon-bmc``, ``yosemitev2-bmc``)
-+=============================================================================================================================================================================================================================================================================================================================================================
- 
- The QEMU Aspeed machines model BMCs of various OpenPOWER systems and
- Aspeed evaluation boards. They are based on different releases of the
-@@ -33,6 +33,7 @@ AST2600 SoC based machines :
- - ``fuji-bmc``             Facebook Fuji BMC
- - ``bletchley-bmc``        Facebook Bletchley BMC
- - ``fby35-bmc``            Facebook fby35 BMC
-+- ``fby4-bmc``             Facebook fby4 BMC
- - ``anacapa-bmc``          Facebook Anacapa BMC
- - ``gb200nvl-bmc``         Nvidia GB200nvl BMC
- 
-diff --git a/hw/arm/aspeed_ast2600_fby4.c b/hw/arm/aspeed_ast2600_fby4.c
-new file mode 100644
-index 0000000000..8c14768030
---- /dev/null
-+++ b/hw/arm/aspeed_ast2600_fby4.c
-@@ -0,0 +1,290 @@
-+/*
-+ * Facebook Yosemite V4
-+ *
-+ * Copyright 2026 9elements.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "hw/sensor/adc128d818.h"
-+#include "hw/arm/aspeed.h"
-+#include "hw/arm/aspeed_soc.h"
-+#include "hw/nvram/eeprom_at24c.h"
-+#include "hw/i2c/i2c_mux_pca954x.h"
-+#include "hw/gpio/pca9552.h"
-+#include "hw/sensor/tmp105.h"
-+
-+#define FBY4_BMC_RAM_SIZE (2 * GiB)
-+#define TYPE_DS1338 "ds1338"
-+
-+/* START OF EEPROM CONTENTS */
-+
-+/*
-+ *./frugen -s board.mfg="Wiwynn" \
-+ * --set board.pname="Fan Board FSC-MAX ADC-TI LED-NXP EFUSE-MAX" \
-+ * --set text:board.pn="BRD-PN-345" \
-+ * --board-date "10/1/2017 12:58:00" \
-+ * --set board.serial="123456" \
-+ * --set product.pname="Yosemite V4" \
-+ * --set product.mfg="Wiwynn" \
-+ * --set product.ver="v1.1" \
-+ * --set product.serial="123456" \
-+ * --set product.atag="PLACEHOLDER" \
-+ * --set product.custom="Fanboard Custom1" \
-+ * --set product.custom.1="Fanboard Custom2" \
-+ * --set text:product.pn="PN-345" \
-+ * fru-yv4-fanboard.bin
-+ */
-+/* EM Config: yosemite4_fanboard_fsc_max_adc_ti_led_nxp_ons_efuse_max.json */
-+/* Yosemite4 fan board */
-+static const uint8_t fru_yv4_fanboard_bin[] = {
-+    0x01, 0x00, 0x00, 0x01, 0x0b, 0x00, 0x00, 0xf3, 0x01, 0x0a, 0x19, 0xce,
-+    0xc2, 0xa8, 0xc6, 0x57, 0x69, 0x77, 0x79, 0x6e, 0x6e, 0xea, 0x46, 0x61,
-+    0x6e, 0x20, 0x42, 0x6f, 0x61, 0x72, 0x64, 0x20, 0x46, 0x53, 0x43, 0x2d,
-+    0x4d, 0x41, 0x58, 0x20, 0x41, 0x44, 0x43, 0x2d, 0x54, 0x49, 0x20, 0x4c,
-+    0x45, 0x44, 0x2d, 0x4e, 0x58, 0x50, 0x20, 0x45, 0x46, 0x55, 0x53, 0x45,
-+    0x2d, 0x4d, 0x41, 0x58, 0x85, 0x91, 0x34, 0x51, 0x95, 0x05, 0xca, 0x42,
-+    0x52, 0x44, 0x2d, 0x50, 0x4e, 0x2d, 0x33, 0x34, 0x35, 0xc0, 0xc1, 0x00,
-+    0x00, 0x00, 0x00, 0xdb, 0x01, 0x09, 0x19, 0xc6, 0x57, 0x69, 0x77, 0x79,
-+    0x6e, 0x6e, 0xcb, 0x59, 0x6f, 0x73, 0x65, 0x6d, 0x69, 0x74, 0x65, 0x20,
-+    0x56, 0x34, 0xc6, 0x50, 0x4e, 0x2d, 0x33, 0x34, 0x35, 0xc4, 0x76, 0x31,
-+    0x2e, 0x31, 0x85, 0x91, 0x34, 0x51, 0x95, 0x05, 0x89, 0x30, 0x1b, 0x8e,
-+    0x25, 0xfa, 0xb2, 0x64, 0x29, 0x03, 0xc0, 0xd0, 0x46, 0x61, 0x6e, 0x62,
-+    0x6f, 0x61, 0x72, 0x64, 0x20, 0x43, 0x75, 0x73, 0x74, 0x6f, 0x6d, 0x32,
-+    0xc1, 0x00, 0x00, 0x9d
-+};
-+static const size_t fru_yv4_fanboard_bin_len = sizeof(fru_yv4_fanboard_bin);
-+
-+/*
-+ *./frugen -s board.mfg="Wiwynn" \
-+ * --set board.pname="Sentinel Dome without Retimer" \
-+ * --set text:board.pn="BRD-PN-345" \
-+ * --board-date "10/1/2017 12:58:00" \
-+ * --set board.serial="123456" \
-+ * --set product.pname="Yosemite V4" \
-+ * --set product.mfg="Wiwynn" \
-+ * --set product.ver="v1.1" \
-+ * --set product.serial="123456" \
-+ * --set product.atag="PLACEHOLDER" \
-+ * --set product.custom="Yosemite V4 T1" \
-+ * --set product.custom.1="Yosemite V4 T1" \
-+ * --set text:product.pn="PN-345" \
-+ * fru-yv4-sentineldome-board.bin
-+ */
-+/* product.cust maps to PRODUCT_INFO_AM2 */
-+/* EM Config: yosemite4_sentineldome_t1.json */
-+/* Yosemite4 Sentinel Dome without Retimer Boards */
-+static const uint8_t fru_yv4_sentineldome_board_bin[] = {
-+    0x01, 0x00, 0x00, 0x01, 0x09, 0x00, 0x00, 0xf5, 0x01, 0x08, 0x19, 0xce,
-+    0xc2, 0xa8, 0xc6, 0x57, 0x69, 0x77, 0x79, 0x6e, 0x6e, 0xdd, 0x53, 0x65,
-+    0x6e, 0x74, 0x69, 0x6e, 0x65, 0x6c, 0x20, 0x44, 0x6f, 0x6d, 0x65, 0x20,
-+    0x77, 0x69, 0x74, 0x68, 0x6f, 0x75, 0x74, 0x20, 0x52, 0x65, 0x74, 0x69,
-+    0x6d, 0x65, 0x72, 0x85, 0x91, 0x34, 0x51, 0x95, 0x05, 0xca, 0x42, 0x52,
-+    0x44, 0x2d, 0x50, 0x4e, 0x2d, 0x33, 0x34, 0x35, 0xc0, 0xc1, 0x00, 0x78,
-+    0x01, 0x09, 0x19, 0xc6, 0x57, 0x69, 0x77, 0x79, 0x6e, 0x6e, 0xcb, 0x59,
-+    0x6f, 0x73, 0x65, 0x6d, 0x69, 0x74, 0x65, 0x20, 0x56, 0x34, 0xc6, 0x50,
-+    0x4e, 0x2d, 0x33, 0x34, 0x35, 0xc4, 0x76, 0x31, 0x2e, 0x31, 0x85, 0x91,
-+    0x34, 0x51, 0x95, 0x05, 0x89, 0x30, 0x1b, 0x8e, 0x25, 0xfa, 0xb2, 0x64,
-+    0x29, 0x03, 0xc0, 0xce, 0x59, 0x6f, 0x73, 0x65, 0x6d, 0x69, 0x74, 0x65,
-+    0x20, 0x56, 0x34, 0x20, 0x54, 0x31, 0xc1, 0x00, 0x00, 0x00, 0x00, 0xeb
-+};
-+static const size_t fru_yv4_sentineldome_board_bin_len =
-+    sizeof(fru_yv4_sentineldome_board_bin);
-+
-+/*
-+ *./frugen -s board.mfg="Wiwynn" \
-+ * --set board.pname="Sentinel Dome" \
-+ * --set text:board.pn="BRD-PN-345" \
-+ * --board-date "10/1/2017 12:58:00" \
-+ * --set board.serial="123456" \
-+ * --set product.pname="Yosemite V4" \
-+ * --set product.mfg="Wiwynn" \
-+ * --set product.ver="v1.1" \
-+ * --set product.serial="123456" \
-+ * --set product.atag="PLACEHOLDER" \
-+ * --set text:product.pn="PN-345" \
-+ * fru-yv4-sentineldome-chassis.bin
-+ */
-+/* EM Config: yosemite4_sentineldome_chassis.json */
-+/* Yosemite 4 Sentinel Dome Chassis FRU */
-+static const uint8_t fru_yv4_sentineldome_chassis_bin[] = {
-+    0x01, 0x00, 0x00, 0x01, 0x07, 0x00, 0x00, 0xf7, 0x01, 0x06, 0x19, 0xce,
-+    0xc2, 0xa8, 0xc6, 0x57, 0x69, 0x77, 0x79, 0x6e, 0x6e, 0xcd, 0x53, 0x65,
-+    0x6e, 0x74, 0x69, 0x6e, 0x65, 0x6c, 0x20, 0x44, 0x6f, 0x6d, 0x65, 0x85,
-+    0x91, 0x34, 0x51, 0x95, 0x05, 0xca, 0x42, 0x52, 0x44, 0x2d, 0x50, 0x4e,
-+    0x2d, 0x33, 0x34, 0x35, 0xc0, 0xc1, 0x00, 0xb6, 0x01, 0x07, 0x19, 0xc6,
-+    0x57, 0x69, 0x77, 0x79, 0x6e, 0x6e, 0xcb, 0x59, 0x6f, 0x73, 0x65, 0x6d,
-+    0x69, 0x74, 0x65, 0x20, 0x56, 0x34, 0xc6, 0x50, 0x4e, 0x2d, 0x33, 0x34,
-+    0x35, 0xc4, 0x76, 0x31, 0x2e, 0x31, 0x85, 0x91, 0x34, 0x51, 0x95, 0x05,
-+    0x89, 0x30, 0x1b, 0x8e, 0x25, 0xfa, 0xb2, 0x64, 0x29, 0x03, 0xc0, 0xc1,
-+    0x00, 0x00, 0x00, 0x59
-+};
-+static const size_t fru_yv4_sentineldome_chassis_bin_len =
-+    sizeof(fru_yv4_sentineldome_chassis_bin);
-+
-+/*
-+ *./frugen -s board.mfg="Wiwynn" \
-+ * --set board.pname="Management Board wBMC" \
-+ * --set text:board.pn="BRD-PN-345" \
-+ * --board-date "10/1/2017 12:58:00" \
-+ * --set board.serial="123456" \
-+ * --set product.pname="Yosemite V4" \
-+ * --set product.mfg="Wiwynn" \
-+ * --set product.ver="v1.1" \
-+ * --set product.serial="123456" \
-+ * --set product.atag="PLACEHOLDER" \
-+ * --set text:product.pn="PN-345" \
-+ * fru-yv4-eclosure.bin
-+ */
-+/* EM Config: yosemite4_chassis.json, yosemite4.json */
-+/* Yosemite 4 Sentinel Dome Enclosure FRU */
-+static const uint8_t fru_yv4_eclosure_bin[] = {
-+    0x01, 0x00, 0x00, 0x01, 0x08, 0x00, 0x00, 0xf6, 0x01, 0x07, 0x19, 0xce,
-+    0xc2, 0xa8, 0xc6, 0x57, 0x69, 0x77, 0x79, 0x6e, 0x6e, 0xd5, 0x4d, 0x61,
-+    0x6e, 0x61, 0x67, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x20, 0x42, 0x6f, 0x61,
-+    0x72, 0x64, 0x20, 0x77, 0x42, 0x4d, 0x43, 0x85, 0x91, 0x34, 0x51, 0x95,
-+    0x05, 0xca, 0x42, 0x52, 0x44, 0x2d, 0x50, 0x4e, 0x2d, 0x33, 0x34, 0x35,
-+    0xc0, 0xc1, 0x00, 0x26, 0x01, 0x07, 0x19, 0xc6, 0x57, 0x69, 0x77, 0x79,
-+    0x6e, 0x6e, 0xcb, 0x59, 0x6f, 0x73, 0x65, 0x6d, 0x69, 0x74, 0x65, 0x20,
-+    0x56, 0x34, 0xc6, 0x50, 0x4e, 0x2d, 0x33, 0x34, 0x35, 0xc4, 0x76, 0x31,
-+    0x2e, 0x31, 0x85, 0x91, 0x34, 0x51, 0x95, 0x05, 0x89, 0x30, 0x1b, 0x8e,
-+    0x25, 0xfa, 0xb2, 0x64, 0x29, 0x03, 0xc0, 0xc1, 0x00, 0x00, 0x00, 0x59
-+};
-+static const size_t fru_yv4_eclosure_bin_len = sizeof(fru_yv4_eclosure_bin);
-+
-+/* END OF EEPROM CONTENTS */
-+
-+static void fby4_i2c_init_fanboard(I2CSlave *fan_mux, size_t eepromSize)
-+{
-+    /* 2 fan boards */
-+    for (int i = 0; i <= 1; i++) {
-+        /* downstream bus */
-+        I2CBus *bus = pca954x_i2c_get_bus(fan_mux, i);
-+
-+        /* ti,adc128d818 @ 0x1f    (adc) */
-+        i2c_slave_create_simple(bus, TYPE_ADC128D818, 0x1f);
-+
-+        /* maxim,max31790 @ 0x20   (pwm) */
-+        /* TODO */
-+
-+        /*
-+         * ti,tca6424 @ 0x22       (gpio)
-+         * linux handles tca6424 with PCA953X_TYPE, same as pca9535
-+         * { "pca9535", 16 | PCA953X_TYPE | PCA_INT, },
-+         * { "tca6424", 24 | PCA953X_TYPE | PCA_INT, },
-+         * so we _could_ be fine here unless more than 16 gpios are used
-+         */
-+        i2c_slave_create_simple(bus, TYPE_PCA9535, 0x22);
-+
-+        /*
-+         * NOTE: above works and could use for gpio presence:
-+         * $ gpioget gpiochip2 2
-+         * 1
-+         */
-+
-+        /* maxim,max31790 @ 0x2f   (pwm) */
-+        /* TODO */
-+
-+        /* maxim,max11615 @ 0x33   (adc) */
-+        /* TODO */
-+
-+        at24c_eeprom_init_rom(bus, 0x52, eepromSize, fru_yv4_fanboard_bin,
-+                              fru_yv4_fanboard_bin_len);
-+
-+        /* LED blink driver / gpio expander */
-+        /* nxp,pca9552 @ 0x61   (gpio) */
-+        i2c_slave_create_simple(bus, TYPE_PCA9552, 0x61);
-+    }
-+}
-+
-+static void fby4_i2c_init_blade_chassis(I2CBus *bus, size_t eepromSize)
-+{
-+    /* Sentinel Dome Blade EEPROMS */
-+
-+    /* Board */
-+    at24c_eeprom_init_rom(bus, 0x54, eepromSize, fru_yv4_sentineldome_board_bin,
-+                          fru_yv4_sentineldome_board_bin_len);
-+
-+    /* Chassis */
-+    at24c_eeprom_init_rom(bus, 0x55, eepromSize,
-+                          fru_yv4_sentineldome_chassis_bin,
-+                          fru_yv4_sentineldome_chassis_bin_len);
-+}
-+
-+static void fby4_i2c_init_enclosure(I2CBus *busEnclosure)
-+{
-+    /* temperature-sensor@0x48 */
-+    i2c_slave_create_simple(busEnclosure, TYPE_TMP75, 0x48);
-+
-+    /* Enclosure (EM Config: yosemite4_chassis.json, yosemite4.json) */
-+    /* TODO: unsure if it's 0x50 or 0x54 */
-+    at24c_eeprom_init_rom(busEnclosure, 0x50, 128 * KiB, fru_yv4_eclosure_bin,
-+                          fru_yv4_eclosure_bin_len);
-+
-+    /* rtc@0x6f - nct3018y */
-+    i2c_slave_create_simple(busEnclosure, TYPE_DS1338, 0x6f);
-+}
-+
-+static void fby4_i2c_init(AspeedMachineState *bmc)
-+{
-+    AspeedSoCState *soc = bmc->soc;
-+    I2CBus *i2c[16];
-+
-+    for (int i = 0; i < 16; i++) {
-+        i2c[i] = aspeed_i2c_get_bus(&soc->i2c, i);
-+    }
-+
-+    I2CSlave *muxSlot1To4 = i2c_slave_create_simple(i2c[8], TYPE_PCA9544, 0x70);
-+
-+    /*
-+     * unused for performance reason
-+     */
-+    I2CSlave *muxSlot5To8 = i2c_slave_create_simple(i2c[9], TYPE_PCA9544, 0x70);
-+    (void)muxSlot5To8;
-+
-+    I2CSlave *muxEnclosure =
-+        i2c_slave_create_simple(i2c[12], TYPE_PCA9544, 0x70);
-+    I2CBus *busEnclosure = pca954x_i2c_get_bus(muxEnclosure, 0);
-+
-+    /* downstream bus */
-+    I2CBus *busSlot1 = pca954x_i2c_get_bus(muxSlot1To4, 0);
-+    I2CBus *busSlot2 = pca954x_i2c_get_bus(muxSlot1To4, 1);
-+    I2CBus *busSlot3 = pca954x_i2c_get_bus(muxSlot1To4, 2);
-+    (void)busSlot3;
-+    I2CBus *busSlot4 = pca954x_i2c_get_bus(muxSlot1To4, 3);
-+    (void)busSlot4;
-+
-+    fby4_i2c_init_enclosure(busEnclosure);
-+
-+    /* there is 8 blade chassis, but we only emulate 2 for performance reason */
-+    fby4_i2c_init_blade_chassis(busSlot1, 128 * KiB);
-+    fby4_i2c_init_blade_chassis(busSlot2, 128 * KiB);
-+
-+    /* Yv4 fanboard connection */
-+    I2CSlave *fan_mux = i2c_slave_create_simple(i2c[14], TYPE_PCA9546, 0x74);
-+
-+    fby4_i2c_init_fanboard(fan_mux, 128 * KiB);
-+}
-+
-+static void aspeed_machine_fby4_class_init(ObjectClass *oc, const void *data)
-+{
-+    MachineClass *mc = MACHINE_CLASS(oc);
-+    AspeedMachineClass *amc = ASPEED_MACHINE_CLASS(oc);
-+
-+    mc->desc = "Facebook fby4 BMC (Cortex-A7)";
-+    amc->fmc_model = "mx66l1g45g";
-+    amc->num_cs = 2;
-+    amc->macs_mask = ASPEED_MAC3_ON;
-+    amc->i2c_init = fby4_i2c_init;
-+    mc->default_ram_size = FBY4_BMC_RAM_SIZE;
-+    aspeed_machine_class_init_cpus_defaults(mc);
-+}
-+
-+static const TypeInfo aspeed_ast2600_fby4_types[] = { {
-+    .name = MACHINE_TYPE_NAME("fby4-bmc"),
-+    .parent = MACHINE_TYPE_NAME("ast2600-evb"),
-+    .class_init = aspeed_machine_fby4_class_init,
-+} };
-+
-+DEFINE_TYPES(aspeed_ast2600_fby4_types)
-diff --git a/hw/arm/meson.build b/hw/arm/meson.build
-index bcc068de04..38fd7b35f0 100644
---- a/hw/arm/meson.build
-+++ b/hw/arm/meson.build
-@@ -61,6 +61,7 @@ arm_common_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files(
-   'aspeed_ast2600_catalina.c',
-   'aspeed_ast2600_evb.c',
-   'aspeed_ast2600_fby35.c',
-+  'aspeed_ast2600_fby4.c',
-   'aspeed_ast2600_fuji.c',
-   'aspeed_ast2600_gb200nvl.c',
-   'aspeed_ast2600_rainier.c',
--- 
-2.56.0
-
+>
+> >
+> > Internal features must be registered after all GDB-visible features to
+> > keep remote register numbering consistent. This ordering is enforced
+> > with an assertion.
+> >
+> > Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> > ---
+> >  gdbstub/gdbstub.c      | 71 ++++++++++++++++++++++++++++++++++++++++++=
+++------
+> >  include/exec/gdbstub.h | 21 +++++++++++++++
+> >  2 files changed, 84 insertions(+), 8 deletions(-)
+> >
+> > diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
+> > index 912e31b66744..ac0f76d62333 100644
+> > --- a/gdbstub/gdbstub.c
+> > +++ b/gdbstub/gdbstub.c
+> > @@ -54,6 +54,7 @@ typedef struct GDBRegisterState {
+> >      gdb_get_reg_cb get_reg;
+> >      gdb_set_reg_cb set_reg;
+> >      const GDBFeature *feature;
+> > +    bool internal; /* hidden from GDB, accessible via API/monitor */
+> >  } GDBRegisterState;
+> >
+> >  GDBState gdbserver_state;
+> > @@ -385,6 +386,11 @@ static const char *get_feature_xml(const char *p, =
+const char **newp,
+> >              }
+> >              for (guint i =3D 0; i < cpu->gdb_regs->len; i++) {
+> >                  r =3D &g_array_index(cpu->gdb_regs, GDBRegisterState, =
+i);
+> > +                /* The core target.xml feature must never be internal.=
+ */
+> > +                g_assert(i > 0 || !r->internal);
+> > +                if (r->internal) {
+> > +                    continue;
+> > +                }
+> >                  g_ptr_array_add(
+> >                      xml,
+> >                      g_markup_printf_escaped("<xi:include href=3D\"%s\"=
+/>",
+> > @@ -400,6 +406,9 @@ static const char *get_feature_xml(const char *p, c=
+onst char **newp,
+> >      /* Is it one of the features? */
+> >      for (guint i =3D 0; i < cpu->gdb_regs->len; i++) {
+> >          r =3D &g_array_index(cpu->gdb_regs, GDBRegisterState, i);
+> > +        if (r->internal) {
+> > +            continue;
+> > +        }
+> >          if (strncmp(p, r->feature->xmlname, len) =3D=3D 0) {
+> >              return r->feature->xml;
+> >          }
+> > @@ -563,13 +572,14 @@ int gdb_write_register(CPUState *cpu, uint8_t *me=
+m_buf, int reg)
+> >
+> >  static void gdb_register_feature(CPUState *cpu, int base_reg,
+> >                                   gdb_get_reg_cb get_reg, gdb_set_reg_c=
+b set_reg,
+> > -                                 const GDBFeature *feature)
+> > +                                 const GDBFeature *feature, bool inter=
+nal)
+> >  {
+> >      GDBRegisterState s =3D {
+> >          .base_reg =3D base_reg,
+> >          .get_reg =3D get_reg,
+> >          .set_reg =3D set_reg,
+> > -        .feature =3D feature
+> > +        .feature =3D feature,
+> > +        .internal =3D internal
+> >      };
+> >
+> >      trace_gdbxml_register_feature(feature->name, feature->xmlname,
+> > @@ -605,7 +615,7 @@ void gdb_init_cpu(CPUState *cpu)
+> >          assert(feature->base_reg =3D=3D 0);
+> >          gdb_register_feature(cpu, 0,
+> >                               cc->gdb_read_register, cc->gdb_write_regi=
+ster,
+> > -                             feature);
+> > +                             feature, false);
+> >          cpu->gdb_next_base_reg =3D cpu->gdb_num_g_regs =3D feature->nu=
+m_regs;
+> >      } else {
+> >          cpu->gdb_next_base_reg =3D cpu->gdb_num_g_regs =3D cc->gdb_num=
+_core_regs;
+> > @@ -616,20 +626,26 @@ void gdb_init_cpu(CPUState *cpu)
+> >                            cc->gdb_num_core_regs);
+> >  }
+> >
+> > -void gdb_register_coprocessor(CPUState *cpu,
+> > -                              gdb_get_reg_cb get_reg, gdb_set_reg_cb s=
+et_reg,
+> > -                              const GDBFeature *feature)
+> > +static void do_gdb_register_coprocessor(CPUState *cpu,
+> > +                                        gdb_get_reg_cb get_reg,
+> > +                                        gdb_set_reg_cb set_reg,
+> > +                                        const GDBFeature *feature,
+> > +                                        bool internal)
+> >  {
+> >      GDBRegisterState *s;
+> >      guint i;
+> >      int base_reg =3D cpu->gdb_next_base_reg;
+> >
+> >      for (i =3D 0; i < cpu->gdb_regs->len; i++) {
+> > -        /* Check for duplicates.  */
+> >          s =3D &g_array_index(cpu->gdb_regs, GDBRegisterState, i);
+> > +        /* Check for duplicates.  */
+> >          if (s->feature =3D=3D feature) {
+> >              return;
+> >          }
+> > +        /* GDB-visible features must not follow internal ones.  */
+> > +        if (!internal) {
+> > +            g_assert(!s->internal);
+> > +        }
+> >      }
+> >
+> >      if (base_reg < feature->base_reg) {
+> > @@ -637,12 +653,27 @@ void gdb_register_coprocessor(CPUState *cpu,
+> >                                                feature->base_reg);
+> >          base_reg =3D feature->base_reg;
+> >      }
+> > -    gdb_register_feature(cpu, base_reg, get_reg, set_reg, feature);
+> > +    gdb_register_feature(cpu, base_reg, get_reg, set_reg, feature, int=
+ernal);
+> >
+> >      /* Add to end of list.  */
+> >      cpu->gdb_next_base_reg =3D base_reg + feature->num_regs;
+> >  }
+> >
+> > +void gdb_register_coprocessor(CPUState *cpu,
+> > +                              gdb_get_reg_cb get_reg, gdb_set_reg_cb s=
+et_reg,
+> > +                              const GDBFeature *feature)
+> > +{
+> > +    do_gdb_register_coprocessor(cpu, get_reg, set_reg, feature, false)=
+;
+> > +}
+> > +
+> > +void gdb_register_internal_coprocessor(CPUState *cpu,
+> > +                                       gdb_get_reg_cb get_reg,
+> > +                                       gdb_set_reg_cb set_reg,
+> > +                                       const GDBFeature *feature)
+> > +{
+> > +    do_gdb_register_coprocessor(cpu, get_reg, set_reg, feature, true);
+> > +}
+> > +
+> >  void gdb_unregister_coprocessor_all(CPUState *cpu)
+> >  {
+> >      /*
+> > @@ -1223,6 +1254,18 @@ static void handle_remove_bp(GArray *params, voi=
+d *user_ctx)
+> >   * the remote gdb to fallback to older methods.
+> >   */
+> >
+> > +static bool gdb_register_is_internal(CPUState *cpu, int reg)
+> > +{
+> > +    for (guint i =3D 0; i < cpu->gdb_regs->len; i++) {
+> > +        GDBRegisterState *r =3D &g_array_index(cpu->gdb_regs, GDBRegis=
+terState, i);
+> > +
+> > +        if (r->base_reg <=3D reg && reg < r->base_reg + r->feature->nu=
+m_regs) {
+> > +            return r->internal;
+> > +        }
+> > +    }
+> > +    return false;
+> > +}
+> > +
+> >  static void handle_set_reg(GArray *params, void *user_ctx)
+> >  {
+> >      int reg_size;
+> > @@ -1232,6 +1275,12 @@ static void handle_set_reg(GArray *params, void =
+*user_ctx)
+> >          return;
+> >      }
+> >
+> > +    if (gdb_register_is_internal(gdbserver_state.g_cpu,
+> > +                                 gdb_get_cmd_param(params, 0)->val_ull=
+)) {
+> > +        gdb_put_packet("E14");
+> > +        return;
+> > +    }
+> > +
+> >      reg_size =3D strlen(gdb_get_cmd_param(params, 1)->data) / 2;
+> >      gdb_hextomem(gdbserver_state.mem_buf, gdb_get_cmd_param(params, 1)=
+->data, reg_size);
+> >      gdb_write_register(gdbserver_state.g_cpu, gdbserver_state.mem_buf-=
+>data,
+> > @@ -1248,6 +1297,12 @@ static void handle_get_reg(GArray *params, void =
+*user_ctx)
+> >          return;
+> >      }
+> >
+> > +    if (gdb_register_is_internal(gdbserver_state.g_cpu,
+> > +                                 gdb_get_cmd_param(params, 0)->val_ull=
+)) {
+> > +        gdb_put_packet("E14");
+> > +        return;
+> > +    }
+> > +
+> >      reg_size =3D gdb_read_register(gdbserver_state.g_cpu,
+> >                                   gdbserver_state.mem_buf,
+> >                                   gdb_get_cmd_param(params, 0)->val_ull=
+);
+> > diff --git a/include/exec/gdbstub.h b/include/exec/gdbstub.h
+> > index 75eb4d9c365e..1bc778324758 100644
+> > --- a/include/exec/gdbstub.h
+> > +++ b/include/exec/gdbstub.h
+> > @@ -40,6 +40,27 @@ void gdb_register_coprocessor(CPUState *cpu,
+> >                                gdb_get_reg_cb get_reg, gdb_set_reg_cb s=
+et_reg,
+> >                                const GDBFeature *feature);
+> >
+> > +/**
+> > + * gdb_register_internal_coprocessor() - register internal registers
+> > + *
+> > + * Like gdb_register_coprocessor(), but the feature is NOT exposed to
+> > + * GDB via the target description XML. The registers are only
+> > + * accessible through QEMU's internal APIs (HMP monitor ``$register``
+> > + * expressions via gdb_get_register_list()).
+> > + *
+> > + * Internal features must be registered after all GDB-visible features
+> > + * to avoid register numbering mismatches with GDB.
+> > + *
+> > + * @cpu - the CPU associated with registers
+> > + * @get_reg - get function
+> > + * @set_reg - set function
+> > + * @feature - the GDBFeature describing the registers
+> > + */
+> > +void gdb_register_internal_coprocessor(CPUState *cpu,
+> > +                                       gdb_get_reg_cb get_reg,
+> > +                                       gdb_set_reg_cb set_reg,
+> > +                                       const GDBFeature *feature);
+> > +
+> >  /**
+> >   * gdb_unregister_coprocessor_all() - unregisters supplemental set of =
+registers
+> >   * @cpu - the CPU associated with registers
+>
+> --
+> Alex Benn=C3=A9e
+> Virtualisation Tech Lead @ Linaro
+>
 
