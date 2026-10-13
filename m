@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FF40CC6B12
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 19:28:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D368CC6B1D
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 19:28:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGiAS-0001q5-Kd; Tue, 13 Oct 2026 15:28:08 -0400
+	id 1xGiAT-0001qX-6q; Tue, 13 Oct 2026 15:28:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1xGiAQ-0001pV-TR
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 15:28:06 -0400
+ id 1xGiAR-0001pd-HM
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 15:28:07 -0400
 Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1xGiAP-00087B-EB
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 15:28:06 -0400
+ id 1xGiAP-00087K-IW
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 15:28:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:MIME-Version:
  References:In-Reply-To:Message-ID:Date:To:From:Sender:Reply-To:Cc:
  Content-Type:Content-ID:Content-Description:Resent-Date:Resent-From:
  Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID;
- bh=XG0OZGKFxU5Od9PDLXkxtlKjW1z13fgHLaTeGYF+lFo=; b=PEEmIXwdIjoPbim5Hr5fTlaSBj
- Wo7+/tddE0AS9s09g43rK/mb8WghluC0kYqnk2cGhFuedEiwEO61aEQlPS/zmMjTHX0WQ47YgshxX
- FFR7EN1TuzOaKl3lVxtEYUWuRSkwY6DXjKi9syWX9Bv5ik2ctvbNNgC2VTltB/QnZLwG2o4TTjmur
- 23EW4ZwLQHxPNJ8EXAI3DoPJGZBhgx9OM4OsipqLc3GAsKEjupqIUFVAEIulY7hirREbNfzETmH8P
- g5vzu8VqM+YYCgLlOcoZRXDpTQPnEtZtHPzyd+NKRcIGIwpJupNjfAFa+5q9iAmnWEENLgTeLJPTk
- zqQXab1ssUocTLrHgUQ6hxMrau0FCK5SRW8MB4ZhGq4/i7NVrR+8sfnK07APKf8onVSo7KhJqH4fI
- mafNa7ALi3rrW6QkiQioMIMrv3u9IMJR7+vKDuyEMgDnfQ8ExA7UbwEf7pskCu1OHtGnBiLrPHItW
- Qao5p7eh+WogC/492F8aLsmiO1XPGvXuJW4EW5vddaQg59H0qPTgW+wOnIQu9WTSrxyGpqk2GDLMt
- DmdctUo9LokvdM1dtAwAblPYqw11Tk5OX5QOmXd/w3pUdflcy64llOLqlXCob3wWY2vt30plip64t
- wD7irwSjOp54j3pQQhIEALcBpg03t4876BVlCvADc=;
+ bh=bGCC+1IM6EtPlwTo/Twu06y3VzSJXBilqfWZgD+6UIg=; b=iNKTeU8UxpFAVgzDiWnCzCLDpn
+ 8Q1AUzdVCLVjQn9Uyxc37bmK549q/4y+K2oco1C99jJCUH7/xGhEmjhY0AwxiJBZmE3b/jXHabsjf
+ jOJiSMj/IWz+O+sjraCZE1rTF22onPnKvwK7L2MFLzXGwhNFtVhiwC8t3cyyL5UQ4Y/2dWk2Wl267
+ EjCgOT3b66RRf7GJpAtPcqXL1+FC7GkljF8+8IfcZqjT/yiz3OSvUfiT6Ny/994migu9TigFzGcoo
+ E0tUYl8Xg/m9JT/LNS5nBz3DtBNGBFQVoqJNI+9xSN4n6DQ+BUWLHH6VGkhDOukiR4d8LTweRYuCs
+ SBbrvExpNdY91lh+zRXOBOWMkb52Oqtu+oMT4CVrVtK0nuLP30ADRMCe7sdEkxke3OfM9YJ9Vr/p9
+ pqIg3a96t/exppeEP2pdmNIevyt0SaaArp7IR0FMCTmNyIQ2rWvBA/ho8EUAAgpfFFCNLTRRE0+aP
+ CS4YLetMUxC7hnf0Z/z1Bsksdx3gUR5sUnHqyhOS9RCCtodzcU6tJgWYKACzGBsHyWI4185PFBJe8
+ qHmW4ePHnEY0BUOIeoLXnA99P25LA0aQSkgg1bMnFLYH34YDgL4Rh4r4sPcRk18KuZ0bOPQmlHUmq
+ D7A4vKkIBC9/SllASb00pBAP4TdlWoEFYlW2NtA64=;
 Received: from [2a02:8012:2f01:0:b2a5:667b:71e2:6751]
  (helo=localhost.localdomain)
  by mail.ilande.co.uk with esmtpsa (TLS1.3) tls
  TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
- (envelope-from <mark.cave-ayland@ilande.co.uk>) id 1xGi9j-001aAM-8r
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 20:27:23 +0100
+ (envelope-from <mark.cave-ayland@ilande.co.uk>) id 1xGi9k-001aAM-Gr
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 20:27:24 +0100
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 To: qemu-devel@nongnu.org
-Date: Tue, 13 Oct 2026 20:27:33 +0100
-Message-ID: <20261013192751.196204-2-mark.cave-ayland@ilande.co.uk>
+Date: Tue, 13 Oct 2026 20:27:36 +0100
+Message-ID: <20261013192751.196204-5-mark.cave-ayland@ilande.co.uk>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20261013192751.196204-1-mark.cave-ayland@ilande.co.uk>
 References: <20261013192751.196204-1-mark.cave-ayland@ilande.co.uk>
@@ -52,7 +52,7 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:b2a5:667b:71e2:6751
 X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: [PULL 1/5] openpic: Preserve IRQs masked by CTPR
+Subject: [PULL 4/5] cuda: Make shift register delay configurable
 X-SA-Exim-Version: 4.2.1 (built Sat, 13 Feb 2021 17:57:42 +0000)
 X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
 Received-SPF: pass client-ip=2001:41c9:1:41f::167;
@@ -80,54 +80,41 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: "Kirill A. Korinsky" <kirill@korins.ky>
 
-OpenBSD exposes this by raising CTPR while handling interrupts. If an
-edge remains pending when EOI lowers the servicing priority, QEMU
-reasserts INT without checking CTPR; IACK then returns the spurious
-vector and consumes the masked edge before CTPR permits delivery.
+The CUDA model assumes a 20 microsecond delay before each shift
+register interrupt. OpenBSD times out during device discovery with that
+timing, so retain the existing default but allow an override.
 
 Signed-off-by: Kirill A. Korinsky <kirill@korins.ky>
 Tested-by: Anushree Mathur <anushree.mathur@linux.ibm.com>
 Tested-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Reviewed-by: Amit Machhiwal <amachhiw@linux.ibm.com>
 Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Message-ID: <20261001230058.11465-2-kirill@korins.ky>
+Message-ID: <20261001230058.11465-5-kirill@korins.ky>
 Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 ---
- hw/intc/openpic.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ hw/misc/macio/cuda.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/hw/intc/openpic.c b/hw/intc/openpic.c
-index 99d2a1e65ec..6f9a5621631 100644
---- a/hw/intc/openpic.c
-+++ b/hw/intc/openpic.c
-@@ -1033,8 +1033,9 @@ static void openpic_cpu_write_internal(void *opaque, hwaddr addr,
-         n_IRQ = IRQ_get_next(opp, &dst->raised);
-         if (n_IRQ != -1) {
-             src = &opp->src[n_IRQ];
--            if (s_IRQ == -1 ||
--                IVPR_PRIORITY(src->ivpr) > dst->servicing.priority) {
-+            if (IVPR_PRIORITY(src->ivpr) > dst->ctpr &&
-+                (s_IRQ == -1 ||
-+                 IVPR_PRIORITY(src->ivpr) > dst->servicing.priority)) {
-                 DPRINTF("Raise OpenPIC INT output cpu %d irq %d",
-                         idx, n_IRQ);
-                 qemu_irq_raise(opp->dst[idx].irqs[OPENPIC_OUTPUT_INT]);
-@@ -1070,12 +1071,13 @@ static uint32_t openpic_iack(OpenPICState *opp, IRQDest *dst, int cpu)
-     }
+diff --git a/hw/misc/macio/cuda.c b/hw/misc/macio/cuda.c
+index ccb3e1d74b0..f06583377a2 100644
+--- a/hw/misc/macio/cuda.c
++++ b/hw/misc/macio/cuda.c
+@@ -535,7 +535,6 @@ static void cuda_realize(DeviceState *dev, Error **errp)
+     s->tick_offset = (uint32_t)mktimegm(&tm) + RTC_OFFSET;
  
-     src = &opp->src[irq];
--    if (!(src->ivpr & IVPR_ACTIVITY_MASK) ||
--            !(IVPR_PRIORITY(src->ivpr) > dst->ctpr)) {
-+    if (!(src->ivpr & IVPR_ACTIVITY_MASK)) {
-         error_report("%s: bad raised IRQ %d ctpr %d ivpr 0x%08x",
-                 __func__, irq, dst->ctpr, src->ivpr);
-         openpic_update_irq(opp, irq);
-         retval = opp->spve;
-+    } else if (IVPR_PRIORITY(src->ivpr) <= dst->ctpr) {
-+        return opp->spve;
-     } else {
-         /* IRQ enter servicing state */
-         IRQ_setbit(&dst->servicing, irq);
+     s->sr_delay_timer = timer_new_ns(QEMU_CLOCK_VIRTUAL, cuda_set_sr_int, s);
+-    s->sr_delay_ns = 20 * SCALE_US;
+ 
+     adb_register_autopoll_callback(adb_bus, cuda_adb_poll, s);
+ }
+@@ -557,6 +556,8 @@ static void cuda_init(Object *obj)
+ 
+ static const Property cuda_properties[] = {
+     DEFINE_PROP_UINT64("timebase-frequency", CUDAState, tb_frequency, 0),
++    DEFINE_PROP_UINT64("x-sr-delay-ns", CUDAState, sr_delay_ns,
++                       20 * SCALE_US),
+ };
+ 
+ static void cuda_class_init(ObjectClass *oc, const void *data)
 -- 
 2.47.3
 
