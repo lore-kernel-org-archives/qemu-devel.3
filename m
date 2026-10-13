@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97255CA9ED2
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 08:40:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE621CC6B03
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 08:41:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGY3k-0007rP-SB; Tue, 13 Oct 2026 04:40:33 -0400
+	id 1xGY3w-0008La-Fd; Tue, 13 Oct 2026 04:40:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xGY3V-0007LK-V4
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 04:40:18 -0400
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ id 1xGY3f-0007cw-EK
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 04:40:27 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xGY3T-0007sH-3z
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 04:40:17 -0400
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-48441a2ba1bso1543845f8f.1
- for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 01:40:14 -0700 (PDT)
+ id 1xGY3c-0007ve-FW
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 04:40:27 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-4a021c809e3so26435245e9.0
+ for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 01:40:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1791880814; x=1792485614; darn=nongnu.org;
+ d=linaro.org; s=google; t=1791880823; x=1792485623; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=rsG3TCscVd7PYoqyQA/dMMFq21JiQcdL/3Au5s6HFt4=;
- b=gkuYDE/x+uxQlelbg+HsK0UVNrhrhXPgGLajX387YT3QA2dagnAQSuqrH1AAuz3xEG
- jBx9JN0Pbonw9E+peFB1NVXFgTkVU5Z3iPp9Q7DPX5kTirVMpN9o1hMZ9eXUU9Re8vgs
- slSiL/1dAd9cFmv+mzlyYWtK59QZB77B8wLcCHj+HNq/NtKyihtcQElTac3DAWbUrBbc
- Jn+P4fUTWrK6wkQ4fMIQJsMrSDVJ34Q4wA/tPH9p4qN3uuYxVUZA43h7mAlEngf2GQ3T
- W34gUerG0ltlJZ6efARnS0cK3gM+6Y7qEKyZHoQ3linbpKVLqCqT592qq47da+p8YN1T
- ZugQ==
+ bh=gzfEd+fMuzIkl5MPbXsWVV3S6TkI1FXs7WFleXHIxOA=;
+ b=lGCnE8plH62BTdjaKYZf+Uj2+2y9GUG25IoweJhfWi819KdsCxIpOk76/jgMV3DKLp
+ MRoVrhxoKM4DKrI5Q9NhUxRyChiZphpx8Ux9OvFKm93kG6GBAcHdyP1NsBVn0UKbg9oW
+ SDDhtHNpJvf31qJU5T1WuOHN1qD/XlWpwsq58kFzZe7Y8D+kpfCEyTMOLzibSWAeudKE
+ n9paoYrdx0l2i5sZK88HoDcxHpHF+IElzAVtWb143G1w7A31/EXVB/Hl8uI4Ph+dfqcc
+ S1EO00gSkKc21aIVujG3vP7j0oqaIEDZgrvPFjwrHK3YLxDGNw1x+EkZEk6jwdYJnynN
+ pOng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791880814; x=1792485614;
+ d=1e100.net; s=20260707; t=1791880823; x=1792485623;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to:content-type;
- bh=rsG3TCscVd7PYoqyQA/dMMFq21JiQcdL/3Au5s6HFt4=;
- b=nJZ3Z9ylEt16hxr7fuAPINH5UrDj0pzQ10xnXkKak8nh0ROB6rCcyypteh+McHI+i4
- hyMTfrdqkwrCN9/tGtLQR48pRhSmkg3lHIOS5jbCF7OjLbcVdHhQZn8dapGqzXcZGw+K
- UnxPcCo59NCF6BgMuGtQMycn2jYCgDv+waSDmN9Mp1re4X66kJy/OQ+SAdmg8XfqUVPr
- LcGOXimYZZYuSRV1noWqCRVwhOF2Zx/LlnBQ9WE9pqf48Neu9Z8Qk3G3QWDq6UmUonTZ
- 2XDYklzt9RFBXqhzJVjHVO4W738CpUTn23s5043SSYehz/Oy8q4vOUgpsAxlpcv9UOvw
- 1Zqg==
+ bh=gzfEd+fMuzIkl5MPbXsWVV3S6TkI1FXs7WFleXHIxOA=;
+ b=HiTOjifn9SCEG27AjvcEzGhUSU5LtiI/IosAlntDmZ0cDOumWljImze/Fv51GHvhHR
+ AassM8sYwFOVfixGXj1MeCBvB3E+grJLUNZbHydNFNMz/0hbK4wvQW2Pbs2F+ZkH0Fuh
+ rBsq2awT/tkj3x69oeBOgSWa19yncrcafimab50jgUcaGFBnhOUo8KSk3ueB1CthgYpt
+ GGbpQTI3z7BVPBFUxoqhCoWx0Thn87YlUFrJY/8V9ali8f6VSsAk7qbSYHTS80CnX1vx
+ 0NBmfvl/QsEcCPSMNmYuJcOh59WDPM1/aR6i2PiuCMUvvApdljgoM+KQiJNmFhLAbm8r
+ fCLQ==
 X-Forwarded-Encrypted: i=1;
- AKwUvByUEAz1dbBz2LpKmpPnG99BxJ8SU/Xe6H2Wf1cTJz27SnNIkp2NOAHLZGJ+K4VBA4SvXDF0OaRqHRYU@nongnu.org
-X-Gm-Message-State: AFq9FYI5bid4bdnxEEpJK0uFOQ0Kx48WsHzKttH5SNiqTnxdj8ZleWNl
- qW8dLjtVRMDsOiGd+lslLTSK9lByts4ej10sZvxn6nlgZpOp7DFUe0Uix5Ts6kxWqUxO9FT45wK
- 4kaOp7nE=
-X-Gm-Gg: AYBFou0eeKiDI5Q9VVVB2onWwxgy6EPXUoSFuyLd37ZwWtLBDyJF3tSWoGCggqfWc8w
- TiQG7AO/ZtMfPThMDxOgAUqEDgFFw0EKfkoa0Txz9cK9F7D5uw18tmX8pflI0Wb5aVx3UyNpXpI
- RIpiwIv8A9QHbIPuf8PWsAmopkwPQhh8jqKer+tEXcRGEUO9bHO9ws5U2ETfSZPGFbnFVO1Nip1
- USXakNXNr0byatal10MG7m9YA03DlwQxfbEY9yk5txYrH5EdAEHUJX8Y8h6LfZaDRYM9w2MKqtL
- i300681ypuVZf7YcuXhGZHQXpBIvGGLqPwSufZZtOULy4WQtzfrW7I8Fz/IwoyPKAFdyFNKMdet
- GTCaFJoRGDBo0kS/u+M+9w/17Y+OEsHLVjiThJjM+JVfs42ju6gg3ErWX56Ebt0jsJUFaxiX18K
- abMY9rqTrPnyuXTdkjbY0rVCX8EbNiWheqseJtLSMYaXsVW/XoXd0MR1GikIoxhq1X9rqcNkcBy
- hzgu8CTr4qJBXoUG6mSk7Op51Pcgw/w722vKT+8kCMojsa+FFeQZ6/zaChMkmllCtKM7OgOWPuZ
- UO8=
-X-Received: by 2002:a05:600c:c167:b0:4a1:a3cc:3c5c with SMTP id
- 5b1f17b1804b1-4a1a3cc3c71mr70078265e9.16.1791880813676; 
- Tue, 13 Oct 2026 01:40:13 -0700 (PDT)
+ AKwUvBwSdhrdMorcax3/96AOJ2H0l1bJYgJvDy1P+zHFUTIhzCUpmSoRl1GvJAKPUVFlTVTinxG5/RqJirgw@nongnu.org
+X-Gm-Message-State: AFq9FYKh+LRfwOl+r7kLKqTmWZgJeWwKGKnFk8GqVSk6K+PRtoaQG4jT
+ 1aBwi6nHBlRuGuax22vpMFMZ2baLJ0ryu4BUS/sVMogu3cvZRJf41PgPqAwnvG+UWZvX0mIJEAQ
+ jkEUr1bU=
+X-Gm-Gg: AYBFou0VWsW2WSoLI3bOZl+tKncDYKfdYYF0hzwMWs5gG6E/mIyFWZ1iaAoe7cQT6AI
+ TAbS18JP5QrYrjqzRzifj17p7KYraQqnDfAp2o+zt1X9zMDZ2x6a5OHdmw8cNk4C9S1zUP9FGxk
+ QGTaZjYnE0Ov/SPHwFEVLRDaLxMXXZgGJoYveoDa04wkGsunKRajA16K35Kti7A7twuJIXYoCFy
+ uNhcGRVHaGDc2R7cWqeGJCXITWnyic6Frw/YzKxaNwN9aOotq2uTdGMGOsQgqsPgZLmbWjG2RRf
+ Y8MQ8LWsPmlFAbIrZruXOMcvCLJEQVIccUJUV9h5eHDGLEXQFaxpNMddic/qyEXsuJMYqsTv97e
+ WKplTb8CRifGRK2jR/jQbYRzntC2dkIJPwLVWwtXVFgUbJqdYuf0pk5XCH7qhbnLwTdQrVSzAyD
+ B25ilb1iJ0wNjG1A79jflJ8jAx6hJ2Nq6oyLOM84qaROn40Goqtn9WdtETl6ERv9Y5jQPXa+vee
+ JjFfAGJx7nXJsCWJTT9F9KFziGwWaS9KAFx9EVEyUNFoplSxpTn6tRukvYQLO1z+fz1BE3SRC/B
+ blYnPYUEm7o3QQ==
+X-Received: by 2002:a05:600c:674a:b0:4a1:7cf8:5433 with SMTP id
+ 5b1f17b1804b1-4a18e443ee9mr218545885e9.3.1791880822894; 
+ Tue, 13 Oct 2026 01:40:22 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a18be96549sm495086735e9.6.2026.10.13.01.40.12
+ 5b1f17b1804b1-4a18be96549sm495086735e9.6.2026.10.13.01.40.21
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 13 Oct 2026 01:40:12 -0700 (PDT)
+ Tue, 13 Oct 2026 01:40:22 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Subject: [PATCH 27/86] target/arm: GICv5 cpuif: Implement
- ICV_PPI_PRIORITYR<n>_EL1
-Date: Tue, 13 Oct 2026 09:38:34 +0100
-Message-ID: <20261013083933.1024405-28-peter.maydell@linaro.org>
+Subject: [PATCH 34/86] target/arm: GICv5 cpuif: Implement
+ gicv5_update_virq_vfiq()
+Date: Tue, 13 Oct 2026 09:38:41 +0100
+Message-ID: <20261013083933.1024405-35-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261013083933.1024405-1-peter.maydell@linaro.org>
 References: <20261013083933.1024405-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,104 +105,135 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Implement the redirection of ICC_PPI_PRIORITYR<n>_EL1 to
-ICV_PPI_ENABLER<n>_EL1; the data for this is stored in
-ICH_PPI_ENABLER<n>_EL2.
+Implement gicv5_update_virq_vfiq(), the virtual interrupt domain
+equivalent of gicv5_update_irq_fiq().  Based on the current highest
+priority pending interrupt for the virtual interrupt domain, we
+signal either the VIRQ or VINMI lines.
 
-The algorithm in gic_ppi_prio_hvi_mask() for expanding 8 mask
-bits out into 8 mask bytes is suggested by an AI, but it is
-only 4 lines of code, and I wrote the comments.
+For VIRQ and VINMI it is important that we call arm_cpu_set_irq()
+rather than calling cpu_interrupt() and cpu_reset_interrupt()
+directly, because arm_cpu_set_irq() handles the logical OR of the
+state from the cpuif and the value of HCR_EL2.{VI,VINMI} to produce
+the VIRQ/VINMI signals seen by the rest of the CPU.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/tcg/gicv5-cpuif.c | 64 ++++++++++++++++++++++++++++++++++--
- 1 file changed, 62 insertions(+), 2 deletions(-)
+ target/arm/tcg/gicv5-cpuif.c | 43 +++++++++++++++++++++++++++++++++++-
+ target/arm/tcg/trace-events  |  1 +
+ 2 files changed, 43 insertions(+), 1 deletion(-)
 
 diff --git a/target/arm/tcg/gicv5-cpuif.c b/target/arm/tcg/gicv5-cpuif.c
-index 2c717b99a0b..e1d3ffb7b1e 100644
+index d2454011b40..a938428b20a 100644
 --- a/target/arm/tcg/gicv5-cpuif.c
 +++ b/target/arm/tcg/gicv5-cpuif.c
-@@ -487,11 +487,70 @@ static void gic_ppi_enable_write(CPUARMState *env, const ARMCPRegInfo *ri,
-     }
+@@ -310,6 +310,35 @@ static void gicv5_update_irq_fiq(CPUARMState *env)
+     arm_cpu_set_irq(env_archcpu(env), ARM_CPU_NMI, superpriority);
  }
  
-+static int icc_ppi_prio_reg_index(const ARMCPRegInfo *ri)
++static void gicv5_update_virq_vfiq(CPUARMState *env)
 +{
 +    /*
-+     * Return the index of the ICC or ICV PPI_PRIORITYR register,
-+     * which is CRm[0]:opc2[2:0].
++     * Update whether we are signalling VIRQ or VFIQ based on the
++     * current state of the CPU interface.
 +     */
-+    return deposit32(ri->opc2, 3, 1, ri->crm);
-+}
-+
-+static uint64_t gic_ppi_prio_hvi_mask(CPUARMState *env, int idx)
-+{
-+    /*
-+     * Return the mask of which fields in the given priority register
-+     * the guest cannot see, which is controlled by the ICH_PPI_HVI
-+     * registers.  We need to expand the appropriate 8 bits from
-+     * ICH_PPI_HVI out to a mask where each byte is either all-1s or
-+     * all-0s.  The return value here is 1s for "do not show the
-+     * guest", the same sense as the ICH_PPI_HVI registers.
-+     */
-+    int regno = idx >> 3;
-+    int startbit = idx & 7;
-+    /* Extract the relevant 8 HVI bits from the right register */
-+    uint64_t mask = extract64(env->gicv5_cpuif.ich_ppi_hvi[regno], startbit, 8);
++    GICv5PendingIrq current_hppi;
++    bool virq, superpriority;
 +
 +    /*
-+     * Now we're going to distribute those 8 bits so they end up in
-+     * bits 0, 8, 16, ... 56 of the mask (i.e. in the LSB of each byte).
++     * Only the legacy vCPU interface signals VFIQ, and we don't
++     * implement that yet. So we leave ARM_CPU_VFIQ and ARM_CPU_VFNMI
++     * at their default unasserted levels.
 +     */
-+    /* Split the 8 bits into two 4-bit chunks at bits 0 and 32 */
-+    mask = (mask | (mask << 28)) & 0x0000000f0000000fULL;
-+    /* Split again into four 2-bit chunks at bits 0, 16, 32, 48 */
-+    mask = (mask | (mask << 14)) & 0x0003000300030003ULL;
-+    /* Split again into eight 1-bit chunks, at the LSB of each byte */
-+    mask = (mask | (mask << 7)) & 0x0101010101010101ULL;
-+    /* Finally, the multiply turns each 0x1 byte into 0xFF */
-+    mask *= 0xff;
-+    return mask;
++
++    /*
++     * We signal VIRQ if there is a HPPI of sufficient priority for
++     * the virtual interrupt domain. It has Superpriority if its
++     * priority is 0 (in which case it is CPU_INTERRUPT_VINMI).
++     */
++    current_hppi = gic_virt_hppi(env);
++    superpriority = current_hppi.prio == 0;
++    virq = current_hppi.prio != PRIO_IDLE && !superpriority;
++
++    trace_gicv5_update_virq_vfiq(virq, superpriority);
++    arm_cpu_set_irq(env_archcpu(env), ARM_CPU_VIRQ, virq);
++    arm_cpu_set_irq(env_archcpu(env), ARM_CPU_VINMI, superpriority);
 +}
 +
-+static uint64_t gic_ppi_priority_read(CPUARMState *env, const ARMCPRegInfo *ri)
-+{
-+    if (gicv5_icv_access(env)) {
-+        int idx = icc_ppi_prio_reg_index(ri);
-+        uint64_t r = env->gicv5_cpuif.ich_ppi_priority[idx];
-+        uint64_t hvi_mask = gic_ppi_prio_hvi_mask(env, idx);
-+
-+        return r & ~hvi_mask;
-+    } else {
-+        return raw_read(env, ri);
-+    }
-+}
-+
- static void gic_ppi_priority_write(CPUARMState *env, const ARMCPRegInfo *ri,
-                                    uint64_t value)
+ static void gic_recalc_ppi_hppi(CPUARMState *env)
  {
--    raw_write(env, ri, value);
--    gic_recalc_ppi_hppi(env);
-+    if (gicv5_icv_access(env)) {
-+        int idx = icc_ppi_prio_reg_index(ri);
-+        uint64_t hvi_mask = gic_ppi_prio_hvi_mask(env, idx);
+     /*
+@@ -398,6 +427,8 @@ static void gic_recalc_virt_ppi_hppi(CPUARMState *env)
+ 
+     trace_gicv5_recalc_virt_ppi_hppi(env->gicv5_cpuif.virt_ppi_hppi.intid,
+                                      env->gicv5_cpuif.virt_ppi_hppi.prio);
 +
-+        env->gicv5_cpuif.ich_ppi_priority[idx] = value & ~hvi_mask;
-+    } else {
-+        raw_write(env, ri, value);
-+        gic_recalc_ppi_hppi(env);
-+    }
++    gicv5_update_virq_vfiq(env);
  }
  
- static void gic_ich_ppi_enable_write(CPUARMState *env, const ARMCPRegInfo *ri,
-@@ -1239,6 +1298,7 @@ void define_gicv5_cpuif_regs(ARMCPU *cpu)
-                 .fgt = FGT_ICC_PPI_PRIORITYRN_EL1,
-                 .fieldoffset = offsetof(CPUARMState, gicv5_cpuif.ppi_priority[i]),
-                 .writefn = gic_ppi_priority_write, .raw_writefn = raw_write,
-+                .readfn = gic_ppi_priority_read,
-             };
-             define_one_arm_cp_reg(cpu, &ppi_prio);
-         }
+ void gicv5_forward_interrupt(ARMCPU *cpu, GICv5Domain domain, bool virtual)
+@@ -408,7 +439,12 @@ void gicv5_forward_interrupt(ARMCPU *cpu, GICv5Domain domain, bool virtual)
+      * If this is a virtual interrupt, do similarly for VIRQ/VFIQ.
+      */
+     if (virtual) {
+-        /* Here we will eventually update the VIRQ/VFIQ state */
++        /*
++         * We don't need to check here for a mismatch between domain
++         * and the domain of the resident VPE, because that will
++         * be checked when gic_virt_hppi() calls back into the IRS.
++         */
++        gicv5_update_virq_vfiq(&cpu->env);
+     } else {
+         gicv5_update_irq_fiq(&cpu->env);
+     }
+@@ -775,12 +811,14 @@ static void gic_ich_vctlr_write(CPUARMState *env, const ARMCPRegInfo *ri,
+                                 uint64_t value)
+ {
+     raw_write(env, ri, value);
++    gicv5_update_virq_vfiq(env);
+ }
+ 
+ static void gic_ich_vmcr_write(CPUARMState *env, const ARMCPRegInfo *ri,
+                                uint64_t value)
+ {
+     raw_write(env, ri, value);
++    gicv5_update_virq_vfiq(env);
+ }
+ 
+ /*
+@@ -798,6 +836,7 @@ static void gic_icc_apr_el1_write(CPUARMState *env, const ARMCPRegInfo *ri,
+ 
+     if (gicv5_icv_access(env)) {
+         env->gicv5_cpuif.ich_apr_el2 = value;
++        gicv5_update_virq_vfiq(env);
+     } else {
+         GICv5Domain domain = gicv5_logical_domain(env);
+         env->gicv5_cpuif.icc_apr[domain] = value;
+@@ -844,6 +883,7 @@ static void gic_icc_cr0_el1_write(CPUARMState *env, const ARMCPRegInfo *ri,
+         vmcr = FIELD_DP64(vmcr, ICH_VMCR_EL2, EN,
+                           FIELD_EX64(value, ICC_CR0, EN));
+         env->gicv5_cpuif.ich_vmcr_el2 = vmcr;
++        gicv5_update_virq_vfiq(env);
+     } else {
+         /*
+          * For our implementation the link to the IRI is always connected,
+@@ -889,6 +929,7 @@ static void gic_icc_pcr_el1_write(CPUARMState *env, const ARMCPRegInfo *ri,
+         vmcr = FIELD_DP64(vmcr, ICH_VMCR_EL2, VMPR,
+                           FIELD_EX64(value, ICC_PCR, PRIORITY));
+         env->gicv5_cpuif.ich_vmcr_el2 = vmcr;
++        gicv5_update_virq_vfiq(env);
+     } else {
+         GICv5Domain domain = gicv5_logical_domain(env);
+ 
+diff --git a/target/arm/tcg/trace-events b/target/arm/tcg/trace-events
+index da25ec994cc..71f1369fcda 100644
+--- a/target/arm/tcg/trace-events
++++ b/target/arm/tcg/trace-events
+@@ -9,4 +9,5 @@ gicv5_gicr_cdia(int domain, uint32_t id) "domain %d CDIA acknowledge of interrup
+ gicv5_cdeoi(int domain) "domain %d CDEOI performing priority drop"
+ gicv5_cddi(int domain, uint32_t id) "domain %d CDDI deactivating interrupt ID 0x%x"
+ gicv5_update_irq_fiq(bool irq, bool fiq, bool nmi) "now IRQ %d FIQ %d NMI %d"
++gicv5_update_virq_vfiq(bool virq, bool vinmi) "now VIRQ %d VINMI %d"
+ gicv5_update_ppi_state(int ppi, bool level) "PPI %d source level now %d"
 -- 
 2.43.0
 
