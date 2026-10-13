@@ -4,93 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 022B4CC6B12
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 19:58:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA588CC6B1A
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 19:59:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGidb-0005P9-NQ; Tue, 13 Oct 2026 15:58:15 -0400
+	id 1xGif4-0005wq-Gy; Tue, 13 Oct 2026 15:59:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xGida-0005Os-6b
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 15:58:14 -0400
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
+ id 1xGiex-0005wZ-Eo
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 15:59:44 -0400
+Received: from mail-dy1-x1330.google.com ([2607:f8b0:4864:20::1330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xGidY-0002b4-JW
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 15:58:13 -0400
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-48afcd7ba9bso1903400f8f.3
- for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 12:58:12 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
+ id 1xGiew-0002et-0f
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 15:59:39 -0400
+Received: by mail-dy1-x1330.google.com with SMTP id
+ 5a478bee46e88-3535bf8b3e0so399925eec.0
+ for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 12:59:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1791921491; x=1792526291; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=WQF1upnov7gcJxgusZlbVaBABSNc8PvZ7p1DSey8bpI=;
- b=czfOin8OzqtSEus7QPYILZ4BJtT32OLRmNv9xnufqF7Kb6lFLLC9LHx1pf3maTptXz
- G3c9W1FcKBbvdo/9cFCoMU62TzAd4awgWY2tgfqQbJNk3unbIaTdyD3PD8pyLVQeNV8W
- i3h6pgW4nSkOlBycFOwV0cd63wWdcOAWfaCPX1iOu6fJof0rs03NuiJlXu7+srHs/s/k
- MVB0ZQplywVvt2FpA2kEXOjv3w0Uw0x4XVuaJMCgoQs4dX+LcQYYKNbriuvmvmpHop5p
- npJHtyci5pT547i3Zn++ehG4pcsJzViSN/XvO9UB9qGokGqM/FhHn4dTY6NdDZPnhbaA
- U1Lw==
+ d=gmail.com; s=20251104; t=1791921576; x=1792526376; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=n1Kznjn9gwc9J8CJXnPKY6p2oc96M5De/Smwcsx+f98=;
+ b=mQJcAXFAUMJ8n+z4hhSPRgeZLObOvSWY+HW4SvGrvPCiKdBw6oavJbvIHDMIDy78fb
+ XidNtV1fI4D30zaMlx7Pnh5MQmbC+2Zr3M685u1o9jmdzzmJoIoM7giYmBiDdUFZXrvo
+ RCinK2cePyo60lDtU3QygcaPDkA9Vc1uqyEhI+AMsP/wcENcvNaT4df/TH2UfB8Yggy7
+ PyNILi6rrmg3alMdlDGRlACoecYoiIuQRRvWYOjCRC1hRo/CWnAaSv4vdKjOZ1PCwvzB
+ lfeceD2pjLfHh1jJPdrtYQNSznjyiBRkXcjfSGQ9/RqXvO43s644F1EHtfI9ZMYneFTo
+ urkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791921491; x=1792526291;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20260707; t=1791921576; x=1792526376;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=WQF1upnov7gcJxgusZlbVaBABSNc8PvZ7p1DSey8bpI=;
- b=GSY3hKxTXTwicLDi2ujn1d0xN/Oe9SPcvvBZ/3QwfDXRENXsRHDaU44QyeDai92+tc
- rzkkFHp7n+3yXWvb6i1gHIiaI94hk1AtrL6yxtCTTnTptDsNJzkYY0St7AKd4NWirT+k
- j5Fgc54FXyJl8cF0UGii9FWyO884402PkuZxL/Y5xK9TE03sTZOSQE1vbieGM72MahZu
- A9OrIWk+bJX2Vj3bqMfD3hwuybGdjHvjvlgYq0tbWCOAmx/4S+qIO7gChAj3suOH/eib
- 96OB8MODVOp1+EcCakrlpoz5L+ozIVEstcqmIwcLbuCKUojI+EvrVEjZqdx0e5R/Yhwo
- s8cA==
-X-Forwarded-Encrypted: i=1;
- AKwUvBzDC4mLai4WVkIL5sLCEZ/mQQJPLO0gJaaPyB8omfIGI5z76tDBD4gPLY0xzFGBeaEUnFUj2/kvvG3Z@nongnu.org
-X-Gm-Message-State: AFq9FYJ1ZpyQ6Fhkno+3VlaSoVca09s4D2xAKO8OyXGEsTckKjqH7MbO
- JApkFSKiE1sEVm6KDEtgsonch0LrPAgs07zrlUseLQvxLgYbHciuLxqClucfi1Qm50U=
-X-Gm-Gg: AYBFou39e7F1FFdmf7bPyjlqDJD+hIhPiJQvCiSs8v69mcVaM6YcdLdCEfzkPT8OA0H
- WyOT/5XmMLHVCRD+xWzLpA1abprQ2T6Cg9aEiQccwxOWKsSfSqyTKAmPhCatwbWjtDEShmv1IJw
- hWUJBHY3QmrKgHBl2b+j6VoSUFU75RIQTUMiDBpxH2wRpeRRwXnoCxSKXUnJrhaciuX5pZ3Z5OB
- +b3BVKAlyp0FQPklIzmuzJVsP76F3vvPzwdb9wnh4fEwSBPBfePBY4Kln7XLrW57YFuMVT5YFyi
- YjV/NssfkhSgyVGzTx4kmJjyVaS5iPtoczHYEfsMxYMEdX4c3WRbDFSYrFRGhrjZTxGAzhpx4UQ
- R5OIcalhTeicP/7IzPF+21ohIIU2kRJuZYU8htwUW2wWve5HFcDAWkWccEzhv5CG9U4Fohpk2gJ
- Y6OQbViDX8V5t5RAWArdiVpOFEXYy9XNB9818CWMs0C33QR3ZWWI4f7lI+/Sh8Y43R0rPXukuzu
- O3IOnOhXCCGdBBwiCdGmACpZ0MSYYfnLLdaCYO+iKCFmn1sc+njoVuyCREiLAO+khCl
-X-Received: by 2002:a05:6000:46ca:b0:487:40d:af33 with SMTP id
- ffacd0b85a97d-48dbaaddd7emr16626950f8f.13.1791921490617; 
- Tue, 13 Oct 2026 12:58:10 -0700 (PDT)
-Received: from [10.86.151.227] (ip-109-091-152-129.um37.pools.vodafone-ip.de.
- [109.91.152.129]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48de0ab4e8csm6552215f8f.23.2026.10.13.12.58.09
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 13 Oct 2026 12:58:10 -0700 (PDT)
-Message-ID: <bb99a307-848a-404d-8fe4-761da4001e1d@linaro.org>
-Date: Tue, 13 Oct 2026 21:58:07 +0200
+ bh=n1Kznjn9gwc9J8CJXnPKY6p2oc96M5De/Smwcsx+f98=;
+ b=QQylUp2rj3xgC7lNENfCWcgE4sLnjdEpnNLukYKieAgReQrqtmitAPh3+hLiHqBmJ2
+ mqEWUocAZKBCxq1x/sIFaVn9YjlAcFyGEqoND5WFOUy7BuT3IpBjCzyJ1ySlSsq8bD0B
+ iypMTPnMFeaC216re00d7e7XXzSw+/va6BqVRaZLiF8XxmtFZHp+zE9yUoVKj61oPBp+
+ cC5gWdIHNMxxMApu3Cv1IUeRxvWBI24BZie8E9220KMWH5Xw0RXJsP12S8TyTZtdT5eb
+ ly0vDc8NsKvtwZdWE0lCLAFoQzZxv0EaffuDKkT6yzOAz8f9GupLTd1HKVDK6a5ZO/bo
+ mbaA==
+X-Gm-Message-State: AFq9FYLWk3JlDkiu1JGTTfbg/vbZ/WY0JynpYGfjlEE6vgCZdcz+e/sx
+ bFwpNaFLislsfOWyJ3eRTanG2mcJOHS8ZO3/W0JMBueci0xmInteaDafoSRDnqnh
+X-Gm-Gg: AYBFou0CIUOn0Lao4MLKRmUGWgi3wbHfQ1laehZxvo+U5Xw3eRccVC3mv5o9to6MPsx
+ MnZpIAjkShRCRm2tRjcNAacAr/NBiVpY0GWW+tcCiIKmFQEaz1sXiwCJC6qEgC4k7ayQe/iWcfh
+ O/H9x1wrXbGC/L1PsB1IIrfkrL+pmIxSp/l6UPaQGqRMoCWcta8DWr2RKgdSJ0hZ5DZuftdBkca
+ lwrISO41soXA6JAbxOS3Sai9m14d8O7GWuQNNw7XhxrR8SuS+nEn0FmoqCFX6uJw9otCNOQ0gqs
+ rJ6NNrj572c3hgNBITwf/BMYxS6PJtQc3I+9uuWNYCTayud8oBLocgdptV5+lfyCvf8NCKmGByG
+ fkfkNjWSCmQwKio2LXswtDiEQmAiuuJonZkigIcRXPNhb/ZF/SDZAoL6YluG54uVYwhgSpu5lzH
+ 5KwNfXLqcHoqpHfaJyRCtehE4vIYm4pFsXKy8uFU6NveyOxVqSu/hCo3ns4DZerITSLPx+yCTQb
+ C+H2FTLaRoQvHesqQ==
+X-Received: by 2002:a05:7300:881a:b0:351:29c8:643 with SMTP id
+ 5a478bee46e88-3537dfb8649mr22456715eec.18.1791921576120; 
+ Tue, 13 Oct 2026 12:59:36 -0700 (PDT)
+Received: from DESKTOP-Q716RM7 ([103.94.185.75])
+ by smtp.googlemail.com with ESMTPSA id
+ 5a478bee46e88-35ca33b4065sm8374297eec.4.2026.10.13.12.59.33
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 13 Oct 2026 12:59:35 -0700 (PDT)
+From: Yonggang Luo <luoyonggang@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: Philippe Mathieu-Daude <philmd@mailo.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Subject: [PATCH] hw/microblaze: defer PetaLogix endianness default until init
+Date: Wed, 14 Oct 2026 03:59:29 +0800
+Message-ID: <20261013195929.1648-1-luoyonggang@gmail.com>
+X-Mailer: git-send-email 2.55.0.windows.3
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 00/19] s390x queue
-To: Eric Farman <farman@linux.ibm.com>, qemu-devel@nongnu.org
-Cc: qemu-s390x@nongnu.org, Matthew Rosato <mjrosato@linux.ibm.com>,
- Cornelia Huck <cohuck@redhat.com>
-References: <20261009182825.148054-1-farman@linux.ibm.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20261009182825.148054-1-farman@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=richard.henderson@linaro.org; helo=mail-wr1-x42f.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1330;
+ envelope-from=luoyonggang@gmail.com; helo=mail-dy1-x1330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,25 +99,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/9/26 20:28, Eric Farman wrote:
-> The following changes since commit f9587d4045c67cd0d8d8bdcd5d0bb5b6b395b63c:
-> 
->    Merge tag 'pbouvier/pr/plugins-20261005' ofhttps://gitlab.com/p-b-o/qemu into staging (2026-10-06 11:26:40 +0200)
-> 
-> are available in the Git repository at:
-> 
->    https://gitlab.com/efarman/qemu.git tags/s390x-20261009
-> 
-> for you to fetch changes up to 598482e3cbf449d76870730f796176da73863e13:
-> 
->    s390x/pci: Reset a device in error state (2026-10-07 13:19:35 -0400)
-> 
-> ----------------------------------------------------------------
-> New s390x features for 11.2
->   - Enable migration of emulated zpci devices
->   - Error recovery of passthrough zpci devices
+This is for avoid call target_info() in class_init
 
-Applied, thanks.
+Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
+---
+ hw/microblaze/petalogix_s3adsp1800_mmu.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-r~
+diff --git a/hw/microblaze/petalogix_s3adsp1800_mmu.c b/hw/microblaze/petalogix_s3adsp1800_mmu.c
+index c5f64319009..43140ad7bda 100644
+--- a/hw/microblaze/petalogix_s3adsp1800_mmu.c
++++ b/hw/microblaze/petalogix_s3adsp1800_mmu.c
+@@ -83,7 +83,13 @@ petalogix_s3adsp1800_init(MachineState *machine)
+     MemoryRegion *phys_ram = g_new(MemoryRegion, 1);
+     qemu_irq irq[32];
+     MemoryRegion *sysmem = get_system_memory();
+-    EndianMode endianness = psms->endianness;
++    EndianMode endianness;
++
++    if (psms->endianness == ENDIAN_MODE_UNSPECIFIED) {
++        psms->endianness = target_big_endian() ? ENDIAN_MODE_BIG :
++                                           ENDIAN_MODE_LITTLE;
++    }
++    endianness = psms->endianness;
+ 
+     cpu = MICROBLAZE_CPU(object_new(TYPE_MICROBLAZE_CPU));
+     object_property_set_str(OBJECT(cpu), "version", "7.10.d", &error_abort);
+@@ -178,8 +184,7 @@ static void petalogix_s3adsp1800_machine_class_init(ObjectClass *oc,
+                                           &EndianMode_lookup,
+                                           machine_get_endianness,
+                                           machine_set_endianness);
+-    object_property_set_default_str(prop, target_big_endian() ? "big"
+-                                                              : "little");
++    object_property_set_default_str(prop, "unspecified");
+     object_class_property_set_description(oc, "endianness",
+             "Defines whether the machine runs in big or little endian mode");
+ }
+-- 
+2.55.0.windows.3
+
 
