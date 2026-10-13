@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0866CC6B10
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 08:47:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE4DBCA9ED2
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 08:47:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGY6O-0004Ld-O8; Tue, 13 Oct 2026 04:43:17 -0400
+	id 1xGY9N-0000eY-Ii; Tue, 13 Oct 2026 04:46:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xGY42-00007K-JJ
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 04:40:52 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ id 1xGY4a-0001k7-Qu
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 04:41:28 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xGY3x-00082G-PO
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 04:40:48 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-4a1688d7769so22524985e9.0
- for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 01:40:45 -0700 (PDT)
+ id 1xGY4X-0008Hu-8S
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 04:41:24 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-4a172eb31f0so20444955e9.1
+ for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 01:41:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1791880844; x=1792485644; darn=nongnu.org;
+ d=linaro.org; s=google; t=1791880879; x=1792485679; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=fxZZyr5tqmX4RAAPXJIUMSNXuOO4bc4vIMg/smsoxD4=;
- b=TdxZ0gDjRFf0lUI9QzAAm6nmCCZdjR+L9T1QqPNDOh6M+Izlkx92H8w361Q6KmvG51
- fx0dnYG9bzDO/SiByauG9MbT8ArMW8BdmlSkRbq97fZVrUoltKdggwe+I8WupBI8VeNC
- L1iLqLFSX+qJ6YyM6sHz7O5PZfPYv/D/f0G7+ccTHDW+2Z4wCCxP/wQNYpKiq+j9LGwe
- fo9r3WgW05IhRxQi0g0/EI32jPoTGURLl8LRqJpQ3x7powNYTpK4PY7xyj87xqbSmIcK
- RtEBF86TD7Q8n2IbHSB00wqDZyX+B579mt5BWgnhMOwbxR1YOfLxHZEM0fw9ujdq2gwR
- X+ug==
+ bh=Joy6MjKedRL92Qe+KSl4RhEqFwkrMXSKOsSYWcHJFiQ=;
+ b=u3BrQTiiay7WvHPG/SLxxI/BuPqbFvuqxdJyLk4PtqCdJB+AHnefuX3Vc9zKsKKeRa
+ cLvxOJ/VXNQ5/nIAgd8f01S04otMyBUogAneXE5r0YgLuYERhSFL6vx9f0vfYiBMhHdS
+ xFerADDR3JEgB9QPMSPO3AdZDpt8vCY3GMAeaR+cwmVncd2EQc3egNlEDgHtzybesmN4
+ vck+eF7VOT8icKUpPlSUl/CfJ6bsxkq3Iv1L5vZePzzb2GtqxW03kXsISU4MAo1mJktS
+ QKsHQk1OSj5Z8bUQf3b7trPHACw4XmDSaeYglUpbsrLkHQ3WmIeTvrqzWU9jG43ZmkM/
+ F0eg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791880844; x=1792485644;
+ d=1e100.net; s=20260707; t=1791880879; x=1792485679;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to:content-type;
- bh=fxZZyr5tqmX4RAAPXJIUMSNXuOO4bc4vIMg/smsoxD4=;
- b=qpXqMD/7TyDOkbgz/feotZ3Ik7wqPCTDu5Fp/BfxCKTBUwUcu1mTTc7Pe2xSLNKoEV
- YEUJt06e6avhbS5snfh4W9Qnz/7MG5+wo6rKZlkbPrbIyaA4ejhJcgTygnh5Tde6jLuc
- uku8Imu35EXeX81BFuuY+j9mrkb0pI/5POO273HXosiUeVTDYAjjZape61zMSoIK5JgH
- N2psocKtICVO9FnDkaUF3qQ9YIG1YyJFiLmuKDOloPuNwUo6DI89YXM9hLZEBE+wiQI6
- AxoMECgymjD7GIU6gSeL1ZFQSGcbRNrI1wH5/yGFD6rdNcv82O6vkRr3eOdZUypt6FDT
- nU2Q==
+ bh=Joy6MjKedRL92Qe+KSl4RhEqFwkrMXSKOsSYWcHJFiQ=;
+ b=E0+FErTzKkklIb5QC+a+FjQqmvOqAotgecu6lrcIMve8AX79wY3guQHRWlMTGmOwgi
+ qbrhuBgEe+cM6iHtqDJILmCObnTdZRq/QlEzCAERL3SNZ4Ag+CxRU0KAAetWjPFmlQ74
+ 0ukcN+8YkuT2qXdCvomMnUqa02/SbQ9YnphLa577bzEB/6A2dAwGyXODlc3DGZzhiDzt
+ lVNQKJ6RYHUqzizzK18kuOPC839zu1xupBfmI4PMqLmdLoHtW6YAOrwhJKOJOfQkRetL
+ 21Yd0eyufaeTFXGorL+IE87hHq+Nr4yxtn+DVHcbFX+fgZbbE9kewHB7O5o99utmsJT7
+ 7Upg==
 X-Forwarded-Encrypted: i=1;
- AKwUvBxc9078Ij0+0E0m4oejsNbS25Wv/Gb3Y4iJvS126eYvGdPetvfrbV7zCTtDjHBdsAGukhWZ1GO2j6Lq@nongnu.org
-X-Gm-Message-State: AFq9FYLEyeW/B5TpBTciJl8VvT18w/HhgJ2x+spoM+QQXEn2D8Z2uSQ4
- SU7SFaN1MbYuEE7fSeUJfCVtqrIoASy3/fTBY9Tqk1Pz/GwbF/8293gceg4TdCErCaw=
-X-Gm-Gg: AYBFou0tvesLppovS0jHTKLK/eFAkBv1SyILshEu10RB+PbJLHpGMLhZlPR1/XyvlL2
- Lo1O9OYF+X+ebHYErYJZQrG/gPD872cAF8uNrxJKY4WIFjhWlBIEeeAn+PXalj1fVjvrfmRt98O
- VE2DaaosSjVPrfQtrxDNvlKwY52i4eXtIggPxqO58Yye3Fu0xUhBzJhIrsVu2snjKc56ajoNWxG
- TqN7kGjaoJSGSioyrxzAW74nO2nyykuI1Ai0AKtSGDgsbzgUz1CxQVD+q/f12Pn6Dz01kTsPrYN
- eIJBmL8wbhM807kqup3X7sIlbHpFay85OpsAcFGrCeae8CKigWuqaLKf9ITfqTNLLMaX5/6gzKw
- usWGmslCOiP3EzdiYXgAcPpH6zvZvxiON61JUfSQxmZf3oGCK6TXS1T/NN9+6+Wy9ob8+QoNOGe
- AAi1IyTuql9yBrMRmsu3sZPWtF78sHUl+3TbiLEXhPtLiFKX7kNMSKrKolqUn2CGwnk5N+A7ze5
- e5qNhcq6NsJhmfyl7vr2ktSS+C6XJuuxt4DhZWnwCTdAcM2BtYqpCkXlwgRYV6t1Zml1JnLpdVh
- 4/pOLOwJk0w90g==
-X-Received: by 2002:a05:600c:190a:b0:4a1:746e:589a with SMTP id
- 5b1f17b1804b1-4a18e4aea54mr253139185e9.18.1791880843998; 
- Tue, 13 Oct 2026 01:40:43 -0700 (PDT)
+ AKwUvBydbvHLWRkdGIocCzV6rPLDVKc+K2qv/IJt/pPLhC0Z5lNkqWqH4QCswfqjfZqkW2OrI0J06eITLbx+@nongnu.org
+X-Gm-Message-State: AFq9FYIc13rfpW15Zwwmt4NjRsaaUkiDY9QpBv/w4RxhAE/JKfEr15RX
+ 7xLtkHzO2tw8SjbREwtbB+UbbT1qpq13W5hNAsQ/Cxan6EVjLjqzOC6vVWOT3svlBYhBhP5SqXL
+ Z4To/eHw=
+X-Gm-Gg: AYBFou0mGN3HIfYzMAWWozOcau/PL0D7JojfH793qTxwolvKgPuQQUPk3di+kio1bSg
+ c9miLWS7i2zA/AUMf6FnfC6JNAPfKpyHE51AErwyQQg+p2DZOPfKdlfOrThnss7HOdoL3Zn/wfV
+ cNTviyNoQgeB06Y4oesFPPGBPPT6/lP5qieDM/6i0xiiATKaHooAU277GmhWo/VuCrqjvgU38z5
+ lNHtvJcoS0TMurK0fcwav1kJ7rOZ1o7AdE5sM2LSZE8T2uwz/e1OlEJF8dqhL+kTqBPDZoJNboH
+ dymo3L6CvRPT+Rq7vbVAfar67prkj5SqAAoXZfM3SgCs5c8fLtsYj5MATDWx6IIxGiMmyWvnEbm
+ 80cX0ud/HjNSjVUZo2tasd5YpLz30MeUNSFHNHZeyqntFyKVvR9kESdOFidWSOqvQPzXJUkO6DH
+ zyfSplJMZ9JYEVy4PDfEKxp8c6IcPL7ghJJTNqZTzpcYXyggwdRtFuv62YTAiXSJuiv3U/UQbzN
+ yahYzRicdCt+NaaaS67LqDtXs/pCgA5i4gIC9w/nHvzMXDEEh8hWWQH1MqvmunUzOXabr194UpH
+ fKY=
+X-Received: by 2002:a05:600c:c176:b0:4a0:c2a:485e with SMTP id
+ 5b1f17b1804b1-4a18e4dce0cmr225675005e9.33.1791880879547; 
+ Tue, 13 Oct 2026 01:41:19 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a18be96549sm495086735e9.6.2026.10.13.01.40.43
+ 5b1f17b1804b1-4a18be96549sm495086735e9.6.2026.10.13.01.41.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 13 Oct 2026 01:40:43 -0700 (PDT)
+ Tue, 13 Oct 2026 01:41:18 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Subject: [PATCH 51/86] hw/intc/arm_gicv5: Ask CPUs whether IRS needs
- virtualization support
-Date: Tue, 13 Oct 2026 09:38:58 +0100
-Message-ID: <20261013083933.1024405-52-peter.maydell@linaro.org>
+Subject: [PATCH 81/86] hw/intc/arm_gicv5: Implement ringing doorbells for VPEs
+Date: Tue, 13 Oct 2026 09:39:28 +0100
+Message-ID: <20261013083933.1024405-82-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261013083933.1024405-1-peter.maydell@linaro.org>
 References: <20261013083933.1024405-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,147 +104,132 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The GICv5 IRS must support virtualization if any CPU in the system
-has EL2 (by spec rule R_KDSPG).  Add a has_virt field to the
-GICv5Common struct to track this, and automatically set it if any
-connected CPU has EL2.
+For the GICv5, if the IRS has a potential virtual interrupt for a VPE
+which is not currently resident on some CPU, then it might need to
+"ring the doorbell" by triggering a physical LPI to tell the
+hypervisor that it ought to schedule the VPE so it can handle the
+virtual interrupt.
 
-We get the CPU to tell us whether it needs virtualization in the
-return value of gicv5_set_gicv5state(); this allows us to maintain
-the arm's-length relationship between the IRS and the CPU (and in
-particular we don't need to include cpu.h in arm_gicv5_common.c, as
-we would if we directly called arm_feature() there).
-
-We could alternatively have provided a has-virtualization QOM
-property, but then the board code would need to take care to
-explicitly configure the IRS to match the CPUs.
-
-(The GICv3 doesn't have an equivalent to this, because in the GICv3
-design virtualization is handled entirely by the CPU interface and
-software; in GICv5 the IRS has hardware support, to reduce the work
-software needs to do.)
-
-None of the code we are about to add in future commits that tests the
-has_virt flag will be accessible until we remove the check in virt.c
-that prevents creation of a machine with the GICv5 and an EL2 CPU, so
-no behaviour will change until we have completed the entire
-virtualization support feature and allow the user to select it.
+The conditions when we need to do this are defined in the spec by
+R_CWZMW: the VPE must be non-resident, have valid doorbell settings
+that request a doorbell, and the pending virtual interrupt must be
+high enough priority to satisfy the doorbell priority mask.  We thus
+need to reconsider whether to ring the doorbell when the vHPPI for
+the VPE changes, when the VPE transitions between resident and
+non-resident, and when the doorbell settings are changed.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/intc/arm_gicv5_common.c         |  9 ++++++++-
- include/hw/intc/arm_gicv5_common.h |  2 ++
- include/hw/intc/arm_gicv5_stream.h | 15 +++++++++++----
- target/arm/cpu.c                   | 17 +++++++++++------
- 4 files changed, 32 insertions(+), 11 deletions(-)
+ hw/intc/arm_gicv5.c  | 62 ++++++++++++++++++++++++++++++++++++--------
+ hw/intc/trace-events |  1 +
+ 2 files changed, 52 insertions(+), 11 deletions(-)
 
-diff --git a/hw/intc/arm_gicv5_common.c b/hw/intc/arm_gicv5_common.c
-index cfadfee4f05..17fd67b5ccd 100644
---- a/hw/intc/arm_gicv5_common.c
-+++ b/hw/intc/arm_gicv5_common.c
-@@ -176,11 +176,18 @@ static void gicv5_common_realize(DeviceState *dev, Error **errp)
-     }
- 
-     for (int i = 0; i < cs->num_cpus; i++) {
--        if (!gicv5_set_gicv5state(cs->cpus[i], cs, cs->cpu_iaffids[i], i)) {
-+        switch (gicv5_set_gicv5state(cs->cpus[i], cs, cs->cpu_iaffids[i], i)) {
-+        case GICV5_CPUIF_MISSING:
-             error_setg(errp,
-                        "CPU %d (IAFFID 0x%x) does not implement GICv5 CPU interface",
-                        i, cs->cpu_iaffids[i]);
-             return;
-+        case GICV5_CPUIF_PRESENT:
-+            break;
-+        case GICV5_CPUIF_NEEDS_VIRT:
-+            /* R_KDSPG: IRS must implement virtualization if any CPU has EL2 */
-+            cs->has_virt = true;
-+            break;
-         }
-     }
- 
-diff --git a/include/hw/intc/arm_gicv5_common.h b/include/hw/intc/arm_gicv5_common.h
-index a47f639e84c..d8f6f5d5db9 100644
---- a/include/hw/intc/arm_gicv5_common.h
-+++ b/include/hw/intc/arm_gicv5_common.h
-@@ -127,6 +127,8 @@ struct GICv5Common {
-     uint32_t spi_base;
-     uint32_t spi_irs_range;
-     uint32_t spi_range;
-+
-+    bool has_virt;
- };
- 
- struct GICv5CommonClass {
-diff --git a/include/hw/intc/arm_gicv5_stream.h b/include/hw/intc/arm_gicv5_stream.h
-index f6d32c6beca..ea27d6aec0f 100644
---- a/include/hw/intc/arm_gicv5_stream.h
-+++ b/include/hw/intc/arm_gicv5_stream.h
-@@ -16,6 +16,12 @@
- 
- typedef struct GICv5Common GICv5Common;
- 
-+typedef enum GICv5CPUIFStatus {
-+    GICV5_CPUIF_MISSING, /* CPU does not have GICv5 cpuif support */
-+    GICV5_CPUIF_PRESENT, /* CPU has GICv5 cpuif */
-+    GICV5_CPUIF_NEEDS_VIRT, /* CPU has GICv5, and needs virt support in IRS */
-+} GICv5CPUIFStatus;
-+
- /**
-  * gicv5_set_gicv5state
-  * @cpu: CPU object to tell about its IRS
-@@ -27,11 +33,12 @@ typedef struct GICv5Common GICv5Common;
-  * IRS must call this when it is realized, for each CPU it is
-  * connected to.
-  *
-- * Returns true on success, false if the CPU doesn't implement the
-- * GICv5 CPU interface.
-+ * The return value indicates whether the CPU has a GICv5 CPU
-+ * interface, and if it does whether it needs virtualization support
-+ * from the IRS.
-  */
--bool gicv5_set_gicv5state(ARMCPU *cpu, GICv5Common *cs, uint32_t iaffid,
--                          uint32_t cpuidx);
-+GICv5CPUIFStatus gicv5_set_gicv5state(ARMCPU *cpu, GICv5Common *cs,
-+                                      uint32_t iaffid, uint32_t cpuidx);
- 
- /*
-  * The architected Stream Protocol is asynchronous; commands can be
-diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-index 4731d1cc7c4..62262d742a2 100644
---- a/target/arm/cpu.c
-+++ b/target/arm/cpu.c
-@@ -1215,20 +1215,25 @@ static void arm_cpu_dump_state(CPUState *cs, FILE *f, int flags)
+diff --git a/hw/intc/arm_gicv5.c b/hw/intc/arm_gicv5.c
+index b3ce8a87e81..a1fe6a8a822 100644
+--- a/hw/intc/arm_gicv5.c
++++ b/hw/intc/arm_gicv5.c
+@@ -572,6 +572,53 @@ static hwaddr l1_vmte_addr(GICv5Common *cs, const GICv5VMTConfig *cfg,
+     return cfg->base + (l1_index * 8);
  }
  
- #ifndef CONFIG_USER_ONLY
--bool gicv5_set_gicv5state(ARMCPU *cpu, GICv5Common *cs, uint32_t iaffid,
--                          uint32_t cpuidx)
-+GICv5CPUIFStatus gicv5_set_gicv5state(ARMCPU *cpu, GICv5Common *cs,
-+                                      uint32_t iaffid, uint32_t cpuidx)
++static void irs_maybe_ring_doorbell(GICv5 *s, VPE *vpe)
++{
++    /*
++     * Ring the doorbell for the VPE if required by the conditions
++     * defined in R_CWZMW: the VPE must be non-resident, and have
++     * valid doorbell settings that actually request a doorbell, and
++     * a doorbell priority mask that allows it.
++     */
++    GICv5Common *cs = ARM_GICV5_COMMON(s);
++    GICv5ISTConfig *cfg;
++    L2_ISTE_Handle h;
++    uint32_t *l2_iste_p;
++    uint32_t iaffid;
++
++    if (!vpe->valid || vpe->resident || !vpe->db_valid || !vpe->db_req) {
++        return;
++    }
++    if (vpe->vhppi.prio > vpe->dbpm) {
++        return;
++    }
++    trace_gicv5_irs_ring_doorbell(domain_name[vpe->vmte->domain],
++                                  vpe->vmte->vmid, vpe->db_intid);
++    /*
++     * Generate the doorbell event, and clear db_req so we only do it once.
++     * This is a SET_EDGE event for an LPI, so (R_HHKMN) it forces the
++     * LPI's handling mode to Edge ond its Pending state to Pending.
++     * If the LPI is unreachable (no LPI table, etc) then we would
++     * report it in IRS_SWERR_STATUSR if we implemented error reporting;
++     * the doorbell is marked as no-longer-requested regardless.
++     */
++    vpe->db_req = false;
++
++    cfg = &s->phys_lpi_config[vpe->vmte->domain];
++    if (!cfg) {
++        return;
++    }
++    l2_iste_p = get_l2_iste(cs, cfg, vpe->db_intid, &h);
++    if (!l2_iste_p) {
++        return;
++    }
++    *l2_iste_p = FIELD_DP32(*l2_iste_p, L2_ISTE, PENDING, true);
++    *l2_iste_p = FIELD_DP32(*l2_iste_p, L2_ISTE, HM, GICV5_EDGE);
++    iaffid = FIELD_EX32(*l2_iste_p, L2_ISTE, IAFFID);
++    put_l2_iste(cs, cfg, &h);
++    irs_recalc_hppi(s, vpe->vmte->domain, iaffid);
++}
++
+ static void irs_recalc_vhppi(GICv5 *s, VMTE *vmte, uint32_t iaffid)
  {
      /*
--     * Set this CPU's gicv5state pointer to point to the GIC that we are
--     * connected to, and record our IAFFID and CPU index.
-+     * Set this CPU's gicv5state pointer to point to the GIC that we
-+     * are connected to, record our IAFFID and cpuidx, and let the IRS
-+     * know if it needs to implement virtualization support.
-      */
-     if (!cpu_isar_feature(aa64_gcie, cpu)) {
--        return false;
-+        return GICV5_CPUIF_MISSING;
+@@ -612,7 +659,7 @@ static void irs_recalc_vhppi(GICv5 *s, VMTE *vmte, uint32_t iaffid)
+         gicv5_forward_interrupt(cs->cpus[vpe->cpuidx], vmte->domain, true);
      }
-     cpu->env.gicv5.gicv5state = cs;
-     cpu->env.gicv5.iaffid = iaffid;
-     cpu->env.gicv5.cpuidx = cpuidx;
--    return true;
-+    if (arm_feature(&cpu->env, ARM_FEATURE_EL2)) {
-+        return GICV5_CPUIF_NEEDS_VIRT;
-+    } else {
-+        return GICV5_CPUIF_PRESENT;
-+    }
- }
- #endif
  
+-    /* TODO: we may need to generate a doorbell interrupt. */
++    irs_maybe_ring_doorbell(s, vpe);
+ }
+ 
+ static void irs_recalc_all_vhppi_for_vm(GICv5 *s, VMTE *vmte)
+@@ -1428,11 +1475,7 @@ bool gicv5_set_resident(GICv5Common *cs, GICv5Domain domain, bool valid,
+ 
+         trace_gicv5_set_non_resident(domain_name[domain], cpuidx, db, dbpm);
+ 
+-        /*
+-         * TODO: when we implement VPE doorbells, we should check whether
+-         * we should immediately generate a doorbell for a VPE that has
+-         * just been made non-resident.
+-         */
++        irs_maybe_ring_doorbell(s, vpe);
+     }
+ 
+     /*
+@@ -2369,11 +2412,8 @@ static void irs_vpe_dbr_write(GICv5 *s, GICv5Domain domain, uint64_t value)
+                                                  IRS_VPE_SELR, VPE_ID),
+                                       vpe->dbpm, vpe->db_intid, vpe->db_req);
+ 
+-        /*
+-         * TODO: when we implement VPE doorbells, check here whether
+-         * this config change means we should now generate a VPE
+-         * doorbell event for this VPE.
+-         */
++        /* This config change might mean we now need to ring the doorbell */
++        irs_maybe_ring_doorbell(s, vpe);
+     } else {
+         trace_gicv5_irs_vpe_dbr_write_nv(domain_name[domain], vpe->vmte->vmid,
+                                          FIELD_EX64(cs->irs_vpe_selr[domain],
+diff --git a/hw/intc/trace-events b/hw/intc/trace-events
+index 963fd75c13e..ddb7ab06207 100644
+--- a/hw/intc/trace-events
++++ b/hw/intc/trace-events
+@@ -260,6 +260,7 @@ gicv5_irs_vpe_dbr_write(const char *domain, uint32_t vmid, uint32_t vpeid, uint8
+ gicv5_irs_vpe_dbr_write_nv(const char *domain, uint32_t vmid, uint32_t vpeid) "GICv5 IRS %s VM ID %u VPE %u IRS_VPE_DBR doorbell info no longer valid"
+ gicv5_set_resident(const char *domain, uint32_t vmid, uint32_t vpeid, uint32_t cpuidx) "GICv5 IRS %s VM ID %u VPE %u set_resident phys CPU idx %u: now resident"
+ gicv5_set_non_resident(const char *domain, uint32_t cpuidx, bool db, uint8_t dbpm) "GICv5 IRS %s set_resident phys CPU idx %u: now no resident VPE; db_req %d dbpm %u"
++gicv5_irs_ring_doorbell(const char *domain, uint32_t vmid, uint32_t db_intid) "GICv5 IRS %s VM ID %u: ringing doorbell LPI %u"
+ 
+ # arm_gicv5_common.c
+ gicv5_common_realize(uint32_t irsid, uint32_t num_cpus, uint32_t spi_base, uint32_t spi_irs_range, uint32_t spi_range) "GICv5 IRS realized: IRS ID %u, %u CPUs, SPI base %u, SPI IRS range %u, SPI range %u"
 -- 
 2.43.0
 
