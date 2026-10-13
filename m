@@ -4,90 +4,141 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 483EECC6B03
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 08:49:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3045FCC6B03
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 08:49:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGY5v-000314-2d; Tue, 13 Oct 2026 04:42:53 -0400
+	id 1xGY9L-0000Wr-TR; Tue, 13 Oct 2026 04:46:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xGY3r-0008Ds-OM
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 04:40:40 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xGY3p-0007zP-DQ
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 04:40:39 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-4a16aaf2067so32210825e9.0
- for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 01:40:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1791880836; x=1792485636; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=xzgSRPibV+W+TuXoD9LFFebcGlaP5K/iGBnAO14/huw=;
- b=YoRRJsqEJnzWcEg2WqDBQrzvSQsyjmJTmriLnw65nQo24cHuKTYcIAwo4ODIeDTMoo
- 0GjRGi/+bOugV0YQsu1AALL7l22frSSdZlWmkJqnB/lG9hfnnlwKdNkUgCYWlKscIAZZ
- ogNp0gGxpzbrpAjmHsT7WFA2BAhNWsOxb4uhGxLDY3SqkI78Y8Of1bgeuod/eyOzpjVX
- 9Tly1DfWSaEDxULtTUHGj2qimsssz4xUYzJzD3I+ClEFyZsZHe4IJHEo/++JcOclnrx3
- grdkNh7SHhyLNVtwm+i6qCfwDa0UlzbipNHFqIKUgAo/3tfhXXhhbfGFN5p8nCT2FFGQ
- 62yQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791880836; x=1792485636;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to:content-type;
- bh=xzgSRPibV+W+TuXoD9LFFebcGlaP5K/iGBnAO14/huw=;
- b=Madx2WTkhb9FIGq8TZGOHeztH6C/TvV4AqpUClnS55Ton49e+iq/2uWdeX3axPp5zT
- UkU5vMhcRgVAUXxBfzzUsxkmovRGOUWVMuZiuLVbkICvd2NLYpMgGJsH1ULlvgk7YkAd
- KJOiWTcRoZkN4TmIGsVg7rmIdQLjFx3XU2UPabZRBbehFbV0FWVh48Wp8645frwuRc5g
- O7ckmLysUkLsTCIJIGiF4vmdSL2oCr5WbNR9T6RCYMOaJgEYeKVe4FCe3d5ORFdNQnXU
- ffajJWiRvYjnHtXL8w1cs1kI2YQfWf0EfSKFaRG3H8+ryRIBfZQwRykA+oghodJDeVh6
- H12Q==
-X-Forwarded-Encrypted: i=1;
- AKwUvBxaoC4D9rxy5jPK75lr4hvEOMMnywHtpa/+BV1x7x0KQBIbaGVFvAc9Hzjptbh3lph9gd5366qEzaaC@nongnu.org
-X-Gm-Message-State: AFq9FYKEC4yE/psiF31CyuuOHuARpdqiLnqEl2bqWXN/gVkXLKG/s09g
- zSd4dVq8D1T/CeuUYNCHW/YZ3dPdf7rWg/KlIEB5o/qX8ET/lLzcJkRVNqa3EFsc9wM=
-X-Gm-Gg: AYBFou3UJaXC8KwpRTEViqQOVmFwlsgzIXq3xxo+BN3lsWepf1cgPdGd4dYRLoIgcbp
- ZTeSStwyzGThnBc+eUhOKajIWFwr7gKvKgn7K2E2FaFAMbTNCoQKydlZR7ka0lhZWKw1uyPs5eJ
- eqKkckHyDvnNu6DYIBSMnSM1C+9l2dWJm9CFBTPHSiaN+QGxVUsdMWneYfpDHA00ka8qoabcThX
- qGzcPcI6c/4IvoELOCir3vuwrDaoCeQEL5a565zQSgVndYje3rv+HanFlavmaG+17UcMKXMBeCF
- aDnww1G5vfwRjPIvhQrQFunqep0lLYFUPcJ1Mt18CjUzZUVKbXjH9D2K0McV3euBAa7MMgWCcri
- Kq+OZ7UqZyemxI7G5gh9sCOUHA0XHNean5eiuAIFuoBeIoZ9/S2ag3wsl+mn+5hAUZ++qn1r4Jj
- nwDtP9DZKu53F7hN/5aI3Hm4oeJLwoCibqbXSxYbJ6BkJyuK+ttzSCEySjKHsR1X/qddNOfQ2qx
- g33Dbm5gPmQluAqYnXRfTSVEDt4Xw1rY+5H97LiJcJiQNki0uor3v/HNnMvlXzDdTl3G2ecT0sw
- lXU=
-X-Received: by 2002:a05:600c:8716:b0:4a1:62b8:9aa1 with SMTP id
- 5b1f17b1804b1-4a18e44885dmr236696575e9.2.1791880835847; 
- Tue, 13 Oct 2026 01:40:35 -0700 (PDT)
-Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a18be96549sm495086735e9.6.2026.10.13.01.40.34
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 13 Oct 2026 01:40:35 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-arm@nongnu.org,
-	qemu-devel@nongnu.org
-Subject: [PATCH 43/86] target/arm: GICv5 cpuif: Implement GIC LDnnn insns
-Date: Tue, 13 Oct 2026 09:38:50 +0100
-Message-ID: <20261013083933.1024405-44-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20261013083933.1024405-1-peter.maydell@linaro.org>
-References: <20261013083933.1024405-1-peter.maydell@linaro.org>
-MIME-Version: 1.0
+ (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
+ id 1xGY5G-0002aq-4W
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 04:42:07 -0400
+Received: from mail-southcentralusazon11011059.outbound.protection.outlook.com
+ ([40.93.194.59] helo=SN4PR0501CU005.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
+ id 1xGY5D-0008Nv-Om
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 04:42:05 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=XzQPdIytXVHY6aRBYZGAeyOdHqzF5jCUPvzVHEyS+4PrGz+HrQGj4FyjbP3wwBgDjr8luF7Xw5ZXyXeAVvgfFdu/3KOb2iCZ/DDjv4CL03tZDOjGbazsjVbAMdfdDH2kzFjMh0RkDUNv+ngfqgG8oi67pNbva/k6kgADBdZbdHaeddVC27yPPhqIct8bPYBZXli72Ru1p3z9ALcBOtUipAKOWA0gzi+1NBiSFnjr3EHTRrAUjyfsGv/IPJq9dVKn5WRry2qUxZlgK4jX90svjBXXWxRY1HFRKsxIehF74QATCgiNu9hr+F4dRxmgUCWvXqeSGX+54CCh5g1MzB/lRA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=00u1YONG9v3bdwh3CJTxgQwT9n/BHtImKbnc9eMLEnY=;
+ b=oM6q2f0+uQMBltz+wVk3p2MJ/7sqV6wxQZw+1htMmEB/wHhVcSVO8mdLfXSk8mmn/ARCLpUwdALRLtbQz5BeUohS3XWGap1uIHfXH0iSdmz11es6UdzV+pNo00SxPSvokBa0kVDna28mEZBR5+U8h5009W4YFEiqefqqU6stIokj5c1RPqUmEfkQL0RID+umaI9cUj309Zq1Yf5KgqIrwjDKyyTa2PTbsZLeMa96NsZ64qJyskb01xUdHUOGLL7ricr9UWGoyKq6jt24oa6YXud7BMGkH0Pj48VXAZHiiGSIBMEk1il5Qa+xjh1xRJn6z4dW/R2CmJDDlSnh1TY5eQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=00u1YONG9v3bdwh3CJTxgQwT9n/BHtImKbnc9eMLEnY=;
+ b=ukoJ0dtR46z/6HC3WOh0aQ5qS/Wa471uBr1Xs/dfXjMrHUlT0wlzk1IVGgv3O92iQ4ZlRLKmpeCkX3AyQnXudAtFkA4kCZYc/xlttmtrNBExXendVIgEwy463p6MLlhh4Tf/4DB6P2CA9JwOur3LI+CE4CQAXgIdrwSQCDpqo+XlCSMtnCN9NdEe99Qhbgix2hmdFNd4tkmQ98lTEWI4GSuuJrO+Sdqf/yCxNMOAaNvnZIy+0Mi8MmeYYKJayU3+gpYeaiP0JNKYOyzIuHuUk32dUs8Bk3tevYlixY6dLv07WrHgbadhqoxNOpnvztmPklS49L9L6wynTN5MEJ9ftA==
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from DM4PR12MB5119.namprd12.prod.outlook.com (2603:10b6:5:392::10)
+ by DM4PR12MB7551.namprd12.prod.outlook.com (2603:10b6:8:10d::12) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.496.23; Tue, 13 Oct
+ 2026 08:36:57 +0000
+Received: from DM4PR12MB5119.namprd12.prod.outlook.com
+ ([fe80::261:eff5:d149:2d56]) by DM4PR12MB5119.namprd12.prod.outlook.com
+ ([fe80::261:eff5:d149:2d56%6]) with mapi id 15.21.0496.021; Tue, 13 Oct 2026
+ 08:36:57 +0000
+Message-ID: <72d85479-6be4-4978-b176-0b1a547e7e86@nvidia.com>
+Date: Tue, 13 Oct 2026 11:36:51 +0300
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] vfio/migration: Don't reset a device on a declined
+ stop transition
+To: Pankaj Kumar <pshit@nvidia.com>, alex@shazbot.org, clg@redhat.com
+Cc: qemu-devel@nongnu.org, pmohite@nvidia.com, dnigam@nvidia.com,
+ alwilliamson@nvidia.com, smitra@nvidia.com, kwankhede@nvidia.com,
+ vkale@nvidia.com, targupta@nvidia.com
+References: <20261008024329.1996536-1-pshit@nvidia.com>
+ <20261013044520.2439021-1-pshit@nvidia.com>
+Content-Language: en-US
+From: Avihai Horon <avihaih@nvidia.com>
+In-Reply-To: <20261013044520.2439021-1-pshit@nvidia.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-ClientProxiedBy: FR4P281CA0445.DEUP281.PROD.OUTLOOK.COM
+ (2603:10a6:d10:c6::18) To DM4PR12MB5119.namprd12.prod.outlook.com
+ (2603:10b6:5:392::10)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DM4PR12MB5119:EE_|DM4PR12MB7551:EE_
+X-MS-Office365-Filtering-Correlation-Id: 4b1aa930-1aca-4066-1644-08df29052431
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|1800799024|23010399003|376014|366016|10067099003|261009223027099003|11063799006|4143699003|6133799003|18002099003|22082099003|56012099006;
+X-Microsoft-Antispam-Message-Info: DmaLluahu1UN0YF4MI5JSNaPBDsceTMVaVuo6VsRHwlcP9ocLB7aLstwzNzCGolKXUYqzZXKBWsN0tdXLhycvxf+aHRLlz/HfwtUuPr/YQibk7KFhcezYXqbF/QhmSMbM+UL27ECARLWgoJ6yobjTuDG6CrjWtzCg5jvDb1wS3b9zEeNm0RLFX0QqNJA5wPOjvACpAIyxjOWPoHEzIkG/Uc2lIG7JLRWQp9U5VEF4FMZ6LOTCYeDjv0T8E89LDMggw0FNFbZkH7VA0bFvkJfIXPa7HV9sYRxZCOcloVBCMw860TH8mZsDsGSjFhKTP9qu8W/WQhhrWeruZnjqANOmGA+I9DKxqbv64PeNv13c5szqE3MwUlwUAHk6pw4jEZTvtnWI3PhBFC1m/dvAvD53x1jarGyy8L/FWpwcNeOan7r9rEmyc6NKy/ZjgK/mojpH5yBE6OGdlgWtxWKyArJKpA6TH/zLxbNEhKsLsJGDHpnku3w9sO05nKkbcKTM+anzckBq80kReom6I9GCSqAPzuRKWWjhANl4DuZx5k78YRRMZsah69T2MvvHYD7ev8qQ+z+5rlvmjrW1pTCA3/GhlCShZLOZzJP54IzJPDimN4wIRz0bAg/bQa9Mr/helSI
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:DM4PR12MB5119.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(23010399003)(376014)(366016)(10067099003)(261009223027099003)(11063799006)(4143699003)(6133799003)(18002099003)(22082099003)(56012099006);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?MkhTSDZzWjg3VHlIdktxZGF5ZUVqMXBPa3RRR0pTelM4YzlNTnlMamtoeTdy?=
+ =?utf-8?B?WVNsVUZOUjRnTWRFeEZ6WGpxSVJoRnBqdUpDQmcrUjh3cGVxZmxXUXhESnc1?=
+ =?utf-8?B?djdheWNqa2d6M0VsbHM5cjF4TW1sRmJ0Q2IzaHZ2aU9zYTlNUmR6eUxIWEZJ?=
+ =?utf-8?B?K05yeW16eUhJYWN6R05mM1RpUlY4bDdPYU41K3F4bllob2h3dXhZZU1PTnRl?=
+ =?utf-8?B?V0dMYitnUWtxVU10ZG5uanFReHg1SHFkY2tkVUcwTk5jY3NyK1g4T1RqM0RW?=
+ =?utf-8?B?OEt3NG94djZQb3RGZWMrM2pEWXd2UkZ0WS8wZFpYeXQ3ZytObml1WXcwUlpo?=
+ =?utf-8?B?endRSmo0Y2hRMkJGS3lncjRwV01UT2RlcVFHTUdaZENlWndsSHJRWTZxT1Mx?=
+ =?utf-8?B?RGdjNWNZL0hFcktqR2Q5dGU1ZGtzNjdPdU43Lzljc2xYbmwvWE8ycUhrcDU2?=
+ =?utf-8?B?T2FKSGNwVGRsd3M4NlhpZURiR1I2aitNaytSTFlpZkJrTWIzK2I3cnpMM1lz?=
+ =?utf-8?B?ZGQrSU80RkVIT1NsU0xxdXlnMWJtUDh2YnNYQnI4ZmJYWjg4cjZVNm9rWTVN?=
+ =?utf-8?B?QkFjdWI3MEo3R2JObjBPNkxoVGpXL3JMR3EvdmFVSHkraWJwYUlJWjk5RHpt?=
+ =?utf-8?B?M3VXSUp5N08vN3U3REVTWGdVOG43VjRkZDlSaUZlNFRxYTNveEZOZzJ3YUd0?=
+ =?utf-8?B?NTZBdFNyWjd0by9aNUREOENLdVdPNFpHN0pSTFQrN1pIbGlGd3BkamVMU2lC?=
+ =?utf-8?B?NEhMeXBVUE9CT0ZuTGhYMmVQaERORVZHUXpORDE5dDVjdGM2dFRDK2lVKzc0?=
+ =?utf-8?B?TWZTTEVOWjJOOGpKZ3pSWUg5WlQ5bXVub1NSSk5aYkdOKzg1bVdVTFVGcEd6?=
+ =?utf-8?B?MWplUTFGaDI0QU5kTUFRN1kwQmtySmNLbzRTRFNzdmZ1blJrL205NmdKTHN1?=
+ =?utf-8?B?T0xHdWJtWmdTNkNUYnZtSEpsUDNLSTEraC9NeWxJVXVsNXdvQ0x4TEVocW1R?=
+ =?utf-8?B?bC9yN25WcFZBSnQzQ1V2SUQ3dVNmQWUwUTFjQXB2KzBjbzYySU03eGZXVFcw?=
+ =?utf-8?B?V1FWcXFMRGlDcTZDTHNhK1dWYUo5MTFXMDZ6R245cVNkT2h4MnJkaW92Kzl2?=
+ =?utf-8?B?T1Zjc0JTajVYdFdJNHd6Y2hUaHJ6bUpLZXFkbjEvRDZnMGlOekxHdXdkYTEr?=
+ =?utf-8?B?R2w5VjNHQTY0WUp1T3piUzg0NFNrdlloVHRBRHRPVWpoOWJra0Z1YUlscE4x?=
+ =?utf-8?B?K3JKdEZqUGVLTnE1NStoaUt4bnZ5UDM5OE9Qb2VJTHJLQ2lxZTRxVk9GdFVk?=
+ =?utf-8?B?WGF3VFFCZ3dxendsUVdvZURDcHdmTjRnYlkvelBXRG41MDFPSHh1K1VCb3F6?=
+ =?utf-8?B?cDVsRGlZNmN3enUyVGFUSnp2bW9YMVRINE5MdVc5VjJVVjJ6TExsUTJsZ3JP?=
+ =?utf-8?B?MXJhWStwUkJGSDR4MDNYSGY2RFNua2t3Ni9FL0dONEl5eTljUWdEbkQ0ZkF6?=
+ =?utf-8?B?blBJQXNkZ3FCWk5HY2RYMU1oZ2I3bmZuVTZpd0xqTU5lamNDU3U0VEhlVWR0?=
+ =?utf-8?B?dE9abXdocnU0Z2Z6SVh4Q2h4cFEyMmZROUIzMlIxdUQwTzNqb0xLTEtFQmR3?=
+ =?utf-8?B?dmVKSUx2TUQ3aXVrYU1FOXhmbUdNNUIwTXdxNytoY0tPMTFvTGpaTzhCYVEy?=
+ =?utf-8?B?TWg4MmxwQkdZUmVXZUliTDd2T3NHbzdnNG03WURHcXRJYzZZNW1HNjNyYXds?=
+ =?utf-8?B?OFlXM2JHd0xFaXJldTBLcHNMckNybmVBWHNHODd3OEhNWnFFYnM0REhTKzlC?=
+ =?utf-8?B?VE1lc2s3RXFvb3E3UVVjeHpYcHYvM0Yvak4vYTdFeUxTQ1lBNm03SGpVVG4w?=
+ =?utf-8?B?Zjk0L3hCVS9UQmVVdGpudDB5RTR3YWh2T0JaVFlpeUxXbktRbFpoTHJjOCtv?=
+ =?utf-8?B?RCs3Q0FGa2VkbnJzVk00OVQ3R0p0YVdyQ1dQOE1FZXdBaUZwZitnUVdEeVZ0?=
+ =?utf-8?B?Q0xBaHFDUWJiK1dUMmFFSEJBWW9nMVFBbGlhZlpua1h6aFQyaDVKdlJrMmsr?=
+ =?utf-8?B?NExxc3hmMzhlcmZHUFFsL0hrb3ZxbUw0bTJsSDlyVmExNHljb1RqZGhRTEFm?=
+ =?utf-8?B?K0Y2aUdqc2VYd0dGZWhmT1I1SkhZRGRKT1hTYUk2R01oUnNjMkMvN29DSDRl?=
+ =?utf-8?B?TStveUNNeUlpSzZTSmFkK2xxKzZ2VERNZ3JvVFlINnpjTUtucG02Mlg4N3Ji?=
+ =?utf-8?B?Z1o4UWw3UldQbGs0aTk0Si9mL1VmbjA3dXVkQlU1ZE9PckhPNHZwSDZFS3p6?=
+ =?utf-8?B?NWxyVkMwVEtEdnVmSkhRZGVFTmRET1BkSlRyOEwwZnV0SGl6NmYrUT09?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 4b1aa930-1aca-4066-1644-08df29052431
+X-MS-Exchange-CrossTenant-AuthSource: DM4PR12MB5119.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Oct 2026 08:36:57.1131 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: xkrGamUR8kknXtVtg1JfH6J+AG4AZZySjnp2f9vdhPqqG+/jS/bDEYWtWFvUbRqF9mO+n3kdDmqsrcxpuzWewQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR12MB7551
+Received-SPF: permerror client-ip=40.93.194.59;
+ envelope-from=avihaih@nvidia.com;
+ helo=SN4PR0501CU005.outbound.protection.outlook.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,76 +154,131 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The GIC cpu interface has a set of GIC LDnnn insns which behave
-exactly like the GIC CDnnn ones except that they always operate on
-the logical interrupt domain.  (EL3 can use these to examine and
-update the state of the interrupts in the physical interrupt domain
-for lower exception levels.)
 
-We won't need these until we implement EL3 support, but since
-we've put in all the necessary groundwork for the reginfo
-structs to just work, we might as well add them now. The writefns
-will select the domain to use based on the opc1 field.
+On 10/13/2026 7:45 AM, Pankaj Kumar wrote:
+> QEMU resets a VFIO device whenever a migration state transition it requests
+> fails. This is done by vfio_migration_set_state_or_reset(), which passes
+> VFIO_DEVICE_STATE_ERROR as the recover state, forcing an immediate
+> VFIO_DEVICE_RESET.
+>
+> However, a device may legitimately decline a state transition, e.g. a vGPU
+> that refuses to stop while a profiling/debug session is active in the guest.
+> Such a device is still healthy and running the guest, so resetting it destroys
+> a perfectly good VM.
+>
+> Instead of resetting on a declined stop, recover the device to its current
+> state. The current device state is always a valid, already-reached state, so
+> recovering to it is effectively a no-op transition that cannot itself fail and
+> trigger a reset.
+>
+> Introduce a helper, vfio_migration_set_state_or_recover(), that selects the
+> recover state based on the transition direction, and route the vmstate change
+> and save-completion paths through it:
+>
+>   - vfio_vmstate_change() and vfio_vmstate_change_prepare() recover to the
+>     current device state for the stop direction. The resume direction keeps
+>     ERROR as the recover state, since a device that cannot resume is genuinely
+>     broken.
+>
+>   - vfio_save_complete_precopy() recovers to the current device state rather
+>     than STOP. If it runs after an earlier stop was declined (the device still
+>     in a running state), the stop-copy attempt is then rolled back instead of
+>     resetting the device.
+>
+> The existing vfio_migration_set_state_or_reset() is retained for the paths
+> that must still reset on failure (save cleanup and the migration-failed
+> notifier).
+>
+> This lets vendor drivers decline a stop as a matter of policy without losing
+> the guest, and lets such drivers drop their own workarounds that swallowed the
+> spurious reset.
+>
+> Signed-off-by: Pankaj Kumar <pshit@nvidia.com>
+> ---
+> v2:
+>   - Introduce a vfio_migration_set_state_or_recover() helper that selects the
+>     recover state by transition direction, and route all three call sites
+>     through it instead of open-coding the recover-state selection (Cédric).
+>   - Keep vfio_migration_set_state_or_reset() for the paths that must still
+>     reset on failure (save cleanup and the migration-failed notifier).
+>
+> v1: https://lore.kernel.org/qemu-devel/20261008024329.1996536-1-pshit@nvidia.com/
+>
+>   hw/vfio/migration.c | 38 +++++++++++++++++++++++++++++++++-----
+>   1 file changed, 33 insertions(+), 5 deletions(-)
 
-As with VD, there is no LD insn for CDIA, CDNMIA or CDEOI.
+Reviewed-by: Avihai Horon <avihaih@nvidia.com>
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- target/arm/tcg/gicv5-cpuif.c | 40 ++++++++++++++++++++++++++++++++++++
- 1 file changed, 40 insertions(+)
+Thanks.
 
-diff --git a/target/arm/tcg/gicv5-cpuif.c b/target/arm/tcg/gicv5-cpuif.c
-index 64e59589cc7..69e51359f22 100644
---- a/target/arm/tcg/gicv5-cpuif.c
-+++ b/target/arm/tcg/gicv5-cpuif.c
-@@ -1501,6 +1501,46 @@ static const ARMCPRegInfo gicv5_cpuif_reginfo[] = {
-         .accessfn = access_gicv5_ich_reg,
-         .writefn = gic_cdhm_write,
-     },
-+    {   .name = "GIC_LDDIS", .state = ARM_CP_STATE_AA64,
-+        .opc0 = 1, .opc1 = 6, .crn = 12, .crm = 1, .opc2 = 0,
-+        .access = PL3_W, .type = ARM_CP_IO | ARM_CP_NO_RAW,
-+        .writefn = gic_cddis_write,
-+    },
-+    {   .name = "GIC_LDEN", .state = ARM_CP_STATE_AA64,
-+        .opc0 = 1, .opc1 = 6, .crn = 12, .crm = 1, .opc2 = 1,
-+        .access = PL3_W, .type = ARM_CP_IO | ARM_CP_NO_RAW,
-+        .writefn = gic_cden_write,
-+    },
-+    {   .name = "GIC_LDPRI", .state = ARM_CP_STATE_AA64,
-+        .opc0 = 1, .opc1 = 6, .crn = 12, .crm = 1, .opc2 = 2,
-+        .access = PL3_W, .type = ARM_CP_IO | ARM_CP_NO_RAW,
-+        .writefn = gic_cdpri_write,
-+    },
-+    {   .name = "GIC_LDAFF", .state = ARM_CP_STATE_AA64,
-+        .opc0 = 1, .opc1 = 6, .crn = 12, .crm = 1, .opc2 = 3,
-+        .access = PL3_W, .type = ARM_CP_IO | ARM_CP_NO_RAW,
-+        .writefn = gic_cdaff_write,
-+    },
-+    {   .name = "GIC_LDPEND", .state = ARM_CP_STATE_AA64,
-+        .opc0 = 1, .opc1 = 6, .crn = 12, .crm = 1, .opc2 = 4,
-+        .access = PL3_W, .type = ARM_CP_IO | ARM_CP_NO_RAW,
-+        .writefn = gic_cdpend_write,
-+    },
-+    {   .name = "GIC_LDRCFG", .state = ARM_CP_STATE_AA64,
-+        .opc0 = 1, .opc1 = 6, .crn = 12, .crm = 1, .opc2 = 5,
-+        .access = PL3_W, .type = ARM_CP_IO | ARM_CP_NO_RAW,
-+        .writefn = gic_cdrcfg_write,
-+    },
-+    {   .name = "GIC_LDDI", .state = ARM_CP_STATE_AA64,
-+        .opc0 = 1, .opc1 = 6, .crn = 12, .crm = 2, .opc2 = 0,
-+        .access = PL3_W, .type = ARM_CP_IO | ARM_CP_NO_RAW,
-+        .writefn = gic_cddi_write,
-+    },
-+    {   .name = "GIC_LDHM", .state = ARM_CP_STATE_AA64,
-+        .opc0 = 1, .opc1 = 6, .crn = 12, .crm = 2, .opc2 = 1,
-+        .access = PL3_W, .type = ARM_CP_IO | ARM_CP_NO_RAW,
-+        .writefn = gic_cdhm_write,
-+    },
-     {   .name = "ICC_IDR0_EL1", .state = ARM_CP_STATE_AA64,
-         .opc0 = 3, .opc1 = 0, .crn = 12, .crm = 10, .opc2 = 2,
-         .access = PL1_R, .type = ARM_CP_CONST | ARM_CP_NO_RAW,
--- 
-2.43.0
-
+> diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
+> index 73c49d8c24..69d50cebdd 100644
+> --- a/hw/vfio/migration.c
+> +++ b/hw/vfio/migration.c
+> @@ -246,6 +246,25 @@ vfio_migration_set_state_or_reset(VFIODevice *vbasedev,
+>                                       VFIO_DEVICE_STATE_ERROR, errp);
+>   }
+>   
+> +/*
+> + * On a stop-direction transition failure, recover the device to its current
+> + * state instead of resetting it: the current state is valid and already
+> + * reached, so recovering to it is effectively a no-op that cannot itself fail.
+> + * On a resume-direction (running) failure, the device is genuinely broken, so
+> + * reset it by using ERROR as the recover state.
+> + */
+> +static int
+> +vfio_migration_set_state_or_recover(VFIODevice *vbasedev,
+> +                                    enum vfio_device_mig_state new_state,
+> +                                    bool running, Error **errp)
+> +{
+> +    VFIOMigration *migration = vbasedev->migration;
+> +    enum vfio_device_mig_state recover_state =
+> +        running ? VFIO_DEVICE_STATE_ERROR : migration->device_state;
+> +
+> +    return vfio_migration_set_state(vbasedev, new_state, recover_state, errp);
+> +}
+> +
+>   static int vfio_load_buffer(QEMUFile *f, VFIODevice *vbasedev,
+>                               uint64_t data_size)
+>   {
+> @@ -771,9 +790,16 @@ static int vfio_save_complete_precopy(QEMUFile *f, void *opaque)
+>   
+>       trace_vfio_save_complete_precopy_start(vbasedev->name);
+>   
+> -    /* We reach here with device state STOP or STOP_COPY only */
+> -    ret = vfio_migration_set_state(vbasedev, VFIO_DEVICE_STATE_STOP_COPY,
+> -                                   VFIO_DEVICE_STATE_STOP, &local_err);
+> +    /*
+> +     * We normally reach here with the device in STOP or STOP_COPY. However, if
+> +     * an earlier stop transition was declined by the device, it may still be in
+> +     * a running state. Recover to the current device state rather than STOP, so
+> +     * a device that declines the stop-copy transition is rolled back to its
+> +     * current state instead of being reset out from under the guest.
+> +     */
+> +    ret = vfio_migration_set_state_or_recover(vbasedev,
+> +                                              VFIO_DEVICE_STATE_STOP_COPY,
+> +                                              false, &local_err);
+>       if (ret) {
+>           error_report_err(local_err);
+>           return ret;
+> @@ -1009,7 +1035,8 @@ static void vfio_vmstate_change_prepare(void *opaque, bool running,
+>           vfio_final_precopy_reinit_check(vbasedev);
+>       }
+>   
+> -    ret = vfio_migration_set_state_or_reset(vbasedev, new_state, &local_err);
+> +    ret = vfio_migration_set_state_or_recover(vbasedev, new_state, running,
+> +                                              &local_err);
+>       if (ret) {
+>           /*
+>            * Migration should be aborted in this case, but vm_state_notify()
+> @@ -1040,7 +1067,8 @@ static void vfio_vmstate_change(void *opaque, bool running, RunState state)
+>                   VFIO_DEVICE_STATE_STOP;
+>       }
+>   
+> -    ret = vfio_migration_set_state_or_reset(vbasedev, new_state, &local_err);
+> +    ret = vfio_migration_set_state_or_recover(vbasedev, new_state, running,
+> +                                              &local_err);
+>       if (ret) {
+>           /*
+>            * Migration should be aborted in this case, but vm_state_notify()
 
