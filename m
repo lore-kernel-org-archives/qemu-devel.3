@@ -4,55 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 222F4CC6B1A
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 19:28:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C486BCC6B1A
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 19:28:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGiAU-0001r9-IO; Tue, 13 Oct 2026 15:28:10 -0400
+	id 1xGiAU-0001qf-3X; Tue, 13 Oct 2026 15:28:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1xGiAS-0001pv-7Q
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 15:28:08 -0400
+ id 1xGiAR-0001ph-Op
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 15:28:07 -0400
 Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1xGiAQ-00087C-KQ
+ id 1xGiAQ-00087A-5g
  for qemu-devel@nongnu.org; Tue, 13 Oct 2026 15:28:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:MIME-Version:
- References:In-Reply-To:Message-ID:Date:To:From:Sender:Reply-To:Cc:
- Content-Type:Content-ID:Content-Description:Resent-Date:Resent-From:
- Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID;
- bh=imopqQxEo2oFfz2zOTMN3NU7W68A9sRZ3GYUcFasF04=; b=ky0G9Qip3zaQuNYJZe0lTDfzwN
- KUNu819y54z8Kl0HgKAvneEiXiO30shro6K8/f/umUeXRafAiJbeTJRxXS+tTiI073FcaI42zTTTA
- 2F3jla9zpsAT7TLZ0983lgpGM/Voa5m6WrAAQKP/DRFngz4fB1ODLhszy8VJNaN9cHeXi3C2Kll6r
- u/ts7CZZvLYkup+LQivMrbhyGK9LDwcIxvf+/ZXEAPOy1+45ln8K+SQo50MnGBHydaC1yViATZAvB
- JVPnSqAf3GqMFNbEF268wMFo/Q8nLOpuBArZBvt2U+vofP+MyBKXMMjneVOhVgJ2qTCsVtmGz5FtB
- PchZgkwtL4zbKxhum6U66B35SlNLQlhIYxrqrjUorL9HqOi0FJD91ejWuwbGKZsLQt4Rs5tMAgIxB
- FxAooGpV9/i+dpf7saV5JSOsN5gUhDNcCnYM1fl3bVmCVeQWECm8EKkHt5b+KIkpRQoFcYccFp3nO
- GrVwqNkosEdKxRugDMmavduAj13fiNxwKtYZvVmtQvtpiDUVb40OJcnCRg39/JgjjSxQ1I9lFQkNv
- 30aiEkT0sbF87j5j77kKf/auNIMwhn9WGH8fZdVjhNAlXISyjqqaOmBErGZ3WQhNAU0VCVg/qac+B
- 8mOnoF5yetuN4ItjW52haWXl2P01e5buwH7wa6YEk=;
+ Message-ID:Date:To:From:Sender:Reply-To:Cc:Content-Type:Content-ID:
+ Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+ :Resent-Message-ID:In-Reply-To:References;
+ bh=KsKfyXN3yxPWIIUU6+sW9kEd1sytQVFzph7gQBLDong=; b=c5FaVRcEFc7/fWYLwqImCJhWwE
+ onGvhxN+IICwLdedfyxg618KahLGsBUCttjnYRoi3t9+g1Ww+tQQlUH53UBGkyFlZpOpbbQD7HKai
+ LW2VlG1MOwS5osh20oQiV5DG+jtnEYPQ5Xkwmr24Y6UDCvUKvbWt8xugXDH6puXA1AOynC2i77ycG
+ GDWvtx+XTN/VvHJTLFsgWCjHNmfO5V+aUUIPk/YVkzxMeV8dxFCXngIHkCSQwQZvvsotGnehLe1hq
+ X0mhqk/B2pIZUeMgMZNJymFrfV4Qs9KvAXRiERxJmO+Av1c4b7R6T9uX4qU/4ggP7tjmcOJnO8cX1
+ A4dNT3AYlU7h/k6VWSVJq6x7UB9S7VrWMBaRSsNbmGyEIWsR0dIfOfs8R3GqZo0ZbaDjyzrV5MsFn
+ J7lu9GT+K4KTYrdS43lIY4WazfDbLsCNFRlaSJfsimMuyPIiMsyRTImpsxDJB27GBwzOPnRt5T8RS
+ 2MUT/I0S1wvic1PDUVOQyCS/jLoRvSi+ArzDZSvZbqTFL6kjjeprCuEjyUPcfa38sAjP1rhoJ/4V3
+ SHnv8leKhO8DD2x2pTVxjUKT4Y5d2EuqzXeXb6QNR23O3FcScRMRu0S5SDbjw195KIlzc9UDKUEz6
+ eXhWapMLYkoDJhmUKh1geIkkIMzmUNJwypLDvh8DI=;
 Received: from [2a02:8012:2f01:0:b2a5:667b:71e2:6751]
  (helo=localhost.localdomain)
  by mail.ilande.co.uk with esmtpsa (TLS1.3) tls
  TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
- (envelope-from <mark.cave-ayland@ilande.co.uk>) id 1xGi9j-001aAM-M9
+ (envelope-from <mark.cave-ayland@ilande.co.uk>) id 1xGi9i-001aAM-O8
  for qemu-devel@nongnu.org; Tue, 13 Oct 2026 20:27:23 +0100
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 To: qemu-devel@nongnu.org
-Date: Tue, 13 Oct 2026 20:27:34 +0100
-Message-ID: <20261013192751.196204-3-mark.cave-ayland@ilande.co.uk>
+Date: Tue, 13 Oct 2026 20:27:32 +0100
+Message-ID: <20261013192751.196204-1-mark.cave-ayland@ilande.co.uk>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20261013192751.196204-1-mark.cave-ayland@ilande.co.uk>
-References: <20261013192751.196204-1-mark.cave-ayland@ilande.co.uk>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:b2a5:667b:71e2:6751
 X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: [PULL 2/5] ppc: Raise decrementer IRQ on zero write
+Subject: [PULL 0/5] qemu-macppc queue 20261013
 X-SA-Exim-Version: 4.2.1 (built Sat, 13 Feb 2021 17:57:42 +0000)
 X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
 Received-SPF: pass client-ip=2001:41c9:1:41f::167;
@@ -78,50 +76,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Kirill A. Korinsky" <kirill@korins.ky>
+The following changes since commit 615ece3c406b262996e569f29ea6eed0d81c4d8d:
 
-OpenBSD writes zero to an edge triggered decrementer, then enters idle
-expecting its interrupt. QEMU defers the already due edge to a timer at
-the current virtual time, leaving the guest stalled.
+  Merge tag 'for-upstream' of https://gitlab.com/bonzini/qemu into staging (2026-10-09 15:49:53 +0200)
 
-Signed-off-by: Kirill A. Korinsky <kirill@korins.ky>
-Tested-by: Anushree Mathur <anushree.mathur@linux.ibm.com>
-Tested-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Suggested-by: Amit Machhiwal <amachhiw@linux.ibm.com>
-Reviewed-by: Amit Machhiwal <amachhiw@linux.ibm.com>
-Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
-Message-ID: <20261001230058.11465-3-kirill@korins.ky>
-Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
----
- hw/ppc/ppc.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+are available in the Git repository at:
 
-diff --git a/hw/ppc/ppc.c b/hw/ppc/ppc.c
-index b123b4cc1cc..6f99b61a287 100644
---- a/hw/ppc/ppc.c
-+++ b/hw/ppc/ppc.c
-@@ -885,6 +885,7 @@ static void __cpu_ppc_store_decr(PowerPCCPU *cpu, int64_t now, uint64_t *nextp,
-      * an edge interrupt, so raise it here too.
-      */
-     if (((flags & PPC_DECR_UNDERFLOW_LEVEL) && signed_value < 0) ||
-+        ((flags & PPC_DECR_ZERO_TRIGGERED) && value == 0) ||
-         ((flags & PPC_DECR_UNDERFLOW_TRIGGERED) && signed_value < 0
-           && signed_decr >= 0)) {
-         (*raise_excp)(cpu);
-@@ -1104,6 +1105,12 @@ void cpu_ppc_tb_init(CPUPPCState *env, uint32_t freq)
-     if (is_book3s_arch2x(env)) {
-         /* All Book3S 64bit CPUs implement level based DEC logic */
-         tb_env->flags |= PPC_DECR_UNDERFLOW_LEVEL;
-+    } else {
-+        /*
-+         * Classic 32-bit edge-triggered decrementer: zero write fires
-+         * immediately
-+         */
-+        tb_env->flags |= PPC_DECR_ZERO_TRIGGERED;
-     }
-     /* Create new timer */
-     tb_env->decr_timer = timer_new_ns(QEMU_CLOCK_VIRTUAL,
--- 
-2.47.3
+  https://github.com/mcayland/qemu.git tags/qemu-macppc-20261013
 
+for you to fetch changes up to 32d0ad97a528dd6c667e7f60d62de27328b00247:
+
+  tests/functional: Boot OpenBSD on mac99 (2026-10-13 06:26:28 +0100)
+
+----------------------------------------------------------------
+Fixes to allow OpenBSD to boot on the mac99 machine.
+
+----------------------------------------------------------------
+Kirill A. Korinsky (5):
+      openpic: Preserve IRQs masked by CTPR
+      ppc: Raise decrementer IRQ on zero write
+      cuda: Include command in successful ADB replies
+      cuda: Make shift register delay configurable
+      tests/functional: Boot OpenBSD on mac99
+
+ hw/intc/openpic.c                    | 10 ++++----
+ hw/misc/macio/cuda.c                 |  8 ++++---
+ hw/ppc/ppc.c                         |  7 ++++++
+ tests/functional/ppc/meson.build     |  2 ++
+ tests/functional/ppc/test_openbsd.py | 46 ++++++++++++++++++++++++++++++++++++
+ 5 files changed, 66 insertions(+), 7 deletions(-)
+ create mode 100755 tests/functional/ppc/test_openbsd.py
 
