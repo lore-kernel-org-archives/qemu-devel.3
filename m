@@ -4,92 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D512CC6B08
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 08:48:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 419E1CC6B10
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 08:48:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGY9f-0002Uz-MA; Tue, 13 Oct 2026 04:46:39 -0400
+	id 1xGY4R-000193-4D; Tue, 13 Oct 2026 04:41:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xGY4T-0001JS-Gw
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 04:41:17 -0400
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ id 1xGY3h-0007m5-P6
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 04:40:29 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xGY4R-0008G7-C0
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 04:41:17 -0400
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-48c45111bebso1512533f8f.0
- for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 01:41:14 -0700 (PDT)
+ id 1xGY3f-0007wX-Sv
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 04:40:29 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-4a018dc1f98so21195085e9.3
+ for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 01:40:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1791880874; x=1792485674; darn=nongnu.org;
+ d=linaro.org; s=google; t=1791880826; x=1792485626; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=H+1SIPr+/cnH/YAjnVN8m/hIlWQogWqNOztypjX89Kg=;
- b=SEsfp1/ptSNOo8rGY96Te1Ojp7XtidMQuDVXL5EHOYogacTNcCWcTg5P0pJdJ3mrfT
- 7h7BNjNmmvsNPLq0kS/PT7JFDpuasllQCCOfAonDgozN1XdIwvmKKZbLteSKEKU4Eyc3
- sgFfuTcabWSSOm76ROVZclH709Cj4XQyOVMmDjJBtQib2Ek05YY7QT9sqlvJaA2oVXDF
- skWJfzq4cHrkBftODu39Uu/6EXVmNApZhLhcnbbfNDabk7O5cN1Ll9B896N+CR9umqzi
- c1eYRJBJ+S9q5sQvkq3/hb/5aSBMaxlszFgw8Iz8V9zVTUsrJsTUdxftR2qFmDt44Dwd
- W5YA==
+ bh=q/K/INR89Bv6VAIICicuXn9qF9wKrXQNAiWLKbQvRBc=;
+ b=MDluzdadyBuLwKZdEPermr3tTnObLYdw+fw4SVDwqaRLg5GS27v9fRGgpdPuceGK/u
+ ExfJLebZ/H6+R8tiDLNEcoueEnrqE/yMKaSd5dsG37La6BJzCqltw3JYmPhieW84499C
+ bq8hDu6nXM2EaPZIIjWOz/01eqQ/YiPm6twggfXSes8egdHJ24lQ3dMLbVTd9/2nl/EU
+ P4XaLYLjHlK+wL0dFR3ZH7GGlyHWWRsEzSUESN5BMgtzBduzBhUfwKHkU8gLkannLG59
+ 5FQbwC/7OUrLVJ9pK2szKl3wk1fzSSE/ILZaJeax8BZyPErFBXbaDhHq/r4T7gYLRdqV
+ TF5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791880874; x=1792485674;
+ d=1e100.net; s=20260707; t=1791880826; x=1792485626;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to:content-type;
- bh=H+1SIPr+/cnH/YAjnVN8m/hIlWQogWqNOztypjX89Kg=;
- b=d7HgzpeVkk6enw/ddh/C0tdS5AlKJ0O+wuNMXHpE/Cqn3UVVSfwuiU/QqZfqj1yM2b
- 37LLypetIrvcStGsyCxxoxa5QmOoe8HVnRRA2aRgyVpHIuwFho3cqC9zOKyfeeONYPVP
- bA8Vnx6UB3AemveT4mtkmHQ8THeshQo/i1NxkKezDo2KfaPkyrmlRB8JNp3JUzA0I/Cd
- ivRnkqMOjsV47dH8USFeqqR6/BYyHXRcGbp/L9krJvOHpFDgdST1433cBSD0QhTalnEv
- ndmOVndLK9koJiFJ9w5q1/nKiEXgxkvmawf8haa1EUFcLNi0Z2cwUoTO851S/Oo1KyUK
- xpeQ==
+ bh=q/K/INR89Bv6VAIICicuXn9qF9wKrXQNAiWLKbQvRBc=;
+ b=Be5q2RjoLBe+Gcw4Dz6hawWuJB0XDvWckbtK9gl6UbzOxg7yhKnVqSLEOjHiDSoieS
+ HaDK37N/orFeZQQw/NsOzAweNvYYr2DRjDyAuL0Y9e/5TUUgot5a60w/r/AK5URQ8CLZ
+ loRz3EILNe2QHpmOzwMEx4f9EvxRZ3tJD85PdN/boN8J5at3iik+3Wya0182kwArZJJ+
+ Y7efnA7wBp7mPjPzULt+XP3okl9Qz8wM0kZ5sa+EDsG7WMZlH0NDJMVcBTMgZAtyii/z
+ DCKhpYoccFFHL0MZZiODQu3jRhUOFOA4lo9SCo0cRZRgSl8Y7MfslrfjHj7jrBI+hYY4
+ SxPA==
 X-Forwarded-Encrypted: i=1;
- AKwUvByp+UzHszR3khqX20q2PZe1s6Wzqc8te5NS/TEmmUCXC6XOq2DaSgjonZOw7mmhxvQVk8j2aFaEZgQj@nongnu.org
-X-Gm-Message-State: AFq9FYLMeNgNtPYt8wENKS7B7fkgkxLqM1W1dkS/4LIruXZM/8xiqimk
- SJqrjD8Fxd/uyRqQjDDbQFjfuU3ZVB0EWfytvxhcxd0wfbvlRKsH1rAzrTyqgMwTlJ5QXuDLBeq
- YUIqtWyk=
-X-Gm-Gg: AYBFou0QAa8whXJskX7whEDY1u0cipiOuCsdmJ/4XNF0eV2Zo2bjgll7m/64VvoTam/
- 4jGOSHlOZU1jtZUTNhzPUuLfEUTTwu2cLk6l11CaNJcjXkTz1+YeetskY99A75QyKSvZQPk4phP
- VDAvQ18ZBX+r5NskKmvS5mpyNrnWqTlp49KgPk/HeI+8IbNK6pZdw6Cq5BTG514ihqvGIombTzo
- OrNdpLqvihXlS0nilrk95B9lgSfiAOFWhlVjBBS+T7w+JdIch7C49H/GJS6E3p+DGHWBpdp+5/O
- ZZBJZ4sNtGqdAp0V5iSrhrtw1De/rJ5mjYD4msK80eIDDyx+g6U+NQAReuQCai8CyAm7PCri+Zy
- 3eJUmJt/Wr5ZLKD/0BE9DeZaoOuYeKbZHXikqondreavCPZJK8Cz9GAWMacDLt7+VsQ/6Yg7JHk
- CmwuSDMznYU3jHy3hRdmuBYXs8NBSSJVnZarHqhzqmQdKFEU1D73hdjlBslRyYmbAst6roU2ugA
- s6RvXhvPYCmDWUezRssrtqnFctn+DebWeAoOS1tt+RD0gp5WREdjqSG/vdecZxkdq+l+j9kYL7G
- s7g=
-X-Received: by 2002:a05:600c:46c5:b0:4a1:78c5:79f5 with SMTP id
- 5b1f17b1804b1-4a18e4d6b28mr236081095e9.33.1791880873732; 
- Tue, 13 Oct 2026 01:41:13 -0700 (PDT)
+ AKwUvBzxYT0ckESWq4qFxoUpji/1yNy3TTrql6bxBwnt8+nXYUNpnq118QN4DqD5XqIu8/TeNz1EELbJI9rD@nongnu.org
+X-Gm-Message-State: AFq9FYJqatELKvNf4WJppfyJ9MB0cey5zYKULJiZHHtdBousBrk8p4NU
+ vm8sz+wrGoIQ+f3FQ7kP0DHiULBtvDXZhteu+BbnmtoLtTM53yEWAusybHrbbFTc2Sd/sv5YXkn
+ r2wVzQo8=
+X-Gm-Gg: AYBFou0Q1+HEHrvYmfg29H9f6S+ABfcDfZtcvHnEoBiH3cbNByXBa8BB68KfQB3pVZG
+ 7OdGcSsry/vITgJWqhkq71hSCEcPREBLqo5f2RD0XXkrsUxRvH+uBv5alvkgyHrTsOfyi7AXFK3
+ ls050Izpg6QVwVq3qIvLEh3udlDbNObHWzdew2l9yJy0Xdy9LfqW8XX6B4te8dywEu2EYNyxIu+
+ X/Lht646if2o2TXVsYZGMpWdwCYgizE6Ig/SIBtz4BPb0UdfMvjimFeuwo3c8TLob0njuUebTqS
+ P3Lh1RihAbXq8xEIjwBeuM4WHvhTmrLA365i3jiOyJqDEVDO6Hi9t1COSJ/UWMJfWgIKBvL6NtZ
+ ak/wOBaFL//yeHqj/oJ/+uN1nBNrEYGWiWjAZWj4dDIuJHSOlBqEmxXC2Cd+vaR4H0RgIMM7ADy
+ 8p5Qm3oNa6x1FT0tCdhirW8/oPUwbEJmN0/buFKHLKiEVAdjKm5NxBmO7cwsFHjjDU/l7rjkWH4
+ EXf9cjc9fAgGhttWVY3dP4Q5lr4rVoAteYQAMyQbcxmgfKf7j5foaMnTu1HkhRJyf1CUwvXWjmB
+ Xs7Q
+X-Received: by 2002:a05:600c:19cd:b0:4a1:80d8:aedb with SMTP id
+ 5b1f17b1804b1-4a18e49d9eamr229535035e9.11.1791880826322; 
+ Tue, 13 Oct 2026 01:40:26 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a18be96549sm495086735e9.6.2026.10.13.01.41.12
+ 5b1f17b1804b1-4a18be96549sm495086735e9.6.2026.10.13.01.40.23
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 13 Oct 2026 01:41:13 -0700 (PDT)
+ Tue, 13 Oct 2026 01:40:24 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Subject: [PATCH 76/86] hw/intc/arm_gicv5: Handle virtual=true in
- gicv5_request_config()
-Date: Tue, 13 Oct 2026 09:39:23 +0100
-Message-ID: <20261013083933.1024405-77-peter.maydell@linaro.org>
+Subject: [PATCH 36/86] target/arm: GICv5 cpuif: ask the GIC for the virtual
+ HPPI
+Date: Tue, 13 Oct 2026 09:38:43 +0100
+Message-ID: <20261013083933.1024405-37-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261013083933.1024405-1-peter.maydell@linaro.org>
 References: <20261013083933.1024405-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x435.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,42 +105,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Support returning the config of a virtual interrupt; as with all the
-config-setting functions, virtual interrupts can be dealt with
-similarly to physical LPIs, just searching in a different IST.
+Now that we have an implementation of ICH_CONTEXTR_EL2 and the API to
+the IRS provides a way to query the virtual HPPI candidate, we can
+fix the TODO remark in gic_virt_hppi() by making the cpuif ask the
+IRS for its virtual HPPI candidate.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/intc/arm_gicv5.c | 16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
+ target/arm/tcg/gicv5-cpuif.c | 27 +++++++++++++++++++++------
+ 1 file changed, 21 insertions(+), 6 deletions(-)
 
-diff --git a/hw/intc/arm_gicv5.c b/hw/intc/arm_gicv5.c
-index 39c96fe0526..8f4d44b2b37 100644
---- a/hw/intc/arm_gicv5.c
-+++ b/hw/intc/arm_gicv5.c
-@@ -994,9 +994,19 @@ uint64_t gicv5_request_config(GICv5Common *cs, uint32_t id, GICv5Domain domain,
-     uint64_t icsr;
+diff --git a/target/arm/tcg/gicv5-cpuif.c b/target/arm/tcg/gicv5-cpuif.c
+index 2eb8184e329..cbe233c61bf 100644
+--- a/target/arm/tcg/gicv5-cpuif.c
++++ b/target/arm/tcg/gicv5-cpuif.c
+@@ -214,6 +214,19 @@ static GICv5PendingIrq gic_hppi(CPUARMState *env, GICv5Domain domain)
+     return best;
+ }
  
-     if (virtual) {
--        qemu_log_mask(LOG_GUEST_ERROR, "gicv5_request_config: tried to "
--                      "read config of a virtual interrupt\n");
--        return R_ICSR_F_MASK;
-+        const GICv5ISTConfig *cfg = ist_for_vint(s, cs, domain, type, cpuidx);
++static bool gic_get_irs_virt_hppi(CPUARMState *env)
++{
++    /*
++     * Return true if we should ask the IRS for its candidate virtual
++     * HPPI. We do this only if we have a resident VPE and are not
++     * ignoring IRS candidate HPPIs because of IRICHPPIDIS.
++     */
++    uint64_t ich_contextr_el2 = env->gicv5_cpuif.ich_contextr_el2;
 +
-+        if (!cfg) {
-+            qemu_log_mask(LOG_GUEST_ERROR, "gicv5_request_config: tried to "
-+                          "read config of unreachable virtual %s %d\n",
-+                          inttype_name(type), id);
-+            return R_ICSR_F_MASK;
-+        }
++    return (ich_contextr_el2 & R_ICH_CONTEXTR_EL2_V_MASK) &&
++        !(ich_contextr_el2 & R_ICH_CONTEXTR_EL2_IRICHPPIDIS_MASK);
++}
 +
-+        icsr = l2_iste_to_icsr(cs, cfg, id);
-+        trace_gicv5_request_config(domain_name[domain], inttype_name(type),
-+                                   virtual, id, icsr);
-+        return icsr;
+ static GICv5PendingIrq gic_virt_hppi(CPUARMState *env)
+ {
+     /*
+@@ -236,12 +249,14 @@ static GICv5PendingIrq gic_virt_hppi(CPUARMState *env)
+         return GICV5_PENDING_IRQ_NONE;
      }
  
-     switch (type) {
+-    /*
+-     * TODO: When we implement ICH_CONTEXTR_EL2, we need to check
+-     * IRICHPPIDS and if it is 0 get the IRS candidate HPPI.  For now,
+-     * set irs_hppi to "no candidate".
+-     */
+-    irs_hppi = GICV5_PENDING_IRQ_NONE;
++    if (gic_get_irs_virt_hppi(env)) {
++        GICv5Common *gic = gicv5_get_gic(env);
++        GICv5Domain domain = gicv5_logical_domain(env);
++
++        irs_hppi = gicv5_get_hppi(gic, domain, true, env->gicv5.cpuidx);
++    } else {
++        irs_hppi = GICV5_PENDING_IRQ_NONE;
++    }
+ 
+     /*
+      * If the best PPI and the best interrupt from the IRS have the
 -- 
 2.43.0
 
