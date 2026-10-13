@@ -4,99 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6964ACC6B1A
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 16:00:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9050FCC6B0E
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 16:01:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGev5-0000iE-Tz; Tue, 13 Oct 2026 12:00:04 -0400
+	id 1xGevd-00018N-0q; Tue, 13 Oct 2026 12:00:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xGev2-0000gv-7f
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 12:00:00 -0400
-Received: from mail-yw1-x1134.google.com ([2607:f8b0:4864:20::1134])
+ id 1xGevS-00013N-7Q
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 12:00:27 -0400
+Received: from mail-yw1-x1131.google.com ([2607:f8b0:4864:20::1131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xGev0-0007Zi-7p
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 11:59:59 -0400
-Received: by mail-yw1-x1134.google.com with SMTP id
- 00721157ae682-8ab43af5e97so30307577b3.1
- for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 08:59:57 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1791907197; cv=none;
+ id 1xGevP-0007rE-Ra
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 12:00:25 -0400
+Received: by mail-yw1-x1131.google.com with SMTP id
+ 00721157ae682-8ac9d666d4eso537307b3.3
+ for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 09:00:23 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1791907222; cv=none;
  d=google.com; s=arc-20260327;
- b=XbM530EM12Pa5uZInVc1Xm68MuObdsHAqXGWWHJDIow9pFDtY7GSIKFw8aB7qezEkj
- ZMrvOvl6pU2LEK6Bn6D8eN+Wg58YR0uU+sJVT6r/cfi6WgbE9pXhplWK5y7Xrbdqv9NC
- m/aZSxHvcH5rlsj/EWbViHbVFjgM265LOUJaE0gYQR08t2TesqBhQXhhpDrE/Y9pK7U9
- 7yeFjvF34r2u4TGbGzdwW978kIV8YUQMvGswnr7cSam9a/srLw2GXeCVyFr2SId+4PI2
- dNRrJFXWDU0nR0wvDvcNsOMTambUDsFj3Nm8ZIaWEApjJKYPuw3szxxSV+BLL9RVg8GJ
- oO/Q==
+ b=eLMCciuLI6DDNGI91wXlaQhRXppymPzgppmXwCtxQwRE17s2vWpA5q2INvf7HR07Zo
+ 7cP/0UyUa3YRtqdZB6EWHNovQgJBGBgl13qXssrSmTw1xMJoJnREiALxD1Ssce/WbNjb
+ aXI260N095I19vxABJBWfhmHHYSQo0lHSiGp+KFcYyz3fTC6vu1UL0GMYL27LqyptQ5O
+ Qc9VIdSbWDP9PnNjwlYyWWBXmzQEEt+HQ4lG9TKZhujbnloeXtBl5KNzdvytSKNIw4OD
+ KQs0oN0bjcuyhrhADd6BOWNxkjf5G9naNP7xNPIFwWxYTgXfhiKH+FZedVRgPrCPt2rf
+ 5NKg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=zdyX4MUR5OiHaBAfMH/AdP6QjGz5HJgdPnXErxafrT4=;
- fh=HYteLl9CcGgNcl+XiDn1zaxVp31PdtzcQABtjAG6k/8=;
- b=CZAphUAh5UJRTfNkT8tK0ebGjId1zGi4IfyEb0NnCVAdl7g/R/0yRobCKumKy+oe5S
- pePuSZPDenOtDY19oWOMEAr29TvPI271EvdkTaBCcVvK9rKkpWBpEObOJ3VVK1xtsaYw
- LX0OUPVpJ6J567v6HesQOmoUzhmo5oA5OrOzxoo8Uv8oRXt9IOQajWXBLz1MGHTnZosa
- Qta3aTVleXJv4JvLs7s88laFaWEuAR9p4hkRux6isDfy+8RLDLNQ6F2ntKe4t4XL5nyG
- FfuFO+OPxJbBHv4t7PqdYRyVLe5v/RQtfYoLNn+pvnZ5JZbdjdJ8u+2QuU2l2Rhi57AF
- eTJA==; darn=nongnu.org
+ bh=xMzfDdWo0ZbobwvhYL+QfEr7jkf7L5HHwABc9Q/vj60=;
+ fh=j917MWWsRG+DvVp5pFOQwh9C74wshAREk9+89aibhUE=;
+ b=ARjIAW5hbGnJdK0vlNM2jlCa5c+WT52iuLXY081zbvmOmW3+O8Vw+0PvMGH27kcejR
+ 923z6R9rV8p/t6nc3UZqSB2L6xk7YDNFinqmtRR+s3r57DhilIFSqXPuP1o0z1blR4eu
+ wfnGosXlBcV99F+SMCOIAubqYsABp+X+lwo0VYgBm+RZl0ZUq+L6B80DTp8Zz7GaBQsc
+ 88ndZPqQ2gqbxQo7oLGz+DJE++AHHUTpHNekKfiW23q7BJHFC0/gR+6QfLDtwmSdItPN
+ eNVLq/gHg2tys1vA5n1/Dl9vh+ZBqRUNf64pTzN5t9+8/DWmITmnQl3R2OKkapxToa9h
+ o36A==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1791907197; x=1792511997; darn=nongnu.org;
+ d=linaro.org; s=google; t=1791907222; x=1792512022; darn=nongnu.org;
  h=content-type:cc:to:subject:message-id:date:from:in-reply-to
  :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=zdyX4MUR5OiHaBAfMH/AdP6QjGz5HJgdPnXErxafrT4=;
- b=D5YOnfmHwRJHcpOBFYQ73j7C8++sy9yXSdRwhscWREjZCLH/7N8GvOl+qgNf0Bz4aO
- kQDhCl6eiatI2VsrgmjqJApH+YoNE2nyzNlyfP7emnfLDtHnCp2LLOo/luD406ESAPWG
- Lzl0GByLm1fs9O5j8eRAThIoIuobdJzfQiANIMv2phyGPMQSjoDXWLBl+uQfjvUxx9zL
- DOk/kwVQ5TpYNfjLi0N99eatWcBqhn3ocIWiw2gp6JkBT/RWGj+bavo8YEbg1/7aC09e
- OaRbj+yBOJUulB3CU6y6Ey6ae61ATinPF2QP5aIdjTiXkwuwEVZ3b0xa2KqkTsJvattc
- P4DQ==
+ :content-type; bh=xMzfDdWo0ZbobwvhYL+QfEr7jkf7L5HHwABc9Q/vj60=;
+ b=XUXAKt6UUUwEX3w++2kZVGJJ0UchFATu2qGExgQM8fwFQYtvPABMRE+fHkZf0rz2pR
+ Z1EMLOj2+Z7UD0/yt/Nnc5DtFcqfs6ArtF13qr+TvRi1xz6QbfkraANZhZvEQZo4m4GR
+ Hym1NNYAtneNUa88tP7zTz5EdAg3QUPBJTRiqPb9nWCQrpmbhrGziyXh2mqaQfl7gvkr
+ o/g0TCZkh7cPFMg4wLHJ/KkbntnF/kVDbao5ehaHc7XZAYet9qIJ/UWd3Tzpoofw7kmN
+ 4BtqfFtMMstaqRZ56uQBCSkxWok+t+XfiCesymV3fyJgl0NFdYT8P/VP/fYQHiAE94ff
+ wLLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791907197; x=1792511997;
+ d=1e100.net; s=20260707; t=1791907222; x=1792512022;
  h=content-type:cc:to:subject:message-id:date:from:in-reply-to
  :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to:content-type;
- bh=zdyX4MUR5OiHaBAfMH/AdP6QjGz5HJgdPnXErxafrT4=;
- b=K09z+1owOY5vclg8QAyq/B+fEQxPx/dmbLg1x4IOLOb0z+JNUGWLDkROeMfxw0L1rS
- Ldu5ICNP1BG1ZBnRNJ3K2o4zYpCSYdZ0SCSqTsoG+G4eeDBhI2tZdlDchdYAdhfkN6nh
- QGit+mPeIw3PByS9lfFobOOdp05Zeenhb4OppramWJtSXtB9v26+qnFC0u0LkmIhsiry
- ide/bDmTmFFEZuMkrfmcpkOsi0f1XCuH45+II1qZ6NFyhDK1haMe/DviiD5nj7lrD1Ds
- NzwpcGpEuWdAe3gofd6XQRryeouDRvpOuoJYyE+CVYSO6kaA9ZJLsaPc86aXZ2XXWygh
- eyNw==
+ bh=xMzfDdWo0ZbobwvhYL+QfEr7jkf7L5HHwABc9Q/vj60=;
+ b=JtjGW1y8nbBAyplWs/IEmIx6zNMPFF3PFAa7+WAJWPBWEWk6tf+/6SnQiqI/WV5IhY
+ O2cM/FXHNBsAN+0mOlP+ZGbCgCii2NyJyLm1671HjfONu+awYwyI9/jB9ROz/EYDzGH7
+ YBLrEUrkRWJoSM58OIVgc6q/EkfOLwNKZwDxXf/R7yQX+S+4dw4ardet8CWwxvS5BE/3
+ hXrv3yTX/HwpWuxPaIAngNIzINTAKZ5jUHreY76juY9hgkAbcrvTRFWq7RaTsZZ4FQ8J
+ qizQZ4sEJ8pMEhsR767qfl3vC3szC+MDw4qy74KXUikThPHzZJfqC6y5FB6bvrK7dNLA
+ C9Yg==
 X-Forwarded-Encrypted: i=1;
- AKwUvBzQ+D/wZKkRs1RqKnOAEps6y2yY+IfYu05UBE6ukwbg7OcDSBBfzHTKFrMuD2bhNH00azLFaKwqArNO@nongnu.org
-X-Gm-Message-State: AFq9FYKA9tOKsR27Wb0zTo0RqdVpabGau9B5aHGCJwbPu8gCEakYlwUA
- K+0+t1Z5NyMFsYKjebu4RLfDf63c3DqJ2cUT50pq8Oy4vgPyvXNMaw0wgKhBgKiX22NS7G0jAc7
- YxfzZHtiJpktjbcUpW71bLRMRyx/sA0I4/abx0PSj4Q==
-X-Gm-Gg: AYBFou0vUO2SJTT3CgBppViyaiVXOVbVLkcU8Xq7g/GUi8aV6RNXfDmcR5uaPbRVmXs
- 8uNQfX6S4DFWIGQabn2IHoTN4On8bJIE7pNvY+ddAy83XXRARom390Qx2vKyOWhxFZfjvyMbWri
- 0bdn/qADoNNC3MmvVRPLDQcwmwu/Dn/p/os5x5hpu6v55CF413frcSkCosd+2/wi/d/SPSLifX2
- 6q7KQ5r+6/QOrUF9XYigpIInVrCKGPmBlWvs2Ihay6Hkjs6Zzw0UVPR4b5+WK8sqOBfS6+KtP7b
- KDb/GUa+EoX/Wx7BFH7hw9sxB6hNo+Ld6AxB96UZbUIglP4H8c4RjnhFpJrvR8R+9zBzePt8DBg
- R47ylJM1i++gQPFJ7nEOLMqmSSb37QcdgcjMR67w=
-X-Received: by 2002:a05:690c:9e:b0:8a9:a1e9:2665 with SMTP id
- 00721157ae682-8b07d3c4195mr46197787b3.6.1791907194410; Tue, 13 Oct 2026
- 08:59:54 -0700 (PDT)
+ AKwUvBx0+0NMzm3XVxgdrRWk3OD8hAxy7y+9+GCbhkWgrw112ATLVkclMINcaF88vF2Bz1kXSxmEPWsLC3bB@nongnu.org
+X-Gm-Message-State: AFq9FYLotgzK0A38BmSNlGFNxW7k/kyabHVZeklLDk5o2+u/95b8pBHp
+ Fa+PlwoEXmpfzcZOn/M2ZRIrCg4G2RFvzFTOKjtWe2BtXPD+4oFJl9uoRlTGUvLFVWMnvT1/esS
+ KTXXXl+LrMzrRUzVNnj3pvsNhH2+YQ1awokKhKAOPhg==
+X-Gm-Gg: AYBFou0n68pVdhgFim17FunzuuDo1BmXwABYe2OURuqSwt5sCR6MkrUJodMFPhGOPbz
+ L+t7xPEij19nC8VxBYk/iLAEq/AmObCrPcvBXGYShTKPytalmHP/LX2hiQoASLbUTJGdGMJYyT7
+ uCEFp7JyZbnt+tlWP7Kr3jE+MPhrbyEL6E0jdPs0vNE6yhHZqzxR6zPH/GMchBOSssgev+ZUQXn
+ Y0c+23MPIAqHSrYX1ZNjKyFX1fYfr55i+beTCbzVNsDFHobhKe8b4F8MhhOZN2lf5ZMcLhh8mjS
+ k6RdBsoEkLMPH4kG6XfPnr5s9sl3XhYzDWGBh7/K+A+mGatHKBSIxio4oo7MyZ76Yn/Q6rOlcG/
+ UtXlSdNwxEU/wEbk4siJCGvhdCshXKksztnAL5ac=
+X-Received: by 2002:a05:690c:288:b0:8b0:9e24:4005 with SMTP id
+ 00721157ae682-8b09e245129mr22462247b3.48.1791907221988; Tue, 13 Oct 2026
+ 09:00:21 -0700 (PDT)
 MIME-Version: 1.0
 References: <20260916104435.600211-1-mark.caveayland@nutanix.com>
- <20260916104435.600211-11-mark.caveayland@nutanix.com>
-In-Reply-To: <20260916104435.600211-11-mark.caveayland@nutanix.com>
+ <20260916104435.600211-12-mark.caveayland@nutanix.com>
+In-Reply-To: <20260916104435.600211-12-mark.caveayland@nutanix.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 13 Oct 2026 16:59:42 +0100
-X-Gm-Features: AclHuK9me7UkpYql-63m348NYt-T3nReypZ14DzPdifhqRdkrWKep_ta3klwqT8
-Message-ID: <CAFEAcA8uN6r19nQpR4okcVGWgHXxOu=BLfvSTmF4_Je94RkYBQ@mail.gmail.com>
-Subject: Re: [PATCH 10/22] i8259_common.c: convert to use DEFINE_TYPES() macro
+Date: Tue, 13 Oct 2026 17:00:07 +0100
+X-Gm-Features: AclHuK_b1CfMObf1rI66LJo21oLhOivp2sgnhibZnkzpTZtnhEkqg-xP9NavG9E
+Message-ID: <CAFEAcA9nfB5ajh1L==G2dSD=0vZY4ZyZSr77rt3OUAH_CCLBkg@mail.gmail.com>
+Subject: Re: [PATCH 11/22] i8259.c: convert to use DEFINE_TYPES() macro
 To: Mark Cave-Ayland <mark.caveayland@nutanix.com>
 Cc: pbonzini@redhat.com, richard.henderson@linaro.org, mst@redhat.com, 
  sstabellini@kernel.org, anthony@xenproject.org, edgar.iglesias@gmail.com, 
  qemu-devel@nongnu.org, xen-devel@lists.xenproject.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1134;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1134.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1131;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1131.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -124,8 +124,8 @@ On Wed, 16 Sept 2026 at 11:50, Mark Cave-Ayland
 >
 > Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
 > ---
->  hw/intc/i8259_common.c | 29 +++++++++++++----------------
->  1 file changed, 13 insertions(+), 16 deletions(-)
+>  hw/intc/i8259.c | 17 +++++++----------
+>  1 file changed, 7 insertions(+), 10 deletions(-)
 
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
