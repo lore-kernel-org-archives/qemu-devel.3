@@ -4,91 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B194CC6B03
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 11:34:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59473CA9ED2
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 11:42:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGalc-00044m-9h; Tue, 13 Oct 2026 07:34:00 -0400
+	id 1xGasn-0005LN-B7; Tue, 13 Oct 2026 07:41:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xGala-00044e-TH
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 07:33:58 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xGalZ-0005Ft-MB
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 07:33:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1791891236;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=H9Gc9h/5UkM7rB0PruF6lTJR+XH9wWtuhOWnt3DR++M=;
- b=fERgmfm5wNX6PhoyY6/MYcaPc+6NLkBO1DLsw+5BwtE7GuNtRQZL8U93pO2tTN3vVeRkC0
- EUwrjitBm5bSq4asRDr0kIiGfBHdZ1+w4SvgUyapV5UvOsGvqvWennmmDToga7brSF0ffl
- rNcxK1eCn1VBpj1+C6kUGlmDR03XxVE=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-639-3fFTwlmfNeqzXOmzwfoQ3Q-1; Tue,
- 13 Oct 2026 11:33:53 +0000
-X-MC-Unique: 3fFTwlmfNeqzXOmzwfoQ3Q-1
-X-Mimecast-MFC-AGG-ID: 3fFTwlmfNeqzXOmzwfoQ3Q_1791891232
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 67EB91954B3B; Tue, 13 Oct 2026 11:33:51 +0000 (UTC)
-Received: from localhost (headnet03.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.114])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 2750E3001D21; Tue, 13 Oct 2026 11:33:49 +0000 (UTC)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xGasl-0005Kz-RA
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 07:41:23 -0400
+Received: from mail-yw1-x112c.google.com ([2607:f8b0:4864:20::112c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xGask-0006bA-5a
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 07:41:23 -0400
+Received: by mail-yw1-x112c.google.com with SMTP id
+ 00721157ae682-8871ada1a26so18105267b3.1
+ for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 04:41:21 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1791891680; cv=none;
+ d=google.com; s=arc-20260327;
+ b=IkS2DninxxCkBwba/+Rkp5BUtv2F4IPPCKhA98dnPH0QEKlUk/wJmgmE/EYHNbLmZj
+ WutdBhqZb4sCCjKsG5NjSLIR1NkyK0ca6H20Grr2x9IdWfGJytM6m7+9QzTqnKK5R+Ea
+ StGfORzORpD6ws3da7A9hoPqseTtDEBtfSpAgi3p5BVSRatdXv4mDOPI5ds+chDiY3ST
+ +Z9q9rVrjjLg6Os+pivcn6rhVxxWOR/tpy4jS3ZpT4Z6jgouecJsen91m5dFp511H5NH
+ ivtVP62KqGcgp668ubFQkggtqc/jdGjCvrPw+QkF1Wg/ZSWOUDAuGFUCRrJEdfu/xwSD
+ vDyA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=9McWWCAOIBxuGBkuBTOr3Tp86N9anlMxSYYZCGam1ns=;
+ fh=0cG31DgQdDSBo+ScoxXvJWhhEtLI7nreI37zUzAcm+I=;
+ b=mLc+h7RK7YlPoOVvqQP2XwgS/qgS1L6ASi3OXWXZfB8UpSp9+6+x7dsAfdQUluRc6p
+ NvIq5X30USX/9Kb/rAtiZdqg4/QtmOPQP4RtgWRXUktHd+yRwYdATVlpK3NLjrRNsHgs
+ mpC5tJM71fvPs6kzRghAVdc1Jc4bbIIAnMCa3qNkIQIFau04msQ8a7Ttq/6akTJTcDbr
+ ZcPMYVsnEyD0HqLwPlgttvP1Y2M6a2vwFEV+ZJiFXLgZKh6wETEB6l7RrRXMkYuRfWKv
+ fqP6/gsjD/tF3iPJN2w2WZ7Ohm/7I4yJHaviVzSZjC+EhMN6YuJyfzHhJ72MLuLuOi6b
+ TUyA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1791891680; x=1792496480; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=9McWWCAOIBxuGBkuBTOr3Tp86N9anlMxSYYZCGam1ns=;
+ b=dZecJ01UL3gMSh3ZE9qNN5zjUQWs/xVTkLVo5fcyGFSjT5tFPMwqphZpoDUh39zSft
+ CG6dgYZV6+QKMXP40o+GtIoeDT+209MTweyddgwu9XiiIn2ZLjKSWQhUT5Dl++MytD8V
+ vIndoVzflFypd9TXadLCpd0tkABKHP3O/RrpICXTxC379pYqbYcVco3Xaqjd9c8c+m+3
+ zDloEuiw2UTUWZyI23o//xOIZRpSZ+Lan9qYGOazmaeAeYF1a4/0UYdwFeMNM/6GNl0U
+ 3aLEyXlOZeo6GWnVy21jIkU33oSY5xIVyeMmsfLPiU5cfaHbj/zt7ADHOtKzpwZ2OHlU
+ crAg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1791891680; x=1792496480;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=9McWWCAOIBxuGBkuBTOr3Tp86N9anlMxSYYZCGam1ns=;
+ b=Q2Qyjv8wpknY44MEqPMr4jtVoBGbgaXuIbWR4rr+w448d1mW3FeTWBBYlNIEybP8tb
+ rZa195/PALEsjbqj2g6kn5iHQqCe+yNtTa9sh27QtbnyUgnObx9unJlZ7+05F8WuluG/
+ yp9yN11geyYZAfjbBiRIGmXwoEfPWjZt+WlR+z4927pjw0eyyeRIlrs8hreQ3uwEKZF0
+ 22oNH9Jjcd6YDExk1DPkGmNOISoEQhhC1HvGUKM5EedREHbhA5r7WJg6RNhC9mWH+k8g
+ Zl3hw4GRPBQ2uzNh1h63isV2aZfZiRDBwD5wJkCzMqA+7h6kZ3gmxBkYt+tx8ytbevvi
+ bUYg==
+X-Gm-Message-State: AFq9FYLwnKBFprTzXRQ1rR5BOShAn5aDT4Nv/RzDPv02L/ILY09REg60
+ HfdMalJBkszIngEdFBpvuf1gWf7GNdYNr00C3JkfM3On2/TnLkx8w/0CKMc5jkwEezsdWgsqRxh
+ Mg4khqPXDbHV/TC97UBj8BpSTK5OF0pIoUCnCwkESZg==
+X-Gm-Gg: AYBFou2ysDMPp3rQUweAa8MdiGLVOEUj8CgEjUHlBEOcbwcvfRsdHw9Cko9QFJ988NU
+ 0Y8OAXdJm54OWn8+sP7h7X3Kzfa9TB57JOrdsWgTm0D/oHD7vjgNvMT0YFCr9XZeNaHijH3wBZP
+ Y3u6879TL8v2ao9UErphAkAlVOvjlZmdDHhDtan8+u4Tiw/jbcBN3pBh2VIuo00rEdDmtRT6wam
+ l9LrvBvmeJmqxmIVnGmDT1YgrBbXHv5USok6+g+BEyopC7B18Z61dTVlJWInjvYYl2l8ADaMs3F
+ Dx33m0EpE3422AcQooli0xa4tdroqgPdxy1LcZ3wLGyWNnwz032j+iRSBeguyp0ykmgthl/XZBQ
+ ClCrDFsZsINhkqLqWEUPJUxSmPY86Sh8GTsHJyXjHX6LkM0wjHw==
+X-Received: by 2002:a05:690c:f08:b0:8a8:e0c7:dc3f with SMTP id
+ 00721157ae682-8b07edb5995mr42242067b3.18.1791891680293; Tue, 13 Oct 2026
+ 04:41:20 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v2] virtio-gpu: fix memory leaks in virgl and rutabaga
-From: marcandre.lureau@redhat.com
-To: Tom Desnoyers <tom.ds1@gmx.com>
-Cc: alex.bennee@linaro.org, dmitry.osipenko@collabora.com, mst@redhat.com, 
- odaki@rsg.ci.i.u-tokyo.ac.jp, qemu-devel@nongnu.org
-In-Reply-To: <20261012165754.11891-1-tom.ds1@gmx.com>
-References: <20261006135504.416083-1-tom.ds1@gmx.com>
- <20261012165754.11891-1-tom.ds1@gmx.com>
-Date: Tue, 13 Oct 2026 15:33:44 +0400
-Message-Id: <179189122487.2643111.17470296223260784506.b4-review@b4>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=582;
- i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=GsZYPyq8pbITdrl93xuOrJYlGSe9aNkT/ViQb4qf3UE=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqzhcagGl2SELclpIIo7ClrsaOoIbekdwFdPb8a
- oY/ksDsPSSJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCas4XGgAKCRDa6OEJdZac
- 5UhVD/oDlb2lBZUBkPr93kD/HRHgMdtORCgm3OdEoxEN5/M3UlewdE9C9kRgwwJL6BuPOwSNSQb
- DHMjnHdSJUGXzvZnNFXblS1jQJ73vhtZClbYczQKjEVosQoA5DUTXO8hQfey0ujxdpqzoS0zicI
- Bs4hgIGWXynklCqsoYiExXqGt2tvSkbGcQ+WeOcrAQPrUEd9Ve8CCIdJJBruvA3uXkoKzKxJOje
- mjs6fYaC+iPllDl6p/pd/aR0AFI0zKvEQnjPAHneKiKxjDSDfXoZkWvyGonxwGfjECIBnZ0xp9a
- kPFc+eoA8c/g/6PDWZy63XkHv2REbmfxX/WEeSa8opbQ+Pfg2vdBqno7taNAopJjOCIPTN2HS+V
- WhCDt8FFmaPJvBvn+A0mAvE3bDFyBZTv0LQ1+yNk0kSolCdG6biWc1EXPZ2Q1szT4h/PfCQMmhJ
- UGc44HFTbvteNsntr47G4HdfUObXJUEFQxXun2wvImt9g/yziIwOFKvlaP+dYx+2A/p6lKZcSTb
- MWOJNsbP1b4rebNhm4N4tplYSiB9ciiQ36CaR9Y/CAUZEvZE7q8SUZBIETnKsvYvuiodtntNmpj
- +ZKT8evXDVcIie3dalF/wbO+9F2QkfwVl8nruQin4svWz7kaMxQSvPaKMzXgvSj4ccDlhVnpHEP
- 7JT17Ba7HH9onGA==
-X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
- fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=marcandre.lureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 10
-X-Spam_score: 1.0
-X-Spam_bar: +
-X-Spam_report: (1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20261012134840.1051969-1-alex.bennee@linaro.org>
+In-Reply-To: <20261012134840.1051969-1-alex.bennee@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 13 Oct 2026 12:41:07 +0100
+X-Gm-Features: AclHuK-_TRFTWfTRNb6_FhuCtZhq8iwthH6pC-l_0gF9LKp9RuHZlndyg60fWdE
+Message-ID: <CAFEAcA-9+y_DQ2Pc5WZGQR_8Q3Qo_xCxaXhKPq5tor1sRFG2ZQ@mail.gmail.com>
+Subject: Re: [RFC PATCH] target/arm: hold bql when SEV sets the event_register
+To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
+ "open list:ARM TCG CPUs" <qemu-arm@nongnu.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,20 +120,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 12 Oct 2026 18:57:54 +0200, Tom Desnoyers <tom.ds1@gmx.com> wrote:
-> When a gpu buffer backed by a guest-memory blob is unreferenced, virgl
-> and rutabaga free the resource but not its addrs field, leaking memory
-> on every unref.
-> 
-> In virtio-gpu-virgl.c, call virtio_gpu_cleanup_mapping() instead of
-> virtio_gpu_cleanup_mapping_iov(). In virtio-gpu-rutabaga.c, call
-> virtio_gpu_cleanup_mapping() before freeing the resource.
-> 
-> [...]
+On Mon, 12 Oct 2026 at 14:48, Alex Benn=C3=A9e <alex.bennee@linaro.org> wro=
+te:
+>
+> There is a race in qemu_process_cpu_events and sleeping on halt_cond
+> where we can miss the setting of the event_register which would cause
+> arm_cpu_has_work to report we shouldn't sleep. As by definition the
+> bql has to be held when we go to sleep against halt_cond guard the
+> kicking of the cpus by the SEV helper with the BQL to ensure things
+> are properly serialised.
+>
+> The other places that set event_register are fine as they are either
+> in the same vCPU context or are already serialised by the BQL.
+>
+> Also use qemu_cond_wait_bql like the other halt_cond users.
+>
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4660
+> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+> ---
+>  system/cpus.c              | 2 +-
+>  target/arm/tcg/op_helper.c | 3 +++
+>  2 files changed, 4 insertions(+), 1 deletion(-)
 
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+This should be
 
--- 
-Marc-André Lureau <marcandre.lureau@redhat.com>
+Cc: qemu-stable@nongnu.org
+Fixes: d238858bff6 ("target/arm: Implement WFE, SEV and SEVONPEND for Corte=
+x-M")
 
+right?
+
+thanks
+-- PMM
 
