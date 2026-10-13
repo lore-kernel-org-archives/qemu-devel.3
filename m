@@ -4,135 +4,172 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D6C7CC6B03
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 04:03:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 761ACCA9ED0
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 04:06:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGTji-0007qf-3h; Tue, 13 Oct 2026 00:03:34 -0400
+	id 1xGTmX-0008Rn-KT; Tue, 13 Oct 2026 00:06:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xGTjf-0007q9-Jg
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 00:03:31 -0400
-Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xGTjc-0008Ll-DO
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 00:03:30 -0400
-Received: by mail-ed1-x52a.google.com with SMTP id
- 4fb4d7f45d1cf-6afbc363efeso2869712a12.3
- for <qemu-devel@nongnu.org>; Mon, 12 Oct 2026 21:03:28 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1791864206; cv=none;
- d=google.com; s=arc-20260327;
- b=hClMqxiOQPNkU+NJ0TUs93fpckD9i4yLPP3I2WD4P63EYPxotAb+gSI0Ils2tAK8w0
- vAXh9G2pQP1kX09QHNwcUj10aTR5emVkvB23Y5dLuxfpiQfcY4kGpT1K54UpFYdcx1pg
- Md7s+24DiT/PtMk9zi7ddY9PFsbd5/SRS6OQFjOjKyBQ4cQ5WiSIJMKwQ5zdm++JAGgs
- gKIXC59uIJrR+UbHKTL2wH4WSoCh7dFHS62fwpPu6c5dwvyhz8ZzFDJ+5xEfmjo6+Qll
- V+pdAvc8NH3PrYZvy+3axI28PgwekE428aGUtnRhOhTtfBrVhzcClfwTM1QvUzkPiz32
- NVYw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :reply-to:in-reply-to:references:mime-version:dkim-signature;
- bh=hGJYbaGu+cCzQrPsnI0c9EENhMDFFGQ36XoIzvnK+UE=;
- fh=1+Uc/F6C/Eh7l5RDLZ0D1fa/8Xv3ib+DBeU3qcrQU+E=;
- b=qe0GW0iL0dCC9+ffwOTe3WM7Sfr86eVkNAS1D/dY6UNBNKYc0Zyp3izB46T4QA6rHJ
- MneJdtBU7KfHR8eiu2bwqlcRwX5F7bm7NwSevngwHU7Tca39KwLqp282kst1jnEFMCSD
- Irh3fyhiBTR7jPE98qT/MgKgxuTfQoGZe+srUxXUgiM6QcXHErVeod8DCshdz+cJboEo
- SnXvJeL+9FqbBXdiqx4tYEL39QZGBq+2eCJD/gZZbRbR+0yZg6DOEUtrgReznOriakqf
- NCaYTGi6wBCcfxmwsexZ9Q83gyj9M4Qh4xZ2vUL5L1gSt3QepcDpraIfC8SabiT2jtWK
- uFLg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1791864206; x=1792469006; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:reply-to:in-reply-to:references:mime-version:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=hGJYbaGu+cCzQrPsnI0c9EENhMDFFGQ36XoIzvnK+UE=;
- b=s92P2EnQ694uZx/eRYzPwaOXrTedRq3WFtYpKyE/lORGF6Ia+XrlLO6Fcj7HaUHuoa
- q1MA1b0cGEeAwhRaXv2Q0T38J1CxaIjf7Ja0rynhfFhH6p0oqvrF71xzG5Uq5aZZT4tI
- ISS/ZWqZv+Ka1mCWvVf0U2dcvTQBHhaUK1+HWCxktodvWdHeb/rW2siH9U7QzoCrwjIx
- Gr6bHfpEHzkbatH56w/MSty22OV/fR1S5dbpwqb0DmV6jP/GT+hM703E/+SaB6NeTlDK
- lKNcxcWoYA9oQEliN0JqayG7u0S5LYoWG1M2GM5IxklAP+gml3drX9/2xF4eBz2nGvk8
- RX/w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791864206; x=1792469006;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:reply-to:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=hGJYbaGu+cCzQrPsnI0c9EENhMDFFGQ36XoIzvnK+UE=;
- b=NJbllOaAT8ovp+hC5BHbqwA5oXv9/kuqkS7glBWLENGzcjUYMdyqzX4MsViiCH4l3V
- HuVdp+O6DYyRKuWYs8OULaS/Xukb1oOeaOR/ANkOiAalhxmDH7K/LMzV9Vwrt+XbDaQb
- WgunvGlRz0NrxAQPBnGh2LlotqqAxIJA92Ml3xLj0NN90MswuTTHQAyCmVC/q71omOVq
- /kdBipN6EuGV5WkPRSFa8z0eL2xsbjziR+Qly+zKX5u1e98rVZHU2AigE/TrYHN4/ggQ
- u9UGC9z5jgzdemAZArZfe90egRfiRiY70M08l3fPOYtcB698G+FVQ2KnSraGOGYXLwPG
- FZzg==
-X-Forwarded-Encrypted: i=1;
- AKwUvByfdURRnuKxApoJCf3yV8bate3Ao21hRGJRWr02dFuR0gt+rfF5I/VhhPmLr6dPT3YJ/zkQBR6SO+Pa@nongnu.org
-X-Gm-Message-State: AFq9FYJ30XAWTCTFu3+y/bDfxzCxu+4+TztKRYHiJIp/aazhFP5UPnC6
- Cyf4LKni/xmzcJ1jDPImdtPwIpuvOgAJcb2qghUDanxDNOJvRRWKdXwVjbvG2ALMt+J/92Ntyx1
- gImCwb+KxfwkGhbV5r+A8fcKa/YydvAQ=
-X-Gm-Gg: AYBFou1PnAHP7JhAVZnbq+klOPi5t397w1jnQjrmaIQq7boLjr+gWhnIgLx76FQl20N
- EtJXiUm7/IZ2sKsgOasQaR/SQBY3fUAv37f8qvFaGY7ieqRkr6CsNd38ONtaoW7cAdrsUxW2CNq
- nzKKgBXVRg6oAwjolRkCFxjz702JPHRnDFH7YlqGGbzPaMSr4KEdopAe7teLPWp/UPbxWx/aa9I
- ylhcEYsjwON5OQMRqc6AWVALnnMWb+9JeaaPhQKHQtGxnvyjUXLRPXDCX+hNlqYd73swNgaDArP
- 3XMO32m0GG5XN0Ew3GHhHPAPSiK9JzHoL6s/ErCjKp5EL8gweJT5w34=
-X-Received: by 2002:a05:6402:4489:b0:6b1:ef6b:f3e4 with SMTP id
- 4fb4d7f45d1cf-6b1ef6c008bmr274714a12.14.1791864205500; Mon, 12 Oct 2026
- 21:03:25 -0700 (PDT)
-MIME-Version: 1.0
-References: <20261007115253.328-1-luoyonggang@gmail.com>
- <2390b3d7-6918-41e3-8532-c19de4cdd1ff@oss.qualcomm.com>
- <asdlbOZBSYIaCMIh@redhat.com>
- <CAE2XoE91XxoJRFpQ_1jhmX6LdxMyN16CF7RXxM62C5Ctkc1tig@mail.gmail.com>
- <42fd67c0-c20d-4bc4-bede-79073e4be4a1@oss.qualcomm.com>
- <CAE2XoE-gN5-vmE8r00Ds_Z=E1WePSFi_MJXjmy9ZuXEU_=o31g@mail.gmail.com>
- <3034c146-0697-4db7-acd4-8076b317a09e@oss.qualcomm.com>
- <CAE2XoE-gCTrpEeCROz9JMpPnTQXQ+AnBTR4RwdQhYizkExjK9w@mail.gmail.com>
- <8cb24445-b659-4bd4-9497-888ce152e82d@oss.qualcomm.com>
- <1a477877-516a-41b8-8548-598bfad74f25@oss.qualcomm.com>
- <CAE2XoE_MotPuxBBkLFWmcDf6ACva2r7y-7sRbQ3DNNwZvXcJFQ@mail.gmail.com>
- <ae0dcb2d-1488-4cea-8bc0-2a0cb2cd74be@oss.qualcomm.com>
- <CAE2XoE9B8RXg6=6kofVA=d6C5OBXT9GZ2cPceWUUDa4m9=_fRg@mail.gmail.com>
- <bfa70b6e-fc66-4607-bd45-b55ae2951d57@oss.qualcomm.com>
-In-Reply-To: <bfa70b6e-fc66-4607-bd45-b55ae2951d57@oss.qualcomm.com>
-From: Yonggang Luo <luoyonggang@gmail.com>
-Date: Tue, 13 Oct 2026 12:03:11 +0800
-X-Gm-Features: AclHuK85NEW-X_1qjebNgB1T24kIfLBw6QOaZ-0B3KS5zgoFrwUZT-R_Ia0R27I
-Message-ID: <CAE2XoE-9w1-3-kFvWXdZZz=sc-Eor3goUr09vANbaqyNrtJGdg@mail.gmail.com>
-Subject: Re: [PATCH 0/8] qom: pass TargetInfo to the is_available callback
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- qemu-devel@nongnu.org, Cleber Rosa <crosa@redhat.com>, 
- Stefan Hajnoczi <stefanha@redhat.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
- Laurent Vivier <lvivier@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- John Snow <jsnow@redhat.com>, Laurent Vivier <laurent@vivier.eu>,
- Richard Henderson <richard.henderson@linaro.org>, 
- Joel Stanley <joel@jms.id.au>, Fabiano Rosas <farosas@suse.de>,
- Kane Chen <kane_chen@aspeedtech.com>, 
- Andrew Jeffery <andrew@codeconstruct.com.au>, Troy Lee <leetroy@gmail.com>, 
- Jamin Lin <jamin_lin@aspeedtech.com>, Stafford Horne <shorne@gmail.com>,
- qemu-arm@nongnu.org, Philippe Mathieu-Daude <philmd@mailo.com>,
- Peter Maydell <peter.maydell@linaro.org>, 
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Steven Lee <steven_lee@aspeedtech.com>, Alexander Bulekov <alxndr@bu.edu>, 
- Darren Kenny <darren.kenny@oracle.com>
-Content-Type: text/plain; charset="UTF-8"
+ (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
+ id 1xGTmQ-0008RW-DQ
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 00:06:23 -0400
+Received: from mgamail.intel.com ([192.198.163.7])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
+ id 1xGTmN-0000DZ-Fj
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 00:06:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1791864380; x=1823400380;
+ h=from:to:cc:subject:date:message-id:references:
+ in-reply-to:content-transfer-encoding:mime-version;
+ bh=LI35QKLY5yEnaL2xhXS+SNhRTepAvtiYNiPO8kNGOdQ=;
+ b=lzF8+jj7sWNIfQIfAMrqcr2Bizy+wcRL+KzYXR0yWiPALil0gAwNlNPQ
+ pYq87qGXsl/2ByzSnGPCcdRxs2APBnHmc4+G0TicRO1V/HnNn1F4UbebZ
+ 4Vbp2PraUrn6e1MzjCmbL+wU6ZBRc0uPHQrIOZgSa8kQJxx6Jrxw4/rum
+ 3oTfkHa6cayHHEy6YkCbGCe9UVePmpD6VtRMCDwq2TMn6uiASqvieKERl
+ OgNMI+7tzdqTIp1d/I4IgNAa2vVel7tcly/U5c/O8q+J2mQzroabpfKK5
+ ZEDXX3Cp+9OIkSOIi3RT5H0c7KfdnHerayeqYK/2e9MPyDNBjAbrlbkIy w==;
+X-CSE-ConnectionGUID: EPHVdVGjTWuYzqXY6jwjpA==
+X-CSE-MsgGUID: /Qx+iNX2QBmpRUh+CfWazQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11933"; a="480311"
+X-IronPort-AV: E=Sophos;i="6.27,154,1787036400"; 
+   d="scan'208";a="480311"
+Received: from orviesa009.jf.intel.com ([10.64.159.149])
+ by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 12 Oct 2026 21:06:16 -0700
+X-CSE-ConnectionGUID: puDWnLVPQ7icjAvYEzJeBA==
+X-CSE-MsgGUID: g/jnAwUFSS+CrioZp6hq+A==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,154,1787036400"; 
+   d="scan'208";a="987597"
+Received: from fmsmsx901.amr.corp.intel.com ([10.18.126.90])
+ by orviesa009.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 12 Oct 2026 21:06:15 -0700
+Received: from FMSMSX901.amr.corp.intel.com (10.18.126.90) by
+ fmsmsx901.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.49; Mon, 12 Oct 2026 21:06:14 -0700
+Received: from fmsedg903.ED.cps.intel.com (10.1.192.145) by
+ FMSMSX901.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.49 via Frontend Transport; Mon, 12 Oct 2026 21:06:14 -0700
+Received: from SN4PR0501CU005.outbound.protection.outlook.com (40.93.194.45)
+ by edgegateway.intel.com (192.55.55.83) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.49; Mon, 12 Oct 2026 21:06:14 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=KIGAW2ZF5LPsRjr9sXLOODGy+WjUCvp7+6Mpa3hxxRDZBBcrKZVxobeXrGLpV3xUh6gYfeOZOFHfp6uPY+0dr1O0sa5yW0Cb8QmfRN48J3YXGZKxnHdAfGEbSrhfRaN0lycKjUT00nInc0gbMEUprolsWjGdNaTTfhF0cT2/VqtxH+AD/Zt/tRrKIwGDVYHhwQPdbojNH4PUpnxhBFK0uu6DocvoXQm1oaZ7Bft0sgXzFcpVqCAMfzgQ7xrOdN39TPo5YHilS+PFoUTBYg9CBVSOV3WJWWuMPm02xjsra48N0cPKMITQszfXzkfykWqFKRPra/0UcAYt3QJuvjk7LQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=H74VRhCsUfhWukFXJCqXncgCKAocLlPvAXvy2CNYkww=;
+ b=c7kdOL+yDa+d2h3AWtgnaWktuv7FRJPKwBPBgxEX45eUzZzVJnf57iPC0R8lm5X/SEJ02s+QQe/mV0W9ImWts5B2FyGIg9URi7kMLKLG5HliseGm5rTr4+178iNCgNw/yxS4ZPPn/C7tELYuVYFFbTxbp5wyxvjUs8zqNTjwWSqKpepWgAms4DlONjFnvSsP2Hgd6+XTWy/MaHmaOg2neVVa5CZfw9qPT/8gNC3YR4BKRnJJILJsF28kHyPcdAqajeCdYmZkTtdM1hIAZMkgsyDxUEN9bPtw+rvsfhQ0dn/1opDyaVs9NDWT5lvhW+lF4AWBe2jB66nIMPrv06ASmQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Received: from CH3PR11MB7177.namprd11.prod.outlook.com (2603:10b6:610:153::8)
+ by SJ2PR11MB7546.namprd11.prod.outlook.com (2603:10b6:a03:4cc::8)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.472.18; Tue, 13 Oct
+ 2026 04:06:11 +0000
+Received: from CH3PR11MB7177.namprd11.prod.outlook.com
+ ([fe80::b997:e226:4979:c035]) by CH3PR11MB7177.namprd11.prod.outlook.com
+ ([fe80::b997:e226:4979:c035%2]) with mapi id 15.21.0496.015; Tue, 13 Oct 2026
+ 04:06:11 +0000
+From: "Kasireddy, Vivek" <vivek.kasireddy@intel.com>
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@redhat.com>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>, Markus Armbruster <armbru@redhat.com>
+CC: Alex Williamson <alex@shazbot.org>
+Subject: RE: [PATCH v13 6/9] vfio/device: Add support for creating dmabuf from
+ multiple ranges
+Thread-Topic: [PATCH v13 6/9] vfio/device: Add support for creating dmabuf
+ from multiple ranges
+Thread-Index: AQHdVphlAJLtaSnr1k+pnx5j3pf8VLb03vkAgAQUeTCAAQO2gIAAaEyw
+Date: Tue, 13 Oct 2026 04:06:10 +0000
+Message-ID: <CH3PR11MB71774290FE2CE0532AD32FADF89E2@CH3PR11MB7177.namprd11.prod.outlook.com>
+References: <20261007201222.648687-1-vivek.kasireddy@intel.com>
+ <20261007201222.648687-7-vivek.kasireddy@intel.com>
+ <306e36da-31eb-4e54-8b47-afb5ae55a6c9@redhat.com>
+ <IA0PR11MB7185A1C516474E6EA317F8E9F89F2@IA0PR11MB7185.namprd11.prod.outlook.com>
+ <98667ef2-8931-497a-bb76-04097a2aa43b@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <98667ef2-8931-497a-bb76-04097a2aa43b@rsg.ci.i.u-tokyo.ac.jp>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: CH3PR11MB7177:EE_|SJ2PR11MB7546:EE_
+x-ms-office365-filtering-correlation-id: a816cf2b-e9d4-4f59-aa14-08df28df50e3
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|1800799024|23010399003|376014|366016|18002099003|260925021311599003|11063799006|22082099003|5023799004|4143699003|6133799003|260925022911599003|10067099003|260925021911599003|56012099006|3023799007|261009223027099003|38070700021;
+x-microsoft-antispam-message-info: a3nKurPwq7YhAF8dP3RCi5otQ10OBKAsKeNKPxVCynPqAbxJdNyoMJ/e3b3Z97+DuOyi41OwMfJnA3opQMJ66R9hfeqT1Df81H8faqLs4h14ZMY+WV6Ync/9uEKk8adLahbvHKrEkftaUPjaWrem6ANDZEsWF2/qnxrFZuDrI5YTLjfqSQ2ZsddtgeV720FWuwRU772c/g/A+qbPJwmZesXiAKbfmbVdfNDGk5R1bif5bQyAEBy0VTVOph2dg1KVMLuoTAgPRHZIWj7b0tTzDhMURioaxeXniQl3SxWPBjg4fsmPlSOTpYDFYAHImqjIKW+ZV0uM2zuhAr6RG0SBsCLK38h9S0dJTyFGIGfyH8FZp/fe58Dss+maIJBaQBMub5DlcUbeOmqIqA52n/AWNE1I2mN5UkpNYD3XQsDPmmhUJ6waoBjwM7sIAztkO77Hu5sBoeiZ4sf4XH0y7IpJVBP7ELk1s2nX2nvwESPL5hvWw1VJ560zmD0gcJ2/PRBT46ADWYkPEt2lLf6PizMbWLU2MRMcexN/5MiIbjTIEuPaa7d5aGx3BzRBZzSvNJx2aAMlRk2vaqdbtT8WpEIiQH4GyWt05hLiR+PeqeRf3lD8FmzbnuT6Tpu6/cZ8gJqGaphr4ioXNaTdNCzIApbOWss9uHC8p+yJYIQuMn4pWKE=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:CH3PR11MB7177.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(23010399003)(376014)(366016)(18002099003)(260925021311599003)(11063799006)(22082099003)(5023799004)(4143699003)(6133799003)(260925022911599003)(10067099003)(260925021911599003)(56012099006)(3023799007)(261009223027099003)(38070700021);
+ DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?iDNyHSUbMemra85fH6PCo9aUVVLlQmPGEsaw6YAaw72e0K1dlp3xQGsRr7?=
+ =?iso-8859-1?Q?yLsfJKbqTt2iduZiDlHs28c0HzI/ZXvEOY7mPOocWrKPZZsKDP1B25GDII?=
+ =?iso-8859-1?Q?hHvrvBBufXwG1XpaDvv8wjv7PAYqTtDwRZRm8iiZOsUOi8dSooKIwiRt3M?=
+ =?iso-8859-1?Q?LLld9q7hFMnHM1QUoR0EqLIAzin7EMWCjKFSvRVcfK2lJL0Wy/tx+Ich5R?=
+ =?iso-8859-1?Q?+mRfZAEAFjUgF3MdCQNK2laiqdlOw2q7m2vj9hQ0CT/Hu6g3nQC1lM9Tn1?=
+ =?iso-8859-1?Q?G8TlntkhUV2z40inxXcnzkwLBXixTcJ/FYQSKhxLaxK2jJ17bAKCo0o2fv?=
+ =?iso-8859-1?Q?+I8YPnY+z13hGOGhmgQKHVSDEE1mgTLNcYJQaU+7OUnXZMGTJQpjHgkNxF?=
+ =?iso-8859-1?Q?469lzOpatPRnFu+I1sOaiCZY2fo8nXkf1piKl3Kwtys1Z3Cw1/IyWQB+H3?=
+ =?iso-8859-1?Q?5S8NhanhN0zR/nqpiEeGG/KiOXyXIHPzgHx1UG5oy44tE4hcwgnyzuFwGT?=
+ =?iso-8859-1?Q?YsLTPmNhWfudBxeDteSdYzdxohR2XZX8c0qQ8q3O0niOmfSQGi7AR4ODG1?=
+ =?iso-8859-1?Q?UKt6g4wqD7f/sgqvO0tycamV6m2FDzxu1ddT2YCRi0ofRyIcM065UCyBRC?=
+ =?iso-8859-1?Q?aNfVtOcD3SDhG3Hv81wxAentjKIhIH1d6zZGoooptb5I23swFCLRNVw/R+?=
+ =?iso-8859-1?Q?ebFnp3UfCXYLNxNILIb3jvVxJ7qyWAaSu8wAcpGYJIxZ4xNf6yWkrS9y5h?=
+ =?iso-8859-1?Q?NduDFiYJGiNEARBWMQhY64DIhIQNR+tBzIDKkswkWiW4QZirG+yCrcWDL3?=
+ =?iso-8859-1?Q?lRMw5lN3vPlGKbiKDTITDORJePaximYb9DHp1s8XDq/t96qH5Q4xwk9fKN?=
+ =?iso-8859-1?Q?ev/oedSAwbOj+YDjANskS8QgDrIjZV3VOLqns+bYP1dsLL1ZQgoMmmjv60?=
+ =?iso-8859-1?Q?RAe+n/2pacQsPGNOZ8RlgaYfxBC3GJVKp472NBbBZVOnkS0id0lUu2SOc3?=
+ =?iso-8859-1?Q?QIlIDWhKCf2ST5KkbvIypHoQKS7Dcwr+5pxT8bymLAzq77/ok779wSDBjn?=
+ =?iso-8859-1?Q?ZaJLqDZjvPqRcTCSapb3a9tF3Mz0xgbdn3ntDrpwcpKgd1bcJjHkITcM/M?=
+ =?iso-8859-1?Q?XG2BB1dKeGY/9bfN9lHDmtupgm033HS4iA0s0XOZd4UgzB57KJW/Q4iavz?=
+ =?iso-8859-1?Q?5aJNI+/N89YznK5whWVsWmYWavoNY+UX2M8OUJY/HXBarIB0qDLl8amN9q?=
+ =?iso-8859-1?Q?zd4cElwSTjFts2mH/j8vaWhbnrrH5ghTpjoLeltxRcV0lWJq4DjLCmThJ7?=
+ =?iso-8859-1?Q?IdRre0k3HDkd6f7Rsg5ZEMY0b8zOgjW3X0dmmgZW+Z2j2UFg2Q9egDJisS?=
+ =?iso-8859-1?Q?B/6GnImNIn3FbfSyqiizgKdbdbFBpXmbx8o1HZq7LP35a4POv8B0KsjHwh?=
+ =?iso-8859-1?Q?pSB29AloFvcXivcAUyLUsn4vJn0jpV3yxO0yF716/h9EbK4171RPKZw8rk?=
+ =?iso-8859-1?Q?s286B3ueyXhftB1rPk5pTvf2e3rtqKkHO87gdoTD7AOYqJCK126cg8AjwB?=
+ =?iso-8859-1?Q?9C6FQV2/RHEwHVhtEkDH+yeFB5mDOm5E+O23m82tIW2YTWjsmwG5ubPVO6?=
+ =?iso-8859-1?Q?v842B4xlrie+Ve2xbHmbTMG+P6qTwkTIjSUEqeBYlc+BiRepQ8gjb6xdTT?=
+ =?iso-8859-1?Q?JiERIkfQQ0/+4kuoTwmWtsuYO+im4zsiaGs5gWsHPvLKXUBTjUFzP3ve62?=
+ =?iso-8859-1?Q?XoJw0zQ8RSX6myary0hdZIRnSX+Rvkm85g1TT05hMhWEkxy3ERVlyciI7l?=
+ =?iso-8859-1?Q?qfNPKu3A+g=3D=3D?=
+Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
- envelope-from=luoyonggang@gmail.com; helo=mail-ed1-x52a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+MIME-Version: 1.0
+X-Exchange-RoutingPolicyChecked: cCO1BFx04/60PPhgeqba89cTu/Q9qTqUT/CKmPTxmaAH0N3vTSjcIKc6n1VgEOtz7DQ7R8XrtDLL7fl5DlACHflsFKFr7KGBhzxJiYz5OwX/5W/WKdmCWdcLFBWWz7ZPcvB/GcMz8aq3JeAydswmfveCLRIjzVg/D5LAHq2h9C7Sy6IRL5bUs5mw/0DYwxV1Eh61YTCey6578om4fdvbc+tzfWex3+LJdx3+tRu/D7GjWY4pSGW/ax7InF+SpBJ+PYYWUcczL0KtTwE8w3DkGKNUvXOyi6j2OOVIDes/0sx5+vzFfVsNaqnBIeESkd4qtAYEy6kj66tVYJOO6RtBNg==
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: CH3PR11MB7177.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: a816cf2b-e9d4-4f59-aa14-08df28df50e3
+X-MS-Exchange-CrossTenant-originalarrivaltime: 13 Oct 2026 04:06:10.8956 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: imDT3V6tJa4cQF4LRYyzxnoSDxy6uUqyohiQ0wWOPeoK4QhlLSM82ppgCGEX0cL7gs7Dg+XwoHdkFPFeIscCoXQC0JSjWcfot0bIglF4RCM=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ2PR11MB7546
+X-OriginatorOrg: intel.com
+Received-SPF: pass client-ip=192.198.163.7;
+ envelope-from=vivek.kasireddy@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -45
+X-Spam_score: -4.6
+X-Spam_bar: ----
+X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -145,378 +182,411 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: luoyonggang@gmail.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Oct 13, 2026 at 11:53=E2=80=AFAM Pierrick Bouvier
-<pierrick.bouvier@oss.qualcomm.com> wrote:
->
-> On 10/12/26 7:43 PM, Yonggang Luo wrote:
-> > On Tue, Oct 13, 2026 at 9:26=E2=80=AFAM Pierrick Bouvier
-> > <pierrick.bouvier@oss.qualcomm.com> wrote:
-> >>
-> >> On 10/11/26 9:26 PM, Yonggang Luo wrote:
-> >>> On Mon, Oct 12, 2026 at 10:25=E2=80=AFAM Pierrick Bouvier
-> >>> <pierrick.bouvier@oss.qualcomm.com> wrote:
-> >>>>
-> >>>> On 10/11/26 7:13 PM, Pierrick Bouvier wrote:
-> >>>>> On 10/11/26 1:22 PM, Yonggang Luo wrote:
-> >>>>>> On Fri, Oct 9, 2026 at 2:34=E2=80=AFAM Pierrick Bouvier
-> >>>>>> <pierrick.bouvier@oss.qualcomm.com> wrote:
-> >>>>>>>
-> >>>>>>> On 10/8/2026 10:13 AM, Yonggang Luo wrote:
-> >>>>>>>> On Fri, Oct 9, 2026 at 12:06=E2=80=AFAM Pierrick Bouvier
-> >>>>>>>> <pierrick.bouvier@oss.qualcomm.com> wrote:
-> >>>>>>>>>
-> >>>>>>>>> On 10/8/2026 2:46 AM, Yonggang Luo wrote:
-> >>>>>>>>>> On Thu, Oct 8, 2026 at 5:42=E2=80=AFPM Daniel P. Berrang=C3=A9=
- <berrange@redhat.com> wrote:
-> >>>>>>>>>>>
-> >>>>>>>>>>> On Wed, Oct 07, 2026 at 01:25:46PM -0700, Pierrick Bouvier wr=
-ote:
-> >>>>>>>>>>>> On 10/7/2026 4:47 AM, Yonggang Luo wrote:
-> >>>>>>>>>>>>> This allows a combined binary to register machine types fro=
-m all its targets.
-> >>>>>>>>>>>>> Consequently, QMP `query-machines` can return machine entri=
-es from every
-> >>>>>>>>>>>>> target, even when `none` is selected. For example, a client=
- can query the
-> >>>>>>>>>>>>> combined machine list with:
-> >>>>>>>>>>>>>
-> >>>>>>>>>>>>> ```json
-> >>>>>>>>>>>>> { "execute": "query-machines" }
-> >>>>>>>>>>>>> ```
-> >>>>>>>>>>>>>
-> >>>>>>>>>>>>> The returned list includes the registered machine classes f=
-rom all linked
-> >>>>>>>>>>>>> targets. This is separate from selecting a machine: with `-=
-target none`,
-> >>>>>>>>>>>>> `-M virt` reports the targets that provide `virt` instead o=
-f choosing one
-> >>>>>>>>>>>>> arbitrarily:
-> >>>>>>>>>>>>>
-> >>>>>>>>>>>>> ```text
-> >>>>>>>>>>>>> qemu-system -target none -M virt
-> >>>>>>>>>>>>> unsupported machine type: "virt" for target "none"
-> >>>>>>>>>>>>> Available for targets:
-> >>>>>>>>>>>>>       aarch64
-> >>>>>>>>>>>>>       arm
-> >>>>>>>>>>>>> ```
-> >>>>>>>>>>>>>
-> >>>>>>>>>>>>
-> >>>>>>>>>>>>     From the long conversation on a previous thread, I thoug=
-ht we reached
-> >>>>>>>>>>>> the conclusion that if we didn't expose any ambiguous name, =
-then -target
-> >>>>>>>>>>>> option is unnecessary, or maybe I got lost on track of this =
-thread.
-> >>>>>>>>>>>>
-> >>>>>>>>>>>> https://lore.kernel.org/qemu-devel/ar_coT44h5-zJPVV@redhat.c=
-om/
-> >>>>>>>>>>>>
-> >>>>>>>>>>>> I'm not sure which semantic we want to have with -target non=
-e. If there
-> >>>>>>>>>>>> is no ambiguous name registered, we just don't need it at al=
-l. It's a
-> >>>>>>>>>>>> win-win IMHO.
-> >>>>>>>>>>>
-> >>>>>>>>>>> Yes, if we expose unique names for every machine, then -targe=
-t is then
-> >>>>>>>>>>> redundant.
-> >>>>>>>>>>
-> >>>>>>>>>> so how to diff riscv32-virt and risv64-virt? oh so for this ma=
-chine we
-> >>>>>>>>>> needs two name?
-> >>>>>>>>>> "virt" needs register twice for it? or register only a single =
-time,
-> >>>>>>>>>> but we prefix the target_name()
-> >>>>>>>>>> automatically? for example machine::name =3D=3D=3D "virt", but=
- we can use
-> >>>>>>>>>> "riscv32-virt" "risv64-virt" to reach it?
-> >>>>>>>>>>
-> >>>>>>>>>
-> >>>>>>>>> Yes, ideally we should have different variant of virt for 32/64=
- bit.
-> >>>>>>>>> Same goes for cpu max types.
-> >>>>>>>>>
-> >>>>>>>>> QOM type is always registered unambiguously ("$arch-virt"). The=
-n, for
-> >>>>>>>>> the "alias" name, which is virt, in case multiple matches are f=
-ound,
-> >>>>>>>>> command line can return an error with list of unambiguous names=
- to call it.
-> >>>>>>>>>
-> >>>>>>>>> $ qemu-system -M virt
-> >>>>>>>>> Multiple virt machines are available. Please choose one of them=
-:
-> >>>>>>>>> - aarch64-virt
-> >>>>>>>>> - riscv64-virt
-> >>>>>>>>>
-> >>>>>>>>> There is no "parsing" of the argument, it's just the real QOM t=
-ype. Then
-> >>>>>>>>> we can find which target it implements from mc->targets.
-> >>>>>>>>> And then, we can automatically choose which cpus should be avai=
-lable
-> >>>>>>>>> based on that, thanks to cpu->targets.
-> >>>>>>>>>
-> >>>>>>>>> For existing binaries, nothing change.
-> >>>>>>>>
-> >>>>>>>> Good, I think we found a clean way now, is_available should be
-> >>>>>>>> removed, and TypeInfo::targets and TypeImpl::targets should be a=
-dded.
-> >>>>>>>
-> >>>>>>> It goes into MachineClass only for now.
-> >>>>>>>
-> >>>>>>>> I think
-> >>>>>>>> for "virt" we can add a shared hw/machine-virt.c instead, and fo=
-rwarding to
-> >>>>>>>> the $arch specific virt. so that we only have a single "virt" re=
-gistered.
-> >>>>>>>> And it's
-> >>>>>>>> targets is
-> >>>>>>>> QEMU_ARCH_I386 |
-> >>>>>>>> QEMU_ARCH_ARM |
-> >>>>>>>> QEMU_ARCH_RISCV |
-> >>>>>>>> QEMU_ARCH_LOONGARCH |
-> >>>>>>>> QEMU_ARCH_M68K |
-> >>>>>>>> QEMU_ARCH_OR1K |
-> >>>>>>>> QEMU_ARCH_XTENSA |
-> >>>>>>>> QEMU_ARCH_HEXAGON
-> >>>>>>>>
-> >>>>>>>> So that we won't have a list of conflict QOM names for "virt" ma=
-chines.
-> >>>>>>>> As now we indeed have only a single "virt" machine that redirect=
-s to
-> >>>>>>>> different targets.
-> >>>>>>>>
-> >>>>>>>
-> >>>>>>> The idea looks appealing, but I don't think it solves the problem=
- to
-> >>>>>>> have multiple virt variants available at the same time.
-> >>>>>>>
-> >>>>>>> The "alias" idea you introduced before is good, we just need to a=
-dd a
-> >>>>>>> check if an alias is really unique, else return an error, as expl=
-ained
-> >>>>>>> previously.
-> >>>>>>>
-> >>>>>>> If "-M aarch64-virt" works for both the new and existing binary, =
-and -M
-> >>>>>>> virt only for existing binaries (and ambiguous for new one), I th=
-ink
-> >>>>>>> that's a safe approach.
-> >>>>>>>
-> >>>>>>>>
-> >>>>>>>> For other types also conflict can be handled in the same way, su=
-ch as
-> >>>>>>>> "-cpu host" "-cpu max"
-> >>>>>>>> maybe others, but I think they all have the same way to deal wit=
-h.
-> >>>>>>>>
-> >>>>>>>>
-> >>>>>>>> That's why  TypeInfo::targets and TypeImpl::targets better than =
-sole
-> >>>>>>>> Machine::targets
-> >>>>>>>>
-> >>>>>>>
-> >>>>>>> One step at a time.
-> >>>>>>> Let's keep focused on declaring targets for a single machine firs=
-t.
-> >>>>>>> Then we can iterate to solve the "virt" problem.
-> >>>>>>> Then convert all the existing machines and add a check in machine=
--target.c
-> >>>>>>> Then, and only then, we can see what happens with cpus.
-> >>>>>>
-> >>>>>> I tried this idea, but I faced a fatal error, because the
-> >>>>>> target_info() is not available until
-> >>>>>> the machine selected(the target arch will be select just along wit=
-h
-> >>>>>> the machine selected), so basically
-> >>>>>> all calls to target_info() would raise an error(null pointer), how=
- to
-> >>>>>> deal with it?
-> >>>>>>
-> >>>>>
-> >>>>> I see. Indeed, since we can't set a target before registering all t=
-ypes,
-> >>>>> it implies that all the types class_init can't use target_* functio=
-ns.
-> >>>>>
-> >>>>>
-> >>>>> - register_accel_target_type
-> >>>>> - cpu_max_v8_register_type
-> >>>>>
-> >>>>
-> >>>> Sorry, mail sent to early.
-> >>>>
-> >>>> For the is_available callback usage, it should be easy to do the swi=
-tch,
-> >>>> since it's basically the same information that what we are trying to=
- do
-> >>>> - we can leave them for now.
-> >>>>
-> >>>> Some types (like accel and max mentioned above), explicitly change t=
-heir
-> >>>> definition depending on the target. It's a behavior we can't rely on
-> >>>> anymore, and it means we need proper distinct types instead of a sin=
-gle
-> >>>> one with dynamic definition driven by target-info.
-> >>>>
-> >>>> I think that's the preliminary work needed, before being able to go
-> >>>> further: convert all existing usage in class_init with distinct type=
-s +
-> >>>> is_available, and then we can do the switch from is_available to the=
- new
-> >>>> .targets approach.
-> >>>
-> >>> Hi Pierrick,
-> >>> I have already tried that introducing new QOM names just to make clas=
-s_init
-> >>>    target-independent is too broad(means all usage of it should be ha=
-ndled)
-> >>> and could complicate compatibility(changed too much code).
-> >>> Can we avoid new names by some new means(ideas welcome)?
-> >>>
-> >>
-> >> As a first step, I don't think we need new names, is_available can be
-> >> used to selectively register one definition or another and avoid any
-> >> clash. What is missing at the moment though, is that some types (like
-> >> cpu max above) change their definition based on target definition.
-> >
-> >
-> >>
-> >> So for cpu max, we would have two distinct types, both named max, but
-> >> one with is_available(target_arm), and other one with
-> >> is_available(target_aarch64), so they are never registered at the same=
- time.
-> >
-> >>
-> >> Same for virt machines. It's already what we have, duplication is
-> >> handled at the moment with distinct is_available callbacks.
-> >>
-> >> Then, see below.
-> >>
-> >>>
-> >>>>
-> >>>> It's probably worth having the conversion in its own series (only
-> >>>> cleanup usage of target_* in class_init), before trying to get rid o=
-f
-> >>>> is_available.
-> >>>
-> >>>>
-> >>>> For the implementation, you can use the multi-targets.c binary test =
-to
-> >>>> drive the change. Remove the module init for target info (leaving no
-> >>>> target set), and add a hacky patch to skip call to is_available (and
-> >>>> return true instead) and allow double definition (which will rely on
-> >>>> is_available). Then, fix all the segfault. Once it compiles and runs=
-,
-> >>>> only double definition will be left, which can be handled by inserti=
-ng
-> >>>> the right is_available callbacks. Then in a subsequent series, the
-> >>>> switch to .targets can be made.
-> >>>
-> >>>
-> >>> Still have no clean clue about how to remove is_available , as we hav=
-e many
-> >>> "virt" machines. Do you means all "virt" machines with "virt-machine"=
- QOM names
-> >>> are inserted to the table? How to get it working because the "key" is=
- string.
-> >>>
-> >>
-> >> Once we have type definition which only depends on is_available, we ca=
-n
-> >> convert this to .targets, which would contain the same information.
-> >> For the rest, I have some ideas, but I would like first we do the firs=
-t
-> >> part (convert to is_available), which is already a huge work in itself=
-,
-> >> and a series of its own.
-> >
-> > Indeed I am confused .targets only exists on Machine, how is it
-> > related to -cpu host -cpu max?
-> >
->
-> We can introduce cpu.targets after machine.targets.
-> First step is just to get something that works with is_available and
-> does not require any target info to be set.
+Hi Akihiko,
 
-Feels weird, what's wrong with this method:
- target/arm/tcg/cpu-max-v8.c | 17 +++++++++++++----
- 1 file changed, 13 insertions(+), 4 deletions(-)
+> Subject: Re: [PATCH v13 6/9] vfio/device: Add support for creating
+> dmabuf from multiple ranges
+>=20
+> >>
+> >>> In order to create a dmabuf associated with a buffer that spans
+> >>> multiple ranges, we first need to identify the VFIO region and
+> >>> index the buffer (represented by iovec) belongs to and then
+> >>> translate its addresses to offsets within that region.
+> >>>
+> >>> The qemu_ram_block_from_host() API gives us both the region and
+> >>> the offset info we need to populate the dma ranges so that we can
+> >>> invoke the VFIO_DEVICE_FEATURE_DMA_BUF feature to create the
+> >> dmabuf.
+> >>>
+> >>> Also, instead of iterating over all QOM devices to find the
+> >>> VFIODevice associated with a memory region, introduce a helper
+> >>> to just use the vfio_device_list to lookup the VFIODevice.
+> >>> And, introduce another helper to lookup the VFIO region given an
+> >>> address.
+> >>>
+> >>> Lastly, introduce an enum to return the type of error encountered
+> >>> while creating the dmabuf fd.
+> >>>
+> >>> Cc: Alex Williamson <alex@shazbot.org>
+> >>> Cc: C=E9dric Le Goater <clg@redhat.com>
+> >>> Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
+> >>> ---
+> >>>    include/hw/vfio/vfio-device.h |  22 +++++++
+> >>>    hw/vfio/device.c              | 109
+> ++++++++++++++++++++++++++++++++++
+> >>>    hw/vfio/dmabuf-stubs.c        |  17 ++++++
+> >>>    hw/vfio/meson.build           |   1 +
+> >>>    4 files changed, 149 insertions(+)
+> >>>    create mode 100644 hw/vfio/dmabuf-stubs.c
+> >>>
+> >>> diff --git a/include/hw/vfio/vfio-device.h b/include/hw/vfio/vfio-
+> >> device.h
+> >>> index 8472420d3f..c05430be8a 100644
+> >>> --- a/include/hw/vfio/vfio-device.h
+> >>> +++ b/include/hw/vfio/vfio-device.h
+> >>> @@ -41,6 +41,13 @@ enum {
+> >>>        VFIO_DEVICE_TYPE_AP =3D 3,
+> >>>    };
+> >>>
+> >>> +enum {
+> >>> +    /* The Guest passed addresses stored in IOV are invalid */
+> >>> +    VFIO_DMABUF_CREATE_ERR_INVALID_IOV =3D -1,
+> >>> +    /* Guest or Host may be at fault for this type of error */
+> >>> +    VFIO_DMABUF_CREATE_ERR_UNSPEC =3D -2,
+> >>> +};
+> >>
+> >> Nack.
+> >>
+> >> As said a few times already : it's a VFIO-specific enum leaking
+> >> into vfio-device.h to serve virtio-gpu's fallback logic. The
+> >> cleanest alternative is to use standard -errno returns and
+> >> make the fd an output parameter.
+> > It looks like Cedric remains unconvinced about the value or usefulness
+> > of this error enum. Therefore, to make progress, I intend to adopt his
+> > suggestion to use standard -errno returns for the next version,
+> considering
+> > that this series has been stuck for a year.
+> >
+> > AFAICS, dropping this error enum means that we would not be able to
+> > clearly identify and log (or attribute) Guest vs Host errors in virtio-=
+gpu,
+> > particularly the INVALID_IOV case. I am not sure if this can be
+> considered
+> > a significant limitation. However, if there is a reasonable middle
+> ground
+> > solution or an alternative that you can think of that does not involve
+> > using VFIO error enums in virtio-gpu, then I would like to pursue that
+> > instead.
+>=20
+> C=E9dric's comment is a reiteration of previous points, but his concrete
+> code suggestion is new and brings to light some challenges with errno
+> propagation.
+>=20
+> First, errno does not precisely match the required semantics. We need
+> to
+> distinguish lookup failures from the other errors. However, with your
+> suggestion, lookup failures become -EINVAL and
+> vfio_device_get_feature()
+> also returns the same value when the backend lacks the operation,
+> making
+> it impossible to distinguish them.
+>=20
+> Propagating errno also requires extra care to preserve it when
+> necessary. For patch "[PATCH v13 8/9] virtio-gpu-dmabuf: Improve error
+> handling with 'Error **' and err enum", you suggested to add the
+> "saved_errno" variable to save errno before error_setg_errno(). That is
+> redundant because error_setg_errno() preserves errno. Realizing that
+> requires careful attention.
+>=20
+> While we could spend effort fixing these issues, we can simply avoid the
+> churn by not using errno.
+>=20
+> In any case, I agree keeping this stuck is not ideal while I don't think
+> I can provide any further insights. So I'm inviting Markus Armbruster to
+Looks like you forgot to cc Markus. I have added him now.
 
-diff --git a/target/arm/tcg/cpu-max-v8.c b/target/arm/tcg/cpu-max-v8.c
-index 65f851f2006..d7323ab431c 100644
---- a/target/arm/tcg/cpu-max-v8.c
-+++ b/target/arm/tcg/cpu-max-v8.c
-@@ -119,12 +119,21 @@ void aarch32_max_v8_tcg_initfn(Object *obj)
- #endif
- }
+> this discussion. This is an area better handled by him, who maintains
+> the error reporting facility, including include/qapi/error.h, which
+> extensively documents codebase-wide error-handling convention.
+>=20
+> Markus, could you advise on the appropriate convention for returning
+> this kind of classification alongside Error **? Your perspective
+> across the codebase may help us settle on a consistent approach
+> beyond the individual subsystems involved here. Perhaps you may
+> improve
+> the documentation according to a design decision made here.
+Markus, here is some additional context from Akihiko as to why there is
+a need to introduce an error enum in VFIO:
+https://lore.kernel.org/qemu-devel/09f02fe2-63cb-4283-899e-4cffc5f60cf1@rsg=
+.ci.i.u-tokyo.ac.jp/
 
-+static void max_v8_tcg_initfn(Object *obj)
-+{
-+    if (target_aarch64()) {
-+        aarch64_max_v8_tcg_initfn(obj);
-+    } else {
-+        aarch32_max_v8_tcg_initfn(obj);
-+    }
-+}
-+
- static void cpu_max_v8_register_type(void)
+>=20
+> If anyone else has a clean middle-ground solution in the meantime, I
+> would greatly appreciate your input as well.
+I am not sure if it can be considered clean or elegant but one middle-groun=
+d
+solution I can think of is to have (and use) the error enum just in virtio-=
+gpu
+only but associate EINVAL (return value of vfio_device_create_dmabuf_fd())
+as the equivalent of INVALID_IOV. That is, the relevant code now becomes:
+
+        res->dmabuf_fd =3D virtio_gpu_create_udmabuf(res, &local_err);
+        if (res->dmabuf_fd =3D=3D VIRTIO_GPU_DMABUF_CREATE_ERR_INVALID_IOV)=
  {
--    static const ARMCPUInfo max_v8[2] =3D {
--        { .name =3D "max-v8", .initfn =3D aarch32_max_v8_tcg_initfn },
--        { .name =3D "max-v8", .initfn =3D aarch64_max_v8_tcg_initfn },
-+    static const ARMCPUInfo max_v8 =3D {
-+        .name =3D "max-v8",
-+        .initfn =3D max_v8_tcg_initfn,
-     };
--    arm_cpu_register(&max_v8[target_aarch64()]);
-+    arm_cpu_register(&max_v8);
- }
- type_init(cpu_max_v8_register_type)
+            error_free_or_abort(&local_err);
 
+            res->dmabuf_fd =3D vfio_device_create_dmabuf_fd(res->iov,
+                                                          res->iov_cnt,
+                                                          &local_err);
+            if (res->dmabuf_fd =3D=3D -EINVAL) {
+                error_free_or_abort(&local_err);
+                qemu_log_mask(LOG_GUEST_ERROR,
+                              "Cannot create dmabuf: incompatible memory\n"=
+);
+                return false;
+            }
 
->
-> >
-> > I already have a working copy that does not depend on target_info()
-> > and selects target_info() when the machine
-> > is selected, no QOM name introduced. only for machines, we will have
-> > $target_name-$machine_name as a name for selecting
-> > the exact machine.
-> >
-> > The cpu max cpu host is dealt by moving the choose code out of
-> > class_init, into object_init. I really did not get your idea by use
-> > is_avaiable. because when I try to get all QOMs to be registered. then
-> > I won't call is_available at all.
->
-> As a first step, we rely on is_available, to work on distinguishing
-> proper types per target and break the dependency of multiple class_init
-> to target_info. Then, we can replace is_available with .targets.
->
-> > because "is_available" depends on target_info(),(we won't have
-> > target_info() till the machine is selected).
-> >
->
-> We can imagine registering types in different buckets per target, which
-> would allow for duplication.
+I think this is reasonable IMO, but is this proposal acceptable to you?=20
 
-
-So your idea is multiple hash-tables for QOM types? key is the target_arch?
-
->
+Thanks,
+Vivek
+>=20
 > Regards,
-> Pierrick
-
-
-
---=20
-         =E6=AD=A4=E8=87=B4
-=E7=A4=BC
-=E7=BD=97=E5=8B=87=E5=88=9A
-Yours
-    sincerely,
-Yonggang Luo
+> Akihiko Odaki
+>=20
+> >
+> > Thanks,
+> > Vivek
+> >>
+> >>
+> >>>    typedef struct VFIODeviceOps VFIODeviceOps;
+> >>>    typedef struct VFIODeviceIOOps VFIODeviceIOOps;
+> >>>    typedef struct VFIOMigration VFIOMigration;
+> >>> @@ -323,6 +330,21 @@ bool
+> vfio_device_has_region_cap(VFIODevice
+> >> *vbasedev, int region, uint16_t cap_t
+> >>>
+> >>>    int vfio_device_get_irq_info(VFIODevice *vbasedev, int index,
+> >>>                                    struct vfio_irq_info *info);
+> >>> +
+> >>> +/**
+> >>> + * Create a dmabuf fd by first translating the addresses in the
+> >>> + * iovec array into VFIO region offsets and then invoking the
+> >>> + * VFIO_DEVICE_FEATURE_DMA_BUF feature.
+> >>> + *
+> >>> + * @iov: array of iovec entries associated with a buffer
+> >>> + * @iov_cnt: number of entries in the iovec array
+> >>> + * @errp: pointer to Error*, to store an error if it happens.
+> >>> + *
+> >>> + * Returns the created dmabuf fd or either
+> >> VFIO_DMABUF_CREATE_ERR_UNSPEC
+> >>> + * or VFIO_DMABUF_CREATE_ERR_INVALID_IOV on error.
+> >>> + */
+> >>> +int vfio_device_create_dmabuf_fd(struct iovec *iov, unsigned int
+> >> iov_cnt,
+> >>> +                                 Error **errp);
+> >>>    #endif
+> >>>
+> >>>    /* Returns 0 on success, or a negative errno. */
+> >>> diff --git a/hw/vfio/device.c b/hw/vfio/device.c
+> >>> index 4f11959633..d95503a5f1 100644
+> >>> --- a/hw/vfio/device.c
+> >>> +++ b/hw/vfio/device.c
+> >>> @@ -21,7 +21,9 @@
+> >>>    #include "qemu/osdep.h"
+> >>>    #include <sys/ioctl.h>
+> >>>
+> >>> +#include "system/ramblock.h"
+> >>>    #include "hw/vfio/vfio-device.h"
+> >>> +#include "hw/vfio/vfio-region.h"
+> >>>    #include "hw/vfio/pci.h"
+> >>>    #include "hw/core/iommu.h"
+> >>>    #include "trace.h"
+> >>> @@ -667,3 +669,110 @@ static VFIODeviceIOOps
+> >> vfio_device_io_ops_ioctl =3D {
+> >>>        .region_read =3D vfio_device_io_region_read,
+> >>>        .region_write =3D vfio_device_io_region_write,
+> >>>    };
+> >>> +
+> >>> +/*
+> >>> + * This helper looks up the VFIODevice corresponding to the given
+> iov.
+> >> It
+> >>> + * can be useful to determinine if a buffer (represented by the iov)
+> >> belongs
+> >>> + * to a VFIO device or not. This is mainly invoked when external
+> >> components
+> >>> + * such as virtio-gpu request creation of dmabuf fds for buffers
+> that may
+> >>> + * belong to a VFIO device.
+> >>> + */
+> >>> +static bool vfio_device_lookup(struct iovec *iov, VFIODevice
+> >> **vbasedevp,
+> >>> +                               RAMBlock **first_rbp, Error **errp)
+> >>> +{
+> >>> +    VFIODevice *vbasedev;
+> >>> +    RAMBlock *first_rb;
+> >>> +    ram_addr_t offset;
+> >>> +
+> >>> +    first_rb =3D qemu_ram_block_from_host(iov[0].iov_base, false,
+> >> &offset);
+> >>> +    if (!first_rb) {
+> >>> +        error_setg(errp, "Could not find first ramblock\n");
+> >>
+> >> no \n
+> >>
+> >>
+> >>> +        return false;
+> >>> +    }
+> >>> +
+> >>> +    *first_rbp =3D first_rb;
+> >>> +    QLIST_FOREACH(vbasedev, &vfio_device_list, next) {
+> >>
+> >> wrong list : global_next.
+> >>
+> >>
+> >>> +        if (vbasedev->dev =3D=3D first_rb->mr->dev) {
+> >>> +            *vbasedevp =3D vbasedev;
+> >>> +            return true;
+> >>> +        }
+> >>> +    }
+> >>> +    error_setg(errp, "No VFIO device found to create dmabuf
+> from\n");
+> >>
+> >> no \n
+> >>
+> >>> +    return false;
+> >>> +}
+> >>> +
+> >>> +/*
+> >>> + * This helper looks up the VFIORegion corresponding to the given
+> >> address.
+> >>> + * It also verifies that the RAMBlock associated with the address is
+> the
+> >>> + * same as the first_rb passed in. This is to ensure that all
+> addresses
+> >>> + * in the iov belong to the same region.
+> >>> + */
+> >>> +static bool vfio_region_lookup(void *addr, VFIORegion **regionp,
+> >>> +                               RAMBlock *first_rb, ram_addr_t *offse=
+tp,
+> >>> +                               Error **errp)
+> >>> +{
+> >>> +    VFIORegion *region;
+> >>> +    RAMBlock *rb;
+> >>> +
+> >>> +    rb =3D qemu_ram_block_from_host(addr, false, offsetp);
+> >>> +    if (!rb || rb !=3D first_rb) {
+> >>> +        error_setg(errp, "Dmabuf segments must belong to the same
+> >> region\n");
+> >>
+> >> remove \n
+> >>
+> >>> +        return false;
+> >>> +    }
+> >>> +
+> >>> +    region =3D vfio_get_region_from_mr(rb->mr);
+> >>> +    if (region) {
+> >>> +        *regionp =3D region;
+> >>> +        return true;
+> >>> +    }
+> >>> +    error_setg(errp, "Could not find valid region for dmabuf
+> segment\n");
+> >>
+> >> here too.
+> >>
+> >>> +    return false;
+> >>> +}
+> >>> +
+> >>> +int vfio_device_create_dmabuf_fd(struct iovec *iov, unsigned int
+> >> iov_cnt,
+> >>> +                                 Error **errp)
+> >>> +{
+> >>> +    g_autofree struct vfio_device_feature *feature =3D NULL;
+> >>> +    struct vfio_device_feature_dma_buf *dma_buf;
+> >>> +    RAMBlock *first_rb =3D NULL;
+> >>> +    VFIODevice *vbasedev;
+> >>> +    VFIORegion *region;
+> >>> +    ram_addr_t offset;
+> >>> +    size_t argsz;
+> >>> +    int i, ret;
+> >>> +
+> >>> +    if (!vfio_device_lookup(iov, &vbasedev, &first_rb, errp)) {
+> >>> +        return VFIO_DMABUF_CREATE_ERR_INVALID_IOV;
+> >>
+> >> return -EINVAL;
+> >>
+> >>> +    }
+> >>> +
+> >>> +    argsz =3D sizeof(*feature) + sizeof (*dma_buf) +
+> >>> +            sizeof(struct vfio_region_dma_range) * iov_cnt;
+> >>> +    feature =3D g_malloc0(argsz);
+> >>> +    *feature =3D (struct vfio_device_feature) {
+> >>> +        .argsz =3D argsz,
+> >>> +        .flags =3D VFIO_DEVICE_FEATURE_GET |
+> >> VFIO_DEVICE_FEATURE_DMA_BUF,
+> >>> +    };
+> >>> +    dma_buf =3D (struct vfio_device_feature_dma_buf *)feature-
+> >data;
+> >>> +
+> >>> +    for (i =3D 0; i < iov_cnt; i++) {
+> >>> +        if (!vfio_region_lookup(iov[i].iov_base, &region,
+> >>> +                                first_rb, &offset, errp)) {
+> >>> +            return VFIO_DMABUF_CREATE_ERR_INVALID_IOV;
+> >>
+> >> return -EINVAL;
+> >>
+> >>> +        }
+> >>> +
+> >>> +        dma_buf->region_index =3D region->nr;
+> >>> +        dma_buf->dma_ranges[i].offset =3D offset;
+> >>> +        dma_buf->dma_ranges[i].length =3D iov[i].iov_len;
+> >>> +    }
+> >>> +
+> >>> +    dma_buf->nr_ranges =3D iov_cnt;
+> >>> +    dma_buf->open_flags =3D O_RDONLY | O_CLOEXEC;
+> >>> +
+> >>> +    ret =3D vfio_device_get_feature(vbasedev, feature);
+> >>> +    if (ret < 0) {
+> >>> +        error_setg_errno(errp, -ret,
+> >>> +                         "Could not create dmabuf fd via VFIO device=
+");
+> >>> +        return VFIO_DMABUF_CREATE_ERR_UNSPEC;
+> >>
+> >> return ret;
+> >>
+> >>> +    }
+> >>> +    return ret;
+> >>> +}
+> >>> diff --git a/hw/vfio/dmabuf-stubs.c b/hw/vfio/dmabuf-stubs.c
+> >>> new file mode 100644
+> >>> index 0000000000..fb5318e929
+> >>> --- /dev/null
+> >>> +++ b/hw/vfio/dmabuf-stubs.c
+> >>
+> >> Fails to build on MinGW/Windows.
+> >>
+> >>       hw/vfio/dmabuf-stubs.c:12:5: error: no previous prototype for
+> >>            'vfio_device_create_dmabuf_fd'
+> >>        hw/vfio/dmabuf-stubs.c:19:7: error: no previous prototype for
+> >>            'vfio_device_mmap_dmabuf'
+> >>
+> >>
+> >>> @@ -0,0 +1,17 @@
+> >>> +/*
+> >>> + * Copyright (c) 2026 Intel and/or its affiliates.
+> >>> + *
+> >>> + * SPDX-License-Identifier: GPL-2.0-or-later
+> >>> + */
+> >>> +
+> >>> +#include "qemu/osdep.h"
+> >>> +#include "qemu/error-report.h"
+> >>> +#include "qemu/iov.h"
+> >>> +#include "hw/vfio/vfio-device.h"
+> >>> +
+> >>> +int vfio_device_create_dmabuf_fd(struct iovec *iov, unsigned int
+> >> iov_cnt,
+> >>> +                                 Error **errp)
+> >>> +{
+> >>> +    error_setg(errp, "VFIO dmabuf support is not enabled");
+> >>> +    return VFIO_DMABUF_CREATE_ERR_UNSPEC;
+> >>
+> >> return -ENOTSUP;
+> >>
+> >>
+> >>> +}
+> >>> diff --git a/hw/vfio/meson.build b/hw/vfio/meson.build
+> >>> index c7c31b78f6..aa6f4bc1b4 100644
+> >>> --- a/hw/vfio/meson.build
+> >>> +++ b/hw/vfio/meson.build
+> >>> @@ -38,3 +38,4 @@ stub_ss.add(files('iommufd-stubs.c'))
+> >>>    system_ss.add(when: 'CONFIG_VFIO_PCI', if_true: files(
+> >>>      'display.c',
+> >>>    ))
+> >>> +system_ss.add(when: 'CONFIG_VFIO', if_false: files('dmabuf-
+> stubs.c'))
+> >
 
