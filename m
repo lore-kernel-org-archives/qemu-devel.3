@@ -4,44 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73AECCC6B19
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 16:28:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8E47CC6B1C
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 16:28:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGfLL-0005Ch-Ts; Tue, 13 Oct 2026 12:27:11 -0400
+	id 1xGfMk-0006Mp-Me; Tue, 13 Oct 2026 12:28:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>)
- id 1xGfKy-00051e-Sc; Tue, 13 Oct 2026 12:26:52 -0400
-Received: from smtpout4.mo536.mail-out.ovh.net ([51.210.91.13])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1xGfLb-0005IQ-Cd
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 12:27:27 -0400
+Received: from smtpout2.mo539.mail-out.ovh.net ([51.210.91.41])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>)
- id 1xGfKu-00052M-Ou; Tue, 13 Oct 2026 12:26:47 -0400
-Received: from director2.derp.mail-out.ovh.net
- (director2.derp.mail-out.ovh.net [79.137.60.36])
- by mo536.mail-out.ovh.net (Postfix) with ESMTPS id 4j408c26nFz821T;
- Tue, 13 Oct 2026 16:26:39 +0000 (UTC)
-Received: from director2.derp.mail-out.ovh.net
- (director2.derp.mail-out.ovh.net. [127.0.0.1])
- by director2.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
- for <jamin_lin@aspeedtech.com>; Tue, 13 Oct 2026 16:26:39 +0000 (UTC)
-Received: from mta7.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.58.184])
- by director2.derp.mail-out.ovh.net (Postfix) with ESMTPS id
- 4j408b4Wrpz1xp2; Tue, 13 Oct 2026 16:26:39 +0000 (UTC)
-Received: from kaod.org (unknown [10.1.6.4])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1xGfLZ-0005DA-5i
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 12:27:27 -0400
+Received: from director5.derp.mail-out.ovh.net
+ (director5.derp.mail-out.ovh.net [79.137.60.225])
+ by mo539.mail-out.ovh.net (Postfix) with ESMTPS id 4j409Q2H49z471H;
+ Tue, 13 Oct 2026 16:27:22 +0000 (UTC)
+Received: from director5.derp.mail-out.ovh.net
+ (director5.derp.mail-out.ovh.net. [127.0.0.1])
+ by director5.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
+ for <jamin_lin@aspeedtech.com>; Tue, 13 Oct 2026 16:27:22 +0000 (UTC)
+Received: from mta7.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.109.231.184])
+ by director5.derp.mail-out.ovh.net (Postfix) with ESMTPS id
+ 4j409Q1YdFz6Mbc; Tue, 13 Oct 2026 16:27:22 +0000 (UTC)
+Received: from kaod.org (unknown [10.1.6.3])
  (Authenticated sender: clg@kaod.org)
- by mta7.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id 5C7E9202CA3; 
- Tue, 13 Oct 2026 16:26:37 +0000 (UTC)
+ by mta7.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id 8A444202CA2; 
+ Tue, 13 Oct 2026 16:27:20 +0000 (UTC)
 Authentication-Results: garm.ovh; auth=pass
- (GARM-99G003478d24aa-79d8-42c0-9ce9-5944aa59226e,
+ (GARM-99G003a498a9f8-66f5-40f5-b090-4e45626a2c70,
  3B5152602AE6D76A7CF2E50DC6ABDDC767F0B630) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 82.64.250.170
-Message-ID: <beae2a33-7a72-420c-a82d-6c33f6b2bfda@kaod.org>
-Date: Tue, 13 Oct 2026 18:26:36 +0200
+Message-ID: <1bb8f3bc-fdc0-428e-9f85-06e995098a6c@kaod.org>
+Date: Tue, 13 Oct 2026 18:27:20 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 06/50] hw/i2c: pca954x: migrate mux state
+Subject: Re: [PATCH v2 02/50] docs/system/arm/aspeed: add the sanmiguel-bmc
+ machine
 To: Emmanuel Blot <emmanuel.blot@free.fr>, qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
@@ -53,7 +54,7 @@ Cc: Peter Maydell <peter.maydell@linaro.org>,
  qemu-ppc@nongnu.org, qemu-riscv@nongnu.org,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 References: <20261012-bmc-minerva-v2-0-4c3dff084ec9@free.fr>
- <20261012-bmc-minerva-v2-6-4c3dff084ec9@free.fr>
+ <20261012-bmc-minerva-v2-2-4c3dff084ec9@free.fr>
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Content-Language: en-US, fr
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -98,29 +99,30 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20261012-bmc-minerva-v2-6-4c3dff084ec9@free.fr>
+In-Reply-To: <20261012-bmc-minerva-v2-2-4c3dff084ec9@free.fr>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-x-ovh-tracer-id: 6611002781404015661
+x-ovh-tracer-id: 6623106205330484269
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTEy2TVmIGdJz9wb2lZxs6ZOYk0T6DuDjUbu8/zXGYTH4fUECEqloGjFfQQCwGTA+Qh7f8ykczPwXj/0yRHFk+ke0Oq8cqPzvgWUWqE52q4F8K7KHMRomHayz0KSPI3Kj1OS1RB4ltUXcr9VLwn8YMxu6kumcdPsPn14jLrFeI22oREKqPhMU2SvVrQ8KaXHRxjVPvt64nha3KIPtHpiy9r9K5jkCxjkBrKxyaee8ty7LwZMq0oVcVbO7WlIGgJOp6cyTRlPBQhZa3PdT41/UEK/QPowtMJd7DrnTJlu2XG9nN1MD1oRi9XLbB1T/tzjDKh80+WtaijTeEgascMvqUOAo8wlyyKTE58vv6KdWC3BynA6DoXlQpwBWKjXC6PHsZiFI1iWvgj3Ykgb8hiDVDl+zD1d8hjHIIm3GfXNkG5dnG/juHWFkyygybmMyfrlnpERMoJSZ3m7vdRKt96IZwtGefdGybqWcLi4andx/Fukcw/9osAeaf225phPoJgRhi5c1HnWFg58ETzbY13m9vPF1z3P7hMFAx33fXnZjVNh9FWG5DNKEzWPVoMB88Y/UDqDUOY9tr5eadOKTNum/KKVf6pqbNurNRTTm2fA8yJCSpewNbwkdZ+9eJhWiMJzLhPHEHXN4tezCr4R8AXcU2hFadNsluasUEOqrwrRrNPvVw
-DKIM-Signature: a=rsa-sha256; bh=vFIVezBGVrvD+tdflbN0Ri2lqEKKJxPozYcGL9BLBWQ=; 
+X-VR-SPAMCAUSE: dmFkZTEy2TVmIGdJz9wb2lZxs6ZOYk0T6DuDjUbu8/zXGYTH4fUECEqloGjFfQQCwGTA+Qh7f8ykczPwXj/0yRHFk+ke0Oq8cqPzvgWUWqE52q4F8K7KHMRomHayz0KSPI3Kj1OS1RB4ltUXcr9VLwn8YMxu6kumcdPsPn14jLrFeI22oREKqPhMU2SvVrQ8KaXHRxjVPvt64nha3KIPtHpiy9r9K5jkCxjkBrKxyaee8ty7LwZMq0oVcVbO7WlIGgJOp6cyTRlPBQhZa3PdT41/UEK/QPowtMJd7DrnTJlu2XG9nN1MD1oRi9XLbB1T/tzjDKh80+WtaijTeEgascMvqUOAE06LxYy8LwRGSE+2OVHqVTxZfKkK9RBop8GOJPUvfyXsaNxt+M0Bp0h2FqsDvkLXEHuYuc1j0bjnioRycSijfrnimTVfsJCDiJuBR3J/3C8THpSqGUVd9hUUIIOdmcMJq/ly9lwTeWzeU76e8hJoiOTZzgBL6pQa5Mdqd0PpgQ6Pe+dJfM2bwBYGJFC/JSage21I4eCsk7CL+43mA/xJRaxjR4zMFl5KoJUA8bXtU/Lqt76SNvTnbny+55Q7RXwzt3fB0gQJDbGOrQ/K+29KDOl/iWaeqEx6Y3umQfrX4s9WMja7Y8XlxjiCWbyB0s13U+fDEMRvsV7dAt5exGecxA
+DKIM-Signature: a=rsa-sha256; bh=TCuB+FQIHLVDi0+qJFrq80O5C3hr+WqZ+F0gE5UsTzE=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1791908801; v=1;
- b=PrWo0i5YEskEY7A3lITyzMHk6MRKR2YTo4aVsU6oNNFzr7LLggTG8LHsX928AjjMuTG3btep
- rjOFRAwuwxlZFVso8UI74aI8U2Akd1ZvH7Oa+y/Jp0l2JkSDUqKbBetAyScN4rBl/p2b1FeWdfh
- zn9NW5FmSfww1QcrleANrEOwJ0eTe39llZwxmYE8Abtc/S/OJ7rlDTe19x57lnNcwshGgXrVzOO
- 6IJ6Zde1DSl4jmrrQ4jG0AfBWi6S8aFBpZ5eeu7ea8rj1CJgiwEDQA0WWVq6JIOVkj8eN7EqJIq
- tcTMu5Y9HFfIEHKlSDXs4mhKiySEfXCBLApptuOcyJ2rg==
-Received-SPF: pass client-ip=51.210.91.13; envelope-from=clg@kaod.org;
- helo=smtpout4.mo536.mail-out.ovh.net
+ t=1791908843; v=1;
+ b=ejBdQvrtK3J9sK7EZjFC7j02Ms4ts5aPFB3bH4KGkZMuqkHdX+7Q1+MZAh9NPL/V7OjVoxDS
+ UvMEIeiTj7QvcU2OV6GixZmzktp39PrS7Eacsydd4wGLyRdMQJbWHVSqTGuGpfrdxubc6m9kIGY
+ bukqnTPBHRvjBWSj0AYFdt6wO/UP5tQIl4W7ON51LRBes5f7G42vFMPIHlwUhh4RjGk4wFMWTOB
+ VoAY4NepBN0/rP0O0QF1yGOolm06Z7kcgxdYJlf2RmFEWXAgblcPtCXpxmQGMXcdKH4gENxHi4S
+ Z9VbeuJ6pwNxR71HAw0PQJo5EjXDqx185JHIWXEDpQlGg==
+Received-SPF: pass client-ip=51.210.91.41; envelope-from=clg@kaod.org;
+ helo=smtpout2.mo539.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -137,66 +139,27 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 10/12/26 16:31, Emmanuel Blot wrote:
-> The pca954x model had no VMStateDescription, so neither the channel
-> selection nor the PCA9545 interrupt status survived a migration.
-> 
-> This changes the migration stream of the pre-existing PCA9546 and
-> PCA9548, which an older QEMU rejects.
+> The Facebook SanMiguel BMC machine is supported by hw/arm but has never
+> been listed in the Aspeed documentation. Add it to the AST2600 machine
+> table.
 > 
 > Signed-off-by: Emmanuel Blot <emmanuel.blot@free.fr>
 > ---
->   hw/i2c/i2c_mux_pca954x.c | 24 ++++++++++++++++++++++++
->   1 file changed, 24 insertions(+)
+>   docs/system/arm/aspeed.rst | 1 +
+>   1 file changed, 1 insertion(+)
 > 
-> diff --git a/hw/i2c/i2c_mux_pca954x.c b/hw/i2c/i2c_mux_pca954x.c
-> index 4bb078a03c..597e57d99a 100644
-> --- a/hw/i2c/i2c_mux_pca954x.c
-> +++ b/hw/i2c/i2c_mux_pca954x.c
-> @@ -28,6 +28,7 @@
->   #include "hw/core/irq.h"
->   #include "hw/core/qdev.h"
->   #include "hw/core/qdev-properties.h"
-> +#include "migration/vmstate.h"
->   #include "qemu/log.h"
->   #include "qemu/queue.h"
->   #include "qom/object.h"
-> @@ -270,6 +271,28 @@ static void pca954x_init(Object *obj)
->       }
->   }
+> diff --git a/docs/system/arm/aspeed.rst b/docs/system/arm/aspeed.rst
+> index 933df41f96..f38f33cbe1 100644
+> --- a/docs/system/arm/aspeed.rst
+> +++ b/docs/system/arm/aspeed.rst
+> @@ -34,6 +34,7 @@ AST2600 SoC based machines :
+>   - ``bletchley-bmc``        Facebook Bletchley BMC
+>   - ``fby35-bmc``            Facebook fby35 BMC
+>   - ``catalina-bmc``         Facebook Catalina BMC
+> +- ``sanmiguel-bmc``        Facebook SanMiguel BMC
+>   - ``anacapa-bmc``          Facebook Anacapa BMC
+>   - ``gb200nvl-bmc``         Nvidia GB200nvl BMC
 >   
-> +static int pca954x_post_load(void *opaque, int version_id)
-> +{
-> +    Pca954xState *s = PCA954X(opaque);
-> +
-> +    pca954x_enable_channel(s, s->control);
-> +    qemu_set_irq(s->int_out, s->int_status == 0);
-> +    return 0;
-> +}
-> +
-> +static const VMStateDescription vmstate_pca954x = {
-> +    .name = "pca954x",
-> +    .version_id = 1,
-> +    .minimum_version_id = 1,
-> +    .post_load = pca954x_post_load,
-> +    .fields = (const VMStateField[]) {
-> +        VMSTATE_SMBUS_DEVICE(parent, Pca954xState),
-> +        VMSTATE_UINT8(control, Pca954xState),
-> +        VMSTATE_UINT8(int_status, Pca954xState),
-> +        VMSTATE_END_OF_LIST()
-> +    },
-> +};
-> +
->   static const Property pca954x_props[] = {
->       DEFINE_PROP_STRING("name", Pca954xState, name),
->   };
-> @@ -287,6 +310,7 @@ static void pca954x_class_init(ObjectClass *klass, const void *data)
->   
->       dc->desc = "Pca954x i2c-mux";
->       dc->realize = pca954x_realize;
-> +    dc->vmsd = &vmstate_pca954x;
->   
->       k->write_data = pca954x_write_data;
->       k->receive_byte = pca954x_read_byte;
 > 
 
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
