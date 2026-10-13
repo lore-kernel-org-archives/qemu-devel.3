@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D874FCC6B1A
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 20:06:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D8FBCC6B1A
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 20:06:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGil4-00080t-By; Tue, 13 Oct 2026 16:05:59 -0400
+	id 1xGilG-0008BA-Bl; Tue, 13 Oct 2026 16:06:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xGikq-0007xP-5G
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 16:05:45 -0400
-Received: from mail-dy1-x1332.google.com ([2607:f8b0:4864:20::1332])
+ id 1xGiku-00080C-1o
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 16:05:48 -0400
+Received: from mail-dy1-x132f.google.com ([2607:f8b0:4864:20::132f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xGikn-0003Mt-Ba
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 16:05:42 -0400
-Received: by mail-dy1-x1332.google.com with SMTP id
- 5a478bee46e88-35834f72d94so6096399eec.0
- for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 13:05:38 -0700 (PDT)
+ id 1xGikr-0003NW-Tc
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 16:05:47 -0400
+Received: by mail-dy1-x132f.google.com with SMTP id
+ 5a478bee46e88-3535bf8b3e0so408536eec.0
+ for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 13:05:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1791921937; x=1792526737; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1791921944; x=1792526744; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=9grlkE7NcjVbWKGA44KZGoN8QKYGDpltY5XgCndOBEc=;
- b=HlCi6khE8AtdDxBX1eiO3PJQJkj02gI5PVMPc0oiR6A1qgQGPiZR9iRXC0VqedYD6f
- SU9W2jYqFU7KlDGTW5Mdv9uhKG9kZ8IKwBKEg01psdgtgWr9Zg/AxVkqbEd3U5bqUcBD
- uFVVU+sb4jtu3Chn8bbcnpTCdyJY5q2RF3WbOxvvjMapXVSwpkas1F9MZYzXWuzPvDth
- zpWsbs8AeOiBOTkKMdgNtKs1ywLcB6aOv4cLh0hpQdbixIQb+uQjCUDcJX5Z+kCREeJH
- 3FdNMiPDSTflv3BtKbUR6JAQd9j3DbTpuybyb9q2GvenFSNH5sGQkbDqQsSRyPcJzi2e
- g5yg==
+ bh=1jAQKw6BdaosTvJkg4nCxTm2cQbTjw31PxJAtciPfv0=;
+ b=X1QptIXnfY0+oPKdnRQH6POjn69jERNt6g1m4Wne/bHouS7ZlBVy+/ZXjdDCcs7mlP
+ WLGJz0KfrRPJruzJYsY6JJkhaEJy16WZSOxlkPhH/lkNljY56kcZYMXtVXz2ugVtqSkr
+ TRdXjP70HLS9MpUtOYWHZ/WP6tYaLC9/JY2q/7paLDRxrid3Gl6z8yFE02fGKPIWibHr
+ aDnONirM4sJ/d+yF62nnXCTCwVzFZuqPj8dH9z5VxiXe8QaPYPeDcakFUZmcjYI3C5yl
+ gl4UqBuC5jzGwtnHrhoq5fvyMmIV/uiKMRc5QqB1m8hYsfrMUzpiHr6/92j2iIQ26SkS
+ qLRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791921937; x=1792526737;
+ d=1e100.net; s=20260707; t=1791921944; x=1792526744;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=9grlkE7NcjVbWKGA44KZGoN8QKYGDpltY5XgCndOBEc=;
- b=oUzUwMfhlZOXDzT6ynA5criBpdVdmhhlI158c8jZ0MvbUHmaFdU7Am42amzom50tfq
- CvutXlVoXqmPLj8mlezbVNf9N388yrUH5/USt8CGKht3sx47qIOjjLVc6jFdtjGcmTNM
- 93rTukugOE+EMyzSQg6ygn5y0Ivl4W98TBJ7L3IhxW9NAbx5tN6BQflPnFOHNQ5opK+8
- kCUy4Jftz6wlfizUlkzWcqeFgrJ4A0dZZz9521BNsYT7QVvRds6rHQ7j7OwGa5kZXCLm
- wXSazoNWAB73yuodS2ixRq3vi1+F1qv1lzirQ8VPiJxtYNL99eXzmOBRf+vWc3J+DUmN
- PEIA==
-X-Gm-Message-State: AFq9FYJ6G8CShMFFclgA8JjnMLLEY/smlfrcUbAoVXQAbApBN88qkqHs
- obQ919hcSpikyi0eJorUIz1i5JVVmuNkMs3ROEEIb2XVs1RhFiff2yH0NxckP7W8
-X-Gm-Gg: AYBFou3wrY8QgLZT5bRpGDFQOm71/ZfZKJu5mv2FYC/da94eM628c6qQYDF73fROiQA
- YX7JDeUBx4ITaBTtyoJw1xRSx+m1IxFTMIqSq2wpDLwawisnEdyLB95aR+94fxZp7MtorEECKQS
- YR7yjDiAKV9ZuIFoC3Gf03WCBdrWJsa3veeYs1Ww1puZMngQqLtzoAwlUtnhQt8voA+1tFbNvXj
- qoJIOZBiXrQkp8yl/oBLWWPp8CTHSBgCKOQ9nSup0bPv+dV+/bO6c/meV5VdBDqhDV1+Blm85uc
- p1CECzo4ckO95mLspFodCtALX+0GbtnY89ud2+kKJo3QQllVVCnAe1YbYTlb56iTIx96ppleHDr
- boLc9vXLtbvqjBRTIQcoIdRbANSZ5n8HAbZiq+TNRBCHGsrXq3NId7zN+GrAFD4eyXzyEI4O41y
- aZnrGcVq1vFomOZu4uAHnhbR4keDbM5Iz/cFJvhbxBjMES8st1uM9fmt0uUj+FM9j1aKehqCvaK
- Hqw9jElhfPBxec7v3SFWiekfCId
-X-Received: by 2002:a05:693c:20c1:10b0:35c:2986:35ab with SMTP id
- 5a478bee46e88-35c29863f99mr4584533eec.13.1791921936333; 
- Tue, 13 Oct 2026 13:05:36 -0700 (PDT)
+ bh=1jAQKw6BdaosTvJkg4nCxTm2cQbTjw31PxJAtciPfv0=;
+ b=FQ/AmfFy/9/Qhl2Ohxf/tAc3vI4/uwhr6vW2+oAdcthqfSRI5BLxTgPytShRa0+HRC
+ yicg5u4kFBAleW5G1OaY2nAKV2krDY89p+Y8ssUHnnDKg9ctPF+Eut2CHnm7ga55U/WS
+ s07V97+MdVWylq9++xJhBAgzFr446kcpbiK/VkRe8d57p/2sUffRiuniTJDTO54nr7P7
+ yuVre7TKGUdgeIaPEqEdZXx6Yvm5aQ7OrHGn0PM0vMfM1fMbjMSNeMB7vOE2rfhaDI64
+ Qxrc8t8BXwHT2n+lyVTQ+o0JfnH9mBpT6CroYTyZLsh0tXdmqCjlUDvLsc50GmgsTc4X
+ 0zqA==
+X-Gm-Message-State: AFq9FYK3xFCjan4VHJyx9I+CZdEO5jOot1OiFEr1widR7DVCOVhljS4A
+ mo9Htf1j/8j6Q5vA2ISTWMPooJkVe+qsZS2xebaEpfI01VDpR3yW0ewG8GgqRVrI
+X-Gm-Gg: AYBFou33/KHcUrcN9m940u8uaBRswYKTHzoeeTU/uSF+fjnmq2ZvXqJDUjU1ExXia00
+ /rujFD3puZiwdwpN/enBgY3gIiFqO8s77CFQX8pGlPwK0ZXZadU6fnB8+sSm9836tac0BlqdzBI
+ U+0dSpqxNeFrwVbkGXvEMBR/LmyOJVYbdLGFN1P+zVPKN0SJGtfMXhEaJ+kvAQPfPvOlZgTgr4m
+ fDJDALD+5pe5KfmO7+lscr0snywsYWPer+MWWGH/WUsQg9OOwxPPgiPPm9iPVzzyGFCAWVsqL/M
+ ON4mBGaxqobJXeV1FGTJudjxng/ZOp/Q1F0ukGs9R0EqXFL3znrAoIk+ci/PbPCvVnDhfemb3+f
+ A8dfSde2cm0ok3i9qzqU0QbPXBgaOkD+irBwk5x/kSZPJD7ksM5aGsfmw+IiktPWoYEqecdohet
+ 3yB63IeTKO/les3mutT9vz4Lo8uCMjm+P7x8C0BL8UnXRhC7C80Zg5KTXiudaFS/l4X13mgXA+u
+ JRFelqoHefC9JoQhA==
+X-Received: by 2002:a05:7301:70b:b0:356:23dd:3c72 with SMTP id
+ 5a478bee46e88-35623dd574fmr15264117eec.4.1791921944220; 
+ Tue, 13 Oct 2026 13:05:44 -0700 (PDT)
 Received: from DESKTOP-Q716RM7 ([103.94.185.75])
  by smtp.googlemail.com with ESMTPSA id
- 5a478bee46e88-35b29c2f861sm25568233eec.11.2026.10.13.13.05.33
+ 5a478bee46e88-35b29c2f861sm25568233eec.11.2026.10.13.13.05.41
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 13 Oct 2026 13:05:35 -0700 (PDT)
+ Tue, 13 Oct 2026 13:05:43 -0700 (PDT)
 From: Yonggang Luo <luoyonggang@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: David Hildenbrand <david@kernel.org>,
@@ -75,24 +75,24 @@ Cc: David Hildenbrand <david@kernel.org>,
  Cornelia Huck <cohuck@redhat.com>, Fam Zheng <fam@euphon.net>,
  qemu-s390x@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
  Eric Farman <farman@linux.ibm.com>
-Subject: [PATCH 1/3] hw/pci: Avoid guard loadparm with target_s390x() for
- s390x in class_init
-Date: Wed, 14 Oct 2026 04:05:22 +0800
-Message-ID: <20261013200525.1340-2-luoyonggang@gmail.com>
+Subject: [PATCH 3/3] hw/virtio/virtio-mem: Avoid call to target_info() in
+ class_init
+Date: Wed, 14 Oct 2026 04:05:24 +0800
+Message-ID: <20261013200525.1340-4-luoyonggang@gmail.com>
 X-Mailer: git-send-email 2.55.0.windows.3
 In-Reply-To: <20261013200525.1340-1-luoyonggang@gmail.com>
 References: <20261013200525.1340-1-luoyonggang@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1332;
- envelope-from=luoyonggang@gmail.com; helo=mail-dy1-x1332.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::132f;
+ envelope-from=luoyonggang@gmail.com; helo=mail-dy1-x132f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,51 +108,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is for avoid call target_info() in class_init.
-Now we directly guard in pci_qdev_property_set_loadparm instead.
-Don't know if its an API break, but the smallest change.
+Done by merge virtio_mem_legacy_guests_properties into virtio_mem_properties.
+As we already have vmem->unplugged_inaccessible handle in virtio_mem_device_realize
+So we can reject the wrong option in virtio_mem_device_realize, then the call
+target_info() in class_init no need anymore.
 
 Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
 ---
- hw/pci/pci.c | 18 ++++++++++--------
- 1 file changed, 10 insertions(+), 8 deletions(-)
+ hw/virtio/virtio-mem.c | 12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
 
-diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-index 0efb4eb4bb0..9d3dcd52942 100644
---- a/hw/pci/pci.c
-+++ b/hw/pci/pci.c
-@@ -2878,6 +2878,11 @@ static void pci_qdev_property_set_loadparm(Object *obj, const char *value,
- {
-     void *lp_str;
+diff --git a/hw/virtio/virtio-mem.c b/hw/virtio/virtio-mem.c
+index 7130ed852d9..e528bf2a88b 100644
+--- a/hw/virtio/virtio-mem.c
++++ b/hw/virtio/virtio-mem.c
+@@ -879,7 +879,11 @@ static void virtio_mem_device_realize(DeviceState *dev, Error **errp)
+             break;
+         }
+     } else {
+-        vmem->unplugged_inaccessible = ON_OFF_AUTO_ON;
++        if (vmem->unplugged_inaccessible != ON_OFF_AUTO_ON) {
++            error_setg(errp, "'%s' must be 'on' on non-x86 targets",
++                       VIRTIO_MEM_UNPLUGGED_INACCESSIBLE_PROP);
++            return;
++        }
+     }
  
-+    if (!target_s390x()) {
-+        error_setg(errp, "'loadparm' is only supported on s390x");
-+        return;
-+    }
-+
-     if (object_property_get_int(obj, "bootindex", NULL) < 0) {
-         error_setg(errp, "'loadparm' is only valid for boot devices");
-         return;
-@@ -2895,14 +2900,11 @@ void pci_qdev_property_add_specifics(DeviceClass *dc)
- {
-     ObjectClass *oc = OBJECT_CLASS(dc);
+     if (vmem->dynamic_memslots &&
+@@ -1568,9 +1572,6 @@ static const Property virtio_mem_properties[] = {
+                      early_migration, true),
+     DEFINE_PROP_BOOL(VIRTIO_MEM_DYNAMIC_MEMSLOTS_PROP, VirtIOMEM,
+                      dynamic_memslots, false),
+-};
+-
+-static const Property virtio_mem_legacy_guests_properties[] = {
+     DEFINE_PROP_ON_OFF_AUTO(VIRTIO_MEM_UNPLUGGED_INACCESSIBLE_PROP, VirtIOMEM,
+                             unplugged_inaccessible, ON_OFF_AUTO_ON),
+ };
+@@ -1635,9 +1636,6 @@ static void virtio_mem_class_init(ObjectClass *klass, const void *data)
+     RamDiscardSourceClass *rdsc = RAM_DISCARD_SOURCE_CLASS(klass);
  
--    /* The loadparm property is only supported on s390x */
--    if (target_s390x()) {
--        object_class_property_add_str(oc, "loadparm",
--                                      pci_qdev_property_get_loadparm,
--                                      pci_qdev_property_set_loadparm);
--        object_class_property_set_description(oc, "loadparm",
--                                              "load parameter (s390x only)");
+     device_class_set_props(dc, virtio_mem_properties);
+-    if (virtio_mem_has_legacy_guests()) {
+-        device_class_set_props(dc, virtio_mem_legacy_guests_properties);
 -    }
-+    object_class_property_add_str(oc, "loadparm",
-+                                  pci_qdev_property_get_loadparm,
-+                                  pci_qdev_property_set_loadparm);
-+    object_class_property_set_description(oc, "loadparm",
-+                                          "load parameter (s390x only)");
- }
+     dc->vmsd = &vmstate_virtio_mem;
  
- MemoryRegion *pci_address_space(PCIDevice *dev)
+     set_bit(DEVICE_CATEGORY_MISC, dc->categories);
 -- 
 2.55.0.windows.3
 
