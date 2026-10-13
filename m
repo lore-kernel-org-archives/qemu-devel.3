@@ -4,106 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49120CC6B12
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 16:05:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B112CC6B1A
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 16:10:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGezp-0004mt-CH; Tue, 13 Oct 2026 12:04:57 -0400
+	id 1xGf4D-0006o9-K2; Tue, 13 Oct 2026 12:09:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xGezi-0004iK-TG
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 12:04:50 -0400
-Received: from mail-yw1-x1135.google.com ([2607:f8b0:4864:20::1135])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xGezh-0008V3-4r
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 12:04:50 -0400
-Received: by mail-yw1-x1135.google.com with SMTP id
- 00721157ae682-8b06c0794cfso969907b3.0
- for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 09:04:48 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1791907488; cv=none;
- d=google.com; s=arc-20260327;
- b=Av7EKNfi1SrIZuOhxWwF62F0LT48DqrwXOoKrEshNSdGF/kc8r5fe8OeBsg1u3rn1I
- GD6NC/f8IguubOLme995Cinm3WrzKvc03V9x0DvS+SG72a6xDdKE5bsq5ovFJloXGrzj
- 25OY5xrkV1JK7eBlHRYEbh+ekS6CFaMc9WUjcJQu5P+gI59PMWGtjApa9uFublGo/6Fu
- oDjy8+xBb3Y/1UQ42ICP5iG+N80rTZfWp0zMfCGi4W7ter9W9e/s68Ab7cXUKTjGwQI1
- CvLygIlP2GBdHDLYrYYBt3IczXs9Dr3AcqGcZXMFsopx2JEON+poRLIGpgtNzwrsF6xg
- PxCQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=8QW4DnggANqKI8NSAkrr1uqBJrud3CDe4KG3w61cK6U=;
- fh=0HhfuW9lB5pM4MDazQl8nS9SbdQheD2kBFcY7jp8Kr0=;
- b=HsUOl/3V1RH0/tK5qDPTqt/1OKM4Js4a1wuOl47clVAdgxWCh2GTfFuzRagpOfy1VE
- KTH9JFRCm6Jo9WSbx0yksuVbmDRxZNJuu9ggmNRFweK94rCS5Zebvr+Tlo3MmREXW+zN
- jaC6vBDOBmr9UQWBnIZuh4s3lXHIyIV1fFBULxv7I1aauX2fw7/O07sPuYK8GfNKT46X
- D8X/BAN9ayuk3eDBma3V9mX0UGcgnQRoS3wWMmZ/NcrIvfb2FLKcdojPFLSUXT1DqReE
- AsKd1GvgngpuLladK8srGUYYA4SXz2rzpb9jUxLQx0ysRXwT1K4jB4a1MeYAektkRlWo
- 0dyg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
+ id 1xGf4B-0006nY-9n
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 12:09:27 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
+ id 1xGf48-000185-P6
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 12:09:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1791907762;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=yP83XJvp4VLaagwHMHEe8pZfBYpfSoP3EcYHgdEhKEc=;
+ b=WowLcSpjTgCKvhQlus+PBfmaO6ZyAadf83jMgK5XrFPJd9xTmsUEnQ1QPpoCf//cp4dDBx
+ bc9N0Ik8FruTTMwD8RPyLUAdwfTb+RLJ0qygPsuzVLAP8Pnl9eWFSiDPKog0VQ9xJt4Hi6
+ 41q20wP+HL6JwaeODbKprzhEO4VyUJ4=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-345-90tBHKLgM2-K3OLbdSFNEQ-1; Tue, 13 Oct 2026 16:09:20 +0000
+X-MC-Unique: 90tBHKLgM2-K3OLbdSFNEQ-1
+X-Mimecast-MFC-AGG-ID: 90tBHKLgM2-K3OLbdSFNEQ_1791907760
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4a01b112fa2so918185e9.1
+ for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 09:09:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1791907488; x=1792512288; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=8QW4DnggANqKI8NSAkrr1uqBJrud3CDe4KG3w61cK6U=;
- b=Djf6RZ9vt3Mi4P2uYlF3lVGxgGDe3kZdfIBEq/Zufh1zxVmk8djBiGANg5BdW8KB7A
- XDHO/CtN6JHNzg55Dmuok8w35lwyluMFIthlkFyellPorNAwCVt/jqlnrS7Zfxc5wdnS
- 6JdBSLI7XGDdlkBLRzyKdzalD1YwrMioQhWAtADC/pI837rBQODRaVOw93PyJpr83QRS
- jK3B/OVSs6Brcl62j/YxUEAEXkqiYflxGC9HRvUfxeZ0krUX9LpRZwYR/cOS0X/6b/p9
- HsjMLRVhlOt73Em0kOvLkfiFMvwIg4NQHKBLZ5mGkBWTO1F+3EuqQb4DVU/TrWd9MLJu
- z+CA==
+ d=redhat.com; s=google; t=1791907760; x=1792512560; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=yP83XJvp4VLaagwHMHEe8pZfBYpfSoP3EcYHgdEhKEc=;
+ b=tfJ2lfe/MJyIEZkryYnDHnLaWViMymwjygFW9ZfMh+V/Pb3+47/65B4xwKmEe1HouR
+ VmmS6h8mymSWE3vxykmreyEnWC4M8gVyMMCPYHdIAfXzrmg9t2j7Ne+/HgqbGQjjyUqb
+ NbgxkYyCnwENPjRDKeu2hNGWikZXRx8dn26NFJcZKCr2W6j32lCkRPts59tuYzQs/BHf
+ I9cfyglZeg+wD+UCTS0FQXU73MGhtNZDoONGldDegrInHr1UifR/3X5+5A1/5mhzLJBr
+ zRbtOCO4ZkMBDihoLNdYQul0wJ8RzeGvg2Y3ttjt3tEPM9YHfMwsKzLiSEidae7onuNc
+ HQRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791907488; x=1792512288;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=8QW4DnggANqKI8NSAkrr1uqBJrud3CDe4KG3w61cK6U=;
- b=iE5Y2qp7E8qpBKXicvuSEAc1+BNov6f0KEC3TVg5cgTaCzuaD2vXtnUHLcISon3ZcM
- MDDngZRn2PXxkMoaJRlL0vXhZWlKawjsh/H6+jP/srn9uAE4DcJ4GNdAvCOSmtOuXNQm
- 7HHQfg6BVYgMoDc+PtF0t0l48Pqd7tI1DAqGtqmt7HHF+sI19JV2dpltv2E02O1tbDaa
- 6+7VR7m2T/A9P8wkUQzIyU2FX9lFl54nQYFkcPYMf0/eVZ2w5G75AuYzUChQ1W04JqBD
- SkXJMK5Vtzwmi4K/1KEmJoz8N6Yd1qdjiOTcWjUpJCx/CQuhvHboHPBIaKcXsqGUHRCX
- rd7g==
-X-Forwarded-Encrypted: i=1;
- AKwUvBxUQDQnW9pXYMxCGt12aOqDXTf129oZDZsBYv2dqzqnXXsNKra+YcqK6WdyqMMmt74k90FYnIeNvHev@nongnu.org
-X-Gm-Message-State: AFq9FYJHzqd3toYQ+7k4GPCLtFamCes2QfmwkUeoEh1PR8TEHl54fWxr
- PpdxKt9gFhUPe4aXizzbf0CHOYhbvQcAdPziT2BD7AB8V6Sl2LGVFwISCxXFYffxmC53lcAAj3s
- zU7LifdUogZolAbaM+L53DboLXdyZCreua0uN1EHoYg8K4eXpJW0Y0dE=
-X-Gm-Gg: AYBFou0vzAmZDb1PAuLRPnBczpVdyIWP0kfhvJEdPKS+MzczpkGId0jAwvzSytseFvu
- cgI8X8we4EjG3dYj6hVi3m32X6Gi0euMPjat+Dok2TxHviRTKXR+xkMFscC6Jh708bOAyjr5gcX
- HGxQW3TeH9XB6+HdPgoPOKPUxp5XDIZaHbfpjQQdNE/N6+OH4uiRV9tvncR+oi9zcPFgQNlx9hy
- QF2/mOprVwBLSTEA2GQDpj11RIqgTKVB24D/XRbIFlb8T6U0D5GCwM3Wb4ns6todqUoijVmawiu
- cy6bZMgiGmitq37JNxC7x/GbOXhtWBcgZzyjS3nNhDzfMqn2TqGSe8eNv28pPPhCToN8F0SFOgo
- ygw3mZJkJ9iIdOm3/1643ivqSSmPXzhLY8ZTOSys=
-X-Received: by 2002:a05:690c:c4f9:b0:8b0:ab57:ebeb with SMTP id
- 00721157ae682-8b0ab57f327mr22200377b3.8.1791907487831; Tue, 13 Oct 2026
- 09:04:47 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1791907760; x=1792512560;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=yP83XJvp4VLaagwHMHEe8pZfBYpfSoP3EcYHgdEhKEc=;
+ b=mMpUMhfC7XvkFOYaIVuGC3hBkQKBNCZh65wAIEg6d0h+cst0dWtEwaxES4A2kh6ePg
+ NW8VYovDxN64sKkIR6qA4+5dLXqVWH9cgptfVLb2hfwTgXxq/rC/zIlx6AX4ztjmw4bz
+ /pJR0x5Xkt9tsTPyQUeI+5pOSmwLDAsGF4pkAku4GZ+MMLQGSVs1iP2hogx3m71vOCYC
+ YA5XPy8QxAA9Pivf1jszxO7N2tT+b5X9gO4f8hmKkTQ6X1N8minjp0OGGDVImPfrT9yr
+ cYmPe/bsTa80vcdYz79vdpsW+X35TCz7RFThbznG/w0d02vqPpaKjmP94q/UyoSuaY5F
+ oM1w==
+X-Gm-Message-State: AFq9FYIrY9C/4XQLABZPMwdKz0qmuhOX6bFk+7Hc2bD8MWFHpZICgs/A
+ rXPk0Z8UCimk0DdGheDfWfGsKncjbu3PQhxpiBWzXc8XxNPoPXCu8YobUOfaB1yyGUE8vB5PNFX
+ oU5NZ1o/OCqkKSUV0lVqN/aDKug61T+zJ/ffuCQpcNUIHRCTfKiDGOkUKddIkXjP2nME=
+X-Gm-Gg: AYBFou3jl2itL9AGEWb87qgNaqXt/KgDXyGgyFprWZnhDbeV2aW0MUyN6nnXnY4ujaC
+ 9zrKG+ASPxMCzLQxM9BXwA2Pf946wxgo3tvrCMD3TRsNBaaL2jNvjNfqrC+xPnsqIOampcs13kc
+ aTuXJP3yC+pTDZ35kVWRNt7p3HRHly3GAjS4u8GvgVSo20m8Q9uVmaLQDpANkWoWnbxWum2a/E8
+ 6wXXgvNc9sjQoMjPmT5ys2S1Wai3Yrs8NbEZRaM5PqzuwcNS1psDa5N3FTOuc8gaQXtCg7i+S+o
+ eX/hxBzGSHHQmiPIDF75hjfWiEONHWrCa4McRMJywqg88DwIeumNoJ7JT3MnmDaxEHviCwDn6tj
+ g1wV1Hq0LYUTi3w==
+X-Received: by 2002:a05:600c:8216:b0:49d:34:420d with SMTP id
+ 5b1f17b1804b1-4a18e4b0465mr259997175e9.20.1791907759610; 
+ Tue, 13 Oct 2026 09:09:19 -0700 (PDT)
+X-Received: by 2002:a05:600c:8216:b0:49d:34:420d with SMTP id
+ 5b1f17b1804b1-4a18e4b0465mr259996635e9.20.1791907759191; 
+ Tue, 13 Oct 2026 09:09:19 -0700 (PDT)
+Received: from jmarcin-thinkpadt14gen5.tpbc.csb ([213.175.46.86])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4a18bf2e0dbsm396395115e9.11.2026.10.13.09.09.17
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 13 Oct 2026 09:09:18 -0700 (PDT)
+Date: Tue, 13 Oct 2026 18:09:15 +0200
+From: Juraj Marcin <jmarcin@redhat.com>
+To: "Denis V. Lunev" <den@openvz.org>
+Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>, 
+ Fabiano Rosas <farosas@suse.de>
+Subject: Re: [PATCH 4/4] migration/postcopy: answer the package-loaded ping
+ from the run BH
+Message-ID: <as5XFTYFvjN1Q3dI@jmarcin-thinkpadt14gen5.tpbc.csb>
+References: <20261002110258.1835979-1-den@openvz.org>
+ <20261002110258.1835979-5-den@openvz.org>
 MIME-Version: 1.0
-References: <20260916104435.600211-1-mark.caveayland@nutanix.com>
- <20260916104435.600211-19-mark.caveayland@nutanix.com>
-In-Reply-To: <20260916104435.600211-19-mark.caveayland@nutanix.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 13 Oct 2026 17:04:36 +0100
-X-Gm-Features: AclHuK8qMJ-I4Tt3XuHQrfl6cTsPi6UaaCLI_oJn5_qEpGEZMA1nMyineaDbfqY
-Message-ID: <CAFEAcA8kqYf-0vA=3NEAGyPw+euS_5CczL61gF1eoybta7B0Wg@mail.gmail.com>
-Subject: Re: [PATCH 18/22] i8259_common.c: remove unused i8259_init_chip()
- function
-To: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-Cc: pbonzini@redhat.com, richard.henderson@linaro.org, mst@redhat.com, 
- sstabellini@kernel.org, anthony@xenproject.org, edgar.iglesias@gmail.com, 
- qemu-devel@nongnu.org, xen-devel@lists.xenproject.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1135;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1135.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20261002110258.1835979-5-den@openvz.org>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jmarcin@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -120,19 +121,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 16 Sept 2026 at 11:49, Mark Cave-Ayland
-<mark.caveayland@nutanix.com> wrote:
->
-> This function is now unused and can be removed.
->
-> Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+On 2026-10-02 13:02, Denis V. Lunev wrote:
+> From: Denis V. Lunev <den@openvz.org>
+> 
+> Commit 7b842fe354c ("migration: Introduce POSTCOPY_DEVICE state") keeps
+> the source in POSTCOPY_DEVICE until the destination answers the
+> QEMU_VM_PING_PACKAGED_LOADED ping packaged right before
+> CMD_POSTCOPY_RUN. The destination answers it from the generic
+> MIG_CMD_PING handler as soon as it reads it, so the source's
+> postcopy-active means the device state is loaded, not that the
+> destination has left RUN_STATE_INMIGRATE. Management acting on the
+> destination once the source reports postcopy-active can still race
+> with loadvm_postcopy_handle_run_bh().
+> 
+> Record the ping in the MIG_CMD_PING handler instead of answering it,
+> and send the pong at the end of the run BH, after the run state change.
+> 
+> The wire format is unchanged: the pong only arrives later, and an
+> older destination keeps answering at once, so mixed versions
+> interoperate. The cost is that the source stays in POSTCOPY_DEVICE for
+> the duration of the run BH, including block layer activation when the
+> destination autostarts.
+> 
+> Suggested-by: Peter Xu <peterx@redhat.com>
+> Signed-off-by: Denis V. Lunev <den@openvz.org>
+> Cc: Peter Xu <peterx@redhat.com>
+> Cc: Fabiano Rosas <farosas@suse.de>
+> Cc: Juraj Marcin <jmarcin@redhat.com>
 > ---
->  include/hw/isa/i8259_internal.h |  1 -
->  hw/intc/i8259_common.c          | 16 ----------------
->  2 files changed, 17 deletions(-)
+>  migration/migration.c | 1 +
+>  migration/migration.h | 2 ++
+>  migration/savevm.c    | 8 ++++++++
+>  3 files changed, 11 insertions(+)
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+I have tested the patch and it does fix the issue where source becomes
+unrecoverable if destination dies in CPU sync, that I tried to fix.
 
-thanks
--- PMM
+Reviewed-by: Juraj Marcin <jmarcin@redhat.com>
+Tested-by: Juraj Marcin <jmarcin@redhat.com>
+
 
