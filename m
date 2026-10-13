@@ -4,130 +4,142 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C73ECC6B12
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 15:30:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 212E7CC6B12
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 15:40:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGeRn-0007Fa-AY; Tue, 13 Oct 2026 11:29:47 -0400
+	id 1xGebk-0000t5-PX; Tue, 13 Oct 2026 11:40:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1xGeRe-0007F8-GU
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 11:29:40 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1xGebg-0000ra-Vj
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 11:40:01 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1xGeRc-0002XE-Ii
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 11:29:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1791905373;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=oBhDayz7n4MPunozcK6swbCSkeFih4p9JbBaeSQZwQI=;
- b=WrjnReotCGAr2O+uPBGp3/4WvHbY+fp6V/qTTXbKeE7a4Dyl4SWwrbrb7CVH1cAGJ5q63B
- xkO+vpV3jGVqYPpA/Fg9TGH0MENocA+GCu80PuwdVhU5D9GH9R15cSwV9sqea7QEJeUnGs
- tl+IMll5vKpLMnJh8mbUg64NJkb/5J0=
-Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
- [209.85.216.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-271-D90LQWlWNSi0Lte7tigVow-1; Tue, 13 Oct 2026 15:29:32 +0000
-X-MC-Unique: D90LQWlWNSi0Lte7tigVow-1
-X-Mimecast-MFC-AGG-ID: D90LQWlWNSi0Lte7tigVow_1791905371
-Received: by mail-pj1-f71.google.com with SMTP id
- 98e67ed59e1d1-3a89dd31fdaso2684413a91.0
- for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 08:29:32 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1791905371; cv=none;
- d=google.com; s=arc-20260327;
- b=U3A8XJdnxZwEyvUi5fnzeuNsnrXDpCxojtLKpvzatVX5hAqrtWjz3mcWGRwO+5bouG
- 0q3ltbVL/FwOklCVFhrbRzxGfghG9rMI0OSGQUDaSoRouv33b+fymwVVyvylZcNO6l7W
- ksCSBaA/DLRYAHW8JMQBtPkZVBjURT9pO9ykl7HIdzksbTnHl4S9nf94WJIjhjXAuiy1
- RBZcmsYC4VEOnaZgWB0eTL/gEj8XDSFBftkb9RQum4H0Owe2FMeKwVl3SyCYRoMNde0y
- GdZIOOtXMBJd9Kw5xjX8+8IGJ6xsuTMJ1h0dtM+3t9PoqzpvGuKrdS5WGIVFBnHGpH7x
- 4q/Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=oBhDayz7n4MPunozcK6swbCSkeFih4p9JbBaeSQZwQI=;
- fh=vR3iH5IUqSxBcZC3qE6t28jCm6GPo/CDwEFh7ntwqAA=;
- b=LTve71r6QCoUvy5kzfEDIx9tWOF/gL+2+aihvlBFOHBoE1svh/rbjoF4pq2Zh/TYvI
- 4ZcKKSJ85eobORj99ZWB6cF44+Ve1r/UZIoCj6+3FrkgxDEFd5iomTLCm7dquo8AR9g6
- RUBullW/2RKgesG95z0kna3hA8Qz2GUl0kzU2TBYWWfig4OdJRTyBInvallezCNSUx4H
- zvn7ZwNoHWdrLCLZ+PIOpLQa9xrhN+QdoM3FO3pIu948ePlytNgqu3mXmPkN1FVnNc2B
- SrUq7/d5P4hxXJ6YceHlF6cyPMr51EcMYRYzqY3OOtdqKH58a1sYcqr0HFU3RXiknRLQ
- 3jxQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1xGebf-0003qH-Ei
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 11:40:00 -0400
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 69DE3w4f1492075
+ for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 15:39:53 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ t2k4+heMZDVN28axRvxVEhEif1lfuBGs2QOACejWny4=; b=KZM7Lr3v2X2qshL6
+ iZa5/0vUnltBWcmi+mhSTyn2B7G80q+7wRRPd9A/3WrW2oJlTKJbR3HZjMHBFISd
+ nq+Bu2WU1fiGp0tIsH3HUKm8CvWbY8jMCtbG8O7sxqOvm8ufgZlE1Lj2dkwrWvDe
+ o0RXHU+9dzEu24Vgid19euHjzEyQ2KcIwqR2gtTdapNi3nH+8DhCefx3Zqjy61ah
+ 0br/KGqQFwWs3FQ/h7PBl+NBa4DTtqvlNMZGnr/Th9QGg6bdTLM6rFCfPv+HKjov
+ eBzRxdv3uMM8N/AZ4Jc2qFYZ2yEqqL6w8BTLl4Zu0fXYV6ibqqhCUzuPY2T8VTP4
+ 3lstzQ==
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h9daqttcs-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 15:39:52 +0000 (GMT)
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-91b7e90fef1so39020506d6.0
+ for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 08:39:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1791905371; x=1792510171; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=oBhDayz7n4MPunozcK6swbCSkeFih4p9JbBaeSQZwQI=;
- b=T69ZwgxHxAWhuJFO6Vm2psw2PqPDlCXDyO5nF9Hk4Cbg9n6kjTEpEjV7fTZQHX4Jkb
- FTIKcdLgopT+S7CPk30VxTBWn+b3t1rwEy9LO/ADfKZX0HqmldN2rClsEphROFsu61/x
- HCSMWMoxUkBUgg4D4petUrpmVHN6ysdz3kYdeWbvEnnqN4Nad79o5IczcyMpfJT/oJtI
- 3pQjRqx3Ap20NAt3JvRO1/imvcTMIcOznVm8Ph+R/nfAiGlDQGcHZFywXqRVFsAtK0X5
- Yf+g9fe2FGCxTOOI9y/MV5CulA7enZOhZwTXP1WuNKkFmEMbEq2yJy5T+BOQnBmYk16o
- zlWw==
+ d=oss.qualcomm.com; s=google; t=1791905991; x=1792510791; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=t2k4+heMZDVN28axRvxVEhEif1lfuBGs2QOACejWny4=;
+ b=QAZno+ufACXzvmiFVyaPVl/S7IrByrII2vF7E+DFMjMfPKir9+ktMJ/GpjqorMoGjs
+ 4c2EWGbhz1g0LUqY0xQrUKWfBcX8i0cMoak5hLVpzxvRACi4rnv++ox7tDuwQOtdDYAB
+ 9fDwuIrUCJUED1G+tmySjvWw59JhFU04aSu6SISa9+J8OrvAsDoLAphfTCb1QF0lYINj
+ EVkHDAdg5IQQ1nuEI2IC0ZnfAPZuJOMDKEO9WXxciqC85Ln7N0Ggzo8Wj2rZ7nQqb2cH
+ xnRL0lj99Oj/qUxKfUAqW8v4XBd41yD80CgjjQyh3odEx5EXt1fh6A3iUi1GCGHUkJNc
+ pDag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791905371; x=1792510171;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=oBhDayz7n4MPunozcK6swbCSkeFih4p9JbBaeSQZwQI=;
- b=J5P75eN/h1Aaewqm2A9R8dDa08tlWq+2RZCV13KnLZBlUlbi0H32X+MaWa5ePspX7n
- 7XsYuQACzVeBD5umFQ7bSdlVrY3rxkB1YcIYmab0VmtaoSPGh4wS8atHvKb0/+OQdjrL
- 7PYyLEg8UdUr8egLG/viJMROmkNFv82848Lij8HH8Y81yrjDFFEHi7D00bPQ/ZlbvU8V
- j5lerYsU6Z8iLyn3nrmPgm8V5u3eFt4p6d//xr9XWeuXd7fWiOIX3Z2Tsi2bw/8UCmdx
- 6c3RuA35BluO/yVCcaoQp/f7NUsCrRyVOAr6JZd39w1AfUveHb+ilW4EcLzQXoaus0hM
- MAFg==
-X-Gm-Message-State: AFq9FYKmh8pORJpyDyCioMwWBYtAKYeLn/kX7fh9ZarHld/5aa5ZVx2O
- s7Yt/PdXC2QdhOeBWZJAkmAzJHc2t4JlgZ169rj8YvdDKkQWWEyo8nGHwTPts7wcWBoeTJAf9qH
- QWDcof056EzEnRqJ2ocIErZ4FxWWcaFQ2/ZYxFCNJQfKoLPuzRexaSXU3fzVC9X7hUJuoTAlRIz
- d9z/X9uEe7uvwCj5tCOy+rpfT1/Xi6SuU=
-X-Gm-Gg: AYBFou3ZMqjyMJsygJM0dMv+mqWVahyQ+7Ea/jHPwOyQVMz6yxXkqZILmczBgjm+w/b
- iJDREMpDoYT354fvVHX6oOqxCglyLhRD93lW1kxjSXIEW0xWwfsaywni1Sn/fgmPc+uw/kDOrkC
- kjD9LmvLp4lGux4khh0SKkQ1oRCAIQnwBPp/6lW9UHs0g7Y94hNUUeFHTAHyhD3RObps6NUbbKF
- Y3/Sm8tRAvKmCu7p0EA1iJiMh+LLwHwwb6p3dh1aCc3y2fthe+SS8SGt45hbLucp5rQTBdQ7ty+
- wA==
-X-Received: by 2002:a17:90b:224c:b0:3ab:b64:5893 with SMTP id
- 98e67ed59e1d1-3ab3ac5ecc6mr10738605a91.53.1791905371328; 
- Tue, 13 Oct 2026 08:29:31 -0700 (PDT)
-X-Received: by 2002:a17:90b:224c:b0:3ab:b64:5893 with SMTP id
- 98e67ed59e1d1-3ab3ac5ecc6mr10738576a91.53.1791905370758; Tue, 13 Oct 2026
- 08:29:30 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1791905991; x=1792510791;
+ h=content-transfer-encoding:content-type:in-reply-to:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=t2k4+heMZDVN28axRvxVEhEif1lfuBGs2QOACejWny4=;
+ b=e6xGXMxSK8AIVOixEJ2RSmd22g2l+CiVNNGHzUlypRYRqQG0FKDaIU9dhKUhlEAik0
+ KMCF5xKf2BG7BZh6DUHvUX2fdG4qbsPmqN3ytb5dP4U0BLUAjD2GQRkTUSNMAstDXTVc
+ TFDNDSTgdUr6L4qEnaUDkJjodfiOJiX60qK5+dT8KCsMrcoi4/SnraZbfo7OwVQ1vKIm
+ CKWFOQsGC9qu+sPWdYWH/6oB6zgFARlD4pof+CQ3sQC8uZGkEQEfzVqVGEau4psm/uT5
+ tGu2CvHVkiJAwuE3Om5XEZOXtzCVKoXKqtD3CoGtPg91SBeClA6NU6EGnB8sKMx/6Fqf
+ IWnQ==
+X-Gm-Message-State: AFq9FYKD1CRJIePR9hPfxCJEhQ51Plcybp6hTB5GqXceutFr0i1gE872
+ bH4Pcz+6RZoCUUtLSkH49r2Ujfr0u9Pn9nxmd1p7wT/B7Qn4IXKdz4TquAwrn27++Imyw439t4x
+ SpJP4/ajkNq8cU3NG1pnS2uJbbJwn/c9JB4I+D68KsBXhCc/1tfM+ZZIThK8W3uW1Qw==
+X-Gm-Gg: AYBFou2SF4BGm2pomeLlwxSWbt/VeepRWFxCHv5hRgELLjRgoqope+KHM2cFQ2qRnXz
+ zRilBZ/SwijmqHHQfzPnImRId0agw7oGpgV6LEe0nn73vyMh0FBCLT3COn+PJsVQvJ22RyqS6Re
+ LRVyQ4gzZeLyDoTDZOB2vXHaiknXX9BL7NrX4zGKEIRO02jN0L2wOceag0XE6/FTIOauY3IqmgU
+ 9HYJugm2o919jlXF3q/UcQF1pzG0iD/Fzl3ieZwOIRbBH1DKBYmWQj6DO+5jFiUBkyyDcvbFqmJ
+ eDbSkSdaPHLNgKr8+0s/e6/sIoML+hOqccWapa+G7Hx0p4dHgNCiIIpfsLzwcoyxwc54wtMP46Q
+ 4egJfAuRsl7/e5wgxMklDMk9Zr0dk1C3wAv18cHUPEBVtJ5dUQX6/ZdTCO/3AGqjp
+X-Received: by 2002:ad4:5fc8:0:b0:91b:5d39:e132 with SMTP id
+ 6a1803df08f44-91b5d39e8c2mr194125846d6.29.1791905991430; 
+ Tue, 13 Oct 2026 08:39:51 -0700 (PDT)
+X-Received: by 2002:ad4:5fc8:0:b0:91b:5d39:e132 with SMTP id
+ 6a1803df08f44-91b5d39e8c2mr194125386d6.29.1791905990825; 
+ Tue, 13 Oct 2026 08:39:50 -0700 (PDT)
+Received: from [10.222.168.219] (Global_NAT1_IAD_FW.qualcomm.com.
+ [129.46.232.65]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-91b97b38700sm28151696d6.11.2026.10.13.08.39.49
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 13 Oct 2026 08:39:50 -0700 (PDT)
+Message-ID: <cf5d4d62-4ac5-4903-8564-4ab3c4e8874a@oss.qualcomm.com>
+Date: Tue, 13 Oct 2026 10:39:48 -0500
 MIME-Version: 1.0
-References: <20260911-qom-qapi-v5-0-7732a55b7760@redhat.com>
- <20260911-qom-qapi-v5-60-7732a55b7760@redhat.com>
- <8733u9ya8v.fsf@pond.sub.org>
-In-Reply-To: <8733u9ya8v.fsf@pond.sub.org>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Tue, 13 Oct 2026 19:29:19 +0400
-X-Gm-Features: AclHuK-Wx4ZwfUfkPPZRRFyNByW-tl3PXQUoqMLOwgO3zUbwQwPYar9L4F5WrBY
-Message-ID: <CAMxuvax65ysmLnOEWbC87GrZxfc86a+7dOb6ZVwenz-NWwvNQQ@mail.gmail.com>
-Subject: Re: [PATCH v5 60/62] qapi: expose integer signedness and width in
- introspection
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Michael Roth <michael.roth@amd.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
- Eric Blake <eblake@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mlureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 1/4] target/hexagon: fix semihosting OPEN filename
+ handling
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, philmd@oss.qualcomm.com,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+References: <20260923153516.3615007-1-brian.cain@oss.qualcomm.com>
+ <20260923153516.3615007-2-brian.cain@oss.qualcomm.com>
+ <CAFEAcA9YPi22UHrBpvih0YtWfa4M2a0RwbfyfWGparN3oUxm5w@mail.gmail.com>
+Content-Language: en-US
+From: Brian Cain <brian.cain@oss.qualcomm.com>
+In-Reply-To: <CAFEAcA9YPi22UHrBpvih0YtWfa4M2a0RwbfyfWGparN3oUxm5w@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-GUID: aqpCIDhDDrmuOUqXgoNk49HtclKx0dJX
+X-Authority-Analysis: v=2.4 cv=FZuiV5+6 c=1 sm=1 tr=0 ts=6ace50c8 cx=c_pps
+ a=UgVkIMxJMSkC9lv97toC5g==:117 a=C3Dk8TwHQYyIj7nOf9RCJw==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
+ a=EUspDBNiAAAA:8 a=az2HLknMwyL0ufk_kykA:9 a=QEXdDO2ut3YA:10
+ a=1HOtulTD9v-eNWfpl4qZ:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDEzMDA2MiBTYWx0ZWRfXywLsTyp+g5zj
+ MCcdFonTFGFKqqgT+suielmUJnG2Fcpc/pX4TIkYq53H49jSXP3gI1wVYUnwuVQ3dvwrgiv7qff
+ YtergtCzPlPDXGYT7AD/hDYR03/2+DU=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDEzMDA2MiBTYWx0ZWRfXxDovTnQV5MQo
+ 8TmWBW+NFsTgR7dojuc/nwoCXarBFY2WTLxjsuTDCskcpNJg0lIo6mAziKK2grrIA45ALTTs1Um
+ cBdx5VgoXNTGEsWgQj6v58h6DB78SIfQwUhXV3D+l/Neeibp5lF82cZzPaWE/+5b1ntQ449XEnM
+ w2NM1AisOOr+uHYFMBTeGoQb31Rkv1hSFlZwRo4nDUFvoRBotsWLSLeVKMGykgbT/RDsZYsKYBI
+ X8Rmy2rJRtjD70Q4QtcyTal36m8tYlbJV9WPTsFfNHisqy43EnHtCgJsfG8wMzZgDcPyZmHGm8y
+ OgrdKaWDxjtFfCm3Uh8P5ZPlXyApD4qYZ0uVkYDJdQG1CEhbKMQa4eigL5W3MV2P12vc+yK8HTP
+ RBQBs5vZazneAg2cBYbR7lDWX81owtGpGgGCAYn8Pxyq3Uj36P7/bb7p7Yr2lHLiY7awNZuTImp
+ sXPFvICSxVYAvjIadSQ==
+X-Proofpoint-ORIG-GUID: aqpCIDhDDrmuOUqXgoNk49HtclKx0dJX
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-10-13_01,2026-10-09_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 lowpriorityscore=0 clxscore=1015 impostorscore=0
+ adultscore=0 bulkscore=0 spamscore=0 malwarescore=0 phishscore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610080000
+ definitions=main-2610130062
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=brian.cain@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -144,53 +156,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
 
-On Tue, Oct 13, 2026 at 5:56=E2=80=AFPM Markus Armbruster <armbru@redhat.co=
-m> wrote:
->
-> Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com> writes:
->
-> > Integer built-in types are currently canonicalized to "int" in
-> > query-qmp-schema. Consequently, clients cannot distinguish types such
-> > as int8, uint64, and size, even though they accept different ranges.
->
-> This is by design.
->
-> Width and signedness are an implementation detail.  We can change them
-> freely without affecting syntactic compatibility of the wire protocol.
->
-> If we expose them, we can't anymore, and docs/devel/qapi-code-gen.rst
-> section "Compatibility considerations" needs an update.
->
-> Why would this be useful?  Knowing width and signedness narrows down the
-> possible values some, but it need not be tight.
+On 10/13/2026 10:10 AM, Peter Maydell wrote:
+> On Wed, 23 Sept 2026 at 16:35, Brian Cain <brian.cain@oss.qualcomm.com> wrote:
+>> HEX_SYS_OPEN copied guest bytes into a fixed-size buffer until it found a
+>> NUL. A missing terminator could overrun that buffer. Use lock_user() with
+>> the ABI filename length and validate its terminating NUL before opening it.
+>>
+>> Replace hexagon_read_memory() with get_user_*() for semihosting argument
+>> accesses.
+> This is doing two things; it really ought to be two patches, I think.
 
-Well, this was just a first step toward a better introspection support
-for constaints. I understand the wire format is just json int, but we
-may want to express ranges, enumeration of valid values, alignment,
-string format etc.. Exposing signdness and width is the basics, and
-establishes a pattern for carrying type-level metadata beyond just
-"json-type". This enable clients to do proper validation and UI
-generation without knowledge of commands and internals.
+Okay - will split them up.
 
->
-> > Preserve the individual integer types during schema analysis and add an
-> > optional "integer" member to SchemaInfoBuiltin. It reports whether the
-> > type is signed and its width in bits. This also preserves the actual
-> > element type for arrays of integers.
-> >
-> > Teach the introspection generator to emit integer values and update the
-> > documentation to describe the extended schema information.
-> >
-> > For example for introspection, for all kind of int, before:
-> > {"name": "int", "json-type": "int", "meta-type": "builtin"}
-> >
-> > After, there are various int types such as:
-> > {"name": "int64", "integer": {"bits": 64, "signed": true}, "json-type":
-> > "int", "meta-type": "builtin"}
-> >
-> > Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
->
 
+> thanks
+> -- PMM
 
