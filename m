@@ -4,97 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA36CCC6B0E
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 15:11:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCEA0CC6B12
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 15:17:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGe9K-0002JF-II; Tue, 13 Oct 2026 11:10:44 -0400
+	id 1xGeFY-0003g7-GG; Tue, 13 Oct 2026 11:17:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xGe9E-0002I6-H4
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 11:10:37 -0400
-Received: from mail-yw1-x1131.google.com ([2607:f8b0:4864:20::1131])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1xGeEu-0003e5-Km
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 11:16:44 -0400
+Received: from mail-qt1-x82b.google.com ([2607:f8b0:4864:20::82b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xGe9D-0000Ol-10
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 11:10:36 -0400
-Received: by mail-yw1-x1131.google.com with SMTP id
- 00721157ae682-87ab6e5f91eso19739777b3.2
- for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 08:10:34 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1791904233; cv=none;
- d=google.com; s=arc-20260327;
- b=KeYNg2858WrH78ihHxqhs+p/Mb5s7cYgCUX+AMgyA8Xai8TZ7SmGNnpGyeU//VunK3
- qcF6MMIQ83REbDdU3euRWe9IsiDSAF2vQJbmTH/MUsoXpRTOiaTIaDukx/OlQs/mDaBD
- oEjyCNGGjf2hgqtET1VGPM/aA3JUTLYvZKKKU304krLFQP4Zzu04aGUipSzHt35Z2qSQ
- MF91LiVb9J0w0Koqn6t55T/qZa13HJjwAOeVKGzdA5eWzJAmQbE07T6fh202nVwj4+tS
- ITcffmkBQqYuYYEUrtS6n4MVrTDTsGXB1RgdGlzQSXE62OQ1ZNubDyGpPY64PExPHHMR
- uMzw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=WHju8u2/XTadtpYrXRuQR3wlTp829/Wq0bxbYPJ1uLE=;
- fh=Lo6rZgc3RKiqxSP/Q7XwHPdPl4aEFi3KMChg+BxIXfc=;
- b=ixNYTcbsxcBnDqoGdHv8oVRoXPVXkIlvDXDihWoKdJ1nPRcIuPxgklcFbI0C7CQpuX
- L2J7OXspQIEDFc3ugawE+4tO/Gta93/Yn2ow9D/CYlNNvbHl/7qPaPM+9x0DcEU3TkKX
- jZcRkOnZwszgSXXtCrV1wCmdLIJkfhQd8GL5LhVwbs7Sw23jrTwhC/pSPTWvZwXC7iy3
- rBXbrWoqGcntZ9K9dkzIXhib3AXYHFrZCGPar0PcD69AOZMEMbh7WNf13I+7o6U3/WEI
- OWS5LFsUlRFX+AMO+alhbvS2PCZdOIxM2jDMhsBq9cf+duGgsG6hol7ukON8JfhwO3oA
- JMIA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1xGeEs-0000zI-7p
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 11:16:28 -0400
+Received: by mail-qt1-x82b.google.com with SMTP id
+ d75a77b69052e-530e75d1ba1so31487791cf.2
+ for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 08:16:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1791904233; x=1792509033; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=WHju8u2/XTadtpYrXRuQR3wlTp829/Wq0bxbYPJ1uLE=;
- b=PToKU4unu3/a6zBPFVowg/mExJnpal1ztOgsRvFtk18uw46wX0eNnz3zm4krcINLPs
- 6PLBBrYbVz+dIZA+ASUaztV5C462lUrR3IqIxfWXq1OSh74+T8DK07NwiqNQtrEKib36
- si+7jPGCWHrA3q7l2ZFuXG+1QEfyMkIWRUlXR9t/hWv0MblRXpTdT7k6UUUUNV4sgU5w
- TxWMKdyanmDHNn/zwZeAyHSrtfEhlrxF6c/2wMQ/Rq5GOQ6WPuM+j7/0EWDqKyHKwDaM
- +pdKcjESpfoJzvEHILCfmB1yOa766kuwQjOFD4cStiapQvE1hjumzA1RoGcHENuN7kVU
- Jrgg==
+ d=linaro.org; s=google; t=1791904585; x=1792509385; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=c4x78hifVQsi6fGRW1vcYagoyKKaaAq6828zAa43ju4=;
+ b=gXbBMy4Pp2SPWVJiQIlkQSeXIte58pdqVL7Ds4FbnmyYoX4VRx9Iixtg7GQykDD4WU
+ 5ENitkmnUgl4bNI/40IwmLrJ2cTVGsSqD3o9X9GotGo+kKNbNJbztIbwl9OZ/vEabN4f
+ qLsbZAE/LqKCmVzpzeTnG7kMh6ZMjESDnGCUmvcuuXiNrX0iR+xyQyjroA2tjMnyo0Wm
+ ABkM6LGwM/kt8jR8hfm0Hu4gxZ4sgfjGH/Bpm5lf/jGvC5iI6LfAd+QxuhlcqbniotdJ
+ 8npMkRMOq4GGXCA1Meg0U3FGuZ93q3LIASFdhn2vtuKX4Iyb16m98NGOaeeKQ7chmEMc
+ s7Gg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791904233; x=1792509033;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=WHju8u2/XTadtpYrXRuQR3wlTp829/Wq0bxbYPJ1uLE=;
- b=Lk6LjhZzflwdihznxhQQA+1Sk8SHFEE2AjltJKtyI98M9Xqb4QEScCGtw1fDF2cgaM
- 2YzCL6/NwLni2avkkWFvDH4a4oCZhwhRiKJp1FFM4mgA4jfc3s0lTSb4uqRcxcEDD6Cb
- sfsiICNkClPwLx0Szf46wtRtNLbScvcHVGxH9y7OkGXXsit4kUTJP3nshA3oqKPgypWD
- +XYGboiLC2/m2q3lEwsi68hwcW6ih+MST4KjRJPmxjHXUbxxxh0SrAkuwQ9Fu9TL5PBE
- cdreV7eEHpAUXOWuQwROh3objthu6XcgfTBzRCilRMRXLM2ihyFmDLpFqNCUglyZ0jCG
- wNlw==
-X-Gm-Message-State: AFq9FYJi1Stz0Yd9j4Jv7sTzcI3OsASJZuZEpSq6CrTw6TYxvABptLNd
- PaQuKcQ0TOloZaXgjsbJMl1GyvmhTSNwnjsmFeWaDzhRinJi6b354lETOQvoezY2IGteL8D2o4t
- pjiw7IeCIIb4GLE5hfF0mFVaLznaWunoF/8PrLqSigQ==
-X-Gm-Gg: AYBFou0dz5LUiIsjuJOG+gI+2w+kpgZEqVss+SiVz/vAJUGltHPYiWKg0s8aA0+VSqR
- eesAAFAG9Zd5E5JXEJquylaUqUk2YWF5/F3ssgPuYI+n67YvMuAVg15ycftVudWPkMgBT3E8Gzd
- YYZMI4Yyw1v5vOoLeS15PBRA78fP0WMd2mIAm3bNak0qG2/3Zl5TKezJv0GpKHCviwYUJrUZiCv
- WXf9aiGxVnHlbk4n7l2OcwQSPsO4usM/vmu4md4VlJRU3TdBuDXJU1VN+1QU10dLDhj1e8kVLl8
- U3lJGIfCDes7L+OXZ4/u1ksixrqXKasP6ZAlVWiqMBgbj2nkf3lk8PACxXSCD4SKvyLZQQvM1bK
- 3Rx7jxP4PZD4QxZvxrBhe6c9ds43gI2QdanEC+Iw=
-X-Received: by 2002:a05:690c:6d81:b0:8b0:a432:5668 with SMTP id
- 00721157ae682-8b0a4327603mr25153687b3.58.1791904233053; Tue, 13 Oct 2026
- 08:10:33 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1791904585; x=1792509385;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=c4x78hifVQsi6fGRW1vcYagoyKKaaAq6828zAa43ju4=;
+ b=ACfsAOLOndT1/daHjZWYtZf7fc2ZDKw/wPOD3GvHe5jFrQt+HYSmo5SCl4VtpAxCwR
+ Bvdp3tV7OuuD+y9NCmOr6F+6OoOmXRRxZdLOOunjDyygS+Jgc2e32LkYAKjZk0Uvc+3L
+ Lqg+eiFQkBsFb1HCc5y/CjMBLawDwYY2Gip55PkbG0e01Tc6VsyphReIrMciTtAOZFmi
+ 9+aMBwMOC2zsdGt76RwfJtA1Iorwy/oxCxLvRlt+F4QBpC3ZjFDCt6kFIopYdpluf3Uu
+ bONb3YabmCjvM1cCPxlEsspQ6y3xtvqoROVvFoodoChY10HqhiCMdePrJoxvxyG8s2zM
+ LdRQ==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBzha1TMnDvVGgz/M4D900SXtaKHKY1SGk0VKP5g5h728vdUKrMacnqgZ5AI9NpQsM7KOU+eSZUTvBR2@nongnu.org
+X-Gm-Message-State: AFq9FYJceaRsq1v5YuecPdYcCT7y8Bx87bAP0fMEHmQB773/BJvLSy66
+ 7ceOddn6MV6++lwWcDx2dItp+oXDil+oJ0EoLYv1mVkIgtvEujdqgHe06PBePvzlcIo=
+X-Gm-Gg: AYBFou3CvRmQYPKgpvKtvkXfIzZoKG2JEYIW4K1Hy+6uyQfv0cOQ3NXgrcUbw9GsrxP
+ vNnh4Y8tcZUR/ZjLqEZRzgx+TwFSuhcZXX9zaPcDIvQfbpuH/+uz37t/yngBhlktxttrZorh3AJ
+ nmR3cMkYuure42Xh+9XSIc0bjLGvlbJSs1DuFixpcmBXdCuigRicIAuQlJB875zU0wMb7CqGoNN
+ 7vOe+UHW/bDjBFgj689Yjpg6+4oL7RFcaL0klEJ/Z5weLys8zM8WEe0foTV3jIMlb/GXnyXICA/
+ +Ybh1H173d+Dm0aOjoV5OjKx2OpVw0a3vbDvJeYq2mefu1qAkreAOW9EJ1JXaaFI+K5HlEL7lp2
+ vETvb9ngoROOc4iKFx388qVOa8ObMUrg8ht2QJKDfYnvOLA41Td6HV6tSFUMD9+LoxYFc3UICkD
+ d5TabBu/04x6cLZ75d1axe7pkfFHWM52k7W5dLvbx3HEm6TrkDTLZSig9qTzd2uy22FR4iGvCqZ
+ 8Mlve2c2eRGP+lbytDO/qk2+MDxH8gIJ8kLd2k=
+X-Received: by 2002:a05:622a:8c8:b0:535:8453:73a0 with SMTP id
+ d75a77b69052e-5359fb54d1amr212348011cf.47.1791904584322; 
+ Tue, 13 Oct 2026 08:16:24 -0700 (PDT)
+Received: from [10.86.151.227] ([172.56.179.170])
+ by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-91b97b383dasm27423236d6.8.2026.10.13.08.16.20
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 13 Oct 2026 08:16:22 -0700 (PDT)
+Message-ID: <3ef62746-33e7-441f-95be-19836f63cb98@linaro.org>
+Date: Tue, 13 Oct 2026 17:16:17 +0200
 MIME-Version: 1.0
-References: <20260923153516.3615007-1-brian.cain@oss.qualcomm.com>
- <20260923153516.3615007-2-brian.cain@oss.qualcomm.com>
-In-Reply-To: <20260923153516.3615007-2-brian.cain@oss.qualcomm.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 13 Oct 2026 16:10:21 +0100
-X-Gm-Features: AclHuK9AJLzijGRlE0PE6wfl5JmhnSAWcJILJvuKI-VvC36ZYd4XFrkh7SUY0gw
-Message-ID: <CAFEAcA9YPi22UHrBpvih0YtWfa4M2a0RwbfyfWGparN3oUxm5w@mail.gmail.com>
-Subject: Re: [PATCH v3 1/4] target/hexagon: fix semihosting OPEN filename
- handling
-To: Brian Cain <brian.cain@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, philmd@oss.qualcomm.com, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1131;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1131.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] tcg: Introduce tcg_type_bits() helper
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+References: <20260928113938.3157-1-philmd@oss.qualcomm.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260928113938.3157-1-philmd@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::82b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-qt1-x82b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -117,17 +106,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 23 Sept 2026 at 16:35, Brian Cain <brian.cain@oss.qualcomm.com> wrote:
->
-> HEX_SYS_OPEN copied guest bytes into a fixed-size buffer until it found a
-> NUL. A missing terminator could overrun that buffer. Use lock_user() with
-> the ABI filename length and validate its terminating NUL before opening it.
->
-> Replace hexagon_read_memory() with get_user_*() for semihosting argument
-> accesses.
+On 9/28/26 13:39, Philippe Mathieu-Daudé wrote:
+> Add a helper function for computing the width (in bits)
+> of a type. Use when appropriate.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+> ---
+>   include/tcg/tcg.h | 11 +++++++++++
+>   tcg/optimize.c    |  4 ++--
+>   tcg/tcg.c         |  4 ++--
+>   3 files changed, 15 insertions(+), 4 deletions(-)
 
-This is doing two things; it really ought to be two patches, I think.
+Thanks, queued to tcg-next.
 
-thanks
--- PMM
+r~
+
 
