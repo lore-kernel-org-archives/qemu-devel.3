@@ -4,44 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8E47CC6B1C
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 16:28:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29E1FCC6B19
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 16:29:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGfMk-0006Mp-Me; Tue, 13 Oct 2026 12:28:39 -0400
+	id 1xGfMq-0006sA-NQ; Tue, 13 Oct 2026 12:28:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1xGfLb-0005IQ-Cd
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 12:27:27 -0400
-Received: from smtpout2.mo539.mail-out.ovh.net ([51.210.91.41])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>)
+ id 1xGfLa-0005IG-QT; Tue, 13 Oct 2026 12:27:27 -0400
+Received: from 8.mo2.mail-out.ovh.net ([46.105.32.207])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1xGfLZ-0005DA-5i
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 12:27:27 -0400
-Received: from director5.derp.mail-out.ovh.net
- (director5.derp.mail-out.ovh.net [79.137.60.225])
- by mo539.mail-out.ovh.net (Postfix) with ESMTPS id 4j409Q2H49z471H;
- Tue, 13 Oct 2026 16:27:22 +0000 (UTC)
-Received: from director5.derp.mail-out.ovh.net
- (director5.derp.mail-out.ovh.net. [127.0.0.1])
- by director5.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
- for <jamin_lin@aspeedtech.com>; Tue, 13 Oct 2026 16:27:22 +0000 (UTC)
-Received: from mta7.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.109.231.184])
- by director5.derp.mail-out.ovh.net (Postfix) with ESMTPS id
- 4j409Q1YdFz6Mbc; Tue, 13 Oct 2026 16:27:22 +0000 (UTC)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>)
+ id 1xGfLY-0005C4-T2; Tue, 13 Oct 2026 12:27:26 -0400
+Received: from director2.derp.mail-out.ovh.net
+ (director2.derp.mail-out.ovh.net [79.137.60.36])
+ by mo2.mail-out.ovh.net (Postfix) with ESMTPS id 4j409M6j1Tz441L;
+ Tue, 13 Oct 2026 16:27:19 +0000 (UTC)
+Received: from director2.derp.mail-out.ovh.net
+ (director2.derp.mail-out.ovh.net. [127.0.0.1])
+ by director2.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
+ for <jamin_lin@aspeedtech.com>; Tue, 13 Oct 2026 16:27:19 +0000 (UTC)
+Received: from mta7.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.54.126])
+ by director2.derp.mail-out.ovh.net (Postfix) with ESMTPS id
+ 4j409M5Lmcz1xtc; Tue, 13 Oct 2026 16:27:19 +0000 (UTC)
 Received: from kaod.org (unknown [10.1.6.3])
  (Authenticated sender: clg@kaod.org)
- by mta7.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id 8A444202CA2; 
- Tue, 13 Oct 2026 16:27:20 +0000 (UTC)
+ by mta7.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id 0FDE4202CA4; 
+ Tue, 13 Oct 2026 16:27:17 +0000 (UTC)
 Authentication-Results: garm.ovh; auth=pass
- (GARM-99G003a498a9f8-66f5-40f5-b090-4e45626a2c70,
+ (GARM-99G003feff8ed5-0ba8-478b-8a52-933f774f0895,
  3B5152602AE6D76A7CF2E50DC6ABDDC767F0B630) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 82.64.250.170
-Message-ID: <1bb8f3bc-fdc0-428e-9f85-06e995098a6c@kaod.org>
-Date: Tue, 13 Oct 2026 18:27:20 +0200
+Message-ID: <2cdab39a-08b7-48c3-b8f1-79d56c355dd5@kaod.org>
+Date: Tue, 13 Oct 2026 18:27:15 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 02/50] docs/system/arm/aspeed: add the sanmiguel-bmc
+Subject: Re: [PATCH v2 01/50] docs/system/arm/aspeed: add the catalina-bmc
  machine
 To: Emmanuel Blot <emmanuel.blot@free.fr>, qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
@@ -54,7 +54,7 @@ Cc: Peter Maydell <peter.maydell@linaro.org>,
  qemu-ppc@nongnu.org, qemu-riscv@nongnu.org,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 References: <20261012-bmc-minerva-v2-0-4c3dff084ec9@free.fr>
- <20261012-bmc-minerva-v2-2-4c3dff084ec9@free.fr>
+ <20261012-bmc-minerva-v2-1-4c3dff084ec9@free.fr>
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Content-Language: en-US, fr
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -99,30 +99,29 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20261012-bmc-minerva-v2-2-4c3dff084ec9@free.fr>
+In-Reply-To: <20261012-bmc-minerva-v2-1-4c3dff084ec9@free.fr>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-x-ovh-tracer-id: 6623106205330484269
+x-ovh-tracer-id: 6622261777485048877
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTEy2TVmIGdJz9wb2lZxs6ZOYk0T6DuDjUbu8/zXGYTH4fUECEqloGjFfQQCwGTA+Qh7f8ykczPwXj/0yRHFk+ke0Oq8cqPzvgWUWqE52q4F8K7KHMRomHayz0KSPI3Kj1OS1RB4ltUXcr9VLwn8YMxu6kumcdPsPn14jLrFeI22oREKqPhMU2SvVrQ8KaXHRxjVPvt64nha3KIPtHpiy9r9K5jkCxjkBrKxyaee8ty7LwZMq0oVcVbO7WlIGgJOp6cyTRlPBQhZa3PdT41/UEK/QPowtMJd7DrnTJlu2XG9nN1MD1oRi9XLbB1T/tzjDKh80+WtaijTeEgascMvqUOAE06LxYy8LwRGSE+2OVHqVTxZfKkK9RBop8GOJPUvfyXsaNxt+M0Bp0h2FqsDvkLXEHuYuc1j0bjnioRycSijfrnimTVfsJCDiJuBR3J/3C8THpSqGUVd9hUUIIOdmcMJq/ly9lwTeWzeU76e8hJoiOTZzgBL6pQa5Mdqd0PpgQ6Pe+dJfM2bwBYGJFC/JSage21I4eCsk7CL+43mA/xJRaxjR4zMFl5KoJUA8bXtU/Lqt76SNvTnbny+55Q7RXwzt3fB0gQJDbGOrQ/K+29KDOl/iWaeqEx6Y3umQfrX4s9WMja7Y8XlxjiCWbyB0s13U+fDEMRvsV7dAt5exGecxA
-DKIM-Signature: a=rsa-sha256; bh=TCuB+FQIHLVDi0+qJFrq80O5C3hr+WqZ+F0gE5UsTzE=; 
+X-VR-SPAMCAUSE: dmFkZTG34d8/DCGA0V4UbDaJQmCayESbSVJtAYeKb4T6qfqn6yctmtN8+GjI1a5LaSO4UcBlS8XOwLiGnGYEvAu5WdmbGpqebb+ABY+7b9hkiUIz/GBdqFRSGKWKxULMSqGPvfT/MeB15wLsduNTE1Czh9wqBNGhYXKGXmqBcUqAOaH1Hwm/BX42CwirjgEnU/Cl9F7bY8RDBzXipYJAzLE91nGeVUA5tc96W3hRZE0scWzpdTGWiinaX+acN76RGihF5HmPELee/OrNzoTUcDm7dDKDJDl37zqHvKvqXHh8RQwGGvcjY4bQlQDnrVsik8rISZymzi3MQBYc9J3briVS2pirmhFgWgzaWO1YOJG5IKQiFPcBSCV5rHOfY9csrj9uQOpbH2tNmbB5MDc4NLWMVPpH3c2AQIYGP24Gzw5pD9DEiQ1unH0+NhVjr+t/4nLwDlXyH//KLU/5Dkp+QgujIr2RZsnwtlyOiOISKjxzWShWFnfDM59nb5dD6UUZxM13Fq2vN6CbsMi2KHkp1EbqP/+1EElMj2G2NKKM7/D8gFHxAekBhINmrmrS26PoetwJj42b5NAdhfE5loU/V2D7Nxsl5mpkXPvlz7YTizgtWKABgMPcO13vJvFZp2SKe6QMKlARNpPtGAOUEG54scIUgQoaCK454X3T4Koo7xwVIHAlwQ
+DKIM-Signature: a=rsa-sha256; bh=0wRYDojipcMZietJmLkdTyX+sKrGzkBGMuafc2+gB6I=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1791908843; v=1;
- b=ejBdQvrtK3J9sK7EZjFC7j02Ms4ts5aPFB3bH4KGkZMuqkHdX+7Q1+MZAh9NPL/V7OjVoxDS
- UvMEIeiTj7QvcU2OV6GixZmzktp39PrS7Eacsydd4wGLyRdMQJbWHVSqTGuGpfrdxubc6m9kIGY
- bukqnTPBHRvjBWSj0AYFdt6wO/UP5tQIl4W7ON51LRBes5f7G42vFMPIHlwUhh4RjGk4wFMWTOB
- VoAY4NepBN0/rP0O0QF1yGOolm06Z7kcgxdYJlf2RmFEWXAgblcPtCXpxmQGMXcdKH4gENxHi4S
- Z9VbeuJ6pwNxR71HAw0PQJo5EjXDqx185JHIWXEDpQlGg==
-Received-SPF: pass client-ip=51.210.91.41; envelope-from=clg@kaod.org;
- helo=smtpout2.mo539.mail-out.ovh.net
+ t=1791908840; v=1;
+ b=Ut0TY6xOv577Cpo6nWbVmWgTWcVCgtVW0YdJLGyMDSRxYN1ieyk+q/1aGjIfDPH/kqBxiLEl
+ MR0Ofo2StamODrk8H5SNqbjLag6XhiU0zkSwN3W/+BVDZIsEilQ39v1wRAM756TfNaF1uHrs+ag
+ ABmYXVC3fCm9D7+h3dvSoeeCQYvODavB9gjk5nmf6YWU7zfPt28dWwXcj434TqjfdoKv5nGWMU6
+ EwYSVSWMd7qXzOFcMUfmaPhpKaASM/iCETNkLvQLBE7s9jL47NUpP6QSMD1Ffj2gtiINxj+nBgy
+ +fa7er/5sg5gl2PxQIX/pUk0jwD8cuPZAC8/5qfF5tZIw==
+Received-SPF: pass client-ip=46.105.32.207; envelope-from=clg@kaod.org;
+ helo=8.mo2.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -139,24 +138,37 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 10/12/26 16:31, Emmanuel Blot wrote:
-> The Facebook SanMiguel BMC machine is supported by hw/arm but has never
+> The Facebook Catalina BMC machine is supported by hw/arm but has never
 > been listed in the Aspeed documentation. Add it to the AST2600 machine
 > table.
 > 
+> While at it, shorten the document title. Listing every machine name in
+> the title duplicates the tables right below it, and made the title (and
+> its underline) grow past 350 columns. The machine list stays available
+> where it is readable, in the per-SoC tables.
+> 
 > Signed-off-by: Emmanuel Blot <emmanuel.blot@free.fr>
 > ---
->   docs/system/arm/aspeed.rst | 1 +
->   1 file changed, 1 insertion(+)
+>   docs/system/arm/aspeed.rst | 5 +++--
+>   1 file changed, 3 insertions(+), 2 deletions(-)
 > 
 > diff --git a/docs/system/arm/aspeed.rst b/docs/system/arm/aspeed.rst
-> index 933df41f96..f38f33cbe1 100644
+> index 2d51ceeb84..933df41f96 100644
 > --- a/docs/system/arm/aspeed.rst
 > +++ b/docs/system/arm/aspeed.rst
-> @@ -34,6 +34,7 @@ AST2600 SoC based machines :
+> @@ -1,5 +1,5 @@
+> -Aspeed family boards (``anacapa-bmc``, ``ast2500-evb``, ``ast2600-evb``, ``bletchley-bmc``, ``fuji-bmc``, ``gb200nvl-bmc``, ``fby35-bmc``, ``g220a-bmc``, ``palmetto-bmc``, ``quanta-q71l-bmc``, ``rainier-bmc``, ``romulus-bmc``, ``supermicrox11-bmc``, ``supermicrox11spi-bmc``, ``tiogapass-bmc``, ``witherspoon-bmc``, ``yosemitev2-bmc``)
+> -===============================================================================================================================================================================================================================================================================================================================================
+> +Aspeed family boards
+> +====================
+>   
+>   The QEMU Aspeed machines model BMCs of various OpenPOWER systems and
+>   Aspeed evaluation boards. They are based on different releases of the
+> @@ -33,6 +33,7 @@ AST2600 SoC based machines :
+>   - ``fuji-bmc``             Facebook Fuji BMC
 >   - ``bletchley-bmc``        Facebook Bletchley BMC
 >   - ``fby35-bmc``            Facebook fby35 BMC
->   - ``catalina-bmc``         Facebook Catalina BMC
-> +- ``sanmiguel-bmc``        Facebook SanMiguel BMC
+> +- ``catalina-bmc``         Facebook Catalina BMC
 >   - ``anacapa-bmc``          Facebook Anacapa BMC
 >   - ``gb200nvl-bmc``         Nvidia GB200nvl BMC
 >   
