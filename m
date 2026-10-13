@@ -4,102 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B5F8CA9ED2
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B65CCC6B08
 	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 08:53:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGY9n-0003KQ-AW; Tue, 13 Oct 2026 04:46:47 -0400
+	id 1xGY9Q-0000vV-Mq; Tue, 13 Oct 2026 04:46:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1xGY6E-0003y2-Tr
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 04:43:07 -0400
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xGY4d-0001nB-NS
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 04:41:28 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1xGY69-0008Uf-2y
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 04:43:04 -0400
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-486e8faff03so1125687f8f.1
- for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 01:43:00 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xGY4b-0008J9-BH
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 04:41:27 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-4a020e65269so16623885e9.2
+ for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 01:41:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1791880979; x=1792485779; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=mnxj7h7HvIWfwoZQRTFXGU62+t1KiKfVReRxfjWSfds=;
- b=E6h129X1h/qJ3fjBYxx+iq2eC/rYGIkNrrts6w4Jj33W1j2xp6sgD8JmkejWhdi3BL
- penAaIDy4sLMxR0k9W4kdO8bJ3wiXk69029XCqHbYTWkXIKjUCz8R7qX7D2T2f8CrqAx
- MDatoMK0Wg4KhZh8xcdm0cQGH/R9DMX2Q5nwO3429l8Pycnnuty6ewl9ImPG1V18Cmtc
- MTBZy+jUmxZK7DegmoOHQ0zC0N7bIyuo6ZT+gTQAU89SZt3/Bjz2ebblwcyL1cB2zL93
- T3azqWDEjZe6hjAYiIgZyq0xQppXiAiOSfrjS/+DuU4tlEWfkLAAF4FM8BC+Qw8cRdZy
- MipA==
+ d=linaro.org; s=google; t=1791880883; x=1792485683; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=mT31UjfoQOsSWM6/4XaazdVD7Jw1EvSOBOVSSh0qErU=;
+ b=fpfQM/yXsYXMmNGsU0czs1VyIJ5ODb1DSF/Fr7LB7br2NlvAODOSGdBQELbaX2iXsj
+ GLaoRQEROnRz6fdjNj+idtOi0LMdsISlAfna+w/QhFonx/aWdqq3H+1VL24/V04CWIrD
+ oMO/EgJESM3fmDgw76QHkSTxNEBFlkNt74GDxjITEP5B7dKX3I/wApwsYfYYzEI7DADz
+ 8edskGTiKwP/rHFoAF7ZbbtJTPZ8kH/hxLDwpGuLEObbDIuSiIbqLTJkruh3ak6bxCB6
+ XsC4y9/KT/KA9ed6LAh5UaXM54/ApNdABLQqUBNk1FtFAGa/YKVV6EW3JWQAJNyqJ5Yu
+ xcGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791880979; x=1792485779;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=mnxj7h7HvIWfwoZQRTFXGU62+t1KiKfVReRxfjWSfds=;
- b=iBELeoIrptD5nEOxXTYoehD8XolXrEpWiqYcHI+MBSm8TLL3ZzpFFJn6VFltLXaKa+
- owvXbG2mH/ualkDQ4NJZxC+rvLvgK8xXpLxA68nRa7ViEGmHVb5MYg2/5UkVhodqWKhM
- cUuGNvQ6Tyc/u/XxBuRzLpUvfq/AyezdV6IlMD24PtR6XPMSo6/db34sRhDKRIlJj5wP
- jKxTkydW2fYMWiQcmwcbZVTcROEdJls+Sed8Q0NS9VpH7g9rfr0v8QUuOObRz+rBk4Pz
- z/LqlqRloc3Wd9gt7yI7LfwSXZynMrYbB3xfRbMSRUfRoeYuVUFQpDROW5E1Au0ac/Q+
- 40pw==
-X-Gm-Message-State: AFq9FYJXE/lCdYFu6I0u04T6lipunBYdOWJydvRASwvelRdI5IbS1/M8
- hAN/fUcVc8WTvLS4/L6V7VZbrnLAOVRH3l2fZdEsM1MJCZ/WwElxs9DaKB1BZ6maiqk=
-X-Gm-Gg: AYBFou3xs7eoNgsKVn/EIQPfaC9P01nIvkE4sllRp8P5xmNxCO4xMG6GfmDssjWhCGj
- xuvET/tNTHatFRHpoxGDeNpnGDqweHK3GdievG9LmSTChNukdoK6gBAAbJKswGGWxtgnlXQDc5R
- tBLw3Ef/jwCVlFg0FiHsgYWHEl+XS9LScIfFPVO/Q+oAEsvJbkufBpgImH0VVXBhKfKoft1WBIc
- V0EvLsFJ+sQB2kpFWnJZtKtcMTUA37n3nae4cGskl/1NPQTWq3RQ3tgZup1N+iYnexHSJS8wGoj
- 2cqX1xUplxXrk1HRTrNyNUQKGgVaI1b099HNrRjMNEQI6lYHvWRHYLve8+lJKLbHI8Dyl/sgq4P
- X9EbaiWU0DHfdmjGkA7hnLa1aSdDnR5GRPo/XAv8nrEyAUJuSca/5UUI5g7VCnSJPDNgFDymX4B
- B5saEBLUeaZICDC27McAcZgZDTp5zahaaKv8tZFmUtg2EC3SxC0Oudw/IweTginu7yVTtE2Q==
-X-Received: by 2002:a05:6000:4a14:b0:487:15a3:1cab with SMTP id
- ffacd0b85a97d-48dbaadb081mr21260264f8f.18.1791880979139; 
- Tue, 13 Oct 2026 01:42:59 -0700 (PDT)
-Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48de0ab5262sm3937232f8f.22.2026.10.13.01.42.58
+ d=1e100.net; s=20260707; t=1791880883; x=1792485683;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to:content-type;
+ bh=mT31UjfoQOsSWM6/4XaazdVD7Jw1EvSOBOVSSh0qErU=;
+ b=TkDkHlzAU+cGoyEPjiPTXn6jpFZcE+jD6emqlOZeYbi3xNdu8o4PZjaMiUe6X8OQIK
+ 0AEal6d+QGSPwvhVVtqPyJCcLZVu2tqcnBctehvTNUJ2qXbFNXnZM0EF9JJg1FVAx8dM
+ DyE17RUvMof7GJYW+yQ4HQjo0jLdal4g+U0oppN0PhAyF4nv4Xp0rcvAJXpsqFzvIOY3
+ ad+GmKFWwodYI1N2qe38kCpVpomdGJCMh+T+SXxabQ3vWQzZXA44n455gEzFQ9Rt+lv2
+ mylrN1zLZSb6uITaNS01JyQwOhTsMgylFgm7tZ7UoXvHTOpTxAVahaG9q6zBaLt0K9jW
+ az1A==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBysr32oC8+KYB+zf5Md73CgSaA7LQ9Fbd75A3cThj37PB/13PQT+8z4OQOc92XmzT7RgfzrNPEHX6zO@nongnu.org
+X-Gm-Message-State: AFq9FYK/sy2dbyl26xJrJGV2QU1TCcXZFIOXB8eA/4LdInNnzsHPXa4d
+ zYR8PKOyPjg4vv49S2x8lF+gLDmfrIzY/lzaZ4GWWstg6yljdDllf8L2uw1JtkAbGwk=
+X-Gm-Gg: AYBFou0EO1VAIYPSertfQ6F+Ja4IUXFMxFsayqzkRMuEm3dEJUx9ATOcYCeq+2Q6isf
+ gMqMzdOnusPiXCWl4npqNcMLEyZU+xft3Dq6nI6I3S17t3Jdc2cDjZ5l8ITUWFDg/SKdQ3G0iwX
+ xWEligHM1o2H3DhfqKa0+VYxbL65OV+6BCm5OnzQwO0Pu3Tkbb9IAxSjlRmn4xoS6wp8vbuXbVE
+ rOKh5SkqWAJ405cvcN6Rd5QSsYer3XiQIZWFbF82HX2/9OF7soC+MUI/HT4TN9wfZaR0q/+3FQV
+ 5eUNInNlCsaVueeyT9lXFpidLHVaXwQf3uKL195xKC3M65ER04FLREeNaAc78jR6g3Z3FX2AHEx
+ ufC7iBZzOUvzI/CSp6M/PFc+UHXeuWxYlCsUhpSPIMAzttV+PcUx5OT/EMWD+rMM7AY143CPUlK
+ YK7cNS5hF8TfgbVQutLxnifG2+gfrd/bcR2B28mMAY4y8ScOR9Jy4SKBI6O+Yu1CaLs+O+/H1Bm
+ U1S8H1XcSSeW8AMSmMCC3JPwe0mwNxBKBcuAwItu42uZdVLcLlBSYss8tVocniXpZ62t36+sko7
+ LlA=
+X-Received: by 2002:a05:600c:a010:b0:4a0:2500:2cd0 with SMTP id
+ 5b1f17b1804b1-4a18e4b4646mr206929765e9.18.1791880882736; 
+ Tue, 13 Oct 2026 01:41:22 -0700 (PDT)
+Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4a18be96549sm495086735e9.6.2026.10.13.01.41.21
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 13 Oct 2026 01:42:58 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 4098C5F8E5;
- Tue, 13 Oct 2026 09:42:57 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
-Cc: qemu-devel@nongnu.org,  "Dr. David Alan Gilbert" <dave@treblig.org>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,  Zhao
- Liu
- <zhao1.liu@intel.com>,  Peter Maydell <peter.maydell@linaro.org>,  Chinmay
- Rath <rathc@linux.ibm.com>,  Nicholas Piggin <npiggin@gmail.com>,  Glenn
- Miles <milesg@linux.ibm.com>,  Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Palmer Dabbelt <palmer@dabbelt.com>,  Alistair Francis
- <alistair.francis@wdc.com>,  Weiwei Li <liwei1518@gmail.com>,  Daniel
- Henrique Barboza <daniel.barboza@oss.qualcomm.com>,  Liu Zhiwei
- <zhiwei_liu@linux.alibaba.com>,  Chao Liu <chao.liu@processmission.com>,
- Max Filippov <jcmvbkbc@gmail.com>,  qemu-arm@nongnu.org,
- qemu-ppc@nongnu.org,  qemu-riscv@nongnu.org,  Paolo Bonzini
- <pbonzini@redhat.com>,  Laurent Vivier <laurent@vivier.eu>,  Mark
- Cave-Ayland <mark.cave-ayland@ilande.co.uk>,  Artyom Tarasenko
- <atar4qemu@gmail.com>,  Helge Deller <deller@gmx.de>,  Pierrick Bouvier
- <pierrick.bouvier@oss.qualcomm.com>,  Warner Losh <imp@bsdimp.com>,  Kyle
- Evans <kevans@freebsd.org>
-Subject: Re: [PATCH v2 04/10] gdbstub: add gdb_register_internal_coprocessor()
-In-Reply-To: <20261013-query-reg-v2-4-6f95a2e139a9@redhat.com>
- (=?utf-8?Q?=22Marc-Andr=C3=A9?=
- Lureau"'s message of "Tue, 13 Oct 2026 00:34:07 +0400")
-References: <20261013-query-reg-v2-0-6f95a2e139a9@redhat.com>
- <20261013-query-reg-v2-4-6f95a2e139a9@redhat.com>
-User-Agent: mu4e 1.14.4-pre6; emacs 30.1
-Date: Tue, 13 Oct 2026 09:42:57 +0100
-Message-ID: <87ik36gfe6.fsf@draig.linaro.org>
+ Tue, 13 Oct 2026 01:41:22 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-arm@nongnu.org,
+	qemu-devel@nongnu.org
+Subject: [PATCH 83/86] hw/intc/arm_gicv5: Implement saving virtual interrupt
+ state to guest memory
+Date: Tue, 13 Oct 2026 09:39:30 +0100
+Message-ID: <20261013083933.1024405-84-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20261013083933.1024405-1-peter.maydell@linaro.org>
+References: <20261013083933.1024405-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x431.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -122,263 +104,212 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com> writes:
+The IRS_SAVE_VMR register allows software to force the IRS to write
+out any cached virtual interrupt state and configuration to the guest
+memory data structures.  (A hypervisor will use this as part of
+saving the configuration of a VM for migration.)
 
-> Add support for registering coprocessor features that are only visible
-> to QEMU's internal APIs (HMP monitor $register expressions, plugins) but
-> hidden from GDB's target description XML.
->
-> When a feature is registered as internal:
-> - It is excluded from the target.xml sent to GDB
-> - Its XML is not served via qXfer:features:read
-> - 'p'/'P' packets for internal register numbers return E14
->
-> This is useful for exposing system registers to the HMP monitor without
-> affecting GDB's register namespace. Exposing aliases or synthetic
-> registers through GDB's target description can cause problems: name
-> collisions with GDB's pseudo-registers, independent register caching,
-> and missing DWARF unwind rules.
+When software writes the S bit to 1, we need to write out cached
+information in our hash tables for the vLPI and vSPI for the VM.  As
+usual for QEMU, this operation is instantaneous from the guest's
+point of view.
 
-Hmm are they *that* useful for HMP then?
+IRS_SAVE_VMR also has functionality for software to check that the
+state of the VM didn't change during the save procedure.  Because we
+will have only one IRS, we take advantage of I_DSRQY's suggestion
+that we make writing {0,1} to {S,Q} be a no-op.  This means handling
+of the reporting of the Quiesced state can be done entirely in the
+implementation of IRS_SAVE_VM_STATUSR, which will be done in the
+following commit.
 
-The front-ends do limit what they export to gdb (see for example
-ARM_CP_NO_GDB) generally because reading them causes side-effects. Those
-restrictions are also a reason to limit them from the HMP interface.
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ hw/intc/arm_gicv5.c                | 104 +++++++++++++++++++++++++++++
+ hw/intc/arm_gicv5_common.c         |   1 +
+ hw/intc/trace-events               |   1 +
+ include/hw/intc/arm_gicv5_common.h |   1 +
+ 4 files changed, 107 insertions(+)
 
->
-> Internal features must be registered after all GDB-visible features to
-> keep remote register numbering consistent. This ordering is enforced
-> with an assertion.
->
-> Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> ---
->  gdbstub/gdbstub.c      | 71 ++++++++++++++++++++++++++++++++++++++++++++=
-------
->  include/exec/gdbstub.h | 21 +++++++++++++++
->  2 files changed, 84 insertions(+), 8 deletions(-)
->
-> diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
-> index 912e31b66744..ac0f76d62333 100644
-> --- a/gdbstub/gdbstub.c
-> +++ b/gdbstub/gdbstub.c
-> @@ -54,6 +54,7 @@ typedef struct GDBRegisterState {
->      gdb_get_reg_cb get_reg;
->      gdb_set_reg_cb set_reg;
->      const GDBFeature *feature;
-> +    bool internal; /* hidden from GDB, accessible via API/monitor */
->  } GDBRegisterState;
->=20=20
->  GDBState gdbserver_state;
-> @@ -385,6 +386,11 @@ static const char *get_feature_xml(const char *p, co=
-nst char **newp,
->              }
->              for (guint i =3D 0; i < cpu->gdb_regs->len; i++) {
->                  r =3D &g_array_index(cpu->gdb_regs, GDBRegisterState, i);
-> +                /* The core target.xml feature must never be internal. */
-> +                g_assert(i > 0 || !r->internal);
-> +                if (r->internal) {
-> +                    continue;
-> +                }
->                  g_ptr_array_add(
->                      xml,
->                      g_markup_printf_escaped("<xi:include href=3D\"%s\"/>=
-",
-> @@ -400,6 +406,9 @@ static const char *get_feature_xml(const char *p, con=
-st char **newp,
->      /* Is it one of the features? */
->      for (guint i =3D 0; i < cpu->gdb_regs->len; i++) {
->          r =3D &g_array_index(cpu->gdb_regs, GDBRegisterState, i);
-> +        if (r->internal) {
-> +            continue;
-> +        }
->          if (strncmp(p, r->feature->xmlname, len) =3D=3D 0) {
->              return r->feature->xml;
->          }
-> @@ -563,13 +572,14 @@ int gdb_write_register(CPUState *cpu, uint8_t *mem_=
-buf, int reg)
->=20=20
->  static void gdb_register_feature(CPUState *cpu, int base_reg,
->                                   gdb_get_reg_cb get_reg, gdb_set_reg_cb =
-set_reg,
-> -                                 const GDBFeature *feature)
-> +                                 const GDBFeature *feature, bool interna=
-l)
->  {
->      GDBRegisterState s =3D {
->          .base_reg =3D base_reg,
->          .get_reg =3D get_reg,
->          .set_reg =3D set_reg,
-> -        .feature =3D feature
-> +        .feature =3D feature,
-> +        .internal =3D internal
->      };
->=20=20
->      trace_gdbxml_register_feature(feature->name, feature->xmlname,
-> @@ -605,7 +615,7 @@ void gdb_init_cpu(CPUState *cpu)
->          assert(feature->base_reg =3D=3D 0);
->          gdb_register_feature(cpu, 0,
->                               cc->gdb_read_register, cc->gdb_write_regist=
-er,
-> -                             feature);
-> +                             feature, false);
->          cpu->gdb_next_base_reg =3D cpu->gdb_num_g_regs =3D feature->num_=
-regs;
->      } else {
->          cpu->gdb_next_base_reg =3D cpu->gdb_num_g_regs =3D cc->gdb_num_c=
-ore_regs;
-> @@ -616,20 +626,26 @@ void gdb_init_cpu(CPUState *cpu)
->                            cc->gdb_num_core_regs);
->  }
->=20=20
-> -void gdb_register_coprocessor(CPUState *cpu,
-> -                              gdb_get_reg_cb get_reg, gdb_set_reg_cb set=
-_reg,
-> -                              const GDBFeature *feature)
-> +static void do_gdb_register_coprocessor(CPUState *cpu,
-> +                                        gdb_get_reg_cb get_reg,
-> +                                        gdb_set_reg_cb set_reg,
-> +                                        const GDBFeature *feature,
-> +                                        bool internal)
->  {
->      GDBRegisterState *s;
->      guint i;
->      int base_reg =3D cpu->gdb_next_base_reg;
->=20=20
->      for (i =3D 0; i < cpu->gdb_regs->len; i++) {
-> -        /* Check for duplicates.  */
->          s =3D &g_array_index(cpu->gdb_regs, GDBRegisterState, i);
-> +        /* Check for duplicates.  */
->          if (s->feature =3D=3D feature) {
->              return;
->          }
-> +        /* GDB-visible features must not follow internal ones.  */
-> +        if (!internal) {
-> +            g_assert(!s->internal);
-> +        }
->      }
->=20=20
->      if (base_reg < feature->base_reg) {
-> @@ -637,12 +653,27 @@ void gdb_register_coprocessor(CPUState *cpu,
->                                                feature->base_reg);
->          base_reg =3D feature->base_reg;
->      }
-> -    gdb_register_feature(cpu, base_reg, get_reg, set_reg, feature);
-> +    gdb_register_feature(cpu, base_reg, get_reg, set_reg, feature, inter=
-nal);
->=20=20
->      /* Add to end of list.  */
->      cpu->gdb_next_base_reg =3D base_reg + feature->num_regs;
->  }
->=20=20
-> +void gdb_register_coprocessor(CPUState *cpu,
-> +                              gdb_get_reg_cb get_reg, gdb_set_reg_cb set=
-_reg,
-> +                              const GDBFeature *feature)
-> +{
-> +    do_gdb_register_coprocessor(cpu, get_reg, set_reg, feature, false);
-> +}
-> +
-> +void gdb_register_internal_coprocessor(CPUState *cpu,
-> +                                       gdb_get_reg_cb get_reg,
-> +                                       gdb_set_reg_cb set_reg,
-> +                                       const GDBFeature *feature)
-> +{
-> +    do_gdb_register_coprocessor(cpu, get_reg, set_reg, feature, true);
-> +}
-> +
->  void gdb_unregister_coprocessor_all(CPUState *cpu)
->  {
->      /*
-> @@ -1223,6 +1254,18 @@ static void handle_remove_bp(GArray *params, void =
-*user_ctx)
->   * the remote gdb to fallback to older methods.
->   */
->=20=20
-> +static bool gdb_register_is_internal(CPUState *cpu, int reg)
-> +{
-> +    for (guint i =3D 0; i < cpu->gdb_regs->len; i++) {
-> +        GDBRegisterState *r =3D &g_array_index(cpu->gdb_regs, GDBRegiste=
-rState, i);
-> +
-> +        if (r->base_reg <=3D reg && reg < r->base_reg + r->feature->num_=
-regs) {
-> +            return r->internal;
-> +        }
-> +    }
-> +    return false;
-> +}
-> +
->  static void handle_set_reg(GArray *params, void *user_ctx)
->  {
->      int reg_size;
-> @@ -1232,6 +1275,12 @@ static void handle_set_reg(GArray *params, void *u=
-ser_ctx)
->          return;
->      }
->=20=20
-> +    if (gdb_register_is_internal(gdbserver_state.g_cpu,
-> +                                 gdb_get_cmd_param(params, 0)->val_ull))=
+diff --git a/hw/intc/arm_gicv5.c b/hw/intc/arm_gicv5.c
+index 4572e5a4017..e1796ec17a6 100644
+--- a/hw/intc/arm_gicv5.c
++++ b/hw/intc/arm_gicv5.c
+@@ -2450,6 +2450,75 @@ static void irs_vpe_dbr_write(GICv5 *s, GICv5Domain domain, uint64_t value)
+     }
+ }
+ 
++/* Data we need to pass to sync_l2_iste() */
++typedef struct SyncL2ISTEUserData {
++    GICv5Common *cs;
++    GICv5ISTConfig *cfg;
++} SyncL2ISTEUserData;
++
++static void sync_l2_iste(gpointer key, gpointer value, gpointer user_data)
++{
++    uint64_t id = GPOINTER_TO_INT(key);
++    uint64_t l2_iste = *(uint32_t *)value;
++    SyncL2ISTEUserData *ud = user_data;
++    hwaddr l2_iste_addr;
++
++    if (get_l2_iste_addr(ud->cs, ud->cfg, id, &l2_iste_addr)) {
++        write_l2_iste_mem(ud->cs, ud->cfg, l2_iste_addr, l2_iste);
++    }
++}
++
++static void irs_sync_ist_to_memory(GICv5Common *cs, GICv5ISTConfig *cfg)
++{
++    /*
++     * Push any information in the IST hash table out to guest memory
++     * (but don't drop the hash table entries).  Writeback errors are
++     * ignored. Compare put_l2_iste()'s code for writing out data whon
++     * it removes L2_ISTE entries from the hash table.
++     */
++    SyncL2ISTEUserData ud;
++
++    if (!cfg->valid) {
++        return;
++    }
++
++    ud.cs = cs;
++    ud.cfg = cfg;
++
++    g_hash_table_foreach(cfg->lpi_cache, sync_l2_iste, &ud);
++}
++
++static void irs_save_vmr_write(GICv5 *s, GICv5Domain domain, uint64_t value)
++{
++    GICv5Common *cs = ARM_GICV5_COMMON(s);
++    GICv5VMTConfig *cfg = &s->vmt_config[domain];
++    uint32_t vmid;
++    VMTE *vmte;
++
++    cs->irs_save_vmr[domain] = value;
++
++    if (!FIELD_EX64(cs->irs_save_vmr[domain], IRS_SAVE_VMR, S)) {
++        return;
++    }
++
++    /* Write out vLPI and vSPI config to guest memory */
++    vmid = FIELD_EX64(cs->irs_save_vmr[domain], IRS_SAVE_VMR, VM_ID);
++
++    if (!cfg->valid || vmid >= (1 << cfg->vm_id_bits)) {
++        return;
++    }
++
++    vmte = g_hash_table_lookup(cfg->vm_cache, GINT_TO_POINTER(vmid));
++    if (!vmte) {
++        return;
++    }
++
++    trace_gicv5_irs_save_vmr_write(domain_name[domain], vmid);
++
++    irs_sync_ist_to_memory(cs, &vmte->lpi_ist);
++    irs_sync_ist_to_memory(cs, &vmte->spi_ist);
++}
++
+ static void spi_sample(GICv5SPIState *spi)
  {
-> +        gdb_put_packet("E14");
-> +        return;
-> +    }
-> +
->      reg_size =3D strlen(gdb_get_cmd_param(params, 1)->data) / 2;
->      gdb_hextomem(gdbserver_state.mem_buf, gdb_get_cmd_param(params, 1)->=
-data, reg_size);
->      gdb_write_register(gdbserver_state.g_cpu, gdbserver_state.mem_buf->d=
-ata,
-> @@ -1248,6 +1297,12 @@ static void handle_get_reg(GArray *params, void *u=
-ser_ctx)
->          return;
->      }
->=20=20
-> +    if (gdb_register_is_internal(gdbserver_state.g_cpu,
-> +                                 gdb_get_cmd_param(params, 0)->val_ull))=
- {
-> +        gdb_put_packet("E14");
-> +        return;
-> +    }
-> +
->      reg_size =3D gdb_read_register(gdbserver_state.g_cpu,
->                                   gdbserver_state.mem_buf,
->                                   gdb_get_cmd_param(params, 0)->val_ull);
-> diff --git a/include/exec/gdbstub.h b/include/exec/gdbstub.h
-> index 75eb4d9c365e..1bc778324758 100644
-> --- a/include/exec/gdbstub.h
-> +++ b/include/exec/gdbstub.h
-> @@ -40,6 +40,27 @@ void gdb_register_coprocessor(CPUState *cpu,
->                                gdb_get_reg_cb get_reg, gdb_set_reg_cb set=
-_reg,
->                                const GDBFeature *feature);
->=20=20
-> +/**
-> + * gdb_register_internal_coprocessor() - register internal registers
-> + *
-> + * Like gdb_register_coprocessor(), but the feature is NOT exposed to
-> + * GDB via the target description XML. The registers are only
-> + * accessible through QEMU's internal APIs (HMP monitor ``$register``
-> + * expressions via gdb_get_register_list()).
-> + *
-> + * Internal features must be registered after all GDB-visible features
-> + * to avoid register numbering mismatches with GDB.
-> + *
-> + * @cpu - the CPU associated with registers
-> + * @get_reg - get function
-> + * @set_reg - set function
-> + * @feature - the GDBFeature describing the registers
-> + */
-> +void gdb_register_internal_coprocessor(CPUState *cpu,
-> +                                       gdb_get_reg_cb get_reg,
-> +                                       gdb_set_reg_cb set_reg,
-> +                                       const GDBFeature *feature);
-> +
->  /**
->   * gdb_unregister_coprocessor_all() - unregisters supplemental set of re=
-gisters
->   * @cpu - the CPU associated with registers
+     /*
+@@ -2717,6 +2786,22 @@ static bool config_readl(GICv5 *s, GICv5Domain domain, hwaddr offset,
+             *data = 0;
+         }
+         return true;
++    case A_IRS_SAVE_VMR:
++        if (gicv5_domain_has_virt(cs, domain)) {
++            *data = extract64(cs->irs_save_vmr[domain], 0, 32);
++        } else {
++            /* RAZ if no virt */
++            *data = 0;
++        }
++        return true;
++    case A_IRS_SAVE_VMR + 4:
++        if (gicv5_domain_has_virt(cs, domain)) {
++            *data = extract64(cs->irs_save_vmr[domain], 32, 32);
++        } else {
++            /* RAZ if no virt */
++            *data = 0;
++        }
++        return true;
+     case A_IRS_VPE_CR0:
+         /* RES0 when VIRT_ONE_N is not implemented */
+         *data = 0;
+@@ -2913,6 +2998,14 @@ static bool config_writel(GICv5 *s, GICv5Domain domain, hwaddr offset,
+         irs_vpe_dbr_write(s, domain,
+                           deposit64(cs->irs_vpe_dbr[domain], 32, 32, data));
+         return true;
++    case A_IRS_SAVE_VMR:
++        irs_save_vmr_write(s, domain,
++                           deposit64(cs->irs_save_vmr[domain], 0, 32, data));
++        return true;
++    case A_IRS_SAVE_VMR + 4:
++        irs_save_vmr_write(s, domain,
++                           deposit64(cs->irs_save_vmr[domain], 32, 32, data));
++        return true;
+     case A_IRS_VPE_CR0:
+         /* RES0 when VIRT_ONE_N is not implemented */
+         return true;
+@@ -3072,6 +3165,14 @@ static bool config_readll(GICv5 *s, GICv5Domain domain, hwaddr offset,
+             *data = 0;
+         }
+         return true;
++    case A_IRS_SAVE_VMR:
++        if (gicv5_domain_has_virt(cs, domain)) {
++            *data = cs->irs_save_vmr[domain];
++        } else {
++            /* RAZ/WI if no virt */
++            *data = 0;
++        }
++        return true;
+     }
+ 
+     return false;
+@@ -3108,6 +3209,9 @@ static bool config_writell(GICv5 *s, GICv5Domain domain, hwaddr offset,
+     case A_IRS_VPE_DBR:
+         irs_vpe_dbr_write(s, domain, data);
+         return true;
++    case A_IRS_SAVE_VMR:
++        irs_save_vmr_write(s, domain, data);
++        return true;
+     }
+ 
+     return false;
+diff --git a/hw/intc/arm_gicv5_common.c b/hw/intc/arm_gicv5_common.c
+index 50365c4dfe6..667f4501ef1 100644
+--- a/hw/intc/arm_gicv5_common.c
++++ b/hw/intc/arm_gicv5_common.c
+@@ -116,6 +116,7 @@ static void gicv5_common_reset_hold(Object *obj, ResetType type)
+         memset(cs->irs_vmap_vper, 0, sizeof(cs->irs_vmap_vper));
+         memset(cs->irs_vpe_selr, 0, sizeof(cs->irs_vpe_selr));
+         memset(cs->irs_vpe_dbr, 0, sizeof(cs->irs_vpe_dbr));
++        memset(cs->irs_save_vmr, 0, sizeof(cs->irs_vpe_dbr));
+ 
+         for (int i = 0; i < NUM_GICV5_DOMAINS; i++) {
+             cs->irs_vpe_statusr[i] = R_IRS_VPE_STATUSR_IDLE_MASK;
+diff --git a/hw/intc/trace-events b/hw/intc/trace-events
+index ddb7ab06207..9902cb97b8f 100644
+--- a/hw/intc/trace-events
++++ b/hw/intc/trace-events
+@@ -261,6 +261,7 @@ gicv5_irs_vpe_dbr_write_nv(const char *domain, uint32_t vmid, uint32_t vpeid) "G
+ gicv5_set_resident(const char *domain, uint32_t vmid, uint32_t vpeid, uint32_t cpuidx) "GICv5 IRS %s VM ID %u VPE %u set_resident phys CPU idx %u: now resident"
+ gicv5_set_non_resident(const char *domain, uint32_t cpuidx, bool db, uint8_t dbpm) "GICv5 IRS %s set_resident phys CPU idx %u: now no resident VPE; db_req %d dbpm %u"
+ gicv5_irs_ring_doorbell(const char *domain, uint32_t vmid, uint32_t db_intid) "GICv5 IRS %s VM ID %u: ringing doorbell LPI %u"
++gicv5_irs_save_vmr_write(const char *domain, uint32_t vmid) "GICv5 IRS %s VM ID %u saving IST data to memory"
+ 
+ # arm_gicv5_common.c
+ gicv5_common_realize(uint32_t irsid, uint32_t num_cpus, uint32_t spi_base, uint32_t spi_irs_range, uint32_t spi_range) "GICv5 IRS realized: IRS ID %u, %u CPUs, SPI base %u, SPI IRS range %u, SPI range %u"
+diff --git a/include/hw/intc/arm_gicv5_common.h b/include/hw/intc/arm_gicv5_common.h
+index d82cc23d10c..7bd6f557058 100644
+--- a/include/hw/intc/arm_gicv5_common.h
++++ b/include/hw/intc/arm_gicv5_common.h
+@@ -99,6 +99,7 @@ struct GICv5Common {
+     uint64_t irs_vpe_selr[NUM_GICV5_DOMAINS];
+     uint32_t irs_vpe_statusr[NUM_GICV5_DOMAINS];
+     uint64_t irs_vpe_dbr[NUM_GICV5_DOMAINS];
++    uint64_t irs_save_vmr[NUM_GICV5_DOMAINS];
+ 
+     /*
+      * Pointer to an array of state information for the SPIs.  Array
+-- 
+2.43.0
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
