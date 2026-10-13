@@ -4,151 +4,133 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D1F2CA9ED0
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 02:13:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE4F9CC6B08
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 02:44:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGS0Y-0002wn-Ls; Mon, 12 Oct 2026 22:12:50 -0400
+	id 1xGSUu-0002di-JD; Mon, 12 Oct 2026 22:44:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xGS0X-0002vm-6c
- for qemu-devel@nongnu.org; Mon, 12 Oct 2026 22:12:49 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xGS0U-0004P5-7k
- for qemu-devel@nongnu.org; Mon, 12 Oct 2026 22:12:48 -0400
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69D21MpU3509529
- for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 02:12:43 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- SJRkcv22iZt/tcNlOZ9fWK+mplwVFJFERSOcPAnCsHw=; b=TZBrFQUTp8ws5qge
- lYPc9Cz97c2nquZgMOBdY98usRK7LxEkyCfyydzlRSBqVIMAyyqzVY/hHlaM8CpA
- VhXB8HLCw6G7VmQI9/uSYbPq1OyWay1NO5CUeTSkWv3R00M/3lok27h0AZjPSCqK
- q0vkEI31InjB02mOtpbszRN7ojWfSW5rzCFUcQynDMi1ojoeJLGN9o87DP6FBgl6
- QUrH+ggzL9XCh/yIU1SPaM3MYwgcGjMBZEbQqsgBvqZuBYHXu2HCcJ7yA9Fevl57
- gMyG8CqDzRrqcwEqeg3xAYU2+kq8sERns0ge4lr1IMQfolOp86NeEQOsdxMo5g+X
- W3qKqw==
-Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com
- [209.85.215.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h8wbc3s6k-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 02:12:43 +0000 (GMT)
-Received: by mail-pg1-f198.google.com with SMTP id
- 41be03b00d2f7-cd5c91bbc36so2235553a12.1
- for <qemu-devel@nongnu.org>; Mon, 12 Oct 2026 19:12:43 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
+ id 1xGSUm-0002c4-S0
+ for qemu-devel@nongnu.org; Mon, 12 Oct 2026 22:44:06 -0400
+Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
+ id 1xGSUj-0008Jq-Ds
+ for qemu-devel@nongnu.org; Mon, 12 Oct 2026 22:44:03 -0400
+Received: by mail-ed1-x52a.google.com with SMTP id
+ 4fb4d7f45d1cf-6afa651700eso3615207a12.2
+ for <qemu-devel@nongnu.org>; Mon, 12 Oct 2026 19:44:00 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1791859440; cv=none;
+ d=google.com; s=arc-20260327;
+ b=BF6/71QKAXA7uRkh1LcID5g787TqjBQGmJABTFhfvOijlGHBnpksg5DhjKFP9+8ykc
+ AuBFgu8obcneuUjEbKyrDBwM2R3sXi3OM4shEGs1nXl1143Nfz3iv7QPxPo9K/E/6NxM
+ yS8lO1ADZkSB+GCgAsiEjTX+8lT7EjjEfXsqdGqbvdWIz7JhP/jgTMY5FZydf3aWz09r
+ t7t15zyKZ+QJ0hi1WItx/R1s7cw0nf2GEJlwV2pBEd+g6l8lbrrQ4nDksZ6w2kn/cYwx
+ RwRA4d44WPEVLXNvADJyZVFuWvM6Yi5zWZum4xF2slBBhlzVRB51hVkmwI7QI3UDWyIS
+ 4Exw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :reply-to:in-reply-to:references:mime-version:dkim-signature;
+ bh=Y7gkPMEVzzW21UVYNugAEa18gFl3PM/FhZ5WgMxgA2M=;
+ fh=VgrlbNwHCNphq916crJ1EiFcw0GAwOmGpsNZ4QWfjGY=;
+ b=TR2Juo9RuS+JwWarDERa1WURQ388cZJ1FHeLtGCQPjY4gFKVcb+cuG75bNmDrU1Z0n
+ Q/WcX7yAcWbs/9jhTv2mjy5v8EM/+uQ/y30qL9epACV7SpaKrytojzxJVIuCLL4blrnj
+ 6Eh1imSTJ6CT1uN0EEFBPQvyye3AjzbhupH5HTdGUxKVDUZ19yr9grX1CkutdYGCAy8h
+ aX8HkqrCAYsmPyl/ntcllUgQ1tmHCtvmxoWhKKkKoaw7cJap5ACfHRg6YNDM7mkWnyIZ
+ d5G9zz+W5tE8iqjH0dN/OUS4kyfD6TzFNOzKHXsKRFccxnZU7Z0V9kQh3lmap5yTlc9d
+ D//A==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1791857558; x=1792462358; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=SJRkcv22iZt/tcNlOZ9fWK+mplwVFJFERSOcPAnCsHw=;
- b=ZfPXHvq3qMHm20r01RD2S1XdMygRKb1YDKrk78YwmmTujRYOaIdBRWQTh5ve88uj2x
- ZZBlJmgLHxd5GaIx9KnY7X3XYUcUUEgNPZVcJoujzbWfLWJJG6lDPslzhARpcM+n4vLH
- xg1Q4+09iAKOJ3yrG5nqHV9RXOSyLWzEJKSe2+AHZ8OBYFdVtZ7n49MqNheWFWPwLC3b
- j6JhbfRNRPDdVn0Wnxi/ZjUoCgvmGldIqhvi2WI7SNix8ISTg2diGcLE+WSn/3/UyMSr
- g+8Z4SJcs3qQ6UBiu64EyWTbTPa1KtE2hZxJJfQyowW6f3QA8ErxaukA032t3r40t/ih
- sBqw==
+ d=gmail.com; s=20251104; t=1791859439; x=1792464239; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:reply-to:in-reply-to:references:mime-version:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=Y7gkPMEVzzW21UVYNugAEa18gFl3PM/FhZ5WgMxgA2M=;
+ b=FUMYesXrYyMHe12qbcF9L4GK37dQ23PBDhs8EC3FtHEaSVr7EXvlLK+z9Vu5orksgn
+ +OSLI0yvm8apNrIIGjPmbbz+zE1pcH5aBB+7bvoikW8ZVxfZaDAGkQdIqqUenDWa1N9X
+ NfNyfYg/hcGso23VWFVSe2xLBCS6DAoD7ODLNlo1i00bStVoL+hyNYDU5n2oGVGQn0AW
+ Lma3NEKkQN2XLIcnxnmccmSYt0Qwlusvj9OeutMPdI+D/6IzK91pWmMsIghIqXTLowiS
+ t61INTklP/JOrW65IdI2GkruitSbfqfegxIb+/ziN6aCyCpZhBYLNai6gdEIv+iFPzXz
+ LxNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791857558; x=1792462358;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=SJRkcv22iZt/tcNlOZ9fWK+mplwVFJFERSOcPAnCsHw=;
- b=AhBvaAOvtYOwqg+RJQ1NZgCpQ9aC4yPfoO80ajB7ZUg0Z0MRLApcXuc8urCxWFFZhn
- oSdzQO4Uo6C9Mcu2WEsVvQelE0vbJYRoBzEJ/XjMB+/nKbU7KAEfjijTtN6H8IuVf8nv
- cuRjjgIej7Uiwl6hC3FTevGazz8CtQvNASM0fbrFp4zfRshHGV/eFmEIigRu79fT4gQx
- z5yvfha6fn5CdCaGFbwuLfRUjy++t0L8TDb2P3sUJfZa80gcfzu21gmBBsCcr5AgM/F8
- rqGYUDL29TfVDZ/jmay6uaqGvpPoPFjxdgQGiE/EwtTUynleo8jfC9OhqdtWegFKNL9m
- T+lQ==
+ d=1e100.net; s=20260707; t=1791859439; x=1792464239;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:reply-to:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=Y7gkPMEVzzW21UVYNugAEa18gFl3PM/FhZ5WgMxgA2M=;
+ b=rv66e6IE4AUu5uUw4hALzhipnA7CyetR/J+W0/xlPZMBG2lOgb/VQAZwKCs4YyB5ES
+ WooUT2WyhFMqnhpZyN/ipfJLizc2tj/XD5fmTBai/m4npRgFys/xVMsxe91XqMD6gk2u
+ uvLtwKLAAbzUzWfH2SQv3iXFq0hY2ciIVD0u42/174pzpBbOj7eQy5jzaxVBGd5PMqzt
+ rZh8akFyPk6o+EPzdUjcvQT43tJvsSR7zN/hRYit/iBHjDF5iL0uKS0QEAG/FRw/rbFF
+ AyzJnRKD7sd1ytVZpwCrgkJMJ01YRiqGUtCLJ72uzjYHfGUxf1T14/FUMCwFxSOMcMOt
+ k8Sg==
 X-Forwarded-Encrypted: i=1;
- AKwUvBxN4CH17BqV3b1jZzOb/ZZvguht5U2yoJ5YGlSXSsNi0xI4wB4OrJC1zuEK3l/y1QoGDMJza6O6Byoj@nongnu.org
-X-Gm-Message-State: AFq9FYJ6eF7MPKRH9UCU0hviI/l4Jp0l3SvwDsR/20h4GVs3aCI5EnqP
- D1CV0CaDAslIb/4wNF9Jj/UqNykhC5YibXBdR3HdWAMf7NA7vUkxP2YzMANNIEd5YQKqEBpEKnC
- 1DqwP9o7OljHqxxykylXp90SHmDNybb5QtH3sC8rIvkBvnpiSguM61Udt/A==
-X-Gm-Gg: AYBFou1fsPWGHz9x+iXws+P3+v1j5Hkon/BIz2TiEpWl9HjG8+5DRTfEV/yJMhAbbG3
- ddBO0nKnjuhM4hA11oRBIfJxcWZ6s36VEYlU55n5P5GCiTUyJfl78NI1EOql/DvJPZaYzCbyd/2
- SlOazsKfardUahb7FdQxsZe4W3cBh/Yo9SHruYxsbpijSa0lbIT9SpilLkpXW7cdZOHi5cA/D70
- g/oyQUM5Zdrr+4Pk68smh5Ch6sRda/GKCgyHT1XqhI4Y9VzOt/u+hhf5oAVjT+En+W1bdNZHYZV
- +kGJS+4LTuxoRURbXp+cR8g/k7BN/fQNuTFP24Ixoyahkjn5Nvg+irRjkuFxRE2pDc/Zy/eIklv
- 7UWNJG4laU+M9wiSmiSlR2mQ34vmNj8oBg+eWL/8JTOusFzhvqwY2toGC
-X-Received: by 2002:a17:902:c406:b0:2e8:4f03:8a4 with SMTP id
- d9443c01a7336-2e84f030f63mr84600025ad.67.1791857557452; 
- Mon, 12 Oct 2026 19:12:37 -0700 (PDT)
-X-Received: by 2002:a17:902:c406:b0:2e8:4f03:8a4 with SMTP id
- d9443c01a7336-2e84f030f63mr84598895ad.67.1791857555145; 
- Mon, 12 Oct 2026 19:12:35 -0700 (PDT)
-Received: from [192.168.1.169] (192-80-163-190.dyn.novuscom.net.
- [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2e8421b16casm49862825ad.40.2026.10.12.19.12.34
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 12 Oct 2026 19:12:34 -0700 (PDT)
-Message-ID: <d4552417-493f-4577-ac64-b3b63b15cdd5@oss.qualcomm.com>
-Date: Mon, 12 Oct 2026 19:12:34 -0700
+ AKwUvBwmM0Ra7oI2J5g9KGyKk8h89g7/qzim1fyV3BsMZjCe9Cmi0oiyAkbDH+NNWDN2HwTpKQrxijJIPqOX@nongnu.org
+X-Gm-Message-State: AFq9FYJub0/7bdDWvOPLyyhYQrrBzjZoTcOFnS+DvuXtZBnAtbJNeG9r
+ OqyxXuK8w8+mnMDpI2nwH8kvfW1vWoykf9p4DJXJOZpQ3NQ4LPoQCMrSbMA2LPupPIZKCdkeTBa
+ MLeHykDTwqNUKwQrvmArH0wkIRgxlH4U=
+X-Gm-Gg: AYBFou0u9pFpHDzHWSfpolTbfoBgF9ub75b2yGhpQ9wX/qxKIqjhKW4ZkVbwh8i6oIX
+ SR7YaKE8tvMxsTiJWPqev6zj/KHSmJf/F0tFSbyBKeRNnect7THxEp+VxL70X8cFBkFLi3oS33r
+ dLeZgPw7Zx4cA41omfjGidU8K4f+DCjI/UMpWZXfm2zStm8Pev/XsK2Rn805njLXKoLj8TKuaT1
+ VKlvpVY4LXUcSxzQbwrCF58nzeYcqxff+IykKzgbwDxnhsGsikWVeJEN+Ncv2/IH8VEh3rwYcfB
+ EtlnUnz88UkhTKu9RB/q2RIvdBvvvgttMQVYcRPdtfuj5uSmI3Y5bfs=
+X-Received: by 2002:a05:6402:4486:b0:6aa:f630:f846 with SMTP id
+ 4fb4d7f45d1cf-6b17c26a90fmr9728221a12.31.1791859439355; Mon, 12 Oct 2026
+ 19:43:59 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] contrib/plugins/bbv.c: Allow selecting ROI
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>
-References: <20261007-bbv-v1-0-a2f521a68fdf@rsg.ci.i.u-tokyo.ac.jp>
- <20261007-bbv-v1-2-a2f521a68fdf@rsg.ci.i.u-tokyo.ac.jp>
- <4eec19e6-db40-4658-b5b3-bc342473cffd@oss.qualcomm.com>
- <f503ffbe-0900-4b8e-ae7b-dbfcc74eb5cc@rsg.ci.i.u-tokyo.ac.jp>
- <2d7c2cdb-b5b9-41ed-9786-dd9b4876bdd8@oss.qualcomm.com>
- <9cda6271-aed9-4a2b-b88f-bca8371d753e@rsg.ci.i.u-tokyo.ac.jp>
- <0b392aaf-7ce1-46bb-b39b-47744ea1e6f9@oss.qualcomm.com>
- <65391825-ef44-4771-99b4-ad3a47279762@rsg.ci.i.u-tokyo.ac.jp>
- <6b00ed2c-e78a-4ac7-9e5b-34d4aebefbbf@oss.qualcomm.com>
- <ea052c05-88bb-4640-801e-8b9937bc5955@rsg.ci.i.u-tokyo.ac.jp>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <ea052c05-88bb-4640-801e-8b9937bc5955@rsg.ci.i.u-tokyo.ac.jp>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDEzMDAwOCBTYWx0ZWRfX2mekaqXgSU4Q
- aO6HSE97aXCjg0IywtWXc4hlrsfMJdPqeDSormYxSGbrj/bDtdJVe8lkuZjoVBGBeaAotb7EDVr
- AkTkDMnJTCq0meKC+bwF5oPlmCv2Fjs=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDEzMDAwOCBTYWx0ZWRfX+dhMKFx/cwrt
- rtvL0HAMwMuhHzjUdIYMwwWwTcJg51rwMyZ7qzTGPQnmfMTiNBw+Dy88qm9T4AOMb0hleELPdwm
- FEpfIqP+B2z5oncXSOMvvOj1JsH46s9U4x3zZB7a7BEjNu/YA6va+rV8+xInFyRPFaodhakrgr5
- LjPzQK/AkL7J7vEh4vqR3TfEQjDG7bBe6311m9JkItKEk25Jj9cH9OyT/ZkPPnl7PU7SsW3vhGE
- j6hO3Qtp5zAQrXuu1pkl9mdzXVHPipHVjpUm+9GatKTKxmEfI3LKgop/NUCVv4YBeQzFVL8rSsf
- Jv3XfeJYK5oQPmwxD230zLMK2yfUcGs/F0VrPnM3BQ54QE18tMWZkkRs6cJZ4kfcPhAX0wShTn2
- t2/6i0dJ8EJLldMSFkt0hVkUebw6lhvdGTgvvevGIfYvLt8rQJncwL6pVsv1ByCRiBVvnO0m6Ry
- Euy5EFR2us8PxyD1Qww==
-X-Authority-Analysis: v=2.4 cv=C4p8WgP+ c=1 sm=1 tr=0 ts=6acd939b cx=c_pps
- a=Qgeoaf8Lrialg5Z894R3/Q==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
- a=eDXpo-QI_MWNifJFH9MA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=O8hF6Hzn-FEA:10 a=x9snwWr2DeNwDh03kgHS:22
-X-Proofpoint-ORIG-GUID: Nf-VFtYfjpybL4JOil8lVF9773xK3NSh
-X-Proofpoint-GUID: Nf-VFtYfjpybL4JOil8lVF9773xK3NSh
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-10-13_01,2026-10-09_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 priorityscore=1501 spamscore=0 bulkscore=0 adultscore=0
- malwarescore=0 suspectscore=0 lowpriorityscore=0 clxscore=1015 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610080000 definitions=main-2610130008
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <20261007115253.328-1-luoyonggang@gmail.com>
+ <2390b3d7-6918-41e3-8532-c19de4cdd1ff@oss.qualcomm.com>
+ <asdlbOZBSYIaCMIh@redhat.com>
+ <CAE2XoE91XxoJRFpQ_1jhmX6LdxMyN16CF7RXxM62C5Ctkc1tig@mail.gmail.com>
+ <42fd67c0-c20d-4bc4-bede-79073e4be4a1@oss.qualcomm.com>
+ <CAE2XoE-gN5-vmE8r00Ds_Z=E1WePSFi_MJXjmy9ZuXEU_=o31g@mail.gmail.com>
+ <3034c146-0697-4db7-acd4-8076b317a09e@oss.qualcomm.com>
+ <CAE2XoE-gCTrpEeCROz9JMpPnTQXQ+AnBTR4RwdQhYizkExjK9w@mail.gmail.com>
+ <8cb24445-b659-4bd4-9497-888ce152e82d@oss.qualcomm.com>
+ <1a477877-516a-41b8-8548-598bfad74f25@oss.qualcomm.com>
+ <CAE2XoE_MotPuxBBkLFWmcDf6ACva2r7y-7sRbQ3DNNwZvXcJFQ@mail.gmail.com>
+ <ae0dcb2d-1488-4cea-8bc0-2a0cb2cd74be@oss.qualcomm.com>
+In-Reply-To: <ae0dcb2d-1488-4cea-8bc0-2a0cb2cd74be@oss.qualcomm.com>
+From: Yonggang Luo <luoyonggang@gmail.com>
+Date: Tue, 13 Oct 2026 10:43:46 +0800
+X-Gm-Features: AclHuK9jmhqYMCRki5xsSX5FQKfrLz1BtUZP9c2TRveS9rt10eKENNqWPDFZ2Ec
+Message-ID: <CAE2XoE9B8RXg6=6kofVA=d6C5OBXT9GZ2cPceWUUDa4m9=_fRg@mail.gmail.com>
+Subject: Re: [PATCH 0/8] qom: pass TargetInfo to the is_available callback
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ qemu-devel@nongnu.org, Cleber Rosa <crosa@redhat.com>, 
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
+ Laurent Vivier <lvivier@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
+ John Snow <jsnow@redhat.com>, Laurent Vivier <laurent@vivier.eu>,
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Joel Stanley <joel@jms.id.au>, Fabiano Rosas <farosas@suse.de>,
+ Kane Chen <kane_chen@aspeedtech.com>, 
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Troy Lee <leetroy@gmail.com>, 
+ Jamin Lin <jamin_lin@aspeedtech.com>, Stafford Horne <shorne@gmail.com>,
+ qemu-arm@nongnu.org, Philippe Mathieu-Daude <philmd@mailo.com>,
+ Peter Maydell <peter.maydell@linaro.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Steven Lee <steven_lee@aspeedtech.com>, Alexander Bulekov <alxndr@bu.edu>, 
+ Darren Kenny <darren.kenny@oracle.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
+ envelope-from=luoyonggang@gmail.com; helo=mail-ed1-x52a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -161,374 +143,309 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: luoyonggang@gmail.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/12/26 7:00 AM, Akihiko Odaki wrote:
-> On 2026/10/09 15:37, Pierrick Bouvier wrote:
->> On 10/8/26 8:33 PM, Akihiko Odaki wrote:
->>> On 2026/10/09 11:30, Pierrick Bouvier wrote:
->>>> On 10/8/2026 5:57 PM, Akihiko Odaki wrote:
->>>>> On 2026/10/09 1:40, Pierrick Bouvier wrote:
->>>>>> On 10/7/2026 11:11 PM, Akihiko Odaki wrote:
->>>>>>> On 2026/10/08 10:08, Pierrick Bouvier wrote:
->>>>>>>> On 10/6/2026 11:01 PM, Akihiko Odaki wrote:
->>>>>>>>> A region of interest (ROI) often excludes the program startup and
->>>>>>>>> exit.
->>>>>>>>> For example, a benchmark may parse a large input and then run a
->>>>>>>>> computation kernel and the former may take longer than the latter;
->>>>>>>>> basic block vectors generated for the whole execution will not
->>>>>>>>> properly
->>>>>>>>> represent the latter.
->>>>>>>>>
->>>>>>>>> Add options to specify the beginning and the end of the ROI to
->>>>>>>>> bound
->>>>>>>>> basic block vector generation to the ROI.
->>>>>>>>>
->>>>>>>>> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
->>>>>>>>> ---
->>>>>>>>>       docs/about/emulation.rst |  8 +++++
->>>>>>>>>       contrib/plugins/bbv.c    | 80 +++++++++++++++++++++++++++++
->>>>>>>>> ++++++++
->>>>>>>>> +++++++++--
->>>>>>>>>       2 files changed, 86 insertions(+), 2 deletions(-)
->>>>>>>>>
->>>>>>>>> diff --git a/docs/about/emulation.rst b/docs/about/emulation.rst
->>>>>>>>> index c58149086cdd..0566171b517b 100644
->>>>>>>>> --- a/docs/about/emulation.rst
->>>>>>>>> +++ b/docs/about/emulation.rst
->>>>>>>>> @@ -284,6 +284,14 @@ The bbv plugin allows you to generate basic
->>>>>>>>> block vectors for use with the
->>>>>>>>>           * - Option
->>>>>>>>>           - Description
->>>>>>>>> +  * - begin=A
->>>>>>>>> +    - The virtual address of the instruction that starts basic
->>>>>>>>> block
->>>>>>>>> vector
->>>>>>>>> +      generation. Generation starts from the beginning of the
->>>>>>>>> execution if
->>>>>>>>> +      not specified.
->>>>>>>>> +  * - end=A
->>>>>>>>> +    - The virtual address of the instruction that ends basic block
->>>>>>>>> vector
->>>>>>>>> +      generation. Generation continues until the endo of the
->>>>>>>>> execution if
->>>>>>>>
->>>>>>>> small typo here: s/endo/end
->>>>>>>
->>>>>>> Thanks for catching the typo.
->>>>>>>
->>>>>>>>
->>>>>>>>> +      not specified.
->>>>>>>>>         * - interval=N
->>>>>>>>>           - The interval to generate a basic block vector
->>>>>>>>> specified by
->>>>>>>>> the number of
->>>>>>>>>             instructions (Default: N = 100000000)
->>>>>>>>> diff --git a/contrib/plugins/bbv.c b/contrib/plugins/bbv.c
->>>>>>>>> index e5caf5d9543b..a2a779f7639e 100644
->>>>>>>>> --- a/contrib/plugins/bbv.c
->>>>>>>>> +++ b/contrib/plugins/bbv.c
->>>>>>>>> @@ -5,6 +5,8 @@
->>>>>>>>>        * SPDX-License-Identifier: GPL-2.0-or-later
->>>>>>>>>        */
->>>>>>>>>       +#include <stdbool.h>
->>>>>>>>> +#include <stdint.h>
->>>>>>>>>       #include <stdio.h>
->>>>>>>>>       #include <glib.h>
->>>>>>>>>       @@ -26,6 +28,10 @@ static GHashTable *bbs;
->>>>>>>>>       static GRWLock bbs_lock;
->>>>>>>>>       static char *filename;
->>>>>>>>>       static struct qemu_plugin_scoreboard *vcpus;
->>>>>>>>> +static bool begin_present;
->>>>>>>>> +static uint64_t begin;
->>>>>>>>> +static bool end_present;
->>>>>>>>> +static uint64_t end;
->>>>>>>>>       static int64_t interval = 100000000;
->>>>>>>>>         static void plugin_exit(void *p)
->>>>>>>>> @@ -66,6 +72,7 @@ static void vcpu_init(unsigned int vcpu_index,
->>>>>>>>> void
->>>>>>>>> *userdata)
->>>>>>>>>           Vcpu *vcpu = qemu_plugin_scoreboard_find(vcpus,
->>>>>>>>> vcpu_index);
->>>>>>>>>             vcpu_filename = g_strdup_printf("%s.%u.bb", filename,
->>>>>>>>> vcpu_index);
->>>>>>>>> +    vcpu->count = begin_present ? INT64_MIN : -interval;
->>>>>>>>
->>>>>>>> Not sure which semantic we are trying to achieve with -interval
->>>>>>>> here.
->>>>>>>>
->>>>>>>> The original logic was to increment this count, until reaching
->>>>>>>> interval,
->>>>>>>> after what we would reset it by using vcpu_count -= interval, to
->>>>>>>> keep
->>>>>>>> the extra insn that went in after the threshold.
->>>>>>>
->>>>>>> The counter now starts at -interval and counts up to zero.
->>>>>>> Subtracting
->>>>>>> interval after emitting a vector still preserves the extra
->>>>>>> instructions.
->>>>>>> For example, with interval=100:
->>>>>>>
->>>>>>>         initial count:       -100
->>>>>>>         after 130 insns:       30  -> emit a vector
->>>>>>>         subtract interval:    -70  -> 70 insns until the next vector
->>>>>>>
->>>>>>>>
->>>>>>>>>           vcpu->file = fopen(vcpu_filename, "w");
->>>>>>>>>       }
->>>>>>>>>       @@ -102,6 +109,22 @@ static void
->>>>>>>>> vcpu_interval_exec(unsigned int
->>>>>>>>> vcpu_index, void *udata)
->>>>>>>>>           fputc('\n', vcpu->file);
->>>>>>>>>       }
->>>>>>>>>       +static void vcpu_begin_insn_exec(unsigned int vcpu_index,
->>>>>>>>> void
->>>>>>>>> *userdata)
->>>>>>>>> +{
->>>>>>>>> +    GHashTableIter iter;
->>>>>>>>> +    void *value;
->>>>>>>>> +
->>>>>>>>> +    g_rw_lock_reader_lock(&bbs_lock);
->>>>>>>>> +    g_hash_table_iter_init(&iter, bbs);
->>>>>>>>> +
->>>>>>>>> +    while (g_hash_table_iter_next(&iter, NULL, &value)) {
->>>>>>>>> +        qemu_plugin_u64_set(bb_count_u64(value), vcpu_index, 0);
->>>>>>>>> +    }
->>>>>>>>> +
->>>>>>>>> +    g_rw_lock_reader_unlock(&bbs_lock);
->>>>>>>>> +    qemu_plugin_u64_set(count_u64(), vcpu_index, -interval);
->>>>>>>>> +}
->>>>>>>>> +
->>>>>>>>>       static void vcpu_tb_trans(struct qemu_plugin_tb *tb, void
->>>>>>>>> *userdata)
->>>>>>>>>       {
->>>>>>>>>           uint64_t n_insns = qemu_plugin_tb_n_insns(tb);
->>>>>>>>> @@ -119,6 +142,19 @@ static void vcpu_tb_trans(struct
->>>>>>>>> qemu_plugin_tb
->>>>>>>>> *tb, void *userdata)
->>>>>>>>>           }
->>>>>>>>>           g_rw_lock_writer_unlock(&bbs_lock);
->>>>>>>>>       +    for (size_t idx = 0; idx < n_insns; idx++) {
->>>>>>>>> +        struct qemu_plugin_insn *insn =
->>>>>>>>> qemu_plugin_tb_get_insn(tb,
->>>>>>>>> idx);
->>>>>>>>> +        uint64_t insn_vaddr = qemu_plugin_insn_vaddr(insn);
->>>>>>>>> +
->>>>>>>>> +        if (begin_present && insn_vaddr == begin) {
->>>>>>>>> +            qemu_plugin_register_vcpu_insn_exec_cb(
->>>>>>>>> +                insn, vcpu_begin_insn_exec,
->>>>>>>>> QEMU_PLUGIN_CB_NO_REGS,
->>>>>>>>> NULL);
->>>>>>>>> +        } else if (end_present && insn_vaddr == end) {
->>>>>>>>> +            qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu(
->>>>>>>>> +                insn, QEMU_PLUGIN_INLINE_STORE_U64, count_u64(),
->>>>>>>>> INT64_MIN);
->>>>>>>>> +        }
->>>>>>>>> +    }
->>>>>>>>> +
->>>>>>>>>           qemu_plugin_register_vcpu_tb_exec_inline_per_vcpu(
->>>>>>>>>               tb, QEMU_PLUGIN_INLINE_ADD_U64, count_u64(), n_insns);
->>>>>>>>>       @@ -127,7 +163,32 @@ static void vcpu_tb_trans(struct
->>>>>>>>> qemu_plugin_tb *tb, void *userdata)
->>>>>>>>>             qemu_plugin_register_vcpu_tb_exec_cond_cb(
->>>>>>>>>               tb, vcpu_interval_exec, QEMU_PLUGIN_CB_NO_REGS,
->>>>>>>>> -        QEMU_PLUGIN_COND_GE, count_u64(), interval, NULL);
->>>>>>>>> +        QEMU_PLUGIN_COND_LT, count_u64(), INT64_MIN, NULL);
->>>>>>>>> +}
->>>>>>>>
->>>>>>>> is INT64_MIN used as an arbitrary large value when interpreted as
->>>>>>>> unsigned immediate? If yes, that's confusing to the reader.
->>>>>>>
->>>>>>> The unsigned comparison count < (uint64_t)INT64_MIN is equivalent
->>>>>>> with
->>>>>>> the signed comparison (int64_t)count >= 0. That is why this
->>>>>>> particular
->>>>>>> value is used.
->>>>>>>
->>>>>>> Setting count to INT64_MIN suppresses output for the next 2^63
->>>>>>> counted
->>>>>>> instructions, which is effectively disabled for this use. The beginEmulation
->>>>>>> callback clears the BB counters and sets count to -interval; end
->>>>>>> sets it
->>>>>>> back to INT64_MIN. The requested interval stays unchanged.
->>>>>>>
->>>>>>
->>>>>> Ok I see better.
->>>>>> Even though it works, it's pretty confusing to be honest. Inline
->>>>>> operatons works with unsigned values, so with conversion and wrap
->>>>>> around, it's safe, but really not intuitive.
->>>>>>
->>>>>> I would prefer if you could refactor this to keep a zero initialized
->>>>>> count value, and add a specific instrumentation path for begin, end
->>>>>> logic (COND_LT, UINT64_MAX - N) to keep the same behavior of "infinite
->>>>>> interval".
->>>>>
->>>>> We cannot choose a separate instrumentation path based on whether
->>>>> execution is inside the ROI. Instrumentation is installed when a TB is
->>>>> translated, but the same TB may execute both inside and outside the
->>>>> ROI.
->>>>>
->>>>> I will preserve this logic and add code comments for clarification.
->>>>>
->>>>
->>>> I took some time to read again how bbv works. Indeed, my idea to modify
->>>> interval was a non sense, and not what is expected.
->>>>
->>>> The current instrumentation per tb is always done unconditionally, and
->>>> the only need thing to do is to snapshot bbs hashtable to keep track of
->>>> the correct data only when being inside the ROI. The rest of existing
->>>> logic stays the same.
->>>>
->>>> - On enter, set vcpu->count to 0 (fresh start) and restore bb table from
->>>> previous exit (empty table if there was no exit yet).
->>>> - On exit, duplicate the bb table to allow to restore it next time we
->>>> enter in ROI.
->>>> Key idea is that we keep on adding things in bb table, but save/restore
->>>> when leaving/entering ROI.
->>>>
->>>> I think for robustness you should also add detection of those expected
->>>> transitions: Out of ROI -> Enter ROI -> Exit ROI -> Enter ROI -> ...
->>>>
->>>> Nothing is currently done to detect if if we meet enter/exit address
->>>> multiple times, without having the correct sequence. I don't know if we
->>>> want to report an error or handle reentrance correctly in this case.
->>>>
->>>> Also, should count be reset on each entrance, or do we want to keep
->>>> track of it also, and save/restore that on exit/enter? I tend to think
->>>> the idea is create a "virtual" interval than only is alive when being
->>>> inside the ROI. In this case, we should keep track of this value also.
->>>
->>> The current design that resets the bb table is intentional. A "virtual"
->>> interval spanning multiple ROIs would be misleading because it mixes
->>> different sections of execution.
->>>
->>
->> Ok.
->>
->>> I don't think we need to add a special handling to enforce a particular
->>> order of transitions. This patch performs the same action for the begin
->>> and end addresses and that makes the behavior predictable.
->>>
->>> Perhaps we can extend the documentation to clarify the "begin" marker to
->>> tell that it resets the bb table, making the behavior clear regardless
->>> of transition order.
->>>
->>
->> I'm fine to keep a simple model, but I'll ask you to remove the logic
->> involving negative numbers, it's just too confusing. Please remove:
->> vcpu->count = begin_present ? INT64_MIN : -interval;
->> and
->> QEMU_PLUGIN_COND_LT, count_u64(), INT64_MIN, NULL);
->>
->> Instead, let's add a new boolean "tracking_region" in struct Vcpu, that
->> is set to true when entering ROI (or true by default if no begin
->> parameter was given).
-> 
-> The flag may look simpler in isolation, but streamlining the
-> interactions with the counter requires more careful thought. Please see
-> below.
-> 
->>
->> Then, modify instrumentation to replace:
->> ```
->> else if (end_present && insn_vaddr == end) {
->>               qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu(
->>                   insn, QEMU_PLUGIN_INLINE_STORE_U64, count_u64(),
->> INT64_MIN);
->> ```
->> with:
->> ```
->> else if (end_present && insn_vaddr == end) {
->>      qemu_plugin_register_vcpu_insn_exec_cb(insn, vcpu_exit_region,
->> QEMU_PLUGIN_CB_NO_REGS, NULL);
->> }
->>
->> static void vcpu_exit_region(unsigned int vcpu_index, void *userdata)
->> {
->>      Vcpu *vcpu = qemu_plugin_scoreboard_find(vcpus, vcpu_index);
->>      vcpu_interval_exec(vcpu_index, NULL);
->>      vcpu->tracking_region = false;
->> }
->> ```
-> 
-> vcpu_exit_region should only disable tracking. Calling
-> vcpu_interval_exec directly bypasses its count >= interval precondition:
-> it subtracts interval even when count is smaller, wrapping the unsigned
-> counter, and emits a partial vector or potentially an empty one.
+On Tue, Oct 13, 2026 at 9:26=E2=80=AFAM Pierrick Bouvier
+<pierrick.bouvier@oss.qualcomm.com> wrote:
 >
-
-I'm fine with it. I was unsure if you wanted to dump the partial data, 
-aggregate it when reentering the section, or simply discard it.
-With a discard, it's even simpler, just need to set tracking_region to 
-false.
-
->>
->> In addition, let's rename s/vcpu_begin_insn_exec/vcpu_enter_region, to
->> be consistent and explicit on what it's doing.
->>
->> And finally, the last piece:
->> static void vcpu_interval_exec(unsigned int vcpu_index, void *udata)
->> {
->>       Vcpu *vcpu = qemu_plugin_scoreboard_find(vcpus, vcpu_index);
->>       if (!vcpu->tracking) {
->>         return;
->>       }
->>       ...
-> 
-> The early return must come after vcpu->count -= interval. Otherwise,
-> once count reaches interval outside the ROI, it remains above the
-> threshold and invokes the callback on every subsequent TB, rather than
-> once per interval.
+> On 10/11/26 9:26 PM, Yonggang Luo wrote:
+> > On Mon, Oct 12, 2026 at 10:25=E2=80=AFAM Pierrick Bouvier
+> > <pierrick.bouvier@oss.qualcomm.com> wrote:
+> >>
+> >> On 10/11/26 7:13 PM, Pierrick Bouvier wrote:
+> >>> On 10/11/26 1:22 PM, Yonggang Luo wrote:
+> >>>> On Fri, Oct 9, 2026 at 2:34=E2=80=AFAM Pierrick Bouvier
+> >>>> <pierrick.bouvier@oss.qualcomm.com> wrote:
+> >>>>>
+> >>>>> On 10/8/2026 10:13 AM, Yonggang Luo wrote:
+> >>>>>> On Fri, Oct 9, 2026 at 12:06=E2=80=AFAM Pierrick Bouvier
+> >>>>>> <pierrick.bouvier@oss.qualcomm.com> wrote:
+> >>>>>>>
+> >>>>>>> On 10/8/2026 2:46 AM, Yonggang Luo wrote:
+> >>>>>>>> On Thu, Oct 8, 2026 at 5:42=E2=80=AFPM Daniel P. Berrang=C3=A9 <=
+berrange@redhat.com> wrote:
+> >>>>>>>>>
+> >>>>>>>>> On Wed, Oct 07, 2026 at 01:25:46PM -0700, Pierrick Bouvier wrot=
+e:
+> >>>>>>>>>> On 10/7/2026 4:47 AM, Yonggang Luo wrote:
+> >>>>>>>>>>> This allows a combined binary to register machine types from =
+all its targets.
+> >>>>>>>>>>> Consequently, QMP `query-machines` can return machine entries=
+ from every
+> >>>>>>>>>>> target, even when `none` is selected. For example, a client c=
+an query the
+> >>>>>>>>>>> combined machine list with:
+> >>>>>>>>>>>
+> >>>>>>>>>>> ```json
+> >>>>>>>>>>> { "execute": "query-machines" }
+> >>>>>>>>>>> ```
+> >>>>>>>>>>>
+> >>>>>>>>>>> The returned list includes the registered machine classes fro=
+m all linked
+> >>>>>>>>>>> targets. This is separate from selecting a machine: with `-ta=
+rget none`,
+> >>>>>>>>>>> `-M virt` reports the targets that provide `virt` instead of =
+choosing one
+> >>>>>>>>>>> arbitrarily:
+> >>>>>>>>>>>
+> >>>>>>>>>>> ```text
+> >>>>>>>>>>> qemu-system -target none -M virt
+> >>>>>>>>>>> unsupported machine type: "virt" for target "none"
+> >>>>>>>>>>> Available for targets:
+> >>>>>>>>>>>      aarch64
+> >>>>>>>>>>>      arm
+> >>>>>>>>>>> ```
+> >>>>>>>>>>>
+> >>>>>>>>>>
+> >>>>>>>>>>    From the long conversation on a previous thread, I thought =
+we reached
+> >>>>>>>>>> the conclusion that if we didn't expose any ambiguous name, th=
+en -target
+> >>>>>>>>>> option is unnecessary, or maybe I got lost on track of this th=
+read.
+> >>>>>>>>>>
+> >>>>>>>>>> https://lore.kernel.org/qemu-devel/ar_coT44h5-zJPVV@redhat.com=
+/
+> >>>>>>>>>>
+> >>>>>>>>>> I'm not sure which semantic we want to have with -target none.=
+ If there
+> >>>>>>>>>> is no ambiguous name registered, we just don't need it at all.=
+ It's a
+> >>>>>>>>>> win-win IMHO.
+> >>>>>>>>>
+> >>>>>>>>> Yes, if we expose unique names for every machine, then -target =
+is then
+> >>>>>>>>> redundant.
+> >>>>>>>>
+> >>>>>>>> so how to diff riscv32-virt and risv64-virt? oh so for this mach=
+ine we
+> >>>>>>>> needs two name?
+> >>>>>>>> "virt" needs register twice for it? or register only a single ti=
+me,
+> >>>>>>>> but we prefix the target_name()
+> >>>>>>>> automatically? for example machine::name =3D=3D=3D "virt", but w=
+e can use
+> >>>>>>>> "riscv32-virt" "risv64-virt" to reach it?
+> >>>>>>>>
+> >>>>>>>
+> >>>>>>> Yes, ideally we should have different variant of virt for 32/64 b=
+it.
+> >>>>>>> Same goes for cpu max types.
+> >>>>>>>
+> >>>>>>> QOM type is always registered unambiguously ("$arch-virt"). Then,=
+ for
+> >>>>>>> the "alias" name, which is virt, in case multiple matches are fou=
+nd,
+> >>>>>>> command line can return an error with list of unambiguous names t=
+o call it.
+> >>>>>>>
+> >>>>>>> $ qemu-system -M virt
+> >>>>>>> Multiple virt machines are available. Please choose one of them:
+> >>>>>>> - aarch64-virt
+> >>>>>>> - riscv64-virt
+> >>>>>>>
+> >>>>>>> There is no "parsing" of the argument, it's just the real QOM typ=
+e. Then
+> >>>>>>> we can find which target it implements from mc->targets.
+> >>>>>>> And then, we can automatically choose which cpus should be availa=
+ble
+> >>>>>>> based on that, thanks to cpu->targets.
+> >>>>>>>
+> >>>>>>> For existing binaries, nothing change.
+> >>>>>>
+> >>>>>> Good, I think we found a clean way now, is_available should be
+> >>>>>> removed, and TypeInfo::targets and TypeImpl::targets should be add=
+ed.
+> >>>>>
+> >>>>> It goes into MachineClass only for now.
+> >>>>>
+> >>>>>> I think
+> >>>>>> for "virt" we can add a shared hw/machine-virt.c instead, and forw=
+arding to
+> >>>>>> the $arch specific virt. so that we only have a single "virt" regi=
+stered.
+> >>>>>> And it's
+> >>>>>> targets is
+> >>>>>> QEMU_ARCH_I386 |
+> >>>>>> QEMU_ARCH_ARM |
+> >>>>>> QEMU_ARCH_RISCV |
+> >>>>>> QEMU_ARCH_LOONGARCH |
+> >>>>>> QEMU_ARCH_M68K |
+> >>>>>> QEMU_ARCH_OR1K |
+> >>>>>> QEMU_ARCH_XTENSA |
+> >>>>>> QEMU_ARCH_HEXAGON
+> >>>>>>
+> >>>>>> So that we won't have a list of conflict QOM names for "virt" mach=
+ines.
+> >>>>>> As now we indeed have only a single "virt" machine that redirects =
+to
+> >>>>>> different targets.
+> >>>>>>
+> >>>>>
+> >>>>> The idea looks appealing, but I don't think it solves the problem t=
+o
+> >>>>> have multiple virt variants available at the same time.
+> >>>>>
+> >>>>> The "alias" idea you introduced before is good, we just need to add=
+ a
+> >>>>> check if an alias is really unique, else return an error, as explai=
+ned
+> >>>>> previously.
+> >>>>>
+> >>>>> If "-M aarch64-virt" works for both the new and existing binary, an=
+d -M
+> >>>>> virt only for existing binaries (and ambiguous for new one), I thin=
+k
+> >>>>> that's a safe approach.
+> >>>>>
+> >>>>>>
+> >>>>>> For other types also conflict can be handled in the same way, such=
+ as
+> >>>>>> "-cpu host" "-cpu max"
+> >>>>>> maybe others, but I think they all have the same way to deal with.
+> >>>>>>
+> >>>>>>
+> >>>>>> That's why  TypeInfo::targets and TypeImpl::targets better than so=
+le
+> >>>>>> Machine::targets
+> >>>>>>
+> >>>>>
+> >>>>> One step at a time.
+> >>>>> Let's keep focused on declaring targets for a single machine first.
+> >>>>> Then we can iterate to solve the "virt" problem.
+> >>>>> Then convert all the existing machines and add a check in machine-t=
+arget.c
+> >>>>> Then, and only then, we can see what happens with cpus.
+> >>>>
+> >>>> I tried this idea, but I faced a fatal error, because the
+> >>>> target_info() is not available until
+> >>>> the machine selected(the target arch will be select just along with
+> >>>> the machine selected), so basically
+> >>>> all calls to target_info() would raise an error(null pointer), how t=
+o
+> >>>> deal with it?
+> >>>>
+> >>>
+> >>> I see. Indeed, since we can't set a target before registering all typ=
+es,
+> >>> it implies that all the types class_init can't use target_* functions=
+.
+> >>>
+> >>>
+> >>> - register_accel_target_type
+> >>> - cpu_max_v8_register_type
+> >>>
+> >>
+> >> Sorry, mail sent to early.
+> >>
+> >> For the is_available callback usage, it should be easy to do the switc=
+h,
+> >> since it's basically the same information that what we are trying to d=
+o
+> >> - we can leave them for now.
+> >>
+> >> Some types (like accel and max mentioned above), explicitly change the=
+ir
+> >> definition depending on the target. It's a behavior we can't rely on
+> >> anymore, and it means we need proper distinct types instead of a singl=
+e
+> >> one with dynamic definition driven by target-info.
+> >>
+> >> I think that's the preliminary work needed, before being able to go
+> >> further: convert all existing usage in class_init with distinct types =
++
+> >> is_available, and then we can do the switch from is_available to the n=
+ew
+> >> .targets approach.
+> >
+> > Hi Pierrick,
+> > I have already tried that introducing new QOM names just to make class_=
+init
+> >   target-independent is too broad(means all usage of it should be handl=
+ed)
+> > and could complicate compatibility(changed too much code).
+> > Can we avoid new names by some new means(ideas welcome)?
+> >
 >
+> As a first step, I don't think we need new names, is_available can be
+> used to selectively register one definition or another and avoid any
+> clash. What is missing at the moment though, is that some types (like
+> cpu max above) change their definition based on target definition.
 
-Right, thanks for catching it.
 
->>
->> The impact performance of calling vcpu_interval_exec + one if every N
->> instructions is invisible, and at least, it's a piece of code we can
->> read in 6 months, and understand in less than 2 min without any
->> additional doc.
-> 
-> I agree the performance impact is negligible, but at least you need to
-> consider about that to be sure. Adding another flag requires those
-> additional considerations.
-> 
-> More broadly, I don't think it's ideal to introduce application-specific
-> logic for this. Looking at the bigger picture, a counting timer with
-> variable expiration is a common pattern that should ideally be supported
-> generally.
-> 
-> An alternative option is to have signed integer variants of
-> qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu() and similar
-> functions to support for that. However, I don't think those are
-> necessary either. Taking at an even broader perspective, C allows
-> avoiding such specialization by letting unsigned variables hold signed
-> values in a well-defined manner; even the underlying implementation of
-> the inline op uses signed and unsigned types interchangeably.
 >
+> So for cpu max, we would have two distinct types, both named max, but
+> one with is_available(target_arm), and other one with
+> is_available(target_aarch64), so they are never registered at the same ti=
+me.
 
-If the argument is "C allows that with a defined behaviour", I don't 
-think it makes a point for me. There is a lot of well defined and 
-confusing code you can write.
-
-Something like:
-  qemu_plugin_register_vcpu_tb_exec_cond_cb(
-         QEMU_PLUGIN_COND_LT, count_u64(), INT64_MIN, NULL);
-with limit and counter being unsigned is not readable for me.
-
-> Although it might not be immediately obvious that an unsigned variable
-> is storing a signed value, adding a brief clarifying comment is still
-> simpler than introducing another variable overall.
 >
+> Same for virt machines. It's already what we have, duplication is
+> handled at the moment with distinct is_available callbacks.
+>
+> Then, see below.
+>
+> >
+> >>
+> >> It's probably worth having the conversion in its own series (only
+> >> cleanup usage of target_* in class_init), before trying to get rid of
+> >> is_available.
+> >
+> >>
+> >> For the implementation, you can use the multi-targets.c binary test to
+> >> drive the change. Remove the module init for target info (leaving no
+> >> target set), and add a hacky patch to skip call to is_available (and
+> >> return true instead) and allow double definition (which will rely on
+> >> is_available). Then, fix all the segfault. Once it compiles and runs,
+> >> only double definition will be left, which can be handled by inserting
+> >> the right is_available callbacks. Then in a subsequent series, the
+> >> switch to .targets can be made.
+> >
+> >
+> > Still have no clean clue about how to remove is_available , as we have =
+many
+> > "virt" machines. Do you means all "virt" machines with "virt-machine" Q=
+OM names
+> > are inserted to the table? How to get it working because the "key" is s=
+tring.
+> >
+>
+> Once we have type definition which only depends on is_available, we can
+> convert this to .targets, which would contain the same information.
+> For the rest, I have some ideas, but I would like first we do the first
+> part (convert to is_available), which is already a huge work in itself,
+> and a series of its own.
 
- From there I'll let you decide between introducing the flag, or 
-reimplement that with positive values (sticking to init count=0) only if 
-you really prefer this approach.
+Indeed I am confused .targets only exists on Machine, how is it
+related to -cpu host -cpu max?
 
+
+I already have a working copy that does not depend on target_info()
+and selects target_info() when the machine
+is selected, no QOM name introduced. only for machines, we will have
+$target_name-$machine_name as a name for selecting
+the exact machine.
+
+The cpu max cpu host is dealt by moving the choose code out of
+class_init, into object_init. I really did not get your idea by use
+is_avaiable. because when I try to get all QOMs to be registered. then
+I won't call is_available at all.
+because "is_available" depends on target_info(),(we won't have
+target_info() till the machine is selected).
+
+>
 > Regards,
-> Akihiko Odaki
+> Pierrick
 
-Regards,
-Pierrick
+
+
+--=20
+         =E6=AD=A4=E8=87=B4
+=E7=A4=BC
+=E7=BD=97=E5=8B=87=E5=88=9A
+Yours
+    sincerely,
+Yonggang Luo
 
