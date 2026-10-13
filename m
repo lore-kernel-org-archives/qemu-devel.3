@@ -4,79 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5618ACA9ED2
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 13:27:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA257CC6B08
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 13:27:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGcUv-0002Xn-EK; Tue, 13 Oct 2026 09:24:53 -0400
+	id 1xGcTg-0001Fu-0Q; Tue, 13 Oct 2026 09:23:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xGcUq-0002Mw-Mv
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 09:24:50 -0400
+ id 1xGcTe-0001Fm-OO
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 09:23:34 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xGcUp-0004l2-Ai
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 09:24:48 -0400
+ id 1xGcTd-0004eM-B0
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 09:23:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1791897886;
+ s=mimecast20190719; t=1791897812;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=U5tZt2GKPFxcvJcqH7pbVZWVa6OrcAcgZ+nFbcOuK5s=;
- b=iKY6xnGnIga5PIMb0ZiAgNceVR16ZDO7o8QYBRlaMC6dwcVKeYFXk3tMCR/l984083vr6E
- M10feIDSPYe1OzxRcBU9hYvzj3MGJJgMebDhmrw12OqL08shjpXVxG05Bvfy8qUF6tC8mu
- +Dm2zyoqvMzv5q8PLL+Gqw9fPoJAu5s=
+ bh=T/94Nf4ceNLOjF4lRuv9bAHw4VGnd4kzGvse9dZPGRs=;
+ b=eXiJ+q/uz20HukFn9m5ZaxsBIRLPCOJg/bFIg5ldkQ/9Vcu/IThvCLgiyR+qPkjNrOcvWv
+ A7mgQF23l23QJr9dzpYLZ6DWw3IZ5iDG+gfMUnrqVlTyOHpd8gUU+pPMEcY0l7CL5JntQf
+ 017A0RzrWzSRTQESKb1EPAXIY3SBJ5w=
 Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-65-PWiu6hSrNTqFrzwJ9PvldA-1; Tue,
- 13 Oct 2026 13:24:45 +0000
-X-MC-Unique: PWiu6hSrNTqFrzwJ9PvldA-1
-X-Mimecast-MFC-AGG-ID: PWiu6hSrNTqFrzwJ9PvldA_1791897883
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-441-EM_J2clZMPiYrKCKJOwTvA-1; Tue,
+ 13 Oct 2026 13:23:29 +0000
+X-MC-Unique: EM_J2clZMPiYrKCKJOwTvA-1
+X-Mimecast-MFC-AGG-ID: EM_J2clZMPiYrKCKJOwTvA_1791897808
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7029A1801339; Tue, 13 Oct 2026 13:24:43 +0000 (UTC)
+ id 122321828AB4; Tue, 13 Oct 2026 13:23:28 +0000 (UTC)
 Received: from localhost (headnet03.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.114])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 7ACF11800446; Tue, 13 Oct 2026 13:24:42 +0000 (UTC)
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 46D77180058D; Tue, 13 Oct 2026 13:23:26 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Tue, 13 Oct 2026 17:23:19 +0400
-Subject: [GIT PULL 22/40] audio/paaudio: avoid pidfile path truncation
+Date: Tue, 13 Oct 2026 17:22:59 +0400
+Subject: [GIT PULL 02/40] chardev: add cols, rows fields
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20261013-ui-v1-22-92da3082ad96@redhat.com>
+Message-Id: <20261013-ui-v1-2-92da3082ad96@redhat.com>
 References: <20261013-ui-v1-0-92da3082ad96@redhat.com>
 In-Reply-To: <20261013-ui-v1-0-92da3082ad96@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org, Gerd Hoffmann <kraxel@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1394;
+Cc: peter.maydell@linaro.org, 
+ =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2362;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=Ke1CB+LepFRjcu3taLa9/9AW99V1bxXDH2iGD/NUxb4=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqzjDDYsJKj5TP8xaHT9bRWkW1lcrLGiBHrZYe1
- gts1imt3HiJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCas4wwwAKCRDa6OEJdZac
- 5cE8D/95ngwa1HqDzNf9PCEkumhh+sO/W3jv1FjhfvGLsxGspapTm8vu9mNwL9sMr7D+Bz7AU0b
- bj/JfJZr26jXKS7+gfGUXndgpCXCFkMy5xPmcoZ2uGFbEp9NYiRkp8RBkDYZhNaCwCBh60pIzmE
- ONm3A7JFqpMnExs229UISQ9oUXVR2WWVlv3+wKpsaw02Mn6RlO7Ds2c0tb6r6jBqmant8hF2aeO
- Rnyaewvz7T38gHrTUnr1RYV9ZV4El9/UmZBGpBrAuAOIWSWAvtNY1EvJ2cKGu7MNQ1Ic7kBRiOC
- Au/zkwlyVoiqzZWXODvAYg+SCZwRJSh0GdwSDk/NhJg5YdmmBwLa2sTdfzlpWtobjraN1chD12t
- Z9XjvcxZuU6jZn0P7EmfxOGBwFaXLojq3mm4zVbE5deGzIFTRSHUUdJjpU44zZ1fYvuQX/d/HsQ
- FL4trWCdyfTqAiND5lw0tjHA76WWZPCbjokjMMHbm6P6fRXkPY0enumPU9P23FP6pfE9blu4mDZ
- r1G0QBoIR27icq4pKoZ5mbC5lZJAfcOGIMXv/twDqd11+vKvtxvNTtkAyUS/BDXUaywTAk1Eoeh
- cxbKzjQL1jhZBnfGQCjX3alWm/o9ws/MdQ7CDfyK0eBh78xul8VCCb22qoa8yQUGKVTgn2Gm8kU
- 5AiXIsYggNNKx0A==
+ bh=yevMcdpgu+Wt7S65lPA/cOP/Wrt+5BO7Jg7EbFH9wV0=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqzjDCSTQ4eRKGOZ9XF2odRzrJvlSjxj8WOp712
+ 99hjTeALtCJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCas4wwgAKCRDa6OEJdZac
+ 5esXEACJWVo9YHufyVwix7tS3SbGCDpgjjDC42lbKBaAgRpBljgxG3fYtoM7X8r2zPxv+05Lbn1
+ iQVlUnPX1totNrACQcM30AAk1CfWlXvc6a7WxT7/le3HThredUyDaCGKgcYdrBHwdFDYE3WDlri
+ UJeiHwL93HUjlB8LVZpqOrurWS/rO3HODfLCDUOzBWNO8akQf42j6HbMwMb7LJbkfP1NsM+NEX4
+ 1YenDW9u4dXACplfOSMD53vukq8vBxxz5+PU2lC0SsHkBlpSzHgzgGK2q6qlq94NJ8J1ISW7NJk
+ 9ttIA+Iep5ll5IPX0YNM6yjXJ1+J0gf7PESeXBuC8Pe6744bOlUirYgpIs2UaXumn9fwcqvOuKW
+ M5lwTbbpj1wtHD6zI5BuGvIRO7QOMjcx3mTzj3P94z+aOfD2as+NfJvygnT5N/A8eQ850ipfrsg
+ ongzht+SBSMJOfe8Sr/CLhB+2SdcLcaGMnsCfsyuBrw7Da1vx2K6a7YZ6O5a4T1aX/KBj792bqX
+ BPcxrMg6hZ2PxPbkZe0JpouHIYYyNdY00ZfpyVVZTzLSjZKAIxAfcTtR9tE9oempuy20mCwl2yK
+ t+pKKLUP2gOwBIdNcyPc/GbyAmaVBEmjcPQFF6EQPDhjCAuQbnHGncG42yzucYEpxCmb5JhVlku
+ DUrOMHq7tWBlXHQ==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -102,40 +104,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The pidfile path is built with snprintf() into a 64-byte stack buffer,
-which can silently truncate when XDG_RUNTIME_DIR is long. Use
-g_strdup_printf() with g_autofree instead.
+From: Szymon Lukasz <noh4hss@gmail.com>
 
-Reported-by: Hui Peng <benquike@gmail.com>
-Fixes: d175505bd68d ("audio: check for pulseaudio daemon pidfile")
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-ID: <20261004-issue-4560-v1-5-ccbef537cbeb@redhat.com>
+These fields should be interpreted as the size of the terminal connected
+to a given chardev.
+
+Signed-off-by: Szymon Lukasz <noh4hss@gmail.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+[Filip: CharBackend -> CharFrontend]
+Signed-off-by: Filip Hejsek <filip.hejsek@gmail.com>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Message-ID: <20261012-console-resize-v10-1-2c3b10d829b3@gmail.com>
 ---
- audio/paaudio.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ chardev/char-fe.c         | 13 +++++++++++++
+ include/chardev/char-fe.h | 10 ++++++++++
+ include/chardev/char.h    |  1 +
+ 3 files changed, 24 insertions(+)
 
-diff --git a/audio/paaudio.c b/audio/paaudio.c
-index 9d0a622fc5e6..358595c0460e 100644
---- a/audio/paaudio.c
-+++ b/audio/paaudio.c
-@@ -819,7 +819,7 @@ audio_pa_realize(AudioBackend *abe, Audiodev *dev, Error **errp)
+diff --git a/chardev/char-fe.c b/chardev/char-fe.c
+index a44f2673731c..c61c91f77933 100644
+--- a/chardev/char-fe.c
++++ b/chardev/char-fe.c
+@@ -329,6 +329,19 @@ void qemu_chr_fe_set_echo(CharFrontend *c, bool echo)
      }
+ }
  
-     if (!popts->server) {
--        char pidfile[64];
-+        g_autofree char *pidfile = NULL;
-         char *runtime;
-         struct stat st;
++void qemu_chr_fe_get_winsize(CharFrontend *c, uint16_t *cols, uint16_t *rows)
++{
++    Chardev *chr = c->chr;
++
++    if (chr) {
++        *cols = chr->cols;
++        *rows = chr->rows;
++    } else {
++        *cols = 0;
++        *rows = 0;
++    }
++}
++
+ void qemu_chr_fe_set_open(CharFrontend *c, bool is_open)
+ {
+     Chardev *chr = c->chr;
+diff --git a/include/chardev/char-fe.h b/include/chardev/char-fe.h
+index a82894e1d511..e4a3801e7dfd 100644
+--- a/include/chardev/char-fe.h
++++ b/include/chardev/char-fe.h
+@@ -168,6 +168,16 @@ int qemu_chr_fe_wait_connected(CharFrontend *c, Error **errp);
+  */
+ void qemu_chr_fe_set_echo(CharFrontend *c, bool echo);
  
-@@ -828,7 +828,7 @@ audio_pa_realize(AudioBackend *abe, Audiodev *dev, Error **errp)
-             error_setg(errp, "XDG_RUNTIME_DIR not set");
-             return false;
-         }
--        snprintf(pidfile, sizeof(pidfile), "%s/pulse/pid", runtime);
-+        pidfile = g_strdup_printf("%s/pulse/pid", runtime);
-         if (stat(pidfile, &st) != 0) {
-             error_setg_errno(errp, errno, "could not stat pidfile %s", pidfile);
-             return false;
++/**
++ * qemu_chr_fe_get_winsize:
++ * @cols: the address for storing columns
++ * @rows: the address for storing rows
++ *
++ * Get the size of the terminal connected to the chardev backend.
++ * Returns *cols = *rows = 0, if no associated Chardev.
++ */
++void qemu_chr_fe_get_winsize(CharFrontend *c, uint16_t *cols, uint16_t *rows);
++
+ /**
+  * qemu_chr_fe_set_open:
+  * @c: a CharFrontend
+diff --git a/include/chardev/char.h b/include/chardev/char.h
+index 7377d8e60a08..6394ec2ffeeb 100644
+--- a/include/chardev/char.h
++++ b/include/chardev/char.h
+@@ -66,6 +66,7 @@ struct Chardev {
+     bool logtimestamp;
+     bool log_line_start;
+     int be_open;
++    uint16_t cols, rows;
+     /* used to coordinate the chardev-change special-case: */
+     bool handover_yank_instance;
+     GSource *gsource;
 
 -- 
 2.56.0.116.g6de20f6092dc
