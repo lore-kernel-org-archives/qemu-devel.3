@@ -4,147 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08B51CC6B0E
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7111DCC6B19
 	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 16:18:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGfC0-0001do-KS; Tue, 13 Oct 2026 12:17:32 -0400
+	id 1xGfCG-0001go-Aq; Tue, 13 Oct 2026 12:17:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xGfBs-0001c7-LK
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 12:17:24 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
+ id 1xGfCD-0001ee-N1
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 12:17:45 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xGfBp-0002tx-9P
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 12:17:24 -0400
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69DE422x615635
- for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 16:17:16 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- HkEV0KD3Yy2mDb8vl6QacftZwQHn3hdcVj9AFUlU2cY=; b=em4ehRpamqJ8gLHA
- 2oANGKcIRYcK6ktBxaudezKDgilqpqP1w7HJOHtZzbbg10swkPf+Ae972fVvD3tL
- Erot1IxhsKHPuX4frrx1OSTR4/c1h2w5BOMxXU0B0G9OBeiclFNZFMAqrBcgkYIT
- l6wgUph9Xkr52CMoTYC9JKfCQInb8+y9h17qArldhQdD3ZYNYpdRUFTuBdl37cXz
- R67+UCpiyehMmEGONfswrnsgvppC8XbmuxIwR1X/T6/SiLbHcE1kQHdFFv2laF8Y
- LTx57Jv6VC6tvYBaRwPO56U38FTlAWIo7VBUbhQwzJ64iDkmqG1dcHwMIYip2vGG
- lyOXFg==
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h9d7jb2f8-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 16:17:15 +0000 (GMT)
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-93a082c014aso21975985a.0
- for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 09:17:15 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
+ id 1xGfCA-0002yT-KD
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 12:17:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1791908260;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Zh2MOsNzaPtuTuhc4mJWogtC460g3kx4xvVwB8WOcwc=;
+ b=O52MnSiAEcgxyE/0IXQo3u/H3PlPEkODYROVOd20Qgb9OGYvBdD8TneW65LP9B4zIgCSF5
+ gYIB3jk2xuAQuM9RpvQxtPU/P47/3+42VBFKUB9nrxNzU8t1wnF5IDxp5PYpslMwSuunjA
+ cDDDdKO0oaxQAU1KDz5jgbjPcjLLCGA=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-27-i4vzmxmlO96PIeiTOEU83Q-1; Tue, 13 Oct 2026 16:17:39 +0000
+X-MC-Unique: i4vzmxmlO96PIeiTOEU83Q-1
+X-Mimecast-MFC-AGG-ID: i4vzmxmlO96PIeiTOEU83Q_1791908258
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-48c69bdeaacso2531404f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 09:17:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1791908235; x=1792513035; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=HkEV0KD3Yy2mDb8vl6QacftZwQHn3hdcVj9AFUlU2cY=;
- b=jcZs2bTKPjl9OJpX6kcF83seNXLQqZ5qCW5vd87ITyXjM5Si12TwCyyL8DoloGpNCz
- e9cYWotM34yyDkpKTc1GtqscRs2IsXqwamUjl189V6gX6046tfCY+QPG/8r7ETIzrecr
- /jCyDGupnxQuPAK7Rmt47lnp55wNFSUCHTtoocCM9XQRxtr7b8c77IoRZC5RihTwQ4//
- mht1a4/O7gYIKmPmmxEhqHCOCY2RA5DnpGUOCXx6UbgV/XW8wiCTz+CZh3P3FMTgxo9U
- N9sIVTL/17rXZcv6W669XJYw8Qucp73OvcMi+0eUsrs0FiyXjmGTLhNvFo5xxWenOMC4
- 35KQ==
+ d=redhat.com; s=google; t=1791908258; x=1792513058; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=Zh2MOsNzaPtuTuhc4mJWogtC460g3kx4xvVwB8WOcwc=;
+ b=W9CpWNPlE0A0OgmHdmboq7D1hccjT2COYXhj1x8H2aL5mUxHK5w5UiJHLz0fNbTUv5
+ pObssZflXjxsz9By5/6PcoGHXlTgQdNMnV1LI8x2U49qWWci3ND2P2YHyGVpdxyeZs8J
+ gfmX59SOuvZD3+hG3vBe5cVSwROMzvim7T08h7b9a5WOd82HGacd/+La8MzEsIur2muh
+ x9Uf3TuxAJhfph5j1sNjzAO/SKvNPDs6d1ixKDwLuyPe/6rKQmbrzO9qH+OPeCPHF7QS
+ hr7iKAosZM6mA0Wus8QwelKMeRru1ve1Mj2Qxd2BRzMmBGjbGiP7GUX/v6ezVAGWTk2i
+ IMNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791908235; x=1792513035;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=HkEV0KD3Yy2mDb8vl6QacftZwQHn3hdcVj9AFUlU2cY=;
- b=wHXDUm3Rj4Ri0CXCvNhBKynoreu2sYq1K9VQ2uIy4h1UI5d8n692sH/cOdpNJoXkMU
- 4dR4FMSZVPxeiwNuGTRFO7UH3+nlKL+/llazzoI9vLo61NcZZWkcxPHFdpH0gOF8Mgh7
- L8kV1pvm7qry56ZQ57TqWJkv/Ysq9gUgRUiJFazvOwnEGWcxzgcuwwqK1kieDRBZUlRc
- L3F35U8VSpPSPaSGV7KEqghQ8aSM3kBYpUK9/sf4CaHSXv9xD0h7L8QFzcz2Z7xbdWyk
- 4rQEHEzyvkzzlkqehYb1yDmofIItjz9IeDyHiLbcUsRtzScY+ukEUjB3/kx35ijIhTKr
- bz1A==
-X-Forwarded-Encrypted: i=1;
- AKwUvByZLDhKogySnMqIL6trMclEOdAvt4z4jJMditIVkvPA2uvXeLSJeExGHYwuCXwbwOBTFMcnkg+JG4g0@nongnu.org
-X-Gm-Message-State: AFq9FYL5aBksfUL4JUvduVzPGR8qImLwnU+PvBzIwIQiAFfBmhLT9RBE
- /vJP2k/LjNFP0biCndcg457HeVpMkFnDepeOkLfs5F9E8fCK6pKdnLmKBV5ld1/1iYSIoFSDu10
- /LyqZ8F6UiphdpQSxPHYzcmppNrvX6hDkZsAieW8CmkxFcJq9Mmg/QGBx+A==
-X-Gm-Gg: AYBFou2N1aMIP3G8lpkRlfvfi2hp1VT/Jqjk1Hjt9YfcWWbg7PA8TIyJriL7IR1oy45
- LWgKzpsCGRplP3xljLulfo3fdRfMM1oZribKg5tFW8F8NW4xx2WmzNRXDqpFbYJnziopwRybgTQ
- bdb7rMv+WhccCjYaAuiCzDhYyW0m/uZQJLLTlp2bjpKRPfl9RiZ/r2SJyxx4v00LsQKLazaTRO7
- co3FPlcZpHzRWDLIa45aTq633/XWnE5VsEhgIQMjiyrPz1D1fIlyvSScqKaO2WHhTjaqQd+f7CI
- 1QdSgOpxUPUCMqRoha7kZ3RFZTzVbtYL+9FH0qja/EOcg7E8Njc7HV3dq2U0hvKXMXtHrh0iQZ5
- T2LuCdulEIS+ES70d9vWVXQ==
-X-Received: by 2002:a05:620a:40d2:b0:93c:7861:675 with SMTP id
- af79cd13be357-93eb93ef2cdmr2053519285a.1.1791908234525; 
- Tue, 13 Oct 2026 09:17:14 -0700 (PDT)
-X-Received: by 2002:a05:620a:40d2:b0:93c:7861:675 with SMTP id
- af79cd13be357-93eb93ef2cdmr2053515085a.1.1791908233918; 
- Tue, 13 Oct 2026 09:17:13 -0700 (PDT)
-Received: from [10.111.130.93] ([212.136.9.21])
+ d=1e100.net; s=20260707; t=1791908258; x=1792513058;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=Zh2MOsNzaPtuTuhc4mJWogtC460g3kx4xvVwB8WOcwc=;
+ b=VX8jhA/QdTHvBFahsxM7RW90sCGzCepkNiVWYYBWNuLytFTUQLQ7R2U1XeGMwWSz/j
+ vOVAUE316HPk36uozrdpwjunjH8NgZ/oUXwlHnCL8DpTD7pkBJ6I+Y+JNCYuG7dn8p9t
+ tDP6ScyGF1OeUSM7LS/vfcExf8fDlsAuWVN9oUZVZxaWn2WfWcA+vZ7GHWuaM3N2DwJU
+ iFg7ECrP4uS+BAkkk35C1p8+uKgLQ6HdhSmxe2+dVjcuGyhSQp//PA6dvvcga2Kh9s87
+ U14bIxRJjJfPKkDcX3Vx+Dlb7RN+OQlfMKedxVVx1ebD1mL9XHh5o2Ca+Ql8tF3eBuQR
+ Q1wQ==
+X-Gm-Message-State: AFq9FYIygDM56sBUZsX4oy8om5VThjcm1bzFVIR7wgqLMhib4FwVkJa9
+ JtnuigaZdxsoOgUzd7IukLInEKJ1OI9ac9bgK7H2VljVVX2Yp5USJHPmDHHRongRToZtTvO09i/
+ sU72MIMTD1iWvk3zL//q9TMi3ILzCN2zOSZFSCRoG2VMrLDPstGWNELqn
+X-Gm-Gg: AYBFou2HBsV9NCDMDkpXrlbLbJkfS5FC1FAO5kK8ir2lB8CN4Cv49BQuJnDmbaagbsS
+ CK27BBL2bmDzhqNQGoUIxSkXIOPakAdtwjkO6K/4qk3vfsCO3908GublDZ7nPrlJUawHi7N2rHW
+ LjeXiSnq8mGl5V2dQ0bBwTKlDyApqkve+JdV1wg4B1YAC0v4KkGBjboimgF99+5Gy27ZBVAAv25
+ uPcMXKtr1ameMgZ+JSbv1ZUobuVYXPILidbYx6ffqKI88uo/YDDfn6eyggBb0mibf/uW2YfYCtr
+ XClbfveufhUH7bKIiaNKEBo+/Nh9rGbiXHJuvajmOK+Ua8vGY3jxLq2S5clgq8AuNRfa2LNSmQB
+ EndQYXKq/wBo72A==
+X-Received: by 2002:a05:6000:60b:b0:487:b28:c82a with SMTP id
+ ffacd0b85a97d-48dbace40damr25554472f8f.47.1791908258003; 
+ Tue, 13 Oct 2026 09:17:38 -0700 (PDT)
+X-Received: by 2002:a05:6000:60b:b0:487:b28:c82a with SMTP id
+ ffacd0b85a97d-48dbace40damr25554425f8f.47.1791908257534; 
+ Tue, 13 Oct 2026 09:17:37 -0700 (PDT)
+Received: from jmarcin-thinkpadt14gen5.tpbc.csb ([213.175.37.14])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48de0aaa9f9sm6200038f8f.19.2026.10.13.09.17.11
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 13 Oct 2026 09:17:12 -0700 (PDT)
-Message-ID: <eea8bfcd-f1ab-4397-bc1b-f770ca7caaa8@oss.qualcomm.com>
-Date: Tue, 13 Oct 2026 18:17:10 +0200
+ ffacd0b85a97d-48de0ac52d3sm6024844f8f.43.2026.10.13.09.17.36
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 13 Oct 2026 09:17:36 -0700 (PDT)
+Date: Tue, 13 Oct 2026 18:17:34 +0200
+From: Juraj Marcin <jmarcin@redhat.com>
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>
+Subject: Re: [PATCH] migration: Add option to VMSD to synchronize CPU right
+ after loading
+Message-ID: <as5Xxj_uTS9PYSAe@jmarcin-thinkpadt14gen5.tpbc.csb>
+References: <20260929132150.2215007-1-jmarcin@redhat.com>
+ <asaNj8NBIJvh1bbn@zhexu-thinkpadt14gen5.rmtcaon.csb>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 00/20] hw/core: Introduce Remote Port Co-simulation
- Protocol
-To: Ruslan Ruslichenko <ruslichenko.r@gmail.com>, qemu-devel@nongnu.org,
- Markus Armbruster <armbru@redhat.com>
-Cc: qemu-arm@nongnu.org, artem_mygaiev@epam.com, volodymyr_babchuk@epam.com,
- peter.maydell@linaro.org, francisco.iglesias@amd.com,
- edgar.iglesias@gmail.com, berrange@redhat.com, eugene@nuvacore.ai,
- Ruslan_Ruslichenko@epam.com, takahiro.nakata.wr@renesas.com
-References: <20260915160044.345788-1-ruslichenko.r@gmail.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <20260915160044.345788-1-ruslichenko.r@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: S30Dm6yul-o-pxFfyjb37DqvQY3fkun6
-X-Proofpoint-ORIG-GUID: S30Dm6yul-o-pxFfyjb37DqvQY3fkun6
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDEzMDA2NCBTYWx0ZWRfXzbkUD7R5WorL
- Uq2XGraZhXnslU73V8Shxe2guu04Y8E1IHYKO1TwVu4m5TAYcfsQxHaNSMn1pml93L57HPgsyqh
- zC0hcQydOsUYoDcttJfNw6gOt/58/Yo=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDEzMDA2NCBTYWx0ZWRfX46lPOdRazQMC
- nFP7HCTSecdgtJeqtoHD1KFvzLaOm9ezVYWjs1N9SupeUg8F4nuOlDe6b1wZ1ewXH82cYUNY3j7
- 85GQQi0pUXXjZ472HZ2VECjIcC2JfoXiYozSunkcpaakgiPhRWzum1X5FH3T0zI+kroEsLe9xPA
- DlcfQQwfX8BddHXk4COPKy5/CLlc/Eb329fT3wfPFLnVcUzBNEAErhELThuqG6j1vLU27xYmwwJ
- C6qZYjM4Pe3Db/9SXzf65+T+1J5PguXZX8+Vf7xe4i8pRuUUWWGnsLidblrrCnSj/lYvKnx+QEi
- 51Jw9DJWHViEMK1kSFk2FerjT1MP9AcRsg2Ykf+26ueT0clUnIUmBiWHbteAZ+ITKX3xa3WAs45
- hdgSmgzI6Buh4TiCGBHJPL6cpLSovI3K0+XKuwtbUThETfgYKo30deVaRJfSDzFwxfNBmhQdEDx
- XFOK2JnyTBGa5mG4XlQ==
-X-Authority-Analysis: v=2.4 cv=PMGaavqC c=1 sm=1 tr=0 ts=6ace598b cx=c_pps
- a=50t2pK5VMbmlHzFWWp8p/g==:117 a=/bviTfK1dmy+WGcHzWQ0gg==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
- a=69wJf7TsAAAA:8 a=NEAV23lmAAAA:8 a=javpHEMGAAAA:8 a=DBfv99YmAAAA:8
- a=Zv_7PsYmnftF76vf0H0A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=IoWCM6iH3mJn3m4BftBB:22 a=Fg1AiH1G6rFz08G2ETeA:22 a=UTe8bF8JKSS6dPDzRicV:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-10-13_01,2026-10-09_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 bulkscore=0 impostorscore=0 malwarescore=0
- lowpriorityscore=0 clxscore=1015 adultscore=0 spamscore=0 phishscore=0
- suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610080000
- definitions=main-2610130064
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+In-Reply-To: <asaNj8NBIJvh1bbn@zhexu-thinkpadt14gen5.rmtcaon.csb>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jmarcin@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -160,148 +122,389 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026-09-15 18:00, Ruslan Ruslichenko wrote:
-> From: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
-> 
-> This patch series introduces the Remote Port (RP) subsystem, a framework designed to connect QEMU with external simulation environments (such as SystemC models or RTL simulators).
+Hi Peter,
 
+On 2026-10-07 14:21, Peter Xu wrote:
+> On Tue, Sep 29, 2026 at 03:21:46PM +0200, Juraj Marcin wrote:
+> > From: Juraj Marcin <jmarcin@redhat.com>
+> > 
+> > Previously, the post init CPU synchronization with the accelerator, like
+> > KVM, was performed in the bottom half of the POSTCOPY_RUN command
+> > handler. However, this causes several problems.
+> > 
+> > First issue is that if CPU synchronization fails, the destination QEMU
+> > crashes. However, it is too late to recover the source side as the
+> > response to special PING has been already sent, and both sides are
+> > already in the POSTCOPY_ACTIVE state.
+> > 
+> > By moving synchronization before responding, if the machine crashes, the
+> > response is never sent and the source side can resume from the
+> > POSTCOPY_DEVICE state.
+> > 
+> > Second issue is caused when migration is paused due to a network
+> > failure or user command right after transitioning to the�POSTCOPY_ACTIVE
+> > state and the CPU synchronization causes a page fault. This page fault
+> > blocks the CPU and the main QEMU threads and cannot be resolved until
+> > postcopy migration is recovered. However, as libvirt also tries to
+> > execute 'cont' QMP command at this time (destination side transitions
+> > from POSTCOPY_DEVICE to POSTCOPY_ACTIVE), it will also halt waiting for
+> > the response from the blocked main QEMU thread, unaware of the fact that
+> > the migration is paused and needs to be recovered. Thus, it will wait
+> > indefinitely and never report postcopy migration error.
+> > 
+> > This patch adds an option to VMSD that identifies devices that require
+> > CPU post init synchronization and runs synchronization for those device
+> > after they are loaded.
+> > 
+> > This moved CPU synchronization right to the device load and if this CPU
+> > synchronization fails, or the network fails during it, the source side
+> > can safely transition from POSTCOPY_DEVICE to a FAILED state.
+> > 
+> > Signed-off-by: Juraj Marcin <jmarcin@redhat.com>
+> > ---
+> > This patch an alternative approach to my previous RFC patch [1] that is
+> > in my opinion less hacky and also pretty minimal.
+> > 
+> > [1]: https://lore.kernel.org/r/20260423154525.10292-1-jmarcin@redhat.com/
+> 
+> Thanks for the repost, Juraj.
+> 
+> Looks like this "integrate post_init into post_load" idea isn't trivial
+> indeed.  So after I read it, concerns I have:
+> 
+> - The current approach of marking VMSD with cpu_sync, definitely not ideal
+>   when VMSD is a generic structures; not good if VMSD code needs to
+>   reference CPUState at all,
+> 
+> - The difficulty justifying this won't break, one example is what happens
+>   if some other VMSDs may update the CPUState object, used to be reflected
+>   in post_init() in master branch where it was done after all post_load()s
+>   (and maybe something else).  It's the part where I questioned myself too
+>   in previous reply of your rfc series, paragraph "Said that, I do see some
+>   complexity over such a change..".
 
-> Motivation
-> In modern SoC and FPGA development, specialized hardware blocks are often verified using SystemC, Verilog, or VHDL long before silicon is available. While QEMU is optimized for high-performance CPU emulation and software development, it requires hardware models to be rewritten in C, which is time-consuming and duplicates effort.
-> 
-> The Remote Port (RP) subsystem addresses this limitation by enabling a Co-simulation environment. It allows QEMU to act as the high-performance Processing Subsystem, booting complex operating systems (e.g. Linux), while delegating specific peripheral modeling to external simulators (SystemC, RTL) via a socket connection.
-> 
-> The Remote Port protocol provides a socket-based interface that supports:
-> 
-> Memory Transactions: Bidirectional memory accesses (Master and Slave) allowing QEMU to access remote devices and vice versa.
-> Interrupts/GPIO: Propagation of interrupt signals between QEMU and the remote peer.
-> IOMMU/ATS Support: Support for Address Translation Services, allowing remote devices to operate correctly behind IOMMU.
-> Time Synchronization: Keeps QEMU and the external simulator in sync by advancing time in fixed steps (quantums).
-> 
-> Integration with SystemC Ecosystem
-> 
-> To connect the simulation side, the open-source libsystemctlm-soc library [1] is used. It acts as a bridge, translating Remote Port protocol packets into standard SystemC/TLM-2.0 transactions [2]. This allows users to attach existing TLM-2.0 compliant models to QEMU.
-> 
-> Architecture Overview
-> 
-> The series is structured into the following logical components:
-> 
-> 1. Core Protocol & Infrastructure
-> 
-> Establishes the socket connection and handshake (Hello protocol).
-> Implements the packet dispatch loop and thread management.
-> 
-> 2. Memory Transaction Support
-> 
-> RP Memory Slave: Allows the remote peer to initiate bus transactions within QEMU.
-> RP Memory Master: Represents a memory region in QEMU that forwards accesses to the remote peer.
-> 
-> 3. Address Translation Services (ATS)
-> 
-> Implements the logic to handle ATS requests from remote masters.
-> Integrates with QEMU's IOMMU notifiers to manage translation caches.
-> 
-> 4. Device Tree (FDT) & Configuration
-> 
-> Added FDT support for Remote Port Memory Master and GPIO
-> 
-> Dependencies
-> 
-> Patches 19-20 in series are based on the following previously submitted series:
-> FDT based machine v3: https://lists.nongnu.org/archive/html/qemu-devel/2026-04/msg00415.html
-> 
-> Instantiation of Remote Port via FDT also registers its reset handler,
-> needed to start protocol thread.
-> 
-> Validation:
-> 
-> The Sample Project demonstrating test setup with QEMU/Remote Port and SystemC emulated PL011 UART module available by following link:
-> https://github.com/renesas/SysC_Island_MIT
-> 
-> 
-> Patch Summary
-> The series is organized as follows:
-> 
-> System/Global:
-> 
-> system/physmem: Add ats_do_translate helper
-> 
-> Remote Port Core:
-> 
-> hw/core: Add Remote Port protocol packet definition
-> hw/core: Add Remote Port header helpers
-> hw/core: Add Remote Port session state and hello protocol
-> hw/core: Add Remote Port object skeleton
-> hw/core: Add Remote Port protocol thread and handshake
-> hw/core: Implement Remote Port response handling
-> hw/core: Implement Remote Port time synchronization
-> hw/core: Implement Remote Port irq, sync and ATS helpers
-> hw/core: Add Remote Port files to build
-> 
-> Memory & Bus Access:
-> 
-> hw/core: Implement Remote Port bus access helpers
-> hw/core: Add Remote Port Memory Master object skeleton
-> hw/core: Implement Remote Port Memory Master bus transactions
-> hw/core: Add Remote Port memory slave device
-> 
-> ATS & Streams:
-> 
-> hw/core: Add Remote Port Stream device
-> hw/core: Add Remote Port ATS device skeleton
-> hw/core: Implement Remote Port ATS logic and cache management
-> 
-> FDT & GPIO:
-> 
-> hw/core: Add Remote Port GPIO/Interrupt bridge
-> hw/core: Add FDT support to Remote Port GPIO
-> hw/core: Add FDT support to Remote Port memory master
-> 
-> Links:
-> [1] libsystemctlm library: https://github.com/Xilinx/libsystemctlm-soc
-> 
-> [2] SystemC TLM description: https://systemc.org/overview/systemc-tlm/
+Yes, this could be problematic...
 
-Re-ordering this series logical groups and the internal
-QEMU APIs used:
+> 
+> So now I start to wonder if we should stick with the PONG-later idea:
+> simpler, easier to justify, and expecting to fix the issue too.  Denis
+> already sent a patch for another issue, assuming it fixes this issue too:
+> 
+> https://lore.kernel.org/r/20261002110258.1835979-5-den@openvz.org
+> 
+> Let me know your thoughts.
 
-[1] Protocol and transport
+I checked the patch and it does indeed fix the issue. I wasn't quite
+convinced by that idea at first, as in my mind it was quite too far from
+the original PING/PONG use case. But it the end it is more robust and
+small solution, so I think we can scrap my patch and go with the patch
+from Denis.
 
-   Patch 1-4, (5), 7-9, 17
+> 
+> > ---
+> >  include/migration/vmstate.h  | 6 ++++++
+> >  migration/savevm.c           | 5 -----
+> >  migration/vmstate.c          | 6 ++++++
+> >  target/alpha/machine.c       | 1 +
+> >  target/arm/machine.c         | 1 +
+> >  target/avr/machine.c         | 1 +
+> >  target/hexagon/machine.c     | 1 +
+> >  target/hppa/machine.c        | 1 +
+> >  target/i386/machine.c        | 1 +
+> >  target/loongarch/machine.c   | 1 +
+> >  target/m68k/cpu.c            | 1 +
+> >  target/microblaze/machine.c  | 1 +
+> >  target/mips/system/machine.c | 1 +
+> >  target/or1k/machine.c        | 1 +
+> >  target/ppc/machine.c         | 1 +
+> >  target/riscv/machine.c       | 1 +
+> >  target/s390x/machine.c       | 1 +
+> >  target/sh4/cpu.c             | 1 +
+> >  target/sparc/machine.c       | 1 +
+> >  target/xtensa/cpu.c          | 1 +
+> >  20 files changed, 29 insertions(+), 5 deletions(-)
+> > 
+> > diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
+> > index 2901877308..60ddeacdd5 100644
+> > --- a/include/migration/vmstate.h
+> > +++ b/include/migration/vmstate.h
+> > @@ -298,6 +298,12 @@ struct VMStateDescription {
+> >       */
+> >  
+> >      bool early_setup;
+> > +    /*
+> > +     * This VMSD describes a CPU which requires synchronization with an
+> > +     * accelerator after it's loaded. Can be set to true only if the device
+> > +     * described by this VMSD is of type CPU.
+> > +     */
+> > +    bool cpu_sync;
+> >      int version_id;
+> >      int minimum_version_id;
+> >      MigrationPriority priority;
+> > diff --git a/migration/savevm.c b/migration/savevm.c
+> > index 4b590ea672..d7153912b1 100644
+> > --- a/migration/savevm.c
+> > +++ b/migration/savevm.c
+> > @@ -2235,8 +2235,6 @@ static void loadvm_postcopy_handle_run_bh(void *opaque)
+> >      /* TODO we should move all of this lot into postcopy_ram.c or a shared code
+> >       * in migration.c
+> >       */
+> > -    cpu_synchronize_all_post_init();
+> > -
+> >      trace_vmstate_downtime_checkpoint("dst-postcopy-bh-cpu-synced");
+> >  
+> >      qemu_announce_self(&mis->announce_timer, migrate_announce_params());
+> > @@ -3217,8 +3215,6 @@ int qemu_loadvm_state(QEMUFile *f, Error **errp)
+> >          }
+> >      }
+> >  
+> > -    cpu_synchronize_all_post_init();
+> > -
+> >      return ret;
+> >  }
+> >  
+> > @@ -3233,7 +3229,6 @@ int qemu_load_device_state(QEMUFile *f, Error **errp)
+> >          return ret;
+> >      }
+> >  
+> > -    cpu_synchronize_all_post_init();
+> >      return 0;
+> >  }
+> >  
+> > diff --git a/migration/vmstate.c b/migration/vmstate.c
+> > index 24004565bf..80a23f8943 100644
+> > --- a/migration/vmstate.c
+> > +++ b/migration/vmstate.c
+> > @@ -19,6 +19,7 @@
+> >  #include "qemu-file.h"
+> >  #include "qemu/bitops.h"
+> >  #include "qemu/error-report.h"
+> > +#include "system/hw_accel.h"
+> >  #include "trace.h"
+> >  
+> >  static bool vmstate_subsection_save(QEMUFile *f, const VMStateDescription *vmsd,
+> > @@ -449,6 +450,11 @@ bool vmstate_load_vmsd(QEMUFile *f, const VMStateDescription *vmsd,
+> >          return false;
+> >      }
+> >  
+> > +    if (vmsd->cpu_sync) {
+> > +        CPUState *cpu = CPU(opaque);
+> > +        cpu_synchronize_post_init(cpu);
+> > +    }
+> > +
+> >      trace_vmstate_load_state_success(vmsd->name);
+> >      return true;
+> >  }
+> > diff --git a/target/alpha/machine.c b/target/alpha/machine.c
+> > index dcba5d441b..2b72159f06 100644
+> > --- a/target/alpha/machine.c
+> > +++ b/target/alpha/machine.c
+> > @@ -82,6 +82,7 @@ static const VMStateField vmstate_cpu_fields[] = {
+> >  
+> >  const VMStateDescription vmstate_alpha_cpu = {
+> >      .name = "cpu",
+> > +    .cpu_sync = true,
+> >      .version_id = 1,
+> >      .minimum_version_id = 1,
+> >      .fields = vmstate_cpu_fields,
+> > diff --git a/target/arm/machine.c b/target/arm/machine.c
+> > index 53a2734d25..cdc9003866 100644
+> > --- a/target/arm/machine.c
+> > +++ b/target/arm/machine.c
+> > @@ -1247,6 +1247,7 @@ static int cpu_post_load(void *opaque, int version_id)
+> >  
+> >  const VMStateDescription vmstate_arm_cpu = {
+> >      .name = "cpu",
+> > +    .cpu_sync = true,
+> >      .version_id = 22,
+> >      .minimum_version_id = 22,
+> >      .pre_save = cpu_pre_save,
+> > diff --git a/target/avr/machine.c b/target/avr/machine.c
+> > index 8064a7214a..9232c98e72 100644
+> > --- a/target/avr/machine.c
+> > +++ b/target/avr/machine.c
+> > @@ -99,6 +99,7 @@ static const VMStateInfo vms_eind = {
+> >  
+> >  const VMStateDescription vms_avr_cpu = {
+> >      .name = "cpu",
+> > +    .cpu_sync = true,
+> >      .version_id = 1,
+> >      .minimum_version_id = 1,
+> >      .fields = (const VMStateField[]) {
+> > diff --git a/target/hexagon/machine.c b/target/hexagon/machine.c
+> > index 179b6f53a2..23548639a7 100644
+> > --- a/target/hexagon/machine.c
+> > +++ b/target/hexagon/machine.c
+> > @@ -21,6 +21,7 @@ static int hexagon_cpu_post_load(void *opaque, int version_id)
+> >  
+> >  const VMStateDescription vmstate_hexagon_cpu = {
+> >      .name = "cpu",
+> > +    .cpu_sync = true,
+> >      .version_id = 2,
+> >      .minimum_version_id = 2,
+> >      .post_load = hexagon_cpu_post_load,
+> > diff --git a/target/hppa/machine.c b/target/hppa/machine.c
+> > index 6a143cf8df..bfc286caaa 100644
+> > --- a/target/hppa/machine.c
+> > +++ b/target/hppa/machine.c
+> > @@ -224,6 +224,7 @@ static const VMStateField vmstate_cpu_fields[] = {
+> >  
+> >  const VMStateDescription vmstate_hppa_cpu = {
+> >      .name = "cpu",
+> > +    .cpu_sync = true,
+> >      .version_id = 1,
+> >      .minimum_version_id = 1,
+> >      .fields = vmstate_cpu_fields,
+> > diff --git a/target/i386/machine.c b/target/i386/machine.c
+> > index 8d69d7e25e..ced3c9a2ac 100644
+> > --- a/target/i386/machine.c
+> > +++ b/target/i386/machine.c
+> > @@ -1806,6 +1806,7 @@ static const VMStateDescription vmstate_apx = {
+> >  
+> >  const VMStateDescription vmstate_x86_cpu = {
+> >      .name = "cpu",
+> > +    .cpu_sync = true,
+> >      .version_id = 12,
+> >      .minimum_version_id = 11,
+> >      .pre_save = cpu_pre_save,
+> > diff --git a/target/loongarch/machine.c b/target/loongarch/machine.c
+> > index 931a5ca5ba..e6deddce58 100644
+> > --- a/target/loongarch/machine.c
+> > +++ b/target/loongarch/machine.c
+> > @@ -210,6 +210,7 @@ static const VMStateDescription vmstate_tlb = {
+> >  /* LoongArch CPU state */
+> >  const VMStateDescription vmstate_loongarch_cpu = {
+> >      .name = "cpu",
+> > +    .cpu_sync = true,
+> >      .version_id = 4,
+> >      .minimum_version_id = 4,
+> >      .fields = (const VMStateField[]) {
+> > diff --git a/target/m68k/cpu.c b/target/m68k/cpu.c
+> > index 9b52ad5fc2..28bc7bdd71 100644
+> > --- a/target/m68k/cpu.c
+> > +++ b/target/m68k/cpu.c
+> > @@ -638,6 +638,7 @@ const VMStateDescription vmstate_68040_spregs = {
+> >  
+> >  static const VMStateDescription vmstate_m68k_cpu = {
+> >      .name = "cpu",
+> > +    .cpu_sync = true,
+> >      .version_id = 1,
+> >      .minimum_version_id = 1,
+> >      .fields = (const VMStateField[]) {
+> > diff --git a/target/microblaze/machine.c b/target/microblaze/machine.c
+> > index f930ff8609..63c8816582 100644
+> > --- a/target/microblaze/machine.c
+> > +++ b/target/microblaze/machine.c
+> > @@ -101,6 +101,7 @@ static const VMStateField vmstate_cpu_fields[] = {
+> >  
+> >  const VMStateDescription vmstate_mb_cpu = {
+> >      .name = "cpu",
+> > +    .cpu_sync = true,
+> >      .version_id = 0,
+> >      .minimum_version_id = 0,
+> >      .fields = vmstate_cpu_fields,
+> > diff --git a/target/mips/system/machine.c b/target/mips/system/machine.c
+> > index bd1e4002cf..536d98f3c4 100644
+> > --- a/target/mips/system/machine.c
+> > +++ b/target/mips/system/machine.c
+> > @@ -374,6 +374,7 @@ static const VMStateDescription mips_vmstate_octeon_crypto = {
+> >  
+> >  const VMStateDescription vmstate_mips_cpu = {
+> >      .name = "cpu",
+> > +    .cpu_sync = true,
+> >      .version_id = 21,
+> >      .minimum_version_id = 21,
+> >      .post_load = cpu_post_load,
+> > diff --git a/target/or1k/machine.c b/target/or1k/machine.c
+> > index 2d5ca16c51..abf11a37a5 100644
+> > --- a/target/or1k/machine.c
+> > +++ b/target/or1k/machine.c
+> > @@ -133,6 +133,7 @@ static int cpu_post_load(void *opaque, int version_id)
+> >  
+> >  const VMStateDescription vmstate_openrisc_cpu = {
+> >      .name = "cpu",
+> > +    .cpu_sync = true,
+> >      .version_id = 1,
+> >      .minimum_version_id = 1,
+> >      .post_load = cpu_post_load,
+> > diff --git a/target/ppc/machine.c b/target/ppc/machine.c
+> > index 569536bd02..33b46d6f3c 100644
+> > --- a/target/ppc/machine.c
+> > +++ b/target/ppc/machine.c
+> > @@ -733,6 +733,7 @@ static const VMStateDescription vmstate_bhrb = {
+> >  
+> >  const VMStateDescription vmstate_ppc_cpu = {
+> >      .name = "cpu",
+> > +    .cpu_sync = true,
+> >      .version_id = 5,
+> >      .minimum_version_id = 5,
+> >      .pre_save = cpu_pre_save,
+> > diff --git a/target/riscv/machine.c b/target/riscv/machine.c
+> > index bf203bffce..f96f5b4dfb 100644
+> > --- a/target/riscv/machine.c
+> > +++ b/target/riscv/machine.c
+> > @@ -497,6 +497,7 @@ static const VMStateDescription vmstate_mseccfg = {
+> >  
+> >  const VMStateDescription vmstate_riscv_cpu = {
+> >      .name = "cpu",
+> > +    .cpu_sync = true,
+> >      .version_id = 12,
+> >      .minimum_version_id = 12,
+> >  #ifdef CONFIG_KVM
+> > diff --git a/target/s390x/machine.c b/target/s390x/machine.c
+> > index b44fba43f1..411d563e25 100644
+> > --- a/target/s390x/machine.c
+> > +++ b/target/s390x/machine.c
+> > @@ -256,6 +256,7 @@ static const VMStateDescription vmstate_diag318 = {
+> >  
+> >  const VMStateDescription vmstate_s390_cpu = {
+> >      .name = "cpu",
+> > +    .cpu_sync = true,
+> >      .post_load = cpu_post_load,
+> >      .pre_save = cpu_pre_save,
+> >      .version_id = 4,
+> > diff --git a/target/sh4/cpu.c b/target/sh4/cpu.c
+> > index 3bbdee301d..c9c724551b 100644
+> > --- a/target/sh4/cpu.c
+> > +++ b/target/sh4/cpu.c
+> > @@ -285,6 +285,7 @@ static void superh_cpu_initfn(Object *obj)
+> >  #ifndef CONFIG_USER_ONLY
+> >  static const VMStateDescription vmstate_sh_cpu = {
+> >      .name = "cpu",
+> > +    .cpu_sync = true,
+> >      .unmigratable = 1,
+> >  };
+> >  
+> > diff --git a/target/sparc/machine.c b/target/sparc/machine.c
+> > index 0d5d79b5e7..a45071b09a 100644
+> > --- a/target/sparc/machine.c
+> > +++ b/target/sparc/machine.c
+> > @@ -227,6 +227,7 @@ static int cpu_pre_save(void *opaque)
+> >  
+> >  const VMStateDescription vmstate_sparc_cpu = {
+> >      .name = "cpu",
+> > +    .cpu_sync = true,
+> >      .version_id = SPARC_VMSTATE_VER,
+> >      .minimum_version_id = SPARC_VMSTATE_VER,
+> >      .pre_save = cpu_pre_save,
+> > diff --git a/target/xtensa/cpu.c b/target/xtensa/cpu.c
+> > index 7c25b9ab70..c431450e58 100644
+> > --- a/target/xtensa/cpu.c
+> > +++ b/target/xtensa/cpu.c
+> > @@ -298,6 +298,7 @@ XtensaCPU *xtensa_cpu_create_with_clock(const char *cpu_type, Clock *cpu_refclk)
+> >  #ifndef CONFIG_USER_ONLY
+> >  static const VMStateDescription vmstate_xtensa_cpu = {
+> >      .name = "cpu",
+> > +    .cpu_sync = true,
+> >      .unmigratable = 1,
+> >  };
+> >  
+> > -- 
+> > 2.55.0
+> > 
+> 
+> -- 
+> Peter Xu
+> 
 
-[2] Memory management
-
-   Patch 10-15 — Memory, address translation logic and cache management
-
-   - get_system_memory()
-   - address_space_init()
-   - address_space_destroy()
-   - address_space_to_flatview()
-   - address_space_translate_internal()
-   - flatview_to_dispatch()
-   - dma_memory_rw()
-   - ats_do_translate()
-   - iommu_notifier_init()
-   - memory_region_get_iommu()
-   - memory_region_get_iommu_class_nocheck()
-   - memory_region_init_io()
-   - memory_region_iommu_attrs_to_index()
-   - memory_region_register_iommu_notifier()
-   - memory_region_unregister_iommu_notifier()
-
-   - sysbus_init_mmio()
-
-[3] GPIO and IRQ management
-
-   Patch (5), 16 — GPIO/Interrupt bridge
-
-   - qdev_init_gpio_in()
-   - qdev_init_gpio_out()
-   - qemu_set_irq()
-
-   - sysbus_init_irq()
-
-[4] QOM and QDev glue
-
-   Patch 6, 18-20
 
