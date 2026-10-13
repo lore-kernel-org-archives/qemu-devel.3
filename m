@@ -4,96 +4,141 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D4E8CC6B03
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 10:03:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD759CC6B08
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 10:08:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGZLU-0001Bf-CL; Tue, 13 Oct 2026 06:02:56 -0400
+	id 1xGZQR-00022b-6A; Tue, 13 Oct 2026 06:08:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xGZLQ-0001BG-Pz
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 06:02:54 -0400
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xGZLO-0007u7-Kk
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 06:02:52 -0400
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-48b042c0728so588324f8f.1
- for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 03:02:50 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xGZQP-00022T-Sg
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 06:08:01 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xGZQN-0000Iv-K9
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 06:08:01 -0400
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 69D8SjUM302959
+ for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 10:07:56 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ rhybMcsXt7MVlQU59av/4Ud9t8eo12dIx3v1X4AmRUo=; b=TJ4il0MqhJltiOQN
+ 5Gy+kb7yn7pVY6jQOMmCaeUfP8410b8OovWxHN7QB+1BvDSjKWfn5ue0xdgLhwXC
+ tkff5cU4SEgiyAHX0orX7XUbwLoxkfqzX/QR7wkiJMY7F0imG+5QfzdQrVVVebc4
+ vk7NJAfgsbRRuOcAxwV3SekMOISJqPi+QX/bGMl+i81k8snCtoSiEItJ019M8Ofn
+ h6XoDzP3ORIkaFt+/QbdNmxFgCXJft9cKTNJ1MAWxszllg8hyfjQ8x5VAWsgjeNV
+ 0vGxtPOd0m3zkhwiggLWXAf/aaJqrP6kU+P/mAbuFrQiRKh2ZvqBKxnVULauCn0F
+ +i0Lcg==
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h98sqa9wy-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 10:07:56 +0000 (GMT)
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-93cbacbb996so455755385a.2
+ for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 03:07:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1791885769; x=1792490569; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id
- :references:in-reply-to:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=9l8QxLsARWG71X43UIA7zF2h/xgxES9j9wgsYMacm1E=;
- b=jwWCO6yMWyGnTpqKDtI1sRtNwExlDxNFqjar7e5C5JDN+eLKQ8ZxEnyUuahPFG/EQM
- gBY2QpaCacVgQDueuE1zudI5tUFjmCr9dJ5EjeJqyn+aL4EpVHBEirWjWIalspcOhr30
- zhnb9oFlJY1urY0tDZIVeC04xQdrIT+JbckhNkwNckVC1Nqd5r1T1IILcXb3DcIk6JPl
- zy79ctU7toizNTQI+t6kKxFHVGR//yEgd2V6Z9H1TJlplLrEov7FgrSQBUxLbfilKmG/
- ag4GbMNw3RveH6fV1VCszYEanP6IRtwygZ2ybK0mQ32ooe2uZowTHAny23priuuV80b8
- VNEA==
+ d=oss.qualcomm.com; s=google; t=1791886076; x=1792490876; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=rhybMcsXt7MVlQU59av/4Ud9t8eo12dIx3v1X4AmRUo=;
+ b=LakAJdZr0goP/YbUbTfcpcR6pINN7Pq3Wq3k65aZjcgdMt29uDGTwVD1zr9qbHDXeE
+ z7d5faPW8YxHs4jti128mfxcbqgvNqHIw+jVdEP/5r95MPiVjmrQW0JI7dgD0+9K5Eb1
+ eNcwDC6fedJ3cyQBGH5KEWdRVk0fEQm6+wMPEuX6BrOLVeRHAu4/pdauO2esiEE3Y11G
+ A74q9yJXnUVQhexAD2B9GnPzDMn7i5AZE2l1URmG2Qn/bdNlLZQDsukhmvEzs63vhbfQ
+ tV0RixQ8Ml1o3M9gr3Ar45jY3/btNzZyrw6bjoFjpkXhxvk1QoPK+Bg7p9osR9lzJ4X9
+ S6KQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791885769; x=1792490569;
- h=content-transfer-encoding:content-type:mime-version:message-id
- :references:in-reply-to:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=9l8QxLsARWG71X43UIA7zF2h/xgxES9j9wgsYMacm1E=;
- b=U5+/Y183IcNFCT1JenWlnHVzSc1yNTUZhAY+iPwr0caMwXBFr448LprBm6Kl7yaQ0O
- SM85ECqesh4L4DETIJJDY/qXLadamq32aFQrGU8LWGPjeT6rfYfl9g6BDLPVU3usJpqD
- e7mcFv15OIHHrYLaz+zC3h5X0aJUGx+gaC60oYPHFylzYZkACmpF0z6wdcUqc3tyusTO
- 9YeWNWuuRaAsnkdZ7IyHcagyFCMXLBUiV9i6FEfZN/4sLKVMSIwinh343NLE+kHupnj+
- +Eo1Wz/c8b4j5GyX4Tg4ddCxjk3kZxTo9e2vNAN9P0OD20tSQSFYcSB+xHr44POORA4o
- Ip8Q==
+ d=1e100.net; s=20260707; t=1791886076; x=1792490876;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=rhybMcsXt7MVlQU59av/4Ud9t8eo12dIx3v1X4AmRUo=;
+ b=S5Whz9YBE/o+DUM3392EqQhNAPYQB5XqJbJybxtRn5E1eeA4M9sgUlvD774qOgtL2I
+ cYWtNAiaQgffsoB+JxKjhALA1gZD2YKtFWOYls4QncNAFEfpPF8N8yDQKQuK+v6P79cp
+ fslkJVVdhqoY6QDHXRwcu9eAkQnq/EmZ6GY3MYt6GqX+VrMTmc9meVu/94FamP9wxMNo
+ drBDC0ijl94uYvRSI4Um59xHx3WqYPxlxRwc3xLaTUa2JvpokIhB6DWN4gDSKd+mJEA3
+ yHN4M/QasnaqjHRmfWNU+SJ1Ps6Tz7/7p9/gZIvMf37BGCV1VpNLET0cw0C5oVJ1XfSD
+ nhmw==
 X-Forwarded-Encrypted: i=1;
- AKwUvBxDxdWwTUqFGh+Gtj/ZRwQjC3+8RjDV6eZPaN6Vj4vKg5e3bJLGzGngsNcI3EK2Rm/myx2/LcWx/FN2@nongnu.org
-X-Gm-Message-State: AFq9FYLZTb3mJhV60CUmN3NxLIwC2eWVI+Rw6m5ZhWE9wbYGNL8eJTB7
- 6WB1a4W8mlTv31OTik7/gOGhhEFOe0fAItPOY1AxV8BHHCqLsThZpA2BCN18Vg==
-X-Gm-Gg: AYBFou1GJMWpgLvi/+dc01L91NKxadOdqr58K4Sm+WC/FMxxifaip7lRdP2UDPSt9vV
- 1DznYsaC+cuL4xk8Ug/HgGhJcy1nDDkLEaiz0Hvjl9u1VnmKlRv+wS7QFsq+CG1vpKi49iNVEtE
- wFBLDi/pkiDWbn9pJRmO3P9XoFltpglUPG2AVXU5CsEvAP/gfzKkk8Jl2NDgubjpLVi06n0pJYf
- peiUpV8R1f9pH7WCu7722xm45FgbNQWqvTNW7yr0TrsjxSCg6arUj9PsQUNhazLuGIwjPZA/VjB
- 7ItOp0syzeLEzTCsHYC9+0eiuK2uLLQwIqxNlC+QZiu73lLruWmEULs3qN7bw54R5sI3zkNjKxN
- b8h9UCmO1Sr8tB86tkSMRtvCEPNV/iMMZVUYhL2lMy3oe/TObuTLUUiPqk6/YiDsImyNGS++JzD
- bheKNfBOTfxuyOi/ZOPvxZNamNThf9V4GEkib+rM6tNba6MltVZiBXoNNEicK3aUK0+5Ke8qQSt
- +u66+ssYZTPlkgj4SQ5Ty+O3IR5zF83TS3McQBheSqwySuVBV1F5bTD/jHr/63ambg39+I=
-X-Received: by 2002:a5d:4e4c:0:b0:48b:10c8:2181 with SMTP id
- ffacd0b85a97d-48dbaaec6a7mr17303506f8f.27.1791885768649; 
- Tue, 13 Oct 2026 03:02:48 -0700 (PDT)
-Received: from ehlo.thunderbird.net
- (p200300faaf35e00015f07061f2b3fa54.dip0.t-ipconnect.de.
- [2003:fa:af35:e000:15f0:7061:f2b3:fa54])
+ AKwUvBzLJ2/O2+7kAa2yn8iI6N9V5mb1mnmq/BzdlgK33sshTQBhEtxUK0iiu2Wwvg6tqvhU9Gda9EpeKwAZ@nongnu.org
+X-Gm-Message-State: AFq9FYJR7zp9QmhfhW0oS0bd/wO1U1lKHDq3J0lBjXOU06QhqKE3B636
+ ZPjUP/mfY76cswhQlIm7FhA73SqSe8ti7UJ+nDCSgPnv51lc+qfuKgCC0K2HqcCaaRx/ghzhYbl
+ HsrYPDxIrV/nQDfl9y+fkUCP+hGbj/c2yIYvYy4LnH5GpIr1yqCI0SBXDHQ==
+X-Gm-Gg: AYBFou3K7PgBgHqFiWcU/07JDGSZ0aSdx6V/+4FgbdIfd8bF1rGOGpfNXHqgBzUXCJL
+ KsjORbOiYAfVwzyeM1hgnUd8i4zc3/fdubHS5C+l+f3jq4TZzn+bhIMUSo1cn3WCytXiax+6MKT
+ TLPm3QH/PU7ooDiyyxnJJfyPtdjYq13fDLVw9Bm73SPDM+wJgQOit21xSaqesJPm4L+yNUZvfDX
+ Hrv0JIZCeRiw+8hASPEOpI6avWyPvKt7UHXY7EjtUfrflNJBSyeVCKLjtvRbEBpVnG73o3ZLmjX
+ gEMhU7DGuw9WKaxqwOVc5Xt6nSZms48huzCTGkAPMP1/QK+p27bTeZP2C+XyEi7v2sGpK9eVbvz
+ MaRWgoHf0a9scgd0wvzJ1c2m1v377k7oVUA==
+X-Received: by 2002:a05:620a:454f:b0:93e:d364:c9ee with SMTP id
+ af79cd13be357-93ed364ea97mr1244318385a.74.1791886075935; 
+ Tue, 13 Oct 2026 03:07:55 -0700 (PDT)
+X-Received: by 2002:a05:620a:454f:b0:93e:d364:c9ee with SMTP id
+ af79cd13be357-93ed364ea97mr1244315585a.74.1791886075466; 
+ Tue, 13 Oct 2026 03:07:55 -0700 (PDT)
+Received: from [192.168.69.210] (pmd666.hd.free.fr. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48de0bd1843sm4292643f8f.56.2026.10.13.03.02.47
+ 5b1f17b1804b1-4a19f249692sm290969025e9.3.2026.10.13.03.07.54
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 13 Oct 2026 03:02:47 -0700 (PDT)
-Date: Tue, 13 Oct 2026 10:02:43 +0000
-From: Bernhard Beschow <shentey@gmail.com>
-To: qemu-devel@nongnu.org, Bin Meng <bin.meng@processmission.com>,
- QEMU <qemu-devel@nongnu.org>
-CC: Bin Meng <bmeng.cn@gmail.com>, Jean-Christophe Dubois <jcd@tribudubois.net>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@oss.qualcomm.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-arm@nongnu.org,
- qemu-block@nongnu.org
-Subject: Re: [PATCH v3 00/10] hw/arm: Enable U-Boot boot on MCIMX6UL-EVK
-In-Reply-To: <20261004090500.3082641-1-bin.meng@processmission.com>
-References: <20261004090500.3082641-1-bin.meng@processmission.com>
-Message-ID: <B64519F5-5D6E-4098-9B27-B2941EA0B2EF@gmail.com>
+ Tue, 13 Oct 2026 03:07:54 -0700 (PDT)
+Message-ID: <220d3e91-fa4b-45dc-a8b5-8a6ee04e1ba5@oss.qualcomm.com>
+Date: Tue, 13 Oct 2026 12:07:54 +0200
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=shentey@gmail.com; helo=mail-wr1-x435.google.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
- FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 38/67] target/arm: GICv5 cpuif: Implement PPI pending
+ status registers
+Content-Language: en-US
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+References: <20260507155154.1886557-1-peter.maydell@linaro.org>
+ <20260507155154.1886557-39-peter.maydell@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <20260507155154.1886557-39-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDEzMDA0MCBTYWx0ZWRfXyDcHH65sLVEj
+ bGA6AU8KZCptIc2ntLOht9Y+gp27BNwArNJtuP3BJEOjxyVnhrEWlpa/Y9xoOX1Taz3inX4aZXo
+ pxGfWW9YudtBplFKgDEJsaFUl3W/222VOGKUf6RwLTilNHOX2lJyUIXyA5BxtGYKqCMqZ3/uZu1
+ wTPkaL0B/yHvjImJDbsAmBAUEusRXTk17EuBje9gE228brDQ0Fd6EXa2wripodt2KW5VJJa8+yd
+ Mnv0B6PxZyYxkFeeUE6vPBDzqTYpZroiq3WVPsC3manRO97Q9tPuUFXZ1wTXlNo56MI6RayA+1v
+ HyczTIAVflYeGiW/fqq/9bg+lprQTEIMV7zr/nZ02rPItgQqDNqsq6XpDOljhUzbxFi7b215lCN
+ lyLDWpXOTFqWOyVyWj+7G+JTbhLxvDiUzFFu08pKHzR4kndygNt/gPWy/aJd//4lTnp0G2EPfQR
+ mvClm+bdrc7VYx4B5gw==
+X-Authority-Analysis: v=2.4 cv=JN+uIMKb c=1 sm=1 tr=0 ts=6ace02fc cx=c_pps
+ a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
+ a=KKAkSRfTAAAA:8 a=i0EeH86SAAAA:8 a=qvKvpNmNlKrUKqZPLrAA:9 a=QEXdDO2ut3YA:10
+ a=PEH46H7Ffwr30OY-TuGO:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDEzMDA0MCBTYWx0ZWRfX16wDJfcfpzry
+ c8TFNZCA0TMy1y6Zo/ScR8eiUoTC0UrTKVuDiBjkRFlLsaVha6FQEi01jD8Sp2KvAoldBH05t/v
+ hGFKtVruBH8Hw/zXpL2Q+Ext/xB2amc=
+X-Proofpoint-ORIG-GUID: vPncI_1Hf8BjZ81XtDd__oMCQz7yHO8g
+X-Proofpoint-GUID: vPncI_1Hf8BjZ81XtDd__oMCQz7yHO8g
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-10-13_01,2026-10-09_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 bulkscore=0 priorityscore=1501 adultscore=0 suspectscore=0
+ phishscore=0 impostorscore=0 lowpriorityscore=0 clxscore=1015 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2610080000 definitions=main-2610130040
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,76 +154,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 7/5/26 17:51, Peter Maydell wrote:
+> The GICv5 PPI pending status is handled by two registers, one of
+> which is write-1-to-set and one of which is write-1-to-clear.  The
+> pending state is read-only for PPIs where the handling mode is Edge.
+> 
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+> Message-id: 20260327111700.795099-39-peter.maydell@linaro.org
+> ---
+>   target/arm/cpu.h             |  1 +
+>   target/arm/tcg/gicv5-cpuif.c | 44 ++++++++++++++++++++++++++++++++++++
+>   2 files changed, 45 insertions(+)
 
 
-Am 4=2E Oktober 2026 09:04:45 UTC schrieb Bin Meng <bin=2Emeng@processmiss=
-ion=2Ecom>:
->
->The mcimx6ul-evk machine can boot Linux directly, but it cannot run the
->U-Boot proper produced by Buildroot far enough to load a kernel from its
->SD card=2E Early U-Boot boot test accesses currently abort or observe
->placeholder values, and the i=2EMX uSDHC model exposes several issues=2E
->
->This series lets an unmodified Buildroot 2026=2E05 U-Boot 2024=2E07 image
->run on mcimx6ul-evk, load zImage and imx6ul-14x14-evk=2Edtb from USDHC2,
->start Linux, mount the SD card root file system, and reach the Buildroot
->login prompt=2E It also documents and tests the existing direct Linux boo=
-t
->path=2E
->
->Patches 1 through 4 provide the minimum early-firmware-visible state=2E
->Patches 5 through 8 address i=2EMX uSDHC behavior needed by U-Boot=2E The
->last two patches document both boot paths and add functional tests for
->U-Boot and direct Linux boot=2E
->
->This series is based on:
-><20261003170232=2E2450916-1-bin=2Emeng@processmission=2Ecom>
->as the sdhci changes have conflicts=2E
+>   static const ARMCPRegInfo gicv5_cpuif_reginfo[] = {
+>       /*
+>        * Barrier: wait until the effects of a cpuif system register
+> @@ -314,6 +334,30 @@ static const ARMCPRegInfo gicv5_cpuif_reginfo[] = {
+>           .fieldoffset = offsetof(CPUARMState, gicv5_cpuif.ppi_hm[1]),
+>           .resetvalue = PPI_HMR1_RESET,
+>       },
+> +    {   .name = "ICC_PPI_CPENDR0_EL1", .state = ARM_CP_STATE_AA64,
+> +        .opc0 = 3, .opc1 = 0, .crn = 12, .crm = 13, .opc2 = 4,
+> +        .access = PL1_RW, .type = ARM_CP_ALIAS | ARM_CP_IO | ARM_CP_NO_RAW,
+> +        .fieldoffset = offsetof(CPUARMState, gicv5_cpuif.ppi_pend[0]),
+> +        .writefn = gic_ppi_cpend_write,
+> +    },
+> +    {   .name = "ICC_PPI_CPENDR1_EL1", .state = ARM_CP_STATE_AA64,
+> +        .opc0 = 3, .opc1 = 0, .crn = 12, .crm = 13, .opc2 = 5,
+> +        .access = PL1_RW, .type = ARM_CP_ALIAS | ARM_CP_IO | ARM_CP_NO_RAW,
+> +        .fieldoffset = offsetof(CPUARMState, gicv5_cpuif.ppi_pend[1]),
+> +        .writefn = gic_ppi_cpend_write,
+> +    },
+> +    {   .name = "ICC_PPI_SPENDR0_EL1", .state = ARM_CP_STATE_AA64,
+> +        .opc0 = 3, .opc1 = 0, .crn = 12, .crm = 13, .opc2 = 6,
+> +        .access = PL1_RW, .type = ARM_CP_IO | ARM_CP_NO_RAW,
+> +        .fieldoffset = offsetof(CPUARMState, gicv5_cpuif.ppi_pend[0]),
+> +        .writefn = gic_ppi_spend_write,
+> +    },
+> +    {   .name = "ICC_PPI_SPENDR0_EL1", .state = ARM_CP_STATE_AA64,
 
-Series applied cleanly for me onto latest master (615ece3c406b) with the f=
-unctional test passing=2E
+ICC_PPI_SPENDR1_EL1 typo?
 
-Best regards,
-Bernhard
-
->
->Changes in v3:
->- Rebase on the v3 PolarFire SoC Icicle Kit series
->- Model the full reserved page as a child of a15mpcore_priv
->- Validate MMDC RAM geometry and document supported capacities
->- Translate uSDHC vendor clock gates in its MMIO handlers
->- Cover partial reset accesses and migrate vendor clock state
->- Extend contiguous SDMA completion to both eSDHC byte orders
->
->Bin Meng (10):
->  hw/cpu: a15mpcore: Model the reserved page as RAZ/WI
->  hw/misc: imx6ul_ccm: Update PMU_MISC0 reset value
->  hw/arm: fsl-imx6ul: Map early firmware register placeholders
->  hw/arm: fsl-imx6ul: Add a minimal MMDC geometry model
->  hw/sd: sdhci: Use a QEMU-local no-busy IRQ quirk bit
->  hw/sd: sdhci: Honor i=2EMX uSDHC vendor clock gates
->  hw/sd: sdhci: Preserve uSDHC status enables for U-Boot
->  hw/sd: sdhci: Skip SDMA boundary stops for eSDHC and uSDHC
->  docs/system/arm: Document MCIMX6UL-EVK Buildroot boot
->  tests/functional/arm: Add MCIMX6UL-EVK boot tests
->
-> MAINTAINERS                               |   1 +
-> docs/system/arm/mcimx6ul-evk=2Erst          |  72 +++++++++++
-> include/hw/arm/fsl-imx6ul=2Eh               |   2 +
-> include/hw/cpu/a15mpcore=2Eh                |   6 +
-> include/hw/sd/sdhci=2Eh                     |  10 +-
-> hw/arm/fsl-imx6ul=2Ec                       |  87 ++++++++++++-
-> hw/arm/mcimx6ul-evk=2Ec                     |   2 +
-> hw/cpu/a15mpcore=2Ec                        |  53 ++++++++
-> hw/misc/imx6ul_ccm=2Ec                      |   2 +-
-> hw/sd/sdhci=2Ec                             | 151 +++++++++++++++++-----
-> tests/functional/arm/meson=2Ebuild          |   2 +
-> tests/functional/arm/test_mcimx6ul_evk=2Epy |  69 ++++++++++
-> 12 files changed, 416 insertions(+), 41 deletions(-)
-> create mode 100644 tests/functional/arm/test_mcimx6ul_evk=2Epy
->
->---
->base-commit: 3ee3bacb1edd0896cb26f0f66493b4ab006fbffa
->branch: imx6ul-evk
->
+> +        .opc0 = 3, .opc1 = 0, .crn = 12, .crm = 13, .opc2 = 7,
+> +        .access = PL1_RW, .type = ARM_CP_IO | ARM_CP_NO_RAW,
+> +        .fieldoffset = offsetof(CPUARMState, gicv5_cpuif.ppi_pend[1]),
+> +        .writefn = gic_ppi_spend_write,
+> +    },
+>   };
 
