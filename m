@@ -4,129 +4,159 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FE0BCC6B0E
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 06:41:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B957CC6B0F
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 06:57:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGWBp-0007HB-JR; Tue, 13 Oct 2026 02:40:45 -0400
+	id 1xGWSA-0000Vv-8e; Tue, 13 Oct 2026 02:57:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1xGWBk-0007GI-7m
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 02:40:41 -0400
-Received: from 3.mo528.mail-out.ovh.net ([46.105.54.122])
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xGWS9-0000Vh-Di
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 02:57:37 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1xGWBh-0004iX-BP
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 02:40:39 -0400
-Received: from director6.derp.mail-out.ovh.net
- (director6.derp.mail-out.ovh.net [79.137.60.226])
- by mo528.mail-out.ovh.net (Postfix) with ESMTPS id 4j3l872srbz66vj;
- Tue, 13 Oct 2026 06:40:23 +0000 (UTC)
-Received: from director6.derp.mail-out.ovh.net
- (director6.derp.mail-out.ovh.net. [127.0.0.1])
- by director6.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
- for <jamin_lin@aspeedtech.com>; Tue, 13 Oct 2026 06:40:23 +0000 (UTC)
-Received: from mta7.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.58.238])
- by director6.derp.mail-out.ovh.net (Postfix) with ESMTPS id
- 4j3l871D8pz46Xm; Tue, 13 Oct 2026 06:40:23 +0000 (UTC)
-Received: from kaod.org (unknown [10.1.6.1])
- (Authenticated sender: clg@kaod.org)
- by mta7.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id 075FA202CA2; 
- Tue, 13 Oct 2026 06:40:20 +0000 (UTC)
-Authentication-Results: garm.ovh; auth=pass
- (GARM-102R004a1417606-9a39-4fca-b47f-aacab28a46fb,
- 3B5152602AE6D76A7CF2E50DC6ABDDC767F0B630) smtp.auth=clg@kaod.org
-X-OVh-ClientIp: 82.64.250.170
-Message-ID: <fbead52a-4ac2-48d2-8cac-fe1f24005caf@kaod.org>
-Date: Tue, 13 Oct 2026 08:40:20 +0200
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xGWS7-0005sZ-L9
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 02:57:37 -0400
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 69D20cND922844
+ for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 06:57:32 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ 9GdmlAg+r0KBNbesZT5lUmE9s7Gfh3qJj15TaW/3QHM=; b=nVrxRbPNFesXQXte
+ z9L5/buQ8gCsPjsFkaFjTfuFG3jkRJtt7fdbqZdpYrLkfvnYeWHEEkWHVrzv2zZv
+ 0jnESq7oV8s4WsyrHgjAAJcZgXQIyaysSpdabsSCfcArMaGypraJutNOItiH6qFb
+ FU89NpJ1cx/CXX18cjAdNWyCp9FkU+sVQmx4iKISoexNcGWVkWrZvsKf24DTzXis
+ bzY3YhM/v6aYGMFHCY4hHbQJtQs4Wv5RXEYHKkw6X2MwxKIaeEfA/YSDveIhx7Dy
+ bkn2hMdNCnftdn5xpdOmwbR7m12ISicMQnIfW/4emiiZPpGKHbQ2Inz5UNwt+E8X
+ JLFfgw==
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h98h1sjjj-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 06:57:32 +0000 (GMT)
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-93cbf2fd504so462726585a.2
+ for <qemu-devel@nongnu.org>; Mon, 12 Oct 2026 23:57:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1791874651; x=1792479451; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=9GdmlAg+r0KBNbesZT5lUmE9s7Gfh3qJj15TaW/3QHM=;
+ b=CxakIhrk8Z9yiVXS3ij7UrMlxV78K5nswMZpE8hpXzh1s5NWdI1fJbGL46x/06MGLs
+ /uQ1luefTmjztzLwwz9I9DjQxBKZr1b400JLS30K9DanDMjyNlz+Og5LyPlJoQavEy5m
+ mQ+7UEdJIesH4HK2ptX+0YtcRrNBNZ9/Z3n9phVqYfaszYR8gIuMIpq8+d3Tdhxerj5W
+ EjkajhEYffZtcArxWN+qEzYt4xpdBS5DpoAobMAc9w2aCUSAZN1JPNLlgHIZjSy1Am/W
+ N/wH2lMwrKfuLUu6xqjXOtTwzByB8seA+E+K2W0B6hkSfCuDXjI1VVS3abQFDzthAFhb
+ ON7g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1791874651; x=1792479451;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=9GdmlAg+r0KBNbesZT5lUmE9s7Gfh3qJj15TaW/3QHM=;
+ b=ViwHjazW1qLHeigxlEWsJhu7do23o/yK97OLkWELBPY2sslDroEWQ8sb99uc1mZDt2
+ uhVsCuPuQ4dxPgDa3OH/Xn8kGxl/gL9gETfPL2lvkQIZtsyucYuMPqLd8PcWX2cJuEOR
+ StJNRcNxWCPlPHDudnYq/SxaIpQpth01tDURT3zsohkfwFyG+FhATxXyr4oI+98el/RF
+ /2M4UfnhBxA+5rHPliATMtXfJ3phWGLodqu/niJRZjQwt+6ShvoGOgxGyJOnCr2UMafV
+ qgYeP6juGuT7pHUraNIm+iPYSQSEtP4s1/KkXlZHW5kNLE+tOWViQG40Ww2fb/lzCpSr
+ Z6Nw==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBzpiK48NXctn2Dn+0ckYOE2ehx3/3uVK4b5XUEfK4azGlAsFNgrTmPODDqm0djIwQp6nO0W9zq5I5Vi@nongnu.org
+X-Gm-Message-State: AFq9FYKhITOvdImmHH5/tVMf/Mkn4d+PQkp0Vkx76ypYWebAgId7P78X
+ fmpi3bt/1ULgOpfNa5s/FTWZ+hZRwZUGAKCypP8DXdTN4lBL+kGuShdcnkxxf1g9TttjE9xZBGB
+ nGvuV/zkIAIdIQ6O7+sQIP7g+fkUx6CsZ7XQ356pJPS6YOl2wzn1tmOl/Dw==
+X-Gm-Gg: AYBFou3NZzfHLkNWAFrrV+lJ3tKqT+WK1M+CBUbEKkJGpRDlxeBcgGMhTo8L1n/hH+F
+ YjX9drTljCQBaIdSkXHJ+XmTbndFRt0TZ/0iEIcpG1DNyFuhydqz1tFCQ3Fkg0vD67+n5V+PQ9E
+ 0jpHuYjTJ7wNNm06ddQTgj7LEpIQ38e394HFwbzrZbS/3UoOc0UtaTl9D6OfX4pCwLYABqNxA3B
+ NamnbSRZvGuCsbdLOsyzHcWktGGP4zt8as5qgeYHWrneEi/4aUiQHYND5dN36q3Ykmee5E7Ksh7
+ eG512NXtWA2mFGwRUqKKWGAKNTWva8hDLzZognmWe0vsKXj5zk92ZTOwuzFLNBCJG87Lbmg8pJn
+ c++lPB/9G9o55bF6W7a7F16iCHXDa5GD4VQ==
+X-Received: by 2002:a05:620a:2a14:b0:93e:4d74:68fd with SMTP id
+ af79cd13be357-93ebd2ab63bmr2029141185a.65.1791874642909; 
+ Mon, 12 Oct 2026 23:57:22 -0700 (PDT)
+X-Received: by 2002:a05:620a:2a14:b0:93e:4d74:68fd with SMTP id
+ af79cd13be357-93ebd2ab63bmr2029138985a.65.1791874642429; 
+ Mon, 12 Oct 2026 23:57:22 -0700 (PDT)
+Received: from [192.168.69.210] (pmd666.hd.free.fr. [88.187.86.199])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4a18bf15691sm335604325e9.6.2026.10.12.23.57.20
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 12 Oct 2026 23:57:21 -0700 (PDT)
+Message-ID: <e883fd2c-db22-4f29-8df0-acd5a5e9d9d9@oss.qualcomm.com>
+Date: Tue, 13 Oct 2026 08:57:19 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 00/50] Aspeed: I2C device models and the Minerva BMC
- machine
-To: Jamin Lin <jamin_lin@aspeedtech.com>,
- Emmanuel Blot <emmanuel.blot@free.fr>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Kane Chen <kane_chen@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+Subject: Re: [PATCH v2 07/10] target/sparc64: expose system registers via GDB
+To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: "Dr. David Alan Gilbert" <dave@treblig.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>, Peter Maydell <peter.maydell@linaro.org>,
+ Chinmay Rath <rathc@linux.ibm.com>, Nicholas Piggin <npiggin@gmail.com>,
+ Glenn Miles <milesg@linux.ibm.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
+ <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu@processmission.com>,
+ Max Filippov <jcmvbkbc@gmail.com>, qemu-arm@nongnu.org,
+ qemu-ppc@nongnu.org, qemu-riscv@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>, Laurent Vivier <laurent@vivier.eu>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Artyom Tarasenko <atar4qemu@gmail.com>, Helge Deller <deller@gmx.de>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
- Patrick Leis <venture@google.com>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- "qemu-ppc@nongnu.org" <qemu-ppc@nongnu.org>,
- "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Glenn Miles <milesg@linux.ibm.com>
-References: <20261012-bmc-minerva-v2-0-4c3dff084ec9@free.fr>
- <d7da10db-04a0-4699-8a96-44e98170f863@kaod.org>
- <TYZPR06MB73731318F235CD2797C03D2FFC9E2@TYZPR06MB7373.apcprd06.prod.outlook.com>
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Content-Language: en-US, fr
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <TYZPR06MB73731318F235CD2797C03D2FFC9E2@TYZPR06MB7373.apcprd06.prod.outlook.com>
+ Warner Losh <imp@bsdimp.com>, Kyle Evans <kevans@freebsd.org>
+References: <20261013-query-reg-v2-0-6f95a2e139a9@redhat.com>
+ <20261013-query-reg-v2-7-6f95a2e139a9@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <20261013-query-reg-v2-7-6f95a2e139a9@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-x-ovh-tracer-id: 15156583072156396589
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTF3rUtrLuiZt5HxLeKdc+m/1FqxmX1vk7sSixFURmGMRxCSDbo/urXqw1OQ+QYc4zh9O4qorzYiy3XjqR9+iz8IAn1cXDPNs5v7sJG8AWsppohNJmrD9qcwwdguDBPz7O1nvMTQL3ji+BZMmShaqt3+Otgjm6JRA4UzrYgvwbYAi62Akxe76Gga7rRt3+7Qsu8iBZw9lV+jcxy0t65g7MNn9Eo4C+DvAb8oiNzFhI5n+rOQ7lJb5YfhiSC7ECvQy4dPZkXyOw1s79EVVvjf9PY/Zv+ZD6bdLEDs5UFUzdwGoJqVzaDhzjh93j+lBSo9VcnT8VghDCCEPpUxaM/0Wd0kn0/f8RUIrREdXoF3Q5n6UVZoPYSC1z+cy2QyawPUj4esJoP1u03aLX3ErXH7cn9VnA6cCY+E9/oUKuRhAvO0Kkm0hhemXiY87rvfiA9LV2I/n8/D6AY3Zj9vmU7VHqCfNzobt0vNx3wVrsQL13NOwYKz4zP9+0Q1Xxd9iisyJIDJVz8gp3jgqzJyJixwb+Nlutt9GycQW9QkhdX0L1sHrZ9k2H/H1JuLOVC61bL4vpccGs4/3dVvOGhugy2G1Gr00kFWw9I3jaXvcsFZes8hoIWvYlV1kLQM9eIWWXC5pqWzJPS3rHqUVn7NH4AAwN8uxMsoxB0gvnr2P8mlU1UYZA
-DKIM-Signature: a=rsa-sha256; bh=2Xm1CenWCEAQSDVNdoy0NXFTXP8nMaGHKDD6AQW0My4=; 
- c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1791873624; v=1;
- b=QE7I4cgz1jAbWGVlBDdvTW0T0H6i5vLMbrbKTcboF1JjCwa3olcPNQhaulPhahl9CUgzA3ir
- eoKXo0wc115wPFPDkNivEzAttrgqFqNMQ+jRwBjuCpLb73M2KfqR55tliYGQgs1yWZ7vfDmK6fg
- g5zdt3FwQj67ozw+CQvRG/vkBatwClsFZezrjlzVr36b+fDiqej1D324h3AwLK1VGHQHu4gxtfC
- dJGT3awAZahaqX8/lMiZ5RySm9TCEKLvPlGsSuei5fKrDWLM/KVf9J0A7s70MpUIltWOR8S9Oxi
- CRmxniM0BKLjZveQkMCHcNoxE9BQp1FRc437SBjxbtKdg==
-Received-SPF: pass client-ip=46.105.54.122; envelope-from=clg@kaod.org;
- helo=3.mo528.mail-out.ovh.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Authority-Analysis: v=2.4 cv=VqC2kO2n c=1 sm=1 tr=0 ts=6acdd65c cx=c_pps
+ a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
+ a=20KFwNOVAAAA:8 a=rB_AC_PIbXsWsa49W_MA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=PEH46H7Ffwr30OY-TuGO:22
+X-Proofpoint-GUID: YPebGC9DGr7qiosyPpy_d8fNaoA3rkiV
+X-Proofpoint-ORIG-GUID: YPebGC9DGr7qiosyPpy_d8fNaoA3rkiV
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDEzMDAyNyBTYWx0ZWRfX+nWRDKA8tG7V
+ QI5TVWI/bI67n5UzNUbuQ59bW1VPn9RhR42LZWIldOc8Y46NQxTkODUOUP0T4xizIUzh3JoRQWJ
+ WdCITz9um+cs/sh/a3ryRr/PG32S6og=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDEzMDAyNyBTYWx0ZWRfXztBLYJwDatWI
+ BPJCYuJKY7kzSgVSP3TFpYIkESUPSx6fFMfsR3n/exvKAOqhTAIgrN4a4x+ZHJ++RH7721u2BmU
+ tgbIWlqWU2j21kcaR1xaZkL2z0Lkt+lxdEqdHdOGOXZxJYi0Q2zUNhV46Fgx/P6y931yAxRkjB3
+ 7y+bwdzMP+WvED64L+2m2svPWqxMkE6Q70TFiIV0p2Wsk7xOdmSrcDyi/X7rx/VyfXKKFglLqzy
+ tRMoyU5iApGAt0WH4yUNC7SDF88VrjW490TPrbvmHebuVzus4CZux2iiLoZskOfJA9R71PxFQ/o
+ lRbm/3APrwS18V/m2v/Ptg/7g8i3eIS5pZGExcqekKqf5im2/yRqDS/bM3cevBoRitkHd+LH/MF
+ A4cWkysJXIUd3BxstcRkMjaQRaYNzO659pukcbJgZl1YnAZejHb3VGyrefBFtrPOFMeSXsGmMpz
+ uudMY39he/3C6tOUnyw==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-10-13_01,2026-10-09_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 suspectscore=0 bulkscore=0 lowpriorityscore=0 spamscore=0
+ adultscore=0 phishscore=0 priorityscore=1501 malwarescore=0 impostorscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2610080000 definitions=main-2610130027
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -143,22 +173,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/13/26 08:32, Jamin Lin wrote:
-> Hi Cédric, Emmanuel
+On 12/10/26 22:34, Marc-AndrÃ© Lureau wrote:
+> Add a sparc64-system.xml GDB feature that exposes asi, pstate,
+> cansave, canrestore, otherwin, wstate, and cleanwin as read-only
+> system registers through the GDB coprocessor interface.
 > 
-> Due to an issue with the ASPEED mail server, we cannot receive patches distributed through the QEMU mailing list. We can only receive emails sent directly to our ASPEED addresses,
+> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+> ---
+>   configs/targets/sparc64-softmmu.mak |  2 +-
+>   gdbstub/gdb-xml/sparc64-system.xml  | 22 +++++++++++++++++++++
+>   target/sparc/gdbstub.c              | 38 +++++++++++++++++++++++++++++++++++++
+>   3 files changed, 61 insertions(+), 1 deletion(-)
+> 
+> diff --git a/configs/targets/sparc64-softmmu.mak b/configs/targets/sparc64-softmmu.mak
+> index 4e621fb8e39e..7f2789136653 100644
+> --- a/configs/targets/sparc64-softmmu.mak
+> +++ b/configs/targets/sparc64-softmmu.mak
+> @@ -1,7 +1,7 @@
+>   TARGET_ARCH=sparc64
+>   TARGET_BASE_ARCH=sparc
+>   TARGET_BIG_ENDIAN=y
+> -TARGET_XML_FILES=sparc64-cpu.xml sparc64-fpu.xml sparc64-cp0.xml
+> +TARGET_XML_FILES=sparc64-cpu.xml sparc64-fpu.xml sparc64-cp0.xml sparc64-system.xml
+>   TARGET_LONG_BITS=64
+>   TARGET_NOT_USING_LEGACY_LDST_PHYS_API=y
+>   TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API=y
+> diff --git a/gdbstub/gdb-xml/sparc64-system.xml b/gdbstub/gdb-xml/sparc64-system.xml
+> new file mode 100644
+> index 000000000000..e00baedb467e
+> --- /dev/null
+> +++ b/gdbstub/gdb-xml/sparc64-system.xml
+> @@ -0,0 +1,22 @@
+> +<?xml version="1.0"?>
+> +<!--
+> +  SPDX-License-Identifier: GPL-2.0-or-later
+> +-->
+> +<!DOCTYPE feature SYSTEM "gdb-target.dtd">
+> +<!-- System-register values are read-only; writes are ignored. -->
+> +<feature name="org.qemu.gdb.sparc.system">
+> +  <reg name="asi" bitsize="32" type="uint32"
+> +       group="qemu-debug" save-restore="no"/>
+> +  <reg name="pstate" bitsize="32" type="uint32"
+> +       group="qemu-debug" save-restore="no"/>
+> +  <reg name="cansave" bitsize="32" type="uint32"
+> +       group="qemu-debug" save-restore="no"/>
+> +  <reg name="canrestore" bitsize="32" type="uint32"
+> +       group="qemu-debug" save-restore="no"/>
+> +  <reg name="otherwin" bitsize="32" type="uint32"
+> +       group="qemu-debug" save-restore="no"/>
+> +  <reg name="wstate" bitsize="32" type="uint32"
+> +       group="qemu-debug" save-restore="no"/>
+> +  <reg name="cleanwin" bitsize="32" type="uint32"
+> +       group="qemu-debug" save-restore="no"/>
+> +</feature>
+> diff --git a/target/sparc/gdbstub.c b/target/sparc/gdbstub.c
+> index 2874ce1b3501..efbe16f38aa9 100644
+> --- a/target/sparc/gdbstub.c
+> +++ b/target/sparc/gdbstub.c
+> @@ -266,6 +266,39 @@ static int sparc_cp0_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
+>   #endif
+>   }
+>   
+> +#if defined(TARGET_SPARC64) && !defined(CONFIG_USER_ONLY)
+> +static int sparc64_gdb_read_system_register(CPUState *cs, GByteArray *buf,
+> +                                           int n)
+> +{
+> +    CPUSPARCState *env = cpu_env(cs);
+> +
+> +    switch (n) {
+> +    case 0:
+> +        return gdb_get_reg32(buf, env->asi);
+> +    case 1:
+> +        return gdb_get_reg32(buf, env->pstate);
+> +    case 2:
+> +        return gdb_get_reg32(buf, env->cansave);
+> +    case 3:
+> +        return gdb_get_reg32(buf, env->canrestore);
+> +    case 4:
+> +        return gdb_get_reg32(buf, env->otherwin);
+> +    case 5:
+> +        return gdb_get_reg32(buf, env->wstate);
+> +    case 6:
+> +        return gdb_get_reg32(buf, env->cleanwin);
+> +    default:
+> +        return 0;
+> +    }
+> +}
 
-Take a look at lei :
+Why not remove the sparc64_monitor_defs[] array at the same time?
+If doable that would ease logical review.
 
-   https://people.kernel.org/monsieuricon/lore-lei-part-1-getting-started
-
-It's a very useful tool to collect mailing list discussions.
-
-> for example, by including --to jamin_lin@aspeedtech.com, --cc jamin_lin@aspeedtech.com or --to-cmd "./scripts/get_maintainer.pl *.patch" in the git send-email command.
-> I will use my personal GMAIL to reply this patch series.
-> jaminlin1207@gmail.com
-
-Thanks a lot,
-
-C.
 
