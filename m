@@ -4,112 +4,141 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6016CC6B0F
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 21:44:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 519B1CC6B12
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 21:51:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGkIA-0005G1-Ic; Tue, 13 Oct 2026 17:44:14 -0400
+	id 1xGkOy-0006Pw-RX; Tue, 13 Oct 2026 17:51:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1xGkI7-0005Fm-WB
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 17:44:12 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1xGkOx-0006Po-91
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 17:51:15 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1xGkI6-0004JD-A7
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 17:44:11 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69DLIxND725927; Tue, 13 Oct 2026 21:44:08 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=I90IMo
- A8V5kPxA/nKEJ5UN9yslPHJNcljyPIgGf8Er8=; b=TVrfXMWxUv4r6hJBZ7icC4
- Z+QXwqDr8k6mvjb1xfO9h1wXMMRBr8e1UnHdR01PWx+zlbZdlMabxZlNeQ1IN+13
- tpktOK7yYBJwqsqhMWbWwxfpGwyqfiPXzIbFqJveySCKACs0POYXBRc6qtBFvfsU
- DOWvHL+z2A8ZueFHACstVkMSqxeWDcSlI5+uXFY3BcOQOf+MlEz+VhaiC95zv23j
- q1UbcIiiORm2lj/h9lGrFjQipFc4zPODs47K8Bt10+Klw0w2MYSZt9JRpzHiis89
- MeONy1QaPrVjYQLfFpRskS/xgHEl1CA5LBH1Y2UyetHilWPXBWZJphd38ntRuUvQ
- ==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4h7dv0gn22-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Tue, 13 Oct 2026 21:44:07 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69DLELTu1440173; Tue, 13 Oct 2026 21:44:06 GMT
-Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4h81wg4ad0-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 13 Oct 2026 21:44:06 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
- [10.20.54.105])
- by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 69DLi5Fd42926468
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 13 Oct 2026 21:44:05 GMT
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 044F920049;
- Tue, 13 Oct 2026 21:44:05 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D198C20040;
- Tue, 13 Oct 2026 21:44:04 +0000 (GMT)
-Received: from [0.0.0.0] (unknown [9.111.35.59])
- by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 13 Oct 2026 21:44:04 +0000 (GMT)
-Message-ID: <044a4043-187c-44cb-9a36-bda34a6e7b27@linux.ibm.com>
-Date: Tue, 13 Oct 2026 23:44:04 +0200
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1xGkOv-00050h-NE
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 17:51:15 -0400
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 69DK90oJ1999236
+ for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 21:51:11 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ ZRgWQcL9l7QbMlT7k7j+TUxWi3Kbn3uI3/WeSEcg/gY=; b=GMV4IUoaVDFP8uqu
+ p9HRaejppcAE3d50+/tCewXmRK69yG6z7qwWfOoP2/nqblUFe0+r97jnCe+Yc1cI
+ C4lwVbb31gVnm9DgMa95CvOkVezB+rZrbQPhS37h8LM5+x4TWnN3quUyCKLkCZJv
+ fs51IoGcyMoDBbMN89Qfp6487JCHXhzPBshIVXHXCOPVZ5W0fJ84sjB/twkbFZXr
+ +/54bWwFBjGFvGX8Znw99Zi4ZFOGWN3fFPravYr8KRG63SQMwR8KQm+s6ZzMVAM8
+ QzIsjA6o4Hu475T5sp80cswfBli64J0SXBV1KjEul4a7XFXXErMy9zj2ceNEuPn0
+ oIRajA==
+Received: from mail-dy1-f200.google.com (mail-dy1-f200.google.com
+ [74.125.82.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h9f62c15r-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 21:51:10 +0000 (GMT)
+Received: by mail-dy1-f200.google.com with SMTP id
+ 5a478bee46e88-35a4d2e39acso1052185eec.1
+ for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 14:51:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1791928270; x=1792533070; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=ZRgWQcL9l7QbMlT7k7j+TUxWi3Kbn3uI3/WeSEcg/gY=;
+ b=N53zbyNp02Klx4BqJ3qXEJmYKij5UhMpICTBggpYYjr4AB7NeiHIJQAHrNOo1KNmvp
+ XCZAmTyqtFFsYd2wdUNbQ7iypRJrrIPFXIyPVEQfm0OVQRew9UJgKBD+Os5vLvmh9aga
+ qRz2s/aajeGBvz14zlJsPWtCpm3Gw85AkiD2o8YTPWhiuC7SwH0nUuvMFLzl5OjvhwRE
+ vZWp8Oh9pFSScSmfGfqPXtKIzmZKarDzbtz5Mx/ae54NkUabGliWawyKte/yshQEerof
+ q/NRBpCX5gQoA4ahZUqWMHC6bqFQxOspItMOvShBwz+IaYoY67QqsIOlB+AVmoDEAtfA
+ EV+g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1791928270; x=1792533070;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=ZRgWQcL9l7QbMlT7k7j+TUxWi3Kbn3uI3/WeSEcg/gY=;
+ b=UByv8PAkgtbCIfyD0BfjWAiH8G1Hcj9Oyj4guOIbj+gAwe4jLrmREUt7qpxnl6Pfho
+ YixdBwD1yhsItIEWTlL2gfZeCAL6QDb3rW9CZnnijCzxDyEcXXjtumV2eJZskl/PRlDz
+ Be4/A2WqKrgHy16ViZTHwGQy3vkBxT1hnukKu/UyIn989PDL6960bSjHEpsWHYGA+PIl
+ T4GkDpc+ttC9bBVCa18RUEPrmz6GxneYD2LNyg1NOEtGej7qVuOmRdGEXeVRywsFP9Wf
+ sdK9wOzj/V/G5E1AUysVl2EOvjrnBA9r/xkld5rv23nEiauEO9acaY23cm1uQ+4WYAwy
+ zlrA==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBw+f5aIysv9b3bMf/MR/FoL288Uu+ytQBA57/0SJwYtj9NOG4C1XWp+nFTQ3azm0FBMmFM83VFQAwZn@nongnu.org
+X-Gm-Message-State: AFq9FYJgpjaf+nwqEw82mv7ZO7ZlQgN+3uzF2vhAvsBPSPcJm7Cak/1F
+ h8AzHpJ3TX9Mtz0H+X+Koj0jW1A1b4iTQD4sieHAyeoETuqx7uKtlSlXIVwHkaYwbkIRIOJTmZH
+ DT3Y1wtk1Hp6u58b1n+ai9WWRnTOJ5JH0AEUqpYE+XEb0BQ1VjaO3lxKfnw==
+X-Gm-Gg: AYBFou1sRZEFpcrbENwMaUhg32t3YSMZIABRsYnWVp07yrLFxIjXu/PnhYZtJXNDDnu
+ LC+DJm7EK66rm7YgNLq7J5wsAXFDKXLxB6OR9OIQeAtgaLdaNpzAtUU72DZEuKtt90p8WI1pLzf
+ 3QQqbIOwuPzLybqrESHHLiX5CpSTAm/d2IQ7//SWgOlYpfsIuWSNrKlhHMHTlOZ+fM02jmu/5HI
+ iOFxe8iUHU75ghzK74XLSI+XoFLNYHvS0eebyseIzH9nBe9YCNMH0wps/gGN4bNP7hzM9RonnlF
+ zANnL6EYpKA+CXdL9uDK/rHQH+oExE+VyWzxsca80DBH0l9qyMEmlXQACKZpGtxm7GWlWPgGW3G
+ y2mGNdu+sTViPvggiQ5fCRZHxtkDKpYSKGnjmEap03Lldzr5xJJdsjtGol5nd4PD5ed8srQ==
+X-Received: by 2002:a05:701b:4211:10b0:14d:baf5:c40f with SMTP id
+ a92af1059eb24-16a5dee142dmr19961644c88.14.1791928269574; 
+ Tue, 13 Oct 2026 14:51:09 -0700 (PDT)
+X-Received: by 2002:a05:701b:4211:10b0:14d:baf5:c40f with SMTP id
+ a92af1059eb24-16a5dee142dmr19961609c88.14.1791928268917; 
+ Tue, 13 Oct 2026 14:51:08 -0700 (PDT)
+Received: from [192.168.1.199] (192-80-163-190.dyn.novuscom.net.
+ [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-17dc865cbffsm295364c88.6.2026.10.13.14.51.08
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 13 Oct 2026 14:51:08 -0700 (PDT)
+Message-ID: <92987794-e0af-4b45-8e32-831d7afe1ce0@oss.qualcomm.com>
+Date: Tue, 13 Oct 2026 14:51:07 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 01/13] tcg: add tcg_gen_goto_jc{3}_{i32,i64,tl}
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: mattst88@gmail.com
-References: <20260917093307.1092084-1-richard.henderson@linaro.org>
- <20260917093307.1092084-2-richard.henderson@linaro.org>
+Subject: Re: [PATCH 1/6] target/hexagon: check privilege mode for system
+ instructions
+To: Brian Cain <brian.cain@oss.qualcomm.com>, qemu-devel@nongnu.org
+References: <20261009192541.4163758-1-brian.cain@oss.qualcomm.com>
+ <20261009192541.4163758-2-brian.cain@oss.qualcomm.com>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Content-Language: en-US
-From: Ilya Leoshkevich <iii@linux.ibm.com>
-In-Reply-To: <20260917093307.1092084-2-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+In-Reply-To: <20261009192541.4163758-2-brian.cain@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDEzMDA4NiBTYWx0ZWRfX3UknddXVVhia
- L4Ur7gYfzGf6IazuTIpasoP4o8qAUN8yLlah/trpaWHpWC/2eS32vherBEgKNbFqqNQJsn4U9qw
- wJ0uAvDZPBv2vFKCPxknKhL2ggo6+2jg9Zv1hJ+iJOE8Pm6Xg1OW3FaW2wBF6CLcPgF8KXrkUIE
- KlFSTF0yn/Z4PB01pGYgykdGkBXZV6Sx+aL9fTg3os0eCMncExRyqva/YCbYcQApG7RNJYLQWUg
- 2dMPVCky3bNwo7MtvCn4U3FiUTP+qLzkfIalzqtkON3yO70+5efWafSVvIZitErp/FG3AJEG8Su
- eqnv13xHoDuIozm/Km3EJ/1bHHiulZEhQ6I5/TrIBkQT6wyX0oT9VwDUtZpf97q8fhy2auc3c+k
- pAwNuJsxXgUU6m7Q5FEnhBIAfcbG6JC/EAf3xlP8Wwz8fLxMubmlajJ2ReAWfbNA6fraTtZZCHp
- v5c/In/0/DUC9L2BSSw==
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDEzMDA4NiBTYWx0ZWRfXzskq7z+GLHe1
- 6skSOjpAqQpyw8ZaW8GxcqCiqcXCkC+ktyaXxEARnvVyEE1B0PBcbpNb7f9jAVjiB4hasfTi7RS
- dxH/6gjegYDYbucUWoo7oWe7Xaq2+M0=
-X-Proofpoint-ORIG-GUID: tWiapfD_8Ddr5o3YpA5tcCgxO9Td9_CD
-X-Authority-Analysis: v=2.4 cv=a6KlZkSF c=1 sm=1 tr=0 ts=6acea627 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=p0WdMEafAAAA:8
- a=pGLkceISAAAA:8 a=KKAkSRfTAAAA:8 a=JC07bDGcoiX0JEuZR1EA:9 a=QEXdDO2ut3YA:10
- a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: 1v__1b16F3sUUBgyz6bpQfXVBUSbuGM2
+X-Authority-Analysis: v=2.4 cv=FOKOVOos c=1 sm=1 tr=0 ts=6acea7ce cx=c_pps
+ a=PfFC4Oe2JQzmKTvty2cRDw==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
+ a=EUspDBNiAAAA:8 a=ssq6Z6STJUegY2MsAWwA:9 a=QEXdDO2ut3YA:10
+ a=6Ab_bkdmUrQuMsNx7PHu:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDEzMDA4NyBTYWx0ZWRfX5oN2q4HDCX4Z
+ UwqUDDXgd1HFbPQyMrrY24AXMcS400xKqYwz1P5Qjuu6323Ew4BvCHZOLqKHeylDSiCS0LwBS4w
+ 4dIx7zyc+S327t85tObeXT87vY4anX8=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDEzMDA4NyBTYWx0ZWRfXwjCS3D1ACl2r
+ 3YDPGAr2OqpYNoKUO/ge8kCTmdW/YUCOz4d1dB7nUKWppqsNhoxHWm9m+9AuIuXVyZUEDOGK8zn
+ xJCFuiZkcDvKPtyeG+lsH5dq8FhB3b+TbkFoWOfM0GYbuezxpKxY0TwOiVT4/+TS5K+irmFLMns
+ fii5j3lifpQoL0sMEDpyiHJqwTJr3Yaf8uv13xjK0BhrMP6gu2b6g339SirCGYG0llJAN8Ooau2
+ t+xqv7NoncQhIuxOW9CMfG6f7+q3QnOcC08dp1DxIGjtehPM0lvp8gMXcgQXi9dXARQ1anJO/dB
+ MJX3fQlKolqwCA4NfRwFtQVvUE7nejaL2TIE7wtvVKUWKvrXBIWDGJWnWvtxjXMm2+3B6A2EJmK
+ 5LAfkQHQ63TIUotAz/d5r/eEx/ZHF+jRqFfs5KUHrny15KU5nSKBjH5LSX+e+sqYVcDZ5XTdAPj
+ kdfVIspSqc3R3ftetAQ==
+X-Proofpoint-GUID: SXzowKuhsSNPCYJ6ZzUh-DXKs1WBNyJ2
+X-Proofpoint-ORIG-GUID: SXzowKuhsSNPCYJ6ZzUh-DXKs1WBNyJ2
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-10-13_01,2026-10-09_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 malwarescore=0 spamscore=0 suspectscore=0 clxscore=1015
- phishscore=0 priorityscore=1501 lowpriorityscore=0 impostorscore=0
- adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610080000
- definitions=main-2610130086
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+ suspectscore=0 phishscore=0 lowpriorityscore=0 impostorscore=0 adultscore=0
+ spamscore=0 clxscore=1015 priorityscore=1501 malwarescore=0 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2610080000 definitions=main-2610130087
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -126,75 +155,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 9/17/26 11:32, Richard Henderson wrote:
-> From: Matt Turner <mattst88@gmail.com>
-> 
-> At translation time the caller often already has the destination PC
-> in a temp and knows the flags, cflags and cs_base any destination it
-> may reach has to match because they are the same as the ones as the
-> current block being generated.  But the promise that the flags are
-> known (or unchanged) is subtle.
-> 
-> So add new entry points with new semantics and --enable-debug-tcg
-> checks against get_tb_cpu_state() at run time.
-> 
-> Signed-off-by: Matt Turner <mattst88@gmail.com>
-> [rth: Split out target changes; add jc3 variant; expand via tcg-op-def.h.inc]
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+On 10/9/2026 12:25 PM, Brian Cain wrote:
+> Fixes: 9831d3cab168 ("target/hexagon: Add privilege check, use tag_ignore()")
+> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
 > ---
->   accel/tcg/tcg-runtime.h      |  4 +++
->   include/tcg/tcg-op-common.h  | 29 +++++++++++++++++++
->   include/tcg/tcg-op.h         |  4 +++
->   include/tcg/tcg-op-def.h.inc |  2 ++
->   accel/tcg/cpu-exec.c         | 27 ++++++++++++++++++
->   tcg/tcg-op.c                 | 55 ++++++++++++++++++++++++++++++++----
->   6 files changed, 115 insertions(+), 6 deletions(-)
+>  target/hexagon/cpu.h            |  1 +
+>  target/hexagon/translate.h      |  1 +
+>  target/hexagon/cpu.c            |  2 ++
+>  target/hexagon/translate.c      | 15 +++++++++++++++
+>  target/hexagon/gen_tcg_funcs.py | 16 ++++++++++------
+>  5 files changed, 29 insertions(+), 6 deletions(-)
+> 
 
-[...]
-
-> +static void gen_goto_jc3(TCGType type, TCGTemp *pc,
-> +                         TCGTemp *cs_base, unsigned flags)
-> +{
-> +    plugin_gen_disable_mem_helpers();
-> +
-> +    /*
-> +     * Widen @pc to i64 because the jump cache is keyed on a vaddr;
-> +     * for a 32-bit guest PC that is its zero extension.
-> +     * Note that cs_base is target-specific, not a vaddr, and always 64-bit.
-> +     */
-> +    if (type == TCG_TYPE_I32) {
-> +        TCGTemp *pc64 = tcg_temp_new_internal(TCG_TYPE_I64, TEMP_EBB);
-> +        gen_extu_i32_i64(pc64, pc);
-> +        pc = pc64;
-> +    }
-> +
-> +#ifdef CONFIG_DEBUG_TCG
-> +    /*
-> +     * The caller has asserted that no flags-affecting cpu state changes
-> +     * happened between this TB and the destination.  Check it.
-> +     */
-> +    gen_helper_goto_jc_check(tcg_env, temp_tcgv_i64(pc),
-> +                             temp_tcgv_i64(cs_base),
-> +                             tcg_constant_i32(flags));
-> +#endif
-> +
-> +    gen_lookup_tb_ptr_and_goto();
-
-This is subtly different from [1], found at [2] linked in the series
-description: the GitLab commit has a tcg_gen_lookup_and_goto_ptr() call
-here, which results in duplicate plugin_gen_disable_mem_helpers()
-invocation.
-
-I wanted to build this series and poke at it a little. The GitLab branch
-in general works, but from the above I conclude that it's not
-necessarily the latest version. And this series doesn't apply to
-master - what is it Based-on?
-
-[1] 
-https://gitlab.com/rth7680/qemu/-/commit/9f3b27849bbc14ac61c09c79ecadb64935cc4568
-[2] https://gitlab.com/rth7680/qemu/-/tree/tcg-matt
-
-[...]
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 
