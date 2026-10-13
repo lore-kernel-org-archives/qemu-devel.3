@@ -4,112 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CCC0CC6B0F
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 07:02:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED684CC6B0F
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 07:04:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGWWN-0001wQ-5d; Tue, 13 Oct 2026 03:02:00 -0400
+	id 1xGWYD-0002YS-3s; Tue, 13 Oct 2026 03:03:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jaminlin1207@gmail.com>)
- id 1xGWVd-0001mW-AS
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 03:01:20 -0400
-Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
+ (Exim 4.90_1) (envelope-from <bmeng.cn@gmail.com>)
+ id 1xGWXu-0002Y2-SB
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 03:03:34 -0400
+Received: from mail-yw1-x1129.google.com ([2607:f8b0:4864:20::1129])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jaminlin1207@gmail.com>)
- id 1xGWVZ-0006Fc-FM
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 03:01:12 -0400
-Received: by mail-ej1-x632.google.com with SMTP id
- a640c23a62f3a-c2e5e801487so381336566b.3
- for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 00:01:08 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1791874868; cv=none;
+ (Exim 4.90_1) (envelope-from <bmeng.cn@gmail.com>)
+ id 1xGWXt-0006M7-89
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 03:03:34 -0400
+Received: by mail-yw1-x1129.google.com with SMTP id
+ 00721157ae682-885cf67963eso19021587b3.0
+ for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 00:03:32 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1791875011; cv=none;
  d=google.com; s=arc-20260327;
- b=ksEJUxiRDab85WhCxM0D4B3Wb9sOmHoAQFg5996ZSV485XT0aipKTvTRWo2cBf1Dgq
- osMeGioG5Bq7+oqyBM993Q05kNwjXINWPGwvn3rsUfZyKUKhm8FTMraWN0+9KhzRuEp/
- 7V8bQoda8+tI5RT1L5+l3OldDudUf9sYFmV6beCNM1goH0nWSviK9SRA2GjYpDrLDoD5
- 0RgdFUtBUF4079Y4Nw+0mgYdPPNj+LidGzR8cC4kmsPNqEhoBMjT/rzFvzNiVnoKHj7N
- W2n/7HBb7c/k7u8iS8s2eGnNBzVpQEAw9m/faHWUYPDYiO5vsygajXwUDFpksUzm18e0
- f1vg==
+ b=X9bp14SAHFlVoVdMwQrSeRXROi+rf5MvmBcR+jEea3nrv/JJYJe7ofbNBDduZi9lX3
+ It4Op9KjZ/Brvv6GAkms3Ixdrv+aNY6jQT2249i6AeOuTWVJUqAFbUVaSNO7DzQQ+K5o
+ s4m41UmQpExf+T17qRIUF9MXXw4Th7weX19PuWUrxXkpMVu0+eGEzqiZ+Hi6UBYPkzka
+ GUmWxwgi2sigOrG4pxyR38BayZ75GeJBf9vs41iTq0/FGAWTss99WGfQBRNPqVPfv1TG
+ va+gX8xvkWn30mq5LPrZlZVtRZK/SeBFlWLvtv20b+MMwKyZKwmh6YxKWXtwy37CYdp0
+ i6WQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=TKCT5RnEV1vWOyylNVGqIx5R7i4UZOmdib+i9xrVYAQ=;
- fh=GM/I2I6fEf5qvJbdhgjZMuNCECIEwt8XqdRDAWXnLqc=;
- b=f7kfLHT0KaxbhaxnHHnERucelw5Aw690UYdmUNCMPryYGQYdBCOiNfVtZRvQDeACiQ
- mWqwm2uECTSRlCU0LHp/oiVGE00TTSe5QvhWZOBYEpjzRyNspn0Hl2QVZHQ+BoLiQohn
- Sb7a42nScMUArRWVimdttkY91AE6ElYOQgv5MhCl0oViSn3iXGUz+T3NPPo0/H0AG8eC
- SX0YuxU6ilzJE1QxnrGgjCTQ+Yi+nWrjj4KprQzbq0hy/SvxE84hB6o0eqZUyqCtKIJd
- bUMQ7qo6Ctp2wLhwNuYcwsItnbTorCj7JB8Wni8oppekhxJ99PYzgEBEesQ8/xr2OowR
- XPDw==; darn=nongnu.org
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=GNSlNRRkQ5Nlg0w7H8dAOtfaTCclFtQeHENZr3xuAU0=;
+ fh=+fgCq3kvB7YxezhfavlPQTuMgPjCaNHeAfq5hiOYvPY=;
+ b=n76Y18Yx78jhYacvrDKu+ejSUVhzX/UWBVXvJX/UHCOJF/zfE4JGHypPoE45Ponxy6
+ mD+37DBdpxa0w0IgJzfeNWF4LGzDmWuZVLFhMYG4FHPDw7nrAmCel3WBu0Osjl83uLUu
+ dtvRAqUs0C2zNUyc8kkBi4WkMtAptQQ35ihqQMwpDWqsaCt//2OhNZ9NoIPB4d/ok/eh
+ fnW9c8fPiCNueSH+cbU1vmYPr5vfUpeLf/Mte3OuEeKi7mw/nQ4HXrCotM2yps2LAjCt
+ JmYXHutCiN8L08K1IR3A0yWNfY78hPadBHVx/ao16TI4lAwXQCDS37xD84ojpehRWlH+
+ rf1g==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1791874868; x=1792479668; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=TKCT5RnEV1vWOyylNVGqIx5R7i4UZOmdib+i9xrVYAQ=;
- b=euDsU3nmDmV8pvwsq/RmQSM6yefFODWpYrQ911F4gUsavtNlacBv6ZjmuJeQl1XT42
- e2o5LfHDD9H6dhgozDnVz/nNrpWcC6T9c1n8/geC3A9PQeN3xezfB0zAighk7DBaRaDJ
- uHrXaoeVtHIkoeku+0Xh8z8CASfq0KV3pONFzFJigdzV3C/HlkZrqZYwjq4dnAOKuDJq
- 7g5HflYa2WDbE/k045pKNJ6Y4XL+Elgkip1tBbNfxjJWeDmFcQhtc47OmtbpdYyNW6s9
- O/hoplpkA6BMT9dkLf/20iN0WnMj0a/FIzKGxg15IQcYBa4uJIAz1RUYNnm2VzR3tVYQ
- V/eg==
+ d=gmail.com; s=20251104; t=1791875011; x=1792479811; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=GNSlNRRkQ5Nlg0w7H8dAOtfaTCclFtQeHENZr3xuAU0=;
+ b=IINQYFI1pqHtaQdxvgh04iFIrrse8Q3r05Au4QwM6EftQnBF9g9ASsoPuDLJP/7J0y
+ NAzsWQCsID09kyK70jLpCsthDSgNxnb2PxuM5Odz/HR4kjh5hrK+eUjBZ/0N7zqz01qG
+ G7/W1K/wkZHC7pPA3UG3rN2qe80NH1V6dIkc9VH3/B9on1OzzIyh+Fdi13L54tBZ/CAL
+ P5Ty2uI+qbdu9bTUPi+B5ZEXSa4E1UjwamN0400uXbfqBcJaIf6LmnB4ftmqn+IEH3Eo
+ z+u3dG7QwK4C/EdRtsWRfWPpvK9zMIRy275H5ixxoVTFOVIrVA2EVWdzYw9B7pQvUNcx
+ rk1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791874868; x=1792479668;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=TKCT5RnEV1vWOyylNVGqIx5R7i4UZOmdib+i9xrVYAQ=;
- b=GFKAruWeyAqUs0HXqVOqRkxpbxP1XJm3xa/ctbW3pRQcDCXU693GsW6YzhnYYdtwDk
- wGi6Y/sbxkzS3hsngV2+z+7wvr7aH8MILLUhEJEX8oKEnNS6e0gNYRDhb8ITeZv5+vH1
- AU6LJshgwZcNi5ikiCtLXi7OW7NswBwok/rzq+CWMCrYImibjm9Kdwmi0sYDaYvqEWsQ
- f9M7I5/8ssVDDj1Kt4VyJAFIvKUZVvCI9f9Y937UsJaR18jJo6xXna9HzRoaHMl0+NPt
- Q4yBFTeLahUSRtfav/jzQEEGG5KdutLIO1tKpAXHdfjGk1/x6V2bfZmHoZnzVoJBRXWA
- Q8mQ==
-X-Gm-Message-State: AFq9FYJc2RB27ml3gbh0PLHkw2cf7gj8UVsvtFYgZqvNx9cehkbuL7/4
- 2lsfdc8V66BfG5tJ1yeIM3tfCZbY4U2XJCU06z3hleYX9T93QnBVG7VgCL8Hk/GlRxj7/JPRDEG
- kebSlOjmx3y7MElIVNrLUj6lGgWyHhrs=
-X-Gm-Gg: AYBFou1oXA3Lw6bLW63V8kHM9WGaCIDNPItnRBJxAPLnrNG8PWjlXj33t7kLJkD5cjx
- 3DSpBXgZhUJyABEFQwEx9WQbQKNZRWihcj2TkCGWAYop6goMMg04rXlRKMHn5g38s2SCrtiiLht
- K6PTuPi5TqWhMhDPNOWeWgMZpnE1sDsrNSau9LkrcPhj+sXn69g9cFnLclkj+M+2XqRBOItA8D1
- pDQApDv7Q/Yul1RIPamE6/8Mrq9mg8kec1MAeokP1K5upqAj1FyUH+I1h/biFU0FJlhWcbN/DyC
- PNj6+nh17+/691+jiufD0TsfIRaHa3P1bc709FlxsHZl22GS0Pkv
-X-Received: by 2002:a17:907:724b:b0:c2e:1d6a:6b78 with SMTP id
- a640c23a62f3a-c31aa0e0cb8mr1176461466b.47.1791874867472; Tue, 13 Oct 2026
- 00:01:07 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1791875011; x=1792479811;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=GNSlNRRkQ5Nlg0w7H8dAOtfaTCclFtQeHENZr3xuAU0=;
+ b=NyqmHqxi/RtBHI4XfmOID1fOpT1g/AKl4Aga7S6ruHWxYZgiHlByH/fr4ClxwnRjWm
+ gIJgT8XzoAGHPDTl8Uk7p2Q7n5b2epypE2DTB6gLjP84QZpuD7mQS0NCIO1988K9v7CK
+ Ip5wmf+FgmDMwfUKLIXjj7mBNYB7HoZ9vHBSJznIMI/XKGflx8EPheA5QsW0ZkFTUSaW
+ OaCO9LFIPZJNWZQb/1IpX8mffy9wYR7VseWYtDcQy7DlixtNqH9u5oBvSjfTShVt+SIp
+ QtWqIaG8dYAYFCUMsWGVIOSIRtop1zF3i8gCIsTR52QLryjFsNcy7ThZOBDltle8z6H0
+ akTQ==
+X-Gm-Message-State: AFq9FYLx1FSatUanL+N9Y0UiU4nRYCce3m9p84ia6V+c2y4We2HNbGEp
+ zNtFrzS+3Jc97hu90Rvoa8haGmTCN2c5gARhfr8QB9R7Eclmyrs4MI6f6eGobgqAz7duaPWW/Dj
+ IfzSJEAkb2vlBn9BmQghrDpH4eGTGjUk=
+X-Gm-Gg: AYBFou1jWqhNy+ZQc2becCd8Sf16GSckpZi5mtByB/RgH2qHGUsX6D7Tc5Ste2YLNoc
+ 0D+LYcWruvJ0snpcdMhogBGR4DrALebWgtK0XqwVYz4Xkurw5VlHPxZYh7PnsmTmwiHoFM/klHC
+ cDC/KGnC1gmWwRXuF18sqMiSNjL0Ur+WyBLkfvzHFXUMCPOUdE6tV7J6W1PX4XEniNdiAEOS/Yd
+ 3OJ53f8HhQDc/9SYTkThi58Ew708FsSMPD1vEd9imbqPEpL+VBRWH2/ICKsoAbJkZxTQKamPzNs
+ 7+AGS56VSlBL/pxGRoGmv9CJxFmor8vOl4gNORWNMzCIpckAyfIFtckCGku2rhLR998gtx/LMRM
+ ioCdZFh6pp0Zs5AI=
+X-Received: by 2002:a05:690c:9988:b0:8b0:9f2c:cfa0 with SMTP id
+ 00721157ae682-8b09f2cd2c0mr22491647b3.44.1791875011595; Tue, 13 Oct 2026
+ 00:03:31 -0700 (PDT)
 MIME-Version: 1.0
-References: <20261012-bmc-minerva-v2-0-4c3dff084ec9@free.fr>
- <20261012-bmc-minerva-v2-3-4c3dff084ec9@free.fr>
-In-Reply-To: <20261012-bmc-minerva-v2-3-4c3dff084ec9@free.fr>
-From: =?UTF-8?B?5p6X5bu65piO?= <jaminlin1207@gmail.com>
-Date: Tue, 13 Oct 2026 15:00:55 +0800
-X-Gm-Features: AclHuK_0EmA86gxslNXKzkKFMXSLT-zOmF24a1p4E6djvihwlnmWjCpLOGNXMCs
-Message-ID: <CA+8rw5xkA0idsTC5e+G=YWLDn4cPLkvMiDNjcT9ef5Sh_3QMQQ@mail.gmail.com>
-Subject: Re: [PATCH v2 03/50] hw/arm: sanmiguel: remove the second SPI flash
- controller
-To: Emmanuel Blot <emmanuel.blot@free.fr>
-Cc: qemu-devel@nongnu.org, =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
- Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, 
- Troy Lee <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>, 
- Kane Chen <kane_chen@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, 
- Joel Stanley <joel@jms.id.au>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-arm@nongnu.org, 
- Patrick Leis <venture@google.com>, Fabiano Rosas <farosas@suse.de>, 
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- qemu-ppc@nongnu.org, qemu-riscv@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
+References: <20261006094921.110871-1-bin.meng@processmission.com>
+In-Reply-To: <20261006094921.110871-1-bin.meng@processmission.com>
+From: Bin Meng <bmeng.cn@gmail.com>
+Date: Tue, 13 Oct 2026 15:03:16 +0800
+X-Gm-Features: AclHuK9K7SXgZn0MnZUuZDTJvvl4U2gdeYMeqyEpbAiU40vl2E6Ra_64fGEoLdI
+Message-ID: <CAEUhbmXs02wsAnEQKfAG1LXPSnWhcH4YvZtNhLA6z1K1gshLHQ@mail.gmail.com>
+Subject: Re: [PATCH 00/17] target/ppc: Correct Freescale Book E CPU models
+To: Bin Meng <bin.meng@processmission.com>
+Cc: QEMU <qemu-devel@nongnu.org>, Bernhard Beschow <shentey@gmail.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Chinmay Rath <rathc@linux.ibm.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Glenn Miles <milesg@linux.ibm.com>, Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Nicholas Piggin <npiggin@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-ppc@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::632;
- envelope-from=jaminlin1207@gmail.com; helo=mail-ej1-x632.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1129;
+ envelope-from=bmeng.cn@gmail.com; helo=mail-yw1-x1129.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
@@ -127,46 +125,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Wed, Oct 7, 2026 at 4:31=E2=80=AFPM Bin Meng <bin.meng@processmission.co=
+m> wrote:
 >
-> The board only populates the flash device attached to the FMC
-> controller; the SoC SPI controllers are left unused. Advertising a
-> part there presents the guest with a flash device the hardware does
-> not have.
+> This series corrects SPR access, cache configuration and instruction
+> availability in the Freescale Book E CPU models. It also adds system
+> TCG tests for e500mc, e5500 and e6500.
 >
-> While here, add the missing year to the copyright line.
+> The patches are grouped as follows:
 >
-> Signed-off-by: Emmanuel Blot <emmanuel.blot@free.fr>
-> ---
->  hw/arm/aspeed_ast2600_sanmiguel.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/hw/arm/aspeed_ast2600_sanmiguel.c b/hw/arm/aspeed_ast2600_sanmiguel.c
-> index 345a9c9416..ac2aef740a 100644
-> --- a/hw/arm/aspeed_ast2600_sanmiguel.c
-> +++ b/hw/arm/aspeed_ast2600_sanmiguel.c
-> @@ -1,7 +1,7 @@
->  /*
->   * Facebook SanMiguel BMC
->   *
-> - * Copyright (c) Meta Platforms, Inc. and affiliates.
-> + * Copyright (c) 2026 Meta Platforms, Inc. and affiliates.
->   *
->   * SPDX-License-Identifier: GPL-2.0-or-later
->   */
-> @@ -384,7 +384,7 @@ static void aspeed_machine_sanmiguel_class_init(ObjectClass *oc,
->      amc->hw_strap1 = SANMIGUEL_BMC_HW_STRAP1;
->      amc->hw_strap2 = SANMIGUEL_BMC_HW_STRAP2;
->      amc->fmc_model = "mx66l1g45g";
-> -    amc->spi_model = "mx66l1g45g";
-> +    amc->spi_model = NULL;
->      amc->num_cs    = 2;
->      amc->macs_mask = ASPEED_MAC0_ON;
->      amc->i2c_init  = sanmiguel_bmc_i2c_init;
->
-> --
-> 2.50.1
->
+> - patch #1-#4, bug fixes to PIR write access, the MAS5 SPR number and
+>   cache block/line sizes (qemu-stable cc'ed)
+> - patch #5-#6, complete e500mc/e5500 L1 cache configuration and
+>   remove redundant e6500 cache geometry bits
+> - patch #7-#11, register the missing cache, MMU-assist and sevearl
+>   control SPRs
+> - patch #12-#14, split the PowerISA 2.05 instructions to several sub-flag=
+s
+>   controlled groups, due to differences seen on the e500 series cores
+> - patch #15-#17: Add TCG tests for illegal-instruction exceptions, byte
+>   comparison and parity results, and FPSCR field-mask handling
 >
 
-Reviewed-by: Jamin Lin <jaminlin1207@gmail.com>
+Ping for review?
 
