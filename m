@@ -4,92 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B8ACCA9ED2
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 13:15:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6EA0CA9ED2
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 13:24:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGcKj-0006GH-Fc; Tue, 13 Oct 2026 09:14:21 -0400
+	id 1xGcTb-0001FS-GB; Tue, 13 Oct 2026 09:23:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <palmer@dabbelt.com>)
- id 1xGcKi-0006Fx-2f
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 09:14:20 -0400
-Received: from mail-dy1-x132f.google.com ([2607:f8b0:4864:20::132f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <palmer@dabbelt.com>)
- id 1xGcKf-0003Ro-Ga
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 09:14:19 -0400
-Received: by mail-dy1-x132f.google.com with SMTP id
- 5a478bee46e88-3535a54bed9so4080869eec.1
- for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 06:14:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=dabbelt-com.20251104.gappssmtp.com; s=20251104; t=1791897255; x=1792502055;
- darn=nongnu.org; 
- h=content-transfer-encoding:content-type:mime-version:message-id:to
- :from:cc:in-reply-to:subject:date:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=PUV66Gn1sIrQwCvb4T+zP3Ycn4o9uPgk2+d8WggpDlA=;
- b=TEeawIOT0rOW/AmvEFr2klJGHF0jBVaUKKytKTNoCuMH8lqOQEC/8R9gX/JwbebHJS
- A/WXeFvoBb+MthnKNUHaDm2Z916WYMQeK3bCby/Bd46mCIBE98FX66V3TOv2b2jzzEmj
- tGh24vCy2WXMc/8iioE1y+eEqMJGo3E27sUWllWCdHyXZkt4uu1MRVQGCEtFRvCCsG+X
- 3srmgzZCxTkIFJcj2MlGm9plEFBZuRpneYQEYimw1+NDJ6Sri8Y5f+Zg32a2C7wXoOFl
- h2sDPJgHpDCOtqoVTCFDP3fFm+Jt+vvpapygEU08i58W6Uaua+0sp3tkQEVF21obdBv7
- 5mXw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791897255; x=1792502055;
- h=content-transfer-encoding:content-type:mime-version:message-id:to
- :from:cc:in-reply-to:subject:date:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to:content-type;
- bh=PUV66Gn1sIrQwCvb4T+zP3Ycn4o9uPgk2+d8WggpDlA=;
- b=hibsvg4jEWs/ZPbZ+fgBW/FnmoAdeUAYZeuriKH9An8fKFaQTxH/KQ9r5fRZ2mwtLT
- JJd9gQzMupdXtqM9C0mTjyVvNusaXp5MhflY5wDe+gjCokO5k7Ybn/JufiRCVCOb3D4g
- qd7GickC29ViIbeuQe3Rq0cBwWJ6UrfQRk49SYsigEsB9IW6Sah3/qwL9RPv2vhIYywp
- h0MTRPP+6w9Fm2FJO3UZ06GuQxiht/caflm40KXCTlup/Bp2PhbFTQlDPlyr7CBfe7ne
- BkuPIDCR0WI+EQUWfIGBc7NeiBA8kOiJOH5tzljXDSUk05blp53E1kUvFK/CSXsu17M4
- lp/w==
-X-Forwarded-Encrypted: i=1;
- AKwUvBy3sU50hZFqyQLF1rPoA6gcC3B9ykeMdkoa+8PmOSRkZ3M9UspE+5fGgnokAz97asdpwi36S9YKV2qi@nongnu.org
-X-Gm-Message-State: AFq9FYJo31Liq91Ku1xdXq0wCOcqXmPugQ4CHck6R3nPgAfs6Xbe5dtU
- 7eBwrEGgl1IRRUF3z9ZUtV3TCUjVj2EmmebLA72CZIE3aHQrbdMOTBhEYERQQIsCGpg=
-X-Gm-Gg: AYBFou1fj2Fua6MzdWTD2g+iLBK0mcCwkEthifdIH4qGSXZcX5X9uXKE31bHDQLFxsq
- 09L2ptiVTRXll7rUZKh9CMssJfCgxsiEBEoTVxo0ZtTDiKfCiMRCUW9uojDFoLP7BO/x4PTuytp
- cbjvxlBN0i8EFGaxUVyW1kV6tcw0ZOvuhAjw+3lLwMUEBBz6AjwQfcZT1PVcCbMJz3+jDl6VYLr
- QaZKCVeBpfqJVzlhXz3a6H4JVVg8jwuoUGHfM9Dc2w8Hn4LYc40W5GjOqkFJ5GEKHfEfqmJRvzQ
- iSfSpiIBq6LypZsxqaVHoxRKyLEABfKaCliFi4JRN+TiRS0LBm5F+IvHDssIRSTpmfbGWH2Q9fY
- zxe7PS5eoJ7XvpkIiCkj2CKCShgj9RHphJ5RMj1i0gzFQBefx0WKr1yGnDGC3Z2zMzAQpGvv8ZM
- NWU/k2O6Y/9YS6Ke0cmzw02jD5rGl54QPT+boXhyDoGd7GRtAI6+/kBIZ65x+QOjDPN540bKtnl
- NLGn0xGXZZJ3LrkxeAQddns+Ic2hQ==
-X-Received: by 2002:a05:7300:d18b:b0:351:1e2e:da4d with SMTP id
- 5a478bee46e88-3537e0bdfe0mr18683928eec.23.1791897254641; 
- Tue, 13 Oct 2026 06:14:14 -0700 (PDT)
-Received: from localhost ([2001:5a8:4687:d600:60f5:5a60:a2fe:eaae])
- by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-3537c841648sm49858819eec.3.2026.10.13.06.14.13
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 13 Oct 2026 06:14:13 -0700 (PDT)
-Date: Tue, 13 Oct 2026 06:14:13 -0700 (PDT)
-X-Google-Original-Date: Tue, 13 Oct 2026 06:14:11 PDT (-0700)
-Subject: Re: [PATCH] target/riscv: Use TSO barriers instead of full barriers
- for Ztso
-In-Reply-To: <96294abc-af49-433d-99ec-9376b7b78091@oss.qualcomm.com>
-CC: rick@sloservers.com, qemu-riscv@nongnu.org, qemu-devel@nongnu.org,
- Alistair Francis <Alistair.Francis@wdc.com>, liwei1518@gmail.com,
- zhiwei_liu@linux.alibaba.com, chao.liu@processmission.com
-From: Palmer Dabbelt <palmer@dabbelt.com>
-To: daniel.barboza@oss.qualcomm.com
-Message-ID: <mhng-29CE4AFA-6FA7-4BFC-8C6F-F6719A684302@Palmers-Mini.rwc.dabbelt.com>
-Mime-Version: 1.0 (MHng)
-Content-Type: text/plain; charset=utf-8; format=flowed
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1xGcTZ-0001F2-Nv
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 09:23:29 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1xGcTX-0004dU-L3
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 09:23:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1791897806;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=a8OxsOCPd2u9GzRP9mLF8s/FyzLYtpDnFiV0xR3zOfY=;
+ b=NRXj2Cn32ae0Oi+EO/nc27ciOSpPCWFNj/jniTskW2txiNY4DMo8vXSQTAaChs3yJrnOSu
+ h942YJj2bZXeE2g5JAF2WjJYzgdXhN5Lo3QXIFCDbjRFoTN+m++6m1OlhX3Az07L5292Xm
+ gthgb/dZgD9d229VgWkykhEdAwfLyoE=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-590-Gqq0dMZ_PImSyfRoOpl-wQ-1; Tue,
+ 13 Oct 2026 13:23:25 +0000
+X-MC-Unique: Gqq0dMZ_PImSyfRoOpl-wQ-1
+X-Mimecast-MFC-AGG-ID: Gqq0dMZ_PImSyfRoOpl-wQ_1791897804
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5498E1828AB4; Tue, 13 Oct 2026 13:23:24 +0000 (UTC)
+Received: from localhost (headnet03.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.114])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 206FB180057E; Tue, 13 Oct 2026 13:23:22 +0000 (UTC)
+From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+Date: Tue, 13 Oct 2026 17:22:58 +0400
+Subject: [GIT PULL 01/40] ui/spice-app: honor gl=off option, reject core/es
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::132f;
- envelope-from=palmer@dabbelt.com; helo=mail-dy1-x132f.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Message-Id: <20261013-ui-v1-1-92da3082ad96@redhat.com>
+References: <20261013-ui-v1-0-92da3082ad96@redhat.com>
+In-Reply-To: <20261013-ui-v1-0-92da3082ad96@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org, 
+ =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1433;
+ i=marcandre.lureau@redhat.com; h=from:subject:message-id;
+ bh=cYHDkSlvRgd2UDY8DWMvrvKDuOHytDafK9rcJSXI/4k=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqzjDBEiByRDd7cMz+o/sjQVlNfQs4O8GC3fEi6
+ ynPLk9N86WJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCas4wwQAKCRDa6OEJdZac
+ 5efwEACdya65BJ8wjog4/ICEUrUs6yPChY4PlQaY8uV+AZck66TCiywLsQxV8kNOpjoPRwemOuC
+ b0kg7EFat+Kx3Go5hBZNReUT+wDlAzcbviSg+twk+mxDGY6ZjtvGF18CEUsJ8BNqIJ8f1qCmiiJ
+ 1/1JfNk/QR9EaxWSJqKFkp16efwX2unzx+R81t9mCRmXpyN3AW8tgd6KGbc69U/aqTVb7HW3DWE
+ BbVkH9+uXk0nCc0X3sARQ4Gb8Wac8gACUX7cGnuEcyzxwVC7XhzMqwxcG9Jw6MAIVn/3nJwznqH
+ jsBRhy0w2SFmc+N4lepcS95AD/ZjO1N5FbvExm3wdLnMUSTzo0X34AFiqctM3+++Ds94WCpL7A5
+ Xf/xXoLps43VRFOPcYIG55GeQ8M917oyzYOKXX2pYR8iYrhex1JXFscN7LxGhGJtLIw7grJyZj3
+ f18WSPkM7R3sAJp6GxF3NimgTR/E8FksS+MYLe75CFu13dHQJuG0cKDRMGXQlTSuTgNadnq8j3z
+ Y5vHt7ZS7+MCMMmrlSqcgWEaAYweEX7OvdABze86u2xZMMIXHtEzy/FD7/mwJ7a6H9mfNTBgOtO
+ fSvC6OHqjDOAL0Hjq84YlGO5Q9Zfc2QbcemB0tUIHOUadc6OFqKGVABG8/jERTRpJLOaUubzgJU
+ noWKuNp1jI6VJpw==
+X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
+ fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=marcandre.lureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
+X-Spam_bar: --
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,95 +103,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 13 Oct 2026 04:57:49 PDT (-0700), daniel.barboza@oss.qualcomm.com wrote:
->
->
-> On 10/2/2026 10:47 AM, Rick Richard wrote:
->> With Ztso, plain loads and stores follow RVTSO, but the barriers
->> around them use TCG_MO_ALL.  That also orders a store before a later
->> load, which TSO doesn't require, and is expensive: on x86 hosts it
->> adds a locked instruction around every load and store in a
->> multi-threaded guest.
+With -display spice-app, the value of the gl option is ignored: gl=off
+enables OpenGL exactly like gl=on. Only omitting the option keeps OpenGL
+disabled.
 
-Thanks.  I'm not quite sure why I had TCG_MO_ALL in there, I think maybe 
-I just misread the TCG_MO_* vs TCG_BAR_* blurb?
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4639
+Fixes: d8aec9d9f129 ("display: add -display spice-app launching a Spice client")
+Reported-by: @jeremie.b
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+---
+ ui/spice-app.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-Reviewed-by: Palmer Dabbelt <palmer@dabbelt.com>
+diff --git a/ui/spice-app.c b/ui/spice-app.c
+index fe3df62bfa5d..90e8de0bc87d 100644
+--- a/ui/spice-app.c
++++ b/ui/spice-app.c
+@@ -180,8 +180,14 @@ static void spice_app_display_early_init(DisplayOptions *opts)
+     qemu_opt_set(qopts, "image-compression", "off", &error_abort);
+     qemu_opt_set(qopts, "streaming-video", "off", &error_abort);
+ #ifdef HAVE_SPICE_GL
+-    qemu_opt_set(qopts, "gl", opts->has_gl ? "on" : "off", &error_abort);
+-    display_opengl = opts->has_gl;
++    if (opts->has_gl &&
++        opts->gl != DISPLAY_GL_MODE_ON &&
++        opts->gl != DISPLAY_GL_MODE_OFF) {
++        error_report("spice-app only supports gl=on/off");
++        exit(1);
++    }
++    display_opengl = opts->has_gl && opts->gl != DISPLAY_GL_MODE_OFF;
++    qemu_opt_set(qopts, "gl", display_opengl ? "on" : "off", &error_abort);
+ #endif
+ }
+ 
 
->> The barrier after a load now only keeps later loads and stores
->> behind it, and the barrier before a store only keeps earlier loads
->> and stores ahead of it.  That is all TSO needs.
->>
->
-> Fixes: 09c4e88759 ("RISC-V: Add support for Ztso")
->
->> Signed-off-by: Rick Richard <rick@sloservers.com>
->> ---
->
-> Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
->
->> I found this while looking into why riscv64 guests were so much
->> slower than aarch64 ones under bsd-user on FreeBSD.  The default -cpu
->> max enables Ztso, and turning it off with ztso=false accounted for
->> most of the difference.
+-- 
+2.56.0.116.g6de20f6092dc
 
-Maybe we shouldn't default to Ztso, or at least not default to Ztso on 
-host systems that themselves aren't TSO?
-
->> On an x86-64 host the patch made xz almost four times faster and cut
->> the time of a clang compile by about 30%, the same as running with
->> ztso=false.  The output didn't change.
->>
->> I also tested it on a Raspberry Pi 3B+, which is arm64 and doesn't
->> give TSO ordering in hardware, to make sure the weaker barriers still
->> hold up there.  Everything ran correctly, and xz was about 12% faster.
->>
->>   target/riscv/tcg/insn_trans/trans_rvi.c.inc | 4 ++--
->>   target/riscv/tcg/insn_trans/trans_rvv.c.inc | 4 ++--
->>   2 files changed, 4 insertions(+), 4 deletions(-)
->>
->> diff --git a/target/riscv/tcg/insn_trans/trans_rvi.c.inc b/target/riscv/tcg/insn_trans/trans_rvi.c.inc
->> index 40b4c9aa..d31e4295 100644
->> --- a/target/riscv/tcg/insn_trans/trans_rvi.c.inc
->> +++ b/target/riscv/tcg/insn_trans/trans_rvi.c.inc
->> @@ -424,7 +424,7 @@ static bool gen_load(DisasContext *ctx, arg_lb *a, MemOp memop)
->>       }
->>
->>       if (ctx->ztso) {
->> -        tcg_gen_mb(TCG_MO_ALL | TCG_BAR_LDAQ);
->> +        tcg_gen_mb(TCG_MO_LD_LD | TCG_MO_LD_ST | TCG_BAR_LDAQ);
->>       }
->>
->>       return out;
->> @@ -485,7 +485,7 @@ static bool gen_store_tl(DisasContext *ctx, arg_sb *a, MemOp memop)
->>       TCGv data = get_gpr(ctx, a->rs2, EXT_NONE);
->>
->>       if (ctx->ztso) {
->> -        tcg_gen_mb(TCG_MO_ALL | TCG_BAR_STRL);
->> +        tcg_gen_mb(TCG_MO_LD_ST | TCG_MO_ST_ST | TCG_BAR_STRL);
->>       }
->>
->>       tcg_gen_qemu_st_tl(data, addr, ctx->mem_idx, memop);
->> diff --git a/target/riscv/tcg/insn_trans/trans_rvv.c.inc b/target/riscv/tcg/insn_trans/trans_rvv.c.inc
->> index a22e2cae..8c21ab87 100644
->> --- a/target/riscv/tcg/insn_trans/trans_rvv.c.inc
->> +++ b/target/riscv/tcg/insn_trans/trans_rvv.c.inc
->> @@ -731,7 +731,7 @@ static bool ldst_us_trans(uint32_t vd, uint32_t rs1, uint32_t data,
->>        * around the loop.
->>        */
->>       if (is_store && s->ztso) {
->> -        tcg_gen_mb(TCG_MO_ALL | TCG_BAR_STRL);
->> +        tcg_gen_mb(TCG_MO_LD_ST | TCG_MO_ST_ST | TCG_BAR_STRL);
->>       }
->>
->>       mark_vs_dirty(s);
->> @@ -739,7 +739,7 @@ static bool ldst_us_trans(uint32_t vd, uint32_t rs1, uint32_t data,
->>       fn(dest, mask, base, tcg_env, desc);
->>
->>       if (!is_store && s->ztso) {
->> -        tcg_gen_mb(TCG_MO_ALL | TCG_BAR_LDAQ);
->> +        tcg_gen_mb(TCG_MO_LD_LD | TCG_MO_LD_ST | TCG_BAR_LDAQ);
->>       }
->>
->>       finalize_rvv_inst(s);
 
