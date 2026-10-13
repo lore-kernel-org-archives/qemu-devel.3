@@ -4,118 +4,139 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD95FCC6B0E
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 07:27:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2B38CC6B03
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 07:44:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGWuY-00075D-VI; Tue, 13 Oct 2026 03:26:59 -0400
+	id 1xGXAj-0000lN-CY; Tue, 13 Oct 2026 03:43:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
- id 1xGWuX-00074e-A0; Tue, 13 Oct 2026 03:26:57 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1xGXAf-0000ks-5B; Tue, 13 Oct 2026 03:43:39 -0400
+Received: from mail-japanwestazlp170120003.outbound.protection.outlook.com
+ ([2a01:111:f403:c406::3] helo=OS8PR02CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
- id 1xGWuU-0000aE-JE; Tue, 13 Oct 2026 03:26:57 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69D2F2Yf1892967; Tue, 13 Oct 2026 07:26:50 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=G9a3MX
- fukH7n3hAnxTgb36RdKHfnVzDaM4ByOEfOr8w=; b=Tjp5SyARPOgJsGaAn3RGmQ
- Ni13jHx1hn8I9wsK4jbDbJHP1vc7slDmlyCTfDQJVobrboL3+RORWIhHLqGWOwWq
- BowgCqV6r5IZYNBjMB/g8ROR3ep73q0UKib/QVfpy10iZyNxhBm35YO+R64M+htY
- y+bOk36Ne9WsBY3zjhPzc4pDX3NX1vKmed6AF6sP1GMVQ5DtAPEFuZZbpCMyBn3W
- Q0grdhc8MciMjAEKO7C2gcr/mYwuAr2lRduYpwuAZm2XIipaFkk+zJR0cFLSqlcu
- NCxDbA9LOjfw+yyb8N1Kf/F3yT12DhAK/itw3GGe1oYvDkr7y1hZTBkz14JfVKPA
- ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4h7dv3cp97-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Tue, 13 Oct 2026 07:26:49 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69D7K83b2295602; Tue, 13 Oct 2026 07:26:48 GMT
-Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4h816h0m45-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 13 Oct 2026 07:26:48 +0000 (GMT)
-Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
- [10.39.53.232])
- by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 69D7Qlj729688428
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 13 Oct 2026 07:26:47 GMT
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2B0AF58059;
- Tue, 13 Oct 2026 07:26:47 +0000 (GMT)
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1A72A58061;
- Tue, 13 Oct 2026 07:26:44 +0000 (GMT)
-Received: from [9.123.8.229] (unknown [9.123.8.229])
- by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 13 Oct 2026 07:26:43 +0000 (GMT)
-Message-ID: <e04f44f4-a86a-41f6-9d09-0c08a26cac89@linux.ibm.com>
-Date: Tue, 13 Oct 2026 12:56:42 +0530
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1xGXAc-0001mw-HH; Tue, 13 Oct 2026 03:43:36 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=iVFsVk9FYZImNDi4+sxi2WwTm+fPg/L/1cgTRFWmfKoPivCky0USaAm16sxhCF5Qv3K5Bd58HKLvH5cMpJABOaRylvE5ejZSjjnEbnpbfbk1k3bWI4o23sY8+wHakAq/kPPfHbDHKaQVN6GrQEsHThzXKBKOGXmoe02n/QArd4P2wpXugA2AX0n4FJ9gbLnhKARoY4jSD9P+Q1KVhvwch2vozWAn+zKKv00k4k31AxnKyEXaiDjwwqtrGSfnw6Mg7u0zhydnLdbQe8rZGDPMEMDAi+Xx2ma7aI0yVC8P8amFz1bdXCxLRLMOJxTF0QVD26xqDz80Ubg9r+ERTXPCfg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=gQGIM9M0uOSqpP/UmMs0sk45sddLFhPbmjNnw0HE0BA=;
+ b=mdD0+7HtnDegnOWTqRFj30pREgGwzLRbp2+hX3T9a6wylNvlgdF8mmMDnjHotgmOW4hCn6pM24KfGsCB0k/f58Agm1J3xmZ8Uyz7pkwEhdSNjNEOg4V0hfos1J3rX7T6XKY//d16aSF9mNdPJXCNHFb2rQhx+le2XXTR6AD6lW8P6cWwqWGWoHlRcQ/520MH2nlV82X5JZcnmvfKZTf5KGEZbiFspMXNm+mqIy3V3Jvt/sI3COl5qj91t3J8oRZzaCznTiOEVAsw+g+3ffXE9wQSwn2TJ11EDaxxwndPDJgXRZCmB6KlZfbJRagn+t26za0olYTzXQDRbwOPcJUE0w==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
+ header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=gQGIM9M0uOSqpP/UmMs0sk45sddLFhPbmjNnw0HE0BA=;
+ b=lCguEMB77p4PjfiH2wmWNZJvBeqqNJd/54wypeTCus4kjAPcqp3EL5xwgFUe8jAsm+b+9/tSUdCrp3YXuJ4gCVKl7R3TXeZc7w++hrvN/KVmrGyKFZww97BNVhBYi8s9O3+T+yBrPBckCMstTRxNUEb5q1WHWsR9k15BW1iLsthJUQoaBFraALfkgdLpfyueC2vg0NcmQ9JjCJugEiPfw3chthUyftvWkee4YqwRKbNj4/0OCIO2S0rPmyahyw0TuaJJvwS0lSZcK/Tka4L/vvnpmA9DC5l+glaU/+NsYmb+8ktEtLdtGReneLrBBl48ZyuxoKjYyYz3nAdbeV7vxA==
+Received: from TYZPR06MB7373.apcprd06.prod.outlook.com (2603:1096:405:a7::14)
+ by SG2PR06MB5059.apcprd06.prod.outlook.com (2603:1096:4:1c7::14) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.496.23; Tue, 13 Oct
+ 2026 07:43:24 +0000
+Received: from TYZPR06MB7373.apcprd06.prod.outlook.com
+ ([fe80::9b90:c4d9:22de:2ac4]) by TYZPR06MB7373.apcprd06.prod.outlook.com
+ ([fe80::9b90:c4d9:22de:2ac4%6]) with mapi id 15.21.0496.021; Tue, 13 Oct 2026
+ 07:43:23 +0000
+From: Jamin Lin <jamin_lin@aspeedtech.com>
+To: "open list:All patches CC here" <qemu-devel@nongnu.org>
+CC: Andrew Jeffery <andrew@codeconstruct.com.au>,
+ =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@kaod.org>, Emmanuel Blot
+ <emmanuel.blot@free.fr>, Fabiano Rosas <farosas@suse.de>, Jamin Lin
+ <jamin_lin@aspeedtech.com>, Joel Stanley <joel@jms.id.au>, Kane Chen
+ <kane_chen@aspeedtech.com>, Troy Lee <leetroy@gmail.com>, Laurent Vivier
+ <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, Peter Maydell
+ <peter.maydell@linaro.org>, =?iso-8859-1?Q?Philippe_Mathieu-Daud=E9?=
+ <philmd@oss.qualcomm.com>, Pierrick Bouvier
+ <pierrick.bouvier@oss.qualcomm.com>, "open list:ASPEED BMCs"
+ <qemu-arm@nongnu.org>, "qemu-ppc@nongnu.org" <qemu-ppc@nongnu.org>,
+ "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>, Steven Lee
+ <steven_lee@aspeedtech.com>, Patrick Leis <venture@google.com>
+Subject: Re: [PATCH v2 48/50] hw/arm: minerva: add Facebook BMC machine
+Thread-Topic: [PATCH v2 48/50] hw/arm: minerva: add Facebook BMC machine
+Thread-Index: AQHdWuZxsph/f01iJEiWxSk0J6PAhw==
+Date: Tue, 13 Oct 2026 07:43:23 +0000
+Message-ID: <TYZPR06MB73736F77F75E0CEE4765E3D1FC9E2@TYZPR06MB7373.apcprd06.prod.outlook.com>
+Accept-Language: zh-TW, en-US
+Content-Language: zh-TW
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+msip_labels: 
+authentication-results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=aspeedtech.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: TYZPR06MB7373:EE_|SG2PR06MB5059:EE_
+x-ms-office365-filtering-correlation-id: e8009868-97cc-467c-1ca0-08df28fda8f4
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|23010399003|1800799024|376014|366016|7416014|18002099003|10067099003|8096899003|261009223027099003|38070700021|56012099006|41080700001;
+x-microsoft-antispam-message-info: hJPo/AcIR2SYFpQlQAoo45Z70rDvn/fXNAd2bg4cAUhrwQmwZYWOZT6OTayZmaFWAs/JaX8Ze/Qayh0yCJVCMtKbp7r9OIft3GKB3ywkFaRnwcwra6nJzvaq29sqVMzzRdOcHO9cqvH9fgZUO3Qf/7O01QtkggLfX4mrfNUwmIllC4XRI78TGKwCRuZOB3yQ3vmw9B+Na48TO0g/dqOB95juCHZgwzK+nqgwfD/wMIkq4lXUaxhgyWzVIyEoHg6uOR5Kss77h0r8pSoQlS3riRX5f+DzhduP0f53w3kU3z+aIepGvSeVGbAvHOSzpTXoaq6Dg50W8eB/5BxBXe5DwqEBv+//zrLPkEm0Y2hlzg6MyW83H9JP4oJ9GlXyJyQUchCymnlaQswYCj66R9a5dfyroocaJ2z8hwQVEKQIZpIl7ucFuHF2sA9yNsN1QL/EZCyf6Ft90/DNv0gAvn09zE5cCA3uROCll62H2zPgxJyWDY+Y5mQe9RpK3XB5dT1v1CUQ2cL5Lu2hAag1wAYcOW8zE/RTApbUHz3XvFPgHVl1a+wFXWnPZ8Yru1DNUmVe5aHCgYVxQDNEnuIblBvbl/et9zbKEXh1/0njWc5IAhecuYtEJyJUGvVs0OWfY2uUjZPqjU8nPW0WcvkS63/t3LFGw8c+90yBNcNGBQ0azF6+p3PHZV0FfOmK+EhXkazrDoKHTZqj6DX6Fjx8QO4jJ4NxFoDpNF9FO2ZKtS5lB2GmIemt20OoT/1hGoiyPk0m
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:zh-tw; SCL:1;
+ SRV:; IPV:NLI; SFV:NSPM; H:TYZPR06MB7373.apcprd06.prod.outlook.com; PTR:;
+ CAT:NONE;
+ SFS:(13230040)(23010399003)(1800799024)(376014)(366016)(7416014)(18002099003)(10067099003)(8096899003)(261009223027099003)(38070700021)(56012099006)(41080700001);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?n6XqgEs586Gi29unefh8iiljGrkUCGKgGG1QBzSAkD+yMerjOG2D7p1NrU?=
+ =?iso-8859-1?Q?O4UsaiTNs5Bf+T1+6WYOZgnfHq9UekHQnfbFaAme0fktcrCQtFe2HCTm3l?=
+ =?iso-8859-1?Q?HAN7wIhpM26t+LJ/XzM3oqL0KL62QF3FcGe2x16skDoN8p0u3S2LtVet61?=
+ =?iso-8859-1?Q?V7q2oCO3OBbsbJZevjfgHqOJdAjMwHQ8VQMr+r7a9bELmJCQ86bwkdWxnC?=
+ =?iso-8859-1?Q?fQ+Aia5UJYPDVPwyT4ev2Ns8N+b5HF1MuOxx6Ep4la9+1WAviaBcUTc4dW?=
+ =?iso-8859-1?Q?URYXoJILDOWLwnpU7OzrbEAEH0pb7z4RaCs/Iubx115TjbPWLmlVC6re9Q?=
+ =?iso-8859-1?Q?udN7vllzF0EG4l4AK/T7h9FLP4Nic1I72tqV+UZdIfWeerFDEtGfDjX7fa?=
+ =?iso-8859-1?Q?KZ1jZm9Bgn4yhxL3nLmuhkTl1Li9DWMcV2wkxswmOOODIiaiZcz5TR382R?=
+ =?iso-8859-1?Q?tZrJRA3tYXCHzV/DUnt3Slm2/TBV0Fe58evzaisJ+MlS9zMX/jEm2T0BcG?=
+ =?iso-8859-1?Q?zTFsYQuKFARXMtIT1+DUJAJww9l+FAzkYJFxQWH3yRWmJmKyFcbwa2TGPF?=
+ =?iso-8859-1?Q?/dM6iBX48XUcdnEJ+BfnvBOKGzHbWBdlgN+ci8T/cpcxX9MVOkhWboxzuW?=
+ =?iso-8859-1?Q?l8GRmn4c6ICP2YLKrWGIxl59bDgzZNKhhlOK+whrBFDtjSorx9A4RhRyFm?=
+ =?iso-8859-1?Q?/NvBjL5/NBi5LhLjGRzzpZemujHnqRaicvuqdufc1nE8p7CbwA5oQG/hGN?=
+ =?iso-8859-1?Q?18HztwthfijZJgZ5UwDhuvpKwKxv3Tz0qp1LKBDmd4qoVftOFzDWV+7X4m?=
+ =?iso-8859-1?Q?kVjipikYsHBkhRHN5vHo1uq1aQI/PQs72Ud9wS4t+AhkwoSHt6uNZQ31Y+?=
+ =?iso-8859-1?Q?aPA4L6XqEeLZihdWv18N+YW7MjHbWro3VSqCzVEtGWwXROWI7oswH3DeCE?=
+ =?iso-8859-1?Q?MYj5TQDUAXp5n4/dfMU+hqcpb2XuaP2IEkVvyffvQxeatRP9MWTCS/PPKT?=
+ =?iso-8859-1?Q?MnvxWI5MY+a8XqEXo5S0DySSlukDlXJYtgVXnGjRsCvievc+FQLrqRHTD2?=
+ =?iso-8859-1?Q?1PvFbfxULL4FHJF4wziAAYpafyExAI0VFEo8Qt/kEipWZE+LWHxsTPtz/s?=
+ =?iso-8859-1?Q?wUMXOhHaey3awa2C5ckonYN9PadHSxhXy06NX/k/s5okA2m3NQLyzRt+o8?=
+ =?iso-8859-1?Q?Hm75V3yz7O2TxKXSoocLqXleX89jl5Yke22Xmb2n1ttCtPYmUfEnhmE/2B?=
+ =?iso-8859-1?Q?gOIZYtMAzrUBESqA503ksBfupLqvEGuGTjC7bx5E9o5R1n7Xq6+XMZn+jn?=
+ =?iso-8859-1?Q?F/oeG6bC8o1R5KUbk4MuRoJ1ckDukf4LM8hVG1aMa0UueGVTSMnoivOZax?=
+ =?iso-8859-1?Q?zjB+J4Vq/ntTxq1Qu1bBpc5Ub9vaACgolQuNsXzt4dkIk4BsZfx7Fg/1U6?=
+ =?iso-8859-1?Q?dRbT/WAeKqfW9z15XpGED5AZacetj9NnYsy8+JpfnbLU4c1cntJ/iGuX9/?=
+ =?iso-8859-1?Q?Q0E79J572cjmW89tS+VPJ+BdewCly5gHiXG1OXdOtoDTKjRFO+MlWNM8R6?=
+ =?iso-8859-1?Q?g44V9zmldRXJhdiY6xjJ/rwymi52husT5IGUDMPLAEAT8SCyhSZulB5PET?=
+ =?iso-8859-1?Q?Nd01KZDbALxQE+z+SJ/tgmwVLewQo1SjYIlxQGPEYX4VUoUzxZVCGHIZ+1?=
+ =?iso-8859-1?Q?ZYjMcMDBTarDqRGWMdqUvyJh2cedJUKovR6n0Hl9a11GjiDsfMkGGVVTKy?=
+ =?iso-8859-1?Q?sKTc0GhMBHEFDUk+8a0pZEKbVk4qxGm8vRuwGgwJDB76NUI7+5/Kd521EO?=
+ =?iso-8859-1?Q?U5avvWudZA=3D=3D?=
+Content-Type: multipart/alternative;
+ boundary="_000_TYZPR06MB73736F77F75E0CEE4765E3D1FC9E2TYZPR06MB7373apcp_"
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 12/17] target/ppc: Split the ISA 2.05 instruction feature
- group
-To: Bin Meng <bin.meng@processmission.com>, QEMU <qemu-devel@nongnu.org>
-Cc: Bernhard Beschow <shentey@gmail.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Glenn Miles <milesg@linux.ibm.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
-References: <20261006094921.110871-1-bin.meng@processmission.com>
- <20261006094921.110871-13-bin.meng@processmission.com>
-Content-Language: en-US
-From: Chinmay Rath <rathc@linux.ibm.com>
-In-Reply-To: <20261006094921.110871-13-bin.meng@processmission.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-GUID: cc5SRUg6BqyqvUJTGBq7M10B0X72T5-5
-X-Proofpoint-ORIG-GUID: EEUhudErAii2wjy_hRHCqrUFIfrxNi0I
-X-Authority-Analysis: v=2.4 cv=aqInmiZV c=1 sm=1 tr=0 ts=6acddd3a cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=FRSEYCzRAAAA:8
- a=xZX0-5J-fjlRuG5LxAQA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=H4N_Y-AU75W7NKDNhZlT:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDEzMDAyOCBTYWx0ZWRfX2W+Mgqd+azqg
- +0eJgA3BvmJiB06yWPdN2k1ZL6bmaGJDYYHybf52SQVhc1+5qgsXTFT6iKsAdsW7RMRyVQEFrlT
- 42kj8zLuHcwJvuY7uA7y96HTUev/HYo=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDEzMDAyOCBTYWx0ZWRfX8vnFxQtu8agl
- ufC1DOWWPOZ4av/uVKwtudES5vIpJjMV26/fvorZlkXipA8vQOUX6ImOhwckFqdopexRIQ30fjq
- UEroz82Tq0vyu6S2YRtYRBV+2UDaIc7aWkA2nNBC+uoW/9icRvl9qfghtWiAi0riNn7tLlXnvb9
- 4RRWkK9KG+Px1vIm2M9gRvq2kJKYU1n4V1cRJbQ1/i4lkKHfx6CwaOxOpUg6KyIQfR8nQf3u7nv
- gj52M66BKChFJYAIBrySojH/hBr5jAUtxHJKjZf1vpJoDRLO1+JQYmkRX2Bmw9fXfzykKoegqmp
- 5XqEf7OImLFm7gga0I4P74yV2kT0+aOpzk6AbMhqbCmSnP5u0twIby6hVlosWI3vpyWs3nDZoTU
- ZiHhmgwfPJvNYK7daoHPqoQnQq7PIMroqJkxaUBRrLmSLg+4WIOv7Jn38f77chC8S1y/U1XraV4
- L/4Fep1+xkj2v0wfLsg==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-10-13_01,2026-10-09_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 clxscore=1011 spamscore=0 malwarescore=0 suspectscore=0
- bulkscore=0 adultscore=0 impostorscore=0 priorityscore=1501
- lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610080000
- definitions=main-2610130028
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=rathc@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+X-Exchange-RoutingPolicyChecked: gapkOS5lHmxi2XFFYfaxM9/tRm23a2pnobRwNflyOAP/+V3MimQPYqJszceFjzpmIM4gEe7df3Hyr89/bYBlfQNr9t9qQY4eBQtiQ/VQcKfCY64pToqKirpmIfKQmPOc3HWpKIeoxd2GJKnJdXypH31HXNCHVYHd3X1dZajFUXmr6CEKrlBn7S8cChIR2jbyhfO3VDyIvtDIoMb9o8KsvyWOq/eXqKCCXxcjZTbZUPYCIBmkmNyecpFd9sAv1K9k5pF8WOyxy5w9NYl1hxLuxibKcMw+HfsvjKkdLHbtqkC91GqWrSJqAT4ZAM0jBFsMj/hKayGd0rCEwcOstaS8FQ==
+X-OriginatorOrg: aspeedtech.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: TYZPR06MB7373.apcprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: e8009868-97cc-467c-1ca0-08df28fda8f4
+X-MS-Exchange-CrossTenant-originalarrivaltime: 13 Oct 2026 07:43:23.5907 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: s/rLhoF9umCOOifhE7oGsz46kn+Mn/K68rUU5lo08/lDGcISiKjErpm/gSiAsi6guGbCEbn3QAYIJW4deALOE3NiH6RNSZbkcfVjM/encpg=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SG2PR06MB5059
+Received-SPF: pass client-ip=2a01:111:f403:c406::3;
+ envelope-from=jamin_lin@aspeedtech.com;
+ helo=OS8PR02CU002.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -131,256 +152,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+--_000_TYZPR06MB73736F77F75E0CEE4765E3D1FC9E2TYZPR06MB7373apcp_
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 
-On 10/6/26 15:19, Bin Meng wrote:
-> The ISA 2.05 flag couples integer instructions to floating-point
-> instructions and extended FPSCR access. The e5500 and e6500 implement
-> cmpb and parity instructions but lack these floating-point features,
-> so enabling the entire group cannot describe their hardware.
 >
-> Give byte comparison, parity, copy sign, integer word loads, paired
-> floating-point transfers and extended FPSCR access separate flags.
-> Keep the existing capabilities of POWER7 and later models, and include
-> all new flags in the TCG supported instruction mask.
+> Add a machine for the Facebook Minerva Chassis Management Module (BMC),
+> an AST2600-based board modelled from its device tree
+> (aspeed-bmc-facebook-minerva.dts).
 >
-> Signed-off-by: Bin Meng <bin.meng@processmission.com>
-> ---
+> The board uses INA230 and INA238 power monitors, TMP75 temperature
+> sensors, PCA9555 IO expanders, PCA9545 and PCA9548 I2C muxes, AT24C
+> EEPROMs and a DS1339 RTC.
 >
->   target/ppc/cpu.h                           | 20 ++++++++++++++++----
->   target/ppc/cpu_init.h                      |  5 ++++-
->   target/ppc/cpu_init.c                      | 10 ++++++++--
->   target/ppc/translate.c                     | 10 ++++++----
->   target/ppc/translate/fixedpoint-impl.c.inc |  6 +++---
->   target/ppc/translate/fp-impl.c.inc         |  8 ++++----
->   target/ppc/translate/fp-ops.c.inc          |  9 ++++++---
->   7 files changed, 47 insertions(+), 21 deletions(-)
->
-> diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
-> index b716ccf540..78fa4653fb 100644
-> --- a/target/ppc/cpu.h
-> +++ b/target/ppc/cpu.h
-> @@ -2568,8 +2568,8 @@ enum {
->       PPC2_PRCNTL        = 0x0000000000000008ULL,
->       /* Byte-reversed, indexed, double-word load and store                    */
->       PPC2_DBRX          = 0x0000000000000010ULL,
-> -    /* Book I 2.05 PowerPC specification                                     */
-> -    PPC2_ISA205        = 0x0000000000000020ULL,
-> +    /* ISA 2.05 cmpb */
-> +    PPC2_CMPB_ISA205   = 0x0000000000000020ULL,
->       /* POWER ISA 2.07                                                        */
->       PPC2_ISA207        = 0x0000000000000040ULL,
->       /* ISA 2.06B bpermd                                                      */
-> @@ -2602,15 +2602,27 @@ enum {
->       PPC2_PPE42X        = 0x0000000000100000ULL,
->       /* PPE42XM instructions                                                  */
->       PPC2_PPE42XM       = 0x0000000000200000ULL,
-> +    /* ISA 2.05 prtyw and prtyd */
-> +    PPC2_PRTY_ISA205   = 0x0000000000800000ULL,
-Hey,
-You have skipped a bit in the flag here. PPC2_PRTY_ISA205 flag should 
-be  0x0000000000400000ULL instead of 0x0000000000800000ULL.
-> +    /* ISA 2.05 fcpsgn */
-> +    PPC2_FCPSGN_ISA205 = 0x0000000001000000ULL,
-> +    /* ISA 2.05 lfiwax */
-> +    PPC2_LFIWAX_ISA205 = 0x0000000002000000ULL,
-> +    /* ISA 2.05 floating-point pair loads and stores */
-> +    PPC2_FP_PAIR_ISA205 = 0x0000000004000000ULL,
-> +    /* ISA 2.05 FPSCR access through the W and L fields */
-> +    PPC2_FPSCR_EXT_ISA205 = 0x0000000008000000ULL,
-Please keep the '=' sign in the flag definitions aligned so as to help 
-prevent error as the one pointed out above.
-While we are at it, please keep the comment end '*/' aligned as well.
+> Every device the Minerva device tree describes and QEMU already models
+> is instantiated. The remaining ones (LTC4287, XDP710, MAX31790, PCF8563
+> and IPMB) have no QEMU model and are left documented as comments.
 
-Thanks,
-Chinmay
->   
->   #define PPC_TCG_INSNS2 (PPC2_BOOKE206 | PPC2_VSX | PPC2_PRCNTL | PPC2_DBRX | \
-> -                        PPC2_ISA205 | PPC2_ISA207 | PPC2_PERM_ISA206 | \
-> +                        PPC2_CMPB_ISA205 | PPC2_ISA207 | PPC2_PERM_ISA206 | \
->                           PPC2_DIVE_ISA206 | PPC2_ATOMIC_ISA206 | \
->                           PPC2_FP_CVT_ISA206 | PPC2_FP_TST_ISA206 | PPC2_DFP | \
->                           PPC2_FP_CVT_S64 | PPC2_TM | PPC2_PM_ISA206 | \
->                           PPC2_ISA300 | PPC2_ISA310 | PPC2_MEM_LWSYNC | \
->                           PPC2_BCDA_ISA206 | PPC2_PPE42 | PPC2_PPE42X | \
-> -                        PPC2_PPE42XM)
-> +                        PPC2_PPE42XM | PPC2_PRTY_ISA205 | \
-> +                        PPC2_FCPSGN_ISA205 | PPC2_LFIWAX_ISA205 | \
-> +                        PPC2_FP_PAIR_ISA205 | PPC2_FPSCR_EXT_ISA205)
->   };
->   
->   /*****************************************************************************/
-> diff --git a/target/ppc/cpu_init.h b/target/ppc/cpu_init.h
-> index 4ba559d8af..e70f1baa74 100644
-> --- a/target/ppc/cpu_init.h
-> +++ b/target/ppc/cpu_init.h
-> @@ -17,7 +17,10 @@
->   #define PPC_INSNS_FLAGS2_POWER_COMMON                                \
->       (PPC2_VSX | PPC2_ISA207 | PPC2_DFP | PPC2_DBRX |                 \
->        PPC2_PERM_ISA206 | PPC2_DIVE_ISA206 | PPC2_ATOMIC_ISA206 |      \
-> -     PPC2_FP_CVT_ISA206 | PPC2_FP_TST_ISA206 | PPC2_ISA205 |         \
-> +     PPC2_FP_CVT_ISA206 | PPC2_FP_TST_ISA206 |                       \
-> +     PPC2_CMPB_ISA205 | PPC2_PRTY_ISA205 |                          \
-> +     PPC2_FCPSGN_ISA205 | PPC2_LFIWAX_ISA205 |                      \
-> +     PPC2_FP_PAIR_ISA205 | PPC2_FPSCR_EXT_ISA205 |                   \
->        PPC2_FP_CVT_S64 | PPC2_ISA300 | PPC2_PRCNTL |                   \
->        PPC2_MEM_LWSYNC | PPC2_BCDA_ISA206)
->   
-> diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
-> index 5077f3300e..f2a342b076 100644
-> --- a/target/ppc/cpu_init.c
-> +++ b/target/ppc/cpu_init.c
-> @@ -6220,7 +6220,10 @@ POWERPC_FAMILY(POWER7)(ObjectClass *oc, const void *data)
->                          PPC_SEGMENT_64B | PPC_SLBI |
->                          PPC_POPCNTB | PPC_POPCNTWD |
->                          PPC_CILDST;
-> -    pcc->insns_flags2 = PPC2_VSX | PPC2_DFP | PPC2_DBRX | PPC2_ISA205 |
-> +    pcc->insns_flags2 = PPC2_VSX | PPC2_DFP | PPC2_DBRX |
-> +                        PPC2_CMPB_ISA205 | PPC2_PRTY_ISA205 |
-> +                        PPC2_FCPSGN_ISA205 | PPC2_LFIWAX_ISA205 |
-> +                        PPC2_FP_PAIR_ISA205 | PPC2_FPSCR_EXT_ISA205 |
->                           PPC2_PERM_ISA206 | PPC2_DIVE_ISA206 |
->                           PPC2_ATOMIC_ISA206 | PPC2_FP_CVT_ISA206 |
->                           PPC2_FP_TST_ISA206 | PPC2_FP_CVT_S64 |
-> @@ -6381,7 +6384,10 @@ POWERPC_FAMILY(POWER8)(ObjectClass *oc, const void *data)
->       pcc->insns_flags2 = PPC2_VSX | PPC2_ISA207 | PPC2_DFP | PPC2_DBRX |
->                           PPC2_PERM_ISA206 | PPC2_DIVE_ISA206 |
->                           PPC2_ATOMIC_ISA206 | PPC2_FP_CVT_ISA206 |
-> -                        PPC2_FP_TST_ISA206 | PPC2_ISA205 | PPC2_FP_CVT_S64 |
-> +                        PPC2_FP_TST_ISA206 | PPC2_FP_CVT_S64 |
-> +                        PPC2_CMPB_ISA205 | PPC2_PRTY_ISA205 |
-> +                        PPC2_FCPSGN_ISA205 | PPC2_LFIWAX_ISA205 |
-> +                        PPC2_FP_PAIR_ISA205 | PPC2_FPSCR_EXT_ISA205 |
->                           PPC2_TM | PPC2_PM_ISA206 | PPC2_MEM_LWSYNC |
->                           PPC2_BCDA_ISA206;
->       pcc->msr_mask = (1ull << MSR_SF) |
-> diff --git a/target/ppc/translate.c b/target/ppc/translate.c
-> index 467b8f3d4e..c00581fc36 100644
-> --- a/target/ppc/translate.c
-> +++ b/target/ppc/translate.c
-> @@ -4403,7 +4403,7 @@ static bool trans_ICBIEP(DisasContext *ctx, arg_X_ea *a)
->   static void gen_dform39(DisasContext *ctx)
->   {
->       if ((ctx->opcode & 0x3) == 0) {
-> -        if (ctx->insns_flags2 & PPC2_ISA205) {
-> +        if (ctx->insns_flags2 & PPC2_FP_PAIR_ISA205) {
->               return gen_lfdp(ctx);
->           }
->       }
-> @@ -4415,7 +4415,7 @@ static void gen_dform3D(DisasContext *ctx)
->   {
->       if ((ctx->opcode & 3) == 0) { /* DS-FORM */
->           /* stfdp */
-> -        if (ctx->insns_flags2 & PPC2_ISA205) {
-> +        if (ctx->insns_flags2 & PPC2_FP_PAIR_ISA205) {
->               return gen_stfdp(ctx);
->           }
->       }
-> @@ -4429,9 +4429,11 @@ GEN_HANDLER_E(cp_abort, 0x1F, 0x06, 0x1A, 0x03FFF801, PPC_NONE, PPC2_ISA300),
->   GEN_HANDLER_E(paste, 0x1F, 0x06, 0x1C, 0x03C00000, PPC_NONE, PPC2_ISA300),
->   GEN_HANDLER(rlwnm, 0x17, 0xFF, 0xFF, 0x00000000, PPC_INTEGER),
->   /* handles lfdp, lxsd, lxssp */
-> -GEN_HANDLER_E(dform39, 0x39, 0xFF, 0xFF, 0x00000000, PPC_NONE, PPC2_ISA205),
-> +GEN_HANDLER_E(dform39, 0x39, 0xFF, 0xFF, 0x00000000,
-> +              PPC_NONE, PPC2_FP_PAIR_ISA205),
->   /* handles stfdp, stxsd, stxssp */
-> -GEN_HANDLER_E(dform3D, 0x3D, 0xFF, 0xFF, 0x00000000, PPC_NONE, PPC2_ISA205),
-> +GEN_HANDLER_E(dform3D, 0x3D, 0xFF, 0xFF, 0x00000000,
-> +              PPC_NONE, PPC2_FP_PAIR_ISA205),
->   GEN_HANDLER(mcrxr, 0x1F, 0x00, 0x10, 0x007FF801, PPC_MISC),
->   GEN_HANDLER(mfspr, 0x1F, 0x13, 0x0A, 0x00000001, PPC_MISC),
->   GEN_HANDLER(mftb, 0x1F, 0x13, 0x0B, 0x00000001, PPC_MFTB),
-> diff --git a/target/ppc/translate/fixedpoint-impl.c.inc b/target/ppc/translate/fixedpoint-impl.c.inc
-> index c3d8bbf267..0c6ec91400 100644
-> --- a/target/ppc/translate/fixedpoint-impl.c.inc
-> +++ b/target/ppc/translate/fixedpoint-impl.c.inc
-> @@ -1545,7 +1545,7 @@ static bool trans_XOR(DisasContext *ctx, arg_XOR *a)
->   
->   static bool trans_CMPB(DisasContext *ctx, arg_CMPB *a)
->   {
-> -    REQUIRE_INSNS_FLAGS2(ctx, ISA205);
-> +    REQUIRE_INSNS_FLAGS2(ctx, CMPB_ISA205);
->       gen_helper_CMPB(cpu_gpr[a->ra], cpu_gpr[a->rt], cpu_gpr[a->rb]);
->       return true;
->   }
-> @@ -1636,7 +1636,7 @@ static bool trans_PRTYW(DisasContext *ctx, arg_PRTYW *a)
->       TCGv rs = cpu_gpr[a->rs];
->       TCGv t0 = tcg_temp_new();
->   
-> -    REQUIRE_INSNS_FLAGS2(ctx, ISA205);
-> +    REQUIRE_INSNS_FLAGS2(ctx, PRTY_ISA205);
->       tcg_gen_shri_tl(t0, rs, 16);
->       tcg_gen_xor_tl(ra, rs, t0);
->       tcg_gen_shri_tl(t0, ra, 8);
-> @@ -1652,7 +1652,7 @@ static bool trans_PRTYD(DisasContext *ctx, arg_PRTYD *a)
->       TCGv t0 = tcg_temp_new();
->   
->       REQUIRE_64BIT(ctx);
-> -    REQUIRE_INSNS_FLAGS2(ctx, ISA205);
-> +    REQUIRE_INSNS_FLAGS2(ctx, PRTY_ISA205);
->       tcg_gen_shri_tl(t0, rs, 32);
->       tcg_gen_xor_tl(ra, rs, t0);
->       tcg_gen_shri_tl(t0, ra, 16);
-> diff --git a/target/ppc/translate/fp-impl.c.inc b/target/ppc/translate/fp-impl.c.inc
-> index e0d9fa2e24..fef770368a 100644
-> --- a/target/ppc/translate/fp-impl.c.inc
-> +++ b/target/ppc/translate/fp-impl.c.inc
-> @@ -324,7 +324,7 @@ TRANS(FNABS, do_move_b, 1ULL << 63, tcg_gen_ori_i64);
->   static bool trans_FCPSGN(DisasContext *ctx, arg_FCPSGN *a)
->   {
->       TCGv_i64 t0, t1, t2;
-> -    REQUIRE_INSNS_FLAGS2(ctx, ISA205);
-> +    REQUIRE_INSNS_FLAGS2(ctx, FCPSGN_ISA205);
->       REQUIRE_FPU(ctx);
->       t0 = tcg_temp_new_i64();
->       t1 = tcg_temp_new_i64();
-> @@ -592,13 +592,13 @@ static void gen_mtfsf(DisasContext *ctx)
->       flm = FPFLM(ctx->opcode);
->       l = FPL(ctx->opcode);
->       w = FPW(ctx->opcode);
-> -    if (unlikely(w & !(ctx->insns_flags2 & PPC2_ISA205))) {
-> +    if (unlikely(w & !(ctx->insns_flags2 & PPC2_FPSCR_EXT_ISA205))) {
->           gen_inval_exception(ctx, POWERPC_EXCP_INVAL_INVAL);
->           return;
->       }
->       if (!l) {
->           t0 = tcg_constant_i32(flm << (w * 8));
-> -    } else if (ctx->insns_flags2 & PPC2_ISA205) {
-> +    } else if (ctx->insns_flags2 & PPC2_FPSCR_EXT_ISA205) {
->           t0 = tcg_constant_i32(0xffff);
->       } else {
->           t0 = tcg_constant_i32(0xff);
-> @@ -627,7 +627,7 @@ static void gen_mtfsfi(DisasContext *ctx)
->       }
->       w = FPW(ctx->opcode);
->       bf = FPBF(ctx->opcode);
-> -    if (unlikely(w & !(ctx->insns_flags2 & PPC2_ISA205))) {
-> +    if (unlikely(w & !(ctx->insns_flags2 & PPC2_FPSCR_EXT_ISA205))) {
->           gen_inval_exception(ctx, POWERPC_EXCP_INVAL_INVAL);
->           return;
->       }
-> diff --git a/target/ppc/translate/fp-ops.c.inc b/target/ppc/translate/fp-ops.c.inc
-> index 9bc9c3a3c3..e6a0d88dd4 100644
-> --- a/target/ppc/translate/fp-ops.c.inc
-> +++ b/target/ppc/translate/fp-ops.c.inc
-> @@ -1,14 +1,17 @@
->   GEN_HANDLER_E(lfdepx, 0x1F, 0x1F, 0x12, 0x00000001, PPC_NONE, PPC2_BOOKE206),
-> -GEN_HANDLER_E(lfiwax, 0x1f, 0x17, 0x1a, 0x00000001, PPC_NONE, PPC2_ISA205),
-> +GEN_HANDLER_E(lfiwax, 0x1f, 0x17, 0x1a, 0x00000001,
-> +              PPC_NONE, PPC2_LFIWAX_ISA205),
->   GEN_HANDLER_E(lfiwzx, 0x1f, 0x17, 0x1b, 0x1, PPC_NONE, PPC2_FP_CVT_ISA206),
-> -GEN_HANDLER_E(lfdpx, 0x1F, 0x17, 0x18, 0x00200001, PPC_NONE, PPC2_ISA205),
-> +GEN_HANDLER_E(lfdpx, 0x1F, 0x17, 0x18, 0x00200001,
-> +              PPC_NONE, PPC2_FP_PAIR_ISA205),
->   
->   #define GEN_STXF(name, stop, opc2, opc3, type)                                \
->   GEN_HANDLER(name##x, 0x1F, opc2, opc3, 0x00000001, type),
->   
->   GEN_STXF(stfiw, st32fiw, 0x17, 0x1E, PPC_FLOAT_STFIWX)
->   GEN_HANDLER_E(stfdepx, 0x1F, 0x1F, 0x16, 0x00000001, PPC_NONE, PPC2_BOOKE206),
-> -GEN_HANDLER_E(stfdpx, 0x1F, 0x17, 0x1C, 0x00200001, PPC_NONE, PPC2_ISA205),
-> +GEN_HANDLER_E(stfdpx, 0x1F, 0x17, 0x1C, 0x00200001,
-> +              PPC_NONE, PPC2_FP_PAIR_ISA205),
->   
->   GEN_HANDLER(mcrfs, 0x3F, 0x00, 0x02, 0x0063F801, PPC_FLOAT),
->   GEN_HANDLER(mtfsb0, 0x3F, 0x06, 0x02, 0x001FF800, PPC_FLOAT),
+Reviewed-by: Jamin Lin <jamin_lin@aspeedtech.com>
+
+--_000_TYZPR06MB73736F77F75E0CEE4765E3D1FC9E2TYZPR06MB7373apcp_
+Content-Type: text/html; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+
+<html>
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Diso-8859-=
+1">
+<style type=3D"text/css" style=3D"display:none;"> P {margin-top:0;margin-bo=
+ttom:0;} </style>
+</head>
+<body dir=3D"ltr">
+<div style=3D"font-family: Aptos, Aptos_EmbeddedFont, Aptos_MSFontService, =
+Calibri, Helvetica, sans-serif; font-size: 12pt; color: rgb(0, 0, 0);">
+&gt;</div>
+<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
+nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
+olor: rgb(0, 0, 0);">
+&gt; Add a machine for the Facebook Minerva Chassis Management Module (BMC)=
+,</div>
+<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
+nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
+olor: rgb(0, 0, 0);">
+&gt; an AST2600-based board modelled from its device tree</div>
+<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
+nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
+olor: rgb(0, 0, 0);">
+&gt; (aspeed-bmc-facebook-minerva.dts).</div>
+<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
+nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
+olor: rgb(0, 0, 0);">
+&gt;</div>
+<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
+nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
+olor: rgb(0, 0, 0);">
+&gt; The board uses INA230 and INA238 power monitors, TMP75 temperature</di=
+v>
+<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
+nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
+olor: rgb(0, 0, 0);">
+&gt; sensors, PCA9555 IO expanders, PCA9545 and PCA9548 I2C muxes, AT24C</d=
+iv>
+<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
+nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
+olor: rgb(0, 0, 0);">
+&gt; EEPROMs and a DS1339 RTC.</div>
+<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
+nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
+olor: rgb(0, 0, 0);">
+&gt;</div>
+<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
+nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
+olor: rgb(0, 0, 0);">
+&gt; Every device the Minerva device tree describes and QEMU already models=
+</div>
+<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
+nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
+olor: rgb(0, 0, 0);">
+&gt; is instantiated. The remaining ones (LTC4287, XDP710, MAX31790, PCF856=
+3</div>
+<div style=3D"font-family: Aptos, Aptos_EmbeddedFont, Aptos_MSFontService, =
+Calibri, Helvetica, sans-serif; font-size: 12pt; color: rgb(0, 0, 0);">
+&gt; and IPMB) have no QEMU model and are left documented as comments.</div=
+>
+<div style=3D"font-family: Aptos, Aptos_EmbeddedFont, Aptos_MSFontService, =
+Calibri, Helvetica, sans-serif; font-size: 12pt; color: rgb(0, 0, 0);">
+<br>
+</div>
+<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
+nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
+olor: rgb(0, 0, 0);">
+Reviewed-by: Jamin Lin &lt;jamin_lin@aspeedtech.com&gt;</div>
+</body>
+</html>
+
+--_000_TYZPR06MB73736F77F75E0CEE4765E3D1FC9E2TYZPR06MB7373apcp_--
 
