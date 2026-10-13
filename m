@@ -4,92 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 117CACC6B03
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 08:46:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E92BCC6B10
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 08:46:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGY7u-00062N-Sf; Tue, 13 Oct 2026 04:44:52 -0400
+	id 1xGY4K-0000hG-8W; Tue, 13 Oct 2026 04:41:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xGY4L-0000nW-TI
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 04:41:10 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ id 1xGY3v-0008O3-Sx
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 04:40:44 -0400
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xGY4J-0008DJ-My
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 04:41:09 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-4a180fbeef5so24336335e9.1
- for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 01:41:07 -0700 (PDT)
+ id 1xGY3t-00080o-QV
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 04:40:43 -0400
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-487049569b6so1851749f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 01:40:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1791880866; x=1792485666; darn=nongnu.org;
+ d=linaro.org; s=google; t=1791880840; x=1792485640; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=3fH1g5tdo8tCigjV124Cc0dlO1K5fRGTqJqA4DWBEjE=;
- b=QOEMMYGrww4cYMthgYTwYZAs2GlFGLCq1g8+WcdhAVsCNqSDLgdnbZKFFTC4a5SfEi
- 3ZrH7bUGPQsP4a8AVkyVJ81LpQFODQcUosW9ggMdxAkPaQBzomu9QLZ8TjxGdDw00A/e
- dTInQ3U7EZqV0mPu6S/V3REsN/6DFniHksY97RzccItGqBsV+/scDYs7Y7m51y1SYejr
- u9u/htwZtfhHTCVUMnjzkpUbrmOO0qlTiIXVSD1U2lccX3OHQx/GzlxDtgOFnwvc2VWv
- j3Sl5i25Zehx01CfvZQehOD7tQzquk1+UDAFwQOmz2ChWFOgZYe2UnsfjUWDXmFEFGVC
- OMBQ==
+ bh=46TFe67yKvbFfVh4QDME6NqlGkn+SwL4WUrd3hyiWf0=;
+ b=T1cX1RqBhFwyU9CbIkfY4Yc6EYKZfoA5rsLDWZzq2i4akah+hLPs95yhtDlb25OUm+
+ FptEnZKtPrnCYMXdepZGCUXWae6Wvdsh7mM+dl3pDFyOkeH6AfUsUj7lqLUPyKCk/c0k
+ ixKIfW7PUZsCiNrWRLlXgfsEaf3yTnWTj0eT2i6zlU6dk/eHvZiAldsWpDSgYytWG3rx
+ ySJD8Q4VIgaPjkNYuNFSEcPL6jR6HBftV4K1arO/VM7C0awuZfKRKqy4r8Ap5EFccMNQ
+ V1IPbpmjlEqSYV2XVTUgZfljEWaTzrp+8OHAIY8+ZHW0oKGxYzdoumn2fXicDzwxZm2Q
+ 8Xsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791880866; x=1792485666;
+ d=1e100.net; s=20260707; t=1791880840; x=1792485640;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to:content-type;
- bh=3fH1g5tdo8tCigjV124Cc0dlO1K5fRGTqJqA4DWBEjE=;
- b=Acc+hXQZBV4Ls2DFstxH2l+czfc1WmAeMVzrvGwNfOaDzGdubkuTh1JKdj8ZKglxFO
- 5BI3OeRm4IS6qS8d9rf9FoSh8WxSyc0j4A8epexS+J05WKBcwIbjCesZ1vUOSLBwn/im
- Y477RSo9wRFM/gubKj7oq3Hoyah1HF+YIYuHaTNhpd5wrbdQCEQvFgB/rleXnfX9phqq
- 1a6eGw5tHvv3zQ7JsaNfCzdMKeGQLvW3tKAYjj1hQ9dI6Mj9Ge+G16+KkIXdmyxGU00G
- EtQG1rlHJBPWCIJdJgoAUZr7owzrtJEWXGr+8mmxxGw8qjHHNRhuRGlLi5tptL5/s3oA
- f+sw==
+ bh=46TFe67yKvbFfVh4QDME6NqlGkn+SwL4WUrd3hyiWf0=;
+ b=BhAS2fs8HU4d4x3khJczntZ8l7PaB+PUGQtGymONntue6OgbOnkANhh6+LNNTC3MKH
+ m0ZB6kI4Yx81C0kOMIPWiR9+EvgvTQgQsCrq4Q35mGNBnEBOXwRVpJ3DFOU1EyhAEwFF
+ S+kAoAHl8WZFHzEtlAFUozhu4HHlLv3oA11HEfwszklSHzTZ1hXUijJ27WlrZ87D/5jN
+ JS9NBy+BQjTVF79wa0KP7Bdt+8vO/Ws3E2SjcoC8QZFJ8UVnqUEcAVpbfEk2whfqPOcP
+ eF9WNu5hCvoCiWuu7MnF4y9Wgl7ERXmDIjLL+Ch5iiUdkr9zj1Qccco01Y7yQy8l9pqb
+ cRtQ==
 X-Forwarded-Encrypted: i=1;
- AKwUvBx9C7esWyE/GQpTpoqTsJAtoeO/t7rgW3gMNHZomYIDu1pYONqgHqrFRJLnrGizmlCm/mxLyLzlGE3H@nongnu.org
-X-Gm-Message-State: AFq9FYKDVvC/JQbdmxENmdHMU69THz1Mg56sqUdcN+Yl2MrLq9R7t0+k
- A2rqLHdhzfBxz+yFZJkUGurUS6KqErxrtMr8sBd58g18B1vYQ/0I+9Sy6Kik56XOuxixiA5zncW
- UITRbalA=
-X-Gm-Gg: AYBFou332EVoS+8XZR8r5QH7I862TYvEjRdybfvAyGzCF/sLxLJSzm+WPf3W1rpP7iZ
- 823CrQdjySahRtHixV9w8cyRkxyP27cXtt0pmMzli5fS5gN0miSzTUIE50mvuZa3vQul8oRq5Xk
- +nD8z/6NWQiIXogfgfKV80p9odDVavYaznGEd67nnRsksmkMyuMJ8puDpnZodiPkrz2zUjRoPwV
- ojv2Dzvz7rWYGjIbrue7pbNFzEjO3D+qkMKpKgRjNUMYNLn9nN4X7DbeYNHGtrhb/MaA5OFZ1gH
- 0Mx/tjitAjIxS/4EU6nQAkUXqpY/oRcoueBW71dmI9nIt8vVgcbMDj+jGm74hVF7u0oEplkF6ao
- zBlA3aSGIrWRETN+tK1TUFzfHi9KDZ1hqEGJkBzH0JRwpS70VfE8n/FrG9h1Da06Gv/tnT5dg+r
- iDGl+X3wAUUrwXa+MWIK65UbFau6un2PT+fSYet7JAy7lD0ttKPDGSp95504BA0PxnaM74OCJzW
- IfARn+Kq/Ks8FqNZ5kjOvUOx+XqkQhblM6utgioriVeqI1AH2XC5L0X6LTbGtRDRWZmXM4UG/M4
- ttc=
-X-Received: by 2002:a05:600d:644f:10b0:4a1:9661:14b5 with SMTP id
- 5b1f17b1804b1-4a196611aa3mr120014655e9.29.1791880866104; 
- Tue, 13 Oct 2026 01:41:06 -0700 (PDT)
+ AKwUvBz1Uy8yDFGSZfncQmg6ng5hfEmbUgj66kIwN0FeUjr2O04vKIbv0/wkA8lWSH0u1m7txa4VK0Ylpxru@nongnu.org
+X-Gm-Message-State: AFq9FYI0g5dNGVEAju4eg3rrxujXron6rhQISJ5o6txs+uHasewToXjq
+ XPWdYKLgFCtV6f+yGHcE0DHlMb/JM6JvqWwwkyk7EsHCz7WXpq3mTVOm8fBuuzRQGcvrZBPE2GV
+ rnyrmm/w=
+X-Gm-Gg: AYBFou2OTJ9WLXo+DFoFBNRJdDjO2lwgxPFmeDgmqyjCrrC6rZRvsz7LuhEn2lVLk+O
+ 8T5VCAfR0hoIdDSvha6rqawMkePlcqARHKZoMzNaJ/we5ozE+6UMG+E2RsVdMEFoaN10ucPPY0L
+ gRAhuZnSRpeHlUfB+l/A75vMwka+QO3znRc0+3/0F5FSRbtYozqR1kxIEY7ZfWssxwxGOhio/2p
+ rj8mbiP9HcVabbhhWxm3Jxb5verF7pjjjUvymsg6vhsJzR+YtsKhqrQu+FXHtc/ylMY6UXUl4n+
+ jtijT286hX4R+JAgGB6Wlwyb4/fGrb007bUZmubzhxPXDHWkKvpr2fFsPeMMgOlBvZluQylU0mw
+ qX1UmPVyFcQ8gtC7oxoni3S6hY9TacqYClUGbBRts1U+UtfvFuHniSm/TFhK+HcA05uEkLd8n0E
+ rsqmd2c8yKXf4FipMLQ7jSz6w0Gdq5WBc8CJlBjP6GWaHe/ywLmzfpjLC39N8MihXNjnY1+1tjA
+ nYOzEcvDf5iiXDalRh2WS/UTfM/7YHMJJfloJjOk7yWMs4Mh88f9egGlADaEQHHDRZ5a7tlgVYt
+ JDAJeCF3j2yP+Q==
+X-Received: by 2002:a05:600c:64c7:b0:4a1:8399:b74a with SMTP id
+ 5b1f17b1804b1-4a18e4e5c7cmr216368425e9.31.1791880840264; 
+ Tue, 13 Oct 2026 01:40:40 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a18be96549sm495086735e9.6.2026.10.13.01.41.05
+ 5b1f17b1804b1-4a18be96549sm495086735e9.6.2026.10.13.01.40.39
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 13 Oct 2026 01:41:05 -0700 (PDT)
+ Tue, 13 Oct 2026 01:40:39 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Subject: [PATCH 70/86] hw/intc/arm_gicv5: Handle virtual=true in
- gicv5_set_priority()
-Date: Tue, 13 Oct 2026 09:39:17 +0100
-Message-ID: <20261013083933.1024405-71-peter.maydell@linaro.org>
+Subject: [PATCH 47/86] target/arm: GICv5 cpuif: Update on HCR_EL2.{NV,
+ NV1} and SCR_EL3.NS changes
+Date: Tue, 13 Oct 2026 09:38:54 +0100
+Message-ID: <20261013083933.1024405-48-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261013083933.1024405-1-peter.maydell@linaro.org>
 References: <20261013083933.1024405-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x329.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,143 +105,154 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The gicv5_set_priority() function has a 'bool virtual' argument so the
-CPU interface can tell us whether it is setting a virtual or physical
-interrupt's priority. Implement the handling for this.
-
-What we need to do is identical to what we do for physical LPIs,
-except that we need to do it on the IST for vLPIs or vSPIs for the
-resident vCPU.  So we can factor out the "update the appropriate
-field in the L2 ISTE".  We do this via a macro, because we're going
-to want identical behaviour for the other fields in an L2_ISTE that
-gicv5_set_enabled(), gicv5_set_pending(), etc update.
-
-Actually recalculating the vHPPI for the affected vCPU will be
-implemented in a later commit.
+When HCR_EL2.{NV,NV1} or SCR_EL3.NS change, this can affect how
+direct injection of timer PPIs is handled, which in turn can
+potentially affect what the highest priority virtual pending PPI is.
+Since the virtual HPPI can be read from EL2 or EL3, we need to
+arrange that changes to these bits trigger a GICv5 recalculation.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/intc/arm_gicv5.c | 90 +++++++++++++++++++++++++++++++++++++++++----
- 1 file changed, 82 insertions(+), 8 deletions(-)
+ target/arm/gicv5-stubs.c     |  8 ++++++++
+ target/arm/helper.c          | 23 ++++++++++++++++++-----
+ target/arm/internals.h       |  9 +++++++++
+ target/arm/tcg/gicv5-cpuif.c | 18 ++++++++++++++++++
+ 4 files changed, 53 insertions(+), 5 deletions(-)
 
-diff --git a/hw/intc/arm_gicv5.c b/hw/intc/arm_gicv5.c
-index fc1f09f51e8..e460d7957fb 100644
---- a/hw/intc/arm_gicv5.c
-+++ b/hw/intc/arm_gicv5.c
-@@ -567,6 +567,81 @@ static hwaddr l1_vmte_addr(GICv5Common *cs, const GICv5VMTConfig *cfg,
-     return cfg->base + (l1_index * 8);
+diff --git a/target/arm/gicv5-stubs.c b/target/arm/gicv5-stubs.c
+index 845626d7c6b..b8c926744cb 100644
+--- a/target/arm/gicv5-stubs.c
++++ b/target/arm/gicv5-stubs.c
+@@ -15,3 +15,11 @@ void define_gicv5_cpuif_regs(ARMCPU *cpu)
+ void gicv5_update_ppi_state(CPUARMState *env, int ppi, bool level)
+ {
+ }
++
++void gicv5_update_on_hcr_nv_change(CPUARMState *env)
++{
++}
++
++void gicv5_update_on_scr_ns_change(CPUARMState *env)
++{
++}
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index ff0b766b73d..959f1d83a70 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -1012,6 +1012,12 @@ static void scr_write(CPUARMState *env, const ARMCPRegInfo *ri, uint64_t value)
+                                            ARMMMUIdxBit_E2 |
+                                            ARMMMUIdxBit_E2_GCS));
+     }
++    /* The GICv5 cpuif needs to know if SCR_EL3.NS changes */
++#ifndef CONFIG_USER_ONLY
++    if (changed & SCR_NS) {
++        gicv5_update_on_scr_ns_change(env);
++    }
++#endif
  }
  
-+static void irs_recalc_vhppi(GICv5 *s, VMTE *vmte, uint32_t iaffid)
-+{
-+    /*
-+     * Recalculate the highest priority pending virtual interrupt for
-+     * the specified VM and vCPU.
-+     *
-+     * TODO: we will implement this in a future commit.
-+     */
-+}
-+
-+static const GICv5ISTConfig *ist_for_vint(GICv5 *s,
-+                                          GICv5Common *cs,
-+                                          GICv5Domain domain,
-+                                          GICv5IntType type,
-+                                          uint32_t cpuidx)
-+{
-+    /*
-+     * Return the GICv5ISTConfig to use to look up the virtual interrupt.
-+     * Return NULL for any case where the operation should be a NOP.
-+     */
-+    VMTE *vmte;
-+    VPE *vpe;
-+
-+    if (!gicv5_domain_has_virt(cs, domain)) {
-+        return NULL;
-+    }
-+
-+    vpe = s->res_vpe[cpuidx];
-+    if (!vpe) {
-+        return NULL;
-+    }
-+    vmte = vpe->vmte;
-+    if (vmte->domain != domain) {
-+        /* Ignore commands for the wrong domain (see R_PYWKM) */
-+        return NULL;
-+    }
-+
-+    return type == GICV5_LPI ? &vmte->lpi_ist : &vmte->spi_ist;
-+}
-+
-+/*
-+ * Define a function that, given a GICv5ISTConfig and an interrupt ID,
-+ * will update the L2_ISTE entry for that interrupt in that IST to
-+ * set the given field to a new value. The function returns true on
-+ * success and if iaffid is non-NULL updates *iaffid with the IAFFID from
-+ * the L2_ISTE (which is the IAFFID whose current HPPI will need to be
-+ * recalculated).
-+ */
-+#define DEF_SET_FIELD_FOR_IST(NAME, TYPE, FIELDNAME)                    \
-+    static bool set_##NAME##_for_ist(GICv5Common *cs,                   \
-+                                     const GICv5ISTConfig *cfg,         \
-+                                     uint32_t id,                       \
-+                                     TYPE NAME,                         \
-+                                     uint32_t *iaffid)                  \
-+    {                                                                   \
-+        L2_ISTE_Handle h;                                               \
-+        uint32_t *l2_iste_p;                                            \
-+        if (!cfg) {                                                     \
-+            return false;                                               \
-+        }                                                               \
-+        l2_iste_p = get_l2_iste(cs, cfg, id, &h);                       \
-+        if (!l2_iste_p) {                                               \
-+            return false;                                               \
-+        }                                                               \
-+        /* read IAFFID first in case we are about to write to it */     \
-+        if (iaffid) {                                                   \
-+            *iaffid = FIELD_EX32(*l2_iste_p, L2_ISTE, IAFFID);          \
-+        }                                                               \
-+        *l2_iste_p = FIELD_DP32(*l2_iste_p, L2_ISTE, FIELDNAME, NAME);  \
-+        put_l2_iste(cs, cfg, &h);                                       \
-+        return true;                                                    \
-+    }
-+
-+DEF_SET_FIELD_FOR_IST(priority, uint8_t, PRIORITY)
-+
- void gicv5_set_priority(GICv5Common *cs, uint32_t id, uint8_t priority,
-                         GICv5Domain domain, GICv5IntType type, bool virtual,
-                         uint32_t cpuidx)
-@@ -580,8 +655,12 @@ void gicv5_set_priority(GICv5Common *cs, uint32_t id, uint8_t priority,
-     priority &= MAKE_64BIT_MASK(5 - QEMU_GICV5_PRI_BITS, QEMU_GICV5_PRI_BITS);
+ static void scr_reset(CPUARMState *env, const ARMCPRegInfo *ri)
+@@ -3881,7 +3887,7 @@ static const ARMCPRegInfo v8_aa32_el1_reginfo[] = {
+ static void do_hcr_write(CPUARMState *env, uint64_t value, uint64_t valid_mask)
+ {
+     ARMCPU *cpu = env_archcpu(env);
+-    bool hcr_change_timer;
++    uint64_t changed;
  
-     if (virtual) {
--        qemu_log_mask(LOG_GUEST_ERROR, "gicv5_set_priority: tried to set "
--                      "priority of a virtual interrupt\n");
-+        const GICv5ISTConfig *cfg = ist_for_vint(s, cs, domain, type, cpuidx);
-+
-+        if (!set_priority_for_ist(cs, cfg, id, priority, &iaffid)) {
-+            return;
-+        }
-+        irs_recalc_vhppi(s, s->res_vpe[cpuidx]->vmte, iaffid);
-         return;
-     }
- 
-@@ -589,15 +668,10 @@ void gicv5_set_priority(GICv5Common *cs, uint32_t id, uint8_t priority,
-     case GICV5_LPI:
-     {
-         const GICv5ISTConfig *cfg = &s->phys_lpi_config[domain];
--        L2_ISTE_Handle h;
--        uint32_t *l2_iste_p = get_l2_iste(cs, cfg, id, &h);
- 
--        if (!l2_iste_p) {
-+        if (!set_priority_for_ist(cs, cfg, id, priority, &iaffid)) {
-             return;
+     if (arm_feature(env, ARM_FEATURE_V8)) {
+         valid_mask |= MAKE_64BIT_MASK(0, 34);  /* ARMv8.0 */
+@@ -3960,6 +3966,8 @@ static void do_hcr_write(CPUARMState *env, uint64_t value, uint64_t valid_mask)
          }
--        *l2_iste_p = FIELD_DP32(*l2_iste_p, L2_ISTE, PRIORITY, priority);
--        iaffid = FIELD_EX32(*l2_iste_p, L2_ISTE, IAFFID);
--        put_l2_iste(cs, cfg, &h);
-         break;
      }
-     case GICV5_SPI:
+ 
++    changed = env->cp15.hcr_el2 ^ value;
++
+     /*
+      * These bits change the MMU setup:
+      * HCR_VM enables stage 2 translation
+@@ -3969,16 +3977,21 @@ static void do_hcr_write(CPUARMState *env, uint64_t value, uint64_t valid_mask)
+      * HCR_FWB changes the interpretation of stage2 descriptor bits
+      * HCR_NV and HCR_NV1 affect interpretation of descriptor bits
+      */
+-    if ((env->cp15.hcr_el2 ^ value) &
++    if (changed &
+         (HCR_VM | HCR_PTW | HCR_DC | HCR_DCT | HCR_FWB | HCR_NV | HCR_NV1)) {
+         tlb_flush(CPU(cpu));
+     }
+-    hcr_change_timer = (env->cp15.hcr_el2 ^ value) &
+-                       (HCR_E2H | HCR_TGE);
+ 
+     /* update */
+     env->cp15.hcr_el2 = value;
+ 
++    /* If HCR_EL2.{NV,NV1} change we must inform the GICv5 cpuif */
++#ifndef CONFIG_USER_ONLY
++    if (changed & (HCR_NV | HCR_NV1)) {
++        gicv5_update_on_hcr_nv_change(env);
++    }
++#endif
++
+     /*
+      * Updates to VI and VF require us to update the status of
+      * virtual interrupts, which are the logical OR of these bits
+@@ -3998,7 +4011,7 @@ static void do_hcr_write(CPUARMState *env, uint64_t value, uint64_t valid_mask)
+         arm_cpu_update_vinmi(cpu);
+         arm_cpu_update_vfnmi(cpu);
+     }
+-    if (hcr_change_timer) {
++    if (changed & (HCR_E2H | HCR_TGE)) {
+ #ifndef CONFIG_USER_ONLY
+         gt_recalc_timer(cpu, GTIMER_PHYS);
+ #endif
+diff --git a/target/arm/internals.h b/target/arm/internals.h
+index 9d817961c67..f291aee0bd8 100644
+--- a/target/arm/internals.h
++++ b/target/arm/internals.h
+@@ -1909,6 +1909,15 @@ void define_gicv5_cpuif_regs(ARMCPU *cpu);
+  */
+ void gicv5_update_ppi_state(CPUARMState *env, int ppi, bool level);
+ 
++/*
++ * Tell the GICv5 when HCR_EL2.{NV,NV1} change. Does nothing if GICv5 not
++ * present.
++ */
++void gicv5_update_on_hcr_nv_change(CPUARMState *env);
++
++/* Tell the GICv5 when SCR_EL3.NS changes. Does nothing if GICv5 not present */
++void gicv5_update_on_scr_ns_change(CPUARMState *env);
++
+ /* Effective value of MDCR_EL2 */
+ static inline uint64_t arm_mdcr_el2_eff(CPUARMState *env)
+ {
+diff --git a/target/arm/tcg/gicv5-cpuif.c b/target/arm/tcg/gicv5-cpuif.c
+index 1f032e39bf6..e7e3dc214d6 100644
+--- a/target/arm/tcg/gicv5-cpuif.c
++++ b/target/arm/tcg/gicv5-cpuif.c
+@@ -630,6 +630,24 @@ void gicv5_update_ppi_state(CPUARMState *env, int ppi, bool level)
+     }
+ }
+ 
++void gicv5_update_on_hcr_nv_change(CPUARMState *env)
++{
++    /* HCR_EL2.{NV,NV1} changed, which affects DVI timer PPI remapping */
++    if (!cpu_isar_feature(aa64_gcie, env_archcpu(env))) {
++        return;
++    }
++    gic_recalc_virt_ppi_hppi(env);
++}
++
++void gicv5_update_on_scr_ns_change(CPUARMState *env)
++{
++    /* SCR_EL3.NS changed, which affects DVI timer PPI remapping */
++    if (!cpu_isar_feature(aa64_gcie, env_archcpu(env))) {
++        return;
++    }
++    gic_recalc_virt_ppi_hppi(env);
++}
++
+ static void gic_cddis_write(CPUARMState *env, const ARMCPRegInfo *ri,
+                             uint64_t value)
+ {
 -- 
 2.43.0
 
