@@ -4,85 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A635BCA9ED2
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 12:48:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F70CCA9ED2
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 12:48:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGbuw-0006oK-0q; Tue, 13 Oct 2026 08:47:42 -0400
+	id 1xGbv3-0006rO-8k; Tue, 13 Oct 2026 08:47:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alexander.hansen@9elements.com>)
- id 1xGbus-0006nP-1M
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 08:47:38 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ id 1xGbuy-0006p2-Os
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 08:47:44 -0400
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alexander.hansen@9elements.com>)
- id 1xGbum-0008QY-Pq
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 08:47:36 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-4a0213948d3so18035235e9.2
- for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 05:47:31 -0700 (PDT)
+ id 1xGbuv-0008TI-TD
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 08:47:44 -0400
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-48afe75f055so2699087f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 05:47:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=9elements.com; s=google; t=1791895650; x=1792500450; darn=nongnu.org;
+ d=9elements.com; s=google; t=1791895659; x=1792500459; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=Bzd1uJ5ELI9MIEoN1BV9xiWkNnvI+NG1RM+6Al/wByc=;
- b=BYgLaqwD4DiCcbLREx27blcvDqHkwHsaKDytlV4AZ9AfNRSgAi7jyx/YQ56rGvErtK
- ZaxGI1lD6S4E20jgOPekEFdrME1yDraRxFywLEcGzc9OK/Bdvon2DZuVV+CuB9E2t/bR
- q5ugiK7ohVHeji0Y56SgkKUD1l5cqRxdiVron5YnDFOji8PpFDjeLSrvh/Wf6WrRAaO5
- tLVEHO3SUY07zjW8433RirhVh0dUdIaWM0AmwoDVMfxStEDnpypS86hZ7FPxMLkKiHyj
- FGcUI4CUg4z2YamR8MXIB5n7uCoKxaSOctUDzqcYWAAj0Kj7zeTEzgwh5WS8RDVfINE/
- 6nnQ==
+ bh=5V1ADJWSpqmE/0EppqJvQTXhFh4gYt9LFpGCgzibkxw=;
+ b=ZjRIS2ll0LxHGwJc7ueAAoTOy4YPTrJyhisC7gPGemLF78FWxznRcrfNq8zoTuoJ9b
+ WsMZZBuBzB0QO0oX/bvnOs6Touv6YvGlEav8MMU3fZJcti6SfwuObVZeaQkTCFDmyC2S
+ Go86emwYeDu6uLSYJiIi6hqoyDCKcUoZwXtB3F7akZTk9NakedTwlnefvVciGCNpSs5q
+ tBne+JY0+ZJTLu6Z6Pg41jkC/sJr/DyJdHkRBOKfIgkCqePGZ5Oyvn0Q2mzX25GdwlVo
+ LU3sHMr6ZIHcYgrGb4BxFbgvNJpjYw3NPApNc5XQqnkYVRJ1A/NIaUHR+bsOHOjBG/CR
+ gyaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791895650; x=1792500450;
+ d=1e100.net; s=20260707; t=1791895659; x=1792500459;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=Bzd1uJ5ELI9MIEoN1BV9xiWkNnvI+NG1RM+6Al/wByc=;
- b=uTue0TTA7HXllSo4IE6fsKxaZ0xsGUHp2LRWMfALfKokqmOdbHTc6yh5k0L0G+shTW
- dnMuzte1x20unpEMC3MhectKWJinOpmJhzXNt2qXW5ptrKLb9FliTVqGE7r4W+pf1fpq
- Xc75LdB11AQG65aMX9O6XLEJ+T8cNXrHdVcSZnTdt0Pu6cQ1TCoxVl4KaqC2dXOd2BVU
- 7oNdP85tdMVtmt62RU2ikgFUjuHAn1Pp9uAPP2MKxKX5kTisIjLnAPLmnLF9lg+SaTc9
- dbpzgV75QZhMNTpksjnfJ3WGuALEZBEIReAGO3WrkLVMr+rPsPW1qDWjHRmdsqiCsulY
- C0dQ==
-X-Gm-Message-State: AFq9FYI7jg6Ow7/+NOud9qp0kHP6pDFVq87SRQwJTVIF8FXLsD5RmUmi
- oUIDVolBKsFxlnxHSi1IAVQ3F3U8q2sQGEODMzYp4SEAOyc15UBQhpm/YJ82GKMjF2aRb2oOy+c
- IpjzT
-X-Gm-Gg: AYBFou1k+gF9Tn6HZuDWycSm8jF1n5ZS7Bjt+H7E0hnldpidCkUnDZ9V5jcwzejyPct
- FPVWv9B8jym7hhBueCIe2gLvNfPobwLQe+u7L1EfKu22bjRoNciaeXO4l31OIHHmqgm1G3bimyC
- 1JX2nlDIgiRbb+Qwc0LVN3NYM3/jafU30bXdpO/QwsGgZOuK9ClVtLLZrHQwqOe9EFYKi6CAHvJ
- zNw5nm0OtFL9J3nNykrCIo9iaABo76WBfyNgsYZaahXQBzKmEoDt9O/D4KVpVHQ10A9WG2jFkFN
- Gt2P6HkbipMrcVf3hKioOufiYvZryarl0IPS5DiTJKIfvSVIrg8piu+P9QO82kYCh44+Z87igkT
- tq+j98uN39OrtCvIXvLorQYoMZ5pmybhffIBmnfYKcoy8fXmMdFAf8SGfL4+FOTLUIoGEEL+6bp
- 8cg5xSaCe2Ea0QfAsFlZ7YfzM8lulMuwzoI/9LIFw2t9tbDTTKMNxMz397toFn4x/KAq5SND04E
- daq/QSiOmZ6zR1AYyUDCX8=
-X-Received: by 2002:a05:600c:154c:b0:49f:ce78:3562 with SMTP id
- 5b1f17b1804b1-4a18e4a9159mr266427485e9.19.1791895650031; 
- Tue, 13 Oct 2026 05:47:30 -0700 (PDT)
+ bh=5V1ADJWSpqmE/0EppqJvQTXhFh4gYt9LFpGCgzibkxw=;
+ b=kgB30h4k5LPBNai4EArawdlcC4Jt1fRi6CTuKtn4UxDKOGkiZ/bfg4NNhkAGWf47oV
+ v55SW7+OpaMnUCVj0TadmpIB+MIrdsFelOw+qRKjv/5mZThtwdiEeb6ojBsScRo0z/cK
+ FRCPjdWIJxTvd4/RnKuZ2+gcAH8gCpk67luREWn4euc1b/PeqrQKmgFNM0FDELYbe3gO
+ m+0DOlqej5aIgDXUMYIB4gSsharKK+Zk/MKxhXjM26/AphPfVInmYg7cDs3IopTd/0ms
+ rlUGk9aXcYlOQMLdMw1cq1yQV7SotrCwmWnnqrTeard18ZussM+jWNyT8ZwZzSYbd7yX
+ CGTw==
+X-Gm-Message-State: AFq9FYKKhxn89qfhmBnA1JvRAXcvx/BWP9w/Ar/ODCbBBsiuuCa6FVCn
+ YPNJ09l/IKOJMc/s82AmAtO+aw3GWP13TiyiHz/HFi18TE0pwJzzdFPkBZxs6Jt9/Qt/LaTyxYU
+ Ojwc7
+X-Gm-Gg: AYBFou0eLBz/nNmY7a1dMeKsGq+LcgNLozt15gYcg//H/drPFGy/SayUCdqvzOyemYX
+ 9JjYMC5TxHqRcNspwRaoVOwfQqyTLlJYO5mHJhwf/sdRAP4Iy7Sy/pLkJS/uCGB9xS7ESZ3xf+A
+ 49IdnjzliXxGGTj3gGHu1okFgfqTtX8eipX1hiuK4PAicdypKQ5Bh7rCpNvYtReZcAcxdl8Mp5S
+ A+RfUOX4lmPCdpSuO3FtabxE7vkSZDU4kBlovPPKwZ7+w4d6ow6iuThvopMjnzb9g9tRjz551mc
+ /txMO6T8x02157vg+D7xEMTV1gk+gJmBFv7tLlibt2vQLn0n3WrNUHkHR33lCWug78glgkrM3ZB
+ 3Hgy+DfNeKauIAysnnaS8Cno46+SvuhcBtGBtwmauZFS8e6nn1KN4ih/C4d6tYE5BteWerJQBuh
+ 89MCN8+qDTJEGOq/ukA/Q99t6GaTqJh9UPnDJ5ZcGR9RILG+6z5f98MmUFK58fuczIu+MusiA06
+ cfyRkAhC5UlEwKLnfYKfp0=
+X-Received: by 2002:a05:600c:8b65:b0:4a1:742e:3 with SMTP id
+ 5b1f17b1804b1-4a18e4ca244mr226734305e9.27.1791895659048; 
+ Tue, 13 Oct 2026 05:47:39 -0700 (PDT)
 Received: from localhost.localdomain ([188.111.3.154])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48de0bc4ebbsm4768847f8f.45.2026.10.13.05.47.29
+ ffacd0b85a97d-48de0bc4ebbsm4768847f8f.45.2026.10.13.05.47.38
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 13 Oct 2026 05:47:29 -0700 (PDT)
+ Tue, 13 Oct 2026 05:47:38 -0700 (PDT)
 From: <alexander.hansen@9elements.com>
 To: qemu-devel@nongnu.org
 Cc: eblot@meta.com, titusr@google.com, clg@kaod.org,
  Alexander Hansen <alexander.hansen@9elements.com>,
- Patrick Leis <venture@google.com>, qemu-arm@nongnu.org
-Subject: [PATCH v8 1/5] hw/i2c: support PCA9544
-Date: Tue, 13 Oct 2026 14:46:45 +0200
-Message-ID: <20261013124649.194808-2-alexander.hansen@9elements.com>
+ Jonathan Cameron <jonathan.cameron@huawei.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org
+Subject: [PATCH v8 5/5] hw/sensor: support MAX11615
+Date: Tue, 13 Oct 2026 14:46:49 +0200
+Message-ID: <20261013124649.194808-6-alexander.hansen@9elements.com>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261013124649.194808-1-alexander.hansen@9elements.com>
 References: <20261013124649.194808-1-alexander.hansen@9elements.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=alexander.hansen@9elements.com; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=alexander.hansen@9elements.com; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,239 +110,505 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Alexander Hansen <alexander.hansen@9elements.com>
 
-Who to explain it better than the manufacturer:
+Product: [1]
+Datasheet: [2]
 
-```
-The PCA9544A is a 1-of-4 bidirectional translating multiplexer,
-controlled via the I2C-bus. The SCL/SDA upstream pair fans out to four
-SCx/SDx downstream pairs, or channels. Only one SCx/SDx channel is
-selected at a time, determined by the contents of the programmable
-control register.
-```
+The ADC reads a pre-defined arbitrary value.
 
-The device updates the selected channel after STOP condition, not on
-the last byte written [1].
+root@yosemite4:~# cat /sys/bus/iio/devices/iio:device2/name
+max11615
+root@yosemite4:~# cat /sys/bus/iio/devices/iio:device2/in_voltage0_raw
+722
+root@yosemite4:~# cat /sys/bus/iio/devices/iio:device2/in_voltage_scale
+0.500000000
 
-For this reason the parent event handler has to be hooked to prevent
-write-read sequence from updating channel selection before STOP
-condition.
-
-Reset also had to be modified since a write would not apply the channel
-selection by itself.
-
-This emulation is done to support yosemite4 machine emulation.
-
-Interrupt forwarding is currently UNSUPPORTED.
+trace:
+less /tmp/qemu-trace.log | grep -i max116
+max11615_realize i2c_addr: 0x33
+max11615_realize i2c_addr: 0x33
+max11615_event i2c_addr: 0x33, event: 0x01
+max11615_write_setup i2c_addr: 0x33, data: 0xd2
+max11615_write_config i2c_addr: 0x33, data: 0x0f
+max11615_event i2c_addr: 0x33, event: 0x03
+max11615_event i2c_addr: 0x33, event: 0x01
+max11615_write_setup i2c_addr: 0x33, data: 0xd2
+max11615_write_config i2c_addr: 0x33, data: 0x0f
+max11615_event i2c_addr: 0x33, event: 0x03
+max11615_event i2c_addr: 0x33, event: 0x01
+max11615_write_setup i2c_addr: 0x33, data: 0xd2
+max11615_write_config i2c_addr: 0x33, data: 0x61
+max11615_event i2c_addr: 0x33, event: 0x03
+max11615_event i2c_addr: 0x33, event: 0x00
+max11615_recv i2c_addr: 0x33, reg_addr: 0x00
+max11615_recv_return i2c_addr: 0x33, returns: 0xfa
+max11615_recv i2c_addr: 0x33, reg_addr: 0x00
+max11615_recv_return i2c_addr: 0x33, returns: 0xd2
+max11615_event i2c_addr: 0x33, event: 0x04
+max11615_event i2c_addr: 0x33, event: 0x03
 
 References:
-[1] https://www.nxp.com/docs/en/data-sheet/PCA9544A.pdf
+[1] https://www.analog.com/en/products/MAX11615.html
+[2] https://www.analog.com/media/en/technical-documentation/data-sheets/MAX11612-MAX11617.pdf
 
-Cc: Patrick Leis <venture@google.com> (maintainer:pca954x)
 Cc: Emmanuel Blot <eblot@meta.com>
 Cc: Titus Rwantare <titusr@google.com>
 Cc: "Cédric Le Goater" <clg@kaod.org> (maintainer:ASPEED BMCs)
-Cc: qemu-arm@nongnu.org (open list:ASPEED BMCs)
+Cc: Jonathan Cameron <jonathan.cameron@huawei.com>
+Cc: "Philippe Mathieu-Daudé" <philmd@linaro.org> (odd fixer:Overall sensors)
+Cc: Paolo Bonzini <pbonzini@redhat.com> (maintainer:Kconfig)
+Cc: Peter Maydell <peter.maydell@linaro.org> (supporter:ARM TCG CPUs)
 Cc: qemu-devel@nongnu.org (open list:All patches CC here)
-
+Cc: qemu-arm@nongnu.org (open list:ARM TCG CPUs)
 Signed-off-by: Alexander Hansen <alexander.hansen@9elements.com>
 ---
- hw/i2c/i2c_mux_pca954x.c         | 88 ++++++++++++++++++++++++++++----
- include/hw/i2c/i2c_mux_pca954x.h |  1 +
- 2 files changed, 78 insertions(+), 11 deletions(-)
+ MAINTAINERS                              |   1 +
+ hw/arm/Kconfig                           |   1 +
+ hw/arm/aspeed_ast2600_fby4.c             |   3 +-
+ hw/sensor/Kconfig                        |   4 +
+ hw/sensor/max1161x.c                     | 314 +++++++++++++++++++++++
+ hw/sensor/meson.build                    |   1 +
+ hw/sensor/trace-events                   |   9 +
+ include/hw/sensor/max1161x.h             |   7 +
+ tests/functional/arm/test_aspeed_fby4.py |   9 +
+ 9 files changed, 348 insertions(+), 1 deletion(-)
+ create mode 100644 hw/sensor/max1161x.c
+ create mode 100644 include/hw/sensor/max1161x.h
 
-diff --git a/hw/i2c/i2c_mux_pca954x.c b/hw/i2c/i2c_mux_pca954x.c
-index c603446028..19212dfa34 100644
---- a/hw/i2c/i2c_mux_pca954x.c
-+++ b/hw/i2c/i2c_mux_pca954x.c
-@@ -30,6 +30,10 @@
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 870152932c..6bd06dd3ab 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -4119,6 +4119,7 @@ S: Maintained
+ F: hw/i2c/pmbus_device.c
+ F: hw/sensor/adm1272.c
+ F: hw/sensor/isl_pmbus_vr.c
++F: hw/sensor/max1161x.c
+ F: hw/sensor/max31790.c
+ F: hw/sensor/max34451.c
+ F: include/hw/i2c/pmbus_device.h
+diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+index ac7e5096aa..25572cfe1b 100644
+--- a/hw/arm/Kconfig
++++ b/hw/arm/Kconfig
+@@ -546,6 +546,7 @@ config ASPEED_SOC
+     select MAX31785
+     select ADC128D818
+     select MAX31790
++    select MAX1161X
+     select FSI_APB2OPB_ASPEED
+     select AT24C
+     select PCI_EXPRESS_ASPEED
+diff --git a/hw/arm/aspeed_ast2600_fby4.c b/hw/arm/aspeed_ast2600_fby4.c
+index 5e49c2e7ea..40c25477ee 100644
+--- a/hw/arm/aspeed_ast2600_fby4.c
++++ b/hw/arm/aspeed_ast2600_fby4.c
+@@ -11,6 +11,7 @@
+ #include "hw/arm/aspeed.h"
+ #include "hw/arm/aspeed_soc.h"
+ #include "hw/nvram/eeprom_at24c.h"
++#include "hw/sensor/max1161x.h"
+ #include "hw/i2c/i2c_mux_pca954x.h"
+ #include "hw/sensor/max31790.h"
+ #include "hw/gpio/pca9552.h"
+@@ -188,7 +189,7 @@ static void fby4_i2c_init_fanboard(I2CSlave *fan_mux, size_t eepromSize)
+         i2c_slave_create_simple(bus, TYPE_MAX31790, 0x2f);
  
- #define PCA9548_CHANNEL_COUNT 8
- #define PCA9546_CHANNEL_COUNT 4
-+#define PCA9544_CHANNEL_COUNT 4
+         /* maxim,max11615 @ 0x33   (adc) */
+-        /* TODO */
++        i2c_slave_create_simple(bus, TYPE_MAX11615, 0x33);
+ 
+         at24c_eeprom_init_rom(bus, 0x52, eepromSize, fru_yv4_fanboard_bin,
+                               fru_yv4_fanboard_bin_len);
+diff --git a/hw/sensor/Kconfig b/hw/sensor/Kconfig
+index 3eeffd32cd..c01d18a5fa 100644
+--- a/hw/sensor/Kconfig
++++ b/hw/sensor/Kconfig
+@@ -51,3 +51,7 @@ config MAX31785
+ config MAX31790
+     bool
+     depends on I2C
 +
-+/* enable bit */
-+#define PCA9544_ENABLE 0x4
- 
- /*
-  * struct Pca954xState - The pca954x state object.
-@@ -56,6 +60,11 @@ typedef struct Pca954xClass {
-     SMBusDeviceClass parent;
- 
-     uint8_t nchans;
++config MAX1161X
++    bool
++    depends on I2C
+diff --git a/hw/sensor/max1161x.c b/hw/sensor/max1161x.c
+new file mode 100644
+index 0000000000..69f7da0438
+--- /dev/null
++++ b/hw/sensor/max1161x.c
+@@ -0,0 +1,314 @@
++/*
++ * Maxim MAX11615 Low-Power 12 bit ADC
++ * Models MAX11612,MAX11613,MAX11614,MAX11615,MAX11616,MAX11617
++ *
++ * Datasheet:
++ * https://www.analog.com/media/en/technical-documentation/data-sheets/MAX11612-MAX11617.pdf
++ *
++ * Copyright 2026 9elements
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
 +
-+    /* channel enable bit for mux devices, zero for switches */
-+    uint8_t mux_enable;
++#include "qemu/osdep.h"
++#include "hw/sensor/max1161x.h"
++#include "hw/i2c/i2c.h"
++#include "migration/vmstate.h"
++#include "qemu/log.h"
++#include "qemu/module.h"
++#include "trace.h"
 +
-+    int (*parent_event)(I2CSlave *s, enum i2c_event event);
- } Pca954xClass;
- 
- #define TYPE_PCA954X "pca954x"
-@@ -99,28 +108,43 @@ static bool pca954x_match(I2CSlave *candidate, uint8_t address,
-     return broadcast;
- }
- 
--static void pca954x_enable_channel(Pca954xState *s, uint8_t enable_mask)
-+static void pca954x_enable_channel(Pca954xState *s, uint8_t control)
- {
-     Pca954xClass *mc = PCA954X_GET_CLASS(s);
-     int i;
- 
-+    if (mc->mux_enable) {
-+        uint8_t selected = control & (mc->mux_enable - 1);
-+        bool enabled = control & mc->mux_enable;
++#define MAX11615_NUM_CHANNELS 8
 +
-+        for (i = 0; i < mc->nchans; i++) {
-+            s->enabled[i] = enabled && i == selected;
-+        }
-+        return;
-+    }
++struct MAX11615State {
++    I2CSlave i2c;
 +
-     /*
--     * For each channel, check if their bit is set in enable_mask and if yes,
-+     * For each channel, check if their bit is set in control and if yes,
-      * enable it, otherwise disable, hide it.
-      */
-     for (i = 0; i < mc->nchans; i++) {
--        if (enable_mask & (1 << i)) {
--            s->enabled[i] = true;
--        } else {
--            s->enabled[i] = false;
--        }
-+        s->enabled[i] = control & (1 << i);
-     }
- }
- 
- static void pca954x_write(Pca954xState *s, uint8_t data)
- {
--    s->control = data;
--    pca954x_enable_channel(s, data);
-+    Pca954xClass *mc = PCA954X_GET_CLASS(s);
-+    uint8_t data_writable = data;
-+
-+    if (mc->mux_enable) {
-+        data_writable = data & 0x0f;
-+    }
-+
-+    s->control = data_writable;
-+    if (!mc->mux_enable) {
-+        pca954x_enable_channel(s, data_writable);
-+    }
- 
-     trace_pca954x_write_bytes(data);
- }
-@@ -128,6 +152,7 @@ static void pca954x_write(Pca954xState *s, uint8_t data)
- static int pca954x_write_data(SMBusDevice *d, uint8_t *buf, uint8_t len)
- {
-     Pca954xState *s = PCA954X(d);
-+    Pca954xClass *mc = PCA954X_GET_CLASS(s);
- 
-     if (len == 0) {
-         qemu_log_mask(LOG_GUEST_ERROR, "%s: writing empty data\n", __func__);
-@@ -136,15 +161,17 @@ static int pca954x_write_data(SMBusDevice *d, uint8_t *buf, uint8_t len)
- 
-     /*
-      * len should be 1, because they write one byte to enable/disable channels.
-+     * In case of PCA9544A, multiple bytes can be written but only the last one
-+     * will be used.
-      */
--    if (len > 1) {
-+    if (len > 1 && !mc->mux_enable) {
-         qemu_log_mask(LOG_GUEST_ERROR,
-             "%s: extra data after channel selection mask\n",
-             __func__);
-         return -1;
-     }
- 
--    pca954x_write(s, buf[0]);
-+    pca954x_write(s, buf[len - 1]);
-     return 0;
- }
- 
-@@ -156,11 +183,33 @@ static uint8_t pca954x_read_byte(SMBusDevice *d)
-     return data;
- }
- 
-+static int pca954x_event(I2CSlave *s, enum i2c_event event)
-+{
-+    Pca954xState *state = PCA954X(s);
-+    Pca954xClass *mc = PCA954X_GET_CLASS(state);
-+
-+    int res = mc->parent_event(s, event);
++    /* true: single-ended mode, false: differential mode */
++    bool single_ended;
 +
 +    /*
-+     * When a channel is selected, it will become active after
-+     * a STOP condition has been placed on the I2C-bus.
++     * Output data coding for the MAX11612–MAX11617 is
++     * binary in unipolar mode and two’s complement in bipolar mode
 +     */
-+    if (mc->mux_enable && event == I2C_FINISH) {
-+        pca954x_enable_channel(state, state->control);
-+    }
-+    return res;
-+}
++    bool bipolar;
 +
- static void pca954x_enter_reset(Object *obj, ResetType type)
- {
-     Pca954xState *s = PCA954X(obj);
-+    Pca954xClass *mc = PCA954X_GET_CLASS(s);
-     /* Reset will disable all channels. */
-     pca954x_write(s, 0);
++    /* The MAX11613/MAX11615/MAX11617 feature a 2.048V internal reference */
++    uint16_t vref;
 +
-+    if (mc->mux_enable) {
-+        pca954x_enable_channel(s, s->control);
-+    }
- }
- 
- I2CBus *pca954x_i2c_get_bus(I2CSlave *mux, uint8_t channel)
-@@ -172,6 +221,13 @@ I2CBus *pca954x_i2c_get_bus(I2CSlave *mux, uint8_t channel)
-     return pca954x->bus[channel];
- }
- 
-+static void pca9544_class_init(ObjectClass *klass, const void *data)
++    uint16_t channels[MAX11615_NUM_CHANNELS];
++
++    /* output buffer */
++    uint8_t outlen;
++    uint8_t outbuf[2];
++
++    /* selected channel for read/write operation */
++    uint8_t pointer;
++};
++
++struct MAX1161XClass {
++    I2CSlaveClass parent_class;
++
++    uint8_t channel_select_mask;
++    size_t n_channels;
++};
++
++OBJECT_DECLARE_TYPE(MAX11615State, MAX1161XClass, MAX11615)
++
++static void max1161x_reset(MAX11615State *s)
 +{
-+    Pca954xClass *s = PCA954X_CLASS(klass);
-+    s->nchans = PCA9544_CHANNEL_COUNT;
-+    s->mux_enable = PCA9544_ENABLE;
++    trace_max11615_reset(s->i2c.address);
++
++    s->single_ended = true;
++    s->bipolar = false;
++    s->vref = 2048;
++    s->pointer = 0;
++    s->outlen = 0;
++
++    MAX1161XClass *mc = MAX11615_GET_CLASS(s);
++
++    for (int i = 0; i < mc->n_channels; i++) {
++        s->channels[i] = 0x2d2;
++    }
 +}
 +
- static void pca9546_class_init(ObjectClass *klass, const void *data)
- {
-     Pca954xClass *s = PCA954X_CLASS(klass);
-@@ -221,8 +277,13 @@ static void pca954x_class_init(ObjectClass *klass, const void *data)
-     ResettableClass *rc = RESETTABLE_CLASS(klass);
-     DeviceClass *dc = DEVICE_CLASS(klass);
-     SMBusDeviceClass *k = SMBUS_DEVICE_CLASS(klass);
-+    Pca954xClass *s = PCA954X_CLASS(klass);
++static void max11615_set_outbuf(MAX11615State *s, uint16_t value)
++{
++    uint8_t msb = value >> 8;
++    uint8_t lsb = value & 0xff;
++    s->outbuf[0] = 0xf0 | (msb & 0xf);
++    s->outbuf[1] = lsb;
++}
 +
-+    /* hook our parent event handler */
-+    s->parent_event = sc->event;
++static void max11615_read_single_ended(MAX11615State *s)
++{
++    /* Table 3. Channel Selection in Single-Ended Mode */
++    /* read an ADC channel, first 4 bits must be high */
++    uint16_t value = s->channels[s->pointer];
++    /*
++     * In single-ended mode, the MAX11612–MAX11617 always
++     * operates in unipolar mode irrespective of BIP/UNI.
++     */
++    if (value > s->vref) {
++        value = 0xfff;
++    }
++    max11615_set_outbuf(s, value);
++}
++
++static int16_t max11615_differential_value(const MAX11615State *s)
++{
++    /* Table 4. Channel Selection in Differential Mode */
++    size_t i1 = s->pointer;
++    size_t i2 = (s->pointer % 2 == 0) ? s->pointer + 1 : s->pointer - 1;
++
++    const int16_t ch1 = s->channels[i1];
++    const int16_t ch2 = s->channels[i2];
++    return ch1 - ch2;
++}
++
++static void max11615_read_differential(MAX11615State *s)
++{
++    const int16_t value = max11615_differential_value(s);
++    uint16_t vu = value;
++
++    /* full-scale transition: Figure 12, Figure 13 */
++    if (s->bipolar) {
++        const uint16_t fs = s->vref / 2;
++        if (value < -fs) {
++            vu = 0x800;
++        }
++        if (value > fs) {
++            vu = 0x7ff;
++        }
++    } else {
++        /*
++         * A negative differential analog input in unipolar mode causes the
++         * digital output code to be zero
++         */
++        if (value < 0) {
++            vu = 0;
++        }
++    }
++
++    max11615_set_outbuf(s, vu);
++}
++
++static void max11615_read(MAX11615State *s)
++{
++    if (s->single_ended) {
++        max11615_read_single_ended(s);
++    } else {
++        max11615_read_differential(s);
++    }
++}
++
++static void max11615_write_config_byte(MAX11615State *s, uint8_t data)
++{
++    trace_max11615_write_config(s->i2c.address, data);
++
++    uint8_t scan_select = (data >> 5) & 0x3;
++
++    if (scan_select != 0x3) {
++        qemu_log_mask(LOG_UNIMP, "%s: unimplemented scan select\n", __func__);
++    }
++
++    const MAX1161XClass *mc = MAX11615_GET_CLASS(s);
++
++    uint8_t channel_select = (data >> 1) & mc->channel_select_mask;
++
++    /* Table 3. Channel Selection */
++    if (channel_select >= mc->n_channels) {
++        qemu_log_mask(LOG_GUEST_ERROR, "%s: invalid channel select\n",
++                      __func__);
++        channel_select = mc->n_channels - 1;
++    }
++    s->pointer = channel_select;
++    s->single_ended = data & 0x1;
++}
++
++static void max11615_write_setup_byte(MAX11615State *s, uint8_t data)
++{
++    trace_max11615_write_setup(s->i2c.address, data);
++    /* we ignore the setup byte, not implemented */
++
++    /* 1 = no action, 0 = resets the configuration register to default */
++    const bool rst = ((data >> 1) & 0x1) == 0x0;
++
++    if (rst) {
++        max1161x_reset(s);
++    }
++
++    s->bipolar = ((data >> 2) & 0x1) == 0x1;
++
++    /* Table 6. Reference Voltage */
++    const uint8_t sel = (data >> 4) & 0x7;
++
++    if (sel == 0x2 || sel == 0x3) {
++        qemu_log_mask(LOG_UNIMP, "%s: unsupported: external vref\n", __func__);
++    }
++}
++
++static int max11615_send(I2CSlave *i2c, uint8_t data)
++{
++    MAX11615State *s = MAX11615(i2c);
++    const uint8_t msb = (data >> 7) & 0x1;
++
++    if (msb) {
++        max11615_write_setup_byte(s, data);
++    } else {
++        max11615_write_config_byte(s, data);
++    }
++
++    s->outlen = 0;
++    return 0;
++}
++
++static uint8_t max11615_recv(I2CSlave *i2c)
++{
++    MAX11615State *s = MAX11615(i2c);
++    trace_max11615_recv(s->i2c.address, s->pointer);
++
++    MAX1161XClass *mc = MAX11615_GET_CLASS(s);
++
++    if (s->outlen >= 2) {
++        /* MAX11615 supports multichannel scan with wraparound */
++        /* see datasheet page 17 */
++
++        s->outlen = 0;
++
++        s->pointer++;
++        if (s->pointer >= mc->n_channels) {
++            s->pointer = 0;
++        }
++    }
++
++    max11615_read(s);
++
++    const uint8_t data = s->outbuf[s->outlen++];
++
++    trace_max11615_recv_return(s->i2c.address, data);
++    return data;
++}
++
++static int max11615_event(I2CSlave *i2c, enum i2c_event event)
++{
++    MAX11615State *s = MAX11615(i2c);
++
++    trace_max11615_event(s->i2c.address, event);
++
++    switch (event) {
++    case I2C_START_RECV:
++        s->outlen = 0;
++        break;
++    default:
++        break;
++    }
++
++    return 0;
++}
++
++static const VMStateDescription vmstate_max11615 = {
++    .name = TYPE_MAX11615,
++    .version_id = 0,
++    .minimum_version_id = 0,
++    .fields =
++        (const VMStateField[]){ VMSTATE_BOOL(single_ended, MAX11615State),
++                                VMSTATE_BOOL(bipolar, MAX11615State),
++                                VMSTATE_UINT16(vref, MAX11615State),
++                                VMSTATE_UINT16_ARRAY(channels, MAX11615State,
++                                                     MAX11615_NUM_CHANNELS),
++                                VMSTATE_UINT8(outlen, MAX11615State),
++                                VMSTATE_UINT8_ARRAY(outbuf, MAX11615State, 2),
++                                VMSTATE_UINT8(pointer, MAX11615State),
++                                VMSTATE_I2C_SLAVE(i2c, MAX11615State),
++                                VMSTATE_END_OF_LIST() }
++};
++
++static void max1161x_reset_hold(Object *obj, ResetType type)
++{
++    MAX11615State *s = MAX11615(obj);
++
++    max1161x_reset(s);
++}
++
++static void max11615_realize(DeviceState *dev, Error **errp)
++{
++    MAX11615State *s = MAX11615(dev);
++
++    trace_max11615_realize(s->i2c.address);
++}
++
++static void max1161x_class_init(ObjectClass *klass, const void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
++    I2CSlaveClass *k = I2C_SLAVE_CLASS(klass);
++    ResettableClass *rc = RESETTABLE_CLASS(klass);
++
++    MAX1161XClass *mc = MAX11615_CLASS(klass);
++
++    mc->n_channels = MAX11615_NUM_CHANNELS;
++    /* max11615 can use 3 channel select bits */
++    mc->channel_select_mask = 0x7;
++
++    dc->realize = max11615_realize;
++    dc->desc = "Maxim MAX11615 12-bit ADC";
++    dc->vmsd = &vmstate_max11615;
++    rc->phases.hold = max1161x_reset_hold;
++    k->event = max11615_event;
++    k->recv = max11615_recv;
++    k->send = max11615_send;
++}
++
++static const TypeInfo max11615_info = {
++    .name = TYPE_MAX11615,
++    .parent = TYPE_I2C_SLAVE,
++    .instance_size = sizeof(MAX11615State),
++    .class_size = sizeof(MAX1161XClass),
++    .class_init = max1161x_class_init,
++};
++
++static void max1161x_register_types(void)
++{
++    type_register_static(&max11615_info);
++}
++
++type_init(max1161x_register_types)
+diff --git a/hw/sensor/meson.build b/hw/sensor/meson.build
+index f2b6b07a78..efc3e6af0c 100644
+--- a/hw/sensor/meson.build
++++ b/hw/sensor/meson.build
+@@ -10,3 +10,4 @@ system_ss.add(when: 'CONFIG_LSM303DLHC_MAG', if_true: files('lsm303dlhc_mag.c'))
+ system_ss.add(when: 'CONFIG_ISL_PMBUS_VR', if_true: files('isl_pmbus_vr.c'))
+ system_ss.add(when: 'CONFIG_MAX31785', if_true: files('max31785.c'))
+ system_ss.add(when: 'CONFIG_MAX31790', if_true: files('max31790.c'))
++system_ss.add(when: 'CONFIG_MAX1161X', if_true: files('max1161x.c'))
+diff --git a/hw/sensor/trace-events b/hw/sensor/trace-events
+index 2041c91dd9..b0d46f3f01 100644
+--- a/hw/sensor/trace-events
++++ b/hw/sensor/trace-events
+@@ -25,3 +25,12 @@ max31790_fan_dynamics_read(uint8_t i2c_addr, size_t channel, uint8_t value) "i2c
+ max31790_fan_dynamics_write(uint8_t i2c_addr, size_t channel, uint8_t value) "i2c_addr: 0x%02x, channel: %zu, value: 0x%02x"
+ max31790_fan_config_read(uint8_t i2c_addr, size_t channel, uint8_t value) "i2c_addr: 0x%02x, channel: %zu, value: 0x%02x"
+ max31790_fan_config_write(uint8_t i2c_addr, size_t channel, uint8_t value) "i2c_addr: 0x%02x, channel: %zu, value: 0x%02x"
++
++# max11615.c
++max11615_write_setup(uint8_t i2c_addr, uint8_t send) "i2c_addr: 0x%02x, data: 0x%02x"
++max11615_write_config(uint8_t i2c_addr, uint8_t send) "i2c_addr: 0x%02x, data: 0x%02x"
++max11615_recv(uint8_t i2c_addr, uint8_t reg_addr) "i2c_addr: 0x%02x, reg_addr: 0x%02x"
++max11615_recv_return(uint8_t i2c_addr, uint8_t data) "i2c_addr: 0x%02x, returns: 0x%02x"
++max11615_event(uint8_t i2c_addr, uint8_t event) "i2c_addr: 0x%02x, event: 0x%02x"
++max11615_realize(uint8_t i2c_addr) "i2c_addr: 0x%02x"
++max11615_reset(uint8_t i2c_addr) "i2c_addr: 0x%02x"
+diff --git a/include/hw/sensor/max1161x.h b/include/hw/sensor/max1161x.h
+new file mode 100644
+index 0000000000..be2e87bff4
+--- /dev/null
++++ b/include/hw/sensor/max1161x.h
+@@ -0,0 +1,7 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++#ifndef QEMU_MAX1161X_H
++#define QEMU_MAX1161X_H
++
++#define TYPE_MAX11615 "max11615"
++
++#endif
+diff --git a/tests/functional/arm/test_aspeed_fby4.py b/tests/functional/arm/test_aspeed_fby4.py
+index be396f53bc..0d81638c82 100755
+--- a/tests/functional/arm/test_aspeed_fby4.py
++++ b/tests/functional/arm/test_aspeed_fby4.py
+@@ -81,6 +81,15 @@ def do_test_arm_aspeed_openbmc_no_network(self, machine, image, uboot,
+         exec_command_and_wait_for_pattern(self,
+             "cat /sys/class/hwmon/hwmon3/fan1_input", "10347");
  
-     sc->match_and_add = pca954x_match;
-+    sc->event = pca954x_event;
- 
-     rc->phases.enter = pca954x_enter_reset;
- 
-@@ -245,6 +306,11 @@ static const TypeInfo pca954x_info[] = {
-         .class_init    = pca954x_class_init,
-         .abstract      = true,
-     },
-+    {
-+        .name          = TYPE_PCA9544,
-+        .parent        = TYPE_PCA954X,
-+        .class_init    = pca9544_class_init,
-+    },
-     {
-         .name          = TYPE_PCA9546,
-         .parent        = TYPE_PCA954X,
-diff --git a/include/hw/i2c/i2c_mux_pca954x.h b/include/hw/i2c/i2c_mux_pca954x.h
-index 3dd25ec983..6449a6dfae 100644
---- a/include/hw/i2c/i2c_mux_pca954x.h
-+++ b/include/hw/i2c/i2c_mux_pca954x.h
-@@ -3,6 +3,7 @@
- 
- #include "hw/i2c/i2c.h"
- 
-+#define TYPE_PCA9544 "pca9544"
- #define TYPE_PCA9546 "pca9546"
- #define TYPE_PCA9548 "pca9548"
++        # MAX11615 test
++        exec_command_and_wait_for_pattern(self,
++            "cat /sys/bus/i2c/devices/30-0033/iio:device*/name", "max11615");
++        # read the value configured in the machine emulation
++        exec_command_and_wait_for_pattern(self,
++            "cat /sys/bus/i2c/devices/30-0033/iio:device*/in_voltage0_raw", "722");
++        exec_command_and_wait_for_pattern(self,
++            "cat /sys/bus/i2c/devices/30-0033/iio:device*/in_voltage_scale", "0.500000000");
++
+     def test_arm_ast2600_yosemitev4_openbmc(self):
+         image_path = self.uncompress(self.ASSET_YOSEMITE_V4_FLASH)
  
 -- 
 2.56.0
