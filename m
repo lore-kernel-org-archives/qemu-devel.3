@@ -4,176 +4,135 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E0AECA9ED0
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 03:58:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D6C7CC6B03
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 04:03:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGTeR-0006mM-Nw; Mon, 12 Oct 2026 23:58:07 -0400
+	id 1xGTji-0007qf-3h; Tue, 13 Oct 2026 00:03:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
- id 1xGTeM-0006kf-N7
- for qemu-devel@nongnu.org; Mon, 12 Oct 2026 23:58:02 -0400
-Received: from mgamail.intel.com ([198.175.65.11])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
- id 1xGTeK-0007hG-DX
- for qemu-devel@nongnu.org; Mon, 12 Oct 2026 23:58:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1791863881; x=1823399881;
- h=from:to:cc:subject:date:message-id:references:
- in-reply-to:content-transfer-encoding:mime-version;
- bh=N8vQA5+GY/R9knqZryiX5J2kbl1KcDj3wP/QMgpWlwY=;
- b=XDy1uc/MP3pYBBDXQV1XVMjf/p7Xmby3fXnBSewm3PPx/9Enz614KbaB
- XHcw3OjMog21Asw70WxgfPo64ZFb4roFMAmzFxZ1oW4deQDn3hqX5R5To
- 0uyoBMnUddq6FCEwLLUrw1GZfv5p2xetJ7IyvOBKJZSfSD0uoF+bGV7/u
- n749A6X+hx4pE3LtMvjjqK+qkMGpRZS/Q9FLvI/A1JgAT5xJvlpyfA2NB
- 7HYn42YMKGYMlKsSRTsrCTsq7kvBUoEyqBwwZIpF68I6RQr7eglFB163o
- VLHYpCjjOWDuVQg+SQ5TFroNyrKG3Gb05LeJwRGBursS8B+BXPV+Eannt Q==;
-X-CSE-ConnectionGUID: oP7Wx3OMSZWE5IvAYMyBGA==
-X-CSE-MsgGUID: 1KllQeGuSyeO3wWBq5e76A==
-X-IronPort-AV: E=McAfee;i="6800,10657,11933"; a="467386"
-X-IronPort-AV: E=Sophos;i="6.27,154,1787036400"; 
-   d="scan'208";a="467386"
-Received: from fmviesa009.fm.intel.com ([10.60.135.149])
- by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 12 Oct 2026 20:57:56 -0700
-X-CSE-ConnectionGUID: uEsGiWYcSVmvxGD6bmsqEw==
-X-CSE-MsgGUID: dNlVgFkvRIy1wkrU9ht9uQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,154,1787036400"; 
-   d="scan'208";a="1381481"
-Received: from orsmsx901.amr.corp.intel.com ([10.22.229.23])
- by fmviesa009.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 12 Oct 2026 20:57:55 -0700
-Received: from ORSMSX902.amr.corp.intel.com (10.22.229.24) by
- ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.49; Mon, 12 Oct 2026 20:57:39 -0700
-Received: from ORSEDG901.ED.cps.intel.com (10.7.248.11) by
- ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.49 via Frontend Transport; Mon, 12 Oct 2026 20:57:39 -0700
-Received: from DM5PR21CU001.outbound.protection.outlook.com (52.101.62.3) by
- edgegateway.intel.com (134.134.137.111) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.49; Mon, 12 Oct 2026 20:57:39 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=zS4cqGrSxP9S9WRH00Cx7p+u6xgFp7425d+QZFAQ1ku84ptli97L06v3WvWlPH5vE/vEtBMAZPmo4fLFg1ut3S7wlprHivXWLLAx9iwhXRMU1mtghHshWc4B8ibquV9K70Z0WzzGG3kUvGkKAENURU4R71tR0VX0uzKCeInojZbPROj8F9tMn85ywUN1Z0uAQuXDRWgDix3QkSQX7gc7Ni+U4l0/cUYr8jdlTSX6lr09hMLd5JC7xiLp6ruKQXGGCIKT0ru0DQwTu4+M+JLlfCYSP6aZ7bSvJjIWSm27QsB1XXDAyd/KoRgs0nn3g7g0TrHmFLSBX2V2MqGGKz6mQg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=gvYll9E3OYDumV3NcD6YQJqX8L7sqpyzVSN6UeEqlOU=;
- b=stq4xIUMCGHBeEsWBONAHGPhJBDKrmeHYtglEaRzCo3c7BTz6FQxurS0GP5cTYZuVGsUJIiJDvseleYhB5F/qmK4Zn1FNR2IRWjZyQTSMjRs8pxbpnoj+74Aw+sCTYDdpFL32Wd52FqoYK0fIGw6NJ0MovzyhI6AjgfxoMnAa7anT1j9KKdC6D0xCB16NH/iumePUs3kQjrWOK1rrVNk2+2xKtW/Cg42j4T0rFZGJpHxgAPWxYFfeIMAN+jDXFAol1Y7MZoWXU9k6SJlEAcMeTdcF6jaut/A8jHeihE/T05baKdSufH6WQJjbKm/YG+NpqJvzIQC6Sh/tRxe1ZD93g==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Received: from CH3PR11MB7177.namprd11.prod.outlook.com (2603:10b6:610:153::8)
- by SJ2PR11MB7546.namprd11.prod.outlook.com (2603:10b6:a03:4cc::8)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.472.18; Tue, 13 Oct
- 2026 03:57:04 +0000
-Received: from CH3PR11MB7177.namprd11.prod.outlook.com
- ([fe80::b997:e226:4979:c035]) by CH3PR11MB7177.namprd11.prod.outlook.com
- ([fe80::b997:e226:4979:c035%2]) with mapi id 15.21.0496.015; Tue, 13 Oct 2026
- 03:57:03 +0000
-From: "Kasireddy, Vivek" <vivek.kasireddy@intel.com>
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>
-CC: =?iso-8859-1?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>,
- =?iso-8859-1?Q?Alex_Benn=E9e?= <alex.bennee@linaro.org>, Dmitry Osipenko
- <dmitry.osipenko@collabora.com>, Alex Williamson <alex@shazbot.org>,
- =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@redhat.com>
-Subject: RE: [PATCH v13 9/9] virtio-gpu-dmabuf: Create dmabuf for blobs
- associated with VFIO devices
-Thread-Topic: [PATCH v13 9/9] virtio-gpu-dmabuf: Create dmabuf for blobs
- associated with VFIO devices
-Thread-Index: AQHdVphjmjD/24Tm10GKCqp8WfcGzLbzXLIAgACjmZCAAPn1AIAD/qBAgAD+IYCAAGb1sA==
-Date: Tue, 13 Oct 2026 03:57:03 +0000
-Message-ID: <CH3PR11MB717792F00FF542E9CD83BDB9F89E2@CH3PR11MB7177.namprd11.prod.outlook.com>
-References: <20261007201222.648687-1-vivek.kasireddy@intel.com>
- <20261007201222.648687-10-vivek.kasireddy@intel.com>
- <b87b6288-4226-442e-8802-d9bf31f5a7dd@rsg.ci.i.u-tokyo.ac.jp>
- <IA0PR11MB71857E6DC18C3B4B74CE235EF8922@IA0PR11MB7185.namprd11.prod.outlook.com>
- <7bd99ac0-b126-43b4-870a-9211914a9701@rsg.ci.i.u-tokyo.ac.jp>
- <IA0PR11MB7185E449EA1B948028DCD31EF89F2@IA0PR11MB7185.namprd11.prod.outlook.com>
- <3c5fa056-d696-42e5-96df-2d36a485e28f@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <3c5fa056-d696-42e5-96df-2d36a485e28f@rsg.ci.i.u-tokyo.ac.jp>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: CH3PR11MB7177:EE_|SJ2PR11MB7546:EE_
-x-ms-office365-filtering-correlation-id: 2559c16c-b76a-484f-2b54-08df28de0a75
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|1800799024|23010399003|376014|366016|18002099003|11063799006|22082099003|5023799004|4143699003|6133799003|10067099003|56012099006|261009223027099003|38070700021;
-x-microsoft-antispam-message-info: SXtRvbt1pBzmbHWuZuGphV+1pDCxtQ5IeJ6Hsz1u8iu7FiwJQNUxnmYS0mefhK+UXjMjvwgwlbwQ+C5uoPiBWAe1HIJF384TL6pFrok4Hk5jhI/Nghagfipu+jKw9gjwrBdKUD8uMWXPt8K/FC8C34cC1r+mxvqM65utpaZP+Sm2smDbQoDyQPrrV+DDPOiHHJG9Ttu3USxeszs7Xsw3QueaH3ct3mD1qC9oMDC0iqJmEwnekdT6ZtxXwlLifEurovUTWKoTqORHS/9hyW9379h/KTRzkYJNhqNrws16uysiazzljAMyt9YHyW0lh+nOGqGiBk/YsI6el5NT8wtgy8G1bGB9asyBoi7UnSgm528MIG76dSnzWnaayVYGWrvHJg2gcrokKYMJaQyoJq9J/UY3KPuodHRqcefqINkQCveJFSyqKd65FwAUTs9TO6B85FYHNYC/xHK6Ntjcoh8WQmYuRS0dFYPl42MaqNl6tnhlujta4Es+h3Mr0MYZIpFSZQ6uoBOXsJFx+z7qwWJObs+TrPdRlfZmvNbxmaFiPE1A4y9e46RSyOyQiXYNwX/b2beSh6Z3K2IgdD/RiYbereeUEPoeZY5ZrsL65fNCYamD1NuY6Kp4kVp8pB6umhv89wvOGia6j0RxHPqJuw1m6V3v5jnMZTSzbE3UD8GPpGBHXq5rsYlo//ix4HEUe0rJRuiNLFz2Nr4qUGKQr94KsXsoSmzTkYheTkuj0304F7E=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:CH3PR11MB7177.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(23010399003)(376014)(366016)(18002099003)(11063799006)(22082099003)(5023799004)(4143699003)(6133799003)(10067099003)(56012099006)(261009223027099003)(38070700021);
- DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?qSeI9TnirFxiGQgR3xEt3FAMToda6oYWIQoSrKFIdDZb5Rj9s/oqVXBxKL?=
- =?iso-8859-1?Q?byU83/1VJf2OlKWY3MQC31v2z0mq4bydUPj6zfvEKXB76UC32I/j0W6veQ?=
- =?iso-8859-1?Q?WP+uoXVQAYnyuKQg+KDX8Ep1yuXG32QDgB/LoOJMgmGjJQ0/8LG2TnDKqw?=
- =?iso-8859-1?Q?UBTZeniIpa+aBJT291NS+e0xERnkAtg0ukl3Y7kdHCWlc9zZjWYobVzUUU?=
- =?iso-8859-1?Q?Ycp+PbcVv6AwNjw64V5EAk110o4HRFu57uUlIFWHj9Z5ktQQl0kRF7vyto?=
- =?iso-8859-1?Q?rEiKJ5f4/FzNdjzkh6+4IHhtINDuwR53MDeqf40WIEKEBW2/myjE999H3n?=
- =?iso-8859-1?Q?ECXQbqYEK9ZoDT2W2dqq+ULEzm6j3QokB/iYcnPeIgvO4Q9FNbBoiY+POg?=
- =?iso-8859-1?Q?IIjVSEyhMve+S/vQq/vIrxafq9cWTOY7rkKgN0eGjG+pWXLRgc7FSMh3q3?=
- =?iso-8859-1?Q?6jLHKg/6E++x4maSw/1u234uQChCYYCZMEkk9Lzs6OtIHH36P9E7bmFvT/?=
- =?iso-8859-1?Q?lnHuFOcwdrcEP1lBp7lInS+0QegXYcVHkhbtztaHQYIJqegoIdBSt+Meem?=
- =?iso-8859-1?Q?CakJZKwBi1JoWjho6cgZJ/UrWKba9HVlNAkD3613otqKh3nK/zW2B6eJP7?=
- =?iso-8859-1?Q?b7U7amo4Oppm0aeQlD1Nt6nJ7iFcC9/8xk1FeVqnASvMiVRlAcfUi7Qt7K?=
- =?iso-8859-1?Q?ocyDky2AqrIWroezLF2wRxhil7mjyJ0fXaewrQdpTEr3Wt3Ky8pTDVqoxW?=
- =?iso-8859-1?Q?uPINaYpEZpuKLolr4w5btIS0PEqTYQCeojZ0uKSu9aMbeH40Sl1El2VSXc?=
- =?iso-8859-1?Q?wmUmExWvrhPxgRvSkNVECFCINsE+/l32V0WEQGIvYZOOeUsNNMLhDYs0P1?=
- =?iso-8859-1?Q?qh0fT/rl3arQi6rdV3bq447uh3QqzqAlIhIsyUNvW0VT+2EwAmVkp3dAhC?=
- =?iso-8859-1?Q?JVK+7HTMmr4NkS2mtcWhNaag8SUDy8nZ6P0MJASx7jJ17sgf+L9oGnb7Bc?=
- =?iso-8859-1?Q?l9t8D7FZwF+4JChOizUWBhCePytlzSmE9Yas3+tJwVrfHy9/BAY3xievIe?=
- =?iso-8859-1?Q?jT0CxL3hw1G6HO9zJWc+yjxLq5vm5lggXgiK/D/gJ6Cr68Ns7NeJbLMKyq?=
- =?iso-8859-1?Q?LseV4w96OgGExM9+33PSrOy5uTHOgw0hp+F1+HpFa2SAcD5YT7TJuzhi6Y?=
- =?iso-8859-1?Q?Wm2KPU6GJoHQZisfQfng/OndHUHaZTvN7Qimry8YvduqLiTY9rzuVnJiyg?=
- =?iso-8859-1?Q?azfNiN9tZgbahb9yJGjiVH+rwvaccl4OsMEAy4NqfFPA1iUSPWY1og9Hfh?=
- =?iso-8859-1?Q?0bA0zPne6PSnycXiIs8D8XqGu3aYxxKgYDYUUwxwv1lshwPW3l2g2HAjcj?=
- =?iso-8859-1?Q?iwMQMuAVEuXUnfOU2lTLjCRmsBxPpWIfkZN4ZR6m/y8M+ckR/Lism8OA5F?=
- =?iso-8859-1?Q?KSBXcaCpzOhwJU8+s69Y+5MqCoIh57KYRJOfv3I9MuN/4e4fI00N6Hr52V?=
- =?iso-8859-1?Q?hs1dGkfm3Asf4LUW05dvUqrovdTYFDJoj98r2ABKdsOvqd4SjcB808STN1?=
- =?iso-8859-1?Q?70faHux4hgqC1uhwG7oHXP6nYvpb6CcpplkKcGxafDX5k/hA8PilZNUUr2?=
- =?iso-8859-1?Q?N4BceBok5b6OhyIWNEXETvCVEsmUnsOzaJzO6tG8a3AsmRXT6+jBTNcGqS?=
- =?iso-8859-1?Q?wfxCpO/yaZMdEGV7LJxqmCTVk9fjfrIfH+IhSDw1nSu8gPBQWb+vCE2xQL?=
- =?iso-8859-1?Q?jh7/Lm/RQemVzxPszH7/hLg+OM61CzMOFzSSG3lFYWUQ3/TkQI5EDjj/yU?=
- =?iso-8859-1?Q?OIq8lRMX8A=3D=3D?=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
+ id 1xGTjf-0007q9-Jg
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 00:03:31 -0400
+Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
+ id 1xGTjc-0008Ll-DO
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 00:03:30 -0400
+Received: by mail-ed1-x52a.google.com with SMTP id
+ 4fb4d7f45d1cf-6afbc363efeso2869712a12.3
+ for <qemu-devel@nongnu.org>; Mon, 12 Oct 2026 21:03:28 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1791864206; cv=none;
+ d=google.com; s=arc-20260327;
+ b=hClMqxiOQPNkU+NJ0TUs93fpckD9i4yLPP3I2WD4P63EYPxotAb+gSI0Ils2tAK8w0
+ vAXh9G2pQP1kX09QHNwcUj10aTR5emVkvB23Y5dLuxfpiQfcY4kGpT1K54UpFYdcx1pg
+ Md7s+24DiT/PtMk9zi7ddY9PFsbd5/SRS6OQFjOjKyBQ4cQ5WiSIJMKwQ5zdm++JAGgs
+ gKIXC59uIJrR+UbHKTL2wH4WSoCh7dFHS62fwpPu6c5dwvyhz8ZzFDJ+5xEfmjo6+Qll
+ V+pdAvc8NH3PrYZvy+3axI28PgwekE428aGUtnRhOhTtfBrVhzcClfwTM1QvUzkPiz32
+ NVYw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :reply-to:in-reply-to:references:mime-version:dkim-signature;
+ bh=hGJYbaGu+cCzQrPsnI0c9EENhMDFFGQ36XoIzvnK+UE=;
+ fh=1+Uc/F6C/Eh7l5RDLZ0D1fa/8Xv3ib+DBeU3qcrQU+E=;
+ b=qe0GW0iL0dCC9+ffwOTe3WM7Sfr86eVkNAS1D/dY6UNBNKYc0Zyp3izB46T4QA6rHJ
+ MneJdtBU7KfHR8eiu2bwqlcRwX5F7bm7NwSevngwHU7Tca39KwLqp282kst1jnEFMCSD
+ Irh3fyhiBTR7jPE98qT/MgKgxuTfQoGZe+srUxXUgiM6QcXHErVeod8DCshdz+cJboEo
+ SnXvJeL+9FqbBXdiqx4tYEL39QZGBq+2eCJD/gZZbRbR+0yZg6DOEUtrgReznOriakqf
+ NCaYTGi6wBCcfxmwsexZ9Q83gyj9M4Qh4xZ2vUL5L1gSt3QepcDpraIfC8SabiT2jtWK
+ uFLg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1791864206; x=1792469006; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:reply-to:in-reply-to:references:mime-version:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=hGJYbaGu+cCzQrPsnI0c9EENhMDFFGQ36XoIzvnK+UE=;
+ b=s92P2EnQ694uZx/eRYzPwaOXrTedRq3WFtYpKyE/lORGF6Ia+XrlLO6Fcj7HaUHuoa
+ q1MA1b0cGEeAwhRaXv2Q0T38J1CxaIjf7Ja0rynhfFhH6p0oqvrF71xzG5Uq5aZZT4tI
+ ISS/ZWqZv+Ka1mCWvVf0U2dcvTQBHhaUK1+HWCxktodvWdHeb/rW2siH9U7QzoCrwjIx
+ Gr6bHfpEHzkbatH56w/MSty22OV/fR1S5dbpwqb0DmV6jP/GT+hM703E/+SaB6NeTlDK
+ lKNcxcWoYA9oQEliN0JqayG7u0S5LYoWG1M2GM5IxklAP+gml3drX9/2xF4eBz2nGvk8
+ RX/w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1791864206; x=1792469006;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:reply-to:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=hGJYbaGu+cCzQrPsnI0c9EENhMDFFGQ36XoIzvnK+UE=;
+ b=NJbllOaAT8ovp+hC5BHbqwA5oXv9/kuqkS7glBWLENGzcjUYMdyqzX4MsViiCH4l3V
+ HuVdp+O6DYyRKuWYs8OULaS/Xukb1oOeaOR/ANkOiAalhxmDH7K/LMzV9Vwrt+XbDaQb
+ WgunvGlRz0NrxAQPBnGh2LlotqqAxIJA92Ml3xLj0NN90MswuTTHQAyCmVC/q71omOVq
+ /kdBipN6EuGV5WkPRSFa8z0eL2xsbjziR+Qly+zKX5u1e98rVZHU2AigE/TrYHN4/ggQ
+ u9UGC9z5jgzdemAZArZfe90egRfiRiY70M08l3fPOYtcB698G+FVQ2KnSraGOGYXLwPG
+ FZzg==
+X-Forwarded-Encrypted: i=1;
+ AKwUvByfdURRnuKxApoJCf3yV8bate3Ao21hRGJRWr02dFuR0gt+rfF5I/VhhPmLr6dPT3YJ/zkQBR6SO+Pa@nongnu.org
+X-Gm-Message-State: AFq9FYJ30XAWTCTFu3+y/bDfxzCxu+4+TztKRYHiJIp/aazhFP5UPnC6
+ Cyf4LKni/xmzcJ1jDPImdtPwIpuvOgAJcb2qghUDanxDNOJvRRWKdXwVjbvG2ALMt+J/92Ntyx1
+ gImCwb+KxfwkGhbV5r+A8fcKa/YydvAQ=
+X-Gm-Gg: AYBFou1PnAHP7JhAVZnbq+klOPi5t397w1jnQjrmaIQq7boLjr+gWhnIgLx76FQl20N
+ EtJXiUm7/IZ2sKsgOasQaR/SQBY3fUAv37f8qvFaGY7ieqRkr6CsNd38ONtaoW7cAdrsUxW2CNq
+ nzKKgBXVRg6oAwjolRkCFxjz702JPHRnDFH7YlqGGbzPaMSr4KEdopAe7teLPWp/UPbxWx/aa9I
+ ylhcEYsjwON5OQMRqc6AWVALnnMWb+9JeaaPhQKHQtGxnvyjUXLRPXDCX+hNlqYd73swNgaDArP
+ 3XMO32m0GG5XN0Ew3GHhHPAPSiK9JzHoL6s/ErCjKp5EL8gweJT5w34=
+X-Received: by 2002:a05:6402:4489:b0:6b1:ef6b:f3e4 with SMTP id
+ 4fb4d7f45d1cf-6b1ef6c008bmr274714a12.14.1791864205500; Mon, 12 Oct 2026
+ 21:03:25 -0700 (PDT)
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked: Zy7CBfB6HVmzxIbb6984vuyU5+qNxC2xl+cie/XNAg5JbhO1VbYd0XY0ztdUJfEgTIRdmwXusQklNsvKZerPlcfu1gFYgwuhkwykwzYF+pSDB526IfCMCheXGn2pq3UiYt12X8mPA/mPKsn+5hFPSoPXSzwDShg3n6/tJl0W3ZaljquZgv2GScvHFXd25vXp4QxuUFCE5qjARx1GJFdDqAylWlEu2ni6mrhBy7iWIe4Wc8jILsyf57cV0gzpl1MZGpCAwctjA5oxLSxKcMLrHmuzH4rA6Ybcv0c40ZBltj/y5JrDKYD9jQ3jlr4etzqccRDZxBMo3A1teWDIaOG1JA==
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: CH3PR11MB7177.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 2559c16c-b76a-484f-2b54-08df28de0a75
-X-MS-Exchange-CrossTenant-originalarrivaltime: 13 Oct 2026 03:57:03.2624 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: eUYSpIzxpaDab3jEZNmCoowHTbmVlz84qSENHsdioNd4v8TUGw4CSFX7OUzIT7y4Qam/6xAY73FtdxINdjoOkicUX1aOdgzF2gWLK9nAoX8=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ2PR11MB7546
-X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=198.175.65.11;
- envelope-from=vivek.kasireddy@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -45
-X-Spam_score: -4.6
-X-Spam_bar: ----
-X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+References: <20261007115253.328-1-luoyonggang@gmail.com>
+ <2390b3d7-6918-41e3-8532-c19de4cdd1ff@oss.qualcomm.com>
+ <asdlbOZBSYIaCMIh@redhat.com>
+ <CAE2XoE91XxoJRFpQ_1jhmX6LdxMyN16CF7RXxM62C5Ctkc1tig@mail.gmail.com>
+ <42fd67c0-c20d-4bc4-bede-79073e4be4a1@oss.qualcomm.com>
+ <CAE2XoE-gN5-vmE8r00Ds_Z=E1WePSFi_MJXjmy9ZuXEU_=o31g@mail.gmail.com>
+ <3034c146-0697-4db7-acd4-8076b317a09e@oss.qualcomm.com>
+ <CAE2XoE-gCTrpEeCROz9JMpPnTQXQ+AnBTR4RwdQhYizkExjK9w@mail.gmail.com>
+ <8cb24445-b659-4bd4-9497-888ce152e82d@oss.qualcomm.com>
+ <1a477877-516a-41b8-8548-598bfad74f25@oss.qualcomm.com>
+ <CAE2XoE_MotPuxBBkLFWmcDf6ACva2r7y-7sRbQ3DNNwZvXcJFQ@mail.gmail.com>
+ <ae0dcb2d-1488-4cea-8bc0-2a0cb2cd74be@oss.qualcomm.com>
+ <CAE2XoE9B8RXg6=6kofVA=d6C5OBXT9GZ2cPceWUUDa4m9=_fRg@mail.gmail.com>
+ <bfa70b6e-fc66-4607-bd45-b55ae2951d57@oss.qualcomm.com>
+In-Reply-To: <bfa70b6e-fc66-4607-bd45-b55ae2951d57@oss.qualcomm.com>
+From: Yonggang Luo <luoyonggang@gmail.com>
+Date: Tue, 13 Oct 2026 12:03:11 +0800
+X-Gm-Features: AclHuK85NEW-X_1qjebNgB1T24kIfLBw6QOaZ-0B3KS5zgoFrwUZT-R_Ia0R27I
+Message-ID: <CAE2XoE-9w1-3-kFvWXdZZz=sc-Eor3goUr09vANbaqyNrtJGdg@mail.gmail.com>
+Subject: Re: [PATCH 0/8] qom: pass TargetInfo to the is_available callback
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ qemu-devel@nongnu.org, Cleber Rosa <crosa@redhat.com>, 
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
+ Laurent Vivier <lvivier@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
+ John Snow <jsnow@redhat.com>, Laurent Vivier <laurent@vivier.eu>,
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Joel Stanley <joel@jms.id.au>, Fabiano Rosas <farosas@suse.de>,
+ Kane Chen <kane_chen@aspeedtech.com>, 
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Troy Lee <leetroy@gmail.com>, 
+ Jamin Lin <jamin_lin@aspeedtech.com>, Stafford Horne <shorne@gmail.com>,
+ qemu-arm@nongnu.org, Philippe Mathieu-Daude <philmd@mailo.com>,
+ Peter Maydell <peter.maydell@linaro.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Steven Lee <steven_lee@aspeedtech.com>, Alexander Bulekov <alxndr@bu.edu>, 
+ Darren Kenny <darren.kenny@oracle.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
+ envelope-from=luoyonggang@gmail.com; helo=mail-ed1-x52a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -186,169 +145,378 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: luoyonggang@gmail.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Akihiko,
-
-> Subject: Re: [PATCH v13 9/9] virtio-gpu-dmabuf: Create dmabuf for
-> blobs associated with VFIO devices
->=20
-> >>>
-> >>>>> In addition to memfd, a blob resource can also have its backing
-> >>>>> storage in a VFIO device region. Since, there is no effective way
-> >>>>> to determine where the backing storage is located, we first try to
-> >>>>> create a dmabuf assuming it is in memfd. If that fails, we try to
-> >>>>> create a dmabuf assuming it is in VFIO device region.
-> >>>>>
-> >>>>> So, we first call virtio_gpu_create_udmabuf() to check if the
-> blob's
-> >>>>> backing storage is located in a memfd or not. If it is not, we
-> invoke
-> >>>>> the vfio_device_create_dmabuf_fd() API which identifies the right
-> >>>>> VFIO device and eventually creates a dmabuf fd.
-> >>>>>
-> >>>>> Note that, for mmapping the dmabuf, we directly call mmap() if
-> the
-> >>>>> dmabuf fd was created via virtio_gpu_create_udmabuf() since we
-> >>>> know
-> >>>>> that the udmabuf driver supports mmap(). However, if the
-> dmabuf
-> >>>> was
-> >>>>> created via vfio_device_create_dmabuf_fd(), we use the
-> >>>>> vfio_device_mmap_dmabuf() API to get a mapping for the
-> dmabuf.
-> >>>>>
-> >>>>> Cc: Marc-Andr=E9 Lureau <marcandre.lureau@redhat.com>
-> >>>>> Cc: Alex Benn=E9e <alex.bennee@linaro.org>
-> >>>>> Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-> >>>>> Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-> >>>>> Cc: Alex Williamson <alex@shazbot.org>
-> >>>>> Cc: C=E9dric Le Goater <clg@redhat.com>
-> >>>>> Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-> >>>>> Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
-> >>>>> ---
-> >>>>>     hw/display/virtio-gpu-dmabuf.c | 22 +++++++++++++++++++---
-> >>>>>     1 file changed, 19 insertions(+), 3 deletions(-)
-> >>>>>
-> >>>>> diff --git a/hw/display/virtio-gpu-dmabuf.c b/hw/display/virtio-
-> gpu-
-> >>>> dmabuf.c
-> >>>>> index c9de8e9ba3..f59a5e76ff 100644
-> >>>>> --- a/hw/display/virtio-gpu-dmabuf.c
-> >>>>> +++ b/hw/display/virtio-gpu-dmabuf.c
-> >>>>> @@ -153,9 +153,25 @@ bool virtio_gpu_init_dmabuf(struct
-> >>>> virtio_gpu_simple_resource *res)
-> >>>>>             if (res->dmabuf_fd =3D=3D
-> >>>> VFIO_DMABUF_CREATE_ERR_INVALID_IOV) {
-> >>>>>                 error_free_or_abort(&local_err);
-> >>>>>
-> >>>>> -            qemu_log_mask(LOG_GUEST_ERROR,
-> >>>>> -                          "Cannot create dmabuf: incompatible
-> memory\n");
-> >>>>> -            return false;
-> >>>>> +            res->dmabuf_fd =3D vfio_device_create_dmabuf_fd(res-
-> >iov,
-> >>>>> +                                                          res->iov=
-_cnt,
-> >>>>> +                                                          &local_e=
-rr);
-> >>>>> +            if (res->dmabuf_fd =3D=3D
-> >>>> VFIO_DMABUF_CREATE_ERR_INVALID_IOV) {
-> >>>>> +                error_free_or_abort(&local_err);
-> >>>>> +                qemu_log_mask(LOG_GUEST_ERROR,
-> >>>>> +                              "Cannot create dmabuf: incompatible
-> memory\n");
-> >>>>> +                return false;
-> >>>>> +            }
-> >>>>> +
-> >>>>> +            if (res->dmabuf_fd >=3D 0) {
-> >>>>> +                pdata =3D vfio_device_mmap_dmabuf(res->iov, res-
-> >iov_cnt,
-> >>>>> +                                                &local_err);
-> >>>>
-> >>>> This maps the complete IOV size, while virtio_gpu_fini_dmabuf()
-> >>>> unmaps
-> >>>> only blob_size. Create and attach accept backing larger than the
-> blob,
-> >>>> so excess pages remain mapped after detach, unref or reset.
-> >>> Good catch. I'll add a check in virtio_gpu_fini_dmabuf() to
-> determine if
-> >>> IOV size > blob_size, then do munmap(res->remapped, IOV size);
-> >>> I think this should be safe even if the mapping (created with mmap)
-> >>> size is blob_size. Or, is there a better solution you can think of su=
-ch
-> as
-> >>> tracking the exact mapping size in res object?
+On Tue, Oct 13, 2026 at 11:53=E2=80=AFAM Pierrick Bouvier
+<pierrick.bouvier@oss.qualcomm.com> wrote:
+>
+> On 10/12/26 7:43 PM, Yonggang Luo wrote:
+> > On Tue, Oct 13, 2026 at 9:26=E2=80=AFAM Pierrick Bouvier
+> > <pierrick.bouvier@oss.qualcomm.com> wrote:
 > >>
-> >> Unmapping the IOV size is not safe if only blob_size was mapped:
-> >> munmap() can also remove unrelated mappings in the excess range.
-> > Ok, got it.
+> >> On 10/11/26 9:26 PM, Yonggang Luo wrote:
+> >>> On Mon, Oct 12, 2026 at 10:25=E2=80=AFAM Pierrick Bouvier
+> >>> <pierrick.bouvier@oss.qualcomm.com> wrote:
+> >>>>
+> >>>> On 10/11/26 7:13 PM, Pierrick Bouvier wrote:
+> >>>>> On 10/11/26 1:22 PM, Yonggang Luo wrote:
+> >>>>>> On Fri, Oct 9, 2026 at 2:34=E2=80=AFAM Pierrick Bouvier
+> >>>>>> <pierrick.bouvier@oss.qualcomm.com> wrote:
+> >>>>>>>
+> >>>>>>> On 10/8/2026 10:13 AM, Yonggang Luo wrote:
+> >>>>>>>> On Fri, Oct 9, 2026 at 12:06=E2=80=AFAM Pierrick Bouvier
+> >>>>>>>> <pierrick.bouvier@oss.qualcomm.com> wrote:
+> >>>>>>>>>
+> >>>>>>>>> On 10/8/2026 2:46 AM, Yonggang Luo wrote:
+> >>>>>>>>>> On Thu, Oct 8, 2026 at 5:42=E2=80=AFPM Daniel P. Berrang=C3=A9=
+ <berrange@redhat.com> wrote:
+> >>>>>>>>>>>
+> >>>>>>>>>>> On Wed, Oct 07, 2026 at 01:25:46PM -0700, Pierrick Bouvier wr=
+ote:
+> >>>>>>>>>>>> On 10/7/2026 4:47 AM, Yonggang Luo wrote:
+> >>>>>>>>>>>>> This allows a combined binary to register machine types fro=
+m all its targets.
+> >>>>>>>>>>>>> Consequently, QMP `query-machines` can return machine entri=
+es from every
+> >>>>>>>>>>>>> target, even when `none` is selected. For example, a client=
+ can query the
+> >>>>>>>>>>>>> combined machine list with:
+> >>>>>>>>>>>>>
+> >>>>>>>>>>>>> ```json
+> >>>>>>>>>>>>> { "execute": "query-machines" }
+> >>>>>>>>>>>>> ```
+> >>>>>>>>>>>>>
+> >>>>>>>>>>>>> The returned list includes the registered machine classes f=
+rom all linked
+> >>>>>>>>>>>>> targets. This is separate from selecting a machine: with `-=
+target none`,
+> >>>>>>>>>>>>> `-M virt` reports the targets that provide `virt` instead o=
+f choosing one
+> >>>>>>>>>>>>> arbitrarily:
+> >>>>>>>>>>>>>
+> >>>>>>>>>>>>> ```text
+> >>>>>>>>>>>>> qemu-system -target none -M virt
+> >>>>>>>>>>>>> unsupported machine type: "virt" for target "none"
+> >>>>>>>>>>>>> Available for targets:
+> >>>>>>>>>>>>>       aarch64
+> >>>>>>>>>>>>>       arm
+> >>>>>>>>>>>>> ```
+> >>>>>>>>>>>>>
+> >>>>>>>>>>>>
+> >>>>>>>>>>>>     From the long conversation on a previous thread, I thoug=
+ht we reached
+> >>>>>>>>>>>> the conclusion that if we didn't expose any ambiguous name, =
+then -target
+> >>>>>>>>>>>> option is unnecessary, or maybe I got lost on track of this =
+thread.
+> >>>>>>>>>>>>
+> >>>>>>>>>>>> https://lore.kernel.org/qemu-devel/ar_coT44h5-zJPVV@redhat.c=
+om/
+> >>>>>>>>>>>>
+> >>>>>>>>>>>> I'm not sure which semantic we want to have with -target non=
+e. If there
+> >>>>>>>>>>>> is no ambiguous name registered, we just don't need it at al=
+l. It's a
+> >>>>>>>>>>>> win-win IMHO.
+> >>>>>>>>>>>
+> >>>>>>>>>>> Yes, if we expose unique names for every machine, then -targe=
+t is then
+> >>>>>>>>>>> redundant.
+> >>>>>>>>>>
+> >>>>>>>>>> so how to diff riscv32-virt and risv64-virt? oh so for this ma=
+chine we
+> >>>>>>>>>> needs two name?
+> >>>>>>>>>> "virt" needs register twice for it? or register only a single =
+time,
+> >>>>>>>>>> but we prefix the target_name()
+> >>>>>>>>>> automatically? for example machine::name =3D=3D=3D "virt", but=
+ we can use
+> >>>>>>>>>> "riscv32-virt" "risv64-virt" to reach it?
+> >>>>>>>>>>
+> >>>>>>>>>
+> >>>>>>>>> Yes, ideally we should have different variant of virt for 32/64=
+ bit.
+> >>>>>>>>> Same goes for cpu max types.
+> >>>>>>>>>
+> >>>>>>>>> QOM type is always registered unambiguously ("$arch-virt"). The=
+n, for
+> >>>>>>>>> the "alias" name, which is virt, in case multiple matches are f=
+ound,
+> >>>>>>>>> command line can return an error with list of unambiguous names=
+ to call it.
+> >>>>>>>>>
+> >>>>>>>>> $ qemu-system -M virt
+> >>>>>>>>> Multiple virt machines are available. Please choose one of them=
+:
+> >>>>>>>>> - aarch64-virt
+> >>>>>>>>> - riscv64-virt
+> >>>>>>>>>
+> >>>>>>>>> There is no "parsing" of the argument, it's just the real QOM t=
+ype. Then
+> >>>>>>>>> we can find which target it implements from mc->targets.
+> >>>>>>>>> And then, we can automatically choose which cpus should be avai=
+lable
+> >>>>>>>>> based on that, thanks to cpu->targets.
+> >>>>>>>>>
+> >>>>>>>>> For existing binaries, nothing change.
+> >>>>>>>>
+> >>>>>>>> Good, I think we found a clean way now, is_available should be
+> >>>>>>>> removed, and TypeInfo::targets and TypeImpl::targets should be a=
+dded.
+> >>>>>>>
+> >>>>>>> It goes into MachineClass only for now.
+> >>>>>>>
+> >>>>>>>> I think
+> >>>>>>>> for "virt" we can add a shared hw/machine-virt.c instead, and fo=
+rwarding to
+> >>>>>>>> the $arch specific virt. so that we only have a single "virt" re=
+gistered.
+> >>>>>>>> And it's
+> >>>>>>>> targets is
+> >>>>>>>> QEMU_ARCH_I386 |
+> >>>>>>>> QEMU_ARCH_ARM |
+> >>>>>>>> QEMU_ARCH_RISCV |
+> >>>>>>>> QEMU_ARCH_LOONGARCH |
+> >>>>>>>> QEMU_ARCH_M68K |
+> >>>>>>>> QEMU_ARCH_OR1K |
+> >>>>>>>> QEMU_ARCH_XTENSA |
+> >>>>>>>> QEMU_ARCH_HEXAGON
+> >>>>>>>>
+> >>>>>>>> So that we won't have a list of conflict QOM names for "virt" ma=
+chines.
+> >>>>>>>> As now we indeed have only a single "virt" machine that redirect=
+s to
+> >>>>>>>> different targets.
+> >>>>>>>>
+> >>>>>>>
+> >>>>>>> The idea looks appealing, but I don't think it solves the problem=
+ to
+> >>>>>>> have multiple virt variants available at the same time.
+> >>>>>>>
+> >>>>>>> The "alias" idea you introduced before is good, we just need to a=
+dd a
+> >>>>>>> check if an alias is really unique, else return an error, as expl=
+ained
+> >>>>>>> previously.
+> >>>>>>>
+> >>>>>>> If "-M aarch64-virt" works for both the new and existing binary, =
+and -M
+> >>>>>>> virt only for existing binaries (and ambiguous for new one), I th=
+ink
+> >>>>>>> that's a safe approach.
+> >>>>>>>
+> >>>>>>>>
+> >>>>>>>> For other types also conflict can be handled in the same way, su=
+ch as
+> >>>>>>>> "-cpu host" "-cpu max"
+> >>>>>>>> maybe others, but I think they all have the same way to deal wit=
+h.
+> >>>>>>>>
+> >>>>>>>>
+> >>>>>>>> That's why  TypeInfo::targets and TypeImpl::targets better than =
+sole
+> >>>>>>>> Machine::targets
+> >>>>>>>>
+> >>>>>>>
+> >>>>>>> One step at a time.
+> >>>>>>> Let's keep focused on declaring targets for a single machine firs=
+t.
+> >>>>>>> Then we can iterate to solve the "virt" problem.
+> >>>>>>> Then convert all the existing machines and add a check in machine=
+-target.c
+> >>>>>>> Then, and only then, we can see what happens with cpus.
+> >>>>>>
+> >>>>>> I tried this idea, but I faced a fatal error, because the
+> >>>>>> target_info() is not available until
+> >>>>>> the machine selected(the target arch will be select just along wit=
+h
+> >>>>>> the machine selected), so basically
+> >>>>>> all calls to target_info() would raise an error(null pointer), how=
+ to
+> >>>>>> deal with it?
+> >>>>>>
+> >>>>>
+> >>>>> I see. Indeed, since we can't set a target before registering all t=
+ypes,
+> >>>>> it implies that all the types class_init can't use target_* functio=
+ns.
+> >>>>>
+> >>>>>
+> >>>>> - register_accel_target_type
+> >>>>> - cpu_max_v8_register_type
+> >>>>>
+> >>>>
+> >>>> Sorry, mail sent to early.
+> >>>>
+> >>>> For the is_available callback usage, it should be easy to do the swi=
+tch,
+> >>>> since it's basically the same information that what we are trying to=
+ do
+> >>>> - we can leave them for now.
+> >>>>
+> >>>> Some types (like accel and max mentioned above), explicitly change t=
+heir
+> >>>> definition depending on the target. It's a behavior we can't rely on
+> >>>> anymore, and it means we need proper distinct types instead of a sin=
+gle
+> >>>> one with dynamic definition driven by target-info.
+> >>>>
+> >>>> I think that's the preliminary work needed, before being able to go
+> >>>> further: convert all existing usage in class_init with distinct type=
+s +
+> >>>> is_available, and then we can do the switch from is_available to the=
+ new
+> >>>> .targets approach.
+> >>>
+> >>> Hi Pierrick,
+> >>> I have already tried that introducing new QOM names just to make clas=
+s_init
+> >>>    target-independent is too broad(means all usage of it should be ha=
+ndled)
+> >>> and could complicate compatibility(changed too much code).
+> >>> Can we avoid new names by some new means(ideas welcome)?
+> >>>
+> >>
+> >> As a first step, I don't think we need new names, is_available can be
+> >> used to selectively register one definition or another and avoid any
+> >> clash. What is missing at the moment though, is that some types (like
+> >> cpu max above) change their definition based on target definition.
+> >
 > >
 > >>
-> >> A cleaner fix is to update vfio_device_mmap_dmabuf() to take the
-> size to
-> >> map (or cap it to blob_size).
-> > Currently, vfio_device_mmap_dmabuf() creates an IOV sized mapping,
-> so it
-> > is going to need extra logic to cap it to blob_size, which needs to be
-> explicitly
-> > passed in. So, are you ok with this given that you previously did not
-> like the
-> > idea of passing in blob_size as a parameter?
->=20
-> Yes, I am fine with a mapping-length parameter for this purpose.
-> I should have made the distinction clearer.
->=20
-> Previously, total_size was required to equal the IOV size, adding
-> blob-specific validation to the VFIO helper. That validation belongs
-> in virtio-gpu.
->=20
-> Here, the parameter specifies how much of the IOV to map, which can
-> be less than its total size. That is a generic mapping operation;
-> the helper does not need to know about blobs. We can name the
-> parameter length and have virtio-gpu pass res->blob_size.
->=20
-> The extra logic to stop at that length and shorten the final mapped
-> segment as necessary is appropriate. This lets mapping and unmapping
-> use the same length without additional tracking.
-Ok, I'll make the change to have vfio_device_mmap_dmabuf() accept
-a length parameter.=20
+> >> So for cpu max, we would have two distinct types, both named max, but
+> >> one with is_available(target_arm), and other one with
+> >> is_available(target_aarch64), so they are never registered at the same=
+ time.
+> >
+> >>
+> >> Same for virt machines. It's already what we have, duplication is
+> >> handled at the moment with distinct is_available callbacks.
+> >>
+> >> Then, see below.
+> >>
+> >>>
+> >>>>
+> >>>> It's probably worth having the conversion in its own series (only
+> >>>> cleanup usage of target_* in class_init), before trying to get rid o=
+f
+> >>>> is_available.
+> >>>
+> >>>>
+> >>>> For the implementation, you can use the multi-targets.c binary test =
+to
+> >>>> drive the change. Remove the module init for target info (leaving no
+> >>>> target set), and add a hacky patch to skip call to is_available (and
+> >>>> return true instead) and allow double definition (which will rely on
+> >>>> is_available). Then, fix all the segfault. Once it compiles and runs=
+,
+> >>>> only double definition will be left, which can be handled by inserti=
+ng
+> >>>> the right is_available callbacks. Then in a subsequent series, the
+> >>>> switch to .targets can be made.
+> >>>
+> >>>
+> >>> Still have no clean clue about how to remove is_available , as we hav=
+e many
+> >>> "virt" machines. Do you means all "virt" machines with "virt-machine"=
+ QOM names
+> >>> are inserted to the table? How to get it working because the "key" is=
+ string.
+> >>>
+> >>
+> >> Once we have type definition which only depends on is_available, we ca=
+n
+> >> convert this to .targets, which would contain the same information.
+> >> For the rest, I have some ideas, but I would like first we do the firs=
+t
+> >> part (convert to is_available), which is already a huge work in itself=
+,
+> >> and a series of its own.
+> >
+> > Indeed I am confused .targets only exists on Machine, how is it
+> > related to -cpu host -cpu max?
+> >
+>
+> We can introduce cpu.targets after machine.targets.
+> First step is just to get something that works with is_available and
+> does not require any target info to be set.
 
-Thanks,
-Vivek
->=20
+Feels weird, what's wrong with this method:
+ target/arm/tcg/cpu-max-v8.c | 17 +++++++++++++----
+ 1 file changed, 13 insertions(+), 4 deletions(-)
+
+diff --git a/target/arm/tcg/cpu-max-v8.c b/target/arm/tcg/cpu-max-v8.c
+index 65f851f2006..d7323ab431c 100644
+--- a/target/arm/tcg/cpu-max-v8.c
++++ b/target/arm/tcg/cpu-max-v8.c
+@@ -119,12 +119,21 @@ void aarch32_max_v8_tcg_initfn(Object *obj)
+ #endif
+ }
+
++static void max_v8_tcg_initfn(Object *obj)
++{
++    if (target_aarch64()) {
++        aarch64_max_v8_tcg_initfn(obj);
++    } else {
++        aarch32_max_v8_tcg_initfn(obj);
++    }
++}
++
+ static void cpu_max_v8_register_type(void)
+ {
+-    static const ARMCPUInfo max_v8[2] =3D {
+-        { .name =3D "max-v8", .initfn =3D aarch32_max_v8_tcg_initfn },
+-        { .name =3D "max-v8", .initfn =3D aarch64_max_v8_tcg_initfn },
++    static const ARMCPUInfo max_v8 =3D {
++        .name =3D "max-v8",
++        .initfn =3D max_v8_tcg_initfn,
+     };
+-    arm_cpu_register(&max_v8[target_aarch64()]);
++    arm_cpu_register(&max_v8);
+ }
+ type_init(cpu_max_v8_register_type)
+
+
+>
+> >
+> > I already have a working copy that does not depend on target_info()
+> > and selects target_info() when the machine
+> > is selected, no QOM name introduced. only for machines, we will have
+> > $target_name-$machine_name as a name for selecting
+> > the exact machine.
+> >
+> > The cpu max cpu host is dealt by moving the choose code out of
+> > class_init, into object_init. I really did not get your idea by use
+> > is_avaiable. because when I try to get all QOMs to be registered. then
+> > I won't call is_available at all.
+>
+> As a first step, we rely on is_available, to work on distinguishing
+> proper types per target and break the dependency of multiple class_init
+> to target_info. Then, we can replace is_available with .targets.
+>
+> > because "is_available" depends on target_info(),(we won't have
+> > target_info() till the machine is selected).
+> >
+>
+> We can imagine registering types in different buckets per target, which
+> would allow for duplication.
+
+
+So your idea is multiple hash-tables for QOM types? key is the target_arch?
+
+>
 > Regards,
-> Akihiko Odaki
->=20
-> >
-> > Thanks,
-> > Vivek
-> >
-> >> This keeps it symmetric with the udmabuf
-> >> path and allows virtio_gpu_fini_dmabuf() to continue unmapping
-> >> blob_size
-> >> without needing extra tracking variables.
-> >>
-> >> Regards,
-> >> Akihiko Odaki
-> >>
-> >>>
-> >>> Thanks,
-> >>> Vivek
-> >>>>
-> >>>> Regards,
-> >>>> Akihiko Odaki
-> >>>>
-> >>>>> +                if (!pdata) {
-> >>>>> +                    virtio_gpu_fini_dmabuf(res);
-> >>>>> +                }
-> >>>>> +            } else {
-> >>>>> +                res->dmabuf_fd =3D -1;
-> >>>>> +            }
-> >>>>>             } else if (res->dmabuf_fd >=3D 0) {
-> >>>>>                 pdata =3D virtio_gpu_remap_dmabuf(res, &local_err);
-> >>>>>                 if (!pdata) {
-> >>>
-> >
+> Pierrick
+
+
+
+--=20
+         =E6=AD=A4=E8=87=B4
+=E7=A4=BC
+=E7=BD=97=E5=8B=87=E5=88=9A
+Yours
+    sincerely,
+Yonggang Luo
 
