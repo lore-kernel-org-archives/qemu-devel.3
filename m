@@ -4,110 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBBA8CC6B0E
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 16:53:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 988B9CC6B12
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 17:59:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGfk8-0001Nq-9w; Tue, 13 Oct 2026 12:52:48 -0400
+	id 1xGglP-0002xl-P8; Tue, 13 Oct 2026 13:58:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1xGfk5-0001Ni-Jr
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 12:52:46 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1xGglO-0002xR-Ce
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 13:58:10 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1xGfk4-0000in-13
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 12:52:45 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69DDgrCB149139; Tue, 13 Oct 2026 16:52:38 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=JynduI
- vWV/Lxeo1IKu+uM4rwlr5RVFQ5+bMezhi7r2M=; b=nFGsnP7qMWgq0QXE6Z1Uep
- lm4gjoBUfywQjmTmU13PlyW7hubZYb7xEWP5P10uQH8bkp/7qOjryAxcOZ6BwUVH
- 02e7JQfsRQ/dy4E4u7kVo927vKN5F7b6tZMAeKLJtjB+XrFgN+9e3V6Csnc2exdL
- LQUbPfcszFvsrpuRd/9WNfdENiHPHUBRcB1yla4QuXQrusrmGmptGsa9V9F9Hap+
- shlFOdq5lnnGw0UsPaRJjrYSphzebOGG/E36O/tvViu5yA8f4KFN5xDgtQBjkFkN
- PAW/2V0+Z+UOtbseUplM8Rq3uXIRSbU/n0juAri/W7F/xvYYR4TjREAs6+ex26WA
- ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4h7dwhfjh6-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Tue, 13 Oct 2026 16:52:38 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69DFZ1Pv2709317; Tue, 13 Oct 2026 16:52:37 GMT
-Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4h816h304n-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 13 Oct 2026 16:52:37 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
- [10.20.54.102])
- by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 69DGqZPN50921774
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 13 Oct 2026 16:52:35 GMT
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 3C7442004D;
- Tue, 13 Oct 2026 16:52:35 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 051C320043;
- Tue, 13 Oct 2026 16:52:35 +0000 (GMT)
-Received: from [0.0.0.0] (unknown [9.111.35.59])
- by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 13 Oct 2026 16:52:34 +0000 (GMT)
-Message-ID: <9a21eb8c-47ca-47e7-8685-d9fb9c20e971@linux.ibm.com>
-Date: Tue, 13 Oct 2026 18:52:34 +0200
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1xGglM-0007KD-OB
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 13:58:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1791914286;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=FfLRZKUJT+Wn4v+T7bNYwJxwXT+oJMCSbMkEw+nFQM4=;
+ b=FXUsexReHplEfz1gL786ardVBtLDAiOCm05NnFfQYVtw9xKYgnlDiBMAuzjsPMh1FoqAnd
+ 5OidWs/Wke5OEGD/u5Wi2fTB6mcbodDcLVYM5adZLhXn0wtPnSxv0RJFv2ubwAv24ctZ52
+ i80AzpfrrCxvv8rfx2Isao8ktmw3Rko=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-171--a51HU1dPYWHD1fsXJjlTg-1; Tue,
+ 13 Oct 2026 17:58:03 +0000
+X-MC-Unique: -a51HU1dPYWHD1fsXJjlTg-1
+X-Mimecast-MFC-AGG-ID: -a51HU1dPYWHD1fsXJjlTg_1791914282
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3B9C5183035E; Tue, 13 Oct 2026 17:58:01 +0000 (UTC)
+Received: from localhost (headnet03.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.114])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id D3A523004D31; Tue, 13 Oct 2026 17:57:58 +0000 (UTC)
+Date: Tue, 13 Oct 2026 13:57:16 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, akalenyu@redhat.com, qemu-block@nongnu.org,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ Benjamin Marzinski <bmarzins@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
+ Fam Zheng <fam@euphon.net>
+Subject: Re: [PATCH 5/8] pr-manager-helper: add PR_HELPER_CLEANUP command
+ support
+Message-ID: <20261013175716.GB1193846@shajnocz.csb>
+References: <20261009153058.1089786-1-stefanha@redhat.com>
+ <20261009153058.1089786-6-stefanha@redhat.com>
+ <75739957-f97d-41e7-8439-cd73cd12be25@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/2] Fix PVH entrypoint parsing
-To: Ard Biesheuvel <ardb@kernel.org>, qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, pbonzini@redhat.com,
- Richard Henderson <richard.henderson@linaro.org>
-References: <20240929180659.3598-1-ardb@kernel.org>
-Content-Language: en-US
-From: Ilya Leoshkevich <iii@linux.ibm.com>
-In-Reply-To: <20240929180659.3598-1-ardb@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDEzMDA2NiBTYWx0ZWRfX1TO5ktWh4tz6
- kweHurDvyoMXMrSjRZt38eJruzEFfp8YCIZonv8q4X10PatWxwcX3cB65v1vIBSrTIfW2uchESe
- WmficVRMfZP95CoSkwWsX7NoiPvOd98=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDEzMDA2NiBTYWx0ZWRfX1fWdeM8eDLtZ
- WZjAMZulcX5LJ+rtcy1MHmkDtc1VYYuqjnjUfRthgV/nBulLT/D9W1HvYn9id5z0DT/vwB+D8ta
- cqmEAfZz18jddkskSgvA8cynFOFDosbGSjnYSgc/iOb4CCz8v/yK06D8hGxJMLVecBsKhEdRess
- 8gVdrYr0iOB5VshsV7s/h3czqfxKPxOomNltOiDLKD5uUWlrjhtmF3bA3TydcgNxFo8ruAIay4L
- TSuPbtzMX5jxwbZ1p9zhb0Cfm8zikwZkIlxH8JXnX/nW37vim4zoWl5oSYp5qAb6wl/QV0QxuOH
- TvTxuo2VUH2CvsMAniyYwtktCUjzpGJ0kjvIaLLJB0jZ8I+8l8YXeyD9HahJSf5Fz8E1OspKJkp
- 6lDc39unKOxrVI7Q6JRSiSNF4EzfqV4n/vRfEd8SkpZF03fSzyvLCwgJTlJQWpv6S/G+NBRkSqA
- Bu4Uz+c4OvHGqqXv5wA==
-X-Proofpoint-GUID: fKiC4icHIA1qU8YNrduNqrSKfu5dABp0
-X-Authority-Analysis: v=2.4 cv=RoFQvymK c=1 sm=1 tr=0 ts=6ace61d6 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=czFtBru75hg9k7Pz9dEA:9
- a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: fKiC4icHIA1qU8YNrduNqrSKfu5dABp0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-10-13_01,2026-10-09_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 spamscore=0 phishscore=0 adultscore=0 bulkscore=0
- impostorscore=0 suspectscore=0 malwarescore=0 clxscore=1011
- lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610080000
- definitions=main-2610130066
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <75739957-f97d-41e7-8439-cd73cd12be25@redhat.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -124,22 +92,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 9/29/24 20:06, Ard Biesheuvel wrote:
-> Fix the handling of the ELF note that describes the PVH entrypoint
+On Tue, Oct 13, 2026 at 06:25:28PM +0200, Paolo Bonzini wrote:
+> On 10/9/26 17:30, Stefan Hajnoczi wrote:
+> > qemu-pr-helper now supports the vendor-specific PR_HELPER_CLEANUP SCSI
+> > command. Add support to the client side.
 > 
-> v2: fix broken ELF note handling on big endian hosts
+> Hi Stefan, up to this point it's all good; qemu-pr-helper works in SCSI
+> commands so a vendor-specific command is the obvious way to add the
+> functionality---and I'm glad the feature negotiation worked out.
 > 
-> Ard Biesheuvel (2):
->    hw/elf_ops: Implement missing endian swabbing for ELF notes
->    hw/x86: Always treat the PVH entrypoint as a 32-bit LE field
+> For the next steps, however, I'm not sure about using blk_ioctl to send the
+> migration done command from SCSIDevice to BlockBackend, which (if I
+> understand correctly) implicitly exposes the command to the guest as well.
 > 
->   hw/i386/x86-common.c     |  7 ++-----
->   include/hw/elf_ops.h.inc | 19 +++++++++++++++++--
->   2 files changed, 19 insertions(+), 7 deletions(-)
+> In particular, perhaps it makes sense to add a migration_done callback to
+> BlockDriverState and BlockBackend?  They can be called either only from
+> SCSIGeneric, or from a new block layer migration notifier that walks the
+> BlockBackend list.
+> 
+> If instead the command is not exposed to the guest, please just add a
+> comment explaining why.
 
-+Cc: Michael and Richard.
+I looked into this: hw/scsi/scsi-bus.c:scsi_req_new() does not support
+vendor-specific commands since scsi_cdb_length() returns -1. So
+PR_HELPER_CLEANUP (0xff) from the guest will be rejected immediately
+by any emulated SCSI HBA.
 
-Gentle ping.
+However, I will send a v2 patch series that goes further: let's
+explicitly reject PR_HELPER_CLEANUP in scsi_req_new() so that even if
+scsi_cdb_length() or related code changes in the future, it will never
+be possible to submit the command from a guest.
+
+> 
+> Thanks,
+> 
+> Paolo
+> 
+> > Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+> > ---
+> >   scsi/pr-manager-helper.c | 20 ++++++++++++++++----
+> >   scsi/utils.c             |  3 +++
+> >   2 files changed, 19 insertions(+), 4 deletions(-)
+> > 
+> > diff --git a/scsi/pr-manager-helper.c b/scsi/pr-manager-helper.c
+> > index 26ef3876f0e..fa6611ed676 100644
+> > --- a/scsi/pr-manager-helper.c
+> > +++ b/scsi/pr-manager-helper.c
+> > @@ -38,6 +38,8 @@ struct PRManagerHelper {
+> >       QemuMutex lock;
+> >       QIOChannel *ioc;
+> > +
+> > +    uint32_t proto_flags; /* flags negotiated with pr-helper */
+> >   };
+> >   static void pr_manager_send_status_changed_event(PRManagerHelper *pr_mgr)
+> > @@ -129,8 +131,9 @@ static int pr_manager_helper_initialize(PRManagerHelper *pr_mgr,
+> >           goto out_close;
+> >       }
+> > -    flags = 0;
+> > -    r = pr_manager_helper_write(pr_mgr, -1, &flags, sizeof(flags), errp);
+> > +    pr_mgr->proto_flags = flags & PR_HELPER_FEATURE_CLEANUP;
+> > +    r = pr_manager_helper_write(pr_mgr, -1, &pr_mgr->proto_flags,
+> > +                                sizeof(pr_mgr->proto_flags), errp);
+> >       if (r < 0) {
+> >           goto out_close;
+> >       }
+> > @@ -160,10 +163,19 @@ static int pr_manager_helper_run(PRManager *p,
+> >           return -EINVAL;
+> >       }
+> > +    /* The command is only available when pr-helper supports it */
+> > +    if (cdb[0] == PR_HELPER_CLEANUP &&
+> > +        !(pr_mgr->proto_flags & PR_HELPER_FEATURE_CLEANUP)) {
+> > +        return -ENOTSUP;
+> > +    }
+> > +
+> >       memcpy(cdb, io_hdr->cmdp, io_hdr->cmd_len);
+> > -    assert(cdb[0] == PERSISTENT_RESERVE_OUT || cdb[0] == PERSISTENT_RESERVE_IN);
+> > +    assert(cdb[0] == PERSISTENT_RESERVE_OUT ||
+> > +           cdb[0] == PERSISTENT_RESERVE_IN ||
+> > +           cdb[0] == PR_HELPER_CLEANUP);
+> >       expected_dir =
+> > -        (cdb[0] == PERSISTENT_RESERVE_OUT ? SG_DXFER_TO_DEV : SG_DXFER_FROM_DEV);
+> > +        (cdb[0] == PERSISTENT_RESERVE_IN ?
+> > +         SG_DXFER_FROM_DEV : SG_DXFER_TO_DEV);
+> >       if (io_hdr->dxfer_direction != expected_dir) {
+> >           return -EINVAL;
+> >       }
+> > diff --git a/scsi/utils.c b/scsi/utils.c
+> > index daee90ecf0e..1ee68e68221 100644
+> > --- a/scsi/utils.c
+> > +++ b/scsi/utils.c
+> > @@ -29,6 +29,9 @@ uint32_t scsi_data_cdb_xfer(uint8_t *buf)
+> >   uint32_t scsi_cdb_xfer(uint8_t *buf)
+> >   {
+> > +    if (buf[0] == PR_HELPER_CLEANUP) {
+> > +        return 0;
+> > +    }
+> >       switch (buf[0] >> 5) {
+> >       case 0:
+> >           return buf[4];
+> 
+
 
