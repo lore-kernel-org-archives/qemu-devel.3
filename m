@@ -4,139 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5A1ACA9ED2
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 10:31:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C098DCC6B03
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 10:37:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGZmX-0007Ea-OU; Tue, 13 Oct 2026 06:30:54 -0400
+	id 1xGZt8-0000qV-83; Tue, 13 Oct 2026 06:37:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xGZmW-0007E8-Q6
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 06:30:52 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xGZmU-0003KK-5k
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 06:30:52 -0400
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69D7OXeq015275
- for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 10:30:48 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- QRB9R8lJgYfAJdJzvGNsIpb/iBY7WtlMqKy8UR3bWX0=; b=Gq3rXCEbHhykC6ka
- irvjHJevuv8AYgG7I2ryxg8Gls0slVPzEO96UP0RtKmZfKHK90I7c5kgDjx4FZTq
- +eYI3vDf76l8Q1BenKGmokWd7O6neRlLSZHYEdXUa9ttj41z676cI6uiomc10sH6
- Us5Va9HZOsiPy/mhl8P9F3bjShgSu4Qrz0K0lNE1TTq0P5Am67BU/HgjZPXgpNBQ
- DcWqiBl+6y0T7+8n2eGkuBbRIfJ/NHawQ5AF441F9VFMPuc/YcxZLeNQnGJ7QBDH
- Vn+ZwXtFpZrwUMBM4GkZuEtXdSv7/LEhXdXVQR1fXCdVITJomyRpbMb134w5Eonr
- YXLmgA==
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h9g7ugs82-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 10:30:47 +0000 (GMT)
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-93cc359d9easo476613085a.3
- for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 03:30:47 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1xGZt6-0000qE-KQ
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 06:37:40 -0400
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1xGZt4-0004Bl-Uq
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 06:37:40 -0400
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-48b03f23305so2360124f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 03:37:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1791887447; x=1792492247; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=QRB9R8lJgYfAJdJzvGNsIpb/iBY7WtlMqKy8UR3bWX0=;
- b=Gtnpagg+MBSsNquOPbhyAwG3FfFR+xwzgEABVPSBo0wjNv6KSNuw5oKU78BjeWEyq8
- qTCgK2UZHSyvFuZ/lb6GlVKjIu8SRjTrR+VGqgQZBfhMAFScaGiedmViSdHWtuSJO5Cb
- 6wQ7cCBvpakF11z7tKDzcza+8Zsjsyc+gAoXHR1qKGjuZT+9f2fVXpQfwD8AKN0id14/
- 6Kf/RmXskOiHpE13Rm7HhjDo4eHKKJ49J1rWS/IG18aiBUQEnQA8v9dVGCDmCSU1jnbR
- 53LQv46JNJDfL7f1St9aFQo7TAog55PwPFtP8T50XyqvcZvQonhVbo1yNxAdSs3iKWZx
- JiEg==
+ d=linaro.org; s=google; t=1791887857; x=1792492657; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:to:from:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=1ClRIfEMJqxrNhVmW03aKtfEAOiVD/wd6hwYPaaiaZ0=;
+ b=DhjW+AZU93NTmJPSt8+OgWAz+a1UjDZhlt6Yyx+5pw2MCHnEWdK1hDxlUrZaWPGeEX
+ r+mXfORoq+W4XO9i/yjFAnBzIbRlOk1Hsv5B8IMnNgSyyZw3JTAu/9CYFq6uEb0CL5Q/
+ Digypgk34UVf8Ckp1vzCh7tCpvwvFL5rvTcwJtBk+tKDQpI2auvcD3Vy7TcX8G7ggxX2
+ ++nuwJVQrc+ITlihMcxyrQCaYltZ1Lr/sD7FNQ7NfXkmFeKu0q6/RIQOgHqODX1vOU0v
+ 0FmfM6CIm27gGZwnrXobkxGE82kXldWkW7OLN1o3lX5QsXcDgwEALY6p0mj3Zw93zoYB
+ 3KsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791887447; x=1792492247;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=QRB9R8lJgYfAJdJzvGNsIpb/iBY7WtlMqKy8UR3bWX0=;
- b=lZ6F8CCoXqO9aHHEUpiXoSD6RLtcYEwefzlIHKBna7iHyXMuSZUFBLIu1PVIQ3LG+D
- IteGRmmGK80tYqfAPGJGHlAWUxmgTRrqGlsETyw3cxLVnUG/mPoVO2wiDp9yC+sIaxax
- /wzn2+o3kkzhvFVbjrbbOXZmtsg1MR4WWzbs0S8T6DTDRmfkM9PTnIyBPd9FEkqbk7P+
- 0kIeyd1OrC/qblrFvvyaYBHiFWkiC4TQnaWDToaXq5tI/9i89vMu30i/7W88slwm5bwu
- RprVVqfuluwqirIpFUjGyFH6/G/8R3m7u/hOaj24c/D6R8/V5wyZde/XnX8zeOKRXSp4
- x0Ng==
-X-Forwarded-Encrypted: i=1;
- AKwUvByanY8XgBSfKYORdd0btnwGnkmSs092i6tdBfdLHXyeGvaw5Kz71nyf4jFbfEjqeQLtl3YUo1raJmnd@nongnu.org
-X-Gm-Message-State: AFq9FYI8Ej7t3GgzsHkbM5E14ogiZY6USlDCwZwUiy7qRw6qz1P/rHWx
- Qc0S4yoL5LkxDROORlftaglEbilS7vkB6e1v5ZzPd6aGk1GFzC7FMHPRmcjt/e20OgPPkKql9mj
- qaxB1hVV/DLhqI2+KaqnHRMoByc7eWUCDsjCIRFob/HeuxPewejqaAvrB6MLoJKXNZBma
-X-Gm-Gg: AYBFou0Oxk+LAxEbxtzaURKVbDWO3RVDFHOH6yoViagKA51+L6Xq7Pw0eYoYQn13XLr
- 16lMKnNVlAnSluMAT7BPerUkiuFpkl4b04ZZk1OJ2xJjmzeFH0l9fZRW+FI/iUsh25LUDCEQbUl
- fxA0ScpQD/PtJmE6yH8OEhoJzJyxgE2Z0dHTwSdtIC0XCXm2gewhU0p3lyyB0ea7tWq47U4XQy4
- QMHFX8e2BX0ADB31JyIxUsFUmD02bd9qTlcwZenXryhzcBgu6WnSfp0/2Fn4ziThLEipygCzLth
- cfeJ3ZpNY35ZvKN33j6mPqGBoO1elsLRWm+qNT5ONdMI5cy84QHQxgzCdZKJw3mRhiR3Vld2UKh
- UoejuLCmivBWOXDteTf29FuLAKbDyMNfJYw==
-X-Received: by 2002:a05:620a:6f06:b0:93e:e2a4:b0fe with SMTP id
- af79cd13be357-93ee2a4b23cmr785713885a.66.1791887446856; 
- Tue, 13 Oct 2026 03:30:46 -0700 (PDT)
-X-Received: by 2002:a05:620a:6f06:b0:93e:e2a4:b0fe with SMTP id
- af79cd13be357-93ee2a4b23cmr785709485a.66.1791887446214; 
- Tue, 13 Oct 2026 03:30:46 -0700 (PDT)
-Received: from [192.168.69.210] (pmd666.hd.free.fr. [88.187.86.199])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a18bb68abfsm392749085e9.0.2026.10.13.03.30.45
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 13 Oct 2026 03:30:45 -0700 (PDT)
-Message-ID: <de4fe97a-83ff-4f56-b3ba-f506d03e252e@oss.qualcomm.com>
-Date: Tue, 13 Oct 2026 12:30:44 +0200
+ d=1e100.net; s=20260707; t=1791887857; x=1792492657;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=1ClRIfEMJqxrNhVmW03aKtfEAOiVD/wd6hwYPaaiaZ0=;
+ b=OJL23E3cxqw1AI0gopxVUpWon4Wbm460n4InzKqAS1eUnY1wFArf3WTKNQdbeFmLV0
+ T6zlciHmkQFCc5jwpnz0oxTllL+/dDf8ICUCYIZfd34tQ2n9y33mSIRoe54DIOI77c2T
+ Z8U3LLV4hVf4soTQ4aLuaIA0VjK8btaob4MvBpZazVW8twnAcXsBtVBw/tTaSB1/Si2o
+ aX/5ElkfzLp2Ds4OHr1fA7GcODULqw7GzFUVOegQ1lGtwQrCIUDFy06bPAdzTm2gK+Gc
+ ttMLJDJ2y5JWTtwQhp3+xKlzbDHiWQPOAsyuSKM2GqwJsG/0etu+/OM/3MAA3aa6SawL
+ j4hQ==
+X-Gm-Message-State: AFq9FYJcqUKSSPMfLQn1qZYo/EA2AWOkjgV5fpAY/dhtEd+P773SmsGD
+ Y0toYvmYBeQMgX8BsGkO19Pk9AhswK3Dxgk0XDK877LVQPNHwoGoYpQXrh7bJ1j+d8iCL82ne88
+ CGbnLuYA=
+X-Gm-Gg: AYBFou1Cn+bxy80wSxoWtAckOiaYTHECmUQ+/9mnfizIxVD/DWIjxdCkqCHbPO7G2iQ
+ wS6aoJXXo1mNdZk5zg+eUlUwBkyUIuRFUiNikNLVjrc0lHeIxFVHxRfP18eh2Cp2fUKR9U0oT+J
+ pW9YLFlNa/uzx4ldu6BPVjKun7ACTQJ4rYu4haP+W0KTtjJz7bWjNJ9gqfePSaHHT1IYApQvjnq
+ Zs/uXc4w6UMHzxmbCDUPWsDPn8ces5eYCXZCcUYN5FiZW7hid7VEkkiQGdznoLendhyGWnIn+rj
+ f6++lk/GyJo9gEhad7TCql7dc+DoU/M/nkulFtQBioH6l8PvqT80q9Bq5oljvQV2rmBZuc+E4j7
+ ujxDcv02UV8zEHArQCgef5KBqrQ2yNzBVs83F88wzC1kf5KVPR1boeL2WCjMxWS/ERItW3q80NC
+ pqbyTtQXnZ3g2uCbwap4gWa/DcSWWqnA5qgZzb7jQ/n/jsw61Ab0Hu5fs6TCQBz61ZbeYJ3A==
+X-Received: by 2002:a05:6000:298d:20b0:48a:f404:6960 with SMTP id
+ ffacd0b85a97d-48dbaadbf75mr17352492f8f.9.1791887856573; 
+ Tue, 13 Oct 2026 03:37:36 -0700 (PDT)
+Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-48de0aaa608sm4772351f8f.18.2026.10.13.03.37.35
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 13 Oct 2026 03:37:35 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 7179E5F8E5
+ for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 11:37:34 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Subject: Re: [RFC PATCH] .dir-locals: include QEMU code in PYTHONPATH
+In-Reply-To: <20260930163050.426737-1-alex.bennee@linaro.org> ("Alex
+ =?utf-8?Q?Benn=C3=A9e=22's?=
+ message of "Wed, 30 Sep 2026 17:30:50 +0100")
+References: <20260930163050.426737-1-alex.bennee@linaro.org>
+User-Agent: mu4e 1.14.4-pre6; emacs 30.1
+Date: Tue, 13 Oct 2026 11:37:34 +0100
+Message-ID: <87pkxdga35.fsf@draig.linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/86] hw/intc/arm_gicv5: Implement virtualization support
-Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-References: <20261013083933.1024405-1-peter.maydell@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20261013083933.1024405-1-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDEzMDA0MSBTYWx0ZWRfXxElEO3CyOx/8
- 8jvv4s2l4Ew1ZVt4cpSSGPn0AVmyqxCHqql4lhDdkiVlumHL8CB16sYA2ssrAoWHClAEexy6ROQ
- QQtM/2t718SPQXKbkuHg6NUG95s9+Vpz+vqc0WIo+NyOoe8yEbfhBkFWsZAEoRf30LWgWYyOnSJ
- WTnr+Y/wxYXsrqDzs9svw57VNg533CRX03XkrcZ6B5ex5oEaAeJruC0/hYqLwboOOlZXmqEbdps
- jG2/7azcIy/LkNS8k4sioH5dIHKxfUgo1umO98uTR/tzmG2m3QqgfwB7BdqEIZ90dvE5YSuXo7S
- tS5UqduJnwE/ih/BFNbphoCjMwI5UZ8BspexwXIftn0CXHmt668R3maXcjo+Jsdl6ruX8g6wKEL
- GEJPaz1apKaWkgsQ/F9/Ay2U+mcUqhzO8rXFg0OIe+JmCdp9wundq5SUpKYP0fRWa4bnp32D+yX
- OpP8dI4Dy7hRTY/H91A==
-X-Authority-Analysis: v=2.4 cv=Z495j3RA c=1 sm=1 tr=0 ts=6ace0857 cx=c_pps
- a=qKBjSQ1v91RyAK45QCPf5w==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
- a=7CQSdrXTAAAA:8 a=VwQbUJbxAAAA:8 a=wlP1sSF8iNsEzO2SmSAA:9 a=QEXdDO2ut3YA:10
- a=NFOGd7dJGGMPyQGDc5-O:22 a=a-qgeE7W1pNrGK8U0ZQC:22
-X-Proofpoint-ORIG-GUID: -zmJ-hWAAW6UgBoxlqc8Iny7wKQBYXE-
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDEzMDA0MSBTYWx0ZWRfX3rBufXSg3h0t
- jsCA8jRVsR6odR1baazvAYGD+4/d1gko5n/eS6YaR+WQjuuZSFNpyz68QU2qmJNEwCVwxzHE21a
- 047ZJAP1aNf+k4K6Gbi0XRfypaA1luQ=
-X-Proofpoint-GUID: -zmJ-hWAAW6UgBoxlqc8Iny7wKQBYXE-
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-10-13_01,2026-10-09_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 lowpriorityscore=0 bulkscore=0 adultscore=0 clxscore=1015
- malwarescore=0 priorityscore=1501 phishscore=0 suspectscore=0 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610080000 definitions=main-2610130041
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x431.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -153,44 +106,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Peter,
+Alex Benn=C3=A9e <alex.bennee@linaro.org> writes:
 
-On 13/10/26 10:38, Peter Maydell wrote:
-> This patchset adds virtualization support to our GICv5 model, and lets
-> the "virt" board use -machine gic-version=x-5,virtualization=on.
-> 
-> Virtualization in the GICv5 is more complicated than it is in GICv3.
-> This is because in GICv3 virtualization is mostly delegated to software,
-> and only the CPU interface has hardware virtualization support. In
-> GICv5 the hardware does a lot more of the work, so virtualization
-> support is needed in both the CPU interface and the IRS.
-> 
-> I've structured this patchset as:
->   * initial preparatory and bug-fixing patches
->   * add virt support to the cpu interface
->   * add virt support to the IRS
->   * remove the check in virt that stops the user enabling virt
-> 
-> The first 11 patches have been on this list already; I've copied
-> across Reviewed-by tags for those patches which got them.
-> 
-> The current spec for the GICv5 is at
-> https://support.arm.com/documentation/aes0070/00eac0/
+> When editing python code the linters tools have a hard time with our
+> imports as they can't be found. To ease this we can expand a
+> PYTHONPATH in .dir-locals so at least Emacs users can have less
+> warnings in their editor.
+>
+> I still get complaints from python-mypy about missing library stubs
+> that mean it can't do proper type analysis though.
 
-Now A.a: https://support.arm.com/documentation/111701/latest
+Gentle ping for any fellow Emacers who also hack on the python code.
 
-> The kernel support for using GICv5 virtualization is not yet in
-> mainline, but it has landed in the kvmarm/next tree:
-> https://git.kernel.org/pub/scm/linux/kernel/git/kvmarm/kvmarm.git next
-> Similarly kvmtool support to run the inner guest is still work
-> in progress, but the tree at
-> https://gitlab.arm.com/linux-arm/kvmtool-sb.git gicv5_wip
-> will work with the kvmarm/next tree.
-> 
-> This series can pass the kernel's vgic_v5 selftest, and boot an
-> inner guest to userspace with kvmtool.
+>
+> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+> ---
+>  .dir-locals.el | 8 +++++++-
+>  1 file changed, 7 insertions(+), 1 deletion(-)
+>
+> diff --git a/.dir-locals.el b/.dir-locals.el
+> index 3ac0cfc6f0d..51871619422 100644
+> --- a/.dir-locals.el
+> +++ b/.dir-locals.el
+> @@ -1,2 +1,8 @@
+>  ((c-mode . ((c-file-style . "stroustrup")
+> -	    (indent-tabs-mode . nil))))
+> +	    (indent-tabs-mode . nil)))
+> + (python-mode .
+> +              ((eval . (when-let* ((root (locate-dominating-file default=
+-directory ".dir-locals.el")))
+> +                         (setq-local process-environment (copy-sequence =
+process-environment))
+> +                         (setenv "PYTHONPATH"
+> +                                 (concat (expand-file-name "python" root=
+) ":"
+> +                                         (expand-file-name "tests/functi=
+onal" root))))))))
 
-Could we have a functional test similar to
-tests/functional/aarch64/test_kvm.py?
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
