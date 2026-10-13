@@ -4,77 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26274CC6B03
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 08:47:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5620CA9ED2
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 08:47:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGY3g-0007ee-8d; Tue, 13 Oct 2026 04:40:28 -0400
+	id 1xGY84-0006La-Ql; Tue, 13 Oct 2026 04:45:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xGY3R-00075x-7I
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 04:40:15 -0400
+ id 1xGY4D-0000SH-KA
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 04:41:03 -0400
 Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xGY3L-0007cj-IN
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 04:40:12 -0400
+ id 1xGY4B-00087R-3S
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 04:41:01 -0400
 Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-4a17baef589so22011165e9.0
- for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 01:39:57 -0700 (PDT)
+ 5b1f17b1804b1-4a161d9b8c7so18417395e9.3
+ for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 01:40:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1791880796; x=1792485596; darn=nongnu.org;
+ d=linaro.org; s=google; t=1791880858; x=1792485658; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=FcrvcwO8TfKKXlj5jfLPNIJA9YWvLSs6kM7SKop1Kq4=;
- b=ujt5PVQkNfTI6SyhYanDDDkRFwjaQAI+vkpjUmqHqRT/0bCgUqWPKUhtGf+EXy+4mP
- t/2HZX8gQ/Srxuij++ZIaP0LEYb2u2uj6hgIpZDJTRGOSGL338LYKPW5zF97U2HMTLQV
- 2iggm1d3MfaMGFx5txbLK3XVqCU1s+nl8RukLrRr2yHfeUHIwiAHCmzFjW8ZulISCjnM
- kCjWfJkpbs6t2XGmyu7n1/Ogp+VoZyLI089dP7INBISG8ONU4cs5EYTMwB871uqApcB8
- z52KjZVDRo/7SKIM6WeXtgp49zLCIv+VHpb/mGBiayq1j6nlfaX2PCB9B3T8Wx4+Prkc
- ZuVg==
+ bh=y2YLtKEIJReIXSWDT6avZPvz6gFeM5i0piN3T0fzPwU=;
+ b=Xf1bgs0z52iOXZqY35y1Zdd+HK8LSR1X4i0if4NoLUtPnJUgv80xLz/PmQXUhG2VSw
+ Q/c6/ZzNJuECep2mM0pUie27KdIOgqJ11ZY2N2cekcckftTzrVIHN8xmAWArHk3/oEJz
+ 7yv7bik2K5TcephdVqo1ljgbpqWf5kCllqFEjvDYeYNw+4IYj2OhMuw0DDEkwA4JNyuy
+ ihGJpSvJjNk2jQu3Lx3CVrGwjf1Qk0+tHSpJLOhDw0uZ5D4GaCRgsIES62zfXFbDZAb0
+ u298rALfvqDFKNLRGWgwOiSZ5+azI058NjFq1ctnU/T80Z4MEDGA8s1bx7LamM1Ejav8
+ 1LqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791880796; x=1792485596;
+ d=1e100.net; s=20260707; t=1791880858; x=1792485658;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to:content-type;
- bh=FcrvcwO8TfKKXlj5jfLPNIJA9YWvLSs6kM7SKop1Kq4=;
- b=Bq1g6N4EWEHneIMsk9zxRyGBnZKcJs8pDGqP8GEmlWjyt8SFu4bojzG35OT2nx9TSi
- cdct9gGR+akH7Lb91HShvlrVayGkAuYYIK9IxsLL4e+EsOAzwAuYXOSxZxKyzR6vGBMI
- IikJ7ewUV1liVbxUGmeMtacaLNHhg9/EuOPs4C1eVObyeu9xBBPmfb6nqb2keERlk8Bi
- q0giYCLkfFyGeT+R2feg8OsYWsBUg1s402dPjgX+uhUVIcJYDbQiPjZd9a2n2x4n0FUr
- 4HHUhzf2B+v4+4TCT3tSI4wbYEIWmxBeKZ3iArTMh/usUEogb/KX7E3+sqObTNUYhEYy
- 4cKA==
+ bh=y2YLtKEIJReIXSWDT6avZPvz6gFeM5i0piN3T0fzPwU=;
+ b=dLYr3s/O16mcNnzltj+iuhqYZDYiXDzlFSerOd+ALl1TNeM6wq00AazilDdI84OfQu
+ 4XXrtPPOXwibChQLtqHOf6El3H6e6s/76yiWE1ZqnZVrvIBVbcKzDhi2kxjojv6gw4iO
+ Mka5RaC1s2NwymOfBdsf2VE/RQBxsacxpmlZau7tZ5iH5eH4pc3KEaIMRzg+lnQNhHDU
+ 4G2FEZTii7qiqrZ+/t1uKKZvSymDF/r4KKB1zer4qsN1NxJ7R7Z5lDVlAk970k57PNlI
+ BCJ0zQSCsTogSlbBKnZbfdK+fT0jHjwwbndrlS1IjNcMvat/xU+t6Ktq71tI935SelUt
+ 2twQ==
 X-Forwarded-Encrypted: i=1;
- AKwUvBwaSnc1u0e5818t1LXqv6zSSJGZh7ZGE8N8bXvFlTq3xnh/Bm8LyPJNUe4Fik+du3mIR8GpVuarXuJM@nongnu.org
-X-Gm-Message-State: AFq9FYLu1kQLZ6ODyV7u0blzBcOdQkn4x24WyBG2Ir7vJGERJnyiEMLE
- CsNydlaEz2WfNe7YqFygNEGmeej+qDbo/xBt41ReZiQtgvd8sak8F9fD6FrWodCJ8Sv8twNusjU
- K6mLX9Tc=
-X-Gm-Gg: AYBFou2DWJcC0DGkYk4Ogb9x9p0p1HJpCgRymxBqOuFgwqjmeO5DOk3XlhLoLrDnXZ2
- 4kGRFPUu5JygmpP+QXMMUMMxYRBIHnAL6DLiVWaCOKW4W98JRb4evfZPj6Xeky9AvYMzWvY5c8G
- M7Mf+vRjuTQIrBqyj8OezPLD5slhOUe9q2Z8zR625ItJpHB1vU3RKOsDxswBZOpkAxX12Ek9q1Y
- w8VZWmVnjjG++7DW6rfZ7xIuDJ5+aZQ+HW7u+FaSUQRY/OPl3GkUwZJPrGiRWlOyum1XwrP4r+B
- ajg1es9ZRq1XAAZRilAlaXzIQiC3IYwbAYBkK2USsT3e+J4I79zKMumcBG/v1RlRx1dxXSJkA+d
- tUWrCkuTqZmZqEITB8dKZP7vzitPE0ndJcmrDvGaMPmnEP9W9RtGa+m8A6sSvHUj7eIFEYAu62i
- 5fw3VdX6l8uDcoJXvodjXpet7Ts7dY2o95upm2NA95EFn2TJu8wlGehDWIgwmeGg3G5CFgT5kK8
- a9KEutt1sHuEXkhS64Qc4jWuXh6K35RHv07EOwWgjaeffJCUdMFTFqj3wujHWPoKRLvBDKgYNrG
- 75s=
-X-Received: by 2002:a05:600c:3144:b0:4a0:2423:946 with SMTP id
- 5b1f17b1804b1-4a18e48d362mr224435315e9.15.1791880796256; 
- Tue, 13 Oct 2026 01:39:56 -0700 (PDT)
+ AKwUvByb5FqX7ICJMpX+qa62czRQLKYOAZ68s3uAzt1aENDFeh1sJxT5x+STu8mm36Vdo+tc4s3aCw8lVAOT@nongnu.org
+X-Gm-Message-State: AFq9FYKyTc0UotdyAtGsk9mCQNBKTp2luRZdTlSKvIvAs+9EEHp2AiIO
+ oKVzTX1ILmZ09EMcWuQPeOgsRUkHb902SV+3d+oa+h6ZjE7qCns97a+2rym4UwmndmA=
+X-Gm-Gg: AYBFou2JzhXOMpaIPIIVkb2T6nuk3x3CmfiealTgxJ8jK1ezmXauB8rlaF2A3dXDmLL
+ wclOOGQKnbif7EJmd0GxtQ5tKA2P8L411DxSxN6Mkv/7Ny3h5xTYr9anvG2RS40WNDsrmheNUk9
+ dxPZudqqiR3aDATh613krxNNlmbhofRiyMDQUXoRfhE90GUi7jbfJj7abW/lCflU7bld95m0qgT
+ tWSzexVPn/WUiYSmv2ldkl3z1+7rN+5gctyBxFBmy0gdl9/wWAtXpSraHskPOYeJqzBx8jbQWdj
+ lChQbPO+hv0wCcwtgUdKlW7PuTbTBG8cQNAnca+kdzlMEB77U/v0LZMaZ6GTkgK9pZvimPtEH3V
+ pV7kq54fyS/h2sVRygElv1FLFGfVS6y6DDMG9/g+PqyEHXcsjd9uQitDCv+/1ghT1wPQsupSkjN
+ sSYNROC+V9jH+6iujgAGX6ebjdILSgwa5cEgBaMjqEIFzzOtJXAGRYakEa308QCfQHW8XTn6Gzg
+ eZ35LtLTTu4GQCMtQ8gPSO9r2hnu3c8gqW4XkOAUYnRsCIOz+nmGYvaRvTRpUqfygclAasqL6Xi
+ NJQ=
+X-Received: by 2002:a05:600c:1d20:b0:49f:fd40:80fa with SMTP id
+ 5b1f17b1804b1-4a18e4f50ecmr237606565e9.34.1791880857652; 
+ Tue, 13 Oct 2026 01:40:57 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a18be96549sm495086735e9.6.2026.10.13.01.39.55
+ 5b1f17b1804b1-4a18be96549sm495086735e9.6.2026.10.13.01.40.56
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 13 Oct 2026 01:39:55 -0700 (PDT)
+ Tue, 13 Oct 2026 01:40:57 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Subject: [PATCH 16/86] target/arm: GICv5 cpuif: Implement ICH_PPI_DVIR<n>_EL2
-Date: Tue, 13 Oct 2026 09:38:23 +0100
-Message-ID: <20261013083933.1024405-17-peter.maydell@linaro.org>
+Subject: [PATCH 63/86] hw/intc/arm_gicv5: Cache VPE table information
+Date: Tue, 13 Oct 2026 09:39:10 +0100
+Message-ID: <20261013083933.1024405-64-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261013083933.1024405-1-peter.maydell@linaro.org>
 References: <20261013083933.1024405-1-peter.maydell@linaro.org>
@@ -104,83 +103,159 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Implement ICH_PPI_DVIR<n>_EL2, which is the register that controls
-whether pending physical PPIs are directly injected as virtual PPIs
-to the virtual interrupt domain.
+Each VM has a VPE table which is a single linear table with an entry
+for each possible vCPU in the VM.  Each VPE has a 'valid' bit and a
+pointer to a VPE descriptor which has IMPDEF contents.  When the VM
+is made valid, the table can contain a mix of already-valid and
+not-yet-valid VPEs.
 
-Bits in this register are RAZ/WI from EL1 and EL2 if the PPI is
-not assigned to the current interrupt domain, but since we don't
-yet implement EL3 GICv5 support yet all PPIs are always assigned
-to the current interrupt domain.
+Cache this information.  Since the GICv5 architecture requires a
+simple linear table here, we can assume that the guest is unlikely to
+populate it sparsely, so we use a simple array rather than a
+hashtable.
 
-In this commit we just implement the register access to the state;
-actual injection of PPIs will be dealt with later. We give the
-register a writefn because eventually writing to this will need
-to trigger a recalculation of VIRQ/VFIQ.
+We will gradually expand the information we put into our VPE struct,
+but for now we just have a boolean tracking whether the VPE is valid
+or not, the guest address of the VPED, and a back-pointer to the
+VMTE.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/cpu.h             |  1 +
- target/arm/tcg/gicv5-cpuif.c | 27 +++++++++++++++++++++++++++
- 2 files changed, 28 insertions(+)
+ hw/intc/arm_gicv5.c              | 62 ++++++++++++++++++++++++++++++--
+ hw/intc/trace-events             |  1 +
+ include/hw/intc/arm_gicv5_regs.h |  3 ++
+ 3 files changed, 64 insertions(+), 2 deletions(-)
 
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index 287cfa87140..5d3587739d7 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -599,6 +599,7 @@ typedef struct CPUArchState {
-         uint64_t ich_ppi_active[GICV5_NUM_PPIS / 64];
-         uint64_t ich_ppi_pend[GICV5_NUM_PPIS / 64];
-         uint64_t ich_ppi_enable[GICV5_NUM_PPIS / 64];
-+        uint64_t ich_ppi_dvi[GICV5_NUM_PPIS / 64];
-         uint64_t ich_ppi_priority[GICV5_NUM_PPIS / 8];
-     } gicv5_cpuif;
+diff --git a/hw/intc/arm_gicv5.c b/hw/intc/arm_gicv5.c
+index 4f74236c62b..c3d824f045b 100644
+--- a/hw/intc/arm_gicv5.c
++++ b/hw/intc/arm_gicv5.c
+@@ -23,10 +23,20 @@
  
-diff --git a/target/arm/tcg/gicv5-cpuif.c b/target/arm/tcg/gicv5-cpuif.c
-index b901e64ef0d..2141f1d8e2c 100644
---- a/target/arm/tcg/gicv5-cpuif.c
-+++ b/target/arm/tcg/gicv5-cpuif.c
-@@ -487,6 +487,12 @@ static void gic_ich_ppi_priority_write(CPUARMState *env, const ARMCPRegInfo *ri,
-     raw_write(env, ri, value);
+ OBJECT_DEFINE_TYPE(GICv5, gicv5, ARM_GICV5, ARM_GICV5_COMMON)
+ 
++typedef struct VMTE VMTE;
++
++/* Cached per-VPE information, from VPE and VPE descriptor */
++typedef struct VPE {
++    VMTE *vmte;
++    hwaddr vped_addr;
++    bool valid;
++} VPE;
++
+ /* In the GICv5VMTConfig::vm_cache this is how we store VMTE info */
+-typedef struct VMTE {
++struct VMTE {
+     GICv5ISTConfig lpi_ist;
+     GICv5ISTConfig spi_ist;
++    VPE *vpet;
+     /* Address of the in-memory L2_VMTE for this VMTE */
+     hwaddr vmte_addr;
+     hwaddr vpet_addr;
+@@ -35,7 +45,7 @@ typedef struct VMTE {
+     GICv5Domain domain;
+     /* We don't cache the VMD_ADDR as we don't use VMDs */
+     /* We don't cache VALID: the existence of this struct implies VALID=1 */
+-} VMTE;
++};
+ 
+ static const char *domain_name[] = {
+     [GICV5_ID_S] = "Secure",
+@@ -101,6 +111,8 @@ static void VMTE_free(void *data)
+         g_hash_table_destroy(vmte->spi_ist.lpi_cache);
+     }
+ 
++    g_free(vmte->vpet);
++
+     g_free(vmte);
  }
  
-+static void gic_ich_ppi_dvi_write(CPUARMState *env, const ARMCPRegInfo *ri,
-+                                  uint64_t value)
+@@ -1219,6 +1231,51 @@ static void initialize_vspi_ist_config(GICv5Common *cs, GICv5Domain domain,
+                           id_bits, istsz, l2sz, structure);
+ }
+ 
++static void init_vpe_from_vpete(VPE *vpe, VMTE *vmte, uint64_t vpete)
 +{
-+    raw_write(env, ri, value);
++    /* Given the value of the in-memory VPETE, set up one VPE struct */
++    vpe->vmte = vmte;
++    vpe->valid = FIELD_EX64(vpete, VPETE, VALID);
++    if (vpe->valid) {
++        vpe->vped_addr = vpete & R_VPETE_VPED_ADDR_MASK;
++        vpe->vped_addr &= ~MAKE_64BIT_MASK(0, QEMU_GICV5_VPED_SZ);
++    }
 +}
 +
- /*
-  * ICC_APR_EL1 is banked and reads/writes as the version for the
-  * current logical interrupt domain.
-@@ -961,6 +967,27 @@ static const ARMCPRegInfo gicv5_cpuif_reginfo[] = {
-         .accessfn = access_gicv5_ich_reg,
-         .fieldoffset = offsetof(CPUARMState, gicv5_cpuif.ich_apr_el2),
-     },
++static void initialize_vpet(GICv5Common *cs, GICv5Domain domain,
++                            GICv5VMTConfig *cfg, VMTE *vmte)
++{
 +    /*
-+     * Note that DVIR bits RAZ/WI when the PPI isn't assigned to the
-+     * current domain, so we will need to mask them when we implement
-+     * EL3 support and ICC_PPI_DOMAINR<n>_EL3
++     * Allocate our cached VPE table, and populate it from guest memory.
++     * Note that (per R_DLKTX) the VPE descriptor is supposed to be all
++     * zeroes at this point, and behaviour is UNPREDICTABLE if it is not,
++     * so we do not need to read the descriptor here. In any case QEMU
++     * doesn't use the VPE descriptors.
 +     */
-+    {   .name = "ICH_PPI_DVIR0_EL2", .state = ARM_CP_STATE_AA64,
-+        .opc0 = 3, .opc1 = 4, .crn = 12, .crm = 10, .opc2 = 0,
-+        .access = PL2_RW, .type = ARM_CP_IO | ARM_CP_NO_RAW,
-+        .nv2_redirect_offset = 0xb40,
-+        .accessfn = access_gicv5_ich_reg,
-+        .fieldoffset = offsetof(CPUARMState, gicv5_cpuif.ich_ppi_dvi[0]),
-+        .writefn = gic_ich_ppi_dvi_write,
-+    },
-+    {   .name = "ICH_PPI_DVIR1_EL2", .state = ARM_CP_STATE_AA64,
-+        .opc0 = 3, .opc1 = 4, .crn = 12, .crm = 10, .opc2 = 1,
-+        .access = PL2_RW, .type = ARM_CP_IO | ARM_CP_NO_RAW,
-+        .nv2_redirect_offset = 0xb48,
-+        .accessfn = access_gicv5_ich_reg,
-+        .fieldoffset = offsetof(CPUARMState, gicv5_cpuif.ich_ppi_dvi[1]),
-+        .writefn = gic_ich_ppi_dvi_write,
-+    },
-     {   .name = "ICH_PPI_ENABLER0_EL2", .state = ARM_CP_STATE_AA64,
-         .opc0 = 3, .opc1 = 4, .crn = 12, .crm = 10, .opc2 = 2,
-         .access = PL2_RW, .type = ARM_CP_IO | ARM_CP_NO_RAW,
++    int num_vpes = 1 << vmte->vpe_id_bits;
++    hwaddr vpete_addr = vmte->vpet_addr;
++
++    vmte->vpet = g_new0(VPE, num_vpes);
++
++    for (int i = 0; i < num_vpes; i++, vpete_addr += 8) {
++        MemTxResult res;
++        uint64_t vpete;
++
++        vpete = address_space_ldq_le(&cs->dma_as, vpete_addr,
++                                     cfg->txattrs, &res);
++        if (res != MEMTX_OK) {
++            qemu_log_mask(LOG_GUEST_ERROR, "VPET lookup failed for VPE 0x%x"
++                          " at physical address 0x" HWADDR_FMT_plx "\n",
++                          i, vpete_addr);
++            return;
++        }
++
++        init_vpe_from_vpete(&vmte->vpet[i], vmte, vpete);
++        trace_gicv5_initialize_vpet(domain_name[vmte->domain], vmte->vmid,
++                                    i, vmte->vpet[i].valid);
++    }
++}
++
+ static void cache_vmte(GICv5Common *cs, GICv5Domain domain,
+                        GICv5VMTConfig *cfg,
+                        uint32_t vmid, uint64_t *l2_vmte, hwaddr l2_addr)
+@@ -1243,6 +1300,7 @@ static void cache_vmte(GICv5Common *cs, GICv5Domain domain,
+      * it has 2^vpe_id_bits entries of 2^3 == 8 bytes each
+      */
+     vmte->vpet_addr &= ~MAKE_64BIT_MASK(0, vmte->vpe_id_bits + 3);
++    initialize_vpet(cs, domain, cfg, vmte);
+ 
+     /*
+      * If the VALID bits are set for the LPI and SPI ISTs, we can read
+diff --git a/hw/intc/trace-events b/hw/intc/trace-events
+index a086b14c825..9057f83af57 100644
+--- a/hw/intc/trace-events
++++ b/hw/intc/trace-events
+@@ -251,6 +251,7 @@ gicv5_vmt_invalid(const char *domain) "GICv5 IRS %s VM table no longer valid"
+ gicv5_vmap_l2_vmtr(const char *domain, uint32_t vmid) "GICv5 IRS %s VM ID %u now valid"
+ gicv5_cache_vmte(const char *domain, uint32_t vmid) "GICv5 IRS %s VM ID %u valid and cached"
+ gicv5_irs_vmap_vistr_write(const char *domain, uint32_t vmid, const char *type, const char *what) "GICv5 IRS %s VM ID %u %s IST now %s"
++gicv5_initialize_vpet(const char *domain, uint32_t vmid, uint32_t vpeid, bool valid) "GICv5 IRS %s VM ID %u VPE %u starts as valid %d"
+ 
+ # arm_gicv5_common.c
+ gicv5_common_realize(uint32_t irsid, uint32_t num_cpus, uint32_t spi_base, uint32_t spi_irs_range, uint32_t spi_range) "GICv5 IRS realized: IRS ID %u, %u CPUs, SPI base %u, SPI IRS range %u, SPI range %u"
+diff --git a/include/hw/intc/arm_gicv5_regs.h b/include/hw/intc/arm_gicv5_regs.h
+index f1ebbb6aaf8..f4243abd182 100644
+--- a/include/hw/intc/arm_gicv5_regs.h
++++ b/include/hw/intc/arm_gicv5_regs.h
+@@ -306,6 +306,9 @@ FIELD(L2_VMTE_3, SPI_ID_BITS, 59, 5)
+ #define VMT_L2_IDX_BITS 7
+ #define VMT_L2_TABLE_SIZE 4096
+ 
++FIELD(VPETE, VALID, 0, 1)
++FIELD(VPETE, VPED_ADDR, 3, 53)
++
+ /*
+  * Format used for gicv5_request_config() return value, which matches
+  * the ICC_ICSR_EL1 bit layout.
 -- 
 2.43.0
 
