@@ -4,78 +4,117 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 803AFCC6B08
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 14:35:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E4E0CC6B0E
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 14:42:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGdac-0000eK-67; Tue, 13 Oct 2026 10:34:50 -0400
+	id 1xGdhC-0002nU-NU; Tue, 13 Oct 2026 10:41:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>)
- id 1xGdaZ-0000cm-2W; Tue, 13 Oct 2026 10:34:47 -0400
-Received: from mx.treblig.org ([2a00:1098:5b::1])
+ (Exim 4.90_1) (envelope-from <wesley.hershberger@canonical.com>)
+ id 1xGdhA-0002mN-MO
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 10:41:36 -0400
+Received: from smtp-relay-internal-1.canonical.com ([185.125.188.123])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>)
- id 1xGdaW-0004AY-6j; Tue, 13 Oct 2026 10:34:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
- ; s=bytemarkmx;
- h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
- :Subject; bh=iggU6xo52j7UG5f89Bng/0Pyh6G/SqJ/YSGM/n8n/nc=; b=ILI3HUbMwaiTNmXt
- 4MVkZAkzrVh7f42Z7Oedb0nzJydEHlwYOZpVXGkvzLq03Wd5VeEUcxaBINq211n78SwzoLjqfxWbm
- 4rIEQy/8XkGxTObDppvF+O40NInOuiKoEpljXwPwjU3yuMBr5Cq1QdkPq9gvQLPA4cW0QvP9EIrjl
- V5W2ZhKdlP2oQySUS2NJEquEyGx9neFfH00aDhsmsVkmLd+Mk4z5M7ecApZ88PCTKJ6ZFSbHiWjeW
- QfSLwjwNtkuzpGLLxspPQIvTxK+0nneYo1FDNfwXrGITejs/z57T2qV4sd5yXSFOLNwl3QCaxmqcs
- QfQruF+0+a9iaedscQ==;
-Received: from dg by mx.treblig.org with local (Exim 4.98.2)
- (envelope-from <dg@treblig.org>) id 1xGdaK-00000003l3Q-2nef;
- Tue, 13 Oct 2026 14:34:32 +0000
-Date: Tue, 13 Oct 2026 14:34:32 +0000
-From: "Dr. David Alan Gilbert" <dave@treblig.org>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@oss.qualcomm.com>,
- Zhao Liu <zhao1.liu@intel.com>, Chinmay Rath <rathc@linux.ibm.com>,
- Nicholas Piggin <npiggin@gmail.com>, Glenn Miles <milesg@linux.ibm.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Chao Liu <chao.liu@processmission.com>,
- Max Filippov <jcmvbkbc@gmail.com>, qemu-arm@nongnu.org,
- qemu-ppc@nongnu.org, qemu-riscv@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>, Laurent Vivier <laurent@vivier.eu>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Artyom Tarasenko <atar4qemu@gmail.com>, Helge Deller <deller@gmx.de>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Warner Losh <imp@bsdimp.com>, Kyle Evans <kevans@freebsd.org>
-Subject: Re: [PATCH v2 04/10] gdbstub: add gdb_register_internal_coprocessor()
-Message-ID: <as5BeHc6uCyYynwz@gallifrey>
-References: <20261013-query-reg-v2-0-6f95a2e139a9@redhat.com>
- <20261013-query-reg-v2-4-6f95a2e139a9@redhat.com>
- <87ik36gfe6.fsf@draig.linaro.org>
- <CAJ+F1CK938-GciwPJj_KjtvKZ04fvKhi8UcSHHORmoboVURzeQ@mail.gmail.com>
- <CAFEAcA-sKfp-1u_UaPbv=SCbDNYrdc69NZdVPT8RTTXgwXYSZQ@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <wesley.hershberger@canonical.com>)
+ id 1xGdh6-00054f-QL
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 10:41:36 -0400
+Received: from mail-yw1-f197.google.com (mail-yw1-f197.google.com
+ [209.85.128.197])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id 0ECD43F322
+ for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 14:41:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+ s=20251003; t=1791902489;
+ bh=EiqXMx+5vmVrSmhqWg8T7XpKjJdtdeomDx6RLsg6SiQ=;
+ h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc;
+ b=dIG3BIZlhazGGaYpPhzmbrHS1nQi33ycK5yUO3KTfutKmUNak1GvZtbtodGPRy94P
+ NYIjliB3chwvQkH3AbysBffijpJ0Q6ESyup2wVSg+QCgRKoKXNgP5n0jN22pM5hnCD
+ V9vBbTXZ6IQuGD9hZV8m+KsU2D0o4le7Fsu3v2AxfIrVlvsnJDA5Xk1W8l4Nlf0jUQ
+ pxhGqXBO1glI87SwV4NzjGM6UCosAyU60JilhAbcPhwlDlBsuP6DC84ImoNQcxRoyA
+ b3HfIZy63opDkWDM+i/xL3rS5jJ+V5Cb3xY6lRc3AIjISEoXwQpG2KT9GpjJn7k27r
+ 0eBji/DfORLzPQibREF9DEaWD9SXwZK/gsIafLs1UOpr0VQhAZUaahTHFv9tFTzNPL
+ 0jHtli2DCgsdejQpLPHbsq/28p8o6resOHju83z3kw2keVAfvnwho4FzBpfzyDymHM
+ kwB52E8hoNmq/ugpUmKaA2GemP/dlfe15LtRQVaYCjc/gYvOciJePYdHqogT0B5aWg
+ 6uWYAwbtOcjIyREZO1/kqBut2iroZlW4Ajzn1ggdHGj4YWRh7ETajVtSoMjlU0XfxG
+ nPLkWpB3V9y6GB2WfUecb/m5uBJp0vzQMD1pUnzW8UTx4GacdhSQRh8lhEaIi9vEDQ
+ YTRku+X9ygwkO+eHbDRyaY6I=
+Received: by mail-yw1-f197.google.com with SMTP id
+ 00721157ae682-869553205a7so32067357b3.1
+ for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 07:41:29 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1791902488; x=1792507288;
+ h=cc:to:message-id:content-transfer-encoding:content-type
+ :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to:content-type;
+ bh=EiqXMx+5vmVrSmhqWg8T7XpKjJdtdeomDx6RLsg6SiQ=;
+ b=H+l23E8L7R/q2eUwmdJNXOIeMLmqtEAIcqxlIExL4tfc47aYkaZF+8rYRYTlR5t74K
+ 1u9awn9DraQkH47ifl4y3Bqz8gDwzbVmtzSV5JhotK0j07xvkx0Rd4zAHJkD8EqNM5xX
+ /0l59Sr1Ac/SoBF1JO8ZG4eaz7QgOwOibGIKR+lz8IPoPZK4IBfW98hTbu/xTUNvsz51
+ hu72COHQxsEM2zNqtJaKV6Kn+TtjTzp598RAtlR9g1cAuBWvUxCzjPZAsqfLqnnACuix
+ FqIncStuxS4NzflOGV50/vB4hLiSdVe3B/Ufr3CE3efbc2BeyiH7WC33E982sUqM4JOr
+ jCMw==
+X-Gm-Message-State: AFq9FYL33VbWYO7e5LHTyZpeSn3ZlCedamY2ROc6FaN7yzE5oltmM/xO
+ X7FqX/0jn2vxQQ9i0udxefP6VE8znYr0q6ikamuVdBrYTvkLEJxtiC5o9pqcBQ8CfyOW4ch1ZD+
+ tKbA7zBg30vEpQTpKpMZMWqnZQtZpbbKgBYD/5JMHD7TkP7R14rOk53LOnrP3u3EkStggBmeq
+X-Gm-Gg: AYBFou11xipj6uy6ewwVGoZ0kCM9mkg7Ox1VH1jTleQ+0fivD5Lcmw1RsgpCeW9zcpx
+ 99Q9vudGrKqJYBg5l0wA4q5phv068SlCPJhuxJk4QQutEePn2iT27KXJ1KM1jw2xw2CDHmjlto+
+ 9AjEKSTA7UtxQpOgNmoqdQrqQRCwRF/tn+troGHAE0VcJpXjikCHaznAZ9wcqtRIeIr4YtDIp/7
+ NyanmL4B3moF01RpoADrMrET0ph6IJ6mbmnwfYqRCKh37QuzNCjYC3q7S2+TIIbX0ds9Sq0eYc9
+ JOYoWM0jG8MHvXZ2t/zNQXA4FSFVnj2DPIiJPbeSnG9/M8yrSJXOZUM25sjeNtxdzMqDOZWIEk1
+ AoYUJHL1UigPj9NFD8HLKVziogqva905O2vW93DYwMOrLhw==
+X-Received: by 2002:a05:690c:c505:b0:8b0:a957:80bc with SMTP id
+ 00721157ae682-8b0a9578579mr21247407b3.40.1791902487802; 
+ Tue, 13 Oct 2026 07:41:27 -0700 (PDT)
+X-Received: by 2002:a05:690c:c505:b0:8b0:a957:80bc with SMTP id
+ 00721157ae682-8b0a9578579mr21247207b3.40.1791902487021; 
+ Tue, 13 Oct 2026 07:41:27 -0700 (PDT)
+Received: from [127.0.1.1] ([97.87.60.46]) by smtp.gmail.com with ESMTPSA id
+ 00721157ae682-8b07f253280sm45691237b3.36.2026.10.13.07.41.25
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 13 Oct 2026 07:41:26 -0700 (PDT)
+From: Wesley Hershberger <wesley.hershberger@canonical.com>
+Date: Tue, 13 Oct 2026 09:38:32 -0500
+Subject: [PATCH] util/coroutine: Reduce default idle pool max size
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAFEAcA-sKfp-1u_UaPbv=SCbDNYrdc69NZdVPT8RTTXgwXYSZQ@mail.gmail.com>
-X-Chocolate: 70 percent or better cocoa solids preferably
-X-Operating-System: Linux/6.12.111+deb13-amd64 (x86_64)
-X-Uptime: 14:32:12 up 13 days, 23:53,  2 users,  load average: 0.00, 0.02, 0.00
-User-Agent: Mutt/2.2.13 (2024-03-09)
-Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
- helo=mx.treblig.org
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20261013-set-default-pool-size-v1-1-7be19402af6c@canonical.com>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/x3MQQqDMBBG4avIrB1IIrTiVcRFjH/qgBjJqEjFu
+ zd0+S3eu0mRBUpddVPGKSppLbB1RWH26wcsUzE5417W2IYVO0+I/lh23lJaWOULbkf3DiYG36K
+ h0m4ZUa7/tx+e5wcxE9YaZwAAAA==
+X-Change-ID: 20261013-set-default-pool-size-8b27c0fca8e3
+To: qemu-devel@nongnu.org
+Cc: Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>, 
+ hector.cao@canonical.com, alex.ramirez@canonical.com, 
+ Wesley Hershberger <wesley.hershberger@canonical.com>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1368;
+ i=wesley.hershberger@canonical.com; h=from:subject:message-id;
+ bh=XrDMtgYiFPJqQ0sUJgCPBGtaq2fKwgfCo+3KwugEWhg=;
+ b=owEB7QES/pANAwAKAfkogKziOh25AcsmYgBqzkMVgbkH9umYHSflTFlb94eNdzRVI1nuU7XhC
+ RLoMTX6MheJAbMEAAEKAB0WIQQsIHxFLwpehxEbQ8r5KICs4joduQUCas5DFQAKCRD5KICs4jod
+ uWBDC/4kRI1DpVTmNVbBbb964j4Ls2YN1UijxyQSVXULtm/diAa0qTHDC5nRgmdaxt4naRlJ4NY
+ GPJJrBXXl483mcMD0fU4fZjPkOKmmTW3eJxu0baVuPGFG2fwNrKOqaxmzf2Lzzqfh2uberzpFM6
+ q1nmiN3g8QhJtfQhMAJAeMsXcfFW8MlCqdJoLyQIPSJUGtkMI317pgsLNd44Yzp83yLpTIXDE6O
+ FgAlTdpMaIsfSE8+7SaBN2DVFqL/eyLigJj/mct7snrpksMqDv7wJSMwjtQc5juMHn/FwEkymTX
+ 3fYuDAAYc0ftmxA2fYFMaB3cMvbNpp37B/OG/MEY427lXfrEZWxIx/kl3G15V8cdOIfzt1kXlCv
+ ExMRW4qc8nMfuH3llZO/sB/EXz/uKRb4Ay/wG5/e2HZBYD1SH5CVTU8Mtf29mXf/l0zGm3v0c5X
+ 6MkG0m0da1bUbAUkSCORzOUse8fvDuaKwAVkFUXh+GYFSJLvWQornDq+XmUyszCmZ4vVw=
+X-Developer-Key: i=wesley.hershberger@canonical.com; a=openpgp;
+ fpr=2C207C452F0A5E87111B43CAF92880ACE23A1DB9
+Received-SPF: pass client-ip=185.125.188.123;
+ envelope-from=wesley.hershberger@canonical.com;
+ helo=smtp-relay-internal-1.canonical.com
+X-Spam_score_int: -45
+X-Spam_score: -4.6
+X-Spam_bar: ----
+X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -92,75 +131,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-* Peter Maydell (peter.maydell@linaro.org) wrote:
-> On Tue, 13 Oct 2026 at 14:01, Marc-André Lureau
-> <marcandre.lureau@redhat.com> wrote:
-> >
-> > Hi
-> >
-> > On Tue, Oct 13, 2026 at 12:51 PM Alex Bennée <alex.bennee@linaro.org> wrote:
-> > >
-> > > Marc-André Lureau <marcandre.lureau@redhat.com> writes:
-> > >
-> > > > Add support for registering coprocessor features that are only visible
-> > > > to QEMU's internal APIs (HMP monitor $register expressions, plugins) but
-> > > > hidden from GDB's target description XML.
-> > > >
-> > > > When a feature is registered as internal:
-> > > > - It is excluded from the target.xml sent to GDB
-> > > > - Its XML is not served via qXfer:features:read
-> > > > - 'p'/'P' packets for internal register numbers return E14
-> > > >
-> > > > This is useful for exposing system registers to the HMP monitor without
-> > > > affecting GDB's register namespace. Exposing aliases or synthetic
-> > > > registers through GDB's target description can cause problems: name
-> > > > collisions with GDB's pseudo-registers, independent register caching,
-> > > > and missing DWARF unwind rules.
-> > >
-> > > Hmm are they *that* useful for HMP then?
-> > >
-> > > The front-ends do limit what they export to gdb (see for example
-> > > ARM_CP_NO_GDB) generally because reading them causes side-effects. Those
-> > > restrictions are also a reason to limit them from the HMP interface.
-> >
-> > I am not a user, but I can imagine they are useful for developers.
-> >
-> > I would like to be able to implement "info registers" purely based on
-> > QMP for ex.
-> 
-> Yes, getting rid of the current hacks that "info registers" does will
-> be a very nice cleanup.
-> 
-> I think that the reason we get this internal-only interface is
-> that gdb itself sets up pseudo-registers for various things that
-> are nice for a human to have but are not directly exposed that
-> way in the XML. So for HMP we can either:
->  (a) not expose that human-facing convenience at all
->  (b) reimplement the equivalent of the pseudo-registers and
->      aliases, to the extent that we care to do so, in a way
->      that they don't appear in the XML we expose to gdb
-> 
-> Personally I'm sceptical of the utility of the "info registers"
-> interface -- if you want to see what the guest CPU is doing then
-> you're going to have a much better time connecting gdb to the debug
-> stub rather than using the extremely rudimentary monitor commands --
-> but "preserve the existing functionality" is a much easier path
-> towards getting this cleaned up than trying to get agreement that
-> we can drop some aspects of it, so I support doing that.
+If g_file_get_contents fails (AppArmor or other LSM), use a more
+conservative default max size for the idle coroutine pool; this avoids
+any possibility of the failure described in 86a637e48104 unless the host
+kernel is configured with a low vm.max_map_count.
 
-It's useful for getting hints on hung VMs;  getting a gdb into a container
-on some cluster of hosts and someone letting you poke with it is
-often pretty hard.
-Getting an admin to run one command when they find a hung VM is more doable.
-(Similarly in cases where they wont send you a full vm dump)
+This change is motivated by a discussion of backport risk:
+https://bugs.launchpad.net/ubuntu/+source/qemu/+bug/2168803/comments/8
 
-Dave
+Fixes: 86a637e48104 ("coroutine: cap per-thread local pool size")
+Signed-off-by: Wesley Hershberger <wesley.hershberger@canonical.com>
+---
+ util/qemu-coroutine.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-> thanks
-> -- PMM
+diff --git a/util/qemu-coroutine.c b/util/qemu-coroutine.c
+index d17135f585a..d8853e3b227 100644
+--- a/util/qemu-coroutine.c
++++ b/util/qemu-coroutine.c
+@@ -391,7 +391,11 @@ static unsigned int get_global_pool_hard_max_size(void)
+     }
+ #endif
+ 
+-    return UINT_MAX;
++    /*
++     * Read from /proc might fail due to LSM; use (DEFAULT_MAX_MAP_COUNT - 5000)
++     * for distributions that don't change the kernel default
++     */
++    return (60530) / 2;
+ }
+ 
+ static void __attribute__((constructor)) qemu_coroutine_init(void)
+
+---
+base-commit: 615ece3c406b262996e569f29ea6eed0d81c4d8d
+change-id: 20261013-set-default-pool-size-8b27c0fca8e3
+
+Best regards,
 -- 
- -----Open up your eyes, open up your mind, open up your code -------   
-/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
-\        dave @ treblig.org |                               | In Hex /
- \ _________________________|_____ http://www.treblig.org   |_______/
+Wesley Hershberger <wesley.hershberger@canonical.com>
+
 
