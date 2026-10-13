@@ -4,78 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 494D8CC6B12
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 20:05:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B84F3CC6B12
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 20:06:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGikU-0007d2-Jf; Tue, 13 Oct 2026 16:05:22 -0400
+	id 1xGiks-0007yD-OL; Tue, 13 Oct 2026 16:05:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1xGikS-0007Zd-Qp
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 16:05:20 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1xGikR-0003LL-Bp
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 16:05:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1791921918;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=E6Rz9v6oqiQUcqsjgM3jkVQy96YrFiTxmj7qvwbYm/Y=;
- b=XspToVrXGzhKt+4PCBe0AAqV7zVUafmNTF6czjcJfiudPIBFe9NwV0TbnjO9I3aowg+r2A
- kBJO/emSNX70BATDgsU0NFHIpfXYkt/M5SShCoV/Ttke0qHPqPnVaFubzLHz9BReNjP8AG
- yew3nc9bKYnkdfqdQnYcFakz+QGNEHk=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-240-vsKJZEo7PUuIBrFqawArYw-1; Tue,
- 13 Oct 2026 20:05:14 +0000
-X-MC-Unique: vsKJZEo7PUuIBrFqawArYw-1
-X-Mimecast-MFC-AGG-ID: vsKJZEo7PUuIBrFqawArYw_1791921913
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 987181802141; Tue, 13 Oct 2026 20:05:13 +0000 (UTC)
-Received: from redhat.com (headnet04.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.116])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 44A68195608E; Tue, 13 Oct 2026 20:05:10 +0000 (UTC)
-Date: Tue, 13 Oct 2026 15:05:08 -0500
-From: Eric Blake <eblake@redhat.com>
-To: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: qemu-devel@nongnu.org, 
+ (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
+ id 1xGikn-0007vP-IU
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 16:05:41 -0400
+Received: from mail-dy1-x1333.google.com ([2607:f8b0:4864:20::1333])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
+ id 1xGikg-0003MW-Hr
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 16:05:37 -0400
+Received: by mail-dy1-x1333.google.com with SMTP id
+ 5a478bee46e88-3282db206d3so669676eec.0
+ for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 13:05:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1791921933; x=1792526733; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:content-type:message-id:date
+ :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=yxG2+ZsQuPaa6XaQtgeEOUrziz4q34X+31ZaFbfef6k=;
+ b=MrqEWpxqMu4CkVneHJ8UUOI81OEoZQ57CUp7nBeD0jS8auUPdNInzLHSbbthjzK6/Q
+ u8OISn9DANY7pCqrHLFudTWPSHwHhqQZdfkk0poxFoFBfSNv4py4TNiAxAN0ty8RwKSE
+ /ljVgdfcd23hnJccJk9DYzerUKFZ2fSFTxhwtKSToQX+D9Z5Tz8s58HGjN+foROcS5wu
+ SpXRXArHxF1IrJdCMg/HESe0bk0VTrv5xonv7GiYYIHM+zKh8M7e7+VZ4V9C5x6wkVTZ
+ NK3uKQIesdSK7ZqjRUlYMmqO5awD/ILeJzMadGL8THurRw77zBqJsRxz+voFlr4G2JF1
+ v6HA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1791921933; x=1792526733;
+ h=content-transfer-encoding:mime-version:content-type:message-id:date
+ :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=yxG2+ZsQuPaa6XaQtgeEOUrziz4q34X+31ZaFbfef6k=;
+ b=yoILXmm6w87ZGCBppSvrRRNNckj2wxWsT2TS1+4IU/i2fFfwvYsx77DJzkGg3Ydjs7
+ 7R99j7pZQuAIGdZm84bKZfQKc6Tq5rPsSQ9RGr+lPrHYU3f4uxieSdiw1SgUjJl7uu2d
+ ToPsqaEu+IAR/DuFFSGtCCvpDl1Ty3VaTZBSyEwuEylzX2VJ9BCmELaBH4tfaz/BIutn
+ Z7N2451Z9yvLEnydxP+5TkRzoN7DxcyztLKSgmvyslq4EPxF/0Lx/CPrEb1gBCvZ/tKr
+ RlQ++WEnl28vyXkT7+JdhlI08urY2pobgGKIIn+hbRnjeykLv9DXVgiddOph1uoKySLh
+ bknA==
+X-Gm-Message-State: AFq9FYK1lTsmDgvTd44I3yrpr6NHpSnQUEp6qG5w6rrqeGWn4RseCK6L
+ dteVF696DUftuXLFIAkFIwXzudeWKbrGG6VxY0lZa5sSDPzqaqDazx8O8FjM5A0a
+X-Gm-Gg: AYBFou0zKUkgBSeRcYcE99lwf/CIara1mhGbB6Sl91Yk5VkIJ8yOSwHOsiVD3BYW98m
+ B0L+No1zNFik6Uku7r48gKBcTeRG3QrELNJk85PrKF3BjlFfZL0p6NlZSeNPclIgR1QRvJmsW0c
+ 29DGZbVpWDrNR7c7+I+tOcFtQUu6/gtWwMh1AXxekCjc4ERdvSmULZBvhpHs2Xw1e4C6lspsYu/
+ A/GclMah1VGZy7AKQBtuMGTWL7QMjetym6Yd4jsj4IanumPObIbMew3HUqZhaQJfGHXkc/E7Hx1
+ bYPEuLdK8QMRrFGHQ8COlfYIKGr32lJui7KrYhxllHwnTy2Gjhbb10aCbJW5X8uye3BF2JFDSwQ
+ XWZCwMq5ZPuTPEpQUCjEAXzbq9EHkwUz9x+Cv5SLs+E1TawaO9+O17vOCZ/XDfFXPKwqV3vqKyl
+ FNcR9+Vf25hMWa30MUI9/pq9W/Fyko0BBg214aStelbsowxl9yGHAMELHi6mpVuRDSTLh8+9Z/g
+ lT83JHpUjrTWBAYxw==
+X-Received: by 2002:a05:693c:809b:b0:359:6187:48bf with SMTP id
+ 5a478bee46e88-359618749c4mr13828943eec.25.1791921932455; 
+ Tue, 13 Oct 2026 13:05:32 -0700 (PDT)
+Received: from DESKTOP-Q716RM7 ([103.94.185.75])
+ by smtp.googlemail.com with ESMTPSA id
+ 5a478bee46e88-35b29c2f861sm25568233eec.11.2026.10.13.13.05.29
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 13 Oct 2026 13:05:31 -0700 (PDT)
+From: Yonggang Luo <luoyonggang@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: David Hildenbrand <david@kernel.org>,
+ Philippe Mathieu-Daude <philmd@mailo.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>, 
- akalenyu@redhat.com, Kevin Wolf <kwolf@redhat.com>, 
- Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
- Fam Zheng <fam@euphon.net>, Paolo Bonzini <pbonzini@redhat.com>, 
- qemu-block@nongnu.org, Hanna Reitz <hreitz@redhat.com>, 
- Benjamin Marzinski <bmarzins@redhat.com>
-Subject: Re: [PATCH v2 8/8] scsi: use REGISTER AND IGNORE EXISTING KEY for
- robustness
-Message-ID: <as6O1TAEUOAf7iJF@redhat.com>
-References: <20261013181752.1299456-1-stefanha@redhat.com>
- <20261013181752.1299456-9-stefanha@redhat.com>
+ Cornelia Huck <cohuck@redhat.com>, Fam Zheng <fam@euphon.net>,
+ qemu-s390x@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
+ Eric Farman <farman@linux.ibm.com>
+Subject: [PATCH 0/3] hw/(pci/scsi/virtio-mem): Avoid call to target_info() in
+ class_init
+Date: Wed, 14 Oct 2026 04:05:21 +0800
+Message-ID: <20261013200525.1340-1-luoyonggang@gmail.com>
+X-Mailer: git-send-email 2.55.0.windows.3
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20261013181752.1299456-9-stefanha@redhat.com>
-User-Agent: NeoMutt/20260616
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=eblake@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1333;
+ envelope-from=luoyonggang@gmail.com; helo=mail-dy1-x1333.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,26 +106,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Oct 13, 2026 at 02:17:52PM -0400, Stefan Hajnoczi wrote:
-> The regular REGISTER service action fails with RESERVATION CONFLICT when
-> the I_T nexus already has a key registered. While we don't expect a key
-> to be registered, it is fragile to rely on this. If there is a key
-> registered for some reason, live migration will fail when the
-> destination hits the RESERVATION CONFLICT error.
-> 
-> Use REGISTER AND IGNORE EXISTING KEY so that the command is likely to
-> succeed.
-> 
-> Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-> ---
->  hw/scsi/scsi-generic.c | 12 +++++++-----
->  1 file changed, 7 insertions(+), 5 deletions(-)
+Now we are going to delay the target select to machine select.
+So that avoid call to target_info() in class_init so that we wont
+face a NULL target_info() error when do class_init. This is because
+class_init is called under object_class_get_list(TYPE_MACHINE, false)
 
-Reviewed-by: Eric Blake <eblake@redhat.com>
+Yonggang Luo (3):
+  hw/pci: Avoid guard loadparm with target_s390x() for s390x in
+    class_init
+  hw/scsi: Avoid guard loadparm with target_s390x() for s390x in
+    class_init
+  hw/virtio/virtio-mem: Avoid call to target_info() in class_init
+
+ hw/pci/pci.c           | 18 ++++++++++--------
+ hw/scsi/scsi-disk.c    | 18 ++++++++++--------
+ hw/virtio/virtio-mem.c | 12 +++++-------
+ 3 files changed, 25 insertions(+), 23 deletions(-)
 
 -- 
-Eric Blake, Principal Software Engineer
-Red Hat, Inc.
-Virtualization:  qemu.org | libguestfs.org
+2.55.0.windows.3
 
 
