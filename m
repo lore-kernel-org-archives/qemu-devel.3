@@ -4,82 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9386CC6B08
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 13:29:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24D78CA9ED2
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 13:29:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGcXP-0005q8-O8; Tue, 13 Oct 2026 09:27:28 -0400
+	id 1xGcX5-0004SV-5A; Tue, 13 Oct 2026 09:27:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xGcVp-0003Qg-8z
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 09:26:02 -0400
+ id 1xGcUq-0002MA-4k
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 09:24:49 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xGcVn-00052X-KW
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 09:25:49 -0400
+ id 1xGcUo-0004km-J4
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 09:24:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1791897947;
+ s=mimecast20190719; t=1791897885;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=FuULZ0tHNbXqq2KnmmAatRNalvsJcZ8lkD3Kp0kGWXk=;
- b=PnaopPuxSNDxQlOgKRjPcsyz0hqx+EhDPLo6XVhJ1fiURDGlL5badyJgPipcOvDGAMnBrj
- z1xkwu9Qf3VOWRU3z1lbcN7g5o2undJGiX/XXtAtovkSIuUUX72sTusui6qsVHAoH+DyGe
- eXmQHRamoRy2wYSTfhwQ92hU9Bcl45Q=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=NH1yAxPyYKHWwMtkfuo5KQPd2ih7dY/qsy1jytulUSA=;
+ b=VYY2bJMPnGLLVsGgbqZReO5yWbRZ82hr4tcmMGjr/LxH6+bfVrkzxgiNfSBvJz+ZLXyLiP
+ Tph075bRPFz1HOrM/56oSROG7cezm9wYQd6W/9nhnpxCnDEpMNtgWS5qfCBBo3uY3aIKIb
+ PkaKJgAs9PAYjeWYrP+WeWV8YetA+Qk=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-92-8n036u3INjquxcW-417juQ-1; Tue,
- 13 Oct 2026 13:25:43 +0000
-X-MC-Unique: 8n036u3INjquxcW-417juQ-1
-X-Mimecast-MFC-AGG-ID: 8n036u3INjquxcW-417juQ_1791897942
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-664-8TJEruSOPZaAhAIH2mbdMQ-1; Tue,
+ 13 Oct 2026 13:24:37 +0000
+X-MC-Unique: 8TJEruSOPZaAhAIH2mbdMQ-1
+X-Mimecast-MFC-AGG-ID: 8TJEruSOPZaAhAIH2mbdMQ_1791897876
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B9118195C25A; Tue, 13 Oct 2026 13:25:42 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6BDC9195FD00; Tue, 13 Oct 2026 13:24:36 +0000 (UTC)
 Received: from localhost (headnet03.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.114])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C1E031800446; Tue, 13 Oct 2026 13:25:41 +0000 (UTC)
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 95909180058D; Tue, 13 Oct 2026 13:24:35 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Tue, 13 Oct 2026 17:23:36 +0400
-Subject: [GIT PULL 39/40] chardev/char-udp: clarify read_poll return value
- with pending data
+Date: Tue, 13 Oct 2026 17:23:17 +0400
+Subject: [GIT PULL 20/40] audio/ossaudio: fix off-by-one in mmap buffer
+ size assertion
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20261013-ui-v1-39-92da3082ad96@redhat.com>
+Message-Id: <20261013-ui-v1-20-92da3082ad96@redhat.com>
 References: <20261013-ui-v1-0-92da3082ad96@redhat.com>
 In-Reply-To: <20261013-ui-v1-0-92da3082ad96@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org, 
- =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=909;
+Cc: peter.maydell@linaro.org, Gerd Hoffmann <kraxel@redhat.com>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1053;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=UPhdr7DlrEuGI73JlZ9pXaSyaJRxsDVn2DWzJ24aOmw=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqzjDEb9EX+bVhBsPvKWQ6zG5BwZcnK1yV5iO33
- R7oH0liH2CJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCas4wxAAKCRDa6OEJdZac
- 5ftQD/0Ta6Jbv5kvCaiQx5WaoEck4eybnaBOLn7ruYFjydzpwBKhUMSrtLSKVKU0tq7qn92VEML
- vPDCK8EtpAxUx6VRKR4DLHS9VDseaBrLhd4tfBkin7w7bSLcrNIt7QQ7pNZYUf5l9mCErLvq5Px
- XN1mvptH09JnEvUNX0Uth4eIEO7ApjlMK31MvVys4WLOkOpY3+/8JAOKGuXgiPM4gkNdZceAsDK
- fgOj+DkzzwYCRVtgQ0HjLPqMUXVBP+cgXOs6YJGGkD1XfB7IOHUOrPQR0dvOqOoz7SbHEJYYpFs
- 7nrC9ac/OGDzaxRz+6Dt2Jbf9oltpyQflJ1v1p3ito69VRSaNGe130r0F/F9CaSgbmKMnlfgkoV
- /QVjKOasqL52xzmXYYRVxgWGzEbWXpwUSPAdPgf1/WdXg5vdyz20g6fQYZlLcRqWiKxDnW2qZxc
- Lnxd7ZgMpNCkLwTARvK5dxPe0Df67Qr6Nxyxz7wGGe/Jv3j/xyFP6ZsYo7xUCUD41DNflQUpGGn
- UeefCfusXOuhPaCjyD060fT+nhIqFjhEeZdKZYwY25nKwFbxzFJ8BNaFOlJtgzjXTVqKFd7mTsn
- 7cjiwzA6k1mTaenWXCISmAuQX860Q7Fk+ykL7KgfHeLW2xHvOJYqXb9PIaQd7AaSBE/z+m3eVpo
- zDULagM8OMREKrw==
+ bh=W0ww9Ki0TeoE/dSJMEeXAsdk2w+QG93eYqdkKtWCX3c=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqzjDDMuu384mCSTK9G4po2cYcayUFF9FXtEQ5q
+ 4mG9zp7AJuJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCas4wwwAKCRDa6OEJdZac
+ 5a/PEACtYQ9+6fVbqVvjFtyq6O92+82oSVNy6kx2odf891tG1QUx8VWJXapnyupvcP36MDU90/0
+ 7pmlA3hMEHECh7waukaTfqdPQUMV7Js3+4BBQM+7MkcB+7/CzUh8dMOjjnuHSMwi/1gB9lzJGcc
+ D/5pRtGQkxHnwFEC4OgpjYl67ccayXL253vSrdxSUE+FkvLFp6A372QSSAr0Y8AbV3hcyTbx11A
+ QqLcR53GeWfDT0zfDI1j+szzOc8jeJbPL9iY1ewGbjhkxcIXOsdwdg+eYBe92Jyy0kwIblucXvu
+ qZOYNbBbgEOO4TlJJSsnOHKc1/I9QfdSFTPHLmGGLf7wy9Wr/WC0iF6T0+tzp2ueWe2ZhPkKE4Q
+ UPsnKzSZtUxkxLlPMT+VBdujkii3mVcQlN5T2O8cN1QVKEyjfnpeXuw5uGhYoLWCN43WTGEREjy
+ IjP1kp/AlWcSnxEES9DuoSrwU5iP24bqrgA9NUbNtbm995vYiz6Vkay0bfa8ICPjSup6NxSVdEs
+ MeGAWeZfhTFFr0qYHrD1QNzVF0d1VvwG3jwi9JfRToaMw7X3NKO7Bv5+dNXq+MqFPLuc2/r3vWP
+ BkkwscCHAWtHBfWcYfvKYPgsMF90OFaq/+O4jiciYveo6uRPscodKypldOuQ9ei0uWhWpGdR1pH
+ 8/GmrSo+NvhpZCg==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -106,32 +104,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a comment explaining why returning s->max_size is safe when
-there is unflushed data in the buffer: udp_chr_flush_buffer()
-loops while max_size > 0, so max_size is guaranteed to be 0 when
-pending data remains.
+oss_put_buffer_out() asserts size < hw->size_emul, but a write that
+fills the entire buffer (size == size_emul) is valid. Use <= instead.
 
+Reported-by: Hui Peng <benquike@gmail.com>
+Fixes: 3ba4066d085f ("ossaudio: port to the new audio backend api")
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-ID: <20261004-issue-4560-v1-22-ccbef537cbeb@redhat.com>
+Message-ID: <20261004-issue-4560-v1-3-ccbef537cbeb@redhat.com>
 ---
- chardev/char-udp.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ audio/ossaudio.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/chardev/char-udp.c b/chardev/char-udp.c
-index 423000832ffb..618fd8f135a0 100644
---- a/chardev/char-udp.c
-+++ b/chardev/char-udp.c
-@@ -81,6 +81,10 @@ static int udp_chr_read_poll(void *opaque)
-      */
-     udp_chr_flush_buffer(s);
+diff --git a/audio/ossaudio.c b/audio/ossaudio.c
+index 95a07ea1cace..e35eab3110e5 100644
+--- a/audio/ossaudio.c
++++ b/audio/ossaudio.c
+@@ -393,7 +393,7 @@ static size_t oss_put_buffer_out(HWVoiceOut *hw, void *buf, size_t size)
+ {
+     OSSVoiceOut *oss = (OSSVoiceOut *) hw;
+     if (oss->mmapped) {
+-        assert(buf == hw->buf_emul + hw->pos_emul && size < hw->size_emul);
++        assert(buf == hw->buf_emul + hw->pos_emul && size <= hw->size_emul);
  
-+    /*
-+     * udp_chr_flush_buffer() loops while max_size > 0 && bufptr < bufcnt,
-+     * so when pending data remains it must be because max_size hit 0.
-+     */
-     return s->max_size;
- }
- 
+         hw->pos_emul = (hw->pos_emul + size) % hw->size_emul;
+         return size;
 
 -- 
 2.56.0.116.g6de20f6092dc
