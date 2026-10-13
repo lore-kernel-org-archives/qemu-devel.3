@@ -4,85 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD88DCA9ED2
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 08:49:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B0E9CA9ED2
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 08:49:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGY6K-000445-0o; Tue, 13 Oct 2026 04:43:12 -0400
+	id 1xGY8n-0000Ck-LB; Tue, 13 Oct 2026 04:45:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xGY3x-0008RV-1l
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 04:40:45 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ id 1xGY4V-0001Tt-A5
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 04:41:20 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xGY3u-000818-Vz
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 04:40:44 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-4a1ad2e2391so2927155e9.0
- for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 01:40:42 -0700 (PDT)
+ id 1xGY4T-0008Ge-7s
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 04:41:18 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-49d0da752ffso24467425e9.3
+ for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 01:41:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1791880841; x=1792485641; darn=nongnu.org;
+ d=linaro.org; s=google; t=1791880876; x=1792485676; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=/Sig7FVvdhb0+exNtEt5dl5MsuYM+MG8UgxMJ4WaGc0=;
- b=WZakO9FSXbZ7GJhLZFFphQyksUyduQemaTIU2ABp1QInl0ka/Nv50vbbufTK8d0WLU
- 3yFD2wig1fMtyKC5HIDGNP8Jf2agR+U20/St7bD+6BFHjHapSTX0MKyf3pGTe/rh9MjI
- YkO24KI7f+qmzkJ/EIm/ukv664w2f9Kf+AeLPdYMscuueMdd+4ouCtfPt9mOONtVKX2I
- SPWV8XAKC64SPdl9x48HjKIlB/84F56mvUCnHu9c/RSV8opmqOwDuLLaU+SLB75bKBhw
- 2+6+9KJLXEtGiC/9RxeRKuzOS/06jUF6KGF8zuPpKOJbVHitUBBz1KA7iJv5OfeOf/16
- icoA==
+ bh=paR4cyu9/UC5Kuni++Tg3b64V5PivixNJ34pK01k3sw=;
+ b=Bm54QZGo6r0vNmS73OZXjMQF1PPmn6RIkfPjgm3Lwkg49SuWDdoksCKwNuK0MWIvZn
+ r7RfFLxeG9j8fxO0lMZW4sHson2yk2xajwrNnX+a8LcDoUdIVuS6pNsz1haUJqLOVnd3
+ kPzmAtzWsGJM0PR0twrN19Ddp4hyaWF4nnVCl+DkwgkBr96J9QnZRKwEKbL4k8yWXwEO
+ 7KWCueh9DOKol0JDNPyAAucFLzrs4wuJkrlMLf+h+FQX9EthL62EYBm5XStgJshjdvX4
+ FUziDM5JdWi6YUEgohasjndnTM8jJNpVIkuH6EjuQRFy/1mLRK9x6R/uSDWAe1kVSPt4
+ mk2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791880841; x=1792485641;
+ d=1e100.net; s=20260707; t=1791880876; x=1792485676;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to:content-type;
- bh=/Sig7FVvdhb0+exNtEt5dl5MsuYM+MG8UgxMJ4WaGc0=;
- b=w0h/R4T7vVjhVIroQ66Hk5Vj+oVq0NgX9QYp5o1dnXEw3GUy6V98IIzpsUyO8aRokM
- Rv00xbmjGvmRA+5bqFDwX46t4mwazZec1/KFrVjJcob1U8kAVurc7MqIeZxDe4wQHwu/
- VJetYCJoMkGMa1gPbUq06HNjX4wQBfV7utGplv4Ztd+R+0vO8kwXAkOTjLSRT00F+8dq
- pfcjcCE4Kp0oVU7VIC55wxfZNccbFz6QbW/p4mIx/hC/ayT4maSAiPRksSG84q5KcZ/D
- AzHn1de/1RxzkRgvkNpJon5mepnTnVYZMOm1psxV62M0SAxEIW6F9NmgvjQj3YRx/Tun
- LMEA==
+ bh=paR4cyu9/UC5Kuni++Tg3b64V5PivixNJ34pK01k3sw=;
+ b=fA6ifRqjaVUglHdaLXSaPux2oH11uqQo6IPn8kNO01mANrCBQN8xAl6rOrLGPBbxKb
+ OQc9XxUYDPtewk26GSORxHBpEpiTYCGU6L0JLWhIOnRCGCQjP8/Q1kQ4xlMALe7Scov6
+ YKmBBvD+xqlL01d51SQVE9XH7jYP0MY6YdfxSuzY0SNQvlx75kPpZ5agJWttT9VwsXMj
+ LhvZOFRNpUROblxpmpkTpa9mmjzdnGre/mNL1C1ybd7n718e+LXMacsy19RfRMugrSWw
+ quOA+uqSeCklheFwkJd7ZeKKrHjUqUe123OuyCmVO98V+R4TTseie5Ylzr70UOGSVO0v
+ 1wDg==
 X-Forwarded-Encrypted: i=1;
- AKwUvByhqtDxuBP3iQ6Lny4CXZIvHH048+fbc6ZvnlZiJsEg/sroLmGghB0kKAfxVyp0VMxk8s++CuGuGRIl@nongnu.org
-X-Gm-Message-State: AFq9FYKKpNK1ejKAUZ2UboBRc/59mmOCTywe8Qk+Gs91RxMVfh2UmF7o
- OQCRJOCGSuRMFBetyZ8uDa12QnVl/UsakQNQCyK3enTuMNbBXibWq84naCSr0NCXceQuvuFDyYU
- z5TKoL50=
-X-Gm-Gg: AYBFou2rS/AWtn2trH7gKeKGwFp2fFhqx2A27mZRddEasjWIvc6UlcgXq76qxLZOT+B
- M9pLw//r6d9xR86TJsAcrUhP159XjfpnrmrbF26zwqtZwqsD7i2oE/bf7gnQtMbL1x4Fk7Wo6JN
- YUSgIWLfqCOKmyYw5GuHavz+gXG6ghjy4wk8mhovWuOsD1oCRSTTnmjmbfrCyK6N4v198oaolSX
- E80hNWWG5EJJS4f2/kTfcgazUrwaCld5J6Gk3pmc/pZkgOaP5q1KWO0/wdTKQV75XncYQn3ooJq
- dd1UfsP+KsUPpo7zWEgCGTG9CF8+OK9S8DztZ/cae6L/O6pwdLRJu0IkXGdm2L3ocnY669EXCdy
- G/QMzyA62kSO0ByaA6Qykg6FhD1mESwTmuCov9sx3KeL31lYdUEQXbzrA4xE5Wmd2drbpq4/VuW
- /ibH2Ye8IUS91MsErF0ckVVBMR0KOu4TSMqljiZmjO975CvV1IhqScLHDNmUGSlTfPkAF+tW8x9
- /7V29MMCYA6bCSxOwyDtSJUQ2LlcHNN9Wp7P9br/kVR5JaHqkaTfwf11fIKwULPsLcckW1JnthQ
- M5E=
-X-Received: by 2002:a05:600c:350b:b0:4a1:ad01:f8dc with SMTP id
- 5b1f17b1804b1-4a1ad01f924mr23664985e9.21.1791880841177; 
- Tue, 13 Oct 2026 01:40:41 -0700 (PDT)
+ AKwUvBxnBkOazTNAEMAYrGuiLvJ5YphoQ0l8Aw9dOs2nu5OoXlCQj3BPHlb5wShDl/foiTi9ZUjdjZz0JZMi@nongnu.org
+X-Gm-Message-State: AFq9FYIqWmDxvqTgRJNCC8FMmJ7DcggoAVyTQ9d6k7voQGGRN6/hIRzd
+ tb0Kjhz8R/DDBdpScjFvdJABWqFF4SvTQe24Rq+rH7px6CVoplmZNhkcWMN0by8c89A=
+X-Gm-Gg: AYBFou3wLKIzcuAEQ9HfqDpECRajwutu6Rr3eyKoH8xPzQBOvtOuyrR4KXkHn+tLilz
+ ZH8equVu5c29/GDRqRkXdqOb/AaSKYDsavPRpdGOyQZMWfZhDLCygK3cJlIey9OtRc8o8d7JX8Z
+ eu0MT4Og9LT+epkRP3ecK9LFLFd4NmjZxWfaj244n5N3zUGZUZbF2z051xRPuA1gdJ9MSlMeuHy
+ HZgazPGqvNGu3cjark2DpCp/qGAccemcGi1ZzjgiN84LJtsaKjJbVlTRXVvSX5xnyL5ZLrBiAWT
+ A5SP1goQZihuEEBjPTIx06/gf8CNcWlNOgeKAl++EAKGOxUzE5PuuHKRLp8tuAXJ9IzBb8qC0b1
+ bSUL7TDm/bdh2NBlgiRTL1kxanFXJjJoUypfY0N1ltCY78NZ2GCQLe2uMTgVeLBMG1kWkuvBGQQ
+ HiV0HsU0DRswdP80fd58Sv79fS4RG2OvErE85uL9+bR3uQwgf9+GwsDLhHKWs2pRfItKUVG68sg
+ qARarciFgTeaHQfIJgS2SMuZgC4TCdHN5QRrzCe5E7nBJ1H20AAk6S9c4w3LFbhecB6ZtbqAEuM
+ nrA=
+X-Received: by 2002:a05:600c:6099:b0:4a0:1feb:de6a with SMTP id
+ 5b1f17b1804b1-4a18e4e7a85mr223917615e9.30.1791880875728; 
+ Tue, 13 Oct 2026 01:41:15 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a18be96549sm495086735e9.6.2026.10.13.01.40.40
+ 5b1f17b1804b1-4a18be96549sm495086735e9.6.2026.10.13.01.41.14
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 13 Oct 2026 01:40:40 -0700 (PDT)
+ Tue, 13 Oct 2026 01:41:15 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Subject: [PATCH 48/86] target/arm: GICv5 cpuif: Update VFIQ/VIRQ when
- direct-injected PPIs change
-Date: Tue, 13 Oct 2026 09:38:55 +0100
-Message-ID: <20261013083933.1024405-49-peter.maydell@linaro.org>
+Subject: [PATCH 78/86] hw/intc/arm_gicv5: Recalculate vHPPIs on VIST and VPE
+ mapping
+Date: Tue, 13 Oct 2026 09:39:25 +0100
+Message-ID: <20261013083933.1024405-79-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261013083933.1024405-1-peter.maydell@linaro.org>
 References: <20261013083933.1024405-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,82 +104,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When a physical PPI changes its pending state we usually don't need
-to update the virtual PPI state.  However, if the PPI is
-direct-injected to the VM then we do need to do that update.  Make
-this check and call gic_recalc_virt_ppi_hppi() where we update
-physical PPI pending state.
+If the guest maps or unmaps the vLPI or vSPI for a VM via
+IRS_VMAP_VISTR, this affects the vHPPI for every VPE in that VM, so
+we need to recalculate it.  Similarly, if the guest maps a VPE for a
+VM via IRS_VMAP_VPER_WRITE, we need to calculate the initial vHPPI
+for that VPE.
+
+Add the calls to recalculate the vHPPI for these register writes.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/tcg/gicv5-cpuif.c | 26 ++++++++++++++++++++++++++
- 1 file changed, 26 insertions(+)
+ hw/intc/arm_gicv5.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-diff --git a/target/arm/tcg/gicv5-cpuif.c b/target/arm/tcg/gicv5-cpuif.c
-index e7e3dc214d6..406c980af5e 100644
---- a/target/arm/tcg/gicv5-cpuif.c
-+++ b/target/arm/tcg/gicv5-cpuif.c
-@@ -602,6 +602,28 @@ void gicv5_forward_interrupt(ARMCPU *cpu, GICv5Domain domain, bool virtual)
-     }
+diff --git a/hw/intc/arm_gicv5.c b/hw/intc/arm_gicv5.c
+index b4dbe7ce3e7..199547abaed 100644
+--- a/hw/intc/arm_gicv5.c
++++ b/hw/intc/arm_gicv5.c
+@@ -613,6 +613,19 @@ static void irs_recalc_vhppi(GICv5 *s, VMTE *vmte, uint32_t iaffid)
+     /* TODO: we may need to generate a doorbell interrupt. */
  }
  
-+static void gic_recalc_virt_ppi_hppi_for_dvi(CPUARMState *env, int reg,
-+                                             uint64_t mask)
++static void irs_recalc_all_vhppi_for_vm(GICv5 *s, VMTE *vmte)
 +{
-+    /*
-+     * Called after the physical PPI pending state has changed for the
-+     * PPIs indicated by the mask and reg arguments.  If any of these
-+     * PPIs are direct-injected, we need to recalculate the virtual
-+     * HPPI.
-+     *
-+     * It is possible that even if the DVI bit is set we might not
-+     * actually be direct-injecting the PPI (e.g. if HVI is set, or if
-+     * timer-PPI redirection means we're ignoring this DVI bit), but
-+     * if so the recalculation will just do nothing. These cases are
-+     * "the guest did something valid but odd" in that it set a DVI
-+     * bit it knew wasn't going to have any effect, so not worth
-+     * trying to catch early.
-+     */
-+    if (env->gicv5_cpuif.ich_ppi_dvi[reg] & mask) {
-+        gic_recalc_virt_ppi_hppi(env);
++    /* Recalculate the vHPPI for all VPEs in this VM */
++
++    for (uint32_t i = 0; i < (1 << vmte->vpe_id_bits); i++) {
++        VPE *vpe = &vmte->vpet[i];
++
++        if (vpe->valid) {
++            irs_recalc_vhppi(s, vmte, i);
++        }
 +    }
 +}
 +
- void gicv5_update_ppi_state(CPUARMState *env, int ppi, bool level)
- {
-     /*
-@@ -627,6 +649,7 @@ void gicv5_update_ppi_state(CPUARMState *env, int ppi, bool level)
-         env->gicv5_cpuif.ppi_pend[0] =
-             deposit64(env->gicv5_cpuif.ppi_pend[0], ppi, 1, level);
-         gic_recalc_ppi_hppi(env);
-+        gic_recalc_virt_ppi_hppi_for_dvi(env, 0, 1ULL << ppi);
+ static const GICv5ISTConfig *ist_for_vint(GICv5 *s,
+                                           GICv5Common *cs,
+                                           GICv5Domain domain,
+@@ -2131,6 +2144,8 @@ static void irs_vmap_vistr_write(GICv5 *s, GICv5Domain domain, uint64_t value)
      }
- }
+     return;
  
-@@ -894,6 +917,7 @@ static void gic_ppi_cpend_write(CPUARMState *env, const ARMCPRegInfo *ri,
-         uint64_t old = raw_read(env, ri);
-         raw_write(env, ri, old & ~value);
-         gic_recalc_ppi_hppi(env);
-+        gic_recalc_virt_ppi_hppi_for_dvi(env, reg, value);
-     }
- }
++    irs_recalc_all_vhppi_for_vm(s, vmte);
++
+ txfail:
+     /* Reportable with EC=0x0 if sw error reporting implemented */
+     qemu_log_mask(LOG_GUEST_ERROR, "L2 VMTE update failed for VMID 0x%x at "
+@@ -2228,6 +2243,8 @@ static void irs_vmap_vper_write(GICv5 *s, GICv5Domain domain, uint64_t value)
+     init_vpe_from_vpete(&vmte->vpet[vpeid], vmte, vpete);
+     trace_gicv5_irs_vmap_vper_write(domain_name[domain], vmte->vmid, vpeid);
  
-@@ -924,6 +948,7 @@ static void gic_ppi_spend_write(CPUARMState *env, const ARMCPRegInfo *ri,
-         uint64_t old = raw_read(env, ri);
-         raw_write(env, ri, old | value);
-         gic_recalc_ppi_hppi(env);
-+        gic_recalc_virt_ppi_hppi_for_dvi(env, reg, value);
-     }
- }
++    irs_recalc_vhppi(s, vmte, vpeid);
++
+     return;
  
-@@ -1428,6 +1453,7 @@ static uint64_t gicr_cdia_read(CPUARMState *env, const ARMCPRegInfo *ri)
-             if (hm_edge) {
-                 /* handling mode is Edge: clear pending */
-                 env->gicv5_cpuif.ppi_pend[ppireg] &= ~ppibit;
-+                gic_recalc_virt_ppi_hppi_for_dvi(env, ppireg, ppibit);
-             }
-             gic_recalc_ppi_hppi(env);
-         }
+ txfail:
 -- 
 2.43.0
 
