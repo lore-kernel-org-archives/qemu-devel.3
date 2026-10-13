@@ -4,142 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B2C8CC6B16
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 15:54:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 594D3CC6B16
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 15:55:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGepK-0006FO-Ut; Tue, 13 Oct 2026 11:54:06 -0400
+	id 1xGeqE-0006uJ-I0; Tue, 13 Oct 2026 11:55:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xGepJ-0006Ci-C4
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 11:54:05 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xGepH-0006UU-KL
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 11:54:05 -0400
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69DE3wK11492054
- for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 15:54:01 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- givbYnEQQ6o0JPMY8SUlWAsFZdR17a/IK585pg5tHjg=; b=BG9Q3Dw3EQE1JeuY
- UPTWaluPGWhTTRWmC1/c8UaPiQtN/7xSpEndjI1IVaQDsIbM7pl2+8wSeAsB2A4z
- rQgTlfEW9rfbx1ljs1UY6dX8LXBKPSyKAxDHOuA5V/oT00GBRCyRqMscRh84nVdf
- +as0KWqg/0XQIHCk7lbtHaTEE8G/Ea+4uS4i2ENedF2k3Htp2iEakCE6ekaiUWPX
- YVjyo+ByIkT32Le+M3RjGkebF/2IAdDwMbV4IqIf8Jbfu9fRAexGFf2C2Gp2F45J
- 4Npey1S3PnfZcga8QH//HiRLhtWETGzh+4f0U2EsSZhJy6wgX0A8koQs+sbRnAPD
- MNFUUw==
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h9daqtvfb-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 15:54:01 +0000 (GMT)
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-91792488228so75643336d6.2
- for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 08:54:01 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xGeqD-0006u8-KV
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 11:55:01 -0400
+Received: from mail-yw1-x1132.google.com ([2607:f8b0:4864:20::1132])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xGeqC-0006fF-1z
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 11:55:01 -0400
+Received: by mail-yw1-x1132.google.com with SMTP id
+ 00721157ae682-836c8bde2dcso20083477b3.0
+ for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 08:54:59 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1791906899; cv=none;
+ d=google.com; s=arc-20260327;
+ b=cHVuFYLBwc8zuZUtJiwNaeYAEFPlCioSbyEoJD6C++bPQtUfBxgrmv7dJs06zkivVQ
+ FwEX7bT+ceg5ASLHUvpY1bXjAZ8bfweJiKcXg7ozH3yNoBozahOEFoI7RWwZ1U4Vc2/P
+ oQ2QRE3zA6T0Z4y1wTnT4OiVzlnBS2xQXPjU+AwCnPpyOrJBIKTSSZ4vAVK5oYGuzhfX
+ p9lrIA7uhCuJFLZ3DXZrxvlxmp5acZhs+EdiRDAAZSP5LBPoandJzx6YGGXupcigRW5q
+ VSYD6d3OCVGmPJAgwXYTEqV4pnVmWqf+KPCPcgUkgkQl7wpRz0d5FcIUMxASgOPixPpZ
+ tquw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=xUX7O0hyhnzIaBL4GI7Fs2xl6p868YhCKfTy7miSTVE=;
+ fh=RmoKsKX77arZ+yzJIVagKGTqLsiR0EujXd77rKqWDhg=;
+ b=cGS+WSGn0H+vX/tIsXTUDRDJ+CY9xPyqsVoh4QFpWbaNOLNS93t9doQ1IW4TXcRMYF
+ dEGWjMhqbQPCpu75xeKtcjb8Mlt8DLkUHkPFSjR7y3ZeEJTZRlXFGjgFFNtPVJBV9cOf
+ auTtVtBDHzvuCEOyA+quPqkBRauIR6w/U/Js836dzgUsXUKaH1K9hjC4iQ0nOTgZZA31
+ d1hW605t5AeOLzX93rZj7TwYBBZk9vXxF+MV9we12WptPE8QVFu9B2ceqY1qMt5v/7LO
+ XT1X+T5qiNqB/IOqqrF87s1CdyHT7I8rNXgypEzYdUIaTXtEvPyk/+Id8JJNo78tNj3v
+ e9UQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1791906840; x=1792511640; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=givbYnEQQ6o0JPMY8SUlWAsFZdR17a/IK585pg5tHjg=;
- b=VLVCCEUKOluEBN+F2qbNDai5Yifa9IZr+JBFbxZuLluzVME5N9MqvHSFFfrLw/90q7
- uohQ2BIL4fMBs3mkhXej5T97UOVlz3ji/3oACnlwx6SI13fmHMmC4KrhCOAUj5xfYcH2
- Qb5P/peEqAjpqyN/IVHG8UiQt92rKkvgXMymix+pA8+QvW1jhcr/Cnd2wElzCz6faLwo
- xnch6hoTgBm21TxRI+Ipw4C3OhZJTjptvfwRVhefBAaQ1NcFKPhmVTBtICNl9JuM6t+n
- DXOSBnT9dRUrJAvwjou/6+PvZibD7neSuuZBKOIkcnFMrUmV1zUdbKEtFLrl9iAbSs8R
- 2DWA==
+ d=linaro.org; s=google; t=1791906899; x=1792511699; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=xUX7O0hyhnzIaBL4GI7Fs2xl6p868YhCKfTy7miSTVE=;
+ b=m15ZVRGIOXYpqLKcb4r9okN7WNrRrNxpgJaL9QaUdVH6PPEfbvrgUxpNFG4uoNOAwh
+ tHzae9YwZVWjqkOEn2bJuIDKi/6hUHxjfPyiIahvwcPghov8gyMBve/lySqqZOEP9+Hu
+ HlbKnZvSbgD8KQVrukClXsqZ/VYe7Ldq4vmzyzO1aO1zstlT0qgQjl4zH6U7be3E6t55
+ APpbOVAATUuRldiHVZkUfbblc32ttUPrUIdZHOg6xNLS5C8DAzFhs5F1Zqft0wVmYHhO
+ DCyqbz4yRi8saKHD3qBTMOcBmbMSklNT07lFN6pliYECbcN1/H8TMYqf+qxAybodLFiR
+ OjXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791906840; x=1792511640;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=givbYnEQQ6o0JPMY8SUlWAsFZdR17a/IK585pg5tHjg=;
- b=E1RjK0170qD2rBvDyQHDZVhUsxPWgOnAUPkK2pR3IsNUN0fL/BTXHsa5bS8aTY7B/c
- MyI9qy48BpFfOq6j0y+yDxmorDr0KuVKdb2qLESk+jo3qommJfQQ/O4A4C8G0kWaGLQ4
- spQHQQFegMrd3Tuac+0yjRPfVS/AAlBI6uw0/+baH6AqXtleTvm7PF99H6WWe4Wf5gZ4
- NSaOSCCcIi40Hn7zy9y15OCes7aaEzFVlIAkF+DQtiEk+GQcutNb2vqyll2ov57Kx1CU
- nuplANAFVtKGv4h2QbuhzW6v3q708i4i+qjr+BiCTeqxGcglG+VizaLE9FIUHwF7nkHp
- RFww==
+ d=1e100.net; s=20260707; t=1791906899; x=1792511699;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=xUX7O0hyhnzIaBL4GI7Fs2xl6p868YhCKfTy7miSTVE=;
+ b=gGjfpK4Dl4CnwZhi4pOD4GJj1+doBxYd+OwmugrC8CuJ3qANsrhL7kV5cjNZNI7alN
+ RotXkW2YWfcQhL6uWOhMwh0ztcuN7nh5AfbzMKEhaiuvaCXhjF4uKkO9X8UYcnGUGCiw
+ i3X5kJeOCT106k6y70x1buG5PVsvyMf+T+xcW4/q88qwmfVMU2QIPb1fcjIRYFbl9YPJ
+ 1Yo+EaAfmJhnOMppBGPnS6Q5Ks7unTi5uiDS9S7Tlk2VWWDURBp8IQWK6sH/CKUVPHdT
+ k5IJfK5zm8IHoyXN7Zjw0OYUrQvUC/ACCsatg7OQE0WoV87noxM33GmswI1fSpIZA7mt
+ wa8Q==
 X-Forwarded-Encrypted: i=1;
- AKwUvBzbC8l38L8up5A8D0TvBPzyba1dIGlmpRoTk2C3kTFe/y5fMU6lWC6bagAzc3G3BHjUQXjkmxV4kUsu@nongnu.org
-X-Gm-Message-State: AFq9FYLrcSvOH9h4VW+KdQSRQe+uPy0e7Xlar20xVo3dbueVLAjDaE+I
- 856lpDnpsPU8HG7emdJ3q1mc3nbwoKw6GTD62GBVXB54F/mnxzkiduv5gUdVXXfhCLvfv8FRqTZ
- mDVTtZKjVtHCnmCWLH3w3NtMSFZdeXOpnLdAFxzucc6iWKsbOIzu5zf6iOQ==
-X-Gm-Gg: AYBFou2WpshHA75NFVAh18SR4UnmqJIDkfB4bmbFaNdMZa/csd/SwkUsNG01QlM3Y6m
- GlwL+n8ScWlPxnTAzEIJtvJUb/7ZKfaIR3Dsmy8ZSkmV5xDPGN1Sjr7aktgtWmqnTtnwmd+sRhp
- 4/3KJVWQWkZI5nP1m6QYnIut+vjjuBN2tOOFbDJbAII51vVNebSPqxW/4zlBSJNxLcn0S65m6y6
- +QkCTgQ1CHoImcMCa5UCGVug9z4pJJ6UGF6FIgzFOFdmjToW/Yh09ijTQX0/WEuSdWx/5s2XcMV
- vIV97No0951IDEfq/4FUqGpDEXEFbNdM7K1Y2GxHyORvdul+rAKAJNIupJByq7//8SkssqsnCRO
- f5skYm8Ny/jXLm7k1CxIoIKUeewMHWXgSqw==
-X-Received: by 2002:a05:620a:4689:b0:93c:70da:e45e with SMTP id
- af79cd13be357-93ebd223c74mr2225558085a.36.1791906840277; 
- Tue, 13 Oct 2026 08:54:00 -0700 (PDT)
-X-Received: by 2002:a05:620a:4689:b0:93c:70da:e45e with SMTP id
- af79cd13be357-93ebd223c74mr2225555085a.36.1791906839816; 
- Tue, 13 Oct 2026 08:53:59 -0700 (PDT)
-Received: from [192.168.69.210] (pmd666.hd.free.fr. [88.187.86.199])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a18bf1358asm375432785e9.4.2026.10.13.08.53.58
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 13 Oct 2026 08:53:59 -0700 (PDT)
-Message-ID: <84ae2610-83fe-4947-bf7d-6df246349ae5@oss.qualcomm.com>
-Date: Tue, 13 Oct 2026 17:53:58 +0200
+ AKwUvBzqM5qgZj+4Rr2P6/SNEWrINf06PHXy11zdXIbhH6/8Zi7/axjpYhYhK90IQOz54/rcI9gSKp0/9DFA@nongnu.org
+X-Gm-Message-State: AFq9FYJhCPOBa2ZxgAQpXIiMP6jM6LbNxjUi8/ljz035MfS0sMKTrUfc
+ bi7HxOq3+9cFc3AGOIQF8E5lEGnyJWkvuu3s6isFGyZ28rPH9ToQ0oCDlkuj0/5S5Ux7YPfpk2C
+ 9A5aHrr5T1XPDvDv6veXrnEyXWL/3nd9S6hSoIi0iww==
+X-Gm-Gg: AYBFou281UlxpWvsGG2r+k0EF2xHpQMVDVfGs3xQVDGcnXLOp83/LbOj1NirZqhfdSU
+ Gyp1JP1DXfN2za3q9S1SFWBzMSvoJGVNGDU/lW8NsDxQRkTKZxJTr8mv8oU5iwuHWeYnS3KLGJV
+ krCNN8pxovNUkjdm+YPvWY75y/s0nd7PX+6OfAf/BjA59TSOSH4piBsWrToXZdWDpp/ZxX/K8FQ
+ rAVGib1UyPc75YFKGpOKjp8i/DliJGDR3SyTc+OxDyKBhYh6o/+ksQmwZiKU6lsrrVBheQIAhic
+ pTMVntBLGJHaXRrBp9sGxQVAkY1GAjf37DGTC2+2Ip3WnN+2VXeqkbJpjCFB508yi8KBV6DL1mp
+ 7nsfa7geXc1PgYuXDem1HvuPYKrFIsskxK4voudQ=
+X-Received: by 2002:a05:690c:c510:b0:8b0:b0d1:fc47 with SMTP id
+ 00721157ae682-8b0b0d20337mr16623687b3.60.1791906898640; Tue, 13 Oct 2026
+ 08:54:58 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] util/coroutine: Reduce default idle pool max size
-Content-Language: en-US
-To: Wesley Hershberger <wesley.hershberger@canonical.com>,
- qemu-devel@nongnu.org
-Cc: Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- hector.cao@canonical.com, alex.ramirez@canonical.com
-References: <20261013-set-default-pool-size-v1-1-7be19402af6c@canonical.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20261013-set-default-pool-size-v1-1-7be19402af6c@canonical.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: VOd3RrQy-edzRUdQHY3tKVcI5AKUqqUI
-X-Authority-Analysis: v=2.4 cv=FZuiV5+6 c=1 sm=1 tr=0 ts=6ace5419 cx=c_pps
- a=UgVkIMxJMSkC9lv97toC5g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
- a=danhDmx_AAAA:8 a=DfNHnWVPAAAA:8 a=ESHcrJg4XHRjUGyFnAEA:9 a=QEXdDO2ut3YA:10
- a=1HOtulTD9v-eNWfpl4qZ:22 a=rjTVMONInIDnV1a_A2c_:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDEzMDA2MyBTYWx0ZWRfX3zvKYGKnGXZ3
- le59kmj5XWCWnX8h9IS5QFG887r7lwFe5RfgzC+D8834XNnb14KiGK4zFhFqN5ojJQ50qBmm/Cc
- 5T/wX1f5LtziO23nfA9WF8In/5TcjQQ=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDEzMDA2MyBTYWx0ZWRfX66jikEWMYS1D
- TumwNznUP2AmtrRfwkSaQczUqSjmfq2haSWgiLe0fcoK+h2UBPXCJ1OZXvkX3GeA+69GotC//5I
- HRaNfefhDdso4aBC3H7OHpI4RBFP9uA1uQtXTpjHYf0u2v9VnGnCLDQJqVRle0rRXn45Wdbu5/e
- oSgs0QfOqBgUqKYBuLKdRfSQSwfvDznp4s0KtSVY4WlBtlpai7Txd240DXAUZgaYIqaFD9P4h7/
- ufKmZr1LzJB7LXhYyUaLK2w/wvHApYiwMDloO5J8pxLWGVmQV+/gVHyIvhzNIaKVog8V9ONKiPa
- 5AW5eMK7KvRtZRGA9aVpVzA5jsR/7n/8+i1q8pHSIjqwhQbafFaqw3kHxeMzwHrYx5QpzT5b3yi
- 3ub2ECl4cesCU7iHTiqYURCdJyn8vfxS7Ybu4euyzZaH8x8wvs2J+HLIpJ/IgqC1TTISFWfWTdV
- H4s4lzzLnthBe4CDXSw==
-X-Proofpoint-ORIG-GUID: VOd3RrQy-edzRUdQHY3tKVcI5AKUqqUI
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-10-13_01,2026-10-09_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 lowpriorityscore=0 clxscore=1015 impostorscore=0
- adultscore=0 bulkscore=0 spamscore=0 malwarescore=0 phishscore=0
- suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610080000
- definitions=main-2610130063
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <20260916104435.600211-1-mark.caveayland@nutanix.com>
+ <20260916104435.600211-6-mark.caveayland@nutanix.com>
+In-Reply-To: <20260916104435.600211-6-mark.caveayland@nutanix.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 13 Oct 2026 16:54:46 +0100
+X-Gm-Features: AclHuK8tx9cc1Chrkd1VlgBGe_Zyl8Wqsg8OPvfvGLJ1IUyuXdLtJM5RjrH8d_0
+Message-ID: <CAFEAcA9eucRyzG=PR2tpx8ObHkdK6xUmOjQ+-nNbJ2dVHaptOA@mail.gmail.com>
+Subject: Re: [PATCH 05/22] i8259.c: move parent_realize from PICClass to
+ I8259CommonClass
+To: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+Cc: pbonzini@redhat.com, richard.henderson@linaro.org, mst@redhat.com, 
+ sstabellini@kernel.org, anthony@xenproject.org, edgar.iglesias@gmail.com, 
+ qemu-devel@nongnu.org, xen-devel@lists.xenproject.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1132;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1132.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -156,60 +120,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+On Wed, 16 Sept 2026 at 11:49, Mark Cave-Ayland
+<mark.caveayland@nutanix.com> wrote:
+>
+> Both the emulated and KVM i8259 implementations store a reference to the
+> parent_realize function in their respective classes. Start by moving
+> parent_realize from PICClass to I8259CommonClass and removing PICClass since
+> it is no longer required.
+>
+> Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
 
-On 13/10/26 16:38, Wesley Hershberger wrote:
-> If g_file_get_contents fails (AppArmor or other LSM), use a more
-> conservative default max size for the idle coroutine pool; this avoids
-> any possibility of the failure described in 86a637e48104 unless the host
-> kernel is configured with a low vm.max_map_count.
-> 
-> This change is motivated by a discussion of backport risk:
-> https://bugs.launchpad.net/ubuntu/+source/qemu/+bug/2168803/comments/8
-> 
-> Fixes: 86a637e48104 ("coroutine: cap per-thread local pool size")
-> Signed-off-by: Wesley Hershberger <wesley.hershberger@canonical.com>
-> ---
->   util/qemu-coroutine.c | 6 +++++-
->   1 file changed, 5 insertions(+), 1 deletion(-)
-> 
-> diff --git a/util/qemu-coroutine.c b/util/qemu-coroutine.c
-> index d17135f585a..d8853e3b227 100644
-> --- a/util/qemu-coroutine.c
-> +++ b/util/qemu-coroutine.c
-> @@ -391,7 +391,11 @@ static unsigned int get_global_pool_hard_max_size(void)
->       }
+This is one of those things where I think we're not 100% consistent
+about whether we think the parent_realize field should go in the
+child class struct or the parent class struct. The name "parent_realize"
+implies it ought to be in the child struct, though, and I think we
+do that more often than we put it in the parent class. This also
+makes some kind of separation-of-concerns sense too: it's the child
+that knows (a) that it exists at all and that (b) it wants to have a
+realize method that will mean it needs to chain back to the parent.
 
-I think you want here
+The docs for device_class_set_parent_realize() claim the parent
+realize ptr is stored "usually in the instance structure" which
+I think is just completely wrong.
 
-           else { your Linux code }
+I could be persuaded otherwise. As usual with QOM/qdev, I'm
+mostly interested in (a) consistency and (b) documenting what the
+"right thing" is. Realize, reset and unrealize are the three
+methods where QOM's lack of convenient support for "child
+implementation of method will need to chain to parent impl"
+is most awkward.
 
->   #endif
->   
-> -    return UINT_MAX;
-> +    /*
-> +     * Read from /proc might fail due to LSM; use (DEFAULT_MAX_MAP_COUNT - 5000)
-
-I've heard of AppArmor, not LSM acronym.
-
-> +     * for distributions that don't change the kernel default
-> +     */
-
-because this ladder is used on BSD, Windows, ...
-
-Also since modifying this area it would be nice to add some
-self-describing #define for this fixed amount for non-coroutine
-users magic number.
-
-> +    return (60530) / 2;
->   }
->   
->   static void __attribute__((constructor)) qemu_coroutine_init(void)
-> 
-> ---
-> base-commit: 615ece3c406b262996e569f29ea6eed0d81c4d8d
-> change-id: 20261013-set-default-pool-size-8b27c0fca8e3
-> 
-> Best regards,
-
+thanks
+-- PMM
 
