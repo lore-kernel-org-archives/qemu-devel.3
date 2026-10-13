@@ -4,91 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CDBDCC6B19
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 16:47:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63BFDCC6B1C
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 16:48:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGfeE-0007Tm-Dz; Tue, 13 Oct 2026 12:46:42 -0400
+	id 1xGffs-0008Lc-G8; Tue, 13 Oct 2026 12:48:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xGfeC-0007T7-6m
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 12:46:40 -0400
-Received: from mail-yw1-x1131.google.com ([2607:f8b0:4864:20::1131])
+ id 1xGffp-0008Ke-Ps
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 12:48:21 -0400
+Received: from mail-yw1-x112b.google.com ([2607:f8b0:4864:20::112b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xGfe9-0008Sp-2A
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 12:46:38 -0400
-Received: by mail-yw1-x1131.google.com with SMTP id
- 00721157ae682-8ab37e44643so1146997b3.0
- for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 09:46:36 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1791909995; cv=none;
+ id 1xGffn-0000A3-1p
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 12:48:21 -0400
+Received: by mail-yw1-x112b.google.com with SMTP id
+ 00721157ae682-888cbacf70eso37722647b3.1
+ for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 09:48:18 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1791910098; cv=none;
  d=google.com; s=arc-20260327;
- b=gQMnO6SNC/WW3R7HFb3t8DJdkHmT3nACq//o9R96Ntjrxpu/iByHzuwv/yfuzs8Yf7
- 91b6A+amMQegUetCQwjsHM9aS0y2jT8fV+dn3ogu+F7SxdvTj7riX0QVJzrKJfuM9eGW
- WFXZ+Iopr1ITtcNVHNRptlloWEuuE0BM33s0j/znc9UG8nodWI2XItip/JnkQkhXMj8k
- iN+32hVqSvW9sjvxk0w3jGuBAVkavFm5vyBfixjK0UR6W7cCWyFTc0m3fs2Su6iGIpbs
- 4sAILTiweBrElVNY8WD3PKDvAlhilG0UpClhQKXVumcESS3X5nKO2dvGMZ/cK7jVialZ
- E6Zg==
+ b=eNaXk80X9FJD/xZdVJiKIyxwG6PtTh9xBEr3tAs4l0lcg9yFoELtPI7GRsNf4UuLrD
+ /udX3JeZF/ylJ9BrXqPjTc06kOWscEJ940m5gBkzoincFRMiDHekQiHtbX02tJhokcHm
+ Yp1khazLmsaTH98NfB+nSai2zh9i3MNklrxuBRyQIN6xJfY8Zss3klqWlF4oRNzlqcft
+ KRG+MxGADuHGni8INPW5zlaRk0WFFQC6JFmmNn+U4x8tnUCIuBh4wldE1q+8I6a0FuR/
+ E+HMqM7fHmLDq94H6vStkWC/pCB3rrgpIToBUtZK5klq2UsnWoB/dfYUsBmmO/g5Hja0
+ ugNQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=0xh+kS0SvoInvRUIsUOjK7U33/ie4eIS07y4C4K0t3g=;
+ bh=UbcTxUBPWUyFIA0yRh+V7xI5nZadhqOBoqHNTMUOxcI=;
  fh=STFjNyXLj0lfgNvlZzFLUS1rWfs5JAUbmS2H0sDlju8=;
- b=o6A4hDwpHa0KwsMEZJZ67DCSao2qhdTQez7S9CaorWSKWCCvTHbikxUi2kDcW3FX/Y
- pjRj0Y5swcUpoDg5G7E53e6xArwjtsYBZgmrlDaqIrV1VLj0JTZdsYgW5xp+/em0F0BK
- FMgyANqCjwiznNRjP16fKFnjvYB6Y6KVMnqpAPrKhD4VlHp3lN4sHy6ZlT5nXXgIQS3X
- Edpq3HUlm5HLKf42LX7ifane9/xTKrLwXy90sjGeu1lQsEw7fDRsHWzbae83chm0fLEM
- zkkFXHs+oGnSfSSoJ2YBKktctEbk+qg8DDmL4x5vVQubsSWKYoqGZD7E+jZcuImJ/brZ
- egxA==; darn=nongnu.org
+ b=PvLW9hQCtkJoa049hTkgfpDK9KYfpIOevS3hl9+SRbLUCMDaSziVVAL1ixO/yZbmMp
+ mB1XFU6EP++80rnbFVt3F8hT3xabcg/hjrO8rwN4H1kJcotgW4y0onn00HEDQdoOQoPr
+ ruQLS3uc0DY/DSEC32qirYROxct85O2U9CQYdQG2/nG9F8sMQjRGq4cx+/qMWkKMBv9g
+ mO2nXT7jfF9Sth+6xsBkiiD1qSSzDw3azeBrHTqTaI8hzVaKA66KSjskJl0E4BuSEOGX
+ 6rHTLJyFLRnxVwQjfHcQmhYG0p8utFCLhc/kVxOPj/l4mmDhukpO3Msom1KyQdvoetuS
+ 5xNw==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1791909995; x=1792514795; darn=nongnu.org;
+ d=linaro.org; s=google; t=1791910098; x=1792514898; darn=nongnu.org;
  h=content-type:cc:to:subject:message-id:date:from:in-reply-to
  :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=0xh+kS0SvoInvRUIsUOjK7U33/ie4eIS07y4C4K0t3g=;
- b=FJYpUcwp+FAyFjCY55DHqHEHTSgJYoR0XJSegfa34kxqNKN7QfqEmTHhsF5AwTMQA+
- LAxnQTu8tPOuwZt9KFM6Rv9mqE1JMkpvZMEQxxYaxgY7jgH+6rnMSmpMCTyBMVDOE4oq
- Sno73duEbNDiTOUM7O0RH1rQQhMilgzfoOZxqS3E3zovHoscHmUJSuO24OA4Qf0WMwGI
- ZWwAnWRpSUwbbQvuYIdy63EWtatBoYxG0v9ej7Ubm5zV89NDmiZL2Wav/xmX7pPPXjTh
- 9yXBstpNDUt4IsnjJuqqPUWuUPmVboRt7W45b+eEYWQyaqVeXn95Rwpon4AOFvy+dc2X
- kL+g==
+ :content-type; bh=UbcTxUBPWUyFIA0yRh+V7xI5nZadhqOBoqHNTMUOxcI=;
+ b=OCkK8X8vcZas9qBPKGPpKSctiSPfwna1Oqm+wo72Q6ItBzs6rPvECCt1wmh9d3TMwG
+ nGGK5En+WBNSj6R8vxI9HgmBhqusn1Jqdr10+yjIf8ZJEqtVRb/Gl5+oM9ApFNI5K6na
+ g3xJCGvZRtPclk3rUjkHJd6qy7OYx3gmeitJGbbZ7JKXjynpPBfMU4WhdtwyCsvobW7/
+ FjonRjY/JNZnmQS0kC/YGa513GAV2wtz5jQj/cqj0k//RMhOdJYeqN+YMRdScOcSYOa6
+ LbXP8S7HAMtRqXXMDsYCrNL7poGK6Ct4SxmQ8xCtN+UnTG92XsA6OWNUXXDIU7RQEVdF
+ OAtQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791909995; x=1792514795;
+ d=1e100.net; s=20260707; t=1791910098; x=1792514898;
  h=content-type:cc:to:subject:message-id:date:from:in-reply-to
  :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to:content-type;
- bh=0xh+kS0SvoInvRUIsUOjK7U33/ie4eIS07y4C4K0t3g=;
- b=ssrybZd/nUPJbzwR5c7wTSUE5Yug54nXHXAmQ5mD+KGNooYR5hsu8aFqIrQvfauj8t
- l8DHenH+KP8FbqNxXCST1e2eJ7426TjPqX+cFUzRPLahZGszBeqoscWWaFV+f5YaL2o0
- FCWg1W0Z96eNqXz6N4mzej51dleSt4dDudC+qNHLj/up9kEalUE6iHdlHYiDwYHauSVF
- Cvvof/LE8Et3Jdu6rnxBdTa2gI7A7fwnrMWfK93L+YT1esheApbgpJsVRN5H7px6tzEY
- iHLURL2IpWeYfPKrAcPqSzc4/lUl4U5MIw5dEKAJDc6j1VoUe+kGGM76S8n1YnOkImvR
- UZtw==
-X-Gm-Message-State: AFq9FYIME5Fxgv81jvdNWBuYZob6V/QvMtZKiyNuqvWUYpuCyV3LKYi0
- nmpZ/OPCY75Ke+9hzEWVaNo+ETc8nUBR2JimSZFmRrbFZkLiiuapjqyBo3h1/uVdCHCnw9y4R+g
- 1r730+aolD/XnTIwq73tz748F9+BRZwIe5TUnES3vpA==
-X-Gm-Gg: AYBFou1wcR5STTSB/ysB5Ge2KCMYa9tKw7VbrBfsGDgY7peZnHgvbFdZZqLUy5XbNg6
- +mfIj1XJoM41hiDIFuP4F8Qz2V81l7wEldFX6rox3vqOqm48mQFrFqWVvLLSdw+516IH8TKs2ni
- uSCUepsBZc/1yervQOE1eKW2bs8iMlrdx/LHxw+lhm9unok3lYKXH2SU/MMzzo4aimI77RJbQxY
- nX/B037dpErVNNDoH4A6PMPZHHU1cRKVl38TV/Wl7/ZaT2Jkg+4rFylu136ieduI4pprb0/DgQ5
- sT1GMKm8QDvd5o+Y7HDQrVy4ZpW+ebQlRxyjUkfgTBeeTORA4wrgVPQJ6qece1PuhpGLfn1X9Od
- 0W7sxS7TbuPbMVOvNhkWh0v/l37fEVCJsUr+pvOQ=
-X-Received: by 2002:a05:690c:d89:b0:8a7:6a41:12db with SMTP id
- 00721157ae682-8b07ebfe3d5mr47459737b3.7.1791909995139; Tue, 13 Oct 2026
- 09:46:35 -0700 (PDT)
+ bh=UbcTxUBPWUyFIA0yRh+V7xI5nZadhqOBoqHNTMUOxcI=;
+ b=aI5POPrKQE1vvlG1ve+oBBsT6jzOxkc5lfcaPUJp/QUXj2AVIBYr9LQvk3VhIe2Jte
+ fySNCthGddHzQ7ZaBZcYRDwsPpLSJT7YJVr5bXmo3Jmqrk2aZyXSihy6rUYXG5xW/a0t
+ 9Jyu9+7j49U01jowRTOE+2deGnEq7YjBp9hkoEqlSKXgB9m9//Y5vL8yxsb5GlnGGjzm
+ XeI6OMznU9QLWz6dCOCoPWW99M7pCaJmTxEUuudEYuAadp6D0VljpbEvz/I54AvbIod3
+ ddIKCw+PLzB7yPQsmLknkHwI8krOpBte6knA8WFfSgdABAquQ5kHF+rDOM6dF5+7pMct
+ YUZA==
+X-Gm-Message-State: AFq9FYJG8fjeM6WOwuVYbPzqKoXYn2DpHPzVQVFWyeQDE7noj2lGeXt2
+ hypZrZ0U5pOvLiEG5bffSZr4svVE/kIjQmzqSyojvFQ8B1iapj/J/ENbqjVnh2Aum0ULTP41rUy
+ n0RRexTq2EC8nq1WAuhyrDdp0QgY/L8KFBjsSdxek9A==
+X-Gm-Gg: AYBFou2+GAdOQryOywO+p2PrpEJITLrK8QHrES4ZHUpHFWcDOcvP5nmwHlzp8GBx1R6
+ +kSKNqXMik6fTn/ul1v+iEyx5H16tVqnO0gY5Gvk4Ytwx5p9JG6fH5M+jKrO9NXtEK5o6az+2uH
+ xfWfh1XupD3qYaQKRUvgIurIQIEAIx02VNN234XPBoJHmvwnkeDhRbFRrzpTEs9/YFrLVpzCmwR
+ sq49glh6GiiWbuTt/MDuTjGG/PQxLGLkRNdT6ewf9pquDykkovPuEwJ2/E0AN5Wvl2j8klg63yU
+ fj9y31e8TgPDvcdFO1DUep3pG19xN99UNAIkIytO29dV/JmmbmOaeja/uyTtC2ecM/uW6veM8bi
+ VwdytuFiwdZuth+F5xlZ6fFrSsI9L2Diw6JqSvks=
+X-Received: by 2002:a05:690c:64c9:b0:873:5c6b:a303 with SMTP id
+ 00721157ae682-8b07ee3497fmr39342127b3.49.1791910097705; Tue, 13 Oct 2026
+ 09:48:17 -0700 (PDT)
 MIME-Version: 1.0
 References: <20261001-mshv_accel_arm64_supp-v6-0-aefe5e76a0e3@linux.microsoft.com>
- <20261001-mshv_accel_arm64_supp-v6-6-aefe5e76a0e3@linux.microsoft.com>
-In-Reply-To: <20261001-mshv_accel_arm64_supp-v6-6-aefe5e76a0e3@linux.microsoft.com>
+ <20261001-mshv_accel_arm64_supp-v6-4-aefe5e76a0e3@linux.microsoft.com>
+In-Reply-To: <20261001-mshv_accel_arm64_supp-v6-4-aefe5e76a0e3@linux.microsoft.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 13 Oct 2026 17:46:21 +0100
-X-Gm-Features: AclHuK_BRDixwbQI8ndxNsGPiTVooqSj1t6ytqm9loLL2ErZqwTEVEMFEDMTFcE
-Message-ID: <CAFEAcA_a-y6g=mjXECBUEqqcMWSy1wbNY813=4SgdqKVKh8npA@mail.gmail.com>
-Subject: Re: [PATCH v6 06/14] target/arm: convert host CPU feature ifdef
- ladder to runtime checks
+Date: Tue, 13 Oct 2026 17:48:04 +0100
+X-Gm-Features: AclHuK807kaRaph7r4pkL63cFbItPKEV6IXn2fB43vXfeDZ3f4hY5r4pdBLYolc
+Message-ID: <CAFEAcA-FfUt2AmxnAqSPkca_-WBS9WBvRgzfj9f26by2FccqDA@mail.gmail.com>
+Subject: Re: [PATCH v6 04/14] meson, target/arm/mshv: Enable arm64 build & add
+ initial MSHV support
 To: Aastha Rawat <aastharawat@linux.microsoft.com>
 Cc: qemu-devel@nongnu.org, Magnus Kulke <magnuskulke@linux.microsoft.com>, 
  Wei Liu <wei.liu@kernel.org>,
@@ -104,8 +104,8 @@ Cc: qemu-devel@nongnu.org, Magnus Kulke <magnuskulke@linux.microsoft.com>,
  Richard Henderson <richard.henderson@linaro.org>, 
  =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1131;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1131.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -131,57 +131,38 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Thu, 1 Oct 2026 at 11:52, Aastha Rawat
 <aastharawat@linux.microsoft.com> wrote:
 >
-> Replace the compile-time #if/#elif preprocessor ladder in
-> aarch64_host_initfn() with runtime calls and add mshv_enabled() to it.
-> This ensures the correct accelerator is selected at runtime when
-> multiple accelerators are compiled in.
+> Enable the build of the MSHV accelerator for arm64 in the Meson build
+> system. Introduce initial files and stub implementations to support MSHV
+> for the ARM target.
 >
-> Add CONFIG_MSHV to the aarch64_cpus[] guard so that mshv accelerator can
-> register the "host" CPU type.
-
-Don't do two things in one commit, please.
-
 > Signed-off-by: Aastha Rawat <aastharawat@linux.microsoft.com>
 > ---
->  target/arm/cpu64.c | 25 +++++++++++++++----------
->  1 file changed, 15 insertions(+), 10 deletions(-)
+>  accel/mshv/mshv-all.c       | 10 ++++--
+>  hw/i386/mshv/clock.c        |  2 +-
+>  include/system/mshv.h       |  2 +-
+>  meson.build                 |  8 ++---
+>  target/arm/meson.build      |  1 +
+>  target/arm/mshv/meson.build |  7 ++++
+>  target/arm/mshv/mshv-all.c  | 81 +++++++++++++++++++++++++++++++++++++++++++++
+>  7 files changed, 103 insertions(+), 8 deletions(-)
 >
-> diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
-> index dcd0d698b3..a9e346049d 100644
-> --- a/target/arm/cpu64.c
-> +++ b/target/arm/cpu64.c
-> @@ -811,17 +811,21 @@ void aarch64_host_initfn(Object *obj)
->      }
->  #endif
->
-> +    if (mshv_enabled()) {
-> +        mshv_arm_set_cpu_features_from_host(cpu);
-> +    } else if (kvm_enabled()) {
->  #if defined(CONFIG_KVM)
-> -    kvm_arm_set_cpreg_mig_tolerances(cpu);
-> -    kvm_arm_set_cpu_features_from_host(cpu);
-> -    aarch64_add_sve_properties(obj);
-> -#elif defined(CONFIG_HVF)
-> -    hvf_arm_set_cpu_features_from_host(cpu);
-> -#elif defined(CONFIG_WHPX)
-> -    whpx_arm_set_cpu_features_from_host(cpu);
-> -#else
-> -    g_assert_not_reached();
-> +        kvm_arm_set_cpreg_mig_tolerances(cpu);
->  #endif
-> +        kvm_arm_set_cpu_features_from_host(cpu);
-> +        aarch64_add_sve_properties(obj);
-> +    } else if (hvf_enabled()) {
-> +        hvf_arm_set_cpu_features_from_host(cpu);
-> +    } else if (whpx_enabled()) {
-> +        whpx_arm_set_cpu_features_from_host(cpu);
-> +    } else {
-> +        g_assert_not_reached();
-> +    }
+> diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
+> index efe19a3914..f3f1825b0b 100644
+> --- a/accel/mshv/mshv-all.c
+> +++ b/accel/mshv/mshv-all.c
+> @@ -142,8 +142,10 @@ static int create_partition(int mshv_fd, int *vm_fd)
+>  {
+>      int ret;
+>      uint64_t pt_flags, host_proc_features;
+> -    union hv_partition_processor_xsave_features disabled_xsave_features;
+>      union hv_partition_processor_features disabled_partition_features = {0};
+> +#if defined(__x86_64__)
+> +    union hv_partition_processor_xsave_features disabled_xsave_features;
+> +#endif
 
-The reason for the ifdefs is that if CONFIG_HVF etc aren't
-set then the functions hvf_arm_set_cpu_features_from_host()
-don't exist...
+This is the common mshv file; if you are adding __x86_64__ ifdefs
+to it then something is in the wrong place and needs to be moved
+to an architecture-specific file/function.
 
 thanks
 -- PMM
