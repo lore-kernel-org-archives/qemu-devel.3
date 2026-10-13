@@ -4,106 +4,133 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3655CC6B1A
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 19:30:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E20D2CC6B12
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 19:30:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGiC9-00033w-Sg; Tue, 13 Oct 2026 15:29:53 -0400
+	id 1xGiCl-0004Kq-LM; Tue, 13 Oct 2026 15:30:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xGiBx-0002qQ-LR
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 15:29:45 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
+ id 1xGiCj-0004Ik-70; Tue, 13 Oct 2026 15:30:29 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xGiBv-0008E8-Ql
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 15:29:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1791919778;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=r6oucVaYQ3n5GBgQha9fHF0++QlyXj2T1/qY+5EmTvo=;
- b=ShyNLvu2BOb+xGADqV7r13OPxISRT43hocIl1GREqNvvBUGPxsjLuqwlpNw5s3gbFn56Jp
- 4/7Vx0t2w6MKoknAIhxkQ/vovIOfCvqUd/TVfWBz7ct8RnIpLYjMCePhnelDHhf4Cw9S2M
- Q/4/FX9FguNCTJI+dEbvhlWy6FIluS0=
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
- [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-390-MinrcFoQOOCNuWPAz-R5oA-1; Tue, 13 Oct 2026 19:29:30 +0000
-X-MC-Unique: MinrcFoQOOCNuWPAz-R5oA-1
-X-Mimecast-MFC-AGG-ID: MinrcFoQOOCNuWPAz-R5oA_1791919770
-Received: by mail-qt1-f199.google.com with SMTP id
- d75a77b69052e-5350ec54bf6so70248861cf.2
- for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 12:29:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1791919770; x=1792524570; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=r6oucVaYQ3n5GBgQha9fHF0++QlyXj2T1/qY+5EmTvo=;
- b=HBV8qTa1QEW2BkLcZ/FFrcW++Xj195303t3CahXrzIuhJsJNDs5ykaWYW+RdP76a31
- vFfAwbNcF99zOeXunJmH1PjipTJipZ8/GfmAo6dGAR1/fW7m8PLQGQM0PF6FJEJj06eR
- 7ssaxD/VRYN8JBRVxrro8NwAVRbth55IZybftwc22r1CULXs8ANFXwhdQLq50O/P9jIz
- yZ8cYM651uuVOlGfDv0XzOoN46zG3A6p3+I8akTz1I5GuhtKZV8EWDanTD/ECKaZXBK+
- IuTMeUTR7iXD8SHTIVY4jdnawjNf4ZpTh1s/Lp2i+AW6ELGvtg976YDOd8YktH+90dew
- JLVA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791919770; x=1792524570;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=r6oucVaYQ3n5GBgQha9fHF0++QlyXj2T1/qY+5EmTvo=;
- b=zeEWnuxykj8VT0QEd1gjnwYxRVKg8aFGXOcHlu+bpB+u06329vXZyls0VBvAsIxp3u
- DaX2hi6tiu6lNLKApSm2Gib+2Pz/gsJJrytD+Z2/RE7xvY0mwgIF6y2pC43DymGtEa++
- gb1+Lnew37+U+yZUgNh7GyVGdv/krs/nqiWPau8448UKz65k9x7SOy2PD8kBAm3EVR4Y
- 8ejksBseuuBasnlrxki0298ztiwe7fndfvdS0XcT9vliVHSTqvnfDOJ+lYHP4Ug4BuYk
- 1uDdEQACFSxUCBh2b2hcBM4YPEKpvsOP3tw31fVsXSR0oKw+Op8+Xg2IkzLjupa6VPqI
- 8OZQ==
-X-Gm-Message-State: AFq9FYLp3W+Yvnz8Imguw7dc44Oakah5HoOdAJqGIch+d9QDoVkfzQab
- eIyucf6YtIx/F/8eZ69HQUxBh917tTHAdgx8AUrfBr+REMduE5YsURF6i3sSTc8qNtRy440JiTv
- 1PUREX7H+eyfMBRxAlgVjoomWGSYGHyhs/0PJ+5he5jiEqfS0sx4cD5t+
-X-Gm-Gg: AYBFou2JTzXuJC+eb/PHt/X3JMUWBoY64Gy/uFbS7s45nJtbmEg1pJbrWSYtG6g19Go
- vRE5mokTq3NAK/6KWUQZIX8WfbFJl/AsAxHddYHbk8qR+3QEVXAfZ6uZDaXM3k/WiZ6DMJNY4p1
- anzbT0QoGLUkbIOT+yfk0sUDRes/YO846xY3TVZ0vgCkqU9TGS7sp2HBnoge+/U09lcGwv4cAog
- KU41XuhlPyhiPFSV6b6VjwSMnAQodsT0OMobQA+qUp839Rw+q+vitGCZOFaEq++1NWjxMjgI9VS
- 45apl0UuUsqCOKGqnUwmLJH2SV67YrVvytX/zpJ0gkpcDv0ZL4aQdQLDXqya9yciRrrLiSg=
-X-Received: by 2002:a05:622a:251a:b0:535:a5fc:3b53 with SMTP id
- d75a77b69052e-535a5fc44a6mr205204991cf.63.1791919769805; 
- Tue, 13 Oct 2026 12:29:29 -0700 (PDT)
-X-Received: by 2002:a05:622a:251a:b0:535:a5fc:3b53 with SMTP id
- d75a77b69052e-535a5fc44a6mr205204621cf.63.1791919769257; 
- Tue, 13 Oct 2026 12:29:29 -0700 (PDT)
-Received: from localhost ([142.188.212.246]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-5359b79a186sm109301131cf.20.2026.10.13.12.29.28
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 13 Oct 2026 12:29:28 -0700 (PDT)
-Date: Tue, 13 Oct 2026 15:29:27 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Fabiano Rosas <farosas@suse.de>
-Subject: Re: [PATCH 0/4] Revert obsolete & broken workaround for GNUTLS
- thread safety bug
-Message-ID: <as6Gl_UDqjmuASF6@zhexu-thinkpadt14gen5.rmtcaon.csb>
-References: <20261013133622.993935-1-berrange@redhat.com>
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
+ id 1xGiCh-0008TG-Qg; Tue, 13 Oct 2026 15:30:28 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 69DDXLAI1934188; Tue, 13 Oct 2026 19:30:06 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=o0NBUG
+ uLKT02bOi74RQQuoqyvMS80+6gkQyT6TkU+OQ=; b=jLOx8PdKWk0nLdZxis6Xof
+ 2HZncwldwUdhybXA56n343rdRE36Vbg+EA2O6a+n41EpjsW3AOJM/tS12QHD46t6
+ TRdkx9a9xL/6ePyP/cj567BtTUPMpkI7rA4OxxsNWpMnCUCmzLcIciP+SW36gWjg
+ a0TLDP6bbtED1xwAeDyLwSpehLBXedbUKHSi0tbJfxN3tQeaSaeqinej/l0dcSSc
+ VZIi7zvOyDDyCEMpfDjWvQ3sjSlH+pnbUQnB4IzDaNGCuTh1U+L6Su6G73LSR4K5
+ mHhheQybcF9Hs9L/blvizm62Mn5psbQr81lrFGFofzHoZPeUGL7vPQpDKMnhJz6g
+ ==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4h7e1w7yx4-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Tue, 13 Oct 2026 19:30:06 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 69DI0WcD3211855; Tue, 13 Oct 2026 19:30:05 GMT
+Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4h9q2yhbse-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 13 Oct 2026 19:30:05 +0000 (GMT)
+Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
+ [10.20.54.103])
+ by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 69DJTxNh16974102
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 13 Oct 2026 19:29:59 GMT
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 3AB7C2004E;
+ Tue, 13 Oct 2026 19:29:59 +0000 (GMT)
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D3EC720043;
+ Tue, 13 Oct 2026 19:29:57 +0000 (GMT)
+Received: from [0.0.0.0] (unknown [9.111.35.59])
+ by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 13 Oct 2026 19:29:57 +0000 (GMT)
+Message-ID: <0a60be0e-3e8f-46cb-914e-84dcd33236ad@linux.ibm.com>
+Date: Tue, 13 Oct 2026 21:29:57 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 14/16] tests/functional: split s390x tuxrun into tcg
+ and kvm run
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Kyle Evans <kevans@freebsd.org>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Brian Cain <brian.cain@oss.qualcomm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Brad Smith <brad@comstyle.com>, Ani Sinha <anisinha@redhat.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Thomas Huth <th.huth+qemu@posteo.eu>, Keith Busch <kbusch@kernel.org>,
+ Matthew Rosato <mjrosato@linux.ibm.com>,
+ Cornelia Huck <cohuck@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Halil Pasic <pasic@linux.ibm.com>, John Snow <jsnow@redhat.com>,
+ Eric Farman <farman@linux.ibm.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Anders Roxell <anders.roxell@linaro.org>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Warner Losh <imp@bsdimp.com>,
+ qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Yoshinori Sato <yoshinori.sato@nifty.com>,
+ Peter Xu <peterx@redhat.com>, Klaus Jensen <its@irrelevant.dk>,
+ Song Gao <gaosong@loongson.cn>, qemu-s390x@nongnu.org,
+ Laurent Vivier <laurent@vivier.eu>
+References: <20261012170330.1144446-1-alex.bennee@linaro.org>
+ <20261012170330.1144446-15-alex.bennee@linaro.org>
+Content-Language: en-US
+From: Ilya Leoshkevich <iii@linux.ibm.com>
+In-Reply-To: <20261012170330.1144446-15-alex.bennee@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20261013133622.993935-1-berrange@redhat.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDEzMDA3NiBTYWx0ZWRfX82bgxLNHXUlO
+ RrCuidwT7+2stTkjai7xwUEu6rGKWyF+vIUQePNNUByBS1kbRyIVaR6fl/oklqwT/rPg4y2a80V
+ e0scCX4j6Hw9pzdQk0Yi6ulcadDKae8=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDEzMDA3NiBTYWx0ZWRfX8RnWdjMmhaYb
+ 1UwhfvWAC4bq5f/mDhCG7jy6Vc+DkEd/TFaZT73o1bYuO23kW6mhrMTjOjK6cH4cFOFf51Upb5z
+ +vyrE//MtXWol6xFo1KJ+Wel7yHLyczilXdWq3PRklaF9JiPca79GPnVQiLcHRvygz79WJkG/Tf
+ 0CEd/rlCXUwfz5ly0/MRgsuXFAKOz+FbWsyYODcqrEfSLwpEBx02sR1/1oJcXctrc0Y82NCtFWE
+ NWIVbyxU8JCIF2lJ1DCya42O8MBZjlLjlhKEMbjgtkDVQQS2sA3kemUI/m4dgV2jZkF9gCfghiW
+ oonIlPGBglWeY5me+J3N3KlEKXT/GGJISJi4XyGyBgtP+Oy7qzD1/WPk6ThUH1Sy5uesfDN/E9g
+ aV9pjqnApmpiDXgPM8h1IYeWmtZ+PM6Duz8+uTynwBA47qWqO+Z0gAVfa/s5BSIR69Aq17ITM7X
+ i1pK2ae49FDhT2EWv1A==
+X-Authority-Analysis: v=2.4 cv=E6pYNqdl c=1 sm=1 tr=0 ts=6ace86be cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=KKAkSRfTAAAA:8
+ a=VnNF1IyMAAAA:8 a=ejQurp_klumxt2yoR9kA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-ORIG-GUID: PniiQOeDl4m4wa37e45m5l1Ip_BsnuQS
+X-Proofpoint-GUID: PniiQOeDl4m4wa37e45m5l1Ip_BsnuQS
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-10-13_01,2026-10-09_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 phishscore=0 clxscore=1015 bulkscore=0 priorityscore=1501
+ spamscore=0 adultscore=0 suspectscore=0 malwarescore=0 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2610080000 definitions=main-2610130076
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,38 +146,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Oct 13, 2026 at 02:36:18PM +0100, Daniel P. Berrangé wrote:
-> A year or so ago we introduced a workaround for a troubling GNUTLS
-> thread safety problem that hits when a bidirectional TLS channel
-> is used and "large" amounts of data are transferred triggering
-> re-keying under TLS 1.3.
-> 
-> Unfortunately that workaround turned out to not work, and since it
-> was close to final freeze we disabled it, rather than attempt last
-> minute changes.
-> 
-> Fast forward a year, and GNUTLS has shipped a fix itself and RHEL
-> at least has backported the fix to stable releases. A user who
-> is still affected can workaround it by disabling TLS 1.3, or
-> forcing use of a different cipher to avoid re-keying entirely.
-> 
-> Getting a viable workaround operating correctly in QEMU is going
-> to be challenging and fragile long term, so not worth spending
-> more time on.
-> 
-> Revert the broken workaround (which was already hardcoded to be
-> disabled at build time).
-> 
-> Daniel P. Berrangé (4):
->   Revert "migration: activate TLS thread safety workaround"
->   Revert "io: add support for activating TLS thread safety workaround"
->   Revert "crypto: add tracing & warning about GNUTLS countermeasures"
->   Revert "crypto: implement workaround for GNUTLS thread safety
->     problems"
 
-Acked-by: Peter Xu <peterx@redhat.com>
 
--- 
-Peter Xu
+On 10/12/26 19:03, Alex Bennée wrote:
+> Add an explicit "kvm" run to the tuxrun tests. Although running on an
+> s390x host would probably have defaulted to "kvm" anyway we want to
+> exercise specific features later.
+> 
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+> ---
+>   tests/functional/s390x/test_tuxrun.py | 11 +++++++++++
+>   1 file changed, 11 insertions(+)
+Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
 
 
