@@ -4,53 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C486BCC6B1A
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 19:28:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E6EBCC6B1A
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 19:29:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGiAU-0001qf-3X; Tue, 13 Oct 2026 15:28:10 -0400
+	id 1xGiAW-0001rw-69; Tue, 13 Oct 2026 15:28:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1xGiAR-0001ph-Op
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 15:28:07 -0400
+ id 1xGiAS-0001pt-3f
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 15:28:08 -0400
 Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1xGiAQ-00087A-5g
+ id 1xGiAP-00087R-JN
  for qemu-devel@nongnu.org; Tue, 13 Oct 2026 15:28:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:MIME-Version:
- Message-ID:Date:To:From:Sender:Reply-To:Cc:Content-Type:Content-ID:
- Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
- :Resent-Message-ID:In-Reply-To:References;
- bh=KsKfyXN3yxPWIIUU6+sW9kEd1sytQVFzph7gQBLDong=; b=c5FaVRcEFc7/fWYLwqImCJhWwE
- onGvhxN+IICwLdedfyxg618KahLGsBUCttjnYRoi3t9+g1Ww+tQQlUH53UBGkyFlZpOpbbQD7HKai
- LW2VlG1MOwS5osh20oQiV5DG+jtnEYPQ5Xkwmr24Y6UDCvUKvbWt8xugXDH6puXA1AOynC2i77ycG
- GDWvtx+XTN/VvHJTLFsgWCjHNmfO5V+aUUIPk/YVkzxMeV8dxFCXngIHkCSQwQZvvsotGnehLe1hq
- X0mhqk/B2pIZUeMgMZNJymFrfV4Qs9KvAXRiERxJmO+Av1c4b7R6T9uX4qU/4ggP7tjmcOJnO8cX1
- A4dNT3AYlU7h/k6VWSVJq6x7UB9S7VrWMBaRSsNbmGyEIWsR0dIfOfs8R3GqZo0ZbaDjyzrV5MsFn
- J7lu9GT+K4KTYrdS43lIY4WazfDbLsCNFRlaSJfsimMuyPIiMsyRTImpsxDJB27GBwzOPnRt5T8RS
- 2MUT/I0S1wvic1PDUVOQyCS/jLoRvSi+ArzDZSvZbqTFL6kjjeprCuEjyUPcfa38sAjP1rhoJ/4V3
- SHnv8leKhO8DD2x2pTVxjUKT4Y5d2EuqzXeXb6QNR23O3FcScRMRu0S5SDbjw195KIlzc9UDKUEz6
- eXhWapMLYkoDJhmUKh1geIkkIMzmUNJwypLDvh8DI=;
+ References:In-Reply-To:Message-ID:Date:To:From:Sender:Reply-To:Cc:
+ Content-Type:Content-ID:Content-Description:Resent-Date:Resent-From:
+ Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID;
+ bh=ospXYYhkqGJuTg88qudMZC2v3wRMLvfBTlHJhpkvrWQ=; b=JJA6LjPiRDp6d1wr5BaiZQst3G
+ gGK0J/4DkMnxs4GSjf7YG1HNmncRTZxwGYoDD9aDFnAtkMHMAnKLJfeVP3K4UsDCkWnkX3fgpFNyN
+ GVz9C84r+63HW8y7ZgEUWwD5rh28pQ5/eX4I1KfbpONEQNo0PNVFU+JmL1Dedc5/QCrsfMQICdIl3
+ WXrdkXI+lChBrvKYxNDFPN1XTwTx41vJYH4BDUqE3oDKKYYQGmiQsAibJHynWeTZufc0xsoXEAnTU
+ 1jIAMawk3oABULh4udWJ2E98tTUXHRW6uNcZ6v9LC09q4SyRS3D608U19PHaSnDRBrzl2bIKa+U28
+ LMKn5++4fJYWrpYETVVyoSuD5qKUN9PJJv2Wy7GfF2VbmxeE4qVw9dU492kaLxSZI872acFjjK+cV
+ Z86Yb/zAxpuZxPju/aQCytGwah/P512sDEmN0xzLod5p2H4/8vlE/dGvIVgIlikZawYDpcxzpveWc
+ xqEuLUStFNROrYbBQUKygajgMAgb6+PtOx2r3DbVkRYoWgZNZWxg1E1SB/WdM3cMvL+waAYvmah+w
+ 3DP+O6CvMTbtDIe7QMwkLxbR+ClYFXXZ+cYltgObZ8ip+Ufph9bUTC4pHQhKVYsPlwmuM3pnsUpW3
+ rFaNI4dsAdyPKzr2K9umFvB9I+Ipq0voSHqe55jpE=;
 Received: from [2a02:8012:2f01:0:b2a5:667b:71e2:6751]
  (helo=localhost.localdomain)
  by mail.ilande.co.uk with esmtpsa (TLS1.3) tls
  TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
- (envelope-from <mark.cave-ayland@ilande.co.uk>) id 1xGi9i-001aAM-O8
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 20:27:23 +0100
+ (envelope-from <mark.cave-ayland@ilande.co.uk>) id 1xGi9k-001aAM-Q9
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 20:27:25 +0100
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 To: qemu-devel@nongnu.org
-Date: Tue, 13 Oct 2026 20:27:32 +0100
-Message-ID: <20261013192751.196204-1-mark.cave-ayland@ilande.co.uk>
+Date: Tue, 13 Oct 2026 20:27:37 +0100
+Message-ID: <20261013192751.196204-6-mark.cave-ayland@ilande.co.uk>
 X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20261013192751.196204-1-mark.cave-ayland@ilande.co.uk>
+References: <20261013192751.196204-1-mark.cave-ayland@ilande.co.uk>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:b2a5:667b:71e2:6751
 X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: [PULL 0/5] qemu-macppc queue 20261013
+Subject: [PULL 5/5] tests/functional: Boot OpenBSD on mac99
 X-SA-Exim-Version: 4.2.1 (built Sat, 13 Feb 2021 17:57:42 +0000)
 X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
 Received-SPF: pass client-ip=2001:41c9:1:41f::167;
@@ -76,34 +78,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 615ece3c406b262996e569f29ea6eed0d81c4d8d:
+From: "Kirill A. Korinsky" <kirill@korins.ky>
 
-  Merge tag 'for-upstream' of https://gitlab.com/bonzini/qemu into staging (2026-10-09 15:49:53 +0200)
+OpenBSD device discovery exercises CTPR masking, zero decrementer
+writes, and CUDA reply timing and layout; regressions in any of these
+paths stall the guest before the installer starts.
 
-are available in the Git repository at:
-
-  https://github.com/mcayland/qemu.git tags/qemu-macppc-20261013
-
-for you to fetch changes up to 32d0ad97a528dd6c667e7f60d62de27328b00247:
-
-  tests/functional: Boot OpenBSD on mac99 (2026-10-13 06:26:28 +0100)
-
-----------------------------------------------------------------
-Fixes to allow OpenBSD to boot on the mac99 machine.
-
-----------------------------------------------------------------
-Kirill A. Korinsky (5):
-      openpic: Preserve IRQs masked by CTPR
-      ppc: Raise decrementer IRQ on zero write
-      cuda: Include command in successful ADB replies
-      cuda: Make shift register delay configurable
-      tests/functional: Boot OpenBSD on mac99
-
- hw/intc/openpic.c                    | 10 ++++----
- hw/misc/macio/cuda.c                 |  8 ++++---
- hw/ppc/ppc.c                         |  7 ++++++
+Signed-off-by: Kirill A. Korinsky <kirill@korins.ky>
+Tested-by: Anushree Mathur <anushree.mathur@linux.ibm.com>
+Tested-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Message-ID: <20261001230058.11465-6-kirill@korins.ky>
+Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+---
  tests/functional/ppc/meson.build     |  2 ++
- tests/functional/ppc/test_openbsd.py | 46 ++++++++++++++++++++++++++++++++++++
- 5 files changed, 66 insertions(+), 7 deletions(-)
+ tests/functional/ppc/test_openbsd.py | 46 ++++++++++++++++++++++++++++
+ 2 files changed, 48 insertions(+)
  create mode 100755 tests/functional/ppc/test_openbsd.py
+
+diff --git a/tests/functional/ppc/meson.build b/tests/functional/ppc/meson.build
+index ae061fe5a61..1055cdaa17e 100644
+--- a/tests/functional/ppc/meson.build
++++ b/tests/functional/ppc/meson.build
+@@ -2,6 +2,7 @@
+ 
+ test_ppc_timeouts = {
+   '40p' : 240,
++  'openbsd' : 240,
+ }
+ 
+ tests_ppc_system_quick = [
+@@ -15,6 +16,7 @@ tests_ppc_system_thorough = [
+   'bamboo',
+   'mac',
+   'mpc8544ds',
++  'openbsd',
+   'ppe42',
+   'replay',
+   'sam460ex',
+diff --git a/tests/functional/ppc/test_openbsd.py b/tests/functional/ppc/test_openbsd.py
+new file mode 100755
+index 00000000000..73fa328b1ff
+--- /dev/null
++++ b/tests/functional/ppc/test_openbsd.py
+@@ -0,0 +1,46 @@
++#!/usr/bin/env python3
++#
++# Test that OpenBSD boots on mac99 and reaches the installer.
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
++
++from qemu_test import QemuSystemTest, Asset
++from qemu_test import wait_for_console_pattern
++
++
++class OpenBSDMac99(QemuSystemTest):
++
++    ASSET_CD = Asset(
++        'https://ftp.eu.openbsd.org/pub/OpenBSD/7.9/macppc/cd79.iso',
++        '227fef3d5089d56ce8376d8bfa28181ce5b19f0eceef0a6d82d58d8e52832b24')
++
++    def test_openbsd_79_installer(self):
++        self.set_machine('mac99')
++        self.require_accelerator('tcg')
++        cdrom_path = self.ASSET_CD.fetch()
++
++        self.vm.set_console()
++        self.vm.add_args('-M', 'via=cuda,graphics=off,usb=off',
++                         '-cpu', '7400',
++                         '-accel', 'tcg,thread=single',
++                         '-smp', '1',
++                         '-m', '2g',
++                         '-nic', 'none',
++                         '-device', 'VGA',
++                         '-global', 'cuda.x-sr-delay-ns=0',
++                         '-prom-env', 'input-device=ttya',
++                         '-prom-env', 'output-device=ttya',
++                         '-cdrom', cdrom_path,
++                         '-boot', 'd',
++                         '-no-reboot')
++        self.vm.launch()
++
++        wait_for_console_pattern(self, 'OpenBSD 7.9 (RAMDISK)', 'panic:')
++        wait_for_console_pattern(
++            self,
++            '(I)nstall, (U)pgrade, (A)utoinstall or (S)hell?',
++            'panic:')
++
++
++if __name__ == '__main__':
++    QemuSystemTest.main()
+-- 
+2.47.3
+
 
