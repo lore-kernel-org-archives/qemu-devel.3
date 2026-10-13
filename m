@@ -4,113 +4,141 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2199CC6B08
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 10:12:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4EDF7CC6B08
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 10:12:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGZTh-0002gx-71; Tue, 13 Oct 2026 06:11:25 -0400
+	id 1xGZUp-0003Mc-2P; Tue, 13 Oct 2026 06:12:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1xGZTf-0002ge-NK
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 06:11:23 -0400
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1xGZTd-0000pD-OX
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 06:11:23 -0400
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-48c411d6615so1973096f8f.3
- for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 03:11:20 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xGZUn-0003M7-Oc
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 06:12:33 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xGZUl-0000zu-RD
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 06:12:33 -0400
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 69D8RIKx923086
+ for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 10:12:30 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ lXplvBc2e7L9iSAnMsXcuVcd5AsadwKMAwd5W0Jdcpk=; b=VKGBqD+Hmxxta0Lq
+ /ZuaiM/PWbNjpmsw8MNMgzJpWa6gJwHqSG0bYPTCDq5SoJ7L+x0SLWO+zl4FlpKI
+ 5BEBaWx73fOjOMDySO6VawqlJDlsEkaJYeQMXHn3/S0OMhy/JwtnDTMcKxEMDf19
+ dYwZ8twWLiXqOFGhnWEEo85DbJF44kL8N+GITYgzIj/L0vrApEQnLRpPNMD3RtbU
+ wspuUSnk65+IffibjIgo9oExVQ7Fww2TsX6RrPjlWnV9qhXjGF8/kT9TH0x493PZ
+ lU0X4vJZTc2wfO9xHZDrWR5lT4Sy2hr+cmqzbpyMopfgIkTm9TxfYhUJZDlDhgWc
+ LNwQIA==
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h98h1tcnx-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 10:12:29 +0000 (GMT)
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-93a3f673221so845308885a.0
+ for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 03:12:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1791886280; x=1792491080; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=pJdElpKWlFhUrwKPkmVz5oeKledBx1uB7YTI4ZaysUE=;
- b=ixs6bNuTvxcH5hUuOp2uGUIszjvU6FH/1jiG+Zhbmxk0QheF9xf/QljYmMFzKh7Stg
- gHrELPLZzXXZYddAP4oHsNENZsKK714JbIF6X967irRH5M4xTNZgFcQNFXtepXnm1OTt
- JJgT5SR5h4hMtSsiP6K81KkdNtaGjgti9qKjTuBzMH9qz3kT4n6Gr4179f96XmAueHmC
- xwYh/PUb6T5muAKCgLFNvLEJRRDB9qgeBg3Ddl93YgNuSx6Qv0fIkATvQ66VnNg86vOW
- c0V86kqbNnx55D2R2+xrodcQckNLa3Yos7HTPi1p86b/uDqML6WWKXvaQRExuAEhpf5t
- XbFQ==
+ d=oss.qualcomm.com; s=google; t=1791886349; x=1792491149; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=lXplvBc2e7L9iSAnMsXcuVcd5AsadwKMAwd5W0Jdcpk=;
+ b=C1+lkw+gB3JA9QqcOyBHJXcyleJozkkN7ujnVEVpKLhv5sMb6H97++0ko1kO5bExK7
+ KYalJpyViPco8n8dCw0tETk+V6YILCBQrwNZ0APr1Dk6eckw872KIPW4kEG/OFh1uG+v
+ KAo4xLoEdw02kyM4wpZIHomd22hTL8I+XOaZQu+O2Eme496vevh4MIt2U81aEBjYwWxe
+ oXdnthDZuZF58Y6Vmt2SThdCEX+DX6VQt4ev0H8NPTwWaf7k55G0i4W8QwfDRT4VbXZS
+ tr+tCGnPBYqte1ltd/A7ojFkXQ7vzoslQw7bMg1uelwFt7ns+CIRLWQVSAZYm+BUXgRs
+ roRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791886280; x=1792491080;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=pJdElpKWlFhUrwKPkmVz5oeKledBx1uB7YTI4ZaysUE=;
- b=1L66a1HTgnhetoCdluCDlpbRUXYJ90jfL80qSh38hRaGpPxwRSDbI/J+biJPpI0JZo
- XAXl+xAVZFKKtEOhIDg2tO7uSKqNRiESO1TEXvQWPmdwUXbBpAp4aH9w2r6pHj1l/QEL
- YiSInEAHSJK6GjwWZZKwPzjApQTOVNwSmV0li5M8/uLP3cA1GAilTqdWPYWgil3JXvn4
- j5cU9kFLB9bmfQr6jyIhz1l54y1bkPRHsTLrTh02n0ImcC+AYD9NxEBUxxs6gSYTY+/+
- zSxTYypioJFy1lozzPYL0Dr+ospmIH8nkU3BtSwPCFvqYsA+xV6nYnlQ2ka8S/C4/8F9
- l6/w==
-X-Gm-Message-State: AFq9FYLp6gVW86ZVbZ+PX4p/7ebJcNPdvhOnp2fr8c7k86Gc2PAzbYQJ
- j+J/32eUKbwcEMnc9dfbAlOvexqpwLQmohJPRkpENYaUfXBSfP1Q311QfvkD/70xXcg=
-X-Gm-Gg: AYBFou05xRr96vN09kHjQjg8w/hkzJklpILq9M3Wi8IzZu3rmoIyMwZ2Y8pDUsqNS1C
- rxxKCm4GyJYFmdTIx99NWDcs5lF0sVXwvCHnQRTMmvVBairua6RK8kab1WiA8aLW3gcO53disrB
- XMIEPi5zLho7NXC+m5twwz7OWdEDW8uMS+A2uolcYOnTWD9K5oxpE6GeJioj+DRfaAOwKf2pD2q
- Dmba9BrdCzJYjujuCt/bH3pmB1yxaaAlFHIXlteOtgket4JfrQw1wGIRQ+TB98mWC4eJID+2QwO
- CTOjIMhU8dZTdP/8A+4LO1gUXJRRrOrKaJF8fiDatWJpxYDpsuasohxEDazYalUedJeKEmZJCfS
- 7EGz2EXDxzAUSnypxj3BVLxmlhyxNXKT2uu6znYDJCpHy+cXV7htsukJg9a3rCCDuQjB7+mz4LK
- 4rIKambVy4KJOfQxZvPVNIO3HqbGGG0klEWfZe8X21oF2VNrRylyVeUeTG/i5BM8H197CMNHLso
- 7pcyoHb
-X-Received: by 2002:a05:6000:491c:b0:488:8a5d:ffcc with SMTP id
- ffacd0b85a97d-48dba9e6715mr23366203f8f.13.1791886279366; 
- Tue, 13 Oct 2026 03:11:19 -0700 (PDT)
-Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48de0bc7299sm3577424f8f.53.2026.10.13.03.11.16
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 13 Oct 2026 03:11:16 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 79BA45F8E5;
- Tue, 13 Oct 2026 11:11:15 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@oss.qualcomm.com>,  Zhao Liu <zhao1.liu@intel.com>,  Kyle Evans
- <kevans@freebsd.org>,  Brian Cain <brian.cain@oss.qualcomm.com>,  Richard
- Henderson <richard.henderson@linaro.org>,  Brad Smith <brad@comstyle.com>,
- Ani Sinha <anisinha@redhat.com>,  Christian Borntraeger
- <borntraeger@linux.ibm.com>,  Thomas Huth <th.huth+qemu@posteo.eu>,  Keith
- Busch <kbusch@kernel.org>,  Matthew Rosato <mjrosato@linux.ibm.com>,
- Cornelia Huck <cohuck@redhat.com>,  Paolo Bonzini <pbonzini@redhat.com>,
- Halil Pasic <pasic@linux.ibm.com>,  John Snow <jsnow@redhat.com>,  Eric
- Farman <farman@linux.ibm.com>,  Pierrick Bouvier
- <pierrick.bouvier@oss.qualcomm.com>,  Anders Roxell
- <anders.roxell@linaro.org>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>,  "Michael S. Tsirkin" <mst@redhat.com>,
- Warner Losh <imp@bsdimp.com>,  qemu-arm@nongnu.org,  Peter Maydell
- <peter.maydell@linaro.org>,  Yoshinori Sato <yoshinori.sato@nifty.com>,
- Peter Xu <peterx@redhat.com>,  Klaus Jensen <its@irrelevant.dk>,  Song
- Gao <gaosong@loongson.cn>,  qemu-s390x@nongnu.org,  Laurent Vivier
- <laurent@vivier.eu>,  Ilya Leoshkevich <iii@linux.ibm.com>
-Subject: Re: [PATCH v2 06/16] tests/functional: update x86_64 tuxrun images
-In-Reply-To: <as3_pJ-KTtbVMilK@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
- =?utf-8?Q?=C3=A9=22's?= message of
- "Tue, 13 Oct 2026 10:53:40 +0100")
-References: <20261012170330.1144446-1-alex.bennee@linaro.org>
- <20261012170330.1144446-7-alex.bennee@linaro.org>
- <as3mM9XesjzPA0o4@redhat.com> <87cxtegcy6.fsf@draig.linaro.org>
- <as3_pJ-KTtbVMilK@redhat.com>
-User-Agent: mu4e 1.14.4-pre6; emacs 30.1
-Date: Tue, 13 Oct 2026 11:11:15 +0100
-Message-ID: <871p9thpvg.fsf@draig.linaro.org>
+ d=1e100.net; s=20260707; t=1791886349; x=1792491149;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=lXplvBc2e7L9iSAnMsXcuVcd5AsadwKMAwd5W0Jdcpk=;
+ b=XDfcmIgcSav29gCczqGkrm29dW5wknNq7yRDe3gjfSQvFbaUUH4ybwQkX1B5nP7T2m
+ ZnAIZKHaBGK71RmCp+Fja20cz9+YPteo/qaM69pEJZ2fRNaMJJ2oDFzZGUN2UAUrlnz6
+ 7YMJEG2v8Ug8nFvcB/MlZmbKVvhRWtYx5piDgF+ui9+FnQOC7K1qPN15gNgNzdiXn2H3
+ jz0tOHwBR2YvRWDxBpmTJAELq95UhIYge1AXg1HKLz0ErBeRVehhGMWk4NOaCuO9gI3p
+ VMljziQ0yZpKcLYx/f8/1ilhyZt6Z9TGNSAwfS6kT2gqD/M0ZOgSwK8MCsOMIZPIcNNW
+ SNQw==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBwvcY59NkDntbbvr8OiNfRXzVY8k58AgX8Of8jAWcmRvy7aj+fwTQuApOmYjM2cu+wocS3f517Znf3B@nongnu.org
+X-Gm-Message-State: AFq9FYLO74adXtv5WBbynJFio7DaKRhh0ElaGkUjgeE9qf+Vf49q4egf
+ J9Ps/B2/EIkkOUJRswfIEEoBoMaRKo+tIoqHKx64ryh1F61MdnRCcBwoccL/3LkDICMMJt/OcSq
+ bYmEQ8xzI/qcJ5Z7aTuLbIaLIb8lYKfGfxBeQgDds8gzgkp+zir1Spu3TWtDzswHGoTpe
+X-Gm-Gg: AYBFou2Wmc5cDKXvnlqIrJ62E2z8LpHBd+gLjKTgRuEyKFuol8fKwrsUMxJXkcu5Yqe
+ Izn92HYUFcJZsEty44KRzzep9c1QgmrxzPXLqFDv7mlY2sYvGbDXtCMFM7gfCT692vG/4CXDGOm
+ g68L13HHC1YhbnqIQRH3s1uMp9YKhM+h9s5/6lCn/+FuGmEdY8YNp9KJyLTTITeirTqOb5T1Ghe
+ RRlv2PS4l/S2JRjwhm8aIUQ5wV3A0SZx9xrm7zhLMXf+Xierbq68av03wnI1THtk5jX4uYONqa2
+ Fca/pKPRKTUqgDoqgokHldvHu04U4ZwUla1XFL+SVIA/T7qCyOkqCS+sehq6xtzgbfgkzLKmp+V
+ 7G92Jk3tNRcKpQmcrKS+TkqACrd9tfE7EuQ==
+X-Received: by 2002:a05:620a:890c:b0:93e:c12c:fbbf with SMTP id
+ af79cd13be357-93ec12d0fcemr1771701585a.76.1791886348813; 
+ Tue, 13 Oct 2026 03:12:28 -0700 (PDT)
+X-Received: by 2002:a05:620a:890c:b0:93e:c12c:fbbf with SMTP id
+ af79cd13be357-93ec12d0fcemr1771698885a.76.1791886348167; 
+ Tue, 13 Oct 2026 03:12:28 -0700 (PDT)
+Received: from [192.168.69.210] (pmd666.hd.free.fr. [88.187.86.199])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4a18c198134sm356381175e9.15.2026.10.13.03.12.27
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 13 Oct 2026 03:12:27 -0700 (PDT)
+Message-ID: <8a030bca-4697-405a-aaa8-017baed8ab55@oss.qualcomm.com>
+Date: Tue, 13 Oct 2026 12:12:26 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 56/86] hw/intc/arm_gicv5: Implement IRS_VMAP_VMR
+Content-Language: en-US
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+References: <20261013083933.1024405-1-peter.maydell@linaro.org>
+ <20261013083933.1024405-57-peter.maydell@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <20261013083933.1024405-57-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Authority-Analysis: v=2.4 cv=VqC2kO2n c=1 sm=1 tr=0 ts=6ace040d cx=c_pps
+ a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
+ a=KKAkSRfTAAAA:8 a=iiB_1M5JUh-BO4UfUGIA:9 a=QEXdDO2ut3YA:10
+ a=PEH46H7Ffwr30OY-TuGO:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-GUID: 6aig3ZVkicr4doqWk-fb3DMSkPRYKSOl
+X-Proofpoint-ORIG-GUID: 6aig3ZVkicr4doqWk-fb3DMSkPRYKSOl
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDEzMDA0MCBTYWx0ZWRfXxY+v+o2xRgWn
+ HvHbxYaKU2AvCGFM3TpPdQypG67fUNwM5k58mvCkmibf55YPHHhNeWu0/5wjyNZ0v1VHCYazfAS
+ /mxWt5Y0hLXcJOAB63GQLautF1us6kQ=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDEzMDA0MCBTYWx0ZWRfX4egM6sO7rQ9R
+ RBfJAfyoDphoCi++Py5/XqkwbjLbGm5km/faobkjxwmkkIzWzD6tyqwsU2NTFgH0Kpda5JsbYmo
+ SEnbwUfxe+AXyGZc8FL1/kVk3aFFEfYrs304xCreI5aWwngBjf9ogP3JcCpRqKZCNo8iFw42hse
+ T6CabOU+3dYBfk7BnM0Ay2JML6flwhozpcRolP2BscXYVo1VxjXjrdUzdUCiDZZFl1i7Xw7Vxjr
+ WF+PtH0q/gCVPX58M+6SNDnFJ4GmEsAC7nQ1QdARXrGKE6+virdIECII1fzH5tLdDo8Hb2zAzLv
+ 8MtoJ3jq3iV1a9Sg5P5vMYi1wwYKVmNK1w2rTXyVhvhBYxNsOOcuYuoM/lWx9pRBUy1Vv0L/9D7
+ FEzyQ4b1XxwwuAwFcGHpQkFNhWzQZ1TInGea06GFBDoPGHrI0t6dMscj9kSnIerLOc38t9mTLOD
+ 1mRGhzUgF76xUyYUSOA==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-10-13_01,2026-10-09_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 suspectscore=0 bulkscore=0 lowpriorityscore=0 spamscore=0
+ adultscore=0 phishscore=0 priorityscore=1501 malwarescore=0 impostorscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2610080000 definitions=main-2610130040
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,95 +154,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+On 13/10/26 10:39, Peter Maydell wrote:
+> The IRS_VMAP_VMR register lets the guest mark a VM as valid.  This is
+> a 64-bit register similar in operation to IRS_VMAP_L2_VMTR.
+> 
+> We are eventually going to want to cache the information in a VM
+> table entry, but for the moment implement the "make valid" operation
+> as simply writing 1 to the VALID bit in the L2 VMTE.
+> 
+> Note that unlike many of the other address fields in GICv5 data
+> structures, we don't need to clear any of the low bits in
+> L1_VMTE.L2_ADDR beyond masking with R_L1_VMTE_L2_ADDR_MASK.  This is
+> because a level 2 VMT is always 4KB and so the alignment is fixed;
+> the mask clears the low 12 bits, enforcing 4KB alignment.
+> 
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+>   hw/intc/arm_gicv5.c                | 94 ++++++++++++++++++++++++++++++
+>   hw/intc/arm_gicv5_common.c         |  1 +
+>   hw/intc/trace-events               |  1 +
+>   include/hw/intc/arm_gicv5_common.h |  1 +
+>   include/hw/intc/arm_gicv5_regs.h   | 21 +++++++
+>   5 files changed, 118 insertions(+)
 
-> On Tue, Oct 13, 2026 at 10:35:45AM +0100, Alex Benn=C3=A9e wrote:
->> Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
->>=20
->> > On Mon, Oct 12, 2026 at 06:03:20PM +0100, Alex Benn=C3=A9e wrote:
->> >> We now split the fetching of the buildroot image from the kernel
->> >> itself. This is because we will want to access additional metadata in
->> >> future tests.
->> >
->> > This commit message appears unrelated to the patch content or subject
->> > line.
->>=20
->> The kernel is now coming from: https://storage.tuxboot.com/kernels/6.18.=
-54/
->> instead of part of the buildroot build in https://storage.tuxboot.com/bu=
-ildroot/20260924/x86_64/
->
-> Ah ok, I misunderstood what the commit message was trying to say,
-> though I'm still underclear how the before/after  bzImage differ
-> from each other ?
->
-> Is the  https://storage.tuxboot.com/kernels/6.18.54/ the
-> authoritative input for the process that produces
->  https://storage.tuxboot.com/buildroot/20260924/x86_64/  ?
 
-No - they are different builds, but the kernel builds have had the
-symbol generation turned on and the buildroot images are generic anyway
-which is why they still work together.
+> @@ -1472,6 +1531,22 @@ static bool config_readl(GICv5 *s, GICv5Domain domain, hwaddr offset,
+>               *data = 0;
+>           }
+>           return true;
+> +    case A_IRS_VMAP_VMR:
+> +        if (gicv5_domain_has_virt(cs, domain) && s->vmt_config[domain].valid) {
+> +            *data = extract64(cs->irs_vmap_vmr[domain], 0, 32);
+> +        } else {
+> +            /* RAZ/WI if no virt or no VM table */
+> +            *data = 0;
+> +        }
+> +        return true;
+> +    case A_IRS_VMAP_VMR + 4:
+> +        if (gicv5_domain_has_virt(cs, domain) && s->vmt_config[domain].valid) {
+> +            *data = extract64(cs->irs_vmap_vmr[domain], 32, 32);
+> +        } else {
+> +            /* RAZ/WI if no virt or no VM table */
+> +            *data = 0;
+> +        }
+> +        return true;
+>       case A_IRS_SPI_STATUSR:
+>           /*
+>            * QEMU writes to IRS_SPI_{CFGR,DOMAINR,SELR,VMR} take effect
+> @@ -1604,6 +1679,14 @@ static bool config_writel(GICv5 *s, GICv5Domain domain, hwaddr offset,
+>                                  deposit64(cs->irs_vmap_l2_vmtr[domain],
+>                                            32, 32, data));
+>           return true;
+> +    case A_IRS_VMAP_VMR:
+> +        irs_vmap_vmr_write(s, domain,
+> +                           deposit64(cs->irs_vmap_vmr[domain], 0, 32, data));
+> +        return true;
+> +    case A_IRS_VMAP_VMR + 4:
+> +        irs_vmap_vmr_write(s, domain,
+> +                           deposit64(cs->irs_vmap_vmr[domain], 32, 32, data));
+> +        return true;
+>       case A_IRS_SPI_SELR:
+>           cs->irs_spi_selr[domain] = data;
+>           return true;
+> @@ -1704,6 +1787,14 @@ static bool config_readll(GICv5 *s, GICv5Domain domain, hwaddr offset,
+>               *data = 0;
+>           }
+>           return true;
+> +    case A_IRS_VMAP_VMR:
+> +        if (gicv5_domain_has_virt(cs, domain) && s->vmt_config[domain].valid) {
+> +            *data = cs->irs_vmap_l2_vmtr[domain];
 
->
-> I see the later patch is pulling in vmlinuz.xz from the
-> former location, so I guess you're trying to just use
-> the common location for both kernel images ?=20
->
->>=20
->> >
->> >>=20
->> >> Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
->> >> Message-ID: <20260930164649.433573-10-alex.bennee@linaro.org>
->> >> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
->> >> ---
->> >>  tests/functional/x86_64/test_tuxrun.py | 8 ++++----
->> >>  1 file changed, 4 insertions(+), 4 deletions(-)
->> >>=20
->> >> diff --git a/tests/functional/x86_64/test_tuxrun.py b/tests/functiona=
-l/x86_64/test_tuxrun.py
->> >> index 729f6447d05..026b373accb 100755
->> >> --- a/tests/functional/x86_64/test_tuxrun.py
->> >> +++ b/tests/functional/x86_64/test_tuxrun.py
->> >> @@ -17,11 +17,11 @@
->> >>  class TuxRunX86Test(TuxRunBaselineTest):
->> >>=20=20
->> >>      ASSET_X86_64_KERNEL =3D Asset(
->> >> -        'https://storage.tuxboot.com/buildroot/20241119/x86_64/bzIma=
-ge',
->> >> -        'f57bfc6553bcd6e0a54aab86095bf642b33b5571d14e3af1731b18c87ed=
-5aef8')
->> >> +        'https://storage.tuxboot.com/kernels/6.18.54/x86_64/bzImage',
->> >> +        '24a3ade610c2cc426ff821050de8a35930b0371357d94cc2c334abac665=
-8552b')
->> >>      ASSET_X86_64_ROOTFS =3D Asset(
->> >> -        'https://storage.tuxboot.com/buildroot/20241119/x86_64/rootf=
-s.ext4.zst',
->> >> -        '4b8b2a99117519c5290e1202cb36eb6c7aaba92b357b5160f5970cf5fb7=
-8a751')
->> >> +        'https://storage.tuxboot.com/buildroot/20260924/x86_64/rootf=
-s.ext4.zst',
->> >> +        '8e310455b0244414ccff29c507f7ccfd4032e3587cc405e49ab0322738e=
-3e27c')
->> >>=20=20
->> >>      def test_x86_64(self):
->> >>          self.require_accelerator("tcg")
->> >> --=20
->> >> 2.47.3
->> >>=20
->> >
->> > With regards,
->> > Daniel
->>=20
->> --=20
->> Alex Benn=C3=A9e
->> Virtualisation Tech Lead @ Linaro
->>=20
->
-> With regards,
-> Daniel
+irs_vmap_l2_vmtr[] or irs_vmap_vmr[]?
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+> +        } else {
+> +            /* RAZ/WI if no virt or no VM table */
+> +            *data = 0;
+> +        }
+> +        return true;
+>       }
+>   
+>       return false;
+> @@ -1722,6 +1813,9 @@ static bool config_writell(GICv5 *s, GICv5Domain domain, hwaddr offset,
+>       case A_IRS_VMAP_L2_VMTR:
+>           irs_vmap_l2_vmtr_write(s, domain, data);
+>           return true;
+> +    case A_IRS_VMAP_VMR:
+> +        irs_vmap_vmr_write(s, domain, data);
+> +        return true;
+>       }
 
