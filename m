@@ -4,50 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04692CC6B12
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 18:19:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A82B3CC6B1A
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 18:19:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGh5Y-0007Ci-N1; Tue, 13 Oct 2026 14:19:00 -0400
+	id 1xGh5E-000716-P9; Tue, 13 Oct 2026 14:18:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1xGh4r-0006xz-As
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 14:18:17 -0400
+ id 1xGh4m-0006xI-Bv
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 14:18:13 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1xGh4m-00015M-Bp
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 14:18:15 -0400
+ id 1xGh4i-00014L-Hc
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 14:18:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1791915490;
+ s=mimecast20190719; t=1791915487;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=cy1sHM4DN9NkFwXyyz8pwoaPUezGhyNbcW8POsu24oY=;
- b=QlQ/9N7X/+d/3UpYHyBXidepL3Prj+GdRKaEMnGuxDJqJfLTB2bd1X154P4RqmYZyyEsy0
- jI37e8J9aAOq2pyjN9jYV8+S7Dgi8r1ZBo/Jg7cQK+04MwOuNEzZcPwJmto6EAN42t0Z7r
- oMbUuUgADWlp6DpIkUi1Il5yWYq8PmM=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=U8EFpisl4E7965xetZNyNyjvdSnI2AFbeVIm/IiRNTY=;
+ b=Q6iLR4S3V8BgxGDG1zyAJIUpoASVv13PBpgEGvFzzyRLnrro9pQKm42ueDteH3B2SA68ML
+ bGSrKSZklqjFLzLlMe5K2Bu9LCoKMmQ2czKXFWu25LDNzdtKllpdogMH1Dw3LSVGoapOTr
+ FefEuNppHMoPbaxfMs3gBCj5Be/Xyns=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-61-zbeQCWICNX2BZzwFaIoQdA-1; Tue,
- 13 Oct 2026 18:18:07 +0000
-X-MC-Unique: zbeQCWICNX2BZzwFaIoQdA-1
-X-Mimecast-MFC-AGG-ID: zbeQCWICNX2BZzwFaIoQdA_1791915486
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-561-6ZmW-E3jNGWE0zZ1DGIXmQ-1; Tue,
+ 13 Oct 2026 18:17:58 +0000
+X-MC-Unique: 6ZmW-E3jNGWE0zZ1DGIXmQ-1
+X-Mimecast-MFC-AGG-ID: 6ZmW-E3jNGWE0zZ1DGIXmQ_1791915477
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0D5281955EB9; Tue, 13 Oct 2026 18:18:06 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 161201945CB0; Tue, 13 Oct 2026 18:17:57 +0000 (UTC)
 Received: from localhost (headnet03.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.114])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id B5807180057E; Tue, 13 Oct 2026 18:18:05 +0000 (UTC)
+ id A4116180057E; Tue, 13 Oct 2026 18:17:55 +0000 (UTC)
 From: Stefan Hajnoczi <stefanha@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
@@ -58,10 +58,9 @@ Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  <qemu-block@nongnu.org>, Hanna Reitz <hreitz@redhat.com>,
  Benjamin Marzinski <bmarzins@redhat.com>,
  Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [PATCH v2 7/8] scsi: clean up persistent reservation state after
- migration
-Date: Tue, 13 Oct 2026 14:17:51 -0400
-Message-ID: <20261013181752.1299456-8-stefanha@redhat.com>
+Subject: [PATCH v2 1/8] pr-manager-helper: fix sense buffer overflow
+Date: Tue, 13 Oct 2026 14:17:45 -0400
+Message-ID: <20261013181752.1299456-2-stefanha@redhat.com>
 In-Reply-To: <20261013181752.1299456-1-stefanha@redhat.com>
 References: <20261013181752.1299456-1-stefanha@redhat.com>
 MIME-Version: 1.0
@@ -91,127 +90,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Live migration of persistent reservations is designed to work without
-coordination between the source and destination. The destination uses
-the PREEMPT command to atomically take over the reservation or
-unregister keys belonging to the source. This approach avoids race
-conditions where other nodes in the cluster might acquire the
-reservation and it minimizes communication during the downtime window.
+scsi_build_sense() assumes the sense buffer is SCSI_SENSE_LEN (18) bytes
+long, so the caller's buffer with an arbitrary size cannot be used. Use
+our own sense buffer (resp.sense) as an intermediate buffer and honor
+the caller's sense buffer size (io_hdr->mx_sb_len).
 
-While this works at the SCSI level, this approach is incomplete when
-using multipathd. Multipathd tracks registered keys and automatically
-registers them again when paths come up. It is unaware that the
-destination has preempted the reservation and therefore it will still
-attempt to register the key on the source host.
+This is triggered when scsi-generic.c:scsi_SG_IO() calls blk_ioctl()
+with an 8-byte sense buffer. There does not appear to be a way for the
+guest to trigger this buffer overflow directly since
+SCSIRequest->sense[] is 252 bytes long.
 
-Use the new PR_HELPER_CLEANUP command to communicate with multipathd on
-the source after migration completes successfully. The effect is similar
-to REGISTER AND IGNORE EXISTING KEY, except it also discards
-multipathd's state so that the source will no longer attempt to register
-the key.
-
-PR_HELPER_CLEANUP is a QEMU-internal command that is rejected by
-scsi_req_new(), so note that this command is not exposed to guests
-although direct blk_aio_ioctl(SG_IO) calls can make use of it.
-
-Buglink: https://redhat.atlassian.net/browse/RHEL-274966
+Fixes: 9bad2a6b9d0a ("scsi: add persistent reservation manager using qemu-pr-helper")
 Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+Reviewed-by: Eric Blake <eblake@redhat.com>
 ---
- include/hw/scsi/scsi.h |  1 +
- hw/scsi/scsi-disk.c    | 21 ++++++++++++++++++++-
- hw/scsi/scsi-generic.c | 29 +++++++++++++++++++++++++++++
- 3 files changed, 50 insertions(+), 1 deletion(-)
+ scsi/pr-manager-helper.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/include/hw/scsi/scsi.h b/include/hw/scsi/scsi.h
-index 3eab339b0d2..a2f6f0be7fc 100644
---- a/include/hw/scsi/scsi.h
-+++ b/include/hw/scsi/scsi.h
-@@ -256,6 +256,7 @@ SCSIDevice *scsi_device_get(SCSIBus *bus, int channel, int target, int lun);
- /* scsi-generic.c. */
- extern const SCSIReqOps scsi_generic_req_ops;
- bool scsi_generic_pr_state_preempt(SCSIDevice *s, Error **errp);
-+bool scsi_generic_pr_state_cleanup(SCSIDevice *s, Error **errp);
+diff --git a/scsi/pr-manager-helper.c b/scsi/pr-manager-helper.c
+index 53432e6d606..26ef3876f0e 100644
+--- a/scsi/pr-manager-helper.c
++++ b/scsi/pr-manager-helper.c
+@@ -234,10 +234,11 @@ static int pr_manager_helper_run(PRManager *p,
  
- /* scsi-disk.c */
- #define SCSI_DISK_QUIRK_MODE_PAGE_APPLE_VENDOR             0
-diff --git a/hw/scsi/scsi-disk.c b/hw/scsi/scsi-disk.c
-index 3d88e57eded..6341089ddf2 100644
---- a/hw/scsi/scsi-disk.c
-+++ b/hw/scsi/scsi-disk.c
-@@ -2773,13 +2773,32 @@ static void scsi_block_migration_failed(SCSIDiskState *s)
+ out:
+     if (ret < 0) {
+-        int sense_len = scsi_build_sense(io_hdr->sbp,
++        int sense_len = scsi_build_sense(resp.sense,
+                                          SENSE_CODE(LUN_COMM_FAILURE));
+         io_hdr->driver_status = SG_ERR_DRIVER_SENSE;
+         io_hdr->sb_len_wr = MIN(io_hdr->mx_sb_len, sense_len);
++        memcpy(io_hdr->sbp, resp.sense, io_hdr->sb_len_wr);
+         io_hdr->status = CHECK_CONDITION;
      }
- }
- 
-+/*
-+ * Unregister keys on the source after migration since the destination has
-+ * preempted and taken over. This cleanup is not necessary at the SCSI level
-+ * but multipathd tracks registered keys and must be informed that this host no
-+ * longer wishes to be registered.
-+ */
-+static void scsi_block_migration_done(SCSIDiskState *s)
-+{
-+    SCSIDevice *d = &s->qdev;
-+    Error *local_err = NULL;
-+
-+    if (!scsi_generic_pr_state_cleanup(d, &local_err)) {
-+        error_prepend(&local_err, "scsi-block migration done: ");
-+        warn_report_err(local_err);
-+    }
-+}
-+
- static int scsi_block_migration_notifier(NotifierWithReturn *notifier,
-                                          MigrationEvent *e, Error **errp)
- {
-     SCSIDiskState *s =
-         container_of(notifier, SCSIDiskState, migration_notifier);
- 
--    if (e->type == MIG_EVENT_FAILED) {
-+    if (e->type == MIG_EVENT_DONE) {
-+        scsi_block_migration_done(s);
-+    } else if (e->type == MIG_EVENT_FAILED) {
-         scsi_block_migration_failed(s);
-     }
-     return 0;
-diff --git a/hw/scsi/scsi-generic.c b/hw/scsi/scsi-generic.c
-index 153a5275567..e41e973aa92 100644
---- a/hw/scsi/scsi-generic.c
-+++ b/hw/scsi/scsi-generic.c
-@@ -652,6 +652,35 @@ bool scsi_generic_pr_state_preempt(SCSIDevice *s, Error **errp)
-     return true;
- }
- 
-+/* Clean up keys on source after migration */
-+bool scsi_generic_pr_state_cleanup(SCSIDevice *s, Error **errp)
-+{
-+    SCSIPRState *pr_state = &s->pr_state;
-+    uint8_t cmd[10] = {
-+        PR_HELPER_CLEANUP, /* OPCODE */
-+    };
-+    int ret;
-+
-+    WITH_QEMU_LOCK_GUARD(&pr_state->mutex) {
-+        if (pr_state->key == 0) {
-+            return true; /* nothing to do */
-+        }
-+    }
-+
-+    ret = scsi_SG_IO(s->conf.blk, SG_DXFER_TO_DEV, cmd, sizeof(cmd), NULL, 0,
-+                     s->io_timeout, errp);
-+    if (ret < 0) {
-+        error_prepend(errp, "pr-helper CLEANUP failed: ");
-+        return false;
-+    }
-+
-+    WITH_QEMU_LOCK_GUARD(&pr_state->mutex) {
-+        pr_state->key = 0;
-+        pr_state->resv_type = 0;
-+    }
-+    return true;
-+}
-+
- static void scsi_read_complete(void * opaque, int ret)
- {
-     SCSIGenericReq *r = (SCSIGenericReq *)opaque;
+     qemu_mutex_unlock(&pr_mgr->lock);
 -- 
 2.56.0
 
