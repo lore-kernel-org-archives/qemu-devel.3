@@ -4,141 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BE99CC6B0F
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 21:17:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36812CC6B0F
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 21:31:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGjri-0007nz-S6; Tue, 13 Oct 2026 17:16:54 -0400
+	id 1xGk5X-00032j-Pg; Tue, 13 Oct 2026 17:31:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xGjrh-0007nf-IC
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 17:16:53 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xGjrf-0001oH-KS
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 17:16:53 -0400
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69DHNLPj2332976
- for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 21:16:50 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 3SX67Zcp+lSzSIiZwkh92ubZw0TmTBoJ3RJIwg+NSUY=; b=UioxSNjEsrOGj+lF
- smYdw2c/huY59DztNPwrMwvs1fIqVpm+toMxy0ji/vXdhK+lIQttxDrS+xm7Vq7k
- TUSprDNKPL67gsFfDUL4umTeFY6Nl7JI9cC+dWSSovkQMtJyYs0EmSmW5VShTnD9
- EZDmD4CFgy6zSTSys8ar3LUlumPquQ+wlOIMDI7oo38nu/46qiallqGr5pd4ZSeX
- s0qMlOevuK2xBrH1ONYC9c2rmKhaTBX35ezMAZJ0wgTv0pC7gCOawSZe1QWwDZvQ
- eczgmHhr5CtUVpAEug7zvRKP/zWnlHj38jJxfSgx49PM/2uRFX1cIg7KUrghgYTC
- TpwzYw==
-Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com
- [209.85.215.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h9s0hgycg-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 21:16:49 +0000 (GMT)
-Received: by mail-pg1-f197.google.com with SMTP id
- 41be03b00d2f7-cd0cf3b1c70so300557a12.3
- for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 14:16:49 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
+ id 1xGk5G-00031U-Pv
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 17:30:57 -0400
+Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
+ id 1xGk5D-0003OH-At
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 17:30:52 -0400
+Received: by mail-ed1-x52c.google.com with SMTP id
+ 4fb4d7f45d1cf-6acb57c2b88so433463a12.2
+ for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 14:30:50 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1791927049; cv=none;
+ d=google.com; s=arc-20260327;
+ b=ZPzHF8zg04Fyx3MucQ6Z4XM9b6ZXfJ0KJEWQeH6zZ/jf7PfY5wdp2Tgo+6p8AmJeQ3
+ FMpHwV0/SbSLtiW8p8dRU6n3vuwNeNlQAGGWigklW+HxwbGiSL3t9KLD6xn/98jwJFao
+ 4rF84/9oXfZ6e3r9LEOKnI7IY8gyMSWR8ZIDGjdmRqPOgrvc+SoLEzHQe5QHSOxGdDOg
+ +J+QIzwMf6ANtkb0Ew3fNgUF8KBe1MI21wdq+rG8NgzdKgYq4Tc7oEJmdMFs7M/I30Kg
+ BcrisZPeQntxaLDg0i771cceZvMHLcWRTKjh0Tt6wZWbof/nrhWsbn1hxFmS2WggnLxv
+ +GWw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :reply-to:in-reply-to:references:mime-version:dkim-signature;
+ bh=ALFIV5O26nsSYvUHOV0g+DM9+uPlrYTCUhfdA8irO6E=;
+ fh=QKdANP/nO7rvHn5kIgspvwzO+mszMlwslD4O4YvMNsA=;
+ b=Ouwt9OESjkDJars1Zle+8APWmsVAcYQQF10dIodAjyy+0cBLbwQ7xCr64ZssGUjRX0
+ /z+Pr3g954j9UrV+JVqbItgKCqHmQ6KnI4brp0RJeVhCttlR/pKYFzfwJYSXdtSY1b/8
+ DZdSE8EI8GaX8j7cazVbnOmrzw24aN+EFxWiUb/UFmeP3YYx8QbOPwkUTWf/P2ohfXHr
+ dVEOnRMt8MDM5PPZgpJ/4hYHQ7X1ro4xn9VSHFN6KDlHR3BOPImrXOqdTFW2TinX/nhQ
+ QckRpd0SdpnocwvWRdmV9DAusklFZ1OWhjNlJBjT5ilaPYJOYkzAHXseDYGyVc8PkXka
+ KxbQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1791926209; x=1792531009; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=3SX67Zcp+lSzSIiZwkh92ubZw0TmTBoJ3RJIwg+NSUY=;
- b=I7YV5Q6WZEEKCP2clXGR4zZxnJfig6cc7RXAaab6yBkQXJthYnVPhGlr/mHNYTK7Pd
- JNZHhy6PHAiHQgwlCc2ycy0CY65iSH9synW72QCBtADW9iJ4oYUTl1olBLvyekvMKr6O
- SWsWA2ZMF1kq+0xQLkDARkMK5T4ZSNJjoFDvfYx/9P14qejdV93Ihy7hLkEsoeNuUhXL
- 5oyHX1Fjc/V+ANx0WwGqn4RqbdnMEe2zuC6uyZDzjcuC0kuDBOoeAUgtyvUIdZsBPs/W
- dS6QH+46BAxD6ZqhLRSyG9xMDYRTxaNgxCgU92Iu3PTzuZG+fv0ddnJU5eUu0N+Eiaxe
- AY9Q==
+ d=gmail.com; s=20251104; t=1791927049; x=1792531849; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:reply-to:in-reply-to:references:mime-version:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=ALFIV5O26nsSYvUHOV0g+DM9+uPlrYTCUhfdA8irO6E=;
+ b=fUI3BnmWJnUrA4KDZiCNZaLsstiACr/zWuvsM1E7kE0dd9aOPEdZ4+ED8Z+LozBdIS
+ PVdz6XaLaFoxGNzmnhswZiRiNzCeIHCyZJVuJxwKHnW+zktIcDtCxXzUcByEj9+3Q16Q
+ 9wd9103PP1+Ii2G/32L0vx1Pqp6VSTx5p1E3v765LBrQReXCaE5rH7C0TxNOVP8rA+uS
+ dHzX28Mlpyk3W/BZXTLc3GYghRSzlyBg8xSHJGFYe/ertOehbfP3AkFslqPLYlPTsBag
+ Ud6tPACVHKZra/nAPBXjybWYpLTIc4VPA2fVIFejePTv7CNtykTcHIkXDyeuwqWbFo0u
+ QssA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791926209; x=1792531009;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=3SX67Zcp+lSzSIiZwkh92ubZw0TmTBoJ3RJIwg+NSUY=;
- b=IlWq+XwreQIcTHD3W6sABo3BnqLLhfVdmHGsiITyqKdZXyqyA6ZKspsjf6W+6jePN+
- e4XRkf9U1jbdQSqOfhJ+Y8WqsshmtnJGxB3w0FCM/hwmyBYNoZas7pGoZmcpxP3oO/kO
- EJ9GG4jLj2puQlBxeS2zWTG6g30l7gI2Xz8W9GOehLcaj54Q7EPtB11PqwfEdBzAhy/r
- Ta+Rn0sCGHkfz44lvLq+6vzNQUP595/BicgNFkGi8IBUmEDK9rV0Q01v8hTFQdNRYxRA
- 4YsTq9/NHu04cDvJVONLNMOU6ij9JnB/9z9MIZxcaqPz7RAEqJQz8KVHklc6TUz+yXnj
- z3JA==
-X-Gm-Message-State: AFq9FYL5qAAn64TyS7kbkzJk3dNbRL3ifcFrW/W8W2Fcz0h5LflLO3B5
- jFEJ24BMN2frH59iOMPYtCMk3YR9Zk9K6sUaMaHlIq+Ry2hjaK7w+Ha46ygiQJbNThdRy4TtKyd
- oC7omn3r3dOgBRzbwpoVkX7HoUI+GA358YlvFUYrTPBkZVt4simvH+pn7yA==
-X-Gm-Gg: AYBFou1Vz7qFTzMA0jqG5ARG9WzZRbiJ/VauR/ZDIGa8VQJZTT4w36e5lMc/KP1s/iP
- W9rrYfmNgbFIhEbRIYN7YqkByJjaFZb1PAgUQz8tuWeMRM4r8lDUA9qb+OY2jVGW+Vt+h+8IkFw
- GA+DtPxW2iMam1nDYCCD/eIqK0V9gH1Aa4VXwqjdMCLylZAmnn9Var7WkLASTi0WgBLheper/ZX
- gbVwkEt0mKS5/aLw1HOzLDrmCs+z2Za9a2IRzs2wUwyZzF4veoBWC3rB1jLv8HqmVxVT7elg/0o
- YymZAiyVSst1BqgZXC4K8BI3lKQu1TMsk4A9SzW4EAqo99jWPBqr5hw4RRy2xlrz8AYkMGTz1F3
- Wiy42ac/Pwv6FBSem/IiQfn2rWQ77AKsrw6F40H5Pzm4ylPagqLAV/gZh
-X-Received: by 2002:a17:90b:2b50:b0:3a8:609c:7a6 with SMTP id
- 98e67ed59e1d1-3ab3a8e9100mr10921093a91.44.1791926208821; 
- Tue, 13 Oct 2026 14:16:48 -0700 (PDT)
-X-Received: by 2002:a17:90b:2b50:b0:3a8:609c:7a6 with SMTP id
- 98e67ed59e1d1-3ab3a8e9100mr10921078a91.44.1791926208232; 
- Tue, 13 Oct 2026 14:16:48 -0700 (PDT)
-Received: from [192.168.1.169] (192-80-163-190.dyn.novuscom.net.
- [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3ac604b2f7csm1145224a91.10.2026.10.13.14.16.47
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 13 Oct 2026 14:16:47 -0700 (PDT)
-Message-ID: <217d7743-f441-444c-9ea3-7de07bdd3b21@oss.qualcomm.com>
-Date: Tue, 13 Oct 2026 14:16:47 -0700
+ d=1e100.net; s=20260707; t=1791927049; x=1792531849;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:reply-to:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=ALFIV5O26nsSYvUHOV0g+DM9+uPlrYTCUhfdA8irO6E=;
+ b=ATIWmLYxziZvUTLBKS3K1qVwKbk01E8BwXVZWcgDlXaYxrux6B6SR3k3nUTtQTtM5j
+ eMymK1AkwQfqqz9ih2bTeipYFaxNQZ33fUreJbN4rhQ4Ux9LelhJFV5KfCqllAfoEBzm
+ 0Mn6rIv7cZPeQhTYUQCf/c0qbQ634zTh46QNGHA/Wypysm/QYV1RzkK8K4dGFui6/Uaa
+ 6WBgo3zvdPOG+iBWUz/mqVOKcwx/9EOW19+cPSl8mzLj9ItmYpoAvK9dzG1n2ribp+cN
+ h1xuC+rkQa+iGv8b8//eVqwT3gQ72HN96e7YrnCx3lVEOCY0oHFmus5k2pDaNe0Wm1w/
+ pbUA==
+X-Gm-Message-State: AFq9FYJZvlhuvCzOGpnMuJ6091jiZWas4LaaQf9YfRyudSzj7FvAxyE3
+ 7cMkb1JODdTO2NSZoy1aET0PHI5LCBOf0mJuGnamyTBSyZbQQZhg+LwlZCAviaQtTI7yND68fZY
+ jDuPJGKcK57qM8NzAbdSXsLGo9OitNh4=
+X-Gm-Gg: AYBFou20csBUzyUAaSS6iGI5WpXLKOr/UjEtm42Aar+o7PpeTMtFf7eGMx1bpK6dl8p
+ 6eeCYD9aXFZZLm01LWfGFqNTZ3h29tXMWYgPM2LI1AgrCvQdnILfTSp2SVtw+oeIvwzR3j1NKOa
+ +OhDYA/4FIqD6IH2c5dNe40LpWXytlnnDxLcn8DFLYE8Wp7/Q6Q78EM3D27S1kc8YEH/vHh0H14
+ 6IipqC/3FB9W7gm9QUaWLWxPSqy8X31Vd+RT03/IQzmath4JKu52JGXkQBs4erDcHL4Hov6m2k+
+ 5tM5h+20yoP6QTtlZqcZH1u30RGaHKn8JT/f8Bs1QPEpTrRfq4ze0Ds=
+X-Received: by 2002:a05:6402:44c9:b0:6b1:cc39:28ec with SMTP id
+ 4fb4d7f45d1cf-6b1cc392d02mr3965120a12.42.1791927049057; Tue, 13 Oct 2026
+ 14:30:49 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/3] releases: build and run any QEMU release easily!
-Content-Language: en-US
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, mjt@tls.msk.ru
-References: <20261011162737.3024-1-pierrick.bouvier@oss.qualcomm.com>
- <as6d-7bwBOyz88hq@zhexu-thinkpadt14gen5.rmtcaon.csb>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-In-Reply-To: <as6d-7bwBOyz88hq@zhexu-thinkpadt14gen5.rmtcaon.csb>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=GL+dgeNK c=1 sm=1 tr=0 ts=6ace9fc1 cx=c_pps
- a=rz3CxIlbcmazkYymdCej/Q==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=xCEogyAeZDdTSCQxLzoA:9 a=QEXdDO2ut3YA:10
- a=bFCP_H2QrGi7Okbo017w:22
-X-Proofpoint-ORIG-GUID: FKn7qf_TUaEf5F8bImqaDPOCRcqpcTFe
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDEzMDA4NCBTYWx0ZWRfX5YZPc3QZOF+a
- XgpjbbmufmC+OQf4H+9yuMykgYw0uLm7GxrD1iPc7eeT1pyxR7A3pErAN1LUIWEIUM82Jl831cI
- g+MBM2YTwxmGt4nibDzcb2pQlwbABik=
-X-Proofpoint-GUID: FKn7qf_TUaEf5F8bImqaDPOCRcqpcTFe
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDEzMDA4NCBTYWx0ZWRfX1OXKZy57HR0+
- kMg3uifoWBww3C5g42GNcBKGhQl3PdwFxQCmLwNNTmzf86rQuzSx91CXWScV47BfJeQO6FtwuUE
- DEjKubfjC7d74J3JIkD77RxMRboQc5x9b4D6LS8XsAber15httNSdiC2a/IUK7hstFm6QCSPF7u
- sL2KZ5Ld8BH3WgQXgc4r6kbEV3bMJ9TNDkhEpzSir2xypAtL4FgMdRTS9TnKCuWeWnfs/GO6DsK
- /oqU9ZG8BhZRG93rI0h9V5NBQOfKLq7H90MMMgAnC5QNkn1okTkuiAZUx8NwDhjECkXI3HFPerm
- kvP7Y1uQ/hmL6CqkSsis21DJpdUwc3hQxsAgOeXa7XydcMhuLvSiW5W00aEmboQpYXXXa4TALns
- WMM/t4Bt+ad1DYZVeWXeUkfTvs/LFY9c9FPBNO0E2X9gXSdCykNykTk583c+bKoL1Y+9dRon5l5
- 75zHZddqeBTiafyjJiQ==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-10-13_01,2026-10-09_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 suspectscore=0 spamscore=0 phishscore=0 adultscore=0
- bulkscore=0 malwarescore=0 clxscore=1015 priorityscore=1501 impostorscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610080000 definitions=main-2610130084
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <20261013195606.152-1-luoyonggang@gmail.com>
+ <f3649d73-1edf-440a-9534-7b00da4d075d@oss.qualcomm.com>
+ <CAE2XoE828e76zdCEkYVcbjRwhcsaSYZF1_UE4akeaoCTqCK3zg@mail.gmail.com>
+ <baf81ba3-f29f-48f0-a9a2-6dc4f005d433@oss.qualcomm.com>
+In-Reply-To: <baf81ba3-f29f-48f0-a9a2-6dc4f005d433@oss.qualcomm.com>
+From: Yonggang Luo <luoyonggang@gmail.com>
+Date: Wed, 14 Oct 2026 05:30:36 +0800
+X-Gm-Features: AclHuK9TYzFjJ0r0h9_TSAtqU5LCViyTjkWqgkr9j-4xfLbLVuM3RrarZ3GEjV8
+Message-ID: <CAE2XoE9L8tuhU2nieJ8D=Cz9svS=W3oqAH+j30RGtZibjp1G=Q@mail.gmail.com>
+Subject: Re: [PATCH] target/arm: defer max-v8 initializer selection until CPU
+ creation
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
+ Philippe Mathieu-Daude <philmd@mailo.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
+ envelope-from=luoyonggang@gmail.com; helo=mail-ed1-x52c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -152,60 +119,112 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: luoyonggang@gmail.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/13/26 2:09 PM, Peter Xu wrote:
-> On Sun, Oct 11, 2026 at 04:27:34PM +0000, Pierrick Bouvier wrote:
->> This series was inspired by a recent post from Fabiano to provide container
->> images for migration tests:
->> https://lore.kernel.org/qemu-devel/24d04a1f-344d-4b90-a307-b582dd9a1128@oss.qualcomm.com/T/#m353f119dc1a24fa437dde8a96d1891629e64303c
->>
->> The idea to be able to build and run any QEMU (past) release with containers was
->> in my mind for some time, so I gave it a shot. Finally, it was easier than
->> expected to obtain a single dockerfile (with a few hacks) that works over all
->> our releases.
->>
->> The oldest functional distro we can find nowadays is ubuntu 14.04. Because of
->> this, the oldest QEMU release we can build is v1.6.1. Previous ones require an
->> environment we can't get easily today.
->>
->> Images have the absolute minimal content possible. It's only qemu binaries,
->> artifacts (roms, keymap, ...), and libraries. There is no shell or any other
->> tool included. As a result, images have a size from 240MB (v1.6.1) to ~1GB
->> (v11.0.0).
->>
->> This series adds 3 pieces:
->> - a unique dockerfile to build any QEMU release. User has to provide an explicit
->>    Ubuntu version when building a given QEMU version.
->> - A script build_release_container.sh which automatically detects which ubuntu
->>    version a given release should be buildable on (based on date). It works
->>    great, and the heuristic works for all our versions.
->> - a script generate_release_links.sh which creates wrapper scripts automatically
->>    using prebuilt images (hosted on my dockerhub).
->>
->> TLDR:
->> $ ./scripts/build_release_container.sh v1.6.1
->> $ podman run -it --rm qemu/v1.6.1 qemu-system-arm --version
->>
->> $ ./script/generate_release_links.sh qemu-time-machine
->> $ ./qemu-time-machine/v1.6.1/qemu-system-arm --version
->> QEMU emulator version 1.6.1, Copyright (c) 2003-2008 Fabrice Bellard
->> $ ./qemu-time-machine/v11.0.0/qemu-system-arm --version
->> QEMU emulator version 11.0.0 (v11.0.0)
->> Copyright (c) 2003-2026 Fabrice Bellard and the QEMU Project developers
-> 
-> This looks pretty useful and also generic, thanks for working on it.
-> 
+On Wed, Oct 14, 2026 at 5:07=E2=80=AFAM Pierrick Bouvier
+<pierrick.bouvier@oss.qualcomm.com> wrote:
+>
+> On 10/13/26 1:19 PM, Yonggang Luo wrote:
+> > On Wed, Oct 14, 2026 at 4:08=E2=80=AFAM Pierrick Bouvier
+> > <pierrick.bouvier@oss.qualcomm.com> wrote:
+> >>
+> >> On 10/13/2026 12:56 PM, Yonggang Luo wrote:
+> >>> This is for avoid "max-v8" qom name conflict in multi-target qemu
+> >>>
+> >>> Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
+> >>> ---
+> >>>   target/arm/tcg/cpu-max-v8.c | 17 +++++++++++++----
+> >>>   1 file changed, 13 insertions(+), 4 deletions(-)
+> >>>
+> >>> diff --git a/target/arm/tcg/cpu-max-v8.c b/target/arm/tcg/cpu-max-v8.=
+c
+> >>> index 65f851f2006..d7323ab431c 100644
+> >>> --- a/target/arm/tcg/cpu-max-v8.c
+> >>> +++ b/target/arm/tcg/cpu-max-v8.c
+> >>> @@ -119,12 +119,21 @@ void aarch32_max_v8_tcg_initfn(Object *obj)
+> >>>   #endif
+> >>>   }
+> >>>
+> >>> +static void max_v8_tcg_initfn(Object *obj)
+> >>> +{
+> >>> +    if (target_aarch64()) {
+> >>> +        aarch64_max_v8_tcg_initfn(obj);
+> >>> +    } else {
+> >>> +        aarch32_max_v8_tcg_initfn(obj);
+> >>> +    }
+> >>> +}
+> >>> +
+> >>>   static void cpu_max_v8_register_type(void)
+> >>>   {
+> >>> -    static const ARMCPUInfo max_v8[2] =3D {
+> >>> -        { .name =3D "max-v8", .initfn =3D aarch32_max_v8_tcg_initfn =
+},
+> >>> -        { .name =3D "max-v8", .initfn =3D aarch64_max_v8_tcg_initfn =
+},
+> >>> +    static const ARMCPUInfo max_v8 =3D {
+> >>> +        .name =3D "max-v8",
+> >>> +        .initfn =3D max_v8_tcg_initfn,
+> >>>       };
+> >>> -    arm_cpu_register(&max_v8[target_aarch64()]);
+> >>> +    arm_cpu_register(&max_v8);
+> >>>   }
+> >>>   type_init(cpu_max_v8_register_type)
+> >>
+> >> It works for the current need, but will require further changes for
+> >> heterogeneous emulation. A more versatile solution could be:
+> >>
+> >> arm_cpu_register(&aarch32_max_v8, target_arm);
+> >> arm_cpu_register(&aarch64_max_v8, target_aarch64);
+> >
+> > And another way to handle it is like x86. it's comes with two variant f=
+or
+> >
+> > #ifdef TARGET_X86_64
+> > #define TYPE_X86_CPU "x86_64-cpu"
+> > #else
+> > #define TYPE_X86_CPU "i386-cpu"
+> > #endif
+> >
+> > This also solves this issue, which looks more straightforward. no need
+> > .targets magic for CPU.
+> > Anyway, maybe the best way is to merge "x86_64-cpu" and "i386-cpu"
+> > into a single cpu type and
+> > add .targets magic? When I am trying to get x86 works, faced this issue
+> >
+>
+> This solves including i386 or x86_64, but not including both at the same
+> time. Same goes for arm vs aarch64.
+>
+> You can take a look at git history in target/arm, to see which kind of
+> changes we did to make arm and aarch64 targets linkable. You'll notice
+> most of the work was to remove (a lot of) #ifdef TARGET_X.
 
-Is there something specific you would need for migration purpose that is 
-not covered yet?
+See it
+SHA-1: ec7e5a90fea996f04ea24e81b680a87bc975354a
+* target/arm: Remove TYPE_AARCH64_CPU
 
-If we go in this direction, and decide to host official images 
-somewhere, we could even add the wrappers by default for all builds, so 
-everyone could have ./build/releases/vX.Y/qemu-* scripts generated by 
-default when typing make or ninja.
+So I am just doing just the reverse direction, I am fixes x86_64 in a way t=
+hat
+register both "x86_64-cpu" "i386-cpu" variants, though this way seems
+more suitable
+for your heterogeneous emulation, but we need to register
+everything(CPUs) twice.
+I'll post those two patches for a look
 
-Regards,
-Pierrick
+
+>
+> Regards,
+> Pierrick
+
+
+
+--=20
+         =E6=AD=A4=E8=87=B4
+=E7=A4=BC
+=E7=BD=97=E5=8B=87=E5=88=9A
+Yours
+    sincerely,
+Yonggang Luo
 
