@@ -4,85 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9111CC6B03
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 08:49:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 483EECC6B03
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 08:49:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGY8l-0008Si-N6; Tue, 13 Oct 2026 04:45:44 -0400
+	id 1xGY5v-000314-2d; Tue, 13 Oct 2026 04:42:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xGY4V-0001XW-Vl
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 04:41:20 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ id 1xGY3r-0008Ds-OM
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 04:40:40 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xGY4U-0008Gs-4m
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 04:41:19 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-4a172eb31f0so20444575e9.1
- for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 01:41:17 -0700 (PDT)
+ id 1xGY3p-0007zP-DQ
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 04:40:39 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-4a16aaf2067so32210825e9.0
+ for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 01:40:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1791880876; x=1792485676; darn=nongnu.org;
+ d=linaro.org; s=google; t=1791880836; x=1792485636; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=HEpQd9AvFwO8uwPIw2G7NA2tUj48bKXTa16by3JaLzo=;
- b=HHQF9G9cUlVbED3dOFPvl5Jd0ZwOMhynCkqr57Phiwtf2WxyI3o3jC5TSCV/OksDVX
- G04w4XB+ZT6zHZx1KUxDBxVAFyPJ977OdtNx1xWRlRNWpQYWCRHckPY2n1UykUaMZzP0
- 6/GB7Kggcvj8Na/HAPQ6l4r2okQ1mCgOQMMS2iittZK6n4D/vPKKHM15m2FqMhKaM0oq
- 52WAuT3iHclpvdPFnyqJ7DRivFubjPOjGs9mPegP6oXkQsWqUEX/M2YkeagqZLBwqCLg
- J0cIpUFBlhhnM2KXVUgk/5ThS7qyUdGio0qnKxbr3vLPI4ofgDTO9CUIMZVyA5NhUnzT
- YdYw==
+ bh=xzgSRPibV+W+TuXoD9LFFebcGlaP5K/iGBnAO14/huw=;
+ b=YoRRJsqEJnzWcEg2WqDBQrzvSQsyjmJTmriLnw65nQo24cHuKTYcIAwo4ODIeDTMoo
+ 0GjRGi/+bOugV0YQsu1AALL7l22frSSdZlWmkJqnB/lG9hfnnlwKdNkUgCYWlKscIAZZ
+ ogNp0gGxpzbrpAjmHsT7WFA2BAhNWsOxb4uhGxLDY3SqkI78Y8Of1bgeuod/eyOzpjVX
+ 9Tly1DfWSaEDxULtTUHGj2qimsssz4xUYzJzD3I+ClEFyZsZHe4IJHEo/++JcOclnrx3
+ grdkNh7SHhyLNVtwm+i6qCfwDa0UlzbipNHFqIKUgAo/3tfhXXhhbfGFN5p8nCT2FFGQ
+ 62yQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791880876; x=1792485676;
+ d=1e100.net; s=20260707; t=1791880836; x=1792485636;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to:content-type;
- bh=HEpQd9AvFwO8uwPIw2G7NA2tUj48bKXTa16by3JaLzo=;
- b=KkVxJdngPEJGIN0onIO1kaWT90iTFY8jKbzwnVtvb8f4yikFAW1bXjCma+CqTeBXGG
- DuH8ksBing3NY4F+Hni9TYOi8LdB+Fy2IbSz+MHqLwQARgzTeim1+b2DNl87LisCFQtD
- pGc1broctP2NqQMCkxnBq8KaiVri8YeRUeSCJVJmQfAnci6fIyHB3SdHoO0dOBYWFtf7
- wqTSIEDi4wGCYPoZf0oXJaZwgJOGP6sBydUgaFDxm2u1aVxw8ZZUAzWUSX70bLQV41T5
- jT6CcszMS7G0hpE2wZQDco9zmw9IXBCSWax0RwwLsCFSrhXE8DSe/183IzgQNRBe8CVH
- WrCA==
+ bh=xzgSRPibV+W+TuXoD9LFFebcGlaP5K/iGBnAO14/huw=;
+ b=Madx2WTkhb9FIGq8TZGOHeztH6C/TvV4AqpUClnS55Ton49e+iq/2uWdeX3axPp5zT
+ UkU5vMhcRgVAUXxBfzzUsxkmovRGOUWVMuZiuLVbkICvd2NLYpMgGJsH1ULlvgk7YkAd
+ KJOiWTcRoZkN4TmIGsVg7rmIdQLjFx3XU2UPabZRBbehFbV0FWVh48Wp8645frwuRc5g
+ O7ckmLysUkLsTCIJIGiF4vmdSL2oCr5WbNR9T6RCYMOaJgEYeKVe4FCe3d5ORFdNQnXU
+ ffajJWiRvYjnHtXL8w1cs1kI2YQfWf0EfSKFaRG3H8+ryRIBfZQwRykA+oghodJDeVh6
+ H12Q==
 X-Forwarded-Encrypted: i=1;
- AKwUvBwF0TXStOd/5pIrzf3fMfWZkvgi7G74MEqhmzuSBF76zwLwfh7lIiBsm3iUO4gkkE1QKEVmlVz2I4Pg@nongnu.org
-X-Gm-Message-State: AFq9FYIsarWFAcch8jHPh/5IY20F7zhvnA4Ue+RzoAW7YTu5I+G32LJ2
- ZiFmihXmQ2IfD50YSIYPnfD2oNpLtIA679pChsaRQt9sHEFZFCqXE0PkoERg5oH9Gkq9TnYYNVO
- Cb4NQpBQ=
-X-Gm-Gg: AYBFou0MNnN4y/MAXDjNhWXTnkjBLFtli/O7cks2gfOJdP+ZRWKnh9/2hVk3mt3vN00
- Ia4x2MXa3W2QG6ubG0tbAFLBrucui3sFe9X2JA9OMKQBKVfdfrVs+9pvb1d5GHoq+wyOjAhkzTg
- OErwjqSYvFlfb/2z6Z6leWj4IBuYR+ZfohNF4+mlSSANK3/9xeiewn3Q7T1Mhh8vLWMN8bDvy9v
- yFWBcp57OVvtffevAa7dx4nlV9sYd7FDlLGBSzcVzjUgt2Rd+81KagJpHR2pqdRjNikx7dTjoRP
- q9No1Xo+KNW0EFCNvN5v2T1Gg5HlS97hG7i+2Hx3PnaafQdwI92xPMbG2rNk4WRwZ5ogL/1hbN2
- 0qbAA/H0rkXjSKfdQgOVBwiM2Um6FXr2PEkKUBFJ8WmkoZz48gRVA0gNfBvQ0yhssf9qXiLXAOZ
- zYUTsRWVOYSZTs57ul5sCCSY6EX5XM9Q2wAlIaAn7QduacIZ/NW7dZQYX2AlHSr5PyZ/sTbT7TO
- pM7aqfy4KHcxjQjrvA8zqA5rDDRDcHMby/lvdo/0OeMb60reYoECXqVLkvagb21fDHTfM86kq86
- nhgMj9BSv+gvkA==
-X-Received: by 2002:a05:600c:4ecb:b0:49f:f099:6fb1 with SMTP id
- 5b1f17b1804b1-4a18e4adcd0mr233780555e9.15.1791880876648; 
- Tue, 13 Oct 2026 01:41:16 -0700 (PDT)
+ AKwUvBxaoC4D9rxy5jPK75lr4hvEOMMnywHtpa/+BV1x7x0KQBIbaGVFvAc9Hzjptbh3lph9gd5366qEzaaC@nongnu.org
+X-Gm-Message-State: AFq9FYKEC4yE/psiF31CyuuOHuARpdqiLnqEl2bqWXN/gVkXLKG/s09g
+ zSd4dVq8D1T/CeuUYNCHW/YZ3dPdf7rWg/KlIEB5o/qX8ET/lLzcJkRVNqa3EFsc9wM=
+X-Gm-Gg: AYBFou3UJaXC8KwpRTEViqQOVmFwlsgzIXq3xxo+BN3lsWepf1cgPdGd4dYRLoIgcbp
+ ZTeSStwyzGThnBc+eUhOKajIWFwr7gKvKgn7K2E2FaFAMbTNCoQKydlZR7ka0lhZWKw1uyPs5eJ
+ eqKkckHyDvnNu6DYIBSMnSM1C+9l2dWJm9CFBTPHSiaN+QGxVUsdMWneYfpDHA00ka8qoabcThX
+ qGzcPcI6c/4IvoELOCir3vuwrDaoCeQEL5a565zQSgVndYje3rv+HanFlavmaG+17UcMKXMBeCF
+ aDnww1G5vfwRjPIvhQrQFunqep0lLYFUPcJ1Mt18CjUzZUVKbXjH9D2K0McV3euBAa7MMgWCcri
+ Kq+OZ7UqZyemxI7G5gh9sCOUHA0XHNean5eiuAIFuoBeIoZ9/S2ag3wsl+mn+5hAUZ++qn1r4Jj
+ nwDtP9DZKu53F7hN/5aI3Hm4oeJLwoCibqbXSxYbJ6BkJyuK+ttzSCEySjKHsR1X/qddNOfQ2qx
+ g33Dbm5gPmQluAqYnXRfTSVEDt4Xw1rY+5H97LiJcJiQNki0uor3v/HNnMvlXzDdTl3G2ecT0sw
+ lXU=
+X-Received: by 2002:a05:600c:8716:b0:4a1:62b8:9aa1 with SMTP id
+ 5b1f17b1804b1-4a18e44885dmr236696575e9.2.1791880835847; 
+ Tue, 13 Oct 2026 01:40:35 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a18be96549sm495086735e9.6.2026.10.13.01.41.15
+ 5b1f17b1804b1-4a18be96549sm495086735e9.6.2026.10.13.01.40.34
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 13 Oct 2026 01:41:16 -0700 (PDT)
+ Tue, 13 Oct 2026 01:40:35 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Subject: [PATCH 79/86] hw/intc/arm_gicv5: Add virtual support to
- gicv5_get_hppi()
-Date: Tue, 13 Oct 2026 09:39:26 +0100
-Message-ID: <20261013083933.1024405-80-peter.maydell@linaro.org>
+Subject: [PATCH 43/86] target/arm: GICv5 cpuif: Implement GIC LDnnn insns
+Date: Tue, 13 Oct 2026 09:38:50 +0100
+Message-ID: <20261013083933.1024405-44-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261013083933.1024405-1-peter.maydell@linaro.org>
 References: <20261013083933.1024405-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,36 +103,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-If a CPU asks for the virtual HPPI for its resident VPE, return it.
+The GIC cpu interface has a set of GIC LDnnn insns which behave
+exactly like the GIC CDnnn ones except that they always operate on
+the logical interrupt domain.  (EL3 can use these to examine and
+update the state of the interrupts in the physical interrupt domain
+for lower exception levels.)
+
+We won't need these until we implement EL3 support, but since
+we've put in all the necessary groundwork for the reginfo
+structs to just work, we might as well add them now. The writefns
+will select the domain to use based on the opc1 field.
+
+As with VD, there is no LD insn for CDIA, CDNMIA or CDEOI.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/intc/arm_gicv5.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ target/arm/tcg/gicv5-cpuif.c | 40 ++++++++++++++++++++++++++++++++++++
+ 1 file changed, 40 insertions(+)
 
-diff --git a/hw/intc/arm_gicv5.c b/hw/intc/arm_gicv5.c
-index 199547abaed..ab0cd1d80e5 100644
---- a/hw/intc/arm_gicv5.c
-+++ b/hw/intc/arm_gicv5.c
-@@ -348,11 +348,13 @@ GICv5PendingIrq gicv5_get_hppi(GICv5Common *cs, GICv5Domain domain,
-     assert(cpuidx < cs->num_cpus);
- 
-     if (virtual) {
--        /*
--         * Until we implement virtualization there is never
--         * an available virtual HPPI candidate.
--         */
--         return GICV5_PENDING_IRQ_NONE;
-+        VPE *vpe = s->res_vpe[cpuidx];
-+
-+        if (!vpe || vpe->vmte->domain != domain) {
-+            return GICV5_PENDING_IRQ_NONE;
-+        }
-+
-+        return vpe->vhppi;
-     }
-     return s->hppi[domain][cpuidx];
- }
+diff --git a/target/arm/tcg/gicv5-cpuif.c b/target/arm/tcg/gicv5-cpuif.c
+index 64e59589cc7..69e51359f22 100644
+--- a/target/arm/tcg/gicv5-cpuif.c
++++ b/target/arm/tcg/gicv5-cpuif.c
+@@ -1501,6 +1501,46 @@ static const ARMCPRegInfo gicv5_cpuif_reginfo[] = {
+         .accessfn = access_gicv5_ich_reg,
+         .writefn = gic_cdhm_write,
+     },
++    {   .name = "GIC_LDDIS", .state = ARM_CP_STATE_AA64,
++        .opc0 = 1, .opc1 = 6, .crn = 12, .crm = 1, .opc2 = 0,
++        .access = PL3_W, .type = ARM_CP_IO | ARM_CP_NO_RAW,
++        .writefn = gic_cddis_write,
++    },
++    {   .name = "GIC_LDEN", .state = ARM_CP_STATE_AA64,
++        .opc0 = 1, .opc1 = 6, .crn = 12, .crm = 1, .opc2 = 1,
++        .access = PL3_W, .type = ARM_CP_IO | ARM_CP_NO_RAW,
++        .writefn = gic_cden_write,
++    },
++    {   .name = "GIC_LDPRI", .state = ARM_CP_STATE_AA64,
++        .opc0 = 1, .opc1 = 6, .crn = 12, .crm = 1, .opc2 = 2,
++        .access = PL3_W, .type = ARM_CP_IO | ARM_CP_NO_RAW,
++        .writefn = gic_cdpri_write,
++    },
++    {   .name = "GIC_LDAFF", .state = ARM_CP_STATE_AA64,
++        .opc0 = 1, .opc1 = 6, .crn = 12, .crm = 1, .opc2 = 3,
++        .access = PL3_W, .type = ARM_CP_IO | ARM_CP_NO_RAW,
++        .writefn = gic_cdaff_write,
++    },
++    {   .name = "GIC_LDPEND", .state = ARM_CP_STATE_AA64,
++        .opc0 = 1, .opc1 = 6, .crn = 12, .crm = 1, .opc2 = 4,
++        .access = PL3_W, .type = ARM_CP_IO | ARM_CP_NO_RAW,
++        .writefn = gic_cdpend_write,
++    },
++    {   .name = "GIC_LDRCFG", .state = ARM_CP_STATE_AA64,
++        .opc0 = 1, .opc1 = 6, .crn = 12, .crm = 1, .opc2 = 5,
++        .access = PL3_W, .type = ARM_CP_IO | ARM_CP_NO_RAW,
++        .writefn = gic_cdrcfg_write,
++    },
++    {   .name = "GIC_LDDI", .state = ARM_CP_STATE_AA64,
++        .opc0 = 1, .opc1 = 6, .crn = 12, .crm = 2, .opc2 = 0,
++        .access = PL3_W, .type = ARM_CP_IO | ARM_CP_NO_RAW,
++        .writefn = gic_cddi_write,
++    },
++    {   .name = "GIC_LDHM", .state = ARM_CP_STATE_AA64,
++        .opc0 = 1, .opc1 = 6, .crn = 12, .crm = 2, .opc2 = 1,
++        .access = PL3_W, .type = ARM_CP_IO | ARM_CP_NO_RAW,
++        .writefn = gic_cdhm_write,
++    },
+     {   .name = "ICC_IDR0_EL1", .state = ARM_CP_STATE_AA64,
+         .opc0 = 3, .opc1 = 0, .crn = 12, .crm = 10, .opc2 = 2,
+         .access = PL1_R, .type = ARM_CP_CONST | ARM_CP_NO_RAW,
 -- 
 2.43.0
 
