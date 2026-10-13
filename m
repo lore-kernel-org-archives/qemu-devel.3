@@ -4,145 +4,150 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4EC10CA9ED0
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 01:32:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D1F2CA9ED0
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 02:13:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGRMZ-0003vz-90; Mon, 12 Oct 2026 21:31:32 -0400
+	id 1xGS0Y-0002wn-Ls; Mon, 12 Oct 2026 22:12:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1xGRLb-0003hw-MW; Mon, 12 Oct 2026 21:30:38 -0400
-Received: from mail-japaneastazlp170130007.outbound.protection.outlook.com
- ([2a01:111:f403:c405::7] helo=TYDPR03CU002.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1xGS0X-0002vm-6c
+ for qemu-devel@nongnu.org; Mon, 12 Oct 2026 22:12:49 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1xGRLX-0008Cl-G3; Mon, 12 Oct 2026 21:30:30 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=DnMdjN0g/EMA17BcBhCo+SeLA17jD5xTn+zrjvfNBROxSk8Zbqs9/LduL96BT80zB3jSXmhrezco8d6pqD95NXrxCViXMer68fCh5Cw9YOd+UNPtLqfY6sTwobj2yxVA4sQapwbFhHHHHSA6pN29JA6PmS+mlQBEfQuhU6MV6RI2cbgqFpiUTHogCNCO/HF+zRGt5CENaOKnDnpiBeT8MMGmf8prtG41NuA6iSrij81da0OandvBnpYgqNIFva7XUQZMtsaFt5HEDY7eDwDCxzwb8KbADl8HnuBP1CDjaseXHvKo4MpHNMignuuTHfzR3ZGK7sZ9J8Vi2vpJQQ3r5Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=8h3wOq3NDFN8ClVnZjDO8Z/TEq3RlIwm6Fj3Hv1sRGk=;
- b=O0k48NSrkhoU80fXpYX81cCSHA21JEVbKEPmHsR5Rqz2zttHem37S7rmV+957RNqHVKriQrrNR5clfpWzsozM0SRYj7jm2U08lBe8yBLFrrWmImJAgHt5mH8PGNsRrJoEWA6siLeH84ylcKZGJqndndV6kRzjHB6srgRcQ3efaZK6cZVzYu0MYq3+Z7sVNHvMxXwHbOaxSH9bdqOOCJEOWABRSg9SDNcD0ETJWjy9EB+z+DuRC5+ExosoonVoKpuNme1O7J22lC5JbFSekcnrfiUSKW9s30NEgUvm/hGa5Pbx1DdMHQLHeJcyS/ksv8ANY/nNEJwFgE8CRIEMgeCEw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
- header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=8h3wOq3NDFN8ClVnZjDO8Z/TEq3RlIwm6Fj3Hv1sRGk=;
- b=o01FFWaMCklkScc6AdEkc6SIs81zvLMLnfRt4HC5IQ1LTX+373FyS2Y30HdCgLJXBIXhdsvnCrtfUknMtQyAwzCik/X+fxHiZvVlPbzBvnFOI/h17zTIXjTER82uAoU1eSaTJGNdbNNDkzugMBEiNimkAvyc+oQCI4MI8mWFYvPnKxchcAWo55YSJlE/9bUfcCFky99lOavzya8J1klWu9I1UAr9oGto/sJnbTP1GN7bYPHAIYDfprBBrFENKedmvh9obto3rdcZMgHOGqKAR/BZ4nSUyST/HbMcxX6hfDrE27NnhCJm8cTIJ7JTw9DsuPRYHtpYQGXjoByZ+pKu7g==
-Received: from SEZPR06MB7362.apcprd06.prod.outlook.com (2603:1096:101:253::10)
- by TY0PR06MB5833.apcprd06.prod.outlook.com (2603:1096:400:32d::8)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.496.23; Tue, 13 Oct
- 2026 01:30:14 +0000
-Received: from SEZPR06MB7362.apcprd06.prod.outlook.com
- ([fe80::cd2d:35d2:a702:1de6]) by SEZPR06MB7362.apcprd06.prod.outlook.com
- ([fe80::cd2d:35d2:a702:1de6%4]) with mapi id 15.21.0496.020; Tue, 13 Oct 2026
- 01:30:14 +0000
-From: Jamin Lin <jamin_lin@aspeedtech.com>
-To: "marcandre.lureau@redhat.com" <marcandre.lureau@redhat.com>
-CC: =?utf-8?B?Q8OpZHJpYyBMZSBHb2F0ZXI=?= <clg@kaod.org>, Peter Maydell
- <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
- <leetroy@gmail.com>, Kane Chen <kane_chen@aspeedtech.com>, Andrew Jeffery
- <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, "open
- list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
- <qemu-devel@nongnu.org>, Troy Lee <troy_lee@aspeedtech.com>
-Subject: RE: [PATCH v3 5/8] hw/usb/redirect-server: Implement control transfers
-Thread-Topic: [PATCH v3 5/8] hw/usb/redirect-server: Implement control
- transfers
-Thread-Index: AQHdWe+4E7RfeF/bg06REPE3kuIe3bb5rViAgAEDWoA=
-Date: Tue, 13 Oct 2026 01:30:14 +0000
-Message-ID: <SEZPR06MB7362FC591BB95B31ACA066B5FC9E2@SEZPR06MB7362.apcprd06.prod.outlook.com>
-References: <20261012021634.2006424-1-jamin_lin@aspeedtech.com>
- <20261012021634.2006424-6-jamin_lin@aspeedtech.com>
- <179179927145.1642373.1827394110159975206.b4-review@b4>
-In-Reply-To: <179179927145.1642373.1827394110159975206.b4-review@b4>
-Accept-Language: zh-TW, en-US
-Content-Language: zh-TW
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=aspeedtech.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SEZPR06MB7362:EE_|TY0PR06MB5833:EE_
-x-ms-office365-filtering-correlation-id: aae40d5a-32b7-4558-25c5-08df28c98808
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|23010399003|1800799024|366016|376014|6133799003|22082099003|18002099003|10067099003|5023799004|261009223027099003|38070700021|56012099006|4143699003;
-x-microsoft-antispam-message-info: 9PJON8jcgq9uzp6233aIuExLKDTzyDw9lfdXXgt5PAa6eA+MxAML9zmQR5sS0X2RiD54I3UiCCfMh2zrfFUL/7Uet60fdMGvypS5Vf4b61NJYP1/NUy/VeX1jOQmtcM1sPzfLKoe/N3wUT5eW+j69c0SXyPE/ubbNt13NGpa5VmVS0/h7NNQYnga64BJ3TWPlZo+ZVIMZTqmzBTGixvyJEHP4dMKqs6Tf3SrBd34NvH6xUtk4LXdTHN9+cgPwUJ3MQMIkFzt8biZGg2DpePjCVQdR9tILOmR9i3qxUeGg3m9nFajzll6Od8XTfB/oouwmDtS6qGQuCtothkAOlAbyqKn3+UYlQX+RAjEYx7sEIuJtn3plPF+d8mYuZFAxShH0oYckxXlAjLCQ153BNDw9LItH2QDWkxZ/Nt1BYKTCZj1YiV+LX/XrPaNgh5asnasSCGRgMZJEQrX2ghDlLogSnqgDQJ/ZmJLFfdTNSA4BCrjRu7NBYCBjNeOwczza2D/VJnboKPxtxdHbY0HzufSLWxWhgyDplqY+OTFyV7Tx8+uinmeCncxrMx6hyGH61yJP2aT308ShrpLlAejNlPhP8z3oyr+6wsX6EUCSy92xU9VtfJjFMfmKWaDpxofuqjr62KiQUNEcanJoOOLbWX+Yucuq6T+cEAMKovYa1OQTEEkPcqW6S2HSwyLHIYAtQo/il8rsOUZrSfVaWJIHTbTeLad2ICfWQIVfAVJLynomVg=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:zh-tw; SCL:1;
- SRV:; IPV:NLI; SFV:NSPM; H:SEZPR06MB7362.apcprd06.prod.outlook.com; PTR:;
- CAT:NONE;
- SFS:(13230040)(23010399003)(1800799024)(366016)(376014)(6133799003)(22082099003)(18002099003)(10067099003)(5023799004)(261009223027099003)(38070700021)(56012099006)(4143699003);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?MjNlZjNSeHkrQktCWlN1blMrcnU5ZldlVEJhRGg2MjMwTGNDdlB4OUhxSk5E?=
- =?utf-8?B?V1dOU0Q5UlhNdnRBUVdVUkR2N21zTTBMeCs5YkhZc2ZHMzducnVZRWw2cGRI?=
- =?utf-8?B?bHNZaStlOXBMTFpvdTJHc0t4QTJQNFZIdE5VZFlyN2Q2Wm51Y1I5NU9HQ3Zv?=
- =?utf-8?B?c1p4Z2lLVlZ1V25OVHdtSVZhYzRQTkpyZ2xJOGFoazRsRUhGbUN6cnluNzZh?=
- =?utf-8?B?M1JhQTlDTkw1MWF6d0pJUjFlRzZibkVYRDZuMERFbW1IZUNkR3dWM2szODNt?=
- =?utf-8?B?bTBIc3J0TXZzdHo3SlBtY1lxQjVQYXpwQStlY1J5dmdPUWR2NHB5KysyZlpR?=
- =?utf-8?B?dS95NW1BNW5NdGcxT25jUmVmcDVCQU5nSXNWb1ZpRGFGYUM3Sm9DYVg5T3cy?=
- =?utf-8?B?dHQ5SXNOeEVJZDRsY2pVd1pCMUhmcUJnSDBKNWNJLzJ0WnEvMmdTcHVadnJm?=
- =?utf-8?B?ZG9nR2tBNFRJcVFsM0lTd1VWNEdUV1orMG9QUHhEZWVqaGt0Z1lWeHAxSVRy?=
- =?utf-8?B?Z0lIY3RGclo4S0krTUV5RFdjcnk0QS9oa2IwQjV5eHI3M2RCMXRpbUQ2N3Z3?=
- =?utf-8?B?NjZYVG4zSkFCUU9Ub2dsd2o0bXJUSXhoZ2w2SUQ3S1lrRzR2ck1vbWt6N01o?=
- =?utf-8?B?MDFaZmY4L2o3Y1ptRjk0U2NiQzlUbVROZ1VsUTlNbXpqdWxlemFScUMxTEgv?=
- =?utf-8?B?NnJZVVJ0MVQvZXZLOXpoMGwvSWpBcTZWZktiNG80RWFzdVJmeWRJOUcxdzgy?=
- =?utf-8?B?R3Yyc1I5QmN3YWJEbjVwMVNBTkdWMGR6ZDBYMW0ycktsdUFBMXJiTkNPZUJD?=
- =?utf-8?B?MEM4a2lWejZJK0NaU3FtWVo4eEtkV1N1bDV4Z05vZlJPclhvWkZpalJPbmFz?=
- =?utf-8?B?VklRVGh1UDQzOGJXL3ozOEczTllVTGdFcEJkUjQxRFdrRG5WenpXTVJxb2ts?=
- =?utf-8?B?cU84Mmc0NWhGZWlUazlLRm1Rdk1NcEM0cXI2UXdsUk9FdjdZeCs1Umh2MHVn?=
- =?utf-8?B?NlVDekJPdHBZekRXT0VtaXJMUnRsaVJwSnNPT1ZyZzZuU0YwSnM5V0laMWJu?=
- =?utf-8?B?Y1BuZGxudWZLUmRQWUQ0U2Z5S21KN1VSUzRrL21Wb2h6RmhyemlRZ052RDNs?=
- =?utf-8?B?eURHd1dKeUg5TlFiMFNSVk5SWWlKM2FscnpFK3dmRkdKc0xBNlBwUCtMRkFL?=
- =?utf-8?B?aHpVZ0FTd3pTWGxqckZPWkNNbUJIb3BabEJ6ekhkdkFKc2NyQlpKWnpKa3h6?=
- =?utf-8?B?NVBsVHpIdzQxVk9mUjNadkR0R1dOajdpaE54SlVGMmd4RjEyemhveUtMd2lD?=
- =?utf-8?B?eVlDVUMwajZ1MWZ5U1MwK0RiZXhudHZkR2VVcnl5UkhSVmdmOEZDbFhKVENI?=
- =?utf-8?B?Z2puWlFSd09rc1lZVmpBUDY1am00LzJkTmRpc0ptZ0RHZWpmUzBkZlVtM0dM?=
- =?utf-8?B?TGFBRUpIVHMvNlNIYVY2cE1iRlViWDUwMzkvWXZsOWRpSlFUYnVoQmZRSlh0?=
- =?utf-8?B?VmthOWdEbUMvWGNpQjdzQzhkdC84di9CaFJjaTU2NFJvS2FQOG5CMkFBV0FY?=
- =?utf-8?B?a3RoUUsxVE1Vdlg2QXFXKzNGdm5RdnoyRVpYZWJBS0d4WTBlYVM1azdmVkdq?=
- =?utf-8?B?dUQ0Qlo2TFZTM1BjSHpMTWxHT1BCenRvd1pER3JvcndoVktXMUxObnRTMk1n?=
- =?utf-8?B?YnFZdm1HdGJVSklXRjZhU0dyWnZ6K1NsZDZ4YU45UGFEeGJoaS96Tmc2Qldn?=
- =?utf-8?B?aFN3ZndiR0pvUlpBNzRHRS9JZktBRWRiak4vUDF0eTFxYW1SQTNxbFVXS0pO?=
- =?utf-8?B?OHBwZCtIOEhidytkVW9pMExBdTcwQlVmeURUY2FWcDk3RkY0N2RHT3MyK21m?=
- =?utf-8?B?VWs5VnZ1SmhSSWZuWWE2MlRqTHVUc3pFelZFVU5ZWW9CRHlFMU1mOXZJZnI1?=
- =?utf-8?B?N1pxZisrZ1FpbXJjbXB3SmhxUHhqT1F1ZCsyaGFnYzlYK0dSSHBtLyt0dlRy?=
- =?utf-8?B?YnBDMjZFMzhOZUNxT3NiWmVaT2w2Qis4c3dvbFV4NVBpUStFMFpJdTF0TjRm?=
- =?utf-8?B?c0llYTNPeGxzTmdzS3B6TWVTcE5SSyswakxWSU5LcDloNWRoVjBFWjM5K2Zy?=
- =?utf-8?B?Ykd0MGVNbGhPanNtd2tyUFg0WDZJc0dIMHBiK2o1bTAvWXdVY1FmZU5WNXNj?=
- =?utf-8?B?VmtLTzhXYUJFWisxUFJaUEx0WStsOEUxUVo4dGxGaktWMFR5Zk8rbGl1dFgv?=
- =?utf-8?B?SzF4NEpyQXh6T3NhamVvTjJ3dktKb1A0Zm9razlHZG15bmcrczYyS0NWNlBt?=
- =?utf-8?B?SUJyQVFiYy9HeEVGaEwvVTRRSHNyRkd1b05lTlprME5aNFZIMk4yZz09?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1xGS0U-0004P5-7k
+ for qemu-devel@nongnu.org; Mon, 12 Oct 2026 22:12:48 -0400
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 69D21MpU3509529
+ for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 02:12:43 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ SJRkcv22iZt/tcNlOZ9fWK+mplwVFJFERSOcPAnCsHw=; b=TZBrFQUTp8ws5qge
+ lYPc9Cz97c2nquZgMOBdY98usRK7LxEkyCfyydzlRSBqVIMAyyqzVY/hHlaM8CpA
+ VhXB8HLCw6G7VmQI9/uSYbPq1OyWay1NO5CUeTSkWv3R00M/3lok27h0AZjPSCqK
+ q0vkEI31InjB02mOtpbszRN7ojWfSW5rzCFUcQynDMi1ojoeJLGN9o87DP6FBgl6
+ QUrH+ggzL9XCh/yIU1SPaM3MYwgcGjMBZEbQqsgBvqZuBYHXu2HCcJ7yA9Fevl57
+ gMyG8CqDzRrqcwEqeg3xAYU2+kq8sERns0ge4lr1IMQfolOp86NeEQOsdxMo5g+X
+ W3qKqw==
+Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com
+ [209.85.215.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h8wbc3s6k-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 02:12:43 +0000 (GMT)
+Received: by mail-pg1-f198.google.com with SMTP id
+ 41be03b00d2f7-cd5c91bbc36so2235553a12.1
+ for <qemu-devel@nongnu.org>; Mon, 12 Oct 2026 19:12:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1791857558; x=1792462358; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=SJRkcv22iZt/tcNlOZ9fWK+mplwVFJFERSOcPAnCsHw=;
+ b=ZfPXHvq3qMHm20r01RD2S1XdMygRKb1YDKrk78YwmmTujRYOaIdBRWQTh5ve88uj2x
+ ZZBlJmgLHxd5GaIx9KnY7X3XYUcUUEgNPZVcJoujzbWfLWJJG6lDPslzhARpcM+n4vLH
+ xg1Q4+09iAKOJ3yrG5nqHV9RXOSyLWzEJKSe2+AHZ8OBYFdVtZ7n49MqNheWFWPwLC3b
+ j6JhbfRNRPDdVn0Wnxi/ZjUoCgvmGldIqhvi2WI7SNix8ISTg2diGcLE+WSn/3/UyMSr
+ g+8Z4SJcs3qQ6UBiu64EyWTbTPa1KtE2hZxJJfQyowW6f3QA8ErxaukA032t3r40t/ih
+ sBqw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1791857558; x=1792462358;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=SJRkcv22iZt/tcNlOZ9fWK+mplwVFJFERSOcPAnCsHw=;
+ b=AhBvaAOvtYOwqg+RJQ1NZgCpQ9aC4yPfoO80ajB7ZUg0Z0MRLApcXuc8urCxWFFZhn
+ oSdzQO4Uo6C9Mcu2WEsVvQelE0vbJYRoBzEJ/XjMB+/nKbU7KAEfjijTtN6H8IuVf8nv
+ cuRjjgIej7Uiwl6hC3FTevGazz8CtQvNASM0fbrFp4zfRshHGV/eFmEIigRu79fT4gQx
+ z5yvfha6fn5CdCaGFbwuLfRUjy++t0L8TDb2P3sUJfZa80gcfzu21gmBBsCcr5AgM/F8
+ rqGYUDL29TfVDZ/jmay6uaqGvpPoPFjxdgQGiE/EwtTUynleo8jfC9OhqdtWegFKNL9m
+ T+lQ==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBxN4CH17BqV3b1jZzOb/ZZvguht5U2yoJ5YGlSXSsNi0xI4wB4OrJC1zuEK3l/y1QoGDMJza6O6Byoj@nongnu.org
+X-Gm-Message-State: AFq9FYJ6eF7MPKRH9UCU0hviI/l4Jp0l3SvwDsR/20h4GVs3aCI5EnqP
+ D1CV0CaDAslIb/4wNF9Jj/UqNykhC5YibXBdR3HdWAMf7NA7vUkxP2YzMANNIEd5YQKqEBpEKnC
+ 1DqwP9o7OljHqxxykylXp90SHmDNybb5QtH3sC8rIvkBvnpiSguM61Udt/A==
+X-Gm-Gg: AYBFou1fsPWGHz9x+iXws+P3+v1j5Hkon/BIz2TiEpWl9HjG8+5DRTfEV/yJMhAbbG3
+ ddBO0nKnjuhM4hA11oRBIfJxcWZ6s36VEYlU55n5P5GCiTUyJfl78NI1EOql/DvJPZaYzCbyd/2
+ SlOazsKfardUahb7FdQxsZe4W3cBh/Yo9SHruYxsbpijSa0lbIT9SpilLkpXW7cdZOHi5cA/D70
+ g/oyQUM5Zdrr+4Pk68smh5Ch6sRda/GKCgyHT1XqhI4Y9VzOt/u+hhf5oAVjT+En+W1bdNZHYZV
+ +kGJS+4LTuxoRURbXp+cR8g/k7BN/fQNuTFP24Ixoyahkjn5Nvg+irRjkuFxRE2pDc/Zy/eIklv
+ 7UWNJG4laU+M9wiSmiSlR2mQ34vmNj8oBg+eWL/8JTOusFzhvqwY2toGC
+X-Received: by 2002:a17:902:c406:b0:2e8:4f03:8a4 with SMTP id
+ d9443c01a7336-2e84f030f63mr84600025ad.67.1791857557452; 
+ Mon, 12 Oct 2026 19:12:37 -0700 (PDT)
+X-Received: by 2002:a17:902:c406:b0:2e8:4f03:8a4 with SMTP id
+ d9443c01a7336-2e84f030f63mr84598895ad.67.1791857555145; 
+ Mon, 12 Oct 2026 19:12:35 -0700 (PDT)
+Received: from [192.168.1.169] (192-80-163-190.dyn.novuscom.net.
+ [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2e8421b16casm49862825ad.40.2026.10.12.19.12.34
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 12 Oct 2026 19:12:34 -0700 (PDT)
+Message-ID: <d4552417-493f-4577-ac64-b3b63b15cdd5@oss.qualcomm.com>
+Date: Mon, 12 Oct 2026 19:12:34 -0700
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked: SbPuCERhzTM5AQueo11jl8gGr9WY4zAp9GbLVv4eCs9kFbYgpj8UrIt4cIxGooAoihBme+Qaf5e/14IPra7oSG1e27AZt7J0CLTtwwBuNzPCsep3GFndiaPiB0mvYU2SY2qIaOBSc5TXYk19jh68VttmtjnwHG3McGbp/m4Twu4X9lihlfsWC0z/kQ+Jcs9I2WUtkxqAlK2Bf1sg5d3v4kbcX5FHo81xW3G+kauZQFBH3CivGYLDUL+4k/mSr24jb3bU1mZDCzwS2NqwIT0Wk2RyyOb+F50Fk/icX0cYXqqqfe1wndbDybjxobNegG+beCIMRBHZc6dk+mwThDvOHA==
-X-OriginatorOrg: aspeedtech.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SEZPR06MB7362.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: aae40d5a-32b7-4558-25c5-08df28c98808
-X-MS-Exchange-CrossTenant-originalarrivaltime: 13 Oct 2026 01:30:14.5643 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: v6jxdCHLD/ngQL2zxINT3G/6tA2MEIO0pdZsHNSt/rQ8nopPZhh1qIb3WOZlftPhNVkaZEKu856Te6QGGe80pYuC0y0BaOhmFFF300Ya6R4=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TY0PR06MB5833
-Received-SPF: pass client-ip=2a01:111:f403:c405::7;
- envelope-from=jamin_lin@aspeedtech.com;
- helo=TYDPR03CU002.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] contrib/plugins/bbv.c: Allow selecting ROI
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>
+References: <20261007-bbv-v1-0-a2f521a68fdf@rsg.ci.i.u-tokyo.ac.jp>
+ <20261007-bbv-v1-2-a2f521a68fdf@rsg.ci.i.u-tokyo.ac.jp>
+ <4eec19e6-db40-4658-b5b3-bc342473cffd@oss.qualcomm.com>
+ <f503ffbe-0900-4b8e-ae7b-dbfcc74eb5cc@rsg.ci.i.u-tokyo.ac.jp>
+ <2d7c2cdb-b5b9-41ed-9786-dd9b4876bdd8@oss.qualcomm.com>
+ <9cda6271-aed9-4a2b-b88f-bca8371d753e@rsg.ci.i.u-tokyo.ac.jp>
+ <0b392aaf-7ce1-46bb-b39b-47744ea1e6f9@oss.qualcomm.com>
+ <65391825-ef44-4771-99b4-ad3a47279762@rsg.ci.i.u-tokyo.ac.jp>
+ <6b00ed2c-e78a-4ac7-9e5b-34d4aebefbbf@oss.qualcomm.com>
+ <ea052c05-88bb-4640-801e-8b9937bc5955@rsg.ci.i.u-tokyo.ac.jp>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <ea052c05-88bb-4640-801e-8b9937bc5955@rsg.ci.i.u-tokyo.ac.jp>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDEzMDAwOCBTYWx0ZWRfX2mekaqXgSU4Q
+ aO6HSE97aXCjg0IywtWXc4hlrsfMJdPqeDSormYxSGbrj/bDtdJVe8lkuZjoVBGBeaAotb7EDVr
+ AkTkDMnJTCq0meKC+bwF5oPlmCv2Fjs=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDEzMDAwOCBTYWx0ZWRfX+dhMKFx/cwrt
+ rtvL0HAMwMuhHzjUdIYMwwWwTcJg51rwMyZ7qzTGPQnmfMTiNBw+Dy88qm9T4AOMb0hleELPdwm
+ FEpfIqP+B2z5oncXSOMvvOj1JsH46s9U4x3zZB7a7BEjNu/YA6va+rV8+xInFyRPFaodhakrgr5
+ LjPzQK/AkL7J7vEh4vqR3TfEQjDG7bBe6311m9JkItKEk25Jj9cH9OyT/ZkPPnl7PU7SsW3vhGE
+ j6hO3Qtp5zAQrXuu1pkl9mdzXVHPipHVjpUm+9GatKTKxmEfI3LKgop/NUCVv4YBeQzFVL8rSsf
+ Jv3XfeJYK5oQPmwxD230zLMK2yfUcGs/F0VrPnM3BQ54QE18tMWZkkRs6cJZ4kfcPhAX0wShTn2
+ t2/6i0dJ8EJLldMSFkt0hVkUebw6lhvdGTgvvevGIfYvLt8rQJncwL6pVsv1ByCRiBVvnO0m6Ry
+ Euy5EFR2us8PxyD1Qww==
+X-Authority-Analysis: v=2.4 cv=C4p8WgP+ c=1 sm=1 tr=0 ts=6acd939b cx=c_pps
+ a=Qgeoaf8Lrialg5Z894R3/Q==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
+ a=eDXpo-QI_MWNifJFH9MA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=O8hF6Hzn-FEA:10 a=x9snwWr2DeNwDh03kgHS:22
+X-Proofpoint-ORIG-GUID: Nf-VFtYfjpybL4JOil8lVF9773xK3NSh
+X-Proofpoint-GUID: Nf-VFtYfjpybL4JOil8lVF9773xK3NSh
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-10-13_01,2026-10-09_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 priorityscore=1501 spamscore=0 bulkscore=0 adultscore=0
+ malwarescore=0 suspectscore=0 lowpriorityscore=0 clxscore=1015 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2610080000 definitions=main-2610130008
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -159,127 +164,371 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-SGkgTWFyYy1BbmRyw6kgTHVyZWF1DQoNCj4gU3ViamVjdDogUmU6IFtQQVRDSCB2MyA1LzhdIGh3
-L3VzYi9yZWRpcmVjdC1zZXJ2ZXI6IEltcGxlbWVudCBjb250cm9sDQo+IHRyYW5zZmVycw0KPiAN
-Cj4gPiBUaGUgaG9zdCBzZW5kcyBhIGNvbnRyb2xfcGFja2V0LiBUdXJuIGl0IGludG8gdGhlIFNF
-VFVQLCBEQVRBIGFuZA0KPiA+IFNUQVRVUyB0b2tlbnMgdGhlIFFFTVUgVVNCIGNvcmUgd2FudHMs
-IHJ1biB0aGVtIG9uIHRoZSBkZXZpY2UsIGFuZA0KPiA+IHNlbmQgdGhlIGFuc3dlciBiYWNrLg0K
-PiA+DQo+ID4gVGhlIGRldmljZSBtYXkgYW5zd2VyIGxhdGVyLCBzbyB3ZSBoYXZlIHRvIHJlbWVt
-YmVyIHRoZSBwYWNrZXRzIHdlDQo+ID4gc2VudC4gRWFjaCBvbmUgc3RheXMgb24gYSBsaXN0IHVu
-dGlsIGl0IGNvbWVzIGJhY2suIFdlIGRyb3AgdGhlIHdob2xlDQo+ID4gbGlzdCBvbiBhIGJ1cyBy
-ZXNldCBvciBhIGNoYXJkZXYgY2xvc2UuIFdoZW4gdGhlIGhvc3QgYXNrcyB1cyB0bw0KPiA+IGNh
-bmNlbCBhIHBhY2tldCwgd2UgYW5zd2VyIGl0IGFuZCBkcm9wIGl0Lg0KPiA+DQo+ID4gdXNicmVk
-aXIgaGFzIGl0cyBvd24gbWVzc2FnZXMgZm9yIHNldF9jb25maWd1cmF0aW9uLA0KPiA+IGdldF9j
-b25maWd1cmF0aW9uLCBzZXRfYWx0X3NldHRpbmcgYW5kIGdldF9hbHRfc2V0dGluZy4gRWFjaCBv
-bmUgaXMgYQ0KPiA+IGNvbnRyb2wgdHJhbnNmZXIsIHNvIHJ1biBpdCBsaWtlIG9uZSBhbmQgc2Vu
-ZCBiYWNrIHRoZSBzdGF0dXMgbWVzc2FnZS4NCj4gPg0KPiA+IHVzYnJlZGlyIHdhbnRzIGFuIGVw
-X2luZm8gbWVzc2FnZS4gSXQgc2F5cyB3aGF0IGtpbmQgZWFjaCBlbmRwb2ludCBpczoNCj4gPiBi
-dWxrLCBpbnRlcnJ1cHQgb3IgY29udHJvbC4gUUVNVSBjYW5ub3QgdGVsbCB1cy4gSXQgb25seSBr
-bm93cyBhZnRlcg0KPiA+IGl0IGhhcyByZWFkIHRoZSBkZXZpY2UncyBkZXNjcmlwdG9ycywgYW5k
-IGl0IG5ldmVyIHJlYWRzIHRoZW0gZm9yIGENCj4gPiBkZXZpY2UgdGhhdCBqdXN0IGZvcndhcmRz
-IHRyYW5zZmVycy4gU28gd2UgcmVhZCB0aGVtIG91cnNlbHZlczogdGhlDQo+ID4gY29uZmlndXJh
-dGlvbiBkZXNjcmlwdG9yIHBhc3NlcyB0aHJvdWdoIHVzIG9uIGl0cyB3YXkgdG8gdGhlIGhvc3Qu
-DQo+ID4NCj4gPiBTaWduZWQtb2ZmLWJ5OiBKYW1pbiBMaW4gPGphbWluX2xpbkBhc3BlZWR0ZWNo
-LmNvbT4NCj4gPiBNZXNzYWdlLUlEOiA8MjAyNjEwMTIwMjE2MzQuMjAwNjQyNC02LWphbWluX2xp
-bkBhc3BlZWR0ZWNoLmNvbT4NCj4gPg0KPiA+IGRpZmYgLS1naXQgYS9ody91c2IvcmVkaXJlY3Qt
-c2VydmVyLmMgYi9ody91c2IvcmVkaXJlY3Qtc2VydmVyLmMgaW5kZXgNCj4gPiAwNWVlMGYzODcz
-NmUuLjIyMDgzMzk0YWI0MSAxMDA2NDQNCj4gPiAtLS0gYS9ody91c2IvcmVkaXJlY3Qtc2VydmVy
-LmMNCj4gPiArKysgYi9ody91c2IvcmVkaXJlY3Qtc2VydmVyLmMNCj4gPiBAQCAtNjMsOSArNjMs
-MTEgQEANCj4gPiAgI2luY2x1ZGUgInFvbS9vYmplY3QuaCINCj4gPg0KPiA+ICAjaW5jbHVkZSA8
-dXNicmVkaXJwYXJzZXIuaD4NCj4gPiArI2luY2x1ZGUgPHVzYnJlZGlycHJvdG8uaD4NCj4gPg0K
-PiA+ICAjaW5jbHVkZSAiaHcvY29yZS9xZGV2LXByb3BlcnRpZXMuaCINCj4gPiAgI2luY2x1ZGUg
-Imh3L2NvcmUvcWRldi1wcm9wZXJ0aWVzLXN5c3RlbS5oIg0KPiA+ICsjaW5jbHVkZSAiZGVzYy5o
-Ig0KPiA+ICAjaW5jbHVkZSAidHJhY2UuaCINCj4gPg0KPiA+ICAjZGVmaW5lIFRZUEVfVVNCX1JF
-RElSX1NFUlZFUiAieC11c2ItcmVkaXItc2VydmVyIg0KPiA+IEBAIC03Myw2ICs3NSw0MSBAQCBP
-QkpFQ1RfREVDTEFSRV9TSU1QTEVfVFlQRShVU0JSZWRpclNlcnZlciwNCj4gPiBVU0JfUkVESVJf
-U0VSVkVSKQ0KPiA+DQo+ID4gICNkZWZpbmUgVVNCUkVESVJfU0VSVkVSX1ZFUlNJT04gInFlbXUg
-IiBUWVBFX1VTQl9SRURJUl9TRVJWRVIgIg0KPiAiDQo+ID4gUUVNVV9WRVJTSU9ODQo+ID4NCj4g
-PiArLyoNCj4gPiArICogVGhlIHVzYnJlZGlyIGVwX2luZm8gbWVzc2FnZSBoYXMgb25lIHNsb3Qg
-cGVyIGVuZHBvaW50IGFuZCBkaXJlY3Rpb24uDQo+ID4gKyAqIEluZGV4IDAtMTUgYXJlIHRoZSBP
-VVQgZW5kcG9pbnRzLCAxNi0zMSB0aGUgSU4gb25lcy4NCj4gPiArICovDQo+ID4gKyNkZWZpbmUg
-VVNCUkVESVJfU0VSVkVSX01BWF9FUCAzMg0KPiA+ICsjZGVmaW5lIFVTQlJFRElSX1NFUlZFUl9F
-UF9JTl9CQVNFIDE2DQo+ID4gKw0KPiA+ICsjZGVmaW5lIFVTQlJFRElSX1NFUlZFUl9DVFJMX1NF
-VFVQIDANCj4gPiArI2RlZmluZSBVU0JSRURJUl9TRVJWRVJfQ1RSTF9TVEFUVVMgMQ0KPiA+ICsN
-Cj4gPiArLyogV2hpY2ggbWVzc2FnZSBhbnN3ZXJzIHRoZSBob3N0IHdoZW4gYSBjb250cm9sIHRy
-YW5zZmVyIGVuZHMuICovDQo+ID4gK3R5cGVkZWYgZW51bSB7DQo+ID4gKyAgICBVU0JSRURJUl9T
-RVJWRVJfUkVQTFlfQ09OVFJPTCwNCj4gPiArICAgIFVTQlJFRElSX1NFUlZFUl9SRVBMWV9DT05G
-SUcsDQo+ID4gKyAgICBVU0JSRURJUl9TRVJWRVJfUkVQTFlfQUxULA0KPiA+ICt9IFVTQlJlZGly
-U2VydmVyUmVwbHk7DQo+ID4gKw0KPiA+ICt0eXBlZGVmIHN0cnVjdCBVU0JSZWRpclNlcnZlclBr
-dCB7DQo+ID4gKyAgICBVU0JQYWNrZXQgcGt0Ow0KPiA+ICsNCj4gPiArICAgIC8qIFNhdmVkIGhl
-YWRlcnMgZm9yIHRoZSB1c2JyZWRpciByZXNwb25zZSAqLw0KPiA+ICsgICAgc3RydWN0IHVzYl9y
-ZWRpcl9jb250cm9sX3BhY2tldF9oZWFkZXIgY3RybF9oZHI7DQo+ID4gKw0KPiA+ICsgICAgLyoN
-Cj4gPiArICAgICAqIFRoZSBJT1YgcG9pbnRzIGhlcmUuIElOIGRhdGEgbGFuZHMgaW4gaXQsIE9V
-VCBkYXRhIGlzIGNvcGllZCBpbi4NCj4gPiArICAgICAqIEFsbG9jYXRlZCBhbmQgZnJlZWQgd2l0
-aCB0aGUgcGFja2V0OyBkYXRhX3NpemUgaXMgaG93IGJpZyBpdCBpcy4NCj4gPiArICAgICAqLw0K
-PiA+ICsgICAgdWludDhfdCAqZGF0YTsNCj4gPiArICAgIGludCBkYXRhX3NpemU7DQo+ID4gKyAg
-ICBRVEFJTFFfRU5UUlkoVVNCUmVkaXJTZXJ2ZXJQa3QpIG5leHQ7DQo+ID4gKyAgICBVU0JSZWRp
-clNlcnZlclJlcGx5IHJlcGx5Ow0KPiA+ICsgICAgdWludDY0X3QgcmVkaXJfaWQ7DQo+ID4gKyAg
-ICBpbnQgdHlwZTsNCj4gPiArfSBVU0JSZWRpclNlcnZlclBrdDsNCj4gPiArDQo+ID4gIHN0cnVj
-dCBVU0JSZWRpclNlcnZlciB7DQo+ID4gICAgICBTeXNCdXNEZXZpY2UgcGFyZW50X29iajsNCj4g
-Pg0KPiA+IEBAIC05Miw4ICsxMjksMjMgQEAgc3RydWN0IFVTQlJlZGlyU2VydmVyIHsNCj4gPiAg
-ICAgIGd1aW50IHdhdGNoOw0KPiA+ICAgICAgYm9vbCBob3N0X2Nvbm5lY3RlZDsNCj4gPiAgICAg
-IGJvb2wgZGV2aWNlX2Fubm91bmNlZDsNCj4gPiArDQo+ID4gKyAgICAvKiBJbi1mbGlnaHQgcGFj
-a2V0IHRyYWNraW5nICovDQo+ID4gKyAgICBRVEFJTFFfSEVBRCgsIFVTQlJlZGlyU2VydmVyUGt0
-KSBpbmZsaWdodDsNCj4gPiArICAgIHVpbnQ2NF90IG5leHRfaWQ7DQo+ID4gKw0KPiA+ICsgICAg
-LyogRW5kcG9pbnQgdGFibGVzIGZvciB0aGUgdXNicmVkaXIgZXBfaW5mbyBtZXNzYWdlLiAqLw0K
-PiA+ICsgICAgdWludDhfdCBlcF90eXBlW1VTQlJFRElSX1NFUlZFUl9NQVhfRVBdOw0KPiA+ICsg
-ICAgdWludDE2X3QgZXBfbWF4X3BhY2tldFtVU0JSRURJUl9TRVJWRVJfTUFYX0VQXTsNCj4gPiAr
-ICAgIHVpbnQ4X3QgZXBfaW50ZXJ2YWxbVVNCUkVESVJfU0VSVkVSX01BWF9FUF07DQo+ID4gKyAg
-ICB1aW50OF90IGVwX2lmYWNlW1VTQlJFRElSX1NFUlZFUl9NQVhfRVBdOw0KPiA+ICB9Ow0KPiA+
-DQo+ID4gK3N0YXRpYyB2b2lkIHVzYnJlZGlyX3NlcnZlcl9wa3RfZnJlZShVU0JSZWRpclNlcnZl
-clBrdCAqcnApOyBzdGF0aWMNCj4gPiArdm9pZCB1c2JyZWRpcl9zZXJ2ZXJfc3RvcF90cmFuc2Zl
-cnMoVVNCUmVkaXJTZXJ2ZXIgKnMpOyBzdGF0aWMgdm9pZA0KPiA+ICt1c2JyZWRpcl9zZXJ2ZXJf
-c2VuZF9jYW5jZWxsZWQoVVNCUmVkaXJTZXJ2ZXIgKnMsDQo+ID4gKyAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICBVU0JSZWRpclNlcnZlclBrdA0KPiAqcnApOw0KPiA+
-ICsNCj4gPiAgLyoNCj4gPiAgICogVGhlIGRldmljZSBpcyB3aGF0ZXZlciBVU0JEZXZpY2UgdGhl
-IHVzZXIgcGx1Z2dlZCBpbnRvIG91ciBwb3J0IHdpdGgNCj4gPiAgICogIi1kZXZpY2UgPGRldmlj
-ZT4sYnVzPTxpZD4uMCIuIE5VTEwgdW50aWwgdGhlbi4NCj4gPiBAQCAtMTA0LDkgKzE1Niw5OCBA
-QCBzdGF0aWMgVVNCRGV2aWNlDQo+ID4gKnVzYnJlZGlyX3NlcnZlcl9kZXZpY2UoVVNCUmVkaXJT
-ZXJ2ZXIgKnMpICB9DQo+ID4NCj4gPiAgLyoNCj4gPiAtICogRGV2aWNlIGFubm91bmNlbWVudA0K
-PiA+ICsgKiBEZXNjcmlwdG9yIHNub29waW5nIGFuZCBkZXZpY2UgYW5ub3VuY2VtZW50DQo+ID4g
-ICAqLw0KPiA+DQo+ID4gK3N0YXRpYyB2b2lkIHVzYnJlZGlyX3NlcnZlcl9yZWNvcmRfZW5kcG9p
-bnQoVVNCUmVkaXJTZXJ2ZXIgKnMsDQo+ID4gKyAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgY29uc3QgVVNCRGVzY3JpcHRvcg0KPiAqZGVzYywNCj4gPiArICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICB1aW50OF90IGlmYWNlKSB7DQo+
-ID4gKyAgICB1aW50OF90IGFkZHI7DQo+ID4gKyAgICBpbnQgZXBfbnI7DQo+ID4gKyAgICBpbnQg
-aWR4Ow0KPiA+ICsNCj4gPiArICAgIGlmIChkZXNjLT5iTGVuZ3RoIDwgNykgew0KPiA+ICsgICAg
-ICAgIHJldHVybjsNCj4gPiArICAgIH0NCj4gPiArDQo+ID4gKyAgICBhZGRyID0gZGVzYy0+dS5l
-bmRwb2ludC5iRW5kcG9pbnRBZGRyZXNzOw0KPiA+ICsgICAgZXBfbnIgPSBhZGRyICYgMHgwZjsN
-Cj4gPiArICAgIGlkeCA9IChhZGRyICYgVVNCX0RJUl9JTikgPyBlcF9uciArIFVTQlJFRElSX1NF
-UlZFUl9FUF9JTl9CQVNFIDoNCj4gZXBfbnI7DQo+ID4gKyAgICBpZiAoZXBfbnIgPCAxIHx8IGlk
-eCA+PSBVU0JSRURJUl9TRVJWRVJfTUFYX0VQKSB7DQo+ID4gKyAgICAgICAgcmV0dXJuOw0KPiA+
-ICsgICAgfQ0KPiA+ICsNCj4gPiArICAgIHMtPmVwX3R5cGVbaWR4XSA9IGRlc2MtPnUuZW5kcG9p
-bnQuYm1BdHRyaWJ1dGVzICYgMHgwMzsNCj4gPiArICAgIHMtPmVwX21heF9wYWNrZXRbaWR4XSA9
-IChkZXNjLT51LmVuZHBvaW50LndNYXhQYWNrZXRTaXplX2hpIDw8IDgpDQo+IHwNCj4gPiArICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgIGRlc2MtPnUuZW5kcG9pbnQud01heFBhY2tldFNpemVf
-bG87DQo+ID4gKyAgICBzLT5lcF9pbnRlcnZhbFtpZHhdID0gZGVzYy0+dS5lbmRwb2ludC5iSW50
-ZXJ2YWw7DQo+ID4gKyAgICBzLT5lcF9pZmFjZVtpZHhdID0gaWZhY2U7DQo+ID4gK30NCj4gPiAr
-DQo+ID4gKy8qDQo+ID4gKyAqIEEgZGV2aWNlIHRoYXQgb25seSBwYXNzZXMgdHJhbnNmZXJzIHRo
-cm91Z2ggbmV2ZXIgZ2V0cyBpdHMNCj4gPiArZW5kcG9pbnQNCj4gPiArICogdHlwZXMgZmlsbGVk
-IGluOiB0aGV5IHN0YXkgSU5WQUxJRCBhbmQgdGhlcmUgaXMgbm90aGluZyB0byBwdXQgaW4NCj4g
-PiArICogZXBfaW5mby4gVGFrZSB0aGVtIGZyb20gdGhlIGNvbmZpZ3VyYXRpb24gZGVzY3JpcHRv
-ciBhcyBpdCBnb2VzIHBhc3QuDQo+ID4gKyAqIFdpdGhvdXQgdGhlbSB0aGUgaG9zdCBzZWVzIHR5
-cGUgMjU1IGFuZCByZWZ1c2VzIHRvIG1vdmUgZGF0YS4NCj4gPiArICovDQo+ID4gK3N0YXRpYyB2
-b2lkIHVzYnJlZGlyX3NlcnZlcl9zbm9vcF9jb25maWdfZGVzYyhVU0JSZWRpclNlcnZlciAqcywN
-Cj4gPiArICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGNvbnN0
-IHVpbnQ4X3QNCj4gKmRhdGEsDQo+ID4gK2ludCBsZW4pIHsNCj4gPiArICAgIGNvbnN0IFVTQkRl
-c2NyaXB0b3IgKmRlc2M7DQo+ID4gKyAgICB1aW50OF90IGlmYWNlID0gMDsNCj4gPiArICAgIGlu
-dCBpID0gMDsNCj4gPiArDQo+ID4gKyAgICB3aGlsZSAoaSArIDIgPD0gbGVuKSB7DQo+ID4gKyAg
-ICAgICAgZGVzYyA9IChjb25zdCBVU0JEZXNjcmlwdG9yICopKGRhdGEgKyBpKTsNCj4gPiArDQo+
-ID4gKyAgICAgICAgaWYgKGRlc2MtPmJMZW5ndGggPCAyIHx8IGkgKyBkZXNjLT5iTGVuZ3RoID4g
-bGVuKSB7DQo+ID4gKyAgICAgICAgICAgIGJyZWFrOw0KPiA+ICsgICAgICAgIH0NCj4gPiArDQo+
-ID4gKyAgICAgICAgaWYgKGRlc2MtPmJEZXNjcmlwdG9yVHlwZSA9PSBVU0JfRFRfSU5URVJGQUNF
-ICYmDQo+IGRlc2MtPmJMZW5ndGggPj0gMykgew0KPiA+ICsgICAgICAgICAgICBpZmFjZSA9IGRl
-c2MtPnUuaW50ZXJmYWNlLmJJbnRlcmZhY2VOdW1iZXI7DQo+IA0KPiBUaGlzIHJlY29yZHMgdGhl
-IGludGVyZmFjZSBudW1iZXIgYnV0IG5vdCBiQWx0ZXJuYXRlU2V0dGluZy4gV2hlbiB0aGUgY29u
-ZmlnDQo+IGRlc2NyaXB0b3IgY2FycmllcyB0d28gYWx0ZXJuYXRlcyBmb3IgdGhlIHNhbWUgaW50
-ZXJmYWNlLCBib3RoIGFyZSB3YWxrZWQgYW5kDQo+IHRoZWlyIGVuZHBvaW50cyBvdmVyd3JpdGUg
-ZWFjaCBvdGhlciBpbiB0aGUgZXAgdGFibGVzLg0KPiBBZnRlciBTRVRfSU5URVJGQUNFIHNlbGVj
-dHMgYWx0ZXJuYXRlIDAsIGVwX2luZm8gbWF5IHN0aWxsIGRlc2NyaWJlIHRoZQ0KPiBlbmRwb2lu
-dHMgb2YgYWx0ZXJuYXRlIDEuDQo+IA0KPiBZb3Ugc2hvdWxkIGJlIGFibGUgdG8gY2FjaGUgdGhl
-IGNvbmZpZyBkZXNjcmlwdG9yIGFuZCByZS1wYXJzZXMgaXQgd2hlbiB0aGUNCj4gYWN0aXZlIGFs
-dGVybmF0ZSBjaGFuZ2VzIGF0IGN0cmxfc3RhdHVzX2NvbXBsZXRlKCksIHdoZW4gc2VuZGluZyB0
-aGUgbmV3DQo+IHNlbmRfZXBfaW5mbygpLg0KPiANCg0KVGhhbmtzIGZvciB0aGUgcmV2aWV3IGFu
-ZCBzdWdnZXN0aW9uLg0KV2lsbCBmaXggaXQuDQoNCkphbWluDQoNCj4gLS0NCj4gTWFyYy1BbmRy
-w6kgTHVyZWF1IDxtYXJjYW5kcmUubHVyZWF1QHJlZGhhdC5jb20+DQoNCg==
+On 10/12/26 7:00 AM, Akihiko Odaki wrote:
+> On 2026/10/09 15:37, Pierrick Bouvier wrote:
+>> On 10/8/26 8:33 PM, Akihiko Odaki wrote:
+>>> On 2026/10/09 11:30, Pierrick Bouvier wrote:
+>>>> On 10/8/2026 5:57 PM, Akihiko Odaki wrote:
+>>>>> On 2026/10/09 1:40, Pierrick Bouvier wrote:
+>>>>>> On 10/7/2026 11:11 PM, Akihiko Odaki wrote:
+>>>>>>> On 2026/10/08 10:08, Pierrick Bouvier wrote:
+>>>>>>>> On 10/6/2026 11:01 PM, Akihiko Odaki wrote:
+>>>>>>>>> A region of interest (ROI) often excludes the program startup and
+>>>>>>>>> exit.
+>>>>>>>>> For example, a benchmark may parse a large input and then run a
+>>>>>>>>> computation kernel and the former may take longer than the latter;
+>>>>>>>>> basic block vectors generated for the whole execution will not
+>>>>>>>>> properly
+>>>>>>>>> represent the latter.
+>>>>>>>>>
+>>>>>>>>> Add options to specify the beginning and the end of the ROI to
+>>>>>>>>> bound
+>>>>>>>>> basic block vector generation to the ROI.
+>>>>>>>>>
+>>>>>>>>> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+>>>>>>>>> ---
+>>>>>>>>>       docs/about/emulation.rst |  8 +++++
+>>>>>>>>>       contrib/plugins/bbv.c    | 80 +++++++++++++++++++++++++++++
+>>>>>>>>> ++++++++
+>>>>>>>>> +++++++++--
+>>>>>>>>>       2 files changed, 86 insertions(+), 2 deletions(-)
+>>>>>>>>>
+>>>>>>>>> diff --git a/docs/about/emulation.rst b/docs/about/emulation.rst
+>>>>>>>>> index c58149086cdd..0566171b517b 100644
+>>>>>>>>> --- a/docs/about/emulation.rst
+>>>>>>>>> +++ b/docs/about/emulation.rst
+>>>>>>>>> @@ -284,6 +284,14 @@ The bbv plugin allows you to generate basic
+>>>>>>>>> block vectors for use with the
+>>>>>>>>>           * - Option
+>>>>>>>>>           - Description
+>>>>>>>>> +  * - begin=A
+>>>>>>>>> +    - The virtual address of the instruction that starts basic
+>>>>>>>>> block
+>>>>>>>>> vector
+>>>>>>>>> +      generation. Generation starts from the beginning of the
+>>>>>>>>> execution if
+>>>>>>>>> +      not specified.
+>>>>>>>>> +  * - end=A
+>>>>>>>>> +    - The virtual address of the instruction that ends basic block
+>>>>>>>>> vector
+>>>>>>>>> +      generation. Generation continues until the endo of the
+>>>>>>>>> execution if
+>>>>>>>>
+>>>>>>>> small typo here: s/endo/end
+>>>>>>>
+>>>>>>> Thanks for catching the typo.
+>>>>>>>
+>>>>>>>>
+>>>>>>>>> +      not specified.
+>>>>>>>>>         * - interval=N
+>>>>>>>>>           - The interval to generate a basic block vector
+>>>>>>>>> specified by
+>>>>>>>>> the number of
+>>>>>>>>>             instructions (Default: N = 100000000)
+>>>>>>>>> diff --git a/contrib/plugins/bbv.c b/contrib/plugins/bbv.c
+>>>>>>>>> index e5caf5d9543b..a2a779f7639e 100644
+>>>>>>>>> --- a/contrib/plugins/bbv.c
+>>>>>>>>> +++ b/contrib/plugins/bbv.c
+>>>>>>>>> @@ -5,6 +5,8 @@
+>>>>>>>>>        * SPDX-License-Identifier: GPL-2.0-or-later
+>>>>>>>>>        */
+>>>>>>>>>       +#include <stdbool.h>
+>>>>>>>>> +#include <stdint.h>
+>>>>>>>>>       #include <stdio.h>
+>>>>>>>>>       #include <glib.h>
+>>>>>>>>>       @@ -26,6 +28,10 @@ static GHashTable *bbs;
+>>>>>>>>>       static GRWLock bbs_lock;
+>>>>>>>>>       static char *filename;
+>>>>>>>>>       static struct qemu_plugin_scoreboard *vcpus;
+>>>>>>>>> +static bool begin_present;
+>>>>>>>>> +static uint64_t begin;
+>>>>>>>>> +static bool end_present;
+>>>>>>>>> +static uint64_t end;
+>>>>>>>>>       static int64_t interval = 100000000;
+>>>>>>>>>         static void plugin_exit(void *p)
+>>>>>>>>> @@ -66,6 +72,7 @@ static void vcpu_init(unsigned int vcpu_index,
+>>>>>>>>> void
+>>>>>>>>> *userdata)
+>>>>>>>>>           Vcpu *vcpu = qemu_plugin_scoreboard_find(vcpus,
+>>>>>>>>> vcpu_index);
+>>>>>>>>>             vcpu_filename = g_strdup_printf("%s.%u.bb", filename,
+>>>>>>>>> vcpu_index);
+>>>>>>>>> +    vcpu->count = begin_present ? INT64_MIN : -interval;
+>>>>>>>>
+>>>>>>>> Not sure which semantic we are trying to achieve with -interval
+>>>>>>>> here.
+>>>>>>>>
+>>>>>>>> The original logic was to increment this count, until reaching
+>>>>>>>> interval,
+>>>>>>>> after what we would reset it by using vcpu_count -= interval, to
+>>>>>>>> keep
+>>>>>>>> the extra insn that went in after the threshold.
+>>>>>>>
+>>>>>>> The counter now starts at -interval and counts up to zero.
+>>>>>>> Subtracting
+>>>>>>> interval after emitting a vector still preserves the extra
+>>>>>>> instructions.
+>>>>>>> For example, with interval=100:
+>>>>>>>
+>>>>>>>         initial count:       -100
+>>>>>>>         after 130 insns:       30  -> emit a vector
+>>>>>>>         subtract interval:    -70  -> 70 insns until the next vector
+>>>>>>>
+>>>>>>>>
+>>>>>>>>>           vcpu->file = fopen(vcpu_filename, "w");
+>>>>>>>>>       }
+>>>>>>>>>       @@ -102,6 +109,22 @@ static void
+>>>>>>>>> vcpu_interval_exec(unsigned int
+>>>>>>>>> vcpu_index, void *udata)
+>>>>>>>>>           fputc('\n', vcpu->file);
+>>>>>>>>>       }
+>>>>>>>>>       +static void vcpu_begin_insn_exec(unsigned int vcpu_index,
+>>>>>>>>> void
+>>>>>>>>> *userdata)
+>>>>>>>>> +{
+>>>>>>>>> +    GHashTableIter iter;
+>>>>>>>>> +    void *value;
+>>>>>>>>> +
+>>>>>>>>> +    g_rw_lock_reader_lock(&bbs_lock);
+>>>>>>>>> +    g_hash_table_iter_init(&iter, bbs);
+>>>>>>>>> +
+>>>>>>>>> +    while (g_hash_table_iter_next(&iter, NULL, &value)) {
+>>>>>>>>> +        qemu_plugin_u64_set(bb_count_u64(value), vcpu_index, 0);
+>>>>>>>>> +    }
+>>>>>>>>> +
+>>>>>>>>> +    g_rw_lock_reader_unlock(&bbs_lock);
+>>>>>>>>> +    qemu_plugin_u64_set(count_u64(), vcpu_index, -interval);
+>>>>>>>>> +}
+>>>>>>>>> +
+>>>>>>>>>       static void vcpu_tb_trans(struct qemu_plugin_tb *tb, void
+>>>>>>>>> *userdata)
+>>>>>>>>>       {
+>>>>>>>>>           uint64_t n_insns = qemu_plugin_tb_n_insns(tb);
+>>>>>>>>> @@ -119,6 +142,19 @@ static void vcpu_tb_trans(struct
+>>>>>>>>> qemu_plugin_tb
+>>>>>>>>> *tb, void *userdata)
+>>>>>>>>>           }
+>>>>>>>>>           g_rw_lock_writer_unlock(&bbs_lock);
+>>>>>>>>>       +    for (size_t idx = 0; idx < n_insns; idx++) {
+>>>>>>>>> +        struct qemu_plugin_insn *insn =
+>>>>>>>>> qemu_plugin_tb_get_insn(tb,
+>>>>>>>>> idx);
+>>>>>>>>> +        uint64_t insn_vaddr = qemu_plugin_insn_vaddr(insn);
+>>>>>>>>> +
+>>>>>>>>> +        if (begin_present && insn_vaddr == begin) {
+>>>>>>>>> +            qemu_plugin_register_vcpu_insn_exec_cb(
+>>>>>>>>> +                insn, vcpu_begin_insn_exec,
+>>>>>>>>> QEMU_PLUGIN_CB_NO_REGS,
+>>>>>>>>> NULL);
+>>>>>>>>> +        } else if (end_present && insn_vaddr == end) {
+>>>>>>>>> +            qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu(
+>>>>>>>>> +                insn, QEMU_PLUGIN_INLINE_STORE_U64, count_u64(),
+>>>>>>>>> INT64_MIN);
+>>>>>>>>> +        }
+>>>>>>>>> +    }
+>>>>>>>>> +
+>>>>>>>>>           qemu_plugin_register_vcpu_tb_exec_inline_per_vcpu(
+>>>>>>>>>               tb, QEMU_PLUGIN_INLINE_ADD_U64, count_u64(), n_insns);
+>>>>>>>>>       @@ -127,7 +163,32 @@ static void vcpu_tb_trans(struct
+>>>>>>>>> qemu_plugin_tb *tb, void *userdata)
+>>>>>>>>>             qemu_plugin_register_vcpu_tb_exec_cond_cb(
+>>>>>>>>>               tb, vcpu_interval_exec, QEMU_PLUGIN_CB_NO_REGS,
+>>>>>>>>> -        QEMU_PLUGIN_COND_GE, count_u64(), interval, NULL);
+>>>>>>>>> +        QEMU_PLUGIN_COND_LT, count_u64(), INT64_MIN, NULL);
+>>>>>>>>> +}
+>>>>>>>>
+>>>>>>>> is INT64_MIN used as an arbitrary large value when interpreted as
+>>>>>>>> unsigned immediate? If yes, that's confusing to the reader.
+>>>>>>>
+>>>>>>> The unsigned comparison count < (uint64_t)INT64_MIN is equivalent
+>>>>>>> with
+>>>>>>> the signed comparison (int64_t)count >= 0. That is why this
+>>>>>>> particular
+>>>>>>> value is used.
+>>>>>>>
+>>>>>>> Setting count to INT64_MIN suppresses output for the next 2^63
+>>>>>>> counted
+>>>>>>> instructions, which is effectively disabled for this use. The beginEmulation
+>>>>>>> callback clears the BB counters and sets count to -interval; end
+>>>>>>> sets it
+>>>>>>> back to INT64_MIN. The requested interval stays unchanged.
+>>>>>>>
+>>>>>>
+>>>>>> Ok I see better.
+>>>>>> Even though it works, it's pretty confusing to be honest. Inline
+>>>>>> operatons works with unsigned values, so with conversion and wrap
+>>>>>> around, it's safe, but really not intuitive.
+>>>>>>
+>>>>>> I would prefer if you could refactor this to keep a zero initialized
+>>>>>> count value, and add a specific instrumentation path for begin, end
+>>>>>> logic (COND_LT, UINT64_MAX - N) to keep the same behavior of "infinite
+>>>>>> interval".
+>>>>>
+>>>>> We cannot choose a separate instrumentation path based on whether
+>>>>> execution is inside the ROI. Instrumentation is installed when a TB is
+>>>>> translated, but the same TB may execute both inside and outside the
+>>>>> ROI.
+>>>>>
+>>>>> I will preserve this logic and add code comments for clarification.
+>>>>>
+>>>>
+>>>> I took some time to read again how bbv works. Indeed, my idea to modify
+>>>> interval was a non sense, and not what is expected.
+>>>>
+>>>> The current instrumentation per tb is always done unconditionally, and
+>>>> the only need thing to do is to snapshot bbs hashtable to keep track of
+>>>> the correct data only when being inside the ROI. The rest of existing
+>>>> logic stays the same.
+>>>>
+>>>> - On enter, set vcpu->count to 0 (fresh start) and restore bb table from
+>>>> previous exit (empty table if there was no exit yet).
+>>>> - On exit, duplicate the bb table to allow to restore it next time we
+>>>> enter in ROI.
+>>>> Key idea is that we keep on adding things in bb table, but save/restore
+>>>> when leaving/entering ROI.
+>>>>
+>>>> I think for robustness you should also add detection of those expected
+>>>> transitions: Out of ROI -> Enter ROI -> Exit ROI -> Enter ROI -> ...
+>>>>
+>>>> Nothing is currently done to detect if if we meet enter/exit address
+>>>> multiple times, without having the correct sequence. I don't know if we
+>>>> want to report an error or handle reentrance correctly in this case.
+>>>>
+>>>> Also, should count be reset on each entrance, or do we want to keep
+>>>> track of it also, and save/restore that on exit/enter? I tend to think
+>>>> the idea is create a "virtual" interval than only is alive when being
+>>>> inside the ROI. In this case, we should keep track of this value also.
+>>>
+>>> The current design that resets the bb table is intentional. A "virtual"
+>>> interval spanning multiple ROIs would be misleading because it mixes
+>>> different sections of execution.
+>>>
+>>
+>> Ok.
+>>
+>>> I don't think we need to add a special handling to enforce a particular
+>>> order of transitions. This patch performs the same action for the begin
+>>> and end addresses and that makes the behavior predictable.
+>>>
+>>> Perhaps we can extend the documentation to clarify the "begin" marker to
+>>> tell that it resets the bb table, making the behavior clear regardless
+>>> of transition order.
+>>>
+>>
+>> I'm fine to keep a simple model, but I'll ask you to remove the logic
+>> involving negative numbers, it's just too confusing. Please remove:
+>> vcpu->count = begin_present ? INT64_MIN : -interval;
+>> and
+>> QEMU_PLUGIN_COND_LT, count_u64(), INT64_MIN, NULL);
+>>
+>> Instead, let's add a new boolean "tracking_region" in struct Vcpu, that
+>> is set to true when entering ROI (or true by default if no begin
+>> parameter was given).
+> 
+> The flag may look simpler in isolation, but streamlining the
+> interactions with the counter requires more careful thought. Please see
+> below.
+> 
+>>
+>> Then, modify instrumentation to replace:
+>> ```
+>> else if (end_present && insn_vaddr == end) {
+>>               qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu(
+>>                   insn, QEMU_PLUGIN_INLINE_STORE_U64, count_u64(),
+>> INT64_MIN);
+>> ```
+>> with:
+>> ```
+>> else if (end_present && insn_vaddr == end) {
+>>      qemu_plugin_register_vcpu_insn_exec_cb(insn, vcpu_exit_region,
+>> QEMU_PLUGIN_CB_NO_REGS, NULL);
+>> }
+>>
+>> static void vcpu_exit_region(unsigned int vcpu_index, void *userdata)
+>> {
+>>      Vcpu *vcpu = qemu_plugin_scoreboard_find(vcpus, vcpu_index);
+>>      vcpu_interval_exec(vcpu_index, NULL);
+>>      vcpu->tracking_region = false;
+>> }
+>> ```
+> 
+> vcpu_exit_region should only disable tracking. Calling
+> vcpu_interval_exec directly bypasses its count >= interval precondition:
+> it subtracts interval even when count is smaller, wrapping the unsigned
+> counter, and emits a partial vector or potentially an empty one.
+>
+
+I'm fine with it. I was unsure if you wanted to dump the partial data, 
+aggregate it when reentering the section, or simply discard it.
+With a discard, it's even simpler, just need to set tracking_region to 
+false.
+
+>>
+>> In addition, let's rename s/vcpu_begin_insn_exec/vcpu_enter_region, to
+>> be consistent and explicit on what it's doing.
+>>
+>> And finally, the last piece:
+>> static void vcpu_interval_exec(unsigned int vcpu_index, void *udata)
+>> {
+>>       Vcpu *vcpu = qemu_plugin_scoreboard_find(vcpus, vcpu_index);
+>>       if (!vcpu->tracking) {
+>>         return;
+>>       }
+>>       ...
+> 
+> The early return must come after vcpu->count -= interval. Otherwise,
+> once count reaches interval outside the ROI, it remains above the
+> threshold and invokes the callback on every subsequent TB, rather than
+> once per interval.
+>
+
+Right, thanks for catching it.
+
+>>
+>> The impact performance of calling vcpu_interval_exec + one if every N
+>> instructions is invisible, and at least, it's a piece of code we can
+>> read in 6 months, and understand in less than 2 min without any
+>> additional doc.
+> 
+> I agree the performance impact is negligible, but at least you need to
+> consider about that to be sure. Adding another flag requires those
+> additional considerations.
+> 
+> More broadly, I don't think it's ideal to introduce application-specific
+> logic for this. Looking at the bigger picture, a counting timer with
+> variable expiration is a common pattern that should ideally be supported
+> generally.
+> 
+> An alternative option is to have signed integer variants of
+> qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu() and similar
+> functions to support for that. However, I don't think those are
+> necessary either. Taking at an even broader perspective, C allows
+> avoiding such specialization by letting unsigned variables hold signed
+> values in a well-defined manner; even the underlying implementation of
+> the inline op uses signed and unsigned types interchangeably.
+>
+
+If the argument is "C allows that with a defined behaviour", I don't 
+think it makes a point for me. There is a lot of well defined and 
+confusing code you can write.
+
+Something like:
+  qemu_plugin_register_vcpu_tb_exec_cond_cb(
+         QEMU_PLUGIN_COND_LT, count_u64(), INT64_MIN, NULL);
+with limit and counter being unsigned is not readable for me.
+
+> Although it might not be immediately obvious that an unsigned variable
+> is storing a signed value, adding a brief clarifying comment is still
+> simpler than introducing another variable overall.
+>
+
+ From there I'll let you decide between introducing the flag, or 
+reimplement that with positive values (sticking to init count=0) only if 
+you really prefer this approach.
+
+> Regards,
+> Akihiko Odaki
+
+Regards,
+Pierrick
 
