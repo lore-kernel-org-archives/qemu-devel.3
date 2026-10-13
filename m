@@ -4,93 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FFF1CA9ED0
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 03:15:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44EF9CA9EDE
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 03:15:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGSyQ-00008c-4f; Mon, 12 Oct 2026 23:14:42 -0400
+	id 1xGSyM-000084-4g; Mon, 12 Oct 2026 23:14:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1xGSyH-00007r-IS
- for qemu-devel@nongnu.org; Mon, 12 Oct 2026 23:14:33 -0400
-Received: from mail-yw1-x112b.google.com ([2607:f8b0:4864:20::112b])
+ id 1xGSyC-000075-BO
+ for qemu-devel@nongnu.org; Mon, 12 Oct 2026 23:14:28 -0400
+Received: from mail-yw1-x1129.google.com ([2607:f8b0:4864:20::1129])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1xGSyF-0003VN-RP
- for qemu-devel@nongnu.org; Mon, 12 Oct 2026 23:14:33 -0400
-Received: by mail-yw1-x112b.google.com with SMTP id
- 00721157ae682-8ae8607e8afso15686827b3.3
- for <qemu-devel@nongnu.org>; Mon, 12 Oct 2026 20:14:31 -0700 (PDT)
+ id 1xGSyA-0003Ub-Ov
+ for qemu-devel@nongnu.org; Mon, 12 Oct 2026 23:14:28 -0400
+Received: by mail-yw1-x1129.google.com with SMTP id
+ 00721157ae682-8ac8a2ac52bso23761797b3.0
+ for <qemu-devel@nongnu.org>; Mon, 12 Oct 2026 20:14:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1791861270; x=1792466070; darn=nongnu.org;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :content-type:mime-version:subject:date:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=L6sU5VMmStegCn9Y0sx6fXu7t/rJE2at+L69jLeCSZk=;
- b=Rv4rTF0bgNFyIBB6i4sR85/Un++VSrduAsN5w/jkohQFT6c97d1TirIcr5HMugw4L6
- DWbwyGGC7iCdKMTaTnVz4/mdLbSmEgrjNXnQpXMDKiuF6c6SSE1B8A9Ch2UoQphepz0E
- nIxTPqgHFvex+on46tyZO2pNtlqAzjrZ4P7YypKEQyvRLHTkw0Q5YCTy0DIAsR6WZXXF
- OonBdk35JwOK/JkqnIkiDSvom9Cu0xTUOUU19EXPkW3NJfn2frwxvH65XbW2r5iyGlTA
- QxzEPXmXWrOII4rEjX5ru4z/IMw7LN+3g7zBvDf6A+ku/622hxHlrDj5fNyrBwwS/+Ah
- gFkg==
+ d=gmail.com; s=20251104; t=1791861265; x=1792466065; darn=nongnu.org;
+ h=cc:to:content-transfer-encoding:content-type:mime-version
+ :message-id:date:subject:from:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=DmW9MHAv8/UchRoPgRyhqivd/bI2CtRp2IghUbmPmdk=;
+ b=O8+ivHnd4XZa8jbDbH2zjdZMLgPSicmcikkJUvOwqkqSdv4w8Q2Ea2g5UcgqXhee1K
+ DfWHKcJWJRCSi7FT+yqMhvzwmnGVWDK9r0yDulBevhClocI2nEulr7LoJ3NpuSgmyF0K
+ c+P74x2NZ6S8q/EwBhOU0edjcKqE3BAbSh+xql4A0vQQ1dCmzZY63b8v5Wim48Os+8wa
+ nJWBGNPFX3alEr1LmIcUjrkOQctBVDqLVK2qhK7O2BB2kS1C2wgvETV49+w6jQQ0Qvhh
+ D46mn2tuSfgLriEL9F7DKqQpkvBiBtNmFTmu/tEWVjMapUt1Wx/OFdsWypol/I34KfvK
+ CUXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791861270; x=1792466070;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :content-type:mime-version:subject:date:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=L6sU5VMmStegCn9Y0sx6fXu7t/rJE2at+L69jLeCSZk=;
- b=eCwDPdt5qlxknx1jZv815w1eOmI1IBFEPlFuhxhssixOQOhdMkjQbiupdLxFosY6W/
- ghiXe4DOQvs7FukWdlGY5Rpd5SOCf9J0GWPd/M9r8aoqLwzKEeKz7mdyVhsEQzmRaV+2
- HCvIxS6EWlGN8T0yxoouS8EWv6nnPt7hcno1atw3SVMwBAeTVkxaPNeXIT4PRlH/Pnr3
- KlLZqRC3Ie74hc1Gs0rRrkn5MCh2EY5qpGbsjy8ARP5Krcr67mczkVbWqprotvViWPH5
- cMUlivz6bUEeh8u/k7hKY+E0SdGtUZa+1m/7IZYf8kNFJs5r2nv5Aq6vh+F2ijIU/E7O
- wTGA==
-X-Gm-Message-State: AFq9FYLvZ6IwFc8qilLzP5JyDpUWZuqKQ0RnKA39mM/csdTukta4D+WP
- H6RMkM/SJqGrjvbxCeztggRxjmgqreUmqXG8GvGIhTK9Fxi2Yr0r9lysvJX5xg==
-X-Gm-Gg: AYBFou3B2bBGBAn8/uoVMtp2bR1I84FzB7Ixw83qqEcX8I+8dfrdklfLcchXM/SPfCO
- gweTniMo1BAfOAbyiCtlT5I2KBk4r6f26Z4sWmqJnBhA87jUKfOgrnrzzORWZDWY1jyjTetqjf3
- dCmeCmK6BLxBuiE45Jj8jYXdWR+rPUTzydLOCziMn3fIDyfp5kKY5y8ZvD25d4PCDKxcQYqGJ/Z
- GGgiIjR7HAoPf9Lh/7H9BMd0TZmMCysezV6ZT7bifMJBOfBGlO6kqbP+YATt08q6tO4cw7JLJ/x
- CGsEHPo6XCvyqQJmd+LA6QvVbENHUW/ZGonN8Zb595BPVOnuIPnOucKY9m43l745z0pZ5elP85r
- DokK3qHhWncxtgcnGuNgHAMWO9/F2Z2BV6t8Zd2bZreVchhC++vkFx5YhKF71oQOBHgNho+tnC2
- 4vkmOEG6R6pI6t9ccfjOljmOulhTJEMDYkloZW5GM4oALm0VYnzHjO2SU8dmMpbpmFA1zmT0sMF
- tvdPQlDI+LpAD9d/VDe+1d80X/c1KsKd8ZJbzjAt3a1HO+5Pemlm6N2Eg==
-X-Received: by 2002:a05:690c:7013:b0:8a1:eaa2:36d7 with SMTP id
- 00721157ae682-8b07ed8e053mr41237497b3.18.1791861270512; 
- Mon, 12 Oct 2026 20:14:30 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1791861265; x=1792466065;
+ h=cc:to:content-transfer-encoding:content-type:mime-version
+ :message-id:date:subject:from:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=DmW9MHAv8/UchRoPgRyhqivd/bI2CtRp2IghUbmPmdk=;
+ b=H0AO+DBYfwiXzXy3HGhlrk5f/ZY+Hoh4lZCAWdak0bL36r/nQDVIA7M36pZE1UYwLi
+ znDz4H4hHV6acO1BxQuMiPZlvSlqKTjU5wPQKWiMNSQluLYg3Al9MA3YwXwbcKQojQXC
+ jj203iY+pXXNU2J6M2SVXF2AdDINamcpVGZCzO4WxhTX3euQGg/PjwIIhwVDp2hCQ5U/
+ D6rM94KOj7nxlzD2pKFjMIoIpOR0mAvlt5izqC9VBTCK5Yxv5NN7S0NQAAngmbHzGApM
+ 7VuM7HkNFSZYm8B5fWAYjgcdJJYVHXHA+l6wyvgu16PfTuVECbH3xfk2piZTvdBA6Oj0
+ ZfdA==
+X-Gm-Message-State: AFq9FYJRQ2aEX/f7JsVTkfebarb/Lugv5Z29PgOnDLlR86TLZttQcB7w
+ w41/Cf2cOUOCV5ttAeYAkT/fMnegLL7CNnTQwTPBNuRhOXJ/99J3WH92wgi8qg==
+X-Gm-Gg: AYBFou0Uy/0U+fYr5X3Kpijo59a2VxIV5VuM9h43DVdiMiF7rnndRDUwgJI0FdeiA1F
+ ECMy2oNkwf5kA8ss9+EIfRly/P69wNHCxuVRIsQ+77KJdzsmgeSI6Ee7Io2HSVcY92nDCe+5Ez8
+ AzDEu8Q44xS/INqNtOWpenAKbqfZlGJbGrfWF8mTRQ1ZIxJf+G+dXWUhGaN3WVQldQ2eG4qv688
+ 9OWNLvCscZST4541XbusAhBFB3ChVpNTvwp1s39mHcLdw608GBC9Hmmk6gDEV3fbiRNrLyfygNQ
+ UnF10Y7imnsgITbl0w5Ey4G8J9LepT3OoTqByR8FzaI5IEn13Ttc+9+lGJxfB3hb1l76clKbDcG
+ PU3ZmM5MQby1eDg+3TCt4CGqTOTlzqWddtqNQWj4b4Wgaj5iVjvULjiqmFY2CFFox0NE43r7f93
+ uJ3PUKFChc5JhAouzY6Z7XKnxJXcSDsm0v3aXIrrHpyLa5tlsH6X0Co5Lm8MegtRrUiOXZlnQh2
+ 6oLtp4Zq31LhZ5kFk8M/NqI997Krxlx2Qy3GUhDFjKqVnTk8wjc65xQvGGUAje6pGE=
+X-Received: by 2002:a05:690c:c584:b0:8a9:9f40:24b4 with SMTP id
+ 00721157ae682-8b07ed56616mr29353837b3.15.1791861264670; 
+ Mon, 12 Oct 2026 20:14:24 -0700 (PDT)
 Received: from localhost ([2600:1702:7a90:6f9f:8bc4:8aec:108d:7a04])
  by smtp.gmail.com with ESMTPSA id
- 00721157ae682-8b07f1b8a9fsm39405637b3.9.2026.10.12.20.14.26
+ 00721157ae682-8b0b0c50268sm8216337b3.25.2026.10.12.20.14.22
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 12 Oct 2026 20:14:27 -0700 (PDT)
+ Mon, 12 Oct 2026 20:14:23 -0700 (PDT)
 From: Matt Turner <mattst88@gmail.com>
-Date: Mon, 12 Oct 2026 23:14:23 -0400
-Subject: [PATCH 2/2] target/alpha: Determine tininess from the delivered result
+Subject: [PATCH 0/2] target/alpha: FPCR exception status fixes for
+ IEEE-mode code
+Date: Mon, 12 Oct 2026 23:14:21 -0400
+Message-Id: <20261012-alpha-fpcr-status-s-v1-0-bc7efa6d5609@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261012-alpha-fpcr-status-s-v1-2-bc7efa6d5609@gmail.com>
-References: <20261012-alpha-fpcr-status-s-v1-0-bc7efa6d5609@gmail.com>
-In-Reply-To: <20261012-alpha-fpcr-status-s-v1-0-bc7efa6d5609@gmail.com>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIzNDA0Mj3cScgoxE3bSC5CLd4pLEktJi3WJd0yTTZBMjcwOj5LRkJaDOgqL
+ UtMwKsKnRsbW1AJrA7XhlAAAA
+X-Change-ID: 20261012-alpha-fpcr-status-s-5b5c42702cfc
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>, 
  Helge Deller <deller@gmx.de>, Matt Turner <mattst88@gmail.com>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=5844; i=mattst88@gmail.com;
- h=from:subject:message-id; bh=Wzu3aZjeh21N3ckQzpTOPYiQMS1npQA3bMwKXRT7deU=;
- b=owGbwMvMwCW25rVmCc8sv+mMp9WSGLLOLuKd0/h45ite1eLXwlL/GPgFDjmbxku8sZU8anOEQ
- fFt4bbrHR9ZGMS4GGaKKbLErVdkmdW2Y6nPaelfMHNYmUCGSIs0MAABCwNfbmJeqZGOkZ6ptqGe
- IZChYxQPkdNj0MgsLi5NLdJNKyhyyMsvSSzJzM8r1ssvSM0rSC/QS8tMK8nIyC8qTgUaoZeXWmL
- q6uhmZGhgYuloYeZk4Whq4uzsZOjk5ujo7OpkZGluYuBs6WjiamnOwMUpAHON3QxGhr6sFW/WRE
- 6fuPeDw8q54nd95B9uDb7rLqqfWHpb+JSI03lGho2rfPx83beeU/xysoch5j6/cX/uvPzf+1y23
- FvnceDxNU4A
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1708; i=mattst88@gmail.com;
+ h=from:subject:message-id; bh=AAOHzClzXrR95JVnwyLhSFb7CY3CijG6g/iOL/2eEz4=;
+ b=owGbwMvMwCW25rVmCc8sv+mMp9WSGLLOLuK98tMu9cwyHc4Pkw7t9zT4mbLi1cL7syduOLTJX
+ LSszj7iWcdHFgYxLoaZYooscesVWWa17Vjqc1r6F8wcViaQIdIiDQxAwMLAl5uYV2qkY6Rnqm2o
+ Zwhk6BjFQ+T0GDQyi4tLU4t00wqKHPLySxJLMvPzivXyC1LzCtIL9NIy00oyMvKLilOBRujlpZa
+ Yujq6GRkamFg6Wpg5WTiamjg7Oxk6uTk6Ors6GVmamxg4WzqauFqaM3BxCsBcU13O8E//kc/ysB
+ rxOXXWcsvu3Gk5OnmTf1jMzTsvJzqeNa3rd0xnZFil/HtK/1x2NqlEH34H82tn6t5F+vtNOMOex
+ 7Kap+FUEC8A
 X-Developer-Key: i=mattst88@gmail.com; a=openpgp;
  fpr=3BB639E56F861FA2E86505690FDD682D974CA72A
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112b;
- envelope-from=mattst88@gmail.com; helo=mail-yw1-x112b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1129;
+ envelope-from=mattst88@gmail.com; helo=mail-yw1-x1129.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -114,155 +116,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Alpha raises underflow only if the result it delivers is tiny.
-softfloat implements IEEE 754 tininess after rounding, which rounds as
-if the exponent range were unbounded.  The two disagree about a result
-that rounds up to the smallest normal:
+Two fixes for the exception status that qemu-alpha reports to code
+built with gcc -mieee.  I found both running glibc's math tests under
+linux-user.
 
-  0x4p-1024 / 0x1.0000000000001p+0 in FE_UPWARD = 0x4p-1024
+Patch 1 fixes 471d493047, which was meant to record masked exceptions
+in the FPCR but had no effect for insns with software completion.
+Without it FE_INEXACT is never set for -mieee code.
 
-The binade below DBL_MIN has a finer spacing than the denormals, so
-with an unbounded exponent the quotient rounds to a value below
-DBL_MIN and softfloat raises underflow.  Alpha does not.  glibc marks
-math/test-float32x-float64-div as XFAIL on Alpha because of this
-(glibc commit a32db99a38), and under qemu that test unexpectedly
-passes.
+Patch 2 makes underflow match the hardware for a result that rounds up
+to the smallest normal number.  Alpha raises no underflow there and
+softfloat does.
 
-Every result that is tiny by Alpha's rule is also tiny by the IEEE
-one, so there is no need for another tininess mode in softfloat.  Drop
-underflow in the S and T format add, sub, mul, div and cvtts helpers
-when the delivered result is normal.
+Patch 1 does not depend on patch 2.
 
-An insn with a denormal operand is different.  Unless DNZ is set it
-traps for software completion and the kernel computes the result, and
-the kernel's emulation raises underflow in the same situation:
+Tested with linux-user only; system mode is untested.
 
-  0x3.ffffffffffffcp-1024 / 0x1.fffffffffffffp-1 in FE_UPWARD
-    = 0x4p-1024, FPCR_UNF set
+glibc's math tests (make check subdirs=math), run under linux-user:
 
-That result is tiny whether tininess is detected before rounding, as
-math-emu does, or after rounding, as softfloat does.  linux-user
-computes these results in the helper instead of trapping, so keep
-softfloat's underflow when float_flag_input_denormal_used is set.  In
-system mode gen_ieee_input raises the trap before the helper runs.
+            PASS  FAIL  XFAIL
+  master    1400   110      1
+  series    1510     0      1
+
+Nearly all of the failures on master are 'Exception "Inexact" not
+set'.  The XFAIL is test-float32x-float64-div.  On master it fails for
+missing inexact; with the series it fails only the four
+div_{upward,downward}_double cases that glibc expects to fail on
+Alpha.
+
+The tcg-alpha-linux-user suite has six failures (float_convs,
+float_convd, float_madds and a plugin variant of each).  They fail the
+same way on master.
 
 Signed-off-by: Matt Turner <mattst88@gmail.com>
 ---
- target/alpha/fpu_helper.c | 36 +++++++++++++++++++++++++++---------
- 1 file changed, 27 insertions(+), 9 deletions(-)
+Matt Turner (2):
+      target/alpha: Record masked exceptions in FPCR for /S insns
+      target/alpha: Determine tininess from the delivered result
 
-diff --git a/target/alpha/fpu_helper.c b/target/alpha/fpu_helper.c
-index 643ce641e8..d902cdd9dc 100644
---- a/target/alpha/fpu_helper.c
-+++ b/target/alpha/fpu_helper.c
-@@ -55,6 +55,24 @@ static uint32_t soft_to_fpcr_exc(CPUAlphaState *env)
-     return ret;
- }
- 
-+/*
-+ * Alpha raises no underflow when the delivered result is normal.
-+ * softfloat does when that result was rounded up to the smallest
-+ * normal, so drop it, except when a denormal operand means the kernel
-+ * computed the result.
-+ */
-+static uint32_t soft_to_fpcr_exc_tiny(CPUAlphaState *env, bool normal)
-+{
-+    bool swc = get_float_exception_flags(&FP_STATUS)
-+               & float_flag_input_denormal_used;
-+    uint32_t ret = soft_to_fpcr_exc(env);
-+
-+    if (unlikely(ret & FPCR_UNF) && normal && !swc) {
-+        ret &= ~FPCR_UNF;
-+    }
-+    return ret;
-+}
-+
- static void fp_exc_raise1(CPUAlphaState *env, uintptr_t retaddr,
-                           uint32_t exc, uint32_t regno, uint32_t hw_exc)
- {
-@@ -227,7 +245,7 @@ uint64_t helper_adds(CPUAlphaState *env, uint64_t a, uint64_t b)
-     fa = s_to_float32(a);
-     fb = s_to_float32(b);
-     fr = float32_add(fa, fb, &FP_STATUS);
--    env->error_code = soft_to_fpcr_exc(env);
-+    env->error_code = soft_to_fpcr_exc_tiny(env, float32_is_normal(fr));
- 
-     return float32_to_s(fr);
- }
-@@ -239,7 +257,7 @@ uint64_t helper_subs(CPUAlphaState *env, uint64_t a, uint64_t b)
-     fa = s_to_float32(a);
-     fb = s_to_float32(b);
-     fr = float32_sub(fa, fb, &FP_STATUS);
--    env->error_code = soft_to_fpcr_exc(env);
-+    env->error_code = soft_to_fpcr_exc_tiny(env, float32_is_normal(fr));
- 
-     return float32_to_s(fr);
- }
-@@ -251,7 +269,7 @@ uint64_t helper_muls(CPUAlphaState *env, uint64_t a, uint64_t b)
-     fa = s_to_float32(a);
-     fb = s_to_float32(b);
-     fr = float32_mul(fa, fb, &FP_STATUS);
--    env->error_code = soft_to_fpcr_exc(env);
-+    env->error_code = soft_to_fpcr_exc_tiny(env, float32_is_normal(fr));
- 
-     return float32_to_s(fr);
- }
-@@ -263,7 +281,7 @@ uint64_t helper_alpha_divs(CPUAlphaState *env, uint64_t a, uint64_t b)
-     fa = s_to_float32(a);
-     fb = s_to_float32(b);
-     fr = float32_div(fa, fb, &FP_STATUS);
--    env->error_code = soft_to_fpcr_exc(env);
-+    env->error_code = soft_to_fpcr_exc_tiny(env, float32_is_normal(fr));
- 
-     return float32_to_s(fr);
- }
-@@ -304,7 +322,7 @@ uint64_t helper_addt(CPUAlphaState *env, uint64_t a, uint64_t b)
-     fa = t_to_float64(a);
-     fb = t_to_float64(b);
-     fr = float64_add(fa, fb, &FP_STATUS);
--    env->error_code = soft_to_fpcr_exc(env);
-+    env->error_code = soft_to_fpcr_exc_tiny(env, float64_is_normal(fr));
- 
-     return float64_to_t(fr);
- }
-@@ -316,7 +334,7 @@ uint64_t helper_subt(CPUAlphaState *env, uint64_t a, uint64_t b)
-     fa = t_to_float64(a);
-     fb = t_to_float64(b);
-     fr = float64_sub(fa, fb, &FP_STATUS);
--    env->error_code = soft_to_fpcr_exc(env);
-+    env->error_code = soft_to_fpcr_exc_tiny(env, float64_is_normal(fr));
- 
-     return float64_to_t(fr);
- }
-@@ -328,7 +346,7 @@ uint64_t helper_mult(CPUAlphaState *env, uint64_t a, uint64_t b)
-     fa = t_to_float64(a);
-     fb = t_to_float64(b);
-     fr = float64_mul(fa, fb, &FP_STATUS);
--    env->error_code = soft_to_fpcr_exc(env);
-+    env->error_code = soft_to_fpcr_exc_tiny(env, float64_is_normal(fr));
- 
-     return float64_to_t(fr);
- }
-@@ -340,7 +358,7 @@ uint64_t helper_divt(CPUAlphaState *env, uint64_t a, uint64_t b)
-     fa = t_to_float64(a);
-     fb = t_to_float64(b);
-     fr = float64_div(fa, fb, &FP_STATUS);
--    env->error_code = soft_to_fpcr_exc(env);
-+    env->error_code = soft_to_fpcr_exc_tiny(env, float64_is_normal(fr));
- 
-     return float64_to_t(fr);
- }
-@@ -429,7 +447,7 @@ uint64_t helper_cvtts(CPUAlphaState *env, uint64_t a)
- 
-     fa = t_to_float64(a);
-     fr = float64_to_float32(fa, &FP_STATUS);
--    env->error_code = soft_to_fpcr_exc(env);
-+    env->error_code = soft_to_fpcr_exc_tiny(env, float32_is_normal(fr));
- 
-     return float32_to_s(fr);
- }
+ target/alpha/fpu_helper.c | 46 ++++++++++++++++++++++++++++++++++++----------
+ 1 file changed, 36 insertions(+), 10 deletions(-)
+---
+base-commit: 615ece3c406b262996e569f29ea6eed0d81c4d8d
+change-id: 20261012-alpha-fpcr-status-s-5b5c42702cfc
 
+Best regards,
 -- 
-2.55.0
+Matt Turner <mattst88@gmail.com>
 
 
