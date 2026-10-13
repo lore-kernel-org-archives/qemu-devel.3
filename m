@@ -4,44 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51F06CC6B12
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 16:27:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75B49CC6B19
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 16:27:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGfKh-0004m7-Ig; Tue, 13 Oct 2026 12:26:31 -0400
+	id 1xGfLr-0005XW-Gu; Tue, 13 Oct 2026 12:27:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1xGfKg-0004lf-Ci
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 12:26:30 -0400
-Received: from 4.mo2.mail-out.ovh.net ([46.105.54.237])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1xGfLG-00059o-8n
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 12:27:09 -0400
+Received: from smtpout2.mo537.mail-out.ovh.net ([51.210.91.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1xGfKc-0004xG-NT
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 12:26:29 -0400
-Received: from director2.derp.mail-out.ovh.net
- (director2.derp.mail-out.ovh.net [79.137.60.36])
- by mo2.mail-out.ovh.net (Postfix) with ESMTPS id 4j408D4mSDz43wm;
- Tue, 13 Oct 2026 16:26:20 +0000 (UTC)
-Received: from director2.derp.mail-out.ovh.net
- (director2.derp.mail-out.ovh.net. [127.0.0.1])
- by director2.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
- for <jamin_lin@aspeedtech.com>; Tue, 13 Oct 2026 16:26:19 +0000 (UTC)
-Received: from mta7.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.37.168])
- by director2.derp.mail-out.ovh.net (Postfix) with ESMTPS id
- 4j408C6Wgnz1xqK; Tue, 13 Oct 2026 16:26:19 +0000 (UTC)
-Received: from kaod.org (unknown [10.1.6.6])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1xGfLA-00057Q-Fd
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 12:27:03 -0400
+Received: from director5.derp.mail-out.ovh.net
+ (director5.derp.mail-out.ovh.net [79.137.60.225])
+ by mo537.mail-out.ovh.net (Postfix) with ESMTPS id 4j408v55X0z3wkL;
+ Tue, 13 Oct 2026 16:26:55 +0000 (UTC)
+Received: from director5.derp.mail-out.ovh.net
+ (director5.derp.mail-out.ovh.net. [127.0.0.1])
+ by director5.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
+ for <jamin_lin@aspeedtech.com>; Tue, 13 Oct 2026 16:26:55 +0000 (UTC)
+Received: from mta3.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.109.231.233])
+ by director5.derp.mail-out.ovh.net (Postfix) with ESMTPS id
+ 4j408v0JQkz6MbW; Tue, 13 Oct 2026 16:26:55 +0000 (UTC)
+Received: from kaod.org (unknown [10.1.6.5])
  (Authenticated sender: clg@kaod.org)
- by mta7.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id A5710202CA3; 
- Tue, 13 Oct 2026 16:26:17 +0000 (UTC)
+ by mta3.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id A979212E2CA6;
+ Tue, 13 Oct 2026 16:26:52 +0000 (UTC)
 Authentication-Results: garm.ovh; auth=pass
- (GARM-102R0041362a08a-e63f-4f97-b7c7-8cad04db7aeb,
+ (GARM-114S008cd285c04-b028-4431-ae67-8a95c5cd409a,
  3B5152602AE6D76A7CF2E50DC6ABDDC767F0B630) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 82.64.250.170
-Message-ID: <b31b2a97-ce10-44ac-8875-09073ccba9c8@kaod.org>
-Date: Tue, 13 Oct 2026 18:26:17 +0200
+Message-ID: <7f3eb371-308a-4687-a830-9071bca6a689@kaod.org>
+Date: Tue, 13 Oct 2026 18:26:52 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 04/50] hw/i2c: pca954x: drop unused header inclusions
+Subject: Re: [PATCH v2 08/50] hw/rtc: ds1338: move TYPE_DS1338 to a public
+ header
 To: Emmanuel Blot <emmanuel.blot@free.fr>, qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
@@ -53,7 +54,7 @@ Cc: Peter Maydell <peter.maydell@linaro.org>,
  qemu-ppc@nongnu.org, qemu-riscv@nongnu.org,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 References: <20261012-bmc-minerva-v2-0-4c3dff084ec9@free.fr>
- <20261012-bmc-minerva-v2-4-4c3dff084ec9@free.fr>
+ <20261012-bmc-minerva-v2-8-4c3dff084ec9@free.fr>
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Content-Language: en-US, fr
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -98,28 +99,29 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20261012-bmc-minerva-v2-4-4c3dff084ec9@free.fr>
+In-Reply-To: <20261012-bmc-minerva-v2-8-4c3dff084ec9@free.fr>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-x-ovh-tracer-id: 6605373278645431341
+x-ovh-tracer-id: 6615506377813699629
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTGudyDp0UEpRqVfuYYj/tcaUBNvU6GjvlFnOBBEtM+Go/vPHG55OLdFXDtfcJ/onwuYP+wZKJoXyKMgPnOz5DD4IBYo+vehe95S0qekujLn2s85hk94usHlXdEedMvckL9jryn2nAFaBlrl9NkSjY0lmZ9Cy7lhokt/1pwzne0w9Vs75O57ypY1N9JUS9W360AqbWrlluS9iEc1UYQGb1YmAD8BK4MzdVdQxgPctcNeFo8DVnWD22v5KW5f8lzfnSPg4KUPVX0SibLBAS0ztyWmc2FlIuTo3xG8ozoBboCl/RhsUYi2NSHYJxlzZ5c721KBSetM3bh9O7hWrFUoVawXk6dBvsHaruZoAlU8J0Q+7hDzlBYzC7jTzD/8c1jOWnZTBxRlwn2/rSyk79JR5QD33pLeTs4DXrhx4hH/iHXvM7nEBnrXRVsHnd39dpC+9U2tJVthI/qITPXCrSNfFTDgJheAd6ti9+WFtmmjphQqysuClXPW02uS95M4UKvjxEC4Dd/YTF/3yQp2kn6zogX3Kx2t06iGdKye8OiFmBqTjno3D2VCcPW9kFWL5ja08LmVFmxYMxwWtJtwFKgVoPaERtu8Dw7+lVtQ+G8qb3NmWsEPhlY4zFp96K9yiHblwdYCQRPLX9DDoSnDXzdeiKv734Vp8QiCfHCi1O9sUJeudA
-DKIM-Signature: a=rsa-sha256; bh=yFtQxhVqPY7FuyAXonkyFaG1q7/cqipv1es94uJRICc=; 
+X-VR-SPAMCAUSE: dmFkZTEy2TVmIGdJz9wb2lZxs6ZOYk0T6DuDjUbu8/zXGYTH4fUECEqloGjFfQQCwGTA+Qh7f8ykczPwXj/0yRHFk+ke0Oq8cqPzvgWUWqE52q4F8K7KHMRomHayz0KSPI3Kj1OS1RB4ltUXcr9VLwn8YMxu6kumcdPsPn14jLrFeI22oREKqPhMU2SvVrQ8KaXHRxjVPvt64nha3KIPtHpiy9r9K5jkCxjkBrKxyaee8ty7LwZMq0oVcVbO7WlIGgJOp6cyTRlPBQhZa3PdT41/UEK/QPowtMJd7DrnTJlu2XG9nN1MD1oRi9XLbB1T/tzjDKh80+WtaijTeEgascMvqUOASS318/WW8I689B1/rFpoJS/H8rqU1pa6Ty+1OtkeRI/ueRnVhPBKnAoKvDhEpwPUCAEjaVWuc5QUVF+QjWMVDuoVI/nclOXVhq+YMUuwNsq68/RZ2xiEjk/ugHqtrSPHph9ucCYbEQpPwWyH4v9qCgLRqJQxmvmIMz74fgOvJVRg4yWwFAzq2ZBkW2MR/wZpxJhRdvUsCT/HPM/Z/LqkNNeprg97s/TtcYZL9sDCvXeyeQj4djOkoiHtboSAbjMa264GKp7lN4BkN8S7Njg2z8OWlzTVc6i2DIRurGy4uwY2zb9WUZpbGuk/tOp8V4h1Zz1ncHYII/w6uRY3z540iQ
+DKIM-Signature: a=rsa-sha256; bh=fPWqKdFXIRT/ZBtnTogM/a6xkJorxhRc4FlHXS8GHCI=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1791908782; v=1;
- b=sX5u281hlXE6NUhr029WDd2Ez0/ShJ0639c+sQmg94v9YQf6CPighLyF1YCsbW2NbpITtC1F
- X+3rUMrL9hhh3djRgOTq814uQQ31EVuEgbE/qf0sDYYHfK94isgWXmg1GELDH6GHpHlmW0xXcaH
- pli2j9UDZpS8zqOzoAFYhIwrnGlKb6ftNq0fZ38y9b9zWqwoIWnGK6NbHlQvCQdopJh2tOjxvsE
- RZRNS3PV143P4LQSbaiJgBp0orvzN9gz12YLQIzAazuL+iBzhglwhMOPWR8+TFnUTMxAhsaeOpU
- xuKrw5RZg68MlejHqwcv/Fm6EKiGmurGwe/E6rWGaucQw==
-Received-SPF: pass client-ip=46.105.54.237; envelope-from=clg@kaod.org;
- helo=4.mo2.mail-out.ovh.net
+ t=1791908817; v=1;
+ b=foG+9UwRpaWA5+JwPIswn8/alWXW6bxW+CG7AgMcCcv5N/QpzGjSeoZHb/5NLGBGqIEDVMi4
+ to8BJRUCmCeIeAgDQemd9an4jGbufFeLkM+LlmEunBW84UHrHcZvY0UgsrePxGFr9LfosBpzCTE
+ B7p7Cby1KosqE4+lamdQwN9SlD01FPb9uppPBAOVDYtljyqBNcD6xAlH9tT+yUCiUmDlhPHKQkG
+ +Uct3Q5IpBbkkBkgqdSZKGmmglQvQsCY486pr+ge4cSP7FDEt0OhAZ4+YrxYLnBmOSwjaADrMnu
+ d40SEDzYUkywMOqgdxadTWB/hrk6SSnvDHJrEa3C+VGeQ==
+Received-SPF: pass client-ip=51.210.91.21; envelope-from=clg@kaod.org;
+ helo=smtpout2.mo537.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -136,35 +138,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/12/26 16:31, Emmanuel Blot wrote:
-> The qapi/error.h, hw/core/sysbus.h and qemu/module.h headers are
-> included but not used by i2c_mux_pca954x.c. Remove them.
+On 10/12/26 16:32, Emmanuel Blot wrote:
+> Move the TYPE_DS1338 type name definition from ds1338.c into a new
+> include/hw/rtc/ds1338.h header so that boards instantiating the device
+> no longer need to redefine the type name string locally.
 > 
 > Signed-off-by: Emmanuel Blot <emmanuel.blot@free.fr>
 > ---
->   hw/i2c/i2c_mux_pca954x.c | 3 ---
->   1 file changed, 3 deletions(-)
+>   hw/rtc/ds1338.c         |  2 +-
+>   include/hw/rtc/ds1338.h | 20 ++++++++++++++++++++
+>   2 files changed, 21 insertions(+), 1 deletion(-)
 > 
-> diff --git a/hw/i2c/i2c_mux_pca954x.c b/hw/i2c/i2c_mux_pca954x.c
-> index c603446028..c8e75da8b2 100644
-> --- a/hw/i2c/i2c_mux_pca954x.c
-> +++ b/hw/i2c/i2c_mux_pca954x.c
-> @@ -15,15 +15,12 @@
->    */
+> diff --git a/hw/rtc/ds1338.c b/hw/rtc/ds1338.c
+> index 5f1ee2e410..f8b3340bf0 100644
+> --- a/hw/rtc/ds1338.c
+> +++ b/hw/rtc/ds1338.c
+> @@ -12,6 +12,7 @@
 >   
 >   #include "qemu/osdep.h"
-> -#include "qapi/error.h"
 >   #include "hw/i2c/i2c.h"
->   #include "hw/i2c/i2c_mux_pca954x.h"
->   #include "hw/i2c/smbus_slave.h"
->   #include "hw/core/qdev.h"
->   #include "hw/core/qdev-properties.h"
-> -#include "hw/core/sysbus.h"
->   #include "qemu/log.h"
-> -#include "qemu/module.h"
->   #include "qemu/queue.h"
+> +#include "hw/rtc/ds1338.h"
+>   #include "migration/vmstate.h"
+>   #include "qemu/bcd.h"
 >   #include "qom/object.h"
->   #include "trace.h"
+> @@ -29,7 +30,6 @@
+>   #define HOURS_PM   0x20
+>   #define CTRL_OSF   0x20
+>   
+> -#define TYPE_DS1338 "ds1338"
+>   OBJECT_DECLARE_SIMPLE_TYPE(DS1338State, DS1338)
+>   
+>   struct DS1338State {
+> diff --git a/include/hw/rtc/ds1338.h b/include/hw/rtc/ds1338.h
+> new file mode 100644
+> index 0000000000..f4cfe6a8e7
+> --- /dev/null
+> +++ b/include/hw/rtc/ds1338.h
+> @@ -0,0 +1,20 @@
+> +/*
+> + * MAXIM DS1338 I2C RTC+NVRAM
+> + *
+> + * Copyright (c) 2009 CodeSourcery.
+> + * Written by Paul Brook
+> + *
+> + * This code is licensed under the GNU GPL v2.
+> + *
+> + * Contributions after 2012-01-13 are licensed under the terms of the
+> + * GNU GPL, version 2 or (at your option) any later version.
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#ifndef HW_RTC_DS1338_H
+> +#define HW_RTC_DS1338_H
+> +
+> +#define TYPE_DS1338 "ds1338"
+> +
+> +#endif
 > 
 
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
