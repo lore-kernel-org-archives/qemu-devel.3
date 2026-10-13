@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7BFECC6B03
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 13:27:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79FCDCA9ED2
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 13:27:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGcXS-0006Dd-FH; Tue, 13 Oct 2026 09:27:30 -0400
+	id 1xGcXQ-00060Q-Sb; Tue, 13 Oct 2026 09:27:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xGcVT-00031H-VK
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 09:25:41 -0400
+ id 1xGcVL-0002wV-3K
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 09:25:26 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xGcVS-0004ph-Ka
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 09:25:27 -0400
+ id 1xGcVJ-0004ok-Mh
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 09:25:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1791897926;
+ s=mimecast20190719; t=1791897917;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=78kDaFiVn1gcJ8I/VaVZFqNdFhbm6uHajSBxfTnYn5A=;
- b=UzRcIDliWzCxnXnvn79ggXDBBGSjyRqwYSQM6PdAmvSyIPMZWMMZCLx2KsMzY4VbS27RPv
- RAD3Xv/o8rjJoDKfXOeDRm6TJ+olQxpJZEviNUyk98oBbvxjgvaGvh0y7hdBjbZ93UqQB7
- oZTe0tZMYaoAOJLo5I9N8FNQll4QeQw=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=f2LdaYktGs82Qnmc7frP3S/xTyOU8jZtVkCT678YmWk=;
+ b=EMvfve1stUUfg0h2WCoZLWrht9jHvzFdzOmlFgd2YcxJxGe5uV+C1wA2DXwcJJwbjCLkva
+ KGoyijuCt/mUf+Ma6u9JLSoK2RGHEPR8H/hOAX3INGN5rRxn+CxS4K0//bzmc6nheAccr0
+ jGo4bEWq62Jk0xpm6vrUiNNs2YsZpOw=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-414-U4Rx27zkN9qwGsthvpHoxQ-1; Tue,
- 13 Oct 2026 13:25:23 +0000
-X-MC-Unique: U4Rx27zkN9qwGsthvpHoxQ-1
-X-Mimecast-MFC-AGG-ID: U4Rx27zkN9qwGsthvpHoxQ_1791897922
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-138-xM4qeP2XODOQ2uLfY7q4_Q-1; Tue,
+ 13 Oct 2026 13:25:15 +0000
+X-MC-Unique: xM4qeP2XODOQ2uLfY7q4_Q-1
+X-Mimecast-MFC-AGG-ID: xM4qeP2XODOQ2uLfY7q4_Q_1791897915
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 19F1819772EF; Tue, 13 Oct 2026 13:25:22 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E0208193FAAB; Tue, 13 Oct 2026 13:25:14 +0000 (UTC)
 Received: from localhost (headnet03.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.114])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 24858180034C; Tue, 13 Oct 2026 13:25:20 +0000 (UTC)
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id EBB0118002B7; Tue, 13 Oct 2026 13:25:13 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Tue, 13 Oct 2026 17:23:30 +0400
-Subject: [GIT PULL 33/40] ui/input: fix integer overflow in
- qemu_input_scale_axis
+Date: Tue, 13 Oct 2026 17:23:28 +0400
+Subject: [GIT PULL 31/40] ui/console: skip empty update regions in
+ qemu_console_update
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20261013-ui-v1-33-92da3082ad96@redhat.com>
+Message-Id: <20261013-ui-v1-31-92da3082ad96@redhat.com>
 References: <20261013-ui-v1-0-92da3082ad96@redhat.com>
 In-Reply-To: <20261013-ui-v1-0-92da3082ad96@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: peter.maydell@linaro.org, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1654;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1032;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=JGN/xRElCdl6P98XBa+ZTVFMvsbnJKfhU1pbKKQi6JQ=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqzjDEKZAxf9MuXtc+DpVRrB8TeVl0B93kk7JOo
- vEwZ92PN06JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCas4wxAAKCRDa6OEJdZac
- 5RSPD/4lHB/gtnG8sAXqKgxdhJsS5nfBBTI96rpAUN8PqmOhokFHg5WoVc0RKbyThNXsNGL6vVi
- ewQM5+nXB2U44zK0vyRbu2lUuZK6y5dBkTsziLtoQJsb80ZphUK7IYGOXvuK1dTCZ0AafPTxt3V
- HHozv/BIDMvBQctJb438sFNcJugkpBtXx6C6Hlm5leNR5F4jc+Qu94eyORIsX9/S+ZA7JeWXf26
- 8RvQsHK0cTUPKbBhn7TteofObLLusyHk5T/9D6nZdwaLIw0HNjY2fB0L3eTx3YbyT/5gcKrxfDT
- EVVedzma9uiFNUC9zQKH21mEZAfSE1RSVo/8q2dAaeaJ6312DICJJUBHlzzurhEmRZs5jqjH0s4
- 86TKWL0l5ds40yYEOap+gsJovyUSaK2+k/qcB7p+do5aERPO2vgk0quDVQdfR/ewJvYmPsq1CDA
- 1y81JDMAZjPQ5NokAAKMEQITrGyX5V1v+8YO1GDGRiQx6/K3vOXWlKukkJbgJh2+TpyAcv/d/t4
- uauY1HFAIiSeRrY8NZdBUEFyPNjrM6b5V0YmpYhMRXomzJAdm0IfPiCktfCcZh7SXcq/0Ohe+5s
- 5yGwvIcSWio7TvQQsp855AFYn5vASJWkQh8zJ12rl1/VKTPFLagE9TmCUvR+nG+xSzjR+Pep31w
- Ql4JThOSEBkCVGA==
+ bh=3tCQ2v7+1zm9Aln9u+tppQw/EwNPJBSYIYhRmvi3dSA=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqzjDEm+4m/weHrxp1CoqKQK1pM9IjGUIZvZ9Tn
+ Lv3JTQNd7OJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCas4wxAAKCRDa6OEJdZac
+ 5bWtD/9Oxc9XUtymxmlAduT3yqF/thrgJ7a7y4KrfFDSP9yjuqq/LApAElRPN/eyg+aLziOz06D
+ g7z8aj/OebHFK0TzmHF+NN7F8kYUgqXCmlGIwVMROsU19L3abqIKjPSWPl0wB6IKL0iTiZxOeBB
+ bl90uRZ6ReVqnR+owfeJMXNo0/ds+LjIzPZP0Evg6GsX76WQRURCQDATN0Zlmg41fNnvWkmBXyX
+ GzRLic+V9pKVfJ9eF9b4hPlgnv8KDvK3uQBvEKh1LB5kMAZvfF2i/u2G/uJQCPG+DRMrN8Vr3bk
+ +OPdyx17GULV9YtJHYsb/nEW3o/sZGYv0mODCllO1WU2UehKuhmVq9BMM7JbnaB8ynab/mWbzx0
+ uH6AhHG3BeRsqHB0K/qdRdVNoUWfiFjBTLUTDYUsXkjlliNwQe0R+Fy9gg5J/czyFhckfvNVbyH
+ aAdmoO2kxPx/lLRCUC7Yy3q/WaZHr2lTfhLjKyabCkQx8/eTTau0VoLSQgdeSGoLLRT5a6z3Caz
+ ru7oZ5XYGQBqE6j/NQ94v5yHAp1FShnBtRdduLdxtaysRd4VvhRSUYPealewgTQEFcZWwun/hYJ
+ gD6sTWsn8dh8/Rns0Vu7q4E9HDGfHYE+HFwlCTrKo0t8GEGCTeJpKcK7JzakwxkNlD2+urlXpuP
+ RFhdekPHTdW0Naw==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -105,51 +105,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The multiplication of (value - min_in) * range_out can overflow
-int64_t when both operands are large. Use muldiv64() to compute
-the scaled result without overflow. Note that muldiv64() takes
-uint32_t for its multiplier and divisor, which is sufficient
-here since all function parameters are int (32-bit on all
-supported host architectures).
+After clamping coordinates to the surface dimensions, the resulting
+width or height can be zero. Proceeding with such values would pass
+degenerate rectangles to display listeners. Return early to avoid
+useless work.
 
+Fixes: 7c20b4a374d0 ("console: fix displaychangelisteners interface")
 Reported-by: Hui Peng <benquike@gmail.com>
-Fixes: 43579403a3d6 ("input: mouse: add helpers functions to core")
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-ID: <20261004-issue-4560-v1-16-ccbef537cbeb@redhat.com>
+Message-ID: <20261004-issue-4560-v1-14-ccbef537cbeb@redhat.com>
 ---
- ui/input.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ ui/console.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/ui/input.c b/ui/input.c
-index b82622c8645d..f40a9883701e 100644
---- a/ui/input.c
-+++ b/ui/input.c
-@@ -5,6 +5,7 @@
- #include "trace.h"
- #include "ui/input.h"
- #include "ui/console.h"
-+#include "qemu/host-utils.h"
- #include "system/replay.h"
- #include "system/runstate.h"
+diff --git a/ui/console.c b/ui/console.c
+index 14f148118e37..795c9857de82 100644
+--- a/ui/console.c
++++ b/ui/console.c
+@@ -740,6 +740,9 @@ void qemu_console_update(QemuConsole *con, int x, int y, int w, int h)
+     y = MIN(y, height);
+     w = MIN(w, width - x);
+     h = MIN(h, height - y);
++    if (w <= 0 || h <= 0) {
++        return;
++    }
  
-@@ -492,11 +493,16 @@ int qemu_input_scale_axis(int value,
- {
-     int64_t range_in = (int64_t)max_in - min_in;
-     int64_t range_out = (int64_t)max_out - min_out;
-+    int64_t diff = (int64_t)value - min_in;
-+    bool neg;
-+    int64_t scaled;
- 
-     if (range_in < 1) {
-         return min_out + range_out / 2;
-     }
--    return ((int64_t)value - min_in) * range_out / range_in + min_out;
-+    neg = (diff < 0) != (range_out < 0);
-+    scaled = muldiv64(llabs(diff), llabs(range_out), llabs(range_in));
-+    return (neg ? -scaled : scaled) + min_out;
- }
- 
- void qemu_input_queue_rel(QemuConsole *src, InputAxis axis, int value)
+     dpy_gfx_update_texture(con, con->surface, x, y, w, h);
+     QLIST_FOREACH(dcl, &s->listeners, next) {
 
 -- 
 2.56.0.116.g6de20f6092dc
