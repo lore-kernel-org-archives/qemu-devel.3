@@ -4,84 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8FEFCC6B03
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 13:26:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4003CA9ED2
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 13:26:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGcVF-0002jU-8V; Tue, 13 Oct 2026 09:25:18 -0400
+	id 1xGcTa-0001FC-Mt; Tue, 13 Oct 2026 09:23:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xGcUf-00025F-2N
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 09:24:39 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1xGcTZ-0001Eq-70
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 09:23:29 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xGcUd-0004jO-Ag
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 09:24:36 -0400
+ id 1xGcTX-0004dM-2N
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 09:23:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1791897870;
+ s=mimecast20190719; t=1791897806;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=pwNY6DylGEoxks1pUfWv4NvG8AC7XceEkwd4bcGu3ck=;
- b=Yh8bSpnjSs3IOphRNkzNksQY/+2hPPsQuuA/Olkg8JBNP+DSjo6R+zp30AAvyVdJA+RqJ5
- kjT7x0npUQyk2N6Yye5uJrwQMPkwMXYxPFmiJ2lP+UWVG630PQ/pLt1eXJ2e9piMcjJvyY
- NOOyQcezKn+hV6HKGmJCPR4kcu+kLiY=
+ content-transfer-encoding:content-transfer-encoding;
+ bh=t52HBx95G2L5wBjiY3vYLfeJx9EuuXZ8FiKV8S2kEZE=;
+ b=OsGM8lB/9AJnAjVsGOphO2OlBMQBU5fnXVA4s/O6pbhveIp1ORRPh9LKK0C8s2dFS3lJxN
+ 77rt8+jGNP/pATtv7xp2zBK+q6UY2gZGRZt3aU4ZcTv3svCuapPwxbg4nB1y0m1nm7N8TB
+ BUD3sy8+vYofnPLjxnCPKW/Ap0cgCcM=
 Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-323-1ImMUVLmMcKXUifcgTDUkA-1; Tue,
- 13 Oct 2026 13:24:26 +0000
-X-MC-Unique: 1ImMUVLmMcKXUifcgTDUkA-1
-X-Mimecast-MFC-AGG-ID: 1ImMUVLmMcKXUifcgTDUkA_1791897865
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-478-1xV2-JF_NUGf6vCLtqa8Ww-1; Tue,
+ 13 Oct 2026 13:23:22 +0000
+X-MC-Unique: 1xV2-JF_NUGf6vCLtqa8Ww-1
+X-Mimecast-MFC-AGG-ID: 1xV2-JF_NUGf6vCLtqa8Ww_1791897800
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A689B1828B05; Tue, 13 Oct 2026 13:24:25 +0000 (UTC)
+ id 8A94C1828B25; Tue, 13 Oct 2026 13:23:20 +0000 (UTC)
 Received: from localhost (headnet03.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.114])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 514FF1800446; Tue, 13 Oct 2026 13:24:23 +0000 (UTC)
-From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Tue, 13 Oct 2026 17:23:14 +0400
-Subject: [GIT PULL 17/40] virtio-gpu: fix memory leaks in virgl and
- rutabaga
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id BA19D427; Tue, 13 Oct 2026 13:23:19 +0000 (UTC)
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20261013-ui-v1-17-92da3082ad96@redhat.com>
-References: <20261013-ui-v1-0-92da3082ad96@redhat.com>
-In-Reply-To: <20261013-ui-v1-0-92da3082ad96@redhat.com>
+Subject: [GIT PULL 00/40] UI, Audio & Chardev fixes + Terminal Resize Support
+Message-Id: <20261013-ui-v1-0-92da3082ad96@redhat.com>
+Date: Tue, 13 Oct 2026 17:22:57 +0400
+From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org, "Michael S. Tsirkin" <mst@redhat.com>, 
- =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, 
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
- Dmitry Osipenko <dmitry.osipenko@collabora.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1991;
+Cc: peter.maydell@linaro.org
+X-Developer-Signature: v=1; a=openpgp-sha256; l=6170;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=x09hVeFBV3OUvQp9gJUjZMonfsXHxSDBsEFJdQVWWQQ=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqzjDDA/Wh7x08UZG0/taX4vT/E6z0hMswqpJ3u
- XH/oxHYLAmJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCas4wwwAKCRDa6OEJdZac
- 5cvyEACgdzuwU6FOXnU4sVuGvsKMDkqp1AvVLXZYsNlOKQ1o5PmzokQ1Rixi8LXPCkkaCpnIduS
- HvrTLe9P4ThFuAU23jQNf+1r31npyrC+kDtcW7RLR6L3qTaygM1JKqKbzv2w9Tg2prP6x9raaIT
- T3eXCT0hvf38GIJDauYoXQ4ZhWLI1lOMO/YWdwCCBf8151Ec3liHrf+p2LxvfUpQpkbjafx2/vN
- NxfdB/2j79s0xLzl7AJ3hZRP4nM+RVlfS84LPF0YCZAYQ+rMLzQqjD5B+gLlKLAilbZEss49gNq
- UgWMnv3wlfh4WZi5NZz/+W8hZJhTiThTdk0LzY4q7tKPCEdGknwpgECsnhDwOS2T6NRkjGCoO7C
- DX7gds/nrmXlDhsytKa9xD1RroqSRHj1lWENk7RA5X5SiccekyElj3JLoLLscd/N8BmZmZ5POR9
- A/FDBIlaBTAApqqzY1FnIVoi3KAzaNpT9YI8ttopkjFjwZr9kHfIuXZ5IXwpng8ZJuDjjreDlQ/
- /4XDoH97tF4wIzk+xh5Gr7GT8y3B0zGGgJ6rK3M7Oj0dWIpJ1JC7uY42JQPkiBsruAoZIejDXwF
- U35KjA0Tim70nOkoYRN63nKfXrEQmX096CDpQ+DJjUY9WQoxe5kJ55L81/gHIzX8OrRfZ1D88wm
- 9nELfHyRSxUCB8w==
+ bh=I0kRo1fXyj5MHfKD8uuVSvlnX4IZYIvF+dRwhdkMTUo=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqzjDB6JjBQI3YmFGTmV+Eho6/lH2/8fah2HPwM
+ s8gQZX126KJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCas4wwQAKCRDa6OEJdZac
+ 5ehLD/4jvhC3u3usGZc5vO6EwWNHzNVnqczfWENluRE82CaTY5t1+hXZuFZI48P2ACfNOBh5g3H
+ mplZ3HCz9RnMKD914Yt2BUDoYDi3c3pFRkgMecOaAxHDBYzqJefoG1FWvrOIdwIDe1IlXNs6DN4
+ n9chAL1O6kkfOfEpnUZ6Kqp9JIYp3YNbXuCr86ub4d9hrqTvCTSB8hFH31MhvImkI6ZPvXGt2Wo
+ 4Xoil/FfM2w63sPOtaFkt+7yyS2JRCqgpjOhdXuKGTA7SU0VI00fDGm1s2oFAsKxRecS4QNjjOz
+ 99D+wgriAHNDZXpKnF6mqjENnU6p1KUOESuglVev+xdsGJY+GPWEu/TGazkPZKU6pKpW58Ul/a+
+ t2/VMzCy1uqVgp/YLawQUPdurX85DTr5282wdiK2cVr7nEgLTJCSc5CvXwxvXxpZBH1Swe2E+zX
+ rqXbqrkuOXQ3O/I97c+NQMIFwohdjr94td/8Uq1LwEID1fPCGzq9i8TeDdIWiWxFxaHSzSKAr1b
+ GHvSQpwu4PzQ6BnXxG9yOsg/z1HLUViIcu6ay+BuwQPDAgr2AUo7c7aRKgjJvIpSbyGcmKLhDr+
+ AVjyS2CBXq7tvMqfNbSn6HcV6cL9V4hakIuO00XXe8NhCS1+uTH+zAHDowfcRN3qmPSbNzDtL3B
+ iKAXdAUI72LaCGQ==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124;
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -22
@@ -89,8 +82,8 @@ X-Spam_score: -2.3
 X-Spam_bar: --
 X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,61 +99,135 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Tom Desnoyers <tom.ds1@gmx.com>
+The following changes since commit 615ece3c406b262996e569f29ea6eed0d81c4d8d:
 
-When a gpu buffer backed by a guest-memory blob is unreferenced, virgl
-and rutabaga free the resource but not its addrs field, leaking memory
-on every unref.
+  Merge tag 'for-upstream' of https://gitlab.com/bonzini/qemu into staging (2026-10-09 15:49:53 +0200)
 
-In virtio-gpu-virgl.c, call virtio_gpu_cleanup_mapping() instead of
-virtio_gpu_cleanup_mapping_iov(). In virtio-gpu-rutabaga.c, call
-virtio_gpu_cleanup_mapping() before freeing the resource.
+are available in the Git repository at:
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4634
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Signed-off-by: Tom Desnoyers <tom.ds1@gmx.com>
-Message-ID: <20261012165754.11891-1-tom.ds1@gmx.com>
----
- hw/display/virtio-gpu-rutabaga.c | 2 ++
- hw/display/virtio-gpu-virgl.c    | 6 +++---
- 2 files changed, 5 insertions(+), 3 deletions(-)
+  https://gitlab.com/marcandre.lureau/qemu.git tags/ui-pr-v1
 
-diff --git a/hw/display/virtio-gpu-rutabaga.c b/hw/display/virtio-gpu-rutabaga.c
-index edf7b6270329..1312a67d7011 100644
---- a/hw/display/virtio-gpu-rutabaga.c
-+++ b/hw/display/virtio-gpu-rutabaga.c
-@@ -164,6 +164,8 @@ virtio_gpu_rutabaga_resource_unref(VirtIOGPU *g,
-     }
- 
-     QTAILQ_REMOVE(&g->reslist, res, next);
-+
-+    virtio_gpu_cleanup_mapping(g, res);
-     g_free(res);
- }
- 
-diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
-index f45571060fea..f71f287d9486 100644
---- a/hw/display/virtio-gpu-virgl.c
-+++ b/hw/display/virtio-gpu-virgl.c
-@@ -451,13 +451,13 @@ virtio_gpu_virgl_resource_unref(VirtIOGPU *g,
-     virgl_renderer_resource_detach_iov(res->base.resource_id,
-                                        &res_iovs,
-                                        &num_iovs);
--    if (res_iovs != NULL && num_iovs != 0) {
--        virtio_gpu_cleanup_mapping_iov(g, res_iovs, num_iovs);
--    }
-+    res->base.iov = res_iovs;
-+    res->base.iov_cnt = num_iovs;
-     virgl_renderer_resource_unref(res->base.resource_id);
- 
-     QTAILQ_REMOVE(&g->reslist, &res->base, next);
- 
-+    virtio_gpu_cleanup_mapping(g, &res->base);
-     g_free(res);
- 
-     return 0;
+for you to fetch changes up to 919711cab29776f12209b375a4db251007c6d96e:
 
--- 
-2.56.0.116.g6de20f6092dc
+  chardev/char: fix use-after-free on mux creation failure (2026-10-13 17:22:49 +0400)
+
+----------------------------------------------------------------
+UI, Audio & Chardev fixes + Terminal Resize Support
+
+Adds end-to-end support for propagating terminal size changes from the
+host to the guest. This includes a new CHR_EVENT_RESIZE chardev event,
+qemu_chr_resize() API, a chardev-window-size-changed QMP command,
+SIGWINCH handling, and wiring through mux/stdio/win-stdio chardevs,
+virtio-serial, virtio-console, GTK, and text console backends.
+
+- collect ui, audio, chardev and display fixes
+
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+
+----------------------------------------------------------------
+Akihiko Odaki (1):
+      hw/display/virtio-gpu: Block migration with large blobs
+
+Filip Hejsek (4):
+      char-win-stdio: add support for terminal size
+      ui/console-vc: forward text console size to vc chardev
+      ui/gtk: forward gtk console size to vc chardev
+      virtio-serial-bus: add terminal resize messages
+
+Gurchetan Singh (1):
+      virtio-gpu-rutabaga: make sure ctx_ids match
+
+Marc-André Lureau (25):
+      ui/spice-app: honor gl=off option, reject core/es
+      hw/display/vga: fix OOB writes after external surface resize
+      audio/ossaudio: fix ioctl passing address-of-pointer instead of pointer
+      audio/dbusaudio: fix off-by-one in volume channel assertion
+      audio/ossaudio: fix off-by-one in mmap buffer size assertion
+      audio/paaudio: fix server string in PAConnection
+      audio/paaudio: avoid pidfile path truncation
+      audio/pwaudio: fix capture buffer leak on early return paths
+      audio/pwaudio: clamp overrun writes to remaining ring buffer space
+      audio/pwaudio: fix integer underflow in qpw_read()
+      audio/pwaudio: handle negative avail in qpw_write and qpw_buffer_get_free
+      audio/pwaudio: bail out on underrun in qpw_write
+      audio/audio-mixeng-be: add upper bounds to audio settings validation
+      audio/wavcapture: prevent freq overflow and corrupted WAV header
+      ui/clipboard: clean up vm change state handler on last peer unregister
+      ui/console: skip empty update regions in qemu_console_update
+      ui/console: use QLIST_FOREACH_SAFE in dpy_refresh
+      ui/input: fix integer overflow in qemu_input_scale_axis
+      ui/vnc-enc-zrle: propagate zrle_compress_data error
+      ui/vnc-jobs: assert rect coordinates and dimensions in vnc_job_add_rect
+      chardev/char-pty: free pty_name in finalize
+      chardev/char-ringbuf: reject zero size with is_power_of_2
+      chardev/char-ringbuf: use actual read length in qmp_ringbuf_read
+      chardev/char-udp: clarify read_poll return value with pending data
+      chardev/char: fix use-after-free on mux creation failure
+
+Szymon Lukasz (8):
+      chardev: add cols, rows fields
+      chardev: add CHR_EVENT_RESIZE
+      chardev: add qemu_chr_resize()
+      char-mux: add support for the terminal size
+      main-loop: change the handling of SIGWINCH
+      char-stdio: add support for the terminal size
+      qmp: add chardev-window-size-changed command
+      virtio-console: notify the guest about terminal resizes
+
+Tom Desnoyers (1):
+      virtio-gpu: fix memory leaks in virgl and rutabaga
+
+ audio/audio-mixeng-be.c           |  4 +-
+ audio/dbusaudio.c                 |  4 +-
+ audio/ossaudio.c                  |  4 +-
+ audio/paaudio.c                   |  6 ++-
+ audio/pwaudio.c                   | 22 ++++++++++-
+ audio/wavcapture.c                |  6 +++
+ backends/cryptodev-vhost-user.c   |  1 +
+ chardev/char-fe.c                 | 13 +++++++
+ chardev/char-mux.c                | 19 ++++++++-
+ chardev/char-pty.c                |  1 +
+ chardev/char-ringbuf.c            | 10 +++--
+ chardev/char-stdio.c              | 33 ++++++++++++++++
+ chardev/char-udp.c                |  4 ++
+ chardev/char-win-stdio.c          | 19 +++++++++
+ chardev/char.c                    | 27 +++++++++++++
+ hw/block/vhost-user-blk.c         |  1 +
+ hw/char/terminal3270.c            |  1 +
+ hw/char/trace-events              |  1 +
+ hw/char/virtio-console.c          | 35 +++++++++++++++--
+ hw/char/virtio-serial-bus.c       | 81 ++++++++++++++++++++++++++++++++++++++-
+ hw/display/vga.c                  |  8 ++--
+ hw/display/vhost-user-media.c     |  1 +
+ hw/display/virtio-gpu-rutabaga.c  |  5 ++-
+ hw/display/virtio-gpu-virgl.c     |  6 +--
+ hw/display/virtio-gpu.c           | 32 ++++++++++++++++
+ hw/ipmi/ipmi_bmc_extern.c         |  1 +
+ hw/scsi/vhost-user-scsi.c         |  1 +
+ hw/usb/ccid-card-passthru.c       |  1 +
+ hw/usb/dev-serial.c               |  1 +
+ hw/usb/redirect.c                 |  1 +
+ hw/virtio/vhost-user-base.c       |  1 +
+ hw/virtio/vhost-user-scmi.c       |  1 +
+ include/chardev/char-fe.h         | 10 +++++
+ include/chardev/char.h            |  9 +++++
+ include/hw/virtio/virtio-serial.h |  7 ++++
+ include/qemu/main-loop.h          |  5 +++
+ monitor/hmp.c                     |  1 +
+ monitor/qmp.c                     |  1 +
+ net/passt.c                       |  1 +
+ net/vhost-user.c                  |  1 +
+ qapi/char.json                    | 31 +++++++++++++++
+ ui/clipboard.c                    |  4 ++
+ ui/console-vc.c                   |  8 ++++
+ ui/console.c                      |  7 +++-
+ ui/curses.c                       | 21 +++++++---
+ ui/gtk.c                          | 28 ++++++++++++++
+ ui/input.c                        |  8 +++-
+ ui/spice-app.c                    | 10 ++++-
+ ui/vnc-enc-zrle.c                 | 19 ++++++---
+ ui/vnc-jobs.c                     |  1 +
+ util/main-loop.c                  | 33 ++++++++++++++++
+ 51 files changed, 513 insertions(+), 43 deletions(-)
 
 
