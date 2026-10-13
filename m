@@ -4,84 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58938CA9ED2
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 08:54:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 907E1CC6B03
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 08:54:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGY4Q-00018Q-VB; Tue, 13 Oct 2026 04:41:15 -0400
+	id 1xGY7r-0005sk-Al; Tue, 13 Oct 2026 04:44:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xGY3U-0007ES-F7
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 04:40:16 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ id 1xGY4B-0000Ls-Al
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 04:40:59 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xGY3Q-0007qX-1Y
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 04:40:16 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-4a171b677d2so15778405e9.0
- for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 01:40:11 -0700 (PDT)
+ id 1xGY49-00086h-7p
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 04:40:58 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-4a172eb31f0so20441435e9.1
+ for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 01:40:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1791880810; x=1792485610; darn=nongnu.org;
+ d=linaro.org; s=google; t=1791880856; x=1792485656; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=4fi3KaUQEy1+IJ+5cSEeFvIQP/QNmNxFWZjQRxfI9as=;
- b=KfHpZzP1LooLBUS7nCCXO7jW4UfzjU7Wp7nVYRxhTqVcBAHens6oK70Jv73XlS/+BE
- BLXnMHNG6k27NmVBcXeZNyS2Jgq4UQhB6HPfgIeCUspu/KcyE9ub1v9Du6pkJSptOjfT
- ZWyZFGt9/2uiKX9Z705xHVFoQLwOAlNFGzQs39cpMPP120JEuIN3FgAPwkfcEs44qXT8
- xm7VVNNX/RnYjPDWdEkiLwLybLTLanaY8q1b4jmeGLpNS0di1OoZDkSmXPey/wjBYcyS
- 7s0NdFq2B7Y9zIzk9IMCS+oWUxi9qTYs3bL7bjOBeZ5eN8/1PqcqhNqtK9QbKW1NNxwM
- h+SQ==
+ bh=ssQOKL4yIVf/4dvvQm7DObQY0a7iM7G4sOvZS6fl620=;
+ b=IgQZtzhque9JHBcSC8AyxFUfkDXgrZyskzAFdOTkqLVvcmJbUPG12HCQcNtSVsuEhH
+ tT53uPllwb7uhhTb/5vVmLmLXkv4sHevccBHHWXByVvCWabyQkHsEFVPoU52nsT1Sy4H
+ UuVazVw4Qup2lv/LQXWAQ3fY5Crba5RX2KT+WJo2EyZgIHielt6FG5WOJ7MxGXNeKfZ3
+ xBa8HK8RK7G3aeMVzs4rEk/Y+T5p7aB25uMvWW5bAxUWdf0CL5fiFxlAyA/ikvui+X2B
+ fkeSMMFPxo/+/K2D+1KWAcLXJcmzoJZsiVcN6+FBwfTz6P3rq/YwaPhxqoyOwxPaPREp
+ gwYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791880810; x=1792485610;
+ d=1e100.net; s=20260707; t=1791880856; x=1792485656;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to:content-type;
- bh=4fi3KaUQEy1+IJ+5cSEeFvIQP/QNmNxFWZjQRxfI9as=;
- b=nHPktA786CIAAV83byeEHeWQ0/zz1UPdpWpDsgUtWi1fArhIaoRzyBRXz9Fog4yzwP
- kS/LPCUzGqeJnkp+mgmdHvLCNy9o47jtlWjIWRtmpHi6s1UwwN4rpPDwlQyUtTD/JwSJ
- CkDINPFnlC89FhNdh8n2+bNSFDz6hQNYgvHZeyZlewAfFr/GTX6+FR4lx24WgOc+1/Cp
- 18a0mmyHsZ3np0J538QkJP6JFQztiq0MSYzYIjvcYEOzHrLLZTaJLHvBnIxnN3G/9oid
- kJw96HnS4wU2ePpBhSL+wkV206Tv7DlHCqjzb7zHWhnyjG63e16AA/n10blyJaHkHXC+
- Oyng==
+ bh=ssQOKL4yIVf/4dvvQm7DObQY0a7iM7G4sOvZS6fl620=;
+ b=a02ntYAll5jOemDaUDHSwKjNg4Fuoawmi2Dd0BAXX3wksWzTbmYY0z5Br6PLh3Twkl
+ hdVNyj9gdjGJoerhHhJgCIzSuFnpMwqO8n8LAs2yfElq06qY8nUSYWb3PKGlfDdycCFS
+ F1zYIZuxRjn6v2DS6F4zK1FhjkCbrhZLG7Q/VES1QOEBdj5CqoNLn8iMVkOT84GCb+os
+ qzl4J8rrDS0uTDPtYBtFKrcr4zKHZjjSxJaIBxA2zM0s7QAqCn1/wSOAk8ejivNTkdDZ
+ ext3NFv2Qe1+AE+IxMgkOE0m5xgIaA618GcIMuWc1XgPCO6wsAINilMg0Iv9FEr2fEL/
+ Itdg==
 X-Forwarded-Encrypted: i=1;
- AKwUvBx+3hfErSa7Tb9hdnOlED2qm5/2bm1SVEtxY8kKUbBwrZOLAIS8HcMEyOSu4uzFR3/QWH5H5jAWUjxP@nongnu.org
-X-Gm-Message-State: AFq9FYK0oZ7lj7K+bqwaCnLLqGxjIFeXWu8V5Dug5xa32nv2wGRag2YT
- wSUawvg/W3WTS+YKrZdiUPUU1tjr5sgAmzrsVP55LrvHxBTekPHPdG1VzpdHvQKsrPPnIWH1O/N
- kGTwgkCU=
-X-Gm-Gg: AYBFou0useSjKrXF9UUvMY7qf3dDOFr3Zvk7vaQFwZWt3NadmLhFihlwQTg5yGZy0WK
- u7LTjxu3fN2mNB3zQlnxGe6JXG9dcEsH228sf8tqEyim8AgafOq6LiRJ5PCApOXKR0MsN5CMIsP
- Ywvn8mOR4ZEKth4hHxiCaMBjCx7w81HUSZ4eZCuoArzkrNkRiRUsKj8Ofofbnh5DXJRPdK8YypB
- uYoC3j0XHhHnq31P4BawJshmn2IfiRT5c/32t+gg5JlG5CIvvokA6+JFH1wvRkxBzKevYb4vwVv
- DkvmYnLg5+tqQNEci4KIXCFU9J7yEaRcYQTqE9yzYo9800NKnAeDG0Q71pjc8bGaHbLAQMFIOux
- XluKgO5LbFKtVGh1SrB/Xdvurcd0Rkvkr3mZ1RfAzhETBRnx7tHzFOnuYrvAqzJCIGZz0Egci5J
- 0l2k+Vdc80XzOwm8xUjeMuHQPvbIoUBine4NqUx4x2q6HJBUn7uIPbOBxpSlslzDXDlt6Ru0rvu
- zdRoSsWS3RKqlt0IrcxMzkciMSkaQ12v8xMRTs5278QCRyq4lomq6vi971H5mAMpBESLWNNKu7b
- v6gK0PycNaWy0Q==
-X-Received: by 2002:a05:600c:348d:b0:4a1:813f:2a63 with SMTP id
- 5b1f17b1804b1-4a18e4aa26amr220023575e9.18.1791880810486; 
- Tue, 13 Oct 2026 01:40:10 -0700 (PDT)
+ AKwUvBz+fMIj4EDPAyen7DVOPrVPH+nfzzVHIbp9/GXhou09pumeUAY0ELnQSjpRpVKF8rQI3jrbcLvRawX5@nongnu.org
+X-Gm-Message-State: AFq9FYLMlDt/zcNdDV0cGXjCBYnLeKMzH64mxzaUhVio1QHlhll30tyP
+ L/xxe1uwZVq+CGELsLrRN6r4sd6pJgicl3kMv8touqkFv5L5D7yxqihelGRXza9O5IxQR9lvCre
+ GusG+Kqg=
+X-Gm-Gg: AYBFou3FwV9li3GCnaU1TSC1bdihkOLAeWmi8raLaUB8DUpaP6ASk+lD2njlcDO9y8d
+ XkWPu+wkjWk/fJDGxlZtMBpzKStgVUAlaHqLEGzhQvC2svulATQyW7VyEu3/1xleV4g5hRiPuSQ
+ nPIarVlr6CRX4xtR5KreLNIQxcX0PM/CCH/YniWVBrvPXCb0XZxgUhXGCso+DxHC4KHfWWBaQWi
+ v/EYLuezGj1T4L+Yzqkg9jKA+PNls40Jey1SLkoe5YvvhiBPxmCTwWFPhfCKd3gNXhwRmCDDVOk
+ xHv4QecFmwAO1qilI5AvNUrb0QKqMhiiqFOgP7MT4Hj2uRv20+C+gXvKyR0AwcdXd8wD2JLgflg
+ 44h7Dj30U0sXc5AGKVM6gaeUq1irLHl37MZN8IEhB4zslmvG8xAdQHbClzSY/MZMJPAn7VLYkXn
+ ew4JYLYEg3/AI9yr6zbKSBb2ohDtR8LCtNNWo2oRgSShEOifnUm//0AdSrEFY/LXQ0Vwp3+MR57
+ EOgP6HaYnX9rk3LOs3+6kDpAmWzHlPrHgC4YumDF8RIwUr+myRN8vHI6TzZuV656R58uz2fIIBy
+ rAg=
+X-Received: by 2002:a05:600c:4e8a:b0:4a1:78dd:dd28 with SMTP id
+ 5b1f17b1804b1-4a18e4d2b31mr235366395e9.27.1791880855762; 
+ Tue, 13 Oct 2026 01:40:55 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a18be96549sm495086735e9.6.2026.10.13.01.40.09
+ 5b1f17b1804b1-4a18be96549sm495086735e9.6.2026.10.13.01.40.54
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 13 Oct 2026 01:40:09 -0700 (PDT)
+ Tue, 13 Oct 2026 01:40:55 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Subject: [PATCH 25/86] target/arm: GICv5 cpuif: Implement ICV_PCR_EL1
-Date: Tue, 13 Oct 2026 09:38:32 +0100
-Message-ID: <20261013083933.1024405-26-peter.maydell@linaro.org>
+Subject: [PATCH 61/86] hw/intc/arm_gicv5: Factor out "make an L2 IST valid"
+ function
+Date: Tue, 13 Oct 2026 09:39:08 +0100
+Message-ID: <20261013083933.1024405-62-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261013083933.1024405-1-peter.maydell@linaro.org>
 References: <20261013083933.1024405-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,58 +105,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Implement the redirection of the ICC_PCR_EL1 encoding to the
-hypervisor guest's view ICV_PCR_EL1. This contains only the
-PRIORITY field, which is stored in ICH_VMCR_EL2.VMPR.
+irs_map_l2_istr_write() makes the L2 IST for a specified interrupt
+valid by finding the L1 ISTE and setting its valid bit. For
+virtualization, we want to do something similar for the ISTs
+used for virtual LPIs and SPIs. Factor out the "do the work"
+part of the function from the specifics of the IRS_MAP_L2_ISTR
+register.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/tcg/gicv5-cpuif.c | 26 ++++++++++++++++++++------
- 1 file changed, 20 insertions(+), 6 deletions(-)
+ hw/intc/arm_gicv5.c | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/target/arm/tcg/gicv5-cpuif.c b/target/arm/tcg/gicv5-cpuif.c
-index 247cefd9e68..125dcd8cf4d 100644
---- a/target/arm/tcg/gicv5-cpuif.c
-+++ b/target/arm/tcg/gicv5-cpuif.c
-@@ -612,18 +612,32 @@ static void gic_icc_cr0_el1_reset(CPUARMState *env, const ARMCPRegInfo *ri)
- 
- static uint64_t gic_icc_pcr_el1_read(CPUARMState *env, const ARMCPRegInfo *ri)
- {
--    GICv5Domain domain = gicv5_logical_domain(env);
--    return env->gicv5_cpuif.icc_pcr[domain];
-+    if (gicv5_icv_access(env)) {
-+        return FIELD_EX64(env->gicv5_cpuif.ich_vmcr_el2,
-+                          ICH_VMCR_EL2, VMPR);
-+    } else {
-+        GICv5Domain domain = gicv5_logical_domain(env);
-+        return env->gicv5_cpuif.icc_pcr[domain];
-+    }
+diff --git a/hw/intc/arm_gicv5.c b/hw/intc/arm_gicv5.c
+index 1d6f2767d02..3fac52012b1 100644
+--- a/hw/intc/arm_gicv5.c
++++ b/hw/intc/arm_gicv5.c
+@@ -1096,11 +1096,8 @@ static void initialize_ist_config(GICv5Common *cs, GICv5Domain domain,
+     cfg->valid = true;
  }
  
- static void gic_icc_pcr_el1_write(CPUARMState *env, const ARMCPRegInfo *ri,
-                                   uint64_t value)
+-static void irs_map_l2_istr_write(GICv5 *s, GICv5Domain domain, uint64_t value)
++static void map_l2_istr(GICv5Common *cs, GICv5ISTConfig *cfg, uint32_t intid)
  {
--    GICv5Domain domain = gicv5_logical_domain(env);
-+    if (gicv5_icv_access(env)) {
-+        /* The PRIORITY field lives in ICH_VMCR_EL2.VMPR */
-+        uint64_t vmcr = env->gicv5_cpuif.ich_vmcr_el2;
+-    GICv5Common *cs = ARM_GICV5_COMMON(s);
+-    GICv5ISTConfig *cfg = &s->phys_lpi_config[domain];
+-    uint32_t intid = FIELD_EX32(value, IRS_MAP_L2_ISTR, ID);
+     hwaddr l1_addr;
+     uint64_t l1_iste;
+     MemTxResult res;
+@@ -1138,6 +1135,15 @@ txfail:
+                   "physical address 0x" HWADDR_FMT_plx "\n", intid, l1_addr);
+ }
  
--    value &= R_ICC_PCR_PRIORITY_MASK;
--    env->gicv5_cpuif.icc_pcr[domain] = value;
--    gicv5_update_irq_fiq(env);
-+        vmcr = FIELD_DP64(vmcr, ICH_VMCR_EL2, VMPR,
-+                          FIELD_EX64(value, ICC_PCR, PRIORITY));
-+        env->gicv5_cpuif.ich_vmcr_el2 = vmcr;
-+    } else {
-+        GICv5Domain domain = gicv5_logical_domain(env);
++static void irs_map_l2_istr_write(GICv5 *s, GICv5Domain domain, uint64_t value)
++{
++    GICv5Common *cs = ARM_GICV5_COMMON(s);
++    GICv5ISTConfig *cfg = &s->phys_lpi_config[domain];
++    uint32_t intid = FIELD_EX32(value, IRS_MAP_L2_ISTR, ID);
 +
-+        value &= R_ICC_PCR_PRIORITY_MASK;
-+        env->gicv5_cpuif.icc_pcr[domain] = value;
-+        gicv5_update_irq_fiq(env);
-+    }
- }
- 
- static void gic_icc_pcr_el1_reset(CPUARMState *env, const ARMCPRegInfo *ri)
++    map_l2_istr(cs, cfg, intid);
++}
++
+ bool gicv5_set_resident(GICv5Common *cs, GICv5Domain domain, bool valid,
+                         uint32_t vpeid, bool db, uint8_t dbpm, uint32_t vmid,
+                         uint32_t cpuidx)
 -- 
 2.43.0
 
