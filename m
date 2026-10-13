@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09793CC6B1A
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 19:28:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FF40CC6B12
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 19:28:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGiAV-0001ru-Ql; Tue, 13 Oct 2026 15:28:11 -0400
+	id 1xGiAS-0001q5-Kd; Tue, 13 Oct 2026 15:28:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1xGiAS-0001ps-1d
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 15:28:08 -0400
+ id 1xGiAQ-0001pV-TR
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 15:28:06 -0400
 Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1xGiAQ-00087F-B4
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 15:28:07 -0400
+ id 1xGiAP-00087B-EB
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 15:28:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:MIME-Version:
  References:In-Reply-To:Message-ID:Date:To:From:Sender:Reply-To:Cc:
  Content-Type:Content-ID:Content-Description:Resent-Date:Resent-From:
  Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID;
- bh=rHEF2jE77dSIuFayJcpdhhmInCgEQiWpCKJPvJzVhAs=; b=MqNjnvzCdNtU7ByNO+ZH40edWP
- LM5QiTbrkGOXRlIkwuyEGX1OW2nbARmFS4zqis66bUpSrQEDZ5nLPV6VgN7Vgun6Tf8PetFD8FuAL
- QPF8F6xdamB48+ZD4QEWkQpVk1ZXsUFWtEn9xpjXoz20Dj2KuIjl3IDUH7HV610KOjt8EFShiTtsj
- NbXKnGrsO+ml8Dr/v0EkPxNbEoud8Tccs9s7u6SqOxxL8xgmba3sXBe8S5L0C+qnhb9h8XOgX/f3E
- +MalfMSpNN5TUt6cMQVlImPPYx2cJn4BzTbVFY5+AYdh/EJPv2+5Iy0zIRzzFQGsb9HCuZXTUdjZh
- 1Z8HkT4bMV0VK3XAgF6ZJFJglnZLgXgovCXaIOEDM8ToWUfUw0+6k6EkQsbRQj/lx7GywqeJpyuxI
- uHGTBZ58A071TVUAMDgES7hbVjSuH9baZHv2BhvGejYYq1rVtloSE/INGEqgEjW+NGf4UvFf/oDj3
- STgo8AUb1lEcw6nLD+/p0qZl0ECgqkQex0PKk/nKK/jm6C/K+kLz3g3ASNyE01owUpvGihpHLH5ET
- 2j8QWLOGT0cfOWjY2diJGvd4X8tcBVg2RHXX+6WSqjHZNtdaBc76bA8Mo9GJaIVe31gdc9GiFWpnP
- qYkWboH4V/Z7usndjJUNEyC7oMADnqfiMCDpq9hCg=;
+ bh=XG0OZGKFxU5Od9PDLXkxtlKjW1z13fgHLaTeGYF+lFo=; b=PEEmIXwdIjoPbim5Hr5fTlaSBj
+ Wo7+/tddE0AS9s09g43rK/mb8WghluC0kYqnk2cGhFuedEiwEO61aEQlPS/zmMjTHX0WQ47YgshxX
+ FFR7EN1TuzOaKl3lVxtEYUWuRSkwY6DXjKi9syWX9Bv5ik2ctvbNNgC2VTltB/QnZLwG2o4TTjmur
+ 23EW4ZwLQHxPNJ8EXAI3DoPJGZBhgx9OM4OsipqLc3GAsKEjupqIUFVAEIulY7hirREbNfzETmH8P
+ g5vzu8VqM+YYCgLlOcoZRXDpTQPnEtZtHPzyd+NKRcIGIwpJupNjfAFa+5q9iAmnWEENLgTeLJPTk
+ zqQXab1ssUocTLrHgUQ6hxMrau0FCK5SRW8MB4ZhGq4/i7NVrR+8sfnK07APKf8onVSo7KhJqH4fI
+ mafNa7ALi3rrW6QkiQioMIMrv3u9IMJR7+vKDuyEMgDnfQ8ExA7UbwEf7pskCu1OHtGnBiLrPHItW
+ Qao5p7eh+WogC/492F8aLsmiO1XPGvXuJW4EW5vddaQg59H0qPTgW+wOnIQu9WTSrxyGpqk2GDLMt
+ DmdctUo9LokvdM1dtAwAblPYqw11Tk5OX5QOmXd/w3pUdflcy64llOLqlXCob3wWY2vt30plip64t
+ wD7irwSjOp54j3pQQhIEALcBpg03t4876BVlCvADc=;
 Received: from [2a02:8012:2f01:0:b2a5:667b:71e2:6751]
  (helo=localhost.localdomain)
  by mail.ilande.co.uk with esmtpsa (TLS1.3) tls
  TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
- (envelope-from <mark.cave-ayland@ilande.co.uk>) id 1xGi9k-001aAM-3D
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 20:27:24 +0100
+ (envelope-from <mark.cave-ayland@ilande.co.uk>) id 1xGi9j-001aAM-8r
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 20:27:23 +0100
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 To: qemu-devel@nongnu.org
-Date: Tue, 13 Oct 2026 20:27:35 +0100
-Message-ID: <20261013192751.196204-4-mark.cave-ayland@ilande.co.uk>
+Date: Tue, 13 Oct 2026 20:27:33 +0100
+Message-ID: <20261013192751.196204-2-mark.cave-ayland@ilande.co.uk>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20261013192751.196204-1-mark.cave-ayland@ilande.co.uk>
 References: <20261013192751.196204-1-mark.cave-ayland@ilande.co.uk>
@@ -52,7 +52,7 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:b2a5:667b:71e2:6751
 X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: [PULL 3/5] cuda: Include command in successful ADB replies
+Subject: [PULL 1/5] openpic: Preserve IRQs masked by CTPR
 X-SA-Exim-Version: 4.2.1 (built Sat, 13 Feb 2021 17:57:42 +0000)
 X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
 Received-SPF: pass client-ip=2001:41c9:1:41f::167;
@@ -80,39 +80,54 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: "Kirill A. Korinsky" <kirill@korins.ky>
 
-OpenBSD and Linux expect the ADB command between the CUDA status and
-reply data. QEMU omits it on success, so guests consume the first data
-byte as the command and lose it from the reply.
+OpenBSD exposes this by raising CTPR while handling interrupts. If an
+edge remains pending when EOI lowers the servicing priority, QEMU
+reasserts INT without checking CTPR; IACK then returns the spurious
+vector and consumes the masked edge before CTPR permits delivery.
 
 Signed-off-by: Kirill A. Korinsky <kirill@korins.ky>
 Tested-by: Anushree Mathur <anushree.mathur@linux.ibm.com>
 Tested-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Reviewed-by: Amit Machhiwal <amachhiw@linux.ibm.com>
 Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Message-ID: <20261001230058.11465-4-kirill@korins.ky>
+Message-ID: <20261001230058.11465-2-kirill@korins.ky>
 Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 ---
- hw/misc/macio/cuda.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ hw/intc/openpic.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/hw/misc/macio/cuda.c b/hw/misc/macio/cuda.c
-index 312dde242ba..ccb3e1d74b0 100644
---- a/hw/misc/macio/cuda.c
-+++ b/hw/misc/macio/cuda.c
-@@ -431,11 +431,12 @@ static void cuda_receive_packet_from_host(CUDAState *s,
-         {
-             uint8_t obuf[ADB_MAX_OUT_LEN + 3];
-             int olen;
--            olen = adb_request(&s->adb_bus, obuf + 2, data + 1, len - 1);
-+            olen = adb_request(&s->adb_bus, obuf + 3, data + 1, len - 1);
-             if (olen > 0) {
-                 obuf[0] = ADB_PACKET;
-                 obuf[1] = 0x00;
--                cuda_send_packet_to_host(s, obuf, olen + 2);
-+                obuf[2] = data[1];
-+                cuda_send_packet_to_host(s, obuf, olen + 3);
-             } else {
-                 /* error */
-                 obuf[0] = ADB_PACKET;
+diff --git a/hw/intc/openpic.c b/hw/intc/openpic.c
+index 99d2a1e65ec..6f9a5621631 100644
+--- a/hw/intc/openpic.c
++++ b/hw/intc/openpic.c
+@@ -1033,8 +1033,9 @@ static void openpic_cpu_write_internal(void *opaque, hwaddr addr,
+         n_IRQ = IRQ_get_next(opp, &dst->raised);
+         if (n_IRQ != -1) {
+             src = &opp->src[n_IRQ];
+-            if (s_IRQ == -1 ||
+-                IVPR_PRIORITY(src->ivpr) > dst->servicing.priority) {
++            if (IVPR_PRIORITY(src->ivpr) > dst->ctpr &&
++                (s_IRQ == -1 ||
++                 IVPR_PRIORITY(src->ivpr) > dst->servicing.priority)) {
+                 DPRINTF("Raise OpenPIC INT output cpu %d irq %d",
+                         idx, n_IRQ);
+                 qemu_irq_raise(opp->dst[idx].irqs[OPENPIC_OUTPUT_INT]);
+@@ -1070,12 +1071,13 @@ static uint32_t openpic_iack(OpenPICState *opp, IRQDest *dst, int cpu)
+     }
+ 
+     src = &opp->src[irq];
+-    if (!(src->ivpr & IVPR_ACTIVITY_MASK) ||
+-            !(IVPR_PRIORITY(src->ivpr) > dst->ctpr)) {
++    if (!(src->ivpr & IVPR_ACTIVITY_MASK)) {
+         error_report("%s: bad raised IRQ %d ctpr %d ivpr 0x%08x",
+                 __func__, irq, dst->ctpr, src->ivpr);
+         openpic_update_irq(opp, irq);
+         retval = opp->spve;
++    } else if (IVPR_PRIORITY(src->ivpr) <= dst->ctpr) {
++        return opp->spve;
+     } else {
+         /* IRQ enter servicing state */
+         IRQ_setbit(&dst->servicing, irq);
 -- 
 2.47.3
 
