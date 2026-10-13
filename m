@@ -4,65 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E6EBCC6B1A
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 19:29:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3655CC6B1A
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 19:30:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGiAW-0001rw-69; Tue, 13 Oct 2026 15:28:12 -0400
+	id 1xGiC9-00033w-Sg; Tue, 13 Oct 2026 15:29:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1xGiAS-0001pt-3f
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 15:28:08 -0400
-Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xGiBx-0002qQ-LR
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 15:29:45 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1xGiAP-00087R-JN
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 15:28:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:MIME-Version:
- References:In-Reply-To:Message-ID:Date:To:From:Sender:Reply-To:Cc:
- Content-Type:Content-ID:Content-Description:Resent-Date:Resent-From:
- Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID;
- bh=ospXYYhkqGJuTg88qudMZC2v3wRMLvfBTlHJhpkvrWQ=; b=JJA6LjPiRDp6d1wr5BaiZQst3G
- gGK0J/4DkMnxs4GSjf7YG1HNmncRTZxwGYoDD9aDFnAtkMHMAnKLJfeVP3K4UsDCkWnkX3fgpFNyN
- GVz9C84r+63HW8y7ZgEUWwD5rh28pQ5/eX4I1KfbpONEQNo0PNVFU+JmL1Dedc5/QCrsfMQICdIl3
- WXrdkXI+lChBrvKYxNDFPN1XTwTx41vJYH4BDUqE3oDKKYYQGmiQsAibJHynWeTZufc0xsoXEAnTU
- 1jIAMawk3oABULh4udWJ2E98tTUXHRW6uNcZ6v9LC09q4SyRS3D608U19PHaSnDRBrzl2bIKa+U28
- LMKn5++4fJYWrpYETVVyoSuD5qKUN9PJJv2Wy7GfF2VbmxeE4qVw9dU492kaLxSZI872acFjjK+cV
- Z86Yb/zAxpuZxPju/aQCytGwah/P512sDEmN0xzLod5p2H4/8vlE/dGvIVgIlikZawYDpcxzpveWc
- xqEuLUStFNROrYbBQUKygajgMAgb6+PtOx2r3DbVkRYoWgZNZWxg1E1SB/WdM3cMvL+waAYvmah+w
- 3DP+O6CvMTbtDIe7QMwkLxbR+ClYFXXZ+cYltgObZ8ip+Ufph9bUTC4pHQhKVYsPlwmuM3pnsUpW3
- rFaNI4dsAdyPKzr2K9umFvB9I+Ipq0voSHqe55jpE=;
-Received: from [2a02:8012:2f01:0:b2a5:667b:71e2:6751]
- (helo=localhost.localdomain)
- by mail.ilande.co.uk with esmtpsa (TLS1.3) tls
- TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
- (envelope-from <mark.cave-ayland@ilande.co.uk>) id 1xGi9k-001aAM-Q9
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 20:27:25 +0100
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-To: qemu-devel@nongnu.org
-Date: Tue, 13 Oct 2026 20:27:37 +0100
-Message-ID: <20261013192751.196204-6-mark.cave-ayland@ilande.co.uk>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20261013192751.196204-1-mark.cave-ayland@ilande.co.uk>
-References: <20261013192751.196204-1-mark.cave-ayland@ilande.co.uk>
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xGiBv-0008E8-Ql
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 15:29:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1791919778;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=r6oucVaYQ3n5GBgQha9fHF0++QlyXj2T1/qY+5EmTvo=;
+ b=ShyNLvu2BOb+xGADqV7r13OPxISRT43hocIl1GREqNvvBUGPxsjLuqwlpNw5s3gbFn56Jp
+ 4/7Vx0t2w6MKoknAIhxkQ/vovIOfCvqUd/TVfWBz7ct8RnIpLYjMCePhnelDHhf4Cw9S2M
+ Q/4/FX9FguNCTJI+dEbvhlWy6FIluS0=
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
+ [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-390-MinrcFoQOOCNuWPAz-R5oA-1; Tue, 13 Oct 2026 19:29:30 +0000
+X-MC-Unique: MinrcFoQOOCNuWPAz-R5oA-1
+X-Mimecast-MFC-AGG-ID: MinrcFoQOOCNuWPAz-R5oA_1791919770
+Received: by mail-qt1-f199.google.com with SMTP id
+ d75a77b69052e-5350ec54bf6so70248861cf.2
+ for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 12:29:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1791919770; x=1792524570; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=r6oucVaYQ3n5GBgQha9fHF0++QlyXj2T1/qY+5EmTvo=;
+ b=HBV8qTa1QEW2BkLcZ/FFrcW++Xj195303t3CahXrzIuhJsJNDs5ykaWYW+RdP76a31
+ vFfAwbNcF99zOeXunJmH1PjipTJipZ8/GfmAo6dGAR1/fW7m8PLQGQM0PF6FJEJj06eR
+ 7ssaxD/VRYN8JBRVxrro8NwAVRbth55IZybftwc22r1CULXs8ANFXwhdQLq50O/P9jIz
+ yZ8cYM651uuVOlGfDv0XzOoN46zG3A6p3+I8akTz1I5GuhtKZV8EWDanTD/ECKaZXBK+
+ IuTMeUTR7iXD8SHTIVY4jdnawjNf4ZpTh1s/Lp2i+AW6ELGvtg976YDOd8YktH+90dew
+ JLVA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1791919770; x=1792524570;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=r6oucVaYQ3n5GBgQha9fHF0++QlyXj2T1/qY+5EmTvo=;
+ b=zeEWnuxykj8VT0QEd1gjnwYxRVKg8aFGXOcHlu+bpB+u06329vXZyls0VBvAsIxp3u
+ DaX2hi6tiu6lNLKApSm2Gib+2Pz/gsJJrytD+Z2/RE7xvY0mwgIF6y2pC43DymGtEa++
+ gb1+Lnew37+U+yZUgNh7GyVGdv/krs/nqiWPau8448UKz65k9x7SOy2PD8kBAm3EVR4Y
+ 8ejksBseuuBasnlrxki0298ztiwe7fndfvdS0XcT9vliVHSTqvnfDOJ+lYHP4Ug4BuYk
+ 1uDdEQACFSxUCBh2b2hcBM4YPEKpvsOP3tw31fVsXSR0oKw+Op8+Xg2IkzLjupa6VPqI
+ 8OZQ==
+X-Gm-Message-State: AFq9FYLp3W+Yvnz8Imguw7dc44Oakah5HoOdAJqGIch+d9QDoVkfzQab
+ eIyucf6YtIx/F/8eZ69HQUxBh917tTHAdgx8AUrfBr+REMduE5YsURF6i3sSTc8qNtRy440JiTv
+ 1PUREX7H+eyfMBRxAlgVjoomWGSYGHyhs/0PJ+5he5jiEqfS0sx4cD5t+
+X-Gm-Gg: AYBFou2JTzXuJC+eb/PHt/X3JMUWBoY64Gy/uFbS7s45nJtbmEg1pJbrWSYtG6g19Go
+ vRE5mokTq3NAK/6KWUQZIX8WfbFJl/AsAxHddYHbk8qR+3QEVXAfZ6uZDaXM3k/WiZ6DMJNY4p1
+ anzbT0QoGLUkbIOT+yfk0sUDRes/YO846xY3TVZ0vgCkqU9TGS7sp2HBnoge+/U09lcGwv4cAog
+ KU41XuhlPyhiPFSV6b6VjwSMnAQodsT0OMobQA+qUp839Rw+q+vitGCZOFaEq++1NWjxMjgI9VS
+ 45apl0UuUsqCOKGqnUwmLJH2SV67YrVvytX/zpJ0gkpcDv0ZL4aQdQLDXqya9yciRrrLiSg=
+X-Received: by 2002:a05:622a:251a:b0:535:a5fc:3b53 with SMTP id
+ d75a77b69052e-535a5fc44a6mr205204991cf.63.1791919769805; 
+ Tue, 13 Oct 2026 12:29:29 -0700 (PDT)
+X-Received: by 2002:a05:622a:251a:b0:535:a5fc:3b53 with SMTP id
+ d75a77b69052e-535a5fc44a6mr205204621cf.63.1791919769257; 
+ Tue, 13 Oct 2026 12:29:29 -0700 (PDT)
+Received: from localhost ([142.188.212.246]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-5359b79a186sm109301131cf.20.2026.10.13.12.29.28
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 13 Oct 2026 12:29:28 -0700 (PDT)
+Date: Tue, 13 Oct 2026 15:29:27 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>
+Subject: Re: [PATCH 0/4] Revert obsolete & broken workaround for GNUTLS
+ thread safety bug
+Message-ID: <as6Gl_UDqjmuASF6@zhexu-thinkpadt14gen5.rmtcaon.csb>
+References: <20261013133622.993935-1-berrange@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:b2a5:667b:71e2:6751
-X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: [PULL 5/5] tests/functional: Boot OpenBSD on mac99
-X-SA-Exim-Version: 4.2.1 (built Sat, 13 Feb 2021 17:57:42 +0000)
-X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
-Received-SPF: pass client-ip=2001:41c9:1:41f::167;
- envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+In-Reply-To: <20261013133622.993935-1-berrange@redhat.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,97 +119,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Kirill A. Korinsky" <kirill@korins.ky>
+On Tue, Oct 13, 2026 at 02:36:18PM +0100, Daniel P. Berrangé wrote:
+> A year or so ago we introduced a workaround for a troubling GNUTLS
+> thread safety problem that hits when a bidirectional TLS channel
+> is used and "large" amounts of data are transferred triggering
+> re-keying under TLS 1.3.
+> 
+> Unfortunately that workaround turned out to not work, and since it
+> was close to final freeze we disabled it, rather than attempt last
+> minute changes.
+> 
+> Fast forward a year, and GNUTLS has shipped a fix itself and RHEL
+> at least has backported the fix to stable releases. A user who
+> is still affected can workaround it by disabling TLS 1.3, or
+> forcing use of a different cipher to avoid re-keying entirely.
+> 
+> Getting a viable workaround operating correctly in QEMU is going
+> to be challenging and fragile long term, so not worth spending
+> more time on.
+> 
+> Revert the broken workaround (which was already hardcoded to be
+> disabled at build time).
+> 
+> Daniel P. Berrangé (4):
+>   Revert "migration: activate TLS thread safety workaround"
+>   Revert "io: add support for activating TLS thread safety workaround"
+>   Revert "crypto: add tracing & warning about GNUTLS countermeasures"
+>   Revert "crypto: implement workaround for GNUTLS thread safety
+>     problems"
 
-OpenBSD device discovery exercises CTPR masking, zero decrementer
-writes, and CUDA reply timing and layout; regressions in any of these
-paths stall the guest before the installer starts.
+Acked-by: Peter Xu <peterx@redhat.com>
 
-Signed-off-by: Kirill A. Korinsky <kirill@korins.ky>
-Tested-by: Anushree Mathur <anushree.mathur@linux.ibm.com>
-Tested-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Message-ID: <20261001230058.11465-6-kirill@korins.ky>
-Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
----
- tests/functional/ppc/meson.build     |  2 ++
- tests/functional/ppc/test_openbsd.py | 46 ++++++++++++++++++++++++++++
- 2 files changed, 48 insertions(+)
- create mode 100755 tests/functional/ppc/test_openbsd.py
-
-diff --git a/tests/functional/ppc/meson.build b/tests/functional/ppc/meson.build
-index ae061fe5a61..1055cdaa17e 100644
---- a/tests/functional/ppc/meson.build
-+++ b/tests/functional/ppc/meson.build
-@@ -2,6 +2,7 @@
- 
- test_ppc_timeouts = {
-   '40p' : 240,
-+  'openbsd' : 240,
- }
- 
- tests_ppc_system_quick = [
-@@ -15,6 +16,7 @@ tests_ppc_system_thorough = [
-   'bamboo',
-   'mac',
-   'mpc8544ds',
-+  'openbsd',
-   'ppe42',
-   'replay',
-   'sam460ex',
-diff --git a/tests/functional/ppc/test_openbsd.py b/tests/functional/ppc/test_openbsd.py
-new file mode 100755
-index 00000000000..73fa328b1ff
---- /dev/null
-+++ b/tests/functional/ppc/test_openbsd.py
-@@ -0,0 +1,46 @@
-+#!/usr/bin/env python3
-+#
-+# Test that OpenBSD boots on mac99 and reaches the installer.
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+
-+from qemu_test import QemuSystemTest, Asset
-+from qemu_test import wait_for_console_pattern
-+
-+
-+class OpenBSDMac99(QemuSystemTest):
-+
-+    ASSET_CD = Asset(
-+        'https://ftp.eu.openbsd.org/pub/OpenBSD/7.9/macppc/cd79.iso',
-+        '227fef3d5089d56ce8376d8bfa28181ce5b19f0eceef0a6d82d58d8e52832b24')
-+
-+    def test_openbsd_79_installer(self):
-+        self.set_machine('mac99')
-+        self.require_accelerator('tcg')
-+        cdrom_path = self.ASSET_CD.fetch()
-+
-+        self.vm.set_console()
-+        self.vm.add_args('-M', 'via=cuda,graphics=off,usb=off',
-+                         '-cpu', '7400',
-+                         '-accel', 'tcg,thread=single',
-+                         '-smp', '1',
-+                         '-m', '2g',
-+                         '-nic', 'none',
-+                         '-device', 'VGA',
-+                         '-global', 'cuda.x-sr-delay-ns=0',
-+                         '-prom-env', 'input-device=ttya',
-+                         '-prom-env', 'output-device=ttya',
-+                         '-cdrom', cdrom_path,
-+                         '-boot', 'd',
-+                         '-no-reboot')
-+        self.vm.launch()
-+
-+        wait_for_console_pattern(self, 'OpenBSD 7.9 (RAMDISK)', 'panic:')
-+        wait_for_console_pattern(
-+            self,
-+            '(I)nstall, (U)pgrade, (A)utoinstall or (S)hell?',
-+            'panic:')
-+
-+
-+if __name__ == '__main__':
-+    QemuSystemTest.main()
 -- 
-2.47.3
+Peter Xu
 
 
