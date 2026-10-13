@@ -4,90 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7EBECA9ED2
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 08:53:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91BEECC6B10
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 08:53:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGY6c-00055j-M4; Tue, 13 Oct 2026 04:43:30 -0400
+	id 1xGY9f-0002TL-Ex; Tue, 13 Oct 2026 04:46:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xGY4I-0000cw-Jo
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 04:41:06 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ id 1xGY4a-0001k6-N7
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 04:41:28 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xGY4G-0008AL-R0
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 04:41:06 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-4980fe6b3beso24566815e9.0
- for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 01:41:02 -0700 (PDT)
+ id 1xGY4X-0008IC-NE
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 04:41:24 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-49d0da752ffso24468155e9.3
+ for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 01:41:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1791880862; x=1792485662; darn=nongnu.org;
+ d=linaro.org; s=google; t=1791880880; x=1792485680; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=wPv7Ak7ok91z1l/gQWZ23Vr8Ogtm8j6ZmfZUtTCQdFo=;
- b=lU3Yxz1OHJLQD9YPuG9pRd4ykCAOgJPZ5OidntbYX0FKBWhDjTZBmVPgnw/5Nabdbp
- OWq9dKTCTZX38VDuaD3PrxGwqXYei3YyNiP7+bVctwGqhDMvr6gdLZpU3eHoXV4HXB7x
- TQkpEPr0+q1txBVdvOSNvLRlGqkTKP243iZ8VtukguhgE6lKHYjDNtddutzPVs8xnu8f
- ow5X3m4cx/mWZ/mKt87cY1l+NYAk9ezwm/P22XLvN9AMi0frdDK5UqUanBVQ4rCiS1lU
- dtwbuZfM5AYJYkqQ0b/WUA12SnkDtGOpk5clADCX+zUOy/iJ4ntPuw/JX0DJ9NkUyGJ3
- LJZw==
+ bh=4um6vfgWs9h9kp00xbqJa6oHTA9SbTpa0Ruq+mXG+G0=;
+ b=fMhJP55lr+f1v0emdF0UCSQIH9vjE37/YGzLS0sxrkVLNmK2QgubE9C/142PiWvQP5
+ EE4piIec9usMdBEdfVn33mqYYMsqXhFSUGzltU7qQ8hxEH0YOsiLmcY1a2wSiUEbFHqc
+ cVWWpIBD+7H5wA/HcS+dOLhIabF3z3h5b3BDn2+wvF71JoQdxDyqJWycVaarMXkzOmza
+ 2SpzvI3FtMB+bM30bcMddjjU8nqPWqB3AyAichWse4fpafyt+/jDJ0N3mWTRORf7yiYt
+ 6b4RDnQjs+cGz34biU8E5ENEyscWusZTEXwuofk4K2Yo1yl+IIuOkAJBOlh53LtA3Hl2
+ 3xYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791880862; x=1792485662;
+ d=1e100.net; s=20260707; t=1791880880; x=1792485680;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to:content-type;
- bh=wPv7Ak7ok91z1l/gQWZ23Vr8Ogtm8j6ZmfZUtTCQdFo=;
- b=vLVjfJLtC3nA9R1XP7nTli8S77+GeuR26vZBmJf+HNBATm5jNvTrWNB+aMKjglxlSv
- N+WXCJcF8gJWGuouBlH3PTlRbmXDbL71dxlUq11P4UZ0ksA54/jVUG+eXyqtiE2ni4QP
- l4SqNUKp89sM9JLNjfCT6r+NIGn0RSWvFkERKGE93/8j9kQI+1uGv4zGf5m1PLpyqBdq
- ohSoRrQn33FuCDmjZLwHs3XLcpDm9lEiqH/NQK6ekgRjRTtyK9NXce+nJHjueU16mu+Y
- ZRfx9Z+N0NhJgYM4F7BAIcHGw/DTzi0L+ZavDe57ay6pn2m6eHpUaMA8QXBRPWLoKiSW
- CP7g==
+ bh=4um6vfgWs9h9kp00xbqJa6oHTA9SbTpa0Ruq+mXG+G0=;
+ b=vAYWm23iLgBjOfyiWJGuu7RQ1jL6Dn7b8qY0QSfyOI7Gjq+Nxc8JQI/QmbJ2iFwY/l
+ BBfoVJt9ErgqNz+geag0ubxYOOpa2JoXVg9LFQHrcQW5tGrtNx5iW8H5LowgTKJn8otK
+ z2ZIixQNFFg67yDuclQBz4yu1o9rbL9ch9nXXfXokfX7PqrYySO6UHlEsh8FNGw5M2Ie
+ uc2eXQMwhds33rVhkbZ0Ql3VErDe6VOAdLoqJIrdqRQR4mh8mRi0k7vVA0AFZNUprTzI
+ pKzfBHFJQzEAVknS4HT8nYeDu+XKfx/jIO/1qw8bh44DzQeHT5xhQRj4YShhPHfPX/Hy
+ OyjA==
 X-Forwarded-Encrypted: i=1;
- AKwUvBxWCIX4ARPB0BGbpGxkHuesrhLdhDvgVXz3LRipZGwxpoXbOVD6YEUT1BSSLiDehsYacEoJgamOpBuE@nongnu.org
-X-Gm-Message-State: AFq9FYK4MFHwFmcpqQ3+0V+qq90Ma3zn3OJYbZdMwLVJCmvlqw+6Ux+b
- P+3EMRttQAn9AXFSrCuAovFR6mtY0vv9sSw+BQXj+HCyi3X6gdaSXnQ9bhmLz/6ROno=
-X-Gm-Gg: AYBFou2XSfI5MHiIBgGV1fnecYvyh3efa4Mnchr+ZuEvn5ykbPGP+HDg84k8f3SSYJC
- q2HTpLapVRyj9U1q3GT5+dF7g9ykm2AipRtfbCMBUmG9a7Gvu/QrlCKGepe9T0zDadzZzKwBJtb
- Z1TxXlud6JmwaSl8z/FZz5pOP3qHJz9Rd8QbgmNd3ndrlGDgLvZa5cwTiEuj3SA+SVY+sQ24goh
- X1YD8vct0RFhmbENFdVHr7jOx3r/u6jL9vXUEuVcKWiqtrzmrzxcuPd+xFJBWtv5XeQaZD52UdD
- TqVJZDvnmfL0Ze9ridCSXfIBe0Xd11J4RazRMlKHt1CpCGzRAdKHaavvcvLjB6aOe15Jn0g3mvM
- hYekUjLtRpTW37XBJ9sUciBhEOzSfzyZmdD40LjC8pO66riRv6Ul/9KN5Ivhg4kEPZiZ24hnEXg
- SsV7X4zG0TQzgX+LORqC34l5de1O2SKUxNWUrIT75xXCTfN/Jca7uhwi95TZquAQFasoL60JFhh
- xq5UNVmSlUeFfixI3WPMtdiGXOv4J3Gz7Et6Dm2+0nQJLSYdCzlbGf3cL7xpTNJu4d9JbSOoHE6
- w/0=
-X-Received: by 2002:a05:600c:4e92:b0:49e:63cc:6324 with SMTP id
- 5b1f17b1804b1-4a18e4837e7mr230958985e9.6.1791880861802; 
- Tue, 13 Oct 2026 01:41:01 -0700 (PDT)
+ AKwUvBzH8eJSzRqFoX2gDhoibJg+W5nYaMeFnR9KOvU4sNtP1B+UY7sGvwgOfyaP6K24X7Ay3bNAcmGaLCLE@nongnu.org
+X-Gm-Message-State: AFq9FYJb9HbDUbPaRihzETnKUvOtaK5mnyPazOYLctGIBIonFpX05/hH
+ aflvD6kLuqh6BiiDib0A9MCqvdAsxDIaZ79iuZ1CaSYi15vZHDEkmIhjX+Is3X7T4txG7cqpKPC
+ t9s4zEgw=
+X-Gm-Gg: AYBFou0V7SnWJt1F8n8DLa+pPiMravmktrP/CJelUulzUmMFjtKbUZFgJQOiD+84ULm
+ lbXQRqM7+c8lLFXWVh2DHoj3eAoywIX17fYUAJpjQ7La8B7JzObpgbQ6B+yR3HMj2Z8WxvCfDo0
+ Hlbdux6ZtdGdIqTwQgrqoDifq1pwx3t8+9t99g71QzmHbR4TEiG5t1ICC06kN5NT/iXuGpoDI/o
+ yE90OArC6m5jhSLhv+kNxo+PpoffGQEizYHUSzC5S0/jtmHQ19dRtWwZGzBMxAKBwpZYArcSOTQ
+ 3AH59XVak8m6TxBiUtQYz3tOalQzroFd0tf34XD2CsH7Coo2bMj4BkJOm2hzv2gAlWWKZ3SkofZ
+ smQzm7seynH7qX/Q2zzQHiDYcJrOjo75r0XYX8+gjsZOfI3uO34wq4olR/F2aLkAgE1WhS0L5Bt
+ rS/DAKm7NfONKsT9qgyARS5x12MeQJK2sk5okjNHNPngJXrXL1mn2j/u/TzZWkSUQnpOinWj1nB
+ ToXzotDf/ZLz9wAtzlveGQ3rxuD037VQDxjB13ynObOJXwlaV3rilb2nbPsOu6F5uqSgm32su5c
+ fAs=
+X-Received: by 2002:a05:600c:6383:b0:4a1:a6e0:4ce4 with SMTP id
+ 5b1f17b1804b1-4a1a6e04d7cmr36094065e9.33.1791880878575; 
+ Tue, 13 Oct 2026 01:41:18 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a18be96549sm495086735e9.6.2026.10.13.01.41.00
+ 5b1f17b1804b1-4a18be96549sm495086735e9.6.2026.10.13.01.41.16
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 13 Oct 2026 01:41:01 -0700 (PDT)
+ Tue, 13 Oct 2026 01:41:16 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Subject: [PATCH 67/86] hw/intc/arm_gicv5: Implement IRS_VPE_CR0
-Date: Tue, 13 Oct 2026 09:39:14 +0100
-Message-ID: <20261013083933.1024405-68-peter.maydell@linaro.org>
+Subject: [PATCH 80/86] hw/intc/arm_gicv5: Implement IRS_VPE_HPPIR
+Date: Tue, 13 Oct 2026 09:39:27 +0100
+Message-ID: <20261013083933.1024405-81-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261013083933.1024405-1-peter.maydell@linaro.org>
 References: <20261013083933.1024405-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,47 +104,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-IRS_VPE_CR0 is a 32-bit VPE configuration register which has
-semantics similar to IRS_VPE_DBR.  However, the only configuration
-field it has is for configuring 1-of-N VPE selection.  Since QEMU
-does not implement the optional 1-of-N handling, for us the entire
-register is RES0.
+Now we are calculating and storing the vHPPI for each VPE, we can
+implement IRS_VPE_HPPIR, which allows the guest to read the current
+vHPPI for the VPE it has selected using IRS_VPE_SELR.
 
-We don't need to implement the "writes to the register trigger a
-re-check of the validity of the VPE in IRS_VPE_SELR and update
-IRS_VPE_STATUSR.V" when the whole register is RES0, so our
-handling of the register can be simple.
+The specification allows the IRS to return the current vHPPI on
+reads, rather than having to sample and hold the vHPPI at the point
+when a VPE is selected by writing to IRS_VPE_SELR.  We choose to do
+this.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/intc/arm_gicv5.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ hw/intc/arm_gicv5.c | 39 +++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 39 insertions(+)
 
 diff --git a/hw/intc/arm_gicv5.c b/hw/intc/arm_gicv5.c
-index f7d2d4a7143..18ca7034011 100644
+index ab0cd1d80e5..b3ce8a87e81 100644
 --- a/hw/intc/arm_gicv5.c
 +++ b/hw/intc/arm_gicv5.c
-@@ -2334,6 +2334,10 @@ static bool config_readl(GICv5 *s, GICv5Domain domain, hwaddr offset,
+@@ -2319,6 +2319,21 @@ static void irs_vpe_selr_write(GICv5 *s, GICv5Domain domain, uint64_t value)
+     cs->irs_vpe_statusr[domain] = status;
+ }
+ 
++static uint64_t irs_vpe_hppir_read(GICv5 *s, GICv5Domain domain)
++{
++    /*
++     * The spec allows the IRS to update IRS_VPE_HPPIR as the VPE's
++     * vHPPI changes, rather than sampling it when IRS_VPE_SELR
++     * is written like e.g. IRS_VPE_DBR. That's what we choose to do.
++     */
++    VPE *vpe = vpe_from_selr(s, domain);
++
++    if (vpe && vpe->vhppi.prio != PRIO_IDLE) {
++        return vpe->vhppi.intid | R_IRS_VPE_HPPIR_HPPIV_MASK;
++    }
++    return 0;
++}
++
+ static void irs_vpe_dbr_write(GICv5 *s, GICv5Domain domain, uint64_t value)
+ {
+     GICv5Common *cs = ARM_GICV5_COMMON(s);
+@@ -2617,6 +2632,22 @@ static bool config_readl(GICv5 *s, GICv5Domain domain, hwaddr offset,
              *data = 0;
          }
          return true;
-+    case A_IRS_VPE_CR0:
-+        /* RES0 when VIRT_ONE_N is not implemented */
-+        *data = 0;
++    case A_IRS_VPE_HPPIR:
++        if (gicv5_domain_has_virt(cs, domain)) {
++            *data = extract64(irs_vpe_hppir_read(s, domain), 0, 32);
++        } else {
++            /* RAZ if no virt */
++            *data = 0;
++        }
 +        return true;
-     case A_IRS_VPE_STATUSR:
-         if (gicv5_domain_has_virt(cs, domain)) {
-             *data = cs->irs_vpe_statusr[domain];
-@@ -2524,6 +2528,9 @@ static bool config_writel(GICv5 *s, GICv5Domain domain, hwaddr offset,
-         irs_vpe_dbr_write(s, domain,
-                           deposit64(cs->irs_vpe_dbr[domain], 32, 32, data));
-         return true;
-+    case A_IRS_VPE_CR0:
-+        /* RES0 when VIRT_ONE_N is not implemented */
++    case A_IRS_VPE_HPPIR + 4:
++        if (gicv5_domain_has_virt(cs, domain)) {
++            *data = extract64(irs_vpe_hppir_read(s, domain), 32, 32);
++        } else {
++            /* RAZ if no virt */
++            *data = 0;
++        }
 +        return true;
-     case A_IRS_SPI_SELR:
-         cs->irs_spi_selr[domain] = data;
+     case A_IRS_VPE_CR0:
+         /* RES0 when VIRT_ONE_N is not implemented */
+         *data = 0;
+@@ -2962,6 +2993,14 @@ static bool config_readll(GICv5 *s, GICv5Domain domain, hwaddr offset,
+             *data = 0;
+         }
          return true;
++    case A_IRS_VPE_HPPIR:
++        if (gicv5_domain_has_virt(cs, domain)) {
++            *data = irs_vpe_hppir_read(s, domain);
++        } else {
++            /* RAZ if no virt */
++            *data = 0;
++        }
++        return true;
+     }
+ 
+     return false;
 -- 
 2.43.0
 
