@@ -4,123 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89F1CCC6B1A
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 16:30:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7464DCC6B0E
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 16:35:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGfMm-0006VM-6a; Tue, 13 Oct 2026 12:28:40 -0400
+	id 1xGfSW-0003mq-VO; Tue, 13 Oct 2026 12:34:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1xGfLp-0005Vf-M1
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 12:27:41 -0400
-Received: from 2.mo528.mail-out.ovh.net ([46.105.44.19])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1xGfLn-0005Hr-2C
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 12:27:41 -0400
-Received: from director4.derp.mail-out.ovh.net
- (director4.derp.mail-out.ovh.net [79.137.60.37])
- by mo528.mail-out.ovh.net (Postfix) with ESMTPS id 4j409h6Q8dz6FKS;
- Tue, 13 Oct 2026 16:27:36 +0000 (UTC)
-Received: from director4.derp.mail-out.ovh.net
- (director4.derp.mail-out.ovh.net. [127.0.0.1])
- by director4.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
- for <jamin_lin@aspeedtech.com>; Tue, 13 Oct 2026 16:27:36 +0000 (UTC)
-Received: from mta2.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.113.125])
- by director4.derp.mail-out.ovh.net (Postfix) with ESMTPS id
- 4j409h5NZGz1xsk; Tue, 13 Oct 2026 16:27:36 +0000 (UTC)
-Received: from kaod.org (unknown [10.1.6.1])
- (Authenticated sender: clg@kaod.org)
- by mta2.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id 523EF941FD8; 
- Tue, 13 Oct 2026 16:27:34 +0000 (UTC)
-Authentication-Results: garm.ovh; auth=pass
- (GARM-110S004522c1746-1d57-4614-a707-bafee614a12d,
- 3B5152602AE6D76A7CF2E50DC6ABDDC767F0B630) smtp.auth=clg@kaod.org
-X-OVh-ClientIp: 82.64.250.170
-Message-ID: <f7890cff-ac12-4cc6-9278-3bbd80f340ab@kaod.org>
-Date: Tue, 13 Oct 2026 18:27:34 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 10/50] hw/rtc: ds1338: implement Resettable reset
-To: Emmanuel Blot <emmanuel.blot@free.fr>, qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-arm@nongnu.org,
- Patrick Leis <venture@google.com>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- qemu-ppc@nongnu.org, qemu-riscv@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-References: <20261012-bmc-minerva-v2-0-4c3dff084ec9@free.fr>
- <20261012-bmc-minerva-v2-10-4c3dff084ec9@free.fr>
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Content-Language: en-US, fr
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <20261012-bmc-minerva-v2-10-4c3dff084ec9@free.fr>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+ (Exim 4.90_1) (envelope-from <palmer@dabbelt.com>)
+ id 1xGfSM-0003ln-1V
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 12:34:27 -0400
+Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <palmer@dabbelt.com>)
+ id 1xGfSK-0006YU-4B
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 12:34:25 -0400
+Received: by mail-pj1-x1029.google.com with SMTP id
+ 98e67ed59e1d1-38d489b6b71so1613946a91.0
+ for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 09:34:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=dabbelt-com.20251104.gappssmtp.com; s=20251104; t=1791909262; x=1792514062;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:content-type:mime-version:message-id:to
+ :from:cc:in-reply-to:subject:date:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=pGc7XlSnnNv/Gs4VKCMJx1WcLuobkHR4JjSxUzcHqhk=;
+ b=gNzp2/851m9DfpG30iPjWLBbxRv2xWuSaJjeSDToex0unmuVtunFSFDaMYvJlYFCXe
+ wHKeRAUAvU/Ki962bdm/whRdGm7qNBeGIfpAu85o1a7GQrJXgQIdhu09gdOASc/W4E0C
+ AGaUh9h6o9HYdKc6CHcxMmDzC0YKYhVS+FBOZ6w3iXp3SNa/YiH/uFV+1tbU7g5Ysf4m
+ 2SVi5nwk7EUskh306Ln1x6zRiz6xxpvlsyWeLqayw6+Fieo5bQFgNsjPgMdKyWtx5+cD
+ WNfDNLbuMPhjYEwI7pX72xw1tIjRaiODz3I2BscofVC26Ecg89CjlFJM6F/jFAcClx5Z
+ 82OQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1791909262; x=1792514062;
+ h=content-transfer-encoding:content-type:mime-version:message-id:to
+ :from:cc:in-reply-to:subject:date:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to:content-type;
+ bh=pGc7XlSnnNv/Gs4VKCMJx1WcLuobkHR4JjSxUzcHqhk=;
+ b=cKiqSCEdBPObruTeae3xF7BFj+4oABoQcmWSeKhHi6VSplLDXuUSz5NDU5aK1qeU6J
+ ae39LN+Un2g00XzWEi9hyl+m5qy1Fu2ASFlpHo9ZbybE4hBJEZePpbw6zfTnuljnGa70
+ voxdNcUsNFEN2kOVE4iZIQoIVowdV4jrxCnNBFtKZepiZfLp0TF0383VMdY+UrXgcJUJ
+ C1Fm8I6s1FNzqmFHNYbT3xmdriIAyaeMakd0LppTFcC5xOVdrufJ8rwQpeHhGC1ttRxL
+ /9nHpO/t7mm4O74NveuTHyLu6jB0bgPdIy/CFpW1Awird+LQhwH7KQuY3to08khH2Uxb
+ GWew==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBy1twdw2jW4I8GZw46lPrVv66C2juiXf+/uhSrJMR6RdtN8bSdx3b3Wz7/XjI7uOnw0pjFd5oakiKB/@nongnu.org
+X-Gm-Message-State: AFq9FYJmIKPQllkCzel8DeSEvEa91X8GOKLItf9xRxcssEY4JFRFxgU7
+ Dnu9OaaWMUunkJmWDDeInYuSJbY4lYjchtI4/CXtGadWZJcXft+v+2yTGg0iBrLpoLQ=
+X-Gm-Gg: AYBFou3WMJ0TDTlFDStEzUT8wWzCaUzazl07svs/MrQc9rfLo92jVBebE0kHblqj7IH
+ 2myqZ9qFEKSMvAroWq8EQ9dagkOaeeewVd+rdtKDdC1D7+VkD9rmp5hy8NgeKv2Vaznp2h1dV2H
+ OORW0lOqweTXP68jZVtEtsj+Hry97//g0QsEpOaAvzCg7kuUJ2oyJGqy9X7bIQKIO2YTgQ+cR60
+ hF7TEeZMDHC6bHb09a3kswIQZbZQDbnXZnuvCqPNLFUU3X/muNiyZxhW0gbt2Z3983LuXEZaYna
+ fgvMYr1CtZoiRK9veVzKXtqRp5gdmDusGxF+fSU8p+xzX4y2niPgOe6B36vbFoTvV3603RbnUJw
+ djO24aHMzaiYwR6fJNw6hOVJ+RMn7bPABR2D6t2rRcGRbBITgyMuqTawQ13sC9jptY8DpF+szuP
+ kfbl/Udq5GQV699UgV7xxe+9huCzt3sQOkI6nParCtV6IsnkldJpaTlFgZfj8klKrzxPFc+bBui
+ 2RvZ7sKwDbwnz6gVr2Jnf1EjOOB8g==
+X-Received: by 2002:a17:90a:2cc5:b0:3ab:a188:b896 with SMTP id
+ 98e67ed59e1d1-3aba188be47mr4751344a91.10.1791909261507; 
+ Tue, 13 Oct 2026 09:34:21 -0700 (PDT)
+Received: from localhost ([2001:5a8:4687:d600:60f5:5a60:a2fe:eaae])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-3ac5f2b9769sm346860a91.15.2026.10.13.09.34.20
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 13 Oct 2026 09:34:20 -0700 (PDT)
+Date: Tue, 13 Oct 2026 09:34:20 -0700 (PDT)
+X-Google-Original-Date: Tue, 13 Oct 2026 09:34:19 PDT (-0700)
+Subject: Re: [PATCH] target/riscv: Use TSO barriers instead of full barriers
+ for Ztso
+In-Reply-To: <f2600f08-73a0-4259-9175-7f644997c366@oss.qualcomm.com>
+CC: rick@sloservers.com, qemu-riscv@nongnu.org, qemu-devel@nongnu.org,
+ Alistair Francis <Alistair.Francis@wdc.com>, liwei1518@gmail.com,
+ zhiwei_liu@linux.alibaba.com, chao.liu@processmission.com
+From: Palmer Dabbelt <palmer@dabbelt.com>
+To: daniel.barboza@oss.qualcomm.com
+Message-ID: <mhng-0D33ADEF-8CD5-47F7-B852-CD30B674B87B@Palmers-Mini.rwc.dabbelt.com>
+Mime-Version: 1.0 (MHng)
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 8bit
-x-ovh-tracer-id: 6627046855325428781
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTFJAA0Cff5mZHzxjOMf3vpdM/VfvcU3tzZqy3rh935Ggo91wXIdpJWVeOQBh0BtkSvpcDXPndRPnQDJ5NOOH3LTp7Nq6TOnz5gH/2/VElRGGUCKt+RHqpbTAnEaoqBeRCSlmVGALEzjKJy8O9LWHZZjTH8ta/3/Ns1/1dAtkg32q9bqR3JeX4KZeQ1ExBk2Xzh+zVJ5kZP+auzj5MEVRHRs1/p1H1NscUbI9FzfTnG2Wu2R/8O+EDjBsjafLViuNUeh8OdAkwN79Q2U1dqkbzpYq8JzfkLY8NR63te0LErTTbLj6jB1xH/iwK5utVdtxSHGcYHKT6mU1lwv9nag/pmKc/u77sbUum4ofTNB0XJY3e64FTzoFucwU2bQIUzPGScrKrl3XqCiwN9H50x4/3GrziRB60ZUp2bVNR1HVbwt+6F9rQlyJSysNKZwK1ejJ00tNnLRfLvTGCrcrXVdYvpDkbyINoSumQJAYhYOvs+MB/zNoyZk8cCiA26r3FXejj2ukewdpVAPv2Jvc1eLTX3MkcTNBPTkyJBAvalaaUOLHHuTTH2rJRVdu2so7iWQrrxI/mVY3Q8YvDfVqEwiF2ktwHmG+ynUMdGEcw1miYzDyezNHVvv2yyieOiJrg69gFHtbFJ/GSVtHhbZ7qI0FnagtU1VVsPJggVnca5i6ebiXg
-DKIM-Signature: a=rsa-sha256; bh=XxaOowC43oCgsIDl8GNhgCaSkmbvPsTfw86INwduuEk=; 
- c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1791908856; v=1;
- b=S7I0XoXM5lbk65bGtQ8f48AvyMAL/9zGRDlv+p+nijNhsTBvTi60ngBT/gaXuBdkD5nRoWr/
- Sgoi+q0oKEne5188xFM14bxiSPyXSFw56GJtMKRWJx/0kvVjf5EdgPQ0uYtX3uXYrvnrWjbqtyS
- 2dveS2OPJpNjSKtTZGv1KvemQOKSHfiade24DYo+tbRFunCFm9Ia5IovOza1agnRiz2YsUTN02p
- 7mpp6zPCZMhhLfdYcbeIFe/Jq66lmpJMeH3GBOhGtqJqupEWI8AmtOnlgcad5nHI6kTw+Bdc50N
- /du9arYruRF/yHwxckXxwZui8ZdOk5mIGVk/aEFmWW2GQ==
-Received-SPF: pass client-ip=46.105.44.19; envelope-from=clg@kaod.org;
- helo=2.mo528.mail-out.ovh.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
+ envelope-from=palmer@dabbelt.com; helo=mail-pj1-x1029.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -136,52 +105,119 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/12/26 16:32, Emmanuel Blot wrote:
-> The device relied on device_class_set_legacy_reset(), a compatibility
-> shim around the legacy DeviceState reset hook. Convert ds1338_reset()
-> into a proper Resettable hold phase, dropping the legacy shim.
-> 
-> Signed-off-by: Emmanuel Blot <emmanuel.blot@free.fr>
-> ---
->   hw/rtc/ds1338.c | 7 ++++---
->   1 file changed, 4 insertions(+), 3 deletions(-)
-> 
-> diff --git a/hw/rtc/ds1338.c b/hw/rtc/ds1338.c
-> index f8b3340bf0..74aee6c746 100644
-> --- a/hw/rtc/ds1338.c
-> +++ b/hw/rtc/ds1338.c
-> @@ -208,9 +208,9 @@ static int ds1338_send(I2CSlave *i2c, uint8_t data)
->       return 0;
->   }
->   
-> -static void ds1338_reset(DeviceState *dev)
-> +static void ds1338_reset_hold(Object *obj, ResetType type)
->   {
-> -    DS1338State *s = DS1338(dev);
-> +    DS1338State *s = DS1338(obj);
->   
->       /* The clock is running and synchronized with the host */
->       s->offset = 0;
-> @@ -224,11 +224,12 @@ static void ds1338_class_init(ObjectClass *klass, const void *data)
->   {
->       DeviceClass *dc = DEVICE_CLASS(klass);
->       I2CSlaveClass *k = I2C_SLAVE_CLASS(klass);
-> +    ResettableClass *rc = RESETTABLE_CLASS(klass);
->   
->       k->event = ds1338_event;
->       k->recv = ds1338_recv;
->       k->send = ds1338_send;
-> -    device_class_set_legacy_reset(dc, ds1338_reset);
-> +    rc->phases.hold = ds1338_reset_hold;
->       dc->vmsd = &vmstate_ds1338;
->   }
->   
-> 
+On Tue, 13 Oct 2026 09:00:41 PDT (-0700), daniel.barboza@oss.qualcomm.com wrote:
+>
+>
+> On 10/13/2026 10:14 AM, Palmer Dabbelt wrote:
+>> On Tue, 13 Oct 2026 04:57:49 PDT (-0700), daniel.barboza@oss.qualcomm.com wrote:
+>>>
+>>>
+>>> On 10/2/2026 10:47 AM, Rick Richard wrote:
+>>>> With Ztso, plain loads and stores follow RVTSO, but the barriers
+>>>> around them use TCG_MO_ALL.  That also orders a store before a later
+>>>> load, which TSO doesn't require, and is expensive: on x86 hosts it
+>>>> adds a locked instruction around every load and store in a
+>>>> multi-threaded guest.
+>>
+>> Thanks.  I'm not quite sure why I had TCG_MO_ALL in there, I think maybe I just misread the TCG_MO_* vs TCG_BAR_* blurb?
+>>
+>> Reviewed-by: Palmer Dabbelt <palmer@dabbelt.com>
+>>
+>>>> The barrier after a load now only keeps later loads and stores
+>>>> behind it, and the barrier before a store only keeps earlier loads
+>>>> and stores ahead of it.  That is all TSO needs.
+>>>>
+>>>
+>>> Fixes: 09c4e88759 ("RISC-V: Add support for Ztso")
+>>>
+>>>> Signed-off-by: Rick Richard <rick@sloservers.com>
+>>>> ---
+>>>
+>>> Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+>>>
+>>>> I found this while looking into why riscv64 guests were so much
+>>>> slower than aarch64 ones under bsd-user on FreeBSD.  The default -cpu
+>>>> max enables Ztso, and turning it off with ztso=false accounted for
+>>>> most of the difference.
+>>
+>> Maybe we shouldn't default to Ztso, or at least not default to Ztso on host systems that themselves aren't TSO?
+>
+> I vote to disable it in the 'max' CPU.  Changing the mem model from RVWMO to
+> RVTSO seems like a decision users have to make in the command line, not
+> something we decided to do because this particular CPU model must have all
+> possible extensions enabled.
+>
+> In theory we could enable it depending on the host affinity with TSO, but I'd
+> rather not create a precedent where a TCG CPU model delivers different
+> extensions based on host capabilities.  We have enough of that in the KVM
+> driver.
 
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Ya, that seems reasonable.  I think the only issue is that TSO hosts 
+will end up defacto TSO in the guest -- or at least I think they will, 
+IIUC that is basicallly how things used to work because TCG didn't do 
+any interesting memory reordering at compile time and thus the TSO-ness 
+of the host essentially just bled through to the guest.
 
-Thanks,
-
-C.
-
+>
+>
+> Thanks,
+> Daniel
+>
+>>
+>>>> On an x86-64 host the patch made xz almost four times faster and cut
+>>>> the time of a clang compile by about 30%, the same as running with
+>>>> ztso=false.  The output didn't change.
+>>>>
+>>>> I also tested it on a Raspberry Pi 3B+, which is arm64 and doesn't
+>>>> give TSO ordering in hardware, to make sure the weaker barriers still
+>>>> hold up there.  Everything ran correctly, and xz was about 12% faster.
+>>>>
+>>>>   target/riscv/tcg/insn_trans/trans_rvi.c.inc | 4 ++--
+>>>>   target/riscv/tcg/insn_trans/trans_rvv.c.inc | 4 ++--
+>>>>   2 files changed, 4 insertions(+), 4 deletions(-)
+>>>>
+>>>> diff --git a/target/riscv/tcg/insn_trans/trans_rvi.c.inc b/target/riscv/tcg/insn_trans/trans_rvi.c.inc
+>>>> index 40b4c9aa..d31e4295 100644
+>>>> --- a/target/riscv/tcg/insn_trans/trans_rvi.c.inc
+>>>> +++ b/target/riscv/tcg/insn_trans/trans_rvi.c.inc
+>>>> @@ -424,7 +424,7 @@ static bool gen_load(DisasContext *ctx, arg_lb *a, MemOp memop)
+>>>>       }
+>>>>
+>>>>       if (ctx->ztso) {
+>>>> -        tcg_gen_mb(TCG_MO_ALL | TCG_BAR_LDAQ);
+>>>> +        tcg_gen_mb(TCG_MO_LD_LD | TCG_MO_LD_ST | TCG_BAR_LDAQ);
+>>>>       }
+>>>>
+>>>>       return out;
+>>>> @@ -485,7 +485,7 @@ static bool gen_store_tl(DisasContext *ctx, arg_sb *a, MemOp memop)
+>>>>       TCGv data = get_gpr(ctx, a->rs2, EXT_NONE);
+>>>>
+>>>>       if (ctx->ztso) {
+>>>> -        tcg_gen_mb(TCG_MO_ALL | TCG_BAR_STRL);
+>>>> +        tcg_gen_mb(TCG_MO_LD_ST | TCG_MO_ST_ST | TCG_BAR_STRL);
+>>>>       }
+>>>>
+>>>>       tcg_gen_qemu_st_tl(data, addr, ctx->mem_idx, memop);
+>>>> diff --git a/target/riscv/tcg/insn_trans/trans_rvv.c.inc b/target/riscv/tcg/insn_trans/trans_rvv.c.inc
+>>>> index a22e2cae..8c21ab87 100644
+>>>> --- a/target/riscv/tcg/insn_trans/trans_rvv.c.inc
+>>>> +++ b/target/riscv/tcg/insn_trans/trans_rvv.c.inc
+>>>> @@ -731,7 +731,7 @@ static bool ldst_us_trans(uint32_t vd, uint32_t rs1, uint32_t data,
+>>>>        * around the loop.
+>>>>        */
+>>>>       if (is_store && s->ztso) {
+>>>> -        tcg_gen_mb(TCG_MO_ALL | TCG_BAR_STRL);
+>>>> +        tcg_gen_mb(TCG_MO_LD_ST | TCG_MO_ST_ST | TCG_BAR_STRL);
+>>>>       }
+>>>>
+>>>>       mark_vs_dirty(s);
+>>>> @@ -739,7 +739,7 @@ static bool ldst_us_trans(uint32_t vd, uint32_t rs1, uint32_t data,
+>>>>       fn(dest, mask, base, tcg_env, desc);
+>>>>
+>>>>       if (!is_store && s->ztso) {
+>>>> -        tcg_gen_mb(TCG_MO_ALL | TCG_BAR_LDAQ);
+>>>> +        tcg_gen_mb(TCG_MO_LD_LD | TCG_MO_LD_ST | TCG_BAR_LDAQ);
+>>>>       }
+>>>>
+>>>>       finalize_rvv_inst(s);
 
