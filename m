@@ -4,88 +4,124 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2FCACC6B09
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 06:06:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 883D6CC6B0E
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 06:24:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGVeL-0003bi-7i; Tue, 13 Oct 2026 02:06:09 -0400
+	id 1xGVvM-0002L5-5N; Tue, 13 Oct 2026 02:23:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <haoqian.he@smartx.com>)
- id 1xGVeH-0003aZ-PW
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 02:06:06 -0400
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <haoqian.he@smartx.com>)
- id 1xGVeE-0001qO-8a
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 02:06:05 -0400
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-2e8662d5e95so13726755ad.0
- for <qemu-devel@nongnu.org>; Mon, 12 Oct 2026 23:06:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=smartx-com.20251104.gappssmtp.com; s=20251104; t=1791871559; x=1792476359;
- darn=nongnu.org; 
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=k5V9XPqBs9Hbx3fNKIKEh9J0EfokO4BTfSItLKlu0bw=;
- b=EY98aET2lr93fy9iL5mW9R5edA0lbN9F/dA/Mnh1CL+kfF2qZNEtoLcnVHQD3NiiFk
- SZBJWMbIDSw0JJJ0ml+0Bd9ddSJqrmaN89ASgoNZDY4kEcujcL2VqyBJ+EUDXi08amMo
- YLaBWGoXWY/VfxkqqHrImrQHDPAjnCCJ8ScEgjBLTU25cY7BbvFXgonSRvPdQFNct0Xp
- Vdm5kKpm0N9V7YHVkntMLx8PiE+IPNXYSvKG7F9QiwZqM7r+42Pu8KKEv5gh7wc++Fe6
- AQZiz/NiWcmOPg+SIqwilLAkmpEM/2jBVCgp+SApL36HsYSmCq0ae4Ox27yNG2FyAjDf
- dk+g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791871559; x=1792476359;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=k5V9XPqBs9Hbx3fNKIKEh9J0EfokO4BTfSItLKlu0bw=;
- b=G5sWrzCRfJ3ltlGHH/SVGiJZcRbhRsDdhjVKiesOR+bZmjdThkxTl6agdUSFPbGsuM
- XOcBYFPUAVCZk2XrsV8eJT+LYQjN3TuU9uJVzfPtYQrdytopLWPS5bzZp0vdGecqKrP+
- H0JGfNoAvIt8YpzpoouITQMTtHMWdFQY4thGghhgef6ym2ReovknBAUhmZJELVxEFBoO
- JIfvlEU+XOTd7K4lCTr/9v3qW+qec77NJ6RcLbM8rlb/kVszW+A+A0JpjAaYcULFFs3K
- Zt5sCm6FT2HaYaSlIE4CuEWieHnQcpZAROxpBSYA9kxlOpRQnepEbCVKWjYrY2S0Z5Bo
- qY8g==
-X-Gm-Message-State: AFq9FYK67tox2fJGgD9ATzbaY4W7kDtNQgp3oDyvHgS9ly/QX8i9udgZ
- Ys9r4JVWgy9dRF4rxbMI82oezCdlL3c6/29K/efDnY4BlEZPWq/iwpiQ9MyIDjXd6s+Gj/Sq96Y
- ISrNtgKtmcww7+r7BuNCb4973R2Vohu3wojFu06R6P3qv+jsGiDeTjmKqI/23SMU=
-X-Gm-Gg: AYBFou3yC5JjQt433YZ18K6LFP37LkOLrShPArZHx63NXqd146DLqodbELu+vSk4NGJ
- 0OuUBLMUf4nHKQ56mH1G/gpaGwbcGPMSfp3tuVEW6j0UgOTiLbDNMAFxKJAlEwWveLKeKqt7EXJ
- kX04LkL9Clxl4fb+BhCQ3TSFoii4/xT3Nlyf3ZEiWTCubc0PYW6q1ne8IIlKf0GhHorJhCXDErg
- JFcn1lrllhweIvLMCtfQC3PmP0dMxZ/qV9TzUNP3f35KhWYyRkvkfbgvjLYT/py5WE8xOSIxv58
- 4tlT/+jdHuhaDviEL9xMaJEnbk6tVlL9mrpfa4lDLUYRc8VZFHyCOBm7zliO+mXf4qpFMMB+I2v
- OHZUHtUckt9bpPaKY7SA4UCuSvp03aehZaNwChzGOOE4KBdf/gDyJszIELzIuKHqmDKL4Ac0NNy
- prFnn719Byyx1N7G1oYgIZdIP17hrSWB+7PtXRzuUkmb4I/NANMXhtTpn/Z9wpqmXz8ksP7Rr16
- xY=
-X-Received: by 2002:a17:902:dace:b0:2df:9257:8088 with SMTP id
- d9443c01a7336-2e842e16665mr102419205ad.57.1791871558938; 
- Mon, 12 Oct 2026 23:05:58 -0700 (PDT)
-Received: from 9950x ([174.136.204.24]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2e8422e1643sm51941445ad.70.2026.10.12.23.05.55
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 12 Oct 2026 23:05:58 -0700 (PDT)
-From: Haoqian He <haoqian.he@smartx.com>
-To: qemu-devel@nongnu.org
-Cc: fengli@smartx.com, John Snow <jsnow@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- qemu-block@nongnu.org
-Subject: [PATCH] block/mirror: inherit the source node discard flag in
- mirror_top
-Date: Tue, 13 Oct 2026 14:05:49 +0800
-Message-ID: <20261013060549.3008438-1-haoqian.he@smartx.com>
-X-Mailer: git-send-email 2.53.0
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1xGVvL-0002Kj-Ah
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 02:23:43 -0400
+Received: from smtpout2.mo538.mail-out.ovh.net ([51.210.91.31])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1xGVvG-0003D9-Eh
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 02:23:43 -0400
+Received: from director4.derp.mail-out.ovh.net
+ (director4.derp.mail-out.ovh.net [79.137.60.37])
+ by mo538.mail-out.ovh.net (Postfix) with ESMTPS id 4j3kmj3Q7Zz6DMm;
+ Tue, 13 Oct 2026 06:23:33 +0000 (UTC)
+Received: from director4.derp.mail-out.ovh.net
+ (director4.derp.mail-out.ovh.net. [127.0.0.1])
+ by director4.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
+ for <jamin_lin@aspeedtech.com>; Tue, 13 Oct 2026 06:23:33 +0000 (UTC)
+Received: from mta3.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.43.121])
+ by director4.derp.mail-out.ovh.net (Postfix) with ESMTPS id
+ 4j3kmj2VVkz1xsg; Tue, 13 Oct 2026 06:23:33 +0000 (UTC)
+Received: from kaod.org (unknown [10.1.6.6])
+ (Authenticated sender: clg@kaod.org)
+ by mta3.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id 0AA3A12E2CA5;
+ Tue, 13 Oct 2026 06:23:30 +0000 (UTC)
+Authentication-Results: garm.ovh; auth=pass
+ (GARM-95G001101991f0-76b3-4923-a3c7-3bd7c9a9549c,
+ 3B5152602AE6D76A7CF2E50DC6ABDDC767F0B630) smtp.auth=clg@kaod.org
+X-OVh-ClientIp: 82.64.250.170
+Message-ID: <d7da10db-04a0-4699-8a96-44e98170f863@kaod.org>
+Date: Tue, 13 Oct 2026 08:23:30 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=haoqian.he@smartx.com; helo=mail-pl1-x62c.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 00/50] Aspeed: I2C device models and the Minerva BMC
+ machine
+To: Emmanuel Blot <emmanuel.blot@free.fr>, qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-arm@nongnu.org,
+ Patrick Leis <venture@google.com>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ qemu-ppc@nongnu.org, qemu-riscv@nongnu.org,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Glenn Miles <milesg@linux.ibm.com>
+References: <20261012-bmc-minerva-v2-0-4c3dff084ec9@free.fr>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Content-Language: en-US, fr
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <20261012-bmc-minerva-v2-0-4c3dff084ec9@free.fr>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+x-ovh-tracer-id: 14872293346313219117
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: dmFkZTGsR1SnRACytQc0NGF7FSqE9sZNU8A81DgnygkAPZaCGromvBWRrw8xfYYlSnPAdGRMRykuQb8PuTZeTuDxdu725vWpM5azDf3or+/Hh9DLwR8Fjb2ViNBkiC9dQIsUjbdgyyUX8lxKIU0KBpho1+IYpTdnKZkXOTkLZX0/Fx45An4bZ25ovKvHaj40UUQCWlV9XsGXxxCuZB7eqai2ff0XV1R/+L7+fJzlheBm1/lFQ7uiLNdo7btyQ9SD4DxjsezIqqFHDjVDFMh4fiaLwKWPFXoWsgoKss/Woty3r/5NqVeV26jkg3eLK3f6Wp4jiMuRt/iqAIKQrSFK94DhU9hdrmo9ZUC3DVYQp2wN7KYjB8S586avGwPyv7LKotnu68ZfPhUPJgd3BVb7PeWm3vLJC3STVOiYBDGVerBPFHDNzbJDSrDHFytDaOedAVVZK0gr/vL6vxe9EglOu9nnf06+mIRsarzBzBDfmJADfDdswpjrkDQYJGpq0GqzNiQPRZJODrCOhYTGOpcIkZt3kny/35g0Ld484c7sWi6cnVIkMTDlqV/tN/hNlb6BSVi3ykTloKEGzvmIonzAYCRviiM6lPj6qmvsFckTeCsjdqjNaIgUqydNh+xpVraW8d0h6PdD0iJlcM/rqBZyL/RpukAI/rsmizmHRF/FgBPTAsgDeQ
+DKIM-Signature: a=rsa-sha256; bh=xIpNob5sMR/aTwPuzB73gteOWDRrzriqP5CypP/2sJc=; 
+ c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
+ t=1791872615; v=1;
+ b=ZHFDqIeJpIr7jkVAe0T4euQ24lLWQyChEcNnz2xPOgOeUPsgrhOuNS13ly4Yxzhw6Yh/EAz8
+ wZY8gaRJN127E2P8gKGIv4vu22FESmiyPkTmByrDo504ykTxDio5hK0wERfltFJTWrR2W+c57Fs
+ 8p9AZJwxruPXEDDWqBkLfl+P+euQoPAhcqaF/o2grJGiZImx5VB+HU8mBUvFUgILDzaJwf541tg
+ J1PI4b+Nu0YkZEZGyrTaWGSeiMTkWo0qx96cYc769K+QoTvkX9gw8eTYfHsrF53D2IU6Xw7TjW/
+ ghnceGwJTISiZqw3kbfYlfcuRLAEWsh3wWN1Z6fGwHBqA==
+Received-SPF: pass client-ip=51.210.91.31; envelope-from=clg@kaod.org;
+ helo=smtpout2.mo538.mail-out.ovh.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,61 +137,159 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-mirror_start_job() inserts a mirror_top filter above the source node
-for both mirror and active commit jobs. Previously, the filter was
-opened with BDRV_O_RDWR only, even when the source had BDRV_O_UNMAP
-enabled.
+Jamin, Glenn,
 
-The block layer checks BDRV_O_UNMAP before invoking a node's discard
-callback. Without this flag on mirror_top, discard requests return
-success without reaching bdrv_mirror_top_pdiscard(). Consequently,
-starting a job can silently suppress guest UNMAP/TRIM requests that
-would otherwise reach the discard-enabled source.
+Could you please help reviewing some patches of this series ?
 
-Initialize the filter's open flags with BDRV_O_RDWR and conditionally
-add BDRV_O_UNMAP from bs->open_flags. Pass the resulting flags to
-bdrv_new_open_driver() so that mirror_top follows the source node's
-discard setting.
+Thanks,
 
-This allows discard requests to reach the existing filter callback,
-which forwards them to the source and either tracks the affected
-range in the dirty bitmap or synchronously propagates the discard
-to the target, depending on the copy mode.
+C.
 
-Signed-off-by: Haoqian He <haoqian.he@smartx.com>
----
- block/mirror.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/block/mirror.c b/block/mirror.c
-index 089856f4a8..a551d392c6 100644
---- a/block/mirror.c
-+++ b/block/mirror.c
-@@ -1854,6 +1854,7 @@ static BlockJob *mirror_start_job(
-     BlockDriverState *mirror_top_bs;
-     bool target_is_backing;
-     uint64_t target_perms, target_shared_perms;
-+    int flags;
-     int ret;
- 
-     GLOBAL_STATE_CODE();
-@@ -1886,8 +1887,13 @@ static BlockJob *mirror_start_job(
-     /* In the case of active commit, add dummy driver to provide consistent
-      * reads on the top, while disabling it in the intermediate nodes, and make
-      * the backing chain writable. */
--    mirror_top_bs = bdrv_new_open_driver(&bdrv_mirror_top, filter_node_name,
--                                         BDRV_O_RDWR, errp);
-+    flags = BDRV_O_RDWR;
-+    if (bs->open_flags & BDRV_O_UNMAP) {
-+        flags |= BDRV_O_UNMAP;
-+    }
-+    mirror_top_bs = bdrv_new_open_driver(&bdrv_mirror_top,
-+                                         filter_node_name,
-+                                         flags, errp);
-     if (mirror_top_bs == NULL) {
-         return NULL;
-     }
--- 
-2.53.0
+
+On 10/12/26 16:31, Emmanuel Blot wrote:
+> Add the minerva-bmc machine and the I2C device models it needs.
+> 
+> Based on master, at:
+>    615ece3c40 ("Merge tag 'for-upstream' of
+>    https://gitlab.com/bonzini/qemu into staging")
+> 
+> New models:
+> 
+>    INA230   TI 36V current-shunt and power monitor
+>    INA238   TI 85V current-shunt, power and temperature monitor
+>    DS1339   RTC, a DS1338 variant
+>    PCA9545  4-channel I2C mux with per-channel interrupt inputs
+> 
+> The INA devices derive current and power from the shunt voltage and
+> their calibration registers. ALERT output is supported. Measurements
+> come in through QOM properties; however, conversion delay is not
+> modelled.
+> 
+> Introduce a device class to manage different variants of the DS1338
+> register map, such as the DS1339. Improve the DS1338 implementation
+> with a Resettable reset, support for the clock-halt bit, and a
+> "persist-on-reset" property keeping the registers across a reset.
+> 
+> The minerva-bmc machine is derived from the platform device tree and
+> instantiates every device that is supported in QEMU. FRU EEPROMs are
+> sanitised images taken from real hardware.
+> 
+> New qtests for the DS1339, INA230, INA238 and PCA9545, plus DS1338
+> cases for the register map, and a functional test booting OpenBMC on
+> minerva-bmc.
+> 
+> The docs now mention the previously missing catalina-bmc and
+> sanmiguel-bmc machines, and the title has been simplified.
+> 
+> One thing worth a second opinion: the PCA954x muxes now have a
+> VMStateDescription, which changes the migration stream for the
+> existing PCA9546 and PCA9548. The DS1338 vmstate also goes from
+> version 2 to 3, but older streams still load fine.
+> 
+> Signed-off-by: Emmanuel Blot <emmanuel.blot@free.fr>
+> ---
+> Changes in v2:
+> - Rebase onto master, which now contains the v1 base.
+> - minerva: drop ASPEED_RAM_SIZE, removed upstream.
+> - No other changes; v1 received no review comments.
+> - Link to v1: https://lore.kernel.org/qemu-devel/20260907-bmc-minerva-v1-0-0d83ad610c3b@free.fr
+> 
+> ---
+> Emmanuel Blot (50):
+>        docs/system/arm/aspeed: add the catalina-bmc machine
+>        docs/system/arm/aspeed: add the sanmiguel-bmc machine
+>        hw/arm: sanmiguel: remove the second SPI flash controller
+>        hw/i2c: pca954x: drop unused header inclusions
+>        hw/i2c: pca954x: add PCA9545 4-channel mux model
+>        hw/i2c: pca954x: migrate mux state
+>        tests/qtest: pca9545: add mux test
+>        hw/rtc: ds1338: move TYPE_DS1338 to a public header
+>        hw: ds1338: use the TYPE_DS1338 constant instead of the "ds1338" string
+>        hw/rtc: ds1338: implement Resettable reset
+>        hw/rtc: ds1338: prefix the file-local helpers with ds1338_
+>        hw/rtc: ds1338: parameterise the register map via a device class
+>        hw/rtc: ds1338: program the clock from the time registers
+>        hw/rtc: ds1338: implement the DS1338 clock-halt bit
+>        hw/rtc: ds1338: refresh the user registers on a read rollover only
+>        hw/rtc: ds1338: add a persist-on-reset property
+>        tests/qtest: ds1338: cover the DS1338-specific register map
+>        tests/qtest: ds1338: cover the power-on register defaults
+>        tests/qtest: ds1338: cover the clock-halt bit
+>        tests/qtest: ds1338: cover persist-on-reset
+>        tests/qtest: ds1338: cover the reserved bits of the time registers
+>        hw/rtc: ds1338: add DS1339 variant
+>        tests/qtest: ds1339: add RTC test
+>        tests/qtest: ds1339: cover power-on defaults and reserved-bit masking
+>        tests/qtest: ds1339: cover oscillator stop/restart and time programming
+>        tests/qtest: ds1339: cover the Century bit
+>        tests/qtest: ds1339: cover the end-of-month rollover
+>        tests/qtest: ds1339: cover the 12-hour format
+>        tests/qtest: ds1339: cover the day-of-week counter
+>        tests/qtest: ds1339: cover persist-on-reset
+>        tests/qtest: ds1339: cover the migration round trip
+>        hw/sensor: ina230: add current/voltage/power monitor
+>        tests/qtest: ina230: add current/voltage/power monitor test
+>        tests/qtest: ina230: cover voltage injection and power derivation
+>        tests/qtest: ina230: cover the ALERT limit functions and CVRF
+>        tests/qtest: ina230: cover the injection-property limits
+>        tests/qtest: ina230: cover operating modes and triggered conversions
+>        tests/qtest: ina230: cover ALERT latch persistence
+>        tests/qtest: ina230: cover a cleared calibration per channel
+>        hw/sensor: ina238: add current/voltage/power monitor
+>        tests/qtest: ina238: add current/voltage/power monitor test
+>        tests/qtest: ina238: cover voltage/temperature injection and derivation
+>        tests/qtest: ina238: cover the ALERT path and conversion-ready flag
+>        tests/qtest: ina238: cover the injection-property limits
+>        tests/qtest: ina238: cover the operating modes
+>        tests/qtest: ina238: cover conversion-ready and alert-latch semantics
+>        tests/qtest: ina238: cover a cleared calibration per channel
+>        hw/arm: minerva: add Facebook BMC machine
+>        hw/arm: minerva: populate EEPROM data
+>        tests/functional/arm: minerva: add BMC boot test
+> 
+>   docs/system/arm/aspeed.rst                  |   7 +-
+>   hw/arm/Kconfig                              |   2 +
+>   hw/arm/aspeed_ast2400_palmetto.c            |   4 +-
+>   hw/arm/aspeed_ast2400_supermicrox11.c       |   4 +-
+>   hw/arm/aspeed_ast2500_romulus.c             |   4 +-
+>   hw/arm/aspeed_ast2500_supermicro-x11spi.c   |   4 +-
+>   hw/arm/aspeed_ast2500_witherspoon.c         |   4 +-
+>   hw/arm/aspeed_ast2600_bletchley.c           |   3 +-
+>   hw/arm/aspeed_ast2600_catalina.c            |   2 +-
+>   hw/arm/aspeed_ast2600_minerva.c             | 856 ++++++++++++++++++++++++++++
+>   hw/arm/aspeed_ast2600_sanmiguel.c           |   7 +-
+>   hw/arm/meson.build                          |   1 +
+>   hw/arm/realview.c                           |   3 +-
+>   hw/arm/versatilepb.c                        |   3 +-
+>   hw/i2c/i2c_mux_pca954x.c                    |  98 +++-
+>   hw/ppc/e500.c                               |   3 +-
+>   hw/riscv/tt_atlantis.c                      |   3 +-
+>   hw/rtc/ds1338.c                             | 427 +++++++++++---
+>   hw/sensor/Kconfig                           |   8 +
+>   hw/sensor/ina230.c                          | 597 +++++++++++++++++++
+>   hw/sensor/ina238.c                          | 802 ++++++++++++++++++++++++++
+>   hw/sensor/meson.build                       |   2 +
+>   hw/sensor/trace-events                      |  14 +
+>   include/hw/i2c/i2c_mux_pca954x.h            |   1 +
+>   include/hw/rtc/ds1338.h                     |  21 +
+>   include/hw/sensor/ina230.h                  |  14 +
+>   include/hw/sensor/ina238.h                  |  14 +
+>   tests/functional/arm/meson.build            |   2 +
+>   tests/functional/arm/test_aspeed_minerva.py |  30 +
+>   tests/qtest/ds1338-test.c                   | 191 ++++++-
+>   tests/qtest/ds1339-test.c                   | 581 +++++++++++++++++++
+>   tests/qtest/ina230-test.c                   | 602 +++++++++++++++++++
+>   tests/qtest/ina238-test.c                   | 806 ++++++++++++++++++++++++++
+>   tests/qtest/meson.build                     |   4 +
+>   tests/qtest/pca9545-test.c                  | 116 ++++
+>   35 files changed, 5125 insertions(+), 115 deletions(-)
+> ---
+> base-commit: 615ece3c406b262996e569f29ea6eed0d81c4d8d
+> change-id: 20260907-bmc-minerva-cd13a718c90b
+> 
+> Best regards,
+> --
+> Emmanuel Blot <emmanuel.blot@free.fr>
 
 
