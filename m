@@ -4,105 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA4F5CC6B12
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 18:29:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF676CC6B12
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 18:33:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGhEc-0004IQ-JS; Tue, 13 Oct 2026 14:28:22 -0400
+	id 1xGhJ9-0005Nq-A4; Tue, 13 Oct 2026 14:33:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1xGhEV-0004HB-Ry; Tue, 13 Oct 2026 14:28:17 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1xGhJ8-0005NF-0Y
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 14:33:02 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1xGhEU-00028o-3S; Tue, 13 Oct 2026 14:28:15 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69DEGDLZ151645; Tue, 13 Oct 2026 18:28:11 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=pp1; bh=cFBPfzV21fUooRfqLNBhg+k5XiHeQVuXC+qog4DJn
- tE=; b=V1iXtrxXol+63UEHBPNctc21QaJDApsOZ4VjT9Vz2UB4l07Vxp5iKkK+A
- DF3gyTIXJIa4GnKz0v3TI3r37urupb+tasmo/EHB6tyaois8O4DE0UI2LkT8KqcQ
- K4ePZY9UqGzBs/S2GEdSKkZdK2q2ID6hqBfIiR91OnqZDa3y6q32RmmtlfFbQ3cs
- YJ3ao0kYxykEmMyWJgJKkLgYdRuyLk21N1UHOsR31ONoTJUlTXolXpuAb1P77OoG
- YLvqDnavzU/Gbo3nGva7///Yrrp32WmUTxDDlx1zuIjvM/W8icUGNPyRs5CeWVWl
- v1+SthwJJCBmk5wZKWOT9HkLs1lWA==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4h7dwhg559-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Tue, 13 Oct 2026 18:28:11 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69DHwaMo3212041; Tue, 13 Oct 2026 18:28:10 GMT
-Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4h9q2yh213-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 13 Oct 2026 18:28:09 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
- [10.20.54.106])
- by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 69DIS7e949938728
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 13 Oct 2026 18:28:07 GMT
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 3352320043;
- Tue, 13 Oct 2026 18:28:07 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 96F992004B;
- Tue, 13 Oct 2026 18:28:06 +0000 (GMT)
-Received: from li-d2cd37cc-2ca3-11b2-a85c-84ed3706e5a0.ibm.com (unknown
- [9.111.35.59]) by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 13 Oct 2026 18:28:06 +0000 (GMT)
-From: Ilya Leoshkevich <iii@linux.ibm.com>
-To: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>
-Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org,
- Ilya Leoshkevich <iii@linux.ibm.com>
-Subject: [PATCH] iotests/108: probe loop device setup
-Date: Tue, 13 Oct 2026 20:28:00 +0200
-Message-ID: <20261013182804.103882-1-iii@linux.ibm.com>
-X-Mailer: git-send-email 2.56.0
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1xGhJ6-0002cn-42
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 14:33:01 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1791916378;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=C5M3AOKZYX69BtLbff3vNXJ4ux2DSG3eDRzeQWzaKtk=;
+ b=dS4M8I8tsoK7ZDwlAHxSbKB7761F9UyYMjt8lsOB+bJuMht0cuoTem1K4wxuB2b0L3YVJI
+ GCuDJspCfPIhE0fUlCztvhBT6ue+MXTTTQV8HkB/7gmOL84UAXGQJ+3szsy+qslpOJUe7x
+ Bw7FJ6376PyoC+DJ+D/ZZRhtPS6kuoc=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-534-oW1vcNyxPyedfA5lJfgk5w-1; Tue,
+ 13 Oct 2026 18:32:54 +0000
+X-MC-Unique: oW1vcNyxPyedfA5lJfgk5w-1
+X-Mimecast-MFC-AGG-ID: oW1vcNyxPyedfA5lJfgk5w_1791916373
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7FEAC1800757; Tue, 13 Oct 2026 18:32:53 +0000 (UTC)
+Received: from redhat.com (headnet04.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.116])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 44E4D1800592; Tue, 13 Oct 2026 18:32:49 +0000 (UTC)
+Date: Tue, 13 Oct 2026 13:32:47 -0500
+From: Eric Blake <eblake@redhat.com>
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: qemu-devel@nongnu.org, akalenyu@redhat.com, qemu-block@nongnu.org, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Benjamin Marzinski <bmarzins@redhat.com>, 
+ Hanna Reitz <hreitz@redhat.com>, Kevin Wolf <kwolf@redhat.com>, 
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Fam Zheng <fam@euphon.net>
+Subject: Re: [PATCH 4/8] qemu-pr-helper: add PR_HELPER_CLEANUP for live
+ migration
+Message-ID: <as5yWEJh6v-wm01T@redhat.com>
+References: <20261009153058.1089786-1-stefanha@redhat.com>
+ <20261009153058.1089786-5-stefanha@redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDEzMDA3MiBTYWx0ZWRfXyq+w79TgQyTd
- DHEYhxnqGGgTGP+ghW2ckdgAAUqX10DgHZntkKq5ArC1rrlrfFl4ITy+GvbSew10wSwQ6iYT74X
- kGxROzcfrdsoHdIsBcV7AoCWomC9wXk=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDEzMDA3MiBTYWx0ZWRfXzVy59sbHkvxA
- msB73M6azkM/mY5tKu1uLYn8ZAwROhAxF4JhZsujYu4+URKVpr74n9sqsjih2dF2oIDXiUwqxvx
- qL3YaHa5Op3FqMqmv7RP90xtcc2Pzq8IUJYzp3+iThCwzfAB92gGBgM3M0+lIUDcw9IVediqfVk
- fOeNgr8o9yp+U9sO+35gfsdCAuNSsltS2tSWXyrMl0k4Fjr8YFN+HIMmVIZsW9wn4soNRpSTht2
- EaOTKAQ20qteCp4lKb7p1KKeXsV1752yanbQu7ma5dwdRCENPL+zDFxUgEyG9VslVx03MSbgJIy
- BSW+TOYc+oErJ0/3+V8o060X+4HTsNo2gizex0INzHEySNzmuug2ri2wdkNZXRS9a0T+jjiEIn5
- d5m7RAabJEm5bQA5mQel/wxCOccL5I8L9a+PEJ/Sk1wbpBadiZvmLyBAGB/15rgWxqUl2NsOaCE
- 8IWFIVA8IjQh+TAq3QQ==
-X-Proofpoint-GUID: sFYNv2zS3s7UIY4gJXVkh6qQ259X1o74
-X-Authority-Analysis: v=2.4 cv=RoFQvymK c=1 sm=1 tr=0 ts=6ace783b cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8 a=dgZOFHOvU9bSPEp8mi8A:9
-X-Proofpoint-ORIG-GUID: sFYNv2zS3s7UIY4gJXVkh6qQ259X1o74
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-10-13_01,2026-10-09_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 spamscore=0 phishscore=0 adultscore=0 bulkscore=0
- impostorscore=0 suspectscore=0 malwarescore=0 clxscore=1011
- lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610080000
- definitions=main-2610130072
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20261009153058.1089786-5-stefanha@redhat.com>
+User-Agent: NeoMutt/20260616
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=eblake@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,37 +90,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Running iotests/108 in a Docker container, that has passwordless sudo
-configured, fails with:
+On Fri, Oct 09, 2026 at 11:30:54AM -0400, Stefan Hajnoczi wrote:
+> Introduce a new vendor-specific SCSI command that acts similar to
+> REGISTER AND IGNORE EXISTING KEY but also discards multipathd's state
+> (including /etc/multipath/prkeys). This command will be used on the
+> source after live migration completes successfully.
+> 
+> This cleanup step is necessary because multipathd will register the key
+> it has stored when the path comes up again. This is undesirable when the
+> guest has migrated to another host and can interfere with the migration
+> process or the application running inside the guest.
+> 
+> Add a qemu-pr-manager protocol feature bit indicating that the new
+> PR_HELPER_CLEANUP command is available. The command has no CDB fields
+> other than OPCODE and the response contains no data aside from the usual
+> result and sense data.
+> 
+> Note that the linker needs an explicit libmpathcmd dependency for
+> mpath_disconnect() even though qemu-pr-helper.c already #included the
+> mpath_cmd.h header before.
+> 
+> Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+> ---
+>  meson.build              |   2 +
+>  include/scsi/constants.h |   1 +
+>  scsi/pr-helper.h         |   3 +
+>  scsi/qemu-pr-helper.c    | 146 ++++++++++++++++++++++++++++++++++++---
+>  4 files changed, 143 insertions(+), 9 deletions(-)
+> 
 
-    losetup: /home/user/src/qemu/build/scratch/qcow2-file-108/t.qcow2: failed to set up loop device: No such file or directory
+> +++ b/scsi/qemu-pr-helper.c
 
-because it incorrectly assumes losetup is allowed to do loop device
-setup, when in reality it can only list devices.
+> @@ -703,7 +823,8 @@ static int coroutine_fn prh_write_response(PRHelperClient *client,
+>      ssize_t r;
+>      size_t sz;
+>  
+> -    if (req->cdb[0] == PERSISTENT_RESERVE_IN && resp->result == GOOD) {
+> +    if (req->cdb[0] == PERSISTENT_RESERVE_IN &&
+> +        resp->result == GOOD) {
+>          assert(resp->sz <= req->sz && resp->sz <= sizeof(client->data));
 
-Fix by probing loop device setup, using the test script as a backing
-file. With this, the test is correctly skipped.
+Spurious hunk?
 
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
----
- tests/qemu-iotests/108 | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+Otherwise,
 
-diff --git a/tests/qemu-iotests/108 b/tests/qemu-iotests/108
-index 1de718188aa..adbaaf87095 100755
---- a/tests/qemu-iotests/108
-+++ b/tests/qemu-iotests/108
-@@ -53,7 +53,8 @@ _supported_os Linux
- _unsupported_imgopts 'refcount_bits=\([^1]\|.\([^6]\|$\)\)' data_file
- 
- # This test either needs sudo -n losetup or FUSE exports to work
--if sudo -n losetup &>/dev/null; then
-+if probe_dev=$(sudo -n losetup -r --show -f "$0" 2>/dev/null); then
-+    sudo -n losetup -d "$probe_dev"
-     loopdev=true
- else
-     loopdev=false
+Reviewed-by: Eric Blake <eblake@redhat.com>
+
 -- 
-2.56.0
+Eric Blake, Principal Software Engineer
+Red Hat, Inc.
+Virtualization:  qemu.org | libguestfs.org
 
 
