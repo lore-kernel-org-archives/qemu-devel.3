@@ -4,85 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39BFBCC6B08
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEB60CC6B13
 	for <qemu-devel@archiver.kernel.org>; Tue, 13 Oct 2026 08:45:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGY3h-0007gK-05; Tue, 13 Oct 2026 04:40:29 -0400
+	id 1xGY4M-0000oC-Ku; Tue, 13 Oct 2026 04:41:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xGY3P-00071n-VI
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 04:40:14 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ id 1xGY3R-00076M-F9
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 04:40:15 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xGY3L-0007cb-HS
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 04:40:11 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-4a02718da81so20751455e9.1
- for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 01:39:56 -0700 (PDT)
+ id 1xGY3L-0007pS-IA
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 04:40:13 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-4a061a13884so23058945e9.3
+ for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 01:40:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1791880796; x=1792485596; darn=nongnu.org;
+ d=linaro.org; s=google; t=1791880805; x=1792485605; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=3izCqRV5UcshDEmb0rQN8l/m/Afo4OAdHcc2f4wlql4=;
- b=qwcM9ef2YTUd8KrkTfwWErxRnWdnxTic+1Mi18/bOOE06GJH6R6l7z76IoozbRN0H7
- qgNQrXJGHahrzRADEgzdeM5b9F8qTIbPx8+YrLNyi0aTcmvwgARAEO3AS/phESvJqsEc
- N7folfpUTLNSQ8kIkO5HVFjwacKrEVBH+Ansqz/xeGZOkiRcX7OVF0Yu2W+byiniTdYM
- F1H70Nz+MfF+I3Yo9XRfj2DL014xhzu41u+8/EqdVIu5lRD9Ex3AIVyiK21HYgxwuTC1
- HaVvTs/uIl6tM1Z48UFgPzu9rjfclFvQv4HVbTDJRzDj10LpN2IWky8sZvjXFHwjmPNa
- fdhQ==
+ bh=iEX+WzxiZFfdpDo3ifOhYecTGAzyVyR7DGadGLTp9Rg=;
+ b=IkRMtWW3tafpC+OYylMBOA54VUYCzHt8Two70H4zkbTXUuVCXGElYbsKqVsLnZlSCV
+ fA5KgbABfA6bbYkbOz0az2PKXKnn3mD0WpK7kE9AqinqjeWHIYt9kbMScrDk3waezSq7
+ MfWngMgo2Jm4wMI2Q3d1etpH10YYAdnzbcMHBISZUCwTBdDwvizvpZpVmZ0vxQeP4P36
+ SY+CODaGxHsLkQYJqBxVXoj3kz18TmVTagCVqfFot2cQmXRGgCkG7zlt9YGsHv3SXBGh
+ Wb4uDhTV7j2JgbPdHzl46c2GfM0NfHogHFVqhzqF/2ZqZzGKL2QOvH6DD/evSQlt1WIj
+ fGGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791880796; x=1792485596;
+ d=1e100.net; s=20260707; t=1791880805; x=1792485605;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to:content-type;
- bh=3izCqRV5UcshDEmb0rQN8l/m/Afo4OAdHcc2f4wlql4=;
- b=nJxNTwvDLuLELYPQF+o94Hmnndr00RZlHqLtDGmTANFUdtXqRfenT+Anl3Igvbm7Dg
- /29s5xrQ3YnBA9QZzzP1GV+PRsGWGH2OXVES9g3dsyvM/uqV373qYhCxPObKkVb3DV5V
- Q0AHhJjBXmcHS7xrCMBNRWD8bjn4HMOGji/fnqiVo6x4OIE2TDbM+rswaKkq+QfhoV8U
- U5xLcUffBH6t3u2+p0wC//sfwGgj1yLSEuoxkbI+TpQTYxGPq97DDyVmYZIPiN6JMbbF
- gbqEk/KKmb6AMgIB+cM27WGa0JMLDXBHiIxDs+DkpbjEL23b4tAJ6omFYtavPIf8gQDc
- IeaA==
+ bh=iEX+WzxiZFfdpDo3ifOhYecTGAzyVyR7DGadGLTp9Rg=;
+ b=uRoSYzRjLeJF4ACnWydSRuUiDQ1vOjEBq1CyJBr99GpILW6y3+6CX/KeRXWgdFcqA7
+ BKuXexLqGQ5EPQxJIeBxh4eEGNFyy4QJI94Eh/XXYkcY4s5g0hZbedcIbF/s1W5OTYCI
+ wqdM4z358+o7XMWCPdsAwpe0xtlHUJoWRQNCOirzmV66ZqoOInwW0lQBzlh55Mb5Rx8T
+ PKiJ1YhmAEnpz0RHA2yEDNocp/xDpiH+rinGTg3bqeOB4dcUk62bxUEBjne9Cb6UyzDf
+ +K6rYQXhRWSRJImhVaxxngdNXKnmZ2Az3WdDLaCMdlP1W8eAS9Qf++AQbHIXw75bB8qb
+ 5EKg==
 X-Forwarded-Encrypted: i=1;
- AKwUvBy77tqZDciEi3Y2gT7m6h0Gdg99Oew1KVKSKWk0PK3xFeBJytgW2R74w3My8HmbpTa0HPmmdmQjyJr7@nongnu.org
-X-Gm-Message-State: AFq9FYL+O40jG/DALoqAVr5NoinzutNmSvTQtlYWe9uSa/UtYwfcQnm+
- PEK4tOBvmX/gHi5MnmLfhnon48Rptv+Pd0eUoILbc3paG4SwnlP0QEAkMjkjRAVz70DALlBQCrs
- QK7ZatQ0=
-X-Gm-Gg: AYBFou19XABfCqRVTSDXKmMUseNV0Sgy4RkSBAXtdrA0AsVoqYp5bUNkB6D4gV8bTra
- KNIIA3G2QV5kucVgVpgOFypXTzC3JifG7bcY9PizGttG9ngxW+5Vz9lSKmAoyCBG2ckpf1eqvCX
- +VSjNOmOrMHDVGJsR8YVrmEOjDEjJfL6JVI9Gsm+8t+2is2hdqFvKN7qLFZ1AQp6sN916vfSxWh
- njkxE3PJ5UV08XSYv3CNyjWp8q2/lWB2X0rRwBJlXihM4wS1PkRzxBiJ6tj6STP2hhFuSb4Lpj1
- 88lEtEfvsZQHIpRoiCk1oWuKDcdP2S1lvPKrfdt14DpEBGU2mZkp05N9acXJou8adpqVBIkHkQW
- saxerVcmOZdb6f+Ny/y0t9LaCiyT18H3uVLtBiKOD32rMorHdPW0EmHEOZLlLCSaGb2l/uWWjY2
- Q66l3Dj24ZGwf6o6TbZKFJ06uvPPS093RiGr2KWhEUxrxLe0x//cHPNi/m+GMCkWBUXX/hcgJmb
- M3NpIUzw9kyYkQXy+lB9UfJE0SCHsgKVnfwb9I0Ta8sYCc1NcfZsLuNFf2i5dAmhBT+5o+5nyiE
- nzU=
-X-Received: by 2002:a05:600c:1909:b0:4a0:159b:d283 with SMTP id
- 5b1f17b1804b1-4a18e4d5412mr260780845e9.30.1791880794376; 
- Tue, 13 Oct 2026 01:39:54 -0700 (PDT)
+ AKwUvBylQT3/ERY3Q3e1SvwLzwA6N5OVkQ8vilYpFCI4B9DphYD1ZNAmeG446VR8zM2vnOe+iJP6fzLDFu6m@nongnu.org
+X-Gm-Message-State: AFq9FYKbI2UE2vzKRlzjfojSa1Ye+ITDdWuaENSvdYIuyvtqoaBuVZB1
+ 30Q9f5/J375h5JPEBDkP/bBJ6xgsSWThyzvT4VVeCNywUsgz9oN8jFcik0EZglo1sVw=
+X-Gm-Gg: AYBFou1nyrh3hfWxWELHMwPgRYZ6tds2YhgcgRYmTmcu/yNHc8hDzdXpv+rO5CYXUzs
+ 8pKcOaKkPzrOILUvORzgD3N9kTSYb2gz8tiUGntnz/Pnmlcw54Xt38my14BN/QAZcJSiZYg7dQI
+ Kw6k//OJ7ZI5baIDl9YiMrPCyvB8gp0QMI0SkLkI/Q6cWGJJxTEMpmRowjm+hhIlVFeWvSq2Ach
+ G5CZW4CuFVergukagHBLGD0k3DAxHoNZzou1MBvYixtXN+XuYLxodZG5HEDwO27vcKzSWrTmeoS
+ M9G3PVAYYQqzg36OKpKLvbzZDSjawZcN8jDX68dzHAkNnYZ+LRWJIYeU9Dw7p9pS19ljS9YbMk2
+ dkmEiWvVikKGp2zju7FZ8dsDyQFJ8c+sPEBqmXgqKLJ4RULl2Kg+ZY1xmeZg6/juSwaToVHxYVl
+ N5P9i7MX2syH1PmG8LfLo4W3oM5dfaq0EcV8/gHo/RgP48MIrvdxjyEAtHBQ23HV2QQfThgNdaF
+ Dn1p6dqjro06+T34h1YkNXG5x8IECbxzyke6etZ8EXJDOyyww5J46dBGNG49OWU0SmW1j9er/TZ
+ Yh4=
+X-Received: by 2002:a05:600c:4ecb:b0:4a0:c01:1902 with SMTP id
+ 5b1f17b1804b1-4a18e43a29fmr236742755e9.2.1791880805159; 
+ Tue, 13 Oct 2026 01:40:05 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a18be96549sm495086735e9.6.2026.10.13.01.39.53
+ 5b1f17b1804b1-4a18be96549sm495086735e9.6.2026.10.13.01.40.03
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 13 Oct 2026 01:39:53 -0700 (PDT)
+ Tue, 13 Oct 2026 01:40:04 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Subject: [PATCH 14/86] target/arm: GICv5 cpuif: Implement ICH_PPI_{ENABLE, PEND,
- ACTIVE} regs
-Date: Tue, 13 Oct 2026 09:38:21 +0100
-Message-ID: <20261013083933.1024405-15-peter.maydell@linaro.org>
+Subject: [PATCH 22/86] target/arm: GICv5 cpuif: Implement ICH_PPI_HVIR<n>_EL2
+Date: Tue, 13 Oct 2026 09:38:29 +0100
+Message-ID: <20261013083933.1024405-23-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261013083933.1024405-1-peter.maydell@linaro.org>
 References: <20261013083933.1024405-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,119 +103,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Implement the ICH_PPI_ENABLERn_EL2, ICH_PPI_PENDRn_EL2 and
-ICH_PPI_ACTIVERn_EL2 registers.  These are the hypervisor interface
-to the underlying state of its guest's PPI interrupts.  Unlike the
-ICC PPI registers, these don't have set and clear register pairs.
+The ICH_PPI_HVIR<n>_EL2 registers allow a hypervisor to hide a PPI
+from the virtual interrupt domain.  When the bit is set, direct reads
+and writes to ICV register fields for that PPI are RAZ/WI.
 
-We mark these as ARM_CP_IO and give them a writefn, even though right
-now the only thing the writefn does is a raw_write to the underlying
-CPU struct field, because eventually hypervisor writes to these
-registers will need to trigger recalculation of the highest priority
-pending PPI and possible signalling of VIRQ.
+As we haven't yet implemented the ICV accesses, all we need to
+implement here is the cpreg and its backing storage.  We will then be
+able to test the DVI bits in the functions that add ICV read and
+write handling. We give the register a writefn because eventually
+it will need to trigger a recalculation of the virtual PPI HPPI.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/cpu.h             |  3 ++
- target/arm/tcg/gicv5-cpuif.c | 64 ++++++++++++++++++++++++++++++++++++
- 2 files changed, 67 insertions(+)
+ target/arm/cpu.h             |  1 +
+ target/arm/tcg/gicv5-cpuif.c | 22 ++++++++++++++++++++++
+ 2 files changed, 23 insertions(+)
 
 diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index a93fd362417..62262c594d7 100644
+index 276466d2b84..81fb68facb9 100644
 --- a/target/arm/cpu.h
 +++ b/target/arm/cpu.h
-@@ -596,6 +596,9 @@ typedef struct CPUArchState {
-         GICv5PendingIrq ppi_hppi[NUM_GICV5_DOMAINS];
- 
+@@ -600,6 +600,7 @@ typedef struct CPUArchState {
          uint64_t ich_apr_el2;
-+        uint64_t ich_ppi_active[GICV5_NUM_PPIS / 64];
-+        uint64_t ich_ppi_pend[GICV5_NUM_PPIS / 64];
-+        uint64_t ich_ppi_enable[GICV5_NUM_PPIS / 64];
-     } gicv5_cpuif;
- 
-     struct {
+         uint64_t ich_vctlr_el2;
+         uint64_t ich_vmcr_el2;
++        uint64_t ich_ppi_hvi[GICV5_NUM_PPIS / 64];
+         uint64_t ich_ppi_active[GICV5_NUM_PPIS / 64];
+         uint64_t ich_ppi_pend[GICV5_NUM_PPIS / 64];
+         uint64_t ich_ppi_enable[GICV5_NUM_PPIS / 64];
 diff --git a/target/arm/tcg/gicv5-cpuif.c b/target/arm/tcg/gicv5-cpuif.c
-index 83c9be2b0e6..6dec0ec1ea6 100644
+index 8cb790204f1..93141c751e4 100644
 --- a/target/arm/tcg/gicv5-cpuif.c
 +++ b/target/arm/tcg/gicv5-cpuif.c
-@@ -463,6 +463,24 @@ static void gic_ppi_priority_write(CPUARMState *env, const ARMCPRegInfo *ri,
-     gic_recalc_ppi_hppi(env);
+@@ -493,6 +493,12 @@ static void gic_ich_ppi_dvi_write(CPUARMState *env, const ARMCPRegInfo *ri,
+     raw_write(env, ri, value);
  }
  
-+static void gic_ich_ppi_enable_write(CPUARMState *env, const ARMCPRegInfo *ri,
-+                                     uint64_t value)
++static void gic_ich_ppi_hvi_write(CPUARMState *env, const ARMCPRegInfo *ri,
++                                  uint64_t value)
 +{
 +    raw_write(env, ri, value);
 +}
 +
-+static void gic_ich_ppi_pend_write(CPUARMState *env, const ARMCPRegInfo *ri,
-+                                   uint64_t value)
-+{
-+    raw_write(env, ri, value);
-+}
-+
-+static void gic_ich_ppi_active_write(CPUARMState *env, const ARMCPRegInfo *ri,
-+                                     uint64_t value)
-+{
-+    raw_write(env, ri, value);
-+}
-+
- /*
-  * ICC_APR_EL1 is banked and reads/writes as the version for the
-  * current logical interrupt domain.
-@@ -937,6 +955,52 @@ static const ARMCPRegInfo gicv5_cpuif_reginfo[] = {
-         .accessfn = access_gicv5_ich_reg,
-         .fieldoffset = offsetof(CPUARMState, gicv5_cpuif.ich_apr_el2),
+ static void gic_ich_vctlr_write(CPUARMState *env, const ARMCPRegInfo *ri,
+                                 uint64_t value)
+ {
+@@ -1002,6 +1008,22 @@ static const ARMCPRegInfo gicv5_cpuif_reginfo[] = {
+         .writefn = gic_icc_pcr_el1_write,
+         .resetfn = gic_icc_pcr_el1_reset,
      },
-+    {   .name = "ICH_PPI_ENABLER0_EL2", .state = ARM_CP_STATE_AA64,
-+        .opc0 = 3, .opc1 = 4, .crn = 12, .crm = 10, .opc2 = 2,
-+        .access = PL2_RW, .type = ARM_CP_IO | ARM_CP_NO_RAW,
-+        .nv2_redirect_offset = 0xb50,
++    {   .name = "ICH_PPI_HVIR0_EL2", .state = ARM_CP_STATE_AA64,
++        .opc0 = 3, .opc1 = 4, .crn = 12, .crm = 7, .opc2 = 0,
++        .access = PL2_RW, .type =  ARM_CP_IO | ARM_CP_NO_RAW,
++        .nv2_redirect_offset = 0xc00,
 +        .accessfn = access_gicv5_ich_reg,
-+        .fieldoffset = offsetof(CPUARMState, gicv5_cpuif.ich_ppi_enable[0]),
-+        .writefn = gic_ich_ppi_enable_write,
++        .fieldoffset = offsetof(CPUARMState, gicv5_cpuif.ich_ppi_hvi[0]),
++        .writefn = gic_ich_ppi_hvi_write,
 +    },
-+    {   .name = "ICH_PPI_ENABLER1_EL2", .state = ARM_CP_STATE_AA64,
-+        .opc0 = 3, .opc1 = 4, .crn = 12, .crm = 10, .opc2 = 3,
-+        .access = PL2_RW, .type = ARM_CP_IO | ARM_CP_NO_RAW,
-+        .nv2_redirect_offset = 0xb58,
++    {   .name = "ICH_PPI_HVIR1_EL2", .state = ARM_CP_STATE_AA64,
++        .opc0 = 3, .opc1 = 4, .crn = 12, .crm = 7, .opc2 = 1,
++        .access = PL2_RW, .type =  ARM_CP_IO | ARM_CP_NO_RAW,
++        .nv2_redirect_offset = 0xc00,
 +        .accessfn = access_gicv5_ich_reg,
-+        .fieldoffset = offsetof(CPUARMState, gicv5_cpuif.ich_ppi_enable[1]),
-+        .writefn = gic_ich_ppi_enable_write,
++        .fieldoffset = offsetof(CPUARMState, gicv5_cpuif.ich_ppi_hvi[1]),
++        .writefn = gic_ich_ppi_hvi_write,
 +    },
-+    {   .name = "ICH_PPI_PENDR0_EL2", .state = ARM_CP_STATE_AA64,
-+        .opc0 = 3, .opc1 = 4, .crn = 12, .crm = 10, .opc2 = 4,
-+        .access = PL2_RW, .type = ARM_CP_IO | ARM_CP_NO_RAW,
-+        .accessfn = access_gicv5_ich_reg,
-+        .fieldoffset = offsetof(CPUARMState, gicv5_cpuif.ich_ppi_pend[0]),
-+        .writefn = gic_ich_ppi_pend_write,
-+    },
-+    {   .name = "ICH_PPI_PENDR1_EL2", .state = ARM_CP_STATE_AA64,
-+        .opc0 = 3, .opc1 = 4, .crn = 12, .crm = 10, .opc2 = 5,
-+        .access = PL2_RW, .type = ARM_CP_IO | ARM_CP_NO_RAW,
-+        .accessfn = access_gicv5_ich_reg,
-+        .fieldoffset = offsetof(CPUARMState, gicv5_cpuif.ich_ppi_pend[1]),
-+        .writefn = gic_ich_ppi_pend_write,
-+    },
-+    {   .name = "ICH_PPI_ACTIVER0_EL2", .state = ARM_CP_STATE_AA64,
-+        .opc0 = 3, .opc1 = 4, .crn = 12, .crm = 10, .opc2 = 6,
-+        .access = PL2_RW, .type = ARM_CP_IO | ARM_CP_NO_RAW,
-+        .nv2_redirect_offset = 0xb30,
-+        .accessfn = access_gicv5_ich_reg,
-+        .fieldoffset = offsetof(CPUARMState, gicv5_cpuif.ich_ppi_active[0]),
-+        .writefn = gic_ich_ppi_active_write,
-+    },
-+    {   .name = "ICH_PPI_ACTIVER1_EL2", .state = ARM_CP_STATE_AA64,
-+        .opc0 = 3, .opc1 = 4, .crn = 12, .crm = 10, .opc2 = 7,
-+        .access = PL2_RW, .type = ARM_CP_IO | ARM_CP_NO_RAW,
-+        .nv2_redirect_offset = 0xb38,
-+        .accessfn = access_gicv5_ich_reg,
-+        .fieldoffset = offsetof(CPUARMState, gicv5_cpuif.ich_ppi_active[1]),
-+        .writefn = gic_ich_ppi_active_write,
-+    },
- };
- 
- void define_gicv5_cpuif_regs(ARMCPU *cpu)
+     {   .name = "ICH_APR_EL2", .state = ARM_CP_STATE_AA64,
+         .opc0 = 3, .opc1 = 4, .crn = 12, .crm = 8, .opc2 = 4,
+         .access = PL2_RW, .type = ARM_CP_NO_RAW,
 -- 
 2.43.0
 
