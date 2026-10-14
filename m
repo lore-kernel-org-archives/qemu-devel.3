@@ -4,65 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A266BCC6B1A
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 16:31:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C804ECC6B1A
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 16:41:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xH1rh-0000Ef-0B; Wed, 14 Oct 2026 12:30:05 -0400
+	id 1xH223-0005Yh-4W; Wed, 14 Oct 2026 12:40:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wangyang25@otcaix.iscas.ac.cn>)
- id 1xH1rL-00006M-Gs; Wed, 14 Oct 2026 12:29:45 -0400
-Received: from smtp81.cstnet.cn ([159.226.251.81] helo=cstnet.cn)
- by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_CBC_SHA1:256)
- (Exim 4.90_1) (envelope-from <wangyang25@otcaix.iscas.ac.cn>)
- id 1xH1rH-00069F-95; Wed, 14 Oct 2026 12:29:41 -0400
-Received: from DESKTOP-7FLBREN (unknown [124.16.137.194])
- by APP-03 (Coremail) with SMTP id rQCowACXmDbrrc9q4kXBCg--.37629S8;
- Thu, 15 Oct 2026 00:29:33 +0800 (CST)
-From: wangyang <wangyang25@otcaix.iscas.ac.cn>
-To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
- liwei1518@gmail.com, daniel.barboza@oss.qualcomm.com,
- zhiwei_liu@linux.alibaba.com, chao.liu@processmission.com,
- christoph.muellner@vrull.eu
-Subject: [PATCH v5 4/5] target/riscv: prioritize Zicfilp checks for misaligned
- JALR
-Date: Thu, 15 Oct 2026 00:29:29 +0800
-Message-ID: <20261014162930.251-5-wangyang25@otcaix.iscas.ac.cn>
-X-Mailer: git-send-email 2.55.0.windows.2
-In-Reply-To: <20261014162930.251-1-wangyang25@otcaix.iscas.ac.cn>
-References: <20261014162930.251-1-wangyang25@otcaix.iscas.ac.cn>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xH221-0005YX-NW
+ for qemu-devel@nongnu.org; Wed, 14 Oct 2026 12:40:45 -0400
+Received: from mail-yw1-x1131.google.com ([2607:f8b0:4864:20::1131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xH220-0007WH-5c
+ for qemu-devel@nongnu.org; Wed, 14 Oct 2026 12:40:45 -0400
+Received: by mail-yw1-x1131.google.com with SMTP id
+ 00721157ae682-8b05bf699easo34957367b3.2
+ for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 09:40:43 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1791996042; cv=none;
+ d=google.com; s=arc-20260327;
+ b=FBnUPmfuvFbQqlj+7f+7GjcPlZev7Z6AAwfCUQBRjCg3vop9Z9u/lRBnJT1jzoCxRP
+ WDrJbhmBY4AqqSE1tIeh/k0ZHTab1ogZ+hWsfb68UbautVqWDP3IYwWKurpXgbJM1oUR
+ EBFrbf5TEo7zhjj4451/l8JWK+yLR7g9APOT13BE6FcQnP5zgurRjDOWV5qM3/MeabD8
+ vtYQM4aNuKuEEjSjRwic1D1ndNZxi8GEQBgJU17rhAMoIg5XNA5yXI3MN1uBMUQv3wmW
+ 9cAPkUxq648P6uxlKSHdicB1ihHnw6Z/g2LOd5eCMTbAvay5NkcUGCTHHDvRw9Qj6QEO
+ C2zQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=HsE4A9PIDoSy53wyR5EU6kLVeX4AGREiYkgrJG6uiU8=;
+ fh=w7Bu1wSGyEWRhvKtbbR+K0kl0+7ycObiJaq3bQjBX30=;
+ b=sWZSKvfzF+uMK7tMts7uwEYFn3u+DbC3ePB5M6WnhnETdOTW/kvPfr2cOM/4PN0Zui
+ mBNssth3Royr+q59900FbDK4EOwUUtWrdvrv2qRFjtebcCVhEiOQiewkx/tJ8WLOL5fH
+ THiJQEi7N/p7iVqExEzvRx0o57XkJAnmPHglmOqkq9kVtyIYH5AZOeJSUup5C3BIWi31
+ p7kl9ZO2Z9j1iZvwJhnR4K+s3WHW/FPqpk0nf/d2LCH6KuPSnF/7O6u+FCPrwDTbPPV/
+ TO7rHBam6FQbTYAZCpznKrHYzhWofqsWDU8+kWltOGfaz6707yc3Fc6NHYefsyJHZH5R
+ WZng==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1791996042; x=1792600842; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=HsE4A9PIDoSy53wyR5EU6kLVeX4AGREiYkgrJG6uiU8=;
+ b=qyuXcPPrt4mS8GATW3Ngbu7Q2mUa4YXol3NlzPLQHDZUjHx4g1RAXi4t4BoZSxwxAA
+ kk8im8Ny4uMfuitC+OfRBQH0ygW7bJtjJ/it44j0Uj3ojf7MvCnb5JR5taZhlunRHYSU
+ wKywiSwEGx6n4F7dmLbnHU0an1mpPow73ZZ2TyTOzpvHDcfL6upTlNorNWNn7gOe3adb
+ UdNPHQHccp8VgoY1dEtPQh+T1OiV4sEqK0MOt7YIloD0EDQT6VHhkZLsl2uD4EF6dNPn
+ 2KwFA2LBITs01lL3FV6wQzsux5twRFS3QjZHpdw3Pl/R/gdHDJnmzqir6XuIcOQpTXRC
+ 4lFA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1791996042; x=1792600842;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=HsE4A9PIDoSy53wyR5EU6kLVeX4AGREiYkgrJG6uiU8=;
+ b=J2JTr4GxWxxibTJIRVidV7Jn/U+bkSYmFqDLqrOF3u0m8oimZkICcpwrSKhUbH2o/V
+ uctQeyrdIqfEyyIr9qXokblZIg1XfdK5JWOUyCHeo1bhyrlvDW9tvvh7R+6rrGwq1Pro
+ wvKzseQl2xUanK5Kfix89+alC4Rz1naPVEe3fmviTxcLHRy2u2XT6prVgllLqqDBNQSA
+ 1ylIeBXFjkHIPhguhqzVz7cGYMcc9XoJ/C/RcDycmXgsAnspbWbTH7GlJwyt0un3fAf0
+ v5iJD2RkNMS7aYQiRB14CWlekH/j/28lhFl8VfBh+2FXbB9zHUNKIx2jwGIcGRM1Gz3y
+ +4zA==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBwvvvDvjUrWiTUPWltknmZehyfFXYeuSkg/OLpGLVpYbSUiVeuOWPIhWFvh6UUFyMD3XUXLoCyVOh8u@nongnu.org
+X-Gm-Message-State: AFq9FYJtNfR9bcEjSmSfHWmGGE3u/s9G3bpSzx+q6F99c3V1hVWHu6f6
+ VHaN4mQqvhzQnRDHadtN3OHGwx54eT0XH+u7vo/l5Nz9m0b+ePSkrV20WDyCz1eLm9o947c7lCl
+ OoOr1UP3XE8s4Wz+/logABk6/0kgT8K12hv2PiKI51Q==
+X-Gm-Gg: AYBFou3FgT/zQd7dQM51DYOdU7ZfsGuLdG92SDqtGsjc1HGBkUVW7hibgfkklHzEY/5
+ iv7PFf5I9Z/NGBqnEfB/wGHSJa+rTGYbbJhLay4Kn5SQ8yN2VNWhz+dy0NOVUrZynh/llsKva9/
+ HryanE9DITwMXLgofTcOzDRWhMEp6C9i4G11yNetOddADZb7p7PVmAsgcFevAIc7RjUCqz+WT7K
+ eOK0+RABkOjxDEP1rBB9Kn/f7WG1pMFr7yLOr2Y0t42XdtxBY6gPRzyeMMPqT2P3pWG6fvwPC/m
+ tNlbbszgK8C6KcbXXlbRkEeCL2MQwqbvwVi77UpeBQbbK+NOoW9lQlS2boVwR5S2LPgC5OGNYab
+ PnT/gSGLGRErIEC9nF7XXJrUJXlNgbE+OUFh21R/up04rXEBBWQ==
+X-Received: by 2002:a05:690c:ed6:b0:8b0:ac08:d706 with SMTP id
+ 00721157ae682-8b0ac08e3aemr29323927b3.12.1791996041754; Wed, 14 Oct 2026
+ 09:40:41 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: rQCowACXmDbrrc9q4kXBCg--.37629S8
-X-Coremail-Antispam: 1UD129KBjvJXoW7tF4UWF17Zr1fWF4DJryDtrb_yoW8Wryrpr
- 40k3yUKrZ8tF95ZF4SqF4UtF43Xa1fWa10qws2q3Z5tF4YyrW3tF1qkryagFyUAF4kur1a
- 9FWqya45WFWUJ3JanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
- 9KBjDU0xBIdaVrnRJUUUmvb7Iv0xC_Kw4lb4IE77IF4wAFF20E14v26rWj6s0DM7CY07I2
- 0VC2zVCF04k26cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28IrcIa0xkI8VA2jI
- 8067AKxVWUAVCq3wA2048vs2IY020Ec7CjxVAFwI0_Xr0E3s1l8cAvFVAK0II2c7xJM28C
- jxkF64kEwVA0rcxSw2x7M28EF7xvwVC0I7IYx2IY67AKxVWUCVW8JwA2z4x0Y4vE2Ix0cI
- 8IcVCY1x0267AKxVWxJVW8Jr1l84ACjcxK6I8E87Iv67AKxVWUJVW8JwA2z4x0Y4vEx4A2
- jsIEc7CjxVAFwI0_Gr0_Gr1UM2vYz4IE04k24VAvwVAKI4IrM2AIxVAIcxkEcVAq07x20x
- vEncxIr21l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r126r1DMcIj
- 6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IYc2Ij64vIr41lc7
- CjxVAaw2AFwI0_Jw0_GFylc2xSY4AK67AK6r1l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC
- 6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWw
- C2zVAF1VAY17CE14v26r1q6r43MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_JFI_
- Gr1lIxAIcVC0I7IYx2IY6xkF7I0E14v26F4j6r4UJwCI42IY6xAIw20EY4v20xvaj40_Jr
- 0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUv
- cSsGvfC2KfnxnUUI43ZEXa7IUYnAwDUUUUU==
-X-Originating-IP: [124.16.137.194]
-X-CM-SenderInfo: 5zdqw5xdqjjk46rwut1l0ox2xfdvhtffof0/
-Received-SPF: pass client-ip=159.226.251.81;
- envelope-from=wangyang25@otcaix.iscas.ac.cn; helo=cstnet.cn
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20260916104435.600211-1-mark.caveayland@nutanix.com>
+ <20260916104435.600211-6-mark.caveayland@nutanix.com>
+ <CAFEAcA9eucRyzG=PR2tpx8ObHkdK6xUmOjQ+-nNbJ2dVHaptOA@mail.gmail.com>
+ <876b66cd-0ea6-4943-9a0e-c0abf2ad6e26@nutanix.com>
+ <ca07d55b-3a6b-455c-b456-8944459f051f@nutanix.com>
+In-Reply-To: <ca07d55b-3a6b-455c-b456-8944459f051f@nutanix.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Wed, 14 Oct 2026 17:40:30 +0100
+X-Gm-Features: AclHuK9GKZpuJodSpbaJGGjpNEJHf1hmwnQWIYQLstVzf56ZJooPw1UCua58JCI
+Message-ID: <CAFEAcA80Rb_TY81bFAu1q33uFL2COfdiH22iw5tkN9aG_gCN_Q@mail.gmail.com>
+Subject: Re: [PATCH 05/22] i8259.c: move parent_realize from PICClass to
+ I8259CommonClass
+To: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+Cc: pbonzini@redhat.com, richard.henderson@linaro.org, mst@redhat.com, 
+ sstabellini@kernel.org, anthony@xenproject.org, edgar.iglesias@gmail.com, 
+ qemu-devel@nongnu.org, xen-devel@lists.xenproject.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1131;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1131.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,42 +123,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When Zicfilp tracking is active, a misaligned indirect JALR target also
-violates the landing-pad requirement. Generate the landing-pad
-software-check before the generic instruction-address-misaligned
-exception for tracked targets, while retaining the existing exception
-for untracked targets.
+On Wed, 14 Oct 2026 at 14:58, Mark Cave-Ayland
+<mark.caveayland@nutanix.com> wrote:
+>
+> On 14/10/2026 12:00, Mark Cave-Ayland wrote:
+>
+> > On 13/10/2026 16:54, Peter Maydell wrote:
+> >
+> >> On Wed, 16 Sept 2026 at 11:49, Mark Cave-Ayland
+> >> <mark.caveayland@nutanix.com> wrote:
+> >>>
+> >>> Both the emulated and KVM i8259 implementations store a reference to the
+> >>> parent_realize function in their respective classes. Start by moving
+> >>> parent_realize from PICClass to I8259CommonClass and removing
+> >>> PICClass since
+> >>> it is no longer required.
+> >>>
+> >>> Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+> >>
+> >> This is one of those things where I think we're not 100% consistent
+> >> about whether we think the parent_realize field should go in the
+> >> child class struct or the parent class struct. The name "parent_realize"
+> >> implies it ought to be in the child struct, though, and I think we
+> >> do that more often than we put it in the parent class. This also
+> >> makes some kind of separation-of-concerns sense too: it's the child
+> >> that knows (a) that it exists at all and that (b) it wants to have a
+> >> realize method that will mean it needs to chain back to the parent.
+> >>
+> >> The docs for device_class_set_parent_realize() claim the parent
+> >> realize ptr is stored "usually in the instance structure" which
+> >> I think is just completely wrong.
+> >>
+> >> I could be persuaded otherwise. As usual with QOM/qdev, I'm
+> >> mostly interested in (a) consistency and (b) documenting what the
+> >> "right thing" is. Realize, reset and unrealize are the three
+> >> methods where QOM's lack of convenient support for "child
+> >> implementation of method will need to chain to parent impl"
+> >> is most awkward.
+> > Yeah it's a tricky one. This patch was really just refactoring what was
+> > already there, but I'm open to moving it into the instance if you think
+> > that is better. I agree with your point about the child instance being
+> > the one that knows it needs to chain back to the parent.
+> >
+> > I'll have an experiment and if it looks good, I'll move it to the
+> > instance in v2.
+> I did a search over the codebase and checked all references to
+> DeviceRealize, and they are all stored in QOM classes and make use of
+> device_class_set_parent_realize(). So for now I think we can say it is
+> the documentation for device_class_set_parent_realize() that is wrong,
+> and I will leave it this way in v2 of the series.
 
-Tested: RV64 M-mode and S-mode Zicfilp controls and misaligned
-targets with c=true and c=false.
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4415
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Signed-off-by: wangyang <wangyang25@otcaix.iscas.ac.cn>
----
- target/riscv/tcg/insn_trans/trans_rvi.c.inc | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+Yes, the *instance* part is definitely wrong. But there's still
+"parent class struct" vs "child class struct". This patch puts
+it in the parent class struct, and as I say above I kind of
+prefer child class struct and think we do that the most often.
 
-diff --git a/target/riscv/tcg/insn_trans/trans_rvi.c.inc b/target/riscv/tcg/insn_trans/trans_rvi.c.inc
-index cc1b5dbbad..aa79a5ef3c 100644
---- a/target/riscv/tcg/insn_trans/trans_rvi.c.inc
-+++ b/target/riscv/tcg/insn_trans/trans_rvi.c.inc
-@@ -187,7 +187,14 @@ static bool trans_jalr(DisasContext *ctx, arg_jalr *a)
- 
-     if (misaligned) {
-         gen_set_label(misaligned);
--        gen_exception_inst_addr_mis(ctx, target_pc);
-+        if (ctx->fcfi_enabled &&
-+            a->rs1 != xRA && a->rs1 != xT0 && a->rs1 != xT2) {
-+            tcg_gen_st8_i32(tcg_constant_i32(RISCV_EXCP_SW_CHECK_FCFI_TVAL),
-+                            tcg_env, offsetof(CPURISCVState, sw_check_code));
-+            generate_exception(ctx, RISCV_EXCP_SW_CHECK);
-+        } else {
-+            gen_exception_inst_addr_mis(ctx, target_pc);
-+        }
-     }
-     ctx->base.is_jmp = DISAS_NORETURN;
- 
--- 
-2.55.0.windows.2
-
+-- PMM
 
