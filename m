@@ -4,85 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 582F5CC6B1A
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 03:48:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 524ACCA9EBD
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 03:48:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGprR-0007Wz-JW; Tue, 13 Oct 2026 23:41:01 -0400
+	id 1xGpsM-00038N-TF; Tue, 13 Oct 2026 23:41:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1xGprK-0007JI-MT
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 23:40:54 -0400
-Received: from mail-pg1-x535.google.com ([2607:f8b0:4864:20::535])
+ id 1xGpsI-0002pb-PI
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 23:41:54 -0400
+Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1xGprI-0001hA-NU
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 23:40:54 -0400
-Received: by mail-pg1-x535.google.com with SMTP id
- 41be03b00d2f7-cc1c9879395so1299028a12.1
- for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 20:40:52 -0700 (PDT)
+ id 1xGpsH-0001oC-90
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 23:41:54 -0400
+Received: by mail-pj1-x102f.google.com with SMTP id
+ 98e67ed59e1d1-3ab9268d90eso1792783a91.3
+ for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 20:41:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1791949251; x=1792554051; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1791949312; x=1792554112; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=2w4PbVTDLPLke88tgeVrGVDCtVHhNNxRQJ/2MKbzQ/4=;
- b=KsmoQLTNClh8sFCg3Xdgsh23/Ns8fflOOm5raE0e8CFZsSF3UjmYFg+9hNgE4TltgA
- 4RMDNphFI7VuA7OanHNCAmJ7QEJaNpcrKwsDo4L6+kmFLMgqnmsjGQXmS3gEtZ2XrBFF
- WZZcdx3iIyFgJPygmsb/jDQicDkivlxOAI4LUQ2qAhj6P3GHi5XRIm21ndHMa+dTuA5N
- ovD4xVjoCp28kDaA7wb0GxayUimWbxLcAv7Z2LhEmE6hH0NcKArxg9GWTJ6sym6o0nxe
- Gn2UiCRmap4b1iXctsMYxQDGj40+jr8QtIb8A3qGdmMO6pl7CgWH6WBANXn0eOWkvdoV
- RPmw==
+ bh=CPWVywykmMjhY28EXkEn+o4MKqXIZACMUINLYzr0uVQ=;
+ b=eKM/E7AmYFRi3kuSWwC4ZmefJS3FgfCYtowEmJI1nTUAVag5vOlqsq5DqDQjwzgjRA
+ zmyoBLHL10x83efWkFKjvhBL6OSmtuVykWnKIkoWlkAvLEHjeJO0Nw5lM16qP5p9XcEQ
+ +jlfWrd1KAZrNLBCTe0+XsT4OXgWl7oRyunouu8B6YwUde6b09c70TCvEpT5S9XjPW6r
+ HiJZ0Eb9MyqCq1jpHOhpFIBEKja6FLat3Tmo/XFTFxEz4utd1k3PgjuEByWzcf62KmoQ
+ cnSbQ1sL093pQT3PdVnLz6cCkM34TWgkkvqkTvd1OjGl/nXGjruf/2d5pZpLXgo8I63O
+ ilHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791949251; x=1792554051;
+ d=1e100.net; s=20260707; t=1791949312; x=1792554112;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=2w4PbVTDLPLke88tgeVrGVDCtVHhNNxRQJ/2MKbzQ/4=;
- b=KN7lxE9uH/YE3qZX+DF8kBmPms0H/a4HCRJZ+/TtSqJpI7UhVv/frYRlOgwy2mHcne
- HXo/CcAVzG5+lZsDRybYDd2RMs4MASWFqAqJj5y75OxYI59vkMOVMmrlWfQBiSTC3ZXF
- 5WJ0sjZVWxx3NmW80tRscEpZfP2wlBgKrRvB/Q2fAMI1cUsM1OU79voxr87+v8tfh935
- rpsqQLoc3BTIB1XrYGEPZAWVIg9/0C2PYo+mKwnGx6UZNx8wzAFdapVXodr82pXmeHHZ
- WWtvrUfFSxunVN3hytGBWT/LxXx8f7Pzu//a6GWqq2RSMgzuKq4o62VdqADfL4RdXwxb
- zMpw==
-X-Gm-Message-State: AFq9FYIC8ctjSsrKkm3of9fsVxY2WE6lHhSwXY/0ai9n2bWzFUYptq2N
- uFvIW+ZcrtmG8X1vA8yV3KzIG8nEz6BFuhc85KoHbeIT/n85g9e1TbElC5Oacw==
-X-Gm-Gg: AYBFou1wfxoguDHNUkKEd9QnlUF77PJJZVX1LuOtlmF824a5YQL63lWO9Zqlgq5rYDm
- TziM9mMqkk6XAYZDsx1gaL4kIa25TVbWauRU8Sj7/tYWaGlO+wbwTZs+mml8ufob7hLbZb2d0si
- +VWk/u16jACk8B5HwWQVRJn4HIRacfRr57g4aAKORzsRp3AKkXhSfARlVzojEVqUjSxGHge16xz
- VgHzTOdQq4DbYYT7TGvjhsfLxhy04eeZSx2LKlN2ngFdBbjaZqg5fMtv2tVB+ZLj0waRT+29u6X
- e52l2mVWOqfdJaz4MVveTUJhaSwjzJMZAVXSU5DCKqRHvEmLues5VvkJ2i/5WlGJVXd6CJ2avD1
- +hn7KkmvXdetn+UQxcsqPOzVQFbV85US2JElyr4un8qS2cv7xbToWTRTv5z0v706NgaNTyBBOf/
- Rg0r7HRTWmt+zOydbwejd+ss3UATVpSWoSMrfsfKVEwicg/CVBS++oNQWWuLlqt8ynyse0Dp1FA
- hPqxmfac/gBM5ASr4phAUquFdI=
-X-Received: by 2002:a17:90a:e70c:b0:39e:6a7e:ee1b with SMTP id
- 98e67ed59e1d1-3ab3ad2b1admr10952230a91.39.1791949251283; 
- Tue, 13 Oct 2026 20:40:51 -0700 (PDT)
+ bh=CPWVywykmMjhY28EXkEn+o4MKqXIZACMUINLYzr0uVQ=;
+ b=XmE0vkFsEUH/3z/vQwJfox9RNnwxwGuhzPwbe1YaQjVYo2JcdKCK37WqaENIq3LMKO
+ +2uXTzbnumvcyHytRJLpmvQPCI1kitoPv/a8WlbqUYtNKVvKUU0YAsiHX/zbwX33Xqzs
+ 2BIi4wkRlktMr/7eWOq1Mly++64rhmYvoc3h6mGmG85wKXM9rj1Wc+pLMN/vjc625s71
+ jQyN40xt/WrptLkAkQajz9v5tM25XSpOy7fqyLjS7DyjDUPUkMKZ/ZGdPrGMHIUw0Vvg
+ eDiUZnffl4G3CI5i52oQ5LqtEVj6Q1CdWlSHrUWjbEbnX6Jz6WLEwAqKGrhI+r5ZIxEv
+ Ts6g==
+X-Gm-Message-State: AFq9FYJl5TSqveUYbVhRVazQvleY8lOh9KXrbXfS3hKuHn9Pom4gXnDO
+ PkW7r85t9f9JklfetGruERhHlAmXPUceAp6xEGxpRVr0+s8WZ+AEiSYGE6wmRg==
+X-Gm-Gg: AYBFou2OVq/IOhCkIf7z4IH6c/2z7TF4u8C+XEZcxVXbV8QgxReN4uaue8Vo3kdanGB
+ aSrx0C86rE1VY3DfwT26S5hgffJZEaJ2kpWbZzlYR43+CHhqDHYMFnqP/8WhFaj5KR5e4Rse10X
+ +H8ev1hMbJTPZPmH0bGZIxiSKJrQ7PPt7kqBE3vezQpsPYwPFlDxJ3XmCQZ6IdGeb60liKZjPLW
+ u+8C2pmD9Vfjj3CHgqRV+liWrPal4MdqW6xQqkrr65Y6hHvz7MOHZqFfwuQxfxMbHA1PdfqyMZD
+ mVB86tKJLv7TaE6BAFuA4L1V6JVE8uyA0mAd2rSkGp/YDJ4oRJek8xspz4xyTl7hDg/6raocKVR
+ WjckbW0vc5GZFSoUujjTcH57TwePQMzeeCqUSfmMD9Sjv4BGRW96C1TFwSywno8OarmsV+4STet
+ qDg3WSgb294Ibd/JJQPdNKQew4uXc5hir9UoDahNY6oOoNtTHu5d91jHFJ+d5D7egEi0D7Rc0lA
+ zIKj4i7M9kp5v7e
+X-Received: by 2002:a17:90b:4b92:b0:3a2:b038:c931 with SMTP id
+ 98e67ed59e1d1-3ab3acc7b09mr10409097a91.40.1791949311894; 
+ Tue, 13 Oct 2026 20:41:51 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3ac61170b7bsm2321457a91.16.2026.10.13.20.40.48
+ 98e67ed59e1d1-3ac61170b7bsm2321457a91.16.2026.10.13.20.41.49
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 13 Oct 2026 20:40:50 -0700 (PDT)
+ Tue, 13 Oct 2026 20:41:51 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: Chao Liu <chao.liu.zevorn@gmail.com>,
+Cc: Rick Richard <rick@sloservers.com>,
  Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Tao Tang <tangtao1634@phytium.com.cn>,
- Alistair Francis <alistair.francis@wdc.com>,
- Nutty Liu <nutty.liu@hotmail.com>
-Subject: [PULL 29/52] target/riscv: add dret instruction
-Date: Wed, 14 Oct 2026 13:38:44 +1000
-Message-ID: <20261014033907.3332383-30-alistair.francis@wdc.com>
+ qemu-stable@nongnu.org, Alistair Francis <alistair.francis@wdc.com>
+Subject: [PULL 47/52] hw/riscv/virt-acpi-build: Fix the UART register width in
+ SPCR
+Date: Wed, 14 Oct 2026 13:39:02 +1000
+Message-ID: <20261014033907.3332383-48-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20261014033907.3332383-1-alistair.francis@wdc.com>
 References: <20261014033907.3332383-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::535;
- envelope-from=alistair23@gmail.com; helo=mail-pg1-x535.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
+ envelope-from=alistair23@gmail.com; helo=mail-pj1-x102f.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -106,111 +105,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Chao Liu <chao.liu.zevorn@gmail.com>
+From: Rick Richard <rick@sloservers.com>
 
-RISC-V Debug Specification:
-https://github.com/riscv/riscv-debug-spec/releases/tag/1.0
+The riscv virt board uses a 16550 UART with an 8-bit register stride,
+but the SPCR table reports 32, which looks to have been copied from
+arm virt, whose PL011 has a 32-bit stride.  Change it to the correct
+stride for a 16550.
 
-Add DRET decode/translate and a helper to leave Debug Mode and return
-to dpc. Executing DRET outside Debug Mode raises illegal instruction.
-
-Signed-off-by: Chao Liu <chao.liu.zevorn@gmail.com>
+Fixes: 3e6f1e61b4 ("hw/riscv/virt-acpi-build.c: Generate SPCR table")
+Signed-off-by: Rick Richard <rick@sloservers.com>
 Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Tested-by: Tao Tang <tangtao1634@phytium.com.cn>
-Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
-Message-ID: <20260928195902.2045235-4-daniel.barboza@oss.qualcomm.com>
+Message-ID: <20261005104008.214588-3-rick@sloservers.com>
+Cc: qemu-stable@nongnu.org
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/helper.h                          |  1 +
- target/riscv/insn32.decode                     |  1 +
- target/riscv/tcg/op_helper.c                   | 18 ++++++++++++++++++
- .../tcg/insn_trans/trans_privileged.c.inc      | 18 ++++++++++++++++++
- 4 files changed, 38 insertions(+)
+ hw/riscv/virt-acpi-build.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/target/riscv/helper.h b/target/riscv/helper.h
-index b7acb6fdc9..d7111ff4b2 100644
---- a/target/riscv/helper.h
-+++ b/target/riscv/helper.h
-@@ -132,6 +132,7 @@ DEF_HELPER_6(csrrw_i128, tl, env, int, tl, tl, tl, tl)
- #ifndef CONFIG_USER_ONLY
- DEF_HELPER_1(sret, tl, env)
- DEF_HELPER_1(mret, tl, env)
-+DEF_HELPER_1(dret, tl, env)
- DEF_HELPER_1(mnret, tl, env)
- DEF_HELPER_1(ctr_clear, void, env)
- DEF_HELPER_1(wfi, void, env)
-diff --git a/target/riscv/insn32.decode b/target/riscv/insn32.decode
-index 288ce8a554..795badc8a7 100644
---- a/target/riscv/insn32.decode
-+++ b/target/riscv/insn32.decode
-@@ -118,6 +118,7 @@ sctrclr     000100000100     00000 000 00000 1110011
- uret        0000000    00010 00000 000 00000 1110011
- sret        0001000    00010 00000 000 00000 1110011
- mret        0011000    00010 00000 000 00000 1110011
-+dret        0111101    10010 00000 000 00000 1110011
- wfi         0001000    00101 00000 000 00000 1110011
- sfence_vma  0001001    ..... ..... 000 00000 1110011 @sfence_vma
- 
-diff --git a/target/riscv/tcg/op_helper.c b/target/riscv/tcg/op_helper.c
-index b67c7718db..dbdaa64f5e 100644
---- a/target/riscv/tcg/op_helper.c
-+++ b/target/riscv/tcg/op_helper.c
-@@ -508,6 +508,24 @@ target_ulong helper_mret(CPURISCVState *env)
-     return retpc;
- }
- 
-+target_ulong helper_dret(CPURISCVState *env)
-+{
-+#ifdef CONFIG_USER_ONLY
-+    riscv_raise_exception(env, RISCV_EXCP_ILLEGAL_INST, GETPC());
-+    return 0;
-+#else
-+    target_ulong retpc;
-+
-+    if (!riscv_cpu_cfg(env)->ext_sdext || !env->debug_mode) {
-+        riscv_raise_exception(env, RISCV_EXCP_ILLEGAL_INST, GETPC());
-+    }
-+
-+    retpc = env->dpc & get_xepc_mask(env);
-+    riscv_cpu_leave_debug_mode(env);
-+    return retpc;
-+#endif
-+}
-+
- target_ulong helper_mnret(CPURISCVState *env)
- {
-     target_ulong retpc = env->mnepc;
-diff --git a/target/riscv/tcg/insn_trans/trans_privileged.c.inc b/target/riscv/tcg/insn_trans/trans_privileged.c.inc
-index ebbbb01179..f1a042d57f 100644
---- a/target/riscv/tcg/insn_trans/trans_privileged.c.inc
-+++ b/target/riscv/tcg/insn_trans/trans_privileged.c.inc
-@@ -125,6 +125,24 @@ static bool trans_mret(DisasContext *ctx, arg_mret *a)
- #endif
- }
- 
-+static bool trans_dret(DisasContext *ctx, arg_dret *a)
-+{
-+#ifndef CONFIG_USER_ONLY
-+    if (!ctx->cfg_ptr->ext_sdext) {
-+        return false;
-+    }
-+    decode_save_opc(ctx, 0);
-+    translator_io_start(&ctx->base);
-+    gen_update_pc(ctx, 0);
-+    gen_helper_dret(cpu_pc, tcg_env);
-+    exit_tb(ctx); /* no chaining */
-+    ctx->base.is_jmp = DISAS_NORETURN;
-+    return true;
-+#else
-+    return false;
-+#endif
-+}
-+
- static bool trans_mnret(DisasContext *ctx, arg_mnret *a)
- {
- #ifndef CONFIG_USER_ONLY
+diff --git a/hw/riscv/virt-acpi-build.c b/hw/riscv/virt-acpi-build.c
+index 8e516ec114..0475dcb5c6 100644
+--- a/hw/riscv/virt-acpi-build.c
++++ b/hw/riscv/virt-acpi-build.c
+@@ -246,7 +246,7 @@ spcr_setup(GArray *table_data, BIOSLinker *linker, RISCVVirtState *s)
+     AcpiSpcrData serial = {
+         .interface_type = 0x12,       /* 16550 compatible */
+         .base_addr.id = AML_AS_SYSTEM_MEMORY,
+-        .base_addr.width = 32,
++        .base_addr.width = 8,
+         .base_addr.offset = 0,
+         .base_addr.size = 1,
+         .base_addr.addr = s->memmap[VIRT_UART0].base,
 -- 
 2.55.0
 
