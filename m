@@ -4,142 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B28C8C3DA7A
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 18:28:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 543BAC3DA7A
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 18:43:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xH3hx-0007d1-Ms; Wed, 14 Oct 2026 14:28:10 -0400
+	id 1xH3wj-0002b5-CK; Wed, 14 Oct 2026 14:43:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xH3hv-0007XR-NN
- for qemu-devel@nongnu.org; Wed, 14 Oct 2026 14:28:08 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1xH3wf-0002ar-3j
+ for qemu-devel@nongnu.org; Wed, 14 Oct 2026 14:43:21 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xH3ht-00028R-Rw
- for qemu-devel@nongnu.org; Wed, 14 Oct 2026 14:28:07 -0400
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69EFpgo51672304
- for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 18:28:04 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 6/jR0KJPW4hafLMzT157L1ms0Lp+PixZVKSbDfjMHrQ=; b=X718rcPkRxoUNjXw
- gd/DZUCTIe7Lek0IMSQ8nt7uLkIqfjqGIKO/IB59qINn9ZsIPsDS9Oqs5DhN53wj
- bGzy4nLF+vKBRFb+4Jyu6dBh4Qk5SoLuT02X2HkJcOZQJ2AnjL8kdr0xBT/1M4Cg
- bUEnB7NSr6yR9PrRzsEP3Epp5zNU7yL4Hcc+fZqaOGvVMkKJrh5DbRcvrL6tVOoo
- wS0iAZsFj5jjDOv0MBBWraVh15s9Oa9V4JyC+OmBdOUhahj33gn5AdYISD1weU8M
- f6P/WamZuFdDhHcA33LULwZ/F20YRQRJkssW4VJOldYiEYBrWYWjXYw2SeJBabn/
- 2urJ3w==
-Received: from mail-dl1-f72.google.com (mail-dl1-f72.google.com [74.125.82.72])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hacrh8mam-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 18:28:04 +0000 (GMT)
-Received: by mail-dl1-f72.google.com with SMTP id
- a92af1059eb24-17dc865c94cso685364c88.1
- for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 11:28:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1792002484; x=1792607284; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=6/jR0KJPW4hafLMzT157L1ms0Lp+PixZVKSbDfjMHrQ=;
- b=J4oSu1LFkFlQwrCWcutssJniJkbHeA2wVevow7TzWK9cHY19BHcYWje3MeLp08ipn/
- kFAEu4oGzqEdyu4k6pDj6OQB765ApNYdfI0NIfUbIbKyHPpsdGprOBmJWrVmTtdxGOxa
- 3QCjIb+fnNUJ0v/tDFgnDz/pqFniVSJrt0ihy3fFEsEKejbIct3skUL5WLYTfw3SrFIo
- NX1RiJSj08gyJGYSam4WjNkQYjbY/ZHP4i0ZkMvdlDxD8wunM0AIEEGCp7Mzh99LDF9E
- 3t/nk7CE+jO8UbXueTzGNOY5uKGSoqLYOonH24oFbukdjj/QXd6lNHcm39Oxc7OfCcls
- xkeg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792002484; x=1792607284;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=6/jR0KJPW4hafLMzT157L1ms0Lp+PixZVKSbDfjMHrQ=;
- b=1oxXKB4YgmvmWjh5y/SWETjpefU5i7NmE72HvAsxbkCxQAX9chTbKF320tY1r4mJ/Y
- tMJnwcfOIs4gShybGa4OqnHa5hmBFDset5POqPgZ8vVG3go59SO5XfNp3ue6BMfyKRPv
- n/I1OgcaquttMHo1L7C/4YOkx998L1IwknNlZzsY9sdrqly1uFuihON6vH4MGkj4Rlu9
- QZzYhtBPSfEAi84If4K1jdKJiYPFaWSWhvTP9jsdlOHlOa9LQlEgpQFlNn42LkEzZ4eM
- 6wpSjJcltdHM3MsnNca348qYI094+Sv9/GuzuJt6XERKYsyIRdeIDjA4W1uWt+DAfoJS
- n81g==
-X-Gm-Message-State: AFq9FYIJxjRO7E6MWc869C/11eOIUiURBgF0mvHvxuXtq7wuID6e6/zK
- uMe/D0lJIggLUJm7W96iYIyvRZvDCVCZeNJ670c78axF4cuWqw89prvQs+1UljhEAUvHIHbbQF6
- 13oBj7pqrpvP75aLzIdaT3663mQysnkiIJMrCt05ln6iJ3+L5W5bH2kfOFpDrXX4LKA==
-X-Gm-Gg: AYBFou2ZH+bwGIHHQMbN4WMREZVS4fBDmGghVdjtBSjFwZJd2PuMwmTBgjuXUywSdkp
- /q8u0Qg6IkEv1G1N4oLNbrjurP18YAHSPNG/do4ynkttIQCW4pY5bPAQ4NQgKC7znVWw+dzAv1Z
- 28XhLjZekMgR+wQEr4bzjsEr/kvEAoCjkeR1/CfGS5q4L+0cUOTDrYlGH8egg0mPVHCUA5bYIsc
- A13tjeBnGgCPovKMqOjhvyGzULVnbMsByWpZL8SDtB8AChu7DaDdOzqzIRlaaXFQg0UR1vt1KLT
- 0fEgLe4jcJTRZ1HRdXAyg/lNNCnRYqiD4lnHQ9wK7Zrlzw+SIOykeCuJGDoi54gjdW2I60XDi+G
- VIS/UnYa1KwM1g8ty+BJNI82tbSS9C9Zhhukkvkn5l4nX/GhDo4VkchjpfR3xqd1jbH2aiQ==
-X-Received: by 2002:a05:7022:1605:b0:151:94a6:6f5f with SMTP id
- a92af1059eb24-16a5fc917b4mr27321544c88.10.1792002483487; 
- Wed, 14 Oct 2026 11:28:03 -0700 (PDT)
-X-Received: by 2002:a05:7022:1605:b0:151:94a6:6f5f with SMTP id
- a92af1059eb24-16a5fc917b4mr27321411c88.10.1792002481709; 
- Wed, 14 Oct 2026 11:28:01 -0700 (PDT)
-Received: from [192.168.1.199] (192-80-163-190.dyn.novuscom.net.
- [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-169a42407e7sm49133341c88.15.2026.10.14.11.28.00
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 14 Oct 2026 11:28:01 -0700 (PDT)
-Message-ID: <5cf6f17c-1a72-4add-beb2-be4498e94bbb@oss.qualcomm.com>
-Date: Wed, 14 Oct 2026 11:27:59 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/11] multi-target: add hexagon
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1xH3wc-0003mK-N4
+ for qemu-devel@nongnu.org; Wed, 14 Oct 2026 14:43:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1792003396;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=bJHXpmTmxzGi3FpR1RkO7Dt+U5YWqFIEZ9UmDdFeHlI=;
+ b=ZVFwmJDBIN4SGylKzE1MTTZ5bC3Sw1wK7VMMsvOy5Sj/TuhecZpX/ZvWDd/hkLqtuUuOgE
+ ysfLOlYoaFlDFyFV+QB3ViJZ0hPZqeVANP620M2sICP9WBc6z0sUjZwvaP0jstHFB3aD/W
+ iwNZjbQ4skGmMEVicHe4KoRF5lZj75M=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-56-wUBmDk6LMgKGntENV3-bmA-1; Wed,
+ 14 Oct 2026 18:43:14 +0000
+X-MC-Unique: wUBmDk6LMgKGntENV3-bmA-1
+X-Mimecast-MFC-AGG-ID: wUBmDk6LMgKGntENV3-bmA_1792003394
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0D8551955F1D
+ for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 18:43:14 +0000 (UTC)
+Received: from eblake.csb (headnet04.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.116])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 8FB0F1800347
+ for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 18:43:13 +0000 (UTC)
+From: Eric Blake <eblake@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Brian Cain <brian.cain@oss.qualcomm.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Alistair Francis <alistair.francis@wdc.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-References: <20261009225226.10657-1-pierrick.bouvier@oss.qualcomm.com>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <20261009225226.10657-1-pierrick.bouvier@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: X0HoU-pQft_NWs61uI212WtLoBuTgG34
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDE0MDA3MyBTYWx0ZWRfX0P9bC5nG4XG/
- ASslVEertpEtEOSvjCFManrVuFfCz5kdQoLgaKS6v2aWBf2VcB5qG9WyQk6PZHAIukHOVkYTAQh
- +NO4tJ9W+RuZv9pRumdYrgTglbldLiE=
-X-Proofpoint-GUID: X0HoU-pQft_NWs61uI212WtLoBuTgG34
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDE0MDA3MyBTYWx0ZWRfX+EWGXC2/EBGV
- DzMbV5WkAw1SXx3H4b0NBldz+A191U8HdC0xS7pLEjAP0b+NSzMDThhMyzDWBScS1nrgeJDnlBg
- 0DfYpAtesTgiGpQ9HhyVMKiyluO2pWrMmRH6kv+3IYgIWD5zeKWgJoXQah9IdXSwz2UxIF72q0R
- lBE+ujzo1nIl6kXScA8u39674RcB2lXaoFiOpmFehBRj1z40cOu+5V13jSY+N5TtQfQil0/arKy
- hr2VN5b6+1gd/gtXT894UEkQE7KaXuuSegUDXN1UW8I4F1tLqcmJmMdPjELrVDxSbdNWe0ry/mb
- qh9mjC+RqhxbGx7GAqq5oEyUiJSamzfy+JnzNlgt4RL+GklVDL3sQ9WuL/t0471THFVlLdkeT7v
- uhqROPecXPZ9euXHAnwtx21x/6RkDBVFMDnrnZ5fMLlxgMlhW1ylvYYcYbM8KR+uYt+NGeqlykD
- rByxswdt52vVE64Z1Ng==
-X-Authority-Analysis: v=2.4 cv=SYZi5fRu c=1 sm=1 tr=0 ts=6acfc9b4 cx=c_pps
- a=bS7HVuBVfinNPG3f6cIo3Q==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=Q9RrAthI1Nh1P9Vuh0AA:9 a=QEXdDO2ut3YA:10
- a=vBUdepa8ALXHeOFLBtFW:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-10-13_01,2026-10-14_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 bulkscore=0 phishscore=0 suspectscore=0 clxscore=1015
- spamscore=0 lowpriorityscore=0 impostorscore=0 adultscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610080000 definitions=main-2610140073
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Subject: [PULL v3 00/15] NBD patches through 2026-10-08
+Date: Wed, 14 Oct 2026 13:42:34 -0500
+Message-ID: <20261014184309.664714-17-eblake@redhat.com>
+MIME-Version: 1.0
+Content-type: text/plain
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=eblake@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 10
+X-Spam_score: 1.0
+X-Spam_bar: +
+X-Spam_report: (1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -155,54 +81,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/9/2026 3:52 PM, Pierrick Bouvier wrote:
-> This series makes hexagon compatible with the other ones we already integrated.
-> 
-> The biggest change is to introduce a semihosting interface, since existing arm
-> symbols conflict with hexagon ones. This is also need for when we'll integrate
-> riscv soon.
-> 
-> Pierrick Bouvier (11):
->   target/hexagon: prefix helpers conflicting with other arch
->   target-info: add target_hexagon
->   hw/hexagon/virt: make machine available for hexagon target only
->   hw/core/cpu: restrict tcg_ops to CONFIG_TCG only
->   semihosting: declare semihosting cpu ops
->   target/riscv: declare semihosting ops
->   target/hexagon: declare semihosting ops
->   target/arm: declare semihosting ops
->   semihosting: use new semihosting ops
->   semihosting: remove common_* functions
->   meson.build: add hexagon-softmmu to multi-target
-> 
->  hw/hexagon/virt.c                   |  2 ++
->  include/hw/core/cpu.h               |  8 +++++
->  include/qemu/target-info.h          |  7 ++++
->  include/semihosting/common-semi.h   | 24 +++++++++----
->  meson.build                         |  1 +
->  semihosting/arm-compat-semi.c       | 56 ++++++++++++++---------------
->  target-info.c                       |  5 +++
->  target/arm/common-semi-target.c     | 29 ++++++++++-----
->  target/arm/cpu.c                    |  4 +++
->  target/arm/internals.h              |  2 ++
->  target/hexagon/common-semi-target.c | 26 +++++++++-----
->  target/hexagon/cpu.c                |  2 ++
->  target/hexagon/gen_tcg_sys.h        |  2 +-
->  target/hexagon/helper.h             |  4 +--
->  target/hexagon/hex_mmu.c            |  2 +-
->  target/hexagon/hex_mmu.h            |  2 +-
->  target/hexagon/internal.h           |  2 ++
->  target/hexagon/op_helper.c          |  4 +--
->  target/hexagon/translate.c          |  4 +--
->  target/riscv/common-semi-target.c   | 29 ++++++++++-----
->  target/riscv/cpu.c                  |  4 +++
->  target/riscv/internals.h            |  2 ++
->  22 files changed, 151 insertions(+), 70 deletions(-)
-> 
+The following changes since commit 8ee6c77176cfee03be0ec7665b6652b2f31f1531:
 
-Sent v2, rebased on master:
-https://lore.kernel.org/qemu-devel/20261014182543.135965-1-pierrick.bouvier@oss.qualcomm.com/T/#t
+  Merge tag 'pull-ufs-20261012' of https://gitlab.com/jeuk20.kim/qemu into staging (2026-10-13 22:01:07 +0200)
 
-Regards,
-Pierrick
+are available in the Git repository at:
+
+  https://gitlab.com/ebblake/qemu.git tags/pull-nbd-2026-10-08-v3
+
+for you to fetch changes up to 9c4c3cb45b321b6365a1b03df14ca7449523aac0:
+
+  iotests/iothreads-nbd-export: Skip on s390 (2026-10-14 13:07:56 -0500)
+
+[v3: sending only the updated cover letter and patch 11/15]
+
+----------------------------------------------------------------
+NBD patches through 2026-10-08
+
+Several fixes, including:
+- Eric Blake: Update MAINTAINERS, support qemu-nbd -s -l
+- Fiona Ebner: Report flush error on qemu-img convert
+- Guillaume Vinke: Fix NBD client on dead connection
+- Denis V. Lunev: Fix postcopy dirty bitmap migration
+- Eric Farman: Several iotest improvements
+
+----------------------------------------------------------------
+Denis V. Lunev (3):
+      migration: add QEMU_COUNTED_STRING_SIZE for counted string buffers
+      migration/block-dirty-bitmap: fix postcopy abort with bitmaps on several nodes
+      iotests/migrate-bitmaps-postcopy-test: add a bitmap on a second node
+
+Eric Blake (2):
+      maint: Update eblake's staging repo
+      qemu-nbd: Support -s and -l at the same time
+
+Eric Farman (4):
+      iotests/nbd-in-qcow2-chain: use default machine
+      iotests/nbd-tls-iothread: skip on non-x86 hardware
+      iotests/fuse-truncate: skip if FUSE is not usable
+      iotests/iothreads-nbd-export: Skip on s390
+
+Fiona Ebner (4):
+      iotests: add test cases for failing flush after qemu-img convert
+      iotests.py: add filter_qemu()
+      block: report flush error during bdrv_close()
+      qemu-img: convert: flush target image after copying
+
+Guillaume Vincke (2):
+      nbd/client-connection: Fix client returning a closed channel
+      iotests: Add coverage for NBD connect thread start delay
+
+ docs/tools/qemu-nbd.rst                            |  7 +-
+ include/migration/qemu-file-types.h                |  6 +-
+ block.c                                            | 13 +++-
+ migration/block-dirty-bitmap.c                     | 62 ++++++++++++++--
+ migration/qemu-file.c                              |  5 +-
+ nbd/client-connection.c                            | 32 +++++++++
+ qemu-img.c                                         |  8 ++-
+ qemu-nbd.c                                         | 22 +++++-
+ MAINTAINERS                                        |  4 +-
+ tests/qemu-iotests/026                             | 10 +--
+ tests/qemu-iotests/026.out                         | 84 ++++++++++++++++++++++
+ tests/qemu-iotests/071                             |  2 +-
+ tests/qemu-iotests/071.out                         |  2 +
+ tests/qemu-iotests/080.out                         |  2 +
+ tests/qemu-iotests/098.out                         |  4 ++
+ tests/qemu-iotests/122                             | 33 +++++++++
+ tests/qemu-iotests/122.out                         | 17 +++++
+ tests/qemu-iotests/244                             |  2 +-
+ tests/qemu-iotests/244.out                         |  1 +
+ tests/qemu-iotests/iotests.py                      |  4 ++
+ tests/qemu-iotests/tests/file-io-error             |  2 +-
+ tests/qemu-iotests/tests/file-io-error.out         |  2 +
+ tests/qemu-iotests/tests/fuse-truncate             |  9 ++-
+ tests/qemu-iotests/tests/iothreads-nbd-export      |  5 ++
+ .../tests/migrate-bitmaps-postcopy-test            | 22 ++++++
+ tests/qemu-iotests/tests/nbd-in-qcow2-chain        |  2 +-
+ tests/qemu-iotests/tests/nbd-stale-connection      | 62 ++++++++++++++++
+ tests/qemu-iotests/tests/nbd-stale-connection.out  | 17 +++++
+ tests/qemu-iotests/tests/nbd-tls-iothread          |  4 ++
+ tests/qemu-iotests/tests/qemu-nbd-snapshots        | 81 +++++++++++++++++++++
+ tests/qemu-iotests/tests/qemu-nbd-snapshots.out    | 39 ++++++++++
+ tests/qemu-iotests/tests/qsd-migrate               |  5 +-
+ tests/qemu-iotests/tests/qsd-migrate.out           |  1 +
+ 33 files changed, 538 insertions(+), 33 deletions(-)
+ create mode 100755 tests/qemu-iotests/tests/nbd-stale-connection
+ create mode 100644 tests/qemu-iotests/tests/nbd-stale-connection.out
+ create mode 100755 tests/qemu-iotests/tests/qemu-nbd-snapshots
+ create mode 100644 tests/qemu-iotests/tests/qemu-nbd-snapshots.out
+
+-- 
+2.56.0
+
 
