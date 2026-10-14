@@ -4,86 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4E89CC6B1A
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 03:44:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BEC0CC6B1C
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 03:45:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGprD-0006yX-IP; Tue, 13 Oct 2026 23:40:47 -0400
+	id 1xGprC-0006sC-1B; Tue, 13 Oct 2026 23:40:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1xGprA-0006oz-55
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 23:40:44 -0400
-Received: from mail-pg1-x531.google.com ([2607:f8b0:4864:20::531])
+ id 1xGpr7-0006ZN-A8
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 23:40:41 -0400
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1xGpr8-0001fN-Fq
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 23:40:43 -0400
-Received: by mail-pg1-x531.google.com with SMTP id
- 41be03b00d2f7-cd60c5da24cso1520020a12.0
- for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 20:40:42 -0700 (PDT)
+ id 1xGpr5-0001f2-G9
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 23:40:41 -0400
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-2e8fe8e343fso11952105ad.2
+ for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 20:40:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1791949241; x=1792554041; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1791949238; x=1792554038; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=Fwbjr1m8WtrQ/Aa7wVElqbsirpE225vewLAnJ1kGdRo=;
- b=MZF0Q/LjMyAyVkdaALS7ZyL19RP2zBpc35kFOipZave/uzKyM1KhLRJ4LcxVjJdNqm
- g7PxYfZLwb87A0LrLuHAWFqQNXM7UMSpSecxTShUwhIvk1jGjUOLAqDRAS5gZAZCsjM1
- 5xqqtfZnbUAXMEcqzq8Y6KqBGJN1feF3VOxmlinLdTug3M68Qcmg9m2bY+Ht+jBSP63f
- yFHUMludmvr+l+vEWANqfxosQBauRdOH2hObAgEDU8fZFwSc3gUfQYgIQ8U6NkTGh/jW
- 6xtU3+5nAGPwMDYaEEjSIaLwKrw8kyxU5ElztxVNqNNmwrs5QAiyK5U20e+reRQeCswQ
- HJNw==
+ bh=xFNjfPuUAVqU31Pm7ELh8jcYlJfnMJdLu8Ehq+rkfgU=;
+ b=FIIiFoRLpteLbGIdoCuiYt2Fktreih9ECDkLShcPb4h8H6Rm25996amTZtYasey0jp
+ snF6wtT3VGQKFvpaIeNOcP8vtO1RSobTzLlT3uFoVPJ/ssIZtpM4JgiDE3kATGQg3yjM
+ ceWSifLudRDAWKNEt9vdpjAVVBTF9O2V2n/KhREr/7CrJNpF7X68+9gmnBSs2rSdFX25
+ BjAlhbtWBv8YcBgfzwRkyINsKa/sxdLPubrzHGtJVUi40stfcdH+DCnaxANHErUTWIf0
+ eBAnO7UHE/OuIZ+K3UlmX/ezvuysdvsEFgX6hf1sn8wY0RbDa4EFANVp1YAtmSvZfHXL
+ fRmg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791949241; x=1792554041;
+ d=1e100.net; s=20260707; t=1791949238; x=1792554038;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=Fwbjr1m8WtrQ/Aa7wVElqbsirpE225vewLAnJ1kGdRo=;
- b=1YyQkpTyZ0NSAU9PCByzKyGHhTiGRE9bXauTjLyfEvRs3jKGz68Ie8AKd7igonZSHn
- GoyWKiyL+bw3FQPgJrS2/GvPZhIYQtTydr6g/zFeVNROOEf2cNb7hFJc5/PHnAKahoaa
- +t2ZYFfa5yIz3XLMUjxcbYaJKRHgXePNFNt+CQOFPT2cj42Q48+bsoTMqy1oJ7ANvVrF
- HqEGL+4ZlFrzjr0R8Acy/fNhhsWoh47csVCMEU+faNOJKpIsPb9EdgSOuYKYbbqAUYbd
- IS1UJyckMpfERqjSkjONnalgEtZ6cTzdTVsOiMnRF3+jgOQPAOyoFKwLWukXRrTap9E0
- HskQ==
-X-Gm-Message-State: AFq9FYK+yDbYlBfODH6OXh4gmYA9uuo/Ss+X13MGppTuYs1aCybI68Oi
- RzigpxQjDF73iPu7m41kmu3RhOQf05L4ZL7dvxOvld/VEor8pz5AFo4wPXw6xw==
-X-Gm-Gg: AYBFou14LT/Wrvx21Q+9DG9wgVi3CNCtDblpQYnDSvEZmAUGYDemmczRcBbGxfDODFP
- fE4k2DhZeFdyoFTAEQ0lOJeDHDtfexRdswYe6KWNqGpuC0V/3A9ABNPEKtnUro7zaLr4Q2hhO42
- F9UtyGZxUYXtL3mpA7wU7E+Wl94aWTyfWTHUjBDLKccBgqOYmMvkQJIdpaIbWkUTaNN4tfxiFza
- GTtWPSJpJMFb9twvXfwGBAJRlprInClTrQXTMKOPpghshq5vXk9aqtwT6BjjBpBdmw7JnCEZnHp
- xuLIuDL5yWv+KNQn9LhoZH5mq9kXs/qD7Le/oSM6PDMPjUotGmrnUxaYZfDrfljolFNe+epXb5R
- pAc0/FqHeilCHqc1kyVBzl8IeyjI9Jc56xdv9BB2RJ61OkZYxr7VM8Mxqci0sF8iTZA2f2lsHNE
- EAQvqEl1KYp/30PjSX1pqGkQtkaSkuryGCY5KoWBrXffo6CnSWxzQ/+R16+nRdzVK36fC2zlYIS
- SuIJq59BGdUuUI+
-X-Received: by 2002:a17:90b:3c04:b0:3ab:39e5:6268 with SMTP id
- 98e67ed59e1d1-3ab3a92f39fmr12598151a91.53.1791949241178; 
- Tue, 13 Oct 2026 20:40:41 -0700 (PDT)
+ bh=xFNjfPuUAVqU31Pm7ELh8jcYlJfnMJdLu8Ehq+rkfgU=;
+ b=MIH2C/Yg9DnV2CyjpY7xRkdNC7/YoL3F7xVR8WOidNeqrcwf552vydjNDlVf9Ptz4f
+ WXOIiIc7hRmyKL7yPVHc7e35EriLnwFZ4QWZ/CXtRWKVwKM322u9bZOBF437V8E6Fx+w
+ fDgXPsH8pco0xRnJoD6ti+LulDtgNga0ATk/x4lku0cs8m7r9ybWKXjHig+A50CFuFhC
+ WXNmgsHZjTltfDmZzuz+p+rgHh/CoyLRXKnBmJywjibXaVe4Y1Bi2Xrsg0/p8nj+sWWK
+ sTjmY5Ci6KDElzbtMlKVXpjMs9bETHY65nhasRczNUOtHhll6gvv6wzFJJVG3GqSABDu
+ 8KEQ==
+X-Gm-Message-State: AFq9FYI9YLYGm8IyaREFcRG+i9DKWgPPMZGww4Kp/qyewWIFwdRUpQ1H
+ rcheJMrQUOhEfrzRhjgNgFg85uTlJ2TZClyzjpV6pdnoptcYhwFJSDluv/u5XA==
+X-Gm-Gg: AYBFou0ZWe4zDEC5lCLXZMYBgzBbBF3qL8kezaMUDs+wWkD2X9pmYnZjkxsWfpNrhmA
+ eTz+bqhnPaigyCZM3glctdhvWUyHr9jEHUQR0Ez1I+cwcVKOtWFE9PwcTN7YmgDnHLU50uYUh+k
+ UurWa/oSUxoq2hZx5mE7la/rZuD/brrXzt+nCwMzgYcjDqROZh9xg7T6dKd0a6mRwRFdy3yWlYD
+ sZFH35duobT5NBrTYGusR6kFg/2TDhSbtCHV3ggFYvrhxET4a484aI2RVDpeCsGykVHcuZyfCsE
+ 886LnKxbpm4/fpCbFWPOGwTfyR3ZGs/yvdf3A8p4qHrhs/e97+31j7SVbDEMuHyrUpvIFB/EMAc
+ tfGmiYcNZjU/schUSchxqzwMwjtgTpnuJvPBYX/sAyZ7bAqWQh5ezsG4sU4Uw0M294Nk+nzvmi9
+ nLMbznIhIugRFWLpbag+3JSYp0ycHkA5gjP/lkZsIhATdvnA7//fHFJq1RsXuxtHEzOjURYggif
+ dk2zpHnWtCJUox0
+X-Received: by 2002:a17:90b:28c8:b0:3a7:a463:54bf with SMTP id
+ 98e67ed59e1d1-3ab3a99825cmr10376536a91.33.1791949238058; 
+ Tue, 13 Oct 2026 20:40:38 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3ac61170b7bsm2321457a91.16.2026.10.13.20.40.38
+ 98e67ed59e1d1-3ac61170b7bsm2321457a91.16.2026.10.13.20.40.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 13 Oct 2026 20:40:40 -0700 (PDT)
+ Tue, 13 Oct 2026 20:40:37 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 26/52] target/riscv: Access MIP atomically
-Date: Wed, 14 Oct 2026 13:38:41 +1000
-Message-ID: <20261014033907.3332383-27-alistair.francis@wdc.com>
+Subject: [PULL 25/52] target/riscv: Add riscv_cpu_get_mip()
+Date: Wed, 14 Oct 2026 13:38:40 +1000
+Message-ID: <20261014033907.3332383-26-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20261014033907.3332383-1-alistair.francis@wdc.com>
 References: <20261014033907.3332383-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::531;
- envelope-from=alistair23@gmail.com; helo=mail-pg1-x531.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x631.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -109,64 +107,153 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 
-Make riscv_cpu_get_mip() read env->mip with qatomic_read() and
-riscv_cpu_update_mip() store it with qatomic_set(). This makes
-MIP reads and writes safe for riscv_cpu_has_work(), which may
-run without the BQL.
+Route MIP reads in the interrupt, CSR, ACLINT and pending-IRQ
+code through a single riscv_cpu_get_mip() accessor, so the
+implementation can change in one place.
 
-Reported-by: Paolo Bonzini <pbonzini@redhat.com>
+riscv_cpu_update_mip() now reads the old value under the BQL,
+so the returned value matches the one written.
+
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260930174508.81497-7-philmd@oss.qualcomm.com>
+Message-ID: <20260930174508.81497-6-philmd@oss.qualcomm.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/cpu.c            | 3 ++-
- target/riscv/tcg/cpu_helper.c | 3 ++-
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ target/riscv/cpu.h            |  7 +++++++
+ hw/intc/riscv_aclint.c        |  2 +-
+ target/riscv/cpu.c            |  8 +++++++-
+ target/riscv/tcg/cpu_helper.c | 12 +++++++-----
+ target/riscv/tcg/csr.c        |  6 ++++--
+ 5 files changed, 26 insertions(+), 9 deletions(-)
 
+diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+index 24b22032e1..f9f0146f56 100644
+--- a/target/riscv/cpu.h
++++ b/target/riscv/cpu.h
+@@ -688,6 +688,13 @@ bool riscv_cpu_translate_for_debug(CPUState *cs, vaddr addr,
+ bool riscv_cpu_exec_interrupt(CPUState *cs, int interrupt_request);
+ void riscv_cpu_swap_hypervisor_regs(CPURISCVState *env);
+ int riscv_cpu_claim_interrupts(RISCVCPU *cpu, uint64_t interrupts);
++/**
++ * riscv_cpu_get_mip:
++ * @env: CPURISCVState
++ *
++ * Returns: the current value of the Machine Interrupt Pending (MIP) register.
++ */
++uint64_t riscv_cpu_get_mip(const CPURISCVState *env);
+ /**
+  * riscv_cpu_update_mip:
+  * @env: CPURISCVState
+diff --git a/hw/intc/riscv_aclint.c b/hw/intc/riscv_aclint.c
+index 2d133d0dcf..4bd359c338 100644
+--- a/hw/intc/riscv_aclint.c
++++ b/hw/intc/riscv_aclint.c
+@@ -438,7 +438,7 @@ static uint64_t riscv_aclint_swi_read(void *opaque, hwaddr addr,
+             qemu_log_mask(LOG_GUEST_ERROR,
+                           "aclint-swi: invalid hartid: %zu", hartid);
+         } else if ((addr & 0x3) == 0) {
+-            return (swi->sswi) ? 0 : ((env->mip & MIP_MSIP) > 0);
++            return (swi->sswi) ? 0 : ((riscv_cpu_get_mip(env) & MIP_MSIP) > 0);
+         }
+     }
+ 
 diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 3e1fde207e..2bf9c15d9a 100644
+index e08cb2f356..3e1fde207e 100644
 --- a/target/riscv/cpu.c
 +++ b/target/riscv/cpu.c
-@@ -22,6 +22,7 @@
- #include "qemu/ctype.h"
- #include "qemu/log.h"
- #include "qemu/guest-random.h"
-+#include "qemu/atomic.h"
- #include "cpu.h"
- #include "cpu_vendorid.h"
- #include "target/riscv/tcg/csr.h"
-@@ -957,7 +958,7 @@ int riscv_cpu_vsirq_pending(CPURISCVState *env)
+@@ -917,8 +917,9 @@ uint64_t riscv_cpu_all_pending(CPURISCVState *env)
+     uint32_t gein = get_field(env->hstatus, HSTATUS_VGEIN);
+     uint64_t vsgein = (env->hgeip & (1ULL << gein)) ? MIP_VSEIP : 0;
+     uint64_t vstip = (env->vstime_irq) ? MIP_VSTIP : 0;
++    uint64_t mip = riscv_cpu_get_mip(env);
  
- uint64_t riscv_cpu_get_mip(const CPURISCVState *env)
- {
--    return env->mip;
-+    return qatomic_read(&env->mip);
+-    return (env->mip | vsgein | vstip) & env->mie;
++    return (mip | vsgein | vstip) & env->mie;
  }
  
+ int riscv_cpu_mirq_pending(CPURISCVState *env)
+@@ -954,6 +955,11 @@ int riscv_cpu_vsirq_pending(CPURISCVState *env)
+                                     (irqs | irqs_f_vs), env->hviprio);
+ }
+ 
++uint64_t riscv_cpu_get_mip(const CPURISCVState *env)
++{
++    return env->mip;
++}
++
  bool riscv_cpu_has_work(CPUState *cs)
+ {
+     RISCVCPU *cpu = RISCV_CPU(cs);
 diff --git a/target/riscv/tcg/cpu_helper.c b/target/riscv/tcg/cpu_helper.c
-index 7ffee54777..2ea0095178 100644
+index 6b44be4df8..7ffee54777 100644
 --- a/target/riscv/tcg/cpu_helper.c
 +++ b/target/riscv/tcg/cpu_helper.c
-@@ -20,6 +20,7 @@
- #include "qemu/osdep.h"
- #include "qemu/log.h"
- #include "qemu/main-loop.h"
-+#include "qemu/atomic.h"
- #include "cpu.h"
- #include "internals.h"
- #include "pmu.h"
-@@ -584,7 +585,7 @@ uint64_t riscv_cpu_update_mip(CPURISCVState *env, uint64_t mask, uint64_t value)
+@@ -567,7 +567,7 @@ void riscv_cpu_interrupt(CPURISCVState *env)
+ 
+     vstip = env->vstime_irq ? MIP_VSTIP : 0;
+ 
+-    if (env->mip | vsgein | vstip | irqf) {
++    if (riscv_cpu_get_mip(env) | vsgein | vstip | irqf) {
+         cpu_interrupt(cs, CPU_INTERRUPT_HARD);
+     } else {
+         cpu_reset_interrupt(cs, CPU_INTERRUPT_HARD);
+@@ -576,14 +576,15 @@ void riscv_cpu_interrupt(CPURISCVState *env)
+ 
+ uint64_t riscv_cpu_update_mip(CPURISCVState *env, uint64_t mask, uint64_t value)
+ {
+-    uint64_t old = env->mip;
++    uint64_t old;
+ 
+     /* No need to update mip for VSTIP */
+     mask = ((mask == MIP_VSTIP) && env->vstime_irq) ? 0 : mask;
+ 
      BQL_LOCK_GUARD();
  
-     old = riscv_cpu_get_mip(env);
--    env->mip = (old & ~mask) | (value & mask);
-+    qatomic_set(&env->mip, (old & ~mask) | (value & mask));
+-    env->mip = (env->mip & ~mask) | (value & mask);
++    old = riscv_cpu_get_mip(env);
++    env->mip = (old & ~mask) | (value & mask);
  
      riscv_cpu_interrupt(env);
  
+@@ -2085,10 +2086,11 @@ void riscv_cpu_do_interrupt(CPUState *cs)
+     bool async = !!(cs->exception_index & RISCV_EXCP_INT_FLAG);
+     target_ulong cause = cs->exception_index & RISCV_EXCP_INT_MASK;
+     uint64_t deleg = async ? env->mideleg : env->medeleg;
++    uint64_t mip = riscv_cpu_get_mip(env);
+     bool s_injected = env->mvip & (1ULL << cause) & env->mvien &&
+-        !(env->mip & (1ULL << cause));
++                                   !(mip & (1ULL << cause));
+     bool vs_injected = env->hvip & (1ULL << cause) & env->hvien &&
+-        !(env->mip & (1ULL << cause));
++                                    !(mip & (1ULL << cause));
+     bool smode_double_trap = false;
+     uint64_t hdeleg = async ? env->hideleg : env->hedeleg;
+     const bool prev_virt = env->virt_enabled;
+diff --git a/target/riscv/tcg/csr.c b/target/riscv/tcg/csr.c
+index a3351428cb..a030614434 100644
+--- a/target/riscv/tcg/csr.c
++++ b/target/riscv/tcg/csr.c
+@@ -3861,7 +3861,7 @@ static RISCVException rmw_mip64(CPURISCVState *env, int csrno,
+     if (mask) {
+         old_mip = riscv_cpu_update_mip(env, mask, (new_val & mask));
+     } else {
+-        old_mip = env->mip;
++        old_mip = riscv_cpu_get_mip(env);
+     }
+ 
+     if (csrno != CSR_HVIP) {
+@@ -4604,8 +4604,10 @@ static RISCVException read_vstopi(CPURISCVState *env, int csrno,
+     hviprio = get_field(env->hvictl, HVICTL_IPRIO);
+ 
+     if (gein) {
++        uint64_t mip = riscv_cpu_get_mip(env);
++
+         vsgein = (env->hgeip & (1ULL << gein)) ? MIP_VSEIP : 0;
+-        vseip = env->mie & (env->mip | vsgein) & MIP_VSEIP;
++        vseip = env->mie & (mip | vsgein) & MIP_VSEIP;
+         if (gein <= env->geilen && vseip) {
+             siid[scount] = IRQ_S_EXT;
+             siprio[scount] = IPRIO_MMAXIPRIO + 1;
 -- 
 2.55.0
 
