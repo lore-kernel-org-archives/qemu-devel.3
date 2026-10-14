@@ -4,121 +4,147 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91F6EC3DA7A
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 20:13:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6AD2CC6B2C
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 20:14:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xH5MA-0003Yk-SP; Wed, 14 Oct 2026 16:13:48 -0400
+	id 1xH5Mm-0004m6-Is; Wed, 14 Oct 2026 16:14:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1xH5LU-0003A9-GV; Wed, 14 Oct 2026 16:13:08 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1xH5Mj-0004gp-OZ
+ for qemu-devel@nongnu.org; Wed, 14 Oct 2026 16:14:21 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1xH5LS-0004by-IQ; Wed, 14 Oct 2026 16:13:04 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69EEiAnR2561646; Wed, 14 Oct 2026 20:12:30 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:reply-to:subject:to; s=pp1;
- bh=HHi46qyzCsOXPl5STcN6bxjNe1E65jAl+2XZKn/yKzg=; b=XU3j8agYLbTi
- BuYg9meD48BCNSf/ozeAI6n2R2UXH7mg5OaMxH5rPKNBu9QhJBIPM4b7hiZp1bxP
- GVwvJ0k6j1h1gNUFAl9rv6BADGMYZaoIe/nbUpEwek+NkjRFEqtxOUkK/h4mJz+z
- dP+pg61h/asaVsj7tAAVFn8VTuX6pC/Boemqp6v007OxkNSmzYTnHySThZCi0Hc6
- wrwlzSDKtSKBgCwOwDGLoxNZDDWO8i/98c7vBKlrbN9WQBnB6PBiidQaHFaCw6cI
- jaPly3qRYyRkBmSfYSskZ3ryoTgZD7MfZ0FRN+i+NLwdmeKqZLj+4AWxAZt8XigW
- zfWLoNHzYQ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4h7dugpj0c-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Wed, 14 Oct 2026 20:12:29 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69EIeuBY634438; Wed, 14 Oct 2026 20:12:28 GMT
-Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4h9q2ypguc-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 14 Oct 2026 20:12:28 +0000 (GMT)
-Received: from smtpav02.dal12v.mail.ibm.com (smtpav02.dal12v.mail.ibm.com
- [10.241.53.101])
- by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 69EKCSXU15467242
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 14 Oct 2026 20:12:28 GMT
-Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1AF8758051;
- Wed, 14 Oct 2026 20:12:28 +0000 (GMT)
-Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 3AF005805A;
- Wed, 14 Oct 2026 20:12:27 +0000 (GMT)
-Received: from mambor8.rchland.ibm.com (unknown [9.10.239.198])
- by smtpav02.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 14 Oct 2026 20:12:27 +0000 (GMT)
-Message-ID: <0e5c23a09b897952529f4a7566e5eab5f9858615.camel@linux.ibm.com>
-Subject: Re: [PATCH v2 47/50] tests/qtest: ina238: cover a cleared
- calibration per channel
-From: Miles Glenn <milesg@linux.ibm.com>
-To: Emmanuel Blot <emmanuel.blot@free.fr>, qemu-devel@nongnu.org
-Cc: =?ISO-8859-1?Q?C=E9dric?= Le Goater <clg@kaod.org>, Peter Maydell
- <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy
- Lee <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>, Kane Chen
- <kane_chen@aspeedtech.com>, Andrew Jeffery <andrew@codeconstruct.com.au>,
- Joel Stanley <joel@jms.id.au>, Pierrick Bouvier
- <pierrick.bouvier@oss.qualcomm.com>, qemu-arm@nongnu.org, Patrick Leis
- <venture@google.com>, Fabiano Rosas <farosas@suse.de>, Laurent Vivier
- <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-ppc@nongnu.org,
- qemu-riscv@nongnu.org, Philippe
- =?ISO-8859-1?Q?Mathieu-Daud=E9?= <philmd@oss.qualcomm.com>
-Date: Wed, 14 Oct 2026 15:12:26 -0500
-In-Reply-To: <20261012-bmc-minerva-v2-47-4c3dff084ec9@free.fr>
-References: <20261012-bmc-minerva-v2-0-4c3dff084ec9@free.fr>
- <20261012-bmc-minerva-v2-47-4c3dff084ec9@free.fr>
-Organization: IBM
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.28.5 (3.28.5-27.el8_10) 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Authority-Analysis: v=2.4 cv=Cr0q4X4D c=1 sm=1 tr=0 ts=6acfe22e cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8
- a=CyY-uauUVvmj6ffrK_IA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: WKY8-DO2vw_CiQBv7PN1gE5H9mLoAGOU
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDE0MDA3OCBTYWx0ZWRfX03OI2YuYn+Pi
- KVaOM1XbbyiGXFm7pCwC9t+Ec78DF4bf+B0I2lnc468YKKeAAi6HZ0UXm/KGnTmkysTKqNNspya
- tkWrcN6d8g2AYV4SXhjuHMnwJbNQn1nvuFrjvX0hPdjInMmJ0/T9NmRJ0c58m5TJ7fa9q0U+yYX
- 3q5wWRerC0tJunmxlDUkGcCqV52Aibzd7mIEASKyQ2jSXualu7z/LOSP9TGgMpGwaDSO0Da+OSE
- EH2RD3e5nEVAa3xPwB6O/ACU4XBR6yBICYD0d0Uv4F2zmFFirrSWh8NgXBWXRne+OgGgvgQNzOs
- GSiUKvX01yppY6z37IMp47vIuULjWGG6gl7Glhfk79s50FQLVp+PWlRL43uNekoN2jqqQIZV030
- WDDhI2S1en/A+Nd/uhtEA1JJK9KoUi9LDmRKmku1Qaor2r9I6qVrU1UZnnN68GGJ8SxX67DJPwO
- mEwLEml55vAIBVM5Sqw==
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDE0MDA3OCBTYWx0ZWRfXwaM2EOedPyZ9
- rLXeiN/YjNJtyI1wxF2YyuUURy8p5hOE+LWsHfD+QczFkqnlFsB0HjGNNYx1e2VbT2ruZ6Egylr
- A9sx66E2RvrFNdZOzRzIgxuweF6FAuo=
-X-Proofpoint-ORIG-GUID: _oeQL1gDu3ClkOZ4zlD1I9nuW_OF2VaQ
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1xH5Mh-0004fd-PV
+ for qemu-devel@nongnu.org; Wed, 14 Oct 2026 16:14:21 -0400
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 69EEb88l1013328
+ for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 20:14:18 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ gaVnZLNu8pbTheViy0bX2nlNS9Ea/r8baqHvUMnP8zU=; b=mV4mXOs5k+7fej9u
+ 2HGg6TKbCYZEcGONYbvk9ngfpJdpYALEKOtFxr/u1Lp3Um2+MEBzCsNbqjCbrGMz
+ GICR2hBrPkq5YilbuwoWMNkrb1xhnBWyCQQ38oz0axqCBOzjB85waxUev04mvtTL
+ Ifzjjk3UvYqbD02fSm9fbQ0AgNArwv71OZV32PB1211isDsENSEiUmFld1/Mg1u3
+ DR6fGrF94QChzCK4jfaX2rPVuKfAIhxjJERyXrlCh+YkRmF3IsqJCLISMn7RrWaV
+ 63Myx9FMebhiY7zZWPiktsg/p/a6xqC3abdBGgY2hO/20D11D9zk1lauz+Cyt1cp
+ tqOTGQ==
+Received: from mail-dy1-f200.google.com (mail-dy1-f200.google.com
+ [74.125.82.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ha80ct8s0-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 20:14:17 +0000 (GMT)
+Received: by mail-dy1-f200.google.com with SMTP id
+ 5a478bee46e88-35d4538fd74so4176211eec.1
+ for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 13:14:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1792008857; x=1792613657; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=gaVnZLNu8pbTheViy0bX2nlNS9Ea/r8baqHvUMnP8zU=;
+ b=dYizaghOABbb/4siwx5f7isQ49rmQCmQCbouJUq64dYqii1xE39C178cXCxp/BnDo0
+ j4gAwccLVg2WpbmIvemYN4v+lw1UKg/wl94nMPB9iUb94zjK+BHsZxM5Bd9vmrvTr44P
+ gtLT7XfIYsesdBmAz4bSNitkuAM6iXD632zpL6/CpWDjKI7mSHrtBhHhuRQWkK/+MuUK
+ XedANC2CZ/Mei724NE4eZpoTR8uNhF1lYswI4ogHgYdnnyoKJAhS10rVlkd2hqRWqED1
+ 54AjtTpdnr4Fc13M1F3g5rfI1Oe1XmWhnuEKNdZJu7Xx0cfHItUsDAlhpCp+0zHErcYj
+ 76eQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1792008857; x=1792613657;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=gaVnZLNu8pbTheViy0bX2nlNS9Ea/r8baqHvUMnP8zU=;
+ b=wjcrNxHx1xMJN0w8U7H1x3W6VFWdHA8eUZvFdYCPo/YfvfV3UNcSXk5cRjzqbhbb9F
+ +oV5Gd4/+4QApsfEiCPdWhHPkspbyPmoMHw8H/KT/Q2jqq2rtq6RyMFcl766Kgstega0
+ rphtAzI+8dgxnj1QpJKiLPKScdJFt6NkAX2OLL8SXdcCbsNNoslsbcV+1SwizGstgCNZ
+ 2IwYoIjhHl7pWkH96WA/3zp6YHMVYQJwTCRN4nUEjoc6oWc99cLfUSUYY2o35BEIn1As
+ 546T7Bo3RorDmVVo6ON3MHjLZ2kZ9cWtQ/smYTNBBqt3o3EBqOc0r2G6PTxQjlHc6odE
+ 1qCw==
+X-Forwarded-Encrypted: i=1;
+ AKwUvByb4u12sTV3+M9p/XmhLRk8OSo2BJEleGDWUIZDbet9KWUl5SWRsXbcBjzupCiu2xR4xG/bwOlKbw3q@nongnu.org
+X-Gm-Message-State: AFq9FYJZEzhCsT9Gvn+BrKFytvVvyqjKFX5OkAbNENm/rIboOKrl1lCK
+ fuk1QP4iDyssBIa/2Z3pTZefcS77priqCqDIlcmsTYQA3bbFYuZ2o+VjZomtxx/hfy7EUVP5JSU
+ 6l1pOciny38KBTGCN5b72HLaPo+SqRDfrA7ipg+EiemwDGQy6ndpWJK3mHw==
+X-Gm-Gg: AYBFou1kGji1gE32tvrrh5f3EkoVHq8Gsa6J5Nx6bmTUwEbS9rlaY8GRfmctluZplqs
+ b69Wc8isSSBsuEUgeeZSBM0fovREe9z5ZR15Lab5ZwnWg+0zKKBAZYh/p/Y/BE2Jw5Sz3Yxjdor
+ i0fxqjfP6yTbWG0XfBgEsD1wvMree9YwsqvKza8doY7YAx7jfeoAzdolds4+r6ay+EO4Ir7dyeY
+ 5LAWPWETxWCzhjR6R5cqVJpslXFKnDps36XCzKbEaytW+GRpHbyEkxv2wNd5k2VpVyEN0Q8rkd/
+ qyPWcU4edMhcABXWP06WDsZUmC5RvtUfnETiK+tdg+waOg92Jwh+zLV9nRgdh8kpJDBNNKMraK5
+ RC/5FSi10WVFLMTkVzvcvzZd4lTVJcJDbTwM9DwsYuja+ezK0xZOLkyaqNTzmFyNhsbnVYw==
+X-Received: by 2002:a05:7301:2ad:b0:351:5b99:5f36 with SMTP id
+ 5a478bee46e88-3537e01eb1dmr21927582eec.9.1792008856937; 
+ Wed, 14 Oct 2026 13:14:16 -0700 (PDT)
+X-Received: by 2002:a05:7301:2ad:b0:351:5b99:5f36 with SMTP id
+ 5a478bee46e88-3537e01eb1dmr21927551eec.9.1792008856133; 
+ Wed, 14 Oct 2026 13:14:16 -0700 (PDT)
+Received: from [192.168.1.199] (192-80-163-190.dyn.novuscom.net.
+ [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-35a352d4b05sm37323854eec.19.2026.10.14.13.14.14
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 14 Oct 2026 13:14:15 -0700 (PDT)
+Message-ID: <2cfd5712-bc91-4600-836a-914f7dd7cd85@oss.qualcomm.com>
+Date: Wed, 14 Oct 2026 13:14:13 -0700
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 05/11] semihosting: declare semihosting cpu ops
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ qemu-devel@nongnu.org
+Cc: Brian Cain <brian.cain@oss.qualcomm.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Anton Johansson <anjo@rev.ng>
+References: <20261014182543.135965-1-pierrick.bouvier@oss.qualcomm.com>
+ <20261014182543.135965-6-pierrick.bouvier@oss.qualcomm.com>
+ <98eb67b3-af20-4f94-b13e-b179dbac233a@oss.qualcomm.com>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <98eb67b3-af20-4f94-b13e-b179dbac233a@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDE0MDA4MCBTYWx0ZWRfX0UQIKJEZg8V5
+ cEyQ4KTJhdLjW/Z517McJ+ZZDskUEgFXH0O5ha3Rip8t2zUmWleSZbTe/NufPZzdhZyKy4w3e0r
+ iomZ7iBdi3XxAhTuCIjfMlTunKTzPJ8=
+X-Proofpoint-GUID: JMcW1G2BLtJWVwmtEYae2sak5OlgPqFj
+X-Proofpoint-ORIG-GUID: JMcW1G2BLtJWVwmtEYae2sak5OlgPqFj
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDE0MDA4MCBTYWx0ZWRfXzZ/RXRscDyOv
+ 9+8AauKZjyafCJbjKVkCgO5cEQLAIhXjmuTjbIQ1VupEL/cNj+slWXXmu1wLRb0fLpiGx2uQnj1
+ Gh+WoIXp/TVJLxhKs+aDvkoQot63D2W95h7SNuyEvE0jcrQQJIUo43DzKBv3OLEN5lWLVyj5OPa
+ u4XE2ayuUtEIN87leLn+dfw2RAkrRRsIfemEncC/LdlHyOaDKOfoYrv1AhqPTi0ceDE5DP6C2gJ
+ RcgNqkjeq5e2muxIWdrp+9qbOCUuGB4BDdcTmz0yEsLBHLBMVLI/g+l+VFHiajO8xDbyVZorip4
+ N+7iwhZpihOPZzkUUIxvc5NnUZ+gHJQiFGHUdxKqV23w9+tGj8uLX/0GyiyAJVDT9ZJetqJmcpB
+ 4b85QAYDL8wB2W4YmCYpsIwqNgYx3+0D+rUS0dvhBeIY3sG6eL5XAZpCEuLdYhoDhHFzicL/7uM
+ dgLVYAL9JaOIw9Tt1fw==
+X-Authority-Analysis: v=2.4 cv=JegpPkKV c=1 sm=1 tr=0 ts=6acfe299 cx=c_pps
+ a=PfFC4Oe2JQzmKTvty2cRDw==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
+ a=EUspDBNiAAAA:8 a=0chu2OoBQL8WuwJmgwcA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=6Ab_bkdmUrQuMsNx7PHu:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-10-13_01,2026-10-14_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 spamscore=0 adultscore=0 priorityscore=1501 suspectscore=0
- malwarescore=0 clxscore=1015 impostorscore=0 lowpriorityscore=0 phishscore=0
+ adultscore=0 clxscore=1015 phishscore=0 suspectscore=0 priorityscore=1501
+ bulkscore=0 lowpriorityscore=0 impostorscore=0 spamscore=0 malwarescore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610080000 definitions=main-2610140078
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=milesg@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+ reason=mlx scancount=1 engine=8.22.0-2610080000 definitions=main-2610140080
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -132,106 +158,45 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: milesg@linux.ibm.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
-
-Thanks,
-
-Glenn
-
-On Mon, 2026-10-12 at 16:32 +0200, Emmanuel Blot via qemu development
-wrote:
-> Verify that without a calibration value the current and power
-> registers read zero, whichever channels the mode converts.
+On 10/14/2026 12:43 PM, Philippe Mathieu-Daudé wrote:
+> On 14/10/26 20:25, Pierrick Bouvier wrote:
+>> This allows a specific target to declare its implementation of 
+>> semihosting.
+>> 
+>> Reviewed-by: Brian Cain <brian.cain@oss.qualcomm.com> Signed-off-
+>> by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> --- 
+>> include/hw/core/cpu.h             |  6 ++++++ include/semihosting/
+>> common-semi.h | 17 +++++++++++++++++ 2 files changed, 23
+>> insertions(+)
+>> 
+>> diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h index
+>> 76801444a16..456154df6f6 100644 --- a/include/hw/core/cpu.h +++ b/
+>> include/hw/core/cpu.h @@ -98,6 +98,9 @@ struct AccelCPUClass; /*
+>> see sysemu-cpu-ops.h */ struct SysemuCPUOps; +/* see semihosting/
+>> common-semi.h */ +struct SemihostingCPUOps; + /** * CPUClass: *
+>> @class_by_name: Callback to map -cpu command line model name to an 
+>> @@ -186,6 +189,9 @@ struct CPUClass { #ifdef CONFIG_TCG /* when
+>> TCG is not available, this pointer is NULL */ const TCGCPUOps
+>> *tcg_ops; + +    /* when target does not implement semihosting,
+>> this pointer is NULL */ +    const struct SemihostingCPUOps
+>> *semi_ops;
 > 
-> Signed-off-by: Emmanuel Blot <emmanuel.blot@free.fr>
-> ---
->  tests/qtest/ina238-test.c | 48 +++++++++++++++++++++++++++++++++++++++++++++++
->  1 file changed, 48 insertions(+)
-> 
-> diff --git a/tests/qtest/ina238-test.c b/tests/qtest/ina238-test.c
-> index e7dd50a822..4e4146461c 100644
-> --- a/tests/qtest/ina238-test.c
-> +++ b/tests/qtest/ina238-test.c
-> @@ -282,6 +282,30 @@ static void test_zero_cal(void *obj, void *data, QGuestAllocator *alloc)
->      g_assert_cmpuint(i2c_get24(dev, REG_POWER), ==, 0);
->  }
->  
-> +/* Clearing SHUNT_CAL zeroes both derived registers in any mode */
-> +static void test_zero_cal_channels(void *obj, void *data,
-> +                                   QGuestAllocator *alloc)
-> +{
-> +    QI2CDevice *dev = (QI2CDevice *)obj;
-> +    static const uint16_t modes[] = { 0x9000, 0xA000, 0xF000 };
-> +    size_t idx;
-> +
-> +    for (idx = 0; idx < ARRAY_SIZE(modes); idx++) {
-> +        i2c_set16(dev, REG_CONFIG, CONFIG_RST);
-> +        i2c_set16(dev, REG_SHUNT_CAL, 0x0FD2);
-> +        qmp_ina238_set("shunt-voltage", 97200000);
-> +        qmp_ina238_set("bus-voltage", 48000000);
-> +        g_assert_cmphex(i2c_get16(dev, REG_CURRENT), !=, 0x0000);
-> +        g_assert_cmpuint(i2c_get24(dev, REG_POWER), !=, 0);
-> +
-> +        i2c_set16(dev, REG_ADC_CONFIG, modes[idx]);
-> +        i2c_set16(dev, REG_SHUNT_CAL, 0x0000);
-> +
-> +        g_assert_cmphex(i2c_get16(dev, REG_CURRENT), ==, 0x0000);
-> +        g_assert_cmpuint(i2c_get24(dev, REG_POWER), ==, 0);
-> +    }
-> +}
-> +
->  /* ADCRANGE changes the shunt LSB, not the current divisor. */
->  static void test_adcrange(void *obj, void *data, QGuestAllocator *alloc)
->  {
-> @@ -458,6 +482,27 @@ static void test_alert_power(void *obj, void *data, QGuestAllocator *alloc)
->      g_assert_cmphex(i2c_get16(dev, REG_DIAG_ALRT) & DIAG_POL, ==, 0);
->  }
->  
-> +/* Clearing SHUNT_CAL drops the power alert with the power reading */
-> +static void test_alert_power_zero_cal(void *obj, void *data,
-> +                                      QGuestAllocator *alloc)
-> +{
-> +    QI2CDevice *dev = (QI2CDevice *)obj;
-> +
-> +    i2c_set16(dev, REG_CONFIG, CONFIG_RST);
-> +    qmp_ina238_set("shunt-voltage", 97200000);
-> +    qmp_ina238_set("bus-voltage", 48000000);
-> +    i2c_set16(dev, REG_SHUNT_CAL, 0x0FD2);
-> +    i2c_set16(dev, REG_PWR_LIMIT, 0x0100);
-> +    g_assert_cmphex(i2c_get16(dev, REG_DIAG_ALRT) & DIAG_POL, ==, DIAG_POL);
-> +
-> +    /* Continuous shunt-only: the power register is not reconverted. */
-> +    i2c_set16(dev, REG_ADC_CONFIG, 0xA000);
-> +    i2c_set16(dev, REG_SHUNT_CAL, 0x0000);
-> +
-> +    g_assert_cmpuint(i2c_get24(dev, REG_POWER), ==, 0);
-> +    g_assert_cmphex(i2c_get16(dev, REG_DIAG_ALRT) & DIAG_POL, ==, 0);
-> +}
-> +
->  /* Two thresholds crossed at once are reported simultaneously (multi-alert) */
->  static void test_alert_multi(void *obj, void *data, QGuestAllocator *alloc)
->  {
-> @@ -733,6 +778,7 @@ static void ina238_register_nodes(void)
->                   NULL);
->      qos_add_test("power", "ina238", test_power, NULL);
->      qos_add_test("zero-cal", "ina238", test_zero_cal, NULL);
-> +    qos_add_test("zero-cal-channels", "ina238", test_zero_cal_channels, NULL);
->      qos_add_test("adcrange", "ina238", test_adcrange, NULL);
->      qos_add_test("mode-shutdown", "ina238", test_mode_shutdown, NULL);
->      qos_add_test("mode-triggered", "ina238", test_mode_triggered, NULL);
-> @@ -742,6 +788,8 @@ static void ina238_register_nodes(void)
->      qos_add_test("alert-bus", "ina238", test_alert_bus, NULL);
->      qos_add_test("alert-temp", "ina238", test_alert_temp, NULL);
->      qos_add_test("alert-power", "ina238", test_alert_power, NULL);
-> +    qos_add_test("alert-power-zero-cal", "ina238", test_alert_power_zero_cal,
-> +                 NULL);
->      qos_add_test("alert-multi", "ina238", test_alert_multi, NULL);
->      qos_add_test("alert-latch", "ina238", test_alert_latch, NULL);
->      qos_add_test("alert-latch-persist", "ina238", test_alert_latch_persist,
-> 
+> Could these be *const?
+
+This field is not statically initialized, so we can't use *const.
+It would trigger: In function ‘arm_cpu_class_init’:
+target/arm/cpu.c:2669:18: error: assignment of read-only member ‘semi_ops’
+ 2669 |     cc->semi_ops = &arm_semihosting_ops;
+      |
+
+Current const ensures we can't modify callbacks set (
+cpu->cc->semi_ops-> (const)), which is what matters the most.
+
+Note: that's the same pattern than all other ops.
+
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 
 
