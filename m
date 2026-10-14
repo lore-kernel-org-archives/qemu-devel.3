@@ -4,117 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93266CC6B2A
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 09:47:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74732CC6B1A
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 09:56:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGvWn-0004AT-Fo; Wed, 14 Oct 2026 05:44:05 -0400
+	id 1xGvi2-0005ru-7K; Wed, 14 Oct 2026 05:55:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xGvWi-00042U-Oc
- for qemu-devel@nongnu.org; Wed, 14 Oct 2026 05:44:03 -0400
-Received: from mail-dl1-x1231.google.com ([2607:f8b0:4864:20::1231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xGvWf-000218-PC
- for qemu-devel@nongnu.org; Wed, 14 Oct 2026 05:44:00 -0400
-Received: by mail-dl1-x1231.google.com with SMTP id
- a92af1059eb24-16079d54c17so4972882c88.0
- for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 02:43:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1791971036; x=1792575836; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=xH4HXArnI0iYFFjnxwL4/aBpDHYrDt+E6XMLGPgH69E=;
- b=bHxl9hxcGa40Q5aa/L5gGWORPveqbIClSD21ueN2Vvr8FVyMlF3VtBCsd62k+xurhM
- pG6ejelfkiXoqdCWcVZrWpsc78C/8uerij6vZkvYDTr2o9tQxGXLodhpenphQf5Vn7gg
- VZBD6BqgXOGTxHKfwMuScqmT3i4cn908Fv7jWNrUUSRTdFa7YMo8ICJuyvFeiVllS6FL
- rbLjByOvTiod5Zys9mGsRhi1g8MJXJULvPICGPjak5w7D6hdzp/fJbb5XvxJF1s2WRqP
- FXk67uVR4UNi9fFkP1xefa7nMXWdqcmsp9b3Knzcv5lB1Hi3eajgGU2vwTWG+ONFMdSP
- WVCQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791971036; x=1792575836;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=xH4HXArnI0iYFFjnxwL4/aBpDHYrDt+E6XMLGPgH69E=;
- b=dPnGQayx3Tugl5txaaYuljUNIcUcxxZtC1HFS4OGIpEQ95D+Me2nJplBNuAbVrOxCu
- 46ggCp6WlP4P3VVE/wjfeh5YuJchIu+Az6GxCBhpiD9hgYU0NiPCe3j1fJ/FXoKuBwbq
- yXxw7UKGsnzzjPahjNdlVKZ2zzg0gW3V8DyNudBIei/TSlAx66uMYXkEUy4REi5ol5MV
- RkY8TatBAg0CYMScNOpKr5BdpWECYmvdgAL26RavFk+tvD+Lo/yK4BQjFIXnLb62p0RF
- VZXebNO2xrb1XwkK2y9uCM78h/3BD7M/2XxaKE2TAzQ1UPVTeFs+Xn8CLADwcKY3QIAk
- ZMiw==
-X-Gm-Message-State: AFq9FYLuA7z0gNcS6gAoM8280nTXAxcYpA4WqWhd/e+ex7+wkWFcraQO
- ZkV2q+yKp97Ev1WY5MLs6r+MfbvDh7OfpowBPdICwZ78aYISjdFaek/lexZJd29cUU4=
-X-Gm-Gg: AYBFou38RMJz5ENacwPkS/bGhOqu8hCc1rZISlOXB2/DKrAv91ImyFnSjNsPIBpGmjR
- VMv/zxRR/Xl7IdozyDbkQAv85gUlj54613UN6QmjQOzEk5Mn2LneJ6wQ3H/7ZO09vNQnBGOivgp
- Re2V3ADkSX45nZg4WmnL6PrYmDE39wh5bTklSU3bgFN+WX5Bti8VxMnssuGrZF7VvlvG92J2/tf
- xH53SGLjX9d92iCAk4UcMJ87IkQUbthOZ5jy3NgMB6sQVduRhVQpDxIoq7awrU4zXYGnfMYJN/e
- HD/6mhNpnRvfBzg7hHZlII3F1fo9TyB6v2ThV/ce1bQUK4HBFv5RVD8VXGSWff/bmHyI1wNSoHt
- 6Dgn7FBGkGrOLJl5f/gwwDnW7hbOjqJK/g21TghmpRuba/EN2F60M9sd8/lY4/iFCfDRtlCpW57
- tUih/aPSBAY6tO0N3gJOSUis5ZfMweRwvilUTLMF/srhLBVm/s8CPANgo38Pin1EmahZiv3S8t0
- 1kC5/a+8hgm0rhzuQ==
-X-Received: by 2002:a05:7022:e884:b0:17e:6de6:6a1a with SMTP id
- a92af1059eb24-17e6de66ab6mr1572535c88.8.1791971036191; 
- Wed, 14 Oct 2026 02:43:56 -0700 (PDT)
-Received: from DESKTOP-Q716RM7 ([103.94.185.75])
- by smtp.googlemail.com with ESMTPSA id
- a92af1059eb24-169a31f6f5csm44348380c88.11.2026.10.14.02.43.48
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 14 Oct 2026 02:43:55 -0700 (PDT)
-From: Yonggang Luo <luoyonggang@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Alistair Francis <alistair.francis@wdc.com>,
- Cornelia Huck <cohuck@redhat.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Philippe Mathieu-Daude <philmd@mailo.com>, Eric Blake <eblake@redhat.com>,
- Eric Farman <farman@linux.ibm.com>, Ani Sinha <anisinha@redhat.com>,
- qemu-s390x@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- David Hildenbrand <david@kernel.org>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Alexander Bulekov <alxndr@bu.edu>, Laurent Vivier <lvivier@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- qemu-arm@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>, qemu-riscv@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>, Fabiano Rosas <farosas@suse.de>,
- Song Gao <17746591750@163.com>, Fam Zheng <fam@euphon.net>,
- Markus Armbruster <armbru@redhat.com>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>,
- Chao Liu <chao.liu@processmission.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Max Filippov <jcmvbkbc@gmail.com>, Weiwei Li <liwei1518@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Brian Cain <brian.cain@oss.qualcomm.com>,
- Darren Kenny <darren.kenny@oracle.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Stafford Horne <shorne@gmail.com>
-Subject: [PATCH 24/34] hw/m68k/virt: use unique QOM name
-Date: Wed, 14 Oct 2026 17:41:39 +0800
-Message-ID: <20261014094224.1976-9-luoyonggang@gmail.com>
-X-Mailer: git-send-email 2.55.0.windows.3
-In-Reply-To: <20261014094224.1976-1-luoyonggang@gmail.com>
-References: <20261014094224.1976-1-luoyonggang@gmail.com>
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1xGvi0-0005rm-1q
+ for qemu-devel@nongnu.org; Wed, 14 Oct 2026 05:55:40 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1xGvhx-0003gV-5Z
+ for qemu-devel@nongnu.org; Wed, 14 Oct 2026 05:55:39 -0400
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8DxjdKPUc9qj7cVAA--.62858S3;
+ Wed, 14 Oct 2026 17:55:27 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by front1 (Coremail) with SMTP id qMiowJCxPs+KUc9qCTAsAA--.27216S2;
+ Wed, 14 Oct 2026 17:55:24 +0800 (CST)
+Subject: Re: [PATCH v5 15/23] target/loongarch: add LVZ to invtlb
+To: SignKirigami <prcups@krgm.moe>, qemu-devel@nongnu.org
+Cc: Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
+References: <cover.1791514848.git.prcups@krgm.moe>
+ <e864669d1a8d97f6d70677ef43ce925eef7ed4a8.1791514848.git.prcups@krgm.moe>
+From: Bibo Mao <maobibo@loongson.cn>
+Message-ID: <c0d7b38d-cd8b-e363-1051-d2f68dbe417c@loongson.cn>
+Date: Wed, 14 Oct 2026 17:56:45 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <e864669d1a8d97f6d70677ef43ce925eef7ed4a8.1791514848.git.prcups@krgm.moe>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1231;
- envelope-from=luoyonggang@gmail.com; helo=mail-dl1-x1231.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-CM-TRANSID: qMiowJCxPs+KUc9qCTAsAA--.27216S2
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoW3Wr1Uuw43Kr1kCry7AFWrWFX_yoWxJFWkpr
+ W7Crs8KFW0k397X3WfJan0gr1UJa1UKw4xX3WSq34SkwsrJr9Y9r1qyw4a9FyrAw45Wr4I
+ yayYvw1jgFyUWFgCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUv2b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
+ xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
+ 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r106r15McIj6I8E87Iv
+ 67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
+ AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02
+ F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jrv_JF
+ 1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7Cj
+ xVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r
+ 1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU8j-
+ e5UUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -36
+X-Spam_score: -3.7
+X-Spam_bar: ---
+X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.783,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -130,91 +81,185 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Set the parent and versioned QOM types to m68k-virt so M68K virt no
-longer collides with other virt-machine types in one process. Keep
-the -M / help / migration name as virt-* via
-machine_class_set_name().
 
-Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
----
- hw/m68k/virt.c | 37 ++++++++++++++++++++++---------------
- 1 file changed, 22 insertions(+), 15 deletions(-)
 
-diff --git a/hw/m68k/virt.c b/hw/m68k/virt.c
-index e52546e4fab..6f141488752 100644
---- a/hw/m68k/virt.c
-+++ b/hw/m68k/virt.c
-@@ -8,6 +8,7 @@
-  */
- 
- #include "qemu/osdep.h"
-+#include "qemu/target-info.h"
- #include "qemu/units.h"
- #include "qemu/guest-random.h"
- #include "exec/target_page.h"
-@@ -322,16 +323,19 @@ static void virt_machine_class_init(ObjectClass *oc, const void *data)
-     mc->default_ram_id = "m68k_virt.ram";
- }
- 
--static const TypeInfo virt_machine_info = {
--    .name         = MACHINE_TYPE_NAME("virt"),
--    .parent       = TYPE_MACHINE,
--    .abstract     = true,
--    .class_init   = virt_machine_class_init,
--    .is_available = target_m68k,
--};
-+#define TYPE_M68K_VIRT_MACHINE \
-+    (target_combined_binary() ? MACHINE_TYPE_NAME("m68k-virt") : \
-+                                MACHINE_TYPE_NAME("virt"))
- 
- static void virt_machine_register_types(void)
- {
-+    const TypeInfo virt_machine_info = {
-+        .name = TYPE_M68K_VIRT_MACHINE,
-+        .parent = TYPE_MACHINE,
-+        .abstract = true,
-+        .class_init = virt_machine_class_init,
-+        .is_available = target_m68k,
-+    };
-     type_register_static(&virt_machine_info);
- }
- 
-@@ -346,21 +350,24 @@ type_init(virt_machine_register_types)
-         MACHINE_VER_SYM(options, virt, __VA_ARGS__)(mc); \
-         mc->desc = "QEMU " MACHINE_VER_STR(__VA_ARGS__) " M68K Virtual Machine"; \
-         MACHINE_VER_DEPRECATION(__VA_ARGS__); \
-+        machine_class_set_name(mc, "virt-" MACHINE_VER_STR(__VA_ARGS__)); \
-         if (latest) { \
-             mc->alias = "virt"; \
-         } \
-     } \
--    static const TypeInfo MACHINE_VER_SYM(info, virt, __VA_ARGS__) = \
--    { \
--        .name = MACHINE_VER_TYPE_NAME("virt", __VA_ARGS__), \
--        .parent = MACHINE_TYPE_NAME("virt"), \
--        .class_init = MACHINE_VER_SYM(class_init, virt, __VA_ARGS__), \
--        .is_available = target_m68k, \
--    }; \
-     static void MACHINE_VER_SYM(register, virt, __VA_ARGS__)(void) \
-     { \
-+        const TypeInfo virt_machine_info = \
-+        { \
-+            .name = target_combined_binary() ? \
-+                    MACHINE_VER_TYPE_NAME("m68k-virt", __VA_ARGS__) : \
-+                    MACHINE_VER_TYPE_NAME("virt", __VA_ARGS__), \
-+            .parent = TYPE_M68K_VIRT_MACHINE, \
-+            .class_init = MACHINE_VER_SYM(class_init, virt, __VA_ARGS__), \
-+            .is_available = target_m68k, \
-+        }; \
-         MACHINE_VER_DELETION(__VA_ARGS__); \
--        type_register_static(&MACHINE_VER_SYM(info, virt, __VA_ARGS__)); \
-+        type_register_static(&virt_machine_info); \
-     } \
-     type_init(MACHINE_VER_SYM(register, virt, __VA_ARGS__));
- 
--- 
-2.55.0.windows.3
+On 2026/10/9 上午11:05, SignKirigami wrote:
+> Add op 0x9, 0xa-0xf to instruction invtlb to support vm level 1.
+> 
+> Signed-off-by: SignKirigami <prcups@krgm.moe>
+> Signed-off-by: Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
+> ---
+>   .../tcg/insn_trans/trans_privileged.c.inc     | 34 +++++++++++++
+>   target/loongarch/tcg/tlb_helper.c             | 51 ++++++++++++++++---
+>   2 files changed, 77 insertions(+), 8 deletions(-)
+> 
+> diff --git a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
+> index 493ed7f24b..00e8f61e42 100644
+> --- a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
+> +++ b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
+> @@ -328,6 +328,10 @@ static bool trans_invtlb(DisasContext *ctx, arg_invtlb *a)
+>           return false;
+>       }
+>   
+> +    if (!avail_LVZ(ctx) && a->imm > 0x6) {
+> +        return false;
+> +    }
+> +
+>       switch (a->imm) {
+>       case 0x0:
+>       case 0x1:
+> @@ -352,6 +356,36 @@ static bool trans_invtlb(DisasContext *ctx, arg_invtlb *a)
+>           gen_helper_invtlb_page_asid_or_g(tcg_env, rj, rk,
+>                                            tcg_constant_i32(0));
+>           break;
+> +    case 0x9:
+> +    case 0x10:
+> +    case 0x11:
+> +    case 0x12:
+> +    case 0x13:
+> +    case 0x14:
+> +    case 0x15:
+> +    case 0x16:
+> +        //TODO: refine 0x9-0x16
+> +        gen_helper_invtlb_all(tcg_env, rj, tcg_constant_i32(0),
+> +                              tcg_constant_i32(0));
+> +        break;
+> +    case 0xa:
+> +        gen_helper_invtlb_all_g(tcg_env, rj, tcg_constant_i32(1),
+> +                                tcg_constant_i32(1));
+> +        break;
+> +    case 0xb:
+> +        gen_helper_invtlb_all_g(tcg_env, rj, tcg_constant_i32(0),
+> +                                tcg_constant_i32(1));
+> +        break;
+> +    case 0xc:
+> +        gen_helper_invtlb_all_asid(tcg_env, rj, tcg_constant_i32(1));
+> +        break;
+> +    case 0xd:
+> +        gen_helper_invtlb_page_asid(tcg_env, rj, rk, tcg_constant_i32(1));
+> +        break;
+> +    case 0xe:
+> +        gen_helper_invtlb_page_asid_or_g(tcg_env, rj, rk,
+> +                                         tcg_constant_i32(1));
+> +        break;
+>       default:
+>           return false;
+>       }
+> diff --git a/target/loongarch/tcg/tlb_helper.c b/target/loongarch/tcg/tlb_helper.c
+> index 60c7193283..c02b7c2472 100644
+> --- a/target/loongarch/tcg/tlb_helper.c
+> +++ b/target/loongarch/tcg/tlb_helper.c
+> @@ -599,9 +599,18 @@ void helper_tlbflush(CPULoongArchState *env, uint32_t vm_level)
+>   void helper_invtlb_all(CPULoongArchState *env, target_ulong info, uint32_t op,
+>                          uint32_t to_guest)
+>   {
+> +    uint16_t gid = to_guest ? (info & 0xff) : get_tgid(env);
+> +
+> +    if (to_guest && env_vm_level(env) == VM_LEVEL1) {
+> +        do_raise_exception(env, EXCCODE_IPE, GETPC());
+> +    }
+> +
+> +    to_guest |= env_vm_level(env) == VM_LEVEL1;
+> +
+>       for (int i = 0; i < LOONGARCH_TLB_MAX; i++) {
+> -        env->tlb[i].tlb_misc = FIELD_DP64(env->tlb[i].tlb_misc,
+> -                                          TLB_MISC, E, 0);
+> +        LoongArchTLB *tlb = &env->tlb[i];
+> +        if ((op == 0 && to_guest == 0) || tlb_entry_matches_gid(tlb, gid))
+> +            tlb->tlb_misc = FIELD_DP64(tlb->tlb_misc, TLB_MISC, E, 0);
+>       }
+>       tlb_flush(env_cpu(env));
+>   }
+if gtlb instruction is removed, I think helper_invtlb_xxx APIs can be 
+simplified and remove parameter to_guest.
+
+Regards
+Bibo Mao
+> @@ -609,11 +618,19 @@ void helper_invtlb_all(CPULoongArchState *env, target_ulong info, uint32_t op,
+>   void helper_invtlb_all_g(CPULoongArchState *env, target_ulong info, uint32_t g,
+>                            uint32_t to_guest)
+>   {
+> +    uint16_t gid = to_guest ? (info & 0xff) : get_tgid(env);
+> +
+> +    if (to_guest && env_vm_level(env) == VM_LEVEL1) {
+> +        do_raise_exception(env, EXCCODE_IPE, GETPC());
+> +    }
+> +
+> +    to_guest |= env_vm_level(env) == VM_LEVEL1;
+> +
+>       for (int i = 0; i < LOONGARCH_TLB_MAX; i++) {
+>           LoongArchTLB *tlb = &env->tlb[i];
+>           uint8_t tlb_g = FIELD_EX64(tlb->tlb_entry0, TLBENTRY, G);
+>   
+> -        if (tlb_g == g) {
+> +        if (tlb_g == g && tlb_entry_matches_gid(tlb, gid)) {
+>               tlb->tlb_misc = FIELD_DP64(tlb->tlb_misc, TLB_MISC, E, 0);
+>           }
+>       }
+> @@ -624,13 +641,19 @@ void helper_invtlb_all_asid(CPULoongArchState *env, target_ulong info,
+>                               uint32_t to_guest)
+>   {
+>       uint16_t asid = info & R_CSR_ASID_ASID_MASK;
+> +    uint16_t gid = to_guest ? ((info >> 16) & 0xff) : get_tgid(env);
+> +
+> +    if (to_guest) {
+> +        do_raise_exception(env, EXCCODE_IPE, GETPC());
+> +    }
+> +    to_guest |= env_vm_level(env);
+>   
+>       for (int i = 0; i < LOONGARCH_TLB_MAX; i++) {
+>           LoongArchTLB *tlb = &env->tlb[i];
+>           uint8_t tlb_g = FIELD_EX64(tlb->tlb_entry0, TLBENTRY, G);
+>           uint16_t tlb_asid = FIELD_EX64(tlb->tlb_misc, TLB_MISC, ASID);
+>   
+> -        if (!tlb_g && (tlb_asid == asid)) {
+> +        if (!tlb_g && tlb_asid == asid && tlb_entry_matches_gid(tlb, gid)) {
+>               tlb->tlb_misc = FIELD_DP64(tlb->tlb_misc, TLB_MISC, E, 0);
+>           }
+>       }
+> @@ -640,12 +663,19 @@ void helper_invtlb_all_asid(CPULoongArchState *env, target_ulong info,
+>   void helper_invtlb_page_asid(CPULoongArchState *env, target_ulong info,
+>                                target_ulong addr, uint32_t to_guest)
+>   {
+> -    int asid = info & 0x3ff;
+> +
+> +    uint16_t asid = info & R_CSR_ASID_ASID_MASK;
+> +    uint16_t gid = to_guest ? ((info >> 16) & 0xff) : get_tgid(env);
+>       const LoongArchTLB *tlb;
+>       tlb_match func;
+>   
+> +    if (to_guest && env_vm_level(env)) {
+> +        do_raise_exception(env, EXCCODE_IPE, GETPC());
+> +    }
+> +    to_guest |= env_vm_level(env);
+> +
+>       func = tlb_match_asid;
+> -    tlb = loongarch_tlb_search_cb(env, addr, asid, func, to_guest, 0);
+> +    tlb = loongarch_tlb_search_cb(env, addr, asid, func, to_guest, gid);
+>       if (tlb) {
+>           invalidate_tlb(env, tlb - env->tlb, to_guest);
+>       }
+> @@ -654,13 +684,18 @@ void helper_invtlb_page_asid(CPULoongArchState *env, target_ulong info,
+>   void helper_invtlb_page_asid_or_g(CPULoongArchState *env, target_ulong info,
+>                                     target_ulong addr, uint32_t to_guest)
+>   {
+> -    int asid = info & 0x3ff;
+> +    uint16_t asid = info & R_CSR_ASID_ASID_MASK;
+> +    uint16_t gid = to_guest ? ((info >> 16) & 0xff) : get_tgid(env);
+>       const LoongArchTLB *tlb;
+>       tlb_match func;
+>   
+>       func = tlb_match_any;
+> +    if (to_guest) {
+> +        do_raise_exception(env, EXCCODE_IPE, GETPC());
+> +    }
+> +    to_guest |= env_vm_level(env);
+>       tlb = loongarch_tlb_search_cb(env, addr, asid, func,
+> -                                  to_guest, 0);
+> +                                  to_guest, gid);
+>       if (tlb) {
+>           invalidate_tlb(env, tlb - env->tlb, to_guest);
+>       }
+> 
 
 
