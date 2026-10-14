@@ -4,71 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0806CC6B1A
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 18:08:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3CB8C3DA7A
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 18:16:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xH3OS-0000Ip-Mi; Wed, 14 Oct 2026 14:08:00 -0400
+	id 1xH3WY-0002T5-5i; Wed, 14 Oct 2026 14:16:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1xH3OQ-0000Hp-6a
- for qemu-devel@nongnu.org; Wed, 14 Oct 2026 14:07:58 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1xH3ON-0000IA-AC
- for qemu-devel@nongnu.org; Wed, 14 Oct 2026 14:07:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1792001273;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=0YuK37UrC6xLhWeUe2TPTpAqk0OLcnMYuF5CMKYrGTA=;
- b=BQ3vUuYKWnbxi9jVjeu0+LNyi7Gyepa93btE3jNIZOrmTo4V78J2yVIoD+TI6TFzzD028M
- YK+8JUpvQqoYIM5pSBaEK3MTSRBfjvr5erO26HP/TKsJly2QRgWcQU5MvwK3sNSicn18x8
- VjMPgB38N/v8pwhloohCvEdqx5OznCk=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-688-KlxmKeaJOhKzNl45W3Qlgg-1; Wed,
- 14 Oct 2026 18:07:50 +0000
-X-MC-Unique: KlxmKeaJOhKzNl45W3Qlgg-1
-X-Mimecast-MFC-AGG-ID: KlxmKeaJOhKzNl45W3Qlgg_1792001269
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9A1F51955F75; Wed, 14 Oct 2026 18:07:48 +0000 (UTC)
-Received: from redhat.com (headnet04.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.116])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5D9081800480; Wed, 14 Oct 2026 18:07:47 +0000 (UTC)
-Date: Wed, 14 Oct 2026 13:07:44 -0500
-From: Eric Blake <eblake@redhat.com>
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PULL v2 00/15] NBD patches through 2026-10-08
-Message-ID: <as_CCTg5aJaWkm70@redhat.com>
-References: <20261012212945.84275-17-eblake@redhat.com>
- <f34e4a10-6673-4d18-8e51-ce4c8f17c398@linaro.org>
+ (Exim 4.90_1) (envelope-from <wangyang25@otcaix.iscas.ac.cn>)
+ id 1xH3WR-0002Sq-8u; Wed, 14 Oct 2026 14:16:15 -0400
+Received: from smtp21.cstnet.cn ([159.226.251.21] helo=cstnet.cn)
+ by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_CBC_SHA1:256)
+ (Exim 4.90_1) (envelope-from <wangyang25@otcaix.iscas.ac.cn>)
+ id 1xH3WN-00010h-Uv; Wed, 14 Oct 2026 14:16:15 -0400
+Received: from DESKTOP-7FLBREN (unknown [124.16.137.194])
+ by APP-01 (Coremail) with SMTP id qwCowADnuOzgxs9qifjeCg--.49849S4;
+ Thu, 15 Oct 2026 02:16:01 +0800 (CST)
+From: wangyang <wangyang25@otcaix.iscas.ac.cn>
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
+ daniel.barboza@oss.qualcomm.com
+Subject: [PATCH] linux-user/riscv: preserve rs1 address for cbo.zero fault
+ reporting
+Date: Thu, 15 Oct 2026 02:15:59 +0800
+Message-ID: <20261014181559.1567-1-wangyang25@otcaix.iscas.ac.cn>
+X-Mailer: git-send-email 2.55.0.windows.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <f34e4a10-6673-4d18-8e51-ce4c8f17c398@linaro.org>
-User-Agent: NeoMutt/20260616
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=eblake@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 10
-X-Spam_score: 1.0
-X-Spam_bar: +
-X-Spam_report: (1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qwCowADnuOzgxs9qifjeCg--.49849S4
+X-Coremail-Antispam: 1UD129KBjvJXoW3Xry7Xr1xXFykGF43tr45trb_yoWxCr4UpF
+ Z7CrW7Kr93tFn7Xw4ftw4jvF15Wr4vgFsrG34ku3yS9r4Sq3yfZw1Dtay7uF4UGFs5XF4j
+ vFsFyryUAFyUXFDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+ 9KBjDU0xBIdaVrnRJUUU9Ib7Iv0xC_Kw4lb4IE77IF4wAFF20E14v26r4j6ryUM7CY07I2
+ 0VC2zVCF04k26cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rw
+ A2F7IY1VAKz4vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xII
+ jxv20xvEc7CjxVAFwI0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4
+ A2jsIEc7CjxVAFwI0_Gr0_Gr1UM2vYz4IE04k24VAvwVAKI4IrM2AIxVAIcxkEcVAq07x2
+ 0xvEncxIr21l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18Mc
+ Ij6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IYc2Ij64vIr41l
+ c7CjxVAaw2AFwI0_JF0_Jw1lc2xSY4AK67AK6ryl42xK82IYc2Ij64vIr41l4I8I3I0E4I
+ kC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWU
+ WwC2zVAF1VAY17CE14v26r126r1DMIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr
+ 0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWU
+ JVWUCwCI42IY6I8E87Iv67AKxVW8JVWxJwCI42IY6I8E87Iv6xkF7I0E14v26r4j6r4UJb
+ IYCTnIWIevJa73UjIFyTuYvjxUkco2DUUUU
+X-Originating-IP: [124.16.137.194]
+X-CM-SenderInfo: 5zdqw5xdqjjk46rwut1l0ox2xfdvhtffof0/
+Received-SPF: pass client-ip=159.226.251.21;
+ envelope-from=wangyang25@otcaix.iscas.ac.cn; helo=cstnet.cn
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,63 +73,184 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Oct 14, 2026 at 10:02:46AM +0200, Richard Henderson wrote:
-> On 10/12/26 23:29, Eric Blake wrote:
-> > The following changes since commit 615ece3c406b262996e569f29ea6eed0d81c4d8d:
-> > 
-> >    Merge tag 'for-upstream' ofhttps://gitlab.com/bonzini/qemu into staging (2026-10-09 15:49:53 +0200)
-> > 
-> > are available in the Git repository at:
-> > 
-> >    https://gitlab.com/ebblake/qemu.git tags/pull-nbd-2026-10-08-v2
-> > 
-> > for you to fetch changes up to 3d794bcd554c3dc196685faf382fdffe7243e674:
-> > 
-> >    iotests/iothreads-nbd-export: Skip on s390 (2026-10-12 16:23:50 -0500)
-> > 
-> > [v2: sending only the updated cover letter and patch 2/15]
-> > 
-> > ----------------------------------------------------------------
-> > NBD patches through 2026-10-08
-> > 
-> > Several fixes, including:
-> > - Eric Blake: Update MAINTAINERS, support qemu-nbd -s -l
-> > - Fiona Ebner: Report flush error on qemu-img convert
-> > - Guillaume Vinke: Fix NBD client on dead connection
-> > - Denis V. Lunev: Fix postcopy dirty bitmap migration
-> > - Eric Farman: Several iotest improvements
-> 
-> This still has 13 job failures, including check-python-minreqs.
-> 
-> https://gitlab.com/qemu-project/qemu/-/pipelines/2945631627
+helper_cbo_zero() aligns the address down to the cache-block size before
+probe_write(), and accel/tcg/user-exec.c:probe_access_internal() reports
+that aligned address to cpu_loop_exit_sigsegv(), so a store fault from a
+legal cbo.zero (e.g. on a read-only page) reports the aligned block base
+as si_addr instead of the rs1 value supplied by the program. Native
+RISC-V Linux reports the exact rs1 address. Keep the original address in
+CPUState and use it when the fault is reported.
 
-Looks like most of the failures were due to the later runners being
-canceled after the early failure of the check-python-minreqs syntax
-check failure. At any rate, I figured out how to patch that one and
-will be posting v3 shortly.
+The saved address must not outlive the instruction that produced it. The
+helper alone cannot guarantee that, because a store trigger or
+breakpoint on the cbo.zero access leaves through the debug path instead
+of one of the four fault consumers, and a later unrelated fault would
+then report the stale cbo.zero address. Also drop the pending override
+on every trap delivery: at the top of riscv_cpu_do_interrupt() and in
+riscv_cpu_debug_excp_handler() for system mode, and right after
+cpu_exec() returns in the linux-user cpu loop.
 
--------------------
-************* Module tests.migrate-bitmaps-postcopy-test
-tests/migrate-bitmaps-postcopy-test:146:8: W0201: Attribute 'drive1_sha256' defined outside __init__ (attribute-defined-outside-init)
+Tested: the read-only-page reproducer reports rs1 for offsets 1, 65 and
+129; an mcontrol store-trigger reproducer reports the follow-up load's
+own access-fault address instead of the earlier cbo.zero rs1.
 
-Fixed by:
-diff --git a/tests/qemu-iotests/tests/migrate-bitmaps-postcopy-test b/tests/qemu-iotests/tests/migrate-bitmaps-postcopy-test
-index bada325e017..53f7dafc79a 100755
---- a/tests/qemu-iotests/tests/migrate-bitmaps-postcopy-test
-+++ b/tests/qemu-iotests/tests/migrate-bitmaps-postcopy-test
-@@ -115,6 +115,7 @@ class TestDirtyBitmapPostcopyMigration(iotests.QMPTestCase):
-                                                           'discard=unmap')
-         self.vm_b = iotests.VM(path_suffix='b').add_drive(disk_b,
-                                                           'discard=unmap')
-+        self.drive1_sha256 = ""
-         # A bitmap on a second node makes postcopy switch nodes after setup
-         self.vm_a.add_drive(disk_a1)
-         self.vm_b.add_drive(disk_b1)
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4151
+Suggested-by: David Harris <david.harris@gitlab.com>
+Signed-off-by: wangyang <wangyang25@otcaix.iscas.ac.cn>
+---
+ accel/tcg/user-exec.c         |  7 ++++++-
+ include/hw/core/cpu.h         |  2 ++
+ linux-user/riscv/cpu_loop.c   |  3 +++
+ target/riscv/tcg/cpu_helper.c | 27 ++++++++++++++++++++++++---
+ target/riscv/tcg/debug.c      |  3 +++
+ target/riscv/tcg/op_helper.c  |  5 +++++
+ 6 files changed, 43 insertions(+), 4 deletions(-)
 
-
+diff --git a/accel/tcg/user-exec.c b/accel/tcg/user-exec.c
+index a35aca7889..13c3845811 100644
+--- a/accel/tcg/user-exec.c
++++ b/accel/tcg/user-exec.c
+@@ -787,7 +787,12 @@ static int probe_access_internal(CPUArchState *env, vaddr addr,
+         return TLB_INVALID_MASK;
+     }
+ 
+-    cpu_loop_exit_sigsegv(env_cpu(env), addr, access_type, maperr, ra);
++    CPUState *cpu = env_cpu(env);
++    if (cpu->exception_addr_valid) {
++        addr = cpu->exception_addr;
++        cpu->exception_addr_valid = false;
++    }
++    cpu_loop_exit_sigsegv(cpu, addr, access_type, maperr, ra);
+ }
+ 
+ int probe_access_flags(CPUArchState *env, vaddr addr, int size,
+diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
+index ae66f5e33e..1fd68367f6 100644
+--- a/include/hw/core/cpu.h
++++ b/include/hw/core/cpu.h
+@@ -560,6 +560,8 @@ struct CPUState {
+     uint32_t tcg_cflags;
+     uint32_t halted;
+     int32_t exception_index;
++    vaddr exception_addr;
++    bool exception_addr_valid;
+ 
+     bool vcpu_dirty;
+     AccelCPUState *accel;
+diff --git a/linux-user/riscv/cpu_loop.c b/linux-user/riscv/cpu_loop.c
+index 6f27a06da4..dbf1d42d33 100644
+--- a/linux-user/riscv/cpu_loop.c
++++ b/linux-user/riscv/cpu_loop.c
+@@ -38,6 +38,9 @@ void cpu_loop(CPURISCVState *env)
+         cpu_exec_end(cs);
+         qemu_process_cpu_events(cs);
+ 
++        /* A trap ends the pending cbo.zero address override window. */
++        cs->exception_addr_valid = false;
++
+         switch (trapnr) {
+         case EXCP_INTERRUPT:
+             /* just indicate that signals should be handled asap */
+diff --git a/target/riscv/tcg/cpu_helper.c b/target/riscv/tcg/cpu_helper.c
+index 07d9222652..4513c9bdbe 100644
+--- a/target/riscv/tcg/cpu_helper.c
++++ b/target/riscv/tcg/cpu_helper.c
+@@ -1537,7 +1537,12 @@ static void raise_mmu_exception(CPURISCVState *env, target_ulong address,
+     default:
+         g_assert_not_reached();
+     }
+-    env->badaddr = address;
++    if (cs->exception_addr_valid) {
++        env->badaddr = cs->exception_addr;
++        cs->exception_addr_valid = false;
++    } else {
++        env->badaddr = address;
++    }
+     env->two_stage_lookup = two_stage;
+     env->two_stage_indirect_lookup = two_stage_indirect;
+ }
+@@ -1588,7 +1593,12 @@ void riscv_cpu_do_transaction_failed(CPUState *cs, hwaddr physaddr,
+         cs->exception_index = RISCV_EXCP_INST_ACCESS_FAULT;
+     }
+ 
+-    env->badaddr = addr;
++    if (cs->exception_addr_valid) {
++        env->badaddr = cs->exception_addr;
++        cs->exception_addr_valid = false;
++    } else {
++        env->badaddr = addr;
++    }
+     env->two_stage_lookup = mmuidx_2stage(mmu_idx);
+     env->two_stage_indirect_lookup = false;
+     cpu_loop_exit_restore(cs, retaddr);
+@@ -1621,7 +1631,12 @@ void riscv_cpu_do_unaligned_access(CPUState *cs, vaddr addr,
+     default:
+         g_assert_not_reached();
+     }
+-    env->badaddr = addr;
++    if (cs->exception_addr_valid) {
++        env->badaddr = cs->exception_addr;
++        cs->exception_addr_valid = false;
++    } else {
++        env->badaddr = addr;
++    }
+     env->two_stage_lookup = mmuidx_2stage(mmu_idx);
+     env->two_stage_indirect_lookup = false;
+     cpu_loop_exit_restore(cs, retaddr);
+@@ -2047,6 +2062,12 @@ void riscv_cpu_do_interrupt(CPUState *cs)
+ {
+     RISCVCPU *cpu = RISCV_CPU(cs);
+     CPURISCVState *env = &cpu->env;
++
++    /*
++     * A trap ends the pending cbo.zero address override window, so drop
++     * any saved rs1 that a store trigger or breakpoint left behind.
++     */
++    cs->exception_addr_valid = false;
+     bool virt = env->virt_enabled;
+     bool write_gva = false;
+     bool always_storeamo = (env->excp_uw2 & RISCV_UW2_ALWAYS_STORE_AMO);
+diff --git a/target/riscv/tcg/debug.c b/target/riscv/tcg/debug.c
+index e4d719a1da..6962557251 100644
+--- a/target/riscv/tcg/debug.c
++++ b/target/riscv/tcg/debug.c
+@@ -973,6 +973,9 @@ void riscv_cpu_debug_excp_handler(CPUState *cs)
+     RISCVCPU *cpu = RISCV_CPU(cs);
+     CPURISCVState *env = &cpu->env;
+ 
++    /* A debug exit ends the cbo.zero address override window too. */
++    cs->exception_addr_valid = false;
++
+     if (cs->watchpoint_hit) {
+         if (cs->watchpoint_hit->flags & BP_CPU) {
+             do_trigger_action(env, DBG_ACTION_BP);
+diff --git a/target/riscv/tcg/op_helper.c b/target/riscv/tcg/op_helper.c
+index b67c7718db..3fc993a207 100644
+--- a/target/riscv/tcg/op_helper.c
++++ b/target/riscv/tcg/op_helper.c
+@@ -188,9 +188,13 @@ void helper_cbo_zero(CPURISCVState *env, target_ulong address)
+     int mmu_idx = riscv_env_mmu_index(env, false);
+     uintptr_t ra = GETPC();
+     void *mem;
++    CPUState *cs = env_cpu(env);
+ 
+     check_zicbo_envcfg(env, MENVCFG_CBZE, ra);
+ 
++    cs->exception_addr = address;
++    cs->exception_addr_valid = true;
++
+     /* Mask off low-bits to align-down to the cache-block. */
+     address &= ~(cbozlen - 1);
+ 
+@@ -218,6 +222,7 @@ void helper_cbo_zero(CPURISCVState *env, target_ulong address)
+             cpu_stb_mmuidx_ra(env, address + i, 0, mmu_idx, ra);
+         }
+     }
++    cs->exception_addr_valid = false;
+ }
+ 
+ /*
 -- 
-Eric Blake, Principal Software Engineer
-Red Hat, Inc.
-Virtualization:  qemu.org | libguestfs.org
+2.55.0.windows.2
 
 
