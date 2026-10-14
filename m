@@ -4,136 +4,184 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B23A4CC6B1D
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 10:49:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60382CC6B1A
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 11:01:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGwXg-0006he-RZ; Wed, 14 Oct 2026 06:49:04 -0400
+	id 1xGwj0-0008EO-4j; Wed, 14 Oct 2026 07:00:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xGwXe-0006hN-Fc
- for qemu-devel@nongnu.org; Wed, 14 Oct 2026 06:49:02 -0400
-Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xGwXc-0000zY-LW
- for qemu-devel@nongnu.org; Wed, 14 Oct 2026 06:49:02 -0400
-Received: by mail-ed1-x535.google.com with SMTP id
- 4fb4d7f45d1cf-6a0794669a6so6010643a12.2
- for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 03:49:00 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1791974939; cv=none;
- d=google.com; s=arc-20260327;
- b=NfHWrXT8Qz2VdEGdF7mL7GXpwQY6qpmxoCR11WAM5uPm7jTNo8FwLc1C6XJEtCLBkX
- YoRRmqaiYFwUGWFMsPTciT+mwRoI+Hgo2g/dpaK1XuqEdiG+2THV7N3FEscEkBsE5ETA
- QMZn7m0gaHH+vhPs+9qsbF1G779YiU+9ISQOP86qDkFv6xnjiGzO0wqspRMV0o6bJiAL
- m2u+7auJN7IodOVcdEYaMnCJhPfAaqRt0+TMH5pAYycIduc/9nDj7QPyAe/4c/lvmwK5
- BneMhJhGSwQ7pAPf93/s5GMBe/T86zzeDskWx8/5ijg34z1cKdTWJaI6YesgJ4ywS3H1
- MaGA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :reply-to:in-reply-to:references:mime-version:dkim-signature;
- bh=Vm4UdWBLGMY1/33zteiFmhB7a2Bd38ynxMbjpAoT3XQ=;
- fh=F+oCjl8UPsyR0d3O50sTkoVJ0qNANg8HwyOTMRSEVSc=;
- b=lOpRxtOOkhzO1F6fVfoDm3U2+w6amfeHu9whmBVYyK+fdkd5bQ/60HeDW9zx/lyL4B
- RXAqDQABT69MeVdGvJZNiuK4kpP+ufwQo36iNcP9AcaRaoE1NvlPwouxXC7gcJtFYLqs
- SsWF4oB6DjackhC+XqySYmq+/dzeYVtr4l8klSunXzBK5ciqrleGfRhE65j+u23arHft
- DxpZe8+TTsN/TyG5tyzwnJ4GBN14ky3c5jWks6MVLYO8EV34/B4vRMkNIZMvrEMZD6cU
- KdvPma624bTcZ5imWIA9u0VbrhthBhDxvWcgaF+j13IYZS7cJPTjztio10MT5rN0+k9v
- 0yYQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1791974939; x=1792579739; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:reply-to:in-reply-to:references:mime-version:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=Vm4UdWBLGMY1/33zteiFmhB7a2Bd38ynxMbjpAoT3XQ=;
- b=dhmOeUn98u18Ozv6JjCQkWnOhHHL31N1FNiZCN3jR/CvfNgdAdUB79OazvNbw5XPsP
- +U8MvWQcPeC9u6J+WxoKBPU9tWhkh+4lnCzMYnbl1znimcI+1YASWATJ2qWTiVRfbWxm
- i7vRMssoyiWcedPyEyOvSbVYJ3wbPVzQUhhDMbkkoCM4/dkHE987vn7bWeI4F9GHJ+AO
- 3sWrp491NYwXh1jgU7g2pZoCCET5bFhrkzu7tFoO468TzBPJpuL/Dsms64lKtizRIpbN
- dUdqC+4ElLH0ItGdXRtx2qwRcndLhnsWjkfrxxuv4wONR8gOrQ5CQjyXp8jyBucY6xpM
- puvg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791974939; x=1792579739;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:reply-to:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=Vm4UdWBLGMY1/33zteiFmhB7a2Bd38ynxMbjpAoT3XQ=;
- b=FE1pijse3KXfG6u7V/SHdf0vKUNZt3JlXQDzAcyUQK3oKf+Y8YXsqk1vrYSxcUyPYN
- T9LySfMiEIuZvVpA/KcHgD8ahxY0k2wh6TaVig9c/oKpNGmcTaxQDWy7zTEPBvIJ7vlw
- kzeY/UUI7kqm0PlAZZi/7vrN80/Zd6U5Xv97XYEPrVEXX1G0e2crkE5iozJT59IbW4t/
- d4ebVJ/xQ+Yj/AM3gFh8y/SQJ+Ljuf63BkteBm6CqVBLP+0HHLav1W8HU7bVMYIlA7nE
- 5bTeCcUn6XTfnLdqwTeDhwkjd64ekoo1t24AV8XG35wjJrE5rvam0n7jmWhUwSpHWWaa
- f37g==
-X-Forwarded-Encrypted: i=1;
- AKwUvByyphMIVetDqj1XZZcExoCFoCGAaRkb5ahN7cZiVgkAzZoLPbKLubCP+b6xDnR1Wl52a0w10Xp/PUNq@nongnu.org
-X-Gm-Message-State: AFq9FYI6n5bP51qln1M1i26E8buP8uj0OqCX/l0h5IlcaS7K5PRPnG2W
- /dn6Y1quFiGnPo1/oTFB4Os6sUtNsQyS8AH2zoGh7kXTWdJLcOi009+teQe31bUCRsjtbTvwPE+
- 1j7Ux+uoSSJdlm/E1frq4A55ozWaJIhkAT/0U+Ek=
-X-Gm-Gg: AYBFou27toJhyJPQ4fpJMxHxgmAaGqjjgsx5FffhbChD9su7bF+3/4nkIMf9bYwm0WK
- 3O6yG8gv5LE3VIlK8mzNkSJK+3uUaTwErijUZiIlWEkytXSZwh+qTe5vS90q5uPlOlMt4I+HAXb
- ePuevXktIQZh597FMfKZEfT8qnc1MJAxTjm9ETrbT2J1++d37bcc6zL5BihtdDSlz6yvo7bVfIX
- i9RrAdJTCDlA3P0u0Bd3FVW86q3q+0asqHB6KuTyqlTgXK5j+koKlls2+t4Bp8KDxU2DXK845f3
- 0+CA320fdn5NgsRjXMyUKZgrVnsIQPV0uMmPjvzvZdoQtr7NJfbGIoo=
-X-Received: by 2002:a05:6402:44da:b0:6af:8022:ffe4 with SMTP id
- 4fb4d7f45d1cf-6b17c2b5870mr9690638a12.38.1791974938747; Wed, 14 Oct 2026
- 03:48:58 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
+ id 1xGwiz-0008EG-0R
+ for qemu-devel@nongnu.org; Wed, 14 Oct 2026 07:00:45 -0400
+Received: from mx0b-002c1b01.pphosted.com ([148.163.155.12])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
+ id 1xGwix-00025N-28
+ for qemu-devel@nongnu.org; Wed, 14 Oct 2026 07:00:44 -0400
+Received: from pps.filterd (m0127842.ppops.net [127.0.0.1])
+ by mx0b-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 69EAYIpM3386605; Wed, 14 Oct 2026 04:00:29 -0700
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=
+ proofpoint20171006; bh=KBYwAnvbdjNZHrkxbLQynUxu0Z0J9UzLCBTZRqdFF
+ 5c=; b=ZCvj6MyY5YRo75xXDgkwaGWKjbXwUd3k50Y/6wkxdA9UHJynPvx8SIq3M
+ AcfsTSVFAmSfDQB0fxuqb4joz9Wqq1lBh/m7eenU1UFIW152MrbeKw+gb0K1TvdK
+ OVpbir4G4v8dWnrwnW4vPdFrHSIFVXbZGMpDPH1q3RSyjkRp2As6+qfxRXLlBPdN
+ 9mJGb+aaMpqps7EJf5xr5z8WlTLHFUgNN3OK0tvpam1MWbmYbOGEOhMeVbpGaTJZ
+ oyhBhGlmy/UeDwUD9NIQ4DklO2ObW10kW0xxwK0JENGiWMb9IzJUXSKo2eOmns3I
+ bm4II56aNcl3ym2+ILd+aryf+1+dA==
+Received: from bl2pr02cu003.outbound.protection.outlook.com
+ (mail-eastusazon11021136.outbound.protection.outlook.com [52.101.52.136])
+ by mx0b-002c1b01.pphosted.com (PPS) with ESMTPS id 4ha83mr1ux-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Wed, 14 Oct 2026 04:00:29 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=g4bWWI57XD9154dtvNxnToPF3bQynN+iuZxOwZgHDmfkgwwEvxpHz+JvWlu6S6GSTCNi8bNmx0KYBc5BYZGf1Mb4+fbgm9vZTqLvpld8JmKfbygzUgfbXmGF9iui11JZTO7lAvZuScfql0faAXT6fc8MF19Lr3j25vbBl/JSaCWLiOITW94l7DjndBT8A6oiWjBGestw9frKBmAke2q6VBZwWZZ18Jy5g2UMOsn2WEZrAgDc0HNS9oqAW8qa9uFCyMeWVSlUlF2hAEZuK9PEHvlkxFukXKwi2bQMI6RWKPF9sHpcFWtx0E2aS8DFTLD/vCjI0UMpZjQn5eLDcNhwIA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=KBYwAnvbdjNZHrkxbLQynUxu0Z0J9UzLCBTZRqdFF5c=;
+ b=HwHiKPNKC4AmWnJdBPpfSbXhO4spWR0gYzbhA/HeJ3VvuIjyAFanMJFUNsRgA6MklziFw4aC0oct5VWfgEoKId0o1FYlAWYB7otbLb0tiIDhZy0GpTF59lzBnOCCGM03wAPFLyQQTCkuBFuSiXX0WGrlmEITaQQGxqs95vWJJxba2Vi9Zj2J2e/QL5aTRafbP4XVAGE1ZnoqPYCxfzalCzm55xqjk7ai1Aq2zX1+LCb72GQM8V5uBhB4+mSlXMg5+GxH+IeV+3og9HWdikjUiCpKyhJqH+bGECs88PiaCW6aMSSHzZ9CxDUJR00NhAx1yI7lsZAmSWSzMsxITShdfw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
+ dkim=pass header.d=nutanix.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=KBYwAnvbdjNZHrkxbLQynUxu0Z0J9UzLCBTZRqdFF5c=;
+ b=BZPlhfzlms1Fj6R89nM/H4nFV0BY09r8rX7pksyfymY8PW2ZCAlvNUktpBzX4dbElLpsuGe2welHFZcK91YvnRNqxS5VEY48t0UtSwywEG5QixohA2Bgm5Rx8mw5Xj+dXgDGIDvWUlop7ZpD3Psp9vIwyxEM0Cp56HK8vy1qmHClf63BNlHw3dVshmyAL3dgf3zrtcniC5cSFsg5P3koiiBBllgxNbTQgGkAQtpcz4rtnqeXgAvIK75+7acaCXtHcQHRVL1Xl3FYLSMMsQsTF2I+VLat+pSYBY3X2szuY+x5rh/5l1eDxKMk1uCi4TOLCht8C+UFpaB20Ah5owcHEg==
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nutanix.com;
+Received: from PH0PR02MB7159.namprd02.prod.outlook.com (2603:10b6:510:16::8)
+ by SA0PR02MB7209.namprd02.prod.outlook.com (2603:10b6:806:da::7) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.522.13; Wed, 14 Oct
+ 2026 11:00:27 +0000
+Received: from PH0PR02MB7159.namprd02.prod.outlook.com
+ ([fe80::8e97:bc32:822c:b250]) by PH0PR02MB7159.namprd02.prod.outlook.com
+ ([fe80::8e97:bc32:822c:b250%4]) with mapi id 15.21.0522.012; Wed, 14 Oct 2026
+ 11:00:27 +0000
+Message-ID: <876b66cd-0ea6-4943-9a0e-c0abf2ad6e26@nutanix.com>
+Date: Wed, 14 Oct 2026 12:00:20 +0100
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 05/22] i8259.c: move parent_realize from PICClass to
+ I8259CommonClass
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: pbonzini@redhat.com, richard.henderson@linaro.org, mst@redhat.com,
+ sstabellini@kernel.org, anthony@xenproject.org,
+ edgar.iglesias@gmail.com, qemu-devel@nongnu.org,
+ xen-devel@lists.xenproject.org
+References: <20260916104435.600211-1-mark.caveayland@nutanix.com>
+ <20260916104435.600211-6-mark.caveayland@nutanix.com>
+ <CAFEAcA9eucRyzG=PR2tpx8ObHkdK6xUmOjQ+-nNbJ2dVHaptOA@mail.gmail.com>
+Content-Language: en-US
+From: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+In-Reply-To: <CAFEAcA9eucRyzG=PR2tpx8ObHkdK6xUmOjQ+-nNbJ2dVHaptOA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: BY5PR03CA0009.namprd03.prod.outlook.com
+ (2603:10b6:a03:1e0::19) To PH0PR02MB7159.namprd02.prod.outlook.com
+ (2603:10b6:510:16::8)
 MIME-Version: 1.0
-References: <20261014093152.834-1-luoyonggang@gmail.com>
- <20261014093152.834-6-luoyonggang@gmail.com>
- <e09a64d3-7632-4f90-bd69-0c6097f8cd78@oss.qualcomm.com>
- <as9ZvlmXQUwvm0vz@redhat.com>
- <5d86e4c0-43b3-475b-b135-29b9d685d13b@oss.qualcomm.com>
-In-Reply-To: <5d86e4c0-43b3-475b-b135-29b9d685d13b@oss.qualcomm.com>
-From: Yonggang Luo <luoyonggang@gmail.com>
-Date: Wed, 14 Oct 2026 18:48:46 +0800
-X-Gm-Features: AclHuK9uPxvtfRhW7ESLgpVV_cu6gA6XspSKH1AK2-K599jdYaeO_JC3w74U-Vw
-Message-ID: <CAE2XoE9uPmQUDNUubFZ7v+E=++PDEmNTz7LXVpzHB-EdrJipfQ@mail.gmail.com>
-Subject: Re: [PATCH 05/34] qapi: add missing Linux user-mode targets to
- EmuTarget
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- qemu-devel@nongnu.org, Eric Blake <eblake@redhat.com>, qemu-riscv@nongnu.org, 
- Alexander Bulekov <alxndr@bu.edu>, Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, 
- Gerd Hoffmann <kraxel@redhat.com>, qemu-s390x@nongnu.org,
- Song Gao <17746591750@163.com>, Matthew Rosato <mjrosato@linux.ibm.com>,
- Alistair Francis <alistair.francis@wdc.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Eric Farman <farman@linux.ibm.com>, 
- Brian Cain <brian.cain@oss.qualcomm.com>, Stefan Hajnoczi <stefanha@redhat.com>,
- Darren Kenny <darren.kenny@oracle.com>, Ani Sinha <anisinha@redhat.com>, 
- Peter Maydell <peter.maydell@linaro.org>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Richard Henderson <richard.henderson@linaro.org>,
- Stafford Horne <shorne@gmail.com>, 
- Cornelia Huck <cohuck@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- Weiwei Li <liwei1518@gmail.com>, 
- Markus Armbruster <armbru@redhat.com>, David Hildenbrand <david@kernel.org>,
- Laurent Vivier <laurent@vivier.eu>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Fam Zheng <fam@euphon.net>, 
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Palmer Dabbelt <palmer@dabbelt.com>, 
- qemu-arm@nongnu.org, Chao Liu <chao.liu@processmission.com>, 
- Philippe Mathieu-Daude <philmd@mailo.com>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, 
- Max Filippov <jcmvbkbc@gmail.com>, Stefano Garzarella <sgarzare@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::535;
- envelope-from=luoyonggang@gmail.com; helo=mail-ed1-x535.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PH0PR02MB7159:EE_|SA0PR02MB7209:EE_
+X-MS-Office365-Filtering-Correlation-Id: 46173ebc-b5be-4608-0704-08df29e25a46
+x-proofpoint-crosstenant: true
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|376014|1800799024|366016|23010399003|56012099006|4143699003|261009223027099003|22082099003|18002099003|10067099003;
+X-Microsoft-Antispam-Message-Info: ZGJBoQWpFqccJUT4Ppb8RB4+eirfTMzvJG7otdwjLLdHeNJ89Euwywez+eVLKBCtZAi7YPJ1ntI7o3psMbRBX4RoAyqR2Fu4X49W/bSzUKNU8/waLta+q1HJjUXTmsRNOi2P4CDrig1hua0r/XhWT3MaagtppmRs8JkvFTG+9jitHoqfU6dMAwjP3UMqk4WAbLFCyc+MiXciVqFXbopSsdTSRvpl872JUv81NUunl0CqmY61KCaFk9koy/uEYlseADyE7UKu6PXlKEd2WK61SDQcMrYRCr3E1y4M6j3aHjN78UUTNL2X9iOdKL1zc+PUyBpS/iI8wGR+TG2eeid7BkYvsDDzfNBAaPvJLrSrn9LXaqxr3K+wHlBKv00r3zYExPt7tbtzhuBU7pmZx4mdOH27W8FRbM17KasfesGGwmB6MC7DKPLg13+11Fks/ZaIpCY4M2QQ7eJEQzcaZYBMf7KlWGYjHMtyUIHT0Dc9MyHqeoPLefNsPLgJFlZTdn1gjjgHqKXhxKv/iHgLPSIkiwFmupA+Y0HxaPHZntNB2BTFv9uqVXTa5s9QN+EXdcJB69uRXZrbTotQibkmvEoFXrUGeKHMdx4NdJkvqFcnwg3I21FEiH/wtk+QLHn8b8nRGPrfpJRPp5WZT17Tvg2QYk/bbBdQhgAUyLnq/dXChJ8=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:PH0PR02MB7159.namprd02.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(1800799024)(366016)(23010399003)(56012099006)(4143699003)(261009223027099003)(22082099003)(18002099003)(10067099003);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?ZmRZUUNuSGJHL0FnVnVBWmduYTNtQjRlZjV3RjNPMEt1WFVSWm9pNUxPT3NG?=
+ =?utf-8?B?L0s4TjhUMFg0djBxOU14NDY2UlNEcWQ3b3VJSHlFRlBpY2lwTkdGK3Y0NFpU?=
+ =?utf-8?B?SmdzNnF2cy8zUWFYUGVRYXJ6Y0l4VmMrTCtoSW5TUzFsczdvU29sSEhMWGpF?=
+ =?utf-8?B?TDFZRFE3WGxFY0IrNkZIMzAyZjBpclI4cENFUWVBRTYwL0dhbTlwVDdEaXpJ?=
+ =?utf-8?B?VHIwb2FhWERnWDN5UGgyWmVUbUlCRm1rejhZRnpCWEdGYy85VVM0TTJkYU9n?=
+ =?utf-8?B?ckFkVksyN2tuK3Vhd2l2ZWJNYWNwUStRczV4VVU5Z1g0cDVaOVF4UG8zNG41?=
+ =?utf-8?B?Zkgya0xlRlkyTVUxTTJndFFWMnpnejM4Nm81NGx3OHRDSDVhVHAyaHNXTkM1?=
+ =?utf-8?B?dC83N2xGaDRHNTR1NloyT1JnR24wcElXOHdNK2tIMUQ3SnNhT2c1WkpxMjhm?=
+ =?utf-8?B?c2k1WXlSNEV0OFBJSzV4U3VtbWI1SHVEQnJaRi9EM3ZRTHZMa3NNQzBWb3FH?=
+ =?utf-8?B?RlB3WXNXeGpuYmg4bWRxN21EbnE2cXZHQnNqclhSeGVVclhFYnZ2NFJ3dGFu?=
+ =?utf-8?B?WlNWUkdvWlNyeXYvUjRUNlE2ZjFNMSs0VlkrRjFqdGdiQ1FTM1d3dkgrYUs1?=
+ =?utf-8?B?aG5FcmpGUUxQa2VUQ1IzNHpteGN5WmdXcHFXa2pCZ1dVMDFHSHVMbXg5VDc1?=
+ =?utf-8?B?ZmZpK2VpTWVJQ2QvYzh5V0Nwd29rTFljZ3hjUDJTMmY5YXBOV0o3TjRuWmQy?=
+ =?utf-8?B?UndNNjg5bXdxYzk5bUExR0RPMUFQRUZxZW5NL2g4Vm84cVBsZVVCK2x5QVZO?=
+ =?utf-8?B?Y0dNbWszZEczUzBtM2FBUkI2OEJySHBOMElaa2FJR014K281c25oRVZrUUxy?=
+ =?utf-8?B?bWVzOWdFU0xQV0U4NnFFYzUycWVSeDJMYWMrb2xoNjNTUTJacUVFQ2syVEQ2?=
+ =?utf-8?B?TkRNZ2R3TEpTYTZYdEhtYkdleVM0VzExSCtOcXB4U3JKdTNmVVdUQ1ZvY3la?=
+ =?utf-8?B?VlU3dGRiSG5DakVPQ3NseklZR3JwbjkrbTlJRFl4UTh2eHR6RnZ3cTFjU3hZ?=
+ =?utf-8?B?YjlpRmxNUWUxNm0ybnZnN1hzTUsxcXRsTUl2YU4rTjJEK3lLTGdESXhGRGZr?=
+ =?utf-8?B?NW52SkM2bnl5eHIvaGJTUE1rdEgyNEpMaC9ZT3RheVZDR3hQSVZUNXBjTC9a?=
+ =?utf-8?B?eTB4VFlYTjUxMHZwM1NZUFRWMnV0OXRiei8rU2hoZFlJUDJEaEEzaVhPa1hz?=
+ =?utf-8?B?b0E2QzloSnhsVjVpcDNBRFZDcm9rMmhrRUJXMm9hcDBTeWZDKzR0R1M4NEVx?=
+ =?utf-8?B?MElmL3ZpMENIZFRLYXQ4NDRhSDh5Ymlickp5dHBxRHp4TXN2MFV5VkluWU5O?=
+ =?utf-8?B?Y2J3TWlQMXZFTDd1RTVqV0lsT25lTGVoc1lWNkVpMlBPRTRJNlJMWXlZYlRX?=
+ =?utf-8?B?TTB5bG9kK2xCZmIzaDQvWWFpdVl6VllKU3lJZVpHNGx1S3BhVURSMTdSNjFT?=
+ =?utf-8?B?dFJHN3Fyb0VrOEhoS1VodlNtVXJtRXA0SjAwek1Uanh2UldWcUJDRE9rTzAv?=
+ =?utf-8?B?ZURHbUNWUmVwMkFkenZRMnV2cXNxb1BaeXZONDR6SEgrMXpwVmMyN1luczlP?=
+ =?utf-8?B?N3B2a2c0MkVnQ0Nqblo4MzFpLzkrNysvUHJDdWk2ODVEVDNwQmxOUkFYa3dH?=
+ =?utf-8?B?SzFNWEF6VG1aOHBwUUZLbG85M0ZaazhHSEhPczJ4MUgrT0hCTkRDVEJWcHZB?=
+ =?utf-8?B?TU9vNXJFcTJ3SnJaYTRsNDRoNXp6ZjdyckIrN09XY0k2RDdUQTFFSUc5eDBh?=
+ =?utf-8?B?Z2JFbnJlNkRHYnp5R1lKRE9wQmsxajhSVkxpWXpqUFpscW4ybm85Ly81eUth?=
+ =?utf-8?B?b3VqR3E1VGtucnU5SmFGNU9vZW96bCtZRlRQSHRHbnltWGVnSzYzRWhhdnp5?=
+ =?utf-8?B?WEpiWWp6UlEvTXg3bllJeHA0VUpnWG4vZk1DWjZYUjRmdU1BRnlBdnVQdlFH?=
+ =?utf-8?B?dWtRTit2eXl6VnZhQ1JxUHJPOHdpRDc2aVBjOFNFZkVlMy9KY2ZtVXBuaUU0?=
+ =?utf-8?B?T0J1YTZiSDlKdjZzbk9BRjVwUFdQS2tQK2wxOEdCYVEvd2N5MHg2QjF5NTBH?=
+ =?utf-8?B?S05iUFljdE1vaVZoaEw0WDFpUlIzdUlEWjRsSDVVUzBpNTU1T1ZnVDJOT3NS?=
+ =?utf-8?B?S0hjaUJSbnMwMjJmQld1MTZBU2NnVGlCMldEMlZUK3BCcEdjK1hEMjhKSGlH?=
+ =?utf-8?B?MjFVc0dXZ1J4bVd1NVd0djluUDlLZFlnMGxQSDFSOUQ5WkpNL2llWHpMb2ky?=
+ =?utf-8?B?end4V0plMVQzOTNFbjArQnBIZXFlWHREa3V1S0hVSzNadll1T3NHTlcvdXhi?=
+ =?utf-8?Q?uZX3lOiB9B733pvg=3D?=
+X-Exchange-RoutingPolicyChecked: RbPrNdZzokPsxfoE4xoClneC+ueTp4BOLoiQpQk24Q+FCfthhcfww2I17x8hoaASBdMhV6tsG0YliCpXy9mk2z03uAP8EOmP2OTQcCqU+JPER60WoK1zOWGh1QQhZ2tJ/xyYVicArcwIcJUDtsFe2Z7V/y9+pD/2hmKqGIiEZjqXY2EOgrCIJWcWSL+IfMEtAACzjUtYB/v+B0r55dq2tIZ0yIs9BzA1hMA78Js1i/Yr6B/8SHp9lUaahwVg8MtnykukW4SCHwZiDS852Cac52qGqxm3rzNlseJJnwDhCHFZibJ+RSX+ONbtcdDD7YiZbuwl9a1mAWG/n83vHgNS1A==
+X-OriginatorOrg: nutanix.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 46173ebc-b5be-4608-0704-08df29e25a46
+X-MS-Exchange-CrossTenant-AuthSource: PH0PR02MB7159.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Oct 2026 11:00:27.0385 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 0xEKrK3SZEXoCaFyx0G3qYt9Z2nU+BDhSJYYcAJaMWV8diXf92DAznul3fhICzi8Q4/JOBRKl8Rs70dwIpr5UBVRIARB+4GGQjmP18JinjI=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA0PR02MB7209
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDE0MDA0MyBTYWx0ZWRfXyK9tZ3oJPo5Y
+ Kk1Ri7VXXRv5fd+kC5sCU+MVxuNRuGVULnKRfw0vk1t5c/d37YxaY3yW9plQI0QR7b8C8skP4oL
+ wFscrb7qtdgMYmguuN+koRtRUMMQwJI=
+X-Authority-Analysis: v=2.4 cv=BroIUoX5 c=1 sm=1 tr=0 ts=6acf60cd cx=c_pps
+ a=IN/ktsHfyviFoRwGlsjPrQ==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
+ a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
+ a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=0kUYKlekyDsA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=VofLwUrZ8Iiv6rRUPXIb:22 a=VUi8bpU7OL1Oj2-RSIOF:22
+ a=64Cc0HZtAAAA:8 a=AWkEWHTIOsQDqs_bE0YA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDE0MDA0MyBTYWx0ZWRfX4mB5yBKYqrBj
+ zkpcQpITlq6z1EZyycJbv//wstKprYEHXnabH9D5REj3lylTw+okT4tbRuE3aI8F7zFuTP22y0E
+ Mo3g2jF/wUlMhOo8JvNgsawZaZTCWN5Tn56G6UW1LgRwciYZaXMbmzizyWatGd0qGBIE7XYqtmV
+ oAJulbqnIKI5rR07z/v7Res7hoFhe2aeUgFEHkqwry4fKuVNmWwbK5J0MHoQ20shnu6qmWNklrL
+ 4vTQ7jKmtzvpZew8E4puz8HPbXIqI6l9gb3i4s04CCp04yJLTm6mHEe9JPgkGDjZDk8q9Y06l1Z
+ qRy0z+AIOk0YIYZzJt5yZsg6POJewph5+eWmYbDjbBFt8N32Vr5LcNi3AQNdM/l0nt+7nw2Qaei
+ +jZXxrTRsbvoDizgr1HzMKVOOf8Ls6KiU4vWN6IrUoijFaeKc3gJH97bsZSQzY51VE3CmOwh5jW
+ 5O+vb6OGj36qBQTHLRA==
+X-Proofpoint-ORIG-GUID: L4g0Y_Yz4cX-YoZfZ-mr8Wb7Mn1wRLGw
+X-Proofpoint-GUID: L4g0Y_Yz4cX-YoZfZ-mr8Wb7Mn1wRLGw
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-10-13_01,2026-10-09_01,2025-10-01_01
+X-Proofpoint-Spam-Reason: safe
+Received-SPF: pass client-ip=148.163.155.12;
+ envelope-from=mark.caveayland@nutanix.com; helo=mx0b-002c1b01.pphosted.com
+X-Spam_score_int: -29
+X-Spam_score: -3.0
+X-Spam_bar: ---
+X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -147,125 +195,51 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: luoyonggang@gmail.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Oct 14, 2026 at 6:45=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
-<philmd@oss.qualcomm.com> wrote:
->
-> On 14/10/26 12:30, Daniel P. Berrang=C3=83=C2=A9 wrote:
-> > On Wed, Oct 14, 2026 at 12:24:57PM +0200, Philippe Mathieu-Daud=C3=A9 w=
-rote:
-> >> On 14/10/26 11:31, Yonggang Luo wrote:
-> >>> This usermode targets:
-> >>> aarch64_be
-> >>> armeb
-> >>> microblazeel
-> >>> mipsn32
-> >>> mipsn32el
-> >>> ppc64le
-> >>> sparc32plus
-> >>> are not in machine.json
-> >>>
-> >>> This is a prepare for directly using TARGET_ARCH_VARIANT latter.
-> >>>
-> >>> Also get target-info.c to be compatible with future TARGET_ARCH_VARIA=
-NT only usage.
-> >>> So that we can define TARGET_ARCH_VARIANT to target_name directly
-> >>>
-> >>> Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
-> >>> ---
-> >>>    include/qemu/base-arch-defs.h | 13 +++++++++++++
-> >>>    qapi/machine.json             | 25 +++++++++++++------------
-> >>>    target-info.c                 | 26 +++++++++-----------------
-> >>>    3 files changed, 35 insertions(+), 29 deletions(-)
-> >>
-> >>
-> >>> diff --git a/qapi/machine.json b/qapi/machine.json
-> >>> index 07fac4f0764..a3d6e08a847 100644
-> >>> --- a/qapi/machine.json
-> >>> +++ b/qapi/machine.json
-> >>> @@ -15,11 +15,10 @@
-> >>>    ##
-> >>>    # @EmuTarget:
-> >>> -#     The comprehensive enumeration of QEMU system emulation
-> >>> -#     ("softmmu") targets.  Run "./configure --help" in the project
-> >>> -#     root directory, and look for the \*-softmmu targets near the
-> >>> -#     "--target-list" option.  The individual target constants are n=
-ot
-> >>> -#     documented here, for the time being.
-> >>> +#     The comprehensive enumeration of QEMU system and user-mode
-> >>> +#     emulation targets.  Run "./configure --help" in the project ro=
-ot
-> >>> +#     directory, and look for the targets near the "--target-list"
-> >>> +#     option.  Individual target constants are not documented here.
-> >>>    #
-> >>>    # @rx: since 5.0
-> >>>    #
-> >>> @@ -30,17 +29,19 @@
-> >>>    # @hexagon: since 11.0
-> >>>    #
-> >>>    # .. note:: The resulting QMP strings can be appended to the
-> >>> -#    "qemu-system-" prefix to produce the corresponding QEMU
-> >>> -#    executable name.  This is true even for "qemu-system-x86_64".
-> >>> +#    "qemu-system-" prefix for system emulation, or the "qemu-" pref=
-ix
-> >>> +#    for user-mode emulation, to produce the corresponding executabl=
-e
-> >>> +#    name, where that target supports the respective emulation mode.
-> >>>    #
-> >>>    # Since: 3.0
-> >>>    ##
-> >>>    { 'enum' : 'EmuTarget',
-> >>> -  'data' : [ 'aarch64', 'alpha', 'arm', 'avr', 'hexagon', 'hppa', 'i=
-386',
-> >>> -             'loongarch64', 'm68k', 'microblaze', 'mips', 'mips64',
-> >>> -             'mips64el', 'mipsel', 'or1k', 'ppc',
-> >>> -             'ppc64', 'riscv32', 'riscv64', 'rx', 's390x', 'sh4',
-> >>> -             'sh4eb', 'sparc', 'sparc64', 'tricore',
-> >>> +  'data' : [ 'aarch64', 'aarch64_be', 'alpha', 'arm', 'armeb', 'avr'=
-,
-> >>> +             'hexagon', 'hppa', 'i386', 'loongarch64', 'm68k', 'micr=
-oblaze',
-> >>> +             'microblazeel', 'mips', 'mips64', 'mips64el', 'mipsel',
-> >>> +             'mipsn32', 'mipsn32el', 'or1k', 'ppc', 'ppc64', 'ppc64l=
-e',
-> >>> +             'riscv32', 'riscv64', 'rx', 's390x', 'sh4', 'sh4eb', 's=
-parc',
-> >>> +             'sparc32plus', 'sparc64', 'tricore',
-> >>>                 'x86_64', 'xtensa', 'xtensaeb' ] }
-> >>
-> >> 'machine.json' is for system binaries.
-> >>
-> >> If we want to expose these QAPI types to the user binaries
-> >> (I'm not sure we want...) then this declaration block should
-> >> be moved in another {qapi}.json file. QAPI types are versioned,
-> >> so we'd need some "  @aarch64_be   # Since v13.0" comments.
-> >>
-> >> Anyway I doubt we want to alter EmuTarget, I'd rather let it
-> >> die as a legacy field, and expose {arch, wordsize, endianness}
-> >> to management layer if this is important to consume.
-> >
-> > Libvirt uses query-target so we don't want that data to go away.
-> > If we want to expose other data alongside the target name that's
-> > fine.
->
-> I'm not suggesting to change 'query-target' format; the opposite...
-> If we are going to add 'query-targets' (the plural form) then we
-> should report something more useful like {arch, wordsize, endianness}
-> but not that EmuTarget type which I consider legacy.
+On 13/10/2026 16:54, Peter Maydell wrote:
 
-I think it should be moved to qapi.json. As I needed it, do you have a bett=
-er
-way to have an enum for mapping target-name to that enum?
+> On Wed, 16 Sept 2026 at 11:49, Mark Cave-Ayland
+> <mark.caveayland@nutanix.com> wrote:
+>>
+>> Both the emulated and KVM i8259 implementations store a reference to the
+>> parent_realize function in their respective classes. Start by moving
+>> parent_realize from PICClass to I8259CommonClass and removing PICClass since
+>> it is no longer required.
+>>
+>> Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+> 
+> This is one of those things where I think we're not 100% consistent
+> about whether we think the parent_realize field should go in the
+> child class struct or the parent class struct. The name "parent_realize"
+> implies it ought to be in the child struct, though, and I think we
+> do that more often than we put it in the parent class. This also
+> makes some kind of separation-of-concerns sense too: it's the child
+> that knows (a) that it exists at all and that (b) it wants to have a
+> realize method that will mean it needs to chain back to the parent.
+> 
+> The docs for device_class_set_parent_realize() claim the parent
+> realize ptr is stored "usually in the instance structure" which
+> I think is just completely wrong.
+> 
+> I could be persuaded otherwise. As usual with QOM/qdev, I'm
+> mostly interested in (a) consistency and (b) documenting what the
+> "right thing" is. Realize, reset and unrealize are the three
+> methods where QOM's lack of convenient support for "child
+> implementation of method will need to chain to parent impl"
+> is most awkward.
+Yeah it's a tricky one. This patch was really just refactoring what was 
+already there, but I'm open to moving it into the instance if you think 
+that is better. I agree with your point about the child instance being 
+the one that knows it needs to chain back to the parent.
+
+I'll have an experiment and if it looks good, I'll move it to the 
+instance in v2.
 
 
---=20
-         =E6=AD=A4=E8=87=B4
-=E7=A4=BC
-=E7=BD=97=E5=8B=87=E5=88=9A
-Yours
-    sincerely,
-Yonggang Luo
+ATB,
+
+Mark.
+
 
