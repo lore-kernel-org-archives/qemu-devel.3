@@ -4,28 +4,28 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88A0BCC6B19
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 01:27:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E81BBCC6B1D
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 01:27:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGnkT-0006cn-TI; Tue, 13 Oct 2026 21:25:42 -0400
+	id 1xGnk0-0005s7-94; Tue, 13 Oct 2026 21:25:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1xGnjn-0005rq-Et; Tue, 13 Oct 2026 21:25:03 -0400
+ id 1xGnje-0005me-QT; Tue, 13 Oct 2026 21:24:52 -0400
 Received: from mail-japaneastazlp170120005.outbound.protection.outlook.com
  ([2a01:111:f403:c405::5] helo=TYPPR03CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1xGnjl-0006vY-Dm; Tue, 13 Oct 2026 21:24:59 -0400
+ id 1xGnjc-0006vY-F1; Tue, 13 Oct 2026 21:24:50 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=LSi+sCZTU/s6C4ojkOsn1EhUuTYeVt8uJY8I8uA5O62IGPtRk0tCRui/mL6OtP3B8bCAN1NpTuHj9+ioc8t7fp0Bn2H5m+VOWdpuVKuzDnOKc9zlQn/e4tpDmr9pVdHSuW5ff/Dw6j970IB1Wo2V9guJDSVKrkDBWCYb6AZ6ljexpn5FQbpO5wkPfr8V0rfodDX7H/PMHR0RfV3dDxdydhMzWZO6+Hep/I1LZMO/msJ76rfZakA/OpujuKpEZk3/KaXFnECJPV6AFjgLvHfZs6fJONow7by73zL3OdAKMAV8YB6qt1EGwQwuLl8RrnkX/Zp0IOazELs1X6iYiyDp9g==
+ b=wZxBKP1oReuODuhjIujFxXiFhV1kTsDbXwqXJOokorI7Pp5leLdueWl5ZyhgiDHJz2UmDGq/wBOk7FpARSDiZv2yCjy4ncOE2K4HJVAAbNOI76RtVtpaMdL4IxcvFtezTPp24gKAqo5oLrBL5oNhO46TMxsologS6/8sl52/cmKn9oetaoIge2ejPiG68yvMkqA6wmHvTF1E5WjBWOtlpfrBEgauN8/XG8i0wEXr7Pf9lCjtKUUAjB2KqQsOJZqBgFGwQT0vemE2GZFV8QqzPzC3PKM52S1nnuKiJ09kgAPRuhKa/TG0za2kCfulKkDOIEwYhEvTJHYOPJWrDOOCRg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=6hhcrfaMIxBzNW58DJPGFj5sqgDjiafTfdqDdn+p+2c=;
- b=STK3348RYZmS81w3c5ykzVT+0Js9qkYk2Ev8MKTwrXk0H2SmC1LTFNZBJKQKKioXDtfJIuILULSmm6jWBmIc34GGf/BnXbUTaryr+4K/wt5W+6JFH7RBlQ/nQUpr7TrCG3DqMUma7Ql6mDlO04LWlY+AXDTr7pPQXoW9L8SS0CcE3rdsO4HbNGETMJiAWjn4kH67RftpvmDm2AtHtO+EN0zpFmmEmoSrnvZCNAVp8H1t/WLxNCQFPvmW0GNPxr+zvWf9P/pwTKgxBfhGvYdgFY8nX+lW3saBkzkdV6pFhoAAnEvFPJ+WKOxA43F+hvdREIfQoIEea7T30oGpQ/q3pQ==
+ bh=+ptKTNmPcNCKuxW70KmXI7j27gJCTxhu92faVWTurgo=;
+ b=Is0LE3otJzz2/TttVJMaNFaw7FXu1sxELcvok9GpJnW8pn3ec1oJC3b8BQEpZFyFYi5ICvuYWKI363UsqQbJZodmvyEnaqabCIVQJLQNPbMQFKqeOsiyQNq/DMGimjgQKvkxAxp6fFKJAKa/N06WZXZOyLEOGTIi94Wn4QWAQ0CJOWuAxeBH7WuIGInJWzbm8cd8WqDdKpyQI4wjCo7aqZlfIwd2AiBd9bbqbuEAzGEHDNdRMji9VBROjAFTTcCue47CwXGrq41Sw/u//wbuKJHfXMoMXLdjwYtShenNVsPUJ/DiS6iZVu6xrk+DCog27854WTaOHim3rWP2ar8l5Q==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=processmission.com; dmarc=pass action=none
  header.from=processmission.com; dkim=pass header.d=processmission.com;
@@ -33,32 +33,27 @@ ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=6hhcrfaMIxBzNW58DJPGFj5sqgDjiafTfdqDdn+p+2c=;
- b=jPpArE4w+P948Q3U5C+HXzIBRA8mR0QTDHaIk5Nk+LodncFev0J4LhP0ZRVIQa8FrE5J5feL/zsnbqh99zE23lY7nhLnB6mcgDW9C6bKaeydBIcovmjXcjyPudnW3Co0vi9edG/6wwGxIvOZOZ9ckIE1Mzjnio4eg9EMltgtERVqVUdQ9E9PD/bV8FtPwq3Hp1q0xZ3X6AKIcr2P3hhC8qxI/WH6U08J7xcgUXPg6x80OPTtOrxlBHgDRQ8ylUnZcVfaKKi+FGvWspr/fkx1rBLCLsEY+HVZUI6bKCiA8q4gVlYAFuDbRspvzE8/uiPMRWI2PikiWz+RtFoHSqHT2w==
+ bh=+ptKTNmPcNCKuxW70KmXI7j27gJCTxhu92faVWTurgo=;
+ b=Pw/UYx8q/w6EhbeJLvaX0Y4hZdqtBqSia13yE9Uec/ysKtJ0pYukrQrJgT/9S0w5fX7tJVwpve4asxHL6Ys17enMyJioXkUuJflK5/YTI8NQW2to8wYP1MBCFXdhOmvF4fm3lgBA4HhZ9jit0YxD+4tquTU/VTIkDcSHMqr8Z26rN7/ZT4Bng/L9eSWoIybKMQsNJnFC9XEcliwnG4iLQ+Sq5EfNqst/BBfSsQidDmqWnA/wHg+wUrBcUTyr8nNQcFDFGRymdgiqV927PE2aw26gnmfRWZR4bgjbJ1K+8ux6GB8RPKrWiJVMWS4/pGWiHQaMp8npM8unVbrWUmKLhg==
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=processmission.com;
 Received: from KL1PR02MB6257.apcprd02.prod.outlook.com (2603:1096:820:da::11)
  by KL1PR02MB6214.apcprd02.prod.outlook.com (2603:1096:820:9e::10)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.522.12; Wed, 14 Oct
- 2026 01:24:37 +0000
+ 2026 01:24:29 +0000
 Received: from KL1PR02MB6257.apcprd02.prod.outlook.com
  ([fe80::ecf9:e832:8196:215]) by KL1PR02MB6257.apcprd02.prod.outlook.com
  ([fe80::ecf9:e832:8196:215%6]) with mapi id 15.21.0496.021; Wed, 14 Oct 2026
- 01:24:37 +0000
+ 01:24:29 +0000
 From: Bin Meng <bin.meng@processmission.com>
 To: QEMU <qemu-devel@nongnu.org>
-Cc: Conor Dooley <conor.dooley@microchip.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Chao Liu <chao.liu@processmission.com>, Conor Dooley <conor@kernel.org>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Sebastian Huber <sebastian.huber@embedded-brains.de>,
- Weiwei Li <liwei1518@gmail.com>, qemu-riscv@nongnu.org
-Subject: [PATCH v4 19/27] hw/misc: pfsoc: Let IOSCB own service interrupt state
-Date: Wed, 14 Oct 2026 09:22:59 +0800
-Message-ID: <20261014012323.322790-20-bin.meng@processmission.com>
+Cc: Conor Dooley <conor@kernel.org>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Sebastian Huber <sebastian.huber@embedded-brains.de>, qemu-riscv@nongnu.org
+Subject: [PATCH v4 16/27] tests/qtest: Add PolarFire SoC RTC coverage
+Date: Wed, 14 Oct 2026 09:22:56 +0800
+Message-ID: <20261014012323.322790-17-bin.meng@processmission.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261014012323.322790-1-bin.meng@processmission.com>
 References: <20261014012323.322790-1-bin.meng@processmission.com>
@@ -70,56 +65,56 @@ X-ClientProxiedBy: TY6PR01CA0005.jpnprd01.prod.outlook.com
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: KL1PR02MB6257:EE_|KL1PR02MB6214:EE_
-X-MS-Office365-Filtering-Correlation-Id: cc47dca1-01b3-41f5-38e2-08df2991e95c
+X-MS-Office365-Filtering-Correlation-Id: 6e783c6d-75a7-44e2-3b42-08df2991e4c7
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|23010399003|1800799024|376014|366016|7416014|18002099003|22082099003|10067099003|3023799007|261009223027099003|56012099006;
-X-Microsoft-Antispam-Message-Info: L8DPMGMgVMk2hXlydRNMZy5e5M9WLy9MrMbUqHsYOG7keqvPtIR+m+XmJVVGCD71ErmBuQggramZeIlM3lWukhmkcwQGxaK3B5zF1UWM1hCtDnlIDWvjtrHrpHjwPom3eQCSvx/n5M7S6xTSLXTq463sOQTqNXVogSO5hmpy5Sw31J+GJUynGhiErBJ1YNWjSQRpWliQWAxmooLjCOMNhEf0uj4aYXxmdOYD1CZEZdIDagLnhFOBrIc2gj5YkZztn3d7oTDC3Mxw7v6tGOvLFNm/wn8ZUYKZm0HSsgG5G4cNpRL/prsST2vD2o5zVgaVUazbKIux0ns7k61AXA/AsLrzIno7/dFprOZKkdeftMv2HHZ8TSIuc0VRRLkuRJDc6rny2S/xkPMRJ5BHyiUBSbNXKJj8CXurjyqMgNF94w+UE0JU/GJxwbAjOjT2Tv16HKEeDUYWZaTBFX1tApzbqAvDhEHky+J+66ggsv7PXGwwpPTjncjR1P4w4kQH0kM3wIMuiY8G7tvBO53hmScSj2YVrab1eMrGGGgL/q5XxRGjuK+gH3j7E1K18aZw98bEZDHG+97d55ziqgdErYyrThzg2evcuT8Zrw3AjuWvdSOyQCbCqHTsXrhul2RrcmzowHaTLtzZEqLdq0PIPWX77quKFF0sGMo/5M3RcZns/ZI=
+ ARA:13230040|23010399003|1800799024|376014|366016|18002099003|22082099003|260925022911599003|10067099003|260925021311599003|260925021911599003|261009223027099003|56012099006;
+X-Microsoft-Antispam-Message-Info: gsfHW4z/fFvdOaBYaYcNbktxzvsGdWPn+1y4HYEMDQEFsvJ9aafsUCbuy3s9m3kLeGBe+ASPbjzlOdIw/dMFtBdW6eX9CbZ8PZqvxIpwruinl96TkXGLlxcgZCj4ZpgR2kAt97WECRONKWL2G+xNDRM28o0e9yU1KKiZkH4IMd2XHkt0JDaX6zvkWSfR/nocTQrBSn/deCcNESsKqSmIE7/VAZsMoKwEviDnh2iQEvt7a8D/CUaPh9qdpEYt3COcpDs2g1m3aOh6y9g1NAuixFxaatvyEPhZmHx1F++A50JY4RYobZXpDPWrZWFtT/gknQKktpXAPH5A/OP/bfwLQ1JarZLzMqyT5dvP/aEhy/Sieum7G72me8JG0jxTCTekv8iSiLY0lI/9B2mP1DJ+hPDz350xjQotqoYQtt8QlmA0eD2zJQzkxfhCjaWnvpqf20uItRAq8PiCff2t472pCBOof+v0VNZv3gnFqEN99x4Fqfn5u86cLj3ZvAABMrhsQ+byuyr5o1yfHNv6k53xHGy8DTVXm+J+rSnzMELqryC5/QfhgOsojKcMTWpzDh9DgUMtvt1dsvd2syb2Qafv8L4rbgYl8lghlz++oKZBJ5qxwl4NCfyIpLjqku6Ya/CQrWjTZkkCUYcu9jpTgP8SwiP4Lnw+hqBRDjaeaB0VlJQ=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:KL1PR02MB6257.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(23010399003)(1800799024)(376014)(366016)(7416014)(18002099003)(22082099003)(10067099003)(3023799007)(261009223027099003)(56012099006);
+ SFS:(13230040)(23010399003)(1800799024)(376014)(366016)(18002099003)(22082099003)(260925022911599003)(10067099003)(260925021311599003)(260925021911599003)(261009223027099003)(56012099006);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?7dC2SKYYv2Y4L6Py04Ps2V4qrHJjeiuT/rtE0wUyJwJM+AsoNy/t2mR1AqmH?=
- =?us-ascii?Q?zVWZocXZJXH1/iHoeg57agE2UVrrQYdb7pP8uPFKgWSR09lkVJ/3ZTLnJo8o?=
- =?us-ascii?Q?4eKM21scZBtXqowrZxrxSUn+R6qo1LsAfDr37pf6zctbVYFrPAl4qFTLOMar?=
- =?us-ascii?Q?+oTOsMNNRhzlXEcJpydvo1Mfr/BURbOoP1F6QOtw5Tw/j7DYgGbxLnW8ywEO?=
- =?us-ascii?Q?9le0s2BQNGGwq/kgej6ICc99U56+5TUxGyEBoPz5TcQghxsvIXv1575NPNm0?=
- =?us-ascii?Q?I6COYHdSOpiohFuMLrkl/butqTSZKD3dKnduQsiXgrQ91abGYQ7KC+GSll8L?=
- =?us-ascii?Q?jjmvxPVnapwocZEEBuA0hEVft6g6VIUI/H9xBF41vcA/KkVnzyJudJ+f1w2M?=
- =?us-ascii?Q?r+EjEClRqHcxQsyt21HHfOPOtAyhX0L7xB2AVN/PJJ0pqpGM4RaJfUlv/D8Q?=
- =?us-ascii?Q?iRqJnlltYxCoPej9dDK0GS6srU9xbmj6LI8lx8CXPxj7+1DvezSoRWCTpFUu?=
- =?us-ascii?Q?HpkXshLp2ooY9ghAnPvggxSkMJ1zWpMqB36k7BYFhYfXENfBM9IHFmRtmpHc?=
- =?us-ascii?Q?2Bw8IpaIX0ZN/J8m2hO8fV6Kgfh9XErSX5i2ojfx2vPbn6XzAInyzXx5+ecd?=
- =?us-ascii?Q?8DmrYRBQce4PorbHMupF8odgoqP8LluoBzKEhcjCyTGoh3wLxONaI2aUnmWv?=
- =?us-ascii?Q?dAlF1clIlibx+tcY0ThfJGdNI5UWpKeGXRzP0kbH6jT51CASn9VdkNxD78vd?=
- =?us-ascii?Q?+uAT69plDmzV1W/jGRt4pkiFVST7wFsPvKYIyc6uW7p6cdIrBVuVlB9WO4QL?=
- =?us-ascii?Q?oJPjPV9fKvdjyJKWqDN43W+ddP43gkFAOVIhoyVqwkO0ObzI3x+yMuWGi1YX?=
- =?us-ascii?Q?POyYJkcpW011ckwqxx+UH7Te+ee5tfqtMP+/z8+wBfVCa81g2E3CGDGcC4wL?=
- =?us-ascii?Q?g9ASBCVSz2bsu+x9XlfLZk03n7LeIjbdv8+UrxunokQVa2Kdfjkxl41Z/4au?=
- =?us-ascii?Q?MqaK6fMiUCH9JaumQGb9H6KwIjDr7vy27D9xm+cJuIEAWgRkKpWsHbWGxwgw?=
- =?us-ascii?Q?iKuyts/hoT7dkOk/lA4IKdijNg81cMQUyuuUM9Gte91MFJwQRS/dGdznzFt5?=
- =?us-ascii?Q?0c/kiQZGsSbUX1mEVn1IQ/njwu8ivKgcYcnAjgBEmMdTOU5l5eLGmIXYKBum?=
- =?us-ascii?Q?2WCMPKZPR6ft1MCV3Voy3eIutl7SLRkpIonILBfF6rW/ARVQQFdATSjjqJ36?=
- =?us-ascii?Q?xys886Nk1wVYGs3QnGul3jkwhY0Sx0UC7XvzNGrShwcokOFmpg6RCI3DdTHq?=
- =?us-ascii?Q?xwci7VxFxPXSv8rrTuwZTh7W2KFriufAV0LUWWUpoXdu1k7vBY4+lfkXuJrL?=
- =?us-ascii?Q?LGR5EHMMdWx90JZmMqbDEJa6p/Sa73Y1YN2RYsFQqPMf0l4tsUi8HTNvKAim?=
- =?us-ascii?Q?c8/T03UAXbzomSUwtTarKS54RhAnxlUbiX4TMKtW2puXx2Yb4VqIjlmWW0HJ?=
- =?us-ascii?Q?mjnkeK0R70FPm6YpJR4NF2ozV5YKcCq8h36FCmhh7cL4jGSYBZ9ZFyuvV/tV?=
- =?us-ascii?Q?Td5HtcxuwFNzh0zzRbQr+bMM3VHP+4DqL+4MBhA0rrqXadSOcN8J3+h/emEZ?=
- =?us-ascii?Q?JirTbPiP10gbzcP7ItB20C8NreF4dJ+/dGyyKnXpfCEKaSAC73UWlB6BOwJi?=
- =?us-ascii?Q?cBRfmc5el8eK3ExXctwE+AAAzcpHmpBBax09GkhNrVgi1Zeob+likHU7yzVF?=
- =?us-ascii?Q?IGawBCUoMBi0dSSJnkbQm3JhK8n1Fyg=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?bw4IbBYpgE58JnqMHKNSPd/NtyI76lnaBXFa+6CfUCrax7dP5sPY/hvEWimt?=
+ =?us-ascii?Q?FUEFafHQo4TgGkLSjVNpsMNlprYqQ5YQVyzgEih6brVwhgvy8o2ohXrt4DOQ?=
+ =?us-ascii?Q?cHAWk+fOrHcBr1QC1Q3Diw/jb1dJzj0v+9s0h5KiinUQ0rNRkGFDeIadWc5N?=
+ =?us-ascii?Q?TFbyg5h5CbGcH9jjWepjbWiv27vMDWcMosut3HiTcDzHaX+glkuDhLPw9fni?=
+ =?us-ascii?Q?HEDH6NTyIy4d4YVJxq2MdMR/MX67gPmmqJuEV1z5TB7zPQ4N960D0VVk6QOu?=
+ =?us-ascii?Q?PHJTU04GcACmZtAHNWCTMkVo4IAO1D9ZQZCsZIdUJn7QGd+j8L/bfNeRU36L?=
+ =?us-ascii?Q?gNZPil1eAsfyf8ep7jAa8yNdGwr111UDvksp6XsCNTslmckz5cX/yuaw2ufY?=
+ =?us-ascii?Q?KP/DmgqxrdEivpmuCpGO/mVgq3EEscZZf0Xn3XRWKuM+NvLc2VIV5ztwlXwo?=
+ =?us-ascii?Q?yNyDSSHSPpvcg7RqWwebpXMGcp+IJkiZWqB4vUVy7O/fwV80WpnqApOiPN07?=
+ =?us-ascii?Q?IuNN57gwrjM1jpRPkdryr3uGAeTEeISPdcOY4cvy0JU1KnUhZ6xflAetQ8aL?=
+ =?us-ascii?Q?orijmjQnDpLA1k/PP2m6L4nmZotfKJYRAi4REGXFFLNKJE4iNTPI/+EV/qJW?=
+ =?us-ascii?Q?ojiRoVH2+SDtu+oY6f6ntyxDGYQJOuXZPKXXba093Ray/BeAQLmpqJJ6wCRr?=
+ =?us-ascii?Q?3wtEbsTgBMiddFU6Nj/zwk8m5KcC21ESdV1tSehtDaAqsjqVr9d7wJ0P2IdZ?=
+ =?us-ascii?Q?MD/FyYX6NYU0IJeRk4zB98fCgsptbrWa1iAdSjfDdF1njS1GUoJ6fgWU4zfY?=
+ =?us-ascii?Q?dG46NhQAd1T1hlImfI/FB7adIEDnV+iaz4A3Xq+PWMUsN+DDa5FL06lxE2mn?=
+ =?us-ascii?Q?pCq7EqGjmtmbVpZwMzx6AiSs12s54ykqsbT8+NK9wysuFpxeEbu5q/+gXxEi?=
+ =?us-ascii?Q?s7YsZ3LQNEpuWQT2F2CcHASHLEeDHQcdWxf4u00efAhzpTgCdnKxzpEhTbjT?=
+ =?us-ascii?Q?iaEAyaFM99IBJ9CLqJqJIJjijqBmLAOGXr+cGXXyRGPFpccuOE2KRPaFCwNe?=
+ =?us-ascii?Q?wy+IPnX5e5qHUcZYF+doITyYHxJohVJyHet16jizDpAimGgCW6qhk1X9Iv+K?=
+ =?us-ascii?Q?Yh0Fi308lEvgzizLSEOAA2eUmeJqPPl+kgN+xFa4QaEB0Z7AcMidOmsmpPA9?=
+ =?us-ascii?Q?o3ezLnCd9KRxLZV1jSvi0ySouQsdN7Hi4JQHg1c6e1wc/XjhDtyFNE/l0Gp6?=
+ =?us-ascii?Q?Irm70TsxMA6yvXbbC5a/l20MV+GnvvC4OjN4qR6yNhqhegj8+A8zU1ybflwv?=
+ =?us-ascii?Q?8oY/SFfFd01b3QkRPFPgPvFsh8/e72LD8qAgx/OEILY4jpp4H9yrzJ/udcui?=
+ =?us-ascii?Q?EpMBAZXL15ufxVqZ7UmSYZGSductrSfhcKDGVNF3b0U2Gz6+38T59HiwrI8F?=
+ =?us-ascii?Q?szxo550bBgfqDf3OwARrbnom1c4Ztx5ZWvRKu79Gg2JKbFeFhEwyVmbNiYvA?=
+ =?us-ascii?Q?nsJe0iDhU8f7RqBIjkfgfshA4B9nug/RX5abZR4xGpZmpBrT4ihJM9P4uflx?=
+ =?us-ascii?Q?9otIHwRxu3QZ8NWabGvnVAEnGdEuvAnkfUG7SclbVJQwialx43xCuJHxQCPz?=
+ =?us-ascii?Q?3/FtCbTIPudD/wotjz+CVfbeZl/DwDtuz9G5MDKfq0fVYwdieFHiJufjXSY5?=
+ =?us-ascii?Q?2pAxVvRXiIYlhWa+kDY9mYiYQP2NrZpNFat3mOefo87AbMnVCiLC0MLwyg1d?=
+ =?us-ascii?Q?ZbJMIWAd+3b1GcODtMI3KjQxDPkBjII=3D?=
 X-OriginatorOrg: processmission.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: cc47dca1-01b3-41f5-38e2-08df2991e95c
+X-MS-Exchange-CrossTenant-Network-Message-Id: 6e783c6d-75a7-44e2-3b42-08df2991e4c7
 X-MS-Exchange-CrossTenant-AuthSource: KL1PR02MB6257.apcprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Oct 2026 01:24:37.3543 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Oct 2026 01:24:29.6870 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: YmkqFu3S3+RbiESKgoVBZ1YmIMmacy5XRHi6Y7Z75cIe8dMSXPQ4XAQT8NbrPJ1tb2ptBXERsYSdtb+BVbsknPncrB+kB2yAiYHDaZLCtJY=
+X-MS-Exchange-CrossTenant-UserPrincipalName: EKue6F/NPFuyYGiNR6DlGFtd9TBdjhymMJu6m1xpNXML3qj0vkdk9aKQgeoL7av5dqaHB11Z77LCAUNjI67puCVb/5Qb39jvjetuKrTTNt8=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: KL1PR02MB6214
 Received-SPF: pass client-ip=2a01:111:f403:c405::5;
  envelope-from=bin.meng@processmission.com;
@@ -146,229 +141,384 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-System service completion raises PLIC source 96 from IOSCB, while
-software accesses MESSAGE_INT through SYSREG. The MESSAGE_INT pending
-bit is not modelled explicitly, so reads return zero even when a
-service interrupt is active. Model the bit so service completion and
-register accesses use the same state.
+Exercise RTC register masks, binary counter, upload and stop controls,
+alarm and wakeup interrupt behavior, reset state, and PLIC wiring on
+the Icicle Kit.
 
-Keep the pending state and PLIC output in IOSCB. Link SYSREG to IOSCB
-so MESSAGE_INT reads the current pending bit and writes update the
-same state.
+Also verify RTC state and pending interrupt migration, including streams
+from QEMU versions that predate the RTC device.
 
 Signed-off-by: Bin Meng <bin.meng@processmission.com>
-Tested-by: Conor Dooley <conor.dooley@microchip.com>
 
 ---
 
-(no changes since v3)
+(no changes since v2)
 
-Changes in v3:
-- Separate interrupt state ownership from the NOTIFY fix
-- Link SYSREG to IOSCB for MESSAGE_INT reads and writes
-- Support both clearing and setting the MESSAGE_INT pending bit
+Changes in v2:
+- Expect the documented hardware state after RTC reset
 
- include/hw/misc/mchp_pfsoc_ioscb.h  |  4 ++++
- include/hw/misc/mchp_pfsoc_sysreg.h |  3 ++-
- hw/misc/mchp_pfsoc_ioscb.c          | 20 ++++++++++++++--
- hw/misc/mchp_pfsoc_sysreg.c         | 37 ++++++++++++++++++++++-------
- hw/riscv/microchip_pfsoc.c          |  5 ++--
- 5 files changed, 55 insertions(+), 14 deletions(-)
+ MAINTAINERS                       |   1 +
+ tests/qtest/mchp_pfsoc_rtc_test.c | 315 ++++++++++++++++++++++++++++++
+ tests/qtest/meson.build           |   5 +-
+ 3 files changed, 320 insertions(+), 1 deletion(-)
+ create mode 100644 tests/qtest/mchp_pfsoc_rtc_test.c
 
-diff --git a/include/hw/misc/mchp_pfsoc_ioscb.h b/include/hw/misc/mchp_pfsoc_ioscb.h
-index aa108d2d88..e8386f9794 100644
---- a/include/hw/misc/mchp_pfsoc_ioscb.h
-+++ b/include/hw/misc/mchp_pfsoc_ioscb.h
-@@ -53,6 +53,7 @@ typedef struct MchpPfSoCIoscbState {
-     uint32_t services_sr;
-     uint8_t mailbox_data[MCHP_PFSOC_IOSCB_MAILBOX_SIZE];
-     char *serial_number;
-+    bool irq_pending;
-     qemu_irq irq;
- } MchpPfSoCIoscbState;
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 2ea76ad1cd..12ffbd560e 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -1810,6 +1810,7 @@ F: include/hw/misc/mchp_pfsoc_dmc.h
+ F: include/hw/misc/mchp_pfsoc_ioscb.h
+ F: include/hw/misc/mchp_pfsoc_sysreg.h
+ F: include/hw/rtc/mchp_pfsoc_rtc.h
++F: tests/qtest/mchp_pfsoc_rtc_test.c
  
-@@ -61,4 +62,7 @@ typedef struct MchpPfSoCIoscbState {
- #define MCHP_PFSOC_IOSCB(obj) \
-     OBJECT_CHECK(MchpPfSoCIoscbState, (obj), TYPE_MCHP_PFSOC_IOSCB)
- 
-+bool mchp_pfsoc_ioscb_get_irq_pending(MchpPfSoCIoscbState *s);
-+void mchp_pfsoc_ioscb_set_irq_pending(MchpPfSoCIoscbState *s, bool pending);
+ Shakti C class SoC
+ L: qemu-riscv@nongnu.org
+diff --git a/tests/qtest/mchp_pfsoc_rtc_test.c b/tests/qtest/mchp_pfsoc_rtc_test.c
+new file mode 100644
+index 0000000000..ed96c15faa
+--- /dev/null
++++ b/tests/qtest/mchp_pfsoc_rtc_test.c
+@@ -0,0 +1,315 @@
++/*
++ * QTest testcase for the Microchip PolarFire SoC RTC
++ *
++ * Copyright (c) 2026 Process Mission
++ *
++ * Author:
++ *   Bin Meng <bin.meng@processmission.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
 +
- #endif /* MCHP_PFSOC_IOSCB_H */
-diff --git a/include/hw/misc/mchp_pfsoc_sysreg.h b/include/hw/misc/mchp_pfsoc_sysreg.h
-index c2b3688a94..d6c9027f2d 100644
---- a/include/hw/misc/mchp_pfsoc_sysreg.h
-+++ b/include/hw/misc/mchp_pfsoc_sysreg.h
-@@ -24,13 +24,14 @@
- #define MCHP_PFSOC_SYSREG_H
- 
- #include "hw/core/sysbus.h"
-+#include "hw/misc/mchp_pfsoc_ioscb.h"
- 
- #define MCHP_PFSOC_SYSREG_REG_SIZE  0x2000
- 
- typedef struct MchpPfSoCSysregState {
-     SysBusDevice parent;
-     MemoryRegion sysreg;
--    qemu_irq irq;
-+    MchpPfSoCIoscbState *ioscb;
- } MchpPfSoCSysregState;
- 
- #define TYPE_MCHP_PFSOC_SYSREG "mchp.pfsoc.sysreg"
-diff --git a/hw/misc/mchp_pfsoc_ioscb.c b/hw/misc/mchp_pfsoc_ioscb.c
-index bde1917c10..1f77da6852 100644
---- a/hw/misc/mchp_pfsoc_ioscb.c
-+++ b/hw/misc/mchp_pfsoc_ioscb.c
-@@ -209,6 +209,22 @@ static const MemoryRegionOps mchp_pfsoc_io_calib_ddr_ops = {
- #define SERVICES_STATUS_SUCCESS             0
- #define SERVICES_STATUS_FAILED              1
- 
-+static void mchp_pfsoc_ioscb_update_irq(MchpPfSoCIoscbState *s)
++#include "qemu/osdep.h"
++#include "qemu/bitops.h"
++#include "qemu/bswap.h"
++#include "qemu/timer.h"
++#include "libqtest.h"
++#include "migration/migration-qmp.h"
++#include "migration/migration-util.h"
++
++#define RTC_BASE            0x20124000
++#define RTC_CONTROL         0x00
++#define RTC_MODE            0x04
++#define RTC_PRESCALER       0x08
++#define RTC_ALARM_LOWER     0x0c
++#define RTC_ALARM_UPPER     0x10
++#define RTC_COMPARE_LOWER   0x14
++#define RTC_COMPARE_UPPER   0x18
++#define RTC_DATETIME_LOWER  0x20
++#define RTC_DATETIME_UPPER  0x24
++#define RTC_RUNNING         BIT(0)
++#define RTC_STOP            BIT(1)
++#define RTC_ALARM_ON        BIT(2)
++#define RTC_ALARM_OFF       BIT(3)
++#define RTC_UPLOAD          BIT(5)
++#define RTC_MATCH           BIT(7)
++#define RTC_WAKEUP_CLEAR    BIT(8)
++#define RTC_WAKEUP_SET      BIT(9)
++#define RTC_UPDATED         BIT(10)
++#define RTC_WAKEUP_ENABLE   BIT(1)
++#define RTC_WAKEUP_RESET    BIT(2)
++#define RTC_WAKEUP_CONTINUE BIT(3)
++#define RTC_PRESCALER_MASK  0x03ffffff
++#define RTC_UPPER_MASK      0x3fffffff
++#define PLIC_BASE           0x0c000000
++#define PLIC_PENDING        0x1000
++#define PLIC_RTC_PENDING    (BIT(16) | BIT(17))
++#define ENVM_BASE           0x20220000
++#define HSS_HEADER_SIZE     0x100
++#define HSS_HEADER_JUMP     0x1000006f
++#define HSS_PAYLOAD_BASE    (ENVM_BASE + HSS_HEADER_SIZE)
++#define HSS_PAYLOAD_SIZE    8
++
++static QTestState *microchip_icicle_kit_start_rtc(const char *firmware)
 +{
-+    qemu_set_irq(s->irq, s->irq_pending);
++    return qtest_initf(
++        "-machine microchip-icicle-kit -smp 5 -m 2G -bios \"%s\" "
++        "-rtc clock=vm", firmware);
 +}
 +
-+bool mchp_pfsoc_ioscb_get_irq_pending(MchpPfSoCIoscbState *s)
++static QTestState *microchip_icicle_kit_start_ext(const char *qemu_var,
++                                                  const char *firmware)
 +{
-+    return s->irq_pending;
++    g_autofree char *args = g_strdup_printf(
++        "-machine microchip-icicle-kit -smp 5 -m 2G -bios \"%s\"",
++        firmware);
++
++    return qtest_init_ext(qemu_var, args, NULL, true);
 +}
 +
-+void mchp_pfsoc_ioscb_set_irq_pending(MchpPfSoCIoscbState *s, bool pending)
++static char *create_firmware(void)
 +{
-+    s->irq_pending = pending;
-+    mchp_pfsoc_ioscb_update_irq(s);
++    uint8_t firmware[HSS_HEADER_SIZE + HSS_PAYLOAD_SIZE] = { 0 };
++    static const uint8_t payload[] = {
++        0x13, 0x00, 0x00, 0x00,
++        0x6f, 0x00, 0x00, 0x00,
++    };
++    char *path;
++    int fd;
++    ssize_t written;
++    unsigned int i;
++
++    stl_le_p(&firmware[0], HSS_HEADER_JUMP);
++    stl_le_p(&firmware[4], HSS_PAYLOAD_SIZE);
++    for (i = 0; i < 5; i++) {
++        stl_le_p(&firmware[8 + i * sizeof(uint32_t)], HSS_PAYLOAD_BASE);
++    }
++    memcpy(&firmware[HSS_HEADER_SIZE], payload, sizeof(payload));
++
++    fd = g_file_open_tmp("microchip-icicle-kit-XXXXXX", &path, NULL);
++    g_assert_cmpint(fd, >=, 0);
++
++    written = write(fd, firmware, sizeof(firmware));
++    g_assert_cmpint(written, ==, sizeof(firmware));
++    close(fd);
++
++    return path;
 +}
 +
- static void services_cr_write(MchpPfSoCIoscbState *s, uint32_t value)
- {
-     uint32_t command;
-@@ -248,7 +264,7 @@ static void services_cr_write(MchpPfSoCIoscbState *s, uint32_t value)
- 
-     s->services_sr = status << SERVICES_SR_STATUS_SHIFT;
-     if (value & SERVICES_CR_NOTIFY) {
--        qemu_irq_raise(s->irq);
-+        mchp_pfsoc_ioscb_set_irq_pending(s, true);
-     }
- }
- 
-@@ -339,7 +355,7 @@ static void mchp_pfsoc_ioscb_reset(DeviceState *dev)
-     s->services_cr = 0;
-     s->services_sr = 0;
-     memset(s->mailbox_data, 0, sizeof(s->mailbox_data));
--    qemu_irq_lower(s->irq);
-+    mchp_pfsoc_ioscb_set_irq_pending(s, false);
- }
- 
- static const Property mchp_pfsoc_ioscb_properties[] = {
-diff --git a/hw/misc/mchp_pfsoc_sysreg.c b/hw/misc/mchp_pfsoc_sysreg.c
-index 1d9154280a..4c52338c8a 100644
---- a/hw/misc/mchp_pfsoc_sysreg.c
-+++ b/hw/misc/mchp_pfsoc_sysreg.c
-@@ -24,20 +24,22 @@
- #include "qemu/bitops.h"
- #include "qemu/log.h"
- #include "qapi/error.h"
--#include "hw/core/irq.h"
-+#include "hw/core/qdev-properties.h"
- #include "hw/core/sysbus.h"
- #include "hw/misc/mchp_pfsoc_sysreg.h"
- #include "system/runstate.h"
- 
--#define CLOCK_CONFIG_CR 0x8
--#define RTC_CLOCK_CR    0xc
--#define MSS_RESET_CR    0x18
--#define ENVM_CR         0xb8
--#define MESSAGE_INT     0x118c
-+#define CLOCK_CONFIG_CR     0x8
-+#define RTC_CLOCK_CR        0xc
-+#define MSS_RESET_CR        0x18
-+#define ENVM_CR             0xb8
-+#define MESSAGE_INT         0x118c
-+#define MESSAGE_INT_PENDING BIT(0)
- 
- static uint64_t mchp_pfsoc_sysreg_read(void *opaque, hwaddr offset,
-                                        unsigned size)
- {
-+    MchpPfSoCSysregState *s = opaque;
-     uint32_t val = 0;
- 
-     switch (offset) {
-@@ -56,6 +58,10 @@ static uint64_t mchp_pfsoc_sysreg_read(void *opaque, hwaddr offset,
-         /* Indicate the eNVM is running at the configured divider rate */
-         val = BIT(6);
-         break;
-+    case MESSAGE_INT:
-+        val = mchp_pfsoc_ioscb_get_irq_pending(s->ioscb) ?
-+              MESSAGE_INT_PENDING : 0;
-+        break;
-     default:
-         qemu_log_mask(LOG_UNIMP, "%s: unimplemented device read "
-                       "(size %d, offset 0x%" HWADDR_PRIx ")\n",
-@@ -77,7 +83,12 @@ static void mchp_pfsoc_sysreg_write(void *opaque, hwaddr offset,
-         }
-         break;
-     case MESSAGE_INT:
--        qemu_irq_lower(s->irq);
-+        /*
-+         * MESSAGE_INT bit 0 is read/write: writing zero clears the interrupt
-+         * and writing one sets it. IOSCB owns the state and PLIC output.
-+         */
-+        mchp_pfsoc_ioscb_set_irq_pending(s->ioscb,
-+                                        value & MESSAGE_INT_PENDING);
-         break;
-     default:
-         qemu_log_mask(LOG_UNIMP, "%s: unimplemented device write "
-@@ -97,20 +108,30 @@ static void mchp_pfsoc_sysreg_realize(DeviceState *dev, Error **errp)
- {
-     MchpPfSoCSysregState *s = MCHP_PFSOC_SYSREG(dev);
- 
-+    if (!s->ioscb) {
-+        error_setg(errp, "The 'ioscb' link must be set");
-+        return;
++static uint64_t rtc_read_binary_count(QTestState *qts)
++{
++    uint64_t count = qtest_readl(qts, RTC_BASE + RTC_DATETIME_LOWER);
++
++    count |= (uint64_t)qtest_readl(qts,
++                                   RTC_BASE + RTC_DATETIME_UPPER) << 32;
++    return count;
++}
++
++static void test_rtc(void)
++{
++    g_autofree char *firmware = create_firmware();
++    QTestState *qts = microchip_icicle_kit_start_rtc(firmware);
++    uint32_t control;
++
++    unlink(firmware);
++    qtest_irq_intercept_out_named(qts, "/machine/soc/rtc", "sysbus-irq");
++
++    g_assert_cmphex(qtest_readl(qts, RTC_BASE + RTC_CONTROL), ==, 0);
++    g_assert_cmphex(rtc_read_binary_count(qts), ==, 0);
++    qtest_clock_step(qts, 2 * NANOSECONDS_PER_SECOND);
++    g_assert_cmphex(rtc_read_binary_count(qts), ==, 0);
++
++    qtest_writel(qts, RTC_BASE + RTC_MODE, UINT32_MAX);
++    qtest_writel(qts, RTC_BASE + RTC_PRESCALER, UINT32_MAX);
++    g_assert_cmphex(qtest_readl(qts, RTC_BASE + RTC_MODE), ==, 0xf);
++    g_assert_cmphex(qtest_readl(qts, RTC_BASE + RTC_PRESCALER), ==,
++                    RTC_PRESCALER_MASK);
++    qtest_writel(qts, RTC_BASE + RTC_MODE, 0);
++
++    qtest_writel(qts, RTC_BASE + RTC_CONTROL, RTC_STOP);
++    g_assert_cmphex(qtest_readl(qts, RTC_BASE + RTC_CONTROL) &
++                    RTC_RUNNING, ==, 0);
++    qtest_clock_step(qts, 2 * NANOSECONDS_PER_SECOND);
++    g_assert_cmphex(rtc_read_binary_count(qts), ==, 0);
++
++    qtest_writel(qts, RTC_BASE + RTC_DATETIME_LOWER, 42);
++    qtest_writel(qts, RTC_BASE + RTC_DATETIME_UPPER, 0);
++    qtest_writel(qts, RTC_BASE + RTC_CONTROL, RTC_UPLOAD);
++    g_assert_cmphex(rtc_read_binary_count(qts), ==, 42);
++    g_assert_cmphex(qtest_readl(qts, RTC_BASE + RTC_CONTROL) &
++                    (RTC_UPLOAD | RTC_UPDATED), ==, RTC_UPDATED);
++
++    qtest_writel(qts, RTC_BASE + RTC_CONTROL, RTC_RUNNING);
++    qtest_clock_step(qts, NANOSECONDS_PER_SECOND);
++    g_assert_cmphex(rtc_read_binary_count(qts), ==, 43);
++    qtest_writel(qts, RTC_BASE + RTC_CONTROL, RTC_WAKEUP_SET);
++    g_assert_true(qtest_get_irq(qts, 0));
++    qtest_writel(qts, RTC_BASE + RTC_CONTROL, RTC_WAKEUP_CLEAR);
++    g_assert_false(qtest_get_irq(qts, 0));
++
++    qtest_writel(qts, RTC_BASE + RTC_ALARM_LOWER, 45);
++    qtest_writel(qts, RTC_BASE + RTC_ALARM_UPPER, 0);
++    qtest_writel(qts, RTC_BASE + RTC_COMPARE_LOWER, UINT32_MAX);
++    qtest_writel(qts, RTC_BASE + RTC_COMPARE_UPPER, RTC_UPPER_MASK);
++    qtest_writel(qts, RTC_BASE + RTC_MODE,
++                 RTC_WAKEUP_ENABLE | RTC_WAKEUP_CONTINUE);
++    qtest_writel(qts, RTC_BASE + RTC_CONTROL, RTC_ALARM_ON);
++    g_assert_false(qtest_get_irq(qts, 0));
++    g_assert_false(qtest_get_irq(qts, 1));
++    control = qtest_readl(qts, RTC_BASE + RTC_CONTROL);
++    g_assert_cmphex(control & RTC_ALARM_ON, ==, RTC_ALARM_ON);
++    qtest_writel(qts, RTC_BASE + RTC_CONTROL, control | RTC_ALARM_OFF);
++    g_assert_cmphex(qtest_readl(qts, RTC_BASE + RTC_CONTROL) &
++                    RTC_ALARM_ON, ==, 0);
++    qtest_clock_step(qts, 2 * NANOSECONDS_PER_SECOND);
++    g_assert_false(qtest_get_irq(qts, 0));
++    g_assert_false(qtest_get_irq(qts, 1));
++
++    qtest_writel(qts, RTC_BASE + RTC_DATETIME_LOWER, 43);
++    qtest_writel(qts, RTC_BASE + RTC_CONTROL, RTC_UPLOAD);
++    qtest_writel(qts, RTC_BASE + RTC_CONTROL, RTC_ALARM_ON);
++    qtest_clock_step(qts, 2 * NANOSECONDS_PER_SECOND);
++    g_assert_true(qtest_get_irq(qts, 0));
++    g_assert_true(qtest_get_irq(qts, 1));
++    g_assert_cmphex(qtest_readl(qts, RTC_BASE + RTC_CONTROL) & RTC_MATCH,
++                    ==, RTC_MATCH);
++    qtest_writel(qts, RTC_BASE + RTC_CONTROL, RTC_ALARM_OFF);
++    g_assert_false(qtest_get_irq(qts, 0));
++    g_assert_false(qtest_get_irq(qts, 1));
++
++    qtest_writel(qts, RTC_BASE + RTC_DATETIME_LOWER, 0);
++    qtest_writel(qts, RTC_BASE + RTC_DATETIME_UPPER, 0);
++    qtest_writel(qts, RTC_BASE + RTC_CONTROL, RTC_UPLOAD);
++    qtest_writel(qts, RTC_BASE + RTC_ALARM_LOWER, 2);
++    qtest_writel(qts, RTC_BASE + RTC_MODE,
++                 RTC_WAKEUP_ENABLE | RTC_WAKEUP_RESET |
++                 RTC_WAKEUP_CONTINUE);
++    qtest_writel(qts, RTC_BASE + RTC_CONTROL, RTC_ALARM_ON);
++    qtest_clock_step(qts, 2 * NANOSECONDS_PER_SECOND);
++    g_assert_true(qtest_get_irq(qts, 0));
++    g_assert_cmphex(rtc_read_binary_count(qts), ==, 0);
++    g_assert_cmphex(qtest_readl(qts, RTC_BASE + RTC_CONTROL) &
++                    RTC_ALARM_ON, ==, RTC_ALARM_ON);
++    qtest_writel(qts, RTC_BASE + RTC_CONTROL, RTC_WAKEUP_CLEAR);
++    qtest_clock_step(qts, 2 * NANOSECONDS_PER_SECOND);
++    g_assert_true(qtest_get_irq(qts, 0));
++    g_assert_cmphex(rtc_read_binary_count(qts), ==, 0);
++    qtest_writel(qts, RTC_BASE + RTC_CONTROL, RTC_ALARM_OFF);
++    g_assert_false(qtest_get_irq(qts, 0));
++    g_assert_false(qtest_get_irq(qts, 1));
++
++    qtest_system_reset(qts);
++    g_assert_cmphex(qtest_readl(qts, RTC_BASE + RTC_CONTROL), ==, 0);
++    g_assert_cmphex(qtest_readl(qts, RTC_BASE + RTC_MODE), ==, 0);
++    g_assert_cmphex(qtest_readl(qts, RTC_BASE + RTC_PRESCALER), ==, 0);
++    g_assert_false(qtest_get_irq(qts, 0));
++    g_assert_false(qtest_get_irq(qts, 1));
++
++    qtest_quit(qts);
++}
++
++static void test_rtc_plic(void)
++{
++    g_autofree char *firmware = create_firmware();
++    QTestState *qts = microchip_icicle_kit_start_rtc(firmware);
++
++    unlink(firmware);
++
++    qtest_writel(qts, RTC_BASE + RTC_DATETIME_LOWER, 42);
++    qtest_writel(qts, RTC_BASE + RTC_DATETIME_UPPER, 0);
++    qtest_writel(qts, RTC_BASE + RTC_CONTROL, RTC_UPLOAD);
++    qtest_writel(qts, RTC_BASE + RTC_CONTROL, RTC_RUNNING);
++    qtest_writel(qts, RTC_BASE + RTC_ALARM_LOWER, 43);
++    qtest_writel(qts, RTC_BASE + RTC_ALARM_UPPER, 0);
++    qtest_writel(qts, RTC_BASE + RTC_COMPARE_LOWER, UINT32_MAX);
++    qtest_writel(qts, RTC_BASE + RTC_COMPARE_UPPER, RTC_UPPER_MASK);
++    qtest_writel(qts, RTC_BASE + RTC_MODE,
++                 RTC_WAKEUP_ENABLE | RTC_WAKEUP_CONTINUE);
++    qtest_writel(qts, RTC_BASE + RTC_CONTROL, RTC_ALARM_ON);
++    qtest_clock_step(qts, NANOSECONDS_PER_SECOND);
++
++    g_assert_cmphex(qtest_readl(qts, PLIC_BASE + PLIC_PENDING + 8) &
++                    PLIC_RTC_PENDING, ==, PLIC_RTC_PENDING);
++
++    qtest_quit(qts);
++}
++
++static void test_machine_migration(void)
++{
++    g_autofree char *firmware = create_firmware();
++    const char *old_qemu = g_getenv("QTEST_QEMU_BINARY_OLD");
++    QTestState *from;
++    QTestState *to = qtest_initf(
++        "-machine microchip-icicle-kit -smp 5 -m 2G "
++        "-bios \"%s\" -incoming defer "
++        "-rtc clock=vm", firmware);
++
++    qtest_irq_intercept_out_named(to, "/machine/soc/rtc", "sysbus-irq");
++
++    /* Allow an older QEMU source to exercise migration compatibility */
++    if (old_qemu) {
++        from = microchip_icicle_kit_start_ext("QTEST_QEMU_BINARY_OLD",
++                                              firmware);
++    } else {
++        from = microchip_icicle_kit_start_rtc(firmware);
++        qtest_writel(from, RTC_BASE + RTC_DATETIME_LOWER, 0x23456789);
++        qtest_writel(from, RTC_BASE + RTC_DATETIME_UPPER, 1);
++        qtest_writel(from, RTC_BASE + RTC_CONTROL, RTC_UPLOAD);
++        qtest_writel(from, RTC_BASE + RTC_CONTROL, RTC_RUNNING);
++        qtest_writel(from, RTC_BASE + RTC_ALARM_LOWER, 0x2345678b);
++        qtest_writel(from, RTC_BASE + RTC_ALARM_UPPER, 1);
++        qtest_writel(from, RTC_BASE + RTC_COMPARE_LOWER, UINT32_MAX);
++        qtest_writel(from, RTC_BASE + RTC_COMPARE_UPPER, RTC_UPPER_MASK);
++        qtest_writel(from, RTC_BASE + RTC_MODE,
++                     RTC_WAKEUP_ENABLE | RTC_WAKEUP_CONTINUE);
++        qtest_writel(from, RTC_BASE + RTC_CONTROL, RTC_ALARM_ON);
++        qtest_writel(from, RTC_BASE + RTC_CONTROL, RTC_WAKEUP_SET);
++        qtest_writel(from, RTC_BASE + RTC_PRESCALER, 999999);
 +    }
 +
-     memory_region_init_io(&s->sysreg, OBJECT(dev),
-                           &mchp_pfsoc_sysreg_ops, s,
-                           "mchp.pfsoc.sysreg",
-                           MCHP_PFSOC_SYSREG_REG_SIZE);
-     sysbus_init_mmio(SYS_BUS_DEVICE(dev), &s->sysreg);
--    sysbus_init_irq(SYS_BUS_DEVICE(dev), &s->irq);
- }
- 
-+static const Property mchp_pfsoc_sysreg_properties[] = {
-+    DEFINE_PROP_LINK("ioscb", MchpPfSoCSysregState, ioscb,
-+                     TYPE_MCHP_PFSOC_IOSCB, MchpPfSoCIoscbState *),
-+};
++    unlink(firmware);
 +
- static void mchp_pfsoc_sysreg_class_init(ObjectClass *klass, const void *data)
- {
-     DeviceClass *dc = DEVICE_CLASS(klass);
- 
-     dc->desc = "Microchip PolarFire SoC SYSREG module";
-     dc->realize = mchp_pfsoc_sysreg_realize;
-+    device_class_set_props(dc, mchp_pfsoc_sysreg_properties);
- }
- 
- static const TypeInfo mchp_pfsoc_sysreg_info = {
-diff --git a/hw/riscv/microchip_pfsoc.c b/hw/riscv/microchip_pfsoc.c
-index 36c894b677..38f4e7d799 100644
---- a/hw/riscv/microchip_pfsoc.c
-+++ b/hw/riscv/microchip_pfsoc.c
-@@ -315,12 +315,11 @@ static void microchip_pfsoc_soc_realize(DeviceState *dev, Error **errp)
-     }
- 
-     /* SYSREG */
-+    object_property_set_link(OBJECT(&s->sysreg), "ioscb", OBJECT(&s->ioscb),
-+                             &error_abort);
-     sysbus_realize(SYS_BUS_DEVICE(&s->sysreg), errp);
-     sysbus_mmio_map(SYS_BUS_DEVICE(&s->sysreg), 0,
-                     memmap[MICROCHIP_PFSOC_SYSREG].base);
--    sysbus_connect_irq(SYS_BUS_DEVICE(&s->sysreg), 0,
--                       qdev_get_gpio_in(DEVICE(s->plic),
--                       MICROCHIP_PFSOC_MAILBOX_IRQ));
- 
-     /* AXISW */
-     create_unimplemented_device("microchip.pfsoc.axisw",
++    migrate_incoming_qmp(to, "tcp:127.0.0.1:0", NULL, "{}");
++    migrate_qmp(from, to, NULL, NULL, "{}");
++    wait_for_migration_complete(from);
++
++    if (old_qemu) {
++        g_assert_cmphex(qtest_readl(to, RTC_BASE + RTC_CONTROL), ==, 0);
++        g_assert_cmphex(qtest_readl(to, RTC_BASE + RTC_PRESCALER), ==, 0);
++        g_assert_false(qtest_get_irq(to, 0));
++        g_assert_false(qtest_get_irq(to, 1));
++    } else {
++        g_assert_cmphex(rtc_read_binary_count(to), ==, 0x123456789);
++        g_assert_cmphex(qtest_readl(to, RTC_BASE + RTC_CONTROL) &
++                        (RTC_RUNNING | RTC_ALARM_ON), ==,
++                        RTC_RUNNING | RTC_ALARM_ON);
++        g_assert_cmphex(qtest_readl(to, RTC_BASE + RTC_PRESCALER), ==,
++                        999999);
++        g_assert_true(qtest_get_irq(to, 0));
++        g_assert_false(qtest_get_irq(to, 1));
++        qtest_writel(to, RTC_BASE + RTC_CONTROL, RTC_WAKEUP_CLEAR);
++        g_assert_false(qtest_get_irq(to, 0));
++        qtest_clock_step(to, 2 * NANOSECONDS_PER_SECOND);
++        g_assert_cmphex(rtc_read_binary_count(to), ==, 0x12345678b);
++        g_assert_true(qtest_get_irq(to, 0));
++        g_assert_true(qtest_get_irq(to, 1));
++        qtest_writel(to, RTC_BASE + RTC_CONTROL, RTC_ALARM_OFF);
++        g_assert_false(qtest_get_irq(to, 0));
++        g_assert_false(qtest_get_irq(to, 1));
++    }
++
++    qtest_quit(from);
++    qtest_quit(to);
++}
++
++int main(int argc, char **argv)
++{
++    g_test_init(&argc, &argv, NULL);
++
++    qtest_add_func("/mchp_pfsoc_rtc/registers", test_rtc);
++    qtest_add_func("/mchp_pfsoc_rtc/plic", test_rtc_plic);
++    qtest_add_func("/mchp_pfsoc_rtc/migration",
++                   test_machine_migration);
++
++    return g_test_run();
++}
+diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+index 29457193ed..fb3dcb200b 100644
+--- a/tests/qtest/meson.build
++++ b/tests/qtest/meson.build
+@@ -312,7 +312,8 @@ qtests_riscv32 = \
+ qtests_riscv64 = ['riscv-csr-test'] + \
+   (unpack_edk2_blobs ? ['bios-tables-test'] : []) + \
+   (config_all_devices.has_key('CONFIG_MICROCHIP_PFSOC') ?
+-   ['cadence-sdhci-test'] : []) + \
++   ['cadence-sdhci-test',
++    'mchp_pfsoc_rtc_test'] : []) + \
+   (config_all_devices.has_key('CONFIG_SIFIVE_L2CC') ? ['sifive_l2cc_test'] : []) + \
+   (config_all_devices.has_key('CONFIG_IOMMU_TESTDEV') and
+    config_all_devices.has_key('CONFIG_RISCV_IOMMU') ?
+@@ -432,6 +433,8 @@ qtests = {
+   'migration-test': test_migration_files + migration_tls_files + migration_colo_files,
+   'sifive_l2cc_test': files('migration/migration-qmp.c',
+                            'migration/migration-util.c'),
++  'mchp_pfsoc_rtc_test': files('migration/migration-qmp.c',
++                               'migration/migration-util.c'),
+   'pxe-test': files('boot-sector.c'),
+   'pnv-xive2-test': files('pnv-xive2-common.c', 'pnv-xive2-flush-sync.c',
+                           'pnv-xive2-nvpg_bar.c'),
 -- 
 2.53.0
 
