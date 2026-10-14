@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 319CECC6B20
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 03:43:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50843CC6B1C
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 03:44:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGpsf-0003oO-EJ; Tue, 13 Oct 2026 23:42:17 -0400
+	id 1xGpqK-0004wr-NP; Tue, 13 Oct 2026 23:39:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1xGpsX-0003cb-QW
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 23:42:10 -0400
-Received: from mail-pg1-x534.google.com ([2607:f8b0:4864:20::534])
+ id 1xGpq3-0004qM-DY
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 23:39:40 -0400
+Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1xGpsW-0001sP-6K
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 23:42:09 -0400
-Received: by mail-pg1-x534.google.com with SMTP id
- 41be03b00d2f7-cc4dbda1e5dso1315119a12.2
- for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 20:42:07 -0700 (PDT)
+ id 1xGpq0-0001KV-AE
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 23:39:34 -0400
+Received: by mail-pj1-x102a.google.com with SMTP id
+ 98e67ed59e1d1-3a813079a55so3233130a91.0
+ for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 20:39:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1791949327; x=1792554127; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1791949164; x=1792553964; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=vEsPkFkLUyA1NU56nP525qgRMdEHY/E8F4lp51ZoNeY=;
- b=IHbQj5qFnvMFtkpYXwlZ42J8ENIzRr00dLJCvSUXh5MFF0d8TJ6VTlPz59mDIJ431W
- EdvXa5JlOduyLLvdwQJJmBk7FtPMda7zJjpCZldYcimXGR1MPKSQizlc//L1zeGiIm6C
- xLxCYv5wyY5bybyWOwWwBmCc8GwT6xpw82c42k+jv7e1IIjMnK59/zMcdVdyyfLA+/a5
- jWWfROnX0NRgMS0ynSfZOKgnG+5xawYPz17Jin/J3Dt/o5WEPvIeqbgpqOIks0wwXq2G
- QXruPZp1maquxjrD3CgxCNSfxuh/QbtByMgHjpRpna3tjLAbpoltlGdbol9LNGQ8QJYh
- K30A==
+ bh=Sfx1HIlYACatyDIWreyR3Kawd11D1y/HMQNShWOnHhU=;
+ b=LCkGGWdNRS6kQ8dmUivk30ztr4FaeYJT8sB6S+pLJRnVQslfoa6LYite5bpsKgLxWC
+ qhxhQUTQ5p05DbrEgoy93Lp6pS3lnAQO/+ONwCVakPvWWLpMb1sWDRvZCkfbRxj6knyE
+ gTUDCC3OqV5bcuNYrBui4/zTdxiHgoHqfR1EqrjubUJNHHYBkyE8VRTLl1Wr2ytD3UL8
+ N+W6X+x9FPnlyg/yL3XNj0E8IP2Fm5xaVvcw86CaNw+uXfeNfH9bfvD0IQ8LHOQKqsIr
+ HW5tRrX7rdDSbDoMwfmvLFo6DabxHBemZhv4BSy8JsZ1bEAVYAwz5hPUj43JlrEafL+D
+ PIZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791949327; x=1792554127;
+ d=1e100.net; s=20260707; t=1791949164; x=1792553964;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=vEsPkFkLUyA1NU56nP525qgRMdEHY/E8F4lp51ZoNeY=;
- b=PSSfJEmxnI7KiBAKLGtHPwTzW0XpQQ6wpP5aZ5zsIVwlS0Gt/fHfUpM1QyXAn6hRTZ
- chH0o6DVCFnXh51RMiMDjL7JT08SXMF5uNrT5nH8YnvsEcyEAkwW8VQnwrucI9SllczH
- F689DlQbDtmkt3TGTb7grhyntZxkAmd4EQfL6hSHvFPUqGLhNvT38toK1ExtgU9ViwTk
- RTDB6QNRaYyA63dhWxK/LVmps54e8WyPP/PVeSjdOEWypbK/rRmTl97/2d29MLqTlFJz
- gJkWEHTJ7Pg3+Xwp94SKlsrrrcyi569023N16XrVJbcqvyuqNOOgt/T6EkBa1tPXZ8Xb
- cJag==
-X-Gm-Message-State: AFq9FYJUzR9d5emiXMlRTUxuQPak4zryjc9mFLdBw973ii93iwShIGPu
- aVXwdcGu5Pt6zdQW4mFc/BYK9acRMromMZdPC+wf4LzCf4bxAq7eH0X1nPUvFA==
-X-Gm-Gg: AYBFou3c7X1DwFX2sZwDwes8xmnwk8IUfOL9EODjoZVX/S1AHSEE0vp7j4XdY0Aoe8w
- BwYjVPoJq2RXk4BuydZm1pP3BfYTvdoo8RQs6wa3XtUlPJVHTDjFqhTy7D+KPTXAM7H/7O87w/e
- pJm89JuPwj2bN3C+Mv7V93MbY38fgU/YcwI35sCHHFAqwW2+u/I/AfDJGD/mO5h0Bi9rgdbi5jo
- gN0g7ooe1UsVrQ/nm+W7W8opG7GvB3c+9i0S5MRHfbuyFbHXT1qWjVAbrvkG5ULyilhCuaHGn+l
- 975Ce1G+3YUsugrnAxtbD+0cjqUEV7XQC89dFbVwFGV59dAJC82W95A/zv3zW6m2v9nHUBslXNa
- oTu7AYwGVv1t4d0eQv4V8harmMBIMId/jF2GZr3obu+INRHvyOVaD5MZXNEZmPGwaPG7eF3TIit
- 3iVJ+PmualjbexQl9fDrRZJNNYwQH0D4HLxsZyC4+3zjmMjAsWWP0KCVAqlj+X4Yk0SO7wsk0I2
- Noun0/TcEf3JXMe
-X-Received: by 2002:a17:90b:4b92:b0:3a8:545f:520d with SMTP id
- 98e67ed59e1d1-3ab3ac9f939mr11437942a91.32.1791949326906; 
- Tue, 13 Oct 2026 20:42:06 -0700 (PDT)
+ bh=Sfx1HIlYACatyDIWreyR3Kawd11D1y/HMQNShWOnHhU=;
+ b=VUHq+6Rwl+3AULW/oIsZlh/HemMFutRS8KHs29bpSQzdd0qY9PWkQux9hU+l1eXzNN
+ SvWElpxlelFTfxsUbDY+e079P8DOW1JOqB90xYqlgzevA7/ymsVxfFa9hJYEycE6Km+6
+ CRF741uleXDnAM0R4IddZ1e7ll8uVnh6z/ghy1GzY9xwEwLm3MthkJixyqFrxF1AmowF
+ oTL+Heud8lZnzppTiqVtgC1sYv+0zmlcsx6wLUFaYMibS8llprMdw/BJeCLdmm2Y0LBB
+ FnuN3cfsIYHUDVAutLGHcckd+l6s9ZIdA6fedYAlMYWOcSOt6/DSfPVxheey6qDo7B4b
+ ZugQ==
+X-Gm-Message-State: AFq9FYKq2mlXZ00yCMeLOGSzAYlGPGN+0z9o9OS2/04AdWkKCRLIpqv2
+ GRS8nhQrceVzlEYi1rBxqi9pEIWnXsVLCZVliJRECqagSPtwGnjS1lHX6NSc2Q==
+X-Gm-Gg: AYBFou1ZVfKHD+dt5dt0TuFv7MvNdBOPmmnKjJvGe9YAq7qv40BJnvvWbwPZsrQrt5A
+ WwVIjOsW0gXu+luI7XIT3pqj3DDFQkmKNct25n893plxvcCOnl0HmTEjvWvShWU3NNvSrM39Qbv
+ Gr24vHy6hTmpRipeFz0K2fOh34HFl6ZGB1iR91seYTeB8QUhIXsybGSenznCRDULVPlel4cvCic
+ aOSko+zHYekj90BZw+9OMIb2S+vGuvo36Tq9f194IGQiC5LBDXReGxqiuwlYv+df2Y2P1d77jv1
+ PBTWXRZlktsCJ1VsFwr8RMbvdXLNqPXjTZGRNVm+1WsFZURwEiLsqMwIVvb8lSOlsY4QDCnwTsh
+ /OvVauG/PMHxbiFIC10cRWikfuFo678m8bptJmhiokrLXfuNzTTigS5IKWy57eocOlBN7fhsozk
+ /xZ9ZbyX9oQ42p7YeHvqUsATGavO0qUCCU04Hfr2rfPzkuLqYUToWdooUVxVHm03P9ry3exAEyo
+ /TkRxdPf3VOkLVP
+X-Received: by 2002:a17:90b:4b82:b0:3ab:a09c:f858 with SMTP id
+ 98e67ed59e1d1-3aba09d4a0cmr5831337a91.33.1791949163804; 
+ Tue, 13 Oct 2026 20:39:23 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3ac61170b7bsm2321457a91.16.2026.10.13.20.42.04
+ 98e67ed59e1d1-3ac61170b7bsm2321457a91.16.2026.10.13.20.39.21
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 13 Oct 2026 20:42:06 -0700 (PDT)
+ Tue, 13 Oct 2026 20:39:23 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>,
+Cc: imaginos <imaginos32@gmail.com>, qemu-stable@nongnu.org,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 52/52] hw/riscv/tt-atlantis: Update UART and I2C to use clk
- from PRCM
-Date: Wed, 14 Oct 2026 13:39:07 +1000
-Message-ID: <20261014033907.3332383-53-alistair.francis@wdc.com>
+Subject: [PULL 01/52] target/riscv: check G-stage write permission for
+ VS-stage A/D updates
+Date: Wed, 14 Oct 2026 13:38:16 +1000
+Message-ID: <20261014033907.3332383-2-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20261014033907.3332383-1-alistair.francis@wdc.com>
 References: <20261014033907.3332383-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::534;
- envelope-from=alistair23@gmail.com; helo=mail-pg1-x534.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
+ envelope-from=alistair23@gmail.com; helo=mail-pj1-x102a.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -104,119 +104,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
+From: imaginos <imaginos32@gmail.com>
 
-Now that we have the PRCM modelled, update the DT nodes for UART1 and
-the 5 I2C controllers to use the rcpu_prcm as a clock provider. This
-also allows us to eliminate the periph_clk that was added to the DT
-previously.
+During a two-stage (VS-stage + G-stage) page-table walk with hardware
+A/D updating enabled (Svadu / menvcfg.ADUE), a store that reaches a
+VS-stage leaf PTE whose accessed or dirty bit is clear triggers a
+hardware write-back of those bits into the PTE. That write-back is an
+implicit store to the PTE's guest-physical address, so it must be
+permitted by G-stage.
 
-Signed-off-by: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20261001-atlantis_prcm-v4-3-95d33c470eeb@oss.tenstorrent.com>
+Fix this by re-running the G-stage translation of the guest PTE's
+address with store semantics. get_physical_address() then also checks
+that G-stage permits the guest PTE to be written, and raises a
+guest-page store fault when it does not.
+
+Cc: qemu-stable@nongnu.org
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3426
+Signed-off-by: imaginos <imaginos32@gmail.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20260705140508.17692-1-imaginos32@gmail.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- include/hw/riscv/tt_atlantis.h |  6 ++++++
- hw/riscv/tt_atlantis.c         | 23 ++++++++++++++---------
- 2 files changed, 20 insertions(+), 9 deletions(-)
+ target/riscv/tcg/cpu_helper.c | 28 ++++++++++++++++++++++++++++
+ 1 file changed, 28 insertions(+)
 
-diff --git a/include/hw/riscv/tt_atlantis.h b/include/hw/riscv/tt_atlantis.h
-index db1dfed157..577c867d71 100644
---- a/include/hw/riscv/tt_atlantis.h
-+++ b/include/hw/riscv/tt_atlantis.h
-@@ -99,6 +99,12 @@ enum {
-     TT_ATL_CLK_RCPU_ROOT = 1,
-     TT_ATL_CLK_NOC_PLL = 25,
-     TT_ATL_CLK_NOCC_CLK = 26,
-+    TT_ATL_CLK_I2C0_PCLK = 33,
-+    TT_ATL_CLK_I2C1_PCLK = 34,
-+    TT_ATL_CLK_I2C2_PCLK = 35,
-+    TT_ATL_CLK_I2C3_PCLK = 36,
-+    TT_ATL_CLK_I2C4_PCLK = 37,
-+    TT_ATL_CLK_UART1_PCLK = 39,
-     TT_ATL_CLK_HSIO_PLL = 54,
-     TT_ATL_CLK_PCIE_PLL = 55,
-     TT_ATL_CLK_MM_PLL0 = 56,
-diff --git a/hw/riscv/tt_atlantis.c b/hw/riscv/tt_atlantis.c
-index 10ae3c2850..4e6c39982c 100644
---- a/hw/riscv/tt_atlantis.c
-+++ b/hw/riscv/tt_atlantis.c
-@@ -265,7 +265,8 @@ static void create_fdt_cpu(void *fdt, TTAtlantisSoCState *s,
- }
+diff --git a/target/riscv/tcg/cpu_helper.c b/target/riscv/tcg/cpu_helper.c
+index 07d9222652..6115f65adb 100644
+--- a/target/riscv/tcg/cpu_helper.c
++++ b/target/riscv/tcg/cpu_helper.c
+@@ -1133,6 +1133,7 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
+     int ptshift;
+     target_ulong pte;
+     hwaddr pte_addr;
++    hwaddr pte_gpa = 0;
+     const hwaddr base_root = base;
+     const bool be = mo_endian_env(env) == MO_BE;
+     int i;
+@@ -1170,6 +1171,7 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
+             }
  
- static void create_fdt_uart(void *fdt, const MemMapEntry *mem, int irq,
--                            int irqchip_phandle)
-+                            int irqchip_phandle, uint32_t clk_parent_phandle,
-+                            uint32_t clk_phandle)
- {
-     g_autofree char *name = g_strdup_printf("/soc/serial@%"HWADDR_PRIX,
-                                             mem->base);
-@@ -275,6 +276,8 @@ static void create_fdt_uart(void *fdt, const MemMapEntry *mem, int irq,
-     qemu_fdt_setprop_sized_cells(fdt, name, "reg", 2, mem->base, 2, mem->size);
-     qemu_fdt_setprop_cell(fdt, name, "reg-shift", 2);
-     qemu_fdt_setprop_cell(fdt, name, "reg-io-width", 4);
-+    qemu_fdt_setprop_cells(fdt, name, "clocks", clk_parent_phandle,
-+                           clk_phandle);
-     qemu_fdt_setprop_cell(fdt, name, "clock-frequency", 3686400);
-     qemu_fdt_setprop_cell(fdt, name, "interrupt-parent", irqchip_phandle);
-     qemu_fdt_setprop_cells(fdt, name, "interrupts", irq, 0x4);
-@@ -305,7 +308,9 @@ static void create_fdt_clk(void *fdt, const char *clock_name,
- }
+             pte_addr = vbase + idx * ptesize;
++            pte_gpa = base + idx * ptesize;
+         } else {
+             pte_addr = base + idx * ptesize;
+         }
+@@ -1424,6 +1426,28 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
+             return TRANSLATE_FAIL;
+         }
  
- static void create_fdt_i2c(void *fdt, const MemMapEntry *mem, uint32_t irq,
--                           uint32_t irqchip_phandle, uint32_t clk_phandle)
-+                           uint32_t irqchip_phandle,
-+                           uint32_t clk_parent_phandle,
-+                           uint32_t clk_phandle)
- {
-     g_autofree char *name = g_strdup_printf("/soc/i2c@%"HWADDR_PRIX, mem->base);
- 
-@@ -314,7 +319,8 @@ static void create_fdt_i2c(void *fdt, const MemMapEntry *mem, uint32_t irq,
-     qemu_fdt_setprop_sized_cells(fdt, name, "reg", 2, mem->base, 2, mem->size);
-     qemu_fdt_setprop_cell(fdt, name, "interrupt-parent", irqchip_phandle);
-     qemu_fdt_setprop_cells(fdt, name, "interrupts", irq, 0x4);
--    qemu_fdt_setprop_cell(fdt, name, "clocks", clk_phandle);
-+    qemu_fdt_setprop_cells(fdt, name, "clocks", clk_parent_phandle,
-+                           clk_phandle);
-     qemu_fdt_setprop_cell(fdt, name, "clock-frequency", 100000);
-     qemu_fdt_setprop_cell(fdt, name, "#address-cells", 1);
-     qemu_fdt_setprop_cell(fdt, name, "#size-cells", 0);
-@@ -356,7 +362,6 @@ static void finalize_fdt(void *fdt, TTAtlantisSoCState *s)
- {
-     uint32_t aplic_s_phandle = next_phandle();
-     uint32_t imsic_s_phandle = next_phandle();
--    uint32_t periph_clk_phandle = next_phandle();
-     uint32_t osc_24m_phandle = next_phandle();
-     uint32_t prcm_rcpu_phandle;
-     g_autofree char *rcpu_name, *hsio_name, *pcie_name, *mm_name;
-@@ -372,10 +377,6 @@ static void finalize_fdt(void *fdt, TTAtlantisSoCState *s)
-      *                       aplic_s_phandle);
-      */
- 
--    create_fdt_uart(fdt, &s->memmap[TT_ATL_UART1], TT_ATL_UART1_IRQ,
--                    aplic_s_phandle);
--
--    create_fdt_clk(fdt, "periph-clk", 100000000, periph_clk_phandle);
-     create_fdt_clk(fdt, "osc-24m", 24000000, osc_24m_phandle);
- 
-     rcpu_name = create_fdt_prcm(fdt, &s->memmap[TT_ATL_PRCM_RCPU], "rcpu");
-@@ -401,11 +402,15 @@ static void finalize_fdt(void *fdt, TTAtlantisSoCState *s)
-                            prcm_rcpu_phandle, TT_ATL_CLK_MM_PLL0,
-                            prcm_rcpu_phandle, TT_ATL_CLK_MM_PLL1);
- 
-+    create_fdt_uart(fdt, &s->memmap[TT_ATL_UART1], TT_ATL_UART1_IRQ,
-+                    aplic_s_phandle, prcm_rcpu_phandle, TT_ATL_CLK_UART1_PCLK);
++        /*
++         * The implicit store that writes updated A/D bits back to a VS-stage
++         * (first-stage) PTE must itself be permitted by G-stage. Re-run the
++         * second-stage translation of the PTE's guest-physical address with
++         * store semantics. If G-stage denies write, raise G-stage store fault
++         * against the PTE address.
++         */
++        if (two_stage && first_stage) {
++            int gpa_prot;
++            hwaddr gpa_paddr;
++            int gpa_ret = get_physical_address(env, &gpa_paddr, &gpa_prot,
++                                               pte_gpa, NULL, MMU_DATA_STORE,
++                                               MMUIdx_U, false, true,
++                                               is_debug, false);
++            if (gpa_ret != TRANSLATE_SUCCESS) {
++                if (fault_pte_addr) {
++                    *fault_pte_addr = pte_gpa >> 2;
++                }
++                return TRANSLATE_G_STAGE_FAIL;
++            }
++        }
 +
-     for (int i = 0; i < TT_ATL_NUM_I2C; i++) {
-         create_fdt_i2c(fdt,
-                        &s->memmap[TT_ATL_I2C0 + i],
-                        TT_ATL_I2C0_IRQ + i,
--                       aplic_s_phandle, periph_clk_phandle);
-+                       aplic_s_phandle, prcm_rcpu_phandle,
-+                       TT_ATL_CLK_I2C0_PCLK + i);
-     }
- 
-     /* I2C peripherals: qemu specific */
+         pmp_ret = get_physical_address_pmp(env, &pmp_prot, pte_addr,
+                                            sxlen_bytes, MMU_DATA_STORE, PRV_S);
+         if (pmp_ret != TRANSLATE_SUCCESS) {
+@@ -2114,6 +2138,10 @@ void riscv_cpu_do_interrupt(CPUState *cs)
+                  * doing VS-stage page table walk.
+                  */
+                 tinst = (riscv_cpu_xlen(env) == 32) ? 0x00002000 : 0x00003000;
++
++                if (cause == RISCV_EXCP_STORE_GUEST_AMO_ACCESS_FAULT) {
++                    tinst |= 0x20;
++                }
+             } else {
+                 /*
+                  * The "Addr. Offset" field in transformed instruction is
 -- 
 2.55.0
 
