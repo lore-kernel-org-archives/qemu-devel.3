@@ -4,28 +4,28 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C90F0CC6B25
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 04:58:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A92D5CC6B19
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 04:58:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGr3C-0006jl-60; Wed, 14 Oct 2026 00:57:14 -0400
+	id 1xGr3Z-00077P-1M; Wed, 14 Oct 2026 00:57:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1xGr2i-0006Zs-6j; Wed, 14 Oct 2026 00:56:45 -0400
+ id 1xGr2z-0006d8-E7; Wed, 14 Oct 2026 00:57:02 -0400
 Received: from mail-japaneastazlp170130007.outbound.protection.outlook.com
  ([2a01:111:f403:c405::7] helo=TYDPR03CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1xGr2g-0008Iu-Pz; Wed, 14 Oct 2026 00:56:43 -0400
+ id 1xGr2x-0008Iu-De; Wed, 14 Oct 2026 00:57:01 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=SuWdP2wvcm9HejHmW5x4w6RNg2yaFv6ZFf1/2//tx3BIMuB6ek38HISVLuoh8mQ6+3SCBIwY8wlG0YOIM7tCc+xUrfH25tc/K8DYXrvb/BnDqzrTAqvTPoCL9tX1/AWE+VFvWj0LGSM/KPKnWuSJE6rmF9fuEAdbM/GhrAJWkEXzGuYXGNo8Puv7BTZvrhhSe7Kt4qThifvz7Jk0wBL0cwP62mf1q8jelOzG95Tg4WUGV2uhd5a55RHEXag0OVwLnaaPBH72u33oNPL7Djy1P1lwDAIyBTavNnNhOXxEbGDvMUCoWa5dEgVfwNjkyyLtjIK74m1pKRBhNWXGDlSJ+w==
+ b=rGbETKvUIf5jAWs4V2qAXgJqSdKdVrXCLd74htgIzyamdxcdOGl6Iz4jXuXzaPatgngM41eg+YO+OEmfc1u+OpvzTxlsdBxqZjJ92rJy6MKQ3YtkSbogRq0eVvfEnxxji/BXdzlh6ZenXrSJBFC8qKJxy6EN9DaDEjAcUFYaHYW/c/DgF0BscRNZ9zKywSgGcwKFT0DcBW0s0xuLeL6pO8R//w47nZR/qTsRTBybsFfarsGrPer4Pyvgx9IQ+tjE/mSGjnDjz+RJbHOkRvGHH1dI39YJ84nhj9EIN5EtZtv+iqCP2BSTJRWufc6bV1cEpq2gTlBHhNrnGGlY7FUDJg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=KcT2OKzwtOZDlBK4wqXH7URnD869CTKb9O68kQbwqzE=;
- b=M/p9n23zySVfjFcGS2GhARYB7oMHrN4clNvOhZhSdMkc+Jcl8NCESlEItIR1NIUt4j+/+IU5xy4YkE2/RYaxGWYrq5jde2T3l3Zxjf23OO0JEHcl6W7ffz0+6a0NDpDA8MLI6q+aHcze/5nm8kpfpyIfoKoP6LiD/RP44Xeh1+RXoO6GKba3h6HJfpaxviGQgKMhWTzTo9gL5kBko4upqYszFcD/fre9kvpSFjeEO6YI9e3GNyLFFmi0W8UxR4Kf5i572byeHU0uF895VzFfbP1JY8uTRZeosViNsegZSes59hAkDJN8A7g+i2h6fdbFIgGO5b5TPeiOZHhXyI88fw==
+ bh=myu6Wj/5XOUXMIPupmukpRDoWxcuXytWSa7Kni2PdBw=;
+ b=hoYDVM4i4c2YfafatlOofmTc4NHz351/7l4uhUtmfDL06/iEhSl3M0wkYFUkwJyNMSeVkiTV+N2YlnuDHBn4w+FoVeb84DsRfSE7+6wRDF8PKkLT1oIezZvYeKqRI/kRrdIWTe1n+L/ErfC/V0UEGQLzOdIVeYDn7h8kDqTbbyN2cUMkgkUY2bsgiONOCFsQIrLMlbjknoq78EHV0XX1RRppnTYcuJDWCNJVyDvD9NO0ADMdBXXcDBznZTcpYk/H92luPVhSTYvtHuuNbeKx4+UyB/CjmbozD3bfcQ7aa1UDDSujkEcw8i1JQoNu6RL7JcGyLrTR8hbTcexxYFyXXw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=processmission.com; dmarc=pass action=none
  header.from=processmission.com; dkim=pass header.d=processmission.com;
@@ -33,27 +33,28 @@ ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=KcT2OKzwtOZDlBK4wqXH7URnD869CTKb9O68kQbwqzE=;
- b=hzuW0Y5tYvB9aMlkZ4DDJDrenLSur9uSOfetljbtnbkzePZM8Mry7+g9Kc11WQ29lv4yXVAaRmRifbsqXdKDz4IccplMsWx5dNiI8utTPw8gLKUabXWl0VFMxuTvVjcB1LKCJs3N6sHl2F0DFVzlfzqqFGRewEA54jh0a6H52wbO2Qlq8H3FfsXW17/H3+dADzqOdlH3Pp6vIsTazNdUKot7dBWavlhjWiqJFg6j6fpYjVezCxhHnl1ipoavDD5lQ9ZRhe65/gigl5/2f9KhoToHeOwdk9GllzIZipzpB2cEvckjIioTivu0auMhGV4A3uPDA0bUERgnNEukRsUrag==
+ bh=myu6Wj/5XOUXMIPupmukpRDoWxcuXytWSa7Kni2PdBw=;
+ b=OeaTw+PJoPDmqDVQAiyvvoh2zfihar9K7KuelFu4vFN3sYWftZSbfGObpkxB/Ne0z0XnkCVTK9vuCu4meNboqQdT71ej5dYX0Gsvhp/dOeCatTXrP/fdee2IELTKXnLJ17QMeQXYLvJZ2ogZOBURSFLdPMjzb399+aFajX/GLJzpYExnFsJS2zNzFvd9GT3hXjBRCkdEUR+3LNp+SFyZFaJgwWtotD+C328DOb5YSpMjD7wtBxM3iBqGK/qDHsvsdcF3nXA8AZEtZUgOV9mVvNlS4XgeXvWP+sSELia1LIQtKegOE82UlYwJJKkPuM2BuTCAAA80xLR9jtTeLC9AAw==
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=processmission.com;
 Received: from KL1PR02MB6257.apcprd02.prod.outlook.com (2603:1096:820:da::11)
  by JH0PR02MB7213.apcprd02.prod.outlook.com (2603:1096:990:67::11)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.522.12; Wed, 14 Oct
- 2026 04:56:32 +0000
+ 2026 04:56:43 +0000
 Received: from KL1PR02MB6257.apcprd02.prod.outlook.com
  ([fe80::ecf9:e832:8196:215]) by KL1PR02MB6257.apcprd02.prod.outlook.com
  ([fe80::ecf9:e832:8196:215%6]) with mapi id 15.21.0496.021; Wed, 14 Oct 2026
- 04:56:32 +0000
+ 04:56:42 +0000
 From: Bin Meng <bin.meng@processmission.com>
 To: QEMU <qemu-devel@nongnu.org>
-Cc: Jean-Christophe Dubois <jcd@tribudubois.net>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org
-Subject: [PATCH v4 03/10] hw/arm: fsl-imx6ul: Map early firmware register
- placeholders
-Date: Wed, 14 Oct 2026 12:55:53 +0800
-Message-ID: <20261014045605.399684-4-bin.meng@processmission.com>
+Cc: Bernhard Beschow <shentey@gmail.com>, Bin Meng <bmeng.cn@gmail.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ qemu-block@nongnu.org
+Subject: [PATCH v4 08/10] hw/sd: sdhci: Skip SDMA boundary stops for eSDHC and
+ uSDHC
+Date: Wed, 14 Oct 2026 12:55:58 +0800
+Message-ID: <20261014045605.399684-9-bin.meng@processmission.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261014045605.399684-1-bin.meng@processmission.com>
 References: <20261014045605.399684-1-bin.meng@processmission.com>
@@ -65,56 +66,56 @@ X-ClientProxiedBy: TYWPR01CA0051.jpnprd01.prod.outlook.com
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: KL1PR02MB6257:EE_|JH0PR02MB7213:EE_
-X-MS-Office365-Filtering-Correlation-Id: 91b00db2-868e-4bb5-b8f6-08df29af8411
+X-MS-Office365-Filtering-Correlation-Id: 5578d7eb-bd62-4172-f816-08df29af8a51
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|366016|23010399003|376014|6133799003|10067099003|22082099003|18002099003|261009223027099003|56012099006;
-X-Microsoft-Antispam-Message-Info: g2MGdXNFwutYTfjZcOI9Q5v2dcI3ohtuEbd36hrbruY6Y3AUswJd4O3iYlYTdAmDKtVIUrZckuyp+jxu3OiFvBrbxeJ6zGY3rqWOyW0iKHdqSBuyidhTsafcdS6CS0JHxk2rONWM4RJWhVbfseXjMTTyBVoBABoQWsCIY4PjMYKJYOwapopWsKT4HuWyM+bm0VXHsT+9yYwOG+ZAqOrcJKX/5f1B75uPaBJ8L3HrKZHewDLIbZ9ut38pOkNbYUyJ8i3suqG+AE9/NSEdhoIUCE9Osmv5GWuaYEVGnLwp8WOGxlSpbylyWC3JU0pPD+cfz9ATVMl4+inU5w7yxen+to+LGMpJ5L5nmefEnMobg6T/iqIpt6VZZDMJvwL2tZJlb03MksMEdP6+LUplU/+TByHTECDFH0ilsDXtQJkXhak1BC0MX/7JaJiXmTMcCtPz+n89BLoof1Bp3gyT3Gt5kMOxZ2ujON7B/gh+L0dkoI+PVL6NluO/cdnxozBdVmIH3G5m5iITCb5jT01/uTQgyuz7Pair9gDb5dmWyS8CUnTsYSxgvXPNh0xFD7KKfD8XXQkMhQeRctJtlGAHT33xSqKUjfbDajptv90braDQm4x+AVilg4OBhQwct85ewHEy/TaA9kxFEpG7Ey+qRCw2qVxauxlQcMkjrd9v0Ybgygo=
+ ARA:13230040|1800799024|366016|23010399003|376014|6133799003|10067099003|22082099003|18002099003|5023799004|261009223027099003|56012099006;
+X-Microsoft-Antispam-Message-Info: fVthhIUVxvbDmrPseQ/umEMnwaDXULHKw2zJVJJr6p02RAnSf+LjxGQApZjWEmtponv5Hw98/XHbJKuizc+NU1afZ//LV0pgtwgwgSOnYH4FJzalBRjj6FgYCSewaAjFDTECIdiiKLev/aDQVmDn3RSdX/c/ncN6PYyhJ2xgi3rs9drUWwK+Krc7IpJrYQ5h5tZi9VykfCzD0QjIJc85uXfum+SqF9CNGpoP5QIDgfTieUPgn031py+feQHS73oejbjTQdzq0EXsTqWsDGhew9lBSnbbjE0jWyu5WRj2apmv/wO69CARCkkqv0YZVECfIjtOpBV+kddOefew86O8FTMpVCg27C3lqh0GGpSgZ1dvVDDKIZmAe0+bw/jzPDL46YzBBrKPXiEec1RoICXGZ/K1rGri9I1qYm7UxJXPxkZOin3e0NpiowUH7gERLA40uX1wdElmQ6vao20+i0ntuRai9Ufsm6+frJX783LScmM6Notlj2TRwjflzkX5pOCy5Ini3esNqMJnrxSEz1/JEU0mKVG1fw6d2ob3hb3L0/kca8WaNcXrBm6fhHCgTLhFbLiS8QZnK4gmctIJazfati9mjFHSJD/MWSJsI9mVYAC9QUHtnbUIzpU1hjmxnU45/B97CcfvgxVey2x5DdTwevPRYafbBamYo7PTeSH+duo=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:KL1PR02MB6257.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(366016)(23010399003)(376014)(6133799003)(10067099003)(22082099003)(18002099003)(261009223027099003)(56012099006);
+ SFS:(13230040)(1800799024)(366016)(23010399003)(376014)(6133799003)(10067099003)(22082099003)(18002099003)(5023799004)(261009223027099003)(56012099006);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?5gauMDMVKm+hzxotidbUuT3n41vJDAU+k82bxXtQq3chNLOwAVyP8GYvDd+u?=
- =?us-ascii?Q?2HzJzpyyD9EUlHVYe+9Vf58e6ggel9uy/SCd1BIEsp75QohWL8m4BzWt8V56?=
- =?us-ascii?Q?+W26cu1A1zjR5nXGi94NROsZN6CsbCh+7owUwLGjQxzxpSKY9IxmkyfV3wz3?=
- =?us-ascii?Q?Y09+ehP1lT3GUduosBSFXF8SuH0NOWBqSkfXr4vZr0gXKNRvD2lCPm3rHq/M?=
- =?us-ascii?Q?W3SQrbTQgrxsTPYm4mZjmbYkQ0Y0jJvvIxfpPCmLXwQW4npcrwSlmGaA+0m1?=
- =?us-ascii?Q?pdyahbsR1nfH9PNa2TfZ08apOJaABTjWzjuUmgz/yfQMNaZORQGcGphIodlI?=
- =?us-ascii?Q?h0M2yNAKh/TaPzXuZA1ux1wtu1judv1jpQBA9Er5kBevBkbw2cXkXezgFdXd?=
- =?us-ascii?Q?IOaea/XXm2Nf1NAzNYEjUp/HgLAhVd1a85LsYScE62P0cFSF2L2QkF7RcoFw?=
- =?us-ascii?Q?efu4kvQKW9OTab/IDLGrvxGnlKq8vfhbl2RDdm4CzIgNbhrsWAMEX7JHDRWk?=
- =?us-ascii?Q?F3zq8BE3koolobY5K78D/oQz23xoDehlaVoYh1POjQSE2bb/uxrL34mtQhd9?=
- =?us-ascii?Q?kTbhshGCmJtu8fw+IceDcpzz1gevpeel3s4aB1dEcN8HPwQZ3HfRZLpL5bxE?=
- =?us-ascii?Q?wOVBi9OJN4zeurhuyLiMqRWhAhC4TFPBrcWY7AyKwRf3Zq8ZHOcmJatnU/P+?=
- =?us-ascii?Q?FYaLsIO7qG6OgCarR3ErmFUOod9XGhoWbjhEuBoAWxkZIkzJW3CCil7w1kjI?=
- =?us-ascii?Q?z6uRpCnrtbcsR6NHkoiRAHoGT3UtN4rshLq7ywT4OxzUsxwVbW7gyw6kPfR+?=
- =?us-ascii?Q?R0UhTrARt9y2ipVpmFMt1bHuRTrspsJ91aJxpF0kWtTpbKXVym7UmalJsK2R?=
- =?us-ascii?Q?bDsnETziAVL4vNU4dblBCRX7FIOTijrFIVxqKn7MAVDKjdBaPM90fm2ya3wI?=
- =?us-ascii?Q?Ez0M4i9UVBbOaMG2NZakJONP/XMCdgdxdbhOuLWgaOCMCyLKuX2wKGgCtQpx?=
- =?us-ascii?Q?/CErufWLpnLJmkht0aux/PTco2DAmyRvaWHSpFSvyO1lJGf3ywvwjaer3L70?=
- =?us-ascii?Q?GFCz/uXslKTjs2Jh7oBRefelXp91iYbsuHB9F9DQZqEhtMLQSSwfCI24QA5Y?=
- =?us-ascii?Q?WqOiU0C9tbyRzV23JJUOBzgq2fJx/KijKfzaiWkGyePDUxvTyLIq1iy7lwau?=
- =?us-ascii?Q?13860ZH8eIUGbY90byUyMGqV3YSP/q4eG7XqLmNqVpxp4uUYZ3J5EOjMWKVD?=
- =?us-ascii?Q?S9lzP2AbYz16urv1eZp7WzRJcXbNvG9TEmlf4Lgl171I+7GyO3yo3Y8ieMD8?=
- =?us-ascii?Q?TCWBVFTmETeld3fZkupJBHa3qe4eBvkrHksgmHPGS4D7HWcE/d+ATmKSaHVT?=
- =?us-ascii?Q?HUthbjrLKccMaqp/7QqxhyJmQobqwK/PSW2wZn6EerCHtUJxjx5eYPs8FO9p?=
- =?us-ascii?Q?HY2YjzgZMVDKUKejQK6WEJbH3Ti/mZnU0OeWubjrgUbzcThbbPeTOyGrfl6/?=
- =?us-ascii?Q?QAjZgZtCPmbx1/RfGMEHw6Nqc9yw/Vqh2f4oVKy94SUSDe64Kteq/uBiTEAn?=
- =?us-ascii?Q?67cu5aMNNA0zCrczXJnBT8/gWjR1YbtIs4VNZWo/5UD3Rf6CApmLXBW1D0sS?=
- =?us-ascii?Q?AV2fSBbc6kcaFyrDpZC5KM3MlrLo6WAl1rk2IeOu4pRCnK4po+IjjQIaeko1?=
- =?us-ascii?Q?TcFnP1lO+1fGmR1cuHkMwjQubodU6QWiK9/r+Pzlm8lrfqvoeKkjIKytVqA6?=
- =?us-ascii?Q?XLozXZ2i+vi2YImnEcNLsh6BO6jYDDE=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?/SKsj5787RIKFbyr5Kd12b26J/PolX/mtyWtWLqHwDgpP4N2GB34FWt7lb2D?=
+ =?us-ascii?Q?I3+SqrkIUfRon0xIK5LMF2w1Hnl7fK2MJtvPPNZ3ANM0Q6I+cSV/NASR79ON?=
+ =?us-ascii?Q?ZNAjOuhcnLW1qvnpvD5nK4/cqGNB2YehUk8xsAhbZ+Pu+TjKnGyxUhmWPyme?=
+ =?us-ascii?Q?1eb7poDQyajItSALF8FwgfOwxcz0sU0L4ddOvBWARiTGk6YyYFOGtinqyw4u?=
+ =?us-ascii?Q?+Y0SRSYOboqnMoZQx8VcZiE3NxSlCFJaeXtCpbX5LHKoaDrffwoxHv7gD4uy?=
+ =?us-ascii?Q?R64Ff8Ult5d0Jd1Q+ZkR1vzEvHQspLVDnkOWikppwnpcozjIKnf2nOLQPHdH?=
+ =?us-ascii?Q?P3rKbrCDyGwHisiagN5DlfyK74TYMlRBjMO4cV03W5CdozybYsCIqhqWYi+J?=
+ =?us-ascii?Q?LgH+t/yWKpfvp3O+aNvG9blx7Om09ulwSdruWbpCtLa3W6Iv8HZ6tLtf2pfl?=
+ =?us-ascii?Q?lYfMQfEOwYlxS8cSz5zVZ+ulNPMyyPJiSRLXHjBe1hBwcm0VpXFO8/AhMs5d?=
+ =?us-ascii?Q?t9UAdU1sRgiqplEgQVkGCsqAa8JMbJJOU7GTXR8bm42F68tVIBZQ6Qh7WbXZ?=
+ =?us-ascii?Q?Z+ApXBuZdjNAGJGVnwnSOsqFnz2wxPceotC97QUnzxFffChabxrjBCdHliNR?=
+ =?us-ascii?Q?9weQF1KW8dbc7yiQLI2F0wDziFrcP0p8mc6oys3tv+kZvf5fM/U+wPsOY467?=
+ =?us-ascii?Q?whcdmWYxjDABNrOtZG6vWF5Bs2n3jV1VujO972M5jr8N2R3vgHYUfGQ7AoZf?=
+ =?us-ascii?Q?3wlDi/mTQLl06tjBwuT1DkCiVSSR0+9poPi/BHAC8s05PwRhOhfZUPDg1QAb?=
+ =?us-ascii?Q?y1dtnGghzb9DIL4r2RPWK+OhzEMC9139vxjWDwK3H5Uk4IUVXx97vo3T376o?=
+ =?us-ascii?Q?p/dyNHNkBaL5qt7ezscXyX/b0Isd+ueYvMQXk8jipM/lM2ywwHo1fQQsskX6?=
+ =?us-ascii?Q?QrTcwxULatwwB+UMJ79uj3qFPp1pW8+l9dzdAb2SJ9gF1yWMuMxI2wCYE5R/?=
+ =?us-ascii?Q?5LYJjrK7Ep581a/eGhIqMaGH862amtE6EByAAjRY4RAj43CALD26sA1No95g?=
+ =?us-ascii?Q?RmSI1hzytucmvn4QghwnIqEMCg6QrO4vogRq29Z+CL0aFlFCnfPdkl7EfSM8?=
+ =?us-ascii?Q?UghgWfoipGg9JKTyVKYAMI2Sto6LEQEZhsGg6Y38CQBqxbnrPofAf3O9kJ1y?=
+ =?us-ascii?Q?AL2SOQntjL79NVcbeI8CeSgrmElnYM3ZC2ppYBOk9G4nKSc1ZE1GDxup73M4?=
+ =?us-ascii?Q?plKBvv3cfP4lF9gq3JO/nqgo6HgzKwq4xtQh0uk8JgWZin49AxRRum1RQovI?=
+ =?us-ascii?Q?z3LOB2LKG90XQgVXDTV7nzJYve//OljwYMMrlQfif+9xwPh1LoenhELna/1c?=
+ =?us-ascii?Q?evFkE9wqJ+QJl9dqeQipb/DI9d5SV3uxJMW0YChWNHCJShbk8wS4lGpZ5fZN?=
+ =?us-ascii?Q?Tejhniqv6zngbfa4N3xEqpwRFU1zo3oWQI0Cpl5E0lxzVnpkwn9JTkpo9III?=
+ =?us-ascii?Q?eWsn9u8Fm9Zr7We/9keLNvpeXpSFjKe2sxIHU3JruFmK8TfI3c+XFy6Y4RQF?=
+ =?us-ascii?Q?a0ulkrAydtFDAhu+l6NB3sTlfZbMT0GxOeFrXr3dBXWjW+wX9cDE2AxOzlu/?=
+ =?us-ascii?Q?VOrp0Bqk4kHD1pYvEzi+8IqHP9tswL80mprSPt4H881FlX5mBRvoVdESjfw0?=
+ =?us-ascii?Q?5bo0kUAZ3oMrnxjEpZrJDsPswxw6Ar10EUwE1zMRJ2FQh6xxjIrRe9jnPHTN?=
+ =?us-ascii?Q?aHAzRRYbT4fBBrXekyMVuC38eRB2nEw=3D?=
 X-OriginatorOrg: processmission.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 91b00db2-868e-4bb5-b8f6-08df29af8411
+X-MS-Exchange-CrossTenant-Network-Message-Id: 5578d7eb-bd62-4172-f816-08df29af8a51
 X-MS-Exchange-CrossTenant-AuthSource: KL1PR02MB6257.apcprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Oct 2026 04:56:32.2999 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Oct 2026 04:56:42.8388 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: ZTqKZ/u70e+jyKGEvyyWYgtbsUkvstAV4QlxWaXNIVUQagqiooAn+UwmrlwBjVytKY3z8cc7cEcy7qPICj54i7tEY5KhJkneo+Rl8DyhyUY=
+X-MS-Exchange-CrossTenant-UserPrincipalName: w0CIgR2Heb7o7xHi1WZIl1/JXliBhQeNYtFpaqz9syOremREDTP+UkU1sWyxskR55QjhpGyJElZef3DKfq1GGGT8Gd3yhxkxOt+JFIR5eA8=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: JH0PR02MB7213
 Received-SPF: pass client-ip=2a01:111:f403:c405::7;
  envelope-from=bin.meng@processmission.com;
@@ -141,48 +142,164 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-U-Boot configures the AIPS bus access controls and the i.MX6UL SNVS
-low-power registers before its console is available. Its timer setup
-also enables the system counter through the control window on AIPS2.
+The common SDHCI core pauses SDMA at the selected buffer boundary and
+waits for software to rewrite the system address. Freescale eSDHC and
+i.MX uSDHC expose BLKATTR without that programmable boundary field.
 
-These blocks are not modeled yet. Map unimplemented regions at their
-documented addresses so early firmware accesses complete without
-falling through to unmapped memory.
+T4240 eSDHC transfers the complete block-count times block-size range
+from DSADDR, and DINT reports successful DMA completion. Its BLKSIZE
+is 12 bits and bits 15:12 are reserved. i.MX6UL uSDHC also completes
+the contiguous transfer, but uses a 13-bit block-size field with bits
+15:13 reserved. Neither needs the synthetic 512 KiB boundary pause.
+
+Enable the no-boundary quirk for both eSDHC byte orders and uSDHC.
+Remove the artificial boundary encoding in their shared translation.
+Keep the standard SDHCI boundary handshake, block-gap stops and DMA
+error handling unchanged.
+
+References:
+- T4240RM (Rev.4), section 15.3.2, 15.3.13 and 15.4.1.3
+  https://www.nxp.com/webapp/Download?colCode=T4240RM
+- IMX6ULRM (Rev.2), section 56.8.2 and 56.8.13
+  https://www.nxp.com/webapp/Download?colCode=IMX6ULRM
 
 Signed-off-by: Bin Meng <bin.meng@processmission.com>
+Reviewed-by: Bernhard Beschow <shentey@gmail.com>
+
 ---
 
-(no changes since v1)
+(no changes since v3)
 
- hw/arm/fsl-imx6ul.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+Changes in v3:
+- Enable the no-boundary quirk for both eSDHC byte orders
+- Remove the synthetic 512 KiB boundary field translation
 
-diff --git a/hw/arm/fsl-imx6ul.c b/hw/arm/fsl-imx6ul.c
-index 1863558a0d..92f8e4b4b2 100644
---- a/hw/arm/fsl-imx6ul.c
-+++ b/hw/arm/fsl-imx6ul.c
-@@ -201,6 +201,21 @@ static void fsl_imx6ul_realize(DeviceState *dev, Error **errp)
-     create_unimplemented_device("a7mpcore-dap", FSL_IMX6UL_A7MPCORE_DAP_ADDR,
-                                 FSL_IMX6UL_A7MPCORE_DAP_SIZE);
+ include/hw/sd/sdhci.h |  5 +++++
+ hw/sd/sdhci.c         | 42 +++++++++++++++++++++---------------------
+ 2 files changed, 26 insertions(+), 21 deletions(-)
+
+diff --git a/include/hw/sd/sdhci.h b/include/hw/sd/sdhci.h
+index c5297310f6..7bd39bf61d 100644
+--- a/include/hw/sd/sdhci.h
++++ b/include/hw/sd/sdhci.h
+@@ -113,6 +113,11 @@ typedef struct SDHCIState SDHCIState;
+  * busy.
+  */
+ #define SDHCI_QUIRK_NO_BUSY_IRQ          BIT(0)
++/*
++ * Controller completes contiguous SDMA transfers without the standard
++ * intermediate buffer-boundary stop and address-update handshake
++ */
++#define SDHCI_QUIRK_NO_SDMA_BOUNDARY     BIT(1)
  
-+    /* AIPS bus configuration */
-+    create_unimplemented_device("aips1-config", FSL_IMX6UL_AIPS1_CFG_ADDR,
-+                                FSL_IMX6UL_AIPS1_CFG_SIZE);
-+    create_unimplemented_device("aips2-config", FSL_IMX6UL_AIPS2_CFG_ADDR,
-+                                FSL_IMX6UL_AIPS2_CFG_SIZE);
-+
-+    /* SNVS low-power general-purpose registers */
-+    create_unimplemented_device("snvs-lp", FSL_IMX6UL_SNVS_LP_ADDR,
-+                                FSL_IMX6UL_SNVS_LP_SIZE);
-+
-+    /* System counter control */
-+    create_unimplemented_device("sys-counter-control",
-+                                FSL_IMX6UL_SYS_CNT_CTRL_ADDR,
-+                                FSL_IMX6UL_SYS_CNT_CTRL_SIZE);
-+
-     /*
-      * MMDC
+ #define TYPE_PCI_SDHCI "sdhci-pci"
+ DECLARE_INSTANCE_CHECKER(SDHCIState, PCI_SDHCI,
+diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
+index 9a33899b64..5f11073984 100644
+--- a/hw/sd/sdhci.c
++++ b/hw/sd/sdhci.c
+@@ -686,12 +686,14 @@ static void sdhci_advance_sdma_address(SDHCIState *s, uint32_t bytes)
+ /* Multi block SDMA transfer */
+ static void sdhci_sdma_transfer_multi_blocks(SDHCIState *s)
+ {
++    bool boundary_enabled =
++        !(s->quirks & SDHCI_QUIRK_NO_SDMA_BOUNDARY);
+     bool page_aligned = false;
+     unsigned int begin;
+     const uint16_t block_size = s->blksize & BLOCK_SIZE_MASK;
+-    uint32_t boundary_chk = 1 << (((s->blksize & ~BLOCK_SIZE_MASK) >> 12) + 12);
++    uint32_t boundary_chk = 0;
+     uint64_t sdma_address = sdhci_sdma_address(s);
+-    uint32_t boundary_count = boundary_chk - (sdma_address % boundary_chk);
++    uint32_t boundary_count = 0;
+ 
+     if (!(s->trnmod & SDHC_TRNS_BLK_CNT_EN) || !s->blkcnt) {
+         qemu_log_mask(LOG_UNIMP, "infinite transfer is not supported\n");
+@@ -703,8 +705,11 @@ static void sdhci_sdma_transfer_multi_blocks(SDHCIState *s)
+      * possible stop at page boundary if initial address is not page aligned,
+      * allow them to work properly
       */
+-    if ((sdma_address % boundary_chk) == 0) {
+-        page_aligned = true;
++    if (boundary_enabled) {
++        boundary_chk =
++            1 << (((s->blksize & ~BLOCK_SIZE_MASK) >> 12) + 12);
++        boundary_count = boundary_chk - (sdma_address % boundary_chk);
++        page_aligned = (sdma_address % boundary_chk) == 0;
+     }
+ 
+     s->prnsts |= SDHC_DATA_INHIBIT | SDHC_DAT_LINE_ACTIVE;
+@@ -720,7 +725,9 @@ static void sdhci_sdma_transfer_multi_blocks(SDHCIState *s)
+                 boundary_count = 0;
+              } else {
+                 s->data_count = block_size;
+-                boundary_count -= block_size - begin;
++                if (boundary_enabled) {
++                    boundary_count -= block_size - begin;
++                }
+                 if (s->trnmod & SDHC_TRNS_BLK_CNT_EN) {
+                     s->blkcnt--;
+                 }
+@@ -745,7 +752,9 @@ static void sdhci_sdma_transfer_multi_blocks(SDHCIState *s)
+                 boundary_count = 0;
+              } else {
+                 s->data_count = block_size;
+-                boundary_count -= block_size - begin;
++                if (boundary_enabled) {
++                    boundary_count -= block_size - begin;
++                }
+             }
+             dma_memory_read(s->dma_as, sdhci_sdma_address(s),
+                             &s->fifo_buffer[begin],
+@@ -2008,18 +2017,6 @@ esdhc_write(void *opaque, hwaddr offset, uint64_t val, unsigned size)
+         sdhci_write(opaque, offset, value, size);
+         break;
+ 
+-    case SDHC_BLKSIZE:
+-        /*
+-         * ESDHCI does not implement "Host SDMA Buffer Boundary", and
+-         * Linux driver will try to zero this field out which will
+-         * break the rest of SDHCI emulation.
+-         *
+-         * Linux defaults to maximum possible setting (512K boundary)
+-         * and it seems to be the only option that i.MX IP implements,
+-         * so we artificially set it to that value.
+-         */
+-        val |= 0x7 << 12;
+-        /* FALLTHROUGH */
+     default:
+         sdhci_write(opaque, offset, val, size);
+         break;
+@@ -2047,7 +2044,8 @@ static void fsl_esdhc_be_init(Object *obj)
+     DeviceState *dev = DEVICE(obj);
+ 
+     s->io_ops = &esdhc_mmio_be_ops;
+-    s->quirks = SDHCI_QUIRK_NO_BUSY_IRQ;
++    s->quirks = SDHCI_QUIRK_NO_BUSY_IRQ |
++                SDHCI_QUIRK_NO_SDMA_BOUNDARY;
+     qdev_prop_set_uint8(dev, "sd-spec-version", 2);
+ }
+ 
+@@ -2072,7 +2070,8 @@ static void fsl_esdhc_le_init(Object *obj)
+     DeviceState *dev = DEVICE(obj);
+ 
+     s->io_ops = &esdhc_mmio_le_ops;
+-    s->quirks = SDHCI_QUIRK_NO_BUSY_IRQ;
++    s->quirks = SDHCI_QUIRK_NO_BUSY_IRQ |
++                SDHCI_QUIRK_NO_SDMA_BOUNDARY;
+     qdev_prop_set_uint8(dev, "sd-spec-version", 2);
+ }
+ 
+@@ -2194,7 +2193,8 @@ static void imx_usdhc_init(Object *obj)
+     DeviceState *dev = DEVICE(obj);
+ 
+     s->io_ops = &usdhc_mmio_ops;
+-    s->quirks = SDHCI_QUIRK_NO_BUSY_IRQ;
++    s->quirks = SDHCI_QUIRK_NO_BUSY_IRQ |
++                SDHCI_QUIRK_NO_SDMA_BOUNDARY;
+     qdev_prop_set_uint8(dev, "sd-spec-version", 3);
+ }
+ 
 -- 
 2.53.0
 
