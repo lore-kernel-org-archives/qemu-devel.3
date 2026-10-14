@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C935CC6B1A
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 03:40:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DCC9CC6B1A
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 03:40:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGpqI-0004vd-Vq; Tue, 13 Oct 2026 23:39:51 -0400
+	id 1xGpqd-0005LF-Tw; Tue, 13 Oct 2026 23:40:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1xGpqC-0004tK-Om
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 23:39:47 -0400
-Received: from mail-pg1-x534.google.com ([2607:f8b0:4864:20::534])
+ id 1xGpqW-0005D4-7h
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 23:40:06 -0400
+Received: from mail-pg1-x529.google.com ([2607:f8b0:4864:20::529])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1xGpqB-0001My-02
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 23:39:44 -0400
-Received: by mail-pg1-x534.google.com with SMTP id
- 41be03b00d2f7-cd6028ff33fso1323895a12.0
- for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 20:39:42 -0700 (PDT)
+ id 1xGpqU-0001PL-Fd
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 23:40:03 -0400
+Received: by mail-pg1-x529.google.com with SMTP id
+ 41be03b00d2f7-cd61cef87f1so521972a12.0
+ for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 20:40:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1791949182; x=1792553982; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1791949201; x=1792554001; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=F5/44gQDY0kzg4/E/SGev6N3prLZC2rRm70nQVMzR9E=;
- b=ZHgutZi3pFm6O8LsC0mZi6D52VK2YooMYp03fQrXjOpBYGxmMfEmAt7Wdc44rkGAh4
- COjSuDzWMpHjWS3RBqv6WwxezB6XjOgZF4JFD3PP3qtkrxFxrtb6194Kcs21pQVz4PMd
- zzqnWP1+Si/ssYhrdBuPMmcjsHIKc3cZ0y/cqwBbdgn2dj5qvJKcknWulgEtjwv9HcrH
- wxo6VF9Fiu2Tmw71TKJ3ihszIsgnU/qjI+FqvhfotMd08LgZ3suTrPFusVpRdxumPDUp
- Y3huHCPP0IfJrvBMWCd//RQNFE03NM253xSyss/4EFwS5EClZdNsISDSpoDcQqv6dwDn
- FlKA==
+ bh=bvphkF4ny4hilMG0LXNrctB7EvQsbDQqRw3lmDJLYb0=;
+ b=V6Hqh9jgJgKhAEhas+ZaqiUY2hVQtH8atW+CutuRDhC3wOax0U8jbHOQZsTxXr09yg
+ zMziLzFaZoJj/Dliuh0Mn9CcVy7QxfPkCTDayjqaN9+K9zQhuFiE0XoeIbxRvPJtAWgJ
+ 8hF0Fn3wWy92gngcH+aHDmfRGRDjsJw+5D+9yTflcRBzx71BafqAdJ7aC5MmWH634Apt
+ 10vzTTepUYFxrsX4d90zuLzghBPDsYp895nJ1LlxHw5QuybklsovxjNbqm8TwnPci/Vx
+ KJHQbs0lCR+jE/pkXS+4RXwrGlF875nOw5Ie0zE3V+0mfpzOFGiEyUqsFKw+NZGtL6aX
+ VKJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791949182; x=1792553982;
+ d=1e100.net; s=20260707; t=1791949201; x=1792554001;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=F5/44gQDY0kzg4/E/SGev6N3prLZC2rRm70nQVMzR9E=;
- b=UAaQ/HFEh3wRkh5wKr0j3jOynW1mouTTn9IG5jrZ4i/hKUVgzZtNwwvmR3xA+vtFxD
- rzDC2IZud3qzDa9a1QIWwjhMK0RKXc3Gx6IWKXIQccNFF3uCw1CLsgJsBv/6KZ/mHZ1H
- nM/C6kfnXAnJruCSDOHBo/uU6uoXkpW4ywGtdD7I8+7QUCzxJrnToTpIgRGPxufFmC3Z
- 7DUVwH6UBkaJ4m6gKDSbbJFp7keHITfao6t/BFXb5jgW8gURdabDxYPlgxGSwQnTUSDP
- PSSaQHlzdjrXp7ctuyCJG/mVW9WpSyHgmhiseSr/F/QjXDQOCXftbrw+BbRuxoE807xt
- Vt0w==
-X-Gm-Message-State: AFq9FYJpn3fut3d2J24EqZTJh+NwzHy8ZMujNFCDvTc/mypMPzBIbvMb
- /hbN9UrMtoKW65rScsC2Rl6dPyoBr5kwgFJdU7h6hi9+o+/zxb0Zk240TOBL6g==
-X-Gm-Gg: AYBFou1GKDRUOCiUoE+hRrTOG7dVmWaF2x92OAJSzHBtftt6rrqkqc1KCiJBmaWM2XE
- 0lYxCJSqWGVisditM84rYAV+5PAPjWawBAjfDHImLZ+JCL2oP8H4RBoOCAAIvEoWrV94ctv8T4n
- vr8UN3UVajrsaj6wO0kdGhWWafwmACti7OoqJxEsKq0g1SfEesIGGQAX6tEv+sV3ZwBnKw/hfZb
- VYucDOyvY4rWK9n/zQ1g7Q57R3EY+mNg+7Cya8RwK4DD/cXkuUMgEOptKEBVAaPhph1QpsTb6lq
- H1dI9AoeiJMLx+6vbA2CEDFslmR0iemXIdOFuPdKRcVtFanzQrBI9As6LEWED8oL08zCJwVPsfP
- oqVyNXoNXqC5fJumfsxx6kVNNeYeE16JoHfle0QFC/t+22/ZWUbZOgcyJJXuVlAQ66ZRFtz8lPg
- vG3d0lnkMugNam8QLnL/tXcouy1/U35ISVbhVQwcq5pSAL9woDuNUZ8KCiS7Wt34PvQzYUiPiSD
- 14yAEGvnGc2YFbAyiWa01iLNpeU
-X-Received: by 2002:a17:90b:314d:b0:3ac:7556:8eed with SMTP id
- 98e67ed59e1d1-3ac7556a42cmr316640a91.44.1791949181458; 
- Tue, 13 Oct 2026 20:39:41 -0700 (PDT)
+ bh=bvphkF4ny4hilMG0LXNrctB7EvQsbDQqRw3lmDJLYb0=;
+ b=sDnTKTiO75X1LNgqlQnTrmJShteDd7zsvQUEkIQuHKZ0dhyw0LYn70SVeu0yT72eTX
+ L1HHTkocfJJlls7udwaxi+JzL7oMCj/GqA4M67DH9lB7N+AnbZkGRq0V053t6tFaeK7+
+ ltSeOHQVbOoev1iM9JS8CsbZzkK8yxqDPgm+T5mB79bMrz4haOneqoZG6ua+O4tmd54k
+ PV0Z0vHkZ7uPTQjQu3/A8ewUQ8QBsxZi/sGxnC2zTvV/n+KmilqkOyTTMMKNmjr+ruR6
+ UyyYau05lY96HYCSBA6bTmedwgbN5qUu7l4rc1iVByUoyXZEPR8ivDJZANWrqnchi5Z/
+ umOQ==
+X-Gm-Message-State: AFq9FYJ/qM5F32AYnzrBJOGVNVt4Z7UgYw9t9pK8mX7tHhCM0YkP8esy
+ yn1LugQfrxH+RfgeMqlOktUA7KztqN7zkucuZ+sN4B2YobPZg6ZKAowyBw0Cdg==
+X-Gm-Gg: AYBFou3mHeaRFXFSVsQU4f5hJWdQJbbXN58KAEZXaZeEBtKcUWLgaEqkkTn9gwYr2R2
+ NT6cGdBb2JBl6aXtRJ9Pag7wVwgc34BX7fFCs3nj9VafkujStNZgLfFLRK3TSZ8/p13SLugwPTR
+ NT1IOIH1/VSNkGINlDKDcJoX75pd7GvvHlk1uscOmUV9l7RSqbpuvUgacGa4lSkBBmxWdgeiT2J
+ sg9zBg7WkQrk40iJN4+QxjGQTUiaotwTzmDhAd96iVesZBd9mXqgtNv0P9eOWU3bdZAgr22ZnvZ
+ Rov4Np3Coj2T7v/QbUFuIchVjOHrW96+Sqwt1PQ4exmE6XrlSrDLCL0VbMmX7owrAPeb1fuUeel
+ f3U1le5HlL4cRR0tyAv1GS0jffNtuOzekYgfmo0Jec90fbTBWqSuyfZ1jt62u24+j9l2SJDMx1j
+ P4OkjKO+3IW03EUR9gL+37oRGlVUpvupu4PhgJ0BTyP+tjJ9bWs4vDQn/JfuoXow4TCe90BPcfb
+ Tn+78VFsx3pUQoB
+X-Received: by 2002:a17:90b:4c4f:b0:3ab:27eb:338e with SMTP id
+ 98e67ed59e1d1-3ab3ac54a33mr11531985a91.52.1791949201033; 
+ Tue, 13 Oct 2026 20:40:01 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3ac61170b7bsm2321457a91.16.2026.10.13.20.39.38
+ 98e67ed59e1d1-3ac61170b7bsm2321457a91.16.2026.10.13.20.39.58
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 13 Oct 2026 20:39:40 -0700 (PDT)
+ Tue, 13 Oct 2026 20:40:00 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: Zephyr Li <fritchleybohrer@gmail.com>, qemu-stable@nongnu.org,
+Cc: Mingliang Liu <liumingliang.dev@bytedance.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 06/52] target/riscv: report WRS.NTO opcode in tval on illegal
- instruction
-Date: Wed, 14 Oct 2026 13:38:21 +1000
-Message-ID: <20261014033907.3332383-7-alistair.francis@wdc.com>
+Subject: [PULL 12/52] disas/riscv: Support vabs.v pseudo-instruction
+Date: Wed, 14 Oct 2026 13:38:27 +1000
+Message-ID: <20261014033907.3332383-13-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20261014033907.3332383-1-alistair.francis@wdc.com>
 References: <20261014033907.3332383-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::534;
- envelope-from=alistair23@gmail.com; helo=mail-pg1-x534.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::529;
+ envelope-from=alistair23@gmail.com; helo=mail-pg1-x529.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -104,154 +104,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zephyr Li <fritchleybohrer@gmail.com>
+From: Mingliang Liu <liumingliang.dev@bytedance.com>
 
-helper_wrs_nto() may raise an illegal or virtual-instruction exception.
-However, trans_wrs_nto() does not save the decoded opcode before calling
-the helper. As a result, exception unwinding leaves env->bins stale and
-trap handling reports an incorrect value in tval.
-
-Call decode_save_opc() before the helper so the faulting instruction
-encoding is restored for trap handling.
-
-Add a TCG test that delegates the mstatus.TW-triggered illegal-instruction
-exception to S-mode and checks scause, sepc and stval.
-
-Cc: qemu-stable@nongnu.org
-Fixes: b62e0ce76098 ("target/riscv: Raise exceptions on wrs.nto")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4080
-Signed-off-by: Zephyr Li <fritchleybohrer@gmail.com>
-Message-ID: <20260901091622.88113-1-fritchleybohrer@gmail.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Signed-off-by: Mingliang Liu <liumingliang.dev@bytedance.com>
+Message-ID: <20260907152301.1701394-3-liumingliang.dev@bytedance.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- .../riscv/tcg/insn_trans/trans_rvzawrs.c.inc  |  2 +
- tests/tcg/riscv64/Makefile.softmmu-target     |  4 +
- tests/tcg/riscv64/test-zawrs-stval.S          | 87 +++++++++++++++++++
- 3 files changed, 93 insertions(+)
- create mode 100644 tests/tcg/riscv64/test-zawrs-stval.S
+ disas/riscv.c        | 6 ++++++
+ disas/riscv-op.c.inc | 3 ++-
+ 2 files changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/target/riscv/tcg/insn_trans/trans_rvzawrs.c.inc b/target/riscv/tcg/insn_trans/trans_rvzawrs.c.inc
-index 1831bbcfc0..cb83b5247e 100644
---- a/target/riscv/tcg/insn_trans/trans_rvzawrs.c.inc
-+++ b/target/riscv/tcg/insn_trans/trans_rvzawrs.c.inc
-@@ -57,6 +57,8 @@ static bool trans_wrs_nto(DisasContext *ctx, arg_wrs_nto *a)
-      * exception, as handled by the wrs.nto helper.
-      */
- #ifndef CONFIG_USER_ONLY
-+    /* Save the opcode in case the helper raises an exception. */
-+    decode_save_opc(ctx, 0);
-     gen_helper_wrs_nto(tcg_env);
- #endif
+diff --git a/disas/riscv.c b/disas/riscv.c
+index 43d5a5255e..9645e19232 100644
+--- a/disas/riscv.c
++++ b/disas/riscv.c
+@@ -103,6 +103,7 @@ static const rvc_constraint rvcc_j[] = { rvc_rd_eq_x0, rvc_end };
+ static const rvc_constraint rvcc_ret[] = { rvc_rs1_eq_ra, rvc_end };
+ static const rvc_constraint rvcc_jr[] = { rvc_rd_eq_x0, rvc_imm_eq_zero,
+                                           rvc_end };
++static const rvc_constraint rvcc_vabs_v[] = { rvc_rs1_eq_x0, rvc_end };
+ static const rvc_constraint rvcc_true[] = { rvc_end };
  
-diff --git a/tests/tcg/riscv64/Makefile.softmmu-target b/tests/tcg/riscv64/Makefile.softmmu-target
-index f2c75abd57..1e44410418 100644
---- a/tests/tcg/riscv64/Makefile.softmmu-target
-+++ b/tests/tcg/riscv64/Makefile.softmmu-target
-@@ -20,6 +20,10 @@ EXTRA_RUNS += run-issue1060
- run-issue1060: issue1060
- 	$(call run-test, $<, $(QEMU) $(QEMU_OPTS)$<)
+ /* pseudo-instruction metadata */
+@@ -242,6 +243,11 @@ static const rv_comp_data rvcp_fsgnjx_q[] = {
+     { },
+ };
  
-+EXTRA_RUNS += run-test-zawrs-stval
-+run-test-zawrs-stval: test-zawrs-stval
-+	$(call run-test, $<, $(QEMU) -cpu max $(QEMU_OPTS)$<)
++static const rv_comp_data rvcp_vabd_vx[] = {
++    { &op_vabs_v, rvcc_vabs_v },
++    { },
++};
 +
- EXTRA_RUNS += run-test-mepc-masking
- run-test-mepc-masking: test-mepc-masking
- 	$(call run-test, $<, $(QEMU) $(QEMU_OPTS)$<)
-diff --git a/tests/tcg/riscv64/test-zawrs-stval.S b/tests/tcg/riscv64/test-zawrs-stval.S
-new file mode 100644
-index 0000000000..42a9901fa6
---- /dev/null
-+++ b/tests/tcg/riscv64/test-zawrs-stval.S
-@@ -0,0 +1,87 @@
-+/*
-+ * Test that WRS.NTO writes the instruction encoding to stval when
-+ * mstatus.TW causes an illegal-instruction exception in S-mode.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+	.option	norvc
-+
-+	.text
-+	.global	_start
-+_start:
-+	/* Unexpected traps to M-mode fail the test. */
-+	lla	t0, machine_trap
-+	csrw	mtvec, t0
-+
-+	/* Delegate illegal-instruction exceptions to S-mode. */
-+	li	t0, 1 << 2
-+	csrs	medeleg, t0
-+
-+	lla	t0, supervisor_trap
-+	csrw	stvec, t0
-+
-+	/* Give S-mode read, write and execute access to all memory. */
-+	li	t0, -1
-+	csrw	pmpaddr0, t0
-+	li	t0, 0xf
-+	csrw	pmpcfg0, t0
-+
-+	/* Set mstatus.TW and select S-mode for mret. */
-+	li	t0, 3 << 11
-+	csrc	mstatus, t0
-+	li	t0, (1 << 21) | (1 << 11)
-+	csrs	mstatus, t0
-+
-+	lla	t0, supervisor_start
-+	csrw	mepc, t0
-+	mret
-+
-+supervisor_start:
-+	/* WRS.NTO must trap because mstatus.TW is set. */
-+	li	a0, 1
-+wrs_nto:
-+	.word	0x00d00073
-+	j	_exit
-+
-+machine_trap:
-+	li	a0, 2
-+	j	_exit
-+
-+supervisor_trap:
-+	li	a0, 3
-+
-+	csrr	t0, scause
-+	li	t1, 2
-+	bne	t0, t1, _exit
-+
-+	csrr	t0, sepc
-+	lla	t1, wrs_nto
-+	bne	t0, t1, _exit
-+
-+	csrr	t1, stval
-+	lwu	t2, 0(t0)
-+	bne	t1, t2, _exit
-+	li	t2, 0x00d00073
-+	bne	t1, t2, _exit
-+
-+	li	a0, 0
-+
-+_exit:
-+	lla	a1, semiargs
-+	li	t0, 0x20026	/* ADP_Stopped_ApplicationExit */
-+	sd	t0, 0(a1)
-+	sd	a0, 8(a1)
-+	li	a0, 0x20	/* TARGET_SYS_EXIT_EXTENDED */
-+
-+	/* Semihosting call sequence. */
-+	.balign	16
-+	slli	zero, zero, 0x1f
-+	ebreak
-+	srai	zero, zero, 0x7
-+	j	.
-+
-+	.data
-+	.balign	16
-+semiargs:
-+	.space	16
+ /* Convert compressed insns into normal insns via pseudo expansion. */
+ #define DECOMP(X)  &(const rv_comp_data){ &X, rvcc_true }
+ 
+diff --git a/disas/riscv-op.c.inc b/disas/riscv-op.c.inc
+index 07b56f5d52..425473ee61 100644
+--- a/disas/riscv-op.c.inc
++++ b/disas/riscv-op.c.inc
+@@ -491,9 +491,10 @@ OP(vaadd_vx, "vaadd.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm)
+ OP(vaaddu_vv, "vaaddu.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm)
+ OP(vaaddu_vx, "vaaddu.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm)
+ OP(vabd_vv, "vabd.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm)
+-OP(vabd_vx, "vabd.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm)
++OP(vabd_vx, "vabd.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm, rvcp_vabd_vx)
+ OP(vabdu_vv, "vabdu.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm)
+ OP(vabdu_vx, "vabdu.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm)
++OP(vabs_v, "vabs.v", rv_codec_illegal, rv_fmt_vd_vs2_vm)
+ OP(vadc_vim, "vadc.vim", rv_codec_v_i, rv_fmt_vd_vs2_imm_vl)
+ OP(vadc_vvm, "vadc.vvm", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vl)
+ OP(vadc_vxm, "vadc.vxm", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vl)
 -- 
 2.55.0
 
