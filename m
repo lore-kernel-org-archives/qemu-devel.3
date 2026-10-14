@@ -4,68 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA09FCC6B1D
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 02:18:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D210CC6B1F
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 02:22:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGoZE-0007yf-5o; Tue, 13 Oct 2026 22:18:08 -0400
+	id 1xGodL-0000Qy-HG; Tue, 13 Oct 2026 22:22:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1xGoZB-0007yH-AK
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 22:18:05 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from <wang.yongD@h3c.com>)
+ id 1xGodJ-0000Qo-85
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 22:22:21 -0400
+Received: from smtp.h3c.com ([60.191.123.56] helo=h3cspam01-ex.h3c.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1xGoZ7-00034V-MV
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 22:18:05 -0400
-Received: from [192.168.10.153] (p865013-ipoe.ipoe.ocn.ne.jp [153.242.222.12])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 69E2HmJc040518
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Wed, 14 Oct 2026 11:17:48 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=iyC9r5fTaIJdjaUYqwQJXMSKSxslLmYbqtL3QgUkl5I=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1791944268; v=1;
- b=NjSA52LGg+EHuxy4VWJ1SVoqohrOvEythLRYF8pu/uGbyS7ddOXL+2teS/+vxHm+
- MCkIHJbNBVv0Xhp9AhtGHgdCWzXldOy3UUQik+2Ceag5VbiDxdgZ4Ie1QzCZw04y
- VwWUm1yQYObdfYyJyFWEz6qSUPkQ8iCmPhj30A24v9AQ9V4TnCClklZKoXWvSHJS
- aydxhQ10uL+lwXz4ppE9gRso8FMia0+WcpNapOL1C4ji+qEOmZmD2t+bsrl7Gg3O
- YtQN9qHC7+2CMPcwL/N20Knm60iuC0XamZ5DpQnthu1xoVrR3FeFoHZLgZJAaK86
- ZyIxLkc8aMGC1tf370G+OQ==
-Message-ID: <12afec43-1da5-4326-9395-73441effe9c6@rsg.ci.i.u-tokyo.ac.jp>
-Date: Wed, 14 Oct 2026 11:17:48 +0900
+ (Exim 4.90_1) (envelope-from <wang.yongD@h3c.com>)
+ id 1xGodG-0003X0-3g
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 22:22:21 -0400
+Received: from mail.maildlp.com ([172.25.15.155])
+ by h3cspam01-ex.h3c.com with ESMTP id 69E2LpDC014457;
+ Wed, 14 Oct 2026 10:21:51 +0800 (+08)
+ (envelope-from wang.yongD@h3c.com)
+Received: from DAG6EX12-BJD.srv.huawei-3com.com (unknown [10.153.34.14])
+ by mail.maildlp.com (Postfix) with ESMTP id 20C542284EA9;
+ Wed, 14 Oct 2026 10:24:44 +0800 (CST)
+Received: from DAG6EX09-BJD.srv.huawei-3com.com (10.153.34.11) by
+ DAG6EX12-BJD.srv.huawei-3com.com (10.153.34.14) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1258.27; Wed, 14 Oct 2026 10:21:50 +0800
+Received: from DAG6EX09-BJD.srv.huawei-3com.com ([fe80::bdc5:ad7:2347:12a5])
+ by DAG6EX09-BJD.srv.huawei-3com.com ([fe80::bdc5:ad7:2347:12a5%4]) with mapi
+ id 15.02.1258.027; Wed, 14 Oct 2026 10:21:50 +0800
+From: Wangyong <wang.yongD@h3c.com>
+To: Kevin Wolf <kwolf@redhat.com>
+CC: "pbonzini@redhat.com" <pbonzini@redhat.com>, "hreitz@redhat.com"
+ <hreitz@redhat.com>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Subject: Re: Subject: [Bug] VPD Page 0xb0 Block Limits incorrectly emulated in
+ scsi-generic causing guest mkfs.xfs failure
+Thread-Topic: Subject: [Bug] VPD Page 0xb0 Block Limits incorrectly emulated
+ in scsi-generic causing guest mkfs.xfs failure
+Thread-Index: Ad1bgq+B7fJV05MGQEGT0tWYY+pYGw==
+Date: Wed, 14 Oct 2026 02:21:50 +0000
+Message-ID: <4fb0ee6a94194d45b744a874423c9637@h3c.com>
+Accept-Language: en-US
+Content-Language: zh-CN
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.142.27.25]
+x-sender-location: DAG2
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v13 6/9] vfio/device: Add support for creating dmabuf from
- multiple ranges
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- "Kasireddy, Vivek" <vivek.kasireddy@intel.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- Markus Armbruster <armbru@redhat.com>
-Cc: Alex Williamson <alex@shazbot.org>
-References: <20261007201222.648687-1-vivek.kasireddy@intel.com>
- <20261007201222.648687-7-vivek.kasireddy@intel.com>
- <306e36da-31eb-4e54-8b47-afb5ae55a6c9@redhat.com>
- <IA0PR11MB7185A1C516474E6EA317F8E9F89F2@IA0PR11MB7185.namprd11.prod.outlook.com>
- <98667ef2-8931-497a-bb76-04097a2aa43b@rsg.ci.i.u-tokyo.ac.jp>
- <CH3PR11MB71774290FE2CE0532AD32FADF89E2@CH3PR11MB7177.namprd11.prod.outlook.com>
- <c18f2fde-5dae-45c5-a61a-8cade3ae5286@redhat.com>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <c18f2fde-5dae-45c5-a61a-8cade3ae5286@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+X-DNSRBL: 
+X-MAIL: h3cspam01-ex.h3c.com 69E2LpDC014457
+Received-SPF: pass client-ip=60.191.123.56; envelope-from=wang.yongD@h3c.com;
+ helo=h3cspam01-ex.h3c.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -82,210 +78,129 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/10/14 1:20, Cédric Le Goater wrote:
-> On 10/13/26 06:06, Kasireddy, Vivek wrote:
->> Hi Akihiko,
->>
->>> Subject: Re: [PATCH v13 6/9] vfio/device: Add support for creating
->>> dmabuf from multiple ranges
->>>
->>>>>
->>>>>> In order to create a dmabuf associated with a buffer that spans
->>>>>> multiple ranges, we first need to identify the VFIO region and
->>>>>> index the buffer (represented by iovec) belongs to and then
->>>>>> translate its addresses to offsets within that region.
->>>>>>
->>>>>> The qemu_ram_block_from_host() API gives us both the region and
->>>>>> the offset info we need to populate the dma ranges so that we can
->>>>>> invoke the VFIO_DEVICE_FEATURE_DMA_BUF feature to create the
->>>>> dmabuf.
->>>>>>
->>>>>> Also, instead of iterating over all QOM devices to find the
->>>>>> VFIODevice associated with a memory region, introduce a helper
->>>>>> to just use the vfio_device_list to lookup the VFIODevice.
->>>>>> And, introduce another helper to lookup the VFIO region given an
->>>>>> address.
->>>>>>
->>>>>> Lastly, introduce an enum to return the type of error encountered
->>>>>> while creating the dmabuf fd.
->>>>>>
->>>>>> Cc: Alex Williamson <alex@shazbot.org>
->>>>>> Cc: Cédric Le Goater <clg@redhat.com>
->>>>>> Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
->>>>>> ---
->>>>>>     include/hw/vfio/vfio-device.h |  22 +++++++
->>>>>>     hw/vfio/device.c              | 109
->>> ++++++++++++++++++++++++++++++++++
->>>>>>     hw/vfio/dmabuf-stubs.c        |  17 ++++++
->>>>>>     hw/vfio/meson.build           |   1 +
->>>>>>     4 files changed, 149 insertions(+)
->>>>>>     create mode 100644 hw/vfio/dmabuf-stubs.c
->>>>>>
->>>>>> diff --git a/include/hw/vfio/vfio-device.h b/include/hw/vfio/vfio-
->>>>> device.h
->>>>>> index 8472420d3f..c05430be8a 100644
->>>>>> --- a/include/hw/vfio/vfio-device.h
->>>>>> +++ b/include/hw/vfio/vfio-device.h
->>>>>> @@ -41,6 +41,13 @@ enum {
->>>>>>         VFIO_DEVICE_TYPE_AP = 3,
->>>>>>     };
->>>>>>
->>>>>> +enum {
->>>>>> +    /* The Guest passed addresses stored in IOV are invalid */
->>>>>> +    VFIO_DMABUF_CREATE_ERR_INVALID_IOV = -1,
->>>>>> +    /* Guest or Host may be at fault for this type of error */
->>>>>> +    VFIO_DMABUF_CREATE_ERR_UNSPEC = -2,
->>>>>> +};
->>>>>
->>>>> Nack.
->>>>>
->>>>> As said a few times already : it's a VFIO-specific enum leaking
->>>>> into vfio-device.h to serve virtio-gpu's fallback logic. The
->>>>> cleanest alternative is to use standard -errno returns and
->>>>> make the fd an output parameter.
->>>> It looks like Cedric remains unconvinced about the value or usefulness
->>>> of this error enum. Therefore, to make progress, I intend to adopt his
->>>> suggestion to use standard -errno returns for the next version,
->>> considering
->>>> that this series has been stuck for a year.
->>>>
->>>> AFAICS, dropping this error enum means that we would not be able to
->>>> clearly identify and log (or attribute) Guest vs Host errors in 
->>>> virtio-gpu,
->>>> particularly the INVALID_IOV case. I am not sure if this can be
->>> considered
->>>> a significant limitation. However, if there is a reasonable middle
->>> ground
->>>> solution or an alternative that you can think of that does not involve
->>>> using VFIO error enums in virtio-gpu, then I would like to pursue that
->>>> instead.
->>>
->>> Cédric's comment is a reiteration of previous points, but his concrete
->>> code suggestion is new and brings to light some challenges with errno
->>> propagation.
->>>
->>> First, errno does not precisely match the required semantics. We need
->>> to
->>> distinguish lookup failures from the other errors. However, with your
->>> suggestion, lookup failures become -EINVAL and
->>> vfio_device_get_feature()
->>> also returns the same value when the backend lacks the operation,
->>> making
->>> it impossible to distinguish them.
->>>
->>> Propagating errno also requires extra care to preserve it when
->>> necessary. For patch "[PATCH v13 8/9] virtio-gpu-dmabuf: Improve error
->>> handling with 'Error **' and err enum", you suggested to add the
->>> "saved_errno" variable to save errno before error_setg_errno(). That is
->>> redundant because error_setg_errno() preserves errno. Realizing that
->>> requires careful attention.
->>>
->>> While we could spend effort fixing these issues, we can simply avoid the
->>> churn by not using errno.
->>>
->>> In any case, I agree keeping this stuck is not ideal while I don't think
->>> I can provide any further insights. So I'm inviting Markus Armbruster to
->> Looks like you forgot to cc Markus. I have added him now.
->>
->>> this discussion. This is an area better handled by him, who maintains
->>> the error reporting facility, including include/qapi/error.h, which
->>> extensively documents codebase-wide error-handling convention.
->>>
->>> Markus, could you advise on the appropriate convention for returning
->>> this kind of classification alongside Error **? Your perspective
->>> across the codebase may help us settle on a consistent approach
->>> beyond the individual subsystems involved here. Perhaps you may
->>> improve
->>> the documentation according to a design decision made here.
->> Markus, here is some additional context from Akihiko as to why there is
->> a need to introduce an error enum in VFIO:
->> https://lore.kernel.org/qemu- 
->> devel/09f02fe2-63cb-4283-899e-4cffc5f60cf1@rsg.ci.i.u-tokyo.ac.jp/
->>
->>>
->>> If anyone else has a clean middle-ground solution in the meantime, I
->>> would greatly appreciate your input as well.
->> I am not sure if it can be considered clean or elegant but one middle- 
->> ground
->> solution I can think of is to have (and use) the error enum just in 
->> virtio-gpu
->> only but associate EINVAL (return value of 
->> vfio_device_create_dmabuf_fd())
->> as the equivalent of INVALID_IOV. That is, the relevant code now becomes:
->>
->>          res->dmabuf_fd = virtio_gpu_create_udmabuf(res, &local_err);
->>          if (res->dmabuf_fd == 
->> VIRTIO_GPU_DMABUF_CREATE_ERR_INVALID_IOV) {
->>              error_free_or_abort(&local_err);
->>
->>              res->dmabuf_fd = vfio_device_create_dmabuf_fd(res->iov,
->>                                                            res->iov_cnt,
->>                                                            &local_err);
->>              if (res->dmabuf_fd == -EINVAL) {
->>                  error_free_or_abort(&local_err);
->>                  qemu_log_mask(LOG_GUEST_ERROR,
->>                                "Cannot create dmabuf: incompatible 
->> memory\n");
->>                  return false;
->>              }
->>
->> I think this is reasonable IMO, but is this proposal acceptable to you?
-> 
-> The return value drives control flow.
-> 
-> AFAICT, in virtio_gpu_init_dmabuf(), the only distinction that seems
-> to matter for control flow is : "should I try the next backend ?" and
-> that's EINVAL, which means "these addresses are incompatible with this
-> particular backend."
-> 
-> The guest-vs-host attribution for logging/debugging is in the errp
-> messages :
-> 
->   - "IOV memory address incompatible with udmabuf" : guest gave 
-> addresses udmabuf can't handle
->   - "No VFIO device found to create dmabuf from"   : guest addresses 
-> don't map to a VFIO device
->   - "UDMABUF_CREATE_LIST: ioctl failed" + errno    :  host/kernel issue
-> 
-> The Error* object is designed to encode a human-readable attribution
-> in a return value. It carries the diagnostic detail and the return
-> code carries the machine action.
-> 
-> Now the flow,
-> 
->    udmabuf
->      ├─ -EINVAL ──► VFIO
->      │                ├─ >= 0 ──► vfio_device_mmap_dmabuf ──► success
->      │                ├─ -EINVAL ──► guest error: incompatible memory
->      │                └─ other -errno ──► error_report_err ──► host error
->      │
->      ├─ >= 0 ──► virtio_gpu_remap_dmabuf ──► success
->      │
->      ├─ -ENODEV ──► error_report_err ──► fail (VFIO NOT tried)
->      ├─ -ENOMEM ──► error_report_err ──► fail (VFIO NOT tried)
->      └─ other -errno ──► error_report_err ──► fail (VFIO NOT tried)
-> 
-> 
-> The fallback trigger should be widen to -EINVAL || -ENODEV.
-> 
-> How's that ?
-
-Choosing between qemu_log_mask(LOG_GUEST_ERROR, ...) and
-error_report_err() is also a machine decision. The caller needs to
-distinguish incompatible backing from other failures to select the
-reporting path; human-readable attribution in Error * is insufficient.
-
-The -EINVAL ambiguity therefore remains. vfio_device_get_feature()
-also returns -EINVAL when the backend lacks the operation. If we
-propagate that unchanged, your diagram classifies it as incompatible
-guest memory. Using -EINVAL for that classification requires an
-explicit mapping that keeps these other failures distinct.
-
-Regarding -ENODEV, virtio_gpu_device_realize() already requires
-virtio_gpu_have_udmabuf() for this blob path. udmabuf_fd() caches the
-opened fd, so the availability-related -ENODEV should not occur
-after successful realization.
-
-Regards,
-Akihiko Odaki
+QW0gMTMuMTAuMjAyNiB1bSAxMDozMiBoYXQgV2FuZ3lvbmcgZ2VzY2hyaWViZW46DQoNCj4gSGks
+DQo+DQo+IEknbSByZXBvcnRpbmcgYSBidWcgd2hlcmUgVlBEIFBhZ2UgMHhiMCAoQmxvY2sgTGlt
+aXRzKSBpcyBpbmNvcnJlY3RseSANCj4gZW11bGF0ZWQgaW4gUUVNVSdzIHNjc2ktZ2VuZXJpYyBk
+cml2ZXIsIGNhdXNpbmcgZ3Vlc3QgVk1zIHRvIGZhaWwgDQo+IG9wZXJhdGlvbnMgbGlrZSBta2Zz
+Lnhmcy4NCj4NCj4gU3VtbWFyeToNCj4gV2hlbiB1c2luZyBRRU1VIHN0YWxlLTExLjAgd2l0aCBz
+Y3NpLWJsb2NrIHBhc3N0aHJvdWdoLCB0aGUgT3B0aW1hbCANCj4gVHJhbnNmZXIgTGVuZ3RoIChh
+bmQgcmVsYXRlZCBmaWVsZHMpIGluIFZQRCBQYWdlIDB4YjAgYXJlIGluY29ycmVjdGx5IA0KPiBj
+YXBwZWQgdG8gYSBtdWNoIHNtYWxsZXIgdmFsdWUgdGhhbiB3aGF0IHRoZSBob3N0IGRldmljZSBy
+ZXBvcnRzLiBUaGlzIA0KPiBpcyBjYXVzZWQgYnkgY29tbWl0IDNjYjI5MDU4IHdoaWNoIG1vZGlm
+aWVkIGJsa19nZXRfbWF4X3RyYW5zZmVyKCkgdG8gDQo+IG5vIGxvbmdlciBjaGVjayBicy0+Ymwu
+bWF4X2h3X3RyYW5zZmVyLCBhbmQgdGhlIHNjc2ktZ2VuZXJpYyBjb2RlIGF0IA0KPiBsaW5lIDE5
+NC0xOTggdXNlcyB0aGlzIGZ1bmN0aW9uIHRvIGNvbXB1dGUgVlBEIGZpZWxkcyhPcHRpbWFsIFRy
+YW5zZmVyIA0KPiBMZW5ndGgpLg0KDQo+IE15IGdpdCByZXBvc2l0b3J5IGRvZXNuJ3QgY29udGFp
+biBhIGNvbW1pdCAzY2IyOTA1OC4gUGxlYXNlIHNwZWNpZnkgd2hlcmUgeW91IGdvdCB5b3VyIGNv
+cHkgb2YgdGhlIFFFTVUgY29kZSBmcm9tLg0KDQpUaGFuayB5b3UgZm9yIGxvb2tpbmcgaW50byB0
+aGlzLg0KVGhlIGlzc3VlIGlzIHJlbGF0ZWQgdG8gdGhlIGZvbGxvd2luZyBwYXRjaGVzOg0KDQow
+MWVmODE4IHNjc2ktZ2VuZXJpYzogcGFzcyBtYXhfc2VnbWVudHMgdmlhIG1heF9pb3YgZmllbGQg
+aW4gQmxvY2tMaW1pdHMNCjE4NDczNDYgZmlsZS1wb3NpeDogdHJ5IEJMS1NFQ1RHRVQgb24gYmxv
+Y2sgZGV2aWNlcyB0b28sIGRvIG5vdCByb3VuZCB0byBwb3dlciBvZiAyDQpjYzA3MTYyOSBibG9j
+azogaW50cm9kdWNlIG1heF9od19pb3YgZm9yIHVzZSBpbiBzY3NpLWdlbmVyaWMNCg0KPiBFbnZp
+cm9ubWVudDoNCj4gSG9zdDogTGludXggd2l0aCBtdWx0aXBhdGggKyBMVU4NCj4gR3Vlc3Q6IExp
+bnV4IFZNIHdpdGggUUVNVSAxMS4wIHNjc2ktYmxvY2sgcGFzc3Rocm91Z2ggSG9zdCBrZXJuZWw6
+IA0KPiA2LjYuMA0KPg0KU3VwcGxlbWVudCBoYXJkd2FyZSBpbmZvcm1hdGlvbjoNCg0KW3Jvb3RA
+IH5dIyBsc3BjaSB8Z3JlcCBFbXUNCjAyOjAwLjAgRmlicmUgQ2hhbm5lbDogRW11bGV4IENvcnBv
+cmF0aW9uIExQZTE1MDAwL0xQZTE2MDAwIFNlcmllcyA4R2IvMTZHYiBGaWJyZSBDaGFubmVsIEFk
+YXB0ZXIgKHJldiAzMCkNCjAyOjAwLjEgRmlicmUgQ2hhbm5lbDogRW11bGV4IENvcnBvcmF0aW9u
+IExQZTE1MDAwL0xQZTE2MDAwIFNlcmllcyA4R2IvMTZHYiBGaWJyZSBDaGFubmVsIEFkYXB0ZXIg
+KHJldiAzMCkNCg0KW3Jvb3RAIH5dIyBjYXQgL3N5cy9ibG9jay9kbS0xL3F1ZXVlL21heF9zZWdt
+ZW50cw0KNjQNCltyb290QCB+XSMgY2F0IC9zeXMvYmxvY2svc2RkL3F1ZXVlL21heF9zZWdtZW50
+cw0KNjQNCg0KPiBSZXByb2R1Y3Rpb24gU3RlcHM6DQo+IFNldCB1cCBhIG11bHRpcGF0aCBlbnZp
+cm9ubWVudCB3aXRoIGEgTFVOIChwaHlzaWNhbCBkaXNrIHdpdGggc3RyaXBlDQo+IGdlb21ldHJ5
+KSBQYXNzIHRoZSBMVU4gdGhyb3VnaCB0byBhIFFFTVUgVk0gdXNpbmcgc2NzaS1ibG9jazoNCj4g
+LWRldmljZSB2aXJ0aW8tc2NzaS1wY2ksaWQ9c2NzaTAsYnVzPXBjaS4wLGFkZHI9MHhhIFwgLWRy
+aXZlIA0KPiBmaWxlPS9kZXYvZGlzay9ieS1pZC9kbS1uYW1lLTM2MDAwZDMxMDA1N2RmODAwMDAw
+MDAwMDAwMDAwMDk2OSxmb3JtYXQ9DQo+IHJhdyxpZj1ub25lLGlkPWRyaXZlLXNjc2kwLTAtMC0w
+LGNhY2hlPW5vbmUsYWlvPW5hdGl2ZSBcIC1kZXZpY2UNCj4gc2NzaS1ibG9jayxidXM9c2NzaTAu
+MCxjaGFubmVsPTAsc2NzaS1pZD0wLGx1bj0wLGRyaXZlPWRyaXZlLXNjc2kwLTAtMA0KPiAtMCxp
+ZD1zY3NpMC0wLTAtMFwNCj4NCj4gSW5zaWRlIHRoZSBWTSwgcnVuIG1rZnMueGZzIC9kZXYvc2Rh
+DQo+DQo+IEV4cGVjdGVkIEJlaGF2aW9yOg0KPiBta2ZzLnhmcyBzaG91bGQgc3VjY2VlZA0KPiBW
+UEQgUGFnZSAweGIwIHNob3VsZCByZXBvcnQgT3B0aW1hbCB0cmFuc2ZlciBsZW5ndGggbWF0Y2hp
+bmcgdGhlIA0KPiBob3N0J3MgUkFJRCBzdHJpcGUgc2l6ZQ0KPg0KPiBBY3R1YWwgQmVoYXZpb3I6
+DQo+IDEuIG1rZnMueGZzIGZhaWxzIGluc2lkZSBWTQ0KPiBTQiBzdHJpcGUgdW5pdCBzYW5pdHkg
+Y2hlY2sgZmFpbGVkDQo+IE1ldGFkYXRhIGNvcnJ1cHRpb24gZGV0ZWN0ZWQgYXQgMHguLi4NCj4g
+eGZ4X3NiIGJsb2NrIDB4MC8weDEwMDANCj4gbGlieGZzX2J3cml0ZTogd3JpdGUgdmVyaWZpZXIg
+ZmFpbGVkDQo+IFNCIHN0cmlwZSB1bml0IHNhbml0eSBjaGVjayBmYWlsZWQNCj4gQUcgMHgwIHVu
+bGlua2VkIGJ1Y2tldCBzYW5pdHkgY2hlY2sgZmFpbGVkDQo+IG1rZnMueGZzOiB3cml0aW5nIEFH
+IGhlYWRlcnMgZmFpbGVkLCBlcnI9MTE3DQo+DQo+IE5vdGU6IE5vIGVycm9yIGluIGRtZXNnIGJl
+Y2F1c2UgWEZTIGZhaWxlZCBkdXJpbmcgaW4tbWVtb3J5IHN1cGVyYmxvY2sgY29uc3RydWN0aW9u
+LCBuZXZlciBpc3N1aW5nIGFjdHVhbCBJL08uDQo+DQo+IG1rZnMueGZzIC1mIC1kIHN1PTAuc3c9
+MCAvZGV2L3NkYQ0KRGlzYWJsaW5nIHN0cmlwaW5nIGluIG1rZnMgY2FuIGJlIHZlcmlmaWVkIHRo
+cm91Z2ggdGVzdGluZy4NCg0KPiAyLiBWUEQgY29tcGFyaXNvbiBiZXR3ZWVuIGhvc3QgYW5kIGd1
+ZXN0IEhvc3QgKHNnX3ZwZCAtcCAweGIwDQo+IC9kZXYvZGlzay9ieS1pZC9kbS1uYW1lLTM2MDAw
+ZDMxMDA1N2RmODAwMDAwMDAwMDAwMDAwMDk2OSkNCj4gQmxvY2sgbGltaXRzIFZQRCBwYWdlIChT
+QkMpDQo+ICAgV3JpdGUgc2FtZSBub24temVybyAoV1NOWik6IDANCj4gICBNYXhpbXVtIGNvbXBh
+cmUgYW5kIHdyaXRlIGxlbmd0aDogMHgxDQo+ICAgT3B0aW1hbCB0cmFuc2ZlciBsZW5ndGggZ3Jh
+bnVsYXJpdHk6IDB4MTAwMA0KPiAgIE1heGltdW0gdHJhbnNmZXIgbGVuZ3RoOiAwIGJsb2NrcyBb
+bm90IHJlcG9ydGVkXQ0KPiAgIE9wdGltYWwgdHJhbnNmZXIgbGVuZ3RoOiAweDEwMDANCj4gICBN
+YXhpbXVtIHByZWZldGNoIGxlbmd0aDogMCBibG9ja3MgW25vdCByZXBvcnRlZF0NCj4gICBNYXhp
+bXVtIHVubWFwIExCQSBjb3VudDogMHgyMDAwMDANCj4gICBNYXhpbXVtIHVubWFwIGJsb2NrIGRl
+c2NyaXB0b3IgY291bnQ6IDB4MQ0KPiAgIE9wdGltYWwgdW5tYXAgZ3JhbnVsYXJpdHk6IDB4MTAw
+MA0KPiAgIFVubWFwIGdyYW51bGFyaXR5IGFsaWdubWVudCB2YWxpZDogdHJ1ZQ0KPiAgIFVubWFw
+IGdyYW51bGFyaXR5IGFsaWdubWVudDogMHgwDQo+ICAgTWF4aW11bSB3cml0ZSBzYW1lIGxlbmd0
+aDogMCBibG9ja3MgW25vdCByZXBvcnRlZF0NCj4gICBNYXhpbXVtIGF0b21pYyB0cmFuc2ZlciBs
+ZW5ndGg6IDAgYmxvY2tzIFtub3QgcmVwb3J0ZWRdDQo+ICAgQXRvbWljIGFsaWdubWVudDogMCBi
+bG9ja3MgW3VuYWxpZ25lZCBhdG9taWMgd3JpdGVzIHBlcm1pdHRlZF0NCj4gICBBdG9taWMgdHJh
+bnNmZXIgbGVuZ3RoIGdyYW51bGFyaXR5OiAwIGJsb2NrcyBbbm8gZ3JhbnVsYXJpdHkgcmVxdWly
+ZW1lbnRdDQo+ICAgTWF4aW11bSBhdG9taWMgdHJhbnNmZXIgbGVuZ3RoIHdpdGggYXRvbWljIGJv
+dW5kYXJ5OiAwIGJsb2NrcyBbbm90IHJlcG9ydGVkXQ0KPiAgIE1heGltdW0gYXRvbWljIGJvdW5k
+YXJ5IHNpemU6IDAgYmxvY2tzIFtjYW4gb25seSB3cml0ZSBhdG9taWMgMSANCj4gYmxvY2tdDQo+
+IFtyb290QGN2a25vZGUxNTEgfl0jIGxsDQo+IC9kZXYvZGlzay9ieS1pZC9kbS1uYW1lLTM2MDAw
+ZDMxMDA1N2RmODAwMDAwMDAwMDAwMDAwMDk2OQ0KPiBscnd4cnd4cnd4IDEgcm9vdCByb290IDEw
+IE9jdCAxMyAxNTo1NQ0KPiAvZGV2L2Rpc2svYnktaWQvZG0tbmFtZS0zNjAwMGQzMTAwNTdkZjgw
+MDAwMDAwMDAwMDAwMDA5NjkgLT4NCj4gLi4vLi4vZG0tMQ0KPiBbcm9vdEBjdmtub2RlMTUxIH5d
+IyBjYXQgL3N5cy9ibG9jay9kbS0xL3F1ZXVlL21heF9zZWdtZW50cw0KPiA2NA0KPiBHdWVzdCAo
+c2dfdnBkIC1wIDB4YjAgL2Rldi9zZGEpOg0KPiBCbG9jayBsaW1pdHMgVlBEIHBhZ2UgKFNCQyk6
+DQo+ICAgV3JpdGUgc2FtZSBub24temVybyAoV1NOWik6IDANCj4gICBNYXhpbXVtIGNvbXBhcmUg
+YW5kIHdyaXRlIGxlbmd0aDogMSBibG9ja3MNCj4gICBPcHRpbWFsIHRyYW5zZmVyIGxlbmd0aCBn
+cmFudWxhcml0eTogNDA5NiBibG9ja3MNCj4gICBNYXhpbXVtIHRyYW5zZmVyIGxlbmd0aDogNTEy
+IGJsb2Nrcw0KPiAgIE9wdGltYWwgdHJhbnNmZXIgbGVuZ3RoOiA1MTIgYmxvY2tzICAgICDihpAg
+SU5DT1JSRUNUDQo+ICAgTWF4aW11bSBwcmVmZXRjaCB0cmFuc2ZlciBsZW5ndGg6IDAgYmxvY2tz
+IFtpZ25vcmVkXQ0KPiAgIE1heGltdW0gdW5tYXAgTEJBIGNvdW50OiAyMDk3MTUyDQo+ICAgTWF4
+aW11bSB1bm1hcCBibG9jayBkZXNjcmlwdG9yIGNvdW50OiAxDQo+ICAgT3B0aW1hbCB1bm1hcCBn
+cmFudWxhcml0eTogNDA5NiBibG9ja3MNCj4gICBVbm1hcCBncmFudWxhcml0eSBhbGlnbm1lbnQg
+dmFsaWQ6IHRydWUNCj4gICBVbm1hcCBncmFudWxhcml0eSBhbGlnbm1lbnQ6IDANCj4gICBNYXhp
+bXVtIHdyaXRlIHNhbWUgbGVuZ3RoOiAwIGJsb2NrcyBbbm90IHJlcG9ydGVkXQ0KPiAgIE1heGlt
+dW0gYXRvbWljIHRyYW5zZmVyIGxlbmd0aDogMCBibG9ja3MgW25vdCByZXBvcnRlZF0NCj4gICBB
+dG9taWMgYWxpZ25tZW50OiAwIFt1bmFsaWduZWQgYXRvbWljIHdyaXRlcyBwZXJtaXR0ZWRdDQo+
+ICAgQXRvbWljIHRyYW5zZmVyIGxlbmd0aCBncmFudWxhcml0eTogMCBbbm8gZ3JhbnVsYXJpdHkg
+cmVxdWlyZW1lbnQNCj4gICBNYXhpbXVtIGF0b21pYyB0cmFuc2ZlciBsZW5ndGggd2l0aCBhdG9t
+aWMgYm91bmRhcnk6IDAgYmxvY2tzIFtub3QgcmVwb3J0ZWRdDQo+ICAgTWF4aW11bSBhdG9taWMg
+Ym91bmRhcnkgc2l6ZTogMCBibG9ja3MgW2NhbiBvbmx5IHdyaXRlIGF0b21pYyAxIA0KPiBibG9j
+a10NCj4NCj4gUmVzdG9yZSAib3B0IHhmZXIgbGVuIiB0byBiZWZvcmUgbW9kaWZpY2F0aW9uLCBt
+a2ZzLnhmcyBjYW4gcGFzcyB0aGUgDQo+IHRlc3QNCj4NCj4gQEAgLTE2OSwxNSArMTY5LDE1IEBA
+IHN0YXRpYyB2b2lkIHNjc2lfaGFuZGxlX2lucXVpcnlfcmVwbHkoU0NTSUdlbmVyaWNSZXEgKnIs
+IFNDU0lEZXZpY2UgKnMpDQo+ICAgICAgICAgIGlmIChwYWdlID09IDB4YjApIHsNCj4gKyAgICAg
+ICAgICAgIHVpbnQzMl90IG1heF90cmFuc2Zlcl9vcHQgPQ0KPiArIGJsa19nZXRfbWF4X3RyYW5z
+ZmVyKHMtPmNvbmYuYmxrKSAvIHMtPmJsb2Nrc2l6ZTsNCj4NCj4gICAgICAgICAgICAgIGFzc2Vy
+dChtYXhfdHJhbnNmZXIpOw0KPiAgICAgICAgICAgICAgbWF4X3RyYW5zZmVyID0gTUlOX05PTl9a
+RVJPKG1heF90cmFuc2ZlciwgbWF4X2lvdiAqIHFlbXVfcmVhbF9ob3N0X3BhZ2Vfc2l6ZSkNCj4g
+ICAgICAgICAgICAgICAgICAvIHMtPmJsb2Nrc2l6ZTsNCj4gICAgICAgICAgICAgIHN0bF9iZV9w
+KCZyLT5idWZbOF0sIG1heF90cmFuc2Zlcik7DQo+ICAgICAgICAgICAgICAvKiBBbHNvIHRha2Ug
+Y2FyZSBvZiB0aGUgb3B0IHhmZXIgbGVuLiAqLw0KPiAgICAgICAgICAgICAgc3RsX2JlX3AoJnIt
+PmJ1ZlsxMl0sDQo+IC0gICAgICAgICAgICAgICAgICAgIE1JTl9OT05fWkVSTyhtYXhfdHJhbnNm
+ZXIsIGxkbF9iZV9wKCZyLT5idWZbMTJdKSkpOw0KPiArICAgICAgICAgICAgICAgICAgICBNSU5f
+Tk9OX1pFUk8obWF4X3RyYW5zZmVyX29wdCwgDQo+ICsgbGRsX2JlX3AoJnItPmJ1ZlsxMl0pKSk7
+DQo+ICAgICAgICAgIH0gZWxzZSBpZiAocy0+bmVlZHNfdnBkX2JsX2VtdWxhdGlvbiAmJiBwYWdl
+ID09IDB4MDAgJiYgci0+YnVmbGVuID49IDQpIHsNCj4gICAgICAgICAgICAgIC8qDQo+ICAgICAg
+ICAgICAgICAgKiBOb3cgd2UncmUgY2FwYWJsZSBvZiBzdXBwbHlpbmcgdGhlIFZQRCBCbG9jayBM
+aW1pdHMNCg0KPiBDb2RlIHRoYXQgcm91Z2hseSBsb29rZWQgbGlrZSB0aGlzIGV4aXN0ZWQgaW4g
+UUVNVSA3LjAgYW5kIGVhcmxpZXIuIFlvdSBzYWlkIHlvdSdyZSB1c2luZyBRRU1VIDExLjAsIHNv
+IGl0IHNob3VsZG4ndCBleGlzdCBpbiB5b3VyIGNvZGUuDQpVcGRhdGUNCg0KKysrIGIvaHcvc2Nz
+aS9zY3NpLWdlbmVyaWMuYw0KQEAgLTE5MiwxMCArMTkyLDExIEBAIHN0YXRpYyBpbnQgc2NzaV9o
+YW5kbGVfaW5xdWlyeV9yZXBseShTQ1NJR2VuZXJpY1JlcSAqciwgU0NTSURldmljZSAqcywgaW50
+IGxlbikNCiAgICAgICAgICAgICB1aW50OF90IGJ1ZlsxNl0gPSB7fTsNCiAgICAgICAgICAgICB1
+aW50OF90IGJ1Zl91c2VkID0gTUlOKHItPmJ1ZmxlbiwgMTYpOw0KICAgICAgICAgICAgIHVpbnQ2
+NF90IG1heF90cmFuc2ZlciA9IGNhbGN1bGF0ZV9tYXhfdHJhbnNmZXIocyk7DQorICAgICAgICAg
+ICAgdWludDMyX3QgbWF4X3RyYW5zZmVyX29wdCA9IGJsa19nZXRfbWF4X3RyYW5zZmVyKHMtPmNv
+bmYuYmxrKSAvIHMtPmJsb2Nrc2l6ZTsNCg0KICAgICAgICAgICAgIG1lbWNweShidWYsIHItPmJ1
+ZiwgYnVmX3VzZWQpOw0KICAgICAgICAgICAgIHN0bF9iZV9wKCZidWZbOF0sIG1heF90cmFuc2Zl
+cik7DQotICAgICAgICAgICAgc3RsX2JlX3AoJmJ1ZlsxMl0sIE1JTl9OT05fWkVSTyhtYXhfdHJh
+bnNmZXIsIGxkbF9iZV9wKCZidWZbMTJdKSkpOw0KKyAgICAgICAgICAgIHN0bF9iZV9wKCZidWZb
+MTJdLCBNSU5fTk9OX1pFUk8obWF4X3RyYW5zZmVyX29wdCwgbGRsX2JlX3AoJmJ1ZlsxMl0pKSk7
+DQogICAgICAgICAgICAgbWVtY3B5KHItPmJ1ZiArIDgsIGJ1ZiArIDgsIGJ1Zl91c2VkIC0gOCk7
+DQoNCiAgICAgICAgIH0gZWxzZSBpZiAocy0+bmVlZHNfdnBkX2JsX2VtdWxhdGlvbiAmJiBwYWdl
+ID09IDB4MDAgJiYgci0+YnVmbGVuID49IDQpIHsNCg0Kd2FuZ3lvbmcNCg0KDQo=
 
