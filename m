@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1546ACC6B1A
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 09:36:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A26F4CC6B1D
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 09:37:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGvNV-0005Eb-6c; Wed, 14 Oct 2026 05:34:32 -0400
+	id 1xGvNy-0005Wx-Nt; Wed, 14 Oct 2026 05:35:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xGvNL-00056V-Kq
- for qemu-devel@nongnu.org; Wed, 14 Oct 2026 05:34:20 -0400
-Received: from mail-dy1-x1334.google.com ([2607:f8b0:4864:20::1334])
+ id 1xGvNU-0005Fa-Sh
+ for qemu-devel@nongnu.org; Wed, 14 Oct 2026 05:34:29 -0400
+Received: from mail-dy1-x132b.google.com ([2607:f8b0:4864:20::132b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xGvNI-0000bz-C4
- for qemu-devel@nongnu.org; Wed, 14 Oct 2026 05:34:18 -0400
-Received: by mail-dy1-x1334.google.com with SMTP id
- 5a478bee46e88-35cd4e8bdbdso3177775eec.1
- for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 02:34:15 -0700 (PDT)
+ id 1xGvNS-0000e7-BF
+ for qemu-devel@nongnu.org; Wed, 14 Oct 2026 05:34:28 -0400
+Received: by mail-dy1-x132b.google.com with SMTP id
+ 5a478bee46e88-33c2520ad38so8984294eec.1
+ for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 02:34:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1791970455; x=1792575255; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1791970464; x=1792575264; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=n1Kznjn9gwc9J8CJXnPKY6p2oc96M5De/Smwcsx+f98=;
- b=E/Y48btEzOWxnsumy9XUq/joLWl0arMqLyG1YcRZA8OLIlWchtu6ns4B5Q0PrFcCLM
- CM5eIC8qcZWxyviYH4q3b0l0R9eNQdSBBxJWuEaHBay2F3NQGGPBVMR5OnkEiVQqlmDI
- 92jRPT3c5NZss4B1IFPrqSGq40QRD8RxGitGYYOevTCp6ooZ0nKK0d39CHMPxmwu3swn
- dj+piktJXyDTzquFf695PkT2EHkR9c9Cq6VUi1UfLlCMmQnId+4E6IVwMYWv4R+mGPmf
- hNvTDtSr8vN2IuPV/fJZjTfyx40u54OXp/tHsWjGA22OZ0+Mo7y+8QNPxaAS6NmhooIM
- t2uw==
+ bh=9grlkE7NcjVbWKGA44KZGoN8QKYGDpltY5XgCndOBEc=;
+ b=fNCZQ4CW5mkFHAmC8cvNK7yLan2cTBOQGi5w1n+GG7mDV8Z7b4NfSN7PGg/r6wgv5+
+ aLI10V3ItNXCc2FgHRxsStGnFbcq5IHHMf4LceP77JSgaqdtWYQt0LTPutowmb1YQVlx
+ N6kIGwWyJ9tjnhiNtGchtjDJ96bO4t8dgygnJcUiWQbGKSgvAspjHcXBHrmbxJNITDik
+ 2Znvt9FCYgefOcHsS/b3TlkwRDXFLPvicOAJcN+oGD7kw/1t7R8lUyXVdzO+lmSnQqTC
+ YFvDVqD4K/U8uSkZCWx4mlAp8N/WRX/tkpQm6u/C3hsL3/sNHTGTZicbJpB6C11ldeX0
+ h86w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791970455; x=1792575255;
+ d=1e100.net; s=20260707; t=1791970464; x=1792575264;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=n1Kznjn9gwc9J8CJXnPKY6p2oc96M5De/Smwcsx+f98=;
- b=JrU9tdFVn4Xz9pxcw0gLObaikmfMLqU8Yqzeo1AB61JsStt1NmYuT+VNHGloETOpYs
- +3EiWVRk1/4Q11lksExANOX6DtmOUy8SVCFB0f0OsKOlL/eIwu9GFUcYHmO5fgp7tCZW
- ZTMMBKacPnHmOj5J2L9Fm6iXiNBJO3m6noJM5mecS/fJ7l11YFBG+rjBEEJpMh91khgk
- GFJrP1ra9VvlvgAXIS7ThrpKloZ/cUJsC3x+yFQLWmaSuaxqNbV12P8d9LMXYAghAtUS
- vqqaMQ5+3oa1W9tFLp9TmmAjWQesv//ATwK3SakpW3VHkSikPn50scglbf7ATGdVnkQU
- cv7Q==
-X-Gm-Message-State: AFq9FYIEkqa7+sokTUBx/Ash2x3niKph5zj2GKEtmDLpIibN5Fp3v0w5
- QpFXykSM72l3pMbQrxfVtqz1oHMDv1fUjWHfLfjnVVqA+sIGRzhyVbBkLSYVQgANE/s=
-X-Gm-Gg: AYBFou1/DPK7ORCiUBL4ynzKreb6qMEp/KUJFH4APkRWejiJ1b48OE8py5DcEf6WOl3
- 5dsfLNetLK9K1XRON1PFqZi77jovtmpT5w1EyGHxnnBCKjGDABQkkx9/88JyDTqi26adjNNvWS7
- vnWJXMX/m0ppzKSnTCW13gfVSPZwPyD3Qxr9sWktpG5EYMvv2qtc5bUwIdKBwrz6Xkn1t1meooo
- /Pi4XT10A4Y+p4STgjoaOldcBajUQpv9xxdMQ9KI708j1XxWxY+vOTncZEKEWTQCHy86dLEu247
- FZfEkShB+wYOOrTMoPHgMf7ibw/hmghrQMhVW4862DuH/LC6l66lGP1el+RV3XJjnO8l/abLKPY
- DR/V0l+mWx1sDjxCRQKd3fJ1eSmfeO0TNSngqgPrD50uXsF7FobsZo8ldaboE6x6DyzvZzgme0t
- SPfMC02Sdy44xmyYbbiKqEMPv9lPalSGhcEl7Hxmjk0CYnsbsofKVmUh7BKBgFycyliLGZfL9Y4
- OoWko7fVCf/+6X6eQ==
-X-Received: by 2002:a05:701b:450b:10b0:164:3237:4483 with SMTP id
- a92af1059eb24-16a6384f137mr18786492c88.42.1791970454472; 
- Wed, 14 Oct 2026 02:34:14 -0700 (PDT)
+ bh=9grlkE7NcjVbWKGA44KZGoN8QKYGDpltY5XgCndOBEc=;
+ b=Ze121zXWIY1CEVHTP/PIog/RtR5G5fh+Xj+9helhlFaNm3zcEC8Z2t0yEJsBsDDDZx
+ sficS7vswsrigG7GT63tXZrRtc1km+3WstLuQzcXZCFT1sJunqucDy7Rhmj2acFE/vQS
+ WDvDPwewCrR92oa3x75GEAEQBQWYtpElx903yiZgUfyFzwC2C79r8RMszztbpubR8sbF
+ 5/MPAQAEcRIUyUntieAqPbMroGuIgtdDyHLKvi1jvtZCAApY/eZdN3bTNapKSVbIa8SN
+ /vJK0RbMn/1KEuSjxQFvR756GMOprepDnvBKfqmB58XZTe4O5UU8QNcY5Ke05ao/VCig
+ iYJw==
+X-Gm-Message-State: AFq9FYLrdJYZi9SDOQkduzfunv13bE926PBcuCBV71/8sY5STxCg3X0k
+ I7K/4CnGpeyYM7ixUVzU2d1ZIdAwwgqubM/pU5rzPIFdUG8q564BPl4ru/xQDh57bnQ=
+X-Gm-Gg: AYBFou03XNyo+tSCeN7binPAssuMBVsGF9hMxXkJKUgLfVGvGLx5BYPn3+AZwM4LQie
+ 6ey8UACoji1sNqIhMP8Z9TVfxtRRkVrwX/HMRAaJOrk1N6Ds4siQ6Inq15eEOeY997ZoX5OCCOI
+ j5OCRdPx8cPAZ7OT+n+nJbkHCLSB/mzZ6Yz/A5dFd5tyJ1wXwx7TIfiNteCMOFQRBTVrQH1hl4+
+ HAwfmhM/csO4R4phjMVX5pU7sEzDVjRM+WkXnz6B8Ri8NT2wxOVjNn/ATQq2FVtOUr7nKsVEhUE
+ Nb43VLaGn+tfEfLsK5ivFJqqPGswe1tTbvz3k9ZtiXaDgDzx99403jF4ulDqLbcXSMqDNHOWTSo
+ 5h5UwMIAAq/hcs7Y3BKxv5Pf3Abb3yK/C1VcYwSw4WWE24L56gyqv4sQ90+onWkFyS2F+PTEUwR
+ fQkUj9+IpavFr+RVrzAL1A7DbbraU4W5y1Z0l8rZW7MEEfPNK8lb7Eovk3+jYXBDJcwOEFCtkD0
+ YHrm88rsoi/qAUGbw==
+X-Received: by 2002:a05:701b:4583:20b0:151:ece6:b171 with SMTP id
+ a92af1059eb24-16a5dcf6262mr21092743c88.14.1791970464295; 
+ Wed, 14 Oct 2026 02:34:24 -0700 (PDT)
 Received: from DESKTOP-Q716RM7 ([103.94.185.75])
  by smtp.googlemail.com with ESMTPSA id
- a92af1059eb24-1698de65af7sm48769303c88.0.2026.10.14.02.34.06
+ a92af1059eb24-1698de65af7sm48769303c88.0.2026.10.14.02.34.16
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 14 Oct 2026 02:34:13 -0700 (PDT)
+ Wed, 14 Oct 2026 02:34:23 -0700 (PDT)
 From: Yonggang Luo <luoyonggang@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Eric Blake <eblake@redhat.com>, qemu-riscv@nongnu.org,
@@ -95,17 +95,17 @@ Cc: Eric Blake <eblake@redhat.com>, qemu-riscv@nongnu.org,
  Philippe Mathieu-Daude <philmd@mailo.com>,
  Jiaxun Yang <jiaxun.yang@flygoat.com>, Max Filippov <jcmvbkbc@gmail.com>,
  Stefano Garzarella <sgarzare@redhat.com>
-Subject: [PATCH 13/34] hw/microblaze: defer PetaLogix endianness default until
- init
-Date: Wed, 14 Oct 2026 17:31:23 +0800
-Message-ID: <20261014093152.834-14-luoyonggang@gmail.com>
+Subject: [PATCH 14/34] hw/pci: Avoid guard loadparm with target_s390x() for
+ s390x in class_init
+Date: Wed, 14 Oct 2026 17:31:24 +0800
+Message-ID: <20261014093152.834-15-luoyonggang@gmail.com>
 X-Mailer: git-send-email 2.55.0.windows.3
 In-Reply-To: <20261014093152.834-1-luoyonggang@gmail.com>
 References: <20261014093152.834-1-luoyonggang@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1334;
- envelope-from=luoyonggang@gmail.com; helo=mail-dy1-x1334.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::132b;
+ envelope-from=luoyonggang@gmail.com; helo=mail-dy1-x132b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -128,42 +128,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is for avoid call target_info() in class_init
+This is for avoid call target_info() in class_init.
+Now we directly guard in pci_qdev_property_set_loadparm instead.
+Don't know if its an API break, but the smallest change.
 
 Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
 ---
- hw/microblaze/petalogix_s3adsp1800_mmu.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ hw/pci/pci.c | 18 ++++++++++--------
+ 1 file changed, 10 insertions(+), 8 deletions(-)
 
-diff --git a/hw/microblaze/petalogix_s3adsp1800_mmu.c b/hw/microblaze/petalogix_s3adsp1800_mmu.c
-index c5f64319009..43140ad7bda 100644
---- a/hw/microblaze/petalogix_s3adsp1800_mmu.c
-+++ b/hw/microblaze/petalogix_s3adsp1800_mmu.c
-@@ -83,7 +83,13 @@ petalogix_s3adsp1800_init(MachineState *machine)
-     MemoryRegion *phys_ram = g_new(MemoryRegion, 1);
-     qemu_irq irq[32];
-     MemoryRegion *sysmem = get_system_memory();
--    EndianMode endianness = psms->endianness;
-+    EndianMode endianness;
-+
-+    if (psms->endianness == ENDIAN_MODE_UNSPECIFIED) {
-+        psms->endianness = target_big_endian() ? ENDIAN_MODE_BIG :
-+                                           ENDIAN_MODE_LITTLE;
-+    }
-+    endianness = psms->endianness;
+diff --git a/hw/pci/pci.c b/hw/pci/pci.c
+index 0efb4eb4bb0..9d3dcd52942 100644
+--- a/hw/pci/pci.c
++++ b/hw/pci/pci.c
+@@ -2878,6 +2878,11 @@ static void pci_qdev_property_set_loadparm(Object *obj, const char *value,
+ {
+     void *lp_str;
  
-     cpu = MICROBLAZE_CPU(object_new(TYPE_MICROBLAZE_CPU));
-     object_property_set_str(OBJECT(cpu), "version", "7.10.d", &error_abort);
-@@ -178,8 +184,7 @@ static void petalogix_s3adsp1800_machine_class_init(ObjectClass *oc,
-                                           &EndianMode_lookup,
-                                           machine_get_endianness,
-                                           machine_set_endianness);
--    object_property_set_default_str(prop, target_big_endian() ? "big"
--                                                              : "little");
-+    object_property_set_default_str(prop, "unspecified");
-     object_class_property_set_description(oc, "endianness",
-             "Defines whether the machine runs in big or little endian mode");
++    if (!target_s390x()) {
++        error_setg(errp, "'loadparm' is only supported on s390x");
++        return;
++    }
++
+     if (object_property_get_int(obj, "bootindex", NULL) < 0) {
+         error_setg(errp, "'loadparm' is only valid for boot devices");
+         return;
+@@ -2895,14 +2900,11 @@ void pci_qdev_property_add_specifics(DeviceClass *dc)
+ {
+     ObjectClass *oc = OBJECT_CLASS(dc);
+ 
+-    /* The loadparm property is only supported on s390x */
+-    if (target_s390x()) {
+-        object_class_property_add_str(oc, "loadparm",
+-                                      pci_qdev_property_get_loadparm,
+-                                      pci_qdev_property_set_loadparm);
+-        object_class_property_set_description(oc, "loadparm",
+-                                              "load parameter (s390x only)");
+-    }
++    object_class_property_add_str(oc, "loadparm",
++                                  pci_qdev_property_get_loadparm,
++                                  pci_qdev_property_set_loadparm);
++    object_class_property_set_description(oc, "loadparm",
++                                          "load parameter (s390x only)");
  }
+ 
+ MemoryRegion *pci_address_space(PCIDevice *dev)
 -- 
 2.55.0.windows.3
 
