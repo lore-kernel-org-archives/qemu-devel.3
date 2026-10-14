@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22781CC6B2D
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 21:11:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B60F2CC6B2D
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 21:11:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xH6FV-0007Ld-Fn; Wed, 14 Oct 2026 17:10:57 -0400
+	id 1xH6FV-0007M9-Ux; Wed, 14 Oct 2026 17:10:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <31O_PagsKClE6t5t6zD4tC1z77z4x.v759x5D-wxEx4676z6D.7Az@flex--namangulati.bounces.google.com>)
- id 1xH6FR-00077Y-4u
- for qemu-devel@nongnu.org; Wed, 14 Oct 2026 17:10:53 -0400
+ <31e_PagsKClI7u6u70E5uD208805y.w86Ay6E-xyFy578707E.8B0@flex--namangulati.bounces.google.com>)
+ id 1xH6FS-0007Cn-Os
+ for qemu-devel@nongnu.org; Wed, 14 Oct 2026 17:10:54 -0400
 Received: from mail-qv1-xf45.google.com ([2607:f8b0:4864:20::f45])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from
- <31O_PagsKClE6t5t6zD4tC1z77z4x.v759x5D-wxEx4676z6D.7Az@flex--namangulati.bounces.google.com>)
- id 1xH6FP-0001De-4i
- for qemu-devel@nongnu.org; Wed, 14 Oct 2026 17:10:52 -0400
+ <31e_PagsKClI7u6u70E5uD208805y.w86Ay6E-xyFy578707E.8B0@flex--namangulati.bounces.google.com>)
+ id 1xH6FQ-0001Di-5S
+ for qemu-devel@nongnu.org; Wed, 14 Oct 2026 17:10:54 -0400
 Received: by mail-qv1-xf45.google.com with SMTP id
- 6a1803df08f44-917a7c17166so87851016d6.1
- for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 14:10:45 -0700 (PDT)
+ 6a1803df08f44-91b8c60c550so81487026d6.0
+ for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 14:10:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20251104; t=1792012245; x=1792617045; darn=nongnu.org;
+ d=google.com; s=20251104; t=1792012246; x=1792617046; darn=nongnu.org;
  h=content-type:cc:to:from:subject:message-id:references:mime-version
  :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=TKIaFE/kHJ3Rfgy+FVKwCxJYILk57aCM7aP6Pl5rp20=;
- b=el0eNVAjzQDXcQM2mLwDTYdmCZZvAinWiCMnMJ6B3Riv93VOa9pfsETwtpoA/Z/BT1
- 8d3oMFYtbuzlgHrQahZu0IKde7xc+yumKjv3RWHhZs1OgFuJCiKIsfffIJ7Lu1s2OS81
- Ah5NIHhx9ys1hQXWm9FLNk7NREJJugseEA1pOfXx+YPy5F5RIqcK14ki5aOdfFE+YjvB
- by9styQrNSFRA+7luXh+La6BcBvdnTR5xQOR/HT6EWbHJXpRre1JkhSZkY1ufS+ooBJk
- 7wPBHnVjsBwB5drEoa0nYReLLENZZUhvyGz9irqwSlpwt+nwT65rN4yR9itCUx+vMN9T
- ssuA==
+ :content-type; bh=FppzXirk5nbi9kcMOQQwDE1EGZz6Q2GpCC2ECGaKeOQ=;
+ b=u/9ecppcNrMnAxU62XTywYU5QRMIYbBJ3BPtqfIDfnYnNm1gappG302AOsQB6W3g06
+ 9AAnWwduPJUxw7R+atjNH/vkIMoncHmeUpnqV5tj1Apyz6jIR/i/djSMAJI0Ih4efIie
+ Cd8w2fxxGFYbKDjYxXN1Yp1tcw574bgw6KuHbzkT+8x7URD4NJ1DJGnzXk5J7htL73rt
+ egXoCafM25i6VtCwueSAeaHOmrMMunS6YUQMtGu2sWBjDkuTctchm5UF3OdUtFoEiNqD
+ kIWb8hsen5j7cymZSMPNDycHkiqqSATmaO/IKtTCywFJUitj+cUKLpa1uNFGl8HwZfbL
+ b0dw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792012245; x=1792617045;
+ d=1e100.net; s=20260707; t=1792012246; x=1792617046;
  h=content-type:cc:to:from:subject:message-id:references:mime-version
  :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=TKIaFE/kHJ3Rfgy+FVKwCxJYILk57aCM7aP6Pl5rp20=;
- b=C9/qBfAHn3HoFkWPvoh0ga2Ll6hNbEew6H22EFf1MIYHQznn1C+7RBqI8vmSkfKk2i
- 9+BaahnFWaP2vyfJ6JsBW1bbHxld7PFcOo5azj0CuvYOuMLw2HaCg0XkBP/XCOUIhlkS
- AryaTjCUOQMaIqWVJge8wu1tR1ET96bly2PEaOwpTewDyi7V7z1aihlkMLjKTZcmRiGp
- LheDLQMSNdNyaQcNWIN2MZxZ1ZhgOqc9Y6m7yvWwix2d4wYyyhz6OgMQBen48EWX9Ljk
- 3nG576hzSaljJA8of38kfjvJpXBpZn3Uhypg86VTMMDAqo76DyMBTehoWemEqzOT0rha
- +pwQ==
-X-Gm-Message-State: AFq9FYKsDrCnwzWuKC62e1E4bwgTUnoF3F6hwLZv8DsJqlxkKhgiV4DB
- AxfS5WJW1IImpvxXhQf1WtBupew3kzl0cAv0Qe1vcSgsAKUXQ0KgFibcLAP0YJOAI2pg7YLJmXz
- yCNegFDMmrUmP8FDVVFAl7xgLj4RdRlkijvx++tUKT/vImSXDtGsXNFARFKZy4YS3s7oQ5h8NRk
- 7wbNvmIT5DQLfRTfaB7kFsgbOTFWHO0CL0GdxFD7O/nJqPJiNHrz9ZWg7UBaIwfA==
-X-Received: from qvbiv8.prod.google.com ([2002:ad4:5ce8:0:b0:91b:98e3:fb03])
+ bh=FppzXirk5nbi9kcMOQQwDE1EGZz6Q2GpCC2ECGaKeOQ=;
+ b=Nhw/ae7J6BeIDGS1u6giDUF0mQF3NA1X6lA1YhL9IzkYoaXRUFTr1MBF0io2k43tiv
+ 31DkCk7LvbDvM+uzltJAPWlxHYydUvKDH3eEVYgZaOnbga90sMQO87UQr1n4aX7Dbs0q
+ aUx4VuObkrwzauKOdfSZnaLVcaKD8nG07+qKEGfZZEN8J4jDJb+wSH5hCnrqLIWDhxLH
+ 2J7f7kb+3jmHIDQ5VPeXlEAPAh0JEQkM0cau4/lU1tG/uK7zGSykIvAWKcPH7DIjd7bz
+ Dw6kmBJNqax/MffMeUCoJ8E7BZEkAunftJdNS9tIuBk7xWl3IBCMyuRhVf+CEy4fx3Y3
+ FKUw==
+X-Gm-Message-State: AFq9FYLGpBSufOl1KW+72TGRjcdo8SxqEOiZKfCo7AX2Jt3qFbsP4TLV
+ PJ/4h1yOvltIHO0dKQc5p6dir2BdnaoxpUVuVwY+XaywmefqVmHT3+1htwHGMCtJiY0L5uZh2q9
+ olDP0qyKIYss1wSW+L2tNsGvWcf7IB9eUfhiXwToyFREY8H4tKuE7eT2OO5vRGxSgDFP5Gq2Eus
+ kXe2ZWQNZwRfZExojWi7H1eZ/9prtTxksgEl/PjpDhKu316hX0pt21HRvFV/cWuA==
+X-Received: from qvuc11.prod.google.com ([2002:a05:6214:1eb:b0:919:85db:35a7])
  (user=namangulati job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:620a:6f05:b0:93e:5fff:db02 with SMTP id
- af79cd13be357-93ebd1dc7camr2778079285a.28.1792012244738; 
- Wed, 14 Oct 2026 14:10:44 -0700 (PDT)
-Date: Wed, 14 Oct 2026 21:10:38 +0000
+ 2002:a05:6214:5085:b0:917:8d3f:29da with SMTP id
+ 6a1803df08f44-91b557cbea3mr298663626d6.27.1792012245728; 
+ Wed, 14 Oct 2026 14:10:45 -0700 (PDT)
+Date: Wed, 14 Oct 2026 21:10:39 +0000
 In-Reply-To: <20261014211041.1087331-1-namangulati@google.com>
 Mime-Version: 1.0
 References: <20261014211041.1087331-1-namangulati@google.com>
 X-Mailer: git-send-email 2.56.0.176.g3575e65682-goog
-Message-ID: <20261014211041.1087331-2-namangulati@google.com>
-Subject: [PATCH v5 1/4] vfio-user: add multi-fd region mmap capability
+Message-ID: <20261014211041.1087331-3-namangulati@google.com>
+Subject: [PATCH v5 2/4] vfio: add 'fd' and 'fd_offset' to VFIOMmap
 From: Naman Gulati <namangulati@google.com>
 To: qemu-devel@nongnu.org
 Cc: John Levon <john.levon@nutanix.com>,
@@ -74,7 +74,7 @@ Cc: John Levon <john.levon@nutanix.com>,
  Matt Evans <matt@ozlabs.org>, Naman Gulati <namangulati@google.com>
 Content-Type: text/plain; charset="UTF-8"
 Received-SPF: pass client-ip=2607:f8b0:4864:20::f45;
- envelope-from=31O_PagsKClE6t5t6zD4tC1z77z4x.v759x5D-wxEx4676z6D.7Az@flex--namangulati.bounces.google.com;
+ envelope-from=31e_PagsKClI7u6u70E5uD208805y.w86Ay6E-xyFy578707E.8B0@flex--namangulati.bounces.google.com;
  helo=mail-qv1-xf45.google.com
 X-Spam_score_int: -95
 X-Spam_score: -9.6
@@ -82,7 +82,7 @@ X-Spam_bar: ---------
 X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- USER_IN_DEF_DKIM_WL=-7.5, WEIRD_QUOTING=0.001 autolearn=ham autolearn_force=no
+ USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,145 +98,132 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Extend the vfio-user protocol specification to allow servers to pass
-multiple file descriptors for different sparse memory areas within a
-single device region with capability
-VFIO_REGION_INFO_CAP_SPARSE_MMAP_FDS (0x8001), negotiated via the
-"sparse_mmap_fds" capability in VFIO_USER_VERSION.
+Allow each sparse mmap subregion to specify its own file descriptor and
+file offset for the mmap call.
 
-VFIO_REGION_INFO_CAP_SPARSE_MMAP_FDS defines an array of sparse mmap
-areas where each area contains:
-- offset: Start of the area within the device region (BAR).
-- fd_offset: Start of the mapping within the backing file descriptor.
-- size: Size of the mappable area.
-- fd_index: Zero-based index into the array of file descriptors
-  received in the SCM_RIGHTS ancillary data of the
-  VFIO_USER_DEVICE_GET_REGION_INFO reply message.
+Add 'fd' (set to -1 when the region fd should be used) and 'fd_offset'
+to VFIOMmap, and update vfio_region_mmap() to use them.
 
 Reviewed-by: Thanos Makatos <thanos.makatos@nutanix.com>
 Signed-off-by: Naman Gulati <namangulati@google.com>
 ---
- docs/interop/vfio-user.rst | 86 ++++++++++++++++++++++++++++++++++++--
- 1 file changed, 82 insertions(+), 4 deletions(-)
+ hw/vfio/vfio-region.h |  4 +++-
+ hw/vfio/pci.c         |  2 ++
+ hw/vfio/region.c      | 26 +++++++++++++++++++-------
+ 3 files changed, 24 insertions(+), 8 deletions(-)
 
-diff --git a/docs/interop/vfio-user.rst b/docs/interop/vfio-user.rst
-index 1c92f442d2..b49781a755 100644
---- a/docs/interop/vfio-user.rst
-+++ b/docs/interop/vfio-user.rst
-@@ -125,7 +125,13 @@ Sparse Regions
- A region can be memory-mappable in whole or in part. When only a subset of a
- region can be mapped by the client, a ``VFIO_REGION_INFO_CAP_SPARSE_MMAP``
- capability is included in the region info reply. This capability describes
--which portions can be mapped by the client.
-+which portions can be mapped by the client. When sparse mmap areas are backed
-+by multiple distinct file descriptors, a
-+``VFIO_REGION_INFO_CAP_SPARSE_MMAP_FDS`` capability is included in the region
-+info reply instead. ``VFIO_REGION_INFO_CAP_SPARSE_MMAP`` and
-+``VFIO_REGION_INFO_CAP_SPARSE_MMAP_FDS`` cannot both be specified for the same
-+region; however, different regions of a device may independently use either
-+capability.
+diff --git a/hw/vfio/vfio-region.h b/hw/vfio/vfio-region.h
+index 58b236f113..9f6a5cf7d5 100644
+--- a/hw/vfio/vfio-region.h
++++ b/hw/vfio/vfio-region.h
+@@ -14,8 +14,10 @@
+ typedef struct VFIOMmap {
+     MemoryRegion mem;
+     void *mmap;
+-    off_t offset;
++    off_t offset;       /* offset within the region */
+     size_t size;
++    int fd;             /* per-mmap fd, or -1 to use the region fd */
++    uint64_t fd_offset; /* offset within fd for the mmap call */
+ } VFIOMmap;
  
- .. Note::
-    For example, in a virtual NVMe controller, sparse regions can be used so
-@@ -536,6 +542,10 @@ Capabilities:
- | write_multiple     | boolean | ``VFIO_USER_REGION_WRITE_MULTI`` messages     |
- |                    |         | are supported if the value is ``true``.       |
- +--------------------+---------+-----------------------------------------------+
-+| sparse_mmap_fds    | boolean | ``VFIO_REGION_INFO_CAP_SPARSE_MMAP_FDS``      |
-+|                    |         | capability is supported if the value is       |
-+|                    |         | ``true``.                                     |
-++--------------------+---------+-----------------------------------------------+
+ typedef struct VFIODevice VFIODevice;
+diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+index 428ab2f069..f851082114 100644
+--- a/hw/vfio/pci.c
++++ b/hw/vfio/pci.c
+@@ -1623,6 +1623,7 @@ static void vfio_pci_fixup_msix_region(VFIOPCIDevice *vdev)
+                                   vdev->msix->table_bar, 0, 0);
+         } else {
+             region->mmaps[0].offset = end;
++            region->mmaps[0].fd_offset += end;
+             region->mmaps[0].size = region->size - end;
+             trace_vfio_msix_fixup(vdev->vbasedev.name,
+                               vdev->msix->table_bar, region->mmaps[0].offset,
+@@ -1649,6 +1650,7 @@ static void vfio_pci_fixup_msix_region(VFIOPCIDevice *vdev)
+                               region->mmaps[0].offset + region->mmaps[0].size);
  
- The ``twin_socket`` capability object holds these name/value pairs:
+         region->mmaps[1].offset = end;
++        region->mmaps[1].fd_offset += end;
+         region->mmaps[1].size = region->size - end;
+         trace_vfio_msix_fixup(vdev->vbasedev.name,
+                               vdev->msix->table_bar, region->mmaps[1].offset,
+diff --git a/hw/vfio/region.c b/hw/vfio/region.c
+index 54ad11a6c8..16efed2fce 100644
+--- a/hw/vfio/region.c
++++ b/hw/vfio/region.c
+@@ -189,6 +189,9 @@ static int vfio_setup_region_sparse_mmaps(VFIORegion *region,
+                                             sparse->areas[i].size - 1);
+             region->mmaps[j].offset = sparse->areas[i].offset;
+             region->mmaps[j].size = sparse->areas[i].size;
++            region->mmaps[j].fd = -1;
++            region->mmaps[j].fd_offset = region->fd_offset +
++                                         sparse->areas[i].offset;
+             j++;
+         }
+     }
+@@ -262,6 +265,8 @@ int vfio_region_setup(Object *obj, VFIODevice *vbasedev, VFIORegion *region,
+                 region->mmaps = g_new0(VFIOMmap, region->nr_mmaps);
+                 region->mmaps[0].offset = 0;
+                 region->mmaps[0].size = region->size;
++                region->mmaps[0].fd = -1;
++                region->mmaps[0].fd_offset = region->fd_offset;
+             } else if (ret) {
+                 return ret;
+             }
+@@ -354,7 +359,6 @@ int vfio_region_mmap(VFIORegion *region)
+     off_t map_offset = 0;
+     size_t align;
+     char *name;
+-    int fd;
  
-@@ -859,9 +869,11 @@ Reply
-   * ``VFIO_REGION_INFO_FLAG_READ`` allows client read access to the region.
-   * ``VFIO_REGION_INFO_FLAG_WRITE`` allows client write access to the region.
-   * ``VFIO_REGION_INFO_FLAG_MMAP`` specifies the client can mmap() the region.
--    When this flag is set, the reply will include a file descriptor in its
--    meta-data. On ``AF_UNIX`` sockets, the file descriptors will be passed as
--    ``SCM_RIGHTS`` type ancillary data.
-+    When this flag is set, the reply will include one or more file descriptors
-+    in its meta-data (up to the number of sparse mmap areas when
-+    ``VFIO_REGION_INFO_CAP_SPARSE_MMAP_FDS`` is present, or a single file
-+    descriptor otherwise). On ``AF_UNIX`` sockets, the file descriptors will be
-+    passed as ``SCM_RIGHTS`` type ancillary data.
-   * ``VFIO_REGION_INFO_FLAG_CAPS`` indicates additional capabilities found in the
-     reply.
+     if (!region->mem || !region->nr_mmaps) {
+         return 0;
+@@ -391,8 +395,6 @@ int vfio_region_mmap(VFIORegion *region)
+         return ret;
+     }
  
-@@ -950,6 +962,72 @@ The VFIO sparse mmap area is defined in ``<linux/vfio.h>`` (``struct
- vfio_region_info_cap_sparse_mmap``).
+-    fd = vfio_device_get_region_fd(region->vbasedev, region->nr);
+-
+     map_align = (void *)ROUND_UP((uintptr_t)map_base, (uintptr_t)align);
+     munmap(map_base, map_align - map_base);
+     munmap(map_align + region->size,
+@@ -404,12 +406,22 @@ int vfio_region_mmap(VFIORegion *region)
+      * offsets being in ascending order.
+      */
+     for (i = 0; i < region->nr_mmaps; i++) {
++        int fd = region->mmaps[i].fd;
++
++        if (fd < 0) {
++            fd = vfio_device_get_region_fd(region->vbasedev, region->nr);
++        }
++        if (fd < 0) {
++            ret = -EINVAL;
++            munmap(map_align + map_offset, region->size - map_offset);
++            goto no_mmap;
++        }
++
+         munmap(map_align + map_offset, region->mmaps[i].offset - map_offset);
+         region->mmaps[i].mmap = mmap(map_align + region->mmaps[i].offset,
+                                      region->mmaps[i].size, prot,
+                                      MAP_SHARED | MAP_FIXED, fd,
+-                                     region->fd_offset +
+-                                     region->mmaps[i].offset);
++                                     region->mmaps[i].fd_offset);
+         if (region->mmaps[i].mmap == MAP_FAILED) {
+             ret = -errno;
+             /*
+@@ -454,8 +466,8 @@ int vfio_region_mmap(VFIORegion *region)
  
+ no_mmap:
+     trace_vfio_region_mmap_fault(memory_region_name(region->mem), i,
+-                                 region->fd_offset + region->mmaps[i].offset,
+-                                 region->fd_offset + region->mmaps[i].offset +
++                                 region->mmaps[i].fd_offset,
++                                 region->mmaps[i].fd_offset +
+                                  region->mmaps[i].size - 1, ret);
  
-+VFIO sparse mmap fds cap header
-+"""""""""""""""""""""""""""""""
-+
-++----------------------+--------------------------------------+
-+| Name                 | Value                                |
-++======================+======================================+
-+| id                   | VFIO_REGION_INFO_CAP_SPARSE_MMAP_FDS |
-++----------------------+--------------------------------------+
-+| version              | 0x1                                  |
-++----------------------+--------------------------------------+
-+| next                 | <next>                               |
-++----------------------+--------------------------------------+
-+| sparse mmap fds info | VFIO region info sparse mmap fds     |
-++----------------------+--------------------------------------+
-+
-+This capability is defined when a region supports direct access by the client
-+via mmap() where different sparse mmap areas are backed by distinct file
-+descriptors in the ``SCM_RIGHTS`` ancillary data array. The server may only
-+include this capability if the client advertised ``sparse_mmap_fds`` as
-+``true`` in ``VFIO_USER_VERSION``. Capability ID
-+``VFIO_REGION_INFO_CAP_SPARSE_MMAP_FDS`` is defined as ``0x8001`` to avoid
-+clashing with kernel VFIO capabilities.
-+
-+VFIO region info cap sparse mmap fds
-+""""""""""""""""""""""""""""""""""""
-+
-++-----------+--------+------+
-+| Name      | Offset | Size |
-++===========+========+======+
-+| nr_areas  | 0      | 4    |
-++-----------+--------+------+
-+| reserved  | 4      | 4    |
-++-----------+--------+------+
-+| offset    | 8      | 8    |
-++-----------+--------+------+
-+| fd_offset | 16     | 8    |
-++-----------+--------+------+
-+| size      | 24     | 8    |
-++-----------+--------+------+
-+| fd_index  | 32     | 4    |
-++-----------+--------+------+
-+| pad       | 36     | 4    |
-++-----------+--------+------+
-+| ...       |        |      |
-++-----------+--------+------+
-+
-+* *nr_areas* is the number of sparse mmap areas in the region.
-+* *offset*, *fd_offset*, *size*, and *fd_index* describe a single area that can be
-+  mapped by the client. There will be *nr_areas* tuples of offset, fd_offset, size,
-+  fd_index, and pad. Sparse mmap areas must not overlap.
-+* *offset* specifies the start of the area within the device region (BAR).
-+* *fd_offset* specifies the start of the mapping within the backing file descriptor
-+  referenced by *fd_index*.
-+* *size* specifies the size of the area. Zero-sized areas (*size* equal to 0)
-+  are not permitted, and *offset* + *size* must not exceed the region *size*.
-+* *fd_index* is the zero-based index into the array of file descriptors
-+  received in the ``SCM_RIGHTS`` ancillary data of the
-+  ``VFIO_USER_DEVICE_GET_REGION_INFO`` reply message. The number of file
-+  descriptors sent in ``SCM_RIGHTS`` must be at least 1 and must not exceed
-+  *nr_areas*.
-+
-+If all sparse mmap areas are backed by a single file descriptor, the server
-+may instead send ``VFIO_REGION_INFO_CAP_SPARSE_MMAP`` and exactly one file
-+descriptor in ``SCM_RIGHTS`` for compatibility with older clients.
-+
-+
- ``VFIO_USER_DEVICE_GET_REGION_IO_FDS``
- --------------------------------------
- 
+     region->mmaps[i].mmap = NULL;
 -- 
 2.56.0.385.gd3acb90ef8-goog
 
