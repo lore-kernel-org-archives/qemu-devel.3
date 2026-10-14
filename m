@@ -4,105 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F181CC6B2A
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 21:23:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66B33CC6B2D
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 21:24:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xH6RD-00026W-Bw; Wed, 14 Oct 2026 17:23:03 -0400
+	id 1xH6SO-0002W9-DZ; Wed, 14 Oct 2026 17:24:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1xH6RC-00026H-9w; Wed, 14 Oct 2026 17:23:02 -0400
+ id 1xH6SM-0002VM-3U; Wed, 14 Oct 2026 17:24:14 -0400
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1xH6RA-00026o-Me; Wed, 14 Oct 2026 17:23:02 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ id 1xH6SK-0002Gd-F3; Wed, 14 Oct 2026 17:24:13 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69EEifj81270475; Wed, 14 Oct 2026 21:22:57 GMT
+ 69EEiWi82466234; Wed, 14 Oct 2026 21:24:11 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=13AJsH
- UAvvxAabtSKgc7taflBZH9H6tpV65LfT4Xt0o=; b=IU3Qcm/uNdnMqX/KJ7i9Pf
- LW3hHFXsM/HtDWQkHnJtLY4ipQoegp/SQl4LYXp5QMzLneioBU9qxrSPgAq1e/n/
- ybun43ufBTU030gLByRhmYjMfB/3dnQiX3iFhJIU6R/+hsH+9ixVlU6oAbWloH/M
- x7eevnXn1/OpqYOzu5Ly+Ok7UqbjehPbZCKLykrJUWrfP+bikJQ9zS5rZKt0PK5z
- GtMepwka6B0JmvmtHJQFzi2LZrnJjThsCYaZ2EGLNIdKX2W7qqHsqO2SCfSyPLZH
- NEtgoFiv7UhTvLqcqQ7d/6N7UCQTXq1sCoK5Pd3Z8w7P3F+sQkMOcQLwfddIGUBg
+ :message-id:mime-version:references:subject:to; s=pp1; bh=UiZrLH
+ Lv9am81rTN0L3KGFlZBljwpdwXcKcZOgXSbFk=; b=EZwm5AfGTRfBVwkCAPx4nG
+ QieQAQzhNUcNIHYYZAQqq+M8Qk/Njw95S9U62oWNfs1MP6cmvp+jInQqqvaanJL/
+ e6GZtNfif2o2rxsj1o1jlb10+qMLppd99/LDFNtfm8/U0N1jiB89d/YKanXl9UeO
+ TLP0fVw0NWNDZSb8ZPVLdDxUrwExy/FA7oqquI1j3pPU6MnOl2CMda1wGEPrHocJ
+ UDkYunGH21P5KsgnJHRhl5nCjurJCRlteaZ8ut2BaY/dOy2WftiyvrKiNWPUbtvG
+ P+3C8fH+P3XQEse6WU/ezm5dkKIi5qsD8Wjlp4SKSIsmB8UlnjkHwAxvHkzh6Lzw
  ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4h7dv0p7v4-1
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4h7e1we6gt-1
  (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Wed, 14 Oct 2026 21:22:56 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69EIXZKI702815; Wed, 14 Oct 2026 21:22:56 GMT
-Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4h816h97qu-1
+ Wed, 14 Oct 2026 21:24:09 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 69EIUnFI3639755; Wed, 14 Oct 2026 21:24:08 GMT
+Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4h9wvg4gx4-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 14 Oct 2026 21:22:56 +0000 (GMT)
-Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com
- [10.241.53.100])
- by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 69ELMtY029229674
+ Wed, 14 Oct 2026 21:24:08 +0000 (GMT)
+Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
+ [10.39.53.232])
+ by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 69ELO7oi4064056
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 14 Oct 2026 21:22:55 GMT
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C121058059;
- Wed, 14 Oct 2026 21:22:55 +0000 (GMT)
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 723995805D;
- Wed, 14 Oct 2026 21:22:55 +0000 (GMT)
+ Wed, 14 Oct 2026 21:24:07 GMT
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id A250458059;
+ Wed, 14 Oct 2026 21:24:07 +0000 (GMT)
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 0DA475805F;
+ Wed, 14 Oct 2026 21:24:07 +0000 (GMT)
 Received: from [9.47.158.153] (unknown [9.47.158.153])
- by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 14 Oct 2026 21:22:55 +0000 (GMT)
-Message-ID: <e6ee0956-7911-481b-a4b3-355b79981a5a@linux.ibm.com>
-Date: Wed, 14 Oct 2026 17:22:54 -0400
+ by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Wed, 14 Oct 2026 21:24:06 +0000 (GMT)
+Message-ID: <92949383-bb41-464e-bbb5-0cebe1a236a1@linux.ibm.com>
+Date: Wed, 14 Oct 2026 17:24:06 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL v1 03/10] tpm_emulator: Reject sending commands smaller
- than the request header
+Subject: Re: [PULL v1 06/10] hw/tpm: crb: Do not clear internal buffers when
+ backend is busy
 To: qemu-stable@nongnu.org
 Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- QEMU <qemu-devel@nongnu.org>
+ Arun Menon <armenon@redhat.com>, QEMU <qemu-devel@nongnu.org>
 References: <20261008212723.3679685-1-stefanb@linux.ibm.com>
- <20261008212723.3679685-4-stefanb@linux.ibm.com>
+ <20261008212723.3679685-7-stefanb@linux.ibm.com>
 Content-Language: en-US
 From: Stefan Berger <stefanb@linux.ibm.com>
-In-Reply-To: <20261008212723.3679685-4-stefanb@linux.ibm.com>
+In-Reply-To: <20261008212723.3679685-7-stefanb@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDE0MDA4NCBTYWx0ZWRfX3LD/sepQide3
- j8SuK3nmlADJl3VMrKqu5oXu6gFXNu3Hg8RrhM88d+apmFXyu04ziU2rjy9RsfwmnoZQthgyLqX
- wlSIrK9IWkPcvfGIJduhHUcr+UjjfzUW4zWJ8YGKVxOkyZntqtDtwtLEyEZwEftlElaxs0JO4Vn
- Vm00PngxgxYw6eDP2jWQms7BeRbxOE4pC+qoUo5awvSN4/SXQ1EeV+ZvofLXImPBKsfV0aZ2FqD
- WGFEKLja9CZtXZ3n38/wTmL93ecxwubtFmHGjRe4aViUOIJBh2ZMQadbnjcPg8ER+eVlqNwmFkc
- UunxQ5PbMk9YPFCVc96PIXhNmpo6M1HosrFsP97Ir3/8LUjsltVle+QBHdgKvdxuPGRIqQlymKz
- 8mJvYthZmZrLnwwpTqcPodAeWw88V4QBquR+ByyeRh/4BFUrRxyoBMdqWvTV5kXE6C6G1kMhwXx
- jmSf2yY2vpN89DMbLBg==
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDE0MDA4NCBTYWx0ZWRfX3Sba47gpnvg4
- 8nl4lfuSWOa2B+v4ggiWY4LZHiDRnOK8QiS+88OTO/PQdZ2qjotr/Oq7G46pe65nbFhW5QooMDb
- eIECfgyeKhAZbQfhInILq2S9QcsnzKA=
-X-Proofpoint-ORIG-GUID: vbAQ4WmQKg0SxHEX3L0D1hwWLMeZOiwe
-X-Authority-Analysis: v=2.4 cv=a6KlZkSF c=1 sm=1 tr=0 ts=6acff2b1 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDE0MDA4NCBTYWx0ZWRfX36pNkSEt0+pf
+ vFf9PumufFt+4vSrej8SNzPNoqJWMk/onYVTJNUkP8PhPB1b1fSfHX8C+ikbaty4IrEczRknjCg
+ +CQGNuFTwXZ31noHX5eHYK77c8goo3E=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDE0MDA4NCBTYWx0ZWRfX9htPLWnsSXc1
+ U83tWKJalIZD+FkZs6JigDKGDSVfyWtHEuTEXKelpz1LSCG1SQE+fxYaFz7XUqfreXSDQss7ab/
+ 5mZSVy8eBsJXquzen4EkXS3yz4xFleaH1obqTc3mN53D/dM5asLWIU8Hob99uQT7HgyBncZn/IC
+ FSiyMJqFYOYgIJlySHPIoMBbluPAMX46pwecneeLwd+p8M+dKVSdakdlxV0SMC4ePcRI5mYBuZq
+ 1JADqockuzAvBJnnFSEWzzoz6b1LVsqntyLQ+8ZBVo5J4+Sz4G+soHzA6FAuk7w662DtArPIRxm
+ qRFNYZkW2zCRqfseBIfh+egR8aFck/rK4pIck0xqQ7UmK9u5wB0X8izFE6QhoEEbSA0MYze/iMi
+ cYIowCUif3hP1rPxBI/wBCLRNnJIrbg8SbDsTLWFcEWhIhcoUyFk4Zn31rObWb9LA/Gw7oFXOSQ
+ oyplTwiRfWEvb8FHeqQ==
+X-Authority-Analysis: v=2.4 cv=E6pYNqdl c=1 sm=1 tr=0 ts=6acff2f9 cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
  a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VwQbUJbxAAAA:8
- a=VnNF1IyMAAAA:8 a=20KFwNOVAAAA:8 a=Zh1Cl7eEDEOzCGiM3-AA:9 a=3ZKOabzyN94A:10
+ a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=VwQbUJbxAAAA:8
+ a=VnNF1IyMAAAA:8 a=20KFwNOVAAAA:8 a=kkV7IriFoqumtxw7-BcA:9 a=3ZKOabzyN94A:10
  a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: vbAQ4WmQKg0SxHEX3L0D1hwWLMeZOiwe
+X-Proofpoint-ORIG-GUID: r0TgTrLWz-d8a9oWEXaA6becvD1ycncv
+X-Proofpoint-GUID: r0TgTrLWz-d8a9oWEXaA6becvD1ycncv
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-10-13_01,2026-10-14_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 malwarescore=0 spamscore=0 suspectscore=0 clxscore=1011
- phishscore=0 priorityscore=1501 lowpriorityscore=0 impostorscore=0
- adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610080000
- definitions=main-2610140084
+ impostorscore=0 phishscore=0 clxscore=1015 bulkscore=0 priorityscore=1501
+ spamscore=0 adultscore=0 suspectscore=0 malwarescore=0 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2610080000 definitions=main-2610140084
 Received-SPF: pass client-ip=148.163.158.5; envelope-from=stefanb@linux.ibm.com;
  helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
@@ -127,35 +126,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Please apply this patch to the stable branch.
+
+Regards,
+    Stefan
 
 
 On 10/8/26 5:27 PM, Stefan Berger wrote:
-> Reject any TPM request from being sent to the TPM emulator that is shorter
-> than the size of the request header.
+> While the backend (thread) is accessing the request and response buffers,
+> do not clear those buffers upon a command cancellation. Also, per CRB spec
+> the TPM is expected to either return a normal command response (command
+> could not be cancelled) or an error response indicating TPM_RC_CANCELED.
+> So the response buffer must be able to receive a response as normal.
 > 
-> Fixes: f4ede81eed29 ("tpm: Added support for TPM emulator")
+> Fixes: 29315d22b259 ("hw/tpm: Add internal buffer state for chunking")
 > Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-> Link: https://lore.kernel.org/qemu-devel/20261002142516.2063735-4-stefanb@linux.ibm.com
+> Reviewed-by: Arun Menon <armenon@redhat.com>
+> Link: https://lore.kernel.org/qemu-devel/20261002142516.2063735-7-stefanb@linux.ibm.com
 > Signed-off-by: Stefan Berger <stefanb@linux.ibm.com>
 > ---
->   backends/tpm/tpm_emulator.c | 5 +++++
->   1 file changed, 5 insertions(+)
+>   hw/tpm/tpm_crb.c | 1 -
+>   1 file changed, 1 deletion(-)
 > 
-> diff --git a/backends/tpm/tpm_emulator.c b/backends/tpm/tpm_emulator.c
-> index 9c95b4d878..0c9e32f36a 100644
-> --- a/backends/tpm/tpm_emulator.c
-> +++ b/backends/tpm/tpm_emulator.c
-> @@ -181,6 +181,11 @@ static int tpm_emulator_unix_tx_bufs(TPMEmulator *tpm_emu,
->       uint32_t to_read;
->       ssize_t ret;
->   
-> +    if (in_len < sizeof(struct tpm_req_hdr)) {
-> +        error_setg(errp, "tpm-emulator: invalid request size %u", in_len);
-> +        return -1;
-> +    }
-> +
->       if (selftest_done) {
->           *selftest_done = false;
->           is_selftest = tpm_util_is_selftest(in, in_len);
+> diff --git a/hw/tpm/tpm_crb.c b/hw/tpm/tpm_crb.c
+> index 54fa2042b5..daf451aa56 100644
+> --- a/hw/tpm/tpm_crb.c
+> +++ b/hw/tpm/tpm_crb.c
+> @@ -219,7 +219,6 @@ static void tpm_crb_mmio_write(void *opaque, hwaddr addr,
+>               if (s->regs[R_CRB_CTRL_START] & CRB_START_INVOKE) {
+>                   tpm_backend_cancel_cmd(s->tpmbe);
+>               }
+> -            tpm_crb_clear_internal_buffers(s);
+>           }
+>           break;
+>       case A_CRB_CTRL_START:
 
 
