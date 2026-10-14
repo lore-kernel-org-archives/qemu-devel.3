@@ -4,77 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6767ACC6B1A
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 06:11:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9AFECC6B1A
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 06:11:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGsCR-0001pM-Un; Wed, 14 Oct 2026 02:10:51 -0400
+	id 1xGsCg-0001sO-B5; Wed, 14 Oct 2026 02:11:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xGsCG-0001oY-Oo
- for qemu-devel@nongnu.org; Wed, 14 Oct 2026 02:10:42 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xGsCE-0005wa-NH
- for qemu-devel@nongnu.org; Wed, 14 Oct 2026 02:10:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1791958237;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=8lBC5q7bkzOduP8N/IFRMaMdStqVLliWubMHIJ+B8WU=;
- b=igpYqNAP5AAjeqUXYRgqk+Y3kdlte4ouogHHNcmVokB3MSy9i+J2cgar+vlPSFvZpLXfs7
- DPnlZTfm8JXvbgnoEuhD19kRLaUXojsPcsQN3ravrB57N32BL0X2jgMrae8UEXwF7f5H9R
- ImgZ+YZ3iYu8ii7P12vNIo3bp63L5BA=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-194-2k8DjijROLGLg0fKbCYVGg-1; Wed,
- 14 Oct 2026 06:10:33 +0000
-X-MC-Unique: 2k8DjijROLGLg0fKbCYVGg-1
-X-Mimecast-MFC-AGG-ID: 2k8DjijROLGLg0fKbCYVGg_1791958232
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8D739180034C; Wed, 14 Oct 2026 06:10:32 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.2])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 31D3D300019F; Wed, 14 Oct 2026 06:10:31 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 92F8E21E6A04; Wed, 14 Oct 2026 08:10:29 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
-Cc: qemu-devel@nongnu.org,  michael.roth@amd.com,  jsnow@redhat.com
-Subject: Re: [RFC PATCH 0/6] qapi: Preliminary work for better QOM
- introspection
-In-Reply-To: <CAMxuvaxyrOtn5uXuWSuRL4KUTyAVZFAinniG-YZQfo4_ngizrA@mail.gmail.com>
- (=?utf-8?Q?=22Marc-Andr=C3=A9?= Lureau"'s message of "Tue, 13 Oct 2026
- 19:20:52 +0400")
-References: <20261009140431.3175479-1-armbru@redhat.com>
- <CAJ+F1CKqDbV0xVkL6Q_++qHk4iNstWC_y2raPXy8BovUyPQzdQ@mail.gmail.com>
- <871p9tya83.fsf@pond.sub.org>
- <CAMxuvaxyrOtn5uXuWSuRL4KUTyAVZFAinniG-YZQfo4_ngizrA@mail.gmail.com>
-Date: Wed, 14 Oct 2026 08:10:29 +0200
-Message-ID: <87o6cwu816.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1xGsCW-0001qw-2q
+ for qemu-devel@nongnu.org; Wed, 14 Oct 2026 02:10:56 -0400
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1xGsCU-0005xE-HT
+ for qemu-devel@nongnu.org; Wed, 14 Oct 2026 02:10:55 -0400
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-48c6f764f82so20279f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 23:10:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1791958253; x=1792563053; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=0DZf+T2NVIDXDOOVWsPeAnkidXmSVMy6au56KI55O/I=;
+ b=Vji1INTsuynsF8ix6A4ALaiOX2TD2JzNC/JKWoi0xAeYpFPnBJtS4imii7UhtTzSQZ
+ 2r9trYECi/dU0hoX3BC03t06l/nd43KrznATMcfVf2BjhA1Oc/bWDFsq//iqcFdE5qIq
+ SLeKkNmGQlOP2o2nAZag4TbTBntx8DkTGZ9P+sqeT5MgXH4ENNMyDdzOPgX3m8DKu9Oz
+ JlOOyGnIoSBrk6DBYE71xOyUVflPfJIIItLXhph8QNTDAV0mydGuEGWM7R8GEnIZHW5f
+ Z/P26Q6E4xdjKcRLnnWiaI0CNeQQmj2EgVHJlKmofyeecRlzA6otXcSHxuqOzV1x6ZTu
+ XUHw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1791958253; x=1792563053;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=0DZf+T2NVIDXDOOVWsPeAnkidXmSVMy6au56KI55O/I=;
+ b=BzVsT4qIXJEQNNquC6YRYy3bn6kjTLay9IKVH1jW8V8xHxtO/U/P/BZqm3YuhGHGPz
+ W9FGZh+dkzJYq2Pi5Xhweki+NjRG+KNSmm4btUe/5LUBlcOsEDGAdoj1/wd/EKGcP41e
+ ZBN8cQSx2z3/XC9miC7GZEdLndI1adULe+4lFG6poRH5ufeX70X/7oh885A29ifV2rpL
+ +bEnAgP9LzW1K3j/lV/iPPsPiuNCwo1fk7NYLuh4D9RqAJj/aYAa91WP+Drrrax+Uuzc
+ CFXXl1uct3b8KEnvonhCAZ+Uq1IjtXemfd+//hVEoO56jo6ygHnphJHDxnSLc++hO+7i
+ GgNA==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBy4NkAClUgsrLENPmZOhQT9adp7txLupPDpw/geLQql/chaWmDtu3cyDZqeW1oMWFoZ0uo4LeoUCaAQ@nongnu.org
+X-Gm-Message-State: AFq9FYLQRsS3JDKSS51QiKBO1ee3A/ZF7SG0+8G6opLbe8J8TFk/8wEN
+ h8BM29eUIbItCFCCYPXZpu3mD673MDT3k44YYYEmyosUZBh96tV86j8sELVasvpAzU0=
+X-Gm-Gg: AYBFou3JVyM13F/kOHSBKxtwD8elO8F/BS+ZdwuJgqUOt9k91OufeFhd48X/k9DRoev
+ XwEVikAFwbcafsSnc0GETcZuC94FbwI701uJCWbLk5CANDWyq2Y61qz0Mo8bqEGRUsoB8hgqKuU
+ CFWeHTeLRHsiWTG0gqR2vrceyyqBXqODGz83goEoOTAgV41L8AagdBpNoczK74hKEZBrOWupzpb
+ 4BDiyUz7tRFbyypcCcJNkCRT1Niz6E5kRUofA3BiMco5KMeXvIMnnJPNfokCRI8v9GtWvC/uNN5
+ My0g0teTceohTTE76XqdfSziyGLyQARkQ7qG5f/gXQIqM49HAUVSGm5RZydLI+Qw6RTTiKhAwjy
+ i0HeMsxb7LJ8ZQrTZ6iVlhWCgiYNHMwXWETlQuO3VhcmlqvVDyo0GGxGAXSP2xmzsr6TqayTxQD
+ JOJR+t+zLlRbbfjknMHQ/rWfRfFhDx/GI3A8PLBozI5gZWadYB4hSUqRQ4qO2wIpkAbVFWkq9rM
+ YjM/OP/fmm1H9kT7WpdFlIpZFv01qhhkvXNRbrBWLiN/nnlUuce8HuheBrtRV6GjSs=
+X-Received: by 2002:a05:6000:2993:20b0:48c:4442:54e with SMTP id
+ ffacd0b85a97d-48dbaae710dmr21112092f8f.30.1791958250848; 
+ Tue, 13 Oct 2026 23:10:50 -0700 (PDT)
+Received: from [10.86.151.227] (ip-109-091-152-129.um37.pools.vodafone-ip.de.
+ [109.91.152.129]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-48de3f7f8b8sm8075976f8f.35.2026.10.13.23.10.49
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 13 Oct 2026 23:10:49 -0700 (PDT)
+Message-ID: <e9cac01d-468e-4f9d-9288-024ca7574114@linaro.org>
+Date: Wed, 14 Oct 2026 08:10:47 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/i386/tcg: Clear cc_op_dirty after UCOMI
+To: Hungyu Lin <dennylin0707@gmail.com>, qemu-devel@nongnu.org
+Cc: pbonzini@redhat.com
+References: <20261010192520.37355-1-dennylin0707@gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20261010192520.37355-1-dennylin0707@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=richard.henderson@linaro.org; helo=mail-wr1-x429.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,71 +105,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com> writes:
+On 10/10/26 21:25, Hungyu Lin wrote:
+> A self-XOR can leave cc_op_dirty set when UCOMI keeps the CC_OP_EFLAGS
+> selector, causing a redundant store to cpu_cc_op. The UCOMI helper
+> already writes CC_OP_EFLAGS, so clear the dirty flag after assume_cc_op()
+> to avoid emitting that store.
+> 
+> Signed-off-by: Hungyu Lin <dennylin0707@gmail.com>
+> ---
+>   target/i386/tcg/emit.c.inc | 1 +
+>   1 file changed, 1 insertion(+)
+> 
+> diff --git a/target/i386/tcg/emit.c.inc b/target/i386/tcg/emit.c.inc
+> index 531398d..918122b 100644
+> --- a/target/i386/tcg/emit.c.inc
+> +++ b/target/i386/tcg/emit.c.inc
+> @@ -4914,6 +4914,7 @@ static void gen_VUCOMI(DisasContext *s, X86DecodedInsn *decode)
+>       fn = s->prefix & PREFIX_DATA ? gen_helper_ucomisd : gen_helper_ucomiss;
+>       fn(tcg_env, OP_PTR1, OP_PTR2);
+>       assume_cc_op(s, CC_OP_EFLAGS);
+> +    s->cc_op_dirty = false;
+>   }
+>   
+>   static void gen_VZEROALL(DisasContext *s, X86DecodedInsn *decode)
 
-> Hi
->
-> On Tue, Oct 13, 2026 at 5:57=E2=80=AFPM Markus Armbruster <armbru@redhat.=
-com> wrote:
->>
->> Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com> writes:
->>
->> > Hi Markus
->> >
->> > On Fri, Oct 9, 2026 at 6:05=E2=80=AFPM Markus Armbruster <armbru@redha=
-t.com> wrote:
->> >>
->> >> Marc-Andr=C3=A9 Lureau has patches to improve QOM introspection.  Lat=
-est
->> >> version is
->> >>
->> >>     Subject: [PATCH v5 00/62] qom/qdev: associate properties with QAP=
-I schema types
->> >>     Date: Fri, 11 Sep 2026 20:34:34 +0400
->> >>     Message-Id: <20260911-qom-qapi-v5-0-7732a55b7760@redhat.com>
->> >>     https://lore.kernel.org/qemu-devel/20260911-qom-qapi-v5-0-7732a55=
-b7760@redhat.com/
->> >>
->> >> The first few patches make the QAPI code generator emit type
->> >> information for use by QOM introspection commands.  They refactor code
->> >> to gain access to masked type names, and to make query-qmp-schema not
->> >> elide types QOM introspection might want to refer to.
->> >>
->> >> My series does this in a different way I find simpler.  It is RFC
->> >> because merging it only makes sense if Marc-Andr=C3=A9 finds it usefu=
-l.
->> >> Marc-Andr=C3=A9, please have a look.
->> >
->> > This is essentially doing the same introspection changes but at a
->> > different level. If you ask me, since it's essentially code cleanup at
->> > this point, I would rather merge my changes first and iterate on top.
->> > But you are the gate keeper, so I wouldn't hold it, we need to move
->> > on... I can rebase on top of your refactoring if you prefer.
->>
->> A rebase gives me a cleaner git history, which I like.  Asking you to do
->> it feels a bit unfair, so I did it:
->>
->>     https://repo.or.cz/qemu/armbru.git/shortlog/refs/heads/qom-props-qap=
-i-types-v5-rebased
->
-> Awesome, I am happy with that! If you want to resubmit on ML or send
-> PR, up to you
+This is definitely wrong.
 
-Great!
+If there's something you're trying to fix, explain that.
 
-I'd like to have a closer look at a few more patches.  They look
-harmless at a glance.
 
-> I think the only local change I had (with the collected review
-> trailers), was BootCertificatesList conversion. But that can be a
-> follow up.
-
-Happy to squash it in, feel free to send me a delta, a revised patch, or
-something to git-fetch.
-
-There's also a temporary test breakage in PATCH 15.  Could you have a
-look?
-
-[...]
-
+r~
 
