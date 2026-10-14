@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89CDFCC6B1D
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 09:34:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F83FCC6B1A
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 09:34:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGvMM-0002u5-Qo; Wed, 14 Oct 2026 05:33:19 -0400
+	id 1xGvMw-00040e-PX; Wed, 14 Oct 2026 05:33:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xGvMD-0002nP-Mh
- for qemu-devel@nongnu.org; Wed, 14 Oct 2026 05:33:09 -0400
-Received: from mail-dl1-x122c.google.com ([2607:f8b0:4864:20::122c])
+ id 1xGvMq-0003tN-Lf
+ for qemu-devel@nongnu.org; Wed, 14 Oct 2026 05:33:51 -0400
+Received: from mail-dl1-x1233.google.com ([2607:f8b0:4864:20::1233])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xGvMB-0000QB-Kw
- for qemu-devel@nongnu.org; Wed, 14 Oct 2026 05:33:09 -0400
-Received: by mail-dl1-x122c.google.com with SMTP id
- a92af1059eb24-154e9d2d979so564263c88.1
- for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 02:33:07 -0700 (PDT)
+ id 1xGvMo-0000Wv-Un
+ for qemu-devel@nongnu.org; Wed, 14 Oct 2026 05:33:48 -0400
+Received: by mail-dl1-x1233.google.com with SMTP id
+ a92af1059eb24-170135e43c7so1205578c88.0
+ for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 02:33:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1791970386; x=1792575186; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1791970425; x=1792575225; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=N92nFfVD3yppLw3bzN6p2rDF7VCVhKpNKJeukwohcLA=;
- b=SNbLQoYUuVmvBbs/MS7q+CZHGDi7xP4hSRpAlb1kmFbeEkUVoPeaKb4y1imHsniZlJ
- ZsslYGjnanerFu2cisHfZ6mL0nvmZkmyWyvkjxv1evD3q2uW+tGbgorH/2K14l0+aZ7Z
- 8lv38Zlf18et2jB1Gb4QBTDeDVfXDtnCBnfEvvylZd+9sRmKw0rNOX9uBph809TZ41T0
- dy3FoPmCBI9zyBHHpzIPX41CBQNE+0Cni4b4v6rgY0jDnJTckFo4AbqgJiKtMRM+EBDm
- AdM1wQn5EPa+qpEfxT1PFSCSCax3sBTYsczC5ju+sxzPxNnBr1inwN482aKN0zHUNfAY
- 4ynQ==
+ bh=Nef3vG5EzYDKP8J72V8FVPzgjgMdn21rsBU8WQpi2Jk=;
+ b=pKtiYRjHjGOq3ErIc5eUPU/BBaPglHU1R1cau/KxOUQ8Kg3x3Lm6HsFYv6Zfv0lsyU
+ 8CElb/koc9DN100ruRYh81TRsltKT6LYjkCcLUPsLNRACQ1YRfhMS0Gp7fYCRwMSJZ6A
+ KunFceg/MF8LNhBWStey847Yaj5iBrlLPSH1AACJ2znKLHhdQO8c6DSvxDD4QFjWqQvO
+ +4zdEhs7fKtgfZP72CFfvs7zR7KwUEPggdtH4Y/MEFREgjt+V19dIMpyb9H6JZsjs6LH
+ w+GbTDUNCy9LWaIMNRyHdhhO7NJTXvMrKvs74InjCVfBOnd6y+pzg+iGa6UZPKlXvSkU
+ Jfzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791970386; x=1792575186;
+ d=1e100.net; s=20260707; t=1791970425; x=1792575225;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=N92nFfVD3yppLw3bzN6p2rDF7VCVhKpNKJeukwohcLA=;
- b=oWpUU1iWH10gxEIyipiJV2AFkdKsnH++I7bkUKsgQiLyD7/mmwM2TfiATbUBgjlkJS
- icQv43aacZQXqUlq/VRTDI4bQRbAa2oQHJG7hpl4dQJ7TPcgb/ewlh+AhYqfJQtYlx4t
- 9YwkHwsIXowK1vW5TuM7V1IZjlAH2lE3XRUXo2QcLwCqyMDH9FLDpM7iLn0p4H6ZJu2m
- uHvoWvF7fPayWr1PRIshl8ehGMk6pHSfXLOyUx07xqHd1zyQNA+SwIhliIZ0xINAuaBd
- ZKH98z9PiRVTQr3OBmrgx8z25GpskVF6qanCEqFQtg6Q5iPBGWuNh4g1keJfxFKpHL5T
- bF2w==
-X-Gm-Message-State: AFq9FYLIaRjDySOEzR5RiM3imq1A7OXNtgyUUeUTyGTZI44Uzs3p0xiX
- eQ0qEoQ3um23MR6SJl+pHhgsFL59wzauZy92Exm8reET7ngKYE+XJn5xdt4VjAClGuw=
-X-Gm-Gg: AYBFou0KBM5Puu2Jlo6bmkVckIhe65jZeHWNLUseS2D8x8g44VXsvLdMD0Qv53diG/5
- sXfABhO2ppzK8Fq6cVBwlWkJD+VlubBlpUHoKI+3rZgftv44YJgSlI185RgL0hMvRK/nHdWA+lv
- YFultZEVaOzQ20ttikM1xSdCNlVrIUqH9G/2/wlid3P36Pcn+c08AJeX6biBnv5LmXH21aNjWvh
- 9JERMSQUm0I/w94aAHRecMZZwUeRpapooge9oByd71EWLBd4TneQ1AoZioQIGljbftmqHmlXZ/y
- FsDnubMVnoX0uzIjZAsj+5CwwRnWLvoTA9W+ESNiIQSRcdLC5Kr3nwAKKTDxZNMAqfZ5GK+8s1t
- NUr2zsbE9UmXxjXWVMER/p5B2xk3Lt86K4kudPJH6P98A7jHThLsk55NxnfhKLPo85wcSBypptt
- OdbP5eaXDmse1nrWeONZSjY5g0jhz+X8jwCaBm1zm4L9dpNVMOuIKNZNwmMQm87JaWLZrZBjR/0
- jQlwHGPlU0v4UG8Fw==
-X-Received: by 2002:a05:7022:f51b:b0:15e:12b6:7365 with SMTP id
- a92af1059eb24-16a54fab7bemr18580852c88.2.1791970386113; 
- Wed, 14 Oct 2026 02:33:06 -0700 (PDT)
+ bh=Nef3vG5EzYDKP8J72V8FVPzgjgMdn21rsBU8WQpi2Jk=;
+ b=pORmloGOh7SlZ0Zc0MRE1bCMmfbhHr5wzUVyXH++TeOhVvylAOhYzYQvdUwkKjgjyq
+ hCk3K5FcLUwABk2xkATNXJ0pvzggNVNx9egCnvCbnfibXfcFduFtpYsfrecbpGpXKjjq
+ qbiIWNaD+544N1E6NyD7LW/xMrMJBNx1fEe9gEIya7I2rY3Fzm/fSHFsG8lmDPHnfTNc
+ +KnSTgIEqYjOX3BI7a+EIl6g2ALsMRdkrV11etB5o7Vaq5AqmtpMgQIR2I2y+T188LaS
+ YCC0rBKbZHd+Fr40+MwqvWd3Dyt2fkRn5Aqg+1eTVoSEPwnSoAL+XC5TJJHzTmfoM/cB
+ Z0vQ==
+X-Gm-Message-State: AFq9FYKjDRLvb6jWlOAEmR4+2CYQUEP9SV8WKn9CLJ4/f9xukLphE/zo
+ 0K29TsewvW3KOkhPQKWIaa6JyeAvu98aTaCOQLfWH8jfbTpxGhtT/pFKwDEkf0dT2EM=
+X-Gm-Gg: AYBFou0MmNcns6uE64YF+e0QLeQkljMLRsYQPt+7T2WAqJ+1nPRErYoLINvsc+D0bvC
+ bi7yKTHvoOl/w3rAER9Jjb5XvvF6zod1SLF6DrzAZkKjPylurLQVyUA/YbkFyMaGxCy8iafMCAw
+ OEiTT+JvzMWX3P1s3fHuY1uKgyIyOp3CIUu8SaGdXYwRx0dMxDF+ZO8sS0Mk/etPly8WZ5gWeYf
+ KDJ5PjqwUjUEjgdgdaR1lDVL/cW5igYCDQ6TX3RCYVne8S8tFcrSpQVjNis6EZZS8zODvLEuLac
+ GTPMCnoB3BmxR3b57kY2WPnqvXE8UTf7L/TBdavTW3zJNzVWgcSjMGO2dFKnpj/T1aAfw2TRjnF
+ SocSO6KOct2wrNErVpio5xwq7Y98f77GGvFlZyrjy8KzM1/1bIdqIe7fAjq7U9Drzr2FaH/WH7F
+ wQh3gLYl0PotLNLnjuAjuwgCnsVFLb4UeoyqrYI3D/Y67bR3uitAxFTSjIjeE1X/jgJLkcKbDeB
+ 7pjXJV0IGycnHlh9g==
+X-Received: by 2002:a05:701b:2713:b0:168:6ad8:e8b0 with SMTP id
+ a92af1059eb24-16a6187f095mr23321482c88.14.1791970425436; 
+ Wed, 14 Oct 2026 02:33:45 -0700 (PDT)
 Received: from DESKTOP-Q716RM7 ([103.94.185.75])
  by smtp.googlemail.com with ESMTPSA id
- a92af1059eb24-1698de65af7sm48769303c88.0.2026.10.14.02.32.58
+ a92af1059eb24-1698de65af7sm48769303c88.0.2026.10.14.02.33.37
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 14 Oct 2026 02:33:05 -0700 (PDT)
+ Wed, 14 Oct 2026 02:33:44 -0700 (PDT)
 From: Yonggang Luo <luoyonggang@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Eric Blake <eblake@redhat.com>, qemu-riscv@nongnu.org,
@@ -95,23 +95,23 @@ Cc: Eric Blake <eblake@redhat.com>, qemu-riscv@nongnu.org,
  Philippe Mathieu-Daude <philmd@mailo.com>,
  Jiaxun Yang <jiaxun.yang@flygoat.com>, Max Filippov <jcmvbkbc@gmail.com>,
  Stefano Garzarella <sgarzare@redhat.com>
-Subject: [PATCH 06/34] meson: define TARGET_ARCH_VARIANT to target_name only
-Date: Wed, 14 Oct 2026 17:31:16 +0800
-Message-ID: <20261014093152.834-7-luoyonggang@gmail.com>
+Subject: [PATCH 10/34] meson: collect Rust crates for combined system target
+Date: Wed, 14 Oct 2026 17:31:20 +0800
+Message-ID: <20261014093152.834-11-luoyonggang@gmail.com>
 X-Mailer: git-send-email 2.55.0.windows.3
 In-Reply-To: <20261014093152.834-1-luoyonggang@gmail.com>
 References: <20261014093152.834-1-luoyonggang@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::122c;
- envelope-from=luoyonggang@gmail.com; helo=mail-dl1-x122c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1233;
+ envelope-from=luoyonggang@gmail.com; helo=mail-dl1-x1233.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,31 +127,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-So target_arch() only related to target_name.to_upper(), simplify
-it's meaning
+multi_target_crates += main_rs is not fine, that may repeat crates.
+So we need collect crates from different $arch directly, and unique
+them to a new list. then reuse 'rust_multi_target.rs' to generate it
+properly
 
 Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
 ---
- meson.build | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ meson.build | 18 +++++++++++++++++-
+ 1 file changed, 17 insertions(+), 1 deletion(-)
 
 diff --git a/meson.build b/meson.build
-index 255c887e8e6..3460d031a95 100644
+index 3460d031a95..f54687e19dc 100644
 --- a/meson.build
 +++ b/meson.build
-@@ -3290,11 +3290,7 @@ fdt_required = []
- foreach target : target_dirs
-   target_name = target.split('-')[0]
-   config_target = { 'TARGET_NAME': target_name }
--  if target.endswith('linux-user')
--    config_target += { 'TARGET_ARCH_VARIANT': 'TARGET_ARCH' }
--  else
--    config_target += { 'TARGET_ARCH_VARIANT': target_name.to_upper() }
--  endif
-+  config_target += { 'TARGET_ARCH_VARIANT': target_name.to_upper() }
+@@ -4431,7 +4431,11 @@ foreach target : target_dirs
+       multi_target_libs += lib
+       multi_target_deps += arch_deps
+       multi_target_deps += target_stubs
+-      multi_target_crates += main_rs
++      foreach crate : crates
++        if crate not in multi_target_crates
++          multi_target_crates += crate
++        endif
++      endforeach
+     endif
+     execs = [{
+       'name': 'qemu-system-' + target_name,
+@@ -4516,6 +4520,18 @@ endforeach
  
-   if target.endswith('linux-user')
-     if host_os != 'linux'
+ # Other build targets
+ 
++# Use collected crate names, not per-target main_rs sources, for the combined root.
++if multi_target_crates.length() > 0
++  multi_target_crates = custom_target(
++    'rust_multi_target.rs',
++    output: 'rust_multi_target.rs',
++    command: [rust_root_crate, multi_target_crates],
++    capture: true,
++    build_always_stale: true,
++  )
++  multi_target_crates = structured_sources(multi_target_crates)
++endif
++
+ multi_target_objects = []
+ foreach lib: multi_target_libs
+   multi_target_objects += lib.extract_all_objects(recursive: true)
 -- 
 2.55.0.windows.3
 
