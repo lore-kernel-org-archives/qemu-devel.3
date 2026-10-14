@@ -4,91 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D01FBCC6B1A
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 08:03:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B54ACC6B1A
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 08:06:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGtww-00037J-9W; Wed, 14 Oct 2026 04:02:58 -0400
+	id 1xGu0M-00040v-3J; Wed, 14 Oct 2026 04:06:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xGtwt-000372-E2
- for qemu-devel@nongnu.org; Wed, 14 Oct 2026 04:02:55 -0400
-Received: from mail-qt1-x82c.google.com ([2607:f8b0:4864:20::82c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xGtwr-0008Br-QZ
- for qemu-devel@nongnu.org; Wed, 14 Oct 2026 04:02:55 -0400
-Received: by mail-qt1-x82c.google.com with SMTP id
- d75a77b69052e-535853983f0so37804961cf.2
- for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 01:02:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1791964973; x=1792569773; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=L3cABIiGOiPelqqPLekjpwWSa/rVwb/3RNOT/UdtY4Q=;
- b=SpNQ9eAOpaNpxYiAl6Zz0bvdcZ4IOwscWyImEpjrLFmec0CCG4UiO/U5uyEP7zpsfZ
- QcWhiERoQD/38nyORMgAr6pGaLx75ZhNlM9QS2t/EJc+qp282jAYH8JA34PzyFPSzg//
- paJeOoIRfzPOv4gSf/jtdiK4qI1dMZnSUHM8qModZt6Cw+wGDo9jQGvGudSZ8NZoeI4D
- QPTa+7H/k+pMqezjVIyEEi/Wwii8kyDBGsSrlPW61kCcXxA5kIpBcdS0H4a386slgSSd
- 04UvGxR1XA8NbjC7d/lqSoZ81ncYoywsn1wFXzar7cBRd9JjRDZjU5uROvBGnzHMBfQd
- CoSA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791964973; x=1792569773;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=L3cABIiGOiPelqqPLekjpwWSa/rVwb/3RNOT/UdtY4Q=;
- b=0zPfdqyxrLNkGtYGEQho2Jq6vVJdDm4wtdYk2iojPaUtuCo/Bn5WGozzaS/cG55dAv
- x751yg69Gv6eIUvWTGj636MBG72r1zWnqflKYw+o48RElDuH6B1rAuC6S6xgmcSOYxPG
- IRKYa+dKal/Qlew3OT1Rc9GsXHWIc+5WRCwYjOezVC5lzg6pYkoYWILGLuAMU25ioFO7
- O0ZCPwT/PRlMppCk4Q+vKy4/HhsTTA03Olob8GXdIoKkl78SCqd+8vIPIkCrsn25CrUQ
- UDbgIGj5ZnvUC2tK4rxQbL4hQnkuJd69tOILjGtwR4eXAtRIS3+S2nhgjxfwmDxeaYKG
- gmuw==
-X-Forwarded-Encrypted: i=1;
- AKwUvBxxaBu2uqYYm93LiQvELc5H8F6lsk913bCJL0xrhsiHnhC/KlHxOJpYROQ/fNeY80Li52VZnKM0rW+s@nongnu.org
-X-Gm-Message-State: AFq9FYLHyGCvLDJD/nadrWR4s/e+zgpS3yq1YYWHryRprO/JWKq96o09
- /afFKdcK7UKNGO9bONem0abPumtSya6O5Cp/Krxa/50iIKfu5DAVqKInHk5roW8QUWqSQw+OA79
- DPNDZYj4=
-X-Gm-Gg: AYBFou08UJERthlJdwZ+YzYT+M8S/9bqOhbcz23XYxUZvTVhnD3Q2CDhgrHFJ3QrdXK
- bPT3C+WvxF/t2W5nqiO+uU6du5TqV0XD8RMhvqJfeqRyKQXRpVlORnGS30V/TCymXRMb4EZEcxn
- wML2dIy/yZpSAS4Q1vfejJEsgtd7uaWpY8dj4buPsXCNmbHrrybYt9zfMgJQ61l5jEQ0peQYxOf
- jN6n4BqSuG0yagTwqwzkNj7I4SrWZXlqnRpSEIukMvWVfwpQULcFkmvZbAMwmQVwnNHueSRAa/+
- lpW5ZmYXDAZsf4U+XZxjl8FSpra8xU+Fajo2IZYEvbbAXAYCIk/lkKZhnndq4TPB2DDK6sYt3+I
- cZllPAdZFbiNV5sH2PZU6j186EUkmkCbENVHUou60kmZfRusF8B/o0Gc9Zx/SK9WFqPemcTzERm
- LKj1MdbN67PPYFuU7lh/IJ1RmxvCTiywUvreW/pLHrtJYBR2PDqadHkAGQdhftiCKXylPPvWwcB
- Q9Qq6NRMCW2ytwYwC/k0e591Kqae8pajpka+nE=
-X-Received: by 2002:a05:622a:5587:b0:535:33a0:520c with SMTP id
- d75a77b69052e-5359f48bd08mr245746361cf.3.1791964972544; 
- Wed, 14 Oct 2026 01:02:52 -0700 (PDT)
-Received: from [10.86.151.227] ([172.56.181.141])
- by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-91b97bce15csm46819266d6.35.2026.10.14.01.02.49
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 14 Oct 2026 01:02:51 -0700 (PDT)
-Message-ID: <f34e4a10-6673-4d18-8e51-ce4c8f17c398@linaro.org>
-Date: Wed, 14 Oct 2026 10:02:46 +0200
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1xGu0K-00040e-FG
+ for qemu-devel@nongnu.org; Wed, 14 Oct 2026 04:06:28 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1xGu0I-0000Fa-HY
+ for qemu-devel@nongnu.org; Wed, 14 Oct 2026 04:06:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1791965184;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=JKoxGrxnOtx4Cgd1bSgg6WEvU9lIq6c47EHTMKne4hE=;
+ b=TPvNZ0oJIyh++Xfs/3iY17fGBXY2GpCkcOQkm7HmDWO+6lDbdcqqlHG13VuJTT6BCSHCfV
+ 7kGtt5/bmUPUXP48/5Xi2qo916s0dqF/z5fDw2hIPzsCjmrmF42PRgeESLeDhT+1bcYC5O
+ AEZbcZCxhqs97e698inys9bCShY3yA0=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-659-dTm_niYsNe67m1lOVbqBuQ-1; Wed,
+ 14 Oct 2026 08:06:20 +0000
+X-MC-Unique: dTm_niYsNe67m1lOVbqBuQ-1
+X-Mimecast-MFC-AGG-ID: dTm_niYsNe67m1lOVbqBuQ_1791965179
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5A3FC19560BA; Wed, 14 Oct 2026 08:06:18 +0000 (UTC)
+Received: from redhat.com (headnet04.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.116])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9E90F195608A; Wed, 14 Oct 2026 08:06:15 +0000 (UTC)
+Date: Wed, 14 Oct 2026 09:06:12 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Cc: Bin Meng <bin.meng@processmission.com>, QEMU <qemu-devel@nongnu.org>,
+ Conor Dooley <conor@kernel.org>, Markus Armbruster <armbru@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Thomas Huth <th.huth@posteo.eu>, Paolo Bonzini <pbonzini@redhat.com>,
+ BALATON Zoltan <balaton@eik.bme.hu>
+Subject: Re: [PATCH v4 27/27] MAINTAINERS: Move Conor Dooley to PolarFire SoC
+ reviewer
+Message-ID: <as839M8VjrWh4r2-@redhat.com>
+References: <20261014012323.322790-1-bin.meng@processmission.com>
+ <20261014012323.322790-28-bin.meng@processmission.com>
+ <72240455-9409-491e-84fe-f29efb7187a6@oss.qualcomm.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL v2 00/15] NBD patches through 2026-10-08
-To: Eric Blake <eblake@redhat.com>, qemu-devel@nongnu.org
-References: <20261012212945.84275-17-eblake@redhat.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20261012212945.84275-17-eblake@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::82c;
- envelope-from=richard.henderson@linaro.org; helo=mail-qt1-x82c.google.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <72240455-9409-491e-84fe-f29efb7187a6@oss.qualcomm.com>
+User-Agent: Mutt/2.4.2 (2026-08-30)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 10
+X-Spam_score: 1.0
 X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+X-Spam_report: (1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,38 +92,106 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/12/26 23:29, Eric Blake wrote:
-> The following changes since commit 615ece3c406b262996e569f29ea6eed0d81c4d8d:
+On Wed, Oct 14, 2026 at 06:16:27AM +0200, Philippe Mathieu-Daudé wrote:
+> On 14/10/26 03:23, Bin Meng wrote:
+> > Conor asked not to be listed as a maintainer, since that could imply
+> > that Microchip sponsors his work on the platform.
 > 
->    Merge tag 'for-upstream' ofhttps://gitlab.com/bonzini/qemu into staging (2026-10-09 15:49:53 +0200)
-> 
-> are available in the Git repository at:
-> 
->    https://gitlab.com/ebblake/qemu.git tags/pull-nbd-2026-10-08-v2
-> 
-> for you to fetch changes up to 3d794bcd554c3dc196685faf382fdffe7243e674:
-> 
->    iotests/iothreads-nbd-export: Skip on s390 (2026-10-12 16:23:50 -0500)
-> 
-> [v2: sending only the updated cover letter and patch 2/15]
-> 
-> ----------------------------------------------------------------
-> NBD patches through 2026-10-08
-> 
-> Several fixes, including:
-> - Eric Blake: Update MAINTAINERS, support qemu-nbd -s -l
-> - Fiona Ebner: Report flush error on qemu-img convert
-> - Guillaume Vinke: Fix NBD client on dead connection
-> - Denis V. Lunev: Fix postcopy dirty bitmap migration
-> - Eric Farman: Several iotest improvements
+> Hmm we hit a limitation of MAINTAINERS format.
 
-This still has 13 job failures, including check-python-minreqs.
+I guess they're concerned about "Supported" vs "Maintained" as
+the subsystem status
 
-https://gitlab.com/qemu-project/qemu/-/pipelines/2945631627
+   Supported:   Someone is actually paid to look after this.
+   Maintained:  Someone actually looks after it.
+
+Technically that language means you should not assume that
+all listed M: are paid - only that at least 1 M: is a paid
+maintainer.  IMHO since Conor uses a non-corporate email
+address there's even less reason to assume they're doing it
+in a paid maintainer role, as opposed to volunteer.
 
 
-r~
+> If so, the Sebastian is in the same situation.
+> 
+> (we had a similar case with PIIX3:hobbyist / PIIX4:cloud in the past)
+> 
+> > 
+> > Keep him listed as a reviewer so he continues to receive relevant
+> > patches without suggesting an active maintenance commitment.
+> > 
+> > Suggested-by: Conor Dooley <conor@kernel.org>
+> > Signed-off-by: Bin Meng <bin.meng@processmission.com>
+> > Acked-by: Conor Dooley <conor@kernel.org>
+> > 
+> > 
+> > ---
+> > 
+> > (no changes since v2)
+> > 
+> > Changes in v2:
+> > - New
+> > 
+> >   MAINTAINERS | 2 +-
+> >   1 file changed, 1 insertion(+), 1 deletion(-)
+> > 
+> > diff --git a/MAINTAINERS b/MAINTAINERS
+> > index 0edc7385fd..40232cb65e 100644
+> > --- a/MAINTAINERS
+> > +++ b/MAINTAINERS
+> > @@ -1794,8 +1794,8 @@ F: tests/tcg/riscv64/test-crc32.S
+> >   Microchip PolarFire SoC Icicle Kit
+> >   M: Bin Meng <bin.meng@processmission.com>
+> > -M: Conor Dooley <conor@kernel.org>
+> >   M: Sebastian Huber <sebastian.huber@embedded-brains.de>
+> > +R: Conor Dooley <conor@kernel.org>
+> >   L: qemu-riscv@nongnu.org
+> >   S: Supported
+> >   F: docs/system/riscv/microchip-icicle-kit.rst
+> 
+> Is tooling confused when we define the same section twice?
+> 
+> Microchip PolarFire SoC Icicle Kit
+> M: Bin Meng <bin.meng@processmission.com>
+> S: Supported
+> F: docs/system/riscv/microchip-icicle-kit.rst
+> F: hw/riscv/microchip_pfsoc.c
+> F: hw/char/mchp_pfsoc_mmuart.c
+> F: hw/misc/mchp_pfsoc_dmc.c
+> F: hw/misc/mchp_pfsoc_ioscb.c
+> F: hw/misc/mchp_pfsoc_sysreg.c
+> F: include/hw/riscv/microchip_pfsoc.h
+> F: include/hw/char/mchp_pfsoc_mmuart.h
+> F: include/hw/misc/mchp_pfsoc_dmc.h
+> F: include/hw/misc/mchp_pfsoc_ioscb.h
+> F: include/hw/misc/mchp_pfsoc_sysreg.h
+> 
+> Microchip PolarFire SoC Icicle Kit
+> M: Conor Dooley <conor@kernel.org>
+> M: Sebastian Huber <sebastian.huber@embedded-brains.de>
+> S: Odd Fixes
+> F: docs/system/riscv/microchip-icicle-kit.rst
+> F: hw/riscv/microchip_pfsoc.c
+> F: hw/char/mchp_pfsoc_mmuart.c
+> F: hw/misc/mchp_pfsoc_dmc.c
+> F: hw/misc/mchp_pfsoc_ioscb.c
+> F: hw/misc/mchp_pfsoc_sysreg.c
+> F: include/hw/riscv/microchip_pfsoc.h
+> F: include/hw/char/mchp_pfsoc_mmuart.h
+> F: include/hw/misc/mchp_pfsoc_dmc.h
+> F: include/hw/misc/mchp_pfsoc_ioscb.h
+> F: include/hw/misc/mchp_pfsoc_sysreg.h
+> 
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+
 
