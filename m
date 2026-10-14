@@ -4,86 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0251DCC6B27
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 08:51:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70B6FCC6B1A
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 08:52:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGuhT-0003C3-V5; Wed, 14 Oct 2026 04:51:03 -0400
+	id 1xGuiI-0003ZV-4x; Wed, 14 Oct 2026 04:51:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1xGuhR-0003BV-MZ
- for qemu-devel@nongnu.org; Wed, 14 Oct 2026 04:51:02 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1xGuiE-0003ZB-E9
+ for qemu-devel@nongnu.org; Wed, 14 Oct 2026 04:51:52 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1xGuhP-0004xk-VK
- for qemu-devel@nongnu.org; Wed, 14 Oct 2026 04:51:01 -0400
+ id 1xGuiC-0004yi-Tc
+ for qemu-devel@nongnu.org; Wed, 14 Oct 2026 04:51:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1791967859;
+ s=mimecast20190719; t=1791967907;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=EJIA3IT7xY7oKcwuics0xcQiUIz03MxxhhsnxtgHAVY=;
- b=OrP1+7hcVuW0ObU5RMb1E8p8HVGXjxIvwAGiZC2HYP4L5tHAVdTgG+69Qyfydk/9TUslSW
- WgYQsyoLKxDM9ngkKvDOj0zEURKWMVnQBaGJaybX9ezeznhIXDTJ/1RfL3pMHA2eMTDhpe
- UHrJy9bGFjNGAy8BdB7FCVW00Dh4R1M=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=UH1Ys0m0wlD3Q6XP55oYK9XVv60ktbLpC82FevmOX8M=;
+ b=AyYt0/zexo+MS7RWFQE3SwdhRJpeXFT7uoJSRNjUp81phNJ6PREiUUC7J14/G8p3J9siwf
+ aJS6QaliPuYc+m4egxsPWGLXB8i1pTSkLwL0yQEUei6m+9n+Fi82MAuuJMrUS+LDYyHIPq
+ h2V481DjNY2Bs3btawZDTuiw3nrssko=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-511-xcB4JaNLOFia31c5J02NdA-1; Wed, 14 Oct 2026 08:50:57 +0000
-X-MC-Unique: xcB4JaNLOFia31c5J02NdA-1
-X-Mimecast-MFC-AGG-ID: xcB4JaNLOFia31c5J02NdA_1791967856
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4a0761224e1so6490025e9.0
- for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 01:50:56 -0700 (PDT)
+ us-mta-256-r7SqFr3PND2oGMDu8w4IBQ-1; Wed, 14 Oct 2026 08:51:44 +0000
+X-MC-Unique: r7SqFr3PND2oGMDu8w4IBQ-1
+X-Mimecast-MFC-AGG-ID: r7SqFr3PND2oGMDu8w4IBQ_1791967903
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4a170fa0879so30663565e9.3
+ for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 01:51:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1791967856; x=1792572656; darn=nongnu.org;
+ d=redhat.com; s=google; t=1791967903; x=1792572703; darn=nongnu.org;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=EJIA3IT7xY7oKcwuics0xcQiUIz03MxxhhsnxtgHAVY=;
- b=rm9Y9ANy+cILarZ1KAAIFZFyR4FsV+MCp5wqNgpKYU/tIlokyZQU8PBWwS7jQYZ6NE
- fBiGIG7+JMltq7CVCJTT+znrYTyFWfg8Ld1ac9om+35lsI4BVI6OpzIo3UrfEPJFEawD
- t0TTFl81Zh5A3TENR4Y1Ho8yFcaF5JiSborrQ2hGSALYiUApFHbRMaCLvsfykX69yPng
- gfxdUUUfGuuqM6EtU6HFyL3sOrEOUqQ00tErwzQlQClGD24xcI+gnsY7eE+BwPF35MWd
- 8AQF2yvSSD2R/ZxPL/siwbiWYx+ImFDnyqas5NcH8uMn+DT8grRE/F8EBP/Tg8TgnSyF
- AOZg==
+ bh=UH1Ys0m0wlD3Q6XP55oYK9XVv60ktbLpC82FevmOX8M=;
+ b=dqJcIRNuE78gHVv/N9CiZSO1AkvxrIYaAU9/nHvO9i9Oal4p9u7429JoNP0Jsx+vGU
+ nEb4kpz1wP5AyROmjs5amVilTETFsgz+XSj7YUcHl0ddA95G26yb8FF0hURh+kbasTVj
+ vag5hv3i0dthoXKWQQf4m+HprIgDDzc52CQZ/yE1YZDsAmvFJDRT5bdO9k1T4mLcrvgf
+ 7O3OoH96SlYQB5IyY0hx7xXeisXyYSHocruiytoSVGf9lk5djY5Z7qBGghIUBiUBwanp
+ EpVciVQqz9Lj8H7pkaQdWqU+mzH9jv+BBiIOY7/VKnzSAzQroKga/GBVs/vi2XzkKnM4
+ sEEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791967856; x=1792572656;
+ d=1e100.net; s=20260707; t=1791967903; x=1792572703;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=EJIA3IT7xY7oKcwuics0xcQiUIz03MxxhhsnxtgHAVY=;
- b=Pjfh9Ytd2mGdigKRb1mwtRJMhQhn/psIE7C/02sVmpM+jMth3R0WkTISiid+/JoY37
- 9hj8WQGKqbvxq20wRJ636B3bCcdzGOpVKAT3vlmFx7vmruBiaEnPzaQlrCIUZYQYqT1F
- qNv227yOvMj3u+gXJ0BS1zrIeANV9J0tNbci41iSu4KjAwXZlCz0jZ4wCtqXjmUCISUq
- ej1YX/uD7VSgp3OL/agfW1rK4t9bBABpo0JLy3zc6l/UH7NsRAPI0/jA9agK/GQ8MZrw
- bfmwNOUP7/VjKypPiM0q8/FfCKk4jsvPNX9hr+FcbyAilz8/wK//8FHaXuC6gd9XuP8I
- /kRQ==
-X-Gm-Message-State: AFq9FYIE4KVrxCPaOJbMGrrjfNwOiu52XfY2dZ1cl1g1Kk712l3iTdav
- u58+XgKUPfOf5d3VH1GUjQP5+e+sDJEmQtmMcyLpHmvuRnkP9wrpAqC0yfQJs0nvWbpahwlj3yx
- chhASBXPsPczR3YnDtyaD2BNxhwV6HsgQG59Z6rzDzZu3/aV9QewTHCZ9
-X-Gm-Gg: AYBFou0Xxz05QHPL/sATgZ0yJwpNXfjgP9r6wZQmNcIL1tkXiuAkOYwvp2Nozd3pG/t
- QbwB8DqGxMF2k8xTD9sfYLN4pd2/Kn/Np8ZK7MWT3ETR7kfFguA5oKCirnri3ZUSxcbH0G1o9sw
- xzqnt19i5ovSokr+ztCD6E1CSF+Kr3dqYNk8/9YwPQjFM6yLzg/UW7XI0lT/oexAd+p2QGd/G2g
- KGd3W85ardeW7bkFXHZspybryWW+HG+Cu8BIkXG1oP+8oRIvK53YQJcQkHUCu+6WNBwZPk3+uY2
- wOPsQmwYKdkljk+yQ9wRLX289vsZXTWDl4twfr7iAQCPavBwmeWMrTNKgXPBhBtZG1wt9PKBE3j
- qC84Z0A==
-X-Received: by 2002:a05:600c:8b09:b0:4a1:6f78:842f with SMTP id
- 5b1f17b1804b1-4a18e4987b8mr313236755e9.11.1791967855766; 
- Wed, 14 Oct 2026 01:50:55 -0700 (PDT)
-X-Received: by 2002:a05:600c:8b09:b0:4a1:6f78:842f with SMTP id
- 5b1f17b1804b1-4a18e4987b8mr313236425e9.11.1791967855329; 
- Wed, 14 Oct 2026 01:50:55 -0700 (PDT)
+ bh=UH1Ys0m0wlD3Q6XP55oYK9XVv60ktbLpC82FevmOX8M=;
+ b=lI49lJcJs1gWt+CsSsQz8txubUmAHkcVyTxsomGLgE4izAlkejF8w4DULZYKy/XXsx
+ xkJuCZZBjMdDqxnqDUoxjo+E/JKuI6zNtndcxhpvYhr0FVxpDlBJ4XQH0jb+2iWhX3R0
+ 0bNry2oENJERYUoqe2p1xZwXH8stJW48xvY9qJ6E0xOnxzwIPxBFyXnSu4LGs9Qkmebh
+ Qjqrcz/4YoNQS3gInRkLBup2Vnme8UE5A7yAfJ8I5ZxbaHhC7PVWic3zO+wC+3VgnSLX
+ xE0Uu7F1TK4Isoi5xGf68NpcXY9mLlnP3ntadvAHd0u5B4Q2rDP2LjKSFxJHiqIY7xu+
+ zM4Q==
+X-Gm-Message-State: AFq9FYKZeMxNc696OyAgigTwhRm/4J4k4TIMl6qAkiGfIW/LH4Fv0oxi
+ gdBTKUAyVVh385w1K/LJZRSIzdCEIYzKVnb6yjOjA9bs9JgrDYjIYbXk04zDABHUr1EoYAjfs4f
+ C3hGLApSlYgIvMD/I1BiR2nDdTOWkYGU1Wq8nPPeKSGmP35G2Q283zie3
+X-Gm-Gg: AYBFou2jQP225twp2GldWsAbooUDDI71F9x9mi0Wt2sqFy5hr9PQk0r7P5Yr1z1yGkG
+ vd+Is60N9VwZWo29EzssSvoLJf6rEOyFvB17ET9ClkCf4eT9qA0AchDBM4xfq9moCHbNaCuC8HS
+ GAp/R9ewVzw8wethr0K8aB860AoFbvl3cp3BToIgv+r0ADHfM5ffjx+ds/HVaX2ZRsHORiXv2Nx
+ KS4LY0Bxon1J771qEbh9j6elSLp9FHMKCN+edQYlSZnHGXsuyxVt6ulC9x40CT1JrZGz36m0D2N
+ Dd9XQqDWCdL4wBHeyGm8qjCrGcLr8VDd11/Tz6jQjosKONZXUKdUoUNqDATu8QqLTiESX4UyYFh
+ EXX5grw==
+X-Received: by 2002:a05:600c:3ba2:b0:4a1:acab:234c with SMTP id
+ 5b1f17b1804b1-4a1acab23acmr116446365e9.10.1791967903158; 
+ Wed, 14 Oct 2026 01:51:43 -0700 (PDT)
+X-Received: by 2002:a05:600c:3ba2:b0:4a1:acab:234c with SMTP id
+ 5b1f17b1804b1-4a1acab23acmr116445895e9.10.1791967902672; 
+ Wed, 14 Oct 2026 01:51:42 -0700 (PDT)
 Received: from sgarzare-redhat ([193.207.168.237])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a18be964dfsm422020365e9.7.2026.10.14.01.50.53
+ 5b1f17b1804b1-4a18beabbd0sm491252285e9.12.2026.10.14.01.51.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 14 Oct 2026 01:50:54 -0700 (PDT)
-Date: Wed, 14 Oct 2026 10:50:49 +0200
+ Wed, 14 Oct 2026 01:51:41 -0700 (PDT)
+Date: Wed, 14 Oct 2026 10:51:39 +0200
 From: Stefano Garzarella <sgarzare@redhat.com>
 To: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 Cc: qemu-devel@nongnu.org, odaki@rsg.ci.i.u-tokyo.ac.jp, 
@@ -92,23 +92,24 @@ Cc: qemu-devel@nongnu.org, odaki@rsg.ci.i.u-tokyo.ac.jp,
  den@openvz.org, 
  dongli.zhang@oracle.com, farosas@suse.de, peterx@redhat.com,
  dwmw2@infradead.org, philmd@oss.qualcomm.com
-Subject: Re: [PATCH v16 15/22] vhost: release ownership in vhost_dev_cleanup()
-Message-ID: <as9BSKwxUUS8psaV@sgarzare-redhat>
+Subject: Re: [PATCH v16 17/22] vhost: release ownership when the incoming
+ migration fails
+Message-ID: <as9CjWs5PbWddXgv@sgarzare-redhat>
 References: <20261012-up-vsock-vhost-v5-v16-0-36c38bd15ffc@virtuozzo.com>
- <20261012-up-vsock-vhost-v5-v16-15-36c38bd15ffc@virtuozzo.com>
+ <20261012-up-vsock-vhost-v5-v16-17-36c38bd15ffc@virtuozzo.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii; format=flowed
 Content-Disposition: inline
-In-Reply-To: <20261012-up-vsock-vhost-v5-v16-15-36c38bd15ffc@virtuozzo.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=sgarzare@redhat.com;
+In-Reply-To: <20261012-up-vsock-vhost-v5-v16-17-36c38bd15ffc@virtuozzo.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=sgarzare@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -22
 X-Spam_score: -2.3
 X-Spam_bar: --
 X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,140 +125,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Oct 12, 2026 at 01:28:23PM +0300, Andrey Drobyshev wrote:
->vhost_dev_cleanup() closes the backend FD, but that doesn't release the
->device ownership taken with VHOST_SET_OWNER if the same file is open
->elsewhere.  That's the case on a CPR target: the source keeps the FD,
->so if the target fails after SET_OWNER, either inside vhost_dev_init()
->or later in its caller, the ownership stays with the target.  Once the
->source is resumed it can't take the device back, SET_OWNER fails with
->EBUSY.
+On Mon, Oct 12, 2026 at 01:28:25PM +0300, Andrey Drobyshev wrote:
+>A CPR target that has taken the device ownership in post_load() doesn't
+>always reach vhost_dev_cleanup(): a subsequent load error, e.g. a
+>truncated migration stream footer, makes QEMU exit() right away, and the
+>ownership stays with the dead process.  The source still holds the FD,
+>so the kernel never releases the device, and the source can't take it
+>back after being resumed -> SET_OWNER fails with EBUSY.
 >
->Track the ownership with a new 'owner' flag in struct vhost_dev, set and
->cleared by vhost_dev_set_owner() and vhost_dev_reset_owner(), and issue
->VHOST_RESET_OWNER in vhost_dev_cleanup() as the common teardown for all
->those paths.  Only do it if the ownership was handed over to us by
->another process, which is marked by the device with a new bool flag
->'owner_handed_over'.  Upon ownership release failure, we have nothing to
->unwind at this point (CPR target teardown), so we just report the failure.
+>Releasing the ownership at exit isn't enough either: with the
+>return-path capability the target reports the failure to the source
+>before exiting, and the source resumes right away, racing with the
+>target's exit for the ownership.  And with exit-on-error=false the
+>target doesn't exit at all.
+>
+>Add a migration notifier to each vhost_dev, registered for its lifetime
+>for the CPR modes, that releases the ownership if still held on
+>MIG_EVENT_INCOMING_FAILED.  It runs before the failure is published in
+>any way.
 >
 >Reported-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
->Suggested-by: Stefano Garzarella <sgarzare@redhat.com>
 >Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 >---
-> hw/virtio/vhost.c         | 40 ++++++++++++++++++++++++++++++++++++++--
-> include/hw/virtio/vhost.h | 11 +++++++++++
-> 2 files changed, 49 insertions(+), 2 deletions(-)
->
->diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
->index c01ccc800cb..085e2ef6f16 100644
->--- a/hw/virtio/vhost.c
->+++ b/hw/virtio/vhost.c
->@@ -53,6 +53,25 @@ static QLIST_HEAD(, vhost_dev) vhost_log_devs[VHOST_BACKEND_TYPE_MAX];
-> static QLIST_HEAD(, vhost_dev) vhost_devices =
->     QLIST_HEAD_INITIALIZER(vhost_devices);
->
->+/*
->+ * Release the device ownership if it was handed over to us by another
->+ * process, e.g. the CPR source.
->+ */
->+static void vhost_dev_try_release_owner(struct vhost_dev *hdev,
->+                                        const char *when)
->+{
->+    int r;
->+
->+    if (!hdev->owner || !hdev->owner_handed_over) {
->+        return;
->+    }
->+    r = vhost_dev_reset_owner(hdev);
->+    if (r < 0) {
->+        error_report("vhost: cannot release device ownership on %s: %s",
->+                     when, strerror(-r));
->+    }
->+}
->+
-> unsigned int vhost_get_max_memslots(void)
-> {
->     unsigned int max = UINT_MAX;
->@@ -1705,20 +1724,32 @@ int vhost_dev_init_backend(struct vhost_dev *hdev, void *opaque,
->
-> int vhost_dev_set_owner(struct vhost_dev *hdev)
-> {
->+    int r;
->+
->     assert(hdev->vhost_ops);
->     if (!hdev->vhost_ops->vhost_set_owner) {
->         return -ENOSYS;
->     }
->-    return hdev->vhost_ops->vhost_set_owner(hdev);
->+    r = hdev->vhost_ops->vhost_set_owner(hdev);
->+    if (!r) {
->+        hdev->owner = true;
->+    }
->+    return r;
-> }
->
-> int vhost_dev_reset_owner(struct vhost_dev *hdev)
-> {
->+    int r;
->+
->     assert(hdev->vhost_ops);
->     if (!hdev->vhost_ops->vhost_reset_owner) {
->         return -ENOSYS;
->     }
->-    return hdev->vhost_ops->vhost_reset_owner(hdev);
->+    r = hdev->vhost_ops->vhost_reset_owner(hdev);
->+    if (!r) {
->+        hdev->owner = false;
->+    }
->+    return r;
-> }
->
-> int vhost_dev_init(struct vhost_dev *hdev, void *opaque,
->@@ -1864,6 +1895,11 @@ void vhost_dev_cleanup(struct vhost_dev *hdev)
->     g_free(hdev->mem);
->     g_free(hdev->mem_sections);
->     if (hdev->vhost_ops) {
->+        /*
->+         * Release the device ownership if we hold it.  Needed e.g. for
->+         * failing CPR target, so the source can re-acquire it.
->+         */
->+        vhost_dev_try_release_owner(hdev, "cleanup");
->         hdev->vhost_ops->vhost_cleanup(hdev);
->     }
->     assert(!hdev->log);
->diff --git a/include/hw/virtio/vhost.h b/include/hw/virtio/vhost.h
->index 73ea130d7ee..efe1eed2606 100644
->--- a/include/hw/virtio/vhost.h
->+++ b/include/hw/virtio/vhost.h
->@@ -111,6 +111,17 @@ struct vhost_dev {
->     bool started;
->     /* @initialized: has the full vhost_dev_init() completed? */
->     bool initialized;
->+    /*
->+     * @owner: has this vhost_dev acquired the device ownership?
->+     * Updated only by vhost_dev_set_owner()/vhost_dev_reset_owner()
->+     */
->+    bool owner;
->+    /*
->+     * @owner_handed_over: CPR target side.  The ownership was handed over
->+     * to us by another process (the CPR source) and must be given back
->+     * when this vhost_dev goes away.  Set by the device.
->+     */
->+    bool owner_handed_over;
+> hw/virtio/vhost.c         | 23 +++++++++++++++++++++++
+> include/hw/virtio/vhost.h |  6 ++++++
+> 2 files changed, 29 insertions(+)
 
-I find the name a bit hard to get, but I don't have better suggestions.
-
-Anyway:
-
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-
->     bool log_enabled;
->     uint64_t log_size;
->     Error *migration_blocker;
->
->-- 
->2.47.1
->
+Acked-by: Stefano Garzarella <sgarzare@redhat.com>
 
 
