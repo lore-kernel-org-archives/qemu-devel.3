@@ -4,107 +4,131 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2651BCC6B1A
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 12:06:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E369CC6B1A
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 12:20:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGxkW-0007av-Sd; Wed, 14 Oct 2026 08:06:24 -0400
+	id 1xGxwy-0001lb-SC; Wed, 14 Oct 2026 08:19:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xGxkT-0007ag-ND
- for qemu-devel@nongnu.org; Wed, 14 Oct 2026 08:06:21 -0400
-Received: from mail-yw1-x1129.google.com ([2607:f8b0:4864:20::1129])
+ (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
+ id 1xGxwo-0001kE-JR
+ for qemu-devel@nongnu.org; Wed, 14 Oct 2026 08:19:08 -0400
+Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xGxkQ-0003oe-DM
- for qemu-devel@nongnu.org; Wed, 14 Oct 2026 08:06:20 -0400
-Received: by mail-yw1-x1129.google.com with SMTP id
- 00721157ae682-8ac8a2ac52bso41828207b3.0
- for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 05:06:17 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1791979577; cv=none;
+ (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
+ id 1xGxwl-0005Pc-4J
+ for qemu-devel@nongnu.org; Wed, 14 Oct 2026 08:19:06 -0400
+Received: by mail-ed1-x535.google.com with SMTP id
+ 4fb4d7f45d1cf-6acb9c018ffso6556461a12.1
+ for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 05:19:01 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1791980340; cv=none;
  d=google.com; s=arc-20260327;
- b=IguUXM/+iQfzcrVqIkOkHoowlmYg2acW4zForbRtRdDuhRZii9Vc9aa6tay2MeqofG
- p7ChRVOiCpPqelMkJleLe6DeL6R/M04z6IkAUPREadEM/rlQ0UZedkB4+xkxUM2W4Oy2
- Cs4zcnFvkqL8JnBA3SJOo/aNUJanMxOU37Wm/0OV7wApzhCyXIYmgVtjSmGTjAYJW7LF
- Pw2jlbgsAFzbFWZbRPRHuXWwHYGfAmIKqGL3xtJQpEHpq2M7nTKQGIz8ODP8x0nQys/3
- FwAaJYXJMuq/LsXKPWkUCRKvQ/1teij9Je+MULdVyFx8D+z5J06W75iTK7H/YoQ8G0qM
- C8AQ==
+ b=BE3jHjPuio3K8UyfWCWkFuhUPuEeycYKKcQVmjHMGY3Gmzl3V0d1rWprvuOYfDRUFz
+ zD0ghBpyDYslPl/TeV1MAb/6N0SfuL0uJbGDzy3ZiJCwonkPHz3kOePWOSrouECPH8CA
+ sD7Ire2d5SpPCpIeAZtLU6Nbd9/gK8G8gVsYmww4t5t7AsiJ5b6y8XgaxAU07xvmV/T6
+ uDMODkFpFvB/oPVPgtWUYb9YfFfdLXqmCjm5bFRwzFGCZPW3EUILy2Zvr/Afdnie3ri2
+ zxbssu9pCnr3PHQpAC/f9HNyl7F23OnfYjAEtgYNxmHdPJgY/JQojHGUkAWplCdXK22n
+ rLhA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=d/3zqLfYuRm+7YCJo4+EtPoysMl01w41Nwru3cxg2z0=;
- fh=YHoQpvTWCe2sf9yaDxE7bMloNaE7q4NVBTFaJj17TiI=;
- b=qVb/cYiiGHS/Xa/S3G+H3q4K2iwPmWwb3p9j2Cjms0pnb6FGM+E+oeChSLhTepQyY7
- +43+Wv1KQLSmHMRDR6338c47t9Ky3eWDpHtLZc+Gzb3lQfrcjQqEG50FrmxMIZ48MnCj
- cGfPypGmmOX7tMlKwFSEMDNE8Zhc4lmPsnGsrJRcOgkgmGi8+t908PGOXtATVTImwcIy
- f9BwscDLRm34nqIQBxvswK4Yy+lZlFyqiRgNP8DcG68EDBQU+WiQkOCKStRoQn2gTDc+
- EvN95/5fTZOVHuyyQZAcuNV6KMpzDlSLaJ4A0XBOxDTH1nUc4r99T/f9PcALU1ujfKiA
- kNNA==; darn=nongnu.org
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :reply-to:in-reply-to:references:mime-version:dkim-signature;
+ bh=ssRl3kbqja2TBFr7DxtKqnpuftUarLL3G3B+v9cQ3R4=;
+ fh=KHw9iF04fvy5z7z7dwUgjCo82utv7gMqh2Et/7WCUxE=;
+ b=cSQXZGJx9tT6Z0CeTxnhMG9ptcHvxT8v11Y9A73jxeUYvYV342cO1uiSK/kicMc8n5
+ kkOwwb99V/YVjTOe2feg2B+AMi7skf6TWAmsV5E3yVKLDI98+PZh5PeTwR+V+wYl/uTA
+ 9vDFtMwCFCQ07q3nxyWyhtG2KzboVb+4TqMjmh7mWcGzynphMHlpye8Odbi6AeBIXbcO
+ hnB/nh86/D3sjjAVyS5d4tMKlj89g8fizLyL8XE306LlTYgDq4MxseN580X/ucrjjpGy
+ /Zb2rLmJFZpSzSUY6LbS65i3PGZmXOhSD1UYFge1Y/BVw4BKPbjQYD2neCrBlk2x7KGz
+ U2LA==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1791979577; x=1792584377; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=d/3zqLfYuRm+7YCJo4+EtPoysMl01w41Nwru3cxg2z0=;
- b=L/jFHOnDhozMDKzW2RhXm8eu2hfQrL5q6xlb2rG1Z79YZASq0c+tXAr8J/nHGpb/xT
- 6zhrtfbD73kxgmvR5Zzs+H0AXjwy2AI2ClW+tJArjE8YgerJl/AimI8iCnvjdhW/MAIX
- 1aD6Mt4qgmXZomjpJnG55mGOvcLwffPjLy0k1xAqWbqpzDjPPs6qGM35yAuMtjpdykj5
- LpBHUYHz3NuRaqaE5fccsw3Mmd7LTelQ3kG6UvapSJlEXpgDgkRQbVUhtaSAkPu7U4CY
- w2d9smR2gcnH+7Lx5JBg06Mp0JX16P89dZF47SB144dYf+0lCFDwYUd6j3dXV9g8NGoc
- REIg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791979577; x=1792584377;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ d=gmail.com; s=20251104; t=1791980340; x=1792585140; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:reply-to:in-reply-to:references:mime-version:from:to:cc
  :subject:date:message-id:reply-to:content-type;
- bh=d/3zqLfYuRm+7YCJo4+EtPoysMl01w41Nwru3cxg2z0=;
- b=wKNGoQsFNCbowsJLKGjTAZlwFBH2eSNmIumgl9JoYBQxcFBpeEoGdwvcZGeAbQnqMs
- v8O3AhgnT5EAopraoLPpFMCEDtZIL2NecldeuuRZ70dmaQnYdugush/CPSPD14UpBPHm
- fYsCt/jhG0mzBIgY6khaybilLdECycbOcT2t8EUrpN5rpqeBBxWn9hxh1BWqCqK8eGcg
- ZTxsTodmhW1Oy3Xpl7qdYdUUJ+BvKBNHn/DV2+Bw6yxYlu+w+8DzJYSnHYlPh7mnVVL6
- HiMtp0QDdDt/likE6ue7QEe3YkQUtcgP6Bwlc9E84QSq4I9VSKj9XR9hvPqmXqi7LFNf
- /aWg==
-X-Forwarded-Encrypted: i=1;
- AKwUvBxOfL8MEYQD9lbiSU9Xqh3LenfoKVEaXehTru9gR0XZRF7/5dy4oscacN5t9Dft04Hcd4qFI80IwQIU@nongnu.org
-X-Gm-Message-State: AFq9FYKvlpP+NsVc1ER85y297mbeA2yTYRVgoL/PP5nglO08L+pgZ0X1
- DSaID0Nq5C4loI5UD5OBg3CPn2BOkjalWoWtNVZVvtK7keacK4jh3FUrezst5Ugx3u4MCTIgVlf
- /Gyd3p6MI2S7OOj13i0L/y3WIHwPxv9+2dLFaA26YWA==
-X-Gm-Gg: AYBFou30oyM0GuKBJ/CWkYlWH1SZi191uMkX7FohKJ8ULRKjDTrBRlfgcURbMysW4zn
- +Orptg7DnWvoxxwv647rcwGUZyTsHeM63lmUDNcTIRRhPcM6vF4og/cuO39axXxPc4HQTPBfvpn
- VqYI0JtLEmWR6Tah6kWsXD2+6ZvXF0dUY/QLFgMduOMMSci+SXTg1hmkPP9hOV509xigXrtjFZJ
- L7wDXXEA54752csHnjuGRAgTZA+1Km/vraBdEEWb+Z4ba8m2MnkRuk39HRdbyUmZxl1hoHsGdrw
- GWWPSenFsYaen+NdBC5sFad2Oy2Gug+PH9gf30TZfimwbLr8bPWfnMZMyRqjIV6UsnLE1Z9LzGL
- GmKq7duGCpC8aXbGiR/gPJkIQ+GS85w1t/7k4kKs=
-X-Received: by 2002:a05:690c:47c4:b0:8a7:ef2a:ff9c with SMTP id
- 00721157ae682-8b07ebfde3amr43167667b3.2.1791979577149; Wed, 14 Oct 2026
- 05:06:17 -0700 (PDT)
+ bh=ssRl3kbqja2TBFr7DxtKqnpuftUarLL3G3B+v9cQ3R4=;
+ b=sLEkmvREnoI8bbLrgd7HDgQL6iqhILvbpTA/RUE8+eCN2eCNDksiuvczOBn4Wy82fX
+ zPgRNPU74BTmcOHPYQXqszW6a8HWsjpUOoMeTi5bw6ax9VyOANeRCAR6pfm3M0Be7g2D
+ w0t3Msp/YTy1xo0n5CSqkB2ln4ztAG3YesazvS0PawWz5Mf7CPvrhg36ah2oh7Mq5Unz
+ CFIFU9kQxWBwPOr29PadzVIoa6Mw4CRAEnZz6JdoKdqgEW1q10Jw4667mcb2pEp68QQj
+ yLkdZCpW+xxNvg5/Ck+/3YwxopdvQ1NETaCtzCZQn4VMLoGM+/OYGRprrCq9tdnn/JUz
+ e8eg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1791980340; x=1792585140;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:reply-to:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=ssRl3kbqja2TBFr7DxtKqnpuftUarLL3G3B+v9cQ3R4=;
+ b=Repnp070eCtHCIO4fyp/PHzXzNYpR5ylsFUW1nGJT3WfIgWWvlDBMJ8ZbfXX0pEOxK
+ Ye7HoPy+c+EX0qPS6mJ6GhB0a27UV3YNdxUqPLKIvTbruTcZQ1DdeSMyoxzKD+fbRFl3
+ Iz01e53eoUES66TPS7OZho63qoB2R7mofdnvTlVFu8lFERRwLepzFjzu+daIjqfpdvAK
+ KwTL5nYr0sY95lTJJrZDLjkz6BsxDyu7QnfhXU9GfdNQ8JaOXx4Dqzzscf3PQHK+dk7I
+ r04mbUZ+wNKngCLlefymWR0Mh3F3SBwoA7SxR6vwkU6DK5+rkXvijnvjk077p0w7o0rM
+ vesw==
+X-Gm-Message-State: AFq9FYKDJ2PI5+bRozdXIsUxlS/kA+DcO6LCng3lGAxKWi/w5i2LTSzS
+ Wv8yHgGV+4Y4ioF8NHhQsedkHs9IBm1AUQ2RxbO8LjU3RZqyzDoF9QRPvGAAsL/vCQke7TA7uYJ
+ HK/bv8xmGYg6SFCGa7A8qVhz62QxuavM=
+X-Gm-Gg: AYBFou3wM+sfCZcUGaaHVlF4YLfokPJ7CQTOLnL6/3QXvNe3BXb2hbiXCidRryfDv+o
+ iuGlYcROX0wrlBDY7XmM8+7jMjHF30ztYI2YFLSpMtwajHaDmZs0K96FTTYDqzwhFI7P1RuVuHj
+ w9ToGRjHdZMBut5RNKdfDSHup1omJ22rITYHuSW7sjhk2UccFvoAkvfYNjPfY7JvLm1/EOR+0m3
+ Hwtf0a355Me2uqmiS9+m9s9NPQxNFNQP8nURX/Oh7Wh74sEryEjq5GY0dKGiN0RzuAtUvJ8KrdD
+ 64ai1Y+hmFRplermWVNEGjy4qF5Zt9ueYPWgxWKRzXBkW1RH24aAVqg=
+X-Received: by 2002:a05:6402:401c:b0:6b1:bb19:de98 with SMTP id
+ 4fb4d7f45d1cf-6b1bb19e440mr8365980a12.1.1791980339890; Wed, 14 Oct 2026
+ 05:18:59 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260916104435.600211-1-mark.caveayland@nutanix.com>
- <20260916104435.600211-15-mark.caveayland@nutanix.com>
- <CAFEAcA_fv66MxW4QKHjUypSwTZL=LK6YVLgNvoMH83ivn=EMbQ@mail.gmail.com>
- <0148737f-834a-4e7a-8e7f-7fff2ffaa90b@nutanix.com>
-In-Reply-To: <0148737f-834a-4e7a-8e7f-7fff2ffaa90b@nutanix.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Wed, 14 Oct 2026 13:06:05 +0100
-X-Gm-Features: AclHuK8r8W29TXukvU3-Y7mDsa8VmOnEakDfcbLqZ_5sU32lHwrsaLd93jsyRyA
-Message-ID: <CAFEAcA_uWm4kq=NRDcUHrU_gDBEiVRc7_FQz+k6omAre0+p7gA@mail.gmail.com>
-Subject: Re: [PATCH 14/22] i8259.c: properly cascade secondary i8259 from
- primary i8259
-To: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-Cc: pbonzini@redhat.com, richard.henderson@linaro.org, mst@redhat.com, 
- sstabellini@kernel.org, anthony@xenproject.org, edgar.iglesias@gmail.com, 
- qemu-devel@nongnu.org, xen-devel@lists.xenproject.org
+References: <20261014093152.834-1-luoyonggang@gmail.com>
+ <20261014093152.834-5-luoyonggang@gmail.com>
+ <87ecdscyoz.fsf@pond.sub.org>
+In-Reply-To: <87ecdscyoz.fsf@pond.sub.org>
+From: Yonggang Luo <luoyonggang@gmail.com>
+Date: Wed, 14 Oct 2026 20:18:47 +0800
+X-Gm-Features: AclHuK_hLX6fS2anu37HyXXnIlCZfmtNKhy61ehqdJR6WqkDWHSlRaw__mjX-k4
+Message-ID: <CAE2XoE_OReOLTzfeEPAUS7doy94M-V=fVzRTrwD190obxn4ZYg@mail.gmail.com>
+Subject: Re: [PATCH 04/34] qapi: rename SysEmuTarget to EmuTarget
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, Eric Blake <eblake@redhat.com>,
+ qemu-riscv@nongnu.org, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Alexander Bulekov <alxndr@bu.edu>, Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ Gerd Hoffmann <kraxel@redhat.com>, qemu-s390x@nongnu.org,
+ Song Gao <17746591750@163.com>, Matthew Rosato <mjrosato@linux.ibm.com>,
+ Alistair Francis <alistair.francis@wdc.com>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Eric Farman <farman@linux.ibm.com>, 
+ Brian Cain <brian.cain@oss.qualcomm.com>, Stefan Hajnoczi <stefanha@redhat.com>,
+ Darren Kenny <darren.kenny@oracle.com>, Ani Sinha <anisinha@redhat.com>, 
+ Peter Maydell <peter.maydell@linaro.org>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Richard Henderson <richard.henderson@linaro.org>,
+ Stafford Horne <shorne@gmail.com>, 
+ Cornelia Huck <cohuck@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Weiwei Li <liwei1518@gmail.com>, 
+ David Hildenbrand <david@kernel.org>, Laurent Vivier <laurent@vivier.eu>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Fam Zheng <fam@euphon.net>, 
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, 
+ qemu-arm@nongnu.org, Chao Liu <chao.liu@processmission.com>, 
+ Philippe Mathieu-Daude <philmd@mailo.com>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, 
+ Max Filippov <jcmvbkbc@gmail.com>, Stefano Garzarella <sgarzare@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1129;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1129.google.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::535;
+ envelope-from=luoyonggang@gmail.com; helo=mail-ed1-x535.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -119,50 +143,111 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: luoyonggang@gmail.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 14 Oct 2026 at 12:20, Mark Cave-Ayland
-<mark.caveayland@nutanix.com> wrote:
+On Wed, Oct 14, 2026 at 7:24=E2=80=AFPM Markus Armbruster <armbru@redhat.co=
+m> wrote:
 >
-> On 13/10/2026 17:18, Peter Maydell wrote:
+> Yonggang Luo <luoyonggang@gmail.com> writes:
 >
-> > On Wed, 16 Sept 2026 at 11:49, Mark Cave-Ayland
-> > <mark.caveayland@nutanix.com> wrote:
-> >>
-> >> Currently the cascaded output from the secondary i8259 is returned directly in
-> >> the pass_irqs[] array, instead of being connected to the relevant input of the
-> >> primary i8259.
-> >>
-> >> Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-> >> ---
-> >>   hw/intc/i8259.c | 3 ++-
-> >>   1 file changed, 2 insertions(+), 1 deletion(-)
-> >>
-> >> diff --git a/hw/intc/i8259.c b/hw/intc/i8259.c
-> >> index fcc94e12f8..964ceb04b2 100644
-> >> --- a/hw/intc/i8259.c
-> >> +++ b/hw/intc/i8259.c
-> >> @@ -501,7 +501,8 @@ static void i8259_pic_realize(DeviceState *dev, Error **errp)
-> >>       }
-> >>
-> >>       /* Wire up secondary cascade */
-> >> -    qdev_connect_gpio_out(sec_dev, 0, s->pass_irqs[2]);
-> >> +    qdev_connect_gpio_out(sec_dev, 0,
-> >> +                          qdev_get_gpio_in(pri_dev, 2));
+> > As now it's also expressing user-mode targets.
 > >
-> > We just added this line in the previous patch, so we might as well
-> > squash this change into the previous one I think.
-> The reason for having this in a separate commit is because it is
-> technically a behaviour change. Before this commit, an interrupt from
-> the secondary PIC would *always* raise the passed interrupt, whereas on
-> real hardware it is possible to disable interrupts from the secondary
-> PIC by masking the relevant input on the primary PIC [1].
+> > This changes the type name exposed by query-qmp-schema; enum values and
+> > serialized target values remain unchanged.
+>
+> Are you sure?  query-qmp-schema masks the type names.
+Thanks, I'll remove this.
 
-OK, if it's a behaviour change that's fine. The commit message
-is written as if it's just a refactoring, though -- it would
-be helpful to spell out what the behaviour change there and
-that it's fixing a corner case bug.
 
--- PMM
+
+
+>
+> > Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
+>
+> [...]
+>
+> > diff --git a/qapi/machine.json b/qapi/machine.json
+> > index 9b145c635ba..07fac4f0764 100644
+> > --- a/qapi/machine.json
+> > +++ b/qapi/machine.json
+> > @@ -14,7 +14,7 @@
+> >  { 'include': 'machine-common.json' }
+> >
+> >  ##
+> > -# @SysEmuTarget:
+> > +# @EmuTarget:
+> >  #     The comprehensive enumeration of QEMU system emulation
+> >  #     ("softmmu") targets.  Run "./configure --help" in the project
+> >  #     root directory, and look for the \*-softmmu targets near the
+>    #     "--target-list" option.  The individual target constants are not
+>    #     documented here, for the time being.
+>
+> Is this still correct?
+This is a grep rename. I'll update it later, thanks.
+>
+> > @@ -35,7 +35,7 @@
+> >  #
+> >  # Since: 3.0
+> >  ##
+> > -{ 'enum' : 'SysEmuTarget',
+> > +{ 'enum' : 'EmuTarget',
+> >    'data' : [ 'aarch64', 'alpha', 'arm', 'avr', 'hexagon', 'hppa', 'i38=
+6',
+> >               'loongarch64', 'm68k', 'microblaze', 'mips', 'mips64',
+> >               'mips64el', 'mipsel', 'or1k', 'ppc',
+> > @@ -95,7 +95,7 @@
+> >                        'qom-path'     : 'str',
+> >                        'thread-id'    : 'int',
+> >                        '*props'       : 'CpuInstanceProperties',
+> > -                      'target'       : 'SysEmuTarget' },
+> > +                      'target'       : 'EmuTarget' },
+> >    'discriminator' : 'target',
+> >    'data'          : { 's390x'        : 'CpuInfoS390' } }
+> >
+> > @@ -281,7 +281,7 @@
+> >  # Since: 1.2
+> >  ##
+> >  { 'struct': 'QemuTargetInfo',
+> > -  'data': { 'arch': 'SysEmuTarget' } }
+> > +  'data': { 'arch': 'EmuTarget' } }
+> >
+> >  ##
+> >  # @query-target:
+> > diff --git a/qapi/pragma.json b/qapi/pragma.json
+> > index 342cedc42e7..93a710ee937 100644
+> > --- a/qapi/pragma.json
+> > +++ b/qapi/pragma.json
+> > @@ -72,7 +72,7 @@
+> >          'SsidSizeMode',
+> >          'String',
+> >          'StringWrapper',
+> > -        'SysEmuTarget',
+> > +        'EmuTarget',
+> >          'ThrottleGroupProperties',
+> >          'VncPrimaryAuth',
+> >          'VncVencryptSubAuth',
+> > @@ -109,7 +109,7 @@
+> >          'QKeyCode',                 # send-key, input-sent-event
+> >          'QapiErrorClass',           # QMP error replies
+> >          'SshHostKeyCheckMode',      # blockdev-add, -blockdev
+> > -        'SysEmuTarget',             # query-cpu-fast, query-target
+> > +        'EmuTarget',                # query-cpu-fast, query-target
+> >          'UuidInfo',                 # query-uuid
+> >          'VncClientInfo',            # query-vnc, query-vnc-servers, ..=
+.
+> >          'X86CPURegister32'          # qom-get of x86 CPU properties
+>
+> [...]
+>
+
+
+--
+         =E6=AD=A4=E8=87=B4
+=E7=A4=BC
+=E7=BD=97=E5=8B=87=E5=88=9A
+Yours
+    sincerely,
+Yonggang Luo
 
