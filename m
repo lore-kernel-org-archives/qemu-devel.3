@@ -4,114 +4,136 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0A02CC6B2A
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 23:31:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 839DDCC6B30
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 23:47:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xH8QP-0003vY-CK; Wed, 14 Oct 2026 19:30:21 -0400
+	id 1xH8g7-0006zf-K3; Wed, 14 Oct 2026 19:46:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xH8QI-0003vI-IZ
- for qemu-devel@nongnu.org; Wed, 14 Oct 2026 19:30:15 -0400
-Received: from smtp-out1.suse.de ([195.135.223.130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xH8QG-0004u6-MI
- for qemu-devel@nongnu.org; Wed, 14 Oct 2026 19:30:14 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 0FBD321E81;
- Wed, 14 Oct 2026 23:30:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1792020611; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=FPHH/NImkdPoz0NmMtS1FY16Vu2ZuP0TvSk+DW8VSJg=;
- b=PSCpfY4wfhWpQX5RiV1v8juuJlzoLlrTNhhJ5X6DSUZCeDM9kEcJebL8JBcbgg3yIaQk1H
- KSUcHYSFqmpGUFzMuthng56XLpmSpW7AC6jBamC2RKc2+Z32TixbAjxR59NodZJDPlYbx9
- 5deC119oEurLAbcQ3v9qYkxr9J4lOLM=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1792020611;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=FPHH/NImkdPoz0NmMtS1FY16Vu2ZuP0TvSk+DW8VSJg=;
- b=17pgAnfVycJCvc6m1wcuNadX5Nbce4pPS6HIfGY38q7dw1sW1wHMf4GtboX0CQkq5WVu8h
- nCSH2SlNnHTAv9BQ==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=PSCpfY4w;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=17pgAnfV
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1792020611; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=FPHH/NImkdPoz0NmMtS1FY16Vu2ZuP0TvSk+DW8VSJg=;
- b=PSCpfY4wfhWpQX5RiV1v8juuJlzoLlrTNhhJ5X6DSUZCeDM9kEcJebL8JBcbgg3yIaQk1H
- KSUcHYSFqmpGUFzMuthng56XLpmSpW7AC6jBamC2RKc2+Z32TixbAjxR59NodZJDPlYbx9
- 5deC119oEurLAbcQ3v9qYkxr9J4lOLM=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1792020611;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=FPHH/NImkdPoz0NmMtS1FY16Vu2ZuP0TvSk+DW8VSJg=;
- b=17pgAnfVycJCvc6m1wcuNadX5Nbce4pPS6HIfGY38q7dw1sW1wHMf4GtboX0CQkq5WVu8h
- nCSH2SlNnHTAv9BQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id AF3C2133F1;
- Wed, 14 Oct 2026 23:30:09 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id v1A2EIEQ0Gr6SAAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 14 Oct 2026 23:30:09 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: "Denis V. Lunev" <den@openvz.org>, qemu-devel@nongnu.org
-Cc: den@openvz.org, Paolo Bonzini <pbonzini@redhat.com>, Richard Henderson
- <richard.henderson@linaro.org>, Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@oss.qualcomm.com>, Zhao Liu <zhao1.liu@intel.com>
-Subject: Re: [PATCH 09/10] system/cpus: add bql-watchdog-abort
-In-Reply-To: <20260915203455.580999-10-den@openvz.org>
-References: <20260915203455.580999-1-den@openvz.org>
- <20260915203455.580999-10-den@openvz.org>
-Date: Wed, 14 Oct 2026 20:30:02 -0300
-Message-ID: <875wz3n9mt.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1xH8g5-0006yv-RN
+ for qemu-devel@nongnu.org; Wed, 14 Oct 2026 19:46:33 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1xH8g4-0006RY-8c
+ for qemu-devel@nongnu.org; Wed, 14 Oct 2026 19:46:33 -0400
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 69EM1UFx152725
+ for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 23:46:30 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=qcppdkim1; bh=hIHJIzhKQzz
+ +XxbGJEJ4fAADKXjaVM4j4u15jHqvEY8=; b=RPCg4ZCA/3Bnz1oYvdiQdtrHRPN
+ szm9x/QBhrlEMGrBg/MQs42bsqKURfWL48RGhVDZ1zlAQf14O6uJxiHiuXzV1r1G
+ cwb389GtfOwYQ9YHluHgbV2w2MMt1nT5ElFHJNWyh+HRZzeVlpF98ag3GaJYMbJ9
+ jAKxTWaBtqQ57ohXFIf6SQXhp3G3aJUzQWHt/aK4PRQUfKUKC9lUKcbROUcrOoi2
+ 75bYvh8gdbXIxPWeMhI2LO/Xca+W4IkXJYrpDj9E07iQjT1DU+HZDcRFNmSnPBRm
+ zIC+OORt6O7ufUzucssH/OjqJCDUXNWi6I8iN/jfaxeoGLTncco1OixNUoQ==
+Received: from mail-dy1-f198.google.com (mail-dy1-f198.google.com
+ [74.125.82.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ha7aek3uc-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 23:46:30 +0000 (GMT)
+Received: by mail-dy1-f198.google.com with SMTP id
+ 5a478bee46e88-3552883bd19so8896833eec.1
+ for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 16:46:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1792021589; x=1792626389; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=hIHJIzhKQzz+XxbGJEJ4fAADKXjaVM4j4u15jHqvEY8=;
+ b=gtesFGxji7gM+8jTl/honAFFBvl745J7Gsb5FL/eCS6sXsVWlq5wII6EzDmyfxmrGD
+ qYCe1AB94GIx4odQGF1Icb5qHOvrsOFrueCe8CHxcDTGei+J9sSbnReJ/338GxT0nUFX
+ xkPFlZfyefiUydVxvoL4uA+AmnQMjlhc3zy6+OS8HA8Jim/SXrKvxsajrqNUMzx3mpSz
+ cDkrVDvOamPj4pNuc6yVOr7mopVnXRYhHtYkQ4ZRDxTwmL00LH9AXLd/Gbu3arHz/oOq
+ VbGzsafMC1pENSOfgCyy2BnXRu7U6doegaPCzgOd5EDkG5TFviCjXcBGccBPi1zQTjF2
+ uU0Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1792021589; x=1792626389;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=hIHJIzhKQzz+XxbGJEJ4fAADKXjaVM4j4u15jHqvEY8=;
+ b=pEPQC0rd+sGZzRKxgMEUehyh0obsDHL67PiBIcut3pTW63Vbh+pvXEjQ4b1+5FkGfg
+ JxhZ7Ur/6nowL3T4Qrve61vBMb8fzwFJcQYe1ZIQWg2uY1p6s+wz4vEZcEyZxNpB/0cM
+ 024Ab5NrY4Nx3ElFRI6Ntj0qTN2DGcahzMwyEZzcXM6NMRk55mZWbuIIfGgwm4r0Gnrl
+ KcJYX42EtkfOpDh8CRGyG4eDKzelJVCE0l8/nvzg217oIAmAySFkf7jYvL2wy4VbdpLG
+ bF9H3QguAa5aJ3dGkR6MP3ORUWnCyC7ymZCkQlo9xubTp8wzlylNczvFEa9YeESQ1Y5A
+ hKAA==
+X-Gm-Message-State: AFq9FYK79A6vJ0SxwERaufWa7UmMqeRGcG5fJZEZbfT+hA4aHFVxnS1o
+ BPwijU7p+OaNu4LKybFByL8O/XlaiZXU6gl7MPQzmk/Nu0kCLepkMy1ul8gYhc3/knmoFvJkha9
+ IdzhHkUXdQhsMQJXbILlPRWcsh3LklEIVpwMPd3jWX81g+2wLBwk/vqdLZD7Fizg3SA==
+X-Gm-Gg: AYBFou3fB1GZ53oIzU7p0Vh+TIrage4EQS6dtQHlGv+BUGjlHycmHd9a8vERXSOXR97
+ fGoGFSPlie1web9bTxOy7SwBItN0/EGgAi2M2qb9srTLWD8OrvuKY36yH9B10pijZW3qSDJPkUq
+ DMAnZqV6TsnE98BuBRienrk2YDkPhLm4iwznK1KwMWpdQmELNVPPENeSCQB8UnRVCx1PxgydeX2
+ s8unxBDS4gSKqCUH97tIoX0B81bppghf+AK04pFsxvIB70bewKs+8xYwhCJhrDlHmasTqq3tmzr
+ VQroElR3P70klcHDr5k8Kdwa8KRaMzXZTLNht1yXN/fbpaN5LzrN9SjCFjoY0Zr/P6MLN5aAqYU
+ qB1KkhS9/IiSInm442wICBKooHENOpJgCfGSrvjXH1Ox3BKorGzo1Z5h86V5b
+X-Received: by 2002:a05:693c:87c4:10b0:356:4b46:9393 with SMTP id
+ 5a478bee46e88-3564b46940amr20546115eec.24.1792021589241; 
+ Wed, 14 Oct 2026 16:46:29 -0700 (PDT)
+X-Received: by 2002:a05:693c:87c4:10b0:356:4b46:9393 with SMTP id
+ 5a478bee46e88-3564b46940amr20546085eec.24.1792021588466; 
+ Wed, 14 Oct 2026 16:46:28 -0700 (PDT)
+Received: from debian.qualcomm.com (192-80-163-190.dyn.novuscom.net.
+ [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-358de54fe47sm42506147eec.31.2026.10.14.16.46.27
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 14 Oct 2026 16:46:27 -0700 (PDT)
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Subject: [PATCH 09/19] dump: use get_dump_info cpu dump op
+Date: Wed, 14 Oct 2026 23:45:55 +0000
+Message-ID: <20261014234605.209084-10-pierrick.bouvier@oss.qualcomm.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20261014234605.209084-1-pierrick.bouvier@oss.qualcomm.com>
+References: <20261014234605.209084-1-pierrick.bouvier@oss.qualcomm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
- MISSING_XM_UA(0.00)[]; RCPT_COUNT_SEVEN(0.00)[7];
- MIME_TRACE(0.00)[0:+]; MID_RHS_MATCH_FROM(0.00)[];
- RCVD_TLS_ALL(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- TO_DN_SOME(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:dkim,qualcomm.com:email,linaro.org:email,intel.com:email];
- DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Queue-Id: 0FBD321E81
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-ORIG-GUID: YfBydrEJpL8EHxCubWOqZwRd3EmKaRZG
+X-Proofpoint-GUID: YfBydrEJpL8EHxCubWOqZwRd3EmKaRZG
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDE0MDA5NCBTYWx0ZWRfX7FdYFh40g8H7
+ 14E22i7U2N8yxB5Im+Yl4y1eY8k726YDgN62D27y+5EHk8/i6+0cbImDOwf6kDz+37tmjxxy//3
+ p6s6CdwpeTGYalX81KGO7AbeB+B+DeE=
+X-Authority-Analysis: v=2.4 cv=NctzRGD4 c=1 sm=1 tr=0 ts=6ad01456 cx=c_pps
+ a=wEP8DlPgTf/vqF+yE6f9lg==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
+ a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22 a=EUspDBNiAAAA:8
+ a=NYN0z9OFfclgqhKjobcA:9 a=bBxd6f-gb0O0v-kibOvt:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDE0MDA5NCBTYWx0ZWRfXzdc2Tvrc0rS1
+ wmRDx5BhaKSAqgfQaelNKkQWZXZIeV25S14yz2vurXnRkUpsnxzcy0UfSYQp+ngfYAkmYe4tRoG
+ mpD/A2qcW5RRSuXxfDD7QYUj3nofCcHJCLbj5EQHfksKu6r/xuDyrzoVkLa/jx4c0VUncv//uq4
+ 8TKSPOCy2e4Nm99bqPY+s1YN0ha/btbDffSDZdFN/ReaManweO7Bl2sc44rMa/0vEFMWlRTAPl+
+ 5MWA7X0CBJXUaXUYeyMsw7+Y2ouPlpHNQFlt2Fl4FmTqdRADLuJ9bnj0n4v5FS86YjJikxjN6o/
+ 8enOQFRobDhCwRTTdY3B004lgEBQBKuoqgXRlhZzdp8LT+OcaZg1V3POWJbdwBCwUzGtF6TrGcJ
+ JeKpkTlOpqNmoYMOfOMj4kaMZzJpmq/dItyFbZXRqulXWxuTz6DxRTkidxto1mZT1Y1hjizLrun
+ nfv4Mf0eXBUFWO8U08Q==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-10-13_01,2026-10-14_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 clxscore=1015 suspectscore=0 lowpriorityscore=0
+ spamscore=0 phishscore=0 impostorscore=0 bulkscore=0 malwarescore=0
+ adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610080000
+ definitions=main-2610140094
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -128,154 +150,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-"Denis V. Lunev" <den@openvz.org> writes:
+Now that all targets implement this interface, we can replace the
+cpu_get_dump_info() call with the new interface. We still pick the
+first_cpu, which will have to be adapted when we introduce heterogeneous
+emulation.
 
-> From: Denis V. Lunev <den@openvz.org>
->
-> The report says where each thread was when the watchdog looked, not
-> how it got there. A core carries every thread's whole stack, at the
-> price of the guest. A qemu whose BQL has been held this long is not
-> running its vCPUs anyway, so on a host where the answer is worth more
-> than the guest, abort after the report.
->
-> Cc: Paolo Bonzini <pbonzini@redhat.com>
-> Cc: Richard Henderson <richard.henderson@linaro.org>
-> Cc: Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com>
-> Cc: Zhao Liu <zhao1.liu@intel.com>
-> Signed-off-by: Denis V. Lunev <den@openvz.org>
-> ---
->  hw/core/machine.c     | 17 +++++++++++++++++
->  include/system/cpus.h |  4 ++++
->  qemu-options.hx       |  5 +++++
->  system/cpus.c         | 19 +++++++++++++++++++
->  4 files changed, 45 insertions(+)
->
-> diff --git a/hw/core/machine.c b/hw/core/machine.c
-> index b55af89516..2abb9e6295 100644
-> --- a/hw/core/machine.c
-> +++ b/hw/core/machine.c
-> @@ -403,6 +403,17 @@ static void machine_set_bql_watchdog_ms(Object *obj,=
- Visitor *v,
->      bql_watchdog_set_timeout_ms(value, errp);
->  }
->=20=20
-> +static bool machine_get_bql_watchdog_abort(Object *obj, Error **errp)
-> +{
-> +    return bql_watchdog_get_abort();
-> +}
-> +
-> +static void machine_set_bql_watchdog_abort(Object *obj, bool value,
-> +                                           Error **errp)
-> +{
-> +    bql_watchdog_set_abort(value);
-> +}
-> +
->  static bool machine_get_new_accel_vmfd_on_reset(Object *obj, Error **err=
-p)
->  {
->      MachineState *ms =3D MACHINE(obj);
-> @@ -1174,6 +1185,12 @@ static void machine_class_init(ObjectClass *oc, co=
-nst void *data)
->          "Watchdog deadline for a Big QEMU Lock hold, in ms. "
->          "Default: 0 (disabled)");
->=20=20
-> +    object_class_property_add_bool(oc, "bql-watchdog-abort",
-> +        machine_get_bql_watchdog_abort, machine_set_bql_watchdog_abort);
-> +    object_class_property_set_description(oc, "bql-watchdog-abort",
-> +        "Abort after the bql-watchdog-ms report, to leave a core dump. "
-> +        "Default: off");
-> +
->      object_class_property_add_bool(oc, "x-change-vmfd-on-reset",
->          machine_get_new_accel_vmfd_on_reset,
->          machine_set_new_accel_vmfd_on_reset);
-> diff --git a/include/system/cpus.h b/include/system/cpus.h
-> index 0e1e63bd85..14dbc8ff0d 100644
-> --- a/include/system/cpus.h
-> +++ b/include/system/cpus.h
-> @@ -44,4 +44,8 @@ void cpu_synchronize_all_pre_loadvm(void);
->  bool bql_watchdog_set_timeout_ms(uint64_t ms, Error **errp);
->  uint64_t bql_watchdog_get_timeout_ms(void);
->=20=20
-> +/* Abort after reporting, to leave a core behind. */
-> +void bql_watchdog_set_abort(bool enable);
-> +bool bql_watchdog_get_abort(void);
-> +
->  #endif
-> diff --git a/qemu-options.hx b/qemu-options.hx
-> index 9600620d34..f43d8ca480 100644
-> --- a/qemu-options.hx
-> +++ b/qemu-options.hx
-> @@ -33,6 +33,7 @@ DEF("machine", HAS_ARG, QEMU_OPTION_machine, \
->      "                dump-guest-core=3Don|off include guest memory in a =
-core dump (default=3Don)\n"
->      "                mem-merge=3Don|off controls memory merge support (d=
-efault: on)\n"
->      "                bql-watchdog-ms=3Dms report a Big QEMU Lock held lo=
-nger than ms (default: 0, off)\n"
-> +    "                bql-watchdog-abort=3Don|off abort after the bql-wat=
-chdog-ms report (default: off)\n"
->      "                aes-key-wrap=3Don|off controls support for AES key =
-wrapping (default=3Don)\n"
->      "                dea-key-wrap=3Don|off controls support for DEA key =
-wrapping (default=3Don)\n"
->      "                suppress-vmdesc=3Don|off disables self-describing m=
-igration (default=3Doff)\n"
-> @@ -94,6 +95,10 @@ SRST
->          milliseconds, up to a minute. The default is 0, which disables t=
-he
->          watchdog.
->=20=20
-> +    ``bql-watchdog-abort=3Don|off``
-> +        Abort after the ``bql-watchdog-ms`` report, to leave a core dump.
-> +        The default is off.
-> +
->      ``aes-key-wrap=3Don|off``
->          Enables or disables AES key wrapping support on s390-ccw hosts.
->          This feature controls whether AES wrapping keys will be created
-> diff --git a/system/cpus.c b/system/cpus.c
-> index 03a07e4824..a200a07707 100644
-> --- a/system/cpus.c
-> +++ b/system/cpus.c
-> @@ -398,6 +398,7 @@ static int bql_this_tid(void)
->  static QemuThread bql_watchdog_thread;
->  static QemuSemaphore bql_watchdog_sem;
->  static uint64_t bql_watchdog_timeout_ms;
-> +static bool bql_watchdog_abort;
->=20=20
->  static void bql_report_thread_states(void)
->  {
-> @@ -411,6 +412,16 @@ static void bql_report_thread_states(void)
->      qemu_funlockfile(stderr);
->  }
->=20=20
-> +bool bql_watchdog_get_abort(void)
-> +{
-> +    return qatomic_read(&bql_watchdog_abort);
-> +}
-> +
-> +void bql_watchdog_set_abort(bool enable)
-> +{
-> +    qatomic_set(&bql_watchdog_abort, enable);
-> +}
-> +
->  static void *bql_watchdog_fn(void *opaque)
->  {
->      unsigned int last =3D qatomic_read(&bql_seq);
-> @@ -456,6 +467,14 @@ static void *bql_watchdog_fn(void *opaque)
->                       when ?: "", when ? " " : "", timeout_ms,
->                       qatomic_read(&bql_owner_tid));
->          bql_report_thread_states();
-> +        if (!qatomic_read(&bql_watchdog_abort)) {
-> +            continue;
-> +        }
-> +        /*
-> +         * A core carries the whole of every stack, and a qemu whose BQL=
- has
-> +         * been held this long has stopped running its vCPUs anyway.
-> +         */
-> +        abort();
->      }
->  }
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+---
+ dump/dump.c | 16 ++++++++++------
+ 1 file changed, 10 insertions(+), 6 deletions(-)
 
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
+diff --git a/dump/dump.c b/dump/dump.c
+index 52be7258a5d..a08a1eff3ea 100644
+--- a/dump/dump.c
++++ b/dump/dump.c
+@@ -32,6 +32,7 @@
+ #include "migration/blocker.h"
+ #include "migration/misc.h"
+ #include "hw/core/cpu.h"
++#include "hw/core/dump-cpu-ops.h"
+ #include "win_dump.h"
+ #include "qemu/range.h"
+ 
+@@ -1793,7 +1794,6 @@ static void dump_init(DumpState *s, int fd, bool has_format,
+     VMCoreInfoState *vmci = vmcoreinfo_find();
+     CPUState *cpu;
+     int nr_cpus;
+-    int ret;
+ 
+     s->has_format = has_format;
+     s->format = format;
+@@ -1852,12 +1852,16 @@ static void dump_init(DumpState *s, int fd, bool has_format,
+         goto cleanup;
+     }
+ 
+-    /* get dump info: endian, class and architecture.
+-     * If the target architecture is not supported, cpu_get_dump_info() will
+-     * return -1.
++    /*
++     * get dump info: endian, class and architecture.
++     * If the cpu does not support dumping this information, get_dump_info
++     * returns -1.
+      */
+-    ret = cpu_get_dump_info(&s->dump_info, &s->guest_phys_blocks);
+-    if (ret < 0) {
++    const DumpCPUOps *dump_ops =
++        first_cpu ? CPU_GET_CLASS(first_cpu)->dump_ops : NULL;
++    if (!dump_ops || !dump_ops->get_dump_info ||
++        dump_ops->get_dump_info(first_cpu, &s->dump_info,
++                                &s->guest_phys_blocks) < 0) {
+         error_setg(errp,
+                    "dumping guest memory is not supported on this target");
+         goto cleanup;
+-- 
+2.43.0
+
 
