@@ -4,72 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DEC6CC6B1A
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 14:42:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C198DCC6B1A
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 14:56:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xH0Bi-0006le-Km; Wed, 14 Oct 2026 10:42:38 -0400
+	id 1xH0P7-0000T9-83; Wed, 14 Oct 2026 10:56:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1xH0Bh-0006lG-9Q
- for qemu-devel@nongnu.org; Wed, 14 Oct 2026 10:42:37 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1xH0Bf-0003k9-R5
- for qemu-devel@nongnu.org; Wed, 14 Oct 2026 10:42:37 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1791988955;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=tcgCoIamvMlm9LpHA5ocjjZ1wJy+Hx7oD+Z0QMeFelk=;
- b=d9SEcjqc/hEm6KL+TpAsi/QozKLsZ8BFt9LxuqfIAiJgrSFzwf1Pd1NhdaA297xniqP6kd
- Jrohxv/0dDUXotpokba4mKRtZILhwpQIVNpAXahBCM0RBt5rGnPjmHA7/KvstqM5IoV/z7
- jc0PZamavV1nld9mNtkMKLgXxpgwPV4=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-166-2CHJTbYINb-N-WAV1oN2aw-1; Wed,
- 14 Oct 2026 14:42:31 +0000
-X-MC-Unique: 2CHJTbYINb-N-WAV1oN2aw-1
-X-Mimecast-MFC-AGG-ID: 2CHJTbYINb-N-WAV1oN2aw_1791988950
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C10EB1956056; Wed, 14 Oct 2026 14:42:29 +0000 (UTC)
-Received: from localhost (headnet05.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.117])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D17F7195608D; Wed, 14 Oct 2026 14:42:28 +0000 (UTC)
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Hanna Reitz <hreitz@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Zhao Liu <zhao1.liu@intel.com>, Stefan Hajnoczi <stefanha@redhat.com>,
- qemu-block@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
- Eric Blake <eblake@redhat.com>
-Subject: [PULL] dmg: avoid out-of-bounds memory load in dmg_read_mish_block()
-Date: Wed, 14 Oct 2026 10:42:24 -0400
-Message-ID: <20261014144227.1357644-1-stefanha@redhat.com>
+ (Exim 4.90_1) (envelope-from <namangulati@google.com>)
+ id 1xH0P5-0000T1-KT
+ for qemu-devel@nongnu.org; Wed, 14 Oct 2026 10:56:27 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <namangulati@google.com>)
+ id 1xH0P3-0004u9-UY
+ for qemu-devel@nongnu.org; Wed, 14 Oct 2026 10:56:27 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-4a018493d57so256155e9.0
+ for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 07:56:24 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1791989783; cv=none;
+ d=google.com; s=arc-20260327;
+ b=R6X4/Vq7wzRy/vvoamb3iCC02RmRqtFUaZra340t7XDTWmDEslXDnJEcPbQMbYOyDt
+ fTSezoNj1oFvfx7PbrcArriM9wxn+UcTdDrRDTWAuoNG+hLoosEQBWZ+PMlKFeMXJ2w3
+ tEqF68aWzUJfYOi9dENMtxqp949PQGbiC744dkDpVjKdn34UhtFfRs5GdFJzLpzGweIC
+ 9A+DU6wZjQOFmeuydpVWfIaykUOVCUrrx/86nJF9O6qfl50iFemESMh7dII+TYQ01m8X
+ d8S+I15dsGOcgkEy6yRHOnoqEKYG6moiBma1TMwZu+nshM92LBq9XqKUB1TcD6EqObLf
+ b7Sw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=x8zUJjf6RAoXebM+s3RYMUWWJ4sutHZIB3YG08N6kuI=;
+ fh=KY4iSIvi5Jb/nm7e2MRTNVDqflN8B404np/L/XjplCE=;
+ b=VWzLfYDmNvRRQ/tXpX2zFjgvqjt5S0XPvCc+B3wthpFzgVbCSlt2h4mUDm5Cv3aLrI
+ ztHTdR9+Y1QbltxaqgOQlrchNzFwS1OgtRWpBpid7vL5/2zcW6yRYvrJ3LwRgkO2/MBd
+ qdsJ4asODFVSayefNncJmdKoJuxbYQGcKlt0W5LMrs6RP+zY4637WsSLM1DF2NaTcD5x
+ ibrNqJkM0Sh5y1AEBsZnlNomDF0gOce8BA8CgbyGAdjhqHwt7rQNmBsDcTb8Ti5zIyAm
+ nyFjaCUO+GceyVs9IHKSLO77ChcdasszNzaZFgty2Yttlte8cfMROjJOwZuzrMcwCeXt
+ bCwg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=google.com; s=20251104; t=1791989783; x=1792594583; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=x8zUJjf6RAoXebM+s3RYMUWWJ4sutHZIB3YG08N6kuI=;
+ b=JDtDXOxDcs2g/w8nrbXIimjANeQ6u3EPrlplAj8nQ97Wwo5TFSa02ql2RV/urTMyNl
+ 4IjCS+00NixqGWtzTSUFWRId0szfR7E/o8PsR9LnfBPKua3e0cfjOyG/PDBm2qvrgMK5
+ qqglXltsXXkzzn4JbyLmVH9QH3pr4cvOlvivShbbYTbIIckLztbLW/Wo85iIL42L0h9J
+ vF1ZfN+Mk3k/9YV8RHrp1dOHFJm4ipMxuYVN0hUv68FGG4X0sIkWidP2qUe0AwBw7f6N
+ wvP+yBFu6xuxiMbjcpJL3296tPNlmCUGg9xojsXgB/mlUd1iac4ykOw9+UnK/mzarFwt
+ WQxA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1791989783; x=1792594583;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=x8zUJjf6RAoXebM+s3RYMUWWJ4sutHZIB3YG08N6kuI=;
+ b=UQqrSRs6eAu7pCKFWcoRN3kKdGwUNGNN6NBY6VcHAMIM8vvTUjkmcfvjy5CD7IasFl
+ KG7Yj+h/Ywux8gnawcPOGPKez+AeYp9lCg59XPYkBcx8yCsWDMq3SzGAH/Zk+Qki4W2o
+ 4FebKRXg0EQ8LA0MVDYona0nKth0nTaVQ0AIfIjEyQRvFR30Add/0fS74eRRMI4lW/OX
+ 6lpGNQm9sDoeIQUeY1oSYzh32DJQgWzfNv4fJqq/x0YO0djkMzCR+dDPve9UjndWtn8z
+ cQT4jTRiat+KWSXPUSg4NaC1L1zckxGSKfRU+W+QmM+jjbircPfoTiZhW2KYqKc760PN
+ fj0g==
+X-Gm-Message-State: AFq9FYKjZYgd51kMnBM/iWUiFLwPpoW3P25N4wFb7QhruAGF7M7T+HPe
+ 8r0KtK6beTp4pWS3tbWPwDMXAgROrIbpT9cEGWboComYevNHHl1NUkP3e6kRs7ed0QOTNOdsp9n
+ 3aCoLO1Mg4vjkMVcWGukYnHdffPOYfRkQRO1istuR
+X-Gm-Gg: AYBFou15TrIOtcaTI3BuR577gl9CaLQLyHxOrDJy9VBes+0eqYw8yA8JqM6oUqYGquB
+ ZHle/XlHzwCCDJ1xFJKfXVqFCxdXy3zcuoBJHaDYIfO9wXsjy3inAJijHWQxJg6ePSUOCIh+K74
+ n7CqOcihfS0wnKZVPthItGyRJlxzMMtJRIJ6Y0y6jsgR2E7EO1pcTAumd9SQnmUTKUNBArH3VI5
+ 34J619t9LvdUkV2D3j4B711/oZ68gTIQ8zLoToujZlJwAsXGoshJxqy2BPNbBvWByNQ+CSU4Uqv
+ Qa+3R0We/B1bnzAUAxWAzQO6Pe8T+Aunc0olUbn17UWH6Mgq3xj+AnLCoLV0cFeqlIfWoaxohMv
+ E2Uw8YiVq4zt6224Nu7gRQeY=
+X-Received: by 2002:a05:600d:644e:20b0:49f:e1d3:fe03 with SMTP id
+ 5b1f17b1804b1-4a1b67831dbmr673835e9.3.1791989782826; Wed, 14 Oct 2026
+ 07:56:22 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 10
-X-Spam_score: 1.0
-X-Spam_bar: +
-X-Spam_report: (1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
+References: <20261009175314.1823347-1-namangulati@google.com>
+ <20261009175314.1823347-4-namangulati@google.com>
+ <9bfb90b4-7ed5-4400-abf6-d01e110e840d@redhat.com>
+In-Reply-To: <9bfb90b4-7ed5-4400-abf6-d01e110e840d@redhat.com>
+From: Naman Gulati <namangulati@google.com>
+Date: Wed, 14 Oct 2026 07:56:10 -0700
+X-Gm-Features: AclHuK82akNIiwRWo3l4lOcKwuEBOoYWec9-zbdioGlbe-1HleX3XynKHHRJdxk
+Message-ID: <CAMP57yXMP8mpdo98pcBhx6bwYh--bL0hVwMQ1gEf3BOAPE-ntg@mail.gmail.com>
+Subject: Re: [PATCH v4 3/4] vfio: add setup_sparse_mmaps hook to
+ VFIODeviceIOOps
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Cc: qemu-devel@nongnu.org, John Levon <john.levon@nutanix.com>, 
+ Thanos Makatos <thanos.makatos@nutanix.com>, Alex Williamson <alex@shazbot.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Matt Evans <matt@ozlabs.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=namangulati@google.com; helo=mail-wm1-x32b.google.com
+X-Spam_score_int: -175
+X-Spam_score: -17.6
+X-Spam_bar: -----------------
+X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,47 +124,135 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-dmg_read_mish_block() loads from memory beyond the end of the buffer
-when count is less than 4.
+On Sun, Oct 11, 2026 at 10:39=E2=80=AFAM C=C3=A9dric Le Goater <clg@redhat.=
+com> wrote:
+>
+> On 10/9/26 19:53, Naman Gulati wrote:
+> > Add a setup_sparse_mmaps callback to VFIODeviceIOOps so transport
+> > backends (such as vfio-user) can parse custom sparse mmap capabilities,
+> > falling back to vfio_default_setup_sparse_mmaps() to process shared
+> > VFIO mmap capabilities.
+> >
+> > Signed-off-by: Naman Gulati <namangulati@google.com>
+> > ---
+> >   hw/vfio/vfio-region.h         |  5 +++++
+> >   include/hw/vfio/vfio-device.h | 16 ++++++++++++++++
+> >   hw/vfio/region.c              | 25 ++++++++++++++++++++++---
+> >   3 files changed, 43 insertions(+), 3 deletions(-)
+> >
+> > diff --git a/hw/vfio/vfio-region.h b/hw/vfio/vfio-region.h
+> > index 9f6a5cf7d5..a0c9533f9f 100644
+> > --- a/hw/vfio/vfio-region.h
+> > +++ b/hw/vfio/vfio-region.h
+> > @@ -46,4 +46,9 @@ void vfio_region_mmaps_set_enabled(VFIORegion *region=
+, bool enabled);
+> >   void vfio_region_exit(VFIORegion *region);
+> >   void vfio_region_finalize(VFIORegion *region);
+> >
+> > +struct vfio_region_info;
+> > +int vfio_default_setup_sparse_mmaps(VFIORegion *region,
+> > +                                    struct vfio_region_info *info,
+> > +                                    Error **errp);
+> > +
+> >   #endif /* HW_VFIO_REGION_H */
+> > diff --git a/include/hw/vfio/vfio-device.h b/include/hw/vfio/vfio-devic=
+e.h
+> > index 8472420d3f..3136e152f2 100644
+> > --- a/include/hw/vfio/vfio-device.h
+> > +++ b/include/hw/vfio/vfio-device.h
+> > @@ -43,6 +43,7 @@ enum {
+> >
+> >   typedef struct VFIODeviceOps VFIODeviceOps;
+> >   typedef struct VFIODeviceIOOps VFIODeviceIOOps;
+> > +typedef struct VFIORegion VFIORegion;
+> >   typedef struct VFIOMigration VFIOMigration;
+> >
+> >   typedef struct IOMMUFDBackend IOMMUFDBackend;
+> > @@ -218,6 +219,21 @@ struct VFIODeviceIOOps {
+> >       int (*get_region_info)(VFIODevice *vdev,
+> >                              struct vfio_region_info *info, int *fd);
+> >
+> > +    /**
+> > +     * @setup_sparse_mmaps
+> > +     *
+> > +     * Parse sparse mmap capabilities for a region and initialize regi=
+on->mmaps.
+> > +     *
+> > +     * @region: #VFIORegion to set up
+> > +     * @info: region info struct containing capabilities
+> > +     * @errp: pointer to Error*, to store an error if it happens
+> > +     *
+> > +     * Returns 0 on success, -ENODEV if not sparse, or negative error =
+code.
+> > +     */
+> > +    int (*setup_sparse_mmaps)(VFIORegion *region,
+> > +                              struct vfio_region_info *info,
+> > +                              Error **errp);
+> > +
+> >       /**
+> >        * @get_irq_info
+> >        *
+> > diff --git a/hw/vfio/region.c b/hw/vfio/region.c
+> > index 16efed2fce..d6cd5d4743 100644
+> > --- a/hw/vfio/region.c
+> > +++ b/hw/vfio/region.c
+> > @@ -162,9 +162,9 @@ static int vfio_mmap_compare_offset(const void *a, =
+const void *b)
+> >       return 0;
+> >   }
+> >
+> > -static int vfio_setup_region_sparse_mmaps(VFIORegion *region,
+> > -                                          struct vfio_region_info *inf=
+o,
+> > -                                          Error **errp)
+> > +int vfio_default_setup_sparse_mmaps(VFIORegion *region,
+> > +                                    struct vfio_region_info *info,
+> > +                                    Error **errp)
+> >   {
+> >       struct vfio_info_cap_header *hdr;
+> >       struct vfio_region_info_cap_sparse_mmap *sparse;
+> > @@ -198,6 +198,25 @@ static int vfio_setup_region_sparse_mmaps(VFIORegi=
+on *region,
+> >
+> >       region->nr_mmaps =3D j;
+> >       region->mmaps =3D g_realloc(region->mmaps, j * sizeof(VFIOMmap));
+> > +    return 0;
+> > +}
+> > +
+> > +static int vfio_setup_region_sparse_mmaps(VFIORegion *region,
+> > +                                          struct vfio_region_info *inf=
+o,
+> > +                                          Error **errp)
+> > +{
+> > +    int ret, i;
+> > +
+> > +    if (region->vbasedev->io_ops &&
+> > +        region->vbasedev->io_ops->setup_sparse_mmaps) {
+>
+> Every other hook is a mandatory field. This should add :
+>
+>    .setup_sparse_mmaps =3D vfio_default_setup_sparse_mmaps
+>
+> in the kernel VFIO io_ops to be consistent with the rest of the code.
+>
+> Thanks,
+>
+> C.
+>
 
-There is no known security impact here because dmg_read_mish_block()
-returns almost immediately without any opportunity to gain control of
-execution or cause other damage. A crash will not happen because it's a
-32-bit load from a memory address that was just heap allocated. The
-address will be properly aligned and will not span a page of memory.
+Thanks, missed that, will fix.
 
-Reported-by: router0mail <https://gitlab.com/router0mail>
-Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-Reviewed-by: Eric Blake <eblake@redhat.com>
-Message-id: 20261013193710.1311621-1-stefanha@redhat.com
-Fixes: 7aee37b93a4f ("block/dmg: process a buffer instead of reading ints")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4569
-Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
----
- block/dmg.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
-
-diff --git a/block/dmg.c b/block/dmg.c
-index 5d7d3b8901f..412d4bfc354 100644
---- a/block/dmg.c
-+++ b/block/dmg.c
-@@ -226,9 +226,13 @@ static int dmg_read_mish_block(BDRVDMGState *s, DmgHeaderState *ds,
-     uint64_t in_offset = ds->data_fork_offset;
-     uint64_t out_offset;
- 
-+    if (count < 244) {
-+        return 0; /* too small, skip silently */
-+    }
-+
-     type = buff_read_uint32(buffer, offset);
--    /* skip data that is not a valid MISH block (invalid magic or too small) */
--    if (type != 0x6d697368 || count < 244) {
-+    /* skip data that is not a valid MISH block (invalid magic) */
-+    if (type != 0x6d697368) {
-         /* assume success for now */
-         return 0;
-     }
--- 
-2.56.0
-
+> > +        ret =3D region->vbasedev->io_ops->setup_sparse_mmaps(region, i=
+nfo, errp);
+> > +    } else {
+> > +        ret =3D vfio_default_setup_sparse_mmaps(region, info, errp);
+> > +    }
+> > +
+> > +    if (ret) {
+> > +        return ret;
+> > +    }
+> >
+> >       /*
+> >        * Sort sparse mmaps by offset to ensure proper handling of gaps
+>
 
