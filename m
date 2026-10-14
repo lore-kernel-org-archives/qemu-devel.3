@@ -4,97 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E6E6CC6B1A
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 17:26:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D800CC6B1A
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 17:36:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xH2k8-0000Jj-65; Wed, 14 Oct 2026 13:26:20 -0400
+	id 1xH2tC-0001hQ-IO; Wed, 14 Oct 2026 13:35:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xH2k5-0000Is-T2
- for qemu-devel@nongnu.org; Wed, 14 Oct 2026 13:26:18 -0400
+ id 1xH2t9-0001gD-K7
+ for qemu-devel@nongnu.org; Wed, 14 Oct 2026 13:35:39 -0400
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xH2k2-000502-Pt
- for qemu-devel@nongnu.org; Wed, 14 Oct 2026 13:26:17 -0400
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+ id 1xH2t6-0005q0-Qy
+ for qemu-devel@nongnu.org; Wed, 14 Oct 2026 13:35:38 -0400
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69EF4FJL4167069
- for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 17:26:13 GMT
+ 69EGZkIN3468967
+ for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 17:35:34 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- TlhXdUVNZOaqaTE9dOIdhq1YTWPu4xMWhK6VXVWA79Q=; b=HqiOgssqJWOb76Ds
- Ib1/dbQXxcVsi0TDSvecRI77Nb3G6DAZX6veqJYBResy1O2bKhXQKgVClKcvz567
- zw1fs/GFSXyCcG13jNb216fo85xs8CuITKb3C+zCkJ5YK309KDtogb7UEHL7tnyf
- 1vkdULMJXwdPv7EbTW3etXVcZLEiSPl6zPxAhMY9bVSwJVcO05PMhB/L0bbOf0Yy
- QkFoebFFM9xGvl5IQdecmykonVBFN0Z+QHfkfgIFTk+Aa+HBCZDKUmEbohWFpVAB
- jDplCTjyqwveHQyPL2arBBISLNhWUYC1pITYdOK1LCx8TRTzrKHpIffCbDXW1O2+
- m99REg==
-Received: from mail-dy1-f197.google.com (mail-dy1-f197.google.com
- [74.125.82.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hac230js9-1
+ kPaexnRf9zS+LN69dCeGEbXqXvBgg7OhiPBeXsfIQDY=; b=PgUDkhfmCapFshJA
+ OxHHnhtvk6zbqX3e/Z0oHyYKvX+Y+je1zF9f9Ejtgn4VpUQrwkPD61vEpMYuKwDN
+ 1s46gCFrq3FsXcuhJzyUAfxTxhF07lNiSSYaRc3QT1FBIY14Col354urmj287I6X
+ 2/h573pT+qETucsA50HT6/2Up6mg+gnL00/8M1YvCTufDVUPcvToLf5phJ0FQkm4
+ YDvucffjbCtmFlSz1J/C5HfvjFXcKwVi93E2xuZGFNkXK9i1F8n4Iqs2gwkfb3Z7
+ A3S6qPTiVFUHNuc6ATcgNGnYWSayekO0TB4DFIvmIv5yLiR+JkTCyykw/1+bUcoK
+ 8DMinA==
+Received: from mail-dy1-f199.google.com (mail-dy1-f199.google.com
+ [74.125.82.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hadd7885h-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 17:26:12 +0000 (GMT)
-Received: by mail-dy1-f197.google.com with SMTP id
- 5a478bee46e88-3548cdfd2fbso6712711eec.1
- for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 10:26:12 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 17:35:34 +0000 (GMT)
+Received: by mail-dy1-f199.google.com with SMTP id
+ 5a478bee46e88-3580c07911eso11464214eec.0
+ for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 10:35:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1791998772; x=1792603572; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1791999334; x=1792604134; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=TlhXdUVNZOaqaTE9dOIdhq1YTWPu4xMWhK6VXVWA79Q=;
- b=Ln/DLRrS7i9y2mK19oK3aQC99P+I8TLFyjzDVrGBkt/nOnkcQylbZ7Rn8+eRSUDcqC
- iydMKeh+QZI2a9W/CJ1YMTlQjZMTVfRzw3Vvpq3M0oOREVA2SoP3USUtrDLqif5Y6f/7
- nvb8VuLBxQwtfLTRbVZKWSD0AFHslOjlPF/bArrug30QbWE808RldZ+SO+GNeOL20c61
- V4bMbyq67tmadaMIe+04K89azrDwGsf4mnN+vUF+lwavXTFErtPYh0VE54Rqi8UY03eF
- YL8PEje3x3pL2uDCF5qtsmE4sUMVl9+nmcnT/jkOpefk7oj/IkMc1wQEHzC630BgKUrp
- hwVg==
+ bh=kPaexnRf9zS+LN69dCeGEbXqXvBgg7OhiPBeXsfIQDY=;
+ b=XoCfp3xs0XNbZzy1S6Bvy7EEjOPTrpsYPsuQPye1v985RQYg9Br9mpTGBl4nwEMEbw
+ oLocwx2Iq1tZe6DuWl0dLF9S6L3BpX5XEZ45Wq2YeDcHcGP7n4s0NkhhnGUCK6HVvp4j
+ FPA4ei8YGiQEVyIHE8N/X5xsZ5r55WUKVCcUqZ5hidLx0a0Sf+mJDq0ekvi0deLyQUOn
+ lVoyB6wXAhpLG1dFH+Ol9uTa9GCHUZxsWAniFAOk4oVkIDj3JBWmz0jYgypXD+IeQCYP
+ qeJ87UzcxA5q7DCnxnTuBDTD53d2pt3A1bo/cDkUnCv91OH2olkd1hgPMP9XQaMCgLvV
+ 5OAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791998772; x=1792603572;
+ d=1e100.net; s=20260707; t=1791999334; x=1792604134;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=TlhXdUVNZOaqaTE9dOIdhq1YTWPu4xMWhK6VXVWA79Q=;
- b=hWhkhjI2/HuoqyGIYS7CcHthNmS+2k7P2u8fgemRWpvxETHAPEOfIE0Rgw2PnRXn2+
- adnGYgC7UWZKQhkycf/gt4cmrWjm9hKBW0X7HFWn6jnnI8HZASei2rnYtbYkAdQ1qbrD
- bcLgurywdbf+BeG96YaI2yaYGS0UuMblfDM9NFcvBcapvCyIQvGYCVi3qodwp1eajDcG
- ryeKxGQkmaDrwISr5Y8ZRTvpKz7m7bzwdWJaBsZZ42QWN8AXZoXfIzKaGRvmSdC8TJBX
- 4a0k/s1nZTUSkO5XdeDa3k8JMF50QRwCWRfu62WC1FmYi6YLebe8piqhOzpM6j5tEPW+
- eFPA==
+ bh=kPaexnRf9zS+LN69dCeGEbXqXvBgg7OhiPBeXsfIQDY=;
+ b=IQ9ct+wXzpm/X2hMX8LRDXSvtFY32npWwTBDOlHhXJ/eG4+lyrGlAEfGOIdFGeBHWM
+ SZ5n+noS4bVid58TrkjE1Z/WbNYNhnexlbsQQNkGg0ywGEODtSn0C+l5gUYrXqFTv42o
+ +dCdgz2AFU0vlAe/pdpmuYhpO1ysU6TR3UT+RjgVagkObtCEMI2MkeINuW2iApmFW/fn
+ ldIZseIm5lbet1HA1yFkldMx3Mfavki1WRskfm94p7WtL6w9L29lCji46G6qqjuLxpM9
+ 2AGy/gwpmt4aJsvlgNKeYFG784bZ/5BSiUaRxPklqmkOZVWUSYI2Lc6gdRyFNLdZMO9Z
+ Yoxw==
 X-Forwarded-Encrypted: i=1;
- AKwUvBwarEXPdOnUW5Gft4/XqOtwjbtWYavL/r7c1GktGrsZ9sSXcz7Ag7dYwcY2d5zN/Uq5zdlccz3KD3NH@nongnu.org
-X-Gm-Message-State: AFq9FYJMU/eNIXRfc27oXHnGH+sTET89ZjBHg1V9v38xG4sQgJY4TcEr
- w5g+TeDlnP4TLaQBjfSxvIIG2u8r7fvukDjXFSTzgpg2PHII0kpizRnX0xYkHbS3HItEPdLSZRk
- n9XPYHtGVrEZg10EqygP/8D8P89vnA8whW2hU184JHz6qGftSd/wS62hoaQ==
-X-Gm-Gg: AYBFou0BLHDonXsy6Ue4Eer2bBl0EIoG8+AuwB2a/EL/SxU8kmVOEnBfLrCocUXzsN0
- xBFssyGx+cSNP1Xf40wDJr+2O9/mjJ3vuVLNbCiCwZr2HnQ4dsN8jKmodg21S61WZhLWDrPUKk+
- OJsZ5ZuHmxU9HG85FMYKrncXF/yaV4J6s+nRG8CuheEQdVeUHZ/eSbURU9H1Ybn16VkqrgFbwos
- a5upgt8RwSqjid5CSCoRdwQXD57RAqkNvYMMbApn7QI9IpGsyVGdMqhM121fSt4btLqo/yizCXY
- 7yG06j6kzoFwKLw9kx8TKi9hpEqIPRDlz4NtqQ8KF+Ln138qrnnHhb4wqB2531nm8J4A4xGhJ/N
- 0V5SnXoKncK9uD3IKOZknjBsScsTylSkfB7a2GEmAim6gbdxzVk0yAujer3mY01rm6+Wygw==
-X-Received: by 2002:a05:7300:b913:b0:358:cb31:4277 with SMTP id
- 5a478bee46e88-358cb3169e2mr25913377eec.28.1791998772057; 
- Wed, 14 Oct 2026 10:26:12 -0700 (PDT)
-X-Received: by 2002:a05:7300:b913:b0:358:cb31:4277 with SMTP id
- 5a478bee46e88-358cb3169e2mr25913302eec.28.1791998771444; 
- Wed, 14 Oct 2026 10:26:11 -0700 (PDT)
+ AKwUvByIaJBXifHp2FN/pOXWhuuJOJF6JWA9bCYtkbg+HQoR/Y4ApbaIE9SXL8sgn54X6iYJ/WzfxsEvu21f@nongnu.org
+X-Gm-Message-State: AFq9FYLXqo7TQ7/325Am8gFjzBHL2cPZgq1oMI/77KGrE6zrE0ONFvfP
+ D+OYN58F2G2eWiaotUW1CuKXMO9uMNPo7bZL1uL4EMRIZFCsgzgUVJwyGoIiGdaTo2BX/aX22ji
+ fRxXs3PPRBRzTCiaHIWVUA3S6OVu/kkX5UKLvRhK0RVx2LAb4PFu1UmUtmQ==
+X-Gm-Gg: AYBFou1BBtOZtKQvf7bPist+MinFldJd5G4cq3fIm+tQAtr1My0+VfFwdt+f2OugTQ3
+ jePnlu6bFHfczscLAHSX/dCzOldMYD5ne3NWaangmMHLpMWz8SdzhA2oJg97ZkRIU/Zit2cOrxD
+ ldVQsy8fc48nPLSswf4CZavYx40LO8+SsW1xC9O7d5L80wpcYDx63kY3lSYFKrzv7bY4Z5vJCze
+ u9H0EaNd295sm8FibqSP+H0uxSwWT6EiLt9mB7tFoVEcjW5VVNx8BLKPN8+HU+mmE3+3YH5wOEn
+ hO9oPJCyI6e7QaF1mrEK3xDMYIAxNOoAc9ZhQ1oEPqE847bOhfQoNMRjqsH1PEdRJAagU0C+pjn
+ tno2jkDQBOceIBbW3WWGLcTmC1W773GGIl9eq0qC68+9nF/+R6rw3IOj/UBWlFBSQV2805g==
+X-Received: by 2002:a05:693c:6099:b0:35e:e454:da28 with SMTP id
+ 5a478bee46e88-35ee454da93mr548551eec.16.1791999333698; 
+ Wed, 14 Oct 2026 10:35:33 -0700 (PDT)
+X-Received: by 2002:a05:693c:6099:b0:35e:e454:da28 with SMTP id
+ 5a478bee46e88-35ee454da93mr548442eec.16.1791999332701; 
+ Wed, 14 Oct 2026 10:35:32 -0700 (PDT)
 Received: from [192.168.1.199] (192-80-163-190.dyn.novuscom.net.
  [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-35b29c2f861sm37806266eec.11.2026.10.14.10.26.08
+ 5a478bee46e88-3537ca6d202sm53293624eec.13.2026.10.14.10.35.30
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 14 Oct 2026 10:26:10 -0700 (PDT)
-Message-ID: <435a282c-f3fe-4d68-bb82-fc358dc7b771@oss.qualcomm.com>
-Date: Wed, 14 Oct 2026 10:26:08 -0700
+ Wed, 14 Oct 2026 10:35:32 -0700 (PDT)
+Message-ID: <b0d5c95f-b08d-4a3b-9c8c-7a7575250fdc@oss.qualcomm.com>
+Date: Wed, 14 Oct 2026 10:35:29 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 05/34] qapi: add missing Linux user-mode targets to
- EmuTarget
+Subject: Re: [PATCH 00/34] single-binary: Select the softmmu target through
+ -machine <type>
 To: Yonggang Luo <luoyonggang@gmail.com>, qemu-devel@nongnu.org
 Cc: Eric Blake <eblake@redhat.com>, qemu-riscv@nongnu.org,
  =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
@@ -124,40 +124,39 @@ Cc: Eric Blake <eblake@redhat.com>, qemu-riscv@nongnu.org,
  Jiaxun Yang <jiaxun.yang@flygoat.com>, Max Filippov <jcmvbkbc@gmail.com>,
  Stefano Garzarella <sgarzare@redhat.com>
 References: <20261014093152.834-1-luoyonggang@gmail.com>
- <20261014093152.834-6-luoyonggang@gmail.com>
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Content-Language: en-US
-In-Reply-To: <20261014093152.834-6-luoyonggang@gmail.com>
+In-Reply-To: <20261014093152.834-1-luoyonggang@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=PYJqFShd c=1 sm=1 tr=0 ts=6acfbb34 cx=c_pps
- a=Uww141gWH0fZj/3QKPojxA==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
+X-Authority-Analysis: v=2.4 cv=BaVNQbt2 c=1 sm=1 tr=0 ts=6acfbd66 cx=c_pps
+ a=cFYjgdjTJScbgFmBucgdfQ==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
  a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
- a=pGLkceISAAAA:8 a=sG8BiHsngPr4fBh7ZusA:9 a=QEXdDO2ut3YA:10
- a=PxkB5W3o20Ba91AHUih5:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDE0MDA2OSBTYWx0ZWRfX5gVPUR99IK3K
- q6GS6QS2c+j1StrRt8VEPzZJGdIyt6kAHBkdBohTnYmQbQl29prDkxmkEwKqmbEKozXTOyw5gIx
- GzaYqEkDk5AqlsU7fIZM6YpCd00CkTg=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDE0MDA2OSBTYWx0ZWRfXx/7kWQDRaE6s
- 3QWM4whTFMemcUD9yjsHp34hU9nRW0nue9d+aWpFWxDgF2mLIZ/X35HsENUnVa73iHnV3BvKhnb
- PLIkumQU5iwC+aUxfzCLRVXhj34tnzrYFSYZThijNOu+oC4vbuVtF87UI5w6d3PqtNM+HaWUJqT
- xifaRxqsjiCEtVEObQ61eGBtY6yM9MmO4sqJVx33PrHhXDq2kn/2HJlWN5QJYlxh61nXKeJmlzJ
- XIJYOun3a8o+ztmSGHKKOAF3iqHCC9DaAZiOGhxUMtskMMAW0NFY53UodDOvu0qmbR2rwLhuegS
- zfaIFCtsf+mDpf3afgHdcKkq+ZZq8eFWAEgmP9ojD3JQTiBmkQbXtqBUH+2tnkkZ+4He+a53eUV
- D8U0bgJrmsGBzROs1LcNC/Pjpp8o6OM2UWn0bdN+ZppjXKjZodKZrBx8HpkCtL5bKvCzMllU5R+
- Ajxm4+0F3Mi/elE9Pcw==
-X-Proofpoint-GUID: f-7EiLwEzqnJhOyV-C6WFUbgcDm57u1k
-X-Proofpoint-ORIG-GUID: f-7EiLwEzqnJhOyV-C6WFUbgcDm57u1k
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=OrK7x0LPfmxmPngmsFUA:9 a=QEXdDO2ut3YA:10
+ a=scEy_gLbYbu1JhEsrz4S:22
+X-Proofpoint-GUID: ze-0uGOx67IdO13U0OJS3yUJZHm1THmP
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDE0MDA3MCBTYWx0ZWRfX4HZYmrJ1iOi2
+ 94bUl5lu8WewidlxICMYBS7tJdrfB73zdCYZ9PkiKYtOfMXg0/JJbNBgkEXUProLbjrgLoIdBfB
+ J1Jy+YDV0o8/z3VFW3YVAPRp214vAKV4NqHnnBdSP9m2rgfFFBd9b14H03IpoI9DhZWDbxhS/pt
+ TjIEQTOeUupbnp+OVP9RhUaU3TQ+2H2wOIXKzMV85PFwC6rpqehXpYATsVVI2GsLxPLMXOIOGQ7
+ fMZ9zi6Rp7eBrEGnh2FPtXc9YKwo6WZ7WSH4Dukb41hLTMrZQCpPPU0RC9xY8SMfTKVT3bPQfJD
+ dn38+XQzasn5Kl9ua3xE0ifzyM4TM4nylFKf10y3OaFoADDTQv6lR7io2HVNnKlDXfblw5B9hVx
+ jTKZ0PQ8oy06D1eX8zGXRoI8iQkn5YvZijSmdI22jAs/0IVMg97E6EE8m+fL04nZwoZtxD36wcu
+ Qwmtk0nYJOfQexW1skw==
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDE0MDA3MCBTYWx0ZWRfX7Q0KMpF+O3QP
+ 6+Iqz3/2iXdDCqUkHuzE6RIaGarl++vLa5NedezlMwFGozod1ptkyUkyJCetohE/NIJuNdANad3
+ 6B1rqRvf4CGhQ3/Hq4FWNs7QFje2LAE=
+X-Proofpoint-ORIG-GUID: ze-0uGOx67IdO13U0OJS3yUJZHm1THmP
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-10-13_01,2026-10-14_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 bulkscore=0 clxscore=1015 priorityscore=1501
- suspectscore=0 phishscore=0 malwarescore=0 impostorscore=0 adultscore=0
+ suspectscore=0 clxscore=1015 phishscore=0 lowpriorityscore=0
+ priorityscore=1501 bulkscore=0 impostorscore=0 malwarescore=0 adultscore=0
  spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
  adjust=0 reason=mlx scancount=1 engine=8.22.0-2610080000
- definitions=main-2610140069
+ definitions=main-2610140070
 Received-SPF: pass client-ip=205.220.168.131;
  envelope-from=pierrick.bouvier@oss.qualcomm.com;
  helo=mx0a-0031df01.pphosted.com
@@ -184,35 +183,157 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 10/14/2026 2:31 AM, Yonggang Luo wrote:
-> This usermode targets:
-> aarch64_be
-> armeb
-> microblazeel
-> mipsn32
-> mipsn32el
-> ppc64le
-> sparc32plus
-> are not in machine.json
+> MachineClass::targets declares each machine's supported targets as a
+> uint64_t QEMU_ARCH_* mask.
 > 
-> This is a prepare for directly using TARGET_ARCH_VARIANT latter.
+> In the combined executable, a machine can be selected from
+> <target>-<machine-name> when <machine-name> is ambitious.
+> Otherwise we can use <machine-name> to directly select a target.
 > 
-> Also get target-info.c to be compatible with future TARGET_ARCH_VARIANT only usage.
-> So that we can define TARGET_ARCH_VARIANT to target_name directly
+> Renaming SysEmuTarget to EmuTarget prepares the enum for both system and
+> user-mode targets before introducing more usage of it.
+> Rationale:
+> https://lore.kernel.org/qemu-devel/d6217459-1e55-4da0-a49f-bde8215d8c0e@oss.qualcomm.com/
 > 
-> Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
-> ---
->  include/qemu/base-arch-defs.h | 13 +++++++++++++
->  qapi/machine.json             | 25 +++++++++++++------------
->  target-info.c                 | 26 +++++++++-----------------
->  3 files changed, 35 insertions(+), 29 deletions(-)
+> The "virt" machines need distinct QOM names to coexist in a combined binary
+> or test. Their existing CLI names and aliases are preserved.
+> 
+> Other indirect call of target_info() in class_init/type_init is removed by
+> serveral commits, this is a prepare for select <target> by -machine $type.
+> As target_info() will be NULL till the target is selected under machine_select.
+> 
+> The commits through "hw: add MachineClass::targets with a usage and test"
+> add a minimal demo/test for introduce MachineClass::targets
+> 
+> The next group, through
+> "meson: build combined qemu-system for multi-target configurations",
+> enabled the test guard to prevent introduce future calling
+> target_info() in type_init or class_init
+> 
+> These two boundaries provide possible merge points.
+> 
+> "targets" be exported along with MachineInfo in commit
+> "qmp: Expose supported targets in query-machines", so that the qmp know
+> how to set proper $<target>-<machine-name>.
+> 
+> The rest commits is the introduce of support of <target> select from
+> `-machine $type`.
+> 
+> Yonggang Luo (34):
+>   qemu/base-arch-defs: extract QEMU_ARCH_BIT for QEMU_ARCH_* enums
+>   qemu: Use SYS_EMU_TARGET__MAX to define QEMU_ARCH_ALL
+>   qemu: increase width of QEMU_ARCH_* masks enums to be 64 bits
+>   qapi: rename SysEmuTarget to EmuTarget
+>   qapi: add missing Linux user-mode targets to EmuTarget
+>   meson: define TARGET_ARCH_VARIANT to target_name only
+>   target-info: prepare the QOM target list before
+>     module_call_init(MODULE_INIT_QOM)
+>   hw: add MachineClass::targets with a usage and test
+>   accel: register CPU parent for each target
+>   meson: collect Rust crates for combined system target
+>   module: Add module_allow_all_arch for allow all modules be loaded
+>   target/arm: defer max-v8 initializer selection until CPU creation
+>   hw/microblaze: defer PetaLogix endianness default until init
+>   hw/pci: Avoid guard loadparm with target_s390x() for s390x in
+>     class_init
+>   hw/scsi: Avoid guard loadparm with target_s390x() for s390x in
+>     class_init
+>   hw/virtio/virtio-mem: Avoid call to target_info() in class_init
+>   target-info: add a combined-binary query stub
+>   machine: allow -M name to differ from QOM type
+>   hw/riscv/virt: use unique QOM name
+>   hw/arm/virt: use unique QOM name
+>   hw/or1k/virt: use unique QOM name
+>   hw/hexagon/virt: use unique QOM name
+>   hw/loongarch/virt: use unique QOM name
+>   hw/m68k/virt: use unique QOM name
+>   hw/xtensa/virt: use unique QOM name
+>   qapi: return MachineInfo typename from query-machines
+>   machine: match the versioned virt example to arm virt
+>   hw: Add MachineClass.targets for all "virt" machines for all possible
+>     targets
+>   system/arch_init: update qemu_arch_available to handle non-target
+>     select condition
+>   meson: build combined qemu-system for multi-target configurations
+>   qmp: Expose supported targets in query-machines
+>   system/vl: select target from machine name in combined binaries
+>   system/vl: handle cpu/device help properly for multi-target qemu
+>   qdev: Handle device alias ambiguous under multi-target qemu
+> 
+>  MAINTAINERS                              |   2 +
+>  accel/accel-common.c                     |   6 +-
+>  accel/accel-internal.h                   |   1 +
+>  accel/accel-system.c                     |  24 +++
+>  accel/accel-user.c                       |   7 +
+>  backends/igvm.c                          |   4 +-
+>  hw/alpha/dp264.c                         |   2 +
+>  hw/arm/virt.c                            |  56 +++----
+>  hw/core/machine-qmp-cmds.c               |  19 ++-
+>  hw/core/machine.c                        |   9 ++
+>  hw/hexagon/virt.c                        |  25 +++-
+>  hw/loongarch/virt.c                      |  47 +++---
+>  hw/m68k/virt.c                           |  39 +++--
+>  hw/microblaze/petalogix_s3adsp1800_mmu.c |  11 +-
+>  hw/misc/vmlaunchupdate.c                 |   6 +-
+>  hw/or1k/virt.c                           |  22 +--
+>  hw/pci/pci.c                             |  18 ++-
+>  hw/riscv/virt.c                          |  28 ++--
+>  hw/scsi/scsi-disk.c                      |  18 ++-
+>  hw/uefi/ovmf-log.c                       |   4 +-
+>  hw/virtio/virtio-mem.c                   |  26 ++--
+>  hw/xtensa/virt.c                         |  24 ++-
+>  include/hw/arm/virt.h                    |   5 +-
+>  include/hw/core/boards.h                 |  45 ++++--
+>  include/hw/hexagon/virt.h                |   5 +-
+>  include/hw/loongarch/virt.h              |   5 +-
+>  include/hw/riscv/virt.h                  |   5 +-
+>  include/monitor/qdev.h                   |   7 +
+>  include/qemu/base-arch-defs.h            |  80 ++++++----
+>  include/qemu/module.h                    |   2 +
+>  include/qemu/target-info-def.h           |   2 +-
+>  include/qemu/target-info-qapi.h          |   4 +-
+>  include/qemu/target-info-qom.h           |   4 +
+>  include/qemu/target-info.h               |   7 +
+>  meson.build                              |  82 +++++++++-
+>  monitor/monitor-hmp-internal.h           |   2 +-
+>  qapi/machine.json                        |  44 +++---
+>  qapi/pragma.json                         |   4 +-
+>  qom/object.c                             |   4 +-
+>  stubs/meson.build                        |   1 +
+>  stubs/target-info.c                      |  10 ++
+>  system/arch_init.c                       |  12 +-
+>  system/qdev-monitor.c                    |  54 ++++++-
+>  system/target-info.c                     |  10 ++
+>  system/vl.c                              | 181 ++++++++++++++++++++---
+>  target-info-def.c                        |   2 +-
+>  target-info-qom.c                        |  26 +++-
+>  target-info.c                            |  38 ++---
+>  target/arm/tcg/cpu-max-v8.c              |  17 ++-
+>  tests/qtest/fuzz/fuzz.c                  |   2 +-
+>  tests/qtest/qom-test.c                   |  65 +++++++-
+>  tests/unit/meson.build                   |   4 +-
+>  tests/unit/test-multi-target.c           |  67 ++++++++-
+>  util/module.c                            |  10 +-
+>  54 files changed, 915 insertions(+), 289 deletions(-)
+>  create mode 100644 stubs/target-info.c
+>  create mode 100644 system/target-info.c
 > 
 
-This patch indeed allows to have a unique definition of
-TARGET_ARCH_VARIANT in next patch. However, it's absolutely not needed
-for anything else in this series, out of cleaning up one if in meson.build.
+Hi Yonggang,
 
-Is there is any concrete reason we need to expose linux-user missing
-variants?
+in a previous thread, we had a long discussion about which direction we
+want to go, and what needs to be implemented. I politely suggested to
+focus first on simply removing dependency in class_init to target_info,
+and rely on is_available only. The idea was to convince you that small
+iteration steps are better than throw-all-in series. I thought we were
+on the same page.
+
+Now, yet another mega series mixing cleanup, code and even going as far
+as introducing the qemu-system binary.
+
+I feel like spending time to give advice didn't lead to a concrete
+change in behavior. As a result, I'm stopping to review all those
+series, and will let others drive this.
 
 Regards,
 Pierrick
