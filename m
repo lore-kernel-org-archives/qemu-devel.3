@@ -4,87 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD54BCC6B1A
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 03:45:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3AA52CC6B1A
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 03:46:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGps2-0001eJ-CM; Tue, 13 Oct 2026 23:41:38 -0400
+	id 1xGpqn-0005uw-GN; Tue, 13 Oct 2026 23:40:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1xGprz-0001Sy-KK
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 23:41:35 -0400
-Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
+ id 1xGpql-0005oF-7c
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 23:40:19 -0400
+Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1xGprx-0001lA-Ki
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 23:41:35 -0400
-Received: by mail-pj1-x102f.google.com with SMTP id
- 98e67ed59e1d1-3a80d1c98f5so344520a91.0
- for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 20:41:33 -0700 (PDT)
+ id 1xGpqj-0001cY-6d
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 23:40:18 -0400
+Received: by mail-pj1-x1032.google.com with SMTP id
+ 98e67ed59e1d1-3ab4178ee33so1973119a91.3
+ for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 20:40:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1791949292; x=1792554092; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1791949216; x=1792554016; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=yihw9/tmy2HOrE2zuiqAqJjvlQRGGP5lmkaoPyRqowA=;
- b=AZzlRsG7PvQ5mN+E1YRaIS11wTKk+nXbWAKzNtQ6ArYrPfDKCwcu5S2EyPlxETgcvC
- vLqyhtTHAYZBs/tGbcPMzhiDm2/s2DA8T3SmbZJcMef0Cr54bpc9g/PZksu/+wwGu8P/
- lUgCcXdf5xif9qZNeTzqBg+oWhDiiyu2OiLSMb2B+lYEh8WOO610fRJbdx2YSZcu6OXz
- RDvH2PXwPHnq49fJ6j1NPNkur2tcJi4V6LUMnQlZgQTuxz/MzzGsUxvbvMLwdc3WRtWf
- sZbyTcM1LN/tHLxaS06KNzxZm3YoRoWzuqN91Z8wgEByJUAin6b9gMftwzOuM2CSI176
- hxvA==
+ bh=RuS9aPT1CWsrJ+rpMEr3jlkZ+iGk1uOZHmMGN7K+jZU=;
+ b=FzbW026SPyCX71H55lQFKec78BgFJ6TT17AvObthTyZYriPZniMFIIPqWXz3LT7wYG
+ vWAYvrX07sEsGxXDaIyGWFo9/ETLKxi341E9JVgHvZ20M7UjVcs7mHvGcWYIR8SzrZcf
+ lxMvfiRs72eJuTebJZUSHTpZFFwDx/U+hEy1vv+XIE4iIqzV3RC0DKvi4Cmj1ddqRx6n
+ KBhKqQty2MjwoCu4uHgrs6OfnUhR0R88xeAnj7a/+Q7MvPQGlLINTX0uri1TRdlUIDvw
+ HcV1MFFrUMllKk2KjQ+k0r1HvoUZUFwpIANJr16pktgWLTxBHrmLMDEAmWpyETukozaf
+ rXZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791949292; x=1792554092;
+ d=1e100.net; s=20260707; t=1791949216; x=1792554016;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=yihw9/tmy2HOrE2zuiqAqJjvlQRGGP5lmkaoPyRqowA=;
- b=HkYBRZSEP1M/yK4USlWpkCNhCbjAwa51AUrBrnpglsDgTKq2w6x6UxCMsNGAcpZ5SI
- 2F1f/9OZVEcmtWLTgg1D3itCDBfF0C4X7dKokNiWW1/HIWSKB7CqLqhQTLxtdLSr8s0p
- PavdS8G14VGSyGRFSaOC9BEn2Dg03Wdc3lysPnQwDkxdm3562yVjZObo+osyj8l4xTd1
- Dlm70bDSxr3fpZIESX9ElxFaM8z3yTItIU7S/1qCEnkVinm8vr8qCBV0I/q7FVnHiqlk
- 7ZxwiT5g7rDhh/k/+hto95Ge0QU7IS2znII4MyOOyPwpEcae8n9j+Yictd41yQRD0JNv
- lrew==
-X-Gm-Message-State: AFq9FYKpq2ZIQCtQiKXI2FAfPX4JIMqJcskzpq7XiTtsE/PgX/g7P6P/
- sDIYrVFHEbS0jCFMyyQv3px8t0O3RL6Irhm4THFYqUA5VXzg0cdWBMfgbE4Zag==
-X-Gm-Gg: AYBFou3SS0N+6hl6ozBKKAD5ix2Q15KO/5kwe/JuuYttlLXr2xUsCXMcOB5G6aEKZDL
- WtbdXQTD5XDzmws+KDbRWo0y2Cokb56mPYJG1ZFIbK1kwX7kw/ZcU8gMmVNffHoMzQ9oHUdIeZ5
- hb28N9WRe96Dh3UWI8dzatspjRTG2mclYVd4Q3UWFkJl17uy4zantlC2Y5QiGUiQZIaF5Ea4X8w
- sY6npHaH90kp3gnqQBZ9H3mHt0GjhNS9PEpIrz3FcHK2h22thQOwDCSJab1/gYHERLoLLNrhplN
- oacpTNGONxsYpWc9m91DwnPoCgb4fxOGZV4R9AfTt1UsgAI3uDKllMkRhb5JyDQ786E4m5nrHc5
- sifLnqqdSp1FJDS/fzLo3YD5Sz6MC9bB3UEn8D/LsISqxuo7Y0fG1FFdcHkYuFlkvN+WN4+SBUd
- J2KN0yQNSeWaox2Xh1fX2wqrsufMpNV/bVD0rkxlu0AW/YK7XiQoxXvokACRzpvJYJQ6pf+qFgN
- UJWmNHpJtum1xvM
-X-Received: by 2002:a17:90a:e7ca:b0:3a4:6f38:f2a2 with SMTP id
- 98e67ed59e1d1-3ab3a953814mr11281133a91.25.1791949292142; 
- Tue, 13 Oct 2026 20:41:32 -0700 (PDT)
+ bh=RuS9aPT1CWsrJ+rpMEr3jlkZ+iGk1uOZHmMGN7K+jZU=;
+ b=XnqhADRW+9i01MoeAl9XG1nC3XHlf7q0LbrDLcn+HrGUcCWDitpRtoQ+jXZvo656t0
+ CyklxVogymwvs8CiRbiOx+Kja+08F5Hn1qDg4JGH/bAnpf5KWRCL4w8NXZw7MZhpkot+
+ 2eilC4VyB1z4iSi7c3mau4AlWSgKMyXcFHHWojaVZLYaGGHvMc5UwdMTzaST7aK1WNlW
+ /J8y/WFjNlZfndBa7YPR/nLEyhT6Z/T78RjpV1fuv9ssdfVHBqhdEX2+JLpbZL42NmL/
+ iR2zXOvyzeo7dPo4Ace7jfu+LU7kaIE6BVJsUA1TH4+XRk/Kq3OjQurJdfDZ18C9SdtG
+ Ua5g==
+X-Gm-Message-State: AFq9FYK9f07pSN9DTM2hM2G16No+kuUiN5oIv0EgAdgwKkIbYZk71Q21
+ IpQmTTf4QeS8sdoNVhVmo9FPdv6rrXMEk4vmwnDXF0596IX8z11U0EPDz8PpuQ==
+X-Gm-Gg: AYBFou15dCPxMlRfeh06MkdRONr8lTRfyK5OurRKaPdMARoHBc333UYR2hpW20OUjC6
+ O9rN5AaKzYKLLbCtGi5yEDg4nWgiEPF42ZFNGX3iYRUhAjag7O02QddnCzkRsVY4n4dUEX1nCQV
+ 0b/P8421+1y9sDtCEYjGe0rsiou4wcSROvd4wown6yHgGjHzQIAW6y2ZP537eppBOsGsdb8wue4
+ pZsfcrl1os7hzmr5goRlGt+1Ndq5bf7Uc4UzZ2EELmjiAUzrjlknQZ9F1g1heuRNQg/L8SRsvHj
+ w248b4cV74GEia2PrWyq6aItnbGrxYSSal592IAbLuwrvbMGIziYi9Xay6GDfXqdLlzEl6nQTyb
+ 3vnard3gt8gpkVVH1ncbxN6i6DfZtBW8jOBrbCrFkWSwKgWDhnEwaEv65YJsFSXAxNh2Qu93R6D
+ nRo+nVdIf82gZWosEIU22c68W0U+p9G8SSYNH15MoNsLvebMI/YX5Urp43Rdmr3R+LY5ADp5gSz
+ xhq/IcTdzvl7/LwEoh60ul0YaY=
+X-Received: by 2002:a17:90b:28c8:b0:3a7:a463:54bf with SMTP id
+ 98e67ed59e1d1-3ab3a99825cmr10375963a91.33.1791949215674; 
+ Tue, 13 Oct 2026 20:40:15 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3ac61170b7bsm2321457a91.16.2026.10.13.20.41.28
+ 98e67ed59e1d1-3ac61170b7bsm2321457a91.16.2026.10.13.20.40.13
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 13 Oct 2026 20:41:31 -0700 (PDT)
+ Tue, 13 Oct 2026 20:40:15 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Icenowy Zheng <uwu@icenowy.me>,
+Cc: Kuan-Wei Chiu <visitorckw@gmail.com>,
  Alistair Francis <alistair.francis@wdc.com>,
- Matheus Ferst <matheus.ferst@eldorado.org.br>,
- Chao Liu <chao.liu@processmission.com>,
- Sunil V L <sunilvl@oss.qualcomm.com>,
- Andrew Jones <andrew.jones@oss.qualcomm.com>
-Subject: [PULL 41/52] target/riscv: add riscv-server-ref CPU
-Date: Wed, 14 Oct 2026 13:38:56 +1000
-Message-ID: <20261014033907.3332383-42-alistair.francis@wdc.com>
+ Chao Liu <chao.liu.zevorn@gmail.com>
+Subject: [PULL 17/52] hw/riscv: Add Milk-V Duo board support
+Date: Wed, 14 Oct 2026 13:38:32 +1000
+Message-ID: <20261014033907.3332383-18-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20261014033907.3332383-1-alistair.francis@wdc.com>
 References: <20261014033907.3332383-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
- envelope-from=alistair23@gmail.com; helo=mail-pj1-x102f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1032;
+ envelope-from=alistair23@gmail.com; helo=mail-pj1-x1032.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -108,115 +104,209 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+From: Kuan-Wei Chiu <visitorckw@gmail.com>
 
-The harts requirements of RISC-V server platform [1] require RVA23 ISA
-profile support and others.
+Add support for the Milk-V Duo development board, which is powered by
+the Sophgo CV1800B SoC.
 
-We're going for a profile-based implementation, instead of a regular CPU
-that can inherit RVA23, to allow future CPUs to use it internally as a
-starting base for their own extension sets.  There's also a new
-'rvserver-ref-1.0' flag that can be used to set the extensions in the
-command line for other CPUs, which can be used for testing/debugging
-purposes.
+The implementation includes:
+- Board-level machine initialization with 64mb of default ram.
+- Integration of the CV1800B SoC.
+- Support for loading external FDT, kernel, and initrd images.
+- Proper setup of the reset vector to match the CV1800B's boot flow.
 
-Note that for all intents and purposes "riscv-server-ref" is a regular
-CPU and no, we're not trying to set a precedent of calling the riscv
-server platform spec a profile.
-
-[1] defines in rule SEE_020 that we must support at least 11 debug
-triggers (4 for insn address, 4 for insn load/store, 1 for icount,
-one for int, one for excp).  We're going for the minimum.  If more
-triggers are needed users can set any trigger amount (N <= 1024)
-with:
-
--cpu riscv-server-ref,num-triggers=N
-
-[1] https://github.com/riscv-non-isa/riscv-server-platform/blob/main/server_platform_requirements.adoc
-
-Suggested-by: Icenowy Zheng <uwu@icenowy.me>
-Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Reviewed-by: Matheus Ferst <matheus.ferst@eldorado.org.br>
-Reviewed-by: Chao Liu <chao.liu@processmission.com>
-Reviewed-by: Sunil V L <sunilvl@oss.qualcomm.com>
-Reviewed-by: Andrew Jones <andrew.jones@oss.qualcomm.com>
-Message-ID: <20260928201107.2049458-3-daniel.barboza@oss.qualcomm.com>
+Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
+Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
+Message-ID: <20260927201326.650943-5-visitorckw@gmail.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/cpu-qom.h |  1 +
- target/riscv/cpu.c     | 34 ++++++++++++++++++++++++++++++++++
- 2 files changed, 35 insertions(+)
+ MAINTAINERS                                 |   9 ++
+ configs/devices/riscv64-softmmu/default.mak |   1 +
+ hw/riscv/milkv_duo.c                        | 118 ++++++++++++++++++++
+ hw/riscv/Kconfig                            |   6 +
+ hw/riscv/meson.build                        |   1 +
+ 5 files changed, 135 insertions(+)
+ create mode 100644 hw/riscv/milkv_duo.c
 
-diff --git a/target/riscv/cpu-qom.h b/target/riscv/cpu-qom.h
-index 1a28f1369c..61234842e3 100644
---- a/target/riscv/cpu-qom.h
-+++ b/target/riscv/cpu-qom.h
-@@ -42,6 +42,7 @@
- #define TYPE_RISCV_CPU_RVA22S64         RISCV_CPU_TYPE_NAME("rva22s64")
- #define TYPE_RISCV_CPU_RVA23U64         RISCV_CPU_TYPE_NAME("rva23u64")
- #define TYPE_RISCV_CPU_RVA23S64         RISCV_CPU_TYPE_NAME("rva23s64")
-+#define TYPE_RISCV_CPU_RVSERVER_REF     RISCV_CPU_TYPE_NAME("riscv-server-ref")
- #define TYPE_RISCV_CPU_IBEX             RISCV_CPU_TYPE_NAME("lowrisc-ibex")
- #define TYPE_RISCV_CPU_SHAKTI_C         RISCV_CPU_TYPE_NAME("shakti-c")
- #define TYPE_RISCV_CPU_SIFIVE_E         RISCV_CPU_TYPE_NAME("sifive-e")
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 1c9b400f71..5e7a7f782d 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -2438,11 +2438,37 @@ static RISCVCPUProfile RVA23S64 = {
-     }
- };
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 913162130f..2e6a7721c5 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -1875,6 +1875,15 @@ F: tests/qtest/k230-wdt-test.c
+ F: tests/qtest/k230-gsdma-test.c
+ F: tests/qtest/k230-decomp-gzip-test.c
  
-+/*
-+ * This riscv-server-ref entry isn't a profile per se but its
-+ * CPU definition can be modelled as a profile that extends
-+ * RVA23, with additional things on top of it, and allowing
-+ * future CPUs to derive from it via
-+ * ".profile = &RVServerRef1_0;".
-+ */
-+static RISCVCPUProfile RVServerRef1_0 = {
-+    .s_parent = &RVA23S64,
-+    .name = "riscv-server-ref-1.0",
-+    .satp_mode = VM_1_10_SV48,
-+    .priv_spec = PRIV_VERSION_1_13_0,
-+    .ext_offsets = {
-+        CPU_CFG_OFFSET(ext_zkr),
-+        CPU_CFG_OFFSET(ext_sdext),
-+        CPU_CFG_OFFSET(ext_sdtrig),
-+        CPU_CFG_OFFSET(ext_ssaia),
-+        CPU_CFG_OFFSET(ext_ssccfg),
-+        /* ssstrict is always enabled for PRIV_VER_1_12+ */
++Milk-V Duo
++M: Kuan-Wei Chiu <visitorckw@gmail.com>
++S: Maintained
++F: hw/misc/cv1800b_clk.c
++F: hw/riscv/cv1800b.c
++F: hw/riscv/milkv_duo.c
++F: include/hw/misc/cv1800b_clk.h
++F: include/hw/riscv/cv1800b.h
 +
-+        RISCV_PROFILE_EXT_LIST_END
-+    }
+ RX Machines
+ -----------
+ rx-gdbsim
+diff --git a/configs/devices/riscv64-softmmu/default.mak b/configs/devices/riscv64-softmmu/default.mak
+index a8e4d0ab33..2ba91b14d4 100644
+--- a/configs/devices/riscv64-softmmu/default.mak
++++ b/configs/devices/riscv64-softmmu/default.mak
+@@ -13,3 +13,4 @@
+ # CONFIG_SHAKTI_C=n
+ # CONFIG_XIANGSHAN_KUNMINGHU=n
+ # CONFIG_MIPS_BOSTON_AIA=n
++# CONFIG_MILKV_DUO=n
+diff --git a/hw/riscv/milkv_duo.c b/hw/riscv/milkv_duo.c
+new file mode 100644
+index 0000000000..1285c8d34f
+--- /dev/null
++++ b/hw/riscv/milkv_duo.c
+@@ -0,0 +1,118 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++/*
++ * Milk-V Duo board
++ *
++ * Copyright (c) 2026 Kuan-Wei Chiu <visitorckw@gmail.com>
++ */
++
++#include "qemu/osdep.h"
++#include "qemu/units.h"
++#include "qapi/error.h"
++#include "hw/core/boards.h"
++#include "hw/riscv/cv1800b.h"
++#include "hw/riscv/boot.h"
++#include "target/riscv/cpu-qom.h"
++#include "system/system.h"
++#include "system/device_tree.h"
++#include "qemu/error-report.h"
++#include "hw/core/loader.h"
++#include <libfdt.h>
++
++struct MilkVDuoState {
++    MachineState parent_obj;
++    CV1800BSoCState soc;
 +};
 +
++#define TYPE_MILK_V_DUO MACHINE_TYPE_NAME("milkv-duo")
++OBJECT_DECLARE_SIMPLE_TYPE(MilkVDuoState, MILK_V_DUO)
 +
- RISCVCPUProfile *riscv_profiles[] = {
-     &RVA22U64,
-     &RVA22S64,
-     &RVA23U64,
-     &RVA23S64,
-+    &RVServerRef1_0,
-     NULL,
- };
- 
-@@ -3830,6 +3856,14 @@ static const TypeInfo riscv_cpu_type_infos[] = {
- #endif
-     ),
- 
-+    DEFINE_RISCV_CPU(TYPE_RISCV_CPU_RVSERVER_REF, TYPE_RISCV_BARE_CPU,
-+        .profile = &RVServerRef1_0,
-+        .misa_mxl_max = MXL_RV64,
-+        .cfg.max_satp_mode = VM_1_10_SV57,
-+        .cfg.pmu_mask = MAKE_64BIT_MASK(3, 6),
-+        .num_triggers = 11,
-+    ),
++static void milkv_duo_init(MachineState *machine)
++{
++    MilkVDuoState *s = MILK_V_DUO(machine);
++    MemoryRegion *system_memory = get_system_memory();
++    RISCVBootInfo boot_info;
++    const char *firmware_name;
++    hwaddr firmware_load_addr, firmware_end_addr;
++    hwaddr fdt_load_addr = 0;
++    int fdt_size = 0;
++    uint64_t kernel_entry = 0;
 +
- #if defined(CONFIG_TCG) && !defined(CONFIG_USER_ONLY)
-     DEFINE_RISCV_CPU(TYPE_RISCV_CPU_BASE128, TYPE_RISCV_DYNAMIC_CPU,
-         .cfg.max_satp_mode = VM_1_10_SV57,
++    object_initialize_child(OBJECT(machine), "soc", &s->soc, TYPE_CV1800B_SOC);
++    qdev_realize(DEVICE(&s->soc), NULL, &error_fatal);
++
++    memory_region_add_subregion(system_memory,
++                                cv1800b_memmap[CV1800B_DEV_DRAM].base,
++                                machine->ram);
++
++    riscv_boot_info_init(&boot_info, &s->soc.cpus);
++
++    firmware_name = riscv_default_firmware_name(&s->soc.cpus);
++    firmware_load_addr = cv1800b_memmap[CV1800B_DEV_DRAM].base;
++    firmware_end_addr = riscv_find_and_load_firmware(machine, &boot_info,
++                                                     firmware_name,
++                                                     &firmware_load_addr, NULL);
++
++    if (machine->dtb) {
++        machine->fdt = load_device_tree(machine->dtb, &fdt_size);
++        if (!machine->fdt) {
++            error_report("Failed to load device tree");
++            exit(1);
++        }
++
++        if (machine->kernel_cmdline && *machine->kernel_cmdline) {
++            if (fdt_path_offset(machine->fdt, "/chosen") < 0) {
++                qemu_fdt_add_subnode(machine->fdt, "/chosen");
++            }
++            qemu_fdt_setprop_string(machine->fdt, "/chosen", "bootargs",
++                                    machine->kernel_cmdline);
++        }
++    }
++
++    if (machine->kernel_filename) {
++        hwaddr kernel_start_addr = riscv_calc_kernel_start_addr(&boot_info,
++                                                                firmware_end_addr);
++        riscv_load_kernel(machine, &boot_info, kernel_start_addr, true, NULL);
++        kernel_entry = boot_info.image_low_addr;
++    }
++
++    if (machine->dtb) {
++        fdt_load_addr = riscv_compute_fdt_addr(cv1800b_memmap[CV1800B_DEV_DRAM].base,
++                                               machine->ram_size, machine, &boot_info);
++        riscv_load_fdt(fdt_load_addr, machine->fdt);
++    }
++
++    riscv_setup_rom_reset_vec(machine, &s->soc.cpus,
++                              firmware_load_addr,
++                              cv1800b_memmap[CV1800B_DEV_ROM].base,
++                              cv1800b_memmap[CV1800B_DEV_ROM].size,
++                              kernel_entry,
++                              fdt_load_addr);
++}
++
++static void milkv_duo_machine_class_init(ObjectClass *oc, const void *data)
++{
++    MachineClass *mc = MACHINE_CLASS(oc);
++    static const char *const valid_cpu_types[] = {
++        TYPE_RISCV_CPU_THEAD_C906,
++        NULL
++    };
++
++    mc->desc = "Milk-V Duo Board (CV1800B)";
++    mc->init = milkv_duo_init;
++    mc->max_cpus = 2;
++    mc->default_cpu_type = TYPE_RISCV_CPU_THEAD_C906;
++    mc->valid_cpu_types = valid_cpu_types;
++    mc->default_ram_size = 64 * MiB;
++    mc->default_ram_id = "riscv.milkv_duo.ram";
++}
++
++static const TypeInfo milkv_duo_machine_type_infos[] = {
++    {
++        .name = TYPE_MILK_V_DUO,
++        .parent = TYPE_MACHINE,
++        .instance_size = sizeof(MilkVDuoState),
++        .class_init = milkv_duo_machine_class_init,
++    },
++};
++
++DEFINE_TYPES(milkv_duo_machine_type_infos)
+diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
+index b7c0871c67..70a331f7ae 100644
+--- a/hw/riscv/Kconfig
++++ b/hw/riscv/Kconfig
+@@ -172,3 +172,9 @@ config SOPHGO_CV1800B
+     select SIFIVE_PLIC
+     select SOPHGO_CV1800B_CLK
+     select DW8250
++
++config MILKV_DUO
++    bool
++    depends on RISCV64
++    default y
++    select SOPHGO_CV1800B
+diff --git a/hw/riscv/meson.build b/hw/riscv/meson.build
+index 45895486d4..a40e80645b 100644
+--- a/hw/riscv/meson.build
++++ b/hw/riscv/meson.build
+@@ -23,5 +23,6 @@ riscv_ss.add(when: 'CONFIG_MIPS_BOSTON_AIA', if_true: files('boston-aia.c'))
+ riscv_ss.add(when: 'CONFIG_K230', if_true: files('k230.c'))
+ 
+ riscv_ss.add(when: 'CONFIG_SOPHGO_CV1800B', if_true: files('cv1800b.c'))
++riscv_ss.add(when: 'CONFIG_MILKV_DUO', if_true: files('milkv_duo.c'))
+ 
+ hw_arch += {'riscv': riscv_ss}
 -- 
 2.55.0
 
