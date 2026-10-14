@@ -4,65 +4,121 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 438FDCC6B2E
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 20:13:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91F6EC3DA7A
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 20:13:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xH5Lm-0003BW-43; Wed, 14 Oct 2026 16:13:23 -0400
+	id 1xH5MA-0003Yk-SP; Wed, 14 Oct 2026 16:13:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brad@comstyle.com>) id 1xH5LE-0002xA-TE
- for qemu-devel@nongnu.org; Wed, 14 Oct 2026 16:12:49 -0400
-Received: from speedy.comstyle.com ([2607:f938:3000:8::2]
- helo=mail.comstyle.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_CHACHA20_POLY1305:256)
- (Exim 4.90_1) (envelope-from <brad@comstyle.com>) id 1xH5LB-0004aX-MD
- for qemu-devel@nongnu.org; Wed, 14 Oct 2026 16:12:47 -0400
-Received: from mail.comstyle.com (localhost [127.0.0.1])
- by mail.comstyle.com (Postfix) with ESMTP id 4j4j6r2HP8z8PbP;
- Wed, 14 Oct 2026 16:12:36 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=comstyle.com; h=
- message-id:date:mime-version:subject:to:cc:references:from
- :in-reply-to:content-type:content-transfer-encoding; s=default;
- bh=h5WT1tHiRXsCBaGtG0sSHcAtb/tRqDGMNZ3UL3OCMFo=; b=Gg/UmlLJod98
- c5p0bqD9CsMeac4BbCiznKd/dQIS0Ti/zMDlEuJgHkzg7NEsi8Pm9LRQAY6DYZBn
- jYFSvN5MK5EQM2sAwHVCDrYWZlgmh+gZjCl3eOzXaq4BrfeMq7cdw9dii4iyZo6u
- ZScd4i0QMekkib8aLuXvAFCGxAqUdto=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=comstyle.com; h=message-id
- :date:mime-version:subject:to:cc:references:from:in-reply-to
- :content-type:content-transfer-encoding; q=dns; s=default; b=JwR
- pXqRaPAyDG2CLXMYfvLOILzYUvleoVqejaw9dnxsnxVozusdP7you+g/IMu81qhp
- DVdACy5h3+znJlZ6Zz4ViaVc766lBtCpIoaiMCzYcmQuPsJC9hYZwKbWhL5PvUGZ
- RBApIpyOspV6qJHspRxg+rLa9xByEcIXXbWzSbFs=
-Received: from [IPV6:2001:470:b050:6:10b5:50c5:b737:d938] (unknown
- [IPv6:2001:470:b050:6:10b5:50c5:b737:d938])
- (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested) (Authenticated sender: brad)
- by mail.comstyle.com (Postfix) with ESMTPSA id 4j4j6r1hmfz8PbN;
- Wed, 14 Oct 2026 16:12:36 -0400 (EDT)
-Message-ID: <fbc18336-5e10-48b4-978e-8d6078790b24@comstyle.com>
-Date: Wed, 14 Oct 2026 16:12:34 -0400
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] qga: do not attempt running hwclock(8) on BSD
-To: Roman Bogorodskiy <bogorodskiy@gmail.com>, qemu-devel@nongnu.org
-Cc: Michael Roth <michael.roth@amd.com>,
- Kostiantyn Kostiuk <kkostiuk@redhat.com>
-References: <20261014112040.70284-1-bogorodskiy@gmail.com>
-Content-Language: en-US
-From: Brad Smith <brad@comstyle.com>
-In-Reply-To: <20261014112040.70284-1-bogorodskiy@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+ (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
+ id 1xH5LU-0003A9-GV; Wed, 14 Oct 2026 16:13:08 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
+ id 1xH5LS-0004by-IQ; Wed, 14 Oct 2026 16:13:04 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 69EEiAnR2561646; Wed, 14 Oct 2026 20:12:30 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:reply-to:subject:to; s=pp1;
+ bh=HHi46qyzCsOXPl5STcN6bxjNe1E65jAl+2XZKn/yKzg=; b=XU3j8agYLbTi
+ BuYg9meD48BCNSf/ozeAI6n2R2UXH7mg5OaMxH5rPKNBu9QhJBIPM4b7hiZp1bxP
+ GVwvJ0k6j1h1gNUFAl9rv6BADGMYZaoIe/nbUpEwek+NkjRFEqtxOUkK/h4mJz+z
+ dP+pg61h/asaVsj7tAAVFn8VTuX6pC/Boemqp6v007OxkNSmzYTnHySThZCi0Hc6
+ wrwlzSDKtSKBgCwOwDGLoxNZDDWO8i/98c7vBKlrbN9WQBnB6PBiidQaHFaCw6cI
+ jaPly3qRYyRkBmSfYSskZ3ryoTgZD7MfZ0FRN+i+NLwdmeKqZLj+4AWxAZt8XigW
+ zfWLoNHzYQ==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4h7dugpj0c-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Wed, 14 Oct 2026 20:12:29 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 69EIeuBY634438; Wed, 14 Oct 2026 20:12:28 GMT
+Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4h9q2ypguc-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 14 Oct 2026 20:12:28 +0000 (GMT)
+Received: from smtpav02.dal12v.mail.ibm.com (smtpav02.dal12v.mail.ibm.com
+ [10.241.53.101])
+ by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 69EKCSXU15467242
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 14 Oct 2026 20:12:28 GMT
+Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 1AF8758051;
+ Wed, 14 Oct 2026 20:12:28 +0000 (GMT)
+Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 3AF005805A;
+ Wed, 14 Oct 2026 20:12:27 +0000 (GMT)
+Received: from mambor8.rchland.ibm.com (unknown [9.10.239.198])
+ by smtpav02.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Wed, 14 Oct 2026 20:12:27 +0000 (GMT)
+Message-ID: <0e5c23a09b897952529f4a7566e5eab5f9858615.camel@linux.ibm.com>
+Subject: Re: [PATCH v2 47/50] tests/qtest: ina238: cover a cleared
+ calibration per channel
+From: Miles Glenn <milesg@linux.ibm.com>
+To: Emmanuel Blot <emmanuel.blot@free.fr>, qemu-devel@nongnu.org
+Cc: =?ISO-8859-1?Q?C=E9dric?= Le Goater <clg@kaod.org>, Peter Maydell
+ <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy
+ Lee <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>, Kane Chen
+ <kane_chen@aspeedtech.com>, Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Joel Stanley <joel@jms.id.au>, Pierrick Bouvier
+ <pierrick.bouvier@oss.qualcomm.com>, qemu-arm@nongnu.org, Patrick Leis
+ <venture@google.com>, Fabiano Rosas <farosas@suse.de>, Laurent Vivier
+ <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-ppc@nongnu.org,
+ qemu-riscv@nongnu.org, Philippe
+ =?ISO-8859-1?Q?Mathieu-Daud=E9?= <philmd@oss.qualcomm.com>
+Date: Wed, 14 Oct 2026 15:12:26 -0500
+In-Reply-To: <20261012-bmc-minerva-v2-47-4c3dff084ec9@free.fr>
+References: <20261012-bmc-minerva-v2-0-4c3dff084ec9@free.fr>
+ <20261012-bmc-minerva-v2-47-4c3dff084ec9@free.fr>
+Organization: IBM
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.28.5 (3.28.5-27.el8_10) 
+Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f938:3000:8::2;
- envelope-from=brad@comstyle.com; helo=mail.comstyle.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Authority-Analysis: v=2.4 cv=Cr0q4X4D c=1 sm=1 tr=0 ts=6acfe22e cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8
+ a=CyY-uauUVvmj6ffrK_IA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: WKY8-DO2vw_CiQBv7PN1gE5H9mLoAGOU
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDE0MDA3OCBTYWx0ZWRfX03OI2YuYn+Pi
+ KVaOM1XbbyiGXFm7pCwC9t+Ec78DF4bf+B0I2lnc468YKKeAAi6HZ0UXm/KGnTmkysTKqNNspya
+ tkWrcN6d8g2AYV4SXhjuHMnwJbNQn1nvuFrjvX0hPdjInMmJ0/T9NmRJ0c58m5TJ7fa9q0U+yYX
+ 3q5wWRerC0tJunmxlDUkGcCqV52Aibzd7mIEASKyQ2jSXualu7z/LOSP9TGgMpGwaDSO0Da+OSE
+ EH2RD3e5nEVAa3xPwB6O/ACU4XBR6yBICYD0d0Uv4F2zmFFirrSWh8NgXBWXRne+OgGgvgQNzOs
+ GSiUKvX01yppY6z37IMp47vIuULjWGG6gl7Glhfk79s50FQLVp+PWlRL43uNekoN2jqqQIZV030
+ WDDhI2S1en/A+Nd/uhtEA1JJK9KoUi9LDmRKmku1Qaor2r9I6qVrU1UZnnN68GGJ8SxX67DJPwO
+ mEwLEml55vAIBVM5Sqw==
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDE0MDA3OCBTYWx0ZWRfXwaM2EOedPyZ9
+ rLXeiN/YjNJtyI1wxF2YyuUURy8p5hOE+LWsHfD+QczFkqnlFsB0HjGNNYx1e2VbT2ruZ6Egylr
+ A9sx66E2RvrFNdZOzRzIgxuweF6FAuo=
+X-Proofpoint-ORIG-GUID: _oeQL1gDu3ClkOZ4zlD1I9nuW_OF2VaQ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-10-13_01,2026-10-14_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 spamscore=0 adultscore=0 priorityscore=1501 suspectscore=0
+ malwarescore=0 clxscore=1015 impostorscore=0 lowpriorityscore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2610080000 definitions=main-2610140078
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=milesg@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -76,69 +132,106 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: milesg@linux.ibm.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026-10-14 7:20 a.m., Roman Bogorodskiy wrote:
-> Currently, qmp_guest_set_time() sets system time using
-> the settimeofday(2) system call and then runs the hwclock(8)
-> util to set hardware time.
->
-> BSDs do not ship hwclock(8), so current implementation
-> always fails while trying to run it.
->
-> Update the code not to run it on BSD. The settimeofday(2)
-> call sets both system and hardware time on these systems.
-> For example, on FreeBSD settimeofday() calls settime()
-> which calls resettodr() [1] which updates RTC clock [2].
-> It is similar on OpenBSD and NetBSD, though implementations
-> differ a bit.
->
-> Additional detail: on FreeBSD RTC clock setting can be
-> disabled with the `machdep.disable_rtc_set` sysctl.
-> As we cannot do anything about it, do not handle that
-> case separately.
->
-> BSD systems do not provide a common utility equivalent
-> to hwclock -s, so report an unsupported operation when
-> no time is supplied.
->
-> 1: https://cgit.freebsd.org/src/tree/sys/kern/kern_time.c
-> 2: https://cgit.freebsd.org/src/tree/sys/kern/subr_rtc.c
->
-> Signed-off-by: Roman Bogorodskiy <bogorodskiy@gmail.com>
-> ---
->   qga/commands-posix.c | 14 ++++++++++++++
->   1 file changed, 14 insertions(+)
->
-> diff --git a/qga/commands-posix.c b/qga/commands-posix.c
-> index 837e285b6d..f3d18e6dcd 100644
-> --- a/qga/commands-posix.c
-> +++ b/qga/commands-posix.c
-> @@ -322,6 +322,20 @@ void qmp_guest_set_time(bool has_time, int64_t time_ns, Error **errp)
->           }
->       }
->   
-> +#if defined(CONFIG_BSD)
-> +    /*
-> +     * BSDs (FreeBSD, OpenBSD, NetBSD) do not have the hwclock(8) tool.
-> +     * These systems update hardware clock when settimeofday() sets
-> +     * system time, so no additional actions are needed.
-> +     * Setting system time from RTC is not supported.
-> +     */
-> +    if (!has_time) {
-> +        error_setg(errp, "Setting system time from RTC is not supported");
-> +    }
-> +
-> +    return;
-> +#endif
-> +
->       /* Now, if user has passed a time to set and the system time is set, we
->        * just need to synchronize the hardware clock. However, if no time was
->        * passed, user is requesting the opposite: set the system time from the
+Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
 
-The command is Linux specific so it shouldn't be checking CONFIG_BSD. It 
-should be
-using something like #ifndef CONFIG_LINUX.
+Thanks,
+
+Glenn
+
+On Mon, 2026-10-12 at 16:32 +0200, Emmanuel Blot via qemu development
+wrote:
+> Verify that without a calibration value the current and power
+> registers read zero, whichever channels the mode converts.
+> 
+> Signed-off-by: Emmanuel Blot <emmanuel.blot@free.fr>
+> ---
+>  tests/qtest/ina238-test.c | 48 +++++++++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 48 insertions(+)
+> 
+> diff --git a/tests/qtest/ina238-test.c b/tests/qtest/ina238-test.c
+> index e7dd50a822..4e4146461c 100644
+> --- a/tests/qtest/ina238-test.c
+> +++ b/tests/qtest/ina238-test.c
+> @@ -282,6 +282,30 @@ static void test_zero_cal(void *obj, void *data, QGuestAllocator *alloc)
+>      g_assert_cmpuint(i2c_get24(dev, REG_POWER), ==, 0);
+>  }
+>  
+> +/* Clearing SHUNT_CAL zeroes both derived registers in any mode */
+> +static void test_zero_cal_channels(void *obj, void *data,
+> +                                   QGuestAllocator *alloc)
+> +{
+> +    QI2CDevice *dev = (QI2CDevice *)obj;
+> +    static const uint16_t modes[] = { 0x9000, 0xA000, 0xF000 };
+> +    size_t idx;
+> +
+> +    for (idx = 0; idx < ARRAY_SIZE(modes); idx++) {
+> +        i2c_set16(dev, REG_CONFIG, CONFIG_RST);
+> +        i2c_set16(dev, REG_SHUNT_CAL, 0x0FD2);
+> +        qmp_ina238_set("shunt-voltage", 97200000);
+> +        qmp_ina238_set("bus-voltage", 48000000);
+> +        g_assert_cmphex(i2c_get16(dev, REG_CURRENT), !=, 0x0000);
+> +        g_assert_cmpuint(i2c_get24(dev, REG_POWER), !=, 0);
+> +
+> +        i2c_set16(dev, REG_ADC_CONFIG, modes[idx]);
+> +        i2c_set16(dev, REG_SHUNT_CAL, 0x0000);
+> +
+> +        g_assert_cmphex(i2c_get16(dev, REG_CURRENT), ==, 0x0000);
+> +        g_assert_cmpuint(i2c_get24(dev, REG_POWER), ==, 0);
+> +    }
+> +}
+> +
+>  /* ADCRANGE changes the shunt LSB, not the current divisor. */
+>  static void test_adcrange(void *obj, void *data, QGuestAllocator *alloc)
+>  {
+> @@ -458,6 +482,27 @@ static void test_alert_power(void *obj, void *data, QGuestAllocator *alloc)
+>      g_assert_cmphex(i2c_get16(dev, REG_DIAG_ALRT) & DIAG_POL, ==, 0);
+>  }
+>  
+> +/* Clearing SHUNT_CAL drops the power alert with the power reading */
+> +static void test_alert_power_zero_cal(void *obj, void *data,
+> +                                      QGuestAllocator *alloc)
+> +{
+> +    QI2CDevice *dev = (QI2CDevice *)obj;
+> +
+> +    i2c_set16(dev, REG_CONFIG, CONFIG_RST);
+> +    qmp_ina238_set("shunt-voltage", 97200000);
+> +    qmp_ina238_set("bus-voltage", 48000000);
+> +    i2c_set16(dev, REG_SHUNT_CAL, 0x0FD2);
+> +    i2c_set16(dev, REG_PWR_LIMIT, 0x0100);
+> +    g_assert_cmphex(i2c_get16(dev, REG_DIAG_ALRT) & DIAG_POL, ==, DIAG_POL);
+> +
+> +    /* Continuous shunt-only: the power register is not reconverted. */
+> +    i2c_set16(dev, REG_ADC_CONFIG, 0xA000);
+> +    i2c_set16(dev, REG_SHUNT_CAL, 0x0000);
+> +
+> +    g_assert_cmpuint(i2c_get24(dev, REG_POWER), ==, 0);
+> +    g_assert_cmphex(i2c_get16(dev, REG_DIAG_ALRT) & DIAG_POL, ==, 0);
+> +}
+> +
+>  /* Two thresholds crossed at once are reported simultaneously (multi-alert) */
+>  static void test_alert_multi(void *obj, void *data, QGuestAllocator *alloc)
+>  {
+> @@ -733,6 +778,7 @@ static void ina238_register_nodes(void)
+>                   NULL);
+>      qos_add_test("power", "ina238", test_power, NULL);
+>      qos_add_test("zero-cal", "ina238", test_zero_cal, NULL);
+> +    qos_add_test("zero-cal-channels", "ina238", test_zero_cal_channels, NULL);
+>      qos_add_test("adcrange", "ina238", test_adcrange, NULL);
+>      qos_add_test("mode-shutdown", "ina238", test_mode_shutdown, NULL);
+>      qos_add_test("mode-triggered", "ina238", test_mode_triggered, NULL);
+> @@ -742,6 +788,8 @@ static void ina238_register_nodes(void)
+>      qos_add_test("alert-bus", "ina238", test_alert_bus, NULL);
+>      qos_add_test("alert-temp", "ina238", test_alert_temp, NULL);
+>      qos_add_test("alert-power", "ina238", test_alert_power, NULL);
+> +    qos_add_test("alert-power-zero-cal", "ina238", test_alert_power_zero_cal,
+> +                 NULL);
+>      qos_add_test("alert-multi", "ina238", test_alert_multi, NULL);
+>      qos_add_test("alert-latch", "ina238", test_alert_latch, NULL);
+>      qos_add_test("alert-latch-persist", "ina238", test_alert_latch_persist,
+> 
 
 
