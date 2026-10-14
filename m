@@ -4,60 +4,139 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3CB8C3DA7A
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 18:16:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0823DC3DA7A
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 18:26:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xH3WY-0002T5-5i; Wed, 14 Oct 2026 14:16:22 -0400
+	id 1xH3g9-0003yn-I4; Wed, 14 Oct 2026 14:26:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wangyang25@otcaix.iscas.ac.cn>)
- id 1xH3WR-0002Sq-8u; Wed, 14 Oct 2026 14:16:15 -0400
-Received: from smtp21.cstnet.cn ([159.226.251.21] helo=cstnet.cn)
- by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_CBC_SHA1:256)
- (Exim 4.90_1) (envelope-from <wangyang25@otcaix.iscas.ac.cn>)
- id 1xH3WN-00010h-Uv; Wed, 14 Oct 2026 14:16:15 -0400
-Received: from DESKTOP-7FLBREN (unknown [124.16.137.194])
- by APP-01 (Coremail) with SMTP id qwCowADnuOzgxs9qifjeCg--.49849S4;
- Thu, 15 Oct 2026 02:16:01 +0800 (CST)
-From: wangyang <wangyang25@otcaix.iscas.ac.cn>
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1xH3g1-0003we-QX
+ for qemu-devel@nongnu.org; Wed, 14 Oct 2026 14:26:10 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1xH3fz-00020u-SK
+ for qemu-devel@nongnu.org; Wed, 14 Oct 2026 14:26:09 -0400
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 69EEbJ5A3642821
+ for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 18:26:07 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=qcppdkim1; bh=mNWnoA/NIHe
+ q44KBvgvqp472AomHIDTpaHKq/Hd7irQ=; b=FBzZPfthCDfg1aQ4KbiQFXst7dl
+ qojGms0hLZ7sHUZFj0Q6EwTP4rakA1c5sNs1N1Z3TVdRnJiTbt3TgfL9rns56f5l
+ DtPipwJMF190/aENZoZ7KlF/WH89OmOkJ/WIIRgPtd93APTQX6BTI/SegUQ6cvTc
+ LMjNonde25v0AaFc7Eh34O8dI2+1QpF3v7UQVcvosQYw5plsXnOVqDGoDsItHatR
+ yq81BNFtMJ2WLOZCryey0+JVFApFogjf5l8zevHHLhOMFLqBmuhJJThag/VdIvbQ
+ G/WlQQ3PKXARTR3yuWlAux2kRTT12YnUmXvVQ1rChAYcgQwhcXl6+ymznmQ==
+Received: from mail-dl1-f69.google.com (mail-dl1-f69.google.com [74.125.82.69])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ha470ayad-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 18:26:06 +0000 (GMT)
+Received: by mail-dl1-f69.google.com with SMTP id
+ a92af1059eb24-14fed306427so3916756c88.1
+ for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 11:26:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1792002366; x=1792607166; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=mNWnoA/NIHeq44KBvgvqp472AomHIDTpaHKq/Hd7irQ=;
+ b=R1cH1344m+pa4ufHNT8FlY4r5VfGXJhSWLSqbMBOkkWAxe7ss3taHicdZ3/WOQuXUH
+ wf4HOOl8AKgUWNDEpt3Dd64eZUA1oDttCRXAHgOkhrJd2RDjtEoQYq7d9A/3tQuZXYWb
+ LVNFmO55nvQXi//kOc0IfWg77Dd88q8XETbG3e0+y4Qf14HksQAhhlB4UzCwrDYh2mlX
+ 89hu8WUsBCZndvGjakM51qKxqvbPKKPr/GaU3Z+rzmhwSSLwaTHdFpKhAd7jLxFAAUg4
+ iBuj4OBgR47EnzdOhmSStIKo27d8rmH5BSxx1ZhMUx+YNLLGNW1hGUTpu9qfgjUZc4sW
+ 9sUg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1792002366; x=1792607166;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=mNWnoA/NIHeq44KBvgvqp472AomHIDTpaHKq/Hd7irQ=;
+ b=CwOLtbTtLmCAbFx5H08xaTKU+QzGo2lfMiMk/uuRXBjqIkHiSl7CyFRsoGQDPvT+mL
+ 8YARhY+F7YG1Q0O/mPNbi2LB0vudnzLuy0ky/EBHJJjoGqwNHD4r6GonjMZq6YtukqSF
+ +iNCbs+7nbTWV37sLpiUsvP7Drfn8V4qTOJkD/f7eOAKr2qccVNuybh5djZGZBiDVQVY
+ PgiTlUYfkIwToyttrqtLFyINtEiDHsxYOt+MUxvm03+yh6uWVreGxxYMohqTrhagfxCx
+ Lx2JpDx2PgCKY5R8ffOIrW4hxfDpxLd75UfYbuOesLvYm24zSHRWkRAGrNPDJ21Bj6sv
+ kHjQ==
+X-Gm-Message-State: AFq9FYJTnETFLV8xCHSRSUwDkL8HTfjPMyWRq9eCnria9NuqmEgYiUJR
+ /2LR+PLT24vg7GDkRfv82tgaOfStxWuh8vC6/vSXGtDjAs2u8huiOZUVo38Xe6Bq0tO9x6rpp+i
+ rPOYS0QrXLKHd8kgyYfUEqmr8yzaFzGA5U/+IDjZeil556krFaM4cPcpSgqaCVKuCpA==
+X-Gm-Gg: AYBFou1fysbImGf8poURPBehqMua05LryDpqoDZsoTGzAMNnNQnv4ykNoWZdVA9bEBb
+ 9M0/eDZKwc8osxq+9Z9en/XKdBA6sBPXDkq4bU3lYjKTdpQoGXfZyDQo/voX3sF/jU5FP66tkvq
+ t4V8OJ77e4UdFryGN0X5pnsjDuym9pYv8puajUnDpCRFORb133tIM+dhwbSPEV2hjsjobWCrN4o
+ g+tNy/+C2HuQVnXoG064ky68/dKy7VCfKMjtsrBPWIlt61DoCHJHRsXp/xaSCevY7pNcWL5pTGa
+ +ZZdc2XJwr99QuqimFKwEYo7Xb0hgOoQK5Cx3NmaRIKrGV2gZHP7iC+WUgEJh7yEMP4kHOG+5tw
+ 80/5SQInhWzk13nVQNbMT+JhUabvYjJCj06VaVmVUKIcoOQ4aS8rR6TU8cScF
+X-Received: by 2002:a05:7023:a4b:20b0:176:d885:4e94 with SMTP id
+ a92af1059eb24-176d88550fdmr11453684c88.26.1792002365736; 
+ Wed, 14 Oct 2026 11:26:05 -0700 (PDT)
+X-Received: by 2002:a05:7023:a4b:20b0:176:d885:4e94 with SMTP id
+ a92af1059eb24-176d88550fdmr11453656c88.26.1792002365216; 
+ Wed, 14 Oct 2026 11:26:05 -0700 (PDT)
+Received: from debian.qualcomm.com (192-80-163-190.dyn.novuscom.net.
+ [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-169a442956asm62348223c88.16.2026.10.14.11.26.04
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 14 Oct 2026 11:26:04 -0700 (PDT)
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
- daniel.barboza@oss.qualcomm.com
-Subject: [PATCH] linux-user/riscv: preserve rs1 address for cbo.zero fault
- reporting
-Date: Thu, 15 Oct 2026 02:15:59 +0800
-Message-ID: <20261014181559.1567-1-wangyang25@otcaix.iscas.ac.cn>
-X-Mailer: git-send-email 2.55.0.windows.2
+Cc: Brian Cain <brian.cain@oss.qualcomm.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Anton Johansson <anjo@rev.ng>
+Subject: [PATCH v2 10/11] semihosting: remove common_* functions
+Date: Wed, 14 Oct 2026 18:25:42 +0000
+Message-ID: <20261014182543.135965-11-pierrick.bouvier@oss.qualcomm.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20261014182543.135965-1-pierrick.bouvier@oss.qualcomm.com>
+References: <20261014182543.135965-1-pierrick.bouvier@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qwCowADnuOzgxs9qifjeCg--.49849S4
-X-Coremail-Antispam: 1UD129KBjvJXoW3Xry7Xr1xXFykGF43tr45trb_yoWxCr4UpF
- Z7CrW7Kr93tFn7Xw4ftw4jvF15Wr4vgFsrG34ku3yS9r4Sq3yfZw1Dtay7uF4UGFs5XF4j
- vFsFyryUAFyUXFDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
- 9KBjDU0xBIdaVrnRJUUU9Ib7Iv0xC_Kw4lb4IE77IF4wAFF20E14v26r4j6ryUM7CY07I2
- 0VC2zVCF04k26cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rw
- A2F7IY1VAKz4vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xII
- jxv20xvEc7CjxVAFwI0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4
- A2jsIEc7CjxVAFwI0_Gr0_Gr1UM2vYz4IE04k24VAvwVAKI4IrM2AIxVAIcxkEcVAq07x2
- 0xvEncxIr21l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18Mc
- Ij6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IYc2Ij64vIr41l
- c7CjxVAaw2AFwI0_JF0_Jw1lc2xSY4AK67AK6ryl42xK82IYc2Ij64vIr41l4I8I3I0E4I
- kC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWU
- WwC2zVAF1VAY17CE14v26r126r1DMIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr
- 0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWU
- JVWUCwCI42IY6I8E87Iv67AKxVW8JVWxJwCI42IY6I8E87Iv6xkF7I0E14v26r4j6r4UJb
- IYCTnIWIevJa73UjIFyTuYvjxUkco2DUUUU
-X-Originating-IP: [124.16.137.194]
-X-CM-SenderInfo: 5zdqw5xdqjjk46rwut1l0ox2xfdvhtffof0/
-Received-SPF: pass client-ip=159.226.251.21;
- envelope-from=wangyang25@otcaix.iscas.ac.cn; helo=cstnet.cn
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDE0MDA3MyBTYWx0ZWRfX0xp9eG4ChhEv
+ xzaL1g7eCRJbcUUd2eF728h1JXxzsGikgGjuHSKHmbgv74YcKz/PR4Tu4daWN12NlSyWm+dsEWt
+ CoAFLOGQZp+4io1KL/OkXIHZO/UwLriWhvVxaApq9aHOHDEXoKIHVh12P9fbyowMM0nvwE+jXum
+ 3CDbPhZbweKXvrxmBaZZgkRw+yGKtFfTW8vTbVZiQr77YhWvOAQ01EZPjgomBsaUeL7UVr8INjE
+ 3QHPqE2bI2Vw/BPmtsp1UmGXGJsynlpiiDk5nLIuvwGPlxc7ht2vICGFIf0RMoHOKgJ8d5cDbXS
+ Ip2ThgbPOGUp/4Q4AiLTTCpFnOq2jMQDJdhsxhjBKivRRgtbct3YVGpKYbjz9YdmzTwYSBB5T/9
+ 13v/culmPfGV33SeBsOpRH844qMWxybXRdnRHL6YGDfT1h6NgEBQJ9ijV3Yb9A0nxqtjxHF2yJT
+ C0OHjv4WfF5YRMDHQmg==
+X-Proofpoint-GUID: og0Hi0KRn_BC03RnEbC-d0E5LJe-4JjL
+X-Authority-Analysis: v=2.4 cv=P6avFSAu c=1 sm=1 tr=0 ts=6acfc93e cx=c_pps
+ a=kVLUcbK0zfr7ocalXnG1qA==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
+ a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22 a=EUspDBNiAAAA:8
+ a=lHUEnDEh36thAgea6SoA:9 a=vr4QvYf-bLy2KjpDp97w:22
+X-Proofpoint-ORIG-GUID: og0Hi0KRn_BC03RnEbC-d0E5LJe-4JjL
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDE0MDA3MyBTYWx0ZWRfXwuxKaJAVhbQA
+ kHaaX2tqDIh4GQZqbLqHAvMCaPC9J7XlFTn4heUxVsAOO5Uqom0BSYquPNaMmVx3DA4an/u4tP7
+ 4fJBmHjsyeoU1AkIbWdFnSCer/oRHx0=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-10-13_01,2026-10-14_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 bulkscore=0 lowpriorityscore=0 priorityscore=1501 adultscore=0
+ suspectscore=0 clxscore=1015 impostorscore=0 malwarescore=0 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2610080000 definitions=main-2610140073
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -73,184 +152,167 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-helper_cbo_zero() aligns the address down to the cache-block size before
-probe_write(), and accel/tcg/user-exec.c:probe_access_internal() reports
-that aligned address to cpu_loop_exit_sigsegv(), so a store fault from a
-legal cbo.zero (e.g. on a read-only page) reports the aligned block base
-as si_addr instead of the rs1 value supplied by the program. Native
-RISC-V Linux reports the exact rs1 address. Keep the original address in
-CPUState and use it when the fault is reported.
+Now that both targets and semihosting implementation both use the
+semihosting ops interface, we can remove all common_* functions.
+This allows us to link together the three targets concerned: arm,
+hexagon and riscv.
 
-The saved address must not outlive the instruction that produced it. The
-helper alone cannot guarantee that, because a store trigger or
-breakpoint on the cbo.zero access leaves through the debug path instead
-of one of the four fault consumers, and a later unrelated fault would
-then report the stale cbo.zero address. Also drop the pending override
-on every trap delivery: at the top of riscv_cpu_do_interrupt() and in
-riscv_cpu_debug_excp_handler() for system mode, and right after
-cpu_exec() returns in the linux-user cpu loop.
-
-Tested: the read-only-page reproducer reports rs1 for offsets 1, 65 and
-129; an mcontrol store-trigger reproducer reports the follow-up load's
-own access-fault address instead of the earlier cbo.zero rs1.
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4151
-Suggested-by: David Harris <david.harris@gitlab.com>
-Signed-off-by: wangyang <wangyang25@otcaix.iscas.ac.cn>
+Reviewed-by: Brian Cain <brian.cain@oss.qualcomm.com>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 ---
- accel/tcg/user-exec.c         |  7 ++++++-
- include/hw/core/cpu.h         |  2 ++
- linux-user/riscv/cpu_loop.c   |  3 +++
- target/riscv/tcg/cpu_helper.c | 27 ++++++++++++++++++++++++---
- target/riscv/tcg/debug.c      |  3 +++
- target/riscv/tcg/op_helper.c  |  5 +++++
- 6 files changed, 43 insertions(+), 4 deletions(-)
+ include/semihosting/common-semi.h   |  7 ------
+ target/arm/common-semi-target.c     | 35 -----------------------------
+ target/hexagon/common-semi-target.c | 35 -----------------------------
+ target/riscv/common-semi-target.c   | 35 -----------------------------
+ 4 files changed, 112 deletions(-)
 
-diff --git a/accel/tcg/user-exec.c b/accel/tcg/user-exec.c
-index a35aca7889..13c3845811 100644
---- a/accel/tcg/user-exec.c
-+++ b/accel/tcg/user-exec.c
-@@ -787,7 +787,12 @@ static int probe_access_internal(CPUArchState *env, vaddr addr,
-         return TLB_INVALID_MASK;
-     }
+diff --git a/include/semihosting/common-semi.h b/include/semihosting/common-semi.h
+index 618f60f76e7..8875aec3c86 100644
+--- a/include/semihosting/common-semi.h
++++ b/include/semihosting/common-semi.h
+@@ -53,12 +53,5 @@ typedef struct SemihostingCPUOps {
  
--    cpu_loop_exit_sigsegv(env_cpu(env), addr, access_type, maperr, ra);
-+    CPUState *cpu = env_cpu(env);
-+    if (cpu->exception_addr_valid) {
-+        addr = cpu->exception_addr;
-+        cpu->exception_addr_valid = false;
-+    }
-+    cpu_loop_exit_sigsegv(cpu, addr, access_type, maperr, ra);
- }
+ void common_semi_cb(CPUState *cs, uint64_t ret, int err);
+ void do_common_semihosting(CPUState *cs);
+-uint64_t common_semi_arg(CPUState *cs, int argno);
+-void common_semi_set_ret(CPUState *cs, uint64_t ret);
+-void common_semi_set_err(CPUState *cs, int err);
+-bool is_64bit_semihosting(CPUArchState *env);
+-bool common_semi_sys_exit_is_extended(CPUState *cs);
+-uint64_t common_semi_stack_bottom(CPUState *cs);
+-bool common_semi_has_synccache(CPUArchState *env);
  
- int probe_access_flags(CPUArchState *env, vaddr addr, int size,
-diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-index ae66f5e33e..1fd68367f6 100644
---- a/include/hw/core/cpu.h
-+++ b/include/hw/core/cpu.h
-@@ -560,6 +560,8 @@ struct CPUState {
-     uint32_t tcg_cflags;
-     uint32_t halted;
-     int32_t exception_index;
-+    vaddr exception_addr;
-+    bool exception_addr_valid;
- 
-     bool vcpu_dirty;
-     AccelCPUState *accel;
-diff --git a/linux-user/riscv/cpu_loop.c b/linux-user/riscv/cpu_loop.c
-index 6f27a06da4..dbf1d42d33 100644
---- a/linux-user/riscv/cpu_loop.c
-+++ b/linux-user/riscv/cpu_loop.c
-@@ -38,6 +38,9 @@ void cpu_loop(CPURISCVState *env)
-         cpu_exec_end(cs);
-         qemu_process_cpu_events(cs);
- 
-+        /* A trap ends the pending cbo.zero address override window. */
-+        cs->exception_addr_valid = false;
-+
-         switch (trapnr) {
-         case EXCP_INTERRUPT:
-             /* just indicate that signals should be handled asap */
-diff --git a/target/riscv/tcg/cpu_helper.c b/target/riscv/tcg/cpu_helper.c
-index 07d9222652..4513c9bdbe 100644
---- a/target/riscv/tcg/cpu_helper.c
-+++ b/target/riscv/tcg/cpu_helper.c
-@@ -1537,7 +1537,12 @@ static void raise_mmu_exception(CPURISCVState *env, target_ulong address,
-     default:
-         g_assert_not_reached();
-     }
--    env->badaddr = address;
-+    if (cs->exception_addr_valid) {
-+        env->badaddr = cs->exception_addr;
-+        cs->exception_addr_valid = false;
-+    } else {
-+        env->badaddr = address;
-+    }
-     env->two_stage_lookup = two_stage;
-     env->two_stage_indirect_lookup = two_stage_indirect;
- }
-@@ -1588,7 +1593,12 @@ void riscv_cpu_do_transaction_failed(CPUState *cs, hwaddr physaddr,
-         cs->exception_index = RISCV_EXCP_INST_ACCESS_FAULT;
-     }
- 
--    env->badaddr = addr;
-+    if (cs->exception_addr_valid) {
-+        env->badaddr = cs->exception_addr;
-+        cs->exception_addr_valid = false;
-+    } else {
-+        env->badaddr = addr;
-+    }
-     env->two_stage_lookup = mmuidx_2stage(mmu_idx);
-     env->two_stage_indirect_lookup = false;
-     cpu_loop_exit_restore(cs, retaddr);
-@@ -1621,7 +1631,12 @@ void riscv_cpu_do_unaligned_access(CPUState *cs, vaddr addr,
-     default:
-         g_assert_not_reached();
-     }
--    env->badaddr = addr;
-+    if (cs->exception_addr_valid) {
-+        env->badaddr = cs->exception_addr;
-+        cs->exception_addr_valid = false;
-+    } else {
-+        env->badaddr = addr;
-+    }
-     env->two_stage_lookup = mmuidx_2stage(mmu_idx);
-     env->two_stage_indirect_lookup = false;
-     cpu_loop_exit_restore(cs, retaddr);
-@@ -2047,6 +2062,12 @@ void riscv_cpu_do_interrupt(CPUState *cs)
- {
-     RISCVCPU *cpu = RISCV_CPU(cs);
-     CPURISCVState *env = &cpu->env;
-+
-+    /*
-+     * A trap ends the pending cbo.zero address override window, so drop
-+     * any saved rs1 that a store trigger or breakpoint left behind.
-+     */
-+    cs->exception_addr_valid = false;
-     bool virt = env->virt_enabled;
-     bool write_gva = false;
-     bool always_storeamo = (env->excp_uw2 & RISCV_UW2_ALWAYS_STORE_AMO);
-diff --git a/target/riscv/tcg/debug.c b/target/riscv/tcg/debug.c
-index e4d719a1da..6962557251 100644
---- a/target/riscv/tcg/debug.c
-+++ b/target/riscv/tcg/debug.c
-@@ -973,6 +973,9 @@ void riscv_cpu_debug_excp_handler(CPUState *cs)
-     RISCVCPU *cpu = RISCV_CPU(cs);
-     CPURISCVState *env = &cpu->env;
- 
-+    /* A debug exit ends the cbo.zero address override window too. */
-+    cs->exception_addr_valid = false;
-+
-     if (cs->watchpoint_hit) {
-         if (cs->watchpoint_hit->flags & BP_CPU) {
-             do_trigger_action(env, DBG_ACTION_BP);
-diff --git a/target/riscv/tcg/op_helper.c b/target/riscv/tcg/op_helper.c
-index b67c7718db..3fc993a207 100644
---- a/target/riscv/tcg/op_helper.c
-+++ b/target/riscv/tcg/op_helper.c
-@@ -188,9 +188,13 @@ void helper_cbo_zero(CPURISCVState *env, target_ulong address)
-     int mmu_idx = riscv_env_mmu_index(env, false);
-     uintptr_t ra = GETPC();
-     void *mem;
-+    CPUState *cs = env_cpu(env);
- 
-     check_zicbo_envcfg(env, MENVCFG_CBZE, ra);
- 
-+    cs->exception_addr = address;
-+    cs->exception_addr_valid = true;
-+
-     /* Mask off low-bits to align-down to the cache-block. */
-     address &= ~(cbozlen - 1);
- 
-@@ -218,6 +222,7 @@ void helper_cbo_zero(CPURISCVState *env, target_ulong address)
-             cpu_stb_mmuidx_ra(env, address + i, 0, mmu_idx, ra);
-         }
-     }
-+    cs->exception_addr_valid = false;
- }
- 
- /*
+ #endif /* COMMON_SEMI_H */
+diff --git a/target/arm/common-semi-target.c b/target/arm/common-semi-target.c
+index 5263c0435a8..aa5190ee16c 100644
+--- a/target/arm/common-semi-target.c
++++ b/target/arm/common-semi-target.c
+@@ -71,38 +71,3 @@ const SemihostingCPUOps arm_semihosting_ops = {
+     .stack_bottom = arm_semi_stack_bottom,
+     .has_synccache = arm_semi_has_synccache,
+ };
+-
+-uint64_t common_semi_arg(CPUState *cs, int argno)
+-{
+-    return arm_semi_arg(cs, argno);
+-}
+-
+-void common_semi_set_ret(CPUState *cs, uint64_t ret)
+-{
+-    arm_semi_set_ret(cs, ret);
+-}
+-
+-void common_semi_set_err(CPUState *cs, int err)
+-{
+-    arm_semi_set_err(cs, err);
+-}
+-
+-bool is_64bit_semihosting(CPUArchState *env)
+-{
+-    return arm_semi_is_64bit(env_cpu(env));
+-}
+-
+-bool common_semi_sys_exit_is_extended(CPUState *cs)
+-{
+-    return arm_semi_sys_exit_is_extended(cs);
+-}
+-
+-uint64_t common_semi_stack_bottom(CPUState *cs)
+-{
+-    return arm_semi_stack_bottom(cs);
+-}
+-
+-bool common_semi_has_synccache(CPUArchState *env)
+-{
+-    return arm_semi_has_synccache(env_cpu(env));
+-}
+diff --git a/target/hexagon/common-semi-target.c b/target/hexagon/common-semi-target.c
+index b97ed6796f8..0a33b872e3a 100644
+--- a/target/hexagon/common-semi-target.c
++++ b/target/hexagon/common-semi-target.c
+@@ -59,38 +59,3 @@ const SemihostingCPUOps hexagon_semihosting_ops = {
+     .stack_bottom = hexagon_semi_stack_bottom,
+     .has_synccache = hexagon_semi_has_synccache,
+ };
+-
+-uint64_t common_semi_arg(CPUState *cs, int argno)
+-{
+-    return hexagon_semi_arg(cs, argno);
+-}
+-
+-void common_semi_set_ret(CPUState *cs, uint64_t ret)
+-{
+-    hexagon_semi_set_ret(cs, ret);
+-}
+-
+-void common_semi_set_err(CPUState *cs, int err)
+-{
+-    hexagon_semi_set_err(cs, err);
+-}
+-
+-bool is_64bit_semihosting(CPUArchState *env)
+-{
+-    return hexagon_semi_is_64bit(env_cpu(env));
+-}
+-
+-bool common_semi_sys_exit_is_extended(CPUState *cs)
+-{
+-    return hexagon_semi_sys_exit_is_extended(cs);
+-}
+-
+-uint64_t common_semi_stack_bottom(CPUState *cs)
+-{
+-    return hexagon_semi_stack_bottom(cs);
+-}
+-
+-bool common_semi_has_synccache(CPUArchState *env)
+-{
+-    return hexagon_semi_has_synccache(env_cpu(env));
+-}
+diff --git a/target/riscv/common-semi-target.c b/target/riscv/common-semi-target.c
+index 7fa3bef6883..24c42254558 100644
+--- a/target/riscv/common-semi-target.c
++++ b/target/riscv/common-semi-target.c
+@@ -62,38 +62,3 @@ const SemihostingCPUOps riscv_semihosting_ops = {
+     .stack_bottom = riscv_semi_stack_bottom,
+     .has_synccache = riscv_semi_has_synccache,
+ };
+-
+-uint64_t common_semi_arg(CPUState *cs, int argno)
+-{
+-    return riscv_semi_arg(cs, argno);
+-}
+-
+-void common_semi_set_ret(CPUState *cs, uint64_t ret)
+-{
+-    riscv_semi_set_ret(cs, ret);
+-}
+-
+-void common_semi_set_err(CPUState *cs, int err)
+-{
+-    riscv_semi_set_err(cs, err);
+-}
+-
+-bool is_64bit_semihosting(CPUArchState *env)
+-{
+-    return riscv_semi_is_64bit(env_cpu(env));
+-}
+-
+-bool common_semi_sys_exit_is_extended(CPUState *cs)
+-{
+-    return riscv_semi_sys_exit_is_extended(cs);
+-}
+-
+-uint64_t common_semi_stack_bottom(CPUState *cs)
+-{
+-    return riscv_semi_stack_bottom(cs);
+-}
+-
+-bool common_semi_has_synccache(CPUArchState *env)
+-{
+-    return riscv_semi_has_synccache(env_cpu(env));
+-}
 -- 
-2.55.0.windows.2
+2.43.0
 
 
