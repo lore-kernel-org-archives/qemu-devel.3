@@ -4,101 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7E1ECC6B2A
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 12:05:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2651BCC6B1A
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 12:06:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGxjT-00072P-0A; Wed, 14 Oct 2026 08:05:19 -0400
+	id 1xGxkW-0007av-Sd; Wed, 14 Oct 2026 08:06:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xGxjQ-000728-Dl
- for qemu-devel@nongnu.org; Wed, 14 Oct 2026 08:05:16 -0400
-Received: from mail-yw1-x112d.google.com ([2607:f8b0:4864:20::112d])
+ id 1xGxkT-0007ag-ND
+ for qemu-devel@nongnu.org; Wed, 14 Oct 2026 08:06:21 -0400
+Received: from mail-yw1-x1129.google.com ([2607:f8b0:4864:20::1129])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xGxjO-0003ad-Ib
- for qemu-devel@nongnu.org; Wed, 14 Oct 2026 08:05:16 -0400
-Received: by mail-yw1-x112d.google.com with SMTP id
- 00721157ae682-8ae9bc9a2fcso48056837b3.1
- for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 05:05:13 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1791979512; cv=none;
+ id 1xGxkQ-0003oe-DM
+ for qemu-devel@nongnu.org; Wed, 14 Oct 2026 08:06:20 -0400
+Received: by mail-yw1-x1129.google.com with SMTP id
+ 00721157ae682-8ac8a2ac52bso41828207b3.0
+ for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 05:06:17 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1791979577; cv=none;
  d=google.com; s=arc-20260327;
- b=BTB5C+bi+CLc/VP6dgQ51fKaywC4TWI8AVCTz1P2mkQ3FoHdYtBp27FJgKm9CnAM6k
- KptUEhm5G1F+/CekPW6QL6ilR7kICZjNzsVY1ZKiqa3pHSdy/ZPEelemuOCpF4sNGKAr
- Qi/BcpGxI+4gbo+4xEiIUJXl284fUHdJYSpdVy7GeJ2+iqeGtXdADlCZNds3eC3z3mew
- DDwd3tqbBrpV9S9yMhRvpa+70WxXx7kRc5YldveL0v40KCH2M2E1gFoDfWJ7r2f1PmE7
- ApQ85CyQkjfI3SKPr8gyAnqKCqtj38e6OHOhllXKRGmtmwQCOXSVp39PKeFAODyzs7Wp
- brZA==
+ b=IguUXM/+iQfzcrVqIkOkHoowlmYg2acW4zForbRtRdDuhRZii9Vc9aa6tay2MeqofG
+ p7ChRVOiCpPqelMkJleLe6DeL6R/M04z6IkAUPREadEM/rlQ0UZedkB4+xkxUM2W4Oy2
+ Cs4zcnFvkqL8JnBA3SJOo/aNUJanMxOU37Wm/0OV7wApzhCyXIYmgVtjSmGTjAYJW7LF
+ Pw2jlbgsAFzbFWZbRPRHuXWwHYGfAmIKqGL3xtJQpEHpq2M7nTKQGIz8ODP8x0nQys/3
+ FwAaJYXJMuq/LsXKPWkUCRKvQ/1teij9Je+MULdVyFx8D+z5J06W75iTK7H/YoQ8G0qM
+ C8AQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=M9Nyl9xH3QF3gMvTwTw/sBu2NY+4Q2lch/paE09DFwI=;
- fh=h8c/yFRgZpGWeDZqTgMvFbz8jsrSkstGL4N/FagHsVA=;
- b=i7g8EmT2U9rd+0f4hzHHnNcI4BSgTsRHRC+gPZAuN42SyjMftDO4SK30UlGIMu95Hv
- 7oRVCRR9hnhYoaOqN6WM3ccL4jAM1TYC/x+QhE+501qqTlC2TSA9jnPQ44KTe1RAMoqI
- KGhGT84ff7l562DxABV75KiUFUjl8NXY9poAqGwoI+UGHJo1rxB0e01scKAdFTVhs8D5
- is8RTUFYL/VQk7Wm+eGwkwfUyn8iwI/7hb9+yOPlUhVA/KqT7vqKzCdTLgwr625whuuo
- rnmiNsNNzlYiOpZYKH//KioPsWpWQPSfRbYT61vT7VzrXtX7JmTLo1JYQ52dP9ZR+CV1
- fm5Q==; darn=nongnu.org
+ bh=d/3zqLfYuRm+7YCJo4+EtPoysMl01w41Nwru3cxg2z0=;
+ fh=YHoQpvTWCe2sf9yaDxE7bMloNaE7q4NVBTFaJj17TiI=;
+ b=qVb/cYiiGHS/Xa/S3G+H3q4K2iwPmWwb3p9j2Cjms0pnb6FGM+E+oeChSLhTepQyY7
+ +43+Wv1KQLSmHMRDR6338c47t9Ky3eWDpHtLZc+Gzb3lQfrcjQqEG50FrmxMIZ48MnCj
+ cGfPypGmmOX7tMlKwFSEMDNE8Zhc4lmPsnGsrJRcOgkgmGi8+t908PGOXtATVTImwcIy
+ f9BwscDLRm34nqIQBxvswK4Yy+lZlFyqiRgNP8DcG68EDBQU+WiQkOCKStRoQn2gTDc+
+ EvN95/5fTZOVHuyyQZAcuNV6KMpzDlSLaJ4A0XBOxDTH1nUc4r99T/f9PcALU1ujfKiA
+ kNNA==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1791979512; x=1792584312; darn=nongnu.org;
+ d=linaro.org; s=google; t=1791979577; x=1792584377; darn=nongnu.org;
  h=content-type:cc:to:subject:message-id:date:from:in-reply-to
  :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=M9Nyl9xH3QF3gMvTwTw/sBu2NY+4Q2lch/paE09DFwI=;
- b=nxm6DmJd8Os0mtL739V+77F64QyRY01XkdSlVaarp4mIlKSg6Gw73zFy7qyyYKWOz2
- uhr8NOe0OAPBeR7Eda6BzorPGeO9SyVspxKu5LnS/qSACKeiZYllSMqD4XdW5UcnuPkh
- ZMHpoUo+In6DMGdnBVHov7VUvKEMD+ahP1BnwHL0gCg2pbfJ1qgRD2HE42/WgHOlqkWe
- O9ctxagOd/Ov8mqDWsquhPyxxO1sFE7sNZ7Acv/RquIdIDuyi09EPZXFvDQf/eKFOCCN
- LGM4EX/bzyYZVZzrJk2r6SrrixcFbeqoLXKaUVxNI1y/6WYPo7X+rGWVQ0mwB6STw/3h
- tXfg==
+ :content-type; bh=d/3zqLfYuRm+7YCJo4+EtPoysMl01w41Nwru3cxg2z0=;
+ b=L/jFHOnDhozMDKzW2RhXm8eu2hfQrL5q6xlb2rG1Z79YZASq0c+tXAr8J/nHGpb/xT
+ 6zhrtfbD73kxgmvR5Zzs+H0AXjwy2AI2ClW+tJArjE8YgerJl/AimI8iCnvjdhW/MAIX
+ 1aD6Mt4qgmXZomjpJnG55mGOvcLwffPjLy0k1xAqWbqpzDjPPs6qGM35yAuMtjpdykj5
+ LpBHUYHz3NuRaqaE5fccsw3Mmd7LTelQ3kG6UvapSJlEXpgDgkRQbVUhtaSAkPu7U4CY
+ w2d9smR2gcnH+7Lx5JBg06Mp0JX16P89dZF47SB144dYf+0lCFDwYUd6j3dXV9g8NGoc
+ REIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791979512; x=1792584312;
+ d=1e100.net; s=20260707; t=1791979577; x=1792584377;
  h=content-type:cc:to:subject:message-id:date:from:in-reply-to
  :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to:content-type;
- bh=M9Nyl9xH3QF3gMvTwTw/sBu2NY+4Q2lch/paE09DFwI=;
- b=t2HVVotC3H/xnxqLtoH5dRD37DofXkiE51JUxjtPHjOSIYE9oVRIbBucVTUr60304R
- 2m1ZJGC7Wf5dvWw/vkSEFJ+Tn2Yy1lrXStVpOSI6Tg/BPJsyuYsdgBTIQREzIIyhPiYC
- weGQNAV+/w9fWGnacOLIDUloxnjCScd3no4M9zx5rPf2/QNvUX6IG6dq3dEFDaK7jV9A
- Ei27tBNiI/vy57XKamis3ySvhbePVvlNCQFKdqNZB1o4/Sa9F3KEZmbtAV9yu2S9own2
- pJSREbX/Z4pi5s4e1XvTHRAPmb9yHs6Zr6Cm/5hOt1njIU920eJ21mm/lfwLgXTMrLZ8
- LRPQ==
+ bh=d/3zqLfYuRm+7YCJo4+EtPoysMl01w41Nwru3cxg2z0=;
+ b=wKNGoQsFNCbowsJLKGjTAZlwFBH2eSNmIumgl9JoYBQxcFBpeEoGdwvcZGeAbQnqMs
+ v8O3AhgnT5EAopraoLPpFMCEDtZIL2NecldeuuRZ70dmaQnYdugush/CPSPD14UpBPHm
+ fYsCt/jhG0mzBIgY6khaybilLdECycbOcT2t8EUrpN5rpqeBBxWn9hxh1BWqCqK8eGcg
+ ZTxsTodmhW1Oy3Xpl7qdYdUUJ+BvKBNHn/DV2+Bw6yxYlu+w+8DzJYSnHYlPh7mnVVL6
+ HiMtp0QDdDt/likE6ue7QEe3YkQUtcgP6Bwlc9E84QSq4I9VSKj9XR9hvPqmXqi7LFNf
+ /aWg==
 X-Forwarded-Encrypted: i=1;
- AKwUvBw0+IJlkvsOqyrc5gUhvKZlqQDpLxTDXDYd5DmzMWLv0JkOb4xTN+1YTdtOaCEYsc7G3PJWc4r9sOYo@nongnu.org
-X-Gm-Message-State: AFq9FYJzfd5SfVDcpQTqrEmgPcCRdRoDGGO8YJbANwqvurpaqfhizRRZ
- LLhwCO7PWVJW6ZBtKQnz9rwEeeoV8hjDG2kZAyYidTTnpJ6+fpH8QKmQP5yTFEFE9x1UVqm79C1
- E+mrZf3AM3qFStoxNR8YVQgGu6sNVBVJ0zkJ1LNyinw==
-X-Gm-Gg: AYBFou32Ct4GPGKRxlqFx5T6q9OuQHqrv+4KB7oN9C5wWLzFRcoBhKjEZ/exCz10jXu
- 04JVudhL8ABAtV2hERoJV+HxYRz/e6WsfIQJIuCztP3Z/hMqKk38hKGKEKhSefpygXqdi8o8Xkm
- 914CxD/JMxyDyvGDQuQ2OJGE8UeVil9pU+Hg6rLbwzS3WZwpQXHHL8s3DEMVu+Z35/crUkDcbps
- vmTHFepFdNJCUb+icnv1ixG4E5bYl24FjDgkbosfmg+eTvQiq9k1/atnGBg/YWY3Fdl4pXnWivK
- iQA7ePPGHjRk2b1cTJ+QWgOA+kHl66bpJ2otKzftGh/44l4gUxJJHlkwI7fdseVYir2vl/pN6hO
- ex8RkVPNO/jRH7EXc2IMEW0gijGnnpr1Wz6YINXa5ydq9s65msQ==
-X-Received: by 2002:a05:690c:13:b0:8b0:a30a:7f31 with SMTP id
- 00721157ae682-8b0a30a9167mr33446427b3.29.1791979512090; Wed, 14 Oct 2026
- 05:05:12 -0700 (PDT)
+ AKwUvBxOfL8MEYQD9lbiSU9Xqh3LenfoKVEaXehTru9gR0XZRF7/5dy4oscacN5t9Dft04Hcd4qFI80IwQIU@nongnu.org
+X-Gm-Message-State: AFq9FYKvlpP+NsVc1ER85y297mbeA2yTYRVgoL/PP5nglO08L+pgZ0X1
+ DSaID0Nq5C4loI5UD5OBg3CPn2BOkjalWoWtNVZVvtK7keacK4jh3FUrezst5Ugx3u4MCTIgVlf
+ /Gyd3p6MI2S7OOj13i0L/y3WIHwPxv9+2dLFaA26YWA==
+X-Gm-Gg: AYBFou30oyM0GuKBJ/CWkYlWH1SZi191uMkX7FohKJ8ULRKjDTrBRlfgcURbMysW4zn
+ +Orptg7DnWvoxxwv647rcwGUZyTsHeM63lmUDNcTIRRhPcM6vF4og/cuO39axXxPc4HQTPBfvpn
+ VqYI0JtLEmWR6Tah6kWsXD2+6ZvXF0dUY/QLFgMduOMMSci+SXTg1hmkPP9hOV509xigXrtjFZJ
+ L7wDXXEA54752csHnjuGRAgTZA+1Km/vraBdEEWb+Z4ba8m2MnkRuk39HRdbyUmZxl1hoHsGdrw
+ GWWPSenFsYaen+NdBC5sFad2Oy2Gug+PH9gf30TZfimwbLr8bPWfnMZMyRqjIV6UsnLE1Z9LzGL
+ GmKq7duGCpC8aXbGiR/gPJkIQ+GS85w1t/7k4kKs=
+X-Received: by 2002:a05:690c:47c4:b0:8a7:ef2a:ff9c with SMTP id
+ 00721157ae682-8b07ebfde3amr43167667b3.2.1791979577149; Wed, 14 Oct 2026
+ 05:06:17 -0700 (PDT)
 MIME-Version: 1.0
 References: <20260916104435.600211-1-mark.caveayland@nutanix.com>
- <20260916104435.600211-14-mark.caveayland@nutanix.com>
- <CAFEAcA-FFiWEs3ZLztVwZ72_TGLuhEBbfKnaZ3NFJJ1W-Wd33A@mail.gmail.com>
- <c444a8ed-eb83-4a69-87e5-57c71f3a6d01@nutanix.com>
-In-Reply-To: <c444a8ed-eb83-4a69-87e5-57c71f3a6d01@nutanix.com>
+ <20260916104435.600211-15-mark.caveayland@nutanix.com>
+ <CAFEAcA_fv66MxW4QKHjUypSwTZL=LK6YVLgNvoMH83ivn=EMbQ@mail.gmail.com>
+ <0148737f-834a-4e7a-8e7f-7fff2ffaa90b@nutanix.com>
+In-Reply-To: <0148737f-834a-4e7a-8e7f-7fff2ffaa90b@nutanix.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Wed, 14 Oct 2026 13:04:59 +0100
-X-Gm-Features: AclHuK_fKBiA6YUTOHdzTar_zcSRcOFWB6_EBRpgQCUFNyZdpL7rStVJCTFbRZ0
-Message-ID: <CAFEAcA8v+pcFz+HsgT9M6xb_16qBKK5FOuf8WupP5KuQK+aNcQ@mail.gmail.com>
-Subject: Re: [PATCH 13/22] i8259.c: introduce TYPE_I8259_PIC device
+Date: Wed, 14 Oct 2026 13:06:05 +0100
+X-Gm-Features: AclHuK8r8W29TXukvU3-Y7mDsa8VmOnEakDfcbLqZ_5sU32lHwrsaLd93jsyRyA
+Message-ID: <CAFEAcA_uWm4kq=NRDcUHrU_gDBEiVRc7_FQz+k6omAre0+p7gA@mail.gmail.com>
+Subject: Re: [PATCH 14/22] i8259.c: properly cascade secondary i8259 from
+ primary i8259
 To: Mark Cave-Ayland <mark.caveayland@nutanix.com>
 Cc: pbonzini@redhat.com, richard.henderson@linaro.org, mst@redhat.com, 
  sstabellini@kernel.org, anthony@xenproject.org, edgar.iglesias@gmail.com, 
  qemu-devel@nongnu.org, xen-devel@lists.xenproject.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112d;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1129;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1129.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -121,75 +122,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 14 Oct 2026 at 12:09, Mark Cave-Ayland
+On Wed, 14 Oct 2026 at 12:20, Mark Cave-Ayland
 <mark.caveayland@nutanix.com> wrote:
 >
-> On 13/10/2026 17:17, Peter Maydell wrote:
+> On 13/10/2026 17:18, Peter Maydell wrote:
 >
-> > On Wed, 16 Sept 2026 at 11:50, Mark Cave-Ayland
+> > On Wed, 16 Sept 2026 at 11:49, Mark Cave-Ayland
 > > <mark.caveayland@nutanix.com> wrote:
-> >> +struct I8259PICState {
-> >> +    DeviceState parent_obj;
-> >> +
-> >> +    qemu_irq pic_out_irq;
-> >> +    qemu_irq pass_irqs[ISA_NUM_IRQS];
-> >> +
-> >> +    ISABus *isabus;
-> >> +    IRQState i8259_primary_out_irq;
-> >> +    I8259CommonState i8259[2];
+> >>
+> >> Currently the cascaded output from the secondary i8259 is returned directly in
+> >> the pass_irqs[] array, instead of being connected to the relevant input of the
+> >> primary i8259.
+> >>
+> >> Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+> >> ---
+> >>   hw/intc/i8259.c | 3 ++-
+> >>   1 file changed, 2 insertions(+), 1 deletion(-)
+> >>
+> >> diff --git a/hw/intc/i8259.c b/hw/intc/i8259.c
+> >> index fcc94e12f8..964ceb04b2 100644
+> >> --- a/hw/intc/i8259.c
+> >> +++ b/hw/intc/i8259.c
+> >> @@ -501,7 +501,8 @@ static void i8259_pic_realize(DeviceState *dev, Error **errp)
+> >>       }
+> >>
+> >>       /* Wire up secondary cascade */
+> >> -    qdev_connect_gpio_out(sec_dev, 0, s->pass_irqs[2]);
+> >> +    qdev_connect_gpio_out(sec_dev, 0,
+> >> +                          qdev_get_gpio_in(pri_dev, 2));
 > >
-> > This allocates only enough space for the common base class's
-> > instance struct, but later we do an object_initialize_child()
-> > of the child class. If the child class's state struct is
-> > ever bigger than the common class, this will break.
->
-> That's true. In theory this should be something like I8259State, however
-> I didn't think it was worth adding a specific
-> OBJECT_DECLARE_SIMPLE_TYPE() if there were no extra fields. I did
-> quickly check that if this happens, then the assert() in
-> object_initialize() fires so if this did happen then we'd find out
-> really quickly.
+> > We just added this line in the previous patch, so we might as well
+> > squash this change into the previous one I think.
+> The reason for having this in a separate commit is because it is
+> technically a behaviour change. Before this commit, an interrupt from
+> the secondary PIC would *always* raise the passed interrupt, whereas on
+> real hardware it is possible to disable interrupts from the secondary
+> PIC by masking the relevant input on the primary PIC [1].
 
-I think that every QOM class ought to define its own instance
-struct, even if it doesn't contain anything beyond the base
-class. This means that when we do need to add a field in future
-we don't have to go around and find the places which currently
-use the parent-class struct but really want the leaf-class
-struct. (There are places where we don't catch mistakes like
-this -- for instance I think if you don't update the
-.instance_size in a type then that doesn't get noticed:
-we've had a bug or too like that).
-
-We don't write that down in https://wiki.qemu.org/Documentation/QOMConventions
-but we do have some similar rules about class structs that
-boil down to "either you're a leaf class and provide none
-of these things, or else you should provide them all; don't
-have a halfway-house 'we happen to only need X and Y but
-not Z right now' setup".
-
-> >>   static const TypeInfo i8259_type_infos[] = {
-> >>       {
-> >>           .name       = TYPE_I8259,
-> >>           .parent     = TYPE_I8259_COMMON,
-> >>           .class_init = i8259_class_init,
-> >>       },
-> >> +    {
-> >> +        .name          = TYPE_I8259_PIC,
-> >> +        .parent        = TYPE_DEVICE,
-> >
-> > Devices that directly inherit from TYPE_DEVICE are awkward,
-> > because they never get reset. Conviently this device doesn't
-> > currently need a reset method, but still, is this a good idea?
->
-> In this case I think it's correct, because the PIC device in this case
-> is a container for 2 cascaded i8259s which are connected separately to
-> the ISA bus. Therefore each i8259 will have its reset triggered via a
-> reset of the ISA bus.
->
-> The container itself can't exist on the ISA bus because it would then
-> appear as a separate device which doesn't make sense in this case.
-
-OK.
+OK, if it's a behaviour change that's fine. The commit message
+is written as if it's just a refactoring, though -- it would
+be helpful to spell out what the behaviour change there and
+that it's fixing a corner case bug.
 
 -- PMM
 
