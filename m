@@ -4,104 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3934ECC6B27
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 08:25:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD757CC6B27
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 08:44:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGuHc-0000Ad-KK; Wed, 14 Oct 2026 04:24:20 -0400
+	id 1xGuaj-0004AG-0t; Wed, 14 Oct 2026 04:44:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ruslichenko.r@gmail.com>)
- id 1xGuHV-0000A3-Kb
- for qemu-devel@nongnu.org; Wed, 14 Oct 2026 04:24:14 -0400
-Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ruslichenko.r@gmail.com>)
- id 1xGuHR-0002EZ-7K
- for qemu-devel@nongnu.org; Wed, 14 Oct 2026 04:24:13 -0400
-Received: by mail-ej1-x634.google.com with SMTP id
- a640c23a62f3a-c169ae1cb26so1061152266b.1
- for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 01:24:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1791966247; x=1792571047; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=E77zUabWfnWHHLgTNO0YwCzccziQx5/PzVOktJEn4XU=;
- b=aypEhdxYbi/UpDHGwN9ain4lrQh98G/V6ceCUzKd4YbtHqmFDTV2a+WcKA/k6HFtRt
- BvbwsgeaJVrTz2wkEw5D5yQJqPLXmLwtoYrGcPjgZBL0EKxK9/e1iR3PyNSmulfRQ923
- dKoKuaL7/ZqOt4aEdP1sPW3RbNVa4t1+hlS9j6ncckSh7zrusoGI/UEsXnRgt5PSnqjM
- 94kb/OFYss2FSHKfV//L5nqjusenw3WdhSG6/FRHcIz4KHnKai4+/lk4RabG4LNgiMpB
- 85+MR0kiKrjpTiNsTOKj/rjZZbVcP4ngLuDchrPEsgSYGItChM5cVAw0c2bJcFalfeIL
- k4sA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791966247; x=1792571047;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=E77zUabWfnWHHLgTNO0YwCzccziQx5/PzVOktJEn4XU=;
- b=mpbmNS1Yn2zhFDcu+hgVz55PKz5DxzLaw3qP//h/EwYWVCQc30FlvWKKgScTaoDzvi
- hsJrNfdIBUVo/0x1vijU7gsnvIrVc5zpfPxNEA2q4LWf437FmxUYbJP1Ao9kIpPUZR7h
- /w1XGBrZcQfcg6MmNrRiKcQBmFLhbKJMbT10igC8CNJIEmd/atHqIePYKQ4cTJzjOGbW
- gjRG68jDU0IUK05VopB9IINNC+UsSpi2LN6BHf9iC/C49x35iOtUZEFOzHHlzxsHWqEP
- 3c1OOqaT2LSr+YYRNJ5HS/Qo9D4hMucprWNYU5plg3E4m2vkqk2W+qDQ+WtdVn7q2uOc
- yPzQ==
-X-Forwarded-Encrypted: i=1;
- AKwUvBzpRWOw9XK8S7u4DYZJVeCHE0PZNamoJnqdCbKFPIgX0zP37uZrOm7bHjYN+50VGN9jiTro+e9Rhk7r@nongnu.org
-X-Gm-Message-State: AFq9FYLRO5c00jpGZsDq6g6NUqO8T8ttzg4nw6sr9jmWFJw66bTPwrue
- dEnRFwK2Bbb3gLVHFlxIcOwoT1YBEgy9MMVqaT/YHrSDKeh6uFPOpdFD
-X-Gm-Gg: AYBFou1FsYiqHmpImGQD8BbymCSusWcaTPdYBrP9L3Sq9/so1A8s/biH8DQoYfV0vor
- MixByMrGhYU9PyxUki0x8oE9EsgiKLTB1AYORfBtMFWlufcUh8yMcV9Y9wHp7fBnSfhcYOoZ/Lx
- diUzDLQO2kh/T9mYa6bgTjtRAtTb+6J4uWqYbWhKQDYlT+XErc8bDGy3EY7OSz75N9K54wfVSbG
- bgbM/lPLA+TRNEQzKVfush26fVa7x4d+hHoH39jAU/lrMSau8LOMxfYXWPWCh8zPxzSZtA+6fjK
- IFKOuqZYAUOWe+KYAzJmaj2qwiK65kMqUsE4SuH/0+pYne6/T/SctqrOf2n+OJq4Dvz1G2pzQHG
- mHKqwBrZbfLp3g2cPh6d/Et0Ejf7rx2t5TQjsNEvs9HkxHt1bgfsp4HT0Vfl9lOcfklnEv08naB
- WJbmWEqPXaKz6Rcgv1OQjuiYLZ0GBc54sCame8I5QliSvMCmTAsfKL2EINiRogB5672QEX2C0ck
- bJuZ7lYdmInYQRrA6Ci7SvJf/N/5HP7GX1HdAdL9Q==
-X-Received: by 2002:a17:906:730f:b0:c2d:d4dd:8b5 with SMTP id
- a640c23a62f3a-c31a9fc0b88mr1422037866b.19.1791966247252; 
- Wed, 14 Oct 2026 01:24:07 -0700 (PDT)
-Received: from [192.168.1.130] (93-143-204-231.adsl.net.t-com.hr.
- [93.143.204.231]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c31b8c4b407sm635010866b.0.2026.10.14.01.24.05
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 14 Oct 2026 01:24:06 -0700 (PDT)
-From: Ruslan Ruslichenko <ruslichenko.r@gmail.com>
-X-Google-Original-From: Ruslan Ruslichenko <ruslichenkor@gmail.com>
-Message-ID: <ea850fd3-1712-470d-a010-465aae705690@gmail.com>
-Date: Wed, 14 Oct 2026 10:24:05 +0200
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1xGuag-00049t-IJ
+ for qemu-devel@nongnu.org; Wed, 14 Oct 2026 04:44:02 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1xGuad-0004Ha-5c
+ for qemu-devel@nongnu.org; Wed, 14 Oct 2026 04:44:02 -0400
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8AxX9PFQM9qm7EVAA--.62972S3;
+ Wed, 14 Oct 2026 16:43:49 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by front1 (Coremail) with SMTP id qMiowJCxNs3AQM9qtigsAA--.13981S2;
+ Wed, 14 Oct 2026 16:43:44 +0800 (CST)
+Subject: Re: [PATCH v5 18/23] target/loongarch: add gcsr instructions and vm
+ level 1 csr management
+To: SignKirigami <prcups@krgm.moe>, qemu-devel@nongnu.org
+Cc: Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
+References: <cover.1791514848.git.prcups@krgm.moe>
+ <6e609bcae12b73d8ddc7a7291afa2ba1b74ea4d0.1791514848.git.prcups@krgm.moe>
+From: Bibo Mao <maobibo@loongson.cn>
+Message-ID: <6ffa3d86-c325-8837-ad28-48a50e690c34@loongson.cn>
+Date: Wed, 14 Oct 2026 16:45:06 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 11/20] hw/core: Implement Remote Port Memory Master bus
- transactions
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Ruslan Ruslichenko <ruslichenko.r@gmail.com>, qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, artem_mygaiev@epam.com, volodymyr_babchuk@epam.com,
- peter.maydell@linaro.org, francisco.iglesias@amd.com,
- edgar.iglesias@gmail.com, berrange@redhat.com, eugene@nuvacore.ai,
- Ruslan_Ruslichenko@epam.com, takahiro.nakata.wr@renesas.com,
- "Edgar E . Iglesias" <edgar.iglesias@amd.com>,
- Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>
-References: <20260915160044.345788-1-ruslichenko.r@gmail.com>
- <20260915160044.345788-12-ruslichenko.r@gmail.com>
- <8f0cfc4a-060c-41a9-81e4-111e0019392f@oss.qualcomm.com>
- <981c4de8-2b09-49df-bcfa-c1f4fdbf3cfb@oss.qualcomm.com>
+In-Reply-To: <6e609bcae12b73d8ddc7a7291afa2ba1b74ea4d0.1791514848.git.prcups@krgm.moe>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-In-Reply-To: <981c4de8-2b09-49df-bcfa-c1f4fdbf3cfb@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::634;
- envelope-from=ruslichenko.r@gmail.com; helo=mail-ej1-x634.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-CM-TRANSID: qMiowJCxNs3AQM9qtigsAA--.13981S2
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj9fXoW3uw47Kr15uF13JrW7ZFyrAFc_yoW8Ww4Uuo
+ WxGF45ZFWrGw4FvasFkw4DXa17XF97C395Cas8uws8W3Z3Cr17Kr1rGrn5Zw4xKF1agrW8
+ u3Z2q3Z8GFn3Zr93l-sFpf9Il3svdjkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8wcxFpf
+ 9Il3svdxBIdaVrn0xqx4xG64xvF2IEw4CE5I8CrVC2j2Jv73VFW2AGmfu7bjvjm3AaLaJ3
+ UjIYCTnIWjp_UUUYx7kC6x804xWl14x267AKxVWUJVW8JwAFc2x0x2IEx4CE42xK8VAvwI
+ 8IcIk0rVWrJVCq3wAFIxvE14AKwVWUGVWUXwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xG
+ Y2AK021l84ACjcxK6xIIjxv20xvE14v26r1j6r1xM28EF7xvwVC0I7IYx2IY6xkF7I0E14
+ v26r1j6r4UM28EF7xvwVC2z280aVAFwI0_Gr1j6F4UJwA2z4x0Y4vEx4A2jsIEc7CjxVAF
+ wI0_Gr1j6F4UJwAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07AIYIkI8VC2zVCFFI
+ 0UMc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUJVWUGwAv7VC2z280
+ aVAFwI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxk0xIA0c2IEe2
+ xFo4CEbIxvr21l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAq
+ x4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r1Y6r
+ 17MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF
+ 7I0E14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxV
+ WUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07j8
+ yCJUUUUU=
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -36
+X-Spam_score: -3.7
+X-Spam_bar: ---
+X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.783,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,285 +82,492 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Philippe,
 
-On 10/13/26 18:10, Philippe Mathieu-Daudé wrote:
-> On 2026-10-13 18:09, Philippe Mathieu-Daudé wrote:
->> Hi,
->>
->> On 2026-09-15 18:00, Ruslan Ruslichenko wrote:
->>> From: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
->>>
->>> Implement the core access handlers for the Remote Port Memory
->>> Master device, which enables QEMU to initiate memory-mapped
->>> transaction to remote peers.
->>>
->>> The patch adds support for:
->>> - Translation of QEMU memory region read/write into Remote Port
->>> read/write packets
->>> - Support for propagating of transaction attributes
->>> (Secure, MasterID)
->>> - Synchronous response waiting with optional timeout (timeout
->>>    configuration to be added within later patches)
->>> - Add trace events for monitoring TX/RX bus transactions
->>>
->>> Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
->>> Signed-off-by: Takahiro Nakata <takahiro.nakata.wr@renesas.com>
->>> Signed-off-by: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
->>> ---
->>>   hw/core/remote-port-memory-master.c | 191 +++++++++++++++++++++++++++-
->>>   hw/core/remote-port.c               |   5 +
->>>   hw/core/trace-events                |   4 +
->>>   include/hw/core/remote-port.h       |  11 ++
->>>   4 files changed, 207 insertions(+), 4 deletions(-)
->>>
->>> diff --git a/hw/core/remote-port-memory-master.c b/hw/core/remote- port-memory-master.c
->>> index 4b0283f9fe..41ef1df518 100644
->>> --- a/hw/core/remote-port-memory-master.c
->>> +++ b/hw/core/remote-port-memory-master.c
->>> @@ -29,18 +29,201 @@
->>>   #define RP_MAX_ACCESS_SIZE 4096
->>> +static int rp_mm_get_timeout(RPMemoryTransaction *tr)
->>> +{
->>> +    RemotePortMap *map = tr->opaque;
->>> +    RemotePortMemoryMaster *s;
->>> +
->>> +    if (!map || !map->parent ||
->>> +        !object_dynamic_cast(OBJECT(map->parent),
->>> +                             TYPE_REMOTE_PORT_MEMORY_MASTER)) {
->>> +        return 0;
->>> +    }
->>> +    s = REMOTE_PORT_MEMORY_MASTER(map->parent);
->>> +    return s->rp_timeout;
->>> +}
->>> +
->>> +MemTxResult rp_mm_access_with_def_attr(RemotePort *rp, uint32_t rp_dev,
->>> +                                       struct rp_peer_state *peer,
->>> +                                       RPMemoryTransaction *tr,
->>> +                                       bool relative, uint64_t offset,
->>> +                                       uint32_t def_attr)
->>> +{
->>> +    uint64_t addr = tr->addr;
->>> +    RemotePortRespSlot *rsp_slot;
->>> +    RemotePortDynPkt *rsp;
->>> +    struct  {
->>> +        struct rp_pkt_busaccess_ext_base pkt;
->>> +        uint8_t reserved[RP_MAX_ACCESS_SIZE];
->>> +    } pay;
->>> +    uint8_t *data = rp_busaccess_tx_dataptr(peer, &pay.pkt);
->>> +    struct rp_encode_busaccess_in in = {0};
->>> +    int i;
->>> +    int len;
->>> +    int rp_timeout = rp_mm_get_timeout(tr);
->>> +    MemTxResult ret;
->>> +
->>> +    if (tr->rw) {
->>> +        /* Data up to 8 bytes is passed as values.  */
->>> +        if (tr->size <= 8) {
->>> +            for (i = 0; i < tr->size; i++) {
->>> +                data[i] = tr->data.u64 >> (i * 8);
->>> +            }
->>> +        } else {
->>> +            memcpy(data, tr->data.p8, tr->size);
->>> +        }
->>> +    }
->>> +
->>> +    addr += relative ? 0 : offset;
->>> +
->>> +    in.cmd = tr->rw ? RP_CMD_write : RP_CMD_read;
->>> +    in.id = rp_new_id(rp);
->>> +    in.dev = rp_dev;
->>> +    in.clk = rp_normalized_vmclk(rp);
->>> +    in.master_id = tr->attr.requester_id;
->>> +    in.addr = addr;
->>> +    in.attr = def_attr;
->>> +    in.attr |= tr->attr.secure ? RP_BUS_ATTR_SECURE : 0;
->>> +    in.size = tr->size;
->>> +    in.stream_width = tr->size;
->>> +    len = rp_encode_busaccess(peer, &pay.pkt, &in);
->>> +    len += tr->rw ? tr->size : 0;
->>> +
->>> +    trace_remote_port_memory_master_tx_busaccess(rp_cmd_to_string(in.cmd),
->>> +        in.id, in.flags, in.dev, in.addr, in.size, in.attr);
->>> +
->>> +    rp_rsp_mutex_lock(rp);
->>> +    rp_write(rp, (void *) &pay, len);
->>> +
->>> +    if (!rp_timeout) {
->>> +        rsp_slot = rp_dev_wait_resp(rp, in.dev, in.id);
->>> +    } else {
->>> +        rsp_slot = rp_dev_timed_wait_resp(rp, in.dev, in.id, rp_timeout);
->>> +        if (rsp_slot->valid == false) {
->>> +            /*
->>> +             * Timeout error
->>> +             */
->>> +            rp_rsp_mutex_unlock(rp);
->>> +            return MEMTX_ERROR;
->>> +        }
->>> +    }
->>> +    rsp = &rsp_slot->rsp;
->>> +
->>> +    /* We dont support out of order answers yet.  */
->>> +    assert(rsp->pkt->hdr.id == in.id);
->>> +
->>> +    switch (rp_get_busaccess_response(rsp->pkt)) {
->>> +    case RP_RESP_OK:
->>> +        ret = MEMTX_OK;
->>> +        break;
->>> +    case RP_RESP_ADDR_ERROR:
->>> +        ret = MEMTX_DECODE_ERROR;
->>> +        break;
->>> +    default:
->>> +        ret = MEMTX_ERROR;
->>> +        break;
->>> +    }
->>> +
->>> +    if (ret == MEMTX_OK && !tr->rw) {
->>> +        data = rp_busaccess_rx_dataptr(peer, &rsp->pkt- >busaccess_ext_base);
->>> +        /* Data up to 8 bytes is return as values.  */
->>> +        if (tr->size <= 8) {
->>> +            for (i = 0; i < tr->size; i++) {
->>> +                tr->data.u64 |= ((uint64_t) data[i]) << (i * 8);
->>> +            }
->>> +        } else {
->>> +            memcpy(tr->data.p8, data, tr->size);
->>
->> I don't understand this direct memory access.
->>
->> Shouldn't this be handled by the FlatView and end as a subpage_t
->> leaf instead?
->>
 
-Thank you for the catch!
-In fact this is a leftover of handling MemoryTransaction's: https://lore.kernel.org/qemu-devel/20260205195824.2610192-14-ruslichenko.r@gmail.com/,
-which were used for RemotePort memory access in v1 patch series.
-
-In Xilinx tree, large access sizes are possible thanks to downstream patch: https://github.com/Xilinx/qemu/commit/063b379d47856e1e0f71f93974157b76d51a3106,
-which is not present in upstream.
-
-For Remote Port v2 series, switched to standard (read|write)_with_attrs to simplify things for now, so those need to be cleaned-up.
-
---
-BR,
-Ruslan
-
->> Doing some archeology to understand:
->> https://lore.kernel.org/qemu-devel/20170204115048.GM12995@toto/
+On 2026/10/9 上午11:05, SignKirigami wrote:
+> Add gcsrrd, gcsrwr and gcsrxchg. Make all csr helper be used by both vm level
+> 0 and 1.
 > 
-> I meant v3:
-> https://lore.kernel.org/qemu-devel/1493391576-29401-1-git-send-email-fred.konrad@greensocs.com/
+> Signed-off-by: SignKirigami <prcups@krgm.moe>
+> Signed-off-by: Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
+> ---
+>   target/loongarch/disas.c                      |   3 +
+>   target/loongarch/insns.decode                 |   6 +
+>   target/loongarch/tcg/csr_helper.c             |  78 +++++++-----
+>   target/loongarch/tcg/helper.h                 |  22 ++--
+>   .../tcg/insn_trans/trans_privileged.c.inc     | 111 ++++++++++++++----
+>   5 files changed, 161 insertions(+), 59 deletions(-)
 > 
->>
->> Amusingly a related backtrace:
->> https://lore.kernel.org/qemu-devel/CAKmqyKOqbJ+-t0SeyZDzDM9RLEQX63WM3- wyJTbiMGHRKtHPYQ@mail.gmail.com/
->>
->>> +        }
->>> +    }
->>> +
->>> +    trace_remote_port_memory_master_rx_busaccess(
->>> +        rp_cmd_to_string(rsp->pkt->hdr.cmd), rsp->pkt->hdr.id,
->>> +        rsp->pkt->hdr.flags, rsp->pkt->hdr.dev, rsp->pkt- >busaccess.addr,
->>> +        rsp->pkt->busaccess.len, rsp->pkt->busaccess.attributes);
->>> +
->>> +    if (rp_timeout) {
->>> +        for (i = 0; i < ARRAY_SIZE(rp->dev_state[rp_dev].rsp_queue); i++) {
->>> +            if (rp->dev_state[rp_dev].rsp_queue[i].used &&
->>> +                rp->dev_state[rp_dev].rsp_queue[i].valid) {
->>> +                rp_resp_slot_done(rp, &rp- >dev_state[rp_dev].rsp_queue[i]);
->>> +            }
->>> +        }
->>> +    } else {
->>> +        rp_resp_slot_done(rp, rsp_slot);
->>> +    }
->>> +    rp_rsp_mutex_unlock(rp);
->>> +
->>> +    /*
->>> +     * For strongly ordered or transactions that don't allow Early Acking,
->>> +     * we need to drain the pending RP processing queue here. This is
->>> +     * because RP handles responses in parallel with normal requests so
->>> +     * they may get reordered. This becomes visible for example with reads
->>> +     * to read-to-clear registers that clear interrupts. Even though the
->>> +     * lowering of the interrupt-wires arrives to us before the read- resp,
->>> +     * we may handle the response before the wire update, resulting in
->>> +     * spurious interrupts.
->>> +     *
->>> +     * This has some room for optimization but for now we use the big hammer
->>> +     * and drain the entire qeueue.
->>> +     */
->>> +    rp_process(rp);
->>> +
->>> +    /* Reads are sync-points, roll the sync timer.  */
->>> +    rp_restart_sync_timer(rp);
->>> +    return ret;
->>> +}
->>> +
->>> +MemTxResult rp_mm_access(RemotePort *rp, uint32_t rp_dev,
->>> +                         struct rp_peer_state *peer,
->>> +                         RPMemoryTransaction *tr,
->>> +                         bool relative, uint64_t offset)
->>> +{
->>> +    return rp_mm_access_with_def_attr(rp, rp_dev, peer, tr, relative, offset,
->>> +                                      0);
->>> +}
->>> +
->>>   static MemTxResult rp_mm_read(void *opaque, hwaddr addr, uint64_t *data,
->>>                                    unsigned size, MemTxAttrs attrs)
->>>   {
->>> -    /* TBD */
->>> -    return MEMTX_OK;
->>> +    MemTxResult ret;
->>> +    RemotePortMap *map = opaque;
->>> +    RemotePortMemoryMaster *s = map->parent;
->>> +
->>> +    RPMemoryTransaction tr = {};
->>> +
->>> +    tr.opaque = map;
->>> +    tr.rw = false;
->>> +    tr.addr = addr;
->>> +    tr.size = size;
->>> +    tr.attr = attrs;
->>> +
->>> +    ret = rp_mm_access(s->rp, s->rp_dev, s->peer, &tr, s->relative,
->>> +                map->offset);
->>> +
->>> +    if (ret == MEMTX_OK) {
->>> +        *data = tr.data.u64;
->>> +    }
->>> +
->>> +    return ret;
->>>   }
->>>   static MemTxResult rp_mm_write(void *opaque, hwaddr addr, uint64_t data,
->>>                                     unsigned size, MemTxAttrs attrs)
->>>   {
->>> -    /* TBD */
->>> -    return MEMTX_OK;
->>> +    RemotePortMap *map = opaque;
->>> +    RemotePortMemoryMaster *s = map->parent;
->>> +
->>> +    RPMemoryTransaction tr = {};
->>> +
->>> +    tr.opaque = map;
->>> +    tr.rw = true;
->>> +    tr.addr = addr;
->>> +    tr.size = size;
->>> +    tr.attr = attrs;
->>> +    tr.data.u64 = data;
->>> +
->>> +    return rp_mm_access(s->rp, s->rp_dev, s->peer, &tr, s->relative,
->>> +                    map->offset);
->>>   }
->>>   static const MemoryRegionOps rp_ops_template = {
->>> diff --git a/hw/core/remote-port.c b/hw/core/remote-port.c
->>> index b4c9fa1528..6a6effdd19 100644
->>> --- a/hw/core/remote-port.c
->>> +++ b/hw/core/remote-port.c
->>> @@ -39,6 +39,11 @@ static void rp_event_read_and_process(RemotePort *s);
->>>   static void sync_timer_hit(void *opaque);
->>>   static void syncresp_timer_hit(void *opaque);
->>> +uint32_t rp_new_id(RemotePort *s)
->>> +{
->>> +    return qatomic_fetch_inc(&s->current_id);
->>> +}
+> diff --git a/target/loongarch/disas.c b/target/loongarch/disas.c
+> index 03d1e560dd..2436c9eec3 100644
+> --- a/target/loongarch/disas.c
+> +++ b/target/loongarch/disas.c
+> @@ -682,6 +682,9 @@ INSN(bgeu,         rr_offs)
+>   INSN(csrrd,        r_csr)
+>   INSN(csrwr,        r_csr)
+>   INSN(csrxchg,      rr_csr)
+> +INSN(gcsrrd,        r_csr)
+> +INSN(gcsrwr,        r_csr)
+> +INSN(gcsrxchg,      rr_csr)
+>   INSN(iocsrrd_b,    rr)
+>   INSN(iocsrrd_h,    rr)
+>   INSN(iocsrrd_w,    rr)
+> diff --git a/target/loongarch/insns.decode b/target/loongarch/insns.decode
+> index 3089d42044..4612af9433 100644
+> --- a/target/loongarch/insns.decode
+> +++ b/target/loongarch/insns.decode
+> @@ -493,6 +493,12 @@ bgeu            0110 11 ................ ..... .....     @rr_offs16
+>     csrxchg           0000 0100 .............. ..... .....     @rr_csr
+>   }
+>   
+> +{
+> +  gcsrrd            0000 0101 .............. 00000 .....     @r_csr
+> +  gcsrwr            0000 0101 .............. 00001 .....     @r_csr
+> +  gcsrxchg          0000 0101 .............. ..... .....     @rr_csr
+> +}
+> +
+>   iocsrrd_b        0000 01100100 10000 00000 ..... .....    @rr
+>   iocsrrd_h        0000 01100100 10000 00001 ..... .....    @rr
+>   iocsrrd_w        0000 01100100 10000 00010 ..... .....    @rr
+> diff --git a/target/loongarch/tcg/csr_helper.c b/target/loongarch/tcg/csr_helper.c
+> index ecfba63228..7ef0032f5d 100644
+> --- a/target/loongarch/tcg/csr_helper.c
+> +++ b/target/loongarch/tcg/csr_helper.c
+> @@ -18,9 +18,10 @@
+>   #include "cpu-csr.h"
+>   #include "cpu-mmu.h"
+>   
+> -target_ulong helper_csrwr_stlbps(CPULoongArchState *env, target_ulong val)
+> +target_ulong helper_csrwr_stlbps(CPULoongArchState *env,
+> +                                 target_ulong val, uint32_t vm_level)
+>   {
+> -    CPUSysState *sys = env_sys(env);
+> +    CPUSysState *sys = get_sys(env, vm_level);
+>       int64_t old_v = sys->CSR_STLBPS;
+>   
+>       /*
+> @@ -40,10 +41,10 @@ target_ulong helper_csrwr_stlbps(CPULoongArchState *env, target_ulong val)
+>       return old_v;
+>   }
+>   
+> -target_ulong helper_csrrd_pgd(CPULoongArchState *env)
+> +target_ulong helper_csrrd_pgd(CPULoongArchState *env, uint32_t vm_level)
+>   {
+>       int64_t v;
+> -    CPUSysState *sys = env_sys(env);
+> +    CPUSysState *sys = get_sys(env, vm_level);
+>   
+>       if (sys->CSR_TLBRERA & 0x1) {
+>           v = sys->CSR_TLBRBADV;
+> @@ -60,25 +61,30 @@ target_ulong helper_csrrd_pgd(CPULoongArchState *env)
+>       return v;
+>   }
+>   
+> -target_ulong helper_csrrd_cpuid(CPULoongArchState *env)
+> +target_ulong helper_csrrd_cpuid(CPULoongArchState *env, uint32_t vm_level)
+>   {
+>       LoongArchCPU *lac = env_archcpu(env);
+> -    CPUSysState *sys = env_sys(env);
+> +    CPUSysState *sys = get_sys(env, vm_level);
+> +
+> +    if (vm_level) {
+> +        return sys->CSR_CPUID;
+> +    }
+>   
+>       sys->CSR_CPUID = CPU(lac)->cpu_index;
+>   
+>       return sys->CSR_CPUID;
+>   }
+>   
+> -target_ulong helper_csrrd_tval(CPULoongArchState *env)
+> +target_ulong helper_csrrd_tval(CPULoongArchState *env, uint32_t vm_level)
+>   {
+> -    return cpu_loongarch_get_timer_ticks(env_timer(env));
+> +    CPUTimerState *timer = vm_level ? env_guest_timer(env) : env_timer(env);
+> +    return cpu_loongarch_get_timer_ticks(timer);
+>   }
+>   
+> -target_ulong helper_csrrd_msgir(CPULoongArchState *env)
+> +target_ulong helper_csrrd_msgir(CPULoongArchState *env, uint32_t vm_level)
+>   {
+>       int irq, new;
+> -    CPUSysState *sys = env_sys(env);
+> +    CPUSysState *sys = get_sys(env, vm_level);
+>   
+>       irq = find_first_bit((unsigned long *)sys->CSR_MSGIS, 256);
+>       if (irq < 256) {
+> @@ -97,13 +103,23 @@ target_ulong helper_csrrd_msgir(CPULoongArchState *env)
+>       return irq;
+>   }
+>   
+> -target_ulong helper_csrwr_estat(CPULoongArchState *env, target_ulong val)
+> +target_ulong helper_csrwr_estat(CPULoongArchState *env,
+> +                                target_ulong val, uint32_t vm_level)
+>   {
+> -    CPUSysState *sys = env_sys(env);
+> +    CPUSysState *sys = get_sys(env, vm_level);
+>       int64_t old_v = sys->CSR_ESTAT;
+>   
+> -    /* Only IS[1:0] can be written */
+> +    /* When guest = 0, only IS[1:0] can be written.
+> +     * When guest = 1, ecode and esubcode of
+> +     * VM_LEVEL1 can be written by VM_LEVEL0.
+> +     */
+>       sys->CSR_ESTAT = deposit64(sys->CSR_ESTAT, 0, 2, val);
+> +    if (vm_level) {
+> +        sys->CSR_ESTAT = deposit64(sys->CSR_ESTAT, 2, 11,
+> +                                   extract64(val, 2, 11));
+> +        sys->CSR_ESTAT = deposit64(sys->CSR_ESTAT, 16, 15,
+> +                                   extract64(val, 16, 15));
+> +    }
+>       /*
+>        * Software interrupts (SWI0/SWI1) are latched in CSR.ESTAT.IS[1:0].
+>        * Make sure the CPU interrupt request state tracks the pending bits,
+> @@ -111,16 +127,17 @@ target_ulong helper_csrwr_estat(CPULoongArchState *env, target_ulong val)
+>        */
+>       if (sys->CSR_ESTAT != old_v) {
+>           bql_lock();
+> -        loongarch_cpu_update_irq(env_archcpu(env), false);
+> +        loongarch_cpu_update_irq(env_archcpu(env), vm_level);
+>           bql_unlock();
+>       }
+>   
+>       return old_v;
+>   }
+>   
+> -target_ulong helper_csrwr_asid(CPULoongArchState *env, target_ulong val)
+> +target_ulong helper_csrwr_asid(CPULoongArchState *env,
+> +                               target_ulong val, uint32_t vm_level)
+>   {
+> -    CPUSysState *sys = env_sys(env);
+> +    CPUSysState *sys = get_sys(env, vm_level);
+>       int64_t old_v = sys->CSR_ASID;
+>   
+>       /* Only ASID filed of CSR_ASID can be written */
+> @@ -131,9 +148,10 @@ target_ulong helper_csrwr_asid(CPULoongArchState *env, target_ulong val)
+>       return old_v;
+>   }
+>   
+> -target_ulong helper_csrwr_tcfg(CPULoongArchState *env, target_ulong val)
+> +target_ulong helper_csrwr_tcfg(CPULoongArchState *env,
+> +                               target_ulong val, uint32_t vm_level)
+>   {
+> -    CPUTimerState *timer = env_timer(env);
+> +    CPUTimerState *timer = vm_level ? env_guest_timer(env) : env_timer(env);
+>       CPUSysState *sys = container_of(timer, CPUSysState, timer_state);
+>       int64_t old_v = sys->CSR_TCFG;
+>   
+> @@ -142,9 +160,10 @@ target_ulong helper_csrwr_tcfg(CPULoongArchState *env, target_ulong val)
+>       return old_v;
+>   }
+>   
+> -target_ulong helper_csrwr_ticlr(CPULoongArchState *env, target_ulong val)
+> +target_ulong helper_csrwr_ticlr(CPULoongArchState *env,
+> +                                target_ulong val, uint32_t vm_level)
+>   {
+> -    CPUTimerState *timer = env_timer(env);
+> +    CPUTimerState *timer = vm_level ? env_guest_timer(env) : env_timer(env);
+>       int64_t old_v = 0;
+>   
+>       if (val & 0x1) {
+> @@ -155,10 +174,11 @@ target_ulong helper_csrwr_ticlr(CPULoongArchState *env, target_ulong val)
+>       return old_v;
+>   }
+>   
+> -target_ulong helper_csrwr_pwcl(CPULoongArchState *env, target_ulong val)
+> +target_ulong helper_csrwr_pwcl(CPULoongArchState *env,
+> +                               target_ulong val, uint32_t vm_level)
+>   {
+>       uint8_t shift, ptbase;
+> -    CPUSysState *sys = env_sys(env);
+> +    CPUSysState *sys = get_sys(env, vm_level);
+>       int64_t old_v = sys->CSR_PWCL;
+>   
+>       /*
+> @@ -180,18 +200,20 @@ target_ulong helper_csrwr_pwcl(CPULoongArchState *env, target_ulong val)
+>       return old_v;
+>   }
+>   
+> -target_ulong helper_csrwr_pwch(CPULoongArchState *env, target_ulong val)
+> +target_ulong helper_csrwr_pwch(CPULoongArchState *env,
+> +                               target_ulong val, uint32_t vm_level)
+>   {
+> -    uint8_t has_ptw;
+> -    CPUSysState *sys = env_sys(env);
+> +    uint8_t host_has_ptw;
+> +    CPUSysState *sys = get_sys(env, vm_level);
+>       int64_t old_v = sys->CSR_PWCH;
+>   
+>       val = FIELD_DP64(val, CSR_PWCH, RESERVE, 0);
+> -    has_ptw = FIELD_EX32(env->cpucfg[2], CPUCFG2, HPTW);
+> -    if (!has_ptw) {
+> +    //TODO: host can't read guest cpucfg
+> +    host_has_ptw = FIELD_EX32(env->cpucfg[2], CPUCFG2, HPTW);
+> +    if (!host_has_ptw) {
+>           val = FIELD_DP64(val, CSR_PWCH, HPTW_EN, 0);
+>       }
+>   
+>       sys->CSR_PWCH = val;
+>       return old_v;
+> - }
+> +}
+> diff --git a/target/loongarch/tcg/helper.h b/target/loongarch/tcg/helper.h
+> index a27b80b087..bce5f46dc2 100644
+> --- a/target/loongarch/tcg/helper.h
+> +++ b/target/loongarch/tcg/helper.h
+> @@ -93,17 +93,17 @@ DEF_HELPER_1(rdtime_d, i64, env)
+>   
+>   #ifndef CONFIG_USER_ONLY
+>   /* CSRs helper */
+> -DEF_HELPER_1(csrrd_pgd, i64, env)
+> -DEF_HELPER_1(csrrd_cpuid, i64, env)
+> -DEF_HELPER_1(csrrd_tval, i64, env)
+> -DEF_HELPER_1(csrrd_msgir, i64, env)
+> -DEF_HELPER_2(csrwr_stlbps, i64, env, tl)
+> -DEF_HELPER_2(csrwr_estat, i64, env, tl)
+> -DEF_HELPER_2(csrwr_asid, i64, env, tl)
+> -DEF_HELPER_2(csrwr_tcfg, i64, env, tl)
+> -DEF_HELPER_2(csrwr_ticlr, i64, env, tl)
+> -DEF_HELPER_2(csrwr_pwcl, i64, env, tl)
+> -DEF_HELPER_2(csrwr_pwch, i64, env, tl)
+> +DEF_HELPER_2(csrrd_pgd, i64, env, i32)
+> +DEF_HELPER_2(csrrd_cpuid, i64, env, i32)
+> +DEF_HELPER_2(csrrd_tval, i64, env, i32)
+> +DEF_HELPER_2(csrrd_msgir, i64, env, i32)
+> +DEF_HELPER_3(csrwr_stlbps, i64, env, tl, i32)
+> +DEF_HELPER_3(csrwr_estat, i64, env, tl, i32)
+> +DEF_HELPER_3(csrwr_asid, i64, env, tl, i32)
+> +DEF_HELPER_3(csrwr_tcfg, i64, env, tl, i32)
+> +DEF_HELPER_3(csrwr_ticlr, i64, env, tl, i32)
+> +DEF_HELPER_3(csrwr_pwcl, i64, env, tl, i32)
+> +DEF_HELPER_3(csrwr_pwch, i64, env, tl, i32)
+>   DEF_HELPER_2(iocsrrd_b, i64, env, tl)
+>   DEF_HELPER_2(iocsrrd_h, i64, env, tl)
+>   DEF_HELPER_2(iocsrrd_w, i64, env, tl)
+> diff --git a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
+> index 00e8f61e42..139dbd6e2a 100644
+> --- a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
+> +++ b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
+> @@ -39,11 +39,14 @@ GEN_FALSE_TRANS(lddir)
+>   GEN_FALSE_TRANS(ertn)
+>   GEN_FALSE_TRANS(dbcl)
+>   GEN_FALSE_TRANS(idle)
+> +GEN_FALSE_TRANS(gcsrrd)
+> +GEN_FALSE_TRANS(gcsrwr)
+> +GEN_FALSE_TRANS(gcsrxchg)
+>   
+>   #else
+>   
+> -typedef void (*GenCSRRead)(TCGv dest, TCGv_ptr env);
+> -typedef void (*GenCSRWrite)(TCGv dest, TCGv_ptr env, TCGv src);
+> +typedef void (*GenCSRRead)(TCGv dest, TCGv_ptr env, TCGv_i32 vm_level);
+> +typedef void (*GenCSRWrite)(TCGv dest, TCGv_ptr env, TCGv src, TCGv_i32 vm_level);
+>   
+>   static bool check_plv(DisasContext *ctx)
+>   {
+> @@ -88,10 +91,14 @@ void loongarch_csr_translate_init(void)
+>   }
+>   #undef SET_CSR_FUNC
+>   
+> -static bool check_csr_flags(DisasContext *ctx, const CSRInfo *csr, bool write)
+> +static bool check_csr_flags(DisasContext *ctx, const CSRInfo *csr,
+> +                            bool write, int vm_level)
+>   {
+>       if ((csr->flags & CSRFL_READONLY) && write) {
+> -        return false;
+> +        /* host writes guest read-only CSRs is allowed */
+> +        if (is_guest_mmu_idx(ctx->mem_idx) || vm_level == VM_LEVEL0) {
+> +            return false;
+> +        }
+>       }
+>       if ((csr->flags & CSRFL_IO) && translator_io_start(&ctx->base)) {
+>           ctx->base.is_jmp = DISAS_EXIT_UPDATE;
+> @@ -101,7 +108,7 @@ static bool check_csr_flags(DisasContext *ctx, const CSRInfo *csr, bool write)
+>       return true;
+>   }
+>   
+> -static bool trans_csrrd(DisasContext *ctx, arg_csrrd *a)
+> +static bool trans_csrrd_impl(DisasContext *ctx, arg_r_csr *a, int vm_level)
+>   {
+>       TCGv dest;
+>       const CSRInfo *csr;
+> @@ -116,21 +123,29 @@ static bool trans_csrrd(DisasContext *ctx, arg_csrrd *a)
+>           /* CSR is undefined: read as 0. */
+>           dest = tcg_constant_tl(0);
+>       } else {
+> -        check_csr_flags(ctx, csr, false);
+> -        dest = gpr_dst(ctx, a->rd, EXT_NONE);
+> -        readfn = (GenCSRRead)csr->readfn;
+> -        if (readfn) {
+> -            readfn(dest, tcg_env);
+> +        check_csr_flags(ctx, csr, false, vm_level);
+> +        if (vm_level && (csr->flags & CSRFL_GSPR)) {
+> +            if (is_guest_mmu_idx(ctx->mem_idx)) {
+> +                generate_exception(ctx, EXCCODE_GSPR);
+> +                return true;
+> +            }
+> +            dest = tcg_constant_tl(0);
+>           } else {
+> -            offset = get_csr_offset(csr, 0);
+> -            tcg_gen_ld_tl(dest, tcg_env, offset);
+> +            dest = gpr_dst(ctx, a->rd, EXT_NONE);
+> +            readfn = (GenCSRRead)csr->readfn;
+> +            if (readfn) {
+> +                readfn(dest, tcg_env, tcg_constant_i32(vm_level));
+> +            } else {
+> +                offset = get_csr_offset(csr, vm_level);
+> +                tcg_gen_ld_tl(dest, tcg_env, offset);
+> +            }
+Can this patch be split into three smaller verson? such as:
+   1. lvz support with csrrd/csrwr/csrxchg instruction.
+   2. lvz support with new gcsrrd/gcsrwr/gcsrxchg instruction.
+   3. Common API for csrrd/gcsrrd.
+or
+   1. lvz support with csrrd/csrwr/csrxchg instruction.
+   2. Common API extraction for csrrd/gcsrr.
+   3. lvz support with new gcsrrd/gcsrwr/gcsrxchg instruction.
+
+With the smaller versions, it is easier to review and find the potential 
+issues.
+
+Regards
+Bibo Mao
+>           }
+>       }
+>       gen_set_gpr(a->rd, dest, EXT_NONE);
+>       return true;
+>   }
+>   
+> -static bool trans_csrwr(DisasContext *ctx, arg_csrwr *a)
+> +static bool trans_csrwr_impl(DisasContext *ctx, arg_r_csr *a, int vm_level)
+>   {
+>       TCGv dest, src1;
+>       const CSRInfo *csr;
+> @@ -146,18 +161,26 @@ static bool trans_csrwr(DisasContext *ctx, arg_csrwr *a)
+>           gen_set_gpr(a->rd, tcg_constant_tl(0), EXT_NONE);
+>           return true;
+>       }
+> -    if (!check_csr_flags(ctx, csr, true)) {
+> +    if (!check_csr_flags(ctx, csr, true, vm_level)) {
+>           /* CSR is readonly: trap. */
+>           return false;
+>       }
+> +    if (vm_level && (csr->flags & CSRFL_GSPR)) {
+> +        if (is_guest_mmu_idx(ctx->mem_idx)) {
+> +            generate_exception(ctx, EXCCODE_GSPR);
+> +            return true;
+> +        }
+> +        gen_set_gpr(a->rd, tcg_constant_tl(0), EXT_NONE);
+> +        return true;
+> +    }
+>       src1 = gpr_src(ctx, a->rd, EXT_NONE);
+>       writefn = (GenCSRWrite)csr->writefn;
+>       if (writefn) {
+>           dest = gpr_dst(ctx, a->rd, EXT_NONE);
+> -        writefn(dest, tcg_env, src1);
+> +        writefn(dest, tcg_env, src1, tcg_constant_i32(vm_level));
+>       } else {
+>           dest = tcg_temp_new();
+> -        offset = get_csr_offset(csr, 0);
+> +        offset = get_csr_offset(csr, vm_level);
+>           tcg_gen_ld_tl(dest, tcg_env, offset);
+>           tcg_gen_st_tl(src1, tcg_env, offset);
+>       }
+> @@ -165,7 +188,7 @@ static bool trans_csrwr(DisasContext *ctx, arg_csrwr *a)
+>       return true;
+>   }
+>   
+> -static bool trans_csrxchg(DisasContext *ctx, arg_csrxchg *a)
+> +static bool trans_csrxchg_impl(DisasContext *ctx, arg_rr_csr *a, int vm_level)
+>   {
+>       TCGv src1, mask, oldv, newv, temp;
+>       const CSRInfo *csr;
+> @@ -182,11 +205,20 @@ static bool trans_csrxchg(DisasContext *ctx, arg_csrxchg *a)
+>           return true;
+>       }
+>   
+> -    if (!check_csr_flags(ctx, csr, true)) {
+> +    if (!check_csr_flags(ctx, csr, true, vm_level)) {
+>           /* CSR is readonly: trap. */
+>           return false;
+>       }
+>   
+> +    if (vm_level && (csr->flags & CSRFL_GSPR)) {
+> +        if (is_guest_mmu_idx(ctx->mem_idx)) {
+> +            generate_exception(ctx, EXCCODE_GSPR);
+> +            return true;
+> +        }
+> +        gen_set_gpr(a->rd, tcg_constant_tl(0), EXT_NONE);
+> +        return true;
+> +    }
+> +
+>       /* So far only readonly csrs have readfn. */
+>       assert(csr->readfn == NULL);
+>   
+> @@ -196,7 +228,7 @@ static bool trans_csrxchg(DisasContext *ctx, arg_csrxchg *a)
+>       newv = tcg_temp_new();
+>       temp = tcg_temp_new();
+>   
+> -    offset = get_csr_offset(csr, 0);
+> +    offset = get_csr_offset(csr, vm_level);
+>       tcg_gen_ld_tl(oldv, tcg_env, offset);
+>       tcg_gen_and_tl(newv, src1, mask);
+>       tcg_gen_andc_tl(temp, oldv, mask);
+> @@ -204,7 +236,7 @@ static bool trans_csrxchg(DisasContext *ctx, arg_csrxchg *a)
+>   
+>       writefn = (GenCSRWrite)csr->writefn;
+>       if (writefn) {
+> -        writefn(oldv, tcg_env, newv);
+> +        writefn(oldv, tcg_env, newv, tcg_constant_i32(vm_level));
+>       } else {
+>           tcg_gen_st_tl(newv, tcg_env, offset);
+>       }
+> @@ -212,6 +244,45 @@ static bool trans_csrxchg(DisasContext *ctx, arg_csrxchg *a)
+>       return true;
+>   }
+>   
+> +static bool trans_csrrd(DisasContext *ctx, arg_csrrd *a)
+> +{
+> +    return trans_csrrd_impl(ctx, a, is_guest_mmu_idx(ctx->mem_idx));
+> +}
+> +
+> +static bool trans_csrwr(DisasContext *ctx, arg_csrwr *a)
+> +{
+> +    return trans_csrwr_impl(ctx, a, is_guest_mmu_idx(ctx->mem_idx));
+> +}
+> +
+> +static bool trans_csrxchg(DisasContext *ctx, arg_csrxchg *a)
+> +{
+> +    return trans_csrxchg_impl(ctx, a, is_guest_mmu_idx(ctx->mem_idx));
+> +}
+> +
+> +static bool trans_gcsrrd(DisasContext *ctx, arg_gcsrrd *a)
+> +{
+> +    if (!avail_LVZ(ctx) || is_guest_mmu_idx(ctx->mem_idx)) {
+> +        return false;
+> +    }
+> +    return trans_csrrd_impl(ctx, a, VM_LEVEL1);
+> +}
+> +
+> +static bool trans_gcsrwr(DisasContext *ctx, arg_gcsrwr *a)
+> +{
+> +    if (!avail_LVZ(ctx) || is_guest_mmu_idx(ctx->mem_idx)) {
+> +        return false;
+> +    }
+> +    return trans_csrwr_impl(ctx, a, VM_LEVEL1);
+> +}
+> +
+> +static bool trans_gcsrxchg(DisasContext *ctx, arg_gcsrxchg *a)
+> +{
+> +    if (!avail_LVZ(ctx) || is_guest_mmu_idx(ctx->mem_idx)) {
+> +        return false;
+> +    }
+> +    return trans_csrxchg_impl(ctx, a, VM_LEVEL1);
+> +}
+> +
+>   static bool gen_iocsrrd(DisasContext *ctx, arg_rr *a,
+>                           void (*func)(TCGv, TCGv_ptr, TCGv))
+>   {
 > 
 
 
