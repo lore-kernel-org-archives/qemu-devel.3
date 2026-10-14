@@ -4,91 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4F29CC6B2A
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 12:56:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43DECCC6B1D
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 12:57:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGyW3-0006oG-0x; Wed, 14 Oct 2026 08:55:33 -0400
+	id 1xGyW5-0006oE-2w; Wed, 14 Oct 2026 08:55:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shmuelfomberg@gmail.com>)
- id 1xGyFG-0003zM-A7
- for qemu-devel@nongnu.org; Wed, 14 Oct 2026 08:38:10 -0400
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shmuelfomberg@gmail.com>)
- id 1xGyFD-0007JF-6b
- for qemu-devel@nongnu.org; Wed, 14 Oct 2026 08:38:09 -0400
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-48c5358fc28so353614f8f.0
- for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 05:38:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1791981485; x=1792586285; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=Lsjn3LV7JBpZW2IxCjuKF63c/Yth+tJQr8znBD2cPwE=;
- b=gKdbrNJfbswaiAckNwvDTSzJfDt+pTJdEevYVHNhtch1ZjuiAuihP4nYo0H1YvyOqG
- qjFD8jmbvLUWlCf8O7Bt1TzSnWLeAUUmXL/PCJyb8+aW/MAc5CCm2Bbnwz9rKdNHsnNB
- X2/i5Wd76ZAuykOQnnaBeJegqDtbIlfS5H+E2Em0ymcGVkRDivcb+2IE0oXi5MiHyPkX
- VS8geKm4UGQaHu2NU/XQlpm8zk52tHBF0nJAeFNd+pzwpKJJGk4gaXCDmYI6Hmeq948s
- iHdWQcJ6rSNLLU1R4xv/ial+slysChWRWk2jR0CyfSl8jUViWD9/plFiqzp4RBqa3fco
- sFvA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791981485; x=1792586285;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=Lsjn3LV7JBpZW2IxCjuKF63c/Yth+tJQr8znBD2cPwE=;
- b=C75VaMDSVce+HLUVfwjzw5i5fU1y2u2L4V7LHDl/PFzguNIf9At0DPlQvDDsxGK115
- 6gUgIe1v7yaXYQhjI3CsLrEUmqk8MPzKzXbMy7oznpszhTXsTed8O0chBfzBCmmBnD9j
- hCerM4D+umBA33hWVsxm3rS0OgYFRu7aoz3ohT+zPFEdBHCYS2DQ04D27PYawT+beRrV
- ipNn6T+1ngqE/E89ZGzB42XR/yDzoRs/WzsMDGO49Lj0wGEe8q9o6lb3dw0P4hNcJGfw
- +RWZVBYwuo19kw2qIh7zltcMQ3HbSjMn9iV5QkGZFBWv9Sy/mTlsBmJTgrZpeYWbT716
- Rbvw==
-X-Forwarded-Encrypted: i=1;
- AKwUvByBPSP4P0g1yycKX1OHT4ApoWKTavkKkld/PrgtukmeUkJcCeMC8K4ZoGuPh+UFpdrfqOm430r7nNFJ@nongnu.org
-X-Gm-Message-State: AFq9FYKA6cCJBbifN4PY/uxKpw4NMwgcMh3BOkalt7FHuQtKtLycCrJG
- ifThLR2u/gofruKIIONn53UZvyPURhHwcMXMHFAjIbGNnG2ak4jTjFCT
-X-Gm-Gg: AYBFou1gcTyP0CouDLNHy4ypWQXyfrbLVf5Bs8Qp0DIRIbUHLmjbv0+qnwZIN2nzq17
- UJWofB7lHc5zMuegBbiyQ4zwt2OHHh+aeR0lUHFDQiI9gKFmZ82rMtlUt+wkwWROb7tTFMAxkLU
- qlm3IRwwTegQxmxrVbrSbUbSdhvOjr3kqfnthS+Oc2eMJpMOM5VPxoSWTA2p8yF9FriMDBvcS5W
- otlIseQ5KHZ5Qyf0WU/6IOddcFTWaf0zWXvHrLaYa1+tYbRqaYG8ItAaPkNBuPw4zEp3KBLW6fz
- GUdIm3oV4SLY+KMX246nsjtCm5YFhM2z5n1pZI6YIoZ923C5Og7CK4KX4v+amepARxbAysZXMVl
- wK2bZPV86VlQKeEKYJVmjGfj7gN5F3JhbDYk2gAfMUnUfdAjivHZjzqmEDvC0mOAerMYWY8Qukr
- 22SM9kOe+YWKaFaOyYtb7mU0Sl7Djesfjc1TYhWFk2OeFvLIBJQryBeXtUXHKJLoCDtouOH92Sw
- 2pLq2PVbaniBRTgq9mHmTXRJeObr0Kd3nY3pZrSFFyTBA==
-X-Received: by 2002:a05:6000:46d6:b0:48d:c20c:cc4d with SMTP id
- ffacd0b85a97d-48dc20cccd2mr16032950f8f.23.1791981484430; 
- Wed, 14 Oct 2026 05:38:04 -0700 (PDT)
-Received: from sfomberg-mac.redhat.corp
- ([2a06:c701:7925:8a00:fca2:9f5c:1c03:33ff])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48de0bd1843sm11798082f8f.56.2026.10.14.05.38.02
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 14 Oct 2026 05:38:03 -0700 (PDT)
-From: Shmuel Fomberg <shmuelfomberg@gmail.com>
-To: shmuelfomberg@gmail.com
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- qemu-devel@nongnu.org (open list:All patches CC here)
-Subject: [PATCH] Adding support for hyper-v enlightments hv-extcalls and
- hv-memory-hint (hypercall HvExtCallMemoryHeatHint)
-Date: Wed, 14 Oct 2026 15:37:47 +0300
-Message-ID: <20261014123748.95097-1-shmuelfomberg@gmail.com>
-X-Mailer: git-send-email 2.54.0
+ (Exim 4.90_1) (envelope-from <gong.shuai@sanechips.com.cn>)
+ id 1xGu6R-0006Lc-Uq; Wed, 14 Oct 2026 04:12:47 -0400
+Received: from mxct.zte.com.cn ([183.62.165.209])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <gong.shuai@sanechips.com.cn>)
+ id 1xGu6P-0000ye-GX; Wed, 14 Oct 2026 04:12:47 -0400
+Received: from mse-fl2.zte.com.cn (unknown [10.5.228.133])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mxct.zte.com.cn (FangMail) with ESMTPS id 4j4P855Xz4z59tmT;
+ Wed, 14 Oct 2026 16:12:37 +0800 (CST)
+Received: (from root@localhost) by mse-fl2.zte.com.cn id 69E8CcV4002763;
+ Wed, 14 Oct 2026 16:12:38 +0800 (+08)
+ (envelope-from gong.shuai@sanechips.com.cn)
+Message-Id: <202610140812.69E8CcV4002763@mse-fl2.zte.com.cn>
+Received: from szxlzmapp03.zte.com.cn ([10.5.231.207])
+ by mse-fl1.zte.com.cn with SMTP id 69E80Klt093682;
+ Wed, 14 Oct 2026 16:00:20 +0800 (+08)
+ (envelope-from gong.shuai@sanechips.com.cn)
+Received: from ubuntu-35-gs (unknown [10.230.214.35])
+ by smtp (Zmail) with SMTP; Wed, 14 Oct 2026 16:00:22 +0800
+X-Zmail-TransId: 3e816acf3696024-0e266
+X-Zmail-LocalSMTP: 1
+X-Zmail-RealSender: gong.shuai@sanechips.com.cn
+From: Gong Shuai <gong.shuai@sanechips.com.cn>
+To: qemu-riscv@nongnu.org, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Palmer Dabbelt <palmer@dabbelt.com>, 
+ Alistair Francis <alistair.francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu@processmission.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Cornelia Huck <cohuck@redhat.com>, Wu Fei <wu.fei9@sanechips.com.cn>,
+ Gong Shuai <gong.shuai@sanechips.com.cn>, Gong Shuai <gsh517025@gmail.com>
+Subject: [RFC PATCH 06/14] hw/riscv/riscv-iommu-accel: Introduce RISC-V IOMMU
+ accel device
+Date: Wed, 14 Oct 2026 15:59:57 +0800
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20261014080005.548066-1-gong.shuai@sanechips.com.cn>
+References: <20261014080005.548066-1-gong.shuai@sanechips.com.cn>
 MIME-Version: 1.0
+X-ZMAIL-USEORIGINALEMLTOOUTBOUND: 1
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=shmuelfomberg@gmail.com; helo=mail-wr1-x430.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-MAIL: mse-fl2.zte.com.cn 69E8CcV4002763
+X-MSS: AUDITRELEASE@mse-fl2.zte.com.cn
+X-TLS: YES
+X-ENVELOPE-SENDER: gong.shuai@sanechips.com.cn
+X-SOURCE-IP: 10.5.228.133 unknown Wed, 14 Oct 2026 16:12:37 +0800
+X-CLEAN: YES
+X-Fangmail-Anti-Spam-Filtered: true
+X-Fangmail-MID-QID: 6ACF3975.000/4j4P855Xz4z59tmT
+Received-SPF: pass client-ip=183.62.165.209;
+ envelope-from=gong.shuai@sanechips.com.cn; helo=mxct.zte.com.cn
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, MSGID_FROM_MTA_HEADER=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Wed, 14 Oct 2026 08:54:54 -0400
+X-Mailman-Approved-At: Wed, 14 Oct 2026 08:54:59 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -103,526 +89,179 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Shmuel Fomberg <shmuelfomberg@gmail.com>
----
- hw/hyperv/hv-gpa-range.c                      |  59 ++++
- include/hw/hyperv/hv-gpa-range.h              |  52 ++++
- .../functional/x86_64/test_hyperv_extcalls.py | 101 +++++++
- tests/unit/test-hv-gpa-range.c                | 271 ++++++++++++++++++
- 4 files changed, 483 insertions(+)
- create mode 100644 hw/hyperv/hv-gpa-range.c
- create mode 100644 include/hw/hyperv/hv-gpa-range.h
- create mode 100644 tests/functional/x86_64/test_hyperv_extcalls.py
- create mode 100644 tests/unit/test-hv-gpa-range.c
+From: Wu Fei <wu.fei9@sanechips.com.cn>
 
-diff --git a/hw/hyperv/hv-gpa-range.c b/hw/hyperv/hv-gpa-range.c
+Add an optional accel device for the RISC-V IOMMU. Its behaviour
+matches the default path so far, leaving room for upcoming
+accelerated (nested) translation. When the accel device is enabled,
+each device's address space is embedded in RISCVIOMMUAccelDevice, a
+per-device struct that will store per-device data for nested
+translation.
+
+Signed-off-by: Wu Fei <wu.fei9@sanechips.com.cn>
+Signed-off-by: Gong Shuai <gong.shuai@sanechips.com.cn>
+---
+ hw/riscv/Kconfig             |  5 ++++
+ hw/riscv/meson.build         |  1 +
+ hw/riscv/riscv-iommu-accel.c | 49 ++++++++++++++++++++++++++++++++++++
+ hw/riscv/riscv-iommu-accel.h | 25 ++++++++++++++++++
+ hw/riscv/riscv-iommu.c       |  5 ++++
+ hw/riscv/riscv-iommu.h       |  3 +++
+ 6 files changed, 88 insertions(+)
+ create mode 100644 hw/riscv/riscv-iommu-accel.c
+ create mode 100644 hw/riscv/riscv-iommu-accel.h
+
+diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
+index 311f1c3cc2..68305e7686 100644
+--- a/hw/riscv/Kconfig
++++ b/hw/riscv/Kconfig
+@@ -1,5 +1,10 @@
++config RISCV_IOMMU_ACCEL
++    bool
++    depends on RISCV_IOMMU
++
+ config RISCV_IOMMU
+     bool
++    select RISCV_IOMMU_ACCEL if IOMMUFD
+ 
+ config RISCV_NUMA
+     bool
+diff --git a/hw/riscv/meson.build b/hw/riscv/meson.build
+index 7aa3c1578d..10cdcc05fa 100644
+--- a/hw/riscv/meson.build
++++ b/hw/riscv/meson.build
+@@ -16,6 +16,7 @@ riscv_ss.add(when: 'CONFIG_TENSTORRENT', if_true: files('tt_atlantis.c'))
+ riscv_ss.add(when: 'CONFIG_ACPI', if_true: files('virt-acpi-build.c'))
+ riscv_ss.add(when: 'CONFIG_RISCV_IOMMU', if_true: files(
+ 	'riscv-iommu.c', 'riscv-iommu-pci.c', 'riscv-iommu-sys.c', 'riscv-iommu-hpm.c'))
++riscv_ss.add(when: 'CONFIG_RISCV_IOMMU_ACCEL', if_true: files('riscv-iommu-accel.c'))
+ riscv_ss.add(when: 'CONFIG_MICROBLAZE_V', if_true: files('microblaze-v-generic.c'))
+ riscv_ss.add(when: 'CONFIG_XIANGSHAN_KUNMINGHU', if_true: files('xiangshan_kmh.c'))
+ riscv_ss.add(when: 'CONFIG_RISCV_MIPS_CPS', if_true: files('cps.c'))
+diff --git a/hw/riscv/riscv-iommu-accel.c b/hw/riscv/riscv-iommu-accel.c
 new file mode 100644
-index 0000000000..e6d3d3eb42
+index 0000000000..41e4d03be6
 --- /dev/null
-+++ b/hw/hyperv/hv-gpa-range.c
-@@ -0,0 +1,59 @@
++++ b/hw/riscv/riscv-iommu-accel.c
+@@ -0,0 +1,49 @@
 +/*
-+ * Hyper-V extended memory heat-hint GPA range helpers.
-+ *
-+ * Copyright (c) 2015-2018 Virtuozzo International GmbH.
++ * RISC-V IOMMU - accelerated (nested) translation support
 + *
 + * SPDX-License-Identifier: GPL-2.0-or-later
 + */
 +
 +#include "qemu/osdep.h"
-+#include "hw/hyperv/hv-gpa-range.h"
-+#include "hw/hyperv/hyperv-proto.h"
 +
-+bool hv_decode_gpa_page_range(uint64_t raw, hwaddr *gpa, hwaddr *len)
++#include "riscv-iommu.h"
++#include "riscv-iommu-accel.h"
++
++static RISCVIOMMUAccelDevice *riscv_iommu_accel_get_dev(RISCVIOMMUState *s,
++                                                        PCIBus *bus, int devfn)
 +{
-+    uint64_t pages = (raw & HV_GPA_PAGE_RANGE_ADDITIONAL_MASK) + 1;
++    RISCVIOMMUSpace *as;
++    RISCVIOMMUAccelDevice *accel_dev;
 +
-+    if (raw & HV_GPA_PAGE_RANGE_LARGEPAGE) {
-+        if (raw & HV_GPA_PAGE_RANGE_PAGE_SIZE_1GB) {
-+            *gpa = raw & HV_GPA_PAGE_RANGE_1G_GPA_MASK;
-+            *len = pages << 30;
-+        } else {
-+            *gpa = raw & HV_GPA_PAGE_RANGE_2M_GPA_MASK;
-+            *len = pages << 21;
-+        }
-+    } else {
-+        *gpa = raw & HV_GPA_PAGE_RANGE_4K_GPA_MASK;
-+        *len = pages << 12;
++    /* FIXME: for simplicity, assume only one iommu right now */
++    as = riscv_iommu_get_space(s, bus, devfn);
++    if (as) {
++        return container_of(as, RISCVIOMMUAccelDevice, as);
 +    }
 +
-+    return *len != 0;
++    accel_dev = g_new0(RISCVIOMMUAccelDevice, 1);
++    as = &accel_dev->as;
++    riscv_iommu_init_space(s, as, bus, devfn);
++
++    return accel_dev;
 +}
 +
-+bool hv_madvise_walk_step(hwaddr *gpa, hwaddr *len,
-+                          hwaddr section_start, hwaddr section_size,
-+                          hwaddr *out_gpa, hwaddr *out_len)
++static AddressSpace *riscv_iommu_accel_find_as(PCIBus *bus, void *opaque,
++                                               int devfn)
 +{
-+    hwaddr skip;
++    RISCVIOMMUState *s = (RISCVIOMMUState *) opaque;
 +
-+    /*
-+     * A hole with no memory region makes the section start past the
-+     * cursor; a zero-size section means there is nothing left to find.
-+     * Either way, stop -- do not advise or advance past the gap.
-+     */
-+    if (!section_size || section_start < *gpa) {
-+        return false;
-+    }
++    RISCVIOMMUAccelDevice *accel_dev = riscv_iommu_accel_get_dev(s, bus, devfn);
++    RISCVIOMMUSpace *as = &accel_dev->as;
 +
-+    skip = section_start - *gpa;
-+    if (skip >= *len || section_size > *len - skip) {
-+        return false;
-+    }
-+
-+    *out_gpa = section_start;
-+    *out_len = section_size;
-+
-+    *gpa = section_start + section_size;
-+    *len -= skip + section_size;
-+    return true;
++    return &as->iova_as;
 +}
-diff --git a/include/hw/hyperv/hv-gpa-range.h b/include/hw/hyperv/hv-gpa-range.h
++
++static const PCIIOMMUOps riscv_iommu_accel_ops = {
++    .get_address_space = riscv_iommu_accel_find_as,
++};
++
++void riscv_iommu_accel_init(RISCVIOMMUState *s)
++{
++    s->iommu_ops = &riscv_iommu_accel_ops;
++}
+diff --git a/hw/riscv/riscv-iommu-accel.h b/hw/riscv/riscv-iommu-accel.h
 new file mode 100644
-index 0000000000..b1cf6664b8
+index 0000000000..c69fea87dd
 --- /dev/null
-+++ b/include/hw/hyperv/hv-gpa-range.h
-@@ -0,0 +1,52 @@
++++ b/hw/riscv/riscv-iommu-accel.h
+@@ -0,0 +1,25 @@
 +/*
-+ * Hyper-V extended memory heat-hint GPA range helpers.
-+ *
-+ * These are small, dependency-free helpers factored out of hyperv.c so
-+ * that the bit-decoding and walk-cursor bookkeeping can be exercised
-+ * directly by unit tests (see tests/unit/test-hv-gpa-range.c) without
-+ * requiring a real MemoryRegion/MemoryRegionSection or any KVM/system
-+ * emulation plumbing.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+#ifndef HW_HYPERV_HV_GPA_RANGE_H
-+#define HW_HYPERV_HV_GPA_RANGE_H
-+
-+#include "exec/hwaddr.h"
-+
-+/*
-+ * Decode one HV_GPA_PAGE_RANGE qword (as found in
-+ * struct hyperv_memory_heat_hint.ranges[]) into a GPA and byte length.
-+ *
-+ * Returns false if the decoded length is zero (nothing to do for this
-+ * range); true otherwise, with *gpa and *len filled in.
-+ *
-+ * Visible for testing.
-+ */
-+bool hv_decode_gpa_page_range(uint64_t raw, hwaddr *gpa, hwaddr *len);
-+
-+/*
-+ * Validate a MemoryRegionSection found by memory_region_find() for the
-+ * current walk cursor (*gpa, *len), and advance the cursor past it.
-+ *
-+ * @section_start/@section_size are the section's
-+ * offset_within_address_space and size, as returned by
-+ * memory_region_find().
-+ *
-+ * On success, returns true and fills in @out_gpa/@out_len with the GPA
-+ * and length that the caller should actually act upon (e.g. madvise()),
-+ * and advances *gpa and *len past the section.
-+ *
-+ * Returns false, without touching *gpa or *len, if the section does not
-+ * fit within the remaining [*gpa, *gpa + *len) range -- e.g. because
-+ * memory_region_find() skipped over a hole and returned a section that
-+ * starts past the cursor, or a section that runs past the requested
-+ * range. The caller should stop walking in that case.
-+ *
-+ * Visible for testing.
-+ */
-+bool hv_madvise_walk_step(hwaddr *gpa, hwaddr *len,
-+                          hwaddr section_start, hwaddr section_size,
-+                          hwaddr *out_gpa, hwaddr *out_len);
-+
-+#endif /* HW_HYPERV_HV_GPA_RANGE_H */
-diff --git a/tests/functional/x86_64/test_hyperv_extcalls.py b/tests/functional/x86_64/test_hyperv_extcalls.py
-new file mode 100644
-index 0000000000..c48f59d554
---- /dev/null
-+++ b/tests/functional/x86_64/test_hyperv_extcalls.py
-@@ -0,0 +1,101 @@
-+#!/usr/bin/env python3
-+#
-+# Validation of the hv-extcalls / hv-memory-hint CPU properties.
-+#
-+# hv-extcalls gates the Hyper-V extended hypercalls (HV_ENABLE_EXTENDED_
-+# HYPERCALLS, HV_CPUID_FEATURES.EBX bit 20); hv-memory-hint additionally
-+# gates whether HvExtCallQueryCapabilities advertises, and
-+# HvExtCallMemoryHeatHint accepts, the memory heat-hint calls.
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+#
-+
-+from qemu_test import QemuSystemTest
-+
-+
-+class HypervExtCallsProps(QemuSystemTest):
-+    """
-+    Validation of the hv-extcalls and hv-memory-hint CPU properties.
-+    """
-+
-+    def get_cpu_prop(self, prop):
-+        cpu_path = self.vm.cmd('query-cpus-fast')[0].get('qom-path')
-+        return self.vm.cmd('qom-get', path=cpu_path, property=prop)
-+
-+    def launch_with_cpu_props(self, cpu_props):
-+        self.set_machine('pc')
-+        self.vm.add_args('-S')
-+        self.set_vm_arg('-cpu', 'qemu64' + cpu_props)
-+        self.vm.launch()
-+
-+    def test_defaults_off(self):
-+        """
-+        Neither property is requested: both must default to off, in
-+        particular hv-extcalls (which was deliberately made default-off
-+        so that enabling the extended hypercalls is an explicit opt-in).
-+        """
-+        self.launch_with_cpu_props('')
-+        self.assertFalse(self.get_cpu_prop('hv-extcalls'),
-+                         'hv-extcalls must default to off')
-+        self.assertFalse(self.get_cpu_prop('hv-memory-hint'),
-+                         'hv-memory-hint must default to off')
-+
-+    def test_hv_extcalls_on(self):
-+        """
-+        hv-extcalls=on by itself must not implicitly turn on
-+        hv-memory-hint.
-+        """
-+        self.launch_with_cpu_props(',hv-extcalls=on')
-+        self.assertTrue(self.get_cpu_prop('hv-extcalls'),
-+                        'hv-extcalls=on must be reflected on the CPU')
-+        self.assertFalse(self.get_cpu_prop('hv-memory-hint'),
-+                         'hv-extcalls=on must not imply hv-memory-hint')
-+
-+    def test_hv_memory_hint_on(self):
-+        """
-+        hv-memory-hint=on without hv-extcalls must still parse/boot (the
-+        combination is a no-op at runtime -- kvm_hv_handle_exit() gates
-+        *all* extended hypercalls, including the capabilities query, on
-+        hv-extcalls -- but QEMU must not reject it at CPU-realize time).
-+        """
-+        self.launch_with_cpu_props(',hv-memory-hint=on')
-+        self.assertFalse(self.get_cpu_prop('hv-extcalls'))
-+        self.assertTrue(self.get_cpu_prop('hv-memory-hint'),
-+                        'hv-memory-hint=on must be reflected on the CPU')
-+
-+    def test_both_on(self):
-+        """
-+        The intended "fully enabled" configuration: both properties on.
-+        """
-+        self.launch_with_cpu_props(',hv-extcalls=on,hv-memory-hint=on')
-+        self.assertTrue(self.get_cpu_prop('hv-extcalls'))
-+        self.assertTrue(self.get_cpu_prop('hv-memory-hint'))
-+
-+
-+class HypervExtCallsModelExpansion(QemuSystemTest):
-+    """
-+    Confirm hv-extcalls/hv-memory-hint are discoverable via
-+    query-cpu-model-expansion, the mechanism management layers (e.g.
-+    libvirt) use to probe which CPU properties/features are supported
-+    before adding them to a domain definition.
-+    """
-+
-+    def test(self):
-+        self.set_machine('none')
-+        self.vm.add_args('-S')
-+        self.vm.launch()
-+
-+        model = {'name': 'qemu64',
-+                'props': {'hv-extcalls': True, 'hv-memory-hint': True}}
-+        e = self.vm.cmd('query-cpu-model-expansion', model=model,
-+                        type='full')
-+        props = e['model']['props']
-+
-+        self.assertIn('hv-extcalls', props)
-+        self.assertIn('hv-memory-hint', props)
-+        self.assertTrue(props['hv-extcalls'])
-+        self.assertTrue(props['hv-memory-hint'])
-+
-+
-+if __name__ == '__main__':
-+    QemuSystemTest.main()
-diff --git a/tests/unit/test-hv-gpa-range.c b/tests/unit/test-hv-gpa-range.c
-new file mode 100644
-index 0000000000..70196f271b
---- /dev/null
-+++ b/tests/unit/test-hv-gpa-range.c
-@@ -0,0 +1,271 @@
-+/*
-+ * Unit tests for the Hyper-V extended memory heat-hint GPA range helpers
-+ * (hw/hyperv/hv-gpa-range.c).
-+ *
-+ * These exercise:
-+ *  - hv_decode_gpa_page_range(): decoding of the HV_GPA_PAGE_RANGE qwords
-+ *    found in a HvExtCallMemoryHeatHint[Async] input buffer.
-+ *  - hv_madvise_walk_step(): the walk-cursor bookkeeping used by
-+ *    hv_madvise_gpa_range() to turn a sequence of memory_region_find()
-+ *    results into the correct set of (host, len) madvise() targets, in
-+ *    particular across holes in the GPA space.  This directly covers the
-+ *    "madvise walk can log/act on the wrong GPA" regression.
-+ *
-+ * Copyright (c) 2015-2018 Virtuozzo International GmbH.
++ * RISC-V IOMMU - accelerated (nested) translation support
 + *
 + * SPDX-License-Identifier: GPL-2.0-or-later
 + */
 +
-+#include "qemu/osdep.h"
-+#include "hw/hyperv/hyperv-proto.h"
-+#include "hw/hyperv/hv-gpa-range.h"
++#ifndef HW_RISCV_RISCV_IOMMU_ACCEL_H
++#define HW_RISCV_RISCV_IOMMU_ACCEL_H
 +
-+#define KiB (1024ULL)
-+#define MiB (1024 * KiB)
-+#define GiB (1024 * MiB)
++#include "hw/riscv/riscv-iommu.h"
++#include CONFIG_DEVICES
 +
-+/*
-+ * ---------------------------------------------------------------------
-+ * hv_decode_gpa_page_range()
-+ * ---------------------------------------------------------------------
-+ */
++typedef struct RISCVIOMMUAccelDevice {
++    RISCVIOMMUSpace as;
++} RISCVIOMMUAccelDevice;
 +
-+static void test_decode_4k_single_page(void)
++#ifdef CONFIG_RISCV_IOMMU_ACCEL
++void riscv_iommu_accel_init(RISCVIOMMUState *s);
++#else
++static inline void riscv_iommu_accel_init(RISCVIOMMUState *s)
 +{
-+    hwaddr gpa, len;
-+    /* pfn = 5, additional_pages = 0 -> one 4K page at GPA 0x5000 */
-+    uint64_t raw = (5ULL << 12);
-+
-+    g_assert_true(hv_decode_gpa_page_range(raw, &gpa, &len));
-+    g_assert_cmphex(gpa, ==, 5 * 4 * KiB);
-+    g_assert_cmphex(len, ==, 4 * KiB);
 +}
++#endif
 +
-+static void test_decode_4k_additional_pages(void)
-+{
-+    hwaddr gpa, len;
-+    /* pfn = 7, additional_pages = 3 -> 4 consecutive 4K pages */
-+    uint64_t raw = (7ULL << 12) | 3;
++#endif /* HW_RISCV_RISCV_IOMMU_ACCEL_H */
+diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
+index 19d4cfa503..bdbb4aece1 100644
+--- a/hw/riscv/riscv-iommu.c
++++ b/hw/riscv/riscv-iommu.c
+@@ -31,6 +31,7 @@
+ 
+ #include "cpu_bits.h"
+ #include "riscv-iommu.h"
++#include "riscv-iommu-accel.h"
+ #include "riscv-iommu-bits.h"
+ #include "riscv-iommu-hpm.h"
+ #include "trace.h"
+@@ -2699,6 +2700,10 @@ static void riscv_iommu_realize(DeviceState *dev, Error **errp)
+ {
+     RISCVIOMMUState *s = RISCV_IOMMU(dev);
+ 
++    if (s->accel) {
++        riscv_iommu_accel_init(s);
++    }
 +
-+    g_assert_true(hv_decode_gpa_page_range(raw, &gpa, &len));
-+    g_assert_cmphex(gpa, ==, 7 * 4 * KiB);
-+    g_assert_cmphex(len, ==, 4 * 4 * KiB);
-+}
+     /* Report QEMU target physical address space limits. */
+     s->cap = set_field(s->cap, RISCV_IOMMU_CAP_PAS, s->pas_bits);
+ 
+diff --git a/hw/riscv/riscv-iommu.h b/hw/riscv/riscv-iommu.h
+index 84437d8771..0d8613a8b1 100644
+--- a/hw/riscv/riscv-iommu.h
++++ b/hw/riscv/riscv-iommu.h
+@@ -110,6 +110,9 @@ struct RISCVIOMMUState {
+     uint8_t hpm_cntrs;
+ 
+     const PCIIOMMUOps *iommu_ops;
 +
-+static void test_decode_4k_max_additional_pages(void)
-+{
-+    hwaddr gpa, len;
-+    /* additional_pages field is 11 bits: max value 0x7ff -> 2048 pages */
-+    uint64_t raw = (1ULL << 20) | HV_GPA_PAGE_RANGE_ADDITIONAL_MASK;
-+
-+    g_assert_true(hv_decode_gpa_page_range(raw, &gpa, &len));
-+    g_assert_cmphex(len, ==, 2048 * 4 * KiB);
-+}
-+
-+static void test_decode_2m_large_page(void)
-+{
-+    hwaddr gpa, len;
-+    /* pfn (2M units) = 3, additional_pages = 1 -> two 2M pages */
-+    uint64_t raw = (3ULL << 21) | HV_GPA_PAGE_RANGE_LARGEPAGE | 1;
-+
-+    g_assert_true(hv_decode_gpa_page_range(raw, &gpa, &len));
-+    g_assert_cmphex(gpa, ==, 3 * 2 * MiB);
-+    g_assert_cmphex(len, ==, 2 * 2 * MiB);
-+}
-+
-+static void test_decode_1g_large_page(void)
-+{
-+    hwaddr gpa, len;
-+    /* pfn (1G units) = 2, additional_pages = 0 -> one 1G page */
-+    uint64_t raw = (2ULL << 30) | HV_GPA_PAGE_RANGE_LARGEPAGE |
-+                   HV_GPA_PAGE_RANGE_PAGE_SIZE_1GB;
-+
-+    g_assert_true(hv_decode_gpa_page_range(raw, &gpa, &len));
-+    g_assert_cmphex(gpa, ==, 2 * GiB);
-+    g_assert_cmphex(len, ==, 1 * GiB);
-+}
-+
-+static void test_decode_masks_strip_low_bits(void)
-+{
-+    hwaddr gpa, len;
-+    /*
-+     * For a 2M large page, everything below bit 21 other than the
-+     * LARGEPAGE flag (bit 11) and additional_pages (bits 0-10) must not
-+     * leak into the decoded GPA.
-+     */
-+    uint64_t raw = (5ULL << 21) | HV_GPA_PAGE_RANGE_LARGEPAGE | 0x3ff;
-+
-+    g_assert_true(hv_decode_gpa_page_range(raw, &gpa, &len));
-+    g_assert_cmphex(gpa, ==, 5 * 2 * MiB);
-+    g_assert_cmphex(gpa & ((2 * MiB) - 1), ==, 0);
-+}
-+
-+/*
-+ * ---------------------------------------------------------------------
-+ * hv_madvise_walk_step()
-+ * ---------------------------------------------------------------------
-+ */
-+
-+static void test_walk_full_match(void)
-+{
-+    hwaddr gpa = 0x1000, len = 0x1000;
-+    hwaddr out_gpa, out_len;
-+
-+    /* memory_region_find() returned exactly the requested range */
-+    g_assert_true(hv_madvise_walk_step(&gpa, &len, 0x1000, 0x1000,
-+                                       &out_gpa, &out_len));
-+    g_assert_cmphex(out_gpa, ==, 0x1000);
-+    g_assert_cmphex(out_len, ==, 0x1000);
-+    g_assert_cmphex(gpa, ==, 0x2000);
-+    g_assert_cmphex(len, ==, 0);
-+}
-+
-+static void test_walk_partial_section_no_skip(void)
-+{
-+    /* Section starts exactly at the cursor but is smaller than @len */
-+    hwaddr gpa = 0x1000, len = 0x3000;
-+    hwaddr out_gpa, out_len;
-+
-+    g_assert_true(hv_madvise_walk_step(&gpa, &len, 0x1000, 0x1000,
-+                                       &out_gpa, &out_len));
-+    g_assert_cmphex(out_gpa, ==, 0x1000);
-+    g_assert_cmphex(out_len, ==, 0x1000);
-+    /* cursor must advance past exactly the found section, nothing more */
-+    g_assert_cmphex(gpa, ==, 0x2000);
-+    g_assert_cmphex(len, ==, 0x2000);
-+}
-+
-+/*
-+ * Regression test for "the madvise walk can log/act on the wrong GPA":
-+ * memory_region_find() skips over a hole and returns a section that
-+ * starts *past* the walk cursor.  The reported/advised GPA must be the
-+ * section's real start, not the stale search cursor, and the hole must
-+ * be consumed without being advised.
-+ */
-+static void test_walk_hole_before_section(void)
-+{
-+    /* Looking for RAM in [0, 0x3000); nothing mapped until 0x1000 */
-+    hwaddr gpa = 0, len = 0x3000;
-+    hwaddr out_gpa, out_len;
-+
-+    g_assert_true(hv_madvise_walk_step(&gpa, &len, 0x1000, 0x1000,
-+                                       &out_gpa, &out_len));
-+    /* Must report the section's actual GPA, not the original cursor (0) */
-+    g_assert_cmphex(out_gpa, ==, 0x1000);
-+    g_assert_cmphex(out_len, ==, 0x1000);
-+    /* Cursor must account for the 0x1000 hole *and* the 0x1000 section */
-+    g_assert_cmphex(gpa, ==, 0x2000);
-+    g_assert_cmphex(len, ==, 0x1000);
-+}
-+
-+/*
-+ * Drive two consecutive steps the way hv_madvise_gpa_range()'s while loop
-+ * does: a hole, then a directly-adjacent section, then end of range.
-+ * Confirms the cursor neither double-processes the boundary nor drifts.
-+ */
-+static void test_walk_hole_then_adjacent_section(void)
-+{
-+    hwaddr gpa = 0, len = 0x3000;
-+    hwaddr out_gpa, out_len;
-+
-+    /* Step 1: hole [0,0x1000), section [0x1000,0x2000) */
-+    g_assert_true(hv_madvise_walk_step(&gpa, &len, 0x1000, 0x1000,
-+                                       &out_gpa, &out_len));
-+    g_assert_cmphex(out_gpa, ==, 0x1000);
-+    g_assert_cmphex(gpa, ==, 0x2000);
-+    g_assert_cmphex(len, ==, 0x1000);
-+
-+    /* Step 2: section starts exactly at the new cursor, no further skip */
-+    g_assert_true(hv_madvise_walk_step(&gpa, &len, 0x2000, 0x1000,
-+                                       &out_gpa, &out_len));
-+    g_assert_cmphex(out_gpa, ==, 0x2000);
-+    g_assert_cmphex(out_len, ==, 0x1000);
-+    g_assert_cmphex(gpa, ==, 0x3000);
-+    g_assert_cmphex(len, ==, 0);
-+}
-+
-+static void test_walk_section_past_requested_range(void)
-+{
-+    /* Section is larger than what's left to process -> stop, don't act */
-+    hwaddr gpa = 0x1000, len = 0x1000;
-+    hwaddr out_gpa = 0xdead, out_len = 0xdead;
-+
-+    g_assert_false(hv_madvise_walk_step(&gpa, &len, 0x1000, 0x2000,
-+                                        &out_gpa, &out_len));
-+    /* cursor and outputs must be left untouched on failure */
-+    g_assert_cmphex(gpa, ==, 0x1000);
-+    g_assert_cmphex(len, ==, 0x1000);
-+    g_assert_cmphex(out_gpa, ==, 0xdead);
-+    g_assert_cmphex(out_len, ==, 0xdead);
-+}
-+
-+static void test_walk_section_before_cursor(void)
-+{
-+    /* Defensive case: section starts before the cursor -> stop */
-+    hwaddr gpa = 0x2000, len = 0x1000;
-+    hwaddr out_gpa, out_len;
-+
-+    g_assert_false(hv_madvise_walk_step(&gpa, &len, 0x1000, 0x1000,
-+                                        &out_gpa, &out_len));
-+    g_assert_cmphex(gpa, ==, 0x2000);
-+    g_assert_cmphex(len, ==, 0x1000);
-+}
-+
-+static void test_walk_zero_size_section(void)
-+{
-+    hwaddr gpa = 0, len = 0x1000;
-+    hwaddr out_gpa, out_len;
-+
-+    g_assert_false(hv_madvise_walk_step(&gpa, &len, 0, 0, &out_gpa, &out_len));
-+    g_assert_cmphex(gpa, ==, 0);
-+    g_assert_cmphex(len, ==, 0x1000);
-+}
-+
-+static void test_walk_skip_equals_len(void)
-+{
-+    /* The whole remaining range is a hole; section starts right at the end */
-+    hwaddr gpa = 0, len = 0x1000;
-+    hwaddr out_gpa, out_len;
-+
-+    g_assert_false(hv_madvise_walk_step(&gpa, &len, 0x1000, 0x1000,
-+                                        &out_gpa, &out_len));
-+    g_assert_cmphex(gpa, ==, 0);
-+    g_assert_cmphex(len, ==, 0x1000);
-+}
-+
-+int main(int argc, char **argv)
-+{
-+    g_test_init(&argc, &argv, NULL);
-+
-+    g_test_add_func("/hv-gpa-range/decode/4k-single-page",
-+                    test_decode_4k_single_page);
-+    g_test_add_func("/hv-gpa-range/decode/4k-additional-pages",
-+                    test_decode_4k_additional_pages);
-+    g_test_add_func("/hv-gpa-range/decode/4k-max-additional-pages",
-+                    test_decode_4k_max_additional_pages);
-+    g_test_add_func("/hv-gpa-range/decode/2m-large-page",
-+                    test_decode_2m_large_page);
-+    g_test_add_func("/hv-gpa-range/decode/1g-large-page",
-+                    test_decode_1g_large_page);
-+    g_test_add_func("/hv-gpa-range/decode/masks-strip-low-bits",
-+                    test_decode_masks_strip_low_bits);
-+
-+    g_test_add_func("/hv-gpa-range/walk/full-match",
-+                    test_walk_full_match);
-+    g_test_add_func("/hv-gpa-range/walk/partial-section-no-skip",
-+                    test_walk_partial_section_no_skip);
-+    g_test_add_func("/hv-gpa-range/walk/hole-before-section",
-+                    test_walk_hole_before_section);
-+    g_test_add_func("/hv-gpa-range/walk/hole-then-adjacent-section",
-+                    test_walk_hole_then_adjacent_section);
-+    g_test_add_func("/hv-gpa-range/walk/section-past-requested-range",
-+                    test_walk_section_past_requested_range);
-+    g_test_add_func("/hv-gpa-range/walk/section-before-cursor",
-+                    test_walk_section_before_cursor);
-+    g_test_add_func("/hv-gpa-range/walk/zero-size-section",
-+                    test_walk_zero_size_section);
-+    g_test_add_func("/hv-gpa-range/walk/skip-equals-len",
-+                    test_walk_skip_equals_len);
-+
-+    return g_test_run();
-+}
++    /* nested iommu support */
++    bool accel;
+ };
+ 
+ void riscv_iommu_pci_setup_iommu(RISCVIOMMUState *iommu, PCIBus *bus,
 -- 
-2.54.0 (Apple Git-157)
+2.53.0
 
 
