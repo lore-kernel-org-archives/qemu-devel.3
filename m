@@ -4,85 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0842CC6B1C
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 03:43:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EA66CC6B1A
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 03:43:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGpsD-0002S8-7v; Tue, 13 Oct 2026 23:41:49 -0400
+	id 1xGpsT-0003Sg-GS; Tue, 13 Oct 2026 23:42:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1xGpsA-0002Iu-H8
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 23:41:46 -0400
-Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ id 1xGpsO-0003Kh-Ra
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 23:42:02 -0400
+Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1xGps8-0001mZ-Ea
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 23:41:46 -0400
-Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-2e901e114fdso11530345ad.2
- for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 20:41:44 -0700 (PDT)
+ id 1xGpsN-0001qZ-BI
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 23:42:00 -0400
+Received: by mail-pj1-x102e.google.com with SMTP id
+ 98e67ed59e1d1-3ab4178ee33so1973730a91.3
+ for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 20:41:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1791949303; x=1792554103; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1791949318; x=1792554118; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=67J7/dAyvEkZLPJYh7VRut0A50m7CFCyrgy+F68cvhQ=;
- b=N5qzuj1f1vojGSF3P9YkdQS7imzhP7OowE0CQKEAt3B3iiAsDvKXEWD3r+VjThAA0c
- eOTe0Uy6fZUaSXFNVxrf+epL8v1+fWZkAlqA6MHlFSEigAnffIbss7RpLnwoPHdknTFI
- F/4oM9BsXTUuLnM2QqxseZKRdwJBqQTGODRyb2TrcuflolUkDMywOXfMvdr0y4+SwpAT
- 9fVE0A2yLvylwn6bVgT/gHSapy1DSUt4fdplsgVd60sZrdEVNWZZoRI3AOg23/QjC1CZ
- LPRlY0LqdNKIbbWYKXA0J0uu9pNgOCJdTUfsSudz6p6L9Q9MS/3m8Wh7NHzeM+kO72XT
- bqRQ==
+ bh=ik4ny7Bm+dyaud/nMRbUWRPGJvt+C0GQpAvpufVJbl4=;
+ b=Sya1hJYQhoowpDLImFULmHIAMiL/s0n+gjNUnpfgxE6bF5K0KMT58Yx2dfns4WM+3L
+ qHvJtgUtChiKD7nbVIPGQIj/9o4TLMbc5/TFpIrDXZVbenjmYoLtQgz4tiYlk1Tx4W5V
+ hlgnsJYvoWHJiD6FFwbqXKEW/AMLIHrCZ9f9Pr2ofJERtv/foPnSbSnElvrD2BQRODKW
+ AI9m59sPhnvwnfK+/PXL2q4i0aTYBtfib4R2fKEKYc8YxqSOdky2cSsi3uqwX6ZV3DwF
+ u560OjALA17a19DoEG/FWqQmfmENjqLSdXMJXA9Aenjt6HWL2O8GILZlcg2J9+k5qsMW
+ BRQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791949303; x=1792554103;
+ d=1e100.net; s=20260707; t=1791949318; x=1792554118;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=67J7/dAyvEkZLPJYh7VRut0A50m7CFCyrgy+F68cvhQ=;
- b=j8YrKRbXcjFrfodxAPTthC4xk27PLsvSi/R9PgC0a9fRYbNVj4+TGWRlyW7WRaUiQw
- YwcTNCBdwo7Jg5O82febAVHQPdVbfDSYA9Fe6nFyn9VOsUy3SSo5O7NHE1v24zt2SSlQ
- K9+EBlZ86uKnlLpat106UrH3YkNhyB4q9L0z+gcmor7U8UmNo5FLVYJMPln1DxGg77+p
- 3L5ey9YyDBgZ4ZoNGVq00trCbPQXaBt/OmjPM6mxpi26tWty2sWzFxGUyVEqUKiT4CJ1
- nOwRdfGg8NZSyg68UMCy6bBv2ZKtkMDG69vVqSe+1jcrPmSQ7AxsnvVF4ia9sTMrd+Ag
- ea+g==
-X-Gm-Message-State: AFq9FYI+Dgkp2vQ7pAE0N8hYe9xCbEM5Y1/pt8Cb9rKw1DL3O1Ex56EY
- /RValtt+wIXRj6vJ+r+TchlQWBvNn6tV2KadANVWxgYA/xlSC62lxMXfakzamg==
-X-Gm-Gg: AYBFou04o4hvFMNyBpgygikIaUo0TYvXVlY4JUdaz5RGr1duiYA8QuIsY4LO5xK1RAN
- M2K6pruiDJY+e4ERjfliF0mVvWOyMswEcHy1KhYbrdeeWGHVpwb96n/ImmNJFyKMnv94Os7KZYP
- fgVFSgaarHy6GTdsJuPn1semIi6xSViWdhm9mtlSqpye5i6UCJVKg375+1lLEaIbGSCLZ1zySC5
- ibV9VaNqUnngSCDS+bwHxJjl1WCuZ99K1juXHezYZOiAbwZku8p58Bd1cIz/x1GGmvb+9GggYhw
- jrjcmfvkx1tFrDF/TQPXUjNj2myZVJDyH7cs1nLRBmz7TsfjuWUml8NqIgMgXFOEpeg9Hin0iWb
- t1ihdPlwitRKURbgAaN5E4hKowtt2kKMC2Jlhqah7i5Mryj3TqGhHWTW1hBc0wq7WH62BQavyaL
- Ns84o1tq/8aZyLUk8zEe9R//lzrcUAhbVPi+vExnSduOmOVma6v8BEby86MALPIFn6su/csF3z+
- 4FwnPJZ2ueyzPwb
-X-Received: by 2002:a17:90b:5346:b0:3ab:17b6:9a91 with SMTP id
- 98e67ed59e1d1-3ab3a747313mr12047421a91.32.1791949302818; 
- Tue, 13 Oct 2026 20:41:42 -0700 (PDT)
+ bh=ik4ny7Bm+dyaud/nMRbUWRPGJvt+C0GQpAvpufVJbl4=;
+ b=1Z2EjMhDngR6N+G3Svy/dImllcCsQDcQZ+R31bNO7r4Hk2b8qEDbdFXdoKG50/pusX
+ xds6Yri9vg3GHCiNAw++zDyM80M4kYaX+gFaiolppMhdpa0J2D85XwtwrxicX2kXvbLx
+ qmn06eHo+2e/Rf4d59Vm2IGGjKzIdJOVQAAoenWBrnrxgq85hyhGsb97EW0rTCaCcFtp
+ kvXkXtB1AOvsO3F7QlIyQlHysbnICmXotrsJAq4AGc6LfzMrYogjirQItVKMWHF92Kzt
+ tjIWyWfyTrgbbcMBYd6zoWJo3Jhq+PN7cvXJvOBEcaI8yn3puhdITEKr2mLu2mM/Od+H
+ /+tA==
+X-Gm-Message-State: AFq9FYLx7hJcwH2jAroTt3gbhZTX8Cbn5XnyrFFEUNpIMxvgD2kDizRw
+ wDCxMQQoAwtAM901+fe3S32zCi71Jc40J7WcQIMxlLLxo4a7yTlu8rXYHLbuDA==
+X-Gm-Gg: AYBFou3qITMvR//n+7Xf3I3QW60SOZWduzV9Yse2VJHW9HdXoayBI5YxuQCnBal7wZV
+ NQjxxv8/Liuecnh6pSx6cMnGqCSy2D2Sxmi0af4FQ7oZCleUhhBP+GubaqAa7qyQ0abPUmhiF62
+ Vknslj9EYPU9Iu9NiRpohEW+y8cZIeQVSAio+pUDcOJmvqF+sVtJqH0W0oH7KmmogEZsRP289q4
+ u8/hPs8V1Ptt815V9VFOf2W5w7oMvVCmR97CcabPIqp914SAiv2p5txnPgr/0YMdyuSFrnraXnG
+ HbhimwsUgEF983YahA9WixfUBh3DF/YqOPvU6VAj/GCTCda8xMyPA16Mc85jBsChyzCpHmP2Pfc
+ Um1vtUzl+CrXmBYtOt5bDblBf/tuca/fNkeqE/6waHQwL52f8ez+aGhXHWY3QzsfBrObiqVncHo
+ GJqSH+AHXrg2tUUDpKlPTKl7hXhqoyEr0+vEnVvSSfZFTrvwEqCPXcQqywlqxtIADCJkTLVn9m2
+ w4CWPBXLULPVO3E
+X-Received: by 2002:a17:90a:d007:b0:3ac:3459:b7ff with SMTP id
+ 98e67ed59e1d1-3ac3459b992mr4332369a91.56.1791949318035; 
+ Tue, 13 Oct 2026 20:41:58 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3ac61170b7bsm2321457a91.16.2026.10.13.20.41.39
+ 98e67ed59e1d1-3ac61170b7bsm2321457a91.16.2026.10.13.20.41.55
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 13 Oct 2026 20:41:42 -0700 (PDT)
+ Tue, 13 Oct 2026 20:41:57 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Chao Liu <chao.liu@processmission.com>,
- Sunil V L <sunilvl@oss.qualcomm.com>,
- Andrew Jones <andrew.jones@oss.qualcomm.com>
-Subject: [PULL 44/52] docs: add riscv-server-ref.rst
-Date: Wed, 14 Oct 2026 13:38:59 +1000
-Message-ID: <20261014033907.3332383-45-alistair.francis@wdc.com>
+Cc: dodochicha <kevincheng60303@gmail.com>, qemu-stable@nongnu.org,
+ Alistair Francis <alistair.francis@wdc.com>
+Subject: [PULL 49/52] target/riscv: Check Svnapot PTE before updating A/D bits
+Date: Wed, 14 Oct 2026 13:39:04 +1000
+Message-ID: <20261014033907.3332383-50-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20261014033907.3332383-1-alistair.francis@wdc.com>
 References: <20261014033907.3332383-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x62f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
+ envelope-from=alistair23@gmail.com; helo=mail-pj1-x102e.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -106,106 +103,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+From: dodochicha <kevincheng60303@gmail.com>
 
-Add documentation for the new riscv-server-ref board.
+Reserved Svnapot PTE encodings must raise a page fault without
+modifying the PTE. Currently the A/D bits may be updated before
+the Svnapot encoding is validated.
 
-Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Move the Svnapot validation before the A/D update so reserved
+PTEs fault without changing the PTE.
+
+Cc: qemu-stable@nongnu.org
+Signed-off-by: dodochicha <kevincheng60303@gmail.com>
+Message-ID: <20261005115916.21196-1-kevincheng60303@gmail.com>
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Reviewed-by: Chao Liu <chao.liu@processmission.com>
-Reviewed-by: Sunil V L <sunilvl@oss.qualcomm.com>
-Reviewed-by: Andrew Jones <andrew.jones@oss.qualcomm.com>
-Message-ID: <20260928201107.2049458-6-daniel.barboza@oss.qualcomm.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- docs/system/riscv/riscv-server-ref.rst | 65 ++++++++++++++++++++++++++
- docs/system/target-riscv.rst           |  1 +
- 2 files changed, 66 insertions(+)
- create mode 100644 docs/system/riscv/riscv-server-ref.rst
+ target/riscv/tcg/cpu_helper.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/docs/system/riscv/riscv-server-ref.rst b/docs/system/riscv/riscv-server-ref.rst
-new file mode 100644
-index 0000000000..da043ed096
---- /dev/null
-+++ b/docs/system/riscv/riscv-server-ref.rst
-@@ -0,0 +1,65 @@
-+.. SPDX-License-Identifier: GPL-2.0-or-later
+diff --git a/target/riscv/tcg/cpu_helper.c b/target/riscv/tcg/cpu_helper.c
+index 4e42883bd5..33d6b41ceb 100644
+--- a/target/riscv/tcg/cpu_helper.c
++++ b/target/riscv/tcg/cpu_helper.c
+@@ -1498,6 +1498,13 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
+         return sstack_page ? TRANSLATE_PMP_FAIL : TRANSLATE_FAIL;
+     }
+ 
++    if (riscv_cpu_cfg(env)->ext_svnapot && (pte & PTE_N)) {
++        napot_bits = ctzl(ppn) + 1;
++        if ((i != (levels - 1)) || (napot_bits != 4)) {
++            return TRANSLATE_FAIL;
++        }
++    }
 +
-+RISC-V Server Platform Reference board (``riscv-server-ref``)
-+=============================================================
-+
-+The RISC-V Server Platform specification `spec`_ defines a standardized
-+set of hardware and software capabilities that portable system software,
-+such as OS and hypervisors, can rely on being present in a RISC-V server
-+platform.  This machine aims to emulate this specification, providing
-+an environment for firmware/OS development and testing.
-+
-+`spec`_ is version 1.0 at the introduction of this board.  For each new
-+supported spec version a new versioned board will be added, keeping
-+"riscv-server-ref" as an alias for the newest version supported.  E.g.
-+for spec version 2.0:
-+
-+* riscv-server-ref-1.0 - board that complies with spec version 1.0
-+* riscv-server-ref-2.0 - board that complies with spec version 2.0
-+* riscv-server-ref - alias for riscv-server-ref-2.0
-+
-+The main features included in the riscv-server-ref board are:
-+
-+* IOMMU platform device (riscv-iommu-sys)
-+* AIA
-+* No AHCI (can be added via command line)
-+* No NIC (can be added via command line)
-+* No virtio mmio bus
-+* No fw_cfg device
-+* No ACPI table
-+* Minimal device tree nodes
-+
-+There are multiple ways of using this reference board.  The spec compliant way
-+is using an EDK2 image and a TPM device.  The board was tested with the TPM
-+device ``tpm-tis`` that uses the external ``swtpm`` emulator.  More info on how
-+to use this device can be found in `tpm`_.
-+
-+To use this board coupled with the tpm-tis device, first start the ``swtpm``
-+process in a shell (the ``log`` parameter is optional):
-+
-+.. code-block:: bash
-+
-+    $ mkdir /tmp/mytpm1
-+    $ swtpm socket --tpmstate dir=/tmp/mytpm1 \
-+            --ctrl type=unixio,path=/tmp/mytpm1/swtpm-sock \
-+            --tpm2 \
-+            --log level=20
-+
-+And then start QEMU with:
-+
-+.. code-block:: bash
-+
-+ qemu-system-riscv64 -M riscv-server-ref \
-+     -bios fw_dynamic.bin \
-+     -kernel EDK2.fd \
-+     -drive file=nvme_disk.ext2,format=raw,id=hd0,if=none \
-+     -device nvme,drive=hd0,serial=ddaaddaa \
-+     -chardev socket,id=chrtpm,path=/tmp/mytpm1/swtpm-sock \
-+     -tpmdev emulator,id=tpm0,chardev=chrtpm \
-+     -device tpm-tis-device,tpmdev=tpm0 \
-+     -netdev user,id=net0 -device e1000e,netdev=net0 \
-+     -nographic
-+
-+
-+.. _spec: https://github.com/riscv-non-isa/riscv-server-platform
-+.. _tpm: https://qemu-project.gitlab.io/qemu/specs/tpm.html
-diff --git a/docs/system/target-riscv.rst b/docs/system/target-riscv.rst
-index 1e49055e29..cc0ef4b64f 100644
---- a/docs/system/target-riscv.rst
-+++ b/docs/system/target-riscv.rst
-@@ -71,6 +71,7 @@ undocumented; you can get a complete list by running
-    riscv/microchip-icicle-kit
-    riscv/milkv-duo
-    riscv/mips
-+   riscv/riscv-server-ref
-    riscv/shakti-c
-    riscv/sifive_u
-    riscv/tt_atlantis
+     target_ulong updated_pte = pte;
+ 
+     /*
+@@ -1590,13 +1597,6 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
+     /* For superpage mappings, make a fake leaf PTE for the TLB's benefit. */
+     target_ulong vpn = addr >> PGSHIFT;
+ 
+-    if (riscv_cpu_cfg(env)->ext_svnapot && (pte & PTE_N)) {
+-        napot_bits = ctzl(ppn) + 1;
+-        if ((i != (levels - 1)) || (napot_bits != 4)) {
+-            return TRANSLATE_FAIL;
+-        }
+-    }
+-
+     napot_mask = (1 << napot_bits) - 1;
+     *physical = (((ppn & ~napot_mask) | (vpn & napot_mask) |
+                   (vpn & (((target_ulong)1 << ptshift) - 1))
 -- 
 2.55.0
 
