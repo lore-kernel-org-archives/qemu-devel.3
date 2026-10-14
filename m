@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A3FACC6B29
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD55CCC6B2A
 	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 08:48:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGueZ-0005hp-QQ; Wed, 14 Oct 2026 04:48:07 -0400
+	id 1xGuem-0005iy-Ku; Wed, 14 Oct 2026 04:48:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1xGueD-0005Wo-8d
- for qemu-devel@nongnu.org; Wed, 14 Oct 2026 04:47:45 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1xGueK-0005ZZ-Ul
+ for qemu-devel@nongnu.org; Wed, 14 Oct 2026 04:47:52 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1xGueA-0004ZR-Ea
- for qemu-devel@nongnu.org; Wed, 14 Oct 2026 04:47:40 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1xGueJ-0004a5-5L
+ for qemu-devel@nongnu.org; Wed, 14 Oct 2026 04:47:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1791967657;
+ s=mimecast20190719; t=1791967665;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=/lwU7Lm7Uh19FovhUkBJV4SoFJWR0MWrOz36CSE2t08=;
- b=OsghGbqu6gittjkbW778oQrwP9qAYuKItNMBkQrWPwLZxnJ7C5FZolTibLKff+96UIamep
- ddZxgYVU6DPPc+lP23PglFHrPGGR28AaQMEVpX0PxL07nNL0GGHQgXRka3/LjPcSYL3WQV
- z1HAwNFN57M2QScRT9x7Prno8o7GJEA=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=weYNgF9+56KYGJ1jmV7oNRyWQIz7MbqGlNWsKqCt10E=;
+ b=UBkDmSmP+gOLS+mUmZTw98kdkrhT/3fs3EMn89R6VfSPcYR2vLHyl/fFWMuxejCChNT+TU
+ D8wJUpV1lm4dlZN2olGqfvmsf9aMIFH3/KewfpxR8rDT//cXRsy34ikrISOQiGFwqBFyuS
+ Taq9nOJ8wHc3JQXlYVe+aM2rdS01mJI=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-554-5QxWv0kfMqevXYNz8pyRWA-1; Wed,
- 14 Oct 2026 08:47:34 +0000
-X-MC-Unique: 5QxWv0kfMqevXYNz8pyRWA-1
-X-Mimecast-MFC-AGG-ID: 5QxWv0kfMqevXYNz8pyRWA_1791967653
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-609-bKLuOSWwPlq2saB6v_gULQ-1; Wed,
+ 14 Oct 2026 08:47:41 +0000
+X-MC-Unique: bKLuOSWwPlq2saB6v_gULQ-1
+X-Mimecast-MFC-AGG-ID: bKLuOSWwPlq2saB6v_gULQ_1791967660
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4A5CA1956040; Wed, 14 Oct 2026 08:47:33 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B17EB195608E; Wed, 14 Oct 2026 08:47:40 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.44.48.67])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 1D5921800642; Wed, 14 Oct 2026 08:47:30 +0000 (UTC)
+ id AC7B51800642; Wed, 14 Oct 2026 08:47:36 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
@@ -52,25 +52,24 @@ Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  Jason Wang <jasowangio@gmail.com>, Alex Williamson <alex@shazbot.org>,
  Peter Xu <peterx@redhat.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [RFC PATCH v3 10/17] igb: Save MTA/UTA hash tables and fixup on VF
- migration load
-Date: Wed, 14 Oct 2026 10:46:48 +0200
-Message-ID: <20261014084655.127254-11-clg@redhat.com>
+Subject: [RFC PATCH v3 12/17] igb: Quiesce VFs on STOP and include PF enable
+ state in migration
+Date: Wed, 14 Oct 2026 10:46:50 +0200
+Message-ID: <20261014084655.127254-13-clg@redhat.com>
 In-Reply-To: <20261014084655.127254-1-clg@redhat.com>
 References: <20261014084655.127254-1-clg@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 10
 X-Spam_score: 1.0
 X-Spam_bar: +
 X-Spam_report: (1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -87,152 +86,221 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The MTA and UTA are PF-wide shared hash tables with no per-VF ownership
-bits. A VF using multicast (VMOLR.ROMPE) or unicast (VMOLR.ROPE) hash
-filtering relies on entries that may differ between source and
-destination PFs.
+Quiesce VFs by clearing VFRE/VFTE on transitions to STOP or
+STOP_COPY, preventing DMA while device state is serialized. Restore
+saved VFRE/VFTE on STOP->RUNNING.
 
-Save both tables in the migration blob and compare them on load. If
-the destination PF is missing entries that were present on the source,
-warn and OR them into the destination, to prevent silent multicast
-or unicast packet loss. Stale source entries may persist on the
-destination until the L1 driver reprograms the tables.
+Include per-VF VFRE/VFTE enable bits in the migration blob so the
+destination can restore the pre-quiesce state. Add a QUIESCED bit to
+STATUS for the driver to confirm DMA has drained. Clear VFLRE before
+state restore on the destination to prevent stale reset indications.
 
 AI-used-for: analysis, code (prototype)
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/net/igb_migration.c | 77 ++++++++++++++++++++++++++++++++++++++++++
- hw/net/trace-events    |  1 +
- 2 files changed, 78 insertions(+)
+ hw/net/igb_migration.h |  6 ++-
+ hw/net/igb_migration.c | 86 +++++++++++++++++++++++++++++++++++++++++-
+ 2 files changed, 89 insertions(+), 3 deletions(-)
 
+diff --git a/hw/net/igb_migration.h b/hw/net/igb_migration.h
+index 4968798509aa..841fc512d228 100644
+--- a/hw/net/igb_migration.h
++++ b/hw/net/igb_migration.h
+@@ -24,7 +24,8 @@
+  *   +0x0C  CAPS                       (RO: F_STATE[0], F_DIRTY[1],
+  *                                      max_ranges[11:8], pgsize[16:12])
+  *   +0x10  CTRL                       (WO: doorbell command)
+- *   +0x14  STATUS                     (RO: state[7:0], error_code[15:8])
++ *   +0x14  STATUS                     (RO: state[7:0], error_code[15:8],
++ *                                      QUIESCED[16])
+  *   +0x18  BUF_ADDR_LO                (RW: shared buffer GPA low)
+  *   +0x1C  BUF_ADDR_HI                (RW: shared buffer GPA high)
+  *   +0x20  DATA_SIZE                  (RO: state blob size in bytes)
+@@ -71,6 +72,7 @@
+ #define IGB_MIG_STATUS_ERROR_CODE_SHIFT 8
+ #define IGB_MIG_STATUS_ERR(code) \
+     ((uint32_t)(code) << IGB_MIG_STATUS_ERROR_CODE_SHIFT)
++#define IGB_MIG_STATUS_QUIESCED         (1u << 16)
+ 
+ /* Device states (based on VFIO migration v2) */
+ #define IGB_MIG_STATE_ERROR             0
+@@ -104,6 +106,8 @@ typedef struct IgbVfMigState {
+     uint32_t mig_data[IGB_VF_STATE_MAX_SIZE / sizeof(uint32_t)];
+     uint32_t mig_data_size;
+     uint64_t mig_data_buf_addr;
++    bool mig_saved_vfre;
++    bool mig_saved_vfte;
+ } IgbVfMigState;
+ 
+ #define IGB_MIG_DIRTY_DEFAULT_PGSIZE        4096
 diff --git a/hw/net/igb_migration.c b/hw/net/igb_migration.c
-index 7cebf3500c0f..42d2587149ef 100644
+index efa2f5a8d333..80098e62daea 100644
 --- a/hw/net/igb_migration.c
 +++ b/hw/net/igb_migration.c
-@@ -60,6 +60,8 @@ typedef struct IgbMigBlob {
-     IgbMigTxCtx tx_ctx[2];
-     uint32_t num_vlvf;
+@@ -64,6 +64,8 @@ typedef struct IgbMigBlob {
      uint32_t vlvf[IGB_VF_MAX_VLVF_REGS];
-+    uint32_t mta[E1000_MC_TBL_SIZE];
-+    uint32_t uta[E1000_MC_TBL_SIZE];
+     uint32_t mta[E1000_MC_TBL_SIZE];
+     uint32_t uta[E1000_MC_TBL_SIZE];
++    uint32_t vfre;
++    uint32_t vfte;
  } IgbMigBlob;
  
  #define IGB_MIG_BLOB_SIZE            sizeof(IgbMigBlob)
-@@ -490,6 +492,22 @@ static int igb_core_vf_can_load_vlvf(IGBCore *core, uint16_t vfn,
-     return 0;
- }
- 
-+static void igb_core_vf_save_hash_tables(IGBCore *core, uint16_t vfn,
-+                                         IgbMigBlob *blob)
-+{
-+    for (int i = 0; i < E1000_MC_TBL_SIZE; i++) {
-+        blob->mta[i] = cpu_to_le32(core->mac[MTA + i]);
-+        blob->uta[i] = cpu_to_le32(core->mac[UTA + i]);
-+
-+        if (core->mac[MTA + i]) {
-+            trace_igbvf_mig_save_hash_tables(vfn, "MTA", i, core->mac[MTA + i]);
-+        }
-+        if (core->mac[UTA + i]) {
-+            trace_igbvf_mig_save_hash_tables(vfn, "UTA", i, core->mac[UTA + i]);
-+        }
-+    }
-+}
-+
- static void igb_core_vf_save_tx_ctx(IGBCore *core, int queue,
-                                     IgbMigTxCtx *tx)
+@@ -530,6 +532,7 @@ static void igb_core_vf_save_tx_ctx(IGBCore *core, int queue,
+ static int igb_core_vf_save_state(IgbVfState *s, void *buf, size_t buf_size)
  {
-@@ -546,6 +564,8 @@ static int igb_core_vf_save_state(IgbVfState *s, void *buf, size_t buf_size)
-     blob->num_vlvf = cpu_to_le32(igb_core_vf_save_vlvf(core, s->vfn,
-                                                         blob->vlvf));
+     int size = IGB_MIG_BLOB_SIZE;
++    IgbVfMigState *ms = &s->mig;
+     IGBCore *core = igbvf_get_core(s);
+     IgbMigBlob *blob = buf;
+     uint32_t offsets[IGB_VF_MAX_FIXED_REGS];
+@@ -568,7 +571,12 @@ static int igb_core_vf_save_state(IgbVfState *s, void *buf, size_t buf_size)
  
-+    igb_core_vf_save_hash_tables(core, s->vfn, blob);
+     igb_core_vf_save_hash_tables(core, s->vfn, blob);
+ 
+-    trace_igbvf_mig_save_state(s->vfn, size);
++    blob->vfre = cpu_to_le32(ms->mig_saved_vfre);
++    blob->vfte = cpu_to_le32(ms->mig_saved_vfte);
 +
-     trace_igbvf_mig_save_state(s->vfn, size);
++    trace_igbvf_mig_save_state(s->vfn, size, ms->mig_saved_vfre,
++                               ms->mig_saved_vfte,
++                               core->mac[VFRE]);
      return size;
  }
-@@ -581,6 +601,61 @@ static bool igb_core_vf_validate_regs(uint16_t vfn,
-     return true;
- }
  
-+/*
-+ * Extract a register from the incoming blob. Used in Phase 1
-+ * validation where core->mac[] still holds the destination's state,
-+ * not the source's.
-+ */
-+static uint32_t igb_core_vf_blob_get_reg(const IgbMigBlob *blob,
-+                                         uint32_t offset)
-+{
-+    uint32_t num_regs = le32_to_cpu(blob->num_regs);
-+
-+    for (int i = 0; i < num_regs; i++) {
-+        if (le32_to_cpu(blob->regs[i].offset) == offset) {
-+            return le32_to_cpu(blob->regs[i].value);
-+        }
-+    }
-+    return 0;
-+}
-+
-+/*
-+ * OR missing hash table entries from the source into the destination.
-+ * MTA/UTA are PF-wide shared tables with no per-VF ownership, so
-+ * entries present on the source may be absent on the destination.
-+ */
-+static bool igb_core_vf_fixup_hash_tables(IGBCore *core, uint16_t vfn,
-+                                           const IgbMigBlob *blob)
-+{
-+    uint32_t vmolr = igb_core_vf_blob_get_reg(blob, VMOLR0 + vfn);
-+    bool check_mta = vmolr & E1000_VMOLR_ROMPE;
-+    bool check_uta = vmolr & E1000_VMOLR_ROPE;
-+    bool fixed_up = false;
-+
-+    for (int i = 0; i < E1000_MC_TBL_SIZE; i++) {
-+        uint32_t src_mta = le32_to_cpu(blob->mta[i]);
-+        uint32_t src_uta = le32_to_cpu(blob->uta[i]);
-+        uint32_t missing_mta = src_mta & ~core->mac[MTA + i];
-+        uint32_t missing_uta = src_uta & ~core->mac[UTA + i];
-+
-+        if (missing_mta && check_mta) {
-+            warn_report("igb: VF%u: MTA[%d] source 0x%x destination 0x%x"
-+                        " (missing 0x%x, merged)",
-+                        vfn, i, src_mta, core->mac[MTA + i], missing_mta);
-+            core->mac[MTA + i] |= missing_mta;
-+            fixed_up = true;
-+        }
-+        if (missing_uta && check_uta) {
-+            warn_report("igb: VF%u: UTA[%d] source 0x%x destination 0x%x"
-+                        " (missing 0x%x, merged)",
-+                        vfn, i, src_uta, core->mac[UTA + i], missing_uta);
-+            core->mac[UTA + i] |= missing_uta;
-+            fixed_up = true;
-+        }
-+    }
-+    return fixed_up;
-+}
-+
- static void igb_core_vf_load_tx_ctx(IGBCore *core, int queue,
-                                     const IgbMigTxCtx *tx)
+@@ -681,6 +689,7 @@ static void igb_core_vf_load_tx_ctx(IGBCore *core, int queue,
+ 
+ static int igb_core_vf_load_state(IgbVfState *s, const void *buf, size_t size)
  {
-@@ -705,6 +780,8 @@ static int igb_core_vf_load_state(IgbVfState *s, const void *buf, size_t size)
-         }
-     }
- 
-+    igb_core_vf_fixup_hash_tables(core, s->vfn, blob);
-+
++    IgbVfMigState *ms = &s->mig;
+     IGBCore *core = igbvf_get_core(s);
+     int q0 = s->vfn;
+     int q1 = s->vfn + IGB_NUM_VM_POOLS;
+@@ -787,13 +796,25 @@ static int igb_core_vf_load_state(IgbVfState *s, const void *buf, size_t size)
      /* Propagate VTIVAR to IVAR0, skipped by direct core->mac[] write */
      igb_core_vf_propagate_ivar(core, s->vfn);
  
-diff --git a/hw/net/trace-events b/hw/net/trace-events
-index 23f6dbcfed82..a8cc72b69d0f 100644
---- a/hw/net/trace-events
-+++ b/hw/net/trace-events
-@@ -301,6 +301,7 @@ igbvf_mig_status(uint16_t vfn, uint32_t status) "VF%u: status 0x%x"
- igbvf_mig_set_state(uint16_t vfn, uint32_t old_state, uint32_t new_state) "VF%u: state %u -> %u"
- igbvf_mig_save_state(uint16_t vfn, uint32_t size) "VF%u: saved %u bytes of device state"
- igbvf_mig_load_state(uint16_t vfn, uint32_t size) "VF%u: loaded %u bytes of device state"
-+igbvf_mig_save_hash_tables(uint16_t vfn, const char *name, int index, uint32_t value) "VF%u: %s[%d]=0x%x"
- igbvf_mig_reset(uint16_t vfn) "VF%u: migration state reset"
+-    trace_igbvf_mig_load_state(s->vfn, (uint32_t)size);
++    ms->mig_saved_vfre = !!le32_to_cpu(blob->vfre);
++    ms->mig_saved_vfte = !!le32_to_cpu(blob->vfte);
++
++    trace_igbvf_mig_load_state(s->vfn, (uint32_t)size,
++                               ms->mig_saved_vfre,
++                               ms->mig_saved_vfte);
+     return 0;
+ }
  
- # spapr_llan.c
+ static int igbvf_mig_load(IgbVfState *s, const void *buf, size_t size)
+ {
+     int ret;
++    IGBCore *core = igbvf_get_core(s);
++
++    /*
++     * Pre-load: Clear the VFLRE bit before restoring state so the PF
++     * watchdog does not overwrite what we are about to load.
++     */
++    core->mac[VFLRE] &= ~BIT(s->vfn);
+ 
+     ret = igb_core_vf_load_state(s, buf, size);
+     if (ret < 0) {
+@@ -1169,6 +1190,43 @@ static uint8_t igbvf_mig_cmd_load(IgbVfState *s, uint32_t data_size)
+     return 0;
+ }
+ 
++/* Quiesce a VF by disabling its RX and TX at the PF level. */
++static void igb_core_vf_quiesce(IgbVfState *s)
++{
++    IgbVfMigState *ms = &s->mig;
++    IGBCore *core = igbvf_get_core(s);
++
++    ms->mig_saved_vfre = !!(core->mac[VFRE] & BIT(s->vfn));
++    ms->mig_saved_vfte = !!(core->mac[VFTE] & BIT(s->vfn));
++
++    core->mac[VFRE] &= ~BIT(s->vfn);
++    core->mac[VFTE] &= ~BIT(s->vfn);
++    trace_igbvf_mig_quiesce(s->vfn, core->mac[VFRE], core->mac[VFTE]);
++}
++
++static void igb_core_vf_unquiesce(IgbVfState *s)
++{
++    IgbVfMigState *ms = &s->mig;
++    IGBCore *core = igbvf_get_core(s);
++    bool re = ms->mig_saved_vfre;
++    bool te = ms->mig_saved_vfte;
++
++    if (re) {
++        core->mac[VFRE] |= BIT(s->vfn);
++    } else {
++        core->mac[VFRE] &= ~BIT(s->vfn);
++    }
++    if (te) {
++        core->mac[VFTE] |= BIT(s->vfn);
++    } else {
++        core->mac[VFTE] &= ~BIT(s->vfn);
++    }
++
++    trace_igbvf_mig_unquiesce(s->vfn, core->mac[VFRE], core->mac[VFTE]);
++
++    /* Interrupt mask restore and pending cause re-raise added later. */
++}
++
+ static uint8_t igbvf_mig_set_state(IgbVfState *s, uint32_t new_state)
+ {
+     IgbVfMigState *ms = &s->mig;
+@@ -1189,6 +1247,11 @@ static uint8_t igbvf_mig_set_state(IgbVfState *s, uint32_t new_state)
+             old == IGB_MIG_STATE_ERROR) {
+             igb_core_vf_dirty_disable(s);
+         }
++        if (old == IGB_MIG_STATE_RUNNING ||
++            old == IGB_MIG_STATE_PRE_COPY ||
++            old == IGB_MIG_STATE_ERROR) {
++            igb_core_vf_quiesce(s);
++        }
+         /* Restore DATA_SIZE to default max */
+         igbvf_mig_update_data_size(s, igb_core_vf_max_data_size(s));
+         break;
+@@ -1201,6 +1264,9 @@ static uint8_t igbvf_mig_set_state(IgbVfState *s, uint32_t new_state)
+         if (old == IGB_MIG_STATE_PRE_COPY) {
+             igb_core_vf_dirty_disable(s);
+         }
++        if (old == IGB_MIG_STATE_STOP) {
++            igb_core_vf_unquiesce(s);
++        }
+         break;
+ 
+     case IGB_MIG_STATE_STOP_COPY:
+@@ -1208,8 +1274,14 @@ static uint8_t igbvf_mig_set_state(IgbVfState *s, uint32_t new_state)
+             old != IGB_MIG_STATE_PRE_COPY) {
+             return IGB_MIG_ERR_BAD_STATE;
+         }
++        if (old == IGB_MIG_STATE_PRE_COPY) {
++            igb_core_vf_quiesce(s);
++        }
+         ret = igb_core_vf_save_state(s, ms->mig_data, sizeof(ms->mig_data));
+         if (ret < 0) {
++            if (old == IGB_MIG_STATE_PRE_COPY) {
++                igb_core_vf_unquiesce(s);
++            }
+             return -ret;
+         }
+         igbvf_mig_update_data_size(s, ret);
+@@ -1251,6 +1323,16 @@ static void igbvf_mig_update_status(IgbVfState *s, uint8_t err)
+         status = IGB_MIG_STATE_ERROR | IGB_MIG_STATUS_ERR(err);
+     }
+ 
++    /*
++     * QUIESCED tells the driver it is safe to read device state.
++     * In STOP and STOP_COPY, igb_core_vf_quiesce() has already
++     * cleared VFRE/VFTE so no further VF DMA can occur.
++     */
++    if (ms->mig_state == IGB_MIG_STATE_STOP ||
++        ms->mig_state == IGB_MIG_STATE_STOP_COPY) {
++        status |= IGB_MIG_STATUS_QUIESCED;
++    }
++
+     pci_set_long(dev->config + IGB_MIG_DVSEC_OFFSET + IGB_MIG_STATUS, status);
+     trace_igbvf_mig_status(s->vfn, status);
+ }
 -- 
 2.56.0
 
