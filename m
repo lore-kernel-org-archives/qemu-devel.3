@@ -4,132 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 525FCCC6B19
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 01:29:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53407CC6B19
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 01:41:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGnkI-00067e-U7; Tue, 13 Oct 2026 21:25:34 -0400
+	id 1xGnz2-0002e4-Lf; Tue, 13 Oct 2026 21:40:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1xGnjk-0005q4-Gv; Tue, 13 Oct 2026 21:25:00 -0400
-Received: from mail-japanwestazlp170120003.outbound.protection.outlook.com
- ([2a01:111:f403:c406::3] helo=OS8PR02CU002.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1xGnyz-0002dK-3k
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 21:40:41 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1xGnji-0006vq-0o; Tue, 13 Oct 2026 21:24:55 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=OSX9xDMyMeAlNq5C6vEVHOEgTI2tSUn6WO3bBmKeN8lU0B1vhd6tuT8NxABI/bMJzZXX47Jpth9vke6pKp8KG0ibKQEiZUDEKvxwzSLflNeE9/JwrcnZPw2yuFJasqhcbbxKU6+e0v9udwnfXiE600Mm75YCy3oOXCKg27GGrFWzeUIlsgD6a2MYFEPJPeGwQnJqaWOOr/AzYq0NTmrH1BXthqMws3Mq2WzngzZdYZfWLi58dBKa+P++Yc0PeAFzglRFNI+gYtvHUFvUEx7Wv3TpvK0gX0urcosuhInjlQBiCGjxuDRHkaADiwsailERmuqXnn6K+jtBpXh2hJJlpA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=KMG2g42Bfo0zJu9pe05IBLFa73jLqvIBiTF2gesWqQU=;
- b=G9HGcmlH3TS+gHQcBC6pGYE4uq2XnrNkFC/+mKOUPBpNvkFhh2l1DJyZq3PMLm0/T7tf7X5HiDLYYPin976qQv3TGn+T69wJd6JOEWfJZAOncS+m4Aoo4N01BFozaRzHBs3EUFD0WyTFxfcYywSkyUhpbGux6tLTpZXDBxhMyRI6cYHxvryqODikNtno7hEFutzJsbXlVa6mkDsO34+L/I7E16cklWms0FEDsnp9iSGditDUvn4PnFU79dFKrJ0RRsmZB2TXDwVAROiJa0aVQdlcBxI/Td54flXWIf9gPT3w7E1xjfjeap95NJCzpvlD5mQlVrXvOsKOykp5ZV02mg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=processmission.com; dmarc=pass action=none
- header.from=processmission.com; dkim=pass header.d=processmission.com;
- arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=KMG2g42Bfo0zJu9pe05IBLFa73jLqvIBiTF2gesWqQU=;
- b=L3q9pj7IS4XsOBOmGFjxQNGO+F4R1R6VAJ2lYaRw+tU0ZkBn5aZWjy5z4iRahgjIzaMOGkcN+hg0znCTnhgBlXJGwbh3XuZPfkp/HYmiz2upuo7bTVvjzxocXN+0ztPiER4SLOjVxf/ODzKgC3vZJnoANeCgBgg30H5roT+1b8eiDCueWyWyIJjjSclkfKAVntAjX8LQ/oekrAuuEyr4Kyn+b+Z+2JyTj10P3StoPiHZOdD/P062I3Hu8JP0Pfi6EGuw40jIQw8dcX0lOnttqDvbrPIpO7R4FLCdbHyuoKp7TiMTM71mfOklrDccdqMfHA4RlMKnHh84QfU4t65GDQ==
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=processmission.com;
-Received: from KL1PR02MB6257.apcprd02.prod.outlook.com (2603:1096:820:da::11)
- by TYNPR02MB9225.apcprd02.prod.outlook.com (2603:1096:405:3b3::12)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.496.23; Wed, 14 Oct
- 2026 01:24:47 +0000
-Received: from KL1PR02MB6257.apcprd02.prod.outlook.com
- ([fe80::ecf9:e832:8196:215]) by KL1PR02MB6257.apcprd02.prod.outlook.com
- ([fe80::ecf9:e832:8196:215%6]) with mapi id 15.21.0496.021; Wed, 14 Oct 2026
- 01:24:47 +0000
-From: Bin Meng <bin.meng@processmission.com>
-To: QEMU <qemu-devel@nongnu.org>
-Cc: Conor Dooley <conor.dooley@microchip.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Chao Liu <chao.liu@processmission.com>, Conor Dooley <conor@kernel.org>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Sebastian Huber <sebastian.huber@embedded-brains.de>,
- Weiwei Li <liwei1518@gmail.com>, qemu-riscv@nongnu.org
-Subject: [PATCH v4 22/27] hw/riscv: pfsoc: Default Icicle Kit to five harts
-Date: Wed, 14 Oct 2026 09:23:02 +0800
-Message-ID: <20261014012323.322790-23-bin.meng@processmission.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20261014012323.322790-1-bin.meng@processmission.com>
-References: <20261014012323.322790-1-bin.meng@processmission.com>
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: TY6PR01CA0005.jpnprd01.prod.outlook.com
- (2603:1096:405:3bc::12) To KL1PR02MB6257.apcprd02.prod.outlook.com
- (2603:1096:820:da::11)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1xGnyv-00005X-7b
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 21:40:40 -0400
+Received: from [192.168.10.153] (p865013-ipoe.ipoe.ocn.ne.jp [153.242.222.12])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 69E1eNdi021602
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Wed, 14 Oct 2026 10:40:23 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=KSUde78HX/O/g9354ffOswmMnJwSfiUzdVrfRLRCRGo=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=From:Message-ID:To:Subject:Date;
+ s=rs20250326; t=1791942023; v=1;
+ b=YAqB8JTyafeabvxhmXbrBLCGEqSTWZNh6kKJjtmQeUt2/RAmmkTouJm4N3yMVqR4
+ OXkNLTWUdL443mse6rjT2SgKA6bdz3GCMBP9xHfQbsySgfzZXL6VK54PNeMLTCDX
+ EaJPECZBJHwhrHUMOVrs58s3/R9oVaSvi3n1LMWdP/FE40ahRaJhXDVsvrl+sxyZ
+ FcR03mQnqzTcABTvEC7MehNzulJIY8a4gfp9ijyJTOeRE5vFAo+xucdd+RASjpa4
+ 2FjuK7bIF04H0ZkCD4wuR7eN1JU87vmikEPgRCnct0qFLTimidk6eKGKkMy+XU0b
+ YxUgyYhjLdXRjwnfUZBitw==
+Message-ID: <c4cbc75f-6629-44cd-834e-c84ac7a1eb0e@rsg.ci.i.u-tokyo.ac.jp>
+Date: Wed, 14 Oct 2026 10:40:23 +0900
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: KL1PR02MB6257:EE_|TYNPR02MB9225:EE_
-X-MS-Office365-Filtering-Correlation-Id: be959a66-d8a9-4e74-0191-08df2991ef86
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|7416014|366016|1800799024|23010399003|18002099003|22082099003|56012099006|261009223027099003|10067099003;
-X-Microsoft-Antispam-Message-Info: V570B9f8Fm7B2tSK+8i0/2jt/xC1g+hPmU8mrutDmAcDoKClSpEsdj138wjROl58t9a7Ngrd0e/6Co70sH9O50qaohSi+E8DeILPtyLJnVwBB6bOjQchSVGs6V9pj3Dq+eifpRKHRPfZdIz4KszUza7LfnjeQSi47uGxOsZ8+KagyTpvdpBfKbjSH9P0eP5MoZE/pMM36srIdtZYTEAHIz+IZRgX507/atN0l41tQMFuVeQLzj3no67trd/74pdSAn9Ehc6ERZDaF1MpD1TZUhkm6bT5b+W9mohFvI1gpdPNNiBAwUskYbzXpnpgV/11pyjdwgyR3FNtIBM7Eqz1a/AWa+STuBacXyIxXSuz+7CFpKwYU4DZKkUxHITdEFqXFLBb20PXfu0u/vit8NuQID5VYbHhxwuBkdZDOfyF2mLZ8STrGAHdmwPkwllgUgm97pVRj49M/3v+N+0boTbONdyuhGhn/JLER1hWHOfJGfcGlscmg7T4586o+du2dixveNwdq9En/VGp1LXrnhPLYjNKTAMTMHUqaydv8mmE6hLMuoRWZIQjqHOb/qkiov2l1mZYTyn2NKcvVItMKbLBWQLfO6eVD97sS7gZzw+zRhQdqdtrv0nJYgc+B3vE/DSeOd1V3hrc2cvregAyqp/AyNtMClZrUB4gQO+0P5A3dYw=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:KL1PR02MB6257.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(7416014)(366016)(1800799024)(23010399003)(18002099003)(22082099003)(56012099006)(261009223027099003)(10067099003);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?boDmFfbN8Vl1lUjxrjlvcIY9IYQefj59zIjygHgvtQ3I2VtSgbkVfuSB7onX?=
- =?us-ascii?Q?Ut+qD6TrmEjT10PvjJJ11+Obxj56KUd7qGuuWpeKfpuCcx/PMP9WLiGDV/pg?=
- =?us-ascii?Q?mEcV6uhy4wfE2nYF00znyX5AhqBVG+wTrcQvxJJuXRIKkdb4l8YBCeCmVvDT?=
- =?us-ascii?Q?q78bsEilTxnm/mi/tSQc5+tE69/IjnDhSWvadXnN3+s8NUk9MFaT5+b4Ta9Y?=
- =?us-ascii?Q?ooPMbKK8yq1hGZZtfqnNbW8dIbHzUjtqtL5jAalxN+++M5IeJy1k0qomBiik?=
- =?us-ascii?Q?QuOIzYFPozyTam3HhcHbEzvFSsBieXwwtfGb81g2ikZzTQ00bEO0myDj5Zdg?=
- =?us-ascii?Q?IAuoXQSGJrvIOvAUtm8w0rmbXdiRTGXr34bCMoivSHEBy3/de3WdpFBQznqC?=
- =?us-ascii?Q?ajIgaO9D/t7NSvCyxWhgIVJb1jaiUTqcHHL0CcJbupo0cyk6O8lEnYH47zAj?=
- =?us-ascii?Q?OD5dB0nJUM3ksYk/5wCQhb73srzLAoHq2IDOYYCCuFvNs2eeNq0U/uZ+dhuB?=
- =?us-ascii?Q?ZLMxJ/EK9EsY5tmHvahjrnN61VbIlKX6LyW8gKI4/efC62CMNZUidusD2pf+?=
- =?us-ascii?Q?fVVGao7P7l+8op6PlQ8Gr6eUfZuU1xJqQZQQso+hrIOwmVH5EDes+V54QThN?=
- =?us-ascii?Q?xEnlqrgJmgzvFU635XeCkq/MzBI6lIULzEvohlyfVlzypWgc2YlUR9QFN5qU?=
- =?us-ascii?Q?jC37Hhc3eI1nkpNkAjDYNsfTRHwqyhaRKQfgu5GXpnR8jaDOp/Bol0IkyjQh?=
- =?us-ascii?Q?nGFJ3CI3ePO43/2U2Mjfu/UJSjyd6D+ZoSOF93Y/aJFBSfobQxfd6te0hfi4?=
- =?us-ascii?Q?ICAY6okMihVltAhjL/vOXwWmYzvXwGtm9ZgvweyG8HgUKxR43YzgvANRByNa?=
- =?us-ascii?Q?7om5Am7U6ohIjg0V8VCnE6Iv95NSNnkPVrfRXN+YlmTTvvni5s2j86fS8a3/?=
- =?us-ascii?Q?TQ9giyeMtyWMd9RcF2eb4SGXqofajHjR4bsgexPTb3TpwhzlxINvaOVyP80q?=
- =?us-ascii?Q?1vf2Da9rarxWQczY0pRk/YDqHVwLrjOsvYqgbs6OeWM8/VY3QLOGZh/C2/tx?=
- =?us-ascii?Q?moBAfYCIbpduckD93jtPWt3scAWxoNL0hXttsC7ftK6Id7LyPoiNLf1fDzP1?=
- =?us-ascii?Q?p5Ht/zbkrQmCBkWFcGTHZUjw9ktDRvv68RxEq4jIVCxysRa38NRZZEKWXwpF?=
- =?us-ascii?Q?mt/1HBJyaW/aRaVSF4reVDMToF+rx+9+hGSKitGz1Smm0IvBogL0ucUlzplp?=
- =?us-ascii?Q?9XTpvo42JijUkUP+OWKKHuMBz5OHKpV5XxOSOE4u80arVf3ieg7Osl5fb4bH?=
- =?us-ascii?Q?HDLQH3u2cpMZsXmD4ZLn7pw7rh4DPVpIbhCey+JhAymreJXde5A9hDv3Sm8A?=
- =?us-ascii?Q?wEALwnpfMgwbltb8g5I6576w3oX68VWlVGSivjeXdKJeWG8e3O5n4FyUQ7w2?=
- =?us-ascii?Q?J7C34XzQ8BfhFecXW1zay9xejvhaKeF8vZMI/YHx+B1+KPnGBksG4DoQvukc?=
- =?us-ascii?Q?yKKbud4FBQxtZuAZMaV5V/nbNCDhTzYePyErVgLcdi8B1gxmQTutatXkFQ6Z?=
- =?us-ascii?Q?uC6jqBkDzrcFmRkkCG2BpIVn+Cky7al6PyJH/KSwNEgCGZ5l5Cy2a5cpW+u6?=
- =?us-ascii?Q?GauiAHT/u/prg9qbF+FY5JCLlkWTRDWYv6JEn4T72MmWRJ0yjyBtYRIHsZY1?=
- =?us-ascii?Q?9yibcMXuqugMo+TOAUq8Jia+/CCqd0WgmcL1BXDFHGeKw9NfXAkscKMO5XW+?=
- =?us-ascii?Q?r5RSH9F1u3h03vMYrhkoLUhIaCIfMRo=3D?=
-X-OriginatorOrg: processmission.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: be959a66-d8a9-4e74-0191-08df2991ef86
-X-MS-Exchange-CrossTenant-AuthSource: KL1PR02MB6257.apcprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Oct 2026 01:24:47.6921 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 5lXd7jOk/maJAtO1pCRFDCR0kZdUpw+qJncXEiuZL+ELHQs/rLKspDjtF5voAg5o774s9SiwqvsmTQiUYz2b/LouTQaYflKQtf8oCgDScNM=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYNPR02MB9225
-Received-SPF: pass client-ip=2a01:111:f403:c406::3;
- envelope-from=bin.meng@processmission.com;
- helo=OS8PR02CU002.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v2 0/9] igb: Add experimental VF live migration support
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
+Cc: Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
+ Jason Wang <jasowangio@gmail.com>, Alex Williamson <alex@shazbot.org>,
+ Peter Xu <peterx@redhat.com>
+References: <20260902192054.3329753-1-clg@redhat.com>
+ <341bf6d3-27e4-425e-a0b1-0e3767e2db99@rsg.ci.i.u-tokyo.ac.jp>
+ <73fe443f-0acd-41b0-a9ca-259f88f0ff88@redhat.com>
+ <fd08029a-4822-4ccc-8033-a981b8ddbbe3@rsg.ci.i.u-tokyo.ac.jp>
+ <34a84565-bb0e-4e6b-b5dc-480c2990740e@redhat.com>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <34a84565-bb0e-4e6b-b5dc-480c2990740e@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -146,57 +78,396 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The Icicle Kit contains one E51 management hart and four U54 application
-harts. Defaulting to two harts can accidentally boot firmware and a
-device tree that expect the full five-hart topology.
+On 2026/10/13 16:20, Cédric Le Goater wrote:
+> Hello Akihiko,
+> 
+> I finally found the time to address the comments from your review.
+> Some more replies below.
+> 
+> 
+> On 9/17/26 21:49, Akihiko Odaki wrote:
+>> On 2026/09/15 17:20, Cédric Le Goater wrote:
+>>> On 9/9/26 09:19, Akihiko Odaki wrote:
+>>>> On 2026/09/03 4:20, Cédric Le Goater wrote:
+>>>>> Hello,
+>>>>>
+>>>>> Live migration of VFIO-passthrough devices - SR-IOV VFs, vGPUs - is a
+>>>>> growing requirement, but real hardware with migration support is
+>>>>> scarce and hard to debug. An emulated device provides a fully
+>>>>> controlled testbed for developing and validating the entire software
+>>>>> stack - vfio-pci variant drivers, VFIO core migration v2 framework,
+>>>>> QEMU, libvirt - and for tuning complex migration policies such as
+>>>>> downtime convergence. It also serves as an educational reference for
+>>>>> understanding VFIO migration end-to-end, from device state
+>>>>> serialization to dirty page tracking.
+>>>>>
+>>>>> This series adds an experimental VF live migration interface to the
+>>>>> emulated igb (82576) device. It enables a vfio-pci variant driver
+>>>>> (igb-vfio-pci) to migrate VFs using the standard VFIO migration v2
+>>>>> protocol with stop-copy and pre-copy support.
+>>>>>
+>>>>> The target scenario is nested virtualization:
+>>>>>
+>>>>>    L0 QEMU (these patches)
+>>>>>      igb PF with x-vf-migration=on
+>>>>>      └── VFs with migration DVSEC
+>>>>>
+>>>>>    L1 kernel
+>>>>>      igb-vfio-pci variant driver [1]
+>>>>>      translates VFIO migration v2 ioctls → DVSEC config writes
+>>>>>
+>>>>>    L1 QEMU (stock, unmodified)
+>>>>>      vfio-pci device model, standard migration fd
+>>>>>
+>>>>>    L2 guest
+>>>>>      standard igbvf driver, unaware of migration
+>>>>>
+>>>>> The L1 QEMU is completely unmodified -- it sees a standard VFIO
+>>>>> migratable device and uses the normal migration fd path.
+>>>>>
+>>>>> * Design
+>>>>>
+>>>>> The migration interface is exposed through a DVSEC (Designated
+>>>>> Vendor-Specific Extended Capability, PCIe cap id 0x23) at offset
+>>>>> 0x160 in VF extended config space. The DVSEC uses a command doorbell
+>>>>> model - all commands are synchronous via PCI config space writes.
+>>>>>
+>>>>> Device state is serialized as a versioned blob of per-VF register
+>>>>> (offset, value) pairs covering control, interrupt, RX/TX queue,
+>>>>> receive address (RA/RA2), etc. plus TX context descriptors and
+>>>>> VFRE/VFTE enable bits. The buffer address is a guest physical
+>>>>> address (GPA) written by the driver via virt_to_phys; the device
+>>>>> accesses guest RAM directly through the system address space.
+>>>>>
+>>>>> Dirty page tracking is implemented with per-range bitmaps maintained
+>>>>> in IGBCore. All VF DMA paths in igb_core.c (TX data, RX data,
+>>>>> descriptor writeback) are instrumented to record touched pages. The
+>>>>> variant driver registers tracked IOVA ranges and queries dirty bitmaps
+>>>>> through a shared buffer. Buffer structures include len, flags, and
+>>>>> reserved fields for future extensibility.
+>>>>>
+>>>>> * Caveats
+>>>>>
+>>>>> The x-vf-migration property is experimental (x- prefix, default off).
+>>>>>
+>>>>> The dirty bitmaps are maintained inside the device, which is not
+>>>>> realistic for discrete NICs without on-chip DRAM.
+>>>>>
+>>>>> * Testing
+>>>>>
+>>>>> The target scenario is nested virtualization: L0 runs QEMU with an
+>>>>> igb PF (x-vf-migration=on), L1 runs the igb-vfio-pci variant driver
+>>>>> and an unmodified QEMU, and L2 runs a standard igbvf driver.
+>>>>>
+>>>>> Migration under iperf3 load works correctly: dirty page tracking
+>>>>> converges (from ~2000 pages per PRE_COPY iteration down to ~280 at
+>>>>> STOP_COPY), and STOP_COPY stays under 250ms.
+>>>>>
+>>>>> * Todo
+>>>>>
+>>>>>    1. Add migration blocker when x-vf-migration=on (no VMState yet) or
+>>>>>       add VMState support for L0 migration (dirty bitmaps, tracking
+>>>>>       engines, DVSEC registers, stats)
+>>>>>    2. Add PRE_COPY state transfer to validate device INIT data (magic,
+>>>>>       version, etc.)
+>>>>>    3. Add qtests for migration state machine transitions, dirty page
+>>>>>       tracking ?
+>>>>>
+>>>>> * Ideas
+>>>>>
+>>>>>    1. RX bandwidth throttle (x-mig-rx-limit, uint32, default 0)
+>>>>>
+>>>>>       Return false from can_receive when the per-VF packet count in 
+>>>>> the
+>>>>>       current tracking interval exceeds the limit. Reduces DMA writes
+>>>>>       and dirty pages realistically.
+>>>>>
+>>>>>    2. Migration phase timing (GET_STATS extension)
+>>>>>
+>>>>>       Add per-VF timestamps: precopy_start_ns, stopcopy_start_ns,
+>>>>>       precopy_duration_ns, stopcopy_duration_ns,
+>>>>>       state_transition_count. Expose via GET_STATS.
+>>>>>
+>>>>>    3. Hot page simulation (x-mig-hot-pages, uint32, default 0)
+>>>>>
+>>>>>       Re-set the first N bitmap bits after each DIRTY_QUERY, 
+>>>>> simulating
+>>>>>       workloads with hot pages that prevent convergence.
+>>>>>
+>>>>>    4. Error injection (x-mig-inject-error, uint32, default 0)
+>>>>>
+>>>>>       One-shot error code injection before command dispatch. A 
+>>>>> separate
+>>>>>       x-mig-inject-dma-fail (bool) for persistent DMA failure testing.
+>>>>>
+>>>>> * Credits
+>>>>>
+>>>>> Alex Williamson suggested the overall approach of a variant driver
+>>>>> with the "x-vf-migration" device property to gate the feature. Thanks
+>>>>> for the ever ongoing support and valuable discussions throughout these
+>>>>> years.
+>>>>>
+>>>>> * AI disclaimer
+>>>>>
+>>>>> The lack of a migration-capable device has been a recurring pain point
+>>>>> for VFIO development over the years, and we hope this proposal
+>>>>> demonstrates the value of having one.
+>>>>>
+>>>>> Claude was used to analyze the IGB PF and VF internal state and
+>>>>> identify the pain points of a working live migration of such devices.
+>>>>> The generated code served as a starting point but *significant* time
+>>>>> was then spent cleaning up, reworking, and shaping it into a clear,
+>>>>> reviewable IGB model extension.
+>>>>>
+>>>>> As QEMU does not yet accept AI-assisted contributions, this series is
+>>>>> submitted as an RFC.
+>>>>
+>>>> This largely repeats the concerns I raised previously [1]. Your 
+>>>> description of the *significant* time spent cleaning up and 
+>>>> reworking the generated code suggests that this series is intended 
+>>>> for upstream inclusion once the implementation direction is agreed. 
+>>>
+>>> Yes. The IGB kernel vfip-pci variant driver is "ready", and so is the
+>>> internal test framework for VFIO migration. The emulated IGB device
+>>> is also becoming increasingly important as a reference device for
+>>> the kernel VFIO self-tests. See:
+>>>
+>>>    https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/ 
+>>> linux.git/ commit?id=1583ef1175ba533e326dfeff6d8b9f3aaf761225
+>>>
+>>>> My concerns as a maintainer are therefore correctness and 
+>>>> maintainability.
+>>>
+>>> I am trying to avoid too much intrusion in the core igb model :
+>>>
+>>>   hw/net/igb_common.h                   |   16 +
+>>>   hw/net/igb_core.h                     |   11 +
+>>>   hw/net/igb.c                          |    7 +
+>>>   hw/net/igb_core.c                     |  124 ++-
+>>>   hw/net/igbvf.c                        |   52 +-
+>>>
+>>> These are mostly code movement or additions. The runtime is hardly
+>>> impacted apart from the DMA tracking, which adds one indirection.
+>>>
+>>> I have added myself as Maintainer for the migration part :
+>>>
+>>>    +igb VF migration
+>>>    +M: Cédric Le Goater <clg@redhat.com>
+>>>    +S: Maintained
+>>>    +F: hw/net/igb_migration.*
+>>>
+>>> I can add you in the next respin. That would be a natural choice
+>>> from my perspective, but I don't want to impose it on you.
+>>
+>> My concern about maintainability is not primarily the line count in 
+>> igb_core.c, but the correctness of the architecture as a whole.
+>>
+>> The migration layer inherently depends on deep assumptions about the 
+>> core device model. For example, my feedback on this version 
+>> highlighted dependencies on RA handling, VLAN filtering, and the 
+>> interrupt state machine. Moving migration logic into a separate file 
+>> isolates the file footprint, but it does not remove these underlying 
+>> functional dependencies.
+>>
+>>>> The missing migration blocker is a concrete example: it is a basic 
+>>>> correctness issue that should be straightforward to address, yet it 
+>>>> remains a TODO. 
+>>>
+>>> yes. It's identified and easy to address. It can come at the end once
+>>> all other issues have been discussed. What worries me the most is the
+>>> control plane : interface with the Linux driver. That is the most
+>>> important part on which these changes depend on getting it right :
+>>>
+>>>    https://github.com/legoater/linux/commits/vfio/
+>>
+>> That makes sense. If the immediate goal is to review the control plane 
+>> interface while save/load state remains incomplete, it would help to 
+>> explicitly state that scope in the cover letter, along with the 
+>> current limitations in implementation and testing.
+>>
+>>>
+>>>> My comments on individual patches also raise the same kinds of 
+>>>> issues I pointed out in the previous version.
+>>>
+>>> You're being tough on me ! I did all this fixing below ! :)
+>>>
+>>> * Changes since rfc-v1
+>>>
+>>>    - Migration BAR replaced with DVSEC at offset 0x160 (no BAR needed)
+>>>    - Wire-format structs (IgbMigBlob, IgbMigRegPair, IgbMigTxCtx)
+>>>      replace raw pointer arithmetic and memcpy
+>>>    - RA entries separated from fixed regs, scanned by pool bit
+>>>    - VFN relocation support (offset remapping + RA pool bit swap)
+>>>    - GPA buffer (address_space_read/write) replaces PCI DMA through PF
+>>>    - State blob validation on load (magic, version, error codes)
+>>>    - NEED_WORDS macro and igb_vf_offset_valid removed
+>>>    - Error codes renumbered: removed BAD_VFN, added UNK_CMD (1-11)
+>>>
+>>>    Reported by Akihiko Odaki:
+>>>
+>>>    - propagate_irqs: clear VF bits before OR (EIMS/EIAC/EIAM)
+>>>    - propagate_ivar: clear IVAR entry when source VTIVAR is invalid
+>>>    - rearm_irqs: restore actual PVTEICR causes, not all three
+>>>    - Dirty bitmap allocation uses BITS_TO_LONGS (heap corruption fix)
+>>>    - Dirty query validates range before g_malloc0 (memory exhaustion)
+>>>    - Dirty bits cleared only after successful bitmap DMA write
+>>>    - Dirty query buffer uses struct offsets (layout mismatch fix)
+>>>    - Load path: register offsets validated against VF whitelist
+>>>    - VMBMEM (mailbox payload) documented as transient, not serialized
+>>>    - dma_writes counter: consistently uint64_t
+>>>    - Dirty range_size: consistently uint64_t (was truncated to 32 bits)
+>>>    - ERROR->STOP: quiesce VF (clear VFRE/VFTE) on transition
+>>>    - rearm_irqs: runs on re || te, not just re (TX-only VF fix)
+>>>    - Stats DMA-written atomically via GET_STATS (no split MMIO tear)
+>>>    - Bisectability: DVSEC + state machine introduced together
+>>>    - Removed NAPI reference and "===" comment decoration
+>>
+>> I appreciate the progress, and I certainly don't mean to minimize the 
+>> effort put into fixing these issues.
+>>
+>> However, many of these bugs stem from the same root cause: high-level 
+>> systemic requirements, such as boundary checks, VF renumbering, 
+>> interrupt state preservation, and OS-independence, are being addressed 
+>> piecemeal as individual bugs arise. I would like to see these 
+>> requirements enforced systematically across the entire implementation 
+>> rather than patched reactively. Replacing raw pointers with explicit 
+>> wire-format structures across the protocol is a great example of the 
+>> kind of systematic fix I mean.
+> 
+> 
+> 
+> The v3 series enforces these requirements structurally. The migration
+> blob uses a typed wire-format struct. Load is two-phase: the blob is
+> validated before any core state is modified, so a malformed blob does
+> not leave the device partially updated. VFN mismatch is rejected.
+> Interrupt mask bits are captured from the PF aggregates before quiesce.
 
-Default to all five harts, while retaining the existing two-to-five
-range for users intentionally configuring fewer application harts.
-Document that firmware and device trees must match the selected count.
+The typed format and validation before modifying device state sound
+like useful improvements. I will assess those changes when v3 is
+available.
 
-Signed-off-by: Bin Meng <bin.meng@processmission.com>
-Tested-by: Conor Dooley <conor.dooley@microchip.com>
+> 
+> 
+>>>>
+>>>> Many of the correctness problems found in v1 and v2 stem from the 
+>>>> choice to build on igb, which is more complex than virtio-net. That 
+>>>> is why I suggested using virtio-net as a simpler basis, unless there 
+>>>> is a problem that rules it out.
+>>>
+>>> virtio-net is a software abstraction designed for virtualization.
+>>>
+>>> Here’s my pitch for igb:
+>>>
+>>> Using an emulated igb device addresses a different problem: validating
+>>> migration of hardware-like devices. igb exposes a real PCI device
+>>> model, hardware-driver interface, DMA engines, queues, interrupts and
+>>> SR-IOV VFs. It allows migration to be implemented at the same
+>>> abstraction boundary at which VFIO migrates physical devices, rather
+>>> than being reduced to serialization of a paravirtualized protocol
+>>> state. Also,
+>>>
+>>> The igb VF uses the inbox igbvf kernel driver, which matches the
+>>> hardware VFIO promise: transparent migration with unmodified guest
+>>> drivers.
+>>> The DVSEC extended capability is a discoverable and standard control
+>>> plane with the device. This is a mechanism a hardware vendor could
+>>> use.
+>>> One cool aspect of an emulated device is that it allows the state to
+>>> be inspected, the behavior is deterministic and faults can be injected
+>>> at any boundary. That's the QEMU bonus.
+>>
+>> I understand the motivation to test hardware-like device migration. 
+>> However, modern virtio-net devices are also implemented in physical 
+>> SmartNICs/DPUs and expose standard PCI interfaces, BARs, DMA engines, 
+>> queues, interrupts, and SR-IOV VFs.
+>>
+>> Using virtio-net as a VFIO test device would not require guest driver 
+>> changes or bypass hardware-like semantics. Given its cleaner 
+>> separation of state, it remains a strong fit for these testing 
+>> requirements without carrying igb's extra complexity.
+> 
+> 
+> virtio-net already has a clean migration path via its own protocol.
+> The goal here is different. igb models a real hardware interface that
+> mirrors what VFIO migration must handle with physical devices.
+> virtio's cleaner separation is an advantage for production, but it
+> doesn't exercise the same problems.
 
----
+As I mentioned previously, virtio-net is already implemented in
+physical NICs. It is a vendor-neutral interface for network devices,
+whether paravirtualized or physical. igb, by comparison, implements
+an Intel-specific legacy hardware interface.
 
-(no changes since v3)
+A physical virtio-net device is arguably a more realistic target for
+a migration mechanism like the one proposed here than an Intel
+82576. Adding a new migration interface to the emulated igb device
+does not make that interface representative of existing igb hardware.
 
-Changes in v3:
-- Change only the default hart count and retain the minimum of two
-- Document reduced topologies and matching firmware requirements
+My suggestion was to use virtio-net as the device behind VFIO in the
+same nested setup. L1 QEMU would still exercise VFIO migration, and
+L2 would still use its ordinary guest driver.
 
- docs/system/riscv/microchip-icicle-kit.rst | 3 +++
- hw/riscv/microchip_pfsoc.c                 | 2 +-
- 2 files changed, 4 insertions(+), 1 deletion(-)
+> 
+> 
+>>
+>>>
+>>>> I would be willing to support allowing AI use in the project for 
+>>>> work like this. I would still need to see these correctness and 
+>>>> maintainability concerns addressed before I could support merging 
+>>>> the series.
+>>>
+>>> I agree. The save/load is still in progress and we might need some
+>>> more intrusive changes in igb to support migration of all state.
+>>> To start with, we could detect and warn.
+>>
+>> Starting with a restricted set of supported configurations is a 
+>> reasonable way forward. However, for features whose state cannot yet 
+>> be restored accurately, we should reject migration rather than merely 
+>> issue a warning. Otherwise, a completed migration risks silently 
+>> corrupting guest-visible device behavior.
+> 
+> 
+> Reject was the approach taken in v3. However, I made the choice to
+> fixup the MTA/UTA table. Restore widens the receive filter (OR missing
+> entries), never drops existing ones. The worst case is a few extra
+> frames that the guest stack would have discarded. Rejecting migration
+> over transient IGMP/mDNS differences would be disproportionate.
 
-diff --git a/docs/system/riscv/microchip-icicle-kit.rst b/docs/system/riscv/microchip-icicle-kit.rst
-index b0ad24f174..138289a913 100644
---- a/docs/system/riscv/microchip-icicle-kit.rst
-+++ b/docs/system/riscv/microchip-icicle-kit.rst
-@@ -27,6 +27,9 @@ The ``microchip-icicle-kit`` machine supports the following devices:
- * 1 SDHC storage controller
- 
- The machine has a fixed 2 GiB of RAM. Other memory sizes are rejected.
-+The machine defaults to all five harts. ``-smp`` may select two to five harts,
-+with one E51 and one to four U54 cores. The firmware and device tree must match
-+the selected topology; the HSS boot flow below uses all five harts.
- 
- Boot options
- ------------
-diff --git a/hw/riscv/microchip_pfsoc.c b/hw/riscv/microchip_pfsoc.c
-index 855c719f76..9d8e5916e7 100644
---- a/hw/riscv/microchip_pfsoc.c
-+++ b/hw/riscv/microchip_pfsoc.c
-@@ -752,7 +752,7 @@ static void microchip_icicle_kit_machine_class_init(ObjectClass *oc,
-     mc->max_cpus = MICROCHIP_PFSOC_MANAGEMENT_CPU_COUNT +
-                    MICROCHIP_PFSOC_COMPUTE_CPU_COUNT;
-     mc->min_cpus = MICROCHIP_PFSOC_MANAGEMENT_CPU_COUNT + 1;
--    mc->default_cpus = mc->min_cpus;
-+    mc->default_cpus = mc->max_cpus;
-     mc->default_ram_id = "microchip.icicle.kit.ram";
-     mc->auto_create_sdcard = true;
- 
--- 
-2.53.0
+My concern is whether that restoration survives subsequent PF driver
+operations.
 
+For example, Linux's igb driver records each VF's multicast hashes in 
+its own software state. A multicast update from another VF calls 
+igb_set_rx_mode(), which rebuilds the MTA and restores each VF's 
+multicast configuration from those records. It also rewrites the VMOLR 
+multicast enable bits.
+
+Consequently, unless v3 also reconciles the destination PF driver's 
+records, a later update could remove the migrated VF's multicast 
+reception. OR-ing the device tables at load time would not address that 
+dependency.
+
+> 
+> 
+>>
+>> This is another advantage of virtio-net: feature negotiation offers a 
+>> clean, standard mechanism to disable unsupported features and define a 
+>> tightly constrained initial scope that is fully migratable.
+> 
+> 
+> virtio feature negotiation is a software construct. The DVSEC CAPS
+> register models the mechanism a hardware vendor would actually use to
+> advertise migration capabilities. Not as rich as virtio, but closer to
+> real hardware.
+
+virtio feature negotiation is part of the device interface and also
+applies to hardware implementations. It is not specific to software
+devices.
+
+My point concerned limiting the features exposed to the guest so that 
+every enabled feature is supported by migration. Advertising migration 
+capabilities serves a different purpose.
+
+Regards,
+Akihiko Odaki
 
