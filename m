@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AEC9CC6B1A
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 05:37:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C292DCC6B19
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 05:38:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGrgK-0002BK-Od; Wed, 14 Oct 2026 01:37:40 -0400
+	id 1xGrgd-0002Ro-Kt; Wed, 14 Oct 2026 01:37:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Sairaj.K@amd.com>) id 1xGrgF-00025H-4i
- for qemu-devel@nongnu.org; Wed, 14 Oct 2026 01:37:36 -0400
-Received: from mail-westcentralusazlp170100005.outbound.protection.outlook.com
- ([2a01:111:f403:c112::5] helo=CY7PR03CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <Sairaj.K@amd.com>) id 1xGrgY-0002JJ-JB
+ for qemu-devel@nongnu.org; Wed, 14 Oct 2026 01:37:55 -0400
+Received: from mail-centralusazon11011040.outbound.protection.outlook.com
+ ([52.101.62.40] helo=DM5PR21CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Sairaj.K@amd.com>) id 1xGrgC-00037K-Qm
- for qemu-devel@nongnu.org; Wed, 14 Oct 2026 01:37:34 -0400
+ (Exim 4.90_1) (envelope-from <Sairaj.K@amd.com>) id 1xGrgW-00037v-S1
+ for qemu-devel@nongnu.org; Wed, 14 Oct 2026 01:37:54 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=hOoI/6U41Vpx6FQXQ8YGGQxQxXjeHRxoo8vkgRylh2Z77CBo34RYdA+hFY0poELJ+XD7x7cJ0Ii8uLY7ltny0hkBYa+XvRdS5cSrWTGYJCJx+v4wB1INzJR51GyGpK1r8VdAkM/c6XeBkvQs3zQW5aptQVIt3ljqfFrJYnHx+hL0WbqOL0kT5slprzyqxjJLZVH0xrP61O62H0CAM+MHAFHV0QMM9Y08wi5nPxbe+1rV3MlpnB98QLMDJugU03/hIyu4284x++Rl1rU9DB9hetPp15FY691y0pcPuz5FIIrFQAFSlgwUaChL4xAPok8WRxfE0UdrqDstWSTPWacy9A==
+ b=E8KseCJMWfH2KcK0FjfiQP92fmOWFkUHpQFCt0EMMEnQJKD9vyBrcUZGNxyDg6ZY3VVSXPgPxE5g82KxJNeH0Z9MooZ9cRj3EJ4I+oqYaQwmUmOA5UpnP1p3L0XkCtJ1gyeIv3a09FlRTgZr65IEbFMCErL4hqyEVrwxnklekq+epibA6awMXfsLWX0ACM2AQ65h8bOrPw7WjxtyF5Sk3JldCnlyCUuku/jvLzeD1A5W3QS0P7RBcRpm4ihwXvI1CGGceh2IpHTBPZQNpsynzi3J9wJf5qAHhTt2Cd5I/+V6BtE0/MGKQUUuo1IkOjci4WanRb1wv7KNYehHrtpDYQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Wl6PPhRnOWm8On7ThO4fE5y3MWXKAEbJ38hmnjlbd2g=;
- b=f5Bl8SbKG/gQOHWsfT3f2iVQ7mBr+fELagSv1v3RpBrpPRYS2ATHDpri74M6MDlCurrQ2vhZXK9D7LeKkTZdWrdffkf8fVj8Il2MfrqJnITkKc1RvWJVKH4yYbd+6pz5slEDF3Wx+n2lIYtJBnoNGaSLODkdaM8vomAUKPbSsKMVvvfiF33fXZSX4UMG406SybqYGu5Me+OSkKytQF50VrBY/shp36yGoM5lL6hEDAe8RIQwfnq/Dunjba7FhihoEqGFYT8yY1sleM1/CUQX4jbccM3zSvEv3D1SU5umFcjCkY+D984UlNOeSR3EVHqsrME3n3ie1RnyHjJtGdkJiQ==
+ bh=j3k6w3Pd3BJeAybw9ydvHpcos6rbnIAmD000irU0FuI=;
+ b=i2b47qLFV9c9+lxkX/5V2ztYQMJ6fjjVKf50fI4uXkiVLDdk4bIzNoK3yeJdNpcPRgmw56K3Uv5mRSWYJbpb975B9p0ZEq6J0wzteYlXswT3M2MRsysdFTeHvaFZPd2dDcQa7WTOm9sy9A9gtfpuSYGc+X6X0Aqavh7MiW6OLe1nZlQ3FrM1QwHSeyHcTcRc8jCh7C/+mpMo+ASzo3ofIrwpTWQZ7rhIx6M/YuSCFHxDKAD/608GoWZEHyNL75nMMPYwHhmIr95ghnlDiD2pAgMV9PAZuPwNxPJyp6jygREVxvugaFMTf+KjSobveiCd0d75ykeQU0PoG2yCt6/2Hw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
  165.204.84.17) smtp.rcpttodomain=bull.com smtp.mailfrom=amd.com; dmarc=pass
  (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
  dkim=none (message not signed); arc=none (0)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Wl6PPhRnOWm8On7ThO4fE5y3MWXKAEbJ38hmnjlbd2g=;
- b=nxqm3v1Ejbo2Aarv3v+VWKl/E1xEHiu7Lgwag3em+WX/5OQVipAJ2wmejbBYbd2KXXhsdDriv1WTs2Zk31XPkPVA/r5zkvwaFjqWWU+qqbQFlC8ybmvmt44r49XXBkFqxjyxBeyrR2kqLYqPGnIObYlFu/BoeZuN4dVsSzpkdGM=
-Received: from SJ0PR05CA0120.namprd05.prod.outlook.com (2603:10b6:a03:334::35)
- by DS7PR12MB5935.namprd12.prod.outlook.com (2603:10b6:8:7e::14) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.496.26; Wed, 14 Oct
- 2026 05:37:23 +0000
-Received: from MW2PEPF00014673.namprd04.prod.outlook.com
- (2603:10b6:a03:334:cafe::72) by SJ0PR05CA0120.outlook.office365.com
- (2603:10b6:a03:334::35) with Microsoft SMTP Server (version=TLS1_3,
+ bh=j3k6w3Pd3BJeAybw9ydvHpcos6rbnIAmD000irU0FuI=;
+ b=44DNw1L9R3dkh/gdDl5VD65rr6U5Zv/CayKUQdzJGAwRBxdoX8J8zXQa7W+fBwQZNVm24BpzQshZKs3TtkhYrzO/vhldTV1/oCvgicl04smQM6t6n7JwfdbW17PHDTV5Ey9ydQbGPHRpmUDjMBLVO1q0hNiiZOZFXNdrIqDivKQ=
+Received: from SJ0PR13CA0101.namprd13.prod.outlook.com (2603:10b6:a03:2c5::16)
+ by SA3PR12MB995558.namprd12.prod.outlook.com (2603:10b6:806:511::16)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.522.12; Wed, 14 Oct
+ 2026 05:37:00 +0000
+Received: from MW2PEPF00014675.namprd04.prod.outlook.com
+ (2603:10b6:a03:2c5:cafe::6f) by SJ0PR13CA0101.outlook.office365.com
+ (2603:10b6:a03:2c5::16) with Microsoft SMTP Server (version=TLS1_3,
  cipher=TLS_AES_256_GCM_SHA384) id 15.21.522.4 via Frontend Transport; Wed, 14
- Oct 2026 05:37:23 +0000
+ Oct 2026 05:37:00 +0000
 X-MS-Exchange-Authentication-Results: mx.microsoft.com 1; spf=pass (sender IP
  is 165.204.84.17) smtp.mailfrom=amd.com;
  dkim=none (message not signed)
@@ -52,13 +52,13 @@ Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
  165.204.84.17 as permitted sender) receiver=protection.outlook.com;
  client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
 Received: from satlexmb07.amd.com (165.204.84.17) by
- MW2PEPF00014673.mail.protection.outlook.com (10.167.249.180) with Microsoft
+ MW2PEPF00014675.mail.protection.outlook.com (10.167.249.182) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.522.6 via Frontend Transport; Wed, 14 Oct 2026 05:37:23 +0000
+ 15.21.522.6 via Frontend Transport; Wed, 14 Oct 2026 05:36:59 +0000
 Received: from BLR-L1-SARUNKOD.amd.com (10.180.168.240) by satlexmb07.amd.com
  (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.53; Wed, 14 Oct
- 2026 00:37:12 -0500
+ 2026 00:36:49 -0500
 From: Sairaj Kodilkar <sarunkod@amd.com>
 To: =?UTF-8?q?Cl=C3=A9ment=20Mathieu--Drif?= <clement.mathieu--drif@bull.com>, 
  "Michael S. Tsirkin" <mst@redhat.com>, Alejandro Jimenez
@@ -69,9 +69,9 @@ To: =?UTF-8?q?Cl=C3=A9ment=20Mathieu--Drif?= <clement.mathieu--drif@bull.com>,
  <sarunkod@amd.com>, Yi Liu <yi.l.liu@intel.com>, <kvm@vger.kernel.org>,
  <qemu-devel@nongnu.org>
 CC: <vasant.hegde@amd.com>, <suravee.suthikulpanit@amd.com>
-Subject: [PATCH 7/8] acpi-build: Create PCI topology using amd iommu root bus
-Date: Wed, 14 Oct 2026 11:04:32 +0530
-Message-ID: <20261014053433.24564-8-sarunkod@amd.com>
+Subject: [PATCH 6/8] amd_iommu: Introduce root bus
+Date: Wed, 14 Oct 2026 11:04:31 +0530
+Message-ID: <20261014053433.24564-7-sarunkod@amd.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20261014053433.24564-1-sarunkod@amd.com>
 References: <20261014053433.24564-1-sarunkod@amd.com>
@@ -83,38 +83,37 @@ X-ClientProxiedBy: satlexmb07.amd.com (10.181.42.216) To satlexmb07.amd.com
  (10.181.42.216)
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MW2PEPF00014673:EE_|DS7PR12MB5935:EE_
-X-MS-Office365-Filtering-Correlation-Id: 0612c30f-63f0-414e-a72f-08df29b53946
+X-MS-TrafficTypeDiagnostic: MW2PEPF00014675:EE_|SA3PR12MB995558:EE_
+X-MS-Office365-Filtering-Correlation-Id: cb255ce8-16b2-44e1-d85c-08df29b52b24
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|36860700016|23010399003|7416014|376014|82310400026|921020|56012099006|11063799006|261009223027099003|10067099003|22082099003|18002099003;
-X-Microsoft-Antispam-Message-Info: EnJLZMVDLGn0aekJkJKzWm343GRzc8mWYYH+LpeN3iSdVONBBFVRGfRut1PIAj3O0++mcAfUjfXw54ea0oyzXEBJ4/OO8WvviSt/Kp7lrDS1mOBZY/LWqAGPx0Z50eZca3ujogsz2p1tsS/R6VymPcI9PrFIfOV2kMe8COnfVbUkx7KbKicEThNX7NwndUd/lC2cgoQEBsavyjyHtX8mFprlMhjD4VYZA3rijvPGA2u4H4aRhrCQ8TG3NkgXl0TL7iYempDBeBODlGyrscgdsfMs2x7d0JiFC/T6ggbiQh8wsH9KODPZEffuvrCoKJONy1ruFc2vxekIsSrkCeHi/q/HAw8QwdXmSxHnbR79RaQoSbo+u8EaDPi5O0YKQ3UYkKP3ffucs5c8CVFZQvIPmbt2kuTnbypiXCGVmYAQS5LLXARCatw7EL3jHWaqBpThFpoz1C1UVe3dbj+FMjjI/DIeeGutaA1G0ClnNJ7re7KAtAHJ3929+kb+aYQWjJiG9RV/IVZRY0eaCrL28k3sIR3I9KWKNIBGSdVAYFzA5tOQJB2bDUZ9ZXv3yUSGfDcs2xoTnI5oMY5GdTBQjf7qXDQdz95S61bCL0fMwGF9JZeSyhWAell+LaJQmzBGZrTMsUi0fnwGNLRh9Vt2g9Rm42vwwUBQacxd8kb7ujg8BUz0PW4nLYbKHfaOklVRuoXyxNwTIJVmHH/MJr11Ox6oz+VzhTvyOLr6e2Nv06XR8OsOF5buFfiy9/qfPvMEiBxu
+ ARA:13230040|1800799024|36860700016|23010399003|376014|7416014|82310400026|921020|56012099006|11063799006|261009223027099003|10067099003|22082099003|18002099003;
+X-Microsoft-Antispam-Message-Info: eWZvlXiUxs5INciDTvTFRTzJWcoE6CCj2wCRA47wtlTSk0bIOpO5vESp1+qIMvKm/gype9S8ou/WM5eqY0uzwfy+pC/iEp3qqhZfzFOHYQuHGArkLKDIOCnfgU4D7P3aCGvg6bmHapLaqYU/tnP2syx/ZBGbQK82r10bustu1Hab1j6zJR0ZE1K4N6/82upL2Fa168DucondnTbvQc/QmGyI6YS+fyfthLpvigeBNTzne0La9WvjeiKfyqwovuUQqbUHMkAbhPUGy13D/TZWdf+OtVkbdDo2NN1j4DDO+Ec/eTsn5f/FLBYJMPAREP9Od6bsYrRkNGbFZTpAJpyba0Q3Zp46opGm3nE7i4upheYuM7DvAQFTwMEIpktsH91os1yOVm5WQaZDyP/PL1Odsdk61aQr7Cyaze4YFExvifpleEAFoV9QLo2aYDLqQEG5BkfTFwhLXuuAYmmrEwXaXoP7Kb0hFiadmyg2oksF8/5Xe7lVaybzMQyt22cbluyNcKvDc3lh8am7yFYL4CGFKyhzY5L79PV6fMWDFzSAh/P97q3swnsLu5h0fDxnLZmyzmZfpri/YSPw9XMfj35750WTCOyppQiZL7Md9sGu2RjGUIJmE44p9hbcJPygN3mvd+RyffB4ibwq9aMRPzc+i0+kEhE8LQauwvC00IxQSCOKTI1zLonPjOyRXLDof3Hi746hCREo/+vMeWuKQpPbSoOomLJ2nYXzzWv+IsdEopfRRudysQu+80qX8rP42Xq5
 X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(1800799024)(36860700016)(23010399003)(7416014)(376014)(82310400026)(921020)(56012099006)(11063799006)(261009223027099003)(10067099003)(22082099003)(18002099003);
+ SFS:(13230040)(1800799024)(36860700016)(23010399003)(376014)(7416014)(82310400026)(921020)(56012099006)(11063799006)(261009223027099003)(10067099003)(22082099003)(18002099003);
  DIR:OUT; SFP:1101; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: 61xgZ4KVa+wtIq2rrK7iL70ThCtOhDXdXgr/IRgrjpqOjfKsrG51JCp0k1Kr8poLJhZvJaJjPuQcap61C4uylTS9LUEjpKa1wcvoC3sq8B8B/4vHebpIbndsxQv5IPfk1e+OdbU/X6cTQZZkdx+rnGC4xg+OeA+P6II4sPhN3wrvZaeQnZRJI2cBeWRUDkGt0MQtp2g4FvxB+ARecbhvJ8A5FdtbJ1fihqna8mhCmljgqL6TG6EA6Fld/m4tLskolDw/wlXf6ir3J44yvOBfhG77hjg9IFpp8zkAXydzBGK9RedgKfM+WXh7CckouQn1lXx5JPf7nrIXA1g5Mrhw+WecBmLlQD/K4Kc+i7tL+p5GWeYAaN3Blaeh1hkgNaGTqGU0pkB9O6vmoR226XZBTFwrAzfZISUY0GNhYV44XUZ2o1Oo/5c1FW3QP7lMFn23
+X-MS-Exchange-AntiSpam-MessageData-0: x2wDkIjZNGlM7Ixd1/A5XtozzXUtpnJ1NhgBobx01Ez3KgVU+AXx5QnJh6ERvlqUIy6ol0jdnN0GjDlqYPsgYh/UrfrZnDETbGrKsS/Xus0AVgnPLIWlH8DppjkIqPLbUgt5zlETSIhEOVMsPgeqnOM1SdtaJmF6UUfwrArj3yPnj+ZxWnjKXeWTcdFVeJg4sST4LnwlICnV2aZbndpgUp4jLHgVNTh7XcUOghi8TbEBURXzjyKcslbEs4wy5cotehbT4MfMKEFT33gt6TMXqsBLa550xvX0aWeQ945JBGKqtk5Ugp6sDX/hzWWbGsLSg0RLn0qJzR1puaANl5AzglsorQYtb/4JAjsS8hV7q2prUTIKRO7cmUM5VcySNaYwsLluKe4pbulfwhOmEih2hNv9fRyCaUgcIEWD598uPTmqx81I/AKyT/pMGO7NTAtG
 X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Oct 2026 05:37:23.5817 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 0612c30f-63f0-414e-a72f-08df29b53946
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Oct 2026 05:36:59.8195 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: cb255ce8-16b2-44e1-d85c-08df29b52b24
 X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
  Helo=[satlexmb07.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: MW2PEPF00014673.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthSource: MW2PEPF00014675.namprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS7PR12MB5935
-Received-SPF: permerror client-ip=2a01:111:f403:c112::5;
- envelope-from=Sairaj.K@amd.com;
- helo=CY7PR03CU001.outbound.protection.outlook.com
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA3PR12MB995558
+Received-SPF: permerror client-ip=52.101.62.40; envelope-from=Sairaj.K@amd.com;
+ helo=DM5PR21CU001.outbound.protection.outlook.com
 X-Spam_score_int: -22
 X-Spam_score: -2.3
 X-Spam_bar: --
 X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -131,188 +130,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Current AMD IOMMU ACPI build adds all the devices and buses under the
-IVHD. In order to support the IOMMU attached on a non system bus and
-serving only child devices of that bus, start exploring devices from the
-child bus. Also, use child list provided by the PCIBus, instead of
-iterating over all the objects in the qemu to find pci bridges.
+Following patch will create IVRS entries starting from the root bus
 
 Signed-off-by: Sairaj Kodilkar <sarunkod@amd.com>
 ---
- hw/i386/acpi-build.c | 142 ++++++++++++++++++++++---------------------
- 1 file changed, 74 insertions(+), 68 deletions(-)
+ hw/i386/amd_iommu.c | 2 ++
+ hw/i386/amd_iommu.h | 3 +++
+ 2 files changed, 5 insertions(+)
 
-diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
-index 8837b69687d1..ed944c819406 100644
---- a/hw/i386/acpi-build.c
-+++ b/hw/i386/acpi-build.c
-@@ -1760,83 +1760,89 @@ insert_ivhd(PCIBus *bus, PCIDevice *dev, void *opaque)
-     /* "Select" IVHD entry, type 0x2 */
-     entry = PCI_BUILD_BDF(pci_bus_num(bus), dev->devfn) << 8 | 0x2;
-     build_append_int_noprefix(table_data, entry, 4);
-+}
- 
--    if (object_dynamic_cast(OBJECT(dev), TYPE_PCI_BRIDGE)) {
--        PCIBus *sec_bus = pci_bridge_get_sec_bus(PCI_BRIDGE(dev));
--        uint8_t sec = pci_bus_num(sec_bus);
--        uint8_t sub = dev->config[PCI_SUBORDINATE_BUS];
--
--        if (pci_bus_is_express(sec_bus)) {
--            /*
--             * Walk the bus if there are subordinates, otherwise use a range
--             * to cover an entire leaf bus.  We could potentially also use a
--             * range for traversed buses, but we'd need to take care not to
--             * create both Select and Range entries covering the same device.
--             * This is easier and potentially more compact.
--             *
--             * An example bare metal system seems to use Select entries for
--             * root ports without a slot (ie. built-ins) and Range entries
--             * when there is a slot.  The same system also only hard-codes
--             * the alias range for an onboard PCIe-to-PCI bridge, apparently
--             * making no effort to support nested bridges.  We attempt to
--             * be more thorough here.
--             */
--            if (sec == sub) { /* leaf bus */
--                /* "Start of Range" IVHD entry, type 0x3 */
--                entry = PCI_BUILD_BDF(sec, PCI_DEVFN(0, 0)) << 8 | 0x3;
--                build_append_int_noprefix(table_data, entry, 4);
--                /* "End of Range" IVHD entry, type 0x4 */
--                entry = PCI_BUILD_BDF(sub, PCI_DEVFN(31, 7)) << 8 | 0x4;
--                build_append_int_noprefix(table_data, entry, 4);
--            } else {
--                pci_for_each_device(sec_bus, sec, insert_ivhd, table_data);
--            }
--        } else {
--            /*
--             * If the secondary bus is conventional, then we need to create an
--             * Alias range for everything downstream.  The range covers the
--             * first devfn on the secondary bus to the last devfn on the
--             * subordinate bus.  The alias target depends on legacy versus
--             * express bridges, just as in pci_device_iommu_address_space().
--             * DeviceIDa vs DeviceIDb as per the AMD IOMMU spec.
--             */
--            uint16_t dev_id_a, dev_id_b;
--
--            dev_id_a = PCI_BUILD_BDF(sec, PCI_DEVFN(0, 0));
-+/*
-+ * Insert IVHD entry for device and recurse, insert alias, or insert range as
-+ * necessary for the PCI topology.
-+ */
-+static void add_ivhd_entries_from_bus(PCIBus *bus, GArray *table_data)
-+{
-+    uint8_t sub;
-+    uint32_t entry;
-+    PCIBus *child_bus;
-+    PCIDevice *parent_dev;
- 
--            if (pci_is_express(dev) &&
--                pcie_cap_get_type(dev) == PCI_EXP_TYPE_PCI_BRIDGE) {
--                dev_id_b = dev_id_a;
--            } else {
--                dev_id_b = PCI_BUILD_BDF(pci_bus_num(bus), dev->devfn);
--            }
-+    if (!bus->parent_dev) {
-+        goto select_devices;
-+    }
- 
--            /* "Alias Start of Range" IVHD entry, type 0x43, 8 bytes */
--            build_append_int_noprefix(table_data, dev_id_a << 8 | 0x43, 4);
--            build_append_int_noprefix(table_data, dev_id_b << 8 | 0x0, 4);
-+    parent_dev = bus->parent_dev;
-+    sub = parent_dev->config[PCI_SUBORDINATE_BUS];
- 
--            /* "End of Range" IVHD entry, type 0x4 */
--            entry = PCI_BUILD_BDF(sub, PCI_DEVFN(31, 7)) << 8 | 0x4;
--            build_append_int_noprefix(table_data, entry, 4);
-+    if (pci_bus_is_express(bus)) {
-+        /*
-+         * Walk the bus if there are subordinates, otherwise use a range
-+         * to cover an entire leaf bus.  We could potentially also use a
-+         * range for traversed buses, but we'd need to take care not to
-+         * create both Select and Range entries covering the same device.
-+         * This is easier and potentially more compact.
-+         *
-+         * An example bare metal system seems to use Select entries for
-+         * root ports without a slot (ie. built-ins) and Range entries
-+         * when there is a slot.  The same system also only hard-codes
-+         * the alias range for an onboard PCIe-to-PCI bridge, apparently
-+         * making no effort to support nested bridges.  We attempt to
-+         * be more thorough here.
-+         */
-+        if (sub != pci_bus_num(bus)) {
-+            goto select_devices;
+diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
+index 5c1fb0879c0f..5e4d5d1f1fcd 100644
+--- a/hw/i386/amd_iommu.c
++++ b/hw/i386/amd_iommu.c
+@@ -2713,6 +2713,8 @@ static void amdvi_sysbus_realize(DeviceState *dev, Error **errp)
          }
--    }
--}
-+        /* "Start of Range" IVHD entry, type 0x3 */
-+        entry = PCI_BUILD_BDF(sub, PCI_DEVFN(0, 0)) << 8 | 0x3;
-+        build_append_int_noprefix(table_data, entry, 4);
-+        /* "End of Range" IVHD entry, type 0x4 */
-+        entry = PCI_BUILD_BDF(sub, PCI_DEVFN(31, 7)) << 8 | 0x4;
-+        build_append_int_noprefix(table_data, entry, 4);
- 
--/* For all PCI host bridges, walk and insert IVHD entries */
--static int
--ivrs_host_bridges(Object *obj, void *opaque)
--{
--    GArray *ivhd_blob = opaque;
-+        return;
-+    } else {
-+        /*
-+         * If the secondary bus is conventional, then we need to create an
-+         * Alias range for everything downstream.  The range covers the
-+         * first devfn on the secondary bus to the last devfn on the
-+         * subordinate bus.  The alias target depends on legacy versus
-+         * express bridges, just as in pci_device_iommu_address_space().
-+         * DeviceIDa vs DeviceIDb as per the AMD IOMMU spec.
-+         */
-+        uint16_t dev_id_a, dev_id_b;
- 
--    if (object_dynamic_cast(obj, TYPE_PCI_HOST_BRIDGE)) {
--        PCIBus *bus = PCI_HOST_BRIDGE(obj)->bus;
-+        dev_id_a = PCI_BUILD_BDF(pci_bus_num(bus), PCI_DEVFN(0, 0));
- 
--        if (bus && !pci_bus_bypass_iommu(bus)) {
--            pci_for_each_device_under_bus(bus, insert_ivhd, ivhd_blob);
-+        if (pci_is_express(parent_dev) &&
-+            pcie_cap_get_type(parent_dev) == PCI_EXP_TYPE_PCI_BRIDGE) {
-+            dev_id_b = dev_id_a;
-+        } else {
-+            dev_id_b = PCI_BUILD_BDF(pci_bus_num(pci_get_bus(parent_dev)),
-+                                     parent_dev->devfn);
-         }
-+
-+        /* "Alias Start of Range" IVHD entry, type 0x43, 8 bytes */
-+        build_append_int_noprefix(table_data, dev_id_a << 8 | 0x43, 4);
-+        build_append_int_noprefix(table_data, dev_id_b << 8 | 0x0, 4);
-+
-+        /* "End of Range" IVHD entry, type 0x4 */
-+        entry = PCI_BUILD_BDF(sub, PCI_DEVFN(31, 7)) << 8 | 0x4;
-+        build_append_int_noprefix(table_data, entry, 4);
-+        return;
      }
  
--    return 0;
-+select_devices:
-+    pci_for_each_device_under_bus(bus, insert_ivhd, table_data);
++    s->root_bus = bus;
 +
-+    QLIST_FOREACH(child_bus, &bus->child, sibling) {
-+        add_ivhd_entries_from_bus(child_bus, table_data);
-+    }
- }
+     s->iotlb = g_hash_table_new_full(amdvi_iotlb_hash,
+                                      amdvi_iotlb_equal, g_free, g_free);
  
- static void
-@@ -1867,8 +1873,8 @@ build_amd_iommu(GArray *table_data, BIOSLinker *linker, const char *oem_id,
-      * blob further below.  Fall back to an entry covering all devices, which
-      * is sufficient when no aliases are present.
-      */
--    object_child_foreach_recursive(object_get_root(),
--                                   ivrs_host_bridges, ivhd_blob);
-+    assert(s->root_bus);
-+    add_ivhd_entries_from_bus(s->root_bus, ivhd_blob);
+diff --git a/hw/i386/amd_iommu.h b/hw/i386/amd_iommu.h
+index 687691ec1cce..04a5bbd33740 100644
+--- a/hw/i386/amd_iommu.h
++++ b/hw/i386/amd_iommu.h
+@@ -373,6 +373,9 @@ struct AMDVIState {
  
-     if (!ivhd_blob->len) {
-         /*
+     /* DMA address translation */
+     bool dma_remap;
++
++    /* root bus to register IOMMU ops */
++    PCIBus *root_bus;
+ };
+ 
+ uint64_t amdvi_extended_feature_register(AMDVIState *s);
 -- 
 2.34.1
 
