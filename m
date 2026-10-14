@@ -4,145 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 690F7CC6B2C
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 20:38:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92702CC6B2C
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 20:51:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xH5jY-0003uj-34; Wed, 14 Oct 2026 16:37:56 -0400
+	id 1xH5wS-0006lP-49; Wed, 14 Oct 2026 16:51:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xH5jW-0003u1-JU
- for qemu-devel@nongnu.org; Wed, 14 Oct 2026 16:37:54 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xH5wQ-0006ks-HG
+ for qemu-devel@nongnu.org; Wed, 14 Oct 2026 16:51:14 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xH5jU-0006ia-WF
- for qemu-devel@nongnu.org; Wed, 14 Oct 2026 16:37:54 -0400
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69EEb0YZ905379
- for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 20:37:51 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- Jl94b0wjndotVBKKHlRvqZcJjWV9wUfmh82SwvQ1+Yk=; b=aOUt8DoNpS2cRKnI
- Eb0uN88JYiTADfI8ZOCM0IVCFWLtUhhl1YTFlxULc7Ak4iOXV1it7K51/cya1+FT
- 9sx+DvIDcjv/bzsNQwee9g/vw4DG+yHXwb7XmcBRPEBJLBQ8BsgPTDGpvES0qpbR
- GYO7DdREihroi7w4FRtNb9f9InMg6aoVICtOXCWqXbIj2txi1HYmI2gt59ZQe0gW
- xKu8UmwM1B0we7xOd+fORxH1DMRx096DUwIT0M8VNIJs/5GxYND2AICerbrdrBsv
- YfxpJjnrpQkSs+UwMc8iGq4Ajrr0qG/JDQLuCqt6O9tabrK1f4JEo0qh6UrzlDzf
- yMNgkg==
-Received: from mail-dy1-f198.google.com (mail-dy1-f198.google.com
- [74.125.82.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ha42p3fb7-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 20:37:51 +0000 (GMT)
-Received: by mail-dy1-f198.google.com with SMTP id
- 5a478bee46e88-351788121cfso8662023eec.0
- for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 13:37:51 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xH5wP-0007l0-7X
+ for qemu-devel@nongnu.org; Wed, 14 Oct 2026 16:51:14 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1792011071;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=nMUKVI0Lf7KCa8iu/hZReoG6yU4XshIK5MLCYU0S9ds=;
+ b=dLARDzRojwpQlRJasLXBWN8yZ2oTzyiEGouA3v1KqO2jUygDpuzQd8dZ6/Z4mN7/eIxKIx
+ a9qZvYiLhxmMZ6SOtOoCat2Z9VcUZmPevB5WRiiNMBq/x6SfirHmsncZj02BUC7qHUeHcK
+ xH/cehIWwatoQ8vfBtM0cK1yTIt+md4=
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
+ [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-575-E6eGSKCMMZisVkHkIRU_wg-1; Wed, 14 Oct 2026 20:51:09 +0000
+X-MC-Unique: E6eGSKCMMZisVkHkIRU_wg-1
+X-Mimecast-MFC-AGG-ID: E6eGSKCMMZisVkHkIRU_wg_1792011069
+Received: by mail-qt1-f199.google.com with SMTP id
+ d75a77b69052e-5350ec54bf6so93614721cf.2
+ for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 13:51:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1792010271; x=1792615071; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=Jl94b0wjndotVBKKHlRvqZcJjWV9wUfmh82SwvQ1+Yk=;
- b=RMuE3puI8xnuc9jeUVkMHUTaZ/bNjdqQXinvh+Y71iIkmSvSVVelcmkz+Pw/MZUKTi
- MXa/DUDwY0x4v0gnpE/+eH2ybRhSSdxKHRxHd3Ut94OoZQUpnRdyOse3dIMS9ZjHH3U1
- +q8m4M28UmCGB3IBGxcvDqwEzLVOGM1XGWmWiplHCd2g7Cxzps3uu9HPvibwz8vr/aPs
- 1zgHvz8T71NZx6XzhtsRkxbAPCLJvbI/noX04nhv8qc0YCfIfYiVu7Y/ViYApW9ue9Bj
- kZMMhfdouOLtLk5XJslY+awH2qWMhEXSCUGV6d/d33AOzC08tJXgBMSWazwdWigXVsdT
- EM6A==
+ d=redhat.com; s=google; t=1792011069; x=1792615869; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=nMUKVI0Lf7KCa8iu/hZReoG6yU4XshIK5MLCYU0S9ds=;
+ b=CI5fofEVE61lKUL3KbBVciGTtEo5X+ZWw0J+fxe+cfwwoncsOP91mLBXkLFcdHUfdM
+ o2RiJ4wL++vDFw+nEmKoQeJR12co743MJaf6rohWaIjodwL6LEKY3p4qAp2MTQJJTKXf
+ O2liHOwemQ5jJ7YsJe+Gcpxu38mRZCCHfxeFN8EAWT70sdFBvbl49s4ZYsi3BqEPId1A
+ s/2bp8lRpsWcUhyG3MebXPhhemp/Dyh5CgtHf3tJ62wMJBW6RXldbxVg70Y7hi7wTtgf
+ KzlfAANNdCmVInM5j3LvVKiOH1FZNLKHh+goLVfUOrEhrAqNBR1+WFL/xAuioE395LPH
+ bCew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792010271; x=1792615071;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=Jl94b0wjndotVBKKHlRvqZcJjWV9wUfmh82SwvQ1+Yk=;
- b=JyFKcDZU645KbUpox49buJ9+Qpe6IKRSSZW9qv0pl6/6J/UQtLDufgT89h01mblj5y
- w5AhmAnNNHz0R632OIWE4Rf3bbF/jw8175DGurBOTJHgGCKmaUToOGsujBDRrMWFI9A1
- DtKot62c5op5uVZuAJrwTCuL+/IFfYBowe7HHfI5dCg5WgDESRYN5oz0jcgnD96S11yB
- +08UpIenL5aaafd6EqW+kzIP4RqV2m3Vh9xqbWOO+APDmaAn67dM1iNKJuEeMEPGvQ/J
- 0or/CGPoTVUQ0y8nS0E/gCP9fS7Hw+LQVrcJgy8x0+8x2o4x9sxDUxVJ8RZJfOjrbvc7
- Vauw==
+ d=1e100.net; s=20260707; t=1792011069; x=1792615869;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=nMUKVI0Lf7KCa8iu/hZReoG6yU4XshIK5MLCYU0S9ds=;
+ b=h7Fv/8Qzwu7vWS5X3aCfSRZMDtvoDEyF9g/JQLytuAc35RQP+ku8jZv0D8YCsD6Z8z
+ 6vLcywd4kXhqUK77XQDrRDuaPr4z5u9jnH3U3WgUnVcVRSRX6gSLVY7Ebl+BAeHaEoan
+ mB+Yo7rTq/u8bBgu2AwIwb0DDxrodWeXlIf7IReNHb7lsr5mlciZAuof5fG12yPomjei
+ wLPCcbSr+8D9+HlcebQNYVI0rGbx7meUkHIt76kRYfr0I8cJGeloNQOW8/sznGlJrCQr
+ Pgn5jFGZ+UPXePr+XuQNRj5XkvyOai8lmQi5x9nwXSgGk+NdSAHt7BC4yljPk2YIx70q
+ 588g==
 X-Forwarded-Encrypted: i=1;
- AKwUvByr8KJLzrv8vnAkNrZMw24fp6y02IEVXSJNN0CyaHAEaH/jtjcvtCYJmJMhB1/yTSLwkC1gGsvxmXaf@nongnu.org
-X-Gm-Message-State: AFq9FYJgTi0ASwBDsYv/6mjWHs4eROeczRICNx8Tkl7b5K1mfKvtHLHH
- I/Mk2t4qTqJd/+BTKXYxqjPpefIUo5g+F3HuNSEf0bc10YPhLQDfqpDkU2wnuA3WMMWSNs3NluV
- wR0m/VasVm1T8DFK4WCsWfK/z70eNzlMVk0R/QnIwRcCJApO1c6Wwpq8IPQ==
-X-Gm-Gg: AYBFou1GdM8BgOl95TEHuqX+eAU65UR2pw7DVzYW1Z6PC3orFKzaO2twsnyQUfaMk9B
- bClp6V66cIBgxGehyploF5bVCIWeoiZO8sTj16vR4cEOx+WdEuXUhIGqyml4QSYvBDAkgCiKSCf
- /YUE/64qfxP7UPp4vd324TEEzN1pCINY3Qvl6TgDQmulmjjOBp0nKdeLy/rgE5SWSD3Q31S6+L8
- ABI3evbjBCOoOhT4AXx8ZsUGYX3sKybecJiHuXuIMfpl0M+TujriSRCrcTyQx1rC8ssb7Gt04CP
- nWIFhzp/FZyKcE7hvOo0nEj3qJA+qq32h7Q0gN1CDxM7y/gdJ3oxaeC8GaLRBYHYw9uunXqjFsP
- ccFQVIlbXNZtk8D+VBCwIdvdiRuAQEa9NBx9LFq2Bnl/VFsGDMfRhDOLx5lPPGz9CaHtTDg==
-X-Received: by 2002:a05:7300:e9d4:20b0:35b:20d6:8eae with SMTP id
- 5a478bee46e88-35b20e5d33bmr13783438eec.3.1792010270438; 
- Wed, 14 Oct 2026 13:37:50 -0700 (PDT)
-X-Received: by 2002:a05:7300:e9d4:20b0:35b:20d6:8eae with SMTP id
- 5a478bee46e88-35b20e5d33bmr13783312eec.3.1792010267987; 
- Wed, 14 Oct 2026 13:37:47 -0700 (PDT)
-Received: from [192.168.1.199] (192-80-163-190.dyn.novuscom.net.
- [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-35b19c6c7b4sm29849357eec.24.2026.10.14.13.37.46
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 14 Oct 2026 13:37:47 -0700 (PDT)
-Message-ID: <ab94e24b-69f0-4e72-8dd4-5b73383a4d64@oss.qualcomm.com>
-Date: Wed, 14 Oct 2026 13:37:46 -0700
+ AKwUvBx8+Zr/fYzkuJ7RUwIpVPIEcoulnwhJXZM0EI1VH55ZP4+DJGUCU+okiGBi86PrmmDahNHBa3A65hoY@nongnu.org
+X-Gm-Message-State: AFq9FYJNeYiKGc6TwgBvrv2WHGkGFDeSMJDmXI+E19fWlMz00zhYMUmO
+ kydbgLzmtO2KxUxsPTg9qnFyOsITjvWSwBJx6A59F38w5KkLq5sdk+0H3wtd7UiB/Fgd4hHef3u
+ SunE36zlwki1mxJnozDCSXqszgtzTp3ib4Vz3if6c8Oo9goLblVUIP4ut
+X-Gm-Gg: AYBFou3z1n/JDH85+qhZERemtAR23TyynZ0w+pCL0OJsIuLhfuslhpFcutik4mnjNPa
+ 2/imB2jNQ6uoAigA0BtgplAznNIkWPDlXHZH6Ypc3/N4Ecp3qKqaE0PDErcp+Z9LBE3FxhIOM/B
+ KjMf0Rv4+Jn6tTaPaqDpBVV6vmIiV8ood1ZPzKDc3NHTQf3JBsXt4akcwl3//IzLeYaL9270yiJ
+ cHQD90k/87qiVg1bdJQPXj//8+4iHr3rtLvSArGAzsz00DGEtgtqNmZavEkH/E35GTv6Ou3TwpB
+ hpQamAWUUt2YEiHwpbVNwgtJj4FBKOsnQI1G+L0esnm2uedr/CQZpTyVZEgXMaH2Ud740co=
+X-Received: by 2002:a05:622a:1104:b0:535:a5fc:3b56 with SMTP id
+ d75a77b69052e-535a5fc44edmr280349691cf.66.1792011068888; 
+ Wed, 14 Oct 2026 13:51:08 -0700 (PDT)
+X-Received: by 2002:a05:622a:1104:b0:535:a5fc:3b56 with SMTP id
+ d75a77b69052e-535a5fc44edmr280349271cf.66.1792011068204; 
+ Wed, 14 Oct 2026 13:51:08 -0700 (PDT)
+Received: from localhost ([142.188.212.246]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-5361269e0e3sm6772581cf.3.2026.10.14.13.51.06
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 14 Oct 2026 13:51:07 -0700 (PDT)
+Date: Wed, 14 Oct 2026 16:51:05 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Alexander Mikhalitsyn <alexander@mihalicyn.com>
+Cc: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>,
+ Jesper Devantier <foss@defmacro.it>,
+ Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
+ "open list:nvme" <qemu-block@nongnu.org>
+Subject: Re: [RFC PATCH] tests/functional: add migration diagnostics and pace
+ nvme activity (HACK!)
+Message-ID: <as_rOWkhyPnWsMfL@zhexu-thinkpadt14gen5.rmtcaon.csb>
+References: <20260921190345.1709227-1-alex.bennee@linaro.org>
+ <asZIy2Rm8QF4TSca@zhexu-thinkpadt14gen5.rmtcaon.csb>
+ <CAJqdLrqxJF4tgfRYrm27rGivP-HyLUX=YCNUiaFqq4nDq0a5pQ@mail.gmail.com>
+ <as6RsuZP6jkZ8twC@zhexu-thinkpadt14gen5.rmtcaon.csb>
+ <CAJqdLrpQLJtXptSURtnT4xo4LJTduhksqAKnoPHCHbbfdVhW0w@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 08/12] target/hexagon: reject reserved L4_loadw_phys
- encoding from v83
-To: Brian Cain <brian.cain@oss.qualcomm.com>, qemu-devel@nongnu.org
-Cc: Alessandro Di Federico <ale@rev.ng>, Anton Johansson <anjo@rev.ng>,
- Laurent Vivier <laurent@vivier.eu>,
- Marco Liebel <marco.liebel@oss.qualcomm.com>, Helge Deller <deller@gmx.de>
-References: <20261014195223.3233623-1-brian.cain@oss.qualcomm.com>
- <20261014195223.3233623-9-brian.cain@oss.qualcomm.com>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <20261014195223.3233623-9-brian.cain@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDE0MDA4MiBTYWx0ZWRfXwWN8975+xLCi
- Ru61hd6wBqCb74uDHkTdgxtcCXSWyLfZRvZtjicIm8tyDF19mGSzC2nIxteQV7uNiahqj+I8ev3
- s6dSwdIS+ZOk3ppFYEPKAaYf6hLJAd0=
-X-Proofpoint-ORIG-GUID: rSzfR-3StERK3_Iyw88TJ95tgIcZzEI1
-X-Authority-Analysis: v=2.4 cv=aeb0Dhot c=1 sm=1 tr=0 ts=6acfe81f cx=c_pps
- a=wEP8DlPgTf/vqF+yE6f9lg==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
- a=EUspDBNiAAAA:8 a=IfGaT4wxoJR8PBfNJjEA:9 a=QEXdDO2ut3YA:10
- a=bBxd6f-gb0O0v-kibOvt:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDE0MDA4MiBTYWx0ZWRfX/N/TegmaBvJ8
- jpOrNOT2gy/SYufACn0qZVXJSuypJ9gKDftmjfu5dIxblIAyz/JFDl/WrbIiUevOFDlOd/O34Vf
- mcaZjRX9iICHyeZMKpINBhWr4SJA+Cp/372QJGnCDCwgJ98804GRzAymDcT9HiGVh1Z5saEzqtg
- cmNLdqr+Fz7s4bC6fa6BpFEQQt/1q+ZfJrCXox9BNfb95pNBIhxGmk6wSs1BCG9MDdelD8bh7ef
- DOKKF3BoPAgdKSWgbL49/WE+5wAKAkcTHdbpZVKo+97ZJZc6PfpfNeZCuREAl8SeXbMN/TM5sr6
- Y8t+uSx88qnEtUqx3JhV57UmFYiR79u+tgeWaNQoiV8C1xH/tdQfHTaMG9hikTEjJ+0/KkSkje3
- PdKTLuNqRdbCqta3Q4XpxQT2+Qx/udzUxNeFBV75m/eh6SofdJteUEaJwjs+wve6GS7W7JlIXIn
- I1vQ/jsxmo7GIver8Tg==
-X-Proofpoint-GUID: rSzfR-3StERK3_Iyw88TJ95tgIcZzEI1
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-10-13_01,2026-10-14_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 bulkscore=0 lowpriorityscore=0 impostorscore=0 suspectscore=0
- spamscore=0 priorityscore=1501 malwarescore=0 clxscore=1015 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610080000 definitions=main-2610140082
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAJqdLrpQLJtXptSURtnT4xo4LJTduhksqAKnoPHCHbbfdVhW0w@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -158,16 +126,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/14/2026 12:52 PM, Brian Cain wrote:
-> Bit 7 of L4_loadw_phys is valid through v81 but reserved starting
-> with v83. Decode it as a legacy don't-care bit, then reject it for v83
-> and later.
+On Wed, Oct 14, 2026 at 10:18:45AM +0200, Alexander Mikhalitsyn wrote:
+> > - for this test, should we remove snapshot=on but instead create an
+> >   explicit overlay that will be used on both src/dst qemu?
 > 
-> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
-> ---
->  target/hexagon/decode.c | 5 +++++
->  1 file changed, 5 insertions(+)
-> 
+> This should solve the issue too, at the same time if test is R/O I'm
+> not sure if we really need this.
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Then.. maybe no need to bother. :)
+
+I think we should better remove snapshot=on no matter what, then whoever
+sends a patch add migration blocker for it won't fail this test.  Seems the
+/tmp mount is still needed then.
+
+For speed control, IMHO it's not good setting bw either too high or too low
+(similar to downtime); too high means converging too fast, too low means it
+won't converge.  Maybe we can mimic what migration-test.c normally do in
+qtest?  that is, we do:
+
+- migrate_ensure_non_converge(),
+- allow a few rounds of migration precopy to happen (e.g. query-migrate
+  shows dirty-count >=2), then switch to,
+- migrate_ensure_converge().
+
+Then make it generic in migrate_vms().  I think it can be helpful too for
+future migration functional tests when it's not always idle?
+
+Thanks,
+
+-- 
+Peter Xu
+
 
