@@ -4,62 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70A6DCC6B2C
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 19:50:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B858C3DA7A
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 19:50:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xH4zC-00045R-Vm; Wed, 14 Oct 2026 15:50:03 -0400
+	id 1xH4zF-00047E-1C; Wed, 14 Oct 2026 15:50:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1xH4zA-00043n-0y
- for qemu-devel@nongnu.org; Wed, 14 Oct 2026 15:50:00 -0400
+ id 1xH4zD-000462-8J
+ for qemu-devel@nongnu.org; Wed, 14 Oct 2026 15:50:03 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1xH4z8-0002Bu-B5
- for qemu-devel@nongnu.org; Wed, 14 Oct 2026 15:49:59 -0400
+ id 1xH4zB-0002Ch-OM
+ for qemu-devel@nongnu.org; Wed, 14 Oct 2026 15:50:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1792007395;
+ s=mimecast20190719; t=1792007401;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=WUO6Tac8X3mNzsPuKOdT9L6kxj9l6oZWAlkS9/iuxZ4=;
- b=Ox22HQmR69oJANJRMQszYvh8D1COXz0whFLPz9zpj7IBXISFlxHWnZg23z8v8nnd99sNNo
- tiLbvNiQ/fYJaygOMQXDCgdAKdAi5TIUZg6WXh52TLjE/FsID5z9aSXovbdUVwvwvkdu0d
- cjRGLKVcTyUzgCWdPAcjjVctxbJkMjs=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=tcgCoIamvMlm9LpHA5ocjjZ1wJy+Hx7oD+Z0QMeFelk=;
+ b=byAB+FMBr5iOmEKTfz6c6vb3l4+3zqb+PZevzpsynLEBC+HC4wTaslYosqiHxxL3xjBR85
+ 8158IJLDVsdsH4Cxq272u3QTNFHI38ZDNAasp8r5EAnBWvKsbZ409+u650pYeqLIudJCPA
+ ROE+B75dI9yIEKDU53//ssdER0y7RJc=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-609-8sMdWCvpMACLh44EvjHyag-1; Wed,
- 14 Oct 2026 19:49:54 +0000
-X-MC-Unique: 8sMdWCvpMACLh44EvjHyag-1
-X-Mimecast-MFC-AGG-ID: 8sMdWCvpMACLh44EvjHyag_1792007393
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-43-0n7xQRHqOUiJHYTUAk7EgA-1; Wed,
+ 14 Oct 2026 19:49:57 +0000
+X-MC-Unique: 0n7xQRHqOUiJHYTUAk7EgA-1
+X-Mimecast-MFC-AGG-ID: 0n7xQRHqOUiJHYTUAk7EgA_1792007396
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D20A31955E8C; Wed, 14 Oct 2026 19:49:52 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9CC911956065; Wed, 14 Oct 2026 19:49:56 +0000 (UTC)
 Received: from localhost (headnet05.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.117])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 1A1DC1800765; Wed, 14 Oct 2026 19:49:51 +0000 (UTC)
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id F22B61800586; Wed, 14 Oct 2026 19:49:55 +0000 (UTC)
 From: Stefan Hajnoczi <stefanha@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Hanna Reitz <hreitz@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
  Stefan Hajnoczi <stefanha@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>, qemu-block@nongnu.org
-Subject: [PULL 0/1] Block patches
-Date: Wed, 14 Oct 2026 15:49:48 -0400
-Message-ID: <20261014194950.1393771-1-stefanha@redhat.com>
-Content-Type: text/plain; charset="utf-8"
+ Richard Henderson <richard.henderson@linaro.org>, qemu-block@nongnu.org,
+ Eric Blake <eblake@redhat.com>
+Subject: [PULL 1/1] dmg: avoid out-of-bounds memory load in
+ dmg_read_mish_block()
+Date: Wed, 14 Oct 2026 15:49:49 -0400
+Message-ID: <20261014194950.1393771-2-stefanha@redhat.com>
+In-Reply-To: <20261014194950.1393771-1-stefanha@redhat.com>
+References: <20261014194950.1393771-1-stefanha@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 10
@@ -84,31 +88,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 8ee6c77176cfee03be0ec7665b6652b2f31f1531:
+dmg_read_mish_block() loads from memory beyond the end of the buffer
+when count is less than 4.
 
-  Merge tag 'pull-ufs-20261012' of https://gitlab.com/jeuk20.kim/qemu into staging (2026-10-13 22:01:07 +0200)
+There is no known security impact here because dmg_read_mish_block()
+returns almost immediately without any opportunity to gain control of
+execution or cause other damage. A crash will not happen because it's a
+32-bit load from a memory address that was just heap allocated. The
+address will be properly aligned and will not span a page of memory.
 
-are available in the Git repository at:
-
-  https://gitlab.com/stefanha/qemu.git tags/block-pull-request
-
-for you to fetch changes up to f659157103de6f335d83d3770e383a52818399cb:
-
-  dmg: avoid out-of-bounds memory load in dmg_read_mish_block() (2026-10-14 10:41:11 -0400)
-
-----------------------------------------------------------------
-Pull request
-
-Contains a bug fix for the dmg block driver.
-
-----------------------------------------------------------------
-
-Stefan Hajnoczi (1):
-  dmg: avoid out-of-bounds memory load in dmg_read_mish_block()
-
+Reported-by: router0mail <https://gitlab.com/router0mail>
+Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+Reviewed-by: Eric Blake <eblake@redhat.com>
+Message-id: 20261013193710.1311621-1-stefanha@redhat.com
+Fixes: 7aee37b93a4f ("block/dmg: process a buffer instead of reading ints")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4569
+Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+---
  block/dmg.c | 8 ++++++--
  1 file changed, 6 insertions(+), 2 deletions(-)
 
+diff --git a/block/dmg.c b/block/dmg.c
+index 5d7d3b8901f..412d4bfc354 100644
+--- a/block/dmg.c
++++ b/block/dmg.c
+@@ -226,9 +226,13 @@ static int dmg_read_mish_block(BDRVDMGState *s, DmgHeaderState *ds,
+     uint64_t in_offset = ds->data_fork_offset;
+     uint64_t out_offset;
+ 
++    if (count < 244) {
++        return 0; /* too small, skip silently */
++    }
++
+     type = buff_read_uint32(buffer, offset);
+-    /* skip data that is not a valid MISH block (invalid magic or too small) */
+-    if (type != 0x6d697368 || count < 244) {
++    /* skip data that is not a valid MISH block (invalid magic) */
++    if (type != 0x6d697368) {
+         /* assume success for now */
+         return 0;
+     }
 -- 
 2.56.0
 
