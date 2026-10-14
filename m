@@ -4,55 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52949CC6B1A
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 16:30:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AD75CC6B1A
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 16:30:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xH1rk-0000Nd-BI; Wed, 14 Oct 2026 12:30:08 -0400
+	id 1xH1rg-0000EI-UQ; Wed, 14 Oct 2026 12:30:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <wangyang25@otcaix.iscas.ac.cn>)
- id 1xH1rJ-00005j-EA; Wed, 14 Oct 2026 12:29:41 -0400
+ id 1xH1rJ-00005U-DF; Wed, 14 Oct 2026 12:29:41 -0400
 Received: from smtp81.cstnet.cn ([159.226.251.81] helo=cstnet.cn)
  by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_CBC_SHA1:256)
  (Exim 4.90_1) (envelope-from <wangyang25@otcaix.iscas.ac.cn>)
- id 1xH1rF-00068t-95; Wed, 14 Oct 2026 12:29:40 -0400
+ id 1xH1rH-000690-6I; Wed, 14 Oct 2026 12:29:41 -0400
 Received: from DESKTOP-7FLBREN (unknown [124.16.137.194])
- by APP-03 (Coremail) with SMTP id rQCowACXmDbrrc9q4kXBCg--.37629S7;
- Thu, 15 Oct 2026 00:29:33 +0800 (CST)
+ by APP-03 (Coremail) with SMTP id rQCowACXmDbrrc9q4kXBCg--.37629S4;
+ Thu, 15 Oct 2026 00:29:32 +0800 (CST)
 From: wangyang <wangyang25@otcaix.iscas.ac.cn>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
  liwei1518@gmail.com, daniel.barboza@oss.qualcomm.com,
  zhiwei_liu@linux.alibaba.com, chao.liu@processmission.com,
  christoph.muellner@vrull.eu
-Subject: [PATCH v5 3/5] target/riscv: require read permission for HLVX accesses
-Date: Thu, 15 Oct 2026 00:29:28 +0800
-Message-ID: <20261014162930.251-4-wangyang25@otcaix.iscas.ac.cn>
+Subject: [PATCH v5 0/5] target/riscv: fix privilege, PMP, CFI, envcfg checks
+Date: Thu, 15 Oct 2026 00:29:25 +0800
+Message-ID: <20261014162930.251-1-wangyang25@otcaix.iscas.ac.cn>
 X-Mailer: git-send-email 2.55.0.windows.2
-In-Reply-To: <20261014162930.251-1-wangyang25@otcaix.iscas.ac.cn>
-References: <20261014162930.251-1-wangyang25@otcaix.iscas.ac.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: rQCowACXmDbrrc9q4kXBCg--.37629S7
-X-Coremail-Antispam: 1UD129KBjvJXoW3Jw4DCry8Xw1xtFWkKF18Grg_yoW7ZF4Dpr
- WrCrWakw4kKFZrCayxtF1jyF15CF43GFWjg3Z7WwsY9F1aq3yru3WkKa42gFs8GFWkWw1j
- ga1qyF1jk3WjqFDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
- 9KBjDU0xBIdaVrnRJUUUmab7Iv0xC_Kw4lb4IE77IF4wAFF20E14v26rWj6s0DM7CY07I2
- 0VC2zVCF04k26cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28IrcIa0xkI8VA2jI
- 8067AKxVWUWwA2048vs2IY020Ec7CjxVAFwI0_Xr0E3s1l8cAvFVAK0II2c7xJM28CjxkF
- 64kEwVA0rcxSw2x7M28EF7xvwVC0I7IYx2IY67AKxVWUCVW8JwA2z4x0Y4vE2Ix0cI8IcV
- CY1x0267AKxVWxJVW8Jr1l84ACjcxK6I8E87Iv67AKxVWUJVW8JwA2z4x0Y4vEx4A2jsIE
- c7CjxVAFwI0_Gr0_Gr1UM2vYz4IE04k24VAvwVAKI4IrM2AIxVAIcxkEcVAq07x20xvEnc
- xIr21l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r126r1DMcIj6I8E
- 87Iv67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IYc2Ij64vIr41lc7CjxV
- Aaw2AFwI0_Jw0_GFylc2xSY4AK67AK6r1l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Y
- z7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zV
- AF1VAY17CE14v26r1q6r43MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_JFI_Gr1l
- IxAIcVC0I7IYx2IY6xkF7I0E14v26F4j6r4UJwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF
- 4lIxAIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsG
- vfC2KfnxnUUI43ZEXa7IUY0FAtUUUUU==
+X-CM-TRANSID: rQCowACXmDbrrc9q4kXBCg--.37629S4
+X-Coremail-Antispam: 1UD129KBjvJXoW7uF1fGFyrKr15Ww1UXrW8Zwb_yoW8trWUpF
+ 4rGayaqFWkGry7Awn3AF4UXr15Wr4fGw45X3srXryrZay5CFyFqrZ3K34aga4DJ3Z8Ww12
+ 9F1qkw13uF15ZFUanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+ 9KBjDU0xBIdaVrnRJUUU9Ib7Iv0xC_Kw4lb4IE77IF4wAFF20E14v26r4j6ryUM7CY07I2
+ 0VC2zVCF04k26cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rw
+ A2F7IY1VAKz4vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xII
+ jxv20xvEc7CjxVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWUJVW8JwA2z4x0Y4vEx4
+ A2jsIEc7CjxVAFwI0_Gr0_Gr1UM2vYz4IE04k24VAvwVAKI4IrM2AIxVAIcxkEcVAq07x2
+ 0xvEncxIr21l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r126r1DMc
+ Ij6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IYc2Ij64vIr41l
+ c7CjxVAaw2AFwI0_Jw0_GFylc2xSY4AK67AK6r1l42xK82IYc2Ij64vIr41l4I8I3I0E4I
+ kC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWU
+ WwC2zVAF1VAY17CE14v26r1q6r43MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr
+ 0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E14v26r4j6F4UMIIF0xvE42xK8VAvwI8IcIk0rVWU
+ JVWUCwCI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r4j6r4UJb
+ IYCTnIWIevJa73UjIFyTuYvjxUkcTQUUUUU
 X-Originating-IP: [124.16.137.194]
 X-CM-SenderInfo: 5zdqw5xdqjjk46rwut1l0ox2xfdvhtffof0/
 Received-SPF: pass client-ip=159.226.251.81;
@@ -77,151 +74,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-HLVX address translation uses execute permission, but the final PMP
-check on the supervisor physical address must also require read
-permission. Carry the HLVX operation through the MMU index and include
-PMP_READ in the final check so execute-only pages fault.
+This series fixes five independent RISC-V emulation issues in the
+XTheadCmo, XTheadBb, HLVX/PMP, Zicfilp, and environment-configuration
+paths.
 
-Tested: RV32 system-mode RWX, HLV, and HLVX.WU PMP test cases.
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4414
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Signed-off-by: wangyang <wangyang25@otcaix.iscas.ac.cn>
----
- target/riscv/internals.h      |  6 ++++++
- target/riscv/tcg/cpu_helper.c | 24 ++++++++++++++++--------
- target/riscv/tcg/op_helper.c  | 11 +++++------
- 3 files changed, 27 insertions(+), 14 deletions(-)
+The first two patches correct XThead instruction handling. The third
+adds the missing final PMP read check for HLVX. The fourth fixes
+Zicfilp exception priority for tracked misaligned JALR targets. The
+fifth canonicalizes reserved CBIE encoding while preserving the
+defined CBIE=11 encoding.
 
-diff --git a/target/riscv/internals.h b/target/riscv/internals.h
-index 5d84e4de96..832c6406bc 100644
---- a/target/riscv/internals.h
-+++ b/target/riscv/internals.h
-@@ -42,6 +42,7 @@
- #define MMUIdx_M            3
- #define MMU_2STAGE_BIT      (1 << 2)
- #define MMU_IDX_SS_WRITE    (1 << 3)
-+#define MMU_IDX_HLVX        (1 << 4)
- 
- static inline privilege_mode_t mmuidx_priv(int mmu_idx)
- {
-@@ -62,6 +63,11 @@ static inline bool mmuidx_2stage(int mmu_idx)
-     return mmu_idx & MMU_2STAGE_BIT;
- }
- 
-+static inline bool mmuidx_hlvx(int mmu_idx)
-+{
-+    return mmu_idx & MMU_IDX_HLVX;
-+}
-+
- /*
-  * Return the endianness for the current privilege
-  * level, based on the MSTATUS MBE/SBE/UBE bits.
-diff --git a/target/riscv/tcg/cpu_helper.c b/target/riscv/tcg/cpu_helper.c
-index 07d9222652..ad41de9d06 100644
---- a/target/riscv/tcg/cpu_helper.c
-+++ b/target/riscv/tcg/cpu_helper.c
-@@ -905,6 +905,7 @@ void riscv_cpu_set_mode(CPURISCVState *env, privilege_mode_t newpriv,
-  */
- static int get_physical_address_pmp(CPURISCVState *env, int *prot, hwaddr addr,
-                                     int size, MMUAccessType access_type,
-+                                    pmp_priv_t extra_privs,
-                                     privilege_mode_t mode)
- {
-     pmp_priv_t pmp_priv;
-@@ -915,7 +916,8 @@ static int get_physical_address_pmp(CPURISCVState *env, int *prot, hwaddr addr,
-         return TRANSLATE_SUCCESS;
-     }
- 
--    pmp_has_privs = pmp_hart_has_privs(env, addr, size, 1 << access_type,
-+    pmp_has_privs = pmp_hart_has_privs(env, addr, size,
-+                                       (1 << access_type) | extra_privs,
-                                        &pmp_priv, mode);
-     if (!pmp_has_privs) {
-         *prot = 0;
-@@ -1177,7 +1179,7 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
-         int pmp_prot;
-         int pmp_ret = get_physical_address_pmp(env, &pmp_prot, pte_addr,
-                                                sxlen_bytes,
--                                               MMU_DATA_LOAD, PRV_S);
-+                                               MMU_DATA_LOAD, 0, PRV_S);
-         if (pmp_ret != TRANSLATE_SUCCESS) {
-             return TRANSLATE_PMP_FAIL;
-         }
-@@ -1425,7 +1427,8 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
-         }
- 
-         pmp_ret = get_physical_address_pmp(env, &pmp_prot, pte_addr,
--                                           sxlen_bytes, MMU_DATA_STORE, PRV_S);
-+                                           sxlen_bytes, MMU_DATA_STORE, 0,
-+                                           PRV_S);
-         if (pmp_ret != TRANSLATE_SUCCESS) {
-             return TRANSLATE_PMP_FAIL;
-         }
-@@ -1711,7 +1714,9 @@ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
- 
-             if (ret == TRANSLATE_SUCCESS) {
-                 ret = get_physical_address_pmp(env, &prot_pmp, pa,
--                                               size, access_type, mode);
-+                                               size, access_type,
-+                                               mmuidx_hlvx(mmu_idx) ?
-+                                               PMP_READ : 0, mode);
-                 tlb_size = pmp_get_tlb_size(env, pa);
- 
-                 qemu_log_mask(CPU_LOG_MMU,
-@@ -1746,7 +1751,9 @@ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
- 
-         if (ret == TRANSLATE_SUCCESS) {
-             ret = get_physical_address_pmp(env, &prot_pmp, pa,
--                                           size, access_type, mode);
-+                                           size, access_type,
-+                                           mmuidx_hlvx(mmu_idx) ?
-+                                           PMP_READ : 0, mode);
-             tlb_size = pmp_get_tlb_size(env, pa);
- 
-             qemu_log_mask(CPU_LOG_MMU,
-@@ -1786,9 +1793,10 @@ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
-         cpu_check_watchpoint(cs, address, size, MEMTXATTRS_UNSPECIFIED,
-                              wp_access, retaddr);
- 
--        raise_mmu_exception(env, address, access_type, pmp_pma_violation,
--                            first_stage_error, two_stage_lookup,
--                            two_stage_indirect_error);
-+        raise_mmu_exception(env, address,
-+                            mmuidx_hlvx(mmu_idx) ? MMU_DATA_LOAD : access_type,
-+                            pmp_pma_violation, first_stage_error,
-+                            two_stage_lookup, two_stage_indirect_error);
-         cpu_loop_exit_restore(cs, retaddr);
-     }
- 
-diff --git a/target/riscv/tcg/op_helper.c b/target/riscv/tcg/op_helper.c
-index 3e94005d2b..060d97ee9c 100644
---- a/target/riscv/tcg/op_helper.c
-+++ b/target/riscv/tcg/op_helper.c
-@@ -650,7 +650,7 @@ static int check_access_hlsv(CPURISCVState *env, bool x, uintptr_t ra)
-     if (!x && mode == PRV_S && get_field(env->vsstatus, MSTATUS_SUM)) {
-         mode = MMUIdx_S_SUM;
-     }
--    return mode | MMU_2STAGE_BIT;
-+    return mode | MMU_2STAGE_BIT | (x ? MMU_IDX_HLVX : 0);
- }
- 
- target_ulong helper_hyp_hlv_bu(CPURISCVState *env, target_ulong addr)
-@@ -726,11 +726,10 @@ void helper_hyp_hsv_d(CPURISCVState *env, target_ulong addr, target_ulong val)
- }
- 
- /*
-- * TODO: These implementations are not quite correct.  They perform the
-- * access using execute permission just fine, but the final PMP check
-- * is supposed to have read permission as well.  Without replicating
-- * a fair fraction of cputlb.c, fixing this requires adding new mmu_idx
-- * which would imply that exact check in tlb_fill.
-+ * HLVX accesses are translated with execute permission (first stage),
-+ * but the final PMP check on the supervisor physical address must
-+ * require read permission as well.  The MMU_IDX_HLVX mmu_idx bit set
-+ * by check_access_hlsv() makes riscv_cpu_tlb_fill() enforce this.
-  */
- target_ulong helper_hyp_hlvx_hu(CPURISCVState *env, target_ulong addr)
- {
+This series is based on 209b2afaface001c7d4d981e38f186afe7b24a50.
+
+Validation performed:
+
+  - QEMU 11.1.1 baseline and patched test-case replays passed.
+  - HLVX.HU and HLVX.WU execute-only PMP cases and tracked and
+    untracked misaligned JALR controls were checked.
+  - Every intermediate patch state built for qemu-system-riscv32,
+    qemu-system-riscv64, qemu-riscv32, and qemu-riscv64.
+  - RV32 XTheadBb imm6 0, 31, 32, and 63 cases pass with the
+    extension enabled and remain illegal when it is disabled.
+  - The series passes checkpatch.pl, git diff --check, and
+    independent apply checks.
+
+Changes since v4:
+
+  - Patch 2 masks the shift amount in the translator again, as
+    suggested by Richard Henderson, instead of splitting the decodetree
+    pattern. The original code and its Reviewed-by tag are restored.
+  - Patches 3 and 5 carry the Reviewed-by tags they received during
+    review of v3; both patches are byte-identical to the reviewed
+    version.
+  - Reword the test descriptions in the commit messages to refer to
+    test cases, as requested during review.
+
+wangyang (5):
+  target/riscv: enforce XTheadCmo U-mode privilege checks
+  target/riscv: mask RV32 XTheadBb th.srri shift amount
+  target/riscv: require read permission for HLVX accesses
+  target/riscv: prioritize Zicfilp checks for misaligned JALR
+  target/riscv: canonicalize reserved CBIE encoding
+
+ target/riscv/internals.h                      |  6 ++++
+ target/riscv/tcg/cpu_helper.c                 | 24 ++++++++++-----
+ target/riscv/tcg/csr.c                        | 29 +++++++++++++++++++
+ target/riscv/tcg/insn_trans/trans_rvi.c.inc   |  9 +++++-
+ .../riscv/tcg/insn_trans/trans_xthead.c.inc   |  5 ++--
+ target/riscv/tcg/op_helper.c                  | 11 ++++---
+ 6 files changed, 67 insertions(+), 17 deletions(-)
+
 -- 
 2.55.0.windows.2
 
