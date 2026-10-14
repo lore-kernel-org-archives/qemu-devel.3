@@ -4,86 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B4EACC6B19
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 06:21:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D30BCC6B24
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 06:21:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGsM3-0005np-8M; Wed, 14 Oct 2026 02:20:47 -0400
+	id 1xGsMq-0005wV-Om; Wed, 14 Oct 2026 02:21:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xGsLx-0005nK-N7
- for qemu-devel@nongnu.org; Wed, 14 Oct 2026 02:20:43 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ id 1xGsMp-0005wB-Vv
+ for qemu-devel@nongnu.org; Wed, 14 Oct 2026 02:21:36 -0400
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xGsLw-0006wP-0y
- for qemu-devel@nongnu.org; Wed, 14 Oct 2026 02:20:41 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-49fbb2acc90so31537305e9.2
- for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 23:20:39 -0700 (PDT)
+ id 1xGsMo-0006y0-B7
+ for qemu-devel@nongnu.org; Wed, 14 Oct 2026 02:21:35 -0400
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-48b060ec084so2375374f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 23:21:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1791958837; x=1792563637; darn=nongnu.org;
+ d=linaro.org; s=google; t=1791958893; x=1792563693; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=odC2w+//hTwiKziasqftRplHedV3NpRa6Q6gpapZCsM=;
- b=SazPdAsScEEch9EkXqFitnpgE5o5Ph27JyritV39bR02grxxjRGp+b5C5mXBL+gqvH
- 5sEXo7ADBbza7OUblK160kr3lSnbAJVNez1Zb9W7xhHlHWv3Wb+Q8YVQpPiYBdKDPKZk
- 7H+ZlE/bNaO7xittHfkgucOoSACpv45UfSYWJPSrdBi7aGww9OYWkKAnvPULruINlfz6
- MiQ5L9tbFQE/H9rdcTnGYqor8c0cBU+Uoe0nl6Jsmbjl4GjTcGi8doZEHcp/av8CA6I8
- 7u9e2pEiiHKVt2SrDnVXAQnc2G0dfxdZ4UXUjj/Kvf6irdC2eoDb1T7Uwmv8/6j4KpT2
- WjOg==
+ bh=28lfvFBPfsWPL2u/keKxvsqU2LOJMsUMJ/4qE40SHkI=;
+ b=V1g8s2Cr8C6lqqBtCDOZb1Q4viXCESI03re0hK63Njpp2UzJ6Wd16Iccs8WUaHRVFJ
+ 3TM0bdGa9ub33suzKX1gV6rM6fYJrRDuUnZuFuCuN0ixfHL2W0LwTJ/5983/QbLKaSfU
+ HG1X6WaQ90vrLqiTw2MdeTyMtkzEo2xx4/g4SyJWdAXcXxaPtIN8CGDkzRN0DNmu4e82
+ XGWLnm0dDoBNriCPfd0bRCTeZCgDzgeENpYCt9t7Hp/WemNnUs9LeNhwQrTIl/Q3wsok
+ QeXiRgDGJauFaXtHrMlFgt+lwDuXp4EPRtUtvo+y7tjXEBJVPAuIHq8ssEWIqJlDG/3/
+ Xxqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791958837; x=1792563637;
+ d=1e100.net; s=20260707; t=1791958893; x=1792563693;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=odC2w+//hTwiKziasqftRplHedV3NpRa6Q6gpapZCsM=;
- b=M0y6xtv3rTwf9CW8TrdoULw+ziHVuDfm68s8rAMYv7eBeNf8OFZbokhJ4WkwSKEZCD
- evcFDeKNtwaVh1UdIeNwOD7TDOB+9a2sHteoNo06URH3YkYQadJiennp5IGOL+rsjyrj
- h1QIZfLHMByU4PRKj+UlxEuSFOM3alYZ//vM1Sk5oZ3Tw1kA7izj5IYN/PVggABHVbYJ
- f+QHnAhGHBSSG+/UveBvVeBUNB5BJRjwWLTaz60rq0N1TnPaAhxjfmIqpZnePhEkLKvV
- aSrZW42iFaxZCZ0FJJB75lV/k7Izv3SHIfnN+/iLFRPLkuuJXl49W+arcwVOThDIPN1Y
- 29LA==
+ bh=28lfvFBPfsWPL2u/keKxvsqU2LOJMsUMJ/4qE40SHkI=;
+ b=REjl/v5JU9jwn7LcLUb+M1IljNZW7KfjCekquoyNub4LsiOvDig/wyGHp6AOU6wDXC
+ IwKNlZVseIsN1ovsEloVCietAn3L0HYM6D0WMz7WvXuTK+Xrmhei7fYG4iYPPJMOGW5p
+ F0unlbERKULTHXmbINThiIvCo8H8QZW0qYHeHk2k4R02HmdKacRib7Ti58r+X2ZQthcx
+ Nc4XtkQR8X7Eaaz9wGEgYaOJNEoxgVK++eT05PM9e+UUskjOFKFVhiH2oGz25MBU7df1
+ TWWuzklhX6DajeQunhCUx20vy/BvNq4u3dkxYvCGhgd1qPKRYhw42xKEhbKZq8RHSdGJ
+ IN9g==
 X-Forwarded-Encrypted: i=1;
- AKwUvBxsIpCLDJ6/mxHmAzimZQEZuWeZekWGu/Dd825bBr8q9B9CagVVlEQrVI4wZICOSRA7RQDEoXaliyVv@nongnu.org
-X-Gm-Message-State: AFq9FYKHxBwKnd2ohXR43XhGET5vjxAw9IlWT8t1UGkP+qaKrOxmx6Fa
- cZDPKlVBM381qejvlDkxThEvXS69CP+9cR6ZT3WhBSxR9XHxphmXLfUX7ffRCj8OHMg=
-X-Gm-Gg: AYBFou2ZLPuo/dBzwYmSinMpP9FPU1sFzVoxM1RO/ChYTB4ILs/QzNjEepqUrV6fW8u
- MJYFt2EVDkLxBsP//f7rFGprxiH8XBLJTXtn6BHCO+UlXMmI97gnF5S5qvhPkBItatqpLPY/rkE
- bdibGdtuXsn9EaQ+RsNgkwZpEP37Qv4L+KpHG5JaYBa8J6bvRP2Ysn+DZSx4xuaWTJHBHXGbD7i
- LJtBwqfL4o5CuLxOLQf09SgZ4xWZeOlzk2erW2TGPEOki1p0/vB0mmQdAWdSikDlwoqUELS8Xns
- mBSrc/QxJjjEUnq5STWI+DCURtcs8edKOB4y+gsgITiwBEkk5NeA0tWI7qBBqCblN4sSisl1Qgn
- S/UJoAldw1NHv+I+L+nxYr55TfMJ0KKE1XiYAYTKGvBH95dLk6o6vTsIdkm7wVHyhaojRVRHvaU
- JKDaUgCYPjC5XPKaMVLUiNRc/kq9QrVaBAO5A4QqFtuIuOJxI2y3VpXb6NFL5q1/ahDJ8xal7Tn
- DKyUivuGNkMKUOsPG5wcj75UuBCX44XMiQuQnnPoFmzrP9byYjk2g/IPw1ZMrs1Sw==
-X-Received: by 2002:a05:600c:8184:b0:49f:ffd0:4039 with SMTP id
- 5b1f17b1804b1-4a18e4f2221mr253073475e9.32.1791958837267; 
- Tue, 13 Oct 2026 23:20:37 -0700 (PDT)
+ AKwUvBzYAWjz6JDQiyXPnqf2HrRb1CLIDrkp/ntb97FkszbOOdp8OwrFfPAWgzqpg2FhL3+oT0XhQfIttJH3@nongnu.org
+X-Gm-Message-State: AFq9FYI55VULhbohE607V1j3Q12EE8kVu4ATehVtW27XOavapG6kpgYV
+ wyPuxqO2oBgBgfrWLrtfJQHD+CCjB+J+QNLnwv5Dn5eJBNvNSQlmRb54SZGxIj/ceaA=
+X-Gm-Gg: AYBFou00N9beb35Uss8RwJzDg9j/l61Iw2+doOXhU3uKsQfx6V1BI7aF0l8cNAGbaqL
+ s63WSNzvZoh/2Ekr+Q4HE8iW1NHPDOMELQhgRgko+UI/dD8Wsvb+NfC5C6eFmYU3kZqSFxyfOzp
+ aDaNNbx04fvsb8IBk3Z/abdstaqq4UzgLO1/CFIAMUTbjTS6AmD60ZvFgykYFc5QbA0B5/3LcMq
+ BSHK5s5dR4Cn5MEU/lNzuj2EWSTx4VG5mg/IZ3qgHm6AhZydsH4acgUaHomMRp/4g0IvPrRM/R9
+ L7Ya5/av5bjvGtUNOSDEiNE3NF6jhG0OmxJnlp49h5PYXr9UOEv8V7CHuiq/ISmnwrJa5Iso+68
+ /hwHDvOaeOr2AOFF8hfBC479Bxw3W4BvhUy+jnFFCzpWcKqrUsefB0MHpluzNs/+LZhTBHI5Nuz
+ hLnq63/rt6VK8T91+n/NWw02PEY3rc/UknYhzej9OJ3k13M7A0qqMeceRnvpV7MFPcRk26YyWZI
+ xVq34PLz8VMlJa112fQYCCJPlZYLy/wrmOy8Dj4srvByp946JYvyzY3OzqKBFOQ+5M=
+X-Received: by 2002:a05:6000:29d3:b0:48c:6616:8f32 with SMTP id
+ ffacd0b85a97d-48dbacfa174mr18660165f8f.53.1791958892856; 
+ Tue, 13 Oct 2026 23:21:32 -0700 (PDT)
 Received: from [10.86.151.227] (ip-109-091-152-129.um37.pools.vodafone-ip.de.
  [109.91.152.129]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a18c1e33d2sm608057635e9.0.2026.10.13.23.20.36
+ ffacd0b85a97d-48de0967affsm8646212f8f.1.2026.10.13.23.21.32
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 13 Oct 2026 23:20:36 -0700 (PDT)
-Message-ID: <1f4ff4eb-d1f7-4903-9927-c1cd5c867d7d@linaro.org>
-Date: Wed, 14 Oct 2026 08:20:34 +0200
+ Tue, 13 Oct 2026 23:21:32 -0700 (PDT)
+Message-ID: <39a2941f-1106-464c-8041-147c91dc037a@linaro.org>
+Date: Wed, 14 Oct 2026 08:21:29 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/arm: Deprecate using named CPU models with KVM
+Subject: Re: [PATCH] target/arm/tcg/gicv5-cpuif: Fix typo in
+ ICC_PPI_SPENDR1_EL1 name
 To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
  qemu-devel@nongnu.org
-Cc: Eric Auger <eric.auger@redhat.com>
-References: <20261013105147.1070641-1-peter.maydell@linaro.org>
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+References: <20261013105704.1071427-1-peter.maydell@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20261013105147.1070641-1-peter.maydell@linaro.org>
+In-Reply-To: <20261013105704.1071427-1-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x32c.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-wr1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,41 +107,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/13/26 12:51, Peter Maydell wrote:
-> Currently when using KVM on Arm, the normal thing is to use either
-> the 'host' or 'max' CPU types, both of which give the guest the same
-> CPU as the host.  We also for legacy reasons allow 'cortex-a53' and
-> 'cortex-a57' CPU types, which will only work when the host CPU is
-> exactly that matching CPU.  This is because the original idea of the
-> KVM ABI was that userspace would request a particular CPU type by
-> setting the target field in the KVM_ARM_VCPU_INIT ioctl to an
-> appropriate KVM_ARM_TARGET_* constant.  However, it quickly became
-> clear that this was a bad idea, and now everything uses
-> KVM_ARM_TARGET_GENERIC_V8; the tiny number of existing CPU-specific
-> target values behave identically to GENERIC_V8 except that they will
-> only work if the host CPU matches them.
+On 10/13/26 12:57, Peter Maydell wrote:
+> A cut-and-paste error meant that the cpreg for ICC_PPI_SPENDR1_EL1
+> incorrectly named it SPENDR0; as these regs aren't exposed to gdb the
+> string here is for debug only, so this has no visible consquences,
+> but it's confusing.  Fix the error.
 > 
-> Future support for "show the KVM guest a CPU type that's not
-> identical to the host" is going to work by telling it different ID
-> register values.  Real Cortex-A53 and A57 CPUs are now all over a
-> decade old and not in widespread use.  Deprecate the ability to use
-> '-cpu cortex-a53' and '-cpu cortex-a57' with KVM, to get rid of this
-> odd legacy corner and open up the opportunity in future to support
-> named CPU types via ID register settings if we want that.
-> 
-> For any situation where the cortex-a53 and cortex-a57 CPU types
-> currently work with KVM, '-cpu host' or '-cpu max' will have
-> identical behaviour.  (Though note that if you are using "KVM, but
-> fall back to TCG" then the fallback under TCG will be different.)
-> 
+> Fixes: 585dad9e79e1 ("target/arm: GICv5 cpuif: Implement PPI pending status registers")
+> Reported-by: Philippe Mathieu-Daudé<philmd@oss.qualcomm.com>
 > Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
 > ---
-> Personally I doubt anybody is actually using these named
-> CPU types...
-> ---
->   docs/about/deprecated.rst | 13 +++++++++++++
->   target/arm/kvm.c          |  7 +++++++
->   2 files changed, 20 insertions(+)
+>   target/arm/tcg/gicv5-cpuif.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
