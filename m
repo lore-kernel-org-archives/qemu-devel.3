@@ -4,84 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A5C4CC6B1C
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 03:47:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60FAFCC6B1A
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 03:47:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGps8-00029e-Ct; Tue, 13 Oct 2026 23:41:44 -0400
+	id 1xGps0-0001Tq-4a; Tue, 13 Oct 2026 23:41:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1xGps6-00023E-V5
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 23:41:43 -0400
-Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
+ id 1xGprv-000184-4F
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 23:41:32 -0400
+Received: from mail-pg1-x52b.google.com ([2607:f8b0:4864:20::52b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1xGps4-0001mA-TR
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 23:41:42 -0400
-Received: by mail-pj1-x1035.google.com with SMTP id
- 98e67ed59e1d1-3ac77270fbfso39610a91.2
- for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 20:41:40 -0700 (PDT)
+ id 1xGprt-0001kk-KM
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 23:41:30 -0400
+Received: by mail-pg1-x52b.google.com with SMTP id
+ 41be03b00d2f7-cd3310348d2so2631767a12.1
+ for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 20:41:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1791949299; x=1792554099; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1791949288; x=1792554088; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=5bTAGSooV44eiWCdfd0Toi5qLge+YpB1WmcD4tXPp7o=;
- b=rbiKyhkFTr5Dy4HbEFxDrP38xIA/7o3tWp7zMaLfdkXN697nwyJs/bnXbHy0VB0g+T
- wvGY/84WPyS5zliPOBCl6pXwwRa3+42KEh85vV0OkPxRI0+C6VCDOQCvLa2dL70PDt/t
- MiGdUpgdDxQQjjJ5SZGmE92OXBZzX9Cdmq4wJK5DXjDjOythRd4p1cq+WIxhCnVY94x9
- KSs3AkOXO9DsJaPkDpqpEgZ7nwHopjvxsHqBsCUjmEZuj10AOy3jPvTyiohCg6VvZ/7Y
- YAnSrOMKUIcc0VWvUvU4TKsI8pbywYRV9BPnt+lvPTUTwYdq/lY8Wmh5fwVXD/5p5f2b
- rBjQ==
+ bh=m8M02c4ySR+Lt6uDZ7Aas2C/BIqx0f3wO/wn5zcjyrs=;
+ b=VUNRwYRM++kZWrtiXRvNFs/NxzlODBwV+49VP59GqFjHMttTdP5SD9GLP/43EM78Yu
+ xy+eUBovinl+WeN0PSdBtwoIiWKkq4rNIeCRwR/nh6WOZhbhTgaZXkuI1GoN6E1hbkUb
+ HLOoyph57o0XSLSwGhV5TvDkksRCjrhSfvwvMy5Rs8gn8qARCqvAj78m7ZIZIzTe4wy2
+ ardxQTI1QwMkrcobSD/tAEddjC4SSvsnK3N5RCB+TJMD9E9WBBlm2aJAzUE0kwBaH2v2
+ ISl3ymesCWdyq6H1kOfRxDnBmaqNrYyL9/nOHHaTfhsuQzEPtQ/oO5Tg8legMB4cymQO
+ H4Jg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791949299; x=1792554099;
+ d=1e100.net; s=20260707; t=1791949288; x=1792554088;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=5bTAGSooV44eiWCdfd0Toi5qLge+YpB1WmcD4tXPp7o=;
- b=W7KciSlevC/r7bj7grwdX7rjvZoELPFkolsHLhUxmedncj3WjV62wbrgQGg7YXwyio
- CDz0RIGVf/B+i4wI6TKO7Ki5nvy6QW9yiFKIeU92+fHiUnPsIN6c0a/MipYaBxC6WXTG
- mO2JOU/fIq1sudKt83W5eFCY3UR5wg1JQiZxhdpkJ3J2NRjRolrXsjaO+thJ8pc7XiH1
- FaUMZdiVor0uBGR+lBKn8TNHzdTRdmBzLbQ1iwSguvHqltzjpWxH1zqq3YUtdEbteiJR
- ewnNN7GOO9CZ4uudOQikC+P9h1czjELIXydfPm4RViaA+DHf3lsJRlelbsFYelJxSvny
- 57bQ==
-X-Gm-Message-State: AFq9FYIWTN3t4ELMsuFHL4YhkTjG6w1hjkDUiIGBgHXhs4lPhDEKqJtf
- QRq9xUpAueC1+1zn8ktd0G3f1HRtQJA4lessK9mv30tQ3tApOVUcG6DiecO3GA==
-X-Gm-Gg: AYBFou3IXG0OiWPZr2BtOCtpxV9g+53OpBGK1eeym0mK2M60qGOtvhQJHSIx2zKzEEh
- sycglHQ/LoKn3L8ehlwCXJgWUhzlY5U0m2uKydfir/xsw+TRdUNcdUYS60WbF5x26baPfIhBUZO
- rhW15XcMPjzU14+RFQiJIArVFN5c5RINlDIDJxoZYJnO736ZbnnSmwlPEQA3C3BPTgNELHO6aRE
- jdv0u5xxG0pbhWbTZLx37MGwO6Z1dBlo3E0ErIx6mieJmT/kKkNDeYaRLjg7mxkK7yvJdNV+szM
- w9Ayhw26dXltuN0IPxGM/R8wGeVPQmumC07c1G+RHZ2ugteTpId5SNRs5zQNXS9IuvlNug571cg
- +MJwOnTMQfisJ37jY6KIRC3S0BXdpp80uqWVu+CxjFpsz+gdfDFd8l82CR1P0dddjiEBK/SPnBU
- 1wmVi1GiUTeFRzZDbpUr3iff7eDx0sAjMuNthiWkY1lFdwok7Kr+wb4hsNJ7IgRyfnsyyFRvfzF
- i2mITU2E4tSk0Ul
-X-Received: by 2002:a17:90b:3912:b0:3a4:dbda:9934 with SMTP id
- 98e67ed59e1d1-3ab3aca2634mr10505205a91.63.1791949299443; 
- Tue, 13 Oct 2026 20:41:39 -0700 (PDT)
+ bh=m8M02c4ySR+Lt6uDZ7Aas2C/BIqx0f3wO/wn5zcjyrs=;
+ b=Q09D+9B5sFVu2XnibpJKddiUyBUaymB89WXM15HU9aQFJuCPOfGuG3Zd5CvjKudSMD
+ Ni77oXD+AaWaimC4bs0TSCdT4fWgh/txjUmClGiwGtGUMoWiF/RQhT4buJpoXecuTum7
+ vwoqQh4+v5AlRc6QdmAHM/em47PPag89UKDTrN25jl/0ver9epR3l2zhJnGMSnh3e8Nz
+ TYi34q28BBfb8MV8f+JsZZ0hxqbshgd/btDo3VhifFZi93yWy5IfV4pErv9dEjKfxLAZ
+ YgbaMN2GfcVyOGUM49PTpz1Gg+Y0mIvF4W3tWORUf4nUXTH+LdvJKIzoPuMCnndkGK3A
+ k1mw==
+X-Gm-Message-State: AFq9FYI4uqcjiagVsUU3NnRqC5M9y0IT5Hr7d/MjjbNFzEvYRDH2KVB7
+ fDQeFIF1GxCN4HZekws3iJhrcgUtZyChimIeEahUVERsWBcp6y9W63b5saKF9w==
+X-Gm-Gg: AYBFou1xjCyARmg3hOW+MEBmzxfNtpKsuRl+xmcLGMTFOQJA/3vCnGNx19D7q6TF31l
+ hdJcin0adl0fPI8GMNZf/CE3MzxiZOvY5xaDLg9+Mq8kgnRFFOzbZQwibKg0+cj44nbUkSWXcWD
+ o4mNWGrsxTNmm16E0LWRHbvcxZUjuuKkSkE+WdXnCXWzsj38pGQ8gC0UMhRXjb4IM2MFRvO6vdJ
+ 3W+ROh82hGIs7SpXULsqgueY3O7pvSEe4mAOslHSSRCKdv/lSUV35FFdc/vl3ZWyfaojETSk/g6
+ fGxPmcXd7z7U6dYNK0PnTJmhJhKDuFoWwl+QVKLhMyHk9JtwuqR/T4zu8Fx+ZVemFP2wUyYrdP0
+ 6G0Ikjf8YcxL1dHM2dhu3qYkmhTuLl90AwRuVDWstIx6JP8OJa4ZslXtr2FLbERxWW4paQ2SBeX
+ oZPhLx2uyJUNzav+SsLlY6s7Pn3ByD3KLCLxbsHSkiA34Aj5JFEYK9rZveIy/mT4j3nqaFrHun1
+ mqtivUjBj6b9vjU
+X-Received: by 2002:a17:90b:43:b0:3ab:330d:6e47 with SMTP id
+ 98e67ed59e1d1-3ab3a9528fbmr8418277a91.10.1791949288228; 
+ Tue, 13 Oct 2026 20:41:28 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3ac61170b7bsm2321457a91.16.2026.10.13.20.41.36
+ 98e67ed59e1d1-3ac61170b7bsm2321457a91.16.2026.10.13.20.41.25
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 13 Oct 2026 20:41:38 -0700 (PDT)
+ Tue, 13 Oct 2026 20:41:27 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
 Cc: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Chao Liu <chao.liu.zevorn@gmail.com>, Nutty Liu <nutty.liu@hotmail.com>,
+ Andrew Jones <andrew.jones@oss.qualcomm.com>,
  Alistair Francis <alistair.francis@wdc.com>,
+ Chao Liu <chao.liu@processmission.com>,
  Sunil V L <sunilvl@oss.qualcomm.com>
-Subject: [PULL 43/52] tests/functional/riscv64: add riscv-server-ref tests
-Date: Wed, 14 Oct 2026 13:38:58 +1000
-Message-ID: <20261014033907.3332383-44-alistair.francis@wdc.com>
+Subject: [PULL 40/52] target/riscv/cpu.c: remove 'bare' condition for .profile
+Date: Wed, 14 Oct 2026 13:38:55 +1000
+Message-ID: <20261014033907.3332383-41-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20261014033907.3332383-1-alistair.francis@wdc.com>
 References: <20261014033907.3332383-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
- envelope-from=alistair23@gmail.com; helo=mail-pj1-x1035.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52b;
+ envelope-from=alistair23@gmail.com; helo=mail-pg1-x52b.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -107,159 +108,37 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 
-Add tests for the recently added riscv-server-ref machine:
+We want to configure other CPU types to use profiles as an alternative
+to adding every profile extension explicitly, i.e. a profile is nothing
+more than an extension bundle.
 
-- a new test_opensbi.py test.  The idea is to have a quick test that can
-catch trivial regressions that would prevent OpenSBI to finish;
-- a new Linux boot "thorough" test that will boot the machine up to the
-buildroot prompt.
-- a TPM specific selftest for the riscv-server-ref board.  The test
-will be skipped if there's no 'swtpm' in the host.
+This means that a vendor CPU can set .profile=rva23s64 while having the
+same handling as any other vendor CPU. Same thing with all other CPU
+types.
 
 Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
-Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
+Reviewed-by: Andrew Jones <andrew.jones@oss.qualcomm.com>
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Reviewed-by: Chao Liu <chao.liu@processmission.com>
 Reviewed-by: Sunil V L <sunilvl@oss.qualcomm.com>
-Message-ID: <20260928201107.2049458-5-daniel.barboza@oss.qualcomm.com>
+Message-ID: <20260928201107.2049458-2-daniel.barboza@oss.qualcomm.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- tests/functional/riscv64/meson.build        |  2 +
- tests/functional/riscv64/test_opensbi.py    |  4 +
- tests/functional/riscv64/test_server_ref.py | 90 +++++++++++++++++++++
- 3 files changed, 96 insertions(+)
- create mode 100755 tests/functional/riscv64/test_server_ref.py
+ target/riscv/cpu.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/tests/functional/riscv64/meson.build b/tests/functional/riscv64/meson.build
-index 8a4f1d00f9..211ea9acfc 100644
---- a/tests/functional/riscv64/meson.build
-+++ b/tests/functional/riscv64/meson.build
-@@ -3,6 +3,7 @@
- test_riscv64_timeouts = {
-   'boston' : 120,
-   'k230' : 120,
-+  'server_ref' : 120,
-   'tuxrun' : 120,
- }
- 
-@@ -15,6 +16,7 @@ tests_riscv64_system_thorough = [
-   'endianness',
-   'boston',
-   'k230',
-+  'server_ref',
-   'sifive_u',
-   'tt_atlantis',
-   'tuxrun',
-diff --git a/tests/functional/riscv64/test_opensbi.py b/tests/functional/riscv64/test_opensbi.py
-index 0f8beb7e7a..367e131164 100755
---- a/tests/functional/riscv64/test_opensbi.py
-+++ b/tests/functional/riscv64/test_opensbi.py
-@@ -36,5 +36,9 @@ def test_riscv_virt(self):
-         self.set_machine('virt')
-         self.boot_opensbi()
- 
-+    def test_riscv_server_ref(self):
-+        self.set_machine('riscv-server-ref')
-+        self.boot_opensbi()
-+
- if __name__ == '__main__':
-     QemuSystemTest.main()
-diff --git a/tests/functional/riscv64/test_server_ref.py b/tests/functional/riscv64/test_server_ref.py
-new file mode 100755
-index 0000000000..ad29094dbe
---- /dev/null
-+++ b/tests/functional/riscv64/test_server_ref.py
-@@ -0,0 +1,90 @@
-+#!/usr/bin/env python3
-+#
-+# Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+#
-+"""
-+riscv-server-ref board test
-+"""
-+
-+import os
-+import tempfile
-+import subprocess
-+
-+from qemu_test import QemuSystemTest, Asset
-+from qemu_test import wait_for_console_pattern
-+from qemu_test import skipIfMissingCommands
-+
-+class RiscvServerRefTest(QemuSystemTest):
-+    """
-+    Test the riscv-server-ref board
-+    """
-+
-+    ASSET_KERNEL = Asset(
-+        ('https://github.com/danielhb/qemu-machine-boot/raw/refs/heads/'
-+         'master/riscv/images/virt64/buildroot/Image'),
-+        '6bacc876c769c1bb6057d2bf549eba67fbe83916e8223f9fe21c8e8fff665a36')
-+
-+    ASSET_ROOTFS = Asset(
-+        ('https://github.com/danielhb/qemu-machine-boot/raw/refs/heads/'
-+         'master/riscv/images/virt64/buildroot/rootfs.ext2'),
-+        'f00bb88749f945d80675540a1338bd1ccb226574685a5b6c65ab44027d0411a8')
-+
-+    def do_test_boot_linux_test(self, tpmstate_dir=None):
-+        self.set_machine('riscv-server-ref')
-+        kernel_path = self.ASSET_KERNEL.fetch()
-+        rootfs_path = self.ASSET_ROOTFS.fetch()
-+
-+        self.vm.add_args('-kernel', kernel_path)
-+        self.vm.add_args('-append', 'rw rootwait root=/dev/sda')
-+        self.vm.add_args('-drive',
-+            f'file={rootfs_path},format=raw,id=hd0,snapshot=on,if=none')
-+        self.vm.add_args('-device', 'ich9-ahci,id=ahci0')
-+        self.vm.add_args('-device', 'ide-hd,drive=hd0,bus=ahci0.0')
-+        self.vm.add_args('-netdev', 'user,id=net0')
-+        self.vm.add_args('-device', 'e1000e,netdev=net0')
-+
-+        if tpmstate_dir is not None:
-+            # Note: code taken verbatim from
-+            # tests/functional/arm/test_aspeed_ast2600_buildroot_tpm.py
-+
-+            # We must put the TPM state dir in /tmp/, not the build dir,
-+            # because some distros use AppArmor to lock down swtpm and
-+            # restrict the set of locations it can access files in.
-+            socket = os.path.join(tpmstate_dir, 'swtpm-socket')
-+            subprocess.run(['swtpm', 'socket', '-d', '--tpm2',
-+                            '--tpmstate', f'dir={tpmstate_dir}',
-+                            '--ctrl', f'type=unixio,path={socket}'],
-+                           check=True)
-+            self.vm.add_args('-chardev', f'socket,id=chrtpm,path={socket}')
-+            self.vm.add_args('-tpmdev', 'emulator,id=tpm0,chardev=chrtpm')
-+            self.vm.add_args('-device', 'tpm-tis-device,tpmdev=tpm0')
-+
-+        self.vm.set_console()
-+        self.vm.launch()
-+
-+        # Wait for OpenSBI
-+        wait_for_console_pattern(self, 'OpenSBI')
-+
-+        # Wait for Linux kernel boot
-+        wait_for_console_pattern(self, 'Linux version')
-+        wait_for_console_pattern(self, 'Machine model: RISC-V Server Platform')
-+
-+        # Test e1000e network card functionality
-+        wait_for_console_pattern(self, 'e1000e')
-+        wait_for_console_pattern(self, 'Network Connection')
-+
-+        # Wait for boot to complete - system reaches login prompt
-+        wait_for_console_pattern(self, 'Run /sbin/init as init process')
-+
-+    def test_boot_linux_test(self):
-+        self.do_test_boot_linux_test()
-+
-+    @skipIfMissingCommands('swtpm')
-+    def test_boot_linux_test_tpm(self):
-+        with tempfile.TemporaryDirectory(prefix="qemu_") as tpmstate_dir:
-+            self.do_test_boot_linux_test(tpmstate_dir)
-+
-+if __name__ == '__main__':
-+    QemuSystemTest.main()
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index 4f4ca08583..1c9b400f71 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -3167,7 +3167,6 @@ static void riscv_cpu_class_base_init(ObjectClass *c, const void *data)
+         mcc->def->bare |= def->bare;
+         if (def->profile) {
+             assert(profile_extends(def->profile, mcc->def->profile));
+-            assert(mcc->def->bare);
+             mcc->def->profile = def->profile;
+         }
+         if (def->misa_mxl_max) {
 -- 
 2.55.0
 
