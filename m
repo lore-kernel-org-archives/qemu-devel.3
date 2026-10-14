@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5ACBCC6B1A
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 09:45:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47859CC6B1A
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 09:45:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGvXN-0005E6-A0; Wed, 14 Oct 2026 05:44:42 -0400
+	id 1xGvXu-0006ms-GK; Wed, 14 Oct 2026 05:45:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xGvX8-0004xd-RS
- for qemu-devel@nongnu.org; Wed, 14 Oct 2026 05:44:31 -0400
-Received: from mail-dl1-x1233.google.com ([2607:f8b0:4864:20::1233])
+ id 1xGvXf-0006S3-Pa
+ for qemu-devel@nongnu.org; Wed, 14 Oct 2026 05:44:59 -0400
+Received: from mail-dl1-x1230.google.com ([2607:f8b0:4864:20::1230])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xGvX6-00024p-Fz
- for qemu-devel@nongnu.org; Wed, 14 Oct 2026 05:44:26 -0400
-Received: by mail-dl1-x1233.google.com with SMTP id
- a92af1059eb24-17bc533fda3so755527c88.1
- for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 02:44:16 -0700 (PDT)
+ id 1xGvXc-0002Cf-7H
+ for qemu-devel@nongnu.org; Wed, 14 Oct 2026 05:44:59 -0400
+Received: by mail-dl1-x1230.google.com with SMTP id
+ a92af1059eb24-16ad92569b5so3783430c88.1
+ for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 02:44:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1791971056; x=1792575856; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1791971095; x=1792575895; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=GXB3QXKoY6wasyI186JoDtarXRkUlXykQdj7F/0KBfo=;
- b=l588tGwrOuENdFJXO3XVfBxeltW57SIlJqxQ+tYTW2qvj5mVyJtwSi+hkOltp6cj4u
- Vt2NyH20bGZwgGvJpBET4HSZeBP8Khh87xVGeZvJ9tVisBX6fEsZ2GH/JUIJ9f3nj5b2
- 7d/gBv8YcqeS7xBS9i8EVq36YlWMfuPo9N70kVlDwNKbIj7pNQh1fpcWPv7VIKdRK0ZA
- 2EVKBleiyYEoLXbBj2wZAN79409ueGxA7vj6DKsxEcoX5lpIOA4+W//kglObja3BS/WW
- udgn5qriVBbGJsWTy94SBz+VLwhT3nHiEE3wDkrGXu2l29WPOWHnXkyGliFQHWOL5jST
- bsrQ==
+ bh=sIFDeCq7ZkSNZTlC5b7kyE+3BiZiRbc8X5G6/SCg8N8=;
+ b=Lo2kz5vK9IcxTGxb1w76FgxmXxhrNv01yrV1yBlC2RS9CRW55dh58U8ljb86XsXiV4
+ Y/UFXzctj88Ens4KuTI3fKKePuXwP4bqfktzuwk7Vzw2OAbV1qop36hiEd2X9/gsbQ83
+ ZyzxokbFUiw2kohn9qDV80nS68kmvo1DmWAnqcxGy0h9iucXv7qpBMxBLXAWoZXPbpYx
+ CfwY0dzdquDJkFt6/bY+ZM4j22b+qsIX4T4Pv06ba7P0P8e0eBBTX8cvZj+wJfP7FviB
+ rHIlQYNVEd6vKTEoi2s2y5IkLmOpXnbfChbIy3OCxDcGhHJhJ6E/hR5S/GqEoQFN5Mnn
+ iv3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791971056; x=1792575856;
+ d=1e100.net; s=20260707; t=1791971095; x=1792575895;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=GXB3QXKoY6wasyI186JoDtarXRkUlXykQdj7F/0KBfo=;
- b=2x7qzhjlmBPAgy470sRjhy5XE5Q0HtNzeTnTTFnk5JlHKyIjr3++iIS1095kj+rzEB
- yYeh9W3LKWW2fKTkpnMq//Mmyi90xHrbgl+X0DTL565xSL04pDSVFQS1po2U9gMsOnOv
- afcmXUFl/t0dygH1QRG3KdyRjPLF+ilVRscAOEn5iJXh6rZtfH1KEsv1FiUDCBZk0knE
- o6WQ0lDXsTCEUYwTrYNmAHMKVT9B1Rt/k/taRadpZNENQzoT/JoCfAgv8mZ8BXnSxIZ9
- dmKuk+kpwnEBkoMQaOCCnNKhxR3e0n4oPEMJDO0FhMQYr3DOqDOrmfRpTTQhYtPem6HJ
- w7HQ==
-X-Gm-Message-State: AFq9FYJyF8LDr2fgyk75O5Php+Wlc4lE/E5BCGh+ccU7+R673nahTMZl
- aUZD9Ppy+3k3qm+97nv5+X+dast4SxxfgiIdgPfu00JGwEfJX/ZpDWSK6YPNI1D4LUs=
-X-Gm-Gg: AYBFou1vcP3loB1+Mva/kDT7h3xRggvypQgrwve5QSRASeBk9SfrqDOXmmV6Drrhnhc
- gmmYAYR6mQMCaqK+MrU570cFFnJktRLxPTCw+ukyrZ29NaYX262HCTdHPgIXQ7BHl/48FQw7vJP
- hIdJ2VqanhhDluf+FV3vWCSsx03uDOZTh7putYj1FaTBlMh95uZOb96aTq8H8NwWtGw6L7VDmej
- K6pboFcWAs2PuOhYZzwxx9U6SMj2FrAMq0BtvsffsDWqHnSjGXNKJ/UgnwujQ1jD7USjPyvORel
- XOBQAm76IPYNT/zmqQ2OIYJO1gCWD9LE0c/k7vkX+dmpsV7bUqtUYWX+7b5452raBT9m+r+Wbwf
- VLCiEVn36mrj3vEpOLoVKU9L/3noRjEa9SBOmAQKf07IZkM6BM5y2K9gmWDw8n//NYtHKnuNuAr
- ciPcv3/aoYsktEEtgoP8siigrYOrklWCW4QFU2kTbL1WtS2FA7g0YpNCCQvmgl+2gEihU0eCES4
- Ivw4yw5VTCwhE5eNMo=
-X-Received: by 2002:a05:7022:170a:b0:15f:28e1:7c7d with SMTP id
- a92af1059eb24-16a61d5c4f6mr18481031c88.42.1791971055473; 
- Wed, 14 Oct 2026 02:44:15 -0700 (PDT)
+ bh=sIFDeCq7ZkSNZTlC5b7kyE+3BiZiRbc8X5G6/SCg8N8=;
+ b=buzcxzCeefWc9yRwjC7wNNVJ9KycDGo4Ij0XsKwRgAe/OsJH6jGxclYhY9CczqfaGh
+ Sr+ZMPB9NfRHjbdfIFO6dHtuxLijtT1D7OjU6PUdxJEPCHixii0fgawXwRjUWQOTybxs
+ ZuDORezu7dDEF+Prr61xGLgrsOZC/OYoPJWe96pRTMUcE6EIunrR2G6fbgfghbPoUV5L
+ wg7513mmXxOrMvE5AcAMq5XdvZKw7XaJezz6TmShwL+ZjLYpsejITDeIH8VEvisztaG4
+ 9mzknQKySDPK6kBS2Had9S7HGUTG4/Yri48Yenfn0kiS6B7MD3Yt1dXhO426Z1R1gvqD
+ Hvkg==
+X-Gm-Message-State: AFq9FYJ0rJHIDWvNzCJD3ZlUVY9O0RutEI7lcxOeZoLg0A46SQ35Y5GQ
+ UrPxOwaLrfqsqgerfEZXvt2mcL+ybCFWyaDHuHbcFSWsJt5fadU6gdK4XD9JULmFjF0=
+X-Gm-Gg: AYBFou0SdWhAxBnyfzwG5cDsfIZRoNtQsuf/HF5MbVtE+BgNcVLGPuJRjPFglbxin+d
+ uDD8d0NlLR8Pen1LBTp0mJhD5c7GObJdrpQaxXDSHhv1YwvxWH3+S05GIUdwfbFgiH2/C1YQcDP
+ 9ysGuG61DihoQ+++pwL5eSVQNTrvvBHLyGfVgsAGTWRNXrpGCAP8J3/+B0ffJJtTsCD5HtquTn7
+ vbt3+9KaEkTAAODi+kJm7GV6yPZqtKKTMAR+/7Vu1t7/jYxGzPSC5aNhz8NeNhWOPAYILpLbvQR
+ S7sBicQ7RFOpfen8hd7lWg5tIqAstITRAoFNXH0FUsSxEUqCbxqd7KwyNJ8/xJ9CfJqytNweA+P
+ XG9gKFKqulXwkDhlXw6MfZZBuEy3b6jmXVTCyrQc26/zLYxxCBQoM0Ddg0rnyIBmA11PIjLDLk6
+ JyxPngdVMek+AOIOmUHK4dJaWORLz1p7IBt5XS94bxy5gByqhZ1I7HpEOzh7U5tBtOfT+iI7hHD
+ +n88oEZYCAUE4S5iaEKtSDnHaQS
+X-Received: by 2002:a05:7022:b047:10b0:144:ddf7:2570 with SMTP id
+ a92af1059eb24-16a5e8728dbmr22079430c88.39.1791971094591; 
+ Wed, 14 Oct 2026 02:44:54 -0700 (PDT)
 Received: from DESKTOP-Q716RM7 ([103.94.185.75])
  by smtp.googlemail.com with ESMTPSA id
- a92af1059eb24-169a31f6f5csm44348380c88.11.2026.10.14.02.44.07
+ a92af1059eb24-169a31f6f5csm44348380c88.11.2026.10.14.02.44.46
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 14 Oct 2026 02:44:14 -0700 (PDT)
+ Wed, 14 Oct 2026 02:44:53 -0700 (PDT)
 From: Yonggang Luo <luoyonggang@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Alistair Francis <alistair.francis@wdc.com>,
@@ -97,24 +97,25 @@ Cc: Alistair Francis <alistair.francis@wdc.com>,
  Darren Kenny <darren.kenny@oracle.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Stafford Horne <shorne@gmail.com>
-Subject: [PATCH 26/34] qapi: return MachineInfo typename from query-machines
-Date: Wed, 14 Oct 2026 17:41:41 +0800
-Message-ID: <20261014094224.1976-11-luoyonggang@gmail.com>
+Subject: [PATCH 30/34] meson: build combined qemu-system for multi-target
+ configurations
+Date: Wed, 14 Oct 2026 17:41:45 +0800
+Message-ID: <20261014094224.1976-15-luoyonggang@gmail.com>
 X-Mailer: git-send-email 2.55.0.windows.3
 In-Reply-To: <20261014094224.1976-1-luoyonggang@gmail.com>
 References: <20261014094224.1976-1-luoyonggang@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1233;
- envelope-from=luoyonggang@gmail.com; helo=mail-dl1-x1233.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1230;
+ envelope-from=luoyonggang@gmail.com; helo=mail-dl1-x1230.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -130,158 +131,198 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-query-machines returned only the -M name, so management apps inferred
-the QOM type as that name plus "-machine". A prefixed type such as
-arm-virt-11.1-machine no longer matches -M virt-11.1. Return the QOM
-type in MachineInfo typename from object_class_get_name() in
-qmp_query_machines(). test_query_machines_typename checks that
-qom-list-properties accepts it.
+Build a top-level qemu-system executable when multiple supported targets
+are configured.
+
+Now the test-multi-target.c are testing under no target selected condition.
+That's guard for future breakage
 
 Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-Acked-by: Markus Armbruster <armbru@redhat.com>
 ---
- hw/core/machine-qmp-cmds.c |  1 +
- qapi/machine.json          |  6 +++-
- tests/qtest/qom-test.c     | 65 ++++++++++++++++++++++++++++++++++----
- 3 files changed, 65 insertions(+), 7 deletions(-)
+ MAINTAINERS                    |  1 +
+ meson.build                    | 58 ++++++++++++++++++++++++++++++++++
+ qom/object.c                   |  4 ++-
+ system/target-info.c           | 10 ++++++
+ tests/unit/meson.build         |  4 +--
+ tests/unit/test-multi-target.c |  5 ++-
+ 6 files changed, 76 insertions(+), 6 deletions(-)
+ create mode 100644 system/target-info.c
 
-diff --git a/hw/core/machine-qmp-cmds.c b/hw/core/machine-qmp-cmds.c
-index bc614a75c7d..59818764dad 100644
---- a/hw/core/machine-qmp-cmds.c
-+++ b/hw/core/machine-qmp-cmds.c
-@@ -116,6 +116,7 @@ MachineInfoList *qmp_query_machines(bool has_compat_props, bool compat_props,
-         }
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 669814d29c5..51012672b0f 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -2147,6 +2147,7 @@ M: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+ M: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+ S: Supported
+ F: stubs/target-info.c
++F: system/target-info.c
+ F: include/qemu/target-info*.h
+ F: target-info*.c
+ F: tests/unit/test-multi-targets.c
+diff --git a/meson.build b/meson.build
+index f54687e19dc..6e90760c05a 100644
+--- a/meson.build
++++ b/meson.build
+@@ -4275,6 +4275,7 @@ multi_target_supported_targets = [
+   'rx-softmmu',
+   'tricore-softmmu',
+ ]
++multi_target_final_targets = []
  
-         info->name = g_strdup(mc->name);
-+        info->q_typename = g_strdup(object_class_get_name(OBJECT_CLASS(mc)));
-         info->cpu_max = !mc->max_cpus ? 1 : mc->max_cpus;
-         info->hotpluggable_cpus = mc->has_hotpluggable_cpus;
-         info->numa_mem_supported = mc->numa_mem_supported;
-diff --git a/qapi/machine.json b/qapi/machine.json
-index a3d6e08a847..47fbc422ec5 100644
---- a/qapi/machine.json
-+++ b/qapi/machine.json
-@@ -162,6 +162,9 @@
- #
- # @name: the name of the machine
- #
-+# @typename: QOM type name of the machine, for qom-list-properties
-+#     (since 11.2)
-+#
- # @alias: an alias for the machine name
- #
- # @is-default: whether the machine is default
-@@ -202,7 +205,7 @@
- # Since: 1.2
- ##
- { 'struct': 'MachineInfo',
--  'data': { 'name': 'str', '*alias': 'str',
-+  'data': { 'name': 'str', 'typename': 'str', '*alias': 'str',
-             '*is-default': 'bool', 'cpu-max': 'int',
-             'hotpluggable-cpus': 'bool',  'numa-mem-supported': 'bool',
-             'deprecated': 'bool', '*default-cpu-type': 'str',
-@@ -231,6 +234,7 @@
- #               {
- #                  "hotpluggable-cpus": true,
- #                  "name": "pc-q35-6.2",
-+#                  "typename": "pc-q35-6.2-machine",
- #                  "compat-props": [
- #                       {
- #                          "qom-type": "virtio-mem",
-diff --git a/tests/qtest/qom-test.c b/tests/qtest/qom-test.c
-index cf4c6b5add5..4ee95af6d94 100644
---- a/tests/qtest/qom-test.c
-+++ b/tests/qtest/qom-test.c
-@@ -200,13 +200,32 @@ static void test_machine(gconstpointer data)
+ emulators = {}
+ foreach target : target_dirs
+@@ -4436,6 +4437,7 @@ foreach target : target_dirs
+           multi_target_crates += crate
+         endif
+       endforeach
++      multi_target_final_targets += target
+     endif
+     execs = [{
+       'name': 'qemu-system-' + target_name,
+@@ -4540,6 +4542,62 @@ endforeach
+ multi_target_link_args = emulator_link_args
+ multi_target_link_args += enable_modules ? ['@block.syms', '@qemu.syms'] : []
  
-     if (g_test_slow()) {
-         /* Make sure we can get the machine class properties: */
--        g_autofree char *qom_machine = g_strdup_printf("%s-machine", machine);
--
--        response = qtest_qmp(qts, "{ 'execute': 'qom-list-properties',"
--                                  "  'arguments': { 'typename': %s } }",
--                             qom_machine);
--        g_assert(response);
-+        QList *list;
-+        const QListEntry *p;
-+        bool found = false;
++if multi_target_final_targets.length() > 1
++  qemu_system_name = 'qemu-system'
++  if host_os == 'darwin'
++    qemu_system_name += '-unsigned'
++  endif
++  multi_target_info_sources = files('system/target-info.c')
++  qemu_system_sources = [
++    multi_target_crates,
++    files('system/main.c'),
++    multi_target_info_sources,
++  ]
++  qemu_system = executable(qemu_system_name,
++                           sources: qemu_system_sources,
++                           dependencies: multi_target_deps + [sdl],
++                           objects: multi_target_objects,
++                           link_depends: [block_syms, qemu_syms],
++                           link_args: multi_target_link_args,
++                           build_by_default: true,
++                           install: true)
++  multi_target_info_objects = qemu_system.extract_objects(
++    multi_target_info_sources)
++  if host_os == 'darwin'
++    icon = 'pc-bios/qemu.rsrc'
++    build_input = [qemu_system, files(icon)]
++    install_input = [
++      get_option('bindir') / qemu_system_name,
++      meson.current_source_dir() / icon
++    ]
++    if 'CONFIG_HVF' in multi_target_config
++      entitlements = 'accel/hvf/entitlements.plist'
++      build_input += files(entitlements)
++      install_input += meson.current_source_dir() / entitlements
++    endif
++    emulators += {'qemu-system': custom_target('qemu-system',
++                 input: build_input,
++                 output: 'qemu-system',
++                 build_by_default: true,
++                 command: [entitlement, '@OUTPUT@', '@INPUT@'])
++    }
++    meson.add_install_script(entitlement, '--install',
++                             get_option('bindir') / 'qemu-system',
++                             install_input)
++  else
++    emulators += {'qemu-system': qemu_system}
++  endif
++else
++  error_str = f'''qemu-system only support targets:
++@multi_target_supported_targets@
 +
-+        response = qtest_qmp(qts, "{ 'execute': 'query-machines' }");
-+        g_assert(!qdict_haskey(response, "error"));
-+        list = qdict_get_qlist(response, "return");
-+        g_assert(list);
-+        for (p = qlist_first(list); p; p = qlist_next(p)) {
-+            QDict *minfo = qobject_to(QDict, qlist_entry_obj(p));
-+            QDict *props;
++use ./configure --target-list= to choose at least one of them'''
++  t = custom_target(command: ['sh', '-c', 'echo "' + error_str + '" && exit 1'],
++                    output: 'none',
++                    build_by_default: false)
++  alias_target('qemu-system', t)
++endif
 +
-+            if (strcmp(qdict_get_str(minfo, "name"), machine)) {
-+                continue;
-+            }
-+            props = qtest_qmp(qts, "{ 'execute': 'qom-list-properties',"
-+                                   "  'arguments': { 'typename': %s } }",
-+                              qdict_get_str(minfo, "typename"));
-+            g_assert(!qdict_haskey(props, "error"));
-+            g_assert(qdict_haskey(props, "return"));
-+            qobject_unref(props);
-+            found = true;
-+            break;
-+        }
-         qobject_unref(response);
-+        g_assert(found);
+ if get_option('plugins')
+   install_headers('include/plugins/qemu-plugin.h')
+   if host_os == 'windows'
+diff --git a/qom/object.c b/qom/object.c
+index 96498f3d001..f05456bd701 100644
+--- a/qom/object.c
++++ b/qom/object.c
+@@ -12,6 +12,7 @@
+ 
+ #include "qemu/osdep.h"
+ #include "qapi/error.h"
++#include "qemu/target-info.h"
+ #include "qom/compat-properties.h"
+ #include "qom/object.h"
+ #include "qom/object_interfaces.h"
+@@ -167,7 +168,8 @@ static TypeImpl *type_register_internal(const TypeInfo *info)
+         abort();
      }
  
-     test_properties(qts, "/machine", true);
-@@ -218,6 +237,39 @@ static void test_machine(gconstpointer data)
-     qtest_quit(qts);
- }
+-    if (info->is_available && !info->is_available()) {
++    if (!target_combined_binary()
++        && info->is_available && !info->is_available()) {
+         return NULL;
+     }
  
-+static void test_query_machines_typename(void)
+diff --git a/system/target-info.c b/system/target-info.c
+new file mode 100644
+index 00000000000..fb13ea8ad22
+--- /dev/null
++++ b/system/target-info.c
+@@ -0,0 +1,10 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++
++#include "qemu/osdep.h"
++
++#include "qemu/target-info.h"
++
++bool target_combined_binary(void)
 +{
-+    QTestState *qts;
-+    QDict *response;
-+    QList *list;
-+    const QListEntry *p;
-+    bool saw = false;
-+
-+    qts = qtest_init("-machine none");
-+    response = qtest_qmp(qts, "{ 'execute': 'query-machines' }");
-+    g_assert(!qdict_haskey(response, "error"));
-+    list = qdict_get_qlist(response, "return");
-+    g_assert(list);
-+
-+    for (p = qlist_first(list); p; p = qlist_next(p)) {
-+        QDict *minfo = qobject_to(QDict, qlist_entry_obj(p));
-+        const char *typename = qdict_get_str(minfo, "typename");
-+        g_autoptr(QDict) props = NULL;
-+
-+        g_assert(g_str_has_suffix(typename, "-machine"));
-+        props = qtest_qmp(qts, "{ 'execute': 'qom-list-properties',"
-+                               "  'arguments': { 'typename': %s } }",
-+                          typename);
-+        g_assert(!qdict_haskey(props, "error"));
-+        g_assert(qdict_haskey(props, "return"));
-+        saw = true;
-+    }
-+
-+    g_assert(saw);
-+    qobject_unref(response);
-+    qtest_quit(qts);
++    return true;
 +}
-+
- static void add_machine_test_case(const char *mname)
+diff --git a/tests/unit/meson.build b/tests/unit/meson.build
+index d17435c1877..4bc7c4c146f 100644
+--- a/tests/unit/meson.build
++++ b/tests/unit/meson.build
+@@ -217,12 +217,12 @@ foreach test_name, extra: tests
+ endforeach
+ 
+ # Multi targets test
+-if multi_target_objects != []
++if is_variable('qemu_system')
+   test('test-multi-target',
+        executable('test-multi-target',
+                   sources: [multi_target_crates, files('test-multi-target.c')],
+                   dependencies: multi_target_deps,
+-                  objects: multi_target_objects,
++                  objects: multi_target_objects + multi_target_info_objects,
+                   link_depends: [block_syms, qemu_syms],
+                   link_args: multi_target_link_args),
+        suite: ['unit'])
+diff --git a/tests/unit/test-multi-target.c b/tests/unit/test-multi-target.c
+index 704e3297ef9..ff81ea42a90 100644
+--- a/tests/unit/test-multi-target.c
++++ b/tests/unit/test-multi-target.c
+@@ -49,6 +49,8 @@ static bool target_arch_available(uint64_t arch_mask)
+ static void test_qom_types_are_unique(void)
  {
-     char *path;
-@@ -250,6 +302,7 @@ int main(int argc, char **argv)
+     g_assert(targets);
++    /* Verify this test runs like the combined qemu-system binary. */
++    g_assert_true(target_combined_binary());
+     /* trigger type_initialize for all types */
+     object_class_get_list("", false);
  
-     qtest_cb_for_every_machine(add_machine_test_case, g_test_quick());
-     qtest_add_func("qom/qom-qtests", test_qom_qtests);
-+    qtest_add_func("qom/machine-typename", test_query_machines_typename);
+@@ -89,9 +91,6 @@ int main(int argc, char **argv)
+     target_info_qom_init();
+     targets = target_info_qom_get_targets();
  
-     return g_test_run();
- }
+-    const TargetInfo *first_ti = TARGET_INFO_CLASS(targets->data)->target_info;
+-    target_info_qom_set_target_info(first_ti);
+-
+     /* register all types */
+     module_call_init(MODULE_INIT_QOM);
+ 
 -- 
 2.55.0.windows.3
 
