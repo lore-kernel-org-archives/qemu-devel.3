@@ -4,28 +4,28 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F03D1CC6B19
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 01:25:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D2E2CC6B1D
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 01:25:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGnjL-0005bn-N9; Tue, 13 Oct 2026 21:24:31 -0400
+	id 1xGnjJ-0005a9-OR; Tue, 13 Oct 2026 21:24:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1xGnjJ-0005aD-NV; Tue, 13 Oct 2026 21:24:29 -0400
-Received: from mail-japaneastazlp170130007.outbound.protection.outlook.com
- ([2a01:111:f403:c405::7] helo=TYDPR03CU002.outbound.protection.outlook.com)
+ id 1xGnjI-0005ZP-5T; Tue, 13 Oct 2026 21:24:28 -0400
+Received: from mail-koreacentralazlp170130006.outbound.protection.outlook.com
+ ([2a01:111:f403:c40f::6] helo=SEYPR02CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1xGnjH-0006ql-Vb; Tue, 13 Oct 2026 21:24:29 -0400
+ id 1xGnjG-0006tZ-N8; Tue, 13 Oct 2026 21:24:27 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=FuXddMXm90uzm32J1U0dTKp1NO+lP1TpFFkwCE8gdirQlnBwEnJ9bGOe3hFYa2fjl+3kM3hqwm9c+4PRRja+GjVNbnGRT94/wB1m9KjxgrgIqZNqTofX/bfYJWLAFrAMRdcfJ+ll2HCJ85rUdTMYsoit8lE02VtaIzO9hbC91CKXXtVbU4M6XbwXDa2RciYUCZhimoNPTLt5u+VdRsBKqeM69GdzRdHxnYm9T3i7b4yhEW4cWd2u8VUrHUML336oDKrumfBP7/+tj1XBbObX7BhSJJ8YPvfM8ODJu4bR4Hmll67Oh3HUzThi4hA7oSIyM2utKqCMoWfMfiHqz3H/QA==
+ b=pitV2ZK+JwVA/NboT3AbsX4tF3Mr3u9N7fRxUDZsxAXHhJ28n1yvJviYc8dTH/+vIBQhSKBmlb/6JxcDEXMqlqRKNNQPgjc9oo+AS/iT8nbPDEZaQsW1NNd2FzCLgM4CLNHkSJRhtV4QaEIvVLYgLXbhC98pdBUmq0vvijQTJbal78zQX5McMsW5e7oHJ4Qs1VbiALOAKr/zkfQYlV7Wm4e8ZhlYKJ9SR1YVlA3aEMYUOMA10RQ+JymlGCEbLJcqk2Su33o/ka5ZLCZkkJcLi8qyUVXGJFKeTEzW1Ih3mOctPYptNLlcaRO+3qHfBPkDO4YN4UIsRg274KbijX8uXw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=6WO3Zj9WgA8ZeigeRpJPJ3gv6Bua7z25o/HvqHq1QvQ=;
- b=Sw5qRSA/Sia+U9SuMQxZ+Yj+3uWxCUGkzEm4J1lOmprDL2fRy+Av+7RzQ/5070uzKe47nBwRitnLKkBX/tW5ppXIwZ4wHUZofI0TVJ+8miUlWjf9sfN5ghAdh4G9lclsuT+X0OUfluPADhPUX5EtVooJocCjrdMdm3DHbBbP8XmocuGMbeVbT1WWAhrl//VTCZELwHOci1PRDktST/5CJMrzGLHiUV07jxBurq86vwhjqiHZJ/L72Gq88BTjAdqCxNnFTC289YwKsDMrb8/ImJYVCjA60/+xbhxX77N246696PxRngin8tF8PL9DYaV3eBc9gTsVDydAGjzYSArbbg==
+ bh=/IEGjE9GbGxoYKfYyj17eRSIkL85nkDRIfh5Z7TBQ8g=;
+ b=yaStqC8a8C6qzDdBIMo0mxi1+ht08LpOFRkLTGy2WtnB7tqjF8YvcM9hslLsUwAygHmp+QfrMfag6O3ncWHIRh3Cd6NjX03PgS0u9mp4DdY4Hhibbd/MAyQRrzfAuTz+c2kAlhuMRKNwVshKGc8Em7oG+JKqu66izXZoLrbOmLbDOhjzvWyOf+M4pQs1KGVtBsW1qewYfgLgnt1CT7sRMJRhT1wWiP47gxM1mMjlg0UoE7ZVjEb320pDl864lVH+2rS3z1zjuuxZgJb3FdaaLY+CGivXIF2apYvQ6c34SaJOdaakFsdtHPz8Qi/Yn6ACws4fskNdtVK5J/NJdUcPqA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=processmission.com; dmarc=pass action=none
  header.from=processmission.com; dkim=pass header.d=processmission.com;
@@ -33,110 +33,103 @@ ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=6WO3Zj9WgA8ZeigeRpJPJ3gv6Bua7z25o/HvqHq1QvQ=;
- b=WrEtIzl5aLq0NjAyiSnpU1z/eTlUsgNK+vBEVymwp0pfErL6f0LQoSO+nKxNoHh3GNGxdXhRDZyjnzSRSQONI0O7p3bK0lD09NxFkziDuQIoaqNlw92DXNu6EpVO2kLZxx9AzRaRGLrbaVVkQ6Cxf2fM6RfQGBXrhAI7DQt2GVw3smYT/PlBqnJQ7Gvm2xAhHHcSzehwpPu7KlpFNgaJiNQ1km084jLxZcsUeXByRrFVPz59MdHAJiv8Wh1lLaOtmceOAXedwCRREzDA6TswrRWl/fKr3IrHE+cvWKFJRklphAqHHx2Ia2EuyqaRb2qX25WsrTM5/2RK6ma+Bq/cqA==
+ bh=/IEGjE9GbGxoYKfYyj17eRSIkL85nkDRIfh5Z7TBQ8g=;
+ b=d+xQSkB3Q3sgHXX/X0pOf0+qMeG6WaUosf3uMXJRIzRzphe5soVm/VuevJdGNFqNJUMhsjIV+2SNX8gvCILTrcmArddx681XVhkLCibI7jHl7RCiwEWnCzZN28Xm4lo0w5oBKNMiPsLBOTk0zrVilxHMtcjEK7gmm8x6iFT4DnNM6oBfKFNXfMUZncI2HsedEMgZbGk8AHmYcGMNjMsnz2h7haskccFy/yRux+m70ftd7S/ykr0z+ggCbkBqEaXYd/p3hqxCtFAxPgA8CdTr19860zM5rFsVs+YAh65O3jpTS8F2s0JrRqanh/ElkoRrpvpjqsC7pCVuyS8UcM8ydA==
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=processmission.com;
 Received: from KL1PR02MB6257.apcprd02.prod.outlook.com (2603:1096:820:da::11)
- by KL1PR02MB6214.apcprd02.prod.outlook.com (2603:1096:820:9e::10)
+ by OSQPR02MB7959.apcprd02.prod.outlook.com (2603:1096:604:297::12)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.522.12; Wed, 14 Oct
- 2026 01:24:15 +0000
+ 2026 01:23:48 +0000
 Received: from KL1PR02MB6257.apcprd02.prod.outlook.com
  ([fe80::ecf9:e832:8196:215]) by KL1PR02MB6257.apcprd02.prod.outlook.com
  ([fe80::ecf9:e832:8196:215%6]) with mapi id 15.21.0496.021; Wed, 14 Oct 2026
- 01:24:15 +0000
+ 01:23:48 +0000
 From: Bin Meng <bin.meng@processmission.com>
 To: QEMU <qemu-devel@nongnu.org>
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Conor Dooley <conor.dooley@microchip.com>, Bin Meng <bmeng.cn@gmail.com>,
- qemu-block@nongnu.org
-Subject: [PATCH v4 11/27] hw/sd: sd: Keep high-capacity memory blocks at 512
- bytes
-Date: Wed, 14 Oct 2026 09:22:51 +0800
-Message-ID: <20261014012323.322790-12-bin.meng@processmission.com>
+Cc: Chao Liu <chao.liu@processmission.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Conor Dooley <conor.dooley@microchip.com>, Conor Dooley <conor@kernel.org>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Sebastian Huber <sebastian.huber@embedded-brains.de>,
+ Weiwei Li <liwei1518@gmail.com>, qemu-riscv@nongnu.org
+Subject: [PATCH v4 01/27] hw/riscv: pfsoc: Correct the L2LIM maximum mapped
+ size
+Date: Wed, 14 Oct 2026 09:22:41 +0800
+Message-ID: <20261014012323.322790-2-bin.meng@processmission.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261014012323.322790-1-bin.meng@processmission.com>
 References: <20261014012323.322790-1-bin.meng@processmission.com>
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 X-ClientProxiedBy: TY6PR01CA0005.jpnprd01.prod.outlook.com
  (2603:1096:405:3bc::12) To KL1PR02MB6257.apcprd02.prod.outlook.com
  (2603:1096:820:da::11)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: KL1PR02MB6257:EE_|KL1PR02MB6214:EE_
-X-MS-Office365-Filtering-Correlation-Id: ba854baf-3000-4770-fb23-08df2991dc6a
+X-MS-TrafficTypeDiagnostic: KL1PR02MB6257:EE_|OSQPR02MB7959:EE_
+X-MS-Office365-Filtering-Correlation-Id: 88642810-6c26-4830-621f-08df2991cbef
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|23010399003|1800799024|376014|366016|6133799003|18002099003|22082099003|10067099003|3023799007|261009223027099003|5023799004|56012099006;
-X-Microsoft-Antispam-Message-Info: utbZgXQkkTSli7HWpQaBcdgnlrcz/W6HX5KGRqvnC3EY4YJwOYzPLfBWyfkqfaPnHuq0rqLlwiroBmyc5KHgCf2bDPCQMm8iS83bRlGfWBOE9Qrwj/LI0PQ6iticDIBLB4TpoP9835fcMlxZaD88Py1qZpZraRHgdxHvckCdv3lAB6LXcS8Tc8FSmfUZvii1Px5lGxn18MkHfPYW2ZuT8THwu5gkzpwd4ObQ3LR/Huk47AHxzoUmUPAaTIE3cPKpnNWQGj/ZUMvnFWTsQWOvWFgvjyxXcG02gjNNv8x0lCM+JlAoK+MPBEZjBy14JU/xu6a4wbZWSs7e4WZMxbkmaThRMHxNW/B2Yw5ViZWuoaEXeTPrueCIONH2YhEoz/+KrdhnOIcsGj/tmxljmepARmOUsp8PjcLt9rZU9o19vvHD5y3KOXC4h8uhhXSj13Eg1sFgwbSa897MJiUBTd06wELKlak+n+f4BOj/E9HAp+CkmyrV1dHQ8epQ4WfRGxZUhrHJa+2xjPlxhF2s5QGCIuCCDKlnWddjPNhSFmR6yhLOReLafxeosCY2HeGdBCAYIKByKqeg1m8ASgu9OutobABZveomPYwnnZ4Vk+GmifRRS72aK8PAGduheX9l7VFQCjx16uu7bw/zSGzLV1srUlXOrVLStR3hA5nSen5EHUs=
+ ARA:13230040|1800799024|376014|7416014|366016|23010399003|56012099006|261009223027099003|10067099003|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info: kl91wh0CwnZvKZoFMRCOnvFGwuFFh5ZhEMsW4U3/QIE+O4s36ZTTssFvVr/j4OVu0tT4IzYXIvuZbEFSAa7Z3t36qSSDvnvX/bVHDAq5iOig3h6gf1nnqIcY0u0b+kLo8phVvoeb+k6VG6AaoaReVPVGQZIqgZo7t7yhjT0u2Qq++DG6ir94SW/lNblUoH+x8GbIKRJ7QVk91l4U+ystsAKDoMHHqEjDY7pMRiQVMnhN+2xlqCBmL7psINBO1IC+AO+62Re3MUOkyRbVRbnf98neWW84x0M6hfne5y6RMsO669p89DSP/EGTHTqXSSjyqsPdB+qBrNas3YzIwmvS8WCbS1F0JoYUgX4x/Ae5tQQWA2B2F8oQVKFolrNauwlBiX12qPamvi77QRXFeWhRJ60tWPd0cI4pqwu9ekxyfX8d90Xl1EfvGByzpgj8Ya2ROm+NcZXGdYGjCvq4MPol0c0fK7W3mfMtoNokh4+N/o4n1qi2jmWnDV22OBAL69j5+dcyFB3hd5xtENFvazKym/OWsR7LRJ+39IIcj5nUI55SSIEvVC585Y8Sl2yIrMbuz2KfempfQmwNXxYJvYdZ54xLVWbDVU5oTtc3/bEDIIqjC02CI8JyHB557A6RcoFLyfeuBAX6soQs6sqOBS1LTaxB769p4WBzqEQ+3Wlq+Ac=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:KL1PR02MB6257.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(23010399003)(1800799024)(376014)(366016)(6133799003)(18002099003)(22082099003)(10067099003)(3023799007)(261009223027099003)(5023799004)(56012099006);
+ SFS:(13230040)(1800799024)(376014)(7416014)(366016)(23010399003)(56012099006)(261009223027099003)(10067099003)(18002099003)(22082099003);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?dG9vSjE4SU9uYk55d0tWcTI0N0JNTkZxdlNqVVdRRXpHTjZ3TnZyaytuV3N2?=
- =?utf-8?B?RVZDb1VacFFRMlIvdkdRSXUzVGRzQmw2a3ZtR2pzQys0akpOTnhFNVBUM1U2?=
- =?utf-8?B?bkNDc2RDWS9zbWdVRS81K0Y2S3Frb0VaZzd6R2YxUXZkbnRPS1pJZlFYUmVt?=
- =?utf-8?B?V2F6Q3VtMVJXNHhqMWJRcnVEVlg3ejljYnBsM1g1ZW81YVI5ZmNnbU5NK2tP?=
- =?utf-8?B?UHEwMmY2R3VRNlFTMkV1bVl5V2hQbzR5TjcwRVd1bGVEa2ZjMC9QVjFWOTJm?=
- =?utf-8?B?TjJQaXZuSWZsY3MvTVdSWG9mNE5DNlNVNVlBdXlYN2dkdncwQnNKRUkzUkJD?=
- =?utf-8?B?ajdEWFBYZGdycGJYYmEzeXZZRWxjL09UdS9GMlcrbGxKRU9ZNnhqMmwzbGR3?=
- =?utf-8?B?NGxucnk2cmFUL0g3djJsNGpEbmp5cGs0MWYzaW50bXloZytucTZVdWJCWXY2?=
- =?utf-8?B?eHd6MGh3Q2JIMHREekplSlQ5QzRRa0d4bmYrV1F2MlJpa1E2NVcvcXRFMmZR?=
- =?utf-8?B?azNWaWRIZTN5YXoxNnFUMS9XNGF0ekdmdDNzcWtCY2xiU3dhWmowQnlLR3R6?=
- =?utf-8?B?MjRlVHh1eitwYU0rcDFpaVBGdkpDWkhPdDNRYU44SUlaYnpvK0sweXIrbHFm?=
- =?utf-8?B?QzBYTVlNam00aHR5WTZFRzBEMk9saXFqa29QaGpLYlpHbFpkMW9uT0xZOEFI?=
- =?utf-8?B?VjlQQ0oxZTFYT3U5UXlqYTNJaDE5YWpha084U1hobng5TElVU1pVbW9sU2dC?=
- =?utf-8?B?OWp5dHVZaVliSWc0SVQ3WVY5aWJjVnkzUHhKOWxWOE5aOHJodkdId1NnYlAr?=
- =?utf-8?B?Ykx4UUV5L3N1YmRMVllHZ3pFU2Z6dm0vUXJQa2Z1NDdVNE9JVnNEZjE4VHFr?=
- =?utf-8?B?N0ptWVdFTXorNFlURDdjYWM3RE8xNHJWWHc4WkhZUEpVdDNkUE4zR0EwQ29M?=
- =?utf-8?B?eXF1U2ErakJxb2xBdENPdEhHSWRDZy9CRm5JT1l6Y1hPL3Nua0tOTExjZ3I1?=
- =?utf-8?B?eTNlWGEyVng0eHdCUTdmYVlUdlgyM1lhNHlxY0hlUUpPYVNYSXAzd1pLOW5T?=
- =?utf-8?B?TFJHbHpvRElqbzNyYm12QzVPQzcvTEgwVjVvU0F4aWlFZVVEcncwdWZOU3Rp?=
- =?utf-8?B?ZGNjcXFqU2FtbjdkdlcwN1A2WEhzRkR1b0pTNTU0em9lczhqUUNRS1Y5YWFu?=
- =?utf-8?B?SWVlM0xaU3MzaUVxNlIrSWFKcnV0bjF0MXBqTmh4NFBkOStKZmVWYXVteTJB?=
- =?utf-8?B?RVpLZC9CdkN1clFKQmVNa0k4V3RwRFpUUDczUEo3TU1ERXgwZzRBUlpleTlZ?=
- =?utf-8?B?MzlBMHB0bk5Hd2sxbTgrWm83cjhLYWxtTWFjS0tQMTd4aVhLOHdtY3N2OHFE?=
- =?utf-8?B?SEozOUtrb0xXSmtIdm5iaXptZ1FLelhpS0tYRmJMSjE3Uko0L1V4TUFhZVFr?=
- =?utf-8?B?b1hWbms5VXBNSC9PVFhnZWhiTGhZdlZNdWdGT3lyb29zaTJGbmZScUxIME9Q?=
- =?utf-8?B?NmtnR1NnR1p4eklsaXY4ODhWSTVBY2JxTUNzcHIwTElvL1ExczNvUHNTWEJH?=
- =?utf-8?B?WURyWEwvUTlFSjQ2Rk84ZHlzbk12NmozZVpkNHUrdlNjUkpUTm5GYm1DejFD?=
- =?utf-8?B?SVM5U0NsRUlVVktlNG9LcTlWNVV3MUpqcDh0THdwMlBiMkgvSUNGeXppaThK?=
- =?utf-8?B?SDN6K090a0R0QlZjNzNycGNhQ1pyY1dTWjhzTUlwVk1KMGhMYzBRcDFwQVpt?=
- =?utf-8?B?VEFjMWQzVGRFYW1wZHFFQ1hZR2lsbWRsOWJOdEFRVk5sNklZWG1jMVpldFR1?=
- =?utf-8?B?bFVBWjlreXBZOTRDam45amJ3Z0pVb0tBNG1Ta1BXc21OR3IrajZweEZTNUJt?=
- =?utf-8?B?S0pNQXl1OVE3WkM4SlkvZ0FVZGpFZlEyMkp4eWZpRkFjZVdZTTlmWmpkRUJx?=
- =?utf-8?B?Ykp5VlRZaElQR0hzQU5hU3BSME04VTBLajZkd2pvYS8wV1BvWktraFNUL2pZ?=
- =?utf-8?B?N2hWa1k2Q2N0YUswN0I4N2dUbUNnWDVSdER2dlVNTkdDQXlsdkpDZkhKSjB3?=
- =?utf-8?B?VzFCTVZCdzFVU1VsME8yUGg2MjVTcGR0QzlVWDcrUEF1RlVxWTREMkhJZjRI?=
- =?utf-8?B?dWtNOEV5WlprbVZWazZJTGhDQmQzMzZBenRLenJuVDhDaDVKZVc4VnU3V0l5?=
- =?utf-8?B?b3pIWkptRjg5c2EvQzFUOEhyZEtWdEtxaUxONVRHOVFDaTI1WkxGNVpBaWh6?=
- =?utf-8?B?R201eklwQmd1MWR2Mk1MVVEvTTUzRHJqRkhDQXVKTXlWd1AvOTlzazBnYzB3?=
- =?utf-8?B?ZDVQaVlQQ0tybjI3ZUltSURQSTl2dytlKzNpa0dtN3dvRDFZZjM4UU4zcWF0?=
- =?utf-8?Q?arMuWB5rnJq7LNl0=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?iGB+yU0l1uETQbm4vLVBpbumECzEy9E08yOxdcz+7aeYDKHezPufCL1nbwil?=
+ =?us-ascii?Q?cib6EmMpgIw+hfqqZFqyhZy3loZrt0Nm2RZp5NSFGGgAniuXVj7kVj2Kj6NY?=
+ =?us-ascii?Q?E3X1aoRqaUCerXIH3yTDsM6riAR+vE8xtc9evAMenMTrVzYP1Rk8ek2PsrUo?=
+ =?us-ascii?Q?aV8yMRM1V1jp9OKtCdExtfINlJm9jWKlihJn7cQjxwzs9FwsjOz5cVjoP3JT?=
+ =?us-ascii?Q?egmo4uicFyTHBSwBVKYCcsFBATqWEL66FFFLDh7KF6SARHuR8C2SwCyrd35A?=
+ =?us-ascii?Q?IATJrENha43VS9g6pAWsNbpE0kkrTbBZTe5r2VvuNEehOLSxmxZiA+LnhrPD?=
+ =?us-ascii?Q?u+Y+ItpO0eQpx0E6nWFeHzq8UAW/Qp5RXWDxPo3xQFv4ORb11UOmT0V/6sS9?=
+ =?us-ascii?Q?2m6uWBbFHeGvHF6CCDI6WdF4lOemcz24bnFbNql+57MgQDRrNQlHWGmJXD/d?=
+ =?us-ascii?Q?q6Dku6o7ErPNbaMkQ5eizxNZdBonr3XQihZkU1HEvjE/lEFDKYsIva19svFn?=
+ =?us-ascii?Q?Lcit0DVo9BFohkpQPdK8pTyqXxjagTg/CAh7R6u4fPDvCo7UAlf6NEP+lSH5?=
+ =?us-ascii?Q?2vW7lD1REr61szU9s7foz5UldbCvdIhdfEQ4ziWajfWfvodHU2oGpYNdFCEZ?=
+ =?us-ascii?Q?hBaZwYJVHTq18zqDBhxI3Z2uEGQCI6rtPyBRvnLmMxdENUcr2bl7FowV5qT3?=
+ =?us-ascii?Q?WeQxJPLVawJoui5KodSTTuVOyeWZSVcbKukchPggGaYuLc+xY3Jt91qgGhQQ?=
+ =?us-ascii?Q?mjxiELk8+wZWio5wRCkOyJejp73G1nWKmbhGL24zVpTYXvaW0gYu8PuU4R6F?=
+ =?us-ascii?Q?iW/jE6mDW8Ja/NeZKWBNvSRwNRXHenKz/K9JCrwjwRRHCFfBRwJ8jdYsRyJA?=
+ =?us-ascii?Q?qupAPXIA1Bai+Yr2aHvzQ27L9yRjm9ymPMETBDqKW4or9vUHaYi5RI71aR+a?=
+ =?us-ascii?Q?F466lwd5Ke3ecFLLU/rif3HYOEnZSMCPWGs24/QXu7F2FPPnrD5wlNB99spD?=
+ =?us-ascii?Q?YwdVyS/6fc15WdgRhcE+p8Rl9NoRoab0BAuUdKCMPD9OAQtTDg7qPHuTj1Fh?=
+ =?us-ascii?Q?le3OzS0dXssM9KU5XW1LIE/Hm+c+VDUtaqNbeL4jE/ovLM8cyC/HA6ArLlCe?=
+ =?us-ascii?Q?XezoGwZlc1fgbR/ShPfZnZ/m+WnhHVvpUeq9OMeBXdxWhqgtOeiF+aezWzHk?=
+ =?us-ascii?Q?4twvzi8BeaxloqgWXdnOjY4E8xkY3ILgouk8lWnq9hUjEQAdhinI35qdwm2F?=
+ =?us-ascii?Q?XZC78bCZYnHMGzwdJOtkGiOXoukQS884chZEj6US5xnAu2y1OH4pHPlKQC8M?=
+ =?us-ascii?Q?xyYhJZ+q2/aCoXaKce2t5lTU2NmPbC33omOS8z10gTFPYmqkMJCJlProuR+y?=
+ =?us-ascii?Q?P8WVARx6iGvGkowxe8EbLN3RNX37LfFsvhfC+95rcTr32aNJ5sdfeWM7zXKv?=
+ =?us-ascii?Q?lLpfJktQCvng9Bv9MY/WUgQ09GaFWxqz34hAtFW6/50YXVz6mnzgSdLv4NIP?=
+ =?us-ascii?Q?Y7XHITa2FsLH/W90PscjHwmI31afB2CHPB2Ru+9bc/lPNuB6o8ZoxzfhOsvf?=
+ =?us-ascii?Q?Bx/XJenyMIZpa6tjPvjslJEhZThHs0t2g1VxtlGCzlY/54dPxrMSGjaZcEh/?=
+ =?us-ascii?Q?D1BdVn14uTn1vimRW6VD/ujQ6pqVsSojJsP1vj/YUdGqZl2cN+Dxmzbwef56?=
+ =?us-ascii?Q?fII+bmsy5YLDQ032RuwpoHZUU0ZXoMNLxyA8EPHv+hfNiyIoLyUkhbVs1iNr?=
+ =?us-ascii?Q?N50eKkhEyc3ZnNTVWpSKy0KkeZhxEM0=3D?=
 X-OriginatorOrg: processmission.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: ba854baf-3000-4770-fb23-08df2991dc6a
+X-MS-Exchange-CrossTenant-Network-Message-Id: 88642810-6c26-4830-621f-08df2991cbef
 X-MS-Exchange-CrossTenant-AuthSource: KL1PR02MB6257.apcprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Oct 2026 01:24:15.6281 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Oct 2026 01:23:48.0410 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: R0fiUNiNTOhZchNlUVzXhK2NFEI8NDq/i5UTqCGNHEb+zIyB/0X+ZzxgakZ+do/Zot3oRcWye9F6c0hvnOEw4g7z7g241cm7G4eCO5LZzmw=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: KL1PR02MB6214
-Received-SPF: pass client-ip=2a01:111:f403:c405::7;
+X-MS-Exchange-CrossTenant-UserPrincipalName: DCOaab9ZaMYd5n2AiwLVkvB2/A21yM9wFOw+DqwmklfReZN+wxHur0eegwPuCD5wZCaP6gk8M+mM+14kir2OVVk8luihoB5R5JiRHVTSKcM=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: OSQPR02MB7959
+Received-SPF: pass client-ip=2a01:111:f403:c40f::6;
  envelope-from=bin.meng@processmission.com;
- helo=TYDPR03CU002.outbound.protection.outlook.com
+ helo=SEYPR02CU001.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -153,195 +146,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-SDHC and SDXC memory commands always transfer 512-byte blocks regardless
-of the length selected by CMD16. QEMU stores that selected length for
-LOCK_UNLOCK but also used it directly for several memory command paths.
+PolarFire SoC has a 2MiB L2 cache, so the maximum mapped size of
+L2LIM should be set to 2MiB too.
 
-Route single- and multi-block memory sizing through the existing helper
-that distinguishes high-capacity cards from SDSC.
-
-This lets PolarFire SoC HSS validate the complete GPT header and locate
-its boot partition instead of receiving only the eight-byte signature.
-
-Fixes: 2d7adea4fe57 ("hw/sd: Support SDHC size cards")
-Cc: qemu-stable@nongnu.org
 Signed-off-by: Bin Meng <bin.meng@processmission.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Reviewed-by: Chao Liu <chao.liu@processmission.com>
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
 Tested-by: Conor Dooley <conor.dooley@microchip.com>
 ---
 
 (no changes since v1)
 
- hw/sd/sd.c | 43 +++++++++++++++++++++++++------------------
- 1 file changed, 25 insertions(+), 18 deletions(-)
+ hw/riscv/microchip_pfsoc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/sd/sd.c b/hw/sd/sd.c
-index b1b3b1226a..0083b8e064 100644
---- a/hw/sd/sd.c
-+++ b/hw/sd/sd.c
-@@ -1975,18 +1975,20 @@ static sd_rsp_type_t sd_cmd_SET_BLOCKLEN(SDState *sd, SDRequest req)
- static sd_rsp_type_t sd_cmd_READ_SINGLE_BLOCK(SDState *sd, SDRequest req)
- {
-     uint64_t addr;
-+    uint32_t blk_len;
- 
-     if (sd->state != sd_transfer_state) {
-         return sd_invalid_state_for_cmd(sd, req);
-     }
- 
-+    blk_len = sd_blk_len(sd);
-     addr = sd_req_get_address(sd, req);
--    if (!address_in_range(sd, "READ_SINGLE_BLOCK", addr, sd->blk_len)) {
-+    if (!address_in_range(sd, "READ_SINGLE_BLOCK", addr, blk_len)) {
-         return sd_r1;
-     }
- 
--    sd_blk_read(sd, addr, sd->blk_len);
--    return sd_cmd_to_sendingdata(sd, req, addr, NULL, sd->blk_len);
-+    sd_blk_read(sd, addr, blk_len);
-+    return sd_cmd_to_sendingdata(sd, req, addr, NULL, blk_len);
- }
- 
- /* CMD19 */
-@@ -2025,13 +2027,15 @@ static sd_rsp_type_t sd_cmd_SET_BLOCK_COUNT(SDState *sd, SDRequest req)
- static sd_rsp_type_t sd_cmd_WRITE_SINGLE_BLOCK(SDState *sd, SDRequest req)
- {
-     uint64_t addr;
-+    uint32_t blk_len;
- 
-     if (sd->state != sd_transfer_state) {
-         return sd_invalid_state_for_cmd(sd, req);
-     }
- 
-+    blk_len = sd_blk_len(sd);
-     addr = sd_req_get_address(sd, req);
--    if (!address_in_range(sd, "WRITE_SINGLE_BLOCK", addr, sd->blk_len)) {
-+    if (!address_in_range(sd, "WRITE_SINGLE_BLOCK", addr, blk_len)) {
-         return sd_r1;
-     }
- 
-@@ -2045,7 +2049,7 @@ static sd_rsp_type_t sd_cmd_WRITE_SINGLE_BLOCK(SDState *sd, SDRequest req)
-     }
- 
-     sd->blk_written = 0;
--    return sd_cmd_to_receivingdata(sd, req, addr, sd->blk_len);
-+    return sd_cmd_to_receivingdata(sd, req, addr, blk_len);
- }
- 
- /* CMD26 */
-@@ -2372,7 +2376,7 @@ static sd_rsp_type_t sd_normal_command(SDState *sd, SDRequest req)
-         switch (sd->state) {
-         case sd_transfer_state:
- 
--            if (!address_in_range(sd, "READ_BLOCK", addr, sd->blk_len)) {
-+            if (!address_in_range(sd, "READ_BLOCK", addr, sd_blk_len(sd))) {
-                 return sd_r1;
-             }
- 
-@@ -2392,7 +2396,8 @@ static sd_rsp_type_t sd_normal_command(SDState *sd, SDRequest req)
-         switch (sd->state) {
-         case sd_transfer_state:
- 
--            if (!address_in_range(sd, "WRITE_BLOCK", addr, sd->blk_len)) {
-+            if (!address_in_range(sd, "WRITE_BLOCK", addr,
-+                                  sd_blk_len(sd))) {
-                 return sd_r1;
-             }
- 
-@@ -2662,6 +2667,7 @@ static void sdcard_write_data_dump(const char *proto, const char *cmd_desc,
- static size_t sd_write_data(SDState *sd, const void *buf, size_t length)
- {
-     unsigned int partition_access;
-+    uint32_t blk_len;
-     int i;
-     const uint8_t *value = buf;
- 
-@@ -2678,6 +2684,7 @@ static size_t sd_write_data(SDState *sd, const void *buf, size_t length)
-     if (sd->card_status & (ADDRESS_ERROR | WP_VIOLATION))
-         return length;
- 
-+    blk_len = sd_blk_len(sd);
-     sdcard_write_data_dump(sd->proto->name,
-                            sd->last_cmd_name,
-                            sd->current_cmd, sd->data_offset, buf, length);
-@@ -2704,7 +2711,7 @@ static size_t sd_write_data(SDState *sd, const void *buf, size_t length)
-         if (sd->data_offset == 0) {
-             /* Start of the block - let's check the address is valid */
-             if (!address_in_range(sd, "WRITE_MULTIPLE_BLOCK",
--                                  sd->data_start, sd->blk_len)) {
-+                                  sd->data_start, blk_len)) {
-                 break;
-             }
-             if (sd->size <= SDSC_MAX_CAPACITY) {
-@@ -2715,7 +2722,7 @@ static size_t sd_write_data(SDState *sd, const void *buf, size_t length)
-             }
-         }
-         sd->data[sd->data_offset++] = value[0];
--        if (sd->data_offset >= sd->blk_len) {
-+        if (sd->data_offset >= blk_len) {
-             /* TODO: Check CRC before committing */
-             sd->state = sd_programming_state;
-             partition_access = sd->ext_csd[EXT_CSD_PART_CONFIG]
-@@ -2726,7 +2733,7 @@ static size_t sd_write_data(SDState *sd, const void *buf, size_t length)
-                 sd_blk_write(sd, sd->data_start, sd->data_offset);
-             }
-             sd->blk_written++;
--            sd->data_start += sd->blk_len;
-+            sd->data_start += blk_len;
-             sd->data_offset = 0;
-             sd->csd[14] |= 0x40;
- 
-@@ -2810,7 +2817,7 @@ static size_t sd_read_data(SDState *sd, void *buf, size_t length)
-     /* TODO: Append CRCs */
-     const uint8_t dummy_byte = 0x00;
-     unsigned int partition_access;
--    uint32_t io_len;
-+    uint32_t blk_len;
-     uint8_t *value = buf;
- 
-     if (!sd->blk || !blk_is_inserted(sd->blk)) {
-@@ -2830,11 +2837,11 @@ static size_t sd_read_data(SDState *sd, void *buf, size_t length)
-         return length;
-     }
- 
--    io_len = sd_blk_len(sd);
-+    blk_len = sd_blk_len(sd);
- 
-     trace_sdcard_read_data(sd->proto->name,
-                            sd->last_cmd_name, sd->current_cmd,
--                           sd->data_offset, sd->data_size, io_len);
-+                           sd->data_offset, sd->data_size, blk_len);
-     switch (sd->current_cmd) {
-     case 6:  /* CMD6:   SWITCH_FUNCTION */
-     case 8:  /* CMD8:   SEND_EXT_CSD */
-@@ -2859,22 +2866,22 @@ static size_t sd_read_data(SDState *sd, void *buf, size_t length)
- 
-         if (sd->data_offset == 0) {
-             if (!address_in_range(sd, "READ_MULTIPLE_BLOCK",
--                                  sd->data_start, io_len)) {
-+                                  sd->data_start, blk_len)) {
-                 *value = dummy_byte;
-                 return length;
-             }
-             partition_access = sd->ext_csd[EXT_CSD_PART_CONFIG]
-                     & EXT_CSD_PART_CONFIG_ACC_MASK;
-             if (partition_access == EXT_CSD_PART_CONFIG_ACC_RPMB) {
--                emmc_rpmb_blk_read(sd, sd->data_start, io_len);
-+                emmc_rpmb_blk_read(sd, sd->data_start, blk_len);
-             } else {
--                sd_blk_read(sd, sd->data_start, io_len);
-+                sd_blk_read(sd, sd->data_start, blk_len);
-             }
-         }
-         *value = sd->data[sd->data_offset++];
- 
--        if (sd->data_offset >= io_len) {
--            sd->data_start += io_len;
-+        if (sd->data_offset >= blk_len) {
-+            sd->data_start += blk_len;
-             sd->data_offset = 0;
- 
-             if (sd->multi_blk_cnt != 0) {
+diff --git a/hw/riscv/microchip_pfsoc.c b/hw/riscv/microchip_pfsoc.c
+index edd29626fa..cfba2990b6 100644
+--- a/hw/riscv/microchip_pfsoc.c
++++ b/hw/riscv/microchip_pfsoc.c
+@@ -95,7 +95,7 @@ static const MemMapEntry microchip_pfsoc_memmap[] = {
+     [MICROCHIP_PFSOC_CLINT] =           {  0x2000000,      0x10000 },
+     [MICROCHIP_PFSOC_L2CC] =            {  0x2010000,       0x1000 },
+     [MICROCHIP_PFSOC_DMA] =             {  0x3000000,     0x100000 },
+-    [MICROCHIP_PFSOC_L2LIM] =           {  0x8000000,    0x2000000 },
++    [MICROCHIP_PFSOC_L2LIM] =           {  0x8000000,     0x200000 },
+     [MICROCHIP_PFSOC_PLIC] =            {  0xc000000,    0x4000000 },
+     [MICROCHIP_PFSOC_MMUART0] =         { 0x20000000,       0x1000 },
+     [MICROCHIP_PFSOC_WDOG0] =           { 0x20001000,       0x1000 },
 -- 
 2.53.0
 
