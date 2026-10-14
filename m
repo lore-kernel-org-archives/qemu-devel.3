@@ -4,152 +4,132 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08BF2CC6B1D
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 01:14:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14F5DCC6B1D
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 01:24:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGnZ4-00041g-F9; Tue, 13 Oct 2026 21:13:54 -0400
+	id 1xGnj9-0005Vk-Fq; Tue, 13 Oct 2026 21:24:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xGnYy-00041H-O3
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 21:13:48 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
+ id 1xGnj6-0005Uw-V2; Tue, 13 Oct 2026 21:24:16 -0400
+Received: from mail-japaneastazlp170130007.outbound.protection.outlook.com
+ ([2a01:111:f403:c405::7] helo=TYDPR03CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xGnYw-0005u8-3w
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 21:13:48 -0400
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69DKHWs2442761
- for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 01:13:44 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- MbNAk8bisyqNqOxQwvG/QQj8i0/h/8RN0wBAOzVm+PY=; b=mVk23SFgr0mgWvBY
- zKhYb7Zsn9NRzVjpa6JFDWQYbUFEIUs+ya56GmhPZqHYSFsWA524ZRFEiCckY1L7
- bv267lIMKECy5yZtxhfidwfVrdKRUH7kJ9aog+VF3Sz/I9QOaHMENGoNMpaj3SPB
- yttNi2CBZskSbvM9z33izCi7UvkJVtJa4tyrF/lE5k6sI2XY3msZkk6p10whBpYL
- Fxt+f87ol6xgFP9NjmMNZ7GU0HJZ5HNnly0pu4/H7rPiZGp2nUnQC0MEtmJ8eof3
- 4Xly4vXivn1Drc3SdS9m4d/QD/n2hwANNMSNvnX3MACRpmOe1dqNRVWfpe0kQeau
- CcNFKQ==
-Received: from mail-dy1-f198.google.com (mail-dy1-f198.google.com
- [74.125.82.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h9n71jwue-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 01:13:44 +0000 (GMT)
-Received: by mail-dy1-f198.google.com with SMTP id
- 5a478bee46e88-33c35f5ca6cso8078323eec.1
- for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 18:13:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1791940423; x=1792545223; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=MbNAk8bisyqNqOxQwvG/QQj8i0/h/8RN0wBAOzVm+PY=;
- b=i0zpXhp2Rttvi4JSOOB1+19yThPk7F9k9ob8ZxusnM/xCMKsduz29mfemOcxKcTYT4
- 11CiT3vl69ZajCYQP0Oq81mS31Hg/5yjdKGff9Y9yPP3lG6bKGKGCU4smHHlZSpRte3R
- Q33/G4anBA3fSYnMGaKKe03oj7X/TxMF/9Te/Q6Q0ENlmv2ZwJXuaIqVedK7YaLyewY+
- 7dpwW5MvuEyl9CeKLjjK1jwjKiKy6ENLTittLL0WyJtk15GleOaKZeqDYQPTibFr56/N
- tNRDF4Hm40TTW5O1vy+smX3JdeEhi75G5SS0Kcrc6hlBU8xpqG5Jf01T2/jCmTCN6Vzo
- z5pA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791940423; x=1792545223;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=MbNAk8bisyqNqOxQwvG/QQj8i0/h/8RN0wBAOzVm+PY=;
- b=18WBGQEiNYf+A6T7x8toFK4or8Ti9jdIijER5nrPQ7i+bUB95M1sn4sxww0StnCbuJ
- vx8+PBLKfYC1eXpES2o4sMg0LnmClFF6NpaCTvZ8sCnNfRdHhSEl63LNZpIXa2/C1w/k
- 8cICpCTc3OzG7sMDwvuNxvwI5O42geDUVGcY5WKgbZFxwqsIX0Mrq0A3VGkgNY0Fp2Ll
- iQ+U2aDgY760WcAIHG7RxcOLK/f3usKiT650voLe7AFHuOLYL2zEsfQfFLJ0uOrYP1Q/
- Z5DQO0U2O4doEDwoLDpq1CNhkrCo3llTaBHzosfEIdpDCD/Bmdhwt2pTqqf7z/jEU0Bu
- MigQ==
-X-Forwarded-Encrypted: i=1;
- AKwUvBy+C/EVn1eQE74ntlDSaF2ZG6Mk54Fs6MkYGqi12EUst1JFfdwOI7B7gj1Sqi5ax7sLF4HPP945MW2f@nongnu.org
-X-Gm-Message-State: AFq9FYLR/BspM+6Ug/fXcrrFYmrAleF6zxyg7WgnAUcxqvvKYp6tpLxv
- N4Ay08eSSylXZw4jwE2Ldj9ixCVCjCubigfAW8SXb6oGh7gK2/JYUUf4p1P/vq4CEoMwcyEDEqC
- yUnjTAFZ7qqw7h75vKi35bdiOBZ97KXGCmMu8ZlSs8Dr6ESpvHdfS/cNALqUOELsDCA==
-X-Gm-Gg: AYBFou0sIf7Gd0uv8v8gLZYAbLtTuIY/UgvZgGEJJUl0XAQv2aHdGQpCCfNmsY0Lqt9
- qRIIuduFaGNzTEX5AcPMyBUm1RBfTOv1pCwnuojBnaFMu0RZS4RKyJoCAFpTBp+aAN0PJyrINEX
- Ide3kNmmFKYxl3F4mr4XwYzwoSJOCeAGwgdx2vjkLlQS9MF+JJynfIrL7hEP2Aivr+DT2LpfAXk
- 9cSsb7hnkG2pPSgyo43UDbldJtiHqXQBY0yf6/rtV2pOLLVwP7Gzfn/5Da77UtHx5j88peG5mts
- zDdXWGzBEliTGXe8N3P12BhrvaQUeXU/ftD3Pk2ZVjk/SEHcID7860aqEmVhJyNu3k9KwLT5VJl
- DtBIMzDOBL+Nt+VHx2l7nLa1gw9H4OEotLDTXkp5d2+Z8JPqvj5Lu+VeNVjs58srxRSETOA==
-X-Received: by 2002:a05:7300:8195:b0:350:869:d106 with SMTP id
- 5a478bee46e88-3537e2363d1mr26060161eec.34.1791940422633; 
- Tue, 13 Oct 2026 18:13:42 -0700 (PDT)
-X-Received: by 2002:a05:7300:8195:b0:350:869:d106 with SMTP id
- 5a478bee46e88-3537e2363d1mr26060095eec.34.1791940421793; 
- Tue, 13 Oct 2026 18:13:41 -0700 (PDT)
-Received: from [192.168.1.199] (192-80-163-190.dyn.novuscom.net.
- [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-3537ca329d9sm50118396eec.5.2026.10.13.18.13.40
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 13 Oct 2026 18:13:41 -0700 (PDT)
-Message-ID: <5ad30a8d-b52f-4a9a-b299-a0caa98f2a67@oss.qualcomm.com>
-Date: Tue, 13 Oct 2026 18:13:39 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] contrib/plugins/bbv.c: Allow selecting ROI
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>
-References: <20261007-bbv-v1-0-a2f521a68fdf@rsg.ci.i.u-tokyo.ac.jp>
- <20261007-bbv-v1-2-a2f521a68fdf@rsg.ci.i.u-tokyo.ac.jp>
- <4eec19e6-db40-4658-b5b3-bc342473cffd@oss.qualcomm.com>
- <f503ffbe-0900-4b8e-ae7b-dbfcc74eb5cc@rsg.ci.i.u-tokyo.ac.jp>
- <2d7c2cdb-b5b9-41ed-9786-dd9b4876bdd8@oss.qualcomm.com>
- <9cda6271-aed9-4a2b-b88f-bca8371d753e@rsg.ci.i.u-tokyo.ac.jp>
- <0b392aaf-7ce1-46bb-b39b-47744ea1e6f9@oss.qualcomm.com>
- <65391825-ef44-4771-99b4-ad3a47279762@rsg.ci.i.u-tokyo.ac.jp>
- <6b00ed2c-e78a-4ac7-9e5b-34d4aebefbbf@oss.qualcomm.com>
- <ea052c05-88bb-4640-801e-8b9937bc5955@rsg.ci.i.u-tokyo.ac.jp>
- <d4552417-493f-4577-ac64-b3b63b15cdd5@oss.qualcomm.com>
- <9ce93dc1-b374-4732-97f8-e7a236759346@rsg.ci.i.u-tokyo.ac.jp>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <9ce93dc1-b374-4732-97f8-e7a236759346@rsg.ci.i.u-tokyo.ac.jp>
-Content-Type: text/plain; charset=UTF-8
+ (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
+ id 1xGnj5-0006ql-2P; Tue, 13 Oct 2026 21:24:16 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=grS001Eecz1MyJv3luewO7KsmbVl09kf1HOVaJ9WmnThpMMWrst201Tg/8F1Q3eXi52NAbx08HzpnSs1pJagJY44u0KvrGyYTHlnaJuFmS7w8o/SCQeBYw9f1mGvP8HZSWct/VNJMQqSyFkmuxlXS0OA14RcFDYNjr7+mMxmGjPH/q4bVeCJe2yVdTbFKmRpxajzx1iVyuWd3VVvK+XZWhlxk4oVBnY1M04TgPDlvjAmlTheaYLwG8AVMckV/qOH0dPepyk5lwJZzP4gq9mId58Q4n3ePUvOpgzwd/NYMFOUHxkwNlptZudylktLGOycygorf0YYPmzyB8/Yr6SfGA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=YvkHcr8hS0+bnqE/H9CWz/3tBSdtruHcHCOrtDKbu1U=;
+ b=vVjqNjBZCPYKSWUAY26OSo5gYLxTilow2dHGVYC7x1rGbhijuO1rKVf2ezvvBYJgqhHNZooPFmLgiwOGML5WFXXlI7ScNgAau+w9z8UZqGSz4XfW3FJyfpNn0Sx3gMutcNUjh6icslN4940dqe4/rD3dTl/7dWmxyO1SRWIaVoju94tFTtx71q4xDkqBnyi7cw8hLVHF6kmc1glnteSQleLZu5Y4Rt8cHs8NEji7MDv6M/EFkoLCc5NKKl3Gg8+nuIggzZR9TlVa4nBURWVO59NjYYOgt89iDVMCugbpdqehB33zkkgcI06n/VN8MyshmqvlyMSsR+WsQNLb7AUnxQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=processmission.com; dmarc=pass action=none
+ header.from=processmission.com; dkim=pass header.d=processmission.com;
+ arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=YvkHcr8hS0+bnqE/H9CWz/3tBSdtruHcHCOrtDKbu1U=;
+ b=tJlBFSt+so5V+ONEyjhJk3M1yYOvgPN2xOGYh+Hb70c3FSwGyErO0evr6q4APKyfhgi7ER5SBFIXVbYW43o+hxr8Et1XxUo5wFWq/AVmT/lydROVVBm6FvQBoom9/M+2BVvRQzVdjNg3+GoQ49qSs5NzKoRLmpxnbfgP/+nSqiUbbgXBZ70qb92TYwn8KXXxPWiNa2TCArFVdw+sMj5bwZ2LC2WBPB4ise+/aXrRxzv7yUik2Oq9Tv+S2sZJ2YP+b0JdYYq7JU+JuvrcXKvvFpX7OgHgi6/rdS6h5f0nhIOdvN5IasUh1BUom1oGhMGxPZt+wzBXz5yK0Bmud4wulg==
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=processmission.com;
+Received: from KL1PR02MB6257.apcprd02.prod.outlook.com (2603:1096:820:da::11)
+ by KL1PR02MB6214.apcprd02.prod.outlook.com (2603:1096:820:9e::10)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.522.12; Wed, 14 Oct
+ 2026 01:24:05 +0000
+Received: from KL1PR02MB6257.apcprd02.prod.outlook.com
+ ([fe80::ecf9:e832:8196:215]) by KL1PR02MB6257.apcprd02.prod.outlook.com
+ ([fe80::ecf9:e832:8196:215%6]) with mapi id 15.21.0496.021; Wed, 14 Oct 2026
+ 01:24:05 +0000
+From: Bin Meng <bin.meng@processmission.com>
+To: QEMU <qemu-devel@nongnu.org>
+Cc: Alistair Francis <Alistair.Francis@wdc.com>,
+ Chao Liu <chao.liu@processmission.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Weiwei Li <liwei1518@gmail.com>, qemu-riscv@nongnu.org
+Subject: [PATCH v4 07/27] hw/riscv: sifive_u: Use the shared SiFive L2 cache
+ controller
+Date: Wed, 14 Oct 2026 09:22:47 +0800
+Message-ID: <20261014012323.322790-8-bin.meng@processmission.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20261014012323.322790-1-bin.meng@processmission.com>
+References: <20261014012323.322790-1-bin.meng@processmission.com>
 Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=FuqQbGrq c=1 sm=1 tr=0 ts=6aced748 cx=c_pps
- a=wEP8DlPgTf/vqF+yE6f9lg==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
- a=I6D0sq9qET5inyjeHjAA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=O8hF6Hzn-FEA:10 a=bBxd6f-gb0O0v-kibOvt:22
-X-Proofpoint-GUID: Knn400Syx-UyrZ8Oyh0M_FGM2SObVWLX
-X-Proofpoint-ORIG-GUID: Knn400Syx-UyrZ8Oyh0M_FGM2SObVWLX
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDE0MDAwNCBTYWx0ZWRfX6hfYr69c5g3o
- buLncp1GqQAQmxJV/h2PI+3w6dxVOCbKtsv0llgcW++GUx1kO2zgUSgmEoQEmoxxZEOV9wm5ywE
- XnEtBLayuZ4L2fdgcMoQS+kir6W/M8jSScbZi00BILEQHQbDhfDtz+oZNGZ2ruZI+3Jwpc9gVLu
- XQMEW86+cyU0Vn2G2PrYlcyCGdniLZBWTN/I6QHTLp4BdkqtInlU6GrsF1CN+cHDnnyAjCi+j7X
- fqrAxjIkAVtTBfMPxAzQmSg5X2Evo2v/X4Qv/htHa2xd9QUHiSCZCtZtSZLVaDhuRfneNuZhGvz
- 8H129z1n0vcLtOMRL69xmoMaN98ffH2XsKxmNrvPgxaZt0SJi/4m3dqqx7VIyu9b1JrcP+Ct77S
- g8j4CNZJgZB+EhP5I2ndIyRiTGFMympAkjhmFpkPX/lsH7Ut3AdOGlU83lr34Nwhn5yyhZo9b5w
- dEh+f+qLM2/UQS2C4NQ==
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDE0MDAwNCBTYWx0ZWRfX5Qloke4WqwlI
- Sc6mIXtdg+/pdWhy8WLMQ4Rg46UEFJ1NPIgC8/LEaPJFpaHAqrPKkt3+hm6zMBBv9PY4/eWZw/t
- lpL8tjmen4ExZ6U7ANUZ9IzIvtBcoX4=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-10-13_01,2026-10-09_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 malwarescore=0 adultscore=0 phishscore=0 suspectscore=0
- priorityscore=1501 bulkscore=0 spamscore=0 impostorscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610080000 definitions=main-2610140004
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain
+X-ClientProxiedBy: TY6PR01CA0005.jpnprd01.prod.outlook.com
+ (2603:1096:405:3bc::12) To KL1PR02MB6257.apcprd02.prod.outlook.com
+ (2603:1096:820:da::11)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: KL1PR02MB6257:EE_|KL1PR02MB6214:EE_
+X-MS-Office365-Filtering-Correlation-Id: 074bfedf-40c1-414f-300a-08df2991d65c
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|23010399003|1800799024|376014|366016|6133799003|18002099003|22082099003|10067099003|261009223027099003|56012099006;
+X-Microsoft-Antispam-Message-Info: mDZHngOYCXcs6Y1NNK2+v+ewzMqoJGCsrMOTV8AdegJt0keQJnn9X1YdScSm9U+au+On8X4CDHitgQa/xE4mM+e2l1VTX5SXXGEGXum7w7JFMHh2/YmIL2XJzAa+LM2Q9Vmm4ECzVjQkzAXlF8EinLIvD2BXDKidDucbBrtvjJXdsK2x0o/LRIDS5kTAOX24hiKhUGEuBkjvjr/lmmReCC2rRFUHtM7qU4tqSs94vcolQtWBkBNbR0CHrciBMAb/L6yfvLpWH9jHlhDFksDIHYMoi56hrmDHo5F3Np/lQPj26aP8+QItugh9selY1khB/QMIcysRst8UV9jJk6p5QCR4VdaR3waBu9YnP1U9RwP3fL7c/8jKIvMApNLeQz36kUp4p/3zIkdv/3TxlnGi2fMpXskuLGOQp2MYnFj7Q4LDaZ3K7rdGVT1DwbZEVZndqucqS0HMAi8xAQtvn+GqzLO7gWelb3L9zd+m0o/YF2mDH0gowWTkmoWXF8zXScaAVPtIOdKk26V/5czo/M5sw1iKjLMcdMyfi3fjzh+WUpxBl9y9+WO1xvrwZVG7KeM26bM/WLBR97aWQPpBsh5CK2zhmWV1j/55hHLCfk+WenTGBfRTu7aGbZtHIglOcA2Q730Sy0IXn3VpAM0Vy9oepITwurM4eUJD1Ww8JtgDQbw=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:KL1PR02MB6257.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(23010399003)(1800799024)(376014)(366016)(6133799003)(18002099003)(22082099003)(10067099003)(261009223027099003)(56012099006);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?ORXIZ4qWXttAppXqCIfxBd/Uk4By6Gu9o06Md9DHg7pDm/E131JMt3cPrx75?=
+ =?us-ascii?Q?dCSdYqIXBQlvU3bnkpurjkDrzRjglamKbTx02yaF7KJtvxcrNrMRVPMkHHnz?=
+ =?us-ascii?Q?Cb2lYYg2VUhmfaAxD0SRg4SKdKQmWInPEAXiyU5gV5LMq9mprrKOJ/U1l1Lu?=
+ =?us-ascii?Q?CbvNiDG0F9nkk3wwYFGLeW6YkKaOQGF/5kTyNdDsR+VWGq4JurUqR0nTCXOV?=
+ =?us-ascii?Q?OD7V6ly8oZETCouui7GVu9UQJrOWSXDKW03/YlskxRlOGQyelXtIxWzkedWx?=
+ =?us-ascii?Q?7XB/hG9fFgzHwUHZIvkB0VcqsTAb/Ew4x35tPiib8i3R5zKfXnX/0BACF2EK?=
+ =?us-ascii?Q?nEkE2V4vHeYYidRKix0snRlxbiMZyloU2kJdf1Xy3bFTNJzprP2tgHnnb9WO?=
+ =?us-ascii?Q?cNRWKdn/wg5humqS8o68Kj0hZDx3Hpt+Q6PIeKMGVmKFgAuGHNw+hD3zOQMq?=
+ =?us-ascii?Q?GNwVbwlHSyNEGC3QbQGhT+bp3AT8ctKyLeSXr4NzPq+bBERvZVziFWfhknJc?=
+ =?us-ascii?Q?UM/r1FtdS+n2I+ZqTVzb+T3bsyQbS//D7WKieOVW8cs/sZbf3QISCAdJoslQ?=
+ =?us-ascii?Q?Ss53xGRv4NGfJZz8BgY8ypMD2rdU+19/4HC1EFsqFg08wif8G6GMRHRpwDMs?=
+ =?us-ascii?Q?yVvBuzxVsRfPpDdIEVREAAquXLfajNNm8gw/Z12rqySvmNjQN2/M0abyA+3a?=
+ =?us-ascii?Q?8LMNqKzc86TmtPz37Xn5Moc1wD+/efrtHmExqfmmleqTc8RuJlFTvT5fmQoG?=
+ =?us-ascii?Q?FdWgCB7g3euDu6k0w+UmfRzu0SzNdTZz0Yw/rK/R3+5gWMnJrX7RLyepk4TR?=
+ =?us-ascii?Q?S7Du4VH3IrRSRxw0iVzVTEbOAHdcIvMzCnAcC10GmG04OSFmHhev3GOD/6wk?=
+ =?us-ascii?Q?Egy61kEEEGyuKzTH37I7GYHLFef2AfPLi+r74S5A2M2G1SDBGwXSiwP+QAt2?=
+ =?us-ascii?Q?5Copydsz5SDdxyVXhmk3l0hksAX7vlB0K/rrhiS3XV1iDazfdY2hJ6kiB9UI?=
+ =?us-ascii?Q?50RcQWltEYoIrGPrGWb7OpRqbdD7L+t+TD0LSLH/dxQJh8aTnqkMgexXOXZ/?=
+ =?us-ascii?Q?kTXQ99IlO9kOOA5v2Jyn0HDY4ReXyywW+erZX6gsb349lt9LSsbI6DD12l1U?=
+ =?us-ascii?Q?ClA0BmK6jrazKbxRZkDOVSlPgpZUAPNFdlfJwbsufOdwEU8LF0KFCxkXaq6U?=
+ =?us-ascii?Q?BB3NAfh9fpWZG6uOaNaZLEJFEem7ENUo4NxdCLalls/o4CHZse2jUkUP0r4+?=
+ =?us-ascii?Q?Z59HrqVmK57z0urEopISpiQJgvHSdbARu6MPQjiEE0aescMHaQ47sQ4Dsel2?=
+ =?us-ascii?Q?lBPmwUcw2GaFThpl6Vj6R+s6RA3h7LcBKA0l8wCnHw7Gz+RAxmb2Rtr8fiNO?=
+ =?us-ascii?Q?IloaHkcjx4kAUxR04Jgv33wvRhUsPN9RVWEELqj3+vyFcBzY3GpZV8r9hSv1?=
+ =?us-ascii?Q?ZUW1MBG47fOpKjU6eWBDYKTfguDnn3FDok0u4OoWp8CMkxS4c9YQu0z+IHJz?=
+ =?us-ascii?Q?JwBXzZqPPzgOzFrZ2eFMQ6k3JPa1r827k1p1UIrm0NxhfmGDzi2aRxw1meKL?=
+ =?us-ascii?Q?ni6/E+zL4TmUfqZMN3ijYfRyvqfOGGhzVjI/lsNKWvwlvIP/fj+iib0lpugR?=
+ =?us-ascii?Q?18ymnUcQgXUDaW+A/c8fhKeBBm1D9v69ooaA3sjlrTVl59Oa162YFLGCBU0P?=
+ =?us-ascii?Q?g6bE1WjmDJCuYQaUQaX9RN9ciCY//LFJQ2s52x4cpsmGTiengHLtp1NTcKq5?=
+ =?us-ascii?Q?rDhf0tZDwHkGwMnXBGX7DvxgV0Dn19o=3D?=
+X-OriginatorOrg: processmission.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 074bfedf-40c1-414f-300a-08df2991d65c
+X-MS-Exchange-CrossTenant-AuthSource: KL1PR02MB6257.apcprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Oct 2026 01:24:05.5150 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: +PyjekMs6cSrp0FXLk3+IkyEPyMqsRaW4uIR+l0rhQpjG4qtyooJwHOhlciKgzIE36ztYrrxpodSq8T5GOZiyvYcTD/z9jVVl3c3wpxc9Wk=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: KL1PR02MB6214
+Received-SPF: pass client-ip=2a01:111:f403:c405::7;
+ envelope-from=bin.meng@processmission.com;
+ helo=TYDPR03CU002.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -166,448 +146,152 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/13/2026 6:02 PM, Akihiko Odaki wrote:
-> On 2026/10/13 11:12, Pierrick Bouvier wrote:
->> On 10/12/26 7:00 AM, Akihiko Odaki wrote:
->>> On 2026/10/09 15:37, Pierrick Bouvier wrote:
->>>> On 10/8/26 8:33 PM, Akihiko Odaki wrote:
->>>>> On 2026/10/09 11:30, Pierrick Bouvier wrote:
->>>>>> On 10/8/2026 5:57 PM, Akihiko Odaki wrote:
->>>>>>> On 2026/10/09 1:40, Pierrick Bouvier wrote:
->>>>>>>> On 10/7/2026 11:11 PM, Akihiko Odaki wrote:
->>>>>>>>> On 2026/10/08 10:08, Pierrick Bouvier wrote:
->>>>>>>>>> On 10/6/2026 11:01 PM, Akihiko Odaki wrote:
->>>>>>>>>>> A region of interest (ROI) often excludes the program startup
->>>>>>>>>>> and
->>>>>>>>>>> exit.
->>>>>>>>>>> For example, a benchmark may parse a large input and then run a
->>>>>>>>>>> computation kernel and the former may take longer than the
->>>>>>>>>>> latter;
->>>>>>>>>>> basic block vectors generated for the whole execution will not
->>>>>>>>>>> properly
->>>>>>>>>>> represent the latter.
->>>>>>>>>>>
->>>>>>>>>>> Add options to specify the beginning and the end of the ROI to
->>>>>>>>>>> bound
->>>>>>>>>>> basic block vector generation to the ROI.
->>>>>>>>>>>
->>>>>>>>>>> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
->>>>>>>>>>> ---
->>>>>>>>>>>       docs/about/emulation.rst |  8 +++++
->>>>>>>>>>>       contrib/plugins/bbv.c    | 80 +++++++++++++++++++++++++
->>>>>>>>>>> ++++
->>>>>>>>>>> ++++++++
->>>>>>>>>>> +++++++++--
->>>>>>>>>>>       2 files changed, 86 insertions(+), 2 deletions(-)
->>>>>>>>>>>
->>>>>>>>>>> diff --git a/docs/about/emulation.rst b/docs/about/emulation.rst
->>>>>>>>>>> index c58149086cdd..0566171b517b 100644
->>>>>>>>>>> --- a/docs/about/emulation.rst
->>>>>>>>>>> +++ b/docs/about/emulation.rst
->>>>>>>>>>> @@ -284,6 +284,14 @@ The bbv plugin allows you to generate basic
->>>>>>>>>>> block vectors for use with the
->>>>>>>>>>>           * - Option
->>>>>>>>>>>           - Description
->>>>>>>>>>> +  * - begin=A
->>>>>>>>>>> +    - The virtual address of the instruction that starts basic
->>>>>>>>>>> block
->>>>>>>>>>> vector
->>>>>>>>>>> +      generation. Generation starts from the beginning of the
->>>>>>>>>>> execution if
->>>>>>>>>>> +      not specified.
->>>>>>>>>>> +  * - end=A
->>>>>>>>>>> +    - The virtual address of the instruction that ends basic
->>>>>>>>>>> block
->>>>>>>>>>> vector
->>>>>>>>>>> +      generation. Generation continues until the endo of the
->>>>>>>>>>> execution if
->>>>>>>>>>
->>>>>>>>>> small typo here: s/endo/end
->>>>>>>>>
->>>>>>>>> Thanks for catching the typo.
->>>>>>>>>
->>>>>>>>>>
->>>>>>>>>>> +      not specified.
->>>>>>>>>>>         * - interval=N
->>>>>>>>>>>           - The interval to generate a basic block vector
->>>>>>>>>>> specified by
->>>>>>>>>>> the number of
->>>>>>>>>>>             instructions (Default: N = 100000000)
->>>>>>>>>>> diff --git a/contrib/plugins/bbv.c b/contrib/plugins/bbv.c
->>>>>>>>>>> index e5caf5d9543b..a2a779f7639e 100644
->>>>>>>>>>> --- a/contrib/plugins/bbv.c
->>>>>>>>>>> +++ b/contrib/plugins/bbv.c
->>>>>>>>>>> @@ -5,6 +5,8 @@
->>>>>>>>>>>        * SPDX-License-Identifier: GPL-2.0-or-later
->>>>>>>>>>>        */
->>>>>>>>>>>       +#include <stdbool.h>
->>>>>>>>>>> +#include <stdint.h>
->>>>>>>>>>>       #include <stdio.h>
->>>>>>>>>>>       #include <glib.h>
->>>>>>>>>>>       @@ -26,6 +28,10 @@ static GHashTable *bbs;
->>>>>>>>>>>       static GRWLock bbs_lock;
->>>>>>>>>>>       static char *filename;
->>>>>>>>>>>       static struct qemu_plugin_scoreboard *vcpus;
->>>>>>>>>>> +static bool begin_present;
->>>>>>>>>>> +static uint64_t begin;
->>>>>>>>>>> +static bool end_present;
->>>>>>>>>>> +static uint64_t end;
->>>>>>>>>>>       static int64_t interval = 100000000;
->>>>>>>>>>>         static void plugin_exit(void *p)
->>>>>>>>>>> @@ -66,6 +72,7 @@ static void vcpu_init(unsigned int vcpu_index,
->>>>>>>>>>> void
->>>>>>>>>>> *userdata)
->>>>>>>>>>>           Vcpu *vcpu = qemu_plugin_scoreboard_find(vcpus,
->>>>>>>>>>> vcpu_index);
->>>>>>>>>>>             vcpu_filename = g_strdup_printf("%s.%u.bb",
->>>>>>>>>>> filename,
->>>>>>>>>>> vcpu_index);
->>>>>>>>>>> +    vcpu->count = begin_present ? INT64_MIN : -interval;
->>>>>>>>>>
->>>>>>>>>> Not sure which semantic we are trying to achieve with -interval
->>>>>>>>>> here.
->>>>>>>>>>
->>>>>>>>>> The original logic was to increment this count, until reaching
->>>>>>>>>> interval,
->>>>>>>>>> after what we would reset it by using vcpu_count -= interval, to
->>>>>>>>>> keep
->>>>>>>>>> the extra insn that went in after the threshold.
->>>>>>>>>
->>>>>>>>> The counter now starts at -interval and counts up to zero.
->>>>>>>>> Subtracting
->>>>>>>>> interval after emitting a vector still preserves the extra
->>>>>>>>> instructions.
->>>>>>>>> For example, with interval=100:
->>>>>>>>>
->>>>>>>>>         initial count:       -100
->>>>>>>>>         after 130 insns:       30  -> emit a vector
->>>>>>>>>         subtract interval:    -70  -> 70 insns until the next
->>>>>>>>> vector
->>>>>>>>>
->>>>>>>>>>
->>>>>>>>>>>           vcpu->file = fopen(vcpu_filename, "w");
->>>>>>>>>>>       }
->>>>>>>>>>>       @@ -102,6 +109,22 @@ static void
->>>>>>>>>>> vcpu_interval_exec(unsigned int
->>>>>>>>>>> vcpu_index, void *udata)
->>>>>>>>>>>           fputc('\n', vcpu->file);
->>>>>>>>>>>       }
->>>>>>>>>>>       +static void vcpu_begin_insn_exec(unsigned int vcpu_index,
->>>>>>>>>>> void
->>>>>>>>>>> *userdata)
->>>>>>>>>>> +{
->>>>>>>>>>> +    GHashTableIter iter;
->>>>>>>>>>> +    void *value;
->>>>>>>>>>> +
->>>>>>>>>>> +    g_rw_lock_reader_lock(&bbs_lock);
->>>>>>>>>>> +    g_hash_table_iter_init(&iter, bbs);
->>>>>>>>>>> +
->>>>>>>>>>> +    while (g_hash_table_iter_next(&iter, NULL, &value)) {
->>>>>>>>>>> +        qemu_plugin_u64_set(bb_count_u64(value), vcpu_index,
->>>>>>>>>>> 0);
->>>>>>>>>>> +    }
->>>>>>>>>>> +
->>>>>>>>>>> +    g_rw_lock_reader_unlock(&bbs_lock);
->>>>>>>>>>> +    qemu_plugin_u64_set(count_u64(), vcpu_index, -interval);
->>>>>>>>>>> +}
->>>>>>>>>>> +
->>>>>>>>>>>       static void vcpu_tb_trans(struct qemu_plugin_tb *tb, void
->>>>>>>>>>> *userdata)
->>>>>>>>>>>       {
->>>>>>>>>>>           uint64_t n_insns = qemu_plugin_tb_n_insns(tb);
->>>>>>>>>>> @@ -119,6 +142,19 @@ static void vcpu_tb_trans(struct
->>>>>>>>>>> qemu_plugin_tb
->>>>>>>>>>> *tb, void *userdata)
->>>>>>>>>>>           }
->>>>>>>>>>>           g_rw_lock_writer_unlock(&bbs_lock);
->>>>>>>>>>>       +    for (size_t idx = 0; idx < n_insns; idx++) {
->>>>>>>>>>> +        struct qemu_plugin_insn *insn =
->>>>>>>>>>> qemu_plugin_tb_get_insn(tb,
->>>>>>>>>>> idx);
->>>>>>>>>>> +        uint64_t insn_vaddr = qemu_plugin_insn_vaddr(insn);
->>>>>>>>>>> +
->>>>>>>>>>> +        if (begin_present && insn_vaddr == begin) {
->>>>>>>>>>> +            qemu_plugin_register_vcpu_insn_exec_cb(
->>>>>>>>>>> +                insn, vcpu_begin_insn_exec,
->>>>>>>>>>> QEMU_PLUGIN_CB_NO_REGS,
->>>>>>>>>>> NULL);
->>>>>>>>>>> +        } else if (end_present && insn_vaddr == end) {
->>>>>>>>>>> +           
->>>>>>>>>>> qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu(
->>>>>>>>>>> +                insn, QEMU_PLUGIN_INLINE_STORE_U64,
->>>>>>>>>>> count_u64(),
->>>>>>>>>>> INT64_MIN);
->>>>>>>>>>> +        }
->>>>>>>>>>> +    }
->>>>>>>>>>> +
->>>>>>>>>>>           qemu_plugin_register_vcpu_tb_exec_inline_per_vcpu(
->>>>>>>>>>>               tb, QEMU_PLUGIN_INLINE_ADD_U64, count_u64(),
->>>>>>>>>>> n_insns);
->>>>>>>>>>>       @@ -127,7 +163,32 @@ static void vcpu_tb_trans(struct
->>>>>>>>>>> qemu_plugin_tb *tb, void *userdata)
->>>>>>>>>>>             qemu_plugin_register_vcpu_tb_exec_cond_cb(
->>>>>>>>>>>               tb, vcpu_interval_exec, QEMU_PLUGIN_CB_NO_REGS,
->>>>>>>>>>> -        QEMU_PLUGIN_COND_GE, count_u64(), interval, NULL);
->>>>>>>>>>> +        QEMU_PLUGIN_COND_LT, count_u64(), INT64_MIN, NULL);
->>>>>>>>>>> +}
->>>>>>>>>>
->>>>>>>>>> is INT64_MIN used as an arbitrary large value when interpreted as
->>>>>>>>>> unsigned immediate? If yes, that's confusing to the reader.
->>>>>>>>>
->>>>>>>>> The unsigned comparison count < (uint64_t)INT64_MIN is equivalent
->>>>>>>>> with
->>>>>>>>> the signed comparison (int64_t)count >= 0. That is why this
->>>>>>>>> particular
->>>>>>>>> value is used.
->>>>>>>>>
->>>>>>>>> Setting count to INT64_MIN suppresses output for the next 2^63
->>>>>>>>> counted
->>>>>>>>> instructions, which is effectively disabled for this use. The
->>>>>>>>> beginEmulation
->>>>>>>>> callback clears the BB counters and sets count to -interval; end
->>>>>>>>> sets it
->>>>>>>>> back to INT64_MIN. The requested interval stays unchanged.
->>>>>>>>>
->>>>>>>>
->>>>>>>> Ok I see better.
->>>>>>>> Even though it works, it's pretty confusing to be honest. Inline
->>>>>>>> operatons works with unsigned values, so with conversion and wrap
->>>>>>>> around, it's safe, but really not intuitive.
->>>>>>>>
->>>>>>>> I would prefer if you could refactor this to keep a zero
->>>>>>>> initialized
->>>>>>>> count value, and add a specific instrumentation path for begin, end
->>>>>>>> logic (COND_LT, UINT64_MAX - N) to keep the same behavior of
->>>>>>>> "infinite
->>>>>>>> interval".
->>>>>>>
->>>>>>> We cannot choose a separate instrumentation path based on whether
->>>>>>> execution is inside the ROI. Instrumentation is installed when a
->>>>>>> TB is
->>>>>>> translated, but the same TB may execute both inside and outside the
->>>>>>> ROI.
->>>>>>>
->>>>>>> I will preserve this logic and add code comments for clarification.
->>>>>>>
->>>>>>
->>>>>> I took some time to read again how bbv works. Indeed, my idea to
->>>>>> modify
->>>>>> interval was a non sense, and not what is expected.
->>>>>>
->>>>>> The current instrumentation per tb is always done unconditionally,
->>>>>> and
->>>>>> the only need thing to do is to snapshot bbs hashtable to keep
->>>>>> track of
->>>>>> the correct data only when being inside the ROI. The rest of existing
->>>>>> logic stays the same.
->>>>>>
->>>>>> - On enter, set vcpu->count to 0 (fresh start) and restore bb
->>>>>> table from
->>>>>> previous exit (empty table if there was no exit yet).
->>>>>> - On exit, duplicate the bb table to allow to restore it next time we
->>>>>> enter in ROI.
->>>>>> Key idea is that we keep on adding things in bb table, but save/
->>>>>> restore
->>>>>> when leaving/entering ROI.
->>>>>>
->>>>>> I think for robustness you should also add detection of those
->>>>>> expected
->>>>>> transitions: Out of ROI -> Enter ROI -> Exit ROI -> Enter ROI -> ...
->>>>>>
->>>>>> Nothing is currently done to detect if if we meet enter/exit address
->>>>>> multiple times, without having the correct sequence. I don't know
->>>>>> if we
->>>>>> want to report an error or handle reentrance correctly in this case.
->>>>>>
->>>>>> Also, should count be reset on each entrance, or do we want to keep
->>>>>> track of it also, and save/restore that on exit/enter? I tend to
->>>>>> think
->>>>>> the idea is create a "virtual" interval than only is alive when being
->>>>>> inside the ROI. In this case, we should keep track of this value
->>>>>> also.
->>>>>
->>>>> The current design that resets the bb table is intentional. A
->>>>> "virtual"
->>>>> interval spanning multiple ROIs would be misleading because it mixes
->>>>> different sections of execution.
->>>>>
->>>>
->>>> Ok.
->>>>
->>>>> I don't think we need to add a special handling to enforce a
->>>>> particular
->>>>> order of transitions. This patch performs the same action for the
->>>>> begin
->>>>> and end addresses and that makes the behavior predictable.
->>>>>
->>>>> Perhaps we can extend the documentation to clarify the "begin"
->>>>> marker to
->>>>> tell that it resets the bb table, making the behavior clear regardless
->>>>> of transition order.
->>>>>
->>>>
->>>> I'm fine to keep a simple model, but I'll ask you to remove the logic
->>>> involving negative numbers, it's just too confusing. Please remove:
->>>> vcpu->count = begin_present ? INT64_MIN : -interval;
->>>> and
->>>> QEMU_PLUGIN_COND_LT, count_u64(), INT64_MIN, NULL);
->>>>
->>>> Instead, let's add a new boolean "tracking_region" in struct Vcpu, that
->>>> is set to true when entering ROI (or true by default if no begin
->>>> parameter was given).
->>>
->>> The flag may look simpler in isolation, but streamlining the
->>> interactions with the counter requires more careful thought. Please see
->>> below.
->>>
->>>>
->>>> Then, modify instrumentation to replace:
->>>> ```
->>>> else if (end_present && insn_vaddr == end) {
->>>>               qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu(
->>>>                   insn, QEMU_PLUGIN_INLINE_STORE_U64, count_u64(),
->>>> INT64_MIN);
->>>> ```
->>>> with:
->>>> ```
->>>> else if (end_present && insn_vaddr == end) {
->>>>      qemu_plugin_register_vcpu_insn_exec_cb(insn, vcpu_exit_region,
->>>> QEMU_PLUGIN_CB_NO_REGS, NULL);
->>>> }
->>>>
->>>> static void vcpu_exit_region(unsigned int vcpu_index, void *userdata)
->>>> {
->>>>      Vcpu *vcpu = qemu_plugin_scoreboard_find(vcpus, vcpu_index);
->>>>      vcpu_interval_exec(vcpu_index, NULL);
->>>>      vcpu->tracking_region = false;
->>>> }
->>>> ```
->>>
->>> vcpu_exit_region should only disable tracking. Calling
->>> vcpu_interval_exec directly bypasses its count >= interval precondition:
->>> it subtracts interval even when count is smaller, wrapping the unsigned
->>> counter, and emits a partial vector or potentially an empty one.
->>>
->>
->> I'm fine with it. I was unsure if you wanted to dump the partial data,
->> aggregate it when reentering the section, or simply discard it.
->> With a discard, it's even simpler, just need to set tracking_region to
->> false.
->>
->>>>
->>>> In addition, let's rename s/vcpu_begin_insn_exec/vcpu_enter_region, to
->>>> be consistent and explicit on what it's doing.
->>>>
->>>> And finally, the last piece:
->>>> static void vcpu_interval_exec(unsigned int vcpu_index, void *udata)
->>>> {
->>>>       Vcpu *vcpu = qemu_plugin_scoreboard_find(vcpus, vcpu_index);
->>>>       if (!vcpu->tracking) {
->>>>         return;
->>>>       }
->>>>       ...
->>>
->>> The early return must come after vcpu->count -= interval. Otherwise,
->>> once count reaches interval outside the ROI, it remains above the
->>> threshold and invokes the callback on every subsequent TB, rather than
->>> once per interval.
->>>
->>
->> Right, thanks for catching it.
->>
->>>>
->>>> The impact performance of calling vcpu_interval_exec + one if every N
->>>> instructions is invisible, and at least, it's a piece of code we can
->>>> read in 6 months, and understand in less than 2 min without any
->>>> additional doc.
->>>
->>> I agree the performance impact is negligible, but at least you need to
->>> consider about that to be sure. Adding another flag requires those
->>> additional considerations.
->>>
->>> More broadly, I don't think it's ideal to introduce application-specific
->>> logic for this. Looking at the bigger picture, a counting timer with
->>> variable expiration is a common pattern that should ideally be supported
->>> generally.
->>>
->>> An alternative option is to have signed integer variants of
->>> qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu() and similar
->>> functions to support for that. However, I don't think those are
->>> necessary either. Taking at an even broader perspective, C allows
->>> avoiding such specialization by letting unsigned variables hold signed
->>> values in a well-defined manner; even the underlying implementation of
->>> the inline op uses signed and unsigned types interchangeably.
->>>
->>
->> If the argument is "C allows that with a defined behaviour", I don't
->> think it makes a point for me. There is a lot of well defined and
->> confusing code you can write.
->>
->> Something like:
->>   qemu_plugin_register_vcpu_tb_exec_cond_cb(
->>          QEMU_PLUGIN_COND_LT, count_u64(), INT64_MIN, NULL);
->> with limit and counter being unsigned is not readable for me.
->>
->>> Although it might not be immediately obvious that an unsigned variable
->>> is storing a signed value, adding a brief clarifying comment is still
->>> simpler than introducing another variable overall.
->>>
->>
->>  From there I'll let you decide between introducing the flag, or
->> reimplement that with positive values (sticking to init count=0) only
->> if you really prefer this approach.
-> 
-> I agree that "C allows this with defined behaviour" is insufficient on
-> its own. Ideally, we could express the signed interpretation directly
-> with int64_t without adding complexity. That would improve clarity,
-> even though the existing arithmetic is already well-defined.
-> 
-> However, we need to consider the whole design. Both approaches require
-> readers to understand more than the individual expressions.
-> 
-> The counter-only approach requires knowing that:
-> 
-> - count is actually treated as signed.
-> - Any non-negative is smaller than (uint64_t)INT64_MIN when compared as
->   unsigned.
-> 
-> The flag approach requires considering:
-> - How the count and flag together determine when a vector is emitted.
-> - The required ordering of count and flag accesses.
-> - Whether the number of callback invocations will significantly
->   increase.
-> 
-> The count-only approach requires fewer considerations, and the ones it
-> does require needs no deduction. The first point is a common practice,
-> as seen in the underlying implementation. The second point is simply a
-> matter of the int64_t definition. In both cases, knowing the definition
-> is sufficient, and both can be documented clearly in the comments.
-> 
-> In contrast, the flag approach requires real reasoning. Comments won't
-> help here; explaining the ordering and interactions via comments would
-> be as complicated as the code itself, thereby imposing a greater
-> cognitive burden.
-> 
-> Furthermore, supporting a variable interval (as done in the count-only
-> approach) is a pattern we should embrace, rather than working around it
-> by introducing a separate flag.
-> 
-> We have also already discussed why retaining count=0 is not a drop-in
-> alternative under the same counter-only instrumentation. The initial
-> state must distinguish execution that starts inside the ROI from
-> execution waiting for the begin marker.
-> 
-> Putting all together, I still believe utilizing the existing signed
-> representation is cleaner than inventing an alternative approach ourselves.
->
+FU540 and PolarFire use the same L2 configuration and way-control
+interface, with different master counts. The `sifive_u` machine
+currently leaves L2CC unimplemented and exposes L2-LIM as fixed
+RAM without WayEnable control.
 
-I respect your opinion, but I would prefer to not introduce such usage
-of the existing API in contrib/, since it might (wrongly) inspire other
-people reading this plugin code.
+Instantiate the shared SiFive L2CC with 21 masters and a modeled
+2 MiB Zero window.
 
-> Regards,
-> Akihiko Odaki
+Signed-off-by: Bin Meng <bin.meng@processmission.com>
 
-Regards,
-Pierrick
+---
+
+(no changes since v3)
+
+Changes in v3:
+- New
+
+ docs/system/riscv/sifive_u.rst |  2 +-
+ include/hw/riscv/sifive_u.h    |  3 +++
+ hw/riscv/sifive_u.c            | 30 +++++++++++++-----------------
+ hw/riscv/Kconfig               |  1 +
+ 4 files changed, 18 insertions(+), 18 deletions(-)
+
+diff --git a/docs/system/riscv/sifive_u.rst b/docs/system/riscv/sifive_u.rst
+index 0e4dcf3e70..e91853ffe2 100644
+--- a/docs/system/riscv/sifive_u.rst
++++ b/docs/system/riscv/sifive_u.rst
+@@ -14,7 +14,7 @@ The ``sifive_u`` machine supports the following devices:
+ * Core Local Interruptor (CLINT)
+ * Platform-Level Interrupt Controller (PLIC)
+ * Power, Reset, Clock, Interrupt (PRCI)
+-* L2 Loosely Integrated Memory (L2-LIM)
++* L2 cache controller, including L2-LIM and L2-Zero windows
+ * DDR memory controller
+ * 2 UARTs
+ * 1 GEM Ethernet controller
+diff --git a/include/hw/riscv/sifive_u.h b/include/hw/riscv/sifive_u.h
+index aed966a62d..be5e6232ce 100644
+--- a/include/hw/riscv/sifive_u.h
++++ b/include/hw/riscv/sifive_u.h
+@@ -28,6 +28,7 @@
+ #include "hw/gpio/sifive_gpio.h"
+ #include "hw/misc/sifive_u_otp.h"
+ #include "hw/misc/sifive_u_prci.h"
++#include "hw/misc/sifive_l2cc.h"
+ #include "hw/ssi/sifive_spi.h"
+ #include "hw/timer/sifive_pwm.h"
+ 
+@@ -45,6 +46,7 @@ typedef struct SiFiveUSoCState {
+     RISCVHartArrayState e_cpus;
+     RISCVHartArrayState u_cpus;
+     DeviceState *plic;
++    SiFiveL2CCState l2cc;
+     SiFiveUPRCIState prci;
+     SIFIVEGPIOState gpio;
+     SiFiveUOTPState otp;
+@@ -82,6 +84,7 @@ enum {
+     SIFIVE_U_DEV_L2CC,
+     SIFIVE_U_DEV_PDMA,
+     SIFIVE_U_DEV_L2LIM,
++    SIFIVE_U_DEV_L2ZERO,
+     SIFIVE_U_DEV_PLIC,
+     SIFIVE_U_DEV_PRCI,
+     SIFIVE_U_DEV_UART0,
+diff --git a/hw/riscv/sifive_u.c b/hw/riscv/sifive_u.c
+index 1ac0d1bbd9..3603cc2aa2 100644
+--- a/hw/riscv/sifive_u.c
++++ b/hw/riscv/sifive_u.c
+@@ -73,6 +73,7 @@ static const MemMapEntry sifive_u_memmap[] = {
+     [SIFIVE_U_DEV_L2CC] =     {  0x2010000,     0x1000 },
+     [SIFIVE_U_DEV_PDMA] =     {  0x3000000,   0x100000 },
+     [SIFIVE_U_DEV_L2LIM] =    {  0x8000000,   0x200000 },
++    [SIFIVE_U_DEV_L2ZERO] =   {  0xa000000,   0x200000 },
+     [SIFIVE_U_DEV_PLIC] =     {  0xc000000,  0x4000000 },
+     [SIFIVE_U_DEV_PRCI] =     { 0x10000000,     0x1000 },
+     [SIFIVE_U_DEV_UART0] =    { 0x10010000,     0x1000 },
+@@ -715,6 +716,10 @@ static void sifive_u_soc_instance_init(Object *obj)
+     object_initialize_child(obj, "gem", &s->gem, TYPE_CADENCE_GEM);
+     object_initialize_child(obj, "gpio", &s->gpio, TYPE_SIFIVE_GPIO);
+     object_initialize_child(obj, "pdma", &s->dma, TYPE_SIFIVE_PDMA);
++    object_initialize_child(obj, "l2-cache-controller", &s->l2cc,
++                            TYPE_SIFIVE_L2CC);
++    qdev_prop_set_uint64(DEVICE(&s->l2cc), "zero-size",
++                         sifive_u_memmap[SIFIVE_U_DEV_L2ZERO].size);
+     object_initialize_child(obj, "spi0", &s->spi0, TYPE_SIFIVE_SPI);
+     object_initialize_child(obj, "spi2", &s->spi2, TYPE_SIFIVE_SPI);
+     object_initialize_child(obj, "pwm0", &s->pwm[0], TYPE_SIFIVE_PWM);
+@@ -728,7 +733,6 @@ static void sifive_u_soc_realize(DeviceState *dev, Error **errp)
+     const MemMapEntry *memmap = sifive_u_memmap;
+     MemoryRegion *system_memory = get_system_memory();
+     MemoryRegion *mask_rom = g_new(MemoryRegion, 1);
+-    MemoryRegion *l2lim_mem = g_new(MemoryRegion, 1);
+     char *plic_hart_config;
+     int i, j;
+ 
+@@ -754,19 +758,14 @@ static void sifive_u_soc_realize(DeviceState *dev, Error **errp)
+     memory_region_add_subregion(system_memory, memmap[SIFIVE_U_DEV_MROM].base,
+                                 mask_rom);
+ 
+-    /*
+-     * Add L2-LIM at reset size.
+-     * This should be reduced in size as the L2 Cache Controller WayEnable
+-     * register is incremented. Unfortunately I don't see a nice (or any) way
+-     * to handle reducing or blocking out the L2 LIM while still allowing it
+-     * be re returned to all enabled after a reset. For the time being, just
+-     * leave it enabled all the time. This won't break anything, but will be
+-     * too generous to misbehaving guests.
+-     */
+-    memory_region_init_ram(l2lim_mem, NULL, "riscv.sifive.u.l2lim",
+-                           memmap[SIFIVE_U_DEV_L2LIM].size, &error_fatal);
+-    memory_region_add_subregion(system_memory, memmap[SIFIVE_U_DEV_L2LIM].base,
+-                                l2lim_mem);
++    /* L2 cache controller, LIM, and Zero windows */
++    sysbus_realize(SYS_BUS_DEVICE(&s->l2cc), &error_fatal);
++    sysbus_mmio_map(SYS_BUS_DEVICE(&s->l2cc), SIFIVE_L2CC_MMIO_REGS,
++                    memmap[SIFIVE_U_DEV_L2CC].base);
++    sysbus_mmio_map(SYS_BUS_DEVICE(&s->l2cc), SIFIVE_L2CC_MMIO_LIM,
++                    memmap[SIFIVE_U_DEV_L2LIM].base);
++    sysbus_mmio_map(SYS_BUS_DEVICE(&s->l2cc), SIFIVE_L2CC_MMIO_ZERO,
++                    memmap[SIFIVE_U_DEV_L2ZERO].base);
+ 
+     /* create PLIC hart topology configuration string */
+     plic_hart_config = riscv_plic_hart_config_string(ms->smp.cpus);
+@@ -868,9 +867,6 @@ static void sifive_u_soc_realize(DeviceState *dev, Error **errp)
+     create_unimplemented_device("riscv.sifive.u.dmc",
+         memmap[SIFIVE_U_DEV_DMC].base, memmap[SIFIVE_U_DEV_DMC].size);
+ 
+-    create_unimplemented_device("riscv.sifive.u.l2cc",
+-        memmap[SIFIVE_U_DEV_L2CC].base, memmap[SIFIVE_U_DEV_L2CC].size);
+-
+     sysbus_realize(SYS_BUS_DEVICE(&s->spi0), errp);
+     sysbus_mmio_map(SYS_BUS_DEVICE(&s->spi0), 0,
+                     memmap[SIFIVE_U_DEV_QSPI0].base);
+diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
+index 46a499f70f..b2b816de6a 100644
+--- a/hw/riscv/Kconfig
++++ b/hw/riscv/Kconfig
+@@ -99,6 +99,7 @@ config SIFIVE_U
+     select CPU_CLUSTER
+     select DEVICE_TREE
+     select RISCV_ACLINT
++    select SIFIVE_L2CC
+     select SIFIVE_GPIO
+     select SIFIVE_PDMA
+     select SIFIVE_PLIC
+-- 
+2.53.0
+
 
