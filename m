@@ -4,143 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32353CC6B1A
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 09:27:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFB8DCC6B1F
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 09:32:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGvGT-0001Pt-IZ; Wed, 14 Oct 2026 05:27:13 -0400
+	id 1xGvLW-0002Eu-1i; Wed, 14 Oct 2026 05:32:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xGvGR-0001Pl-M7
- for qemu-devel@nongnu.org; Wed, 14 Oct 2026 05:27:11 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xGvGQ-000897-1x
- for qemu-devel@nongnu.org; Wed, 14 Oct 2026 05:27:11 -0400
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69E5wpoR3951298
- for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 09:27:08 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- JiQuL0+No/TJVOwMFvvBgw7NdCceIIQhBanI4v3E6Lw=; b=Ly6bmAhSmaUWf2Gk
- D55XFEbnFBBP++zL0sKbXADCxMYTz9wkWSAYGAtSqF0YNkqNTVerM9IywGF+qUgv
- pUVPO2pK8Wlu9H5XZvBwHvQ5rc8bgkYC795DNVarfYwEtGqAEGSBuVL991TB3Bs4
- ekgZj2+Bffo1groE7269DYyJq563DirP88G/MOuNs1KP4YYPPPKuziK6Gefpy5KU
- EF6PW9R3qBwsLeLAlql6SAfmA13FE+zkhMm8QfdT7MSOZEzJJ9V6aOVnij3hW2nV
- bWO8iesNFj5U+NtI+VuK+w0c9DdZsh2ng7rylIZkwI58zSNDZno5I8W/kNQBiY0w
- lI082Q==
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ha42p0vje-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 09:27:07 +0000 (GMT)
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-53514fbd4a3so2745601cf.3
- for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 02:27:07 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
+ id 1xGvLS-0002EW-OJ
+ for qemu-devel@nongnu.org; Wed, 14 Oct 2026 05:32:22 -0400
+Received: from mail-dl1-x1232.google.com ([2607:f8b0:4864:20::1232])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
+ id 1xGvLP-0000KB-HN
+ for qemu-devel@nongnu.org; Wed, 14 Oct 2026 05:32:22 -0400
+Received: by mail-dl1-x1232.google.com with SMTP id
+ a92af1059eb24-154e9d2d979so563363c88.1
+ for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 02:32:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1791970027; x=1792574827; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=JiQuL0+No/TJVOwMFvvBgw7NdCceIIQhBanI4v3E6Lw=;
- b=IoIDWk7IK73BYDQJadM+SGctiuyI/FOvHYF796ME9/LzyoFZ0kJre/5Qix3f91CejS
- nMBPQdefNwpqSPcaOi+jsPypJxi98MZGuSuFAjngLZRrOZs7TrT3nPtt7iPbi6ZLxAOv
- bi7lhuVTXvAHbyqUIxwYiaNl38jjShYDEarW5PO+SpQIeJXGW0hvxxs5M46YOXTTPZgr
- Rj+nOhPGOYaC1fE1oQwCsufGfGU5tAKtKqozFyMMfMngZmcFgIDWBHyNrCX3lWpTbNOg
- zVWlwHijdLztZlqh6GoOjWFQl8Ws/lv/AXEWe40ZCZoIjiyvwfLvnNrUfDwsZFmMVeGj
- csOw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791970027; x=1792574827;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=gmail.com; s=20251104; t=1791970338; x=1792575138; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=JiQuL0+No/TJVOwMFvvBgw7NdCceIIQhBanI4v3E6Lw=;
- b=dXR+OUgBXttBJaikrNnyFcTYj9lEqDmV3MxzOdtarA9FDCRuf+GFukJgVxvBXAdLuT
- sEiz+TBN9q3nuaSbsiP9g8z0lMQQva+5E3hj+21B6wry73jbSRaeXsCft2NFxinPmXoK
- bHiOeiBQ77uxk5/jIm6+j3OuyEvQPniaHfLyqYkOS0kDji1Vdt1jDlx2D+hSR/eMLIre
- f847iTxZoyC4EqmXNE2jxdO69D3gKTfPAufEJy++rtXTjxrHbwWFuun2gSfMkO7RdCHi
- aOdFv89wW8C9Q8mSB65NRxorRIdNdILfD3wR5tU1Ds4oPw4P9qEe73B6dDLLTL/Mheph
- kFJQ==
-X-Forwarded-Encrypted: i=1;
- AKwUvBzTCHJ8APSEW1atBGkL1x+QgwjxPoAiI+tZce2FfHimzBT4lRtxXLXma2THNqPT6YMxPnGl89NDZRRS@nongnu.org
-X-Gm-Message-State: AFq9FYKBSgMoNJXalOcACJRYSGFx61KKOaZNbMjRGq47wBE4BOIzqkFr
- oLJ76sgMCqz57D5r6XHAPxWOaImcDmBJSowlqz46Ng8AcPXaueZ0xBWUYJ30QfSgtoWu+tUaS9r
- Pn6n249a803t7m2jCL/Od1wGFmVqaM8BH0PGjHBI3hC06JIFvhCqGXc9Cxw==
-X-Gm-Gg: AYBFou0h/naUWSog30geCeude113J+0OH4TJKtKQEtBAYe7iauXJxdiSH7MTBonS5Of
- WBEzcnEgq+XrMgFJ9p5tS43R69iVZ3JakSB4LebL6UIw0Fd0M7dCTWw82mf339YMe4p3S1a5jkn
- ExnXiNwQBvsN60qdOrD55VpWaCiJP68ZzS841sec9VaBIun9N9IbXgDJWXM+Q4wdKIbskv58aM+
- JFFG4Pa+hHGaAsoUhuUbzFWLqK1hNgnRyathij4mkgzPN5oREjzqSN4M2leCByUakmmcP9OfgNU
- riYOaok6z4k6U1XGx7KwHTCWwshAbk9ORFkXq1UCZPXCSWfuey3JzDk+GX4fAybSQTpkgAynE+q
- 7y4ibekhM20Pwbs1SsG+AS5DhMmNJkpi+4A==
-X-Received: by 2002:ac8:5a91:0:b0:535:f1b:68e5 with SMTP id
- d75a77b69052e-5359fb5a450mr263359531cf.44.1791970027335; 
- Wed, 14 Oct 2026 02:27:07 -0700 (PDT)
-X-Received: by 2002:ac8:5a91:0:b0:535:f1b:68e5 with SMTP id
- d75a77b69052e-5359fb5a450mr263359401cf.44.1791970026904; 
- Wed, 14 Oct 2026 02:27:06 -0700 (PDT)
-Received: from [192.168.69.210] (pmd666.hd.free.fr. [88.187.86.199])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a18bf35930sm422852375e9.13.2026.10.14.02.27.05
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 14 Oct 2026 02:27:06 -0700 (PDT)
-Message-ID: <7957a503-6fb5-40cd-9793-1bcdcde1717b@oss.qualcomm.com>
-Date: Wed, 14 Oct 2026 11:27:05 +0200
+ bh=rSqKSRhEqnstEH7SJXTfujA+NHTWwnjZ9T7JL0yO7Dk=;
+ b=cbh2zRGNuE97IHFiDeTfDxakb8gs8WMtfdoKP3fI2zHZ3pPNP9p6hqna6fmCq3ZLed
+ 7PGsK3kBHQai9I0F0Yh/pWGExUwUhE8giVaoC0ncIgbvyW/M362gO8wQiboNsF02A7zr
+ iPby/q78GC/T3GXp2qEurgFSgfJpgxfibSzoj9RysXG9BprOfw4UHNy2Q73Meityl+Sk
+ DmifPqbzRcFJmPOWJUOL4kpaEQOtLKMvquBpyeuo5cmpLqlXkhFvBoliO9Y+QtQMui4O
+ I9hKZPWGFt4OzAZRWM0dDeChrp6G0kIBukhjudxv0vqYMsZVdFVc5gVnKnUdDQX859GR
+ BXUA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1791970338; x=1792575138;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=rSqKSRhEqnstEH7SJXTfujA+NHTWwnjZ9T7JL0yO7Dk=;
+ b=EZCNVpQZlprlZXwwLuYiGXPMpPmdlcMtwPYxBkujGUYZeYLlHNMOgkX6+g1qRqkt9Z
+ LYlFuvjZpvPmlWGQYa817KTPe0+27+X3M4NhHWgO6zxTbQ1A4XtIhS1QQuiAcWu/5LlT
+ y3MMDK5CFqte3QxYdU0Eesx1dPVxhxezLOtjea+6yzZYZkUinAnUAKB8b5hyiTgVsGP7
+ vcjy6EenQB6tpzCfzzU+V+bqIpOuJb6YdODmJrHZ1NG+WCHlSWs7Huy6g8rxLzxaUIu7
+ XZhqG+XjXXbnEiiHEnybw2awipbrtGOX50pDc1YsZzsQRo81s3tyOKoR5qMyFcFJTrf0
+ PRZA==
+X-Gm-Message-State: AFq9FYJt6E8cB2gi15qYuAF9OgeZiC8Iw1fkp7CRzaSan/H1hLwYmde6
+ nw956APgGhH2L/std8TNgBhgfBAbUdR+NCBSm3DMwYoezGjLOL6sljukAxT2vniwVH8=
+X-Gm-Gg: AYBFou3m2yjlrFUnKljyUwD7pkg1tZTu7NFYlf12/6RMADus5pmimOWazZmgje5AQgI
+ AakpVQbZHKAynq/x0W1sFVTpRhuoX9ifcbJ45ME/LtDkKM3l8ioIqocn5dN8hbIgdKVf/e0S4mD
+ ujNN2NxuUv/cAC9HvtQtqGSSDA+xog07egWwJKlUHR+fjJEaB4YWygo7i6O4at2DAuNBAv1VmO4
+ Jcs5rty+GoXogymyKrbWRMKFIUwWP7twnqPglGBIn6UOZy1xQpKahdoNjoel0Zhspd5q8HQ+Y+f
+ G2GBfcPT0V24XiYKBsjmdEQA2zOr5BbWNhiZd6MyQ4b8gbgjYMonaruOhZpgdGyB353hFqwZ1Sf
+ ywagt+iQZsxaUGGk8kOWF+AmisJxmGEl9f/76jzjVXd2i9mOSPrZtb1aqSTO2cetBa4cDaU8cGo
+ 8zUIYDWe6rJH1XyGGA9SZAmZqAWNFh1yPp7M+GpDlmPExVv/+ROmj2LsmKdWa6Qj4Dd6dt63REN
+ s/McEJ5/30+p/m4+Oh5NIm+NFSi
+X-Received: by 2002:a05:7022:7e8c:b0:143:1bb1:b3c3 with SMTP id
+ a92af1059eb24-16a5ce94210mr21692046c88.14.1791970337648; 
+ Wed, 14 Oct 2026 02:32:17 -0700 (PDT)
+Received: from DESKTOP-Q716RM7 ([103.94.185.75])
+ by smtp.googlemail.com with ESMTPSA id
+ a92af1059eb24-1698de65af7sm48769303c88.0.2026.10.14.02.32.08
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 14 Oct 2026 02:32:16 -0700 (PDT)
+From: Yonggang Luo <luoyonggang@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: Eric Blake <eblake@redhat.com>, qemu-riscv@nongnu.org,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Alexander Bulekov <alxndr@bu.edu>, Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ qemu-s390x@nongnu.org, Song Gao <17746591750@163.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Eric Farman <farman@linux.ibm.com>,
+ Brian Cain <brian.cain@oss.qualcomm.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ Darren Kenny <darren.kenny@oracle.com>, Ani Sinha <anisinha@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Stafford Horne <shorne@gmail.com>, Cornelia Huck <cohuck@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Weiwei Li <liwei1518@gmail.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ David Hildenbrand <david@kernel.org>, Laurent Vivier <laurent@vivier.eu>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Fam Zheng <fam@euphon.net>, "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, qemu-arm@nongnu.org,
+ Chao Liu <chao.liu@processmission.com>,
+ Philippe Mathieu-Daude <philmd@mailo.com>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, Max Filippov <jcmvbkbc@gmail.com>,
+ Stefano Garzarella <sgarzare@redhat.com>
+Subject: [PATCH 01/34] qemu/base-arch-defs: extract QEMU_ARCH_BIT for
+ QEMU_ARCH_* enums
+Date: Wed, 14 Oct 2026 17:31:11 +0800
+Message-ID: <20261014093152.834-2-luoyonggang@gmail.com>
+X-Mailer: git-send-email 2.55.0.windows.3
+In-Reply-To: <20261014093152.834-1-luoyonggang@gmail.com>
+References: <20261014093152.834-1-luoyonggang@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] qom: deprecate use of instance level properties
-Content-Language: en-US
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- Mark Cave-Ayland <mark.caveayland@nutanix.com>,
- Markus Armbruster <armbru@redhat.com>
-References: <20261013120638.855671-1-berrange@redhat.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20261013120638.855671-1-berrange@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDE0MDAzNyBTYWx0ZWRfX/DRb+gaxWmhC
- jXVF+MyO6VTRJqWSqiRVVAyzdBvcRhB8Q2IQC/GPk5TjkrvEKgFmYknY6EcbTD8E65vSXOPMQOr
- dqBRtY1hsFuQ+g2bleRq0O9Rgfxjvis=
-X-Proofpoint-ORIG-GUID: xIkJH_YS-xuniawfdjj3CXLfPvVfqtyj
-X-Authority-Analysis: v=2.4 cv=aeb0Dhot c=1 sm=1 tr=0 ts=6acf4aeb cx=c_pps
- a=JbAStetqSzwMeJznSMzCyw==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
- a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8 a=ug_acTv2MyFcWMqQv4UA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=uxP6HrT_eTzRwkO_Te1X:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDE0MDAzNyBTYWx0ZWRfX5q9E6Ssprwkk
- XExWxAFTg2e3Pd3aqZ/nRGGLHQskSBnaVjq5jIiBEqgChpW6G9x/4bVUXpfb4U7loa+Tv1uIKHP
- M5CEjeGjnJxcvmLPGVl8tB9ebx127FAArL3MNm9QgEDfFol1+U7gbc7ogpyjNPxHJiTbsgAEbQe
- rQxPa8mwRQdAY80tjlhBQC5IJzUWu2DRiFdy1Af+1z19dB0rmpi+UfgWbB1Jcn9CtV3DNhQjqBE
- AkzlrGrpZMWYmugoGWfYyeq9Ia4W52jvJbld6GzGy4/YNv5ZYCVg0S3vhd3OX2FYqZdWqzqXUEr
- xd1ZcFfetM+GvWVGYACHNHmlIPdTifrv+CGk5bVa+2T/VgVX/aWSA3vYL+A2N7gKLyM/YF4SlQK
- LlYhZkLpw5PvsJtR0WuWGXmf9l2nF3WgzDQldY/lsk4fWEdCQ1Q6wpwRTRL0TNsq+ZFISsStjos
- d2QbmzEnFHwtEvbF+mw==
-X-Proofpoint-GUID: xIkJH_YS-xuniawfdjj3CXLfPvVfqtyj
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-10-13_01,2026-10-09_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 bulkscore=0 lowpriorityscore=0 impostorscore=0 suspectscore=0
- spamscore=0 priorityscore=1501 malwarescore=0 clxscore=1015 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610080000 definitions=main-2610140037
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1232;
+ envelope-from=luoyonggang@gmail.com; helo=mail-dl1-x1232.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UPPERCASE_75_100=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -156,14 +128,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 13/10/26 14:06, Daniel P. BerrangÃ© wrote:
-> Add API docs to object_property_(add/try_add/del) to recommend
-> use of class properties instead.
-> 
-> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> ---
->   include/qom/object.h | 25 ++++++++++++++++++++++---
->   1 file changed, 22 insertions(+), 3 deletions(-)
+Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
+---
+ include/qemu/base-arch-defs.h | 60 ++++++++++++++++++-----------------
+ 1 file changed, 31 insertions(+), 29 deletions(-)
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+diff --git a/include/qemu/base-arch-defs.h b/include/qemu/base-arch-defs.h
+index f33465738c9..806ad8094a4 100644
+--- a/include/qemu/base-arch-defs.h
++++ b/include/qemu/base-arch-defs.h
+@@ -9,36 +9,38 @@
+ 
+ #include "qapi/qapi-types-machine.h"
+ 
++#define QEMU_ARCH_BIT(target) (1UL << (target))
++
+ enum {
+-    QEMU_ARCH_ALPHA =       (1UL << SYS_EMU_TARGET_ALPHA),
+-    QEMU_ARCH_ARM =         (1UL << SYS_EMU_TARGET_ARM) |
+-                            (1UL << SYS_EMU_TARGET_AARCH64),
+-    QEMU_ARCH_I386 =        (1UL << SYS_EMU_TARGET_I386) |
+-                            (1UL << SYS_EMU_TARGET_X86_64),
+-    QEMU_ARCH_M68K =        (1UL << SYS_EMU_TARGET_M68K),
+-    QEMU_ARCH_MICROBLAZE =  (1UL << SYS_EMU_TARGET_MICROBLAZE),
+-    QEMU_ARCH_MIPS =        (1UL << SYS_EMU_TARGET_MIPS) |
+-                            (1UL << SYS_EMU_TARGET_MIPSEL) |
+-                            (1UL << SYS_EMU_TARGET_MIPS64) |
+-                            (1UL << SYS_EMU_TARGET_MIPS64EL),
+-    QEMU_ARCH_PPC =         (1UL << SYS_EMU_TARGET_PPC) |
+-                            (1UL << SYS_EMU_TARGET_PPC64),
+-    QEMU_ARCH_S390X =       (1UL << SYS_EMU_TARGET_S390X),
+-    QEMU_ARCH_SH4 =         (1UL << SYS_EMU_TARGET_SH4) |
+-                            (1UL << SYS_EMU_TARGET_SH4EB),
+-    QEMU_ARCH_SPARC =       (1UL << SYS_EMU_TARGET_SPARC) |
+-                            (1UL << SYS_EMU_TARGET_SPARC64),
+-    QEMU_ARCH_XTENSA =      (1UL << SYS_EMU_TARGET_XTENSA) |
+-                            (1UL << SYS_EMU_TARGET_XTENSAEB),
+-    QEMU_ARCH_OR1K =        (1UL << SYS_EMU_TARGET_OR1K),
+-    QEMU_ARCH_TRICORE =     (1UL << SYS_EMU_TARGET_TRICORE),
+-    QEMU_ARCH_HPPA =        (1UL << SYS_EMU_TARGET_HPPA),
+-    QEMU_ARCH_RISCV =       (1UL << SYS_EMU_TARGET_RISCV32) |
+-                            (1UL << SYS_EMU_TARGET_RISCV64),
+-    QEMU_ARCH_RX =          (1UL << SYS_EMU_TARGET_RX),
+-    QEMU_ARCH_AVR =         (1UL << SYS_EMU_TARGET_AVR),
+-    QEMU_ARCH_HEXAGON =     (1UL << SYS_EMU_TARGET_HEXAGON),
+-    QEMU_ARCH_LOONGARCH =   (1UL << SYS_EMU_TARGET_LOONGARCH64),
++    QEMU_ARCH_ALPHA =       QEMU_ARCH_BIT(SYS_EMU_TARGET_ALPHA),
++    QEMU_ARCH_ARM =         QEMU_ARCH_BIT(SYS_EMU_TARGET_ARM) |
++                            QEMU_ARCH_BIT(SYS_EMU_TARGET_AARCH64),
++    QEMU_ARCH_I386 =        QEMU_ARCH_BIT(SYS_EMU_TARGET_I386) |
++                            QEMU_ARCH_BIT(SYS_EMU_TARGET_X86_64),
++    QEMU_ARCH_M68K =        QEMU_ARCH_BIT(SYS_EMU_TARGET_M68K),
++    QEMU_ARCH_MICROBLAZE =  QEMU_ARCH_BIT(SYS_EMU_TARGET_MICROBLAZE),
++    QEMU_ARCH_MIPS =        QEMU_ARCH_BIT(SYS_EMU_TARGET_MIPS) |
++                            QEMU_ARCH_BIT(SYS_EMU_TARGET_MIPSEL) |
++                            QEMU_ARCH_BIT(SYS_EMU_TARGET_MIPS64) |
++                            QEMU_ARCH_BIT(SYS_EMU_TARGET_MIPS64EL),
++    QEMU_ARCH_PPC =         QEMU_ARCH_BIT(SYS_EMU_TARGET_PPC) |
++                            QEMU_ARCH_BIT(SYS_EMU_TARGET_PPC64),
++    QEMU_ARCH_S390X =       QEMU_ARCH_BIT(SYS_EMU_TARGET_S390X),
++    QEMU_ARCH_SH4 =         QEMU_ARCH_BIT(SYS_EMU_TARGET_SH4) |
++                            QEMU_ARCH_BIT(SYS_EMU_TARGET_SH4EB),
++    QEMU_ARCH_SPARC =       QEMU_ARCH_BIT(SYS_EMU_TARGET_SPARC) |
++                            QEMU_ARCH_BIT(SYS_EMU_TARGET_SPARC64),
++    QEMU_ARCH_XTENSA =      QEMU_ARCH_BIT(SYS_EMU_TARGET_XTENSA) |
++                            QEMU_ARCH_BIT(SYS_EMU_TARGET_XTENSAEB),
++    QEMU_ARCH_OR1K =        QEMU_ARCH_BIT(SYS_EMU_TARGET_OR1K),
++    QEMU_ARCH_TRICORE =     QEMU_ARCH_BIT(SYS_EMU_TARGET_TRICORE),
++    QEMU_ARCH_HPPA =        QEMU_ARCH_BIT(SYS_EMU_TARGET_HPPA),
++    QEMU_ARCH_RISCV =       QEMU_ARCH_BIT(SYS_EMU_TARGET_RISCV32) |
++                            QEMU_ARCH_BIT(SYS_EMU_TARGET_RISCV64),
++    QEMU_ARCH_RX =          QEMU_ARCH_BIT(SYS_EMU_TARGET_RX),
++    QEMU_ARCH_AVR =         QEMU_ARCH_BIT(SYS_EMU_TARGET_AVR),
++    QEMU_ARCH_HEXAGON =     QEMU_ARCH_BIT(SYS_EMU_TARGET_HEXAGON),
++    QEMU_ARCH_LOONGARCH =   QEMU_ARCH_BIT(SYS_EMU_TARGET_LOONGARCH64),
+     QEMU_ARCH_ALL =         UINT32_MAX,
+ };
+ 
+-- 
+2.55.0.windows.3
+
 
