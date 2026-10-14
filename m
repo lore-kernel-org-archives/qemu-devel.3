@@ -4,120 +4,117 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99900CC6B2C
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 21:56:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07FB9CC6B2A
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 22:38:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xH6xS-00008A-Db; Wed, 14 Oct 2026 17:56:22 -0400
+	id 1xH7as-0005hu-8G; Wed, 14 Oct 2026 18:37:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wesley.hershberger@canonical.com>)
- id 1xH6xM-00007K-BG
- for qemu-devel@nongnu.org; Wed, 14 Oct 2026 17:56:16 -0400
-Received: from smtp-relay-internal-1.canonical.com ([185.125.188.123])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wesley.hershberger@canonical.com>)
- id 1xH6xJ-0005Jh-0W
- for qemu-devel@nongnu.org; Wed, 14 Oct 2026 17:56:14 -0400
-Received: from mail-yx1-f71.google.com (mail-yx1-f71.google.com
- [74.125.224.71])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xH7aq-0005hg-8u
+ for qemu-devel@nongnu.org; Wed, 14 Oct 2026 18:37:04 -0400
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xH7ao-0000Zy-KN
+ for qemu-devel@nongnu.org; Wed, 14 Oct 2026 18:37:04 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id CCF1A3F154
- for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 21:56:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
- s=20251003; t=1792014970;
- bh=QsrujNT23KodeRhxy6ctEoCpVb2h+gJO/L6jtpjjrv0=;
- h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
- In-Reply-To:To:Cc;
- b=kyDfX/YxVJnQ8mmdDHSfc26WmcVK0dS9SKCs2CL74K+nf7iRBTlyfEsImNOcfpRam
- QVpPIsA2K8M0/naw8YldgSYQ/vxRLvbX03q4FUNh29Psdp6aabxdCoBQ8/PJcsOK2B
- azn4koSXVEbefPUKu0DIKKwKKPNhUTmEPsd0clM6yQcQGZKgIrKjhEWJV+biEabxnr
- CHrE/ZucKYREDYtIW1F71AwmtoLDKfRBoK/8KBZxTOJpe/iAIIfllkTw2weWkRC4Oh
- GpGfLuGaa1W8TYG4ITA2BCwzsKWVW/9ioP4h1KRs4/38P6ePsyXhgJ1XB1C69O0+8U
- J7ER9YzCEh9HJLCfpYQgajBuuQ6iDmCyKyBJkYkXOOGNl2yxSj2nFY8nCvWApCLA27
- 2I4ir+t7pgV+CpFkZm6meX1VXMoaikLIi6zNkqkGTLelOTzSlRT6c0pUFa2F2HQDND
- gfBn4lBk83sMhiva7I9/AwEu59ISOGhDknjPgNJJjqeW7xnSpcpRQARB5cu0ntekKI
- vWHai+1gLElvMaMV4E4NtILXnTKzYlKdVyootnaPYY4lkhq6ia8ksbcxjvL1+zJ7gX
- GVvzojzCbCupiXoqKCfYw413R98xdM+ODFH80jjMtuK3RQEAmSgkKZzoUWsAIeFpRe
- xDMhCcbqdCWagPBAA2yqHggA=
-Received: by mail-yx1-f71.google.com with SMTP id
- 956f58d0204a3-677c4ca2265so1925258d50.2
- for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 14:56:10 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792014970; x=1792619770;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :content-type:mime-version:subject:date:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=QsrujNT23KodeRhxy6ctEoCpVb2h+gJO/L6jtpjjrv0=;
- b=kdd+TNw1trvJ4K/kLGbA+uMQnK7ITER0ymi52EYFFrG975KikD+pehH8dn8pGKAayB
- k8NtFUmVj5EzuAM6Hf6rK4iw1F3KoOhJlQmb69h6/Rm7gqMs0RgMPQOIhQMV7TepSS5N
- YSdLVGbNcf3OMq0TUoVWlKbUz5D3wi32v1Q1LRhAhX/KOoirHSbA8kyTXuG8lE1Toy/u
- HIpIhwtdnKY677Nw4QSnZDjGQHhfDfoCW/noZd29GypA/EJmqNbHDkPB7FsEjZnC9+lH
- 8HT+DGjTP5JVlWrRbncQ/zfogvXYFbzkDNt0NXAmKpNcJGHkn3uBJQW7gfLAOUK439W5
- rzig==
-X-Gm-Message-State: AFq9FYLAWlw29nVthSu0/xVIycPkr8MWAAdog8dUFxjzUQmPlx6pDMz3
- FD17IeBRkiImoqM0TZLaO9e8jGHVIsSWK5U7+rO411ASm3tLu07L2nU5SJuIcuvWAX1In4ecw3F
- 6diYGdFFqbZtIRhmxSCCpN46/dHKayNSXlo92mEtFK5Pwj9lm584IwnjA5dn8Zshv6uw2C8ql
-X-Gm-Gg: AYBFou2Za78sjbpMbOfnJmMPSwxYTHPXcJfauYcufXqsXkwsnWbgNz1FwCwgotfShNp
- emgc/W8qm9iHadRVx7esupioqo+Sv9vYh1HpwXVADwI6t/Wbpo7KqieCp6AdcRqXerVR5QPg8yk
- 3n0zl9zuv6LqveqLhHu0+iIu6A+PgiFtP1JMrPPKj6GjDt+NyxkQf9RT9Bhbi6cBvYrD+8qIt2N
- 4LSeSgYx6CEI0KBsdG22rJTQs/rIrt2/OW4np2Hhz3vQVBqWOTkr/JTndRuSBsAgajYv0D47+ZH
- 8nCPIcLYBf/+Vz54Y/gJAEd4qzFpcF8OzjNM0KoUcfPZo+m3YxGGjSE0COE8T2XHhLKn0JAHss9
- kwp7MqVk0DTGjMV4hcTT3LqzASDTGg8iomHDiPQVd7fGZwiO3cONcvA==
-X-Received: by 2002:a05:690e:d42:b0:677:c9c1:258c with SMTP id
- 956f58d0204a3-67936067bd2mr4163279d50.71.1792014969652; 
- Wed, 14 Oct 2026 14:56:09 -0700 (PDT)
-X-Received: by 2002:a05:690e:d42:b0:677:c9c1:258c with SMTP id
- 956f58d0204a3-67936067bd2mr4163265d50.71.1792014969164; 
- Wed, 14 Oct 2026 14:56:09 -0700 (PDT)
-Received: from [127.0.1.1] ([2600:6c45:3000:1420:7d2b:a0a2:5b86:60e4])
- by smtp.gmail.com with ESMTPSA id
- 956f58d0204a3-6799df67495sm201283d50.0.2026.10.14.14.56.07
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 14 Oct 2026 14:56:08 -0700 (PDT)
-From: Wesley Hershberger <wesley.hershberger@canonical.com>
-Date: Wed, 14 Oct 2026 16:55:46 -0500
-Subject: [PATCH v4 2/2] util/coroutine: Reduce default idle pool max size
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 671471F397;
+ Wed, 14 Oct 2026 22:37:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1792017420; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=uSSIQXpd0JgzGVlLmwk8XNS+4VDCOpotWHon7ZM0hsg=;
+ b=nDN8XZAwT0et83F+z8rS8kOBNQbWIuJ9/TVvPeNst+GAOyep9dKcYxTW4eBgNzwbWDxICo
+ ZFT41gWR2Efb1BLgi/Hjuez+kvZBfZhLKKVzw0NJ31W8XgpY24YEuIGq+28KpMIEzNg23j
+ NKdrgr1Gz9pItfoW7R0qBW5QhppbnWI=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1792017420;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=uSSIQXpd0JgzGVlLmwk8XNS+4VDCOpotWHon7ZM0hsg=;
+ b=7i6DAAtJTwodsYlVdiw+U3FRBqQNWf8vMkU7JJElSDEXZXdSjRC/TodogT+E2UmLKsZCCD
+ kUPzthYTPbHWk9CA==
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=nDN8XZAw;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=7i6DAAtJ
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1792017420; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=uSSIQXpd0JgzGVlLmwk8XNS+4VDCOpotWHon7ZM0hsg=;
+ b=nDN8XZAwT0et83F+z8rS8kOBNQbWIuJ9/TVvPeNst+GAOyep9dKcYxTW4eBgNzwbWDxICo
+ ZFT41gWR2Efb1BLgi/Hjuez+kvZBfZhLKKVzw0NJ31W8XgpY24YEuIGq+28KpMIEzNg23j
+ NKdrgr1Gz9pItfoW7R0qBW5QhppbnWI=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1792017420;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=uSSIQXpd0JgzGVlLmwk8XNS+4VDCOpotWHon7ZM0hsg=;
+ b=7i6DAAtJTwodsYlVdiw+U3FRBqQNWf8vMkU7JJElSDEXZXdSjRC/TodogT+E2UmLKsZCCD
+ kUPzthYTPbHWk9CA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 7D631133F1;
+ Wed, 14 Oct 2026 22:36:59 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id hCnoBwsE0GrqEgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 14 Oct 2026 22:36:59 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: "Denis V. Lunev" <den@openvz.org>, qemu-devel@nongnu.org
+Cc: den@openvz.org, Paolo Bonzini <pbonzini@redhat.com>, Richard Henderson
+ <richard.henderson@linaro.org>, Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@oss.qualcomm.com>, Zhao Liu <zhao1.liu@intel.com>, Stefan Weil
+ <sw@weilnetz.de>
+Subject: Re: [PATCH 01/10] util/qemu-thread: track bql_locked across the
+ timed condvar wait
+In-Reply-To: <20260915203455.580999-2-den@openvz.org>
+References: <20260915203455.580999-1-den@openvz.org>
+ <20260915203455.580999-2-den@openvz.org>
+Date: Wed, 14 Oct 2026 19:36:57 -0300
+Message-ID: <878q3znc3a.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20261014-set-default-pool-size-v4-2-a3aff89b94f0@canonical.com>
-References: <20261014-set-default-pool-size-v4-0-a3aff89b94f0@canonical.com>
-In-Reply-To: <20261014-set-default-pool-size-v4-0-a3aff89b94f0@canonical.com>
-To: qemu-devel@nongnu.org
-Cc: Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>, 
- Hector Cao <hector.cao@canonical.com>, 
- =?utf-8?q?Alex_Ram=C3=ADrez?= <alex.ramirez@canonical.com>, 
- Wesley Hershberger <wesley.hershberger@canonical.com>, 
- =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3971;
- i=wesley.hershberger@canonical.com; h=from:subject:message-id;
- bh=sMbtxlft+39dMA70DKT774McU6FK2M/8TFC/fsKqQ1Y=;
- b=owEB7QES/pANAwAKAfkogKziOh25AcsmYgBqz/p1AUEjp2kT+hdU9ObaPnUBN3YclglUXoji4
- TyjL2CB3VaJAbMEAAEKAB0WIQQsIHxFLwpehxEbQ8r5KICs4joduQUCas/6dQAKCRD5KICs4jod
- udpXC/4uKx/rtqGNSLXjQKEbq2Fdg2IRVEYteEqeLy/tJfHZMP2vWJia3OGLBuecfXj2Wgbc9dI
- ym8+NCAubGE5OTnlR0g4PFxWfev56r3TOIZKDbIV/JMSD4UaDmGY4dgHrP78zxm+SjI+2Biw7Hd
- X7AbOs4YUnE+hlCE36obs/WSJJu7531U9joNPiyYfk52fv+1HygNymxov7j+QCzjkX43RB6v53/
- 9dqRdn0tUUilf6FDnDKRr8nHdYg6c9lPoxMYIbCtmBlxNYTWdv8ylLKkKWUiVm/TAL0jDx1fjKU
- ByZ1Lc5d8lNq1ws+PwjpTO802whH2K2ixaHXvPRSSXS4oMHAt5iEpUPioRKBXmzL8jTgvAsUBj5
- SfZHGZvYYt7o0Ss2OJMfF8+eRLgD4eV4JppHyqaI5I6IMbk5s07gWE8lcLAF2W+M/3tsm0elEeS
- vGElDgs6gI5Zo0Pz9vyGx9nNC9HlVTPx6yOE9XNpg/gOpYtdY2ABflTxuBFp+UMhEjocc=
-X-Developer-Key: i=wesley.hershberger@canonical.com; a=openpgp;
- fpr=2C207C452F0A5E87111B43CAF92880ACE23A1DB9
-Received-SPF: pass client-ip=185.125.188.123;
- envelope-from=wesley.hershberger@canonical.com;
- helo=smtp-relay-internal-1.canonical.com
-X-Spam_score_int: -32
-X-Spam_score: -3.3
-X-Spam_bar: ---
-X-Spam_report: (-3.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_BL_SPAMCOP_NET=1.347, RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+X-Rspamd-Queue-Id: 671471F397
+X-Rspamd-Action: no action
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ RCVD_TLS_ALL(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ MISSING_XM_UA(0.00)[]; ARC_NA(0.00)[]; MIME_TRACE(0.00)[0:+];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ MID_RHS_MATCH_FROM(0.00)[]; TO_DN_SOME(0.00)[];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ RCPT_COUNT_SEVEN(0.00)[8]; RCVD_COUNT_TWO(0.00)[2];
+ TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:dkim,imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ DKIM_TRACE(0.00)[suse.de:+]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -134,118 +131,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-If g_file_get_contents fails (AppArmor, etc), use a more conservative
-default max size for the idle coroutine pool.
+"Denis V. Lunev" <den@openvz.org> writes:
 
-This avoids any possibility of the failure described in 86a637e48104
-unless the host kernel is configured with a lower-than-default
-vm.max_map_count.
+> From: Denis V. Lunev <den@openvz.org>
+>
+> qemu_cond_timedwait_ts() releases and retakes the mutex around
+> pthread_cond_timedwait(), but calls the two trace points by hand
+> instead of going through the mutex hooks, so it never reaches
+> bql_update_status(). A thread waiting there still reports bql_locked
+> true while the mutex is released, which is the confusion the hooks were
+> given that job to end. migration/cpu-throttle.c reaches this through
+> qemu_cond_timedwait_bql(). The Windows qemu_cond_timedwait_impl() has
+> the same two trace calls, next to a qemu_cond_wait_impl() that already
+> uses the hooks.
+>
+> Call the hooks, which emit the same two trace points.
+>
+> Fixes: c89d1c879a ("bql: Fix bql_locked status with condvar APIs")
+> Cc: Paolo Bonzini <pbonzini@redhat.com>
+> Cc: Richard Henderson <richard.henderson@linaro.org>
+> Cc: Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com>
+> Cc: Zhao Liu <zhao1.liu@intel.com>
+> Cc: Stefan Weil <sw@weilnetz.de>
+> Signed-off-by: Denis V. Lunev <den@openvz.org>
+> ---
+>  util/qemu-thread-posix.c | 4 ++--
+>  util/qemu-thread-win32.c | 4 ++--
+>  2 files changed, 4 insertions(+), 4 deletions(-)
+>
+> diff --git a/util/qemu-thread-posix.c b/util/qemu-thread-posix.c
+> index 089606c93f..580cdf8079 100644
+> --- a/util/qemu-thread-posix.c
+> +++ b/util/qemu-thread-posix.c
+> @@ -250,9 +250,9 @@ qemu_cond_timedwait_ts(QemuCond *cond, QemuMutex *mut=
+ex, struct timespec *ts,
+>      int err;
+>=20=20
+>      assert(cond->initialized);
+> -    trace_qemu_mutex_unlock(mutex, file, line);
+> +    qemu_mutex_pre_unlock(mutex, file, line);
+>      err =3D pthread_cond_timedwait(&cond->cond, &mutex->lock, ts);
+> -    trace_qemu_mutex_locked(mutex, file, line);
+> +    qemu_mutex_post_lock(mutex, file, line);
+>      if (err && err !=3D ETIMEDOUT) {
+>          error_exit(err, __func__);
+>      }
+> diff --git a/util/qemu-thread-win32.c b/util/qemu-thread-win32.c
+> index 3037732a6f..afdacdb5f2 100644
+> --- a/util/qemu-thread-win32.c
+> +++ b/util/qemu-thread-win32.c
+> @@ -177,11 +177,11 @@ bool qemu_cond_timedwait_impl(QemuCond *cond, QemuM=
+utex *mutex, int ms,
+>      int rc =3D 0;
+>=20=20
+>      assert(cond->initialized);
+> -    trace_qemu_mutex_unlock(mutex, file, line);
+> +    qemu_mutex_pre_unlock(mutex, file, line);
+>      if (!SleepConditionVariableSRW(&cond->var, &mutex->lock, ms, 0)) {
+>          rc =3D GetLastError();
+>      }
+> -    trace_qemu_mutex_locked(mutex, file, line);
+> +    qemu_mutex_post_lock(mutex, file, line);
+>      if (rc && rc !=3D ERROR_TIMEOUT) {
+>          error_exit(rc, __func__);
+>      }
 
-This change is motivated by a discussion of backport risk:
-https://bugs.launchpad.net/ubuntu/+source/qemu/+bug/2168803/comments/8
-
-Fixes: 86a637e48104 ("coroutine: cap per-thread local pool size")
-Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
-Signed-off-by: Wesley Hershberger <wesley.hershberger@canonical.com>
----
- util/qemu-coroutine.c | 73 ++++++++++++++++++++++++++++++++-------------------
- 1 file changed, 46 insertions(+), 27 deletions(-)
-
-diff --git a/util/qemu-coroutine.c b/util/qemu-coroutine.c
-index 5af61995437..b3312f7bf99 100644
---- a/util/qemu-coroutine.c
-+++ b/util/qemu-coroutine.c
-@@ -361,42 +361,61 @@ void qemu_coroutine_dec_pool_size(unsigned int removing_pool_size)
-     global_pool_max_size -= removing_pool_size;
- }
- 
--static unsigned int get_global_pool_hard_max_size(void)
--{
- #ifdef __linux__
--    g_autofree char *contents = NULL;
--    int max_map_count;
-+/*
-+ * include/linux/mm.h
-+ */
-+#define DEFAULT_MAX_MAP_COUNT 65530
- 
--    /*
--     * Linux processes can have up to max_map_count virtual memory areas
--     * (VMAs). mmap(2), mprotect(2), etc fail with ENOMEM beyond this limit. We
--     * must limit the coroutine pool to a safe size to avoid running out of
--     * VMAs.
--     */
--    if (g_file_get_contents("/proc/sys/vm/max_map_count", &contents, NULL,
--                            NULL)) {
-+static unsigned int get_max_map_count(void)
-+{
-+    g_autofree char *contents = NULL;
-+    int max_map_count = 0;
-+    if (g_file_get_contents("/proc/sys/vm/max_map_count", &contents,
-+                            NULL, NULL)) {
-         /* contents has trailing newline, remove it before conversion */
-         g_strchomp(contents);
--        if (qemu_strtoi(contents, NULL, 10, &max_map_count) != 0) {
--            return UINT_MAX;
--        }
--        /*
--         * This is an upper bound that avoids exceeding max_map_count. Leave a
--         * fixed amount for non-coroutine users like library dependencies,
--         * vhost-user, etc. Each coroutine takes up 2 VMAs so halve the
--         * remaining amount.
--         */
--        if (max_map_count > 5000) {
--            return (max_map_count - 5000) / 2;
--        } else {
--            /* Disable the global pool but threads still have local pools */
--            return 0;
-+        if (qemu_strtoi(contents, NULL, 10, &max_map_count) == 0) {
-+            return max_map_count;
-         }
-     }
--#endif
- 
-+    /*
-+     * Read from /proc might fail due to mandatory access control (AppArmor,
-+     * SELinux, etc). Use the kernel's default in that case.
-+     */
-+    return DEFAULT_MAX_MAP_COUNT;
-+}
-+
-+/*
-+ * Linux processes can have up to max_map_count virtual memory areas
-+ * (VMAs). mmap(2), mprotect(2), etc fail with ENOMEM beyond this limit. We
-+ * must limit the coroutine pool to a safe size to avoid running out of
-+ * VMAs.
-+ */
-+static unsigned int get_global_pool_hard_max_size(void)
-+{
-+    int max_map_count = get_max_map_count();
-+
-+    /*
-+     * This is an upper bound that avoids exceeding max_map_count. Leave a
-+     * fixed amount for non-coroutine users like library dependencies,
-+     * vhost-user, etc. Each coroutine takes up 2 VMAs so halve the
-+     * remaining amount.
-+     */
-+    if (max_map_count > 5000) {
-+        return (max_map_count - 5000) / 2;
-+    } else {
-+        /* Disable the global pool but threads still have local pools */
-+        return 0;
-+    }
-+}
-+#else
-+static unsigned int get_global_pool_hard_max_size(void)
-+{
-     return UINT_MAX;
- }
-+#endif
- 
- static void __attribute__((constructor)) qemu_coroutine_init(void)
- {
-
--- 
-2.53.0
-
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
 
