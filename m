@@ -4,55 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53407CC6B19
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 01:41:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4D22CC6B19
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 01:53:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGnz2-0002e4-Lf; Tue, 13 Oct 2026 21:40:45 -0400
+	id 1xGoAe-0003yM-Pf; Tue, 13 Oct 2026 21:52:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1xGnyz-0002dK-3k
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 21:40:41 -0400
+ id 1xGoAa-0003xI-FU
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 21:52:40 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1xGnyv-00005X-7b
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 21:40:40 -0400
+ id 1xGoAW-0000tu-76
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 21:52:40 -0400
 Received: from [192.168.10.153] (p865013-ipoe.ipoe.ocn.ne.jp [153.242.222.12])
  (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 69E1eNdi021602
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 69E1qKF3027188
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Wed, 14 Oct 2026 10:40:23 +0900 (JST)
+ Wed, 14 Oct 2026 10:52:20 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=KSUde78HX/O/g9354ffOswmMnJwSfiUzdVrfRLRCRGo=; 
+DKIM-Signature: a=rsa-sha256; bh=iTvbq0sN1cwzMJIoHwmdzt/RMsk2t3E4bq/W4Yh0bD4=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1791942023; v=1;
- b=YAqB8JTyafeabvxhmXbrBLCGEqSTWZNh6kKJjtmQeUt2/RAmmkTouJm4N3yMVqR4
- OXkNLTWUdL443mse6rjT2SgKA6bdz3GCMBP9xHfQbsySgfzZXL6VK54PNeMLTCDX
- EaJPECZBJHwhrHUMOVrs58s3/R9oVaSvi3n1LMWdP/FE40ahRaJhXDVsvrl+sxyZ
- FcR03mQnqzTcABTvEC7MehNzulJIY8a4gfp9ijyJTOeRE5vFAo+xucdd+RASjpa4
- 2FjuK7bIF04H0ZkCD4wuR7eN1JU87vmikEPgRCnct0qFLTimidk6eKGKkMy+XU0b
- YxUgyYhjLdXRjwnfUZBitw==
-Message-ID: <c4cbc75f-6629-44cd-834e-c84ac7a1eb0e@rsg.ci.i.u-tokyo.ac.jp>
-Date: Wed, 14 Oct 2026 10:40:23 +0900
+ s=rs20250326; t=1791942740; v=1;
+ b=Ho3MybZ50gHH+TKJMsKre7jX2sHmJH7+ltPq5EPErvdVcA0rNC6BtPT/ZEmBdilK
+ UBWlpGw55Xfff6+PrQtWID/C7BK2Hp4t2+xfuTE6Q/AR0rORMl4xjwxKQTi9y2bp
+ kfGhyMV9SnvRQMS9Fp3i8ZqBmCgdf2lN05zBnfiCzg+csmXpqwBsNqP50Og2MUDN
+ dpTs5OUoDn7dmjcS1hNfgt8jMIG1GxXMzi+LBTGE7lrDSRgH7NltpyEfn3kzT5sr
+ SbVotDiewQlFvSCfYgWORFeNaXOeGDHROt/SbJcq9xl4xZtm5s7KBOMTLZytCchm
+ grkP9JrrKaBdlIvBdjAVCQ==
+Message-ID: <a231b25f-7cdc-4667-b9d8-2b2ef023cb56@rsg.ci.i.u-tokyo.ac.jp>
+Date: Wed, 14 Oct 2026 10:52:20 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v2 0/9] igb: Add experimental VF live migration support
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
-Cc: Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
- Jason Wang <jasowangio@gmail.com>, Alex Williamson <alex@shazbot.org>,
- Peter Xu <peterx@redhat.com>
-References: <20260902192054.3329753-1-clg@redhat.com>
- <341bf6d3-27e4-425e-a0b1-0e3767e2db99@rsg.ci.i.u-tokyo.ac.jp>
- <73fe443f-0acd-41b0-a9ca-259f88f0ff88@redhat.com>
- <fd08029a-4822-4ccc-8033-a981b8ddbbe3@rsg.ci.i.u-tokyo.ac.jp>
- <34a84565-bb0e-4e6b-b5dc-480c2990740e@redhat.com>
+Subject: Re: [PATCH 2/2] contrib/plugins/bbv.c: Allow selecting ROI
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>
+References: <20261007-bbv-v1-0-a2f521a68fdf@rsg.ci.i.u-tokyo.ac.jp>
+ <20261007-bbv-v1-2-a2f521a68fdf@rsg.ci.i.u-tokyo.ac.jp>
+ <4eec19e6-db40-4658-b5b3-bc342473cffd@oss.qualcomm.com>
+ <f503ffbe-0900-4b8e-ae7b-dbfcc74eb5cc@rsg.ci.i.u-tokyo.ac.jp>
+ <2d7c2cdb-b5b9-41ed-9786-dd9b4876bdd8@oss.qualcomm.com>
+ <9cda6271-aed9-4a2b-b88f-bca8371d753e@rsg.ci.i.u-tokyo.ac.jp>
+ <0b392aaf-7ce1-46bb-b39b-47744ea1e6f9@oss.qualcomm.com>
+ <65391825-ef44-4771-99b4-ad3a47279762@rsg.ci.i.u-tokyo.ac.jp>
+ <6b00ed2c-e78a-4ac7-9e5b-34d4aebefbbf@oss.qualcomm.com>
+ <ea052c05-88bb-4640-801e-8b9937bc5955@rsg.ci.i.u-tokyo.ac.jp>
+ <d4552417-493f-4577-ac64-b3b63b15cdd5@oss.qualcomm.com>
+ <9ce93dc1-b374-4732-97f8-e7a236759346@rsg.ci.i.u-tokyo.ac.jp>
+ <5ad30a8d-b52f-4a9a-b299-a0caa98f2a67@oss.qualcomm.com>
 Content-Language: en-US
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <34a84565-bb0e-4e6b-b5dc-480c2990740e@redhat.com>
+In-Reply-To: <5ad30a8d-b52f-4a9a-b299-a0caa98f2a67@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=49.212.243.89;
@@ -78,395 +85,456 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/10/13 16:20, Cédric Le Goater wrote:
-> Hello Akihiko,
-> 
-> I finally found the time to address the comments from your review.
-> Some more replies below.
-> 
-> 
-> On 9/17/26 21:49, Akihiko Odaki wrote:
->> On 2026/09/15 17:20, Cédric Le Goater wrote:
->>> On 9/9/26 09:19, Akihiko Odaki wrote:
->>>> On 2026/09/03 4:20, Cédric Le Goater wrote:
->>>>> Hello,
+On 2026/10/14 10:13, Pierrick Bouvier wrote:
+> On 10/13/2026 6:02 PM, Akihiko Odaki wrote:
+>> On 2026/10/13 11:12, Pierrick Bouvier wrote:
+>>> On 10/12/26 7:00 AM, Akihiko Odaki wrote:
+>>>> On 2026/10/09 15:37, Pierrick Bouvier wrote:
+>>>>> On 10/8/26 8:33 PM, Akihiko Odaki wrote:
+>>>>>> On 2026/10/09 11:30, Pierrick Bouvier wrote:
+>>>>>>> On 10/8/2026 5:57 PM, Akihiko Odaki wrote:
+>>>>>>>> On 2026/10/09 1:40, Pierrick Bouvier wrote:
+>>>>>>>>> On 10/7/2026 11:11 PM, Akihiko Odaki wrote:
+>>>>>>>>>> On 2026/10/08 10:08, Pierrick Bouvier wrote:
+>>>>>>>>>>> On 10/6/2026 11:01 PM, Akihiko Odaki wrote:
+>>>>>>>>>>>> A region of interest (ROI) often excludes the program startup
+>>>>>>>>>>>> and
+>>>>>>>>>>>> exit.
+>>>>>>>>>>>> For example, a benchmark may parse a large input and then run a
+>>>>>>>>>>>> computation kernel and the former may take longer than the
+>>>>>>>>>>>> latter;
+>>>>>>>>>>>> basic block vectors generated for the whole execution will not
+>>>>>>>>>>>> properly
+>>>>>>>>>>>> represent the latter.
+>>>>>>>>>>>>
+>>>>>>>>>>>> Add options to specify the beginning and the end of the ROI to
+>>>>>>>>>>>> bound
+>>>>>>>>>>>> basic block vector generation to the ROI.
+>>>>>>>>>>>>
+>>>>>>>>>>>> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+>>>>>>>>>>>> ---
+>>>>>>>>>>>>        docs/about/emulation.rst |  8 +++++
+>>>>>>>>>>>>        contrib/plugins/bbv.c    | 80 +++++++++++++++++++++++++
+>>>>>>>>>>>> ++++
+>>>>>>>>>>>> ++++++++
+>>>>>>>>>>>> +++++++++--
+>>>>>>>>>>>>        2 files changed, 86 insertions(+), 2 deletions(-)
+>>>>>>>>>>>>
+>>>>>>>>>>>> diff --git a/docs/about/emulation.rst b/docs/about/emulation.rst
+>>>>>>>>>>>> index c58149086cdd..0566171b517b 100644
+>>>>>>>>>>>> --- a/docs/about/emulation.rst
+>>>>>>>>>>>> +++ b/docs/about/emulation.rst
+>>>>>>>>>>>> @@ -284,6 +284,14 @@ The bbv plugin allows you to generate basic
+>>>>>>>>>>>> block vectors for use with the
+>>>>>>>>>>>>            * - Option
+>>>>>>>>>>>>            - Description
+>>>>>>>>>>>> +  * - begin=A
+>>>>>>>>>>>> +    - The virtual address of the instruction that starts basic
+>>>>>>>>>>>> block
+>>>>>>>>>>>> vector
+>>>>>>>>>>>> +      generation. Generation starts from the beginning of the
+>>>>>>>>>>>> execution if
+>>>>>>>>>>>> +      not specified.
+>>>>>>>>>>>> +  * - end=A
+>>>>>>>>>>>> +    - The virtual address of the instruction that ends basic
+>>>>>>>>>>>> block
+>>>>>>>>>>>> vector
+>>>>>>>>>>>> +      generation. Generation continues until the endo of the
+>>>>>>>>>>>> execution if
+>>>>>>>>>>>
+>>>>>>>>>>> small typo here: s/endo/end
+>>>>>>>>>>
+>>>>>>>>>> Thanks for catching the typo.
+>>>>>>>>>>
+>>>>>>>>>>>
+>>>>>>>>>>>> +      not specified.
+>>>>>>>>>>>>          * - interval=N
+>>>>>>>>>>>>            - The interval to generate a basic block vector
+>>>>>>>>>>>> specified by
+>>>>>>>>>>>> the number of
+>>>>>>>>>>>>              instructions (Default: N = 100000000)
+>>>>>>>>>>>> diff --git a/contrib/plugins/bbv.c b/contrib/plugins/bbv.c
+>>>>>>>>>>>> index e5caf5d9543b..a2a779f7639e 100644
+>>>>>>>>>>>> --- a/contrib/plugins/bbv.c
+>>>>>>>>>>>> +++ b/contrib/plugins/bbv.c
+>>>>>>>>>>>> @@ -5,6 +5,8 @@
+>>>>>>>>>>>>         * SPDX-License-Identifier: GPL-2.0-or-later
+>>>>>>>>>>>>         */
+>>>>>>>>>>>>        +#include <stdbool.h>
+>>>>>>>>>>>> +#include <stdint.h>
+>>>>>>>>>>>>        #include <stdio.h>
+>>>>>>>>>>>>        #include <glib.h>
+>>>>>>>>>>>>        @@ -26,6 +28,10 @@ static GHashTable *bbs;
+>>>>>>>>>>>>        static GRWLock bbs_lock;
+>>>>>>>>>>>>        static char *filename;
+>>>>>>>>>>>>        static struct qemu_plugin_scoreboard *vcpus;
+>>>>>>>>>>>> +static bool begin_present;
+>>>>>>>>>>>> +static uint64_t begin;
+>>>>>>>>>>>> +static bool end_present;
+>>>>>>>>>>>> +static uint64_t end;
+>>>>>>>>>>>>        static int64_t interval = 100000000;
+>>>>>>>>>>>>          static void plugin_exit(void *p)
+>>>>>>>>>>>> @@ -66,6 +72,7 @@ static void vcpu_init(unsigned int vcpu_index,
+>>>>>>>>>>>> void
+>>>>>>>>>>>> *userdata)
+>>>>>>>>>>>>            Vcpu *vcpu = qemu_plugin_scoreboard_find(vcpus,
+>>>>>>>>>>>> vcpu_index);
+>>>>>>>>>>>>              vcpu_filename = g_strdup_printf("%s.%u.bb",
+>>>>>>>>>>>> filename,
+>>>>>>>>>>>> vcpu_index);
+>>>>>>>>>>>> +    vcpu->count = begin_present ? INT64_MIN : -interval;
+>>>>>>>>>>>
+>>>>>>>>>>> Not sure which semantic we are trying to achieve with -interval
+>>>>>>>>>>> here.
+>>>>>>>>>>>
+>>>>>>>>>>> The original logic was to increment this count, until reaching
+>>>>>>>>>>> interval,
+>>>>>>>>>>> after what we would reset it by using vcpu_count -= interval, to
+>>>>>>>>>>> keep
+>>>>>>>>>>> the extra insn that went in after the threshold.
+>>>>>>>>>>
+>>>>>>>>>> The counter now starts at -interval and counts up to zero.
+>>>>>>>>>> Subtracting
+>>>>>>>>>> interval after emitting a vector still preserves the extra
+>>>>>>>>>> instructions.
+>>>>>>>>>> For example, with interval=100:
+>>>>>>>>>>
+>>>>>>>>>>          initial count:       -100
+>>>>>>>>>>          after 130 insns:       30  -> emit a vector
+>>>>>>>>>>          subtract interval:    -70  -> 70 insns until the next
+>>>>>>>>>> vector
+>>>>>>>>>>
+>>>>>>>>>>>
+>>>>>>>>>>>>            vcpu->file = fopen(vcpu_filename, "w");
+>>>>>>>>>>>>        }
+>>>>>>>>>>>>        @@ -102,6 +109,22 @@ static void
+>>>>>>>>>>>> vcpu_interval_exec(unsigned int
+>>>>>>>>>>>> vcpu_index, void *udata)
+>>>>>>>>>>>>            fputc('\n', vcpu->file);
+>>>>>>>>>>>>        }
+>>>>>>>>>>>>        +static void vcpu_begin_insn_exec(unsigned int vcpu_index,
+>>>>>>>>>>>> void
+>>>>>>>>>>>> *userdata)
+>>>>>>>>>>>> +{
+>>>>>>>>>>>> +    GHashTableIter iter;
+>>>>>>>>>>>> +    void *value;
+>>>>>>>>>>>> +
+>>>>>>>>>>>> +    g_rw_lock_reader_lock(&bbs_lock);
+>>>>>>>>>>>> +    g_hash_table_iter_init(&iter, bbs);
+>>>>>>>>>>>> +
+>>>>>>>>>>>> +    while (g_hash_table_iter_next(&iter, NULL, &value)) {
+>>>>>>>>>>>> +        qemu_plugin_u64_set(bb_count_u64(value), vcpu_index,
+>>>>>>>>>>>> 0);
+>>>>>>>>>>>> +    }
+>>>>>>>>>>>> +
+>>>>>>>>>>>> +    g_rw_lock_reader_unlock(&bbs_lock);
+>>>>>>>>>>>> +    qemu_plugin_u64_set(count_u64(), vcpu_index, -interval);
+>>>>>>>>>>>> +}
+>>>>>>>>>>>> +
+>>>>>>>>>>>>        static void vcpu_tb_trans(struct qemu_plugin_tb *tb, void
+>>>>>>>>>>>> *userdata)
+>>>>>>>>>>>>        {
+>>>>>>>>>>>>            uint64_t n_insns = qemu_plugin_tb_n_insns(tb);
+>>>>>>>>>>>> @@ -119,6 +142,19 @@ static void vcpu_tb_trans(struct
+>>>>>>>>>>>> qemu_plugin_tb
+>>>>>>>>>>>> *tb, void *userdata)
+>>>>>>>>>>>>            }
+>>>>>>>>>>>>            g_rw_lock_writer_unlock(&bbs_lock);
+>>>>>>>>>>>>        +    for (size_t idx = 0; idx < n_insns; idx++) {
+>>>>>>>>>>>> +        struct qemu_plugin_insn *insn =
+>>>>>>>>>>>> qemu_plugin_tb_get_insn(tb,
+>>>>>>>>>>>> idx);
+>>>>>>>>>>>> +        uint64_t insn_vaddr = qemu_plugin_insn_vaddr(insn);
+>>>>>>>>>>>> +
+>>>>>>>>>>>> +        if (begin_present && insn_vaddr == begin) {
+>>>>>>>>>>>> +            qemu_plugin_register_vcpu_insn_exec_cb(
+>>>>>>>>>>>> +                insn, vcpu_begin_insn_exec,
+>>>>>>>>>>>> QEMU_PLUGIN_CB_NO_REGS,
+>>>>>>>>>>>> NULL);
+>>>>>>>>>>>> +        } else if (end_present && insn_vaddr == end) {
+>>>>>>>>>>>> +
+>>>>>>>>>>>> qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu(
+>>>>>>>>>>>> +                insn, QEMU_PLUGIN_INLINE_STORE_U64,
+>>>>>>>>>>>> count_u64(),
+>>>>>>>>>>>> INT64_MIN);
+>>>>>>>>>>>> +        }
+>>>>>>>>>>>> +    }
+>>>>>>>>>>>> +
+>>>>>>>>>>>>            qemu_plugin_register_vcpu_tb_exec_inline_per_vcpu(
+>>>>>>>>>>>>                tb, QEMU_PLUGIN_INLINE_ADD_U64, count_u64(),
+>>>>>>>>>>>> n_insns);
+>>>>>>>>>>>>        @@ -127,7 +163,32 @@ static void vcpu_tb_trans(struct
+>>>>>>>>>>>> qemu_plugin_tb *tb, void *userdata)
+>>>>>>>>>>>>              qemu_plugin_register_vcpu_tb_exec_cond_cb(
+>>>>>>>>>>>>                tb, vcpu_interval_exec, QEMU_PLUGIN_CB_NO_REGS,
+>>>>>>>>>>>> -        QEMU_PLUGIN_COND_GE, count_u64(), interval, NULL);
+>>>>>>>>>>>> +        QEMU_PLUGIN_COND_LT, count_u64(), INT64_MIN, NULL);
+>>>>>>>>>>>> +}
+>>>>>>>>>>>
+>>>>>>>>>>> is INT64_MIN used as an arbitrary large value when interpreted as
+>>>>>>>>>>> unsigned immediate? If yes, that's confusing to the reader.
+>>>>>>>>>>
+>>>>>>>>>> The unsigned comparison count < (uint64_t)INT64_MIN is equivalent
+>>>>>>>>>> with
+>>>>>>>>>> the signed comparison (int64_t)count >= 0. That is why this
+>>>>>>>>>> particular
+>>>>>>>>>> value is used.
+>>>>>>>>>>
+>>>>>>>>>> Setting count to INT64_MIN suppresses output for the next 2^63
+>>>>>>>>>> counted
+>>>>>>>>>> instructions, which is effectively disabled for this use. The
+>>>>>>>>>> beginEmulation
+>>>>>>>>>> callback clears the BB counters and sets count to -interval; end
+>>>>>>>>>> sets it
+>>>>>>>>>> back to INT64_MIN. The requested interval stays unchanged.
+>>>>>>>>>>
+>>>>>>>>>
+>>>>>>>>> Ok I see better.
+>>>>>>>>> Even though it works, it's pretty confusing to be honest. Inline
+>>>>>>>>> operatons works with unsigned values, so with conversion and wrap
+>>>>>>>>> around, it's safe, but really not intuitive.
+>>>>>>>>>
+>>>>>>>>> I would prefer if you could refactor this to keep a zero
+>>>>>>>>> initialized
+>>>>>>>>> count value, and add a specific instrumentation path for begin, end
+>>>>>>>>> logic (COND_LT, UINT64_MAX - N) to keep the same behavior of
+>>>>>>>>> "infinite
+>>>>>>>>> interval".
+>>>>>>>>
+>>>>>>>> We cannot choose a separate instrumentation path based on whether
+>>>>>>>> execution is inside the ROI. Instrumentation is installed when a
+>>>>>>>> TB is
+>>>>>>>> translated, but the same TB may execute both inside and outside the
+>>>>>>>> ROI.
+>>>>>>>>
+>>>>>>>> I will preserve this logic and add code comments for clarification.
+>>>>>>>>
+>>>>>>>
+>>>>>>> I took some time to read again how bbv works. Indeed, my idea to
+>>>>>>> modify
+>>>>>>> interval was a non sense, and not what is expected.
+>>>>>>>
+>>>>>>> The current instrumentation per tb is always done unconditionally,
+>>>>>>> and
+>>>>>>> the only need thing to do is to snapshot bbs hashtable to keep
+>>>>>>> track of
+>>>>>>> the correct data only when being inside the ROI. The rest of existing
+>>>>>>> logic stays the same.
+>>>>>>>
+>>>>>>> - On enter, set vcpu->count to 0 (fresh start) and restore bb
+>>>>>>> table from
+>>>>>>> previous exit (empty table if there was no exit yet).
+>>>>>>> - On exit, duplicate the bb table to allow to restore it next time we
+>>>>>>> enter in ROI.
+>>>>>>> Key idea is that we keep on adding things in bb table, but save/
+>>>>>>> restore
+>>>>>>> when leaving/entering ROI.
+>>>>>>>
+>>>>>>> I think for robustness you should also add detection of those
+>>>>>>> expected
+>>>>>>> transitions: Out of ROI -> Enter ROI -> Exit ROI -> Enter ROI -> ...
+>>>>>>>
+>>>>>>> Nothing is currently done to detect if if we meet enter/exit address
+>>>>>>> multiple times, without having the correct sequence. I don't know
+>>>>>>> if we
+>>>>>>> want to report an error or handle reentrance correctly in this case.
+>>>>>>>
+>>>>>>> Also, should count be reset on each entrance, or do we want to keep
+>>>>>>> track of it also, and save/restore that on exit/enter? I tend to
+>>>>>>> think
+>>>>>>> the idea is create a "virtual" interval than only is alive when being
+>>>>>>> inside the ROI. In this case, we should keep track of this value
+>>>>>>> also.
+>>>>>>
+>>>>>> The current design that resets the bb table is intentional. A
+>>>>>> "virtual"
+>>>>>> interval spanning multiple ROIs would be misleading because it mixes
+>>>>>> different sections of execution.
+>>>>>>
 >>>>>
->>>>> Live migration of VFIO-passthrough devices - SR-IOV VFs, vGPUs - is a
->>>>> growing requirement, but real hardware with migration support is
->>>>> scarce and hard to debug. An emulated device provides a fully
->>>>> controlled testbed for developing and validating the entire software
->>>>> stack - vfio-pci variant drivers, VFIO core migration v2 framework,
->>>>> QEMU, libvirt - and for tuning complex migration policies such as
->>>>> downtime convergence. It also serves as an educational reference for
->>>>> understanding VFIO migration end-to-end, from device state
->>>>> serialization to dirty page tracking.
+>>>>> Ok.
 >>>>>
->>>>> This series adds an experimental VF live migration interface to the
->>>>> emulated igb (82576) device. It enables a vfio-pci variant driver
->>>>> (igb-vfio-pci) to migrate VFs using the standard VFIO migration v2
->>>>> protocol with stop-copy and pre-copy support.
+>>>>>> I don't think we need to add a special handling to enforce a
+>>>>>> particular
+>>>>>> order of transitions. This patch performs the same action for the
+>>>>>> begin
+>>>>>> and end addresses and that makes the behavior predictable.
+>>>>>>
+>>>>>> Perhaps we can extend the documentation to clarify the "begin"
+>>>>>> marker to
+>>>>>> tell that it resets the bb table, making the behavior clear regardless
+>>>>>> of transition order.
+>>>>>>
 >>>>>
->>>>> The target scenario is nested virtualization:
+>>>>> I'm fine to keep a simple model, but I'll ask you to remove the logic
+>>>>> involving negative numbers, it's just too confusing. Please remove:
+>>>>> vcpu->count = begin_present ? INT64_MIN : -interval;
+>>>>> and
+>>>>> QEMU_PLUGIN_COND_LT, count_u64(), INT64_MIN, NULL);
 >>>>>
->>>>>    L0 QEMU (these patches)
->>>>>      igb PF with x-vf-migration=on
->>>>>      └── VFs with migration DVSEC
->>>>>
->>>>>    L1 kernel
->>>>>      igb-vfio-pci variant driver [1]
->>>>>      translates VFIO migration v2 ioctls → DVSEC config writes
->>>>>
->>>>>    L1 QEMU (stock, unmodified)
->>>>>      vfio-pci device model, standard migration fd
->>>>>
->>>>>    L2 guest
->>>>>      standard igbvf driver, unaware of migration
->>>>>
->>>>> The L1 QEMU is completely unmodified -- it sees a standard VFIO
->>>>> migratable device and uses the normal migration fd path.
->>>>>
->>>>> * Design
->>>>>
->>>>> The migration interface is exposed through a DVSEC (Designated
->>>>> Vendor-Specific Extended Capability, PCIe cap id 0x23) at offset
->>>>> 0x160 in VF extended config space. The DVSEC uses a command doorbell
->>>>> model - all commands are synchronous via PCI config space writes.
->>>>>
->>>>> Device state is serialized as a versioned blob of per-VF register
->>>>> (offset, value) pairs covering control, interrupt, RX/TX queue,
->>>>> receive address (RA/RA2), etc. plus TX context descriptors and
->>>>> VFRE/VFTE enable bits. The buffer address is a guest physical
->>>>> address (GPA) written by the driver via virt_to_phys; the device
->>>>> accesses guest RAM directly through the system address space.
->>>>>
->>>>> Dirty page tracking is implemented with per-range bitmaps maintained
->>>>> in IGBCore. All VF DMA paths in igb_core.c (TX data, RX data,
->>>>> descriptor writeback) are instrumented to record touched pages. The
->>>>> variant driver registers tracked IOVA ranges and queries dirty bitmaps
->>>>> through a shared buffer. Buffer structures include len, flags, and
->>>>> reserved fields for future extensibility.
->>>>>
->>>>> * Caveats
->>>>>
->>>>> The x-vf-migration property is experimental (x- prefix, default off).
->>>>>
->>>>> The dirty bitmaps are maintained inside the device, which is not
->>>>> realistic for discrete NICs without on-chip DRAM.
->>>>>
->>>>> * Testing
->>>>>
->>>>> The target scenario is nested virtualization: L0 runs QEMU with an
->>>>> igb PF (x-vf-migration=on), L1 runs the igb-vfio-pci variant driver
->>>>> and an unmodified QEMU, and L2 runs a standard igbvf driver.
->>>>>
->>>>> Migration under iperf3 load works correctly: dirty page tracking
->>>>> converges (from ~2000 pages per PRE_COPY iteration down to ~280 at
->>>>> STOP_COPY), and STOP_COPY stays under 250ms.
->>>>>
->>>>> * Todo
->>>>>
->>>>>    1. Add migration blocker when x-vf-migration=on (no VMState yet) or
->>>>>       add VMState support for L0 migration (dirty bitmaps, tracking
->>>>>       engines, DVSEC registers, stats)
->>>>>    2. Add PRE_COPY state transfer to validate device INIT data (magic,
->>>>>       version, etc.)
->>>>>    3. Add qtests for migration state machine transitions, dirty page
->>>>>       tracking ?
->>>>>
->>>>> * Ideas
->>>>>
->>>>>    1. RX bandwidth throttle (x-mig-rx-limit, uint32, default 0)
->>>>>
->>>>>       Return false from can_receive when the per-VF packet count in 
->>>>> the
->>>>>       current tracking interval exceeds the limit. Reduces DMA writes
->>>>>       and dirty pages realistically.
->>>>>
->>>>>    2. Migration phase timing (GET_STATS extension)
->>>>>
->>>>>       Add per-VF timestamps: precopy_start_ns, stopcopy_start_ns,
->>>>>       precopy_duration_ns, stopcopy_duration_ns,
->>>>>       state_transition_count. Expose via GET_STATS.
->>>>>
->>>>>    3. Hot page simulation (x-mig-hot-pages, uint32, default 0)
->>>>>
->>>>>       Re-set the first N bitmap bits after each DIRTY_QUERY, 
->>>>> simulating
->>>>>       workloads with hot pages that prevent convergence.
->>>>>
->>>>>    4. Error injection (x-mig-inject-error, uint32, default 0)
->>>>>
->>>>>       One-shot error code injection before command dispatch. A 
->>>>> separate
->>>>>       x-mig-inject-dma-fail (bool) for persistent DMA failure testing.
->>>>>
->>>>> * Credits
->>>>>
->>>>> Alex Williamson suggested the overall approach of a variant driver
->>>>> with the "x-vf-migration" device property to gate the feature. Thanks
->>>>> for the ever ongoing support and valuable discussions throughout these
->>>>> years.
->>>>>
->>>>> * AI disclaimer
->>>>>
->>>>> The lack of a migration-capable device has been a recurring pain point
->>>>> for VFIO development over the years, and we hope this proposal
->>>>> demonstrates the value of having one.
->>>>>
->>>>> Claude was used to analyze the IGB PF and VF internal state and
->>>>> identify the pain points of a working live migration of such devices.
->>>>> The generated code served as a starting point but *significant* time
->>>>> was then spent cleaning up, reworking, and shaping it into a clear,
->>>>> reviewable IGB model extension.
->>>>>
->>>>> As QEMU does not yet accept AI-assisted contributions, this series is
->>>>> submitted as an RFC.
+>>>>> Instead, let's add a new boolean "tracking_region" in struct Vcpu, that
+>>>>> is set to true when entering ROI (or true by default if no begin
+>>>>> parameter was given).
 >>>>
->>>> This largely repeats the concerns I raised previously [1]. Your 
->>>> description of the *significant* time spent cleaning up and 
->>>> reworking the generated code suggests that this series is intended 
->>>> for upstream inclusion once the implementation direction is agreed. 
->>>
->>> Yes. The IGB kernel vfip-pci variant driver is "ready", and so is the
->>> internal test framework for VFIO migration. The emulated IGB device
->>> is also becoming increasingly important as a reference device for
->>> the kernel VFIO self-tests. See:
->>>
->>>    https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/ 
->>> linux.git/ commit?id=1583ef1175ba533e326dfeff6d8b9f3aaf761225
->>>
->>>> My concerns as a maintainer are therefore correctness and 
->>>> maintainability.
->>>
->>> I am trying to avoid too much intrusion in the core igb model :
->>>
->>>   hw/net/igb_common.h                   |   16 +
->>>   hw/net/igb_core.h                     |   11 +
->>>   hw/net/igb.c                          |    7 +
->>>   hw/net/igb_core.c                     |  124 ++-
->>>   hw/net/igbvf.c                        |   52 +-
->>>
->>> These are mostly code movement or additions. The runtime is hardly
->>> impacted apart from the DMA tracking, which adds one indirection.
->>>
->>> I have added myself as Maintainer for the migration part :
->>>
->>>    +igb VF migration
->>>    +M: Cédric Le Goater <clg@redhat.com>
->>>    +S: Maintained
->>>    +F: hw/net/igb_migration.*
->>>
->>> I can add you in the next respin. That would be a natural choice
->>> from my perspective, but I don't want to impose it on you.
->>
->> My concern about maintainability is not primarily the line count in 
->> igb_core.c, but the correctness of the architecture as a whole.
->>
->> The migration layer inherently depends on deep assumptions about the 
->> core device model. For example, my feedback on this version 
->> highlighted dependencies on RA handling, VLAN filtering, and the 
->> interrupt state machine. Moving migration logic into a separate file 
->> isolates the file footprint, but it does not remove these underlying 
->> functional dependencies.
->>
->>>> The missing migration blocker is a concrete example: it is a basic 
->>>> correctness issue that should be straightforward to address, yet it 
->>>> remains a TODO. 
->>>
->>> yes. It's identified and easy to address. It can come at the end once
->>> all other issues have been discussed. What worries me the most is the
->>> control plane : interface with the Linux driver. That is the most
->>> important part on which these changes depend on getting it right :
->>>
->>>    https://github.com/legoater/linux/commits/vfio/
->>
->> That makes sense. If the immediate goal is to review the control plane 
->> interface while save/load state remains incomplete, it would help to 
->> explicitly state that scope in the cover letter, along with the 
->> current limitations in implementation and testing.
->>
->>>
->>>> My comments on individual patches also raise the same kinds of 
->>>> issues I pointed out in the previous version.
->>>
->>> You're being tough on me ! I did all this fixing below ! :)
->>>
->>> * Changes since rfc-v1
->>>
->>>    - Migration BAR replaced with DVSEC at offset 0x160 (no BAR needed)
->>>    - Wire-format structs (IgbMigBlob, IgbMigRegPair, IgbMigTxCtx)
->>>      replace raw pointer arithmetic and memcpy
->>>    - RA entries separated from fixed regs, scanned by pool bit
->>>    - VFN relocation support (offset remapping + RA pool bit swap)
->>>    - GPA buffer (address_space_read/write) replaces PCI DMA through PF
->>>    - State blob validation on load (magic, version, error codes)
->>>    - NEED_WORDS macro and igb_vf_offset_valid removed
->>>    - Error codes renumbered: removed BAD_VFN, added UNK_CMD (1-11)
->>>
->>>    Reported by Akihiko Odaki:
->>>
->>>    - propagate_irqs: clear VF bits before OR (EIMS/EIAC/EIAM)
->>>    - propagate_ivar: clear IVAR entry when source VTIVAR is invalid
->>>    - rearm_irqs: restore actual PVTEICR causes, not all three
->>>    - Dirty bitmap allocation uses BITS_TO_LONGS (heap corruption fix)
->>>    - Dirty query validates range before g_malloc0 (memory exhaustion)
->>>    - Dirty bits cleared only after successful bitmap DMA write
->>>    - Dirty query buffer uses struct offsets (layout mismatch fix)
->>>    - Load path: register offsets validated against VF whitelist
->>>    - VMBMEM (mailbox payload) documented as transient, not serialized
->>>    - dma_writes counter: consistently uint64_t
->>>    - Dirty range_size: consistently uint64_t (was truncated to 32 bits)
->>>    - ERROR->STOP: quiesce VF (clear VFRE/VFTE) on transition
->>>    - rearm_irqs: runs on re || te, not just re (TX-only VF fix)
->>>    - Stats DMA-written atomically via GET_STATS (no split MMIO tear)
->>>    - Bisectability: DVSEC + state machine introduced together
->>>    - Removed NAPI reference and "===" comment decoration
->>
->> I appreciate the progress, and I certainly don't mean to minimize the 
->> effort put into fixing these issues.
->>
->> However, many of these bugs stem from the same root cause: high-level 
->> systemic requirements, such as boundary checks, VF renumbering, 
->> interrupt state preservation, and OS-independence, are being addressed 
->> piecemeal as individual bugs arise. I would like to see these 
->> requirements enforced systematically across the entire implementation 
->> rather than patched reactively. Replacing raw pointers with explicit 
->> wire-format structures across the protocol is a great example of the 
->> kind of systematic fix I mean.
-> 
-> 
-> 
-> The v3 series enforces these requirements structurally. The migration
-> blob uses a typed wire-format struct. Load is two-phase: the blob is
-> validated before any core state is modified, so a malformed blob does
-> not leave the device partially updated. VFN mismatch is rejected.
-> Interrupt mask bits are captured from the PF aggregates before quiesce.
-
-The typed format and validation before modifying device state sound
-like useful improvements. I will assess those changes when v3 is
-available.
-
-> 
-> 
+>>>> The flag may look simpler in isolation, but streamlining the
+>>>> interactions with the counter requires more careful thought. Please see
+>>>> below.
 >>>>
->>>> Many of the correctness problems found in v1 and v2 stem from the 
->>>> choice to build on igb, which is more complex than virtio-net. That 
->>>> is why I suggested using virtio-net as a simpler basis, unless there 
->>>> is a problem that rules it out.
+>>>>>
+>>>>> Then, modify instrumentation to replace:
+>>>>> ```
+>>>>> else if (end_present && insn_vaddr == end) {
+>>>>>                qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu(
+>>>>>                    insn, QEMU_PLUGIN_INLINE_STORE_U64, count_u64(),
+>>>>> INT64_MIN);
+>>>>> ```
+>>>>> with:
+>>>>> ```
+>>>>> else if (end_present && insn_vaddr == end) {
+>>>>>       qemu_plugin_register_vcpu_insn_exec_cb(insn, vcpu_exit_region,
+>>>>> QEMU_PLUGIN_CB_NO_REGS, NULL);
+>>>>> }
+>>>>>
+>>>>> static void vcpu_exit_region(unsigned int vcpu_index, void *userdata)
+>>>>> {
+>>>>>       Vcpu *vcpu = qemu_plugin_scoreboard_find(vcpus, vcpu_index);
+>>>>>       vcpu_interval_exec(vcpu_index, NULL);
+>>>>>       vcpu->tracking_region = false;
+>>>>> }
+>>>>> ```
+>>>>
+>>>> vcpu_exit_region should only disable tracking. Calling
+>>>> vcpu_interval_exec directly bypasses its count >= interval precondition:
+>>>> it subtracts interval even when count is smaller, wrapping the unsigned
+>>>> counter, and emits a partial vector or potentially an empty one.
+>>>>
 >>>
->>> virtio-net is a software abstraction designed for virtualization.
+>>> I'm fine with it. I was unsure if you wanted to dump the partial data,
+>>> aggregate it when reentering the section, or simply discard it.
+>>> With a discard, it's even simpler, just need to set tracking_region to
+>>> false.
 >>>
->>> Here’s my pitch for igb:
+>>>>>
+>>>>> In addition, let's rename s/vcpu_begin_insn_exec/vcpu_enter_region, to
+>>>>> be consistent and explicit on what it's doing.
+>>>>>
+>>>>> And finally, the last piece:
+>>>>> static void vcpu_interval_exec(unsigned int vcpu_index, void *udata)
+>>>>> {
+>>>>>        Vcpu *vcpu = qemu_plugin_scoreboard_find(vcpus, vcpu_index);
+>>>>>        if (!vcpu->tracking) {
+>>>>>          return;
+>>>>>        }
+>>>>>        ...
+>>>>
+>>>> The early return must come after vcpu->count -= interval. Otherwise,
+>>>> once count reaches interval outside the ROI, it remains above the
+>>>> threshold and invokes the callback on every subsequent TB, rather than
+>>>> once per interval.
+>>>>
 >>>
->>> Using an emulated igb device addresses a different problem: validating
->>> migration of hardware-like devices. igb exposes a real PCI device
->>> model, hardware-driver interface, DMA engines, queues, interrupts and
->>> SR-IOV VFs. It allows migration to be implemented at the same
->>> abstraction boundary at which VFIO migrates physical devices, rather
->>> than being reduced to serialization of a paravirtualized protocol
->>> state. Also,
+>>> Right, thanks for catching it.
 >>>
->>> The igb VF uses the inbox igbvf kernel driver, which matches the
->>> hardware VFIO promise: transparent migration with unmodified guest
->>> drivers.
->>> The DVSEC extended capability is a discoverable and standard control
->>> plane with the device. This is a mechanism a hardware vendor could
->>> use.
->>> One cool aspect of an emulated device is that it allows the state to
->>> be inspected, the behavior is deterministic and faults can be injected
->>> at any boundary. That's the QEMU bonus.
+>>>>>
+>>>>> The impact performance of calling vcpu_interval_exec + one if every N
+>>>>> instructions is invisible, and at least, it's a piece of code we can
+>>>>> read in 6 months, and understand in less than 2 min without any
+>>>>> additional doc.
+>>>>
+>>>> I agree the performance impact is negligible, but at least you need to
+>>>> consider about that to be sure. Adding another flag requires those
+>>>> additional considerations.
+>>>>
+>>>> More broadly, I don't think it's ideal to introduce application-specific
+>>>> logic for this. Looking at the bigger picture, a counting timer with
+>>>> variable expiration is a common pattern that should ideally be supported
+>>>> generally.
+>>>>
+>>>> An alternative option is to have signed integer variants of
+>>>> qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu() and similar
+>>>> functions to support for that. However, I don't think those are
+>>>> necessary either. Taking at an even broader perspective, C allows
+>>>> avoiding such specialization by letting unsigned variables hold signed
+>>>> values in a well-defined manner; even the underlying implementation of
+>>>> the inline op uses signed and unsigned types interchangeably.
+>>>>
+>>>
+>>> If the argument is "C allows that with a defined behaviour", I don't
+>>> think it makes a point for me. There is a lot of well defined and
+>>> confusing code you can write.
+>>>
+>>> Something like:
+>>>    qemu_plugin_register_vcpu_tb_exec_cond_cb(
+>>>           QEMU_PLUGIN_COND_LT, count_u64(), INT64_MIN, NULL);
+>>> with limit and counter being unsigned is not readable for me.
+>>>
+>>>> Although it might not be immediately obvious that an unsigned variable
+>>>> is storing a signed value, adding a brief clarifying comment is still
+>>>> simpler than introducing another variable overall.
+>>>>
+>>>
+>>>   From there I'll let you decide between introducing the flag, or
+>>> reimplement that with positive values (sticking to init count=0) only
+>>> if you really prefer this approach.
 >>
->> I understand the motivation to test hardware-like device migration. 
->> However, modern virtio-net devices are also implemented in physical 
->> SmartNICs/DPUs and expose standard PCI interfaces, BARs, DMA engines, 
->> queues, interrupts, and SR-IOV VFs.
+>> I agree that "C allows this with defined behaviour" is insufficient on
+>> its own. Ideally, we could express the signed interpretation directly
+>> with int64_t without adding complexity. That would improve clarity,
+>> even though the existing arithmetic is already well-defined.
 >>
->> Using virtio-net as a VFIO test device would not require guest driver 
->> changes or bypass hardware-like semantics. Given its cleaner 
->> separation of state, it remains a strong fit for these testing 
->> requirements without carrying igb's extra complexity.
-> 
-> 
-> virtio-net already has a clean migration path via its own protocol.
-> The goal here is different. igb models a real hardware interface that
-> mirrors what VFIO migration must handle with physical devices.
-> virtio's cleaner separation is an advantage for production, but it
-> doesn't exercise the same problems.
-
-As I mentioned previously, virtio-net is already implemented in
-physical NICs. It is a vendor-neutral interface for network devices,
-whether paravirtualized or physical. igb, by comparison, implements
-an Intel-specific legacy hardware interface.
-
-A physical virtio-net device is arguably a more realistic target for
-a migration mechanism like the one proposed here than an Intel
-82576. Adding a new migration interface to the emulated igb device
-does not make that interface representative of existing igb hardware.
-
-My suggestion was to use virtio-net as the device behind VFIO in the
-same nested setup. L1 QEMU would still exercise VFIO migration, and
-L2 would still use its ordinary guest driver.
-
-> 
-> 
+>> However, we need to consider the whole design. Both approaches require
+>> readers to understand more than the individual expressions.
 >>
->>>
->>>> I would be willing to support allowing AI use in the project for 
->>>> work like this. I would still need to see these correctness and 
->>>> maintainability concerns addressed before I could support merging 
->>>> the series.
->>>
->>> I agree. The save/load is still in progress and we might need some
->>> more intrusive changes in igb to support migration of all state.
->>> To start with, we could detect and warn.
+>> The counter-only approach requires knowing that:
 >>
->> Starting with a restricted set of supported configurations is a 
->> reasonable way forward. However, for features whose state cannot yet 
->> be restored accurately, we should reject migration rather than merely 
->> issue a warning. Otherwise, a completed migration risks silently 
->> corrupting guest-visible device behavior.
-> 
-> 
-> Reject was the approach taken in v3. However, I made the choice to
-> fixup the MTA/UTA table. Restore widens the receive filter (OR missing
-> entries), never drops existing ones. The worst case is a few extra
-> frames that the guest stack would have discarded. Rejecting migration
-> over transient IGMP/mDNS differences would be disproportionate.
-
-My concern is whether that restoration survives subsequent PF driver
-operations.
-
-For example, Linux's igb driver records each VF's multicast hashes in 
-its own software state. A multicast update from another VF calls 
-igb_set_rx_mode(), which rebuilds the MTA and restores each VF's 
-multicast configuration from those records. It also rewrites the VMOLR 
-multicast enable bits.
-
-Consequently, unless v3 also reconciles the destination PF driver's 
-records, a later update could remove the migrated VF's multicast 
-reception. OR-ing the device tables at load time would not address that 
-dependency.
-
-> 
-> 
+>> - count is actually treated as signed.
+>> - Any non-negative is smaller than (uint64_t)INT64_MIN when compared as
+>>    unsigned.
 >>
->> This is another advantage of virtio-net: feature negotiation offers a 
->> clean, standard mechanism to disable unsupported features and define a 
->> tightly constrained initial scope that is fully migratable.
+>> The flag approach requires considering:
+>> - How the count and flag together determine when a vector is emitted.
+>> - The required ordering of count and flag accesses.
+>> - Whether the number of callback invocations will significantly
+>>    increase.
+>>
+>> The count-only approach requires fewer considerations, and the ones it
+>> does require needs no deduction. The first point is a common practice,
+>> as seen in the underlying implementation. The second point is simply a
+>> matter of the int64_t definition. In both cases, knowing the definition
+>> is sufficient, and both can be documented clearly in the comments.
+>>
+>> In contrast, the flag approach requires real reasoning. Comments won't
+>> help here; explaining the ordering and interactions via comments would
+>> be as complicated as the code itself, thereby imposing a greater
+>> cognitive burden.
+>>
+>> Furthermore, supporting a variable interval (as done in the count-only
+>> approach) is a pattern we should embrace, rather than working around it
+>> by introducing a separate flag.
+>>
+>> We have also already discussed why retaining count=0 is not a drop-in
+>> alternative under the same counter-only instrumentation. The initial
+>> state must distinguish execution that starts inside the ROI from
+>> execution waiting for the begin marker.
+>>
+>> Putting all together, I still believe utilizing the existing signed
+>> representation is cleaner than inventing an alternative approach ourselves.
+>>
 > 
-> 
-> virtio feature negotiation is a software construct. The DVSEC CAPS
-> register models the mechanism a hardware vendor would actually use to
-> advertise migration capabilities. Not as rich as virtio, but closer to
-> real hardware.
+> I respect your opinion, but I would prefer to not introduce such usage
+> of the existing API in contrib/, since it might (wrongly) inspire other
+> people reading this plugin code.
 
-virtio feature negotiation is part of the device interface and also
-applies to hardware implementations. It is not specific to software
-devices.
+I agree that contrib plugins should set a good example. What pattern
+would you like them to demonstrate for a counting timer whose expiration
+can change at runtime, including effectively disabling the timer?
 
-My point concerned limiting the features exposed to the guest so that 
-every enabled feature is supported by migration. Advertising migration 
-capabilities serves a different purpose.
+The counter-only design expresses this by updating the counter while
+keeping the instrumentation unchanged. I think that is a useful pattern
+to demonstrate, with its interpretation and assumptions documented.
+
+I would like to understand which general pattern you would prefer to
+encourage, so we can compare the approaches on that basis.
 
 Regards,
 Akihiko Odaki
