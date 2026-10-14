@@ -4,89 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A804CC6B2F
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 21:06:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DAF49CC6B2E
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 21:07:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xH6Al-0001QB-Fq; Wed, 14 Oct 2026 17:06:03 -0400
+	id 1xH6Ab-0001Mb-01; Wed, 14 Oct 2026 17:05:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xH6Aj-0001PW-IA
- for qemu-devel@nongnu.org; Wed, 14 Oct 2026 17:06:01 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ id 1xH6AX-0001LR-Ge
+ for qemu-devel@nongnu.org; Wed, 14 Oct 2026 17:05:49 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xH6Ah-0000il-Fy
- for qemu-devel@nongnu.org; Wed, 14 Oct 2026 17:06:01 -0400
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+ id 1xH6AW-0000hD-1z
+ for qemu-devel@nongnu.org; Wed, 14 Oct 2026 17:05:49 -0400
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69EFMii91682646
- for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 21:05:58 GMT
+ 69EEbELH301147
+ for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 21:05:46 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- WGnEJ78Boc7LXNm6t4FBYciEvL3cwRlOovNZLHHmiLc=; b=nBhJvfVm/P7XjVSW
- hQQsp9FT7lYtsQrtMNfS37BqH5eXQCtxzYcaGNUViRoatDk41ax7M2ggYHIcs1PI
- rv5svDEd5n+ges070Xd8YADT/uG6Ni4Ewv1RvF+gu+7qpQ4syZk0G7ViKhDR8vua
- fW0BlTG/60iYyoshYOGrnq/rks9k4+M99f6Ad+2OrdnImQiF5kjgWphRFp1WHJIb
- 2WMgdplM/YQLP642HsvJEayzQEaZNPxy/pXkCF5Dnyv39th6AF5SrFltOsjOEA4t
- FIlUFwEB7eGLWOxjF+pWB/FgUlncCYR5b89Uu3Pv+6woC2KbTobG+Q1D1cdUJBOy
- 6IRVvQ==
-Received: from mail-dy1-f200.google.com (mail-dy1-f200.google.com
- [74.125.82.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hacb018w8-1
+ n6iwn0RVSBt1UI+L9sH8dEvRd/busJPAgCkh2EUMJb0=; b=lptPvSRDCFHoo/q1
+ 8hL/WGZ1tnD6Vej+P/6ik/HA/OoLM+xG8EGlauxl9jKi7TIfq4klAJKMmGQyptrz
+ nYyqyMhFpjjsY73nmRcI6aPJjRzb+eePuVEs8EXvqOcE0rGQsphb/wVCfrX43zY7
+ oOMnX4LohMP3hwtRxF5oGa5p9dyjiJP3lti6OXvWAZR5qtR5jc02zkTBGXjm+O16
+ Ovs7ncW4WUvbP0IEBuTyKUyERybJJEQPE4+aseMm6WXsTpFEqcfOhvnWLvdqjso1
+ OyxIGjiQRLjsXGU2zmUdVEnxlMocoa7gHYyrBJBTK7tTYi++TB0L2dyYO29Ybn87
+ zi3awA==
+Received: from mail-dy1-f199.google.com (mail-dy1-f199.google.com
+ [74.125.82.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ha4623gq9-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 21:05:58 +0000 (GMT)
-Received: by mail-dy1-f200.google.com with SMTP id
- 5a478bee46e88-33713e5e6daso6753131eec.0
- for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 14:05:58 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 21:05:46 +0000 (GMT)
+Received: by mail-dy1-f199.google.com with SMTP id
+ 5a478bee46e88-3510d0baf63so4454403eec.1
+ for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 14:05:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1792011957; x=1792616757; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1792011946; x=1792616746; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=WGnEJ78Boc7LXNm6t4FBYciEvL3cwRlOovNZLHHmiLc=;
- b=i7SRCcQIz3vKpsh3jrnQijAOkCBeBl6Uag7e56lXl5w6ba7U1mj90bUOyll3/J/BUw
- wfB7f+Q5VAkvTCV9SaeRgw9njSzWFbP+L1nAW0Qx+9xl1lkqkKcOKTuP4RY68cA2JkiH
- JIoz8299iiC0T59XbRBVcHF9jNMIFbhPzzC7vQRxJixoXvqS4y/PZhFzNPHW0FD+VJqu
- RskyaKgV4Ble3RaoyVcq9QY2q5ZATGtLv5qguW1k7gimNZBuhdvuOBkzIEaq7sAAKJNf
- iJYPkVK5hYpHSp4MSSHNbhRp5KO5nWDJCCfxUJUCkquFUTZzSUzoKy5sWSgwy3CGkWkL
- BICg==
+ bh=n6iwn0RVSBt1UI+L9sH8dEvRd/busJPAgCkh2EUMJb0=;
+ b=a8fLbtyF03BU5J129qpu7KvugW4sow6+LQpajMWj5BFbfPjs7/iQ70UaL00kHgsulm
+ DuG1JgkDaOWLhUUOK2t8Saj32YUzBg9GeaOnwMt8kUYBI84BYMHI8OjW/ANyA8Yae6dQ
+ z6nifVMLhtPJSpBIc4zNQAOjlxq702+b30661iklZBT1pWlUKWXLRVAlLMTrhrMuFyos
+ pUNq1baELHAVvBlZfEITiyOIMLT1j89Gvk/IALLemjHx/QJnWyVeFXVcv7XPyAOQ8cAa
+ 7eWH2X6NARLwvmokjHu81lsA1EqfWZQ1h1JEvdwL4voSgARLcGuJVNZxYWMJLhHfg3n1
+ ytgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792011957; x=1792616757;
+ d=1e100.net; s=20260707; t=1792011946; x=1792616746;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=WGnEJ78Boc7LXNm6t4FBYciEvL3cwRlOovNZLHHmiLc=;
- b=oh0D2ja0ga1zRW48REFtO3cjgPGeYcu9P3p1YsTdP6BEYPG1TqyHO7O22iv2eipBYj
- nvQRa5XoagjXpyGs0LWan7EmeDtl61B7qfXmW+Qk+GAEcb1GdnRX5Nmqj5oBXhOWpB85
- JxJUA4SAetDuwbk+70JPl7/09lrp6HubeIi7OZW+AmyWCK+2bgZup0sP99uVq8tTcfLz
- 0yI1sMDMjF8fa28kHXEp8ndB74Xim/pFSnBv3ls/qZ1OwrBniyXSGntpDE5QYPyEEGx/
- FNCgT/L80fEaHSjio6PqTiAqWcPyWu5IAMk6Un/x8OeLpgO8D5uZZxlebbHZsdo8BXfk
- AA9A==
-X-Gm-Message-State: AFq9FYI9nlUVrMMfLSDuqhkqtW++48CXKN5Yx4LAXoESSz2YMN4Tknzn
- a3tR6utaiQRt/VC1R0jzJ5jn55+4pxu10kdrnfeRDN8tH4It7uJ4+fU255NdhWeYLAkO5w48vLb
- g/HcHERQNF8ZdLNwe/LuVdeshzdb8iPPUdKQ3M4Ov+gCWVIIzvOld4AF4pMe1gwxeow==
-X-Gm-Gg: AYBFou0pYa0D2M8gH0fT6a3tylec6VwI0HngdoEJ0cCCQ/oo5DCUy7LhNqMTR+szCRx
- oUG62rD6PA5HhDJG+4ym9shDnOYRNcQUlepBFyvRSPYwvuNe7LHRRwSXPDpULevVoBsLvfKPwsZ
- yeRnIFpuntIvIcgm2pg3Un1kpeotID/aZgfLVi4itUVV6Kb8V457fW+s3tZaF2YOXsy04A53Nvs
- GJhxLN0IvWuBrKeVonimkvpsbShOAO2862O50cXXdQ67yfDddLWyAcg4Y+C4dRZ2wmFG4ZLprHX
- KhffxJ9Gk7Nhlw2uW+zC6L7P0Vy3CFfEC+rU8WjnBrI14xcmbQYqXB/SQqRzMnmcFoTCzJLiihF
- sd6/yio6aMEz6w+OSka9ZprcYkS2slAeb37LRg/Tp0R3Ut2Cqvi/lRKsyiMhw
-X-Received: by 2002:a05:693c:8951:20b0:35b:782c:aa31 with SMTP id
- 5a478bee46e88-35b783bf575mr11387527eec.28.1792011957236; 
- Wed, 14 Oct 2026 14:05:57 -0700 (PDT)
-X-Received: by 2002:a05:693c:8951:20b0:35b:782c:aa31 with SMTP id
- 5a478bee46e88-35b783bf575mr11387472eec.28.1792011955736; 
- Wed, 14 Oct 2026 14:05:55 -0700 (PDT)
+ bh=n6iwn0RVSBt1UI+L9sH8dEvRd/busJPAgCkh2EUMJb0=;
+ b=AWvcz9GXkF+7DXXAS6lbAuxrSsw6IDb7oLJuljFCR/aNe/oh7d93CuGQusJ3dZFyD3
+ VvhnixmQMEOCLRJFcCjQ3dfKnxcdzYfE7Me2i0ritMCIAFN8HYSkKO+1JHP9XjBoskvu
+ oLVhNm8XLNcYAFjO7QNX7tKrr0NqKvQLV2iSFt3TFnVCQUlvO1zqNomIc1doVg+934G/
+ 2jYrU8dmJw2HpkhZh1pHjOmTQO4Mqb4U8ajzaxk2aYyeorVL8uMwEjdFnn+nXgqhus/9
+ qSeGWq7WOzKllkdodiKkjGCHhO+Vl3gWb2FkcQlveVX7fM0Tguhom0r59twFCCHIyn7J
+ pnQg==
+X-Gm-Message-State: AFq9FYLdIIzNPo+Wqv2UwlS+VcQI73OYcPz3pbcNyyp95sNuF+aZJ+cT
+ o4euWT7ddjbPbq93SzNBbTk+YQU8o3lewonhfwnfWG++S9LC6Xugeirea3ywo/4Oig+v8dz5Snu
+ tJg+YnvR9+ExxhIjPxVRJgjk3jDiSi1seklVajacbrggF0ntdwHIpZBBI6FWZ6qra/g==
+X-Gm-Gg: AYBFou3fDCJCtnCKdQw7aGID7bcimAqTq48pL7iYrqTlgwbniJm8AucdMpgV2UQCDhj
+ qWAsUyjdGN/U/mefabHJ0VkTs5AP9YmVSUB+aYqosBW7JdtXDHVvTQnnNqdvo8D8z9c4NYSuxcb
+ KX4765scx7efHDsyz+X4Cw0h4qpduH0v1thNCWflPhMBxM9zgzS38NbBz5m13crb8M8Z3L1X+Kb
+ JWIK0m4Fzqzo8Q1DQ8CYXIxhzwgS9+0V12hEZ17Q8sfL0ZSvQ2GneP+dFWbHfEFfFr6QhF6aAfb
+ BqI/6YR+XZDW90/aqIXiQvpedB2OdcVrmxfOawEPHNOgYstiGsahOBjMTklGg0CRdTiDioorxzq
+ GSrPYf588+KMsoTQaCoB0RMlmT/iTjx/azadJzqUOKEGdJQB3GRxGlC4bS3G7
+X-Received: by 2002:a05:7301:618f:10b0:359:8492:20ff with SMTP id
+ 5a478bee46e88-35984922299mr16963067eec.12.1792011945675; 
+ Wed, 14 Oct 2026 14:05:45 -0700 (PDT)
+X-Received: by 2002:a05:7301:618f:10b0:359:8492:20ff with SMTP id
+ 5a478bee46e88-35984922299mr16963041eec.12.1792011945076; 
+ Wed, 14 Oct 2026 14:05:45 -0700 (PDT)
 Received: from debian.qualcomm.com (192-80-163-190.dyn.novuscom.net.
  [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-358ee8a3387sm46562092eec.15.2026.10.14.14.05.54
+ 5a478bee46e88-358ee8a3387sm46562092eec.15.2026.10.14.14.05.43
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 14 Oct 2026 14:05:55 -0700 (PDT)
+ Wed, 14 Oct 2026 14:05:44 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
@@ -95,45 +95,46 @@ Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Anton Johansson <anjo@rev.ng>, Peter Maydell <peter.maydell@linaro.org>,
  Brian Cain <brian.cain@oss.qualcomm.com>
-Subject: [PATCH v3 10/12] semihosting: use new semihosting ops
-Date: Wed, 14 Oct 2026 21:05:24 +0000
-Message-ID: <20261014210526.104215-11-pierrick.bouvier@oss.qualcomm.com>
+Subject: [PATCH v3 02/12] target-info: add target_hexagon
+Date: Wed, 14 Oct 2026 21:05:16 +0000
+Message-ID: <20261014210526.104215-3-pierrick.bouvier@oss.qualcomm.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261014210526.104215-1-pierrick.bouvier@oss.qualcomm.com>
 References: <20261014210526.104215-1-pierrick.bouvier@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=VKpIDNPX c=1 sm=1 tr=0 ts=6acfeeb6 cx=c_pps
- a=PfFC4Oe2JQzmKTvty2cRDw==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
+X-Proofpoint-ORIG-GUID: xuKTd2usDzrpTLBn7jEGNm08qptJvhlr
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDE0MDA4NCBTYWx0ZWRfXyfAqzE+EROls
+ H/ejXehsnGSb2kvX28wvPIpL8n1S6svzzgvBWfeAK7lTKrJch+DPoNQrRHIL5mnYDvn6o05pNoU
+ z2R/p8WhKwVzQQc/zA7/FF3y3SwzZqUGK0Sly4IfR9A3pdVimuRM8LZRYQy3nFmnxvLajaitm+U
+ 5CQDPkYBsNHR0GOanHzIlSjAHun1Bijw0CaAClzltY396jagiN397a1V5Zhs+bzVyjTKOTHE5RH
+ QQ6pb+yBAiniGKsj7qvJYGlU5PYxiTuMh5Tal4VbhVeZhemLZZ4HIErIhExufcu3DltOGdRS2kJ
+ brK7KVeUHJFhX7UMG/I6Y4I4scgINHR6lrp8IQ33Bf+I8E1GyFHZe8oQ1yZF87hFmhPIjtfD4KX
+ ex9WAbLKooSuAo49W+lonWeSi3oO4wxOOih9gnYoU6XCNrWaOhmz48cvGUhaOm6x7RiYKdBoB03
+ 7Ek687aO5S6SpW8v9MQ==
+X-Authority-Analysis: v=2.4 cv=ErZHPicA c=1 sm=1 tr=0 ts=6acfeeaa cx=c_pps
+ a=cFYjgdjTJScbgFmBucgdfQ==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
  a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
- a=EUspDBNiAAAA:8 a=e19n-G9kEiEojgAQi20A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=6Ab_bkdmUrQuMsNx7PHu:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDE0MDA4NCBTYWx0ZWRfX2OuFmZdYX6J2
- mtPXnKIb3Vy5WqcIThS3DKgj7p9IK4bqgMPnQatQXho1bWMt9A3lFztXLT7TbH3PIdYrJ6moXZP
- bzGBIFkToG7s+Dw9Ax1BtXawIV7LEDI=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDE0MDA4NCBTYWx0ZWRfX8CgQqSvjvdyB
- 8duOK/yIiLhZSmy+YgHaEfORQszVTLaRBf9/myJIFHKb9z0NN8iOz/MSqBVsprn8+dUozR8MgUh
- P7qr24EvlmY+dZaqx99VGboYVnBd07Z9puK7Dfn0BWwuJ8fBiZgcG/YwGUMR2G/bRb3v3aMrY4D
- aGdpr2i/3iw3TCka4cX6X3MvQf6AFWJ/fvOL+4CuY/xJYxi365zDpWA8KvWvKA0eYO1kRKIrQup
- qc53WdB2bxIOWx9LFjlhuFiZ6fD0qu34GZoucH0aAqWuWD5JFL+DHKPcmxZcfv7PN3f+3ZpFOSG
- QNNvwsi1Ihq57ZG+04AITzn1BnRiDGFV+M1zA4uQvRNI3PVKtHMY+dorAGvOslwzErfnNy2YBWL
- oqZMbxXaSxP5JxmHHnk936MDLSjII8r44x1YeKibjON3H0sCKamb+eklG4nlCXeReSSmrorEaZ7
- sGwcb6Um6QTJnJN19gQ==
-X-Proofpoint-ORIG-GUID: mc1pkxsUqB_IL-qVUou-RrudUBxsD53_
-X-Proofpoint-GUID: mc1pkxsUqB_IL-qVUou-RrudUBxsD53_
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
+ a=EUspDBNiAAAA:8 a=oeoYDfJPrL2azRNJ8Y4A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=scEy_gLbYbu1JhEsrz4S:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDE0MDA4NCBTYWx0ZWRfXzHOKBVM8UFH4
+ 6RF1SuRAYkhkbK12/O97xEwuuLSLNV72E8Md2O6IJFpJe3Fu+3F3nm4zt0EAqA6qk16IL921oeD
+ Ko8RhQuva5yoNNy/zyJJiUo6ZHL6ToA=
+X-Proofpoint-GUID: xuKTd2usDzrpTLBn7jEGNm08qptJvhlr
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-10-13_01,2026-10-14_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 bulkscore=0 lowpriorityscore=0 impostorscore=0 suspectscore=0
- malwarescore=0 phishscore=0 spamscore=0 clxscore=1015 priorityscore=1501
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610080000 definitions=main-2610140084
-Received-SPF: pass client-ip=205.220.168.131;
+ phishscore=0 malwarescore=0 bulkscore=0 impostorscore=0 adultscore=0
+ suspectscore=0 clxscore=1015 lowpriorityscore=0 priorityscore=1501
+ spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2610080000
+ definitions=main-2610140084
+Received-SPF: pass client-ip=205.220.180.131;
  envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
+ helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -156,245 +157,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Now that all targets implement this interface, we can replace function
-calls with the new interface.
-
-We assume semihosting ops are set on this code path, and do not perform
-a NULL check.
-
 Reviewed-by: Brian Cain <brian.cain@oss.qualcomm.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 ---
- semihosting/arm-compat-semi.c | 56 +++++++++++++++++------------------
- 1 file changed, 28 insertions(+), 28 deletions(-)
+ include/qemu/target-info.h | 7 +++++++
+ target-info.c              | 5 +++++
+ 2 files changed, 12 insertions(+)
 
-diff --git a/semihosting/arm-compat-semi.c b/semihosting/arm-compat-semi.c
-index b930a028649..3117eadb3b7 100644
---- a/semihosting/arm-compat-semi.c
-+++ b/semihosting/arm-compat-semi.c
-@@ -188,7 +188,7 @@ static LayoutInfo common_semi_find_bases(CPUState *cs)
+diff --git a/include/qemu/target-info.h b/include/qemu/target-info.h
+index adda363ac39..862097c6c63 100644
+--- a/include/qemu/target-info.h
++++ b/include/qemu/target-info.h
+@@ -70,6 +70,13 @@ bool target_aarch64(void);
   */
+ bool target_m68k(void);
  
- #define GET_ARG(n) do {                                 \
--    if (is_64bit_semihosting(env)) {                    \
-+    if (cs->cc->semi_ops->is_64bit(cs)) {               \
-         if (get_user_u64(arg ## n, args + (n) * 8)) {   \
-             goto do_fault;                              \
-         }                                               \
-@@ -200,7 +200,7 @@ static LayoutInfo common_semi_find_bases(CPUState *cs)
- } while (0)
- 
- #define SET_ARG(n, val)                                 \
--    (is_64bit_semihosting(env) ?                        \
-+    (cs->cc->semi_ops->is_64bit(cs) ?                   \
-      put_user_u64(val, args + (n) * 8) :                \
-      put_user_u32(val, args + (n) * 4))
- 
-@@ -237,10 +237,10 @@ void common_semi_cb(CPUState *cs, uint64_t ret, int err)
-         ts->swi_errno = err;
- #else
-         syscall_err = err;
--        common_semi_set_err(cs, err);
-+        cs->cc->semi_ops->set_err(cs, err);
- #endif
-     }
--    common_semi_set_ret(cs, ret);
-+    cs->cc->semi_ops->set_ret(cs, ret);
++/**
++ * target_hexagon:
++ *
++ * Returns whether the target architecture is Hexagon.
++ */
++bool target_hexagon(void);
++
+ /**
+  * target_or1k:
+  *
+diff --git a/target-info.c b/target-info.c
+index 6b365113955..254530d8ea5 100644
+--- a/target-info.c
++++ b/target-info.c
+@@ -68,6 +68,11 @@ bool target_m68k(void)
+     return target_arch() == SYS_EMU_TARGET_M68K;
  }
  
- /*
-@@ -249,7 +249,7 @@ void common_semi_cb(CPUState *cs, uint64_t ret, int err)
-  */
- static void common_semi_dead_cb(CPUState *cs, uint64_t ret, int err)
++bool target_hexagon(void)
++{
++    return target_arch() == SYS_EMU_TARGET_HEXAGON;
++}
++
+ bool target_or1k(void)
  {
--    common_semi_set_ret(cs, 0xdeadbeef);
-+    cs->cc->semi_ops->set_ret(cs, 0xdeadbeef);
- }
- 
- /*
-@@ -260,7 +260,7 @@ static void common_semi_rw_cb(CPUState *cs, uint64_t ret, int err)
- {
-     /* Recover the original length from the third argument. */
-     CPUArchState *env G_GNUC_UNUSED = cpu_env(cs);
--    uint64_t args = common_semi_arg(cs, 1);
-+    uint64_t args = cs->cc->semi_ops->arg(cs, 1);
-     uint64_t arg2;
-     GET_ARG(2);
- 
-@@ -268,7 +268,7 @@ static void common_semi_rw_cb(CPUState *cs, uint64_t ret, int err)
-  do_fault:
-         ret = 0; /* error: no bytes transmitted */
-     }
--    common_semi_set_ret(cs, arg2 - ret);
-+    cs->cc->semi_ops->set_ret(cs, arg2 - ret);
- }
- 
- /*
-@@ -302,7 +302,7 @@ static void common_semi_seek_cb(CPUState *cs, uint64_t ret, int err)
-  */
- static uint64_t common_semi_flen_buf(CPUState *cs)
- {
--    vaddr sp = common_semi_stack_bottom(cs);
-+    vaddr sp = cs->cc->semi_ops->stack_bottom(cs);
-     return sp - 64;
- }
- 
-@@ -330,7 +330,7 @@ common_semi_readc_cb(CPUState *cs, uint64_t ret, int err)
-         CPUArchState *env G_GNUC_UNUSED = cpu_env(cs);
-         uint8_t ch;
- 
--        if (get_user_u8(ch, common_semi_stack_bottom(cs) - 1)) {
-+        if (get_user_u8(ch, cs->cc->semi_ops->stack_bottom(cs) - 1)) {
-             ret = -1, err = EFAULT;
-         } else {
-             ret = ch;
-@@ -385,7 +385,7 @@ void semihosting_arm_compatible_init(void)
-  */
- void do_common_semihosting(CPUState *cs)
- {
--    CPUArchState *env = cpu_env(cs);
-+    CPUArchState *env G_GNUC_UNUSED = cpu_env(cs);
-     uint64_t args;
-     uint64_t arg0, arg1, arg2, arg3;
-     uint64_t ul_ret;
-@@ -393,8 +393,8 @@ void do_common_semihosting(CPUState *cs)
-     int nr;
-     int64_t elapsed;
- 
--    nr = common_semi_arg(cs, 0) & 0xffffffffU;
--    args = common_semi_arg(cs, 1);
-+    nr = cs->cc->semi_ops->arg(cs, 0) & 0xffffffffU;
-+    args = cs->cc->semi_ops->arg(cs, 1);
- 
-     switch (nr) {
-     case TARGET_SYS_OPEN:
-@@ -494,15 +494,15 @@ void do_common_semihosting(CPUState *cs)
- 
-     case TARGET_SYS_READC:
-         semihost_sys_read_gf(cs, common_semi_readc_cb, &console_in_gf,
--                             common_semi_stack_bottom(cs) - 1, 1);
-+                             cs->cc->semi_ops->stack_bottom(cs) - 1, 1);
-         break;
- 
-     case TARGET_SYS_ISERROR:
-     {
-         GET_ARG(0);
--        bool ret = is_64bit_semihosting(env) ?
-+        bool ret = cs->cc->semi_ops->is_64bit(cs) ?
-                    (int64_t)arg0 < 0 : (int32_t)arg0 < 0;
--        common_semi_set_ret(cs, ret);
-+        cs->cc->semi_ops->set_ret(cs, ret);
-         break;
-     }
-     case TARGET_SYS_ISTTY:
-@@ -533,7 +533,7 @@ void do_common_semihosting(CPUState *cs)
-         len = asprintf(&s, "%s/qemu-%x%02x", g_get_tmp_dir(),
-                        getpid(), (int)arg1 & 0xff);
-         if (len < 0) {
--            common_semi_set_ret(cs, -1);
-+            cs->cc->semi_ops->set_ret(cs, -1);
-             break;
-         }
- 
-@@ -542,7 +542,7 @@ void do_common_semihosting(CPUState *cs)
-         /* Make sure there's enough space in the buffer */
-         if (len > arg2) {
-             free(s);
--            common_semi_set_ret(cs, -1);
-+            cs->cc->semi_ops->set_ret(cs, -1);
-             break;
-         }
-         p = lock_user(VERIFY_WRITE, arg0, len, 0);
-@@ -553,7 +553,7 @@ void do_common_semihosting(CPUState *cs)
-         memcpy(p, s, len);
-         unlock_user(p, arg0, len);
-         free(s);
--        common_semi_set_ret(cs, 0);
-+        cs->cc->semi_ops->set_ret(cs, 0);
-         break;
-     }
- 
-@@ -572,7 +572,7 @@ void do_common_semihosting(CPUState *cs)
-         break;
- 
-     case TARGET_SYS_CLOCK:
--        common_semi_set_ret(cs, clock() / (CLOCKS_PER_SEC / 100));
-+        cs->cc->semi_ops->set_ret(cs, clock() / (CLOCKS_PER_SEC / 100));
-         break;
- 
-     case TARGET_SYS_TIME:
-@@ -587,7 +587,7 @@ void do_common_semihosting(CPUState *cs)
-         break;
- 
-     case TARGET_SYS_ERRNO:
--        common_semi_set_ret(cs, get_swi_errno(cs));
-+        cs->cc->semi_ops->set_ret(cs, get_swi_errno(cs));
-         break;
- 
-     case TARGET_SYS_GET_CMDLINE:
-@@ -734,7 +734,7 @@ void do_common_semihosting(CPUState *cs)
-             for (i = 0; i < ARRAY_SIZE(retvals); i++) {
-                 bool fail;
- 
--                if (is_64bit_semihosting(env)) {
-+                if (cs->cc->semi_ops->is_64bit(cs)) {
-                     fail = put_user_u64(retvals[i], arg0 + i * 8);
-                 } else {
-                     fail = put_user_u32(retvals[i], arg0 + i * 4);
-@@ -745,7 +745,7 @@ void do_common_semihosting(CPUState *cs)
-                     goto do_fault;
-                 }
-             }
--            common_semi_set_ret(cs, 0);
-+            cs->cc->semi_ops->set_ret(cs, 0);
-         }
-         break;
- 
-@@ -755,7 +755,7 @@ void do_common_semihosting(CPUState *cs)
-         uint32_t ret;
- 
-         if (nr == TARGET_SYS_EXIT_EXTENDED ||
--            common_semi_sys_exit_is_extended(cs)) {
-+            cs->cc->semi_ops->sys_exit_is_extended(cs)) {
-             /*
-              * The A64 version of SYS_EXIT takes a parameter block,
-              * so the application-exit type can return a subcode which
-@@ -786,7 +786,7 @@ void do_common_semihosting(CPUState *cs)
- 
-     case TARGET_SYS_ELAPSED:
-         elapsed = get_clock() - clock_start;
--        if (is_64bit_semihosting(env)) {
-+        if (cs->cc->semi_ops->is_64bit(cs)) {
-             if (SET_ARG(0, elapsed)) {
-                 goto do_fault;
-             }
-@@ -796,12 +796,12 @@ void do_common_semihosting(CPUState *cs)
-                 goto do_fault;
-             }
-         }
--        common_semi_set_ret(cs, 0);
-+        cs->cc->semi_ops->set_ret(cs, 0);
-         break;
- 
-     case TARGET_SYS_TICKFREQ:
-         /* qemu always uses nsec */
--        common_semi_set_ret(cs, 1000000000);
-+        cs->cc->semi_ops->set_ret(cs, 1000000000);
-         break;
- 
-     case TARGET_SYS_SYNCCACHE:
-@@ -810,8 +810,8 @@ void do_common_semihosting(CPUState *cs)
-          * virtual address range. This is a nop for us since we don't
-          * implement caches. This is only present on A64.
-          */
--        if (common_semi_has_synccache(env)) {
--            common_semi_set_ret(cs, 0);
-+        if (cs->cc->semi_ops->has_synccache(cs)) {
-+            cs->cc->semi_ops->set_ret(cs, 0);
-             break;
-         }
-         /* fall through */
+     return target_arch() == SYS_EMU_TARGET_OR1K;
 -- 
 2.43.0
 
