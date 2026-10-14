@@ -4,184 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58213CC6B1D
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 11:25:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7E1ECC6B2A
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 12:05:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGx66-0007b3-Bk; Wed, 14 Oct 2026 07:24:38 -0400
+	id 1xGxjT-00072P-0A; Wed, 14 Oct 2026 08:05:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
- id 1xGx65-0007aV-8K
- for qemu-devel@nongnu.org; Wed, 14 Oct 2026 07:24:37 -0400
-Received: from mx0b-002c1b01.pphosted.com ([148.163.155.12])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
- id 1xGx63-0005g0-IG
- for qemu-devel@nongnu.org; Wed, 14 Oct 2026 07:24:37 -0400
-Received: from pps.filterd (m0127844.ppops.net [127.0.0.1])
- by mx0b-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69E7wOr93014631; Wed, 14 Oct 2026 04:24:29 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=
- proofpoint20171006; bh=5Y42nFX1SuoOHfoLk9XCJ3MgIlx+bFXAwAy9V4CsU
- ow=; b=lqhwuCkK6/Vzv9Y57U+pnEB09yphxefHBQGnBnG2UYU5ZO/Z2BPAspADP
- EU1jeE8c+feeuYFPU8Tf+FZ52B7FTgWUyO8wGwxYsQGVq0NfRj0ypPZ6j3zkQJev
- opcQz7rr28B5b+vzkiZ4oop2vD0yyu9DSHh3mL0E8F2GzsJe4porCIksdf69lZrf
- ABYTpZ1800J7RCnCMvT9p0QYL4zz7+mGQjaSLsVLve2HnrQkIRPpIot30DqdcbiT
- chp3eU1ZTb9n4gaPUZrJRRm2SZ9FJ1r8Ja7mBh1FYLZjtYh39dNCyOdVGnDFhfIi
- yJc/YIxq+iwH5IE3WhX22mUcrax3w==
-Received: from co1pr03cu002.outbound.protection.outlook.com
- (mail-westus2azon11020143.outbound.protection.outlook.com [52.101.46.143])
- by mx0b-002c1b01.pphosted.com (PPS) with ESMTPS id 4h9pvvtrww-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Wed, 14 Oct 2026 04:24:29 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=UCnQJtU4oJx/P6P5towLLsFKmKBSCv0qErSwC+FmP54QmB+m6L37KUJJ1zEwipnRrhDh5epxPPJ1dxQM7bs/Knw5mwJqmPpQjC2xhctd2ZHjqgQrCrCpWezMK/K0mrpAdAzUDbOLIorrrq7Vf/GwfGG2N0zWvRHC91c4auaEHYHaIxzPOSNj11h5yGhG21+hpRnU8ccPulHt4MdCG/ZK/ey6mMs7bx/oINEQBX0gOnkPQgQTuqCtXtAofn5KefG8/CXXusU3XDHicS6qaT6R8wfOMdjGSXhzgYnyVrU+7vuRcOho2/F0YdOjt7WmD85w2P6t0xK/rPO5vz+kVAdCKg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=5Y42nFX1SuoOHfoLk9XCJ3MgIlx+bFXAwAy9V4CsUow=;
- b=qLRB5O2r9K7k/bn/4rk5JUozlVHaBZ7BwY29Nx0Tl8zQqdogjE0mG4kxJ33SS49o6290H9A6ergXv/4WWyBRaDlTE/LuziB+j0e56WYfw4nCUCNf6hWwa0PHIplrFqIGPtVymOh5/qvFguYmGQwaF5Uuqkth6MRGwMwo8XwmoFuX8jULMZIGD6Gdmfdt6lhmcTwD6CYr0f4uydjxfq+ZOueZQHzNi6OSKi1qljBZ7+XObHj1JQcX0u0+AMd/g8uDA1dx3AHvWJbbL5GVTrPmqG4eNTJDq1mmp9ltXe9ScCP8+FwqRya69JFzZSyI7aVCU3p15+gNwNDJXqRiuNRp5Q==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
- dkim=pass header.d=nutanix.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=5Y42nFX1SuoOHfoLk9XCJ3MgIlx+bFXAwAy9V4CsUow=;
- b=XBN1le++cY/jyeNoToMQM5GYc9jMUTg0tOqrEQMCjDTH4e0Ir120VWqYq3LA97DaunKlT+Sqhg6GDKupujSclEmwp2TBGeT+zsYh6SCnZ71Nz1YwFe9DMpkEZqlhTEfAdCdT0G/XaWNvZr7FBbSSuZkZoetFIYiLLGJV8FKtMdILnFxxD1/Er/Fj13UAmkWADphrgG+TPNf0rAvRSjsgJjivFl645a2+lIaAdnmu4JNGU2aMD2LvDPcNYZPzPVIL0GlnwwN6mGCSAqfZ84y/BMGlkzcSJkebbMHQmVvL54Zbe0du6SWFVw4ihgPjfdJMDVyd0Vjs39K3ZQmkVKS9Sw==
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nutanix.com;
-Received: from PH0PR02MB7159.namprd02.prod.outlook.com (2603:10b6:510:16::8)
- by SA2PR02MB7595.namprd02.prod.outlook.com (2603:10b6:806:146::24) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.522.12; Wed, 14 Oct
- 2026 11:24:27 +0000
-Received: from PH0PR02MB7159.namprd02.prod.outlook.com
- ([fe80::8e97:bc32:822c:b250]) by PH0PR02MB7159.namprd02.prod.outlook.com
- ([fe80::8e97:bc32:822c:b250%4]) with mapi id 15.21.0522.012; Wed, 14 Oct 2026
- 11:24:27 +0000
-Message-ID: <dfb75bf5-600a-4d0f-865a-de4d9829ea64@nutanix.com>
-Date: Wed, 14 Oct 2026 12:24:21 +0100
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 21/22] i8259_common.c: remove static irq_count and
- irq_level variables
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: pbonzini@redhat.com, richard.henderson@linaro.org, mst@redhat.com,
- sstabellini@kernel.org, anthony@xenproject.org,
- edgar.iglesias@gmail.com, qemu-devel@nongnu.org,
- xen-devel@lists.xenproject.org
-References: <20260916104435.600211-1-mark.caveayland@nutanix.com>
- <20260916104435.600211-22-mark.caveayland@nutanix.com>
- <CAFEAcA9vm7004bytZqYwXCNj_+VNy1RzKMqG3TDnJkswpNhLUg@mail.gmail.com>
-Content-Language: en-US
-From: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-In-Reply-To: <CAFEAcA9vm7004bytZqYwXCNj_+VNy1RzKMqG3TDnJkswpNhLUg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: SJ0PR05CA0113.namprd05.prod.outlook.com
- (2603:10b6:a03:334::28) To PH0PR02MB7159.namprd02.prod.outlook.com
- (2603:10b6:510:16::8)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xGxjQ-000728-Dl
+ for qemu-devel@nongnu.org; Wed, 14 Oct 2026 08:05:16 -0400
+Received: from mail-yw1-x112d.google.com ([2607:f8b0:4864:20::112d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xGxjO-0003ad-Ib
+ for qemu-devel@nongnu.org; Wed, 14 Oct 2026 08:05:16 -0400
+Received: by mail-yw1-x112d.google.com with SMTP id
+ 00721157ae682-8ae9bc9a2fcso48056837b3.1
+ for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 05:05:13 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1791979512; cv=none;
+ d=google.com; s=arc-20260327;
+ b=BTB5C+bi+CLc/VP6dgQ51fKaywC4TWI8AVCTz1P2mkQ3FoHdYtBp27FJgKm9CnAM6k
+ KptUEhm5G1F+/CekPW6QL6ilR7kICZjNzsVY1ZKiqa3pHSdy/ZPEelemuOCpF4sNGKAr
+ Qi/BcpGxI+4gbo+4xEiIUJXl284fUHdJYSpdVy7GeJ2+iqeGtXdADlCZNds3eC3z3mew
+ DDwd3tqbBrpV9S9yMhRvpa+70WxXx7kRc5YldveL0v40KCH2M2E1gFoDfWJ7r2f1PmE7
+ ApQ85CyQkjfI3SKPr8gyAnqKCqtj38e6OHOhllXKRGmtmwQCOXSVp39PKeFAODyzs7Wp
+ brZA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=M9Nyl9xH3QF3gMvTwTw/sBu2NY+4Q2lch/paE09DFwI=;
+ fh=h8c/yFRgZpGWeDZqTgMvFbz8jsrSkstGL4N/FagHsVA=;
+ b=i7g8EmT2U9rd+0f4hzHHnNcI4BSgTsRHRC+gPZAuN42SyjMftDO4SK30UlGIMu95Hv
+ 7oRVCRR9hnhYoaOqN6WM3ccL4jAM1TYC/x+QhE+501qqTlC2TSA9jnPQ44KTe1RAMoqI
+ KGhGT84ff7l562DxABV75KiUFUjl8NXY9poAqGwoI+UGHJo1rxB0e01scKAdFTVhs8D5
+ is8RTUFYL/VQk7Wm+eGwkwfUyn8iwI/7hb9+yOPlUhVA/KqT7vqKzCdTLgwr625whuuo
+ rnmiNsNNzlYiOpZYKH//KioPsWpWQPSfRbYT61vT7VzrXtX7JmTLo1JYQ52dP9ZR+CV1
+ fm5Q==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1791979512; x=1792584312; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=M9Nyl9xH3QF3gMvTwTw/sBu2NY+4Q2lch/paE09DFwI=;
+ b=nxm6DmJd8Os0mtL739V+77F64QyRY01XkdSlVaarp4mIlKSg6Gw73zFy7qyyYKWOz2
+ uhr8NOe0OAPBeR7Eda6BzorPGeO9SyVspxKu5LnS/qSACKeiZYllSMqD4XdW5UcnuPkh
+ ZMHpoUo+In6DMGdnBVHov7VUvKEMD+ahP1BnwHL0gCg2pbfJ1qgRD2HE42/WgHOlqkWe
+ O9ctxagOd/Ov8mqDWsquhPyxxO1sFE7sNZ7Acv/RquIdIDuyi09EPZXFvDQf/eKFOCCN
+ LGM4EX/bzyYZVZzrJk2r6SrrixcFbeqoLXKaUVxNI1y/6WYPo7X+rGWVQ0mwB6STw/3h
+ tXfg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1791979512; x=1792584312;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=M9Nyl9xH3QF3gMvTwTw/sBu2NY+4Q2lch/paE09DFwI=;
+ b=t2HVVotC3H/xnxqLtoH5dRD37DofXkiE51JUxjtPHjOSIYE9oVRIbBucVTUr60304R
+ 2m1ZJGC7Wf5dvWw/vkSEFJ+Tn2Yy1lrXStVpOSI6Tg/BPJsyuYsdgBTIQREzIIyhPiYC
+ weGQNAV+/w9fWGnacOLIDUloxnjCScd3no4M9zx5rPf2/QNvUX6IG6dq3dEFDaK7jV9A
+ Ei27tBNiI/vy57XKamis3ySvhbePVvlNCQFKdqNZB1o4/Sa9F3KEZmbtAV9yu2S9own2
+ pJSREbX/Z4pi5s4e1XvTHRAPmb9yHs6Zr6Cm/5hOt1njIU920eJ21mm/lfwLgXTMrLZ8
+ LRPQ==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBw0+IJlkvsOqyrc5gUhvKZlqQDpLxTDXDYd5DmzMWLv0JkOb4xTN+1YTdtOaCEYsc7G3PJWc4r9sOYo@nongnu.org
+X-Gm-Message-State: AFq9FYJzfd5SfVDcpQTqrEmgPcCRdRoDGGO8YJbANwqvurpaqfhizRRZ
+ LLhwCO7PWVJW6ZBtKQnz9rwEeeoV8hjDG2kZAyYidTTnpJ6+fpH8QKmQP5yTFEFE9x1UVqm79C1
+ E+mrZf3AM3qFStoxNR8YVQgGu6sNVBVJ0zkJ1LNyinw==
+X-Gm-Gg: AYBFou32Ct4GPGKRxlqFx5T6q9OuQHqrv+4KB7oN9C5wWLzFRcoBhKjEZ/exCz10jXu
+ 04JVudhL8ABAtV2hERoJV+HxYRz/e6WsfIQJIuCztP3Z/hMqKk38hKGKEKhSefpygXqdi8o8Xkm
+ 914CxD/JMxyDyvGDQuQ2OJGE8UeVil9pU+Hg6rLbwzS3WZwpQXHHL8s3DEMVu+Z35/crUkDcbps
+ vmTHFepFdNJCUb+icnv1ixG4E5bYl24FjDgkbosfmg+eTvQiq9k1/atnGBg/YWY3Fdl4pXnWivK
+ iQA7ePPGHjRk2b1cTJ+QWgOA+kHl66bpJ2otKzftGh/44l4gUxJJHlkwI7fdseVYir2vl/pN6hO
+ ex8RkVPNO/jRH7EXc2IMEW0gijGnnpr1Wz6YINXa5ydq9s65msQ==
+X-Received: by 2002:a05:690c:13:b0:8b0:a30a:7f31 with SMTP id
+ 00721157ae682-8b0a30a9167mr33446427b3.29.1791979512090; Wed, 14 Oct 2026
+ 05:05:12 -0700 (PDT)
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PH0PR02MB7159:EE_|SA2PR02MB7595:EE_
-X-MS-Office365-Filtering-Correlation-Id: 0fd87a39-f822-43d3-166b-08df29e5b4f8
-x-proofpoint-crosstenant: true
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|366016|1800799024|23010399003|56012099006|4143699003|10067099003|22082099003|18002099003|3023799007;
-X-Microsoft-Antispam-Message-Info: uaHJyyUXSUfZlFH7aNbf2LjuExN6gAtXrsj2CP9xkNUlwtCyPKkTxUftkj9d4rc5Y4qQXK4pFqawet/ibsN+kEOMJARw2OFThjHeq3Wkhxmn3KEhkV9t2iIFHQpNhXdAKGAQoDh5dPSM8ev9bHOWoHeDdXzShatU3KF9LaYPH8MwpWaDVYf7E/eUFbjYZ8/8Z9BX+oCp3JiuqYEP+7SMZeo3udo61UbyzjAatrObMLELFT4ickHeJyO8z+Rt9WC7gFezJjTZyuxAmv1ViKf08bfMBDU7JIW6yrCBo2xTJ8PMobnQwkqU5qxTk5rYyCqiK2u2kZdZA96lvc2SRDlzwT39cE5PbK4K8Vx66eadVHbehtq+kdnEgawFHCydoRuzovLQ7RRmh9Is79b3hTfHO2FpBXPx6+f25rJNG7XcdehiwZJp6PyFnU2hjhGGH3oO+Iii/AZufx75TlSbZzYzHcAGc/iyY1yuEFyUGt+5V7vbM3qrF/qO8B7A8bFjejWa5jcyXQCFFJSsrWmcoTj6/Q+Fw3D9tX31Dnqo2p69BSE5ni4+DVERw3QUxXGQJWkMDAXR6z08UtadctS9jN/4lenO6w5bU6KCGOj7ERAkQp9ovvmtmnjj+f+niJdtBrJt/ix2BFAy3JqHyeslweUjeR8EXxT1KMahcw/n8aXKNMg=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:PH0PR02MB7159.namprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(366016)(1800799024)(23010399003)(56012099006)(4143699003)(10067099003)(22082099003)(18002099003)(3023799007);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?VDNQZmxYTDlic0JKL1NFVE5WWW1NbERNQXk0MGlRMnpRN1ppcE1pMzgydVBi?=
- =?utf-8?B?cVBXcWxNY2RrcDhTUlM0bkVvMVhWdTJ5WXhkVFNGaklDcnRJeGo5VHh6bER0?=
- =?utf-8?B?U2czN0NyWmMvMmtWTmUrU0NpNFJxUThEM0N4bi8zT1hGVFJ0aGRmR3Nia3E4?=
- =?utf-8?B?bThtcFl1TzJlcWV5eGx5UU1UUlpyaFhncXBZTnBjSDV0bWNWUTZ1dEN5OXI0?=
- =?utf-8?B?N1dQejBQRDNyZklnSjNidzBDZTBYKzZYY3g4L1lSdEk2MDdHa0FyR0JEdnB0?=
- =?utf-8?B?MHVwb3BoMllqYVRKc2NQRjFmeFJWMCszeXRKTnpTbThaZ2VIbEtmMTUvMy8r?=
- =?utf-8?B?M3dQU3daNzVWaU1ZQ3pEeVAxd0NYVjFlamxxR3VCNjBQVGlpMmkzdEsrRUJJ?=
- =?utf-8?B?VThCRUhIcEJORVdJMldaMWZuQlNXTEs2VFAwc1dnMjlORG9HR3YxaXMwbTNS?=
- =?utf-8?B?akI5RVlwZkRwUDBqSURRM3VzMVVpeC84ZGs2TVNXNEFQcHU4Rk9CRkdhNld4?=
- =?utf-8?B?SDUyTnNjdTlhdmk4TzJWSGhCeXlNZjlWSms3TzBNSWZPZ0Y2RHVNZkRQL21Q?=
- =?utf-8?B?YjFiN3lZWXFBMWplVGwzcW9KK2Ird0FpelQybUp0b1gvOEY2WnBjZGdPQnVF?=
- =?utf-8?B?RzB1QmpCYlpzYnBxMGpFMVVnNXl6NWdCd1RvQTY5emp1TGpPVndTQzlwTHRh?=
- =?utf-8?B?cXFvOERaMTc2M2lqSDR1VDNWTEkwT1B6VTAvZm1tVlQwMzB2cVA2QzJBSGJp?=
- =?utf-8?B?RGRCRnJUelVkWXp1cEZtaEFIZ3JvSk5HOXRKcFlaQmkzUnMvTDRxanQwWW1G?=
- =?utf-8?B?b2tXcHc1TXdCaTlTVCtVejBFL0d6YksvWmFNZHhxbVI1S1FhZEFyWjZWTkJP?=
- =?utf-8?B?aXdCSWo4MmxHcU4xVnkwb3FSdkc2WDRlcExhTXZ0MmVGSUtZcWczZGtIMFlz?=
- =?utf-8?B?UkF6NjhSTzR2UldzSlpQdVV5Q1JVZFlOQ3RScjJTdkIzWXRIVllBd21NK2JJ?=
- =?utf-8?B?ZENBcGFvbG9Fa3dKVDBLMnk4ZTZzT2libGkxdytaa1ptUTVuajF6RXJya1RH?=
- =?utf-8?B?djBDMWgrdGNldExqNGFrZFFTUStwRGErbU1xc3JDQ0svVW5XeFR0eFFGTm8y?=
- =?utf-8?B?YThyUjl2V2NYSDZEdk9rd2xMaFNuOHRlMUZxaE1wem4ybTFpbzVNVW1jcDRM?=
- =?utf-8?B?Zk5BOE1IZHlFRThROFNRVUlrbWVOMW1CR3JUcFhmeXRWSkFhYzFCcHpSeFJT?=
- =?utf-8?B?MXVhQzUyYzdhZVJwQUNDcFFPbHNHbHhLdDhYSVdMZTlSNzBrcEVyOW9oOGRF?=
- =?utf-8?B?c2JkQ09nZnBDeSt3dXdOK0t4NWJLMzlWVDlZZGNNV1ZUZ3pQWnUvRHlrOHpJ?=
- =?utf-8?B?VEoyZHl4ZC91ZmU4RmtzaHlmbzdPL216WU5YSm1TSDN5Um1Rc1ZpNktlMUdZ?=
- =?utf-8?B?UmFJdXRhNUxsL0JGckVDekw1RUJITHFoU0tiMGJBSUNzeFRLVnRYT1lRSU95?=
- =?utf-8?B?bHlRNzgzKyt1TG9vekxxK2x5MkxVVTYzVXpPOUg2MndhRE44Zlg1dlk2MEMr?=
- =?utf-8?B?TldKVkRHczhDQ1NMQ3NReHl5alhIYnZVRkwrUkc1cHdjd1FjUVQvb041MTho?=
- =?utf-8?B?ZTlWZXluZ1Z5MWYwNzV0WXM5bk9vVjdUVFlBQnNNbmZWOWFYdWxYRk5NV05h?=
- =?utf-8?B?a09YU2xvTDJsUTNCVkJyQWFCVEhhRkhpbkFBR1J3cVBUV2ZDSWttNzdhamdH?=
- =?utf-8?B?c3JnT3dYamk4Q0JkWTFFTm1ZS0pPc2VCdWZTVDFmWWQ5SVREQ09neVdEUm1l?=
- =?utf-8?B?Vjd3M1A5cGIySjMxeFQxdUlsLytGeXh3aHkxK3BseHBBL1pwK09ZNllyakxZ?=
- =?utf-8?B?anluSDN5Z0xOdExvTzZmWkd6RUFZYzdBVXpHUzUvWVkvL25tV2V3NmZmNTV3?=
- =?utf-8?B?TUk2WDd5cGlrMWNLUm1oWUsxN2EvU1AxRGpIaE9TVDNtaHd2Ujlrejhaa3Nu?=
- =?utf-8?B?ZDI1YldqRHVrL0MyT09kYU9EdzZFek5xRnpDejU5L2NrUUhiT2FjeTJ2TzNJ?=
- =?utf-8?B?ZUhUcFBlSEpSRGplWkFuLy96TkIyeXpmc2puNzZPMTVsZ2E3a1VEa3hnVXRv?=
- =?utf-8?B?a0VWRlozYm9saWlqT1FCSjJIR1JJUlgwSENyalVSbkdVQ3FHQ0JTc3p6Vzc3?=
- =?utf-8?B?MWlDUEFuSGhzMjFjbnI5c1oxSUZzVm8rVzZsRERpcnhLQnFZK0VqQVFQNDdU?=
- =?utf-8?B?cmErYlNpdUFzS3BtUUZSWmRYZmlrSkFWM0hlSDl2TXMvSWhGQkU3US8vTWsx?=
- =?utf-8?B?Y0VnNzRGK3RNRzZxQ1g3OEFEbTAwNEJ3eTJLZWNHRDJrQysreHV4dlhSV1px?=
- =?utf-8?Q?Si87uoJaOpcPSv2E=3D?=
-X-Exchange-RoutingPolicyChecked: yPWX5CL9CYlPg2jIIJoEQmSIkPg0EQTeLPep03EZ2rQNO2eXxbrXYmQR87lKJ0KTHIctEixBdW1h7N1wWE7V2nXUfjra8QU0xBz5sMZ5EDZ4lTmQ8nyOGvDVYKIZQTimYBuGOqWYKm1YH0CTYbsIE/fKCr2BrvhQY3t8Ch675nLGc5lGWZHB0Sah/5FVNJE8a0Nex2GUrbiYb8yZIY33FFefMmObvAR7gAnD/YRlt29iCKWzh2HFSd2NaHqNCLZnvqkfNwlySVRd+RtTitXnw9PFX5cEeUO7JOfsW2fZjs4Hk/iw8viuBPvVgi9gHhQJL2cUTfaWth9GesqxVS4+Rg==
-X-OriginatorOrg: nutanix.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 0fd87a39-f822-43d3-166b-08df29e5b4f8
-X-MS-Exchange-CrossTenant-AuthSource: PH0PR02MB7159.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Oct 2026 11:24:27.2679 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: hyi9viHEsH5h8QkvCq1evxOPmMVLaqkwXu6qn4UsrNKB+N0y83WSC/nQWfhg9l7hZQhRfv2Ff8tVhDUwpo7FaIK9SC2yQOBAwm3WRYsO7LU=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA2PR02MB7595
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDE0MDA0NSBTYWx0ZWRfX8nFt4J/MhYLs
- YD9l8Gm+qdV466ZG33U6LTNLI+9ozj7Txs7443tL2ZwjWo6ezcKuzOL4fvajkUkp//PW4p1L4Ee
- kmGLnCR0OZ7s8RhiDJe4joVpUaQxcaY=
-X-Authority-Analysis: v=2.4 cv=dfgVTnXe c=1 sm=1 tr=0 ts=6acf666d cx=c_pps
- a=XSy6xVanZX0hR9uvxkBJyg==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
- a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
- a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=0kUYKlekyDsA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=VofLwUrZ8Iiv6rRUPXIb:22 a=0LlEyIVc8U2lsR7dKhuH:22
- a=64Cc0HZtAAAA:8 a=YTpg2wbwm77mjifCQ_kA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: Qoz3gkV64PytRdUnL2AFpZViDOtsa9C1
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDE0MDA0NSBTYWx0ZWRfXyMcvyY9JuAwB
- FcmojvORGZpXLDjPN1kHG61ENMKb4fIYEUrj5YCSXGkYUy8oKeLgo6rNeDofSGUPXcErhUcQf5h
- UsHFXwvkMgHTyxIgtLro4clcv7C8Q07DLTv/ZnlrcZuchRTOLGghvGbcscFyVNyFesvph6jYFO3
- lFM2p9CnPx9fGMQCUKFRnxglSPgYZ5AKZUNm9GeHMuC1toENKuvaCgTZuHcgzc8Pxe2pHi/FIuC
- J9NV30dBltlyuRMy2N3wHIGgTx9IpR3TvjyK2cvQqCb4JWuIv2dGgVP4yB8NkgE9DywmUkmsMfI
- 4sLq7jR9QAgZs2h/sDJAQv3ggtveZh5m5xxXbcgDfsYjzCLAYinD2dJjtipHBSsL9M2Uvn1emHm
- +cDTpIRt+Cx9hWYX9uZiPOwduYZb4fFmRWBAPO6jZvwjz7TE9JKEzsUw1iEbchGxzsKFYgvKkBi
- mw7ObwTHdH+NdZp1F4w==
-X-Proofpoint-GUID: Qoz3gkV64PytRdUnL2AFpZViDOtsa9C1
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-10-13_01,2026-10-09_01,2025-10-01_01
-X-Proofpoint-Spam-Reason: safe
-Received-SPF: pass client-ip=148.163.155.12;
- envelope-from=mark.caveayland@nutanix.com; helo=mx0b-002c1b01.pphosted.com
-X-Spam_score_int: -29
-X-Spam_score: -3.0
-X-Spam_bar: ---
-X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
+References: <20260916104435.600211-1-mark.caveayland@nutanix.com>
+ <20260916104435.600211-14-mark.caveayland@nutanix.com>
+ <CAFEAcA-FFiWEs3ZLztVwZ72_TGLuhEBbfKnaZ3NFJJ1W-Wd33A@mail.gmail.com>
+ <c444a8ed-eb83-4a69-87e5-57c71f3a6d01@nutanix.com>
+In-Reply-To: <c444a8ed-eb83-4a69-87e5-57c71f3a6d01@nutanix.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Wed, 14 Oct 2026 13:04:59 +0100
+X-Gm-Features: AclHuK_fKBiA6YUTOHdzTar_zcSRcOFWB6_EBRpgQCUFNyZdpL7rStVJCTFbRZ0
+Message-ID: <CAFEAcA8v+pcFz+HsgT9M6xb_16qBKK5FOuf8WupP5KuQK+aNcQ@mail.gmail.com>
+Subject: Re: [PATCH 13/22] i8259.c: introduce TYPE_I8259_PIC device
+To: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+Cc: pbonzini@redhat.com, richard.henderson@linaro.org, mst@redhat.com, 
+ sstabellini@kernel.org, anthony@xenproject.org, edgar.iglesias@gmail.com, 
+ qemu-devel@nongnu.org, xen-devel@lists.xenproject.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -198,64 +121,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 13/10/2026 17:29, Peter Maydell wrote:
+On Wed, 14 Oct 2026 at 12:09, Mark Cave-Ayland
+<mark.caveayland@nutanix.com> wrote:
+>
+> On 13/10/2026 17:17, Peter Maydell wrote:
+>
+> > On Wed, 16 Sept 2026 at 11:50, Mark Cave-Ayland
+> > <mark.caveayland@nutanix.com> wrote:
+> >> +struct I8259PICState {
+> >> +    DeviceState parent_obj;
+> >> +
+> >> +    qemu_irq pic_out_irq;
+> >> +    qemu_irq pass_irqs[ISA_NUM_IRQS];
+> >> +
+> >> +    ISABus *isabus;
+> >> +    IRQState i8259_primary_out_irq;
+> >> +    I8259CommonState i8259[2];
+> >
+> > This allocates only enough space for the common base class's
+> > instance struct, but later we do an object_initialize_child()
+> > of the child class. If the child class's state struct is
+> > ever bigger than the common class, this will break.
+>
+> That's true. In theory this should be something like I8259State, however
+> I didn't think it was worth adding a specific
+> OBJECT_DECLARE_SIMPLE_TYPE() if there were no extra fields. I did
+> quickly check that if this happens, then the assert() in
+> object_initialize() fires so if this did happen then we'd find out
+> really quickly.
 
-> On Wed, 16 Sept 2026 at 11:50, Mark Cave-Ayland
-> <mark.caveayland@nutanix.com> wrote:
->>
->> Adjust the parameters to i8259_stat_update_irq() to allow passing in pointers
->> to the irq_count and irq_level arrays, and then move the arrays into the
->> corresponding i8259 PIC and KVM PIC devices.
->>
->> Doing this allows the statistics capture logic in i8259_set_irq() that handles
->> incoming cascading interrupts to be removed.
->>
->> Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-> 
->> diff --git a/hw/i386/kvm/i8259.c b/hw/i386/kvm/i8259.c
->> index 421c9279cd..ca661afc02 100644
->> --- a/hw/i386/kvm/i8259.c
->> +++ b/hw/i386/kvm/i8259.c
->> @@ -30,6 +30,9 @@ struct KVMI8259PICState {
->>
->>       ISABus *isabus;
->>       I8259CommonState i8259[2];
->> +
->> +    int irq_level[ISA_NUM_IRQS];
->> +    uint64_t irq_count[ISA_NUM_IRQS];
->>   };
-> 
-> 
->> diff --git a/hw/intc/i8259.c b/hw/intc/i8259.c
->> index 3f10777036..ac43995ce4 100644
->> --- a/hw/intc/i8259.c
->> +++ b/hw/intc/i8259.c
->> @@ -49,14 +49,16 @@ struct I8259PICState {
->>       ISABus *isabus;
->>       IRQState i8259_primary_out_irq;
->>       I8259CommonState i8259[2];
->> +
->> +    int irq_level[ISA_NUM_IRQS];
->> +    uint64_t irq_count[ISA_NUM_IRQS];
->> +#ifdef DEBUG_IRQ_LATENCY
->> +    int64_t irq_time[ISA_NUM_IRQS];
->> +#endif
->>   };
-> 
-> Would it make sense for these two types to have a common base
-> class (where the stats stuff could then live)? AIUI they're
-> both intending to provide the same interface ("pair of i8259
-> devices cascaded together in the way that x86 does it").
-I did consider this in development since it would avoid the duplication 
-here (and potentially in both realize() methods), but wasn't sure the 
-extra complexity of the object hierarchy was worth it.
+I think that every QOM class ought to define its own instance
+struct, even if it doesn't contain anything beyond the base
+class. This means that when we do need to add a field in future
+we don't have to go around and find the places which currently
+use the parent-class struct but really want the leaf-class
+struct. (There are places where we don't catch mistakes like
+this -- for instance I think if you don't update the
+.instance_size in a type then that doesn't get noticed:
+we've had a bug or too like that).
 
-However since you've also raised the idea, I'll have a look at this and 
-add it to v2 if it looks good.
+We don't write that down in https://wiki.qemu.org/Documentation/QOMConventions
+but we do have some similar rules about class structs that
+boil down to "either you're a leaf class and provide none
+of these things, or else you should provide them all; don't
+have a halfway-house 'we happen to only need X and Y but
+not Z right now' setup".
 
+> >>   static const TypeInfo i8259_type_infos[] = {
+> >>       {
+> >>           .name       = TYPE_I8259,
+> >>           .parent     = TYPE_I8259_COMMON,
+> >>           .class_init = i8259_class_init,
+> >>       },
+> >> +    {
+> >> +        .name          = TYPE_I8259_PIC,
+> >> +        .parent        = TYPE_DEVICE,
+> >
+> > Devices that directly inherit from TYPE_DEVICE are awkward,
+> > because they never get reset. Conviently this device doesn't
+> > currently need a reset method, but still, is this a good idea?
+>
+> In this case I think it's correct, because the PIC device in this case
+> is a container for 2 cascaded i8259s which are connected separately to
+> the ISA bus. Therefore each i8259 will have its reset triggered via a
+> reset of the ISA bus.
+>
+> The container itself can't exist on the ISA bus because it would then
+> appear as a separate device which doesn't make sense in this case.
 
-ATB,
+OK.
 
-Mark.
-
+-- PMM
 
