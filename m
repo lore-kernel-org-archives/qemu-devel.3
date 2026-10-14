@@ -4,90 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 306A0CC6B2C
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 12:57:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDF73CC6B1D
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 12:58:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGyWf-0007WD-9u; Wed, 14 Oct 2026 08:56:09 -0400
+	id 1xGyYD-0002qi-1l; Wed, 14 Oct 2026 08:57:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shmuelfomberg@gmail.com>)
- id 1xGyHA-0004Jn-Fy
- for qemu-devel@nongnu.org; Wed, 14 Oct 2026 08:40:08 -0400
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shmuelfomberg@gmail.com>)
- id 1xGyH7-0007O2-1r
- for qemu-devel@nongnu.org; Wed, 14 Oct 2026 08:40:07 -0400
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-48de6a62a4cso1241299f8f.2
- for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 05:40:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1791981603; x=1792586403; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=Lsjn3LV7JBpZW2IxCjuKF63c/Yth+tJQr8znBD2cPwE=;
- b=iqcbkF7UGZLMA5jUnkRYHXhVPWZNkOWYzKcS0bRWLqw70p2KOkG01gPhfSPz05CtJN
- /oWynsrp4i69ec8rVm1+a976fplopJmQlmcrm9B0p7TpewHcc1meK7oJ0aOI8jhPO4Cl
- WbQxdCra0e4rbuo3ogYeehmDnt5Nc8jZr/vWf+muyzqNG4eeZlyFgj9DxPvKvm/K8BOW
- wp35RQUAjXfL+YFDLBxjbdRi6cZ3mnCPt0k5jnK8tdNUQ1UmK4FOubnse2m4GvEuWxv9
- qPz9T2LqhC2z24RyVKN3vV7ofx1qEURsKOqlbmRixwM6k2NSwwFb0rixQJLckJP67juA
- EfzQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791981603; x=1792586403;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=Lsjn3LV7JBpZW2IxCjuKF63c/Yth+tJQr8znBD2cPwE=;
- b=vr7KAPGkJ5ZnvZq0CiTNzdpbgWT+NPAlJk6hWmmlPhftdDWk0SxyMojqe6xcJXOfNy
- z5eqy0Z6lgioBUESJgG+vh3TU0aId0hFGvzAcLLPVs3kL2yFHl27sxwiNTAuXQIH30D9
- scK6jy+Ekiu3DqYZaVdVb2TbxlKyaGCgkivt1SGB5yNAWSZ94HRZ+V05KtcLI7gBYTvb
- /EWEsuPUONohwGjQdLRGLODaAZJ0zHJSHY6+NEFaDyyqNHsssZNZvJZei25nY47HinUc
- ljANRQMTMh31GPA4aWzjQVyKvRAxv4uAv0vpUh5AVmGL5/roSrQQyEL8xbufmat6QtCF
- aD4A==
-X-Gm-Message-State: AFq9FYLWX75dPnHAXb3LWl4KmdB6qEGfTJuQWIgWhxUko+a7+h+lfYJN
- GF9Q8NH7VLGzN9xdMYeYLUvKk2NCMRuNqh530GSjNPZqYUTgTABFlosWN81jyXjN
-X-Gm-Gg: AYBFou2+qgO1MSVTvfFBSVaWjTRNggw5Wlv0VnJ/jAzdiPKwr5a8nGEIp3GyyCUr3b4
- d9b5H9q3dSC62IbozPLlJxBroNH5ytPQ/S3emylzkH+by5bkxtek7aY/OnjCYHEkB1A48F833hM
- oVZL9OpRl/3DyO3dETJ2jvMKm/RJllCIYNaVZ3+h5Xu4qJMhYxHAQZ4J1pqt7oVjSr69LmOR1f3
- 4vyrJbe+86HjPWVmwErUz+trZUaQvFiczRgJz71Yb/FoLbKI01ZaOyKQOOdlFOH/Rg+ekNS5j0o
- UQpqO9baGiJBuIWaVeXwhsv87q9viWsaGMW3pJF330n5xGc6GkR0FoscBPAdMyWHF1wOWPEgDLO
- sq8yzQiA4gA9QOYfxopzyf60tvbaaPlTASUHMxCS0kQZZ72k+rWQANVaICGZS/uG+5BbonQpEbn
- pVTy5AQABoY27ozkqHdN0yHsYEB4kcowtRKqSu8fkUKrJswS5nj4yOG/7YM7OcZKGRc4fZ58oB1
- rAkn0VlkHwnw2VkoMgP66sp8eowvxteYS1daiO5MoVmUg==
-X-Received: by 2002:a5d:588c:0:b0:48b:5083:96ae with SMTP id
- ffacd0b85a97d-48ddff64e46mr12217126f8f.15.1791981603132; 
- Wed, 14 Oct 2026 05:40:03 -0700 (PDT)
-Received: from sfomberg-mac.redhat.corp
- ([2a06:c701:7925:8a00:fca2:9f5c:1c03:33ff])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48de0bc6b82sm12029945f8f.51.2026.10.14.05.40.01
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 14 Oct 2026 05:40:02 -0700 (PDT)
-From: Shmuel Fomberg <shmuelfomberg@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com, zhao1.liu@intel.com, mtosatti@redhat.com,
- pierrick.bouvier@oss.qualcomm.com, kvm@vger.kernel.org,
- Shmuel Fomberg <shmuelfomberg@gmail.com>
-Subject: [PATCH] Adding support for hyper-v enlightments hv-extcalls and
- hv-memory-hint (hypercall HvExtCallMemoryHeatHint)
-Date: Wed, 14 Oct 2026 15:39:54 +0300
-Message-ID: <20261014123954.95181-1-shmuelfomberg@gmail.com>
-X-Mailer: git-send-email 2.54.0
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
+ id 1xGyY0-0002Y2-AR; Wed, 14 Oct 2026 08:57:34 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
+ id 1xGyXx-0001oS-FJ; Wed, 14 Oct 2026 08:57:31 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 69ECJAIR1774676; Wed, 14 Oct 2026 12:57:23 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=SFpIgw
+ 5RQXR1TJOp6l/f/qCT5vKo7yKr5BzwuDiCpd0=; b=OZ5mlcRwX247ZfpRW7enQl
+ g3HxXaGdFWJz2PtMwyKRih+zAiQrte5dO4eQzgh5xulHCQd94dOzIsu51BwQyk05
+ YbrqldHx8TdTQaTzL9oAP6bt7TTkm3gBtwulhaLZu8tsS+7h6Ad3OxkS0tLccnsF
+ K3bUwLUPVkvrHwxEOyDVi3pjgXWaSKFMv95gYw/BLIx5Uk96Jcfsi0qsMBIBdadK
+ ax7VaxDIP4W4KA0VSmfCZ3qxmFVPPHQq6WPW//emYciJ64p0+AjdXIdFO55KE8D5
+ xzmb894U+uDLLnaMtfNcdma4DQiFz/hwdDSCA+l9syQQ7N+SMSPTGB4N3yK+jMVQ
+ ==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4h7dwj3yat-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Wed, 14 Oct 2026 12:57:23 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 69EBFEKm2709272; Wed, 14 Oct 2026 12:57:23 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4h816h7bdp-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 14 Oct 2026 12:57:23 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
+ [10.20.54.105])
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 69ECvJ8R43450672
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 14 Oct 2026 12:57:19 GMT
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 3333D20049;
+ Wed, 14 Oct 2026 12:57:19 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E55C920040;
+ Wed, 14 Oct 2026 12:57:18 +0000 (GMT)
+Received: from [0.0.0.0] (unknown [9.111.31.234])
+ by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Wed, 14 Oct 2026 12:57:18 +0000 (GMT)
+Message-ID: <eb426f52-d4da-47b0-8c69-c5db6b3a1914@linux.ibm.com>
+Date: Wed, 14 Oct 2026 14:57:18 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=shmuelfomberg@gmail.com; helo=mail-wr1-x434.google.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
- FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/s390x/tcg: fix register update on guest memory
+ fault in cpacf_aes_ecb
+To: Andrew Holden <andy0x48@linux.ibm.com>, qemu-devel@nongnu.org
+Cc: qemu-s390x@nongnu.org, richard.henderson@linaro.org, david@kernel.org,
+ cohuck@redhat.com, freude@linux.ibm.com
+References: <20261008154455.369004-1-andy0x48@linux.ibm.com>
+Content-Language: en-US
+From: Ilya Leoshkevich <iii@linux.ibm.com>
+In-Reply-To: <20261008154455.369004-1-andy0x48@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDE0MDA1MCBTYWx0ZWRfX36+vtJeKIfGc
+ dAzsL5dffyZcplKN5qCoEQTKncm4STDcOQ5U1cjQ1tM1JFDNif9gRcOvsBXI9voGrPzdiG8WbSs
+ K0TvnQyCA8cp+5AhT4WTpMfsoMWKxhxAlF05wDBXH80ytfX7kHnF3mKim5nSGDAam8GEd8qBaoN
+ lBGUtVRACs738vcwDnwyRkVqt3kNJgBKlfoH6tar67gobe/uivCY3KCCKCzGYXIkDdeOcNvry7O
+ DOIRreP8vAZIE0zSpZ7XyOw0l+MCfOSk/aF6I2siG7tx6o71cohcX7g3F6YARQn/kArJ/PJIFql
+ aTJ5qiPHYu281u1+es8zIG2MJZ1n7LHEB0lgx4Bo2fqIoiRwreZNU0mu1Wq53eLl+CFptxd1iz3
+ iyt7H7KeHGGlPp2WjFYiy+TGR9r9EYpie6KR9FEfnnsr8oxYDuExMb6XwkbAmr78YsnhATbSj4H
+ uKjNNf+jVK7LWjtBFQw==
+X-Proofpoint-GUID: QXVL066XCrHzqX0OyAMsOMfROn6Qu9fm
+X-Proofpoint-ORIG-GUID: QXVL066XCrHzqX0OyAMsOMfROn6Qu9fm
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDE0MDA1MCBTYWx0ZWRfXx+L2PU/NM+pp
+ AE7jrksZxxEkHyF38muksZ1FF2M500EjDtjWk/HivFu8JE8MIJEEYpPZHLk77A131YpY2ps3l8P
+ avbs1t7oDBV4FIJAsAhnWHczB+Jv1W0=
+X-Authority-Analysis: v=2.4 cv=btHZl0ai c=1 sm=1 tr=0 ts=6acf7c33 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VnNF1IyMAAAA:8
+ a=pYz2OXkNAIB79UDkkJEA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-10-13_01,2026-10-09_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 malwarescore=0 phishscore=0 impostorscore=0 adultscore=0
+ lowpriorityscore=0 priorityscore=1501 clxscore=1015 spamscore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610080000
+ definitions=main-2610140050
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Wed, 14 Oct 2026 08:54:54 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -102,526 +125,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Shmuel Fomberg <shmuelfomberg@gmail.com>
----
- hw/hyperv/hv-gpa-range.c                      |  59 ++++
- include/hw/hyperv/hv-gpa-range.h              |  52 ++++
- .../functional/x86_64/test_hyperv_extcalls.py | 101 +++++++
- tests/unit/test-hv-gpa-range.c                | 271 ++++++++++++++++++
- 4 files changed, 483 insertions(+)
- create mode 100644 hw/hyperv/hv-gpa-range.c
- create mode 100644 include/hw/hyperv/hv-gpa-range.h
- create mode 100644 tests/functional/x86_64/test_hyperv_extcalls.py
- create mode 100644 tests/unit/test-hv-gpa-range.c
 
-diff --git a/hw/hyperv/hv-gpa-range.c b/hw/hyperv/hv-gpa-range.c
-new file mode 100644
-index 0000000000..e6d3d3eb42
---- /dev/null
-+++ b/hw/hyperv/hv-gpa-range.c
-@@ -0,0 +1,59 @@
-+/*
-+ * Hyper-V extended memory heat-hint GPA range helpers.
-+ *
-+ * Copyright (c) 2015-2018 Virtuozzo International GmbH.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "hw/hyperv/hv-gpa-range.h"
-+#include "hw/hyperv/hyperv-proto.h"
-+
-+bool hv_decode_gpa_page_range(uint64_t raw, hwaddr *gpa, hwaddr *len)
-+{
-+    uint64_t pages = (raw & HV_GPA_PAGE_RANGE_ADDITIONAL_MASK) + 1;
-+
-+    if (raw & HV_GPA_PAGE_RANGE_LARGEPAGE) {
-+        if (raw & HV_GPA_PAGE_RANGE_PAGE_SIZE_1GB) {
-+            *gpa = raw & HV_GPA_PAGE_RANGE_1G_GPA_MASK;
-+            *len = pages << 30;
-+        } else {
-+            *gpa = raw & HV_GPA_PAGE_RANGE_2M_GPA_MASK;
-+            *len = pages << 21;
-+        }
-+    } else {
-+        *gpa = raw & HV_GPA_PAGE_RANGE_4K_GPA_MASK;
-+        *len = pages << 12;
-+    }
-+
-+    return *len != 0;
-+}
-+
-+bool hv_madvise_walk_step(hwaddr *gpa, hwaddr *len,
-+                          hwaddr section_start, hwaddr section_size,
-+                          hwaddr *out_gpa, hwaddr *out_len)
-+{
-+    hwaddr skip;
-+
-+    /*
-+     * A hole with no memory region makes the section start past the
-+     * cursor; a zero-size section means there is nothing left to find.
-+     * Either way, stop -- do not advise or advance past the gap.
-+     */
-+    if (!section_size || section_start < *gpa) {
-+        return false;
-+    }
-+
-+    skip = section_start - *gpa;
-+    if (skip >= *len || section_size > *len - skip) {
-+        return false;
-+    }
-+
-+    *out_gpa = section_start;
-+    *out_len = section_size;
-+
-+    *gpa = section_start + section_size;
-+    *len -= skip + section_size;
-+    return true;
-+}
-diff --git a/include/hw/hyperv/hv-gpa-range.h b/include/hw/hyperv/hv-gpa-range.h
-new file mode 100644
-index 0000000000..b1cf6664b8
---- /dev/null
-+++ b/include/hw/hyperv/hv-gpa-range.h
-@@ -0,0 +1,52 @@
-+/*
-+ * Hyper-V extended memory heat-hint GPA range helpers.
-+ *
-+ * These are small, dependency-free helpers factored out of hyperv.c so
-+ * that the bit-decoding and walk-cursor bookkeeping can be exercised
-+ * directly by unit tests (see tests/unit/test-hv-gpa-range.c) without
-+ * requiring a real MemoryRegion/MemoryRegionSection or any KVM/system
-+ * emulation plumbing.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+#ifndef HW_HYPERV_HV_GPA_RANGE_H
-+#define HW_HYPERV_HV_GPA_RANGE_H
-+
-+#include "exec/hwaddr.h"
-+
-+/*
-+ * Decode one HV_GPA_PAGE_RANGE qword (as found in
-+ * struct hyperv_memory_heat_hint.ranges[]) into a GPA and byte length.
-+ *
-+ * Returns false if the decoded length is zero (nothing to do for this
-+ * range); true otherwise, with *gpa and *len filled in.
-+ *
-+ * Visible for testing.
-+ */
-+bool hv_decode_gpa_page_range(uint64_t raw, hwaddr *gpa, hwaddr *len);
-+
-+/*
-+ * Validate a MemoryRegionSection found by memory_region_find() for the
-+ * current walk cursor (*gpa, *len), and advance the cursor past it.
-+ *
-+ * @section_start/@section_size are the section's
-+ * offset_within_address_space and size, as returned by
-+ * memory_region_find().
-+ *
-+ * On success, returns true and fills in @out_gpa/@out_len with the GPA
-+ * and length that the caller should actually act upon (e.g. madvise()),
-+ * and advances *gpa and *len past the section.
-+ *
-+ * Returns false, without touching *gpa or *len, if the section does not
-+ * fit within the remaining [*gpa, *gpa + *len) range -- e.g. because
-+ * memory_region_find() skipped over a hole and returned a section that
-+ * starts past the cursor, or a section that runs past the requested
-+ * range. The caller should stop walking in that case.
-+ *
-+ * Visible for testing.
-+ */
-+bool hv_madvise_walk_step(hwaddr *gpa, hwaddr *len,
-+                          hwaddr section_start, hwaddr section_size,
-+                          hwaddr *out_gpa, hwaddr *out_len);
-+
-+#endif /* HW_HYPERV_HV_GPA_RANGE_H */
-diff --git a/tests/functional/x86_64/test_hyperv_extcalls.py b/tests/functional/x86_64/test_hyperv_extcalls.py
-new file mode 100644
-index 0000000000..c48f59d554
---- /dev/null
-+++ b/tests/functional/x86_64/test_hyperv_extcalls.py
-@@ -0,0 +1,101 @@
-+#!/usr/bin/env python3
-+#
-+# Validation of the hv-extcalls / hv-memory-hint CPU properties.
-+#
-+# hv-extcalls gates the Hyper-V extended hypercalls (HV_ENABLE_EXTENDED_
-+# HYPERCALLS, HV_CPUID_FEATURES.EBX bit 20); hv-memory-hint additionally
-+# gates whether HvExtCallQueryCapabilities advertises, and
-+# HvExtCallMemoryHeatHint accepts, the memory heat-hint calls.
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+#
-+
-+from qemu_test import QemuSystemTest
-+
-+
-+class HypervExtCallsProps(QemuSystemTest):
-+    """
-+    Validation of the hv-extcalls and hv-memory-hint CPU properties.
-+    """
-+
-+    def get_cpu_prop(self, prop):
-+        cpu_path = self.vm.cmd('query-cpus-fast')[0].get('qom-path')
-+        return self.vm.cmd('qom-get', path=cpu_path, property=prop)
-+
-+    def launch_with_cpu_props(self, cpu_props):
-+        self.set_machine('pc')
-+        self.vm.add_args('-S')
-+        self.set_vm_arg('-cpu', 'qemu64' + cpu_props)
-+        self.vm.launch()
-+
-+    def test_defaults_off(self):
-+        """
-+        Neither property is requested: both must default to off, in
-+        particular hv-extcalls (which was deliberately made default-off
-+        so that enabling the extended hypercalls is an explicit opt-in).
-+        """
-+        self.launch_with_cpu_props('')
-+        self.assertFalse(self.get_cpu_prop('hv-extcalls'),
-+                         'hv-extcalls must default to off')
-+        self.assertFalse(self.get_cpu_prop('hv-memory-hint'),
-+                         'hv-memory-hint must default to off')
-+
-+    def test_hv_extcalls_on(self):
-+        """
-+        hv-extcalls=on by itself must not implicitly turn on
-+        hv-memory-hint.
-+        """
-+        self.launch_with_cpu_props(',hv-extcalls=on')
-+        self.assertTrue(self.get_cpu_prop('hv-extcalls'),
-+                        'hv-extcalls=on must be reflected on the CPU')
-+        self.assertFalse(self.get_cpu_prop('hv-memory-hint'),
-+                         'hv-extcalls=on must not imply hv-memory-hint')
-+
-+    def test_hv_memory_hint_on(self):
-+        """
-+        hv-memory-hint=on without hv-extcalls must still parse/boot (the
-+        combination is a no-op at runtime -- kvm_hv_handle_exit() gates
-+        *all* extended hypercalls, including the capabilities query, on
-+        hv-extcalls -- but QEMU must not reject it at CPU-realize time).
-+        """
-+        self.launch_with_cpu_props(',hv-memory-hint=on')
-+        self.assertFalse(self.get_cpu_prop('hv-extcalls'))
-+        self.assertTrue(self.get_cpu_prop('hv-memory-hint'),
-+                        'hv-memory-hint=on must be reflected on the CPU')
-+
-+    def test_both_on(self):
-+        """
-+        The intended "fully enabled" configuration: both properties on.
-+        """
-+        self.launch_with_cpu_props(',hv-extcalls=on,hv-memory-hint=on')
-+        self.assertTrue(self.get_cpu_prop('hv-extcalls'))
-+        self.assertTrue(self.get_cpu_prop('hv-memory-hint'))
-+
-+
-+class HypervExtCallsModelExpansion(QemuSystemTest):
-+    """
-+    Confirm hv-extcalls/hv-memory-hint are discoverable via
-+    query-cpu-model-expansion, the mechanism management layers (e.g.
-+    libvirt) use to probe which CPU properties/features are supported
-+    before adding them to a domain definition.
-+    """
-+
-+    def test(self):
-+        self.set_machine('none')
-+        self.vm.add_args('-S')
-+        self.vm.launch()
-+
-+        model = {'name': 'qemu64',
-+                'props': {'hv-extcalls': True, 'hv-memory-hint': True}}
-+        e = self.vm.cmd('query-cpu-model-expansion', model=model,
-+                        type='full')
-+        props = e['model']['props']
-+
-+        self.assertIn('hv-extcalls', props)
-+        self.assertIn('hv-memory-hint', props)
-+        self.assertTrue(props['hv-extcalls'])
-+        self.assertTrue(props['hv-memory-hint'])
-+
-+
-+if __name__ == '__main__':
-+    QemuSystemTest.main()
-diff --git a/tests/unit/test-hv-gpa-range.c b/tests/unit/test-hv-gpa-range.c
-new file mode 100644
-index 0000000000..70196f271b
---- /dev/null
-+++ b/tests/unit/test-hv-gpa-range.c
-@@ -0,0 +1,271 @@
-+/*
-+ * Unit tests for the Hyper-V extended memory heat-hint GPA range helpers
-+ * (hw/hyperv/hv-gpa-range.c).
-+ *
-+ * These exercise:
-+ *  - hv_decode_gpa_page_range(): decoding of the HV_GPA_PAGE_RANGE qwords
-+ *    found in a HvExtCallMemoryHeatHint[Async] input buffer.
-+ *  - hv_madvise_walk_step(): the walk-cursor bookkeeping used by
-+ *    hv_madvise_gpa_range() to turn a sequence of memory_region_find()
-+ *    results into the correct set of (host, len) madvise() targets, in
-+ *    particular across holes in the GPA space.  This directly covers the
-+ *    "madvise walk can log/act on the wrong GPA" regression.
-+ *
-+ * Copyright (c) 2015-2018 Virtuozzo International GmbH.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "hw/hyperv/hyperv-proto.h"
-+#include "hw/hyperv/hv-gpa-range.h"
-+
-+#define KiB (1024ULL)
-+#define MiB (1024 * KiB)
-+#define GiB (1024 * MiB)
-+
-+/*
-+ * ---------------------------------------------------------------------
-+ * hv_decode_gpa_page_range()
-+ * ---------------------------------------------------------------------
-+ */
-+
-+static void test_decode_4k_single_page(void)
-+{
-+    hwaddr gpa, len;
-+    /* pfn = 5, additional_pages = 0 -> one 4K page at GPA 0x5000 */
-+    uint64_t raw = (5ULL << 12);
-+
-+    g_assert_true(hv_decode_gpa_page_range(raw, &gpa, &len));
-+    g_assert_cmphex(gpa, ==, 5 * 4 * KiB);
-+    g_assert_cmphex(len, ==, 4 * KiB);
-+}
-+
-+static void test_decode_4k_additional_pages(void)
-+{
-+    hwaddr gpa, len;
-+    /* pfn = 7, additional_pages = 3 -> 4 consecutive 4K pages */
-+    uint64_t raw = (7ULL << 12) | 3;
-+
-+    g_assert_true(hv_decode_gpa_page_range(raw, &gpa, &len));
-+    g_assert_cmphex(gpa, ==, 7 * 4 * KiB);
-+    g_assert_cmphex(len, ==, 4 * 4 * KiB);
-+}
-+
-+static void test_decode_4k_max_additional_pages(void)
-+{
-+    hwaddr gpa, len;
-+    /* additional_pages field is 11 bits: max value 0x7ff -> 2048 pages */
-+    uint64_t raw = (1ULL << 20) | HV_GPA_PAGE_RANGE_ADDITIONAL_MASK;
-+
-+    g_assert_true(hv_decode_gpa_page_range(raw, &gpa, &len));
-+    g_assert_cmphex(len, ==, 2048 * 4 * KiB);
-+}
-+
-+static void test_decode_2m_large_page(void)
-+{
-+    hwaddr gpa, len;
-+    /* pfn (2M units) = 3, additional_pages = 1 -> two 2M pages */
-+    uint64_t raw = (3ULL << 21) | HV_GPA_PAGE_RANGE_LARGEPAGE | 1;
-+
-+    g_assert_true(hv_decode_gpa_page_range(raw, &gpa, &len));
-+    g_assert_cmphex(gpa, ==, 3 * 2 * MiB);
-+    g_assert_cmphex(len, ==, 2 * 2 * MiB);
-+}
-+
-+static void test_decode_1g_large_page(void)
-+{
-+    hwaddr gpa, len;
-+    /* pfn (1G units) = 2, additional_pages = 0 -> one 1G page */
-+    uint64_t raw = (2ULL << 30) | HV_GPA_PAGE_RANGE_LARGEPAGE |
-+                   HV_GPA_PAGE_RANGE_PAGE_SIZE_1GB;
-+
-+    g_assert_true(hv_decode_gpa_page_range(raw, &gpa, &len));
-+    g_assert_cmphex(gpa, ==, 2 * GiB);
-+    g_assert_cmphex(len, ==, 1 * GiB);
-+}
-+
-+static void test_decode_masks_strip_low_bits(void)
-+{
-+    hwaddr gpa, len;
-+    /*
-+     * For a 2M large page, everything below bit 21 other than the
-+     * LARGEPAGE flag (bit 11) and additional_pages (bits 0-10) must not
-+     * leak into the decoded GPA.
-+     */
-+    uint64_t raw = (5ULL << 21) | HV_GPA_PAGE_RANGE_LARGEPAGE | 0x3ff;
-+
-+    g_assert_true(hv_decode_gpa_page_range(raw, &gpa, &len));
-+    g_assert_cmphex(gpa, ==, 5 * 2 * MiB);
-+    g_assert_cmphex(gpa & ((2 * MiB) - 1), ==, 0);
-+}
-+
-+/*
-+ * ---------------------------------------------------------------------
-+ * hv_madvise_walk_step()
-+ * ---------------------------------------------------------------------
-+ */
-+
-+static void test_walk_full_match(void)
-+{
-+    hwaddr gpa = 0x1000, len = 0x1000;
-+    hwaddr out_gpa, out_len;
-+
-+    /* memory_region_find() returned exactly the requested range */
-+    g_assert_true(hv_madvise_walk_step(&gpa, &len, 0x1000, 0x1000,
-+                                       &out_gpa, &out_len));
-+    g_assert_cmphex(out_gpa, ==, 0x1000);
-+    g_assert_cmphex(out_len, ==, 0x1000);
-+    g_assert_cmphex(gpa, ==, 0x2000);
-+    g_assert_cmphex(len, ==, 0);
-+}
-+
-+static void test_walk_partial_section_no_skip(void)
-+{
-+    /* Section starts exactly at the cursor but is smaller than @len */
-+    hwaddr gpa = 0x1000, len = 0x3000;
-+    hwaddr out_gpa, out_len;
-+
-+    g_assert_true(hv_madvise_walk_step(&gpa, &len, 0x1000, 0x1000,
-+                                       &out_gpa, &out_len));
-+    g_assert_cmphex(out_gpa, ==, 0x1000);
-+    g_assert_cmphex(out_len, ==, 0x1000);
-+    /* cursor must advance past exactly the found section, nothing more */
-+    g_assert_cmphex(gpa, ==, 0x2000);
-+    g_assert_cmphex(len, ==, 0x2000);
-+}
-+
-+/*
-+ * Regression test for "the madvise walk can log/act on the wrong GPA":
-+ * memory_region_find() skips over a hole and returns a section that
-+ * starts *past* the walk cursor.  The reported/advised GPA must be the
-+ * section's real start, not the stale search cursor, and the hole must
-+ * be consumed without being advised.
-+ */
-+static void test_walk_hole_before_section(void)
-+{
-+    /* Looking for RAM in [0, 0x3000); nothing mapped until 0x1000 */
-+    hwaddr gpa = 0, len = 0x3000;
-+    hwaddr out_gpa, out_len;
-+
-+    g_assert_true(hv_madvise_walk_step(&gpa, &len, 0x1000, 0x1000,
-+                                       &out_gpa, &out_len));
-+    /* Must report the section's actual GPA, not the original cursor (0) */
-+    g_assert_cmphex(out_gpa, ==, 0x1000);
-+    g_assert_cmphex(out_len, ==, 0x1000);
-+    /* Cursor must account for the 0x1000 hole *and* the 0x1000 section */
-+    g_assert_cmphex(gpa, ==, 0x2000);
-+    g_assert_cmphex(len, ==, 0x1000);
-+}
-+
-+/*
-+ * Drive two consecutive steps the way hv_madvise_gpa_range()'s while loop
-+ * does: a hole, then a directly-adjacent section, then end of range.
-+ * Confirms the cursor neither double-processes the boundary nor drifts.
-+ */
-+static void test_walk_hole_then_adjacent_section(void)
-+{
-+    hwaddr gpa = 0, len = 0x3000;
-+    hwaddr out_gpa, out_len;
-+
-+    /* Step 1: hole [0,0x1000), section [0x1000,0x2000) */
-+    g_assert_true(hv_madvise_walk_step(&gpa, &len, 0x1000, 0x1000,
-+                                       &out_gpa, &out_len));
-+    g_assert_cmphex(out_gpa, ==, 0x1000);
-+    g_assert_cmphex(gpa, ==, 0x2000);
-+    g_assert_cmphex(len, ==, 0x1000);
-+
-+    /* Step 2: section starts exactly at the new cursor, no further skip */
-+    g_assert_true(hv_madvise_walk_step(&gpa, &len, 0x2000, 0x1000,
-+                                       &out_gpa, &out_len));
-+    g_assert_cmphex(out_gpa, ==, 0x2000);
-+    g_assert_cmphex(out_len, ==, 0x1000);
-+    g_assert_cmphex(gpa, ==, 0x3000);
-+    g_assert_cmphex(len, ==, 0);
-+}
-+
-+static void test_walk_section_past_requested_range(void)
-+{
-+    /* Section is larger than what's left to process -> stop, don't act */
-+    hwaddr gpa = 0x1000, len = 0x1000;
-+    hwaddr out_gpa = 0xdead, out_len = 0xdead;
-+
-+    g_assert_false(hv_madvise_walk_step(&gpa, &len, 0x1000, 0x2000,
-+                                        &out_gpa, &out_len));
-+    /* cursor and outputs must be left untouched on failure */
-+    g_assert_cmphex(gpa, ==, 0x1000);
-+    g_assert_cmphex(len, ==, 0x1000);
-+    g_assert_cmphex(out_gpa, ==, 0xdead);
-+    g_assert_cmphex(out_len, ==, 0xdead);
-+}
-+
-+static void test_walk_section_before_cursor(void)
-+{
-+    /* Defensive case: section starts before the cursor -> stop */
-+    hwaddr gpa = 0x2000, len = 0x1000;
-+    hwaddr out_gpa, out_len;
-+
-+    g_assert_false(hv_madvise_walk_step(&gpa, &len, 0x1000, 0x1000,
-+                                        &out_gpa, &out_len));
-+    g_assert_cmphex(gpa, ==, 0x2000);
-+    g_assert_cmphex(len, ==, 0x1000);
-+}
-+
-+static void test_walk_zero_size_section(void)
-+{
-+    hwaddr gpa = 0, len = 0x1000;
-+    hwaddr out_gpa, out_len;
-+
-+    g_assert_false(hv_madvise_walk_step(&gpa, &len, 0, 0, &out_gpa, &out_len));
-+    g_assert_cmphex(gpa, ==, 0);
-+    g_assert_cmphex(len, ==, 0x1000);
-+}
-+
-+static void test_walk_skip_equals_len(void)
-+{
-+    /* The whole remaining range is a hole; section starts right at the end */
-+    hwaddr gpa = 0, len = 0x1000;
-+    hwaddr out_gpa, out_len;
-+
-+    g_assert_false(hv_madvise_walk_step(&gpa, &len, 0x1000, 0x1000,
-+                                        &out_gpa, &out_len));
-+    g_assert_cmphex(gpa, ==, 0);
-+    g_assert_cmphex(len, ==, 0x1000);
-+}
-+
-+int main(int argc, char **argv)
-+{
-+    g_test_init(&argc, &argv, NULL);
-+
-+    g_test_add_func("/hv-gpa-range/decode/4k-single-page",
-+                    test_decode_4k_single_page);
-+    g_test_add_func("/hv-gpa-range/decode/4k-additional-pages",
-+                    test_decode_4k_additional_pages);
-+    g_test_add_func("/hv-gpa-range/decode/4k-max-additional-pages",
-+                    test_decode_4k_max_additional_pages);
-+    g_test_add_func("/hv-gpa-range/decode/2m-large-page",
-+                    test_decode_2m_large_page);
-+    g_test_add_func("/hv-gpa-range/decode/1g-large-page",
-+                    test_decode_1g_large_page);
-+    g_test_add_func("/hv-gpa-range/decode/masks-strip-low-bits",
-+                    test_decode_masks_strip_low_bits);
-+
-+    g_test_add_func("/hv-gpa-range/walk/full-match",
-+                    test_walk_full_match);
-+    g_test_add_func("/hv-gpa-range/walk/partial-section-no-skip",
-+                    test_walk_partial_section_no_skip);
-+    g_test_add_func("/hv-gpa-range/walk/hole-before-section",
-+                    test_walk_hole_before_section);
-+    g_test_add_func("/hv-gpa-range/walk/hole-then-adjacent-section",
-+                    test_walk_hole_then_adjacent_section);
-+    g_test_add_func("/hv-gpa-range/walk/section-past-requested-range",
-+                    test_walk_section_past_requested_range);
-+    g_test_add_func("/hv-gpa-range/walk/section-before-cursor",
-+                    test_walk_section_before_cursor);
-+    g_test_add_func("/hv-gpa-range/walk/zero-size-section",
-+                    test_walk_zero_size_section);
-+    g_test_add_func("/hv-gpa-range/walk/skip-equals-len",
-+                    test_walk_skip_equals_len);
-+
-+    return g_test_run();
-+}
--- 
-2.54.0 (Apple Git-157)
 
+On 10/8/26 17:44, Andrew Holden wrote:
+> The KM instruction loop in cpacf_aes_ecb() updated the source pointer,
+> destination pointer, and length registers only after the entire loop
+> completed, using a 'done' accumulator. If a guest memory access fault
+> fires mid-loop, siglongjmp unwinds the C stack before the register
+> update is reached. The registers then reflect block 0 rather than the
+> block being processed, causing the instruction to restart from the
+> beginning on every fault. This results in quadratic reprocessing and
+> violates the PoP requirement that registers reflect partial completion
+> per block processed.
+> 
+> Fix this by updating the registers inside the loop body after each
+> successfully processed block, and removing the 'done' accumulator.
+> 
+> Signed-off-by: Andrew Holden <andy0x48@linux.ibm.com>
+> ---
+>   target/s390x/tcg/cpacf_aes.c | 18 ++++++++----------
+>   1 file changed, 8 insertions(+), 10 deletions(-)
+
+
+In addition to what Harald already mentioned, it would be good to contribute
+a linux-user test.
 
