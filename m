@@ -4,64 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F35B3CC6B29
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 08:49:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0251DCC6B27
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 08:51:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGue6-0005RI-VT; Wed, 14 Oct 2026 04:47:35 -0400
+	id 1xGuhT-0003C3-V5; Wed, 14 Oct 2026 04:51:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1xGue1-0005Nz-Lf
- for qemu-devel@nongnu.org; Wed, 14 Oct 2026 04:47:29 -0400
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1xGuhR-0003BV-MZ
+ for qemu-devel@nongnu.org; Wed, 14 Oct 2026 04:51:02 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1xGudy-0004YQ-KW
- for qemu-devel@nongnu.org; Wed, 14 Oct 2026 04:47:29 -0400
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1xGuhP-0004xk-VK
+ for qemu-devel@nongnu.org; Wed, 14 Oct 2026 04:51:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1791967645;
+ s=mimecast20190719; t=1791967859;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=TfLjsqPCvOp1hw/c9bS1s68B+V5vmUAntXKrnqamUFY=;
- b=IvY04w1iiFnbqAzdDJYMN119yOuxacxKdQ2jhRlgiOtsmg2E7bkTh9kxYgJQV5yfsz1JuB
- FTW9JnxrK2B5xMImF/ZgJ/6GQwTCkHMA3bpR/kgMMZ9OH1gcVslEWJCEJT0tDZaaRW3RHG
- 2HM+9jgcDJxs0fG3i0yH1NMhb/J2Xuk=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-401-8gnq-wtWMx6E3V2r1BdQCg-1; Wed,
- 14 Oct 2026 08:47:23 +0000
-X-MC-Unique: 8gnq-wtWMx6E3V2r1BdQCg-1
-X-Mimecast-MFC-AGG-ID: 8gnq-wtWMx6E3V2r1BdQCg_1791967642
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A8B4D180034C; Wed, 14 Oct 2026 08:47:22 +0000 (UTC)
-Received: from corto.redhat.com (unknown [10.44.48.67])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id F42251800446; Wed, 14 Oct 2026 08:47:19 +0000 (UTC)
-From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
- Jason Wang <jasowangio@gmail.com>, Alex Williamson <alex@shazbot.org>,
- Peter Xu <peterx@redhat.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [RFC PATCH v3 06/17] igb: Add VF post-load fixups for live migration
-Date: Wed, 14 Oct 2026 10:46:44 +0200
-Message-ID: <20261014084655.127254-7-clg@redhat.com>
-In-Reply-To: <20261014084655.127254-1-clg@redhat.com>
-References: <20261014084655.127254-1-clg@redhat.com>
+ bh=EJIA3IT7xY7oKcwuics0xcQiUIz03MxxhhsnxtgHAVY=;
+ b=OrP1+7hcVuW0ObU5RMb1E8p8HVGXjxIvwAGiZC2HYP4L5tHAVdTgG+69Qyfydk/9TUslSW
+ WgYQsyoLKxDM9ngkKvDOj0zEURKWMVnQBaGJaybX9ezeznhIXDTJ/1RfL3pMHA2eMTDhpe
+ UHrJy9bGFjNGAy8BdB7FCVW00Dh4R1M=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-511-xcB4JaNLOFia31c5J02NdA-1; Wed, 14 Oct 2026 08:50:57 +0000
+X-MC-Unique: xcB4JaNLOFia31c5J02NdA-1
+X-Mimecast-MFC-AGG-ID: xcB4JaNLOFia31c5J02NdA_1791967856
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4a0761224e1so6490025e9.0
+ for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 01:50:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1791967856; x=1792572656; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=EJIA3IT7xY7oKcwuics0xcQiUIz03MxxhhsnxtgHAVY=;
+ b=rm9Y9ANy+cILarZ1KAAIFZFyR4FsV+MCp5wqNgpKYU/tIlokyZQU8PBWwS7jQYZ6NE
+ fBiGIG7+JMltq7CVCJTT+znrYTyFWfg8Ld1ac9om+35lsI4BVI6OpzIo3UrfEPJFEawD
+ t0TTFl81Zh5A3TENR4Y1Ho8yFcaF5JiSborrQ2hGSALYiUApFHbRMaCLvsfykX69yPng
+ gfxdUUUfGuuqM6EtU6HFyL3sOrEOUqQ00tErwzQlQClGD24xcI+gnsY7eE+BwPF35MWd
+ 8AQF2yvSSD2R/ZxPL/siwbiWYx+ImFDnyqas5NcH8uMn+DT8grRE/F8EBP/Tg8TgnSyF
+ AOZg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1791967856; x=1792572656;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=EJIA3IT7xY7oKcwuics0xcQiUIz03MxxhhsnxtgHAVY=;
+ b=Pjfh9Ytd2mGdigKRb1mwtRJMhQhn/psIE7C/02sVmpM+jMth3R0WkTISiid+/JoY37
+ 9hj8WQGKqbvxq20wRJ636B3bCcdzGOpVKAT3vlmFx7vmruBiaEnPzaQlrCIUZYQYqT1F
+ qNv227yOvMj3u+gXJ0BS1zrIeANV9J0tNbci41iSu4KjAwXZlCz0jZ4wCtqXjmUCISUq
+ ej1YX/uD7VSgp3OL/agfW1rK4t9bBABpo0JLy3zc6l/UH7NsRAPI0/jA9agK/GQ8MZrw
+ bfmwNOUP7/VjKypPiM0q8/FfCKk4jsvPNX9hr+FcbyAilz8/wK//8FHaXuC6gd9XuP8I
+ /kRQ==
+X-Gm-Message-State: AFq9FYIE4KVrxCPaOJbMGrrjfNwOiu52XfY2dZ1cl1g1Kk712l3iTdav
+ u58+XgKUPfOf5d3VH1GUjQP5+e+sDJEmQtmMcyLpHmvuRnkP9wrpAqC0yfQJs0nvWbpahwlj3yx
+ chhASBXPsPczR3YnDtyaD2BNxhwV6HsgQG59Z6rzDzZu3/aV9QewTHCZ9
+X-Gm-Gg: AYBFou0Xxz05QHPL/sATgZ0yJwpNXfjgP9r6wZQmNcIL1tkXiuAkOYwvp2Nozd3pG/t
+ QbwB8DqGxMF2k8xTD9sfYLN4pd2/Kn/Np8ZK7MWT3ETR7kfFguA5oKCirnri3ZUSxcbH0G1o9sw
+ xzqnt19i5ovSokr+ztCD6E1CSF+Kr3dqYNk8/9YwPQjFM6yLzg/UW7XI0lT/oexAd+p2QGd/G2g
+ KGd3W85ardeW7bkFXHZspybryWW+HG+Cu8BIkXG1oP+8oRIvK53YQJcQkHUCu+6WNBwZPk3+uY2
+ wOPsQmwYKdkljk+yQ9wRLX289vsZXTWDl4twfr7iAQCPavBwmeWMrTNKgXPBhBtZG1wt9PKBE3j
+ qC84Z0A==
+X-Received: by 2002:a05:600c:8b09:b0:4a1:6f78:842f with SMTP id
+ 5b1f17b1804b1-4a18e4987b8mr313236755e9.11.1791967855766; 
+ Wed, 14 Oct 2026 01:50:55 -0700 (PDT)
+X-Received: by 2002:a05:600c:8b09:b0:4a1:6f78:842f with SMTP id
+ 5b1f17b1804b1-4a18e4987b8mr313236425e9.11.1791967855329; 
+ Wed, 14 Oct 2026 01:50:55 -0700 (PDT)
+Received: from sgarzare-redhat ([193.207.168.237])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4a18be964dfsm422020365e9.7.2026.10.14.01.50.53
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 14 Oct 2026 01:50:54 -0700 (PDT)
+Date: Wed, 14 Oct 2026 10:50:49 +0200
+From: Stefano Garzarella <sgarzare@redhat.com>
+To: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+Cc: qemu-devel@nongnu.org, odaki@rsg.ci.i.u-tokyo.ac.jp, 
+ bchaney@akamai.com, mst@redhat.com, maciej.szmigiero@oracle.com, 
+ mark.kanda@oracle.com, vsementsov@yandex-team.ru, clg@redhat.com,
+ den@openvz.org, 
+ dongli.zhang@oracle.com, farosas@suse.de, peterx@redhat.com,
+ dwmw2@infradead.org, philmd@oss.qualcomm.com
+Subject: Re: [PATCH v16 15/22] vhost: release ownership in vhost_dev_cleanup()
+Message-ID: <as9BSKwxUUS8psaV@sgarzare-redhat>
+References: <20261012-up-vsock-vhost-v5-v16-0-36c38bd15ffc@virtuozzo.com>
+ <20261012-up-vsock-vhost-v5-v16-15-36c38bd15ffc@virtuozzo.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <20261012-up-vsock-vhost-v5-v16-15-36c38bd15ffc@virtuozzo.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=sgarzare@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -22
 X-Spam_score: -2.3
@@ -85,93 +124,140 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-After restoring per-VF register state, propagate the VTIVAR interrupt
-vector routing to the shared IVAR0 register, which controls the
-actual hardware interrupt routing for VF queues.
+On Mon, Oct 12, 2026 at 01:28:23PM +0300, Andrey Drobyshev wrote:
+>vhost_dev_cleanup() closes the backend FD, but that doesn't release the
+>device ownership taken with VHOST_SET_OWNER if the same file is open
+>elsewhere.  That's the case on a CPR target: the source keeps the FD,
+>so if the target fails after SET_OWNER, either inside vhost_dev_init()
+>or later in its caller, the ownership stays with the target.  Once the
+>source is resumed it can't take the device back, SET_OWNER fails with
+>EBUSY.
+>
+>Track the ownership with a new 'owner' flag in struct vhost_dev, set and
+>cleared by vhost_dev_set_owner() and vhost_dev_reset_owner(), and issue
+>VHOST_RESET_OWNER in vhost_dev_cleanup() as the common teardown for all
+>those paths.  Only do it if the ownership was handed over to us by
+>another process, which is marked by the device with a new bool flag
+>'owner_handed_over'.  Upon ownership release failure, we have nothing to
+>unwind at this point (CPR target teardown), so we just report the failure.
+>
+>Reported-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+>Suggested-by: Stefano Garzarella <sgarzare@redhat.com>
+>Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+>---
+> hw/virtio/vhost.c         | 40 ++++++++++++++++++++++++++++++++++++++--
+> include/hw/virtio/vhost.h | 11 +++++++++++
+> 2 files changed, 49 insertions(+), 2 deletions(-)
+>
+>diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+>index c01ccc800cb..085e2ef6f16 100644
+>--- a/hw/virtio/vhost.c
+>+++ b/hw/virtio/vhost.c
+>@@ -53,6 +53,25 @@ static QLIST_HEAD(, vhost_dev) vhost_log_devs[VHOST_BACKEND_TYPE_MAX];
+> static QLIST_HEAD(, vhost_dev) vhost_devices =
+>     QLIST_HEAD_INITIALIZER(vhost_devices);
+>
+>+/*
+>+ * Release the device ownership if it was handed over to us by another
+>+ * process, e.g. the CPR source.
+>+ */
+>+static void vhost_dev_try_release_owner(struct vhost_dev *hdev,
+>+                                        const char *when)
+>+{
+>+    int r;
+>+
+>+    if (!hdev->owner || !hdev->owner_handed_over) {
+>+        return;
+>+    }
+>+    r = vhost_dev_reset_owner(hdev);
+>+    if (r < 0) {
+>+        error_report("vhost: cannot release device ownership on %s: %s",
+>+                     when, strerror(-r));
+>+    }
+>+}
+>+
+> unsigned int vhost_get_max_memslots(void)
+> {
+>     unsigned int max = UINT_MAX;
+>@@ -1705,20 +1724,32 @@ int vhost_dev_init_backend(struct vhost_dev *hdev, void *opaque,
+>
+> int vhost_dev_set_owner(struct vhost_dev *hdev)
+> {
+>+    int r;
+>+
+>     assert(hdev->vhost_ops);
+>     if (!hdev->vhost_ops->vhost_set_owner) {
+>         return -ENOSYS;
+>     }
+>-    return hdev->vhost_ops->vhost_set_owner(hdev);
+>+    r = hdev->vhost_ops->vhost_set_owner(hdev);
+>+    if (!r) {
+>+        hdev->owner = true;
+>+    }
+>+    return r;
+> }
+>
+> int vhost_dev_reset_owner(struct vhost_dev *hdev)
+> {
+>+    int r;
+>+
+>     assert(hdev->vhost_ops);
+>     if (!hdev->vhost_ops->vhost_reset_owner) {
+>         return -ENOSYS;
+>     }
+>-    return hdev->vhost_ops->vhost_reset_owner(hdev);
+>+    r = hdev->vhost_ops->vhost_reset_owner(hdev);
+>+    if (!r) {
+>+        hdev->owner = false;
+>+    }
+>+    return r;
+> }
+>
+> int vhost_dev_init(struct vhost_dev *hdev, void *opaque,
+>@@ -1864,6 +1895,11 @@ void vhost_dev_cleanup(struct vhost_dev *hdev)
+>     g_free(hdev->mem);
+>     g_free(hdev->mem_sections);
+>     if (hdev->vhost_ops) {
+>+        /*
+>+         * Release the device ownership if we hold it.  Needed e.g. for
+>+         * failing CPR target, so the source can re-acquire it.
+>+         */
+>+        vhost_dev_try_release_owner(hdev, "cleanup");
+>         hdev->vhost_ops->vhost_cleanup(hdev);
+>     }
+>     assert(!hdev->log);
+>diff --git a/include/hw/virtio/vhost.h b/include/hw/virtio/vhost.h
+>index 73ea130d7ee..efe1eed2606 100644
+>--- a/include/hw/virtio/vhost.h
+>+++ b/include/hw/virtio/vhost.h
+>@@ -111,6 +111,17 @@ struct vhost_dev {
+>     bool started;
+>     /* @initialized: has the full vhost_dev_init() completed? */
+>     bool initialized;
+>+    /*
+>+     * @owner: has this vhost_dev acquired the device ownership?
+>+     * Updated only by vhost_dev_set_owner()/vhost_dev_reset_owner()
+>+     */
+>+    bool owner;
+>+    /*
+>+     * @owner_handed_over: CPR target side.  The ownership was handed over
+>+     * to us by another process (the CPR source) and must be given back
+>+     * when this vhost_dev goes away.  Set by the device.
+>+     */
+>+    bool owner_handed_over;
 
-igb_core_vf_propagate_ivar() clears the IVAR0 entry before writing,
-unlike igb_set_vtivar() which only OR-s. The existing write handler
-could be refactored to use this helper in a follow-up.
+I find the name a bit hard to get, but I don't have better suggestions.
 
-AI-used-for: analysis, code (prototype)
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
----
- hw/net/igb_core.h      |  2 ++
- hw/net/igb_core.c      | 37 +++++++++++++++++++++++++++++++++++++
- hw/net/igb_migration.c |  3 +++
- 3 files changed, 42 insertions(+)
+Anyway:
 
-diff --git a/hw/net/igb_core.h b/hw/net/igb_core.h
-index 60724e2824ab..e066b9e029fd 100644
---- a/hw/net/igb_core.h
-+++ b/hw/net/igb_core.h
-@@ -145,4 +145,6 @@ igb_start_recv(IGBCore *core);
- 
- IGBCore *igb_pf_get_core(void *pf);
- 
-+void igb_core_vf_propagate_ivar(IGBCore *core, uint16_t vfn);
-+
- #endif
-diff --git a/hw/net/igb_core.c b/hw/net/igb_core.c
-index 2a4883907353..ef941ecb86b4 100644
---- a/hw/net/igb_core.c
-+++ b/hw/net/igb_core.c
-@@ -4552,3 +4552,40 @@ igb_core_post_load(IGBCore *core)
- 
-     return 0;
- }
-+
-+/*
-+ * Propagate VTIVAR to IVAR0, which controls the actual hardware
-+ * interrupt routing for VF queues.
-+ */
-+void igb_core_vf_propagate_ivar(IGBCore *core, uint16_t vfn)
-+{
-+    uint32_t vtivar = core->mac[VTIVAR + vfn];
-+    int n;
-+    uint8_t ent;
-+    uint32_t mask;
-+
-+    n = igb_ivar_entry_rx(vfn);
-+    mask = 0xffU << (8 * (n % 4));
-+    if (vtivar & E1000_IVAR_VALID) {
-+        ent = E1000_IVAR_VALID |
-+              (24 - vfn * IGBVF_MSIX_VEC_NUM - (2 - (vtivar & 0x7)));
-+        core->mac[IVAR0 + n / 4] =
-+            (core->mac[IVAR0 + n / 4] & ~mask) |
-+            ((uint32_t)ent << (8 * (n % 4)));
-+    } else {
-+        core->mac[IVAR0 + n / 4] &= ~mask;
-+    }
-+
-+    n = igb_ivar_entry_tx(vfn);
-+    mask = 0xffU << (8 * (n % 4));
-+    ent = vtivar >> 8;
-+    if (ent & E1000_IVAR_VALID) {
-+        ent = E1000_IVAR_VALID |
-+              (24 - vfn * IGBVF_MSIX_VEC_NUM - (2 - (ent & 0x7)));
-+        core->mac[IVAR0 + n / 4] =
-+            (core->mac[IVAR0 + n / 4] & ~mask) |
-+            ((uint32_t)ent << (8 * (n % 4)));
-+    } else {
-+        core->mac[IVAR0 + n / 4] &= ~mask;
-+    }
-+}
-diff --git a/hw/net/igb_migration.c b/hw/net/igb_migration.c
-index 0c21a5e45f32..831515639bd6 100644
---- a/hw/net/igb_migration.c
-+++ b/hw/net/igb_migration.c
-@@ -253,6 +253,9 @@ static int igb_core_vf_load_state(IgbVfState *s, const void *buf, size_t size)
-         }
-     }
- 
-+    /* Propagate VTIVAR to IVAR0, skipped by direct core->mac[] write */
-+    igb_core_vf_propagate_ivar(core, s->vfn);
-+
-     trace_igbvf_mig_load_state(s->vfn, (uint32_t)size);
-     return 0;
- }
--- 
-2.56.0
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+
+>     bool log_enabled;
+>     uint64_t log_size;
+>     Error *migration_blocker;
+>
+>-- 
+>2.47.1
+>
 
 
