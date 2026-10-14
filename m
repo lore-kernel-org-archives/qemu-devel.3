@@ -4,85 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E113CC6B19
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 03:41:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C4FBCC6B1A
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 03:41:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGprl-0000Hi-4D; Tue, 13 Oct 2026 23:41:21 -0400
+	id 1xGprc-000884-Ia; Tue, 13 Oct 2026 23:41:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1xGpra-00084T-O1
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 23:41:10 -0400
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ id 1xGprV-0007qo-Hf
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 23:41:07 -0400
+Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1xGprZ-0001iF-6O
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 23:41:10 -0400
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-2e8662d5e95so3714985ad.0
- for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 20:41:08 -0700 (PDT)
+ id 1xGprT-0001hw-MO
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 23:41:05 -0400
+Received: by mail-pj1-x1034.google.com with SMTP id
+ 98e67ed59e1d1-3ab4178ee33so1973375a91.3
+ for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 20:41:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1791949268; x=1792554068; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1791949262; x=1792554062; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=orIH+Bb3TpS/WphK46YabXmJ/NC8X9SYQ+BdAkjWdKY=;
- b=EaHbx2e8wAkYf92l9zWvy/uWassIPzuwklQ8osgy1aIiIZ1yXV9Kh5KCXsIo1Wu+lr
- mtVqwUGki9fUdq2P0BnWHkJhEVyxThHP35VPWn5feFhOEfSs68uPxmGIjhVkNam3KDjw
- KX2+gO7n68Ht+BsJI6o8KYv3ORYpf7XpEDQYSXrKnepLdMbImmg5+gLjh/3V78XSNyVt
- 4XYAFFyxhUT/HEWBrSwGALlfSUgn5PTnRFt2czhugezL02/suDknjR3niSOxwVQo1L6W
- /iu8C9b/p8tf413LQNyfRW8hvqe+m/fu+9DDBv8AOWKWt//YPav1XeBrIPa5qN2bexon
- vAjQ==
+ bh=I/hpfpAOm5Z+Mm1bh46gSCjEjDHW8Fd/PWfFEyXj2YA=;
+ b=TgjdLyTJpKkm0CITJHBHWrNIPqwywbMSHouIt2qVB3WTQR6pxueDyx4iYXGgnQWrwr
+ QmXr+U+pQ8shZ4bWs4W1Vrwv0vk7fMVfCA60GGnfdn2UDI/nDlIHQwrRDUc6UuPNMLAP
+ cBVnV1m8gkx5xUj2IuPSMnlalpXNxI+X44STWLL5tYcRM9MaqbJc7fykxVZaJNbsdypu
+ OsXfLUuZUrd6LIVnsTPD7PBBAKzNiaRksq4dxgynAfuHI1XigC3PTQxD9yHBVl1eeqW/
+ wmmWn0hrj+2j8rgW4ioJ5RxwaINh6ntviGNt1qUB1x+yeJ0pPbs+NtnYGVlIr7kwUz6k
+ XuiQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791949268; x=1792554068;
+ d=1e100.net; s=20260707; t=1791949262; x=1792554062;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=orIH+Bb3TpS/WphK46YabXmJ/NC8X9SYQ+BdAkjWdKY=;
- b=Qb+x9sMEM9COWZ/nTdNJ2rwHlr/wBr1h1wE1ENhKKyyDS1ySBZXGBgBlV8IrckfNLj
- cinnXDWtCZPC4INZjUbraOWM63mUW4ZpgYN5/icniWHoNXrN10xQMTKblrQUY9rPl1i/
- GH9+Cdt/sIrJlNSk/6wsQ9gaWrOL26z46sfHEHOeQGZCFpWuXH+BSF4HWSCxquHpf6oZ
- hBU0AkvHkwF8lqYr1eRac1vxW7YqtKhZgjjH4JqwPRf8/K56l52bZYONmjqJXiPUvYSY
- Nw5pTgN0ywpL53av0oNXSrndMGJDQqxJwPdOcyJ1ccgTqWp3EAVDQsVyFwRplN4d0OAu
- xmwA==
-X-Gm-Message-State: AFq9FYK3YXoEIDt+WMTeLbxy1AoMaHRXuXQElQzhOQzuxcQtjPyN5DLY
- gWzBy/0dX6dAdif2uiqFpQV1prbE3m9JTtmQV+1gwHdSafQaNlGicodTigGgRw==
-X-Gm-Gg: AYBFou1B1G0D80Ck172rZc1Gahw1kVtw+WwfvooiuOHwzOWa7DdyQX0SqmU7jgUhCWc
- Mn6Hrx2ycIEZlwhrm2iCKmxE2nVvu1tm5Za+OAq8JssBlDKxk0tK9HvkNZsCpTQBY/J95t3s9hq
- P5Tp6KGX2mmhZ/uZUsSFdqYpFx8x2BB5Y3Ft5DV4PB1MwN+EAxU40ZeJ+r7PFfcU5hPps9HE1g8
- ZLhHALJYB42LOp9XdyLQp+R+XhqrWp0XcQCX5wxWlIDGHiAy2ZmZGxRamx4dRCPZ6OruyA3gnps
- bhqjCQH/UTtIwxMutxSavvajOLMEbGIiznNsj3mroR9GnjYGsSAEj1T8O0B1OcUJUHheghmUOiO
- 6Ta7JxL3rzlcP6A0BM6hTrTFM9uQLvVL211f0DkuBjmJZf9pFzFfpwzpnYAI3ukaX9U1VYKfwUm
- pXpVptDT+JeJhv8B8WIi24rnxZ6Hp2bgKoo+wyVeLm5QAdkbhlKKj2/b/1iu8EtEdW5Pd3bDLZ7
- NxjAzO/aV0m0QGxWzI+I+BXBlY=
-X-Received: by 2002:a17:90b:2681:b0:3aa:ff61:9504 with SMTP id
- 98e67ed59e1d1-3ab3a9127f1mr11306871a91.20.1791949267758; 
- Tue, 13 Oct 2026 20:41:07 -0700 (PDT)
+ bh=I/hpfpAOm5Z+Mm1bh46gSCjEjDHW8Fd/PWfFEyXj2YA=;
+ b=qolLBly+Y+XUNWrH4ZUJcJopBmAD8aUPb3NTTUn7pg9NCTa8LnbowIrWiURJ5ppjK9
+ oQnNOnUjIYEHuaSeuNhbGwYs2+fHjF+pi52C1nW20X81Ty6zsq2hvewP9W1kXzMTd0Xn
+ o0cjpVAJVxV3SVB5o3ysC2aHZstknT1FU1+1uaV1tCJLIgAmsrCyOSVd/uVzvyaP3np6
+ CJ+ZWSkbc7xpJGEUGZrwtB+/xSbb+9huevbo04hbGD0vqos8/2nz5Ov+y2elzaHworgB
+ /E2lq3LKKiAC/dlkIr3+NIpybLGfzfCRFYz775DiYNX2N6jxeFcStGxJ+CYRX56GmaNt
+ oVIQ==
+X-Gm-Message-State: AFq9FYJWO5rNNa66hfQfqY60CZjrKsFWFTbWTx6dWnxNfPEkXd8FdHPc
+ DD8V1Ac3J31tQvEH9/HAhL7YULMdTRJXkgAiEjr4Bp3m98iElZllUal/DDrEPg==
+X-Gm-Gg: AYBFou0f7WOVxym8xrLZZsBrVb2xQsnzykwPMA0zmNlAaO73L7xFZm8VH3G3aOrNrd8
+ x5P1LfeSxoeXSEXe/ihSRTjZW3a1GSpIhy6NxxqyTnYad4H/esKuouMq+e6K2nTrNAQzTET67IP
+ Oxl39atEwOPL8mV/oL1akwIBJhLChgj/oSCz9yvcM91InR8xZK1h31UU9kwWE4OQi8Bg9Cy1rzG
+ YefmBdghdPpSMulvoCEg8sH4Xc85K6OW0z26Npf3qSkzPfUIPmDK6LiZabK6hK/SOz2JbKZEHKu
+ vlpsJHmubvLRYc72jV9fIn8k5RDtrl1qVgcaW7o2oxm+K5ENkk5y30SLsHAk8BW/TMgJQagv/Bd
+ lgp+jf4RL1m9s0dSzq7D+PIHliNjgZHVxepZgyeFDd5nkKDQGF6JBMKEnGlagZvpK1H2749kSs3
+ 7e8a025GibAuJvbJKbNISmAGKU4z3lwqn53/00AU5isTOuL8B3lYuxJEn2TVASXuMQzs0kQgD6j
+ Fjgwegx03NHtkqO
+X-Received: by 2002:a17:90b:270c:b0:3ab:be66:ddb6 with SMTP id
+ 98e67ed59e1d1-3abbe66e034mr7485314a91.20.1791949262159; 
+ Tue, 13 Oct 2026 20:41:02 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3ac61170b7bsm2321457a91.16.2026.10.13.20.41.05
+ 98e67ed59e1d1-3ac61170b7bsm2321457a91.16.2026.10.13.20.40.58
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 13 Oct 2026 20:41:07 -0700 (PDT)
+ Tue, 13 Oct 2026 20:41:01 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: Max Chou <max.chou@sifive.com>,
+Cc: Chao Liu <chao.liu.zevorn@gmail.com>,
  Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Chao Liu <chao.liu@processmission.com>
-Subject: [PULL 34/52] target/riscv: Add cfg property for SiFive int8 matmul
- extensions
-Date: Wed, 14 Oct 2026 13:38:49 +1000
-Message-ID: <20261014033907.3332383-35-alistair.francis@wdc.com>
+ Tao Tang <tangtao1634@phytium.com.cn>,
+ Alistair Francis <alistair.francis@wdc.com>
+Subject: [PULL 32/52] target/riscv: add sdtrig trigger action=debug mode
+Date: Wed, 14 Oct 2026 13:38:47 +1000
+Message-ID: <20261014033907.3332383-33-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20261014033907.3332383-1-alistair.francis@wdc.com>
 References: <20261014033907.3332383-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x630.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
+ envelope-from=alistair23@gmail.com; helo=mail-pj1-x1034.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -106,91 +105,160 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Max Chou <max.chou@sifive.com>
+From: Chao Liu <chao.liu.zevorn@gmail.com>
 
-Add the CPU config properties for SiFive's custom int8 matrix
-multiply vector extensions:
+RISC-V Debug Specification:
+https://github.com/riscv/riscv-debug-spec/releases/tag/1.0
 
-- Xsfvqmaccdod: 2x8x2 int8 matrix-multiply-accumulate operations
-- Xsfvqmaccqoq: 4x8x4 int8 matrix-multiply-accumulate operations
+Allow mcontrol/mcontrol6 action=1 when Sdext is enabled. When such a
+trigger hits, enter Debug Mode with cause=trigger and stop with
+EXCP_DEBUG.
 
-All instructions of these extensions require the Zve32x extension
-to be present whenever either extension is enabled. Validate this
-in riscv_cpu_validate_vendor_ext() alongside the existing vector
-extension validation in riscv_cpu_validate_set_extensions().
+Also report inst-count triggers in tinfo and read their action field.
 
+Signed-off-by: Chao Liu <chao.liu.zevorn@gmail.com>
 Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Signed-off-by: Max Chou <max.chou@sifive.com>
-Reviewed-by: Chao Liu <chao.liu@processmission.com>
-Message-ID: <20260927082534.3228237-2-max.chou@sifive.com>
+Tested-by: Tao Tang <tangtao1634@phytium.com.cn>
+Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20260928195902.2045235-7-daniel.barboza@oss.qualcomm.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/cpu_cfg_fields.h.inc |  2 ++
- target/riscv/cpu.c                |  2 ++
- target/riscv/tcg/tcg-cpu.c        | 16 ++++++++++++++++
- 3 files changed, 20 insertions(+)
+ target/riscv/tcg/debug.c | 54 ++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 52 insertions(+), 2 deletions(-)
 
-diff --git a/target/riscv/cpu_cfg_fields.h.inc b/target/riscv/cpu_cfg_fields.h.inc
-index 55a79da194..85fc3ad8bb 100644
---- a/target/riscv/cpu_cfg_fields.h.inc
-+++ b/target/riscv/cpu_cfg_fields.h.inc
-@@ -161,6 +161,8 @@ BOOL_FIELD(ext_xmipscbop)
- BOOL_FIELD(ext_xmipscmov)
- BOOL_FIELD(ext_xmipslsp)
- BOOL_FIELD(ext_xlrbr)
-+BOOL_FIELD(ext_xsfvqmaccdod)
-+BOOL_FIELD(ext_xsfvqmaccqoq)
+diff --git a/target/riscv/tcg/debug.c b/target/riscv/tcg/debug.c
+index 2537515f54..aaf2dca17e 100644
+--- a/target/riscv/tcg/debug.c
++++ b/target/riscv/tcg/debug.c
+@@ -34,6 +34,7 @@
+ #include "exec/watchpoint.h"
+ #include "system/cpu-timers.h"
+ #include "exec/icount.h"
++#include "accel/tcg/cpu-loop.h"
  
- BOOL_FIELD(big_endian)
- BOOL_FIELD(mmu)
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index d0ee2433fd..b8cedbf7e9 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -302,6 +302,8 @@ const RISCVIsaExtData isa_edata_arr[] = {
-     ISA_EXT_DATA_ENTRY(xmipscbop, PRIV_VERSION_1_12_0, ext_xmipscbop),
-     ISA_EXT_DATA_ENTRY(xmipscmov, PRIV_VERSION_1_12_0, ext_xmipscmov),
-     ISA_EXT_DATA_ENTRY(xmipslsp, PRIV_VERSION_1_12_0, ext_xmipslsp),
-+    ISA_EXT_DATA_ENTRY(xsfvqmaccdod, PRIV_VERSION_1_13_0, ext_xsfvqmaccdod),
-+    ISA_EXT_DATA_ENTRY(xsfvqmaccqoq, PRIV_VERSION_1_13_0, ext_xsfvqmaccqoq),
-     ISA_EXT_DATA_ENTRY(xtheadba, PRIV_VERSION_1_11_0, ext_xtheadba),
-     ISA_EXT_DATA_ENTRY(xtheadbb, PRIV_VERSION_1_11_0, ext_xtheadbb),
-     ISA_EXT_DATA_ENTRY(xtheadbs, PRIV_VERSION_1_11_0, ext_xtheadbs),
-diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-index ae5166b13a..2ab0efa3a2 100644
---- a/target/riscv/tcg/tcg-cpu.c
-+++ b/target/riscv/tcg/tcg-cpu.c
-@@ -436,6 +436,16 @@ static void riscv_cpu_validate_v(CPURISCVState *env, RISCVCPUConfig *cfg,
-     }
- }
+ /*
+  * The following M-mode trigger CSRs are implemented:
+@@ -117,6 +118,8 @@ static trigger_action_t get_trigger_action(CPURISCVState *env,
+         action = (tdata1 & TYPE6_ACTION) >> 12;
+         break;
+     case TRIGGER_TYPE_INST_CNT:
++        action = tdata1 & ITRIGGER_ACTION;
++        break;
+     case TRIGGER_TYPE_INT:
+     case TRIGGER_TYPE_EXCP:
+     case TRIGGER_TYPE_EXT_SRC:
+@@ -287,6 +290,7 @@ static target_ulong textra_validate(CPURISCVState *env, target_ulong tdata3)
  
-+static void riscv_cpu_validate_vendor_ext(RISCVCPU *cpu, Error **errp)
-+{
-+    if ((cpu->cfg.ext_xsfvqmaccdod || cpu->cfg.ext_xsfvqmaccqoq) &&
-+        !cpu->cfg.ext_zve32x) {
-+        error_setg(errp, "Xsfvqmaccdod/Xsfvqmaccqoq extensions require "
-+                         "Zve32x extension");
-+        return;
-+    }
-+}
-+
- static void riscv_cpu_disable_priv_spec_isa_exts(RISCVCPU *cpu)
+ static void do_trigger_action(CPURISCVState *env, target_ulong trigger_index)
  {
-     CPURISCVState *env = &cpu->env;
-@@ -819,6 +829,12 @@ void riscv_cpu_validate_set_extensions(RISCVCPU *cpu, Error **errp)
-         return;
-     }
++    CPUState *cs = env_cpu(env);
+     trigger_action_t action = get_trigger_action(env, trigger_index);
  
-+    riscv_cpu_validate_vendor_ext(cpu, &local_err);
-+    if (local_err != NULL) {
-+        error_propagate(errp, local_err);
-+        return;
+     switch (action) {
+@@ -296,6 +300,21 @@ static void do_trigger_action(CPURISCVState *env, target_ulong trigger_index)
+         riscv_raise_exception(env, RISCV_EXCP_BREAKPOINT, 0);
+         break;
+     case DBG_ACTION_DBG_MODE:
++        if (!env_archcpu(env)->cfg.ext_sdext) {
++            qemu_log_mask(LOG_GUEST_ERROR,
++                          "trigger action=debug mode requires Sdext\n");
++            riscv_raise_exception(env, RISCV_EXCP_BREAKPOINT, 0);
++        }
++        riscv_cpu_enter_debug_mode(env, env->pc, DCSR_CAUSE_TRIGGER);
++        /*
++         * If this came from the Trigger Module's CPU breakpoint/watchpoint,
++         * we're already returning via EXCP_DEBUG. Otherwise, stop now.
++         */
++        if (cs->exception_index != EXCP_DEBUG) {
++            cs->exception_index = EXCP_DEBUG;
++            cpu_loop_exit_restore(cs, GETPC());
++        }
++        break;
+     case DBG_ACTION_TRACE0:
+     case DBG_ACTION_TRACE1:
+     case DBG_ACTION_TRACE2:
+@@ -448,6 +467,7 @@ static target_ulong type2_mcontrol_validate(CPURISCVState *env,
+ {
+     target_ulong val;
+     uint32_t size;
++    uint32_t action;
+ 
+     /* validate the generic part first */
+     val = tdata1_validate(env, ctrl, TRIGGER_TYPE_AD_MATCH);
+@@ -455,11 +475,25 @@ static target_ulong type2_mcontrol_validate(CPURISCVState *env,
+     /* validate unimplemented (always zero) bits */
+     warn_always_zero_bit(ctrl, TYPE2_MATCH, "match");
+     warn_always_zero_bit(ctrl, TYPE2_CHAIN, "chain");
+-    warn_always_zero_bit(ctrl, TYPE2_ACTION, "action");
+     warn_always_zero_bit(ctrl, TYPE2_TIMING, "timing");
+     warn_always_zero_bit(ctrl, TYPE2_SELECT, "select");
+     warn_always_zero_bit(ctrl, TYPE2_HIT, "hit");
+ 
++    action = (ctrl & TYPE2_ACTION) >> 12;
++    if (action == DBG_ACTION_BP) {
++        val |= ctrl & TYPE2_ACTION;
++    } else if (action == DBG_ACTION_DBG_MODE) {
++        if (env_archcpu(env)->cfg.ext_sdext) {
++            val |= ctrl & TYPE2_ACTION;
++        } else {
++            qemu_log_mask(LOG_GUEST_ERROR,
++                          "trigger action=debug mode requires Sdext\n");
++        }
++    } else {
++        qemu_log_mask(LOG_UNIMP, "trigger action: %u is not supported\n",
++                      action);
 +    }
 +
-     if (mcc->def->misa_mxl_max == MXL_RV32 && cpu->cfg.ext_svukte) {
-         error_setg(errp, "svukte is not supported for RV32");
-         return;
+     /* validate size encoding */
+     size = type2_breakpoint_size(env, ctrl);
+     if (access_size[size] == -1) {
+@@ -576,6 +610,7 @@ static target_ulong type6_mcontrol6_validate(CPURISCVState *env,
+ {
+     target_ulong val;
+     uint32_t size;
++    uint32_t action;
+ 
+     /* validate the generic part first */
+     val = tdata1_validate(env, ctrl, TRIGGER_TYPE_AD_MATCH6);
+@@ -583,7 +618,6 @@ static target_ulong type6_mcontrol6_validate(CPURISCVState *env,
+     /* validate unimplemented (always zero) bits */
+     warn_always_zero_bit(ctrl, TYPE6_MATCH, "match");
+     warn_always_zero_bit(ctrl, TYPE6_CHAIN, "chain");
+-    warn_always_zero_bit(ctrl, TYPE6_ACTION, "action");
+     warn_always_zero_bit(ctrl, TYPE6_SELECT, "select");
+     warn_always_zero_bit(ctrl, TYPE6_HIT, "hit");
+ 
+@@ -593,6 +627,21 @@ static target_ulong type6_mcontrol6_validate(CPURISCVState *env,
+         warn_always_zero_bit(ctrl, TYPE6_TIMING_0_13, "timing");
+     }
+ 
++    action = (ctrl & TYPE6_ACTION) >> 12;
++    if (action == DBG_ACTION_BP) {
++        val |= ctrl & TYPE6_ACTION;
++    } else if (action == DBG_ACTION_DBG_MODE) {
++        if (env_archcpu(env)->cfg.ext_sdext) {
++            val |= ctrl & TYPE6_ACTION;
++        } else {
++            qemu_log_mask(LOG_GUEST_ERROR,
++                          "trigger action=debug mode requires Sdext\n");
++        }
++    } else {
++        qemu_log_mask(LOG_UNIMP, "trigger action: %u is not supported\n",
++                      action);
++    }
++
+     /* validate size encoding */
+     size = extract32(ctrl, 16, 4);
+     if (access_size[size] == -1) {
+@@ -959,6 +1008,7 @@ void tdata_csr_write(CPURISCVState *env, int tdata_index, target_ulong val)
+ target_ulong tinfo_csr_read(CPURISCVState *env)
+ {
+     target_ulong val = BIT(TRIGGER_TYPE_AD_MATCH) |
++                       BIT(TRIGGER_TYPE_INST_CNT) |
+                        BIT(TRIGGER_TYPE_AD_MATCH6);
+ 
+     if (debug_trigger_version_1_0(env)) {
 -- 
 2.55.0
 
