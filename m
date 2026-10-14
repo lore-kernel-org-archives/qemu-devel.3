@@ -4,52 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AD75CC6B1A
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 16:30:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB203C3DA7A
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 16:30:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xH1rg-0000EI-UQ; Wed, 14 Oct 2026 12:30:04 -0400
+	id 1xH1rc-0000Ah-Ca; Wed, 14 Oct 2026 12:30:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <wangyang25@otcaix.iscas.ac.cn>)
- id 1xH1rJ-00005U-DF; Wed, 14 Oct 2026 12:29:41 -0400
+ id 1xH1rI-00004v-0F; Wed, 14 Oct 2026 12:29:41 -0400
 Received: from smtp81.cstnet.cn ([159.226.251.81] helo=cstnet.cn)
  by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_CBC_SHA1:256)
  (Exim 4.90_1) (envelope-from <wangyang25@otcaix.iscas.ac.cn>)
- id 1xH1rH-000690-6I; Wed, 14 Oct 2026 12:29:41 -0400
+ id 1xH1rF-00068v-BV; Wed, 14 Oct 2026 12:29:39 -0400
 Received: from DESKTOP-7FLBREN (unknown [124.16.137.194])
- by APP-03 (Coremail) with SMTP id rQCowACXmDbrrc9q4kXBCg--.37629S4;
- Thu, 15 Oct 2026 00:29:32 +0800 (CST)
+ by APP-03 (Coremail) with SMTP id rQCowACXmDbrrc9q4kXBCg--.37629S6;
+ Thu, 15 Oct 2026 00:29:33 +0800 (CST)
 From: wangyang <wangyang25@otcaix.iscas.ac.cn>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
  liwei1518@gmail.com, daniel.barboza@oss.qualcomm.com,
  zhiwei_liu@linux.alibaba.com, chao.liu@processmission.com,
  christoph.muellner@vrull.eu
-Subject: [PATCH v5 0/5] target/riscv: fix privilege, PMP, CFI, envcfg checks
-Date: Thu, 15 Oct 2026 00:29:25 +0800
-Message-ID: <20261014162930.251-1-wangyang25@otcaix.iscas.ac.cn>
+Subject: [PATCH v5 2/5] target/riscv: mask RV32 XTheadBb th.srri shift amount
+Date: Thu, 15 Oct 2026 00:29:27 +0800
+Message-ID: <20261014162930.251-3-wangyang25@otcaix.iscas.ac.cn>
 X-Mailer: git-send-email 2.55.0.windows.2
+In-Reply-To: <20261014162930.251-1-wangyang25@otcaix.iscas.ac.cn>
+References: <20261014162930.251-1-wangyang25@otcaix.iscas.ac.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: rQCowACXmDbrrc9q4kXBCg--.37629S4
-X-Coremail-Antispam: 1UD129KBjvJXoW7uF1fGFyrKr15Ww1UXrW8Zwb_yoW8trWUpF
- 4rGayaqFWkGry7Awn3AF4UXr15Wr4fGw45X3srXryrZay5CFyFqrZ3K34aga4DJ3Z8Ww12
- 9F1qkw13uF15ZFUanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
- 9KBjDU0xBIdaVrnRJUUU9Ib7Iv0xC_Kw4lb4IE77IF4wAFF20E14v26r4j6ryUM7CY07I2
- 0VC2zVCF04k26cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rw
- A2F7IY1VAKz4vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xII
- jxv20xvEc7CjxVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWUJVW8JwA2z4x0Y4vEx4
- A2jsIEc7CjxVAFwI0_Gr0_Gr1UM2vYz4IE04k24VAvwVAKI4IrM2AIxVAIcxkEcVAq07x2
- 0xvEncxIr21l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r126r1DMc
- Ij6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IYc2Ij64vIr41l
- c7CjxVAaw2AFwI0_Jw0_GFylc2xSY4AK67AK6r1l42xK82IYc2Ij64vIr41l4I8I3I0E4I
- kC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWU
- WwC2zVAF1VAY17CE14v26r1q6r43MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr
- 0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E14v26r4j6F4UMIIF0xvE42xK8VAvwI8IcIk0rVWU
- JVWUCwCI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r4j6r4UJb
- IYCTnIWIevJa73UjIFyTuYvjxUkcTQUUUUU
+X-CM-TRANSID: rQCowACXmDbrrc9q4kXBCg--.37629S6
+X-Coremail-Antispam: 1UD129KBjvJXoW7ZFW5Xr4rKw43Xw47Xr4DXFb_yoW8JFWxpr
+ 47GrWjkFZYgFy8Awsayw4UJF43JF45Xw4Iq3WvvwnxZrWYvrW7JFWakrW2gF17AF4qgr40
+ 9F1qyry3ZayDJa7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+ 9KBjDU0xBIdaVrnRJUUUmab7Iv0xC_KF4lb4IE77IF4wAFF20E14v26rWj6s0DM7CY07I2
+ 0VC2zVCF04k26cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28IrcIa0xkI8VA2jI
+ 8067AKxVWUXwA2048vs2IY020Ec7CjxVAFwI0_Gr0_Xr1l8cAvFVAK0II2c7xJM28CjxkF
+ 64kEwVA0rcxSw2x7M28EF7xvwVC0I7IYx2IY67AKxVWUCVW8JwA2z4x0Y4vE2Ix0cI8IcV
+ CY1x0267AKxVWxJVW8Jr1l84ACjcxK6I8E87Iv67AKxVWUJVW8JwA2z4x0Y4vEx4A2jsIE
+ c7CjxVAFwI0_Gr0_Gr1UM2vYz4IE04k24VAvwVAKI4IrM2AIxVAIcxkEcVAq07x20xvEnc
+ xIr21l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r126r1DMcIj6I8E
+ 87Iv67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IYc2Ij64vIr41lc7CjxV
+ Aaw2AFwI0_Jw0_GFylc2xSY4AK67AK6r1l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Y
+ z7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zV
+ AF1VAY17CE14v26r1q6r43MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_JFI_Gr1l
+ IxAIcVC0I7IYx2IY6xkF7I0E14v26F4j6r4UJwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF
+ 4lIxAIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsG
+ vfC2KfnxnUUI43ZEXa7IUnxwI3UUUUU==
 X-Originating-IP: [124.16.137.194]
 X-CM-SenderInfo: 5zdqw5xdqjjk46rwut1l0ox2xfdvhtffof0/
 Received-SPF: pass client-ip=159.226.251.81;
@@ -74,56 +77,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series fixes five independent RISC-V emulation issues in the
-XTheadCmo, XTheadBb, HLVX/PMP, Zicfilp, and environment-configuration
-paths.
+The XTheadBb th.srri instruction uses the low log2(XLEN) bits of
+imm6. The generic shift helper rejects values greater than or equal to
+XLEN, which incorrectly rejects imm6 values 32 through 63 on RV32.
+Normalize the operand in the translator before calling the helper.
 
-The first two patches correct XThead instruction handling. The third
-adds the missing final PMP read check for HLVX. The fourth fixes
-Zicfilp exception priority for tracked misaligned JALR targets. The
-fifth canonicalizes reserved CBIE encoding while preserving the
-defined CBIE=11 encoding.
+Tested: RV32 imm6 0, 31, 32, and 63 test cases with XTheadBb enabled
+and disabled; RV64 imm6 63 with XTheadBb enabled and disabled.
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4413
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Signed-off-by: wangyang <wangyang25@otcaix.iscas.ac.cn>
+---
+ target/riscv/tcg/insn_trans/trans_xthead.c.inc | 1 +
+ 1 file changed, 1 insertion(+)
 
-This series is based on 209b2afaface001c7d4d981e38f186afe7b24a50.
-
-Validation performed:
-
-  - QEMU 11.1.1 baseline and patched test-case replays passed.
-  - HLVX.HU and HLVX.WU execute-only PMP cases and tracked and
-    untracked misaligned JALR controls were checked.
-  - Every intermediate patch state built for qemu-system-riscv32,
-    qemu-system-riscv64, qemu-riscv32, and qemu-riscv64.
-  - RV32 XTheadBb imm6 0, 31, 32, and 63 cases pass with the
-    extension enabled and remain illegal when it is disabled.
-  - The series passes checkpatch.pl, git diff --check, and
-    independent apply checks.
-
-Changes since v4:
-
-  - Patch 2 masks the shift amount in the translator again, as
-    suggested by Richard Henderson, instead of splitting the decodetree
-    pattern. The original code and its Reviewed-by tag are restored.
-  - Patches 3 and 5 carry the Reviewed-by tags they received during
-    review of v3; both patches are byte-identical to the reviewed
-    version.
-  - Reword the test descriptions in the commit messages to refer to
-    test cases, as requested during review.
-
-wangyang (5):
-  target/riscv: enforce XTheadCmo U-mode privilege checks
-  target/riscv: mask RV32 XTheadBb th.srri shift amount
-  target/riscv: require read permission for HLVX accesses
-  target/riscv: prioritize Zicfilp checks for misaligned JALR
-  target/riscv: canonicalize reserved CBIE encoding
-
- target/riscv/internals.h                      |  6 ++++
- target/riscv/tcg/cpu_helper.c                 | 24 ++++++++++-----
- target/riscv/tcg/csr.c                        | 29 +++++++++++++++++++
- target/riscv/tcg/insn_trans/trans_rvi.c.inc   |  9 +++++-
- .../riscv/tcg/insn_trans/trans_xthead.c.inc   |  5 ++--
- target/riscv/tcg/op_helper.c                  | 11 ++++---
- 6 files changed, 67 insertions(+), 17 deletions(-)
-
+diff --git a/target/riscv/tcg/insn_trans/trans_xthead.c.inc b/target/riscv/tcg/insn_trans/trans_xthead.c.inc
+index 681f70e5bc..34226b1be5 100644
+--- a/target/riscv/tcg/insn_trans/trans_xthead.c.inc
++++ b/target/riscv/tcg/insn_trans/trans_xthead.c.inc
+@@ -141,6 +141,7 @@ GEN_TRANS_TH_ADDSL(3)
+ static bool trans_th_srri(DisasContext *ctx, arg_th_srri * a)
+ {
+     REQUIRE_XTHEADBB(ctx);
++    a->shamt &= get_olen(ctx) - 1;
+     return gen_shift_imm_fn_per_ol(ctx, a, EXT_NONE,
+                                    tcg_gen_rotri_tl, gen_roriw, NULL);
+ }
 -- 
 2.55.0.windows.2
 
