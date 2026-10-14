@@ -4,84 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A0D8CC6B1C
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 03:40:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E7CFCC6B1A
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 03:40:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGpqN-0004yg-L7; Tue, 13 Oct 2026 23:39:55 -0400
+	id 1xGpqf-0005Sf-Gv; Tue, 13 Oct 2026 23:40:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1xGpqB-0004tA-2h
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 23:39:44 -0400
-Received: from mail-pg1-x52a.google.com ([2607:f8b0:4864:20::52a])
+ id 1xGpqd-0005KE-4Z
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 23:40:11 -0400
+Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1xGpq8-0001Mb-Fd
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 23:39:42 -0400
-Received: by mail-pg1-x52a.google.com with SMTP id
- 41be03b00d2f7-cc50ad2d650so2702178a12.1
- for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 20:39:39 -0700 (PDT)
+ id 1xGpqb-0001bq-4y
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 23:40:10 -0400
+Received: by mail-pj1-x1035.google.com with SMTP id
+ 98e67ed59e1d1-3ac451e128cso817838a91.1
+ for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 20:40:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1791949179; x=1792553979; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1791949208; x=1792554008; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=QVMBiGCXBl16d9HL8Unik9lFRKj8974JHMX15++voLg=;
- b=CSHGVW3yGMA8/Mjr/7rxOPuQDKXg9Rl1MVUPfb64Re7qwWHvjKQaLwLvvupyWDOBf3
- XsSioh4m5VGxn691vSr3pqQZDmI1HMh873uEYNFTg3IotVPgpOZgz7UlJrNFATUjVace
- moT2im4cr1LTlKQIaIGlH5HyECfnH05VAXeT6yZ4zpAv40NobNlYpdVnBv1FmMTx33fx
- +URbOm5Hm2eLpLFZiD9o/aa8NwlfaIs36QLulFrWjc2G6Jnw/teRZTmOMv6O01foZQlR
- GBtgkXk4MLRELG//wyhSdoWu6vBXn3ctlHFvv+sciSl8ijrEfniMtSchGZHRKz+CmQz8
- wpjg==
+ bh=R0xDXzW8T0fEPSFyBJJQQXuC0/LnAHdiE4OZZ65/ljw=;
+ b=VcEjOTnoXDca3fBOD7z6MPfay1k7oyWLnoaOfXEeFV+nLCg2BSSGkgUf8GxussbPPN
+ scPBXiO3COEOf8tAE3whk2t0d4qpwqoreIpzIhGdkVO+cZHPLjyPRfh8GT5/sju7s0mx
+ EEPs3U1hYxB2B3dZEdx1xiuBKbj5qU6XwemwYbKLsBuDyLHdFVlGNdOIeo2mkm9L2TS1
+ hYQMPijVoDOeAPCVcvYJRKpTqIF/Virf2tNtw/jEvlGfjfa+0bUwExLediE59m/ogN5S
+ U0C7rb4XJ5hu0ThSuxHTRLYhZ3Zg6wOXz4FRecF933GSiHbIrjP0Fa8QPvDW5MtaZPHm
+ Y/ag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791949179; x=1792553979;
+ d=1e100.net; s=20260707; t=1791949208; x=1792554008;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=QVMBiGCXBl16d9HL8Unik9lFRKj8974JHMX15++voLg=;
- b=1PYlBSClBOZYVwrbgbH3CxHrDhth22Y/7fsozzMFKS5Pi7CFMALe0qrpfZTomtUrjk
- osNtqGfGIxcJ7doyL1HwD643Zg1//ZurS6qRRQXqF8vWx1/ycmdkAhtPX/FCeADY/mGk
- GhhYj7IsDFtLLbNRnXCW3sMMaFZoeqaDHXvmwCfmeabPPsSKBVm2KSALKvD9mH4R9cIJ
- I+22JH9eNI8LUOxFr2yXtWR6BYgItc/s3RZPNzU5J72VhAp+6SdH4PQINyJqDfb5aeu+
- MX2nVmltJjOqLvdwXsDPgTxSTstYbLWWFIplUKFWUYkbFLdiPCPWtAgqxOkv3Zs9Cy7l
- KvNQ==
-X-Gm-Message-State: AFq9FYJng/qLEg4KinWd7+HvI6ZFPLukdZ41hgRAYqirzs1SnOmwIPe+
- bjSXr0cxaWgn1U48npWcI8NvWLSFC/cBY1J0jbEfe//KG5uWURsN8K4bbovrRg==
-X-Gm-Gg: AYBFou3UHwIYWYjuDOPjbHChT5MMc+nPTjIWp20/54cvtfPivYOI1bziUngl66TZr2v
- Lx748pYnZaUQl6fSSTdWuQ7B/IakW0hyiQAJ8RrVJo4/hQB8c74RAZ9msZWDHmf45D2TWBzzhi8
- fSVfWi8RgnRsOVOVkc8cYL4gjbNQj4PMvra9AykjscXusOsJVZ1Rws/FBDhoUwWkiRGxGZJyu3J
- LlgDmj67v899fEdJ+Kj2FVDXST/T2jlosyMNw9h39DdLTUxaKiTQXXYsUkLaaxNfS3cweLwvko+
- 7Z+jC5pIX5m0puUOGmeh2RRNjLvh2wagrsv6m7Yc7O+qWsxx7g2wpIfg4FhmGf8HCRg56pOTMtC
- LbKXzRT8nzj0Gu4bqwXAXkgW/zdAOXZg4BIQxQqeiSEhusg1muDg9q8UjnGoevAX8+rD2Nqkfj2
- MvSojMGJqkJQbDjIQEsPyMl88vx5C+AHvWSPRkCbuKawyVM2HJvOz2Z4JhmZXlJ+q53KznNLg1F
- 9w+0d3mpdRqkpO/
-X-Received: by 2002:a17:90b:2688:b0:3a4:adea:50ad with SMTP id
- 98e67ed59e1d1-3ab3a775938mr12289888a91.27.1791949178550; 
- Tue, 13 Oct 2026 20:39:38 -0700 (PDT)
+ bh=R0xDXzW8T0fEPSFyBJJQQXuC0/LnAHdiE4OZZ65/ljw=;
+ b=KCfxUTxvXOMjL2G2oZlp4tRIVzu45a1CadjjqmXJYOjN32ddUqwOLlvmztUyE4EcoI
+ c32DS8LEUo4zw1DliwHyTAcjtCCkl7hsnVOratHoFCJBeN1ojebZ1T8AiajaPYWOYjFl
+ VgPs6LRKqNA5a0mZ4LbsrXqUK8tjeoQzGmvPEgCZ7myBHdYYCWjYNl0sIV4hQHqnUUpC
+ bxGmg8/pUbR6IYWuXpD2GgZInmC6ynS2IaIZrhDnOC0V/sjbsRHTUhH8Jf5M+zOLSZ5C
+ xgDrvkOGJQMLLpu/jm2wqMBzZBsMFtS4I/mXXq26CUCusQt/LuuEA/yyWGA0yxTbEoHQ
+ idnw==
+X-Gm-Message-State: AFq9FYI9uQajY8FqRpLvUgKrP48tmcY2Y2cirPBYCNV3p6hi3jIVhdn9
+ p5SSsgekvqtr7FAq5FcTAeYCdZ0s8EX5+ECRj4bXf/UUIvKwV7jKhGN+70CT5g==
+X-Gm-Gg: AYBFou27HliGftK/rT7ZYBGSvLZKy8XZvzJ48KuEdYSxIWgzbE6JE+LUYescM7eCDx0
+ UCbnmmNKngUVy5M2u4avHQATWBddmv9Hg6DMXAhIBtvVXwTw08cqBl465+L9+smsPmIOPBMxwxh
+ rLA1FLA+5dBVW/GsIsKD9pquT69Ifa5sJcidJp37c+hbE4dc7nO9YiPyIyz123d80Og8V0tpmw5
+ sEud/crW0RZG1fCIkJpQZuPqp1vaucoWT/RJvrATrHxPvxWXA/JuMu7ki13guRn8L6zczCg74AD
+ +LbRDtQAuaTS3g61OKUqACw1tAF33a8u5tTg+bX7UXh6QxOGTjBL7uq68U8mSesfVH9sB03gmUc
+ v/A0H7SwsYVAk7N9AGBV6Ih+MVIMdJ9KqHlYZyveizEhuxvL/sa8hhL5S8pYUp02WbfgkpLK+X/
+ 2lHAautL3VaAd0RqscpB23rNT7o6D7KfPIVdpZk/LMqwQ271aDHzbc315b9Sap9HUnLCw+unwQV
+ adEOuMXyKUgFpv7
+X-Received: by 2002:a17:90b:270c:b0:3ab:be66:ddb6 with SMTP id
+ 98e67ed59e1d1-3abbe66e034mr7483344a91.20.1791949207782; 
+ Tue, 13 Oct 2026 20:40:07 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3ac61170b7bsm2321457a91.16.2026.10.13.20.39.35
+ 98e67ed59e1d1-3ac61170b7bsm2321457a91.16.2026.10.13.20.40.04
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 13 Oct 2026 20:39:37 -0700 (PDT)
+ Tue, 13 Oct 2026 20:40:06 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: "Christian S. Lima" <christianslima@proton.me>, qemu-stable@nongnu.org,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 05/52] targetriscv: svinval instructions raise virtual
- instruction exception
-Date: Wed, 14 Oct 2026 13:38:20 +1000
-Message-ID: <20261014033907.3332383-6-alistair.francis@wdc.com>
+Cc: Kuan-Wei Chiu <visitorckw@gmail.com>, Chao Liu <chao.liu.zevorn@gmail.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Portia Stephens <portias@oss.tenstorrent.com>
+Subject: [PULL 14/52] hw/char: Add dw8250 UART
+Date: Wed, 14 Oct 2026 13:38:29 +1000
+Message-ID: <20261014033907.3332383-15-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20261014033907.3332383-1-alistair.francis@wdc.com>
 References: <20261014033907.3332383-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52a;
- envelope-from=alistair23@gmail.com; helo=mail-pg1-x52a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
+ envelope-from=alistair23@gmail.com; helo=mail-pj1-x1035.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -105,61 +104,245 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Christian S. Lima" <christianslima@proton.me>
+From: Kuan-Wei Chiu <visitorckw@gmail.com>
 
-The risc v privileged specification requires hinval.vvma, hinval.gvma,
-sfence.w.inval and sfence.inval.ir should raise a virtual instruction
-exception when executed in the vu-mode. This patch add the check to
-raise the virtual instruction exception when is in the vu-mode.
+Add the dw8250 uart support. This hardware is a widely used 16550A
+derivative that includes additional registers.
 
-Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3621
-Signed-off-by: Christian S. Lima <christianslima@proton.me>
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Message-ID: <20260911201323.37757-1-christianslima@proton.me>
+Without this specific device support, the Linux 8250_dw driver fails to
+probe the extended registers (UCV, CPR, etc.), which are essential for
+correct feature detection.
+
+Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
+Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20260927201326.650943-2-visitorckw@gmail.com>
+[ Changes by Portia Stephens <portias@oss.tenstorrent.com>:
+ - hw/char/dw8250: Fix leak when creating child device
+]
+Signed-off-by: Portia Stephens <portias@oss.tenstorrent.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/tcg/insn_trans/trans_svinval.c.inc |  3 +++
- target/riscv/tcg/insn_trans/trans_xthead.c.inc  | 12 +++++++-----
- 2 files changed, 10 insertions(+), 5 deletions(-)
+ MAINTAINERS              |   6 ++
+ include/hw/char/dw8250.h |  28 +++++++++
+ hw/char/dw8250.c         | 130 +++++++++++++++++++++++++++++++++++++++
+ hw/char/Kconfig          |   4 ++
+ hw/char/meson.build      |   1 +
+ 5 files changed, 169 insertions(+)
+ create mode 100644 include/hw/char/dw8250.h
+ create mode 100644 hw/char/dw8250.c
 
-diff --git a/target/riscv/tcg/insn_trans/trans_svinval.c.inc b/target/riscv/tcg/insn_trans/trans_svinval.c.inc
-index 4614c1489c..1341beba2f 100644
---- a/target/riscv/tcg/insn_trans/trans_svinval.c.inc
-+++ b/target/riscv/tcg/insn_trans/trans_svinval.c.inc
-@@ -25,6 +25,9 @@
- /* Test if priv level is M or S. */
- #define REQUIRE_PRIV_MS(ctx) do {          \
-     if (ctx->priv == PRV_U) {              \
-+        if (ctx->virt_enabled) {           \
-+            ctx->virt_inst_excp = true;    \
-+        }                                  \
-         return false;                      \
-     }                                      \
- } while (0)
-diff --git a/target/riscv/tcg/insn_trans/trans_xthead.c.inc b/target/riscv/tcg/insn_trans/trans_xthead.c.inc
-index f4e3051000..ea4b169422 100644
---- a/target/riscv/tcg/insn_trans/trans_xthead.c.inc
-+++ b/target/riscv/tcg/insn_trans/trans_xthead.c.inc
-@@ -267,11 +267,13 @@ static bool trans_th_tst(DisasContext *ctx, arg_th_tst *a)
- #define REQUIRE_PRIV_MSU(ctx)
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 1312bbd1bd..913162130f 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -2852,6 +2852,12 @@ S: Maintained
+ F: hw/i2c/designware_i2c.c
+ F: include/hw/i2c/designware_i2c.h
  
- /* Test if priv level is M or S. */
--#define REQUIRE_PRIV_MS(ctx)                                    \
--do {                                                            \
--    if (ctx->priv == PRV_U) {                                   \
--        return false;                                           \
--    }                                                           \
-+#define REQUIRE_PRIV_MS(ctx) do {          \
-+    if (ctx->priv == PRV_U) {              \
-+        if (ctx->virt_enabled) {           \
-+            ctx->virt_inst_excp = true;    \
-+        }                                  \
-+        return false;                      \
-+    }                                      \
- } while (0)
++DesignWare 8250 UART
++M: Kuan-Wei Chiu <visitorckw@gmail.com>
++S: Maintained
++F: hw/char/dw8250.c
++F: include/hw/char/dw8250.h
++
+ Generic Loader
+ M: Alistair Francis <alistair@alistair23.me>
+ S: Maintained
+diff --git a/include/hw/char/dw8250.h b/include/hw/char/dw8250.h
+new file mode 100644
+index 0000000000..ce0b97715b
+--- /dev/null
++++ b/include/hw/char/dw8250.h
+@@ -0,0 +1,28 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++/*
++ * Synopsys DesignWare APB UART (DW 8250)
++ *
++ * Copyright (c) 2026 Kuan-Wei Chiu <visitorckw@gmail.com>
++ */
++
++#ifndef HW_CHAR_DW8250_H
++#define HW_CHAR_DW8250_H
++
++#include "hw/core/sysbus.h"
++#include "qom/object.h"
++#include "hw/char/serial-mm.h"
++
++#define TYPE_DW8250 "dw8250"
++OBJECT_DECLARE_SIMPLE_TYPE(DW8250State, DW8250)
++
++struct DW8250State {
++    SysBusDevice parent_obj;
++
++    MemoryRegion container;
++    MemoryRegion ext_iomem;
++    SerialMM serial_mm;
++
++    uint8_t regshift;
++};
++
++#endif
+diff --git a/hw/char/dw8250.c b/hw/char/dw8250.c
+new file mode 100644
+index 0000000000..50baeae62c
+--- /dev/null
++++ b/hw/char/dw8250.c
+@@ -0,0 +1,130 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++/*
++ * Synopsys DesignWare APB UART (DW 8250)
++ *
++ * Copyright (c) 2026 Kuan-Wei Chiu <visitorckw@gmail.com>
++ */
++
++#include "qemu/osdep.h"
++#include "qemu/log.h"
++#include "qapi/error.h"
++#include "hw/char/dw8250.h"
++#include "hw/core/qdev-properties.h"
++#include "hw/core/qdev-properties-system.h"
++
++#define DW_UART_REGION_SIZE 0x100
++
++#define DW_UART_RE_EN (0xB4 >> 2) /* Receiver Output Enable Register */
++#define DW_UART_DLF   (0xC0 >> 2) /* Divisor Latch Fraction Register */
++#define DW_UART_CPR   (0xF4 >> 2) /* Component Parameter Register */
++#define DW_UART_UCV   (0xF8 >> 2) /* UART Component Version */
++#define DW_UART_CTR   (0xFC >> 2) /* Component Type Register */
++
++#define DW_UART_UCV_VALUE 0x3332332A /* "323*" -> v3.23a */
++#define DW_UART_CTR_VALUE 0x44570110 /* "DW" */
++
++static uint64_t dw8250_ext_read(void *opaque, hwaddr addr, unsigned int size)
++{
++    DW8250State *s = opaque;
++
++    switch (addr >> s->regshift) {
++    case DW_UART_UCV:
++        return DW_UART_UCV_VALUE;
++    case DW_UART_CPR:
++        return 0x00000000; /* No advanced features (DMA, extra FIFOs) */
++    case DW_UART_CTR:
++        return DW_UART_CTR_VALUE;
++
++    case DW_UART_RE_EN:
++    case DW_UART_DLF:
++        /*
++         * Return 0 to indicate these optional features
++         * (RS485 and Fractional Divisor) are not implemented.
++         */
++        return 0x00000000;
++
++    default:
++        return 0;
++    }
++}
++
++static void dw8250_ext_write(void *opaque, hwaddr addr, uint64_t val, unsigned int size)
++{
++    qemu_log_mask(LOG_UNIMP, "%s: Unimplemented write to address 0x%" HWADDR_PRIx "\n",
++                  __func__, addr);
++}
++
++static const MemoryRegionOps dw8250_ext_ops = {
++    .read = dw8250_ext_read,
++    .write = dw8250_ext_write,
++    .endianness = DEVICE_LITTLE_ENDIAN,
++    .impl = {
++        .min_access_size = 4,
++        .max_access_size = 4,
++    },
++    .valid = {
++        .min_access_size = 1,
++        .max_access_size = 4,
++    },
++};
++
++static void dw8250_instance_init(Object *obj)
++{
++    DW8250State *s = DW8250(obj);
++
++    object_initialize_child(obj, "serial-mm", &s->serial_mm, TYPE_SERIAL_MM);
++    object_property_add_alias(obj, "chardev", OBJECT(&s->serial_mm), "chardev");
++}
++
++static void dw8250_realize(DeviceState *dev, Error **errp)
++{
++    DW8250State *s = DW8250(dev);
++    SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
++    SysBusDevice *serial_sbd = SYS_BUS_DEVICE(&s->serial_mm);
++
++    memory_region_init(&s->container, OBJECT(dev), "dw8250-container",
++                       DW_UART_REGION_SIZE);
++    sysbus_init_mmio(sbd, &s->container);
++
++    qdev_prop_set_uint8(DEVICE(&s->serial_mm), "regshift", s->regshift);
++    qdev_prop_set_uint8(DEVICE(&s->serial_mm), "endianness", DEVICE_LITTLE_ENDIAN);
++    if (!sysbus_realize(serial_sbd, errp)) {
++        return;
++    }
++
++    memory_region_init_io(&s->ext_iomem, OBJECT(dev), &dw8250_ext_ops, s,
++                          "dw8250-ext", DW_UART_REGION_SIZE);
++    memory_region_add_subregion(&s->container, 0, &s->ext_iomem);
++
++    memory_region_add_subregion_overlap(&s->container, 0,
++                                        sysbus_mmio_get_region(serial_sbd, 0), 1);
++
++    sysbus_pass_irq(sbd, serial_sbd);
++}
++
++static const Property dw8250_properties[] = {
++    DEFINE_PROP_UINT8("regshift", DW8250State, regshift, 2),
++};
++
++static void dw8250_class_init(ObjectClass *klass, const void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
++
++    dc->realize = dw8250_realize;
++    device_class_set_props(dc, dw8250_properties);
++}
++
++static const TypeInfo dw8250_info = {
++    .name          = TYPE_DW8250,
++    .parent        = TYPE_SYS_BUS_DEVICE,
++    .instance_size = sizeof(DW8250State),
++    .instance_init = dw8250_instance_init,
++    .class_init    = dw8250_class_init,
++};
++
++static void dw8250_register_types(void)
++{
++    type_register_static(&dw8250_info);
++}
++
++type_init(dw8250_register_types)
+diff --git a/hw/char/Kconfig b/hw/char/Kconfig
+index 020c0a84bb..7040040641 100644
+--- a/hw/char/Kconfig
++++ b/hw/char/Kconfig
+@@ -95,3 +95,7 @@ config IP_OCTAL_232
+     bool
+     default y
+     depends on IPACK
++
++config DW8250
++    bool
++    select SERIAL_MM
+diff --git a/hw/char/meson.build b/hw/char/meson.build
+index fc3d7ee506..b2250ee6ae 100644
+--- a/hw/char/meson.build
++++ b/hw/char/meson.build
+@@ -38,6 +38,7 @@ system_ss.add(when: 'CONFIG_STM32L4X5_USART', if_true: files('stm32l4x5_usart.c'
+ system_ss.add(when: 'CONFIG_MCHP_PFSOC_MMUART', if_true: files('mchp_pfsoc_mmuart.c'))
+ system_ss.add(when: 'CONFIG_HTIF', if_true: files('riscv_htif.c'))
+ system_ss.add(when: 'CONFIG_GOLDFISH_TTY', if_true: files('goldfish_tty.c'))
++system_ss.add(when: 'CONFIG_DW8250', if_true: files('dw8250.c'))
  
- #define NOP_PRIVCHECK(insn, extcheck, privcheck)                \
+ specific_ss.add(when: 'CONFIG_TERMINAL3270', if_true: files('terminal3270.c'))
+ specific_ss.add(when: 'CONFIG_PSERIES', if_true: files('spapr_vty.c'))
 -- 
 2.55.0
 
