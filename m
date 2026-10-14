@@ -4,63 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5787CC6B2E
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 20:06:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 744F0C3DA7A
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 20:07:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xH5F9-00055s-QG; Wed, 14 Oct 2026 16:06:31 -0400
+	id 1xH5Ft-0005kW-VS; Wed, 14 Oct 2026 16:07:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1xH5F5-0004yZ-Jb; Wed, 14 Oct 2026 16:06:27 -0400
+ id 1xH5Fe-0005fx-GR; Wed, 14 Oct 2026 16:07:03 -0400
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1xH5F3-0003qJ-Qc; Wed, 14 Oct 2026 16:06:27 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ id 1xH5Fb-00041k-Qy; Wed, 14 Oct 2026 16:07:02 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69EEich02466332; Wed, 14 Oct 2026 20:06:04 GMT
+ 69EEiIaC1270128; Wed, 14 Oct 2026 20:06:37 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:reply-to:subject:to; s=pp1;
- bh=Gj5yCen+2dfCCilbM8S+3EHR/BnQC9YhiRa96GP8nUo=; b=IT8gOGAG2/8M
- UfjJ1wOI/rVzrAeHCxQGyaMWeGcmDV9jvfXsJUT6XDPY1iOnf7qwgzoBSZL0HdOE
- z5iHbamsfTOoAh/SZtVKUInTacrW0JNkFu7q2TaTyaWrBmPNVmbAF3mY9yHewQub
- MeUHQe3rhO5X1OpnProW+9H1yRp+B7m0O+1hIf5eHbTaqYz5yP5F8i2mi4L6TIc1
- SD8IGWB3hHHeeIECmO78298TPUvvnXa/CpACNAmCNvf1wg2BqdzG4OUBOY5igOgc
- f5dM6X3bY+ctQKEAWRzTtrxB7MCcEWltuAMYIl8bPNUfGLDFev5yjlBiPsZRWyhh
- pBqZLDljjw==
+ bh=fAhxV0TKch3DBKe4y9bjamK7GEsUjhNUCkKaQe4qdqQ=; b=fFV6B0ik4ZNf
+ voieevLi4EZ2XjqKu8zzUAsgA4OfEx6HBB1hJ7FqSCBc2zFMqYj8jW1E/QXqvDZC
+ aIRJcq1y7XWOuk4XCseam+xZjW/Up6ibNbpe2RYXg2F8UXnUPl93hfxyHFEU2PJy
+ hINuHeZP3K7U5iJS/WpYkWv0yD5R6k8dejjHkRH/c7QqrR0VdjFCU1gookGK229K
+ v2S97F73OaGdfuXpNZV/PvJnZkaOeFAEE7Qk/Zxqn0nnpEkG0SejvsWyPeAUmKwI
+ iNIGAMRnQtaWMLKhjWKes72yO9kILhNynh00P7x3GD4Z6SWceCHfUyz2+aOSW3F9
+ mylyS9KqXA==
 Received: from ppma11.dal12v.mail.ibm.com
  (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4h7e1wdw5c-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4h7dv0nxg1-1
  (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Wed, 14 Oct 2026 20:06:03 +0000 (GMT)
+ Wed, 14 Oct 2026 20:06:36 +0000 (GMT)
 Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
  by ppma11.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69EIW58w714371; Wed, 14 Oct 2026 20:06:02 GMT
-Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4h9qb6xdy1-1
+ 69EIdScf714310; Wed, 14 Oct 2026 20:06:35 GMT
+Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4h9qb6xe0q-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 14 Oct 2026 20:06:02 +0000 (GMT)
-Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
- [10.241.53.105])
- by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 69EK61T930343744
+ Wed, 14 Oct 2026 20:06:35 +0000 (GMT)
+Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
+ [10.39.53.228])
+ by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 69EK6YGQ30933622
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 14 Oct 2026 20:06:02 GMT
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A77B65805D;
- Wed, 14 Oct 2026 20:06:01 +0000 (GMT)
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C941C58055;
- Wed, 14 Oct 2026 20:06:00 +0000 (GMT)
+ Wed, 14 Oct 2026 20:06:35 GMT
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id BD42158059;
+ Wed, 14 Oct 2026 20:06:34 +0000 (GMT)
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 53C5A58067;
+ Wed, 14 Oct 2026 20:06:33 +0000 (GMT)
 Received: from mambor8.rchland.ibm.com (unknown [9.10.239.198])
- by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 14 Oct 2026 20:06:00 +0000 (GMT)
-Message-ID: <dbf69fefb1069890a71d0bf5317c3f13935b913b.camel@linux.ibm.com>
-Subject: Re: [PATCH v2 36/50] tests/qtest: ina230: cover the
- injection-property limits
+ by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Wed, 14 Oct 2026 20:06:33 +0000 (GMT)
+Message-ID: <79e9a5da30b2899b335e06ce77048c914e209ef8.camel@linux.ibm.com>
+Subject: Re: [PATCH v2 38/50] tests/qtest: ina230: cover ALERT latch
+ persistence
 From: Miles Glenn <milesg@linux.ibm.com>
 To: Emmanuel Blot <emmanuel.blot@free.fr>, qemu-devel@nongnu.org
 Cc: =?ISO-8859-1?Q?C=E9dric?= Le Goater <clg@kaod.org>, Peter Maydell
@@ -74,10 +74,10 @@ Cc: =?ISO-8859-1?Q?C=E9dric?= Le Goater <clg@kaod.org>, Peter Maydell
  Paolo Bonzini <pbonzini@redhat.com>, qemu-ppc@nongnu.org,
  qemu-riscv@nongnu.org, Philippe
  =?ISO-8859-1?Q?Mathieu-Daud=E9?= <philmd@oss.qualcomm.com>
-Date: Wed, 14 Oct 2026 15:06:00 -0500
-In-Reply-To: <20261012-bmc-minerva-v2-36-4c3dff084ec9@free.fr>
+Date: Wed, 14 Oct 2026 15:06:32 -0500
+In-Reply-To: <20261012-bmc-minerva-v2-38-4c3dff084ec9@free.fr>
 References: <20261012-bmc-minerva-v2-0-4c3dff084ec9@free.fr>
- <20261012-bmc-minerva-v2-36-4c3dff084ec9@free.fr>
+ <20261012-bmc-minerva-v2-38-4c3dff084ec9@free.fr>
 Organization: IBM
 Content-Type: text/plain; charset="UTF-8"
 X-Mailer: Evolution 3.28.5 (3.28.5-27.el8_10) 
@@ -85,32 +85,33 @@ Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 X-TM-AS-GCONF: 00
 X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDE0MDA3OCBTYWx0ZWRfX3P3mbixUK0MI
- vwavcPmn6Iv6LsQxguwoM7jsScJZkx7nP1t3YmHFYE1ZIPILP6iweP4aVlv4VtknfcK4LSHZs96
- DzBM3GzmmNBcMiJR982kfhfSiA41Tn8=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDE0MDA3OCBTYWx0ZWRfX3R2crEHd+Xkx
- wIfJvYm1QP3Zx/JQ3GRrXKXeLJZYHSgRFwLHlarM4PJF9wAk169eBJpnSbug4uiL95NZL7wSb++
- UCI0vrZ1y3wBRq5rgLNPifWLVOiiTercxR16lnMFZh5jlxzz3OV7FUjfLLk8+qxdEOMoUF26rZj
- 1m/qANVgYNewCzX3as2+N5bfZpDA0vE1sKvnPUTJytJvnUbdTxuRom05cP8ph9EmS7sK/WwxXW+
- LekKBj/+eDlmE920Ct7P3wWOLIlRZPw/08pOunTDLRcZkFFivQShlmAkAg9lqKwAvGEQmJNOSJo
- eUztpZ8F4zZzSvnaeJ0zZO+p14YxpS+On1xItRH6Z9wlcL35y/12McOffNhj7ShbOK/xmgxGW9J
- 3IEt5JA1l3nHkQJANXbZ/P4RjIaLjw2HB5KFbt1AnLuRVMPyDihCM1Qqwi9Q06CtLmoFDkWw7Y8
- +md7HgClC1wRuSLEHyg==
-X-Authority-Analysis: v=2.4 cv=E6pYNqdl c=1 sm=1 tr=0 ts=6acfe0ab cx=c_pps
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDE0MDA3OCBTYWx0ZWRfX1NoNC6Pe9i9m
+ rliD2XdmvmsAa4OGza3thSU7bqXLNwNYeAmotmeeJwayRX6neWUAyewpx/NjF5eRxYEwE2Wm9zw
+ 8jkX9k0FbO2pzXuA0nfdkXJiQBSIgHJ87hi3E5Nu/s72xNkZ1GUOy5llnn2BgqFJ4oASZraIo59
+ WpYLBseFlp8YhA76fWXGKe/WEEGyAiXeVZx/XNHGrGjGQoJK/xC0i+rSCLx/rvewI1l4Z/lVsNq
+ YHb+syvyCkdwLLQTz90oIL0/zIdYSDjCoLNgjEnnfYDdpr2dGGQOObwF94ZrUmh0FejM+KHcLwH
+ iPOMxBrbdMFnsQR/DuG0OUlT5I5MllcEXJ/ggM4UNA5tqvfviQ7mBSb95myWIqQQi3+uULBQQ0Q
+ eHfCb0vhYv8H6ycT5SUp6hK9VOyXTZYdF6OJD/9ZIshamVDAuh5egoZc9w3WhxLB4QXuoguVZhR
+ ipGV/cvhjSXeMLgDVyA==
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDE0MDA3OCBTYWx0ZWRfX38h1QPScGgRk
+ D2695ddSSJDK6c7BUKwADBjvh5yFatwZwya0qn2qvbKpkPTgXGhRkiJLSxQKNKLb4/hXFDC7DKm
+ K0GcNEBc54UnTvtaoao5x6mtnrB6qZQ=
+X-Proofpoint-ORIG-GUID: om-fMx9Hqiopi6OuaWbSxvVoWlCX8ej-
+X-Authority-Analysis: v=2.4 cv=a6KlZkSF c=1 sm=1 tr=0 ts=6acfe0cc cx=c_pps
  a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
  a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8
- a=QfumlfGxchuXkGhP4sYA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: ubCUTM8TXNYAZphBN2_dSLLIGZ75bly5
-X-Proofpoint-GUID: eeDzX8O45IB9aj3oOi1AlTs72Etth16g
+ a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8
+ a=Ogg6Cib4d_kmUnUIKOoA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: GDZ1mip4Wy6y-dkl9YfVN_xI_EV8ybe1
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-10-13_01,2026-10-14_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 phishscore=0 clxscore=1011 bulkscore=0 priorityscore=1501
- spamscore=0 adultscore=0 suspectscore=0 malwarescore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610080000 definitions=main-2610140078
+ bulkscore=0 malwarescore=0 spamscore=0 suspectscore=0 clxscore=1015
+ phishscore=0 priorityscore=1501 lowpriorityscore=0 impostorscore=0
+ adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610080000
+ definitions=main-2610140078
 Received-SPF: pass client-ip=148.163.158.5; envelope-from=milesg@linux.ibm.com;
  helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
@@ -144,106 +145,123 @@ Glenn
 
 On Mon, 2026-10-12 at 16:32 +0200, Emmanuel Blot via qemu development
 wrote:
-> Verify that the extremes of the shunt- and bus-voltage injection ranges
-> round-trip through the QOM property without truncation or wraparound,
-> and that values just outside are rejected rather than silently wrapped.
+> Verify what releases a latched alert and what can bring it back: a
+> Mask/Enable read and a Configuration write both clear it, and only a
+> conversion that re-samples the fault on a channel it converted asserts
+> it again.
 > 
 > Signed-off-by: Emmanuel Blot <emmanuel.blot@free.fr>
 > ---
->  tests/qtest/ina230-test.c | 59 +++++++++++++++++++++++++++++++++++++++++++++++
->  1 file changed, 59 insertions(+)
+>  tests/qtest/ina230-test.c | 89 +++++++++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 89 insertions(+)
 > 
 > diff --git a/tests/qtest/ina230-test.c b/tests/qtest/ina230-test.c
-> index 1c55028fcb..36c899efee 100644
+> index f8b982686a..591927e551 100644
 > --- a/tests/qtest/ina230-test.c
 > +++ b/tests/qtest/ina230-test.c
-> @@ -47,6 +47,11 @@
->  #define SHUNT_LSB_NV        2500
->  #define BUS_LSB_UV          1250
->  
-> +/* Injection-property limits (see ina230.c) */
-> +#define SHUNT_MIN_NV        (-81920000)
-> +#define SHUNT_MAX_NV        81917500
-> +#define BUS_MAX_UV          36000000
-> +
->  #define DIE_ID_VAL          0x2310
->  
->  /* QMP helpers for injecting the physical inputs */
-> @@ -76,6 +81,18 @@ static int qmp_ina230_get(const char *property)
->      return ret;
+> @@ -364,6 +364,88 @@ static void test_alert_latch(void *obj, void *data, QGuestAllocator *alloc)
 >  }
 >  
-> +/* A qom-set expected to be rejected (value outside the supported range) */
-> +static void qmp_ina230_set_fail(const char *property, int64_t value)
-> +{
-> +    QDict *resp;
-> +
-> +    resp = qmp("{ 'execute': 'qom-set', 'arguments':"
-> +               " { 'path': %s, 'property': %s, 'value': %lld } }",
-> +               INA230_TEST_ID, property, (long long)value);
-> +    g_assert(qdict_haskey(resp, "error"));
-> +    qobject_unref(resp);
-> +}
-> +
->  /* Power-on-reset default values and the Die ID */
->  static void test_defaults(void *obj, void *data, QGuestAllocator *alloc)
->  {
-> @@ -307,6 +324,46 @@ static void test_cvrf(void *obj, void *data, QGuestAllocator *alloc)
->      g_assert_cmphex(i2c_get16(dev, REG_MASK_ENABLE) & ME_CVRF, ==, 0);
->  }
->  
-> +/* Shunt-voltage injection limits */
-> +static void test_shunt_limits(void *obj, void *data, QGuestAllocator *alloc)
+>  /* Bus over-limit alert */
+> +static void test_alert_latch_persist(void *obj, void *data,
+> +                                     QGuestAllocator *alloc)
 > +{
 > +    QI2CDevice *dev = (QI2CDevice *)obj;
 > +
 > +    i2c_set16(dev, REG_CONFIG, CONFIG_RST);
+> +    i2c_set16(dev, REG_ALERT_LIMIT, 0x1000);
+> +    i2c_set16(dev, REG_MASK_ENABLE, ME_SOL | ME_LEN);
 > +
-> +    qmp_ina230_set("shunt-voltage", SHUNT_MAX_NV);
-> +    g_assert_cmphex(i2c_get16(dev, REG_SHUNT), ==, 0x7FFF);
-> +    g_assert_cmpint(qmp_ina230_get("shunt-voltage"), ==, SHUNT_MAX_NV);
+> +    qmp_ina230_set("shunt-voltage", 20000000);
 > +
-> +    qmp_ina230_set("shunt-voltage", SHUNT_MIN_NV);
-> +    g_assert_cmphex(i2c_get16(dev, REG_SHUNT), ==, 0x8000);
-> +    g_assert_cmpint(qmp_ina230_get("shunt-voltage"), ==, SHUNT_MIN_NV);
+> +    /* First read shows the latched AFF and clears the latch */
+> +    g_assert_cmphex(i2c_get16(dev, REG_MASK_ENABLE) & ME_AFF, ==, ME_AFF);
 > +
-> +    qmp_ina230_set_fail("shunt-voltage", (int64_t)SHUNT_MAX_NV + 1);
-> +    qmp_ina230_set_fail("shunt-voltage", (int64_t)SHUNT_MIN_NV - 1);
-> +    g_assert_cmpint(qmp_ina230_get("shunt-voltage"), ==, SHUNT_MIN_NV);
-> +    g_assert_cmphex(i2c_get16(dev, REG_SHUNT), ==, 0x8000);
+> +    /* Fault still present but no new conversion: AFF stays cleared */
+> +    g_assert_cmphex(i2c_get16(dev, REG_MASK_ENABLE) & ME_AFF, ==, 0);
+> +
+> +    qmp_ina230_set("shunt-voltage", 20000000);
+> +    g_assert_cmphex(i2c_get16(dev, REG_MASK_ENABLE) & ME_AFF, ==, ME_AFF);
 > +}
 > +
-> +/* Bus-voltage injection limits. */
-> +static void test_bus_limits(void *obj, void *data, QGuestAllocator *alloc)
+> +/* A Configuration write releases the latch as a Mask/Enable read does. */
+> +static void test_alert_latch_config(void *obj, void *data,
+> +                                    QGuestAllocator *alloc)
 > +{
 > +    QI2CDevice *dev = (QI2CDevice *)obj;
 > +
 > +    i2c_set16(dev, REG_CONFIG, CONFIG_RST);
+> +    i2c_set16(dev, REG_ALERT_LIMIT, 0x1000);
+> +    i2c_set16(dev, REG_MASK_ENABLE, ME_SOL | ME_LEN);
 > +
-> +    qmp_ina230_set("bus-voltage", 0);
-> +    g_assert_cmphex(i2c_get16(dev, REG_BUS), ==, 0x0000);
+> +    /* Latch a fault, then bring the input back below the limit */
+> +    qmp_ina230_set("shunt-voltage", 20000000);
+> +    qmp_ina230_set("shunt-voltage", 2500000);
 > +
-> +    qmp_ina230_set("bus-voltage", BUS_MAX_UV);
-> +    g_assert_cmphex(i2c_get16(dev, REG_BUS), ==, 0x7080);
-> +    g_assert_cmpint(qmp_ina230_get("bus-voltage"), ==, BUS_MAX_UV);
+> +    i2c_set16(dev, REG_CONFIG, CONFIG_POR);
+> +    g_assert_cmphex(i2c_get16(dev, REG_MASK_ENABLE) & ME_AFF, ==, 0);
 > +
-> +    qmp_ina230_set_fail("bus-voltage", (int64_t)BUS_MAX_UV + 1);
-> +    qmp_ina230_set_fail("bus-voltage", -1);
-> +    g_assert_cmpint(qmp_ina230_get("bus-voltage"), ==, BUS_MAX_UV);
+> +    /* With the fault present, the reconversion latches it again */
+> +    qmp_ina230_set("shunt-voltage", 20000000);
+> +    i2c_set16(dev, REG_CONFIG, CONFIG_POR);
+> +    g_assert_cmphex(i2c_get16(dev, REG_MASK_ENABLE) & ME_AFF, ==, ME_AFF);
 > +}
 > +
->  static void ina230_register_nodes(void)
+> +/* The releasing write need not reconvert: a power-down leaves it clear. */
+> +static void test_alert_latch_shutdown(void *obj, void *data,
+> +                                      QGuestAllocator *alloc)
+> +{
+> +    QI2CDevice *dev = (QI2CDevice *)obj;
+> +
+> +    i2c_set16(dev, REG_CONFIG, CONFIG_RST);
+> +    i2c_set16(dev, REG_ALERT_LIMIT, 0x1000);
+> +    i2c_set16(dev, REG_MASK_ENABLE, ME_SOL | ME_LEN);
+> +
+> +    qmp_ina230_set("shunt-voltage", 20000000);
+> +
+> +    i2c_set16(dev, REG_CONFIG, 0x0000); /* power-down */
+> +    g_assert_cmphex(i2c_get16(dev, REG_MASK_ENABLE) & ME_AFF, ==, 0);
+> +}
+> +
+> +/*
+> + * A conversion only re-samples the alert of a channel it converted: the bus
+> + * register a shunt-only conversion left stale must not re-latch.
+> + */
+> +static void test_alert_channel(void *obj, void *data, QGuestAllocator *alloc)
+> +{
+> +    QI2CDevice *dev = (QI2CDevice *)obj;
+> +
+> +    i2c_set16(dev, REG_CONFIG, CONFIG_RST);
+> +    i2c_set16(dev, REG_ALERT_LIMIT, 0x2000);
+> +    i2c_set16(dev, REG_MASK_ENABLE, ME_BOL | ME_LEN);
+> +
+> +    qmp_ina230_set("bus-voltage", 12000000);
+> +    g_assert_cmphex(i2c_get16(dev, REG_MASK_ENABLE) & ME_AFF, ==, ME_AFF);
+> +
+> +    /* Shunt-only mode: the bus register keeps its over-limit value */
+> +    i2c_set16(dev, REG_CONFIG, 0x0005);
+> +    qmp_ina230_set("shunt-voltage", 20000000);
+> +    g_assert_cmphex(i2c_get16(dev, REG_BUS), ==, 0x2580);
+> +    g_assert_cmphex(i2c_get16(dev, REG_MASK_ENABLE) & ME_AFF, ==, 0);
+> +}
+> +
+>  static void test_alert_bus(void *obj, void *data, QGuestAllocator *alloc)
 >  {
->      QOSGraphEdgeOptions opts = {
-> @@ -322,6 +379,8 @@ static void ina230_register_nodes(void)
->      qos_add_test("config-wmask", "ina230", test_config_wmask, NULL);
->      qos_add_test("shunt-injection", "ina230", test_shunt_injection, NULL);
->      qos_add_test("bus-injection", "ina230", test_bus_injection, NULL);
-> +    qos_add_test("shunt-limits", "ina230", test_shunt_limits, NULL);
-> +    qos_add_test("bus-limits", "ina230", test_bus_limits, NULL);
->      qos_add_test("calibration-current", "ina230", test_calibration_current,
->                   NULL);
->      qos_add_test("power", "ina230", test_power, NULL);
+>      QI2CDevice *dev = (QI2CDevice *)obj;
+> @@ -481,6 +563,13 @@ static void ina230_register_nodes(void)
+>      qos_add_test("edges-overflow", "ina230", test_edges_overflow, NULL);
+>      qos_add_test("alert-shunt-over", "ina230", test_alert_shunt_over, NULL);
+>      qos_add_test("alert-latch", "ina230", test_alert_latch, NULL);
+> +    qos_add_test("alert-latch-persist", "ina230", test_alert_latch_persist,
+> +                 NULL);
+> +    qos_add_test("alert-latch-config", "ina230", test_alert_latch_config,
+> +                 NULL);
+> +    qos_add_test("alert-latch-shutdown", "ina230", test_alert_latch_shutdown,
+> +                 NULL);
+> +    qos_add_test("alert-channel", "ina230", test_alert_channel, NULL);
+>      qos_add_test("alert-bus", "ina230", test_alert_bus, NULL);
+>      qos_add_test("alert-power", "ina230", test_alert_power, NULL);
+>      qos_add_test("cvrf", "ina230", test_cvrf, NULL);
 > 
 
 
