@@ -4,93 +4,143 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF073CA9EBD
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 03:49:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E140CA9EBD
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 03:53:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGpqZ-0005D1-Tt; Tue, 13 Oct 2026 23:40:07 -0400
+	id 1xGq3J-000760-OS; Tue, 13 Oct 2026 23:53:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1xGpqU-0005BJ-HV
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 23:40:02 -0400
-Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1xGpqR-0001P2-Qn
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 23:40:02 -0400
-Received: by mail-pg1-x530.google.com with SMTP id
- 41be03b00d2f7-cd60c5da24cso1519797a12.0
- for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 20:39:59 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1xGq3I-00075r-Ci
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 23:53:16 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1xGq3F-0002so-8N
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 23:53:15 -0400
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 69DJWCCO442750
+ for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 03:53:11 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ CfLI2ucZQp4tOjfAHdZmOaoFc/JNWav2kL+pui0KCjQ=; b=Uw7gzoOr6+DrHgIw
+ YATBZr/al07MHrNeTGtRMRGAWyIGlVGdK4Aa9tX5AW/T65c0mV5yR95Myqt+CFWr
+ PKxsl8hk5ZCGi3gUdrzspQaRfsxlAjNkgd+dn87BSmRL9Wn6DHKVZPCGJpyCx3PM
+ NKvmBOti2w7CdZjNy5fm1v+KtmlIx9bENTtq20JXttYJz3zP3oaYenFu5jHJ/iBp
+ tWeeQgKQthy7TG2BgxV1WrLGYbZ6hBGRbA6FYOHovEhsEJ3F0uarNw0A+yw8huS7
+ 6+7q9Fee5iX6DyCTpAuEBZijpnv9lwWiLmOig4ovt/smF3GZZSIFmvuXu02oTq1+
+ imYOBQ==
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h9n71kdc1-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 03:53:11 +0000 (GMT)
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-93e49a1d3b1so840458685a.2
+ for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 20:53:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1791949198; x=1792553998; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=1Atvm0kTXDlDVi7eWVHslXQF01diCUIaYP1isyCb8CE=;
- b=R5sPJUoKY/hGkjhGJCgV7GIApB0iu2zeCaLsGcjfiD61rkZQKvJlGz4GuR1RZaMJqw
- ged8t5xFKQkCFGapv6IOZKJjfYHSdJ77P2cBc9WCmhUZQ2uvPJKzBDKOlA3tRVKOBLAK
- 2yLk8QGOksyHY7TREv1IjGoBzPytcajl8yTumkSXRLPAxXk0bq1+RDG7lgfnjqofSOkL
- 5pKOlxuvnRZSXxONmNGDqX7l/cV5LkfFanutRUnChi9eJWIzC1VeBVT2JkNC2YI4IIzh
- Fkh6RM2iZXCZKiI/FQ+enSMynTQl2XMl68wgJspr+trUXgKBFiP5NqEYRssTBQixOYjj
- Fwuw==
+ d=oss.qualcomm.com; s=google; t=1791949991; x=1792554791; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from
+ :content-language:references:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=CfLI2ucZQp4tOjfAHdZmOaoFc/JNWav2kL+pui0KCjQ=;
+ b=ALKSNxrm3fQp0K47xHv3l3QOF70MOIE/CI9BfHwiKptTAHkRy9rWjV+GVbWJGI9N7c
+ hPOz3MubkVecLJEr0Iy8ZAmmb9CsELVPWnpA64vPgEz/rJOMQL/H/IH2LG9B2XyW6FxF
+ HbO7P2DO3HM0Gdts28dcv/5Yi5YzKqNwhg2vJLMvR7LBW/YiuTf6qJB6Q0Ce+M2M+zpz
+ cHe7lTQXmo99fDNEpsuElxTW7q16hrJYrmDsYcoB5gKykvjfaZa+ZMRmpgXNq3+H9ztW
+ ruUrYoAxNcjUrnQr5Xl8UNVjMZ77/34jvIE03jeBUu9c6hhXbvb6Y6YSdEZCteL69OGZ
+ Xxvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791949198; x=1792553998;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=1Atvm0kTXDlDVi7eWVHslXQF01diCUIaYP1isyCb8CE=;
- b=y7YC9p5+FpWCh4bYY8TL/QChB0ycT4iUpv4DrEZKeod/mj/Z81qznhVP6rBiJWIZ7J
- hLUbW+vTdoxK1utKrgkNjvnaUXYXH5b8U8HbEC9WEvmVV8xxD9kNs761wjSLXeBh5nQz
- RGQp5cyxRTE8eCWq+0NKlGA6WZ1EAQMtSvCbPdMv2sao9Smc2q+ywNXgFJV0twdqcCWI
- ix3j+DuHMeYwabBWkZdeCgNyOHDi2dZtndKoaK8mcB6DOf+LTbPnOERlM1XWFROy+UP5
- 66rw9xG7vkcwxbJuraklKIaBcDxqJ9bH50WCW1Jkj4AreFIEYXjE5udL9eeaEW9MR53U
- gxIw==
-X-Gm-Message-State: AFq9FYKk9n1CvhQa2CYspWy9LF5I+3ICHpw6qCgGbePjc6zV1E1xDshj
- y6tGH5gaB8GA8jf+tBhA+mGYmae6PEZ+oHFW9xe3PDLhRmoQa2reMUvvLjWVVA==
-X-Gm-Gg: AYBFou05utTa2FTSRWvDQLkGTg9HfApgE4mB1nVoAxTqJOU/YqayOvffYyV8R6BXcC+
- jnBjO6vZBqvNqc6PMEZgP3HZ7yVuAn6fK+4koyDHVH6pXVCLeA/GRruhvJyFzMJ5l7LBuqsxOrT
- QfooHlQ1IAvTvgv/glJbPEg6InAnFBUpD6qI4WT214TuJvhC2ErYMXNkqYh5pqhpeuzUETJQ+1w
- 41vAZK0G7vctMVGLj9loJ2lozCTcyNIxI8y4SBA/QfTyPhgZwbXeTtgUC76iRsqd70hYiz2cVqt
- kmXUgAMkEtZ2wx+xdntSDRQfUtvGFcda55KZGGBmjEIIDQzWByBv1/NvZnHWZHXYoYfCdmgED7/
- E+POclUFf61BvXvjc49oSxE5PRpIxHyw/xI8D0uSjfDXSqEpeBk7tN3KXCeX8O/02SoxCIo58YL
- KQ3+3X0jCrdNv1KvYNOw8hRTWdhGnaQeOCaUBnnVqKd/EGqDRUN6mbA4tcrk2VJQThJU9ZiI7o7
- ZNv6+eUqG4CGEkLMx5t2Rn8EV4=
-X-Received: by 2002:a17:90a:a8f:b0:3ab:413:49af with SMTP id
- 98e67ed59e1d1-3ab3a92850dmr9490310a91.49.1791949198218; 
- Tue, 13 Oct 2026 20:39:58 -0700 (PDT)
-Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3ac61170b7bsm2321457a91.16.2026.10.13.20.39.54
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 13 Oct 2026 20:39:57 -0700 (PDT)
-From: alistair23@gmail.com
-X-Google-Original-From: alistair.francis@wdc.com
-To: qemu-devel@nongnu.org
-Cc: Zhibo Hong <hongzhibo@bytedance.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Joel Stanley <joel@jms.id.au>,
- Mingliang Liu <liumingliang.dev@bytedance.com>,
- Chao Liu <chao.liu@processmission.com>,
- Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 11/52] target/riscv: Add support for the Zvabd extension
-Date: Wed, 14 Oct 2026 13:38:26 +1000
-Message-ID: <20261014033907.3332383-12-alistair.francis@wdc.com>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20261014033907.3332383-1-alistair.francis@wdc.com>
-References: <20261014033907.3332383-1-alistair.francis@wdc.com>
+ d=1e100.net; s=20260707; t=1791949991; x=1792554791;
+ h=content-transfer-encoding:content-type:in-reply-to:from
+ :content-language:references:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=CfLI2ucZQp4tOjfAHdZmOaoFc/JNWav2kL+pui0KCjQ=;
+ b=thr7grnROKOI02aR9bIsxIuFSlJ4kiRsRynt4XPY0UJqzaLgGqCp5D2rUC0pfZz1nb
+ qz1IEQ1yxmYRod8BcHD4K4+DEXLvNYOPvI/T8Zn8beBwhiLbqhXgWD1Ts7rwNP5ShArE
+ bkAtAQ/KmjesK1on6FeFjtVKCxNbWeRWZpJouaQcQ3cCmCqjauqVg9Ab43BTaEIUhYbo
+ 2OA8nawaJLjNKHIakBNAxjq3lp2uXAA/fOe46hfH6JZ+qkE69u5j4Q/ENU1D3SreE+SJ
+ vypcJty3Crbr9l08B7wup0E4lnQNoJM0OHSk+dih9zpiT2Pnd8ump+PtfTqee+P4Vmdk
+ M+qQ==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBxANFRnNYRQ3690V1QTJ5h6vKzFQ1CydsY2JVd7T1nlYjvKGDSh7caJpp/PICAXn8VktvqHrCKJzQ8s@nongnu.org
+X-Gm-Message-State: AFq9FYKfmZG+mylg6BihylQsdrCzyG6rlHj+i0y/IKFbe82tFEWtpay7
+ O8EbBfmaZigZz+2SIJSypJjmxePS9xz4hE4pZ0k2RmMjqi69yDrDD3mvk0o+qz6t5PBCb6qIs4T
+ T7i2wytoMwUs29r+kqdqu9BJGqnIYVF4WRYYd73axHOhDJnAaF+1cRd6hTg==
+X-Gm-Gg: AYBFou07ssnZR6ENqo4Wg3y7m5SLZL+raqHR8Y50l/LUPnQEXzasEY5Ma5ALs5byYfi
+ TPZpTtFdrTnuZYEzdy1yutlxtcWgoE3gN9oKoUUFfdBDkWOAqdJFOoQ3Cesmbv3v8xGryP4PUG1
+ zjSK08Fyu6yxzQcDBSL6GWvNpU1ioXL/2hitjx4K28J+aNUESdG3p+jLF/BkzGHIb7p9mDrgyjE
+ IKQmIXA2Vr/k6ZB5sLcqDCHxM9e6xhI+rR0K0x3EDiwozC+TsCYLBUlqnkr46dkQBSCrr0jf6xW
+ ll/iL3YP/AhMcEUl7+rkg+gtlBUDKCpwcqTf25t+TBvqzEeYVYHP63nzF/hyt4of8PMfN/jN20v
+ GFbW1CQiNSiLXehXAypg241OHtODZxMK7L5k0CtdCltcb12H5ZyaH2JcDFLKyf34EyVwYRDxxC+
+ ZNnDg=
+X-Received: by 2002:a05:620a:4489:b0:93c:5c60:c3a6 with SMTP id
+ af79cd13be357-93ebd2a6dbamr2411204385a.66.1791949990770; 
+ Tue, 13 Oct 2026 20:53:10 -0700 (PDT)
+X-Received: by 2002:a05:620a:4489:b0:93c:5c60:c3a6 with SMTP id
+ af79cd13be357-93ebd2a6dbamr2411202785a.66.1791949990245; 
+ Tue, 13 Oct 2026 20:53:10 -0700 (PDT)
+Received: from [192.168.1.199] (104-54-226-75.lightspeed.austtx.sbcglobal.net.
+ [104.54.226.75]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-93ef5042696sm405194985a.26.2026.10.13.20.53.09
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 13 Oct 2026 20:53:09 -0700 (PDT)
+Message-ID: <2a4aa0ac-bb1d-4196-9e53-f1c79b309a95@oss.qualcomm.com>
+Date: Tue, 13 Oct 2026 22:53:07 -0500
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6/6] tests/functional/hexagon: add MiniVM, lock tests
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org
+References: <20261009192541.4163758-1-brian.cain@oss.qualcomm.com>
+ <20261009192541.4163758-7-brian.cain@oss.qualcomm.com>
+ <c788ccde-7e96-48f1-8bd8-74e773db5e85@oss.qualcomm.com>
+ <c4909309-faaf-4b22-8554-92f8757d132c@oss.qualcomm.com>
+ <606fbcd9-9e34-4344-93a7-3590e392da64@oss.qualcomm.com>
+Content-Language: en-US
+From: Brian Cain <brian.cain@oss.qualcomm.com>
+In-Reply-To: <606fbcd9-9e34-4344-93a7-3590e392da64@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::530;
- envelope-from=alistair23@gmail.com; helo=mail-pg1-x530.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Authority-Analysis: v=2.4 cv=FuqQbGrq c=1 sm=1 tr=0 ts=6acefca7 cx=c_pps
+ a=qKBjSQ1v91RyAK45QCPf5w==:117 a=x6rl1zRT+JsLSO7OGbGBKQ==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
+ a=qC_FGOx9AAAA:8 a=EUspDBNiAAAA:8 a=f9SgpVA45t80_lO34RkA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=NFOGd7dJGGMPyQGDc5-O:22 a=fsdK_YakeE02zTmptMdW:22
+X-Proofpoint-GUID: uQ7IX_xNVQyyvTrFwD88WBAd4dyMvNga
+X-Proofpoint-ORIG-GUID: uQ7IX_xNVQyyvTrFwD88WBAd4dyMvNga
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDE0MDAxNSBTYWx0ZWRfXy+VqHGStbJYz
+ dvAeQXkXCGXKuviQOFlwIKD6KN5PE5ZeV7bJ3v65pMVg5V7v05Mx2xmRm4aIi7bxg0y5F3lSp8j
+ odbMIVFh2gd22dOeuo0GwzdCshlnKexv/G7NKGwNNvP7fJUySjZmOd6y52r/dt2AVHeldKEk+z2
+ Oytx0OfqimMyBuHhAxLhG0Dx04gbm8K0C3I8YKZqL2Ha0H9rFNYPvySY4W/VahpWpBm6glIHEZa
+ 1cosTvuzx/gywfxFbK7NmjmAJrRz5ntpkzu8xyb1szX5h/xx+A3iwOvAdfYgg+pVWtG55B5qXDr
+ Q57aWa4+4CTDDGg1JXweysw4f7WIL6OHt+c8BOUkHnA+5bw8vJhGNrf0yWkWzy/hFlWb4qrOuzZ
+ NDsezAGXW+YOLB///30SYOW1xyKcPYYKXNSb0HNOc0ExRJwPrUUziz2BL+CsNDBvm0PM70Wk3Bx
+ jEIZo/O5UD4XhNZ9bLg==
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDE0MDAxNSBTYWx0ZWRfXwRlenxVD7KzV
+ lGYE2HwX2H8aMhQbl3mGyuoM22sPZriXUjEK+uuY4JK8dExpYhWDGi26woAH0XqRRfi4/mGVjOx
+ cbgHeHApXwz+24FULz72F+ZehdR/19s=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-10-13_01,2026-10-09_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 malwarescore=0 adultscore=0 phishscore=0 suspectscore=0
+ priorityscore=1501 bulkscore=0 spamscore=0 impostorscore=0 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2610080000 definitions=main-2610140015
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -107,323 +157,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhibo Hong <hongzhibo@bytedance.com>
 
-The draft Zvabd extension version 0.9 provides vector integer
-absolute-difference operations for image, video, and other
-data-processing workloads. It introduces eight new instructions:
+On 10/13/2026 7:42 PM, Pierrick Bouvier wrote:
+> On 10/13/2026 5:24 PM, Brian Cain wrote:
+>> On 10/13/2026 4:55 PM, Pierrick Bouvier wrote:
+>>> On 10/9/2026 12:25 PM, Brian Cain wrote:
+>>>> Add the lock_verify test case to verify the k0/tlblock behavior, add the
+>>>> minivm tests to cover start() and more.
+>>>>
+>>>> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+>>>> ---
+>>>>    tests/functional/hexagon/meson.build      |  1 +
+>>>>    tests/functional/hexagon/test_minivm.py   | 43 +++++++++++++++++++++++
+>>>>    tests/functional/hexagon/test_systests.py |  3 ++
+>>>>    3 files changed, 47 insertions(+)
+>>>>    create mode 100755 tests/functional/hexagon/test_minivm.py
+>>>>
+>>>> diff --git a/tests/functional/hexagon/meson.build b/tests/functional/
+>>>> hexagon/meson.build
+>>>> index 44053e64676..e182bc98a06 100644
+>>>> --- a/tests/functional/hexagon/meson.build
+>>>> +++ b/tests/functional/hexagon/meson.build
+>>>> @@ -3,6 +3,7 @@
+>>>>    tests_hexagon_system_thorough = [
+>>>>      'arch_tests',
+>>>>      'systests',
+>>>> +  'minivm',
+>>>>    ]
+>>>>      test_hexagon_timeouts = {
+>>>> diff --git a/tests/functional/hexagon/test_minivm.py b/tests/
+>>>> functional/hexagon/test_minivm.py
+>>>> new file mode 100755
+>>>> index 00000000000..a70edbcc987
+>>>> --- /dev/null
+>>>> +++ b/tests/functional/hexagon/test_minivm.py
+>>>> @@ -0,0 +1,43 @@
+>>>> +#!/usr/bin/env python3
+>>>> +#
+>>>> +# Copyright(c) 2024-2025 Qualcomm Innovation Center, Inc. All Rights
+>>>> Reserved.
+>>>> +#
+>>>> +# SPDX-License-Identifier: GPL-2.0-or-later
+>>>> +
+>>>> +from qemu_test import QemuSystemTest, Asset, skipBigDataTest
+>>>> +
+>>>> +class MiniVMTest(QemuSystemTest):
+>>>> +    '''
+>>>> +    minivm is a Hexagon hypervisor that implements the Hexagon VM
+>>>> +    specification.  These test cases boot minivm and then load test
+>>>> cases
+>>>> +    to the address specified by MiniVMTest.GUEST_ENTRY and
+>>>> +    execute a minvm-guest program to exercise minivm virtualization
+>>>> +    features.
+>>>> +    '''
+>>>> +    timeout = 180
+>>>> +    GUEST_ENTRY = 0xc0000000
+>>>> +    REPO = 'https://artifacts.codelinaro.org/artifactory'
+>>>> +    ASSET_TARBALL = \
+>>>> +        Asset(f'{REPO}/codelinaro-toolchain-for-hexagon/'
+>>>> +               '19.1.5/hexagon_minivm_2024_Dec_15.tar.gz',
+>>>> +
+>>>> 'd7920b5ff14bed5a10b23ada7d4eb927ede08635281f25067e0d5711feee2c2a')
+>>>> +
+>>>> +    @skipBigDataTest()
+>>>> +    def test_minivm(self):
+>>>> +        self.set_machine('sim')
+>>>> +        self.archive_extract(self.ASSET_TARBALL)
+>>>> +        rootfs_path = self.scratch_file('hexagon-unknown-linux-musl-
+>>>> rootfs')
+>>>> +        kernel_path = f'{rootfs_path}/boot/minivm'
+>>>> +
+>>>> +        for test_case in ('test_mmu', 'test_interrupts',
+>>>> 'test_processors'):
+>>>> +            with self.subTest(test_case=test_case):
+>>>> +                vm = self.get_vm(name=test_case)
+>>>> +                vm.add_args('-kernel', kernel_path, '-device',
+>>>> +                            f'loader,addr={hex(self.GUEST_ENTRY)},'
+>>>> +                            f'file={rootfs_path}/boot/{test_case}')
+>>>> +                vm.launch()
+>>>> +                vm.wait()
+>>>> +                self.assertEqual(vm.exitcode(), 0)
+>>>> +
+>>> In case we decide to extend that with many other sub testcases, it could
+>>> be useful to define real sub tests. Just a suggestion though, it's not
+>>> necessary for the only 3 tests we have at the moment.
+>> OBTW confession time - the subTest() was merely hackery because the
+>> tarball includes a large-ish filesystem.  It was a sparse file before
+>> archive+compression but effectively now it's dense.  I just did this to
+>> avoid the time spent extracting for each test.  The extraction time
+>> dominates the test duration.
+>>
+>> So maybe there's a better approach to consider w/o subTest()?
+>>
+> After checking it's indeed a bit slow.
+> Would that be possible to reduce test_mmu (culprit, 2.5GB) image size to
+> something under 100MB?
+>
+> Beyond time, it would save disk space also.
 
-  - vabd.vv, vabd.vx, vabdu.vv, and vabdu.vx support SEW values from
-    8 through ELEN, with SEW 64 requiring Zve64x.
-  - vwabda.vv, vwabda.vx, vwabdau.vv, and vwabdau.vx support SEW 8
-    and 16 and accumulate into a double-width destination.
 
-This patch implements the extension, including instruction decoding,
-TCG translation, and helper functions. This implementation targets
-version 0.9, whose instruction encodings differ from version 0.7.
+Ok - I'll see about that.
 
-The specification is under review at:
-https://github.com/riscv/riscv-isa-manual/pull/3279
 
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Reviewed-by: Joel Stanley <joel@jms.id.au>
-Signed-off-by: Zhibo Hong <hongzhibo@bytedance.com>
-Signed-off-by: Mingliang Liu <liumingliang.dev@bytedance.com>
-Reviewed-by: Chao Liu <chao.liu@processmission.com>
-Message-ID: <20260907152301.1701394-2-liumingliang.dev@bytedance.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
----
- target/riscv/helper.h                       | 26 ++++++++++
- target/riscv/cpu_cfg_fields.h.inc           |  1 +
- target/riscv/insn32.decode                  | 10 ++++
- disas/riscv.c                               |  8 +++
- target/riscv/cpu.c                          |  1 +
- target/riscv/tcg/tcg-cpu.c                  |  6 +++
- target/riscv/tcg/vector_helper.c            | 56 +++++++++++++++++++++
- disas/riscv-op.c.inc                        |  8 +++
- target/riscv/tcg/insn_trans/trans_rvv.c.inc | 45 +++++++++++++++++
- 9 files changed, 161 insertions(+)
-
-diff --git a/target/riscv/helper.h b/target/riscv/helper.h
-index aab92bf132..b7acb6fdc9 100644
---- a/target/riscv/helper.h
-+++ b/target/riscv/helper.h
-@@ -1350,6 +1350,32 @@ DEF_HELPER_5(vsm4k_vi, void, ptr, ptr, i32, env, i32)
- DEF_HELPER_4(vsm4r_vv, void, ptr, ptr, env, i32)
- DEF_HELPER_4(vsm4r_vs, void, ptr, ptr, env, i32)
- 
-+/* Zvabd Extension */
-+DEF_HELPER_6(vabd_vv_b, void, ptr, ptr, ptr, ptr, env, i32)
-+DEF_HELPER_6(vabd_vv_h, void, ptr, ptr, ptr, ptr, env, i32)
-+DEF_HELPER_6(vabd_vv_w, void, ptr, ptr, ptr, ptr, env, i32)
-+DEF_HELPER_6(vabd_vv_d, void, ptr, ptr, ptr, ptr, env, i32)
-+DEF_HELPER_6(vabd_vx_b, void, ptr, ptr, tl, ptr, env, i32)
-+DEF_HELPER_6(vabd_vx_h, void, ptr, ptr, tl, ptr, env, i32)
-+DEF_HELPER_6(vabd_vx_w, void, ptr, ptr, tl, ptr, env, i32)
-+DEF_HELPER_6(vabd_vx_d, void, ptr, ptr, tl, ptr, env, i32)
-+DEF_HELPER_6(vabdu_vv_b, void, ptr, ptr, ptr, ptr, env, i32)
-+DEF_HELPER_6(vabdu_vv_h, void, ptr, ptr, ptr, ptr, env, i32)
-+DEF_HELPER_6(vabdu_vv_w, void, ptr, ptr, ptr, ptr, env, i32)
-+DEF_HELPER_6(vabdu_vv_d, void, ptr, ptr, ptr, ptr, env, i32)
-+DEF_HELPER_6(vabdu_vx_b, void, ptr, ptr, tl, ptr, env, i32)
-+DEF_HELPER_6(vabdu_vx_h, void, ptr, ptr, tl, ptr, env, i32)
-+DEF_HELPER_6(vabdu_vx_w, void, ptr, ptr, tl, ptr, env, i32)
-+DEF_HELPER_6(vabdu_vx_d, void, ptr, ptr, tl, ptr, env, i32)
-+DEF_HELPER_6(vwabda_vv_b, void, ptr, ptr, ptr, ptr, env, i32)
-+DEF_HELPER_6(vwabda_vv_h, void, ptr, ptr, ptr, ptr, env, i32)
-+DEF_HELPER_6(vwabda_vx_b, void, ptr, ptr, tl, ptr, env, i32)
-+DEF_HELPER_6(vwabda_vx_h, void, ptr, ptr, tl, ptr, env, i32)
-+DEF_HELPER_6(vwabdau_vv_b, void, ptr, ptr, ptr, ptr, env, i32)
-+DEF_HELPER_6(vwabdau_vv_h, void, ptr, ptr, ptr, ptr, env, i32)
-+DEF_HELPER_6(vwabdau_vx_b, void, ptr, ptr, tl, ptr, env, i32)
-+DEF_HELPER_6(vwabdau_vx_h, void, ptr, ptr, tl, ptr, env, i32)
-+
- /* CFI (zicfiss) helpers */
- #ifndef CONFIG_USER_ONLY
- DEF_HELPER_1(ssamoswap_disabled, void, env)
-diff --git a/target/riscv/cpu_cfg_fields.h.inc b/target/riscv/cpu_cfg_fields.h.inc
-index f91c780299..6f567612fa 100644
---- a/target/riscv/cpu_cfg_fields.h.inc
-+++ b/target/riscv/cpu_cfg_fields.h.inc
-@@ -83,6 +83,7 @@ BOOL_FIELD(ext_zve32x)
- BOOL_FIELD(ext_zve64f)
- BOOL_FIELD(ext_zve64d)
- BOOL_FIELD(ext_zve64x)
-+BOOL_FIELD(ext_zvabd)
- BOOL_FIELD(ext_zvbb)
- BOOL_FIELD(ext_zvbc)
- BOOL_FIELD(ext_zvkb)
-diff --git a/target/riscv/insn32.decode b/target/riscv/insn32.decode
-index aa02dae3c9..288ce8a554 100644
---- a/target/riscv/insn32.decode
-+++ b/target/riscv/insn32.decode
-@@ -1086,3 +1086,13 @@ sb_aqrl  00111 . . ..... ..... 000 ..... 0101111 @atom_st
- sh_aqrl  00111 . . ..... ..... 001 ..... 0101111 @atom_st
- sw_aqrl  00111 . . ..... ..... 010 ..... 0101111 @atom_st
- sd_aqrl  00111 . . ..... ..... 011 ..... 0101111 @atom_st
-+
-+# *** Zvabd Extension ***
-+vabd_vv       010101 . ..... ..... 010 ..... 1010111 @r_vm
-+vabd_vx       010101 . ..... ..... 110 ..... 1010111 @r_vm
-+vabdu_vv      010110 . ..... ..... 010 ..... 1010111 @r_vm
-+vabdu_vx      010110 . ..... ..... 110 ..... 1010111 @r_vm
-+vwabda_vv     111101 . ..... ..... 000 ..... 1010111 @r_vm
-+vwabda_vx     111101 . ..... ..... 100 ..... 1010111 @r_vm
-+vwabdau_vv    111110 . ..... ..... 000 ..... 1010111 @r_vm
-+vwabdau_vx    111110 . ..... ..... 100 ..... 1010111 @r_vm
-diff --git a/disas/riscv.c b/disas/riscv.c
-index ef8b7ff20f..43d5a5255e 100644
---- a/disas/riscv.c
-+++ b/disas/riscv.c
-@@ -2024,6 +2024,8 @@ static const rv_opcode_data *decode_inst_opcode(rv_decode *dec, rv_isa isa)
-                 case 48: return &op_vwredsumu_vs;
-                 case 49: return &op_vwredsum_vs;
-                 case 53: return &op_vwsll_vv;
-+                case 61: return &op_vwabda_vv;
-+                case 62: return &op_vwabdau_vv;
-                 }
-                 break;
-             case 1:
-@@ -2166,6 +2168,8 @@ static const rv_opcode_data *decode_inst_opcode(rv_decode *dec, rv_isa isa)
-                         break;
-                     }
-                     break;
-+                case 21: return &op_vabd_vv;
-+                case 22: return &op_vabdu_vv;
-                 case 23:
-                     if ((inst >> 25) & 1) {
-                         return &op_vcompress_vm;
-@@ -2351,6 +2355,8 @@ static const rv_opcode_data *decode_inst_opcode(rv_decode *dec, rv_isa isa)
-                 case 46: return &op_vnclipu_wx;
-                 case 47: return &op_vnclip_wx;
-                 case 53: return &op_vwsll_vx;
-+                case 61: return &op_vwabda_vx;
-+                case 62: return &op_vwabdau_vx;
-                 }
-                 break;
-             case 5:
-@@ -2427,6 +2433,8 @@ static const rv_opcode_data *decode_inst_opcode(rv_decode *dec, rv_isa isa)
-                         }
-                     }
-                     break;
-+                case 21: return &op_vabd_vx;
-+                case 22: return &op_vabdu_vx;
-                 case 32: return &op_vdivu_vx;
-                 case 33: return &op_vdiv_vx;
-                 case 34: return &op_vremu_vx;
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index da4c1a090b..e08cb2f356 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -220,6 +220,7 @@ const RISCVIsaExtData isa_edata_arr[] = {
-     ISA_EXT_DATA_ENTRY(zksh, PRIV_VERSION_1_12_0, ext_zksh),
-     ISA_EXT_DATA_ENTRY(zkt, PRIV_VERSION_1_12_0, ext_zkt),
-     ISA_EXT_DATA_ENTRY(ztso, PRIV_VERSION_1_12_0, ext_ztso),
-+    ISA_EXPERIMENTAL_EXT_DATA_ENTRY(zvabd, PRIV_VERSION_1_13_0, ext_zvabd),
-     ISA_EXT_DATA_ENTRY(zvbb, PRIV_VERSION_1_12_0, ext_zvbb),
-     ISA_EXT_DATA_ENTRY(zvbc, PRIV_VERSION_1_12_0, ext_zvbc),
-     ISA_EXT_DATA_ENTRY(zve32f, PRIV_VERSION_1_10_0, ext_zve32f),
-diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-index b68160af83..be2332083c 100644
---- a/target/riscv/tcg/tcg-cpu.c
-+++ b/target/riscv/tcg/tcg-cpu.c
-@@ -731,6 +731,12 @@ void riscv_cpu_validate_set_extensions(RISCVCPU *cpu, Error **errp)
-         return;
-     }
- 
-+    if ((cpu->cfg.ext_zvabd) && !cpu->cfg.ext_zve32x) {
-+        error_setg(errp,
-+                   "Zvabd extensions require V or Zve* extensions");
-+        return;
-+    }
-+
-     if (cpu->cfg.ext_zicntr && !cpu->cfg.ext_zicsr) {
-         if (cpu_cfg_ext_is_user_set(cpu, CPU_CFG_OFFSET(ext_zicntr))) {
-             error_setg(errp, "zicntr requires zicsr");
-diff --git a/target/riscv/tcg/vector_helper.c b/target/riscv/tcg/vector_helper.c
-index 0d1e4e0964..917a48b510 100644
---- a/target/riscv/tcg/vector_helper.c
-+++ b/target/riscv/tcg/vector_helper.c
-@@ -5911,3 +5911,59 @@ GEN_VEXT_INT_EXT(vsext_vf2_d, int64_t, int32_t, H8, H4)
- GEN_VEXT_INT_EXT(vsext_vf4_w, int32_t, int8_t,  H4, H1)
- GEN_VEXT_INT_EXT(vsext_vf4_d, int64_t, int16_t, H8, H2)
- GEN_VEXT_INT_EXT(vsext_vf8_d, int64_t, int8_t,  H8, H1)
-+
-+/* Zvabd Extension */
-+#define DO_ABD(N, M)  (N > M ? N - M : M - N)
-+#define DO_ABDACC(N, M, D) (DO_ABD(N, M) + D)
-+
-+RVVCALL(OPIVV2, vabd_vv_b, OP_SSS_B, H1, H1, H1, DO_ABD)
-+RVVCALL(OPIVV2, vabd_vv_h, OP_SSS_H, H2, H2, H2, DO_ABD)
-+RVVCALL(OPIVV2, vabd_vv_w, OP_SSS_W, H4, H4, H4, DO_ABD)
-+RVVCALL(OPIVV2, vabd_vv_d, OP_SSS_D, H8, H8, H8, DO_ABD)
-+RVVCALL(OPIVX2, vabd_vx_b, OP_SSS_B, H1, H1, DO_ABD)
-+RVVCALL(OPIVX2, vabd_vx_h, OP_SSS_H, H2, H2, DO_ABD)
-+RVVCALL(OPIVX2, vabd_vx_w, OP_SSS_W, H4, H4, DO_ABD)
-+RVVCALL(OPIVX2, vabd_vx_d, OP_SSS_D, H8, H8, DO_ABD)
-+RVVCALL(OPIVV2, vabdu_vv_b, OP_UUU_B, H1, H1, H1, DO_ABD)
-+RVVCALL(OPIVV2, vabdu_vv_h, OP_UUU_H, H2, H2, H2, DO_ABD)
-+RVVCALL(OPIVV2, vabdu_vv_w, OP_UUU_W, H4, H4, H4, DO_ABD)
-+RVVCALL(OPIVV2, vabdu_vv_d, OP_UUU_D, H8, H8, H8, DO_ABD)
-+RVVCALL(OPIVX2, vabdu_vx_b, OP_UUU_B, H1, H1, DO_ABD)
-+RVVCALL(OPIVX2, vabdu_vx_h, OP_UUU_H, H2, H2, DO_ABD)
-+RVVCALL(OPIVX2, vabdu_vx_w, OP_UUU_W, H4, H4, DO_ABD)
-+RVVCALL(OPIVX2, vabdu_vx_d, OP_UUU_D, H8, H8, DO_ABD)
-+
-+RVVCALL(OPIVV3, vwabda_vv_b, WOP_SSS_B, H2, H1, H1, DO_ABDACC)
-+RVVCALL(OPIVV3, vwabda_vv_h, WOP_SSS_H, H4, H2, H2, DO_ABDACC)
-+RVVCALL(OPIVX3, vwabda_vx_b, WOP_SSS_B, H2, H1, DO_ABDACC)
-+RVVCALL(OPIVX3, vwabda_vx_h, WOP_SSS_H, H4, H2, DO_ABDACC)
-+RVVCALL(OPIVV3, vwabdau_vv_b, WOP_UUU_B, H2, H1, H1, DO_ABDACC)
-+RVVCALL(OPIVV3, vwabdau_vv_h, WOP_UUU_H, H4, H2, H2, DO_ABDACC)
-+RVVCALL(OPIVX3, vwabdau_vx_b, WOP_UUU_B, H2, H1, DO_ABDACC)
-+RVVCALL(OPIVX3, vwabdau_vx_h, WOP_UUU_H, H4, H2, DO_ABDACC)
-+
-+GEN_VEXT_VV(vabd_vv_b, 1)
-+GEN_VEXT_VV(vabd_vv_h, 2)
-+GEN_VEXT_VV(vabd_vv_w, 4)
-+GEN_VEXT_VV(vabd_vv_d, 8)
-+GEN_VEXT_VX(vabd_vx_b, 1)
-+GEN_VEXT_VX(vabd_vx_h, 2)
-+GEN_VEXT_VX(vabd_vx_w, 4)
-+GEN_VEXT_VX(vabd_vx_d, 8)
-+GEN_VEXT_VV(vabdu_vv_b, 1)
-+GEN_VEXT_VV(vabdu_vv_h, 2)
-+GEN_VEXT_VV(vabdu_vv_w, 4)
-+GEN_VEXT_VV(vabdu_vv_d, 8)
-+GEN_VEXT_VX(vabdu_vx_b, 1)
-+GEN_VEXT_VX(vabdu_vx_h, 2)
-+GEN_VEXT_VX(vabdu_vx_w, 4)
-+GEN_VEXT_VX(vabdu_vx_d, 8)
-+
-+GEN_VEXT_VV(vwabda_vv_b, 2)
-+GEN_VEXT_VV(vwabda_vv_h, 4)
-+GEN_VEXT_VX(vwabda_vx_b, 2)
-+GEN_VEXT_VX(vwabda_vx_h, 4)
-+GEN_VEXT_VV(vwabdau_vv_b, 2)
-+GEN_VEXT_VV(vwabdau_vv_h, 4)
-+GEN_VEXT_VX(vwabdau_vx_b, 2)
-+GEN_VEXT_VX(vwabdau_vx_h, 4)
-diff --git a/disas/riscv-op.c.inc b/disas/riscv-op.c.inc
-index 1d334e4857..07b56f5d52 100644
---- a/disas/riscv-op.c.inc
-+++ b/disas/riscv-op.c.inc
-@@ -490,6 +490,10 @@ OP(vaadd_vv, "vaadd.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm)
- OP(vaadd_vx, "vaadd.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm)
- OP(vaaddu_vv, "vaaddu.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm)
- OP(vaaddu_vx, "vaaddu.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm)
-+OP(vabd_vv, "vabd.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm)
-+OP(vabd_vx, "vabd.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm)
-+OP(vabdu_vv, "vabdu.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm)
-+OP(vabdu_vx, "vabdu.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm)
- OP(vadc_vim, "vadc.vim", rv_codec_v_i, rv_fmt_vd_vs2_imm_vl)
- OP(vadc_vvm, "vadc.vvm", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vl)
- OP(vadc_vxm, "vadc.vxm", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vl)
-@@ -861,6 +865,10 @@ OP(vsuxei16_v, "vsuxei16.v", rv_codec_v_r, rv_fmt_ldst_vd_rs1_vs2_vm)
- OP(vsuxei32_v, "vsuxei32.v", rv_codec_v_r, rv_fmt_ldst_vd_rs1_vs2_vm)
- OP(vsuxei64_v, "vsuxei64.v", rv_codec_v_r, rv_fmt_ldst_vd_rs1_vs2_vm)
- OP(vsuxei8_v, "vsuxei8.v", rv_codec_v_r, rv_fmt_ldst_vd_rs1_vs2_vm)
-+OP(vwabda_vv, "vwabda.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm)
-+OP(vwabda_vx, "vwabda.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm)
-+OP(vwabdau_vv, "vwabdau.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm)
-+OP(vwabdau_vx, "vwabdau.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm)
- OP(vwadd_vv, "vwadd.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm)
- OP(vwadd_vx, "vwadd.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm)
- OP(vwadd_wv, "vwadd.wv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm)
-diff --git a/target/riscv/tcg/insn_trans/trans_rvv.c.inc b/target/riscv/tcg/insn_trans/trans_rvv.c.inc
-index a22e2cae6c..14ef961607 100644
---- a/target/riscv/tcg/insn_trans/trans_rvv.c.inc
-+++ b/target/riscv/tcg/insn_trans/trans_rvv.c.inc
-@@ -4091,3 +4091,48 @@ GEN_INT_EXT_TRANS(vzext_vf8, 3, 2)
- GEN_INT_EXT_TRANS(vsext_vf2, 1, 3)
- GEN_INT_EXT_TRANS(vsext_vf4, 2, 4)
- GEN_INT_EXT_TRANS(vsext_vf8, 3, 5)
-+
-+/* Zvabd Extension */
-+#define GEN_ABD_CHECK(NAME, CHECK_FN, MAX_SEW)                       \
-+static bool NAME(DisasContext *s, arg_rmrr *a)                       \
-+{                                                                    \
-+    return CHECK_FN(s, a) && s->cfg_ptr->ext_zvabd &&                \
-+           s->sew <= MAX_SEW &&                                      \
-+           (s->sew != MO_64 || s->cfg_ptr->ext_zve64x);              \
-+}
-+GEN_ABD_CHECK(vabd_vv_check, opivv_check, MO_64)
-+GEN_ABD_CHECK(vabd_vx_check, opivx_check, MO_64)
-+GEN_ABD_CHECK(vwabd_vv_check, opivv_overwrite_widen_check, MO_16)
-+GEN_ABD_CHECK(vwabd_vx_check, opivx_overwrite_widen_check, MO_16)
-+
-+GEN_OPIVV_TRANS(vabd_vv, vabd_vv_check)
-+GEN_OPIVX_TRANS(vabd_vx, vabd_vx_check)
-+GEN_OPIVV_TRANS(vabdu_vv, vabd_vv_check)
-+GEN_OPIVX_TRANS(vabdu_vx, vabd_vx_check)
-+
-+#define GEN_ABD_OPIVV_WIDEN_TRANS(NAME, CHECK)                          \
-+static bool trans_##NAME(DisasContext *s, arg_rmrr *a)                  \
-+{                                                                       \
-+    static gen_helper_gvec_4_ptr * const fns[2] = {                     \
-+        gen_helper_##NAME##_b, gen_helper_##NAME##_h,                   \
-+    };                                                                  \
-+    return s->sew <= MO_16 && do_opivv_widen(s, a, fns[s->sew], CHECK); \
-+}
-+
-+#define GEN_ABD_OPIVX_WIDEN_TRANS(NAME, CHECK)                          \
-+static bool trans_##NAME(DisasContext *s, arg_rmrr *a)                  \
-+{                                                                       \
-+    if (CHECK(s, a)) {                                                  \
-+        static gen_helper_opivx * const fns[2] = {                      \
-+            gen_helper_##NAME##_b, gen_helper_##NAME##_h,               \
-+        };                                                              \
-+        return opivx_trans(a->rd, a->rs1, a->rs2, a->vm,                \
-+                           fns[s->sew], s);                             \
-+    }                                                                   \
-+    return false;                                                       \
-+}
-+
-+GEN_ABD_OPIVV_WIDEN_TRANS(vwabda_vv, vwabd_vv_check)
-+GEN_ABD_OPIVX_WIDEN_TRANS(vwabda_vx, vwabd_vx_check)
-+GEN_ABD_OPIVV_WIDEN_TRANS(vwabdau_vv, vwabd_vv_check)
-+GEN_ABD_OPIVX_WIDEN_TRANS(vwabdau_vx, vwabd_vx_check)
--- 
-2.55.0
-
+>
+> Regards,
+> Pierrick
 
