@@ -4,28 +4,28 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7B3FCC6B19
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 01:24:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24D29CC6B19
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 01:24:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGnj3-0005TM-T9; Tue, 13 Oct 2026 21:24:13 -0400
+	id 1xGnjB-0005X0-GI; Tue, 13 Oct 2026 21:24:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1xGnj1-0005Sv-I7; Tue, 13 Oct 2026 21:24:11 -0400
+ id 1xGnjA-0005WC-C0; Tue, 13 Oct 2026 21:24:20 -0400
 Received: from mail-japaneastazlp170130007.outbound.protection.outlook.com
  ([2a01:111:f403:c405::7] helo=TYDPR03CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1xGniz-0006ql-Q4; Tue, 13 Oct 2026 21:24:11 -0400
+ id 1xGnj8-0006ql-2H; Tue, 13 Oct 2026 21:24:20 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=lrnZDSz7skC49irDQ9v1+MHzr29V/IHvDqZahAmq419lwE7BJ0o7bqP6eQpjI4uN/zY8NNs4E0cdv+VpUdbhAEY/NBFgTE0UlkKPlt9c3L7AOARFwEpz9xTEZ/Ddt/Ab7/82QAhJNdz9Oy2tW1bQ81DPDPKDZ/2IDiVvHktjH6mtYwMonSmfL3U/YXh9hcXMNMW9nYKMW54mQkAq+aFA4HS4czwMnJygrU9iyRI/iJOVTMyH9SJJzkDzaEUGGO0dyuuNcHDNrRePkRDsHY9FUvYbv5lD4pmNCRLpicYx/BWhPtn023v5Y16xZcIFZAgZCYh/rwkczAjr1qcxfPPjdQ==
+ b=i8W6Rd5Stqw8VyJnoEbKe6aJce9sBdWwDM73QNBkXMdDvlzfKu3suLjaGfQ/HvKus+uQpwQlS4VH2mW0YWHU8QPXXA6YxlBqDE7CLv9zETO5O23hLqRPgxj41O/hXLJeg08YtRPMWhB4qWSk1FY0tAT/7Vhxu5fH+5Vmk1pRk/7/3AnaR5EYRP2UOVqFdHfkjG+H+MZXl8iam7tmtsM+KBq+Pdo5MeN4hv0cHv9kVYHTEoTNKR0/ZtYNpvmakYjASTNwIODIxjY+V0rwQ7PL35vjKE7byf5mftOZelP+8Do7ILGGu0picOYsfaZpON69Fr19XqCoR2dfIMwe2/1brg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=iFpJ9JRgEBO+VaHtLo7Qedad+cMHZycM3aypk00REtU=;
- b=HrIXFVoQtV5+2357MdktkiPDGV9kFDDSfb6+fRUzQADOlviH0KaaYAyf1ClDoqE7kQWl7wrUQyYVfM1iDAwDp1OxOQ4KyTKsZCqgWv32IDxPEBnka3bjSe7hGwTZXcnu1o6JZkom9CGXfXLTaLz5vy3iLBVwNohhvSttAYA1biK2U+1CRcYpkfx5kJqUcmy+8ThMTxOqFptIsgdWNUwda0Z2FYZCz3vFDFoeGiF09kicu1GOrQoug6WWSlAPzX54p1kCvlCHvArtiejx5TRbzClyySOJ7aSXq7N4G8T+hrhNoSOskvFS8y3geLNps6/BQCMyFWzxJ9oLv367VFUf5A==
+ bh=bg52kWXK8j7jf/301TCFVCrSsD2/GDUhc+1K1wL9I10=;
+ b=Akz6+sKiZ+aB3nmFTNoSFJPLEKmN5y8jiyJTkxopp8B50gDvQPq9tq6Upl7XEFpe55QX3jaL1jvbMUGFd2YfYynfitPDhYEW9psezlact7J7sr/5rzMakDmpUxOiDfF47A3rrOC60JSxWonED24vDwRuPEpJ9/w4sb7JJyz6adyLCmS23iUGsR3mEHtQPCcTuz0Y3RwKG/FH351kP4nvhWjXCLgcI/qgRThcb8Eo1dCwQK0m7s0j7g+5FnrvJQ5es7qWg/IFROEEqLcwQsMCC9lE3b6PRZ0e1YT/KuKYqUtYHoO0mkpaHPJhMkGMkQ3RUKpY7WHWjhrJybq7Uz01AA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=processmission.com; dmarc=pass action=none
  header.from=processmission.com; dkim=pass header.d=processmission.com;
@@ -33,32 +33,28 @@ ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=iFpJ9JRgEBO+VaHtLo7Qedad+cMHZycM3aypk00REtU=;
- b=cdK4QGnfXAxFnZRktKYgXc6KhhvS0DQvzbBw8gXtnK6gWCePRZKlFPYYJAh81MtSxGKfIh7YYya8Ug7oiV9czSCHcfO+ptsToEKYVktGVU8P8TgGX8THF5xwyy4dC1Yq+D3Mj8c1ROHt4Jf7F0lah3FYZMxu3sNyEMPNglvDwQYy/Bzy+zfbLjMwltapLGqKKBVeUfz2vC2Hyo1XTGm5wzhv/qOlBAqryXCvraWfbYBLpmDVwkUjKuVMpddTmcz7S6WlqSLb6FFuFIxRfA1S+exjFHhLtJgOYACb5saRIJfc4GYG+MjGuWxDvIFfsDdwHUJ3GYq/9BJ3YYTVvNH3YQ==
+ bh=bg52kWXK8j7jf/301TCFVCrSsD2/GDUhc+1K1wL9I10=;
+ b=RbtcPcNJ20qvblKKzMn0RL7rhgBANdgmIz8PUTxIpxclyZoAXjuSKbZzBrr22i3cSqzcqpk9OS07wR9LX/dX8+epl2VldgRpXETW2XtdkYP2FldgGU/G3OhiJdJ/u5xZqWeCUqso5jyP17yjJ0b/tuAIgyWQWAOPDA+GMFSjJkRHUFDaFDPoJKe+M4dgAkADQ9UYNWTuLrhHHD3dkssnD04cBa72mDR3OLBn88XaCxvflwMKFIH61QMyiWMkBoanrTVm8azsc8NEzM6bvuhd/TvnN8wD557TwpEOj8tFFdQoXNAVMxpmV8R+4WoAn+F7Troz3X8x573v4R/nPt2O6Q==
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=processmission.com;
 Received: from KL1PR02MB6257.apcprd02.prod.outlook.com (2603:1096:820:da::11)
  by KL1PR02MB6214.apcprd02.prod.outlook.com (2603:1096:820:9e::10)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.522.12; Wed, 14 Oct
- 2026 01:23:59 +0000
+ 2026 01:24:08 +0000
 Received: from KL1PR02MB6257.apcprd02.prod.outlook.com
  ([fe80::ecf9:e832:8196:215]) by KL1PR02MB6257.apcprd02.prod.outlook.com
  ([fe80::ecf9:e832:8196:215%6]) with mapi id 15.21.0496.021; Wed, 14 Oct 2026
- 01:23:59 +0000
+ 01:24:08 +0000
 From: Bin Meng <bin.meng@processmission.com>
 To: QEMU <qemu-devel@nongnu.org>
-Cc: Conor Dooley <conor.dooley@microchip.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Chao Liu <chao.liu@processmission.com>, Conor Dooley <conor@kernel.org>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+Cc: Alistair Francis <Alistair.Francis@wdc.com>,
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
  Palmer Dabbelt <palmer@dabbelt.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Sebastian Huber <sebastian.huber@embedded-brains.de>,
- Weiwei Li <liwei1518@gmail.com>, qemu-riscv@nongnu.org
-Subject: [PATCH v4 05/27] hw/riscv: pfsoc: Map the SiFive L2CC memory windows
-Date: Wed, 14 Oct 2026 09:22:45 +0800
-Message-ID: <20261014012323.322790-6-bin.meng@processmission.com>
+ qemu-riscv@nongnu.org
+Subject: [PATCH v4 08/27] tests/qtest: Add SiFive L2 cache controller coverage
+Date: Wed, 14 Oct 2026 09:22:48 +0800
+Message-ID: <20261014012323.322790-9-bin.meng@processmission.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261014012323.322790-1-bin.meng@processmission.com>
 References: <20261014012323.322790-1-bin.meng@processmission.com>
@@ -70,56 +66,56 @@ X-ClientProxiedBy: TY6PR01CA0005.jpnprd01.prod.outlook.com
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: KL1PR02MB6257:EE_|KL1PR02MB6214:EE_
-X-MS-Office365-Filtering-Correlation-Id: 8c247fa4-4422-4f47-d2e3-08df2991d2bd
+X-MS-Office365-Filtering-Correlation-Id: d3cf1651-6c5d-469d-296d-08df2991d7dd
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|23010399003|1800799024|376014|366016|7416014|6133799003|18002099003|22082099003|10067099003|261009223027099003|56012099006;
-X-Microsoft-Antispam-Message-Info: +JGvZ6QZWgUY+ZpvP56Rvw59EgRZ/4ooVgo7EV8uUCm4i1rqD32kSim9Ixw0VqThxWDtzx6h+YIayLOepU+ECPX/eHApfX0NKTUtS2lzykC5rNDjoqn+98ovaq++ZH+48RWZqS/il87S33P034WXgVrtYJVcJwf3psYG/ix2tJyJtr5EkhdloY/tFgTDUhM53DBdgBajWqSO8Ym6Wns/G4C+redmorzYzOWEizjOMkFiATF3jrhLHKdIUHBoDwUE1n5j0veIeWdyGnlFVJPxhYip6CWxuRORP/VCey8Wrni6vQYepgnLdLwz4OzJBAAa1KasKEECmeq0NNhtkgcgqQIEs+QfIqZ30OiCEuVSiefDqBCjcmdX+5MvSB9LTLS3txbzcAbajzkyy2rapCjh5Tu0LoKlWNu7pkada4TZgCCfafM1waGjSKbqoXBrHmR4XTuHfCkdhtpRVMcKTVDoxroJSwNbo6tpY1tTDdZqoCGTyUXwiGnu2UWzHPeawsFgbFpruh+WLs0yQnPVSfa+p3N3jbQ54NLQIKlKdg7+2M2JPweXZjDrlIdmlJnahOM1eM4OygjmI2i37bAV3AuMGwVucJJcI8gjymhkwZaGUHk79MPQafh4QYIFmdiuIaFaawTkE0d8LI7oDT/s9c4pd6DbRBy1Wk6O20/dbhT+xeY=
+ ARA:13230040|23010399003|1800799024|376014|366016|6133799003|18002099003|22082099003|260925022911599003|10067099003|260925021311599003|260925021911599003|261009221227099003|261009223027099003|5023799004|56012099006;
+X-Microsoft-Antispam-Message-Info: V1h2/Lj6b9/uos1++26z5Bz8f5JDpF/57YWktwQw2hWj+aOTBQe5U+cIKClzXd7DauHQ/t+6DofrYZyQchlU+yw6cu5R0YQAR2vVl5cbBv2nstMZnJKPBpwl3oHnIbob2Hz1HdNsvOqmyUWK1vJYBhEtzBcbvcgHHabwZLfmYvwGeqphZA85Wnh1KcnGyuIa7NA7q5Z2JuKwrBJk/bnKmQUgSEq1Y9xt4hg4sJeuJPXill0/HpMx5yJH4KLGneKQt1nRSnZc6ZAH/yFv6YqJsosYA4po0pHy6AuiEKCJ4q9r0IytTR3cFbklrjnL0D/NLs0O3Ya7DtAKL7BqQsbwzuNj7BKudm5cPngzIfP5x+x8USpANkX622xiti0JngId143hJpcArQuqT+L2mU8kZqIGaq/D8ByGb9t61WHQI370DaDtihJjYLcV+NMfM3DF6RQ7ydQffpwu1lCLEhujxIRQNqNJQrsVK3Hu1CSjBdt3s8xdLI53a/wDHHDxJBHL9gcOUcMnaid9ncRuNrvaiZVh5nIsqFNX9w33qwY/143M7M7KMet6VyXzLwIl2RDtTuvmnNWEWg31pCBPhtgURQsPxrM03gqnTviAv1H2JlNB4nSoUOhLYAqjCwg/iEnpZJH1AwxnntOeRj7W47/rwLbeeWHG+017ykQJMh1RIgw=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:KL1PR02MB6257.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(23010399003)(1800799024)(376014)(366016)(7416014)(6133799003)(18002099003)(22082099003)(10067099003)(261009223027099003)(56012099006);
+ SFS:(13230040)(23010399003)(1800799024)(376014)(366016)(6133799003)(18002099003)(22082099003)(260925022911599003)(10067099003)(260925021311599003)(260925021911599003)(261009221227099003)(261009223027099003)(5023799004)(56012099006);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?KyvfmlJjsCCZqHw9NeoDeJ7u1hQqzjf0i64DbMwIwi5eUxzxx9J8p2wu3dr4?=
- =?us-ascii?Q?HtvlPTJUJDdiSSZuKg8iQ+A7JtmCeznVusk5GNvfCeyCNK4s9ES7mWIZWJt+?=
- =?us-ascii?Q?pXWOkO8tTXdjziI66GY+2WM6gxB+evyUKBol1Ykd8WP18sG0oiTAuOsvCb+x?=
- =?us-ascii?Q?CvHhv2LAHHClFdR1NXIASDEmUhNg8Z+JUCKt86Fl1w3Okto3kWS7mRh2vbNw?=
- =?us-ascii?Q?n7GY8E5V8zDKjCpVUKsQJNHdQ6OMKONmnP1JqcjSeM4JGjOMFGTWuFeeIYf6?=
- =?us-ascii?Q?iDbkMWflmk5hSttDFn7OHyfZCgM9bRcm7JzfUZr+hJkTLNFmWYnxO3fIA9NL?=
- =?us-ascii?Q?CqoRwi8olq4Qcdi3laTu4bfLilUXbuf7dtX5+7pHEgGPPiJRlpE/K2Mi9BGJ?=
- =?us-ascii?Q?CrItb61rkhKt9a3sTFXJQp19TZukrOcsVqCOVqvVf2Yj8rglXMDs/AVRguxw?=
- =?us-ascii?Q?oc1NNVqs2QP7cLO9Si7xSve7iCDe5D3jvGD43eqEV06tg1/qnDfXyz6YipFN?=
- =?us-ascii?Q?fXZTyHZ3NpETgxsht9ppO4s9VmIUlqFPljJ+D7QpEE7Vbl1cD/w4HFgP7NeH?=
- =?us-ascii?Q?Y0MpK8yJQUCEvlYiWmR15oQlmkYiBV1lXrqGtYsMzd4hfmNp0FKNlShF5p9W?=
- =?us-ascii?Q?DUeNfAl2DpDZq5GO08l/Y5pKI1hbpjG991JBZTAf+Dm22K1JmoHy79gidglD?=
- =?us-ascii?Q?Y7tHaKg6evs7dFRzSsn7LhTzOfNEFAKMfuyWQSCaOAaKRBRo6VYtIXH/HuZR?=
- =?us-ascii?Q?XxvU1W17SrI307S9ZR4bPrW46RJj6kj3vzkVnZF0pu08EWq+z3PHvdAQY65j?=
- =?us-ascii?Q?7sSkGk/VO9D9TihpufLD7Wp64BYqdnT5zFzUDeXUUhDuobqTmW22d7eachwe?=
- =?us-ascii?Q?Z1rleGMWYvdcK5F8lxu8QLLZHuiOgIe1prHeiavNbzXL4OnbLSEtWtiW3bbJ?=
- =?us-ascii?Q?sotKTto+Onpgu2d9fHuYBatJUd4GBkKa2Bq85xD2peE3r56VlcMNfK4luexQ?=
- =?us-ascii?Q?Paikk/BL4KsY/eYt2C6sgCrc2dZsrqOOIaQmHZsoGoE7HxYBciI021Xq6fzL?=
- =?us-ascii?Q?C/3HBj5ypfEQS5dB6xuVbcKUsYrY8iz9n/z7DxoqpswpghQZXMSD9YKGI4wV?=
- =?us-ascii?Q?/7XNca95fPg5q/UBXkyqfE8uYfLsgFQ5ejrF0adefSFBpdmE1WrmfCill1Sa?=
- =?us-ascii?Q?uW4g72UKneXQA+WJ6UUg0DM170gELSDUSbgDrQBp7lHEF7vQssOVhSsY/v81?=
- =?us-ascii?Q?wL7lIWZlVBEB4Mq8x6QgO/DKKa2TgSKMBnM58mNBsfxQ9/PiLZkRoKZwQxp8?=
- =?us-ascii?Q?ueddJkuJSryOEcYe8wUCIPkTjM2t3Fu7fHlnPhw4dhW/Ny1yk7UwGv/4eSUi?=
- =?us-ascii?Q?rc9T3hMb12M+wTj1Mgl0tJ6/6MQSX9kUROJnBRsLQG3CqWo4EngDpJgMIMZS?=
- =?us-ascii?Q?gMgcGnWgKeDWt1XokiJmcUiqc1Q0Ua6lWloWnjiXFgHu93UKUGGQsfVnbagy?=
- =?us-ascii?Q?dB/oAeBnsPf9l+1UtuxnVsZAiEzizYeAqvTLiclEW4ZEt7B56zWxK8c3oQXD?=
- =?us-ascii?Q?TRFNOvMOs+SwIAFp9yboLcz7A8x0M7TkNEM+P99psPWxgps4dXQdH9i99cFL?=
- =?us-ascii?Q?+K4mFwWUgKTMz1R4eMG3bMD25viwV3LYB9dbmZ63BxzBRQt/UHgTwuLSevIp?=
- =?us-ascii?Q?31o3Rl7ZQRjJl2PWdl3h4ik8kBG2/DAVnVpXRRFfRzdxOEdPDFogfeVAQcZg?=
- =?us-ascii?Q?ddBjWcAL3MnVTs5ZkHIZY5ickyxMiEM=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?+YgkjUE7T85FMF2EbrhLqE8c6D9x4TVJUT7cwdTwEGljvqD4hdUvzFWC8VgU?=
+ =?us-ascii?Q?S0cv+MYCLpr2ZPn+6avtoBo+nNg29TUdbR5j5EOuI7yNnVn0WhENzsWroleB?=
+ =?us-ascii?Q?idxZ8iXqS9W5V2dX94HMYSO2M+iRYB4mF9r2i3enobWXpSddECr0yYvPjsXo?=
+ =?us-ascii?Q?ynY++WWjspjEOMl5l3Oblfvp3QMuuk+cLiSCrcL6BMNUB4zDmlQ11d34TboQ?=
+ =?us-ascii?Q?0iGm3LRx63hpQ3IV9Nssj+g6n8AnOYhDhaTz23OjFH8NUwzwtcsfTqyVEuNz?=
+ =?us-ascii?Q?1+mUFn/XGpjto1CCW+8Bb0mzPKof7/hpROyZOxMn7xx2DjMbXZpUgsPrKj3x?=
+ =?us-ascii?Q?yKU/usDqiEmRbhc/2GNl+9m3oQiugy6OwAsVb5Hv+C+KjktEuJPABYfWZQFl?=
+ =?us-ascii?Q?ryOqepORAb6W/+qkVRe0kBJF3+kgu9mrJS1j6CmPA1KA1DmUs8//QAl+8MSc?=
+ =?us-ascii?Q?enscZUvI1se6gVFQAYSrveJVBOgwYZdsP/344z8JXSyvtN+I/btdrPlc1kpj?=
+ =?us-ascii?Q?K+LgvVdtF3VgLBDqKcc9PDB2BvYtBL3QLShxggKgFrI39Oh3GpbisJ7F/ZVp?=
+ =?us-ascii?Q?En3zzBfBWldO2KKzZ30FTh8AZxUUoAi08Ks6WOK16hInKG1+VUU2vH3+ze9V?=
+ =?us-ascii?Q?7gjZVgR/KTWUJhIRC/U9WugL+6pX3+3OFq4Yz9+cBrRcrnREl4kisl4+7LGz?=
+ =?us-ascii?Q?idxxzZ14MLvnRJTGwxEYriE+oLbN9GBVs76PgUWGIJQWlI5b2su+3puGV0Co?=
+ =?us-ascii?Q?tXkQb748Wg6YSgyhrUiIy67xNwEJfuRpFUOVrR1ye+XWCY9oXxiWAUjH00PJ?=
+ =?us-ascii?Q?5Guek+gaTLwr+dMVZZfkeMwrJzJ56Sq7TVV/kpOHB0z8HMu1OyrblgA2yHlX?=
+ =?us-ascii?Q?ZrVlLjWOrjy7LAg+Gv+FCZ6uIYOvMNQ30lpAo9D+IiaM/UMKhyYlOxK7Eswu?=
+ =?us-ascii?Q?LxiegYpqcCMObLvAInB+YH78WoB12lmViSPHvrytLzshgsuBPUShn1ZKRU6f?=
+ =?us-ascii?Q?7uRCxZgcpqeWhvSSvmfgjjNSCcIeap56XfTNZSqgvLNhr8MQEqt4SQJe7HZo?=
+ =?us-ascii?Q?+0DK0ADOcre0GpRDg41ca3eS6tZ+Pi32qFdJ44fq3omSS9j2YyM0xql82yaW?=
+ =?us-ascii?Q?GHXhvL0dgzXiZSKG689LRDdK8FvNXKqdAE9/YfKutnqFDE9DaECvnonNgh5T?=
+ =?us-ascii?Q?wmsAGJ9iv3vOIe9Ky6OnVT/r6Dy0ooIzuAjwytIKnkwF2/iTVUn5v63EMtr3?=
+ =?us-ascii?Q?niBTAu1+ECUjMiyJASRnsgXKqQOczdZtAt9EAPsElF0J7UWc1T24f8TgZEKp?=
+ =?us-ascii?Q?geFg0qP2CQBP8rkiCTc5gqniNJcMZhdQX3ys9QvGurO/VYykS9sVzBw0VBPW?=
+ =?us-ascii?Q?l7X2VLW1GzTfpmPjY3EU0eA6R8mBc8d2wnqBI+1eAYfR/myCTkOHrehJ60za?=
+ =?us-ascii?Q?yaELUMO2uiS6osQHk54xP0Vw0+UC+dDd9I0j858mcTdJQHlFnAh07+6iuJ8i?=
+ =?us-ascii?Q?opoVf8S2VLUZm5SbgJxD66ALbYiCD5KKSm8WmPEwdFW04bPonF4UIx0uGdte?=
+ =?us-ascii?Q?Dw3MboOpfG8BKRleUgMzOiebRIiSN1ItjtQyk+p/TqGscOW17XKH+IvU525/?=
+ =?us-ascii?Q?wp2tmCx1HqXJxcT2jOFreQRIu3uYErJgGsbFR3LnFS1TAGW9jmENcEPS9tCr?=
+ =?us-ascii?Q?XzmGkGdn5vBnGHMjoRBzXvSmtMc7yPpEGZVVjaR7KMGw89ZtnVihhAalhMIX?=
+ =?us-ascii?Q?lbgcIWD0viwWCGIxUkMYJl+gwsTQ4ek=3D?=
 X-OriginatorOrg: processmission.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 8c247fa4-4422-4f47-d2e3-08df2991d2bd
+X-MS-Exchange-CrossTenant-Network-Message-Id: d3cf1651-6c5d-469d-296d-08df2991d7dd
 X-MS-Exchange-CrossTenant-AuthSource: KL1PR02MB6257.apcprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Oct 2026 01:23:59.4157 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Oct 2026 01:24:07.9957 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: bXQvaXUPde2ZAGa61TAWtWxeLForBXY6efHl0OJ53ozF8vTzgLVwiPoNpQRw1mOXeHYKYqT2NFa3yysHiY2GfV4IrpwXEJefCC+XKM7BxPg=
+X-MS-Exchange-CrossTenant-UserPrincipalName: u+BNMWKKyaCWbwRpO/nQqeJYkFlLLai6Mpd8HSLpsQrW1d0uid2UPpVpAwXmZJHqianseJJyOQJit0Qzg/fsQIIMX51TZnTTuvC+TP+5hTQ=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: KL1PR02MB6214
 Received-SPF: pass client-ip=2a01:111:f403:c405::7;
  envelope-from=bin.meng@processmission.com;
@@ -146,140 +142,379 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-L2-LIM consists of cache SRAM ways controlled by L2CC WayEnable, and
-L2 Zero is the controller's scratchpad allocation interface. Creating
-their RAM stand-ins in the SoC and passing a LIM link splits ownership
-of the register state and the memory views it controls.
+Exercise Config, WayEnable, and indexed WayMask registers on the
+PolarFire and FU540 integrations, including their different master
+counts, reset, monotonic writes, and unimplemented-register logging.
 
-Instantiate the shared SiFive L2CC with 15 masters and the existing
-2 MiB modeled Zero aperture. Let the controller own the backing and
-both windows, and map its register, LIM, and Zero regions from the SoC.
-Remove the external RAM allocations and the l2-lim link.
+Verify that enabling cache ways hides the corresponding LIM range,
+while the controller's Zero window stays accessible. Check that reset
+restores hidden LIM data without clearing the Zero RAM stand-in.
 
-The device restores the visible LIM range after reset or migration.
-L2 Zero keeps its fixed aperture as a RAM approximation of scratchpad
-access rather than tracking the remaining LIM capacity.
+Migrate register state and both RAM backings, verify the destination
+LIM view, and confirm that writes to hidden addresses do not alter the
+data restored by a later reset.
 
 Signed-off-by: Bin Meng <bin.meng@processmission.com>
-Tested-by: Conor Dooley <conor.dooley@microchip.com>
 
 ---
 
 (no changes since v3)
 
 Changes in v3:
-- Configure and instantiate the shared SiFive L2CC
-- Map the register, LIM, and Zero windows exposed by the controller
-- Remove the external RAM allocations and l2-lim link
-- Keep the PolarFire master count and modeled Zero aperture unchanged
+- Rename the test for the shared SiFive L2CC model
+- Exercise 15 masters on PolarFire and 21 masters on FU540
 
- include/hw/riscv/microchip_pfsoc.h |  2 ++
- hw/riscv/microchip_pfsoc.c         | 45 ++++++++++--------------------
- hw/riscv/Kconfig                   |  1 +
- 3 files changed, 17 insertions(+), 31 deletions(-)
+ MAINTAINERS                    |   1 +
+ tests/qtest/sifive_l2cc_test.c | 306 +++++++++++++++++++++++++++++++++
+ tests/qtest/meson.build        |   3 +
+ 3 files changed, 310 insertions(+)
+ create mode 100644 tests/qtest/sifive_l2cc_test.c
 
-diff --git a/include/hw/riscv/microchip_pfsoc.h b/include/hw/riscv/microchip_pfsoc.h
-index 612fd2b69c..18f5003850 100644
---- a/include/hw/riscv/microchip_pfsoc.h
-+++ b/include/hw/riscv/microchip_pfsoc.h
-@@ -27,6 +27,7 @@
- #include "hw/cpu/cluster.h"
- #include "hw/dma/sifive_pdma.h"
- #include "hw/misc/mchp_pfsoc_dmc.h"
-+#include "hw/misc/sifive_l2cc.h"
- #include "hw/misc/mchp_pfsoc_ioscb.h"
- #include "hw/misc/mchp_pfsoc_sysreg.h"
- #include "hw/net/cadence_gem.h"
-@@ -43,6 +44,7 @@ typedef struct MicrochipPFSoCState {
-     RISCVHartArrayState e_cpus;
-     RISCVHartArrayState u_cpus;
-     DeviceState *plic;
-+    SiFiveL2CCState l2cc;
-     MchpPfSoCDdrSgmiiPhyState ddr_sgmii_phy;
-     MchpPfSoCDdrCfgState ddr_cfg;
-     MchpPfSoCIoscbState ioscb;
-diff --git a/hw/riscv/microchip_pfsoc.c b/hw/riscv/microchip_pfsoc.c
-index 8106dbb3ad..d0d8c8f84c 100644
---- a/hw/riscv/microchip_pfsoc.c
-+++ b/hw/riscv/microchip_pfsoc.c
-@@ -174,6 +174,12 @@ static void microchip_pfsoc_soc_instance_init(Object *obj)
-     object_initialize_child(obj, "dma-controller", &s->dma,
-                             TYPE_SIFIVE_PDMA);
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 1312bbd1bd..acb79a7d61 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -1827,6 +1827,7 @@ F: docs/system/riscv/sifive_u.rst
+ F: hw/*/*sifive*.c
+ F: include/hw/*/*sifive*.h
+ F: tests/functional/riscv64/test_sifive_u.py
++F: tests/qtest/sifive_l2cc_test.c
  
-+    object_initialize_child(obj, "l2-cache-controller", &s->l2cc,
-+                            TYPE_SIFIVE_L2CC);
-+    qdev_prop_set_uint32(DEVICE(&s->l2cc), "num-masters", 15);
-+    qdev_prop_set_uint64(DEVICE(&s->l2cc), "zero-size",
-+                         microchip_pfsoc_memmap[MICROCHIP_PFSOC_L2ZERO].size);
+ Tenstorrent Machines
+ M: Joel Stanley <joel@jms.id.au>
+diff --git a/tests/qtest/sifive_l2cc_test.c b/tests/qtest/sifive_l2cc_test.c
+new file mode 100644
+index 0000000000..fef80f3438
+--- /dev/null
++++ b/tests/qtest/sifive_l2cc_test.c
+@@ -0,0 +1,306 @@
++/*
++ * QTest testcase for the SiFive L2 cache controller
++ *
++ * Copyright (c) 2026 Process Mission
++ *
++ * Author:
++ *   Bin Meng <bin.meng@processmission.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
 +
-     object_initialize_child(obj, "sysreg", &s->sysreg,
-                             TYPE_MCHP_PFSOC_SYSREG);
++#include "qemu/osdep.h"
++#include "qemu/units.h"
++#include "libqtest.h"
++#include "migration/migration-qmp.h"
++#include "migration/migration-util.h"
++
++#define L2CC_BASE                       0x02010000
++#define L2CC_CONFIG                     0x000
++#define L2CC_CONFIG_VALUE               0x06091004
++#define L2CC_WAY_ENABLE                 0x008
++#define L2CC_ECC_INJECT                 0x040
++#define L2CC_FLUSH64                    0x200
++#define L2CC_WAY_MASK_BASE              0x800
++#define L2CC_WAY_MASK_COUNT             15
++#define L2CC_MAX_MASTERS                21
++#define L2CC_WAY_MASK(n)                (L2CC_WAY_MASK_BASE + 8 * (n))
++#define L2CC_MASTER15                   L2CC_WAY_MASK(L2CC_WAY_MASK_COUNT)
++#define L2CC_WAY_ENABLE_RESET           0
++#define L2CC_WAY_MASK_RESET             UINT64_MAX
++
++#define L2_LIM_BASE                     0x08000000
++#define L2_WAY_SIZE                     (128 * KiB)
++#define L2_LIM_RESET_WAYS               15
++#define L2_ZERO_BASE                    0x0a000000
++#define L2_ZERO_SIZE                    (2 * MiB)
++
++static QTestState *sifive_l2cc_start(const char *firmware)
++{
++    return qtest_initf("-machine microchip-icicle-kit -smp 5 -m 2G "
++                       "-bios \"%s\"", firmware);
++}
++
++static char *sifive_l2cc_create_firmware(void)
++{
++    static const uint8_t firmware[] = {
++        0x13, 0x00, 0x00, 0x00,
++        0x6f, 0x00, 0x00, 0x00,
++    };
++    char *path;
++    int fd;
++    ssize_t written;
++
++    fd = g_file_open_tmp("sifive_l2cc_XXXXXX", &path, NULL);
++    g_assert_cmpint(fd, >=, 0);
++
++    written = write(fd, firmware, sizeof(firmware));
++    g_assert_cmpint(written, ==, sizeof(firmware));
++    close(fd);
++
++    return path;
++}
++
++static uint64_t l2cc_way_mask_test_value(unsigned int master)
++{
++    return UINT64_C(0xfedcba9876543201) + master;
++}
++
++static void test_l2cc_registers(void)
++{
++    g_autofree char *firmware = sifive_l2cc_create_firmware();
++    QTestState *qts = sifive_l2cc_start(firmware);
++    unsigned int i;
++
++    unlink(firmware);
++
++    g_assert_cmphex(qtest_readl(qts, L2CC_BASE + L2CC_CONFIG), ==,
++                    L2CC_CONFIG_VALUE);
++    qtest_writel(qts, L2CC_BASE + L2CC_CONFIG, UINT32_MAX);
++    g_assert_cmphex(qtest_readl(qts, L2CC_BASE + L2CC_CONFIG), ==,
++                    L2CC_CONFIG_VALUE);
++
++    g_assert_cmphex(qtest_readb(qts, L2CC_BASE + L2CC_WAY_ENABLE), ==,
++                    L2CC_WAY_ENABLE_RESET);
++    qtest_writeb(qts, L2CC_BASE + L2CC_WAY_ENABLE, 0xd);
++    g_assert_cmphex(qtest_readb(qts, L2CC_BASE + L2CC_WAY_ENABLE), ==, 0xd);
++    qtest_writeb(qts, L2CC_BASE + L2CC_WAY_ENABLE, 3);
++    g_assert_cmphex(qtest_readb(qts, L2CC_BASE + L2CC_WAY_ENABLE), ==, 0xd);
++    qtest_writeq(qts, L2CC_BASE + L2CC_WAY_ENABLE, 0xf);
++    g_assert_cmphex(qtest_readq(qts, L2CC_BASE + L2CC_WAY_ENABLE), ==, 0xf);
++    qtest_writeb(qts, L2CC_BASE + L2CC_WAY_ENABLE, 0xe);
++    g_assert_cmphex(qtest_readb(qts, L2CC_BASE + L2CC_WAY_ENABLE), ==, 0xf);
++
++    for (i = 0; i < L2CC_WAY_MASK_COUNT; i++) {
++        g_assert_cmphex(qtest_readq(qts, L2CC_BASE + L2CC_WAY_MASK(i)), ==,
++                        L2CC_WAY_MASK_RESET);
++        qtest_writeq(qts, L2CC_BASE + L2CC_WAY_MASK(i),
++                     l2cc_way_mask_test_value(i));
++    }
++    for (i = 0; i < L2CC_WAY_MASK_COUNT; i++) {
++        g_assert_cmphex(qtest_readq(qts, L2CC_BASE + L2CC_WAY_MASK(i)), ==,
++                        l2cc_way_mask_test_value(i));
++    }
++
++    qtest_system_reset(qts);
++    g_assert_cmphex(qtest_readl(qts, L2CC_BASE + L2CC_CONFIG), ==,
++                    L2CC_CONFIG_VALUE);
++    g_assert_cmphex(qtest_readb(qts, L2CC_BASE + L2CC_WAY_ENABLE), ==,
++                    L2CC_WAY_ENABLE_RESET);
++    for (i = 0; i < L2CC_WAY_MASK_COUNT; i++) {
++        g_assert_cmphex(qtest_readq(qts, L2CC_BASE + L2CC_WAY_MASK(i)), ==,
++                        L2CC_WAY_MASK_RESET);
++    }
++
++    qtest_quit(qts);
++}
++
++static void test_l2lim_topology(void)
++{
++    g_autofree char *firmware = sifive_l2cc_create_firmware();
++    uint32_t original[L2_LIM_RESET_WAYS];
++    const uint32_t poison = 0xdeadc0de;
++    const uint64_t zero_last = L2_ZERO_BASE + L2_ZERO_SIZE - 4;
++    QTestState *qts = sifive_l2cc_start(firmware);
++    unsigned int i;
++
++    unlink(firmware);
++
++    /* Check the fixed aperture, not the RAM stand-in's eviction behavior */
++    qtest_writel(qts, zero_last, 0xa55a9669);
++    g_assert_cmphex(qtest_readl(qts, zero_last), ==, 0xa55a9669);
++
++    for (i = 1; i <= L2_LIM_RESET_WAYS; i++) {
++        uint64_t l2lim_size = (L2_LIM_RESET_WAYS - i) * L2_WAY_SIZE;
++        uint64_t hidden = L2_LIM_BASE + l2lim_size;
++        uint32_t tail = 0x96000000 | i;
++
++        original[i - 1] = 0x69000000 | i;
++        qtest_writel(qts, hidden, original[i - 1]);
++        g_assert_cmphex(qtest_readl(qts, hidden), ==, original[i - 1]);
++
++        if (l2lim_size) {
++            qtest_writel(qts, hidden - 4, tail);
++            g_assert_cmphex(qtest_readl(qts, hidden - 4), ==, tail);
++        }
++
++        qtest_writeb(qts, L2CC_BASE + L2CC_WAY_ENABLE, i);
++        g_assert_cmphex(qtest_readb(qts,
++                                   L2CC_BASE + L2CC_WAY_ENABLE), ==, i);
++        if (l2lim_size) {
++            g_assert_cmphex(qtest_readl(qts, hidden - 4), ==, tail);
++        }
++        g_assert_cmphex(qtest_readl(qts, hidden), ==, 0);
++        qtest_writel(qts, hidden, poison);
++        g_assert_cmphex(qtest_readl(qts, hidden), ==, 0);
++        g_assert_cmphex(qtest_readl(qts, zero_last), ==, 0xa55a9669);
++    }
++
++    qtest_writeb(qts, L2CC_BASE + L2CC_WAY_ENABLE, UINT8_MAX);
++    g_assert_cmphex(qtest_readb(qts, L2CC_BASE + L2CC_WAY_ENABLE), ==,
++                    UINT8_MAX);
++    g_assert_cmphex(qtest_readl(qts, L2_LIM_BASE), ==, 0);
++    qtest_writeb(qts, L2CC_BASE + L2CC_WAY_ENABLE, 3);
++    g_assert_cmphex(qtest_readb(qts, L2CC_BASE + L2CC_WAY_ENABLE), ==,
++                    UINT8_MAX);
++    g_assert_cmphex(qtest_readl(qts, L2_LIM_BASE), ==, 0);
++
++    qtest_system_reset(qts);
++    g_assert_cmphex(qtest_readb(qts, L2CC_BASE + L2CC_WAY_ENABLE), ==,
++                    L2CC_WAY_ENABLE_RESET);
++    for (i = 1; i <= L2_LIM_RESET_WAYS; i++) {
++        uint64_t restored = L2_LIM_BASE +
++                            (L2_LIM_RESET_WAYS - i) * L2_WAY_SIZE;
++
++        g_assert_cmphex(qtest_readl(qts, restored), ==, original[i - 1]);
++    }
++    g_assert_cmphex(qtest_readl(qts, zero_last), ==, 0xa55a9669);
++
++    qtest_quit(qts);
++}
++
++static void test_l2cc_master_count(void)
++{
++    g_autofree char *firmware = sifive_l2cc_create_firmware();
++    QTestState *qts = qtest_initf(
++        "-machine sifive_u -smp 5 -bios \"%s\"", firmware);
++    const uint64_t zero_last = L2_ZERO_BASE + L2_ZERO_SIZE - 4;
++    unsigned int i;
++
++    unlink(firmware);
++
++    for (i = 0; i < L2CC_MAX_MASTERS; i++) {
++        g_assert_cmphex(qtest_readq(qts, L2CC_BASE + L2CC_WAY_MASK(i)), ==,
++                        L2CC_WAY_MASK_RESET);
++        qtest_writeq(qts, L2CC_BASE + L2CC_WAY_MASK(i),
++                     l2cc_way_mask_test_value(i));
++    }
++    for (i = 0; i < L2CC_MAX_MASTERS; i++) {
++        g_assert_cmphex(qtest_readq(qts, L2CC_BASE + L2CC_WAY_MASK(i)), ==,
++                        l2cc_way_mask_test_value(i));
++    }
++    g_assert_cmphex(qtest_readq(qts,
++                                L2CC_BASE + L2CC_WAY_MASK(L2CC_MAX_MASTERS)),
++                    ==, 0);
++    qtest_writel(qts, zero_last, 0x12345678);
++    qtest_writel(qts, L2_ZERO_BASE + L2_ZERO_SIZE, 0xdeadc0de);
++    g_assert_cmphex(qtest_readl(qts, L2_ZERO_BASE + L2_ZERO_SIZE), ==, 0);
++    qtest_writeb(qts, L2CC_BASE + L2CC_WAY_ENABLE, 15);
++    g_assert_cmphex(qtest_readl(qts, zero_last), ==, 0x12345678);
++    g_assert_cmphex(qtest_readl(qts, L2_LIM_BASE), ==, 0);
++
++    qtest_system_reset(qts);
++    for (i = 0; i < L2CC_MAX_MASTERS; i++) {
++        g_assert_cmphex(qtest_readq(qts, L2CC_BASE + L2CC_WAY_MASK(i)), ==,
++                        L2CC_WAY_MASK_RESET);
++    }
++    qtest_quit(qts);
++}
++
++static void test_l2cc_migration(void)
++{
++    g_autofree char *firmware = sifive_l2cc_create_firmware();
++    QTestState *from = sifive_l2cc_start(firmware);
++    QTestState *to = qtest_initf(
++        "-machine microchip-icicle-kit -smp 5 -m 2G "
++        "-bios \"%s\" -incoming defer", firmware);
++    const uint64_t hidden = L2_LIM_BASE + 8 * L2_WAY_SIZE;
++    const uint64_t zero_last = L2_ZERO_BASE + L2_ZERO_SIZE - 4;
++
++    unlink(firmware);
++
++    qtest_writel(from, L2_LIM_BASE, 0x11223344);
++    qtest_writel(from, hidden, 0x55667788);
++    qtest_writel(from, zero_last, 0x99aabbcc);
++    qtest_writeb(from, L2CC_BASE + L2CC_WAY_ENABLE, 7);
++    qtest_writeq(from, L2CC_BASE + L2CC_WAY_MASK(14), 0x1234);
++    g_assert_cmphex(qtest_readl(from, hidden), ==, 0);
++
++    migrate_incoming_qmp(to, "tcp:127.0.0.1:0", NULL, "{}");
++    migrate_qmp(from, to, NULL, NULL, "{}");
++    wait_for_migration_complete(from);
++
++    g_assert_cmphex(qtest_readb(to, L2CC_BASE + L2CC_WAY_ENABLE), ==, 7);
++    g_assert_cmphex(qtest_readq(to, L2CC_BASE + L2CC_WAY_MASK(14)), ==, 0x1234);
++    g_assert_cmphex(qtest_readl(to, L2_LIM_BASE), ==, 0x11223344);
++    g_assert_cmphex(qtest_readl(to, hidden), ==, 0);
++    qtest_writel(to, hidden, 0xdeadc0de);
++    g_assert_cmphex(qtest_readl(to, zero_last), ==, 0x99aabbcc);
++
++    qtest_system_reset(to);
++    g_assert_cmphex(qtest_readb(to, L2CC_BASE + L2CC_WAY_ENABLE), ==, 0);
++    g_assert_cmphex(qtest_readl(to, hidden), ==, 0x55667788);
++    g_assert_cmphex(qtest_readl(to, zero_last), ==, 0x99aabbcc);
++
++    qtest_quit(from);
++    qtest_quit(to);
++}
++
++static void test_l2cc_unimplemented(void)
++{
++    g_autofree char *firmware = sifive_l2cc_create_firmware();
++    g_autofree char *log_path = NULL;
++    g_autofree char *log = NULL;
++    QTestState *qts;
++    int fd;
++
++    fd = g_file_open_tmp("sifive_l2cc_unimp_XXXXXX", &log_path, NULL);
++    g_assert_cmpint(fd, >=, 0);
++    close(fd);
++
++    qts = qtest_initf(
++        "-machine microchip-icicle-kit -smp 5 -m 2G -bios \"%s\" "
++        "-d unimp -D \"%s\"", firmware, log_path);
++    unlink(firmware);
++
++    g_assert_cmphex(qtest_readl(qts, L2CC_BASE + L2CC_ECC_INJECT), ==, 0);
++    qtest_writeq(qts, L2CC_BASE + L2CC_FLUSH64, 0x1234);
++    g_assert_cmphex(qtest_readq(qts, L2CC_BASE + L2CC_MASTER15), ==, 0);
++    qtest_quit(qts);
++
++    g_assert_true(g_file_get_contents(log_path, &log, NULL, NULL));
++    g_assert_nonnull(strstr(log,
++        "unimplemented device read (size 4, offset 0x40)"));
++    g_assert_nonnull(strstr(log,
++        "unimplemented device write (size 8, value 0x1234, offset 0x200)"));
++    g_assert_nonnull(strstr(log,
++        "unimplemented device read (size 8, offset 0x878)"));
++    unlink(log_path);
++}
++
++int main(int argc, char **argv)
++{
++    g_test_init(&argc, &argv, NULL);
++
++    if (qtest_has_machine("microchip-icicle-kit")) {
++        qtest_add_func("/sifive_l2cc/registers", test_l2cc_registers);
++        qtest_add_func("/sifive_l2cc/l2lim_topology", test_l2lim_topology);
++        qtest_add_func("/sifive_l2cc/unimplemented", test_l2cc_unimplemented);
++        qtest_add_func("/sifive_l2cc/migration", test_l2cc_migration);
++    }
++    if (qtest_has_machine("sifive_u")) {
++        qtest_add_func("/sifive_l2cc/master_count", test_l2cc_master_count);
++    }
++
++    return g_test_run();
++}
+diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+index 200abf6f36..1fe008c9ed 100644
+--- a/tests/qtest/meson.build
++++ b/tests/qtest/meson.build
+@@ -311,6 +311,7 @@ qtests_riscv32 = \
  
-@@ -200,8 +206,6 @@ static void microchip_pfsoc_soc_realize(DeviceState *dev, Error **errp)
-     MemoryRegion *system_memory = get_system_memory();
-     MemoryRegion *rsvd0_mem = g_new(MemoryRegion, 1);
-     MemoryRegion *e51_dtim_mem = g_new(MemoryRegion, 1);
--    MemoryRegion *l2lim_mem = g_new(MemoryRegion, 1);
--    MemoryRegion *l2zero_mem = g_new(MemoryRegion, 1);
-     MemoryRegion *envm_data = g_new(MemoryRegion, 1);
-     MemoryRegion *qspi_xip_mem = g_new(MemoryRegion, 1);
-     char *plic_hart_config;
-@@ -260,35 +264,14 @@ static void microchip_pfsoc_soc_realize(DeviceState *dev, Error **errp)
-         RISCV_ACLINT_DEFAULT_MTIMECMP, RISCV_ACLINT_DEFAULT_MTIME,
-         iks->clint_timebase_freq, false);
- 
--    /* L2 cache controller */
--    create_unimplemented_device("microchip.pfsoc.l2cc",
--        memmap[MICROCHIP_PFSOC_L2CC].base, memmap[MICROCHIP_PFSOC_L2CC].size);
--
--    /*
--     * Add L2-LIM at reset size.
--     * This should be reduced in size as the L2 Cache Controller WayEnable
--     * register is incremented. Unfortunately I don't see a nice (or any) way
--     * to handle reducing or blocking out the L2 LIM while still allowing it
--     * be re returned to all enabled after a reset. For the time being, just
--     * leave it enabled all the time. This won't break anything, but will be
--     * too generous to misbehaving guests.
--     */
--    memory_region_init_ram(l2lim_mem, NULL, "microchip.pfsoc.l2lim",
--                           memmap[MICROCHIP_PFSOC_L2LIM].size, &error_fatal);
--    memory_region_add_subregion(system_memory,
--                                memmap[MICROCHIP_PFSOC_L2LIM].base,
--                                l2lim_mem);
--
--    /*
--     * HSS decompresses into the L2 zero-device window and executes there.
--     * Model it as RAM because QEMU does not model the backing L2 cache.
--     */
--    memory_region_init_ram(l2zero_mem, NULL, "microchip.pfsoc.l2zero",
--                           memmap[MICROCHIP_PFSOC_L2ZERO].size,
--                           &error_fatal);
--    memory_region_add_subregion(system_memory,
--                                memmap[MICROCHIP_PFSOC_L2ZERO].base,
--                                l2zero_mem);
-+    /* The L2CC owns the SRAM backing and both software-visible windows */
-+    sysbus_realize(SYS_BUS_DEVICE(&s->l2cc), errp);
-+    sysbus_mmio_map(SYS_BUS_DEVICE(&s->l2cc), SIFIVE_L2CC_MMIO_REGS,
-+                    memmap[MICROCHIP_PFSOC_L2CC].base);
-+    sysbus_mmio_map(SYS_BUS_DEVICE(&s->l2cc), SIFIVE_L2CC_MMIO_LIM,
-+                    memmap[MICROCHIP_PFSOC_L2LIM].base);
-+    sysbus_mmio_map(SYS_BUS_DEVICE(&s->l2cc), SIFIVE_L2CC_MMIO_ZERO,
-+                    memmap[MICROCHIP_PFSOC_L2ZERO].base);
- 
-     /* create PLIC hart topology configuration string */
-     plic_hart_config = riscv_plic_hart_config_string(ms->smp.cpus);
-diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
-index d06ac26648..46a499f70f 100644
---- a/hw/riscv/Kconfig
-+++ b/hw/riscv/Kconfig
-@@ -21,6 +21,7 @@ config MICROCHIP_PFSOC
-     select MCHP_PFSOC_MMUART
-     select MCHP_PFSOC_SYSREG
-     select RISCV_ACLINT
-+    select SIFIVE_L2CC
-     select SIFIVE_PDMA
-     select SIFIVE_PLIC
-     select UNIMP
+ qtests_riscv64 = ['riscv-csr-test'] + \
+   (unpack_edk2_blobs ? ['bios-tables-test'] : []) + \
++  (config_all_devices.has_key('CONFIG_SIFIVE_L2CC') ? ['sifive_l2cc_test'] : []) + \
+   (config_all_devices.has_key('CONFIG_IOMMU_TESTDEV') and
+    config_all_devices.has_key('CONFIG_RISCV_IOMMU') ?
+    ['iommu-riscv-test'] : []) + \
+@@ -427,6 +428,8 @@ qtests = {
+   'erst-test': files('erst-test.c'),
+   'ivshmem-test': [rt, '../../contrib/ivshmem-server/ivshmem-server.c'],
+   'migration-test': test_migration_files + migration_tls_files + migration_colo_files,
++  'sifive_l2cc_test': files('migration/migration-qmp.c',
++                           'migration/migration-util.c'),
+   'pxe-test': files('boot-sector.c'),
+   'pnv-xive2-test': files('pnv-xive2-common.c', 'pnv-xive2-flush-sync.c',
+                           'pnv-xive2-nvpg_bar.c'),
 -- 
 2.53.0
 
