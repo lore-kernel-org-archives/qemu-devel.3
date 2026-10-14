@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 016C3CC6B29
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 08:49:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 929F9CC6B27
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 08:49:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGufA-0006ag-Q3; Wed, 14 Oct 2026 04:48:40 -0400
+	id 1xGuf5-0006Cs-7U; Wed, 14 Oct 2026 04:48:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1xGueU-0005h1-B5
- for qemu-devel@nongnu.org; Wed, 14 Oct 2026 04:48:00 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1xGueX-0005hw-FP
+ for qemu-devel@nongnu.org; Wed, 14 Oct 2026 04:48:01 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1xGueR-0004ah-R7
- for qemu-devel@nongnu.org; Wed, 14 Oct 2026 04:47:57 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1xGueU-0004aq-45
+ for qemu-devel@nongnu.org; Wed, 14 Oct 2026 04:48:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1791967675;
+ s=mimecast20190719; t=1791967677;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=+o+Marw5FWNlQbRhb4nqCDgNy13bdt7p4Qdx355J3m4=;
- b=WL3lkOlCIznY9PxoSqf/vHlF1mPXKXzoRL9GpYO63EpPjqcX7vzicP6wbdvHI00LqBTjFs
- vSYR3FoPkYlVRmF6SdrW1xWHsZS33ztnqaBY06CEQOx2rqE3itrstqzQpjkCTqKpbIMF95
- LIaHdAGvLzNEs0pj2BvsIOJ+I0mb7W4=
+ bh=frszv/8ZB8wT/sOTfNnRXI89W8XikBHKKqxWG2/H3iQ=;
+ b=LMPx/xyG2WYOlDSCoGJ5NmSKF08icO77jEmyeRBooUY1AQu4f/mC0e86S6YXorNhTfiVyN
+ elqmI98IiXTasb9qtPzVRlGuzlSQvivpfn4oDEzNn6KtxktTGADxQB8UB4QKasVlALYMQE
+ jdgE4I+bOPNaov0DhVkGqtxghl7gQhc=
 Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-674-Gjj-AP9LPJyZj5_0OLUesQ-1; Wed,
- 14 Oct 2026 08:47:49 +0000
-X-MC-Unique: Gjj-AP9LPJyZj5_0OLUesQ-1
-X-Mimecast-MFC-AGG-ID: Gjj-AP9LPJyZj5_0OLUesQ_1791967668
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-184-UTbiPCgSM4i58KjdSYNFMg-1; Wed,
+ 14 Oct 2026 08:47:55 +0000
+X-MC-Unique: UTbiPCgSM4i58KjdSYNFMg-1
+X-Mimecast-MFC-AGG-ID: UTbiPCgSM4i58KjdSYNFMg_1791967674
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A6F5F180061E; Wed, 14 Oct 2026 08:47:48 +0000 (UTC)
+ id 574C71800656; Wed, 14 Oct 2026 08:47:54 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.44.48.67])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 78EF71800345; Wed, 14 Oct 2026 08:47:46 +0000 (UTC)
+ id C4AC21800677; Wed, 14 Oct 2026 08:47:51 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
@@ -52,9 +52,9 @@ Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  Jason Wang <jasowangio@gmail.com>, Alex Williamson <alex@shazbot.org>,
  Peter Xu <peterx@redhat.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [RFC PATCH v3 15/17] igb: Add dirty page tracking statistics
-Date: Wed, 14 Oct 2026 10:46:53 +0200
-Message-ID: <20261014084655.127254-16-clg@redhat.com>
+Subject: [RFC PATCH v3 17/17] tests/qtest: Add igb VF migration tests
+Date: Wed, 14 Oct 2026 10:46:55 +0200
+Message-ID: <20261014084655.127254-18-clg@redhat.com>
 In-Reply-To: <20261014084655.127254-1-clg@redhat.com>
 References: <20261014084655.127254-1-clg@redhat.com>
 MIME-Version: 1.0
@@ -85,233 +85,989 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a GET_STATS command (cmd 7) to the migration DVSEC for monitoring
-dirty page tracking and DMA activity per VF. The device DMA-writes an
-igb_mig_stats_resp struct to the shared buffer.
+Add qtests for the igb VF migration DVSEC interface covering:
 
-The dma_writes counter is also reported in the dirty query buffer so
-the driver gets it alongside the bitmap without an extra config read.
+  - DVSEC discovery: extended cap header, CAPS flags, CAPS read-only,
+    BUF_ADDR read-back, VF activation (ERROR -> STOP -> RUNNING)
+  - State machine: stop-copy and resuming paths with quiesced bit
+    checks, invalid transitions, pre-copy transitions
+    (RUNNING -> PRE_COPY -> STOP, RUNNING -> PRE_COPY -> STOP_COPY)
+  - Save/load roundtrip: DATA_SIZE in STOP vs STOP_COPY, double save,
+    blob header verification
+  - Error recovery: full save/load cycle after ERROR -> STOP -> RUNNING
+  - Blob validation: bad magic, bad version, bad VFN, corrupted blob
+    (random word flips)
+  - Command errors: unknown command, save/load in wrong state, missing
+    save buffer, missing load buffer, size zero, size too big
+  - Dirty tracking: enable/disable/query cycle, enable without buffer,
+    query without enable, bad page size, unsupported page size,
+    bad range, overflow, overlapping ranges, misaligned range,
+    multiple ranges, double enable, query with wrong range,
+    64K page size
 
-Counters are reset on first DIRTY_ENABLE, so the driver can read
-final values after DIRTY_DISABLE.
+The tests access the VF DVSEC via Q35 ECAM (PCIEXBAR enabled through
+legacy CF8/CFC) and use 16-bit writes for SR-IOV NumVFs/CTRL.
 
-AI-used-for: code (prototype)
+AI-used-for: tests
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/net/igb_core.h      |  1 +
- hw/net/igb_migration.h | 22 +++++++++++++++
- hw/net/igb_migration.c | 63 ++++++++++++++++++++++++++++++++++++++++--
- hw/net/trace-events    |  2 +-
- 4 files changed, 84 insertions(+), 4 deletions(-)
+ MAINTAINERS                      |   1 +
+ tests/qtest/igb-migration-test.c | 921 +++++++++++++++++++++++++++++++
+ tests/qtest/meson.build          |   1 +
+ 3 files changed, 923 insertions(+)
+ create mode 100644 tests/qtest/igb-migration-test.c
 
-diff --git a/hw/net/igb_core.h b/hw/net/igb_core.h
-index 75780f68dffb..e09cac48d7b1 100644
---- a/hw/net/igb_core.h
-+++ b/hw/net/igb_core.h
-@@ -103,6 +103,7 @@ struct IGBCore {
-     int64_t timadj;
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 5a878ae7af84..37a2f3fac5fc 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -2826,6 +2826,7 @@ igb VF migration
+ M: Cédric Le Goater <clg@redhat.com>
+ S: Maintained
+ F: hw/net/igb_migration.*
++F: tests/qtest/igb-migration-test.c
+ F: docs/system/devices/igb-migration.rst
  
-     IGBVfDirtyState vf_dirty[IGB_MAX_VF_FUNCTIONS];
-+    IgbVfMigStats vf_mig_stats[IGB_MAX_VF_FUNCTIONS];
- };
- 
- void
-diff --git a/hw/net/igb_migration.h b/hw/net/igb_migration.h
-index 96dfe99468d1..3cb197036705 100644
---- a/hw/net/igb_migration.h
-+++ b/hw/net/igb_migration.h
-@@ -66,6 +66,7 @@
- #define IGB_MIG_CMD_DIRTY_ENABLE        4
- #define IGB_MIG_CMD_DIRTY_DISABLE       5
- #define IGB_MIG_CMD_DIRTY_QUERY         6
-+#define IGB_MIG_CMD_GET_STATS           7
- 
- /* STATUS register: state in [7:0], error code [15:8] */
- #define IGB_MIG_STATUS_STATE_MASK       0xFF
-@@ -101,6 +102,15 @@
- /* Shared buffer constants */
- #define IGB_VF_STATE_MAX_SIZE           4096
- 
-+typedef struct IgbVfMigStats {
-+    uint64_t dma_writes;
-+    uint64_t dma_bytes;
-+    uint32_t dirty_pages_set;
-+    uint32_t dirty_pages_cleared;
-+    uint32_t dirty_page_count;
-+    uint32_t dirty_query_count;
-+} IgbVfMigStats;
-+
- typedef struct IgbVfMigState {
-     uint32_t mig_state;
-     uint32_t mig_data[IGB_VF_STATE_MAX_SIZE / sizeof(uint32_t)];
-@@ -157,6 +167,18 @@ struct igb_mig_dirty_query {
-     uint8_t bitmap[];
- };
- 
+ eepro100
+diff --git a/tests/qtest/igb-migration-test.c b/tests/qtest/igb-migration-test.c
+new file mode 100644
+index 000000000000..569c30ca6692
+--- /dev/null
++++ b/tests/qtest/igb-migration-test.c
+@@ -0,0 +1,921 @@
 +/*
-+ * GET_STATS:    device writes igb_mig_stats_resp to buffer.
++ * QTest for igb VF migration DVSEC state machine and save/load
++ *
++ * Copyright (c) 2026 Red Hat, Inc.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
 + */
-+struct igb_mig_stats_resp {
-+    uint64_t dma_writes;
-+    uint64_t dma_bytes;
-+    uint32_t dirty_pages_set;
-+    uint32_t dirty_pages_cleared;
-+    uint32_t dirty_page_count;
-+    uint32_t dirty_query_count;
-+};
 +
- typedef struct IGBCore IGBCore;
- typedef struct IgbVfState IgbVfState;
- 
-diff --git a/hw/net/igb_migration.c b/hw/net/igb_migration.c
-index ab80dbb5c6c6..77ae25347eaa 100644
---- a/hw/net/igb_migration.c
-+++ b/hw/net/igb_migration.c
-@@ -854,6 +854,7 @@ void igb_core_dirty_track_dma(IGBCore *core, int vfn,
-                               dma_addr_t addr, dma_addr_t len)
- {
-     IGBVfDirtyState *ds = &core->vf_dirty[vfn];
-+    IgbVfMigStats *stats = &core->vf_mig_stats[vfn];
-     bool matched = false;
-     uint32_t i;
- 
-@@ -863,6 +864,9 @@ void igb_core_dirty_track_dma(IGBCore *core, int vfn,
- 
-     trace_igb_core_dirty_track_dma(vfn, addr, len);
- 
-+    stats->dma_writes++;
-+    stats->dma_bytes += len;
++#include "qemu/osdep.h"
++#include "libqtest.h"
++#include "qemu/module.h"
++#include "hw/net/igb_migration.h"
++#include "hw/net/igb_regs.h"
 +
-     for (i = 0; i < ds->num_ranges; i++) {
-         IGBVfDirtyRange *r = &ds->ranges[i];
-         uint64_t r_end = r->iova + r->size;
-@@ -882,7 +886,10 @@ void igb_core_dirty_track_dma(IGBCore *core, int vfn,
- 
-         for (page = start_page; page <= end_page; page++) {
-             if (page < r->nbits) {
--                set_bit(page, r->bitmap);
-+                if (!test_and_set_bit(page, r->bitmap)) {
-+                    stats->dirty_pages_set++;
-+                    stats->dirty_page_count++;
-+                }
-             }
-         }
-     }
-@@ -909,6 +916,15 @@ static uint32_t igb_core_vf_dirty_enable(IgbVfState *s, uint64_t pgsize,
-     IGBVfDirtyState *ds = igb_core_vf_dirty_state(s);
-     IGBVfDirtyRange *r;
- 
-+    /*
-+     * Reset stats on first enable so the driver can read them after
-+     * disable
-+     */
-+    if (ds->num_ranges == 0) {
-+        memset(&igbvf_get_core(s)->vf_mig_stats[s->vfn], 0,
-+               sizeof(IgbVfMigStats));
-+    }
++/* Q35 MCH config register to enable ECAM */
++#define MCH_HOST_BRIDGE_PCIEXBAR        0x60
++#define Q35_ECAM_BASE                   0xb0000000ULL
 +
-     if (ds->num_ranges >= IGB_MIG_CAPS_MAX_RANGES) {
-         return IGB_MIG_ERR_TOO_MANY_RANGES;
-     }
-@@ -1058,12 +1074,14 @@ static IGBVfDirtyRange *igb_core_vf_dirty_range_valid(IGBVfDirtyState *ds,
- static uint8_t igbvf_mig_cmd_dirty_query(IgbVfState *s)
- {
-     IgbVfMigState *ms = &s->mig;
-+    IgbVfMigStats *stats = &igbvf_get_core(s)->vf_mig_stats[s->vfn];
-     IGBVfDirtyState *ds = &igbvf_get_core(s)->vf_dirty[s->vfn];
-     uint64_t buf_addr = ms->mig_data_buf_addr;
-     uint64_t range_iova = 0, range_size = 0;
-     IGBVfDirtyRange *range;
-     uint32_t bmp_bytes, dirty_pages;
-     uint32_t val32;
-+    uint64_t val64;
-     size_t out_size;
-     g_autofree void *bitmap = NULL;
- 
-@@ -1109,6 +1127,10 @@ static uint8_t igbvf_mig_cmd_dirty_query(IgbVfState *s)
- 
-     dirty_pages = bitmap_count_one(bitmap, range_size / range->page_size);
- 
-+    stats->dirty_pages_cleared += dirty_pages;
-+    stats->dirty_page_count -= MIN(stats->dirty_page_count, dirty_pages);
-+    stats->dirty_query_count++;
++/* PF on pcie.0 at slot 4 (devfn 0x20), bus 0 */
++#define PF_BUS                  0
++#define PF_SLOT                 4
++#define PF_DEVFN                (PF_SLOT << 3)
 +
-     val32 = cpu_to_le32(out_size);
-     address_space_write(&address_space_memory,
-                         buf_addr + offsetof(struct igb_mig_dirty_query,
-@@ -1119,8 +1141,13 @@ static uint8_t igbvf_mig_cmd_dirty_query(IgbVfState *s)
-                         buf_addr + offsetof(struct igb_mig_dirty_query,
-                                             dirty_page_count),
-                         MEMTXATTRS_UNSPECIFIED, &val32, sizeof(val32));
--
--    trace_igbvf_mig_dirty_query(s->vfn, (uint64_t)out_size, dirty_pages);
-+    val64 = cpu_to_le64(stats->dma_writes);
-+    address_space_write(&address_space_memory,
-+                        buf_addr + offsetof(struct igb_mig_dirty_query,
-+                                            dma_writes),
-+                        MEMTXATTRS_UNSPECIFIED, &val64, sizeof(val64));
-+    trace_igbvf_mig_dirty_query(s->vfn, (uint64_t)out_size, dirty_pages,
-+                                stats->dma_writes);
-     return 0;
- }
- 
-@@ -1381,6 +1408,32 @@ static uint8_t igbvf_mig_set_state(IgbVfState *s, uint32_t new_state)
-     return 0;
- }
- 
-+static uint8_t igbvf_mig_cmd_get_stats(IgbVfState *s)
++/* VF0 devfn = PF_devfn + VF_OFFSET (0x80) = 0xA0, same bus */
++#define VF0_BUS                 0
++#define VF0_DEVFN               (PF_DEVFN + 0x80)
++
++/* SR-IOV cap offset in igb PF */
++#define IGB_SRIOV_CAP_OFFSET    0x160
++
++/* DVSEC offset in VF extended config space */
++#define DVSEC_BASE              IGB_MIG_DVSEC_OFFSET
++
++/* Blob constants */
++#define BLOB_MAGIC              0x4D494742
++
++/* DMA buffer GPA for state blob */
++#define DMA_BUF_GPA             0x100000ULL
++
++static void ecam_enable(QTestState *qts)
 +{
-+    IgbVfMigState *ms = &s->mig;
-+    IgbVfMigStats *stats = &igbvf_get_core(s)->vf_mig_stats[s->vfn];
-+    struct igb_mig_stats_resp resp;
-+    MemTxResult r;
-+
-+    if (!ms->mig_data_buf_addr) {
-+        return IGB_MIG_ERR_NO_BUFFER;
-+    }
-+
-+    resp.dma_writes = cpu_to_le64(stats->dma_writes);
-+    resp.dma_bytes = cpu_to_le64(stats->dma_bytes);
-+    resp.dirty_pages_set = cpu_to_le32(stats->dirty_pages_set);
-+    resp.dirty_pages_cleared = cpu_to_le32(stats->dirty_pages_cleared);
-+    resp.dirty_page_count = cpu_to_le32(stats->dirty_page_count);
-+    resp.dirty_query_count = cpu_to_le32(stats->dirty_query_count);
-+
-+    r = address_space_write(&address_space_memory, ms->mig_data_buf_addr,
-+                            MEMTXATTRS_UNSPECIFIED, &resp, sizeof(resp));
-+    if (r != MEMTX_OK) {
-+        return IGB_MIG_ERR_DMA_FAILED;
-+    }
-+    return 0;
++    /* Set PCIEXBAREN (bit 0) in MCH PCIEXBAR via legacy CF8/CFC */
++    qtest_outl(qts, 0xcf8, 0x80000000 | MCH_HOST_BRIDGE_PCIEXBAR);
++    qtest_outl(qts, 0xcfc, Q35_ECAM_BASE | 1);
 +}
 +
- static void igbvf_mig_update_status(IgbVfState *s, uint8_t err)
- {
-     IgbVfMigState *ms = &s->mig;
-@@ -1442,6 +1495,10 @@ static void igbvf_mig_cmd_ctrl(IgbVfState *s, uint32_t val)
-         err = igbvf_mig_cmd_dirty_query(s);
-         break;
- 
-+    case IGB_MIG_CMD_GET_STATS:
-+        err = igbvf_mig_cmd_get_stats(s);
-+        break;
++static uint64_t ecam_addr(int bus, int devfn, int offset)
++{
++    return Q35_ECAM_BASE + ((uint64_t)bus << 20) +
++           ((uint64_t)devfn << 12) + offset;
++}
 +
-     default:
-         err = IGB_MIG_ERR_UNK_CMD;
-         break;
-diff --git a/hw/net/trace-events b/hw/net/trace-events
-index a171888db380..ea006fd4399f 100644
---- a/hw/net/trace-events
-+++ b/hw/net/trace-events
-@@ -305,7 +305,7 @@ igbvf_mig_save_hash_tables(uint16_t vfn, const char *name, int index, uint32_t v
- igbvf_mig_reset(uint16_t vfn) "VF%u: migration state reset"
- igbvf_mig_dirty_enable(uint16_t vfn, uint64_t pgsize, uint64_t nbits) "VF%u: dirty tracking enabled pgsize=%"PRIu64" nbits=%"PRIu64
- igbvf_mig_dirty_disable(uint16_t vfn) "VF%u: dirty tracking disabled"
--igbvf_mig_dirty_query(uint16_t vfn, uint64_t size, uint32_t dirty_pages) "VF%u: dirty query returned %"PRIu64" bytes, %u dirty pages"
-+igbvf_mig_dirty_query(uint16_t vfn, uint64_t size, uint32_t dirty_pages, uint64_t dma_writes) "VF%u: dirty query returned %"PRIu64" bytes, %u dirty pages (dma_writes=%"PRIu64")"
- igb_core_dirty_track_dma(int vfn, uint64_t addr, uint64_t len) "VF%d: dirty DMA addr=0x%"PRIx64" len=%"PRIu64
- igb_core_dirty_track_dma_drop(int vfn, uint64_t addr, uint64_t len) "VF%d: dirty DMA dropped addr=0x%"PRIx64" len=%"PRIu64" no matching range"
- igbvf_mig_quiesce(uint16_t vfn, uint32_t vfre, uint32_t vfte) "VF%u: quiesce VFRE=0x%x VFTE=0x%x"
++static uint32_t ecam_readl(QTestState *qts, int bus, int devfn, int offset)
++{
++    return qtest_readl(qts, ecam_addr(bus, devfn, offset));
++}
++
++static void ecam_writel(QTestState *qts, int bus, int devfn,
++                        int offset, uint32_t val)
++{
++    qtest_writel(qts, ecam_addr(bus, devfn, offset), val);
++}
++
++static void ecam_writew(QTestState *qts, int bus, int devfn,
++                        int offset, uint16_t val)
++{
++    qtest_writew(qts, ecam_addr(bus, devfn, offset), val);
++}
++
++static uint32_t dvsec_readl(QTestState *qts, int offset)
++{
++    return ecam_readl(qts, VF0_BUS, VF0_DEVFN, DVSEC_BASE + offset);
++}
++
++static void dvsec_writel(QTestState *qts, int offset, uint32_t val)
++{
++    ecam_writel(qts, VF0_BUS, VF0_DEVFN, DVSEC_BASE + offset, val);
++}
++
++static uint32_t dvsec_status(QTestState *qts)
++{
++    return dvsec_readl(qts, IGB_MIG_STATUS);
++}
++
++static uint32_t dvsec_state(QTestState *qts)
++{
++    return dvsec_status(qts) & IGB_MIG_STATUS_STATE_MASK;
++}
++
++static uint32_t dvsec_error(QTestState *qts)
++{
++    return (dvsec_status(qts) >> IGB_MIG_STATUS_ERROR_CODE_SHIFT) & 0xFF;
++}
++
++static void dvsec_cmd(QTestState *qts, uint32_t cmd, uint32_t arg)
++{
++    dvsec_writel(qts, IGB_MIG_CTRL,
++                 (cmd & IGB_MIG_CTRL_CMD_MASK) |
++                 (arg << IGB_MIG_CTRL_ARG_SHIFT));
++}
++
++static void dvsec_set_state(QTestState *qts, uint32_t state)
++{
++    dvsec_cmd(qts, IGB_MIG_CMD_SET_STATE, state);
++}
++
++static void dvsec_set_buf_addr(QTestState *qts, uint64_t gpa)
++{
++    dvsec_writel(qts, IGB_MIG_BUF_ADDR_LO, (uint32_t)gpa);
++    dvsec_writel(qts, IGB_MIG_BUF_ADDR_HI, (uint32_t)(gpa >> 32));
++}
++
++static void enable_sriov(QTestState *qts, uint16_t num_vfs)
++{
++    int sriov = IGB_SRIOV_CAP_OFFSET;
++
++    ecam_writew(qts, PF_BUS, PF_DEVFN, sriov + PCI_SRIOV_NUM_VF, num_vfs);
++    ecam_writew(qts, PF_BUS, PF_DEVFN, sriov + PCI_SRIOV_CTRL,
++                PCI_SRIOV_CTRL_VFE | PCI_SRIOV_CTRL_MSE);
++}
++
++static void activate_vf(QTestState *qts)
++{
++    /* Initial state is ERROR; driver activates via ERROR -> STOP -> RUNNING */
++    g_assert_cmpuint(dvsec_state(qts), ==, IGB_MIG_STATE_ERROR);
++    dvsec_set_state(qts, IGB_MIG_STATE_STOP);
++    g_assert_cmpuint(dvsec_state(qts), ==, IGB_MIG_STATE_STOP);
++    dvsec_set_state(qts, IGB_MIG_STATE_RUNNING);
++    g_assert_cmpuint(dvsec_state(qts), ==, IGB_MIG_STATE_RUNNING);
++}
++
++static QTestState *start_igb_vm(void)
++{
++    QTestState *qts = qtest_init(
++        "-machine q35 -m 512M -nodefaults "
++        "-device igb,bus=pcie.0,addr=4.0,x-vf-migration=on "
++        "-netdev hubport,hubid=0,id=hs0");
++
++    ecam_enable(qts);
++    enable_sriov(qts, 1);
++    activate_vf(qts);
++    return qts;
++}
++
++static void test_dvsec_presence(void)
++{
++    QTestState *qts = start_igb_vm();
++
++    /* Check DVSEC header: extended cap id 0x23, DVSEC vendor Qumranet */
++    uint32_t hdr = dvsec_readl(qts, 0x00);
++    g_assert_cmphex(hdr & 0xFFFF, ==, 0x0023);
++
++    /* Check CAPS: F_STATE and F_DIRTY should be advertised */
++    uint32_t caps = dvsec_readl(qts, IGB_MIG_CAPS);
++    g_assert(caps & IGB_MIG_CAP_F_STATE);
++    g_assert(caps & IGB_MIG_CAP_F_DIRTY);
++
++    /* CAPS is read-only */
++    dvsec_writel(qts, IGB_MIG_CAPS, 0);
++    g_assert_cmphex(dvsec_readl(qts, IGB_MIG_CAPS), ==, caps);
++
++    /* BUF_ADDR_LO/HI are read-write */
++    dvsec_writel(qts, IGB_MIG_BUF_ADDR_LO, 0xDEAD0000);
++    dvsec_writel(qts, IGB_MIG_BUF_ADDR_HI, 0x0000BEEF);
++    g_assert_cmphex(dvsec_readl(qts, IGB_MIG_BUF_ADDR_LO), ==, 0xDEAD0000);
++    g_assert_cmphex(dvsec_readl(qts, IGB_MIG_BUF_ADDR_HI), ==, 0x0000BEEF);
++
++    qtest_quit(qts);
++}
++
++static void test_state_machine_stop_copy(void)
++{
++    QTestState *qts = start_igb_vm();
++
++    /* RUNNING: not quiesced */
++    g_assert(!(dvsec_status(qts) & IGB_MIG_STATUS_QUIESCED));
++
++    /* RUNNING -> STOP: quiesced */
++    dvsec_set_state(qts, IGB_MIG_STATE_STOP);
++    g_assert_cmpuint(dvsec_state(qts), ==, IGB_MIG_STATE_STOP);
++    g_assert_cmpuint(dvsec_error(qts), ==, 0);
++    g_assert(dvsec_status(qts) & IGB_MIG_STATUS_QUIESCED);
++
++    /* STOP -> STOP_COPY: quiesced */
++    dvsec_set_state(qts, IGB_MIG_STATE_STOP_COPY);
++    g_assert_cmpuint(dvsec_state(qts), ==, IGB_MIG_STATE_STOP_COPY);
++    g_assert_cmpuint(dvsec_error(qts), ==, 0);
++    g_assert(dvsec_status(qts) & IGB_MIG_STATUS_QUIESCED);
++
++    /* STOP_COPY -> STOP */
++    dvsec_set_state(qts, IGB_MIG_STATE_STOP);
++    g_assert_cmpuint(dvsec_state(qts), ==, IGB_MIG_STATE_STOP);
++
++    /* STOP -> RUNNING: not quiesced */
++    dvsec_set_state(qts, IGB_MIG_STATE_RUNNING);
++    g_assert_cmpuint(dvsec_state(qts), ==, IGB_MIG_STATE_RUNNING);
++    g_assert(!(dvsec_status(qts) & IGB_MIG_STATUS_QUIESCED));
++
++    qtest_quit(qts);
++}
++
++static void test_state_machine_resuming(void)
++{
++    QTestState *qts = start_igb_vm();
++
++    /* RUNNING -> STOP */
++    dvsec_set_state(qts, IGB_MIG_STATE_STOP);
++    g_assert_cmpuint(dvsec_state(qts), ==, IGB_MIG_STATE_STOP);
++
++    /* STOP -> RESUMING */
++    dvsec_set_state(qts, IGB_MIG_STATE_RESUMING);
++    g_assert_cmpuint(dvsec_state(qts), ==, IGB_MIG_STATE_RESUMING);
++    g_assert_cmpuint(dvsec_error(qts), ==, 0);
++
++    /* RESUMING -> STOP */
++    dvsec_set_state(qts, IGB_MIG_STATE_STOP);
++    g_assert_cmpuint(dvsec_state(qts), ==, IGB_MIG_STATE_STOP);
++
++    /* STOP -> RUNNING */
++    dvsec_set_state(qts, IGB_MIG_STATE_RUNNING);
++    g_assert_cmpuint(dvsec_state(qts), ==, IGB_MIG_STATE_RUNNING);
++
++    qtest_quit(qts);
++}
++
++static void test_state_machine_invalid(void)
++{
++    QTestState *qts = start_igb_vm();
++
++    /* RUNNING -> STOP_COPY (invalid, must go through STOP) */
++    dvsec_set_state(qts, IGB_MIG_STATE_STOP_COPY);
++    g_assert_cmpuint(dvsec_state(qts), ==, IGB_MIG_STATE_ERROR);
++    g_assert_cmpuint(dvsec_error(qts), ==, IGB_MIG_ERR_BAD_STATE);
++
++    qtest_quit(qts);
++}
++
++static void test_state_machine_pre_copy(void)
++{
++    QTestState *qts = start_igb_vm();
++
++    dvsec_set_buf_addr(qts, DMA_BUF_GPA);
++
++    /* RUNNING -> PRE_COPY */
++    dvsec_set_state(qts, IGB_MIG_STATE_PRE_COPY);
++    g_assert_cmpuint(dvsec_state(qts), ==, IGB_MIG_STATE_PRE_COPY);
++    g_assert_cmpuint(dvsec_error(qts), ==, 0);
++
++    /* PRE_COPY -> STOP (quiesce + disable dirty) */
++    dvsec_set_state(qts, IGB_MIG_STATE_STOP);
++    g_assert_cmpuint(dvsec_state(qts), ==, IGB_MIG_STATE_STOP);
++
++    /* Back to RUNNING */
++    dvsec_set_state(qts, IGB_MIG_STATE_RUNNING);
++    g_assert_cmpuint(dvsec_state(qts), ==, IGB_MIG_STATE_RUNNING);
++
++    /* RUNNING -> PRE_COPY -> STOP_COPY */
++    dvsec_set_state(qts, IGB_MIG_STATE_PRE_COPY);
++    g_assert_cmpuint(dvsec_state(qts), ==, IGB_MIG_STATE_PRE_COPY);
++
++    dvsec_set_state(qts, IGB_MIG_STATE_STOP_COPY);
++    g_assert_cmpuint(dvsec_state(qts), ==, IGB_MIG_STATE_STOP_COPY);
++
++    /* STOP_COPY -> STOP */
++    dvsec_set_state(qts, IGB_MIG_STATE_STOP);
++    g_assert_cmpuint(dvsec_state(qts), ==, IGB_MIG_STATE_STOP);
++
++    qtest_quit(qts);
++}
++
++static void test_save_load_roundtrip(void)
++{
++    QTestState *qts = start_igb_vm();
++    uint32_t buf[IGB_VF_STATE_MAX_SIZE / sizeof(uint32_t)];
++
++    dvsec_set_buf_addr(qts, DMA_BUF_GPA);
++
++    /* --- Save path --- */
++
++    /* RUNNING -> STOP */
++    dvsec_set_state(qts, IGB_MIG_STATE_STOP);
++    g_assert_cmpuint(dvsec_state(qts), ==, IGB_MIG_STATE_STOP);
++
++    /* DATA_SIZE in STOP is the max allocation hint */
++    uint32_t max_size = dvsec_readl(qts, IGB_MIG_DATA_SIZE);
++    g_assert_cmpuint(max_size, >, 0);
++    g_assert_cmpuint(max_size, <=, IGB_VF_STATE_MAX_SIZE);
++
++    /* STOP -> STOP_COPY */
++    dvsec_set_state(qts, IGB_MIG_STATE_STOP_COPY);
++    g_assert_cmpuint(dvsec_state(qts), ==, IGB_MIG_STATE_STOP_COPY);
++
++    /* DATA_SIZE in STOP_COPY is the actual serialized size */
++    uint32_t data_size = dvsec_readl(qts, IGB_MIG_DATA_SIZE);
++    g_assert_cmpuint(data_size, >, 0);
++    g_assert_cmpuint(data_size, <=, max_size);
++
++    /* Issue SAVE */
++    dvsec_cmd(qts, IGB_MIG_CMD_SAVE, 0);
++    g_assert_cmpuint(dvsec_state(qts), ==, IGB_MIG_STATE_STOP_COPY);
++    g_assert_cmpuint(dvsec_error(qts), ==, 0);
++
++    /* Second SAVE is idempotent */
++    dvsec_cmd(qts, IGB_MIG_CMD_SAVE, 0);
++    g_assert_cmpuint(dvsec_state(qts), ==, IGB_MIG_STATE_STOP_COPY);
++    g_assert_cmpuint(dvsec_error(qts), ==, 0);
++
++    /* Read blob from DMA buffer */
++    qtest_memread(qts, DMA_BUF_GPA, buf, data_size);
++
++    /* Verify blob header */
++    g_assert_cmphex(le32_to_cpu(buf[0]), ==, BLOB_MAGIC);
++    g_assert_cmpuint(le32_to_cpu(buf[1]), ==, 1);   /* version */
++    g_assert_cmpuint(le32_to_cpu(buf[2]), ==, 0);   /* vfn */
++
++    /* STOP_COPY -> STOP */
++    dvsec_set_state(qts, IGB_MIG_STATE_STOP);
++    g_assert_cmpuint(dvsec_state(qts), ==, IGB_MIG_STATE_STOP);
++
++    /* --- Load path --- */
++
++    /* STOP -> RESUMING */
++    dvsec_set_state(qts, IGB_MIG_STATE_RESUMING);
++    g_assert_cmpuint(dvsec_state(qts), ==, IGB_MIG_STATE_RESUMING);
++
++    /* Write blob to DMA buffer */
++    qtest_memwrite(qts, DMA_BUF_GPA, buf, data_size);
++
++    /* Issue LOAD */
++    dvsec_cmd(qts, IGB_MIG_CMD_LOAD, data_size);
++    g_assert_cmpuint(dvsec_state(qts), ==, IGB_MIG_STATE_RESUMING);
++    g_assert_cmpuint(dvsec_error(qts), ==, 0);
++
++    /* RESUMING -> STOP -> RUNNING */
++    dvsec_set_state(qts, IGB_MIG_STATE_STOP);
++    g_assert_cmpuint(dvsec_state(qts), ==, IGB_MIG_STATE_STOP);
++
++    dvsec_set_state(qts, IGB_MIG_STATE_RUNNING);
++    g_assert_cmpuint(dvsec_state(qts), ==, IGB_MIG_STATE_RUNNING);
++    g_assert_cmpuint(dvsec_error(qts), ==, 0);
++
++    qtest_quit(qts);
++}
++
++static void test_load_bad_magic(void)
++{
++    QTestState *qts = start_igb_vm();
++    uint32_t buf[IGB_VF_STATE_MAX_SIZE / sizeof(uint32_t)];
++
++    dvsec_set_buf_addr(qts, DMA_BUF_GPA);
++
++    /* Save to get a valid blob */
++    dvsec_set_state(qts, IGB_MIG_STATE_STOP);
++    dvsec_set_state(qts, IGB_MIG_STATE_STOP_COPY);
++    uint32_t data_size = dvsec_readl(qts, IGB_MIG_DATA_SIZE);
++    dvsec_cmd(qts, IGB_MIG_CMD_SAVE, 0);
++    qtest_memread(qts, DMA_BUF_GPA, buf, data_size);
++
++    /* Corrupt magic */
++    buf[0] = cpu_to_le32(0xDEADBEEF);
++
++    /* Try to load */
++    dvsec_set_state(qts, IGB_MIG_STATE_STOP);
++    dvsec_set_state(qts, IGB_MIG_STATE_RESUMING);
++    qtest_memwrite(qts, DMA_BUF_GPA, buf, data_size);
++    dvsec_cmd(qts, IGB_MIG_CMD_LOAD, data_size);
++
++    g_assert_cmpuint(dvsec_state(qts), ==, IGB_MIG_STATE_ERROR);
++    g_assert_cmpuint(dvsec_error(qts), ==, IGB_MIG_ERR_BAD_MAGIC);
++
++    qtest_quit(qts);
++}
++
++static void test_load_bad_version(void)
++{
++    QTestState *qts = start_igb_vm();
++    uint32_t buf[IGB_VF_STATE_MAX_SIZE / sizeof(uint32_t)];
++
++    dvsec_set_buf_addr(qts, DMA_BUF_GPA);
++
++    /* Save to get a valid blob */
++    dvsec_set_state(qts, IGB_MIG_STATE_STOP);
++    dvsec_set_state(qts, IGB_MIG_STATE_STOP_COPY);
++    uint32_t data_size = dvsec_readl(qts, IGB_MIG_DATA_SIZE);
++    dvsec_cmd(qts, IGB_MIG_CMD_SAVE, 0);
++    qtest_memread(qts, DMA_BUF_GPA, buf, data_size);
++
++    /* Corrupt version */
++    buf[1] = cpu_to_le32(0xFF);
++
++    /* Try to load */
++    dvsec_set_state(qts, IGB_MIG_STATE_STOP);
++    dvsec_set_state(qts, IGB_MIG_STATE_RESUMING);
++    qtest_memwrite(qts, DMA_BUF_GPA, buf, data_size);
++    dvsec_cmd(qts, IGB_MIG_CMD_LOAD, data_size);
++
++    g_assert_cmpuint(dvsec_state(qts), ==, IGB_MIG_STATE_ERROR);
++    g_assert_cmpuint(dvsec_error(qts), ==, IGB_MIG_ERR_BAD_VERSION);
++
++    qtest_quit(qts);
++}
++
++static void test_load_bad_vfn(void)
++{
++    QTestState *qts = start_igb_vm();
++    uint32_t buf[IGB_VF_STATE_MAX_SIZE / sizeof(uint32_t)];
++
++    dvsec_set_buf_addr(qts, DMA_BUF_GPA);
++
++    /* Save to get a valid blob */
++    dvsec_set_state(qts, IGB_MIG_STATE_STOP);
++    dvsec_set_state(qts, IGB_MIG_STATE_STOP_COPY);
++    uint32_t data_size = dvsec_readl(qts, IGB_MIG_DATA_SIZE);
++    dvsec_cmd(qts, IGB_MIG_CMD_SAVE, 0);
++    qtest_memread(qts, DMA_BUF_GPA, buf, data_size);
++
++    /* Corrupt VFN */
++    buf[2] = cpu_to_le32(7);
++
++    /* Try to load */
++    dvsec_set_state(qts, IGB_MIG_STATE_STOP);
++    dvsec_set_state(qts, IGB_MIG_STATE_RESUMING);
++    qtest_memwrite(qts, DMA_BUF_GPA, buf, data_size);
++    dvsec_cmd(qts, IGB_MIG_CMD_LOAD, data_size);
++
++    g_assert_cmpuint(dvsec_state(qts), ==, IGB_MIG_STATE_ERROR);
++    g_assert_cmpuint(dvsec_error(qts), ==, IGB_MIG_ERR_BAD_VFN);
++
++    qtest_quit(qts);
++}
++
++static void test_error_recovery(void)
++{
++    QTestState *qts = start_igb_vm();
++    uint32_t buf[IGB_VF_STATE_MAX_SIZE / sizeof(uint32_t)];
++
++    dvsec_set_buf_addr(qts, DMA_BUF_GPA);
++
++    /* Trigger an error: invalid state transition */
++    dvsec_set_state(qts, IGB_MIG_STATE_STOP_COPY);
++    g_assert_cmpuint(dvsec_state(qts), ==, IGB_MIG_STATE_ERROR);
++
++    /* Recover: ERROR -> STOP -> RUNNING */
++    dvsec_set_state(qts, IGB_MIG_STATE_STOP);
++    g_assert_cmpuint(dvsec_state(qts), ==, IGB_MIG_STATE_STOP);
++    dvsec_set_state(qts, IGB_MIG_STATE_RUNNING);
++    g_assert_cmpuint(dvsec_state(qts), ==, IGB_MIG_STATE_RUNNING);
++    g_assert_cmpuint(dvsec_error(qts), ==, 0);
++
++    /* Full save/load cycle should work after recovery */
++    dvsec_set_state(qts, IGB_MIG_STATE_STOP);
++    dvsec_set_state(qts, IGB_MIG_STATE_STOP_COPY);
++    uint32_t data_size = dvsec_readl(qts, IGB_MIG_DATA_SIZE);
++    dvsec_cmd(qts, IGB_MIG_CMD_SAVE, 0);
++    g_assert_cmpuint(dvsec_error(qts), ==, 0);
++    qtest_memread(qts, DMA_BUF_GPA, buf, data_size);
++
++    dvsec_set_state(qts, IGB_MIG_STATE_STOP);
++    dvsec_set_state(qts, IGB_MIG_STATE_RESUMING);
++    qtest_memwrite(qts, DMA_BUF_GPA, buf, data_size);
++    dvsec_cmd(qts, IGB_MIG_CMD_LOAD, data_size);
++    g_assert_cmpuint(dvsec_error(qts), ==, 0);
++
++    dvsec_set_state(qts, IGB_MIG_STATE_STOP);
++    dvsec_set_state(qts, IGB_MIG_STATE_RUNNING);
++    g_assert_cmpuint(dvsec_state(qts), ==, IGB_MIG_STATE_RUNNING);
++
++    qtest_quit(qts);
++}
++
++static void test_save_no_buffer(void)
++{
++    QTestState *qts = start_igb_vm();
++
++    /* Enter STOP_COPY without setting buffer address */
++    dvsec_set_state(qts, IGB_MIG_STATE_STOP);
++    dvsec_set_state(qts, IGB_MIG_STATE_STOP_COPY);
++
++    /* Issue SAVE without buffer */
++    dvsec_cmd(qts, IGB_MIG_CMD_SAVE, 0);
++    g_assert_cmpuint(dvsec_state(qts), ==, IGB_MIG_STATE_ERROR);
++    g_assert_cmpuint(dvsec_error(qts), ==, IGB_MIG_ERR_NO_BUFFER);
++
++    qtest_quit(qts);
++}
++
++static void test_load_corrupted_blob(void)
++{
++    QTestState *qts = start_igb_vm();
++    uint32_t buf[IGB_VF_STATE_MAX_SIZE / sizeof(uint32_t)];
++    uint32_t good[IGB_VF_STATE_MAX_SIZE / sizeof(uint32_t)];
++
++    dvsec_set_buf_addr(qts, DMA_BUF_GPA);
++
++    /* Save a valid blob */
++    dvsec_set_state(qts, IGB_MIG_STATE_STOP);
++    dvsec_set_state(qts, IGB_MIG_STATE_STOP_COPY);
++    uint32_t data_size = dvsec_readl(qts, IGB_MIG_DATA_SIZE);
++    dvsec_cmd(qts, IGB_MIG_CMD_SAVE, 0);
++    qtest_memread(qts, DMA_BUF_GPA, good, data_size);
++
++    uint32_t n_words = data_size / sizeof(uint32_t);
++
++    /* Flip a random word in the blob 16 times; each must be rejected */
++    for (int i = 0; i < 16; i++) {
++        memcpy(buf, good, data_size);
++
++        uint32_t idx = g_test_rand_int_range(0, n_words);
++        buf[idx] ^= g_test_rand_int();
++
++        /* Reset to RESUMING for each attempt */
++        dvsec_set_state(qts, IGB_MIG_STATE_STOP);
++        dvsec_set_state(qts, IGB_MIG_STATE_RESUMING);
++        qtest_memwrite(qts, DMA_BUF_GPA, buf, data_size);
++        dvsec_cmd(qts, IGB_MIG_CMD_LOAD, data_size);
++
++        uint32_t state = dvsec_state(qts);
++        g_assert(state == IGB_MIG_STATE_ERROR ||
++                 state == IGB_MIG_STATE_RESUMING);
++    }
++
++    qtest_quit(qts);
++}
++
++static void test_unknown_command(void)
++{
++    QTestState *qts = start_igb_vm();
++
++    dvsec_cmd(qts, 0xFF, 0);
++    g_assert_cmpuint(dvsec_state(qts), ==, IGB_MIG_STATE_ERROR);
++    g_assert_cmpuint(dvsec_error(qts), ==, IGB_MIG_ERR_UNK_CMD);
++
++    qtest_quit(qts);
++}
++
++static void test_save_wrong_state(void)
++{
++    QTestState *qts = start_igb_vm();
++
++    dvsec_set_buf_addr(qts, DMA_BUF_GPA);
++
++    /* SAVE while RUNNING (must be in STOP_COPY) */
++    dvsec_cmd(qts, IGB_MIG_CMD_SAVE, 0);
++    g_assert_cmpuint(dvsec_state(qts), ==, IGB_MIG_STATE_ERROR);
++    g_assert_cmpuint(dvsec_error(qts), ==, IGB_MIG_ERR_BAD_STATE);
++
++    qtest_quit(qts);
++}
++
++static void test_load_wrong_state(void)
++{
++    QTestState *qts = start_igb_vm();
++
++    dvsec_set_buf_addr(qts, DMA_BUF_GPA);
++
++    /* LOAD while STOP (must be in RESUMING) */
++    dvsec_set_state(qts, IGB_MIG_STATE_STOP);
++    dvsec_cmd(qts, IGB_MIG_CMD_LOAD, 64);
++    g_assert_cmpuint(dvsec_state(qts), ==, IGB_MIG_STATE_ERROR);
++    g_assert_cmpuint(dvsec_error(qts), ==, IGB_MIG_ERR_BAD_STATE);
++
++    qtest_quit(qts);
++}
++
++static void test_load_no_buffer(void)
++{
++    QTestState *qts = start_igb_vm();
++
++    /* Enter RESUMING without setting buffer address */
++    dvsec_set_state(qts, IGB_MIG_STATE_STOP);
++    dvsec_set_state(qts, IGB_MIG_STATE_RESUMING);
++
++    /* Issue LOAD without buffer */
++    dvsec_cmd(qts, IGB_MIG_CMD_LOAD, 64);
++    g_assert_cmpuint(dvsec_state(qts), ==, IGB_MIG_STATE_ERROR);
++    g_assert_cmpuint(dvsec_error(qts), ==, IGB_MIG_ERR_NO_BUFFER);
++
++    qtest_quit(qts);
++}
++
++static void test_load_size_zero(void)
++{
++    QTestState *qts = start_igb_vm();
++
++    dvsec_set_buf_addr(qts, DMA_BUF_GPA);
++
++    dvsec_set_state(qts, IGB_MIG_STATE_STOP);
++    dvsec_set_state(qts, IGB_MIG_STATE_RESUMING);
++
++    /* LOAD with size 0 */
++    dvsec_cmd(qts, IGB_MIG_CMD_LOAD, 0);
++    g_assert_cmpuint(dvsec_state(qts), ==, IGB_MIG_STATE_ERROR);
++    g_assert_cmpuint(dvsec_error(qts), ==, IGB_MIG_ERR_BAD_SIZE);
++
++    qtest_quit(qts);
++}
++
++static void test_load_size_too_big(void)
++{
++    QTestState *qts = start_igb_vm();
++
++    dvsec_set_buf_addr(qts, DMA_BUF_GPA);
++
++    dvsec_set_state(qts, IGB_MIG_STATE_STOP);
++    dvsec_set_state(qts, IGB_MIG_STATE_RESUMING);
++
++    /* LOAD with size exceeding max */
++    dvsec_cmd(qts, IGB_MIG_CMD_LOAD, IGB_VF_STATE_MAX_SIZE + 1);
++    g_assert_cmpuint(dvsec_state(qts), ==, IGB_MIG_STATE_ERROR);
++    g_assert_cmpuint(dvsec_error(qts), ==, IGB_MIG_ERR_BAD_SIZE);
++
++    qtest_quit(qts);
++}
++
++static void write_dirty_enable_req(QTestState *qts, uint64_t gpa,
++                                   uint64_t pgsize, uint64_t iova,
++                                   uint64_t size)
++{
++    struct igb_mig_dirty_enable_req req = {
++        .len = cpu_to_le32(sizeof(req)),
++        .pgsize = cpu_to_le64(pgsize),
++        .range_iova = cpu_to_le64(iova),
++        .range_size = cpu_to_le64(size),
++    };
++    qtest_memwrite(qts, gpa, &req, sizeof(req));
++}
++
++static void test_dirty_enable_no_buffer(void)
++{
++    QTestState *qts = start_igb_vm();
++
++    /* DIRTY_ENABLE without setting buffer address */
++    dvsec_cmd(qts, IGB_MIG_CMD_DIRTY_ENABLE, 0);
++    g_assert_cmpuint(dvsec_state(qts), ==, IGB_MIG_STATE_ERROR);
++    g_assert_cmpuint(dvsec_error(qts), ==, IGB_MIG_ERR_NO_BUFFER);
++
++    qtest_quit(qts);
++}
++
++static void test_dirty_query_not_enabled(void)
++{
++    QTestState *qts = start_igb_vm();
++
++    dvsec_set_buf_addr(qts, DMA_BUF_GPA);
++
++    dvsec_cmd(qts, IGB_MIG_CMD_DIRTY_QUERY, 0);
++    g_assert_cmpuint(dvsec_state(qts), ==, IGB_MIG_STATE_ERROR);
++    g_assert_cmpuint(dvsec_error(qts), ==, IGB_MIG_ERR_NOT_ENABLED);
++
++    qtest_quit(qts);
++}
++
++static void test_dirty_enable_bad_pgsize(void)
++{
++    QTestState *qts = start_igb_vm();
++
++    dvsec_set_buf_addr(qts, DMA_BUF_GPA);
++
++    /* page size 0x1234 is not a power of 2 and not in CAPS */
++    write_dirty_enable_req(qts, DMA_BUF_GPA, 0x1234, 0, 0x10000);
++    dvsec_cmd(qts, IGB_MIG_CMD_DIRTY_ENABLE, 0);
++    g_assert_cmpuint(dvsec_state(qts), ==, IGB_MIG_STATE_ERROR);
++    g_assert_cmpuint(dvsec_error(qts), ==, IGB_MIG_ERR_BAD_PGSIZE);
++
++    qtest_quit(qts);
++}
++
++static void test_dirty_enable_bad_range(void)
++{
++    QTestState *qts = start_igb_vm();
++
++    dvsec_set_buf_addr(qts, DMA_BUF_GPA);
++
++    /* zero range size */
++    write_dirty_enable_req(qts, DMA_BUF_GPA, 4096, 0, 0);
++    dvsec_cmd(qts, IGB_MIG_CMD_DIRTY_ENABLE, 0);
++    g_assert_cmpuint(dvsec_state(qts), ==, IGB_MIG_STATE_ERROR);
++    g_assert_cmpuint(dvsec_error(qts), ==, IGB_MIG_ERR_BAD_RANGE);
++
++    qtest_quit(qts);
++}
++
++static void test_dirty_enable_overflow(void)
++{
++    QTestState *qts = start_igb_vm();
++
++    dvsec_set_buf_addr(qts, DMA_BUF_GPA);
++
++    /* range_iova + range_size wraps uint64 */
++    write_dirty_enable_req(qts, DMA_BUF_GPA, 4096,
++                           UINT64_MAX - 0xFFF, 0x2000);
++    dvsec_cmd(qts, IGB_MIG_CMD_DIRTY_ENABLE, 0);
++    g_assert_cmpuint(dvsec_state(qts), ==, IGB_MIG_STATE_ERROR);
++    g_assert_cmpuint(dvsec_error(qts), ==, IGB_MIG_ERR_BAD_RANGE);
++
++    qtest_quit(qts);
++}
++
++static void test_dirty_enable_overlap(void)
++{
++    QTestState *qts = start_igb_vm();
++
++    dvsec_set_buf_addr(qts, DMA_BUF_GPA);
++
++    /* First range succeeds */
++    write_dirty_enable_req(qts, DMA_BUF_GPA, 4096, 0, 0x10000);
++    dvsec_cmd(qts, IGB_MIG_CMD_DIRTY_ENABLE, 0);
++    g_assert_cmpuint(dvsec_state(qts), ==, IGB_MIG_STATE_RUNNING);
++    g_assert_cmpuint(dvsec_error(qts), ==, 0);
++
++    /* Second range overlaps the first */
++    write_dirty_enable_req(qts, DMA_BUF_GPA, 4096, 0x8000, 0x10000);
++    dvsec_cmd(qts, IGB_MIG_CMD_DIRTY_ENABLE, 0);
++    g_assert_cmpuint(dvsec_state(qts), ==, IGB_MIG_STATE_ERROR);
++    g_assert_cmpuint(dvsec_error(qts), ==, IGB_MIG_ERR_BAD_RANGE);
++
++    qtest_quit(qts);
++}
++
++static void test_dirty_enable_unsupported_pgsize(void)
++{
++    QTestState *qts = start_igb_vm();
++
++    dvsec_set_buf_addr(qts, DMA_BUF_GPA);
++
++    /* 512 is a power of 2 but not in CAPS pgsize bitmask */
++    write_dirty_enable_req(qts, DMA_BUF_GPA, 512, 0, 0x10000);
++    dvsec_cmd(qts, IGB_MIG_CMD_DIRTY_ENABLE, 0);
++    g_assert_cmpuint(dvsec_state(qts), ==, IGB_MIG_STATE_ERROR);
++    g_assert_cmpuint(dvsec_error(qts), ==, IGB_MIG_ERR_BAD_PGSIZE);
++
++    qtest_quit(qts);
++}
++
++static void test_dirty_enable_64k_pgsize(void)
++{
++    QTestState *qts = start_igb_vm();
++
++    dvsec_set_buf_addr(qts, DMA_BUF_GPA);
++
++    /* CAPS only advertises 4K, so 64K should be rejected */
++    write_dirty_enable_req(qts, DMA_BUF_GPA, 65536, 0, 0x100000);
++    dvsec_cmd(qts, IGB_MIG_CMD_DIRTY_ENABLE, 0);
++    g_assert_cmpuint(dvsec_state(qts), ==, IGB_MIG_STATE_ERROR);
++    g_assert_cmpuint(dvsec_error(qts), ==, IGB_MIG_ERR_BAD_PGSIZE);
++
++    qtest_quit(qts);
++}
++
++static void test_dirty_enable_misaligned(void)
++{
++    QTestState *qts = start_igb_vm();
++
++    dvsec_set_buf_addr(qts, DMA_BUF_GPA);
++
++    /* range_iova not aligned to page size */
++    write_dirty_enable_req(qts, DMA_BUF_GPA, 4096, 0x1000 + 1, 0x10000);
++    dvsec_cmd(qts, IGB_MIG_CMD_DIRTY_ENABLE, 0);
++    g_assert_cmpuint(dvsec_state(qts), ==, IGB_MIG_STATE_ERROR);
++    g_assert_cmpuint(dvsec_error(qts), ==, IGB_MIG_ERR_BAD_PGSIZE);
++
++    qtest_quit(qts);
++}
++
++static void test_dirty_enable_multiple_ranges(void)
++{
++    QTestState *qts = start_igb_vm();
++
++    dvsec_set_buf_addr(qts, DMA_BUF_GPA);
++
++    /* First range */
++    write_dirty_enable_req(qts, DMA_BUF_GPA, 4096, 0, 0x10000);
++    dvsec_cmd(qts, IGB_MIG_CMD_DIRTY_ENABLE, 0);
++    g_assert_cmpuint(dvsec_state(qts), ==, IGB_MIG_STATE_RUNNING);
++    g_assert_cmpuint(dvsec_error(qts), ==, 0);
++
++    /* Second non-overlapping range */
++    write_dirty_enable_req(qts, DMA_BUF_GPA, 4096, 0x100000, 0x10000);
++    dvsec_cmd(qts, IGB_MIG_CMD_DIRTY_ENABLE, 0);
++    g_assert_cmpuint(dvsec_state(qts), ==, IGB_MIG_STATE_RUNNING);
++    g_assert_cmpuint(dvsec_error(qts), ==, 0);
++
++    dvsec_cmd(qts, IGB_MIG_CMD_DIRTY_DISABLE, 0);
++
++    qtest_quit(qts);
++}
++
++static void test_dirty_enable_double(void)
++{
++    QTestState *qts = start_igb_vm();
++
++    dvsec_set_buf_addr(qts, DMA_BUF_GPA);
++
++    /* First enable succeeds */
++    write_dirty_enable_req(qts, DMA_BUF_GPA, 4096, 0, 0x10000);
++    dvsec_cmd(qts, IGB_MIG_CMD_DIRTY_ENABLE, 0);
++    g_assert_cmpuint(dvsec_state(qts), ==, IGB_MIG_STATE_RUNNING);
++    g_assert_cmpuint(dvsec_error(qts), ==, 0);
++
++    /* Same range again overlaps itself */
++    write_dirty_enable_req(qts, DMA_BUF_GPA, 4096, 0, 0x10000);
++    dvsec_cmd(qts, IGB_MIG_CMD_DIRTY_ENABLE, 0);
++    g_assert_cmpuint(dvsec_state(qts), ==, IGB_MIG_STATE_ERROR);
++    g_assert_cmpuint(dvsec_error(qts), ==, IGB_MIG_ERR_BAD_RANGE);
++
++    qtest_quit(qts);
++}
++
++static void test_dirty_query_bad_range(void)
++{
++    QTestState *qts = start_igb_vm();
++    struct igb_mig_dirty_query qbuf = { 0 };
++
++    dvsec_set_buf_addr(qts, DMA_BUF_GPA);
++
++    /* Enable: 4K pages, 64K range at IOVA 0 */
++    write_dirty_enable_req(qts, DMA_BUF_GPA, 4096, 0, 0x10000);
++    dvsec_cmd(qts, IGB_MIG_CMD_DIRTY_ENABLE, 0);
++    g_assert_cmpuint(dvsec_state(qts), ==, IGB_MIG_STATE_RUNNING);
++
++    /* Query a range that doesn't match */
++    qbuf.len = cpu_to_le32(sizeof(qbuf) + 16);
++    qbuf.iova = cpu_to_le64(0x200000);
++    qbuf.size = cpu_to_le64(0x10000);
++    qtest_memwrite(qts, DMA_BUF_GPA, &qbuf, sizeof(qbuf));
++    dvsec_cmd(qts, IGB_MIG_CMD_DIRTY_QUERY, 0);
++    g_assert_cmpuint(dvsec_state(qts), ==, IGB_MIG_STATE_ERROR);
++    g_assert_cmpuint(dvsec_error(qts), ==, IGB_MIG_ERR_BAD_RANGE);
++
++    qtest_quit(qts);
++}
++
++static void test_dirty_enable_query_cycle(void)
++{
++    QTestState *qts = start_igb_vm();
++    struct igb_mig_dirty_query qbuf = { 0 };
++
++    dvsec_set_buf_addr(qts, DMA_BUF_GPA);
++
++    /* Enable: 4K pages, 64K range at IOVA 0 */
++    write_dirty_enable_req(qts, DMA_BUF_GPA, 4096, 0, 0x10000);
++    dvsec_cmd(qts, IGB_MIG_CMD_DIRTY_ENABLE, 0);
++    g_assert_cmpuint(dvsec_state(qts), ==, IGB_MIG_STATE_RUNNING);
++    g_assert_cmpuint(dvsec_error(qts), ==, 0);
++
++    /* Query: no DMA activity, bitmap should be empty */
++    qbuf.len = cpu_to_le32(sizeof(qbuf) + 16);
++    qbuf.iova = cpu_to_le64(0);
++    qbuf.size = cpu_to_le64(0x10000);
++    qtest_memwrite(qts, DMA_BUF_GPA, &qbuf, sizeof(qbuf));
++    dvsec_cmd(qts, IGB_MIG_CMD_DIRTY_QUERY, 0);
++    g_assert_cmpuint(dvsec_state(qts), ==, IGB_MIG_STATE_RUNNING);
++    g_assert_cmpuint(dvsec_error(qts), ==, 0);
++
++    /* Read back dirty_page_count - should be 0 */
++    qtest_memread(qts, DMA_BUF_GPA, &qbuf, sizeof(qbuf));
++    g_assert_cmpuint(le32_to_cpu(qbuf.dirty_page_count), ==, 0);
++
++    /* Disable */
++    dvsec_cmd(qts, IGB_MIG_CMD_DIRTY_DISABLE, 0);
++    g_assert_cmpuint(dvsec_state(qts), ==, IGB_MIG_STATE_RUNNING);
++    g_assert_cmpuint(dvsec_error(qts), ==, 0);
++
++    qtest_quit(qts);
++}
++
++static void register_igb_migration_test(void)
++{
++    qtest_add_func("/igb/migration/dvsec-presence", test_dvsec_presence);
++    qtest_add_func("/igb/migration/state-machine/stop-copy",
++                   test_state_machine_stop_copy);
++    qtest_add_func("/igb/migration/state-machine/resuming",
++                   test_state_machine_resuming);
++    qtest_add_func("/igb/migration/state-machine/invalid",
++                   test_state_machine_invalid);
++    qtest_add_func("/igb/migration/state-machine/pre-copy",
++                   test_state_machine_pre_copy);
++    qtest_add_func("/igb/migration/save-load-roundtrip",
++                   test_save_load_roundtrip);
++    qtest_add_func("/igb/migration/load-bad-magic", test_load_bad_magic);
++    qtest_add_func("/igb/migration/load-bad-version", test_load_bad_version);
++    qtest_add_func("/igb/migration/load-bad-vfn", test_load_bad_vfn);
++    qtest_add_func("/igb/migration/error-recovery", test_error_recovery);
++    qtest_add_func("/igb/migration/save-no-buffer", test_save_no_buffer);
++    qtest_add_func("/igb/migration/load-corrupted-blob",
++                   test_load_corrupted_blob);
++    qtest_add_func("/igb/migration/unknown-command", test_unknown_command);
++    qtest_add_func("/igb/migration/save-wrong-state", test_save_wrong_state);
++    qtest_add_func("/igb/migration/load-wrong-state", test_load_wrong_state);
++    qtest_add_func("/igb/migration/load-size-zero", test_load_size_zero);
++    qtest_add_func("/igb/migration/load-size-too-big", test_load_size_too_big);
++    qtest_add_func("/igb/migration/load-no-buffer", test_load_no_buffer);
++    qtest_add_func("/igb/migration/dirty/enable-no-buffer",
++                   test_dirty_enable_no_buffer);
++    qtest_add_func("/igb/migration/dirty/query-not-enabled",
++                   test_dirty_query_not_enabled);
++    qtest_add_func("/igb/migration/dirty/enable-bad-pgsize",
++                   test_dirty_enable_bad_pgsize);
++    qtest_add_func("/igb/migration/dirty/enable-bad-range",
++                   test_dirty_enable_bad_range);
++    qtest_add_func("/igb/migration/dirty/enable-overflow",
++                   test_dirty_enable_overflow);
++    qtest_add_func("/igb/migration/dirty/enable-overlap",
++                   test_dirty_enable_overlap);
++    qtest_add_func("/igb/migration/dirty/enable-unsupported-pgsize",
++                   test_dirty_enable_unsupported_pgsize);
++    qtest_add_func("/igb/migration/dirty/enable-64k-pgsize",
++                   test_dirty_enable_64k_pgsize);
++    qtest_add_func("/igb/migration/dirty/enable-misaligned",
++                   test_dirty_enable_misaligned);
++    qtest_add_func("/igb/migration/dirty/enable-multiple-ranges",
++                   test_dirty_enable_multiple_ranges);
++    qtest_add_func("/igb/migration/dirty/enable-double",
++                   test_dirty_enable_double);
++    qtest_add_func("/igb/migration/dirty/query-bad-range",
++                   test_dirty_query_bad_range);
++    qtest_add_func("/igb/migration/dirty/enable-query-cycle",
++                   test_dirty_enable_query_cycle);
++}
++
++libqos_init(register_igb_migration_test);
+diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+index 200abf6f36d6..8a469ee48d69 100644
+--- a/tests/qtest/meson.build
++++ b/tests/qtest/meson.build
+@@ -355,6 +355,7 @@ qos_test_ss.add(
+   'virtio-iommu-test.c',
+   'vmxnet3-test.c',
+   'igb-test.c',
++  'igb-migration-test.c',
+   'ufs-test.c',
+   'riscv-iommu-test.c',
+ )
 -- 
 2.56.0
 
