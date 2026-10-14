@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F1AFCC6B1A
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 09:46:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D26ECC6B1D
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 09:46:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGvZC-0000ND-0p; Wed, 14 Oct 2026 05:46:34 -0400
+	id 1xGvZE-0000VK-VH; Wed, 14 Oct 2026 05:46:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xGvY2-00079M-3b
- for qemu-devel@nongnu.org; Wed, 14 Oct 2026 05:45:28 -0400
-Received: from mail-dl1-x122a.google.com ([2607:f8b0:4864:20::122a])
+ id 1xGvYI-0007dE-GR
+ for qemu-devel@nongnu.org; Wed, 14 Oct 2026 05:45:39 -0400
+Received: from mail-dl1-x1230.google.com ([2607:f8b0:4864:20::1230])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xGvXx-0002Uh-WA
- for qemu-devel@nongnu.org; Wed, 14 Oct 2026 05:45:20 -0400
-Received: by mail-dl1-x122a.google.com with SMTP id
- a92af1059eb24-16079d54c17so4974392c88.0
- for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 02:45:16 -0700 (PDT)
+ id 1xGvYG-0002Yx-5y
+ for qemu-devel@nongnu.org; Wed, 14 Oct 2026 05:45:38 -0400
+Received: by mail-dl1-x1230.google.com with SMTP id
+ a92af1059eb24-14fc585291cso255330c88.1
+ for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 02:45:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1791971115; x=1792575915; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1791971134; x=1792575934; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=3fUQiYjovRhBbOY9jZqr1EROLvDeVoIIJQ8l3JOg7Gk=;
- b=o/34U5nexp0IeGiAd6xIhWZn1RqnfgurT11nbZA+sNdlWRmCb9s9yUEQBAdUO4OSsM
- LcW5AVS4FTS5AROri3e4DBi1LkDouP3dvzXcB7mUCzB2RHXV/9lx4+Wtk3y8bJ3vxuYI
- O2rVItTdPTJIWqd7M6JsnNPrP33RsNr6rGZUtuuK6QMz6/VjE3NU70Q5kZHmQmkLheIe
- tZGBsV55VxcEWEDClTd/1tzohezaVpgbdltVxijJJWBXdtPHbR/Kc1kJetnGu5irLFOs
- dKmGNCsECjJUskOElpcEYDLi7Ky64LEJln9S8AmmLDs59X7s3jCjc9eDs/Oe/WYB6JIw
- rG/Q==
+ bh=47rkJyHTHaoX94n5mXjj187II58O48Rz7ARv90xXfM0=;
+ b=ONtSK1PeuUDT4UL24kOqydC8AucdycHLbBv5rqEnzcHHzdIMT85fMSx0eV3xW95yzF
+ 1w6hr1dT0aXRzVOKYNx76+L4bhgNizVjfe1m9O7946GIpK1kkGN+tH54kvzuSpJD3T0Q
+ A0bPTBsAHyTZCsf1Qb/60YSNzYpBEilGkHDiIyMZKt6F9MY51I4rTrdcSkD/noXvyRsu
+ 0OVoXyHitUhSKG6cWIoD0FWtRi+FxZB9aPisEovQqyEhPIOd3w6iN6KRt/OMn1Lr7KNe
+ zaf6XMzjybqP0RZHsWkZ0GHZ9UZcThJLkQh94dDs7X0W+W+cYo6l0gUrBTjqp5xwXiy3
+ apvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791971115; x=1792575915;
+ d=1e100.net; s=20260707; t=1791971134; x=1792575934;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=3fUQiYjovRhBbOY9jZqr1EROLvDeVoIIJQ8l3JOg7Gk=;
- b=J5OZV5jWxQ0DHqNFpAw3MoB9tdUimUfdmZBqdlPIbz2nvbzPGF0n+9YBurZdnzIj0D
- aqvwoM3I+LJ0BGszbD1OrSVMT78nkrgjZz0d4QgulVC7/qs9S+kdb3qt8IkC2hI6usov
- z8dbwUlO1vZ9UtoZmhxu1dErCFuLVEMBajGpvc2XeS0m0T2DzCeJ8oHnmDerfyjAlymy
- Olz2yykHvG2ila7RrbsaceYJarttm2VVvlPSETnO9cokenl7F7cNnkTewh9eX0QCo7yJ
- d6Spmdg8qWwEo/X+f46Aq/IW0i08QMBAbYf+sAZXRXHh5EabGFjEr49/IMd+nM/VZOhb
- lsFg==
-X-Gm-Message-State: AFq9FYITYCHNU9gyT0vsw2E3LHIynzFhWsO2LJWFFo1NGLQwowrCa7Ft
- rG9j7j+bPrEemchyNsF4Gk9w6pVVwHT4KCzb4rAAIvaW918LoINAkhz4mMQtDszX/y0=
-X-Gm-Gg: AYBFou2CKnns5+wugVG23W5JzFgfzAUTAkVa5Yj9MSi/20khuKDiofQtKveTFId5jkG
- bS7cr6iSwvOHh9m0wWsNyrQdzf32WTVJ3V6xbyESX2CPtCKgitDktQYnow8a27ELqN8NBcjN4+m
- R7lTIbzRl4N5u6qqf3u7fhGt1qmMBBmvLWwyfqs22b4A0zqFnYHFjlu3pATyKYI3Yid44nXceg0
- y+TAK2U/inuel130K+oZcF8x+ke+jcXl5xeYOmsJooNkLsyKhLH+rUQ6gnQTZWXaK8gonfTI4NI
- /7kokLXnesrhMh2kpkq7pR+TsTDj2lLr0GSNoDtSzLjl3ZMbDPok3Y48J/ryCugLASY9dDwOAtd
- VFypf5ajqVqexYj0dFrk4HHgV+w1YGTvwC0KbnmDb7QRmEVcSxFRvpnWUeEEnnMO9lDeCUHiuAz
- 12XsJoEIkxKn2Xi1DCTe6laKexDLrLGRynYm4h7K6f/luuSEz5KWIUD4Rb5SfH0w1TvTRSn84iU
- rZhIf6Julydgrm6DQ==
-X-Received: by 2002:a05:701b:451c:20b0:14a:5d07:9b with SMTP id
- a92af1059eb24-16a5ea5d851mr19635817c88.28.1791971115165; 
- Wed, 14 Oct 2026 02:45:15 -0700 (PDT)
+ bh=47rkJyHTHaoX94n5mXjj187II58O48Rz7ARv90xXfM0=;
+ b=Ez+HCHnxMBIv443NiQZsUz9aVWYI22LY9U6c2/pWwA35k5nZyGysRfv4pTgIauC+U1
+ 7ncOXwgp7ui8NNy/nmE7bprRjvFpoCnD7znyb1K2Qmhk0YdgMa6BrJBBCrU0hsQQKh1c
+ BxR0BIsw9yAUTI5yJAOl+JnHuLNmqnvXfYyPSBg/dkAlvyJUm5XSVbakogr0/LPIaeWI
+ UgfxxQOxjgLZ5rnZiNReYhyveeXC8ieACCeLXzxIIY7gld8y8xe8gJDVV68AB9ogieAi
+ OANBAtchcO+5Fgf5zUyrnDPyA1tpFujDjk1vLOJNLfiZjGqh7YLMFr2JYBz2u4Jhup4n
+ nSiA==
+X-Gm-Message-State: AFq9FYJXVhy2fEyMuiCFUD5e9+D7UuaTqJl+ocER0/sqxRd4zLd6d/jJ
+ zSkIJh42qL3c/8rqzu9wecvbI7OySWaWgHlOijvVCwPU+lZCOz5RO3SlCXeFPijM0e0=
+X-Gm-Gg: AYBFou281kHCt8B5QvGMFp1bmuMAYUVb5ld7lgYnz6gKZJoFb62P9CJQJ2JDfyW9aIF
+ 7hIuRbLZ6lugMH8MukRRKrwQ455mfS3eoTSkH/lf92wYrvQqT1sE0eRc7XKQuCnFP2lkyYdJrFq
+ s9S4Iu7EG8MCjhiz7DtRZCUeAEQ1hECZlrC55srTcK6rC6QcFWNFK3jFHCT6eLhoJdN2dw1/Oon
+ jWTtnoTiVewTJKhIZWTkFGNnt+BXGNmet48zI6BqEBVUI3h1riXo+AeYymVxgtgYP+tRNscSZ+W
+ oYzWvNEnD+oPMovpuy4DD4s/3+VRK824EklBbvk3macv3sooQ3MYpnbQIDiFEzD4F3ABhKEDrJ9
+ TVT2gUFP99suhCANkq1lV9fnQIr6+rKd5/7z6+dHxt+xn7tpoL64j9HiQ00qv0aCKDvBgojc95k
+ iJOFsxvRGiGGR8W4nmMOIiGLvwB6Did6cGpwzUZ52mxcnkvNOjvI76RTKJPcvbZGXhd+mGv8CzV
+ DoPuevNR6UOKs8wcg==
+X-Received: by 2002:a05:7022:1582:b0:143:298e:913d with SMTP id
+ a92af1059eb24-16a63b2edc7mr29904960c88.47.1791971134432; 
+ Wed, 14 Oct 2026 02:45:34 -0700 (PDT)
 Received: from DESKTOP-Q716RM7 ([103.94.185.75])
  by smtp.googlemail.com with ESMTPSA id
- a92af1059eb24-169a31f6f5csm44348380c88.11.2026.10.14.02.45.06
+ a92af1059eb24-169a31f6f5csm44348380c88.11.2026.10.14.02.45.26
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 14 Oct 2026 02:45:14 -0700 (PDT)
+ Wed, 14 Oct 2026 02:45:33 -0700 (PDT)
 From: Yonggang Luo <luoyonggang@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Alistair Francis <alistair.francis@wdc.com>,
@@ -96,24 +96,24 @@ Cc: Alistair Francis <alistair.francis@wdc.com>,
  Darren Kenny <darren.kenny@oracle.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Stafford Horne <shorne@gmail.com>
-Subject: [PATCH 32/34] system/vl: select target from machine name in combined
- binaries
-Date: Wed, 14 Oct 2026 17:41:47 +0800
-Message-ID: <20261014094224.1976-17-luoyonggang@gmail.com>
+Subject: [PATCH 34/34] qdev: Handle device alias ambiguous under multi-target
+ qemu
+Date: Wed, 14 Oct 2026 17:41:49 +0800
+Message-ID: <20261014094224.1976-19-luoyonggang@gmail.com>
 X-Mailer: git-send-email 2.55.0.windows.3
 In-Reply-To: <20261014094224.1976-1-luoyonggang@gmail.com>
 References: <20261014094224.1976-1-luoyonggang@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::122a;
- envelope-from=luoyonggang@gmail.com; helo=mail-dl1-x122a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1230;
+ envelope-from=luoyonggang@gmail.com; helo=mail-dl1-x1230.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_FILL_THIS_FORM_SHORT=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -129,198 +129,157 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Match -machine $target_arch-$machine_name against registered machine
-names and aliases. Also accept -machine $machine_name when it uniquely
-identifies a machine; report architecture-qualified choices when it is
-ambiguous.
+For example:
 
-This do not change single-target behavior.
+./qemu-system -device virtio-blk,help
+
+will raise the following error:
+
+qemu-system: -device virtio-blk,help: Device alias 'virtio-blk' is ambiguous without a selected machine
+Specify -machine <arch>-<machine-name> or an unambiguous <machine-name>, or use a concrete device name:
+  virtio-blk-device
+  virtio-blk-pci
 
 Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
 ---
- system/vl.c | 133 ++++++++++++++++++++++++++++++++++++++++++++++++----
- 1 file changed, 124 insertions(+), 9 deletions(-)
+ include/monitor/qdev.h |  7 ++++++
+ system/qdev-monitor.c  | 52 ++++++++++++++++++++++++++++++++++++++----
+ system/vl.c            |  7 +++---
+ 3 files changed, 58 insertions(+), 8 deletions(-)
 
-diff --git a/system/vl.c b/system/vl.c
-index e2bd65ebd40..5d6ba08b591 100644
---- a/system/vl.c
-+++ b/system/vl.c
-@@ -1205,6 +1205,77 @@ static int parse_fw_cfg(void *opaque, QemuOpts *opts, Error **errp)
-     return 0;
+diff --git a/include/monitor/qdev.h b/include/monitor/qdev.h
+index 8f7e2f616cf..92dd4e35351 100644
+--- a/include/monitor/qdev.h
++++ b/include/monitor/qdev.h
+@@ -10,6 +10,13 @@ void hmp_info_qtree(MonitorHMP *hmp, const QDict *qdict);
+ void hmp_info_qdm(MonitorHMP *hmp, const QDict *qdict);
+ void qmp_device_add(QDict *qdict, QObject **ret_data, Error **errp);
+ 
++/**
++ * qdev_device_help: print device listing or property help when requested.
++ * @opts: device options
++ *
++ * Returns: 0 if no help was requested, 1 if handled, or -1 if an ambiguous
++ * alias prevented help. Other property-help errors retain the handled result.
++ */
+ int qdev_device_help(QemuOpts *opts);
+ DeviceState *qdev_device_add(QemuOpts *opts, Error **errp);
+ DeviceState *qdev_device_add_from_qdict(const QDict *opts,
+diff --git a/system/qdev-monitor.c b/system/qdev-monitor.c
+index b3ca619f3c9..8ab19568b0d 100644
+--- a/system/qdev-monitor.c
++++ b/system/qdev-monitor.c
+@@ -24,6 +24,8 @@
+ #include "monitor/monitor.h"
+ #include "monitor/qdev.h"
+ #include "qemu/base-arch-defs.h"
++#include "qemu/target-info.h"
++#include "qemu/target-info-def.h"
+ #include "system/runstate.h"
+ #include "qapi/error.h"
+ #include "qapi/qapi-commands-qdev.h"
+@@ -217,10 +219,18 @@ static void qdev_print_devinfos(bool show_no_user)
+     g_slist_free(list);
  }
  
-+static bool machine_target_matches(MachineClass *mc, const TargetInfo *ti,
-+                                   const char *name)
-+{
-+    const char *names[] = { mc->name, mc->alias };
-+
-+    for (unsigned i = 0; i < ARRAY_SIZE(names); i++) {
-+        if (names[i]) {
-+            if (!strcmp(name, names[i])) {
-+                return true;
-+            }
-+            g_autofree char *qualified =
-+                g_strdup_printf("%s-%s", ti->target_name, names[i]);
-+
-+            if (!strcmp(name, qualified)) {
-+                return true;
-+            }
-+        }
-+    }
-+    return false;
-+}
-+
-+static MachineClass *machine_target_select(GSList *machines, GSList **targets,
-+                                           const char *name, Error **errp)
-+{
+-static const char *find_typename_by_alias(const char *alias)
++static const char *find_typename_by_alias(const char *alias, Error **errp)
+ {
 +    ERRP_GUARD();
-+    MachineClass *machine = NULL;
-+    const TargetInfo *target = NULL;
-+    g_autoptr(GString) hints = g_string_new(NULL);
++    bool unselected = target_combined_binary() && !target_info();
++    const char *match = NULL;
++    g_autoptr(GString) hints = NULL;
 +    unsigned count = 0;
-+    GSList *el;
-+    GSList *tel;
-+
-+    *targets = object_class_get_list(TYPE_TARGET_INFO, false);
-+    if (!name) {
-+        return NULL;
-+    }
-+
-+    for (el = machines; el; el = el->next) {
-+        MachineClass *mc = el->data;
-+
-+        for (tel = *targets; tel; tel = tel->next) {
-+            const TargetInfo *ti = TARGET_INFO_CLASS(tel->data)->target_info;
-+
-+            if ((mc->targets & QEMU_ARCH_BIT(ti->target_arch)) &&
-+                machine_target_matches(mc, ti, name)) {
-+                count++;
-+                machine = mc;
-+                target = ti;
-+                g_string_append_printf(hints, "  -machine %s-%s\n",
-+                                       ti->target_name, mc->name);
-+            }
-+        }
-+    }
-+    if (!count) {
-+        error_setg(errp, "unsupported machine type: \"%s\"", name);
-+        error_append_hint(errp, "Use -machine help to list supported names, "
-+                          "then select <arch>-<machine-name> or an "
-+                          "unambiguous <machine-name>\n");
-+        return NULL;
-+    }
-+    if (count != 1) {
-+        error_setg(errp, "machine name '%s' is ambiguous", name);
-+        error_append_hint(errp, "Select an architecture-prefixed name:\n%s",
-+                          hints->str);
-+        return NULL;
-+    }
-+
-+    target_info_qom_set_target_info(target);
-+    return machine;
-+}
-+
- static int device_help_func(void *opaque, QemuOpts *opts, Error **errp)
- {
-     return qdev_device_help(opts);
-@@ -1565,16 +1636,23 @@ static gint machine_class_cmp(gconstpointer a, gconstpointer b, gpointer d)
- static void machine_help_func(const QDict *qdict)
- {
-     g_autoptr(GSList) machines = NULL;
-+    g_autoptr(GSList) targets = NULL;
-     GSList *el;
-+    GSList *tel;
-     const char *type = qdict_get_try_str(qdict, "type");
-+    MachineClass *machine_class = NULL;
+     int i;
  
-     machines = object_class_get_list(TYPE_MACHINE, false);
--    if (type) {
--        ObjectClass *machine_class = OBJECT_CLASS(find_machine(type, machines));
--        if (machine_class) {
--            type_print_class_properties(object_class_get_name(machine_class));
--            return;
--        }
-+    if (target_combined_binary()) {
-+        machine_class = machine_target_select(machines, &targets, type,
-+                                              &error_fatal);
-+    } else if (type) {
-+        machine_class = find_machine(type, machines);
++    if (unselected) {
++        hints = g_string_new(NULL);
 +    }
-+    if (machine_class) {
-+        type_print_class_properties(
-+            object_class_get_name(OBJECT_CLASS(machine_class)));
-+        return;
-     }
- 
-     printf("Supported machines are:\n");
-@@ -1585,9 +1663,20 @@ static void machine_help_func(const QDict *qdict)
-             printf("%-20s %s (alias of %s)\n", mc->alias, mc->desc, mc->name);
+     for (i = 0; qdev_alias_table[i].alias; i++) {
+         if (qdev_alias_table[i].arch_mask &&
+             !qemu_arch_available(qdev_alias_table[i].arch_mask)) {
+@@ -228,11 +238,32 @@ static const char *find_typename_by_alias(const char *alias)
          }
-         printf("%-20s %s%s%s%s\n", mc->name, mc->desc,
--               mc->is_default ? " (default)" : "",
-+               mc->is_default && !target_combined_binary() ? " (default)" : "",
-                mc->deprecation_reason ? " (deprecated)" : "",
-                object_class_is_secure(OBJECT_CLASS(mc)) ? " (secure)" : "");
-+        for (tel = targets; tel; tel = tel->next) {
-+            const TargetInfo *ti = TARGET_INFO_CLASS(tel->data)->target_info;
+ 
+         if (strcmp(qdev_alias_table[i].alias, alias) == 0) {
+-            return qdev_alias_table[i].typename;
++            const char *typename = qdev_alias_table[i].typename;
 +
-+            if (mc->targets & QEMU_ARCH_BIT(ti->target_arch)) {
-+                printf("  %s-%s\n", ti->target_name, mc->name);
-+                if (mc->alias && strcmp(mc->name, mc->alias)) {
-+                    printf("  %s-%s (alias)\n",
-+                           ti->target_name, mc->alias);
-+                }
++            if (!unselected) {
++                return typename;
 +            }
-+        }
++            ObjectClass *oc = module_object_class_by_name(typename);
++
++            if (!object_class_dynamic_cast(oc, TYPE_DEVICE) ||
++                object_class_is_abstract(oc)) {
++                continue;
++            }
++            match = typename;
++            count++;
++            g_string_append_printf(hints, "  %s\n", typename);
+         }
      }
+ 
+-    return NULL;
++    if (count > 1) {
++        error_setg(errp, "Device alias '%s' is ambiguous without a "
++                   "selected machine", alias);
++        error_append_hint(errp, "Specify -machine <arch>-<machine-name> or "
++                          "an unambiguous <machine-name>, or use a "
++                          "concrete device name:\n%s", hints->str);
++        return NULL;
++    }
++    return match;
  }
  
-@@ -1684,6 +1773,26 @@ static MachineClass *select_machine(QDict *qdict, Error **errp)
-     g_autoptr(GSList) machines = object_class_get_list(TYPE_MACHINE, false);
-     MachineClass *machine_class = NULL;
+ static DeviceClass *qdev_get_device_class(const char **driver, Error **errp)
+@@ -243,7 +274,13 @@ static DeviceClass *qdev_get_device_class(const char **driver, Error **errp)
  
-+    if (target_combined_binary()) {
-+        g_autoptr(GSList) targets = NULL;
+     oc = module_object_class_by_name(*driver);
+     if (!oc) {
+-        const char *typename = find_typename_by_alias(*driver);
++        Error *local_err = NULL;
++        const char *typename = find_typename_by_alias(*driver, &local_err);
 +
-+        if (!machine_type) {
-+            error_setg(errp, "No machine specified; combined binaries "
-+                       "have no default machine");
-+            error_append_hint(errp,
-+                              "Use -machine help to list supported names, "
-+                              "then select <arch>-<machine-name> or an "
-+                              "unambiguous <machine-name>\n");
++        if (local_err) {
++            error_propagate(errp, local_err);
 +            return NULL;
 +        }
-+        machine_class = machine_target_select(machines, &targets, machine_type,
-+                                              errp);
-+        if (machine_class) {
-+            qdict_del(qdict, "type");
-+        }
-+        return machine_class;
-+    }
+ 
+         if (typename) {
+             *driver = typename;
+@@ -308,7 +345,12 @@ int qdev_device_help(QemuOpts *opts)
+     }
+ 
+     if (!object_class_by_name(driver)) {
+-        const char *typename = find_typename_by_alias(driver);
++        const char *typename = find_typename_by_alias(driver, &local_err);
 +
-     if (machine_type) {
-         machine_class = find_machine(machine_type, machines);
-         if (!machine_class) {
-@@ -2913,10 +3022,16 @@ void qemu_init(int argc, char **argv)
-     os_setup_limits();
++        if (local_err) {
++            error_report_err(local_err);
++            return -1;
++        }
  
-     target_info_qom_init();
--    target_info_qom_set_target();
-+    if (!target_combined_binary()) {
-+        target_info_qom_set_target();
-+    }
+         if (typename) {
+             driver = typename;
+diff --git a/system/vl.c b/system/vl.c
+index bad13393f24..068fa5e12ad 100644
+--- a/system/vl.c
++++ b/system/vl.c
+@@ -2795,9 +2795,10 @@ static void qemu_process_help_options(void)
+         exit(0);
+     }
  
-     module_init_info(qemu_modinfo);
--    module_allow_arch(target_name());
-+    if (target_combined_binary()) {
-+        module_allow_all_arch();
-+    } else {
-+        module_allow_arch(target_name());
-+    }
+-    if (qemu_opts_foreach(qemu_find_opts("device"),
+-                          device_help_func, NULL, NULL)) {
+-        exit(0);
++    int device_help = qemu_opts_foreach(qemu_find_opts("device"),
++                                      device_help_func, NULL, NULL);
++    if (device_help) {
++        exit(device_help < 0 ? EXIT_FAILURE : EXIT_SUCCESS);
+     }
  
-     qemu_init_subsystems();
- 
+     /* -L help lists the data directories and exits. */
 -- 
 2.55.0.windows.3
 
