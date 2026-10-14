@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BEC0CC6B1C
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 03:45:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64354CC6B1C
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 03:45:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGprC-0006sC-1B; Tue, 13 Oct 2026 23:40:46 -0400
+	id 1xGpsQ-0003KX-Aq; Tue, 13 Oct 2026 23:42:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1xGpr7-0006ZN-A8
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 23:40:41 -0400
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ id 1xGpsM-000391-EZ
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 23:41:58 -0400
+Received: from mail-pg1-x52e.google.com ([2607:f8b0:4864:20::52e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1xGpr5-0001f2-G9
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 23:40:41 -0400
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-2e8fe8e343fso11952105ad.2
- for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 20:40:39 -0700 (PDT)
+ id 1xGpsK-0001pz-Ld
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 23:41:58 -0400
+Received: by mail-pg1-x52e.google.com with SMTP id
+ 41be03b00d2f7-cc4b1f7e8f4so2193512a12.1
+ for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 20:41:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1791949238; x=1792554038; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=xFNjfPuUAVqU31Pm7ELh8jcYlJfnMJdLu8Ehq+rkfgU=;
- b=FIIiFoRLpteLbGIdoCuiYt2Fktreih9ECDkLShcPb4h8H6Rm25996amTZtYasey0jp
- snF6wtT3VGQKFvpaIeNOcP8vtO1RSobTzLlT3uFoVPJ/ssIZtpM4JgiDE3kATGQg3yjM
- ceWSifLudRDAWKNEt9vdpjAVVBTF9O2V2n/KhREr/7CrJNpF7X68+9gmnBSs2rSdFX25
- BjAlhbtWBv8YcBgfzwRkyINsKa/sxdLPubrzHGtJVUi40stfcdH+DCnaxANHErUTWIf0
- eBAnO7UHE/OuIZ+K3UlmX/ezvuysdvsEFgX6hf1sn8wY0RbDa4EFANVp1YAtmSvZfHXL
- fRmg==
+ d=gmail.com; s=20251104; t=1791949315; x=1792554115; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=xdvPWuv8zxakG1FAo70OqA0FhB4rWKcTdR7oA6UwWSU=;
+ b=nPSFIDPsQrz6HNajv1imaT97dPf9oov/1xD/LaH9+99zIMioNG2F+Ch/FxKc9fPEx+
+ U7lr0PA/hX63+bCUbnX6G0qxrwf7akfx/ixIPHPCuyAN+iq1jMO5VYIDG3QpvKD9RAR+
+ ZlnSW9VcGBFad6lPIkkoiYjZoDmJSpbaxj/cSyj+Xp3y1CwJvd+xz1J2J/UXLxROFUz9
+ EVjG/G/1OTm0DV+2L/yvHOnJXOgLIkb1FF78KfvgtD8Y3Mh/GKeWRfuymxe8qfb/rTbj
+ SHwOpK3YNQeJsyFuVGS3ngCeV0Enq9ayVHDMcfCsYvjyi40pfRuvVhtN+px1CNip1Z48
+ 1xkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791949238; x=1792554038;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=xFNjfPuUAVqU31Pm7ELh8jcYlJfnMJdLu8Ehq+rkfgU=;
- b=MIH2C/Yg9DnV2CyjpY7xRkdNC7/YoL3F7xVR8WOidNeqrcwf552vydjNDlVf9Ptz4f
- WXOIiIc7hRmyKL7yPVHc7e35EriLnwFZ4QWZ/CXtRWKVwKM322u9bZOBF437V8E6Fx+w
- fDgXPsH8pco0xRnJoD6ti+LulDtgNga0ATk/x4lku0cs8m7r9ybWKXjHig+A50CFuFhC
- WXNmgsHZjTltfDmZzuz+p+rgHh/CoyLRXKnBmJywjibXaVe4Y1Bi2Xrsg0/p8nj+sWWK
- sTjmY5Ci6KDElzbtMlKVXpjMs9bETHY65nhasRczNUOtHhll6gvv6wzFJJVG3GqSABDu
- 8KEQ==
-X-Gm-Message-State: AFq9FYI9YLYGm8IyaREFcRG+i9DKWgPPMZGww4Kp/qyewWIFwdRUpQ1H
- rcheJMrQUOhEfrzRhjgNgFg85uTlJ2TZClyzjpV6pdnoptcYhwFJSDluv/u5XA==
-X-Gm-Gg: AYBFou0ZWe4zDEC5lCLXZMYBgzBbBF3qL8kezaMUDs+wWkD2X9pmYnZjkxsWfpNrhmA
- eTz+bqhnPaigyCZM3glctdhvWUyHr9jEHUQR0Ez1I+cwcVKOtWFE9PwcTN7YmgDnHLU50uYUh+k
- UurWa/oSUxoq2hZx5mE7la/rZuD/brrXzt+nCwMzgYcjDqROZh9xg7T6dKd0a6mRwRFdy3yWlYD
- sZFH35duobT5NBrTYGusR6kFg/2TDhSbtCHV3ggFYvrhxET4a484aI2RVDpeCsGykVHcuZyfCsE
- 886LnKxbpm4/fpCbFWPOGwTfyR3ZGs/yvdf3A8p4qHrhs/e97+31j7SVbDEMuHyrUpvIFB/EMAc
- tfGmiYcNZjU/schUSchxqzwMwjtgTpnuJvPBYX/sAyZ7bAqWQh5ezsG4sU4Uw0M294Nk+nzvmi9
- nLMbznIhIugRFWLpbag+3JSYp0ycHkA5gjP/lkZsIhATdvnA7//fHFJq1RsXuxtHEzOjURYggif
- dk2zpHnWtCJUox0
-X-Received: by 2002:a17:90b:28c8:b0:3a7:a463:54bf with SMTP id
- 98e67ed59e1d1-3ab3a99825cmr10376536a91.33.1791949238058; 
- Tue, 13 Oct 2026 20:40:38 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1791949315; x=1792554115;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=xdvPWuv8zxakG1FAo70OqA0FhB4rWKcTdR7oA6UwWSU=;
+ b=ctJ16jLCQhFyqZHvM4RDQkzprIRuBpQeuppXXAnax4uJ2dfctn9fdxP1/OUwy1aWh1
+ 2nGnOgnaoggik2a+eMfAi6K8lt8HYX2XQk7DEt1asAoaTytTOgK9aljo0nXpLD7bAAEv
+ YubUBL/L8ohthTimCGeX5K2HClFK+y4FPaJ3h0LE9d+XVS/A91gWrwc54P85BZg/Kilb
+ eaoruvYjV6YCnQSeSDi67a4TuOfDYRuIyp7ndn3l3+urmvmXJJWypLxjMhQ/Nxwpz5d3
+ Y3Us3WubSOcspGKqHU4o5veWH1IknPU9IUZcjccIrvecfMwEDOI2kUr5g0Oxe+lamlz9
+ KNwQ==
+X-Gm-Message-State: AFq9FYJpfM/zPnbDkeJ9D6xJTl1Xvef+3vvmNANYB9nuxjA3ouS/236F
+ VKkHpk6MG8zJUpDRS2Br+GkDlbBe/cK9801BBem5WTbApCnqmnDehp1bnMTYwA==
+X-Gm-Gg: AYBFou0xn0rH2A2ENpnj2OmdQy/pp1MoWsYWs+7U4qdKkwF/rz9VUSB8XRpmFizwtrK
+ lNi9V45PuW5xjGiHD+ARNcaE/xSo6PvjllIsIaDXAoLfvYvBrGe0Gm1XxS4WyQ2KCD9N+7rV10f
+ wnOZ/7dfTMAYhF7HLHkUntrjAiGmaM6PYba4XdS4GkJlzjdYJ4l57kEzeDVX2nXu66+XXn3ixBe
+ UYGRpJH3Tew/77UNi893mU6kLj5dIbe+NYbIRmH810+YvX37P+2RLfyJHVL2QWVqJUcWc6jeB8C
+ vLg1Cgg64gK4XU4rd4BPVrS9PilK+6htYaQfLc4vx/7JwzToLUtlbjsawAllrN0DUQAIVoffQ0V
+ CYeQgkSAeINRoHtzTpTl5Nq3Qi4Xl963B0haX2kZsC23LYkNQxS+mJ0ZYcgT0hUDJ+tC7Oxyq42
+ GmFW9Ji75x+28a4/GFpS9Koh1yJnSVow7GIXTSM5psrRGPeOm1VJqm3YVZAW+TtLy2g19PRymBt
+ +79vcWoMCEi5qME
+X-Received: by 2002:a17:90b:1dd1:b0:3a7:e0f4:2857 with SMTP id
+ 98e67ed59e1d1-3ab3a359dd3mr10494895a91.1.1791949315167; 
+ Tue, 13 Oct 2026 20:41:55 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3ac61170b7bsm2321457a91.16.2026.10.13.20.40.35
+ 98e67ed59e1d1-3ac61170b7bsm2321457a91.16.2026.10.13.20.41.52
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 13 Oct 2026 20:40:37 -0700 (PDT)
+ Tue, 13 Oct 2026 20:41:54 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 25/52] target/riscv: Add riscv_cpu_get_mip()
-Date: Wed, 14 Oct 2026 13:38:40 +1000
-Message-ID: <20261014033907.3332383-26-alistair.francis@wdc.com>
+Cc: Rick Richard <rick@sloservers.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ qemu-stable@nongnu.org, Alistair Francis <alistair.francis@wdc.com>
+Subject: [PULL 48/52] tests/qtest/bios-tables-test: Update riscv64 virt SPCR
+ golden reference
+Date: Wed, 14 Oct 2026 13:39:03 +1000
+Message-ID: <20261014033907.3332383-49-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20261014033907.3332383-1-alistair.francis@wdc.com>
 References: <20261014033907.3332383-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x631.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52e;
+ envelope-from=alistair23@gmail.com; helo=mail-pg1-x52e.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -105,155 +105,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+From: Rick Richard <rick@sloservers.com>
 
-Route MIP reads in the interrupt, CSR, ACLINT and pending-IRQ
-code through a single riscv_cpu_get_mip() accessor, so the
-implementation can change in one place.
+Update the riscv64 virt SPCR golden reference file to have the fix for
+the UART register width.
 
-riscv_cpu_update_mip() now reads the old value under the BQL,
-so the returned value matches the one written.
+Diffs from iasl:
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260930174508.81497-6-philmd@oss.qualcomm.com>
+@@ -1,58 +1,58 @@
+ /*
+  * Intel ACPI Component Architecture
+  * AML/ASL+ Disassembler version 20230628 (64-bit version)
+  * Copyright (c) 2000 - 2023 Intel Corporation
+  *
+  * Disassembly of tests/data/acpi/riscv64/virt/SPCR, Sat Oct  3 08:44:51 2026
+  *
+  * ACPI Data Table [SPCR]
+  *
+  * Format: [HexOffset DecimalOffset ByteLength]  FieldName : FieldValue (in hex)
+  */
+
+ [000h 0000 004h]                   Signature : "SPCR"    [Serial Port Console Redirection Table]
+ [004h 0004 004h]                Table Length : 0000005A
+ [008h 0008 001h]                    Revision : 04
+-[009h 0009 001h]                    Checksum : 13
++[009h 0009 001h]                    Checksum : 2B
+ [00Ah 0010 006h]                      Oem ID : "BOCHS "
+ [010h 0016 008h]                Oem Table ID : "BXPC    "
+ [018h 0024 004h]                Oem Revision : 00000001
+ [01Ch 0028 004h]             Asl Compiler ID : "BXPC"
+ [020h 0032 004h]       Asl Compiler Revision : 00000001
+
+ [024h 0036 001h]              Interface Type : 12
+ [025h 0037 003h]                    Reserved : 000000
+
+ [028h 0040 00Ch]        Serial Port Register : [Generic Address Structure]
+ [028h 0040 001h]                    Space ID : 00 [SystemMemory]
+-[029h 0041 001h]                   Bit Width : 20
++[029h 0041 001h]                   Bit Width : 08
+ [02Ah 0042 001h]                  Bit Offset : 00
+ [02Bh 0043 001h]        Encoded Access Width : 01 [Byte Access:8]
+ [02Ch 0044 008h]                     Address : 0000000010000000
+
+ [034h 0052 001h]              Interrupt Type : 10
+ [035h 0053 001h]         PCAT-compatible IRQ : 00
+ [036h 0054 004h]                   Interrupt : 0000000A
+ [03Ah 0058 001h]                   Baud Rate : 07
+ [03Bh 0059 001h]                      Parity : 00
+ [03Ch 0060 001h]                   Stop Bits : 01
+ [03Dh 0061 001h]                Flow Control : 00
+ [03Eh 0062 001h]               Terminal Type : 03
+ [04Ch 0076 001h]                    Reserved : 00
+ [040h 0064 002h]               PCI Device ID : FFFF
+ [042h 0066 002h]               PCI Vendor ID : FFFF
+ [044h 0068 001h]                     PCI Bus : 00
+ [045h 0069 001h]                  PCI Device : 00
+ [046h 0070 001h]                PCI Function : 00
+ [047h 0071 004h]                   PCI Flags : 00000000
+ [04Bh 0075 001h]                 PCI Segment : 00
+ [04Ch 0076 004h]                    Reserved : 00000000
+
+ Raw Table Data: Length 90 (0x5A)
+
+-    0000: 53 50 43 52 5A 00 00 00 04 13 42 4F 43 48 53 20  // SPCRZ.....BOCHS
++    0000: 53 50 43 52 5A 00 00 00 04 2B 42 4F 43 48 53 20  // SPCRZ....+BOCHS
+     0010: 42 58 50 43 20 20 20 20 01 00 00 00 42 58 50 43  // BXPC    ....BXPC
+-    0020: 01 00 00 00 12 00 00 00 00 20 00 01 00 00 00 10  // ......... ......
++    0020: 01 00 00 00 12 00 00 00 00 08 00 01 00 00 00 10  // ................
+     0030: 00 00 00 00 10 00 0A 00 00 00 07 00 01 00 03 00  // ................
+     0040: FF FF FF FF 00 00 00 00 00 00 00 00 00 00 00 00  // ................
+     0050: 00 00 00 00 02 00 58 00 2E 00                    // ......X...
+
+Signed-off-by: Rick Richard <rick@sloservers.com>
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Message-ID: <20261005104008.214588-4-rick@sloservers.com>
+Cc: qemu-stable@nongnu.org
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/cpu.h            |  7 +++++++
- hw/intc/riscv_aclint.c        |  2 +-
- target/riscv/cpu.c            |  8 +++++++-
- target/riscv/tcg/cpu_helper.c | 12 +++++++-----
- target/riscv/tcg/csr.c        |  6 ++++--
- 5 files changed, 26 insertions(+), 9 deletions(-)
+ tests/qtest/bios-tables-test-allowed-diff.h |   1 -
+ tests/data/acpi/riscv64/virt/SPCR           | Bin 90 -> 90 bytes
+ 2 files changed, 1 deletion(-)
 
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 24b22032e1..f9f0146f56 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -688,6 +688,13 @@ bool riscv_cpu_translate_for_debug(CPUState *cs, vaddr addr,
- bool riscv_cpu_exec_interrupt(CPUState *cs, int interrupt_request);
- void riscv_cpu_swap_hypervisor_regs(CPURISCVState *env);
- int riscv_cpu_claim_interrupts(RISCVCPU *cpu, uint64_t interrupts);
-+/**
-+ * riscv_cpu_get_mip:
-+ * @env: CPURISCVState
-+ *
-+ * Returns: the current value of the Machine Interrupt Pending (MIP) register.
-+ */
-+uint64_t riscv_cpu_get_mip(const CPURISCVState *env);
- /**
-  * riscv_cpu_update_mip:
-  * @env: CPURISCVState
-diff --git a/hw/intc/riscv_aclint.c b/hw/intc/riscv_aclint.c
-index 2d133d0dcf..4bd359c338 100644
---- a/hw/intc/riscv_aclint.c
-+++ b/hw/intc/riscv_aclint.c
-@@ -438,7 +438,7 @@ static uint64_t riscv_aclint_swi_read(void *opaque, hwaddr addr,
-             qemu_log_mask(LOG_GUEST_ERROR,
-                           "aclint-swi: invalid hartid: %zu", hartid);
-         } else if ((addr & 0x3) == 0) {
--            return (swi->sswi) ? 0 : ((env->mip & MIP_MSIP) > 0);
-+            return (swi->sswi) ? 0 : ((riscv_cpu_get_mip(env) & MIP_MSIP) > 0);
-         }
-     }
- 
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index e08cb2f356..3e1fde207e 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -917,8 +917,9 @@ uint64_t riscv_cpu_all_pending(CPURISCVState *env)
-     uint32_t gein = get_field(env->hstatus, HSTATUS_VGEIN);
-     uint64_t vsgein = (env->hgeip & (1ULL << gein)) ? MIP_VSEIP : 0;
-     uint64_t vstip = (env->vstime_irq) ? MIP_VSTIP : 0;
-+    uint64_t mip = riscv_cpu_get_mip(env);
- 
--    return (env->mip | vsgein | vstip) & env->mie;
-+    return (mip | vsgein | vstip) & env->mie;
- }
- 
- int riscv_cpu_mirq_pending(CPURISCVState *env)
-@@ -954,6 +955,11 @@ int riscv_cpu_vsirq_pending(CPURISCVState *env)
-                                     (irqs | irqs_f_vs), env->hviprio);
- }
- 
-+uint64_t riscv_cpu_get_mip(const CPURISCVState *env)
-+{
-+    return env->mip;
-+}
-+
- bool riscv_cpu_has_work(CPUState *cs)
- {
-     RISCVCPU *cpu = RISCV_CPU(cs);
-diff --git a/target/riscv/tcg/cpu_helper.c b/target/riscv/tcg/cpu_helper.c
-index 6b44be4df8..7ffee54777 100644
---- a/target/riscv/tcg/cpu_helper.c
-+++ b/target/riscv/tcg/cpu_helper.c
-@@ -567,7 +567,7 @@ void riscv_cpu_interrupt(CPURISCVState *env)
- 
-     vstip = env->vstime_irq ? MIP_VSTIP : 0;
- 
--    if (env->mip | vsgein | vstip | irqf) {
-+    if (riscv_cpu_get_mip(env) | vsgein | vstip | irqf) {
-         cpu_interrupt(cs, CPU_INTERRUPT_HARD);
-     } else {
-         cpu_reset_interrupt(cs, CPU_INTERRUPT_HARD);
-@@ -576,14 +576,15 @@ void riscv_cpu_interrupt(CPURISCVState *env)
- 
- uint64_t riscv_cpu_update_mip(CPURISCVState *env, uint64_t mask, uint64_t value)
- {
--    uint64_t old = env->mip;
-+    uint64_t old;
- 
-     /* No need to update mip for VSTIP */
-     mask = ((mask == MIP_VSTIP) && env->vstime_irq) ? 0 : mask;
- 
-     BQL_LOCK_GUARD();
- 
--    env->mip = (env->mip & ~mask) | (value & mask);
-+    old = riscv_cpu_get_mip(env);
-+    env->mip = (old & ~mask) | (value & mask);
- 
-     riscv_cpu_interrupt(env);
- 
-@@ -2085,10 +2086,11 @@ void riscv_cpu_do_interrupt(CPUState *cs)
-     bool async = !!(cs->exception_index & RISCV_EXCP_INT_FLAG);
-     target_ulong cause = cs->exception_index & RISCV_EXCP_INT_MASK;
-     uint64_t deleg = async ? env->mideleg : env->medeleg;
-+    uint64_t mip = riscv_cpu_get_mip(env);
-     bool s_injected = env->mvip & (1ULL << cause) & env->mvien &&
--        !(env->mip & (1ULL << cause));
-+                                   !(mip & (1ULL << cause));
-     bool vs_injected = env->hvip & (1ULL << cause) & env->hvien &&
--        !(env->mip & (1ULL << cause));
-+                                    !(mip & (1ULL << cause));
-     bool smode_double_trap = false;
-     uint64_t hdeleg = async ? env->hideleg : env->hedeleg;
-     const bool prev_virt = env->virt_enabled;
-diff --git a/target/riscv/tcg/csr.c b/target/riscv/tcg/csr.c
-index a3351428cb..a030614434 100644
---- a/target/riscv/tcg/csr.c
-+++ b/target/riscv/tcg/csr.c
-@@ -3861,7 +3861,7 @@ static RISCVException rmw_mip64(CPURISCVState *env, int csrno,
-     if (mask) {
-         old_mip = riscv_cpu_update_mip(env, mask, (new_val & mask));
-     } else {
--        old_mip = env->mip;
-+        old_mip = riscv_cpu_get_mip(env);
-     }
- 
-     if (csrno != CSR_HVIP) {
-@@ -4604,8 +4604,10 @@ static RISCVException read_vstopi(CPURISCVState *env, int csrno,
-     hviprio = get_field(env->hvictl, HVICTL_IPRIO);
- 
-     if (gein) {
-+        uint64_t mip = riscv_cpu_get_mip(env);
-+
-         vsgein = (env->hgeip & (1ULL << gein)) ? MIP_VSEIP : 0;
--        vseip = env->mie & (env->mip | vsgein) & MIP_VSEIP;
-+        vseip = env->mie & (mip | vsgein) & MIP_VSEIP;
-         if (gein <= env->geilen && vseip) {
-             siid[scount] = IRQ_S_EXT;
-             siprio[scount] = IPRIO_MMAXIPRIO + 1;
+diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
+index aae973048a..dfb8523c8b 100644
+--- a/tests/qtest/bios-tables-test-allowed-diff.h
++++ b/tests/qtest/bios-tables-test-allowed-diff.h
+@@ -1,2 +1 @@
+ /* List of comma-separated changed AML files to ignore */
+-"tests/data/acpi/riscv64/virt/SPCR",
+diff --git a/tests/data/acpi/riscv64/virt/SPCR b/tests/data/acpi/riscv64/virt/SPCR
+index 59d2c8f7f2..6003c230b1 100644
+Binary files a/tests/data/acpi/riscv64/virt/SPCR and b/tests/data/acpi/riscv64/virt/SPCR differ
 -- 
 2.55.0
 
