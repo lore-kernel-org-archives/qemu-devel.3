@@ -4,83 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A68ABCC6B1A
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 03:41:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E113CC6B19
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 03:41:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGpqu-00065B-LG; Tue, 13 Oct 2026 23:40:28 -0400
+	id 1xGprl-0000Hi-4D; Tue, 13 Oct 2026 23:41:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1xGpqp-0005z8-W4
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 23:40:25 -0400
-Received: from mail-pg1-x529.google.com ([2607:f8b0:4864:20::529])
+ id 1xGpra-00084T-O1
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 23:41:10 -0400
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1xGpqo-0001dC-7U
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 23:40:23 -0400
-Received: by mail-pg1-x529.google.com with SMTP id
- 41be03b00d2f7-cc4b1f7e8f4so2193005a12.1
- for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 20:40:21 -0700 (PDT)
+ id 1xGprZ-0001iF-6O
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 23:41:10 -0400
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-2e8662d5e95so3714985ad.0
+ for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 20:41:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1791949221; x=1792554021; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1791949268; x=1792554068; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=Gy63YQt3lMUN41DPH04wnhXjE9xcTgPZmTMce2BK9Qw=;
- b=XLzxFRjCfW1C1qyow6f9lek25IiKB7UkjRLKFx2xEs821dz2MW9cqBujUflnKdO8eQ
- PPpNtHZltx9gV5RWzYVJJrQSmlU+6k43msOU3MQkvQsawnRcKMOOu9t/HG25HlHxVsIv
- 8ACbFz8dyznJarwFpAF+3Nfd3ntWDyn8M0VFS3dqepEGS/25n0YMK5+r3mr5lOemillg
- cwG38PU3QgbTjOssAgcm28ysZIofWuZKTsQJh713Q99VQtQ0TmMuKbC7rAgAsFaAYjyb
- l/8L42CPGUBol5pG3XFZsEpbJUjyUpTmftz2LiPR3fJGSDfcWP3irPFC1DLUDB2ZEfY5
- 0dnQ==
+ bh=orIH+Bb3TpS/WphK46YabXmJ/NC8X9SYQ+BdAkjWdKY=;
+ b=EaHbx2e8wAkYf92l9zWvy/uWassIPzuwklQ8osgy1aIiIZ1yXV9Kh5KCXsIo1Wu+lr
+ mtVqwUGki9fUdq2P0BnWHkJhEVyxThHP35VPWn5feFhOEfSs68uPxmGIjhVkNam3KDjw
+ KX2+gO7n68Ht+BsJI6o8KYv3ORYpf7XpEDQYSXrKnepLdMbImmg5+gLjh/3V78XSNyVt
+ 4XYAFFyxhUT/HEWBrSwGALlfSUgn5PTnRFt2czhugezL02/suDknjR3niSOxwVQo1L6W
+ /iu8C9b/p8tf413LQNyfRW8hvqe+m/fu+9DDBv8AOWKWt//YPav1XeBrIPa5qN2bexon
+ vAjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791949221; x=1792554021;
+ d=1e100.net; s=20260707; t=1791949268; x=1792554068;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=Gy63YQt3lMUN41DPH04wnhXjE9xcTgPZmTMce2BK9Qw=;
- b=Wnq0qfDmnc4Lu0DsKcum7KGS2DEc9EVythuF9uOPEkSSIkOCNTje0j1PM4qQNmM9gW
- wfMJ2yoiUpYawuediN30j2XpB1BybhAtFgJ2jRyN5rKbML8+tM8T52+r36FxFNq+qCKg
- 7dIZsHXnnkzLZbbckbkIptyJLzQGoLH/u9cuuEZrhhe5LYP7chFAQo90SoCMpcX8dVAI
- NFVao0andyQBGQZbmcb+kDaOt+WjGZjMcccehf/87t4FAsTDNbph3meR10f+Zl2DT2UU
- ZLLFY70dPe9Pb1QU57e4J7UyuORUAMKiPkfFaMG+t2FXazp9Wm2jdTUvH7GA02kXRsZC
- qYuA==
-X-Gm-Message-State: AFq9FYKwuc7eXQRonjGwvx8MNsnMbfEky/EuHfhY936PBfMbY6Gw70MU
- nuvJw5AFlrr+10WvhrScaezD9wmuD8FBiRrOUe5wulXvWkTGUkx2+xaq4GHozw==
-X-Gm-Gg: AYBFou27U4fbnjfmjZik6baFmWTuYLsW/01KoLYdou2qS934iupRPM4JFmeATKniGX1
- BpOx/nJantPywf86yElXKBzoXuTrLsaB+6zqbU6P1/rqnqIZdu3DRZvn2CESngO3WPPa0kaKKgM
- Im93MmdCiHF/P3siPiJTK+L6mO2IlkiV1E+bGPFcmW3qfCb3iUcKOp3UxOmiCTFhLCAWShCbett
- 9QLq4doEft1pDvwV4HiZzGBDJ6QeEFQMBFd+vTo3gYOZ7DVkmrIM/r9q8YFEv1Rq8fPhu/EzJOw
- mgc55dfW5FXfgHRBAKQvgDWzBgeSP9DOH74VQmv0TkjhdcP770tjvjrIvVx8b9BTljBkRlBP925
- Zgu39YGie7kncJiuwPImVhu+DJJNKl7dcKVgXXe/USMqIFGdtdCZiXNa53eTlpak6HV+PgQAgyg
- B0hIaT86OAnOFk/9LhmPVnyTeVqvSo8g1LBWbV670pyVhsVLxsSvr3LG1ToTCdm4SB9JBDoWP3V
- iR0R9l7cOCIq9jb
-X-Received: by 2002:a17:90b:2d8e:b0:3ab:c674:d83c with SMTP id
- 98e67ed59e1d1-3abc674eb8amr6852828a91.27.1791949220936; 
- Tue, 13 Oct 2026 20:40:20 -0700 (PDT)
+ bh=orIH+Bb3TpS/WphK46YabXmJ/NC8X9SYQ+BdAkjWdKY=;
+ b=Qb+x9sMEM9COWZ/nTdNJ2rwHlr/wBr1h1wE1ENhKKyyDS1ySBZXGBgBlV8IrckfNLj
+ cinnXDWtCZPC4INZjUbraOWM63mUW4ZpgYN5/icniWHoNXrN10xQMTKblrQUY9rPl1i/
+ GH9+Cdt/sIrJlNSk/6wsQ9gaWrOL26z46sfHEHOeQGZCFpWuXH+BSF4HWSCxquHpf6oZ
+ hBU0AkvHkwF8lqYr1eRac1vxW7YqtKhZgjjH4JqwPRf8/K56l52bZYONmjqJXiPUvYSY
+ Nw5pTgN0ywpL53av0oNXSrndMGJDQqxJwPdOcyJ1ccgTqWp3EAVDQsVyFwRplN4d0OAu
+ xmwA==
+X-Gm-Message-State: AFq9FYK3YXoEIDt+WMTeLbxy1AoMaHRXuXQElQzhOQzuxcQtjPyN5DLY
+ gWzBy/0dX6dAdif2uiqFpQV1prbE3m9JTtmQV+1gwHdSafQaNlGicodTigGgRw==
+X-Gm-Gg: AYBFou1B1G0D80Ck172rZc1Gahw1kVtw+WwfvooiuOHwzOWa7DdyQX0SqmU7jgUhCWc
+ Mn6Hrx2ycIEZlwhrm2iCKmxE2nVvu1tm5Za+OAq8JssBlDKxk0tK9HvkNZsCpTQBY/J95t3s9hq
+ P5Tp6KGX2mmhZ/uZUsSFdqYpFx8x2BB5Y3Ft5DV4PB1MwN+EAxU40ZeJ+r7PFfcU5hPps9HE1g8
+ ZLhHALJYB42LOp9XdyLQp+R+XhqrWp0XcQCX5wxWlIDGHiAy2ZmZGxRamx4dRCPZ6OruyA3gnps
+ bhqjCQH/UTtIwxMutxSavvajOLMEbGIiznNsj3mroR9GnjYGsSAEj1T8O0B1OcUJUHheghmUOiO
+ 6Ta7JxL3rzlcP6A0BM6hTrTFM9uQLvVL211f0DkuBjmJZf9pFzFfpwzpnYAI3ukaX9U1VYKfwUm
+ pXpVptDT+JeJhv8B8WIi24rnxZ6Hp2bgKoo+wyVeLm5QAdkbhlKKj2/b/1iu8EtEdW5Pd3bDLZ7
+ NxjAzO/aV0m0QGxWzI+I+BXBlY=
+X-Received: by 2002:a17:90b:2681:b0:3aa:ff61:9504 with SMTP id
+ 98e67ed59e1d1-3ab3a9127f1mr11306871a91.20.1791949267758; 
+ Tue, 13 Oct 2026 20:41:07 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3ac61170b7bsm2321457a91.16.2026.10.13.20.40.18
+ 98e67ed59e1d1-3ac61170b7bsm2321457a91.16.2026.10.13.20.41.05
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 13 Oct 2026 20:40:20 -0700 (PDT)
+ Tue, 13 Oct 2026 20:41:07 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: Kuan-Wei Chiu <visitorckw@gmail.com>,
- Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 19/52] tests/functional/riscv64: Add boot test for Milk-V Duo
- board
-Date: Wed, 14 Oct 2026 13:38:34 +1000
-Message-ID: <20261014033907.3332383-20-alistair.francis@wdc.com>
+Cc: Max Chou <max.chou@sifive.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Chao Liu <chao.liu@processmission.com>
+Subject: [PULL 34/52] target/riscv: Add cfg property for SiFive int8 matmul
+ extensions
+Date: Wed, 14 Oct 2026 13:38:49 +1000
+Message-ID: <20261014033907.3332383-35-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20261014033907.3332383-1-alistair.francis@wdc.com>
 References: <20261014033907.3332383-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::529;
- envelope-from=alistair23@gmail.com; helo=mail-pg1-x529.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x630.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -104,107 +106,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Kuan-Wei Chiu <visitorckw@gmail.com>
+From: Max Chou <max.chou@sifive.com>
 
-Add a functional boot test for the Milk-V Duo board to validate the
-end-to-end boot flow.
+Add the CPU config properties for SiFive's custom int8 matrix
+multiply vector extensions:
 
-$ ./build/run ./tests/functional/riscv64/test_milkv_duo.py
-TAP version 13
-ok 1 test_milkv_duo.MilkvDuoMachine.test_riscv64_milkv_duo
-1..1
+- Xsfvqmaccdod: 2x8x2 int8 matrix-multiply-accumulate operations
+- Xsfvqmaccqoq: 4x8x4 int8 matrix-multiply-accumulate operations
 
-Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
-Message-ID: <20260927201326.650943-7-visitorckw@gmail.com>
+All instructions of these extensions require the Zve32x extension
+to be present whenever either extension is enabled. Validate this
+in riscv_cpu_validate_vendor_ext() alongside the existing vector
+extension validation in riscv_cpu_validate_set_extensions().
+
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Signed-off-by: Max Chou <max.chou@sifive.com>
+Reviewed-by: Chao Liu <chao.liu@processmission.com>
+Message-ID: <20260927082534.3228237-2-max.chou@sifive.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- MAINTAINERS                                |  1 +
- tests/functional/riscv64/meson.build       |  1 +
- tests/functional/riscv64/test_milkv_duo.py | 53 ++++++++++++++++++++++
- 3 files changed, 55 insertions(+)
- create mode 100755 tests/functional/riscv64/test_milkv_duo.py
+ target/riscv/cpu_cfg_fields.h.inc |  2 ++
+ target/riscv/cpu.c                |  2 ++
+ target/riscv/tcg/tcg-cpu.c        | 16 ++++++++++++++++
+ 3 files changed, 20 insertions(+)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index b38e694b1c..4092228bea 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1883,6 +1883,7 @@ F: hw/riscv/cv1800b.c
- F: hw/riscv/milkv_duo.c
- F: include/hw/misc/cv1800b_clk.h
- F: include/hw/riscv/cv1800b.h
-+F: tests/functional/riscv64/test_milkv_duo.py
- F: tests/qtest/milkv-duo-test.c
+diff --git a/target/riscv/cpu_cfg_fields.h.inc b/target/riscv/cpu_cfg_fields.h.inc
+index 55a79da194..85fc3ad8bb 100644
+--- a/target/riscv/cpu_cfg_fields.h.inc
++++ b/target/riscv/cpu_cfg_fields.h.inc
+@@ -161,6 +161,8 @@ BOOL_FIELD(ext_xmipscbop)
+ BOOL_FIELD(ext_xmipscmov)
+ BOOL_FIELD(ext_xmipslsp)
+ BOOL_FIELD(ext_xlrbr)
++BOOL_FIELD(ext_xsfvqmaccdod)
++BOOL_FIELD(ext_xsfvqmaccqoq)
  
- RX Machines
-diff --git a/tests/functional/riscv64/meson.build b/tests/functional/riscv64/meson.build
-index d1a3e6c2bf..8a4f1d00f9 100644
---- a/tests/functional/riscv64/meson.build
-+++ b/tests/functional/riscv64/meson.build
-@@ -18,4 +18,5 @@ tests_riscv64_system_thorough = [
-   'sifive_u',
-   'tt_atlantis',
-   'tuxrun',
-+  'milkv_duo',
- ]
-diff --git a/tests/functional/riscv64/test_milkv_duo.py b/tests/functional/riscv64/test_milkv_duo.py
-new file mode 100755
-index 0000000000..6a7e2a5d19
---- /dev/null
-+++ b/tests/functional/riscv64/test_milkv_duo.py
-@@ -0,0 +1,53 @@
-+#!/usr/bin/env python3
-+#
-+# Functional test that boots a Linux kernel on a Milk-V Duo machine
-+#
-+# Copyright (c) 2026 Kuan-Wei Chiu <visitorckw@gmail.com>
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
+ BOOL_FIELD(big_endian)
+ BOOL_FIELD(mmu)
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index d0ee2433fd..b8cedbf7e9 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -302,6 +302,8 @@ const RISCVIsaExtData isa_edata_arr[] = {
+     ISA_EXT_DATA_ENTRY(xmipscbop, PRIV_VERSION_1_12_0, ext_xmipscbop),
+     ISA_EXT_DATA_ENTRY(xmipscmov, PRIV_VERSION_1_12_0, ext_xmipscmov),
+     ISA_EXT_DATA_ENTRY(xmipslsp, PRIV_VERSION_1_12_0, ext_xmipslsp),
++    ISA_EXT_DATA_ENTRY(xsfvqmaccdod, PRIV_VERSION_1_13_0, ext_xsfvqmaccdod),
++    ISA_EXT_DATA_ENTRY(xsfvqmaccqoq, PRIV_VERSION_1_13_0, ext_xsfvqmaccqoq),
+     ISA_EXT_DATA_ENTRY(xtheadba, PRIV_VERSION_1_11_0, ext_xtheadba),
+     ISA_EXT_DATA_ENTRY(xtheadbb, PRIV_VERSION_1_11_0, ext_xtheadbb),
+     ISA_EXT_DATA_ENTRY(xtheadbs, PRIV_VERSION_1_11_0, ext_xtheadbs),
+diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+index ae5166b13a..2ab0efa3a2 100644
+--- a/target/riscv/tcg/tcg-cpu.c
++++ b/target/riscv/tcg/tcg-cpu.c
+@@ -436,6 +436,16 @@ static void riscv_cpu_validate_v(CPURISCVState *env, RISCVCPUConfig *cfg,
+     }
+ }
+ 
++static void riscv_cpu_validate_vendor_ext(RISCVCPU *cpu, Error **errp)
++{
++    if ((cpu->cfg.ext_xsfvqmaccdod || cpu->cfg.ext_xsfvqmaccqoq) &&
++        !cpu->cfg.ext_zve32x) {
++        error_setg(errp, "Xsfvqmaccdod/Xsfvqmaccqoq extensions require "
++                         "Zve32x extension");
++        return;
++    }
++}
 +
-+from qemu_test import LinuxKernelTest, Asset
-+from qemu_test import skipIfMissingCommands, wait_for_console_pattern
+ static void riscv_cpu_disable_priv_spec_isa_exts(RISCVCPU *cpu)
+ {
+     CPURISCVState *env = &cpu->env;
+@@ -819,6 +829,12 @@ void riscv_cpu_validate_set_extensions(RISCVCPU *cpu, Error **errp)
+         return;
+     }
+ 
++    riscv_cpu_validate_vendor_ext(cpu, &local_err);
++    if (local_err != NULL) {
++        error_propagate(errp, local_err);
++        return;
++    }
 +
-+class MilkvDuoMachine(LinuxKernelTest):
-+
-+    timeout = 120
-+
-+    ASSET_KERNEL = Asset(
-+        'https://storage.tuxboot.com/kernels/6.11.9/riscv64/Image',
-+        '174f8bb87f08961e54fa3fcd954a8e31f4645f6d6af4dd43983d5e9841490fb0'
-+    )
-+    ASSET_DTBS = Asset(
-+        'https://storage.tuxboot.com/kernels/6.11.9/riscv64/dtbs.tar.xz',
-+        '97e5e65a7e6c68303e53486af120c0846ee8df572e9c15f0c4dccb831d0cef4b'
-+    )
-+    ASSET_ROOTFS = Asset(
-+        'https://storage.tuxboot.com/buildroot/20241119/riscv64/rootfs.ext4.zst',
-+        'aa4736a9872651dfc0d95e709465eedf1134fd19d42b8cb305bfd776f9801004'
-+    )
-+
-+    @skipIfMissingCommands('zstd')
-+    def test_riscv64_milkv_duo(self):
-+        self.set_machine('milkv-duo')
-+
-+        kernel_path = self.ASSET_KERNEL.fetch()
-+        dtb_path = self.archive_extract(
-+            self.ASSET_DTBS, member='dtbs/sophgo/cv1800b-milkv-duo.dtb')
-+        rootfs_path = self.uncompress(self.ASSET_ROOTFS)
-+
-+        self.vm.set_console()
-+        self.vm.add_args('-bios', 'default',
-+                         '-kernel', kernel_path,
-+                         '-dtb', dtb_path,
-+                         '-drive', f'file={rootfs_path},format=raw,id=sd-card,snapshot=on',
-+                         '-device', 'sd-card,drive=sd-card',
-+                         '-append', 'console=ttyS0,115200 root=/dev/mmcblk0 rootwait earlycon')
-+
-+        self.vm.launch()
-+
-+        wait_for_console_pattern(self, 'Machine model: Milk-V Duo')
-+        wait_for_console_pattern(self, 'Welcome to TuxTest')
-+        wait_for_console_pattern(self, 'tuxtest login:')
-+
-+if __name__ == '__main__':
-+    LinuxKernelTest.main()
+     if (mcc->def->misa_mxl_max == MXL_RV32 && cpu->cfg.ext_svukte) {
+         error_setg(errp, "svukte is not supported for RV32");
+         return;
 -- 
 2.55.0
 
