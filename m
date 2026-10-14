@@ -4,87 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFFE4CC6B2E
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 21:07:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A224CC6B2D
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 21:07:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xH6Ai-0001PD-Ie; Wed, 14 Oct 2026 17:06:00 -0400
+	id 1xH6Ai-0001PC-Ep; Wed, 14 Oct 2026 17:06:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xH6Ag-0001Ol-SX
+ id 1xH6Ag-0001Ok-S5
  for qemu-devel@nongnu.org; Wed, 14 Oct 2026 17:05:58 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xH6Af-0000iT-2O
+ id 1xH6Af-0000iX-6S
  for qemu-devel@nongnu.org; Wed, 14 Oct 2026 17:05:58 -0400
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69EF4DZB4167044
- for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 21:05:55 GMT
+ 69EEbEiP301154
+ for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 21:05:56 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=paWdih5wsu4
- pFa0HzwbRdAAtDgAq79AZwmjuzoUSo+I=; b=W95hHOpeGnlmo3x5AmJISTj3hSh
- gzDMPmPBy16v1XCQgg/jOO27O5lpjr9TgR3CL1fdivEFvm6VqPCZljF/qCxwXqvn
- f0dIssB20zTa7Fob8UmgcdhQql7Weh6e/y1lmsMJWsfupN1eLrfO3PCds0AuB0aL
- mzUswyn0MMJuFLJhYHcB5XnYdoe/VFbnXv0Fy4LZQQqe/EX9G/n1ODHd0MkIvCeF
- gyXgwViEJrCmKQ1IP3/XaJxfHjaHVZL1ngL3KElyUkLSE3oCtZY2NAqBo8UG6H4f
- 76ojscW7J+15u8TROON0rN9hyga8iCEHGbVeLrZtKrHc+JoM72fgw0pPRUw==
-Received: from mail-dy1-f198.google.com (mail-dy1-f198.google.com
- [74.125.82.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hac231bgu-1
+ :mime-version:references:subject:to; s=qcppdkim1; bh=mZSsHV2acar
+ VtMJ9kUWF/qsX5yLpbM82FWoGZN6JASM=; b=WGNhOcAq+0uoUpqQlpgY8OxlYKJ
+ vdNYPXbJbRwNq/G7+7lymAzugDGxT3EgR4Ep+wfO5zKyVyaWLTNHMYWbMd6Cmxk+
+ jzXb3IDPamaIcndRmdKNlb1JiEP49/K1dtdHuoP3FxshevMCZwkeKjztsmg9ZOis
+ 6nDr98z/Vyq36PuOHg0wJWEW7CIm9gLanJL+UEu41AmUZNwP84cPKaz7832RXMyq
+ 1SPtL1GFG2Z7WkGuabHya8whzrBRWaMUNUQRcHCu8rlL69x2j9UXz5hyOulEGU4j
+ Z4HHvIkotAudtAUSpkJjh3VNblZI+6fn53qoRSwiBZcaEuZkQGe2ZbA3wXg==
+Received: from mail-dy1-f200.google.com (mail-dy1-f200.google.com
+ [74.125.82.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ha4623gqv-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 21:05:55 +0000 (GMT)
-Received: by mail-dy1-f198.google.com with SMTP id
- 5a478bee46e88-3580c07911eso11982584eec.0
- for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 14:05:55 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 21:05:56 +0000 (GMT)
+Received: by mail-dy1-f200.google.com with SMTP id
+ 5a478bee46e88-30c0d568830so9338213eec.1
+ for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 14:05:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=oss.qualcomm.com; s=google; t=1792011955; x=1792616755; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=paWdih5wsu4pFa0HzwbRdAAtDgAq79AZwmjuzoUSo+I=;
- b=LBo58gdxkMld7ZJrBXIZLL8AmYmTooHBfm2CxF9xY2iFi8vFcvyRwqYCnbF5qLUryO
- UcBoNFaVs9WjpEZcBuho5HkTATtOjj3QtjMwXmOcbN/rmyR1S7/rd41LX1+1btJIhhFV
- ZqnlkxWK2BPBfb8Xr2DG7QbT2pwm1z2cflpNadMJmZ6rAWrp8oqxN1SO5g09JPIyeuOv
- XUUQ8Z1w2rI4eMU5Tt0ZJ+FN8k98opxgiZxcDElXl66XCusFOpNujNktTp5Tx7WcKrF3
- QvVgyUWtSgOvzPH2tSCCFe/A7Q+82heXnwY0TP9VRHp3Z6csCxBavlOw5ls6lkCrHnLD
- aX0w==
+ bh=mZSsHV2acarVtMJ9kUWF/qsX5yLpbM82FWoGZN6JASM=;
+ b=jlKABKLCi1Rg+8oEOCwfOn+subLJ0cAS0hpdUWYRBankUE5Ly7dxw2maZRO9UrPy+p
+ rsYBc2Gs24ydXE83+UqdAu2k/kRvS0XDARgApOHFpN3C0gyZRnU1B0+zCiPDkrcaW0KW
+ plOmZ3/VZhU2hebWnNK2mBWUpY26wvAVsADa/3DiseT/r6i+HRm5ejRW/3k7bOTQlR/7
+ Tg48g8B4EyqsXX45w8tQ5BDwXwGy3mEMRYOL6rlJX6lCbWv9dqhrxOlayu38QP1x7sWM
+ 8NKqZP1sp9M+snp+gFaHDZZV+c1//LR5MWdvfg0V/j/YSEbUWwMRWNIDUXS1gAVBe2uO
+ 0Hog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20260707; t=1792011955; x=1792616755;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=paWdih5wsu4pFa0HzwbRdAAtDgAq79AZwmjuzoUSo+I=;
- b=NF/d2TQXsHBhiMmNvIsqcFh8LXjBH1zOQW4qjhchJCzCo33ZfkrMpDqX2cAxfF1yfT
- IqJs3g5Fu10NcRspi5N7/mNE69P3aCB2GA5XEUEb+V1cVx6BEAWu1xDvnsl1i+XfMIOm
- +E0wiWVah3E1Nj03TgEPrWwLChedJAXFl6b2ZOAomNnhtYQtjKE2Mjg8YjEhYnB98TfT
- jCRxPyWhFqtePF0KkZ9bEpsElDzT9/hOMpv79JUCd9yeWpJvMUROGWFjmmJLBhMM4VBD
- ilRw3cGq9UGbiVLAS3ZFM9RMWbwVQPXW49tcoC/8Wp+boJtdIyUkKN1xSfEcaYQ+k//Q
- umtg==
-X-Gm-Message-State: AFq9FYIa9JyAUk5ckSQg2giPjwPwCrd0LO6+DDvln6e6XGENuGCAzWhK
- pKYVmmmohBHf895mGYEjIpmWQUr8snN8Y3rz35VfJXaZZTSl5qptGlSFBV+iliMIGRYtHxsOhqk
- kJtZlCbI3xR+jH9SgckZaX+wmIZ6Xk7a7+GsdQ23sutpH5Eha8WEJ1bQVtzUM99ufiQ==
-X-Gm-Gg: AYBFou2+gff5U5rtGOTGoXWS/oOUYc0L/TB0gTKcR2gYl02b4qde4iEfhGCjDyu1W1q
- qWLkSs3Ed+EqGmLCbNmLJDpcMc8/qAq4KilSpM0qZkdMW+spwWxyBOxuMVXD3a7redm6h9yevaZ
- NMb2RRG7qB4xt7wYqN8vKNT+G6nDDWtofIDNDLG56mdemfY9MDICJAzajfqh+vAr9qeWsSIL0xr
- R044FZGzlLUz90Q5X1wlWuhFMVqIKoxa5ElletWZuz6b3lVRWP79WQ8csplKh1LE7p9mwAoFSul
- +/fKMeZoA1aRNOgXSSka2ILZc2noPh0Wbw8SmiwNvWwTd1jPmjDVvi348LCcxxnLDQEiNdLCmY0
- gMZ4UzFgC+hxvk16XagX5L2pIgM3aNxyVbYqOrhTvldX+jzvzEOrajqtgaEQs
-X-Received: by 2002:a05:7300:3c8f:b0:35c:8abb:b4ae with SMTP id
- 5a478bee46e88-35c8abbb713mr8330055eec.25.1792011954617; 
+ bh=mZSsHV2acarVtMJ9kUWF/qsX5yLpbM82FWoGZN6JASM=;
+ b=j3a1LoqBKsvwnwjuEhiOboWSf5NXlUceWGxXCPTiT7L+p6okaCOdnHbvfasKQ1LOm8
+ WNr9cmVwJmNinRX/OFC2ZwbLEhFaCD8tnisOKFIa/3lTupXQPrGPlU38gxuau+rndjwF
+ HgwcJq90HGC8XpwENwse0m512A72ztx2Zm+T+gYlQFOn2TzNEl7PZugvFdwc0Lz2ogXn
+ jCkVhorXMyLNKYGJBGEQEaLUY3Bt+gRi94dwCmcnxGxsAipF+GcBY266/U9pOpQgo13J
+ aQtNLtRmfHvSU639NfKa0dcrZmMtAnzVQeWnfFSHW1/srPd4qQfefdcFw1+tlMc7C3tl
+ sZHQ==
+X-Gm-Message-State: AFq9FYIdHYnFD0ax3D0S2BpootZs3WADXQ1jcCuLhzesiywXMRbHX4Cb
+ K/cGEvyBtv5i11sSdzXl/bCCxkxtvHw1SHbE3r+euNGhRLyHP9nAStSeL+NkBgOh39XnI3gGxSx
+ bFfMTv+lOhvcxWhp1c6521vMjD0UQhSU4VnJxzvPV/zdb+fRRQMHNzHuBIsSbmQ6wrQ==
+X-Gm-Gg: AYBFou3dG4tBmIutXAakk+7qJr6tQ67iu5vZGYVrUbgWc7QzeqQlC0UatJFH+knwsqE
+ JFRhO6EE/f5nKQMhOFCa0eOSkxcoeNKuOQ8LzXzgRAm0Z/PJ4o5gPKc1M+QL0ng6LICaoO0OP7/
+ q4YoH4HVUmzST5ZC6o2LZQU6t3wAzd2oeG5IkHxkfr9H64P+GkP/BMzbUhXR2J8x/lTx3DlRl/e
+ 3ZZl8YkmUUNwRTFK/kbPMXoqh8o6uVO7Re2i1YSXGQF8ikQr/e602YEcCQTeynAQc7ZwNXd5Uxp
+ 9ihMkgvhKz9hY/BqIwhyE+cvc2aGmuBOggk+0GFAOTg9wDEvEiaplSrJ5k/KBtSfmpCJ4+D7Cc/
+ B+JvGBy26IQT4DDK9Q477Sf87O0sYbkNwHsv4IWR9w7WzfQXo/U1iP6ZEvx/B
+X-Received: by 2002:a05:7301:53c1:b0:351:5cb5:53f7 with SMTP id
+ 5a478bee46e88-3537dedd531mr23835744eec.3.1792011955102; 
+ Wed, 14 Oct 2026 14:05:55 -0700 (PDT)
+X-Received: by 2002:a05:7301:53c1:b0:351:5cb5:53f7 with SMTP id
+ 5a478bee46e88-3537dedd531mr23835720eec.3.1792011954497; 
  Wed, 14 Oct 2026 14:05:54 -0700 (PDT)
-X-Received: by 2002:a05:7300:3c8f:b0:35c:8abb:b4ae with SMTP id
- 5a478bee46e88-35c8abbb713mr8330002eec.25.1792011953218; 
- Wed, 14 Oct 2026 14:05:53 -0700 (PDT)
 Received: from debian.qualcomm.com (192-80-163-190.dyn.novuscom.net.
  [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-358ee8a3387sm46562092eec.15.2026.10.14.14.05.52
+ 5a478bee46e88-358ee8a3387sm46562092eec.15.2026.10.14.14.05.53
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 14 Oct 2026 14:05:52 -0700 (PDT)
+ Wed, 14 Oct 2026 14:05:53 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
@@ -93,44 +93,44 @@ Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Anton Johansson <anjo@rev.ng>, Peter Maydell <peter.maydell@linaro.org>,
  Brian Cain <brian.cain@oss.qualcomm.com>
-Subject: [PATCH v3 08/12] target/hexagon: declare semihosting ops
-Date: Wed, 14 Oct 2026 21:05:22 +0000
-Message-ID: <20261014210526.104215-9-pierrick.bouvier@oss.qualcomm.com>
+Subject: [PATCH v3 09/12] target/arm: declare semihosting ops
+Date: Wed, 14 Oct 2026 21:05:23 +0000
+Message-ID: <20261014210526.104215-10-pierrick.bouvier@oss.qualcomm.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261014210526.104215-1-pierrick.bouvier@oss.qualcomm.com>
 References: <20261014210526.104215-1-pierrick.bouvier@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=PYJqFShd c=1 sm=1 tr=0 ts=6acfeeb3 cx=c_pps
- a=wEP8DlPgTf/vqF+yE6f9lg==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
+X-Proofpoint-ORIG-GUID: M9qoIsyo8OaeYqztxe6rEeGhz-gP-oBZ
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDE0MDA4NCBTYWx0ZWRfX5rYCUpr2V9M+
+ wMWvGJJlOfIScPwEeADf6kSkZfWbeBh8BMijWw4HjqE76TnyGgIQ7mRjbPXQyQMc96KdOyqoChy
+ doUaGA82M38hn55AbOx6SDH4IpTPxjGM8QOC5nbuHCCMInWb9fSpXstqZ2oJCoqWovP5VtD0108
+ w51I9oOnlaxtGnbX9OPm7G94f/KpXa4E/GFNfjdg+/KYC78oq3EaZPs8uf9Cb0Fdf3gxgMQhEDU
+ 0YaGaA2h1/B3wbBrnP5JwIOwQKvymRJBEYvHC0N9mLv2kBYdFGgVZMfuvqUnHQZFhgxLN6QU8cz
+ y14RTXW2Eqq1F9DyfXLFfgVJSW8L3PQ+wwb8M4eFG50Dcl6sT0EhpugotMqTL4CmSil4mE90hdv
+ x/4GQo/hgzxJTUUF3CQ+CfiuQWTf6Kkr9EHj1quI5yk5AN9U1QH3jbTGnWIHJvuOBpau8V9xuy9
+ FPPs+psui7rm/pf5YyQ==
+X-Authority-Analysis: v=2.4 cv=ErZHPicA c=1 sm=1 tr=0 ts=6acfeeb4 cx=c_pps
+ a=PfFC4Oe2JQzmKTvty2cRDw==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
  a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22 a=EUspDBNiAAAA:8
- a=RKMH5O5a7-KqqQVN41YA:9 a=bBxd6f-gb0O0v-kibOvt:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDE0MDA4NCBTYWx0ZWRfX9Vc9DrySEv7M
- PmU5mjW/fzz47AQXY4MWf7IlU7SCRCO6QfV/QqTxXcHuL5UbvPHjcBce1OuGx2WBak9Wk3pABxR
- mC+SIJp6c35IczbfW6u/vZn5r/ivoZo=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDE0MDA4NCBTYWx0ZWRfX0z52FS0DxHuH
- 9NDJj0U1ZqErhb2JAOEGvooSXEwLFrjFHB1gCmq7foQwlvJDS6xLeNFpd7c4pnY+4jRx6fcBtzD
- aV2kMYVepnF+RieuQvSIqlGTBh+YRbhq0QtiXF4fn96wa+s8MkT690i4iSKmK8zVnIvuwOgeju1
- o+/AEZc7TAuxoSTgedho/VnMynWORgCM6SbgG441ih+iG5Bs7zdLq0FM0fGPm8Yn5mJngv5cxhB
- SMnK+Nqo0tiBodJra6wopULoXGJ8TqJioKO/gsh+SZLzHDGP9KfhKnqKcXWSyBY91Tg4kCTeHbP
- D8Re0ZMVsnI5WlcKfChF4jOFpeUvxmjOHjPurWzUtoIH0re4Q6Ey82ztQ+Q2RLZ6BWSTfp8+Hee
- wJGyBSfe+SbebWi+B8acPAq83z34iIBv/TKVLSYwGIkZ/43dWBNJEPvv9WRVLrRVKSav/3tBpKk
- uAkgezxYLMQ4aGZ/h4w==
-X-Proofpoint-GUID: 9zC4Uz3fwXN2kl7YvIKXZu-ZKN-LOG8L
-X-Proofpoint-ORIG-GUID: 9zC4Uz3fwXN2kl7YvIKXZu-ZKN-LOG8L
+ a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22 a=EUspDBNiAAAA:8
+ a=891gjW5_EiFNocZM0noA:9 a=6Ab_bkdmUrQuMsNx7PHu:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDE0MDA4NCBTYWx0ZWRfXwZYGAV0yCp2B
+ qOMp4sbgSUvRb3qgP4RsDUEWnbrLaDJ/4pwcykrdBCv5bOcYqfXEaUIsXv0ClKXQQbAqrxth4ks
+ fV+odN45EernnCwf/I5s8al0753FBRA=
+X-Proofpoint-GUID: M9qoIsyo8OaeYqztxe6rEeGhz-gP-oBZ
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-10-13_01,2026-10-14_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 bulkscore=0 clxscore=1015 priorityscore=1501
- suspectscore=0 phishscore=0 malwarescore=0 impostorscore=0 adultscore=0
+ phishscore=0 malwarescore=0 bulkscore=0 impostorscore=0 adultscore=0
+ suspectscore=0 clxscore=1015 lowpriorityscore=0 priorityscore=1501
  spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
  adjust=0 reason=mlx scancount=1 engine=8.22.0-2610080000
  definitions=main-2610140084
-Received-SPF: pass client-ip=205.220.168.131;
+Received-SPF: pass client-ip=205.220.180.131;
  envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
+ helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -158,141 +158,150 @@ For now, we keep the global common_* symbols defined.
 Reviewed-by: Brian Cain <brian.cain@oss.qualcomm.com>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 ---
- target/hexagon/common-semi-target.c | 65 ++++++++++++++++++++++++-----
- target/hexagon/cpu.c                |  2 +
- target/hexagon/internal.h           |  2 +
- 3 files changed, 59 insertions(+), 10 deletions(-)
+ target/arm/common-semi-target.c | 72 +++++++++++++++++++++++++++------
+ target/arm/cpu.c                |  4 ++
+ target/arm/internals.h          |  2 +
+ 3 files changed, 65 insertions(+), 13 deletions(-)
 
-diff --git a/target/hexagon/common-semi-target.c b/target/hexagon/common-semi-target.c
-index 210d33e54e2..da92ff298a2 100644
---- a/target/hexagon/common-semi-target.c
-+++ b/target/hexagon/common-semi-target.c
-@@ -8,44 +8,89 @@
- 
+diff --git a/target/arm/common-semi-target.c b/target/arm/common-semi-target.c
+index 38d52deb3d6..dc5f277a59e 100644
+--- a/target/arm/common-semi-target.c
++++ b/target/arm/common-semi-target.c
+@@ -10,9 +10,10 @@
  #include "qemu/osdep.h"
  #include "cpu.h"
--#include "cpu_helper.h"
  #include "semihosting/common-semi.h"
-+#include "internal.h"
++#include "internals.h"
+ #include "target/arm/cpu-qom.h"
  
 -uint64_t common_semi_arg(CPUState *cs, int argno)
-+static uint64_t hexagon_semi_arg(const CPUState *cs, int argno)
++static uint64_t arm_semi_arg(const CPUState *cs, int argno)
  {
--    CPUHexagonState *env = cpu_env(cs);
-+    const CPUHexagonState *env = cpu_env(cs);
-     return env->gpr[HEX_REG_R00 + argno];
+     ARMCPU *cpu = ARM_CPU(cs);
+     CPUARMState *env = &cpu->env;
+@@ -23,7 +24,7 @@ uint64_t common_semi_arg(CPUState *cs, int argno)
+     }
  }
  
 -void common_semi_set_ret(CPUState *cs, uint64_t ret)
-+static void hexagon_semi_set_ret(CPUState *cs, uint64_t ret)
++static void arm_semi_set_ret(CPUState *cs, uint64_t ret)
  {
-     CPUHexagonState *env = cpu_env(cs);
-     env->gpr[HEX_REG_R00] = ret;
+     ARMCPU *cpu = ARM_CPU(cs);
+     CPUARMState *env = &cpu->env;
+@@ -34,29 +35,74 @@ void common_semi_set_ret(CPUState *cs, uint64_t ret)
+     }
  }
  
--void common_semi_set_err(CPUState *cs, int err)
-+static void hexagon_semi_set_err(CPUState *cs, int err)
- {
-     CPUHexagonState *env = cpu_env(cs);
-     env->gpr[HEX_REG_R01] = err;
- }
- 
--bool common_semi_sys_exit_is_extended(CPUState *cs)
-+static bool hexagon_semi_is_64bit(const CPUState *cs)
- {
-     return false;
- }
- 
-+static bool hexagon_semi_sys_exit_is_extended(const CPUState *cs)
++static void arm_semi_set_err(CPUState *cs, int err)
 +{
-+    return false;
 +}
 +
-+static uint64_t hexagon_semi_stack_bottom(const CPUState *cs)
++static bool arm_semi_is_64bit(const CPUState *cs)
 +{
-+    const CPUHexagonState *env = cpu_env(cs);
-+    return env->gpr[HEX_REG_SP];
++    return is_a64(cpu_env(cs));
 +}
 +
-+static bool hexagon_semi_has_synccache(const CPUState *cs)
++static bool arm_semi_sys_exit_is_extended(const CPUState *cs)
 +{
-+    return false;
++    return is_a64(cpu_env(cs));
 +}
 +
-+const SemihostingCPUOps hexagon_semihosting_ops = {
-+    .arg = hexagon_semi_arg,
-+    .set_ret = hexagon_semi_set_ret,
-+    .set_err = hexagon_semi_set_err,
-+    .is_64bit = hexagon_semi_is_64bit,
-+    .sys_exit_is_extended = hexagon_semi_sys_exit_is_extended,
-+    .stack_bottom = hexagon_semi_stack_bottom,
-+    .has_synccache = hexagon_semi_has_synccache,
++static uint64_t arm_semi_stack_bottom(const CPUState *cs)
++{
++    const ARMCPU *cpu = ARM_CPU(cs);
++    const CPUARMState *env = &cpu->env;
++    return is_a64(env) ? env->xregs[31] : env->regs[13];
++}
++
++static bool arm_semi_has_synccache(const CPUState *cs)
++{
++    /* Ok for A64, invalid for A32/T32 */
++    return is_a64(cpu_env(cs));
++}
++
++const SemihostingCPUOps arm_semihosting_ops = {
++    .arg = arm_semi_arg,
++    .set_ret = arm_semi_set_ret,
++    .set_err = arm_semi_set_err,
++    .is_64bit = arm_semi_is_64bit,
++    .sys_exit_is_extended = arm_semi_sys_exit_is_extended,
++    .stack_bottom = arm_semi_stack_bottom,
++    .has_synccache = arm_semi_has_synccache,
 +};
 +
 +uint64_t common_semi_arg(CPUState *cs, int argno)
 +{
-+    return hexagon_semi_arg(cs, argno);
++    return arm_semi_arg(cs, argno);
 +}
 +
 +void common_semi_set_ret(CPUState *cs, uint64_t ret)
 +{
-+    hexagon_semi_set_ret(cs, ret);
++    arm_semi_set_ret(cs, ret);
 +}
 +
-+void common_semi_set_err(CPUState *cs, int err)
-+{
-+    hexagon_semi_set_err(cs, err);
-+}
-+
+ void common_semi_set_err(CPUState *cs, int err)
+ {
+-}
+-
+-bool common_semi_sys_exit_is_extended(CPUState *cs)
+-{
+-    return is_a64(cpu_env(cs));
++    arm_semi_set_err(cs, err);
+ }
+ 
  bool is_64bit_semihosting(CPUArchState *env)
  {
--    return false;
-+    return hexagon_semi_is_64bit(env_cpu(env));
+-    return is_a64(env);
++    return arm_semi_is_64bit(env_cpu(env));
 +}
 +
 +bool common_semi_sys_exit_is_extended(CPUState *cs)
 +{
-+    return hexagon_semi_sys_exit_is_extended(cs);
++    return arm_semi_sys_exit_is_extended(cs);
  }
  
  uint64_t common_semi_stack_bottom(CPUState *cs)
  {
--    CPUHexagonState *env = cpu_env(cs);
--    return env->gpr[HEX_REG_SP];
-+    return hexagon_semi_stack_bottom(cs);
+-    ARMCPU *cpu = ARM_CPU(cs);
+-    CPUARMState *env = &cpu->env;
+-    return is_a64(env) ? env->xregs[31] : env->regs[13];
++    return arm_semi_stack_bottom(cs);
  }
  
  bool common_semi_has_synccache(CPUArchState *env)
  {
--    return false;
-+    return hexagon_semi_has_synccache(env_cpu(env));
+-    /* Ok for A64, invalid for A32/T32 */
+-    return is_a64(env);
++    return arm_semi_has_synccache(env_cpu(env));
  }
-diff --git a/target/hexagon/cpu.c b/target/hexagon/cpu.c
-index 6550e7fa800..8bbd4647968 100644
---- a/target/hexagon/cpu.c
-+++ b/target/hexagon/cpu.c
-@@ -851,6 +851,8 @@ static void hexagon_cpu_class_init(ObjectClass *c, const void *data)
- #ifndef CONFIG_USER_ONLY
-     cc->sysemu_ops = &hexagon_sysemu_ops;
-     dc->vmsd = &vmstate_hexagon_cpu;
-+    /* semihosting is only supported in system mode for Hexagon */
-+    cc->semi_ops = &hexagon_semihosting_ops;
- #endif
- #ifdef CONFIG_TCG
-     cc->tcg_ops = &hexagon_tcg_ops;
-diff --git a/target/hexagon/internal.h b/target/hexagon/internal.h
-index 3ed83904eb7..073de10284e 100644
---- a/target/hexagon/internal.h
-+++ b/target/hexagon/internal.h
-@@ -34,6 +34,8 @@ void hexagon_debug_qreg(CPUHexagonState *env, int regnum);
- void hexagon_debug(CPUHexagonState *env);
- void hexagon_dump(CPUHexagonState *env, FILE *f, int flags);
+diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+index 10ac6c98318..81ec1ce21c6 100644
+--- a/target/arm/cpu.c
++++ b/target/arm/cpu.c
+@@ -2663,6 +2663,10 @@ static void arm_cpu_class_init(ObjectClass *oc, const void *data)
  
-+extern const struct SemihostingCPUOps hexagon_semihosting_ops;
+ #ifdef CONFIG_TCG
+     cc->tcg_ops = &arm_tcg_ops;
++#if !defined(CONFIG_USER_ONLY) || defined(CONFIG_LINUX)
++    /* semihosting is not supported for bsd-user */
++    cc->semi_ops = &arm_semihosting_ops;
++#endif
+ #endif /* CONFIG_TCG */
+ }
+ 
+diff --git a/target/arm/internals.h b/target/arm/internals.h
+index c41fa5225c7..e849e357cfe 100644
+--- a/target/arm/internals.h
++++ b/target/arm/internals.h
+@@ -437,6 +437,8 @@ bool arm_cpu_exec_halt(CPUState *cs);
+ int arm_cpu_mmu_index(CPUState *cs, bool ifetch);
+ #endif /* CONFIG_TCG */
+ 
++extern const struct SemihostingCPUOps arm_semihosting_ops;
 +
- extern const char * const hexagon_regnames[TOTAL_PER_THREAD_REGS];
- #ifndef CONFIG_USER_ONLY
- extern const char * const hexagon_sregnames[];
+ typedef enum ARMFPRounding {
+     FPROUNDING_TIEEVEN,
+     FPROUNDING_POSINF,
 -- 
 2.43.0
 
