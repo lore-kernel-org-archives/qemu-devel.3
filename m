@@ -4,84 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64354CC6B1C
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 03:45:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD54BCC6B1A
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 03:45:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGpsQ-0003KX-Aq; Tue, 13 Oct 2026 23:42:02 -0400
+	id 1xGps2-0001eJ-CM; Tue, 13 Oct 2026 23:41:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1xGpsM-000391-EZ
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 23:41:58 -0400
-Received: from mail-pg1-x52e.google.com ([2607:f8b0:4864:20::52e])
+ id 1xGprz-0001Sy-KK
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 23:41:35 -0400
+Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1xGpsK-0001pz-Ld
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 23:41:58 -0400
-Received: by mail-pg1-x52e.google.com with SMTP id
- 41be03b00d2f7-cc4b1f7e8f4so2193512a12.1
- for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 20:41:56 -0700 (PDT)
+ id 1xGprx-0001lA-Ki
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 23:41:35 -0400
+Received: by mail-pj1-x102f.google.com with SMTP id
+ 98e67ed59e1d1-3a80d1c98f5so344520a91.0
+ for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 20:41:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1791949315; x=1792554115; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1791949292; x=1792554092; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=xdvPWuv8zxakG1FAo70OqA0FhB4rWKcTdR7oA6UwWSU=;
- b=nPSFIDPsQrz6HNajv1imaT97dPf9oov/1xD/LaH9+99zIMioNG2F+Ch/FxKc9fPEx+
- U7lr0PA/hX63+bCUbnX6G0qxrwf7akfx/ixIPHPCuyAN+iq1jMO5VYIDG3QpvKD9RAR+
- ZlnSW9VcGBFad6lPIkkoiYjZoDmJSpbaxj/cSyj+Xp3y1CwJvd+xz1J2J/UXLxROFUz9
- EVjG/G/1OTm0DV+2L/yvHOnJXOgLIkb1FF78KfvgtD8Y3Mh/GKeWRfuymxe8qfb/rTbj
- SHwOpK3YNQeJsyFuVGS3ngCeV0Enq9ayVHDMcfCsYvjyi40pfRuvVhtN+px1CNip1Z48
- 1xkw==
+ bh=yihw9/tmy2HOrE2zuiqAqJjvlQRGGP5lmkaoPyRqowA=;
+ b=AZzlRsG7PvQ5mN+E1YRaIS11wTKk+nXbWAKzNtQ6ArYrPfDKCwcu5S2EyPlxETgcvC
+ vLqyhtTHAYZBs/tGbcPMzhiDm2/s2DA8T3SmbZJcMef0Cr54bpc9g/PZksu/+wwGu8P/
+ lUgCcXdf5xif9qZNeTzqBg+oWhDiiyu2OiLSMb2B+lYEh8WOO610fRJbdx2YSZcu6OXz
+ RDvH2PXwPHnq49fJ6j1NPNkur2tcJi4V6LUMnQlZgQTuxz/MzzGsUxvbvMLwdc3WRtWf
+ sZbyTcM1LN/tHLxaS06KNzxZm3YoRoWzuqN91Z8wgEByJUAin6b9gMftwzOuM2CSI176
+ hxvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791949315; x=1792554115;
+ d=1e100.net; s=20260707; t=1791949292; x=1792554092;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=xdvPWuv8zxakG1FAo70OqA0FhB4rWKcTdR7oA6UwWSU=;
- b=ctJ16jLCQhFyqZHvM4RDQkzprIRuBpQeuppXXAnax4uJ2dfctn9fdxP1/OUwy1aWh1
- 2nGnOgnaoggik2a+eMfAi6K8lt8HYX2XQk7DEt1asAoaTytTOgK9aljo0nXpLD7bAAEv
- YubUBL/L8ohthTimCGeX5K2HClFK+y4FPaJ3h0LE9d+XVS/A91gWrwc54P85BZg/Kilb
- eaoruvYjV6YCnQSeSDi67a4TuOfDYRuIyp7ndn3l3+urmvmXJJWypLxjMhQ/Nxwpz5d3
- Y3Us3WubSOcspGKqHU4o5veWH1IknPU9IUZcjccIrvecfMwEDOI2kUr5g0Oxe+lamlz9
- KNwQ==
-X-Gm-Message-State: AFq9FYJpfM/zPnbDkeJ9D6xJTl1Xvef+3vvmNANYB9nuxjA3ouS/236F
- VKkHpk6MG8zJUpDRS2Br+GkDlbBe/cK9801BBem5WTbApCnqmnDehp1bnMTYwA==
-X-Gm-Gg: AYBFou0xn0rH2A2ENpnj2OmdQy/pp1MoWsYWs+7U4qdKkwF/rz9VUSB8XRpmFizwtrK
- lNi9V45PuW5xjGiHD+ARNcaE/xSo6PvjllIsIaDXAoLfvYvBrGe0Gm1XxS4WyQ2KCD9N+7rV10f
- wnOZ/7dfTMAYhF7HLHkUntrjAiGmaM6PYba4XdS4GkJlzjdYJ4l57kEzeDVX2nXu66+XXn3ixBe
- UYGRpJH3Tew/77UNi893mU6kLj5dIbe+NYbIRmH810+YvX37P+2RLfyJHVL2QWVqJUcWc6jeB8C
- vLg1Cgg64gK4XU4rd4BPVrS9PilK+6htYaQfLc4vx/7JwzToLUtlbjsawAllrN0DUQAIVoffQ0V
- CYeQgkSAeINRoHtzTpTl5Nq3Qi4Xl963B0haX2kZsC23LYkNQxS+mJ0ZYcgT0hUDJ+tC7Oxyq42
- GmFW9Ji75x+28a4/GFpS9Koh1yJnSVow7GIXTSM5psrRGPeOm1VJqm3YVZAW+TtLy2g19PRymBt
- +79vcWoMCEi5qME
-X-Received: by 2002:a17:90b:1dd1:b0:3a7:e0f4:2857 with SMTP id
- 98e67ed59e1d1-3ab3a359dd3mr10494895a91.1.1791949315167; 
- Tue, 13 Oct 2026 20:41:55 -0700 (PDT)
+ bh=yihw9/tmy2HOrE2zuiqAqJjvlQRGGP5lmkaoPyRqowA=;
+ b=HkYBRZSEP1M/yK4USlWpkCNhCbjAwa51AUrBrnpglsDgTKq2w6x6UxCMsNGAcpZ5SI
+ 2F1f/9OZVEcmtWLTgg1D3itCDBfF0C4X7dKokNiWW1/HIWSKB7CqLqhQTLxtdLSr8s0p
+ PavdS8G14VGSyGRFSaOC9BEn2Dg03Wdc3lysPnQwDkxdm3562yVjZObo+osyj8l4xTd1
+ Dlm70bDSxr3fpZIESX9ElxFaM8z3yTItIU7S/1qCEnkVinm8vr8qCBV0I/q7FVnHiqlk
+ 7ZxwiT5g7rDhh/k/+hto95Ge0QU7IS2znII4MyOOyPwpEcae8n9j+Yictd41yQRD0JNv
+ lrew==
+X-Gm-Message-State: AFq9FYKpq2ZIQCtQiKXI2FAfPX4JIMqJcskzpq7XiTtsE/PgX/g7P6P/
+ sDIYrVFHEbS0jCFMyyQv3px8t0O3RL6Irhm4THFYqUA5VXzg0cdWBMfgbE4Zag==
+X-Gm-Gg: AYBFou3SS0N+6hl6ozBKKAD5ix2Q15KO/5kwe/JuuYttlLXr2xUsCXMcOB5G6aEKZDL
+ WtbdXQTD5XDzmws+KDbRWo0y2Cokb56mPYJG1ZFIbK1kwX7kw/ZcU8gMmVNffHoMzQ9oHUdIeZ5
+ hb28N9WRe96Dh3UWI8dzatspjRTG2mclYVd4Q3UWFkJl17uy4zantlC2Y5QiGUiQZIaF5Ea4X8w
+ sY6npHaH90kp3gnqQBZ9H3mHt0GjhNS9PEpIrz3FcHK2h22thQOwDCSJab1/gYHERLoLLNrhplN
+ oacpTNGONxsYpWc9m91DwnPoCgb4fxOGZV4R9AfTt1UsgAI3uDKllMkRhb5JyDQ786E4m5nrHc5
+ sifLnqqdSp1FJDS/fzLo3YD5Sz6MC9bB3UEn8D/LsISqxuo7Y0fG1FFdcHkYuFlkvN+WN4+SBUd
+ J2KN0yQNSeWaox2Xh1fX2wqrsufMpNV/bVD0rkxlu0AW/YK7XiQoxXvokACRzpvJYJQ6pf+qFgN
+ UJWmNHpJtum1xvM
+X-Received: by 2002:a17:90a:e7ca:b0:3a4:6f38:f2a2 with SMTP id
+ 98e67ed59e1d1-3ab3a953814mr11281133a91.25.1791949292142; 
+ Tue, 13 Oct 2026 20:41:32 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3ac61170b7bsm2321457a91.16.2026.10.13.20.41.52
+ 98e67ed59e1d1-3ac61170b7bsm2321457a91.16.2026.10.13.20.41.28
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 13 Oct 2026 20:41:54 -0700 (PDT)
+ Tue, 13 Oct 2026 20:41:31 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: Rick Richard <rick@sloservers.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- qemu-stable@nongnu.org, Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 48/52] tests/qtest/bios-tables-test: Update riscv64 virt SPCR
- golden reference
-Date: Wed, 14 Oct 2026 13:39:03 +1000
-Message-ID: <20261014033907.3332383-49-alistair.francis@wdc.com>
+Cc: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Icenowy Zheng <uwu@icenowy.me>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Matheus Ferst <matheus.ferst@eldorado.org.br>,
+ Chao Liu <chao.liu@processmission.com>,
+ Sunil V L <sunilvl@oss.qualcomm.com>,
+ Andrew Jones <andrew.jones@oss.qualcomm.com>
+Subject: [PULL 41/52] target/riscv: add riscv-server-ref CPU
+Date: Wed, 14 Oct 2026 13:38:56 +1000
+Message-ID: <20261014033907.3332383-42-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20261014033907.3332383-1-alistair.francis@wdc.com>
 References: <20261014033907.3332383-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52e;
- envelope-from=alistair23@gmail.com; helo=mail-pg1-x52e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
+ envelope-from=alistair23@gmail.com; helo=mail-pj1-x102f.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -105,97 +108,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Rick Richard <rick@sloservers.com>
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 
-Update the riscv64 virt SPCR golden reference file to have the fix for
-the UART register width.
+The harts requirements of RISC-V server platform [1] require RVA23 ISA
+profile support and others.
 
-Diffs from iasl:
+We're going for a profile-based implementation, instead of a regular CPU
+that can inherit RVA23, to allow future CPUs to use it internally as a
+starting base for their own extension sets.  There's also a new
+'rvserver-ref-1.0' flag that can be used to set the extensions in the
+command line for other CPUs, which can be used for testing/debugging
+purposes.
 
-@@ -1,58 +1,58 @@
- /*
-  * Intel ACPI Component Architecture
-  * AML/ASL+ Disassembler version 20230628 (64-bit version)
-  * Copyright (c) 2000 - 2023 Intel Corporation
-  *
-  * Disassembly of tests/data/acpi/riscv64/virt/SPCR, Sat Oct  3 08:44:51 2026
-  *
-  * ACPI Data Table [SPCR]
-  *
-  * Format: [HexOffset DecimalOffset ByteLength]  FieldName : FieldValue (in hex)
-  */
+Note that for all intents and purposes "riscv-server-ref" is a regular
+CPU and no, we're not trying to set a precedent of calling the riscv
+server platform spec a profile.
 
- [000h 0000 004h]                   Signature : "SPCR"    [Serial Port Console Redirection Table]
- [004h 0004 004h]                Table Length : 0000005A
- [008h 0008 001h]                    Revision : 04
--[009h 0009 001h]                    Checksum : 13
-+[009h 0009 001h]                    Checksum : 2B
- [00Ah 0010 006h]                      Oem ID : "BOCHS "
- [010h 0016 008h]                Oem Table ID : "BXPC    "
- [018h 0024 004h]                Oem Revision : 00000001
- [01Ch 0028 004h]             Asl Compiler ID : "BXPC"
- [020h 0032 004h]       Asl Compiler Revision : 00000001
+[1] defines in rule SEE_020 that we must support at least 11 debug
+triggers (4 for insn address, 4 for insn load/store, 1 for icount,
+one for int, one for excp).  We're going for the minimum.  If more
+triggers are needed users can set any trigger amount (N <= 1024)
+with:
 
- [024h 0036 001h]              Interface Type : 12
- [025h 0037 003h]                    Reserved : 000000
+-cpu riscv-server-ref,num-triggers=N
 
- [028h 0040 00Ch]        Serial Port Register : [Generic Address Structure]
- [028h 0040 001h]                    Space ID : 00 [SystemMemory]
--[029h 0041 001h]                   Bit Width : 20
-+[029h 0041 001h]                   Bit Width : 08
- [02Ah 0042 001h]                  Bit Offset : 00
- [02Bh 0043 001h]        Encoded Access Width : 01 [Byte Access:8]
- [02Ch 0044 008h]                     Address : 0000000010000000
+[1] https://github.com/riscv-non-isa/riscv-server-platform/blob/main/server_platform_requirements.adoc
 
- [034h 0052 001h]              Interrupt Type : 10
- [035h 0053 001h]         PCAT-compatible IRQ : 00
- [036h 0054 004h]                   Interrupt : 0000000A
- [03Ah 0058 001h]                   Baud Rate : 07
- [03Bh 0059 001h]                      Parity : 00
- [03Ch 0060 001h]                   Stop Bits : 01
- [03Dh 0061 001h]                Flow Control : 00
- [03Eh 0062 001h]               Terminal Type : 03
- [04Ch 0076 001h]                    Reserved : 00
- [040h 0064 002h]               PCI Device ID : FFFF
- [042h 0066 002h]               PCI Vendor ID : FFFF
- [044h 0068 001h]                     PCI Bus : 00
- [045h 0069 001h]                  PCI Device : 00
- [046h 0070 001h]                PCI Function : 00
- [047h 0071 004h]                   PCI Flags : 00000000
- [04Bh 0075 001h]                 PCI Segment : 00
- [04Ch 0076 004h]                    Reserved : 00000000
-
- Raw Table Data: Length 90 (0x5A)
-
--    0000: 53 50 43 52 5A 00 00 00 04 13 42 4F 43 48 53 20  // SPCRZ.....BOCHS
-+    0000: 53 50 43 52 5A 00 00 00 04 2B 42 4F 43 48 53 20  // SPCRZ....+BOCHS
-     0010: 42 58 50 43 20 20 20 20 01 00 00 00 42 58 50 43  // BXPC    ....BXPC
--    0020: 01 00 00 00 12 00 00 00 00 20 00 01 00 00 00 10  // ......... ......
-+    0020: 01 00 00 00 12 00 00 00 00 08 00 01 00 00 00 10  // ................
-     0030: 00 00 00 00 10 00 0A 00 00 00 07 00 01 00 03 00  // ................
-     0040: FF FF FF FF 00 00 00 00 00 00 00 00 00 00 00 00  // ................
-     0050: 00 00 00 00 02 00 58 00 2E 00                    // ......X...
-
-Signed-off-by: Rick Richard <rick@sloservers.com>
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Message-ID: <20261005104008.214588-4-rick@sloservers.com>
-Cc: qemu-stable@nongnu.org
+Suggested-by: Icenowy Zheng <uwu@icenowy.me>
+Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Reviewed-by: Matheus Ferst <matheus.ferst@eldorado.org.br>
+Reviewed-by: Chao Liu <chao.liu@processmission.com>
+Reviewed-by: Sunil V L <sunilvl@oss.qualcomm.com>
+Reviewed-by: Andrew Jones <andrew.jones@oss.qualcomm.com>
+Message-ID: <20260928201107.2049458-3-daniel.barboza@oss.qualcomm.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- tests/qtest/bios-tables-test-allowed-diff.h |   1 -
- tests/data/acpi/riscv64/virt/SPCR           | Bin 90 -> 90 bytes
- 2 files changed, 1 deletion(-)
+ target/riscv/cpu-qom.h |  1 +
+ target/riscv/cpu.c     | 34 ++++++++++++++++++++++++++++++++++
+ 2 files changed, 35 insertions(+)
 
-diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
-index aae973048a..dfb8523c8b 100644
---- a/tests/qtest/bios-tables-test-allowed-diff.h
-+++ b/tests/qtest/bios-tables-test-allowed-diff.h
-@@ -1,2 +1 @@
- /* List of comma-separated changed AML files to ignore */
--"tests/data/acpi/riscv64/virt/SPCR",
-diff --git a/tests/data/acpi/riscv64/virt/SPCR b/tests/data/acpi/riscv64/virt/SPCR
-index 59d2c8f7f2..6003c230b1 100644
-Binary files a/tests/data/acpi/riscv64/virt/SPCR and b/tests/data/acpi/riscv64/virt/SPCR differ
+diff --git a/target/riscv/cpu-qom.h b/target/riscv/cpu-qom.h
+index 1a28f1369c..61234842e3 100644
+--- a/target/riscv/cpu-qom.h
++++ b/target/riscv/cpu-qom.h
+@@ -42,6 +42,7 @@
+ #define TYPE_RISCV_CPU_RVA22S64         RISCV_CPU_TYPE_NAME("rva22s64")
+ #define TYPE_RISCV_CPU_RVA23U64         RISCV_CPU_TYPE_NAME("rva23u64")
+ #define TYPE_RISCV_CPU_RVA23S64         RISCV_CPU_TYPE_NAME("rva23s64")
++#define TYPE_RISCV_CPU_RVSERVER_REF     RISCV_CPU_TYPE_NAME("riscv-server-ref")
+ #define TYPE_RISCV_CPU_IBEX             RISCV_CPU_TYPE_NAME("lowrisc-ibex")
+ #define TYPE_RISCV_CPU_SHAKTI_C         RISCV_CPU_TYPE_NAME("shakti-c")
+ #define TYPE_RISCV_CPU_SIFIVE_E         RISCV_CPU_TYPE_NAME("sifive-e")
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index 1c9b400f71..5e7a7f782d 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -2438,11 +2438,37 @@ static RISCVCPUProfile RVA23S64 = {
+     }
+ };
+ 
++/*
++ * This riscv-server-ref entry isn't a profile per se but its
++ * CPU definition can be modelled as a profile that extends
++ * RVA23, with additional things on top of it, and allowing
++ * future CPUs to derive from it via
++ * ".profile = &RVServerRef1_0;".
++ */
++static RISCVCPUProfile RVServerRef1_0 = {
++    .s_parent = &RVA23S64,
++    .name = "riscv-server-ref-1.0",
++    .satp_mode = VM_1_10_SV48,
++    .priv_spec = PRIV_VERSION_1_13_0,
++    .ext_offsets = {
++        CPU_CFG_OFFSET(ext_zkr),
++        CPU_CFG_OFFSET(ext_sdext),
++        CPU_CFG_OFFSET(ext_sdtrig),
++        CPU_CFG_OFFSET(ext_ssaia),
++        CPU_CFG_OFFSET(ext_ssccfg),
++        /* ssstrict is always enabled for PRIV_VER_1_12+ */
++
++        RISCV_PROFILE_EXT_LIST_END
++    }
++};
++
++
+ RISCVCPUProfile *riscv_profiles[] = {
+     &RVA22U64,
+     &RVA22S64,
+     &RVA23U64,
+     &RVA23S64,
++    &RVServerRef1_0,
+     NULL,
+ };
+ 
+@@ -3830,6 +3856,14 @@ static const TypeInfo riscv_cpu_type_infos[] = {
+ #endif
+     ),
+ 
++    DEFINE_RISCV_CPU(TYPE_RISCV_CPU_RVSERVER_REF, TYPE_RISCV_BARE_CPU,
++        .profile = &RVServerRef1_0,
++        .misa_mxl_max = MXL_RV64,
++        .cfg.max_satp_mode = VM_1_10_SV57,
++        .cfg.pmu_mask = MAKE_64BIT_MASK(3, 6),
++        .num_triggers = 11,
++    ),
++
+ #if defined(CONFIG_TCG) && !defined(CONFIG_USER_ONLY)
+     DEFINE_RISCV_CPU(TYPE_RISCV_CPU_BASE128, TYPE_RISCV_DYNAMIC_CPU,
+         .cfg.max_satp_mode = VM_1_10_SV57,
 -- 
 2.55.0
 
