@@ -4,144 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BAD6CC6B1A
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 04:30:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7040CC6B24
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 04:31:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGqdc-0001dm-8U; Wed, 14 Oct 2026 00:30:49 -0400
+	id 1xGqdk-0001md-OS; Wed, 14 Oct 2026 00:30:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1xGqda-0001Zg-7D
- for qemu-devel@nongnu.org; Wed, 14 Oct 2026 00:30:46 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
+ id 1xGqdj-0001mM-Og
+ for qemu-devel@nongnu.org; Wed, 14 Oct 2026 00:30:55 -0400
+Received: from fhigh-a6-smtp.messagingengine.com ([103.168.172.157])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1xGqdY-0006Gv-Ay
- for qemu-devel@nongnu.org; Wed, 14 Oct 2026 00:30:45 -0400
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69E24ZS42333507
- for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 04:30:43 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- WNcoK2FbN/T25VV/WJ0/Hf9qdy5edUNuk1pquNE81HY=; b=hV/70OFvb4RONxSc
- mw+37zUYwcU0A0SFtopCgn/1ugIpORhCjPksxEJ/F45uQzPNszJ8cfNkDHCZK3x1
- zm4gA8zbOO3CZD7eEQJPqCuljMUiHXAFEsCySN0xX3IlxYHhnlzn4jpBWVtFapfQ
- oVURf0VFP6wsosnf5rSW7GR5n9Uuclk+0L/Ifdo2ftj4jDj9OKwYKYkqhA3VF/zA
- i3a1kimJpPJ0YT5+oxAsV/D47W9BoqZb1BI4oF1j512t6/Xd+nepwoczG+XxWPtq
- 92mRhqB2c9lOk4AD32nVGbmh7CWnMrSa60tkOodDxe+G0UCYXJWNeWTb5zfbntDU
- zZeQMw==
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h9s0hjag3-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 04:30:43 +0000 (GMT)
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-5338cfe567eso77436901cf.2
- for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 21:30:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1791952243; x=1792557043; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=WNcoK2FbN/T25VV/WJ0/Hf9qdy5edUNuk1pquNE81HY=;
- b=AAlWgSpXK/HvE6JHjUrrZctVfeaER8hbFdmo6iAvKXWYY+L8oMEBhmmUcJachb9UDd
- iaYrYpC1nKwezFPVOiZ3gvw8TsIB3hpw0Sflso9M3OvDUB8sPHrPiMjoneC6dvRgZrtJ
- 7P1nVhM+IQjgCzlxq3vf4taRCRBOYuXiKv+8x8m5I/U4uCT1kVgzPdVPk4LF64Iy7Tec
- jMpwIAviyZiWYzPgzRXYFiueTiyyptzOiDtamjRx8kT7dexF3w7A/gcMDKjWb0LtfY08
- M71giK2HHCOMnAxHDhHXp9j5d8hIrOW+G0g7BFdyWx7ntYhK3faFY9OV+vMJLbD8ds+X
- lg8A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791952243; x=1792557043;
- h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=WNcoK2FbN/T25VV/WJ0/Hf9qdy5edUNuk1pquNE81HY=;
- b=n7vLaggQUzffd6jLWevVkG9vDeKIP15a+q+1mzUEVyxBn5PYefpVDYtPYPAujCJHI0
- yO4KdH+uQOlU1+CE5a/V+LrFXhO3giK+06GzDvXkbnHsLGVy1HB3t4rZTZxNaO8O/U5b
- FzTuR722nkSHIqPoqEFSYJceu3cxwq691SsbpLK0+gbaWf7cNoAQZ+RPyghRtaAfHRGD
- YxL2Yyha8wKP4xAL89p7ZoCjHlJmy1V2d7ArV1FO84iPWTJoWJeyR1/4iRSV/sKoCxh0
- pDw1A6huWOVueLZR55fdFYcmrjzouBmnfaHlyqgpIa0MGuGqB2a3Z8+AMQfTZFwrGJwA
- yJfg==
-X-Forwarded-Encrypted: i=1;
- AKwUvBzgM9HeODNx+pZYOMlGfukquieOoMbe6Qvrr4+lkVYhcugIvE1fxhZ3zxMrzQIpQ5WJGSXa/jr0qQV0@nongnu.org
-X-Gm-Message-State: AFq9FYKW69PlAPTmSJJIdn4bONlJM0tdf/BwOPZm0o09cFT8PyFCYFsY
- FSJ/Dwqs6hxmAPrLr+MtROsyjxDWncA6k/njbAB+4HsDre0GMPTPDG79EGFx3m9MvDvmOQkiun7
- 8kkCWHOBK7YosKCUPvJqTzEJBS4ioC7wHBTUgJWwyIm6+hnysh+D31vB9Kg==
-X-Gm-Gg: AYBFou2Dn99HrsV9F/Tww4n+hbGsRwBoLO9qU8J8x700/J9lx02Oc6BSdO1E+bY6TvV
- UMjN60aPIkI3d6B7a+kEu9HCsmsr0CMWiI0uykUy41GY7x3aRxUIoI/JpfNES6jGN412KokiGv5
- ZhS0Q2mqd0Yulre2sj55p6QCVX4Yj0YMZohRGpT0gBdkDJTskKVowb7t/TSdIndLxUppXfiV6z3
- z8U3omAaZkvLHjPAHR2giIiLo7RA93nB7xjVf5bq1imzOd2D7NkE1hngdnoSF+JHwtqwP0Pwy5w
- JSMbglzSMn5qWtYVl6w1nsJRaMKunq2oBSxccO/pspf/Yb+DDXRU496vP5MC5mOKvhUGxJPQBq7
- go/uGQ5X15sHMVc2cF7RFhWsa4sHbZWA9CIkAM9/KGQwSp8KlKu0IzSdoly2JCpwO5epAy7FVP2
- f43Aw=
-X-Received: by 2002:a05:622a:511:b0:533:3ec8:a834 with SMTP id
- d75a77b69052e-5359fb3dce3mr247490721cf.40.1791952242722; 
- Tue, 13 Oct 2026 21:30:42 -0700 (PDT)
-X-Received: by 2002:a05:622a:511:b0:533:3ec8:a834 with SMTP id
- d75a77b69052e-5359fb3dce3mr247490471cf.40.1791952242056; 
- Tue, 13 Oct 2026 21:30:42 -0700 (PDT)
-Received: from [192.168.1.199] (104-54-226-75.lightspeed.austtx.sbcglobal.net.
- [104.54.226.75]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-5359b7a34b5sm116352461cf.22.2026.10.13.21.30.40
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 13 Oct 2026 21:30:41 -0700 (PDT)
-Message-ID: <57045b8c-dec0-4964-b196-cb0a8476d863@oss.qualcomm.com>
-Date: Tue, 13 Oct 2026 23:30:39 -0500
+ (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
+ id 1xGqdh-0006Kj-R0
+ for qemu-devel@nongnu.org; Wed, 14 Oct 2026 00:30:55 -0400
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+ by mailfhigh.phl.internal (Postfix) with ESMTP id 58B1F1400174
+ for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 00:30:53 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+ by phl-compute-03.internal (MEProxy); Wed, 14 Oct 2026 00:30:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alistair23.me;
+ h=cc:cc:content-transfer-encoding:content-type:content-type
+ :date:date:from:from:in-reply-to:in-reply-to:message-id
+ :mime-version:references:reply-to:subject:subject:to:to; s=fm2;
+ t=1791952253; x=1792038653; bh=lM/CT7B5lqbOJqRBdRu0ItaKIHBhcrD1
+ 1c+h6Uw9F+o=; b=O0PJHNZpPZKKwxsmuobWFx/W2wLNTTeLjjqSh/fFjBST9X0B
+ miJcuhfNOrYoiEUEADdBAPgqIlg0is5OAbnBmpTXFe8VxWANuc+/JTjMg+KqGPtn
+ cW5r60YwqsRft5pkL6qHe6v3Paiio6VecMYFxBPrhcFH5kvYpVqwF2G3Av4+1KRY
+ lOVT28uV8yMdZWWcZvMAOVQCN7H45CshXwtjyziKwWtmy015NQQrkdvlqFshX95M
+ 7obNdTuDy0vZKIPoyNq0R4BHvX1Ll/B/OZzwai27rOa2b0gcWwzONkIoBQBEopBZ
+ Nxl9Y6EnXJce+s54jZ/wpgsgiadw5yQFkaCgBA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:content-type:date:date:feedback-id:feedback-id
+ :from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1791952253; x=
+ 1792038653; bh=lM/CT7B5lqbOJqRBdRu0ItaKIHBhcrD11c+h6Uw9F+o=; b=b
+ ccKp8gMFV7odpuYp0gguxHy00NCO0xNP3Z/Q5OI7gYqBnAcvfOCMTf3Denax3I3b
+ an97KYGobOLqNW+oPxt7j+nmhEzWnAQXvynWTu45D6QpvraUWw4FXvBqGA88YzHR
+ 7wmfXWG9kLhmoNvcPlxuxhh7AHsXAeQqDBFXfnVcjKxCX5qY8rtn+lDqh68IiH2p
+ Xu3N+nlT3QtOQIJceUSeVfzXQ1QNsKN4ylDIVoWIKUwi/6d6gg8VH3EWiLtFWC47
+ EMzXvTeR90K/ZvwfkWvlamS+1vAevdyAD0gkNHuONgisO2jtFFWs7vkMKhCDhBdp
+ yw0WlsTlA7tbb7WgOczQA==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+ repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
+ action=sign d=alistair23.me a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1791952253; d=alistair23.me;
+ mf=PGFsaXN0YWlyQGFsaXN0YWlyMjMubWU+;
+ rt=PHFlbXUtZGV2ZWxAbm9uZ251Lm9yZz4=;
+ s=fm2:rsa-sha256:my4UYXStLIMZOhzVHCnmqIlP6wNea/wByf2f1HYYobtGaPC
+ VCvlFsUzU1g59XMDp6rA7GmWcVTAv/XsuJKYAEYzCIuDBvSZcrX6c+823lgTvrD8
+ UNlFjnB1F9vUCJhMLuhxq8UwRJZ/WoSvs10VXxZcj7O9H3WXQGGkeZZLogwsPGCw
+ 9Ia5ZFHWWquvKX+j6KzePifwRJl9ICcUc9PcnanjPmqUjZKSZwAcdyTKx6tvlhaV
+ AtvRSZXCqtStViVpP3tlvobcYPiIowDaANyTgmxi0uEuFvCjFJ0eN8avZan42oIl
+ AmMyBakjseWV0IIGjEpvODJWyf8fUXtzlY2nCZA==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+ repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
+ action=mi-m=1; hc=13;
+ hn=cc,content-transfer-encoding,content-type,date,feedback-id,
+ from,in-reply-to,message-id,mime-version,references,subject,to,
+ user-agent;
+Message-Instance: m=1;
+ h=sha256:FfGxxgZyeFBSs/SUFsE0o23L+BGX+i51yzP6+DcV8dY=:J6wXCQHgOhCqleME2xsLiF62Vavg6Uo3GZPHFuuIzRQ=;
+X-ME-Sender: <xms:fAXPajU8HbPHotdXduiHuAlSUlsl6U2045gkfqojxGR2HlP_h4jfhg>
+ <xme:fAXPaikBlWEyJvtlRjQQ1CsyfScP8qecn-9fCMHwLtEXUMMCT2C3VSx1b00loUVef
+ ZntwNPPx8xwYgC5TnF74X5HoGVWAMwvwzo19poYRZ54dCZjTl0r1x0j>
+X-ME-Received: <xmr:fAXPakZiMnm-KXKLUsKSuwbzAPG5AeKvW2pfK_6a84AzeNuP1sxaRlM3CgSSo_FJM-xFnFF7PMTr2m59o9dSmy7aHOE>
+X-ME-Proxy-Cause: dmFkZTGPS0Z/NKQnuxEzMQacG2rHnkt2QMJOrkL3S65LcYHb6WbKx+TJCtep9sT7Glhfxk
+ lZ2oQW/v0vQsZ3sURildClZV1VcfZKLuz+1jpIYtIUkeA6esdPdPM+vCWVj4BL7LI+iR89
+ 5aJOiMrXsYWLybXtP/MiTdIC2NKW4JrCpYE36LWNkK8n1kpe2o9VjfGT9zuO5FdwD/0h8l
+ 2sxGY0Y/MnJzj9hqq69h0MOOKfrsE+NNBYu938MP0C5qE7lducrKOi56GNfd3OYLYZZQjw
+ FadO9bfzL66AfnlA2OyudPbrmAPBbJsWfNQsrCHLStxUxucTHdS1H+tq1+AbGtV1ohKwId
+ t7XR5m5VOOrQjv/Zyd9jJRyB480RpKSS+6JJPR12XHJmJtLyShl54z71L2pJW8XYcgOtB0
+ d2+OWFTOkusoPmP8VcK4IbqydDuvuwtJcHVymIGuCYzj+Z1xiflTTZC9U44ql5dChAmBXU
+ Du5JFrI97rFjA1cmUcEWIB/2NtCkGIfEJfTRCx5D5YQkr5gth1BJ9yfI0qrz1sm4y6f6Af
+ 56gPeofA78O0zcwZvR1HFiq05GH4/ayQsY1ShtmWdDuyxJJqXzs/EgkvqVBWyyrn4075sS
+ SIvTxteZwj1rgCeKNObA3e0p6f97cysrDEr2aCZY9b40FONVpweL/viSVkYg
+X-ME-Proxy: <xmx:fAXPatPJZgRky5FrD7dp8F3G6MVgcuqOXN6VX125r10f8tEMDrcmGQ>
+ <xmx:fAXPapa23O71yXHQ_Lq-e6LxApYNidQsPedes4fH6aX8S68ajZWm-Q>
+ <xmx:fAXPar3P4rRdqPkYlg94KHwE-zwYhlZTKjGMh93h0YfL2UKI5zcbVA>
+ <xmx:fAXPavdUXbtPJvI95HVFSJocMOc5BUUK4rPWyTbhJckp9x9gAvR1cg>
+ <xmx:fQXPavuuEYed4d4omi1JzdY6TVosX0S_TdaVnK3q1AUldaa8Qfo9MLXz>
+Feedback-ID: ifd214418:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 14 Oct 2026 00:30:50 -0400 (EDT)
+Message-ID: <7ac693b6d4f38fe8b23ca487759de0362df31d07.camel@alistair23.me>
+Subject: Re: [PATCH v2 22/23] tests/tcg/riscv64: Vector load test
+From: Alistair <alistair@alistair23.me>
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, Joel Stanley <joel@jms.id.au>
+Date: Wed, 14 Oct 2026 14:30:49 +1000
+In-Reply-To: <20260821040404.268123-23-richard.henderson@linaro.org>
+References: <20260821040404.268123-1-richard.henderson@linaro.org>
+ <20260821040404.268123-23-richard.henderson@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.62.0 (by Flathub.org) 
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 06/11] target/riscv: declare semihosting ops
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Alistair Francis <alistair.francis@wdc.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-References: <20261009225226.10657-1-pierrick.bouvier@oss.qualcomm.com>
- <20261009225226.10657-7-pierrick.bouvier@oss.qualcomm.com>
-Content-Language: en-US
-From: Brian Cain <brian.cain@oss.qualcomm.com>
-In-Reply-To: <20261009225226.10657-7-pierrick.bouvier@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=GL+dgeNK c=1 sm=1 tr=0 ts=6acf0573 cx=c_pps
- a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=x6rl1zRT+JsLSO7OGbGBKQ==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
- a=EUspDBNiAAAA:8 a=BJ7rpSF3g0RtI8Q15BsA:9 a=QEXdDO2ut3YA:10
- a=dawVfQjAaf238kedN5IG:22
-X-Proofpoint-ORIG-GUID: -C0FhFSX2oXw9vjA5Ppg0FMNYLR0KdGQ
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDE0MDAxNyBTYWx0ZWRfXwiRzMQ8oF6XR
- eIYT4iGnUF45yZJx/NKq2kS0ivhzekxHRfBOuUjYNn5CDHdbwHT9GhkQg7YWUgdxRfwD3Eiy0SO
- xthDgLNp32SDJf3aHTms836FQC67xcI=
-X-Proofpoint-GUID: -C0FhFSX2oXw9vjA5Ppg0FMNYLR0KdGQ
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDE0MDAxNyBTYWx0ZWRfX/w7g+hYv8MPX
- z+V/eby06y22C1ZHdHljSdJSjDf43G/jWUHSwvWEbkthwdfNrF4+dOhcP/4mdcQcAhtCdfHYmLR
- 2rskGrKOPv9GuHXRR7ztYM/INC2cjCwQzip7ExISno1VZBtdz5JlmrFqjggSB7+BCDLqVK63j7q
- 3dBMCGOTBlIwbE0qqnfxEBxkxPm4DRmHIZKUuuJRJ7XRZHlhM3tgEEJkUjXn0xDeVXnQcnjx6Je
- DUZpJj36kVuIwxtL4arnhbBkugI2A6b+w8gf96QFflLXniElY7+yodryM3PH7r+RTymEQSCCr1t
- 6R/58sbVjS5NvaBqEaW+N7qIL8FpRSG+3dKb/CVtWGbherJ17GiLwOP1TKMZElZlxBpoaqD6+fp
- v/k+FAgxuvaCm8C/Wo9IQNqK/ZXdLRpm6qXyXfpCahoGUO8siyyj51FXlTd8mVh2KqJOTzpepa5
- Xa6sV3VX1kUmjmEKRxQ==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-10-13_01,2026-10-09_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 suspectscore=0 spamscore=0 phishscore=0 adultscore=0
- bulkscore=0 malwarescore=0 clxscore=1015 priorityscore=1501 impostorscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610080000 definitions=main-2610140017
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Received-SPF: pass client-ip=103.168.172.157;
+ envelope-from=alistair@alistair23.me; helo=fhigh-a6-smtp.messagingengine.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -158,147 +128,197 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Thu, 2026-08-20 at 21:04 -0700, Richard Henderson wrote:
+> From: Joel Stanley <joel@jms.id.au>
+>=20
+> A userspace program to perform vector loads and stores that cross
+> page
+> boundaries, and check the result.
+>=20
+> Signed-off-by: Joel Stanley <joel@jms.id.au>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> Message-ID: <20260820130223.2762-2-joel@jms.id.au>
 
-On 10/9/2026 5:52 PM, Pierrick Bouvier wrote:
-> For now, we keep the global common_* symbols defined.
->
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+I don't think we need this commit, the next one does the same thing,
+but in C instead of assembly
+
+Alistair
+
 > ---
-Reviewed-by: Brian Cain <brian.cain@oss.qualcomm.com>
-
->   target/riscv/common-semi-target.c | 62 +++++++++++++++++++++++++++----
->   target/riscv/cpu.c                |  4 ++
->   target/riscv/internals.h          |  2 +
->   3 files changed, 60 insertions(+), 8 deletions(-)
->
-> diff --git a/target/riscv/common-semi-target.c b/target/riscv/common-semi-target.c
-> index 38a00e160c3..7fa3bef6883 100644
-> --- a/target/riscv/common-semi-target.c
-> +++ b/target/riscv/common-semi-target.c
-> @@ -11,43 +11,89 @@
->   #include "qemu/osdep.h"
->   #include "cpu.h"
->   #include "semihosting/common-semi.h"
-> +#include "internals.h"
->   
-> -uint64_t common_semi_arg(CPUState *cs, int argno)
-> +static uint64_t riscv_semi_arg(CPUState *cs, int argno)
->   {
->       RISCVCPU *cpu = RISCV_CPU(cs);
->       CPURISCVState *env = &cpu->env;
->       return env->gpr[xA0 + argno];
->   }
->   
-> -void common_semi_set_ret(CPUState *cs, uint64_t ret)
-> +static void riscv_semi_set_ret(CPUState *cs, uint64_t ret)
->   {
->       RISCVCPU *cpu = RISCV_CPU(cs);
->       CPURISCVState *env = &cpu->env;
->       env->gpr[xA0] = ret;
->   }
->   
-> +static void riscv_semi_set_err(CPUState *cs, int err)
-> +{
-> +}
+> =C2=A0tests/tcg/riscv64/Makefile.target |=C2=A0 13 +++
+> =C2=A0tests/tcg/riscv64/test-rvv-ldst.S | 131
+> ++++++++++++++++++++++++++++++
+> =C2=A02 files changed, 144 insertions(+)
+> =C2=A0create mode 100644 tests/tcg/riscv64/test-rvv-ldst.S
+>=20
+> diff --git a/tests/tcg/riscv64/Makefile.target
+> b/tests/tcg/riscv64/Makefile.target
+> index 4da5b9a3b3..68a5ec5255 100644
+> --- a/tests/tcg/riscv64/Makefile.target
+> +++ b/tests/tcg/riscv64/Makefile.target
+> @@ -13,6 +13,19 @@ run-test-noc: QEMU_OPTS +=3D -cpu rv64,c=3Dfalse
+> =C2=A0TESTS +=3D test-aes
+> =C2=A0run-test-aes: QEMU_OPTS +=3D -cpu rv64,zk=3Don
+> =C2=A0
+> +# Vector load test
+> +TESTS +=3D test-rvv-ldst
+> +test-rvv-ldst: CFLAGS +=3D -march=3Drv64gcv
+> +test-rvv-ldst: LDFLAGS =3D -nostdlib -static
+> +run-test-rvv-ldst: QEMU_OPTS +=3D -cpu max
 > +
-> +static bool riscv_semi_is_64bit(CPUState *cs)
-> +{
-> +    return riscv_cpu_mxl(cpu_env(cs)) != MXL_RV32;
-> +}
+> +# Re-run the vector tests at each supported VLEN
+> +TEST_RVV_VLENS =3D 128 256 512 1024
+> +EXTRA_RUNS +=3D $(patsubst %,run-test-rvv-ldst-
+> vlen%,$(TEST_RVV_VLENS))
+> +run-test-rvv-ldst-vlen%: test-rvv-ldst
+> +	$(call run-test, $@, env QEMU=3D$(QEMU) $(QEMU) $(QEMU_OPTS) -
+> cpu max$(COMMA)vlen=3D$* $<, \
+> +		test-rvv-ldst with vlen=3D$*)
 > +
-> +static bool riscv_semi_sys_exit_is_extended(CPUState *cs)
-> +{
-> +    return riscv_semi_is_64bit(cs);
-> +}
+> =C2=A0# Test for fcvtmod
+> =C2=A0TESTS +=3D test-fcvtmod
+> =C2=A0test-fcvtmod: CFLAGS +=3D -march=3Drv64imafdc
+> diff --git a/tests/tcg/riscv64/test-rvv-ldst.S
+> b/tests/tcg/riscv64/test-rvv-ldst.S
+> new file mode 100644
+> index 0000000000..939b3f038b
+> --- /dev/null
+> +++ b/tests/tcg/riscv64/test-rvv-ldst.S
+> @@ -0,0 +1,131 @@
+> +/*
+> + * RISC-V vector load/store page crossing test
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
 > +
-> +static uint64_t riscv_semi_stack_bottom(CPUState *cs)
-> +{
-> +    RISCVCPU *cpu = RISCV_CPU(cs);
-> +    CPURISCVState *env = &cpu->env;
-> +    return env->gpr[xSP];
-> +}
+> +=C2=A0=C2=A0=C2=A0 .section .rodata
+> +=C2=A0=C2=A0=C2=A0 // Page aligned so the within-page cases never cross =
+a boundary
+> +=C2=A0=C2=A0=C2=A0 .set MAX_PAGE_SIZE, 65536
+> +=C2=A0=C2=A0=C2=A0 .balign MAX_PAGE_SIZE
+> +src_data:
+> +=C2=A0=C2=A0=C2=A0 .byte 0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17
+> +=C2=A0=C2=A0=C2=A0 .byte 0x18, 0x19, 0x1A, 0x1B, 0x1C, 0x1D, 0x1E, 0x1F
+> +=C2=A0=C2=A0=C2=A0 .set NUM_BYTES, . - src_data
 > +
-> +static bool riscv_semi_has_synccache(CPUState *cs)
-> +{
-> +    return true;
-> +}
+> +=C2=A0=C2=A0=C2=A0 .balign MAX_PAGE_SIZE
+> +pageA_start:
+> +=C2=A0=C2=A0=C2=A0 // Fill the page, stopping 8 bytes short of the bound=
+ary
+> +=C2=A0=C2=A0=C2=A0 .fill MAX_PAGE_SIZE - 8, 1, 0xfa
+> +src_cross_data:
+> +=C2=A0=C2=A0=C2=A0 .byte 0x20, 0x21, 0x22, 0x23, 0x24, 0x25, 0x26, 0x27
+> +pageB_start:
+> +=C2=A0=C2=A0=C2=A0 .byte 0x28, 0x29, 0x2A, 0x2B, 0x2C, 0x2D, 0x2E, 0x2F
+> +=C2=A0=C2=A0=C2=A0 .set NUM_CROSS_BYTES, . - src_cross_data
 > +
-> +const SemihostingCPUOps riscv_semihosting_ops = {
-> +    .arg = riscv_semi_arg,
-> +    .set_ret = riscv_semi_set_ret,
-> +    .set_err = riscv_semi_set_err,
-> +    .is_64bit = riscv_semi_is_64bit,
-> +    .sys_exit_is_extended = riscv_semi_sys_exit_is_extended,
-> +    .stack_bottom = riscv_semi_stack_bottom,
-> +    .has_synccache = riscv_semi_has_synccache,
-> +};
+> +=C2=A0=C2=A0=C2=A0 .section .bss
+> +=C2=A0=C2=A0=C2=A0 .balign MAX_PAGE_SIZE
+> +dst_data:
+> +=C2=A0=C2=A0=C2=A0 .space 16
 > +
-> +uint64_t common_semi_arg(CPUState *cs, int argno)
-> +{
-> +    return riscv_semi_arg(cs, argno);
-> +}
+> +=C2=A0=C2=A0=C2=A0 .balign MAX_PAGE_SIZE
+> +=C2=A0=C2=A0=C2=A0 .space (MAX_PAGE_SIZE - 8)
+> +dst_cross_data:
+> +=C2=A0=C2=A0=C2=A0 .space 16
 > +
-> +void common_semi_set_ret(CPUState *cs, uint64_t ret)
-> +{
-> +    riscv_semi_set_ret(cs, ret);
-> +}
+> +.option norelax
+> +.option norvc
 > +
->   void common_semi_set_err(CPUState *cs, int err)
->   {
-> +    riscv_semi_set_err(cs, err);
->   }
->   
->   bool is_64bit_semihosting(CPUArchState *env)
->   {
-> -    return riscv_cpu_mxl(env) != MXL_RV32;
-> +    return riscv_semi_is_64bit(env_cpu(env));
->   }
->   
->   bool common_semi_sys_exit_is_extended(CPUState *cs)
->   {
-> -    return is_64bit_semihosting(cpu_env(cs));
-> +    return riscv_semi_sys_exit_is_extended(cs);
->   }
->   
->   uint64_t common_semi_stack_bottom(CPUState *cs)
->   {
-> -    RISCVCPU *cpu = RISCV_CPU(cs);
-> -    CPURISCVState *env = &cpu->env;
-> -    return env->gpr[xSP];
-> +    return riscv_semi_stack_bottom(cs);
->   }
->   
->   bool common_semi_has_synccache(CPUArchState *env)
->   {
-> -    return true;
-> +    return riscv_semi_has_synccache(env_cpu(env));
->   }
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index da4c1a090b9..63c709ac738 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -3053,6 +3053,10 @@ static void riscv_cpu_common_class_init(ObjectClass *c, const void *data)
->       cc->gdb_arch_name = riscv_gdb_arch_name;
->   #ifdef CONFIG_TCG
->       cc->tcg_ops = &riscv_tcg_ops;
-> +#if !defined(CONFIG_USER_ONLY) || defined(CONFIG_LINUX)
-> +    /* semihosting is not supported for bsd-user */
-> +    cc->semi_ops = &riscv_semihosting_ops;
-> +#endif
->   #endif /* CONFIG_TCG */
->   
->       device_class_set_props(dc, riscv_cpu_properties);
-> diff --git a/target/riscv/internals.h b/target/riscv/internals.h
-> index 5d84e4de960..f17d011d22f 100644
-> --- a/target/riscv/internals.h
-> +++ b/target/riscv/internals.h
-> @@ -206,6 +206,8 @@ static inline target_ulong get_xepc_mask(CPURISCVState *env)
->   bool riscv_cpu_has_work(CPUState *cs);
->   #endif
->   
-> +extern const struct SemihostingCPUOps riscv_semihosting_ops;
+> +=C2=A0=C2=A0=C2=A0 .text
+> +=C2=A0=C2=A0=C2=A0 .globl _start
+> +_start:
+> +=C2=A0=C2=A0=C2=A0 // Case 1: Load/store within a page. t3 is the exit c=
+ode on
+> failure
+> +=C2=A0=C2=A0=C2=A0 li=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 t3, 1
+> +=C2=A0=C2=A0=C2=A0 la=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 a0, src_data
+> +=C2=A0=C2=A0=C2=A0 li=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 a1, NUM_BYTES
 > +
->   /* Zjpm addr masking routine */
->   static inline target_ulong adjust_addr_body(CPURISCVState *env,
->                                               target_ulong addr,
+> +=C2=A0=C2=A0=C2=A0 // SEW=3D8, LMUL=3D1
+> +=C2=A0=C2=A0=C2=A0 vsetvli t0, a1, e8, m1, ta, ma
+> +
+> +=C2=A0=C2=A0=C2=A0 // Check the load will cover 16 bytes
+> +=C2=A0=C2=A0=C2=A0 bne=C2=A0=C2=A0=C2=A0=C2=A0 t0, a1, fail
+> +
+> +=C2=A0=C2=A0=C2=A0 // perform load
+> +=C2=A0=C2=A0=C2=A0 vle8.v=C2=A0 v1, (a0)
+> +
+> +=C2=A0=C2=A0=C2=A0 // Store vector content in memory
+> +=C2=A0=C2=A0=C2=A0 la=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 a2, dst_data
+> +=C2=A0=C2=A0=C2=A0 vse8.v=C2=A0 v1, (a2)
+> +
+> +=C2=A0=C2=A0=C2=A0 // Compare first half
+> +=C2=A0=C2=A0=C2=A0 ld=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 t1, 0(a0)
+> +=C2=A0=C2=A0=C2=A0 ld=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 t2, 0(a2)
+> +=C2=A0=C2=A0=C2=A0 bne=C2=A0=C2=A0=C2=A0=C2=A0 t1, t2, fail
+> +
+> +=C2=A0=C2=A0=C2=A0 // Compare second half
+> +=C2=A0=C2=A0=C2=A0 ld=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 t1, 8(a0)
+> +=C2=A0=C2=A0=C2=A0 ld=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 t2, 8(a2)
+> +=C2=A0=C2=A0=C2=A0 bne=C2=A0=C2=A0=C2=A0=C2=A0 t1, t2, fail
+> +
+> +=C2=A0=C2=A0=C2=A0 // Case 2: Load straddles a page boundary
+> +=C2=A0=C2=A0=C2=A0 li=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 t3, 2
+> +=C2=A0=C2=A0=C2=A0 la=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 a0, src_cross_data
+> +=C2=A0=C2=A0=C2=A0 li=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 a1, NUM_CROSS_BYTES
+> +
+> +=C2=A0=C2=A0=C2=A0 // SEW=3D8, LMUL=3D1
+> +=C2=A0=C2=A0=C2=A0 vsetvli t0, a1, e8, m1, ta, ma
+> +=C2=A0=C2=A0=C2=A0 bne=C2=A0=C2=A0=C2=A0=C2=A0 t0, a1, fail
+> +
+> +=C2=A0=C2=A0=C2=A0 // perform load
+> +=C2=A0=C2=A0=C2=A0 vle8.v=C2=A0 v1, (a0)
+> +
+> +=C2=A0=C2=A0=C2=A0 // Store vector content in memory
+> +=C2=A0=C2=A0=C2=A0 la=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 a2, dst_data
+> +=C2=A0=C2=A0=C2=A0 vse8.v=C2=A0 v1, (a2)
+> +
+> +=C2=A0=C2=A0=C2=A0 // Compare first half
+> +=C2=A0=C2=A0=C2=A0 ld=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 t1, 0(a0)
+> +=C2=A0=C2=A0=C2=A0 ld=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 t2, 0(a2)
+> +=C2=A0=C2=A0=C2=A0 bne=C2=A0=C2=A0=C2=A0=C2=A0 t1, t2, fail
+> +
+> +=C2=A0=C2=A0=C2=A0 // Compare second half
+> +=C2=A0=C2=A0=C2=A0 ld=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 t1, 8(a0)
+> +=C2=A0=C2=A0=C2=A0 ld=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 t2, 8(a2)
+> +=C2=A0=C2=A0=C2=A0 bne=C2=A0=C2=A0=C2=A0=C2=A0 t1, t2, fail
+> +
+> +=C2=A0=C2=A0=C2=A0 // Case 3: Store straddles a page boundary
+> +=C2=A0=C2=A0=C2=A0 li=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 t3, 3
+> +=C2=A0=C2=A0=C2=A0 la=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 a0, src_data
+> +=C2=A0=C2=A0=C2=A0 li=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 a1, NUM_BYTES
+> +
+> +=C2=A0=C2=A0=C2=A0 // SEW=3D8, LMUL=3D1
+> +=C2=A0=C2=A0=C2=A0 vsetvli t0, a1, e8, m1, ta, ma
+> +=C2=A0=C2=A0=C2=A0 bne=C2=A0=C2=A0=C2=A0=C2=A0 t0, a1, fail
+> +
+> +=C2=A0=C2=A0=C2=A0 // perform load
+> +=C2=A0=C2=A0=C2=A0 vle8.v=C2=A0 v1, (a0)
+> +
+> +=C2=A0=C2=A0=C2=A0 // Store vector content in memory
+> +=C2=A0=C2=A0=C2=A0 la=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 a2, dst_cross_data
+> +=C2=A0=C2=A0=C2=A0 vse8.v=C2=A0 v1, (a2)
+> +
+> +=C2=A0=C2=A0=C2=A0 // Compare first half
+> +=C2=A0=C2=A0=C2=A0 ld=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 t1, 0(a0)
+> +=C2=A0=C2=A0=C2=A0 ld=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 t2, 0(a2)
+> +=C2=A0=C2=A0=C2=A0 bne=C2=A0=C2=A0=C2=A0=C2=A0 t1, t2, fail
+> +
+> +=C2=A0=C2=A0=C2=A0 // Compare second half
+> +=C2=A0=C2=A0=C2=A0 ld=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 t1, 8(a0)
+> +=C2=A0=C2=A0=C2=A0 ld=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 t2, 8(a2)
+> +=C2=A0=C2=A0=C2=A0 bne=C2=A0=C2=A0=C2=A0=C2=A0 t1, t2, fail
+> +
+> +pass:
+> +=C2=A0=C2=A0=C2=A0 li=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 a0, 0
+> +=C2=A0=C2=A0=C2=A0 j=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 exit
+> +
+> +fail:
+> +=C2=A0=C2=A0=C2=A0 mv=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 a0, t3
+> +
+> +exit:
+> +=C2=A0=C2=A0=C2=A0 li=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 a7, 93=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 // sys_exit
+> +=C2=A0=C2=A0=C2=A0 ecall
 
