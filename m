@@ -4,63 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24DBACC6B1A
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 04:27:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F52ECC6B20
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 04:28:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGqZf-0000RD-UM; Wed, 14 Oct 2026 00:26:44 -0400
+	id 1xGqb2-0000st-6v; Wed, 14 Oct 2026 00:28:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
- id 1xGqZe-0000Ql-1m
- for qemu-devel@nongnu.org; Wed, 14 Oct 2026 00:26:42 -0400
-Received: from fhigh-a6-smtp.messagingengine.com ([103.168.172.157])
+ id 1xGqaz-0000sN-KZ
+ for qemu-devel@nongnu.org; Wed, 14 Oct 2026 00:28:05 -0400
+Received: from fout-a2-smtp.messagingengine.com ([103.168.172.145])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
- id 1xGqZc-0005tu-2W
- for qemu-devel@nongnu.org; Wed, 14 Oct 2026 00:26:41 -0400
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
- by mailfhigh.phl.internal (Postfix) with ESMTP id 958D214000F1
- for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 00:26:39 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
- by phl-compute-05.internal (MEProxy); Wed, 14 Oct 2026 00:26:39 -0400
+ id 1xGqax-0005ya-GN
+ for qemu-devel@nongnu.org; Wed, 14 Oct 2026 00:28:05 -0400
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+ by mailfout.phl.internal (Postfix) with ESMTP id 0E6DBEC00C1
+ for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 00:28:03 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+ by phl-compute-03.internal (MEProxy); Wed, 14 Oct 2026 00:28:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alistair23.me;
  h=cc:cc:content-transfer-encoding:content-type:content-type
  :date:date:from:from:in-reply-to:in-reply-to:message-id
  :mime-version:references:reply-to:subject:subject:to:to; s=fm2;
- t=1791951999; x=1792038399; bh=o3e54oPmlqlckOlkuFIzaxJOifxNfCGk
- 9Pqdw+4z+/o=; b=tXjykXR+/TCahhTk/gEkO6Cai7Surq6o+SwEEI2mlLmupYyf
- 0FgVuMTKIfOfqzK4i5GWd0Y2txKZrNc7WqFGXxOsSn0hri/uGNH0WWOZMpINda1U
- mUw3PNZPRehSlLp/AB3NVNPHXghCpGiMkKGEjppBTb8j1f+0GIad6zlzDO3aCj2r
- T98ByTYvT6stqynaMIn6R2L6S72AUUrt31xCfYY2CiO96JrfeqPnuz5elSfxcstq
- ORLP9keHv9uY9Q/LOhrdLEwGCrkRVr7ZXvtxSQXz1Qra9kOnwzpJUkGLf89EI+GQ
- f6nqUokuTLhxK2SXWb9WPbf2QL2LeH43h1B0mg==
+ t=1791952083; x=1792038483; bh=nNrFgYs6Tj4vS2Ti17G6dvbR9TxTsUtZ
+ agc3NsPkUI4=; b=hpxJDz12LTADV+UTDbTpXCjF26Mh2m6oqxHi0EnSiKJW+O0d
+ eAAHohd08hYGcVd6nP77hE7fYVAXoTfOLbNYyNDVBnbRT99yVD7gmzz0YpgnEpvD
+ KzxiRk0nV/7lHL6BmFSt6rtXeBREHXG4RFjV+IjVPH2WqPYDVq64K0ro5x2RdZK+
+ 21CHx6Hl/mHRgWXSBuwwujELlXQ0d+XFBLETO9Vh+Qh14tpBf4yaczY2vlWG+hiW
+ Rs+XMVOtEoIhjJPJqMU2MrLhxi/bWNNrq6h06Knfl4EOTv9ZaEHSUWi8wzv8pAGc
+ Ym9cPA9c1peRwxROKHB57EqWVgLIlUdxJF74nw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-transfer-encoding
  :content-type:content-type:date:date:feedback-id:feedback-id
  :from:from:in-reply-to:in-reply-to:message-id:mime-version
  :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1791951999; x=
- 1792038399; bh=o3e54oPmlqlckOlkuFIzaxJOifxNfCGk9Pqdw+4z+/o=; b=j
- m4uWGspXd6pMe2j07tqMDGoheqFRP7BrlRWTYHN4HHGpPG1gjSVMzcHN5/+w7iGR
- cGKhCGD5sTj5lq2cHQBjP/Zex1Xmk572j1tmIkzYoPrWCqNJLwhheFWiNB7G76Fn
- cT2EduXnrDT2Yo6fhg5revM0K61n1+iY3+5eV5RCdLTecqg6yrmh2gkS9RQo/Jpq
- cAPq47G2bLE7GmpFKCJyEOEb9QG35u58PGmYyRQEsAoXROaWjFjo/oc7OIrUmE1R
- cr5iKxaGpzL8exUvGkd5hbi+wtbLfb9NJMpR1o+efux/fPxWsJpMEwFFf0nD8nlU
- 3FkM5FNhb3uT/aPxfabBw==
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1791952083; x=
+ 1792038483; bh=nNrFgYs6Tj4vS2Ti17G6dvbR9TxTsUtZagc3NsPkUI4=; b=Z
+ j3DoEUbX+T8tITu8kyxn1p+aEgJNp16zOU71nTuofimXFso0y0hTW5DQY02AZmxu
+ 3Ph6tohTnR5f0Bot81j5hnyiwx5IMEZc/EOEFnShsB4IX6EWabnEa5o+0WmEXBW0
+ qbq7mY849l9vdrpL+JAo6CuG+SIZjWORqXDVAQldGgBMJ1y0FPa+JlW4s5IYD3AP
+ puo+faVF7L3EtT3Frqyf3IrdQIhaxP73Q3UD6stkZFbkExDVaMl0DjP0N1CXncQ1
+ MjZQRERfMXeHw+GK4pZZVCwgrCioUHCnXTS6kX+Dde5cOrASOY8RKeRItZdnz3XV
+ brVcp7k7RDTJxjeMHrJRQ==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
  repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
  action=sign d=alistair23.me a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1791951999; d=alistair23.me;
+DKIM2-Signature: i=1; m=1; t=1791952083; d=alistair23.me;
  mf=PGFsaXN0YWlyQGFsaXN0YWlyMjMubWU+;
  rt=PHFlbXUtZGV2ZWxAbm9uZ251Lm9yZz4=;
- s=fm2:rsa-sha256:J13h5eivubk9Qt3dpZ0bCvUwmV1+Kgh0eR0mvkXzhjrEKv4
- uuPffub8JFkejucgLuDGZIxLKRprtSyNDqRDiowArj6fdbXlDEJc9fqG1XgAq0Fe
- tS1ESn4B6R0lFbdikCkxjVCY2d+EJWzs2XpRC97n0gn+3j4DSFEAIJfqxJ/kldXV
- 41tNnlN2NWqtC8PP03qg07bVuKoZ1Oy5kxV6Z0fLzsqFDnAhb7tgv4QhP+CWqej0
- HgZpmTYRVXMaa6j9vL5p58fgtEZ81CvLRH1sRiLeFbujz8yh9jo39nbOjk1MJDGz
- LeanMYJykcq+ziFtciKpsQitlNDmIv/j6ZFsCsQ==;
+ s=fm2:rsa-sha256:OaJh2GzFZuQBJuJWk4FWrkFHicjmfOqMpBgOmu9zkvG7f2K
+ 1cSsQT+VlG6Aft1Qs3toz/vuz6PX4ib5Hyy9RdUvifOmR9kDXS6dDvavwbIbfbRw
+ d8LnwMt3qwSz0Ra3c+macIXPNotR/7hbf4AksOcpvr0KSI4DAeb9+wW0EBW2b6Ee
+ J0kQfpjYDpzrEjvVOzaM08NJ2+3WQahbwvk0YAs/eADN5CVU5db30Ak18ugXAw10
+ dhXKBACQYA/ABBJB0jqfvtoEp29mduH2/hXVfGAxdh33ympldoBKFaUBoeP42WCK
+ 0iohLtWA+XJVI5YBKbAQ/ObYjKIUUffuMthk67w==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
  repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
  action=mi-m=1; hc=13;
@@ -68,51 +68,50 @@ X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
  from,in-reply-to,message-id,mime-version,references,subject,to,
  user-agent;
 Message-Instance: m=1;
- h=sha256:rvswAY3G7DUx2+i+f0nn7WfLGS5/u2I3G/ocJzYdrUg=:o3e54oPmlqlckOlkuFIzaxJOifxNfCGk9Pqdw+4z+/o=;
-X-ME-Sender: <xms:fwTPalhnMzCXlmfVFReuhY0ri6_k6o7O6O7Uul1cC3qvV7GUuuF-XA>
- <xme:fwTPauX7c-doHNpoXRAE9tnkwQqPo_9iQ5SJOMG9pgr98VWscRJoDyqzdBMWYQi3a
- CtV-rpbu_ifWqvrnkz0I3JmiOC9dkPu8regn2mdg6WFruWOb1LRRfY>
-X-ME-Received: <xmr:fwTPakOxYml4WwxTJ7oaeOBe6OSt-2aCvc3hybuxGQbYqfCPTofl24Fw1_hXyMi2P7oDrqsOH1lRmqjN654NenULIRQ>
-X-ME-Proxy-Cause: dmFkZTGhw2sssvs+St6vj6vZpUps7X5ID2Ul9q1mE3v3LGH7/+MeJKsdmx5WWbDIidPnVF
- CuccV2//26BkvMcbwJIdXBpMW51PkWzMbsS4GaiQH7AOk2odnUFQdliYa6JCVyHSZyAu79
- kvCBOXxH0lk22BTk/69mnjlNI/ScVtGLdRap3rEV8THJ+fMy/qYvHYQH1kO65X/2KrK9oO
- X+ST7Jh/wHpSpBfX6Mhz7E3edkvdHuss99nba/65xW2hNPlCOOrOWvNGuWS5AuKwWPSJCW
- bwOp7/Ss9dYXNqeneLTT85kTZMDlz/hFOhTEN9V40wCoeAiTy7TT0mf1GHIc8gSq5o1cFn
- daAYiOzI1KkM3X4IlreWT+7VGLBiP9YFt6D4Fi42AdgmSsHG9356SIfkWk2HUCJAkGr/mk
- Fqixuhll3JlFr2P0npAJXyaxOyAID454CXkY1IG1nguLSBqTtg6BeJ8yD7wWu3ybwksGdM
- CEv0WHfdTJOPLdBJ9dWD15anmveRkEptNzYQw+bjXQ43bYS4XeW7KAWxAFAq9Pyyoix9+R
- 3xts/VE6G1rhjmcOlMaW/y9bN1Uz85FFPh+CXJGJtifHm27PhtBS6Dr93gn4DnIbT1weLE
- iGm9tuNtPD/X8C3rrPPVzrp1RgDI6+mpxdMno3Lp5fTMn/RT1yk4NIgROTNw
-X-ME-Proxy: <xmx:fwTPaiaj3b9wLiXog6wtbVr8hHAlt28D0e4HcGN0s2Mm3SyD8u1nBg>
- <xmx:fwTPaoqjeGHQPhJWlF5nGqq9AGPTvue4AWxqZyg9KR5qa60YfUd0dA>
- <xmx:fwTPamYhTjvcQOQRf06k5lnY-n3T8uQpWrd1a-b3dQra-e_xJ1Hitw>
- <xmx:fwTPagRYrxrxsjEAToXA4deeB9oyJzTtLfLXWtLNp_cKVjxPfFsffA>
- <xmx:fwTPas29DIGQDfvEE5yWMnjU5O38FX2CL_7Ak-xGoNTj_ka8ykRcw3HC>
+ h=sha256:miF3MDnCvBoZGiHN1bNTs/vjVHehRcB9t3kpgrW0rrE=:nNrFgYs6Tj4vS2Ti17G6dvbR9TxTsUtZagc3NsPkUI4=;
+X-ME-Sender: <xms:0wTPanKDuoJ3Z74M_7ZkOqiyhcjsvYy-eo8KZwCvuJV9MIDibRnBVg>
+ <xme:0wTPavdOMuL8gCggrqIT6LMzwHuzmySGvDPO2quEBRoqF4EgkYvPRJiiy2oIFrGxp
+ nk2V0DINcdYiE7iNsFLpvKVxUBulXGzfm6b2ueNmakqHF3Xc4TAAV-2>
+X-ME-Received: <xmr:0wTPau07plvHus026ejUcRjN6uuH3nDFmH_CH5vS4w2qWBGGaejFxWiAvtFwGw8G7nKXsltmpRUVFxjjhOho8lzYr64>
+X-ME-Proxy-Cause: dmFkZTGXwy3PD/pSXw5muzO+5ZK3ax58O9IODEptBYhSjJ9BrilKcbkSWOqcErsMvZSexc
+ T3U7Hp4U16rQ8sPGovtOmlnwsEuQxII9KuhlFNNmG8XlmKgewnBqsO9yx/WOCwhCdG8Al8
+ DmMpBoeQDFch3COh3cjoqEbr9x+4Y1pu8zMn4DB1MSrNNhPZsYUIB6+ogmD+0MqHRylkVn
+ iYa6PEonN+rE1+dKwR/MaRE5HMztBVs+1uUju6d8h81Ur8sYNwpVVqlyKJmHomi2EcuJJg
+ sL2t9+oMu3t+dr5uesLFU/KzpDi5CEL8VLJunoORLyzRezzhjhxSGaXFH2FRjx1hLlX+GE
+ PAb9jJqvGhYBBzUzD/R/w3z/ffI9eFF8tcYWAJXkXCBLx6aH3waOSajMoEhS13m8vfkY8E
+ Ewy4X76lhcR0GpILAQsAfG1dnuLH3FXY3uu3rsp5K8nOrY7NZ5l+GOr7ABVGcr9kmsLnzW
+ qALjLBtbClZI+Y7sFkCSTwDkscRfgK8LOD6/Po8F3AC2GDwSmyalkjVBDXB2LdYrina1l7
+ qGTgKx/c/PulqzQcchXnHmx59XVWFkUakp35Vb6Jp6qp7HDqFdXY4mOs/fJzW2lokSs21z
+ sDjp1EWlZFuZtQPWMXLDZtMc9JqXQej1uhAFopcEhEg9B5NyYKC+88f9KOOg
+X-ME-Proxy: <xmx:0wTPaohp7NXt1whe2QdejFW0DGhrVW210Uc7zuCgHffSXFIbx_h_IQ>
+ <xmx:0wTPakQnV-r_j5KiQeJMehs2za1stP9VuJ1x6WeaOkEiF0QOncW6bw>
+ <xmx:0wTPaphT3SckpnG1IXG3KH64U4gZ8OrPOh8NgGH3HXFiM5fRi9ViRw>
+ <xmx:0wTPak6j2BzA5bTAZgWCEwlYmr0_XiuEjluScOYDBd0SOYfStlJNOQ>
+ <xmx:0wTPak-aSfDtQLjvqZyUCSKtpKqDR4ZB3thJyZ6nrlvWn9ikmreO5FjM>
 Feedback-ID: ifd214418:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 14 Oct 2026 00:26:37 -0400 (EDT)
-Message-ID: <f32f253348af1b4800d748c44bcaa37b94871783.camel@alistair23.me>
-Subject: Re: [PATCH v2 20/23] target/riscv: Drop v0 argument from
- gen_helper_ldst_stride
+ 14 Oct 2026 00:28:01 -0400 (EDT)
+Message-ID: <5966e420c23219afc5a3177168f22b186dd50feb.camel@alistair23.me>
+Subject: Re: [PATCH v2 21/23] target/riscv: Drop v0 argument from
+ gen_helper_ldst_index
 From: Alistair <alistair@alistair23.me>
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org
-Date: Wed, 14 Oct 2026 14:26:36 +1000
-In-Reply-To: <20260821040404.268123-21-richard.henderson@linaro.org>
+Date: Wed, 14 Oct 2026 14:27:59 +1000
+In-Reply-To: <20260821040404.268123-22-richard.henderson@linaro.org>
 References: <20260821040404.268123-1-richard.henderson@linaro.org>
- <20260821040404.268123-21-richard.henderson@linaro.org>
+ <20260821040404.268123-22-richard.henderson@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: base64
+Content-Transfer-Encoding: quoted-printable
 User-Agent: Evolution 3.62.0 (by Flathub.org) 
 MIME-Version: 1.0
-Received-SPF: pass client-ip=103.168.172.157;
- envelope-from=alistair@alistair23.me; helo=fhigh-a6-smtp.messagingengine.com
+Received-SPF: pass client-ip=103.168.172.145;
+ envelope-from=alistair@alistair23.me; helo=fout-a2-smtp.messagingengine.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -129,105 +128,266 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gVGh1LCAyMDI2LTA4LTIwIGF0IDIxOjA0IC0wNzAwLCBSaWNoYXJkIEhlbmRlcnNvbiB3cm90
-ZToKPiBTaW5jZSB3ZSdyZSBhbHNvIHBhc3NpbmcgZW52LCB2MCBpcyBhbHdheXMgZW52LT52cmVn
-Lgo+IAo+IFNpZ25lZC1vZmYtYnk6IFJpY2hhcmQgSGVuZGVyc29uIDxyaWNoYXJkLmhlbmRlcnNv
-bkBsaW5hcm8ub3JnPgoKUmV2aWV3ZWQtYnk6IEFsaXN0YWlyIEZyYW5jaXMgPGFsaXN0YWlyLmZy
-YW5jaXNAd2RjLmNvbT4KCkFsaXN0YWlyCgo+IC0tLQo+IMKgdGFyZ2V0L3Jpc2N2L2hlbHBlci5o
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgfCAxNiArKysrKysr
-Ky0tLS0tLS0tCj4gwqB0YXJnZXQvcmlzY3YvdGNnL3ZlY3Rvcl9oZWxwZXIuY8KgwqDCoMKgwqDC
-oMKgwqDCoMKgwqAgfMKgIDQgKystLQo+IMKgdGFyZ2V0L3Jpc2N2L3RjZy9pbnNuX3RyYW5zL3Ry
-YW5zX3J2di5jLmluYyB8IDE2ICsrKysrLS0tLS0tLS0tLS0KPiDCoDMgZmlsZXMgY2hhbmdlZCwg
-MTUgaW5zZXJ0aW9ucygrKSwgMjEgZGVsZXRpb25zKC0pCj4gCj4gZGlmZiAtLWdpdCBhL3Rhcmdl
-dC9yaXNjdi9oZWxwZXIuaCBiL3RhcmdldC9yaXNjdi9oZWxwZXIuaAo+IGluZGV4IDhhNDJhNmNl
-MDMuLjNlZjM1Mjg5OGIgMTAwNjQ0Cj4gLS0tIGEvdGFyZ2V0L3Jpc2N2L2hlbHBlci5oCj4gKysr
-IGIvdGFyZ2V0L3Jpc2N2L2hlbHBlci5oCj4gQEAgLTE3OSwxNCArMTc5LDE0IEBAIERFRl9IRUxQ
-RVJfNCh2c2UzMl92X21hc2ssIHZvaWQsIHB0ciwgdGwsIGVudiwKPiBpMzIpCj4gwqBERUZfSEVM
-UEVSXzQodnNlNjRfdl9tYXNrLCB2b2lkLCBwdHIsIHRsLCBlbnYsIGkzMikKPiDCoERFRl9IRUxQ
-RVJfNCh2bG1fdiwgdm9pZCwgcHRyLCB0bCwgZW52LCBpMzIpCj4gwqBERUZfSEVMUEVSXzQodnNt
-X3YsIHZvaWQsIHB0ciwgdGwsIGVudiwgaTMyKQo+IC1ERUZfSEVMUEVSXzYodmxzZThfdiwgdm9p
-ZCwgcHRyLCBwdHIsIHRsLCB0bCwgZW52LCBpMzIpCj4gLURFRl9IRUxQRVJfNih2bHNlMTZfdiwg
-dm9pZCwgcHRyLCBwdHIsIHRsLCB0bCwgZW52LCBpMzIpCj4gLURFRl9IRUxQRVJfNih2bHNlMzJf
-diwgdm9pZCwgcHRyLCBwdHIsIHRsLCB0bCwgZW52LCBpMzIpCj4gLURFRl9IRUxQRVJfNih2bHNl
-NjRfdiwgdm9pZCwgcHRyLCBwdHIsIHRsLCB0bCwgZW52LCBpMzIpCj4gLURFRl9IRUxQRVJfNih2
-c3NlOF92LCB2b2lkLCBwdHIsIHB0ciwgdGwsIHRsLCBlbnYsIGkzMikKPiAtREVGX0hFTFBFUl82
-KHZzc2UxNl92LCB2b2lkLCBwdHIsIHB0ciwgdGwsIHRsLCBlbnYsIGkzMikKPiAtREVGX0hFTFBF
-Ul82KHZzc2UzMl92LCB2b2lkLCBwdHIsIHB0ciwgdGwsIHRsLCBlbnYsIGkzMikKPiAtREVGX0hF
-TFBFUl82KHZzc2U2NF92LCB2b2lkLCBwdHIsIHB0ciwgdGwsIHRsLCBlbnYsIGkzMikKPiArREVG
-X0hFTFBFUl81KHZsc2U4X3YsIHZvaWQsIHB0ciwgdGwsIHRsLCBlbnYsIGkzMikKPiArREVGX0hF
-TFBFUl81KHZsc2UxNl92LCB2b2lkLCBwdHIsIHRsLCB0bCwgZW52LCBpMzIpCj4gK0RFRl9IRUxQ
-RVJfNSh2bHNlMzJfdiwgdm9pZCwgcHRyLCB0bCwgdGwsIGVudiwgaTMyKQo+ICtERUZfSEVMUEVS
-XzUodmxzZTY0X3YsIHZvaWQsIHB0ciwgdGwsIHRsLCBlbnYsIGkzMikKPiArREVGX0hFTFBFUl81
-KHZzc2U4X3YsIHZvaWQsIHB0ciwgdGwsIHRsLCBlbnYsIGkzMikKPiArREVGX0hFTFBFUl81KHZz
-c2UxNl92LCB2b2lkLCBwdHIsIHRsLCB0bCwgZW52LCBpMzIpCj4gK0RFRl9IRUxQRVJfNSh2c3Nl
-MzJfdiwgdm9pZCwgcHRyLCB0bCwgdGwsIGVudiwgaTMyKQo+ICtERUZfSEVMUEVSXzUodnNzZTY0
-X3YsIHZvaWQsIHB0ciwgdGwsIHRsLCBlbnYsIGkzMikKPiDCoERFRl9IRUxQRVJfNih2bHhlaThf
-OF92LCB2b2lkLCBwdHIsIHB0ciwgdGwsIHB0ciwgZW52LCBpMzIpCj4gwqBERUZfSEVMUEVSXzYo
-dmx4ZWk4XzE2X3YsIHZvaWQsIHB0ciwgcHRyLCB0bCwgcHRyLCBlbnYsIGkzMikKPiDCoERFRl9I
-RUxQRVJfNih2bHhlaThfMzJfdiwgdm9pZCwgcHRyLCBwdHIsIHRsLCBwdHIsIGVudiwgaTMyKQo+
-IGRpZmYgLS1naXQgYS90YXJnZXQvcmlzY3YvdGNnL3ZlY3Rvcl9oZWxwZXIuYwo+IGIvdGFyZ2V0
-L3Jpc2N2L3RjZy92ZWN0b3JfaGVscGVyLmMKPiBpbmRleCA2NmE1ZjY4ZGU4Li4xNWMxMjgxNTM4
-IDEwMDY0NAo+IC0tLSBhL3RhcmdldC9yaXNjdi90Y2cvdmVjdG9yX2hlbHBlci5jCj4gKysrIGIv
-dGFyZ2V0L3Jpc2N2L3RjZy92ZWN0b3JfaGVscGVyLmMKPiBAQCAtMzA1LDcgKzMwNSw3IEBAIHZl
-eHRfbGRzdF9zdHJpZGUodm9pZCAqdmQsIHRhcmdldF91bG9uZyBiYXNlLAo+IHRhcmdldF91bG9u
-ZyBzdHJpZGUsCj4gwqB9Cj4gwqAKPiDCoCNkZWZpbmUgR0VOX1ZFWFRfTERfU1RSSURFKE5BTUUs
-IEVUWVBFLAo+IExPQURfRk4pwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoCBcCj4gLVFFTVVfRkxBVFRFTiB2b2lkIEhFTFBFUihOQU1FKSh2b2lkICp2ZCwgdm9p
-ZCAqIHYwLCB0YXJnZXRfdWxvbmcKPiBiYXNlLMKgIFwKPiArUUVNVV9GTEFUVEVOIHZvaWQgSEVM
-UEVSKE5BTUUpKHZvaWQgKnZkLCB0YXJnZXRfdWxvbmcKPiBiYXNlLMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoCBcCj4gwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqAgdGFyZ2V0X3Vsb25nIHN0cmlkZSwgQ1BVUklTQ1ZTdGF0ZQo+ICpl
-bnYsIFwKPiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoCB1aW50MzJfdAo+IGRlc2MpwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBcCj4gwqB7wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAKPiDC
-oMKgwqAgXAo+IEBAIC0zMjAsNyArMzIwLDcgQEAgR0VOX1ZFWFRfTERfU1RSSURFKHZsc2UzMl92
-LCBpbnQzMl90LCBsZGVfd190bGIpCj4gwqBHRU5fVkVYVF9MRF9TVFJJREUodmxzZTY0X3YsIGlu
-dDY0X3QsIGxkZV9kX3RsYikKPiDCoAo+IMKgI2RlZmluZSBHRU5fVkVYVF9TVF9TVFJJREUoTkFN
-RSwgRVRZUEUsCj4gU1RPUkVfRk4pwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqAgXAo+IC1RRU1VX0ZMQVRURU4gdm9pZCBIRUxQRVIoTkFNRSkodm9pZCAqdmQsIHZv
-aWQgKnYwLCB0YXJnZXRfdWxvbmcKPiBiYXNlLMKgwqAgXAo+ICtRRU1VX0ZMQVRURU4gdm9pZCBI
-RUxQRVIoTkFNRSkodm9pZCAqdmQsIHRhcmdldF91bG9uZwo+IGJhc2UswqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgIFwKPiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoCB0YXJnZXRfdWxvbmcgc3RyaWRlLCBDUFVSSVNDVlN0YXRlCj4g
-KmVudiwgXAo+IMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgIHVpbnQzMl90Cj4gZGVzYynCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIFwKPiDCoHvCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoAo+
-IMKgwqDCoCBcCj4gZGlmZiAtLWdpdCBhL3RhcmdldC9yaXNjdi90Y2cvaW5zbl90cmFucy90cmFu
-c19ydnYuYy5pbmMKPiBiL3RhcmdldC9yaXNjdi90Y2cvaW5zbl90cmFucy90cmFuc19ydnYuYy5p
-bmMKPiBpbmRleCAzZDMyNTY0NjYwLi41ZTM1MmRiZjQxIDEwMDY0NAo+IC0tLSBhL3RhcmdldC9y
-aXNjdi90Y2cvaW5zbl90cmFucy90cmFuc19ydnYuYy5pbmMKPiArKysgYi90YXJnZXQvcmlzY3Yv
-dGNnL2luc25fdHJhbnMvdHJhbnNfcnZ2LmMuaW5jCj4gQEAgLTg3OCwzMiArODc4LDI2IEBAIEdF
-Tl9WRVhUX1RSQU5TKHZzbV92LCBNT184LCB2c21fdiwKPiBzdF91c19tYXNrX29wLCBzdF91c19t
-YXNrX2NoZWNrKQo+IMKgLyoKPiDCoCAqKiogc3RyaWRlIGxvYWQgYW5kIHN0b3JlCj4gwqAgKi8K
-PiAtdHlwZWRlZiB2b2lkIGdlbl9oZWxwZXJfbGRzdF9zdHJpZGUoVENHdl9wdHIsIFRDR3ZfcHRy
-LCBUQ0d2LAo+IC3CoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIFRDR3YsIFRDR3ZfZW52LCBUQ0d2X2kzMik7Cj4gK3R5
-cGVkZWYgdm9pZCBnZW5faGVscGVyX2xkc3Rfc3RyaWRlKFRDR3ZfcHRyLCBUQ0d2LCBUQ0d2LCBU
-Q0d2X2VudiwKPiBUQ0d2X2kzMik7Cj4gwqAKPiDCoHN0YXRpYyBib29sIGxkc3Rfc3RyaWRlX3Ry
-YW5zKHVpbnQzMl90IHZkLCB1aW50MzJfdCByczEsIHVpbnQzMl90Cj4gcnMyLAo+IMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB1aW50
-MzJfdCBkYXRhLCBnZW5faGVscGVyX2xkc3Rfc3RyaWRlCj4gKmZuLAo+IMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBEaXNhc0NvbnRl
-eHQgKnMpCj4gwqB7Cj4gLcKgwqDCoCBUQ0d2X3B0ciBkZXN0LCBtYXNrOwo+IC3CoMKgwqAgVENH
-diBiYXNlLCBzdHJpZGU7Cj4gK8KgwqDCoCBUQ0d2X3B0ciBkZXN0ID0gdGNnX3RlbXBfbmV3X3B0
-cigpOwo+ICvCoMKgwqAgVENHdiBiYXNlID0gZ2V0X2dwcihzLCByczEsIEVYVF9OT05FKTsKPiAr
-wqDCoMKgIFRDR3Ygc3RyaWRlID0gZ2V0X2dwcihzLCByczIsIEVYVF9OT05FKTsKPiDCoMKgwqDC
-oCBUQ0d2X2kzMiBkZXNjOwo+IMKgCj4gLcKgwqDCoCBkZXN0ID0gdGNnX3RlbXBfbmV3X3B0cigp
-Owo+IC3CoMKgwqAgbWFzayA9IHRjZ190ZW1wX25ld19wdHIoKTsKPiAtwqDCoMKgIGJhc2UgPSBn
-ZXRfZ3ByKHMsIHJzMSwgRVhUX05PTkUpOwo+IC3CoMKgwqAgc3RyaWRlID0gZ2V0X2dwcihzLCBy
-czIsIEVYVF9OT05FKTsKPiAtCj4gwqDCoMKgwqAgZGF0YSA9IHZkYXRhX2FkZF9tZW1vcGlkeChz
-LCBkYXRhKTsKPiDCoMKgwqDCoCBkZXNjID0gdGNnX2NvbnN0YW50X2kzMihzaW1kX2Rlc2Mocy0+
-Y2ZnX3B0ci0+dmxlbmIsCj4gwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBzLT5jZmdfcHRyLT52bGVuYiwg
-ZGF0YSkpOwo+IMKgCj4gwqDCoMKgwqAgdGNnX2dlbl9hZGRpX3B0cihkZXN0LCB0Y2dfZW52LCB2
-cmVnX29mcyhzLCB2ZCkpOwo+IC3CoMKgwqAgdGNnX2dlbl9hZGRpX3B0cihtYXNrLCB0Y2dfZW52
-LCB2cmVnX29mcyhzLCAwKSk7Cj4gwqAKPiDCoMKgwqDCoCBtYXJrX3ZzX2RpcnR5KHMpOwo+IMKg
-Cj4gLcKgwqDCoCBmbihkZXN0LCBtYXNrLCBiYXNlLCBzdHJpZGUsIHRjZ19lbnYsIGRlc2MpOwo+
-ICvCoMKgwqAgZm4oZGVzdCwgYmFzZSwgc3RyaWRlLCB0Y2dfZW52LCBkZXNjKTsKPiDCoAo+IMKg
-wqDCoMKgIGZpbmFsaXplX3J2dl9pbnN0KHMpOwo+IMKgwqDCoMKgIHJldHVybiB0cnVlOwo=
+On Thu, 2026-08-20 at 21:04 -0700, Richard Henderson wrote:
+> Since we're also passing env, v0 is always env->vreg.
+>=20
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+
+Alistair
+
+> ---
+> =C2=A0target/riscv/helper.h=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0 | 64 ++++++++++---------
+> --
+> =C2=A0target/riscv/tcg/vector_helper.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 15 ++---
+> =C2=A0target/riscv/tcg/insn_trans/trans_rvv.c.inc | 17 ++----
+> =C2=A03 files changed, 46 insertions(+), 50 deletions(-)
+>=20
+> diff --git a/target/riscv/helper.h b/target/riscv/helper.h
+> index 3ef352898b..bf49a793d5 100644
+> --- a/target/riscv/helper.h
+> +++ b/target/riscv/helper.h
+> @@ -187,38 +187,38 @@ DEF_HELPER_5(vsse8_v, void, ptr, tl, tl, env,
+> i32)
+> =C2=A0DEF_HELPER_5(vsse16_v, void, ptr, tl, tl, env, i32)
+> =C2=A0DEF_HELPER_5(vsse32_v, void, ptr, tl, tl, env, i32)
+> =C2=A0DEF_HELPER_5(vsse64_v, void, ptr, tl, tl, env, i32)
+> -DEF_HELPER_6(vlxei8_8_v, void, ptr, ptr, tl, ptr, env, i32)
+> -DEF_HELPER_6(vlxei8_16_v, void, ptr, ptr, tl, ptr, env, i32)
+> -DEF_HELPER_6(vlxei8_32_v, void, ptr, ptr, tl, ptr, env, i32)
+> -DEF_HELPER_6(vlxei8_64_v, void, ptr, ptr, tl, ptr, env, i32)
+> -DEF_HELPER_6(vlxei16_8_v, void, ptr, ptr, tl, ptr, env, i32)
+> -DEF_HELPER_6(vlxei16_16_v, void, ptr, ptr, tl, ptr, env, i32)
+> -DEF_HELPER_6(vlxei16_32_v, void, ptr, ptr, tl, ptr, env, i32)
+> -DEF_HELPER_6(vlxei16_64_v, void, ptr, ptr, tl, ptr, env, i32)
+> -DEF_HELPER_6(vlxei32_8_v, void, ptr, ptr, tl, ptr, env, i32)
+> -DEF_HELPER_6(vlxei32_16_v, void, ptr, ptr, tl, ptr, env, i32)
+> -DEF_HELPER_6(vlxei32_32_v, void, ptr, ptr, tl, ptr, env, i32)
+> -DEF_HELPER_6(vlxei32_64_v, void, ptr, ptr, tl, ptr, env, i32)
+> -DEF_HELPER_6(vlxei64_8_v, void, ptr, ptr, tl, ptr, env, i32)
+> -DEF_HELPER_6(vlxei64_16_v, void, ptr, ptr, tl, ptr, env, i32)
+> -DEF_HELPER_6(vlxei64_32_v, void, ptr, ptr, tl, ptr, env, i32)
+> -DEF_HELPER_6(vlxei64_64_v, void, ptr, ptr, tl, ptr, env, i32)
+> -DEF_HELPER_6(vsxei8_8_v, void, ptr, ptr, tl, ptr, env, i32)
+> -DEF_HELPER_6(vsxei8_16_v, void, ptr, ptr, tl, ptr, env, i32)
+> -DEF_HELPER_6(vsxei8_32_v, void, ptr, ptr, tl, ptr, env, i32)
+> -DEF_HELPER_6(vsxei8_64_v, void, ptr, ptr, tl, ptr, env, i32)
+> -DEF_HELPER_6(vsxei16_8_v, void, ptr, ptr, tl, ptr, env, i32)
+> -DEF_HELPER_6(vsxei16_16_v, void, ptr, ptr, tl, ptr, env, i32)
+> -DEF_HELPER_6(vsxei16_32_v, void, ptr, ptr, tl, ptr, env, i32)
+> -DEF_HELPER_6(vsxei16_64_v, void, ptr, ptr, tl, ptr, env, i32)
+> -DEF_HELPER_6(vsxei32_8_v, void, ptr, ptr, tl, ptr, env, i32)
+> -DEF_HELPER_6(vsxei32_16_v, void, ptr, ptr, tl, ptr, env, i32)
+> -DEF_HELPER_6(vsxei32_32_v, void, ptr, ptr, tl, ptr, env, i32)
+> -DEF_HELPER_6(vsxei32_64_v, void, ptr, ptr, tl, ptr, env, i32)
+> -DEF_HELPER_6(vsxei64_8_v, void, ptr, ptr, tl, ptr, env, i32)
+> -DEF_HELPER_6(vsxei64_16_v, void, ptr, ptr, tl, ptr, env, i32)
+> -DEF_HELPER_6(vsxei64_32_v, void, ptr, ptr, tl, ptr, env, i32)
+> -DEF_HELPER_6(vsxei64_64_v, void, ptr, ptr, tl, ptr, env, i32)
+> +DEF_HELPER_5(vlxei8_8_v, void, ptr, tl, ptr, env, i32)
+> +DEF_HELPER_5(vlxei8_16_v, void, ptr, tl, ptr, env, i32)
+> +DEF_HELPER_5(vlxei8_32_v, void, ptr, tl, ptr, env, i32)
+> +DEF_HELPER_5(vlxei8_64_v, void, ptr, tl, ptr, env, i32)
+> +DEF_HELPER_5(vlxei16_8_v, void, ptr, tl, ptr, env, i32)
+> +DEF_HELPER_5(vlxei16_16_v, void, ptr, tl, ptr, env, i32)
+> +DEF_HELPER_5(vlxei16_32_v, void, ptr, tl, ptr, env, i32)
+> +DEF_HELPER_5(vlxei16_64_v, void, ptr, tl, ptr, env, i32)
+> +DEF_HELPER_5(vlxei32_8_v, void, ptr, tl, ptr, env, i32)
+> +DEF_HELPER_5(vlxei32_16_v, void, ptr, tl, ptr, env, i32)
+> +DEF_HELPER_5(vlxei32_32_v, void, ptr, tl, ptr, env, i32)
+> +DEF_HELPER_5(vlxei32_64_v, void, ptr, tl, ptr, env, i32)
+> +DEF_HELPER_5(vlxei64_8_v, void, ptr, tl, ptr, env, i32)
+> +DEF_HELPER_5(vlxei64_16_v, void, ptr, tl, ptr, env, i32)
+> +DEF_HELPER_5(vlxei64_32_v, void, ptr, tl, ptr, env, i32)
+> +DEF_HELPER_5(vlxei64_64_v, void, ptr, tl, ptr, env, i32)
+> +DEF_HELPER_5(vsxei8_8_v, void, ptr, tl, ptr, env, i32)
+> +DEF_HELPER_5(vsxei8_16_v, void, ptr, tl, ptr, env, i32)
+> +DEF_HELPER_5(vsxei8_32_v, void, ptr, tl, ptr, env, i32)
+> +DEF_HELPER_5(vsxei8_64_v, void, ptr, tl, ptr, env, i32)
+> +DEF_HELPER_5(vsxei16_8_v, void, ptr, tl, ptr, env, i32)
+> +DEF_HELPER_5(vsxei16_16_v, void, ptr, tl, ptr, env, i32)
+> +DEF_HELPER_5(vsxei16_32_v, void, ptr, tl, ptr, env, i32)
+> +DEF_HELPER_5(vsxei16_64_v, void, ptr, tl, ptr, env, i32)
+> +DEF_HELPER_5(vsxei32_8_v, void, ptr, tl, ptr, env, i32)
+> +DEF_HELPER_5(vsxei32_16_v, void, ptr, tl, ptr, env, i32)
+> +DEF_HELPER_5(vsxei32_32_v, void, ptr, tl, ptr, env, i32)
+> +DEF_HELPER_5(vsxei32_64_v, void, ptr, tl, ptr, env, i32)
+> +DEF_HELPER_5(vsxei64_8_v, void, ptr, tl, ptr, env, i32)
+> +DEF_HELPER_5(vsxei64_16_v, void, ptr, tl, ptr, env, i32)
+> +DEF_HELPER_5(vsxei64_32_v, void, ptr, tl, ptr, env, i32)
+> +DEF_HELPER_5(vsxei64_64_v, void, ptr, tl, ptr, env, i32)
+> =C2=A0DEF_HELPER_4(vle8ff_v, void, ptr, tl, env, i32)
+> =C2=A0DEF_HELPER_4(vle16ff_v, void, ptr, tl, env, i32)
+> =C2=A0DEF_HELPER_4(vle32ff_v, void, ptr, tl, env, i32)
+> diff --git a/target/riscv/tcg/vector_helper.c
+> b/target/riscv/tcg/vector_helper.c
+> index 15c1281538..d46fd5c9c4 100644
+> --- a/target/riscv/tcg/vector_helper.c
+> +++ b/target/riscv/tcg/vector_helper.c
+> @@ -598,12 +598,13 @@ GEN_VEXT_GET_INDEX_ADDR(idx_w, uint32_t, H4)
+> =C2=A0GEN_VEXT_GET_INDEX_ADDR(idx_d, uint64_t, H8)
+> =C2=A0
+> =C2=A0static void
+> -vext_ldst_index(void *vd, void *v0, target_ulong base,
+> +vext_ldst_index(void *vd, target_ulong base,
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0 void *vs2, CPURISCVState *env, uint32_t desc,
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0 vext_get_index_addr get_index_addr,
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0 vext_ldst_elem_fn_tlb *ldst_elem,
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0 uint32_t log2_esz, uintptr_t ra)
+> =C2=A0{
+> +=C2=A0=C2=A0=C2=A0 void *v0 =3D env->vreg;
+> =C2=A0=C2=A0=C2=A0=C2=A0 uint32_t nf =3D vext_nf(desc);
+> =C2=A0=C2=A0=C2=A0=C2=A0 uint32_t vm =3D vext_vm(desc);
+> =C2=A0=C2=A0=C2=A0=C2=A0 uint32_t max_elems =3D vext_max_elems(desc, log2=
+_esz);
+> @@ -633,10 +634,10 @@ vext_ldst_index(void *vd, void *v0,
+> target_ulong base,
+> =C2=A0}
+> =C2=A0
+> =C2=A0#define GEN_VEXT_LD_INDEX(NAME, ETYPE, INDEX_FN,
+> LOAD_FN)=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0 \
+> -QEMU_FLATTEN void HELPER(NAME)(void *vd, void *v0, target_ulong
+> base,=C2=A0=C2=A0 \
+> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 void *vs2, CPURISCVState *env,
+> uint32_t desc) \
+> +QEMU_FLATTEN void HELPER(NAME)(void *vd, target_ulong base, void
+> *vs2,=C2=A0 \
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 CPURISCVState *env, uint32_t
+> desc)=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 \
+> =C2=A0{=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0
+> =C2=A0=C2=A0=C2=A0 \
+> -=C2=A0=C2=A0=C2=A0 vext_ldst_index(vd, v0, base, vs2, env, desc,
+> INDEX_FN,=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0 \
+> +=C2=A0=C2=A0=C2=A0 vext_ldst_index(vd, base, vs2, env, desc,
+> INDEX_FN,=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 \
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 LOAD_FN, ctzl(sizeof(ETYPE=
+)),
+> GETPC());=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0 \
+> =C2=A0}
+> =C2=A0
+> @@ -658,10 +659,10 @@ GEN_VEXT_LD_INDEX(vlxei64_32_v, int32_t, idx_d,
+> lde_w_tlb)
+> =C2=A0GEN_VEXT_LD_INDEX(vlxei64_64_v, int64_t, idx_d, lde_d_tlb)
+> =C2=A0
+> =C2=A0#define GEN_VEXT_ST_INDEX(NAME, ETYPE, INDEX_FN,
+> STORE_FN)=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0 \
+> -QEMU_FLATTEN void HELPER(NAME)(void *vd, void *v0, target_ulong
+> base,=C2=A0=C2=A0 \
+> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 void *vs2, CPURISCVState *env,
+> uint32_t desc) \
+> +QEMU_FLATTEN void HELPER(NAME)(void *vd, target_ulong base, void
+> *vs2,=C2=A0 \
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 CPURISCVState *env, uint32_t
+> desc)=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 \
+> =C2=A0{=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0
+> =C2=A0=C2=A0=C2=A0 \
+> -=C2=A0=C2=A0=C2=A0 vext_ldst_index(vd, v0, base, vs2, env, desc,
+> INDEX_FN,=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0 \
+> +=C2=A0=C2=A0=C2=A0 vext_ldst_index(vd, base, vs2, env, desc,
+> INDEX_FN,=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 \
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 STORE_FN, ctzl(sizeof(ETYP=
+E)),
+> GETPC());=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0 \
+> =C2=A0}
+> =C2=A0
+> diff --git a/target/riscv/tcg/insn_trans/trans_rvv.c.inc
+> b/target/riscv/tcg/insn_trans/trans_rvv.c.inc
+> index 5e352dbf41..4556c644cc 100644
+> --- a/target/riscv/tcg/insn_trans/trans_rvv.c.inc
+> +++ b/target/riscv/tcg/insn_trans/trans_rvv.c.inc
+> @@ -975,33 +975,28 @@ GEN_VEXT_TRANS(vsse64_v, MO_64, rnfvm,
+> st_stride_op, st_stride_check)
+> =C2=A0/*
+> =C2=A0 *** index load and store
+> =C2=A0 */
+> -typedef void gen_helper_ldst_index(TCGv_ptr, TCGv_ptr, TCGv,
+> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 TCGv_ptr, TCGv_en=
+v, TCGv_i32);
+> +typedef void gen_helper_ldst_index(TCGv_ptr, TCGv, TCGv_ptr,
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 TCGv_env, TCGv_i3=
+2);
+> =C2=A0
+> =C2=A0static bool ldst_index_trans(uint32_t vd, uint32_t rs1, uint32_t
+> vs2,
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0 uint32_t data, gen_helper_ldst_index
+> *fn,
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0 DisasContext *s)
+> =C2=A0{
+> -=C2=A0=C2=A0=C2=A0 TCGv_ptr dest, mask, index;
+> -=C2=A0=C2=A0=C2=A0 TCGv base;
+> +=C2=A0=C2=A0=C2=A0 TCGv_ptr dest =3D tcg_temp_new_ptr();
+> +=C2=A0=C2=A0=C2=A0 TCGv_ptr index =3D tcg_temp_new_ptr();
+> +=C2=A0=C2=A0=C2=A0 TCGv base =3D get_gpr(s, rs1, EXT_NONE);
+> =C2=A0=C2=A0=C2=A0=C2=A0 TCGv_i32 desc;
+> =C2=A0
+> -=C2=A0=C2=A0=C2=A0 dest =3D tcg_temp_new_ptr();
+> -=C2=A0=C2=A0=C2=A0 mask =3D tcg_temp_new_ptr();
+> -=C2=A0=C2=A0=C2=A0 index =3D tcg_temp_new_ptr();
+> -=C2=A0=C2=A0=C2=A0 base =3D get_gpr(s, rs1, EXT_NONE);
+> -
+> =C2=A0=C2=A0=C2=A0=C2=A0 data =3D vdata_add_memopidx(s, data);
+> =C2=A0=C2=A0=C2=A0=C2=A0 desc =3D tcg_constant_i32(simd_desc(s->cfg_ptr->=
+vlenb,
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0 s->cfg_ptr->vlenb, data));
+> =C2=A0
+> =C2=A0=C2=A0=C2=A0=C2=A0 tcg_gen_addi_ptr(dest, tcg_env, vreg_ofs(s, vd))=
+;
+> =C2=A0=C2=A0=C2=A0=C2=A0 tcg_gen_addi_ptr(index, tcg_env, vreg_ofs(s, vs2=
+));
+> -=C2=A0=C2=A0=C2=A0 tcg_gen_addi_ptr(mask, tcg_env, vreg_ofs(s, 0));
+> =C2=A0
+> =C2=A0=C2=A0=C2=A0=C2=A0 mark_vs_dirty(s);
+> =C2=A0
+> -=C2=A0=C2=A0=C2=A0 fn(dest, mask, base, index, tcg_env, desc);
+> +=C2=A0=C2=A0=C2=A0 fn(dest, base, index, tcg_env, desc);
+> =C2=A0
+> =C2=A0=C2=A0=C2=A0=C2=A0 finalize_rvv_inst(s);
+> =C2=A0=C2=A0=C2=A0=C2=A0 return true;
 
