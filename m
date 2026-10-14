@@ -4,143 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C640BCC6B19
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 03:11:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C21BFCC6B19
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 03:21:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGpO4-0008Mh-LG; Tue, 13 Oct 2026 23:10:40 -0400
+	id 1xGpXJ-0000rf-5L; Tue, 13 Oct 2026 23:20:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xGpO3-0008MU-1p
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 23:10:39 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xGpO1-0007iP-7w
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 23:10:38 -0400
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69E1iOar3017736
- for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 03:10:34 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- C6BTd4+DC652ck87k+ZtCTKEsPH8cHM0ghdA8uo+Y44=; b=ZlnCNFuD7SCZXmi+
- uabp0W88iB92cnAkVLIVVtIIkl8UGjzbHGLW7/1jmRk1FqeAnCV6WKUZy/yu/QiG
- uJ9tmEdj16WkKxEnXXvyT5t/MNVYKYGQBIlV1BLt1bUIe+K7QTlgixnAZT2EvaYY
- 5eCI2W4li+NYFKmybgN7waLe574RBVE/FXgWKW3MdQVqMBwVfxJXRkutNAFv4NaJ
- oSl6Ea8B+O+eA4Z+wXTLS3HwYyeivuXWWERLeksizQrrxbohtcTlEtH3er1VeqVr
- m6V0W5yB4kU23iGGt5qMVv0LsFM6XT0wd6YA36uCNoDHvM2HjN5ZnDlYJJgjPVXk
- 2T8ZPw==
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h9s2b23r9-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 03:10:33 +0000 (GMT)
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-93cc40759b2so806589985a.1
- for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 20:10:33 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
+ id 1xGpXH-0000rO-5R
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 23:20:11 -0400
+Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
+ id 1xGpXF-0008Lp-EI
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 23:20:10 -0400
+Received: by mail-ed1-x52d.google.com with SMTP id
+ 4fb4d7f45d1cf-6b1cc392d8bso710241a12.1
+ for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 20:20:08 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1791948008; cv=none;
+ d=google.com; s=arc-20260327;
+ b=aKAXFUQ6F1TjmjNNpsnOJMtSbV3Ll4q6gBRTjv3FiPxfg0CfyYxBcrGKrywTQc5Lmg
+ ON5CQRgCaruI5JSp4P0wL1Xqv/rdV2LdXml98gAJ6KEpVyjqslnqIUSusRaRxWxx3qh+
+ IO9xQVahKf7hkW4elJkV/91Y8nRlZ7YQh8k36RwnD0bBuVhUC1BDN1OLUqJ5lpFUAuzV
+ QEWL/t9NOY9w/fx2BlcdTedrC2f3FVMTiFurJyT43d28+bzpp8X7hP98s5RRMIx22Top
+ OomEgnBq2FjpNrhfWfOzUfj/NVxGpbg4wjxjInfFk7urTf99f7rMId/nNjlOBjYdWDLr
+ e5Vg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :reply-to:in-reply-to:references:mime-version:dkim-signature;
+ bh=mxY9S8D9jN+dNB3gZtht2Bt+DGTBuSwd5icwmsVKJT8=;
+ fh=aUz2Be7HQDY/LfYaa8dIrF0guArmdPFWafRBpwi1Qpk=;
+ b=aBz0FVCUlmi7N6qb/Wdtte4XKuywHJfe2FIdaBi4tfnJpudQKpA0eIsuLyuTUNitdE
+ 5S6q1oFFv8XY2V8w3q5fNoE/ME3wTLSBE7lg/x6zYiV/BlP32oNne5fd6sQaCQMmoE2I
+ 3r+fDGwHuqMn0uLxrCFHEWy+KEL+MFm1hPIgTXgTjAj3KSm3j3jhlhg84EKgofd60dBt
+ rvWvNItcvNcA5Y0Von/KTMC8yvZlRyZFpnoJOKlNQCyHAk+xzDGGjxfudg8pYqERdY+S
+ 7FpkIrQ4MSKdOckrzC1rhHJuTUE+4cBsmjKIpX83P8SE3IPBC+HT3sdLXpjvD7IZPmJ5
+ UeYA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1791947433; x=1792552233; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=C6BTd4+DC652ck87k+ZtCTKEsPH8cHM0ghdA8uo+Y44=;
- b=eh3kgFCGOYO3k6c+ge8Xr2GV2W09Kqfpv9qHfoi/prclLm+/lfCOEvR2WE/GbEI7GT
- +UXXDhtSRIzgzNpBwj5CoH1WDb118nAusEKSlAtij5qBT4bTrzmOQWCo2rs6FIouev8b
- i0KmeE1DXu2BpzHe2/aasz1grhpY6S3WKfOZKLhba3XQaxBt7/Mg54gxFgolKGUKw4Xe
- ln+Sx+XC0hHWAkh7UYntGnsErsj3GGvNrmRMv2MOZB6uDCGO+AT9SEsoXe53bW9WVeBa
- EoURNWrgjzE0bFhc2/gG8znKF57rM1r+xnGQVWYJWiYb7kYnPsCOgPn5E9pblmtTfgZB
- D6pQ==
+ d=gmail.com; s=20251104; t=1791948008; x=1792552808; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:reply-to:in-reply-to:references:mime-version:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=mxY9S8D9jN+dNB3gZtht2Bt+DGTBuSwd5icwmsVKJT8=;
+ b=Q8Veav1JbmuwENPiigL2uoscA8xUfE4odiK+0zBpn95J87nooWT7In50NQN84JvZLD
+ LiscKh6Q+cqzF4RfJtZu8o5/VlGLB4epfPZZv4Imt07ubGExUhOl9sHNA8WL7lm+oMty
+ gcZRkz8Vj6U1yvmZ+aUTCCgGalGv1k4w+hkmLYohbnp31Bt1PYO2S4/NApGDIq2bNI8e
+ PRMCRcGcyAevbxS6t0gUPEQ89xsbBxwxIulOtwPgy6moB+x9YuITP1Hd2hEpmKe9+ltK
+ cwfQ/iUL73+i3i89vds6dapvlou1Qk6fVq1xB1JlQweqxThjCMf0GWGI72Ei2jWM3sFq
+ Zq0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791947433; x=1792552233;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=C6BTd4+DC652ck87k+ZtCTKEsPH8cHM0ghdA8uo+Y44=;
- b=x609H0JS5xv/FZ+HEVyc12tAulyfYTeFnNAZwm3j8qlNcsQvITDwG2N9oGm7V7xSxS
- ZpyZJQqxl0eLLZExpqDECi8gjcy5ijcRafv+mxGHgLnB35RltyOv3iYb/lAsoplxxS+V
- raY95s8LR5aoDxHbVrhTjHcNiPu2tCEUTQUWyr4483VbIw6+r5YDFVaVY1jMc6ejxclA
- 9IcOeRXP6fertZ9JdsQuqfKYlQUodLkiRBuOi7UHVBXqlvYhoonIRb3n1lbquUqa7hyG
- fWjHrAv9HYA2H/ClrlVg48d/3U/NvQDDQCSYNRid2nJBMTAHWZ3KUCrLg5JDPmiH1yzG
- jtGQ==
-X-Forwarded-Encrypted: i=1;
- AKwUvBxveF14CNrny7pCEgjdXdKLbDruPJCLPoK42wKZzzdx0FaPJvRtK/M0X5skN76HWwdD30ZjiitNhx92@nongnu.org
-X-Gm-Message-State: AFq9FYKHjVt0IbFfU5lqjOSCRpHnSI+YGoRFNJH7lawR9LRltkZABNiJ
- BMZJ0/5GQQvVYyemkGjwp5/1JyDr38VjBNSQzRurfzF9OUtvmT2LIY62mI8rh3rG/5XXXke8k04
- M6f76DRigUv81sagM0KxFsuM+dITTtFvRNG6fgb32VJyvXdwO6v/dCkKHKg==
-X-Gm-Gg: AYBFou0yIURKPa+XX0r+ab0mrzmW0cXTYmm3PeB21eSLGoPy9uatIrnQ1BmZt1mkSv3
- Gy9yXi/869vYPhR1vQB1JALpdFiqLhwVCdMemU70Ge3qlaXvYtHYXNpmrx+XJMzP0tnGsOFBrgb
- Pzs+P5QfGR9e81QRfyzNHXKTFuUB7ZpjAIoi+PILboJ7gLKIUWHDqpIDDphwIl4R5XsevVG7RV+
- 0JwbHAq1khfdqCtCQZfAYHg4S3Ukl6kCURS4zsXSyQZjMGTt3p7FOCWWrrtsEGciiRCy+ebraM4
- GmkUM243FMEOdLdS3AS8Qs4m9X1vu9yoY16eyuU3nC8ecaf5y3lDkb8Hgb+lVIlWT+wxKfARsIs
- w7sGnmrmyY0aC7GipIe6/rIOauJXrfDcg8Q==
-X-Received: by 2002:a05:620a:1b9a:b0:93c:5ff3:2244 with SMTP id
- af79cd13be357-93ebd2085femr2272917085a.35.1791947432944; 
- Tue, 13 Oct 2026 20:10:32 -0700 (PDT)
-X-Received: by 2002:a05:620a:1b9a:b0:93c:5ff3:2244 with SMTP id
- af79cd13be357-93ebd2085femr2272914485a.35.1791947432463; 
- Tue, 13 Oct 2026 20:10:32 -0700 (PDT)
-Received: from [192.168.69.210] (pmd666.hd.free.fr. [88.187.86.199])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a18bea0f1csm587045125e9.9.2026.10.13.20.10.30
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 13 Oct 2026 20:10:31 -0700 (PDT)
-Message-ID: <ceb0694a-3ca7-4112-bf23-48c0e117ebbc@oss.qualcomm.com>
-Date: Wed, 14 Oct 2026 05:10:30 +0200
+ d=1e100.net; s=20260707; t=1791948008; x=1792552808;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:reply-to:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=mxY9S8D9jN+dNB3gZtht2Bt+DGTBuSwd5icwmsVKJT8=;
+ b=iBw5EKQDDjXmgmQUVccQkFcntUy0cLjFDm3H11zdYJ2jyHjxYYPKrp9OqpF02QrRoI
+ IwrA7Jy1FMtnf2K9v0HowF/g/83YkYDF3/xto8LX+R+bm0G8+VnnReID/4Oc+GqeBosf
+ oVvseyMS7VYDtPXZ9ML7N5evc1yyewgoGBIiPFISdHxoxUjhRQ9pOlolVzTHeQcPgpPn
+ oq5+zN+2t+flBK+qMDC+5ynf9Y2Qtcfrpw9GpWYJNhsP+nhPmDATcb4d+OXRlhMFFA6t
+ mJxpZWHTJ7p3s66gsKviqSAhzeYbYqgB3ylbYzp5SsBMo0lw+qLVzBi4GGxc70DVxKA0
+ O91g==
+X-Gm-Message-State: AFq9FYLKXpEKAlfsDJ+0DFGtfq8Ve9K/uXW5U3venPk6MPOj4ODd1yuA
+ mPG2Yi8Q684ilD6tGoETBitdkfONE+uXOVmIR6WKteDbCptxzzAJBeCzpKU6xMCahEFuuqNTCYN
+ jCiD0IZ8srPzuqGvrNzhOwB8gfR2HjZA=
+X-Gm-Gg: AYBFou2TzBcMYMJ/MHy01TwTcLuezA0dB8pjVdDjqN10MGI7XjeSotHO2Jdo/djNf/A
+ vTCDjfUnt5G5ea/ZQYfYRIX2fEe/l0PcRRE41+LnoEIE3fgI0Trni7equyC7544uMAyMuFHmvua
+ eNtaAGR6f+NfnlUVnpR1pj6310aYcLAZFqJc/Zh4kentVRlDAOmYRa7DisuX3/Hdv/9UJFJBuRr
+ zUUkUi5vLa89i1XMj8MV3VqikQvwCX6/USdVGwbNE3ogJaVhhnR24Pz1mR5crycz+PhHuZqXKTL
+ RMmOAjrrMhH5BCJPhzb/QBfbyN793pPek5l0PXHDIUcIFQz+m8xYrSU=
+X-Received: by 2002:a05:6402:c522:20b0:6b1:b97b:750 with SMTP id
+ 4fb4d7f45d1cf-6b1b97b0a16mr4778031a12.16.1791948007730; Tue, 13 Oct 2026
+ 20:20:07 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
+References: <20261013195929.1648-1-luoyonggang@gmail.com>
+ <ceb0694a-3ca7-4112-bf23-48c0e117ebbc@oss.qualcomm.com>
+In-Reply-To: <ceb0694a-3ca7-4112-bf23-48c0e117ebbc@oss.qualcomm.com>
+From: Yonggang Luo <luoyonggang@gmail.com>
+Date: Wed, 14 Oct 2026 11:19:52 +0800
+X-Gm-Features: AclHuK8TAkUFhWiz7iUjbP-0FQfC8koUlaRCWqvOTf-NWNVKr9-O7XeEjZrEMmo
+Message-ID: <CAE2XoE9aYjYCAbWam1NkUdoLgXMo8a3AKC_-njnYybqn7eKYQw@mail.gmail.com>
 Subject: Re: [PATCH] hw/microblaze: defer PetaLogix endianness default until
  init
-Content-Language: en-US
-To: Yonggang Luo <luoyonggang@gmail.com>, qemu-devel@nongnu.org
-Cc: Philippe Mathieu-Daude <philmd@mailo.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, Philippe Mathieu-Daude <philmd@mailo.com>, 
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Thomas Huth <thuth@redhat.com>
-References: <20261013195929.1648-1-luoyonggang@gmail.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20261013195929.1648-1-luoyonggang@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=RPQmjIi+ c=1 sm=1 tr=0 ts=6acef2a9 cx=c_pps
- a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
- a=zfSE7H3uAAAA:8 a=pGLkceISAAAA:8 a=90ak46tRxeTLrPC98aoA:9 a=QEXdDO2ut3YA:10
- a=PEH46H7Ffwr30OY-TuGO:22 a=r0bLQnNZBtpSUBZG6Bsk:22
-X-Proofpoint-GUID: cB5FnIPUkNisOoBCdWzCo-_57e9EznTx
-X-Proofpoint-ORIG-GUID: cB5FnIPUkNisOoBCdWzCo-_57e9EznTx
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDE0MDAxMiBTYWx0ZWRfX50ihy0vir9Zo
- IpUQEW4ye4x9R3+77cTTpo9LSXAUIy/8HGhwV4NVxRFiFbFjZ1FsjqPcMw2jkGdsLOC6zey7K9Q
- kCIzqPCM24nPxXmlfkhagfJR2pKwk37llbtnUpfoLJ7W2IoB+Yi4ELV9LBiseN9w8YL0CkOpD7O
- 7v2t1woIuqjSpKS9FmZ8YAD8VuRP+VDQHKpwQQ1wl20LVLba9ZtuyRjbtvYNjrba/OQNXgfyQ6B
- JsdKz+2BsBkaKoqxgNJkP3djnuiuegbHDoqVYbyouvSYxLzBjw/cTAyanDdaBxhkFounp5Ic9jM
- nD/c1xJ2QdpFJYTgB7tFwyOOBDZfsLUThAp8beEJIxg6E4jWAMmk5xES2J0ZmGsOLcvkAmCbBgL
- oUmvpoetU8qTTf6lhNEFHTQGsSRuz7uPpGFn7yggMxoeaECojoU2c4Jhh0YkQMyDxSYNykvSK6t
- VHJeumr4V7/wPirZvYw==
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDE0MDAxMiBTYWx0ZWRfX/sdOZmpElbH5
- C6Je2Xi9atic3Ss7oasXB6TnEmm+G/DYZeVzGxmcPRppimOmMtxtq34e5HNkYVHtdjiiSAxSRzo
- nyi62oOyx+XEKygSw29g38XmOowNgJY=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-10-13_01,2026-10-09_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 bulkscore=0 priorityscore=1501 clxscore=1015 malwarescore=0
- phishscore=0 impostorscore=0 lowpriorityscore=0 suspectscore=0 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610080000 definitions=main-2610140012
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
+ envelope-from=luoyonggang@gmail.com; helo=mail-ed1-x52d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -154,49 +118,74 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: luoyonggang@gmail.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 13/10/26 21:59, Yonggang Luo wrote:
-> This is for avoid call target_info() in class_init
+On Wed, Oct 14, 2026 at 11:10=E2=80=AFAM Philippe Mathieu-Daud=C3=A9
+<philmd@oss.qualcomm.com> wrote:
+>
+> On 13/10/26 21:59, Yonggang Luo wrote:
+> > This is for avoid call target_info() in class_init
+>
+> Why? What is the use case you are you trying to fix?
+>
+> https://cbea.ms/git-commit/#why-not-how
+>
+> > Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
+> > ---
+> >   hw/microblaze/petalogix_s3adsp1800_mmu.c | 11 ++++++++---
+> >   1 file changed, 8 insertions(+), 3 deletions(-)
+> >
+> > diff --git a/hw/microblaze/petalogix_s3adsp1800_mmu.c b/hw/microblaze/p=
+etalogix_s3adsp1800_mmu.c
+> > index c5f64319009..43140ad7bda 100644
+> > --- a/hw/microblaze/petalogix_s3adsp1800_mmu.c
+> > +++ b/hw/microblaze/petalogix_s3adsp1800_mmu.c
+> > @@ -83,7 +83,13 @@ petalogix_s3adsp1800_init(MachineState *machine)
+> >       MemoryRegion *phys_ram =3D g_new(MemoryRegion, 1);
+> >       qemu_irq irq[32];
+> >       MemoryRegion *sysmem =3D get_system_memory();
+> > -    EndianMode endianness =3D psms->endianness;
+> > +    EndianMode endianness;
+> > +
+> > +    if (psms->endianness =3D=3D ENDIAN_MODE_UNSPECIFIED) {
+> > +        psms->endianness =3D target_big_endian() ? ENDIAN_MODE_BIG :
+> > +                                           ENDIAN_MODE_LITTLE;
+> > +    }
+> > +    endianness =3D psms->endianness;
+> >
+> >       cpu =3D MICROBLAZE_CPU(object_new(TYPE_MICROBLAZE_CPU));
+> >       object_property_set_str(OBJECT(cpu), "version", "7.10.d", &error_=
+abort);
+> > @@ -178,8 +184,7 @@ static void petalogix_s3adsp1800_machine_class_init=
+(ObjectClass *oc,
+> >                                             &EndianMode_lookup,
+> >                                             machine_get_endianness,
+> >                                             machine_set_endianness);
+> > -    object_property_set_default_str(prop, target_big_endian() ? "big"
+> > -                                                              : "littl=
+e");
+> > +    object_property_set_default_str(prop, "unspecified");
+> >       object_class_property_set_description(oc, "endianness",
+> >               "Defines whether the machine runs in big or little endian=
+ mode");
+> >   }
+>
 
-Why? What is the use case you are you trying to fix?
+https://lore.kernel.org/qemu-devel/60494b19-420f-4d0f-966c-b70c4c51104b@oss=
+.qualcomm.com/
 
-https://cbea.ms/git-commit/#why-not-how
+Avoid calling target_info() in class_init, as for the combined
+qemu-system, target_info() is not available(NULL)
+till the machine is selected.
 
-> Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
-> ---
->   hw/microblaze/petalogix_s3adsp1800_mmu.c | 11 ++++++++---
->   1 file changed, 8 insertions(+), 3 deletions(-)
-> 
-> diff --git a/hw/microblaze/petalogix_s3adsp1800_mmu.c b/hw/microblaze/petalogix_s3adsp1800_mmu.c
-> index c5f64319009..43140ad7bda 100644
-> --- a/hw/microblaze/petalogix_s3adsp1800_mmu.c
-> +++ b/hw/microblaze/petalogix_s3adsp1800_mmu.c
-> @@ -83,7 +83,13 @@ petalogix_s3adsp1800_init(MachineState *machine)
->       MemoryRegion *phys_ram = g_new(MemoryRegion, 1);
->       qemu_irq irq[32];
->       MemoryRegion *sysmem = get_system_memory();
-> -    EndianMode endianness = psms->endianness;
-> +    EndianMode endianness;
-> +
-> +    if (psms->endianness == ENDIAN_MODE_UNSPECIFIED) {
-> +        psms->endianness = target_big_endian() ? ENDIAN_MODE_BIG :
-> +                                           ENDIAN_MODE_LITTLE;
-> +    }
-> +    endianness = psms->endianness;
->   
->       cpu = MICROBLAZE_CPU(object_new(TYPE_MICROBLAZE_CPU));
->       object_property_set_str(OBJECT(cpu), "version", "7.10.d", &error_abort);
-> @@ -178,8 +184,7 @@ static void petalogix_s3adsp1800_machine_class_init(ObjectClass *oc,
->                                             &EndianMode_lookup,
->                                             machine_get_endianness,
->                                             machine_set_endianness);
-> -    object_property_set_default_str(prop, target_big_endian() ? "big"
-> -                                                              : "little");
-> +    object_property_set_default_str(prop, "unspecified");
->       object_class_property_set_description(oc, "endianness",
->               "Defines whether the machine runs in big or little endian mode");
->   }
 
+--=20
+         =E6=AD=A4=E8=87=B4
+=E7=A4=BC
+=E7=BD=97=E5=8B=87=E5=88=9A
+Yours
+    sincerely,
+Yonggang Luo
 
