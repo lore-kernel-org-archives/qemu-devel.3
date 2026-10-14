@@ -4,86 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4473CC6B1C
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 03:40:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2529CC6B19
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 03:40:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGpqG-0004tt-Me; Tue, 13 Oct 2026 23:39:48 -0400
+	id 1xGpqT-00056U-8P; Tue, 13 Oct 2026 23:40:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1xGpq4-0004qT-WD
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 23:39:40 -0400
-Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
+ id 1xGpqQ-00052O-EA
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 23:40:00 -0400
+Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1xGpq1-0001Kf-2q
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 23:39:36 -0400
-Received: by mail-pj1-x102e.google.com with SMTP id
- 98e67ed59e1d1-3ab8309dcbaso2659925a91.1
- for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 20:39:28 -0700 (PDT)
+ id 1xGpqO-0001Oj-Ds
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 23:39:58 -0400
+Received: by mail-pg1-x530.google.com with SMTP id
+ 41be03b00d2f7-ca766c1c9ccso1236368a12.0
+ for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 20:39:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1791949168; x=1792553968; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1791949195; x=1792553995; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=8YFPhT6aOCuG9UYnv1AULvKlN1lwEIlGrbq+GhNIGTo=;
- b=OnuO2HSisBG4Mb59C/dEjEeVAApKgfINFJuy4ee0j6rnqVtxlUGO6sU2nEAxRhYKCG
- gMBeECZ2iUNvyzRwQVVfExbeA4CTh7GvSy/uj52xbqXhRLi5i1+B2MayY6PDbp8IlBEq
- Xer1F5dN+ZQSnM52ut2YUDHsK5dy88LQOeXI4p9N/kEhfc+nmZjyp+3oDBBjV+PeIkkQ
- JmWK+IUPovxXfH66vhJwnMQtiZ5Ff+IWnGMOXQwpU2x6gxg8QSch89Hl76Un/jISHnCK
- Y62qy1kB3rZuhR7E4y8qs7rchmZzbTOnViU8yE/DlF19TNBAPNhICEkJDlD8pqsjlXxO
- yRBg==
+ bh=YqIF/59e+QonDfHIGLvlQpYNE6/FNUOPbJAnQ8BC5ek=;
+ b=AZjW6jKo3TnRJ5zHfzrRA0Oee3V+P0qAiM2rsArYVjHc1UAlv6UmEftJfj2433OO+P
+ KFUbXdIcBl9h075uCcX7Ehbvd0//N2KbvqcPce7Gb0vA4c0w3qwunKoHPr/GlnZLZMh4
+ pd5PsQzNWrwfqwq2AzE/59nuMCQ7LrlQnSZOkfvctKvS22wy6UjJUKY8RXzuhiGI0XcJ
+ W1gWxTRRz1rScGkJG96bcrHk0ICjIjz3rJdUzJB6qrilRP1l6gWmLhUerXtfzyy9L7ii
+ tljQHKwK7aInwb6r3j0nfcrvwv1yRm5uvuZpVrgS6gvnCRcRLJ9VoyIioq3FW5tpKc+9
+ RdjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791949168; x=1792553968;
+ d=1e100.net; s=20260707; t=1791949195; x=1792553995;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=8YFPhT6aOCuG9UYnv1AULvKlN1lwEIlGrbq+GhNIGTo=;
- b=Bb/jbCZbDAAXMtxdJN6SDY78pJrOUt0EBWLD1+8cB2kDXNSOGVQ2kur5u/yHNap3NL
- ackapJ+fJAw2RJ5rnnwgr5x2UrYCkEblGREN2ZeNI/pIPlmvqUuQKYGZ+mgcmsbphlsq
- q1eyRbwgVAPzq+bUowEDqAwIdlpamF63j4vyy0QQZ+J75c4fbsrUMLF++ZRdT2qT9WmX
- LGToGzeECmcbTJFj3THAcvROfSWqkLA/GG1D8oYRrY5kkblrEJuzOYvYPxVSqUQ1mTNt
- R1UoKm0mQgPUA8ro4UWQJF7+yTrjKd8kraum7pfK24XDAMRMU1o2zVxR8fhvCohU5m1/
- fCbw==
-X-Gm-Message-State: AFq9FYKRg0lRwIIsInULYezZfKcEwZz/MzXCY9NsVh+XmVusRqnDOJAq
- 9InqNspRnr30RgRzsrZxSnFXggj4SJYR4sIulHTOagIV1jYzxoaRWexKWvqgCQ==
-X-Gm-Gg: AYBFou1OENWIdAQcvu5MVpAwebxCvvawc/iaOIEFrH346K5cMBy+aqWIuc9SFC+WHom
- FIRu3OUQhBQ9bhTY+2fAThrs7p7G5X8TzkjeQeS6D25TuT4HIrWPf2HyDv/gjMuBrQU+oMPDx9Y
- 7t896ETFTpGF59YmIogyP4BDMiompZSuouCXUzI8wFitR99I3z0GJrvVYk2PlizJfGjuPBxVQKG
- KWVfyIyo6/RDLJzfBw7KYuB03Cp7eg3O+8mBGDuBb3VppV+Pina67uY+Bj8iASrzk0tT1PQpHfC
- XmtzZ1k9QwV4BJgymb+8KG3iNtPQenCe20k8QhG4tUHQEplXPF7AYD6zz/Y1K2iqC7VlEu/4Pl/
- K9MSaCjL5UPePWXQIRjzHPpX0NxUENOoqAJfOByciM4EPzpf/M+zG05jFGLX8sbsX2AVXqsodok
- wM/V+95F0GxjxYJSD6oy1A9ZgCqCCyonXno8/5gI2IjWUz9u7+rka98YCAki0kWaJwUsJpshoiP
- SbCwppzUewAjyfD
-X-Received: by 2002:a17:90b:224c:b0:3a7:a3c8:8f4a with SMTP id
- 98e67ed59e1d1-3ab3a9a8dbbmr10003802a91.18.1791949167584; 
- Tue, 13 Oct 2026 20:39:27 -0700 (PDT)
+ bh=YqIF/59e+QonDfHIGLvlQpYNE6/FNUOPbJAnQ8BC5ek=;
+ b=g09Rx/IpJE3f1yS1NN+oqcA0uVMmnvJNCKDxNalMgyuZnq0j4a7liDI6JhSsKVKCuJ
+ IDkO4WN44+WdzzF5hBn6LztBL8js5DPk4eRtpn2AJZY8Fc6bYUjG1D8ZCxSNyyUSXmIn
+ XAiqcVNI7OQ8ftaZfHTMQF4O3wG2J5cgHnUqoZukQWuX9iJvZ8kGQkfz1OxJb7KmLGiE
+ BXOWJEgRnm2xY059nP5f2WWZiXzyt5U4v1Jzy8ZP2qvLA4N7QTUE8GThgYlprV4szaPV
+ GtYdQBhgWxrKdmAipJjJJNsbAodjhJINJyXmJWaEVaJL78C9idRUYPEYTLF354p/DkoE
+ PPkw==
+X-Gm-Message-State: AFq9FYLuVUJXgM8U2Uyk6E7ol7yAh1+sU0d2oIYk+8a96c5ff6r6Ay9P
+ K81nNx1+vbKmOctDOHxO37IrYVVCWshGzOQgPofY4b+NtrRLVJrM/vFKYaUNLQ==
+X-Gm-Gg: AYBFou2nPEmrQzL7WVCCH1vMdJ6y5tNBJrq/6/h9xTBGOmoRwaNk4w9uKjMBxOrkmTF
+ mLIqn+nscNJ6IegnaDT3LHNiuQl9uuWDGkI2HJla4t1qFweWKXGnKexbnoC0JEDaO97I+CPSzHs
+ NHGdEsNF+PslcboJqYpsk2xMD04C4QsZpxHs8bkHGDiufoNpseSC4ZS1HHQw9rGAo2TEpKfAOL7
+ 8He+GuQ/tvnr4rBzJ0y4/664ZQa4DRqwevt4oR9uX9hglBZhZWV6UAZClKSacuoeEgz2U7ryCCG
+ M+Je+hXpozzawNocbgEvI1rWhlkFSQTdy2Eo8aRYRHIaVghOwifEHc3l2cS/esupJTUgqkVy+5q
+ MM6HjvyJyCBOEZCO6uCFHBJgwr51hzmbSPnaZTuRGGPRzEdjbNBjLADVo9iHWEdtMHamP6geRd1
+ zQTfRntjNq2LXBucVKpclK3cQ60/TF02dwrRHzCdQytPNp01syh7DXr7TdcbXYDiGtsQ7HuHs4I
+ hRm9mUaVGiZ0FfS
+X-Received: by 2002:a17:90b:3a48:b0:3a7:8350:3f7e with SMTP id
+ 98e67ed59e1d1-3ab3ae76c0bmr10486546a91.44.1791949194556; 
+ Tue, 13 Oct 2026 20:39:54 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3ac61170b7bsm2321457a91.16.2026.10.13.20.39.24
+ 98e67ed59e1d1-3ac61170b7bsm2321457a91.16.2026.10.13.20.39.51
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 13 Oct 2026 20:39:26 -0700 (PDT)
+ Tue, 13 Oct 2026 20:39:53 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: Mayuresh Chitale <mayuresh.chitale@oss.qualcomm.com>,
- qemu-stable@nongnu.org,
+Cc: Zephyr Li <fritchleybohrer@gmail.com>, qemu-stable@nongnu.org,
  Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Gong Shuai <gsh517025@gmail.com>,
- TianCheng TANG <lyndra@linux.alibaba.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 02/52] target/riscv: Restore LCOFI handling in interrupt CSRs
-Date: Wed, 14 Oct 2026 13:38:17 +1000
-Message-ID: <20261014033907.3332383-3-alistair.francis@wdc.com>
+Subject: [PULL 10/52] target/riscv: save ELP in MPELP for NMIE=0 exceptions
+Date: Wed, 14 Oct 2026 13:38:25 +1000
+Message-ID: <20261014033907.3332383-11-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20261014033907.3332383-1-alistair.francis@wdc.com>
 References: <20261014033907.3332383-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
- envelope-from=alistair23@gmail.com; helo=mail-pj1-x102e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::530;
+ envelope-from=alistair23@gmail.com; helo=mail-pg1-x530.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -107,256 +104,211 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Mayuresh Chitale <mayuresh.chitale@oss.qualcomm.com>
+From: Zephyr Li <fritchleybohrer@gmail.com>
 
-Commit 27f9566dcd98 dropped bits 13-15 from the LOCAL_INTERRUPTS
-macro and hence also from individual masks such as all_ints,
-sip_writable_mask etc.
+The Smrnmi specification, section 8.5, "RNMI Operation", states:
 
-As a result, even with sscofpmf and ssaia enabled, the LCOFI never got
-delivered to the host OS and guest OS respectively.
+  If the hart encounters an exception while executing in M-mode with the
+  mnstatus.NMIE bit clear, the exception is an RNMI exception. Trap state
+  is still saved in the regular M-mode CSRs and the handler returns with
+  MRET.
 
-Add back bit 13 in all the affected masks, but gate it on Sscofpmf being
-implemented. For the virtual interrupt paths, i.e., mvip/mvien,
-hvip/hvien/vsip/vsie registers, bit 13 is additionally gated on Smaia
-and Ssaia respectively. Bits 14, 15 can be added when those interrupt
-sources get defined.
+riscv_cpu_do_interrupt() instead saves ELP in mnstatus.MNPELP on this
+path. MRET restores ELP from mstatus.MPELP, so the expected landing-pad
+state is lost.
+
+Always save ELP in mstatus.MPELP for M-mode exceptions. Keep MNPELP for
+the actual RNMI interrupt path, which returns with MNRET.
+
+Add a TCG test that checks ELP preservation across an NMIE=0 M-mode
+exception and MRET.
 
 Cc: qemu-stable@nongnu.org
-Fixes: 27f9566dcd98 ("target/riscv: Update the local interrupt mask")
+Fixes: 0266fd8b56a4 ("target/riscv: Add Zicfilp support for Smrnmi")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4223
 Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Suggested-by: Gong Shuai <gsh517025@gmail.com>
-Suggested-by: TianCheng TANG <lyndra@linux.alibaba.com>
-Signed-off-by: Mayuresh Chitale <mayuresh.chitale@oss.qualcomm.com>
-Message-ID: <20260921145334.419651-1-mayuresh.chitale@oss.qualcomm.com>
+Signed-off-by: Zephyr Li <fritchleybohrer@gmail.com>
+Message-ID: <20260903013627.1105-1-fritchleybohrer@gmail.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/tcg/csr.c | 88 +++++++++++++++++++++++++++++++++++-------
- 1 file changed, 73 insertions(+), 15 deletions(-)
+ target/riscv/tcg/cpu_helper.c             |  18 +---
+ tests/tcg/riscv64/Makefile.softmmu-target |   8 ++
+ tests/tcg/riscv64/test-zicfilp-smrnmi.S   | 117 ++++++++++++++++++++++
+ 3 files changed, 127 insertions(+), 16 deletions(-)
+ create mode 100644 tests/tcg/riscv64/test-zicfilp-smrnmi.S
 
-diff --git a/target/riscv/tcg/csr.c b/target/riscv/tcg/csr.c
-index 061bc9db77..a3351428cb 100644
---- a/target/riscv/tcg/csr.c
-+++ b/target/riscv/tcg/csr.c
-@@ -1815,7 +1815,7 @@ static RISCVException write_stimecmph(CPURISCVState *env, int csrno,
- #define LOCAL_INTERRUPTS   (~0xFFFFULL)
+diff --git a/target/riscv/tcg/cpu_helper.c b/target/riscv/tcg/cpu_helper.c
+index 6115f65adb..e78acf37dc 100644
+--- a/target/riscv/tcg/cpu_helper.c
++++ b/target/riscv/tcg/cpu_helper.c
+@@ -2292,23 +2292,9 @@ void riscv_cpu_do_interrupt(CPUState *cs)
  
- static const uint64_t delegable_ints =
--    S_MODE_INTERRUPTS | VS_MODE_INTERRUPTS | MIP_LCOFIP;
-+    S_MODE_INTERRUPTS | VS_MODE_INTERRUPTS;
- static const uint64_t vs_delegable_ints =
-     (VS_MODE_INTERRUPTS | LOCAL_INTERRUPTS) & ~MIP_LCOFIP;
- static const uint64_t all_ints = M_MODE_INTERRUPTS | S_MODE_INTERRUPTS |
-@@ -1877,6 +1877,42 @@ static const uint64_t hvien_writable_mask = LOCAL_INTERRUPTS;
+         src = env->sepc;
+     } else {
+-        /*
+-         * If the hart encounters an exception while executing in M-mode
+-         * with the mnstatus.NMIE bit clear, the exception is an RNMI exception.
+-         */
+-        nnmi_excep = cpu->cfg.ext_smrnmi &&
+-                     !get_field(env->mnstatus, MNSTATUS_NMIE) &&
+-                     !async;
+-
+-        /* handle the trap in M-mode */
+-        /* save elp status */
++        /* Save ELP for MRET. */
+         if (cpu_get_fcfien(env)) {
+-            if (nnmi_excep) {
+-                env->mnstatus = set_field(env->mnstatus, MNSTATUS_MNPELP,
+-                                          env->elp);
+-            } else {
+-                env->mstatus = set_field(env->mstatus, MSTATUS_MPELP, env->elp);
+-            }
++            env->mstatus = set_field(env->mstatus, MSTATUS_MPELP, env->elp);
+         }
  
- static const uint64_t vsip_writable_mask = MIP_VSSIP | LOCAL_INTERRUPTS;
+         if (riscv_has_ext(env, RVH)) {
+diff --git a/tests/tcg/riscv64/Makefile.softmmu-target b/tests/tcg/riscv64/Makefile.softmmu-target
+index 1e44410418..9cf049e1cf 100644
+--- a/tests/tcg/riscv64/Makefile.softmmu-target
++++ b/tests/tcg/riscv64/Makefile.softmmu-target
+@@ -49,6 +49,14 @@ comma:= ,
+ run-test-crc32: test-crc32
+ 	$(call run-test, $<, $(QEMU) -cpu rv64$(comma)xlrbr=true $(QEMU_OPTS)$<)
  
++EXTRA_RUNS += run-test-zicfilp-smrnmi
++run-test-zicfilp-smrnmi: test-zicfilp-smrnmi
++	$(call run-test, $<, \
++	  $(QEMU) \
++	  -cpu rv64$(comma)zicsr=true$(comma)zicfilp=true$(comma)smrnmi=true \
++	  -global rv64-riscv-cpu.rnmi-exception-vector=0x80000100 \
++	  $(QEMU_OPTS)$<)
++
+ # Zicclsm: misaligned load/store support. Assemble one source twice: the
+ # default build expects every misaligned access to succeed (zicclsm=true),
+ # the -DZICCLSM_DISABLED build expects every one to trap (zicclsm=false).
+diff --git a/tests/tcg/riscv64/test-zicfilp-smrnmi.S b/tests/tcg/riscv64/test-zicfilp-smrnmi.S
+new file mode 100644
+index 0000000000..b5965bf705
+--- /dev/null
++++ b/tests/tcg/riscv64/test-zicfilp-smrnmi.S
+@@ -0,0 +1,117 @@
 +/*
-+ * Selects the extensions that need to be checked when accessing various
-+ * interrupt registers.
++ * Test that an M-mode exception taken with mnstatus.NMIE clear saves ELP in
++ * mstatus.MPELP, so that it is restored by MRET.  MNPELP is reserved for the
++ * actual RNMI path, which returns with MNRET.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
 + */
-+typedef enum {
-+    /* Accessing mideleg, mie, mip, and alias paths  */
-+    AIA_NONE,
-+    /* Accessing mvien, mvip non-alias path */
-+    AIA_SMAIA,
-+    /* Accessing hvien, hvip, vsie, vsip paths */
-+    AIA_SSAIA,
-+} AIAExt;
 +
-+/*
-+ * This function can be extended later to configure mask for standard local
-+ * interrupt bits 14 and 15, once those get defined in the Priv Spec.
-+ */
-+static uint64_t std_impl_intr_mask(CPURISCVState *env, AIAExt ext)
-+{
-+    const RISCVCPUConfig *cfg = riscv_cpu_cfg(env);
++	.option	norvc
 +
-+    if (ext == AIA_SMAIA && !cfg->ext_smaia) {
-+        return 0;
-+    }
++	.equ	CSR_MNSTATUS, 0x744
++	.equ	CSR_MSECCFG, 0x747
++	.equ	MNSTATUS_NMIE, 1 << 3
++	.equ	MNSTATUS_MNPELP, 1 << 9
++	.equ	MSECCFG_MLPE, 1 << 10
++	.equ	MSTATUS_MPELP, 1 << 41
++	.equ	EXCP_INST_ACCESS_FAULT, 1
++	.equ	EXCP_SW_CHECK, 18
++	.equ	SW_CHECK_FCFI_TVAL, 2
 +
-+    if (ext == AIA_SSAIA && !cfg->ext_ssaia) {
-+        return 0;
-+    }
++	.text
++	.global	_start
++_start:
++	/* Verify that NMIE is clear before exercising the exception path. */
++	csrr	t0, CSR_MNSTATUS
++	andi	t0, t0, MNSTATUS_NMIE
++	bnez	t0, fail_nmie
 +
-+    if (!cfg->ext_sscofpmf) {
-+        return 0;
-+    }
++	/* Enable landing-pad checks in M-mode, then start a new TB. */
++	li	t0, MSECCFG_MLPE
++	csrs	CSR_MSECCFG, t0
++	j	tracked_jump
 +
-+    return MIP_LCOFIP;
-+}
++tracked_jump:
++	/* Make a Zicfilp-tracked indirect jump to an address that faults. */
++	li	t1, 0
++	jalr	zero, 0(t1)
 +
- /* Machine Information Registers */
- static RISCVException read_zero(CPURISCVState *env, int csrno,
-                                 target_ulong *val)
-@@ -2249,8 +2285,10 @@ static RISCVException rmw_mideleg64(CPURISCVState *env, int csrno,
-                                     uint64_t *ret_val,
-                                     uint64_t new_val, uint64_t wr_mask)
- {
-+    uint64_t std_mask = std_impl_intr_mask(env, AIA_NONE);
-     uint64_t mask = wr_mask & delegable_ints;
- 
-+    mask |= wr_mask & std_mask;
-     if (ret_val) {
-         *ret_val = env->mideleg;
-     }
-@@ -2300,8 +2338,10 @@ static RISCVException rmw_mie64(CPURISCVState *env, int csrno,
-                                 uint64_t *ret_val,
-                                 uint64_t new_val, uint64_t wr_mask)
- {
-+    uint64_t std_mask = std_impl_intr_mask(env, AIA_NONE);
-     uint64_t mask = wr_mask & all_ints;
- 
-+    mask |= wr_mask & std_mask;
-     if (ret_val) {
-         *ret_val = env->mie;
-     }
-@@ -2350,8 +2390,10 @@ static RISCVException rmw_mvien64(CPURISCVState *env, int csrno,
-                                 uint64_t *ret_val,
-                                 uint64_t new_val, uint64_t wr_mask)
- {
-+    uint64_t std_mask = std_impl_intr_mask(env, AIA_SMAIA);
-     uint64_t mask = wr_mask & mvien_writable_mask;
- 
-+    mask |= wr_mask & std_mask;
-     if (ret_val) {
-         *ret_val = env->mvien;
-     }
-@@ -3784,9 +3826,12 @@ static RISCVException rmw_mip64(CPURISCVState *env, int csrno,
-                                 uint64_t *ret_val,
-                                 uint64_t new_val, uint64_t wr_mask)
- {
-+    uint64_t std_mask = std_impl_intr_mask(env, AIA_NONE);
-     uint64_t old_mip, mask = wr_mask & delegable_ints;
-     uint32_t gin;
- 
-+    mask |= wr_mask & std_mask;
++	/*
++	 * The instruction access fault should have redirected to the handler.
++	 */
++	li	a0, 1
++	j	_exit
 +
-     /*
-      * When mvien[9]=1, mip.SEIP is read-only and reflects only
-      * the external interrupt signal from the interrupt controller.
-@@ -3900,9 +3945,12 @@ static RISCVException rmw_mvip64(CPURISCVState *env, int csrno,
-      *  alias_mask denotes the bits that come from mip nalias_mask denotes bits
-      *  that come from hvip.
-      */
--    uint64_t alias_mask = ((S_MODE_INTERRUPTS | LOCAL_INTERRUPTS) &
-+    AIAExt intr_virt = ((csrno == CSR_MVIP) || (csrno == CSR_MVIPH)) ?
-+                          AIA_SMAIA : AIA_NONE;
-+    uint64_t std_mask = std_impl_intr_mask(env, intr_virt);
-+    uint64_t alias_mask = ((S_MODE_INTERRUPTS | std_mask | LOCAL_INTERRUPTS) &
-         (env->mideleg | ~env->mvien)) | MIP_STIP;
--    uint64_t nalias_mask = (S_MODE_INTERRUPTS | LOCAL_INTERRUPTS) &
-+    uint64_t nalias_mask = (S_MODE_INTERRUPTS | std_mask | LOCAL_INTERRUPTS) &
-         (~env->mideleg & env->mvien);
-     uint64_t wr_mask_mvip;
-     uint64_t wr_mask_mip;
-@@ -3931,8 +3979,8 @@ static RISCVException rmw_mvip64(CPURISCVState *env, int csrno,
-         alias_mask &= ~MIP_STIP;
-     }
- 
--    wr_mask_mip = wr_mask & alias_mask & mvip_writable_mask;
--    wr_mask_mvip = wr_mask & nalias_mask & mvip_writable_mask;
-+    wr_mask_mip = wr_mask & alias_mask & (mvip_writable_mask | std_mask);
-+    wr_mask_mvip = wr_mask & nalias_mask & (mvip_writable_mask | std_mask);
- 
-     /*
-      * For bits set in alias_mask, mvip needs to be alias of mip, so forward
-@@ -4065,9 +4113,11 @@ static RISCVException rmw_vsie64(CPURISCVState *env, int csrno,
-                                  uint64_t *ret_val,
-                                  uint64_t new_val, uint64_t wr_mask)
- {
--    uint64_t alias_mask = (LOCAL_INTERRUPTS | VS_MODE_INTERRUPTS) &
--                            env->hideleg;
--    uint64_t nalias_mask = LOCAL_INTERRUPTS & (~env->hideleg & env->hvien);
-+    uint64_t std_mask = std_impl_intr_mask(env, AIA_SSAIA);
-+    uint64_t alias_mask = (LOCAL_INTERRUPTS | VS_MODE_INTERRUPTS |
-+                           std_mask) & env->hideleg;
-+    uint64_t nalias_mask = (LOCAL_INTERRUPTS | std_mask) &
-+                           (~env->hideleg & env->hvien);
-     uint64_t rval, rval_vs, vsbits;
-     uint64_t wr_mask_vsie;
-     uint64_t wr_mask_mie;
-@@ -4135,9 +4185,11 @@ static RISCVException rmw_sie64(CPURISCVState *env, int csrno,
-                                 uint64_t *ret_val,
-                                 uint64_t new_val, uint64_t wr_mask)
- {
--    uint64_t nalias_mask = (S_MODE_INTERRUPTS | LOCAL_INTERRUPTS) &
-+    uint64_t std_mask = std_impl_intr_mask(env, AIA_NONE);
-+    uint64_t nalias_mask = (S_MODE_INTERRUPTS | std_mask | LOCAL_INTERRUPTS) &
-         (~env->mideleg & env->mvien);
--    uint64_t alias_mask = (S_MODE_INTERRUPTS | LOCAL_INTERRUPTS) & env->mideleg;
-+    uint64_t alias_mask = (S_MODE_INTERRUPTS | std_mask | LOCAL_INTERRUPTS) &
-+        env->mideleg;
-     uint64_t sie_mask = wr_mask & nalias_mask;
-     RISCVException ret;
- 
-@@ -4320,6 +4372,7 @@ static RISCVException rmw_vsip64(CPURISCVState *env, int csrno,
-                                  uint64_t new_val, uint64_t wr_mask)
- {
-     RISCVException ret;
-+    uint64_t std_mask = std_impl_intr_mask(env, AIA_SSAIA);
-     uint64_t rval, mask = env->hideleg & VS_MODE_INTERRUPTS;
-     uint64_t vsbits;
- 
-@@ -4335,7 +4388,7 @@ static RISCVException rmw_vsip64(CPURISCVState *env, int csrno,
-     wr_mask |= vsbits << 1;
- 
-     ret = rmw_hvip64(env, csrno, &rval, new_val,
--                     wr_mask & mask & vsip_writable_mask);
-+                     wr_mask & mask & (vsip_writable_mask | std_mask));
-     if (ret_val) {
-         rval &= mask;
-         vsbits = rval & VS_MODE_INTERRUPTS;
-@@ -4382,7 +4435,9 @@ static RISCVException rmw_sip64(CPURISCVState *env, int csrno,
-                                 uint64_t new_val, uint64_t wr_mask)
- {
-     RISCVException ret;
--    uint64_t mask = (env->mideleg | env->mvien) & sip_writable_mask;
-+    uint64_t std_mask = std_impl_intr_mask(env, AIA_NONE);
-+    uint64_t mask = (env->mideleg | env->mvien) &
-+                    (sip_writable_mask | std_mask);
- 
-     if (env->virt_enabled) {
-         if (env->hvictl & HVICTL_VTI) {
-@@ -4395,7 +4450,7 @@ static RISCVException rmw_sip64(CPURISCVState *env, int csrno,
- 
-     if (ret_val) {
-         *ret_val &= (env->mideleg | env->mvien) &
--            (S_MODE_INTERRUPTS | LOCAL_INTERRUPTS);
-+            (S_MODE_INTERRUPTS | std_mask | LOCAL_INTERRUPTS);
-     }
- 
-     return ret;
-@@ -4737,7 +4792,9 @@ static RISCVException rmw_hvien64(CPURISCVState *env, int csrno,
-                                     uint64_t new_val, uint64_t wr_mask)
- {
-     uint64_t mask = wr_mask & hvien_writable_mask;
-+    uint64_t std_mask = std_impl_intr_mask(env, AIA_SSAIA);
- 
-+    mask |= wr_mask & std_mask;
-     if (ret_val) {
-         *ret_val = env->hvien;
-     }
-@@ -4861,6 +4918,7 @@ static RISCVException rmw_hvip64(CPURISCVState *env, int csrno,
-      */
-     uint64_t alias_mask = (env->hideleg | ~env->hvien) | VS_MODE_INTERRUPTS;
-     uint64_t nalias_mask = (~env->hideleg & env->hvien);
-+    uint64_t std_mask = std_impl_intr_mask(env, AIA_SSAIA);
-     uint64_t wr_mask_hvip;
-     uint64_t wr_mask_mip;
- 
-@@ -4882,8 +4940,8 @@ static RISCVException rmw_hvip64(CPURISCVState *env, int csrno,
-         alias_mask &= (env->hideleg | env->hvien);
-     }
- 
--    wr_mask_hvip = wr_mask & nalias_mask & hvip_writable_mask;
--    wr_mask_mip = wr_mask & alias_mask & hvip_writable_mask;
-+    wr_mask_hvip = wr_mask & nalias_mask & (hvip_writable_mask | std_mask);
-+    wr_mask_mip = wr_mask & alias_mask & (hvip_writable_mask | std_mask);
- 
-     /* Aliased bits, bits 10, 6, 2 need to come from mip. */
-     ret = rmw_mip64(env, csrno, &ret_mip, new_val, wr_mask_mip);
++fail_nmie:
++	li	a0, 6
++	j	_exit
++
++	/* Must match rnmi-exception-vector in Makefile.softmmu-target. */
++	.org	0x100
++rnmi_exception:
++	csrr	t0, mcause
++	li	t1, EXCP_INST_ACCESS_FAULT
++	beq	t0, t1, handle_fetch_fault
++	li	t1, EXCP_SW_CHECK
++	beq	t0, t1, handle_sw_check
++
++	li	a0, 4
++	j	_exit
++
++handle_fetch_fault:
++	/* This is an M-mode exception and will return with MRET. */
++	csrr	t0, mstatus
++	li	t1, MSTATUS_MPELP
++	and	t0, t0, t1
++	beqz	t0, fail_mpelp
++
++	csrr	t0, CSR_MNSTATUS
++	andi	t0, t0, MNSTATUS_MNPELP
++	bnez	t0, fail_mnpelp
++
++	lla	t0, resume_non_lpad
++	csrw	mepc, t0
++	mret
++
++resume_non_lpad:
++	/* MRET must restore ELP, so this instruction must not retire. */
++	li	a0, 1
++	j	_exit
++
++handle_sw_check:
++	csrr	t0, mtval
++	li	t1, SW_CHECK_FCFI_TVAL
++	bne	t0, t1, fail_tval
++
++	li	a0, 0
++	j	_exit
++
++fail_mpelp:
++	li	a0, 2
++	j	_exit
++
++fail_mnpelp:
++	li	a0, 3
++	j	_exit
++
++fail_tval:
++	li	a0, 5
++
++_exit:
++	lla	a1, semiargs
++	li	t0, 0x20026	/* ADP_Stopped_ApplicationExit */
++	sd	t0, 0(a1)
++	sd	a0, 8(a1)
++	li	a0, 0x20	/* TARGET_SYS_EXIT_EXTENDED */
++
++	/* Semihosting call sequence. */
++	.balign	16
++	slli	zero, zero, 0x1f
++	ebreak
++	srai	zero, zero, 0x7
++	j	.
++
++	.data
++	.balign	16
++semiargs:
++	.space	16
 -- 
 2.55.0
 
