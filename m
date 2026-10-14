@@ -4,66 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49703CC6B2E
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 21:11:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F874CC6B2E
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 21:11:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xH6FT-0007Ga-Vk; Wed, 14 Oct 2026 17:10:56 -0400
+	id 1xH6FT-0007Cx-5R; Wed, 14 Oct 2026 17:10:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <31u_PagsKClM8v7v81F6vE319916z.x97Bz7F-yzGz689818F.9C1@flex--namangulati.bounces.google.com>)
- id 1xH6FS-0007CU-HE
- for qemu-devel@nongnu.org; Wed, 14 Oct 2026 17:10:54 -0400
-Received: from mail-yw1-x1146.google.com ([2607:f8b0:4864:20::1146])
+ <30-_PagsKClA5s4s5yC3sB0y66y3w.u648w4C-vwDw3565y5C.69y@flex--namangulati.bounces.google.com>)
+ id 1xH6FR-00077W-3j
+ for qemu-devel@nongnu.org; Wed, 14 Oct 2026 17:10:53 -0400
+Received: from mail-yw1-x1145.google.com ([2607:f8b0:4864:20::1145])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from
- <31u_PagsKClM8v7v81F6vE319916z.x97Bz7F-yzGz689818F.9C1@flex--namangulati.bounces.google.com>)
- id 1xH6FP-0001Dm-P5
- for qemu-devel@nongnu.org; Wed, 14 Oct 2026 17:10:54 -0400
-Received: by mail-yw1-x1146.google.com with SMTP id
- 00721157ae682-88322409239so52774117b3.1
- for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 14:10:48 -0700 (PDT)
+ <30-_PagsKClA5s4s5yC3sB0y66y3w.u648w4C-vwDw3565y5C.69y@flex--namangulati.bounces.google.com>)
+ id 1xH6FP-0001Da-4l
+ for qemu-devel@nongnu.org; Wed, 14 Oct 2026 17:10:52 -0400
+Received: by mail-yw1-x1145.google.com with SMTP id
+ 00721157ae682-8b0cd41e7aaso9748817b3.3
+ for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 14:10:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20251104; t=1792012247; x=1792617047; darn=nongnu.org;
- h=content-type:cc:to:from:subject:message-id:references:mime-version
- :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=BHAaWWEJMCHHxNcrFC5T+b9snoojTnLGaAfiiw4oB8c=;
- b=AhKq1em9azmIrc41DYw/mBp3H54wGBXvnHTR0yRWSnCMfetR7KUGgEjWPprGjUXEbC
- bN47xLvCVXmAsqWiuo0VZbhoj62tI40fuiR44ZHEKD94kNSP72YYUbi4EvqCl8ENqZBV
- 0af/b0/2wk/QCM35aEiEG5kKmCyRaRUU7T5DN/wgmd+jgUIeZJ48scWmJDpqzqCBPC3G
- 8JnvkqF+HBgMiJIihvleL0p2S+g71yCtDCyrD2SU1LjO2OYLRmHsYE433o+g6VCuuDWD
- fkRvm7rxPdEgEsPEEOYqZkmG/T76QuebpWan/lshbqqqXYZjXK6AoWY93NQG3YpLSWzM
- +NQQ==
+ d=google.com; s=20251104; t=1792012244; x=1792617044; darn=nongnu.org;
+ h=content-type:cc:to:from:subject:message-id:mime-version:date:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=pWWpz+aRzv/pobj9rfyOULHv/yWqVmaAAIWGjnE9xHo=;
+ b=livF3KLEflIHSpBLxM3KxPmMYREhoEM76eG0WOrhnQzhGVVndBhhmXfLHopzYjlY3j
+ BwRW8IEMqBHstnaj55mdnpyP5Xa+8SJNXU9wsIre33xFJ/qbeM3wXOYqvswZHcoJmZwF
+ Eq2wbUzWZGBfLmg9IqX76T2hMXvQgDC1VieLaw/0H/QC7KF2Kqv7tDDlRLv9njtuDvAD
+ ZGpYFGKi24u3nvOyglMyQUY3nrniRlAoLDj+qaxO/rWlC3/hcS0DTjA/vpoEOqYMOwof
+ dv/ry5O4nQisai56tpxQ8PA6mBJkQ8i4bUKLUMxFq9snkoO5qFA1oJSWivGvwQ35ey3l
+ 9hGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792012247; x=1792617047;
- h=content-type:cc:to:from:subject:message-id:references:mime-version
- :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=BHAaWWEJMCHHxNcrFC5T+b9snoojTnLGaAfiiw4oB8c=;
- b=Q62WrxxaWcIegQNfBQlfPNEtowzmbNRv2TVZ38g1PSnTBxde5FtV7bB0TrEYOVN4LR
- cMnEgrLIHgThrVc2n1qp0j4N7eL1dQUHnDjA0GX2V8P1VStCcj3CRUByrjFoTQaTEUj2
- wn+eC021k0ttNf51t4QDsNemsEmPQoJvQzttCsI/maNNOxeT7+a6tFSlPC7ZoxK5cyP0
- Pt6jqcTsFZOZiEdZmXORUIBXpFs3lKQ33v3+dXHLmnOa4GOrvytD3nkS/3tetUvkZ7v8
- ZeIC3K7Uryy4ot7iEDzlcpne9uBcCTXkK97g81A1W+5WAIzleKPyDLT7rgsgUcspiZVb
- xeww==
-X-Gm-Message-State: AFq9FYLmbJJGA3v3NjiIoUxROvkCPe4GWAlPNqmuiePuNP8GVH8TJlne
- eMCSycHeWo/TFulcFO3Xf2B1zVerJYqQrRMdB2EaMSrWh/4lKKT+2YFWif8JMsg0n5B7feX9BaQ
- C5hMdLwM0AC/WDu8VkTWQURBFl2rkCv41t0U9q3xE7ATTsRd9l3Blo0vLpPnnEYL0T+8b6g5Tu6
- r8tsDROkyYqUobXmpOqFm33KN2si/1UN5K1UUIoZwMKFI6oyCCJ9FnhfWC3rvIKA==
-X-Received: from ywb9.prod.google.com ([2002:a05:690c:9509:b0:8ac:6bf3:16a6])
+ d=1e100.net; s=20260707; t=1792012244; x=1792617044;
+ h=content-type:cc:to:from:subject:message-id:mime-version:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=pWWpz+aRzv/pobj9rfyOULHv/yWqVmaAAIWGjnE9xHo=;
+ b=G5tJwU88LWlFGLbSdBBbFlE9/GCe16IqnTBV1C8leU6artX5WYly08RsGDzR3nZi0A
+ TZsIeV6cLKwhhx28qOGuI6C4s5xlKOjKaN1dTKi1+9ckHOav2gJjwl41MnRfF+s5jZcq
+ mPQlJ/pw5LtIGInRrBEJZUeSmeLuyiDEzm8TqAQthqudMGm2YyGMOlQnWcMSUKpDCGa2
+ 0WtPOsxbsIISzI1Sp4QVkl3Mi1V0zyqXMZ3g0Z/kdsD6LokHyYPnWAFUNCDwufVB3XBP
+ 5r3czt44kR1vsrLQg2x7CkyM8MRdy/gcfQyfMXH7Azf49+H0j9Ku6gRsehOAqO8YupHs
+ pJjg==
+X-Gm-Message-State: AFq9FYI6jgRFyMS9vTGGoRRk9mSERnaChHjElrDH2WusucZwfqONhfuX
+ or4yI296XMKlJJdewm+iEyEKotDB4Xou3FrIwBMvkznCuG2eN/ej7z9iFB13XzUit49uSU84C1w
+ tf4XiLtmL4bf7+tiKQVUZYLUgSHtyJPtKqQ5BsNezOVyE5pMFxWt0oYXlKFAIrkXGHhnI0lC7QL
+ Kmc1SDehJz6K0OO9fYFOXqF/JA8/IK6zFRtwyIa0HAl6nkAtG9HgvCkHYrNYE/Sw==
+X-Received: from ywbcn24.prod.google.com ([2002:a05:690c:d18:b0:8ac:3797:b81d])
  (user=namangulati job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:690c:10d:b0:8b0:88b7:cfe3 with SMTP id
- 00721157ae682-8b088b7d19bmr60655457b3.40.1792012246749; 
- Wed, 14 Oct 2026 14:10:46 -0700 (PDT)
-Date: Wed, 14 Oct 2026 21:10:40 +0000
-In-Reply-To: <20261014211041.1087331-1-namangulati@google.com>
+ 2002:a05:690c:a4c5:b0:8b0:d42c:5500 with SMTP id
+ 00721157ae682-8b0d42c7690mr1779827b3.0.1792012243704; 
+ Wed, 14 Oct 2026 14:10:43 -0700 (PDT)
+Date: Wed, 14 Oct 2026 21:10:37 +0000
 Mime-Version: 1.0
-References: <20261014211041.1087331-1-namangulati@google.com>
 X-Mailer: git-send-email 2.56.0.176.g3575e65682-goog
-Message-ID: <20261014211041.1087331-4-namangulati@google.com>
-Subject: [PATCH v5 3/4] vfio: add setup_sparse_mmaps hook to VFIODeviceIOOps
+Message-ID: <20261014211041.1087331-1-namangulati@google.com>
+Subject: [PATCH v5 0/4] vfio-user: support multiple FDs backing region mmaps
 From: Naman Gulati <namangulati@google.com>
 To: qemu-devel@nongnu.org
 Cc: John Levon <john.levon@nutanix.com>,
@@ -73,9 +71,9 @@ Cc: John Levon <john.levon@nutanix.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Matt Evans <matt@ozlabs.org>, Naman Gulati <namangulati@google.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1146;
- envelope-from=31u_PagsKClM8v7v81F6vE319916z.x97Bz7F-yzGz689818F.9C1@flex--namangulati.bounces.google.com;
- helo=mail-yw1-x1146.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1145;
+ envelope-from=30-_PagsKClA5s4s5yC3sB0y66y3w.u648w4C-vwDw3565y5C.69y@flex--namangulati.bounces.google.com;
+ helo=mail-yw1-x1145.google.com
 X-Spam_score_int: -95
 X-Spam_score: -9.6
 X-Spam_bar: ---------
@@ -98,118 +96,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a setup_sparse_mmaps callback to VFIODeviceIOOps so transport
-backends (such as vfio-user) can parse custom sparse mmap capabilities,
-falling back to vfio_default_setup_sparse_mmaps() to process shared
-VFIO mmap capabilities.
+This series extends the vfio-user protocol specification to allow
+servers to pass multiple file descriptors for different sparse memory
+areas to be mmap'ed within a single device region.
 
-Reviewed-by: Thanos Makatos <thanos.makatos@nutanix.com>
-Signed-off-by: Naman Gulati <namangulati@google.com>
+This extension is intended for exposing paravirtualized PCI devices via
+a vfio-user server that may have multiple unique sub-regions in a BAR
+backed by some mmap'able buffers sourced from distinct file descriptors.
+
+This change introduces a new capability:
+  VFIO_REGION_INFO_CAP_SPARSE_MMAP_FDS
+
+Unlike VFIO_REGION_INFO_CAP_SPARSE_MMAP (which maps all sparse areas
+from a single open file descriptor), this new capability defines an
+array of sparse mmap areas where each area contains an index into the
+array of file descriptors.
+
+When all sparse areas share a single file descriptor, servers may
+continue to emit VFIO_REGION_INFO_CAP_SPARSE_MMAP and send exactly one
+file descriptor in SCM_RIGHTS for backwards compatibility with older
+clients.
+
+The extensions in this series also lays the groundwork to make use of
+the in-development series [1] extending vfio-pci to return distinct
+dmabuf FDs for discrete regions of a device's BAR. A vfio-user server
+may choose to return dmabuf FDs for various regions of a device's BAR to
+map a vfio passthrough device into the guest, in order to retain control
+of the device and be able to revoke mappings passed to the VM.
+
+libvfio-user server side changes WIP on github [2].
+
+
+[1] https://lore.kernel.org/all/20260715174737.15287-1-matt@ozlabs.org
+[2] https://github.com/NamanGulati/libvfio-user/tree/multi-region-fd
+
 ---
- hw/vfio/vfio-region.h         |  5 +++++
- include/hw/vfio/vfio-device.h | 16 ++++++++++++++++
- hw/vfio/device.c              |  1 +
- hw/vfio/region.c              | 19 ++++++++++++++++---
- 4 files changed, 38 insertions(+), 3 deletions(-)
+Changes from v4:
+  - Set .setup_sparse_mmaps = vfio_default_setup_sparse_mmaps in
+    vfio_device_io_ops_ioctl. (Cedric)
+  - Return -EINVAL in vfio_user_device_io_get_region_info() when
+    VFIO_REGION_INFO_CAP_SPARSE_MMAP_FDS is present without received
+    FDs. (Cedric)
+  - Dropped redundant VFIO_USER_MAX_REGIONS bounds checks in
+    vfio_user_device_io_get_region_info() and
+    vfio_user_device_io_setup_sparse_mmaps(). (Thanos)
+  - Validated sparse_fds->nr_areas against info->argsz and switched to
+    g_try_new0() for region->mmaps. (Thanos)
+  - Included area info in invalid area error message and added comments
+    for recv_fds resets in hw/vfio-user/proxy.c. (Thanos)
+  - Link to v4: https://lore.kernel.org/qemu-devel/20261009175314.1823347-1-namangulati@google.com
 
-diff --git a/hw/vfio/vfio-region.h b/hw/vfio/vfio-region.h
-index 9f6a5cf7d5..a0c9533f9f 100644
---- a/hw/vfio/vfio-region.h
-+++ b/hw/vfio/vfio-region.h
-@@ -46,4 +46,9 @@ void vfio_region_mmaps_set_enabled(VFIORegion *region, bool enabled);
- void vfio_region_exit(VFIORegion *region);
- void vfio_region_finalize(VFIORegion *region);
- 
-+struct vfio_region_info;
-+int vfio_default_setup_sparse_mmaps(VFIORegion *region,
-+                                    struct vfio_region_info *info,
-+                                    Error **errp);
-+
- #endif /* HW_VFIO_REGION_H */
-diff --git a/include/hw/vfio/vfio-device.h b/include/hw/vfio/vfio-device.h
-index 8472420d3f..3136e152f2 100644
---- a/include/hw/vfio/vfio-device.h
-+++ b/include/hw/vfio/vfio-device.h
-@@ -43,6 +43,7 @@ enum {
- 
- typedef struct VFIODeviceOps VFIODeviceOps;
- typedef struct VFIODeviceIOOps VFIODeviceIOOps;
-+typedef struct VFIORegion VFIORegion;
- typedef struct VFIOMigration VFIOMigration;
- 
- typedef struct IOMMUFDBackend IOMMUFDBackend;
-@@ -218,6 +219,21 @@ struct VFIODeviceIOOps {
-     int (*get_region_info)(VFIODevice *vdev,
-                            struct vfio_region_info *info, int *fd);
- 
-+    /**
-+     * @setup_sparse_mmaps
-+     *
-+     * Parse sparse mmap capabilities for a region and initialize region->mmaps.
-+     *
-+     * @region: #VFIORegion to set up
-+     * @info: region info struct containing capabilities
-+     * @errp: pointer to Error*, to store an error if it happens
-+     *
-+     * Returns 0 on success, -ENODEV if not sparse, or negative error code.
-+     */
-+    int (*setup_sparse_mmaps)(VFIORegion *region,
-+                              struct vfio_region_info *info,
-+                              Error **errp);
-+
-     /**
-      * @get_irq_info
-      *
-diff --git a/hw/vfio/device.c b/hw/vfio/device.c
-index 4f11959633..94d6e7ce09 100644
---- a/hw/vfio/device.c
-+++ b/hw/vfio/device.c
-@@ -662,6 +662,7 @@ static VFIODeviceIOOps vfio_device_io_ops_ioctl = {
- 
-     .device_feature = vfio_device_io_device_feature,
-     .get_region_info = vfio_device_io_get_region_info,
-+    .setup_sparse_mmaps = vfio_default_setup_sparse_mmaps,
-     .get_irq_info = vfio_device_io_get_irq_info,
-     .set_irqs = vfio_device_io_set_irqs,
-     .region_read = vfio_device_io_region_read,
-diff --git a/hw/vfio/region.c b/hw/vfio/region.c
-index 16efed2fce..94cfb708bf 100644
---- a/hw/vfio/region.c
-+++ b/hw/vfio/region.c
-@@ -162,9 +162,9 @@ static int vfio_mmap_compare_offset(const void *a, const void *b)
-     return 0;
- }
- 
--static int vfio_setup_region_sparse_mmaps(VFIORegion *region,
--                                          struct vfio_region_info *info,
--                                          Error **errp)
-+int vfio_default_setup_sparse_mmaps(VFIORegion *region,
-+                                    struct vfio_region_info *info,
-+                                    Error **errp)
- {
-     struct vfio_info_cap_header *hdr;
-     struct vfio_region_info_cap_sparse_mmap *sparse;
-@@ -198,6 +198,19 @@ static int vfio_setup_region_sparse_mmaps(VFIORegion *region,
- 
-     region->nr_mmaps = j;
-     region->mmaps = g_realloc(region->mmaps, j * sizeof(VFIOMmap));
-+    return 0;
-+}
-+
-+static int vfio_setup_region_sparse_mmaps(VFIORegion *region,
-+                                          struct vfio_region_info *info,
-+                                          Error **errp)
-+{
-+    int ret, i;
-+
-+    ret = region->vbasedev->io_ops->setup_sparse_mmaps(region, info, errp);
-+    if (ret) {
-+        return ret;
-+    }
- 
-     /*
-      * Sort sparse mmaps by offset to ensure proper handling of gaps
+Changes from v3:
+  - Added "sparse_mmap_fds" capability to VFIO_USER_VERSION so servers
+    know whether the client supports
+    VFIO_REGION_INFO_CAP_SPARSE_MMAP_FDS. (Thanos)
+  - Changed VFIO_REGION_INFO_CAP_SPARSE_MMAP_FDS capability ID to 0x8001. (Thanos)
+  - Clarified and enforced that VFIO_REGION_INFO_CAP_SPARSE_MMAP and
+    VFIO_REGION_INFO_CAP_SPARSE_MMAP_FDS are mutually exclusive per region,
+    number of FDs in SCM_RIGHTS must not exceed nr_areas, zero-sized areas
+    are not permitted, offset + size must not exceed the region size, and
+    areas must not overlap. (Thanos)
+  - Link to v3: https://lore.kernel.org/qemu-devel/20261007000833.2445641-1-namangulati@google.com
+
+Changes from v2:
+  - As suggested by Cedric: kept core VFIO changes minimal by only
+    extending VFIOMMmap to hold each mmap subregion's fd & fd_offset.
+  - Moved multi-FD management and capability parsing into hw/vfio-user,
+    and using VFIOUserProxy to hold region multi-fds.
+  - Resend: rebased to head.
+  - Link to v2: https://lore.kernel.org/qemu-devel/20260826050039.2068138-1-namangulati@google.com
+
+Changes from RFC:
+  - Refactored the get_region_info callback to keep vbasedev constant
+    and take in a VFIORegionFDs* out parameter to store the received fds.
+  - Link to RFC: https://lore.kernel.org/qemu-devel/20260811233930.401797-1-namangulati@google.com
+---
+
+Naman Gulati (4):
+  vfio-user: add multi-fd region mmap capability
+  vfio: add 'fd' and 'fd_offset' to VFIOMmap
+  vfio: add setup_sparse_mmaps hook to VFIODeviceIOOps
+  vfio-user: support multiple FDs for sparse mmap regions
+
+ docs/interop/vfio-user.rst    |  86 ++++++++++++++++++++++--
+ hw/vfio-user/protocol.h       |  35 ++++++++--
+ hw/vfio-user/proxy.h          |   2 +
+ hw/vfio/vfio-region.h         |   9 ++-
+ include/hw/vfio/vfio-device.h |  16 +++++
+ hw/vfio-user/device.c         | 121 ++++++++++++++++++++++++++++++++--
+ hw/vfio-user/proxy.c          |  52 +++++++++++++--
+ hw/vfio/device.c              |   1 +
+ hw/vfio/pci.c                 |   2 +
+ hw/vfio/region.c              |  45 ++++++++++---
+ 10 files changed, 337 insertions(+), 32 deletions(-)
+
 -- 
 2.56.0.385.gd3acb90ef8-goog
-
 
