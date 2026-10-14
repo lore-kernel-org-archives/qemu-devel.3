@@ -4,116 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4FBDC3DA7A
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 17:57:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0806CC6B1A
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 18:08:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xH3Dp-0006yq-Ao; Wed, 14 Oct 2026 13:57:01 -0400
+	id 1xH3OS-0000Ip-Mi; Wed, 14 Oct 2026 14:08:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xH3Dn-0006yf-UX
- for qemu-devel@nongnu.org; Wed, 14 Oct 2026 13:57:00 -0400
-Received: from smtp-out2.suse.de ([195.135.223.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xH3Dm-0007pd-Ee
- for qemu-devel@nongnu.org; Wed, 14 Oct 2026 13:56:59 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1xH3OQ-0000Hp-6a
+ for qemu-devel@nongnu.org; Wed, 14 Oct 2026 14:07:58 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1xH3ON-0000IA-AC
+ for qemu-devel@nongnu.org; Wed, 14 Oct 2026 14:07:57 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1792001273;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=0YuK37UrC6xLhWeUe2TPTpAqk0OLcnMYuF5CMKYrGTA=;
+ b=BQ3vUuYKWnbxi9jVjeu0+LNyi7Gyepa93btE3jNIZOrmTo4V78J2yVIoD+TI6TFzzD028M
+ YK+8JUpvQqoYIM5pSBaEK3MTSRBfjvr5erO26HP/TKsJly2QRgWcQU5MvwK3sNSicn18x8
+ VjMPgB38N/v8pwhloohCvEdqx5OznCk=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-688-KlxmKeaJOhKzNl45W3Qlgg-1; Wed,
+ 14 Oct 2026 18:07:50 +0000
+X-MC-Unique: KlxmKeaJOhKzNl45W3Qlgg-1
+X-Mimecast-MFC-AGG-ID: KlxmKeaJOhKzNl45W3Qlgg_1792001269
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 487641F7D2;
- Wed, 14 Oct 2026 17:56:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1792000615; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=BcCMthuEwPuUz+5bclTzpOOOTl24Gd43RbgqKVBL4Yg=;
- b=ex725nZYxrVZsn0Qrnkt1o5JcjvT7fEMW1O8UktRBhLf1mhrQS7dl95/1o2xZjfbyyyWXE
- daOb+0IHCFme+qDHV65iVnxCgz2vq4FOrLhu2nsevYXmnsYrGiu/CR6D/6/omQ/2C+GWCF
- rCMV+KmHYaDsKCXSUtXFahA0wipwuHM=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1792000615;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=BcCMthuEwPuUz+5bclTzpOOOTl24Gd43RbgqKVBL4Yg=;
- b=T5hUXg3I25UvFzTHOVgsZNNUVBNb7AxoDoNb6PX3rclXh+Xa74M/YOi/e+cWn1oWcKZ05E
- iBqgHY3Krytgm0CA==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=veLHhfns;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=uTWqbgHG
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1792000614; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=BcCMthuEwPuUz+5bclTzpOOOTl24Gd43RbgqKVBL4Yg=;
- b=veLHhfnsgbdE0sEzvtngvPRV52tcUmNQF6rKoTZOt3CsafKnShxQMMtHGKFP34ppJT+Yck
- jL8BsyJXtMuwXdNtYqMrKyszWphRyQuIwbaHdb6Mt92/q6Lamchi+/qv2hdPSDTZpXo9zR
- bRsKKR4//7OU6O5pJGuWaYO7SzIRuKE=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1792000614;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=BcCMthuEwPuUz+5bclTzpOOOTl24Gd43RbgqKVBL4Yg=;
- b=uTWqbgHGC0zwAWFNwHi7crOya1ncIh6zuPPbcLZYIVjPS8NJ5hoZmUQp7x+7Cb14tmwLSR
- E6aKp+j5eUqd7vDg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 48535133F1;
- Wed, 14 Oct 2026 17:56:53 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id vssHNGTCz2plagAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 14 Oct 2026 17:56:53 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, peterx@redhat.com, mjt@tls.msk.ru
-Subject: Re: [RFC] container images for migration-test
-In-Reply-To: <asyX0JccFfG0ZMDp@redhat.com>
-References: <8733vbtmge.fsf@suse.de> <asyX0JccFfG0ZMDp@redhat.com>
-Date: Wed, 14 Oct 2026 14:56:46 -0300
-Message-ID: <87jynkmaht.fsf@suse.de>
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9A1F51955F75; Wed, 14 Oct 2026 18:07:48 +0000 (UTC)
+Received: from redhat.com (headnet04.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.116])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5D9081800480; Wed, 14 Oct 2026 18:07:47 +0000 (UTC)
+Date: Wed, 14 Oct 2026 13:07:44 -0500
+From: Eric Blake <eblake@redhat.com>
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PULL v2 00/15] NBD patches through 2026-10-08
+Message-ID: <as_CCTg5aJaWkm70@redhat.com>
+References: <20261012212945.84275-17-eblake@redhat.com>
+ <f34e4a10-6673-4d18-8e51-ce4c8f17c398@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-X-Rspamd-Queue-Id: 487641F7D2
-X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- FROM_HAS_DN(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- ARC_NA(0.00)[];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- MIME_TRACE(0.00)[0:+]; RCVD_TLS_ALL(0.00)[];
- DKIM_TRACE(0.00)[suse.de:+]; RCPT_COUNT_THREE(0.00)[4];
- RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
- TO_DN_SOME(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- MISSING_XM_UA(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,
- imap1.dmz-prg2.suse.org:rdns, suse.de:dkim]
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <f34e4a10-6673-4d18-8e51-ce4c8f17c398@linaro.org>
+User-Agent: NeoMutt/20260616
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=eblake@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 10
+X-Spam_score: 1.0
+X-Spam_bar: +
+X-Spam_report: (1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -129,59 +84,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+On Wed, Oct 14, 2026 at 10:02:46AM +0200, Richard Henderson wrote:
+> On 10/12/26 23:29, Eric Blake wrote:
+> > The following changes since commit 615ece3c406b262996e569f29ea6eed0d81c4d8d:
+> > 
+> >    Merge tag 'for-upstream' ofhttps://gitlab.com/bonzini/qemu into staging (2026-10-09 15:49:53 +0200)
+> > 
+> > are available in the Git repository at:
+> > 
+> >    https://gitlab.com/ebblake/qemu.git tags/pull-nbd-2026-10-08-v2
+> > 
+> > for you to fetch changes up to 3d794bcd554c3dc196685faf382fdffe7243e674:
+> > 
+> >    iotests/iothreads-nbd-export: Skip on s390 (2026-10-12 16:23:50 -0500)
+> > 
+> > [v2: sending only the updated cover letter and patch 2/15]
+> > 
+> > ----------------------------------------------------------------
+> > NBD patches through 2026-10-08
+> > 
+> > Several fixes, including:
+> > - Eric Blake: Update MAINTAINERS, support qemu-nbd -s -l
+> > - Fiona Ebner: Report flush error on qemu-img convert
+> > - Guillaume Vinke: Fix NBD client on dead connection
+> > - Denis V. Lunev: Fix postcopy dirty bitmap migration
+> > - Eric Farman: Several iotest improvements
+> 
+> This still has 13 job failures, including check-python-minreqs.
+> 
+> https://gitlab.com/qemu-project/qemu/-/pipelines/2945631627
 
-> On Mon, Sep 14, 2026 at 08:58:09PM -0300, Fabiano Rosas wrote:
->> Hi, I just wanted to share and ask for feedback on some container images
->> I've been building as part of my testing of migration pull-requests.
->>=20
->> From a Dockerfile from ./tests/docker/dockerfiles/ I'm producing the
->> following:
->>=20
->> $ docker images
->> qemu-build-base:11.0.0                        b6efa198e93a        5.8GB
->> qemu-rootfs-base:11.0.0                       72bcb5418f4d       4.08GB
->> qemu:11.0.0                                   018a3f0f4dcc          2GB
->
-> snip
->
->> 2) Neither the QEMU build nor the distro repos are reliable enough to
->> allow me to just "go back in time" and rebuild at any moment, I need to
->> keep the artifacts cached to avoid rebuilding. Otherwise it comes time
->> to send a PR and I discover that some python piece has changed or the
->> distro messed up the older repository.
->
-> Yes, in general building old QEMU on new distros periodically
-> hits trouble.  If building old QEMU, better reliability is
-> achieved by using a distro release that was from the same
-> timeframe as QEMU.  Is using containers targetting such old
-> distro versions not an option ? The tests/docker/dockerfiles
-> from the old QEMU branch ought to work ?
->
+Looks like most of the failures were due to the later runners being
+canceled after the early failure of the check-python-minreqs syntax
+check failure. At any rate, I figured out how to patch that one and
+will be posting v3 shortly.
 
-Yes, I'm doing just that. Some tweaks are needed still. For instance, my
-script has something like this:
+-------------------
+************* Module tests.migrate-bitmaps-postcopy-test
+tests/migrate-bitmaps-postcopy-test:146:8: W0201: Attribute 'drive1_sha256' defined outside __init__ (attribute-defined-outside-init)
 
-  dockerfile=3D"tests/docker/dockerfiles/opensuse-leap.docker"
+Fixed by:
+diff --git a/tests/qemu-iotests/tests/migrate-bitmaps-postcopy-test b/tests/qemu-iotests/tests/migrate-bitmaps-postcopy-test
+index bada325e017..53f7dafc79a 100755
+--- a/tests/qemu-iotests/tests/migrate-bitmaps-postcopy-test
++++ b/tests/qemu-iotests/tests/migrate-bitmaps-postcopy-test
+@@ -115,6 +115,7 @@ class TestDirtyBitmapPostcopyMigration(iotests.QMPTestCase):
+                                                           'discard=unmap')
+         self.vm_b = iotests.VM(path_suffix='b').add_drive(disk_b,
+                                                           'discard=unmap')
++        self.drive1_sha256 = ""
+         # A bitmap on a second node makes postcopy switch nodes after setup
+         self.vm_a.add_drive(disk_a1)
+         self.vm_b.add_drive(disk_b1)
 
-  sed -i 's/ncurses-devel//' $dockerfile
 
-  if [ "$tag" =3D "10.1.0" ]; then
-      sed -i 's/libLLVM19//' $dockerfile
-  fi
+-- 
+Eric Blake, Principal Software Engineer
+Red Hat, Inc.
+Virtualization:  qemu.org | libguestfs.org
 
-> Our stable release branches have the same needs, and their
-> CI is using the container images from the old branches.
->
-> How far back in time do you need/want to go for migration
-> testing ?  Is it sufficient to merely target versions for
-> which mjt is still doing active maint work, so we can
-> expect the containers to still work.
->
-
-I'm currently testing against the previous 3 releases. I think 2
-releases is probably enough.
-
-> With regards,
-> Daniel
 
