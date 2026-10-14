@@ -4,82 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC54CCA9EBD
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 03:48:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB034CA9EBD
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 03:48:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGpqs-00060q-Ii; Tue, 13 Oct 2026 23:40:26 -0400
+	id 1xGprs-0000sz-LH; Tue, 13 Oct 2026 23:41:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1xGpqo-0005wq-6C
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 23:40:23 -0400
-Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
+ id 1xGpro-0000cp-VJ
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 23:41:25 -0400
+Received: from mail-pj1-x102c.google.com ([2607:f8b0:4864:20::102c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1xGpql-0001cr-OX
- for qemu-devel@nongnu.org; Tue, 13 Oct 2026 23:40:21 -0400
-Received: by mail-pj1-x1035.google.com with SMTP id
- 98e67ed59e1d1-398a4dcf289so1915775a91.2
- for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 20:40:19 -0700 (PDT)
+ id 1xGprm-0001jy-U2
+ for qemu-devel@nongnu.org; Tue, 13 Oct 2026 23:41:24 -0400
+Received: by mail-pj1-x102c.google.com with SMTP id
+ 98e67ed59e1d1-3ab3260b35dso2289456a91.1
+ for <qemu-devel@nongnu.org>; Tue, 13 Oct 2026 20:41:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1791949218; x=1792554018; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1791949282; x=1792554082; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=S1XJDR9OtqfvoNeWCW8sQ0wmQsbt0AmE5hlrUneIK80=;
- b=KvR4DE83bZST1b6SRi4grITE7VM2rSHsGUdHliAGBLr0ipKK3hj3Fy+83+UQhBNddI
- m5y2mXIsEGv1tdqQQDIzVAXPOqELhukoZByO0y08EdTYd7FxvGgs2RzdHsaV2hKE/1Lo
- QkDBolfJooZAGaHWMM4m792I776pDRrxtS+yWh/nykDDO/maNrHoBQRu+6t0xRAEagts
- A1v5ksG7hCE6CLoN+sLDaySxTo0CXg6mwJ66KGFSRc3CtcHidnWASGRiV3Wh7tBvZvTi
- Ud3ozy8p+kTgIBkPqmGLvb9eoY/hbPIytMSC7z5D+Hz/NEzhgrzz3Tkiiu+ai6oT20wJ
- K1Zw==
+ bh=BXHIdCL2nwmPCAXE9RBEn375WNlbVPnjszwV9mXbAEo=;
+ b=BQpxtiQtfN35qMB5QIDs0xnQa+8e0C94cqnxNKA3vyi9t0ks1CX+ti1mqzpORn/4mn
+ JylB3Sy5bq+tGZdZx63pB1fkM2wCjwrdLbqCQob/ywkjqlEs68XDxaNzgg6W1toFdclx
+ h4Bm8k+k0ee1Vn1cKQ52cA2C9KjobmASJJI2Ect3eMWudebieeG0nmGzhuQolbaRCydM
+ K2hqp5Z1aPXjP18ZlxZP02GMS830Vv0gk2U+/ZVSMmaGIR+THahzlMfVSFVy+fX9EyKv
+ AWcxIKha0m8fGOeyt8SmWYvNH3SwHtJ0LtfPOkVn8AXfqCCsx0uAWk/SYc4InwoFd3JY
+ guRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791949218; x=1792554018;
+ d=1e100.net; s=20260707; t=1791949282; x=1792554082;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=S1XJDR9OtqfvoNeWCW8sQ0wmQsbt0AmE5hlrUneIK80=;
- b=QZFf7W6dWMpqzI76aywuNtto35typhiPtjKMxFdaAx0GIgOcxsCxE3rWy+jfNAJPO3
- XA8dcXGNOE+NxFbklq7Ke9H4Ir836c342flZN8AAmz60/kL4MRzhOKn3TTsChL2JVRpb
- J4/e0Zz1okd1cUPHpfZlYFYboFraI9i6cUyZUUtV6gE5p1XXDIMMGClR08Eu3BqqZzHX
- ehzBBZis1XcZpGP+6h/QtyM5o4wiZFshBVKxj5FHci7+B5GHQkJJgufdMtatMIkj0MEX
- 8Mgf3cKd9jsr2wLT/m3yGlw+J3RyK5WJ486d0yEXEq3ARDFK3GFwR8Luf/1jEEtZr2Yo
- 4zBg==
-X-Gm-Message-State: AFq9FYKzmX0WpVyA1EiQhrlmvVp3stIgnu0rkOMrBDqnChuzNfzAV82d
- rIGSeUQOFlUjYQHI7UqHZYgsB///UgWpOcALArdCozLd+5/s6W4/Eyf0vJCeOA==
-X-Gm-Gg: AYBFou1eTHtlka03r2zU2gRtmK0Y/bchrGzIvzYZslQ1XmUc/njFtrSvRbrhCIREdj3
- gcM2rTQ1oByljhd7JogLnVqWI9J8lTCjQPkouVLBNM7qb0z3V6fPmbQXqRgqy23eyemOqJSb/F8
- NkjGwbCiZGlOFwoM4LA7PwhMBhjsHatMCfzY5hyaXBhmB2rbePNcQHV+o/7uo3oquTcFJe59Ynr
- FiwgqBQckOJHNszFMuRAp/a1qTVjl3knlyn4ao3lqwuDzdaeRiJ+/z4Q8QcQ7lAkM3fHK7+LjsN
- 7nhjAIg6U936ondg8I7S2m2OqoiKWCIzyfwW/HY2ba23V9aAiaCRBxsP0AxVjTCKKqZgVfRR16X
- 6netrfSVCPZxWdNpkw1pDycQ2ywH95aUH0U+t6SqbIPO264QF7tmga/xyhCw6OXulrN2IfOxP2x
- cftcNeDzFzGrgqHxb9vooAVSon8KDEEn/2OynRbIuw7tWXiXd7SIAc9XtdN+jLlEljvMzGbD/P6
- gB8v0dk2Ln9357Z
-X-Received: by 2002:a17:90b:514b:b0:3ab:22fe:b13e with SMTP id
- 98e67ed59e1d1-3ab3ae6b03fmr12645196a91.53.1791949218331; 
- Tue, 13 Oct 2026 20:40:18 -0700 (PDT)
+ bh=BXHIdCL2nwmPCAXE9RBEn375WNlbVPnjszwV9mXbAEo=;
+ b=FhQJE1dv7TR9qgXBime3O3UgV1g5dhtpF3uV7y3YL3BPADbl06lUW3penGL6eVWInd
+ QgNMhP28kL2onetCZyEvFrDxO+eCSxry9BOJ5FUbz+mhpCb9DfnaK9YgJZU2sfdD1Blp
+ 74s0T5NyzROEK4y8U8nYElvNxB6EDz/+JBv7m2JtGexb6P9XXpLGblhdSHb29Zozn3F+
+ AytUDXWm10hXMbwYHuk4t18gUcmbBFgHr+uuZwCEH4qm/ALJ3sFq4GI4lHuqc51D7Tfd
+ 0ihQYbkmUQirWX9icGS9C9zO+NRZOJQkdJE2i5hlyVBw0UpnuYQcIQfMsklSWjmM/nPj
+ 0PzQ==
+X-Gm-Message-State: AFq9FYJ+F3gq6TadGtRONpK0FyMkGZA5FuJguCs62CzKyYREaDFCU8xr
+ k3fc7NGyZQXZCSfJHxQfpO+rIj3G9sR/6r3OL49GuizgHxxCzjyiVBHmxEB/9g==
+X-Gm-Gg: AYBFou0vI/JXADInZmDfp9mzD9moZxWImR6dWd2cpdquCsz/x3BJhFVRM09Vqt5k044
+ oaJEI3+BDsLdLSyhKfP6bpBPVVfUnKhqjI6L7YNqfuLOeMGXNZkB7Uzh1H6GTSq2iUtjifM3I/9
+ moaLMrIn9KrKAu6XMZ3FDy4eNgatzFyIuRSeySermR8gNA1Jeo6L1FpS/07fCDuLZ292RvoB57T
+ saoYQC5Vk3/onwWyeJyC1wqP68ywkjKbyA4H7E9IBLXNj3ls88flzWeKWNGYPXXdHypEumW3Nfg
+ tpdolsAeJ9ce6Wn4CaHcVCYGwizBD5JxqTXmixYcaUBMzusuSPB2F089PFWz6LXZ3oDHjOFxf0X
+ PJaakp749zBMDdviiONudstEHRAuAQoQj4LpWybsiLMJ3JEKsKo389z1t7MOii/R7a39sFH4piP
+ ZRkWk22gO3f3b5MTDDtGiNhXXKfntHkWIaj9wWJBU1doKZeEhE+X1nhjiZVDLXPEQd2x8Or2o+5
+ f5VN7tAUh1E+Ih+
+X-Received: by 2002:a17:90b:3143:b0:3ab:e588:c29b with SMTP id
+ 98e67ed59e1d1-3abe588fa64mr7508628a91.5.1791949281509; 
+ Tue, 13 Oct 2026 20:41:21 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3ac61170b7bsm2321457a91.16.2026.10.13.20.40.16
+ 98e67ed59e1d1-3ac61170b7bsm2321457a91.16.2026.10.13.20.41.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 13 Oct 2026 20:40:17 -0700 (PDT)
+ Tue, 13 Oct 2026 20:41:20 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: Kuan-Wei Chiu <visitorckw@gmail.com>,
- Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 18/52] tests/qtest: Add qtest for Milk-V Duo board
-Date: Wed, 14 Oct 2026 13:38:33 +1000
-Message-ID: <20261014033907.3332383-19-alistair.francis@wdc.com>
+Cc: Jason Chien <jason.chien@sifive.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Max Chou <max.chou@sifive.com>, Chao Liu <chao.liu@processmission.com>
+Subject: [PULL 38/52] disas/riscv: Add disassembler support for
+ Xsfvqmaccdod/Xsfvqmaccqoq
+Date: Wed, 14 Oct 2026 13:38:53 +1000
+Message-ID: <20261014033907.3332383-39-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20261014033907.3332383-1-alistair.francis@wdc.com>
 References: <20261014033907.3332383-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
- envelope-from=alistair23@gmail.com; helo=mail-pj1-x1035.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102c;
+ envelope-from=alistair23@gmail.com; helo=mail-pj1-x102c.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -103,134 +106,187 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Kuan-Wei Chiu <visitorckw@gmail.com>
+From: Jason Chien <jason.chien@sifive.com>
 
-Add minimal qtest coverage for the Milk-V Duo machine to validate basic
-MMIO mapping and register access.
+Add disassembler support for all SiFive custom int8 matrix-multiply
+instructions: sf.vqmacc{u,,us,su}.4x8x4 and sf.vqmacc{u,,us,su}.2x8x2.
 
-Currently tested:
-- Verify DW8250 UART component version and type signatures.
-- Test read/write access to CV1800B clock bypass register.
+These instructions share opcode 0b1011011 and funct3 0b010, and are
+distinguished by funct6: 60-63 for the 4x8x4 (Xsfvqmaccqoq) tile and
+44-47 for the 2x8x2 (Xsfvqmaccdod) tile.
 
-Tested with:
-$ meson test -C build -v qemu:qtest-riscv64/milkv-duo-test
-[...]
-Ok:                 1
-Fail:               0
-
-Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
+Signed-off-by: Jason Chien <jason.chien@sifive.com>
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 Acked-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260927201326.650943-6-visitorckw@gmail.com>
+Signed-off-by: Max Chou <max.chou@sifive.com>
+Reviewed-by: Chao Liu <chao.liu@processmission.com>
+Message-ID: <20260927082534.3228237-6-max.chou@sifive.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- MAINTAINERS                  |  1 +
- tests/qtest/milkv-duo-test.c | 70 ++++++++++++++++++++++++++++++++++++
- tests/qtest/meson.build      |  3 +-
- 3 files changed, 73 insertions(+), 1 deletion(-)
- create mode 100644 tests/qtest/milkv-duo-test.c
+ MAINTAINERS              |  1 +
+ disas/riscv-xsf.h        | 16 +++++++++++++
+ disas/riscv.h            |  1 +
+ disas/riscv-xsf.c        | 49 ++++++++++++++++++++++++++++++++++++++++
+ disas/riscv.c            |  2 ++
+ disas/riscv-xsf-op.c.inc | 11 +++++++++
+ disas/meson.build        |  3 ++-
+ 7 files changed, 82 insertions(+), 1 deletion(-)
+ create mode 100644 disas/riscv-xsf.h
+ create mode 100644 disas/riscv-xsf.c
+ create mode 100644 disas/riscv-xsf-op.c.inc
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index 2e6a7721c5..b38e694b1c 100644
+index 7954964f4b..3957de045f 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -1883,6 +1883,7 @@ F: hw/riscv/cv1800b.c
- F: hw/riscv/milkv_duo.c
- F: include/hw/misc/cv1800b_clk.h
- F: include/hw/riscv/cv1800b.h
-+F: tests/qtest/milkv-duo-test.c
+@@ -405,6 +405,7 @@ S: Supported
+ F: target/riscv/xsf.decode
+ F: target/riscv/tcg/insn_trans/trans_xsf.c.inc
+ F: target/riscv/tcg/xsf_helper.c
++F: disas/riscv-xsf*
  
- RX Machines
- -----------
-diff --git a/tests/qtest/milkv-duo-test.c b/tests/qtest/milkv-duo-test.c
+ RENESAS RX CPUs
+ R: Yoshinori Sato <yoshinori.sato@nifty.com>
+diff --git a/disas/riscv-xsf.h b/disas/riscv-xsf.h
 new file mode 100644
-index 0000000000..06064b8733
+index 0000000000..b15b7aa97c
 --- /dev/null
-+++ b/tests/qtest/milkv-duo-test.c
-@@ -0,0 +1,70 @@
++++ b/disas/riscv-xsf.h
+@@ -0,0 +1,16 @@
 +/*
-+ * QTest for Milk-V Duo Board
++ * QEMU disassembler -- RISC-V specific header (xsf*).
 + *
-+ * Copyright (c) 2026 Kuan-Wei Chiu <visitorckw@gmail.com>
++ * Copyright (c) 2023 SiFive, Inc.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#ifndef DISAS_RISCV_XSF_H
++#define DISAS_RISCV_XSF_H
++
++#include "disas/riscv.h"
++
++const rv_opcode_data *decode_xsf(rv_decode *, rv_isa);
++
++#endif /* DISAS_RISCV_XSF_H */
+diff --git a/disas/riscv.h b/disas/riscv.h
+index b0269bb709..4f1ffc4ae0 100644
+--- a/disas/riscv.h
++++ b/disas/riscv.h
+@@ -262,6 +262,7 @@ typedef struct {
+ #define rv_fmt_vd_vs2_imm_vm          "O\tD,F,im"
+ #define rv_fmt_vd_vs2_uimm            "O\tD,F,u"
+ #define rv_fmt_vd_vs2_uimm_vm         "O\tD,F,um"
++#define rv_fmt_vd_vs1_vs2             "O\tD,E,F"
+ #define rv_fmt_vd_vs1_vs2_vm          "O\tD,E,Fm"
+ #define rv_fmt_vd_rs1_vs2_vm          "O\tD,1,Fm"
+ #define rv_fmt_vd_fs1_vs2_vm          "O\tD,4,Fm"
+diff --git a/disas/riscv-xsf.c b/disas/riscv-xsf.c
+new file mode 100644
+index 0000000000..745fcc8efd
+--- /dev/null
++++ b/disas/riscv-xsf.c
+@@ -0,0 +1,49 @@
++/*
++ * QEMU RISC-V Disassembler for xsf (SiFive vendor extensions).
++ *
++ * Copyright (c) 2023 SiFive, Inc.
 + *
 + * SPDX-License-Identifier: GPL-2.0-or-later
 + */
 +
 +#include "qemu/osdep.h"
-+#include "libqtest.h"
++#include "disas/riscv.h"
++#include "disas/riscv-xsf.h"
 +
-+#define CV1800B_CLK_BASE            0x03002000
-+#define CV1800B_CLK_BYPASS          0x030
-+#define CV1800B_CLK_BYPASS_RESET    0xFFFFFFFF
-+#define TEST_PATTERN_5A             0x5A5A5A5A
-+#define TEST_PATTERN_A5             0xA5A5A5A5
++#define OP(N, ...) static const rv_opcode_data op_##N = { __VA_ARGS__ };
++#include "riscv-xsf-op.c.inc"
++#undef OP
 +
-+#define CV1800B_UART0_BASE          0x04140000
-+#define DW_UART_UCV                 0xF8
-+#define DW_UART_CTR                 0xFC
-+#define DW_UART_VERSION_3_23A       0x3332332A
-+#define DW_UART_TYPE_SIGNATURE      0x44570110
-+
-+static void test_milkv_duo_uart(void)
++const rv_opcode_data *decode_xsf(rv_decode *dec, rv_isa isa)
 +{
-+    QTestState *qts;
-+    uint32_t component_version;
-+    uint32_t component_type;
++    rv_inst inst = dec->inst;
 +
-+    qts = qtest_init("-M milkv-duo");
++    switch ((inst >> 0) & 0b1111111) {
++    case 0b1011011:
++        switch ((inst >> 12) & 0b111) {
++        case 0b010:
++            switch ((inst >> 26) & 0b111111) {
++            case 0b101100:
++                return &op_sf_vqmaccu_2x8x2;
++            case 0b101101:
++                return &op_sf_vqmacc_2x8x2;
++            case 0b101110:
++                return &op_sf_vqmaccus_2x8x2;
++            case 0b101111:
++                return &op_sf_vqmaccsu_2x8x2;
++            case 0b111100:
++                return &op_sf_vqmaccu_4x8x4;
++            case 0b111101:
++                return &op_sf_vqmacc_4x8x4;
++            case 0b111110:
++                return &op_sf_vqmaccus_4x8x4;
++            case 0b111111:
++                return &op_sf_vqmaccsu_4x8x4;
++            }
++            break;
++        }
++        break;
++    }
 +
-+    component_version = qtest_readl(qts, CV1800B_UART0_BASE + DW_UART_UCV);
-+    g_assert_cmphex(component_version, ==, DW_UART_VERSION_3_23A);
-+
-+    component_type = qtest_readl(qts, CV1800B_UART0_BASE + DW_UART_CTR);
-+    g_assert_cmphex(component_type, ==, DW_UART_TYPE_SIGNATURE);
-+
-+    qtest_quit(qts);
++    return NULL;
 +}
-+
-+static void test_milkv_duo_clk(void)
-+{
-+    QTestState *qts;
-+    uint32_t clk_bypass_val;
-+
-+    qts = qtest_init("-M milkv-duo");
-+
-+    clk_bypass_val = qtest_readl(qts, CV1800B_CLK_BASE + CV1800B_CLK_BYPASS);
-+    g_assert_cmphex(clk_bypass_val, ==, CV1800B_CLK_BYPASS_RESET);
-+
-+    qtest_writel(qts, CV1800B_CLK_BASE + CV1800B_CLK_BYPASS, TEST_PATTERN_5A);
-+    clk_bypass_val = qtest_readl(qts, CV1800B_CLK_BASE + CV1800B_CLK_BYPASS);
-+    g_assert_cmphex(clk_bypass_val, ==, TEST_PATTERN_5A);
-+
-+    qtest_writel(qts, CV1800B_CLK_BASE + CV1800B_CLK_BYPASS, TEST_PATTERN_A5);
-+    clk_bypass_val = qtest_readl(qts, CV1800B_CLK_BASE + CV1800B_CLK_BYPASS);
-+    g_assert_cmphex(clk_bypass_val, ==, TEST_PATTERN_A5);
-+
-+    qtest_quit(qts);
-+}
-+
-+int main(int argc, char **argv)
-+{
-+    g_test_init(&argc, &argv, NULL);
-+
-+    qtest_add_func("/riscv/milkv-duo/uart", test_milkv_duo_uart);
-+    qtest_add_func("/riscv/milkv-duo/clk", test_milkv_duo_clk);
-+
-+    return g_test_run();
-+}
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index 200abf6f36..18fceca421 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -315,7 +315,8 @@ qtests_riscv64 = ['riscv-csr-test'] + \
-    config_all_devices.has_key('CONFIG_RISCV_IOMMU') ?
-    ['iommu-riscv-test'] : []) + \
-   (config_all_devices.has_key('CONFIG_K230') ?
--   ['k230-ddr-test', 'k230-wdt-test', 'k230-gsdma-test', 'k230-decomp-gzip-test'] : [])
-+   ['k230-ddr-test', 'k230-wdt-test', 'k230-gsdma-test', 'k230-decomp-gzip-test'] : []) + \
-+   ['milkv-duo-test']
+diff --git a/disas/riscv.c b/disas/riscv.c
+index 9645e19232..ca0d6e90b3 100644
+--- a/disas/riscv.c
++++ b/disas/riscv.c
+@@ -27,6 +27,7 @@
+ #include "disas/riscv-xthead.h"
+ #include "disas/riscv-xventana.h"
+ #include "disas/riscv-xlrbr.h"
++#include "disas/riscv-xsf.h"
  
- qtests_hexagon = ['boot-serial-test', 'l2vic-test', 'qct-qtimer-test']
+ /* register names */
  
+@@ -3470,6 +3471,7 @@ static GString *disasm_inst(rv_isa isa, uint64_t pc, rv_inst inst,
+             { has_xtheadsync_p, decode_xtheadsync },
+             { has_XVentanaCondOps_p, decode_xventanacondops },
+             { has_xlrbr_p, decode_xlrbr },
++            { has_xsf_p, decode_xsf },
+         };
+ 
+         for (size_t i = 0; i < ARRAY_SIZE(decoders); i++) {
+diff --git a/disas/riscv-xsf-op.c.inc b/disas/riscv-xsf-op.c.inc
+new file mode 100644
+index 0000000000..c8daa7ebef
+--- /dev/null
++++ b/disas/riscv-xsf-op.c.inc
+@@ -0,0 +1,11 @@
++/* Xsfvqmaccqoq */
++OP(sf_vqmaccu_4x8x4, "sf.vqmaccu.4x8x4", rv_codec_v_r, rv_fmt_vd_vs1_vs2)
++OP(sf_vqmacc_4x8x4, "sf.vqmacc.4x8x4", rv_codec_v_r, rv_fmt_vd_vs1_vs2)
++OP(sf_vqmaccus_4x8x4, "sf.vqmaccus.4x8x4", rv_codec_v_r, rv_fmt_vd_vs1_vs2)
++OP(sf_vqmaccsu_4x8x4, "sf.vqmaccsu.4x8x4", rv_codec_v_r, rv_fmt_vd_vs1_vs2)
++
++/* Xsfvqmaccdod */
++OP(sf_vqmaccu_2x8x2, "sf.vqmaccu.2x8x2", rv_codec_v_r, rv_fmt_vd_vs1_vs2)
++OP(sf_vqmacc_2x8x2, "sf.vqmacc.2x8x2", rv_codec_v_r, rv_fmt_vd_vs1_vs2)
++OP(sf_vqmaccus_2x8x2, "sf.vqmaccus.2x8x2", rv_codec_v_r, rv_fmt_vd_vs1_vs2)
++OP(sf_vqmaccsu_2x8x2, "sf.vqmaccsu.2x8x2", rv_codec_v_r, rv_fmt_vd_vs1_vs2)
+diff --git a/disas/meson.build b/disas/meson.build
+index b382550e41..9b14adf4f1 100644
+--- a/disas/meson.build
++++ b/disas/meson.build
+@@ -8,7 +8,8 @@ common_ss.add(when: 'CONFIG_RISCV_DIS', if_true: files(
+     'riscv.c',
+     'riscv-xthead.c',
+     'riscv-xventana.c',
+-    'riscv-xlrbr.c'
++    'riscv-xlrbr.c',
++    'riscv-xsf.c'
+ ))
+ common_ss.add(when: 'CONFIG_SH4_DIS', if_true: files('sh4.c'))
+ common_ss.add(when: 'CONFIG_SPARC_DIS', if_true: files('sparc.c'))
 -- 
 2.55.0
 
