@@ -4,63 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3C40CC6B2F
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 20:09:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 701F5C3DA7A
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 20:10:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xH5Hi-0007a3-F5; Wed, 14 Oct 2026 16:09:10 -0400
+	id 1xH5IS-0000BS-JD; Wed, 14 Oct 2026 16:09:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1xH5Hf-0007YD-Uz; Wed, 14 Oct 2026 16:09:07 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ id 1xH5IN-00007M-8G; Wed, 14 Oct 2026 16:09:51 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1xH5Hd-000480-Nn; Wed, 14 Oct 2026 16:09:07 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ id 1xH5IL-0004A6-3H; Wed, 14 Oct 2026 16:09:50 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69EEiSjO1270237; Wed, 14 Oct 2026 20:08:49 GMT
+ 69EEiU3f695299; Wed, 14 Oct 2026 20:09:20 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:reply-to:subject:to; s=pp1;
- bh=I7lyoxFS7pcrfgo3ghwjzdmWBxgPuNwO8AFA0sE/Yjw=; b=O4pB3ud9m+BL
- qzelXAfTalEQubHsZ+RcX0Bibx8VE3YjuO+99k+YgEwK5CoiXCnmZA5RBUVMlxWT
- d4g+H6Rn77lELNjT4i/ZCejPIyZ9/o0KoUZSj7ywW5rPg1Vc2PPa42p5MuUS64Rj
- WF7d0ZjcYQ3cLSY0365O8fnClRjPl9FXTas6yOdk3fe6ISBcFsMako7GGfpeCjkB
- b1uX7TBuEUzbKGl7wMwJ0Sce2JcGLjGrS+wgDaCagSUsIZSrfqVkz02ism1uIxIO
- UbsEsmPHfMNuo03FTx8ygK82iAHMIYiCFRT9pa9NYPntZw+s6PYYxJpwnIk9m4jj
- RBnaMiHXIQ==
+ bh=3WG0JtmpqLDIJbS/+UNHCfOYYAu/C09vEpGXbtFiBK0=; b=RTg1EaQRmj1r
+ 3Ziqp88QgtyTtENZkMMHFH5pbkkPMwSheB7hiij7YrAGwBnKuGyf/wPSSAefIM7b
+ K+EVbjY/upiGvHGUf+Mz1LFZJyM9aGSgd40F6Yau68/FVQiZxoiJok6j0C0mw+f+
+ J53LVCV1cD7B+wrVyE2H64QTOG47lg2kykfilzztVN+futtLBezqLx2vfovp7QFA
+ XAYIsRmRzJAlzTiGsyxmPrDETb1S7K1TqUjV1emRhrLaxTn6XgKI066v/QUZ8FYw
+ 1NaOJ0bjh1o4DGQFrIn4H68rm+tqYDzXihRyZDZtQWR3691yB0SBP9FNnvlOYf+i
+ Xsz1MDu5CA==
 Received: from ppma13.dal12v.mail.ibm.com
  (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4h7dv0nxq5-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4h7dwhphpp-1
  (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Wed, 14 Oct 2026 20:08:49 +0000 (GMT)
+ Wed, 14 Oct 2026 20:09:19 +0000 (GMT)
 Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
  by ppma13.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69EIYQNd3639707; Wed, 14 Oct 2026 20:08:48 GMT
-Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4h9wvg4988-1
+ 69EIe1BY3639841; Wed, 14 Oct 2026 20:09:18 GMT
+Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4h9wvg499t-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 14 Oct 2026 20:08:48 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
- [10.241.53.103])
- by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 69EK8lIv9896518
+ Wed, 14 Oct 2026 20:09:18 +0000 (GMT)
+Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
+ [10.241.53.105])
+ by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 69EK8ViL19726886
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 14 Oct 2026 20:08:47 GMT
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 3B8CD58056;
- Wed, 14 Oct 2026 20:08:47 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 65E5458062;
- Wed, 14 Oct 2026 20:08:46 +0000 (GMT)
+ Wed, 14 Oct 2026 20:08:31 GMT
+Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id BADAE58059;
+ Wed, 14 Oct 2026 20:09:17 +0000 (GMT)
+Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id DC6E458055;
+ Wed, 14 Oct 2026 20:09:16 +0000 (GMT)
 Received: from mambor8.rchland.ibm.com (unknown [9.10.239.198])
- by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 14 Oct 2026 20:08:46 +0000 (GMT)
-Message-ID: <497b3c7bf49c5ca783c7740e448941793b81ad43.camel@linux.ibm.com>
-Subject: Re: [PATCH v2 41/50] tests/qtest: ina238: add current/voltage/power
- monitor test
+ by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Wed, 14 Oct 2026 20:09:16 +0000 (GMT)
+Message-ID: <a0ebf6ef33670ce46aa51b50ba113ceba1f3f5f5.camel@linux.ibm.com>
+Subject: Re: [PATCH v2 42/50] tests/qtest: ina238: cover voltage/temperature
+ injection and derivation
 From: Miles Glenn <milesg@linux.ibm.com>
 To: Emmanuel Blot <emmanuel.blot@free.fr>, qemu-devel@nongnu.org
 Cc: =?ISO-8859-1?Q?C=E9dric?= Le Goater <clg@kaod.org>, Peter Maydell
@@ -74,10 +74,10 @@ Cc: =?ISO-8859-1?Q?C=E9dric?= Le Goater <clg@kaod.org>, Peter Maydell
  Paolo Bonzini <pbonzini@redhat.com>, qemu-ppc@nongnu.org,
  qemu-riscv@nongnu.org, Philippe
  =?ISO-8859-1?Q?Mathieu-Daud=E9?= <philmd@oss.qualcomm.com>
-Date: Wed, 14 Oct 2026 15:08:46 -0500
-In-Reply-To: <20261012-bmc-minerva-v2-41-4c3dff084ec9@free.fr>
+Date: Wed, 14 Oct 2026 15:09:16 -0500
+In-Reply-To: <20261012-bmc-minerva-v2-42-4c3dff084ec9@free.fr>
 References: <20261012-bmc-minerva-v2-0-4c3dff084ec9@free.fr>
- <20261012-bmc-minerva-v2-41-4c3dff084ec9@free.fr>
+ <20261012-bmc-minerva-v2-42-4c3dff084ec9@free.fr>
 Organization: IBM
 Content-Type: text/plain; charset="UTF-8"
 X-Mailer: Evolution 3.28.5 (3.28.5-27.el8_10) 
@@ -85,41 +85,41 @@ Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 X-TM-AS-GCONF: 00
 X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDE0MDA3OCBTYWx0ZWRfX3Wm0o1hd765A
- 1eyc6x7+iYEruW8r9ny1X/HofGhL7mfqSy3klfc1a7pFskXnzl8llaFMfhgzWpGLmeaV17eje/r
- 7cZ+FdQqNdtV8XEUtYvRZ/AxAT+lC76aWo/K6BJLUqgJeYjQKxt3lKMJzpzZYlvlJKTP60TmWWc
- tp6b9PEV2b5cYl5WvDe+ZsPBRY45SzZEivfaxoX1rtRvbrKEg+0yDY64B67eNb71ubESNBbE5KA
- tsXFqIDunuOHcJ8Ymlc/SLwrPesVq1ub+ixraUu/b3+87lOtw3FJvR59ZFUhSAnGqBcnSu1Vd/5
- KFPLfh/AgXMtjChnTA26Rt0Wln8zWRpnJlo+1XskaHC4UzXUl7kHy+xp7v59jEW0oqPRUl1CBcM
- nOvTzyUYPFvyH7yEo3ZorTySBoAUt+h2/dFmWFi3ZpVwwfa5eC5GxS8gYZV10YwYtAxO++dpBXe
- VnM6AXJuHkKPuyz3dtQ==
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDE0MDA3OCBTYWx0ZWRfX7P2q/ZCX9t+A
- /W0ijupVswGkHKYAEVCbQQ3MRZzF2AZKrhkdmLrkcTaDYJKK2m0NAPGcUkrrky5j9kAK0WTOAFg
- wqW2F85weNX5522/EzJvgypW2ANAGwU=
-X-Proofpoint-ORIG-GUID: 2C438X0HqycWApJ8nmaJ3BuIVMx0S6hp
-X-Authority-Analysis: v=2.4 cv=a6KlZkSF c=1 sm=1 tr=0 ts=6acfe151 cx=c_pps
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDE0MDA3OCBTYWx0ZWRfX+lVAoCprbmUW
+ X4PoQXlUS6sR+HkGRNHXkH991tcZsTwvbliQ+3NPy4ThkSxKhbcHyw0QIWKJwv7ZzLAsOLPaDTG
+ E9j1ePDeNfssFOQh0HYefHnG4ePFJ9s=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDE0MDA3OCBTYWx0ZWRfXzgkRQROXKnCe
+ B6RPa1HZN8JGh/H52UF8/vUYFRxQteVxk3KNgXDDLsdZT1WDu8s5nOoxjfOI+PNXRO+n/hq1ZtD
+ hiqYvCRdIWZRSqxgbXL5NKFypH9RnbspoLL9upoo+ZFi4wZpPQBS9Psn7AUBKMfX9ZysWOOAsY/
+ K2Oe4fD5FOth0njg4PJ8k3OgxXrHjX6tizFwXpaG1DBdDhyE4XoB2CPvl1ll/AHM1HqGw9QsD4f
+ uqLsHFwvrqBVLr4Dnfv6F8sQwERthD6zbWpOGQOvESZG/YFYmTlmT8awFKXhoNHRepKSx6gEp8r
+ 8WBXND9r/jDmCP4vVOH0mOFqyFx3hWj8KwsxWxOAfkUyldfRIlc2Al6BlFpHfzkdXmCyWkIv+qm
+ c7q4CCVATGEnYq5mD7b/uYWgJ+ClhoVLT75d6glLdVua/QrRPi8sof5mb48cUwWonky8KEHLk+8
+ YXo6uhOHv7J9eOyBhcg==
+X-Proofpoint-GUID: 7BvHeaCkK4TWCuk1KJIl8Cw2yDaXObWF
+X-Authority-Analysis: v=2.4 cv=RoFQvymK c=1 sm=1 tr=0 ts=6acfe170 cx=c_pps
  a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
  a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8
- a=hTvPPykMyHyLrdisSnMA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: PFNwv_cWR69i8W2XaLzSEeIt6aLkZ9u3
+ a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8
+ a=7v0_3JnuglIbc8E0cOcA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: F6MSuzESv6y5jKM3VW0DIErSQQDpCWhC
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-10-13_01,2026-10-14_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 malwarescore=0 spamscore=0 suspectscore=0 clxscore=1015
- phishscore=0 priorityscore=1501 lowpriorityscore=0 impostorscore=0
- adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ priorityscore=1501 spamscore=0 phishscore=0 adultscore=0 bulkscore=0
+ impostorscore=0 suspectscore=0 malwarescore=0 clxscore=1011
+ lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610080000
  definitions=main-2610140078
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=milesg@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=milesg@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -145,211 +145,196 @@ Glenn
 
 On Mon, 2026-10-12 at 16:32 +0200, Emmanuel Blot via qemu development
 wrote:
-> Introduce the INA238 qtest: the qgraph node, the QMP injection helpers
-> and the register map. Cover the reset defaults, the software reset, and
-> the Configuration register write mask.
+> Cover the shunt-, bus- and die-temperature injection properties and the
+> current and power values derived through the Shunt Calibration register,
+> including the zero-calibration case, the ADCRANGE rescaling and the
+> clamp/overflow edges.
 > 
 > Signed-off-by: Emmanuel Blot <emmanuel.blot@free.fr>
 > ---
->  tests/qtest/ina238-test.c | 177 ++++++++++++++++++++++++++++++++++++++++++++++
->  tests/qtest/meson.build   |   1 +
->  2 files changed, 178 insertions(+)
+>  tests/qtest/ina238-test.c | 156 ++++++++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 156 insertions(+)
 > 
 > diff --git a/tests/qtest/ina238-test.c b/tests/qtest/ina238-test.c
-> new file mode 100644
-> index 0000000000..6e59ed30b5
-> --- /dev/null
+> index 6e59ed30b5..693139f988 100644
+> --- a/tests/qtest/ina238-test.c
 > +++ b/tests/qtest/ina238-test.c
-> @@ -0,0 +1,177 @@
-> +/*
-> + * QTest testcase for the INA238 current/voltage/power monitor
-> + *
-> + * Copyright (c) 2026 Meta Platforms, Inc. and affiliates.
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "libqos/i2c.h"
-> +#include "libqos/qgraph.h"
-> +#include "libqtest-single.h"
-> +#include "qobject/qdict.h"
-> +
-> +#define INA238_TEST_ID      "ina238-test"
-> +#define INA238_TEST_ADDR    0x40
-> +
-> +/* Register pointer addresses */
-> +#define REG_CONFIG          0x00
-> +#define REG_ADC_CONFIG      0x01
-> +#define REG_SHUNT_CAL       0x02
-> +#define REG_VSHUNT          0x04
-> +#define REG_VBUS            0x05
-> +#define REG_DIETEMP         0x06
-> +#define REG_CURRENT         0x07
-> +#define REG_POWER           0x08
-> +#define REG_DIAG_ALRT       0x0B
-> +#define REG_SOVL            0x0C
-> +#define REG_SUVL            0x0D
-> +#define REG_BOVL            0x0E
-> +#define REG_BUVL            0x0F
-> +#define REG_TEMP_LIMIT      0x10
-> +#define REG_PWR_LIMIT       0x11
-> +#define REG_MANUFACTURER_ID 0x3E
-> +#define REG_DEVICE_ID       0x3F
-> +
-> +/* Configuration register bits */
-> +#define CONFIG_RST          0x8000
-> +#define CONFIG_ADCRANGE     0x0010
-> +
-> +/* DIAG_ALRT register bits */
-> +#define DIAG_MEMSTAT        0x0001
-> +#define DIAG_CNVRF          0x0002
-> +#define DIAG_POL            0x0004
-> +#define DIAG_BUSUL          0x0008
-> +#define DIAG_BUSOL          0x0010
-> +#define DIAG_SHNTUL         0x0020
-> +#define DIAG_SHNTOL         0x0040
-> +#define DIAG_TMPOL          0x0080
-> +#define DIAG_MATHOF         0x0200
-> +#define DIAG_APOL           0x1000
-> +#define DIAG_SLOWALERT      0x2000
-> +#define DIAG_CNVR           0x4000
-> +#define DIAG_ALATCH         0x8000
-> +
-> +/* Reset values */
-> +#define CONFIG_POR          0x0000
-> +#define ADC_CONFIG_POR      0xFB68
-> +#define SHUNT_CAL_POR       0x1000
-> +#define DIAG_ALRT_POR       0x0001
-> +#define SOVL_POR            0x7FFF
-> +#define SUVL_POR            0x8000
-> +#define BOVL_POR            0x7FFF
-> +#define BUVL_POR            0x0000
-> +#define TEMP_LIMIT_POR      0x7FF0
-> +#define PWR_LIMIT_POR       0xFFFF
-> +#define MANUFACTURER_ID_VAL 0x5449
-> +#define DEVICE_ID_VAL       0x2381
-> +
-> +/* Read the 24-bit POWER register (MSB first) */
-> +static uint32_t i2c_get24(QI2CDevice *dev, uint8_t reg)
-> +{
-> +    uint8_t resp[3];
-> +
-> +    i2c_read_block(dev, reg, resp, sizeof(resp));
-> +    return (resp[0] << 16) | (resp[1] << 8) | resp[2];
-> +}
-> +
-> +/* QMP helpers for injecting the physical inputs */
-> +
-> +static void qmp_ina238_set(const char *property, int value)
+> @@ -89,6 +89,20 @@ static void qmp_ina238_set(const char *property, int value)
+>      qobject_unref(resp);
+>  }
+>  
+> +static int qmp_ina238_get(const char *property)
 > +{
 > +    QDict *resp;
+> +    int ret;
 > +
-> +    resp = qmp("{ 'execute': 'qom-set', 'arguments':"
-> +               " { 'path': %s, 'property': %s, 'value': %d } }",
-> +               INA238_TEST_ID, property, value);
+> +    resp = qmp("{ 'execute': 'qom-get', 'arguments':"
+> +               " { 'path': %s, 'property': %s } }",
+> +               INA238_TEST_ID, property);
 > +    g_assert(qdict_haskey(resp, "return"));
+> +    ret = qdict_get_int(resp, "return");
 > +    qobject_unref(resp);
+> +    return ret;
 > +}
 > +
-> +/* Power-on-reset default values and the ID registers */
-> +static void test_defaults(void *obj, void *data, QGuestAllocator *alloc)
+>  /* Power-on-reset default values and the ID registers */
+>  static void test_defaults(void *obj, void *data, QGuestAllocator *alloc)
+>  {
+> @@ -160,6 +174,139 @@ static void test_config_wmask(void *obj, void *data, QGuestAllocator *alloc)
+>      g_assert_cmphex(i2c_get16(dev, REG_CONFIG), ==, CONFIG_POR);
+>  }
+>  
+> +/* Shunt voltage register */
+> +static void test_shunt_injection(void *obj, void *data, QGuestAllocator *alloc)
 > +{
 > +    QI2CDevice *dev = (QI2CDevice *)obj;
-> +
-> +    g_assert_cmphex(i2c_get16(dev, REG_CONFIG), ==, CONFIG_POR);
-> +    g_assert_cmphex(i2c_get16(dev, REG_ADC_CONFIG), ==, ADC_CONFIG_POR);
-> +    g_assert_cmphex(i2c_get16(dev, REG_SHUNT_CAL), ==, SHUNT_CAL_POR);
-> +    g_assert_cmphex(i2c_get16(dev, REG_VSHUNT), ==, 0x0000);
-> +    g_assert_cmphex(i2c_get16(dev, REG_VBUS), ==, 0x0000);
-> +    g_assert_cmphex(i2c_get16(dev, REG_DIETEMP), ==, 0x0000);
-> +    g_assert_cmphex(i2c_get16(dev, REG_CURRENT), ==, 0x0000);
-> +    g_assert_cmphex(i2c_get24(dev, REG_POWER), ==, 0x000000);
-> +    g_assert_cmphex(i2c_get16(dev, REG_DIAG_ALRT), ==, DIAG_ALRT_POR);
-> +    g_assert_cmphex(i2c_get16(dev, REG_SOVL), ==, SOVL_POR);
-> +    g_assert_cmphex(i2c_get16(dev, REG_SUVL), ==, SUVL_POR);
-> +    g_assert_cmphex(i2c_get16(dev, REG_BOVL), ==, BOVL_POR);
-> +    g_assert_cmphex(i2c_get16(dev, REG_BUVL), ==, BUVL_POR);
-> +    g_assert_cmphex(i2c_get16(dev, REG_TEMP_LIMIT), ==, TEMP_LIMIT_POR);
-> +    g_assert_cmphex(i2c_get16(dev, REG_PWR_LIMIT), ==, PWR_LIMIT_POR);
-> +    g_assert_cmphex(i2c_get16(dev, REG_MANUFACTURER_ID), ==,
-> +                    MANUFACTURER_ID_VAL);
-> +    g_assert_cmphex(i2c_get16(dev, REG_DEVICE_ID), ==, DEVICE_ID_VAL);
-> +}
-> +
-> +/* Software reset via the Configuration RST bit */
-> +static void test_soft_reset(void *obj, void *data, QGuestAllocator *alloc)
-> +{
-> +    QI2CDevice *dev = (QI2CDevice *)obj;
-> +
-> +    i2c_set16(dev, REG_SHUNT_CAL, 0x1234);
-> +    i2c_set16(dev, REG_SOVL, 0x0500);
-> +    i2c_set16(dev, REG_TEMP_LIMIT, 0x0A00);
-> +    i2c_set16(dev, REG_DIAG_ALRT, DIAG_ALATCH);
-> +
-> +    qmp_ina238_set("shunt-voltage", 97200000);
-> +    qmp_ina238_set("bus-voltage", 48000000);
-> +    qmp_ina238_set("die-temperature", 25000);
-> +
-> +    g_assert_cmphex(i2c_get16(dev, REG_SHUNT_CAL), ==, 0x1234);
-> +    g_assert_cmphex(i2c_get16(dev, REG_SOVL), ==, 0x0500);
-> +    g_assert_cmphex(i2c_get16(dev, REG_VSHUNT), ==, 0x4BF0);
-> +    g_assert_cmpuint(i2c_get16(dev, REG_CURRENT), !=, 0);
 > +
 > +    i2c_set16(dev, REG_CONFIG, CONFIG_RST);
 > +
-> +    g_assert_cmphex(i2c_get16(dev, REG_CONFIG), ==, CONFIG_POR);
-> +    g_assert_cmphex(i2c_get16(dev, REG_SHUNT_CAL), ==, SHUNT_CAL_POR);
-> +    g_assert_cmphex(i2c_get16(dev, REG_SOVL), ==, SOVL_POR);
-> +    g_assert_cmphex(i2c_get16(dev, REG_TEMP_LIMIT), ==, TEMP_LIMIT_POR);
-> +    g_assert_cmphex(i2c_get16(dev, REG_DIAG_ALRT), ==, DIAG_ALRT_POR);
+> +    qmp_ina238_set("shunt-voltage", 97200000);
+> +    g_assert_cmphex(i2c_get16(dev, REG_VSHUNT), ==, 0x4BF0);
 > +
-> +    g_assert_cmphex(i2c_get16(dev, REG_VSHUNT), ==, 0x0000);
-> +    g_assert_cmphex(i2c_get16(dev, REG_VBUS), ==, 0x0000);
-> +    g_assert_cmphex(i2c_get16(dev, REG_DIETEMP), ==, 0x0000);
+> +    qmp_ina238_set("shunt-voltage", -80000000);
+> +    g_assert_cmphex(i2c_get16(dev, REG_VSHUNT), ==, 0xC180);
+> +
+> +    g_assert_cmpint(qmp_ina238_get("shunt-voltage"), ==, -80000000);
+> +}
+> +
+> +/* Bus voltage register */
+> +static void test_bus_injection(void *obj, void *data, QGuestAllocator *alloc)
+> +{
+> +    QI2CDevice *dev = (QI2CDevice *)obj;
+> +
+> +    i2c_set16(dev, REG_CONFIG, CONFIG_RST);
+> +
+> +    qmp_ina238_set("bus-voltage", 48000000);
+> +    g_assert_cmphex(i2c_get16(dev, REG_VBUS), ==, 0x3C00);
+> +
+> +    qmp_ina238_set("bus-voltage", 12000000);
+> +    g_assert_cmphex(i2c_get16(dev, REG_VBUS), ==, 0x0F00);
+> +}
+> +
+> +/* Die temperature register */
+> +static void test_temp_injection(void *obj, void *data, QGuestAllocator *alloc)
+> +{
+> +    QI2CDevice *dev = (QI2CDevice *)obj;
+> +
+> +    i2c_set16(dev, REG_CONFIG, CONFIG_RST);
+> +
+> +    qmp_ina238_set("die-temperature", 25000);
+> +    g_assert_cmphex(i2c_get16(dev, REG_DIETEMP), ==, 0x0C80);
+> +
+> +    qmp_ina238_set("die-temperature", -25000);
+> +    g_assert_cmphex(i2c_get16(dev, REG_DIETEMP), ==, 0xF380);
+> +
+> +    g_assert_cmpint(qmp_ina238_get("die-temperature"), ==, -25000);
+> +}
+> +
+> +/* Calibration-derived current */
+> +static void test_calibration_current(void *obj, void *data,
+> +                                     QGuestAllocator *alloc)
+> +{
+> +    QI2CDevice *dev = (QI2CDevice *)obj;
+> +
+> +    i2c_set16(dev, REG_CONFIG, CONFIG_RST);
+> +    qmp_ina238_set("shunt-voltage", 97200000);
+> +
+> +    i2c_set16(dev, REG_SHUNT_CAL, 0x0000);
+> +    g_assert_cmphex(i2c_get16(dev, REG_CURRENT), ==, 0x0000);
+> +
+> +    i2c_set16(dev, REG_SHUNT_CAL, 0x0FD2);
+> +    g_assert_cmphex(i2c_get16(dev, REG_CURRENT), ==, 0x4CCC);
+> +}
+> +
+> +/* Calibration-derived power */
+> +static void test_power(void *obj, void *data, QGuestAllocator *alloc)
+> +{
+> +    QI2CDevice *dev = (QI2CDevice *)obj;
+> +
+> +    i2c_set16(dev, REG_CONFIG, CONFIG_RST);
+> +    qmp_ina238_set("shunt-voltage", 97200000);
+> +    qmp_ina238_set("bus-voltage", 48000000);
+> +    i2c_set16(dev, REG_SHUNT_CAL, 0x0FD2);
+> +
+> +    g_assert_cmpuint(i2c_get24(dev, REG_POWER), ==, 4718400);
+> +}
+> +
+> +/* With SHUNT_CAL == 0 the current and power registers stay zero */
+> +static void test_zero_cal(void *obj, void *data, QGuestAllocator *alloc)
+> +{
+> +    QI2CDevice *dev = (QI2CDevice *)obj;
+> +
+> +    i2c_set16(dev, REG_CONFIG, CONFIG_RST);
+> +    i2c_set16(dev, REG_SHUNT_CAL, 0x0000);
+> +    qmp_ina238_set("shunt-voltage", 97200000);
+> +    qmp_ina238_set("bus-voltage", 48000000);
+> +
 > +    g_assert_cmphex(i2c_get16(dev, REG_CURRENT), ==, 0x0000);
 > +    g_assert_cmpuint(i2c_get24(dev, REG_POWER), ==, 0);
 > +}
 > +
-> +/* CONFIG keeps only the writable ADCRANGE/CONVDLY bits and self-clears RST */
-> +static void test_config_wmask(void *obj, void *data, QGuestAllocator *alloc)
+> +/* ADCRANGE changes the shunt LSB, not the current divisor. */
+> +static void test_adcrange(void *obj, void *data, QGuestAllocator *alloc)
 > +{
 > +    QI2CDevice *dev = (QI2CDevice *)obj;
 > +
-> +    i2c_set16(dev, REG_CONFIG, CONFIG_ADCRANGE | 0x0040);
-> +    g_assert_cmphex(i2c_get16(dev, REG_CONFIG), ==, CONFIG_ADCRANGE | 0x0040);
+> +    i2c_set16(dev, REG_CONFIG, CONFIG_RST);
+> +
+> +    qmp_ina238_set("shunt-voltage", 20000000);
+> +    g_assert_cmphex(i2c_get16(dev, REG_VSHUNT), ==, 0x0FA0);
+> +
+> +    i2c_set16(dev, REG_SHUNT_CAL, 0x0800);
+> +    g_assert_cmphex(i2c_get16(dev, REG_CURRENT), ==, 0x1F40);
+> +
+> +    i2c_set16(dev, REG_CONFIG, CONFIG_ADCRANGE);
+> +    g_assert_cmphex(i2c_get16(dev, REG_VSHUNT), ==, 0x3E80);
+> +
+> +    g_assert_cmphex(i2c_get16(dev, REG_CURRENT), ==, 0x7D00);
+> +
+> +    i2c_set16(dev, REG_SHUNT_CAL, 0x2000);
+> +    g_assert_cmphex(i2c_get16(dev, REG_CURRENT), ==, 0x1F40);
+> +}
+> +
+> +/* Clamping at full scale and the MATHOF flag */
+> +static void test_overflow(void *obj, void *data, QGuestAllocator *alloc)
+> +{
+> +    QI2CDevice *dev = (QI2CDevice *)obj;
 > +
 > +    i2c_set16(dev, REG_CONFIG, CONFIG_RST);
-> +    g_assert_cmphex(i2c_get16(dev, REG_CONFIG), ==, CONFIG_POR);
+> +
+> +    i2c_set16(dev, REG_CONFIG, CONFIG_ADCRANGE);
+> +    qmp_ina238_set("shunt-voltage", 97200000);
+> +    g_assert_cmphex(i2c_get16(dev, REG_VSHUNT), ==, 0x7FFF);
+> +    qmp_ina238_set("shunt-voltage", -97200000);
+> +    g_assert_cmphex(i2c_get16(dev, REG_VSHUNT), ==, 0x8000);
+> +
+> +    i2c_set16(dev, REG_CONFIG, CONFIG_POR);
+> +    qmp_ina238_set("shunt-voltage", 163835000);
+> +    i2c_set16(dev, REG_SHUNT_CAL, 0x0001);
+> +    g_assert_cmphex(i2c_get16(dev, REG_CURRENT), ==, 0x7FFF);
+> +    g_assert_cmphex(i2c_get16(dev, REG_DIAG_ALRT) & DIAG_MATHOF, ==,
+> +                    DIAG_MATHOF);
 > +}
 > +
-> +static void ina238_register_nodes(void)
-> +{
-> +    QOSGraphEdgeOptions opts = {
-> +        .extra_device_opts = "id=" INA238_TEST_ID ",address=0x40"
-> +    };
-> +    add_qi2c_address(&opts, &(QI2CAddress) { INA238_TEST_ADDR });
-> +
-> +    qos_node_create_driver("ina238", i2c_device_create);
-> +    qos_node_consumes("ina238", "i2c-bus", &opts);
-> +
-> +    qos_add_test("defaults", "ina238", test_defaults, NULL);
-> +    qos_add_test("soft-reset", "ina238", test_soft_reset, NULL);
-> +    qos_add_test("config-wmask", "ina238", test_config_wmask, NULL);
-> +}
-> +libqos_init(ina238_register_nodes);
-> diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-> index e413a0cc75..7005509d4d 100644
-> --- a/tests/qtest/meson.build
-> +++ b/tests/qtest/meson.build
-> @@ -331,6 +331,7 @@ qos_test_ss.add(
->    'eepro100-test.c',
->    'es1370-test.c',
->    'ina230-test.c',
-> +  'ina238-test.c',
->    'lsm303dlhc-mag-test.c',
->    'isl_pmbus_vr-test.c',
->    'max34451-test.c',
+> +/* Shunt over-limit alert (transparent mode) */
+>  static void ina238_register_nodes(void)
+>  {
+>      QOSGraphEdgeOptions opts = {
+> @@ -173,5 +320,14 @@ static void ina238_register_nodes(void)
+>      qos_add_test("defaults", "ina238", test_defaults, NULL);
+>      qos_add_test("soft-reset", "ina238", test_soft_reset, NULL);
+>      qos_add_test("config-wmask", "ina238", test_config_wmask, NULL);
+> +    qos_add_test("shunt-injection", "ina238", test_shunt_injection, NULL);
+> +    qos_add_test("bus-injection", "ina238", test_bus_injection, NULL);
+> +    qos_add_test("temp-injection", "ina238", test_temp_injection, NULL);
+> +    qos_add_test("calibration-current", "ina238", test_calibration_current,
+> +                 NULL);
+> +    qos_add_test("power", "ina238", test_power, NULL);
+> +    qos_add_test("zero-cal", "ina238", test_zero_cal, NULL);
+> +    qos_add_test("adcrange", "ina238", test_adcrange, NULL);
+> +    qos_add_test("overflow", "ina238", test_overflow, NULL);
+>  }
+>  libqos_init(ina238_register_nodes);
 > 
 
 
