@@ -4,113 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDF73CC6B1D
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 12:58:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C10D4CC6B1A
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 12:58:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGyYD-0002qi-1l; Wed, 14 Oct 2026 08:57:45 -0400
+	id 1xGyWO-00072g-7p; Wed, 14 Oct 2026 08:55:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1xGyY0-0002Y2-AR; Wed, 14 Oct 2026 08:57:34 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <gong.shuai@sanechips.com.cn>)
+ id 1xGu5L-0006Ca-Pj; Wed, 14 Oct 2026 04:11:40 -0400
+Received: from mxhk.zte.com.cn ([160.30.148.35])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1xGyXx-0001oS-FJ; Wed, 14 Oct 2026 08:57:31 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69ECJAIR1774676; Wed, 14 Oct 2026 12:57:23 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=SFpIgw
- 5RQXR1TJOp6l/f/qCT5vKo7yKr5BzwuDiCpd0=; b=OZ5mlcRwX247ZfpRW7enQl
- g3HxXaGdFWJz2PtMwyKRih+zAiQrte5dO4eQzgh5xulHCQd94dOzIsu51BwQyk05
- YbrqldHx8TdTQaTzL9oAP6bt7TTkm3gBtwulhaLZu8tsS+7h6Ad3OxkS0tLccnsF
- K3bUwLUPVkvrHwxEOyDVi3pjgXWaSKFMv95gYw/BLIx5Uk96Jcfsi0qsMBIBdadK
- ax7VaxDIP4W4KA0VSmfCZ3qxmFVPPHQq6WPW//emYciJ64p0+AjdXIdFO55KE8D5
- xzmb894U+uDLLnaMtfNcdma4DQiFz/hwdDSCA+l9syQQ7N+SMSPTGB4N3yK+jMVQ
- ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4h7dwj3yat-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Wed, 14 Oct 2026 12:57:23 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69EBFEKm2709272; Wed, 14 Oct 2026 12:57:23 GMT
-Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4h816h7bdp-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 14 Oct 2026 12:57:23 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
- [10.20.54.105])
- by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 69ECvJ8R43450672
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 14 Oct 2026 12:57:19 GMT
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 3333D20049;
- Wed, 14 Oct 2026 12:57:19 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E55C920040;
- Wed, 14 Oct 2026 12:57:18 +0000 (GMT)
-Received: from [0.0.0.0] (unknown [9.111.31.234])
- by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 14 Oct 2026 12:57:18 +0000 (GMT)
-Message-ID: <eb426f52-d4da-47b0-8c69-c5db6b3a1914@linux.ibm.com>
-Date: Wed, 14 Oct 2026 14:57:18 +0200
+ (Exim 4.90_1) (envelope-from <gong.shuai@sanechips.com.cn>)
+ id 1xGu5I-0000q8-97; Wed, 14 Oct 2026 04:11:39 -0400
+Received: from mse-fl2.zte.com.cn (unknown [10.5.228.133])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mxhk.zte.com.cn (FangMail) with ESMTPS id 4j4P6j71S4z8R03f;
+ Wed, 14 Oct 2026 16:11:25 +0800 (CST)
+Received: (from root@localhost) by mse-fl2.zte.com.cn id 69E8BN84098054;
+ Wed, 14 Oct 2026 16:11:23 +0800 (+08)
+ (envelope-from gong.shuai@sanechips.com.cn)
+Message-Id: <202610140811.69E8BN84098054@mse-fl2.zte.com.cn>
+Received: from szxl2zmapp06.zte.com.cn ([10.1.32.108])
+ by mse-fl2.zte.com.cn with SMTP id 69E80DJw079324;
+ Wed, 14 Oct 2026 16:00:13 +0800 (+08)
+ (envelope-from gong.shuai@sanechips.com.cn)
+Received: from ubuntu-35-gs (unknown [10.230.214.35])
+ by smtp (Zmail) with SMTP; Wed, 14 Oct 2026 16:00:15 +0800
+X-Zmail-TransId: 3e816acf3687024-0e12b
+X-Zmail-LocalSMTP: 1
+X-Zmail-RealSender: gong.shuai@sanechips.com.cn
+From: Gong Shuai <gong.shuai@sanechips.com.cn>
+To: qemu-riscv@nongnu.org, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Palmer Dabbelt <palmer@dabbelt.com>, 
+ Alistair Francis <alistair.francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu@processmission.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Cornelia Huck <cohuck@redhat.com>, Wu Fei <wu.fei9@sanechips.com.cn>,
+ Gong Shuai <gong.shuai@sanechips.com.cn>, Gong Shuai <gsh517025@gmail.com>
+Subject: [RFC PATCH 00/14] hw/riscv: Add accelerated (nested) translation
+ support to the RISC-V IOMMU
+Date: Wed, 14 Oct 2026 15:59:51 +0800
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/s390x/tcg: fix register update on guest memory
- fault in cpacf_aes_ecb
-To: Andrew Holden <andy0x48@linux.ibm.com>, qemu-devel@nongnu.org
-Cc: qemu-s390x@nongnu.org, richard.henderson@linaro.org, david@kernel.org,
- cohuck@redhat.com, freude@linux.ibm.com
-References: <20261008154455.369004-1-andy0x48@linux.ibm.com>
-Content-Language: en-US
-From: Ilya Leoshkevich <iii@linux.ibm.com>
-In-Reply-To: <20261008154455.369004-1-andy0x48@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDE0MDA1MCBTYWx0ZWRfX36+vtJeKIfGc
- dAzsL5dffyZcplKN5qCoEQTKncm4STDcOQ5U1cjQ1tM1JFDNif9gRcOvsBXI9voGrPzdiG8WbSs
- K0TvnQyCA8cp+5AhT4WTpMfsoMWKxhxAlF05wDBXH80ytfX7kHnF3mKim5nSGDAam8GEd8qBaoN
- lBGUtVRACs738vcwDnwyRkVqt3kNJgBKlfoH6tar67gobe/uivCY3KCCKCzGYXIkDdeOcNvry7O
- DOIRreP8vAZIE0zSpZ7XyOw0l+MCfOSk/aF6I2siG7tx6o71cohcX7g3F6YARQn/kArJ/PJIFql
- aTJ5qiPHYu281u1+es8zIG2MJZ1n7LHEB0lgx4Bo2fqIoiRwreZNU0mu1Wq53eLl+CFptxd1iz3
- iyt7H7KeHGGlPp2WjFYiy+TGR9r9EYpie6KR9FEfnnsr8oxYDuExMb6XwkbAmr78YsnhATbSj4H
- uKjNNf+jVK7LWjtBFQw==
-X-Proofpoint-GUID: QXVL066XCrHzqX0OyAMsOMfROn6Qu9fm
-X-Proofpoint-ORIG-GUID: QXVL066XCrHzqX0OyAMsOMfROn6Qu9fm
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDE0MDA1MCBTYWx0ZWRfXx+L2PU/NM+pp
- AE7jrksZxxEkHyF38muksZ1FF2M500EjDtjWk/HivFu8JE8MIJEEYpPZHLk77A131YpY2ps3l8P
- avbs1t7oDBV4FIJAsAhnWHczB+Jv1W0=
-X-Authority-Analysis: v=2.4 cv=btHZl0ai c=1 sm=1 tr=0 ts=6acf7c33 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VnNF1IyMAAAA:8
- a=pYz2OXkNAIB79UDkkJEA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-10-13_01,2026-10-09_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 malwarescore=0 phishscore=0 impostorscore=0 adultscore=0
- lowpriorityscore=0 priorityscore=1501 clxscore=1015 spamscore=0
- suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610080000
- definitions=main-2610140050
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-ZMAIL-USEORIGINALEMLTOOUTBOUND: 1
+Content-Transfer-Encoding: 8bit
+X-MAIL: mse-fl2.zte.com.cn 69E8BN84098054
+X-MSS: AUDITRELEASE@mse-fl2.zte.com.cn
+X-TLS: YES
+X-ENVELOPE-SENDER: gong.shuai@sanechips.com.cn
+X-SOURCE-IP: 10.5.228.133 unknown Wed, 14 Oct 2026 16:11:26 +0800
+X-CLEAN: YES
+X-Fangmail-Anti-Spam-Filtered: true
+X-Fangmail-MID-QID: 6ACF392D.000/4j4P6j71S4z8R03f
+Received-SPF: pass client-ip=160.30.148.35;
+ envelope-from=gong.shuai@sanechips.com.cn; helo=mxhk.zte.com.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, MSGID_FROM_MTA_HEADER=0.001,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Wed, 14 Oct 2026 08:54:55 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -125,28 +87,137 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Add an "accel" mode to the riscv-iommu device so that the physical RISC-V
+IOMMU performs the guest's first-stage translation instead of QEMU
+emulating it. The guest IOMMU driver keeps building its own page tables
+and device contexts as it would with a physical IOMMU, the host owns the
+second stage, and DMA translation runs in hardware. The ARM SMMUv3 accel
+support follows the same idea, and so does this work. We are posting it
+as an RFC to collect feedback on the design.
+
+Background
+
+The RISC-V IOMMU supports nested translation, and iommufd gained vIOMMU
+and nested HWPT objects that let a VMM bind a stage-1 domain owned by
+userspace to a stage-2 domain owned by the VMM and have the physical
+IOMMU walk both. QEMU does not use this interface for the RISC-V IOMMU
+yet, and this work adds the accelerated mode that does.
+
+Design
+
+The guest owns stage-1, which covers the device context and the
+first-stage page tables. The host owns stage-2. QEMU mirrors only the
+guest state the host hardware needs, and forwards invalidations.
+
+Each accelerated IOMMU owns an iommufd vIOMMU, parented by the stage-2
+nesting parent HWPT that the VFIO core allocates for the VM. Each
+attached device gets a vDEVICE that maps the guest devid to the host
+device, and always has a HWPT attached, so QEMU keeps an abort and a
+bypass HWPT for devices the guest does not translate and installs a
+nested stage-1 HWPT when its device context does translate. A device
+context change is picked up when the guest invalidates the context, and
+a missing or invalid context aborts that device's DMA.
+
+Invalidations are forwarded to the host IOMMU, and a RISC-V invalidate
+command carries no requester id, so no per device filtering is needed.
+The guest capabilities are intersected with what the attached host
+IOMMUs support and finalised before the guest can observe them. Every
+vfio-pci endpoint behind every accelerated IOMMU is handed the same
+shared system address space, so the stage-2 nesting parent is shared
+within the VM instead of duplicated per IOMMU.
+
+Patch organization
+
+Patch 1 updates linux-headers, but it is a placeholder. It hand imports
+only the RISC-V IOMMU definitions of iommufd.h instead of running
+scripts/update-linux-headers.sh. It depends on the RISC-V IOMMU nested
+and vIOMMU kernel UAPI, which will be posted soon.
+
+Patches 2 to 5 are preparation, and each is a precondition for the
+accel device rather than incidental cleanup. They enable IOMMUFD on the
+virt machine, let a PCI IOMMU override its ops, expose RISCVIOMMUSpace
+so per device accel state can be embedded in it, and split the device
+context fetch out of the cache lookup so the command path can read a
+freshly written device context.
+
+Patches 6 to 13 build the accel device, adding the skeleton, the shared
+system address space, the endpoint restrictions, get_viommu_flags, the
+vIOMMU and proxy HWPTs in the set and unset callbacks, nested device
+context install, host invalidation, and host hardware info validation.
+Patch 14 adds the accel property last, so the switch only becomes
+available once all the supporting pieces are in place.
+
+Testing
+
+The host is a RISC-V machine whose physical IOMMU is provided by an
+outer QEMU riscv-iommu model, enabled with the iommu-sys machine
+property. An NVMe controller under it is bound to vfio-pci and passed
+through to the guest. For simplicity the guest runs the same kernel as
+the host, and inside the guest it mainly uses the normal IOMMU driver
+and the NVMe driver.
+
+    -object iommufd,id=iommufd0
+    -device riscv-iommu-pci,addr=1.0,s-stage=on,g-stage=off,accel=on
+    -device vfio-pci,host=0000:01:00.0,iommufd=iommufd0
+
+Add iommu.passthrough=0 iommu.strict=1 to the guest command line so the
+guest installs and uses the vIOMMU. The guest's riscv-iommu driver then
+probes the vIOMMU, builds its stage-1 tables and programs device
+contexts. I/O on the passed through NVMe goes through the combined
+stage-1 and stage-2 walk on the physical IOMMU, and device MSIs reach
+the vCPU without host software in the data path. Correctness was
+checked by running fio against the passed through disk with
+verification enabled, including under load.
+
+Known limitations
+
+accel=on supports stage-1 only, and the second stage belongs to the host.
+Only vfio-pci endpoints using the iommufd backend are supported, and
+emulated endpoints are rejected because supporting them would mean
+owning IOTLB invalidation in QEMU again. MSI remapping stays with the
+host IOMMU, so the guest sees the base device context format. There is
+no ATS or PRI support and no process_id or PDT support. Migration is
+blocked while accel=on because the host vIOMMU and HWPT state cannot
+be migrated. One accelerated IOMMU instance per VM is assumed for now.
+
+The series is also available from
+https://github.com/leaprise/qemu/tree/riscv/iommu-nested-rfc1
 
 
-On 10/8/26 17:44, Andrew Holden wrote:
-> The KM instruction loop in cpacf_aes_ecb() updated the source pointer,
-> destination pointer, and length registers only after the entire loop
-> completed, using a 'done' accumulator. If a guest memory access fault
-> fires mid-loop, siglongjmp unwinds the C stack before the register
-> update is reached. The registers then reflect block 0 rather than the
-> block being processed, causing the instruction to restart from the
-> beginning on every fault. This results in quadratic reprocessing and
-> violates the PoP requirement that registers reflect partial completion
-> per block processed.
-> 
-> Fix this by updating the registers inside the loop body after each
-> successfully processed block, and removing the 'done' accumulator.
-> 
-> Signed-off-by: Andrew Holden <andy0x48@linux.ibm.com>
-> ---
->   target/s390x/tcg/cpacf_aes.c | 18 ++++++++----------
->   1 file changed, 8 insertions(+), 10 deletions(-)
+Gong Shuai (5):
+  linux-headers: Update iommufd.h header for RISC-V IOMMU nested
+    translation
+  hw/riscv/riscv-iommu: Expose RISCVIOMMUSpace and split its helpers
+  hw/riscv/riscv-iommu: Split device context fetch from cache lookup
+  hw/riscv/riscv-iommu-accel: Add nested vDC install/uninstall support
+  hw/riscv/riscv-iommu-accel: Get host RISC-V IOMMU hw info and validate
 
+Wu Fei (9):
+  hw/riscv/Kconfig: Enable IOMMUFD on RISC-V virt machine
+  hw/riscv/riscv-iommu: Allow PCI IOMMU ops to be overridden
+  hw/riscv/riscv-iommu-accel: Introduce RISC-V IOMMU accel device
+  hw/riscv/riscv-iommu-accel: Initialize shared system address space
+  hw/riscv/riscv-iommu-accel: Restrict accelerated IOMMU to vfio-pci
+    endpoints with iommufd
+  hw/riscv/riscv-iommu-accel: Implement get_viommu_flags() callback
+  hw/riscv/riscv-iommu-accel: Add set/unset_iommu_device callback
+  hw/riscv/riscv-iommu-accel: Add support to issue invalidation cmd to
+    host
+  hw/riscv/riscv-iommu-accel: Add accel property for iommu device
 
-In addition to what Harald already mentioned, it would be good to contribute
-a linux-user test.
+ hw/riscv/Kconfig              |   6 +
+ hw/riscv/meson.build          |   1 +
+ hw/riscv/riscv-iommu-accel.c  | 713 ++++++++++++++++++++++++++++++++++
+ hw/riscv/riscv-iommu-accel.h  |  81 ++++
+ hw/riscv/riscv-iommu.c        | 209 +++++++---
+ hw/riscv/riscv-iommu.h        |  36 ++
+ hw/riscv/trace-events         |   6 +
+ linux-headers/linux/iommufd.h |  52 +++
+ 8 files changed, 1047 insertions(+), 57 deletions(-)
+ create mode 100644 hw/riscv/riscv-iommu-accel.c
+ create mode 100644 hw/riscv/riscv-iommu-accel.h
+
+-- 
+2.53.0
+
 
