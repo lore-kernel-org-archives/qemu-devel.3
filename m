@@ -4,28 +4,28 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE0AECC6B1D
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 01:28:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91AB6CC6B19
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Oct 2026 01:28:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xGnj6-0005UQ-EX; Tue, 13 Oct 2026 21:24:16 -0400
+	id 1xGnlG-0008GX-PB; Tue, 13 Oct 2026 21:26:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1xGnj3-0005TN-Ug; Tue, 13 Oct 2026 21:24:14 -0400
-Received: from mail-japaneastazlp170130007.outbound.protection.outlook.com
- ([2a01:111:f403:c405::7] helo=TYDPR03CU002.outbound.protection.outlook.com)
+ id 1xGnjr-0005tq-32; Tue, 13 Oct 2026 21:25:10 -0400
+Received: from mail-japaneastazlp170120005.outbound.protection.outlook.com
+ ([2a01:111:f403:c405::5] helo=TYPPR03CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1xGnj2-0006ql-Cv; Tue, 13 Oct 2026 21:24:13 -0400
+ id 1xGnjo-0006wT-NF; Tue, 13 Oct 2026 21:25:02 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=tk5/8gONyHPfrJvlM094QDVUYg3QQStenC4fSB37OVarOR1Ew6W/eC5guvSu+HY19ZeoHFbt1k5rSmNSfmqvDYqAvo01BBHyy2+WzNtqCD2VIkZB6JZ1NScfduv3i2rsbBx6Yu/3HynDidf64jU7DwP4371IPk4PzzzFXcGERYuF1VicAEuNZDyYQeS359sYh+4Dzrjpe0BN8RF1IvMUUf7J2oPCx4C9bOTLWdNHuop7b+Al3NEvzsp3hz7SigBOppX6ENS0JM735/Hw3p8TJOBZ9TBndEQwEZR0/NoHw0oo+RFdMDlV/3KqYQkn08TOWBcIpPQGgOT3faX89xXrXg==
+ b=Zc4goPg2EYAYF8UUA3Co/eTb5J8cJ0u6qlEKNCDs+cdEegn8rU2L6qbE1Z96zO5GhJrothYmOkNG30hXta07uFhLdvmMkqw5yIi82umsZgf1bp8GEB2GKTUfYJ8j0SFdo1UUVRNgFdOSvdi8SuJlVIeHGniT240rL6vHse9GMIAInoFOgls3OW8UZUhNuot+3bUzPQvogRKBtPVT/N4pEFIosGK/ftzb4zeNSvZ7Sf4Rb+Ie2LXu3OT64MM/Yl3ywqF/ChHE3HkMAGl6zCRinhU/wQPedv5TGVKVqs4iLIo1mKqa2XzvKFIA4i+sFaoA1Bdf2y5SDi7JMkt+zenVrg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=tKU7hKnCQXQx77DNv2YiglKLWFekUmfmQySPK5dRSG4=;
- b=eNwo5Rs6fSjr0LPFXLgpT99CByXWAiKqbp1u0NZ5VpXIKrgeAaOiCahVycBgk2gqrB0yaV9zu3xIE0zYjDAKV3qk9alRxpbGFLvSUmqltVrN/Uf9JM0cjJXmG68dRoOQx0lc3UfaNQSlUidWn1zimUEDqBLWzjUyDlHWvRBpVprTLUJArKZQ1GYK0Ysh5c2aNrbSJqbfKJpT3djR6TqGja/Eiml0PGgQwUodOm9nCdiFEN215oZM8H4cxjcPwoPSfnJbx0p3nl880Gi5t98UgnMjGyS/+/DUzT224YgzgAfVBH/3i//zaRwfBn9H3vTbTDoVAI2vcm4urE2KgE4/0Q==
+ bh=E7Pt0G7M57nqYiigc/P1FRrS+xjJh6M4kU6I/uTIWMQ=;
+ b=SOh77YPPNrS4oOhgn2hBsMWlM9Kp3Wf1ESx/k7zqypNWCJIjqTha4XjR5OmyL8bi6yy0q63m9/vmp7kpnT3hPEH8Bw2G/EnkThZKwASC9PCx2UUUlkZnk9MQF004SM9s5O0nAOdGzWS9uh3cChAPC9yGMUgv7qd24D169g6FoRGpkaSKx8sM1Ud4i1uIo0ufThw3xk5MtifOOsn1UQehNkP0zQairdISKdodBsppktvJPtrx725sNi9s1TFYemxIIRF8LcS5cjHv169AquhE/UdE3pkVPT/Cf9Y877UjQ9hkYwuuNNIGxWMVO5yAVBnlxWA3d7dt52tG7FbtYQV+EQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=processmission.com; dmarc=pass action=none
  header.from=processmission.com; dkim=pass header.d=processmission.com;
@@ -33,32 +33,28 @@ ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=tKU7hKnCQXQx77DNv2YiglKLWFekUmfmQySPK5dRSG4=;
- b=f7HQVa7/VD22WBT4SjakN9MlH5hX9It60EWR/KZUZXWBAR1ERd65bZzJFBKTLv6mtvHi0fsr88BdrfZWSmG6gumsvjPz7P6gZGwv+HAyxnL8pOQjheUkg50T2KDnpc8GFqLWJrKSkJAjKVPPr7gQN1mSDVkIAMe82luSGj+GuTvL+ShfBypZrzacAKMCjMjqGeH5M6W8HRrAD1C+hZqtAcf6WXq2BrFhv2t+3QZi2ODN4MG/lIrkqnUpWRYudB0vVCN6c8uLXSs1Z3j3gvoJc3sqg9iqT47Ldv7873RSSapYEqvm4S4whaD060Gsbg23tQINvEKf1EaBAI6aVElUlA==
+ bh=E7Pt0G7M57nqYiigc/P1FRrS+xjJh6M4kU6I/uTIWMQ=;
+ b=PWO/jTJCDCbCKnL2FGtX0bONEsxv0h31rU+4/lRapicdgv5LtsJfdoZSRFpFyOA4W5b0SGUaH7+shkLvNPl+KJKo4oka7gUNDbpwgRf+kcbzBe6veKIw/xCkS7vIC/ykd3s6mrVsXlHfvPAItLNZzc/UvSm1K4QwadhWSCNxVUZIL4O/MsXlM3JYWZfymxA0Fmo/j4zYx2AJ7cHlFzxZTGpRPiiIN3aIJpFc5yyNe834T3WlC3ZYIDxCcXWpM0H31cySYlz6pH+shcFHj3P3GGjA6XWfITzsYrjmzmhsZZuwl5By1pTMMRyUt7jmJ6BJFsPB8WWDmnmkoz7JKiWlxw==
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=processmission.com;
 Received: from KL1PR02MB6257.apcprd02.prod.outlook.com (2603:1096:820:da::11)
- by KL1PR02MB6214.apcprd02.prod.outlook.com (2603:1096:820:9e::10)
+ by TYZPR02MB6222.apcprd02.prod.outlook.com (2603:1096:400:282::9)
  with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.522.12; Wed, 14 Oct
- 2026 01:24:02 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.522.13; Wed, 14 Oct
+ 2026 01:24:52 +0000
 Received: from KL1PR02MB6257.apcprd02.prod.outlook.com
  ([fe80::ecf9:e832:8196:215]) by KL1PR02MB6257.apcprd02.prod.outlook.com
  ([fe80::ecf9:e832:8196:215%6]) with mapi id 15.21.0496.021; Wed, 14 Oct 2026
- 01:24:02 +0000
+ 01:24:52 +0000
 From: Bin Meng <bin.meng@processmission.com>
 To: QEMU <qemu-devel@nongnu.org>
-Cc: Conor Dooley <conor.dooley@microchip.com>,
- Alistair Francis <Alistair.Francis@wdc.com>,
- Chao Liu <chao.liu@processmission.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Palmer Dabbelt <palmer@dabbelt.com>, Weiwei Li <liwei1518@gmail.com>,
- qemu-riscv@nongnu.org
-Subject: [PATCH v4 06/27] hw/riscv: sifive_u: Correct the L2LIM maximum mapped
- size
-Date: Wed, 14 Oct 2026 09:22:46 +0800
-Message-ID: <20261014012323.322790-7-bin.meng@processmission.com>
+Cc: Conor Dooley <conor@kernel.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Sebastian Huber <sebastian.huber@embedded-brains.de>, qemu-riscv@nongnu.org
+Subject: [PATCH v4 24/27] docs/system/riscv: pfsoc: Document CLINT topology
+ for direct Linux boot
+Date: Wed, 14 Oct 2026 09:23:04 +0800
+Message-ID: <20261014012323.322790-25-bin.meng@processmission.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261014012323.322790-1-bin.meng@processmission.com>
 References: <20261014012323.322790-1-bin.meng@processmission.com>
@@ -69,67 +65,67 @@ X-ClientProxiedBy: TY6PR01CA0005.jpnprd01.prod.outlook.com
  (2603:1096:820:da::11)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: KL1PR02MB6257:EE_|KL1PR02MB6214:EE_
-X-MS-Office365-Filtering-Correlation-Id: 49d9c2af-d3e4-42b8-7649-08df2991d481
+X-MS-TrafficTypeDiagnostic: KL1PR02MB6257:EE_|TYZPR02MB6222:EE_
+X-MS-Office365-Filtering-Correlation-Id: 1449a15b-fe65-4474-59aa-08df2991f219
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|23010399003|1800799024|376014|366016|18002099003|22082099003|10067099003|56012099006;
-X-Microsoft-Antispam-Message-Info: WgQ3XCBlgX5LTtM3Xps4/bpBouTjp7nXuvD4Qbv3QFVuhQG01BpOu896y4zwvYKlfI7Rp6mphGOvCdElKv/5UbOcJhQNkgYDYW6UtdaU9ydt5iX/MFSFU5tfADb8uSee2yJg6cmBD9UYF5r+42tv0yssUE8pSu2w10EJ6QDmWeUAFHSAGIJ5BSEpylPZhoR1ZKgpYBKmaVXWlZ2jInaiGWz3fgqa0hDS5b4XRTSHqO4elCeFWAy7gyQ8Vvzjx9ag1ldoIoMeALODLiKM+YWCEYKTvduqCVUSeIp5VtC33xIM1kD1VJ0MNQpIsQTT8cjM89jOP6he3aiK9oA805i6wKmJM5oO5a14Te6uZn7QuJvgMyA1djrwf+qZR+rlXbtHVSYQWiaGWIHoV3UTZMZJKhaMGs9rTVPyzN0N4q7IIBPZZDYYvW8OMgtZoEbi4f5ybCfNuV/js3oXKBNn+L8MkeiSnWz4KMChsXZco5VLktUVUlXbtlkCooBoNj4r4/77V82qVDgca2HneTnFX3PVczBYs5uafEkySe+JqJHRHR4WbWX09MZcY27R6bBP/CX6yU20/9KRnV1KG/TtNiPF5KX/b72TweJ4IYZez+Oe/mKxmc4sw11aYDSKCFOMqZfEngNNFkKO7fYZludiGlDWmwpMSucDA/rnGqfkOKH4sdg=
+ ARA:13230040|23010399003|1800799024|366016|376014|10067099003|261009223027099003|5023799004|56012099006|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info: BPNtp4CYsR55Tgk1jGgBQkTzALf9SRsYdu1DVCLfX+ZAg3VmLlHZU66pIiTe8xHfG+6OuGXJix4i4gE9mrrsh1b3JSP0k4YwLd73/dViq67WGz+j5o3u3zZL+5pwbnyaTtUsvDi9RkFB/uML2IRkPml19Y726Dg98lgPQNK6KPbatTiqhn6dwDFIhtsaeZ0dSSnFcV1XDjU2KNwoFYfhrPMQ4RoS9aoKr6rI64IM5hBTHMvlgvlCD+LCf+BDBo8y/PK/RZwXB4VoOmY1w3uETd5MamNDYSBlvxiEitQ9/sSGrCnSKdY5Q4599kL5xg8acGEi+QK9kV3Q36o2wDThkyll6jFPJH7oNirpPr7IPsBSsj9x+2ljn/88E4QoVcEQmaHGw26jx4IcUpk6iBVpXOZGqsfZd2tKpc2erU42uhyKAE8Io4eRa5xz9xTB6utMMIgRE6phxCnXs8sVLb3aQEZ3LfCkguPIB4qRxGP1wBxvmaiJIT9f0twzB6NFu0+ADOU8z62td9lVxx579XwooWx0My3do3ysqVSum5tjMgy3Por6tc+sjAr/XNmwhEDyeM9xnFD+6cDVdR0aH6h4uqn7SmYkWRJW0lhLiaQHU6eMDmUwAdXlcm+7+aDPGc+RbLh9NFjRd5I/+T/6LjpWjARgGLBdu/UaWNmO+qQpd7A=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:KL1PR02MB6257.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(23010399003)(1800799024)(376014)(366016)(18002099003)(22082099003)(10067099003)(56012099006);
+ SFS:(13230040)(23010399003)(1800799024)(366016)(376014)(10067099003)(261009223027099003)(5023799004)(56012099006)(18002099003)(22082099003);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?jO7Ied80VRNizHaYMe2OKrGV2rJhlNc2XNycoKXvaqNrcyyR+XDITmMIjNJm?=
- =?us-ascii?Q?IvjibjbAysi4q4/9++8D1+Xn0hJGiYz/lXW7ISOgNgBGFJGRyY9dhMfp+NO1?=
- =?us-ascii?Q?p6aH6t8mGnGq+JabLgNuT2bKf9ey3ARXWPB86dewfzB74TTne12/p0pqhlE1?=
- =?us-ascii?Q?O7DbW/SBJ7DlkVF++liuw/gESJgf9Vuy+7c/nRI1OW+UEXoqSTPPkHaiWd0Q?=
- =?us-ascii?Q?242lAfAbanaMI0mDwKNlPKed1/2riaA4SAzujRb90fIZkmjXRpwEaLBKKCAg?=
- =?us-ascii?Q?hsMMgFMRbAb2xT9buMz73ietBWOZJC0P6/zZnpOkBL17sQmie9/wC3VZ2K5d?=
- =?us-ascii?Q?1ZXssnjmFnOiw+9u33OPiXrvTs7A067yLUGaHIt0okAE6n6OrSaNnCvbdibg?=
- =?us-ascii?Q?8LuMTiRsPoJlHtUhdQ2aO6Fo/hs0EypbLRfi2I2iQwL1UqWtEPy1t5c907Ei?=
- =?us-ascii?Q?X0AlaRMcYjYzh1cIg3kHVJktly2xosDeHKVjSQq9j9CtdRtbZqDssNtoMpug?=
- =?us-ascii?Q?kERi9ks1qUVXykoY2BH6J+0wbKfzXo3ZVUftsApGP/o4ZT9hZU8Vo4EOKwzW?=
- =?us-ascii?Q?gwMj5zTi1b5VWwNnYxdVn1vp8HifdTinZNvBpfixkmPt4EDp65F7EFIrGeaZ?=
- =?us-ascii?Q?N8dqUZawhIb0hqrUw0wfb/egVVLWTz5TcII9YJvw+ip/wwz+GreH2h4bDjSf?=
- =?us-ascii?Q?gFIEUqgVgjER+27EzjSJwYHR4vunIrR3qJ1h2cBw7k31dnxFs3zQxfaw5tIE?=
- =?us-ascii?Q?bjglpJEKG21acdE3Qf11otdF1CYNPK3gy3Kmm1bapRRm/8KE+9V4ijQFoTAe?=
- =?us-ascii?Q?kCHrWA3zWs2F2/1mjGvDtY+vqnXxAwJH7Z63oA4RCKJAk8NVv1FjoDt6wOgf?=
- =?us-ascii?Q?KhCiO7H9eE02CYC5HDmE1KxMww3H9VWaM5JpA+fLtKIQEGdZi7IoOfelrnMQ?=
- =?us-ascii?Q?7kx15ivJJwZqaXcc0KchoRmdltrbBNEyWGXTTpzEKWE7DmronKN/IMP+6aYC?=
- =?us-ascii?Q?i5EQyPDKTFWUusxrGzlHFeK/IH4aKqnWU91rvi0Xmgi/0gwpRr6DUFf/H5DE?=
- =?us-ascii?Q?zFwBtWxhtfp83PepTRXfb7VQPTCEvqO2Ra3/xK6a4Vl7jvfclxsNLXBoYrAP?=
- =?us-ascii?Q?uh/R+Me+6JSuQfcwIENHA6s8sLgWtdjUqwXOufCVe+Fcx40NmYgmFiBy+YQ0?=
- =?us-ascii?Q?cayupMijpd1hK1YX+WoszwWt9Vwa/5b5WzEQayNfSkicKv4EdkZfSNU22hSo?=
- =?us-ascii?Q?bDlcseeW+T28xrAqKaGAR+RkZnRhcgQGYorr5oP8Uy18K8qV/qSe8WJHbJ0K?=
- =?us-ascii?Q?FMI2vkjfY/DmqcB28gYRJcjxO+JoEWLXXGDpa5JsLKRP8tc7wSlT9ASjPNNb?=
- =?us-ascii?Q?sGRY2mHkrGQjQxGoVPoWC+TEta2KOkUN/0NIx4gTZYWPDNJLTsppzb3CKud8?=
- =?us-ascii?Q?eI+K9NupuI9nYpHXbj0HKDxdOW3HrpSlioKK3RG8oEJc1zqU5IMCVT+2e0ZW?=
- =?us-ascii?Q?XBr0d0Rgef7GKIYMEGHVr2BbSfl8GxqwUq3vCyRgav0GvvHQix4Ey8rc29YF?=
- =?us-ascii?Q?Scm10k9ylXBKe6EKvBMHbZ89w2UmnJShXu10LpPMZ/u+zcdp0RqV9aLh3k6i?=
- =?us-ascii?Q?OVCCFm1Iyz2AwDTxJSwLQ4JkAgtMmDtj3CwxFSIpGwTelz+EHpPaso93Ttl2?=
- =?us-ascii?Q?E5f4abERLrnY369v6fAb9PWSn0oY0v2YcgJrFT/Q2FCGAmP7KeIccv6OBOFb?=
- =?us-ascii?Q?NAGSoWbPPVg7tDFUxdczRPINcHSNiWk=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?vP7IW+IrChQcOVdxxP0K/THA6pxuvrcz3ronT40/pM9xX8mU7kYbM1ZGnqeU?=
+ =?us-ascii?Q?RiPal5+db7vXYpTlk6YUAnNzVFjaO966pcHnn6X6q2EfV4ghKb8Q3BTU9m38?=
+ =?us-ascii?Q?pLaIPP4rORB8IT34r860Mv4xFG7yP3pH0tPGUauQjdVdB1SySOMyMB/20I6H?=
+ =?us-ascii?Q?q1BaDYLRQ7La7CnMDQPJ1/5OMrX08E+L8Jr6btTRsuYzp2Bt/jSSfbkEK6SR?=
+ =?us-ascii?Q?tNi3T+ut+E99iLD0dnyai/e4tV2QSxhwryHOJQ8gm6aEq5Vp/G4MvaenL2jo?=
+ =?us-ascii?Q?x4qnK+985qPvL+juBFnBoTyYI9RbYO/9Pi02FrHiEcVvOP94C9xNaauLqkzZ?=
+ =?us-ascii?Q?x0bLnWIxmwVNCgjI993s+QxIoAOfFRsICxUGVObKpvaWPGnuHK4/JvKzaJWZ?=
+ =?us-ascii?Q?JCp0xvCdMN6gDTDr7FdXhngVzMgDwBI8twHMmDPFTsigXqPY3rX5vQHUtX+t?=
+ =?us-ascii?Q?yXvmzVk7jBrEYVx1SD52HYYrKSe4AFrEJrGOOENy/PaM1f8eYO4pePtpHaFy?=
+ =?us-ascii?Q?lqJXWuxw0c4sbAs/7OJm+RfmcZmOh6dxELS7VcScWDNN3feY2ledylJEpMam?=
+ =?us-ascii?Q?eMljqM4wXjzJrrMo5Gc1NP/HBSVsGC1BYOH8MRmFzmldq69WvgyTVeHnFaJX?=
+ =?us-ascii?Q?WwLbpp5mkar9f5T0kimGkuE26a5GwJkO275P+Tluc7kojF5kUsCHAA/8MJ/K?=
+ =?us-ascii?Q?0VlDnuAnPH1j6+hfHmAqy0acyTER6OxNhhlnDtWEyHBvA1xVF/eJvF8oSDN8?=
+ =?us-ascii?Q?/VrHJZHROE8UaFOWYnlBFgmnbFN1FPvjiUtY3aEVbkBHttZpC76o4TROntu9?=
+ =?us-ascii?Q?iQmfATjGPwkuNOcuHtpTpUMmE+sDgh+8TZZC2VU4ZFDZoaje26FH1gv1JN89?=
+ =?us-ascii?Q?Xh0UsHGs5ool2/Qm/xcbhl7XFk0CdGJvxUwQCBsFha9L3M+pPoZ4nMphw1gB?=
+ =?us-ascii?Q?VWIS5EdCcxYPDc83AEiywz9h15LsZGwKBx3K8SAC2aRm+hSuVksk8gv0JQne?=
+ =?us-ascii?Q?UIFa0+8QUo+35Vk7JvkTINmRDV7xZxMPdFP3I/W4r+1Kwr0aJVKRKBlDnPBN?=
+ =?us-ascii?Q?CYBXkp35mJwYBlIaE/oTHbQpIRpwbaQi4VTYBBTkASwaj5CQ/I0bML3MA9Ru?=
+ =?us-ascii?Q?YyZaArbkdEpvS1gc0Q7gPkT+OVyFX7jNz0lEQEE1KGX2uiFt1tYgdJoTkm6w?=
+ =?us-ascii?Q?1w6lWZ9iQjBmlYYcARsXbT84K3P1O9OQkbWZmhC08ciDxYKtr3vqIOFhCZvt?=
+ =?us-ascii?Q?Z/XSrdilCrdGGaEpgAuV5BoFkSza2VawiNJ51dDDb6qdIj7GtP+EEXtZsxhN?=
+ =?us-ascii?Q?rO09sE/9iSTeMlf7EItYtf6R2t3UycnrloNBmNVIZUhXP2rHKfho9wECoCzI?=
+ =?us-ascii?Q?PhKCliPMVqOZod8txCo4QVhOWVqZTQUisVihKInJZjHZyDgdOVfYmzb6HXWj?=
+ =?us-ascii?Q?Aj283YavsJXIVJ9RaJ/xz+3DhRcgu5+v4SufQbjpa6sDguTh/XjWsULV9hQX?=
+ =?us-ascii?Q?u0C2QJD527tcLNz1LFfZd2iwSaMc4AOHOdnA8w6ETON70l1GdifQNaujgGfd?=
+ =?us-ascii?Q?fniFO2tzldnA0611g8OYbQdjlzBk9u2Rf2NybvhkyMB20V+6HS1hN4ib8yJh?=
+ =?us-ascii?Q?FnhwW3YoZzDO1TL2EKcTPYRbjeg0mihbYfTWwuOMMK97pOJCVS41h2yqhfzs?=
+ =?us-ascii?Q?vKhvewRppuG81UKWyx+Y96rql4I84fRe+wy009BtC3zjTqFDwpsdCLOQ2Avc?=
+ =?us-ascii?Q?9SPQGvTs70qTgqgoAzSwyU/gQAuuMAE=3D?=
 X-OriginatorOrg: processmission.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 49d9c2af-d3e4-42b8-7649-08df2991d481
+X-MS-Exchange-CrossTenant-Network-Message-Id: 1449a15b-fe65-4474-59aa-08df2991f219
 X-MS-Exchange-CrossTenant-AuthSource: KL1PR02MB6257.apcprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Oct 2026 01:24:02.4069 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Oct 2026 01:24:52.0126 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: TAK6NUsnCjaBOTF0NB/ns3rL+MQ8BeFa6aZ9gc9+sPW8NNS4Am3GvYVcExSpwMx5w7QJ7KrnLe4Ex0GtFhjpodvDvtfXyubt1ryFYqlKK2Y=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: KL1PR02MB6214
-Received-SPF: pass client-ip=2a01:111:f403:c405::7;
+X-MS-Exchange-CrossTenant-UserPrincipalName: NEz5qLQtVXo3HhKgHGteHAb5/QnafIobgDiFWWl6hx+gBy3Ea1zP/fpd+2h0ivoz71nZeXVcYmieYjOV/AHdEvnNKxeyn7oOgEuSCRRV1V8=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYZPR02MB6222
+Received-SPF: pass client-ip=2a01:111:f403:c405::5;
  envelope-from=bin.meng@processmission.com;
- helo=TYDPR03CU002.outbound.protection.outlook.com
+ helo=TYPPR03CU001.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -146,35 +142,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-FU540 SoC has a 2MiB L2 cache, so the maximum mapped size of
-L2LIM should be set to 2MiB too.
+The generic OpenSBI platform derives the CLINT first hart and register
+slot count from interrupts-extended.  Some S-mode-only MPFS device trees
+mask the E51 M-mode interrupt entries with 0xffffffff, which shifts the
+MSIP and MTIMECMP slots when the same DTB is used for direct boot.
+
+Document the complete five-hart CLINT node. Require interrupts 3 and 7
+for hart 0 as well as the U54 harts.
 
 Signed-off-by: Bin Meng <bin.meng@processmission.com>
-Tested-by: Conor Dooley <conor.dooley@microchip.com>
 
 ---
 
 (no changes since v3)
 
 Changes in v3:
-- New
+- Explain how reduced hart topologies change the CLINT DTB tuples
 
- hw/riscv/sifive_u.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ docs/system/riscv/microchip-icicle-kit.rst | 26 +++++++++++++++++++++-
+ 1 file changed, 25 insertions(+), 1 deletion(-)
 
-diff --git a/hw/riscv/sifive_u.c b/hw/riscv/sifive_u.c
-index b7d5e7b4da..1ac0d1bbd9 100644
---- a/hw/riscv/sifive_u.c
-+++ b/hw/riscv/sifive_u.c
-@@ -72,7 +72,7 @@ static const MemMapEntry sifive_u_memmap[] = {
-     [SIFIVE_U_DEV_CLINT] =    {  0x2000000,    0x10000 },
-     [SIFIVE_U_DEV_L2CC] =     {  0x2010000,     0x1000 },
-     [SIFIVE_U_DEV_PDMA] =     {  0x3000000,   0x100000 },
--    [SIFIVE_U_DEV_L2LIM] =    {  0x8000000,  0x2000000 },
-+    [SIFIVE_U_DEV_L2LIM] =    {  0x8000000,   0x200000 },
-     [SIFIVE_U_DEV_PLIC] =     {  0xc000000,  0x4000000 },
-     [SIFIVE_U_DEV_PRCI] =     { 0x10000000,     0x1000 },
-     [SIFIVE_U_DEV_UART0] =    { 0x10010000,     0x1000 },
+diff --git a/docs/system/riscv/microchip-icicle-kit.rst b/docs/system/riscv/microchip-icicle-kit.rst
+index 2159e8e461..038ea7221f 100644
+--- a/docs/system/riscv/microchip-icicle-kit.rst
++++ b/docs/system/riscv/microchip-icicle-kit.rst
+@@ -66,7 +66,31 @@ should meet the following requirements:
+   option.
+ 
+ * It should contain a node for the CLINT device with a compatible string
+-  "riscv,clint0".
++  "riscv,clint0" or "sifive,clint0".  Its ``interrupts-extended`` property
++  must describe the M-mode software interrupt (3) and timer interrupt (7) for
++  every hart, including the E51 hart 0.
++
++For example, the default five-hart Icicle Kit CLINT node can be described as:
++
++.. code-block:: none
++
++    clint: clint@2000000 {
++        compatible = "sifive,fu540-c000-clint", "sifive,clint0";
++        reg = <0x0 0x2000000 0x0 0xc000>;
++        interrupts-extended = <&cpu0_intc 3>, <&cpu0_intc 7>,
++                              <&cpu1_intc 3>, <&cpu1_intc 7>,
++                              <&cpu2_intc 3>, <&cpu2_intc 7>,
++                              <&cpu3_intc 3>, <&cpu3_intc 7>,
++                              <&cpu4_intc 3>, <&cpu4_intc 7>;
++    };
++
++When selecting fewer harts with ``-smp``, remove the absent hart nodes and their
++CLINT interrupt tuples from the DTB while retaining the E51 hart 0 entries.
++
++Do not replace the hart 0 interrupt numbers with ``0xffffffff`` when the same
++DTB is used to initialize the generic OpenSBI platform.  OpenSBI derives the
++first hart and the number of CLINT register slots from these interrupt tuples;
++masking hart 0 would shift the per-hart MSIP and MTIMECMP register mappings.
+ 
+ When ``-bios`` is not specified or set to ``default``, the OpenSBI
+ ``fw_dynamic`` BIOS image for the ``generic`` platform is used to boot an
 -- 
 2.53.0
 
