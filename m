@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F30A1CC6B38
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 18:09:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B5EFCC6B33
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 18:09:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHPtI-0003nR-2h; Thu, 15 Oct 2026 14:09:20 -0400
+	id 1xHPtJ-0003nr-VH; Thu, 15 Oct 2026 14:09:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xHPtE-0003mT-1J
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 14:09:16 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ id 1xHPtG-0003n7-5N
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 14:09:18 -0400
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xHPtB-00010r-Dg
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 14:09:15 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-4a16bc2278aso40217865e9.1
- for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 11:09:13 -0700 (PDT)
+ id 1xHPtE-00011J-1I
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 14:09:17 -0400
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-4a018dc1f98so45280735e9.3
+ for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 11:09:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1792087752; x=1792692552; darn=nongnu.org;
+ d=linaro.org; s=google; t=1792087755; x=1792692555; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=9nPNao+8x8XrdLz6UNCPSRRQ5rQmCuLAuqzCi5g7l+M=;
- b=gUDl4ACb8gnPzakxgGwSFcTknvchXF0111882FN+DUScDaqMFp5uYMggsvDaOm5vPl
- SplZlZjcgZW6EcRfwPGr9CgKcY31whJEpNDFMhxScUGI1bmkmTd0VyygrrQw9S3KbHcy
- WNQMsfmnhJoYGZoeLnoigBSlKee4KO4HkI+tHO/mHh/MTeCHY2582veq+8IEpKcI7M61
- T5zEW3MDM4ba/DWpdpAzshV1jm0Fk/SUlW+Z1UbOYhrpHHC1vPDcZoR0MEciXToOE1f7
- yTOQLqSzHHvOCkQ34QvMkWHv1d//3BSRCtlpaE66KSBNPUiKJN64Xq17SVHpeyuM2KP+
- XqlQ==
+ bh=cb83B0DVu7VB0LbtmGD2wsC1zLnnqxfUynf1dn4QGkA=;
+ b=lFbhy3s1ZQh+jhOBSoy4oUietNPbdpPoEVfYumk76QLUBHWWUej5k4f4cDP9NgMO0e
+ W+1P2OEKiL/A6pTAbQyLagD6DYxD+zLymoXlZYbRUu+iHWcCOh87wOiZQJQUSpmScEfG
+ GElzndZeRK3yZuxF/Mygl81FKpfv4rL2paoZpYXihno0LcCBClVHSmeWNV4ruCm4uuCs
+ mpbtZY/baOt3I9xeTJrHBtNGvlmGJiUBTPKfcG3oUAIXURwHIdR8mPd7hKD5kzmezpl5
+ bVia/CRChDgVph6dAeng6WgY5sFoP4VaTwcq9bGQp6/TUG0sv27AJfz4kNij1ez9VrMz
+ cs4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792087752; x=1792692552;
+ d=1e100.net; s=20260707; t=1792087755; x=1792692555;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to:content-type;
- bh=9nPNao+8x8XrdLz6UNCPSRRQ5rQmCuLAuqzCi5g7l+M=;
- b=qwppqXdAFVyiqBgx97AiWMSRoA44R9UQg4BfKOTvoLHw9do/Dq7+TsA8kFaDp+s1Fc
- S+wNPlerjAOQrkgkXB33GKK0OfI4ulo54O0rH7/hrQA2kt9LVNhF+KC5VPmTptY12bYM
- RKjAec7trAu5rrh7irx2DstEE56vobI8CpUMrAaLs8ZBnjAtjhsf3YPGFaMt3g3GHa4n
- eDMTD+VNcTKm+YsdMmmJPv41m+Ig+7X5aTOuLHMXD31cg5DqM4xwEnhtVS2YSWpwDjA4
- Eg3YUzhvS8uwkaBEy4Bijf83q6NnFHZ8o4P/7axl+mCneWd6frU033IQic0Mx1VUsbvZ
- Mbfg==
-X-Gm-Message-State: AFq9FYJdvFni1XDrQumjULCrYkyFUW/lc0YL7ddFoTnEKyzoOYcQgR8W
- kZ9yLA4E9jfkXmW/U5Ibo+ZAWnKa2VZt5JXHCND5VtrTUwenLyZKewPmCrBP4ikKe0N+yTndaDX
- MaYgY4Cg=
-X-Gm-Gg: AYBFou2k2KXMf4ZrA/Hp2ESaYY5UXm1Y87su2HQRoP4LR1jlScYZ4ZsCDQm56FRXMz8
- /nNCxyGPWYxRkp6Po3GfEw7pizo2LyEyxBN3eOrn5wXBx1U/N/FN8uVgLa518dXYMWPOZZd5h23
- blykCrF1QiGfJX3/77UhODkOhjZR1MNM9ziTRZsjXBlM5AzLCupZRufwuGk5bAOFTD4F0BW55/5
- pFRl6BxJPba+hjmdVMDHpo8yAyx+NpE71PwClTgEQGIqdj5Ohz1fGwasTztZNtuX2WnUsHm5+ty
- 36xa02gcd3DDG+dIj3HUbQxqQGlOoMEkc8J55KZAGxeN35zf/QmrCoddSRRH9UwQBVzSg5XiDbH
- /qjMHBo4dLVcfPCDQw9RS2EENgz+TG1VmC4491S/ciktpOacOe/hm7ud5s66XSm7B16u244C2kK
- TJMjnfjOSH4/w/7J4R13WL2PdmxtwDj/gsXD7gw1DafLHb5yV8X1S+isTT9P3+ESfa6R8dkIKCw
- dSDTRiU7fgX090ZxfPpxR6AdfoOEULmUB9dI8fmHCRGTI8WRI6c5O9vFhZHjhllFKwGeDuBC+aq
- iGA=
-X-Received: by 2002:a05:600d:82e4:b0:4a1:a45a:88f with SMTP id
- 5b1f17b1804b1-4a1a45a08f7mr259403205e9.20.1792087751974; 
- Thu, 15 Oct 2026 11:09:11 -0700 (PDT)
+ bh=cb83B0DVu7VB0LbtmGD2wsC1zLnnqxfUynf1dn4QGkA=;
+ b=KwipuyFDCCeU6HnWF3HCMJIrkzbzhsugXSQ4M2BOUI9cd0zKHWsCw86qRUWDeq09/o
+ xqKj1xXKrXT/WaJh+D9dqIRQsV9Gg+BNdJPtbVgHjj4w113CIJEWyQTH491Di08Cj0Q2
+ HdQswXMqPXg0OV4hmPwiR5ZgMCQ//4/FWvV2McYQZ6hswqwk3dP0iDy8OddA9XN8tdD0
+ aRdOOQKv0r94DB3CZZqLi8mFRlL37tpjNOUtRcjJFEKH/fVDntGxOLAouErQUimaHUSc
+ m+dIyhlg/76dAY8lKM2KjUZg3HbXHel6/EKMLZgSMjLcUXV1q0Wzs5n+4MheCGWIxzzV
+ tkYw==
+X-Gm-Message-State: AFq9FYIXldJwMoS/sYzjhrSCHPPNxfWYhukw/tiU3yeLJkdh3JuYIVOW
+ OryEEV7O25d7KHb+CvToeDBO/iDTJ2JV3Eo5uBDlkCD9MEgSLNoJrjHIYcIw/eXVJbBIngenXsj
+ 3IIMOydA=
+X-Gm-Gg: AYBFou0xx3Ue2UzcDw1NzufhwHtZt351XSfuEhoMddV/hK9ZtsLQfpUHJuAB1ZQbr7h
+ PZhBLuIYxJ8zlFUkV1yvT33XZf+rv4z5I+prvMiqa65XgrCdWHTNlfeo+qetALf2A98L9p2mtTV
+ ayLQxZjlbuYgv/WbxK8VeoSHEmY1bjxN5k24XIrxenDGYw0KxJPm64i+L0ALoWXRRXwSJPO444C
+ S4UAcGDueKB/HXLY8+rF7uCBB3MmWFFANfyUbXHKvUzwy74uPkJwHdhII3vi2N2gerjDx+RdVlP
+ YDlaXTvA7eruI/lFrmKmSsWMvEC3jIToauftJpXpUhpEfjw5AazFa0CnXaQwh6wPyZXQE8HQDTe
+ imLrytFSbIJrFgKNDmTXaqsDsqjDsWn8o5k9v9/gH0n6a6zmbKBGoX7e/gURsh3xjFWsD0+cUZI
+ ZPRY76EiszUPBIYmZVPZFxPwTEvnTOmXNmnu2TmlnkDdfO7CBceVgNn06pdlfIzPYtyYN+tLPZM
+ l0TinJIKrBCFG3jJM5UmU7OTDWdoqtpZt9EOvgOX6SK4qMmfrVLni5/p3VPbWPvW5e0TRSjtwCp
+ 8MRVGJkEmJtfdw==
+X-Received: by 2002:a05:600c:8b65:b0:49e:6683:d23c with SMTP id
+ 5b1f17b1804b1-4a18e3ef1bdmr377924805e9.0.1792087754687; 
+ Thu, 15 Oct 2026 11:09:14 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48de7773d02sm14692701f8f.13.2026.10.15.11.09.11
+ ffacd0b85a97d-48de7773d02sm14692701f8f.13.2026.10.15.11.09.13
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 Oct 2026 11:09:11 -0700 (PDT)
+ Thu, 15 Oct 2026 11:09:14 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 08/16] tests/tcg/aarch64: Test the TTBR layout with TCR.DS and
- a 48-bit OA
-Date: Thu, 15 Oct 2026 19:08:50 +0100
-Message-ID: <20261015180858.1863407-9-peter.maydell@linaro.org>
+Subject: [PULL 11/16] target/arm: Squash accessfn in
+ modify_arm_cp_regs_with_len
+Date: Thu, 15 Oct 2026 19:08:53 +0100
+Message-ID: <20261015180858.1863407-12-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261015180858.1863407-1-peter.maydell@linaro.org>
 References: <20261015180858.1863407-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,145 +103,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Fuad Tabba <fuad.tabba@linux.dev>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-Extend the TTBR base address test to check that, with TCR.DS or VTCR.DS
-and a 48-bit OA, setting TTBR[5:2] is a level 0 Address size fault.
+When reducing permission of ID registers for userspace
+access for an emulated kernel, drop the access check as well.
 
-Reviewed-by: Gustavo Romero <gromero@redhat.com>
-Signed-off-by: Fuad Tabba <fuad.tabba@linux.dev>
-Message-id: 20261009115728.1299384-5-fuad.tabba@linux.dev
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20261010070952.323466-4-richard.henderson@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- tests/tcg/aarch64/system/ttbr-baddr.c | 55 +++++++++++++++++++++++++++
- 1 file changed, 55 insertions(+)
+ target/arm/helper.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/tests/tcg/aarch64/system/ttbr-baddr.c b/tests/tcg/aarch64/system/ttbr-baddr.c
-index b29c9e1ab0b..20a240410d1 100644
---- a/tests/tcg/aarch64/system/ttbr-baddr.c
-+++ b/tests/tcg/aarch64/system/ttbr-baddr.c
-@@ -4,6 +4,8 @@
-  * With a 52-bit OA, walk a two-entry level 0 table through an IPA with
-  * bit 50 set, which stage 2 maps back onto the table, so the walk
-  * succeeds only if TTBR[4] is cleared from bit 4 of the base address.
-+ * With TCR.DS or VTCR.DS and a 48-bit OA, check that setting TTBR[5:2]
-+ * is a level 0 Address size fault.
-  *
-  * Copyright (c) 2026 Google LLC
-  * Author: Fuad Tabba <fuad.tabba@linux.dev>
-@@ -42,10 +44,13 @@
-  * Stage 1: 16KB granule, 48-bit VA, so level 0 has two entries.
-  * Stage 2: 64KB granule, 52-bit IPA, mapping RAM at its own address and
-  * again at HIGH_IPA.
-+ * Stage 2 with VTCR.DS: 16KB granule, 47-bit IPA, mapping RAM flat.
-  */
- static uint64_t s1_l0[2048] __attribute__((aligned(16384)));
- static uint64_t s1_l1[2048] __attribute__((aligned(16384)));
- static uint64_t s1_l2[2048] __attribute__((aligned(16384)));
-+static uint64_t s2ds_l1[2048] __attribute__((aligned(16384)));
-+static uint64_t s2ds_l2[2048] __attribute__((aligned(16384)));
- static uint64_t s2_l1[1024] __attribute__((aligned(65536)));
- static uint64_t s2_l2[8192] __attribute__((aligned(65536)));
- static uint64_t s2_l2_high[8192] __attribute__((aligned(65536)));
-@@ -54,20 +59,27 @@ static uint64_t s2_l2_high[8192] __attribute__((aligned(65536)));
- #define TCR_T1SZ(x)     ((uint64_t)(x) << 16)
- #define TCR_TG0_16K     (2UL << 14)
- #define TCR_TG1_16K     (1UL << 30)
-+#define TCR_IPS_48      (5UL << 32)
- #define TCR_IPS_52      (6UL << 32)
- #define TCR_DS          (1UL << 59)
- 
- #define VTCR_T0SZ(x)    ((uint64_t)(x) << 0)
- #define VTCR_SL0_L1     (2UL << 6)
-+#define VTCR_TG0_16K    (2UL << 14)
- #define VTCR_TG0_64K    (1UL << 14)
-+#define VTCR_PS_48      (5UL << 16)
- #define VTCR_PS_52      (6UL << 16)
- #define VTCR_RES1       (1UL << 31)
-+#define VTCR_DS         (1UL << 32)
- 
- #define HCR_VM          (1UL << 0)
- #define HCR_RW          (1UL << 31)
- 
- #define PAR_F           (1UL << 0)
-+#define PAR_FST(par)    (((par) >> 1) & 0x3f)
- #define PAR_PA(par)     ((par) & 0xfffffffff000UL)
-+#define FST_ADDR_SIZE_L0    0x00
-+
- #define S2_BLOCK        ((1 << 10) | (3 << 6) | (0xf << 2) | 1)
- 
- static void tlb_flush(void)
-@@ -86,6 +98,17 @@ static uint64_t at(uint64_t ttbr1)
-     return par;
- }
- 
-+static uint64_t at_s1(uint64_t ttbr1)
-+{
-+    uint64_t par;
-+
-+    write_sysreg(ttbr1_el1, ttbr1);
-+    tlb_flush();
-+    asm volatile("at s1e1r, %1; isb; mrs %0, par_el1"
-+                 : "=r" (par) : "r" (TEST_VA));
-+    return par;
-+}
-+
- static void setup_tables(void)
- {
-     /* Stage 1: TEST_VA -> RAM_BASE, 32MB block, AF */
-@@ -93,6 +116,10 @@ static void setup_tables(void)
-     s1_l1[0] = (uint64_t)s1_l2 | 3;
-     s1_l2[(RAM_BASE >> 25) & 0x7ff] = RAM_BASE | (1 << 10) | 1;
- 
-+    /* Stage 2 with VTCR.DS: RAM_BASE -> RAM_BASE, 32MB block, AF, RW */
-+    s2ds_l1[0] = (uint64_t)s2ds_l2 | 3;
-+    s2ds_l2[(RAM_BASE >> 25) & 0x7ff] = RAM_BASE | S2_BLOCK;
-+
-     /* Stage 2: 512MB blocks at RAM_BASE and HIGH_IPA | RAM_BASE, AF, RW */
-     s2_l1[0] = (uint64_t)s2_l2 | 3;
-     s2_l1[HIGH_IPA >> 42] = (uint64_t)s2_l2_high | 3;
-@@ -108,6 +135,15 @@ static int check(const char *name, uint64_t par)
-     return !ok;
- }
- 
-+/* A level 0 Address size fault */
-+static int check_fault(const char *name, uint64_t par)
-+{
-+    int ok = (par & PAR_F) && PAR_FST(par) == FST_ADDR_SIZE_L0;
-+
-+    ml_printf("%s: PAR_EL1=%lx %s\n", name, par, ok ? "ok" : "FAIL");
-+    return !ok;
-+}
-+
- int main(void)
- {
-     uint64_t mmfr0 = read_sysreg(id_aa64mmfr0_el1);
-@@ -135,6 +171,25 @@ int main(void)
-     write_sysreg(mair_el1, 0xff);
-     write_sysreg(sctlr_el1, read_sysreg(sctlr_el1) | 1);
- 
-+    /*
-+     * TCR.DS with a 48-bit OA: TTBR[5:2] are base address bits [51:48],
-+     * so setting any of them is a level 0 Address size fault.
-+     */
-+    write_sysreg(hcr_el2, HCR_RW);
-+    write_sysreg(tcr_el1, tcr | TCR_IPS_48);
-+    ret |= check("ips48", at_s1(base));
-+    ret |= check_fault("ips48 ttbr[2]", at_s1(base | (1 << 2)));
-+    ret |= check_fault("ips48 ttbr[4]", at_s1(base | (1 << 4)));
-+
-+    /* The same for VTTBR, with VTCR.DS and a 48-bit PS */
-+    write_sysreg(vtcr_el2, VTCR_T0SZ(17) | VTCR_SL0_L1 | VTCR_TG0_16K |
-+                 VTCR_PS_48 | VTCR_RES1 | VTCR_DS);
-+    write_sysreg(hcr_el2, HCR_RW | HCR_VM);
-+    write_sysreg(vttbr_el2, (uint64_t)s2ds_l1);
-+    ret |= check("ps48", at(base));
-+    write_sysreg(vttbr_el2, (uint64_t)s2ds_l1 | (1 << 2));
-+    ret |= check_fault("ps48 vttbr[2]", at(base));
-+
-     /*
-      * 52-bit OA: TTBR[4] is base address bit 50, so with it set the
-      * level 0 table is at IPA HIGH_IPA | s1_l0. Stage 2 maps that IPA
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index 4cd418b962a..7974c46000b 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -8406,11 +8406,13 @@ void modify_arm_cp_regs_with_len(ARMCPRegInfo *regs, size_t regs_len,
+             if (pat && g_pattern_match_string(pat, r->name)) {
+                 r->type = ARM_CP_CONST;
+                 r->access = PL0U_R;
++                r->accessfn = NULL;
+                 r->resetvalue = 0;
+                 /* continue */
+             } else if (strcmp(r->name, m->name) == 0) {
+                 r->type = ARM_CP_CONST;
+                 r->access = PL0U_R;
++                r->accessfn = NULL;
+                 r->resetvalue &= m->exported_bits;
+                 r->resetvalue |= m->fixed_bits;
+                 break;
 -- 
 2.43.0
 
