@@ -4,113 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E5A8CC6B33
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 10:42:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D720DCC6B33
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 10:44:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHIua-0006xb-OA; Thu, 15 Oct 2026 06:42:12 -0400
+	id 1xHIvf-0007oj-E3; Thu, 15 Oct 2026 06:43:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
- id 1xHIuY-0006xC-B2
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 06:42:10 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
- id 1xHIuV-0006ej-Cv
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 06:42:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1792060925;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=PycOLRXzU7agR6Q3OcAH6kmDrTbpnm5BwTz54oWot1A=;
- b=TdwbnV4MK2X/my4revdaQtDao50reYBxpSHMSlt79KjrTZAQfJ+flZYhcGhqcTyVZhjXzl
- 0ZAlegceI+XUKr4kpgP0qM4rMhE2ysIST2bWjsqHMu9Ext8o1W/I8SITQTs7UtEqw5z/hx
- JcvsZfdxAF3kjTS7JdgTkbVhYBXzfrM=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-376-VQTS2QPBMxC8JcEsHwKPng-1; Thu, 15 Oct 2026 10:42:04 +0000
-X-MC-Unique: VQTS2QPBMxC8JcEsHwKPng-1
-X-Mimecast-MFC-AGG-ID: VQTS2QPBMxC8JcEsHwKPng_1792060923
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4a013ea30c0so36558215e9.0
- for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 03:42:04 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xHIva-0007ng-Mu
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 06:43:14 -0400
+Received: from mail-yw1-x1132.google.com ([2607:f8b0:4864:20::1132])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xHIvX-0006iY-0Y
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 06:43:13 -0400
+Received: by mail-yw1-x1132.google.com with SMTP id
+ 00721157ae682-8ac8a2ac52bso53736247b3.0
+ for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 03:43:10 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792060990; cv=none;
+ d=google.com; s=arc-20260327;
+ b=VNKAivBOgdhDasf0itpRUApLMg4Y0wMUxV1ColN9C/6YdAnDnWjc9l0YlxX+fh2AyW
+ lfVV81LCDBHfmoLYZY2K/LHjNNeiutp7XMvbTKd1prAdB4zPjBs5H/p1Syy74wbWowuQ
+ JFNviVopJa6uE4JHsduEMLrwy9lABgk0ZAGyRzTaN6WkcfPlZC5DZ+diKwkj41GWI9oC
+ aVtDG5AYwNMG7IEjOqkK1kcKlZ9Rn3lpDEx1p95I+/Ux6r+T5HUDiYruNA0wLh0sDrTI
+ 2PTwanQJloKrynWyy0ZxxYt+YqV6G/I6QosmQwWtb/yT/oazrSXEV+uBm577WZZcgiYR
+ e6iA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+ :dkim-signature;
+ bh=goJEpo9WJS29B8YvteJZWomX9CylYDEkhExGEjFe6N8=;
+ fh=FBdsZjhbP+DsOWwZCD98HP1pdV+8cWYkXHC6040hJGs=;
+ b=PEEBwMbjWrdVrIeQoN4M5Ruepzmc+GippRX4qOq3Cs7DV12RGZzgcHyyybboeNmIjp
+ 7TB8dp+SafJ/fFcDionjBr5lhHER+rDJ76zIPd8RniUGhGcY/UpP+MF3SfNOtVQYxk2Z
+ E3EiyAUXRdX8mtOGFXHdmdQnwXh/STcrXYFkLaIScDhpAhxl5ASi/HrirQ3halgLuRaV
+ dKYT0AvPn67DpStH+mvx6Qi7RfwWwIOtwJYV6WsVwmEc84zFexOgxg0GxaEWFrSOR/DP
+ bDLurwcUsxw2MCKBX3bxWRhuDY8TAWxKBeVz24C8Guu6x7FbmlWUl6mGKZiRVlyu9KMl
+ bP0g==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1792060923; x=1792665723; darn=nongnu.org;
- h=cc:to:message-id:content-transfer-encoding:content-type
- :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=PycOLRXzU7agR6Q3OcAH6kmDrTbpnm5BwTz54oWot1A=;
- b=FcoBV+5CMv9kn3OtL9pW2RLj9WiXuCW+o9bBgw9RshmahC0hSjGcCY0vxi8dLNngfu
- DT/b4ibxqiTpaDJK9N+s9XwWqQYowMJ7if2SWq+p91S7+nr7ZjEFUNGFRqBMu11a3ayN
- g/4s6ks+k5KtlC02OzoREHOeEpO/HhoBaicMuLP5IDubrYTpVmWHspDjp/yg5dNd+vZ1
- CkMrijsgh/XgADgO5CuU0Dcc5ImoBDSk6stPLCXPoGCKcoBJ+qoSVBw1wf21kVaKsjLr
- imZRSLD9V1MXy2QT8im6Go+JUUP9lEfxZyAhH1ileoKgsDUPtpoa0xgZst3cEnz3jPtK
- KNsw==
+ d=linaro.org; s=google; t=1792060990; x=1792665790; darn=nongnu.org;
+ h=content-type:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=goJEpo9WJS29B8YvteJZWomX9CylYDEkhExGEjFe6N8=;
+ b=tmgCVVg0dpqazdqqfaT544e3TATkanVYqeHSoDrS8Bx5fBKEBZELFP9ItRQ8njq0wb
+ 2bANEMzRJzDAgAGp8NDZqXiCuJ3SgZVWdnJQOCRpywXL/s5KOB6mMfvPkk+UGYharMw4
+ LRmA1tVVKVYy3f5BVVnjYeBvbReI1UOsG5IvMcjyZsIkUi3S/33Xkc9UeAlTDYXLC8/z
+ PcylwXRIKuAC2azwuVhEkfGQdKbeAQjzwrqvbAQBCp1JOCm8dCKkBLdF/kQb1UIZs/vE
+ j3DOYOBOQyW03V5JF0/kbYAKy0AhaGAy/bKEpq3awT5Src3t2s27EcksafPmvWcbggFt
+ +pAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792060923; x=1792665723;
- h=cc:to:message-id:content-transfer-encoding:content-type
- :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to:content-type;
- bh=PycOLRXzU7agR6Q3OcAH6kmDrTbpnm5BwTz54oWot1A=;
- b=YDiAFCQiDZJvljPX1euvab0C6HDUOnfuKDK5nwcIWid2tRMctqtgE9kyZRTOINMOLX
- 5sQSOVqvIDKm7dQUN0pFhXB0T9AyHvqnlVz78Sm2fyfP7ZZ+em7BKX/OsS3omVSuOx3Q
- SPEXZyEWI0X1t5cSAFYm7UbrFup+BHWMam7LcSQBDPm3LzBC1ki9RvIz7K+8DlbospwQ
- FbttAIkx11eNyul6EFBC0WUACj9OBJEHH35DYZcA4/nBvSH+Bj3gYcailbnLPC9zK9D0
- +MeR35byxueOLYdVzH/UVkApe8VtIf2eQmT616SFQZ+QgwrHcLYUNYguSeX11PD/h/Hh
- ShDg==
-X-Gm-Message-State: AFq9FYI15+zpy2eb/4kbGtKH5+FNqKOMdqVaUY+YjF+gCaO4dsc/XvT+
- viMLfxq8guRkHcuoNlslufLy1UnAC1BQ35PV1ZJ+ndfUtdlTwopYYNPYa75Xmk7BPqKK/9DCK9O
- 05nQenBGrnat6aoaz5QqZYfVQauIOS4Uoougu0uB0ICnC2spIb5HpqP/D
-X-Gm-Gg: AYBFou0F8QIrEkpMCW9THETbcf9vBXs6LNoOUeQj4Hj44zqou2HRhu51MHisRlVheZ0
- F/44qD9pwTU0dH0NPDhPiHyDPtVjQ8shQolxA3sUqhYIprFeYcOdbierXddg50aUc5O0/IUJZqk
- bWVyvg12WqXEhJgtW4gPIxvO+2NTEjaSAVV2gmUxjm+A0Sup4Uvb8pMJdvEC4+d8+Zxukb3hTX1
- Z2IuBgvHmOqGQ8iAfP1YHg2hKbyK7MKbLYUzJyfH/zOMtufVwnQ9+QPesnNP/KShv58w6QUuC+Z
- bX/VvlkM/KWQL8ezrM5a8EQPnoxKhu5TfDuGxCosGVgAPO4V79Yj6iq/kzZeJ98eGT7nXqPs5At
- MSh2k6Eaav0QPnUedHZZWL/lDD9SuazolDV8GcQq/ZwB3UzqMG4Hf7nlk4wPOs8nW+h56
-X-Received: by 2002:a05:600c:8b6f:b0:4a0:25e9:bc47 with SMTP id
- 5b1f17b1804b1-4a18e4ba6c2mr344020475e9.19.1792060922895; 
- Thu, 15 Oct 2026 03:42:02 -0700 (PDT)
-X-Received: by 2002:a05:600c:8b6f:b0:4a0:25e9:bc47 with SMTP id
- 5b1f17b1804b1-4a18e4ba6c2mr344020205e9.19.1792060922553; 
- Thu, 15 Oct 2026 03:42:02 -0700 (PDT)
-Received: from lleonard-thinkpadx1carbongen13.rmtit.csb ([176.206.38.69])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a1bd96fed4sm62387935e9.2.2026.10.15.03.42.01
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 Oct 2026 03:42:02 -0700 (PDT)
-From: Luigi Leonardi <leonardi@redhat.com>
-Date: Thu, 15 Oct 2026 12:41:57 +0200
-Subject: [PATCH v2] igvm: add command line parameter support
+ d=1e100.net; s=20260707; t=1792060990; x=1792665790;
+ h=content-type:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=goJEpo9WJS29B8YvteJZWomX9CylYDEkhExGEjFe6N8=;
+ b=hV2yE3vM/SugCTzqOdR9T2SKkNSlVt9n6ZDeS6Y4JaJyVWVmR1KoV73+rS3eyda+np
+ AR4nAcgo2R7h8CweiWj+03dzvOEc6LPwWwr89e4pwLfJegKukmHHO6C1L8d/6kX6N7kB
+ 9NsU/AWMqmf3nLxmUqgSgkrO1GMgi2GWzDyoTBxccSbXHWavd3KXwYmfdCLfFz8Kop79
+ 7izI1C8p/j/BKMxwTxmLgRMXaERUs9tZzTsg6kxpwNLeroBtwzAkYGuM0t25iGJ+sFIy
+ XoFn/4Jtr9livs5ARDJSznRTxrRiHCmIr9/zlpCsvOB2DSHr7gMeKN65otD0xs+gGTIa
+ Xkfg==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBzjbNDOPE7PYNEAgfjGiAtKsHlOLhU3KW1RIYznAARInDICjRE3v5p0OClNT7hxTCYHB3I9P90rSFX+@nongnu.org
+X-Gm-Message-State: AFq9FYKP41WAbB4ydvfu0OwRzlsv0cxsqrRuGzPJs6tykc87ijVtd1l7
+ DkcEb0Hbvs0nhtYY2CRi02uRE45p1Vfi7DPr+TY91elF37bgDiv/vVL94CY543o1hfBQmiuQIY/
+ uP7uhs+Pey+8MAgkNqY0SDBdvQ2He/gc+JbpnVGCbjBAWdTBN1pVQkJY=
+X-Gm-Gg: AYBFou2KRH8B2ZlE5wig8s/dabXk4bdDmtK1F6mVOvBCYd1HSKxEiYguo/ieJvz9FrS
+ epFsjtoCXnsoBtY6YxLZDfxF2BkxD173fvIvng0vej53gdKygMFHZqRLRpknHQTzXIH6MEbiu6y
+ sSc6Q70T1Y36P6xXu98WsrgRA7hbfg0VcBd1ScSnJt6aXeEWsNKfwloZWi9aHZZvl6D45eacTvu
+ 6Ppl4cJawWAnJZhVWomcMVgs4vbAKuarYTgVNZ462ADHumbs3ISorVCJ8jdSCb6fans5zZZzAUc
+ 2Xi9gadzmT+AnCvln8bd/oBZVjf+2Uk1d/od9U1ovzdqt3mWtPsEcn167BCc3KECItjQTdpLAoU
+ 0Pc7b+IX7dR456NzAjBrKLLq5I+MRWTpGN2XeQf0J
+X-Received: by 2002:a05:690c:6601:b0:8b0:a01e:2cd4 with SMTP id
+ 00721157ae682-8b0a01e3479mr48027897b3.31.1792060989554; Thu, 15 Oct 2026
+ 03:43:09 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20261015-igvm_command_line-v2-1-1f358acfdf2f@redhat.com>
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/32NXQrCMBCEr1L22cg20j+fvIeUkmbXdsGmkpSgl
- Nzd2AP4+A0z3+wQ2AsHuBY7eI4SZHUZ9KkAOxs3sRLKDBp1jd0FlUxxGey6LMbR8BTHytqxMjg
- SkUHIu5fnh7wP573PPEvYVv85LmL5S//ZYqlKVeu2ahAbaju6eabZbOfcgj6l9AUtBeRrswAAA
- A==
-X-Change-ID: 20260930-igvm_command_line-ccb5a0bddda0
-To: qemu-devel@nongnu.org
-Cc: Gerd Hoffmann <kraxel@redhat.com>, 
- Stefano Garzarella <sgarzare@redhat.com>, Ani Sinha <anisinha@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, 
- =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>, 
- Luigi Leonardi <leonardi@redhat.com>
-X-Mailer: b4 0.14.3
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=leonardi@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
+References: <20261013083933.1024405-1-peter.maydell@linaro.org>
+ <20261013083933.1024405-45-peter.maydell@linaro.org>
+In-Reply-To: <20261013083933.1024405-45-peter.maydell@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 15 Oct 2026 11:42:57 +0100
+X-Gm-Features: AclHuK8lN38F5_bdx-GxNkdPO7fyPPY7qDliYUkgp7JGXyOO6SseT0qayM34A_Y
+Message-ID: <CAFEAcA-2+rrNObsLnMgy2zVbQQbxFd5tezqESZzk=eBYGg1XjA@mail.gmail.com>
+Subject: Re: [PATCH 44/86] target/arm: GICv5 cpuif: Handle PPI injection in
+ vPPI pending reads
+To: qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1132;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1132.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,171 +117,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a "cmdline" property to the igvm-cfg object and a handler for the
-IGVM_VHT_COMMAND_LINE directive, which copies the string into the
-parameter area the directive points at.
+On Tue, 13 Oct 2026 at 09:40, Peter Maydell <peter.maydell@linaro.org> wrote:
+>
+> The GICv5 cpuif allows the hypervisor to configure PPIs to be
+> directly injected into a VM.  Setting the appropriate bit in
+> ICH_PPI_DVIR<n>_EL2 causes that physical PPI to appear as a virtual
+> PPI in the virtual interupt domain.
 
-The command line is passed to whatever software the IGVM file loads,
-such as an SVSM. For example, SVSM can use it to select the serial port
-it logs to.
+"interrupt"
 
-Signed-off-by: Luigi Leonardi <leonardi@redhat.com>
----
-Changes in v2:
-- Updated commit message and doc to make it clear that QEMU does not
-  need to parse this string [Markus]
-- Link to v1: https://lore.kernel.org/qemu-devel/20260930-igvm_command_line-v1-1-62857007d89d@redhat.com
----
- backends/igvm-cfg.c            | 21 +++++++++++++++++++++
- backends/igvm.c                | 31 +++++++++++++++++++++++++++++++
- include/system/igvm-internal.h |  5 +++++
- qapi/qom.json                  |  6 +++++-
- 4 files changed, 62 insertions(+), 1 deletion(-)
+>
+> Directly injected PPIs mostly behave like true virtual PPIs; the
+> exception is that their pending state tracks the pending state of the
+> underlying physical PPI, and guest operations that read or update the
+> pending state work on the physical PPI's pending state.  (Hypervisor
+> operations via ICH_PPI_PENDR<n>_EL2 are not changed, and don't work
+> with the physical PPI pending state.)
+>
+> The complication here is that when nested virtualization is active
+> the EL1 timer PPIs must be redirected so that they appear with
+> different virtual PPI IDs from their physical PPI IDs.  All other
+> injection is a simple 1:1 mapping with a physical PPI always
+> injecting to the virtual PPI with the same ID.
+>
+> In this commit we update the places which read the pending state
+> of virtual PPIs to honour the DVI bits and report the pending
+> state of the underlying direct-injected PPI.
+>
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 
-diff --git a/backends/igvm-cfg.c b/backends/igvm-cfg.c
-index 935ba54f54..ec796ea8a6 100644
---- a/backends/igvm-cfg.c
-+++ b/backends/igvm-cfg.c
-@@ -34,6 +34,19 @@ static void set_igvm(Object *obj, const char *value, Error **errp)
-     igvm->filename = g_strdup(value);
- }
- 
-+static char *get_cmdline(Object *obj, Error **errp)
-+{
-+    IgvmCfg *igvm = IGVM_CFG(obj);
-+    return g_strdup(igvm->cmdline);
-+}
-+
-+static void set_cmdline(Object *obj, const char *value, Error **errp)
-+{
-+    IgvmCfg *igvm = IGVM_CFG(obj);
-+    g_free(igvm->cmdline);
-+    igvm->cmdline = g_strdup(value);
-+}
-+
- static ResettableState *igvm_reset_state(Object *obj)
- {
-     IgvmCfg *igvm = IGVM_CFG(obj);
-@@ -85,6 +98,13 @@ static void igvm_cfg_class_init(ObjectClass *oc, const void *data)
-     object_class_property_set_description(oc, "file",
-                                           "Set the IGVM filename to use");
- 
-+    object_class_property_add_str(oc, "cmdline", get_cmdline, set_cmdline);
-+    object_class_property_set_description(oc, "cmdline",
-+                                          "Set the kernel-style command line "
-+                                          "for the software loaded from the IGVM "
-+                                          "file (copied verbatim, not "
-+                                          "parsed by QEMU)");
-+
-     igvmc->process = qigvm_process_file;
- 
-     rc->get_state = igvm_reset_state;
-@@ -112,4 +132,5 @@ static void igvm_cfg_finalize(Object *obj)
-         igvm_free(igvm->file);
-     }
-     g_free(igvm->filename);
-+    g_free(igvm->cmdline);
- }
-diff --git a/backends/igvm.c b/backends/igvm.c
-index ec7bee428b..d059fee4d2 100644
---- a/backends/igvm.c
-+++ b/backends/igvm.c
-@@ -158,6 +158,8 @@ static int qigvm_directive_snp_id_block(QIgvm *ctx, const uint8_t *header_data,
- static int qigvm_initialization_guest_policy(QIgvm *ctx,
-                                        const uint8_t *header_data,
-                                        Error **errp);
-+static int qigvm_directive_command_line(QIgvm *ctx, const uint8_t *header_data,
-+                                        Error **errp);
- #ifdef CONFIG_FDT
- static int qigvm_directive_device_tree(QIgvm *ctx, const uint8_t *header_data,
-                                        Error **errp);
-@@ -192,6 +194,8 @@ static struct QIGVMHandler handlers[] = {
-       qigvm_initialization_guest_policy },
-     { IGVM_VHT_MADT, IGVM_HEADER_SECTION_DIRECTIVE,
-       qigvm_directive_madt },
-+    { IGVM_VHT_COMMAND_LINE, IGVM_HEADER_SECTION_DIRECTIVE,
-+      qigvm_directive_command_line },
- #ifdef CONFIG_FDT
-     { IGVM_VHT_DEVICE_TREE, IGVM_HEADER_SECTION_DIRECTIVE,
-       qigvm_directive_device_tree },
-@@ -851,6 +855,33 @@ static int qigvm_directive_snp_id_block(QIgvm *ctx, const uint8_t *header_data,
-     return 0;
- }
- 
-+static int qigvm_directive_command_line(QIgvm *ctx, const uint8_t *header_data,
-+                                        Error **errp)
-+{
-+    const IGVM_VHS_PARAMETER *param = (const IGVM_VHS_PARAMETER *)header_data;
-+    const char *cmdline = ctx->cfg->cmdline ? ctx->cfg->cmdline : "";
-+    uint8_t *param_data;
-+    uint32_t param_size;
-+    size_t cmdline_size = strlen(cmdline) + 1;
-+
-+    param_data = qigvm_get_param_data(ctx, param, &param_size, errp);
-+    if (!param_data) {
-+        return -1;
-+    }
-+
-+    if (cmdline_size > param_size) {
-+        error_setg(errp,
-+                   "IGVM: command line size %zu exceeds the %u byte "
-+                   "parameter area defined in IGVM file",
-+                   cmdline_size, param_size);
-+        return -1;
-+    }
-+
-+    memcpy(param_data, cmdline, cmdline_size);
-+
-+    return 0;
-+}
-+
- #ifdef CONFIG_FDT
- static int qigvm_directive_device_tree(QIgvm *ctx, const uint8_t *header_data,
-                                        Error **errp)
-diff --git a/include/system/igvm-internal.h b/include/system/igvm-internal.h
-index b3b64cb584..b56a2e1254 100644
---- a/include/system/igvm-internal.h
-+++ b/include/system/igvm-internal.h
-@@ -32,6 +32,11 @@ struct IgvmCfg {
-      *           format.
-      */
-     char *filename;
-+    /*
-+     * cmdline: Command line for the software loaded from the IGVM file,
-+     *          if it asks for one.
-+     */
-+    char *cmdline;
-     IgvmHandle file;
-     ResettableState reset_state;
-     QTAILQ_HEAD(, IgvmMemoryRegion) memory_regions;
-diff --git a/qapi/qom.json b/qapi/qom.json
-index 5895c97750..1823ece665 100644
---- a/qapi/qom.json
-+++ b/qapi/qom.json
-@@ -1004,11 +1004,15 @@
- #
- # @file: IGVM file to use to configure guest
- #
-+# @cmdline: kernel-style command line for the software loaded from
-+#     the IGVM file.  Passed verbatim: QEMU does not parse it.
-+#     Ignored if the IGVM file does not ask for one.  (since 11.2)
-+#
- # Since: 10.1
- ##
- { 'struct': 'IgvmCfgProperties',
-   'if': 'CONFIG_IGVM',
--  'data': { 'file': 'str' } }
-+  'data': { 'file': 'str', '*cmdline': 'str' } }
- 
- ##
- # @SevCommonProperties:
 
----
-base-commit: 9c88811b81a935a172c5c873b2ada2d9b38a5f74
-change-id: 20260930-igvm_command_line-ccb5a0bddda0
+> +static uint64_t gic_virt_ppi_pending(CPUARMState *env, int reg)
+> +{
+> +    /*
+> +     * Return the pending state of the virtual PPIs; this is the
+> +     * combination of the ICH_PPI_PENDR<n>_EL2 state and the pending
+> +     * state of the physical PPIs which are being direct-injected.
+> +     */
+> +    uint64_t dvi_pend = env->gicv5_cpuif.ppi_pend[reg];
+> +    uint64_t ppi_dvi = env->gicv5_cpuif.ich_ppi_dvi[reg];
+> +    uint64_t dvi_mask = gic_virt_dvi_mask(env, reg);
+> +
+> +    if (reg == 0 &&
+> +        (arm_hcr_el2_eff(env) & (HCR_NV | HCR_NV1)) == HCR_NV) {
+> +        if (arm_is_secure_below_el3(env)) {
+> +            /* 30 -> 20 and 27 -> 19 */
+> +            if (extract64(ppi_dvi, 30, 1)) {
+> +                dvi_pend = deposit64(dvi_pend, extract64(dvi_pend, 30, 1), 20, 1);
+> +            }
+> +            if (extract64(ppi_dvi, 27, 1)) {
+> +                dvi_pend = deposit64(dvi_pend, extract64(dvi_pend, 27, 1), 19, 1);
+> +            }
+> +        } else {
+> +            /* 30 -> 26 and 27 -> 28 */
+> +            if (extract64(ppi_dvi, 30, 1)) {
+> +                dvi_pend = deposit64(dvi_pend, extract64(dvi_pend, 30, 1), 26, 1);
+> +            }
+> +            if (extract64(ppi_dvi, 27, 1)) {
+> +                dvi_pend = deposit64(dvi_pend, extract64(dvi_pend, 27, 1), 28, 1);
+> +            }
+> +        }
 
-Best regards,
--- 
-Luigi Leonardi <leonardi@redhat.com>
+This code gets the order of arguments to deposit64() wrong:
+they are value, start, length, fieldval, so should be
+  dvi_pend = deposit64(dvi_pend, 20, 1, extract64(....))
+and so on.
 
+-- PMM
 
