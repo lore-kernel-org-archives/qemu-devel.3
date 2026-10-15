@@ -4,66 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DD03CC6B38
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 06:08:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9C89CC6B2F
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 06:09:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHEds-0003nr-D7; Thu, 15 Oct 2026 02:08:40 -0400
+	id 1xHEdo-0003m2-6h; Thu, 15 Oct 2026 02:08:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <3323QagoKCloKL2FD6QB9M8GG8D6.4GEI6EM-56N6DFGF8FM.GJ8@flex--stanleyjhu.bounces.google.com>)
- id 1xHEdn-0003m3-TM
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 02:08:36 -0400
-Received: from mail-pf1-x446.google.com ([2607:f8b0:4864:20::446])
+ <33W3QagoKClgIJ0DB4O97K6EE6B4.2ECG4CK-34L4BDED6DK.EH6@flex--stanleyjhu.bounces.google.com>)
+ id 1xHEdl-0003ke-TU
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 02:08:33 -0400
+Received: from mail-pg1-x547.google.com ([2607:f8b0:4864:20::547])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from
- <3323QagoKCloKL2FD6QB9M8GG8D6.4GEI6EM-56N6DFGF8FM.GJ8@flex--stanleyjhu.bounces.google.com>)
- id 1xHEdl-0004I3-6u
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 02:08:35 -0400
-Received: by mail-pf1-x446.google.com with SMTP id
- d2e1a72fcca58-88a10162189so1671224b3a.2
- for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 23:08:32 -0700 (PDT)
+ <33W3QagoKClgIJ0DB4O97K6EE6B4.2ECG4CK-34L4BDED6DK.EH6@flex--stanleyjhu.bounces.google.com>)
+ id 1xHEdk-0004Hz-8f
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 02:08:33 -0400
+Received: by mail-pg1-x547.google.com with SMTP id
+ 41be03b00d2f7-cc4fc935a11so1319810a12.0
+ for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 23:08:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20251104; t=1792044511; x=1792649311; darn=nongnu.org;
- h=content-type:cc:to:from:subject:message-id:references:mime-version
- :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=32vAjksIsACXadybq/uJGbf2PeloTpgQawBV11i2/+Y=;
- b=ruO4uvbIDSp/LzopnKVsyRXHTjeYcVu2mEYaY3VyqBJOsJlDFl5jZn5ZKgxvtf8f2n
- RoVsG6eQrKxtPRDODJQZ28zsAVAaXFUOZt0repZax5+SBbaX9ghFYFLscCfjwCmBVB2S
- sUm7uRzjRHxpf1GhDSrQH+mGMON82YuiU8RFMtjCa2JWCTvhEKUdpMXzLSz4EGo3LWiJ
- 3LbnCvJ9Jma/7R7nBT2V4sKU+k5AZQv0hPpoYoURijnWetRf4ekN75rji5ykZboh/uET
- opQKfwkbmI1wz5VUpLKQi2KLdEK2D74fFGqGfQdzzvwzIm7KajP5PB00dAKh7o6KnHGI
- uJQQ==
+ d=google.com; s=20251104; t=1792044509; x=1792649309; darn=nongnu.org;
+ h=content-type:cc:to:from:subject:message-id:mime-version:date:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=cAi4uB2hBMj2hz6r0GKZ7hS/pjMimcswPAylWvF5K2g=;
+ b=f0HZ4Wnu0XvwjGmaFLNzjl1JQDPT4c0SWh2g//SVaJ1SL9qQWw9emhQx9SI5c8R6eN
+ XxLmjvgrrIQc2Ex6ZAyacHwSWo2rrF+MmUCn/Iy8naTxMz88EbZah+wYu69UXKb2lx6s
+ D9F/Vq2gNU5BONY8+FHt55Nfv4lhswxbDWrkqnv+3EWuD06KLWjVuCdeFhMvhisJ543Y
+ 6tQDsC9qhldTmNcIAwJc21NBlX89TgHeMBVk/Q0CfceWKqMTsfeZdt1KpzQtqzJAWtUp
+ X2gPN3dhBZD40KBc9YcsFCP+cVfx7Jf7KQm9gfKghi8ckXzuASTbwGHtve6ZF0cU2aPF
+ V9TQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792044511; x=1792649311;
- h=content-type:cc:to:from:subject:message-id:references:mime-version
- :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=32vAjksIsACXadybq/uJGbf2PeloTpgQawBV11i2/+Y=;
- b=hqm71OlhXwL0Pq8zozrtqGlwcMIAqfnzq0Rv8zmRejgWP7aQY6BNpqacWn6Y/XRGVA
- sKuBftPsXXoX3LCVjEU5HGxYUh6gcI3rZsq61kJw9+mHiqNT6+cyN1+VibaFuRjxi59G
- 2pxFn4YnQTTkhF39l5osU9sqbuDanm8/g4dsFcdVepPZTR+EXjDL7IidkpBtXnzxcLZ5
- YtUggFaEiYp7Db4Ks9R7LL0SXWa32kiwiC0H/kIc4vxpPZrLH0yfsj6+3NWT4EMp27ZR
- FBNvP2NDFL0sXntAz4Ni7oxuU1aHtvWMm3hX+Bag8FDbp2yTleORElHb8cJvsQXTM2/D
- AOWg==
-X-Gm-Message-State: AFq9FYJn5WZYC/hOXsNtwNwJs/C4TdaQZOa0bXpwQlie48lUv9WTa4GB
- QGr+aYsb0PZXXd5jaxudYSgXUkUprTRhxui4ck6eJ3wp3ltZSsAFkl/KeRiIoeyUZcqrCtaYZlP
- Z+fvCF8e0FBgRwOkPexusFg==
-X-Received: from pfks14.prod.google.com ([2002:a05:6a00:194e:b0:88e:a9ad:c5e6])
+ d=1e100.net; s=20260707; t=1792044509; x=1792649309;
+ h=content-type:cc:to:from:subject:message-id:mime-version:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=cAi4uB2hBMj2hz6r0GKZ7hS/pjMimcswPAylWvF5K2g=;
+ b=nEKwKKClqaxGB9yMLHDRCBayLU5BjR4N1WC98i5G0auL3/kYsQf+b03Pur8zcoi1bm
+ dfNi3LfNznMWI7ftuqTWe97DhsoGC//OHzEtUe2mShrJOSDwJ/eXe/yfH5nBkXLkaRV2
+ rv3k9T5LmHmsBxj4u282gyFum7uEhvY/cs6C9U+Stt1fzQR/6SuS64eoJThcYFejYRpD
+ STYD8r2igkJ8mECCFur71zrN/gV7XFpDHTbWgqN9vBXKhWrRvxRIxwexc6j/817sdECp
+ t+ZBIGhsHCyVVnZQAD9fpgaQdLKDABd8rVY2d9UtLHMT45VhOCbPlhE9tE1t5bbPuVBW
+ dH8A==
+X-Gm-Message-State: AFq9FYL27Lw3PAGm1FvnKpMCx3xcf8JJVSH4xHQxJJoAGtYVhp3hbi//
+ J7zXKYpXNaL5mPbbDJsIV5ZQKdHLMDVmax0qBhnVdr8NY6MQLFF6lyYE8YqF3bKIMLco+DvT8IB
+ DEZ+tuPG+zZT6d9KcWP0qTQ==
+X-Received: from pgbda6.prod.google.com ([2002:a05:6a02:2386:b0:cca:c02e:bfd6])
  (user=stanleyjhu job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:6a00:2283:b0:887:3fca:835d with SMTP id
- d2e1a72fcca58-897c78ddeecmr16675382b3a.29.1792044511093; 
- Wed, 14 Oct 2026 23:08:31 -0700 (PDT)
-Date: Thu, 15 Oct 2026 14:08:20 +0800
-In-Reply-To: <20261015060827.341298-1-stanleyjhu@google.com>
+ 2002:a05:6a21:6004:b0:3e1:558d:e369 with SMTP id
+ adf61e73a8af0-3e16bfbf84bmr15879666637.27.1792044509156; 
+ Wed, 14 Oct 2026 23:08:29 -0700 (PDT)
+Date: Thu, 15 Oct 2026 14:08:19 +0800
 Mime-Version: 1.0
-References: <20261015060827.341298-1-stanleyjhu@google.com>
 X-Mailer: git-send-email 2.56.0.385.gd3acb90ef8-goog
-Message-ID: <20261015060827.341298-2-stanleyjhu@google.com>
-Subject: [PATCH 1/8] hw/ufs: Add experimental fault injection properties for
- holding requests
+Message-ID: <20261015060827.341298-1-stanleyjhu@google.com>
+Subject: [PATCH 0/8] hw/ufs: Add fault injection, update TMR doc,
+ and add qtests
 From: Stanley Jhu <stanleyjhu@google.com>
 To: Jeuk Kim <jeuk20.kim@samsung.com>, Jeuk Kim <jeuk20.kim@gmail.com>
 Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>, 
@@ -71,9 +69,9 @@ Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
  Jinyoung Choi <j-young.choi@samsung.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::446;
- envelope-from=3323QagoKCloKL2FD6QB9M8GG8D6.4GEI6EM-56N6DFGF8FM.GJ8@flex--stanleyjhu.bounces.google.com;
- helo=mail-pf1-x446.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::547;
+ envelope-from=33W3QagoKClgIJ0DB4O97K6EE6B4.2ECG4CK-34L4BDED6DK.EH6@flex--stanleyjhu.bounces.google.com;
+ helo=mail-pg1-x547.google.com
 X-Spam_score_int: -95
 X-Spam_score: -9.6
 X-Spam_bar: ---------
@@ -96,444 +94,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add experimental properties x-fault-inject-tag and x-fault-inject-mode
-to ufs-pci and ufs-sysbus devices for testing host driver error
-handling and recovery routines.
+This series adds experimental fault injection to the UFS device model
+so host drivers can exercise task abort and power management recovery,
+updates the task management description in the UFS docs, and adds
+qtest cases for controller reset, MCQ runtime registers, task
+management and fault-injected task abort.
 
-When x-fault-inject-tag is set to a specific tag (0..255), the
-controller holds the matching SCSI command request in u->held_req
-without completing it. When x-fault-inject-tag is set to 0xfffffffe
-(UFS_FAULT_INJECT_TAG_ANY), the controller intercepts the first
-READ_10 or WRITE_10 command with LBA >= 512, skipping boot-time
-metadata reads. The default value is 0xffffffff
-(UFS_FAULT_INJECT_TAG_NONE), which disables fault injection.
+- Patches 1-2: x-fault-inject-tag and x-fault-inject-mode properties
+  to hold a transfer request, and task management handling for the
+  held request.
+- Patch 3: ssu-timeout mode for power management recovery testing.
+- Patch 4: document the supported task management functions (QUERY
+  TASK and ABORT TASK).
+- Patches 5-8: qtest helpers and test cases.
 
-Both properties can be changed at runtime through QOM (for example
-QMP qom-set). A held request is released on HCE reset. Task
-management handling for held requests follows in the next patch.
+The fault injection properties are experimental (x- prefix) and off
+by default.
 
-Signed-off-by: Stanley Jhu <stanleyjhu@google.com>
----
- hw/ufs/trace-events |   3 +
- hw/ufs/ufs-pci.c    |   6 ++
- hw/ufs/ufs-sysbus.c |   6 ++
- hw/ufs/ufs.c        | 229 ++++++++++++++++++++++++++++++++++++++++++++
- hw/ufs/ufs.h        |  58 +++++++++++
- 5 files changed, 302 insertions(+)
+Tested with qos-test on aarch64 and x86_64 (14 and 15 UFS cases).
 
-diff --git a/hw/ufs/trace-events b/hw/ufs/trace-events
-index 5e5a54a3fb..33e8940421 100644
---- a/hw/ufs/trace-events
-+++ b/hw/ufs/trace-events
-@@ -16,6 +16,9 @@ ufs_mcq_create_sq(uint8_t sqid, uint8_t cqid, uint64_t addr, uint16_t size) "mcq
- ufs_mcq_create_cq(uint8_t cqid, uint64_t addr, uint16_t size) "mcq create cq cqid %"PRIu8", addr 0x%"PRIx64", size %"PRIu16""
- ufs_write_mcq_op_reg(uint8_t qid, uint32_t offset, uint32_t data) "qid %"PRIu8", offset 0x%"PRIx32", data 0x%"PRIx32""
- ufs_process_tmr(uint8_t func, uint32_t tag, uint8_t resp) "query_func 0x%"PRIx8", task_tag %"PRIu32", tm_resp 0x%"PRIx8""
-+ufs_fault_inject_hold_req(uint8_t tag, uint32_t lba) "held command tag %"PRIu8", lba %"PRIu32""
-+ufs_fault_inject_set_tag(uint32_t tag) "fault-inject-tag set to 0x%"PRIx32""
-+ufs_fault_inject_set_mode(const char *mode) "fault-inject-mode set to %s"
- ufs_hce_reset(void) "HCE 1 -> 0 reset: cancelling BHs, resetting MCQ and request lists"
- 
- # error condition
-diff --git a/hw/ufs/ufs-pci.c b/hw/ufs/ufs-pci.c
-index 8abd7d98e3..504a63bef9 100644
---- a/hw/ufs/ufs-pci.c
-+++ b/hw/ufs/ufs-pci.c
-@@ -72,6 +72,12 @@ static const Property ufs_pci_props[] = {
-                        0x400),
-     DEFINE_PROP_UINT32("wb-min-size", UfsPciState, ufs.params.wb_min_size,
-                        0x100),
-+    DEFINE_PROP_UNSIGNED("x-fault-inject-tag", UfsPciState,
-+                         ufs.params.fault_inject_tag, UFS_FAULT_INJECT_TAG_NONE,
-+                         ufs_prop_fault_inject_tag, uint32_t),
-+    DEFINE_PROP("x-fault-inject-mode", UfsPciState,
-+                ufs.params.fault_inject_mode, ufs_prop_fault_inject_mode,
-+                char *),
- };
- 
- static const VMStateDescription ufs_pci_vmstate = {
-diff --git a/hw/ufs/ufs-sysbus.c b/hw/ufs/ufs-sysbus.c
-index 84de2e95ac..9de31557e7 100644
---- a/hw/ufs/ufs-sysbus.c
-+++ b/hw/ufs/ufs-sysbus.c
-@@ -45,6 +45,12 @@ static const Property ufs_sysbus_props[] = {
-                        0x400),
-     DEFINE_PROP_UINT32("wb-min-size", SysbusUfsState, ufs.params.wb_min_size,
-                        0x100),
-+    DEFINE_PROP_UNSIGNED("x-fault-inject-tag", SysbusUfsState,
-+                         ufs.params.fault_inject_tag, UFS_FAULT_INJECT_TAG_NONE,
-+                         ufs_prop_fault_inject_tag, uint32_t),
-+    DEFINE_PROP("x-fault-inject-mode", SysbusUfsState,
-+                ufs.params.fault_inject_mode, ufs_prop_fault_inject_mode,
-+                char *),
- };
- 
- static const VMStateDescription ufs_sysbus_vmstate = {
-diff --git a/hw/ufs/ufs.c b/hw/ufs/ufs.c
-index f008af7467..e715182b6f 100644
---- a/hw/ufs/ufs.c
-+++ b/hw/ufs/ufs.c
-@@ -15,6 +15,7 @@
- 
- #include "qemu/osdep.h"
- #include "qapi/error.h"
-+#include "qapi/visitor.h"
- #include "scsi/constants.h"
- #include "hw/core/irq.h"
- #include "trace.h"
-@@ -743,6 +744,66 @@ static bool ufs_mcq_delete_cq(UfsHc *u, uint8_t qid)
-     return true;
- }
- 
-+static void ufs_fault_inject_init(UfsHc *u)
-+{
-+    u->active_fault_inject_tag = u->params.fault_inject_tag;
-+    u->held_req = NULL;
-+}
-+
-+static void ufs_fault_inject_hce_reset(UfsHc *u)
-+{
-+    if (u->held_req) {
-+        u->held_req = NULL;
-+        u->active_fault_inject_tag = UFS_FAULT_INJECT_TAG_NONE;
-+        u->params.fault_inject_tag = UFS_FAULT_INJECT_TAG_NONE;
-+    } else {
-+        u->active_fault_inject_tag = u->params.fault_inject_tag;
-+    }
-+}
-+
-+static bool ufs_fault_inject_exec_req(UfsRequest *req)
-+{
-+    UfsHc *u = req->hc;
-+
-+    if (likely(u->active_fault_inject_tag == UFS_FAULT_INJECT_TAG_NONE) ||
-+        u->held_req != NULL ||
-+        req->req_upiu.header.trans_type != UFS_UPIU_TRANSACTION_COMMAND) {
-+        return false;
-+    }
-+
-+    if (u->active_fault_inject_tag == UFS_FAULT_INJECT_TAG_ANY) {
-+        uint8_t op = req->req_upiu.sc.cdb[0];
-+
-+        if (op == READ_10 || op == WRITE_10) {
-+            /*
-+             * In 10-byte SCSI read/write commands (SBC-4), bytes 2..5
-+             * encode the 32-bit Logical Block Address (LBA) in
-+             * big-endian.
-+             */
-+            uint32_t lba = ldl_be_p(&req->req_upiu.sc.cdb[2]);
-+
-+            /*
-+             * Only intercept target I/O targeting LBA >=
-+             * UFS_FAULT_INJECT_MIN_LBA. Skips guest boot-time partition
-+             * table and superblock scanning.
-+             */
-+            if (lba >= UFS_FAULT_INJECT_MIN_LBA) {
-+                u->active_fault_inject_tag = req->req_upiu.header.task_tag;
-+                u->held_req = req;
-+                trace_ufs_fault_inject_hold_req(
-+                    req->req_upiu.header.task_tag, lba);
-+                return true;
-+            }
-+        }
-+    } else if (req->req_upiu.header.task_tag == u->active_fault_inject_tag) {
-+        u->held_req = req;
-+        trace_ufs_fault_inject_hold_req(req->req_upiu.header.task_tag, 0);
-+        return true;
-+    }
-+
-+    return false;
-+}
-+
- static void ufs_hce_reset(UfsHc *u)
- {
-     int i;
-@@ -819,6 +880,8 @@ static void ufs_hce_reset(UfsHc *u)
-         memset(u->mcq_op_reg, 0, sizeof(u->mcq_op_reg));
-     }
- 
-+    ufs_fault_inject_hce_reset(u);
-+
-     u->resetting = false;
- 
-     /* 5. De-assert IRQ */
-@@ -2397,6 +2460,10 @@ static void ufs_exec_req(UfsRequest *req)
-         return;
-     }
- 
-+    if (ufs_fault_inject_exec_req(req)) {
-+        return;
-+    }
-+
-     switch (req->req_upiu.header.trans_type) {
-     case UFS_UPIU_TRANSACTION_NOP_OUT:
-         req_result = ufs_exec_nop_cmd(req);
-@@ -3017,8 +3084,166 @@ static void ufs_init_hc(UfsHc *u)
- 
-     timer_init_ms(&u->idle_timer, QEMU_CLOCK_VIRTUAL_RT, ufs_idle_timer_cb, u);
-     timer_mod(&u->idle_timer, now + UFS_IDLE_TIMER_TICK);
-+
-+    ufs_fault_inject_init(u);
-+}
-+
-+static bool ufs_fault_inject_parse_mode(const char *str,
-+                                        UfsFaultInjectMode *mode,
-+                                        Error **errp)
-+{
-+    if (!str || g_strcmp0(str, "abort-success") == 0) {
-+        *mode = UFS_FAULT_INJECT_ABORT_SUCCESS;
-+    } else if (g_strcmp0(str, "abort-failed") == 0) {
-+        *mode = UFS_FAULT_INJECT_ABORT_FAILED;
-+    } else if (g_strcmp0(str, "in-transition") == 0) {
-+        *mode = UFS_FAULT_INJECT_IN_TRANSITION;
-+    } else if (g_strcmp0(str, "timeout") == 0) {
-+        *mode = UFS_FAULT_INJECT_TIMEOUT;
-+    } else {
-+        error_setg(errp, "invalid x-fault-inject-mode: %s", str);
-+        return false;
-+    }
-+    return true;
- }
- 
-+static bool ufs_fault_inject_realize(UfsHc *u, Error **errp)
-+{
-+    return ufs_fault_inject_parse_mode(u->params.fault_inject_mode,
-+                                       &u->fault_inject_mode, errp);
-+}
-+
-+static void ufs_prop_get_fault_inject_tag(Object *obj, Visitor *v,
-+                                          const char *name, void *opaque,
-+                                          Error **errp)
-+{
-+    Property *prop = opaque;
-+    uint32_t *ptr = object_field_prop_ptr(obj, prop);
-+    UfsParams *params = container_of(ptr, UfsParams, fault_inject_tag);
-+    UfsHc *u = container_of(params, UfsHc, params);
-+
-+    visit_type_uint32(v, name, &u->active_fault_inject_tag, errp);
-+}
-+
-+static void ufs_prop_set_fault_inject_tag(Object *obj, Visitor *v,
-+                                          const char *name, void *opaque,
-+                                          Error **errp)
-+{
-+    Property *prop = opaque;
-+    uint32_t *ptr = object_field_prop_ptr(obj, prop);
-+    UfsParams *params = container_of(ptr, UfsParams, fault_inject_tag);
-+    UfsHc *u = container_of(params, UfsHc, params);
-+    uint32_t val;
-+
-+    if (!visit_type_uint32(v, name, &val, errp)) {
-+        return;
-+    }
-+
-+    if (u->held_req != NULL) {
-+        error_setg(errp,
-+                   "cannot change %s while a request (tag %u) is held",
-+                   name, u->held_req->req_upiu.header.task_tag);
-+        return;
-+    }
-+
-+    *ptr = val;
-+    u->active_fault_inject_tag = val;
-+    trace_ufs_fault_inject_set_tag(val);
-+}
-+
-+static void ufs_prop_set_default_fault_inject_tag(ObjectProperty *op,
-+                                                  const Property *prop)
-+{
-+    object_property_set_default_uint(op, prop->defval.u);
-+}
-+
-+const PropertyInfo ufs_prop_fault_inject_tag = {
-+    .type = "uint32",
-+    .description = "Task tag to hold for fault injection",
-+    .get = ufs_prop_get_fault_inject_tag,
-+    .set = ufs_prop_set_fault_inject_tag,
-+    .set_default_value = ufs_prop_set_default_fault_inject_tag,
-+    .realized_set_allowed = true,
-+};
-+
-+static void ufs_prop_get_fault_inject_mode(Object *obj, Visitor *v,
-+                                           const char *name, void *opaque,
-+                                           Error **errp)
-+{
-+    Property *prop = opaque;
-+    char **ptr = object_field_prop_ptr(obj, prop);
-+    UfsParams *params = container_of(ptr, UfsParams, fault_inject_mode);
-+    UfsHc *u = container_of(params, UfsHc, params);
-+    const char *str;
-+    char *val;
-+
-+    switch (u->fault_inject_mode) {
-+    case UFS_FAULT_INJECT_ABORT_FAILED:
-+        str = "abort-failed";
-+        break;
-+    case UFS_FAULT_INJECT_IN_TRANSITION:
-+        str = "in-transition";
-+        break;
-+    case UFS_FAULT_INJECT_TIMEOUT:
-+        str = "timeout";
-+        break;
-+    case UFS_FAULT_INJECT_ABORT_SUCCESS:
-+    default:
-+        str = "abort-success";
-+        break;
-+    }
-+
-+    val = g_strdup(str);
-+    visit_type_str(v, name, &val, errp);
-+    g_free(val);
-+}
-+
-+static void ufs_prop_set_fault_inject_mode(Object *obj, Visitor *v,
-+                                           const char *name, void *opaque,
-+                                           Error **errp)
-+{
-+    Property *prop = opaque;
-+    char **ptr = object_field_prop_ptr(obj, prop);
-+    UfsParams *params = container_of(ptr, UfsParams, fault_inject_mode);
-+    UfsHc *u = container_of(params, UfsHc, params);
-+    char *str;
-+    UfsFaultInjectMode mode;
-+
-+    if (!visit_type_str(v, name, &str, errp)) {
-+        return;
-+    }
-+
-+    if (!ufs_fault_inject_parse_mode(str, &mode, errp)) {
-+        g_free(str);
-+        return;
-+    }
-+
-+    g_free(*ptr);
-+    *ptr = str;
-+    u->fault_inject_mode = mode;
-+    trace_ufs_fault_inject_set_mode(str);
-+}
-+
-+static void ufs_prop_release_fault_inject_mode(Object *obj, const char *name,
-+                                               void *opaque)
-+{
-+    Property *prop = opaque;
-+    char **ptr = object_field_prop_ptr(obj, prop);
-+
-+    g_free(*ptr);
-+    *ptr = NULL;
-+}
-+
-+const PropertyInfo ufs_prop_fault_inject_mode = {
-+    .type = "str",
-+    .description = "Fault injection mode: abort-success, abort-failed, "
-+                   "in-transition, timeout",
-+    .get = ufs_prop_get_fault_inject_mode,
-+    .set = ufs_prop_set_fault_inject_mode,
-+    .release = ufs_prop_release_fault_inject_mode,
-+    .realized_set_allowed = true,
-+};
-+
- bool ufs_realize(UfsHc *u, DeviceState *dev, AddressSpace *dma_as, Error **errp)
- {
-     u->dev = dev;
-@@ -3028,6 +3253,10 @@ bool ufs_realize(UfsHc *u, DeviceState *dev, AddressSpace *dma_as, Error **errp)
-         return false;
-     }
- 
-+    if (!ufs_fault_inject_realize(u, errp)) {
-+        return false;
-+    }
-+
-     qbus_init(&u->bus, sizeof(UfsBus), TYPE_UFS_BUS, dev, dev->id);
-     u->bus.hc = u;
- 
-diff --git a/hw/ufs/ufs.h b/hw/ufs/ufs.h
-index 265a43faaa..6004268ba2 100644
---- a/hw/ufs/ufs.h
-+++ b/hw/ufs/ufs.h
-@@ -88,6 +88,53 @@ typedef struct UfsLu {
-     UfsScsiOp scsi_op;
- } UfsLu;
- 
-+/*
-+ * Fault injection modes for x-fault-inject-mode property.
-+ * Controls how the held transfer request and subsequent Task Management
-+ * Request (TMR) are resolved by the controller:
-+ *
-+ * UFS_FAULT_INJECT_ABORT_SUCCESS: TMR ABORT_TASK aborts the held request,
-+ *                                 clears its state, and returns SUCCESS
-+ *                                 (COMPL).
-+ * UFS_FAULT_INJECT_ABORT_FAILED:  TMR ABORT_TASK returns
-+ *                                 TASK_MANAGEMENT_FUNC_FAILED, forcing host
-+ *                                 driver to escalate to Host Reset.
-+ * UFS_FAULT_INJECT_IN_TRANSITION: TMR QUERY_TASK / ABORT_TASK completes the
-+ *                                 held request successfully and returns
-+ *                                 COMPL (simulating a command completing in
-+ *                                 transition / grace period).
-+ * UFS_FAULT_INJECT_TIMEOUT:       TMR ABORT_TASK does not complete or clear
-+ *                                 doorbell, triggering hardware-level TMR
-+ *                                 timeout.
-+ */
-+typedef enum UfsFaultInjectMode {
-+    UFS_FAULT_INJECT_ABORT_SUCCESS = 0,
-+    UFS_FAULT_INJECT_ABORT_FAILED,
-+    UFS_FAULT_INJECT_IN_TRANSITION,
-+    UFS_FAULT_INJECT_TIMEOUT,
-+} UfsFaultInjectMode;
-+
-+/*
-+ * Sentinel values for x-fault-inject-tag property.
-+ * Task Tags in UFS are 8-bit (0..255). Values >= 256 are reserved as
-+ * sentinel flags to preserve full testability of Tag 0.
-+ *
-+ * UFS_FAULT_INJECT_TAG_NONE: Disable fault injection (default).
-+ * UFS_FAULT_INJECT_TAG_ANY:  Automatically intercept the first user-space
-+ *                            READ_10 or WRITE_10 command targeting
-+ *                            LBA >= UFS_FAULT_INJECT_MIN_LBA.
-+ */
-+#define UFS_FAULT_INJECT_TAG_NONE 0xffffffff
-+#define UFS_FAULT_INJECT_TAG_ANY  0xfffffffe
-+
-+/*
-+ * Minimum Logical Block Address (LBA) for automatic fault injection.
-+ * Skip early disk blocks (LBA 0..511, e.g. MBR, GPT partition tables, EFI,
-+ * and filesystem superblocks) to ensure guest OS boot-time disk discovery
-+ * and partition scanning complete cleanly without being held.
-+ */
-+#define UFS_FAULT_INJECT_MIN_LBA 512
-+
- typedef struct UfsParams {
-     char *serial;
-     uint8_t nutrs; /* Number of UTP Transfer Request Slots */
-@@ -97,6 +144,8 @@ typedef struct UfsParams {
-     uint8_t mcq_maxq; /* MCQ Maximum number of Queues */
-     uint32_t wb_max_size; /* WB Maximum allocation units */
-     uint32_t wb_min_size; /* WB Minimum allocation units */
-+    uint32_t fault_inject_tag;
-+    char *fault_inject_mode;
- } UfsParams;
- 
- /*
-@@ -186,6 +235,11 @@ typedef struct UfsHc {
-     uint32_t hid_fragment_count; /* Remaining fragmented 4KB units */
-     uint32_t hid_defrag_total; /* Requested units at defrag start */
-     uint32_t hid_defrag_remaining; /* Requested units left to move */
-+
-+    /* Test and fault injection properties */
-+    uint32_t active_fault_inject_tag;
-+    UfsFaultInjectMode fault_inject_mode;
-+    UfsRequest *held_req;
- } UfsHc;
- 
- static inline uint32_t ufs_mcq_sq_tail(UfsHc *u, uint32_t qid)
-@@ -309,4 +363,8 @@ void ufs_init_wlu(UfsLu *wlu, uint8_t wlun);
- bool ufs_realize(UfsHc *u, DeviceState *dev, AddressSpace *dma_as,
-                  Error **errp);
- void ufs_unrealize(UfsHc *u);
-+
-+extern const PropertyInfo ufs_prop_fault_inject_tag;
-+extern const PropertyInfo ufs_prop_fault_inject_mode;
-+
- #endif /* HW_UFS_UFS_H */
+Stanley Jhu (8):
+  hw/ufs: Add experimental fault injection properties for holding
+    requests
+  hw/ufs: Handle task management requests for fault-injected held
+    requests
+  hw/ufs: Add ssu-timeout mode for power management recovery testing
+  docs/system/ufs: Update task management request support status
+  tests/qtest/ufs-test: Add TMR and async MCQ SCSI submission helpers
+  tests/qtest/ufs-test: Add HCE reset unit test
+  tests/qtest/ufs-test: Add MCQ runtime register and TMR handling test
+  tests/qtest/ufs-test: Add QOM fault injection task abort test
+
+ docs/system/devices/ufs.rst |   7 +-
+ hw/ufs/trace-events         |   3 +
+ hw/ufs/ufs-pci.c            |   6 +
+ hw/ufs/ufs-sysbus.c         |   6 +
+ hw/ufs/ufs.c                | 337 +++++++++++++++++++-
+ hw/ufs/ufs.h                |  62 ++++
+ tests/qtest/ufs-test.c      | 610 ++++++++++++++++++++++++++++++++++++
+ 7 files changed, 1027 insertions(+), 4 deletions(-)
+
+
+base-commit: 8ee6c77176cfee03be0ec7665b6652b2f31f1531
 -- 
 2.56.0.385.gd3acb90ef8-goog
 
