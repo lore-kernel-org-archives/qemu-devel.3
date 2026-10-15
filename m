@@ -4,98 +4,139 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CF61CC6B2D
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 00:30:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4534ECC6B33
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 00:54:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xH9LK-0001d0-3O; Wed, 14 Oct 2026 20:29:10 -0400
+	id 1xH9jl-0005u5-RF; Wed, 14 Oct 2026 20:54:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <portias@tenstorrent.com>)
- id 1xH9LH-0001cB-9Y
- for qemu-devel@nongnu.org; Wed, 14 Oct 2026 20:29:07 -0400
-Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <portias@tenstorrent.com>)
- id 1xH9LF-0000wb-7G
- for qemu-devel@nongnu.org; Wed, 14 Oct 2026 20:29:07 -0400
-Received: by mail-pj1-x102e.google.com with SMTP id
- 98e67ed59e1d1-38ecc48b3deso314390a91.0
- for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 17:29:04 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1xH9jk-0005t2-30
+ for qemu-devel@nongnu.org; Wed, 14 Oct 2026 20:54:24 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1xH9ji-0002rk-F3
+ for qemu-devel@nongnu.org; Wed, 14 Oct 2026 20:54:23 -0400
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 69ENJahU500328
+ for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 00:54:21 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=qcppdkim1; bh=4OtXcfE2RQn
+ ISyEelrwyIngLXcbGbCsl/Yq/lOI93RQ=; b=RmD2j8fxfJxN14Ba3vnKmMrajOL
+ o65pfQFQciYuFOM/+VCv+EXmV8BS3r0ez0TYAnwA2Hou54JDqmGepYSL9vsHhJQw
+ sKep9J5kcNlBCGhGcAICeeXUl9nz2kZnO0vdQ2ZQkf8OsnCE++3VxdjbbphSgNMs
+ tzDqer/s2NHnR8h23vKVzPJwi5M/hXVOfPhN8Yo5F86MCmbKTfADeyJbOtZu36lK
+ PcPQt/oGQWpp8L4n1E1W4JoHDLxzu9bIwjlKN0VXIO3xQlO/naSvL1tFbrizVhTK
+ sbf4cNGYn+fuLzwEOqv+2BxwYTGsg0FJRNYmOFuwi2OPi8/LyXqdkeNIqfQ==
+Received: from mail-dy1-f198.google.com (mail-dy1-f198.google.com
+ [74.125.82.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4haagf2ep2-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 00:54:20 +0000 (GMT)
+Received: by mail-dy1-f198.google.com with SMTP id
+ 5a478bee46e88-33c35f5ca6cso9958404eec.1
+ for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 17:54:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=tenstorrent.com; s=google; t=1792024144; x=1792628944; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1792025660; x=1792630460; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=W6iQt/nJGJKSfexDx17afcIMBhxPEbv2eHDhVLE1BZQ=;
- b=I0aU5GSGT+YCrsGJRVyDUPmZSpde8Nq4RX6tb9iDejCYueGjZgvQaVrkD1HqRG+Re9
- Yyusxmf5ijy7nE3NR1ss3Rv0U2hJqFQWCpMY0IbNm4tCSWpm4aUfRZ8tW6XVCtEXGO51
- 50J1axNbE8Az6GtM9+55+zGiJKN6/0BmMsyOHrRPFy9bINXujP/Jc1/6Wa6ne0cides+
- QqQsXZ/ylhrZZ9Ez98W2bmndzVkH3L3odgyXVmDXK4VoZ5s9HbGJGVTu4sM1nLBLc5Y7
- Umhu+yK5JMLd5r65DTevn333laDU2/+kr4Cj1qsu6ZcFohpZ7W5/leKEXC8BDpCEpr0z
- nBaA==
+ bh=4OtXcfE2RQnISyEelrwyIngLXcbGbCsl/Yq/lOI93RQ=;
+ b=NqESiv/mNyGIhIbKKYJ9/0tJLaZCEEDHaUqZ3GHm5R0OsU7aZAeiqxHBLQ+2nLWWL1
+ hxTTUWPqbpDLdJ/3RJBUZoXszQl7GoGd1yUVDRSQjSdVpFNm32spGH1vjyTBeNkv3tNp
+ jLN/kFEPAQV2w35GEYEy/5+Bcwh1gdbHvZlXHvZr/CU3p59DKI4bHbIGnmExfsKiPFsx
+ ixQ5spvrqQ2JBA+vDvvMk0rwyMZD5AVEA6hD6Gcux+IrtiaU9R6NMzEOzyMrC1Ylpd8M
+ ShqYXCO6pfKPLBU2JASkjf1uTaPIMLZFvL6J56CotfX60bYJ2F21Jro9sFVzLExE0Nl/
+ VSXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792024144; x=1792628944;
+ d=1e100.net; s=20260707; t=1792025660; x=1792630460;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=W6iQt/nJGJKSfexDx17afcIMBhxPEbv2eHDhVLE1BZQ=;
- b=cW6Iu8S75YZn7UsQf/+pmhUYpeipykP80HE2B1GkLh/fGdYy2B3cUMWjqXlKo9P5Yo
- Efd3H2xo8Xg/Eq40CoV9K2Gz0ViUpPpEv/FHSdgXT1k8PVmpOU6OMgxTXt1M7T+mQ0cW
- 44592ztwkVb0gl8x6nvENwwf8fYCRmRpAIT5i8cAOTCEGNExOglLefyYHpoXNvMPm/vt
- EuYfjh+A+UA43KdBGrSr+LmsDi1QyVN0veRH//5XUxCyq/+l3xvri/QfOwP6SoJB9pP7
- AGg3J2310WwJ7RP+8YY9etueCoZGZwwY1tBwQ57i1bZh24irZpPNmOdrA6EelKdWW+7c
- uQug==
-X-Gm-Message-State: AFq9FYIWffVHK/i8R5VCwkVDKAoOrdDY0Qhxnll6bQwtwhkwDAIEGq5v
- kcbf+HRcWgn/QmjD8DHa7IUTNHTdfddLC5lVmb5CHvlJY6K9zG9lefK6muZ1FumJNI1FkdBX3T5
- 6TRu3sXQ=
-X-Gm-Gg: AYBFou0uUcc2qb6iGWoL+bhXMhwMs2+I9m4h9O/6Z6ECZZiDGgUUz9im6ftNz7n+4sI
- F2TLCurUnVx1ttomnIXHeANNR01hBp3+lDploQkJlxkXkph5vLNsvF2KiRQOxJFgDJlGc2XGluE
- 2E4UFSGpNP1gBGr27rz4OTOKvLsdFy8eyERXyaHK/s0HdqWj7aNKTZRQF2yLCtz2V/1SXzHxwVJ
- jy7H1YGDH7TzRsucapjQ/gMD0INMMmD+ZouI4SDXh2e0347xnXK7rCsE9e1sbs04FwNSzqlwSh7
- v3Z8MAEED4RbHSCu4Xw+iyB/i0E9LPofYs5ttDgM4tj2QT6y+x3JJaejkWEtuOpzoEfFWubx4Qg
- 9ozLF4fBCww+kHO6ZqiEt1nlYSgsh0NKsXDNiW0zvajqkLXpzV0aLlGmZQcLxys9EusKU1mqk0w
- d6uAwu+9iB6HGDKA8eF3yL4YyFzW3cZszwPdZ5gMK4o2JvpjpoV0PYZic065n+NXLux0UlwbbDO
- PE/SdHAX/sRZTOlNiDH4OnXaH3gZqkEDZyGTIOyoMXlMc8=
-X-Received: by 2002:a17:90b:1a90:b0:3a8:1759:2217 with SMTP id
- 98e67ed59e1d1-3ab3a393867mr26528758a91.2.1792024143827; 
- Wed, 14 Oct 2026 17:29:03 -0700 (PDT)
-Received: from lima-default.tail89d63.ts.net ([159.196.41.205])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3ac92a49d7bsm795730a91.0.2026.10.14.17.28.58
+ bh=4OtXcfE2RQnISyEelrwyIngLXcbGbCsl/Yq/lOI93RQ=;
+ b=E3KI9iG9XVl04iv8xfuErVHqRFpDZ6+qFAFaZYtF0G9v7q8wXDXYuaScjh9PXWlzB8
+ RQKtA/oM0GYy1lOiXyJPfSrCAqAd/XbufC/ivAF9Lu2+VdZo9BPSW/NzN9VYuklx152d
+ oR/WGlxvXBsHZoOVlNJojU/bYOX8a7gkwSDTfc8GzyAvRMwJdlE8vf8Va1S2/YO2whnE
+ pl33NeiRwnR+78iM8R9Gwlp6c1eKpwCxa0EpiWhetlZpgQQziZcPg51bXrWb18nzCx6M
+ OZ6X/h6eE0lQNYYmekNCNis5k1ylbdVs3Nk60gRG9oDYhNTcfW/0V2tncPEpgRo48HUK
+ qhng==
+X-Gm-Message-State: AFq9FYLhxsXheUEjFUybCIwv3PiLpWkgqxRg7feWV5pgZIQAYCIWJ4+O
+ VsR+WdXAHvnAxBtIZaQBdgm+0r5BM2YQEI970f9HL8h3DrZSKVwaVSV6Q2PDNQ5YDqoysRejvkt
+ nggM7l+teiTJ8J386L+GzSszZIS7NTQhl7yY8Xpiqdqi6kxP+Rn4MUHpvswq/lkYFkA==
+X-Gm-Gg: AYBFou3QdxsOS31qKPh0V1KsgebAqfqVC2jDe/3lOFghzR+6FXoYffBDxEQ+WZ3miZX
+ 9AEJj4jSUJP3ZHrFbfIgpN7FwW8m146xXL0fw1AfAsBNOrLoqB7Bg22ZjHESThI0tJdGF9vGBpb
+ akLjl4ukkQqRvgE7aTrFM8mBGj1TfuTUDVaB/XfyusMOLInZ7qWLFEffnqK6c8qOqVQW8Fo+utS
+ GjomjMyoD4Sz2OuL2MO6xR1KgPlz61e6AxeFeh4n5Wvec0gvoWh2SkBxUOCPWQUvKAo8akhcNt6
+ hfRKYNgkYlNZVrxKlK+2zC1tkSvLu06vN8B58/mvlMIBnrmIeUqbV7yOZ44L38bZDH6RAsd+FMx
+ JGz7nrBSx48o32rcVUAh/v0xY0Khhx8dtbUczpDIlBtBVILumh53y2UYnklkh
+X-Received: by 2002:a05:7301:90a:b0:34e:c001:1486 with SMTP id
+ 5a478bee46e88-3537e042911mr22337454eec.8.1792025659632; 
+ Wed, 14 Oct 2026 17:54:19 -0700 (PDT)
+X-Received: by 2002:a05:7301:90a:b0:34e:c001:1486 with SMTP id
+ 5a478bee46e88-3537e042911mr22337389eec.8.1792025657834; 
+ Wed, 14 Oct 2026 17:54:17 -0700 (PDT)
+Received: from debian.qualcomm.com (192-80-163-190.dyn.novuscom.net.
+ [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-3537cacb61asm60487033eec.21.2026.10.14.17.54.16
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 14 Oct 2026 17:29:03 -0700 (PDT)
-From: Portia Stephens <portias@oss.tenstorrent.com>
+ Wed, 14 Oct 2026 17:54:17 -0700 (PDT)
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
-Cc: Chao Liu <chao.liu@processmission.com>,
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Portia Stephens <portias@oss.tenstorrent.com>, qemu-riscv@nongnu.org,
- Michael Ellerman <mpe@kernel.org>,
- Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>,
- Alistair Francis <alistair.francis@wdc.com>, Joel Stanley <joel@jms.id.au>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Nicholas Piggin <npiggin@gmail.com>
-Subject: [PATCH v5 1/3] hw/riscv/atlantis: Use dw8250 UART model
-Date: Thu, 15 Oct 2026 10:28:47 +1000
-Message-ID: <20261015002849.1640109-2-portias@oss.tenstorrent.com>
+ Markus Armbruster <armbru@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Subject: [PATCH 3/8] target/loongarch: rename to
+ qmp_query_loongarch_cpu_definitions
+Date: Thu, 15 Oct 2026 00:53:50 +0000
+Message-ID: <20261015005355.62406-4-pierrick.bouvier@oss.qualcomm.com>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20261015002849.1640109-1-portias@oss.tenstorrent.com>
-References: <20261015002849.1640109-1-portias@oss.tenstorrent.com>
+In-Reply-To: <20261015005355.62406-1-pierrick.bouvier@oss.qualcomm.com>
+References: <20261015005355.62406-1-pierrick.bouvier@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
- envelope-from=portias@tenstorrent.com; helo=mail-pj1-x102e.google.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDE1MDAwMyBTYWx0ZWRfX2tLUEypKcY2J
+ VADU9vEhFjEPM9mW7pLFMgFIDLVEXF9KImX4gP16R4NzGLLy4LwlFsdpqlHPpenWSRzpkl58FoC
+ E6Bcmy4kqcxPhg4tiEjzLME7kYyN/nqZHAHBrKhcc4Zt9VxBfFwnva8sH5pEhWfM+RvnUUwrDbw
+ /+4Q+EVWiPxeHZhmy/SYJLBSvqigp1R3vxUPPZwLRszCAeAKigMt6QcIr7mawPxtau8/NEiPwr/
+ 72YZHvIW1rMZMjvvPuSeYfoT8lLQJ4Q5Vqm8ytjGoGdICfeuH9yhP1d6AeKpIfM6hIalzqv5QXI
+ ZFL9N0m05rFF51yDQ+QnoLDWATll9apxRdE5wo8kMviBticMit04xXBhRBQ+KJc9I4YB2J7eQ28
+ j9a/wHJF7ENASxeyOFmFDTLG5ZSJfzQ0zdn0ryWd2SUsYcnR+Jc1vHHIFSunF8Ipm7Hkul50nxu
+ 0dkCD/w3lwStYVMYukw==
+X-Proofpoint-GUID: spUgYHDmOi_Y9XRzwgTt9iYsE6VYSL4n
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDE1MDAwMyBTYWx0ZWRfX0GiJ72fx3Rnr
+ 8Q4KoAnXuMRuX2JMhF+cR4vYKewpCnsyomWjrTcZYiQ8y0BdoaHnpGZSLwWVvvd06QDQp4c5b4F
+ zJ8YJOeZ94W4sg4bfioG6Hfz/mqvGT4=
+X-Proofpoint-ORIG-GUID: spUgYHDmOi_Y9XRzwgTt9iYsE6VYSL4n
+X-Authority-Analysis: v=2.4 cv=V/noQuni c=1 sm=1 tr=0 ts=6ad0243c cx=c_pps
+ a=wEP8DlPgTf/vqF+yE6f9lg==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
+ a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22 a=EUspDBNiAAAA:8
+ a=kW4jeXrm8ddfkYLm61sA:9 a=bBxd6f-gb0O0v-kibOvt:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-10-13_01,2026-10-14_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 malwarescore=0 lowpriorityscore=0 impostorscore=0
+ bulkscore=0 adultscore=0 clxscore=1015 phishscore=0 spamscore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610080000
+ definitions=main-2610150003
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,154 +152,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Replace the ns16550 UART with a Designware UART now that a model is
-available. The hack which sets the rest of the UART register space as
-unimplemented can be removed.
-
-Signed-off-by: Portia Stephens <portias@oss.tenstorrent.com>
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 ---
- hw/riscv/Kconfig               |  2 +-
- hw/riscv/tt_atlantis.c         | 48 +++++++++++-----------------------
- include/hw/riscv/tt_atlantis.h |  4 +--
- 3 files changed, 18 insertions(+), 36 deletions(-)
+ include/system/qmp-cpu.h              | 1 +
+ target/loongarch/loongarch-qmp-cmds.c | 8 +++++++-
+ 2 files changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
-index fb05031228..d89fdfcc86 100644
---- a/hw/riscv/Kconfig
-+++ b/hw/riscv/Kconfig
-@@ -144,7 +144,7 @@ config TENSTORRENT
-     select RISCV_ACLINT
-     select RISCV_APLIC
-     select RISCV_IMSIC
--    select SERIAL_MM
-+    select DW8250
-     select DEVICE_TREE
-     select DESIGNWARE_I2C
-     select DS1338
-diff --git a/hw/riscv/tt_atlantis.c b/hw/riscv/tt_atlantis.c
-index 4e6c39982c..dfd6bc6ba6 100644
---- a/hw/riscv/tt_atlantis.c
-+++ b/hw/riscv/tt_atlantis.c
-@@ -24,9 +24,8 @@
- #include "hw/riscv/fdt-common.h"
- #include "hw/riscv/riscv_hart.h"
+diff --git a/include/system/qmp-cpu.h b/include/system/qmp-cpu.h
+index 84b78c3a097..dbca230ac6f 100644
+--- a/include/system/qmp-cpu.h
++++ b/include/system/qmp-cpu.h
+@@ -11,5 +11,6 @@
  
--#include "hw/char/serial-mm.h"
-+#include "hw/char/dw8250.h"
- #include "hw/intc/riscv_aclint.h"
--#include "hw/misc/unimp.h"
- #include "hw/misc/tt_atlantis_prcm.h"
+ CpuDefinitionInfoList *qmp_query_arm_cpu_definitions(Error **errp);
+ CpuDefinitionInfoList *qmp_query_i386_cpu_definitions(Error **errp);
++CpuDefinitionInfoList *qmp_query_loongarch_cpu_definitions(Error **errp);
  
- #include "system/system.h"
-@@ -268,11 +267,15 @@ static void create_fdt_uart(void *fdt, const MemMapEntry *mem, int irq,
-                             int irqchip_phandle, uint32_t clk_parent_phandle,
-                             uint32_t clk_phandle)
- {
-+    static const char * const compat[2] = {
-+        "snps,dw-apb-uart", "ns16550a"
-+    };
-     g_autofree char *name = g_strdup_printf("/soc/serial@%"HWADDR_PRIX,
-                                             mem->base);
- 
-     qemu_fdt_add_subnode(fdt, name);
--    qemu_fdt_setprop_string(fdt, name, "compatible", "ns16550a");
-+    qemu_fdt_setprop_string_array(fdt, name, "compatible",
-+                                 (char **)&compat, ARRAY_SIZE(compat));
-     qemu_fdt_setprop_sized_cells(fdt, name, "reg", 2, mem->base, 2, mem->size);
-     qemu_fdt_setprop_cell(fdt, name, "reg-shift", 2);
-     qemu_fdt_setprop_cell(fdt, name, "reg-io-width", 4);
-@@ -466,17 +469,6 @@ static void load_fdt(TTAtlantisState *ams)
-     create_fdt_memory(ms->fdt, &ams->soc);
+ #endif
+diff --git a/target/loongarch/loongarch-qmp-cmds.c b/target/loongarch/loongarch-qmp-cmds.c
+index f053f22bb8c..dadf5de889d 100644
+--- a/target/loongarch/loongarch-qmp-cmds.c
++++ b/target/loongarch/loongarch-qmp-cmds.c
+@@ -10,6 +10,7 @@
+ #include "qemu/target-info.h"
+ #include "qapi/error.h"
+ #include "qapi/qapi-commands-machine.h"
++#include "system/qmp-cpu.h"
+ #include "cpu.h"
+ #include "qobject/qdict.h"
+ #include "qapi/qobject-input-visitor.h"
+@@ -28,7 +29,7 @@ static void loongarch_cpu_add_definition(gpointer data, gpointer user_data)
+     QAPI_LIST_PREPEND(*cpu_list, info);
  }
  
--static void mmio_map_unimplemented(MemoryRegion *memory, SysBusDevice *dev,
--                                   const char *name, hwaddr addr, uint64_t size)
--{
--    qdev_prop_set_string(DEVICE(dev), "name", name);
--    qdev_prop_set_uint64(DEVICE(dev), "size", size);
--    sysbus_realize(dev, &error_abort);
--
--    memory_region_add_subregion_overlap(memory, addr,
--                                        sysbus_mmio_get_region(dev, 0), -1000);
--}
--
- static void tt_atlantis_machine_done(Notifier *n, void *data)
+-CpuDefinitionInfoList *qmp_query_cpu_definitions(Error **errp)
++CpuDefinitionInfoList *qmp_query_loongarch_cpu_definitions(Error **errp)
  {
-     TTAtlantisState *ams = container_of(n, TTAtlantisState, machine_done);
-@@ -545,8 +537,7 @@ static void tt_atlantis_soc_init(Object *obj)
+     CpuDefinitionInfoList *cpu_list = NULL;
+     GSList *list;
+@@ -40,6 +41,11 @@ CpuDefinitionInfoList *qmp_query_cpu_definitions(Error **errp)
+     return cpu_list;
+ }
  
-     object_initialize_child(obj, "cpus", &s->cpus, TYPE_RISCV_HART_ARRAY);
- 
--    object_initialize_child(obj, "uart1", &s->uart1,
--                            TYPE_UNIMPLEMENTED_DEVICE);
-+    object_initialize_child(obj, "uart1", &s->uart1, TYPE_DW8250);
- 
-     object_initialize_child(obj, "prcm-rcpu",
-                             &s->prcm[TT_ATLANTIS_PRCM_DOMAIN_RCPU],
-@@ -653,11 +644,6 @@ static void tt_atlantis_soc_realize(DeviceState *dev, Error **errp)
-     memory_region_add_subregion(s->memory, s->memmap[TT_ATL_BOOTROM].base,
-                                 &s->bootrom);
- 
--    /* UART1, the soc console (UART0 is for the boot microcontroller) */
--    serial_mm_init(s->memory, s->memmap[TT_ATL_UART1].base, 2,
--                   qdev_get_gpio_in(s->irqchip, TT_ATL_UART1_IRQ),
--                   115200, serial_hd(0), DEVICE_LITTLE_ENDIAN);
--
-     /* 4 PRCM blocks */
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->prcm[TT_ATLANTIS_PRCM_DOMAIN_RCPU]),
-                         errp)) {
-@@ -695,18 +681,14 @@ static void tt_atlantis_soc_realize(DeviceState *dev, Error **errp)
-         sysbus_mmio_get_region(
-             SYS_BUS_DEVICE(&s->prcm[TT_ATLANTIS_PRCM_DOMAIN_MM]), 0));
- 
--    /*
--     * Atlantis contains a DesignWare uart while the QEMU machine
--     * uses the serial_mm model with the base ns16550 register set.
--     * Linux's dw driver writes outside of serial_mm's 0x20 sized
--     * mapping and faults.
--     *
--     * Create an unimplemented device region so writes don't fault
--     * and reads return zero, which keeps Linux happy.
--     */
--    mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&s->uart1),
--                           "tt-atlantis.uart1", s->memmap[TT_ATL_UART1].base,
--                           s->memmap[TT_ATL_UART1].size);
-+    /* UART1, the soc console (UART0 is for the boot microcontroller) */
-+    qdev_prop_set_chr(DEVICE(&s->uart1), "chardev", serial_hd(0));
-+    sysbus_realize(SYS_BUS_DEVICE(&s->uart1), &error_fatal);
-+    memory_region_add_subregion(s->memory,
-+                                s->memmap[TT_ATL_UART1].base,
-+                                sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->uart1), 0));
-+    sysbus_connect_irq(SYS_BUS_DEVICE(&s->uart1), 0,
-+                       qdev_get_gpio_in(s->irqchip, TT_ATL_UART1_IRQ));
- 
-     /* I2C */
-     for (int i = 0; i < TT_ATL_NUM_I2C; i++) {
-diff --git a/include/hw/riscv/tt_atlantis.h b/include/hw/riscv/tt_atlantis.h
-index 577c867d71..fc7a4337cc 100644
---- a/include/hw/riscv/tt_atlantis.h
-+++ b/include/hw/riscv/tt_atlantis.h
-@@ -13,8 +13,8 @@
- #include "hw/core/sysbus.h"
- #include "hw/i2c/designware_i2c.h"
- #include "hw/intc/riscv_imsic.h"
--#include "hw/misc/unimp.h"
- #include "hw/misc/tt_atlantis_prcm.h"
-+#include "hw/char/dw8250.h"
- #include "hw/riscv/riscv_hart.h"
- 
- #define TYPE_TT_ATLANTIS_MACHINE MACHINE_TYPE_NAME("tt-atlantis")
-@@ -41,7 +41,7 @@ struct TTAtlantisSoCState {
-     RISCVHartArrayState cpus;
-     DeviceState *irqchip;
-     DesignWareI2CState i2c[TT_ATL_NUM_I2C];
--    UnimplementedDeviceState uart1;
-+    DW8250State uart1;
-     MemoryRegion bootrom;
-     TTAtlantisPRCMState prcm[TT_ATL_NUM_PRCM];
- 
++CpuDefinitionInfoList *qmp_query_cpu_definitions(Error **errp)
++{
++    return qmp_query_loongarch_cpu_definitions(errp);
++}
++
+ static const char *cpu_model_advertised_features[] = {
+     "lsx", "lasx", "lbt", "pmu", "kvm-pv-ipi", "kvm-steal-time", "msgint",
+     "ptw", NULL
 -- 
 2.43.0
 
