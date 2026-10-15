@@ -4,49 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F307FCC6B3C
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 11:21:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7D12CC6B3C
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 11:21:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHJW8-000217-Pl; Thu, 15 Oct 2026 07:21:01 -0400
+	id 1xHJWZ-0002Kb-Ld; Thu, 15 Oct 2026 07:21:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xHJW5-000208-FE
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 07:20:57 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1xHJWY-0002J3-JQ
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 07:21:26 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xHJW3-00040H-0X
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 07:20:56 -0400
+ id 1xHJWV-00045J-LA
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 07:21:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1792063253;
+ s=mimecast20190719; t=1792063283;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=NyDOPFHMdLCDs3tkT+jxVfa9CaV06y+teiW41aZ+d38=;
- b=MxoeZU3IepnSp6vD+4OlsHM+1MoM2JMBY37elb5w6wr0ai6vZaYD1NPQ2DSZwVYk6c2/QL
- ELB5GaXrOs3mCsbMW+pyWg+bv3GRp6sVi+j/YMu/mkmoR7AFsPcA92FXNnsW/sGsBnX4jF
- aH0VefcorHOipe9d/il34tPI/+MaC/8=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=WmbF2rav6olts7r91nikWE5VNRBJjs1nM9Ql/qEIAzk=;
+ b=H3nKjkHsHMcj7CJKbgvf3CXtkMASQOEclQZLbqkBgbrhqPaJk2RyFnFdRIPlKk4Du1FiyD
+ 0xC/YnRoz53wc4+vxfPcx+tWSlQg+LRVIcUyVHlTC/zua6TU7nmDQyW2Fu3TXQbxd5uIC8
+ L+B0u+w3KBGJdtxDQnPgafsJBRYuopI=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-674-h5wYvG6GOkibxG44A2rZRw-1; Thu,
- 15 Oct 2026 11:20:52 +0000
-X-MC-Unique: h5wYvG6GOkibxG44A2rZRw-1
-X-Mimecast-MFC-AGG-ID: h5wYvG6GOkibxG44A2rZRw_1792063250
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-7-TvMfxSBrN2e5UdyjGzfKAQ-1; Thu,
+ 15 Oct 2026 11:21:19 +0000
+X-MC-Unique: TvMfxSBrN2e5UdyjGzfKAQ-1
+X-Mimecast-MFC-AGG-ID: TvMfxSBrN2e5UdyjGzfKAQ_1792063278
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 595C91956079; Thu, 15 Oct 2026 11:20:50 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1824818011D5; Thu, 15 Oct 2026 11:21:18 +0000 (UTC)
 Received: from berrange.csb (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 7D1CC1800677; Thu, 15 Oct 2026 11:20:46 +0000 (UTC)
+ id ABDB41800677; Thu, 15 Oct 2026 11:21:14 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
@@ -60,23 +61,25 @@ Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Eric Blake <eblake@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Laurent Vivier <lvivier@redhat.com>
-Subject: [PATCH 00/21] system: introduce a live data recorder facility
-Date: Thu, 15 Oct 2026 12:20:23 +0100
-Message-ID: <20261015112044.1999748-1-berrange@redhat.com>
+Subject: [PATCH 07/21] util: introduce 'tldr',
+ a system data recorder for crash handling
+Date: Thu, 15 Oct 2026 12:20:30 +0100
+Message-ID: <20261015112044.1999748-8-berrange@redhat.com>
+In-Reply-To: <20261015112044.1999748-1-berrange@redhat.com>
+References: <20261015112044.1999748-1-berrange@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 10
-X-Spam_score: 1.0
-X-Spam_bar: +
-X-Spam_report: (1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
+X-Spam_score_int: -22
+X-Spam_score: -2.3
+X-Spam_bar: --
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,186 +95,750 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series introduces a new facility called 'tldr' which is a
-live data recorder. This is intended to aid support of production
-QEMU deployments, by providing a data collection facility that
-can be left "always on", such that in the event of a QEMU crash
-or guest OS crash, certain important information will be recorded.
+Introduce a new subsystem "tldr" aka "thrifty live data recorder"
+that will be able to continuously collect certain information at
+runtime and dump that in a crash report when QEMU exits abnormally.
+As a second use case, it will support manual triggering on interesting
+events such as guest OS panic.
 
-The data recorder has to be enabled by adding a "tldr-config"
-object instance with -object / object_add.
+Initially the framework does nothing except print the signal
+information. Later commits will introduce broader data collection.
+This relies on the dummy siginfo_t struct for portability to Windows.
 
-With this series, the data recorder collects
-
- * error_report/warn_report/error_printf messages
- * QMP events
- * QMP errors
- * QMP commands, which are not query-XXX/qom-list,
-   or any command associated with a QMP error.
- * qemu_log output
-
-The last item is intended primarily to be used in combination
-with tracing and its 'log' backend, to have continuous
-recording of certain interesting probes.
-
-Each type of data is collected in a distinct circular
-buffer, such that high volumes of one type of data, does
-not result in overwriting other types of low volume data.
-
-The data recorder is set to trigger on SIGBUS, SIGSEGV,
-SIGILL, SIGFPE and SIGABRT, or manually via QMP 'tldr-dump'.
-
-There is a open question in one of the patches about SIGBUS
-handling, since that is already used for MCE capture and I'm
-unclear if I'm breaking something about KVM MCE reporting.
-
-This series proposes using sigaltstack() to register an
-alternative signal handling stack. This would mainly be
-useful if we have a crash from a stack overflow, but the
-cost is that we have 8k extra per thread, and I'm not
-entirely convinced that's a beneficial tradeoff. Might
-be better to just accept stack overflows as a risk.
-
-This series only captures text based info, but as a followup
-I would like to extend this to capture statistics data from
-relevant subsystems. For example, the BlockBackend has its
-own "always on" stats accounting code, which can be queried
-with QMP. Ideally I would like to figure out a way to dump
-all the BlockBackend stats in the data recorder output.
-Likewise perhaps capture NIC stats and/or KVM stats in an
-"always on" manner for some interesting baseline dataset.
-The challenge with that is making it safe to access the
-stats data without taking any mutex locks, since this must
-run from a signal handler.
-
-A typical recommended usage would be:
-
- $QEMU  -object tldr-config,id=tldr
-        -d tldr
-        -trace events=/var/lib/libvirt/qemu/trace.txt
-
-This leaves dumps to go to QEMU's stderr on crash, but
-to send them to a file
-
-   -object tldr-config,id=tldr,crash-target=/some/path
-
-The '-d tldr' flag redirects qemu_log() to the TLDR buffer
-instead of stdout, and the '-trace events' arg defines
-the "always on" tracepoints we want to capture.
-
-An example crash dump seen if I send SIGBUS to a libvirt
-managed QEMU is, with 'object*' tracepoints collected:
-
-🚨🚨🚨 QEMU Data Recorder Start 🚨🚨🚨
-
-🔍 Trigger:
-  - Signal: SIGBUS (7)
-  - Code: User process kill (0)
-  - Address: 0x1e5a9e
-
-🎥  Message recording 'command':
-2026-10-15T10:59:11.318427Z {"execute": "qmp_capabilities", "id": "libvirt-1"}
-2026-10-15T10:59:11.322047Z {"execute": "migrate-set-capabilities", "arguments": {"capabilities": [{"state": true, "capability": "events"}]}, "id": "libvirt-3"}
-2026-10-15T10:59:11.347566Z {"execute": "balloon", "arguments": {"value": 4294967296}, "id": "libvirt-9"}
-2026-10-15T10:59:11.354570Z {"execute": "set-action", "arguments": {"panic": "pause"}, "id": "libvirt-12"}
-2026-10-15T10:59:11.358046Z {"execute": "cont", "id": "libvirt-14"}
-
-🎥  Message recording 'event':
-2026-10-15T10:59:11.358108Z {"timestamp": {"seconds": 1792061951, "microseconds": 358094}, "event": "RESUME"}
-2026-10-15T10:59:20.757392Z {"timestamp": {"seconds": 1792061960, "microseconds": 757371}, "event": "VSERPORT_CHANGE", "data": {"open": true, "id": "console1"}}
-2026-10-15T10:59:24.431398Z {"timestamp": {"seconds": 1792061964, "microseconds": 431379}, "event": "NIC_RX_FILTER_CHANGED", "data": {"name": "net0", "path": "/machine/peripheral/net0/virtio-backend"}}
-2026-10-15T10:59:32.586658Z {"timestamp": {"seconds": 1792061972, "microseconds": 586603}, "event": "RTC_CHANGE", "data": {"offset": 0, "qom-path": "/machine/unattached/device[12]/rtc"}}
-
-🎥  Message recording 'log':
-28:QIO_CHANNEL_FILE)
-2026-10-15T10:59:31.753125Z object_dynamic_cast_assert obj=0x557d5c828780 type=chardev-pty->chardev-pty (../chardev/char-pty.c:50:PTY_CHARDEV)
-2026-10-15T10:59:31.753128Z object_dynamic_cast_assert obj=0x557d5c828780 type=chardev-pty->chardev-pty (../chardev/char-pty.c:50:PTY_CHARDEV)
-2026-10-15T10:59:31.796114Z object_dynamic_cast_assert obj=0x557d5ca7d3a0 type=host-x86_64-cpu->x86_64-cpu (../target/i386/cpu-qom.h:31:X86_CPU)
-2026-10-15T10:59:31.796148Z object_class_dynamic_cast_assert type=kvm-apic->apic-common (/home/berrange/src/virt/qemu/include/hw/i386/apic_internal.h:131:APIC_COMMON_GET_CLASS)
-
-...snip...
-
-2026-10-15T10:59:33.713641Z object_dynamic_cast_assert obj=0x557d5cc20b10 type=PCIE->PCI (/home/berrange/src/virt/qemu/include/hw/pci/pci.h:289:PCI_BUS)
-2026-10-15T10:59:33.713643Z object_class_dynamic_cast_assert type=PCIE->PCI (/home/berrange/src/virt/qemu/include/hw/pci/pci.h:289:PCI_BUS_GET_CLASS)
-2026-10-15T10:59:33.713648Z object_dynamic_cast_assert obj=0x557d5ca03700 type=host-x86_64-cpu->x86_64-cpu (../target/i386/cpu-qom.h:31:X86_CPU)
-2026-10-15T10:59:33.713664Z object_dynamic_cast_assert obj=0x557d5eadd320 type=virtio-gpu-device->virtio-device (/home/berrange/src/virt/qemu/include/hw/virtio/virtio.h:91:VIRTIO_DEVICE)
-
-🚨🚨🚨 QEMU Data Recorder End 🚨🚨🚨
-
-"object_*" is not a particularly good choice for 'always on'
-data collection as it is high volume and mostly noise. The
-job of identifying the "interesting" low volume tracepoints
-is outstanding. We can provide guidance upstream but downstream
-should control what they're interested in collecting. We might
-want to add further tracepoints in the code at interesting
-places that we useful for post-crash debugging.
-
-Daniel P. Berrangé (21):
-  osdep: add 'ignore_value(x)' macro
-  system: move SIGBUS signal handling to signal.c
-  system: rename qemu_init_sigbus to qemu_init_crash_signals
-  system: run SIGBUS handler on alternate signal stack
-  util: expand alternate signal stack to all threads
-  osdep: provide dummy siginfo_t definition
-  util: introduce 'tldr', a system data recorder for crash handling
-  qapi: add 'tldr-dump' command for on-demand data recorder output
-  system: trigger TLDR crash dump on unhandled SIGBUS
-  system: simplify signal handler logic
-  main: allow SIGBUS in the main loop
-  system: enable SIGBUS handling on non-Linux platforms
-  system: enable crash dumps on SIGSEGV, SIGILL, SIGFPE and SIGABRT
-  util: introduce capture of textual messages in data recorder
-  util: capture warnings and errors in the data recorder
-  monitor: remove obsolete/redundant exports
-  monitor: capture monitor commands and events in data recorder
-  log: enable directing log messages to data recorder
-  tests/qtest: add API to declare an expected crash signal
-  qtest: add 'crash' command to generate 'authentic' process crashes
-  tests/qtest: add test to validate data recorder on crashes
-
- MAINTAINERS                 |  12 +
- include/qemu/log.h          |   1 +
- include/qemu/osdep.h        |  16 +
- include/qemu/tldr.h         |  76 ++++
- include/system/signal.h     |  25 ++
- meson.build                 |   4 +
- monitor/monitor-internal.h  |   2 -
- monitor/qmp.c               |  66 +++-
- qapi/meson.build            |   1 +
- qapi/qapi-schema.json       |   1 +
- qapi/qom.json               |  18 +
- qapi/tldr.json              |  62 +++
- qemu-options.hx             |  24 ++
- stubs/meson.build           |   1 +
- stubs/monitor-puts.c        |   9 +
- system/cpus.c               |  78 +---
- system/meson.build          |   1 +
- system/qtest.c              |  50 +++
- system/signal.c             | 149 +++++++
- tests/qtest/libqtest.c      |  62 ++-
- tests/qtest/libqtest.h      |  27 ++
- tests/qtest/meson.build     |   3 +
- tests/qtest/tldr-test.c     | 124 ++++++
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+---
+ MAINTAINERS                 |   8 +
+ include/qemu/tldr.h         |  24 ++
+ qapi/qom.json               |  15 ++
+ qemu-options.hx             |  14 ++
  tests/unit/meson.build      |   1 +
- tests/unit/test-util-tldr.c | 377 ++++++++++++++++++
- util/error-report.c         |  43 ++-
- util/log.c                  |  42 +-
- util/main-loop.c            |   1 -
+ tests/unit/test-util-tldr.c | 105 +++++++++
  util/meson.build            |   1 +
- util/qemu-thread-posix.c    |  20 +
- util/tldr-internal.h        |  52 +++
- util/tldr.c                 | 750 ++++++++++++++++++++++++++++++++++++
- 32 files changed, 1976 insertions(+), 123 deletions(-)
+ util/tldr-internal.h        |  21 ++
+ util/tldr.c                 | 438 ++++++++++++++++++++++++++++++++++++
+ 9 files changed, 627 insertions(+)
  create mode 100644 include/qemu/tldr.h
- create mode 100644 include/system/signal.h
- create mode 100644 qapi/tldr.json
- create mode 100644 stubs/monitor-puts.c
- create mode 100644 system/signal.c
- create mode 100644 tests/qtest/tldr-test.c
  create mode 100644 tests/unit/test-util-tldr.c
  create mode 100644 util/tldr-internal.h
  create mode 100644 util/tldr.c
 
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 6b5aafe43b1..4fa68810c1e 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -4772,3 +4772,11 @@ Machine development tool
+ M: Maksim Davydov <davydov-max@yandex-team.ru>
+ S: Supported
+ F: scripts/compare-machine-types.py
++
++Data Recorder
++M: Daniel P. Berrangé <berrange@redhat.com>
++S: Maintained
++F: util/tldr.c
++F: util/tldr-internal.h
++F: include/qemu/tldr.h
++F: tests/unit/test-util-tldr.c
+diff --git a/include/qemu/tldr.h b/include/qemu/tldr.h
+new file mode 100644
+index 00000000000..67152b136b3
+--- /dev/null
++++ b/include/qemu/tldr.h
+@@ -0,0 +1,24 @@
++/*
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ *
++ * TL;DR: Thrifty Live Data Recorder
++ *
++ * Copyright (C) 2026 Red Hat Inc.
++ */
++
++#ifndef QEMU_TLDR_H__
++#define QEMU_TLDR_H__
++
++/**
++ * qtldr_crash_dump_signal:
++ * @si: signal information
++ *
++ * Print a crash dump in response to a signal.
++ *
++ * The crash will be printed to the configured crash
++ * file, if set. If opening the crash file fails, or
++ * no path is configured, STDERR will be used.
++ */
++void qtldr_crash_dump_signal(siginfo_t *si);
++
++#endif /* QEMU_TLDR_H__ */
+diff --git a/qapi/qom.json b/qapi/qom.json
+index 49f222796ab..1c9031fba9a 100644
+--- a/qapi/qom.json
++++ b/qapi/qom.json
+@@ -1233,6 +1233,19 @@
+   'data': { '*pretty': 'bool',
+             '*close-action': 'MonitorQMPCloseAction' } }
+ 
++##
++# @QTLDRConfigProperties:
++#     Configuration for data recorder
++#
++# @crash-target: fully qualified path to perserve data recorder
++#                contents on QEMU crash
++#
++# Since: 11.2.0
++##
++{ 'struct': 'QTLDRConfigProperties',
++  'data': { '*crash-target': 'str' }
++}
++
+ ##
+ # @ObjectType:
+ #
+@@ -1302,6 +1315,7 @@
+     's390-pv-guest',
+     'tdx-guest',
+     'throttle-group',
++    'tldr-config',
+     'tls-creds-anon',
+     'tls-creds-psk',
+     'tls-creds-x509',
+@@ -1379,6 +1393,7 @@
+       'tdx-guest':                  'TdxGuestProperties',
+       'thread-context':             'ThreadContextProperties',
+       'throttle-group':             'ThrottleGroupProperties',
++      'tldr-config':                'QTLDRConfigProperties',
+       'tls-creds-anon':             'TlsCredsAnonProperties',
+       'tls-creds-psk':              'TlsCredsPskProperties',
+       'tls-creds-x509':             'TlsCredsX509Properties',
+diff --git a/qemu-options.hx b/qemu-options.hx
+index 2f6863180b0..2f63d86b635 100644
+--- a/qemu-options.hx
++++ b/qemu-options.hx
+@@ -6682,6 +6682,20 @@ SRST
+         ::
+ 
+             (qemu) qom-set /objects/iothread1 poll-max-ns 100000
++
++
++    ``-object tldr-config,id=id,crash-target=path``
++        Creating the ``tldr-config`` object enables the thrifty live data
++        recorder, which continuously captures important information about
++        the operation of the QEMU process. When a SIGSEGV, SIGBUS,
++        SIGILL, SIGFPE or SIGABRT are seen the contents of the data
++        recorder will be dumped to the stderr stream. If the
++        ``crash-target`` parameter was given, that specifies a fully
++        qualified file path to write the dump to instead of stderr.
++
++        The ``tldr-config`` object can be added at initial startup
++        or via QMP at runtime. Once created, however, it is not
++        permitted to disable it.
+ ERST
+ 
+ 
+diff --git a/tests/unit/meson.build b/tests/unit/meson.build
+index d17435c1877..aa02895e767 100644
+--- a/tests/unit/meson.build
++++ b/tests/unit/meson.build
+@@ -136,6 +136,7 @@ if have_system
+     'test-qmp-cmds': [testqapi],
+     'test-xbzrle': [migration],
+     'test-util-sockets': ['socket-helpers.c'],
++    'test-util-tldr': [],
+     'test-base64': [],
+     'test-bufferiszero': [],
+     'test-smp-parse': [qom, meson.project_source_root() / 'hw/core/machine-smp.c'],
+diff --git a/tests/unit/test-util-tldr.c b/tests/unit/test-util-tldr.c
+new file mode 100644
+index 00000000000..4384e10cc18
+--- /dev/null
++++ b/tests/unit/test-util-tldr.c
+@@ -0,0 +1,105 @@
++/*
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ *
++ * Tests for util/tldr.c
++ *
++ * Copyright 2026 Red Hat, Inc.
++ */
++
++#include "qemu/osdep.h"
++#include "util/tldr-internal.h"
++
++typedef struct {
++    bool siginfo;
++    const char *data;
++} QTLDRTestData;
++
++#define TEST_SIGINFO_NULL \
++    QTLDR_DUMP_TRIGGER_PREFIX "manual\n"
++
++#define TEST_SIGINFO_SEGV \
++    QTLDR_DUMP_TRIGGER_PREFIX "\n" \
++    "  - Signal: SIGSEGV (11)\n" \
++    "  - Code: Address not mapped (1)\n" \
++    "  - Address: 0x87539319\n"
++
++
++static void
++test_tldr_one(QTLDRTestData *data)
++{
++    g_autofree char *tmpname = NULL;
++    int tmpfd;
++    char buf[1024];
++    ssize_t dumplen;
++
++    tmpfd = g_file_open_tmp("test-util-tldr-XXXXXX",
++                            &tmpname, NULL);
++    unlink(tmpname);
++
++    if (data->siginfo) {
++        siginfo_t si = {};
++        si.si_signo = 11; /*
++                           * SIGSEGV on Linux, but don't use constant
++                           * since expected output string hardcodes 11
++                           */
++        si.si_code = 1;
++        si.si_addr = (void *)0x87539319;
++        qtldr_crash_dump_internal(tmpfd, &si);
++    } else {
++        qtldr_crash_dump_internal(tmpfd, NULL);
++    }
++
++    lseek(tmpfd, 0, SEEK_SET);
++
++    dumplen = read(tmpfd, buf, sizeof(buf));
++
++    assert(dumplen > 0);
++    buf[dumplen] = '\0';
++
++    close(tmpfd);
++
++    g_assert_cmpstr(buf, ==, data->data);
++}
++
++
++static void
++test_tldr_minimal_default(void)
++{
++    QTLDRTestData data = {
++        .siginfo = false,
++        .data =
++            QTLDR_DUMP_LEADER
++            TEST_SIGINFO_NULL
++            QTLDR_DUMP_TRAILER
++    };
++
++    test_tldr_one(&data);
++}
++
++
++static void
++test_tldr_minimal_siginfo(void)
++{
++    QTLDRTestData data = {
++        .siginfo = true,
++        .data =
++            QTLDR_DUMP_LEADER
++            TEST_SIGINFO_SEGV
++            QTLDR_DUMP_TRAILER
++    };
++
++    test_tldr_one(&data);
++}
++
++
++int main(int argc, char **argv)
++{
++    g_test_init(&argc, &argv, NULL);
++
++    g_test_add_func("/util/tldr/minimal/default",
++                    test_tldr_minimal_default);
++    g_test_add_func("/util/tldr/minimal/siginfo",
++                    test_tldr_minimal_siginfo);
++
++    return g_test_run();
++}
+diff --git a/util/meson.build b/util/meson.build
+index fa174c07a57..00c2350c87e 100644
+--- a/util/meson.build
++++ b/util/meson.build
+@@ -66,6 +66,7 @@ util_ss.add(files('int128.c'))
+ util_ss.add(files('memalign.c'))
+ util_ss.add(files('interval-tree.c'))
+ util_ss.add(files('lockcnt.c'))
++util_ss.add(files('tldr.c'))
+ 
+ if have_system
+   util_ss.add(files('crc-ccitt.c'))
+diff --git a/util/tldr-internal.h b/util/tldr-internal.h
+new file mode 100644
+index 00000000000..193d8425eee
+--- /dev/null
++++ b/util/tldr-internal.h
+@@ -0,0 +1,21 @@
++/*
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ *
++ * TL;DR: Thrifty Live Data Recorder
++ *
++ * Copyright (C) 2026 Red Hat Inc.
++ */
++
++#ifndef QEMU_TLDR_INTERNAL_H__
++#define QEMU_TLDR_INTERNAL_H__
++
++#include "qemu/tldr.h"
++
++#define QTLDR_DUMP_LEADER "\n🚨🚨🚨 QEMU Data Recorder Start 🚨🚨🚨\n"
++#define QTLDR_DUMP_TRAILER "\n🚨🚨🚨 QEMU Data Recorder End 🚨🚨🚨\n\n"
++#define QTLDR_DUMP_TRIGGER_PREFIX "\n🔍 Trigger:"
++#define QTLDR_DUMP_OPEN_ERROR "🔥 Unable to dump to '"
++
++void qtldr_crash_dump_internal(int fd, siginfo_t *si);
++
++#endif /* QEMU_TLDR_INTERNAL_H__ */
+diff --git a/util/tldr.c b/util/tldr.c
+new file mode 100644
+index 00000000000..13e9881bc9b
+--- /dev/null
++++ b/util/tldr.c
+@@ -0,0 +1,438 @@
++/*
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ *
++ * TL;DR: Thrifty Live Data Recorder
++ *
++ * Copyright (C) 2026 Red Hat Inc.
++ */
++
++#include "qemu/osdep.h"
++#include "qemu/atomic.h"
++#include "util/tldr-internal.h"
++#include "qom/object.h"
++#include "qom/object_interfaces.h"
++#include "qapi/error.h"
++
++struct QTLDRConfig {
++    Object parent;
++
++    char *crash_target;
++};
++
++static int qtldr_active;
++static char *qtldr_crash_target;
++
++#define TYPE_QTLDR_CONFIG "tldr-config"
++
++OBJECT_DECLARE_SIMPLE_TYPE(QTLDRConfig, QTLDR_CONFIG);
++
++OBJECT_DEFINE_SIMPLE_TYPE_WITH_INTERFACES(QTLDRConfig,
++                                          qtldr_config,
++                                          QTLDR_CONFIG,
++                                          OBJECT,
++                                          { TYPE_USER_CREATABLE },
++                                          { NULL });
++
++
++static void
++qtldr_config_finalize(Object *obj)
++{
++    QTLDRConfig *cfg = QTLDR_CONFIG(obj);
++
++    g_free(cfg->crash_target);
++}
++
++
++static char *
++qtldr_config_get_crash_target(Object *obj, Error **errp)
++{
++    QTLDRConfig *cfg = QTLDR_CONFIG(obj);
++    return g_strdup(cfg->crash_target);
++}
++
++
++static void
++qtldr_config_set_crash_target(Object *obj, const char *path, Error **errp)
++{
++    QTLDRConfig *cfg = QTLDR_CONFIG(obj);
++    g_free(cfg->crash_target);
++    cfg->crash_target = g_strdup(path);
++}
++
++
++static void
++qtldr_config_complete(UserCreatable *uc, Error **errp)
++{
++    QTLDRConfig *cfg = QTLDR_CONFIG(uc);
++
++    /*
++     * Forbid changes, since once configured, we can't safely
++     * change it due to signal handlers running without ability
++     * to hold mutex locks
++     */
++    if (qtldr_crash_target) {
++        error_setg(errp, "TLDR configuration cannot be changed");
++        return;
++    }
++
++    qatomic_store_release(&qtldr_crash_target, g_strdup(cfg->crash_target));
++    qatomic_inc(&qtldr_active);
++}
++
++
++static bool
++qtldr_config_prepare_delete(UserCreatable *uc, Error **errp)
++{
++    /*
++     * Forbid deletion, since once configured, we can't safely
++     * change it due to signal handlers running without ability
++     * to hold mutex locks
++     */
++    error_setg(errp, "Deleting the 'tldr-config' object is not supported");
++    return false;
++}
++
++
++static void
++qtldr_config_class_init(ObjectClass *klass, const void *opaque)
++{
++    UserCreatableClass *ucc = USER_CREATABLE_CLASS(klass);
++    object_class_property_add_str(klass, "crash-target",
++                                  qtldr_config_get_crash_target,
++                                  qtldr_config_set_crash_target);
++
++    ucc->complete = qtldr_config_complete;
++    ucc->prepare_delete = qtldr_config_prepare_delete;
++}
++
++
++static void
++qtldr_config_init(Object *obj)
++{
++}
++
++
++/*
++ * WARNING: Code below this marker is used when dumping
++ * WARNING: the data recorder buffers. It is subject to
++ * WARNING: execution directly in signal handler context
++ * WARNING: on a limited stack (SIGSTKSZ).
++ *
++ * WARNING: Thus from here onwards must only use async
++ * WARNING: signal safe POSIX functions.
++ */
++
++
++static void
++qtldr_write_int_buf(int fd, uint64_t v,
++                    const char *digits, size_t digitslen,
++                    char *target, size_t targetlen)
++{
++    size_t offset = targetlen;
++    do {
++        uint64_t r = (v % digitslen);
++        target[--offset] = digits[r];
++        v /= digitslen;
++    } while (v && offset);
++    ignore_value(write(fd, target + offset, targetlen - offset));
++}
++
++
++static void
++qtldr_write_int_dec(int fd, uint64_t v)
++{
++    static char digits[] = "0123456789";
++    char target[20];
++    qtldr_write_int_buf(fd, v, digits, strlen(digits),
++                        target, G_N_ELEMENTS(target));
++}
++
++
++static void
++qtldr_write_int_hex(int fd, uint64_t v)
++{
++    static const char digits[] = "0123456789abcdef";
++    char target[16];
++    qtldr_write_int_buf(fd, v, digits, strlen(digits),
++                        target, G_N_ELEMENTS(target));
++}
++
++
++static const char *
++qtldr_crash_dump_signal_str(int signo)
++{
++    switch (signo) {
++    case SIGSEGV:
++        return "SIGSEGV";
++#ifndef WIN32
++    case SIGBUS:
++        return "SIGBUS";
++#endif
++    case SIGABRT:
++        return "SIGABRT";
++    case SIGILL:
++        return "SIGILL";
++    case SIGFPE:
++        return "SIGFPE";
++    }
++    return NULL;
++}
++
++
++static const char *
++qtldr_crash_dump_code_str(int signo, int code)
++{
++    switch (code) {
++#ifdef SI_USER
++    case SI_USER:
++        return "User process kill";
++#endif
++#ifdef SI_KERNEL
++    case SI_KERNEL:
++        return "Kernel process kill";
++#endif
++#ifdef SI_QUEUE
++    case SI_QUEUE:
++        return "Signal queue";
++#endif
++#ifdef SI_TIMER
++    case SI_TIMER:
++        return "Timer expired";
++#endif
++#ifdef SI_MESGQ
++    case SI_MESGQ:
++        return "Message queue state changed";
++#endif
++#ifdef SI_ASYNCIO
++    case SI_ASYNCIO:
++        return "AIO completed";
++#endif
++#ifdef SI_TKILL
++    case SI_TKILL:
++        return "User thread kill";
++#endif
++    }
++    switch (signo) {
++    case SIGSEGV:
++        switch (code) {
++#ifdef SEGV_MAPERR
++        case SEGV_MAPERR:
++            return "Address not mapped";
++#endif
++#ifdef SEGV_ACCERR
++        case SEGV_ACCERR:
++            return "Access permissions";
++#endif
++#ifdef SEGV_BNDERR
++        case SEGV_BNDERR:
++            return "Address out of bounds";
++#endif
++#ifdef SEGV_PKUERR
++        case SEGV_PKUERR:
++            return "Memory protection keys";
++#endif
++        }
++        break;
++
++#ifndef WIN32
++    case SIGBUS:
++        switch (code) {
++#ifdef BUS_ADRALN
++        case BUS_ADRALN:
++            return "Address alignment";
++#endif
++#ifdef BUS_ADDRER
++        case BUS_ADRERR:
++            return "Physical address error";
++#endif
++#ifdef BUS_OBJERR
++        case BUS_OBJERR:
++            return "Object hardware error";
++#endif
++#ifdef BUS_MCEERR_AR
++        case BUS_MCEERR_AR:
++            return "Memory error, machine check";
++#endif
++#ifdef BUS_MCEERR_AO
++        case BUS_MCEERR_AO:
++            return "Memory error, not consumed";
++#endif
++        }
++        break;
++#endif
++
++    case SIGILL:
++        switch (code) {
++#ifdef ILL_ILLOPC
++        case ILL_ILLOPC:
++            return "Illegal opcode";
++#endif
++#ifdef ILL_ILLOPN
++        case ILL_ILLOPN:
++            return "Illegal operand";
++#endif
++#ifdef ILL_ILLADR
++        case ILL_ILLADR:
++            return "Illegal addressing mode";
++#endif
++#ifdef ILL_ILLTRP
++        case ILL_ILLTRP:
++            return "Illegal trap";
++#endif
++#ifdef ILL_PRVOPC
++        case ILL_PRVOPC:
++            return "Privileged opcode";
++#endif
++#ifdef ILL_PRVREG
++        case ILL_PRVREG:
++            return "Privileged register";
++#endif
++#ifdef ILL_COPROC
++        case ILL_COPROC:
++            return "Coprocessor error";
++#endif
++#ifdef ILL_BADSTK
++        case ILL_BADSTK:
++            return "Internal stack error";
++#endif
++        }
++        break;
++
++    case SIGFPE:
++        switch (code) {
++#ifdef FPE_INTDIV
++        case FPE_INTDIV:
++            return "Integer divide by zero";
++#endif
++#ifdef FPE_INTOVF
++        case FPE_INTOVF:
++            return "Integer overflow";
++#endif
++#ifdef FPE_FLTDIV
++        case FPE_FLTDIV:
++            return "Floating-point divide by zero";
++#endif
++#ifdef FPE_FLTOVF
++        case FPE_FLTOVF:
++            return "Floating-point overflow";
++#endif
++#ifdef FPE_FLTUND
++        case FPE_FLTUND:
++            return "Floating-point underflow";
++#endif
++#ifdef FPE_FLTRES
++        case FPE_FLTRES:
++            return "Floating-point inexact result";
++#endif
++#ifdef FPE_FLTINV
++        case FPE_FLTINV:
++            return "Floating-point invalid operation";
++#endif
++#ifdef FPE_FLTSUB
++        case FPE_FLTSUB:
++            return "Subscript out of range";
++#endif
++        }
++        break;
++    }
++    return NULL;
++}
++
++
++static void
++qtldr_crash_dump_print_field(int fd, const char *label,
++                             const char *valstr, int val)
++{
++    ignore_value(write(fd, label, strlen(label)));
++    if (valstr) {
++        ignore_value(write(fd, valstr, strlen(valstr)));
++        ignore_value(write(fd, " (", 2));
++    }
++    qtldr_write_int_dec(fd, val);
++    if (valstr) {
++        ignore_value(write(fd, ")", 1));
++    }
++    ignore_value(write(fd, "\n", 1));
++}
++
++
++static void
++qtldr_crash_dump_print_siginfo(int fd, siginfo_t *si)
++{
++    const char *signostr = qtldr_crash_dump_signal_str(si->si_signo);
++    const char *codestr = qtldr_crash_dump_code_str(si->si_signo, si->si_code);
++    ignore_value(write(fd, QTLDR_DUMP_TRIGGER_PREFIX,
++                       strlen(QTLDR_DUMP_TRIGGER_PREFIX)));
++    ignore_value(write(fd, "\n", 1));
++
++    qtldr_crash_dump_print_field(fd, "  - Signal: ", signostr, si->si_signo);
++    qtldr_crash_dump_print_field(fd, "  - Code: ", codestr, si->si_code);
++
++    ignore_value(write(fd, "  - Address: 0x", 15));
++    qtldr_write_int_hex(fd, (uint64_t)si->si_addr);
++    ignore_value(write(fd, "\n", 1));
++}
++
++
++void
++qtldr_crash_dump_internal(int fd, siginfo_t *si)
++{
++    if (fd == -1) {
++        fd = STDERR_FILENO;
++    }
++
++    ignore_value(write(fd, QTLDR_DUMP_LEADER, strlen(QTLDR_DUMP_LEADER)));
++    if (si) {
++        qtldr_crash_dump_print_siginfo(fd, si);
++    } else {
++        ignore_value(write(fd, QTLDR_DUMP_TRIGGER_PREFIX,
++                           strlen(QTLDR_DUMP_TRIGGER_PREFIX)));
++        ignore_value(write(fd, "manual\n", 7));
++    }
++
++    ignore_value(write(fd, QTLDR_DUMP_TRAILER, strlen(QTLDR_DUMP_TRAILER)));
++}
++
++
++void
++qtldr_crash_dump_signal(siginfo_t *si)
++{
++    int fd = STDERR_FILENO;
++    const char *tgt;
++
++    if (!qatomic_read(&qtldr_active)) {
++        return;
++    }
++
++    tgt = qatomic_load_acquire(&qtldr_crash_target);
++    if (tgt) {
++        /*
++         * Must NOT use qemu_create, as it is not safe from
++         * signal handler context due to using monitor APIs
++         */
++        fd = open(tgt, O_WRONLY | O_CREAT | O_TRUNC, 0600);
++        if (fd < 0) {
++            /*
++             * Couldn't open our designated crash report
++             * file location, so fallback to STDERR as
++             * the least worst next best option, and
++             * warn the user of the failure
++             */
++            fd = STDERR_FILENO;
++            int saved_errno = errno;
++            ignore_value(write(fd, QTLDR_DUMP_OPEN_ERROR,
++                               strlen(QTLDR_DUMP_OPEN_ERROR)));
++            ignore_value(write(fd, tgt, strlen(tgt)));
++            ignore_value(write(fd, "': ", 3));
++            qtldr_write_int_dec(fd, saved_errno);
++            ignore_value(write(fd, "\n", 1));
++        }
++    }
++
++    qtldr_crash_dump_internal(fd, si);
++
++    if (fd != STDERR_FILENO) {
++        qemu_fdatasync(fd);
++        close(fd);
++    }
++}
 -- 
 2.56.0
 
