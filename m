@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B98FFCC6B38
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 09:35:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F30DACC6B3A
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 09:35:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHHrD-0000Jv-8H; Thu, 15 Oct 2026 05:34:39 -0400
+	id 1xHHrE-0000KJ-1H; Thu, 15 Oct 2026 05:34:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1xHHr6-0000IF-RN; Thu, 15 Oct 2026 05:34:33 -0400
+ id 1xHHrA-0000Im-Gm; Thu, 15 Oct 2026 05:34:37 -0400
 Received: from mail-japanwestazlp170120003.outbound.protection.outlook.com
  ([2a01:111:f403:c406::3] helo=OS8PR02CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1xHHr3-0006DP-Qr; Thu, 15 Oct 2026 05:34:31 -0400
+ id 1xHHr7-0006Dz-4x; Thu, 15 Oct 2026 05:34:36 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=iMuvpJqkvOkuBS2YFQvJfoGuTRRoxtdFUYdQtB6hlrDh14fT7fnPwpu5tisqyr1d3tiIU81k/C8WEPVlGbAtBohm/j3eb0y4l+dN36C8eL0mzfgYrfcITQ2rQqAJCUr349WAhqGSdY2GAcT5Vk0WL4dT9CPYBsYpyLDK1NA3ukD8T+EeZJyAuq0ib9TfANDSIJxA0NKRD/DXRJZlQ9p5/bkKASFXPIswj1Awp1Skk2Tqol/EsFMq9CsJyJcaztMTlcIADBJbwoKL2hkpqgyeFMYeW3YtK+bBOS3JW8jAuL228W7c130aQ6LjBACwN8QglbTWsBjRmgkJgav6paXZOA==
+ b=p1/fSO2dNY37agGu65RDW37BMx7z0y+0Pm2jYVYBAEtwbhAYO8hkdtdPnqFdfHAPoGkxQyw1nt9jaQ26MNeSeqYE5Gk2AccgEXJkfBBxmy27K2XPjMj/tSfGY8Xc93suyybathnn+fB7vCz4ZznKb7uuRRB3v+80XsVg+PssLzVO6U9/SCS7RGU17VukTasPZtvJq9Sit4t1fej5xl7eUwVpKJxFPq1nNHP1sWTfkv3Bqi7zHY2fQr7xy49YkVaa/xC5YiBJ63bIP6Uf8naOJu+qKsE8W0Ot8NLXKQ6etn5R3Fg7f/xVbsUAYzeGr9tXA4+BgLj0gw7OMMm1bZyWvw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=CDoIdk+bIu91xNHY/z+G3v2+Q6AidKeXa+hnwvGsnAU=;
- b=n1NWMZ4DS+i+UNZjcxAqxKrrcW1shaLfYObOTr/h+zX70N1FrG7r4ugnS40wU1xZ5CxJlcXIHz0CLioINXzUKBuPCTn7RoZ86+JlC3hpCdMrWlgpf00wH5yN72+xGJaS/CnvfCsISwiCmvxZgRIu0MaC0Wc4E56W9SmR4SUffeTN2DzdOtybiGsEX+8+W5F6LeiqeYOQ4K/z6X9cwbpLC2439cWmEDp8K8JOjEzWBQ8gqBgDaLfjwobPaUqPANaOe3tlG2VTTUk5IotQ3iCaAfYOEfcb4DEBLEhaqyVb+3vbYhIYUlqXTexDPkRrVOqHrrUjy7DB2pm2QGDjSCpf9A==
+ bh=uIz5efoeMHnDBvmoi78vuPOmGgx5R26mRWm1J0DY40k=;
+ b=Ti6xyq7Xin+12aedNIxF3Xj9i6mgjsjxSY5X7tsQd1IEOGe43nkETvaqMg7/x+I/mxjb5bDoIlr0nfOp77I8dJQykFQ0o4DpC6FSm4Pv70udF/Yo73eMQYuI6XjtUoNFJf6uZ1ktRtx71ghE94v2UDipTUd6rlv1C/hQOpG9uY1YUjFqmXuUPMzzE+FXjSsQWiFJOHU7+EFUjAoMCIJUIRUKImzGUBkVHMVVg26tJUvbS85lTEdQC7VM1GFx3Wll7pw82hBBRvcRwe0d1hd+VECq0g8B41wkARR+LmQhpYdDT6WYFviIxVq6uTQ01fgWCFJqnQAmxICKukXB/QWhKg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
  header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=CDoIdk+bIu91xNHY/z+G3v2+Q6AidKeXa+hnwvGsnAU=;
- b=p22Q0sznrPhxI/2yV+H93oTvbqPIuVz5wybEEPkuO9rWwA6DgNA5Wv6I22dB1O/xRWa81mj1NniPi5zyRnp0ZuNXY0VfUJLAkhfUhR5Ywesph7Fr9/4CwVPD1BVasHlxx+f1Wqs0cF5WMAgp4PXp39gt9AZPAkTvnFrOIh6U231ajk/StcAqwo1tTXRA2KewkXPGSbTqDDboncd26p0e4z00Tb7HxwtSAIiMsBMagauCxPKdup4lwBVnmXEFE7IkBKZYazpy16xn5SBWZHVx3hfH+hGNGEB9eCe75RNeJubiH+v7+4r0b20UTysqexidGwkvBCpb0WpolEaHmB2ehw==
+ bh=uIz5efoeMHnDBvmoi78vuPOmGgx5R26mRWm1J0DY40k=;
+ b=ext2WpP0EIH8XwLlu/uyl2KUYXWmVw92V75Wv5k4lJD9uZmNd3ZZ/NnNrZ+3oVFFN4zoCefYTI6DPPGDy7qaKGxqVlGIsC3VAyPuDF9Penk6BViEmGolloN9Q4WDNCfrKxShk02KKNDG7rk+JR0Ur/L5Ht1rZ/RC9nuRpzuRPhW0YrmLYFhXamOZsoRZPU/8cAXuY2AYV8GSaC+WUJBQXvMgKMcn7qzMR5eL7IfhjRbUtKrFteV58jy9K7/F9moNHJjHmWTTHk6WEY8U90+gWqcJ13sBHx+SIMw3rjneZMK6RAhqVVwvUQwS5K6FdHBBWMuuPUoBh1Gel5j765caUQ==
 Received: from SEZPR06MB7362.apcprd06.prod.outlook.com (2603:1096:101:253::10)
- by TYZPR06MB5527.apcprd06.prod.outlook.com (2603:1096:400:28d::12)
- with Microsoft SMTP Server (version=TLS1_2,
+ by JH0PR06MB7199.apcprd06.prod.outlook.com (2603:1096:990:99::6) with
+ Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.522.13; Thu, 15 Oct
- 2026 09:34:20 +0000
+ 2026 09:34:25 +0000
 Received: from SEZPR06MB7362.apcprd06.prod.outlook.com
  ([fe80::cd2d:35d2:a702:1de6]) by SEZPR06MB7362.apcprd06.prod.outlook.com
  ([fe80::cd2d:35d2:a702:1de6%4]) with mapi id 15.21.0522.012; Thu, 15 Oct 2026
- 09:34:20 +0000
+ 09:34:25 +0000
 From: Jamin Lin <jamin_lin@aspeedtech.com>
 To: "marcandre.lureau@redhat.com" <marcandre.lureau@redhat.com>,
  =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@kaod.org>, Peter Maydell
@@ -52,12 +52,13 @@ To: "marcandre.lureau@redhat.com" <marcandre.lureau@redhat.com>,
  list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
  <qemu-devel@nongnu.org>
 CC: Jamin Lin <jamin_lin@aspeedtech.com>, Troy Lee <troy_lee@aspeedtech.com>
-Subject: [PATCH v5 2/8] hw/usb/redirect-server: Add a usbredir server device
-Thread-Topic: [PATCH v5 2/8] hw/usb/redirect-server: Add a usbredir server
- device
-Thread-Index: AQHdXIhaGxQ7G6gD/kW/RmXUHtdUfw==
-Date: Thu, 15 Oct 2026 09:34:20 +0000
-Message-ID: <20261015093417.573063-3-jamin_lin@aspeedtech.com>
+Subject: [PATCH v5 6/8] hw/usb/redirect-server: Implement bulk and interrupt
+ transfers
+Thread-Topic: [PATCH v5 6/8] hw/usb/redirect-server: Implement bulk and
+ interrupt transfers
+Thread-Index: AQHdXIhdIifKtb7QpUSTZyTl8e2dEA==
+Date: Thu, 15 Oct 2026 09:34:24 +0000
+Message-ID: <20261015093417.573063-7-jamin_lin@aspeedtech.com>
 References: <20261015093417.573063-1-jamin_lin@aspeedtech.com>
 In-Reply-To: <20261015093417.573063-1-jamin_lin@aspeedtech.com>
 Accept-Language: zh-TW, en-US
@@ -67,63 +68,63 @@ X-MS-TNEF-Correlator:
 authentication-results: mx.microsoft.com 1; dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=aspeedtech.com;
 x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SEZPR06MB7362:EE_|TYZPR06MB5527:EE_
-x-ms-office365-filtering-correlation-id: 46722bcd-f6f9-4ba7-b8c1-08df2a9f7d65
+x-ms-traffictypediagnostic: SEZPR06MB7362:EE_|JH0PR06MB7199:EE_
+x-ms-office365-filtering-correlation-id: bd8814db-0c5d-42df-3cc3-08df2a9f8037
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
 x-microsoft-antispam: BCL:0;
- ARA:13230040|376014|366016|1800799024|23010399003|38070700021|56012099006|921020|5023799004|261009223027099003|260925021911599003|22082099003|10067099003|18002099003|260925022911599003|260925021311599003|3023799007;
-x-microsoft-antispam-message-info: MG3SsWJedtI3UTEJWyr/szL4kZHLxz6R3/YoJk5Q+zZw/YcfpsSoaVaPEEs7RGotNRSjuWk8s55yahP8DA6sRsFnsLVHBdVbKGzIxEej7k0q5xa3VwiNxURuzZlYflITVdp69xnKjcqKVgHFN+mdxzuHpqW7Eab2whwyvub+RmwlPjLHvSLDBWfOIKPy2f2fBpRvBRYyBJJuFPnkeSrwl7Gb3A9Ije2Vwnuj8zeMEJXplI9auLvc7ufkB4BunAkyalN0WcONmtu7ps/vksEIZcL8qp8+dnOn2wfmZotpBSkbWLT1bmldj1p66ce0B0pOuhLM6dexjVujzRCXOqC0itSFz4bcilAltOJSDZRbkCETrCi8GwIADtquNjInlshum0Zj28zgqVxV/QGDeKYBngQJvqotIURrWyLPne2xx4FaBICJxrhqGQMbIvj3pdzSa8NOLSQD35hQiSxF/5hFdh5xauo1MDicrn1cHqbGh9WZqZDQkbOJUJqDObFvgy3tW2LIcdQCdPXOn3XhGOCdD0T6weOH+hmRf1gxaquZuZUw15U30dpSIQUQYSUisV4YHXEiPd0YZn5HT0o1gYG4rPDFPqZ3vZLFifc656LNtyRPgtJmq07MeQlH2NvxupQaKdDtWjfsvlNxNpMb3l/gzJeujtetIhkPskEVdvFJLiJEfbvW/TaXVUhazTjQ9Maag12I6YZpPtr65MKzHqVrFuRF2t7R0EqigGovnqn204mV1Yl/dfLVg/8Ju9ezckjk
+ ARA:13230040|366016|1800799024|376014|23010399003|38070700021|921020|56012099006|5023799004|261009223027099003|18002099003|10067099003|22082099003|6133799003;
+x-microsoft-antispam-message-info: tPnGGIiV1yoNDOyB3VmV6EsDuRdp8k8AwKGzKIpHsjH+zut7Hkw9D7AkeIZLxsWEvkeyMWNn0kyKOZ2AYpDOwgBYuOuYyu1aZjCZo1cOjNuLyCPXTWM4gyfDMCymSjSRzNwimyKkkTFh6zhkc9dZpKd57GzxMHbZY+8D7MF2iYWIWvt/B6sgXqHyPAbiQG7X5QLU1YgUxTtiwfJdoro5ktoGVHjSfmw/WfbS4kFdI4OLIrFfRq3ZYJ5gEHv3Qwc2hJ9ajjD2rmx50ARXnqzqmIxKcnBEce+F31PI/WePHWlGrf16xtLUq5vvkD9Iy5yeE6QjPJHyTPF0A/MIuHco4YYDckodqSC7BouU4s6Ct1cgT4lUPklobVrSNuNBNoFKZX3cwdiRr4vwDPewm8KxqdwZL8LfNanbcd9azczfX/sAMX8/yFSwOfCp+l8g5xExa1JT+TSnWvxKjLpSLefwKH5AmOqgiuDnDSySJ9wS9rRCnqDoC0yRVDwv8XtxKsaeM1tuRnx1RHHKEzo8r/9MYC7utMIS2fhr2TGh5SkxNfFU2/yyXRN7J7d4+8+ZxlLKgH8uia+9Xn6Jp43wgkgHOTWPSrcO6ajmYTMDwijoira5ewdkKw/qVSQ97GQjII2Xo6419HyJNC9Xgm4UAPDIQ1ZHx4URG35bDscThS7qJzbEwMuk47U2OyrWfwzxrprZ1Zx9JNNsFgEi+A0qFJTpl9WP3bbGEONlbi1wYvfd8hnkD9FQQ5bfRB+TtjJ0otHE
 x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:SEZPR06MB7362.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(366016)(1800799024)(23010399003)(38070700021)(56012099006)(921020)(5023799004)(261009223027099003)(260925021911599003)(22082099003)(10067099003)(18002099003)(260925022911599003)(260925021311599003)(3023799007);
+ SFS:(13230040)(366016)(1800799024)(376014)(23010399003)(38070700021)(921020)(56012099006)(5023799004)(261009223027099003)(18002099003)(10067099003)(22082099003)(6133799003);
  DIR:OUT; SFP:1102; 
 x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?wlR/5wXgaN/XIk4bXuGf/BOdouB5FVxiHTVf2yo9QAt7J3Js8Leyr7KM3o?=
- =?iso-8859-1?Q?h5zm+3ghwPJUIuebqHEsNfHs8e9hIi9wGSR4SSQ9Sdqewz1But1uPa8SAr?=
- =?iso-8859-1?Q?za6nGBszO4J4bWUVOPN6bC88BJUmI6vPFKlryZ184GNHan69d3P9QsLmXP?=
- =?iso-8859-1?Q?Q7KhUYFZDKyebV4Pta6vYlm9ZNy9blzsd4upnz5SnD76fQlV5q09mPt4eN?=
- =?iso-8859-1?Q?L8U13taW8pd24YO/HAXUvFaT1S2nVQ+RikULYdW/nCb+swa+iSRCzt+DYc?=
- =?iso-8859-1?Q?rlo2DIj3f74fkHSkJizYz4+ApRBxdP8Yw2X+yBtgnXjZoyWGHP0W+cML55?=
- =?iso-8859-1?Q?EMnd+b4hE9t8MWQQxftpflJOcxrmp0h72ghFB77pEdczlCSqLv9MGr5g9d?=
- =?iso-8859-1?Q?r6hw/o8uDXI0GALkmzjBDBujOb4Mc2jqIM5FNAw+QWDb3mGbJMWWLcVgZL?=
- =?iso-8859-1?Q?XdQw5VBOEzhq1KIqa44J6WrwD1Jav6Jkmc5jWQh0UwzvBEkSmMoPsL278w?=
- =?iso-8859-1?Q?uJawhKJD85G8xT70DY+cfga71r2DI6pfNNUdygk568hNBR+6LhIEJqdBHM?=
- =?iso-8859-1?Q?zYCzJYs0uTcq+mFWJRycZi7gVqWly4bhfFXDOnkhYpU67SbxxAHokYDt0W?=
- =?iso-8859-1?Q?Syz5K/QmIk/PgZjQA4d5AVKNPQV2h/KNfwfuiMYwFkqHiGrcxedVbgPvNT?=
- =?iso-8859-1?Q?skFX16VVbGfwTHddl9eoHFGSABMvtNJp1HL14uD2BKczHFR9t9Lei2P9kQ?=
- =?iso-8859-1?Q?dfVjg7IoruuP+454e93zcQiIi8NTTRCZJBiOu6dKKWRfdiVq5nDmE5ggD6?=
- =?iso-8859-1?Q?gLvyo8aX/HfQ3VWvd9fhBqU+J8lW3fhfZLyS6lMZ9ZWZveYgXBzOhIwhc/?=
- =?iso-8859-1?Q?+CElevxWOCaC25/aZFaP2O8c8ZICBhex5Qi1f4MGkVX8Eg/V6oWtv06gG+?=
- =?iso-8859-1?Q?R7POK7tgajySh4Udo7c/AVKJYS72gsmuZ27IZtVbZenzsqhg9nfWfSEHTK?=
- =?iso-8859-1?Q?zZjZaxaEbWMds/toJDwAyn/KdLOYwfjpPmLICTWaTOOvhw0sTjeFGW9+Wf?=
- =?iso-8859-1?Q?Wietc0V9sA58Nf6gsHPAekAMyCMSOu4sh6yXJWsVgzg3O17d0XU+OXipQX?=
- =?iso-8859-1?Q?lPXQE4fTQv1po9qj45m+6KztYUICE6Ro31kOoxmWBLtBJsLuJLZWdJDbJ6?=
- =?iso-8859-1?Q?VFgnJXXQmGofPefbNSoSSmCe5pc/7luxhavfdHhDhu91wCdPtmdeqWZGJc?=
- =?iso-8859-1?Q?Pt/6yopyZeiPGRF5Gyg2KPorLVACNfn6cVV/z34C/3WFopByPbSAFHI0lC?=
- =?iso-8859-1?Q?0mtwoZF49kHvB75Yn74oO4KlZD1jFm4kJ5eopIFMG3RkfpR/25PbOPq+IC?=
- =?iso-8859-1?Q?EQDArcpKfTk2Jc175I0ExoNzpJdkkedE7SR2vWWOTqlqMJ+TPhnZB1LQ9t?=
- =?iso-8859-1?Q?MRGBjCWeHtY5ncWKz29XWOdD8GxSUiPXJr3JK2g7moUj3Tol0dxUxGkq2T?=
- =?iso-8859-1?Q?zo3jXxnZE3T2mlVywrBqiG3sU4Uk3HH79J082PzOsfyuBGOHuBYW3ApHif?=
- =?iso-8859-1?Q?4TWkAeo4Sb8peFGl20VH+QRM+IGK95MDy0pIQ8rN7LEqzMTvpfZuop5hSZ?=
- =?iso-8859-1?Q?QYAgx8WPy2+kh87zt1XCYxKAcQ8zqv8LNQ5Z5/oB4Og4Tz4tT1p3VFE/LO?=
- =?iso-8859-1?Q?eudGpLPSpQCuJDNSuGnW3QDnzAtkqzvdVwnPzS3BUA6Wz58Mv80+AWDiig?=
- =?iso-8859-1?Q?3PNlY09hSEtku1PBeY82PcJJ4zPLqFlHEak7ua0YiLMp8yjpfwnqXQjSxU?=
- =?iso-8859-1?Q?VgmlA4AbJQ=3D=3D?=
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?a8JB0RvElABJy8CLoSO4Z/OUFuo5cjV1PLLVJ+uLlsD0dUMIR8LgMs6IgQ?=
+ =?iso-8859-1?Q?taN/i9xoCl9MeIQkbwDVQEIhi2sJd7Z6I5gstQuraQwOK14sXR3RylySv9?=
+ =?iso-8859-1?Q?rm00TjZ2/hR2jmWCcsPsG/cGkMR4F9HDqe2lRcwxN8Zi7jsXu3e73B4GbR?=
+ =?iso-8859-1?Q?ZBV3T6G/J10RGNlmYXbg/RAQ3TgJI54g0pAr19ofZBPP0flZ/+nYjY5oLc?=
+ =?iso-8859-1?Q?RkT/D7Fb1gQb2vXbpHoPVKukhoe7K3fqucGURo2IFXn4KMYBqNAU+qWsgS?=
+ =?iso-8859-1?Q?IFm7hC+++3GE/XVj6v3pfQzyz4nwjVIyXotvD2QwTKUiceerZ6gxtP78Q+?=
+ =?iso-8859-1?Q?NCzbtAKQuQEStGpDj1BKr4DJzpoTDMBlqUZBOi1/iPfmJpOA+bucabcc2c?=
+ =?iso-8859-1?Q?L/klz1xDqtkQh8QLmFDNRbPvDj7OQxBhHAx1/lnvJT1Xcw/86wz2mZOdSl?=
+ =?iso-8859-1?Q?KBP7QPYvz14p4TRJuxyzY0D1j6bh8PlLmLdT/jkH3EIcnM7Dkeir/yX4aO?=
+ =?iso-8859-1?Q?1r8nbQMntHDclaa1T6CtM9ydzJhJ6KKFuRrOzJQMBTZML7QC3aUC94Bp3+?=
+ =?iso-8859-1?Q?2hYy+nwXWCdz9uVrqk3NC5KpFja2G2QzzA0LUAmAqrF8EiFketFqdMoIlA?=
+ =?iso-8859-1?Q?IATvniq6SI1ZVUhyGSPqXN5opIdqo/u962zBG3q9DywXJROjJT+7/zcH3E?=
+ =?iso-8859-1?Q?Yb2EJ9XBu7yhF0tiYpA57l25tHU6sBJtWbbu3X2c9X//ClbXPugW6tX7Rl?=
+ =?iso-8859-1?Q?fe1omvwXxQs3vRt14T4WrQa3AVvkuhr/K0Nf60BsXTgkSX54Ap8TRH0gvc?=
+ =?iso-8859-1?Q?hjzmUYiebPXMUM7K+V+fsZkAVIZNeXBkNl4//qQxT01suHOXWXuYRCN0DG?=
+ =?iso-8859-1?Q?zvGj/6k13TpuNEB6wcxY/uRBoYUlQ9C8aM1AFfqlmfWlRHLXde2wqjJtGZ?=
+ =?iso-8859-1?Q?vzV6ManO1S+UKW3f8SFMBT52hStF7hbTRKS2tKHQTZDeP6GOaiFFBo2aUs?=
+ =?iso-8859-1?Q?mOQgc/OYrS5rbM4Dn7WG4/Ud08xcmCBYxvoisdZxyNsjuzkKD8PAnwt14E?=
+ =?iso-8859-1?Q?FTHVhbXMHikFVYoUy2W6bbrWLVrxza+O7k25zvMtd915vYD11EsO+EKKb1?=
+ =?iso-8859-1?Q?s3inH1CnKgfJ+HASK4xdcwKTnmeLwUj1hCxqCJoHJTBhf8X9kcbJJD9djr?=
+ =?iso-8859-1?Q?3NY+2kO4GX8Fo7+1A3UuU/2c7crxdHTTyfKuXPSZdVUQzejXmzdFQbSREi?=
+ =?iso-8859-1?Q?oowWgVi0l1f7ixT1Qoill8BJHUipZIg2CmHDPRZUyK+m3fe4aIHesDtbkh?=
+ =?iso-8859-1?Q?/NPjN4YaRJ+b+iF/21YBSZ3azDgh+3/IYxg8ByPJxPOY4az43DsORN2m4N?=
+ =?iso-8859-1?Q?nw6CEfrIPxsETnuvaiZ5Xf96BFLkK+W10xyIu/g8AE+Sp25HLBqVrYiqOH?=
+ =?iso-8859-1?Q?BvLODRohZfnLSgpkce6lLtMv7VuMlcJ95s5yCVwDMwI0/uk2Xw9pFDaO/x?=
+ =?iso-8859-1?Q?2qShatiJaxE5IVAPuSC9US+c2Iq5ai3huXBgZ5XLceJt9y59VWtMbCPnz/?=
+ =?iso-8859-1?Q?15ZysgRxUk9JzSQNBQED7tkZElm2XFqakfkjol6xE3KfhroXlrnzIUG3yV?=
+ =?iso-8859-1?Q?ukNYItAorfJ8oayrICgrSv0zGPm4kd90zeY1hDXWFeH+5v+AFLawUvxJNx?=
+ =?iso-8859-1?Q?whSMUCKf8Fljaxcg2jOaTPKqDUz8lHGqSXHYiUIP0pnyRdeW4YDL410Cuc?=
+ =?iso-8859-1?Q?SiBvbyfYzHJmdwqW4RuYt3tXxkrUesxfS4aVL/eq+G5H5Ns1rK4qyfS+/K?=
+ =?iso-8859-1?Q?KdGKp17brA=3D=3D?=
 Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked: Eqst7D/0iH9n6XWHddIpfB0oEiRBxrxhZKi/LjDPsqytmqyQe/A5C4pbrdmyY9tf8WiBxCHnZ22jJhyT4RxbEkfWWkB3zeAKdSu1XDgEJyPuiL50H+nIT/2UG8ZCwwvJgUP1ImBF5irIe7TQv3jNVl3iuyF8ZEqWcqMjNcJ24j4ls/b66w/c4fBx8SOlpyIkar7JEk8iqk4U3vwE4Kmo2kn2WMh/z1d6KOu6JtewH/j84kVkris8COwtPiPxIJUfCxSBKnu+p8iFl0h3ICm8p1Yv9IKiaIdgeWw1Cn+c2fHGCK0ozTottmWrC+xGUWr2mLgPXdXD1nPBGpbDpIwEzg==
+X-Exchange-RoutingPolicyChecked: smrgLk2IkgpgPsOydTPklCLnItI7cjbd9tUUuGtAGhrW22Y0eduKWx88eUeVtePqEALeG4dqTroUtN4shlXyqeRX81/YtB0e7bclAPS9wq3QbYS30h+Yh1BpRrlRxyQ0xfWEzafR1JWNUUSEEfSZu9rxj71XfT/f89h0yJJh835l+GA5BQbNxFED/bn9t8T9VzC8HB5aDAoH22rptLsH4UkjDUERjwCa6nsuM7pzTYzP39mxOAa7YGntUE/u8JO3SNCBP3nlAb+KX7Y0Mp61oMW/zGAdI8TxDv6U8+xXZ6i2PMmV8Y6bckEE1dFbafmGBdhjfXU02KB+kpvMIuk3jQ==
 X-OriginatorOrg: aspeedtech.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
 X-MS-Exchange-CrossTenant-AuthSource: SEZPR06MB7362.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 46722bcd-f6f9-4ba7-b8c1-08df2a9f7d65
-X-MS-Exchange-CrossTenant-originalarrivaltime: 15 Oct 2026 09:34:20.1642 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: bd8814db-0c5d-42df-3cc3-08df2a9f8037
+X-MS-Exchange-CrossTenant-originalarrivaltime: 15 Oct 2026 09:34:24.8642 (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: 1oLtvpBQ5TlkF3lbXoS9MQI3GpH0zEDxixiJ9QoGzIofRZk24AdKMDx0RdG7DqUv7L7r5Pzaf3HxN7R67HUKeU7wsKz8KGLEaY9VCqBajtI=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYZPR06MB5527
+X-MS-Exchange-CrossTenant-userprincipalname: wLXXhIqhePPpU6wdAUhM8DDgUy2ir+CNHRHgs39rDWW4wd862dduJlTg5c3hPk83k6E8ykesCieBOoFbUU1oDTv6b0j7ruWKnn20/t9mcY4=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: JH0PR06MB7199
 Received-SPF: pass client-ip=2a01:111:f403:c406::3;
  envelope-from=jamin_lin@aspeedtech.com;
  helo=OS8PR02CU002.outbound.protection.outlook.com
@@ -148,206 +149,348 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add "x-usb-redir-server". It exports a USB device from this QEMU to a=0A=
-USB host in another QEMU, using the usbredir protocol. The other side is=0A=
-the existing "usb-redir" device.=0A=
+Send bulk and interrupt packets to the device and return the result to=0A=
+the host. Each one is a request and an answer, so they reuse the packet=0A=
+tracking added for control transfers.=0A=
 =0A=
-The name has an "x-" prefix because the device is experimental. It has=0A=
-to sit on the sysbus so that qdev can find the USB bus it provides, and=0A=
-that may change later, so the name is not fixed yet.=0A=
-=0A=
-The exported device is plugged in with "-device <dev>,bus=3D<id>.0". So we=
-=0A=
-have to provide a USB bus. To find that bus, qdev starts at the main=0A=
-system bus and walks down the tree. A device that is not on a bus is not=0A=
-in the tree, so the bus it provides cannot be found. We have to sit on=0A=
-the main system bus. That makes this a sysbus device, even though it has=0A=
-no MMIO and no IRQ.=0A=
-=0A=
-usbredir carries one device, not a bus. A hub cannot be exported because=0A=
-the protocol has no device address field, so only the device on the=0A=
-first port is redirected. To export several devices, run one=0A=
-x-usb-redir-server per device, each with its own chardev.=0A=
-=0A=
-The link to the remote host is a chardev, so this device cannot be=0A=
-migrated. Its VMStateDescription says so with unmigratable.=0A=
+A bulk request carries a 32 bit length, so the host can ask us to=0A=
+allocate up to 4 GB. Refuse a request that big. Do not answer it with=0A=
+fewer bytes instead: the host counts the bytes it gets back, and it=0A=
+resets the device when some are missing.=0A=
 =0A=
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>=0A=
 Reviewed-by: Marc-Andr=E9 Lureau <marcandre.lureau@redhat.com>=0A=
 ---=0A=
- hw/usb/redirect-server.c | 143 +++++++++++++++++++++++++++++++++++++++=0A=
- hw/usb/meson.build       |   3 +-=0A=
- 2 files changed, 145 insertions(+), 1 deletion(-)=0A=
- create mode 100644 hw/usb/redirect-server.c=0A=
+ hw/usb/redirect-server.c | 203 +++++++++++++++++++++++++++++++++++++++=0A=
+ hw/usb/trace-events      |   5 +=0A=
+ 2 files changed, 208 insertions(+)=0A=
 =0A=
 diff --git a/hw/usb/redirect-server.c b/hw/usb/redirect-server.c=0A=
-new file mode 100644=0A=
-index 0000000000..bc883add0e=0A=
---- /dev/null=0A=
+index a8647b5efc..bf5286b649 100644=0A=
+--- a/hw/usb/redirect-server.c=0A=
 +++ b/hw/usb/redirect-server.c=0A=
-@@ -0,0 +1,143 @@=0A=
-+/*=0A=
-+ * USB redirector, server side=0A=
-+ *=0A=
-+ * Copyright (c) 2026 ASPEED Technology Inc.=0A=
-+ *=0A=
-+ * SPDX-License-Identifier: GPL-2.0-or-later=0A=
-+ *=0A=
-+ * Exports a locally emulated USB device to a remote USB host over the=0A=
-+ * usbredir protocol, so a device emulated in one QEMU instance can be=0A=
-+ * enumerated by a host controller emulated in another one.=0A=
-+ *=0A=
-+ * Architecture. The left column is a request going to the device. The=0A=
-+ * right column is the answer coming back. The middle hop carries=0A=
-+ * usbredir messages over a socket. The top and bottom hops carry=0A=
-+ * USBPackets inside QEMU.=0A=
-+ *=0A=
-+ *     remote QEMU: guest driver -> EHCI/XHCI=0A=
-+ *              |                     ^=0A=
-+ *    USBPacket |                     | USBPacket=0A=
-+ *              v                     |=0A=
-+ *     "usb-redir" (the client)=0A=
-+ *              |                     ^=0A=
-+ *     usbredir |   chardev socket    | usbredir=0A=
-+ *              v                     |=0A=
-+ *     x-usb-redir-server (the server, this file)=0A=
-+ *              |                     ^=0A=
-+ *    USBPacket |                     | USBPacket=0A=
-+ *              v                     |=0A=
-+ *     any USBDevice, "-device <dev>,bus=3D<id>.0"=0A=
-+ *=0A=
-+ * "usb-redir" (hw/usb/redirect.c) is the client:=0A=
-+ *   - it takes a USBPacket from the remote guest and writes it to the=0A=
-+ *     socket as a usbredir message=0A=
-+ *   - it reads the answer from the socket and completes the USBPacket=0A=
-+ *=0A=
-+ * This file is the server. It does the same thing, but backwards:=0A=
-+ *   - it reads a usbredir message from the socket and runs it as a=0A=
-+ *     USBPacket on the bus below=0A=
-+ *   - it takes the result of that USBPacket and writes it back to the=0A=
-+ *     same socket as a usbredir message, for the client to read=0A=
-+ *=0A=
-+ * A USB device has to sit on a USB bus, and in QEMU a USB bus is always=
-=0A=
-+ * made by a host controller. So this file makes one and acts as the=0A=
-+ * host controller on this side. It models no real chip: its cable is=0A=
-+ * the chardev socket. The real host is in the other QEMU.=0A=
-+ *=0A=
-+ * usbredir carries one device, not a bus. A hub cannot be exported:=0A=
-+ * the protocol has no device address field. To export several devices,=0A=
-+ * run one x-usb-redir-server per device, each with its own chardev.=0A=
-+ */=0A=
-+=0A=
-+#include "qemu/osdep.h"=0A=
-+#include "qapi/error.h"=0A=
-+#include "qemu/module.h"=0A=
-+#include "migration/vmstate.h"=0A=
-+#include "hw/core/sysbus.h"=0A=
-+#include "hw/usb/usb.h"=0A=
-+#include "qom/object.h"=0A=
-+=0A=
-+#define TYPE_USB_REDIR_SERVER "x-usb-redir-server"=0A=
-+OBJECT_DECLARE_SIMPLE_TYPE(USBRedirServer, USB_REDIR_SERVER)=0A=
-+=0A=
-+struct USBRedirServer {=0A=
-+    SysBusDevice parent_obj;=0A=
-+=0A=
-+    /* USB bus */=0A=
-+    USBBus bus;=0A=
-+    USBPort port;=0A=
-+};=0A=
-+=0A=
-+/*=0A=
-+ * USB port ops=0A=
-+ */=0A=
-+=0A=
-+static void usbredir_server_port_child_detach(USBPort *port, USBDevice *ch=
-ild)=0A=
-+{=0A=
-+    /* We only export the device on our own port. Nothing to do. */=0A=
-+}=0A=
-+=0A=
-+static void usbredir_server_port_wakeup(USBPort *port)=0A=
-+{=0A=
-+    /* We do not pass remote wakeup to the host. Nothing to do. */=0A=
-+}=0A=
-+=0A=
-+static USBPortOps usbredir_server_port_ops =3D {=0A=
-+    .child_detach =3D usbredir_server_port_child_detach,=0A=
-+    .wakeup =3D usbredir_server_port_wakeup,=0A=
-+};=0A=
-+=0A=
-+/*=0A=
-+ * USB bus ops=0A=
-+ */=0A=
-+=0A=
-+static USBBusOps usbredir_server_bus_ops =3D {=0A=
-+};=0A=
-+=0A=
-+/*=0A=
-+ * Device registration=0A=
-+ */=0A=
-+=0A=
-+static void usbredir_server_realize(DeviceState *dev, Error **errp)=0A=
-+{=0A=
-+    USBRedirServer *s =3D USB_REDIR_SERVER(dev);=0A=
-+=0A=
-+    /* One port: usbredir carries a single device. */=0A=
-+    usb_bus_new(&s->bus, sizeof(s->bus), &usbredir_server_bus_ops, dev);=
-=0A=
-+    s->bus.no_auto_hub =3D true;=0A=
-+    usb_register_port(&s->bus, &s->port, s, 0, &usbredir_server_port_ops,=
-=0A=
-+                      USB_SPEED_MASK_LOW | USB_SPEED_MASK_FULL |=0A=
-+                      USB_SPEED_MASK_HIGH);=0A=
-+}=0A=
-+=0A=
-+/*=0A=
-+ * The link to the remote host is a chardev, and we cannot migrate=0A=
-+ * that. So this device cannot be migrated either.=0A=
-+ */=0A=
-+static const VMStateDescription vmstate_usbredir_server =3D {=0A=
-+    .name =3D TYPE_USB_REDIR_SERVER,=0A=
-+    .unmigratable =3D 1,=0A=
-+};=0A=
-+=0A=
-+static void usbredir_server_class_init(ObjectClass *klass, const void *dat=
-a)=0A=
-+{=0A=
-+    DeviceClass *dc =3D DEVICE_CLASS(klass);=0A=
-+=0A=
-+    dc->desc =3D "USB Redirection Server";=0A=
-+    dc->realize =3D usbredir_server_realize;=0A=
-+    dc->vmsd =3D &vmstate_usbredir_server;=0A=
-+    set_bit(DEVICE_CATEGORY_USB, dc->categories);=0A=
-+}=0A=
-+=0A=
-+static const TypeInfo usbredir_server_types[] =3D {=0A=
-+    {=0A=
-+        .name =3D TYPE_USB_REDIR_SERVER,=0A=
-+        .parent =3D TYPE_DYNAMIC_SYS_BUS_DEVICE,=0A=
-+        .instance_size =3D sizeof(USBRedirServer),=0A=
-+        .class_init =3D usbredir_server_class_init,=0A=
-+    },=0A=
-+};=0A=
-+module_obj(TYPE_USB_REDIR_SERVER);=0A=
-+module_kconfig(USB);=0A=
-+=0A=
-+DEFINE_TYPES(usbredir_server_types)=0A=
-diff --git a/hw/usb/meson.build b/hw/usb/meson.build=0A=
-index 429dcd6a24..0061b935e6 100644=0A=
---- a/hw/usb/meson.build=0A=
-+++ b/hw/usb/meson.build=0A=
-@@ -78,7 +78,8 @@ endif=0A=
- if usbredir.found()=0A=
-   usbredir_ss =3D ss.source_set()=0A=
-   usbredir_ss.add(when: 'CONFIG_USB',=0A=
--                  if_true: [usbredir, files('redirect.c', 'quirks.c')])=0A=
-+                  if_true: [usbredir, files('redirect.c', 'quirks.c',=0A=
-+                                            'redirect-server.c')])=0A=
-   hw_usb_modules +=3D {'redirect': usbredir_ss}=0A=
- endif=0A=
+@@ -82,8 +82,16 @@ OBJECT_DECLARE_SIMPLE_TYPE(USBRedirServer, USB_REDIR_SER=
+VER)=0A=
+ #define USBREDIR_SERVER_MAX_EP 32=0A=
+ #define USBREDIR_SERVER_EP_IN_BASE 16=0A=
  =0A=
++/*=0A=
++ * The bulk length field is 32 bits, so the host can ask for up to 4 GB.=
+=0A=
++ * This is the largest transfer accepted.=0A=
++ */=0A=
++#define USBREDIR_SERVER_MAX_BULK (1 * MiB)=0A=
++=0A=
+ #define USBREDIR_SERVER_CTRL_SETUP 0=0A=
+ #define USBREDIR_SERVER_CTRL_STATUS 1=0A=
++#define USBREDIR_SERVER_BULK 2=0A=
++#define USBREDIR_SERVER_INTR 3=0A=
+ =0A=
+ /* Which message answers the host when a control transfer ends. */=0A=
+ typedef enum {=0A=
+@@ -96,7 +104,9 @@ typedef struct USBRedirServerPkt {=0A=
+     USBPacket pkt;=0A=
+ =0A=
+     /* Saved headers for the usbredir response */=0A=
++    struct usb_redir_interrupt_packet_header intr_hdr;=0A=
+     struct usb_redir_control_packet_header ctrl_hdr;=0A=
++    struct usb_redir_bulk_packet_header bulk_hdr;=0A=
+ =0A=
+     /*=0A=
+      * The IOV points here. IN data lands in it, OUT data is copied in.=0A=
+@@ -524,6 +534,52 @@ static void usbredir_server_ctrl_status_complete(USBRe=
+dirServer *s,=0A=
+     usbredir_server_send_ep_info(s);=0A=
+ }=0A=
+ =0A=
++static void usbredir_server_bulk_complete(USBRedirServer *s,=0A=
++                                          USBRedirServerPkt *rp)=0A=
++{=0A=
++    struct usb_redir_bulk_packet_header resp =3D rp->bulk_hdr;=0A=
++    bool is_in =3D !!(rp->bulk_hdr.endpoint & USB_DIR_IN);=0A=
++    int actual =3D rp->pkt.actual_length;=0A=
++    int len;=0A=
++=0A=
++    resp.status =3D usbredir_server_status(rp->pkt.status);=0A=
++=0A=
++    /* Only an IN transfer carries data back. */=0A=
++    len =3D is_in ? actual : 0;=0A=
++    resp.length =3D len;=0A=
++    resp.length_high =3D len >> 16;=0A=
++=0A=
++    trace_usbredir_server_bulk_complete(rp->redir_id, resp.endpoint,=0A=
++                                        resp.status, actual);=0A=
++=0A=
++    usbredirparser_send_bulk_packet(s->parser, rp->redir_id, &resp,=0A=
++                                    len > 0 ? rp->data : NULL, len);=0A=
++    usbredirparser_do_write(s->parser);=0A=
++}=0A=
++=0A=
++static void usbredir_server_intr_complete(USBRedirServer *s,=0A=
++                                          USBRedirServerPkt *rp)=0A=
++{=0A=
++    struct usb_redir_interrupt_packet_header resp =3D rp->intr_hdr;=0A=
++    bool is_in =3D !!(rp->intr_hdr.endpoint & USB_DIR_IN);=0A=
++    int actual =3D rp->pkt.actual_length;=0A=
++    int len;=0A=
++=0A=
++    resp.status =3D usbredir_server_status(rp->pkt.status);=0A=
++=0A=
++    /* Only an IN transfer carries data back. */=0A=
++    len =3D is_in ? actual : 0;=0A=
++    resp.length =3D len;=0A=
++=0A=
++    trace_usbredir_server_intr_complete(rp->redir_id, resp.endpoint,=0A=
++                                        resp.status, actual);=0A=
++=0A=
++    usbredirparser_send_interrupt_packet(s->parser, rp->redir_id, &resp,=
+=0A=
++                                         len > 0 ? rp->data : NULL,=0A=
++                                         len);=0A=
++    usbredirparser_do_write(s->parser);=0A=
++}=0A=
++=0A=
+ /*=0A=
+  * USB port ops=0A=
+  */=0A=
+@@ -596,6 +652,12 @@ static void usbredir_server_packet_complete(USBPort *p=
+ort, USBPacket *p)=0A=
+     case USBREDIR_SERVER_CTRL_STATUS:=0A=
+         usbredir_server_ctrl_status_complete(s, rp);=0A=
+         break;=0A=
++    case USBREDIR_SERVER_BULK:=0A=
++        usbredir_server_bulk_complete(s, rp);=0A=
++        break;=0A=
++    case USBREDIR_SERVER_INTR:=0A=
++        usbredir_server_intr_complete(s, rp);=0A=
++        break;=0A=
+     }=0A=
+ =0A=
+     usbredir_server_pkt_free(rp);=0A=
+@@ -972,6 +1034,105 @@ static void usbredir_server_get_alt_setting(void *pr=
+iv, uint64_t id,=0A=
+                                USBREDIR_SERVER_REPLY_ALT);=0A=
+ }=0A=
+ =0A=
++static void usbredir_server_bulk_packet(void *priv, uint64_t id,=0A=
++    struct usb_redir_bulk_packet_header *hdr,=0A=
++    uint8_t *data, int data_len)=0A=
++{=0A=
++    USBRedirServer *s =3D priv;=0A=
++    USBDevice *device =3D usbredir_server_device(s);=0A=
++    bool is_in =3D !!(hdr->endpoint & USB_DIR_IN);=0A=
++    int pid =3D is_in ? USB_TOKEN_IN : USB_TOKEN_OUT;=0A=
++    struct usb_redir_bulk_packet_header resp;=0A=
++    int ep_nr =3D hdr->endpoint & 0x0f;=0A=
++    USBRedirServerPkt *rp;=0A=
++    USBEndpoint *ep;=0A=
++    uint32_t len;=0A=
++=0A=
++    if (!s->host_connected || !device || !device->attached) {=0A=
++        return;=0A=
++    }=0A=
++=0A=
++    /* IN: what the host asked for. OUT: what the host sent. */=0A=
++    len =3D is_in ? (((uint32_t)hdr->length_high << 16) | hdr->length)=0A=
++                : (uint32_t)data_len;=0A=
++=0A=
++    /*=0A=
++     * Too big. Tell the host the transfer failed.=0A=
++     * Do not send back less data instead. The host would see the=0A=
++     * missing bytes as an error and reset the device.=0A=
++     */=0A=
++    if (len > USBREDIR_SERVER_MAX_BULK) {=0A=
++        resp =3D *hdr;=0A=
++        resp.status =3D usb_redir_inval;=0A=
++        resp.length =3D 0;=0A=
++        resp.length_high =3D 0;=0A=
++=0A=
++        trace_usbredir_server_bulk_too_big(id, hdr->endpoint, len);=0A=
++        usbredirparser_send_bulk_packet(s->parser, id, &resp, NULL, 0);=0A=
++        usbredirparser_do_write(s->parser);=0A=
++        return;=0A=
++    }=0A=
++=0A=
++    ep =3D usb_ep_get(device, pid, ep_nr);=0A=
++    rp =3D usbredir_server_pkt_alloc(len);=0A=
++    rp->redir_id =3D id;=0A=
++    rp->type =3D USBREDIR_SERVER_BULK;=0A=
++    rp->bulk_hdr =3D *hdr;=0A=
++=0A=
++    usb_packet_setup(&rp->pkt, pid, ep, 0, s->next_id++, false, false);=0A=
++=0A=
++    /* OUT data comes from the host. IN data is written by the device. */=
+=0A=
++    if (!is_in && len > 0) {=0A=
++        memcpy(rp->data, data, len);=0A=
++    }=0A=
++    usb_packet_addbuf(&rp->pkt, rp->data, len);=0A=
++=0A=
++    trace_usbredir_server_bulk(id, hdr->endpoint, len);=0A=
++    usbredir_server_submit_to_device(s, rp);=0A=
++}=0A=
++=0A=
++/*=0A=
++ * The host sends an interrupt_packet. It is a request: interrupt OUT=0A=
++ * data to write, or a single IN request to answer.=0A=
++ */=0A=
++static void usbredir_server_interrupt_packet(void *priv, uint64_t id,=0A=
++    struct usb_redir_interrupt_packet_header *hdr,=0A=
++    uint8_t *data, int data_len)=0A=
++{=0A=
++    USBRedirServer *s =3D priv;=0A=
++    USBDevice *device =3D usbredir_server_device(s);=0A=
++    bool is_in =3D !!(hdr->endpoint & USB_DIR_IN);=0A=
++    int pid =3D is_in ? USB_TOKEN_IN : USB_TOKEN_OUT;=0A=
++    int ep_nr =3D hdr->endpoint & 0x0f;=0A=
++    USBRedirServerPkt *rp;=0A=
++    USBEndpoint *ep;=0A=
++    int len;=0A=
++=0A=
++    if (!s->host_connected || !device || !device->attached) {=0A=
++        return;=0A=
++    }=0A=
++=0A=
++    /* IN: what the host asked for. OUT: what the host sent. */=0A=
++    len =3D is_in ? hdr->length : data_len;=0A=
++=0A=
++    ep =3D usb_ep_get(device, pid, ep_nr);=0A=
++    rp =3D usbredir_server_pkt_alloc(len);=0A=
++    rp->redir_id =3D id;=0A=
++    rp->type =3D USBREDIR_SERVER_INTR;=0A=
++    rp->intr_hdr =3D *hdr;=0A=
++=0A=
++    usb_packet_setup(&rp->pkt, pid, ep, 0, s->next_id++, false, false);=0A=
++=0A=
++    /* OUT data comes from the host. IN data is written by the device. */=
+=0A=
++    if (!is_in && len > 0) {=0A=
++        memcpy(rp->data, data, len);=0A=
++    }=0A=
++    usb_packet_addbuf(&rp->pkt, rp->data, len);=0A=
++=0A=
++    trace_usbredir_server_interrupt(id, hdr->endpoint, len);=0A=
++    usbredir_server_submit_to_device(s, rp);=0A=
++}=0A=
++=0A=
+ static void usbredir_server_filter_reject(void *priv)=0A=
+ {=0A=
+     trace_usbredir_server_filter_reject();=0A=
+@@ -995,6 +1156,24 @@ static void usbredir_server_interface_info(void *priv=
+,=0A=
+     /* The host should not send this to a device. Nothing to do. */=0A=
+ }=0A=
+ =0A=
++static void usbredir_server_alloc_bulk_streams(void *priv, uint64_t id,=0A=
++    struct usb_redir_alloc_bulk_streams_header *hdr)=0A=
++{=0A=
++    /* We do not advertise bulk streams. Nothing to do. */=0A=
++}=0A=
++=0A=
++static void usbredir_server_start_bulk_receiving(void *priv, uint64_t id,=
+=0A=
++    struct usb_redir_start_bulk_receiving_header *hdr)=0A=
++{=0A=
++    /* We do not advertise this. Nothing to do. */=0A=
++}=0A=
++=0A=
++static void usbredir_server_stop_bulk_receiving(void *priv, uint64_t id,=
+=0A=
++    struct usb_redir_stop_bulk_receiving_header *hdr)=0A=
++{=0A=
++    /* We do not advertise this. Nothing to do. */=0A=
++}=0A=
++=0A=
+ static void usbredir_server_cancel_data_packet(void *priv, uint64_t id)=0A=
+ {=0A=
+     struct usb_redir_control_packet_header resp =3D {=0A=
+@@ -1043,7 +1222,9 @@ static void usbredir_server_cancel_data_packet(void *=
+priv, uint64_t id)=0A=
+ static void usbredir_server_send_cancelled(USBRedirServer *s,=0A=
+                                            USBRedirServerPkt *rp)=0A=
+ {=0A=
++    struct usb_redir_interrupt_packet_header intr;=0A=
+     struct usb_redir_control_packet_header ctrl;=0A=
++    struct usb_redir_bulk_packet_header bulk;=0A=
+ =0A=
+     switch (rp->type) {=0A=
+     case USBREDIR_SERVER_CTRL_SETUP:=0A=
+@@ -1054,6 +1235,21 @@ static void usbredir_server_send_cancelled(USBRedirS=
+erver *s,=0A=
+         usbredirparser_send_control_packet(s->parser, rp->redir_id,=0A=
+                                            &ctrl, NULL, 0);=0A=
+         break;=0A=
++    case USBREDIR_SERVER_BULK:=0A=
++        bulk =3D rp->bulk_hdr;=0A=
++        bulk.status =3D usb_redir_cancelled;=0A=
++        bulk.length =3D 0;=0A=
++        bulk.length_high =3D 0;=0A=
++        usbredirparser_send_bulk_packet(s->parser, rp->redir_id,=0A=
++                                        &bulk, NULL, 0);=0A=
++        break;=0A=
++    case USBREDIR_SERVER_INTR:=0A=
++        intr =3D rp->intr_hdr;=0A=
++        intr.status =3D usb_redir_cancelled;=0A=
++        intr.length =3D 0;=0A=
++        usbredirparser_send_interrupt_packet(s->parser, rp->redir_id,=0A=
++                                             &intr, NULL, 0);=0A=
++        break;=0A=
+     default:=0A=
+         return;=0A=
+     }=0A=
+@@ -1096,6 +1292,8 @@ static void usbredir_server_create_parser(USBRedirSer=
+ver *s)=0A=
+     s->parser->hello_func =3D usbredir_server_hello;=0A=
+     s->parser->reset_func =3D usbredir_server_reset;=0A=
+     s->parser->control_packet_func =3D usbredir_server_control_packet;=0A=
++    s->parser->bulk_packet_func =3D usbredir_server_bulk_packet;=0A=
++    s->parser->interrupt_packet_func =3D usbredir_server_interrupt_packet;=
+=0A=
+     s->parser->set_configuration_func =3D usbredir_server_set_configuratio=
+n;=0A=
+ =0A=
+     /* The parser calls these directly, so they must not be NULL. */=0A=
+@@ -1107,7 +1305,12 @@ static void usbredir_server_create_parser(USBRedirSe=
+rver *s)=0A=
+     s->parser->device_disconnect_ack_func =3D=0A=
+         usbredir_server_device_disconnect_ack;=0A=
+     s->parser->interface_info_func =3D usbredir_server_interface_info;=0A=
++    s->parser->alloc_bulk_streams_func =3D usbredir_server_alloc_bulk_stre=
+ams;=0A=
+     s->parser->cancel_data_packet_func =3D usbredir_server_cancel_data_pac=
+ket;=0A=
++    s->parser->start_bulk_receiving_func =3D=0A=
++        usbredir_server_start_bulk_receiving;=0A=
++    s->parser->stop_bulk_receiving_func =3D=0A=
++        usbredir_server_stop_bulk_receiving;=0A=
+ =0A=
+     /* Capabilities: 64-bit IDs, connect_device_version, ep_info sizes */=
+=0A=
+     usbredirparser_caps_set_cap(caps, usb_redir_cap_connect_device_version=
+);=0A=
+diff --git a/hw/usb/trace-events b/hw/usb/trace-events=0A=
+index 0ed20838b2..d74860ad4b 100644=0A=
+--- a/hw/usb/trace-events=0A=
++++ b/hw/usb/trace-events=0A=
+@@ -415,3 +415,8 @@ usbredir_server_endpoint_dropped(uint8_t address) "endp=
+oint 0x%02x does not fit=0A=
+ usbredir_server_control(uint64_t id, uint8_t requesttype, uint8_t request,=
+ uint16_t value, uint16_t index, uint16_t length) "id %" PRIu64 " type 0x%0=
+2x request 0x%02x value 0x%04x index 0x%04x length %u"=0A=
+ usbredir_server_ctrl_setup_complete(uint64_t id, int status, int actual) "=
+id %" PRIu64 " status %d actual %d"=0A=
+ usbredir_server_ctrl_status_complete(uint64_t id, int status) "id %" PRIu6=
+4 " status %d"=0A=
++usbredir_server_bulk(uint64_t id, uint8_t ep, size_t len) "id %" PRIu64 " =
+ep 0x%02x len %zu"=0A=
++usbredir_server_bulk_complete(uint64_t id, uint8_t ep, int status, int act=
+ual) "id %" PRIu64 " ep 0x%02x status %d actual %d"=0A=
++usbredir_server_bulk_too_big(uint64_t id, uint8_t ep, uint32_t len) "id %"=
+ PRIu64 " ep 0x%02x len %u"=0A=
++usbredir_server_interrupt(uint64_t id, uint8_t ep, size_t len) "id %" PRIu=
+64 " ep 0x%02x len %zu"=0A=
++usbredir_server_intr_complete(uint64_t id, uint8_t ep, int status, int act=
+ual) "id %" PRIu64 " ep 0x%02x status %d actual %d"=0A=
 -- =0A=
 2.43.0=0A=
 
