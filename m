@@ -4,73 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96F6CCC6B2F
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 08:46:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D74D0CC6B34
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 08:50:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHH67-0005qo-LM; Thu, 15 Oct 2026 04:45:59 -0400
+	id 1xHH9b-0006LT-4o; Thu, 15 Oct 2026 04:49:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xHH65-0005qZ-2d
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 04:45:57 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1xHH9X-0006L3-4O; Thu, 15 Oct 2026 04:49:31 -0400
+Received: from forwardcorp1d.mail.yandex.net
+ ([2a02:6b8:c41:1300:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xHH63-00016b-DM
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 04:45:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1792053953;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=XUxIq/JKuZiYr6JOemJl67D5U9t+yUxe3n5LJquaf9g=;
- b=LTetTyTpIiCJnapP4+ywCG3tCSMx+wsuju8bPwSHujYudArUrRK4LBXtW35xzoGcEvP7s9
- hM3VKK4qY0UAGWx+LtLEVCLBxNBj7m66dH+WwqUutaptyr1StHSias575iYL+MmpLlb1hI
- Zw0TNw/6FEK7Cqi/PInfYWJP8I4GmEc=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-493-aaJyabB5NBK4v3bl9CUlYQ-1; Thu,
- 15 Oct 2026 08:45:52 +0000
-X-MC-Unique: aaJyabB5NBK4v3bl9CUlYQ-1
-X-Mimecast-MFC-AGG-ID: aaJyabB5NBK4v3bl9CUlYQ_1792053951
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 38717180065F; Thu, 15 Oct 2026 08:45:51 +0000 (UTC)
-Received: from redhat.com (headnet04.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.116])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 65E543000735; Thu, 15 Oct 2026 08:45:48 +0000 (UTC)
-Date: Thu, 15 Oct 2026 09:45:45 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Gerd Hoffmann <kraxel@redhat.com>
-Cc: qemu-devel@nongnu.org,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- "Michael S. Tsirkin" <mst@redhat.com>
-Subject: Re: [PATCH 1/2] pci id: clarify pci subsystem id usage
-Message-ID: <atCSufyPp8vdreSI@redhat.com>
-References: <20261015081544.40310-1-kraxel@redhat.com>
- <20261015081544.40310-2-kraxel@redhat.com>
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1xHH9U-0001DE-Ji; Thu, 15 Oct 2026 04:49:30 -0400
+Received: from mail-nwsmtp-smtp-corp-main-63.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-63.yp-c.yandex.net
+ [IPv6:2a02:6b8:c0c:8a96:0:640:b39c:0])
+ by forwardcorp1d.mail.yandex.net (postfix) with ESMTPS id 758A58081F;
+ Thu, 15 Oct 2026 11:49:24 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:d5a::1:34] (unknown
+ [2a02:6bf:8080:d5a::1:34])
+ by mail-nwsmtp-smtp-corp-main-63.iva.yp-c.yandex.net (smtpcorp) with ESMTPSA
+ id NnQhOK2fX8c0-Mhm4yXxL; Thu, 15 Oct 2026 11:49:23 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1792054163;
+ bh=Qx1v4jvj89gBLFDdQaRaft49EHAyeaLSSOB8xeSWs+k=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=BBlodnRgMM8SOEtGq5/fJAW9u93dqYrRJfwG0/ytxiEP7JfhhtFgLM0tnhYTSzcis
+ zkM3L8y0ALAZvpXBiGcvJvOn0w8OoYWbUCNoMGt5eUef2T1sAuFPHlwy0LUqbSo7gj
+ dzxWyH7F+V6TSrNQApixVKOCgt/3Y/YwZ/mGuDqg=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-63.iva.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <7d5b8b9e-3274-4ba5-a073-3ddc15fe2f3c@yandex-team.ru>
+Date: Thu, 15 Oct 2026 11:49:23 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20261015081544.40310-2-kraxel@redhat.com>
-User-Agent: Mutt/2.4.2 (2026-08-30)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 6/9] block/block-copy: extract
+ block_copy_set_task_method()
+To: "Denis V. Lunev" <den@openvz.org>, qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>, 
+ John Snow <jsnow@redhat.com>
+References: <20260929155125.3151111-1-den@openvz.org>
+ <20260929155125.3151111-7-den@openvz.org>
+Content-Language: en-US
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <20260929155125.3151111-7-den@openvz.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a02:6b8:c41:1300:1:45:d181:df01;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -84,43 +74,30 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Oct 15, 2026 at 10:15:43AM +0200, Gerd Hoffmann wrote:
-> Qemu uses the pci subsystem id not only for emulated devices, but also
-> for virtio devices and generic pci class devices such as pci bridges,
-> xhci + nvme controllers etc.  Update the documentation accordingly.
+On 29.09.26 18:51, Denis V. Lunev wrote:
+> From: Denis V. Lunev<den@openvz.org>
 > 
-> Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
-> ---
->  docs/specs/pci-ids.rst | 5 +++--
->  1 file changed, 3 insertions(+), 2 deletions(-)
+> Move the per-task block-status query and its skip_unallocated and
+> BDRV_BLOCK_ZERO handling out of block_copy_dirty_clusters() into
+> block_copy_set_task_method(). No behavior change. The next patch
+> changes that decision, and having it in one place keeps that change to
+> just the new logic.
 > 
-> diff --git a/docs/specs/pci-ids.rst b/docs/specs/pci-ids.rst
-> index 261b0f359fe5..832f8bd1b802 100644
-> --- a/docs/specs/pci-ids.rst
-> +++ b/docs/specs/pci-ids.rst
-> @@ -46,8 +46,9 @@ maintained as part of the virtio specification.
->    upstream merge or shipping a distro/product) to avoid conflicts.
->  
->  1af4:1100
-> -  Used as PCI Subsystem ID for existing hardware devices emulated
-> -  by QEMU.
-> +  Used as PCI Subsystem ID for existing hardware devices emulated by
-> +  QEMU, such as the intel chipset devices.  Also used for virtio
-> +  devices and generic pci class devices (1b36:00xx, see below).
+> The block-status result no longer lands in the caller's @ret, so drop
+> the note saying @ret may be positive at the out: label.
+> 
+> Reviewed-by: Andrey Drobyshev<andrey.drobyshev@virtuozzo.com>
+> Signed-off-by: Denis V. Lunev<den@openvz.org>
+> CC: Vladimir Sementsov-Ogievskiy<vsementsov@yandex-team.ru>
+> CC: John Snow<jsnow@redhat.com>
+> CC: Andrey Drobyshev<andrey.drobyshev@virtuozzo.com>
 
-When talking virtio devices, does that include virtio devices
-implemented outside QEMU via vhostuser, or only in-QEMU virtio
-devices ?
+Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 
-With regards,
-Daniel
 -- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
-
+Best regards,
+Vladimir
 
