@@ -4,83 +4,143 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1649CC6B3A
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 06:09:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21BE2CC6B2F
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 06:14:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHEeE-000458-Dw; Thu, 15 Oct 2026 02:09:03 -0400
+	id 1xHEil-0007lh-P8; Thu, 15 Oct 2026 02:13:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <36m3QagoKCmUVWDQOHbMKXJRRJOH.FRPTHPX-GHYHOQRQJQX.RUJ@flex--stanleyjhu.bounces.google.com>)
- id 1xHEdz-0003pH-Ii
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 02:08:49 -0400
-Received: from mail-pf1-x446.google.com ([2607:f8b0:4864:20::446])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from
- <36m3QagoKCmUVWDQOHbMKXJRRJOH.FRPTHPX-GHYHOQRQJQX.RUJ@flex--stanleyjhu.bounces.google.com>)
- id 1xHEdx-0004J1-H7
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 02:08:47 -0400
-Received: by mail-pf1-x446.google.com with SMTP id
- d2e1a72fcca58-88c4da716f4so1568409b3a.3
- for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 23:08:44 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1xHEij-0007kq-JE
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 02:13:42 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1xHEif-0004dN-P4
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 02:13:40 -0400
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 69F3xKUd1640679
+ for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 06:13:30 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ gjmxI3ex3uuihpaXF3LyN1xBZIUEyL6VQrD/YWpcZ2I=; b=WkwkviQWhjoO1NMA
+ he9VrPKEEm508Wqht2ZgqLDuWqnVHKfffzzzB1MlXoTIZXcTfUNciYZ5dfu5//R+
+ pmsLeSACLvszlOdwgbRawBzueYYkTEBvig0lj3mq7w5vetC/FYugn+Y/pVtEb3Om
+ tFvD0omWTHkpJuSU6OjlOGDtWGoXxvGho2lIntKqRHhR3jr6zxszEfcczCszji4Z
+ zANNsaZOxaPLd/puBoH2h+hZ+/whQBdrT22BwxnMqAhrmwmAbYXuX08uPMOV64Pl
+ iHGgfHcUh0MYdkszHdy8ZsrNSfogDGxeOS/g1gB54JesENw+M5e/VvWWtvwmT+cJ
+ NIzEZA==
+Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com
+ [209.85.214.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4haqdhgext-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 06:13:30 +0000 (GMT)
+Received: by mail-pl1-f199.google.com with SMTP id
+ d9443c01a7336-2e93f67358eso14640855ad.1
+ for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 23:13:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20251104; t=1792044523; x=1792649323; darn=nongnu.org;
- h=content-type:cc:to:from:subject:message-id:references:mime-version
- :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=YXfNj14sqOtZZ8CMqr7JKbQhAXcN7HYzqRY9snrtqfA=;
- b=wCsjFuQEnWn3kjU3Elz/7+Zli7J/Eyzs4Dpz4LPQ37DPLADnai5MGA0ZRWUQa3UbQN
- XXmEKPwsM17BrBFP2US7kCVRcsRjOe57caNguxgMrtI7VO3fPj9IZhiNZcIRn0fYexvD
- Q3rGdYGBWBnZKFWXoj95xn4Cc44dXRZ1W+vcq6RNNCbBTRThoJBe5w/MC77I8jCDHWKb
- CRN+CjCZxLYnhXQBTr9riGCTbBxsCU09s4yMF5KaJjDBHWXH20/wizOZoUJ7Um2wsKza
- nJ5TGdPm3ga4Yo9ftq4GmCBax7cHr2BrExPKuYsu2r15oA/Wd7WkcJWPF9n0FxGp3GkI
- ZtYQ==
+ d=oss.qualcomm.com; s=google; t=1792044810; x=1792649610; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=gjmxI3ex3uuihpaXF3LyN1xBZIUEyL6VQrD/YWpcZ2I=;
+ b=dD8qnXXbzGbq7+r//VDJWKn2YtjPJ2TMORZ7EeDE7Go8oQa0bXVT0Ew2T4pYt1Z1ck
+ LzdMk9z+kso8p77NxWOzZK9u0PmkEB4nXf2+loTosVsK3SLGvpWazs3gr5XhA7IBsd69
+ MR8Tn5TcrHvawvCFfHSNmjeddg8tvpG/DY1/IOdkt3BYbwx+HUpQTyZfSgThEwGnMFmd
+ 75ISYieIsF3DNuEF0jmmkISvRuU5SRBLJ1MxiYZCV5dOryEanLXmzzzhNNQajNIi8TbI
+ +nZO7dAh1/NsIObwt0dctR9O1aXrOS6Lxgy/LSu70VMYWUtspDDrolUxbiTp4G9ho84V
+ 8meA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792044523; x=1792649323;
- h=content-type:cc:to:from:subject:message-id:references:mime-version
- :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20260707; t=1792044810; x=1792649610;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=YXfNj14sqOtZZ8CMqr7JKbQhAXcN7HYzqRY9snrtqfA=;
- b=1ZPIfmgI6s67q6klY4FItMo+gde/uRGVQq702v/fRpUFKOB/keKVe3E4qKWCJ38Nf4
- ZFk+MLZfXIyfzJo6Uhb9+6WpWGB8hAjhC91du9QtNCxoP/AHztxnqJx5yO48/MRN3zKL
- Laou3Txc9FqsXTJlxo+FKdne8Zf6z53pQjC3vXSTFLBj6GYOXJxnUHjwLo8ECCKj1o8/
- ue2fn6QKiaoLuGe6QTVM27hGDNYPBEAqtCbgky0yPdacgUH5pCjCnA+xeOBkoX4a7H3q
- AtgAmqQlz6+bc9ZQGEaBG4FGuPD/jSrd3eqyn90kVUv8qhH4eC0LT1/MgLd3Bi/DGJJ4
- m4yA==
-X-Gm-Message-State: AFq9FYKb8mLOzN2L9BQ3C1sxbd6dfycQ22uGsdVrmAXnCp3kQz+jdUcX
- 2gSnSglpy2uRkhoeo2YZir2MINK4eOV8CgrBeoK+eo1ryiCtYkBT3YV9wJwILKkQVWpRXWVrURv
- aLrUiEZTllLmwe4+Gx4U2jw==
-X-Received: from pfdr1.prod.google.com ([2002:aa7:8b81:0:b0:88e:5b93:cd3f])
- (user=stanleyjhu job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:6a00:a01:b0:886:bb44:631f with SMTP id
- d2e1a72fcca58-897c6e1c80emr17928098b3a.10.1792044522769; 
- Wed, 14 Oct 2026 23:08:42 -0700 (PDT)
-Date: Thu, 15 Oct 2026 14:08:26 +0800
-In-Reply-To: <20261015060827.341298-1-stanleyjhu@google.com>
-Mime-Version: 1.0
-References: <20261015060827.341298-1-stanleyjhu@google.com>
-X-Mailer: git-send-email 2.56.0.385.gd3acb90ef8-goog
-Message-ID: <20261015060827.341298-8-stanleyjhu@google.com>
-Subject: [PATCH 7/8] tests/qtest/ufs-test: Add MCQ runtime register and TMR
- handling test
-From: Stanley Jhu <stanleyjhu@google.com>
-To: Jeuk Kim <jeuk20.kim@samsung.com>, Jeuk Kim <jeuk20.kim@gmail.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>, 
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- Jinyoung Choi <j-young.choi@samsung.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::446;
- envelope-from=36m3QagoKCmUVWDQOHbMKXJRRJOH.FRPTHPX-GHYHOQRQJQX.RUJ@flex--stanleyjhu.bounces.google.com;
- helo=mail-pf1-x446.google.com
-X-Spam_score_int: -95
-X-Spam_score: -9.6
-X-Spam_bar: ---------
-X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
+ bh=gjmxI3ex3uuihpaXF3LyN1xBZIUEyL6VQrD/YWpcZ2I=;
+ b=tCL+WzVv+yUHUGssKRr3THiFMsXli9eAU63oYjIyKpUhj1gtM4qlRJENiJDTkhjBl6
+ uThrCyhsUuK9lnInEhGHDL7kfLIWsFX6oSjof0o667zF4WJDk9M0FUfIJ/iIAd40dyVT
+ //4Kwj6GZOcIuGgPmlApMXqn6B/rYsXHxJihqNBjVGMDtblcz/QRyh8gr8mOMs7rwZQ7
+ uKOowBCZ1GXdRxO3qyvDMHwBb/iR3iNBW7p6mKC3Dc54XK8nhVemsTe9yV/VK04lhgUH
+ OWGMHQf2ykTs1izryK/9XbF/uiAMckuwOon2/HSYQuWeNcA7Uy9E1tRONhhahBV9KRSr
+ fl+g==
+X-Gm-Message-State: AFq9FYKUDrwT/847gJjkqTwSZBVFpmiV9sfKqHKyA1TOmFUn0DGdNOV2
+ IxgC5xSpG3cEer1LgE038AamFNhKucOn3vkhhbk2QXJKut+Ui/SuE7hfPTuVBHY95uaAlSDKQUK
+ Zto4Xu6zaVoP6jP8YSSnSEVVHaExuguKULH1MwzwPfiArM4eOhbkuDU6qFA==
+X-Gm-Gg: AYBFou3hgt/j1o6DfEZ43Edr/PPE6kpIigw0zKU2Cd7uSrDOOksQScix2f3yzxddkZZ
+ v6acpDd4nLpw7iZHsjyTngjUoF9QNojKKXX3bu6BqDen1KdIilyStwEOa2lGpPkR/g2A4Gjqmdu
+ TrePllfqaNohkfb+5BwsOCdWqLoNRbpcaLr4G4mDvbzP2hAOyX2DLPU0CcJdOA41sHKkpfVzQbZ
+ IIz0VWBFFA/xb0km/sWC0DzVyzgvq2WnVk82RHDTKXFQRmHCK/6tyZhJcQo0pR4GWAa/kJvSPt5
+ vq4nZ/C3CFQVCBXYjWhuK0h7lc7dluAve2W4suTEV8SufYy7nux3Moa9K8ON+eFwytivKv+uZq6
+ 4S0oMDn8Fn9gJ3w68I7UEPPSvvYdZsrgbHWWEXEp1L7YlvUVVbrYoNekI
+X-Received: by 2002:a17:902:e549:b0:2e9:134c:657c with SMTP id
+ d9443c01a7336-2e9134c6a4emr71806005ad.54.1792044809983; 
+ Wed, 14 Oct 2026 23:13:29 -0700 (PDT)
+X-Received: by 2002:a17:902:e549:b0:2e9:134c:657c with SMTP id
+ d9443c01a7336-2e9134c6a4emr71805785ad.54.1792044809473; 
+ Wed, 14 Oct 2026 23:13:29 -0700 (PDT)
+Received: from [192.168.1.169] (192-80-163-190.dyn.novuscom.net.
+ [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2e8422da9b1sm77628145ad.66.2026.10.14.23.13.28
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 14 Oct 2026 23:13:29 -0700 (PDT)
+Message-ID: <30dd70d0-a899-43dc-863e-f49128fdc8af@oss.qualcomm.com>
+Date: Wed, 14 Oct 2026 23:13:28 -0700
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/8] multi-target: remove qmp_query_cpu_definitions
+ duplication
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@oss.qualcomm.com>, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
+ <marcandre.lureau@redhat.com>
+References: <20261015005355.62406-1-pierrick.bouvier@oss.qualcomm.com>
+ <87bj8vbj3u.fsf@pond.sub.org>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <87bj8vbj3u.fsf@pond.sub.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDE1MDAyNCBTYWx0ZWRfX7htmakrL8oO9
+ lZW8sPBe2GZb45/99uHxM91hA0uVyYRfH9ixOI7e4sxiDfWd4Mve7HW6h7UGCCoEtBQweJ3U5CQ
+ hDMBYSDW/UjqkAQYETzGVtCEbRH0AJNDMDvTf6foSzr1ZRdw0ULqyoqwdJOhBMi0zp0oNi/1z0D
+ DW4Bhu5eopiUuSFDCvL1Ueu7BkuVzAnDSDXhUMiceJzsbJJJ9YbPkEjLi/JmhA/uX3Pmfrmxl9e
+ uOwXwhpSvX1SiIr/O+XVW753abC3d8+b3dAulDeEbEb9347irbiPuH8AQijPKKegFuyOq9ZDAUq
+ v5YjSCypxvlhLLpBkILKFveNSESW4eeqJgfId1q2dVExcxrFqKmMizLwVweGJcG1bLpbZy2daar
+ XqCDknN5EySv0gRQAwb7yfVUP3R1kaqZ0c/XTBZv5LHEv4iI7RswCNDKKlQbUeV73oBZG5luvvi
+ 0t7sTXCUb6dZ0ofFp7A==
+X-Proofpoint-GUID: 6kjVSor_bmrmJxVdEwFwWDlJ4rLKSheC
+X-Authority-Analysis: v=2.4 cv=DeeCOftW c=1 sm=1 tr=0 ts=6ad06f0a cx=c_pps
+ a=JL+w9abYAAE89/QcEU+0QA==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
+ a=p0WdMEafAAAA:8 a=EUspDBNiAAAA:8 a=20KFwNOVAAAA:8 a=xbjdRGERY6FnFoWgviEA:9
+ a=QEXdDO2ut3YA:10 a=324X-CrmTo6CU4MGRt3R:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDE1MDAyNCBTYWx0ZWRfX1GOuHxiphqcm
+ buHc3bruzrX/hLUNZFpPLUiV8wiG1fhtegG/PAECV79yPj0msIQGU6st+RlRh/wlNRahxWKKb9P
+ jdEFoO0zQAPbl31a7B3swUbds6EkhW8=
+X-Proofpoint-ORIG-GUID: 6kjVSor_bmrmJxVdEwFwWDlJ4rLKSheC
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-10-13_01,2026-10-14_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 impostorscore=0 suspectscore=0 malwarescore=0 phishscore=0
+ spamscore=0 priorityscore=1501 lowpriorityscore=0 adultscore=0 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2610080000 definitions=main-2610150024
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,205 +156,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add ufs_test_tmr_handling() to verify UTMRL UFS_QUERY_TASK execution
-(both interrupt-driven I=1 and polling I=0 UTMRDs), SQCTI/CQIACR
-register access, SQRTC/SQRTS queue stop/start and self-clearing ICU
-transitions across running, stopped, and disabled SQ states, nullified
-SQE (CT = 0xF) completion with UFS_OCS_ABORTED, and CQIS.TEPS
-write-1-to-clear synchronization with IS.CQES.
+On 10/14/26 10:58 PM, Markus Armbruster wrote:
+> Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
+> 
+>> This series allows to link multiple targets that define
+>> qmp_query_cpu_definitions. It simply replaces the duplicated definitions with
+>> target-specific ones and a single dispatcher. We didn't use yet the dispatcher
+>> pattern, and it's the first situation where it appears to be a good fit.
+>>
+>> A possible alternative would be to introduce this callback directly at
+>> target-info level, which I think is a less desirable solution, since it would
+>> ties this API to monitor.
+> 
+> I'm curious... why would such a tie be undesirable?
+>
 
-Signed-off-by: Stanley Jhu <stanleyjhu@google.com>
----
- tests/qtest/ufs-test.c | 161 ++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 160 insertions(+), 1 deletion(-)
+We have a unique definition of target-info for all targets 
+(https://gitlab.com/qemu-project/qemu/-/blob/master/target-info-def.c), 
+which is simple and nice.
 
-diff --git a/tests/qtest/ufs-test.c b/tests/qtest/ufs-test.c
-index c82e35b2b5..c7d901a029 100644
---- a/tests/qtest/ufs-test.c
-+++ b/tests/qtest/ufs-test.c
-@@ -1673,7 +1673,7 @@ static void ufstest_hid(void *obj, void *data, QGuestAllocator *alloc)
-     ufs_exit(ufs, alloc);
- }
- 
--static G_GNUC_UNUSED void ufs_send_tmr(QUfs *ufs, uint64_t utmrlba, int slot,
-+static void ufs_send_tmr(QUfs *ufs, uint64_t utmrlba, int slot,
-                                        uint8_t tm_func, uint8_t lun,
-                                        uint32_t task_tag,
-                                        UtpTaskReqDesc *utrd_out)
-@@ -1799,6 +1799,164 @@ static void ufs_test_hce_reset(void *obj, void *data, QGuestAllocator *alloc)
-     ufs_exit(ufs, alloc);
- }
- 
-+static void ufs_test_tmr_handling(void *obj, void *data, QGuestAllocator *alloc)
-+{
-+    QUfs *ufs = obj;
-+    uint64_t utmrlba, desc_addr, req_upiu_addr, rsp_upiu_addr;
-+    UtpTaskReqDesc desc = { 0 }, utrd_result;
-+    UtpTransferReqDesc null_utrd;
-+    UtpUpiuReq req_upiu = { 0 };
-+    UfsCqEntry cqe;
-+    uint32_t mcq_reg_offset, sqdao, cqisao, sqrts, sqrtc, orig_sqattr;
-+    int null_slot;
-+    enum UtpOcsCodes ocs;
-+    UtpUpiuRsp rsp_upiu;
-+
-+    ufs_init(ufs, alloc);
-+    g_assert_true(ufs->support_mcq);
-+
-+    /* Set up UTMRL */
-+    utmrlba = guest_alloc(alloc, 8 * sizeof(UtpTaskReqDesc));
-+    ufs_wreg(ufs, A_UTMRLBA, utmrlba & 0xffffffff);
-+    ufs_wreg(ufs, A_UTMRLBAU, utmrlba >> 32);
-+    ufs_wreg(ufs, A_UTMRLRSR, 1);
-+
-+    /* Issue UFS_QUERY_TASK for inactive tag 15 (Interrupt bit I=1) */
-+    ufs_send_tmr(ufs, utmrlba, 0, UFS_QUERY_TASK, 0, 15, &utrd_result);
-+    g_assert_cmpuint(le32_to_cpu(utrd_result.header.dword_2) & UFS_MASK_OCS,
-+                     ==, UFS_OCS_SUCCESS);
-+    g_assert_cmpuint(utrd_result.upiu_rsp.rsp_header.response,
-+                     ==, UFS_COMMAND_RESULT_SUCCESS);
-+    g_assert_cmpuint(be32_to_cpu(utrd_result.upiu_rsp.output_param1),
-+                     ==, UFS_UPIU_TASK_MANAGEMENT_FUNC_COMPL);
-+
-+    /* Issue polling UTMRD with I=0 (slot 1): clears doorbell without UTMRCS */
-+    desc_addr = utmrlba + 1 * sizeof(UtpTaskReqDesc);
-+    desc.header.dword_0 = 0;
-+    desc.header.dword_2 = cpu_to_le32(UFS_OCS_INVALID_COMMAND_STATUS);
-+    desc.upiu_req.req_header.trans_type = UFS_UPIU_TRANSACTION_TASK_REQ;
-+    desc.upiu_req.req_header.query_func = UFS_QUERY_TASK;
-+    desc.upiu_req.req_header.lun = 0;
-+    desc.upiu_req.req_header.task_tag = 0x11;
-+    desc.upiu_req.input_param1 = cpu_to_be32(0);
-+    desc.upiu_req.input_param2 = cpu_to_be32(15);
-+    qtest_memwrite(ufs->dev.bus->qts, desc_addr, &desc, sizeof(desc));
-+
-+    ufs_wreg(ufs, A_UTMRLDBR, 1 << 1);
-+    g_assert_cmpuint(ufs_rreg(ufs, A_UTMRLDBR) & (1 << 1), ==, 0);
-+    g_assert_cmpuint(FIELD_EX32(ufs_rreg(ufs, A_IS), IS, UTMRCS), ==, 0);
-+    qtest_memread(ufs->dev.bus->qts, desc_addr, &utrd_result,
-+                  sizeof(utrd_result));
-+    g_assert_cmpuint(le32_to_cpu(utrd_result.header.dword_2) & UFS_MASK_OCS,
-+                     ==, UFS_OCS_SUCCESS);
-+    g_assert_cmpuint(utrd_result.upiu_rsp.rsp_header.response,
-+                     ==, UFS_COMMAND_RESULT_SUCCESS);
-+    g_assert_cmpuint(be32_to_cpu(utrd_result.upiu_rsp.output_param1),
-+                     ==, UFS_UPIU_TASK_MANAGEMENT_FUNC_COMPL);
-+
-+    /* Verify SQCTI, CQIACR, SQRTS/SQRTC, and CQIS/IS.CQES W1C sync */
-+    sqdao = ufs->sqdao[TEST_QID];
-+    mcq_reg_offset =
-+        FIELD_EX32(ufs_rreg(ufs, A_MCQCAP), MCQCAP, QCFGPTR) * 0x200 +
-+        TEST_QID * 0x40;
-+    cqisao = ufs_rreg(ufs, mcq_reg_offset + A_CQISAO);
-+
-+    /* SQCTI and CQIACR read/write */
-+    ufs_wreg(ufs, sqdao + A_SQCTI, (1 << 8) | 0x2b);
-+    g_assert_cmpuint(ufs_rreg(ufs, sqdao + A_SQCTI), ==, (1 << 8) | 0x2b);
-+    ufs_wreg(ufs, cqisao + offsetof(UfsMcqCqIntReg, iacr), 0x101);
-+    g_assert_cmpuint(ufs_rreg(ufs, cqisao + offsetof(UfsMcqCqIntReg, iacr)),
-+                     ==, 0x101);
-+
-+    /* SQ_ICU while running (STS=0) -> sets SQRTS.CUS=1, RTC=2 */
-+    ufs_wreg(ufs, sqdao + A_SQRTC, FIELD_DP32(0, SQRTC, ICU, 1));
-+    sqrts = ufs_rreg(ufs, sqdao + A_SQRTS);
-+    sqrtc = ufs_rreg(ufs, sqdao + A_SQRTC);
-+    g_assert_cmpuint(FIELD_EX32(sqrts, SQRTS, STS), ==, 0);
-+    g_assert_cmpuint(FIELD_EX32(sqrts, SQRTS, CUS), ==, 1);
-+    g_assert_cmpuint(FIELD_EX32(sqrts, SQRTS, RTC), ==, 2);
-+    g_assert_cmpuint(FIELD_EX32(sqrtc, SQRTC, ICU), ==, 0);
-+
-+    /* SQ_STOP -> sets SQRTS.STS = 1 */
-+    ufs_wreg(ufs, sqdao + A_SQRTC, FIELD_DP32(0, SQRTC, STOP, 1));
-+    sqrts = ufs_rreg(ufs, sqdao + A_SQRTS);
-+    g_assert_cmpuint(FIELD_EX32(sqrts, SQRTS, STS), ==, 1);
-+
-+    /*
-+     * SQ_ICU while stopped (no matching req) -> sets SQRTS.CUS=1, RTC=1 and
-+     * self-clears ICU.
-+     */
-+    ufs_wreg(ufs, sqdao + A_SQRTC,
-+             FIELD_DP32(0, SQRTC, STOP, 1) | FIELD_DP32(0, SQRTC, ICU, 1));
-+    sqrts = ufs_rreg(ufs, sqdao + A_SQRTS);
-+    sqrtc = ufs_rreg(ufs, sqdao + A_SQRTC);
-+    g_assert_cmpuint(FIELD_EX32(sqrts, SQRTS, STS), ==, 1);
-+    g_assert_cmpuint(FIELD_EX32(sqrts, SQRTS, CUS), ==, 1);
-+    g_assert_cmpuint(FIELD_EX32(sqrts, SQRTS, RTC), ==, 1);
-+    g_assert_cmpuint(FIELD_EX32(sqrtc, SQRTC, ICU), ==, 0);
-+
-+    /*
-+     * Queue a nullified SQE (CT = 0xF) while SQ is stopped, then resume SQ
-+     * (STOP 1->0): SQRTS.STS clears to 0 while SQRTS.CUS remains 1, and the
-+     * nullified SQE posts CQE with UFS_OCS_ABORTED without writing rsp_upiu.
-+     */
-+    null_slot = alloc_cmd_desc_slot(ufs);
-+    req_upiu_addr =
-+        ufs->cmd_desc_addr + null_slot * UTP_COMMAND_DESCRIPTOR_SIZE;
-+    rsp_upiu_addr = req_upiu_addr + UTP_RESPONSE_UPIU_OFFSET;
-+    req_upiu.header.trans_type = UFS_UPIU_TRANSACTION_NOP_OUT;
-+    req_upiu.header.task_tag = null_slot;
-+    qtest_memwrite(ufs->dev.bus->qts, req_upiu_addr, &req_upiu,
-+                   sizeof(req_upiu));
-+    memset(&rsp_upiu, 0xa5, sizeof(rsp_upiu));
-+    qtest_memwrite(ufs->dev.bus->qts, rsp_upiu_addr, &rsp_upiu,
-+                   sizeof(rsp_upiu));
-+
-+    null_utrd = ufs_build_req_utrd(req_upiu_addr, UFS_UTP_NO_DATA_TRANSFER, 0);
-+    null_utrd.header.dword_0 = cpu_to_le32((UFS_UTP_CMD_TYPE_NULL << 28) |
-+                                           UFS_UTP_NO_DATA_TRANSFER |
-+                                           UFS_UTP_REQ_DESC_INT_CMD);
-+    __ufs_send_transfer_request_mcq_async(ufs, 0, &null_utrd);
-+
-+    /* SQ_START (STOP 1->0) -> clears SQRTS.STS = 0 while preserving CUS = 1 */
-+    ufs_wreg(ufs, sqdao + A_SQRTC, 0);
-+    sqrts = ufs_rreg(ufs, sqdao + A_SQRTS);
-+    g_assert_cmpuint(FIELD_EX32(sqrts, SQRTS, STS), ==, 0);
-+    g_assert_cmpuint(FIELD_EX32(sqrts, SQRTS, CUS), ==, 1);
-+
-+    ufs_wait_for_irq(ufs);
-+    g_assert_cmpuint(ufs_mcq_poll_cq(ufs, &cqe, 1), ==, 1);
-+    g_assert_cmpuint(cqe.status, ==, UFS_OCS_ABORTED);
-+    g_assert_cmpuint(cqe.task_tag, ==, null_slot);
-+    qtest_memread(ufs->dev.bus->qts, rsp_upiu_addr, &rsp_upiu,
-+                  sizeof(rsp_upiu));
-+    g_assert_cmpuint(rsp_upiu.header.trans_type, ==, 0xa5);
-+    ufs_wreg(ufs, cqisao + A_CQIS, FIELD_DP32(0, CQIS, TEPS, 1));
-+    release_cmd_desc_slot(ufs, null_slot);
-+
-+    /* Verify MCQ command sets CQIS.TEPS=1 and W1C clears CQIS.TEPS & IS.CQES */
-+    ocs = ufs_send_nop_out(ufs, &rsp_upiu);
-+    g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
-+    g_assert_cmpuint(FIELD_EX32(ufs_rreg(ufs, cqisao + A_CQIS), CQIS, TEPS),
-+                     ==, 1);
-+    ufs_wreg(ufs, cqisao + A_CQIS, FIELD_DP32(0, CQIS, TEPS, 1));
-+    g_assert_cmpuint(FIELD_EX32(ufs_rreg(ufs, cqisao + A_CQIS), CQIS, TEPS),
-+                     ==, 0);
-+    g_assert_cmpuint(FIELD_EX32(ufs_rreg(ufs, A_IS), IS, CQES), ==, 0);
-+
-+    /* SQ_ICU on disabled SQ (SQEN=0) -> sets SQRTS.CUS=1, RTC=3 */
-+    orig_sqattr = ufs_rreg(ufs, mcq_reg_offset + A_SQATTR);
-+    ufs_wreg(ufs, mcq_reg_offset + A_SQATTR, 0);
-+    ufs_wreg(ufs, sqdao + A_SQRTC, FIELD_DP32(0, SQRTC, ICU, 1));
-+    sqrts = ufs_rreg(ufs, sqdao + A_SQRTS);
-+    g_assert_cmpuint(FIELD_EX32(sqrts, SQRTS, CUS), ==, 1);
-+    g_assert_cmpuint(FIELD_EX32(sqrts, SQRTS, RTC), ==, 3);
-+    ufs_wreg(ufs, mcq_reg_offset + A_SQATTR, orig_sqattr);
-+
-+    guest_free(alloc, utmrlba);
-+    ufs_exit(ufs, alloc);
-+}
-+
- static void ufs_register_nodes(void)
- {
-     const char *arch;
-@@ -1856,6 +2014,7 @@ static void ufs_register_nodes(void)
-     qos_add_test("query-desciptor", "ufs", ufstest_query_desc_request,
-                  &io_test_opts);
-     qos_add_test("hce-reset", "ufs", ufs_test_hce_reset, &mcq_test_opts);
-+    qos_add_test("tmr-handling", "ufs", ufs_test_tmr_handling, &mcq_test_opts);
-     qos_add_test("wb-init", "ufs", ufstest_wb_init, &wb_test_opts);
-     qos_add_test("wb-read-write", "ufs", ufstest_wb_read_write, &wb_test_opts);
-     qos_add_test("hid", "ufs", ufstest_hid, &io_test_opts);
--- 
-2.56.0.385.gd3acb90ef8-goog
+We could consider adding callbacks in this "generic" file only if they 
+are implemented for all targets, but as we can see in this series, only 
+a few targets implement this. It would be more boilerplate for the same 
+result.
 
+IMHO the two concerned functions (qmp_query_cpu*) look more like an 
+exception than a proper rule. dump functions (posted in another series) 
+are more related to cpu, and not to target themselves.
+
+I would happy to revisit this if community prefers to go in a different 
+direction though.
+
+>> If the approach here is accepted, I'll extend this series with
+>> qmp_query_cpu_model_expansion which follows the same pattern.
+>> With this, we'll be free to link together almost all the base architectures.
+> 
+> Series
+> Acked-by: Markus Armbruster <armbru@redhat.com>
+> 
+
+Regards,
+Pierrick
 
