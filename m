@@ -4,69 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0165CC6B34
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 08:24:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB59ACC6B2F
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 08:37:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHGkc-0006c5-RP; Thu, 15 Oct 2026 04:23:46 -0400
+	id 1xHGx8-00006f-EU; Thu, 15 Oct 2026 04:36:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1xHGkU-0006ah-R1
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 04:23:39 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1xHGx6-00005z-0B; Thu, 15 Oct 2026 04:36:40 -0400
+Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1xHGkR-00076n-SC
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 04:23:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1792052614;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=gMbH46NIuuR3tz1VhQI6SevZ/s/DcUHVJE6FSXi7Zjw=;
- b=IMBbbOjJBrjEmEuRoq0h7OkuF5XYkjBjuqZ1sOuaizcZ7Q2GyuCCtB/+3myQc0vDfmUOBl
- IPkAtb60OsxJhNV3bif3LKouhw/hUeD1EyzJz1rgLmWkKh52NbfIkVEWFnpY4oIZhW7fDK
- t6B9FzBWWMMymgHSTEZolf0XdqJaKig=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-633-ssRfDCiaNIKxS6Ueaj_SRg-1; Thu,
- 15 Oct 2026 08:23:32 +0000
-X-MC-Unique: ssRfDCiaNIKxS6Ueaj_SRg-1
-X-Mimecast-MFC-AGG-ID: ssRfDCiaNIKxS6Ueaj_SRg_1792052611
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 74C8E180065C; Thu, 15 Oct 2026 08:23:31 +0000 (UTC)
-Received: from sirius.home.kraxel.org (unknown [10.44.32.37])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id CC228300072E; Thu, 15 Oct 2026 08:23:30 +0000 (UTC)
-Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
- id D62011800399; Thu, 15 Oct 2026 10:15:44 +0200 (CEST)
-From: Gerd Hoffmann <kraxel@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>
-Subject: [PATCH 1/2] pci id: clarify pci subsystem id usage
-Date: Thu, 15 Oct 2026 10:15:43 +0200
-Message-ID: <20261015081544.40310-2-kraxel@redhat.com>
-In-Reply-To: <20261015081544.40310-1-kraxel@redhat.com>
-References: <20261015081544.40310-1-kraxel@redhat.com>
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1xHGx3-0008K6-7t; Thu, 15 Oct 2026 04:36:38 -0400
+Received: from mail-nwsmtp-smtp-corp-main-56.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-56.yp-c.yandex.net
+ [IPv6:2a02:6b8:c42:6522:0:640:3362:0])
+ by forwardcorp1d.mail.yandex.net (postfix) with ESMTPS id C81B180451;
+ Thu, 15 Oct 2026 11:36:34 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:d5a::1:34] (unknown
+ [2a02:6bf:8080:d5a::1:34])
+ by mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net (smtpcorp) with ESMTPSA
+ id XaQ8O139aqM0-XKnwOKfo; Thu, 15 Oct 2026 11:36:34 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1792053394;
+ bh=YdEkfJRTIHD1cxHyBgRSfFrL7VYkRnWlxdnsmR8yILw=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=ZqGbDY6nBHzikDKtLNdtFsIhVu/zx7sr9i2woOrCGihZ5eGXmKo85MuFhFNZr3BvW
+ pWev3yjBvnXeln9lHFY/UrKCQNmvZ57u1A5UV1MBduMoxVttAVut7MD//0C3MCXnN9
+ gQZv88oVxaXZ9i4Vqxv2MOnRzW9KXSnjzZAvxqGw=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <4a157478-19e5-47bf-b199-bce5b4390f99@yandex-team.ru>
+Date: Thu, 15 Oct 2026 11:36:33 +0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kraxel@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 2/9] iotests/040: cover large and fragmented commit runs
+To: "Denis V. Lunev" <den@openvz.org>, qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>, 
+ John Snow <jsnow@redhat.com>
+References: <20260929155125.3151111-1-den@openvz.org>
+ <20260929155125.3151111-3-den@openvz.org>
+Content-Language: en-US
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <20260929155125.3151111-3-den@openvz.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=178.154.239.200;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -83,32 +75,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Qemu uses the pci subsystem id not only for emulated devices, but also
-for virtio devices and generic pci class devices such as pci bridges,
-xhci + nvme controllers etc.  Update the documentation accordingly.
+On 29.09.26 18:51, Denis V. Lunev wrote:
+> From: Denis V. Lunev<den@openvz.org>
+> 
+> 040 never commits runs long enough to span more than one block-status
+> query, so the answer that commit_iteration() is about to start caching
+> goes untested.
+> 
+> Add two cases on a base <- mid <- active chain, committing mid so the
+> job takes the regular commit path rather than active commit, and compare
+> base against a snapshot of mid taken before the commit. One case mixes
+> multi-megabyte data, zero and hole runs, the other fragments them down
+> to single clusters with every transition off the 512K boundary.
+> 
+> Reviewed-by: Andrey Drobyshev<andrey.drobyshev@virtuozzo.com>
+> Signed-off-by: Denis V. Lunev<den@openvz.org>
+> CC: Vladimir Sementsov-Ogievskiy<vsementsov@yandex-team.ru>
+> CC: John Snow<jsnow@redhat.com>
+> CC: Andrey Drobyshev<andrey.drobyshev@virtuozzo.com>
 
-Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
----
- docs/specs/pci-ids.rst | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 
-diff --git a/docs/specs/pci-ids.rst b/docs/specs/pci-ids.rst
-index 261b0f359fe5..832f8bd1b802 100644
---- a/docs/specs/pci-ids.rst
-+++ b/docs/specs/pci-ids.rst
-@@ -46,8 +46,9 @@ maintained as part of the virtio specification.
-   upstream merge or shipping a distro/product) to avoid conflicts.
- 
- 1af4:1100
--  Used as PCI Subsystem ID for existing hardware devices emulated
--  by QEMU.
-+  Used as PCI Subsystem ID for existing hardware devices emulated by
-+  QEMU, such as the intel chipset devices.  Also used for virtio
-+  devices and generic pci class devices (1b36:00xx, see below).
- 
- 1af4:1110
-   ivshmem device (:doc:`ivshmem-spec`)
 -- 
-2.56.0
-
+Best regards,
+Vladimir
 
