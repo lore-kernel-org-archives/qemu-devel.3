@@ -4,143 +4,125 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1E41CC6B2F
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 06:14:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 288FACC6B34
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 06:21:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHEjU-0008Lt-9W; Thu, 15 Oct 2026 02:14:28 -0400
+	id 1xHEpi-0002fc-DY; Thu, 15 Oct 2026 02:20:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xHEjR-0008Ie-1V
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 02:14:25 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1xHEpf-0002el-M3
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 02:20:52 -0400
+Received: from smtpout6.mo537.mail-out.ovh.net ([51.210.91.25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xHEjO-0004eH-TG
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 02:14:24 -0400
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69F3xmq92739406
- for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 06:14:21 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- gd1Fx2wEdC+n+5kj89cGBNzkO2yK4ty9WSvc7MGr96Y=; b=jf4dEL7tJiikOfGO
- f37wkZTDlIiaDqPZAyY/8j5/LNDZkL7AEujoEyKubfYeuww+El2rDFK135T1L6EE
- bZx/ycefBbb8zus34utcQTi6+q+5n8r2uDrU3AdJ9CWnYZi6rgJL/HofP7JYL3U3
- iLq1gEmfWjCAWqgEGYDNIwcqcU61Rer6VpeYXJ6/etSLyNN2nRDrDn9eezr3K0Dj
- uwjFIQLqS0DZFp/+F6ehFbmWaj/jxQCTKD8TqLMxzv1Dqg0YBI5UDIg/Qi/aEJ14
- MWVK/g7iOdLq+DJF3WBRr2SaIAEpPETTMSaxSJ0nR5N7EiRZ5qx3blZ/oODNI7/r
- +yMlvg==
-Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com
- [209.85.215.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4haqds8dsm-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 06:14:20 +0000 (GMT)
-Received: by mail-pg1-f199.google.com with SMTP id
- 41be03b00d2f7-cbb20f82a0eso3437825a12.0
- for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 23:14:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1792044860; x=1792649660; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=gd1Fx2wEdC+n+5kj89cGBNzkO2yK4ty9WSvc7MGr96Y=;
- b=E6Ot1L/Nyqdjr3xUdrpWkppHzOliieMBZiv+c3FxCVufi0PA8w59gDtBn2N+OPsBki
- ANxT8lEWfYPxhc2BXf1T2xGEOgZnWYrMRUXkEp3MknVC9pDpVs132Th4Ykbu3omFHz5Z
- 2EcTOIwYWgHpivqsG5tixoD3v4rbegSzgYG2hlToOSHG5anLQXR0wZFOQROl8E1xT5J5
- ivK0zvDnfCbM36oBYlGeNa8YKQFM51KjHYKJ5CNO1VgvEHLzCmvX7JsNT47t4r+y3Vux
- vvznmO7Kf+f8i40FbJ+c2eOGEje+XtUAqvVY4TGqmA2ClZ/GV0hvV/1BhQ/Hvd+4Rvk7
- rUIw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792044860; x=1792649660;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=gd1Fx2wEdC+n+5kj89cGBNzkO2yK4ty9WSvc7MGr96Y=;
- b=Qp17B7hNHyIK9VlH93BTQNlb6k1t4TV+yXMllgLtUxuUxMCnSHANJqVnLyVSqTDTPM
- 0fc0wcdYE1EFDeYFUfPri7qwIbo2uEb7YJPYwctEgSmd/vVr4oipcGgrZS+R5UbPem/b
- JKFgxbLJdHpwxhQ0Op0I3OLleN0Z4iDJLWb9BCQ7g7v+m6rgRefOObQnvL0KeZkRhGQ3
- cFp7xL28DQ7Zft4u47iwxJmdGMAPcoh0E6kQyDs5B/iDeWOVsbNV6rKoU48nfJegrJqJ
- 6004TAJATek18P6KAHFVRBwmRibrO9XKQbVEN/iqR0k/9b5ylxSycfH4FK8HXp3qdp7q
- TwZw==
-X-Gm-Message-State: AFq9FYJURk/7yY7aO+B94uMnhBhlR70Q+szcxivRK06L5F0G+w1I0Awu
- vKASlvKgc/7MMq3vEcSklv5ZBRNu7rt7fn3L27N4bpvBdwuyjY5n32Vf35chHKEAr7AMl2uUYje
- C54Vhf4TPpv4Wb5g37HKBUHoLBXD4cKwOEdin0A9uPKlvLcBIlN1PlJ9LFw==
-X-Gm-Gg: AYBFou2vJnwl75OpQQI7Ur+gaO1fv7nk6EkHB2ecAOKU3DrSQnu5H5AprS2Dv7WexuR
- lFSzls43o6fxoqMd3FSKDvZuPcnRT0RUxUgih17V4GtfuYs5rjUa7FBw6o9euY4lpjud7SAYRJC
- xzdlr8DjR+B86JcgdDEOLoX7+EvcEzPnt0fOl4HiIjuD1mghbYUSN+cqxSCekZjrfpgfCjR4/Ce
- gfRsIHGzi4vSBse3Fhblifxw6/279U2V59gMlJdXigQg91oUZepsmLmIjw2YEgvsQ55bBFLk2FG
- /O2B6dxGjsOJl2DkTP2720eqo2ypio07IPvaeNJy74qMsgwdt3OkHR6kLZsNQnxfj5z9MqFz1aE
- 6EvsYGGZam3g94T/KDsE+cRaW6zt4Xy2M/nJHGWVPlMoC5umVnTxWczkZ
-X-Received: by 2002:a05:6a20:6a0e:b0:3e0:c5f5:626c with SMTP id
- adf61e73a8af0-3e16be43d18mr13070083637.40.1792044859896; 
- Wed, 14 Oct 2026 23:14:19 -0700 (PDT)
-X-Received: by 2002:a05:6a20:6a0e:b0:3e0:c5f5:626c with SMTP id
- adf61e73a8af0-3e16be43d18mr13070070637.40.1792044859374; 
- Wed, 14 Oct 2026 23:14:19 -0700 (PDT)
-Received: from [192.168.1.169] (192-80-163-190.dyn.novuscom.net.
- [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-89d803cc0a5sm1862908b3a.30.2026.10.14.23.14.18
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 14 Oct 2026 23:14:18 -0700 (PDT)
-Message-ID: <e6c39225-d713-4bef-af49-a451a64fa4db@oss.qualcomm.com>
-Date: Wed, 14 Oct 2026 23:14:18 -0700
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1xHEpd-0005HX-Ct
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 02:20:51 -0400
+Received: from director5.derp.mail-out.ovh.net
+ (director5.derp.mail-out.ovh.net [79.137.60.225])
+ by mo537.mail-out.ovh.net (Postfix) with ESMTPS id 4j4ycX1RQ9z43WS;
+ Thu, 15 Oct 2026 06:20:44 +0000 (UTC)
+Received: from director5.derp.mail-out.ovh.net
+ (director5.derp.mail-out.ovh.net. [127.0.0.1])
+ by director5.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
+ for <alistair@alistair23.me>; Thu, 15 Oct 2026 06:20:44 +0000 (UTC)
+Received: from mta6.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.96.193])
+ by director5.derp.mail-out.ovh.net (Postfix) with ESMTPS id
+ 4j4ycX0Mknz5vLZ; Thu, 15 Oct 2026 06:20:44 +0000 (UTC)
+Received: from kaod.org (unknown [10.1.6.4])
+ (Authenticated sender: clg@kaod.org)
+ by mta6.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id 098A71B42CB8;
+ Thu, 15 Oct 2026 06:20:41 +0000 (UTC)
+Authentication-Results: garm.ovh; auth=pass
+ (GARM-104R005d1f06cb3-f418-4883-a7e5-6746d6db4819,
+ 39EAFCA45846CB7F25CFDE7C5DD07A896C21AD00) smtp.auth=clg@kaod.org
+X-OVh-ClientIp: 82.64.250.170
+Message-ID: <ede46cde-e280-440b-a527-05dad685ef58@kaod.org>
+Date: Thu, 15 Oct 2026 08:20:41 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 8/8] qmp: reimplement qmp_query_cpu_definitions as a
- dispatcher function
-Content-Language: en-US
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@oss.qualcomm.com>, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
- <marcandre.lureau@redhat.com>
-References: <20261015005355.62406-1-pierrick.bouvier@oss.qualcomm.com>
- <20261015005355.62406-9-pierrick.bouvier@oss.qualcomm.com>
- <87cxtbbj5i.fsf@pond.sub.org>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-In-Reply-To: <87cxtbbj5i.fsf@pond.sub.org>
+Subject: Re: [PATCH v1 00/14] hw/arm/aspeed: Add AST1040 FMC/SPI controllers
+ and unimplemented devices
+To: Jamin Lin <jamin_lin@aspeedtech.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Kane Chen <kane_chen@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ Alistair Francis <alistair@alistair23.me>, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>,
+ "open list:Block layer core" <qemu-block@nongnu.org>
+Cc: Troy Lee <troy_lee@aspeedtech.com>
+References: <20261015055642.106204-1-jamin_lin@aspeedtech.com>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Content-Language: en-US, fr
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <20261015055642.106204-1-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: E-kopXPsoxxt1hsu2kbrD1Boxgul_Sfz
-X-Authority-Analysis: v=2.4 cv=fNusTpae c=1 sm=1 tr=0 ts=6ad06f3c cx=c_pps
- a=Oh5Dbbf/trHjhBongsHeRQ==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
- a=EUspDBNiAAAA:8 a=XfvIXIaxakq8nYA5joAA:9 a=QEXdDO2ut3YA:10
- a=_Vgx9l1VpLgwpw_dHYaR:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDE1MDAyNCBTYWx0ZWRfXxCpJLCqR51JN
- AKnBYZhlHfWoA5UvZFhyYE2aVSU2Lf81878uHPBduCrnxkL3MYZAWH2LgVKcDSMaibIlCoz4TzI
- POPL0ZmEOa6CJhsys3YnoggKyzBRGSrRAYubod+w0kUDE73PtuO2RmekX0q4U+Pxk6TEU2gPGrU
- A3xFVF3QkblGFp/kS49RBCimijuslDElUOErsV5f9KvWT22t/WTkxvvbUd/uibKjt5PqCGCGtyr
- TXUOQutQ5KeWAboXPPDqBulJcbYOYleA/+y6sXHYoQWHsr+8KzNXo/tI4iLKBzmIerBJXAGPOvk
- 7an+YTgfHisc/S4wETuTD/PrhcCbE/cM2jNBF4Y7PDfGTzbpD/JXrnXTvp1+R399qnSPKyrfth9
- 2k62Y6MHDTDu5AECy5Fas7Yj7J7Jz/LMh42RW62rj4pLx6bKkIRV4tVm9oZRmJRKzBFWnnpCfdE
- zixlNdmeTmOA1Nhm/3w==
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDE1MDAyNCBTYWx0ZWRfX09wrs1haky3d
- BLRcVPNSDCD5p1+fwI81fi191WD9uaUPVjY47sMU1Jq54m63ViwjZYGLMDBLD1Tc9GjAj3C6+RW
- P8afeNZXgglqHYlvIfG4aVp4Wehjt3o=
-X-Proofpoint-GUID: E-kopXPsoxxt1hsu2kbrD1Boxgul_Sfz
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-10-13_01,2026-10-14_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 phishscore=0 bulkscore=0 lowpriorityscore=0 impostorscore=0
- spamscore=0 clxscore=1015 priorityscore=1501 adultscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610080000 definitions=main-2610150024
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+x-ovh-tracer-id: 8123367830765939757
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: dmFkZTEwgDTtQp1PCuwSJLIHmh8lkvy8lwsipne3MMMqqwlo/HUoT6Z16mSOc5XeBMCQfzZiarB4R8/Zk/NZ/9161XiVOfm5I7g+GARGZC8mMKbEVpPZutiUlo/bRE7clmALsI0KWTgxfHgFdItMwWtIGHZ9uUlKAJUKY0PZrAJ+HVPBqazPN5ZSw4KmZ70onsZOFLQIMiX4OQ2QKmc18mIM/pLgJToib9ifQwdzHwegmtKyDSNa+IBmlj469piZKhf94Lqah4Yp0hL0DtCVW8bFxdIYFob9WCn1e7NvMIqjfYV4gKd9hdqdeETAezKSZvw65cMqLRdJY6eXp9hcahO0jmgHSwOaK6IfziSryCAnFwD+bl13ctKF1rRgisX0AFp/tRnfNf4LX1sbtgX/BVK9qhH2/lcFb7YmaaPBzcnJTYS54k7GQF/1vztx/6wgX0cuVqFiL7rtE7Zw1DNslD5mA/ztOMJ+jm3z7zK/BA1BHBvEeafNSjNDtJW7aN5OnKtCEq/3dN3WwIqCkaj/9qZR2DZTH5YzeqNn+LkHItvpslxDl6P3RpAQ3ca66B7W7BcpkvwjYkqD0Cmho5oiFP1bGuy6jR7KTkSlog1rLMH4nlyc1Ar7+vc52RiRD2EubHgi6mkZSGZFczSnVGUfm3dNb7Jl9niQCjnukhenLBhq8V1HIg
+DKIM-Signature: a=rsa-sha256; bh=AVlsGYd4rTnV03++VXbQpDVqFYx5zAvUXGpLY5TWx8I=; 
+ c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
+ t=1792045245; v=1;
+ b=gwHoUFuuqAD9gZidvIA6rHckp9spIonH/LqUC7Wuzfuj9NyxKrL686LPlN+9mL3YcA6v4i4+
+ fmv4KiD45WamrNXvaMst7+S5jk4ebt3i2sRVLqxWT8gKgmAgaPAKe6C18ImTXXU0gYORRnMABxh
+ V1Zb6XcQbwSYUuz2waNxjC1XyqNTlcigALEt1yjQeRx2dFLr9rKeFVjhwVntxV57L9w4Srz4fF4
+ WRvtTnnUoQOcyRwGkWXAN9sIshMIV/KRWBBkepAmZl3b2wsrENbsqlsP9/LlUraM5dmF9ImKVdH
+ 5SAKeBuIKMyuf/kVvaDFXIFScAE6gRYdBu04PyHoSjEgA==
+Received-SPF: pass client-ip=51.210.91.25; envelope-from=clg@kaod.org;
+ helo=smtpout6.mo537.mail-out.ovh.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -157,226 +139,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/14/26 10:57 PM, Markus Armbruster wrote:
-> Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
-> 
->> Now that we have per target implementations of this function, we simply
->> dispatch the call to relevant implementation.
->> This eliminates duplication of qmp_query_cpu_definitions symbol.
->>
->> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
->> ---
->>   hw/core/machine-qmp-cmds.c            | 32 +++++++++++++++++++++++++++
->>   stubs/meson.build                     |  6 +++++
->>   stubs/qmp-cpu-arm.c                   |  9 ++++++++
->>   stubs/qmp-cpu-i386.c                  |  9 ++++++++
->>   stubs/qmp-cpu-loongarch.c             |  9 ++++++++
->>   stubs/qmp-cpu-mips.c                  |  9 ++++++++
->>   stubs/qmp-cpu-ppc.c                   |  9 ++++++++
->>   stubs/qmp-cpu-riscv.c                 |  9 ++++++++
->>   stubs/qmp-cpu-s390x.c                 |  6 +++++
->>   stubs/qmp-cpu.c                       |  7 ------
->>   target/arm/arm-qmp-cmds.c             |  5 -----
->>   target/i386/cpu.c                     |  5 -----
->>   target/loongarch/loongarch-qmp-cmds.c |  5 -----
->>   target/mips/system/mips-qmp-cmds.c    |  5 -----
->>   target/ppc/ppc-qmp-cmds.c             |  5 -----
->>   target/riscv/riscv-qmp-cmds.c         |  5 -----
->>   target/s390x/cpu_models_system.c      |  5 -----
->>   17 files changed, 98 insertions(+), 42 deletions(-)
->>   create mode 100644 stubs/qmp-cpu-arm.c
->>   create mode 100644 stubs/qmp-cpu-i386.c
->>   create mode 100644 stubs/qmp-cpu-loongarch.c
->>   create mode 100644 stubs/qmp-cpu-mips.c
->>   create mode 100644 stubs/qmp-cpu-ppc.c
->>   create mode 100644 stubs/qmp-cpu-riscv.c
->>
->> diff --git a/hw/core/machine-qmp-cmds.c b/hw/core/machine-qmp-cmds.c
->> index 9c08b17510a..3fee45d568d 100644
->> --- a/hw/core/machine-qmp-cmds.c
->> +++ b/hw/core/machine-qmp-cmds.c
->> @@ -27,6 +27,7 @@
->>   #include "system/hostmem.h"
->>   #include "system/hw_accel.h"
->>   #include "system/numa.h"
->> +#include "system/qmp-cpu.h"
->>   #include "system/ramlist.h"
->>   #include "system/runstate.h"
->>   #include "system/system.h"
->> @@ -93,6 +94,37 @@ CpuInfoFastList *qmp_query_cpus_fast(Error **errp)
->>       return head;
->>   }
->>   
->> +CpuDefinitionInfoList *qmp_query_cpu_definitions(Error **errp)
->> +{
->> +    switch (target_arch()) {
->> +    case SYS_EMU_TARGET_AARCH64:
->> +    case SYS_EMU_TARGET_ARM:
->> +        return qmp_query_arm_cpu_definitions(errp);
->> +    case SYS_EMU_TARGET_I386:
->> +    case SYS_EMU_TARGET_X86_64:
->> +        return qmp_query_i386_cpu_definitions(errp);
->> +    case SYS_EMU_TARGET_LOONGARCH64:
->> +        return qmp_query_loongarch_cpu_definitions(errp);
->> +    case SYS_EMU_TARGET_MIPS:
->> +    case SYS_EMU_TARGET_MIPS64:
->> +    case SYS_EMU_TARGET_MIPS64EL:
->> +    case SYS_EMU_TARGET_MIPSEL:
->> +        return qmp_query_mips_cpu_definitions(errp);
->> +    case SYS_EMU_TARGET_PPC:
->> +    case SYS_EMU_TARGET_PPC64:
->> +        return qmp_query_ppc_cpu_definitions(errp);
->> +    case SYS_EMU_TARGET_RISCV32:
->> +    case SYS_EMU_TARGET_RISCV64:
->> +        return qmp_query_riscv_cpu_definitions(errp);
->> +    case SYS_EMU_TARGET_S390X:
->> +        return qmp_query_s390x_cpu_definitions(errp);
->> +    default:
->> +        error_setg(errp,
->> +                   "CPU model definitions are not supported on this target");
->> +        return NULL;
->> +    }
->> +}
->> +
->>   MachineInfoList *qmp_query_machines(bool has_compat_props, bool compat_props,
->>                                       Error **errp)
->>   {
->> diff --git a/stubs/meson.build b/stubs/meson.build
->> index 29b6644b254..dcb67ce5295 100644
->> --- a/stubs/meson.build
->> +++ b/stubs/meson.build
->> @@ -86,6 +86,12 @@ if have_system
->>     stub_ss.add(files('qmp-i386-sgx.c'))
->>     stub_ss.add(files('qmp-i386-xen.c'))
->>     stub_ss.add(files('qmp-cpu.c'))
->> +  stub_ss.add(files('qmp-cpu-arm.c'))
->> +  stub_ss.add(files('qmp-cpu-i386.c'))
->> +  stub_ss.add(files('qmp-cpu-loongarch.c'))
->> +  stub_ss.add(files('qmp-cpu-mips.c'))
->> +  stub_ss.add(files('qmp-cpu-ppc.c'))
->> +  stub_ss.add(files('qmp-cpu-riscv.c'))
->>     stub_ss.add(files('qmp-cpu-s390x.c'))
->>     stub_ss.add(files('qmp-cpu-s390x-kvm.c'))
->>     if have_hmp
->> diff --git a/stubs/qmp-cpu-arm.c b/stubs/qmp-cpu-arm.c
->> new file mode 100644
->> index 00000000000..6249d7bde8d
->> --- /dev/null
->> +++ b/stubs/qmp-cpu-arm.c
->> @@ -0,0 +1,9 @@
->> +/* SPDX-License-Identifier: GPL-2.0-or-later */
->> +
->> +#include "qemu/osdep.h"
->> +#include "system/qmp-cpu.h"
->> +
->> +CpuDefinitionInfoList *qmp_query_arm_cpu_definitions(Error **errp)
->> +{
->> +    g_assert_not_reached();
->> +}
->> diff --git a/stubs/qmp-cpu-i386.c b/stubs/qmp-cpu-i386.c
->> new file mode 100644
->> index 00000000000..4858951f8c2
->> --- /dev/null
->> +++ b/stubs/qmp-cpu-i386.c
->> @@ -0,0 +1,9 @@
->> +/* SPDX-License-Identifier: GPL-2.0-or-later */
->> +
->> +#include "qemu/osdep.h"
->> +#include "system/qmp-cpu.h"
->> +
->> +CpuDefinitionInfoList *qmp_query_i386_cpu_definitions(Error **errp)
->> +{
->> +    g_assert_not_reached();
->> +}
->> diff --git a/stubs/qmp-cpu-loongarch.c b/stubs/qmp-cpu-loongarch.c
->> new file mode 100644
->> index 00000000000..695b6558d7e
->> --- /dev/null
->> +++ b/stubs/qmp-cpu-loongarch.c
->> @@ -0,0 +1,9 @@
->> +/* SPDX-License-Identifier: GPL-2.0-or-later */
->> +
->> +#include "qemu/osdep.h"
->> +#include "system/qmp-cpu.h"
->> +
->> +CpuDefinitionInfoList *qmp_query_loongarch_cpu_definitions(Error **errp)
->> +{
->> +    g_assert_not_reached();
->> +}
->> diff --git a/stubs/qmp-cpu-mips.c b/stubs/qmp-cpu-mips.c
->> new file mode 100644
->> index 00000000000..4d251d5f078
->> --- /dev/null
->> +++ b/stubs/qmp-cpu-mips.c
->> @@ -0,0 +1,9 @@
->> +/* SPDX-License-Identifier: GPL-2.0-or-later */
->> +
->> +#include "qemu/osdep.h"
->> +#include "system/qmp-cpu.h"
->> +
->> +CpuDefinitionInfoList *qmp_query_mips_cpu_definitions(Error **errp)
->> +{
->> +    g_assert_not_reached();
->> +}
->> diff --git a/stubs/qmp-cpu-ppc.c b/stubs/qmp-cpu-ppc.c
->> new file mode 100644
->> index 00000000000..315461c7db7
->> --- /dev/null
->> +++ b/stubs/qmp-cpu-ppc.c
->> @@ -0,0 +1,9 @@
->> +/* SPDX-License-Identifier: GPL-2.0-or-later */
->> +
->> +#include "qemu/osdep.h"
->> +#include "system/qmp-cpu.h"
->> +
->> +CpuDefinitionInfoList *qmp_query_ppc_cpu_definitions(Error **errp)
->> +{
->> +    g_assert_not_reached();
->> +}
->> diff --git a/stubs/qmp-cpu-riscv.c b/stubs/qmp-cpu-riscv.c
->> new file mode 100644
->> index 00000000000..ce500ffa3f3
->> --- /dev/null
->> +++ b/stubs/qmp-cpu-riscv.c
->> @@ -0,0 +1,9 @@
->> +/* SPDX-License-Identifier: GPL-2.0-or-later */
->> +
->> +#include "qemu/osdep.h"
->> +#include "system/qmp-cpu.h"
->> +
->> +CpuDefinitionInfoList *qmp_query_riscv_cpu_definitions(Error **errp)
->> +{
->> +    g_assert_not_reached();
->> +}
->> diff --git a/stubs/qmp-cpu-s390x.c b/stubs/qmp-cpu-s390x.c
->> index 71e794482b5..4556072a226 100644
->> --- a/stubs/qmp-cpu-s390x.c
->> +++ b/stubs/qmp-cpu-s390x.c
->> @@ -3,6 +3,12 @@
->>   #include "qemu/osdep.h"
->>   #include "qapi/error.h"
->>   #include "qapi/qapi-commands-machine.h"
->> +#include "system/qmp-cpu.h"
->> +
->> +CpuDefinitionInfoList *qmp_query_s390x_cpu_definitions(Error **errp)
->> +{
->> +    g_assert_not_reached();
->> +}
->>   
->>   CpuModelCompareInfo *
->>   qmp_query_cpu_model_comparison(CpuModelInfo *infoa,
-> 
-> I believe the stubs are needed to make hw/core/machine-qmp-cmds.c link
-> when targets are compiled out.  Suggest to briefly explain that in the
-> commit message.
->
+Hello Jamin,
 
-That's correct.
-I'll add it to commit message so it's clearer.
-
-> [...]
+On 10/15/26 07:56, Jamin Lin wrote:
+> Dependency:
 > 
+> This series is based on the aspeed-next branch:
+> https://github.com/legoater/qemu/commits/aspeed-next
+
+I appreciate all these new additions, but there are also pending proposals
+that require some feedback too ...
 
 Thanks,
-Pierrick
+
+C.
+
+
+> 
+> v1:
+>   1. Fix AST2700 segment end address decoding
+>   2. Fix AST2700 DMA flash address mask
+>   3. Rename w25q32dw to w25q33pw and add the SFDP table for the W25Q33PW,
+>   4. Correct the AST1040 A0 silicon revision ID
+>   5. Add FMC and SPI controllers
+>   6. Add the FMC/SPI filters, OTP, ATC, I3C and Caliptra register
+>      regions as unimplemented device
+>   7. Update the AST1040 functional test to use the official pre-built
+>      image from aspeed-mcu-fw-hub v01.00.
+> 
+> Jamin Lin (14):
+>    hw/ssi/aspeed_smc: Fix AST2700 segment end address decoding
+>    hw/ssi/aspeed_smc: Fix AST2700 DMA flash address mask
+>    hw/block/m25p80: Rename w25q32dw to w25q33pw
+>    hw/block/m25p80: Add SFDP table for Winbond W25Q33PW flash
+>    hw/misc/aspeed_scu: Correct AST1040 A0 revision ID
+>    hw/ssi/aspeed_smc: Add AST1040 FMC and SPI controllers
+>    hw/arm/aspeed_ast1040: Add FMC and SPI controllers
+>    hw/arm/aspeed_ast1040: Add FMC and SPI filters as unimplemented
+>      devices
+>    hw/arm/aspeed_ast1040: Add OTP as an unimplemented device
+>    hw/arm/aspeed_ast1040: Add Anti-Tamper Controller (ATC) as an
+>      unimplemented device
+>    hw/arm/aspeed_ast1040: Add I3C as an unimplemented device
+>    hw/arm/aspeed_ast1040: Add Caliptra as an unimplemented device
+>    tests/qtest/aspeed_smc: Add AST1040 SMC tests
+>    tests/functional/arm/test_aspeed_ast1040: Update AST1040 image to
+>      aspeed-mcu-fw-hub v01.00
+> 
+>   hw/block/m25p80_sfdp.h                      |   1 +
+>   include/hw/misc/aspeed_scu.h                |   2 +-
+>   hw/arm/aspeed_ast1040.c                     |  45 ++++++++
+>   hw/block/m25p80.c                           |   3 +-
+>   hw/block/m25p80_sfdp.c                      |  36 ++++++
+>   hw/ssi/aspeed_smc.c                         | 121 +++++++++++++++++++-
+>   tests/qtest/aspeed_smc-test.c               |  61 ++++++++++
+>   tests/functional/arm/test_aspeed_ast1040.py |  12 +-
+>   8 files changed, 268 insertions(+), 13 deletions(-)
+> 
+
 
