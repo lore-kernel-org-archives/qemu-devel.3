@@ -4,50 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C27FACC6B3A
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 11:22:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 505BCCC6B3A
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 11:22:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHJWy-0003Mt-Ui; Thu, 15 Oct 2026 07:21:53 -0400
+	id 1xHJWt-00031Y-SF; Thu, 15 Oct 2026 07:21:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xHJWv-000358-ED
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 07:21:49 -0400
+ id 1xHJWk-0002e4-Vp
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 07:21:39 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xHJWt-000488-Fe
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 07:21:48 -0400
+ id 1xHJWj-00046p-Fe
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 07:21:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1792063306;
+ s=mimecast20190719; t=1792063296;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=XzlJyDe4zs3886N5xEwtyoKBEt/CgdMwFT2Y2P20zYo=;
- b=XCRDQ9FFofC1Al50MFMN95/ZGFwW8HhKfcU8Alszr8DhnT2ANrSmBVrCjgWfN2rQtsUVDp
- PEzHPrXOfypImpA6Lzx0agY6nP9t0+llMZ9k1FBf4stmffM6rcSBCrryc/NzDTDcwv+/fZ
- 4k//QFbwFD8Rm66aZBM18tyUAk11HDQ=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=5haCt0bm54wWL2bVHp0taWIAhiA12SOJQyRH0t+ZRFE=;
+ b=bvhZJP2MwXz0Tej8lJ+cvAGrq77y0c+zQO2W6mQaXVXVKJB40Vdg9vWoLifPX991EmfsSO
+ M9G0jN4TLUaUsdtpqBWpSya0VMeluSabaLORkF/vA063kLIyzP5yhOWqJbbs5r09TJrc1K
+ 1RYBdO5T4Z3QHPmcHpcNWdJ2GI09RHQ=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-86-JZz9jQJ_Mai0Jf-I2CB70g-1; Thu,
- 15 Oct 2026 11:21:43 +0000
-X-MC-Unique: JZz9jQJ_Mai0Jf-I2CB70g-1
-X-Mimecast-MFC-AGG-ID: JZz9jQJ_Mai0Jf-I2CB70g_1792063302
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-400-j9NgM4cmMjC0JqRR77FYZA-1; Thu,
+ 15 Oct 2026 11:21:31 +0000
+X-MC-Unique: j9NgM4cmMjC0JqRR77FYZA-1
+X-Mimecast-MFC-AGG-ID: j9NgM4cmMjC0JqRR77FYZA_1792063290
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1A1FA1956040; Thu, 15 Oct 2026 11:21:42 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 893F91956059; Thu, 15 Oct 2026 11:21:30 +0000 (UTC)
 Received: from berrange.csb (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 9C8181803A40; Thu, 15 Oct 2026 11:21:38 +0000 (UTC)
+ id A0A2D1800257; Thu, 15 Oct 2026 11:21:26 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
@@ -61,10 +61,9 @@ Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Eric Blake <eblake@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Laurent Vivier <lvivier@redhat.com>
-Subject: [PATCH 13/21] system: enable crash dumps on SIGSEGV, SIGILL,
- SIGFPE and SIGABRT
-Date: Thu, 15 Oct 2026 12:20:36 +0100
-Message-ID: <20261015112044.1999748-14-berrange@redhat.com>
+Subject: [PATCH 10/21] system: simplify signal handler logic
+Date: Thu, 15 Oct 2026 12:20:33 +0100
+Message-ID: <20261015112044.1999748-11-berrange@redhat.com>
 In-Reply-To: <20261015112044.1999748-1-berrange@redhat.com>
 References: <20261015112044.1999748-1-berrange@redhat.com>
 MIME-Version: 1.0
@@ -96,86 +95,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Expand the current SIGBUS crash dumps onto further signals that
-represent program crashes from bad code or guest OS behaviour.
-This change covers Windows platforms too, by using the dummy
-siginfo struct definition from osdeup.h.
+sigaction() can fail if
 
-Note that the signal handler gets unregistered before trying the
-crash dump, so in the unlikely event that crash dump itself crashes,
-QEMU will exit, rather than getting into a loop.
+ * The signal number is invalid
+ * The signal number is KILL / STOP
+ * The sigaction struct points to invalid memory
 
-In a debugger we'll still see the full stack history of the original
-flaw, just with one extra frame present for the signal handler.
+None of these scenarios can arise with our use of sigaction(), so
+rather than try to handle failures, assert that the call passed.
 
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- system/signal.c | 33 ++++++++++++++++++++++++++++-----
- 1 file changed, 28 insertions(+), 5 deletions(-)
+ system/signal.c | 15 ++++++---------
+ 1 file changed, 6 insertions(+), 9 deletions(-)
 
 diff --git a/system/signal.c b/system/signal.c
-index 615704900bc..4568ded4cdd 100644
+index f667b56255d..88316089fc0 100644
 --- a/system/signal.c
 +++ b/system/signal.c
-@@ -56,11 +56,11 @@ static void sig_handler(int n, siginfo_t *siginfo, void *ctx)
+@@ -56,15 +56,12 @@ static void sigbus_reraise(siginfo_t *siginfo)
  
      memset(&action, 0, sizeof(action));
      action.sa_handler = SIG_DFL;
--    assert(sigaction(SIGBUS, &action, NULL) == 0);
-+    assert(sigaction(siginfo->si_signo, &action, NULL) == 0);
-     qtldr_crash_dump_signal(siginfo);
--    raise(SIGBUS);
-+    raise(siginfo->si_signo);
-     sigemptyset(&set);
--    sigaddset(&set, SIGBUS);
-+    sigaddset(&set, siginfo->si_signo);
-     pthread_sigmask(SIG_UNBLOCK, &set, NULL);
+-    if (!sigaction(SIGBUS, &action, NULL)) {
+-        qtldr_crash_dump_signal(siginfo);
+-        raise(SIGBUS);
+-        sigemptyset(&set);
+-        sigaddset(&set, SIGBUS);
+-        pthread_sigmask(SIG_UNBLOCK, &set, NULL);
+-    }
+-    perror("Failed to re-raise SIGBUS!");
+-    abort();
++    assert(sigaction(SIGBUS, &action, NULL) == 0);
++    qtldr_crash_dump_signal(siginfo);
++    raise(SIGBUS);
++    sigemptyset(&set);
++    sigaddset(&set, SIGBUS);
++    pthread_sigmask(SIG_UNBLOCK, &set, NULL);
  }
  
-@@ -108,10 +108,13 @@ void qemu_init_crash_signals(void)
-      */
-     memset(&action, 0, sizeof(action));
-     action.sa_flags = SA_SIGINFO | SA_ONSTACK;
-+    action.sa_sigaction = sig_handler;
-+    sigaction(SIGSEGV, &action, NULL);
-+    sigaction(SIGABRT, &action, NULL);
-+    sigaction(SIGILL, &action, NULL);
-+    sigaction(SIGFPE, &action, NULL);
- #ifdef CONFIG_LINUX
-     action.sa_sigaction = sigbus_handler;
--#else
--    action.sa_sigaction = sig_handler;
- #endif
-     sigaction(SIGBUS, &action, NULL);
- 
-@@ -120,7 +123,27 @@ void qemu_init_crash_signals(void)
- #endif
- }
- #else /* !CONFIG_SIGACTION */
-+
-+static void sig_handler(int signo)
-+{
-+    siginfo_t si = {
-+        .si_signo = signo,
-+        .si_code = 0,
-+        .si_addr = 0x0,
-+    };
-+    assert(signal(signo, SIG_DFL) == 0);
-+    qtldr_crash_dump_signal(&si);
-+    raise(signo);
-+}
-+
- void qemu_init_crash_signals(void)
- {
-+#ifndef WIN32
-+    signal(SIGBUS, sig_handler);
-+#endif
-+    signal(SIGSEGV, sig_handler);
-+    signal(SIGABRT, sig_handler);
-+    signal(SIGILL, sig_handler);
-+    signal(SIGFPE, sig_handler);
- }
- #endif /* !CONFIG_SIGACTION */
+ static void sigbus_handler(int n, siginfo_t *siginfo, void *ctx)
 -- 
 2.56.0
 
