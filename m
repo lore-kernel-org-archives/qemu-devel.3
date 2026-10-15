@@ -4,95 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05807CC6B3C
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 10:56:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B04B1CC6B33
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 10:56:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHJ7s-0000u4-Qz; Thu, 15 Oct 2026 06:55:56 -0400
+	id 1xHJ7t-0000yb-A3; Thu, 15 Oct 2026 06:55:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1xHJ7V-0000a0-Md
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 06:55:37 -0400
+ id 1xHJ7N-0000O5-RZ
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 06:55:26 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1xHJ7T-0008Hg-Ef
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 06:55:33 -0400
+ id 1xHJ7K-0008Ga-Lc
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 06:55:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1792061730;
+ s=mimecast20190719; t=1792061721;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Nk8gDfehU7yoEPbANvagEtZ5Xv355XUw0eD1fSeorHw=;
- b=cWRuT9V/Wz9LjiSCWkdmjjlLhWJJRjNlyd7/HIAXwNBnj3/FhmvaTvb8eD/cTpMqO4ySoB
- +kG/fILO5GJ2E5lDBLX+bpUIZPEjPmzSoNw0pSNmmq4AwoY5QW1bie1NkEntYe8YQR6Jc5
- MY5mdzrRg1nuusbnMZSwXe5RQrEeTJY=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=TPnTxz7gori3yzc32ys5GhwdB69n9JiF4dQbjWZRkhY=;
+ b=EiY3z0RcUK5N6fyiVVmoPK0vwR77JXPOxue9FS7jmYizzqdd8IyXeldBZ1jEBSNVbLQwN+
+ acpldvnMqzwCU9a7b5fH6KjTFsaZt2B5aFZ6NxF6IuzXSR0lhacgPDT3AIhVM7aDZ8et9t
+ 7c2RQji/902qpDGfHzRhk9MrN38CdBg=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-610-2BRefZIeP4qe6istWzGZ3Q-1; Thu, 15 Oct 2026 10:55:28 +0000
-X-MC-Unique: 2BRefZIeP4qe6istWzGZ3Q-1
-X-Mimecast-MFC-AGG-ID: 2BRefZIeP4qe6istWzGZ3Q_1792061728
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-48af4a0bd0fso2933037f8f.2
- for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 03:55:28 -0700 (PDT)
+ us-mta-676-4Jl7DLIGNa6FHsJ-8e7k_A-1; Thu, 15 Oct 2026 10:55:19 +0000
+X-MC-Unique: 4Jl7DLIGNa6FHsJ-8e7k_A-1
+X-Mimecast-MFC-AGG-ID: 4Jl7DLIGNa6FHsJ-8e7k_A_1792061718
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-48b09f01f56so3302269f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 03:55:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1792061727; x=1792666527; darn=nongnu.org;
+ d=redhat.com; s=google; t=1792061718; x=1792666518; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=Nk8gDfehU7yoEPbANvagEtZ5Xv355XUw0eD1fSeorHw=;
- b=HX0uNenG5H1g/vpJwjt0cz8zQrFHxCKsh2mq4b5M55/Z7qhekZcR95lS668jyYN7Rf
- ENQV4DI+ywUS2XtfyUwt1+HLcrxYjcFR2fmzXY7dhohep+d3VBR6n0TG569tZv8SEVSJ
- BEGCUx6I2u8F8JQZz/s6JhFzZNPXCfttkPz1lEwUGtsE9XiznW+SEzoqf2hYVWtRFLIw
- /6GOaF9ImhaIxk+YFmAZs4lU90EM/3Z30qgfUzeKAjvEpWTPdsalCfH8sL6cKjProLpw
- 9QpSiCTom83K7euqf8wvsYXkCc9OmaaTbbtNoLbAzSEw5Ct0v8UddIXBNG027JDQ856K
- NqYw==
+ bh=TPnTxz7gori3yzc32ys5GhwdB69n9JiF4dQbjWZRkhY=;
+ b=TKNHUemgh1MOtHloD7xKdc0vHIvoLLvG4X/anU+VOhOQYN6DWWCLpt81FsbCCifrlA
+ i6hOO1l5WXZCfHrze5n5hFxzTjH9egYtxFqHlwdFJ1HZEe2W1t2hxiPWArdtSqDl5qVg
+ lz72LE5sNpW5lS6cZFfXIFuV9Q0reQsMlhoMOeL8jum/Jt6C5IzcukAhJ9KdfBkqzTG5
+ BShc3sjrM5qmBvV+1MRMrnjfkvxFWIkVZNbTzam9CoDT2+4BO1tKoGWed+Puu61REOCV
+ l51DR95fWe9v7bqLETA84Mr3f4lhsTGE9qC+/H4NTYiuHIN7yOpvDAQ8FsCArpDXMRWS
+ 5Bsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792061727; x=1792666527;
+ d=1e100.net; s=20260707; t=1792061718; x=1792666518;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=Nk8gDfehU7yoEPbANvagEtZ5Xv355XUw0eD1fSeorHw=;
- b=z6OPl4YOTXpAuFYK70DVvPLRe/WFICM2e9NGNBm5QQVtfEOxoc4s4EoU5zwfhbhxn3
- m/O1s37SWvsEAg4VaRAfngjbZCV97+lkixndwE6gEDThYLQmB1oW/NBAz4R1FotEwaaE
- 0BlIs/0c78th/cTAMR3aU8QzcsHSmGWTg8VvIGrFfd5zSLj6gTMn9DWd3ZnhAF7Dw1Rx
- JUJ3YISMz4xnyPkByRgfn8JaFMxtS7SZJ+P0xKc2bCzwow0lPwyWmOLYrcpl1WZp4k2G
- XRfRHPZuCPWpHM8WpF3O8MZan09lPG7kO6Durh56Q1wILbGNAQnBR2U1sHwNRAml4a/8
- pF8Q==
-X-Gm-Message-State: AFq9FYKp00cETKiDVM1CoyRbr/2aBIbaaZgEcWXuNy+YJQ1cmSegf7FU
- e+aG3/m4UMmZubHZK8S7PuoaOvK6An/IhdklfjG2Bg9eAdzJ2X3okFH1YQ+L3Ku4V/jLp7ObHdN
- OL1S1AeYeUvKwLJYqrW+cOc/CEl9GJrqS/xvr2Xy42pmy7AEO2NI5nd+V7do45NKtEMWJvZzWZe
- AWgpz9LpIT5qRJpu7S5ynyRvc/CWPNuYr/dfhXJJVv
-X-Gm-Gg: AYBFou03Cr+qsbCEJV1GoaXKctSwignnUZ4JSw/UB/ovHbxkQ0/X//BEpPYRkCH3hqb
- aUVZVQOUdZ5kzlL8ZkaNL3K8Q261n7ng4vWbrOoblFyeeXPtQHgo5DkYzWbWGmKpbDajQ1NH4P8
- fww7E3jPjpYwt2uHgrC9G6GUIAyl/8ByPJ+zpOcsw/JVdxDc1vaFzmHz03/yPrtsWAm4698vwaB
- /adjdPH1kfts3Pvrxh1WiyTSCcrBElrvZcJSImxygmKLDGUKb9QYjOKMWcTxh2aOooqFlYeLC1i
- Rc23Fd7yBqGtiPvie84UWio7W1o2ltnQNjKfh0ZraoESf5el+vwt1ynaKCveae/C3pD1OMqNHvZ
- PVsC6XKrPV6kpfeoE7eNAtjOFzPk+H1WPyd7gNHz6yi5wgam1KkC95cCmF6GGlW7yKSok2nO+XG
- cpUVCl
-X-Received: by 2002:a05:6000:2303:b0:48d:f102:aba9 with SMTP id
- ffacd0b85a97d-48df102adb2mr7139596f8f.52.1792061727504; 
- Thu, 15 Oct 2026 03:55:27 -0700 (PDT)
-X-Received: by 2002:a05:6000:2303:b0:48d:f102:aba9 with SMTP id
- ffacd0b85a97d-48df102adb2mr7139407f8f.52.1792061725565; 
- Thu, 15 Oct 2026 03:55:25 -0700 (PDT)
+ bh=TPnTxz7gori3yzc32ys5GhwdB69n9JiF4dQbjWZRkhY=;
+ b=l8i9x0AwiaJ1PfwDYFzVyK10rNaqS14h9Mk20pkdvg0lSphXuj+ZWq0XYJBQMOR1VC
+ 08yKQfdApoJeAsxJgneUls0oHMxKH2HekJ2fTeu1a6RX9bJGRRtjVrYzgf6RtmG7b2M9
+ 1Z4UmU0aAiXrtwzIaPPpYAiWgz0w7Pa0NloxdeG7lxpIEtFJf5zvbtCpSzHY78+veZxf
+ wJG9qdLRGoR8UnI4yCMwYIIehpwl43kD3JyZaC3N64DMIK6AJ68FGfJiA0T/3xCafZq1
+ o5qq9vHICHkLQE8MeJ7wM/G4ZQEfcB27Q18wRq6tETyZ9VFOYDm/t/atoUz4TDrNZCdb
+ ylNA==
+X-Gm-Message-State: AFq9FYIXZDYvQ9QgaPUELNaZfkVopRzUOk1THmz0/qnr8N7ikG9+NJBV
+ uPsHt7v+QiQOnaTDtzirW9IeYZwMLivqF0iB8mGy4LERznuaBacnsi+2jeG3OXAZj5VN9hQGiSG
+ ycsxPZySMNDnFC4bIUvQgb+ffaiofk82jsUeySkynrxEpcqVx7n69t27xOMt+rPkWvHh8HSZWcK
+ OT5z47HWJxVp3ONtLCJOfu3yvAfiAn7So65z7s7rCj
+X-Gm-Gg: AYBFou3tpBtDewxKApaRt0D2Mw/YgigMlMWzTdF45iqbjPGWxsLG60/7QlMmZ/8hrAb
+ NfWk6kUgUL3rgcxqoyVKN46CrsuTjnsFAUmt2V87dC6rQ9nXwYbTHkV4kvZSh6BwhdK1RbwGjeP
+ HDotY+P4ONDdSUW4ExB2zj3aGmuZ1mBKF0KvuanRX6EV5UYKscRlEykkyjRX9MS2FCl9ZgnOPac
+ yKaMVZdIhrDg2/9EdJWPLTpgdadpY0k60OZ6AysFUXcNncRpY35zkMbjUWTH5GdsPhfAVGS9UfR
+ zZctm2GhLL8PLzLGnUlPvhPX+THXINts3D5SZcKJJ+Z5kSEP16EQGrC8PTvMF3UhjYjAyKx+/Ak
+ aJ1b42FYOOx0pNvHCRMWeoNj7CSQ8pNuWMPASi/RlQQnTdetpewIGFe/BbqIilgJlQ643TOQJK0
+ VbHJfu
+X-Received: by 2002:a05:6000:481a:b0:48c:4d32:ccf8 with SMTP id
+ ffacd0b85a97d-48dbaade745mr34769630f8f.16.1792061718457; 
+ Thu, 15 Oct 2026 03:55:18 -0700 (PDT)
+X-Received: by 2002:a05:6000:481a:b0:48c:4d32:ccf8 with SMTP id
+ ffacd0b85a97d-48dbaade745mr34769594f8f.16.1792061718018; 
+ Thu, 15 Oct 2026 03:55:18 -0700 (PDT)
 Received: from [192.168.10.48] ([176.206.82.153])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48de09693c7sm22481519f8f.4.2026.10.15.03.55.19
+ ffacd0b85a97d-48de0aaaaebsm18285769f8f.14.2026.10.15.03.54.59
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 Oct 2026 03:55:19 -0700 (PDT)
+ Thu, 15 Oct 2026 03:54:59 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Stefan Hajnoczi <stefanha@redhat.com>,
 	Eric Blake <eblake@redhat.com>
-Subject: [PULL 11/13] scsi: clean up persistent reservation state after
- migration
-Date: Thu, 15 Oct 2026 12:53:45 +0200
-Message-ID: <20261015105347.827029-12-pbonzini@redhat.com>
+Subject: [PULL 10/13] file-posix: forward PR_HELPER_CLEANUP commands to
+ pr-manager
+Date: Thu, 15 Oct 2026 12:53:44 +0200
+Message-ID: <20261015105347.827029-11-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261015105347.827029-1-pbonzini@redhat.com>
 References: <20261015105347.827029-1-pbonzini@redhat.com>
@@ -124,130 +124,44 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Stefan Hajnoczi <stefanha@redhat.com>
 
-Live migration of persistent reservations is designed to work without
-coordination between the source and destination. The destination uses
-the PREEMPT command to atomically take over the reservation or
-unregister keys belonging to the source. This approach avoids race
-conditions where other nodes in the cluster might acquire the
-reservation and it minimizes communication during the downtime window.
-
-While this works at the SCSI level, this approach is incomplete when
-using multipathd. Multipathd tracks registered keys and automatically
-registers them again when paths come up. It is unaware that the
-destination has preempted the reservation and therefore it will still
-attempt to register the key on the source host.
-
-Use the new PR_HELPER_CLEANUP command to communicate with multipathd on
-the source after migration completes successfully. The effect is similar
-to REGISTER AND IGNORE EXISTING KEY, except it also discards
-multipathd's state so that the source will no longer attempt to register
-the key.
-
-PR_HELPER_CLEANUP is a QEMU-internal command that is rejected by
-scsi_req_new(), so note that this command is not exposed to guests
-although direct blk_aio_ioctl(SG_IO) calls can make use of it.
-
-Buglink: https://redhat.atlassian.net/browse/RHEL-274966
 Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
 Reviewed-by: Eric Blake <eblake@redhat.com>
-Link: https://lore.kernel.org/r/20261013181752.1299456-8-stefanha@redhat.com
+Link: https://lore.kernel.org/r/20261013181752.1299456-7-stefanha@redhat.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- include/hw/scsi/scsi.h |  1 +
- hw/scsi/scsi-disk.c    | 21 ++++++++++++++++++++-
- hw/scsi/scsi-generic.c | 29 +++++++++++++++++++++++++++++
- 3 files changed, 50 insertions(+), 1 deletion(-)
+ block/file-posix.c | 18 +++++++++++++-----
+ 1 file changed, 13 insertions(+), 5 deletions(-)
 
-diff --git a/include/hw/scsi/scsi.h b/include/hw/scsi/scsi.h
-index 3eab339b0d2..a2f6f0be7fc 100644
---- a/include/hw/scsi/scsi.h
-+++ b/include/hw/scsi/scsi.h
-@@ -256,6 +256,7 @@ SCSIDevice *scsi_device_get(SCSIBus *bus, int channel, int target, int lun);
- /* scsi-generic.c. */
- extern const SCSIReqOps scsi_generic_req_ops;
- bool scsi_generic_pr_state_preempt(SCSIDevice *s, Error **errp);
-+bool scsi_generic_pr_state_cleanup(SCSIDevice *s, Error **errp);
- 
- /* scsi-disk.c */
- #define SCSI_DISK_QUIRK_MODE_PAGE_APPLE_VENDOR             0
-diff --git a/hw/scsi/scsi-disk.c b/hw/scsi/scsi-disk.c
-index 3d88e57eded..6341089ddf2 100644
---- a/hw/scsi/scsi-disk.c
-+++ b/hw/scsi/scsi-disk.c
-@@ -2773,13 +2773,32 @@ static void scsi_block_migration_failed(SCSIDiskState *s)
+diff --git a/block/file-posix.c b/block/file-posix.c
+index 328adb57233..df117f35d48 100644
+--- a/block/file-posix.c
++++ b/block/file-posix.c
+@@ -4362,12 +4362,20 @@ hdev_co_ioctl(BlockDriverState *bs, unsigned long int req, void *buf)
+         return ret;
      }
- }
  
-+/*
-+ * Unregister keys on the source after migration since the destination has
-+ * preempted and taken over. This cleanup is not necessary at the SCSI level
-+ * but multipathd tracks registered keys and must be informed that this host no
-+ * longer wishes to be registered.
-+ */
-+static void scsi_block_migration_done(SCSIDiskState *s)
-+{
-+    SCSIDevice *d = &s->qdev;
-+    Error *local_err = NULL;
+-    if (req == SG_IO && s->pr_mgr) {
++    if (req == SG_IO) {
+         struct sg_io_hdr *io_hdr = buf;
+-        if (io_hdr->cmdp[0] == PERSISTENT_RESERVE_OUT ||
+-            io_hdr->cmdp[0] == PERSISTENT_RESERVE_IN) {
+-            return pr_manager_execute(s->pr_mgr, qemu_get_current_aio_context(),
+-                                      s->fd, io_hdr);
 +
-+    if (!scsi_generic_pr_state_cleanup(d, &local_err)) {
-+        error_prepend(&local_err, "scsi-block migration done: ");
-+        warn_report_err(local_err);
-+    }
-+}
-+
- static int scsi_block_migration_notifier(NotifierWithReturn *notifier,
-                                          MigrationEvent *e, Error **errp)
- {
-     SCSIDiskState *s =
-         container_of(notifier, SCSIDiskState, migration_notifier);
- 
--    if (e->type == MIG_EVENT_FAILED) {
-+    if (e->type == MIG_EVENT_DONE) {
-+        scsi_block_migration_done(s);
-+    } else if (e->type == MIG_EVENT_FAILED) {
-         scsi_block_migration_failed(s);
++        if (s->pr_mgr) {
++            if (io_hdr->cmdp[0] == PERSISTENT_RESERVE_OUT ||
++                io_hdr->cmdp[0] == PERSISTENT_RESERVE_IN ||
++                io_hdr->cmdp[0] == PR_HELPER_CLEANUP) {
++                return pr_manager_execute(s->pr_mgr, qemu_get_current_aio_context(),
++                                          s->fd, io_hdr);
++            }
++        } else if (io_hdr->cmdp[0] == PR_HELPER_CLEANUP) {
++            /* This is a nop without pr-manager */
++            io_hdr->status = GOOD;
++            return 0;
+         }
      }
-     return 0;
-diff --git a/hw/scsi/scsi-generic.c b/hw/scsi/scsi-generic.c
-index 153a5275567..e41e973aa92 100644
---- a/hw/scsi/scsi-generic.c
-+++ b/hw/scsi/scsi-generic.c
-@@ -652,6 +652,35 @@ bool scsi_generic_pr_state_preempt(SCSIDevice *s, Error **errp)
-     return true;
- }
  
-+/* Clean up keys on source after migration */
-+bool scsi_generic_pr_state_cleanup(SCSIDevice *s, Error **errp)
-+{
-+    SCSIPRState *pr_state = &s->pr_state;
-+    uint8_t cmd[10] = {
-+        PR_HELPER_CLEANUP, /* OPCODE */
-+    };
-+    int ret;
-+
-+    WITH_QEMU_LOCK_GUARD(&pr_state->mutex) {
-+        if (pr_state->key == 0) {
-+            return true; /* nothing to do */
-+        }
-+    }
-+
-+    ret = scsi_SG_IO(s->conf.blk, SG_DXFER_TO_DEV, cmd, sizeof(cmd), NULL, 0,
-+                     s->io_timeout, errp);
-+    if (ret < 0) {
-+        error_prepend(errp, "pr-helper CLEANUP failed: ");
-+        return false;
-+    }
-+
-+    WITH_QEMU_LOCK_GUARD(&pr_state->mutex) {
-+        pr_state->key = 0;
-+        pr_state->resv_type = 0;
-+    }
-+    return true;
-+}
-+
- static void scsi_read_complete(void * opaque, int ret)
- {
-     SCSIGenericReq *r = (SCSIGenericReq *)opaque;
 -- 
 2.56.0
 
