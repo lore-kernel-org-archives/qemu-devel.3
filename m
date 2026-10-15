@@ -4,88 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F967CC6B33
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D5DECC6B34
 	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 14:56:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHMsI-00020q-GO; Thu, 15 Oct 2026 10:56:06 -0400
+	id 1xHMs7-0001zx-Fh; Thu, 15 Oct 2026 10:55:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xHMsF-00020X-Vd
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 10:56:04 -0400
-Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
+ id 1xHMs4-0001zj-S7
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 10:55:53 -0400
+Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xHMsE-0008Vw-6q
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 10:56:03 -0400
-Received: by mail-ed1-x530.google.com with SMTP id
- 4fb4d7f45d1cf-6b1b13e09ffso5949483a12.3
- for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 07:56:01 -0700 (PDT)
+ id 1xHMry-0008U5-CO
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 10:55:52 -0400
+Received: by mail-ej1-x634.google.com with SMTP id
+ a640c23a62f3a-c2e69aa07c3so338969066b.1
+ for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 07:55:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1792076160; x=1792680960; darn=nongnu.org;
+ d=linaro.org; s=google; t=1792076143; x=1792680943; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=g32trlGyDzah+dddiDX4dEQov5de09hHHaVwMj9ZkK0=;
- b=h9neFD+Og7tyVzBEigp8Z3spBvHtStPBrpVBwKmEaGjU7N32rZ772u7wdOp+7sVcYA
- flE810hJsk/8BsW9VSVQsaKfcslTSp7R4kgc3Z8r3goOujj5baaISnjSa1B9nZcLAChZ
- us+vFBt6Dkp2syw/ki7IA5eGd6KwCSa0YomPQMnTePIVSAdegEVwvzhtk35l7n/4I2lY
- Zc0+AILtgswIdVMoerRmth2A7/0h2x+roonnpNkAL6m1wy5391kQuIWLzHwoYKyKk6yS
- nP7Asx8coAVJHIcBgynuAfQ56gx6To/oeDALbKZe35vxSmy4oDYwhS5oRjHA/WTiJHtv
- DVag==
+ bh=noRSiHlaVgNWp5wrlwCc4SFj4riuto5Ddi8kaCFHJuY=;
+ b=NiSoYNJhMcSN3fYlxhIrQwYtMPoJh0n38oSyLt4l/zBX/w9kVX3ysmhe8pSDet5b0j
+ igX6cYxX9hfAwiv5tX+xgxwwt2tIlmQ8f5obXyB5vpXLlXPkCp6TX3QqR/0a+k1YTcbz
+ 9wUMm651WJUxK2iESXO9tDSn7MEJw8JINTHEJrj9q0qfOsN0QOdBCht00/JX/meiPXh7
+ 4B8ckae8b0AOffDyW0NoWNi+PRwGB3lOyIl4ZsI8Se8J7H1TfYYvNyEhWtMyLoW5DQRS
+ w+JN2a44W+65Sobuss1kUIXjM//seiXu7QSywPls5553CLjHANzOiKB0PLnQMkxNx4vI
+ 0VPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792076160; x=1792680960;
+ d=1e100.net; s=20260707; t=1792076143; x=1792680943;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=g32trlGyDzah+dddiDX4dEQov5de09hHHaVwMj9ZkK0=;
- b=hfSou3MVmjGAgaMQl/LQcEkB15EBiEo2y5UZ0FF7ad7lzjvhVcD1P6U5BwDi+viCZA
- rZpEyO8Bn4shdLUfmEHYDQJROpT+l9tcxQu3vcWxWuoi5+fHnin6i3w3/dHpXN7gtz+r
- 6GAjkSJqWwcFPoFvFckLOwdOfNRGhvxG0qa4rY8xHgKof/ZyRjX1y4SKJFgce0JdyNvQ
- Ay3WsDPhgMxYzhg2VUEyE1AnBDiqgN+tQL6zGE1VyTRarBOPCaDf6I2P+tcyCCOWgEsj
- DmJC0R46kJy6CeB/MULgHq0kkbyNTVFn+9Lg02p3zIW5eV6jstkILJ2FhdGh11hKvGmL
- uR/g==
+ bh=noRSiHlaVgNWp5wrlwCc4SFj4riuto5Ddi8kaCFHJuY=;
+ b=jN+7UAUyOSajF+TVGmSrvj6JSSfm3BzIs/XaSm9sMUvCEpNptYWLFRnDKR6mX8SNmj
+ GWXomwfZ4bWayHIbvQe+hZJJFVdBfLZIW6/J7fk6eGPlFWGvTP/1tgldKdhTQ/HrWmvr
+ Rd2hpuZji1az4i6Dz7StpP5Fx+ED5rBR7YgHrIvuiBXh7sinTpiaQqAJNSx+p1+dPiqw
+ 69Xh9WcF/nvLiQV5bTMZ30mR1uZtDaSLE+xt0fBXEavcXaFSxI2t/EveoMbLzge9oEWl
+ 1ejguI4pqz+sDmFVfc0jaNxJohsJtXKbTP0KJ49G6ryms+994IGSQrSn3E5Z/EM7pDWD
+ eKKQ==
 X-Forwarded-Encrypted: i=1;
- AKwUvBzenuSUJwpKwM5E48JzZQonyVfIqg/Ph70+n80XVmt2uJDmZytYbjaA89VRv9HTQUgui6Vuh78rPAVn@nongnu.org
-X-Gm-Message-State: AFq9FYK3f8+FUvTzuRxvxlN0GJn/LXMjJxKNTjJcqLe2gxSBbkAauRd/
- EqdHIGSfACo83aFYnMe77t96/5ltSAUUzRUAs6qzaXt9rgoCpmAJgMQ/jRiodLAg8RQ=
-X-Gm-Gg: AYBFou1OQiGZfkh6d+mhXgCCGPwZuPy014Es+s4VfRMrPIO1dE9aVllVY619f4WFYZy
- 2Wc7BczfEtd1g9mxOcoks8ZBnnZlXYVRvJFJHFB46nS5fV7IvSfbLCB8RYT0YvW3441xiTC6T81
- FDmT7ciD8vtqSiMcGJClr+11KLCcmMl8jYxSn8hP0AfwEeyM/4+Htb4bk4DaiXhr/C22cVK4t+t
- Q2kH5ale/QowtJZhXvbxyPXMj2/v4FgB2Qn7DkB/+ewiyr1zbFwle/TN/qee1CmUCBZOS9oi+Nn
- 5gBIvfN+Iprr7lWVp1up7IL5KItJLSwGiCRQSgIOYjj3by4FEOS/ouvWJTPTD6bln5AC4yxRL+v
- ZyDrwegVGrIkCyX4cLEHkQsgNG1sYhzi8iDUgyQ0gsmYu5bJrQeIssmgyqKY8jU9MR8yrAqnufg
- oXX98tymHzM1t4sTQfUXo4Iy7inZvi+gxUaSIA0mcht5uO/zH4xad5IZIZyw3KS+ZtriX9Ns2RQ
- 0wnNUUgWFsQgfTR7FjCyVFSTW2iwIeOXT/m4hSNE/tu2otcOwErxfllLI9Tr86oAVmQSiBKxAqi
- JcCKy/HW6s77II/g+axykey8DDB37qXyuQdoslysHfA=
-X-Received: by 2002:a05:6402:320e:b0:6b1:d841:deaf with SMTP id
- 4fb4d7f45d1cf-6b1d841e0e1mr11391427a12.24.1792076160471; 
- Thu, 15 Oct 2026 07:56:00 -0700 (PDT)
+ AKwUvBzixCtrU9lO6BycexiwP/8cCLQ5SDt+zpBEscUym2f4KS+yyoIjtyvgkZi0qdAi74bvVOgfbRbbNfu8@nongnu.org
+X-Gm-Message-State: AFq9FYLYTxgDiFKOb0TCVtHZjv3vMth4Xl3jjf1peWBb58E4gsFutyjm
+ YVhjiu1D3T72qvvOPZrYoIiPnIGRSpIX383p37OpUz7/cjqzNK5c8ogmBbPldI+5RoU=
+X-Gm-Gg: AYBFou219o0Hu04l89vS14rGrJ0/qCUrMwFXZDYHYXA4EwFnSGJymlORxTknDNYt+8S
+ PcKZ64TXeznWc5rI2SoLkt1HhFXEBTpqZJvKaceCdgIf9gfflh8wT6EO7FBRV25RhoZWr1WOJrX
+ R9oPfgEoUJJ4y/FV/L16sV86v6UWzx477FJuWG4x7/2zUlXHsK0lLtpkCE2cIekQTts7TBCKjQy
+ UjMHCIIzIGlGTeako93OCzpnr26gdK8PGEMVfIiocnsg3Q8fCD2ZEwF4yEQ2EBgxUnlhaa8coLh
+ vepZLB0/Wzn3umPkbuheCDjevLdNJEDp+qgFsE/43MDkcRm+3WX/zBvYMxM86eDtM0wOPHu/8Nx
+ /k+B4PqTqai3bvlnc2NSF+CUvoiO5AnVjmT289kqXlQgZjaj0nBEACi90IZJmC+kJIaKG28we28
+ WmmQ7LSQcScxvC8wn+GtxmOFYlH85hynke1AcjTYblIFMMqjfAMn1u+6qJZifoHtUoMOEIiWmC3
+ wvPh8WN23FKHtX5Di+DbLYLnBCo6aXWcd+y3TZWee4mnbDiVq0LfO5Dj8G4zMP56iKKpM4TmpT/
+ k+tIsuHIU1SMq995xp5MtxEtTUmYDchuirHXlwzDKbCXXZqI8ekeFw==
+X-Received: by 2002:a17:907:3f8d:b0:c29:6191:44ea with SMTP id
+ a640c23a62f3a-c31a9ff4935mr1766463266b.12.1792076141804; 
+ Thu, 15 Oct 2026 07:55:41 -0700 (PDT)
 Received: from ?IPV6:2003:ca:3f0f:8b00:6e0e:d1a6:87ab:6860?
  (p200300ca3f0f8b006e0ed1a687ab6860.dip0.t-ipconnect.de.
  [2003:ca:3f0f:8b00:6e0e:d1a6:87ab:6860])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-6b20386327csm2514421a12.18.2026.10.15.07.55.57
+ a640c23a62f3a-c3ed9b3ec90sm138655066b.41.2026.10.15.07.55.40
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 15 Oct 2026 07:55:59 -0700 (PDT)
-Message-ID: <727d00d4-c3a9-4e09-89b1-98f3bbfbf93d@linaro.org>
-Date: Thu, 15 Oct 2026 16:55:54 +0200
+ Thu, 15 Oct 2026 07:55:41 -0700 (PDT)
+Message-ID: <a41b0196-cfa3-49e4-84cf-a6d654b916c3@linaro.org>
+Date: Thu, 15 Oct 2026 16:55:38 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 00/21] aspeed queue
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-References: <20261015122151.889017-1-clg@redhat.com>
+Subject: Re: [PULL 0/8] vfio queue
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
+References: <20261015122055.888209-1-clg@redhat.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20261015122151.889017-1-clg@redhat.com>
+In-Reply-To: <20261015122055.888209-1-clg@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::530;
- envelope-from=richard.henderson@linaro.org; helo=mail-ed1-x530.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::634;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ej1-x634.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,33 +107,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/15/26 14:21, Cédric Le Goater wrote:
+On 10/15/26 14:20, Cédric Le Goater wrote:
 > The following changes since commit d5b5083cb783c447001e862c2b525e59f48ad78c:
 > 
 >    Merge tag 'block-pull-request' ofhttps://gitlab.com/stefanha/qemu into staging (2026-10-15 11:53:41 +0200)
 > 
 > are available in the Git repository at:
 > 
->    https://github.com/legoater/qemu/ tags/pull-aspeed-20261015
+>    https://github.com/legoater/qemu/ tags/pull-vfio-20261015
 > 
-> for you to fetch changes up to 4cf1f0e37d9491eb8b0c8be8dd9dab9260b8fa36:
+> for you to fetch changes up to 2240c14c16dfc6c3b9840677f0d153165af7d4ee:
 > 
->    tests/functional: give the set_machine probe VM the test workdir (2026-10-15 13:14:09 +0200)
+>    vfio/migration: Don't reset a device on a declined stop transition (2026-10-15 13:15:24 +0200)
 > 
 > ----------------------------------------------------------------
-> aspeed queue:
+> vfio queue:
 > 
-> * Fix OOB read in HACE has_padding() when padding_size is zero
-> * Allocate ACRY RSA qtest SRAM buffers on the heap to reduce stack usage
-> * Consolidate OTP layout definitions between aspeed_otp and aspeed_sbc
-> * Derive ABR and secure boot state from OTP config straps, removing
->    the "emmc-abr" and "signing-settings" machine properties
-> * Sort device IDs alphabetically
-> * Add I2C test for IO expander 1 on the AST2700A2
-> * Update ASPEED BMCs reviewer list
-> * Add a create_unimplemented_devices() helper and convert all Aspeed
->    SoCs and coprocessors to table-driven unimplemented devices
-> * Fix the set_machine probe VM to use the test workdir
+> * Fix UBSAN shift error in MTRR mask computation on AMD EPYC with 52
+>    physical address bits
+> * Add Fixes: tag validation to checkpatch
+> * Reject virtio-net failover during vfio-user init
+> * Sanitize DBUF_CTL POWER_STATE for iGPU passthrough, fixing display
+>    corruption on first boot
+> * Thread vf-token through iommufd bind
+> * Make MTL/ARL guests fall back to BAR-based framebuffer access in
+>    passthrough
+> * Update igd-assign.txt for Intel MTL and newer platforms
+> * Don't reset a VFIO device on a declined stop transition
 
 Applied, thanks.
 
