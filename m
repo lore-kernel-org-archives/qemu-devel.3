@@ -4,63 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5F70CC6B38
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9417CC6B3C
 	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 10:25:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHIeS-0001NM-O4; Thu, 15 Oct 2026 06:25:33 -0400
+	id 1xHIdf-0000Zy-51; Thu, 15 Oct 2026 06:24:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eblot.ml@gmail.com>)
- id 1xHIeL-0001F5-1H
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 06:25:25 -0400
-Received: from mail-wm1-f52.google.com ([209.85.128.52])
+ id 1xHIdM-0000WL-F4
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 06:24:26 -0400
+Received: from mail-wm1-f50.google.com ([209.85.128.50])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <eblot.ml@gmail.com>)
- id 1xHIeI-0003iY-5E
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 06:25:24 -0400
-Received: by mail-wm1-f52.google.com with SMTP id
- 5b1f17b1804b1-4a172eb31f0so44201505e9.1
- for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 03:25:21 -0700 (PDT)
+ id 1xHIdK-0003D5-7u
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 06:24:24 -0400
+Received: by mail-wm1-f50.google.com with SMTP id
+ 5b1f17b1804b1-4a17baef589so17029025e9.0
+ for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 03:24:21 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792059920; x=1792664720;
+ d=1e100.net; s=20260707; t=1792059861; x=1792664661;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :content-type:mime-version:subject:date:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=55Fgqc9VQyRpyCCP2Jau8AxqRXuSeRGIW2uq0lzhQEw=;
- b=VKh2atvJAhLCof7IHmdVFLBSfs7/SdLjhmcZ/TkvTuRj8TDq9NTSHchkfFTMpUl0Lo
- umGTjIolI2Auo++CYRKI4LmT2wQ+9VWvxWWrat7WHlXnCMEWveOeF2DPsLq+sUH0uhvg
- 1f37RNCxYaoUvlw1m0GP/zkigYG7GEDvvy5lOoU0aoKqSaf5L0R3rpE7IBaeU7J9kFza
- p+do4qGyci5a9hoipiOi5jwJtwTGYzXG3aijR3gyfOIzF4zVC/MQeWj5FzV0NNQBO1w9
- ISQejH6mlK+ID6fMe7CPIISGm1PZrQyl6fR+yi80Dr3QFU5JfdQIAQZ41aEoeWs3G+J6
- tjIg==
-X-Gm-Message-State: AFq9FYL8OSZcFstIJFOZtlzvVFa2HDCNL2fM+fKxm6S0TiwXihNdH4wX
- nAcPa6IASQrNLXm6NntJVsXeV/roYfL0krrRL58loMkxee8l454yMYvcDBIsqnm5
-X-Gm-Gg: AYBFou190Hnb/BSk89UbseBISghu+6WckBWKAhza8hBs7ogXb2v9X2GFgtR7pgGFpBp
- +UvP0MRNgMMTB+NRWVSc7KfGKBg3PilfpKxBhXBddP/i55jdYzhmQhp9hC+AzUIOjzZ5c9uB17U
- f9/W+wF364/vTxf6kAHHWVSwChLFknBjWWZ/zNYppbsZnddxFnCNu2Ul5bDt96S001eKvHfiFLI
- hlMqHjQ9xlGSbULeXqM3Q9JJiCHZ5A8q7RcF/KAnTOb+4t8sZZqkKsUvb3WUwDAymN3Sp8Dfgqm
- bg2yK1GzGRr9CG9qzhUT2wM14FexEKaBRHeVkhbGtqL1YVIkNzavnTR6Qz9GeT+SuONJeMJkqd+
- 5AtOvjV371cy3HibxqY7cyMzRQqVQdLXql5OD6Nqtq9uWDpExuMVBrqyjA3g7RFNuV2aQ4yTe1o
- N6mAF+oDJPgvQQ3Tt0YEqc6DgPW8JQ6hllSCAGon/lrqtlDmWqoRaDx0655m3pcp2M2+tbfvbAW
- 61ittvuqFPJDB+Lrwx5NwZkFufaRvTZwMnPWFR/jt+Pl4I=
-X-Received: by 2002:a05:600c:8b65:b0:49e:6683:d23c with SMTP id
- 5b1f17b1804b1-4a18e3ef1bdmr345050635e9.0.1792059920506; 
- Thu, 15 Oct 2026 03:25:20 -0700 (PDT)
+ bh=0Pey2/h5d4egpWMShENSUMjJQuRdUBUW9uGkG9/qdms=;
+ b=QvZeDBn1Bo8iQjIrbc9j0ewVxVcSyvYAUZrTjR8JND956+Iik+ZyraftxabQSnt/Wh
+ DeciFHfueTZoGgcCvGU8kNyscUBZhFgAuX/+SpkTDRfBhuxJWNlMhEntkGVrzahZyI4+
+ GPFmmx3ZfEwGn8DzcKIIPSyezOFBICA+gI2ZXbxQIZ0cZLCzssMMpfCc2VvNHd+pkTvH
+ jq1w6Ko6oOk+OwAtxKG5Mhkh5QyrkK7ow2stXvwjDIoGszkCVj/dMf25vAVR7j3ynUZV
+ Ee7bPvK+ammNLEKybYJH/n1iv2Z6zDtST0Fjc7I7kjrnljyLCjtUJKMa5cO6kZGVdh9N
+ D88g==
+X-Gm-Message-State: AFq9FYK3qGYIclT1v7GDC7QYP8dY11nMNTUStlsnZb6E+X9J2WSG/2ho
+ vBca/bdqkhFQpmLMpbeps/zfLG7WResxvVx0YKvmIjZ7yM8NSbjZNjrLYZ0ywatG
+X-Gm-Gg: AYBFou2dpmG2T09sWytMtQMsboAq91D9DW50tJdcM7HwreiikqvXq3qAp8WPEjvVdLT
+ kJS1ekoCyDg3pFwW/cvuaSuRyxVpmdn24wUXf4F5zyUoHN8Sm+XiNt5skxM9XrzfueYA5Dz9uf7
+ Vk19Wk/FVEWZ0/nh6m1kIyc1Xax3WNCZzlThHu6jam0iRJ1YaN38XaZCLyZ/JPKx4H2jE81gLzI
+ tdwxMmje/cNGhlsJc/O8uTBsE2wZxZh/u1jbC3+FEkhppguj+g2T4PeM6XZE+xDQPMa2Oqx37/2
+ LVLrQDVEYaEdNxr/FSPqMLqTx05+s+j4IKAIV+hHq74BVqq+pxs3g5mNv1Cp0G6QB94MCQxLYxt
+ yvnl3SVMQMrLWqHy6VjEAvHiFvdRAqo3PwZ03eMzWPiWYgA7eZoZa1SrUcGDeVKFNEBKYqe/fEZ
+ S2brEBopgY2WoipFZOwT6pyki9npZZeh1Vm+2GjhVgFZsemO4Qlm79w2P7iYn3vihpC9UCYCl7b
+ Mwtc2sR/cNa7dXps5223Bx2Z26b/mPnsvJv5HJ+rpt4NQ==
+X-Received: by 2002:a05:600c:1d11:b0:4a0:25db:4591 with SMTP id
+ 5b1f17b1804b1-4a18e4a4c33mr393827345e9.23.1792059860573; 
+ Thu, 15 Oct 2026 03:24:20 -0700 (PDT)
 Received: from localhost (89-93-216-19.hfc.dyn.abo.bbox.fr. [89.93.216.19])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a1bd9b8ebdsm69844415e9.10.2026.10.15.03.25.19
+ 5b1f17b1804b1-4a1bd96fed4sm61274505e9.2.2026.10.15.03.24.19
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 Oct 2026 03:25:20 -0700 (PDT)
-Date: Thu, 15 Oct 2026 11:27:58 +0200
-Subject: [PATCH v3 11/50] hw/rtc: ds1338: prefix the file-local helpers
- with ds1338_
+ Thu, 15 Oct 2026 03:24:20 -0700 (PDT)
+Date: Thu, 15 Oct 2026 11:27:49 +0200
+Subject: [PATCH v3 02/50] docs/system/arm/aspeed: add the sanmiguel-bmc machine
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20261015-bmc-minerva-v3-11-7d50c8a108e5@free.fr>
+Message-Id: <20261015-bmc-minerva-v3-2-7d50c8a108e5@free.fr>
 References: <20261015-bmc-minerva-v3-0-7d50c8a108e5@free.fr>
 In-Reply-To: <20261015-bmc-minerva-v3-0-7d50c8a108e5@free.fr>
 To: qemu-devel@nongnu.org
@@ -74,18 +73,18 @@ Cc: =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
  Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
  qemu-ppc@nongnu.org, qemu-riscv@nongnu.org, 
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, 
- Emmanuel Blot <emmanuel.blot@free.fr>, 
+ Emmanuel Blot <emmanuel.blot@free.fr>, Jamin Lin <jaminlin1207@gmail.com>, 
  =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 X-Mailer: b4 0.16.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1792056475; l=2103;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1792056474; l=930;
  i=emmanuel.blot@free.fr; s=20260602; h=from:subject:message-id;
- bh=FMkjbHnVM4vN5NqR+DRLvhBEQGGHcj2pwxki5uk8mq4=;
- b=oQPF/Etz71xicNB2QlisxChLVRN5OlR6W/80dZOYIHylDcRQVDf4DPkC+7UrrjtqtsysWc3Z9
- jXlZ3BFuIi1AxggnbHO64G+FloWEpuBocXWQ7t2jTq+F5MqHxFgDK1a
+ bh=f+ewNztwtHsQvjNwITmtmh2RHXZRe5TnF0pSYWV+BZo=;
+ b=n/hPuH2OEZgEqvXG6jHRYPpF9OlmfLfbELivf7KRVn5BQ+oqc7dr1sZZmfoggz0VECaiEa2uW
+ RReHHGEWT46CyBc+PauWC/CC/Di9uE27c3SaS/WDKTwCS3fFywj+scs
 X-Developer-Key: i=emmanuel.blot@free.fr; a=ed25519;
  pk=0qFrZ21FAAN8OfVsSoVcCFTk/NMYOWzxJz4paSAVm0g=
-Received-SPF: pass client-ip=209.85.128.52; envelope-from=eblot.ml@gmail.com;
- helo=mail-wm1-f52.google.com
+Received-SPF: pass client-ip=209.85.128.50; envelope-from=eblot.ml@gmail.com;
+ helo=mail-wm1-f50.google.com
 X-Spam_score_int: -15
 X-Spam_score: -1.6
 X-Spam_bar: -
@@ -111,72 +110,28 @@ From:  Emmanuel Blot via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Two static helpers predate the rest of the file and carry no device
-prefix.
+The Facebook SanMiguel BMC machine is supported by hw/arm but has never
+been listed in the Aspeed documentation. Add it to the AST2600 machine
+table.
 
+Reviewed-by: Jamin Lin <jaminlin1207@gmail.com>
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
 Signed-off-by: Emmanuel Blot <emmanuel.blot@free.fr>
 ---
- hw/rtc/ds1338.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ docs/system/arm/aspeed.rst | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/hw/rtc/ds1338.c b/hw/rtc/ds1338.c
-index 74aee6c746..1755a3a37c 100644
---- a/hw/rtc/ds1338.c
-+++ b/hw/rtc/ds1338.c
-@@ -57,7 +57,7 @@ static const VMStateDescription vmstate_ds1338 = {
-     }
- };
- 
--static void capture_current_time(DS1338State *s)
-+static void ds1338_capture_current_time(DS1338State *s)
- {
-     /* Capture the current time into the secondary registers
-      * which will be actually read by the data transfer operation.
-@@ -85,7 +85,7 @@ static void capture_current_time(DS1338State *s)
-     s->nvram[6] = to_bcd(now.tm_year - 100);
- }
- 
--static void inc_regptr(DS1338State *s)
-+static void ds1338_inc_regptr(DS1338State *s)
- {
-     /* The register pointer wraps around after 0x3F; wraparound
-      * causes the current time/date to be retransferred into
-@@ -93,7 +93,7 @@ static void inc_regptr(DS1338State *s)
-      */
-     s->ptr = (s->ptr + 1) & (NVRAM_SIZE - 1);
-     if (!s->ptr) {
--        capture_current_time(s);
-+        ds1338_capture_current_time(s);
-     }
- }
- 
-@@ -108,7 +108,7 @@ static int ds1338_event(I2CSlave *i2c, enum i2c_event event)
-          * START_SEND, because the guest can't get at that data
-          * without going through a START_RECV which would overwrite it.
-          */
--        capture_current_time(s);
-+        ds1338_capture_current_time(s);
-         break;
-     case I2C_START_SEND:
-         s->addr_byte = true;
-@@ -129,7 +129,7 @@ static uint8_t ds1338_recv(I2CSlave *i2c)
- 
-     trace_ds1338_recv(s->ptr, res);
- 
--    inc_regptr(s);
-+    ds1338_inc_regptr(s);
-     return res;
- }
- 
-@@ -204,7 +204,7 @@ static int ds1338_send(I2CSlave *i2c, uint8_t data)
-     } else {
-         s->nvram[s->ptr] = data;
-     }
--    inc_regptr(s);
-+    ds1338_inc_regptr(s);
-     return 0;
- }
+diff --git a/docs/system/arm/aspeed.rst b/docs/system/arm/aspeed.rst
+index 933df41f96..f38f33cbe1 100644
+--- a/docs/system/arm/aspeed.rst
++++ b/docs/system/arm/aspeed.rst
+@@ -34,6 +34,7 @@ AST2600 SoC based machines :
+ - ``bletchley-bmc``        Facebook Bletchley BMC
+ - ``fby35-bmc``            Facebook fby35 BMC
+ - ``catalina-bmc``         Facebook Catalina BMC
++- ``sanmiguel-bmc``        Facebook SanMiguel BMC
+ - ``anacapa-bmc``          Facebook Anacapa BMC
+ - ``gb200nvl-bmc``         Nvidia GB200nvl BMC
  
 
 -- 
