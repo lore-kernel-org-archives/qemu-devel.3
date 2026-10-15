@@ -4,103 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4089FCC6B30
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 10:53:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 302C9CC6B34
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 10:53:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHJ4k-0002SZ-NC; Thu, 15 Oct 2026 06:52:42 -0400
+	id 1xHJ4b-0002J9-7w; Thu, 15 Oct 2026 06:52:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xHJ4j-0002Qu-GY
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 06:52:41 -0400
-Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1xHJ4Z-0002If-3g
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 06:52:31 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xHJ4h-0007qd-Sl
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 06:52:41 -0400
-Received: by mail-ed1-x531.google.com with SMTP id
- 4fb4d7f45d1cf-6ae27f06c2fso3657709a12.3
- for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 03:52:39 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792061558; cv=none;
- d=google.com; s=arc-20260327;
- b=e10nRkoqvQB3Lge1+/ouudewKMn686dU7h3Ex6rMW7tHBVWLTdMrDbVQOjMB/LRIZ9
- mW0LGhBviV581H5x5iJ1lijFb9iF0Aix+VgNsPCWTDDuwcxSAc5KoAsAV3e9hM0Ga5Ye
- /qGL1n5CoBM3N/bUvgZymC9u3PPdRvjfbMcq1XE2IeMdCYbBmuSTqBLnIE5niYl2qnD0
- NUP6O5ASScarenmQssTZ6/doyYDGWmJP2ySdVjphExBivf60uGAHhzlRNv7bpx6GICUG
- WtYVCHb35Ud5iKRmaxVPDlUbV7NDuSTSVXJ6DPP/zPxSygN4gDWpasR0Ddykp9xw+aeM
- 1Qcg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=to:subject:message-id:date:from:in-reply-to:references:mime-version
- :dkim-signature;
- bh=82nOw34p6r8quozBtV6O6375kWs8MNR6yskY5g7RwKI=;
- fh=hX/hVHaj/kOe2zXxumnGo27SHe19QBb44kyvkZ18Suo=;
- b=L/uugzbAI7p+yKXXwGazdqQ5G/jXaES5mYgS4bMrMpKbgMZjVQWR8xCKBL4Jc6Ear6
- WaZKEWYgeS2V513tl+G9oyqs+xHwQcuTUrpEdH1veAI37r2L7/xxmlvzGkE3pPTtw4nT
- 1qoPXOnaa6ePJ5vysZtpvaI8CGxcp8B5w9iE+gzS1iajWX81yuxIWZ6WAIB8TExKJwtf
- QbisCEuqcTb/mxYEcO96nAQk1teiwYEFVhYv9oxtPUsKXkWNIk6rdr7LXq0U16wOA3sO
- AqJaDMQ7luSJ7nLWpYIBxnr2pThU82Q1N4Uj5igmnXHNN4RAGjvKz2iLHVhcld+kw1xi
- 55iQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1xHJ4X-0007pH-Hg
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 06:52:30 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-4a061a13884so42918815e9.3
+ for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 03:52:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1792061558; x=1792666358; darn=nongnu.org;
- h=content-type:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=82nOw34p6r8quozBtV6O6375kWs8MNR6yskY5g7RwKI=;
- b=lQ//XKDrAZVW+30z5tGkccE6dMRIMia8XI1GMC2t+YgWkdaQ57yXffQErDSPzH5kTs
- O+rzgp87u0Hc5v18H/i0XHX5Ythjuz5HEXdGz6qGKNt5DmC666D2XXRr5Kl3KQ1CUN0e
- Vmbm5SmidCU6gy6FuE9RID8VR65ygovLvyKACrLHLJUvq/s/E6F/CRoEQArrYt8VAUhS
- oJqU54jry4BqLjdYtruOD8raao2ULCq7Qz1q2FCw949ZHxdUEgfYZlDr0z1R70GZwvT8
- rfYtPzYpF89hN9m+qoNXn01S+ORe7/HJjGXj/Bum8XhH5pZ4mBr8e7CBPU3KCR6A0Um+
- oi/Q==
+ d=linaro.org; s=google; t=1792061548; x=1792666348; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=y2THRkcowFt8BXPCKTuP7l9cCUJ2bhNGSwLzU9DTbXg=;
+ b=cHztgblmb0y8udRsSC6Hau/c8Ae5u4SGMJP5biiZDEvAyFLQfct3kCZ/yJqvU07kSl
+ 9TWXow+XOH/IMd9vouqzwVLc94SmKXfN/J9AQU89ZT+L1GypcNcHBajRTgkKe6vQclj5
+ lHwFpmdhiuYs3kJgROy4UpVd3BCiKQjkfb4KScHKAdIW4VenZQO7n/JxEXbtPQgF0Tqi
+ u1Cwh5BWbAak665lzChgsOlTEcemSzk8qHTYQqKYuParAMU8vvvK2JhFgHD/at/KVh9g
+ UE06gePiXBqn4UYQUENH0U4vZTulIgBIxbeFB6nRTqVd1fRUrnW3Wqqp3XDwMddN5URz
+ lhVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792061558; x=1792666358;
- h=content-type:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=82nOw34p6r8quozBtV6O6375kWs8MNR6yskY5g7RwKI=;
- b=BBFvS6tw6xiUv812M2iM3wVUSidGd8fTKaRaUT4hMlFW4iHC6bBIds2OZaA/l+3p6/
- HOJyFEsKo8cHJcq4gWphv6O0htzKrrfwEVu2tf36MHgL8wqdKvK15tMAmeUIWtry7Aq6
- 5spOC2GC23hsDkQ0k8h7GCMZOlBUZduwUUjXBa4tj2CSG1XiqDRLnt6LUjfDQNiR2Maa
- OTXevvOVeWbDbss6xHEU4THFZSl9xkfZ39iN/zmLV6QqE1qFZImwsrZ3kZF90AAnM/1E
- aUi7XJEKGOERhzhy6r3Af6fgnG4JoUuw8PMkkbogn/OApKbzn+037qvVkaA/Js9YrTI0
- e2qA==
-X-Forwarded-Encrypted: i=1;
- AKwUvBwn9HLGCaBl61QVCnrjJ2uKTsSvhu2N//r3KoAAi2J8MV7zI+ICs2clunpKsltpKOeBvK9+LLvMfGRy@nongnu.org
-X-Gm-Message-State: AFq9FYLKEbo40oiMIMdfcj9MjxFV2oqmAdQAi/KRIoNZCuCyAZ4XEOy/
- xhZaJk8qBnfPA78r4DDGRXtyNBTccJ3Uou0jms8ZutIUoffMW3D8IClnmskkgVmFzmiBXf1L/vG
- ClWRQjvqtqWul2bgSijgBB2XUQdPcieYFGPNZoGYbhw==
-X-Gm-Gg: AYBFou1A/UVdmbagVkojJVne45PPFFptLiC72rwfhzcnjLpBQmpw8/l5Y4/oQAFj42x
- eTwh0GBR9lZyGZf8L18CJ2+lrVX1mkSP4SRqY3v7aj3CdsKLUjf6YK49Bp9nARHLw9EOSgeli9U
- DIT4LuDzsdizlrDWqzyibXgSDAd99A3VdIAaybKyuZsz0z/92tzBjc5Yle4U/evnEX2oG3nykBw
- jwxqyzqnmHWpGWMmNudl4jTCerEC5fHD9zSL8atUmPgxiqdHI8CnayEjpcgXs2HBMfjirn9ChtO
- b3dwZJFU6LgALYHypZGv9nEXNYp84WYjlSUmwPAp4I9V5GML8IK0LI7wJDQdYG7wJClIUJFLhBl
- Y/AtN7XW9dkAcrSFx/Aw1v6nMbw28mAF8onB8hok=
-X-Received: by 2002:a17:907:2d88:b0:c2e:4373:521 with SMTP id
- a640c23a62f3a-c31aa0d2286mr1589276966b.46.1792061558337; Thu, 15 Oct 2026
- 03:52:38 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1792061548; x=1792666348;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=y2THRkcowFt8BXPCKTuP7l9cCUJ2bhNGSwLzU9DTbXg=;
+ b=QhRedbZxc6wxluV8v+eO3I1MpL+uNUw5rXjwl9icp0Zwk+uZDwysqk81yUIk8k7Ouo
+ UQoSrAEUbYgkNuEzGvfNNz9ho9uK/ysGSHSzi0K4l8ryudYaXXVvqZFLaCUwdJdH7Wgh
+ 3OM9rKguEC+DbgDeBaHozMx1W4hZus6IKG7fjDK6QCkf8c6pOnHOSUWOAGyhADiTj0e5
+ tH2X/HLum663rwR8JAw8gQE5yNoL6S5isJenE196FZFBAkMc6d+OOnzN78XC+yMRw94r
+ weoOVNzQr9mJW63gpIJqqJEFX4+JZgbBOdeVL0FgIU7yIb5+0kPeMzjVOFUoDdrT3XZH
+ j6rA==
+X-Gm-Message-State: AFq9FYLoXZ68OOiy7kGQjFJM6WVbelMATvKAa3nBt1HIPE9sKxU1a3tj
+ Fadw/Xg4OgZAcJsmA/vMk9u2Is9DeWcq07OV34GJPfhpgTKVrRt27Wo6TalWEBu2DiFoGRkO6dt
+ K8mxyiaU=
+X-Gm-Gg: AYBFou1jLRUBFZHf63i79xqdTj0fP3Q1vUaTuM63Xlni4tkWGkUyzg+ocrkpWYF8MWc
+ zhs2UymQ4r8nhnJ0PMG29yFu6W8CtdupwV8lVunHzzYDA9bi3QRtyhgFdkiG5VJ5hrFr+3SbbkL
+ lj2EIhalUEc09UbFWE904z6XS0BvapsKYuQ6zUIO8DVKhP/4cqykplLzP3zjft331X5OY3bRyA6
+ bg1OIJVVg6XlOgYGE8VCJ779Twmx0TCvYFGFt+qg2r3/C3bbWWv0RaPvNlnShwXiRXHqDnfgd1N
+ 8f0sIEnWIYsG4ti+IigHpgupo9ESNJJnPfJfFqIhGWbB1LR7sHdqwyNWUTR3O2SQHEiFrRtaAgO
+ sT9johN0+laOMmgksVUfWaUc3FdcqyUSYchipK2A5eOB6L4ZvnKj/T2C9USuwlQsaMsTXWEfQ2h
+ x+eO3nFtFuYx74mg+z6jiqOewsxIa8i6RU2EIi4wSoUFjpe0rA2UGBQSivoWmzsfgtSP1VvFmKj
+ 0jjAXtoWDvFH3lgrLnChD7Dc00p6xMP3jgyFQ55sLe1T3xqVewKrcEfxCa7YF/h43AzYI3EKts9
+ p01AMe5Q+/ryOwM=
+X-Received: by 2002:a05:600c:810a:b0:4a0:2391:6533 with SMTP id
+ 5b1f17b1804b1-4a18e4a954bmr355010125e9.21.1792061548034; 
+ Thu, 15 Oct 2026 03:52:28 -0700 (PDT)
+Received: from stoup.fritz.box
+ (p200300ca3f0f8b006e0ed1a687ab6860.dip0.t-ipconnect.de.
+ [2003:ca:3f0f:8b00:6e0e:d1a6:87ab:6860])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-48df5b88207sm3075949f8f.59.2026.10.15.03.52.26
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 15 Oct 2026 03:52:27 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Subject: [PULL 05/16] tcg: Introduce tcg_type_bits() helper
+Date: Thu, 15 Oct 2026 12:51:57 +0200
+Message-ID: <20261015105212.356392-6-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20261015105212.356392-1-richard.henderson@linaro.org>
+References: <20261015105212.356392-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-References: <20261013083933.1024405-1-peter.maydell@linaro.org>
- <20261013083933.1024405-56-peter.maydell@linaro.org>
-In-Reply-To: <20261013083933.1024405-56-peter.maydell@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 15 Oct 2026 11:52:25 +0100
-X-Gm-Features: AclHuK_Vll3GDo6Gs_0u4ampo0VYsopa_vjcc0BCMlP0LZz7a0eKc9ItaJEhrfI
-Message-ID: <CAFEAcA8SkMpPwVPB1NWXpuPo+AWtCBY4uWqE2Zxfrqc19KWeBw@mail.gmail.com>
-Subject: Re: [PATCH 55/86] hw/intc/arm_gicv5: Implement IRS_VMAP_L2_VMTR
-To: qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::531;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x531.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,81 +106,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 13 Oct 2026 at 09:40, Peter Maydell <peter.maydell@linaro.org> wrote:
->
-> The IRS_VMAP_L2_VMTR register allows the guest to make a level 2 VM
-> table valid.  It's similar to what the IRS_MAP_L2_ISTR register does
-> for the IST, but it's 64 bits, and so it is R/W and has an M bit for
-> "actually do the operation" so that the guest can write it as two 32
-> bit halves.  Since we don't cache anything yet, all the "make valid"
-> operation needs to do is write to the VALID bit in the L1 table entry
-> in guest memory.
->
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+From: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 
-> +static void irs_vmap_l2_vmtr_write(GICv5 *s, GICv5Domain domain, uint64_t value)
-> +{
-> +    GICv5Common *cs = ARM_GICV5_COMMON(s);
-> +    GICv5VMTConfig *cfg = &s->vmt_config[domain];
-> +    uint32_t vmid = FIELD_EX64(value, IRS_VMAP_L2_VMTR, VM_ID);
-> +    bool m = FIELD_EX64(value, IRS_VMAP_L2_VMTR, M);
-> +    hwaddr l1_addr;
-> +    uint64_t l1_vmte;
-> +    MemTxResult res;
-> +
-> +    if (!gicv5_domain_has_virt(cs, domain) || !cfg->valid || !cfg->structure) {
-> +        /*
-> +         * The whole register is RAZ/WI if no virt, or if the VM
-> +         * table is invalid or not 2 level.
-> +         */
-> +        return;
-> +    }
-> +
-> +    /*
-> +     * Otherwise, write to the register. The M bit is WO/UNKNOWN,
-> +     * and we make sure it is 0, so that a 32-bit write to the low
-> +     * half of the register never appears to have the M bit set.
-> +     */
-> +    cs->irs_vmap_l2_vmtr[domain] = value & ~R_IRS_VMAP_L2_VMTR_M_MASK;
-> +
-> +    if (!m || vmid >= (1 << cfg->vm_id_bits)) {
-> +        /*
-> +         * If guest didn't actually ask to make the L2 table valid, or
-> +         * the ID is out of range, do nothing except the register update.
-> +         */
-> +        return;
-> +    }
-> +
-> +    /* Find the relevant L1 VMTE and set its VALID bit */
-> +    l1_addr = l1_vmte_addr(cs, cfg, vmid);
-> +
-> +    l1_vmte = address_space_ldq_le(&cs->dma_as, l1_addr, cfg->txattrs, &res);
-> +    if (res != MEMTX_OK) {
-> +        goto txfail;
-> +    }
-> +
-> +    l1_vmte = FIELD_DP64(l1_vmte, L1_VMTE, VALID, 1);
+Add a helper function for computing the width (in bits)
+of a type. Use when appropriate.
 
-This is missing a check for "is the VALID bit already set in the L1_VMTE?"
-(which per the spec is supposed to be a "has no effect" situation). In this
-patch the lack of a check is harmless, but when we add the code later to
-cache VM table entries we'll fall through into that and incorrectly
-corrupt the cached VM table entries by re-initializing them.
+Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20260928113938.3157-1-philmd@oss.qualcomm.com>
+---
+ include/tcg/tcg.h | 11 +++++++++++
+ tcg/optimize.c    |  4 ++--
+ tcg/tcg.c         |  4 ++--
+ 3 files changed, 15 insertions(+), 4 deletions(-)
 
-> +
-> +    address_space_stq_le(&cs->dma_as, l1_addr, l1_vmte, cfg->txattrs, &res);
-> +    if (res != MEMTX_OK) {
-> +        goto txfail;
-> +    }
-> +
-> +    return;
-> +
-> +txfail:
-> +    /* Reportable with EC=0x0 if sw error reporting implemented */
-> +    qemu_log_mask(LOG_GUEST_ERROR, "L1 VMTE update failed for VMID 0x%x at "
-> +                  "physical address 0x" HWADDR_FMT_plx "\n", vmid, l1_addr);
-> +}
-> +
+diff --git a/include/tcg/tcg.h b/include/tcg/tcg.h
+index 7669dc1c2db..2e005189344 100644
+--- a/include/tcg/tcg.h
++++ b/include/tcg/tcg.h
+@@ -164,6 +164,17 @@ static inline int tcg_type_size(TCGType t)
+     return 4 << i;
+ }
+ 
++/**
++ * tcg_type_bits
++ * @t: type
++ *
++ * Return the size of the type in bits.
++ */
++static inline int tcg_type_bits(TCGType t)
++{
++    return 8 * tcg_type_size(t);
++}
++
+ typedef tcg_target_ulong TCGArg;
+ 
+ /* Define type and accessor macros for TCG variables.
+diff --git a/tcg/optimize.c b/tcg/optimize.c
+index c631f690afb..294eb5ed29c 100644
+--- a/tcg/optimize.c
++++ b/tcg/optimize.c
+@@ -1704,7 +1704,7 @@ static bool fold_deposit(OptContext *ctx, TCGOp *op)
+                                           ti_const_val(t2)));
+     }
+ 
+-    width = 8 * tcg_type_size(ctx->type);
++    width = tcg_type_bits(ctx->type);
+     type_mask = MAKE_64BIT_MASK(0, width);
+     len_mask = MAKE_64BIT_MASK(0, len);
+ 
+@@ -2279,7 +2279,7 @@ static bool fold_multiply2(OptContext *ctx, TCGOp *op)
+                 op->args[0] = rh;
+                 op->args[1] = rl;
+                 op->args[2] =
+-                    arg_new_constant(ctx, tcg_type_size(ctx->type) * 8 - 1);
++                    arg_new_constant(ctx, tcg_type_bits(ctx->type) - 1);
+                 return fold_shift(ctx, op);
+             default:
+                 break;
+diff --git a/tcg/tcg.c b/tcg/tcg.c
+index ecc1f54c1bf..65d3190a8ed 100644
+--- a/tcg/tcg.c
++++ b/tcg/tcg.c
+@@ -2883,11 +2883,11 @@ void tcg_dump_ops(TCGContext *s, FILE *f, bool have_prefs)
+             if (def->flags & TCG_OPF_INT) {
+                 col += ne_fprintf(f, " %s_i%d ",
+                                   def->name,
+-                                  8 * tcg_type_size(TCGOP_TYPE(op)));
++                                  tcg_type_bits(TCGOP_TYPE(op)));
+             } else if (def->flags & TCG_OPF_VECTOR) {
+                 col += ne_fprintf(f, "%s v%d,e%d,",
+                                   def->name,
+-                                  8 * tcg_type_size(TCGOP_TYPE(op)),
++                                  tcg_type_bits(TCGOP_TYPE(op)),
+                                   8 << TCGOP_VECE(op));
+             } else {
+                 col += ne_fprintf(f, " %s ", def->name);
+-- 
+2.53.0
 
--- PMM
 
