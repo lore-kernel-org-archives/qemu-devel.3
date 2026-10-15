@@ -4,88 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41D28CC6B2F
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 06:52:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34037CC6B2F
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 06:52:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHFJb-0003pM-TP; Thu, 15 Oct 2026 02:51:47 -0400
+	id 1xHFJQ-0003me-8a; Thu, 15 Oct 2026 02:51:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <sunilvl@oss.qualcomm.com>)
- id 1xHFJZ-0003oB-Qo
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 02:51:45 -0400
+ id 1xHFJO-0003m8-4T
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 02:51:34 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <sunilvl@oss.qualcomm.com>)
- id 1xHFJY-0007kc-6N
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 02:51:45 -0400
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+ id 1xHFJM-0007jh-FN
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 02:51:33 -0400
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69F2K6Mt841683
- for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 06:51:43 GMT
+ 69F3wed91889570
+ for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 06:51:29 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=4DL+SBQ2Ss3
- ATMiGsknsh3lcVREWPyJVJydoWib4YtU=; b=dVYR7Aj3xCJMIOf9qVrgu9TyOxT
- KGEDnTCNfvvUWOxPj1wsHMDsqhV8sqEvF5hK8VZiqHnTHhhDaN9qVWX1FcVLmoOi
- jI/8pWJPZkX+gBVHlm8F6Pxpjx+3u7PxpgYDdAB3JQK4U90AWbaQpN/zAC1KY0ER
- e2eh7h85v0o86ryKIk3dKNg6eeLeyvJlS27xhHTf3Uy+D6IA42f4cyQpIMmgEQkm
- pXfdOnjVoFBtpU/8Rabjh2pYLLbVLk18+EGY7VDnyX3iL9GuAuL1uGBpAWJPNlU6
- MLFfaGcHEMFTSD6OOwwDwJc2TclTbbyX3nZ4f+GTwOtUGXaDCcy2eq/h2aw==
-Received: from mail-dl1-f71.google.com (mail-dl1-f71.google.com [74.125.82.71])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hae4wtk9n-1
+ cc:content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=qcppdkim1; bh=f1sTy+kSh45LyG93o2ZkLR2eDpL1z0lgD9c
+ BUFAQBRs=; b=lY70ICCVCY/0lh7an6RltqpduPieexZB3AcHE6gSICoFMqUgZJG
+ PWkGKjNQSuVo8I9Gt3FImKNWOcamTWPSkX0Nx/1EYW+itd6YLh7ngQOCR+n/fXpr
+ ar6lV2CMNiH4mQRaOxhrO0qbgJqX1lNVwDlMGG66Q7SBXr0kfouq424jKacFJb2C
+ hDrOELjTPHkcPPXyLytfd6WhLegMaW4l26stCWvl1JV6ZKCLbOG/nT9fNGlmjCv6
+ Brb5/k8miHS8t5z1+3SEUEyQMcrH4RqaNEYOC2pbJJNQ//Dx1BI3Kk4GXpcYeJBG
+ HML0OCVnG8Fdx2Yz5IRDGmAJqDT1vBGHyTA==
+Received: from mail-dl1-f70.google.com (mail-dl1-f70.google.com [74.125.82.70])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4haqda0khd-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 06:51:42 +0000 (GMT)
-Received: by mail-dl1-f71.google.com with SMTP id
- a92af1059eb24-149e8e8ad71so5719844c88.1
- for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 23:51:42 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 06:51:28 +0000 (GMT)
+Received: by mail-dl1-f70.google.com with SMTP id
+ a92af1059eb24-1665200f4c2so6929931c88.0
+ for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 23:51:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1792047102; x=1792651902; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=4DL+SBQ2Ss3ATMiGsknsh3lcVREWPyJVJydoWib4YtU=;
- b=N5Gs4mqSobLMqETjK4v4HA5bW0e4rPHxJmZn6q1MjEoKLqUD7bP6Qwzr4y7gJOrMbS
- sivYeV/8byNgzgGATQSjJLArDivBvJ20bCd48vENrxtlq8iZdnppZViixoXW0GvzTQyH
- 6QmFJ6MfgtgVORlvs5J55AnmzBOtJVdvYhP785I3XZuC+5LKfgMDebE+EDM1o37FVSqE
- HL9L1G8bD8auAycid13Udff9yoUoUe7QPppu9r2j6rQgeuFK4C+49XOvrXgi7i3BQBqw
- aX9ST3rc80cnCL6/qtEj61vZDmaKBI2vrkNrHk7P2REkbl0IEM2mn2LJmaLkzfr6b7IP
- zoEw==
+ d=oss.qualcomm.com; s=google; t=1792047088; x=1792651888; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=f1sTy+kSh45LyG93o2ZkLR2eDpL1z0lgD9cBUFAQBRs=;
+ b=HPBWWk0sNTS4irEYrUzE1LwqyioLRgFCyY9FDzzhtD8u2RLTeR/IVQ2v+Q+xUxPEtK
+ VGBLKnlZtZXChsgp6YE2QC/clqMXuBHFMdRwbqpfB3mmEmmHpMNJoMZGyftuRunzjaZ1
+ SpI9LlH1a07WP5MoTRdzDpzPN1r1DYwPMDhvhh6urfMDthSx5u+Ow1v5ECY+8vThG5TZ
+ vFayLwsX+BrqFWi6H7LJ7oZGAjfdOlC4sdIvVlUzPMyGrNqv5C/CFnCtgRPXZ+gHbXPE
+ sH4squDquzbWGQcZornq1AcKOtCLU4+sI/OyTNj7AG2SmJUvowPTZelQbgoQuNUdVsnS
+ CBxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792047102; x=1792651902;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=4DL+SBQ2Ss3ATMiGsknsh3lcVREWPyJVJydoWib4YtU=;
- b=za++YlSPcAlAnGqFqNR7FHZ8HXJoRVtQHmatvv9Z/v0e7ytqasUQPhfObKxlt9UJZY
- vJ6qJ3QPXSSxq7kdoKGWDfytNQupg330/tcFXSFzIJSLRKw79n270+siGIHtnCHL3CiA
- p05Kc4QCKoFb8gRx1IENf4X+J1HSro+A+/FZlyp4QeLgzwZ8JB5svTMc9YTD3BwCIj4c
- +PuyzUxkAKwXicN2UCyukti4FGeIV6yLd42FoIaVeHyB0pRD/7xvViiYjwUttBXlx429
- 7BlBf87ef4SIoInmNUQongB9UC7dDQZuRhSx+2imx4HkxlWRynG0JF1TvcppEcvrLmqR
- 54Lg==
-X-Gm-Message-State: AFq9FYL2X4eCb/7eB4ifoH6ytKaBNVqtfpm2oas4lnMJY2El9NYxZuYb
- oxu9y0byRSKh9Gm8+X6WHbAcQl+W0cKhGiWwfFcI7SwEDpE9AwLo7U2b/IP8/HZtHwKj2EBgZ7L
- wSJ3GGO3SeW/8edurxLsEC1sUejD2qICqBwmv3QqyISX0pTNamOlWkSl6L++iRQqCHA==
-X-Gm-Gg: AYBFou1p4bRM/nl/Lwe2yhX1TUPR8fWCqPJgcyaFOoNXxWGuOdRChIb78Ew/FAwOR1c
- cR5waoPG4+rkwCkwkqdfBIBi66Qq+kTigU9FtaYB78dMFiB3mE9rngtiomC/DQ0ZdJPkxpoKdIe
- /KE7YogiIJ6oK9LsXEaa6BpPPLwmC9s/iSK3z38OaYfR28q2ecVU6smB9ihGQTwm5vAqnjlmZ41
- ja2bBZGTXTEm6maAfruFlC0O2ZgGZIORikRDtjuskAjuWL0vGUdwXU3YIfkB5ef9DlScnZyYKvb
- +ZkCR71Pkvkb98ttBWQ2/j+RWKisCaLh87FscfsGwOZzidrI0SIyHahIgDa4sCNLPHPEE9z7jUe
- U0WwfBs6i50pa1+m4I9uUt3Q5s2b/6H096luegfM26n+CE/afZmr3+NY1ZcfUcqIg1Rx+5T8Ir2
- gMS/rRNnQRVeM=
-X-Received: by 2002:a05:7022:1584:b0:143:4d12:396d with SMTP id
- a92af1059eb24-16a61a6def5mr33427291c88.26.1792047101728; 
- Wed, 14 Oct 2026 23:51:41 -0700 (PDT)
-X-Received: by 2002:a05:7022:1584:b0:143:4d12:396d with SMTP id
- a92af1059eb24-16a61a6def5mr33427204c88.26.1792047100330; 
- Wed, 14 Oct 2026 23:51:40 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1792047088; x=1792651888;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=f1sTy+kSh45LyG93o2ZkLR2eDpL1z0lgD9cBUFAQBRs=;
+ b=MebuzdT4duh6KgibjXrHpgzz/2R/N8BpDE7hFQerHTMN9j9UkTGqpSD8xRfATowH62
+ ML8+6Qo1nLh2NegJ0i+JAgb3EqNmJFv2E8Noh6wyqjId6TJyFv01OT+Dp1a+c+zl7Ch2
+ J35sOwuf9wk1BZluVnbY3PVzwE8NGN3ox9Scz+BsK+1+FM+pPa7RSOB93hjzISX8d7g1
+ e076O+Dx1UMpwZdIpohiEFW9fELD+4QJnCQCmYpEW2XkySJQigNhI70GZFFUKSNeVsfX
+ cnOo9Mhg+2LPLkHbHip0XVapIVVJBP8lzL0kkS+DS0rU/cO7FmSl18jXVmvbDE7P9Taz
+ 5Xpw==
+X-Gm-Message-State: AFq9FYJaXwirLkhUwkQp8bi0Xd92IosQ4b5Zq53CScEfMGqssCW5Qz4z
+ fOJg1tjAzMfnNJDSyHKF0gW7p90IjmRyn2xhjAi8N/KWCLTaBNHpatOso+DBou8XknOmbwrXKEB
+ tAhCNgLIlDovu9YgooKyel5kIHUTNmemLQH2697zY84evjcczhjS8z+whykRrAfSJEQ==
+X-Gm-Gg: AYBFou33EvO9UsYsBoIgv+pcdf0+ch0LiJUw/pVAbx0OdV5l+v6suc8orjJAETDIErS
+ OfpkpJ7knAOFeVJ/PFnGWrQqLg/3OJ6K/xCVIYZkl/6Sogh8C/tGzJF2I+HBKul6GNMF9y3oKQV
+ JRXWPhqjHZRCT/kSjTlx/8X0ytxNCjHPdWrH9rOb82LPqq8nt9QHvW9Q9GHPD8xi8ehoxyekH3E
+ ixHgbUwlKb5f5QLuvj1jxnFBgIdN1fQKuZkY0r9mK3PBt53g5AdMhfY9axQgmH1Ot5GeyNG1kv2
+ D/i0ior1927Hd3Pqdjt6aPa+uYJAYFzNtHoj53wdkN7wOKrjVIKJLQcLMllbgjkZZ9YpANPHzg2
+ j5c+XUrEDx9sWpxgL/PAZsAFgALXZljJx/GpeA+fLnzIYm/zRZ0M2LC8g0WLpHvNLo0C+JBrMkc
+ QwBF+NLuw3JKk=
+X-Received: by 2002:a05:701b:2086:20b0:149:1b5b:1f25 with SMTP id
+ a92af1059eb24-16a5adfc081mr25454367c88.15.1792047087704; 
+ Wed, 14 Oct 2026 23:51:27 -0700 (PDT)
+X-Received: by 2002:a05:701b:2086:20b0:149:1b5b:1f25 with SMTP id
+ a92af1059eb24-16a5adfc081mr25454344c88.15.1792047087169; 
+ Wed, 14 Oct 2026 23:51:27 -0700 (PDT)
 Received: from hu-sunilvl-blr.qualcomm.com
  (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com. [103.229.18.19])
  by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-169a442956asm67451789c88.16.2026.10.14.23.51.34
+ a92af1059eb24-169a442956asm67451789c88.16.2026.10.14.23.51.21
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 14 Oct 2026 23:51:39 -0700 (PDT)
+ Wed, 14 Oct 2026 23:51:26 -0700 (PDT)
 From: Sunil V L <sunilvl@oss.qualcomm.com>
 To: qemu-devel@nongnu.org, qemu-riscv@nongnu.org
 Cc: Palmer Dabbelt <palmer@dabbelt.com>,
@@ -99,41 +98,37 @@ Cc: Palmer Dabbelt <palmer@dabbelt.com>,
  Anup Patel <anup.patel@oss.qualcomm.com>,
  Drew Fustini <fustini@kernel.org>, Prajwal N <prajwal.n@oss.qualcomm.com>,
  Shankar C <shankar.c@oss.qualcomm.com>,
- Sunil V L <sunilvl@oss.qualcomm.com>,
- Sia Jee Heng <jeeheng.sia@starfivetech.com>
-Subject: [PATCH v2 2/4] hw/riscv/virt: Add ACPI PPTT table
-Date: Thu, 15 Oct 2026 12:19:55 +0530
-Message-ID: <20261015064957.4076464-3-sunilvl@oss.qualcomm.com>
+ Sunil V L <sunilvl@oss.qualcomm.com>
+Subject: [PATCH v2 0/4] RISC-V: ACPI: Add PPTT support
+Date: Thu, 15 Oct 2026 12:19:53 +0530
+Message-ID: <20261015064957.4076464-1-sunilvl@oss.qualcomm.com>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20261015064957.4076464-1-sunilvl@oss.qualcomm.com>
-References: <20261015064957.4076464-1-sunilvl@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDE1MDAyNyBTYWx0ZWRfX0FrqsIAq/yyE
- jkhgsoIK9Oej3IlJe+97Ih3I0GLJKew64qoR9HRXRUUn5nz9fE6GeZeoW4nyt8yYrnDjwUo4aQR
- olhNFsXOR9Yx07+7kAfZq1sc25cwJZo=
-X-Proofpoint-ORIG-GUID: 0PyUiSnezpyA66bpyf6cBLJeD0S88Pj6
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDE1MDAyNyBTYWx0ZWRfXxk+0EizRcX2e
- 3L1bAAPCGp3TmLz5+/dwPiD3K0BHrJQtBkQasJbrplQsrG6IEfetDyEEnnugDHrtbyxMB0Q3hww
- 266xynXyfbvSN06Pp0AOT9MaaTl2uLvE9eV+YuR8I4CRc943dSrsc4Xrk9Zy3aHqsO0PofntHKY
- OtwxVGzfnhd1QS3hojwf21n3+yvFsasVI98nxTFf+/KcOabWKMl4SshGMebbalQL9MHOststski
- FB+LxLDICtG6m/ElTtyinomPIX1P1VRBHh49awpQ7Q74EogCZ/rCQtFNh/ccOL5yB0FGtGQrH7E
- 7FMNEWc24kvaChhIdMRsKOzLu9pCAakezVcd2WxZysxd2JUUh8FvEU5ilQMgN9rsb9SQr/SnXUq
- ccVoS9IogYspX0mBEMPmhIHKg64P0w8BX2N7eFqAtvTX3nQJ3wU3Mm0a9eI7zRxEaJfEqPKsXaR
- FYhOo7S4ZZgj321RhOQ==
-X-Authority-Analysis: v=2.4 cv=E8BYNqdl c=1 sm=1 tr=0 ts=6ad077fe cx=c_pps
- a=JYo30EpNSr/tUYqK9jHPoA==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDE1MDAyNyBTYWx0ZWRfXxgmLIWvSYbv8
+ gxVQ/2E/3vWC/eM5AQ7UcVQ+lR8Pt7vHdDg0DFt9l9OeZUY0aDR9G9QXMhdAh6l3WHvMFuTxk2k
+ 8vYjP3RS+pF+zBoL9OCNiFXOOjeAbsM=
+X-Authority-Analysis: v=2.4 cv=K9u3jCWI c=1 sm=1 tr=0 ts=6ad077f0 cx=c_pps
+ a=SvEPeNj+VMjHSW//kvnxuw==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
  a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22 a=EUspDBNiAAAA:8
- a=Bq6zwJu1AAAA:8 a=bgGojp78X7_NmGY_0FYA:9 a=Fk4IpSoW4aLDllm1B1p-:22
- a=KQ6X2bKhxX7Fj2iT9C4S:22
-X-Proofpoint-GUID: 0PyUiSnezpyA66bpyf6cBLJeD0S88Pj6
+ a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22 a=mDV3o1hIAAAA:8
+ a=Lpe6bjFTOsfE0dEvvBYA:9 a=Kq8ClHjjuc5pcCNDwlU0:22
+X-Proofpoint-GUID: TLsaUi85zcJsyPfIMpqQIPE0O7lWTPwO
+X-Proofpoint-ORIG-GUID: TLsaUi85zcJsyPfIMpqQIPE0O7lWTPwO
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDE1MDAyNyBTYWx0ZWRfX1vhinf6ydb11
+ HQxQjzhsti868Im09wvcuX510zYHiF0qvJ2af4be7qklhp2QkNpDVeSfCozQguenNIwmJV4B/KA
+ 5yQLTxpi5V/OFrIizGuTIrqU07CZHTokYmqNfYlLPNCuOcmpEH+Hrj10+xWPsIcpPmE6ZQF/jiE
+ N/3cKBsb7Us9M+m7BTPB32ZOkURDPZn6Pn39NJjBxzt+i+Yfjbk1aKjPnPfbVlgp++9RWsubcQH
+ l4F2rkNVT9rd1f3D+yKdf3SFYNSHMXgDwbXtaGD0QC1d8S+BoaM5CgF+oAVfs9ixCzH/MZUVHOS
+ GfQB/UrqcxBhaCsgWgYfR+8p/p/EyHoVz0rUeixcP5ByHzfCqt/XYHbmvt2VMMiTJt8Q0YKzRza
+ GH/PB4dAmB0TwE4HS3KKtJ8Yja6UN00xJ7dmeS962knEPCIbg9TWwROzjcka+sE9r6h/A2DISQN
+ OGYq0K9uC6sjnGPP5Cw==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-10-13_01,2026-10-14_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 impostorscore=0 suspectscore=0 malwarescore=0 spamscore=0
- bulkscore=0 adultscore=0 priorityscore=1501 lowpriorityscore=0 phishscore=0
+ malwarescore=0 adultscore=0 clxscore=1015 spamscore=0 priorityscore=1501
+ phishscore=0 suspectscore=0 lowpriorityscore=0 impostorscore=0 bulkscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2610080000 definitions=main-2610150027
 Received-SPF: pass client-ip=205.220.180.131;
@@ -160,142 +155,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Generate the Processor Properties Topology Table (PPTT) for the RISC-V
-virt machine.
+Hi all,
 
-Describe the machine using separate L1 data and instruction caches plus
-unified L2 and L3 caches, and enable the corresponding cache and cluster
-SMP properties.
+This series adds ACPI Processor Properties Topology Table (PPTT) support to
+the RISC-V virt machine. PPTT allows the guest to discover the processor and
+cache topology exposed by the machine, which is useful for making better
+scheduling and cache-management decisions.
 
-Signed-off-by: Sunil V L <sunilvl@oss.qualcomm.com>
-Signed-off-by: Sia Jee Heng <jeeheng.sia@starfivetech.com>
----
- hw/riscv/virt-acpi-build.c |  7 ++++++
- hw/riscv/virt.c            | 51 ++++++++++++++++++++++++++++++++++++++
- include/hw/riscv/virt.h    |  4 +++
- 3 files changed, 62 insertions(+)
+The implementation describes the RISC-V virt cache hierarchy with separate
+L1 instruction and data caches, followed by unified L2 and L3 caches. It also
+enables the corresponding cache and cluster properties in the machine SMP
+description and wires the generated PPTT into the existing ACPI table
+build.
 
-diff --git a/hw/riscv/virt-acpi-build.c b/hw/riscv/virt-acpi-build.c
-index 0475dcb5c601..8254f1294a72 100644
---- a/hw/riscv/virt-acpi-build.c
-+++ b/hw/riscv/virt-acpi-build.c
-@@ -882,7 +882,10 @@ static void virt_acpi_build(RISCVVirtState *s, AcpiBuildTables *tables)
-     unsigned dsdt, xsdt;
-     GArray *tables_blob = tables->table_data;
-     MachineState *ms = MACHINE(s);
-+    CPUCoreCaches caches[CPU_MAX_CACHES];
-+    unsigned int num_caches;
- 
-+    num_caches = virt_get_caches(caches);
-     table_offsets = g_array_new(false, true,
-                                 sizeof(uint32_t));
- 
-@@ -909,6 +912,10 @@ static void virt_acpi_build(RISCVVirtState *s, AcpiBuildTables *tables)
-         build_rimt(tables_blob, tables->linker, s);
-     }
- 
-+    acpi_add_table(table_offsets, tables_blob);
-+    build_pptt(tables_blob, tables->linker, ms, s->oem_id,
-+               s->oem_table_id, num_caches, caches);
-+
-     acpi_add_table(table_offsets, tables_blob);
- 
-     if (ms->acpi_spcr_enabled) {
-diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-index d4b501802f60..c84b17a40125 100644
---- a/hw/riscv/virt.c
-+++ b/hw/riscv/virt.c
-@@ -109,6 +109,45 @@ static const MemMapEntry virt_memmap[] = {
-     [VIRT_DRAM] =         { 0x80000000,           0x0 },
- };
- 
-+static CPUCoreCaches virt_caches[] = {
-+    {
-+        .type = DATA_CACHE,
-+        .sets = 256,
-+        .size = 64 * KiB,
-+        .level = 1,
-+        .linesize = 64,
-+        .attributes = 0x0,
-+        .associativity = 4,
-+    },
-+    {
-+        .type = INSTRUCTION_CACHE,
-+        .sets = 256,
-+        .size = 64 * KiB,
-+        .level = 1,
-+        .linesize = 64,
-+        .attributes = 0x0,
-+        .associativity = 4,
-+    },
-+    {
-+        .type = UNIFIED_CACHE,
-+        .sets = 4096,
-+        .size = 2048 * KiB,
-+        .level = 2,
-+        .linesize = 64,
-+        .attributes = 0x0,
-+        .associativity = 8,
-+    },
-+    {
-+        .type = UNIFIED_CACHE,
-+        .sets = 8192,
-+        .size = 4096 * KiB,
-+        .level = 3,
-+        .linesize = 64,
-+        .attributes = 0x0,
-+        .associativity = 8,
-+    },
-+};
-+
- /* PCIe high mmio is fixed for RV32 */
- #define VIRT32_HIGH_PCIE_MMIO_BASE  0x300000000ULL
- #define VIRT32_HIGH_PCIE_MMIO_SIZE  (4 * GiB)
-@@ -140,6 +179,12 @@ static void virt_flash_map(RISCVVirtState *s,
-                          sysmem, VIRT_FLASH_SECTOR_SIZE);
- }
- 
-+unsigned int virt_get_caches(CPUCoreCaches *caches)
-+{
-+    memcpy(caches, virt_caches, sizeof(virt_caches));
-+    return ARRAY_SIZE(virt_caches);
-+}
-+
- static void create_fdt_socket_plic(RISCVVirtState *s,
-                                    int socket,
-                                    uint32_t *phandle, uint32_t *intc_phandles,
-@@ -1144,6 +1189,12 @@ static void virt_machine_class_init(ObjectClass *oc, const void *data)
-     mc->cpu_index_to_instance_props = riscv_numa_cpu_index_to_props;
-     mc->get_default_cpu_node_id = riscv_numa_get_default_cpu_node_id;
-     mc->numa_mem_supported = true;
-+    mc->smp_props.clusters_supported = true;
-+    mc->smp_props.cache_supported[CACHE_LEVEL_AND_TYPE_L1D] = true;
-+    mc->smp_props.cache_supported[CACHE_LEVEL_AND_TYPE_L1I] = true;
-+    mc->smp_props.cache_supported[CACHE_LEVEL_AND_TYPE_L2] = true;
-+    mc->smp_props.cache_supported[CACHE_LEVEL_AND_TYPE_L3] = true;
-+
-     /* platform instead of architectural choice */
-     mc->cpu_cluster_has_numa_boundary = true;
-     mc->default_ram_id = "riscv_virt_board.ram";
-diff --git a/include/hw/riscv/virt.h b/include/hw/riscv/virt.h
-index e516898f9ad9..1e498a4f5f6e 100644
---- a/include/hw/riscv/virt.h
-+++ b/include/hw/riscv/virt.h
-@@ -121,10 +121,14 @@ enum {
- #define VIRT_PLIC_SIZE(__num_context) \
-     (VIRT_PLIC_CONTEXT_BASE + (__num_context) * VIRT_PLIC_CONTEXT_STRIDE)
- 
-+#define CPU_MAX_CACHES 16
-+
- bool virt_is_acpi_enabled(RISCVVirtState *s);
- bool virt_is_iommu_sys_enabled(RISCVVirtState *s);
- void virt_acpi_setup(RISCVVirtState *vms);
- 
-+unsigned int virt_get_caches(CPUCoreCaches *caches);
-+
- /*
-  * The virt machine physical address space used by some of the devices
-  * namely ACLINT, PLIC, APLIC, and IMSIC depend on number of Sockets,
+Unlike ARM, RISC-V doesn't have a way to discover the Cache
+topology from registers. Hence, I am hardcoding default values for the
+cache topology structures. These cache topology structures are added in
+virt.c itself so that a future series can add support for DT as well. In
+future, it can be enhanced to support vendor cpu/soc specific cache
+information to override this default hardcoded cache details.
+
+The series also updates the bios-tables-test data and removes the temporary
+PPTT entry from the allowed-diff list. The generated table is 96 bytes and
+describes the package, cluster, and processor hierarchy for the virt machine.
+
+This work follows the discussion and earlier work shared here:
+https://lists.gnu.org/archive/html/qemu-riscv/2024-01/msg00928.html
+
+I have retained the contribution from Sia Jee Heng and added his
+Signed-off-by tag to the relevant patch.
+
+To enable cache structures in the PPTT, one should use similar to below
+command line option.
+
+-M virt,smp-cache.0.cache=l1d,smp-cache.0.topology=core,smp-cache.1.cache=l1i,smp-cache.1.topology=core,smp-cache.2.cache=l2,smp-cache.2.topology=cluster,smp-cache.3.cache=l3,smp-cache.3.topology=socket
+
+lscpu -C in linux can be used to display these cache structures.
+
+Changes from v1:
+	1) Replaced loop with memcpy
+	2) Made virt_caches static in virt.c
+	3) Added Daniel's RB tags
+
+Sunil V L (4):
+
+Sunil V L (4):
+  tests/qtest/bios-tables-test: Allow PPTT for RISC-V
+  hw/riscv/virt: Add ACPI PPTT table
+  tests/qtest/bios-tables-test: Update riscv64 virt PPTT golden
+    reference
+  MAINTAINERS: Update Sunil's email id
+
+ MAINTAINERS                       |   2 +-
+ hw/riscv/virt-acpi-build.c        |   7 ++++
+ hw/riscv/virt.c                   |  51 ++++++++++++++++++++++++++++++
+ include/hw/riscv/virt.h           |   4 +++
+ tests/data/acpi/riscv64/virt/PPTT | Bin 0 -> 96 bytes
+ 5 files changed, 63 insertions(+), 1 deletion(-)
+ create mode 100644 tests/data/acpi/riscv64/virt/PPTT
+
 -- 
 2.43.0
 
