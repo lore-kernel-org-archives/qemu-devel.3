@@ -4,51 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45EABCC6B33
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 13:46:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3E3BCC6B34
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 13:46:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHLlr-0000Sa-Bz; Thu, 15 Oct 2026 09:45:23 -0400
+	id 1xHLmO-0000jF-BP; Thu, 15 Oct 2026 09:45:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <liumingliang.dev@bytedance.com>)
- id 1xHLln-0000Rq-V7
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 09:45:20 -0400
+ id 1xHLmC-0000Y7-BX
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 09:45:45 -0400
 Received: from va-1-115.ptr.blmpb.com ([209.127.230.115])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <liumingliang.dev@bytedance.com>)
- id 1xHLlk-0000Cd-4d
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 09:45:19 -0400
+ id 1xHLm9-0000Fw-Qy
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 09:45:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- s=2212171451; d=bytedance.com; t=1792071910; h=from:subject:
+ s=2212171451; d=bytedance.com; t=1792071937; h=from:subject:
  mime-version:from:date:message-id:subject:to:cc:reply-to:content-type:
  mime-version:in-reply-to:message-id;
- bh=fXN5+Du69GLIzo6VxCrefaXCvokJNSl5Etjg9VpB9OQ=;
- b=QLWgu0G2lx7/ELYqE+S2FY/61Mmx5vGKGmC1KjyoPC57Mkei+WIovX6b5meRqoXlRkzxw+
- FvZ/fi+S5wRN/wjtBiT2Ss5yRSs59cSvEUJyfdmDuZKCsF9Zo1jG/ldXCDnjuNbpUvXQP3
- vkjeCVuZi3TKNOE9Pz+fDU8WIcc/b2+DfesSw4mOEOe66PcsHYcchF9OYRwOO0uEsHdjQr
- pmpVL4VC2F1Adlyj7dfIQGgMWJyJ/0MSkwMedU2qCSt8+ykCDHK/iNibxfAnq3F/edLxEJ
- PZNutUGoa1LKqeWycSww/mYmEGCkNVzK2pMDwEGuoHckdxGdfLUgC3jjv4cUxA==
-References: <20261015134337.3354723-1-liumingliang.dev@bytedance.com>
-Content-Transfer-Encoding: 7bit
-Message-Id: <20261015134337.3354723-2-liumingliang.dev@bytedance.com>
+ bh=6lcUjfiazzLw26A7lj7n2AZ9mByxDvOo/ROJdPVBUQU=;
+ b=KqJcD5CneLeYoEPCnG74wWSy7G1vorwOQB6st+m3dzGuqQ+7g9XksKmovwX1yz9IFYyHfl
+ RxL8SNyodQrX7r8qrEPn9Mj9qpKVF8V1VVGDQh2Jo6crBAbigsaLHo+ikO3ecjJvSD89IR
+ /lswLV+AKV0wlQQwINOF8aSDVjROpJpj9/Zsi12i8KqaJFNkMcd8hVTRSTxyc2lvurbMWE
+ rCe0dLqxUwfBKo/875qZNNXbwkuWm0QQfWmREyWWExnBG2kbD7wytYm+n5q9KZt94f5nE1
+ w3bkMzf8Ku+CrbcbPcMzVe/k8rqZAu+sssfH3NtSe/sPsZA7PwSs8z7UkDvcnQ==
+Date: Thu, 15 Oct 2026 21:43:37 +0800
 X-Original-From: Mingliang Liu <liumingliang.dev@bytedance.com>
 Content-Type: text/plain; charset=UTF-8
+X-Mailer: git-send-email 2.39.5
+X-Lms-Return-Path: <lba+26ad0d900+05cfcb+nongnu.org+liumingliang.dev@bytedance.com>
 Cc: <qemu-riscv@nongnu.org>, <palmer@dabbelt.com>, 
  <Alistair.Francis@wdc.com>, <zhiwei_liu@linux.alibaba.com>, 
  <liwei1518@gmail.com>, <daniel.barboza@oss.qualcomm.com>, 
  <chao.liu@processmission.com>, <richard.henderson@linaro.org>, 
- "Zhibo Hong" <hongzhibo@bytedance.com>, "Joel Stanley" <joel@jms.id.au>, 
  "Mingliang Liu" <liumingliang.dev@bytedance.com>
-Subject: [PATCH v4 1/3] target/riscv: Add support for the Zvabd extension
-Mime-Version: 1.0
 From: "Mingliang Liu" <liumingliang.dev@bytedance.com>
-Date: Thu, 15 Oct 2026 21:43:35 +0800
-X-Lms-Return-Path: <lba+26ad0d8e4+7a2667+nongnu.org+liumingliang.dev@bytedance.com>
-X-Mailer: git-send-email 2.39.5
+Message-Id: <20261015134337.3354723-4-liumingliang.dev@bytedance.com>
+Mime-Version: 1.0
 In-Reply-To: <20261015134337.3354723-1-liumingliang.dev@bytedance.com>
 To: <qemu-devel@nongnu.org>
+Subject: [PATCH v4 3/3] tests/tcg/riscv64: Add Zvabd extension tests
+Content-Transfer-Encoding: 7bit
+References: <20261015134337.3354723-1-liumingliang.dev@bytedance.com>
 Received-SPF: pass client-ip=209.127.230.115;
  envelope-from=liumingliang.dev@bytedance.com; helo=va-1-115.ptr.blmpb.com
 X-Spam_score_int: -20
@@ -56,7 +55,7 @@ X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -72,319 +71,702 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhibo Hong <hongzhibo@bytedance.com>
+Add a RV64 TCG test covering the masked and unmasked vector-vector
+and vector-scalar forms of vabd, vabdu, vwabda, and vwabdau.
 
-The draft Zvabd extension version 0.9 provides vector integer
-absolute-difference operations for image, video, and other
-data-processing workloads. It introduces eight new instructions:
+Assemblers do not yet support the version 0.9 instruction mnemonics,
+so the instruction encodings are hardcoded for the time being.
 
-  - vabd.vv, vabd.vx, vabdu.vv, and vabdu.vx support SEW values from
-    8 through ELEN, with SEW 64 requiring Zve64x.
-  - vwabda.vv, vwabda.vx, vwabdau.vv, and vwabdau.vx support SEW 8
-    and 16 and accumulate into a double-width destination.
+GNU binutils 2.47 supports the incompatible version 0.7 instruction
+encodings. Therefore, this test must not be built with that version,
+even after it is converted to use instruction mnemonics.
 
-This patch implements the extension, including instruction decoding,
-TCG translation, and helper functions. This implementation targets
-version 0.9, whose instruction encodings differ from version 0.7.
-
-The specification is under review at:
-https://github.com/riscv/riscv-isa-manual/pull/3279
-
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Reviewed-by: Joel Stanley <joel@jms.id.au>
-Signed-off-by: Zhibo Hong <hongzhibo@bytedance.com>
+Co-Author: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 Signed-off-by: Mingliang Liu <liumingliang.dev@bytedance.com>
 ---
- disas/riscv-op.c.inc                        |  8 +++
- disas/riscv.c                               |  8 +++
- target/riscv/cpu.c                          |  1 +
- target/riscv/cpu_cfg_fields.h.inc           |  1 +
- target/riscv/helper.h                       | 26 ++++++++++
- target/riscv/insn32.decode                  | 10 ++++
- target/riscv/tcg/insn_trans/trans_rvv.c.inc | 45 +++++++++++++++++
- target/riscv/tcg/tcg-cpu.c                  |  6 +++
- target/riscv/tcg/vector_helper.c            | 56 +++++++++++++++++++++
- 9 files changed, 161 insertions(+)
+ tests/tcg/riscv64/system/meson.build |   1 +
+ tests/tcg/riscv64/test-zvabd.S       | 659 +++++++++++++++++++++++++++
+ 2 files changed, 660 insertions(+)
+ create mode 100644 tests/tcg/riscv64/test-zvabd.S
 
-diff --git a/disas/riscv-op.c.inc b/disas/riscv-op.c.inc
-index 1d334e4857..07b56f5d52 100644
---- a/disas/riscv-op.c.inc
-+++ b/disas/riscv-op.c.inc
-@@ -490,6 +490,10 @@ OP(vaadd_vv, "vaadd.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm)
- OP(vaadd_vx, "vaadd.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm)
- OP(vaaddu_vv, "vaaddu.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm)
- OP(vaaddu_vx, "vaaddu.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm)
-+OP(vabd_vv, "vabd.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm)
-+OP(vabd_vx, "vabd.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm)
-+OP(vabdu_vv, "vabdu.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm)
-+OP(vabdu_vx, "vabdu.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm)
- OP(vadc_vim, "vadc.vim", rv_codec_v_i, rv_fmt_vd_vs2_imm_vl)
- OP(vadc_vvm, "vadc.vvm", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vl)
- OP(vadc_vxm, "vadc.vxm", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vl)
-@@ -861,6 +865,10 @@ OP(vsuxei16_v, "vsuxei16.v", rv_codec_v_r, rv_fmt_ldst_vd_rs1_vs2_vm)
- OP(vsuxei32_v, "vsuxei32.v", rv_codec_v_r, rv_fmt_ldst_vd_rs1_vs2_vm)
- OP(vsuxei64_v, "vsuxei64.v", rv_codec_v_r, rv_fmt_ldst_vd_rs1_vs2_vm)
- OP(vsuxei8_v, "vsuxei8.v", rv_codec_v_r, rv_fmt_ldst_vd_rs1_vs2_vm)
-+OP(vwabda_vv, "vwabda.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm)
-+OP(vwabda_vx, "vwabda.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm)
-+OP(vwabdau_vv, "vwabdau.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm)
-+OP(vwabdau_vx, "vwabdau.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm)
- OP(vwadd_vv, "vwadd.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm)
- OP(vwadd_vx, "vwadd.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm)
- OP(vwadd_wv, "vwadd.wv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm)
-diff --git a/disas/riscv.c b/disas/riscv.c
-index e85dbac035..b0102e47bc 100644
---- a/disas/riscv.c
-+++ b/disas/riscv.c
-@@ -2024,6 +2024,8 @@ static const rv_opcode_data *decode_inst_opcode(rv_decode *dec, rv_isa isa)
-                 case 48: return &op_vwredsumu_vs;
-                 case 49: return &op_vwredsum_vs;
-                 case 53: return &op_vwsll_vv;
-+                case 61: return &op_vwabda_vv;
-+                case 62: return &op_vwabdau_vv;
-                 }
-                 break;
-             case 1:
-@@ -2166,6 +2168,8 @@ static const rv_opcode_data *decode_inst_opcode(rv_decode *dec, rv_isa isa)
-                         break;
-                     }
-                     break;
-+                case 21: return &op_vabd_vv;
-+                case 22: return &op_vabdu_vv;
-                 case 23:
-                     if ((inst >> 25) & 1) {
-                         return &op_vcompress_vm;
-@@ -2351,6 +2355,8 @@ static const rv_opcode_data *decode_inst_opcode(rv_decode *dec, rv_isa isa)
-                 case 46: return &op_vnclipu_wx;
-                 case 47: return &op_vnclip_wx;
-                 case 53: return &op_vwsll_vx;
-+                case 61: return &op_vwabda_vx;
-+                case 62: return &op_vwabdau_vx;
-                 }
-                 break;
-             case 5:
-@@ -2427,6 +2433,8 @@ static const rv_opcode_data *decode_inst_opcode(rv_decode *dec, rv_isa isa)
-                         }
-                     }
-                     break;
-+                case 21: return &op_vabd_vx;
-+                case 22: return &op_vabdu_vx;
-                 case 32: return &op_vdivu_vx;
-                 case 33: return &op_vdiv_vx;
-                 case 34: return &op_vremu_vx;
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index da4c1a090b..e08cb2f356 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -220,6 +220,7 @@ const RISCVIsaExtData isa_edata_arr[] = {
-     ISA_EXT_DATA_ENTRY(zksh, PRIV_VERSION_1_12_0, ext_zksh),
-     ISA_EXT_DATA_ENTRY(zkt, PRIV_VERSION_1_12_0, ext_zkt),
-     ISA_EXT_DATA_ENTRY(ztso, PRIV_VERSION_1_12_0, ext_ztso),
-+    ISA_EXPERIMENTAL_EXT_DATA_ENTRY(zvabd, PRIV_VERSION_1_13_0, ext_zvabd),
-     ISA_EXT_DATA_ENTRY(zvbb, PRIV_VERSION_1_12_0, ext_zvbb),
-     ISA_EXT_DATA_ENTRY(zvbc, PRIV_VERSION_1_12_0, ext_zvbc),
-     ISA_EXT_DATA_ENTRY(zve32f, PRIV_VERSION_1_10_0, ext_zve32f),
-diff --git a/target/riscv/cpu_cfg_fields.h.inc b/target/riscv/cpu_cfg_fields.h.inc
-index f91c780299..6f567612fa 100644
---- a/target/riscv/cpu_cfg_fields.h.inc
-+++ b/target/riscv/cpu_cfg_fields.h.inc
-@@ -83,6 +83,7 @@ BOOL_FIELD(ext_zve32x)
- BOOL_FIELD(ext_zve64f)
- BOOL_FIELD(ext_zve64d)
- BOOL_FIELD(ext_zve64x)
-+BOOL_FIELD(ext_zvabd)
- BOOL_FIELD(ext_zvbb)
- BOOL_FIELD(ext_zvbc)
- BOOL_FIELD(ext_zvkb)
-diff --git a/target/riscv/helper.h b/target/riscv/helper.h
-index aab92bf132..b7acb6fdc9 100644
---- a/target/riscv/helper.h
-+++ b/target/riscv/helper.h
-@@ -1350,6 +1350,32 @@ DEF_HELPER_5(vsm4k_vi, void, ptr, ptr, i32, env, i32)
- DEF_HELPER_4(vsm4r_vv, void, ptr, ptr, env, i32)
- DEF_HELPER_4(vsm4r_vs, void, ptr, ptr, env, i32)
+diff --git a/tests/tcg/riscv64/system/meson.build b/tests/tcg/riscv64/system/meson.build
+index c2d7d09887..4ab0529da4 100644
+--- a/tests/tcg/riscv64/system/meson.build
++++ b/tests/tcg/riscv64/system/meson.build
+@@ -24,6 +24,7 @@ tests += {
+   'test-crc32.S': setup + {'qemu_args': ['-cpu', 'rv64,xlrbr=true', qemu_args]},
+   'test-minstret-ecall.S': setup + {'qemu_args': ['-icount', 'shift=1', qemu_args]},
+   'test-misa-w.S': setup + {'qemu_args': ['-cpu', 'rv64,x-misa-w=true,c=true,v=true', qemu_args]},
++  'test-zvabd.S': setup + {'qemu_args': ['-cpu', 'rv64,v=true,vlen=256,x-zvabd=true', qemu_args]},
+ }
  
-+/* Zvabd Extension */
-+DEF_HELPER_6(vabd_vv_b, void, ptr, ptr, ptr, ptr, env, i32)
-+DEF_HELPER_6(vabd_vv_h, void, ptr, ptr, ptr, ptr, env, i32)
-+DEF_HELPER_6(vabd_vv_w, void, ptr, ptr, ptr, ptr, env, i32)
-+DEF_HELPER_6(vabd_vv_d, void, ptr, ptr, ptr, ptr, env, i32)
-+DEF_HELPER_6(vabd_vx_b, void, ptr, ptr, tl, ptr, env, i32)
-+DEF_HELPER_6(vabd_vx_h, void, ptr, ptr, tl, ptr, env, i32)
-+DEF_HELPER_6(vabd_vx_w, void, ptr, ptr, tl, ptr, env, i32)
-+DEF_HELPER_6(vabd_vx_d, void, ptr, ptr, tl, ptr, env, i32)
-+DEF_HELPER_6(vabdu_vv_b, void, ptr, ptr, ptr, ptr, env, i32)
-+DEF_HELPER_6(vabdu_vv_h, void, ptr, ptr, ptr, ptr, env, i32)
-+DEF_HELPER_6(vabdu_vv_w, void, ptr, ptr, ptr, ptr, env, i32)
-+DEF_HELPER_6(vabdu_vv_d, void, ptr, ptr, ptr, ptr, env, i32)
-+DEF_HELPER_6(vabdu_vx_b, void, ptr, ptr, tl, ptr, env, i32)
-+DEF_HELPER_6(vabdu_vx_h, void, ptr, ptr, tl, ptr, env, i32)
-+DEF_HELPER_6(vabdu_vx_w, void, ptr, ptr, tl, ptr, env, i32)
-+DEF_HELPER_6(vabdu_vx_d, void, ptr, ptr, tl, ptr, env, i32)
-+DEF_HELPER_6(vwabda_vv_b, void, ptr, ptr, ptr, ptr, env, i32)
-+DEF_HELPER_6(vwabda_vv_h, void, ptr, ptr, ptr, ptr, env, i32)
-+DEF_HELPER_6(vwabda_vx_b, void, ptr, ptr, tl, ptr, env, i32)
-+DEF_HELPER_6(vwabda_vx_h, void, ptr, ptr, tl, ptr, env, i32)
-+DEF_HELPER_6(vwabdau_vv_b, void, ptr, ptr, ptr, ptr, env, i32)
-+DEF_HELPER_6(vwabdau_vv_h, void, ptr, ptr, ptr, ptr, env, i32)
-+DEF_HELPER_6(vwabdau_vx_b, void, ptr, ptr, tl, ptr, env, i32)
-+DEF_HELPER_6(vwabdau_vx_h, void, ptr, ptr, tl, ptr, env, i32)
+ tests += {
+diff --git a/tests/tcg/riscv64/test-zvabd.S b/tests/tcg/riscv64/test-zvabd.S
+new file mode 100644
+index 0000000000..4f91acea0c
+--- /dev/null
++++ b/tests/tcg/riscv64/test-zvabd.S
+@@ -0,0 +1,659 @@
++/*
++ * Test the Zvabd vector absolute-difference instructions and the vabs.v
++ * pseudoinstruction.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
 +
- /* CFI (zicfiss) helpers */
- #ifndef CONFIG_USER_ONLY
- DEF_HELPER_1(ssamoswap_disabled, void, env)
-diff --git a/target/riscv/insn32.decode b/target/riscv/insn32.decode
-index aa02dae3c9..288ce8a554 100644
---- a/target/riscv/insn32.decode
-+++ b/target/riscv/insn32.decode
-@@ -1086,3 +1086,13 @@ sb_aqrl  00111 . . ..... ..... 000 ..... 0101111 @atom_st
- sh_aqrl  00111 . . ..... ..... 001 ..... 0101111 @atom_st
- sw_aqrl  00111 . . ..... ..... 010 ..... 0101111 @atom_st
- sd_aqrl  00111 . . ..... ..... 011 ..... 0101111 @atom_st
++	.option arch, +v
++	.option norvc
 +
-+# *** Zvabd Extension ***
-+vabd_vv       010101 . ..... ..... 010 ..... 1010111 @r_vm
-+vabd_vx       010101 . ..... ..... 110 ..... 1010111 @r_vm
-+vabdu_vv      010110 . ..... ..... 010 ..... 1010111 @r_vm
-+vabdu_vx      010110 . ..... ..... 110 ..... 1010111 @r_vm
-+vwabda_vv     111101 . ..... ..... 000 ..... 1010111 @r_vm
-+vwabda_vx     111101 . ..... ..... 100 ..... 1010111 @r_vm
-+vwabdau_vv    111110 . ..... ..... 000 ..... 1010111 @r_vm
-+vwabdau_vx    111110 . ..... ..... 100 ..... 1010111 @r_vm
-diff --git a/target/riscv/tcg/insn_trans/trans_rvv.c.inc b/target/riscv/tcg/insn_trans/trans_rvv.c.inc
-index a22e2cae6c..14ef961607 100644
---- a/target/riscv/tcg/insn_trans/trans_rvv.c.inc
-+++ b/target/riscv/tcg/insn_trans/trans_rvv.c.inc
-@@ -4091,3 +4091,48 @@ GEN_INT_EXT_TRANS(vzext_vf8, 3, 2)
- GEN_INT_EXT_TRANS(vsext_vf2, 1, 3)
- GEN_INT_EXT_TRANS(vsext_vf4, 2, 4)
- GEN_INT_EXT_TRANS(vsext_vf8, 3, 5)
++	.text
 +
-+/* Zvabd Extension */
-+#define GEN_ABD_CHECK(NAME, CHECK_FN, MAX_SEW)                       \
-+static bool NAME(DisasContext *s, arg_rmrr *a)                       \
-+{                                                                    \
-+    return CHECK_FN(s, a) && s->cfg_ptr->ext_zvabd &&                \
-+           s->sew <= MAX_SEW &&                                      \
-+           (s->sew != MO_64 || s->cfg_ptr->ext_zve64x);              \
-+}
-+GEN_ABD_CHECK(vabd_vv_check, opivv_check, MO_64)
-+GEN_ABD_CHECK(vabd_vx_check, opivx_check, MO_64)
-+GEN_ABD_CHECK(vwabd_vv_check, opivv_overwrite_widen_check, MO_16)
-+GEN_ABD_CHECK(vwabd_vx_check, opivx_overwrite_widen_check, MO_16)
++	.global _start
++_start:
++	/* Enable the vector unit (mstatus.VS = Initial). */
++	li	t0, 1 << 9
++	csrs	mstatus, t0
 +
-+GEN_OPIVV_TRANS(vabd_vv, vabd_vv_check)
-+GEN_OPIVX_TRANS(vabd_vx, vabd_vx_check)
-+GEN_OPIVV_TRANS(vabdu_vv, vabd_vv_check)
-+GEN_OPIVX_TRANS(vabdu_vx, vabd_vx_check)
++	/* Route synchronous traps to trap_handler (mtvec direct mode). */
++	la	t0, trap_handler
++	csrw	mtvec, t0
 +
-+#define GEN_ABD_OPIVV_WIDEN_TRANS(NAME, CHECK)                          \
-+static bool trans_##NAME(DisasContext *s, arg_rmrr *a)                  \
-+{                                                                       \
-+    static gen_helper_gvec_4_ptr * const fns[2] = {                     \
-+        gen_helper_##NAME##_b, gen_helper_##NAME##_h,                   \
-+    };                                                                  \
-+    return s->sew <= MO_16 && do_opivv_widen(s, a, fns[s->sew], CHECK); \
-+}
++	/* Run each test function. */
++	call	test_vabs_v
++	bnez	a0, _exit
++	call	test_vabs_v_mask
++	bnez	a0, _exit
 +
-+#define GEN_ABD_OPIVX_WIDEN_TRANS(NAME, CHECK)                          \
-+static bool trans_##NAME(DisasContext *s, arg_rmrr *a)                  \
-+{                                                                       \
-+    if (CHECK(s, a)) {                                                  \
-+        static gen_helper_opivx * const fns[2] = {                      \
-+            gen_helper_##NAME##_b, gen_helper_##NAME##_h,               \
-+        };                                                              \
-+        return opivx_trans(a->rd, a->rs1, a->rs2, a->vm,                \
-+                           fns[s->sew], s);                             \
-+    }                                                                   \
-+    return false;                                                       \
-+}
++	call	test_vabd_vv
++	bnez	a0, _exit
++	call	test_vabd_vv_mask
++	bnez	a0, _exit
 +
-+GEN_ABD_OPIVV_WIDEN_TRANS(vwabda_vv, vwabd_vv_check)
-+GEN_ABD_OPIVX_WIDEN_TRANS(vwabda_vx, vwabd_vx_check)
-+GEN_ABD_OPIVV_WIDEN_TRANS(vwabdau_vv, vwabd_vv_check)
-+GEN_ABD_OPIVX_WIDEN_TRANS(vwabdau_vx, vwabd_vx_check)
-diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-index b68160af83..be2332083c 100644
---- a/target/riscv/tcg/tcg-cpu.c
-+++ b/target/riscv/tcg/tcg-cpu.c
-@@ -731,6 +731,12 @@ void riscv_cpu_validate_set_extensions(RISCVCPU *cpu, Error **errp)
-         return;
-     }
- 
-+    if ((cpu->cfg.ext_zvabd) && !cpu->cfg.ext_zve32x) {
-+        error_setg(errp,
-+                   "Zvabd extensions require V or Zve* extensions");
-+        return;
-+    }
++	call	test_vabd_vx
++	bnez	a0, _exit
++	call	test_vabd_vx_mask
++	bnez	a0, _exit
 +
-     if (cpu->cfg.ext_zicntr && !cpu->cfg.ext_zicsr) {
-         if (cpu_cfg_ext_is_user_set(cpu, CPU_CFG_OFFSET(ext_zicntr))) {
-             error_setg(errp, "zicntr requires zicsr");
-diff --git a/target/riscv/tcg/vector_helper.c b/target/riscv/tcg/vector_helper.c
-index 0d1e4e0964..917a48b510 100644
---- a/target/riscv/tcg/vector_helper.c
-+++ b/target/riscv/tcg/vector_helper.c
-@@ -5911,3 +5911,59 @@ GEN_VEXT_INT_EXT(vsext_vf2_d, int64_t, int32_t, H8, H4)
- GEN_VEXT_INT_EXT(vsext_vf4_w, int32_t, int8_t,  H4, H1)
- GEN_VEXT_INT_EXT(vsext_vf4_d, int64_t, int16_t, H8, H2)
- GEN_VEXT_INT_EXT(vsext_vf8_d, int64_t, int8_t,  H8, H1)
++	call	test_vabdu_vv
++	bnez	a0, _exit
++	call	test_vabdu_vv_mask
++	bnez	a0, _exit
 +
-+/* Zvabd Extension */
-+#define DO_ABD(N, M)  (N > M ? N - M : M - N)
-+#define DO_ABDACC(N, M, D) (DO_ABD(N, M) + D)
++	call	test_vabdu_vx
++	bnez	a0, _exit
++	call	test_vabdu_vx_mask
++	bnez	a0, _exit
 +
-+RVVCALL(OPIVV2, vabd_vv_b, OP_SSS_B, H1, H1, H1, DO_ABD)
-+RVVCALL(OPIVV2, vabd_vv_h, OP_SSS_H, H2, H2, H2, DO_ABD)
-+RVVCALL(OPIVV2, vabd_vv_w, OP_SSS_W, H4, H4, H4, DO_ABD)
-+RVVCALL(OPIVV2, vabd_vv_d, OP_SSS_D, H8, H8, H8, DO_ABD)
-+RVVCALL(OPIVX2, vabd_vx_b, OP_SSS_B, H1, H1, DO_ABD)
-+RVVCALL(OPIVX2, vabd_vx_h, OP_SSS_H, H2, H2, DO_ABD)
-+RVVCALL(OPIVX2, vabd_vx_w, OP_SSS_W, H4, H4, DO_ABD)
-+RVVCALL(OPIVX2, vabd_vx_d, OP_SSS_D, H8, H8, DO_ABD)
-+RVVCALL(OPIVV2, vabdu_vv_b, OP_UUU_B, H1, H1, H1, DO_ABD)
-+RVVCALL(OPIVV2, vabdu_vv_h, OP_UUU_H, H2, H2, H2, DO_ABD)
-+RVVCALL(OPIVV2, vabdu_vv_w, OP_UUU_W, H4, H4, H4, DO_ABD)
-+RVVCALL(OPIVV2, vabdu_vv_d, OP_UUU_D, H8, H8, H8, DO_ABD)
-+RVVCALL(OPIVX2, vabdu_vx_b, OP_UUU_B, H1, H1, DO_ABD)
-+RVVCALL(OPIVX2, vabdu_vx_h, OP_UUU_H, H2, H2, DO_ABD)
-+RVVCALL(OPIVX2, vabdu_vx_w, OP_UUU_W, H4, H4, DO_ABD)
-+RVVCALL(OPIVX2, vabdu_vx_d, OP_UUU_D, H8, H8, DO_ABD)
++	call	test_vwabda_vv
++	bnez	a0, _exit
++	call	test_vwabda_vv_mask
++	bnez	a0, _exit
 +
-+RVVCALL(OPIVV3, vwabda_vv_b, WOP_SSS_B, H2, H1, H1, DO_ABDACC)
-+RVVCALL(OPIVV3, vwabda_vv_h, WOP_SSS_H, H4, H2, H2, DO_ABDACC)
-+RVVCALL(OPIVX3, vwabda_vx_b, WOP_SSS_B, H2, H1, DO_ABDACC)
-+RVVCALL(OPIVX3, vwabda_vx_h, WOP_SSS_H, H4, H2, DO_ABDACC)
-+RVVCALL(OPIVV3, vwabdau_vv_b, WOP_UUU_B, H2, H1, H1, DO_ABDACC)
-+RVVCALL(OPIVV3, vwabdau_vv_h, WOP_UUU_H, H4, H2, H2, DO_ABDACC)
-+RVVCALL(OPIVX3, vwabdau_vx_b, WOP_UUU_B, H2, H1, DO_ABDACC)
-+RVVCALL(OPIVX3, vwabdau_vx_h, WOP_UUU_H, H4, H2, DO_ABDACC)
++	call	test_vwabda_vx
++	bnez	a0, _exit
++	call	test_vwabda_vx_mask
++	bnez	a0, _exit
 +
-+GEN_VEXT_VV(vabd_vv_b, 1)
-+GEN_VEXT_VV(vabd_vv_h, 2)
-+GEN_VEXT_VV(vabd_vv_w, 4)
-+GEN_VEXT_VV(vabd_vv_d, 8)
-+GEN_VEXT_VX(vabd_vx_b, 1)
-+GEN_VEXT_VX(vabd_vx_h, 2)
-+GEN_VEXT_VX(vabd_vx_w, 4)
-+GEN_VEXT_VX(vabd_vx_d, 8)
-+GEN_VEXT_VV(vabdu_vv_b, 1)
-+GEN_VEXT_VV(vabdu_vv_h, 2)
-+GEN_VEXT_VV(vabdu_vv_w, 4)
-+GEN_VEXT_VV(vabdu_vv_d, 8)
-+GEN_VEXT_VX(vabdu_vx_b, 1)
-+GEN_VEXT_VX(vabdu_vx_h, 2)
-+GEN_VEXT_VX(vabdu_vx_w, 4)
-+GEN_VEXT_VX(vabdu_vx_d, 8)
++	call	test_vwabdau_vv
++	bnez	a0, _exit
++	call	test_vwabdau_vv_mask
++	bnez	a0, _exit
 +
-+GEN_VEXT_VV(vwabda_vv_b, 2)
-+GEN_VEXT_VV(vwabda_vv_h, 4)
-+GEN_VEXT_VX(vwabda_vx_b, 2)
-+GEN_VEXT_VX(vwabda_vx_h, 4)
-+GEN_VEXT_VV(vwabdau_vv_b, 2)
-+GEN_VEXT_VV(vwabdau_vv_h, 4)
-+GEN_VEXT_VX(vwabdau_vx_b, 2)
-+GEN_VEXT_VX(vwabdau_vx_h, 4)
++	call	test_vwabdau_vx
++	bnez	a0, _exit
++	call	test_vwabdau_vx_mask
++	bnez	a0, _exit
++
++	j	_exit
++
++test_vabs_v:
++	vsetivli zero, 2, e8, m1, ta, ma
++
++	/* Load .arr_neg array in v1 */
++	la     t0,.arr_neg
++	vle8.v v1,0(t0)
++
++	/* vabs.v v2, v1 (vabd.vx v2, v1, x0) raw opcode */
++	.insn r 0x57, 0x6, 0x2b, x2, x0, x1
++
++	/* Load .arr_pos in v3 */
++	la      t1,.arr_pos
++	vle8.v  v3,0(t1)
++
++	/* Compare v2 and v3 into v0 */
++	vmsne.vv  v0,v2,v3
++	vcpop.m a0,v0
++	snez    a0,a0
++
++	ret
++
++test_vabs_v_mask:
++	vsetivli zero, 2, e8, m1, ta, mu
++
++	/* Load .arr_neg array in v1 */
++	la      t0, .arr_neg
++	vle8.v  v1, 0(t0)
++
++	/* Zero v2 using .arr_zero */
++	la     t0,.arr_zero
++	vle8.v v2,0(t0)
++
++	/* Load .v0_mask array in v0 */
++	la     t1,.v0_mask
++	vle8.v v0,0(t1)
++
++	/* vabs.v v2, v1, v0.t raw opcode */
++	.insn r 0x57, 0x6, 0x2a, x2, x0, x1
++
++	/* Load .arr_masked in v3 */
++	la      t0,.arr_masked
++	vle8.v  v3,0(t0)
++
++	/* Compare v2 and v3 into v0 */
++	vmsne.vv  v0,v2,v3
++	vcpop.m a0,v0
++	snez    a0,a0
++
++	ret
++
++test_vabd_vv:
++	/*
++	 * Test signed vector-vector absolute difference:
++	 * abs({-5, -7} - {5, 7}) = {10, 14}.
++	 */
++	vsetivli zero, 2, e8, m1, ta, mu
++
++	/* Load the two signed source vectors into v1 and v3. */
++	la      t0, .arr_neg
++	vle8.v  v1, 0(t0)
++	la      t0, .arr_pos
++	vle8.v  v3, 0(t0)
++
++	/* Execute vabd.vv v2, v1, v3. */
++	.insn r 0x57, 0x2, 0x2b, x2, x3, x1
++
++	/* Load the expected result into v3. */
++	la      t0, .expect_vabd_vv
++	vle8.v  v3, 0(t0)
++
++	/* Compare v2 and v3 into v0 */
++	vmsne.vv  v0, v2, v3
++	vcpop.m a0, v0
++	snez    a0, a0
++
++	ret
++
++test_vabd_vv_mask:
++	/*
++	 * Test masked vabd.vv.  Element 0 remains 9 and element 1 becomes
++	 * abs(-7 - 7) = 14.
++	 */
++	vsetivli zero, 2, e8, m1, ta, mu
++
++	/* Load the two signed source vectors into v1 and v3. */
++	la      t0, .arr_neg
++	vle8.v  v1, 0(t0)
++	la      t0, .arr_pos
++	vle8.v  v3, 0(t0)
++
++	/* Load original value into v2 */
++	la      t0, .arr_init
++	vle8.v  v2, 0(t0)
++
++	/* Load mask value into v0 */
++	la      t0, .v0_mask
++	vle8.v  v0, 0(t0)
++
++	.insn r 0x57, 0x2, 0x2a, x2, x3, x1
++
++	/* Load the expected result into v3. */
++	la      t0, .expect_vabd_vv_masked
++	vle8.v  v3, 0(t0)
++
++	vmsne.vv  v0, v2, v3
++	vcpop.m a0, v0
++	snez    a0, a0
++	ret
++
++test_vabd_vx:
++	/*
++	 * Test signed vector-scalar absolute difference:
++	 * abs({-5, -7} - 3) = {8, 10}.
++	 */
++	vsetivli zero, 2, e8, m1, ta, mu
++	la      t0, .arr_neg
++	vle8.v  v1, 0(t0)
++	li      a2, 3
++
++	/* Execute vabd.vx v2, v1, a2. */
++	.insn r 0x57, 0x6, 0x2b, x2, x12, x1
++
++	/* Load the expected result into v3. */
++	la      t0, .expect_vabd_vx
++	vle8.v  v3, 0(t0)
++
++	vmsne.vv  v0, v2, v3
++	vcpop.m a0, v0
++	snez    a0, a0
++	ret
++
++test_vabd_vx_mask:
++	/*
++	 * Test masked vabd.vx.  Element 0 remains 9 and element 1 becomes
++	 * abs(-7 - 3) = 10.
++	 */
++	vsetivli zero, 2, e8, m1, ta, mu
++
++	la      t0, .arr_neg
++	vle8.v  v1, 0(t0)
++	li      a2, 3
++
++	la      t0, .arr_init
++	vle8.v  v2, 0(t0)
++
++	la      t0, .v0_mask
++	vle8.v  v0, 0(t0)
++
++	.insn r 0x57, 0x6, 0x2a, x2, x12, x1
++
++	la      t0, .expect_vabd_vx_masked
++	vle8.v  v3, 0(t0)
++
++	vmsne.vv  v0, v2, v3
++	vcpop.m a0, v0
++	snez    a0, a0
++	ret
++
++test_vabdu_vv:
++	/*
++	 * Test unsigned vector-vector absolute difference:
++	 * abs({0, 255} - {255, 0}) = {255, 255}.
++	 */
++	vsetivli zero, 2, e8, m1, ta, mu
++
++	/* Load the two unsigned source vectors into v1 and v3. */
++	la      t0, .arr_unsigned_lhs
++	vle8.v  v1, 0(t0)
++	la      t0, .arr_unsigned_rhs
++	vle8.v  v3, 0(t0)
++
++	/* Execute vabdu.vv v2, v1, v3. */
++	.insn r 0x57, 0x2, 0x2d, x2, x3, x1
++
++	/* Load the expected result into v3. */
++	la      t0, .expect_vabdu_vv
++	vle8.v  v3, 0(t0)
++
++	vmsne.vv  v0, v2, v3
++	vcpop.m a0, v0
++	snez    a0, a0
++	ret
++
++test_vabdu_vv_mask:
++	/*
++	 * Test masked vabdu.vv.  Element 0 remains 9 and element 1 becomes
++	 * abs(255 - 0) = 255.
++	 */
++	vsetivli zero, 2, e8, m1, ta, mu
++
++	la      t0, .arr_unsigned_lhs
++	vle8.v  v1, 0(t0)
++	la      t0, .arr_unsigned_rhs
++	vle8.v  v3, 0(t0)
++
++	la      t0, .arr_init
++	vle8.v  v2, 0(t0)
++
++	la      t0, .v0_mask
++	vle8.v  v0, 0(t0)
++
++	.insn r 0x57, 0x2, 0x2c, x2, x3, x1
++
++	la      t0, .expect_vabdu_vv_masked
++	vle8.v  v3, 0(t0)
++
++	vmsne.vv  v0, v2, v3
++	vcpop.m a0, v0
++	snez    a0, a0
++	ret
++
++test_vabdu_vx:
++	/*
++	 * Test unsigned vector-scalar absolute difference:
++	 * abs({0, 255} - 128) = {128, 127}.
++	 */
++	vsetivli zero, 2, e8, m1, ta, mu
++
++	la      t0, .arr_unsigned_lhs
++	vle8.v  v1, 0(t0)
++	li      a2, 128
++
++	/* Execute vabdu.vx v2, v1, a2. */
++	.insn r 0x57, 0x6, 0x2d, x2, x12, x1
++
++	la      t0, .expect_vabdu_vx
++	vle8.v  v3, 0(t0)
++
++	vmsne.vv  v0, v2, v3
++	vcpop.m a0, v0
++	snez    a0, a0
++	ret
++
++test_vabdu_vx_mask:
++	/*
++	 * Test masked vabdu.vx.  Element 0 remains 9 and element 1 becomes
++	 * abs(255 - 128) = 127.
++	 */
++	vsetivli zero, 2, e8, m1, ta, mu
++
++	la      t0, .arr_unsigned_lhs
++	vle8.v  v1, 0(t0)
++	li      a2, 128
++
++	la      t0, .arr_init
++	vle8.v  v2, 0(t0)
++
++	la      t0, .v0_mask
++	vle8.v  v0, 0(t0)
++
++	.insn r 0x57, 0x6, 0x2c, x2, x12, x1
++
++	la      t0, .expect_vabdu_vx_masked
++	vle8.v  v3, 0(t0)
++
++	vmsne.vv  v0, v2, v3
++	vcpop.m a0, v0
++	snez    a0, a0
++	ret
++
++test_vwabda_vv:
++	/*
++	 * Test signed widening vector-vector absolute difference and
++	 * accumulation. Start with v4 = {1000, -1000}, and the expected
++	 * widened result is {1000, -1000} + abs({-5, -7} - {5, 7}) =
++	 * {1010, -986}.
++	 */
++	/* Load the 16-bit accumulator before selecting 8-bit operands. */
++	vsetivli zero, 2, e16, m2, ta, mu
++	la      t0, .arr_signed_acc
++	vle16.v v4, 0(t0)
++
++	vsetivli zero, 2, e8, m1, ta, mu
++	la      t0, .arr_neg
++	vle8.v  v1, 0(t0)
++	la      t0, .arr_pos
++	vle8.v  v2, 0(t0)
++
++	/* Execute vwabda.vv v4, v1, v2. */
++	.insn r 0x57, 0x0, 0x7b, x4, x2, x1
++
++	/* Select the widened EEW and compare v4 with the expected result. */
++	vsetivli zero, 2, e16, m2, ta, mu
++	la      t0, .expect_vwabda_vv
++	vle16.v v6, 0(t0)
++
++	vmsne.vv  v0, v4, v6
++	vcpop.m a0, v0
++	snez    a0, a0
++	ret
++
++test_vwabda_vv_mask:
++	/*
++	 * Test masked vwabda.vv.
++	 * Start with v4 = {1000, -1000}, v0 = {0, 1}, and the expected widened
++	 * result is {1000, -1000} + abs({-5, -7} - {5, 7}) = {1000, -986}.
++	 */
++	vsetivli zero, 2, e16, m2, ta, mu
++	la      t0, .arr_signed_acc
++	vle16.v v4, 0(t0)
++
++	vsetivli zero, 2, e8, m1, ta, mu
++	la      t0, .arr_neg
++	vle8.v  v1, 0(t0)
++	la      t0, .arr_pos
++	vle8.v  v2, 0(t0)
++
++	la      t0, .v0_mask
++	vle8.v  v0, 0(t0)
++
++	.insn r 0x57, 0x0, 0x7a, x4, x2, x1
++
++	vsetivli zero, 2, e16, m2, ta, mu
++	la      t0, .expect_vwabda_vv_masked
++
++	vle16.v v6, 0(t0)
++	vmsne.vv  v0, v4, v6
++	vcpop.m a0, v0
++	snez    a0, a0
++	ret
++
++test_vwabda_vx:
++	/*
++	 * Test signed widening vector-scalar absolute difference and
++	 * accumulation. With scalar 3, v4 becomes {1000 + 8, -1000 + 10}.
++	 */
++	/* Load the 16-bit accumulator before selecting 8-bit operands. */
++	vsetivli zero, 2, e16, m2, ta, mu
++	la      t0, .arr_signed_acc
++	vle16.v v4, 0(t0)
++
++	vsetivli zero, 2, e8, m1, ta, mu
++	la      t0, .arr_neg
++	vle8.v  v1, 0(t0)
++	li      a2, 3
++
++	/* Execute vwabda.vx v4, v1, a2. */
++	.insn r 0x57, 0x4, 0x7b, x4, x12, x1
++
++	/* Select the widened EEW and compare v4 with the expected result. */
++	vsetivli zero, 2, e16, m2, ta, mu
++	la      t0, .expect_vwabda_vx
++	vle16.v v6, 0(t0)
++
++	vmsne.vv  v0, v4, v6
++	vcpop.m a0, v0
++	snez    a0, a0
++	ret
++
++test_vwabda_vx_mask:
++	/*
++	 * Test masked vwabda.vx.  Element 0 remains 1000 while element 1
++	 * accumulates 10 and becomes -990.
++	 */
++	vsetivli zero, 2, e16, m2, ta, mu
++
++	la      t0, .arr_signed_acc
++	vle16.v v4, 0(t0)
++
++	vsetivli zero, 2, e8, m1, ta, mu
++	la      t0, .arr_neg
++	vle8.v  v1, 0(t0)
++	li      a2, 3
++
++	la      t0, .v0_mask
++	vle8.v  v0, 0(t0)
++
++	.insn r 0x57, 0x4, 0x7a, x4, x12, x1
++
++	vsetivli zero, 2, e16, m2, ta, mu
++	la      t0, .expect_vwabda_vx_masked
++	vle16.v v6, 0(t0)
++
++	vmsne.vv  v0, v4, v6
++	vcpop.m a0, v0
++	snez    a0, a0
++	ret
++
++test_vwabdau_vv:
++	/*
++	 * Test unsigned widening vector-vector absolute difference and
++	 * accumulation. Start with v4 = {1000, 2000}, adding {255, 255}
++	 * produces {1255, 2255}.
++	 */
++	/* Load the unsigned 16-bit accumulator and 8-bit source vectors. */
++	vsetivli zero, 2, e16, m2, ta, mu
++
++	la      t0, .arr_unsigned_acc
++	vle16.v v4, 0(t0)
++	vsetivli zero, 2, e8, m1, ta, mu
++
++	la      t0, .arr_unsigned_lhs
++	vle8.v  v1, 0(t0)
++	la      t0, .arr_unsigned_rhs
++	vle8.v  v2, 0(t0)
++
++	/* Execute vwabdau.vv v4, v1, v2. */
++	.insn r 0x57, 0x0, 0x7d, x4, x2, x1
++
++	/* Select the widened EEW and compare v4 with the expected result. */
++	vsetivli zero, 2, e16, m2, ta, mu
++	la      t0, .expect_vwabdau_vv
++	vle16.v v6, 0(t0)
++
++	vmsne.vv  v0, v4, v6
++	vcpop.m a0, v0
++	snez    a0, a0
++	ret
++
++test_vwabdau_vv_mask:
++	/*
++	 * Test masked vwabdau.vv.  Element 0 remains 1000 while element 1
++	 * accumulates 255 and becomes 2255.
++	 */
++	vsetivli zero, 2, e16, m2, ta, mu
++
++	la      t0, .arr_unsigned_acc
++	vle16.v v4, 0(t0)
++
++	vsetivli zero, 2, e8, m1, ta, mu
++	la      t0, .arr_unsigned_lhs
++	vle8.v  v1, 0(t0)
++	la      t0, .arr_unsigned_rhs
++	vle8.v  v2, 0(t0)
++
++	la      t0, .v0_mask
++	vle8.v  v0, 0(t0)
++
++	.insn r 0x57, 0x0, 0x7c, x4, x2, x1
++
++	vsetivli zero, 2, e16, m2, ta, mu
++	la      t0, .expect_vwabdau_vv_masked
++	vle16.v v6, 0(t0)
++
++	vmsne.vv  v0, v4, v6
++	vcpop.m a0, v0
++	snez    a0, a0
++	ret
++
++test_vwabdau_vx:
++	/*
++	 * Test unsigned widening vector-scalar absolute difference and
++	 * accumulation. With scalar 128, v4 becomes {1000 + 128, 2000 + 127}.
++	 */
++	/* Load the unsigned 16-bit accumulator and 8-bit source vector. */
++	vsetivli zero, 2, e16, m2, ta, mu
++
++	la      t0, .arr_unsigned_acc
++	vle16.v v4, 0(t0)
++
++	vsetivli zero, 2, e8, m1, ta, mu
++	la      t0, .arr_unsigned_lhs
++	vle8.v  v1, 0(t0)
++	li      a2, 128
++
++	/* Execute vwabdau.vx v4, v1, a2. */
++	.insn r 0x57, 0x4, 0x7d, x4, x12, x1
++
++	/* Select the widened EEW and compare v4 with the expected result. */
++	vsetivli zero, 2, e16, m2, ta, mu
++	la      t0, .expect_vwabdau_vx
++	vle16.v v6, 0(t0)
++
++	vmsne.vv  v0, v4, v6
++	vcpop.m a0, v0
++	snez    a0, a0
++	ret
++
++test_vwabdau_vx_mask:
++	/*
++	 * Test masked vwabdau.vx.  Element 0 remains 1000 while element 1
++	 * accumulates 127 and becomes 2127.
++	 */
++	vsetivli zero, 2, e16, m2, ta, mu
++
++	la      t0, .arr_unsigned_acc
++	vle16.v v4, 0(t0)
++
++	vsetivli zero, 2, e8, m1, ta, mu
++	la      t0, .arr_unsigned_lhs
++	vle8.v  v1, 0(t0)
++	li      a2, 128
++
++	la      t0, .v0_mask
++	vle8.v  v0, 0(t0)
++
++	.insn r 0x57, 0x4, 0x7c, x4, x12, x1
++
++	vsetivli zero, 2, e16, m2, ta, mu
++	la      t0, .expect_vwabdau_vx_masked
++	vle16.v v6, 0(t0)
++
++	vmsne.vv  v0, v4, v6
++	vcpop.m a0, v0
++	snez    a0, a0
++	ret
++
++
++/* Exit through the semihosting SYS_EXIT_EXTENDED call with a0 as the code. */
++_exit:
++	la	a1, semiargs
++	li	t0, 0x20026	/* ADP_Stopped_ApplicationExit */
++	sd	t0, 0(a1)
++	sd	a0, 8(a1)
++	li	a0, 0x20	/* TARGET_SYS_EXIT_EXTENDED */
++	.balign	16
++	slli	zero, zero, 0x1f
++	ebreak
++	srai	zero, zero, 0x7
++	j	.
++
++	.balign	4
++trap_handler:
++	csrr	t4, mcause
++	la	t5, trap_mcause
++	sd	t4, 0(t5)
++	csrr	t4, mtval
++	la	t5, trap_mtval
++	sd	t4, 0(t5)
++	li	a0, 1
++	j	_exit
++
++	.data
++	.balign	8
++semiargs:
++	.space	16
++trap_mcause:
++	.space	8
++trap_mtval:
++	.space	8
++.arr_neg:
++	.byte -5, -7
++.arr_pos:
++	.byte 5, 7
++.arr_zero:
++	.byte 0, 0
++.arr_init:
++	.byte 9, 9
++.v0_mask:
++	.byte 0b10
++.arr_masked:
++	.byte 0, 7
++
++/* Unsigned input vectors used by vabdu and vwabdau. */
++.arr_unsigned_lhs:
++	.byte 0, 255
++.arr_unsigned_rhs:
++	.byte 255, 0
++	.balign 2
++
++/* Nonzero accumulators verify the add part of widening operations. */
++.arr_signed_acc:
++	.half 1000, -1000
++.arr_unsigned_acc:
++	.half 1000, 2000
++
++/* Expected results for the unmasked and masked forms. */
++.expect_vabd_vv:
++	.byte 10, 14
++.expect_vabd_vv_masked:
++	.byte 9, 14
++.expect_vabd_vx:
++	.byte 8, 10
++.expect_vabd_vx_masked:
++	.byte 9, 10
++.expect_vabdu_vv:
++	.byte 255, 255
++.expect_vabdu_vv_masked:
++	.byte 9, 255
++.expect_vabdu_vx:
++	.byte 128, 127
++.expect_vabdu_vx_masked:
++	.byte 9, 127
++.expect_vwabda_vv:
++	.half 1010, -986
++.expect_vwabda_vv_masked:
++	.half 1000, -986
++.expect_vwabda_vx:
++	.half 1008, -990
++.expect_vwabda_vx_masked:
++	.half 1000, -990
++.expect_vwabdau_vv:
++	.half 1255, 2255
++.expect_vwabdau_vv_masked:
++	.half 1000, 2255
++.expect_vwabdau_vx:
++	.half 1128, 2127
++.expect_vwabdau_vx_masked:
++	.half 1000, 2127
 -- 
 2.39.5
 
