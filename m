@@ -4,101 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82DBACC6B33
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 15:56:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9101ACC6B39
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 15:57:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHNoL-00073s-M4; Thu, 15 Oct 2026 11:56:05 -0400
+	id 1xHNpY-0007Zb-8h; Thu, 15 Oct 2026 11:57:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xHNoC-00073R-NH
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 11:55:58 -0400
-Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xHNoB-0006Wh-0C
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 11:55:56 -0400
-Received: by mail-ed1-x52b.google.com with SMTP id
- 4fb4d7f45d1cf-6aa8d04fcddso288779a12.0
- for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 08:55:54 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792079752; cv=none;
- d=google.com; s=arc-20260327;
- b=KRzLIH3CVO6G71mV+4oq0LXux3yvZOn/yQYKRrCEZ9NeL/Pry8n1UUu5hTvdsGHeZ4
- +6VhTz6L/HgPm19lC0MLnKdMPI1MnBJzOG9lcZJHFnSRGOXIrdF6BmAHJwUCCDuMQj+A
- StRkQzWmLYm7h97A7ggGza3GQZHU7KMdQZjAlKyqT5US6H72qv6aW9IOh25MaEXleFlG
- SyjhWqfh+2UA/K2COy7TLR9iGUSrlSB9M/cfKWGHJ0EIzNGAT5ICjKH2CkX22abra4Bi
- FH8t3giK/ctuM64P7VBf/eoY8lO8/aWMjkhWJ0NI4pQdN0ia/19okt2u8FFejHxF2rvd
- 2PSw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:to:subject:message-id:date:from:reply-to
- :mime-version:dkim-signature;
- bh=biKPhK+Eap31Whv/6hLBpGm6wwDalOoe/GLIqUhb19A=;
- fh=WcfKM6WiyoShp5TmLt4kF7EnAdj3ZzF+QrdHUKEVRic=;
- b=DgOSuFbBAcSQFOfIbCFjJyeiUp65+s/zHk8F/fDwdw9OYXklJETin76BmVWayhikoj
- oJPgfYxJGd0+6zTeqCqlSZsg/g6dLKogdrxBknrr3rR5PpC+rwKDE0SgOQGIYbmQ/Y7H
- QSkv8ufmBVHue0txJsB9mbwrxr93Za5SFt8ABH5OSF4V08806bl3kB5aDuEyRBmSIFnl
- O/dfMPnW+fvxEzSL++vPT8ZQiWIvkTc7nNwKlOS0tKtUv35MXyJ5CH60yPDQ4hTvhYK6
- i8nz0DmokzwZVLz9XneTlvleqeMe5FJZ8zqAxZ/RN4i3wkLE5v1HPl7OD+45U/98rMSX
- JF2w==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1792079752; x=1792684552; darn=nongnu.org;
- h=content-transfer-encoding:content-type:to:subject:message-id:date
- :from:reply-to:mime-version:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=biKPhK+Eap31Whv/6hLBpGm6wwDalOoe/GLIqUhb19A=;
- b=RuEixH+YIIZRynvEPBA1mRHgkQFNihXhkdQHXVYXOvwFvInXB1m2GZBnwJ8dcUp031
- SupAeMxmrDybRlH6R89ONReQq7rVAy55LyfytV2XEvdzNg9IPoXPq7KESSYkI2mwRG8G
- dp/jPMARxPIfn6x9QsL8pJ3de6iB52og9YzdOyQHhZyuX/AgbowAISKkN15mlrHLuYQW
- zn2wP7lmutrxFnPRxbQ/jG33L9aSHdK2DBlqISsmquN2AtEDU9uP5bGeU9dZ2aMa8ejm
- Qqx6axOZqthEviswDFPgJ/5lZYWf6kWpAZz3dePLNXU/cxKp2N8DEF2hf/6PlJpz1QPO
- gPTw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792079752; x=1792684552;
- h=content-transfer-encoding:content-type:to:subject:message-id:date
- :from:reply-to:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=biKPhK+Eap31Whv/6hLBpGm6wwDalOoe/GLIqUhb19A=;
- b=KabQbTYu7CIsQH+PdI6vrDBfTFwzvS7TRoMEyvuWF3q0LEAwgOqpaPGQAfOnXEHO1V
- iAYBESUkaNkbVvFJkSr6/VqunCok3NBTZB+cKmsNrKtISy1JGPFbYqSiScqFP1eF/8Ar
- /m/1Ygd9b0qoIEXTldR2jIi07Ix8MSqy2Ekb1MmgGEpmAM8ZqeNlcFa8MX0x0/db4f+7
- 9+tsq3REEfk5mo8SB33SZ5Q3sIfcq3vyuS4jvckzcEzewdz/1jiC75xVYBCQAja7i12e
- mZVAVnjbaDI02IoV5CfpHJVd0x78u2t6hGm2yuHT/dKJognSp2yqf+o7h4SbNosNIP5j
- bx8Q==
-X-Gm-Message-State: AFq9FYLfpPh8srHY7iUTmt1scKWO0KvDR7TXhhywDm+TxM4s48vC0uC3
- QhyaMpiMNKUo04NWWxuvX9kUHTG2IW9dreg50j+Q3iOh42psh9t78Y0Wd/tQsNZW+tIrHk0iRtj
- BrfIsWXJKx5HejuDLmGxQyrKV825Jzjhm5iYrr30=
-X-Gm-Gg: AYBFou1l4E36Yob6r/Mno2FHfkvRYL6tkp6zmAwB/pS+BM8iY6BnhD50iPCGKcbrRvI
- eUmXP8Wevs6N4Zsouno5T65ITIRxGGJG/rZn8iKzWfCof0LZOGT1GoF5+fxJMeKLdHCgAS74dzT
- cdaw1J63aYlXh6XpAIyfT0IbTEHYT4noB0n73o5S+BHEBPumotXh9+sfI9SbMzFBwEKGfsh9s/I
- xsjrbXVOELsRhy9x8t5sX/SsqFD4FNdffXP8YXvfa5St7nxsPeDZhTWmAFVCYOsVXevzTeP7VJ7
- p55rF+ifmhH8xt2R5t/iCcWzEhY3oipB44fLksxml8zjvs+Awr3v4gg=
-X-Received: by 2002:a05:6402:528b:b0:6b1:e8e1:a3b4 with SMTP id
- 4fb4d7f45d1cf-6b3875e10bfmr542297a12.4.1792079752148; Thu, 15 Oct 2026
- 08:55:52 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1xHNpV-0007XO-8N
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 11:57:17 -0400
+Received: from mx.treblig.org ([2a00:1098:5b::1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1xHNpR-0006dl-HE
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 11:57:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
+ ; s=bytemarkmx;
+ h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
+ :Subject; bh=5DkVqtLl1i2gf2jHVa0L3rsN+EoMZS2YxefuCff2jtU=; b=YtpwX27u+wtwEEG3
+ katq778mkTG8VgvwNuTaSft4hB0oZal7246bys9IvhF2khUT087aEqtG2+ry16tVitU/qbqeRxgKO
+ RefRJ5k35ZbvvE8b//jA0bgIY+DZJiLUX2YMKUg2rB/E9lGoSCiU7fWoRfcAEPs4Xxp6CrDySUqWJ
+ 2MtmYBsbtBbW61m1Enqz99ChrJi4aJfLhhrFdPtwpH6JRTGVrfwiiedFqSfvuSF2Se/PVgJJVCvb5
+ Jb/VljvADI1xQwo4aq2nmog6UAVTri9CE/YYy1sR91VDTKIoijv0gA2LHNbCE4wVi3vc+4JvDzEri
+ oD2Wq2gr6mbqUtfX+Q==;
+Received: from dg by mx.treblig.org with local (Exim 4.98.2)
+ (envelope-from <dg@treblig.org>) id 1xHNpN-00000004c7P-1so2;
+ Thu, 15 Oct 2026 15:57:09 +0000
+Date: Thu, 15 Oct 2026 15:57:09 +0000
+From: "Dr. David Alan Gilbert" <dave@treblig.org>
+To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org,
+ =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
+ Michael Roth <michael.roth@amd.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@oss.qualcomm.com>,
+ Fabiano Rosas <farosas@suse.de>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Eric Blake <eblake@redhat.com>, Laurent Vivier <lvivier@redhat.com>
+Subject: Re: [PATCH 17/21] monitor: capture monitor commands and events in
+ data recorder
+Message-ID: <atD31Q9B9FgDWXeO@gallifrey>
+References: <20261015112044.1999748-1-berrange@redhat.com>
+ <20261015112044.1999748-18-berrange@redhat.com>
 MIME-Version: 1.0
-From: Yonggang Luo <luoyonggang@gmail.com>
-Date: Thu, 15 Oct 2026 23:55:39 +0800
-X-Gm-Features: AclHuK9lA7uTCUUywkb1p164lnEOHolsWcmmD3Uo0RGaFs-MokWKa_ou3UZoUXc
-Message-ID: <CAE2XoE9M-1WwFzEB2MmuBt5LQJQpmv0mWBxwBhND9SoFPqDeHg@mail.gmail.com>
-Subject: Some though about the -machine type=<$type>
-To: qemu-level <qemu-devel@nongnu.org>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
- envelope-from=luoyonggang@gmail.com; helo=mail-ed1-x52b.google.com
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20261015112044.1999748-18-berrange@redhat.com>
+X-Chocolate: 70 percent or better cocoa solids preferably
+X-Operating-System: Linux/6.12.111+deb13-amd64 (x86_64)
+X-Uptime: 15:55:40 up 16 days,  1:17,  2 users,  load average: 0.05, 0.07, 0.02
+User-Agent: Mutt/2.2.13 (2024-03-09)
+Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
+ helo=mx.treblig.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -112,29 +76,198 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: luoyonggang@gmail.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-As now -machine type=3D<target_name>-<machine_name> works.
-maybe better way is -machine type=3D<machine_name>,target=3D<target_name>
-as we can select target at the time when machine selected, and at there
-The target option for -machine is also parsed, we can take the advantage of=
- it.
-And other than MachineClass::targets, we can add an extra
-MachineClass::default_target, so that when target is not specified, we
-can choose the default target for <machine_name> for the specific
-machine.
-And for "virt" machines, it's an exception, as it has multiple entrypoint,
-For these I think it is better to prefix "virt" with a <base-arch> for
-its machine name, then choose the target=3D<target_name>(mainly for
-x86/risc v/arm/ppc/mips(which have two target(32bit and 64bit)).
+* Daniel P. Berrangé (berrange@redhat.com) wrote:
+> QMP monitor commands which change system state (ie not query-XXX
+> commands) are relevant to the data recorder, as they reflect what
+> has been done to QEMU at runtime by the mgmt application.
 
---=20
-         =E6=AD=A4=E8=87=B4
-=E7=A4=BC
-=E7=BD=97=E5=8B=87=E5=88=9A
-Yours
-    sincerely,
-Yonggang Luo
+Do you have any filters for avoiding capturing passwords/keys
+(which admitedly they should be doing by files, but hmm).
+
+Dave
+
+> QMP monitor events are relevant to the data recorder, as they
+> reflect a combination of what has been done to QEMU at runtime by
+> the mgmt application, as well as changes triggered by the guest OS.
+> 
+> QMP error responses are relevant either to reveal mistakes in mgmt
+> apps, or to reveal problems in QEMU. If the associated QMP command
+> was not already recorded, it will be recorded for any error
+> response to provide context to the failure.
+> 
+> QMP normal responses are skipped since the data can be volumous
+> and thus result in poor signal/noise ratio.
+> 
+> The QMP commands are never captured to a string buffer as input
+> is streamed into the JSON parser and the result is spat out as
+> a QObject. Thus, the commands need to be formatted back into JSON
+> string format for the data recorder. This is a mild but acceptable
+> performance overhead, in the overall context of handling a QMP
+> command.
+> 
+> The QMP events are captured immediately before they are written
+> back on the wire where already in string format.
+> 
+> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> ---
+>  monitor/qmp.c | 67 +++++++++++++++++++++++++++++++++++++++++++++------
+>  1 file changed, 59 insertions(+), 8 deletions(-)
+> 
+> diff --git a/monitor/qmp.c b/monitor/qmp.c
+> index ccb39a48d4c..659ad23d832 100644
+> --- a/monitor/qmp.c
+> +++ b/monitor/qmp.c
+> @@ -34,6 +34,7 @@
+>  #include "qobject/qjson.h"
+>  #include "qobject/qlist.h"
+>  #include "qom/object_interfaces.h"
+> +#include "qemu/tldr.h"
+>  #include "trace.h"
+>  
+>  /*
+> @@ -80,7 +81,8 @@ static MonitorQMP *qmp_dispatcher_current_mon;
+>  OBJECT_DEFINE_TYPE(MonitorQMP, monitor_qmp, MONITOR_QMP, MONITOR);
+>  
+>  static void monitor_qmp_cleanup_req_queue_locked(MonitorQMP *mon);
+> -static void qmp_send_response(MonitorQMP *mon, const QDict *rsp);
+> +static void qmp_send_response(MonitorQMP *mon, const QDict *rsp,
+> +                              const QObject *ctx);
+>  
+>  static void monitor_qmp_finalize(Object *obj)
+>  {
+> @@ -169,7 +171,7 @@ static void monitor_qmp_emit_event(Monitor *mon, QAPIEvent event, QDict *qdict)
+>          }
+>      }
+>  
+> -    qmp_send_response(qmp, qdict);
+> +    qmp_send_response(qmp, qdict, NULL);
+>  }
+>  
+>  static bool monitor_qmp_requires_iothread(const Monitor *mon)
+> @@ -243,7 +245,8 @@ static void monitor_qmp_cleanup_queue_and_resume(MonitorQMP *mon)
+>  
+>  }
+>  
+> -static void qmp_send_response(MonitorQMP *mon, const QDict *rsp)
+> +static void qmp_send_response(MonitorQMP *mon, const QDict *rsp,
+> +                              const QObject *ctx)
+>  {
+>      const QObject *data = QOBJECT(rsp);
+>      GString *json;
+> @@ -252,6 +255,30 @@ static void qmp_send_response(MonitorQMP *mon, const QDict *rsp)
+>      assert(json != NULL);
+>      trace_monitor_qmp_respond(mon, json->str);
+>  
+> +    /*
+> +     * Errors are always useful to record. We recorded the
+> +     * command in the caller in many cases, but if not, then
+> +     * 'ctx' will be non-NULL and we should record it now
+> +     * for context.
+> +     */
+> +    if (qtldr_msg_enabled(QTLDR_MSG_BUCKET_TYPE_COMMAND) &&
+> +        qdict_haskey(rsp, "error")) {
+> +        if (ctx) {
+> +            g_autoptr(GString) ctxstr = qobject_to_json(ctx);
+> +            qtldr_msg_record(QTLDR_MSG_BUCKET_TYPE_COMMAND, ctxstr->str);
+> +        }
+> +        qtldr_msg_record(QTLDR_MSG_BUCKET_TYPE_COMMAND, json->str);
+> +    }
+> +
+> +    /*
+> +     * Capture events, since they represent changes
+> +     * in state or behaviour
+> +     */
+> +    if (qtldr_msg_enabled(QTLDR_MSG_BUCKET_TYPE_EVENT) &&
+> +        qdict_haskey(rsp, "event")) {
+> +        qtldr_msg_record(QTLDR_MSG_BUCKET_TYPE_EVENT, json->str);
+> +    }
+> +
+>      g_string_append_c(json, '\n');
+>      monitor_puts(&mon->parent_obj, json->str);
+>  
+> @@ -263,10 +290,10 @@ static void qmp_send_response(MonitorQMP *mon, const QDict *rsp)
+>   * Null @rsp can only happen for commands with QCO_NO_SUCCESS_RESP.
+>   * Nothing is emitted then.
+>   */
+> -static void monitor_qmp_respond(MonitorQMP *mon, QDict *rsp)
+> +static void monitor_qmp_respond(MonitorQMP *mon, QDict *rsp, QObject *ctx)
+>  {
+>      if (rsp) {
+> -        qmp_send_response(mon, rsp);
+> +        qmp_send_response(mon, rsp, ctx);
+>      }
+>  }
+>  
+> @@ -276,9 +303,33 @@ static void monitor_qmp_respond(MonitorQMP *mon, QDict *rsp)
+>   */
+>  static void monitor_qmp_dispatch(MonitorQMP *mon, QObject *req)
+>  {
+> +    QObject *ctx = req;
+>      QDict *rsp;
+>      QDict *error;
+>  
+> +    /*
+> +     * Capture commands which are liable to change state,
+> +     * i.e. exclude purely information query comamnds
+> +     */
+> +    if (qtldr_msg_enabled(QTLDR_MSG_BUCKET_TYPE_COMMAND)) {
+> +        QDict *cmd = qobject_to(QDict, req);
+> +        if (cmd != NULL) {
+> +            const char *cmdname = qdict_get_try_str(cmd, "execute")
+> +                ?: qdict_get_try_str(cmd, "exec-oob");
+> +            if (cmdname != NULL &&
+> +                !g_str_has_prefix(cmdname, "query-") &&
+> +                !g_str_has_prefix(cmdname, "qom-list")) {
+> +                g_autoptr(GString) cmdstr = qobject_to_json(req);
+> +                qtldr_msg_record(QTLDR_MSG_BUCKET_TYPE_COMMAND, cmdstr->str);
+> +                /*
+> +                 * Prevent recording cmd twice if the later response
+> +                 * is an error
+> +                 */
+> +                ctx = NULL;
+> +            }
+> +        }
+> +    }
+> +
+>      rsp = qmp_dispatch(mon->commands, req, qmp_oob_enabled(mon),
+>                         &mon->parent_obj);
+>  
+> @@ -294,7 +345,7 @@ static void monitor_qmp_dispatch(MonitorQMP *mon, QObject *req)
+>          }
+>      }
+>  
+> -    monitor_qmp_respond(mon, rsp);
+> +    monitor_qmp_respond(mon, rsp, ctx);
+>      qobject_unref(rsp);
+>  }
+>  
+> @@ -455,7 +506,7 @@ void coroutine_fn monitor_qmp_dispatcher_co(void *data)
+>              trace_monitor_qmp_err_in_band(error_get_pretty(req_obj->err));
+>              rsp = qmp_error_response(req_obj->err);
+>              req_obj->err = NULL;
+> -            monitor_qmp_respond(mon, rsp);
+> +            monitor_qmp_respond(mon, rsp, NULL);
+>              qobject_unref(rsp);
+>          }
+>  
+> @@ -623,7 +674,7 @@ static void monitor_qmp_event(void *opaque, QEMUChrEvent event)
+>              monitor_qmp_caps_reset(mon);
+>          }
+>          data = qmp_greeting(mon);
+> -        qmp_send_response(mon, data);
+> +        qmp_send_response(mon, data, NULL);
+>          qobject_unref(data);
+>          break;
+>      case CHR_EVENT_CLOSED:
+> -- 
+> 2.56.0
+> 
+-- 
+ -----Open up your eyes, open up your mind, open up your code -------   
+/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
+\        dave @ treblig.org |                               | In Hex /
+ \ _________________________|_____ http://www.treblig.org   |_______/
 
