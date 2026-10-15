@@ -4,57 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F28BCC6B2F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12BBCCC6B39
 	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 08:24:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHGkY-0006bQ-4h; Thu, 15 Oct 2026 04:23:42 -0400
+	id 1xHGkb-0006bd-NX; Thu, 15 Oct 2026 04:23:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1xHGkU-0006ag-MC
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 04:23:38 -0400
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1xHGkV-0006aw-QC
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 04:23:40 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1xHGkT-00076t-F5
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 04:23:38 -0400
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1xHGkT-00076u-Jx
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 04:23:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
  s=mimecast20190719; t=1792052615;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=cfwvGZZK0byFtb7E/5EGv+DQ0t0qe4HWVin7NtcM4SQ=;
- b=WrrqSSIeXVsOdvIbEJFWcsSUacmOko+h14C+dtzo+AmFs5v34Lnoj1efYk6znfy/sOfHNc
- BeAym5oTzLZEpNbtbVBlKrk4E/zqYLppFuoHVCHD/BFrXN2eSzkNczIMSaSiN60aBvSy8d
- Q32rTy3BDI3bpvMipN8o5eCOZJ/LhTU=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=KdB3Ki1kZ6pWi+3pldEJWVBk6otasEeXjyORPwJjOfE=;
+ b=fJCErzhuF4hzR8mD+J+d8mix4OPdUougIfg65wKFYwRkps6jrUFhnhyWoYgVjq0y8NnL/D
+ +TRMaseugWUCZR3I2Q4TGOmy451TIhdCO4M4vep8ktLWM2ymW/JYojCyW13VOV/A5RoKR6
+ uCNTAo5mxeBKHplGuJ/C5O1A/zmrxLs=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-470-PA-PufmDO7-WM5EOxBIMlw-1; Thu,
- 15 Oct 2026 08:23:33 +0000
-X-MC-Unique: PA-PufmDO7-WM5EOxBIMlw-1
-X-Mimecast-MFC-AGG-ID: PA-PufmDO7-WM5EOxBIMlw_1792052612
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-350-pOdS-smDOWOIAZAldGjuxA-1; Thu,
+ 15 Oct 2026 08:23:32 +0000
+X-MC-Unique: pOdS-smDOWOIAZAldGjuxA-1
+X-Mimecast-MFC-AGG-ID: pOdS-smDOWOIAZAldGjuxA_1792052611
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B57FD19560A6; Thu, 15 Oct 2026 08:23:32 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 92D041955F2A; Thu, 15 Oct 2026 08:23:31 +0000 (UTC)
 Received: from sirius.home.kraxel.org (unknown [10.44.32.37])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 739EA1956087; Thu, 15 Oct 2026 08:23:32 +0000 (UTC)
+ id BE6DD1956087; Thu, 15 Oct 2026 08:23:30 +0000 (UTC)
 Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
- id C6E9F18000B9; Thu, 15 Oct 2026 10:15:44 +0200 (CEST)
+ id E497718003AE; Thu, 15 Oct 2026 10:15:44 +0200 (CEST)
 From: Gerd Hoffmann <kraxel@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>
-Subject: [PATCH 0/2] pci id documentation updates
-Date: Thu, 15 Oct 2026 10:15:42 +0200
-Message-ID: <20261015081544.40310-1-kraxel@redhat.com>
+ "Michael S. Tsirkin" <mst@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ =?UTF-8?q?=C4=90=E1=BA=A1t=20Ng=C3=B4=20Qu=E1=BB=91c?= <datlechin@gmail.com>
+Subject: [PATCH 2/2] pci id: assign pci subsystem id for osmates
+Date: Thu, 15 Oct 2026 10:15:44 +0200
+Message-ID: <20261015081544.40310-3-kraxel@redhat.com>
+In-Reply-To: <20261015081544.40310-1-kraxel@redhat.com>
+References: <20261015081544.40310-1-kraxel@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=kraxel@redhat.com;
@@ -82,15 +86,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Allows the guest driver to identify the host implementation,
+useful to be more specific when applying quirks etc.
 
+Cc: Đạt Ngô Quốc <datlechin@gmail.com>
+Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+---
+ docs/specs/pci-ids.rst | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-Gerd Hoffmann (2):
-  pci id: clarify pci subsystem id usage
-  pci id: assign pci subsystem id for osmates
-
- docs/specs/pci-ids.rst | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
-
+diff --git a/docs/specs/pci-ids.rst b/docs/specs/pci-ids.rst
+index 832f8bd1b802..45e0d22e71bd 100644
+--- a/docs/specs/pci-ids.rst
++++ b/docs/specs/pci-ids.rst
+@@ -50,6 +50,10 @@ maintained as part of the virtio specification.
+   QEMU, such as the intel chipset devices.  Also used for virtio
+   devices and generic pci class devices (1b36:00xx, see below).
+ 
++1af4:1101
++  PCI Subsystem ID for OSMates (github.com/osmates), will be used
++  for virtio devices and pci class devices (xhci, nvme).
++
+ 1af4:1110
+   ivshmem device (:doc:`ivshmem-spec`)
+ 
 -- 
 2.56.0
 
