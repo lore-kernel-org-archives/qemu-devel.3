@@ -4,144 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F34A4CC6B3A
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 16:28:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7959ECC6B39
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 16:34:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHOJI-0000m4-Op; Thu, 15 Oct 2026 12:28:04 -0400
+	id 1xHOP2-0001U1-EH; Thu, 15 Oct 2026 12:34:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1xHOJH-0000lv-MF
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 12:28:03 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1xHOJF-0000rm-Ho
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 12:28:03 -0400
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69FFmrDp2114176
- for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 16:27:59 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-type:date:from:in-reply-to:message-id:mime-version
- :references:subject:to; s=qcppdkim1; bh=DyXw4oeGv0wTogzCnv3XzCij
- IYnhB+JrY1KfHRlW020=; b=gtRDVbYCgENGRqreFnCCVSLokfCRVmtG0n+a1926
- CeRE0URpipDb3Ra0I1ILIrI+h98cm4k/iC/EL5POncHqVUV5bIziTyxR+N1m8+ea
- KxelJl62C941eBjEQ+xSEjU88nIi4gJy+pevNHnq2qT2cCt6tXmn0LrCLz0o5aaF
- XknALFjEviHEOTOvY3WWBn1bC7LVe68LKV4Aq/TtcN20K1+UUy06GY/tx9EppMmd
- sfP/0HRTSjoIPu723LxF/zp+/ATLty6NuDJDySk2ZUyl2pxv/h4ih43Aqfm0Wwy6
- dV+dO0BU9utWnsIF/hVJg3+CiKaheh8RKBAtdhOAsSt9MQ==
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hajmyc1nf-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 16:27:59 +0000 (GMT)
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-934956beec8so333357285a.0
- for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 09:27:58 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xHOOz-0001Tm-Rl
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 12:33:58 -0400
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xHOOy-0001Ur-2h
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 12:33:57 -0400
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-48afbd2c386so3315425f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 09:33:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1792081678; x=1792686478; darn=nongnu.org;
- h=in-reply-to:from:content-language:references:cc:to:subject
- :user-agent:mime-version:date:message-id:content-type:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=DyXw4oeGv0wTogzCnv3XzCijIYnhB+JrY1KfHRlW020=;
- b=HUdZo1qOyIMgtXykVJCS9O1BYwKdV7R/0d+ACBGXER6zywmMATcemX8Nn0LvSLfj+Q
- sfASKMqZQCGdPcaQMlfkKkjWGiuAoPvknM/HKfvYk1Xyhf7X8U0G8VgSJjJuRTgp2WuM
- wZLPvXBzOC6a6fS/LpAI8KdH4usI34/AwNN3cbzSygF7FF7ASMk8DSEY8duBdyAAqUnD
- 5jr3EFSxEfxMEF4eWvfNvaKkruAW60v5IhlfoqU758ZZFyM7ZoKjLVwP55P8K2iPPU/Z
- 31eQKjRU3dDUgR9yU+rc4FPN8WwNVnxdenlF3lXm0JZoO22wv6CKlKhSg2SQ7GLclPpo
- +GLg==
+ d=linaro.org; s=google; t=1792082034; x=1792686834; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=idh+qDMpz8gw8Z2xNyv3VkwIH/aLIMopmU/32yT1TlI=;
+ b=tAeWjLkJFDsdMbl07oV0P6kyLgUmM6o5JFYExpURxxYPYmj3IkabNoCGQrJTjrYybX
+ KyEA2SWB0vUV8p0i6FZGrxjLOvrnmAY2Ta/XH8I94BI0jnOkPAfyabHEzWstMslFfLOf
+ jNA7Kpn34ka5/TsSduuVLjqIvvmmLWs6M3Nrm0cnutosYGciLZYamWIUMbnYSroZTLXq
+ 0oJlE+Dc8x/wRUYhv4D17m36Ns2Vjk+eId+ST75OdPQlfrCx2YXgK09TqiKpavFjCIk3
+ deeovrMktfUBuqGMEsp7zYscjHIuwBBZ/Ztm0PBGyYgEvAdvXmhX7SwAu6sGR2kkrJQI
+ t7mw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792081678; x=1792686478;
- h=in-reply-to:from:content-language:references:cc:to:subject
- :user-agent:mime-version:date:message-id:content-type:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=DyXw4oeGv0wTogzCnv3XzCijIYnhB+JrY1KfHRlW020=;
- b=jxZD0eukedFgebPkf0IIvtTG7NwjkIWyYkuNDuLI7xMrRff9BzCGjovxP4VpOQIU3E
- sZH2g+TO8va7zpYT8AHkAtHWHOSN53bcqZ2tyomAtEWD3MVXOT5XOztnUAdJ6I6HPTGh
- peth8eNRsQKIyn8SuxeFuIsZ7ybz0YxN/Hcj5RwwmLSKr23ijpovHOJuZva4gUJG5Glw
- xxqrnr98HvuZsKr0LY5x1ZJm1G4eFBtCsHgAWnJ7hlFcz7O6LIHyZinQhURm/a/Q8+CD
- JJQhHK+GkYLLIze/CM2yBoFApDnHurSkS+/9SfSdjbkUW17mQ59c5jw5X80WaCA1yxP+
- bFfg==
-X-Forwarded-Encrypted: i=1;
- AKwUvBy772HDzElYviZYbFaasMOXfulouVnTpxqdhp9Qe0DdWywwrnHYd/U5HWv6EWNMNmgoyblQvTFA8zu3@nongnu.org
-X-Gm-Message-State: AFq9FYK//7GvYoo+pcoOtcbhf9ewAoZlVVNy/oCV8Zcdciz5zriLPET3
- Y+hzY7C5e/y8B08Xaa1MRFGgjQn3FBEG1Q9nYNuicqMz6wHpDq8m6uDKmNjxvK1ajvmXvzggbQ8
- XN+S5GQMtCX2EQB26opVmuxKd1hsJIoAlLbShSoa2neWJTgLnk7OekCtkQQ==
-X-Gm-Gg: AYBFou1dOT5JQLS0tb8PbyjRjfZ2H4WP/JJcYjx2OSZOKkJjOP8uKliTnzqfvXLW2Gp
- p7svkNvUxha5SVwFYpPa4cQRaBxD/j8O4I2YLgOgVAL9QrAQBIj6sqrX0nyeq+ymNbsHxQlZfEz
- nsr7GrSNbihNkxyk2fbFCKj2fVY9hNb3bj2A+aGK8xfWs0zu4/88m780aq0HgNPRg5CSexdQr2x
- ujEYxKiwZ6FfmTBH1JvErvB1PEZiRza0pmqVahZWvdjMOdU2NzBHqUAjose0x3DvyPBchFeIQYg
- SF1GpxuSG3pYabUxqA/SfRbcwFfSC5YM2NbmpGs0UUK3yuOIWsfpPZtUx6OaIxwrU7oNsOwEIvQ
- o3+i3h4slj9NiLlH9ljtzBv0LnFAH/zC+miiGUcf5ZflRfEHDsYJVt2YYsP9ouE9W
-X-Received: by 2002:a05:620a:7007:b0:93f:cbd:8e20 with SMTP id
- af79cd13be357-93f0cbd8fc8mr548701785a.73.1792081677948; 
- Thu, 15 Oct 2026 09:27:57 -0700 (PDT)
-X-Received: by 2002:a05:620a:7007:b0:93f:cbd:8e20 with SMTP id
- af79cd13be357-93f0cbd8fc8mr548691785a.73.1792081676650; 
- Thu, 15 Oct 2026 09:27:56 -0700 (PDT)
-Received: from [10.222.168.219] (Global_NAT1_IAD_FW.qualcomm.com.
- [129.46.232.65]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-93ef504f6d6sm808463085a.27.2026.10.15.09.27.54
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 15 Oct 2026 09:27:55 -0700 (PDT)
-Content-Type: multipart/alternative;
- boundary="------------tdF8idqp0OI0bhosCpgySj0X"
-Message-ID: <7f64d5e0-73d4-422b-a8ae-58fe42b4976f@oss.qualcomm.com>
-Date: Thu, 15 Oct 2026 11:27:54 -0500
+ d=1e100.net; s=20260707; t=1792082034; x=1792686834;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=idh+qDMpz8gw8Z2xNyv3VkwIH/aLIMopmU/32yT1TlI=;
+ b=0jGzvMVnpJ5LgpzY1A5zJ1iT8LXP1wGIRhTv2NTo2qicm+BFSGqnxV2+f29EfQZpWo
+ oC4pVEf9GxP08nD5q1zOifjm2+7i7PIZYKeC0t1ufFVtu/uo+JehqzgTHZY0YrEAR2+a
+ SEyWOntigABdwNuhYHi57OXy3ejoLygyAMrGPuWDYXsdTJJ7i/kgNYQ35tj2b8UNPemn
+ TWjV9afsoieKH9XsWJM8mTt+iaQYroUsqm89IT3s4p7q+L2mN+xkI3+f0iTuTQYVjgl8
+ CQFXWBpAgkyMOtupgS7UA1TmvPbxuYX6wIURL9to+tR1xzY8+vNJQRkF2RTkCgAdCfDy
+ a2XA==
+X-Gm-Message-State: AFq9FYIRHAMpSx3QV61M+bIaR/UORfauEEFvmFOujD3cgojMu99RNI6R
+ NyuZCB9WBLhhKc4asK+eWoDJMGQ4vuBB0tqPQbJ1j8voUkWIho+dmO6oS5+qhc06kbJJPVoQjVd
+ 2stcdA/0=
+X-Gm-Gg: AYBFou0sXUm2N3+nMeEIiSsbAYZUCzX8faFHXgHA4Y3HdnkRysAN4eE2M7xjjZO3lnz
+ sRFDO0vfAluVJuVECCtm/I6DwqoJv66kSQO8dWCeIYztPrAMi0WXNg3msp9GJVzJ4cNvvzAoqUg
+ OV6wkRzst3EbMJgeubVDGi75R6UO1IqsmBlV0be8eeeLAjQ3WjlCxdeF+1EMES3ckfBGayod52q
+ F18fGxxyBFsH3dbT51/UEvU8lgEU34NBOfbu6ppspq4hSa1c5ff0P2RXc1iu6Rik2t2Y7l4RsOR
+ q6/HFoQ5LHS+NduXZ4FURGjjLDn1+sK4K4txW3rQ3Mu2/3/3bwySNl71Ysg5uLYR06LZGaVIwQB
+ VV0P3d36gEiELPk8imUcHQmNsqN9HIkoUzKRZ1yDFRxOHC12ODYrzjhRbUIg5UwCBEupJkc6fZ3
+ B/TwfAe4MG8LaUGUhn+wZcUWCSBKNfV0+JLDIrKFyh67VulTsRQnqcVTGokhLoPD2cfmyu5HViO
+ bYSnR8SFaKUn1b4IeJtFpHWrQIVUyHqxoCCkILAcnoSeuFVCUmBeZuUJ8mmmZWZ/9ha4tRQwn9X
+ rhA=
+X-Received: by 2002:a05:6000:2611:b0:48d:ecba:3cf8 with SMTP id
+ ffacd0b85a97d-48decba3dd6mr11265415f8f.43.1792082034146; 
+ Thu, 15 Oct 2026 09:33:54 -0700 (PDT)
+Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-48df5b88207sm5076118f8f.59.2026.10.15.09.33.53
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 15 Oct 2026 09:33:53 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Mark Cave-Ayland <mark.caveayland@nutanix.com>
+Subject: [PATCH] include/hw/core/qdev.h: Fix where
+ device_class_set_parent_realize docs suggest putting parent_realize
+Date: Thu, 15 Oct 2026 17:33:52 +0100
+Message-ID: <20261015163352.1751191-1-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 06/12] target/riscv/cpu: constify cpu parameter for
- riscv_cpu_mxl
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org
-Cc: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Anton Johansson <anjo@rev.ng>, Peter Maydell <peter.maydell@linaro.org>
-References: <20261014210526.104215-1-pierrick.bouvier@oss.qualcomm.com>
- <20261014210526.104215-7-pierrick.bouvier@oss.qualcomm.com>
-Content-Language: en-US
-From: Brian Cain <brian.cain@oss.qualcomm.com>
-In-Reply-To: <20261014210526.104215-7-pierrick.bouvier@oss.qualcomm.com>
-X-Proofpoint-GUID: ikLVvc996hwsjYkC-wimPc6f-NCKaUIb
-X-Proofpoint-ORIG-GUID: ikLVvc996hwsjYkC-wimPc6f-NCKaUIb
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDE1MDA2NSBTYWx0ZWRfX6tCVeQoO9hVz
- plpSYa+JjtjaTS5l2YX+NbQ0EO7UKuMvQFvu78z0WfeWdzXE/23zVnHmwWM+SpWjpKOcB4O4Tff
- nmz//Zfpsq0XgTB77UDfz67o4XGYu98=
-X-Authority-Analysis: v=2.4 cv=TbQDJhQh c=1 sm=1 tr=0 ts=6ad0ff0f cx=c_pps
- a=qKBjSQ1v91RyAK45QCPf5w==:117 a=C3Dk8TwHQYyIj7nOf9RCJw==:17
- a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22 a=r77TgQKjGQsHNAKrUKIA:9
- a=EUspDBNiAAAA:8 a=X7FINd2aeJSs8-1LBM8A:9 a=QEXdDO2ut3YA:10
- a=1_sf4qHvRHQ7HlRkUqsA:9 a=_ByBskfzb6DOv6nj:21 a=_W_S_7VecoQA:10
- a=lqcHg5cX4UMA:10 a=NFOGd7dJGGMPyQGDc5-O:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDE1MDA2NSBTYWx0ZWRfXwZ/s3KbmJO9R
- hFYLDqNXBtBrFbdPysDo5U2yhyNitiivx32RmzBnvyguLjlvxUMGYDJZDfb6SPFClf8NxTq+/hY
- wpNThdT5DyKOUP3BSeRkhnDbDswRDaojwdCHgueTYfE4lWc7J5tpHRWgw0IQ2E0Tx3a81FD9Au6
- e6uzjEjkRUE7vms1QXzQZqllwtU2rQKjARgucUleMMJT8SbODU/oOMPmZUwtnc1kME3WkeDihN/
- Dia4kvjFdxm8ehBtMgAw2eafrd6sUMtQZaAzaC8quPNb4OTRHKrcZBzQLA1qFuT3yohw845MmTS
- A07S33INQbtiTNOudd1ZEB1HydiX6qfGLlyK+C1m5ouZwcMdGMD5xFdhITnaE6B4vZTThyW67Nm
- AsjREy4c7Eh83fbd+L7Yx3xb5Z6twXsV//wm123HaWfBClwcA7qfy0FMNyK9+lUjSvcwFj2QhIb
- /8vPOIgsZ1G60CGAPVg==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-10-14_01,2026-10-14_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 lowpriorityscore=0 bulkscore=0 priorityscore=1501 spamscore=0
- clxscore=1015 impostorscore=0 phishscore=0 malwarescore=0 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610080000 definitions=main-2610150065
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=brian.cain@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -158,89 +102,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is a multi-part message in MIME format.
---------------tdF8idqp0OI0bhosCpgySj0X
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+The documentation for device_class_set_parent_realize() suggests that
+the parent realize function pointer is "usually in the instance
+structure".  This is definitely wrong, because the function pointer
+is a class thing, and should live in a class struct, not an instance
+struct.  Update the documentation to correct this, instead
+recommending that it should be placed in the class struct for the
+child class.
 
+At time of writing, of the 75 or so uses of this function, about 50
+put the parent_realize pointer in the child class struct, and about
+25 in the parent class struct.  We recommend the former both because
+it is the more common choice, and also because it makes more logical
+sense: it's the child that knows (a) that it exists at all and that
+(b) it wants to have a realize method that will mean it needs to
+chain back to the parent, and we shouldn't need to edit the parent's
+class struct because we want to add a child class that chains to its
+realize method.
 
-On 10/14/2026 4:05 PM, Pierrick Bouvier wrote:
-> Signed-off-by: Pierrick Bouvier<pierrick.bouvier@oss.qualcomm.com>
-> ---
->   target/riscv/cpu.h | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-
-Reviewed-by: Brian Cain <brian.cain@oss.qualcomm.com>
-
-
-
-> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-> index 8c8ffe94cd8..00650a66dcb 100644
-> --- a/target/riscv/cpu.h
-> +++ b/target/riscv/cpu.h
-> @@ -755,7 +755,7 @@ FIELD(EXT_TB_FLAGS, BIG_ENDIAN, 33, 1)
->   #ifdef TARGET_RISCV32
->   #define riscv_cpu_mxl(env)  ((void)(env), MXL_RV32)
->   #else
-> -static inline RISCVMXL riscv_cpu_mxl(CPURISCVState *env)
-> +static inline RISCVMXL riscv_cpu_mxl(const CPURISCVState *env)
->   {
->       return env->misa_mxl;
->   }
---------------tdF8idqp0OI0bhosCpgySj0X
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  </head>
-  <body>
-    <p><br>
-    </p>
-    <div class="moz-cite-prefix">On 10/14/2026 4:05 PM, Pierrick Bouvier
-      wrote:<br>
-    </div>
-    <blockquote type="cite"
-cite="mid:20261014210526.104215-7-pierrick.bouvier@oss.qualcomm.com">
-      <pre wrap="" class="moz-quote-pre">Signed-off-by: Pierrick Bouvier <a class="moz-txt-link-rfc2396E" href="mailto:pierrick.bouvier@oss.qualcomm.com">&lt;pierrick.bouvier@oss.qualcomm.com&gt;</a>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/riscv/cpu.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-</pre>
-    </blockquote>
-    <pre wrap="" class="moz-quote-pre"><span
-    style="padding: 0px; tab-size: 8;"
-    class="hljs diff colorediffs language-diff">Reviewed-by: Brian Cain </span><a
-    class="moz-txt-link-rfc2396E"
-    href="mailto:brian.cain@oss.qualcomm.com">&lt;brian.cain@oss.qualcomm.com&gt;</a><span
-    style="padding: 0px; tab-size: 8;"
-    class="hljs diff colorediffs language-diff"></span></pre>
-    <p><br>
-    </p>
-    <p><br>
-    </p>
-    <blockquote type="cite"
-cite="mid:20261014210526.104215-7-pierrick.bouvier@oss.qualcomm.com">
-      <pre wrap="" class="moz-quote-pre">
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 8c8ffe94cd8..00650a66dcb 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -755,7 +755,7 @@ FIELD(EXT_TB_FLAGS, BIG_ENDIAN, 33, 1)
- #ifdef TARGET_RISCV32
- #define riscv_cpu_mxl(env)  ((void)(env), MXL_RV32)
- #else
--static inline RISCVMXL riscv_cpu_mxl(CPURISCVState *env)
-+static inline RISCVMXL riscv_cpu_mxl(const CPURISCVState *env)
- {
-     return env-&gt;misa_mxl;
- }
-</pre>
-    </blockquote>
-  </body>
-</html>
+ include/hw/core/qdev.h | 15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
---------------tdF8idqp0OI0bhosCpgySj0X--
+diff --git a/include/hw/core/qdev.h b/include/hw/core/qdev.h
+index 8e91e2fcb08..1330e0153d4 100644
+--- a/include/hw/core/qdev.h
++++ b/include/hw/core/qdev.h
+@@ -953,9 +953,18 @@ void device_class_set_props_n(DeviceClass *dc, const Property *props, size_t n);
+  *
+  * This is intended to be used when the new realize function will
+  * eventually call its parent realization function during creation.
+- * This requires storing the function call somewhere (usually in the
+- * instance structure) so you can eventually call
+- * dc->parent_realize(dev, errp)
++ * @parent_realize should be where you want to save the pointer to
++ * the parent class realize function; the recommended location is a
++ * field named "parent_realize" in your class's class struct.
++ * (Some existing code puts the field in the parent class's class
++ * struct; this will work but is not the preferred thing for new code.)
++ *
++ * In your realize function you should chain to your parent's
++ * realize function using something like::
++ *
++ *    MyThingClass *mc = MY_THING_GET_CLASS(dev);
++ *    (do your child class realize actions here)
++ *    mc->parent_realize(dev, errp);
+  */
+ void device_class_set_parent_realize(DeviceClass *dc,
+                                      DeviceRealize dev_realize,
+-- 
+2.43.0
+
 
