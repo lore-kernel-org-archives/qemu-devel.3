@@ -4,93 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70908CC6B39
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B379CC6B34
 	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 07:40:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHG45-0004wW-5U; Thu, 15 Oct 2026 03:39:49 -0400
+	id 1xHG47-0004wx-HT; Thu, 15 Oct 2026 03:39:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1xHG3z-0004vn-Td
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 03:39:44 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1xHG42-0004wK-Sv
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 03:39:46 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1xHG3y-0003Er-1I
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 03:39:43 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1xHG41-0003FE-61
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 03:39:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1792049980;
+ s=mimecast20190719; t=1792049984;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=xVAeqaPsqxRIJaF1GIm8eNcESWB6TOw9nTp4vQ6sYTg=;
- b=TXAhX5YSpPJI/W5a5azmsdTD7s9pqOI7pv78KkKp3Det4wkph/guaMw0RjEufb43Ga3cL8
- NhptQjoaEvKlZcxhhM+GALJFfVwp4h9hnIOE1eK63o4c2M70Wu39uXQQNlfMwalzjWkhGp
- xvGwQ5xOUaL3427tgxuzXI6Ph/ZoZTo=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=hKE9CywBX8b0n5l0+v41Om1Ya2NpV1+ARuuDRW3McaU=;
+ b=DJdOXLN+rt8bm5PIb4bHibimhqEP5pZWwZmJCfLqXp5VmGk9RbcTMw3wr1X09ysZA8rJ/Q
+ GRwqo6wp+/kBNhF2OiqM+7h3tPRTO9DBDKH6Miw23LMkRZ/jdzkJNY8sBl4GFjHgnvqIlz
+ yozWw2hdbR8PGcyRXIhODsWHmCx3pA4=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-79-o6r_LAz6MT-1J_N3Gdio8w-1; Thu, 15 Oct 2026 07:39:34 +0000
-X-MC-Unique: o6r_LAz6MT-1J_N3Gdio8w-1
-X-Mimecast-MFC-AGG-ID: o6r_LAz6MT-1J_N3Gdio8w_1792049973
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4a1b11e7837so19397195e9.1
- for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 00:39:34 -0700 (PDT)
+ us-mta-288-ZkGY52PcPiuulnbWi0fUwQ-1; Thu, 15 Oct 2026 07:39:42 +0000
+X-MC-Unique: ZkGY52PcPiuulnbWi0fUwQ-1
+X-Mimecast-MFC-AGG-ID: ZkGY52PcPiuulnbWi0fUwQ_1792049981
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-48b028d93c5so3596439f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 00:39:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1792049973; x=1792654773; darn=nongnu.org;
+ d=redhat.com; s=google; t=1792049981; x=1792654781; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:autocrypt
  :content-language:from:references:cc:to:subject:user-agent
  :mime-version:date:message-id:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=xVAeqaPsqxRIJaF1GIm8eNcESWB6TOw9nTp4vQ6sYTg=;
- b=QLbtaOgDyypOzVduAocxEwKNNDacUx5ioOPJdTlhtzH/MZLSOrR1HhETjNkk4EVeID
- hkylXVPcJd21RdOX/VMxzaZk00PXDrFHU/Plp5RRuXw/5q2NKQ1c9RGAyVSwyvWV0q1K
- 3IzNszwtHUGBZKdPzXH/jEuCxAIEElr1Nea7e35UwGpq7BfTjicE4CXdsBH9CifVCJS1
- 8OlagVVsZ1vMaqwvsM1spnMQEIG48ViXbHbk/vN4VA6ofbcEHTki0Y4Y5W5RZcXN6j/N
- 6tQAILGwvqHfVL8htMrCFxkx13tSVGVPcg6Z/5niUsuQbDYB3VyU243r6X+B8BxXtkxA
- Fa5A==
+ bh=hKE9CywBX8b0n5l0+v41Om1Ya2NpV1+ARuuDRW3McaU=;
+ b=GixQWA+a5lXbruaEO59NnPA0T3O8KHVgU+V06UhDH6Gux05WnF2t/hERhtgN1xwAy3
+ xIq2aBo8Y9MwXeZCPPyUzRIm7htIg+gSAtm1AYz9a7hYkQS1XDCHAbPC/pMfjy6l+ulK
+ liewL5qArxIKpvVid7g8e8CBuUTxD8c6FkSEfoHxhfT2U252XccL+5Y2PMS6WnC+p6c/
+ 8iEQFj8n8SoyBGYUUB6RLwqDzWR+i709GmLG9oqpA7p/mp3opHFLebh5v54kemTmW/0R
+ bJ0lZxGsnV2IlHOoKgGVGUr5B6XMSRfapcBQ2ZFjzBk/h+gxclRRwDdeTzBvolvQC1Ng
+ 5I/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792049973; x=1792654773;
+ d=1e100.net; s=20260707; t=1792049981; x=1792654781;
  h=content-transfer-encoding:content-type:in-reply-to:autocrypt
  :content-language:from:references:cc:to:subject:user-agent
  :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to:content-type;
- bh=xVAeqaPsqxRIJaF1GIm8eNcESWB6TOw9nTp4vQ6sYTg=;
- b=MYTpN5Pb9bDyYv9jKwiDLQ7UuQyzz/vR05QtWAlZtElYHxjqzKnV4BjSKwitcPSVAk
- ZOnpCHlT3TbUbu3zZd7VOiz/z4ts2GJfdIyO0Agb5HtyC4bkI8tLWrkgNqn2vSzH8FWp
- xN7hOgJN2lihwt+dgHuM247qmElis6dIdrADhgjKJqlFY43yK4CGmbztyWN68QOHgXza
- Z35UtXe/A+RdSPXefw8ukkaqMb1Yi/kx6g52fHqFHf0v7Ks3TuLXou2DFNwYp32Nhkwa
- cPexFTS+fbErc9ipMlCB6emgsP1dZikkdIwRTvhKg9MUzhmSfpWDgfkQO+JIGWhoK67b
- JWNw==
+ bh=hKE9CywBX8b0n5l0+v41Om1Ya2NpV1+ARuuDRW3McaU=;
+ b=cHNy4zy4/w9+spFdQBInLeBK2e4/vY90GWX/cXcrmlOygCI1aDBZoiC0YDLFuWLijX
+ lbZ13oIbRvL1n4EAWv9YlSaJsJk+mxqfiE9uVuuvqKVKHe0lteLN7//7N8yRSrDrxxiu
+ fW03zMmWu1UM2BPN2Qo7tcQqKcGV8qOv8KB8nW4Nb/t4tQP5wlx5M+t0qH4PJQgQP3h0
+ QJY0kTKY7HmLI7pxccMetz+ivTy0VnmCiZlWEq5zIAFveUFSXIBRfuCBJtkeywR+63XC
+ HEfFETCh4Iy06H/HgOAhHvFnrNjK9taqe8YZocpoyZGyXnNjDlhqzCMzZZ1pZLPwyiih
+ Zhkg==
 X-Forwarded-Encrypted: i=1;
- AKwUvBxncgB91XUzIOHVAukok9IpRvwFJsChekZvqPh8zqcqozHLBr6ZDBu5OIcSAy3vdk3QHca4//wBB/FF@nongnu.org
-X-Gm-Message-State: AFq9FYIW3DbH9t197qmo2ZEztIDyrUqFBxZ3sH5rHmwRH11LobqtgtTx
- 4Irb4njleE5OKaYvvlbsvQiQz4YYaHJfCHppj6SFbXsHFad3R5wyAWlGlcyftz9e0temojWPrnH
- 3/vdnHW9WbPJI6dQEm2GGsTGG8ajWUYVuchNJe5ZhdPMZjhKb68bkmtdW
-X-Gm-Gg: AYBFou1inK4sUqNn/tGp0PPdgGVYlttjYkdiAfs28KA8R2ES/6kqnmTGL6UG/e2nE7m
- 2Z6LXTVXazpH2D/X+vngH86ADnxnwQWaOXM1rWnbUctDXDfkkbHIa0osc4Nw/axMREEUyXktCVZ
- Xr6NFcYvFEW0EFqzRDE5fhBLqODWuFPpJfL8/g5/98ESSr/GyslmE6RjBPAqNbcqAk5B+OxMKad
- LHOapJ/GasTsHf7mJDga6HMiIM2q2/PWgyUaSNDK53CJc0w64ipREZJfMaxJtgKmDGT4ZK2UXzE
- gSD9dyxBWtKcP/dAO6ldnybsxQXiVeVvhpN2Qs1G6qWBIpSaWwjNAFWhCXM4lrhpWxCxbbqMHoC
- PCP48Av/bCcrS2paucUFkn1gqbYwIsJ1KX3bR+yPc
-X-Received: by 2002:a05:600c:4f42:b0:4a0:b6:4619 with SMTP id
- 5b1f17b1804b1-4a18e3ecfc8mr436500225e9.0.1792049973379; 
- Thu, 15 Oct 2026 00:39:33 -0700 (PDT)
-X-Received: by 2002:a05:600c:4f42:b0:4a0:b6:4619 with SMTP id
- 5b1f17b1804b1-4a18e3ecfc8mr436497625e9.0.1792049971395; 
- Thu, 15 Oct 2026 00:39:31 -0700 (PDT)
+ AKwUvBxAFKB8KRLbDNRPoBJXoWsETorfuN3neK8IyR4dpt1xjKv1IqmKHe8lEYVjgPLecTTyh1arhILouhgm@nongnu.org
+X-Gm-Message-State: AFq9FYIEIhD8hYOc4WrVSDSohLINBbd+IsFXp60oOeNabl02se7MorEp
+ RJCiTiM/2IyfxuG7qBCsmlSqsfVSsaS6Z4/8YvFw7tSe3BZUzpXXq/tnNOZggioinusMwkV4D93
+ HHx9QFX8UtsLkfx8aZo/DfpHn/GaSd71bvcEAU759SlslQrGTnU2zNvGx
+X-Gm-Gg: AYBFou2YTrnnqk0elT83Nb1UfwEFLH+EOtKZBQ6orKOGztDGp9i8b/X9ISyJ8BP2vNc
+ drYsTJOYOXovEBNCRazX8Dht9APcyys/GJzLSrfiFnjc64pxALNrpbsl13IFPLKIeCmJ0qj2QHm
+ c7/C8sq26ziv2+i9wJKhzFqQiPzaI76YKMplq1w9vBmzl8jkTn2ziL+s2fLns1d7Vs+E2B+S3Be
+ eqdMLJhgJLostMXc44+2+kGTFsXrgBS9hcdqvzdEZA2My0OBUpaH82LZ0X4OKUl/XqwyrT/fdDg
+ YOm6LiF4x8P6+7TfzH+oPa9rJWwJrI1GsuaY7gShZPZc8FMVI39/vbijDN/4pACf7ET1bRoZTmI
+ Oc4Uf0FLisQdTGMTsWSdPvFDy+SPl0T/0XnwU3P+0
+X-Received: by 2002:a05:6000:4683:b0:48b:5e5:664f with SMTP id
+ ffacd0b85a97d-48dbaadddcdmr24951982f8f.18.1792049981274; 
+ Thu, 15 Oct 2026 00:39:41 -0700 (PDT)
+X-Received: by 2002:a05:6000:4683:b0:48b:5e5:664f with SMTP id
+ ffacd0b85a97d-48dbaadddcdmr24951925f8f.18.1792049980591; 
+ Thu, 15 Oct 2026 00:39:40 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:1292:d530:578a:3c67:6721:1232?
  ([2a01:e0a:1292:d530:578a:3c67:6721:1232])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a1bdbb4a30sm48595685e9.15.2026.10.15.00.39.30
+ ffacd0b85a97d-48df50bd11asm2705748f8f.8.2026.10.15.00.39.39
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 15 Oct 2026 00:39:30 -0700 (PDT)
-Message-ID: <4fb67f68-a2d9-4101-b667-4d59067e2256@redhat.com>
-Date: Thu, 15 Oct 2026 09:39:29 +0200
+ Thu, 15 Oct 2026 00:39:40 -0700 (PDT)
+Message-ID: <b13640de-6ecf-4fd7-8d37-0a03976d3912@redhat.com>
+Date: Thu, 15 Oct 2026 09:39:39 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 2/4] vfio: add 'fd' and 'fd_offset' to VFIOMmap
+Subject: Re: [PATCH v5 3/4] vfio: add setup_sparse_mmaps hook to
+ VFIODeviceIOOps
 To: Naman Gulati <namangulati@google.com>, qemu-devel@nongnu.org
 Cc: John Levon <john.levon@nutanix.com>,
  Thanos Makatos <thanos.makatos@nutanix.com>,
@@ -98,7 +99,7 @@ Cc: John Levon <john.levon@nutanix.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Matt Evans <matt@ozlabs.org>
 References: <20261014211041.1087331-1-namangulati@google.com>
- <20261014211041.1087331-3-namangulati@google.com>
+ <20261014211041.1087331-4-namangulati@google.com>
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Content-Language: en-US, fr
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -144,18 +145,18 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20261014211041.1087331-3-namangulati@google.com>
+In-Reply-To: <20261014211041.1087331-4-namangulati@google.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -22
 X-Spam_score: -2.3
 X-Spam_bar: --
 X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -172,132 +173,117 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 10/14/26 23:10, Naman Gulati wrote:
-> Allow each sparse mmap subregion to specify its own file descriptor and
-> file offset for the mmap call.
-> 
-> Add 'fd' (set to -1 when the region fd should be used) and 'fd_offset'
-> to VFIOMmap, and update vfio_region_mmap() to use them.
+> Add a setup_sparse_mmaps callback to VFIODeviceIOOps so transport
+> backends (such as vfio-user) can parse custom sparse mmap capabilities,
+> falling back to vfio_default_setup_sparse_mmaps() to process shared
+> VFIO mmap capabilities.
 > 
 > Reviewed-by: Thanos Makatos <thanos.makatos@nutanix.com>
 > Signed-off-by: Naman Gulati <namangulati@google.com>
 > ---
->   hw/vfio/vfio-region.h |  4 +++-
->   hw/vfio/pci.c         |  2 ++
->   hw/vfio/region.c      | 26 +++++++++++++++++++-------
->   3 files changed, 24 insertions(+), 8 deletions(-)
+>   hw/vfio/vfio-region.h         |  5 +++++
+>   include/hw/vfio/vfio-device.h | 16 ++++++++++++++++
+>   hw/vfio/device.c              |  1 +
+>   hw/vfio/region.c              | 19 ++++++++++++++++---
+>   4 files changed, 38 insertions(+), 3 deletions(-)
 > 
 > diff --git a/hw/vfio/vfio-region.h b/hw/vfio/vfio-region.h
-> index 58b236f113..9f6a5cf7d5 100644
+> index 9f6a5cf7d5..a0c9533f9f 100644
 > --- a/hw/vfio/vfio-region.h
 > +++ b/hw/vfio/vfio-region.h
-> @@ -14,8 +14,10 @@
->   typedef struct VFIOMmap {
->       MemoryRegion mem;
->       void *mmap;
-> -    off_t offset;
-> +    off_t offset;       /* offset within the region */
->       size_t size;
-> +    int fd;             /* per-mmap fd, or -1 to use the region fd */
-> +    uint64_t fd_offset; /* offset within fd for the mmap call */
->   } VFIOMmap;
+> @@ -46,4 +46,9 @@ void vfio_region_mmaps_set_enabled(VFIORegion *region, bool enabled);
+>   void vfio_region_exit(VFIORegion *region);
+>   void vfio_region_finalize(VFIORegion *region);
 >   
->   typedef struct VFIODevice VFIODevice;
-> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-> index 428ab2f069..f851082114 100644
-> --- a/hw/vfio/pci.c
-> +++ b/hw/vfio/pci.c
-> @@ -1623,6 +1623,7 @@ static void vfio_pci_fixup_msix_region(VFIOPCIDevice *vdev)
->                                     vdev->msix->table_bar, 0, 0);
->           } else {
->               region->mmaps[0].offset = end;
-> +            region->mmaps[0].fd_offset += end;
->               region->mmaps[0].size = region->size - end;
->               trace_vfio_msix_fixup(vdev->vbasedev.name,
->                                 vdev->msix->table_bar, region->mmaps[0].offset,
-> @@ -1649,6 +1650,7 @@ static void vfio_pci_fixup_msix_region(VFIOPCIDevice *vdev)
->                                 region->mmaps[0].offset + region->mmaps[0].size);
+> +struct vfio_region_info;
+> +int vfio_default_setup_sparse_mmaps(VFIORegion *region,
+> +                                    struct vfio_region_info *info,
+> +                                    Error **errp);
+> +
+>   #endif /* HW_VFIO_REGION_H */
+> diff --git a/include/hw/vfio/vfio-device.h b/include/hw/vfio/vfio-device.h
+> index 8472420d3f..3136e152f2 100644
+> --- a/include/hw/vfio/vfio-device.h
+> +++ b/include/hw/vfio/vfio-device.h
+> @@ -43,6 +43,7 @@ enum {
 >   
->           region->mmaps[1].offset = end;
-> +        region->mmaps[1].fd_offset += end;
->           region->mmaps[1].size = region->size - end;
->           trace_vfio_msix_fixup(vdev->vbasedev.name,
->                                 vdev->msix->table_bar, region->mmaps[1].offset,
+>   typedef struct VFIODeviceOps VFIODeviceOps;
+>   typedef struct VFIODeviceIOOps VFIODeviceIOOps;
+> +typedef struct VFIORegion VFIORegion;
+>   typedef struct VFIOMigration VFIOMigration;
+>   
+>   typedef struct IOMMUFDBackend IOMMUFDBackend;
+> @@ -218,6 +219,21 @@ struct VFIODeviceIOOps {
+>       int (*get_region_info)(VFIODevice *vdev,
+>                              struct vfio_region_info *info, int *fd);
+>   
+> +    /**
+> +     * @setup_sparse_mmaps
+> +     *
+> +     * Parse sparse mmap capabilities for a region and initialize region->mmaps.
+> +     *
+> +     * @region: #VFIORegion to set up
+> +     * @info: region info struct containing capabilities
+> +     * @errp: pointer to Error*, to store an error if it happens
+> +     *
+> +     * Returns 0 on success, -ENODEV if not sparse, or negative error code.
+> +     */
+> +    int (*setup_sparse_mmaps)(VFIORegion *region,
+> +                              struct vfio_region_info *info,
+> +                              Error **errp);
+> +
+>       /**
+>        * @get_irq_info
+>        *
+> diff --git a/hw/vfio/device.c b/hw/vfio/device.c
+> index 4f11959633..94d6e7ce09 100644
+> --- a/hw/vfio/device.c
+> +++ b/hw/vfio/device.c
+> @@ -662,6 +662,7 @@ static VFIODeviceIOOps vfio_device_io_ops_ioctl = {
+>   
+>       .device_feature = vfio_device_io_device_feature,
+>       .get_region_info = vfio_device_io_get_region_info,
+> +    .setup_sparse_mmaps = vfio_default_setup_sparse_mmaps,
+>       .get_irq_info = vfio_device_io_get_irq_info,
+>       .set_irqs = vfio_device_io_set_irqs,
+>       .region_read = vfio_device_io_region_read,
 > diff --git a/hw/vfio/region.c b/hw/vfio/region.c
-> index 54ad11a6c8..16efed2fce 100644
+> index 16efed2fce..94cfb708bf 100644
 > --- a/hw/vfio/region.c
 > +++ b/hw/vfio/region.c
-> @@ -189,6 +189,9 @@ static int vfio_setup_region_sparse_mmaps(VFIORegion *region,
->                                               sparse->areas[i].size - 1);
->               region->mmaps[j].offset = sparse->areas[i].offset;
->               region->mmaps[j].size = sparse->areas[i].size;
-> +            region->mmaps[j].fd = -1;
-> +            region->mmaps[j].fd_offset = region->fd_offset +
-> +                                         sparse->areas[i].offset;
->               j++;
->           }
->       }
-> @@ -262,6 +265,8 @@ int vfio_region_setup(Object *obj, VFIODevice *vbasedev, VFIORegion *region,
->                   region->mmaps = g_new0(VFIOMmap, region->nr_mmaps);
->                   region->mmaps[0].offset = 0;
->                   region->mmaps[0].size = region->size;
-> +                region->mmaps[0].fd = -1;
-> +                region->mmaps[0].fd_offset = region->fd_offset;
->               } else if (ret) {
->                   return ret;
->               }
-> @@ -354,7 +359,6 @@ int vfio_region_mmap(VFIORegion *region)
->       off_t map_offset = 0;
->       size_t align;
->       char *name;
-> -    int fd;
+> @@ -162,9 +162,9 @@ static int vfio_mmap_compare_offset(const void *a, const void *b)
+>       return 0;
+>   }
 >   
->       if (!region->mem || !region->nr_mmaps) {
->           return 0;
-> @@ -391,8 +395,6 @@ int vfio_region_mmap(VFIORegion *region)
->           return ret;
->       }
+> -static int vfio_setup_region_sparse_mmaps(VFIORegion *region,
+> -                                          struct vfio_region_info *info,
+> -                                          Error **errp)
+> +int vfio_default_setup_sparse_mmaps(VFIORegion *region,
+> +                                    struct vfio_region_info *info,
+> +                                    Error **errp)
+>   {
+>       struct vfio_info_cap_header *hdr;
+>       struct vfio_region_info_cap_sparse_mmap *sparse;
+> @@ -198,6 +198,19 @@ static int vfio_setup_region_sparse_mmaps(VFIORegion *region,
 >   
-> -    fd = vfio_device_get_region_fd(region->vbasedev, region->nr);
-> -
->       map_align = (void *)ROUND_UP((uintptr_t)map_base, (uintptr_t)align);
->       munmap(map_base, map_align - map_base);
->       munmap(map_align + region->size,
-> @@ -404,12 +406,22 @@ int vfio_region_mmap(VFIORegion *region)
->        * offsets being in ascending order.
->        */
->       for (i = 0; i < region->nr_mmaps; i++) {
-> +        int fd = region->mmaps[i].fd;
+>       region->nr_mmaps = j;
+>       region->mmaps = g_realloc(region->mmaps, j * sizeof(VFIOMmap));
+> +    return 0;
+> +}
 > +
-> +        if (fd < 0) {
-> +            fd = vfio_device_get_region_fd(region->vbasedev, region->nr);
-> +        }
-> +        if (fd < 0) {
-> +            ret = -EINVAL;
-> +            munmap(map_align + map_offset, region->size - map_offset);
-> +            goto no_mmap;
-> +        }
+> +static int vfio_setup_region_sparse_mmaps(VFIORegion *region,
+> +                                          struct vfio_region_info *info,
+> +                                          Error **errp)
+> +{
+> +    int ret, i;
 > +
->           munmap(map_align + map_offset, region->mmaps[i].offset - map_offset);
->           region->mmaps[i].mmap = mmap(map_align + region->mmaps[i].offset,
->                                        region->mmaps[i].size, prot,
->                                        MAP_SHARED | MAP_FIXED, fd,
-> -                                     region->fd_offset +
-> -                                     region->mmaps[i].offset);
-> +                                     region->mmaps[i].fd_offset);
->           if (region->mmaps[i].mmap == MAP_FAILED) {
->               ret = -errno;
->               /*
-> @@ -454,8 +466,8 @@ int vfio_region_mmap(VFIORegion *region)
+> +    ret = region->vbasedev->io_ops->setup_sparse_mmaps(region, info, errp);
+> +    if (ret) {
+> +        return ret;
+> +    }
 >   
->   no_mmap:
->       trace_vfio_region_mmap_fault(memory_region_name(region->mem), i,
-> -                                 region->fd_offset + region->mmaps[i].offset,
-> -                                 region->fd_offset + region->mmaps[i].offset +
-> +                                 region->mmaps[i].fd_offset,
-> +                                 region->mmaps[i].fd_offset +
->                                    region->mmaps[i].size - 1, ret);
->   
->       region->mmaps[i].mmap = NULL;
+>       /*
+>        * Sort sparse mmaps by offset to ensure proper handling of gaps
 
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
