@@ -4,62 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 014CCCC6B34
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 10:36:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7F01CC6B3F
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 10:37:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHIln-0005mu-JK; Thu, 15 Oct 2026 06:33:08 -0400
+	id 1xHIlR-0003rP-Pp; Thu, 15 Oct 2026 06:32:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eblot.ml@gmail.com>)
- id 1xHIiA-0008GS-IA
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 06:29:25 -0400
-Received: from mail-wm1-f49.google.com ([209.85.128.49])
+ id 1xHIhN-0007kC-0k
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 06:28:43 -0400
+Received: from mail-wm1-f47.google.com ([209.85.128.47])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <eblot.ml@gmail.com>)
- id 1xHIi7-0004Ya-3F
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 06:29:21 -0400
-Received: by mail-wm1-f49.google.com with SMTP id
- 5b1f17b1804b1-4a172eb31f0so44243915e9.1
- for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 03:29:18 -0700 (PDT)
+ id 1xHIhH-0004Oj-Vg
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 06:28:32 -0400
+Received: by mail-wm1-f47.google.com with SMTP id
+ 5b1f17b1804b1-4a1ad2e2391so20853255e9.0
+ for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 03:28:27 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792060157; x=1792664957;
+ d=1e100.net; s=20260707; t=1792060106; x=1792664906;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :content-type:mime-version:subject:date:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=tktjGaYiiPphflc+jwBY/yh3JfaTUnJhW1nAnyAEoO4=;
- b=rZHvvjv1/RIk6SfGGxkYHoiLMdRLeaY2pkZEFYu/AGY98lItINFhQXfDj48/yTFdho
- CYVdFQrn0KXLEV1Xa3fxSz+6GX4P/Ku4mRv+FCDcuTFV9hBG5rvsathS89rnJXI7OqY9
- RYVdW/9wCjp+3/2pErNEZJa518Efwjl2kUcfssNvOrgZCf00rvJKupPnz+rb7H1yFKyo
- 8cEzRFYk/qk6IDsWc9GyIquflkp75G123QhXg4+LKtweK3GOmGfS3HGUQiLzuwFjLPpy
- 5ccAdsGkAmUMfbNZO1UAit6o9oB2gsoTllYpMtorDXuw5yWRLp80298NBgq95j3zApsK
- OjPA==
-X-Gm-Message-State: AFq9FYJwfuGDrI7AV0tAUWlFVOWNutZMOlpRZRwieCJZh8Wdtx0R1GM0
- WwLj4sv+AsvixH+cWkUSi5fhfm5VQUh33x+GhUx2UM6LbHti1vgOwY06jdF7zA==
-X-Gm-Gg: AYBFou1NI6n6OEy1aZLISy/6TtSyeAFX9SttwPK1k6HIN6H0KC6mtYWrOmA4dq4sLr2
- 4usmIaOPGw5Pur1hAHkkFX0kf6bNr88rur6cyV80lP+CWnBlepegs9q4Rx4UvKpl9zGMr9rE0LN
- 1LvEewM7Qle51+jABNaDY7SP5tNA/PA6i2vF/msZNOwfTENYFDlnaQLLaguINZ2J0eTSSWqEiYn
- bC/L0fISpbtulEFfLg8mvftgzmgd8NdVLQc6LfD7ehh7jsdgSdFafwVPy/FANMetQFSG9RKgjGh
- rJw+A8NQ4fF3W+vBH1rabuH17HtjB0YOxGQ2UX8Lhky15YHFsN5LgZsFXG6ubsnmHNQYEzKHeqg
- XGNOdw64D1I84oYHk2DTMvAMM08BTtAro7mVtwOgSuLXwUzVsw4bD2i2Avx0xqrcx9B4eP0USI7
- OhZu24LCwCXoDYcM0gqR81oDmHWa0v9CEfS3mEDCivZ4NrArnLf+CT/Ll/knfG7BWXarMPp+4N4
- CvbdQUCUzdCE53Hj6epjDE1AVe4UIfdtB/BxaME1n4GLQ==
-X-Received: by 2002:a05:600c:4747:b0:4a1:88de:9e8b with SMTP id
- 5b1f17b1804b1-4a18e49d65dmr368156415e9.5.1792060157390; 
- Thu, 15 Oct 2026 03:29:17 -0700 (PDT)
+ bh=SXVkV6BmIYa4CM52mZdbIuwD6cqbidYPD1oEQTmNrJw=;
+ b=UF+lIAnNZtJsgxc2HMhIAmFWGOWc0Fale18Z2CYZ8py2zYg3eboKANl/hmpzn4/F4Y
+ tzjNxecQlbyYuU5THylrfDpPtz1cRJP+aqcGbp75C6s7whTMPXDVWKbPoO1U0D3Xel3j
+ CVCu93Wlv9jTAU9qwlqzDO7dKNY9fXcb1fdDg8Ln+Q7A9BL+TOsyl/5knWkWgF6SoThx
+ CKzeKIWnVNEsXUGpOzHmIGWC/2asc2UgPApxU6atL8psX5q1dUczaAT8DeC+i8A0eOgp
+ DSfusp6LK65szV8mSrgF/Cmj872geNGn+z6R828Xt4t0GHSDzNnopanf4LedHTiIhFiY
+ BN1g==
+X-Gm-Message-State: AFq9FYIvvyS35g22HBO98md6nTQbXGHrVv5aySw/SepFMCWd0FcB/pgP
+ ZOvoktDX3yB5Ym4BshVwCI20My6y8TPhArjOGW0vViFviMwTzgnnSgcznhkjDw==
+X-Gm-Gg: AYBFou0M0MbPfoGLM12DFWW8aploZri7vENUI6AF8G3bikD3Kkb7H06u2km8pPkt8kt
+ QS14wcxQ7I131NBqAJHBNzM2jLYESPlQLQERbFKyvv0T1Vwde3Aa2cO+wFBtj+MIqzsrjWaEhmq
+ HQYlG8guSqjhyv/2FVloA+OUdYctNGKvMTp6CPR3TC0c36XbfLYdFwvw7Bh5kz3hbdb40jP4eLq
+ alZlE32+eQa6xXCMWIXskplLR7xW0UuqsxVvL/fh/EVFZsU9P0LPd2UUdAA4BzLhZrKsPDs96Hw
+ 4LUetsm1bua72BdlJ9FODtjSUIKk3JQHTZiMyFpj6p2yWo3igXzs8UeT6rvZru1v6NfMn/cUjcy
+ YuXBbne278ZQQvF8darazcl8cgOggCeIhxPDf94zMDqbERRj3VeoZNUGNyEuNCWxmYUYwUvMdtF
+ d+uZhzt8FDCdpwgZFnmAI+DxpjWAIKs39FiygXO9a2SpA85ZC7M1lI4Hn7GD3D9i8AefxnAAzLG
+ RYWZ+xNUSapQs45NeOWQGccb/8PUfzOjhs5qUOJ+FOdnQ==
+X-Received: by 2002:a05:600c:4e4f:b0:4a1:ad27:e797 with SMTP id
+ 5b1f17b1804b1-4a1ad27e79cmr172669715e9.6.1792060106381; 
+ Thu, 15 Oct 2026 03:28:26 -0700 (PDT)
 Received: from localhost (89-93-216-19.hfc.dyn.abo.bbox.fr. [89.93.216.19])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a1bd9a8a22sm67881385e9.5.2026.10.15.03.29.16
+ ffacd0b85a97d-48de0bd733fsm17897744f8f.58.2026.10.15.03.28.25
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 Oct 2026 03:29:16 -0700 (PDT)
-Date: Thu, 15 Oct 2026 11:28:32 +0200
-Subject: [PATCH v3 45/50] tests/qtest: ina238: cover the operating modes
+ Thu, 15 Oct 2026 03:28:25 -0700 (PDT)
+Date: Thu, 15 Oct 2026 11:28:25 +0200
+Subject: [PATCH v3 38/50] tests/qtest: ina230: cover ALERT latch
+ persistence
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261015-bmc-minerva-v3-45-7d50c8a108e5@free.fr>
+Message-Id: <20261015-bmc-minerva-v3-38-7d50c8a108e5@free.fr>
 References: <20261015-bmc-minerva-v3-0-7d50c8a108e5@free.fr>
 In-Reply-To: <20261015-bmc-minerva-v3-0-7d50c8a108e5@free.fr>
 To: qemu-devel@nongnu.org
@@ -75,15 +76,15 @@ Cc: =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, 
  Emmanuel Blot <emmanuel.blot@free.fr>, Glenn Miles <milesg@linux.ibm.com>
 X-Mailer: b4 0.16.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1792056477; l=4362;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1792056476; l=4970;
  i=emmanuel.blot@free.fr; s=20260602; h=from:subject:message-id;
- bh=hpkKt0gJgZXEPALCwyXp/2SRP8/YiYX8+r6RcSGYDn4=;
- b=/UFllWcjbet2SJFXyHjRNf5XETBgpowehkf3+3AO4Zo75Xw2tM3S8oAMp5BjPJJaYQpWn7fZH
- NyVbSXGjV7gDEB4ngs+MjCKonznMFpf6NWaNUc9Gl8QyhzqhAcymf8r
+ bh=W8bVV49/k/VdCQ886gBN1IQ0GLO/G1VK52xof55CHLg=;
+ b=izrE0Ei6LuVlDgzOoZf5xuAgBouG0QHhkfTEsa/7pbev/U3Uk7z+E4Ja5k+nRLGxqwR5nXzYS
+ u2PQjP6AGAoCGASkJaqegIcA9ii1On1IQoO2ZeIcCinpXIBF0aPN45j
 X-Developer-Key: i=emmanuel.blot@free.fr; a=ed25519;
  pk=0qFrZ21FAAN8OfVsSoVcCFTk/NMYOWzxJz4paSAVm0g=
-Received-SPF: pass client-ip=209.85.128.49; envelope-from=eblot.ml@gmail.com;
- helo=mail-wm1-f49.google.com
+Received-SPF: pass client-ip=209.85.128.47; envelope-from=eblot.ml@gmail.com;
+ helo=mail-wm1-f47.google.com
 X-Spam_score_int: -15
 X-Spam_score: -1.6
 X-Spam_bar: -
@@ -109,105 +110,124 @@ From:  Emmanuel Blot via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add coverage for the ADC_CONFIG MODE field: shutdown modes perform no
-conversion and leave the measurement registers and CNVRF untouched,
-triggered modes convert once per ADC_CONFIG write, and continuous
-channel-select modes refresh only the enabled measurement registers.
+Verify what releases a latched alert and what can bring it back: a
+Mask/Enable read and a Configuration write both clear it, and only a
+conversion that re-samples the fault on a channel it converted asserts
+it again.
 
 Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
 Signed-off-by: Emmanuel Blot <emmanuel.blot@free.fr>
 ---
- tests/qtest/ina238-test.c | 70 +++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 70 insertions(+)
+ tests/qtest/ina230-test.c | 89 +++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 89 insertions(+)
 
-diff --git a/tests/qtest/ina238-test.c b/tests/qtest/ina238-test.c
-index 74912424c0..fb7bcc265c 100644
---- a/tests/qtest/ina238-test.c
-+++ b/tests/qtest/ina238-test.c
-@@ -304,6 +304,73 @@ static void test_adcrange(void *obj, void *data, QGuestAllocator *alloc)
-     g_assert_cmphex(i2c_get16(dev, REG_CURRENT), ==, 0x1F40);
+diff --git a/tests/qtest/ina230-test.c b/tests/qtest/ina230-test.c
+index 4d601c74b5..cda52bb815 100644
+--- a/tests/qtest/ina230-test.c
++++ b/tests/qtest/ina230-test.c
+@@ -364,6 +364,88 @@ static void test_alert_latch(void *obj, void *data, QGuestAllocator *alloc)
  }
  
-+/* Shutdown converts nothing: registers are held, CNVRF stays clear. */
-+static void test_mode_shutdown(void *obj, void *data, QGuestAllocator *alloc)
+ /* Bus over-limit alert */
++static void test_alert_latch_persist(void *obj, void *data,
++                                     QGuestAllocator *alloc)
 +{
 +    QI2CDevice *dev = (QI2CDevice *)obj;
 +
 +    i2c_set16(dev, REG_CONFIG, CONFIG_RST);
-+    i2c_set16(dev, REG_SHUNT_CAL, 0x1000);
-+    qmp_ina238_set("shunt-voltage", 20000000);
-+    qmp_ina238_set("bus-voltage", 12000000);
-+    g_assert_cmphex(i2c_get16(dev, REG_VSHUNT), ==, 0x0FA0);
-+    g_assert_cmphex(i2c_get16(dev, REG_VBUS), ==, 0x0F00);
++    i2c_set16(dev, REG_ALERT_LIMIT, 0x1000);
++    i2c_set16(dev, REG_MASK_ENABLE, ME_SOL | ME_LEN);
 +
-+    /* Clear CNVRF, then enter shutdown (MODE = 0). */
-+    (void)i2c_get16(dev, REG_DIAG_ALRT);
-+    i2c_set16(dev, REG_ADC_CONFIG, 0x0000);
++    qmp_ina230_set("shunt-voltage", 20000000);
 +
-+    /* Injecting while shut down performs no conversion: registers are held. */
-+    qmp_ina238_set("shunt-voltage", 40000000);
-+    qmp_ina238_set("bus-voltage", 24000000);
-+    g_assert_cmphex(i2c_get16(dev, REG_VSHUNT), ==, 0x0FA0);
-+    g_assert_cmphex(i2c_get16(dev, REG_VBUS), ==, 0x0F00);
++    /* First read shows the latched AFF and clears the latch */
++    g_assert_cmphex(i2c_get16(dev, REG_MASK_ENABLE) & ME_AFF, ==, ME_AFF);
 +
-+    /* No conversion completed, so CNVRF stays clear. */
-+    g_assert_cmphex(i2c_get16(dev, REG_DIAG_ALRT) & DIAG_CNVRF, ==, 0);
++    /* Fault still present but no new conversion: AFF stays cleared */
++    g_assert_cmphex(i2c_get16(dev, REG_MASK_ENABLE) & ME_AFF, ==, 0);
++
++    qmp_ina230_set("shunt-voltage", 20000000);
++    g_assert_cmphex(i2c_get16(dev, REG_MASK_ENABLE) & ME_AFF, ==, ME_AFF);
 +}
 +
-+/* Triggered modes convert once per ADC_CONFIG write. */
-+static void test_mode_triggered(void *obj, void *data, QGuestAllocator *alloc)
++/* A Configuration write releases the latch as a Mask/Enable read does. */
++static void test_alert_latch_config(void *obj, void *data,
++                                    QGuestAllocator *alloc)
 +{
 +    QI2CDevice *dev = (QI2CDevice *)obj;
 +
 +    i2c_set16(dev, REG_CONFIG, CONFIG_RST);
-+    i2c_set16(dev, REG_SHUNT_CAL, 0x1000);
-+    qmp_ina238_set("shunt-voltage", 20000000);
++    i2c_set16(dev, REG_ALERT_LIMIT, 0x1000);
++    i2c_set16(dev, REG_MASK_ENABLE, ME_SOL | ME_LEN);
 +
-+    /* Enter triggered bus+shunt+temp mode: one conversion. */
-+    i2c_set16(dev, REG_ADC_CONFIG, 0x7000);
-+    g_assert_cmphex(i2c_get16(dev, REG_VSHUNT), ==, 0x0FA0);
++    /* Latch a fault, then bring the input back below the limit */
++    qmp_ina230_set("shunt-voltage", 20000000);
++    qmp_ina230_set("shunt-voltage", 2500000);
 +
-+    /* A new input does not convert until the next trigger. */
-+    qmp_ina238_set("shunt-voltage", 40000000);
-+    g_assert_cmphex(i2c_get16(dev, REG_VSHUNT), ==, 0x0FA0);
++    i2c_set16(dev, REG_CONFIG, CONFIG_POR);
++    g_assert_cmphex(i2c_get16(dev, REG_MASK_ENABLE) & ME_AFF, ==, 0);
 +
-+    /* Re-triggering with another ADC_CONFIG write samples the new input. */
-+    i2c_set16(dev, REG_ADC_CONFIG, 0x7000);
-+    g_assert_cmphex(i2c_get16(dev, REG_VSHUNT), ==, 0x1F40);
++    /* With the fault present, the reconversion latches it again */
++    qmp_ina230_set("shunt-voltage", 20000000);
++    i2c_set16(dev, REG_CONFIG, CONFIG_POR);
++    g_assert_cmphex(i2c_get16(dev, REG_MASK_ENABLE) & ME_AFF, ==, ME_AFF);
 +}
 +
-+/* A bus-only mode refreshes the bus register alone; the rest are held. */
-+static void test_mode_channels(void *obj, void *data, QGuestAllocator *alloc)
++/* The releasing write need not reconvert: a power-down leaves it clear. */
++static void test_alert_latch_shutdown(void *obj, void *data,
++                                      QGuestAllocator *alloc)
 +{
 +    QI2CDevice *dev = (QI2CDevice *)obj;
 +
 +    i2c_set16(dev, REG_CONFIG, CONFIG_RST);
-+    i2c_set16(dev, REG_SHUNT_CAL, 0x1000);
-+    qmp_ina238_set("shunt-voltage", 20000000);
-+    qmp_ina238_set("bus-voltage", 12000000);
++    i2c_set16(dev, REG_ALERT_LIMIT, 0x1000);
++    i2c_set16(dev, REG_MASK_ENABLE, ME_SOL | ME_LEN);
 +
-+    /* Continuous bus-only mode. */
-+    i2c_set16(dev, REG_ADC_CONFIG, 0x9000);
-+    qmp_ina238_set("shunt-voltage", 40000000);
-+    qmp_ina238_set("bus-voltage", 24000000);
++    qmp_ina230_set("shunt-voltage", 20000000);
 +
-+    g_assert_cmphex(i2c_get16(dev, REG_VSHUNT), ==, 0x0FA0);
-+    g_assert_cmphex(i2c_get16(dev, REG_VBUS), ==, 0x1E00);
++    i2c_set16(dev, REG_CONFIG, 0x0000); /* power-down */
++    g_assert_cmphex(i2c_get16(dev, REG_MASK_ENABLE) & ME_AFF, ==, 0);
 +}
 +
- /* Clamping at full scale and the MATHOF flag */
- static void test_overflow(void *obj, void *data, QGuestAllocator *alloc)
++/*
++ * A conversion only re-samples the alert of a channel it converted: the bus
++ * register a shunt-only conversion left stale must not re-latch.
++ */
++static void test_alert_channel(void *obj, void *data, QGuestAllocator *alloc)
++{
++    QI2CDevice *dev = (QI2CDevice *)obj;
++
++    i2c_set16(dev, REG_CONFIG, CONFIG_RST);
++    i2c_set16(dev, REG_ALERT_LIMIT, 0x2000);
++    i2c_set16(dev, REG_MASK_ENABLE, ME_BOL | ME_LEN);
++
++    qmp_ina230_set("bus-voltage", 12000000);
++    g_assert_cmphex(i2c_get16(dev, REG_MASK_ENABLE) & ME_AFF, ==, ME_AFF);
++
++    /* Shunt-only mode: the bus register keeps its over-limit value */
++    i2c_set16(dev, REG_CONFIG, 0x0005);
++    qmp_ina230_set("shunt-voltage", 20000000);
++    g_assert_cmphex(i2c_get16(dev, REG_BUS), ==, 0x2580);
++    g_assert_cmphex(i2c_get16(dev, REG_MASK_ENABLE) & ME_AFF, ==, 0);
++}
++
+ static void test_alert_bus(void *obj, void *data, QGuestAllocator *alloc)
  {
-@@ -548,6 +615,9 @@ static void ina238_register_nodes(void)
-     qos_add_test("power", "ina238", test_power, NULL);
-     qos_add_test("zero-cal", "ina238", test_zero_cal, NULL);
-     qos_add_test("adcrange", "ina238", test_adcrange, NULL);
-+    qos_add_test("mode-shutdown", "ina238", test_mode_shutdown, NULL);
-+    qos_add_test("mode-triggered", "ina238", test_mode_triggered, NULL);
-+    qos_add_test("mode-channels", "ina238", test_mode_channels, NULL);
-     qos_add_test("overflow", "ina238", test_overflow, NULL);
-     qos_add_test("alert-shunt", "ina238", test_alert_shunt, NULL);
-     qos_add_test("alert-bus", "ina238", test_alert_bus, NULL);
+     QI2CDevice *dev = (QI2CDevice *)obj;
+@@ -481,6 +563,13 @@ static void ina230_register_nodes(void)
+     qos_add_test("edges-overflow", "ina230", test_edges_overflow, NULL);
+     qos_add_test("alert-shunt-over", "ina230", test_alert_shunt_over, NULL);
+     qos_add_test("alert-latch", "ina230", test_alert_latch, NULL);
++    qos_add_test("alert-latch-persist", "ina230", test_alert_latch_persist,
++                 NULL);
++    qos_add_test("alert-latch-config", "ina230", test_alert_latch_config,
++                 NULL);
++    qos_add_test("alert-latch-shutdown", "ina230", test_alert_latch_shutdown,
++                 NULL);
++    qos_add_test("alert-channel", "ina230", test_alert_channel, NULL);
+     qos_add_test("alert-bus", "ina230", test_alert_bus, NULL);
+     qos_add_test("alert-power", "ina230", test_alert_power, NULL);
+     qos_add_test("cvrf", "ina230", test_cvrf, NULL);
 
 -- 
 2.53.0-Meta
