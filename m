@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3849ACC6B38
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1649CC6B3A
 	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 06:09:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHEe1-0003p5-8B; Thu, 15 Oct 2026 02:08:51 -0400
+	id 1xHEeE-000458-Dw; Thu, 15 Oct 2026 02:09:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <34m3QagoKCl0NO5IG9TECPBJJBG9.7JHL9HP-89Q9GIJIBIP.JMB@flex--stanleyjhu.bounces.google.com>)
- id 1xHEds-0003ns-9L
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 02:08:40 -0400
-Received: from mail-pl1-x648.google.com ([2607:f8b0:4864:20::648])
+ <36m3QagoKCmUVWDQOHbMKXJRRJOH.FRPTHPX-GHYHOQRQJQX.RUJ@flex--stanleyjhu.bounces.google.com>)
+ id 1xHEdz-0003pH-Ii
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 02:08:49 -0400
+Received: from mail-pf1-x446.google.com ([2607:f8b0:4864:20::446])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from
- <34m3QagoKCl0NO5IG9TECPBJJBG9.7JHL9HP-89Q9GIJIBIP.JMB@flex--stanleyjhu.bounces.google.com>)
- id 1xHEdp-0004IN-Oo
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 02:08:39 -0400
-Received: by mail-pl1-x648.google.com with SMTP id
- d9443c01a7336-2ccb687f82eso46642715ad.3
- for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 23:08:36 -0700 (PDT)
+ <36m3QagoKCmUVWDQOHbMKXJRRJOH.FRPTHPX-GHYHOQRQJQX.RUJ@flex--stanleyjhu.bounces.google.com>)
+ id 1xHEdx-0004J1-H7
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 02:08:47 -0400
+Received: by mail-pf1-x446.google.com with SMTP id
+ d2e1a72fcca58-88c4da716f4so1568409b3a.3
+ for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 23:08:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20251104; t=1792044515; x=1792649315; darn=nongnu.org;
+ d=google.com; s=20251104; t=1792044523; x=1792649323; darn=nongnu.org;
  h=content-type:cc:to:from:subject:message-id:references:mime-version
  :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=rv7fv8Mq5HfQJ+NDwI7zpkuvScKfGwdgRtcmXo2PjEk=;
- b=gqLMmbndEIWXaS+UWKhReQULuooNIXQso82NDp0d1VXeqrWaBv+Efrm6xgTstd6S4/
- ScOov/30MAyaSzEeVwnNkmIeX27JbiiLus4q4XLxDB3wEkKxkxSZud66NUSA5d66EZ8d
- TUMEQm76tZA7FjRmh1bU/GB+YqMJ4XA/Fpk0cfkOxY9dWG5t+FwLG3mD6NTB+TSB4bhR
- OzatlXO5Jc5EHLJHQPLkvENekHfpvrBwWGJWk5+Etfm2dZiOWqA2uJxbz5cAGyX9aCJG
- d6U0iz9j2P+V991xSEvn3cCIujVYA0ewWnoVesYLcZOdrb4ExCm9uYM/4dS41NFmxGRC
- VW8Q==
+ :content-type; bh=YXfNj14sqOtZZ8CMqr7JKbQhAXcN7HYzqRY9snrtqfA=;
+ b=wCsjFuQEnWn3kjU3Elz/7+Zli7J/Eyzs4Dpz4LPQ37DPLADnai5MGA0ZRWUQa3UbQN
+ XXmEKPwsM17BrBFP2US7kCVRcsRjOe57caNguxgMrtI7VO3fPj9IZhiNZcIRn0fYexvD
+ Q3rGdYGBWBnZKFWXoj95xn4Cc44dXRZ1W+vcq6RNNCbBTRThoJBe5w/MC77I8jCDHWKb
+ CRN+CjCZxLYnhXQBTr9riGCTbBxsCU09s4yMF5KaJjDBHWXH20/wizOZoUJ7Um2wsKza
+ nJ5TGdPm3ga4Yo9ftq4GmCBax7cHr2BrExPKuYsu2r15oA/Wd7WkcJWPF9n0FxGp3GkI
+ ZtYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792044515; x=1792649315;
+ d=1e100.net; s=20260707; t=1792044523; x=1792649323;
  h=content-type:cc:to:from:subject:message-id:references:mime-version
  :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=rv7fv8Mq5HfQJ+NDwI7zpkuvScKfGwdgRtcmXo2PjEk=;
- b=tPAz5YWbAv3EeghnMyhHKB1pQUdc033iv+ox13IcRO0UOa1kRVu90VvPu++/wpDKAW
- s83/sfbhNoxdjpq0TVXLyi4LpjZQGn8NOIIrGHTOO6S4+IqLn5THUY9gWzjCMX3+8P+L
- E8nOZTbVv/DPgYZ6fdoYiF6BMD8lyhzeCCNBmddt9KR411K5dG6ilx4AiG+9nvBCKnpP
- dVmmfXdDJG586J6VBYwT+D+BnEwH9J7Q8Qnpe39GM5pX5aaHLHjL6y5NIoGexcIsi+kL
- 2QlcczcWU4hcHehgNbphH6fhnRTBWCRRdZozJNMX0vW531Lwx1/8IowYX46dPtNghLZm
- ozUA==
-X-Gm-Message-State: AFq9FYJ6FDl5jE4PAtmKKS2r2eqKFsYSUIxGaS/mX1B7MSoAcRLGwygl
- HEioUfHY2HXj1GB9zgLFGqtwo1pY3dGjC5Lo9KcvGTjOZggfhp1oOEdBk8ZvVPz0YJ9h35aNXfO
- s3Vk2d6n7eWZsXbjZXJXPKA==
-X-Received: from plnm7.prod.google.com ([2002:a17:902:fda7:b0:2e9:3ced:bb90])
+ bh=YXfNj14sqOtZZ8CMqr7JKbQhAXcN7HYzqRY9snrtqfA=;
+ b=1ZPIfmgI6s67q6klY4FItMo+gde/uRGVQq702v/fRpUFKOB/keKVe3E4qKWCJ38Nf4
+ ZFk+MLZfXIyfzJo6Uhb9+6WpWGB8hAjhC91du9QtNCxoP/AHztxnqJx5yO48/MRN3zKL
+ Laou3Txc9FqsXTJlxo+FKdne8Zf6z53pQjC3vXSTFLBj6GYOXJxnUHjwLo8ECCKj1o8/
+ ue2fn6QKiaoLuGe6QTVM27hGDNYPBEAqtCbgky0yPdacgUH5pCjCnA+xeOBkoX4a7H3q
+ AtgAmqQlz6+bc9ZQGEaBG4FGuPD/jSrd3eqyn90kVUv8qhH4eC0LT1/MgLd3Bi/DGJJ4
+ m4yA==
+X-Gm-Message-State: AFq9FYKb8mLOzN2L9BQ3C1sxbd6dfycQ22uGsdVrmAXnCp3kQz+jdUcX
+ 2gSnSglpy2uRkhoeo2YZir2MINK4eOV8CgrBeoK+eo1ryiCtYkBT3YV9wJwILKkQVWpRXWVrURv
+ aLrUiEZTllLmwe4+Gx4U2jw==
+X-Received: from pfdr1.prod.google.com ([2002:aa7:8b81:0:b0:88e:5b93:cd3f])
  (user=stanleyjhu job=prod-delivery.src-stubby-dispatcher) by
- 2002:a17:902:f706:b0:2df:4dc5:e12e with SMTP id
- d9443c01a7336-2e842ab68afmr161915825ad.27.1792044514972; 
- Wed, 14 Oct 2026 23:08:34 -0700 (PDT)
-Date: Thu, 15 Oct 2026 14:08:22 +0800
+ 2002:a05:6a00:a01:b0:886:bb44:631f with SMTP id
+ d2e1a72fcca58-897c6e1c80emr17928098b3a.10.1792044522769; 
+ Wed, 14 Oct 2026 23:08:42 -0700 (PDT)
+Date: Thu, 15 Oct 2026 14:08:26 +0800
 In-Reply-To: <20261015060827.341298-1-stanleyjhu@google.com>
 Mime-Version: 1.0
 References: <20261015060827.341298-1-stanleyjhu@google.com>
 X-Mailer: git-send-email 2.56.0.385.gd3acb90ef8-goog
-Message-ID: <20261015060827.341298-4-stanleyjhu@google.com>
-Subject: [PATCH 3/8] hw/ufs: Add ssu-timeout mode for power management
- recovery testing
+Message-ID: <20261015060827.341298-8-stanleyjhu@google.com>
+Subject: [PATCH 7/8] tests/qtest/ufs-test: Add MCQ runtime register and TMR
+ handling test
 From: Stanley Jhu <stanleyjhu@google.com>
 To: Jeuk Kim <jeuk20.kim@samsung.com>, Jeuk Kim <jeuk20.kim@gmail.com>
 Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>, 
@@ -71,9 +71,9 @@ Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
  Jinyoung Choi <j-young.choi@samsung.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::648;
- envelope-from=34m3QagoKCl0NO5IG9TECPBJJBG9.7JHL9HP-89Q9GIJIBIP.JMB@flex--stanleyjhu.bounces.google.com;
- helo=mail-pl1-x648.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::446;
+ envelope-from=36m3QagoKCmUVWDQOHbMKXJRRJOH.FRPTHPX-GHYHOQRQJQX.RUJ@flex--stanleyjhu.bounces.google.com;
+ helo=mail-pf1-x446.google.com
 X-Spam_score_int: -95
 X-Spam_score: -9.6
 X-Spam_bar: ---------
@@ -96,111 +96,204 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Extend the experimental fault injection property x-fault-inject-mode
-with a new "ssu-timeout" mode to facilitate automated testing of host
-driver power management and Start Stop Unit (SSU) recovery handling.
-
-When x-fault-inject-mode="ssu-timeout" is set and x-fault-inject-tag
-is armed (e.g., 0xfffffffe for any tag, or a matching tag), the
-controller only intercepts SCSI START_STOP (0x1B) commands sent to
-the UFS Device Well-Known LUN (WLUN) and holds them without queuing
-them to the SCSI layer, while letting non-SSU commands complete
-normally. This triggers the host driver's 10-second SSU command
-timeout and subsequent power management recovery routines (e.g.,
-during suspend-to-idle or freeze transitions), verifying host error
-recovery and link restoration paths.
+Add ufs_test_tmr_handling() to verify UTMRL UFS_QUERY_TASK execution
+(both interrupt-driven I=1 and polling I=0 UTMRDs), SQCTI/CQIACR
+register access, SQRTC/SQRTS queue stop/start and self-clearing ICU
+transitions across running, stopped, and disabled SQ states, nullified
+SQE (CT = 0xF) completion with UFS_OCS_ABORTED, and CQIS.TEPS
+write-1-to-clear synchronization with IS.CQES.
 
 Signed-off-by: Stanley Jhu <stanleyjhu@google.com>
 ---
- hw/ufs/ufs.c | 24 +++++++++++++++++++++---
- hw/ufs/ufs.h |  4 ++++
- 2 files changed, 25 insertions(+), 3 deletions(-)
+ tests/qtest/ufs-test.c | 161 ++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 160 insertions(+), 1 deletion(-)
 
-diff --git a/hw/ufs/ufs.c b/hw/ufs/ufs.c
-index 33940e39a8..da8d512283 100644
---- a/hw/ufs/ufs.c
-+++ b/hw/ufs/ufs.c
-@@ -845,6 +845,7 @@ static void ufs_fault_inject_sq_cleanup(UfsHc *u, UfsRequest *req)
- static bool ufs_fault_inject_exec_req(UfsRequest *req)
+diff --git a/tests/qtest/ufs-test.c b/tests/qtest/ufs-test.c
+index c82e35b2b5..c7d901a029 100644
+--- a/tests/qtest/ufs-test.c
++++ b/tests/qtest/ufs-test.c
+@@ -1673,7 +1673,7 @@ static void ufstest_hid(void *obj, void *data, QGuestAllocator *alloc)
+     ufs_exit(ufs, alloc);
+ }
+ 
+-static G_GNUC_UNUSED void ufs_send_tmr(QUfs *ufs, uint64_t utmrlba, int slot,
++static void ufs_send_tmr(QUfs *ufs, uint64_t utmrlba, int slot,
+                                        uint8_t tm_func, uint8_t lun,
+                                        uint32_t task_tag,
+                                        UtpTaskReqDesc *utrd_out)
+@@ -1799,6 +1799,164 @@ static void ufs_test_hce_reset(void *obj, void *data, QGuestAllocator *alloc)
+     ufs_exit(ufs, alloc);
+ }
+ 
++static void ufs_test_tmr_handling(void *obj, void *data, QGuestAllocator *alloc)
++{
++    QUfs *ufs = obj;
++    uint64_t utmrlba, desc_addr, req_upiu_addr, rsp_upiu_addr;
++    UtpTaskReqDesc desc = { 0 }, utrd_result;
++    UtpTransferReqDesc null_utrd;
++    UtpUpiuReq req_upiu = { 0 };
++    UfsCqEntry cqe;
++    uint32_t mcq_reg_offset, sqdao, cqisao, sqrts, sqrtc, orig_sqattr;
++    int null_slot;
++    enum UtpOcsCodes ocs;
++    UtpUpiuRsp rsp_upiu;
++
++    ufs_init(ufs, alloc);
++    g_assert_true(ufs->support_mcq);
++
++    /* Set up UTMRL */
++    utmrlba = guest_alloc(alloc, 8 * sizeof(UtpTaskReqDesc));
++    ufs_wreg(ufs, A_UTMRLBA, utmrlba & 0xffffffff);
++    ufs_wreg(ufs, A_UTMRLBAU, utmrlba >> 32);
++    ufs_wreg(ufs, A_UTMRLRSR, 1);
++
++    /* Issue UFS_QUERY_TASK for inactive tag 15 (Interrupt bit I=1) */
++    ufs_send_tmr(ufs, utmrlba, 0, UFS_QUERY_TASK, 0, 15, &utrd_result);
++    g_assert_cmpuint(le32_to_cpu(utrd_result.header.dword_2) & UFS_MASK_OCS,
++                     ==, UFS_OCS_SUCCESS);
++    g_assert_cmpuint(utrd_result.upiu_rsp.rsp_header.response,
++                     ==, UFS_COMMAND_RESULT_SUCCESS);
++    g_assert_cmpuint(be32_to_cpu(utrd_result.upiu_rsp.output_param1),
++                     ==, UFS_UPIU_TASK_MANAGEMENT_FUNC_COMPL);
++
++    /* Issue polling UTMRD with I=0 (slot 1): clears doorbell without UTMRCS */
++    desc_addr = utmrlba + 1 * sizeof(UtpTaskReqDesc);
++    desc.header.dword_0 = 0;
++    desc.header.dword_2 = cpu_to_le32(UFS_OCS_INVALID_COMMAND_STATUS);
++    desc.upiu_req.req_header.trans_type = UFS_UPIU_TRANSACTION_TASK_REQ;
++    desc.upiu_req.req_header.query_func = UFS_QUERY_TASK;
++    desc.upiu_req.req_header.lun = 0;
++    desc.upiu_req.req_header.task_tag = 0x11;
++    desc.upiu_req.input_param1 = cpu_to_be32(0);
++    desc.upiu_req.input_param2 = cpu_to_be32(15);
++    qtest_memwrite(ufs->dev.bus->qts, desc_addr, &desc, sizeof(desc));
++
++    ufs_wreg(ufs, A_UTMRLDBR, 1 << 1);
++    g_assert_cmpuint(ufs_rreg(ufs, A_UTMRLDBR) & (1 << 1), ==, 0);
++    g_assert_cmpuint(FIELD_EX32(ufs_rreg(ufs, A_IS), IS, UTMRCS), ==, 0);
++    qtest_memread(ufs->dev.bus->qts, desc_addr, &utrd_result,
++                  sizeof(utrd_result));
++    g_assert_cmpuint(le32_to_cpu(utrd_result.header.dword_2) & UFS_MASK_OCS,
++                     ==, UFS_OCS_SUCCESS);
++    g_assert_cmpuint(utrd_result.upiu_rsp.rsp_header.response,
++                     ==, UFS_COMMAND_RESULT_SUCCESS);
++    g_assert_cmpuint(be32_to_cpu(utrd_result.upiu_rsp.output_param1),
++                     ==, UFS_UPIU_TASK_MANAGEMENT_FUNC_COMPL);
++
++    /* Verify SQCTI, CQIACR, SQRTS/SQRTC, and CQIS/IS.CQES W1C sync */
++    sqdao = ufs->sqdao[TEST_QID];
++    mcq_reg_offset =
++        FIELD_EX32(ufs_rreg(ufs, A_MCQCAP), MCQCAP, QCFGPTR) * 0x200 +
++        TEST_QID * 0x40;
++    cqisao = ufs_rreg(ufs, mcq_reg_offset + A_CQISAO);
++
++    /* SQCTI and CQIACR read/write */
++    ufs_wreg(ufs, sqdao + A_SQCTI, (1 << 8) | 0x2b);
++    g_assert_cmpuint(ufs_rreg(ufs, sqdao + A_SQCTI), ==, (1 << 8) | 0x2b);
++    ufs_wreg(ufs, cqisao + offsetof(UfsMcqCqIntReg, iacr), 0x101);
++    g_assert_cmpuint(ufs_rreg(ufs, cqisao + offsetof(UfsMcqCqIntReg, iacr)),
++                     ==, 0x101);
++
++    /* SQ_ICU while running (STS=0) -> sets SQRTS.CUS=1, RTC=2 */
++    ufs_wreg(ufs, sqdao + A_SQRTC, FIELD_DP32(0, SQRTC, ICU, 1));
++    sqrts = ufs_rreg(ufs, sqdao + A_SQRTS);
++    sqrtc = ufs_rreg(ufs, sqdao + A_SQRTC);
++    g_assert_cmpuint(FIELD_EX32(sqrts, SQRTS, STS), ==, 0);
++    g_assert_cmpuint(FIELD_EX32(sqrts, SQRTS, CUS), ==, 1);
++    g_assert_cmpuint(FIELD_EX32(sqrts, SQRTS, RTC), ==, 2);
++    g_assert_cmpuint(FIELD_EX32(sqrtc, SQRTC, ICU), ==, 0);
++
++    /* SQ_STOP -> sets SQRTS.STS = 1 */
++    ufs_wreg(ufs, sqdao + A_SQRTC, FIELD_DP32(0, SQRTC, STOP, 1));
++    sqrts = ufs_rreg(ufs, sqdao + A_SQRTS);
++    g_assert_cmpuint(FIELD_EX32(sqrts, SQRTS, STS), ==, 1);
++
++    /*
++     * SQ_ICU while stopped (no matching req) -> sets SQRTS.CUS=1, RTC=1 and
++     * self-clears ICU.
++     */
++    ufs_wreg(ufs, sqdao + A_SQRTC,
++             FIELD_DP32(0, SQRTC, STOP, 1) | FIELD_DP32(0, SQRTC, ICU, 1));
++    sqrts = ufs_rreg(ufs, sqdao + A_SQRTS);
++    sqrtc = ufs_rreg(ufs, sqdao + A_SQRTC);
++    g_assert_cmpuint(FIELD_EX32(sqrts, SQRTS, STS), ==, 1);
++    g_assert_cmpuint(FIELD_EX32(sqrts, SQRTS, CUS), ==, 1);
++    g_assert_cmpuint(FIELD_EX32(sqrts, SQRTS, RTC), ==, 1);
++    g_assert_cmpuint(FIELD_EX32(sqrtc, SQRTC, ICU), ==, 0);
++
++    /*
++     * Queue a nullified SQE (CT = 0xF) while SQ is stopped, then resume SQ
++     * (STOP 1->0): SQRTS.STS clears to 0 while SQRTS.CUS remains 1, and the
++     * nullified SQE posts CQE with UFS_OCS_ABORTED without writing rsp_upiu.
++     */
++    null_slot = alloc_cmd_desc_slot(ufs);
++    req_upiu_addr =
++        ufs->cmd_desc_addr + null_slot * UTP_COMMAND_DESCRIPTOR_SIZE;
++    rsp_upiu_addr = req_upiu_addr + UTP_RESPONSE_UPIU_OFFSET;
++    req_upiu.header.trans_type = UFS_UPIU_TRANSACTION_NOP_OUT;
++    req_upiu.header.task_tag = null_slot;
++    qtest_memwrite(ufs->dev.bus->qts, req_upiu_addr, &req_upiu,
++                   sizeof(req_upiu));
++    memset(&rsp_upiu, 0xa5, sizeof(rsp_upiu));
++    qtest_memwrite(ufs->dev.bus->qts, rsp_upiu_addr, &rsp_upiu,
++                   sizeof(rsp_upiu));
++
++    null_utrd = ufs_build_req_utrd(req_upiu_addr, UFS_UTP_NO_DATA_TRANSFER, 0);
++    null_utrd.header.dword_0 = cpu_to_le32((UFS_UTP_CMD_TYPE_NULL << 28) |
++                                           UFS_UTP_NO_DATA_TRANSFER |
++                                           UFS_UTP_REQ_DESC_INT_CMD);
++    __ufs_send_transfer_request_mcq_async(ufs, 0, &null_utrd);
++
++    /* SQ_START (STOP 1->0) -> clears SQRTS.STS = 0 while preserving CUS = 1 */
++    ufs_wreg(ufs, sqdao + A_SQRTC, 0);
++    sqrts = ufs_rreg(ufs, sqdao + A_SQRTS);
++    g_assert_cmpuint(FIELD_EX32(sqrts, SQRTS, STS), ==, 0);
++    g_assert_cmpuint(FIELD_EX32(sqrts, SQRTS, CUS), ==, 1);
++
++    ufs_wait_for_irq(ufs);
++    g_assert_cmpuint(ufs_mcq_poll_cq(ufs, &cqe, 1), ==, 1);
++    g_assert_cmpuint(cqe.status, ==, UFS_OCS_ABORTED);
++    g_assert_cmpuint(cqe.task_tag, ==, null_slot);
++    qtest_memread(ufs->dev.bus->qts, rsp_upiu_addr, &rsp_upiu,
++                  sizeof(rsp_upiu));
++    g_assert_cmpuint(rsp_upiu.header.trans_type, ==, 0xa5);
++    ufs_wreg(ufs, cqisao + A_CQIS, FIELD_DP32(0, CQIS, TEPS, 1));
++    release_cmd_desc_slot(ufs, null_slot);
++
++    /* Verify MCQ command sets CQIS.TEPS=1 and W1C clears CQIS.TEPS & IS.CQES */
++    ocs = ufs_send_nop_out(ufs, &rsp_upiu);
++    g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
++    g_assert_cmpuint(FIELD_EX32(ufs_rreg(ufs, cqisao + A_CQIS), CQIS, TEPS),
++                     ==, 1);
++    ufs_wreg(ufs, cqisao + A_CQIS, FIELD_DP32(0, CQIS, TEPS, 1));
++    g_assert_cmpuint(FIELD_EX32(ufs_rreg(ufs, cqisao + A_CQIS), CQIS, TEPS),
++                     ==, 0);
++    g_assert_cmpuint(FIELD_EX32(ufs_rreg(ufs, A_IS), IS, CQES), ==, 0);
++
++    /* SQ_ICU on disabled SQ (SQEN=0) -> sets SQRTS.CUS=1, RTC=3 */
++    orig_sqattr = ufs_rreg(ufs, mcq_reg_offset + A_SQATTR);
++    ufs_wreg(ufs, mcq_reg_offset + A_SQATTR, 0);
++    ufs_wreg(ufs, sqdao + A_SQRTC, FIELD_DP32(0, SQRTC, ICU, 1));
++    sqrts = ufs_rreg(ufs, sqdao + A_SQRTS);
++    g_assert_cmpuint(FIELD_EX32(sqrts, SQRTS, CUS), ==, 1);
++    g_assert_cmpuint(FIELD_EX32(sqrts, SQRTS, RTC), ==, 3);
++    ufs_wreg(ufs, mcq_reg_offset + A_SQATTR, orig_sqattr);
++
++    guest_free(alloc, utmrlba);
++    ufs_exit(ufs, alloc);
++}
++
+ static void ufs_register_nodes(void)
  {
-     UfsHc *u = req->hc;
-+    uint8_t op;
- 
-     if (likely(u->active_fault_inject_tag == UFS_FAULT_INJECT_TAG_NONE) ||
-         u->held_req != NULL ||
-@@ -852,9 +853,21 @@ static bool ufs_fault_inject_exec_req(UfsRequest *req)
-         return false;
-     }
- 
--    if (u->active_fault_inject_tag == UFS_FAULT_INJECT_TAG_ANY) {
--        uint8_t op = req->req_upiu.sc.cdb[0];
-+    op = req->req_upiu.sc.cdb[0];
-+    if (u->fault_inject_mode == UFS_FAULT_INJECT_SSU_TIMEOUT) {
-+        if (op == START_STOP &&
-+            req->req_upiu.header.lun == UFS_UPIU_UFS_DEVICE_WLUN &&
-+            (u->active_fault_inject_tag == UFS_FAULT_INJECT_TAG_ANY ||
-+             req->req_upiu.header.task_tag == u->active_fault_inject_tag)) {
-+            u->active_fault_inject_tag = req->req_upiu.header.task_tag;
-+            u->held_req = req;
-+            trace_ufs_fault_inject_hold_req(req->req_upiu.header.task_tag, 0);
-+            return true;
-+        }
-+        return false;
-+    }
- 
-+    if (u->active_fault_inject_tag == UFS_FAULT_INJECT_TAG_ANY) {
-         if (op == READ_10 || op == WRITE_10) {
-             /*
-              * In 10-byte SCSI read/write commands (SBC-4), bytes 2..5
-@@ -3188,6 +3201,8 @@ static bool ufs_fault_inject_parse_mode(const char *str,
-         *mode = UFS_FAULT_INJECT_IN_TRANSITION;
-     } else if (g_strcmp0(str, "timeout") == 0) {
-         *mode = UFS_FAULT_INJECT_TIMEOUT;
-+    } else if (g_strcmp0(str, "ssu-timeout") == 0) {
-+        *mode = UFS_FAULT_INJECT_SSU_TIMEOUT;
-     } else {
-         error_setg(errp, "invalid x-fault-inject-mode: %s", str);
-         return false;
-@@ -3275,6 +3290,9 @@ static void ufs_prop_get_fault_inject_mode(Object *obj, Visitor *v,
-     case UFS_FAULT_INJECT_TIMEOUT:
-         str = "timeout";
-         break;
-+    case UFS_FAULT_INJECT_SSU_TIMEOUT:
-+        str = "ssu-timeout";
-+        break;
-     case UFS_FAULT_INJECT_ABORT_SUCCESS:
-     default:
-         str = "abort-success";
-@@ -3325,7 +3343,7 @@ static void ufs_prop_release_fault_inject_mode(Object *obj, const char *name,
- const PropertyInfo ufs_prop_fault_inject_mode = {
-     .type = "str",
-     .description = "Fault injection mode: abort-success, abort-failed, "
--                   "in-transition, timeout",
-+                   "in-transition, timeout, ssu-timeout",
-     .get = ufs_prop_get_fault_inject_mode,
-     .set = ufs_prop_set_fault_inject_mode,
-     .release = ufs_prop_release_fault_inject_mode,
-diff --git a/hw/ufs/ufs.h b/hw/ufs/ufs.h
-index 6004268ba2..2016f72ffe 100644
---- a/hw/ufs/ufs.h
-+++ b/hw/ufs/ufs.h
-@@ -106,12 +106,16 @@ typedef struct UfsLu {
-  * UFS_FAULT_INJECT_TIMEOUT:       TMR ABORT_TASK does not complete or clear
-  *                                 doorbell, triggering hardware-level TMR
-  *                                 timeout.
-+ * UFS_FAULT_INJECT_SSU_TIMEOUT:   Intercepts SCSI START_STOP (0x1B) commands
-+ *                                 targeting the UFS Device WLUN when
-+ *                                 x-fault-inject-tag is armed.
-  */
- typedef enum UfsFaultInjectMode {
-     UFS_FAULT_INJECT_ABORT_SUCCESS = 0,
-     UFS_FAULT_INJECT_ABORT_FAILED,
-     UFS_FAULT_INJECT_IN_TRANSITION,
-     UFS_FAULT_INJECT_TIMEOUT,
-+    UFS_FAULT_INJECT_SSU_TIMEOUT,
- } UfsFaultInjectMode;
- 
- /*
+     const char *arch;
+@@ -1856,6 +2014,7 @@ static void ufs_register_nodes(void)
+     qos_add_test("query-desciptor", "ufs", ufstest_query_desc_request,
+                  &io_test_opts);
+     qos_add_test("hce-reset", "ufs", ufs_test_hce_reset, &mcq_test_opts);
++    qos_add_test("tmr-handling", "ufs", ufs_test_tmr_handling, &mcq_test_opts);
+     qos_add_test("wb-init", "ufs", ufstest_wb_init, &wb_test_opts);
+     qos_add_test("wb-read-write", "ufs", ufstest_wb_read_write, &wb_test_opts);
+     qos_add_test("hid", "ufs", ufstest_hid, &io_test_opts);
 -- 
 2.56.0.385.gd3acb90ef8-goog
 
