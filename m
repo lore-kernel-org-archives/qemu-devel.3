@@ -4,90 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02775CC6B30
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 10:54:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7795CC6B30
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 10:54:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHJ4f-0002MU-62; Thu, 15 Oct 2026 06:52:37 -0400
+	id 1xHJ69-0005hn-Tj; Thu, 15 Oct 2026 06:54:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xHJ4c-0002Jc-NI
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 06:52:34 -0400
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xHJ4a-0007pi-U0
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 06:52:34 -0400
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-487049569b6so3542571f8f.1
- for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 03:52:32 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1xHJ5x-0005JA-Lz
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 06:53:58 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1xHJ5v-0007w8-Ed
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 06:53:57 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1792061634;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=uN4f1KuqHGe2DuzdAee3ToHFFTYNLWgBakn8qHjmgW0=;
+ b=I73maTKpqXvksSraU5e5RcXajaYz6dKCI/IkTME3vr21t2ePojdJYvjbOJqznyWoOiVUKr
+ bNCskn4DjvSJ0zxZI6fiTy9fzNJlBqqI9PXhZrl7d/OfvVg4gSRd4nzaKyYbkfBsxk2kEz
+ MEH4uTaNpSUeo6NpEy/AN5mPJ4jCkYs=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-373-dE8xH-mlPIGBYwRHMyCiMQ-1; Thu, 15 Oct 2026 10:53:51 +0000
+X-MC-Unique: dE8xH-mlPIGBYwRHMyCiMQ-1
+X-Mimecast-MFC-AGG-ID: dE8xH-mlPIGBYwRHMyCiMQ_1792061631
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4a027f2e364so35305945e9.3
+ for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 03:53:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1792061551; x=1792666351; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=UgxSvjqorZbozu944NHI8qviwoPcBKpeVr1Z3LODC8M=;
- b=h6wEZPBh05sGiJCZwzV/0hwilgJRathd4n2Ck+x783qZMuv7g4QSl8QSxQpMfUUqlu
- jIqjSYFS9Uuf4odI037/bABgtQeDOD9HsKa09T7ioBP/1WYnmF2d32X99ntnlvmFBpCo
- wfiYG96SeQiA70jvZespAhfZ6JI9fjtWK7+QJp87fjGmaajGPwXHav6cWx+qAzcTENBz
- DgdVChKHS01OMTnaUqyZaqYeTSS240Mk/lIIMuoJVIMXY5fOun23VjAuDkm/0rBJrpuW
- DlomjzX1nRQgVc6UZBZXZSpYph6WY4UcaVDnVkFA9L9c+YWA3lBZjqG9p3bMqQcijaJ4
- E8pg==
+ d=redhat.com; s=google; t=1792061630; x=1792666430; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=uN4f1KuqHGe2DuzdAee3ToHFFTYNLWgBakn8qHjmgW0=;
+ b=oHChQNMeWH7r5BQHeYD/0cBoSl6F1jJ0M7Obm+4/2fKdfQz1Fkp9wirNeGhGQDIdCV
+ ZpVYrOmAP+PEQWxta/+qyfbUjwKSCyZNupLjKpDCU5v+eQEzFYvkC5kru+APjIGuGXdt
+ Y8GznbcNALsRUprLbn5/JN6kJ1xpo3i+Ad+rNm05oZuR5IOyFHwnNgERWPlCpF1xR4Ta
+ eGeJEQFNq49bpBkOog9PWAKjNz76V4dLkxYmI31EwlvavmGIe0O3lfJ2fcXr4ecCOi+P
+ u6HueCxVa7itNSZpAjcUxKK6Vl44rTnaVEZgSdQBeE7HMIjNwkKCLr/zdK9zw/yuRC4s
+ dblQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792061551; x=1792666351;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=UgxSvjqorZbozu944NHI8qviwoPcBKpeVr1Z3LODC8M=;
- b=WlBhI9u5Ksc0OR5p58FNbV01Do5B4ad670N1LeQYzCDmf13jbChpzmsS3AJ3PNfyuf
- 6/mqScdiBctDzeGdq6WcgO6keSAIbhrnbA9rzYb8ywhpVPKPxrL1dTxSDltB2ZZShrYc
- sBhAYCculNY7vQKhViLtaAq8wnMGgfJsjRUiQZDAXAZg/4BPSVQjomcc8QzhgZ8PEqr8
- mCf00jl7AA+9ngqjiwJz3b1wuzJeCP4io72SVxqSmkmr80psMqmrP819ETE8oLzkKpOf
- pE2wOTUTvZBPU5BWprOPwZ2cWbKQyJVQ20xvy3hpEwJ2gQMdtpNK/hhuichJSDLbm512
- tZBQ==
-X-Gm-Message-State: AFq9FYKP2t2mpf5dyHc47bceZZks3YqUM62VQx96rhiaI4wcYqzKjug3
- UG6RGH+QddGwliW2qkyXmC/q1s3zC2SHHQiCIYXi7pJZA69eeBJItgiLhjrqX7bKqN0gf8CYrlu
- XJD5TW0g=
-X-Gm-Gg: AYBFou0WtgLbILzkTKqAz91AIg4t/+TgxSJlj1Vswl2KEUwLQParAvAkgfGgAp92S72
- 1d3Npt4VbjLka4AKW11sHmLlUSNDBj+W2xYA6uVBwpqRUr6q6L6kiMtKnMApClQ+fES5f0Bmpcq
- tEdnXN13JAilwdh3N3SHwrCKarycYXXrtF2YbI27b6+JolCUjVXkwfWegKZN/WRTgLc27tp/itv
- X1T3miyRuYNG8PaGtTeulD4kBx+KV9t/Lv7XeITjo4cbi0c05dACd91+x7M6Qm8ENUqYL10txWm
- tWne6wzltTCOmie8s8d1H/Smk/wtqO/afxjAk0IrJ1692yjKClgDKpOyLnJJc8wNpuE7AoCwE9s
- dgx+H/Q7ZSvzLdOFUx1IxQ0w8S/OsiINxkEAgTY7AKHftMw0mqDtZXDZl7Z3JIqBZBFdZTab+xq
- wLTCoye9rGGWQZ+fLYA2zad3HiDIu1afNVt13WssV0ssqlJzIW8GGI9yMnIaCK4jwpYJ46+CxSJ
- us3rmLyudeY0j6S1/yjobvXCElm+t5bo/o5b9zXFR6DtTAAugAB/TLDU2OPxJmHPfsF2Ab8iOI9
- pwtP
-X-Received: by 2002:adf:e013:0:20b0:487:930:8acc with SMTP id
- ffacd0b85a97d-48dbaaddbd5mr26798811f8f.16.1792061551394; 
- Thu, 15 Oct 2026 03:52:31 -0700 (PDT)
-Received: from stoup.fritz.box
- (p200300ca3f0f8b006e0ed1a687ab6860.dip0.t-ipconnect.de.
- [2003:ca:3f0f:8b00:6e0e:d1a6:87ab:6860])
+ d=1e100.net; s=20260707; t=1792061630; x=1792666430;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=uN4f1KuqHGe2DuzdAee3ToHFFTYNLWgBakn8qHjmgW0=;
+ b=wLPeUw0XIVcCtXPV9AaNCDJqZdkdC9H9g8IvTV3fsCEOxLBbsN4wZkYWYw6G3d+QMq
+ Cl8zk2XC7jUWURzuEFwML17VYwuxyThIMVgk5QfQz35SwNFGuk58JulahtXZwMHoouU6
+ hCqZc77Czvbg5LP1MohcMgEXO1Fqm+qS0GApFoOh5aRYKG9Qkj1Mc/L9Y2qrK4j+mUQi
+ Ag8lsnUdgNPvn8YAbIFG6n8qspF2SNkjwEKuYUQIP9vQtoNCPXoNtNEZDMKVzqu/OJ2B
+ 8hNpxNJkJy+WquJKKjcDrEvHiUZZOYeC6rOvIgbF6q9RwxYQTzlvDyi93GWte2xDE2D9
+ 2tTA==
+X-Gm-Message-State: AFq9FYKnnieXRLgCzjoI95pFHdVJlBA2RfVLuW1liqCP/Xz+8IXn7lTu
+ lOi1hDtKpfpDMbznmo5kJ4ktbH11p2e8UpA+y5ijEWrv2kEYRupPJ2wnPrztbWWIB0EI+uaAmDd
+ ivfyFUkMpBFQx40eGfaurDDOZ70GUqPUsgiUCxkHf0Sr8tIZ2vVRBreK6QaLMdICECnv1e+/0xT
+ sxEcWHz4h4sUVWHTrtO8X6XYXpbnDBXZwzhZL7wC1h
+X-Gm-Gg: AYBFou0BoJCmRJrcn1qM04uqREEyx2Ry9SbDkZRbGmVYa9COwTX5Or7JlzV3bGc65I5
+ IdQ2+44eWetCSokeNwbwcKurdPQ/GE8UJ+aJ1gm/v5HAsRuCbQRWiQ4QP3BFsXZq7F7sWYYcSzq
+ CYf/c2o3IfPsEzBgIFgZUuCKNLOlz6cTaMVuuZ8ueesXVeYCxr7sce916xlia9YXGuT+4YN8XrF
+ LRwWLVmU2Bop2YJiNVEPJvoB1w595tetPWoxzAv9sdIrewptO6jXROJiwx+10OESwXMp8ukXe/+
+ W6MADesL2ASvu1VmUpOwRg/CzUOT8fWc3yPe0FE41Zd5b7P+kyRbRj1VZ1fwjn1CqgPF6UTwNdm
+ YjDuQgXO5A6bnA6MnFxcnc+24/qz2xoxAk2jBhZR9t0ss7bJM7gytD3HsLvaqTkuMxznDmpM0m/
+ 3uW6jq
+X-Received: by 2002:a05:600c:5249:b0:4a0:1b14:e846 with SMTP id
+ 5b1f17b1804b1-4a18e446905mr363862175e9.4.1792061630540; 
+ Thu, 15 Oct 2026 03:53:50 -0700 (PDT)
+X-Received: by 2002:a05:600c:5249:b0:4a0:1b14:e846 with SMTP id
+ 5b1f17b1804b1-4a18e446905mr363861655e9.4.1792061629940; 
+ Thu, 15 Oct 2026 03:53:49 -0700 (PDT)
+Received: from [192.168.10.48] ([176.206.82.153])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48df5b88207sm3075949f8f.59.2026.10.15.03.52.28
+ 5b1f17b1804b1-4a1bd648fd8sm26998385e9.1.2026.10.15.03.53.48
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 Oct 2026 03:52:30 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
+ Thu, 15 Oct 2026 03:53:48 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Max Chou <max.chou@sifive.com>, Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 06/16] tcg/riscv64: Return tcg_insn_unit from insn encoders
-Date: Thu, 15 Oct 2026 12:51:58 +0200
-Message-ID: <20261015105212.356392-7-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20261015105212.356392-1-richard.henderson@linaro.org>
-References: <20261015105212.356392-1-richard.henderson@linaro.org>
+Subject: [PULL 00/13] target/i386/tcg, SCSI changes for 2026-10-15
+Date: Thu, 15 Oct 2026 12:53:34 +0200
+Message-ID: <20261015105347.827029-1-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.56.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=richard.henderson@linaro.org; helo=mail-wr1-x432.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -104,165 +116,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Returning int32_t was logically incorrect.
+The following changes since commit 615ece3c406b262996e569f29ea6eed0d81c4d8d:
 
-Reviewed-by: Max Chou <max.chou@sifive.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- tcg/riscv64/tcg-target.c.inc | 47 ++++++++++++++++++------------------
- 1 file changed, 23 insertions(+), 24 deletions(-)
+  Merge tag 'for-upstream' of https://gitlab.com/bonzini/qemu into staging (2026-10-09 15:49:53 +0200)
 
-diff --git a/tcg/riscv64/tcg-target.c.inc b/tcg/riscv64/tcg-target.c.inc
-index 14a397117a2..158697cbc93 100644
---- a/tcg/riscv64/tcg-target.c.inc
-+++ b/tcg/riscv64/tcg-target.c.inc
-@@ -434,28 +434,28 @@ static bool tcg_target_const_match(int64_t val, int ct,
- 
- /* Type-R */
- 
--static int32_t encode_r(RISCVInsn opc, TCGReg rd, TCGReg rs1, TCGReg rs2)
-+static tcg_insn_unit encode_r(RISCVInsn opc, TCGReg rd, TCGReg rs1, TCGReg rs2)
- {
-     return opc | (rd & 0x1f) << 7 | (rs1 & 0x1f) << 15 | (rs2 & 0x1f) << 20;
- }
- 
- /* Type-I */
- 
--static int32_t encode_imm12(uint32_t imm)
-+static tcg_insn_unit encode_imm12(uint32_t imm)
- {
-     return (imm & 0xfff) << 20;
- }
- 
--static int32_t encode_i(RISCVInsn opc, TCGReg rd, TCGReg rs1, uint32_t imm)
-+static tcg_insn_unit encode_i(RISCVInsn opc, TCGReg rd, TCGReg rs1, uint32_t imm)
- {
-     return opc | (rd & 0x1f) << 7 | (rs1 & 0x1f) << 15 | encode_imm12(imm);
- }
- 
- /* Type-S */
- 
--static int32_t encode_simm12(uint32_t imm)
-+static tcg_insn_unit encode_simm12(uint32_t imm)
- {
--    int32_t ret = 0;
-+    tcg_insn_unit ret = 0;
- 
-     ret |= (imm & 0xFE0) << 20;
-     ret |= (imm & 0x1F) << 7;
-@@ -463,16 +463,16 @@ static int32_t encode_simm12(uint32_t imm)
-     return ret;
- }
- 
--static int32_t encode_s(RISCVInsn opc, TCGReg rs1, TCGReg rs2, uint32_t imm)
-+static tcg_insn_unit encode_s(RISCVInsn opc, TCGReg rs1, TCGReg rs2, uint32_t imm)
- {
-     return opc | (rs1 & 0x1f) << 15 | (rs2 & 0x1f) << 20 | encode_simm12(imm);
- }
- 
- /* Type-SB */
- 
--static int32_t encode_sbimm12(uint32_t imm)
-+static tcg_insn_unit encode_sbimm12(uint32_t imm)
- {
--    int32_t ret = 0;
-+    tcg_insn_unit ret = 0;
- 
-     ret |= (imm & 0x1000) << 19;
-     ret |= (imm & 0x7e0) << 20;
-@@ -482,28 +482,28 @@ static int32_t encode_sbimm12(uint32_t imm)
-     return ret;
- }
- 
--static int32_t encode_sb(RISCVInsn opc, TCGReg rs1, TCGReg rs2, uint32_t imm)
-+static tcg_insn_unit encode_sb(RISCVInsn opc, TCGReg rs1, TCGReg rs2, uint32_t imm)
- {
-     return opc | (rs1 & 0x1f) << 15 | (rs2 & 0x1f) << 20 | encode_sbimm12(imm);
- }
- 
- /* Type-U */
- 
--static int32_t encode_uimm20(uint32_t imm)
-+static tcg_insn_unit encode_uimm20(uint32_t imm)
- {
-     return imm & 0xfffff000;
- }
- 
--static int32_t encode_u(RISCVInsn opc, TCGReg rd, uint32_t imm)
-+static tcg_insn_unit encode_u(RISCVInsn opc, TCGReg rd, uint32_t imm)
- {
-     return opc | (rd & 0x1f) << 7 | encode_uimm20(imm);
- }
- 
- /* Type-UJ */
- 
--static int32_t encode_ujimm20(uint32_t imm)
-+static tcg_insn_unit encode_ujimm20(uint32_t imm)
- {
--    int32_t ret = 0;
-+    tcg_insn_unit ret = 0;
- 
-     ret |= (imm & 0x0007fe) << (21 - 1);
-     ret |= (imm & 0x000800) << (20 - 11);
-@@ -513,7 +513,7 @@ static int32_t encode_ujimm20(uint32_t imm)
-     return ret;
- }
- 
--static int32_t encode_uj(RISCVInsn opc, TCGReg rd, uint32_t imm)
-+static tcg_insn_unit encode_uj(RISCVInsn opc, TCGReg rd, uint32_t imm)
- {
-     return opc | (rd & 0x1f) << 7 | encode_ujimm20(imm);
- }
-@@ -521,8 +521,8 @@ static int32_t encode_uj(RISCVInsn opc, TCGReg rd, uint32_t imm)
- 
- /* Type-OPIVI */
- 
--static int32_t encode_vi(RISCVInsn opc, TCGReg rd, int32_t imm,
--                         TCGReg vs2, bool vm)
-+static tcg_insn_unit encode_vi(RISCVInsn opc, TCGReg rd, int32_t imm,
-+                               TCGReg vs2, bool vm)
- {
-     return opc | (rd & 0x1f) << 7 | (imm & 0x1f) << 15 |
-            (vs2 & 0x1f) << 20 | (vm << 25);
-@@ -530,8 +530,8 @@ static int32_t encode_vi(RISCVInsn opc, TCGReg rd, int32_t imm,
- 
- /* Type-OPIVV/OPMVV/OPIVX/OPMVX, Vector load and store */
- 
--static int32_t encode_v(RISCVInsn opc, TCGReg d, TCGReg s1,
--                        TCGReg s2, bool vm)
-+static tcg_insn_unit encode_v(RISCVInsn opc, TCGReg d, TCGReg s1,
-+                              TCGReg s2, bool vm)
- {
-     return opc | (d & 0x1f) << 7 | (s1 & 0x1f) << 15 |
-            (s2 & 0x1f) << 20 | (vm << 25);
-@@ -539,20 +539,19 @@ static int32_t encode_v(RISCVInsn opc, TCGReg d, TCGReg s1,
- 
- /* Vector vtype */
- 
--static uint32_t encode_vtype(bool vta, bool vma,
--                            MemOp vsew, RISCVVlmul vlmul)
-+static uint32_t encode_vtype(bool vta, bool vma, MemOp vsew, RISCVVlmul vlmul)
- {
-     return vma << 7 | vta << 6 | vsew << 3 | vlmul;
- }
- 
--static int32_t encode_vset(RISCVInsn opc, TCGReg rd,
--                           TCGArg rs1, uint32_t vtype)
-+static tcg_insn_unit encode_vset(RISCVInsn opc, TCGReg rd,
-+                                 TCGArg rs1, uint32_t vtype)
- {
-     return opc | (rd & 0x1f) << 7 | (rs1 & 0x1f) << 15 | (vtype & 0x7ff) << 20;
- }
- 
--static int32_t encode_vseti(RISCVInsn opc, TCGReg rd,
--                            uint32_t uimm, uint32_t vtype)
-+static tcg_insn_unit encode_vseti(RISCVInsn opc, TCGReg rd,
-+                                  uint32_t uimm, uint32_t vtype)
- {
-     return opc | (rd & 0x1f) << 7 | (uimm & 0x1f) << 15 | (vtype & 0x3ff) << 20;
- }
+are available in the Git repository at:
+
+  https://gitlab.com/bonzini/qemu.git tags/for-upstream
+
+for you to fetch changes up to eec2d0c16d4a2541a14f5a1867812a508ba7b95e:
+
+  scsi: document PR_HELPER_CLEANUP command (2026-10-15 12:05:44 +0200)
+
+----------------------------------------------------------------
+* target/i386/tcg: zero FXSAVE FOP and reserved slot bytes
+* target/i386: fix immediate stack adjustment for RET and RETF
+* target/i386/tcg: remove unused operand types
+* pr-manager-helper: fix sense buffer overflow
+* scsi, pr-helper: clean up multipathd PR state after migration
+
+----------------------------------------------------------------
+Artemii Mashanov (2):
+      target/i386/tcg: zero FXSAVE FOP and reserved slot bytes
+      target/i386: fix immediate stack adjustment for RET and RETF
+
+Paolo Bonzini (2):
+      target/i386/tcg: remove unused X86_TYPE_L
+      target/i386/tcg: drop X86_TYPE_A
+
+Stefan Hajnoczi (9):
+      pr-manager-helper: fix sense buffer overflow
+      scsi: increase sense buffer size in scsi_SG_IO()
+      hw/scsi-disk: move MIG_EVENT_FAILED into a new function
+      qemu-pr-helper: add PR_HELPER_CLEANUP for live migration
+      pr-manager-helper: add PR_HELPER_CLEANUP command support
+      file-posix: forward PR_HELPER_CLEANUP commands to pr-manager
+      scsi: clean up persistent reservation state after migration
+      scsi: use REGISTER AND IGNORE EXISTING KEY for robustness
+      scsi: document PR_HELPER_CLEANUP command
+
+ docs/interop/pr-helper.rst       |  16 ++++-
+ meson.build                      |   2 +
+ include/hw/scsi/scsi.h           |   1 +
+ include/scsi/constants.h         |   1 +
+ scsi/pr-helper.h                 |   3 +
+ target/i386/tcg/decode-new.h     |   2 -
+ block/file-posix.c               |  18 +++--
+ hw/scsi/scsi-bus.c               |  10 +++
+ hw/scsi/scsi-disk.c              |  45 +++++++++---
+ hw/scsi/scsi-generic.c           |  64 +++++++++++++----
+ scsi/pr-manager-helper.c         |  23 ++++--
+ scsi/qemu-pr-helper.c            | 146 ++++++++++++++++++++++++++++++++++++---
+ scsi/utils.c                     |   3 +
+ target/i386/tcg/fpu_helper.c     |   3 +
+ tests/tcg/x86_64/fxsave.c        |  66 ++++++++++++++++++
+ target/i386/tcg/decode-new.c.inc |   7 +-
+ target/i386/tcg/emit.c.inc       |   4 +-
+ tests/tcg/x86_64/meson.build     |   1 +
+ 18 files changed, 361 insertions(+), 54 deletions(-)
+ create mode 100644 tests/tcg/x86_64/fxsave.c
 -- 
-2.53.0
+2.56.0
 
 
