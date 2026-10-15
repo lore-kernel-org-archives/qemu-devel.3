@@ -4,111 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8509CC6B3A
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 14:06:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D694CC6B3A
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 14:11:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHM5n-0006Z2-2P; Thu, 15 Oct 2026 10:05:59 -0400
+	id 1xHMAR-0008IQ-Tv; Thu, 15 Oct 2026 10:10:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1xHM5j-0006Yb-TZ
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 10:05:55 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xHMAG-0008HL-1D
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 10:10:42 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1xHM5h-0002OV-Mi
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 10:05:55 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xHMAD-0002rN-FV
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 10:10:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1792073153;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
+ s=mimecast20190719; t=1792073430;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=Ro4VReCJbMXDDulID/D345/NuyZnyk0gEdYTf6PdAuE=;
- b=DH61S91ks5xU9Zu8x/HNJFbLjgUblBkDMvXLa7AvtECf3838ieRtjrCOPEUa67xOwX21Rj
- kOZmJYkb6c+CGzd4/TWCIZlUz03cB2A0HxipWc1mUMnJRGiw6zm2MT40PTa4bDqcPuj+rC
- 5VH1oPtylMeH9v5ozwi71CBKdVExZWg=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=egczxxrFtvcYyfarEmFiFgyKZF8VWbLqP202pxHrC9c=;
+ b=XbfHT3tjWvrG6QzCSGynxkuhvELeq87tgLQvSWRV5vRP7gzvVJ+93OPIuJVqOpnrCqzzzG
+ C2dPiLM7rjnQVMJV4V1XDo2Gs/5WwutBrITOGGfUkNlKyHimEQbchApmD0i3UYUYG+NU9s
+ D1ydXfI6sIP7zdzCFHDhnAq+S594iV8=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-610-z--7IRBrMbeQG2vptccERA-1; Thu, 15 Oct 2026 14:05:49 +0000
-X-MC-Unique: z--7IRBrMbeQG2vptccERA-1
-X-Mimecast-MFC-AGG-ID: z--7IRBrMbeQG2vptccERA_1792073149
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4a1ad49096fso66855e9.0
- for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 07:05:49 -0700 (PDT)
+ us-mta-29-2Ax2coxdOxi8fvydCe3X8w-1; Thu, 15 Oct 2026 14:10:27 +0000
+X-MC-Unique: 2Ax2coxdOxi8fvydCe3X8w-1
+X-Mimecast-MFC-AGG-ID: 2Ax2coxdOxi8fvydCe3X8w_1792073427
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-48b028d93c5so3912003f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 07:10:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1792073426; x=1792678226; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=egczxxrFtvcYyfarEmFiFgyKZF8VWbLqP202pxHrC9c=;
+ b=af2vWHjrdEs6XnxrU1M2OF6f8tOmznxC5/94GTT1f3ZMrhYtt7FPgkY7oZP6nrh8Mf
+ mKrm0Afxr2NPCfQ0NEFoL2v8n3BiWohEDLo0+/3X1/FDJBuaUX9LWr5MSXMcV7HzmeGI
+ /i/rbCiYcuH+YeZsS6jDrXG50uAxG4Nvf+vf+XZ+9XZbv+rA5HCi/5PxzZE5YSqGomaa
+ CsK5qXfZKiwyT7u09NTae2nK090kRF4qZRv8u6xg9VzYx46Wf9YVb9q+dwh5rAUXst4N
+ uMmiXZ120Xpyp+3s0EYb176I+o1zv4zxp+iK+9pqBy0zOR8wtNd56WNSmYpYD+lwfDB7
+ BMyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792073148; x=1792677948;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:reply-to:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=Ro4VReCJbMXDDulID/D345/NuyZnyk0gEdYTf6PdAuE=;
- b=qW1FR3ZVrPY3ZsiNU4noDTbJmvNlSgE08qhZqJib7+tKE1UJfNZKkL+kpRALdnqaXR
- ExgyN4Sbl56BvMH7WqP4KSQv/i+8gMxQHzCanutn1sNdhg1Y68ZzFPZ1qji+6gaVFRte
- 8bNXW3wcvkNgmmCXhWGRMPUU3NIxlqtmNJaattmOhDF2HFE5URHEfonKI4wM9GIzEEap
- +WzOkRxi60QtDXgsguTu8mqdeU8eoY0OszvOMXDR/TfIJ/CbV31G6lgTFsxFs1bw0/w6
- 3oKtyUZFqipm353uUOYJvwyTfpwfCWC8b+6R2FDwMPY1xKyXAw43GuYWzni2aT2UhIps
- HZww==
-X-Forwarded-Encrypted: i=1;
- AKwUvBzwaE4Yf+7CDcpO3cKESfV71SCZYFZLYE8KBDBVfkyNqT0hClrYl2Kh1drz9qNma7YvxK7YkXFLr+R9@nongnu.org
-X-Gm-Message-State: AFq9FYIy3ScGfDWD4ZiqrrIwwVtK4pjndpMW4y2EuEflmroeD8PRIjvV
- OQ7K4hOsOwRrpYfeDT3FR535opX+KLD76lDLUivwUeKJPAaZXbGfCnuueVErmUutplt4pfbeFD/
- ak9qV6xmRMdDylWNTohauIMmnE9jXtVPo4pC3tFTlzxBgdbplO+l80sVO
-X-Gm-Gg: AYBFou2mLHs3U81KwyT98xKuv1t3KxJCbDpn+GhI4lgm4IKIti1CcaW27I3XNqZsazu
- ahzZHry2OMC6cXLDwFdisHcnyfsDTJElAPefJD5iDZhkRLJmiEU/kF4dI/wxQJztTLEd4KAaLKu
- 9nIrpYcUg0P6C5e+VDqOepOYA+zNSXVMzLGpW4cM6sUj4KDm4RV9SVHxoDDxcelsshVorPyfh7n
- GeuT8YGVDKWVKZpr+YesUkwEX3TINhOEcQr4ngZAdL37Gs78emz7l8iOQSXPy3JWsdEQrPB0kS1
- sljV9Eb39VcR4hmF7iF1ojH1+GmzCxxscML3YX9e/U3X9c7f5f2R8ARksOs6Wbjnhj6ZdbKRJ+3
- 9TueHmxC3HPoT7x4YK/tABqgKJlKtMprnc14uRGNVcaT/PxkT
-X-Received: by 2002:a05:600c:2154:b0:4a1:ac66:604b with SMTP id
- 5b1f17b1804b1-4a1c6635d20mr2234385e9.1.1792073148399; 
- Thu, 15 Oct 2026 07:05:48 -0700 (PDT)
-X-Received: by 2002:a05:600c:2154:b0:4a1:ac66:604b with SMTP id
- 5b1f17b1804b1-4a1c6635d20mr2233835e9.1.1792073147927; 
- Thu, 15 Oct 2026 07:05:47 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ d=1e100.net; s=20260707; t=1792073426; x=1792678226;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=egczxxrFtvcYyfarEmFiFgyKZF8VWbLqP202pxHrC9c=;
+ b=jc+kz3/6QUDmeXKc2hr801MF6mG4FDeZKSs8/yOCdHTdrfV2jkLdwhfWnFB8C4doc/
+ De+cI8TrALk68R5Qu8BMId2yVKsxiIAl22uz3ZafQDdtySbTC2jlWoEN3A+TThZYybTK
+ vwZ0Y0HeHDrWzYPr0zr/1XZWDMtnOz9sQvOcMiUO1Na/24K8Ozmg0hvLSa+Ki/nGXS6E
+ V906+P5pMUSzZVGj/+e/lyDlEDJNp3L/2BMYbqDEnf1IniOy0XTksdAk+gSYEOehfJdW
+ amHuXwH+MXQ7318f3o1uT3IRcT78mEm9nrg3UX8UdWgqn7O3lAZ7RwinElFm1/4DASYz
+ l6iw==
+X-Gm-Message-State: AFq9FYImEJERCx27PRSaKZDg6D8ubS21WiFWV1XSyJ0HDn1fcgwtaPK3
+ vdLZCm+4Ha9knxMbkKl52b0Ib84A1PNLIuk9OKVKsKVcsByPJ7FhlzU4KmpiC5KhLUKu2MfZ//i
+ QPnZMpDDngXv0CqCCs0d7I4OqI1mDCj+fTPmBBRjbPI///iiPMC4hsyvA
+X-Gm-Gg: AYBFou1lbVgO1DERJF+m91vMU2dm9HMj28gXOP/x+8JG7F5BYK/uNQS9Ig7PaMLkaP1
+ /0StbXFB7DEbNXK4HZZSe4mKeltl4Q8xWJqSIRDftIdwxBpbuzTiq1/PNSK8Rx72eubyr3wu2cB
+ bDtA1BQ1dfTc4V3t87XC4FQ3XKHXcJLdwtJirXnGVBZ4TxCLCWnY9tRXfNZkSCFIMzRte2rkjYb
+ zso5MHewtWNB3SZ9Gt3qkVpgW+4sj/FPGPyXHP13FBmGTHfB+RsA4jbbORv1wi9z2e18hr/dMIM
+ eRhaHWe/vNdLhen0Y5LfA3le9vFgLxRn50yy/QaGzgdw7pxYgY6P0RudM9JZFLx0ibJTcg==
+X-Received: by 2002:a05:6000:601:b0:48d:e61d:68da with SMTP id
+ ffacd0b85a97d-48de61d6949mr16622964f8f.20.1792073426412; 
+ Thu, 15 Oct 2026 07:10:26 -0700 (PDT)
+X-Received: by 2002:a05:6000:601:b0:48d:e61d:68da with SMTP id
+ ffacd0b85a97d-48de61d6949mr16622855f8f.20.1792073425671; 
+ Thu, 15 Oct 2026 07:10:25 -0700 (PDT)
+Received: from redhat.com ([2a0d:6fc0:3fd7:5300:3d6b:52a4:a23f:9d0b])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a1bd6428b3sm67859615e9.1.2026.10.15.07.05.46
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 15 Oct 2026 07:05:47 -0700 (PDT)
-Message-ID: <a1245318-1843-45c8-9822-bea483a3e660@redhat.com>
-Date: Thu, 15 Oct 2026 16:05:45 +0200
+ ffacd0b85a97d-48de0bc5e0asm19148125f8f.50.2026.10.15.07.10.23
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 15 Oct 2026 07:10:24 -0700 (PDT)
+Date: Thu, 15 Oct 2026 10:10:22 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: David Vrabel <david.vrabel@nutanix.com>
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ Zhao Liu <zhao1.liu@intel.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@oss.qualcomm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Subject: Re: [PATCH v3 0/4] hw/pci-bridge: Configurable apparent bandwidth
+ for the PCIe topology
+Message-ID: <20261015101016-mutt-send-email-mst@kernel.org>
+References: <20260928152431.310363-1-david.vrabel@nutanix.com>
+ <6fa1a07f-afbb-4c65-85e0-ddcebd9bddec@nutanix.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v4 14/25] target/arm: add neoverse-v2-v2 named CPU
- model
-Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Khushit Shah <khushit.shah@nutanix.com>, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, kvmarm@lists.linux.dev, cohuck@redhat.com,
- richard.henderson@linaro.org, maz@kernel.org, oliver.upton@linux.dev,
- berrange@redhat.com, abologna@redhat.com, jdenemar@redhat.com,
- gshan@redhat.com, skolothumtho@nvidia.com, sebott@redhat.com,
- armbru@redhat.com, philmd@linaro.org, yangjinqian1@huawei.com,
- shaju.abraham@nutanix.com, mark.caveayland@nutanix.com,
- ping@khushitshah.com, sandesh.patel@nutanix.com
-References: <20260921123249.1708067-1-khushit.shah@nutanix.com>
- <20260921123249.1708067-15-khushit.shah@nutanix.com>
- <395b66c9-4173-401b-b469-8972b710aae2@redhat.com>
- <CAFEAcA8DcLLYJeE_NUKrFTKfYvHp+6YYAmCdZnBfz2AjRNDnzw@mail.gmail.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <CAFEAcA8DcLLYJeE_NUKrFTKfYvHp+6YYAmCdZnBfz2AjRNDnzw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <6fa1a07f-afbb-4c65-85e0-ddcebd9bddec@nutanix.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -22
 X-Spam_score: -2.3
 X-Spam_bar: --
 X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,45 +118,36 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Thu, Oct 15, 2026 at 02:41:55PM +0100, David Vrabel wrote:
+> 
+> ping?
+> On 28/09/2026 16:24, David Vrabel wrote:
+> > When a VM has been assigned a number of PCIe devices behind a common
+> > PCIe switch and the VM intends to use peer-to-peer (P2P) transfers
+> > between the devices, it is useful to be able to more report the
+> > apparent PCIe bandwidth so it reflects the real handwidth of the
+> > underlying hardware. This allows software in the VM (such as NCCL[1])
+> > to make better decisions about whether to use P2P or not.
+> > 
+> > The existing emulated PCIe switch is a vintage TI XIO3130 and only
+> > support 2.5 GT/s and x1, so we introduces new generic upstream and
+> > downstream port devices (pcie-upstream-port and pcie-downstream-port),
+> > inspired by the existing generic pcie-root-port device.
+> > 
+> > The existing experimental "x-speed" and "x-width" options are made
+> > non-experimental, allowing the pcie-root-port and pcie-downstream-port
+> > capabilities to be configured to match the hardware.
+> > 
+> > The pcie-root-port device is updated to default to a Gen6 capable
+> > device.
+> > 
+> > Finally, where a root or upstream port's bandwidth has been limited,
+> > we also ensure the other end of the link reports the same link status.
 
 
-On 10/15/26 2:22 PM, Peter Maydell wrote:
-> On Thu, 15 Oct 2026 at 13:13, Eric Auger <eric.auger@redhat.com> wrote:
->> Hi Khushit,
->>
->> On 9/21/26 2:32 PM, Khushit Shah wrote:
->>> Add a KVM-only named CPU model for Neoverse V2 r0p1 (TRM 102375),
->>> inheriting from neoverse-v2-v1 (r0p0).
->>>
->>> r0p1 only changes MIDR_EL1.Revision and adds FEAT_ECBHB
->>> (ID_AA64MMFR1_EL1.ECBHB).
->>>  static const ArmNamedCpuModel arm_cpu_models[] = {
->>>      {"arm-v9.0-a-v1", NULL, arm_v9_0_a_v1_props},
->>>      {"neoverse-v2-v1", "arm-v9.0-a-v1", neoverse_v2_v1_props},
->>> +    {"neoverse-v2-v2", "neoverse-v2-v1", neoverse_v2_v2_props},
->> nit I would call it directly neoverse-v2-r0p1 and leave the -v<n> suffix
->> for potential fixes. Same for r0p0 obviously.
-> I'm not very enthusiastic about accumulating different CPU models
-> for all the different rXpY variations that appear. We used to have
-> a ton of basically identical pxa720 variants and I was glad to be
-> able to drop those when we deprecated-and-dropped the pxa support.
->
-> Is any user actually going to care about the difference between
-> r0p0 and r0p1 ? In particular pX changes are just hardware
-> bugfixes that QEMU was unlikely to be modelling in the first place.
-I do agree. In terms of ID reg, there is very little difference between
-both. Modeling a single one may be sufficient
-
-Thanks
-
-Eric
->
-> thanks
-> -- PMM
->
+will merge, thanks!
 
 
