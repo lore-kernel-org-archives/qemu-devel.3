@@ -4,113 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E818CC6B33
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 10:36:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87BD2CC6B33
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 10:36:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHInk-0001oI-Jf; Thu, 15 Oct 2026 06:35:08 -0400
+	id 1xHIld-00055Q-GD; Thu, 15 Oct 2026 06:32:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1xHIn3-00017Q-At
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 06:34:26 -0400
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ (Exim 4.90_1) (envelope-from <eblot.ml@gmail.com>)
+ id 1xHIiM-0008PB-Rh
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 06:29:36 -0400
+Received: from mail-wr1-f41.google.com ([209.85.221.41])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1xHIn0-0005Tp-PO
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 06:34:24 -0400
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-48af27fe287so218102f8f.0
- for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 03:34:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1792060459; x=1792665259; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=nQyOr1Z5jySAz/1/kJJ++1Mttc/PZnyiAEeZmfuQdwQ=;
- b=i0stPFD8OLpi3vDkXtHZvMNAJ+3s/eLitRh0OXsYdeh7YsDGjrFpBtWQDSTIl829Ge
- U/qtclRwtVdiCkCeL6OWQ/KKZB59xXYlThhemqdU5TeEddT1I+V0j9WauCAzuoNS49pq
- cdj40L4cFXm0Eg44dhOqv4LNfNM9EBWmzSqyAtwmm54AxlmvJQZulO4GiP2ISgawY841
- EZrlrRtWYl5r6j8dV4swLm5QQhXeNYQKMj98CMB1y8M2Fp8F+AX1k75h/D9lzR8KCCKI
- q4cNvFea27+uOZzcZPyvncJI4Daaxd9y6V86UepWRCJsS4LJGgsAu2XeXMVav+/V9HRO
- P5kw==
+ (Exim 4.90_1) (envelope-from <eblot.ml@gmail.com>)
+ id 1xHIiJ-0004bL-JR
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 06:29:34 -0400
+Received: by mail-wr1-f41.google.com with SMTP id
+ ffacd0b85a97d-48afcd7ba9bso2848500f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 03:29:31 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792060459; x=1792665259;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
+ d=1e100.net; s=20260707; t=1792060170; x=1792664970;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :content-type:mime-version:subject:date:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=nQyOr1Z5jySAz/1/kJJ++1Mttc/PZnyiAEeZmfuQdwQ=;
- b=vmkeQwU5nup21/97h61++GOTWzkflrVKOs+7gckvl8r+VnGML2wZtVCilbIjuFlRyo
- nvXbFydDbl4l890E3zZV+r8uuPaQkSW3RZvsYkiiuebC24niMr+mspz0IOX5ixzBk+C7
- 6DVQW9/LapGIvQS7dEZQcsqfU1vIQiHfjpVTNHxH0oFdj4bFTafOQSOIi6AcogP3a4j+
- /TrJkYhSDM8BhBOQb/KV1I0skKFEzGZzlQfNftCe9rwjNsOSX/IwNa7bTgLfEKbMXx1k
- m8YNfxpPR+ZtWRK2PvclD9KHIwdqkpeYkWVFLlWcyHyO4VbljxG3YKyXgRGjZ2v0Mrm6
- dLlg==
-X-Gm-Message-State: AFq9FYLd0loJ5F42DkHyWUqJsIPhlM5IMbfQ30AnRiYHxJ5GRhwQYYSq
- SKnZrQDYyf1uEdvLll4TWfnaddlW37+M1+rmS/ooGb2xit6G+32DPeZo86sLW5miGiQ=
-X-Gm-Gg: AYBFou3MS+BiZlDAkOTXaaQnqdO0C8C/dgJbaYwDb0rwkBtyl2QeT8OPof2EK/6FaCv
- 2zvEF6levnzPIaKWkERhe6ur7lZdcGELY/ciFec6Hp9SZx+JUx+TfyI3uaVdbnAT8VucpimxKq2
- 0sXISJHburYbqbXPJLjJmF1I9gk9eK1Cqs5EiVBGENmX+3ie7aLnz5N/CbiSH60FsFXOqMsYIQV
- Lyxt6uzJCU+G0HJlDWNAc2oWXPWOeFpaTOMSrrThKVYfoQZ8+oMKwaczFSNsDuKiWXsiRkjAdHu
- f1clQYP9FMYr4ltzKPOIDK0jitKEu2Wj3Nzs+Qia4eqSNocXypIbAh3JQwa2mc1Wsm44YY2VUwg
- vZ40XLgKcarIvbu5v7KT0UX6p/S+ZQ233oitcSwnycj7UGhX18mpCpstF7OuzVNJIqFiPcpoxKY
- f5LAkKg5FXBlevf6Cmd7o5WBUTY1pgSx5CogTCWOMiPoFovqYvqc7vvUstZjbvsoqcUKyE2w==
-X-Received: by 2002:a05:600c:3f0c:b0:4a1:85d9:13be with SMTP id
- 5b1f17b1804b1-4a18e498471mr397848315e9.20.1792060459135; 
- Thu, 15 Oct 2026 03:34:19 -0700 (PDT)
-Received: from draig.lan ([185.124.0.158]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48df3cbb78asm4405720f8f.48.2026.10.15.03.34.18
+ bh=GgVTUxuGD9oTRYIDiMSJ0REbd9D3oR+ntYCQl5qLzoc=;
+ b=MnBbEpCuhSGZptIu+xE/yrcH5qYQnYLjblOjwfBrOr/0kAY+nkfU2dfBw6hySiQweY
+ QQAS1aHrdk29hTqG5d3nwO/Qm5ylXN1I+uMjD0+9P8vK8pbvXcRbuFVWHF5k0G0r63kV
+ Ze/e/MeRRKb3x7ddLJ58BKaY0hokoHD/yKk/JAsZBIdImPG0I8zR10oX/ZZiGN5Nhmp8
+ 0MLX0PTRLzQZIk6ui3LquRnqP/XP/3NH4qAVeAh+g5KDeIDR670savfwCc8j0b0D5pgR
+ vvTlYlqt58l2VsNr0ljuds4g0XasEuTowP1L0qJ1CQgNPzefz3+QuKU5yHROj4J3je4m
+ 4Trw==
+X-Gm-Message-State: AFq9FYKTELHf3O1RrwjLR6vQzo3VvHumvvhegsPViaLawfC1YPIvISAl
+ M/af+dEtxJz2RxwC0qXgsP+h3sY3kz3PHcybu0Y87oC/3m4therEG/SZdpEbpQ==
+X-Gm-Gg: AYBFou2DFF7evdlFY0GGC36RdQs6nyTSZFG0cCoQRoWAAwhcFocpAvLpDccGJGS+NCQ
+ 8R6ryYOiL1JGribK5MgcEuNJOvhuAIZC9F5lPCeuqYBTp0mxz9nOpIcJ1IijeoYq0CvtgJxWoYY
+ td9NarZOBA22EPs80QVirj4s/4UsxyCQ6yh/mhq6rCOXCprd4ugHqnJGBhss7lFdtv2A1c2+VGQ
+ in3NYrll9ID5Ucejy//Bv9H4bTgUrQBHDyuxDrj/SSrYlX+VHXNK9OkEcyg6SuzH9XBbhAaVSMy
+ Q7E8ap0Smp2z4iLOFkZM3ELYQlwvQ+jQhalLO9ciLh4a6VxSdrBEYDlHi/C7zLUyewB1sHtnBRq
+ LKQ/lPd22GjmubAJ7U+bE4DyXBm/D4wHCN8yU6mGd799/bwxx+fKf03niNyOSdKfIE9I3djakeh
+ rkP6Zdy8atY7i8czW+pWglY6LBASOVWSOXNaBWVoeZujeyIjNJK9BlcVQHpg0Qak9xOa76eE8sH
+ 9ulawwOnQfqMWd7Poq1VIr7TWK0ivBSRdEUNgsI6GJo6A==
+X-Received: by 2002:adf:e009:0:10b0:48c:7dac:8957 with SMTP id
+ ffacd0b85a97d-48dbacda6b7mr26548472f8f.32.1792060169949; 
+ Thu, 15 Oct 2026 03:29:29 -0700 (PDT)
+Received: from localhost (89-93-216-19.hfc.dyn.abo.bbox.fr. [89.93.216.19])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-48df3cbb78asm4380945f8f.48.2026.10.15.03.29.29
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 Oct 2026 03:34:18 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 1CC815F869;
- Thu, 15 Oct 2026 11:34:17 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Ilya Leoshkevich <iii@linux.ibm.com>
-Cc: qemu-devel@nongnu.org,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@oss.qualcomm.com>,  Zhao Liu <zhao1.liu@intel.com>,  Kyle Evans
- <kevans@freebsd.org>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
- <berrange@redhat.com>,  Brian
- Cain <brian.cain@oss.qualcomm.com>,  Richard Henderson
- <richard.henderson@linaro.org>,  Brad Smith <brad@comstyle.com>,  Ani
- Sinha <anisinha@redhat.com>,  Christian Borntraeger
- <borntraeger@linux.ibm.com>,  Thomas Huth <th.huth+qemu@posteo.eu>,  Keith
- Busch <kbusch@kernel.org>,  Matthew Rosato <mjrosato@linux.ibm.com>,
- Cornelia Huck <cohuck@redhat.com>,  Paolo Bonzini <pbonzini@redhat.com>,
- Halil Pasic <pasic@linux.ibm.com>,  John Snow <jsnow@redhat.com>,  Eric
- Farman <farman@linux.ibm.com>,  Pierrick Bouvier
- <pierrick.bouvier@oss.qualcomm.com>,  Anders Roxell
- <anders.roxell@linaro.org>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>,  "Michael S. Tsirkin" <mst@redhat.com>,
- Warner Losh <imp@bsdimp.com>,  qemu-arm@nongnu.org,  Peter Maydell
- <peter.maydell@linaro.org>,  Yoshinori Sato <yoshinori.sato@nifty.com>,
- Peter Xu <peterx@redhat.com>,  Klaus Jensen <its@irrelevant.dk>,  Song
- Gao <gaosong@loongson.cn>,  qemu-s390x@nongnu.org,  Laurent Vivier
- <laurent@vivier.eu>
-Subject: Re: [PATCH v2 16/16] tests/functional: add tuxrun kvm gdb test for
- s390x
-In-Reply-To: <9898cc36-2438-473c-aed5-eb1a5671c2d0@linux.ibm.com> (Ilya
- Leoshkevich's message of "Tue, 13 Oct 2026 21:42:03 +0200")
-References: <20261012170330.1144446-1-alex.bennee@linaro.org>
- <20261012170330.1144446-17-alex.bennee@linaro.org>
- <9898cc36-2438-473c-aed5-eb1a5671c2d0@linux.ibm.com>
-User-Agent: mu4e 1.14.4-pre6; emacs 30.1
-Date: Thu, 15 Oct 2026 11:34:17 +0100
-Message-ID: <87ecdrfe1i.fsf@draig.linaro.org>
+ Thu, 15 Oct 2026 03:29:29 -0700 (PDT)
+Date: Thu, 15 Oct 2026 11:28:34 +0200
+Subject: [PATCH v3 47/50] tests/qtest: ina238: cover a cleared calibration
+ per channel
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20261015-bmc-minerva-v3-47-7d50c8a108e5@free.fr>
+References: <20261015-bmc-minerva-v3-0-7d50c8a108e5@free.fr>
+In-Reply-To: <20261015-bmc-minerva-v3-0-7d50c8a108e5@free.fr>
+To: qemu-devel@nongnu.org
+Cc: =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
+ Peter Maydell <peter.maydell@linaro.org>, 
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>, 
+ Jamin Lin <jamin_lin@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>, 
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-arm@nongnu.org, 
+ Patrick Leis <venture@google.com>, Fabiano Rosas <farosas@suse.de>, 
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ qemu-ppc@nongnu.org, qemu-riscv@nongnu.org, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, 
+ Emmanuel Blot <emmanuel.blot@free.fr>, Glenn Miles <milesg@linux.ibm.com>
+X-Mailer: b4 0.16.0
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1792056477; l=4102;
+ i=emmanuel.blot@free.fr; s=20260602; h=from:subject:message-id;
+ bh=2gZSb8/zG9OIbMPLJl7bRBev6cgnZtrY0rkeYgdq44I=;
+ b=wNIc+sVHCxAllJTqaogpZtOhqWDui41nSrmTwkeit3qftZL+w+Lh3IRGHnvq+HUl4OejmKpUx
+ NBiSh83jIlQC+gRWDzSUqwbYkXncwCvzgZw0cCxOpv7Yssyman1hCBj
+X-Developer-Key: i=emmanuel.blot@free.fr; a=ed25519;
+ pk=0qFrZ21FAAN8OfVsSoVcCFTk/NMYOWzxJz4paSAVm0g=
+Received-SPF: pass client-ip=209.85.221.41; envelope-from=eblot.ml@gmail.com;
+ helo=mail-wr1-f41.google.com
+X-Spam_score_int: -15
+X-Spam_score: -1.6
+X-Spam_bar: -
+X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9,
+ FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.25, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,85 +105,102 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Emmanuel Blot <emmanuel.blot@free.fr>
+From:  Emmanuel Blot via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Ilya Leoshkevich <iii@linux.ibm.com> writes:
+Verify that without a calibration value the current and power
+registers read zero, whichever channels the mode converts.
 
-> On 10/12/26 19:03, Alex Benn=C3=A9e wrote:
->> As with x86_64 we now have the bits to add a KVM gdb test. One minor
->> wrinkle is the s390x only supports WP_WRITE watch points so we skip
->> the other watch point tests lest we get confusing messages about
->> failing to insert HW breakpoints.
->> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
->> ---
->>   tests/functional/gdb-scripts/kernel_gdb_test.py | 10 ++++++----
->>   tests/functional/s390x/test_tuxrun.py           | 14 ++++++++++++++
->>   2 files changed, 20 insertions(+), 4 deletions(-)
->> diff --git a/tests/functional/gdb-scripts/kernel_gdb_test.py
->> b/tests/functional/gdb-scripts/kernel_gdb_test.py
->> index 2d62fe01f10..56f0514c943 100644
->> --- a/tests/functional/gdb-scripts/kernel_gdb_test.py
->> +++ b/tests/functional/gdb-scripts/kernel_gdb_test.py
->> @@ -107,11 +107,13 @@ def do_one_watch(sym, wtype, text):
->>   def check_watches(sym_name):
->>       "Watch a symbol for any access."
->>   -    # Should hit for any read
->> -    do_one_watch(sym_name, gdb.WP_ACCESS, "awatch")
->> +    # s390 only supports write watchpoints
->> +    if "s390" not in gdb.selected_frame().architecture().name():
->> +        # Should hit for any read
->> +        do_one_watch(sym_name, gdb.WP_ACCESS, "awatch")
->>   -    # Again should hit for reads
->> -    do_one_watch(sym_name, gdb.WP_READ, "rwatch")
->> +        # Again should hit for reads
->> +        do_one_watch(sym_name, gdb.WP_READ, "rwatch")
->>         # Finally when it is written
->>       do_one_watch(sym_name, gdb.WP_WRITE, "watch")
->> diff --git a/tests/functional/s390x/test_tuxrun.py b/tests/functional/s3=
-90x/test_tuxrun.py
->> index 8e0261e2b7f..528af3c08ff 100755
->> --- a/tests/functional/s390x/test_tuxrun.py
->> +++ b/tests/functional/s390x/test_tuxrun.py
->> @@ -19,6 +19,9 @@ class TuxRunS390xTest(TuxRunBaselineTest):
->>       ASSET_S390X_KERNEL =3D Asset(
->>           'https://storage.tuxboot.com/kernels/6.18.54/s390/bzImage',
->>           '5efeb31754b211440e1595ab11355bb006fe78a2c0604ed0a8c55c4598b71=
-aec')
->> +    ASSET_S390X_VMLINUX =3D Asset(
->> +        'https://storage.tuxboot.com/kernels/6.18.54/s390/vmlinux.xz',
->> +        '5bbd4d34e0950f88053a9bfd16078896df4b1ee1696fc2ad62488e681a6bdd=
-8e')
->>       ASSET_S390X_ROOTFS =3D Asset(
->>           'https://storage.tuxboot.com/buildroot/20260924/s390/rootfs.ex=
-t4.zst',
->>           '5ba18c4d18831c50a0c743990f7bdee1d3b520629d423c55b668d8fbbac9c=
-6f5')
->> @@ -42,5 +45,16 @@ def test_s390_kvm(self):
->>                              haltmsg=3D"Requesting system halt",
->>                              accel=3D"kvm")
->>   +    def test_s390_kvm_gdb(self):
->> +        self.set_machine('s390-ccw-virtio')
->> +        self.require_accelerator('kvm')
->> +        self.wait_for_shutdown=3DFalse
->> +        self.common_tuxrun_gdb(kernel_asset=3Dself.ASSET_S390X_KERNEL,
->> +                               vmlinux_asset=3Dself.ASSET_S390X_VMLINUX,
->> +                               rootfs_asset=3Dself.ASSET_S390X_ROOTFS,
->> +                               drive=3D"virtio-blk-ccw",
->> +                               haltmsg=3D"Requesting system halt",
->> +                               accel=3D"kvm")
->> +
->>   if __name__ =3D=3D '__main__':
->>       TuxRunBaselineTest.main()
->
-> This hangs unfortunately.
-> You need something like the following to compensate for the difference
-> between vmlinux ELF addresses and the actual nokaslr load address:
+Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
+Signed-off-by: Emmanuel Blot <emmanuel.blot@free.fr>
+---
+ tests/qtest/ina238-test.c | 48 +++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 48 insertions(+)
 
-I realise now I had it working on my s390x image and forgot to fold the
-changes from that tree into my local git. Fixed in v3
+diff --git a/tests/qtest/ina238-test.c b/tests/qtest/ina238-test.c
+index e7dd50a822..4e4146461c 100644
+--- a/tests/qtest/ina238-test.c
++++ b/tests/qtest/ina238-test.c
+@@ -282,6 +282,30 @@ static void test_zero_cal(void *obj, void *data, QGuestAllocator *alloc)
+     g_assert_cmpuint(i2c_get24(dev, REG_POWER), ==, 0);
+ }
+ 
++/* Clearing SHUNT_CAL zeroes both derived registers in any mode */
++static void test_zero_cal_channels(void *obj, void *data,
++                                   QGuestAllocator *alloc)
++{
++    QI2CDevice *dev = (QI2CDevice *)obj;
++    static const uint16_t modes[] = { 0x9000, 0xA000, 0xF000 };
++    size_t idx;
++
++    for (idx = 0; idx < ARRAY_SIZE(modes); idx++) {
++        i2c_set16(dev, REG_CONFIG, CONFIG_RST);
++        i2c_set16(dev, REG_SHUNT_CAL, 0x0FD2);
++        qmp_ina238_set("shunt-voltage", 97200000);
++        qmp_ina238_set("bus-voltage", 48000000);
++        g_assert_cmphex(i2c_get16(dev, REG_CURRENT), !=, 0x0000);
++        g_assert_cmpuint(i2c_get24(dev, REG_POWER), !=, 0);
++
++        i2c_set16(dev, REG_ADC_CONFIG, modes[idx]);
++        i2c_set16(dev, REG_SHUNT_CAL, 0x0000);
++
++        g_assert_cmphex(i2c_get16(dev, REG_CURRENT), ==, 0x0000);
++        g_assert_cmpuint(i2c_get24(dev, REG_POWER), ==, 0);
++    }
++}
++
+ /* ADCRANGE changes the shunt LSB, not the current divisor. */
+ static void test_adcrange(void *obj, void *data, QGuestAllocator *alloc)
+ {
+@@ -458,6 +482,27 @@ static void test_alert_power(void *obj, void *data, QGuestAllocator *alloc)
+     g_assert_cmphex(i2c_get16(dev, REG_DIAG_ALRT) & DIAG_POL, ==, 0);
+ }
+ 
++/* Clearing SHUNT_CAL drops the power alert with the power reading */
++static void test_alert_power_zero_cal(void *obj, void *data,
++                                      QGuestAllocator *alloc)
++{
++    QI2CDevice *dev = (QI2CDevice *)obj;
++
++    i2c_set16(dev, REG_CONFIG, CONFIG_RST);
++    qmp_ina238_set("shunt-voltage", 97200000);
++    qmp_ina238_set("bus-voltage", 48000000);
++    i2c_set16(dev, REG_SHUNT_CAL, 0x0FD2);
++    i2c_set16(dev, REG_PWR_LIMIT, 0x0100);
++    g_assert_cmphex(i2c_get16(dev, REG_DIAG_ALRT) & DIAG_POL, ==, DIAG_POL);
++
++    /* Continuous shunt-only: the power register is not reconverted. */
++    i2c_set16(dev, REG_ADC_CONFIG, 0xA000);
++    i2c_set16(dev, REG_SHUNT_CAL, 0x0000);
++
++    g_assert_cmpuint(i2c_get24(dev, REG_POWER), ==, 0);
++    g_assert_cmphex(i2c_get16(dev, REG_DIAG_ALRT) & DIAG_POL, ==, 0);
++}
++
+ /* Two thresholds crossed at once are reported simultaneously (multi-alert) */
+ static void test_alert_multi(void *obj, void *data, QGuestAllocator *alloc)
+ {
+@@ -733,6 +778,7 @@ static void ina238_register_nodes(void)
+                  NULL);
+     qos_add_test("power", "ina238", test_power, NULL);
+     qos_add_test("zero-cal", "ina238", test_zero_cal, NULL);
++    qos_add_test("zero-cal-channels", "ina238", test_zero_cal_channels, NULL);
+     qos_add_test("adcrange", "ina238", test_adcrange, NULL);
+     qos_add_test("mode-shutdown", "ina238", test_mode_shutdown, NULL);
+     qos_add_test("mode-triggered", "ina238", test_mode_triggered, NULL);
+@@ -742,6 +788,8 @@ static void ina238_register_nodes(void)
+     qos_add_test("alert-bus", "ina238", test_alert_bus, NULL);
+     qos_add_test("alert-temp", "ina238", test_alert_temp, NULL);
+     qos_add_test("alert-power", "ina238", test_alert_power, NULL);
++    qos_add_test("alert-power-zero-cal", "ina238", test_alert_power_zero_cal,
++                 NULL);
+     qos_add_test("alert-multi", "ina238", test_alert_multi, NULL);
+     qos_add_test("alert-latch", "ina238", test_alert_latch, NULL);
+     qos_add_test("alert-latch-persist", "ina238", test_alert_latch_persist,
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+-- 
+2.53.0-Meta
+
 
