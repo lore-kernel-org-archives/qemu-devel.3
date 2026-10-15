@@ -4,112 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABFA8CC6B34
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 13:12:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8918CC6B34
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 13:13:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHLFB-0001Tq-5T; Thu, 15 Oct 2026 09:11:37 -0400
+	id 1xHLGR-0002Cq-CC; Thu, 15 Oct 2026 09:12:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xHLF7-0001Tc-IJ
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 09:11:33 -0400
-Received: from smtp-out2.suse.de ([195.135.223.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xHLF5-0003sE-9s
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 09:11:32 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 8E8281FF60;
- Thu, 15 Oct 2026 13:11:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1792069889; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1xHLGP-0002AH-OE
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 09:12:53 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1xHLGN-00042P-G1
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 09:12:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1792069970;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Ne4Ce9SMYL1stVtY0bThXko0Q7wxnFgGPktHIGbRdrw=;
- b=gQkCEQNJKpPB7wK7I18+2cVj4sVJ4sdIT0UpqlqdcHq1MW9+OA69JOzD/MEkF9HdhciHjJ
- 1cohBmaQmxLfon2Ux2vYCmcCOoL8Ta7eEt5+1d1IDPpwgZ6LIFmuMMyZXX6I4afYMRT6z0
- znMH1LLhvPg5GMQ+IXPtkLOlnW7M9WU=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1792069889;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Ne4Ce9SMYL1stVtY0bThXko0Q7wxnFgGPktHIGbRdrw=;
- b=ha4nEINXe8fXY10wx1JIA1B2Tk5eRx3DPMO5lQLYFAFHiDXRaBIuxG/1Vhxe08D/MEG/k3
- KV5/4uU+AbSZIGCA==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=gQkCEQNJ;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=ha4nEINX
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1792069889; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Ne4Ce9SMYL1stVtY0bThXko0Q7wxnFgGPktHIGbRdrw=;
- b=gQkCEQNJKpPB7wK7I18+2cVj4sVJ4sdIT0UpqlqdcHq1MW9+OA69JOzD/MEkF9HdhciHjJ
- 1cohBmaQmxLfon2Ux2vYCmcCOoL8Ta7eEt5+1d1IDPpwgZ6LIFmuMMyZXX6I4afYMRT6z0
- znMH1LLhvPg5GMQ+IXPtkLOlnW7M9WU=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1792069889;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Ne4Ce9SMYL1stVtY0bThXko0Q7wxnFgGPktHIGbRdrw=;
- b=ha4nEINXe8fXY10wx1JIA1B2Tk5eRx3DPMO5lQLYFAFHiDXRaBIuxG/1Vhxe08D/MEG/k3
- KV5/4uU+AbSZIGCA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id EECE1132C9;
- Thu, 15 Oct 2026 13:11:09 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id XOuKOOXQ0GqBQAAAD6G6ig
- (envelope-from <farosas@suse.de>); Thu, 15 Oct 2026 13:11:08 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
-Cc: peterx@redhat.com, Akash Kulhalli <akulhall@redhat.com>, Juraj Marcin
- <jmarcin@redhat.com>
-Subject: Re: [PATCH v2 5/7] migration: Dump type of channel in
- set_incoming_channel tracepoint
-In-Reply-To: <20261006182046.3767283-6-peterx@redhat.com>
-References: <20261006182046.3767283-1-peterx@redhat.com>
- <20261006182046.3767283-6-peterx@redhat.com>
-Date: Thu, 15 Oct 2026 10:10:50 -0300
-Message-ID: <87v773kt2d.fsf@suse.de>
+ bh=SjkC2h+ZCfM2mKlA1Wlh748PEKb06peYkGGWGp6hhR4=;
+ b=MyAy1bgh7611tZw3ssOQNaAt2XTYm50n61SNtIUCkjiksuvrq2KG6FaYqYPhYDi04egp6R
+ blQOwLofDcP4vQQb057G6VRIbTjGielZIQ1gDz5DMN8Gk1iJiycS1QnzQvrJJrFGo9wVRz
+ LXk8BXdOsfjK5iEtmG5arX8E1ehofTA=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-685-BKjP6XevOJCo5cqAs_CQbg-1; Thu, 15 Oct 2026 13:12:46 +0000
+X-MC-Unique: BKjP6XevOJCo5cqAs_CQbg-1
+X-Mimecast-MFC-AGG-ID: BKjP6XevOJCo5cqAs_CQbg_1792069966
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-48af4a0bd0fso3011166f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 06:12:46 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1792069966; x=1792674766;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:reply-to:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=SjkC2h+ZCfM2mKlA1Wlh748PEKb06peYkGGWGp6hhR4=;
+ b=rYYY0VoUR1tNTU3GN1qDVM0NCXSuvxRHGyO9cO1/qHNLpvWWLt3Vbbl4TUT2qSB6xc
+ HZ/lG59og0gmnONQQ8ipnYupJ+Oe4oUfUt+XJ02K11Oat9rW0dXlew7Jnw6oW97JRiLQ
+ RLu7ktAGEqgOdOkjM7+9CD3Qj23YbYJKM5sJIPABBc+bCS2Lq1t6ckKNel6bJkQ0U9O+
+ COcSOQeaLzaQRdli2yQ741KxAQxNOG8+21RD30szH2L0e/Lb+chejZ5D/tnU0fczP8bZ
+ U/iO7TX2P1HjqNpVfDYennzzuzynLqPDOuV+vmAZF51JNMBbVgb7SDVRBGOcV3aaMpoF
+ SOzg==
+X-Forwarded-Encrypted: i=1;
+ AKwUvByKIvw5h0W7KfbjWayGwmbQtqeq2xzyEKFmM3AcNc9OM9Uxtqe2ghdc3gqG5aq41R9EHZcefa1Q2ojK@nongnu.org
+X-Gm-Message-State: AFq9FYIN5VBLmIbCRNHTX3+A1sVykvD7Hm8ht5ghzWbOK3bc5IT6nrAH
+ jgws0/o5zlZdo/JsqnspXVmx/inavIo6JY89iQy3d6shFq0ZwW8OZdtwUrWGZMbu8Cvf6WtMolZ
+ MbvjCxZ84OmQ+SfN2sIH47chB9WSXjgKLhfK47IO4oPGcEVdgqe/Vc170
+X-Gm-Gg: AYBFou0HbwuGmM5G83/WuUgsTB9eYyOvD/FCYW6iOHz0lIHg6QMPTRpqnE9D9pxwFDl
+ KHlOeMYoOsCsO9ePy5NEOQK0hz24ni9e9lyMDh4QMA+gHeIjhR3GCk+xjHE3HQrPJx5941Iremk
+ neZdtIn3e/801Q/zMsqukT3zplnnvsCWRO/1FliT/yi/cMCuNCcwOpSCbHPqzIWkYX+IX5ZB+3W
+ J+G7TmbtEBM/HmRYzgRaA+a6+skzWEZ7Boq/b1hZ+d0xN/SOH36hnFCde76kttqQuBo4WxKTp3o
+ q24DJnbhn+3AHLu6sfQYg5LqmoMgKF/+Jk1aut21ICiGyCcHuHirI5yTUMbxczkoPuMcoB/899o
+ Wk6YD5YqJ97yIkvZ/9S6BQ/2Jy+igyx1xcSFdeV3VY47jNydp
+X-Received: by 2002:a05:600c:548c:b0:4a1:a7f8:c11f with SMTP id
+ 5b1f17b1804b1-4a1a7f8c1cfmr185453275e9.9.1792069965738; 
+ Thu, 15 Oct 2026 06:12:45 -0700 (PDT)
+X-Received: by 2002:a05:600c:548c:b0:4a1:a7f8:c11f with SMTP id
+ 5b1f17b1804b1-4a1a7f8c1cfmr185452645e9.9.1792069965247; 
+ Thu, 15 Oct 2026 06:12:45 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-48de0aaaa34sm18547051f8f.20.2026.10.15.06.12.43
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 15 Oct 2026 06:12:44 -0700 (PDT)
+Message-ID: <6e0b9a10-84c3-4948-8eef-3d2ea5c44a56@redhat.com>
+Date: Thu, 15 Oct 2026 15:12:42 +0200
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-X-Rspamd-Queue-Id: 8E8281FF60
-X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- ARC_NA(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+]; FROM_HAS_DN(0.00)[];
- RCVD_TLS_ALL(0.00)[]; DKIM_TRACE(0.00)[suse.de:+];
- RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
- RCPT_COUNT_FIVE(0.00)[5]; MID_RHS_MATCH_FROM(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- MISSING_XM_UA(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,
- imap1.dmz-prg2.suse.org:rdns, suse.de:email, suse.de:dkim]
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v4 11/25] target/arm: disable PMU support for named
+ CPU models
+Content-Language: en-US
+To: Khushit Shah <khushit.shah@nutanix.com>, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, kvmarm@lists.linux.dev
+Cc: cohuck@redhat.com, peter.maydell@linaro.org,
+ richard.henderson@linaro.org, maz@kernel.org, oliver.upton@linux.dev,
+ berrange@redhat.com, abologna@redhat.com, jdenemar@redhat.com,
+ gshan@redhat.com, skolothumtho@nvidia.com, sebott@redhat.com,
+ armbru@redhat.com, philmd@linaro.org, yangjinqian1@huawei.com,
+ shaju.abraham@nutanix.com, mark.caveayland@nutanix.com,
+ ping@khushitshah.com, sandesh.patel@nutanix.com
+References: <20260921123249.1708067-1-khushit.shah@nutanix.com>
+ <20260921123249.1708067-12-khushit.shah@nutanix.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20260921123249.1708067-12-khushit.shah@nutanix.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
+X-Spam_bar: --
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -123,75 +119,47 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
+Hi Khushit,
 
-> Add this info to be crystal clear on what channel we're installing.
+On 9/21/26 2:32 PM, Khushit Shah wrote:
+> Under KVM, the guest PMU is backed by the host PMU (event set, PMCR.N,
+> and PMCEID), which may not be portable across heterogeneous hosts.
 >
-> Signed-off-by: Peter Xu <peterx@redhat.com>
+> Disable PMU support for named CPU models by clearing ARM_FEATURE_PMU in
+> the named-model init path so arm_cpu_post_init() does not create the
+> "pmu" property.
+
+To me it shall be possible to turn PMU on even on named model. I
+understand it may create migration issues due to the HW adherence but yet.
+I think on x86 you can use -cpu Haswell-IBRS,pmu=on.
+
+Eric
+
+
+>
+> Signed-off-by: Khushit Shah <khushit.shah@nutanix.com>
 > ---
->  migration/channel.h    |  3 ++-
->  migration/channel.c    | 10 +++++++++-
->  migration/trace-events |  2 +-
->  3 files changed, 12 insertions(+), 3 deletions(-)
+>  target/arm/cpu-models.c | 4 ++++
+>  1 file changed, 4 insertions(+)
 >
-> diff --git a/migration/channel.h b/migration/channel.h
-> index a7d0d29058..678712f291 100644
-> --- a/migration/channel.h
-> +++ b/migration/channel.h
-> @@ -24,7 +24,8 @@ typedef enum {
->      CH_NONE,
->      CH_MAIN,
->      CH_MULTIFD,
-> -    CH_POSTCOPY
-> +    CH_POSTCOPY,
-> +    CH_NUM,
->  } MigChannelType;
+> diff --git a/target/arm/cpu-models.c b/target/arm/cpu-models.c
+> index fed3197186..153ee10ae6 100644
+> --- a/target/arm/cpu-models.c
+> +++ b/target/arm/cpu-models.c
+> @@ -159,6 +159,10 @@ static void arm_named_cpu_initfn(Object *obj)
+>      /* 1.b Properly set RES1 fields. */
+>      reset_res1_fields(cpu);
 >  
->  void migration_channel_process_incoming(QIOChannel *ioc);
-> diff --git a/migration/channel.c b/migration/channel.c
-> index 8407ea46cb..b9065efd03 100644
-> --- a/migration/channel.c
-> +++ b/migration/channel.c
-> @@ -34,6 +34,13 @@
->  #include "trace.h"
->  #include "yank_functions.h"
->  
-> +static const char *const mig_channel_str[CH_NUM] = {
-> +    [CH_NONE] = "NONE",
-> +    [CH_MAIN] = "MAIN",
-> +    [CH_MULTIFD] = "MULTIFD",
-> +    [CH_POSTCOPY] = "PREEMPT",
-> +};
+> +    /* Disable PMU for named CPU models. */
+> +    unset_feature(&cpu->env, ARM_FEATURE_PMU);
+> +    cpu->has_pmu = false;
 > +
->  void migration_connect_outgoing(MigrationState *s, MigrationAddress *addr,
->                                  Error **errp)
->  {
-> @@ -219,7 +226,8 @@ static bool migration_incoming_channel_install(MigrationIncomingState *mis,
->      }
->  
->      trace_migration_set_incoming_channel(ioc,
-> -                                         object_get_typename(OBJECT(ioc)));
-> +                                         object_get_typename(OBJECT(ioc)),
-> +                                         mig_channel_str[ch]);
->      migration_ioc_register_yank(ioc);
->  
->      if (migration_incoming_setup(ioc, ch, errp)) {
-> diff --git a/migration/trace-events b/migration/trace-events
-> index c93c9f9e75..8840d82f8d 100644
-> --- a/migration/trace-events
-> +++ b/migration/trace-events
-> @@ -208,7 +208,7 @@ migration_transferred_bytes(uint64_t qemu_file, uint64_t multifd, uint64_t rdma)
->  
->  # channel.c
->  migration_channel_process_incoming(void *ioc, const char *ioctype) "ioc=%p ioctype=%s"
-> -migration_set_incoming_channel(void *ioc, const char *ioctype) "ioc=%p ioctype=%s"
-> +migration_set_incoming_channel(void *ioc, const char *ioctype, const char *type) "ioc=%p ioctype=%s type=%s"
->  migration_set_outgoing_channel(void *ioc, const char *ioctype) "ioc=%p ioctype=%s"
->  
->  # global_state.c
+>      /* 2. Add sveNNNN and SYSREG_ properties */
+>      aarch64_add_sve_properties(obj);
+>      aarch64_add_idregs_properties(obj);
 
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
 
