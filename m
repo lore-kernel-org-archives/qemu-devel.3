@@ -4,53 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 750ACCC6B33
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 12:21:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5C54CC6B34
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 12:21:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHKSM-0002oI-W2; Thu, 15 Oct 2026 08:21:11 -0400
+	id 1xHKSO-0002p3-EW; Thu, 15 Oct 2026 08:21:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1xHKSL-0002ne-3R
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 08:21:09 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1xHKSM-0002oH-TD
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 08:21:10 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1xHKSJ-0005IN-KC
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 08:21:08 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1xHKSK-0005IT-OV
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 08:21:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
  s=mimecast20190719; t=1792066867;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=GbgDmWBP2ex35aB6M+KcyNwA82V26Myp+820/irNa8E=;
- b=CVuG/+aBdke4d0SDzWG5T2XCIv78nMWDbGoLOhyjj7k3dRvugxvXR09z+1ffOlK5GIqCoR
- iLjwt8hVMWRLZV/HShTmQDyUCT6JxvdkdmANazyfKt52f8+94qPVwyVDNdlBs62pPvX0O5
- RJtw8dWNzRKruG2rCLVoP3xbjmvuoUA=
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=fREmhUQtKJU3j1+MSYYCp5cEcdJ/20AGuBPbHsf21zQ=;
+ b=VYPJM3PXqWZsSV3QI+BatTUZSUcIQ2Sb3+wImwg3XppD729bR0u5bKk2BUIPUrGPnUlEWN
+ s2mO3lhPRMVXxbuko821u3Hg6wXKfqg+XsHr6M7S804mMrOWUVZLytiSagV5Qrx2+h5+Xb
+ FHJ+WknGLALQCq+Y7E8xaN6oP2p2+DA=
 Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-564-L3yH4fPkMUSWOqZF2w9oaw-1; Thu,
- 15 Oct 2026 12:20:59 +0000
-X-MC-Unique: L3yH4fPkMUSWOqZF2w9oaw-1
-X-Mimecast-MFC-AGG-ID: L3yH4fPkMUSWOqZF2w9oaw_1792066858
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-652-avZnk_1bP4enoISQFdpmsg-1; Thu,
+ 15 Oct 2026 12:21:05 +0000
+X-MC-Unique: avZnk_1bP4enoISQFdpmsg-1
+X-Mimecast-MFC-AGG-ID: avZnk_1bP4enoISQFdpmsg_1792066864
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id ABFC91800657
- for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 12:20:58 +0000 (UTC)
+ id 4A9DE180062D; Thu, 15 Oct 2026 12:21:04 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.44.48.67])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 994D118004D2; Thu, 15 Oct 2026 12:20:57 +0000 (UTC)
+ id 5E78A180057F; Thu, 15 Oct 2026 12:21:01 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 0/8] vfio queue
-Date: Thu, 15 Oct 2026 14:20:47 +0200
-Message-ID: <20261015122055.888209-1-clg@redhat.com>
+Cc: Hugo Komatsu <hugo.komatsu@nutanix.com>,
+ John Levon <john.levon@nutanix.com>,
+ Mark Cave-Ayland <mark.caveayland@nutanix.com>,
+ Thanos Makatos <thanos.makatos@nutanix.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PULL 3/8] vfio-user: reject failover during init
+Date: Thu, 15 Oct 2026 14:20:50 +0200
+Message-ID: <20261015122055.888209-4-clg@redhat.com>
+In-Reply-To: <20261015122055.888209-1-clg@redhat.com>
+References: <20261015122055.888209-1-clg@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,61 +85,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit d5b5083cb783c447001e862c2b525e59f48ad78c:
+From: Hugo Komatsu <hugo.komatsu@nutanix.com>
 
-  Merge tag 'block-pull-request' of https://gitlab.com/stefanha/qemu into staging (2026-10-15 11:53:41 +0200)
+Virtio-net failover is a networking feature that relies on a primary
+and standby device pair. This is not currently supported for vfio-user.
+Refuse initialization if this property is set.
 
-are available in the Git repository at:
+Signed-off-by: Hugo Komatsu <hugo.komatsu@nutanix.com>
+Reviewed-by: John Levon <john.levon@nutanix.com>
+Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+Reviewed-by: Thanos Makatos <thanos.makatos@nutanix.com>
+Link: https://lore.kernel.org/qemu-devel/20260813110731.80-1-hugo.komatsu@nutanix.com
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+---
+ hw/vfio-user/pci.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-  https://github.com/legoater/qemu/ tags/pull-vfio-20261015
-
-for you to fetch changes up to 2240c14c16dfc6c3b9840677f0d153165af7d4ee:
-
-  vfio/migration: Don't reset a device on a declined stop transition (2026-10-15 13:15:24 +0200)
-
-----------------------------------------------------------------
-vfio queue:
-
-* Fix UBSAN shift error in MTRR mask computation on AMD EPYC with 52
-  physical address bits
-* Add Fixes: tag validation to checkpatch
-* Reject virtio-net failover during vfio-user init
-* Sanitize DBUF_CTL POWER_STATE for iGPU passthrough, fixing display
-  corruption on first boot
-* Thread vf-token through iommufd bind
-* Make MTL/ARL guests fall back to BAR-based framebuffer access in
-  passthrough
-* Update igd-assign.txt for Intel MTL and newer platforms
-* Don't reset a VFIO device on a declined stop transition
-
-----------------------------------------------------------------
-Cédric Le Goater (2):
-      target/i386/kvm: Fix UBSAN shift error in MTRR mask computation
-      scripts/checkpatch: validate Fixes: tag format and commit ancestry
-
-Hugo Komatsu (1):
-      vfio-user: reject failover during init
-
-Mikhail Malyshev (1):
-      vfio/igd: sanitize DBUF_CTL POWER_STATE for iGPU passthrough
-
-Pankaj Kumar (1):
-      vfio/migration: Don't reset a device on a declined stop transition
-
-Tushar Dave (1):
-      hw/vfio: thread vf-token through iommufd bind
-
-Yuan Wang (2):
-      vfio/igd: Make MTL/ARL guests fall back to BAR-based framebuffer access
-      vfio/igd: Update igd-assign.txt for Intel MTL and newer platforms
-
- docs/igd-assign.txt   |   2 +-
- hw/vfio-user/pci.c    |   5 ++
- hw/vfio/igd.c         | 168 +++++++++++++++++++++++++++++++++++++++++++++++++-
- hw/vfio/iommufd.c     |  10 +++
- hw/vfio/migration.c   |  38 ++++++++++--
- target/i386/kvm/kvm.c |   3 +-
- scripts/checkpatch.pl |  66 ++++++++++++++++++++
- 7 files changed, 281 insertions(+), 11 deletions(-)
+diff --git a/hw/vfio-user/pci.c b/hw/vfio-user/pci.c
+index e7573d4a9f088c1afc8ed2709932842247abf6ac..983e1d4ad470bfa887a3a60e88e2f255f0ed085a 100644
+--- a/hw/vfio-user/pci.c
++++ b/hw/vfio-user/pci.c
+@@ -266,6 +266,11 @@ static void vfio_user_pci_realize(PCIDevice *pdev, Error **errp)
+         return;
+     }
+ 
++    if (pdev->failover_pair_id) {
++        error_setg(errp, "vfio-user: failover is not supported");
++        return;
++    }
++
+     sock_name = udev->socket->u.q_unix.path;
+ 
+     vbasedev->name = g_strdup_printf("vfio-user:%s", sock_name);
+-- 
+2.56.0
 
 
