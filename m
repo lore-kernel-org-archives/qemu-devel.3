@@ -4,65 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E160CC6B2E
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 05:04:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1AF3CC6B2F
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 05:07:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHDdW-00033O-D8; Thu, 15 Oct 2026 01:04:14 -0400
+	id 1xHDgX-0003e1-GX; Thu, 15 Oct 2026 01:07:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rick@sloservers.com>)
- id 1xHDdU-00033D-Ft
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 01:04:12 -0400
-Received: from vps.sloservers.com ([204.109.61.218])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xHDgV-0003dr-BR
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 01:07:20 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rick@sloservers.com>)
- id 1xHDdS-0007d1-OC
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 01:04:12 -0400
-Received: from thinking.duckdns.org (unknown [192.168.11.4])
- by vps.sloservers.com (Postfix) with ESMTPS id 0039394C7;
- Thu, 15 Oct 2026 05:04:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sloservers.com;
- s=mail; t=1792040647;
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xHDgT-0007yI-2t
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 01:07:18 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1792040835;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=M68i/OP4/Wz0w435qEj2szCXEPlqPmyot5dwVrReU7c=;
- b=TJDUmPCDOqh1Vk+Q4P383ppPNUfsEW7VN0xnTQ1OOyVTi3b1mR1MbjuUur/xc4ch9qbDLH
- bLNqPeH87GL4repVhD9Tpj4xy4/VuOWE/4a6CcpCJOfGolE90C5p5rKJPAks8USHhnAUfU
- zO/msudgSUykcKlCUo7Ui66BEz5C63m/21lSMgBRSHD6SoWZiPV3H+Sha+l5TF+EHUKzsV
- eoZ1Q5ZZe+bfKJRcUEUwAYKoQ469SPEoUwsF5maZI6A8/OyTs2BlQzlD30ZRBAZQoBymtk
- abPARvxUi55J2VhVJHf5FQRlSuJsTza1fiVvTTqZD35Jri+bEctH94BebmGy9g==
-Received: from [192.168.1.131] (OPNsense.thinking.duckdns.org [192.168.1.5])
- by thinking.duckdns.org (Postfix) with ESMTPSA id 42E04121B;
- Wed, 14 Oct 2026 22:04:06 -0700 (PDT)
-Message-ID: <9dd7ae30-b1fd-4dae-9e62-594af39a77d2@sloservers.com>
-Date: Wed, 14 Oct 2026 22:04:05 -0700
+ bh=INdKPlSZPizcpEjdMeGRENfyzOCrbnidkEG9iYo/P8Y=;
+ b=Jcq+cnKD9el9Q+s5aB0iKgSqLM5G9oZYl14ougaRBIWhHN5z9i/jpwjz85vOhcAQiAsqSl
+ AtyIU7wh0ZJkprCKZC2KBS87wbBslzEiJntYfwtENxlguq7KMgK6X5GFjltE1doN28/rqk
+ 8z2FRYF81OKtazK/Kb3KSK1pDgDKljg=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-303-JD2LEjWYM_eZ7N6js58zHg-1; Thu,
+ 15 Oct 2026 05:07:10 +0000
+X-MC-Unique: JD2LEjWYM_eZ7N6js58zHg-1
+X-Mimecast-MFC-AGG-ID: JD2LEjWYM_eZ7N6js58zHg_1792040828
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 44F971954199; Thu, 15 Oct 2026 05:06:29 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.2])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 958AB30001A2; Thu, 15 Oct 2026 05:06:28 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 4DBE321E6A04; Thu, 15 Oct 2026 07:06:26 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Dongli Zhang <dongli.zhang@oracle.com>
+Cc: qemu-devel@nongnu.org,  david@kernel.org,  imammedo@redhat.com,
+ maciej.szmigiero@oracle.com,  peterx@redhat.com,  farosas@suse.de,
+ mark.kanda@oracle.com,  bchaney@akamai.com,
+ pierrick.bouvier@oss.qualcomm.com,  alex@shazbot.org,  clg@redhat.com,
+ yi.l.liu@intel.com,  eric.auger@redhat.com,  zhenzhong.duan@intel.com,
+ mst@redhat.com,  cohuck@redhat.com,  pbonzini@redhat.com, eblake@redhat.com
+Subject: Re: [PATCH 01/21] qapi/migration: add cpr-luo migration mode
+In-Reply-To: <4b7de1ba-f063-43b9-9dd2-64d1187e488f@oracle.com> (Dongli Zhang's
+ message of "Wed, 14 Oct 2026 08:52:24 -0700")
+References: <20261012235727.398133-1-dongli.zhang@oracle.com>
+ <20261012235727.398133-2-dongli.zhang@oracle.com>
+ <878q40eni8.fsf@pond.sub.org>
+ <4b7de1ba-f063-43b9-9dd2-64d1187e488f@oracle.com>
+Date: Thu, 15 Oct 2026 07:06:26 +0200
+Message-ID: <87qzhrblil.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Betterbird (Windows)
-Subject: Re: [PATCH] common-user: Skip the identity map when qemu is loaded low
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: laurent@vivier.eu, deller@gmx.de, pierrick.bouvier@oss.qualcomm.com,
- imp@bsdimp.com, kevans@freebsd.org
-References: <605bc800-4263-40af-b8d9-18305d25f3cf@sloservers.com>
- <cfeb85d4-57af-4aa5-a265-a6ac46cf1f22@linaro.org>
- <094898a9-b3fe-43f8-b335-c149ed8b0a96@sloservers.com>
- <1f1af018-8720-467e-8c8b-b4c19a0b9c5b@linaro.org>
-Content-Language: en-US
-From: Rick Richard <rick@sloservers.com>
-In-Reply-To: <1f1af018-8720-467e-8c8b-b4c19a0b9c5b@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=204.109.61.218; envelope-from=rick@sloservers.com;
- helo=vps.sloservers.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 10
+X-Spam_score: 1.0
+X-Spam_bar: +
+X-Spam_report: (1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,36 +91,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/13/2026 7:53 AM, Richard Henderson wrote:
+Dongli Zhang <dongli.zhang@oracle.com> writes:
+
+> On Wed, Oct 14, 2026 12:42:55AM -0700, Markus Armbruster wrote:
+>> Dongli Zhang <dongli.zhang@oracle.com> writes:
+>> 
+>>> Add the cpr-luo migration mode for CPR through the Linux Live Update
+>>> Orchestrator (LUO). Subsequent changes preserve CPR state and RAMBlock
+>>> backing file descriptors in an LUO session across a host kernel update.
+>>>
+>>> Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
+>>> ---
+>>>  qapi/migration.json | 11 ++++++++++-
+>>>  1 file changed, 10 insertions(+), 1 deletion(-)
+>>>
+>>> diff --git a/qapi/migration.json b/qapi/migration.json
+>>> index 889a9b89c2..ab117c3897 100644
+>>> --- a/qapi/migration.json
+>>> +++ b/qapi/migration.json
+>>> @@ -712,9 +712,18 @@
+>>>  #     with the '-machine aux-ram-share=on' option.
+>>>  #
+>>>  #     (since 10.2)
+>>> +#
+>>> +# @cpr-luo: A CPR mode that preserves guest RAM backing file
+>>> +#     descriptors and CPR state through the Linux Live Update
+>>> +#     Orchestrator (LUO) across a host kernel update.
+>>> +#
+>>> +#     This mode requires Linux with LUO support.
+>> 
+>> Pardon my ignorant question: host or guest kernel?
+>> 
+> Host KVM kernel.
+
+Suggest something like "This mode requires Linux with LUO support on the
+host", or "This mode requires the host to run Linux with LUO support".
+
+> cpr-luo is more similar to cpr-exec (assuming VFIO is not involved).
 >
->> FreeBSD can't link static PIE, so qemu-*-static is always linked at
->> 0x200000.
+> cpr-exec (same process across exec):
 >
-> That's unfortunate.  We could explicitly link somewhere high in the address space, perhaps.  E.g.
+> - RAMBlock fds are preserved across exec(). The metadata is transferred to the
+> target via a memfd passed through an environment variable.
+> - The device state (i.e., virtio) is transferred through the main stream (i.e.,
+> a file).
 >
->   -Wl,--image-base,0x80000000000
+> cpr-transfer (two processes):
 >
-I tried that, but on FreeBSD amd64 it won't link above 2G.
+> - RAMBlock fds are preserved and transferred to the target QEMU via a UNIX
+> domain socket.
+> - The device state (i.e., virtio) is transferred through the main stream (i.e.,
+> local TCP).
+>
+> cpr-reboot (across reboot):
+>
+> - The RAMBlock is always reconstructed. It is just a matter of whether to
+> save/load the memory data, depending on whether x-ignore-shared is enabled.
+> - The vmstate (i.e., virtio) is transferred through the main stream (i.e., a file).
+>
+> New cpr-luo (across kexec/LUO/KHO):
+>
+> - RAMBlock fds are preserved and transferred across kexec to the target QEMU via
+> LUO/KHO, identified by a LUO session and tokens.
+> - The device state (i.e., virtio) is transferred through the main stream (i.e.,
+> a file).
 
-The static libc and crtbeginT.o aren't PIC, so they're full of
-R_X86_64_32 and R_X86_64_32S relocations:
+Is this covered in the documentation?
 
-  ld: error: /usr/lib/crtbeginT.o:(function __do_global_dtors_aux: .text+0x8):
-    relocation R_X86_64_32 out of range: 8796093721768 is not in [0, 4294967295]
+> Thank you very much!
+>
+> Dongli Zhang
 
-  ld: error: /usr/lib/libc.a(libc_start1.o):(function __libc_start1: .text+0xb7):
-    relocation R_X86_64_32S out of range: 2415920304 is not in [-2147483648, 2147483647]
+You're welcome!
 
-0x70000000 works though. I linked qemu-aarch64 there with no other
-changes, and guest_base stays 0. ldd on perl and the other packaged
-programs I tried work fine with this.
-
-It's not really safe though, it just moves qemu out of the way. A
-guest MAP_FIXED can still land on qemu's memory and crash it, even
-with a non-zero guest_base, since the heap and code buffer are still
-in reach. Maybe target_mmap should refuse that and give the guest an
-error instead?
-
-If you want to go with the link address, I can add it to qemu's
-meson.build for static non-PIE builds.
 
