@@ -4,82 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48850C2D0A6
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 18:10:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB7D5CC6B33
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 18:10:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHPtL-0003pP-VH; Thu, 15 Oct 2026 14:09:24 -0400
+	id 1xHPtS-0003rO-Lm; Thu, 15 Oct 2026 14:09:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xHPtH-0003nU-KP
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 14:09:19 -0400
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ id 1xHPt6-0003ky-Ul
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 14:09:08 -0400
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xHPtF-00011d-U4
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 14:09:19 -0400
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-48c6955a7c3so1658233f8f.1
- for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 11:09:17 -0700 (PDT)
+ id 1xHPt5-00010I-2Z
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 14:09:08 -0400
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-48c4649b35bso711269f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 11:09:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1792087756; x=1792692556; darn=nongnu.org;
+ d=linaro.org; s=google; t=1792087745; x=1792692545; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=6RfD7QaogbN7wbHzQt8R/cTi4riXyz7aFoG02Ip6eyI=;
- b=GT0yQQ1VbL9UK/Z+viYytzlR6x8N4JSBlx0Yslj/JyYblsOYUVYKB3YT3NivV5Y52y
- YLeP8AOCWBXOCoXWNCa985VZeb7Fn+Pwy4RwD6yDxBKQ5TOJ6fyRqQTfaTfDrqXvbmq7
- dOCxr3uGVEX4I8rpAbwUMtxE50gSdv5OApYpy56sZCgF2a+Lc/VXtQTuAVskJKeAslZS
- +4/DLylCCTlRJfvSRIgxwxajdQ3s9xF8VpOooYiyPEpCLK3C8b8JrTfwiNve8pn3jfBC
- NnW1IirrC5kQuoe8hM0/fzMyGp5Xhr/3eu+IHJo6sAY8J/HQtCOlhvsiyuEfSxiR/sc5
- umrA==
+ bh=gCXpy/YATXKD7IJ5gVE8xSjzEOVIPjSSZvJa3xBkBJI=;
+ b=uamoXOYbeL2ITmKoX6OPc5WHQNa0ZOU1Wuu5LMUw8zyhCDcXk6IGKRJiBPtIZJEzU6
+ QYf1AIxjsWkmQzPwjvCVMBFcjRG8Ho9W9peWTNm6yzFSlVWVbuXRU55C9YToa509BdLq
+ 5JOkUiFsegLaXC3A1rD0mBDyp316niPEjfmQ02udYZXn1Pz0UdD+ZGp/08H/e/sdW+Mr
+ xlGTcXIRMWbUSQPiFhQTIiJEHI0nwVFXhYImHJsf0rXYR9YWDeGzX2/lLIVLNriTx865
+ h3/bMpgfcny1QqiH1wXijnc/72ngdvNHsTX9FrEkSMaumYnFVQZyRRzdpx/xeiZc9mXz
+ ZsEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792087756; x=1792692556;
+ d=1e100.net; s=20260707; t=1792087745; x=1792692545;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to:content-type;
- bh=6RfD7QaogbN7wbHzQt8R/cTi4riXyz7aFoG02Ip6eyI=;
- b=dlCwiLBekajOf9FcX5n5SmGNhwMzat9juUv+ewUHeQJXyeDk9+9YqP6fRxPd2Pt+YK
- Hm/D0KFD8zPQxaf9Djb6+/xgZAAArWOuRCYArP7EmpBFZC2GDZOpLQ6iWr9fDZsIAqeO
- tkmStG1PVjurar4RbDUjV34GxQdleHOkse9yhA+MwTN8u/Wh24fojPoI5hAR4u2FdVzT
- m1cXVDB+/1uluy9mMvyyjIdcNCCHZZihDFh9juKrBgOO3f+qMWtio5g5/SVrDIf2WPDK
- p0a8vvPh+evPj+0TPwyL9r4kTjVe0JdCBeouoYu6J/bBCtjHgMEfNEjWioEF7hh99Tyu
- DP5w==
-X-Gm-Message-State: AFq9FYILUQWndCGF0+Kziio5tLOHUZK0Fde33AMz5M8A7ymvUC0ComiV
- E18mU0BrQOQv+4bLdEcmdGUdJVlZJnCyDh/76r5ZXrf9Np4GUre38DrCh/8PNgxxN9FxyXQ8hCX
- RJljNHLc=
-X-Gm-Gg: AYBFou0sDQOvrkZVjcmusuBqfc4CURgYF7xQj8fc+rBfITwvhzKoCCzZG8JMbYQFZTB
- d3m2tlSHUOKdUMrpOkD0VREXv4/zLdiinDBQmNFeyiHsyE31J/7ZQO5WCWgS9uWRxaJs4kAFBXf
- 7rd9aPsoZz05VOQF3AJUxdAaKr51rJ5mCHSd2g67hHW7LJSo1J6EiH4akZuscCbG6jDsWf9/UTO
- pBp+RyQwybTU3pjYOOva1rMTF9x9DPbjHweqgVz6hSUWVTnf9EecueIWpbEUfuWJJYfEipMvRLJ
- NsR2SoTsK0cTbiHC18KActYfrJU38CrZ26ZRkLZeEhJVpDWx2X/3JbS4TDcngMDuholqaKsZicg
- Db0lBYwbbu5Vz5XT5+tcEMRK99hc4x9KVR16lF7OGj7niUOO78bbmSTytz69w9GIBJziXyjRzFu
- F6CzYQT3M2/oprDq+XRMY1TVAL16IMPxHXFhuzXhGXMLQYFM+yDx9zIDD/U2M/nma0jj790i/el
- V5qZz+U5L0gjQgN7CbDD+mVqu04jYExL/q2JUDRAX3rdgyCUsVv3cXLW2e62OH2VxLtbMIlZQ/M
- XNfY
-X-Received: by 2002:a05:6000:480a:b0:48d:eb44:650c with SMTP id
- ffacd0b85a97d-48deb44661cmr10876869f8f.40.1792087755999; 
- Thu, 15 Oct 2026 11:09:15 -0700 (PDT)
+ bh=gCXpy/YATXKD7IJ5gVE8xSjzEOVIPjSSZvJa3xBkBJI=;
+ b=BCdeJWC01Rkm40qhK3erF3TyX/Ty0+Virwu4zVnSLvZN2h4WIq6fNy97tWci19e/5X
+ TBx+/UNavkGBMdgeIZSWkzedcF/NcQ0j/aicjoXmw5SQoHyakeiPN4bm2M6hOU3LUrMF
+ 3S1jI5shoqsf7t6JyPkjhM/0ldpbn3leUMcRzHuYpTwmpTzRiatmM5jCRH8xYMkHQGrs
+ fD0Dn84ttI3WgpIBO0B5bHwYL1tpXb3po7Sw5Wg1CtGwkW67vr8xkqPmHl09PldmbS4e
+ kpwwyBw6wXTDB+hTN/blkF0nglF2KGS++oYtEd5pyHpg735g7PCYztk7mjvCxNiLbw6E
+ QY0Q==
+X-Gm-Message-State: AFq9FYLMgJ2ofDZhS/tpno8DeosDOfS9H7SHmAocjYJXaQziJIwyoyQW
+ 0XK2HaLrr6JuyLgGWNoiHj91jmXlcCD1Q/tHAw45Ip5tWGYEnHrrE/ulQ+7A1ZHcgW9HQnvZ4g1
+ d3DD4sS0=
+X-Gm-Gg: AYBFou2whQfTyAtEBw93BSJrUgwkMSIVDiaxoFT69J0IPLclpCCPbaYHUfY5wXGyTMp
+ GR1RhFOLmYspDUfvTjM5NhyqujGcCO1W2JOgvzIqv9oq5RT3zervfxE6/RMgqFUm94EVAxBT64d
+ Fqs9q5CYMo0p4eHLuJZS9uoiW3kM72rTGLEu3LCJ51PUgUrZk6N5HUtcdMXCKBetfO/U5wU2zDD
+ mGSIx1draKZ9XV5TTWdqkfTIvGskEcF1ILXcmRJ2o7sgvAiw5Rmu1HV6ovjECzP5V4UaimklZsZ
+ 0FoDcPaQdCtVMexBdbdrjkk9F5vn8KuoJbOwBcJ/lLkwi1nsrceGTJ4h4FZbWu6WvaeYFPSEaL+
+ bLw50kuTFCRXpP5rh3JikNtAWQbo8RCnR6hzxQpWsUcBczBdg1OChZ+srcGTKF5HV4bAdjX2F6L
+ MF3jt1AhGYiM55WiNRxbkMCD0+7ZTjuSQ8z/+4we7MGuR5DdC6923DbVipInwgVsNzbZMKDVjx7
+ 9ZmmpwhCctX8a5Zo/AZAVN16MZW5sfNesAeebaLdwxAleWUidA/KaeIgWOkgbDaXPy4BOoJMybs
+ s18=
+X-Received: by 2002:a05:6000:38e:b0:48d:db77:d119 with SMTP id
+ ffacd0b85a97d-48ddb77d2ebmr25715045f8f.2.1792087745471; 
+ Thu, 15 Oct 2026 11:09:05 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48de7773d02sm14692701f8f.13.2026.10.15.11.09.14
+ ffacd0b85a97d-48de7773d02sm14692701f8f.13.2026.10.15.11.09.04
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 Oct 2026 11:09:14 -0700 (PDT)
+ Thu, 15 Oct 2026 11:09:04 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 12/16] target/arm: Implement SCR_EL3.TID3
-Date: Thu, 15 Oct 2026 19:08:54 +0100
-Message-ID: <20261015180858.1863407-13-peter.maydell@linaro.org>
+Subject: [PULL 04/16] hw/misc/stm32_rcc: Mirror clock ready and switch status
+ bits
+Date: Thu, 15 Oct 2026 19:08:46 +0100
+Message-ID: <20261015180858.1863407-5-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261015180858.1863407-1-peter.maydell@linaro.org>
 References: <20261015180858.1863407-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x432.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,44 +103,142 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Manuele Conti <manuele.conti@archimede-energia.com>
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20261010070952.323466-5-richard.henderson@linaro.org
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+RM0090 7.3.1/7.3.3: oscillator ready bits follow their
+corresponding enable bits, and SWS follows SW. Upstream stored raw
+values, so firmware polling for ready or checking SWS never saw the
+expected state.
+
+Mirror the enable bits into the ready bits on CR writes and SW into
+SWS on CFGR writes. Clock switching is instantaneous in QEMU. No
+oscillator startup or PLL lock delay is modelled.
+
+Add qtest coverage for HSION, HSEON, PLLON, PLLI2SON and SW,
+including clearing the ready bits again when the oscillators are
+disabled.
+
+Signed-off-by: Manuele Conti <manuele.conti@archimede-energia.com>
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/helper.c | 17 +++++++++++++++--
- 1 file changed, 15 insertions(+), 2 deletions(-)
+ hw/misc/stm32_rcc.c              | 19 ++++++++++
+ tests/qtest/stm32f405-rcc-test.c | 62 ++++++++++++++++++++++++++++++++
+ tests/qtest/meson.build          |  2 +-
+ 3 files changed, 82 insertions(+), 1 deletion(-)
+ create mode 100644 tests/qtest/stm32f405-rcc-test.c
 
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index 7974c46000b..78da51996e8 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -6078,8 +6078,21 @@ static CPAccessResult access_v7a_tid3(CPUARMState *env, const ARMCPRegInfo *ri,
-      * Any other registers in the TID3 trap space should use access_tid3(),
-      * so that they trap on v8 and above, but not on v7.
-      */
--    if ((arm_current_el(env) < 2) && (arm_hcr_el2_eff(env) & HCR_TID3)) {
--        return CP_ACCESS_TRAP_EL2;
-+    switch (arm_current_el(env)) {
-+    case 1:
-+        if (arm_hcr_el2_eff(env) & HCR_TID3) {
-+            return CP_ACCESS_TRAP_EL2;
-+        }
-+        /* fall through */
-+    case 2:
-+        if (env->cp15.scr_el3 & SCR_TID3) {
-+            return CP_ACCESS_TRAP_EL3;
-+        }
-+        break;
-+    case 3:
-+        break;
-+    default:
-+        g_assert_not_reached();
+diff --git a/hw/misc/stm32_rcc.c b/hw/misc/stm32_rcc.c
+index 5cfb39e5607..814c5ea3b01 100644
+--- a/hw/misc/stm32_rcc.c
++++ b/hw/misc/stm32_rcc.c
+@@ -90,6 +90,25 @@ static void stm32_rcc_write(void *opaque, hwaddr addr,
      }
  
-     return CP_ACCESS_OK;
+     switch (addr) {
++    case STM32_RCC_CR:
++        /*
++         * Oscillators become ready immediately in QEMU.
++         * Mirror enable bits into ready bits. See RM0090 7.3.1.
++         */
++        value = deposit32(value, 1, 1, extract32(value, 0, 1));
++        value = deposit32(value, 17, 1, extract32(value, 16, 1));
++        value = deposit32(value, 25, 1, extract32(value, 24, 1));
++        value = deposit32(value, 27, 1, extract32(value, 26, 1));
++        s->regs[addr >> 2] = value;
++        return;
++    case STM32_RCC_CFGR:
++        /*
++         * System clock switching is instantaneous in QEMU.
++         * Mirror SW[1:0] into SWS[3:2]. See RM0090 7.3.3.
++         */
++        value = deposit32(value, 2, 2, extract32(value, 0, 2));
++        s->regs[addr >> 2] = value;
++        return;
+     case STM32_RCC_AHB1_RSTR ... STM32_RCC_AHB3_RSTR:
+     case STM32_RCC_APB1_RSTR ... STM32_RCC_APB2_RSTR:
+         prev_value = s->regs[addr / 4];
+diff --git a/tests/qtest/stm32f405-rcc-test.c b/tests/qtest/stm32f405-rcc-test.c
+new file mode 100644
+index 00000000000..1a8819b6f5b
+--- /dev/null
++++ b/tests/qtest/stm32f405-rcc-test.c
+@@ -0,0 +1,62 @@
++/*
++ * STM32F405 RCC tests
++ *
++ * Copyright (c) 2026 Manuele Conti <manuele.conti@archimede-energia.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "libqtest-single.h"
++
++#define RCC_BASE        0x40023800
++#define RCC_CR          (RCC_BASE + 0x00)
++#define RCC_CFGR        (RCC_BASE + 0x08)
++
++#define CR_HSION        (1U << 0)
++#define CR_HSIRDY       (1U << 1)
++#define CR_HSEON        (1U << 16)
++#define CR_HSERDY       (1U << 17)
++#define CR_PLLON        (1U << 24)
++#define CR_PLLRDY       (1U << 25)
++#define CR_PLLI2SON     (1U << 26)
++#define CR_PLLI2SRDY    (1U << 27)
++
++static void test_cr_ready_bits(void)
++{
++    uint32_t on = CR_HSION | CR_HSEON | CR_PLLON | CR_PLLI2SON;
++    uint32_t ready = CR_HSIRDY | CR_HSERDY | CR_PLLRDY | CR_PLLI2SRDY;
++
++    writel(RCC_CR, on);
++    g_assert_cmphex(readl(RCC_CR), ==, on | ready);
++
++    writel(RCC_CR, 0);
++    g_assert_cmphex(readl(RCC_CR), ==, 0);
++}
++
++static void test_cfgr_switch_status(void)
++{
++    unsigned int sw;
++
++    for (sw = 0; sw < 4; sw++) {
++        writel(RCC_CFGR, sw);
++        g_assert_cmphex(readl(RCC_CFGR), ==, sw | (sw << 2));
++    }
++}
++
++int main(int argc, char **argv)
++{
++    int ret;
++
++    g_test_init(&argc, &argv, NULL);
++
++    qtest_add_func("/stm32f405/rcc/cr-ready-bits", test_cr_ready_bits);
++    qtest_add_func("/stm32f405/rcc/cfgr-switch-status",
++                   test_cfgr_switch_status);
++
++    qtest_start("-machine olimex-stm32-h405");
++    ret = g_test_run();
++    qtest_end();
++
++    return ret;
++}
+diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+index 69bebe5a396..2f63621e393 100644
+--- a/tests/qtest/meson.build
++++ b/tests/qtest/meson.build
+@@ -254,7 +254,7 @@ qtests_exynos4210 = \
+ 
+ qtests_arm = \
+   (config_all_devices.has_key('CONFIG_OLIMEX_STM32_H405') ? \
+-   ['stm32f405-timer-test'] : []) + \
++   ['stm32f405-timer-test', 'stm32f405-rcc-test'] : []) + \
+   (config_all_devices.has_key('CONFIG_MPS2') ? ['sse-timer-test'] : []) + \
+   (config_all_devices.has_key('CONFIG_CMSDK_APB_DUALTIMER') ? ['cmsdk-apb-dualtimer-test'] : []) + \
+   (config_all_devices.has_key('CONFIG_CMSDK_APB_TIMER') ? ['cmsdk-apb-timer-test'] : []) + \
 -- 
 2.43.0
 
