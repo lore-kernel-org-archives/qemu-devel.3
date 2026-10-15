@@ -4,110 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC3B1CC6B34
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 07:54:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B457CC6B2F
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 07:55:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHGIU-00013m-0Z; Thu, 15 Oct 2026 03:54:42 -0400
+	id 1xHGHx-0000tM-BM; Thu, 15 Oct 2026 03:54:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
- id 1xHGIT-00013d-6r
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 03:54:41 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
- id 1xHGIR-0004R1-OR
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 03:54:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1792050878;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=l6twZoHnabfZa9E7zwB119jg5IyCAwxBQB9uv9orm0o=;
- b=VJE07XKD+U+ZbBqm91GQ3ZN/aEy6yEMeabRNSWu+Jde2WUCcyNMNuoc60CQdQZrqPLixXB
- 1hcZ2pbBTaztFhess9XIS3CWVyI3zByb1w4v30lv/xNQPstHaFJKLgWMYImPUYW5E8CyOs
- pvJMFD+kpRqLK0HTPV1J6tqEv54uEqs=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-205-iSNxzwgXPgqrislePgVtVg-1; Thu, 15 Oct 2026 07:54:37 +0000
-X-MC-Unique: iSNxzwgXPgqrislePgVtVg-1
-X-Mimecast-MFC-AGG-ID: iSNxzwgXPgqrislePgVtVg_1792050876
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4a17e77c5b1so14906525e9.1
- for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 00:54:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1792050876; x=1792655676; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=l6twZoHnabfZa9E7zwB119jg5IyCAwxBQB9uv9orm0o=;
- b=rCdkoH9hwLkR8jzIKzBIEFTwkBlhVhsmX+waailUAVjNAmqpfEEVtcjLkXf3noVcy/
- FNUKhaHd0XmFTcoDkBI2T+TofTYvIQMNhAtWCNllzi6sF7seumahsJlMdO9xYolT2sWq
- +Gm1gu+6Lw3L5n5n9ReiSwy4fGeCRzUw9hC8i2+iCjdLGZ7LF2TkrVTYIqU3HlWz6/lM
- AjVIZnekmxlGmHE2f9ezYsFE26Z7Ow9NZAMewN+L05MNdsJhp7YRkwe2w1WB3z+I/8QK
- q6JLyEiHBAf+HabI/xz3qyhv3ltMxUlzRCFNFyVwraYJypWC37H6nyqFVnXFRm9P+kQL
- 48Jw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792050876; x=1792655676;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=l6twZoHnabfZa9E7zwB119jg5IyCAwxBQB9uv9orm0o=;
- b=qe+lWBffsIRw7Zx6jU8nf66rt6TjJrq0mzfn9YR1wWS5mrnarLpnHU+E10vOA+vIFH
- 33Uiutgbd9teG9yYk6oGjoop3vQ4QCXtj+H7Yx0H19vuDW7EViSPl6PUfPbc+dEYVDXh
- mEEQvAbuyHky2Ds9cGVBJAzBBOncDPs5H1fuyNhTvhifikzBcKnTPqhDKPrV7ulNFOlg
- JKkQksKy/L7mXrG0MAf04K9tl3tWnGhk4mScjs32BDD2vyvjbv3GsyW+rv5r89ZXO6+X
- XX2A69oX0CnZnzZxWu7AaxQk2YZHxKpzhjI9uh2JQzHedGV2wIuOx8kYpPr9qBQqTkfT
- UDFA==
-X-Gm-Message-State: AFq9FYJV9SABbhS8inVQGGwBmQHMW8e1EW4fJjP39YnXRMymD5Wh644t
- BaCY6vR0Tk/s+iAXbK8zswiMjgkjIQuptkSIRpFlvSywO1PbntdKHtWnBe45vLeXpziTQPGXHNy
- ods3yIieIu+PhYlgCZz4imD0UXEbdW1O6eJf9/pru3RmkPnNZEs3fZQHr
-X-Gm-Gg: AYBFou2G19lCOF5rNUkuPjOzYZJIYiaoU76doD5489v+V+jyuETWu6neQP1LHJ6ESd+
- DirCG9K3PfLBculpaQd+ppDNhhkZS7PTzDvGv6hUub8xWJviukB6ntLAOX2NUzK8qXbitb9tbqu
- z00IsDXeSCaTSb4vBYqWwJ6TuAkDVzyI7whGFPGxXkreT4PvyvQfRQUcgpGPnGWXXnPS34vvCLL
- 53lUF1VVsV5n3Ql1MasfXmYkGo5vGxeuVJ7IIb9Kht4bleuYIKmc/YwesmXwyz4F6FbZtuZtlCQ
- hrLs80/VEIPogcRcvFMLlDc/G+wVrCauHo0TFc+v2W3FG1Hlg/vQirbInXqb1ekBqU1c9CBWUeD
- kXlIl2n9WURWWbjYNFPWjzUg340MZ5fK8oj4=
-X-Received: by 2002:a05:600c:3d96:b0:4a1:746e:5898 with SMTP id
- 5b1f17b1804b1-4a18e4835e7mr319120185e9.13.1792050875917; 
- Thu, 15 Oct 2026 00:54:35 -0700 (PDT)
-X-Received: by 2002:a05:600c:3d96:b0:4a1:746e:5898 with SMTP id
- 5b1f17b1804b1-4a18e4835e7mr319119865e9.13.1792050875579; 
- Thu, 15 Oct 2026 00:54:35 -0700 (PDT)
-Received: from leonardi-redhat ([176.206.38.69])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a1bdbace19sm52653635e9.14.2026.10.15.00.54.34
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 Oct 2026 00:54:35 -0700 (PDT)
-Date: Thu, 15 Oct 2026 09:54:33 +0200
-From: Luigi Leonardi <leonardi@redhat.com>
-To: Gerd Hoffmann <kraxel@redhat.com>
-Cc: qemu-devel@nongnu.org, Stefano Garzarella <sgarzare@redhat.com>, 
- Ani Sinha <anisinha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- Zhao Liu <zhao1.liu@intel.com>, Marcelo Tosatti <mtosatti@redhat.com>, 
- "Daniel P. Berrange" <berrange@redhat.com>, kvm@vger.kernel.org
-Subject: Re: [PATCH v2 0/5] igvm/sev: apply the IGVM guest policy before launch
-Message-ID: <atCGn10gISek2sZE@leonardi-redhat>
-References: <20260907-fix_igvm_policy-v2-0-c8c50f1dbfda@redhat.com>
- <as-gUPOHujXsPiWV@leonardi-redhat>
- <atCFVaKiSIvz9uVS@nucbdw.ghoffman.csb.home.kraxel.org>
+ (Exim 4.90_1) (envelope-from <wangyang25@otcaix.iscas.ac.cn>)
+ id 1xHGHs-0000r3-8C; Thu, 15 Oct 2026 03:54:05 -0400
+Received: from smtp81.cstnet.cn ([159.226.251.81] helo=cstnet.cn)
+ by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_CBC_SHA1:256)
+ (Exim 4.90_1) (envelope-from <wangyang25@otcaix.iscas.ac.cn>)
+ id 1xHGHq-0004Q8-0W; Thu, 15 Oct 2026 03:54:04 -0400
+Received: from [172.17.0.2] (unknown [124.16.137.194])
+ by APP-03 (Coremail) with SMTP id rQCowACHizmMhtBq093SCg--.11963S3;
+ Thu, 15 Oct 2026 15:53:48 +0800 (CST)
+From: wangyang <wangyang25@otcaix.iscas.ac.cn>
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Weiwei Li <liweiwei@iscas.ac.cn>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@c-sky.com>
+Subject: [PATCH] target/riscv: gate envcfg CBO fields on extensions
+Date: Thu, 15 Oct 2026 07:53:47 +0000
+Message-Id: <179205082798.38010.17010797392458454916@otcaix.iscas.ac.cn>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <atCFVaKiSIvz9uVS@nucbdw.ghoffman.csb.home.kraxel.org>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=leonardi@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
-X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-CM-TRANSID: rQCowACHizmMhtBq093SCg--.11963S3
+X-Coremail-Antispam: 1UD129KBjvJXoWxZw4UCw4xXr1rCw4rtr4fZrb_yoW5WFWUpF
+ s8WFsxGrWkt34S9a93Gr1UWFs8JrZ5Ka929wnruasavFW2vrn3GFyDt343Ar18WFyxAr47
+ K3ya9r1jyF4UAFDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+ 9KBjDU0xBIdaVrnRJUUU9ab7Iv0xC_Kw4lb4IE77IF4wAFF20E14v26r4j6ryUM7CY07I2
+ 0VC2zVCF04k26cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rw
+ A2F7IY1VAKz4vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xII
+ jxv20xvEc7CjxVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJVW8Jr1l84ACjcxK6I
+ 8E87Iv6xkF7I0E14v26r4UJVWxJr1lnxkEFVAIw20F6cxK64vIFxWle2I262IYc4CY6c8I
+ j28IcVAaY2xG8wAqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jrv_JF
+ 1lYx0Ex4A2jsIE14v26r4j6F4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCY
+ 1x0262kKe7AKxVWUAVWUtwCY02Avz4vE14v_GF4l42xK82IYc2Ij64vIr41l4I8I3I0E4I
+ kC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWU
+ WwC2zVAF1VAY17CE14v26r126r1DMIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr
+ 0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E14v26r4j6F4UMIIF0xvE42xK8VAvwI8IcIk0rVWU
+ JVWUCwCI42IY6I8E87Iv67AKxVW8JVWxJwCI42IY6I8E87Iv6xkF7I0E14v26r4UJVWxJr
+ UvcSsGvfC2KfnxnUUI43ZEXa7IU5WCJJUUUUU==
+X-Originating-IP: [124.16.137.194]
+X-CM-SenderInfo: 5zdqw5xdqjjk46rwut1l0ox2xfdvhtffof0/
+Received-SPF: pass client-ip=159.226.251.81;
+ envelope-from=wangyang25@otcaix.iscas.ac.cn; helo=cstnet.cn
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,21 +74,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+The envcfg CBO fields are provided by Zicbom and Zicboz. Keep them
+read-only zero when the corresponding extension is absent in all three
+envcfg CSRs.
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4225
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Signed-off-by: wangyang <wangyang25@otcaix.iscas.ac.cn>
+ target/riscv/tcg/csr.c | 37 +++++++++++++++++++++++++++++++++----
+ 1 file changed, 33 insertions(+), 4 deletions(-)
 
-On Thu, Oct 15, 2026 at 09:50:32AM +0200, Gerd Hoffmann wrote:
->  Hi,
->
->> gentle ping :)
->
->Any update for the igvm command line patch which needs a doc update?
->My plan is to bundle them all in one PR.
->
-
-will send a v2 later today!
-
-Thanks!
-
-Luigi
+diff --git a/target/riscv/tcg/csr.c b/target/riscv/tcg/csr.c
+index 061bc9d..96c513b 100644
+--- a/target/riscv/tcg/csr.c
++++ b/target/riscv/tcg/csr.c
+@@ -3224,10 +3224,19 @@ static RISCVException write_menvcfg(CPURISCVState *en=
+v, int csrno,
+                                     target_ulong val, uintptr_t ra)
+ {
+     const RISCVCPUConfig *cfg =3D riscv_cpu_cfg(env);
+-    uint64_t mask =3D MENVCFG_FIOM | MENVCFG_CBIE | MENVCFG_CBCFE |
+-                    MENVCFG_CBZE;
++    uint64_t mask =3D MENVCFG_FIOM;
+     bool stce_changed =3D false;
+=20
++    /* CBIE/CBCFE are read-only zero when Zicbom is not implemented. */
++    if (cfg->ext_zicbom) {
++        mask |=3D MENVCFG_CBIE | MENVCFG_CBCFE;
++    }
++
++    /* CBZE is read-only zero when Zicboz is not implemented. */
++    if (cfg->ext_zicboz) {
++        mask |=3D MENVCFG_CBZE;
++    }
++
+     /*
+      * menvcfg.LPE (Zicfilp) and menvcfg.SSE (Zicfiss) reside in the low
+      * 32 bits and are defined for both RV32 and RV64, so they must be
+@@ -3328,8 +3337,18 @@ static RISCVException read_senvcfg(CPURISCVState *env,=
+ int csrno,
+ static RISCVException write_senvcfg(CPURISCVState *env, int csrno,
+                                     target_ulong val, uintptr_t ra)
+ {
+-    uint64_t mask =3D SENVCFG_FIOM | SENVCFG_CBIE | SENVCFG_CBCFE | SENVCFG_=
+CBZE;
++    uint64_t mask =3D SENVCFG_FIOM;
+     RISCVException ret;
++
++    /* CBIE/CBCFE are read-only zero when Zicbom is not implemented. */
++    if (env_archcpu(env)->cfg.ext_zicbom) {
++        mask |=3D SENVCFG_CBIE | SENVCFG_CBCFE;
++    }
++
++    /* CBZE is read-only zero when Zicboz is not implemented. */
++    if (env_archcpu(env)->cfg.ext_zicboz) {
++        mask |=3D SENVCFG_CBZE;
++    }
+     /* Update PMM field only if the value is valid according to Zjpm v1.0 */
+     if (env_archcpu(env)->cfg.ext_ssnpm &&
+         riscv_cpu_mxl(env) =3D=3D MXL_RV64 &&
+@@ -3386,10 +3405,20 @@ static RISCVException write_henvcfg(CPURISCVState *en=
+v, int csrno,
+                                     target_ulong val, uintptr_t ra)
+ {
+     const RISCVCPUConfig *cfg =3D riscv_cpu_cfg(env);
+-    uint64_t mask =3D HENVCFG_FIOM | HENVCFG_CBIE | HENVCFG_CBCFE | HENVCFG_=
+CBZE;
++    uint64_t mask =3D HENVCFG_FIOM;
+     RISCVException ret;
+     bool stce_changed =3D false;
+=20
++    /* CBIE/CBCFE are read-only zero when Zicbom is not implemented. */
++    if (cfg->ext_zicbom) {
++        mask |=3D HENVCFG_CBIE | HENVCFG_CBCFE;
++    }
++
++    /* CBZE is read-only zero when Zicboz is not implemented. */
++    if (cfg->ext_zicboz) {
++        mask |=3D HENVCFG_CBZE;
++    }
++
+     ret =3D smstateen_acc_ok(env, 0, SMSTATEEN0_HSENVCFG);
+     if (ret !=3D RISCV_EXCP_NONE) {
+         return ret;
+--=20
+2.43.0
 
 
