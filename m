@@ -4,61 +4,135 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7C79CC6B2F
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 05:52:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3EDBBCC6B38
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 05:57:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHENU-0000W6-NP; Thu, 15 Oct 2026 01:51:45 -0400
+	id 1xHESV-0001k1-G7; Thu, 15 Oct 2026 01:56:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1xHENS-0000QV-7j
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 01:51:42 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1xHESS-0001jB-JL; Thu, 15 Oct 2026 01:56:52 -0400
+Received: from mail-japanwestazlp170120003.outbound.protection.outlook.com
+ ([2a01:111:f403:c406::3] helo=OS8PR02CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1xHENO-0002fn-DK
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 01:51:42 -0400
-Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 69F5pHC5002842
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Thu, 15 Oct 2026 14:51:17 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=rtrXwU6CJYaSc96wgRxAmLBXW6WCu3r7ZsGT+3em1c0=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1792043477; v=1;
- b=J9gZLnMqJIvxBaX7w2ZmeEhkAD9FT4wHFbI6y3A9DqK/I2cOIyjnxlSg7G1boWll
- 2pDU/yDgTAu0CB6sswoq9HvyOEp0tzu8omS8X43tQihyC+SQBJbWuRGOlXfZyY2G
- nwx9YfVjJOa54enOTVeOKIKKlc3YkFwJlQT+mqIcKFnALepNAwDlnH9VHT4VLUw7
- zR3xYKsaaDJbwbzi1Rvefg+VDTjvACf0/qBwPPy7QJ1G38S/SFj5Tb+fqYkZ7gG6
- haYW8p6z4QPoG92QF0vMuuzjUMgbYsfxeJMBKBu4XAmdlKw8Whm3b6qj28oQXZz0
- G5Zw8kZIyHXQBCqziTnczQ==
-Message-ID: <d41be206-4325-4c15-9b31-633a75bd93a2@rsg.ci.i.u-tokyo.ac.jp>
-Date: Thu, 15 Oct 2026 14:51:16 +0900
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v3 00/17] igb: Add experimental VF live migration
- support
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
-Cc: Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
- Jason Wang <jasowangio@gmail.com>, Alex Williamson <alex@shazbot.org>,
- Peter Xu <peterx@redhat.com>
-References: <20261014084655.127254-1-clg@redhat.com>
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1xHESQ-0003Ci-0e; Thu, 15 Oct 2026 01:56:52 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=UviK3TWZ11Q2R0GMYHh1mItFbO+9UE6OHJa4IX9xlNfhKQMiPUtk0Zw/OPFu3hCWBtIBEExWOr1tunTIbs6d/b/52SIvPpr4WXYagt57NJArZIRYcZ9PfQFkGA3wBU5SkaHdqqSWbPyxHfaHtTwykOl+z2DvUCOWoYFqr1KDO3+DyAZuEXsuOnJBaPG7uDScEnH5ZKvc18sTsdSdtq13c2F0KhZb5uCBLpwDPOeVrwM3SyEJazPa+uxP4Jsh3YwAVErw/elT0ckIThjyLWpSQLCphEpgSzd8l+B2WNOU6aLdJN6cCkKuEtgOSdWQ2vfN6XyIWh6xjDJ9GJTePC3pvg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=9X//fO9mwIIeqh1eEKo6f8lqah8Tj85x+S0SWjtFHhI=;
+ b=iQ+N6nvFU0fi3VienAIl6IX4cP9O5PZDefdx5NWtyzu7xVDCix9ByS1poUiipnB0xPUe9CukoCAezzsuJZVLnkS0pxtZATMnBB7qVZw+U4wxSxHACJ9s1QbgPvLlMadmY3Z9+FwoiYVy5gYstwlg7HqKB41ydDnz3opFIYXIL4jzefy+fQnpihYCSElAy1Vd2xrQsUxjlxH0YCmMo4qKxUiKow71aLwJNDcf/4p8mFinw96k0eMmoVcOoiZtUzAGOnfoDdp75qAQjBJg9wuFoikiPPXMYRSE87+USqoV6xP+VVPclCekKsgZYJsUrqvxpeufYPY4iREIAjqqzsGKDA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
+ header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=9X//fO9mwIIeqh1eEKo6f8lqah8Tj85x+S0SWjtFHhI=;
+ b=k1gg7E6OELnROHACUGyK75cDVQqTaUYtjdO6dBGR2z9nkt+sbtL5wdgnHmTIpzeuXNiLLGdNQ2WjtvRybk23h0neui7QmB1e+Fv65ntuIcM3XjLjsBbZFgGe949TRXmswy4RAisRqIZqbKnBGqkq6ZQsZ3iRx+mwfjkI/IcOMxKpT6zJCVEVNXhhL6yIgKezSQwOe+mruSiULwPhsgpAcPecrr1WRjJ0NJZ0ZeCtB80PnG+qrh55kyKLuTFn5yKHePoSawgli97rj/eqLoJc2eBYTnVQ2sPQ4/Uq2jQLkq7/ffKUz58nEhCLHTaafp4YUVF+kCkdYAFq2XBf4V5W8Q==
+Received: from SEZPR06MB7362.apcprd06.prod.outlook.com (2603:1096:101:253::10)
+ by TYZPR06MB5736.apcprd06.prod.outlook.com (2603:1096:400:26b::8)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.522.13; Thu, 15 Oct
+ 2026 05:56:43 +0000
+Received: from SEZPR06MB7362.apcprd06.prod.outlook.com
+ ([fe80::cd2d:35d2:a702:1de6]) by SEZPR06MB7362.apcprd06.prod.outlook.com
+ ([fe80::cd2d:35d2:a702:1de6%4]) with mapi id 15.21.0522.012; Thu, 15 Oct 2026
+ 05:56:43 +0000
+From: Jamin Lin <jamin_lin@aspeedtech.com>
+To: =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@kaod.org>, Peter Maydell
+ <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
+ <leetroy@gmail.com>, Kane Chen <kane_chen@aspeedtech.com>, Andrew Jeffery
+ <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, Alistair
+ Francis <alistair@alistair23.me>, Kevin Wolf <kwolf@redhat.com>, Hanna Reitz
+ <hreitz@redhat.com>, Fabiano Rosas <farosas@suse.de>, Laurent Vivier
+ <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, "open list:ASPEED
+ BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
+ <qemu-devel@nongnu.org>, "open list:Block layer core" <qemu-block@nongnu.org>
+CC: Jamin Lin <jamin_lin@aspeedtech.com>, Troy Lee <troy_lee@aspeedtech.com>
+Subject: [PATCH v1 00/14] hw/arm/aspeed: Add AST1040 FMC/SPI controllers and
+ unimplemented devices
+Thread-Topic: [PATCH v1 00/14] hw/arm/aspeed: Add AST1040 FMC/SPI controllers
+ and unimplemented devices
+Thread-Index: AQHdXGn03wcEq+63Vkq4UlnhEzvLTQ==
+Date: Thu, 15 Oct 2026 05:56:43 +0000
+Message-ID: <20261015055642.106204-1-jamin_lin@aspeedtech.com>
+Accept-Language: zh-TW, en-US
 Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20261014084655.127254-1-clg@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=aspeedtech.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SEZPR06MB7362:EE_|TYZPR06MB5736:EE_
+x-ms-office365-filtering-correlation-id: de4b784f-6047-4ce7-0eac-08df2a811705
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|23010399003|1800799024|376014|366016|7416014|10067099003|18002099003|921020|261009223027099003|38070700021|56012099006;
+x-microsoft-antispam-message-info: F+j2zwMa0maydsVzKK7nKl/saxEJLjgz9mdc5MaS0zKGhBFacB8xoThUE9IfrYDbEZDfy7qSzkyvf8TDEaYtFg2QkDTc9BeVDd0nFptiPwNO5lyoRH3zN6w8fllKzUy1tnRBwM2dL3TAS/qeRXCh8RnRJCVbnZW1CWxSpJcrnuKfqHKwFn1Sjsvfim5J0IwIUl6vvuACRdSFQaZ8HxY0w98GZk48+x/gmnhYGyCXSCoLqIhv+kAu5bIuv+MAmZy2wJrxi7avW/ZHLKjvKB+pJqaelfT+nErFhAHW0pk8LK6mV0J8MxSHrVsWN84U6Sudf+fr/Wat0Xz8HC19nA6iU/pt2hj8Evj8Yg2T5eBai78k1SLpeCiNRqK7WQMoFwat2v/TxN+vSmcOidW0usOY+wTq8usePJcWtTifA4eCSAcNrRl1duEi/65zodHsWnlPuv1m+K2H0cj28CmaIL6tfkOcxKycq7XVzMS7ps45TusA/WVxaWI5qIx9uZfCpxNXyNgIVPh98jsKXpf6+vekyQRuDg+eFLaofcuols77N9j8Xz/Eou7ySAaYwkYaRUFfYVCjXMfsPsTal/byHNGraYkceOPVYO46+UZRZYnwQMf0Kl+mgcB6eMEARIfBhB3G4iwddnLAGDNNw/W3lrbTP7P8Ss4IPrSY/wGz+kJgkQX4iaV+tKpVVbhuB0hYhplTfKmazYzMSbP/0VD7tcIYamO+lpffF1CrPdPAeVbNePPaanQD5fT2xF9H6dfY476y
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SEZPR06MB7362.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(23010399003)(1800799024)(376014)(366016)(7416014)(10067099003)(18002099003)(921020)(261009223027099003)(38070700021)(56012099006);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?mL/ibhMw1yxdQ9SJn6qoZ79PygFoE+z4N+WEmm7lIZHTiuzag8TTk96aeY?=
+ =?iso-8859-1?Q?OK61exM26L4TVnoauueuyR3D+qPd+NYFwVF2xzejHCkQRxcaBcsKAYKgXJ?=
+ =?iso-8859-1?Q?zw5oT/G3dTiNajoUbW39LYP/rx6IZDLa5+3ACrfkgM2vw5RGEY0lE1HUsc?=
+ =?iso-8859-1?Q?XNQFs4RWdk5Q04yQHDW+WQE4hOu/B2ln3+UG2RM52gYEUCANlm4+WK2I00?=
+ =?iso-8859-1?Q?WeSgGyWtdlUgufVxzu187VnQiYl0YCikHoZykD0dWwCxk2hRt6XM21kt2r?=
+ =?iso-8859-1?Q?1x2emLUJ07rHwDEs39uoUIQ0cOfk5FXYDWQrCJlPix+IpAh4ppjQ7lwB0m?=
+ =?iso-8859-1?Q?0vvXLbUmCaa6YWUc9pqjZBxpnVFk3elSt2CJDStt+jKMH2PghO42JQ6Kgl?=
+ =?iso-8859-1?Q?8GCAe/jWA+n8RHcfE9UgzgCTHx+97eOHh82NQbV5x4neKE+tfcfx7Gq8wO?=
+ =?iso-8859-1?Q?9pLu+ex6EoAQ47zGzkCxpSxPCyLMlFxr501viXoh5P2LMz3xVnigXqgQAM?=
+ =?iso-8859-1?Q?2IY4FLH4TCwgm5dE3gs1aP7L2m6qu9JlC7sV1H3L8BW/UREmVzUFqLtrTw?=
+ =?iso-8859-1?Q?e9Y3Qdz7ZFAnqN3eblyK/QNksrk6xA7naCJay1gZ4vzfpqn12DKJJsiNOH?=
+ =?iso-8859-1?Q?rvxEjtrYadHK7Vp5z5ToUSvlylbLM9kgpMBsxYUsY7OEBbTzNnS7kwALS+?=
+ =?iso-8859-1?Q?5E/K0fvy3y3d0Xy3MZysHOi26vzoZcsTFFeQBXaU/rV8cMIxe2QbCW351L?=
+ =?iso-8859-1?Q?fH1+hBGJiISnB6YbE8B2K7hqO28XPPF0gf5WHcaBkj1bG8snQe2HGWK40F?=
+ =?iso-8859-1?Q?wJ7KjxYqo53T62S00wqlEd2YnxDXy9BCPZtHVWoe6BmoROt33SMHc0jj/4?=
+ =?iso-8859-1?Q?tmE5EzLP6wXII7/u+4j+BVELQ0wlUJ2sjn+lELtsd0yuuHHbhBbCsTwhO5?=
+ =?iso-8859-1?Q?YLAdP158wtQqdeBbCosZs2BEevKYyv47QHCyGBEb96Nr/RFmTzU0DnCEyW?=
+ =?iso-8859-1?Q?geTwMwuqHLiLShKFKZxVLPmSLYDHS0I+j1Rf66teEXEUQF9XhLcvtvz5mx?=
+ =?iso-8859-1?Q?NpYMR6tVnVoh6XH1rbhVSFAISYUyLjKpZkj+SY8xhRJ+6pL6dePfGxYrmF?=
+ =?iso-8859-1?Q?VkIanHCAnpK7Zc/M3JNWtf4gucnasqpmgFVfhG/O9Mt5e5MsskCzJgKePs?=
+ =?iso-8859-1?Q?ezGdPxwhVTVII4BXHmaie5ZHfmk7FaSdyCTVqY8CMvO5BDrAl3Gm/OSCSH?=
+ =?iso-8859-1?Q?XlfjTm4L6Dt5Fu8BHylHX/htp5EN0AQIP1rbAoJR8V8mmzqwkZjgWkwhZM?=
+ =?iso-8859-1?Q?FgBeq4kNdCb9LLyZPl7p+LKSiGJVKb4nYgeMiXgvWDQaUbRPs8jsaFr6Cv?=
+ =?iso-8859-1?Q?YKK+DO/ydGSTuYLbO9Th0Mu+lQYnXiw0YHeqeRU2YeaCDdxbK81fS4eRcV?=
+ =?iso-8859-1?Q?s89h5ur8YgT3Nrkxi0Z8PUA/svIpqReNVSlaMS9Odx4Fv9DwlqyzyyjNBC?=
+ =?iso-8859-1?Q?zy8G73+tkfouu40K5c/v++FLA5Kbfh58Zf8GdF5l+nRNzfrb0KftRoBkpi?=
+ =?iso-8859-1?Q?Y0CzniEiY3jqQGpBW16LHx+mVI0Bs0piFX6nWlyj2GpqR08Wi3BitgfsrC?=
+ =?iso-8859-1?Q?vOM6wbAetWQWsxNrEBE/3rEo8sE6kbTPC+zaZ2dC0svv0oyL//pMvkBNLj?=
+ =?iso-8859-1?Q?XaW+RbfGHItI7kGl0tEOMMWlyLOzRDngV63l0By/3DfWHUDsAtmfyOLU9T?=
+ =?iso-8859-1?Q?Sm0AKGYfl1lNo0u5k1AEWzGrGEHIvZYC/3Cut3aZOCezFupUfXIJLRfsqa?=
+ =?iso-8859-1?Q?UKRfptq8LA=3D=3D?=
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+X-Exchange-RoutingPolicyChecked: 2AyeIoSiNTi1U68t3Yb8f0fK/ppWdSmXvlE3gfvg8Xfp6UehdUkPlHRr2DSAWS1LFqkFfs57l2wUSQ6OLGQTr0/JncAOr2n39hJukgPzxtkvkw+4FgfvCks/Nzefz7tYyUe0jzYVBQf+f1TTLtL+IyKrS+oXoEZSj6dAiBPFI3yiDNdpHGMPDv/RvVNSLgjHD9y+1VNSsPVa0ipPTyHGzC5yUSFyVa5k+Wf0JYdv0MJiYXt8DK3EKOjpWpGv4iZvUCZ+ugEPSkhEaF+JruaNl32+3sWeiE/hM2oOOlDW1Rss4RUcnvq/AgqFB/KI4Pb2G0B4RrwCb01FUsLTyAxs1Q==
+X-OriginatorOrg: aspeedtech.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SEZPR06MB7362.apcprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: de4b784f-6047-4ce7-0eac-08df2a811705
+X-MS-Exchange-CrossTenant-originalarrivaltime: 15 Oct 2026 05:56:43.5029 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: AH4RTxpISwVs+TR3Fpw+hZdOxbJWvHk7cGIby4B2iih878N/tUt+YVPUePU72E06EB2FzwttY0o1cXb+vQIiMLlwJKLbn116S9UFalzTN6k=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYZPR06MB5736
+Received-SPF: pass client-ip=2a01:111:f403:c406::3;
+ envelope-from=jamin_lin@aspeedtech.com;
+ helo=OS8PR02CU002.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -75,308 +149,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/10/14 17:46, Cédric Le Goater wrote:
-> Hello,
-> 
-> Live migration of VFIO-passthrough devices, SR-IOV VFs, vGPUs, is a
-> growing requirement, but real hardware with migration support is
-> scarce and hard to debug. An emulated device provides a fully
-> controlled testbed for developing and validating the entire software
-> stack, vfio-pci variant drivers, VFIO core migration v2 framework,
-> QEMU, libvirt, and for tuning complex migration policies such as
-> downtime convergence. It also serves as an educational reference for
-> understanding VFIO migration end-to-end, from device state
-> serialization to dirty page tracking.
-> 
-> This series adds an experimental VF live migration interface to the
-> emulated igb (82576) device. It enables a vfio-pci variant driver
-> (igb-vfio-pci) to migrate VFs using the standard VFIO migration v2
-> protocol with stop-copy and pre-copy support.
-> 
-> The target scenario is nested virtualization:
-> 
->    L0 QEMU (these patches)
->      igb PF with x-vf-migration=on
->      └── VFs with migration DVSEC
-> 
->    L1 kernel
->      igb-vfio-pci variant driver [1]
->      translates VFIO migration v2 ioctls → DVSEC config writes
-> 
->    L1 QEMU (stock, unmodified)
->      vfio-pci device model, standard migration fd
-> 
->    L2 guest
->      standard igbvf driver, unaware of migration
-> 
-> The L1 QEMU is completely unmodified. It sees a standard VFIO
-> migratable device and uses the normal migration fd path.
-> 
-> * Design
-> 
-> The migration interface is exposed through a DVSEC (Designated
-> Vendor-Specific Extended Capability, PCIe cap id 0x23) at offset
-> 0x160 in VF extended config space. The DVSEC uses a command doorbell
-> model; all commands are synchronous via PCI config space writes.
-> 
-> Device state is serialized as a versioned blob of per-VF register
-> (offset, value) pairs covering control, interrupt, RX/TX queue,
-> receive address (RA/RA2), etc. plus TX context descriptors and
-> VFRE/VFTE enable bits. The buffer address is a guest physical
-> address (GPA) written by the driver via virt_to_phys; the device
-> accesses guest RAM directly through the system address space.
-> 
-> Dirty page tracking is implemented with per-range bitmaps maintained
-> in IGBCore. All VF DMA paths in igb_core.c (TX data, RX data,
-> descriptor writeback) are instrumented to record touched pages. The
-> variant driver registers tracked IOVA ranges and queries dirty bitmaps
-> through a shared buffer. Buffer structures include len, flags, and
-> reserved fields for future extensibility.
-> 
-> * Caveats
-> 
-> The x-vf-migration property is experimental (x- prefix, default off).
-> 
-> The current implementation maintains dirty bitmaps inside the device,
-> which is not realistic for discrete NICs without on-chip DRAM.
-> 
-> On load, MTA/UTA fixup merges missing source entries into the
-> destination but is not durable: the L1 PF driver zeroes and reprograms
-> these tables on any multicast update, and has no record of the
-> migrated VF's hashes. A proper fix requires QEMU to track per-VF
-> multicast hashes and restore them on load, either through a new DVSEC
-> command consumed by the variant driver or by injecting a VF mailbox
-> message to the L1 PF driver.
-> 
-> * Testing
-> 
-> The target scenario is nested virtualization: L0 runs QEMU with an
-> igb PF (x-vf-migration=on), L1 runs the igb-vfio-pci variant driver
-> and an unmodified QEMU, and L2 runs a standard igbvf driver.
-> 
-> Migration under iperf3 load works correctly: dirty page tracking
-> converges (from ~2000 pages per PRE_COPY iteration down to ~280 at
-> STOP_COPY), and STOP_COPY stays under 250ms.
-> 
-> * Todo
-> 
->    1. Add VMState support for L0 migration (dirty bitmaps, tracking
->       engines, DVSEC registers, stats)
->    2. Add PRE_COPY state transfer to validate device INIT data (magic,
->       version, etc.)
-> 
-> * Ideas
-> 
->    1. RX bandwidth throttle (x-mig-rx-limit, uint32, default 0)
-> 
->       Return false from can_receive when the per-VF packet count in the
->       current tracking interval exceeds the limit. Reduces DMA writes
->       and dirty pages realistically.
-> 
->    2. Migration phase timing (GET_STATS extension)
-> 
->       Add per-VF timestamps: precopy_start_ns, stopcopy_start_ns,
->       precopy_duration_ns, stopcopy_duration_ns,
->       state_transition_count. Expose via GET_STATS.
-> 
->    3. Hot page simulation (x-mig-hot-pages, uint32, default 0)
-> 
->       Re-set the first N bitmap bits after each DIRTY_QUERY, simulating
->       workloads with hot pages that prevent convergence.
-> 
->    4. Error injection (x-mig-inject-error, uint32, default 0)
-> 
->       One-shot error code injection before command dispatch. A separate
->       x-mig-inject-dma-fail (bool) for persistent DMA failure testing.
-> 
-> * Credits
-> 
-> Alex Williamson suggested the overall approach of a variant driver
-> with the "x-vf-migration" device property to gate the feature. Thanks
-> for the ever ongoing support and valuable discussions throughout these
-> years.
-> 
-> * AI disclaimer
-> 
-> The lack of a migration-capable device has been a recurring pain point
-> for VFIO development over the years, and we hope this proposal
-> demonstrates the value of having one.
-> 
-> Claude was used to analyze the IGB PF and VF internal state and
-> identify the pain points of a working live migration of such devices.
-> The generated code served as a starting point but *significant* time
-> was then spent cleaning up, reworking, and shaping it into a clear,
-> reviewable IGB model extension.
-
-Below is the raw output from running `b4 shazam` and asking GPT-6 Astra 
-Ultra to "review each commit," shared here for demonstration. Normally, 
-I review each comment, filter out false positives, and manually assemble 
-the relevant context, but I wanted to provide the unfiltered results 
-this time.
-
-Since you use Claude while I use Codex, I can understand if Codex 
-catches a few things Claude misses, but I didn't expect this volume. 
-Moreover, many of these issues are recurring, following a pattern that 
-hasn't changed over the last two reviews.
-
-I don't believe Claude's core capabilities are too limited to catch 
-these issues. Instead, my hypotheses are:
-
-- Claude is not priotizing working "better, not faster" [1]. While
-   working faster is nice, quality should take precedence, and the
-   current balance may be miscalibrated.
-- The model and reasoning effort configuration may be underpowered.
-
-Suggestions for improvement:
-
-- Explicitly ask: "review each commit".
-- Pass past review comments as context when asking Claude to perform the
-   review.
-- Use the best model and highest reasoning effort configuration for
-   final local reviews before submission.
-
-Regards,
-Akihiko Odaki
-
-[1] 
-https://lore.kernel.org/qemu-devel/20260930085433.830743-2-pbonzini@redhat.com/
-
----
-
-Reviewed all 17 commits in `615ece3c406b..c5d547be30d8`. The series 
-still has migration correctness issues and a qtest regression.
-
-1. **`5404e7f4e9ae` — Property and DVSEC capability**
-    No actionable finding.
-
-2. **`fc515c08615c` — Migration blocker**
-    No actionable finding.
-
-3. **`dae704cc51b8` — Migration state machine**
-    No independent finding. The recovery problem introduced by quiescing 
-is covered under commit 12.
-
-4. **`995983deaea3` — Serialization infrastructure**
-    No independent finding.
-
-5. **`207eb305d397` — VF register serialization**
-    **[P1] Preserve pending mailbox transactions.** The [register 
-list](hw/net/igb_migration.c:102) saves mailbox control registers but 
-omits `VMBMEM`, claiming quiescing drains it. No drain occurs. A pending 
-PF reply therefore restores `PFSTS` with stale destination payload. A 
-focused probe restored `PFSTS=1` but read payload `0` instead of 
-`0x12345678`. Preserve the transaction or coordinate its completion 
-before saving.
-
-6. **`a0e79d2465df` — Post-load fixups**
-    No additional finding.
-
-7. **`3509f2eb4600` — TX context serialization**
-    No additional finding.
-
-8. **`c0c5fe9620dd` — Receive-address serialization**
-    **[P1] Reconcile restored addresses with PF allocation state.** The 
-[free-slot allocation](hw/net/igb_migration.c:284) moves addresses 
-without updating the PF driver’s `mac_table`. A round trip moved VF0’s 
-MAC from reserved RAR23 to RAR1. The PF still considers RAR1 free, so a 
-subsequent secondary-address allocation can overwrite the migrated VF’s 
-address. Restoring hardware entries alone does not preserve ownership.
-
-9. **`bd807329dbca` — VLAN filter serialization**
-    **[P1] Restore PF VLAN bookkeeping alongside VFTA.** The [VFTA 
-update](hw/net/igb_migration.c:380) leaves the destination PF driver’s 
-`shadow_vfta` unchanged. For example, restoring VLAN 100 and then adding 
-VLAN 101 through the PF rewrites the same VFTA word from that stale 
-shadow, clearing VLAN 100. The migrated VF then loses tagged traffic 
-despite retaining its VLVF entry.
-
-10. **`7694a1bc9d43` — MTA/UTA restoration**
-     **[P1] The multicast restoration is still temporary.** [OR-ing the 
-saved MTA](hw/net/igb_migration.c:662) does not restore the PF driver’s 
-per-VF multicast hashes and counts. A later multicast request from 
-another VF rebuilds MTA and the receive-mode bits from those caches, 
-discarding the migrated VF’s configuration. This remains the PF 
-bookkeeping problem discussed in the thread.
-
-11. **`efe8749e6477` — Dirty tracking**
-
-     **[P1] This intermediate commit does not compile.** The [trace 
-declarations](hw/net/trace-events:302) change the save/load events to 
-five/four arguments, while their call sites still pass two. Commit 12 
-fixes the calls; move the declaration changes there.
-
-     **[P1] Reject overflowing query ranges.** The [range 
-check](hw/net/igb_migration.c:1064) adds `range_iova + range_size` 
-without checking overflow. With tracking enabled for `[0, 64 KiB)`, a 
-query starting at `UINT64_MAX - 4095` with size 8192 incorrectly 
-succeeds. Larger wrapped sizes can also truncate the bitmap allocation 
-while leaving `bitmap_count_one()` scanning the full requested size.
-
-     **[P2] Honor the query buffer length.** The [query 
-handler](hw/net/igb_migration.c:1095) never reads `len`. A probe 
-advertising only 24 bytes succeeded and overwrote the next 16 bytes with 
-response fields. Validate the header and available bitmap space before 
-writing or clearing dirty bits.
-
-     **[P2] Free dirty bitmaps during teardown.** The 
-[allocations](hw/net/igb_migration.c:961) are released only by explicit 
-disable/state transitions. Neither VF nor PF unrealize cleans them up. 
-Removing a PF with active tracking leaks its bitmaps; repeated hotplug 
-accumulates the allocations.
-
-12. **`61cd2a726e1e` — Quiescing and enable-state preservation**
-
-     **[P1] STOP does not quiesce interrupt DMA.** 
-[Quiescing](hw/net/igb_migration.c:1289) clears `VFRE`/`VFTE` but leaves 
-active EITR timers able to notify MSI-X. A probe observed another MSI 
-memory write after STOP reported `QUIESCED`. Pending timer notifications 
-need to be stopped and preserved for resume.
-
-     **[P2] Error recovery overwrites the saved enable state.** [ERROR → 
-STOP](hw/net/igb_migration.c:1348) quiesces again even when the VF was 
-already stopped. After `RUNNING → STOP → STOP_COPY`, a failed SAVE 
-followed by `ERROR → STOP → RUNNING` replaces the saved RX/TX enables 
-with zero. The probe returned to RUNNING with both directions disabled.
-
-     **[P2] Validate the blob before clearing VFLRE.** The [pre-load 
-operation](hw/net/igb_migration.c:831) consumes the PF’s pending 
-VF-reset indication before validating the blob. A rejected LOAD 
-therefore still changes device state. Move this mutation after 
-successful validation.
-
-13. **`4a9d2fed1f04` — Effective interrupt masks**
-     **[P1] Preserve effective pending causes as well as masks.** 
-[Restoring masks](hw/net/igb_migration.c:1268) clears the VF’s `EICR` 
-slice without saving it. A masked pending cause disappeared across a 
-simple `STOP → RUNNING` cycle, without any migration. Serialize and 
-restore the actual pending causes.
-
-14. **`dcffcb07ed87` — Interrupt re-injection**
-     **[P1] PVTEICR is not the pending-cause state.** The [new 
-helper](hw/net/igb_core.c:4613) reads a shadow containing the last 
-write-one-to-clear value. It can therefore recreate an already 
-acknowledged interrupt while missing a genuinely pending one. A probe 
-changed effective `EICR` from zero to `0x400000` after STOP/RUNNING 
-solely because that cause had previously been acknowledged.
-
-15. **`01bcf6d4e9d1` — Dirty-tracking statistics**
-     No additional finding.
-
-16. **`4eda0478f80d` — Testing documentation**
-     No independent finding. The documentation builds successfully.
-
-17. **`c5d547be30d8` — Migration qtests**
-     **[P1] Restrict registration to supported machines and devices.** 
-The [registration function](tests/qtest/igb-migration-test.c:867) 
-unconditionally adds tests to the shared `qos-test` binary, while 
-startup hardcodes `q35`. Running the new DVSEC test against 
-`qemu-system-aarch64` aborts with “unsupported machine type.” Gate 
-registration or use the graph’s machine/device discovery.
-
-The x86_64 and AArch64 binaries, `qos-test`, and HTML documentation 
-build successfully at the tip. All 31 supplied migration tests pass on 
-x86_64; focused probes reproduce the mailbox, address relocation, 
-range/length validation, interrupt, and recovery failures above. The PF 
-bookkeeping consequences were traced through the Linux driver; full 
-nested guest migration was not run. The worktree remains unchanged.
+Dependency:=0A=
+=0A=
+This series is based on the aspeed-next branch: =0A=
+https://github.com/legoater/qemu/commits/aspeed-next=0A=
+=0A=
+v1:=0A=
+ 1. Fix AST2700 segment end address decoding=0A=
+ 2. Fix AST2700 DMA flash address mask=0A=
+ 3. Rename w25q32dw to w25q33pw and add the SFDP table for the W25Q33PW,=0A=
+ 4. Correct the AST1040 A0 silicon revision ID=0A=
+ 5. Add FMC and SPI controllers=0A=
+ 6. Add the FMC/SPI filters, OTP, ATC, I3C and Caliptra register=0A=
+    regions as unimplemented device=0A=
+ 7. Update the AST1040 functional test to use the official pre-built=0A=
+    image from aspeed-mcu-fw-hub v01.00.=0A=
+=0A=
+Jamin Lin (14):=0A=
+  hw/ssi/aspeed_smc: Fix AST2700 segment end address decoding=0A=
+  hw/ssi/aspeed_smc: Fix AST2700 DMA flash address mask=0A=
+  hw/block/m25p80: Rename w25q32dw to w25q33pw=0A=
+  hw/block/m25p80: Add SFDP table for Winbond W25Q33PW flash=0A=
+  hw/misc/aspeed_scu: Correct AST1040 A0 revision ID=0A=
+  hw/ssi/aspeed_smc: Add AST1040 FMC and SPI controllers=0A=
+  hw/arm/aspeed_ast1040: Add FMC and SPI controllers=0A=
+  hw/arm/aspeed_ast1040: Add FMC and SPI filters as unimplemented=0A=
+    devices=0A=
+  hw/arm/aspeed_ast1040: Add OTP as an unimplemented device=0A=
+  hw/arm/aspeed_ast1040: Add Anti-Tamper Controller (ATC) as an=0A=
+    unimplemented device=0A=
+  hw/arm/aspeed_ast1040: Add I3C as an unimplemented device=0A=
+  hw/arm/aspeed_ast1040: Add Caliptra as an unimplemented device=0A=
+  tests/qtest/aspeed_smc: Add AST1040 SMC tests=0A=
+  tests/functional/arm/test_aspeed_ast1040: Update AST1040 image to=0A=
+    aspeed-mcu-fw-hub v01.00=0A=
+=0A=
+ hw/block/m25p80_sfdp.h                      |   1 +=0A=
+ include/hw/misc/aspeed_scu.h                |   2 +-=0A=
+ hw/arm/aspeed_ast1040.c                     |  45 ++++++++=0A=
+ hw/block/m25p80.c                           |   3 +-=0A=
+ hw/block/m25p80_sfdp.c                      |  36 ++++++=0A=
+ hw/ssi/aspeed_smc.c                         | 121 +++++++++++++++++++-=0A=
+ tests/qtest/aspeed_smc-test.c               |  61 ++++++++++=0A=
+ tests/functional/arm/test_aspeed_ast1040.py |  12 +-=0A=
+ 8 files changed, 268 insertions(+), 13 deletions(-)=0A=
+=0A=
+-- =0A=
+2.53.0=0A=
 
