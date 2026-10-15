@@ -4,58 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3E3BCC6B34
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 13:46:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 269ADCC6B34
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 13:47:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHLmO-0000jF-BP; Thu, 15 Oct 2026 09:45:56 -0400
+	id 1xHLnf-0001f7-PH; Thu, 15 Oct 2026 09:47:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <liumingliang.dev@bytedance.com>)
- id 1xHLmC-0000Y7-BX
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 09:45:45 -0400
-Received: from va-1-115.ptr.blmpb.com ([209.127.230.115])
+ id 1xHLnc-0001eZ-Fk
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 09:47:12 -0400
+Received: from va-1-113.ptr.blmpb.com ([209.127.230.113])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <liumingliang.dev@bytedance.com>)
- id 1xHLm9-0000Fw-Qy
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 09:45:44 -0400
+ id 1xHLnY-0000LV-Q9
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 09:47:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- s=2212171451; d=bytedance.com; t=1792071937; h=from:subject:
+ s=2212171451; d=bytedance.com; t=1792072024; h=from:subject:
  mime-version:from:date:message-id:subject:to:cc:reply-to:content-type:
  mime-version:in-reply-to:message-id;
- bh=6lcUjfiazzLw26A7lj7n2AZ9mByxDvOo/ROJdPVBUQU=;
- b=KqJcD5CneLeYoEPCnG74wWSy7G1vorwOQB6st+m3dzGuqQ+7g9XksKmovwX1yz9IFYyHfl
- RxL8SNyodQrX7r8qrEPn9Mj9qpKVF8V1VVGDQh2Jo6crBAbigsaLHo+ikO3ecjJvSD89IR
- /lswLV+AKV0wlQQwINOF8aSDVjROpJpj9/Zsi12i8KqaJFNkMcd8hVTRSTxyc2lvurbMWE
- rCe0dLqxUwfBKo/875qZNNXbwkuWm0QQfWmREyWWExnBG2kbD7wytYm+n5q9KZt94f5nE1
- w3bkMzf8Ku+CrbcbPcMzVe/k8rqZAu+sssfH3NtSe/sPsZA7PwSs8z7UkDvcnQ==
-Date: Thu, 15 Oct 2026 21:43:37 +0800
-X-Original-From: Mingliang Liu <liumingliang.dev@bytedance.com>
-Content-Type: text/plain; charset=UTF-8
-X-Mailer: git-send-email 2.39.5
-X-Lms-Return-Path: <lba+26ad0d900+05cfcb+nongnu.org+liumingliang.dev@bytedance.com>
-Cc: <qemu-riscv@nongnu.org>, <palmer@dabbelt.com>, 
- <Alistair.Francis@wdc.com>, <zhiwei_liu@linux.alibaba.com>, 
- <liwei1518@gmail.com>, <daniel.barboza@oss.qualcomm.com>, 
- <chao.liu@processmission.com>, <richard.henderson@linaro.org>, 
- "Mingliang Liu" <liumingliang.dev@bytedance.com>
+ bh=243Btl5UmKM/dRPYAxN1/G+ygppLrhOrXkZGq8YqmRk=;
+ b=nByogJBFnQACvByC89zDihEtHYJDDbll6DtJPSO76JP59o5vvFXvPj8i34VEFrkTQOfW/E
+ ie1rMbB1t7FW/bt0FoKgAqCjLyZ22h1vb+p0mte4gznH8DjYpGA3s0bplraqjnBr10GznT
+ 3EWKNEZgIiTTObZ3Eg/yMEbOIh0eXA/BBnn2ldZpvnE3S/YQ57dmcZcsu9BP2PNDNk+hG2
+ MJ6CJ+DblAJ/e05kK5ZJqmc9G1z89zvticH/m3VtPV9xJof/8QAzld/xpLhvxOPL4FPno6
+ dBZC3d8NvA5kgqKjCLLHxuMkJYuOHQgNKWCI/vOEjH9xnH7GyBM2aCril4inxQ==
+Subject: Re: [PULL 13/52] tests/tcg/riscv64: Add Zvabd extension tests
 From: "Mingliang Liu" <liumingliang.dev@bytedance.com>
-Message-Id: <20261015134337.3354723-4-liumingliang.dev@bytedance.com>
+Content-Type: multipart/alternative;
+ boundary=8d8db24a7c4b18362562ebba3019e1805e355269ef21a27be37974790420
+Message-Id: <ee7ee3a1f02a7e7cbb15b78aec59fd82060d2306.d26d8a5f.9cd0.4f67.b275.dc0453cc54f7@bytedance.com>
+To: "Richard Henderson" <richard.henderson@linaro.org>
 Mime-Version: 1.0
-In-Reply-To: <20261015134337.3354723-1-liumingliang.dev@bytedance.com>
-To: <qemu-devel@nongnu.org>
-Subject: [PATCH v4 3/3] tests/tcg/riscv64: Add Zvabd extension tests
-Content-Transfer-Encoding: 7bit
-References: <20261015134337.3354723-1-liumingliang.dev@bytedance.com>
-Received-SPF: pass client-ip=209.127.230.115;
- envelope-from=liumingliang.dev@bytedance.com; helo=va-1-115.ptr.blmpb.com
+In-Reply-To: <3cf4014b-12ce-4252-a593-0f230b45619f@linaro.org>
+X-Lms-Return-Path: <lba+16ad0d956+d6dba3+nongnu.org+liumingliang.dev@bytedance.com>
+References: <20261014033907.3332383-1-alistair.francis@wdc.com>
+ <20261014033907.3332383-14-alistair.francis@wdc.com>
+ <3cf4014b-12ce-4252-a593-0f230b45619f@linaro.org>
+Date: Thu, 15 Oct 2026 21:46:59 +0800
+Cc: <qemu-devel@nongnu.org>, <alistair23@gmail.com>
+Received-SPF: pass client-ip=209.127.230.113;
+ envelope-from=liumingliang.dev@bytedance.com; helo=va-1-113.ptr.blmpb.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -71,702 +67,226 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a RV64 TCG test covering the masked and unmasked vector-vector
-and vector-scalar forms of vabd, vabdu, vwabda, and vwabdau.
+--8d8db24a7c4b18362562ebba3019e1805e355269ef21a27be37974790420
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
 
-Assemblers do not yet support the version 0.9 instruction mnemonics,
-so the instruction encodings are hardcoded for the time being.
+Hi Richard,
 
-GNU binutils 2.47 supports the incompatible version 0.7 instruction
-encodings. Therefore, this test must not be built with that version,
-even after it is converted to use instruction mnemonics.
+Thanks for pointing this out. I have updated the patch and sent a revised v=
+ersion.
+> From: "Richard Henderson"<richard.henderson@linaro.org>
+> Date:=C2=A0 Thu, Oct 15, 2026, 14:08
+> Subject:=C2=A0 Re: [PULL 13/52] tests/tcg/riscv64: Add Zvabd extension te=
+sts
+> To: <qemu-devel@nongnu.org>, <alistair23@gmail.com>, <liumingliang.dev@by=
+tedance.com>
+> On 10/14/26 05:38, alistair23@gmail.com=C2=A0wrote:
+> > From: Mingliang Liu<liumingliang.dev@bytedance.com>
+> >=C2=A0
+> > Add a RV64 TCG test covering the masked and unmasked vector-vector
+> > and vector-scalar forms of vabd, vabdu, vwabda, and vwabdau.
+> >=C2=A0
+> > Assemblers do not yet support the version 0.9 instruction mnemonics,
+> > so the instruction encodings are hardcoded for the time being.
+> >=C2=A0
+> > GNU binutils 2.47 supports the incompatible version 0.7 instruction
+> > encodings. Therefore, this test must not be built with that version,
+> > even after it is converted to use instruction mnemonics.
+> >=C2=A0
+> > Reviewed-by: Daniel Henrique Barboza<daniel.barboza@oss.qualcomm.com>
+> > Co-Author: Daniel Henrique Barboza<daniel.barboza@oss.qualcomm.com>
+> > Signed-off-by: Daniel Henrique Barboza<daniel.barboza@oss.qualcomm.com>
+> > Signed-off-by: Mingliang Liu<liumingliang.dev@bytedance.com>
+> > Message-ID:<20260907152301.1701394-4-liumingliang.dev@bytedance.com>
+> > Signed-off-by: Alistair Francis<alistair.francis@wdc.com>
+> > ---
+> > =C2=A0 tests/tcg/riscv64/Makefile.softmmu-target | =C2=A0 9 +
+> > =C2=A0 tests/tcg/riscv64/test-zvabd.S =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0=C2=A0 | 659 ++++++++++++++++++++++
+> > =C2=A0 2 files changed, 668 insertions(+)
+> > =C2=A0 create mode 100644 tests/tcg/riscv64/test-zvabd.S
+>=20
+>=20
+> tests/tcg/riscv64/Makefile.softmmu-target no longer exists.
+> This should be rewritten to update tests/tcg/riscv64/meson.build.
+>=20
+>=20
+>=20
+>=20
+> r~
+>=20
+>=20
+--8d8db24a7c4b18362562ebba3019e1805e355269ef21a27be37974790420
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html; charset=UTF-8
 
-Co-Author: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Signed-off-by: Mingliang Liu <liumingliang.dev@bytedance.com>
----
- tests/tcg/riscv64/system/meson.build |   1 +
- tests/tcg/riscv64/test-zvabd.S       | 659 +++++++++++++++++++++++++++
- 2 files changed, 660 insertions(+)
- create mode 100644 tests/tcg/riscv64/test-zvabd.S
-
-diff --git a/tests/tcg/riscv64/system/meson.build b/tests/tcg/riscv64/system/meson.build
-index c2d7d09887..4ab0529da4 100644
---- a/tests/tcg/riscv64/system/meson.build
-+++ b/tests/tcg/riscv64/system/meson.build
-@@ -24,6 +24,7 @@ tests += {
-   'test-crc32.S': setup + {'qemu_args': ['-cpu', 'rv64,xlrbr=true', qemu_args]},
-   'test-minstret-ecall.S': setup + {'qemu_args': ['-icount', 'shift=1', qemu_args]},
-   'test-misa-w.S': setup + {'qemu_args': ['-cpu', 'rv64,x-misa-w=true,c=true,v=true', qemu_args]},
-+  'test-zvabd.S': setup + {'qemu_args': ['-cpu', 'rv64,v=true,vlen=256,x-zvabd=true', qemu_args]},
- }
- 
- tests += {
-diff --git a/tests/tcg/riscv64/test-zvabd.S b/tests/tcg/riscv64/test-zvabd.S
-new file mode 100644
-index 0000000000..4f91acea0c
---- /dev/null
-+++ b/tests/tcg/riscv64/test-zvabd.S
-@@ -0,0 +1,659 @@
-+/*
-+ * Test the Zvabd vector absolute-difference instructions and the vabs.v
-+ * pseudoinstruction.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+	.option arch, +v
-+	.option norvc
-+
-+	.text
-+
-+	.global _start
-+_start:
-+	/* Enable the vector unit (mstatus.VS = Initial). */
-+	li	t0, 1 << 9
-+	csrs	mstatus, t0
-+
-+	/* Route synchronous traps to trap_handler (mtvec direct mode). */
-+	la	t0, trap_handler
-+	csrw	mtvec, t0
-+
-+	/* Run each test function. */
-+	call	test_vabs_v
-+	bnez	a0, _exit
-+	call	test_vabs_v_mask
-+	bnez	a0, _exit
-+
-+	call	test_vabd_vv
-+	bnez	a0, _exit
-+	call	test_vabd_vv_mask
-+	bnez	a0, _exit
-+
-+	call	test_vabd_vx
-+	bnez	a0, _exit
-+	call	test_vabd_vx_mask
-+	bnez	a0, _exit
-+
-+	call	test_vabdu_vv
-+	bnez	a0, _exit
-+	call	test_vabdu_vv_mask
-+	bnez	a0, _exit
-+
-+	call	test_vabdu_vx
-+	bnez	a0, _exit
-+	call	test_vabdu_vx_mask
-+	bnez	a0, _exit
-+
-+	call	test_vwabda_vv
-+	bnez	a0, _exit
-+	call	test_vwabda_vv_mask
-+	bnez	a0, _exit
-+
-+	call	test_vwabda_vx
-+	bnez	a0, _exit
-+	call	test_vwabda_vx_mask
-+	bnez	a0, _exit
-+
-+	call	test_vwabdau_vv
-+	bnez	a0, _exit
-+	call	test_vwabdau_vv_mask
-+	bnez	a0, _exit
-+
-+	call	test_vwabdau_vx
-+	bnez	a0, _exit
-+	call	test_vwabdau_vx_mask
-+	bnez	a0, _exit
-+
-+	j	_exit
-+
-+test_vabs_v:
-+	vsetivli zero, 2, e8, m1, ta, ma
-+
-+	/* Load .arr_neg array in v1 */
-+	la     t0,.arr_neg
-+	vle8.v v1,0(t0)
-+
-+	/* vabs.v v2, v1 (vabd.vx v2, v1, x0) raw opcode */
-+	.insn r 0x57, 0x6, 0x2b, x2, x0, x1
-+
-+	/* Load .arr_pos in v3 */
-+	la      t1,.arr_pos
-+	vle8.v  v3,0(t1)
-+
-+	/* Compare v2 and v3 into v0 */
-+	vmsne.vv  v0,v2,v3
-+	vcpop.m a0,v0
-+	snez    a0,a0
-+
-+	ret
-+
-+test_vabs_v_mask:
-+	vsetivli zero, 2, e8, m1, ta, mu
-+
-+	/* Load .arr_neg array in v1 */
-+	la      t0, .arr_neg
-+	vle8.v  v1, 0(t0)
-+
-+	/* Zero v2 using .arr_zero */
-+	la     t0,.arr_zero
-+	vle8.v v2,0(t0)
-+
-+	/* Load .v0_mask array in v0 */
-+	la     t1,.v0_mask
-+	vle8.v v0,0(t1)
-+
-+	/* vabs.v v2, v1, v0.t raw opcode */
-+	.insn r 0x57, 0x6, 0x2a, x2, x0, x1
-+
-+	/* Load .arr_masked in v3 */
-+	la      t0,.arr_masked
-+	vle8.v  v3,0(t0)
-+
-+	/* Compare v2 and v3 into v0 */
-+	vmsne.vv  v0,v2,v3
-+	vcpop.m a0,v0
-+	snez    a0,a0
-+
-+	ret
-+
-+test_vabd_vv:
-+	/*
-+	 * Test signed vector-vector absolute difference:
-+	 * abs({-5, -7} - {5, 7}) = {10, 14}.
-+	 */
-+	vsetivli zero, 2, e8, m1, ta, mu
-+
-+	/* Load the two signed source vectors into v1 and v3. */
-+	la      t0, .arr_neg
-+	vle8.v  v1, 0(t0)
-+	la      t0, .arr_pos
-+	vle8.v  v3, 0(t0)
-+
-+	/* Execute vabd.vv v2, v1, v3. */
-+	.insn r 0x57, 0x2, 0x2b, x2, x3, x1
-+
-+	/* Load the expected result into v3. */
-+	la      t0, .expect_vabd_vv
-+	vle8.v  v3, 0(t0)
-+
-+	/* Compare v2 and v3 into v0 */
-+	vmsne.vv  v0, v2, v3
-+	vcpop.m a0, v0
-+	snez    a0, a0
-+
-+	ret
-+
-+test_vabd_vv_mask:
-+	/*
-+	 * Test masked vabd.vv.  Element 0 remains 9 and element 1 becomes
-+	 * abs(-7 - 7) = 14.
-+	 */
-+	vsetivli zero, 2, e8, m1, ta, mu
-+
-+	/* Load the two signed source vectors into v1 and v3. */
-+	la      t0, .arr_neg
-+	vle8.v  v1, 0(t0)
-+	la      t0, .arr_pos
-+	vle8.v  v3, 0(t0)
-+
-+	/* Load original value into v2 */
-+	la      t0, .arr_init
-+	vle8.v  v2, 0(t0)
-+
-+	/* Load mask value into v0 */
-+	la      t0, .v0_mask
-+	vle8.v  v0, 0(t0)
-+
-+	.insn r 0x57, 0x2, 0x2a, x2, x3, x1
-+
-+	/* Load the expected result into v3. */
-+	la      t0, .expect_vabd_vv_masked
-+	vle8.v  v3, 0(t0)
-+
-+	vmsne.vv  v0, v2, v3
-+	vcpop.m a0, v0
-+	snez    a0, a0
-+	ret
-+
-+test_vabd_vx:
-+	/*
-+	 * Test signed vector-scalar absolute difference:
-+	 * abs({-5, -7} - 3) = {8, 10}.
-+	 */
-+	vsetivli zero, 2, e8, m1, ta, mu
-+	la      t0, .arr_neg
-+	vle8.v  v1, 0(t0)
-+	li      a2, 3
-+
-+	/* Execute vabd.vx v2, v1, a2. */
-+	.insn r 0x57, 0x6, 0x2b, x2, x12, x1
-+
-+	/* Load the expected result into v3. */
-+	la      t0, .expect_vabd_vx
-+	vle8.v  v3, 0(t0)
-+
-+	vmsne.vv  v0, v2, v3
-+	vcpop.m a0, v0
-+	snez    a0, a0
-+	ret
-+
-+test_vabd_vx_mask:
-+	/*
-+	 * Test masked vabd.vx.  Element 0 remains 9 and element 1 becomes
-+	 * abs(-7 - 3) = 10.
-+	 */
-+	vsetivli zero, 2, e8, m1, ta, mu
-+
-+	la      t0, .arr_neg
-+	vle8.v  v1, 0(t0)
-+	li      a2, 3
-+
-+	la      t0, .arr_init
-+	vle8.v  v2, 0(t0)
-+
-+	la      t0, .v0_mask
-+	vle8.v  v0, 0(t0)
-+
-+	.insn r 0x57, 0x6, 0x2a, x2, x12, x1
-+
-+	la      t0, .expect_vabd_vx_masked
-+	vle8.v  v3, 0(t0)
-+
-+	vmsne.vv  v0, v2, v3
-+	vcpop.m a0, v0
-+	snez    a0, a0
-+	ret
-+
-+test_vabdu_vv:
-+	/*
-+	 * Test unsigned vector-vector absolute difference:
-+	 * abs({0, 255} - {255, 0}) = {255, 255}.
-+	 */
-+	vsetivli zero, 2, e8, m1, ta, mu
-+
-+	/* Load the two unsigned source vectors into v1 and v3. */
-+	la      t0, .arr_unsigned_lhs
-+	vle8.v  v1, 0(t0)
-+	la      t0, .arr_unsigned_rhs
-+	vle8.v  v3, 0(t0)
-+
-+	/* Execute vabdu.vv v2, v1, v3. */
-+	.insn r 0x57, 0x2, 0x2d, x2, x3, x1
-+
-+	/* Load the expected result into v3. */
-+	la      t0, .expect_vabdu_vv
-+	vle8.v  v3, 0(t0)
-+
-+	vmsne.vv  v0, v2, v3
-+	vcpop.m a0, v0
-+	snez    a0, a0
-+	ret
-+
-+test_vabdu_vv_mask:
-+	/*
-+	 * Test masked vabdu.vv.  Element 0 remains 9 and element 1 becomes
-+	 * abs(255 - 0) = 255.
-+	 */
-+	vsetivli zero, 2, e8, m1, ta, mu
-+
-+	la      t0, .arr_unsigned_lhs
-+	vle8.v  v1, 0(t0)
-+	la      t0, .arr_unsigned_rhs
-+	vle8.v  v3, 0(t0)
-+
-+	la      t0, .arr_init
-+	vle8.v  v2, 0(t0)
-+
-+	la      t0, .v0_mask
-+	vle8.v  v0, 0(t0)
-+
-+	.insn r 0x57, 0x2, 0x2c, x2, x3, x1
-+
-+	la      t0, .expect_vabdu_vv_masked
-+	vle8.v  v3, 0(t0)
-+
-+	vmsne.vv  v0, v2, v3
-+	vcpop.m a0, v0
-+	snez    a0, a0
-+	ret
-+
-+test_vabdu_vx:
-+	/*
-+	 * Test unsigned vector-scalar absolute difference:
-+	 * abs({0, 255} - 128) = {128, 127}.
-+	 */
-+	vsetivli zero, 2, e8, m1, ta, mu
-+
-+	la      t0, .arr_unsigned_lhs
-+	vle8.v  v1, 0(t0)
-+	li      a2, 128
-+
-+	/* Execute vabdu.vx v2, v1, a2. */
-+	.insn r 0x57, 0x6, 0x2d, x2, x12, x1
-+
-+	la      t0, .expect_vabdu_vx
-+	vle8.v  v3, 0(t0)
-+
-+	vmsne.vv  v0, v2, v3
-+	vcpop.m a0, v0
-+	snez    a0, a0
-+	ret
-+
-+test_vabdu_vx_mask:
-+	/*
-+	 * Test masked vabdu.vx.  Element 0 remains 9 and element 1 becomes
-+	 * abs(255 - 128) = 127.
-+	 */
-+	vsetivli zero, 2, e8, m1, ta, mu
-+
-+	la      t0, .arr_unsigned_lhs
-+	vle8.v  v1, 0(t0)
-+	li      a2, 128
-+
-+	la      t0, .arr_init
-+	vle8.v  v2, 0(t0)
-+
-+	la      t0, .v0_mask
-+	vle8.v  v0, 0(t0)
-+
-+	.insn r 0x57, 0x6, 0x2c, x2, x12, x1
-+
-+	la      t0, .expect_vabdu_vx_masked
-+	vle8.v  v3, 0(t0)
-+
-+	vmsne.vv  v0, v2, v3
-+	vcpop.m a0, v0
-+	snez    a0, a0
-+	ret
-+
-+test_vwabda_vv:
-+	/*
-+	 * Test signed widening vector-vector absolute difference and
-+	 * accumulation. Start with v4 = {1000, -1000}, and the expected
-+	 * widened result is {1000, -1000} + abs({-5, -7} - {5, 7}) =
-+	 * {1010, -986}.
-+	 */
-+	/* Load the 16-bit accumulator before selecting 8-bit operands. */
-+	vsetivli zero, 2, e16, m2, ta, mu
-+	la      t0, .arr_signed_acc
-+	vle16.v v4, 0(t0)
-+
-+	vsetivli zero, 2, e8, m1, ta, mu
-+	la      t0, .arr_neg
-+	vle8.v  v1, 0(t0)
-+	la      t0, .arr_pos
-+	vle8.v  v2, 0(t0)
-+
-+	/* Execute vwabda.vv v4, v1, v2. */
-+	.insn r 0x57, 0x0, 0x7b, x4, x2, x1
-+
-+	/* Select the widened EEW and compare v4 with the expected result. */
-+	vsetivli zero, 2, e16, m2, ta, mu
-+	la      t0, .expect_vwabda_vv
-+	vle16.v v6, 0(t0)
-+
-+	vmsne.vv  v0, v4, v6
-+	vcpop.m a0, v0
-+	snez    a0, a0
-+	ret
-+
-+test_vwabda_vv_mask:
-+	/*
-+	 * Test masked vwabda.vv.
-+	 * Start with v4 = {1000, -1000}, v0 = {0, 1}, and the expected widened
-+	 * result is {1000, -1000} + abs({-5, -7} - {5, 7}) = {1000, -986}.
-+	 */
-+	vsetivli zero, 2, e16, m2, ta, mu
-+	la      t0, .arr_signed_acc
-+	vle16.v v4, 0(t0)
-+
-+	vsetivli zero, 2, e8, m1, ta, mu
-+	la      t0, .arr_neg
-+	vle8.v  v1, 0(t0)
-+	la      t0, .arr_pos
-+	vle8.v  v2, 0(t0)
-+
-+	la      t0, .v0_mask
-+	vle8.v  v0, 0(t0)
-+
-+	.insn r 0x57, 0x0, 0x7a, x4, x2, x1
-+
-+	vsetivli zero, 2, e16, m2, ta, mu
-+	la      t0, .expect_vwabda_vv_masked
-+
-+	vle16.v v6, 0(t0)
-+	vmsne.vv  v0, v4, v6
-+	vcpop.m a0, v0
-+	snez    a0, a0
-+	ret
-+
-+test_vwabda_vx:
-+	/*
-+	 * Test signed widening vector-scalar absolute difference and
-+	 * accumulation. With scalar 3, v4 becomes {1000 + 8, -1000 + 10}.
-+	 */
-+	/* Load the 16-bit accumulator before selecting 8-bit operands. */
-+	vsetivli zero, 2, e16, m2, ta, mu
-+	la      t0, .arr_signed_acc
-+	vle16.v v4, 0(t0)
-+
-+	vsetivli zero, 2, e8, m1, ta, mu
-+	la      t0, .arr_neg
-+	vle8.v  v1, 0(t0)
-+	li      a2, 3
-+
-+	/* Execute vwabda.vx v4, v1, a2. */
-+	.insn r 0x57, 0x4, 0x7b, x4, x12, x1
-+
-+	/* Select the widened EEW and compare v4 with the expected result. */
-+	vsetivli zero, 2, e16, m2, ta, mu
-+	la      t0, .expect_vwabda_vx
-+	vle16.v v6, 0(t0)
-+
-+	vmsne.vv  v0, v4, v6
-+	vcpop.m a0, v0
-+	snez    a0, a0
-+	ret
-+
-+test_vwabda_vx_mask:
-+	/*
-+	 * Test masked vwabda.vx.  Element 0 remains 1000 while element 1
-+	 * accumulates 10 and becomes -990.
-+	 */
-+	vsetivli zero, 2, e16, m2, ta, mu
-+
-+	la      t0, .arr_signed_acc
-+	vle16.v v4, 0(t0)
-+
-+	vsetivli zero, 2, e8, m1, ta, mu
-+	la      t0, .arr_neg
-+	vle8.v  v1, 0(t0)
-+	li      a2, 3
-+
-+	la      t0, .v0_mask
-+	vle8.v  v0, 0(t0)
-+
-+	.insn r 0x57, 0x4, 0x7a, x4, x12, x1
-+
-+	vsetivli zero, 2, e16, m2, ta, mu
-+	la      t0, .expect_vwabda_vx_masked
-+	vle16.v v6, 0(t0)
-+
-+	vmsne.vv  v0, v4, v6
-+	vcpop.m a0, v0
-+	snez    a0, a0
-+	ret
-+
-+test_vwabdau_vv:
-+	/*
-+	 * Test unsigned widening vector-vector absolute difference and
-+	 * accumulation. Start with v4 = {1000, 2000}, adding {255, 255}
-+	 * produces {1255, 2255}.
-+	 */
-+	/* Load the unsigned 16-bit accumulator and 8-bit source vectors. */
-+	vsetivli zero, 2, e16, m2, ta, mu
-+
-+	la      t0, .arr_unsigned_acc
-+	vle16.v v4, 0(t0)
-+	vsetivli zero, 2, e8, m1, ta, mu
-+
-+	la      t0, .arr_unsigned_lhs
-+	vle8.v  v1, 0(t0)
-+	la      t0, .arr_unsigned_rhs
-+	vle8.v  v2, 0(t0)
-+
-+	/* Execute vwabdau.vv v4, v1, v2. */
-+	.insn r 0x57, 0x0, 0x7d, x4, x2, x1
-+
-+	/* Select the widened EEW and compare v4 with the expected result. */
-+	vsetivli zero, 2, e16, m2, ta, mu
-+	la      t0, .expect_vwabdau_vv
-+	vle16.v v6, 0(t0)
-+
-+	vmsne.vv  v0, v4, v6
-+	vcpop.m a0, v0
-+	snez    a0, a0
-+	ret
-+
-+test_vwabdau_vv_mask:
-+	/*
-+	 * Test masked vwabdau.vv.  Element 0 remains 1000 while element 1
-+	 * accumulates 255 and becomes 2255.
-+	 */
-+	vsetivli zero, 2, e16, m2, ta, mu
-+
-+	la      t0, .arr_unsigned_acc
-+	vle16.v v4, 0(t0)
-+
-+	vsetivli zero, 2, e8, m1, ta, mu
-+	la      t0, .arr_unsigned_lhs
-+	vle8.v  v1, 0(t0)
-+	la      t0, .arr_unsigned_rhs
-+	vle8.v  v2, 0(t0)
-+
-+	la      t0, .v0_mask
-+	vle8.v  v0, 0(t0)
-+
-+	.insn r 0x57, 0x0, 0x7c, x4, x2, x1
-+
-+	vsetivli zero, 2, e16, m2, ta, mu
-+	la      t0, .expect_vwabdau_vv_masked
-+	vle16.v v6, 0(t0)
-+
-+	vmsne.vv  v0, v4, v6
-+	vcpop.m a0, v0
-+	snez    a0, a0
-+	ret
-+
-+test_vwabdau_vx:
-+	/*
-+	 * Test unsigned widening vector-scalar absolute difference and
-+	 * accumulation. With scalar 128, v4 becomes {1000 + 128, 2000 + 127}.
-+	 */
-+	/* Load the unsigned 16-bit accumulator and 8-bit source vector. */
-+	vsetivli zero, 2, e16, m2, ta, mu
-+
-+	la      t0, .arr_unsigned_acc
-+	vle16.v v4, 0(t0)
-+
-+	vsetivli zero, 2, e8, m1, ta, mu
-+	la      t0, .arr_unsigned_lhs
-+	vle8.v  v1, 0(t0)
-+	li      a2, 128
-+
-+	/* Execute vwabdau.vx v4, v1, a2. */
-+	.insn r 0x57, 0x4, 0x7d, x4, x12, x1
-+
-+	/* Select the widened EEW and compare v4 with the expected result. */
-+	vsetivli zero, 2, e16, m2, ta, mu
-+	la      t0, .expect_vwabdau_vx
-+	vle16.v v6, 0(t0)
-+
-+	vmsne.vv  v0, v4, v6
-+	vcpop.m a0, v0
-+	snez    a0, a0
-+	ret
-+
-+test_vwabdau_vx_mask:
-+	/*
-+	 * Test masked vwabdau.vx.  Element 0 remains 1000 while element 1
-+	 * accumulates 127 and becomes 2127.
-+	 */
-+	vsetivli zero, 2, e16, m2, ta, mu
-+
-+	la      t0, .arr_unsigned_acc
-+	vle16.v v4, 0(t0)
-+
-+	vsetivli zero, 2, e8, m1, ta, mu
-+	la      t0, .arr_unsigned_lhs
-+	vle8.v  v1, 0(t0)
-+	li      a2, 128
-+
-+	la      t0, .v0_mask
-+	vle8.v  v0, 0(t0)
-+
-+	.insn r 0x57, 0x4, 0x7c, x4, x12, x1
-+
-+	vsetivli zero, 2, e16, m2, ta, mu
-+	la      t0, .expect_vwabdau_vx_masked
-+	vle16.v v6, 0(t0)
-+
-+	vmsne.vv  v0, v4, v6
-+	vcpop.m a0, v0
-+	snez    a0, a0
-+	ret
-+
-+
-+/* Exit through the semihosting SYS_EXIT_EXTENDED call with a0 as the code. */
-+_exit:
-+	la	a1, semiargs
-+	li	t0, 0x20026	/* ADP_Stopped_ApplicationExit */
-+	sd	t0, 0(a1)
-+	sd	a0, 8(a1)
-+	li	a0, 0x20	/* TARGET_SYS_EXIT_EXTENDED */
-+	.balign	16
-+	slli	zero, zero, 0x1f
-+	ebreak
-+	srai	zero, zero, 0x7
-+	j	.
-+
-+	.balign	4
-+trap_handler:
-+	csrr	t4, mcause
-+	la	t5, trap_mcause
-+	sd	t4, 0(t5)
-+	csrr	t4, mtval
-+	la	t5, trap_mtval
-+	sd	t4, 0(t5)
-+	li	a0, 1
-+	j	_exit
-+
-+	.data
-+	.balign	8
-+semiargs:
-+	.space	16
-+trap_mcause:
-+	.space	8
-+trap_mtval:
-+	.space	8
-+.arr_neg:
-+	.byte -5, -7
-+.arr_pos:
-+	.byte 5, 7
-+.arr_zero:
-+	.byte 0, 0
-+.arr_init:
-+	.byte 9, 9
-+.v0_mask:
-+	.byte 0b10
-+.arr_masked:
-+	.byte 0, 7
-+
-+/* Unsigned input vectors used by vabdu and vwabdau. */
-+.arr_unsigned_lhs:
-+	.byte 0, 255
-+.arr_unsigned_rhs:
-+	.byte 255, 0
-+	.balign 2
-+
-+/* Nonzero accumulators verify the add part of widening operations. */
-+.arr_signed_acc:
-+	.half 1000, -1000
-+.arr_unsigned_acc:
-+	.half 1000, 2000
-+
-+/* Expected results for the unmasked and masked forms. */
-+.expect_vabd_vv:
-+	.byte 10, 14
-+.expect_vabd_vv_masked:
-+	.byte 9, 14
-+.expect_vabd_vx:
-+	.byte 8, 10
-+.expect_vabd_vx_masked:
-+	.byte 9, 10
-+.expect_vabdu_vv:
-+	.byte 255, 255
-+.expect_vabdu_vv_masked:
-+	.byte 9, 255
-+.expect_vabdu_vx:
-+	.byte 128, 127
-+.expect_vabdu_vx_masked:
-+	.byte 9, 127
-+.expect_vwabda_vv:
-+	.half 1010, -986
-+.expect_vwabda_vv_masked:
-+	.half 1000, -986
-+.expect_vwabda_vx:
-+	.half 1008, -990
-+.expect_vwabda_vx_masked:
-+	.half 1000, -990
-+.expect_vwabdau_vv:
-+	.half 1255, 2255
-+.expect_vwabdau_vv_masked:
-+	.half 1000, 2255
-+.expect_vwabdau_vx:
-+	.half 1128, 2127
-+.expect_vwabdau_vx_masked:
-+	.half 1000, 2127
--- 
-2.39.5
+<html><head></head><body><div id=3D"editor_version_7.72.1_HbPS7Jqe" style=
+=3D"word-break:break-word;"><div data-zone-id=3D"0" data-line-index=3D"0" d=
+ata-line=3D"true" style=3D"margin-top: 4px; margin-bottom: 4px; line-height=
+: 1.6;"><div dir=3D"auto" style=3D"font-size: 14px;">Hi Richard,</div></div=
+><div data-zone-id=3D"0" data-line-index=3D"1" data-line=3D"true" style=3D"=
+margin-top: 4px; margin-bottom: 4px; line-height: 1.6;"><div dir=3D"auto" s=
+tyle=3D"font-size: 14px;"><br/></div></div><div data-zone-id=3D"0" data-lin=
+e-index=3D"2" data-line=3D"true" style=3D"margin-top: 4px; margin-bottom: 4=
+px; line-height: 1.6;"><div dir=3D"auto" style=3D"font-size: 14px;">Thanks =
+for pointing this out. I have updated the patch and sent a revised version.=
+</div></div></div><div class=3D"history-quote-wrapper" id=3D"lark-mail-quot=
+e-179207200" style=3D"word-break: break-word;"><div id=3D"lark-mail-quote-1=
+72f5b460db2cf3dc04ab7b44c2a844c"><div class=3D"history-quote-meta-wrapper a=
+dit-html-block__attr history-quote-gap-tag" style=3D"padding: 12px; backgro=
+und: rgb(245, 246, 247); color: rgb(31, 35, 41); border-radius: 4px; margin=
+-top: 24px; margin-bottom: 12px;" id=3D"lark-mail-meta-jJE2Hl7eN"><div data=
+-zone-id=3D"0" data-line-index=3D"3" data-line=3D"true" style=3D"margin: 0p=
+x;" class=3D"history-quote-line quote-head-meta-line"><div class=3D"" dir=
+=3D"auto">From: &#34;Richard Henderson&#34;&lt;<a class=3D"quote-head-meta-=
+mailto" target=3D"_blank" rel=3D"noopener noreferrer" href=3D"mailto:richar=
+d.henderson@linaro.org" style=3D"cursor: pointer; text-decoration: none; co=
+lor: inherit;">richard.henderson@linaro.org</a>&gt;</div></div><div data-zo=
+ne-id=3D"0" data-line-index=3D"4" data-line=3D"true" style=3D"margin: 0px;"=
+ class=3D"history-quote-line quote-head-meta-line"><div class=3D"" dir=3D"a=
+uto">Date:=C2=A0 Thu, Oct 15, 2026, 14:08</div></div><div data-zone-id=3D"0=
+" data-line-index=3D"5" data-line=3D"true" style=3D"margin: 0px;" class=3D"=
+history-quote-line quote-head-meta-line"><div class=3D"" dir=3D"auto">Subje=
+ct:=C2=A0 Re: [PULL 13/52] tests/tcg/riscv64: Add Zvabd extension tests</di=
+v></div><div data-zone-id=3D"0" data-line-index=3D"6" data-line=3D"true" st=
+yle=3D"margin: 0px;" class=3D"history-quote-line quote-head-meta-line"><div=
+ class=3D"" dir=3D"auto">To: &lt;<a class=3D"quote-head-meta-mailto" target=
+=3D"_blank" rel=3D"noopener noreferrer" href=3D"mailto:qemu-devel@nongnu.or=
+g" style=3D"cursor: pointer; text-decoration: none; color: inherit;">qemu-d=
+evel@nongnu.org</a>&gt;, &lt;<a class=3D"quote-head-meta-mailto" target=3D"=
+_blank" rel=3D"noopener noreferrer" href=3D"mailto:alistair23@gmail.com" st=
+yle=3D"cursor: pointer; text-decoration: none; color: inherit;">alistair23@=
+gmail.com</a>&gt;, &lt;<a class=3D"quote-head-meta-mailto" target=3D"_blank=
+" rel=3D"noopener noreferrer" href=3D"mailto:liumingliang.dev@bytedance.com=
+" style=3D"cursor: pointer; text-decoration: none; color: inherit;">liuming=
+liang.dev@bytedance.com</a>&gt;</div></div></div><div data-zone-id=3D"0" da=
+ta-line-index=3D"7" data-line=3D"true" style=3D"margin-top: 4px; margin-bot=
+tom: 4px; line-height: 1.6;" class=3D"history-quote-line"><div class=3D"" d=
+ir=3D"auto" style=3D"font-size: 14px;"><span>On 10/14/26 05:38, <a href=3D"=
+mailto:alistair23@gmail.com" target=3D"_blank" ref=3D"noopener noreferrer">=
+alistair23@gmail.com</a>=C2=A0wrote:</span></div></div><div data-zone-id=3D=
+"0" data-line-index=3D"8" data-line=3D"true" style=3D"margin-top: 4px; marg=
+in-bottom: 4px; line-height: 1.6;" class=3D"history-quote-line"><div class=
+=3D"" dir=3D"auto" style=3D"font-size: 14px;"><span>&gt; From: Mingliang Li=
+u&lt;<a href=3D"mailto:liumingliang.dev@bytedance.com" target=3D"_blank" re=
+f=3D"noopener noreferrer">liumingliang.dev@bytedance.com</a>&gt;</span></di=
+v></div><div data-zone-id=3D"0" data-line-index=3D"9" data-line=3D"true" st=
+yle=3D"margin-top: 4px; margin-bottom: 4px; line-height: 1.6;" class=3D"his=
+tory-quote-line"><div class=3D"" dir=3D"auto" style=3D"font-size: 14px;">&g=
+t;=C2=A0</div></div><div data-zone-id=3D"0" data-line-index=3D"10" data-lin=
+e=3D"true" style=3D"margin-top: 4px; margin-bottom: 4px; line-height: 1.6;"=
+ class=3D"history-quote-line"><div class=3D"" dir=3D"auto" style=3D"font-si=
+ze: 14px;">&gt; Add a RV64 TCG test covering the masked and unmasked vector=
+-vector</div></div><div data-zone-id=3D"0" data-line-index=3D"11" data-line=
+=3D"true" style=3D"margin-top: 4px; margin-bottom: 4px; line-height: 1.6;" =
+class=3D"history-quote-line"><div class=3D"" dir=3D"auto" style=3D"font-siz=
+e: 14px;">&gt; and vector-scalar forms of vabd, vabdu, vwabda, and vwabdau.=
+</div></div><div data-zone-id=3D"0" data-line-index=3D"12" data-line=3D"tru=
+e" style=3D"margin-top: 4px; margin-bottom: 4px; line-height: 1.6;" class=
+=3D"history-quote-line"><div class=3D"" dir=3D"auto" style=3D"font-size: 14=
+px;">&gt;=C2=A0</div></div><div data-zone-id=3D"0" data-line-index=3D"13" d=
+ata-line=3D"true" style=3D"margin-top: 4px; margin-bottom: 4px; line-height=
+: 1.6;" class=3D"history-quote-line"><div class=3D"" dir=3D"auto" style=3D"=
+font-size: 14px;">&gt; Assemblers do not yet support the version 0.9 instru=
+ction mnemonics,</div></div><div data-zone-id=3D"0" data-line-index=3D"14" =
+data-line=3D"true" style=3D"margin-top: 4px; margin-bottom: 4px; line-heigh=
+t: 1.6;" class=3D"history-quote-line"><div class=3D"" dir=3D"auto" style=3D=
+"font-size: 14px;">&gt; so the instruction encodings are hardcoded for the =
+time being.</div></div><div data-zone-id=3D"0" data-line-index=3D"15" data-=
+line=3D"true" style=3D"margin-top: 4px; margin-bottom: 4px; line-height: 1.=
+6;" class=3D"history-quote-line"><div class=3D"" dir=3D"auto" style=3D"font=
+-size: 14px;">&gt;=C2=A0</div></div><div data-zone-id=3D"0" data-line-index=
+=3D"16" data-line=3D"true" style=3D"margin-top: 4px; margin-bottom: 4px; li=
+ne-height: 1.6;" class=3D"history-quote-line"><div class=3D"" dir=3D"auto" =
+style=3D"font-size: 14px;">&gt; GNU binutils 2.47 supports the incompatible=
+ version 0.7 instruction</div></div><div data-zone-id=3D"0" data-line-index=
+=3D"17" data-line=3D"true" style=3D"margin-top: 4px; margin-bottom: 4px; li=
+ne-height: 1.6;" class=3D"history-quote-line"><div class=3D"" dir=3D"auto" =
+style=3D"font-size: 14px;">&gt; encodings. Therefore, this test must not be=
+ built with that version,</div></div><div data-zone-id=3D"0" data-line-inde=
+x=3D"18" data-line=3D"true" style=3D"margin-top: 4px; margin-bottom: 4px; l=
+ine-height: 1.6;" class=3D"history-quote-line"><div class=3D"" dir=3D"auto"=
+ style=3D"font-size: 14px;">&gt; even after it is converted to use instruct=
+ion mnemonics.</div></div><div data-zone-id=3D"0" data-line-index=3D"19" da=
+ta-line=3D"true" style=3D"margin-top: 4px; margin-bottom: 4px; line-height:=
+ 1.6;" class=3D"history-quote-line"><div class=3D"" dir=3D"auto" style=3D"f=
+ont-size: 14px;">&gt;=C2=A0</div></div><div data-zone-id=3D"0" data-line-in=
+dex=3D"20" data-line=3D"true" style=3D"margin-top: 4px; margin-bottom: 4px;=
+ line-height: 1.6;" class=3D"history-quote-line"><div class=3D"" dir=3D"aut=
+o" style=3D"font-size: 14px;"><span>&gt; Reviewed-by: Daniel Henrique Barbo=
+za&lt;<a href=3D"mailto:daniel.barboza@oss.qualcomm.com" target=3D"_blank" =
+ref=3D"noopener noreferrer">daniel.barboza@oss.qualcomm.com</a>&gt;</span><=
+/div></div><div data-zone-id=3D"0" data-line-index=3D"21" data-line=3D"true=
+" style=3D"margin-top: 4px; margin-bottom: 4px; line-height: 1.6;" class=3D=
+"history-quote-line"><div class=3D"" dir=3D"auto" style=3D"font-size: 14px;=
+"><span>&gt; Co-Author: Daniel Henrique Barboza&lt;<a href=3D"mailto:daniel=
+.barboza@oss.qualcomm.com" target=3D"_blank" ref=3D"noopener noreferrer">da=
+niel.barboza@oss.qualcomm.com</a>&gt;</span></div></div><div data-zone-id=
+=3D"0" data-line-index=3D"22" data-line=3D"true" style=3D"margin-top: 4px; =
+margin-bottom: 4px; line-height: 1.6;" class=3D"history-quote-line"><div cl=
+ass=3D"" dir=3D"auto" style=3D"font-size: 14px;"><span>&gt; Signed-off-by: =
+Daniel Henrique Barboza&lt;<a href=3D"mailto:daniel.barboza@oss.qualcomm.co=
+m" target=3D"_blank" ref=3D"noopener noreferrer">daniel.barboza@oss.qualcom=
+m.com</a>&gt;</span></div></div><div data-zone-id=3D"0" data-line-index=3D"=
+23" data-line=3D"true" style=3D"margin-top: 4px; margin-bottom: 4px; line-h=
+eight: 1.6;" class=3D"history-quote-line"><div class=3D"" dir=3D"auto" styl=
+e=3D"font-size: 14px;"><span>&gt; Signed-off-by: Mingliang Liu&lt;<a href=
+=3D"mailto:liumingliang.dev@bytedance.com" target=3D"_blank" ref=3D"noopene=
+r noreferrer">liumingliang.dev@bytedance.com</a>&gt;</span></div></div><div=
+ data-zone-id=3D"0" data-line-index=3D"24" data-line=3D"true" style=3D"marg=
+in-top: 4px; margin-bottom: 4px; line-height: 1.6;" class=3D"history-quote-=
+line"><div class=3D"" dir=3D"auto" style=3D"font-size: 14px;"><span>&gt; Me=
+ssage-ID:&lt;<a href=3D"mailto:20260907152301.1701394-4-liumingliang.dev@by=
+tedance.com" target=3D"_blank" ref=3D"noopener noreferrer">20260907152301.1=
+701394-4-liumingliang.dev@bytedance.com</a>&gt;</span></div></div><div data=
+-zone-id=3D"0" data-line-index=3D"25" data-line=3D"true" style=3D"margin-to=
+p: 4px; margin-bottom: 4px; line-height: 1.6;" class=3D"history-quote-line"=
+><div class=3D"" dir=3D"auto" style=3D"font-size: 14px;"><span>&gt; Signed-=
+off-by: Alistair Francis&lt;<a href=3D"mailto:alistair.francis@wdc.com" tar=
+get=3D"_blank" ref=3D"noopener noreferrer">alistair.francis@wdc.com</a>&gt;=
+</span></div></div><div data-zone-id=3D"0" data-line-index=3D"26" data-line=
+=3D"true" style=3D"margin-top: 4px; margin-bottom: 4px; line-height: 1.6;" =
+class=3D"history-quote-line"><div class=3D"" dir=3D"auto" style=3D"font-siz=
+e: 14px;">&gt; ---</div></div><div data-zone-id=3D"0" data-line-index=3D"27=
+" data-line=3D"true" style=3D"margin-top: 4px; margin-bottom: 4px; line-hei=
+ght: 1.6;" class=3D"history-quote-line"><div class=3D"" dir=3D"auto" style=
+=3D"font-size: 14px;">&gt; =C2=A0 tests/tcg/riscv64/Makefile.softmmu-target=
+ | =C2=A0 9 +</div></div><div data-zone-id=3D"0" data-line-index=3D"28" dat=
+a-line=3D"true" style=3D"margin-top: 4px; margin-bottom: 4px; line-height: =
+1.6;" class=3D"history-quote-line"><div class=3D"" dir=3D"auto" style=3D"fo=
+nt-size: 14px;">&gt; =C2=A0 tests/tcg/riscv64/test-zvabd.S =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0=C2=A0 | 659 ++++++++++++++++++++++</div></div><div dat=
+a-zone-id=3D"0" data-line-index=3D"29" data-line=3D"true" style=3D"margin-t=
+op: 4px; margin-bottom: 4px; line-height: 1.6;" class=3D"history-quote-line=
+"><div class=3D"" dir=3D"auto" style=3D"font-size: 14px;">&gt; =C2=A0 2 fil=
+es changed, 668 insertions(+)</div></div><div data-zone-id=3D"0" data-line-=
+index=3D"30" data-line=3D"true" style=3D"margin-top: 4px; margin-bottom: 4p=
+x; line-height: 1.6;" class=3D"history-quote-line"><div class=3D"" dir=3D"a=
+uto" style=3D"font-size: 14px;">&gt; =C2=A0 create mode 100644 tests/tcg/ri=
+scv64/test-zvabd.S</div></div><div data-zone-id=3D"0" data-line-index=3D"31=
+" data-line=3D"true" style=3D"margin-top: 4px; margin-bottom: 4px; line-hei=
+ght: 1.6;" class=3D"history-quote-line"><div class=3D"" dir=3D"auto" style=
+=3D"font-size: 14px;"><br/></div></div><div data-zone-id=3D"0" data-line-in=
+dex=3D"32" data-line=3D"true" style=3D"margin-top: 4px; margin-bottom: 4px;=
+ line-height: 1.6;" class=3D"history-quote-line"><div class=3D"" dir=3D"aut=
+o" style=3D"font-size: 14px;">tests/tcg/riscv64/Makefile.softmmu-target no =
+longer exists.</div></div><div data-zone-id=3D"0" data-line-index=3D"33" da=
+ta-line=3D"true" style=3D"margin-top: 4px; margin-bottom: 4px; line-height:=
+ 1.6;" class=3D"history-quote-line"><div class=3D"" dir=3D"auto" style=3D"f=
+ont-size: 14px;">This should be rewritten to update tests/tcg/riscv64/meson=
+.build.</div></div><div data-zone-id=3D"0" data-line-index=3D"34" data-line=
+=3D"true" style=3D"margin-top: 4px; margin-bottom: 4px; line-height: 1.6;" =
+class=3D"history-quote-line"><div class=3D"" dir=3D"auto" style=3D"font-siz=
+e: 14px;"><br/></div></div><div data-zone-id=3D"0" data-line-index=3D"35" d=
+ata-line=3D"true" style=3D"margin-top: 4px; margin-bottom: 4px; line-height=
+: 1.6;" class=3D"history-quote-line"><div class=3D"" dir=3D"auto" style=3D"=
+font-size: 14px;"><br/></div></div><div data-zone-id=3D"0" data-line-index=
+=3D"36" data-line=3D"true" style=3D"margin-top: 4px; margin-bottom: 4px; li=
+ne-height: 1.6;" class=3D"history-quote-line"><div class=3D"" dir=3D"auto" =
+style=3D"font-size: 14px;">r~</div></div><div data-zone-id=3D"0" data-line-=
+index=3D"37" data-line=3D"true" style=3D"margin-top: 4px; margin-bottom: 4p=
+x; line-height: 1.6;"><div dir=3D"auto" style=3D"font-size: 14px;"><br/></d=
+iv></div></div></div></body></html>
+--8d8db24a7c4b18362562ebba3019e1805e355269ef21a27be37974790420--
 
