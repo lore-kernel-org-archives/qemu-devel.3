@@ -4,64 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9C89CC6B2F
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 06:09:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36CA5CC6B39
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 06:09:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHEdo-0003m2-6h; Thu, 15 Oct 2026 02:08:36 -0400
+	id 1xHEeB-0003wH-LQ; Thu, 15 Oct 2026 02:08:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <33W3QagoKClgIJ0DB4O97K6EE6B4.2ECG4CK-34L4BDED6DK.EH6@flex--stanleyjhu.bounces.google.com>)
- id 1xHEdl-0003ke-TU
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 02:08:33 -0400
-Received: from mail-pg1-x547.google.com ([2607:f8b0:4864:20::547])
+ <36G3QagoKCmMTUBOMFZKIVHPPHMF.DPNRFNV-EFWFMOPOHOV.PSH@flex--stanleyjhu.bounces.google.com>)
+ id 1xHEdx-0003p7-Od
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 02:08:48 -0400
+Received: from mail-pg1-x545.google.com ([2607:f8b0:4864:20::545])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from
- <33W3QagoKClgIJ0DB4O97K6EE6B4.2ECG4CK-34L4BDED6DK.EH6@flex--stanleyjhu.bounces.google.com>)
- id 1xHEdk-0004Hz-8f
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 02:08:33 -0400
-Received: by mail-pg1-x547.google.com with SMTP id
- 41be03b00d2f7-cc4fc935a11so1319810a12.0
- for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 23:08:30 -0700 (PDT)
+ <36G3QagoKCmMTUBOMFZKIVHPPHMF.DPNRFNV-EFWFMOPOHOV.PSH@flex--stanleyjhu.bounces.google.com>)
+ id 1xHEdv-0004In-PV
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 02:08:45 -0400
+Received: by mail-pg1-x545.google.com with SMTP id
+ 41be03b00d2f7-cc4ac5feaa4so3350251a12.1
+ for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 23:08:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20251104; t=1792044509; x=1792649309; darn=nongnu.org;
- h=content-type:cc:to:from:subject:message-id:mime-version:date:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=cAi4uB2hBMj2hz6r0GKZ7hS/pjMimcswPAylWvF5K2g=;
- b=f0HZ4Wnu0XvwjGmaFLNzjl1JQDPT4c0SWh2g//SVaJ1SL9qQWw9emhQx9SI5c8R6eN
- XxLmjvgrrIQc2Ex6ZAyacHwSWo2rrF+MmUCn/Iy8naTxMz88EbZah+wYu69UXKb2lx6s
- D9F/Vq2gNU5BONY8+FHt55Nfv4lhswxbDWrkqnv+3EWuD06KLWjVuCdeFhMvhisJ543Y
- 6tQDsC9qhldTmNcIAwJc21NBlX89TgHeMBVk/Q0CfceWKqMTsfeZdt1KpzQtqzJAWtUp
- X2gPN3dhBZD40KBc9YcsFCP+cVfx7Jf7KQm9gfKghi8ckXzuASTbwGHtve6ZF0cU2aPF
- V9TQ==
+ d=google.com; s=20251104; t=1792044521; x=1792649321; darn=nongnu.org;
+ h=content-type:cc:to:from:subject:message-id:references:mime-version
+ :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=mqjEmUU0U9hvpchxY/PjtiKlPdGQUq34O/p+GdEPli8=;
+ b=B+2NPnc0pwKXpZQPhGRVTOBhFp1eoultDTdSakjwjU+7pwve0QjWCuoq+re3O83Orl
+ 583TAGSHGA+q2SfgWF1HAWTKlDCLkmp/eMtQCcrFaeGt/gYJEo44qsjgSJCSbQ6csUT0
+ JdPq6z0JH7UFx6cO/5+w7fjZgV0VMmidLbvBnKHKxC/UbO1vge2YowCwcftDXodbKFK4
+ KT/tGq58VTrmS8PwrcSpUuEcplYFgnSJOhLc0QRBkCjs4XDb5QnTeYjo70d71iXgknZ4
+ cUR1xH1vc5A+W/ncoVW16/zDEA7jK87X+Up85SkuxxQiUmjj/g1bttuKZ0GfbSyR4D5Y
+ /7Cg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792044509; x=1792649309;
- h=content-type:cc:to:from:subject:message-id:mime-version:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=cAi4uB2hBMj2hz6r0GKZ7hS/pjMimcswPAylWvF5K2g=;
- b=nEKwKKClqaxGB9yMLHDRCBayLU5BjR4N1WC98i5G0auL3/kYsQf+b03Pur8zcoi1bm
- dfNi3LfNznMWI7ftuqTWe97DhsoGC//OHzEtUe2mShrJOSDwJ/eXe/yfH5nBkXLkaRV2
- rv3k9T5LmHmsBxj4u282gyFum7uEhvY/cs6C9U+Stt1fzQR/6SuS64eoJThcYFejYRpD
- STYD8r2igkJ8mECCFur71zrN/gV7XFpDHTbWgqN9vBXKhWrRvxRIxwexc6j/817sdECp
- t+ZBIGhsHCyVVnZQAD9fpgaQdLKDABd8rVY2d9UtLHMT45VhOCbPlhE9tE1t5bbPuVBW
- dH8A==
-X-Gm-Message-State: AFq9FYL27Lw3PAGm1FvnKpMCx3xcf8JJVSH4xHQxJJoAGtYVhp3hbi//
- J7zXKYpXNaL5mPbbDJsIV5ZQKdHLMDVmax0qBhnVdr8NY6MQLFF6lyYE8YqF3bKIMLco+DvT8IB
- DEZ+tuPG+zZT6d9KcWP0qTQ==
-X-Received: from pgbda6.prod.google.com ([2002:a05:6a02:2386:b0:cca:c02e:bfd6])
+ d=1e100.net; s=20260707; t=1792044521; x=1792649321;
+ h=content-type:cc:to:from:subject:message-id:references:mime-version
+ :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=mqjEmUU0U9hvpchxY/PjtiKlPdGQUq34O/p+GdEPli8=;
+ b=XDv+DJN/TUIO09iWTFAujrCg1EDcODd5EmZNb5e4IY3HQ8uSHAxfjF32TzI7mmNqe9
+ DYnTZwQ3GHVKXWTwPtFA0bvRm0D16NJIVDao/8DH6b7F82cQRKgS6QnZrqkO5+IUyL+3
+ JyCuPzrr70amP23K+TxFYP1hFq5rvarUVnEsEocMYHE63Buq1y4PyZuMKY3uYyX5Wg1I
+ 71SD0gfmY9Wqs3vonRPhAH7oKhdJmurqryeogzLQAfRoEtX8/uVSXPzW+FKeqVoqXJsr
+ FgIb7XXLmj/3rWfJrtlAdMikYWfonfjvxrsfc3/Lf03tl0IkV9J50KHXMGsa/YdQh8ID
+ FKUg==
+X-Gm-Message-State: AFq9FYKBhQeZEMQhNpFacVuzNbRQNyQeX7FUzdOCXtoCMROelzqDHfbP
+ OWsxqZOkDMzW+E2I+5dWntMoVNcVeaJmgdqZL/oOczuJPvAmxidqpC4wd2kSljOBWtWKt1WPe96
+ 1C6zvaZj1XGlxSd1lJdMifg==
+X-Received: from pfbbw17.prod.google.com ([2002:a05:6a00:4091:b0:891:74f:5b6])
  (user=stanleyjhu job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:6a21:6004:b0:3e1:558d:e369 with SMTP id
- adf61e73a8af0-3e16bfbf84bmr15879666637.27.1792044509156; 
- Wed, 14 Oct 2026 23:08:29 -0700 (PDT)
-Date: Thu, 15 Oct 2026 14:08:19 +0800
+ 2002:a05:6a00:854:b0:881:bc81:e8f3 with SMTP id
+ d2e1a72fcca58-897c5d5c3bfmr12446577b3a.12.1792044520742; 
+ Wed, 14 Oct 2026 23:08:40 -0700 (PDT)
+Date: Thu, 15 Oct 2026 14:08:25 +0800
+In-Reply-To: <20261015060827.341298-1-stanleyjhu@google.com>
 Mime-Version: 1.0
+References: <20261015060827.341298-1-stanleyjhu@google.com>
 X-Mailer: git-send-email 2.56.0.385.gd3acb90ef8-goog
-Message-ID: <20261015060827.341298-1-stanleyjhu@google.com>
-Subject: [PATCH 0/8] hw/ufs: Add fault injection, update TMR doc,
- and add qtests
+Message-ID: <20261015060827.341298-7-stanleyjhu@google.com>
+Subject: [PATCH 6/8] tests/qtest/ufs-test: Add HCE reset unit test
 From: Stanley Jhu <stanleyjhu@google.com>
 To: Jeuk Kim <jeuk20.kim@samsung.com>, Jeuk Kim <jeuk20.kim@gmail.com>
 Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>, 
@@ -69,9 +70,9 @@ Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
  Jinyoung Choi <j-young.choi@samsung.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::547;
- envelope-from=33W3QagoKClgIJ0DB4O97K6EE6B4.2ECG4CK-34L4BDED6DK.EH6@flex--stanleyjhu.bounces.google.com;
- helo=mail-pg1-x547.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::545;
+ envelope-from=36G3QagoKCmMTUBOMFZKIVHPPHMF.DPNRFNV-EFWFMOPOHOV.PSH@flex--stanleyjhu.bounces.google.com;
+ helo=mail-pg1-x545.google.com
 X-Spam_score_int: -95
 X-Spam_score: -9.6
 X-Spam_bar: ---------
@@ -94,48 +95,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series adds experimental fault injection to the UFS device model
-so host drivers can exercise task abort and power management recovery,
-updates the task management description in the UFS docs, and adds
-qtest cases for controller reset, MCQ runtime registers, task
-management and fault-injected task abort.
+Add ufs_test_hce_reset() to verify HCE 1->0->1 controller reset
+behavior, checking that UTMRLRSR and dynamic MCQ queue configuration and
+operational registers reset to 0 while host-configured registers (IE,
+UTMRLBA/UTMRLBAU, MCQCONFIG) and static capability offsets (SQDAO/CQDAO)
+are preserved and subsequent I/O succeeds.
 
-- Patches 1-2: x-fault-inject-tag and x-fault-inject-mode properties
-  to hold a transfer request, and task management handling for the
-  held request.
-- Patch 3: ssu-timeout mode for power management recovery testing.
-- Patch 4: document the supported task management functions (QUERY
-  TASK and ABORT TASK).
-- Patches 5-8: qtest helpers and test cases.
+Signed-off-by: Stanley Jhu <stanleyjhu@google.com>
+---
+ tests/qtest/ufs-test.c | 75 ++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 75 insertions(+)
 
-The fault injection properties are experimental (x- prefix) and off
-by default.
-
-Tested with qos-test on aarch64 and x86_64 (14 and 15 UFS cases).
-
-Stanley Jhu (8):
-  hw/ufs: Add experimental fault injection properties for holding
-    requests
-  hw/ufs: Handle task management requests for fault-injected held
-    requests
-  hw/ufs: Add ssu-timeout mode for power management recovery testing
-  docs/system/ufs: Update task management request support status
-  tests/qtest/ufs-test: Add TMR and async MCQ SCSI submission helpers
-  tests/qtest/ufs-test: Add HCE reset unit test
-  tests/qtest/ufs-test: Add MCQ runtime register and TMR handling test
-  tests/qtest/ufs-test: Add QOM fault injection task abort test
-
- docs/system/devices/ufs.rst |   7 +-
- hw/ufs/trace-events         |   3 +
- hw/ufs/ufs-pci.c            |   6 +
- hw/ufs/ufs-sysbus.c         |   6 +
- hw/ufs/ufs.c                | 337 +++++++++++++++++++-
- hw/ufs/ufs.h                |  62 ++++
- tests/qtest/ufs-test.c      | 610 ++++++++++++++++++++++++++++++++++++
- 7 files changed, 1027 insertions(+), 4 deletions(-)
-
-
-base-commit: 8ee6c77176cfee03be0ec7665b6652b2f31f1531
+diff --git a/tests/qtest/ufs-test.c b/tests/qtest/ufs-test.c
+index d8329d1409..c82e35b2b5 100644
+--- a/tests/qtest/ufs-test.c
++++ b/tests/qtest/ufs-test.c
+@@ -1725,6 +1725,80 @@ static G_GNUC_UNUSED int ufs_mcq_send_scsi_cmd_async(QUfs *ufs, uint8_t lun,
+     return cmd_desc_slot;
+ }
+ 
++static void ufs_test_hce_reset(void *obj, void *data, QGuestAllocator *alloc)
++{
++    QUfs *ufs = obj;
++    uint32_t mcqcap, qcfgptr, mcq_reg_offset;
++    uint32_t orig_sqdao, orig_cqdao, orig_ie;
++    enum UtpOcsCodes ocs;
++    UtpUpiuRsp rsp_upiu;
++
++    ufs_init(ufs, alloc);
++    g_assert_true(ufs->support_mcq);
++
++    mcqcap = ufs_rreg(ufs, A_MCQCAP);
++    qcfgptr = FIELD_EX32(mcqcap, MCQCAP, QCFGPTR);
++    mcq_reg_offset = qcfgptr * 0x200 + TEST_QID * 0x40;
++
++    orig_sqdao = ufs_rreg(ufs, mcq_reg_offset + A_SQDAO);
++    orig_cqdao = ufs_rreg(ufs, mcq_reg_offset + A_CQDAO);
++    orig_ie = ufs_rreg(ufs, A_IE);
++    g_assert_cmpuint(orig_sqdao, !=, 0);
++    g_assert_cmpuint(orig_cqdao, !=, 0);
++    g_assert_cmpuint(orig_ie, !=, 0);
++    g_assert_cmpuint(ufs_rreg(ufs, mcq_reg_offset + A_SQATTR), !=, 0);
++    g_assert_cmpuint(ufs_rreg(ufs, mcq_reg_offset + A_CQATTR), !=, 0);
++    g_assert_cmpuint(ufs_rreg(ufs, orig_sqdao + 0x4), !=, 0);
++
++    ufs_wreg(ufs, A_UTMRLBA, 0x1000);
++    ufs_wreg(ufs, A_UTMRLBAU, 0x1);
++    ufs_wreg(ufs, A_UTMRLRSR, 1);
++    ufs_wreg(ufs, A_MCQCONFIG, 0x100);
++    g_assert_cmpuint(ufs_rreg(ufs, A_UTMRLRSR), ==, 1);
++
++    /* Write HCE=0 to trigger controller reset */
++    ufs_wreg(ufs, A_HCE, 0);
++    g_assert_cmpuint(FIELD_EX32(ufs_rreg(ufs, A_HCE), HCE, HCE), ==, 0);
++    g_assert_cmpuint(ufs_rreg(ufs, A_HCS), ==, 0);
++    g_assert_cmpuint(ufs_rreg(ufs, A_UTMRLRSR), ==, 0);
++
++    /* Verify host-configured registers remain preserved across HCE=0 */
++    g_assert_cmpuint(ufs_rreg(ufs, A_IE), ==, orig_ie);
++    g_assert_cmpuint(ufs_rreg(ufs, A_UTMRLBA), ==, 0x1000);
++    g_assert_cmpuint(ufs_rreg(ufs, A_UTMRLBAU), ==, 0x1);
++    g_assert_cmpuint(ufs_rreg(ufs, A_MCQCONFIG), ==, 0x100);
++
++    /* Verify dynamic queue configuration registers reset to 0 */
++    g_assert_cmpuint(ufs_rreg(ufs, mcq_reg_offset + A_SQATTR), ==, 0);
++    g_assert_cmpuint(ufs_rreg(ufs, mcq_reg_offset + A_SQLBA), ==, 0);
++    g_assert_cmpuint(ufs_rreg(ufs, mcq_reg_offset + A_CQATTR), ==, 0);
++    g_assert_cmpuint(ufs_rreg(ufs, mcq_reg_offset + A_CQLBA), ==, 0);
++
++    /* Verify dynamic MCQ operational registers reset to 0 on HCE=0 */
++    g_assert_cmpuint(ufs_rreg(ufs, orig_sqdao), ==, 0);
++    g_assert_cmpuint(ufs_rreg(ufs, orig_sqdao + 0x4), ==, 0);
++    g_assert_cmpuint(ufs_rreg(ufs, orig_cqdao), ==, 0);
++    g_assert_cmpuint(ufs_rreg(ufs, orig_cqdao + 0x4), ==, 0);
++
++    /* Verify read-only capability offsets (SQDAO/CQDAO) remain intact */
++    g_assert_cmpuint(ufs_rreg(ufs, mcq_reg_offset + A_SQDAO), ==, orig_sqdao);
++    g_assert_cmpuint(ufs_rreg(ufs, mcq_reg_offset + A_CQDAO), ==, orig_cqdao);
++
++    /* Re-enable HCE=1 and verify dynamic queue status/pointers remain 0 */
++    ufs_wreg(ufs, A_HCE, FIELD_DP32(0, HCE, HCE, 1));
++    g_assert_cmpuint(FIELD_EX32(ufs_rreg(ufs, A_HCE), HCE, HCE), ==, 1);
++
++    /* Free previous guest allocations before re-initializing */
++    ufs_exit(ufs, alloc);
++
++    /* Re-enable HCE=1, re-init controller, and verify normal I/O succeeds */
++    ufs_init(ufs, alloc);
++    ocs = ufs_send_nop_out(ufs, &rsp_upiu);
++    g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
++
++    ufs_exit(ufs, alloc);
++}
++
+ static void ufs_register_nodes(void)
+ {
+     const char *arch;
+@@ -1781,6 +1855,7 @@ static void ufs_register_nodes(void)
+                  &io_test_opts);
+     qos_add_test("query-desciptor", "ufs", ufstest_query_desc_request,
+                  &io_test_opts);
++    qos_add_test("hce-reset", "ufs", ufs_test_hce_reset, &mcq_test_opts);
+     qos_add_test("wb-init", "ufs", ufstest_wb_init, &wb_test_opts);
+     qos_add_test("wb-read-write", "ufs", ufstest_wb_read_write, &wb_test_opts);
+     qos_add_test("hid", "ufs", ufstest_hid, &io_test_opts);
 -- 
 2.56.0.385.gd3acb90ef8-goog
 
