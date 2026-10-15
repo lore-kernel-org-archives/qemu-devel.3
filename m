@@ -4,107 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3689CC6B38
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB8EECCA466
 	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 18:17:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHQ17-0007A9-50; Thu, 15 Oct 2026 14:17:25 -0400
+	id 1xHPvn-0001kI-Tt; Thu, 15 Oct 2026 14:11:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xHQ0x-0006qR-8A
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 14:17:19 -0400
-Received: from mail-yw1-x1133.google.com ([2607:f8b0:4864:20::1133])
+ (Exim 4.90_1) (envelope-from <marcelomanzo@gmail.com>)
+ id 1xHPva-0001Sy-Oz
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 14:11:42 -0400
+Received: from mail-qt1-x82e.google.com ([2607:f8b0:4864:20::82e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xHQ0v-000245-72
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 14:17:14 -0400
-Received: by mail-yw1-x1133.google.com with SMTP id
- 00721157ae682-8b0d126f631so16034127b3.2
- for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 11:17:10 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792088230; cv=none;
- d=google.com; s=arc-20260327;
- b=V9NvvYYbvwQvWxUC9N0XN1lciVfGyMHUGUYz1Gqc5AWzHG0dZg6iFuTsWsZBHD7dSQ
- pSLs9CFOwFAquOA+wyINSAJDKN1hal3fuT0OMfu1bwXav9qaaWw6C/EOLzcg76ulZ1i3
- rpDC3/i0FZNPd9dO5DWGnIrO8CbHDllY4g7M6jyLqln4XlLRWgwuXFJhthnFNd78Ua3c
- KULTDyYTZT7t5vALvyNPKWLPUqxZl5Q9JUxVUcC/ePgIhFDLMZkZo2rtLp+Nr6UMIktn
- C9c/d6996DwU9HkPSNf2pOVgcL6QZJqxvLsN9vq+0HNCR0h3g5a+ga8PawOxN0nhgbWd
- rfGA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=7CwE7f/YNKXWSR3ShZsT/nFCuFAw+1Nclzgc4s6rzvE=;
- fh=W/JhvAlf9kvTQdSfT2vqiKAkNO4YiRVg8H2M8w9SXbQ=;
- b=TNGSVjvAOPtGWYg2ZFBHoYHePCkipX/xCG9pSuJDBz/eiLUvqzvSUe31IDHZHYr4C1
- /nkudsfrc4WmJ+XOD2h6kzU3G60WlTjtULMhNvfJSeKn2dQa9KxsRp9wyfeD75nGj+Jz
- xRk5TWeX1kZEcBtiw1DZhDunjolFQpZi5UDbkJWzPIkBTdMt4IDFsz4uyvhDwx7XRH9/
- SLtNVhqPObUs2kWwY7dCpveI11YEltZzM+6fSlZacgQEV8R8Szg9bi30+bxK4u5E1fNg
- gzkj2ZUwmuwtiSXwDYJa4kKwLSsZnwbqwUP3rDcom11VVwf4/t/HNjLoycsLLms+8R2j
- LSxQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <marcelomanzo@gmail.com>)
+ id 1xHPvY-0001Vx-Ka
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 14:11:42 -0400
+Received: by mail-qt1-x82e.google.com with SMTP id
+ d75a77b69052e-5351d76e1baso2867721cf.1
+ for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 11:11:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1792088230; x=1792693030; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=7CwE7f/YNKXWSR3ShZsT/nFCuFAw+1Nclzgc4s6rzvE=;
- b=dWGPW/zA/vCRoBDYoVFTMwS7TGs+nC9EmZjX5NUaYQxNRak57fLgRRuupk6tfMdmR/
- Hz/kBmlW5Qvs9rOm9Kp6ZAhdG4InbBy2Xc8O2fHZ48LVD/UOrc7f15bDs+TMk2U7X7MQ
- zwER2VhxasGeSPuUCvET/dA+hS98OZAgOdabsylJ8pZtL79yS211/x/ALU2jNUCBTumH
- dp/SDW3iQxw9pK10aGA0MCKeaYzoRE6jZ5Z2ctpDQVYUoO3/18UCxQUTBUmCKWGZoeBR
- sE5z3Ymw6j5dbP4lqXhjklJucAXY6QXRHK7tDa/dzW8cczL2F1xWo1cVD6SKVasdVB6v
- am6A==
+ d=gmail.com; s=20251104; t=1792087899; x=1792692699; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=IpXjq2SzDcplb7laGRs+XIFC6vBU+wvz9DmPUswUPKY=;
+ b=smxZ3fCoIRCHEFp5LJfQ75zd5wniGe6g2FCRWk/vJtnMZ1p5ybVNJL/T0rdx9COgHR
+ b/hDQDEDDf4ZbeYb97Fqjh7oDppm1YPGjF21+pftK+oC6yLS4YuIEfpbgTOdA7cBy20Z
+ r9lnCI6Rav9hIWYVlkAw4GsaMNoWjqyO0DV1NQ5oMw7Zt8MimFy5VGMu8ghOc4lOTky8
+ me/GNsbmXcmoyKm8uyJR8+MpBGn6sOK/oeEyIhZKp2Jzywy1Y/dRewKLyxi0KCXYV47p
+ eQJq4Q38UY2McjMPhb9nhpcOUh85iuSQUZsq4oYdhxn332HKKRdyIWC6dPjtahBkTEgW
+ RlXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792088230; x=1792693030;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=7CwE7f/YNKXWSR3ShZsT/nFCuFAw+1Nclzgc4s6rzvE=;
- b=wlJL9rzzygpEEt0jiKgQmfHEnCb2/6PU8Cq679BNCOfDmz96KhAGhCKVFeYJYB38Uf
- SjPP63hf5TvBGdy+kRaI3rRcmTab+fnnMCcQzVdSbtXvHEpKTGWh3SRK9cuDnaClaNN/
- uKtgJqN8T9Jd9wA/RbMwSuem8AF1DNSwD/bHODukkNVlBMnFaEwrWPTr0u7XUpW8ml/P
- DY7Z027FkzY0hLnrmvtiXJbARXAnD3SL3sr5ya5ZqfRtn0aJs/mizrxHEnTHy5LBtne3
- Xbzrro3w75MvvyfOB28GXrx4d2mn5rwtc4OUyFXcF6aVye/Uq7XPAkYYQK8mKtfCR+hi
- XpYw==
-X-Gm-Message-State: AFq9FYKoh8+5Ot3RAYKjLA6FH+Ec8TQfktqiRGhohVmZISMak5pFs5GF
- O3+DkbeQRPtlF729f45WxFNuprzWjc8/iJbaOd1CCihSQ0S0G7/7KD8gFAIo4ZCWu+6P3iRD491
- MFxnsTyxx6zSHWHcbkwhFXi6EYKScliUlDXHo3rWV4Q==
-X-Gm-Gg: AYBFou216Tu/dTKuC1XBQ0GBmuYYbxbgbRnYTbCOGxiRmZibdTrqghyao2x8EAQmHEM
- aR6Lda8fKd9Rhs42Lk4ocz6HNsXiXtUSOqFkM/BtHnKOqCgZbNv/nJsSMmvDE70ARdK4GCsUbRF
- 3B1uCE1KUTNI8Q5dGxkbM5C1WEpsSywY3XH7Zw2JqkQ1/2/qAfukl6XvUozr2a0PD5udg59OfOC
- 9SllNlgyuT1EO/7LbNc75EmsR7cTtEvF7OQDD/54CF0aiSqejF6qCS9nSJ6YhCoC/6i878r5vDN
- +dy9azmAiZYii3JapZR3KE1hdFiAF+83NCGsF67PBXX7YBq8Y2yQnp5iRax+C0eryiiBreDnVQR
- SIZnJyZU4Hf9cVfqfaF7PMj3tg3CeNZmKl5IKAJw=
-X-Received: by 2002:a05:690c:4f89:b0:8b0:ccc3:27d2 with SMTP id
- 00721157ae682-8b0ccc3303fmr13955287b3.29.1792088229601; Thu, 15 Oct 2026
- 11:17:09 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1792087899; x=1792692699;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=IpXjq2SzDcplb7laGRs+XIFC6vBU+wvz9DmPUswUPKY=;
+ b=KEPSIWbKrM4ntypw0aewk3vtLwA95xzr1DMfBMMdfeW+JHKYoRf7h9A28AEQzkD5jD
+ uTohpbnwoPjO/T1XdQvBhwLDHuPEmA3LMT/lvInqXU++IxNVMBODtbtgXKwdZOLPQFpV
+ jvMiUuCnFZUMnD71s7s+yoTZwb+ZlDxMd6R/hBircLAodcIRvqk0umHPOdC6L+dHHXwN
+ XHCSxo9+fivJ2QoT65ghMMMqxadRUV6UObXgq16yCnCP96Sg/g7/FRFXo3vO94Hds7Gz
+ AXFZXxES6Oq6dWpDUYVkuimuMki1S+Fp18WVDhCC5DhSIuVCqAXyBpYnzYNmIeMxP9gi
+ D8zg==
+X-Gm-Message-State: AFq9FYI75normgcM7QX5Cm5giUMdNQaA9yrAugWa6GG/eEZzHdemtLXt
+ HDtXLse7VbYY1PFaeFt+COJOR4JiCnoI3Bw6f0hMYHZVknT68goElKCOXPV0dLtc
+X-Gm-Gg: AYBFou2PLCSDA0hOcKJBvhwOSjYbHt1xfXhFXFwkMXvZCkj+0jfqueJcVVe0M/Oa3+D
+ ZoJB1EOkB5z81ffp2cW787EvdgfBYIFm/yggNNLgGQv/5ExFv9gZnHDZpt4PLuTqNJ6wDQq4LIg
+ bSWw1I0ulLJ0PS9HfT67hdFAYGBa6BYmF5k7GjdJvxlfdgwHW16FWVwERcnEunTZPChMiUCcDJX
+ ngCX8mHw4uJqgm7RGacXZRNbdw+zOipnJR8iLYYiAuhI8TUfT9xzCDLIO/40LeP8cPUFd8sHqyc
+ mRoKtoaeIVeyXPd4/lN2tQxT3w3ZGkFn5iUhuX2ZpqmPRa+c5grHmGebtxDZ8a4me8vI68Cxf7c
+ i+PYjesjsB+lBMeA3dOwqslyHWBZbPn3QfgTlaqaHkZ1iJa5rXc5AQDpmDENFn2WUtxekyA7QFy
+ fr1kxn9yJYlKt9hCf9PYr3XTJIcDhJ+LvMMCzRnQkm+UwXYzpgTp/NA/guNJBE20jjwJITJlGt9
+ CugcxvSdhZ8NJUzjccf08rHMtMLMP2tRW/DqNOQXBUFvUm8gG3owxzxmXNJZOkSlK5kiw==
+X-Received: by 2002:a05:622a:1929:b0:535:1943:ccc2 with SMTP id
+ d75a77b69052e-53626f65aacmr14955011cf.4.1792087899381; 
+ Thu, 15 Oct 2026 11:11:39 -0700 (PDT)
+Received: from localhost.localdomain ([2606:6d00:159:2900:919:5388:4e10:5949])
+ by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-536127efe4asm32130611cf.19.2026.10.15.11.11.38
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 15 Oct 2026 11:11:39 -0700 (PDT)
+From: Marcelo Manzo <marcelomanzo@gmail.com>
+To: qemu-devel@nongnu.org,
+	qemu-arm@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Sergey Kambalin <serg.oker@gmail.com>,
+ Sergey Kambalin <sergey.kambalin@auriga.com>,
+ Marcelo Manzo <marcelomanzo@gmail.com>, Jason Wang <jasowangio@gmail.com>
+Subject: [PATCH v3 11/16] hw/net/bcm2838_genet: implement GENET MDIO
+Date: Thu, 15 Oct 2026 14:11:16 -0400
+Message-ID: <20261015181122.60608-12-marcelomanzo@gmail.com>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20261015181122.60608-1-marcelomanzo@gmail.com>
+References: <20261015181122.60608-1-marcelomanzo@gmail.com>
 MIME-Version: 1.0
-References: <20261015163352.1751191-1-peter.maydell@linaro.org>
- <atEC-pIGhLYLXVmC@redhat.com>
-In-Reply-To: <atEC-pIGhLYLXVmC@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 15 Oct 2026 19:16:58 +0100
-X-Gm-Features: AclHuK9D2GmlMxylJU6DEN1cXhtTGabHjX96stEfAkOtxavRWQGHySqK_Otu9X4
-Message-ID: <CAFEAcA-wEB15afO4Na8+8cF_Ja3v-8ewd8EdPavxJbfTmrL9GA@mail.gmail.com>
-Subject: Re: [PATCH] include/hw/core/qdev.h: Fix where
- device_class_set_parent_realize docs suggest putting parent_realize
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
- Mark Cave-Ayland <mark.caveayland@nutanix.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1133;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1133.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::82e;
+ envelope-from=marcelomanzo@gmail.com; helo=mail-qt1-x82e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,97 +105,229 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 15 Oct 2026 at 17:44, Daniel P. Berrang=C3=A9 <berrange@redhat.com>=
- wrote:
->
-> On Thu, Oct 15, 2026 at 05:33:52PM +0100, Peter Maydell wrote:
-> > The documentation for device_class_set_parent_realize() suggests that
-> > the parent realize function pointer is "usually in the instance
-> > structure".  This is definitely wrong, because the function pointer
-> > is a class thing, and should live in a class struct, not an instance
-> > struct.  Update the documentation to correct this, instead
-> > recommending that it should be placed in the class struct for the
-> > child class.
-> >
-> > At time of writing, of the 75 or so uses of this function, about 50
-> > put the parent_realize pointer in the child class struct, and about
-> > 25 in the parent class struct.  We recommend the former both because
-> > it is the more common choice, and also because it makes more logical
-> > sense: it's the child that knows (a) that it exists at all and that
-> > (b) it wants to have a realize method that will mean it needs to
-> > chain back to the parent, and we shouldn't need to edit the parent's
-> > class struct because we want to add a child class that chains to its
-> > realize method.
->
-> I'm confused why we need to store a copy of the parent's
-> realize method at all, when we can just reference it from
-> the parent class struct ?
->
-> Taking one example
->
->   static void pl050_kbd_realize(DeviceState *dev, Error **errp)
->   {
->       PL050DeviceClass *pdc =3D PL050_GET_CLASS(dev);
->       PL050KbdState *s =3D PL050_KBD_DEVICE(dev);
->       PL050State *ps =3D PL050(dev);
->
->       if (!sysbus_realize(SYS_BUS_DEVICE(&s->kbd), errp)) {
->           return;
->       }
->
->       ps->ps2dev =3D PS2_DEVICE(&s->kbd);
->       pdc->parent_realize(dev, errp);
->   }
->
-> why wouldn't we rewrite that as
->
->   static void pl050_kbd_realize(DeviceState *dev, Error **errp)
->   {
->       PL050DeviceClass *pdc =3D PL050_GET_CLASS(dev);
->       DeviceClass *parent =3D DEVICE_CLASS(object_class_get_parent(OBJECT=
-_CLASS(pdc)));
->       PL050KbdState *s =3D PL050_KBD_DEVICE(dev);
->       PL050State *ps =3D PL050(dev);
->
->       if (!sysbus_realize(SYS_BUS_DEVICE(&s->kbd), errp)) {
->           return;
->       }
->
->       ps->ps2dev =3D PS2_DEVICE(&s->kbd);
->       parent->realize(dev, errp);
->   }
->
-> am I missing a reason we need to store the parent's
-> realize method pointer ?
+From: Sergey Kambalin <serg.oker@gmail.com>
 
-Because the parent class's struct doesn't have a pointer to
-its realize method. pl050_class_init() does this to set
-up its realize method:
+Implement the MDIO command register handling used to read/write the
+BCM54213PE PHY's standard MII registers (BMCR, BMSR, LPA, ...) plus
+its vendor "shadow" register blocks reached through the AUX_CTL/
+EXP_SHD indirection scheme, and a simple link-state model (PHY
+starts down, comes up once BMCR is programmed and autonegotiation
+is (re)started).
 
-    DeviceClass *dc =3D DEVICE_CLASS(oc);
+Part of Sergey Kambalin's original Raspberry Pi 4B PCIe/GENET
+networking series (patchwork series 829638, posted to qemu-devel in
+2024, never merged). Carried forward and completed by Marcelo Manzo.
 
-    dc->realize =3D pl050_realize;
+While carrying this forward, fix the autonegotiation-restart handling
+in bcm2838_genet_mdio_cmd(): the guest PHY driver sets BMCR.ANRESTART
+and polls BMCR until it reads back as cleared, but the result of
+FIELD_DP16() (which returns a new value rather than modifying its
+argument) was discarded, so the bit never cleared and the guest
+spun forever at boot. Also refresh the link state once the restart
+has been handled.
 
-and that's the only place where pl050_realize is pointed to.
+Signed-off-by: Sergey Kambalin <sergey.kambalin@auriga.com>
+Signed-off-by: Marcelo Manzo <marcelomanzo@gmail.com>
+---
+ hw/net/bcm2838_genet.c         | 139 ++++++++++++++++++++++++++++++++-
+ include/hw/net/bcm2838_genet.h |   3 +-
+ 2 files changed, 139 insertions(+), 3 deletions(-)
 
-To put the child class's realize method into place we need
-to overwrite the DeviceClass::realize field, which means we
-need somewhere to put the old value.
+diff --git a/hw/net/bcm2838_genet.c b/hw/net/bcm2838_genet.c
+index f3c5ca26c5..fe2a3cf890 100644
+--- a/hw/net/bcm2838_genet.c
++++ b/hw/net/bcm2838_genet.c
+@@ -20,6 +20,8 @@
+ #include "hw/net/bcm2838_genet.h"
+ #include "trace.h"
+ 
++static void bcm2838_genet_phy_update_link(BCM2838GenetState *s);
++
+ /* GENET layouts */
+ REG32(GENET_SYS_REV_CTRL,              0)
+ FIELD(GENET_SYS_REV_CTRL, GPHY_REV,    0, 16)
+@@ -216,6 +218,7 @@ FIELD(GENET_PHY_STAT_1000, LOCALRXOK, 13, 1)
+ FIELD(GENET_PHY_STAT_1000, MSRES,     14, 1)
+ FIELD(GENET_PHY_STAT_1000, MSFAIL,    15, 1)
+ 
++/* There are two data representations for PHY_AUX_CTRL register */
+ REG16(GENET_PHY_AUX_CTRL_0,              0)
+ FIELD(GENET_PHY_AUX_CTRL_0, REG_ID_MASK, 0, 3)
+ FIELD(GENET_PHY_AUX_CTRL_0, RSVD_3,      3, 1)
+@@ -272,6 +275,134 @@ static void bcm2838_genet_set_irq_prio(BCM2838GenetState *s)
+     qemu_set_irq(s->irq_prio, level);
+ }
+ 
++static void bcm2838_genet_phy_aux_ctl_write(BCM2838GenetState *s,
++                                            uint16_t value)
++{
++    uint16_t reg_id = FIELD_EX16(value, GENET_PHY_AUX_CTRL_0, REG_ID);
++    uint16_t reg_id_mask = FIELD_EX16(value, GENET_PHY_AUX_CTRL_0, REG_ID_MASK);
++    uint16_t misc_wren = FIELD_EX16(value, GENET_PHY_AUX_CTRL_0, MISC_WREN);
++    uint16_t reg_data = FIELD_EX16(value, GENET_PHY_AUX_CTRL_0, REG_DATA);
++    uint16_t reg_data12 = FIELD_EX16(value, GENET_PHY_AUX_CTRL_1, REG_DATA);
++
++    uint16_t *phy_aux_ctl_shd_reg_id =
++        (uint16_t *)&s->phy_aux_ctl_shd_regs + reg_id;
++    uint16_t *phy_aux_ctl_shd_reg_id_mask =
++        (uint16_t *)&s->phy_aux_ctl_shd_regs + reg_id_mask;
++
++    if (reg_id_mask == BCM2838_GENET_PHY_AUX_CTL_MISC) {
++        if (reg_id == BCM2838_GENET_PHY_AUX_CTL_MISC) {
++            if (misc_wren == 0) {
++                /* write for subsequent read (8-bit from AUX_CTL_MISC) */
++                FIELD_DP16(value, GENET_PHY_AUX_CTRL_0, REG_DATA,
++                          *phy_aux_ctl_shd_reg_id);
++            } else {
++                /* write 8 bits to AUX_CTL_MISC */
++                *phy_aux_ctl_shd_reg_id_mask = reg_data;
++            }
++        } else {
++            /* write for subsequent read (12-bit) */
++            FIELD_DP16(value, GENET_PHY_AUX_CTRL_1, REG_DATA,
++                      *phy_aux_ctl_shd_reg_id);
++        }
++    } else {
++        /* write 12 bits */
++        *phy_aux_ctl_shd_reg_id_mask = reg_data12;
++    }
++
++    s->phy_regs.aux_ctl = value;
++}
++
++static void bcm2838_genet_phy_shadow_write(BCM2838GenetState *s,
++                                           uint16_t value)
++{
++    uint16_t reg_id = FIELD_EX16(value, GENET_PHY_SHADOW, REG_ID);
++    uint16_t wr = FIELD_EX16(value, GENET_PHY_SHADOW, WR);
++    uint16_t reg_data = FIELD_EX16(value, GENET_PHY_SHADOW, REG_DATA);
++
++    uint16_t *phy_shd_reg = (uint16_t *)&s->phy_shd_regs + reg_id;
++
++    if (wr == 0) {
++        FIELD_DP16(value, GENET_PHY_SHADOW, REG_DATA, *phy_shd_reg);
++    } else {
++        *phy_shd_reg = reg_data;
++    }
++
++    s->phy_regs.shd = value;
++}
++
++static void bcm2838_genet_phy_exp_shadow_write(BCM2838GenetState *s,
++                                               uint16_t value)
++{
++    /*
++     * TODO Stub implementation without side effect,
++     * just storing registers values
++     */
++    uint16_t reg_id = FIELD_EX16(s->phy_regs.exp_ctrl,
++                                 GENET_PHY_EXP_SEL, REG_ID);
++    uint16_t block_id = FIELD_EX16(s->phy_regs.exp_ctrl,
++                                   GENET_PHY_EXP_SEL, BLOCK_ID);
++
++    s->phy_exp_shd_regs.regs[block_id][reg_id] = value;
++}
++
++static uint16_t bcm2838_genet_phy_exp_shadow_read(BCM2838GenetState *s)
++{
++    uint16_t reg_id = FIELD_EX16(s->phy_regs.exp_ctrl,
++                                 GENET_PHY_EXP_SEL, REG_ID);
++    uint16_t block_id = FIELD_EX16(s->phy_regs.exp_ctrl,
++                                   GENET_PHY_EXP_SEL, BLOCK_ID);
++
++    return s->phy_exp_shd_regs.regs[block_id][reg_id];
++}
++
++static uint64_t bcm2838_genet_mdio_cmd(BCM2838GenetState *s, uint64_t cmd)
++{
++    uint32_t phy_reg_id = FIELD_EX32(cmd, GENET_UMAC_MDIO_CMD, REG_ID);
++    uint32_t phy_reg_data = FIELD_EX32(cmd, GENET_UMAC_MDIO_CMD, REG_DATA);
++    uint32_t start_busy = FIELD_EX32(cmd, GENET_UMAC_MDIO_CMD, START_BUSY);
++    uint32_t rd = FIELD_EX32(cmd, GENET_UMAC_MDIO_CMD, RD);
++    uint32_t wr = FIELD_EX32(cmd, GENET_UMAC_MDIO_CMD, WR);
++    uint16_t *phy_reg = (uint16_t *)&s->phy_regs + phy_reg_id;
++
++    uint16_t anrestart = FIELD_EX16(phy_reg_data, GENET_PHY_BMCR, ANRESTART);
++
++    if (start_busy != 0) {
++        cmd = FIELD_DP32(cmd, GENET_UMAC_MDIO_CMD, START_BUSY, 0);
++
++        if (rd != 0) {
++            if (phy_reg_id == BCM2838_GENET_EXP_DATA) {
++                cmd = FIELD_DP32(cmd, GENET_UMAC_MDIO_CMD, REG_DATA,
++                                 bcm2838_genet_phy_exp_shadow_read(s));
++            } else {
++                cmd = FIELD_DP32(cmd, GENET_UMAC_MDIO_CMD, REG_DATA, *phy_reg);
++            }
++        } else if (wr != 0) {
++            if (phy_reg_id == BCM2838_GENET_PHY_AUX_CTL) {
++                bcm2838_genet_phy_aux_ctl_write(s, phy_reg_data);
++            } else if (phy_reg_id == BCM2838_GENET_PHY_SHD) {
++                bcm2838_genet_phy_shadow_write(s, phy_reg_data);
++            } else if (phy_reg_id == BCM2838_GENET_EXP_DATA) {
++                bcm2838_genet_phy_exp_shadow_write(s, phy_reg_data);
++            } else {
++                if (phy_reg_id == BCM2838_GENET_PHY_BMCR) {
++                    /* Initiate auto-negotiation once it has been restarted */
++                    if (anrestart == 1) {
++                        phy_reg_data = FIELD_DP16(phy_reg_data,
++                                                  GENET_PHY_BMCR,
++                                                  ANRESTART, 0);
++                    }
++                }
++                *phy_reg = phy_reg_data;
++                if (phy_reg_id == BCM2838_GENET_PHY_BMCR && anrestart == 1) {
++                    bcm2838_genet_phy_update_link(s);
++                }
++            }
++        }
++    }
++
++    return cmd;
++}
++
+ static uint64_t bcm2838_genet_read(void *opaque, hwaddr offset, unsigned size)
+ {
+     uint64_t value = ~0;
+@@ -359,10 +490,13 @@ static void bcm2838_genet_write(void *opaque, hwaddr offset, uint64_t value,
+             s->regs.rdma.status = (~value) & GENET_DMA_ENABLE_MASK;
+             break;
+         case BCM2838_GENET_UMAC_MDIO_CMD:
++            value = bcm2838_genet_mdio_cmd(s, value);
++            s->regs.intrl0.stat = FIELD_DP32(s->regs.intrl0.stat,
++                                             GENET_INTRL_0, MDIO_DONE, 1);
++            break;
+         case BCM2838_GENET_TDMA_REGS
+             ... BCM2838_GENET_TDMA_REGS + sizeof(BCM2838GenetRegsTdma) - 1:
+-            qemu_log_mask(LOG_UNIMP,
+-                "UMAC MDIO and TDMA aren't implemented yet");
++            qemu_log_mask(LOG_UNIMP, "TDMA isn't implemented yet");
+             break;
+         default:
+             break;
+@@ -464,6 +598,7 @@ static void bcm2838_genet_reset(Object *obj, ResetType type)
+ 
+     trace_bcm2838_genet_reset("done");
+ 
++    bcm2838_genet_set_qemu_mac(s);
+     bcm2838_genet_phy_reset(s);
+ }
+ 
+diff --git a/include/hw/net/bcm2838_genet.h b/include/hw/net/bcm2838_genet.h
+index e3dee5a78f..b34c4b3ce7 100644
+--- a/include/hw/net/bcm2838_genet.h
++++ b/include/hw/net/bcm2838_genet.h
+@@ -103,7 +103,8 @@ OBJECT_DECLARE_SIMPLE_TYPE(BCM2838GenetState, BCM2838_GENET)
+ #define BCM2838_GENET_EXP_DATA          BCM2838_GENET_PHY_REG(exp_data)
+ #define BCM2838_GENET_EXP_SEL           BCM2838_GENET_PHY_REG(exp_ctrl)
+ 
+-#define BCM2838_GENET_PHY_AUX_CTL_MISC  0x7
++#define BCM2838_GENET_PHY_AUX_CTL_AUXCTL    0x0
++#define BCM2838_GENET_PHY_AUX_CTL_MISC      0x7
+ #define BCM2838_GENET_PHY_AUX_CTL_REGS_SIZE 8
+ 
+ #define BCM2838_GENET_PHY_EXP_SHD_BLOCKS_CNT 256
+-- 
+2.55.0
 
-We could alternatively solve this by saying:
- (a) every class struct must have a "realize" field,
-     and the class init sets both DeviceClass::realize and
-     MyClass::realize (perhaps restrict this to only "every
-     class that has or might need to have subclasses")
- (b) to chain to the superclass realize, get the MyParentClass
-     class pointer and call MyParentClass::realize
-
-The support (or lack thereof) in QOM for methods like realize,
-unrealize and reset which should pretty much always chain to
-their parent class implementation is pretty terrible, so if
-we can come up with something more ergonomic I'd be happy to
-throw out the hacks we have today.
-
-thanks
--- PMM
 
