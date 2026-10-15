@@ -4,66 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9101ACC6B39
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 15:57:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B697CC6B33
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 16:08:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHNpY-0007Zb-8h; Thu, 15 Oct 2026 11:57:20 -0400
+	id 1xHNz4-0001Xr-Tz; Thu, 15 Oct 2026 12:07:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1xHNpV-0007XO-8N
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 11:57:17 -0400
-Received: from mx.treblig.org ([2a00:1098:5b::1])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1xHNz1-0001Xa-QR
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 12:07:07 -0400
+Received: from smtpout2.mo538.mail-out.ovh.net ([51.210.91.31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1xHNpR-0006dl-HE
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 11:57:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
- ; s=bytemarkmx;
- h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
- :Subject; bh=5DkVqtLl1i2gf2jHVa0L3rsN+EoMZS2YxefuCff2jtU=; b=YtpwX27u+wtwEEG3
- katq778mkTG8VgvwNuTaSft4hB0oZal7246bys9IvhF2khUT087aEqtG2+ry16tVitU/qbqeRxgKO
- RefRJ5k35ZbvvE8b//jA0bgIY+DZJiLUX2YMKUg2rB/E9lGoSCiU7fWoRfcAEPs4Xxp6CrDySUqWJ
- 2MtmYBsbtBbW61m1Enqz99ChrJi4aJfLhhrFdPtwpH6JRTGVrfwiiedFqSfvuSF2Se/PVgJJVCvb5
- Jb/VljvADI1xQwo4aq2nmog6UAVTri9CE/YYy1sR91VDTKIoijv0gA2LHNbCE4wVi3vc+4JvDzEri
- oD2Wq2gr6mbqUtfX+Q==;
-Received: from dg by mx.treblig.org with local (Exim 4.98.2)
- (envelope-from <dg@treblig.org>) id 1xHNpN-00000004c7P-1so2;
- Thu, 15 Oct 2026 15:57:09 +0000
-Date: Thu, 15 Oct 2026 15:57:09 +0000
-From: "Dr. David Alan Gilbert" <dave@treblig.org>
-To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org,
- =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
- Michael Roth <michael.roth@amd.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@oss.qualcomm.com>,
- Fabiano Rosas <farosas@suse.de>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Eric Blake <eblake@redhat.com>, Laurent Vivier <lvivier@redhat.com>
-Subject: Re: [PATCH 17/21] monitor: capture monitor commands and events in
- data recorder
-Message-ID: <atD31Q9B9FgDWXeO@gallifrey>
-References: <20261015112044.1999748-1-berrange@redhat.com>
- <20261015112044.1999748-18-berrange@redhat.com>
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1xHNyv-0007KB-Ib
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 12:07:07 -0400
+Received: from director5.derp.mail-out.ovh.net
+ (director5.derp.mail-out.ovh.net [79.137.60.225])
+ by mo538.mail-out.ovh.net (Postfix) with ESMTPS id 4j5Ccy1ZW7z5vlT;
+ Thu, 15 Oct 2026 16:06:57 +0000 (UTC)
+Received: from director5.derp.mail-out.ovh.net
+ (director5.derp.mail-out.ovh.net. [127.0.0.1])
+ by director5.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
+ for <jamin_lin@aspeedtech.com>; Thu, 15 Oct 2026 16:06:57 +0000 (UTC)
+Received: from mta7.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.58.64])
+ by director5.derp.mail-out.ovh.net (Postfix) with ESMTPS id 4j5Ccx3q5kz6MYb;
+ Thu, 15 Oct 2026 16:06:57 +0000 (UTC)
+Received: from kaod.org (unknown [10.1.6.5])
+ (Authenticated sender: clg@kaod.org)
+ by mta7.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id D5D16202BDF; 
+ Thu, 15 Oct 2026 16:06:56 +0000 (UTC)
+Authentication-Results: garm.ovh; auth=pass
+ (GARM-108S00286f4d019-78fa-41a3-b5ab-c9f8449c867b,
+ 39EAFCA45846CB7F25CFDE7C5DD07A896C21AD00) smtp.auth=clg@kaod.org
+X-OVh-ClientIp: 82.64.250.170
+Message-ID: <653d7a76-323a-4ab0-831c-1d61763abc49@kaod.org>
+Date: Thu, 15 Oct 2026 18:06:56 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20261015112044.1999748-18-berrange@redhat.com>
-X-Chocolate: 70 percent or better cocoa solids preferably
-X-Operating-System: Linux/6.12.111+deb13-amd64 (x86_64)
-X-Uptime: 15:55:40 up 16 days,  1:17,  2 users,  load average: 0.05, 0.07, 0.02
-User-Agent: Mutt/2.2.13 (2024-03-09)
-Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
- helo=mx.treblig.org
+User-Agent: Mozilla Thunderbird
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Content-Language: en-US, fr
+To: "open list:All patches CC here" <qemu-devel@nongnu.org>,
+ "open list:ARM cores" <qemu-arm@nongnu.org>
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+Cc: 'Jamin Lin' <jamin_lin@aspeedtech.com>,
+ Emmanuel Blot <emmanuel.blot@free.fr>
+Subject: Aspeed series for QEMU 11.2
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+x-ovh-tracer-id: 18023687185740835851
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: dmFkZTED+3/Lr0Q5HWnK1OuMNOpXmHEzCMvbB/zGMTDO1ecbYJem3i0DJ/gTzjA91y9/Wr+c36SQDnO/B4eZZ9UTZjghG6ssHrRwiDdQjs+a54N5lSVA/bnf1qB8BZGgi/yjNZALjy+O0axf4NRPxxkGRypY4iThgqDk5Xt7XXHcJQ7TDn50DXyGQfZSbiEtuoNa3Oo1OxJxUFL9kIAnefuI/IWLOu8MF7/jbFYHJTAdO2YxZJkiuJr75hClbDXGAMieq+KmCJiPR2DGmc1XjaubHxyntTr71pZV6WKQMUXLJUavMjf/FigvcOvymhHIYhV/qloKZ3QlxAoa7MgZPDlCa2wuAAqF9tmZWhVt7ddJ8KoaFibCxjNDHy/8ljlPyhiFq7t64MQNsb8I/WgED0CDJ+7UTgYcZBIN44qCBLHLk6NU/Po/F0sxh5ZWa3pH1GNqhWe+RK8tqXUETZm25YosY4I/15h2g4M6yIWJfhaEAAU5X42beWP8Asf7UbkPN9Zj8wWL/gF3M5h+mJmv8EWt4HGO2r0/aHKIaKN0/jEW4F7lr/TOwIeqqYURoIPp+TIP4hFwFXZsq2SjW00D/Gh229CdiOD27A6RWgJsr1rUlKCtoSrjwgKIV9MLJJbA4dR4JmroG2Ba9BtCu6AxZqFQjQRXEgaKCMBAJxgjAmFCjwTihA
+DKIM-Signature: a=rsa-sha256; bh=9MymVRGhB1bVk17JaU3B6twDdqP/0kZ+1jqiwyTs1yk=; 
+ c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
+ t=1792080418; v=1;
+ b=rv82+C8W72XOIxXYNJDfvReHLhWPxZ886JNu1Qe54T6ZNrxEPdve0fTiruDKwR4acef2fNtd
+ VYuDJCorIGoB9YBpSW51BGbYNoXQQ7Btpso0ItUDsxkMiLxQfHm4/bUgpJxgdpwHt6eWUr6YjX4
+ nu1buWO1/aPWBwgNs3mkRNOZUS6GLuEvisZ+6+xElwUq24Ow9ZqLHnJ5z3tSwqcSN2+lHBncav6
+ +qTl8C8LwsH6pPnGlum/2H2wPT0lGkJlfwZy9QRgXl2Wd1wuwj+YcdssU6OMCXDGJ95SDViGgqY
+ u9OYozB3TJSBVKO712mWssWMBykmUTW4eJ0QCHtB25vpQ==
+Received-SPF: pass client-ip=51.210.91.31; envelope-from=clg@kaod.org;
+ helo=smtpout2.mo538.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -79,195 +127,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-* Daniel P. Berrangé (berrange@redhat.com) wrote:
-> QMP monitor commands which change system state (ie not query-XXX
-> commands) are relevant to the data recorder, as they reflect what
-> has been done to QEMU at runtime by the mgmt application.
+Hello !
 
-Do you have any filters for avoiding capturing passwords/keys
-(which admitedly they should be doing by files, but hmm).
+I will be out next week and we are getting close to soft freeze. Here
+is a status of the Aspeed series that we could merge in this cycle :
 
-Dave
+Close to be ready :
 
-> QMP monitor events are relevant to the data recorder, as they
-> reflect a combination of what has been done to QEMU at runtime by
-> the mgmt application, as well as changes triggered by the guest OS.
-> 
-> QMP error responses are relevant either to reveal mistakes in mgmt
-> apps, or to reveal problems in QEMU. If the associated QMP command
-> was not already recorded, it will be recorded for any error
-> response to provide context to the failure.
-> 
-> QMP normal responses are skipped since the data can be volumous
-> and thus result in poor signal/noise ratio.
-> 
-> The QMP commands are never captured to a string buffer as input
-> is streamed into the JSON parser and the result is spat out as
-> a QObject. Thus, the commands need to be formatted back into JSON
-> string format for the data recorder. This is a mild but acceptable
-> performance overhead, in the overall context of handling a QMP
-> command.
-> 
-> The QMP events are captured immediately before they are written
-> back on the wire where already in string format.
-> 
-> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> ---
->  monitor/qmp.c | 67 +++++++++++++++++++++++++++++++++++++++++++++------
->  1 file changed, 59 insertions(+), 8 deletions(-)
-> 
-> diff --git a/monitor/qmp.c b/monitor/qmp.c
-> index ccb39a48d4c..659ad23d832 100644
-> --- a/monitor/qmp.c
-> +++ b/monitor/qmp.c
-> @@ -34,6 +34,7 @@
->  #include "qobject/qjson.h"
->  #include "qobject/qlist.h"
->  #include "qom/object_interfaces.h"
-> +#include "qemu/tldr.h"
->  #include "trace.h"
->  
->  /*
-> @@ -80,7 +81,8 @@ static MonitorQMP *qmp_dispatcher_current_mon;
->  OBJECT_DEFINE_TYPE(MonitorQMP, monitor_qmp, MONITOR_QMP, MONITOR);
->  
->  static void monitor_qmp_cleanup_req_queue_locked(MonitorQMP *mon);
-> -static void qmp_send_response(MonitorQMP *mon, const QDict *rsp);
-> +static void qmp_send_response(MonitorQMP *mon, const QDict *rsp,
-> +                              const QObject *ctx);
->  
->  static void monitor_qmp_finalize(Object *obj)
->  {
-> @@ -169,7 +171,7 @@ static void monitor_qmp_emit_event(Monitor *mon, QAPIEvent event, QDict *qdict)
->          }
->      }
->  
-> -    qmp_send_response(qmp, qdict);
-> +    qmp_send_response(qmp, qdict, NULL);
->  }
->  
->  static bool monitor_qmp_requires_iothread(const Monitor *mon)
-> @@ -243,7 +245,8 @@ static void monitor_qmp_cleanup_queue_and_resume(MonitorQMP *mon)
->  
->  }
->  
-> -static void qmp_send_response(MonitorQMP *mon, const QDict *rsp)
-> +static void qmp_send_response(MonitorQMP *mon, const QDict *rsp,
-> +                              const QObject *ctx)
->  {
->      const QObject *data = QOBJECT(rsp);
->      GString *json;
-> @@ -252,6 +255,30 @@ static void qmp_send_response(MonitorQMP *mon, const QDict *rsp)
->      assert(json != NULL);
->      trace_monitor_qmp_respond(mon, json->str);
->  
-> +    /*
-> +     * Errors are always useful to record. We recorded the
-> +     * command in the caller in many cases, but if not, then
-> +     * 'ctx' will be non-NULL and we should record it now
-> +     * for context.
-> +     */
-> +    if (qtldr_msg_enabled(QTLDR_MSG_BUCKET_TYPE_COMMAND) &&
-> +        qdict_haskey(rsp, "error")) {
-> +        if (ctx) {
-> +            g_autoptr(GString) ctxstr = qobject_to_json(ctx);
-> +            qtldr_msg_record(QTLDR_MSG_BUCKET_TYPE_COMMAND, ctxstr->str);
-> +        }
-> +        qtldr_msg_record(QTLDR_MSG_BUCKET_TYPE_COMMAND, json->str);
-> +    }
-> +
-> +    /*
-> +     * Capture events, since they represent changes
-> +     * in state or behaviour
-> +     */
-> +    if (qtldr_msg_enabled(QTLDR_MSG_BUCKET_TYPE_EVENT) &&
-> +        qdict_haskey(rsp, "event")) {
-> +        qtldr_msg_record(QTLDR_MSG_BUCKET_TYPE_EVENT, json->str);
-> +    }
-> +
->      g_string_append_c(json, '\n');
->      monitor_puts(&mon->parent_obj, json->str);
->  
-> @@ -263,10 +290,10 @@ static void qmp_send_response(MonitorQMP *mon, const QDict *rsp)
->   * Null @rsp can only happen for commands with QCO_NO_SUCCESS_RESP.
->   * Nothing is emitted then.
->   */
-> -static void monitor_qmp_respond(MonitorQMP *mon, QDict *rsp)
-> +static void monitor_qmp_respond(MonitorQMP *mon, QDict *rsp, QObject *ctx)
->  {
->      if (rsp) {
-> -        qmp_send_response(mon, rsp);
-> +        qmp_send_response(mon, rsp, ctx);
->      }
->  }
->  
-> @@ -276,9 +303,33 @@ static void monitor_qmp_respond(MonitorQMP *mon, QDict *rsp)
->   */
->  static void monitor_qmp_dispatch(MonitorQMP *mon, QObject *req)
->  {
-> +    QObject *ctx = req;
->      QDict *rsp;
->      QDict *error;
->  
-> +    /*
-> +     * Capture commands which are liable to change state,
-> +     * i.e. exclude purely information query comamnds
-> +     */
-> +    if (qtldr_msg_enabled(QTLDR_MSG_BUCKET_TYPE_COMMAND)) {
-> +        QDict *cmd = qobject_to(QDict, req);
-> +        if (cmd != NULL) {
-> +            const char *cmdname = qdict_get_try_str(cmd, "execute")
-> +                ?: qdict_get_try_str(cmd, "exec-oob");
-> +            if (cmdname != NULL &&
-> +                !g_str_has_prefix(cmdname, "query-") &&
-> +                !g_str_has_prefix(cmdname, "qom-list")) {
-> +                g_autoptr(GString) cmdstr = qobject_to_json(req);
-> +                qtldr_msg_record(QTLDR_MSG_BUCKET_TYPE_COMMAND, cmdstr->str);
-> +                /*
-> +                 * Prevent recording cmd twice if the later response
-> +                 * is an error
-> +                 */
-> +                ctx = NULL;
-> +            }
-> +        }
-> +    }
-> +
->      rsp = qmp_dispatch(mon->commands, req, qmp_oob_enabled(mon),
->                         &mon->parent_obj);
->  
-> @@ -294,7 +345,7 @@ static void monitor_qmp_dispatch(MonitorQMP *mon, QObject *req)
->          }
->      }
->  
-> -    monitor_qmp_respond(mon, rsp);
-> +    monitor_qmp_respond(mon, rsp, ctx);
->      qobject_unref(rsp);
->  }
->  
-> @@ -455,7 +506,7 @@ void coroutine_fn monitor_qmp_dispatcher_co(void *data)
->              trace_monitor_qmp_err_in_band(error_get_pretty(req_obj->err));
->              rsp = qmp_error_response(req_obj->err);
->              req_obj->err = NULL;
-> -            monitor_qmp_respond(mon, rsp);
-> +            monitor_qmp_respond(mon, rsp, NULL);
->              qobject_unref(rsp);
->          }
->  
-> @@ -623,7 +674,7 @@ static void monitor_qmp_event(void *opaque, QEMUChrEvent event)
->              monitor_qmp_caps_reset(mon);
->          }
->          data = qmp_greeting(mon);
-> -        qmp_send_response(mon, data);
-> +        qmp_send_response(mon, data, NULL);
->          qobject_unref(data);
->          break;
->      case CHR_EVENT_CLOSED:
-> -- 
-> 2.56.0
-> 
--- 
- -----Open up your eyes, open up your mind, open up your code -------   
-/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
-\        dave @ treblig.org |                               | In Hex /
- \ _________________________|_____ http://www.treblig.org   |_______/
++ (v5) hw/usb: Add a usbredir server transport
+   https://lore.kernel.org/qemu-devel/20261015093417.573063-2-jamin_lin@aspeedtech.com
++ (v2) hw/usb/aspeed-udc: Add AST1030 UDC support
+   https://lore.kernel.org/qemu-devel/20261005064418.3060881-2-jamin_lin@aspeedtech.com
+
+Please help Emmanuel get this reviewed  :
+
++ (v3) Aspeed: I2C device models and the Minerva BMC
+   https://lore.kernel.org/qemu-devel/20261015-bmc-minerva-v3-1-7d50c8a108e5@free.fr
+
+Look simple enough for QEMU 11.2, will check when I am back :
+
++ (v1) hw/arm/aspeed: Add AST1040 FMC/SPI controllers and
+   https://lore.kernel.org/qemu-devel/20261015055642.106204-2-jamin_lin@aspeedtech.com
++ (v1) hw/arm/aspeed: Add AST1080 SoC and EVB support
+   https://lore.kernel.org/qemu-devel/20261015063625.186708-2-jamin_lin@aspeedtech.com
+
+This didn't get any reviews yet (so for later)
+
++ (v2) Add ASPEED VGA PCI device support
+   https://lore.kernel.org/qemu-devel/20260910014447.4110781-2-jamin_lin@aspeedtech.com
+
+There are others as well, but honestly, I think this update is already
+significant enough.
+
+Thanks,
+
+C.
 
