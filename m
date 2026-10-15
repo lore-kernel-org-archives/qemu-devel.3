@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA36ECC6B30
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 10:53:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FE8BCC6B33
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 10:53:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHJ4Z-0002Iz-Dp; Thu, 15 Oct 2026 06:52:31 -0400
+	id 1xHJ4n-0002Tx-3L; Thu, 15 Oct 2026 06:52:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xHJ4X-0002IE-Se
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 06:52:29 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ id 1xHJ4l-0002T5-5X
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 06:52:43 -0400
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xHJ4W-0007pA-7k
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 06:52:29 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-4a01933b584so44118075e9.0
- for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 03:52:27 -0700 (PDT)
+ id 1xHJ4j-0007r5-CX
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 06:52:42 -0400
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-48c6955a7c3so1462780f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 03:52:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1792061546; x=1792666346; darn=nongnu.org;
+ d=linaro.org; s=google; t=1792061560; x=1792666360; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=jNf29mw5unxQhmsuzci0zdkkF+rcJG9kmkx3vZJn9Xg=;
- b=XrP2Pv9VhF7eI2UqA25qFXqxw2OZRiO06MGowfN1bs+QLbQlBWri5GAbmVvZ6DxVir
- U/61dK/dd+l6drToNUYLU+6Nm2YKSyhcjzwdQkCRtvoH322H43gqz7Eg5EainecZiPKC
- XkBQvhEq0pue9Hdv0P64Xio/ZqgMOuzA0gD02phJIn4ALEC0TrF7vhlA9QE6MQHVwV75
- cHg4uwQr8FdWivqahU8PkWqaTH3+8zRoP/UyNmrvAFyZfNObYjRHgVZIAwxpLRhB/j0W
- 2igqjjTS99221OPG9CTvgUJyIC7VnpTF7JgPC86KswNVqF9q3mMSusGteI+KNhQcSyaj
- +f6Q==
+ bh=n98E2pZRXP0uOhJ5yNj447/v7obAeDWkpJner3Bn8g0=;
+ b=sM3zIqjdmvHPqcqAUoUmohDZxJkgt6u6u1rSeYUp+WYgrRCEwz0IQGjMAKnN5laABR
+ 5nNGPOQ8t5bY8mWoeNJMDtTuTb695f9rvnHxQkzbcbnv2Cm1ZYT82bLKbIUgFoV1fIan
+ 5jpEBKYpyDHSRWdbGtIGayF3mFUmOqqk9G7jQz/76euUAfQa3rjeGS5/isbXpkteQM7D
+ u1/+YYJCFgOrVpCyxbI+j45IRB03sNs4S1lT4cCYfIuGh6Vk8Sflghx1HaI206rW6jWR
+ t7whgY1lCdGreB9+7k7KoxolQkvhrvGVrSoCh8TT2q10lg4a825+MtyJiUK3kXsEsAlK
+ iCFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792061546; x=1792666346;
+ d=1e100.net; s=20260707; t=1792061560; x=1792666360;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=jNf29mw5unxQhmsuzci0zdkkF+rcJG9kmkx3vZJn9Xg=;
- b=k713BGhU4f29PrPlKlJp+SZ5rZoa1WGwwKnjklMA5ScdA+/nFxeVSoTcl5k9vmg3X5
- XtWlQBLMnkGjK0mXJlBlh2F5Wnya31NM0O5x7Id7YSjVeTxrw1LignEx+kB6CvvnGpZ5
- 6/bybYxxCpBuZAG3yGxfRgFQnJTVLsHFq7DDzyKu2OnfWDsIoavRi0Qy4OXk0xzyFaQF
- fS3OqncWnAvmwHKf/8yVgb5N3Q1jkGUGxYk2pkGPA1GS8kKymssSmzbNwtTjaj3/2+hL
- nuskkBk7h/Dv5CtM6TAfww5c1fDNF31sHjvsL/NLaArnZNa1zZqmH32/VpNdpM/1JaO+
- NpIg==
-X-Gm-Message-State: AFq9FYKOydW7NAEW9rgD49mpiQ7bt2rtDlKEgISrFLa6mybVfQTPmaS4
- QIEH6YWfaBgf52SVuRnYuZ5IwHYOIU22kZUwHlNot3pqbBv+LTPDcErWvxXjF5b3/ZtakLErh7c
- KFwL2pvA=
-X-Gm-Gg: AYBFou3q9lKm40luWqLHQjxhTX7cz87tuILk2EfTgEMj8AYutHtkm3XYD0dwF2JWaqV
- whNtME2yELI9tT3yr0XachgXJjxavDqPoHN5c8fpdnH0qVWYwY37tkFCiPI8RMpfuxWxg8Whh9Q
- XV4FiXW7w9X4YSfRe+Eds4TZedSRc40mbtaV9V/zcuk3S7ydn+JG7AbCapVPrrZrgrblLEoQYRH
- j55Z8tv+rt3S9r3/NL2LK2511JMkIXqufIQ3DAqC6bbEU6DZLMrgTrEGujsNI/wffec7Jj8oggn
- tv1qeFL+rTRlgBJqBfYsSt79PwX26gju3c8/PPjgyTiSNsbEO7YzQ2KOSG+mjN2aJKsrWyBIv6m
- 7khtazDisizEBUhKlfF7eSL7PLAf+x5H4gbDWMJX48MZZcghST/eHLdIgauwg334VTeTyFLMYTH
- GeuShS7h75CFCtvGLE53XdPe1+RSjiJ+v8MABW5hhWr3/51ZmYpONaW9gUOSlHPLyfZR+AzecZ5
- 4UJiCshZ2r/11Cid6UI+IYO5FJGQ1GJYLgyo4vLo/2gpHRLcNs9mnn5vdi+8QhdGT34GaIC0ApV
- kaDa
-X-Received: by 2002:a05:600c:674a:b0:49f:f0bd:1e40 with SMTP id
- 5b1f17b1804b1-4a18e4afe9cmr348237945e9.23.1792061546462; 
- Thu, 15 Oct 2026 03:52:26 -0700 (PDT)
+ bh=n98E2pZRXP0uOhJ5yNj447/v7obAeDWkpJner3Bn8g0=;
+ b=OYX3KxMLkaHxAat2kqTUEFbOFYtFtZv5EQtp0jAlvVHdT0svIlC6ljFys5UpQgeWjj
+ ROVCH4a1Op2eAQfVB1avjmJjCxsBHsKemd2fQOBHJpMmEZeKBTJG+HR1Y6cI8KP557ZU
+ /+gXz6DGfzN2d2OagEwOkx/0Vrl4McpBfJXmI4QQIfNVdc57zpbth376REGnI2vuyM0X
+ +Cc5mZIxh9qhnQWocZQVSAMt8KYG64BWgl/4EyUTpJPihL/EE52ZrxbHVEioUreIYSJH
+ OYIo6ZYyO83ZT8uATTdhOAH1nWDgYAn9b9rTNpXy87sJjX7QFJ4+vOvYlY+XOOC/JPfb
+ yACA==
+X-Gm-Message-State: AFq9FYJ/eLhBUcHy838NFOzneUpVO26PnRRjFSomChN4UPMM6//T/VBQ
+ gB7F7S9PdfL5fu3PSshZTktdQm518airT/TEiWjzfZIptzV8j0GZHx6hwAYgmtpV2388DDPJjfC
+ b4AVnHqk=
+X-Gm-Gg: AYBFou0jbVKxQCe4O9J1mrmpHM8Fhc4bGOoNRIQH2Tf57n817UcGv2HDtLiSGbC89QL
+ e52tG8oO5qCxJAix1lzI2nXi3vDayvIME2ZHP9UayklZpvbN3tdDmqBDPwNrYw5n1PdfCFK+tDK
+ iKVaJsao7guy5UbbZYoQrGOa8Y4xhzIBt+Tae7eK6zeTLXMhmYPX+XxFBGWnZOemjlAVx0IzPlz
+ j/PBGgmdxSu2YWuq5541XfClcegqkjdQKMlOtjEnDF8AMjr8Iuxd11Z/ZQLcxPik34u+JGBC6ov
+ RqH0Dno/sXgim55S1+6fwpIEh5/ddMROXCzuhZrR8BPY6dpcRG9GurLFiPbUnhkiMIFJyYgchSe
+ v9EEUR8usp2wrknx9jj+L0Fh09nlVzLjtrMLHfGb8EWWcVZNV55R1lSF/myVhYOjSLg8+fxemFk
+ 8KLPUAKqSB0ww05m7EMB8Ue0kRJF94SYyL4l+wMR4WUjpTTaVrX8arc9P1pkSLeNlwockK9WFlk
+ 3m4ugBgWmB8Mne14BjQggOZ4bobzRIUiAejvltv8twVLbF+hZLriuviR4JUBeZID+1tpGLcyQhY
+ eSF+jKHERoDr82c=
+X-Received: by 2002:a05:6000:46cb:b0:48c:4444:f0a2 with SMTP id
+ ffacd0b85a97d-48dba7bf41dmr24022626f8f.7.1792061559811; 
+ Thu, 15 Oct 2026 03:52:39 -0700 (PDT)
 Received: from stoup.fritz.box
  (p200300ca3f0f8b006e0ed1a687ab6860.dip0.t-ipconnect.de.
  [2003:ca:3f0f:8b00:6e0e:d1a6:87ab:6860])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48df5b88207sm3075949f8f.59.2026.10.15.03.52.25
+ ffacd0b85a97d-48df5b88207sm3075949f8f.59.2026.10.15.03.52.38
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 Oct 2026 03:52:26 -0700 (PDT)
+ Thu, 15 Oct 2026 03:52:39 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Aurelien Jarno <aurelien@aurel32.net>
-Subject: [PULL 04/16] tcg/riscv64: Remove vector min/max ops with immediates
-Date: Thu, 15 Oct 2026 12:51:56 +0200
-Message-ID: <20261015105212.356392-5-richard.henderson@linaro.org>
+Cc: Max Chou <max.chou@sifive.com>
+Subject: [PULL 12/16] tcg/riscv64: Return success from encode_jimm
+Date: Thu, 15 Oct 2026 12:52:04 +0200
+Message-ID: <20261015105212.356392-13-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261015105212.356392-1-richard.henderson@linaro.org>
 References: <20261015105212.356392-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=richard.henderson@linaro.org; helo=mail-wr1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,85 +104,111 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Aurelien Jarno <aurelien@aurel32.net>
+Centralize the range test for this encoding.
+Directly OR into the insn value.
+Assert success in encode_j.
+Use encode_jimm in tcg_out_call_int.
 
-RVV 1.0 only defines vmin, vminu, vmax and vmaxu instructions for the
-vector-vector and vector-scalar case, not the for vector-immediate case.
-Remove the immediate variant from TCG code generation.
-
-Fixes: 1631f19b04fe ("tcg/riscv: Implement vector min/max ops")
-Signed-off-by: Aurelien Jarno <aurelien@aurel32.net>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Max Chou <max.chou@sifive.com>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20261008181611.3015838-1-aurelien@aurel32.net>
 ---
- tcg/riscv64/tcg-target.c.inc | 20 ++++++++------------
- 1 file changed, 8 insertions(+), 12 deletions(-)
+ tcg/riscv64/tcg-target.c.inc | 46 ++++++++++++++++--------------------
+ 1 file changed, 21 insertions(+), 25 deletions(-)
 
 diff --git a/tcg/riscv64/tcg-target.c.inc b/tcg/riscv64/tcg-target.c.inc
-index de9a3570b23..14a397117a2 100644
+index 3a7761b6fec..c8f91612d37 100644
 --- a/tcg/riscv64/tcg-target.c.inc
 +++ b/tcg/riscv64/tcg-target.c.inc
-@@ -306,13 +306,9 @@ typedef enum {
-     OPC_VSSUBU_VI = 0x88000057 | V_OPIVI,
+@@ -507,24 +507,26 @@ static tcg_insn_unit encode_u(RISCVInsn opc, TCGReg rd, tcg_target_long imm)
  
-     OPC_VMAX_VV = 0x1c000057 | V_OPIVV,
--    OPC_VMAX_VI = 0x1c000057 | V_OPIVI,
-     OPC_VMAXU_VV = 0x18000057 | V_OPIVV,
--    OPC_VMAXU_VI = 0x18000057 | V_OPIVI,
-     OPC_VMIN_VV = 0x14000057 | V_OPIVV,
--    OPC_VMIN_VI = 0x14000057 | V_OPIVI,
-     OPC_VMINU_VV = 0x10000057 | V_OPIVV,
--    OPC_VMINU_VI = 0x10000057 | V_OPIVI,
+ /* Type-J */
  
-     OPC_VMSEQ_VV = 0x60000057 | V_OPIVV,
-     OPC_VMSEQ_VI = 0x60000057 | V_OPIVI,
-@@ -2810,19 +2806,19 @@ static void tcg_out_vec_op(TCGContext *s, TCGOpcode opc,
-         break;
-     case INDEX_op_smax_vec:
-         set_vtype_len_sew(s, type, vece);
--        tcg_out_opc_vv_vi(s, OPC_VMAX_VV, OPC_VMAX_VI, a0, a1, a2, c2);
-+        tcg_out_opc_vv(s, OPC_VMAX_VV, a0, a1, a2);
-         break;
-     case INDEX_op_smin_vec:
-         set_vtype_len_sew(s, type, vece);
--        tcg_out_opc_vv_vi(s, OPC_VMIN_VV, OPC_VMIN_VI, a0, a1, a2, c2);
-+        tcg_out_opc_vv(s, OPC_VMIN_VV, a0, a1, a2);
-         break;
-     case INDEX_op_umax_vec:
-         set_vtype_len_sew(s, type, vece);
--        tcg_out_opc_vv_vi(s, OPC_VMAXU_VV, OPC_VMAXU_VI, a0, a1, a2, c2);
-+        tcg_out_opc_vv(s, OPC_VMAXU_VV, a0, a1, a2);
-         break;
-     case INDEX_op_umin_vec:
-         set_vtype_len_sew(s, type, vece);
--        tcg_out_opc_vv_vi(s, OPC_VMINU_VV, OPC_VMINU_VI, a0, a1, a2, c2);
-+        tcg_out_opc_vv(s, OPC_VMINU_VV, a0, a1, a2);
-         break;
-     case INDEX_op_shls_vec:
-         set_vtype_len_sew(s, type, vece);
-@@ -2974,10 +2970,6 @@ tcg_target_op_def(TCGOpcode op, TCGType type, unsigned flags)
-     case INDEX_op_sssub_vec:
-     case INDEX_op_usadd_vec:
-     case INDEX_op_ussub_vec:
--    case INDEX_op_smax_vec:
--    case INDEX_op_smin_vec:
--    case INDEX_op_umax_vec:
--    case INDEX_op_umin_vec:
-         return C_O1_I2(v, v, vK);
-     case INDEX_op_sub_vec:
-         return C_O1_I2(v, vK, v);
-@@ -2987,6 +2979,10 @@ tcg_target_op_def(TCGOpcode op, TCGType type, unsigned flags)
-     case INDEX_op_sarv_vec:
-     case INDEX_op_rotlv_vec:
-     case INDEX_op_rotrv_vec:
-+    case INDEX_op_smax_vec:
-+    case INDEX_op_smin_vec:
-+    case INDEX_op_umax_vec:
-+    case INDEX_op_umin_vec:
-         return C_O1_I2(v, v, v);
-     case INDEX_op_shls_vec:
-     case INDEX_op_shrs_vec:
+-static tcg_insn_unit encode_jimm20(tcg_target_long imm)
++static bool encode_jimm20(tcg_insn_unit *insn, tcg_target_long imm)
+ {
+-    tcg_insn_unit ret = 0;
+-
+-    ret |= (imm & 0x0007fe) << (21 - 1);
+-    ret |= (imm & 0x000800) << (20 - 11);
+-    ret |= (imm & 0x0ff000) << (12 - 12);
+-    ret |= (imm & 0x100000) << (31 - 20);
+-
+-    return ret;
++    if ((imm & 1) == 0 && imm == sextract32(imm, 0, 20)) {
++        *insn |= ((imm & 0x0007fe) << (21 - 1)
++                  | (imm & 0x000800) << (20 - 11)
++                  | (imm & 0x0ff000) << (12 - 12)
++                  | (imm & 0x100000) << (31 - 20));
++        return true;
++    }
++    return false;
+ }
+ 
+ static tcg_insn_unit encode_j(RISCVInsn opc, TCGReg rd, tcg_target_long imm)
+ {
+-    return opc | (rd & 0x1f) << 7 | encode_jimm20(imm);
++    tcg_insn_unit insn = opc | (rd & 0x1f) << 7;
++    bool ok = encode_jimm20(&insn, imm);
++    tcg_debug_assert(ok);
++    return insn;
+ }
+ 
+-
+ /* Type-OPIVI */
+ 
+ static tcg_insn_unit encode_vi(RISCVInsn opc, TCGReg rd, tcg_target_long imm,
+@@ -635,12 +637,7 @@ static bool reloc_jimm20(tcg_insn_unit *src_rw, const tcg_insn_unit *target)
+     intptr_t offset = (intptr_t)target - (intptr_t)src_rx;
+ 
+     tcg_debug_assert((offset & 1) == 0);
+-    if (offset == sextreg(offset, 0, 20)) {
+-        *src_rw |= encode_jimm20(offset);
+-        return true;
+-    }
+-
+-    return false;
++    return encode_jimm20(src_rw, offset);
+ }
+ 
+ static bool reloc_call(tcg_insn_unit *src_rw, const tcg_insn_unit *target)
+@@ -1580,14 +1577,15 @@ static void tcg_out_call_int(TCGContext *s, const tcg_insn_unit *arg, bool tail)
+ {
+     TCGReg link = tail ? TCG_REG_ZERO : TCG_REG_RA;
+     ptrdiff_t offset = tcg_pcrel_diff(s, arg);
++    tcg_insn_unit insn = encode_j(OPC_JAL, link, 0);
+     int ret;
+ 
+     init_setting_vtype(s);
+ 
+     tcg_debug_assert((offset & 1) == 0);
+-    if (offset == sextreg(offset, 0, 20)) {
+-        /* short jump: -2097150 to 2097152 */
+-        tcg_out_opc_jump(s, OPC_JAL, link, offset);
++    if (encode_jimm20(&insn, offset)) {
++        /* short jump */
++        tcg_out32(s, insn);
+     } else if (offset == (int32_t)offset) {
+         /* long jump: -2147483646 to 2147483648 */
+         tcg_out_opc_upper(s, OPC_AUIPC, TCG_REG_TMP0, 0);
+@@ -1964,15 +1962,13 @@ void tb_target_set_jmp_target(const TranslationBlock *tb, int n,
+ {
+     uintptr_t addr = tb->jmp_target_addr[n];
+     ptrdiff_t offset = addr - jmp_rx;
+-    tcg_insn_unit insn;
++    tcg_insn_unit insn = OPC_JAL; /* rd = TCG_REG_ZERO */
+ 
+     /* Either directly branch, or fall through to indirect branch. */
+-    if (offset == sextreg(offset, 0, 20)) {
+-        insn = encode_j(OPC_JAL, TCG_REG_ZERO, offset);
+-    } else {
++    if (!encode_jimm20(&insn, offset)) {
+         insn = OPC_NOP;
+     }
+-    qatomic_set((uint32_t *)jmp_rw, insn);
++    qatomic_set((tcg_insn_unit *)jmp_rw, insn);
+     flush_idcache_range(jmp_rx, jmp_rw, 4);
+ }
+ 
 -- 
 2.53.0
 
