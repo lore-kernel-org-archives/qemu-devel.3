@@ -4,71 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB997CC6B34
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 12:24:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00941CC6B3D
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 12:24:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHKTZ-0005sK-Ns; Thu, 15 Oct 2026 08:22:25 -0400
+	id 1xHKU8-0007bh-Kx; Thu, 15 Oct 2026 08:23:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1xHKTU-0005Ya-Bp
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 08:22:20 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1xHKTu-0006bI-8L
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 08:22:48 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1xHKTS-0005bP-32
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 08:22:20 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1xHKTs-0005hY-4Y
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 08:22:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1792066937;
+ s=mimecast20190719; t=1792066962;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=uNoELrlgMsrXFiUnOLWVdQdQwMaebCX35+/HiwhaaW0=;
- b=WS/nMZ6lj3uYSXk8zjSvDE+fBRsEMJFMp3x9j6Se7eYkM4omFLM5hqHa9/idbA5E1sUoay
- x90pS2h+xG6McW482a6B6n1oXntcZUf4grI9Ugk3Jxv2jKeIGdImYzbwf32uT4XgTLudNa
- X1DvlfcRB/6367jWvIflm4mF6xuYg+k=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=F2Rrm6IKlaaZDhpA4W1gPO4DprvlkUlCAXvj1bF7xBY=;
+ b=CEMXAPdl6NusM1OT2vmimqM1rhTSDlVNOxAXxHpXhqZSvEiyk6VMoKq5yzkiFgyk17dvTt
+ FVNjU7mglhrvW76bwlBF/w4YY3V7D6yqtNTo4tPeeE/wketilmOMgFb/plwmJlY6zhJx6h
+ 5V1XG+wSpk3NZbF/vxh1DCPx3AqgEk0=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-608-XgBs26-VNJeLWQcVFCZsBQ-1; Thu,
- 15 Oct 2026 12:22:14 +0000
-X-MC-Unique: XgBs26-VNJeLWQcVFCZsBQ-1
-X-Mimecast-MFC-AGG-ID: XgBs26-VNJeLWQcVFCZsBQ_1792066933
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-175-nAWUEcxoNgqHDjbiXKryMA-1; Thu,
+ 15 Oct 2026 12:22:33 +0000
+X-MC-Unique: nAWUEcxoNgqHDjbiXKryMA-1
+X-Mimecast-MFC-AGG-ID: nAWUEcxoNgqHDjbiXKryMA_1792066952
 Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2A9081955F0C; Thu, 15 Oct 2026 12:22:13 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 042781955F1D; Thu, 15 Oct 2026 12:22:32 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.44.48.67])
  by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 6DF817D9; Thu, 15 Oct 2026 12:22:11 +0000 (UTC)
+ id 5946E7D9; Thu, 15 Oct 2026 12:22:30 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
 Cc: Jamin Lin <jamin_lin@aspeedtech.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 09/21] hw/misc/unimp: Add create_unimplemented_devices() helper
-Date: Thu, 15 Oct 2026 14:21:39 +0200
-Message-ID: <20261015122151.889017-10-clg@redhat.com>
+Subject: [PULL 18/21] hw/arm/aspeed_ast1700: Use a table for unimplemented
+ devices
+Date: Thu, 15 Oct 2026 14:21:48 +0200
+Message-ID: <20261015122151.889017-19-clg@redhat.com>
 In-Reply-To: <20261015122151.889017-1-clg@redhat.com>
 References: <20261015122151.889017-1-clg@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 10
 X-Spam_score: 1.0
 X-Spam_bar: +
 X-Spam_report: (1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -87,87 +87,78 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Jamin Lin <jamin_lin@aspeedtech.com>
 
-Several boards and SoCs create many unimplemented devices. Each of them
-uses its own structure and helper to describe and map these devices.
+Before this change, the I3C unimplemented device of AST1700 needed its
+own field in AspeedAST1700SoCState and was created and mapped with
+open-coded calls.
 
-Add an UnimplementedDeviceConfig structure and a
-create_unimplemented_devices() helper. The helper creates an
-unimplemented device for each entry of a table, adds it as a QOM child
-of the parent object, and maps it in a memory region container with
-the given priority. The table is terminated by an empty entry.
+Describe it in a table and use create_unimplemented_devices() to create
+and map it in the AST1700 memory region. This makes the code easier to
+maintain and read.
 
-Suggested-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+No functional change.
+
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Tested-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20261012064445.2571633-2-jamin_lin@aspeedtech.com
+Link: https://lore.kernel.org/qemu-devel/20261012064445.2571633-11-jamin_lin@aspeedtech.com
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- include/hw/misc/unimp.h | 21 +++++++++++++++++++++
- hw/misc/unimp.c         | 20 ++++++++++++++++++++
- 2 files changed, 41 insertions(+)
+ hw/arm/aspeed_ast1700.c | 21 ++++++++-------------
+ 1 file changed, 8 insertions(+), 13 deletions(-)
 
-diff --git a/include/hw/misc/unimp.h b/include/hw/misc/unimp.h
-index 77a5077511f2..073575159d60 100644
---- a/include/hw/misc/unimp.h
-+++ b/include/hw/misc/unimp.h
-@@ -25,6 +25,27 @@ struct UnimplementedDeviceState {
-     uint64_t size;
+diff --git a/hw/arm/aspeed_ast1700.c b/hw/arm/aspeed_ast1700.c
+index 5af5da5b8a73..e5d5bf405623 100644
+--- a/hw/arm/aspeed_ast1700.c
++++ b/hw/arm/aspeed_ast1700.c
+@@ -15,7 +15,6 @@
+ 
+ #define AST2700_SOC_LTPI_SIZE        0x01000000
+ #define AST1700_SOC_SRAM_SIZE        0x00040000
+-#define AST1700_SOC_I3C_SIZE         0x00010000
+ 
+ enum {
+     ASPEED_AST1700_DEV_SPI0,
+@@ -51,6 +50,11 @@ static const hwaddr aspeed_ast1700_io_memmap[] = {
+     [ASPEED_AST1700_DEV_SPI0_MEM]  =  0x04000000,
  };
  
-+typedef struct UnimplementedDeviceConfig {
-+    const char *qom_name;
-+    const char *region_name;
-+    uint64_t offset;
-+    uint64_t size;
-+    int priority;
-+} UnimplementedDeviceConfig;
++static const UnimplementedDeviceConfig aspeed_ast1700_unimp_devs[] = {
++    { "ioexp-i3c", "ioexp-i3c", 0x00C20000, 0x00010000, -1000 },
++    { }
++};
 +
-+/**
-+ * create_unimplemented_devices:
-+ * @parentobj: the parent object
-+ * @container: a #MemoryRegion within which @addr is a relative address
-+ * @devconfigs: NULL terminated array of #UnimplementedDeviceConfig
-+ *
-+ * For each entries in @devconfigs, create a TYPE_UNIMPLEMENTED_DEVICE
-+ * and mmap it in @container at UnimplementedDeviceConfig::offset.
-+ * @container is expected to be a QOM child of @parentobj.
-+ */
-+void create_unimplemented_devices(Object *parentobj, MemoryRegion *container,
-+                                  const UnimplementedDeviceConfig *devconfigs);
-+
- /**
-  * create_unimplemented_device: create and map a dummy device
-  * @name: name of the device for debug logging
-diff --git a/hw/misc/unimp.c b/hw/misc/unimp.c
-index 521b84bf20bf..4c8dcbdff336 100644
---- a/hw/misc/unimp.c
-+++ b/hw/misc/unimp.c
-@@ -96,3 +96,23 @@ static void unimp_register_types(void)
+ static void aspeed_ast1700_realize(DeviceState *dev, Error **errp)
+ {
+     AspeedAST1700SoCState *s = ASPEED_AST1700(dev);
+@@ -181,14 +185,9 @@ static void aspeed_ast1700_realize(DeviceState *dev, Error **errp)
+                         sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->wdt[i]), 0));
+     }
+ 
+-    /* I3C */
+-    qdev_prop_set_string(DEVICE(&s->i3c), "name", "ioexp-i3c");
+-    qdev_prop_set_uint64(DEVICE(&s->i3c), "size", AST1700_SOC_I3C_SIZE);
+-    sysbus_realize(SYS_BUS_DEVICE(&s->i3c), errp);
+-    memory_region_add_subregion_overlap(&s->iomem,
+-                        aspeed_ast1700_io_memmap[ASPEED_AST1700_DEV_I3C],
+-                        sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->i3c), 0),
+-                        -1000);
++    /* Unimplemented devices */
++    create_unimplemented_devices(OBJECT(s), &s->iomem,
++                                 aspeed_ast1700_unimp_devs);
  }
  
- type_init(unimp_register_types)
-+
-+void create_unimplemented_devices(Object *parentobj, MemoryRegion *container,
-+                                  const UnimplementedDeviceConfig *devconfigs)
-+{
-+    const UnimplementedDeviceConfig *cfg;
-+
-+    for (cfg = devconfigs; cfg->qom_name; cfg++) {
-+        DeviceState *dev = qdev_new(TYPE_UNIMPLEMENTED_DEVICE);
-+        SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
-+
-+        object_property_add_child(parentobj, cfg->qom_name, OBJECT(dev));
-+        qdev_prop_set_string(dev, "name", cfg->region_name);
-+        qdev_prop_set_uint64(dev, "size", cfg->size);
-+        sysbus_realize_and_unref(sbd, &error_fatal);
-+
-+        memory_region_add_subregion_overlap(container, cfg->offset,
-+                                            sysbus_mmio_get_region(sbd, 0),
-+                                            cfg->priority);
-+    }
-+}
+ static void aspeed_ast1700_instance_init(Object *obj)
+@@ -238,10 +237,6 @@ static void aspeed_ast1700_instance_init(Object *obj)
+                                 &s->wdt[i], "aspeed.wdt-ast2700");
+     }
+ 
+-    /* I3C */
+-    object_initialize_child(obj, "ioexp-i3c", &s->i3c,
+-                            TYPE_UNIMPLEMENTED_DEVICE);
+-
+     return;
+ }
+ 
 -- 
 2.56.0
 
