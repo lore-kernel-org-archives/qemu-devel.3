@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7FCCCC6B38
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 10:25:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17837CC6B33
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 10:26:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHIdb-0000Zb-FV; Thu, 15 Oct 2026 06:24:41 -0400
+	id 1xHIe6-0000sB-K7; Thu, 15 Oct 2026 06:25:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eblot.ml@gmail.com>)
- id 1xHIdG-0000Vp-KR
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 06:24:20 -0400
-Received: from mail-wm1-f51.google.com ([209.85.128.51])
+ id 1xHIe1-0000pZ-ET
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 06:25:05 -0400
+Received: from mail-wm1-f52.google.com ([209.85.128.52])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <eblot.ml@gmail.com>)
- id 1xHIdD-0003BR-TB
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 06:24:18 -0400
-Received: by mail-wm1-f51.google.com with SMTP id
- 5b1f17b1804b1-4a02667ccebso37159265e9.0
- for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 03:24:15 -0700 (PDT)
+ id 1xHIdz-0003NM-59
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 06:25:04 -0400
+Received: by mail-wm1-f52.google.com with SMTP id
+ 5b1f17b1804b1-4a19cba5c14so46006775e9.3
+ for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 03:25:02 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792059854; x=1792664654;
+ d=1e100.net; s=20260707; t=1792059901; x=1792664701;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :content-type:mime-version:subject:date:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=vlJ0YMKurtXs9nd1yudaJA57cD2SNCrzN2aA7xi4zDY=;
- b=roV4LyNh+WjtZlD+VVlXIv0bGLSYZA5gtBpAbBjfvaSM/UV5BX0aAuAOBkbTRn+rbe
- 1NOSFQTlQSLJj/l2aniBMlWEo/QmqvSTPvb1vpMIvKb9qXIUBnWQJR1kmjQO2OfhCBo9
- S0FWHNsbMKrbNdZr4I2SzEeTxqcxpXtk/qOTx6GwAoeEgPZrzUMGAKtFFxr8pbZuJuay
- y0CEGhI8AxpsGvJkydeNeEacOxj3q+rrZkND8LDbSIFaFH0oFEEDII7itxAy1lgZGUFm
- Qt693tBC1uJJiIx0jnTLKttqQQV5/E9/zWoaQoQNxweJyTcicRdsIMFOg7jRPA+5ybUB
- S3SA==
-X-Gm-Message-State: AFq9FYJNxCM5BA9f/KGq6ocXxgeH1U2d6AZZZWMTcRQmk4R/i0XQAdyC
- esZQsL4GV8rO7TSab3iWUV2fYGjRjf7xWMVSoU6r6muwfvzZHlRZZsWsqarBZrjJ
-X-Gm-Gg: AYBFou3t0h14b2wLoZCfK7jMlT5XbqRi7lCMHg+IBrm0dMAAj5/ZSWlWvZ8Yaf+eszJ
- /Br7+obBbA02gLc25chOlfwUce1XF0+mUeokW2I1lgzYDpTY62dxCE9s+AGrVx1HmsSniEMn4/A
- 4yq7ySIXKQB3kC8Te6uiwhy9SR2fshVk+XM820Z1XAzubcs/aQLzUbGgic2FMTOj+IX0bIs3qWe
- JIGToxycZoyn1TQvqY7y9FxC+Hvs4vJVSlyeRRljd9zc5oiJiuNufOxjuTDzdJLnuW2f5yOb8z5
- 0mT/EcbLQSE9n8klMEg6TjPvYmddL9UpCcW8lVNdUk3QUKDNBFLTcmpEymPZn7/KvUect7sq51Y
- OdnR28lVUUFiP1X4SwPsHPtwkn9Wl18CLTnci+bP2rnyIgNp1YqS+R6f+qt+m/V53RaksgvDM7q
- kurnMhtv/FGvUeiLYMUuqDfpM9kpmdvUgwCR8YuHYqiZNw0xZzwIWklt9cSdobdfnmsCAyoRlGf
- HmA2tak7PTyXehjXSxZFz33FBfQHglYylkSTa/hPcvIjg==
-X-Received: by 2002:a05:600d:82e4:b0:4a1:a45a:88f with SMTP id
- 5b1f17b1804b1-4a1a45a08f7mr231984865e9.20.1792059854088; 
- Thu, 15 Oct 2026 03:24:14 -0700 (PDT)
+ bh=hRRN1JeUA7jwAaRlPA2bDBFjU7DAkrQAjmmVepzRcwY=;
+ b=fL0DKTpPupKFyufSfxxcJb2PZk9DT4UbTAqiQ/gis40jh8sN3ssWvAsorORWmVuBjv
+ VmBAiPp4UL1f/9UntIfUC8D5V1SpifJKU40XXcTLLWg3pijqzRV2blGSLZx3l9Z74M7G
+ d0KhUemHAnsMLk6VpVVxwMHtIk+n03tIsWZPwTdI6F0KDeg8fjw0gIj9eq/9OGn4NaZJ
+ tiW214uZIYWop6H7pbVQ/S6AErM3auOMui1wDehpIVpV0nzFeNAc833ki3vG1tjVaxbA
+ 1AQp+VfTIbxiGjzsM9HwYum+UzhP9r6RfqGXWPBJSl3QRRvG8ipnUnTY4cCSVjS1bq88
+ 3AdQ==
+X-Gm-Message-State: AFq9FYIcnsj1zArQeLgD4riX1iv2Q6tk8YlcqTbPLiFAIya8BRxoOTnD
+ 20mYDWJJM6Z+FmlC43GJ7vQQ1KRKsZZI9nj2PI8wucTurV8bPWA8w3o8I7NgabU5
+X-Gm-Gg: AYBFou1d2b/hf9Pqv8oa7eYb/0visnBeeN6lQX1+U2FdZ+1W/Gd6AdFJyuOrw/sXXTU
+ iEyvzStIlHmno5sWxq3aEtOSXywG/CMaSZ1ITlN3qXyAryNDj+Ds8A8Of5p8fyZUNWvFKptTSwY
+ /59E6gCCSdggzOzL6PuG1QZeGhbB7sAhXNglc6tBfYSjH4aLNKdJNKYBdSU89RO/ukF7ffE6cIO
+ FW15H+uVyzEwu5DRSHAvkECT15TzSdaWAoTRLYdDFINjw71dgSb9R+JNMt8CzpomR8pTDSZvW0Y
+ MI0+e5g7dnqvdHzgKW0gvnUPJjkwF6hrViDJYWlgTHYS0K0Y7L0ag62GLDEpt6ndJItUwkpyGM4
+ qMXHipHm47s/zK32rRjBfAJVHeu1Az2IgmEZmdtUJn1+qzzmIkVxNNUQTId+DkOckoMpRyEhxeM
+ QueWY/TBfDHlDigkw3CY49WztSDFTjyTinwF+8ioCCzNdbIX412+/ACV5+L/D50/lvNPuY7+Gnf
+ QIa1dEVUgF1V1gU4geU85z00k8PVA6I/4TJZ43BaDLpWtxCqc9RXllw
+X-Received: by 2002:a05:600c:350b:b0:4a1:ad01:f8dc with SMTP id
+ 5b1f17b1804b1-4a1ad01f924mr164855695e9.21.1792059901206; 
+ Thu, 15 Oct 2026 03:25:01 -0700 (PDT)
 Received: from localhost (89-93-216-19.hfc.dyn.abo.bbox.fr. [89.93.216.19])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a1bd68144fsm43698635e9.4.2026.10.15.03.24.13
+ ffacd0b85a97d-48de3f7f8b8sm16993684f8f.35.2026.10.15.03.25.00
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 Oct 2026 03:24:13 -0700 (PDT)
-Date: Thu, 15 Oct 2026 11:27:48 +0200
-Subject: [PATCH v3 01/50] docs/system/arm/aspeed: add the catalina-bmc machine
+ Thu, 15 Oct 2026 03:25:00 -0700 (PDT)
+Date: Thu, 15 Oct 2026 11:27:55 +0200
+Subject: [PATCH v3 08/50] hw/rtc: ds1338: move TYPE_DS1338 to a public header
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20261015-bmc-minerva-v3-1-7d50c8a108e5@free.fr>
+Message-Id: <20261015-bmc-minerva-v3-8-7d50c8a108e5@free.fr>
 References: <20261015-bmc-minerva-v3-0-7d50c8a108e5@free.fr>
 In-Reply-To: <20261015-bmc-minerva-v3-0-7d50c8a108e5@free.fr>
 To: qemu-devel@nongnu.org
@@ -73,18 +73,18 @@ Cc: =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
  Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
  qemu-ppc@nongnu.org, qemu-riscv@nongnu.org, 
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, 
- Emmanuel Blot <emmanuel.blot@free.fr>, Jamin Lin <jaminlin1207@gmail.com>, 
+ Emmanuel Blot <emmanuel.blot@free.fr>, 
  =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 X-Mailer: b4 0.16.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1792056474; l=2095;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1792056475; l=1605;
  i=emmanuel.blot@free.fr; s=20260602; h=from:subject:message-id;
- bh=ohO/cxfhzUynwcpNUOnDO3N8MbcDCcR99qBjLp7ftAQ=;
- b=ZKsJLrtK7bOG060LP680C6YTJKyi/EjFZFOJ/P4eeqVxAIDrSPCn/737cUSu4Exy21Ag4JMsf
- xBXb2C5eUyLC7z3z0GM9LpOxpFlMcRaifRPj9Xe87pn7RY1SeXko9Wr
+ bh=jNIbEw5Dx6rmzBocKs0idI42P74RBZ2J77WhR75yZGs=;
+ b=69tmfEnX6XuLSGcxuI3K9dz2hqhVD3rFmws43ND5avNLLyg4HCGpgtxn6qpeFZDj3RGMoFQ2q
+ NwLglTZbW+MCsGZ5bQR/5Yh3+PWECxOyhnYmfRh6WxpbQXw1w3gzV4E
 X-Developer-Key: i=emmanuel.blot@free.fr; a=ed25519;
  pk=0qFrZ21FAAN8OfVsSoVcCFTk/NMYOWzxJz4paSAVm0g=
-Received-SPF: pass client-ip=209.85.128.51; envelope-from=eblot.ml@gmail.com;
- helo=mail-wm1-f51.google.com
+Received-SPF: pass client-ip=209.85.128.52; envelope-from=eblot.ml@gmail.com;
+ helo=mail-wm1-f52.google.com
 X-Spam_score_int: -15
 X-Spam_score: -1.6
 X-Spam_bar: -
@@ -110,42 +110,63 @@ From:  Emmanuel Blot via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The Facebook Catalina BMC machine is supported by hw/arm but has never
-been listed in the Aspeed documentation. Add it to the AST2600 machine
-table.
+Move the TYPE_DS1338 type name definition from ds1338.c into a new
+include/hw/rtc/ds1338.h header so that boards instantiating the device
+no longer need to redefine the type name string locally.
 
-While at it, shorten the document title. Listing every machine name in
-the title duplicates the tables right below it, and made the title (and
-its underline) grow past 350 columns. The machine list stays available
-where it is readable, in the per-SoC tables.
-
-Reviewed-by: Jamin Lin <jaminlin1207@gmail.com>
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
 Signed-off-by: Emmanuel Blot <emmanuel.blot@free.fr>
 ---
- docs/system/arm/aspeed.rst | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ hw/rtc/ds1338.c         |  2 +-
+ include/hw/rtc/ds1338.h | 20 ++++++++++++++++++++
+ 2 files changed, 21 insertions(+), 1 deletion(-)
 
-diff --git a/docs/system/arm/aspeed.rst b/docs/system/arm/aspeed.rst
-index 2d51ceeb84..933df41f96 100644
---- a/docs/system/arm/aspeed.rst
-+++ b/docs/system/arm/aspeed.rst
-@@ -1,5 +1,5 @@
--Aspeed family boards (``anacapa-bmc``, ``ast2500-evb``, ``ast2600-evb``, ``bletchley-bmc``, ``fuji-bmc``, ``gb200nvl-bmc``, ``fby35-bmc``, ``g220a-bmc``, ``palmetto-bmc``, ``quanta-q71l-bmc``, ``rainier-bmc``, ``romulus-bmc``, ``supermicrox11-bmc``, ``supermicrox11spi-bmc``, ``tiogapass-bmc``, ``witherspoon-bmc``, ``yosemitev2-bmc``)
--===============================================================================================================================================================================================================================================================================================================================================
-+Aspeed family boards
-+====================
+diff --git a/hw/rtc/ds1338.c b/hw/rtc/ds1338.c
+index 5f1ee2e410..f8b3340bf0 100644
+--- a/hw/rtc/ds1338.c
++++ b/hw/rtc/ds1338.c
+@@ -12,6 +12,7 @@
  
- The QEMU Aspeed machines model BMCs of various OpenPOWER systems and
- Aspeed evaluation boards. They are based on different releases of the
-@@ -33,6 +33,7 @@ AST2600 SoC based machines :
- - ``fuji-bmc``             Facebook Fuji BMC
- - ``bletchley-bmc``        Facebook Bletchley BMC
- - ``fby35-bmc``            Facebook fby35 BMC
-+- ``catalina-bmc``         Facebook Catalina BMC
- - ``anacapa-bmc``          Facebook Anacapa BMC
- - ``gb200nvl-bmc``         Nvidia GB200nvl BMC
+ #include "qemu/osdep.h"
+ #include "hw/i2c/i2c.h"
++#include "hw/rtc/ds1338.h"
+ #include "migration/vmstate.h"
+ #include "qemu/bcd.h"
+ #include "qom/object.h"
+@@ -29,7 +30,6 @@
+ #define HOURS_PM   0x20
+ #define CTRL_OSF   0x20
  
+-#define TYPE_DS1338 "ds1338"
+ OBJECT_DECLARE_SIMPLE_TYPE(DS1338State, DS1338)
+ 
+ struct DS1338State {
+diff --git a/include/hw/rtc/ds1338.h b/include/hw/rtc/ds1338.h
+new file mode 100644
+index 0000000000..f4cfe6a8e7
+--- /dev/null
++++ b/include/hw/rtc/ds1338.h
+@@ -0,0 +1,20 @@
++/*
++ * MAXIM DS1338 I2C RTC+NVRAM
++ *
++ * Copyright (c) 2009 CodeSourcery.
++ * Written by Paul Brook
++ *
++ * This code is licensed under the GNU GPL v2.
++ *
++ * Contributions after 2012-01-13 are licensed under the terms of the
++ * GNU GPL, version 2 or (at your option) any later version.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#ifndef HW_RTC_DS1338_H
++#define HW_RTC_DS1338_H
++
++#define TYPE_DS1338 "ds1338"
++
++#endif
 
 -- 
 2.53.0-Meta
