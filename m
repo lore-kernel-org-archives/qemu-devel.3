@@ -4,107 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B623CC6B33
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 10:54:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02775CC6B30
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 10:54:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHJ66-0005Xf-BC; Thu, 15 Oct 2026 06:54:06 -0400
+	id 1xHJ4f-0002MU-62; Thu, 15 Oct 2026 06:52:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1xHJ62-0005Ld-KC
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 06:54:04 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1xHJ60-0007wa-Qr
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 06:54:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1792061639;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=cQT64RPQilPvwdPb0LkD3kd7Fzvx+yQCRQ512TDt1/A=;
- b=OUrvBmlT5eZLgrcrkzMJ+Bag3+1Z/yzjAdAzpZVxKGzQgvAh3oK3H+fO+tqRkzhBN3IAu9
- a6MpSJ61hpeNSBYrtC2D/Xj6RVe6dKSXhijjqYm3FqDhH8qDJ86MogBN13gMSQbg7Sh3pc
- hi4xNIwYrxGcP8HK7hsrB+AruuYK2yY=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-642-mmFBL7cuMaSTVJ8YwKcsvA-1; Thu, 15 Oct 2026 10:53:58 +0000
-X-MC-Unique: mmFBL7cuMaSTVJ8YwKcsvA-1
-X-Mimecast-MFC-AGG-ID: mmFBL7cuMaSTVJ8YwKcsvA_1792061637
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-48af5a07314so3258582f8f.2
- for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 03:53:58 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1xHJ4c-0002Jc-NI
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 06:52:34 -0400
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1xHJ4a-0007pi-U0
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 06:52:34 -0400
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-487049569b6so3542571f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 03:52:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1792061637; x=1792666437; darn=nongnu.org;
+ d=linaro.org; s=google; t=1792061551; x=1792666351; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=cQT64RPQilPvwdPb0LkD3kd7Fzvx+yQCRQ512TDt1/A=;
- b=CQHHqS+YtiL48sHdUR9H9LsWrcL8uCsOdre3FWh0sPHWw2b3JtKlPAcFhQJknp1hc5
- 2FNuOpgIAR5MB4GVCSeKBqoJqT+FpidmD2Si380JPERvgZr/uIwt+S7VKRuneFrukaXP
- 7G8hs4xMJHZFaQvKru5j2NiCW6nqUZ6oAZLS7F6KJcBG6rfpLcy7rv9yJtTXsdoVTKBc
- sztwv2ODd2KJPRZM7RF8AoZ0sfDtX0Y0wBgPop5eicOd/c4cblBDKdua533WIH4/FC3r
- VlI2ULF7bS1c8xnBa9eOg1pRFBNfnta0kjAL6jEQaTyouQbmJty5P3ha2N/QKQMR/dmu
- TIyA==
+ bh=UgxSvjqorZbozu944NHI8qviwoPcBKpeVr1Z3LODC8M=;
+ b=h6wEZPBh05sGiJCZwzV/0hwilgJRathd4n2Ck+x783qZMuv7g4QSl8QSxQpMfUUqlu
+ jIqjSYFS9Uuf4odI037/bABgtQeDOD9HsKa09T7ioBP/1WYnmF2d32X99ntnlvmFBpCo
+ wfiYG96SeQiA70jvZespAhfZ6JI9fjtWK7+QJp87fjGmaajGPwXHav6cWx+qAzcTENBz
+ DgdVChKHS01OMTnaUqyZaqYeTSS240Mk/lIIMuoJVIMXY5fOun23VjAuDkm/0rBJrpuW
+ DlomjzX1nRQgVc6UZBZXZSpYph6WY4UcaVDnVkFA9L9c+YWA3lBZjqG9p3bMqQcijaJ4
+ E8pg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792061637; x=1792666437;
+ d=1e100.net; s=20260707; t=1792061551; x=1792666351;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=cQT64RPQilPvwdPb0LkD3kd7Fzvx+yQCRQ512TDt1/A=;
- b=I4Jgr8ywjYo7c8xju/3V6DzQUuyacvVtA1vZSbOTNe6PhRh5TzMkv9eXAfoVa3/NkR
- 6aiFm8mgy7ifmHmviV8t4bnmjo8Ne6mCWOQunUKSGA5EtF+WrUf0ZZdWTABpOaCsgseu
- QmO5PpNm2PpycQUFfTnr4d57o1lwp/cCqhMb9m/jC4S9/hy8Wlyo23v+czeojJACsFX6
- Ei483ZvfXt8nse+U5FofF1YbiaBSNg1u9vf/GHESLLNnO8rLxsSqVv8y+c/fFhTMVhyW
- T5l713xeGIxdhsuChLjtabDtV0Niiog5GPoEG1m0BgEixdLa7h22XRRc//cAs3k7xaaX
- JirA==
-X-Gm-Message-State: AFq9FYLwtPrFP+aOICCp/NqTXfwyPxTJdLnhGYd6aZvQ5jBzEZyIi8mM
- HMqE8dtxQkbXuC8UQscd1xxkx0YcohWKiT2CdTw5JNqI3XM5qUSfYr8ObDb/MDDXZ0BsmDwa3fX
- 6miRaE3deSFNYKD0MaJe229aIEvelcbRm4wL85YDOflVIto4YgUA6Z3b9i1oqgcuPu+qCz4A4lU
- OZpGwaJChFLYXlWfU/3JSfnsy2K2QVSqtBQMtwgGQN
-X-Gm-Gg: AYBFou1evgMpg2Da9/6kYBVVm1XdFSgJKyOt+goVYpiH7MITOLXI/h1sZB2hcpX1CC2
- dtzSivwD7XpA9es4JV0ftDF+vFnyXwEykQodSan8po9gIgoktPMwsTd2Y0xKfypi2dzf6HOtfjY
- buRIjgASYmER/9FL4SuAZitYMI8E+q3vGWQvpQ08qaCUlo+fwkyA+udEr0snm+nBzl7u4+DDndu
- IRSHSx4nqPrvi54Ha823RMPPjlPYnis+nSyj9LDn38taxRAXJWQ2+mswPu9nXJCCWgV9VSZgYZw
- 04iz0n1rYYTZ/k+IgEU35MIwdNtGLJBEsRoEumLMwvWzE4Qw1qXpx39WhijXzxCzdZ/iCnPRm2h
- vlgi84dSCQPiHO9wuB1OXFyuFZx/BOAV6Wva6Hp+Oo7xw/i7nPcd7l9+LvWQy4qW4GGy4veE5ar
- UB5k96
-X-Received: by 2002:a05:600d:1b:b0:4a1:9661:14b7 with SMTP id
- 5b1f17b1804b1-4a196611b9amr269079255e9.32.1792061637146; 
- Thu, 15 Oct 2026 03:53:57 -0700 (PDT)
-X-Received: by 2002:a05:600d:1b:b0:4a1:9661:14b7 with SMTP id
- 5b1f17b1804b1-4a196611b9amr269078975e9.32.1792061636697; 
- Thu, 15 Oct 2026 03:53:56 -0700 (PDT)
-Received: from [192.168.10.48] ([176.206.82.153])
+ bh=UgxSvjqorZbozu944NHI8qviwoPcBKpeVr1Z3LODC8M=;
+ b=WlBhI9u5Ksc0OR5p58FNbV01Do5B4ad670N1LeQYzCDmf13jbChpzmsS3AJ3PNfyuf
+ 6/mqScdiBctDzeGdq6WcgO6keSAIbhrnbA9rzYb8ywhpVPKPxrL1dTxSDltB2ZZShrYc
+ sBhAYCculNY7vQKhViLtaAq8wnMGgfJsjRUiQZDAXAZg/4BPSVQjomcc8QzhgZ8PEqr8
+ mCf00jl7AA+9ngqjiwJz3b1wuzJeCP4io72SVxqSmkmr80psMqmrP819ETE8oLzkKpOf
+ pE2wOTUTvZBPU5BWprOPwZ2cWbKQyJVQ20xvy3hpEwJ2gQMdtpNK/hhuichJSDLbm512
+ tZBQ==
+X-Gm-Message-State: AFq9FYKP2t2mpf5dyHc47bceZZks3YqUM62VQx96rhiaI4wcYqzKjug3
+ UG6RGH+QddGwliW2qkyXmC/q1s3zC2SHHQiCIYXi7pJZA69eeBJItgiLhjrqX7bKqN0gf8CYrlu
+ XJD5TW0g=
+X-Gm-Gg: AYBFou0WtgLbILzkTKqAz91AIg4t/+TgxSJlj1Vswl2KEUwLQParAvAkgfGgAp92S72
+ 1d3Npt4VbjLka4AKW11sHmLlUSNDBj+W2xYA6uVBwpqRUr6q6L6kiMtKnMApClQ+fES5f0Bmpcq
+ tEdnXN13JAilwdh3N3SHwrCKarycYXXrtF2YbI27b6+JolCUjVXkwfWegKZN/WRTgLc27tp/itv
+ X1T3miyRuYNG8PaGtTeulD4kBx+KV9t/Lv7XeITjo4cbi0c05dACd91+x7M6Qm8ENUqYL10txWm
+ tWne6wzltTCOmie8s8d1H/Smk/wtqO/afxjAk0IrJ1692yjKClgDKpOyLnJJc8wNpuE7AoCwE9s
+ dgx+H/Q7ZSvzLdOFUx1IxQ0w8S/OsiINxkEAgTY7AKHftMw0mqDtZXDZl7Z3JIqBZBFdZTab+xq
+ wLTCoye9rGGWQZ+fLYA2zad3HiDIu1afNVt13WssV0ssqlJzIW8GGI9yMnIaCK4jwpYJ46+CxSJ
+ us3rmLyudeY0j6S1/yjobvXCElm+t5bo/o5b9zXFR6DtTAAugAB/TLDU2OPxJmHPfsF2Ab8iOI9
+ pwtP
+X-Received: by 2002:adf:e013:0:20b0:487:930:8acc with SMTP id
+ ffacd0b85a97d-48dbaaddbd5mr26798811f8f.16.1792061551394; 
+ Thu, 15 Oct 2026 03:52:31 -0700 (PDT)
+Received: from stoup.fritz.box
+ (p200300ca3f0f8b006e0ed1a687ab6860.dip0.t-ipconnect.de.
+ [2003:ca:3f0f:8b00:6e0e:d1a6:87ab:6860])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a1bd9a88bbsm64780665e9.3.2026.10.15.03.53.50
+ ffacd0b85a97d-48df5b88207sm3075949f8f.59.2026.10.15.03.52.28
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 Oct 2026 03:53:51 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
+ Thu, 15 Oct 2026 03:52:30 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Artemii Mashanov <ralerrdirsardx@gmail.com>
-Subject: [PULL 01/13] target/i386/tcg: zero FXSAVE FOP and reserved slot bytes
-Date: Thu, 15 Oct 2026 12:53:35 +0200
-Message-ID: <20261015105347.827029-2-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261015105347.827029-1-pbonzini@redhat.com>
-References: <20261015105347.827029-1-pbonzini@redhat.com>
+Cc: Max Chou <max.chou@sifive.com>, Alistair Francis <alistair.francis@wdc.com>
+Subject: [PULL 06/16] tcg/riscv64: Return tcg_insn_unit from insn encoders
+Date: Thu, 15 Oct 2026 12:51:58 +0200
+Message-ID: <20261015105212.356392-7-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20261015105212.356392-1-richard.henderson@linaro.org>
+References: <20261015105212.356392-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=richard.henderson@linaro.org; helo=mail-wr1-x432.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,137 +104,165 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Artemii Mashanov <ralerrdirsardx@gmail.com>
+Returning int32_t was logically incorrect.
 
-TCG's do_xsave_fpu() omitted writing the FOP field and the reserved
-bytes (10..15) of each x87 register slot. Those parts of
-the destination buffer retained their previous contents.
-
-The reserved bytes of all eight slots are zeroed. TCG does not
-yet track the actual FOP value, this patch stores a fixed zero instead.
-
-Add a regression test in tests/tcg/x86_64/fxsave.c. It fills the
-FXSAVE area with 0xcc, executes FNINIT and FXSAVE64, then verifies that
-FOP and all reserved slot bytes are zero.
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3522
-
-Signed-off-by: Artemii Mashanov <ralerrdirsardx@gmail.com>
-Link: https://lore.kernel.org/r/20260826171655.117679-1-ralerrdirsardx@gmail.com
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Reviewed-by: Max Chou <max.chou@sifive.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/i386/tcg/fpu_helper.c |  3 ++
- tests/tcg/x86_64/fxsave.c    | 66 ++++++++++++++++++++++++++++++++++++
- tests/tcg/x86_64/meson.build |  1 +
- 3 files changed, 70 insertions(+)
- create mode 100644 tests/tcg/x86_64/fxsave.c
+ tcg/riscv64/tcg-target.c.inc | 47 ++++++++++++++++++------------------
+ 1 file changed, 23 insertions(+), 24 deletions(-)
 
-diff --git a/target/i386/tcg/fpu_helper.c b/target/i386/tcg/fpu_helper.c
-index fb473c28f7b..4bbac996326 100644
---- a/target/i386/tcg/fpu_helper.c
-+++ b/target/i386/tcg/fpu_helper.c
-@@ -2620,6 +2620,7 @@ static void do_xsave_fpu(X86Access *ac, target_ulong ptr)
-     access_stw(ac, ptr + XO(legacy.fcw), env->fpuc);
-     access_stw(ac, ptr + XO(legacy.fsw), fpus);
-     access_stw(ac, ptr + XO(legacy.ftw), fptag ^ 0xff);
-+    access_stw(ac, ptr + XO(legacy.fpop), 0);
+diff --git a/tcg/riscv64/tcg-target.c.inc b/tcg/riscv64/tcg-target.c.inc
+index 14a397117a2..158697cbc93 100644
+--- a/tcg/riscv64/tcg-target.c.inc
++++ b/tcg/riscv64/tcg-target.c.inc
+@@ -434,28 +434,28 @@ static bool tcg_target_const_match(int64_t val, int ct,
  
-     /* In 32-bit mode this is eip, sel, dp, sel.
-        In 64-bit mode this is rip, rdp.
-@@ -2632,6 +2633,8 @@ static void do_xsave_fpu(X86Access *ac, target_ulong ptr)
-     for (i = 0; i < 8; i++) {
-         floatx80 tmp = ST(i);
-         do_fstt(ac, addr, tmp);
-+        access_stw(ac, addr + 10, 0);
-+        access_stl(ac, addr + 12, 0);
-         addr += 16;
-     }
+ /* Type-R */
+ 
+-static int32_t encode_r(RISCVInsn opc, TCGReg rd, TCGReg rs1, TCGReg rs2)
++static tcg_insn_unit encode_r(RISCVInsn opc, TCGReg rd, TCGReg rs1, TCGReg rs2)
+ {
+     return opc | (rd & 0x1f) << 7 | (rs1 & 0x1f) << 15 | (rs2 & 0x1f) << 20;
  }
-diff --git a/tests/tcg/x86_64/fxsave.c b/tests/tcg/x86_64/fxsave.c
-new file mode 100644
-index 00000000000..d08a4e8a0e5
---- /dev/null
-+++ b/tests/tcg/x86_64/fxsave.c
-@@ -0,0 +1,66 @@
-+/*
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ * See https://gitlab.com/qemu-project/qemu/-/issues/3522
-+ */
-+
-+#include <stdint.h>
-+#include <stdio.h>
-+#include <string.h>
-+
-+#define FXSAVE_FOP_OFFSET      6
-+#define FXSAVE_X87_OFFSET      32
-+#define FXSAVE_SLOT_SIZE       16
-+#define FXSAVE_RESERVED_START  10
-+#define FXSAVE_NUM_SLOTS       8
-+
-+struct fxsave_area {
-+    uint8_t raw[512];
-+} __attribute__((aligned(16)));
-+
-+_Static_assert(sizeof(struct fxsave_area) == 512,
-+                "FXSAVE area must be exactly 512 bytes");
-+
-+static uint16_t u16_le(const uint8_t *p)
-+{
-+    uint16_t v;
-+    memcpy(&v, p, sizeof(v));
-+    return v;
-+}
-+
-+int main(void)
-+{
-+    struct fxsave_area area;
-+    uint16_t fop;
-+
-+    memset(&area, 0xcc, sizeof(area));
-+
-+    __asm__ volatile(
-+        "fninit\n\t"
-+        "fxsave64 %0"
-+        : "+m" (area)
-+        :
-+        : "memory"
-+    );
-+
-+    fop = u16_le(&area.raw[FXSAVE_FOP_OFFSET]);
-+    if (fop != 0) {
-+        fprintf(stderr, "FOP: expected 0, got 0x%04x\n", (unsigned)fop);
-+        return 1;
-+    }
-+
-+    for (int slot = 0; slot < FXSAVE_NUM_SLOTS; slot++) {
-+        int base = FXSAVE_X87_OFFSET + slot * FXSAVE_SLOT_SIZE;
-+        for (int b = FXSAVE_RESERVED_START; b < FXSAVE_SLOT_SIZE; b++) {
-+            uint8_t val = area.raw[base + b];
-+            if (val != 0) {
-+                fprintf(stderr,
-+                        "Slot %d byte %d (offset %d): expected 0x00, "
-+                        "got 0x%02x\n",
-+                        slot, b, base + b, (unsigned)val);
-+                return 1;
-+            }
-+        }
-+    }
-+
-+    return 0;
-+}
-diff --git a/tests/tcg/x86_64/meson.build b/tests/tcg/x86_64/meson.build
-index 968fe27cfc5..95c7ee676eb 100644
---- a/tests/tcg/x86_64/meson.build
-+++ b/tests/tcg/x86_64/meson.build
-@@ -61,6 +61,7 @@ tests += {
-     'cflags': ['-pthread', '-Wl,--no-warn-rwx-segments']
-   },
-   'fma.c': {},
-+  'fxsave.c': {},
-   'noexec.c': {},
-   'segment-prefixes.c': {},
-   'test-1648.c': {},
+ 
+ /* Type-I */
+ 
+-static int32_t encode_imm12(uint32_t imm)
++static tcg_insn_unit encode_imm12(uint32_t imm)
+ {
+     return (imm & 0xfff) << 20;
+ }
+ 
+-static int32_t encode_i(RISCVInsn opc, TCGReg rd, TCGReg rs1, uint32_t imm)
++static tcg_insn_unit encode_i(RISCVInsn opc, TCGReg rd, TCGReg rs1, uint32_t imm)
+ {
+     return opc | (rd & 0x1f) << 7 | (rs1 & 0x1f) << 15 | encode_imm12(imm);
+ }
+ 
+ /* Type-S */
+ 
+-static int32_t encode_simm12(uint32_t imm)
++static tcg_insn_unit encode_simm12(uint32_t imm)
+ {
+-    int32_t ret = 0;
++    tcg_insn_unit ret = 0;
+ 
+     ret |= (imm & 0xFE0) << 20;
+     ret |= (imm & 0x1F) << 7;
+@@ -463,16 +463,16 @@ static int32_t encode_simm12(uint32_t imm)
+     return ret;
+ }
+ 
+-static int32_t encode_s(RISCVInsn opc, TCGReg rs1, TCGReg rs2, uint32_t imm)
++static tcg_insn_unit encode_s(RISCVInsn opc, TCGReg rs1, TCGReg rs2, uint32_t imm)
+ {
+     return opc | (rs1 & 0x1f) << 15 | (rs2 & 0x1f) << 20 | encode_simm12(imm);
+ }
+ 
+ /* Type-SB */
+ 
+-static int32_t encode_sbimm12(uint32_t imm)
++static tcg_insn_unit encode_sbimm12(uint32_t imm)
+ {
+-    int32_t ret = 0;
++    tcg_insn_unit ret = 0;
+ 
+     ret |= (imm & 0x1000) << 19;
+     ret |= (imm & 0x7e0) << 20;
+@@ -482,28 +482,28 @@ static int32_t encode_sbimm12(uint32_t imm)
+     return ret;
+ }
+ 
+-static int32_t encode_sb(RISCVInsn opc, TCGReg rs1, TCGReg rs2, uint32_t imm)
++static tcg_insn_unit encode_sb(RISCVInsn opc, TCGReg rs1, TCGReg rs2, uint32_t imm)
+ {
+     return opc | (rs1 & 0x1f) << 15 | (rs2 & 0x1f) << 20 | encode_sbimm12(imm);
+ }
+ 
+ /* Type-U */
+ 
+-static int32_t encode_uimm20(uint32_t imm)
++static tcg_insn_unit encode_uimm20(uint32_t imm)
+ {
+     return imm & 0xfffff000;
+ }
+ 
+-static int32_t encode_u(RISCVInsn opc, TCGReg rd, uint32_t imm)
++static tcg_insn_unit encode_u(RISCVInsn opc, TCGReg rd, uint32_t imm)
+ {
+     return opc | (rd & 0x1f) << 7 | encode_uimm20(imm);
+ }
+ 
+ /* Type-UJ */
+ 
+-static int32_t encode_ujimm20(uint32_t imm)
++static tcg_insn_unit encode_ujimm20(uint32_t imm)
+ {
+-    int32_t ret = 0;
++    tcg_insn_unit ret = 0;
+ 
+     ret |= (imm & 0x0007fe) << (21 - 1);
+     ret |= (imm & 0x000800) << (20 - 11);
+@@ -513,7 +513,7 @@ static int32_t encode_ujimm20(uint32_t imm)
+     return ret;
+ }
+ 
+-static int32_t encode_uj(RISCVInsn opc, TCGReg rd, uint32_t imm)
++static tcg_insn_unit encode_uj(RISCVInsn opc, TCGReg rd, uint32_t imm)
+ {
+     return opc | (rd & 0x1f) << 7 | encode_ujimm20(imm);
+ }
+@@ -521,8 +521,8 @@ static int32_t encode_uj(RISCVInsn opc, TCGReg rd, uint32_t imm)
+ 
+ /* Type-OPIVI */
+ 
+-static int32_t encode_vi(RISCVInsn opc, TCGReg rd, int32_t imm,
+-                         TCGReg vs2, bool vm)
++static tcg_insn_unit encode_vi(RISCVInsn opc, TCGReg rd, int32_t imm,
++                               TCGReg vs2, bool vm)
+ {
+     return opc | (rd & 0x1f) << 7 | (imm & 0x1f) << 15 |
+            (vs2 & 0x1f) << 20 | (vm << 25);
+@@ -530,8 +530,8 @@ static int32_t encode_vi(RISCVInsn opc, TCGReg rd, int32_t imm,
+ 
+ /* Type-OPIVV/OPMVV/OPIVX/OPMVX, Vector load and store */
+ 
+-static int32_t encode_v(RISCVInsn opc, TCGReg d, TCGReg s1,
+-                        TCGReg s2, bool vm)
++static tcg_insn_unit encode_v(RISCVInsn opc, TCGReg d, TCGReg s1,
++                              TCGReg s2, bool vm)
+ {
+     return opc | (d & 0x1f) << 7 | (s1 & 0x1f) << 15 |
+            (s2 & 0x1f) << 20 | (vm << 25);
+@@ -539,20 +539,19 @@ static int32_t encode_v(RISCVInsn opc, TCGReg d, TCGReg s1,
+ 
+ /* Vector vtype */
+ 
+-static uint32_t encode_vtype(bool vta, bool vma,
+-                            MemOp vsew, RISCVVlmul vlmul)
++static uint32_t encode_vtype(bool vta, bool vma, MemOp vsew, RISCVVlmul vlmul)
+ {
+     return vma << 7 | vta << 6 | vsew << 3 | vlmul;
+ }
+ 
+-static int32_t encode_vset(RISCVInsn opc, TCGReg rd,
+-                           TCGArg rs1, uint32_t vtype)
++static tcg_insn_unit encode_vset(RISCVInsn opc, TCGReg rd,
++                                 TCGArg rs1, uint32_t vtype)
+ {
+     return opc | (rd & 0x1f) << 7 | (rs1 & 0x1f) << 15 | (vtype & 0x7ff) << 20;
+ }
+ 
+-static int32_t encode_vseti(RISCVInsn opc, TCGReg rd,
+-                            uint32_t uimm, uint32_t vtype)
++static tcg_insn_unit encode_vseti(RISCVInsn opc, TCGReg rd,
++                                  uint32_t uimm, uint32_t vtype)
+ {
+     return opc | (rd & 0x1f) << 7 | (uimm & 0x1f) << 15 | (vtype & 0x3ff) << 20;
+ }
 -- 
-2.56.0
+2.53.0
 
 
