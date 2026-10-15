@@ -4,69 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40FB4CC6B2D
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 01:43:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 187BECC6B33
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 02:00:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHAVC-00072z-UZ; Wed, 14 Oct 2026 21:43:27 -0400
+	id 1xHAkl-0008Ub-Hf; Wed, 14 Oct 2026 21:59:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1xHAVA-00072U-5k
- for qemu-devel@nongnu.org; Wed, 14 Oct 2026 21:43:24 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1xHAV6-0007Hm-HD
- for qemu-devel@nongnu.org; Wed, 14 Oct 2026 21:43:23 -0400
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8Bxb9OwL9BqoPUVAA--.63760S3;
- Thu, 15 Oct 2026 09:43:12 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowJDxTs+tL9BqB3gsAA--.28108S2;
- Thu, 15 Oct 2026 09:43:09 +0800 (CST)
-Subject: Re: [PATCH v5 15/23] target/loongarch: add LVZ to invtlb
-From: Bibo Mao <maobibo@loongson.cn>
-To: SignKirigami <prcups@krgm.moe>, qemu-devel@nongnu.org
-Cc: Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
-References: <cover.1791514848.git.prcups@krgm.moe>
- <e864669d1a8d97f6d70677ef43ce925eef7ed4a8.1791514848.git.prcups@krgm.moe>
- <c0d7b38d-cd8b-e363-1051-d2f68dbe417c@loongson.cn>
-Message-ID: <3ee66db5-e554-7c8d-0013-4a0cf258e1c6@loongson.cn>
-Date: Thu, 15 Oct 2026 09:44:31 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <filip.hejsek@gmail.com>)
+ id 1xHAkk-0008UO-5l
+ for qemu-devel@nongnu.org; Wed, 14 Oct 2026 21:59:30 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <filip.hejsek@gmail.com>)
+ id 1xHAki-0000AZ-FK
+ for qemu-devel@nongnu.org; Wed, 14 Oct 2026 21:59:29 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-4a16c1608faso61680535e9.0
+ for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 18:59:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1792029566; x=1792634366; darn=nongnu.org;
+ h=cc:to:content-transfer-encoding:content-type:mime-version
+ :message-id:date:subject:from:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=8CJxtwWzoxwg1UM/B1jbRAKPv7zwQjXGNMN4bg15vIc=;
+ b=jn+AvAWVZ/2gMILKriTXgcZdSNKFiO7g/APUxXxB93T/IvqrXtLFo+OEuss3JZAFJy
+ CMRKkOroKO4fC+1qQxBmUWojn+gndn+zwLuXcJegdpidIOiRcEnIHwD7CKIDKr/qBNzR
+ ho1sDlqBn18EP+pJFrUiskXKBR7xx1jXPUY+BOQ0NUY38Pb5yzbwH2S2vl3m5F4VZZpI
+ EUF4LN3YdIaQCVLQ/M671MsAWAVrtuuB9yS6LGncSTOgcMbM/LumZfmIFHQpK9A1ZyLx
+ +6OKv3kMPx8tZQal09roFbL7RKKH1I6Vu25LF9eRZA1IOu2L3S7ZCABeTjsl5V2rwEhR
+ 2UDQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1792029566; x=1792634366;
+ h=cc:to:content-transfer-encoding:content-type:mime-version
+ :message-id:date:subject:from:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=8CJxtwWzoxwg1UM/B1jbRAKPv7zwQjXGNMN4bg15vIc=;
+ b=Ul1nBmqFF/LCSGBEG6uSa/ppXxTEGdK4tlQGH7QpJ1Mxiscf8rKPtEQP4Pyb7yVn18
+ sIY5pg+NlxvYW2AwifXFS7fkXI6OYwf9ilNNvftRgaenNAZkQpgo6vLZ9EZcqK0i74hr
+ kW8Nk2Jll3yxtkx+9Fq3Xa4eVNFaalmCuoHQo5nXo0SU+Nl4WRjT7TyVSJNqaDCg8cLO
+ SRD7z65+pF2d4Yi89TuNcEDVAb/MjW0e0nc8729jazTxSFesZ5EuCT2rKS/IuPgPQ/zw
+ DnZ80qQW5prulXRYkKIVTybfi64YU+YZbmxbOVXUyM5lloEJXrKGE3LW0FBv9WyFFiHt
+ HjcQ==
+X-Gm-Message-State: AFq9FYIfndTzBH1DXM0SSPqkyDGAglwX18jpdrjL9n+aR60Rk5j65YEq
+ p8TYQV9IInEOYsrV3DoUQwy+PtFavVcFMKPku82yl3/OQEXRyF4MbqxEUbWPgi7m
+X-Gm-Gg: AYBFou2nrzkE9/qer5TJxWkH0Kr0MwIHgXD0jcGOYoSrr1AVAOL87GZWMUcQ7ChwUVx
+ vYhF4k2z8d6258DWZOCJ/1Fx7BjyXNvDDebtCOktYOWFuddOUzzCjigRWvtGcked8haYkyFP4dh
+ lcbHOHwhw5YU7hWwEVW1JzskjC+3QV4tUlLDwVUEk1xPv0086p1+TRds9ifc1WPQ55ThCrH3WyN
+ G0B537hHK7R0jy1tEKnxzR+Yl/US902VbQPcHw5aJsEobspNuVICZx/DXYhOxLIcu+iZ/A4AVb/
+ G/anA/RHVQNsthludlR5GSSD4t3TulVqoZBrCIk4TUDQ6uBmu6JSUCTvCnQwpObprclKXyf/h0j
+ KX2SyqUaRCXT892TxgDo68JG+pN7wawaDuCOhbNkMu4oCbwZI/WUHfPEqPSYGUi/pjUe2VtdsuZ
+ sCrMOmQknkHp0p+XfNIttqyzSHPpBmfIZRnTr8axzoWImt+TCeJ8tYLYUHKHafEwUDzD7itDhIr
+ bj5alnzQW51/+uCNXhluRHbBAA=
+X-Received: by 2002:a05:600c:810a:b0:4a0:ec5:46d9 with SMTP id
+ 5b1f17b1804b1-4a18e3ef100mr331615355e9.0.1792029565874; 
+ Wed, 14 Oct 2026 18:59:25 -0700 (PDT)
+Received: from localhost (mem-185.47.220.165.jmnet.cz. [185.47.220.165])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4a1bd972aebsm36974675e9.1.2026.10.14.18.59.25
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 14 Oct 2026 18:59:25 -0700 (PDT)
+From: Filip Hejsek <filip.hejsek@gmail.com>
+Subject: [PATCH v2 0/2] io: make sure we don't close stdio fds
+Date: Thu, 15 Oct 2026 03:58:23 +0200
+Message-Id: <20261015-fix-stdio-close-v2-0-0f01e6580e24@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <c0d7b38d-cd8b-e363-1051-d2f68dbe417c@loongson.cn>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJDxTs+tL9BqB3gsAA--.28108S2
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW3Gw4kGry3trWUJF47Aw4DWrX_yoWfuw4kpr
- 1kJrWUtryUGrn5Xr17Jr15JFyUJr1UJw1UJr1rXF15Jr47Jr1jgr4qqr1q9r18Ar48Jr1U
- Jr1UZrnrZF17JFgCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUv0b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
- Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
- 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r106r15McIj6I8E87Iv67AK
- xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
- AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E
- 14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jrv_JF1lIx
- kGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAF
- wI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r
- 4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU1EksDUU
- UUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -36
-X-Spam_score: -3.7
-X-Spam_bar: ---
-X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.783,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/2WNyw6CMBBFf4XM2pq2lIes/A/DAoYBxgA1LRIN4
+ d8tGFcuT3LuuSt4ckweimgFRwt7tlMAfYoA+2rqSHATGLTUqZJKi5Zfws8NW4GD9SQueZ4amSS
+ NyWIIq4ejoBzFW/ll/6zvhPOe2Y2e/Wzd+7hc1O796vFffVFCCkPYVkalmNV47caKhzPaEcpt2
+ z6ErUDxwAAAAA==
+X-Change-ID: 20261012-fix-stdio-close-98864055d473
+To: qemu-devel@nongnu.org
+Cc: =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>
+X-Mailer: b4 0.15.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1792029564; l=1408;
+ i=filip.hejsek@gmail.com; s=20250912; h=from:subject:message-id;
+ bh=o5YoeP9+MANegk0svBirjQc+04T87vcTiLChrT27p7E=;
+ b=5VpgXY25MXYu9yiudU3cQO73hxwu5O0ksxcUMda/93g9VgV0E7H4SOv6hfMtSlgMPi977vdf+
+ wJHZwI6Vd0HCnGdmmeZEPH2yaTHYMJdAf0enTxNJuY0P/bR5iNRRNV5
+X-Developer-Key: i=filip.hejsek@gmail.com; a=ed25519;
+ pk=nakB8gEK3oi+Q/5dBTMCy/LgZL47NP60z1jeDR6O/WU=
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=filip.hejsek@gmail.com; helo=mail-wm1-x335.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,210 +113,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+The stdio chardev currently closes the stdin and stdout fds when it is
+destroyed. This means that, assuming char0 is a stdio chardev, invoking
+the HMP command
 
+    chardev-change char0 null
 
-On 2026/10/14 下午5:56, Bibo Mao wrote:
-> 
-> 
-> On 2026/10/9 上午11:05, SignKirigami wrote:
->> Add op 0x9, 0xa-0xf to instruction invtlb to support vm level 1.
->>
->> Signed-off-by: SignKirigami <prcups@krgm.moe>
->> Signed-off-by: Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
->> ---
->>   .../tcg/insn_trans/trans_privileged.c.inc     | 34 +++++++++++++
->>   target/loongarch/tcg/tlb_helper.c             | 51 ++++++++++++++++---
->>   2 files changed, 77 insertions(+), 8 deletions(-)
->>
->> diff --git a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc 
->> b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
->> index 493ed7f24b..00e8f61e42 100644
->> --- a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
->> +++ b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
->> @@ -328,6 +328,10 @@ static bool trans_invtlb(DisasContext *ctx, 
->> arg_invtlb *a)
->>           return false;
->>       }
->> +    if (!avail_LVZ(ctx) && a->imm > 0x6) {
->> +        return false;
->> +    }
->> +
->>       switch (a->imm) {
->>       case 0x0:
->>       case 0x1:
->> @@ -352,6 +356,36 @@ static bool trans_invtlb(DisasContext *ctx, 
->> arg_invtlb *a)
->>           gen_helper_invtlb_page_asid_or_g(tcg_env, rj, rk,
->>                                            tcg_constant_i32(0));
->>           break;
->> +    case 0x9:
->> +    case 0x10:
->> +    case 0x11:
->> +    case 0x12:
->> +    case 0x13:
->> +    case 0x14:
->> +    case 0x15:
->> +    case 0x16:
->> +        //TODO: refine 0x9-0x16
->> +        gen_helper_invtlb_all(tcg_env, rj, tcg_constant_i32(0),
->> +                              tcg_constant_i32(0));
->> +        break;
->> +    case 0xa:
->> +        gen_helper_invtlb_all_g(tcg_env, rj, tcg_constant_i32(1),
->> +                                tcg_constant_i32(1));
->> +        break;
->> +    case 0xb:
->> +        gen_helper_invtlb_all_g(tcg_env, rj, tcg_constant_i32(0),
->> +                                tcg_constant_i32(1));
->> +        break;
->> +    case 0xc:
->> +        gen_helper_invtlb_all_asid(tcg_env, rj, tcg_constant_i32(1));
->> +        break;
->> +    case 0xd:
->> +        gen_helper_invtlb_page_asid(tcg_env, rj, rk, 
->> tcg_constant_i32(1));
->> +        break;
->> +    case 0xe:
->> +        gen_helper_invtlb_page_asid_or_g(tcg_env, rj, rk,
->> +                                         tcg_constant_i32(1));
->> +        break;
->>       default:
->>           return false;
->>       }
->> diff --git a/target/loongarch/tcg/tlb_helper.c 
->> b/target/loongarch/tcg/tlb_helper.c
->> index 60c7193283..c02b7c2472 100644
->> --- a/target/loongarch/tcg/tlb_helper.c
->> +++ b/target/loongarch/tcg/tlb_helper.c
->> @@ -599,9 +599,18 @@ void helper_tlbflush(CPULoongArchState *env, 
->> uint32_t vm_level)
->>   void helper_invtlb_all(CPULoongArchState *env, target_ulong info, 
->> uint32_t op,
->>                          uint32_t to_guest)
->>   {
->> +    uint16_t gid = to_guest ? (info & 0xff) : get_tgid(env);
->> +
->> +    if (to_guest && env_vm_level(env) == VM_LEVEL1) {
->> +        do_raise_exception(env, EXCCODE_IPE, GETPC());
->> +    }
->> +
->> +    to_guest |= env_vm_level(env) == VM_LEVEL1;
->> +
->>       for (int i = 0; i < LOONGARCH_TLB_MAX; i++) {
->> -        env->tlb[i].tlb_misc = FIELD_DP64(env->tlb[i].tlb_misc,
->> -                                          TLB_MISC, E, 0);
->> +        LoongArchTLB *tlb = &env->tlb[i];
->> +        if ((op == 0 && to_guest == 0) || tlb_entry_matches_gid(tlb, 
->> gid))
->> +            tlb->tlb_misc = FIELD_DP64(tlb->tlb_misc, TLB_MISC, E, 0);
->>       }
->>       tlb_flush(env_cpu(env));
->>   }
-> if gtlb instruction is removed, I think helper_invtlb_xxx APIs can be 
-> simplified and remove parameter to_guest.
-Sorry, to_guest is useful even if gtlb instruction is removed. I think 
-that parameter to_guest should be changed as vm_level, the same name API 
-set_sys(CPULoongArchState *env, int vm_level).
+will cause QEMU to run with descriptors 0 and 1 closed. That's not a
+great situation, as:
+  - the stdio chardev cannot be recreated
+  - code assuming fds 0 and 1 are open will misbehave
+  - the fds 0 and 1 will get assigned to newly opened files, possibly
+    causing them to be confused for actual stdin/stdout
 
-Also I think that this patch should be split as smaller parts like 
-comments with csrrd instruction, such as:
-   1. Existing invtlb() instruction with LVZ support.
-   2. More op code with invtlb() instruction.
-   3. Add common API or new parameter vm_level with helper_intlb_xxx 
-function.
+The fist patch fixes the problem by duplicating the fds before they get
+passed to qio_channel_file_new_fd(), the second patch adds a warning
+that is printed when qio_channel_file_new_fd() is called with a stdio
+fd.
 
-Regards
-Bibo Mao
-> 
-> Regards
-> Bibo Mao
->> @@ -609,11 +618,19 @@ void helper_invtlb_all(CPULoongArchState *env, 
->> target_ulong info, uint32_t op,
->>   void helper_invtlb_all_g(CPULoongArchState *env, target_ulong info, 
->> uint32_t g,
->>                            uint32_t to_guest)
->>   {
->> +    uint16_t gid = to_guest ? (info & 0xff) : get_tgid(env);
->> +
->> +    if (to_guest && env_vm_level(env) == VM_LEVEL1) {
->> +        do_raise_exception(env, EXCCODE_IPE, GETPC());
->> +    }
->> +
->> +    to_guest |= env_vm_level(env) == VM_LEVEL1;
->> +
->>       for (int i = 0; i < LOONGARCH_TLB_MAX; i++) {
->>           LoongArchTLB *tlb = &env->tlb[i];
->>           uint8_t tlb_g = FIELD_EX64(tlb->tlb_entry0, TLBENTRY, G);
->> -        if (tlb_g == g) {
->> +        if (tlb_g == g && tlb_entry_matches_gid(tlb, gid)) {
->>               tlb->tlb_misc = FIELD_DP64(tlb->tlb_misc, TLB_MISC, E, 0);
->>           }
->>       }
->> @@ -624,13 +641,19 @@ void helper_invtlb_all_asid(CPULoongArchState 
->> *env, target_ulong info,
->>                               uint32_t to_guest)
->>   {
->>       uint16_t asid = info & R_CSR_ASID_ASID_MASK;
->> +    uint16_t gid = to_guest ? ((info >> 16) & 0xff) : get_tgid(env);
->> +
->> +    if (to_guest) {
->> +        do_raise_exception(env, EXCCODE_IPE, GETPC());
->> +    }
->> +    to_guest |= env_vm_level(env);
->>       for (int i = 0; i < LOONGARCH_TLB_MAX; i++) {
->>           LoongArchTLB *tlb = &env->tlb[i];
->>           uint8_t tlb_g = FIELD_EX64(tlb->tlb_entry0, TLBENTRY, G);
->>           uint16_t tlb_asid = FIELD_EX64(tlb->tlb_misc, TLB_MISC, ASID);
->> -        if (!tlb_g && (tlb_asid == asid)) {
->> +        if (!tlb_g && tlb_asid == asid && tlb_entry_matches_gid(tlb, 
->> gid)) {
->>               tlb->tlb_misc = FIELD_DP64(tlb->tlb_misc, TLB_MISC, E, 0);
->>           }
->>       }
->> @@ -640,12 +663,19 @@ void helper_invtlb_all_asid(CPULoongArchState 
->> *env, target_ulong info,
->>   void helper_invtlb_page_asid(CPULoongArchState *env, target_ulong info,
->>                                target_ulong addr, uint32_t to_guest)
->>   {
->> -    int asid = info & 0x3ff;
->> +
->> +    uint16_t asid = info & R_CSR_ASID_ASID_MASK;
->> +    uint16_t gid = to_guest ? ((info >> 16) & 0xff) : get_tgid(env);
->>       const LoongArchTLB *tlb;
->>       tlb_match func;
->> +    if (to_guest && env_vm_level(env)) {
->> +        do_raise_exception(env, EXCCODE_IPE, GETPC());
->> +    }
->> +    to_guest |= env_vm_level(env);
->> +
->>       func = tlb_match_asid;
->> -    tlb = loongarch_tlb_search_cb(env, addr, asid, func, to_guest, 0);
->> +    tlb = loongarch_tlb_search_cb(env, addr, asid, func, to_guest, gid);
->>       if (tlb) {
->>           invalidate_tlb(env, tlb - env->tlb, to_guest);
->>       }
->> @@ -654,13 +684,18 @@ void helper_invtlb_page_asid(CPULoongArchState 
->> *env, target_ulong info,
->>   void helper_invtlb_page_asid_or_g(CPULoongArchState *env, 
->> target_ulong info,
->>                                     target_ulong addr, uint32_t to_guest)
->>   {
->> -    int asid = info & 0x3ff;
->> +    uint16_t asid = info & R_CSR_ASID_ASID_MASK;
->> +    uint16_t gid = to_guest ? ((info >> 16) & 0xff) : get_tgid(env);
->>       const LoongArchTLB *tlb;
->>       tlb_match func;
->>       func = tlb_match_any;
->> +    if (to_guest) {
->> +        do_raise_exception(env, EXCCODE_IPE, GETPC());
->> +    }
->> +    to_guest |= env_vm_level(env);
->>       tlb = loongarch_tlb_search_cb(env, addr, asid, func,
->> -                                  to_guest, 0);
->> +                                  to_guest, gid);
->>       if (tlb) {
->>           invalidate_tlb(env, tlb - env->tlb, to_guest);
->>       }
->>
+Changes in v2:
+- Code style fixes
+- Set *errp when dup fails
+- Link to v1: https://lore.kernel.org/qemu-devel/20261013-fix-stdio-close-v1-0-4ecfa416c7bc@gmail.com
+
+Signed-off-by: Filip Hejsek <filip.hejsek@gmail.com>
+---
+Filip Hejsek (2):
+      char-stdio: avoid closing stdio fds
+      io: report a warning when a file channel is created from a stdio fd
+
+ chardev/char-stdio.c | 16 +++++++++++++++-
+ io/channel-file.c    |  6 ++++++
+ 2 files changed, 21 insertions(+), 1 deletion(-)
+---
+base-commit: 615ece3c406b262996e569f29ea6eed0d81c4d8d
+change-id: 20261012-fix-stdio-close-98864055d473
+
+Best regards,
+--  
+Filip Hejsek <filip.hejsek@gmail.com>
 
 
