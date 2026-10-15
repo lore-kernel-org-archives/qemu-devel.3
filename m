@@ -4,84 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C179CC6B34
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 08:05:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2702FCC6B34
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 08:06:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHGSL-00048z-Cu; Thu, 15 Oct 2026 04:04:53 -0400
+	id 1xHGTh-0004rA-O6; Thu, 15 Oct 2026 04:06:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xHGSJ-00048X-UN
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 04:04:51 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xHGSD-0005IV-Fq
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 04:04:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1792051484;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=dDUQP2M8JBDeFsWOhSpt5t1W8MShJh6KYkquaTQyQ0I=;
- b=P48baGakvtS11rotBuUm0eqZNND1RS3O/qDLcgXlsrMgMKFuddacHFHvpg4QGVFk78yrPt
- HZoICn/0HRvPs+rNa2IRz+EdZMofDa6UMJldmkcaJle8Fld5vk5vz5xgFnyzCkfTtPKD2C
- y7i7jXes3StD13S/PK0QBzslC1g8gGY=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-472-VGj7oXhIMEmqzCgrJ-BinQ-1; Thu,
- 15 Oct 2026 08:04:38 +0000
-X-MC-Unique: VGj7oXhIMEmqzCgrJ-BinQ-1
-X-Mimecast-MFC-AGG-ID: VGj7oXhIMEmqzCgrJ-BinQ_1792051477
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7C72C1955F14; Thu, 15 Oct 2026 08:04:36 +0000 (UTC)
-Received: from redhat.com (headnet04.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.116])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 187A2195608D; Thu, 15 Oct 2026 08:04:29 +0000 (UTC)
-Date: Thu, 15 Oct 2026 09:04:26 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Filip Hejsek <filip.hejsek@gmail.com>
-Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>,
- Laurent Vivier <laurent@vivier.eu>, Eric Blake <eblake@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- qemu-block@nongnu.org, "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Mark Kanda <mark.kanda@oracle.com>, Ben Chaney <bchaney@akamai.com>,
- Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>
-Subject: Re: [PATCH v3] treewide: use qemu_dup() instead of dup()
-Message-ID: <atCJCs4acmZoss2H@redhat.com>
-References: <20261015-use-qemu-dup-v3-1-ca02b5927725@gmail.com>
+ (Exim 4.90_1) (envelope-from <wangyang25@otcaix.iscas.ac.cn>)
+ id 1xHGTR-0004mE-VL; Thu, 15 Oct 2026 04:06:08 -0400
+Received: from smtp81.cstnet.cn ([159.226.251.81] helo=cstnet.cn)
+ by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_CBC_SHA1:256)
+ (Exim 4.90_1) (envelope-from <wangyang25@otcaix.iscas.ac.cn>)
+ id 1xHGTN-0005Xj-Kw; Thu, 15 Oct 2026 04:05:59 -0400
+Received: from [172.17.0.2] (unknown [124.16.137.194])
+ by APP-03 (Coremail) with SMTP id rQCowABncD5didBqBRvTCg--.36829S3;
+ Thu, 15 Oct 2026 16:05:49 +0800 (CST)
+From: wangyang <wangyang25@otcaix.iscas.ac.cn>
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Weiwei Li <liweiwei@iscas.ac.cn>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@c-sky.com>
+Subject: [PATCH] target/riscv: mask inactive senvcfg.SSE on read
+Date: Thu, 15 Oct 2026 08:05:48 +0000
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20261015-use-qemu-dup-v3-1-ca02b5927725@gmail.com>
-User-Agent: Mutt/2.4.2 (2026-08-30)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 10
-X-Spam_score: 1.0
-X-Spam_bar: +
-X-Spam_report: (1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-CM-TRANSID: rQCowABncD5didBqBRvTCg--.36829S3
+Message-Id: <6AD0895D.0F1C23.05843@cstnet.cn>
+X-Coremail-Antispam: 1UD129KBjvdXoWrKrW8JrWrKrWrGF48ZF17GFg_yoWfWFb_Cw
+ 4furyxZaykZanFkFWDZw1rAryYk3y8Ka4rKaySkrZ0gry2gFyUZ3WkWFyDury5uw4UG3Z3
+ t3ZrGrWxWw17AjkaLaAFLSUrUUUUbb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
+ 9fnUUIcSsGvfJTRUUUbSxYjsxI4VWDJwAYFVCjjxCrM7AC8VAFwI0_Gr0_Xr1l1xkIjI8I
+ 6I8E6xAIw20EY4v20xvaj40_Wr0E3s1l1IIY67AEw4v_Jr0_Jr4l8cAvFVAK0II2c7xJM2
+ 8CjxkF64kEwVA0rcxSw2x7M28EF7xvwVC0I7IYx2IY67AKxVWUCVW8JwA2z4x0Y4vE2Ix0
+ cI8IcVCY1x0267AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIE14v26F4j6r4UJwA2z4x0Y4vEx4
+ A2jsIEc7CjxVAFwI0_Gr1j6F4UJwAac4AC62xK8xCEY4vEwIxC4wAS0I0E0xvYzxvE52x0
+ 82IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUAVWUtw
+ Av7VC2z280aVAFwI0_Cr0_Gr1UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwAK
+ zVAC0xCFj2AI6cx7MxkF7I0En4kS14v26r1q6r43MxkIecxEwVAFwVW8ZwCF04k20xvY0x
+ 0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E
+ 7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIxkGc2Ij64vIr41lIxAIcV
+ C0I7IYx2IY67AKxVWUCVW8JwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Gr0_Cr1lIxAIcVCF
+ 04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r4j6F4UMIIF0xvEx4A2jsIEc7
+ CjxVAFwI0_Gr1j6F4UJbIYCTnIWIevJa73UjIFyTuYvjxUsoGQUUUUU
+X-Originating-IP: [124.16.137.194]
+X-CM-SenderInfo: 5zdqw5xdqjjk46rwut1l0ox2xfdvhtffof0/
+Received-SPF: pass client-ip=159.226.251.81;
+ envelope-from=wangyang25@otcaix.iscas.ac.cn; helo=cstnet.cn
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,99 +71,39 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Oct 15, 2026 at 03:34:43AM +0200, Filip Hejsek wrote:
-> Use qemu_dup() to ensure the cloexec flag is set on dup'd fds.
-> 
-> The only direct users of dup() are now guest syscalls in the user
-> emulators and the implementation of qemu_dup() itself.
-> 
-> Signed-off-by: Filip Hejsek <filip.hejsek@gmail.com>
-> ---
-> For each call I replaced, I checked how the resulting fd is used
-> afterwards. In summary:
-> 
-> hw/virtio/virtio.c:
->     the fd is passed to memory_region_init_ram_from_fd, used for mmaping
-> 
-> io/channel-file.c:
->     the fd is passed to qio_channel_file_new_fd, used for reading/writing
-> 
-> migration/cpr-exec.c:
->     the cloexec flag is cleared
-> 
-> qemu-nbd.c:
->     the fd is stored into old_stderr, then dup2'd back to STDERR_FILENO
-> 
-> system/vl.c:
->     no change in behavior, the code was already setting the cloexec flag
-> 
-> ui/dmabuf.c:
->     the function is called by qemu_spice_gl_update, which passes the fds
->     to SPICE server
-> 
-> tests/qtest/bios-tables-test.c:
->     temp dup of stdout, dup2'd back to STDOUT_FILENO
-> 
-> tests/unit/test-util-sockets.c:
->     one fd is dup'd again and returned from mock monitor_get_fd; another
->     is converted to string and given as address to socket_connect
-> 
-> tests/unit/test-vmstate.c:
->     passed to qio_channel_file_new_fd to create a channel
-> 
-> Changes in v3:
-> - Also replace the use in migration/cpr-exec.c and the tests
-> - Link to v2: https://lore.kernel.org/qemu-devel/20261013-use-qemu-dup-v2-1-12ecd94263b7@gmail.com
-> 
-> Changes in v2:
-> - Replace the use in qemu-nbd.c too
-> - Changed commit message
-> - Link to v1: https://lore.kernel.org/qemu-devel/20261012-use-qemu-dup-v1-1-03d94852a6c8@gmail.com
-> ---
->  hw/virtio/virtio.c             | 2 +-
->  io/channel-file.c              | 2 +-
->  migration/cpr-exec.c           | 2 +-
->  qemu-nbd.c                     | 2 +-
->  system/vl.c                    | 9 +--------
->  tests/qtest/bios-tables-test.c | 2 +-
->  tests/unit/test-util-sockets.c | 6 +++---
->  tests/unit/test-vmstate.c      | 2 +-
->  ui/dmabuf.c                    | 2 +-
->  9 files changed, 11 insertions(+), 18 deletions(-)
+The CFI rules make senvcfg.SSE read as zero when menvcfg.SSE is clear.
+In VU mode it also reads as zero when henvcfg.SSE is clear. Mask the
+readback to match those rules.
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4224
+Signed-off-by: wangyang <wangyang25@otcaix.iscas.ac.cn>
+---
+ target/riscv/tcg/csr.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-
-> diff --git a/migration/cpr-exec.c b/migration/cpr-exec.c
-> index daa50916d2..2f38db30bb 100644
-> --- a/migration/cpr-exec.c
-> +++ b/migration/cpr-exec.c
-> @@ -44,7 +44,7 @@ bool cpr_exec_persist_state(QEMUFile *f, Error **errp)
->  {
->      QIOChannelFile *fioc = QIO_CHANNEL_FILE(qemu_file_get_ioc(f));
->      /* coverity[leaked_storage] - mfd intentionally kept open across exec() */
-> -    int mfd = dup(fioc->fd);
-> +    int mfd = qemu_dup(fioc->fd);
->      char val[16];
-
-This change needed to be:
-
-   int mfd = qemu_dup(fioc->fd);
-   qemu_clear_cloexec(fioc->fd);   
-
-
-If that is added:
-
- Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
- 
-
-With regards,
-Daniel
--- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+diff --git a/target/riscv/tcg/csr.c b/target/riscv/tcg/csr.c
+index 061bc9d..7fd148d 100644
+--- a/target/riscv/tcg/csr.c
++++ b/target/riscv/tcg/csr.c
+@@ -3322,6 +3322,14 @@ static RISCVException read_senvcfg(CPURISCVState *env,=
+ int csrno,
+     }
+=20
+     *val =3D env->senvcfg;
++
++    if (env_archcpu(env)->cfg.ext_zicfiss) {
++        if (!(env->menvcfg & MENVCFG_SSE) ||
++            (env->virt_enabled && !(env->henvcfg & HENVCFG_SSE))) {
++            *val &=3D ~SENVCFG_SSE;
++        }
++    }
++
+     return RISCV_EXCP_NONE;
+ }
+=20
+--=20
+2.43.0
 
 
