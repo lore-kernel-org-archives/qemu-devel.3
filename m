@@ -4,88 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFAF1CCA464
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 18:17:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E25ECC6B38
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 18:40:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHPvN-0001Gz-Q0; Thu, 15 Oct 2026 14:11:29 -0400
+	id 1xHQMx-00061I-Ow; Thu, 15 Oct 2026 14:39:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcelomanzo@gmail.com>)
- id 1xHPvL-0001Bc-L9
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 14:11:27 -0400
-Received: from mail-qt1-x82a.google.com ([2607:f8b0:4864:20::82a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcelomanzo@gmail.com>)
- id 1xHPvJ-0001Rk-S4
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 14:11:27 -0400
-Received: by mail-qt1-x82a.google.com with SMTP id
- d75a77b69052e-53606d2351aso18290801cf.3
- for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 11:11:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1792087885; x=1792692685; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=kDi6Ms4VOCBYgAFNYh2oj+riu0usSjF6z3/Qp8bt9l4=;
- b=ix+hFRZgc+JWYU+jUbXCf4CoeP+omyBwf4uwVM1l7R77RYzw8veeU+qCvbsxctCsD6
- ADTy9VlVarBH9PTWoQ1vHTkEyeA4G92hB/Z+B/N4sS8h0WC8DsHAS2LhF1FPZVU9C9Ik
- L/hnURoI4pc29jbza7/ED66rFtXwZDqXNKlsNp8XyhG0CZAtk6wotyxRxoioAwvfmeEj
- Tz5pWeQKyDAKDcpjE7/rq8eUTE5p6TtA1xwdzYf3oKAp9PF3umtyAkpdKEM3avUDTCU3
- 6otVy6U8hoLHf5bXUQjUrQ5gQvM3NIpNmzEWDrVy9fUlCmIQfA1nrc0/slbagelv/4Aj
- Vszw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792087885; x=1792692685;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=kDi6Ms4VOCBYgAFNYh2oj+riu0usSjF6z3/Qp8bt9l4=;
- b=LR1fDNQ+Tq6TzXOBFzwcWLMX+qDYBlRS+UDc42MnYuYX9McSUlFbrD+OAwLIVoeVES
- j/KHiSNbA500IVoabGcwEjsN3VgFU8wB1FtcgcuxzwhrWbAcTdnvF6l8dDrmWy4BMDF3
- QQKo1zekNc308jL6bbP+GeLh1xV2jDdBMgQgeLqFIrccc2TK1OiObu9t9JEIix4aEpBY
- SW8Gz+yf2okqUUD2PxKUfs0EmdT0CK+gtDhPawT4mVPZMQ28guyrggWXA0z1jvZ3X1qs
- pjAV8C6KCKUuQxG7xc/0hXBzfiqeoIdF+8SYrWABhltK2kF0wD7ZrxN4GPQ5S+8GWvYF
- r+Jg==
-X-Gm-Message-State: AFq9FYJHPYn2bcWo27V0dEZ2+0l5cy87v2Yxbh6QYbAIDSunn12aONOn
- AZeK9LsZ6tpGOhfRKaY1Q65AHI16SU0dWh2iO9sOc+Pxp4+FwtvjSy+KmrOUIgtI
-X-Gm-Gg: AYBFou3D3V1YkW+QgAwNXIvAbMJy80KAdQvlvg4sZBF02E2BU8yQWSlNKSRP0ecazJX
- Cb3MHiEL+cG8D7Q/Tx3YaxPxCdz48S+TwdGvDGN0WFnsxn3hw2p6SXnp9noAlKqw2PEL3x1ldeM
- Bnn9a2nGOoa4PP/6KaBUw7TBHluepOhDgTWateYJr1cbcKmRVXu1vdYwiBnlXTDG0Pi2UEHnftu
- kAWb0Ido9zo9OrhN1d4WqHuB0HPalUkod/Idd+b7Vn1oQtgxUzoDbGS//3htj+6fpn2dpiXeWF6
- WzESkWewvyCiERIQ/QfkzkdMI+TjkijOU0WdReUqghlbrGybf4qlDRtLnFFpncq8rzKCrh0c+N7
- K9e4Kc/ihBUFUA3Yo5ckuFCYFPGZsuoQijoHOP6wYrWIpl4HaOQTn5PxW//+l5Ubqbnd5kPDot4
- ZMw8/rVLSFKCRug57up2pDCJs3jfKyp1TPFrBfXfZFa5s1zB8kToT58TOL6C7yww1mc+G3DYkga
- +Nq6bInf73ikV57P4LuyhzcmKN/xdmKJ2IB0S0v6RjTaQUvY7/Nsq8FcTECPo/OH8V7Eg==
-X-Received: by 2002:a05:622a:ab03:20b0:534:20b8:5d08 with SMTP id
- d75a77b69052e-53628350fa2mr7722071cf.45.1792087884680; 
- Thu, 15 Oct 2026 11:11:24 -0700 (PDT)
-Received: from localhost.localdomain ([2606:6d00:159:2900:919:5388:4e10:5949])
- by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-536127efe4asm32130611cf.19.2026.10.15.11.11.23
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 15 Oct 2026 11:11:23 -0700 (PDT)
-From: Marcelo Manzo <marcelomanzo@gmail.com>
-To: qemu-devel@nongnu.org,
-	qemu-arm@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Marcelo Manzo <marcelomanzo@gmail.com>
-Subject: [PATCH v3 00/16] hw/arm/raspi4b: working PCIe and GENET (real
- networking)
-Date: Thu, 15 Oct 2026 14:11:05 -0400
-Message-ID: <20261015181122.60608-1-marcelomanzo@gmail.com>
-X-Mailer: git-send-email 2.55.0
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1xHQMu-000610-4L
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 14:39:57 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1xHQMr-0003v3-Sb
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 14:39:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1792089590;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=8LjQirsHZrA/VFR3YZGg2BtMWtzixNcgaqp7jQn9zKY=;
+ b=cI+L3uyySsGEbLbrcCpiv8cHtiHZQWt8mN4xEteXFO+eorQIGiuJ5k6Xl8T5nROtYOmAHJ
+ qI85l9asE66fACzrdjpjuBm6p1IXjA8M3KNBRgdwEpkOegkLDEjTNx9mXTDvTou2XqmAaJ
+ z71LxKlEu9GGDtZ/1PmA8e7x2KubJMs=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-136-569VhxWOPtyVjPBWTMzAIQ-1; Thu,
+ 15 Oct 2026 18:39:46 +0000
+X-MC-Unique: 569VhxWOPtyVjPBWTMzAIQ-1
+X-Mimecast-MFC-AGG-ID: 569VhxWOPtyVjPBWTMzAIQ_1792089585
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 516F8195604A; Thu, 15 Oct 2026 18:39:45 +0000 (UTC)
+Received: from localhost (headnet05.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.117])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 79BBD1955F21; Thu, 15 Oct 2026 18:39:44 +0000 (UTC)
+Date: Thu, 15 Oct 2026 14:39:43 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Wesley Hershberger <wesley.hershberger@canonical.com>
+Cc: qemu-devel@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
+ Hector Cao <hector.cao@canonical.com>,
+ Alex =?iso-8859-1?Q?Ram=EDrez?= <alex.ramirez@canonical.com>,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
+Subject: Re: [PATCH v4 2/2] util/coroutine: Reduce default idle pool max size
+Message-ID: <20261015183942.GB1504100@shajnocz.csb>
+References: <20261014-set-default-pool-size-v4-0-a3aff89b94f0@canonical.com>
+ <20261014-set-default-pool-size-v4-2-a3aff89b94f0@canonical.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::82a;
- envelope-from=marcelomanzo@gmail.com; helo=mail-qt1-x82a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="I40o/0aa2RI9esXk"
+Content-Disposition: inline
+In-Reply-To: <20261014-set-default-pool-size-v4-2-a3aff89b94f0@canonical.com>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 10
+X-Spam_score: 1.0
+X-Spam_bar: +
+X-Spam_report: (1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,89 +89,160 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series gets raspi4b's PCIe root complex and GENET Ethernet
-controller working end to end: the PCIe link comes up and devices on
-it enumerate, and GENET passes real network traffic (DHCP, SSH, bulk
-downloads) under both older (Debian 11, 5.15) and newer (Debian 13,
-6.18) guest kernels. Most of the GENET code is Sergey Kambalin's
-2024 series (patchwork series 829638), carried forward with his
-authorship and Signed-off-by kept.
+--I40o/0aa2RI9esXk
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-v3: thanks to Peter for the review (and for running it under UBSan),
-and to Philippe.
+On Wed, Oct 14, 2026 at 04:55:46PM -0500, Wesley Hershberger wrote:
+> If g_file_get_contents fails (AppArmor, etc), use a more conservative
+> default max size for the idle coroutine pool.
+>=20
+> This avoids any possibility of the failure described in 86a637e48104
+> unless the host kernel is configured with a lower-than-default
+> vm.max_map_count.
+>=20
+> This change is motivated by a discussion of backport risk:
+> https://bugs.launchpad.net/ubuntu/+source/qemu/+bug/2168803/comments/8
+>=20
+> Fixes: 86a637e48104 ("coroutine: cap per-thread local pool size")
+> Suggested-by: Daniel P. Berrang=E9 <berrange@redhat.com>
+> Signed-off-by: Wesley Hershberger <wesley.hershberger@canonical.com>
+> ---
+>  util/qemu-coroutine.c | 73 ++++++++++++++++++++++++++++++++-------------=
+------
+>  1 file changed, 46 insertions(+), 27 deletions(-)
+>=20
+> diff --git a/util/qemu-coroutine.c b/util/qemu-coroutine.c
+> index 5af61995437..b3312f7bf99 100644
+> --- a/util/qemu-coroutine.c
+> +++ b/util/qemu-coroutine.c
+> @@ -361,42 +361,61 @@ void qemu_coroutine_dec_pool_size(unsigned int remo=
+ving_pool_size)
+>      global_pool_max_size -=3D removing_pool_size;
+>  }
+> =20
+> -static unsigned int get_global_pool_hard_max_size(void)
+> -{
+>  #ifdef __linux__
+> -    g_autofree char *contents =3D NULL;
+> -    int max_map_count;
+> +/*
+> + * include/linux/mm.h
+> + */
+> +#define DEFAULT_MAX_MAP_COUNT 65530
+> =20
+> -    /*
+> -     * Linux processes can have up to max_map_count virtual memory areas
+> -     * (VMAs). mmap(2), mprotect(2), etc fail with ENOMEM beyond this li=
+mit. We
+> -     * must limit the coroutine pool to a safe size to avoid running out=
+ of
+> -     * VMAs.
+> -     */
+> -    if (g_file_get_contents("/proc/sys/vm/max_map_count", &contents, NUL=
+L,
+> -                            NULL)) {
+> +static unsigned int get_max_map_count(void)
+> +{
+> +    g_autofree char *contents =3D NULL;
+> +    int max_map_count =3D 0;
+> +    if (g_file_get_contents("/proc/sys/vm/max_map_count", &contents,
+> +                            NULL, NULL)) {
+>          /* contents has trailing newline, remove it before conversion */
+>          g_strchomp(contents);
+> -        if (qemu_strtoi(contents, NULL, 10, &max_map_count) !=3D 0) {
+> -            return UINT_MAX;
+> -        }
+> -        /*
+> -         * This is an upper bound that avoids exceeding max_map_count. L=
+eave a
+> -         * fixed amount for non-coroutine users like library dependencie=
+s,
+> -         * vhost-user, etc. Each coroutine takes up 2 VMAs so halve the
+> -         * remaining amount.
+> -         */
+> -        if (max_map_count > 5000) {
+> -            return (max_map_count - 5000) / 2;
+> -        } else {
+> -            /* Disable the global pool but threads still have local pool=
+s */
+> -            return 0;
+> +        if (qemu_strtoi(contents, NULL, 10, &max_map_count) =3D=3D 0) {
+> +            return max_map_count;
+>          }
+>      }
+> -#endif
+> =20
+> +    /*
+> +     * Read from /proc might fail due to mandatory access control (AppAr=
+mor,
+> +     * SELinux, etc). Use the kernel's default in that case.
+> +     */
+> +    return DEFAULT_MAX_MAP_COUNT;
+> +}
+> +
+> +/*
+> + * Linux processes can have up to max_map_count virtual memory areas
+> + * (VMAs). mmap(2), mprotect(2), etc fail with ENOMEM beyond this limit.=
+ We
+> + * must limit the coroutine pool to a safe size to avoid running out of
+> + * VMAs.
+> + */
+> +static unsigned int get_global_pool_hard_max_size(void)
+> +{
+> +    int max_map_count =3D get_max_map_count();
 
-  - Fix the UB Peter found by running "make check-functional" under
-    clang's UBSan: bcm2838_genet_rdma() built the per-packet status
-    block by casting the (misaligned) RX buffer to a C struct. It now
-    fills the status block in with stl_le_p(), which is also correct
-    on big-endian hosts. The functional tests now run clean under
-    --enable-ubsan.
-  - Fold the three bugfix patches that were in v2 (PHY autonegotiation
-    restart, RX checksum reporting, TX ring activation check) into the
-    patches that introduce the code they fix: the MDIO patch, the TX
-    path patch and the RX path patch respectively. The series goes
-    from 19 patches to 16. Philippe's Reviewed-by on the old "fix TX
-    ring activation check" patch is not carried over, since that
-    change now lives inside the TX path patch.
-  - While in bcm2838_genet_rdma() I also found that the RX descriptor
-    index and the DMA write length come from guest-programmed
-    registers and were not checked against the size of the descriptor
-    array / our packet buffer. Add those checks (in the RX path
-    patch).
-  - Rebased on current master (7e8d3c7fc4).
+get_max_map_count() returns an unsigned int and this function does too.
+Make max_map_count unsigned int here too for consistency?
 
-This conflicts trivially (three files: raspi4b.c and
-bcm2838_peripherals.[ch]) with the RNG200/thermal sensor series
-("[PATCH v2 0/5] hw/arm/raspi4b: RNG200 and thermal sensor"), which is
-posted separately. Whichever lands second, I will rebase.
+Other than that:
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 
-Tested: checkpatch.pl reports no errors; the series builds on current
-master and tests/functional/aarch64/test_raspi4.py passes, including
-under clang --enable-ubsan; and unmodified Raspberry Pi OS Bullseye
-and Trixie based images boot under raspi4b with a working network
-(DHCP, ping, 2MB downloads) and SSH.
+> +
+> +    /*
+> +     * This is an upper bound that avoids exceeding max_map_count. Leave=
+ a
+> +     * fixed amount for non-coroutine users like library dependencies,
+> +     * vhost-user, etc. Each coroutine takes up 2 VMAs so halve the
+> +     * remaining amount.
+> +     */
+> +    if (max_map_count > 5000) {
+> +        return (max_map_count - 5000) / 2;
+> +    } else {
+> +        /* Disable the global pool but threads still have local pools */
+> +        return 0;
+> +    }
+> +}
+> +#else
+> +static unsigned int get_global_pool_hard_max_size(void)
+> +{
+>      return UINT_MAX;
+>  }
+> +#endif
+> =20
+>  static void __attribute__((constructor)) qemu_coroutine_init(void)
+>  {
+>=20
+> --=20
+> 2.53.0
+>=20
 
-Marcelo Manzo (7):
-  hw/arm/bcm2838_pcie: add BCM2838 PCIe Root Complex
-  hw/arm/bcm2838_pcie: add BCM2838 PCIe host
-  hw/arm/bcm2838: enable BCM2838 PCIe host bridge
-  hw/net/bcm2838_genet: add GENET stub device
-  hw/arm/bcm2838: enable BCM2838 GENET controller
-  docs/system/arm/raspi: move PCIe/GENET from missing to implemented
-  tests/functional/aarch64: add raspi4b GENET networking test
+--I40o/0aa2RI9esXk
+Content-Type: application/pgp-signature; name=signature.asc
 
-Sergey Kambalin (9):
-  hw/net/bcm2838_genet: add GENET register structs, part 1/4
-  hw/net/bcm2838_genet: add GENET register structs, part 2/4
-  hw/net/bcm2838_genet: add GENET register structs, part 3/4
-  hw/net/bcm2838_genet: add GENET register structs, part 4/4
-  hw/net/bcm2838_genet: add GENET register access macros
-  hw/net/bcm2838_genet: implement GENET register ops
-  hw/net/bcm2838_genet: implement GENET MDIO
-  hw/net/bcm2838_genet: implement GENET TX path
-  hw/net/bcm2838_genet: implement GENET RX path
+-----BEGIN PGP SIGNATURE-----
 
- docs/system/arm/raspi.rst               |    6 +-
- hw/arm/bcm2838.c                        |   15 +
- hw/arm/bcm2838_pcie.c                   |  308 ++++++
- hw/arm/bcm2838_peripherals.c            |   46 +
- hw/arm/meson.build                      |    4 +-
- hw/arm/raspi4b.c                        |    2 -
- hw/arm/trace-events                     |    4 +
- hw/net/bcm2838_genet.c                  | 1136 +++++++++++++++++++++++
- hw/net/meson.build                      |    2 +
- hw/net/trace-events                     |   16 +
- include/hw/arm/bcm2838_pcie.h           |   75 ++
- include/hw/arm/bcm2838_peripherals.h    |    7 +
- include/hw/net/bcm2838_genet.h          |  428 +++++++++
- tests/functional/aarch64/test_raspi4.py |   30 +
- 14 files changed, 2074 insertions(+), 5 deletions(-)
- create mode 100644 hw/arm/bcm2838_pcie.c
- create mode 100644 hw/net/bcm2838_genet.c
- create mode 100644 include/hw/arm/bcm2838_pcie.h
- create mode 100644 include/hw/net/bcm2838_genet.h
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmrRHe4ACgkQnKSrs4Gr
+c8jXkgf+JZZ+7MX72KvvUYFwPMbT9JUm9lRvykDwDSdoINK15OHWu39nykKIN460
+U6L6Dz65En4V8LedrWjIkL5ALA6HIOh0IST+m4EMeiRPFtU/wL2S3NtMFx7vVMj9
+NvLkys7X461hf2omw0tk02ZLW7X1F89S7VpiZY3fs3E/JZzqwGgqOmXGEOOExK2B
+3exbxZY9VGi7k9qtj48oQ21aEwzu22c1rbOmCbcbIDo5TvycNyRZCq4L9gxx7DFZ
+kYX+5+yG4YPlWn42WFeBABxmDKj2ooO9PSheI8z51aOOC03agKHhGAqm7Cg+uue6
+y7hWjHsNME950lJ2b5IlCJ9S7XtoFA==
+=qKST
+-----END PGP SIGNATURE-----
 
--- 
-2.55.0
+--I40o/0aa2RI9esXk--
 
 
