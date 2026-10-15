@@ -4,63 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66FF9CC6B30
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 10:33:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92A89CC6B30
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 10:33:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHIlh-0005RL-KR; Thu, 15 Oct 2026 06:33:01 -0400
+	id 1xHIgx-000714-RX; Thu, 15 Oct 2026 06:28:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eblot.ml@gmail.com>)
- id 1xHIi3-0008BP-8X
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 06:29:16 -0400
-Received: from mail-wr1-f46.google.com ([209.85.221.46])
+ id 1xHIfe-00030Y-3b
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 06:26:50 -0400
+Received: from mail-wr1-f43.google.com ([209.85.221.43])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <eblot.ml@gmail.com>)
- id 1xHIi0-0004X8-ME
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 06:29:14 -0400
-Received: by mail-wr1-f46.google.com with SMTP id
- ffacd0b85a97d-48c5358fc28so200984f8f.0
- for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 03:29:12 -0700 (PDT)
+ id 1xHIfc-0003y7-3c
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 06:26:45 -0400
+Received: by mail-wr1-f43.google.com with SMTP id
+ ffacd0b85a97d-48afcd7ba9bso2846749f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 03:26:43 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792060151; x=1792664951;
+ d=1e100.net; s=20260707; t=1792060003; x=1792664803;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :content-type:mime-version:subject:date:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=fK1yTBZ+R4UZ9jGLZP5etFoRte2w8wAdC3Wr5b6SMuI=;
- b=f2r0mWLZBqq0VGHSqp0/mCKrl1CyL/isL6BPrUMmhOzw4Rp5sBoydcWfVKb9d0Cdrb
- H1fv6lrBoWmvzc1RDBbo2ksP2ts69qL4sGImKyHlmiYW5h0U5LDzYDbTQOMHCC4pqH6C
- +fh0HeZasndPsLpCKu2WA+h2Y/J/+SK86SkT2xBY2zSW5H8hYMLT+iiEX9pg63p8+unV
- vb8d+2KTxWs8/l7KWSrSD2xlWJd95tiigYKRQgDbUSr726/lFhHdslB117RqJ8JvcZWK
- 8laF5Ih+rll8ILbHG9nfApkyXG9X5vSBBJp6mD6S4E/+52sMwsEv7WftJx1/JvBqr2gv
- Gu3w==
-X-Gm-Message-State: AFq9FYISfCnURIymLrvOEYuc1W7HVjIXDSXGdWQUfoLqOE5BCuiEIZdr
- z6Rg/4TlgojmONwwPeFNwgUhK0LQEKLODO17CtA4ugpdmaXx3v2monNn/NTzUw==
-X-Gm-Gg: AYBFou3OcJP0meb9cr12ePnpx2mLt+FPt0WASqEzH2rshgwfLENjQBG5wwoEiqBhacp
- XXEedAQSBWdZ54ZH9fsAWZniB3Dh7ah3py4WZ2QOuLLXu5skXFIHNg6zV5c9brez7JRuj7IPb5y
- AsYlMrrB5VILGl1BMGcxC2HMK5Z/R8JV1dts/1J4gt9CSUcR4f3Vf6ncx17Slg8l+iswCItunLv
- MKfT5AHYYMW5vZVfvECbqQtA5OtdE0IFoY4pT5ztdFS1LZ3tqlnH2SSJtcGmcN4LKykv9afVqoP
- OlxIuypXBtxS7O5m2k8ySbSseYSeJt9Enj7jaPlSt66+Ir5/vD6kz74E+WbcjpNkacu5B+USIHV
- o8HVCVZmKs92OQ4hriYtGo20XxYNS5cEUtlQB5kAAXhhK3dB5xE/TXjEpAXNkx4Ifu2wpaNHI/9
- oloA9/xOBFtr8ZUEGToVBbLEfaL3J4UD1WUgI8prbB2oBVQmLYbVBRN9+H2hyhaOzUCrEVC7MxZ
- ALMvKilNl8aLb9X7l1WZ++4TVp5zeSnbvGf24ilVosxFbzypx5olFmY
-X-Received: by 2002:adf:e005:0:20b0:487:2443:7526 with SMTP id
- ffacd0b85a97d-48dbacf6f1fmr26735193f8f.55.1792060151095; 
- Thu, 15 Oct 2026 03:29:11 -0700 (PDT)
+ bh=QSHfR+FE1OJSEIF+srn8jrxOvwwXnZAlMTYR7tbCSUA=;
+ b=s4yDyO7DqthDkLTL/9UQ//FdmG+Dufx5A4V8WDFebuUZllcZeJ+6+S2wn/r2FQLPw4
+ b6MZom5io0whlHbf+BhW6RvIO2BsQoS7OLsQx7/h1BSU8Q7i7T6Q0TDqOXu0BnX4fKol
+ OlVTcQI1AhgbuF+LQi6CfVuCahp8thj5rX9U+EUR28uNyEhc4Amirfq4DoJHb2c+w2dt
+ Mmg5stit/838B9Fq2w5IgJ87Jxl6x7W3UqZq8GJzbTyMe+FKE5rGKqYcwzSYbteOHnPo
+ wlW8DcgwPlDMmiNrGA1+3dcgBsvKp7zSr1Y5CzFvXRaPuyzsRvLmScRhWP2x6lKU3a6s
+ 8jrw==
+X-Gm-Message-State: AFq9FYIz4jrfXp4iSWp8IZD0Vfum/Fa2JfzF4UeypjkRORVBOMszAlOk
+ 8Wo/6mi5C+kIdqjLjaY7gI7lt3F8yNSmFba30VIaxSJd/wBBlRFsCEuArQx6mA==
+X-Gm-Gg: AYBFou1hhOguZxUVsL1zT4D6tg8ThGrcy1/Afvvpz5yUKrK1kyya+FH8SrJ4QSJO6ck
+ IhoATtJ6tDnCEURJa1e5ChOxqDdu4vLiP3qLZfKAYAxcWVHbl/kvuaDt4yjqgw6gNQYbXtYtHrq
+ LdD0I2gAyfAOLYeiLXl+yQ9dqGPu1zaZWvymQCx5p73IX3Rbtbg5t6R9wS4CM6LtHuklp9ZmmxZ
+ sKhWKGB9+4t4cO392acn5Oh2O3gOMC19BckWQIg3S0yUDbqfom8ZuiiHVArYmgluF2I66YJ3erF
+ 5JtdHcFGY44OapojAXdXdHN0GlpRqgANkjBzh9zvOtyQTopUxIY5ADA5t/5DHBGPz4ggU46lpfi
+ S2Et92WpFVBH5Hc+0SvUhg/ocPsS36HiJPGTffUWbs0I7TkndX7iHofYWr4S5xW0X2Dkv75ODIO
+ KSJafi8fnVc7QOjG8nBVSQGBRKfiaF863x04GcikSMFS9aGlqffjX6M/wweEBuCIGZOyAotveJ+
+ 5AM4i+/Cgi0F/lgRnUiD+YbEPxdZv2iE/bajQmQI1dF4w==
+X-Received: by 2002:a05:6000:601:b0:48d:e61d:68da with SMTP id
+ ffacd0b85a97d-48de61d6949mr15114378f8f.20.1792060002573; 
+ Thu, 15 Oct 2026 03:26:42 -0700 (PDT)
 Received: from localhost (89-93-216-19.hfc.dyn.abo.bbox.fr. [89.93.216.19])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48df3a25b41sm3925112f8f.46.2026.10.15.03.29.10
+ ffacd0b85a97d-48de72d2b13sm12639411f8f.55.2026.10.15.03.26.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 Oct 2026 03:29:10 -0700 (PDT)
-Date: Thu, 15 Oct 2026 11:28:31 +0200
-Subject: [PATCH v3 44/50] tests/qtest: ina238: cover the injection-property
- limits
+ Thu, 15 Oct 2026 03:26:40 -0700 (PDT)
+Date: Thu, 15 Oct 2026 11:28:10 +0200
+Subject: [PATCH v3 23/50] tests/qtest: ds1339: add RTC test
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261015-bmc-minerva-v3-44-7d50c8a108e5@free.fr>
+Message-Id: <20261015-bmc-minerva-v3-23-7d50c8a108e5@free.fr>
 References: <20261015-bmc-minerva-v3-0-7d50c8a108e5@free.fr>
 In-Reply-To: <20261015-bmc-minerva-v3-0-7d50c8a108e5@free.fr>
 To: qemu-devel@nongnu.org
@@ -74,17 +73,17 @@ Cc: =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
  Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
  qemu-ppc@nongnu.org, qemu-riscv@nongnu.org, 
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, 
- Emmanuel Blot <emmanuel.blot@free.fr>, Glenn Miles <milesg@linux.ibm.com>
+ Emmanuel Blot <emmanuel.blot@free.fr>
 X-Mailer: b4 0.16.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1792056477; l=5375;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1792056476; l=7125;
  i=emmanuel.blot@free.fr; s=20260602; h=from:subject:message-id;
- bh=cK0KtEZakGGTiCMBuvt6S8R0Yj1qS5lBpstYZd6Z9WY=;
- b=Hs8Q/rUHke2aLNfzWDp7o3ZAqeNrgh6w3ivLdfsiGOksNKtafg9nYYzCQuDEKZndE0VOMw9r2
- bs6qfss/69lBY8Y1MH/mEpQR2CHC4fFC6Ks77aA7Xkm62R2/q3pT/2l
+ bh=1Wak78S8zcF2CEBoKWQERSoJuNyRus2AqAEUV58mDEs=;
+ b=/kF+WuKUeg71h5E0CqNV8d+T44r7D93WjSTatxsSuZDnyLv27qWk5SJIdoyDSsU6WZSGMTBcT
+ 9ftOTlJRX9pDtlO2XxVGHk46It5WrKsqmk8BVLGewrRPilwWXtOXkLv
 X-Developer-Key: i=emmanuel.blot@free.fr; a=ed25519;
  pk=0qFrZ21FAAN8OfVsSoVcCFTk/NMYOWzxJz4paSAVm0g=
-Received-SPF: pass client-ip=209.85.221.46; envelope-from=eblot.ml@gmail.com;
- helo=mail-wr1-f46.google.com
+Received-SPF: pass client-ip=209.85.221.43; envelope-from=eblot.ml@gmail.com;
+ helo=mail-wr1-f43.google.com
 X-Spam_score_int: -15
 X-Spam_score: -1.6
 X-Spam_bar: -
@@ -110,133 +109,200 @@ From:  Emmanuel Blot via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Verify that the extremes of the shunt-voltage, bus-voltage and
-die-temperature injection ranges round-trip through the QOM property
-without truncation or wraparound, and that values just outside are
-rejected rather than silently wrapped.
+The variant had no test of its own. Cover its register map, the
+write-protection of the oscillator-stop flag, and the wrap of the
+register pointer at the end of the map.
 
-Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
 Signed-off-by: Emmanuel Blot <emmanuel.blot@free.fr>
 ---
- tests/qtest/ina238-test.c | 84 +++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 84 insertions(+)
+ tests/qtest/ds1339-test.c | 166 ++++++++++++++++++++++++++++++++++++++++++++++
+ tests/qtest/meson.build   |   1 +
+ 2 files changed, 167 insertions(+)
 
-diff --git a/tests/qtest/ina238-test.c b/tests/qtest/ina238-test.c
-index 08813377c9..74912424c0 100644
---- a/tests/qtest/ina238-test.c
-+++ b/tests/qtest/ina238-test.c
-@@ -67,6 +67,13 @@
- #define MANUFACTURER_ID_VAL 0x5449
- #define DEVICE_ID_VAL       0x2381
- 
-+/* Injection-property limits (see ina238.c) */
-+#define SHUNT_MIN_NV        (-163840000) /* -32768 * 5 uV  */
-+#define SHUNT_MAX_NV        163835000    /*  32767 * 5 uV  */
-+#define BUS_MAX_UV          85000000     /* 27200 * 3.125 mV */
-+#define TEMP_MIN_MC         (-40000)     /*  -320 * 125 m-degC */
-+#define TEMP_MAX_MC         125000       /*  1000 * 125 m-degC */
+diff --git a/tests/qtest/ds1339-test.c b/tests/qtest/ds1339-test.c
+new file mode 100644
+index 0000000000..08fc16acda
+--- /dev/null
++++ b/tests/qtest/ds1339-test.c
+@@ -0,0 +1,166 @@
++/*
++ * QTest testcase for the DS1339 RTC
++ *
++ * Copyright (c) 2026 Meta Platforms, Inc. and affiliates.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
 +
- /* Read the 24-bit POWER register (MSB first) */
- static uint32_t i2c_get24(QI2CDevice *dev, uint8_t reg)
- {
-@@ -103,6 +110,18 @@ static int qmp_ina238_get(const char *property)
-     return ret;
- }
- 
-+/* A qom-set expected to be rejected (value outside the supported range) */
-+static void qmp_ina238_set_fail(const char *property, int64_t value)
++#include "qemu/osdep.h"
++#include "qemu/bcd.h"
++#include "libqos/i2c.h"
++
++#define DS1339_ADDR 0x68
++
++/* DS1339 register map */
++#define DS1339_SECONDS   0x00
++#define DS1339_MONTH     0x05
++#define DS1339_YEAR      0x06
++#define DS1339_ALARM1    0x07
++#define DS1339_ALARM2    0x0b
++#define DS1339_CONTROL   0x0e
++#define DS1339_STATUS    0x0f
++#define DS1339_TRICKLE   0x10
++#define DS1339_NUM_REGS  0x11
++
++#define DS1339_STATUS_OSF 0x80
++
++/* The clock and calendar come up on the host time. */
++static void test_time(void *obj, void *data, QGuestAllocator *alloc)
 +{
-+    QDict *resp;
++    QI2CDevice *i2cdev = (QI2CDevice *)obj;
++    uint8_t resp[7];
++    time_t now = time(NULL);
++    struct tm *tm_ptr = gmtime(&now);
 +
-+    resp = qmp("{ 'execute': 'qom-set', 'arguments':"
-+               " { 'path': %s, 'property': %s, 'value': %lld } }",
-+               INA238_TEST_ID, property, (long long)value);
-+    g_assert(qdict_haskey(resp, "error"));
-+    qobject_unref(resp);
++    i2c_read_block(i2cdev, DS1339_SECONDS, resp, sizeof(resp));
++
++    g_assert_cmpuint(from_bcd(resp[4]), ==, tm_ptr->tm_mday);
++    g_assert_cmpuint(from_bcd(resp[5]), ==, 1 + tm_ptr->tm_mon);
++    g_assert_cmpuint(2000 + from_bcd(resp[6]), ==, 1900 + tm_ptr->tm_year);
 +}
 +
- /* Power-on-reset default values and the ID registers */
- static void test_defaults(void *obj, void *data, QGuestAllocator *alloc)
- {
-@@ -443,6 +462,68 @@ static void test_cnvrf(void *obj, void *data, QGuestAllocator *alloc)
-     g_assert_cmphex(i2c_get16(dev, REG_DIAG_ALRT) & DIAG_CNVRF, ==, 0);
- }
- 
-+/* Shunt-voltage injection limits */
-+static void test_shunt_limits(void *obj, void *data, QGuestAllocator *alloc)
++/* Writable control bits round-trip; the reserved one reads back zero. */
++static void test_control_register(void *obj, void *data,
++                                  QGuestAllocator *alloc)
 +{
-+    QI2CDevice *dev = (QI2CDevice *)obj;
++    QI2CDevice *i2cdev = (QI2CDevice *)obj;
 +
-+    i2c_set16(dev, REG_CONFIG, CONFIG_RST);
++    i2c_set8(i2cdev, DS1339_CONTROL, 0x1c);
++    g_assert_cmphex(i2c_get8(i2cdev, DS1339_CONTROL), ==, 0x1c);
 +
-+    qmp_ina238_set("shunt-voltage", SHUNT_MAX_NV);
-+    g_assert_cmphex(i2c_get16(dev, REG_VSHUNT), ==, 0x7FFF);
-+    g_assert_cmpint(qmp_ina238_get("shunt-voltage"), ==, SHUNT_MAX_NV);
++    i2c_set8(i2cdev, DS1339_CONTROL, 0xff);
++    g_assert_cmphex(i2c_get8(i2cdev, DS1339_CONTROL), ==, 0xbf);
 +
-+    qmp_ina238_set("shunt-voltage", SHUNT_MIN_NV);
-+    g_assert_cmphex(i2c_get16(dev, REG_VSHUNT), ==, 0x8000);
-+    g_assert_cmpint(qmp_ina238_get("shunt-voltage"), ==, SHUNT_MIN_NV);
-+
-+    qmp_ina238_set_fail("shunt-voltage", (int64_t)SHUNT_MAX_NV + 1);
-+    qmp_ina238_set_fail("shunt-voltage", (int64_t)SHUNT_MIN_NV - 1);
-+    g_assert_cmpint(qmp_ina238_get("shunt-voltage"), ==, SHUNT_MIN_NV);
-+    g_assert_cmphex(i2c_get16(dev, REG_VSHUNT), ==, 0x8000);
++    i2c_set8(i2cdev, DS1339_CONTROL, 0x00);
++    g_assert_cmphex(i2c_get8(i2cdev, DS1339_CONTROL), ==, 0x00);
 +}
 +
-+/* Bus-voltage injection limits */
-+static void test_bus_limits(void *obj, void *data, QGuestAllocator *alloc)
++/* The oscillator-stop flag can only be cleared by a write, never set. */
++static void test_osf_write_protect(void *obj, void *data,
++                                   QGuestAllocator *alloc)
 +{
-+    QI2CDevice *dev = (QI2CDevice *)obj;
++    QI2CDevice *i2cdev = (QI2CDevice *)obj;
 +
-+    i2c_set16(dev, REG_CONFIG, CONFIG_RST);
++    g_assert_cmphex(i2c_get8(i2cdev, DS1339_STATUS) & DS1339_STATUS_OSF,
++                    ==, DS1339_STATUS_OSF);
++    i2c_set8(i2cdev, DS1339_STATUS, DS1339_STATUS_OSF);
++    g_assert_cmphex(i2c_get8(i2cdev, DS1339_STATUS) & DS1339_STATUS_OSF,
++                    ==, DS1339_STATUS_OSF);
 +
-+    qmp_ina238_set("bus-voltage", 0);
-+    g_assert_cmphex(i2c_get16(dev, REG_VBUS), ==, 0x0000);
-+
-+    qmp_ina238_set("bus-voltage", BUS_MAX_UV);
-+    g_assert_cmphex(i2c_get16(dev, REG_VBUS), ==, 0x6A40);
-+    g_assert_cmpint(qmp_ina238_get("bus-voltage"), ==, BUS_MAX_UV);
-+
-+    qmp_ina238_set_fail("bus-voltage", (int64_t)BUS_MAX_UV + 1);
-+    qmp_ina238_set_fail("bus-voltage", -1);
-+    g_assert_cmpint(qmp_ina238_get("bus-voltage"), ==, BUS_MAX_UV);
-+    g_assert_cmphex(i2c_get16(dev, REG_VBUS), ==, 0x6A40);
++    i2c_set8(i2cdev, DS1339_STATUS, 0x00);
++    g_assert_cmphex(i2c_get8(i2cdev, DS1339_STATUS) & DS1339_STATUS_OSF, ==, 0);
++    i2c_set8(i2cdev, DS1339_STATUS, DS1339_STATUS_OSF);
++    g_assert_cmphex(i2c_get8(i2cdev, DS1339_STATUS) & DS1339_STATUS_OSF, ==, 0);
 +}
 +
-+/* Die-temperature injection limits */
-+static void test_temp_limits(void *obj, void *data, QGuestAllocator *alloc)
++/* The register pointer wraps at the end of the map. */
++static void test_address_wrap(void *obj, void *data, QGuestAllocator *alloc)
 +{
-+    QI2CDevice *dev = (QI2CDevice *)obj;
++    QI2CDevice *i2cdev = (QI2CDevice *)obj;
 +
-+    i2c_set16(dev, REG_CONFIG, CONFIG_RST);
-+
-+    qmp_ina238_set("die-temperature", TEMP_MAX_MC);
-+    g_assert_cmphex(i2c_get16(dev, REG_DIETEMP), ==, 0x3E80);
-+    g_assert_cmpint(qmp_ina238_get("die-temperature"), ==, TEMP_MAX_MC);
-+
-+    qmp_ina238_set("die-temperature", TEMP_MIN_MC);
-+    g_assert_cmphex(i2c_get16(dev, REG_DIETEMP), ==, 0xEC00);
-+    g_assert_cmpint(qmp_ina238_get("die-temperature"), ==, TEMP_MIN_MC);
-+
-+    qmp_ina238_set_fail("die-temperature", (int64_t)TEMP_MAX_MC + 1);
-+    qmp_ina238_set_fail("die-temperature", (int64_t)TEMP_MIN_MC - 1);
-+    g_assert_cmpint(qmp_ina238_get("die-temperature"), ==, TEMP_MIN_MC);
-+    g_assert_cmphex(i2c_get16(dev, REG_DIETEMP), ==, 0xEC00);
++    i2c_set8(i2cdev, DS1339_CONTROL, 0x2a);
++    g_assert_cmphex(i2c_get8(i2cdev, DS1339_CONTROL + DS1339_NUM_REGS),
++                    ==, 0x2a);
 +}
 +
- static void ina238_register_nodes(void)
- {
-     QOSGraphEdgeOptions opts = {
-@@ -459,6 +540,9 @@ static void ina238_register_nodes(void)
-     qos_add_test("shunt-injection", "ina238", test_shunt_injection, NULL);
-     qos_add_test("bus-injection", "ina238", test_bus_injection, NULL);
-     qos_add_test("temp-injection", "ina238", test_temp_injection, NULL);
-+    qos_add_test("shunt-limits", "ina238", test_shunt_limits, NULL);
-+    qos_add_test("bus-limits", "ina238", test_bus_limits, NULL);
-+    qos_add_test("temp-limits", "ina238", test_temp_limits, NULL);
-     qos_add_test("calibration-current", "ina238", test_calibration_current,
-                  NULL);
-     qos_add_test("power", "ina238", test_power, NULL);
++/* A block transfer off the end of the map carries on from the start. */
++static void test_block_wrap(void *obj, void *data, QGuestAllocator *alloc)
++{
++    QI2CDevice *i2cdev = (QI2CDevice *)obj;
++    /* The alarm 2 block, then on into the time registers once it wraps. */
++    const uint8_t out[11] = {
++        0x0b, 0x0c, 0x0d,              /* alarm 2 */
++        0x18,                          /* control */
++        0x00,                          /* status */
++        0xa5,                          /* trickle charger */
++        0x30, 0x20, 0x10, 0x05, 0x12,  /* 10:20:30, day 5, the 12th */
++    };
++    uint8_t resp[11];
++
++    /* A month and year the wrapping write never reaches. */
++    i2c_set8(i2cdev, DS1339_MONTH, 0x07);
++    i2c_set8(i2cdev, DS1339_YEAR, 0x31);
++
++    i2c_write_block(i2cdev, DS1339_ALARM2, out, sizeof(out));
++
++    i2c_read_block(i2cdev, DS1339_SECONDS, resp, 7);
++    g_assert_cmphex(resp[2], ==, 0x10);
++    g_assert_cmphex(resp[3], ==, 0x05);
++    g_assert_cmphex(resp[4], ==, 0x12);
++    g_assert_cmphex(resp[5] & 0x1f, ==, 0x07);
++    g_assert_cmphex(resp[6], ==, 0x31);
++
++    i2c_read_block(i2cdev, DS1339_ALARM2, resp, sizeof(resp));
++    g_assert_cmphex(resp[0], ==, 0x0b);
++    g_assert_cmphex(resp[1], ==, 0x0c);
++    g_assert_cmphex(resp[2], ==, 0x0d);
++    g_assert_cmphex(resp[3], ==, 0x18);
++    g_assert_cmphex(resp[4], ==, 0x00);
++    g_assert_cmphex(resp[5], ==, 0xa5);
++    g_assert_cmphex(resp[8], ==, 0x10);
++    g_assert_cmphex(resp[9], ==, 0x05);
++    g_assert_cmphex(resp[10], ==, 0x12);
++}
++
++/* The alarm and trickle registers are stored but never evaluated. */
++static void test_alarm_registers(void *obj, void *data,
++                                 QGuestAllocator *alloc)
++{
++    QI2CDevice *i2cdev = (QI2CDevice *)obj;
++    static const uint8_t regs[] = {
++        DS1339_ALARM1, 0x08, 0x09, 0x0a,        /* alarm 1 */
++        DS1339_ALARM2, 0x0c, 0x0d,              /* alarm 2 */
++        DS1339_TRICKLE,
++    };
++    static const uint8_t vals[] = { 0xff, 0x00, 0x5a, 0xa5 };
++    unsigned reg, val;
++
++    for (reg = 0; reg < ARRAY_SIZE(regs); reg++) {
++        for (val = 0; val < ARRAY_SIZE(vals); val++) {
++            i2c_set8(i2cdev, regs[reg], vals[val]);
++            g_assert_cmphex(i2c_get8(i2cdev, regs[reg]), ==, vals[val]);
++        }
++    }
++}
++
++static void ds1339_register_nodes(void)
++{
++    QOSGraphEdgeOptions opts = {
++        .extra_device_opts = "address=0x68"
++    };
++    add_qi2c_address(&opts, &(QI2CAddress) { DS1339_ADDR });
++
++    qos_node_create_driver("ds1339", i2c_device_create);
++    qos_node_consumes("ds1339", "i2c-bus", &opts);
++
++    qos_add_test("time", "ds1339", test_time, NULL);
++    qos_add_test("control-register", "ds1339", test_control_register, NULL);
++    qos_add_test("osf-write-protect", "ds1339", test_osf_write_protect, NULL);
++    qos_add_test("address-wrap", "ds1339", test_address_wrap, NULL);
++    qos_add_test("block-wrap", "ds1339", test_block_wrap, NULL);
++    qos_add_test("alarm-registers", "ds1339", test_alarm_registers,
++                 NULL);
++}
++
++libqos_init(ds1339_register_nodes);
+diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+index e05d8a07b9..e23eb9bbca 100644
+--- a/tests/qtest/meson.build
++++ b/tests/qtest/meson.build
+@@ -326,6 +326,7 @@ qos_test_ss.add(
+   'adm1272-test.c',
+   'adm1266-test.c',
+   'ds1338-test.c',
++  'ds1339-test.c',
+   'e1000-test.c',
+   'eepro100-test.c',
+   'es1370-test.c',
 
 -- 
 2.53.0-Meta
