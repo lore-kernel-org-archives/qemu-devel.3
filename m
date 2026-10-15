@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0730CC6B1C
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 03:39:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F07DCA9EDE
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 03:39:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHCID-00057b-27; Wed, 14 Oct 2026 23:38:09 -0400
+	id 1xHCJ2-0005UD-FI; Wed, 14 Oct 2026 23:39:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jay.chang@sifive.com>)
- id 1xHCIB-00056u-6b
- for qemu-devel@nongnu.org; Wed, 14 Oct 2026 23:38:07 -0400
-Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
+ id 1xHCIx-0005NJ-Fa
+ for qemu-devel@nongnu.org; Wed, 14 Oct 2026 23:38:56 -0400
+Received: from mail-pj1-x1031.google.com ([2607:f8b0:4864:20::1031])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <jay.chang@sifive.com>)
- id 1xHCI9-0008LC-BE
- for qemu-devel@nongnu.org; Wed, 14 Oct 2026 23:38:06 -0400
-Received: by mail-pf1-x434.google.com with SMTP id
- d2e1a72fcca58-89a756e5d20so3767268b3a.2
- for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 20:38:04 -0700 (PDT)
+ id 1xHCIu-0008M0-Bw
+ for qemu-devel@nongnu.org; Wed, 14 Oct 2026 23:38:55 -0400
+Received: by mail-pj1-x1031.google.com with SMTP id
+ 98e67ed59e1d1-38759bcd877so3022543a91.2
+ for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 20:38:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1792035484; x=1792640284; darn=nongnu.org;
+ d=sifive.com; s=google; t=1792035520; x=1792640320; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=U7ptBXsKmRklF6bGufE4i32VXEqBAhm3UPl6252cLL4=;
- b=fNslFWQzheg2PEC3WnIxiyAQBtZhYBRPaqclDjvdmX7+3qd0LtjSJoZmCUH3LCK072
- Da+K7Y59KTUCuXH+x7KfsnmubyxXveID6BIwX0w6cUfwNsmzhXpCN7wCCimIzGN5AU6Q
- JHqPCgA/Bs3lKBfcEYT6wyI5qS9/5UQUHPPGVCtDmD82bjvHVq9LVlOCJiB2zFMCkGnF
- z2VIIIK3BgW/CNDpWkie4o45cQqw6CtF881bAiOUg8cjP+pkkyOoFaXDcdDXWg5pea7e
- 4I6TOnJnYdzls9RFfReN5xwdDjTrE7OSyi+5IrVoWvlKFNGZOwZmjJeijaHbcrYV29Sg
- 8fXg==
+ bh=EJrDgCMXhmdM85GfU40H3R0tvXVAUqEEUdDEDQ/JOEI=;
+ b=fuKkuuIMyg8MAl1R9OtyUEJouHdgQiq9/AVKBtojIyynX1bbwEV201vmK8snvdxwbM
+ McShm9y86OYkSQtAo/IKZt/Iq48IvrI528ZsMDcvQ1NjaCZZ4AIvE2ol2wTNOCUy+mWp
+ 0x6Zx902guZPPhnEuGDvLRvBFxla/9FuZkpjzVGo3u5J3wQQmfSdOPIStiVmMkvm2tHa
+ uP7/JAhXxuur9etxFVWlShQ4noldyxCC6njXUMlqgqAGwE9NrVCuBYEWUSKStY+TZWSG
+ hWs0Y2YxyfqJ1J3TzIF0LNDET9ZWxcIM8wdgMmhIaktYrdegGN+viFZO7n8HlmOL4oim
+ 1QZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792035484; x=1792640284;
+ d=1e100.net; s=20260707; t=1792035520; x=1792640320;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=U7ptBXsKmRklF6bGufE4i32VXEqBAhm3UPl6252cLL4=;
- b=N+yYrCO5pBm5p7DpaiHOxORtjhJ8t1GRWInIDCquEXyhACh0n4vAAAlM48SMDkZuFi
- cUH/bW/K7ysBThsnQzCL2AQEMq5gul5LdhlHtHvzUj8qCPZFpZpJVWi7oMDdJ0SN64Kf
- 1WXz2OKpPrNYV2Jbq8u2UtvKAbab9dr+SYtKk3Ri6O1ODpAmphQY+l1JOm/1I3lJ2sxZ
- WgMYj4HcIiVXarxm3SxLM38rduD1QicneU8z94ht+Oo8zQpgIG8sj78k6GPA5Yl7bOya
- hodGsMC5Pc/59thgF5+B7ilvr/z36ZJbuRoqgukCo53qx3oa9lBidt1mTbIlktW9fr9f
- k6GQ==
-X-Gm-Message-State: AFq9FYKyhaskw7jD1DjnTzRJUWSSEjkiiA9U2iyJ+nuwoczuSZb4lUJa
- eiTwbNQXpY+VZaS05SOvS791SoXcGUt46dvVE7XDgNJ7Q6a4qBPlD4mE/3gREsPqoLShEMDalCY
- 82avFdEu55zuFRsES6Nz12wQSgqlPXlCbTAIiJbBzUtX6yq2+cDO6c4T2sIrSlxBTziUDOjyd/U
- Ya/e2wGZZgMrJiCRJkT5BkahEBhndRBOF36mRnvqtA+CfwWA==
-X-Gm-Gg: AYBFou3VCzOfy2Yzen7FEzCyTxf380lb6BOn/WF37W8PACoOTkepaIckC2HHPEoRhTq
- YYUF/AwaG9AkH8RumZ7ygmoZpfWx+hJ2SBS2lkEm9KMY5RM+Wf2Q9uAI0IuxaW3widQG0SIVsY+
- 4Xtggb7BHrtHJPqKF/H+snzdcW9wT2snQNBXElGZbQM5RNZdrTcRi2x/wdC4EpqbcMDF9IFOPdn
- +kmESOSq9zdFRjobUhXm4gdc8s9LxTWA71Kd9ggdTHVlz5y1bUalYiaQu2ZkmwYCukNT+WFMCcU
- 6mgCRN2Z/ykPi/TMtQ4Q/3RNkkXIea79416im3uWkRaT23UUh3YimuVQo7/XKBKu8JgzlMGR8BB
- nvyfmkjDWgx44/In7N054SgW9ugMrCOuGhPL20i2MDOKz+kfyz76yTKa0aEMPxE10LSO1j5OW0E
- DnjEmjtMpUzdDALwuggALrFp2JQNWU4h8Uy77cZon82IHMYhjIloo7NHo3V0Sexhla0NoEzyz3p
- 76zIM7o6H9o+ZKGRsCWVJ/fPikjqZSItnQCbea7xSn0BhQ=
-X-Received: by 2002:a05:6a20:6a0e:b0:3e0:de4c:71e6 with SMTP id
- adf61e73a8af0-3e16beb2702mr15660650637.54.1792035483732; 
- Wed, 14 Oct 2026 20:38:03 -0700 (PDT)
+ bh=EJrDgCMXhmdM85GfU40H3R0tvXVAUqEEUdDEDQ/JOEI=;
+ b=HB9p/5JJGWBuKFIQrbfil1uEu2e+YTb8MHa5eUlct3n1EwYoVJc/T3pcsunC7YjPdY
+ V0dAMnEEnCtDuZyR+mOrtRR+R8BOf7evPjbyMwB8L6rMXMef0u1EQ9R85XPGlnKNnIke
+ bp9b+eAdbHj+RQpFo5d1PRTem/0Aa6j41ocNnNo9kgRXW5lSBAUXxq1a+ME7yZmkN9f2
+ wo5zOtu01yIE9RTbGT6Xzjf4SmEh9WRBGZEZ73xWeomuYl9LBNPQQo1xO/LGU05Xm+tz
+ o4DCBwtgw18fFKLaDzNZjpLn7XF66CcvnhABs7ULmdgUE47DpMNVfsiohWs18bUWVbdU
+ 0G/A==
+X-Gm-Message-State: AFq9FYIuvZMrg2mBeK9Y8WR9ghKs0FOcT/sGYxpdkvg02M+5ZyLwBZZ1
+ onQzShhlrCdkDZ9ZsUO7NTiKa99NDh5kJySBpWe3ZTXRNm/dO1Oh0aWEmKVCb15L6r5M1VCRRgR
+ cuSMoBuN9Q7IUg1LynF02TEJ0VSFZ5QJ3d66Z2dXWn/ypjXMnSx8jG+OpMURVjBKm+O+KHR7XxO
+ XXjN5WmySTtvbxsWeM2TtdnpPiFVlxpNF4qSMSfJTj
+X-Gm-Gg: AYBFou3YnlMoos9AGdupt+PjqWNGuVnaEgUuWSOYnlAFVqTUkbt6zOhT8XZF4NaoBpG
+ pnfwHLN8PiqjuRpaaMA693pDBRxQBvitulBe9+18pLM017LHsS5Ri3Dnpy5JapKq4Y3h+GloIuK
+ WdHxpvA/HrGZ/U7GAhnieMMc0EAiSIGwsXXfx35SLRC2DpL+xP+X7J3FKLWu2O5Dwrw1YI6TEOk
+ fvm8NgWhFWex1pc9pJDyJRxo4PebT4ixrQ2ym3Hi9pE4T30PgN30XUy4rgagphJJ+z5krD9J3HW
+ xE/GFwJDw9A+osgnzHrnA0wwdZkU4AAzerHZ91sJr5S53LTiX3ZG2mHT7jZR5UkxjUDDmx54w12
+ 2vQLxZw6n1VQShptB40Pq9/cRaf8eNYqKRZYenXsCOuow/rGqGDMhefaJSGKoPNEZ2J/aaZywy6
+ G+Xf4VjtbWYV3tz/hpVrUUGkeRhdfqzAsv0o8OFGFuzKh2SZ7u9FXqmPipg6s/MOKTjLbRcZwXv
+ uO6EMXfyI+LPnodQnmLfYSiNXI25t/XbxYc
+X-Received: by 2002:a17:90b:4c42:b0:3ac:80dc:f419 with SMTP id
+ 98e67ed59e1d1-3ac80dd01bcmr2772614a91.25.1792035519661; 
+ Wed, 14 Oct 2026 20:38:39 -0700 (PDT)
 Received: from jchang-1875.internal.sifive.com ([136.226.240.181])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-cd635c612a9sm559188a12.17.2026.10.14.20.38.00
+ 41be03b00d2f7-cd635c612a9sm559188a12.17.2026.10.14.20.38.36
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 14 Oct 2026 20:38:03 -0700 (PDT)
+ Wed, 14 Oct 2026 20:38:39 -0700 (PDT)
 From: Jay Chang <jay.chang@sifive.com>
 To: qemu-devel@nongnu.org
 Cc: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
@@ -76,23 +76,23 @@ Cc: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
  qemu-arm@nongnu.org (open list:Xilinx Zynq),
  Jay Chang <jay.chang@sifive.com>, Frank Chang <frank.chang@sifive.com>,
  Jim Shu <jim.shu@sifive.com>
-Subject: [PATCH 2/6] hw/dma/xilinx_axidma: Add 64-bit MMIO access support
-Date: Thu, 15 Oct 2026 11:37:29 +0800
-Message-ID: <20261015033733.35116-3-jay.chang@sifive.com>
+Subject: [PATCH 3/6] hw/dma/xilinx_axidma: Fix DMASR register handling
+Date: Thu, 15 Oct 2026 11:37:30 +0800
+Message-ID: <20261015033733.35116-4-jay.chang@sifive.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20261015033733.35116-1-jay.chang@sifive.com>
 References: <20261015033733.35116-1-jay.chang@sifive.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
- envelope-from=jay.chang@sifive.com; helo=mail-pf1-x434.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1031;
+ envelope-from=jay.chang@sifive.com; helo=mail-pj1-x1031.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,262 +108,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Implement 32-bit and 64-bit descriptor register accesses through dedicated MMIO helpers.
+This patch fixes two register handling issues in the Xilinx AXI DMA
+controller:
+
+1. DMACR Start Processing Logic:
+   When the guest writes to R_DMACR to start DMA processing, the
+   original code cleared both DMASR_HALTED and DMASR_IDLE flags.
+   However, DMASR_IDLE should only be cleared when TAILDESC is written
+   (indicating actual work is queued). Incorrectly clearing IDLE on
+   DMACR write can cause the DMA state machine to behave incorrectly.
+
+2. DMASR W1C (Write-1-to-Clear) IRQ Bits:
+   The original implementation had incorrect W1C logic:
+       value &= ~(value & DMASR_IRQ_MASK);
+       s->regs[addr] = value; // write R/O bit
+
+   This would clear the entire register instead of just the IRQ bits.
+   The correct W1C implementation should clear only the bits that are
+   both set in the register AND written as 1 by the guest:
+       s->regs[addr] &= ~(value & DMASR_IRQ_MASK);
+
+3. Enhanced Error Logging:
+   Added qemu_log_mask(LOG_GUEST_ERROR) when the DMA engine encounters
+   a descriptor that is already marked COMPLETE. This indicates a guest
+   driver error (reusing descriptors without proper reset) and helps
+   debugging network issues.
 
 Signed-off-by: Jay Chang <jay.chang@sifive.com>
 Reviewed-by: Frank Chang <frank.chang@sifive.com>
 Reviewed-by: Jim Shu <jim.shu@sifive.com>
 ---
- hw/dma/xilinx_axidma.c | 199 +++++++++++++++++++++++++++++------------
- 1 file changed, 143 insertions(+), 56 deletions(-)
+ hw/dma/xilinx_axidma.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
 diff --git a/hw/dma/xilinx_axidma.c b/hw/dma/xilinx_axidma.c
-index 45fd2e45c1..282f92867d 100644
+index 282f92867d..6892d494c0 100644
 --- a/hw/dma/xilinx_axidma.c
 +++ b/hw/dma/xilinx_axidma.c
-@@ -56,7 +56,9 @@ DECLARE_INSTANCE_CHECKER(XilinxAXIDMAStreamSink, XILINX_AXI_DMA_CONTROL_STREAM,
- #define R_DMACR             (0x00 / 4)
- #define R_DMASR             (0x04 / 4)
- #define R_CURDESC           (0x08 / 4)
-+#define R_CURDESC_MSB       (0x0C / 4)
- #define R_TAILDESC          (0x10 / 4)
-+#define R_TAILDESC_MSB      (0x14 / 4)
- #define R_MAX               (0x30 / 4)
+@@ -385,6 +385,10 @@ static size_t stream_process_s2mem(struct Stream *s, unsigned char *buf,
  
- #define CONTROL_PAYLOAD_WORDS 5
-@@ -477,12 +479,40 @@ xilinx_axidma_data_stream_push(StreamSink *obj, unsigned char *buf, size_t len,
-     return ret;
- }
+         if (s->desc.status & SDESC_STATUS_COMPLETE) {
+             s->regs[R_DMASR] |= DMASR_HALTED;
++            qemu_log_mask(LOG_GUEST_ERROR,
++                          "xilinx_axidma: HALT: curdesc=0x%016lx already"
++                          " COMPLETE status=0x%x\n",
++                          (unsigned long)curdesc, s->desc.status);
+             break;
+         }
  
--static uint64_t axidma_read(void *opaque, hwaddr addr,
--                            unsigned size)
-+static uint32_t axidma_readl(XilinxAXIDMA *d, struct Stream *s,
-+                             hwaddr addr, int sid)
-+{
-+    switch (addr) {
-+    case R_DMACR:
-+        /* Simulate one cycle reset delay.  */
-+        s->regs[R_DMACR] &= ~DMACR_RESET;
-+        return s->regs[R_DMACR];
-+    case R_DMASR:
-+        s->regs[R_DMASR] &= 0xffff;
-+        s->regs[R_DMASR] |= (s->complete_cnt & 0xff) << 16;
-+        s->regs[R_DMASR] |= (ptimer_get_count(s->ptimer) & 0xff) << 24;
-+        return s->regs[R_DMASR];
-+    default:
-+        D(qemu_log("%s ch=%d addr=" HWADDR_FMT_plx " v=%x\n",
-+                   __func__, sid, addr * 4, s->regs[addr]));
-+        return s->regs[addr];
-+    }
-+}
-+
-+static uint64_t axidma_readq(XilinxAXIDMA *d, struct Stream *s,
-+                             hwaddr addr, int sid)
-+{
-+    /* Combine two consecutive 32-bit slots into a 64-bit value.  */
-+    if (addr + 1 < R_MAX) {
-+        return s->regs[addr] | ((uint64_t)s->regs[addr + 1] << 32);
-+    }
-+    return s->regs[addr];
-+}
-+
-+static uint64_t axidma_read(void *opaque, hwaddr addr, unsigned size)
- {
-     XilinxAXIDMA *d = opaque;
-     struct Stream *s;
--    uint32_t r = 0;
-     int sid;
+@@ -555,15 +559,14 @@ static void axidma_writel(XilinxAXIDMA *d, struct Stream *s, hwaddr addr,
  
-     sid = streamid_from_addr(addr);
-@@ -490,26 +520,102 @@ static uint64_t axidma_read(void *opaque, hwaddr addr,
+         if ((value & 1) && !stream_resetting(s)) {
+             /* Start processing.  */
+-            s->regs[R_DMASR] &= ~(DMASR_HALTED | DMASR_IDLE);
++            s->regs[R_DMASR] &= ~DMASR_HALTED;
+         }
+         stream_reload_complete_cnt(s);
+         break;
  
-     addr = addr % 0x30;
-     addr >>= 2;
-+
-+    switch (size) {
-+    case 8:
-+        return axidma_readq(d, s, addr, sid);
-+    case 4:
-+    default:
-+        return axidma_readl(d, s, addr, sid);
-+    }
-+}
-+
-+static void axidma_kick(XilinxAXIDMA *d, struct Stream *s, int sid)
-+{
-+    s->regs[R_DMASR] &= ~DMASR_IDLE;
-+    if (!sid) {
-+        stream_process_mem2s(s, d->tx_data_dev, d->tx_control_dev);
-+    }
-+}
-+
-+static void axidma_writel(XilinxAXIDMA *d, struct Stream *s, hwaddr addr,
-+                          uint32_t value, int sid)
-+{
-     switch (addr) {
--        case R_DMACR:
--            /* Simulate one cycles reset delay.  */
--            s->regs[addr] &= ~DMACR_RESET;
--            r = s->regs[addr];
--            break;
--        case R_DMASR:
--            s->regs[addr] &= 0xffff;
--            s->regs[addr] |= (s->complete_cnt & 0xff) << 16;
--            s->regs[addr] |= (ptimer_get_count(s->ptimer) & 0xff) << 24;
--            r = s->regs[addr];
--            break;
--        default:
--            r = s->regs[addr];
--            D(qemu_log("%s ch=%d addr=" HWADDR_FMT_plx " v=%x\n",
--                           __func__, sid, addr * 4, r));
--            break;
-+    case R_DMACR:
-+        /* Tailptr mode is always on.  */
-+        value |= DMACR_TAILPTR_MODE;
-+        /* Remember our previous reset state.  */
-+        value |= (s->regs[R_DMACR] & DMACR_RESET);
-+        s->regs[R_DMACR] = value;
-+
-+        if (value & DMACR_RESET) {
-+            stream_reset(s);
-+        }
-+
-+        if ((value & 1) && !stream_resetting(s)) {
-+            /* Start processing.  */
-+            s->regs[R_DMASR] &= ~(DMASR_HALTED | DMASR_IDLE);
-+        }
-+        stream_reload_complete_cnt(s);
-+        break;
-+
-+    case R_DMASR:
-+        /* Mask away write to clear irq lines.  */
-+        value &= ~(value & DMASR_IRQ_MASK);
-+        s->regs[R_DMASR] = value;
-+        break;
-+
-+    case R_CURDESC:
-+        s->regs[R_CURDESC] = value;
-+        break;
-+
-+    case R_CURDESC_MSB:
-+        s->regs[R_CURDESC_MSB] = value;
-+        break;
-+
-+    case R_TAILDESC:
-+        s->regs[R_TAILDESC] = value;
-+        axidma_kick(d, s, sid);
-+        break;
-+
-+    case R_TAILDESC_MSB:
-+        s->regs[R_TAILDESC_MSB] = value;
-+        axidma_kick(d, s, sid);
-+        break;
-+
-+    default:
-+        D(qemu_log("%s: ch=%d addr=" HWADDR_FMT_plx " v=%x\n",
-+                   __func__, sid, addr * 4, value));
-+        s->regs[addr] = value;
-+        break;
-     }
--    return r;
-+}
+     case R_DMASR:
+-        /* Mask away write to clear irq lines.  */
+-        value &= ~(value & DMASR_IRQ_MASK);
+-        s->regs[R_DMASR] = value;
++        /* Clear W1C IRQ bits.  */
++        s->regs[R_DMASR] &= ~(value & DMASR_IRQ_MASK);
+         break;
  
-+static void axidma_writeq(XilinxAXIDMA *d, struct Stream *s, hwaddr addr,
-+                          uint64_t value, int sid)
-+{
-+    switch (addr) {
-+    case R_CURDESC:
-+        s->regs[R_CURDESC] = (uint32_t)value;
-+        s->regs[R_CURDESC_MSB] = (uint32_t)(value >> 32);
-+        break;
-+
-+    case R_TAILDESC:
-+        s->regs[R_TAILDESC] = (uint32_t)value;
-+        s->regs[R_TAILDESC_MSB] = (uint32_t)(value >> 32);
-+        axidma_kick(d, s, sid);
-+        break;
-+
-+    default:
-+        D(qemu_log("%s: ch=%d addr=" HWADDR_FMT_plx " v=%x\n",
-+                   __func__, sid, addr * 4, (unsigned)value));
-+        s->regs[addr] = (uint32_t)value;
-+        if (addr + 1 < R_MAX) {
-+            s->regs[addr + 1] = (uint32_t)(value >> 32);
-+        }
-+        break;
-+    }
- }
- 
- static void axidma_write(void *opaque, hwaddr addr,
-@@ -524,44 +630,17 @@ static void axidma_write(void *opaque, hwaddr addr,
- 
-     addr = addr % 0x30;
-     addr >>= 2;
--    switch (addr) {
--        case R_DMACR:
--            /* Tailptr mode is always on.  */
--            value |= DMACR_TAILPTR_MODE;
--            /* Remember our previous reset state.  */
--            value |= (s->regs[addr] & DMACR_RESET);
--            s->regs[addr] = value;
--
--            if (value & DMACR_RESET) {
--                stream_reset(s);
--            }
--
--            if ((value & 1) && !stream_resetting(s)) {
--                /* Start processing.  */
--                s->regs[R_DMASR] &= ~(DMASR_HALTED | DMASR_IDLE);
--            }
--            stream_reload_complete_cnt(s);
--            break;
--
--        case R_DMASR:
--            /* Mask away write to clear irq lines.  */
--            value &= ~(value & DMASR_IRQ_MASK);
--            s->regs[addr] = value;
--            break;
- 
--        case R_TAILDESC:
--            s->regs[addr] = value;
--            s->regs[R_DMASR] &= ~DMASR_IDLE; /* Not idle.  */
--            if (!sid) {
--                stream_process_mem2s(s, d->tx_data_dev, d->tx_control_dev);
--            }
--            break;
--        default:
--            D(qemu_log("%s: ch=%d addr=" HWADDR_FMT_plx " v=%x\n",
--                  __func__, sid, addr * 4, (unsigned)value));
--            s->regs[addr] = value;
--            break;
-+    switch (size) {
-+    case 8:
-+        axidma_writeq(d, s, addr, value, sid);
-+        break;
-+    case 4:
-+    default:
-+        axidma_writel(d, s, addr, (uint32_t)value, sid);
-+        break;
-     }
-+
-     if (sid == 1 && d->notify) {
-         StreamCanPushNotifyFn notifytmp = d->notify;
-         d->notify = NULL;
-@@ -574,6 +653,14 @@ static const MemoryRegionOps axidma_ops = {
-     .read = axidma_read,
-     .write = axidma_write,
-     .endianness = DEVICE_NATIVE_ENDIAN,
-+    .valid = {
-+        .min_access_size = 4,
-+        .max_access_size = 8
-+    },
-+    .impl = {
-+        .min_access_size = 4,
-+        .max_access_size = 8
-+    }
- };
- 
- static void xilinx_axidma_realize(DeviceState *dev, Error **errp)
+     case R_CURDESC:
 -- 
 2.48.1
 
