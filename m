@@ -4,118 +4,118 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC21ACC6B38
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 21:35:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 747A6CCA464
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 21:35:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHT5C-0005R7-RE; Thu, 15 Oct 2026 17:33:50 -0400
+	id 1xHT58-0005K6-Fy; Thu, 15 Oct 2026 17:33:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xHT4X-0005CZ-90
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 17:33:09 -0400
+ id 1xHT4f-0005Dd-QN
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 17:33:19 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xHT4V-0002SO-Ix
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 17:33:09 -0400
+ id 1xHT4c-0002Sg-4b
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 17:33:17 -0400
 Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69FKDTmP3462814
- for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 21:32:56 GMT
+ 69FKDTmR3462814
+ for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 21:33:01 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=Hx0EUtBc7dv
- XA3AGksgltf6SzhPv85okwXe51BzfITk=; b=ZomGKGjV7jBvXZMMxVXPaDz2hk4
- JMcdfUwlkDgSNgbLkE44/WN2E1slZTx10hMtk9JVxLA75RKnLWlztstd/hrt59fJ
- 6rPTL5ztssYFKvcoUXO3aps6MfjjJ8xlH81N5NL0MwMHNb9d96LjKN1vjy3+tJky
- iKpTyIYr1b10zhTYHAdQk165fF0viTJc43VuhIjsTm2Rw9/6ziFRvVPa0hc9Ypx3
- xbMeAHmm8q5hjOBCocJnLzIG2qszegtJfARZRye/ej58T6YD8flRbbPguc0VVpRi
- 2yd+5OIfx9oFL5hcNN7R0EKRubaBYjkKrUW/cbj7SI6DrBW87hzruTpfg/g==
-Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
- [209.85.216.72])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hayu69v54-1
+ :mime-version:references:subject:to; s=qcppdkim1; bh=rugzwJl0gQc
+ FNLEQfZTbze/QkSoVCJ85QVb1/nLSXEs=; b=P6TW6LAtNUOxsc0wv234VoUZtno
+ ZiQOq8gL+tMTvodG3HcyLZPBAVmMHfAsMSjhdH2L5ru6P6yVR4zGv0B2WuHGONuU
+ C1fvBlQdvb+/uscdUJwqt0vRznnWEamC6WnjJNuPkekM7cqF6j17b8VYOUgmk0gY
+ 4lEXgwAvFYgLfzfrYTWq7A6825GskJFvBf3rJ5QDglqKKJhN+1Rp2qxUo5x+lq32
+ +/v312I3W5oQHIYQUYDITQGCHbtDpB1GadCk4Q2PVts2m5lJ6xx2Mly95aPKgi78
+ ufiU0xRDuWtq5YRUHPFK1gYOiDq8EO7Ffo8dTqu/F/49ik/7hcLw08BUrGQ==
+Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
+ [209.85.216.70])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hayu69v5b-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 21:32:56 +0000 (GMT)
-Received: by mail-pj1-f72.google.com with SMTP id
- 98e67ed59e1d1-3ac77c3ff6aso2984305a91.0
- for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 14:32:56 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 21:33:01 +0000 (GMT)
+Received: by mail-pj1-f70.google.com with SMTP id
+ 98e67ed59e1d1-3abfcf726dcso2743720a91.2
+ for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 14:33:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1792099975; x=1792704775; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1792099981; x=1792704781; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=Hx0EUtBc7dvXA3AGksgltf6SzhPv85okwXe51BzfITk=;
- b=fuZqPd8EP9TkM/VkaXcl8eMTnfQr73QHbtcOee1IaQNg75Wpc5kUPgNhYLoYTzfzmG
- XwkxHVd7e3mNzq5uKLCP4YhQmhzj4W2Xb9kjCC8BN34/wfM/9ePJ9VNVdb7jhcl0mJTA
- 9WM843sAOiTIuJ2iS3T2nIQA9Cx315aaoSv6KRLyYDX6P3oer1qnXm3i/mwMZnnILn+8
- SaZpdlLG9mU51iBdSa0OQKkWnbdTSjgyuhAdX1NZCqxzRfQ/hTjg9PRcc/q0jLgrXjSG
- a0OXyQUGk+/T7h3UoLcj0wbh7hqqbMNHOKoNCZJ3kRS1MjNwbSZLJXCwvYXJbXaq5KR1
- rfCA==
+ bh=rugzwJl0gQcFNLEQfZTbze/QkSoVCJ85QVb1/nLSXEs=;
+ b=Bmk72UeYK//kT0Z4sGvKK/2n8lBJPxl/Lmksm7kdMuwBXhOJYZWAxG9TCkBNLa1CUJ
+ t/xbMmD2+ZK674rKdlTZ4Pb70B0nVLR5lC+zgaZ4101v2L2T6WImjsh2UK8N4Ux++Re3
+ nGHIS6pW6mBLk961X3EbKeZ6Etnf6YwxzVevMRhzIUA8iE4M4UwNnRtRuHCxGGApl6A4
+ Lyf7S2RjMUX3HLnJaV3Y8uyjCFL7OconwlNHUGAp9qjAXqBWfAuoFvNXjQjvNGfIMYXH
+ FxXDblTc+VmR6AzQagfzeLJd9DzqjLG90pucwtg/KgR6pE65bU4ihsPLX7VlU7uFVnsm
+ SrQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792099975; x=1792704775;
+ d=1e100.net; s=20260707; t=1792099981; x=1792704781;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=Hx0EUtBc7dvXA3AGksgltf6SzhPv85okwXe51BzfITk=;
- b=ZqA4A0C9X3m8Ld4BFqwWsEzU7qBt1wtul4M3A4SkUki1qwP44Q68Bx9/UDxIDSC0kr
- bsZTdI3uNP98jHZSbFl+1i5wXvGmX+UQqVjhrX8TKkKTlma+10J5MXASnSMN4AlsTxJW
- kR2GuC25/9+twRM9EZ/Hy83GZ1m4UAjCkezcu/v2cn21dccjwcXiiZbsv/jPQCwBH4m0
- i7xOiQtU2aIG5iuhggvqirqZa5bvEndM+mO856wQsP1oJJQMsS5ZdkiXwzoy1uGSHH4a
- hmBjJzhnXXz/FoH522NNEq4MGeDJhaysbHNs+YdvYs+8CL/461Pi22CFNiBUK0KsmeBV
- GuRA==
-X-Gm-Message-State: AFq9FYLqRkXE/8NkWA8tDYx9XXGeyB5S/WYyHEcdf0RaE9iAFVD84ium
- x1DOK4yVwQSLPy4IMFYKBbBsZXrYi6Ag/eGxLgYmM4L36H3J/whBdw/tbErMr1nijmKxEmAJiS0
- zsxxUuQiPPsI5BUDfiEjlRrx1UqN4FkQDNPgDSwrqIoWgBSKc+DAZTi6iwodnHY7ncQ==
-X-Gm-Gg: AYBFou0I45kzlRm0A2hbl0fq6WgNWHQp4MQp1LWitEOJoebITwwc8pNyOWsanK+EcCC
- /IwYz6+0Qw7cEnkhlQ1GcBMnrcjsljUNhnkazcqta0MLdkJZAEquaAK51uiHO+jhJ+KmrY6waBd
- C8vw2OX6Iivnwy0EUFUBdVjy9k+zsuE6U+M8lgM7HOQ/XIdAfBoyJTWtNEgjF7UECmNeufIcis/
- WUftur/Izp1CWP4YaLhJm+YggGSHwsv7G9+8VEIh82kSoU/NOExC7Z27Qlu9tESc7VuF9iiMDwu
- fTVCrT6xLtgc91YRFMt8wVHc4yM/w+k7GW7fJwG0Z/79SAG7QRl1rDI4IMDs8lisPhGyl2bM4yS
- Ajt40g1KGdQ/LJ/Y/k9ifp66WwWGbEGUNl022Rwnvjzy993ffVdxZQ8PgirTnkxE=
-X-Received: by 2002:a17:90b:5823:b0:3a7:9413:cfae with SMTP id
- 98e67ed59e1d1-3ab3ab1d561mr17607903a91.42.1792099975397; 
- Thu, 15 Oct 2026 14:32:55 -0700 (PDT)
-X-Received: by 2002:a17:90b:5823:b0:3a7:9413:cfae with SMTP id
- 98e67ed59e1d1-3ab3ab1d561mr17607884a91.42.1792099974927; 
- Thu, 15 Oct 2026 14:32:54 -0700 (PDT)
+ bh=rugzwJl0gQcFNLEQfZTbze/QkSoVCJ85QVb1/nLSXEs=;
+ b=d+o6vLwWVjTHY7HfFtJeb/UXyaSHQq+Pjtk1RTHcU+ePM33rQ0Wc742dUeT6TgUOxj
+ O9I3Xg/+VtY3Y2P6L6J+hV54qnBs8jgHzsKjSgeho7ek+FNesnPn6UKJB6pxXQwI37dq
+ AW2AmlGBllZJxslHFJB/U2zYkrF+9KpEuJjD1qR++PbNIiJ9tVegl572QYkb9CvmzsLP
+ 9Zge3NpagrtIufnF5H2Sxqbcp+9Q9WcihjFQh0vDUI+J+SY0r7JQCg6iKPN8VzTVKqPg
+ UCpWuW5rpSp4RxqXF+8WhNLnZAVTNmVve14NnybEg7bAhc7nds7BiqgO+ghQdPHR9PDl
+ tWUw==
+X-Gm-Message-State: AFq9FYKen6QhfBaa1xIKAIqElHni8m9qW4CuZhWxewcAuF2FlI4ooUfs
+ TEd4+8eXSLJd1sgkn+f+8DmkLceZZd6SNr/5RhHB0JWC+HtOXx8caa793xEeD/lV7Hx2kiYz/t/
+ UcDDbSOYdqB/RikLCW1gif/Bdg5mP86b64bYRTUOkHvTeUhTFhHhwBlSyapZD0QFDBA==
+X-Gm-Gg: AYBFou3ZD6bBhFx7LU9Uz+4z/wDUHvLJhhrXI298aLzcLK720U8HpBgduJF+SCIzWhk
+ IoWnvKCDS/ms07NOAa+j/tNmbzNsbNy+jT8HBSCcuqrvClTeo1alFejpPiQjFeCa5sAHubs4/hk
+ yE4Dy6mEnJeWcQYXUsC3L8oruBFugmO51gRvibrS89KMBZZ3kC75xHeU8E93ipkDRnJTibUvNc0
+ RiwNAV6UKZMBGsDmXgoIVZLZOoXJ47ON84b2Ysd545p26CDK87SEGxJ3ibv0FhmJVuEdBC8zhN7
+ SlL+Q3wZP7Wsu1nweYl7lsKtFXmDArJ5B2pumW4S1m1IEBgm2Pw3rb708PhXUk0/he9VKLoOnN5
+ 5qG0VKlXEmvZbtZF3GMCFZvmWMpxfASpYRxnFLdKzh9b5fpPdUS6MtBNrtgcvvys=
+X-Received: by 2002:a17:90a:ec87:b0:3a8:c0cd:57fb with SMTP id
+ 98e67ed59e1d1-3ab3ac9a1b0mr17041217a91.42.1792099980622; 
+ Thu, 15 Oct 2026 14:33:00 -0700 (PDT)
+X-Received: by 2002:a17:90a:ec87:b0:3a8:c0cd:57fb with SMTP id
+ 98e67ed59e1d1-3ab3ac9a1b0mr17041150a91.42.1792099978897; 
+ Thu, 15 Oct 2026 14:32:58 -0700 (PDT)
 Received: from pc.taild8403c.ts.net (192-80-163-190.dyn.novuscom.net.
  [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3ac940055f5sm5989362a91.0.2026.10.15.14.32.54
+ 98e67ed59e1d1-3ac940055f5sm5989362a91.0.2026.10.15.14.32.58
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 Oct 2026 14:32:54 -0700 (PDT)
+ Thu, 15 Oct 2026 14:32:58 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, anjo@rev.ng
-Subject: [PATCH v2 12/19] target/arm: implement get_note_size sysemu op
-Date: Thu, 15 Oct 2026 21:32:29 +0000
-Message-ID: <20261015213236.157767-13-pierrick.bouvier@oss.qualcomm.com>
+Subject: [PATCH v2 16/19] target/s390x: implement get_note_size sysemu op
+Date: Thu, 15 Oct 2026 21:32:33 +0000
+Message-ID: <20261015213236.157767-17-pierrick.bouvier@oss.qualcomm.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261015213236.157767-1-pierrick.bouvier@oss.qualcomm.com>
 References: <20261015213236.157767-1-pierrick.bouvier@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: E5iCjxZxsrtHl9EVVDqo2v2msAbA66bl
-X-Authority-Analysis: v=2.4 cv=ff04WEQF c=1 sm=1 tr=0 ts=6ad14688 cx=c_pps
- a=RP+M6JBNLl+fLTcSJhASfg==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
+X-Proofpoint-ORIG-GUID: CsgGuYxuYmJ6wmEZUJhxS10sDvY2ablQ
+X-Authority-Analysis: v=2.4 cv=ff04WEQF c=1 sm=1 tr=0 ts=6ad1468d cx=c_pps
+ a=0uOsjrqzRL749jD1oC5vDA==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
  a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
  a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22 a=EUspDBNiAAAA:8
- a=Vcmh8FhFDDEcUw5d5KwA:9 a=iS9zxrgQBfv6-_F4QbHw:22
-X-Proofpoint-GUID: E5iCjxZxsrtHl9EVVDqo2v2msAbA66bl
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDE1MDA4NSBTYWx0ZWRfXzv/hBkHVMaOI
- OXWhv8lDS3v6tqmSUEbjTBcH6wJerde7hOfQdwGGJXVXIoM1HgrbX7rMMYcc4oa8B9OdwtfYQ6H
- gusgnfNCGh+flcsJuDRGBRCIGBZRkdMCPQZ+UeML8r+hKIDd2QnrUreufTYNSJmQx8TlVwa9nPZ
- 4UR4wdG40ZSKmuN639tiBZapC/vEQlzwsV2HGgvbTqbRqFUAUYgKzCXgl77tMLa32B5ltCjOb9j
- ZVgHyjgisyEkSum965wGhAwvZhxVuDpJLZERofvj2+eERDda47xGxoweU0r+23b+YvjXOt547WO
- Ltc8Qf21W5SmDmT2tX4l06N6Hgii2lnUfJINsa9KQrZG7d/HonDFziJvciHXkLHgdkxTi+gSNhZ
- 46/XoQTun+aeYo0S8GMYaHyqf097aUc8eUAHb9DTtszBcyz2+xjus5TWFIQYkFfN23e1AIgc27h
- XfNUqEuoX/iLtw7nBeA==
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDE1MDA4NSBTYWx0ZWRfXyA99Rhf5Z7ja
- FHrRn00g2EH8nstDwUCqsT6zbFog9a4sDAR/X7Ko1rp+HLd77t0hFx3ZhMfiDGyISG/QfViF91D
- Ob/8NJ+aRrs/68PpRCw6ZfSlOkayf/4=
+ a=EDlH-CkopuZvdY7HuOYA:9 a=mQ_c8vxmzFEMiUWkPHU9:22
+X-Proofpoint-GUID: CsgGuYxuYmJ6wmEZUJhxS10sDvY2ablQ
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDE1MDA4NSBTYWx0ZWRfX8imo8nx+15ZY
+ EyZTXyK3RPenx4Y2byA27m3KvSKp11VYS7/0RzS9mfLHSaShTF7e8AwOQHiEJzxvMJ1U90crgla
+ a3g/61O69hKRuVYzPpuT9gZQ2F5I5Blq0KzV2X2ioG3UI4KBIP8h+rs+/dg4OnmTaz8Z5Mk7Q+Q
+ BFo7RnsE3tFXRYYiRQm+fpsVomIMWpOUu4RnpU2Zyt/LzoSxj833x38+14ZufiOvgUJtptIqYPL
+ wMCTxnDV4BnH150gqoXwBkTovCesq/ZuoEZd4H04nDVWynAueNCi7+tSCklOecH6mChfsztLgsM
+ Fj7mowVZjeA8ovwHj6ZWimDenXXk2/+PcKOL/ciGatkBJsb4odcCgpMz8sHNle4WLCBLNXYsWiP
+ FlWGkLIoOip75mCGsKWY/t+ebpi4IhYTfZB6AhmqwEbsX1tdzi6JVOT0dUujp0t9jLF09euHymS
+ T1vhDmxoyKKdS+Eh1lA==
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDE1MDA4NSBTYWx0ZWRfX0pT/vi7cXLEx
+ U6lyETjSGKUWgQyP4b30tRls1SqAv7WVohL+mYDius9Xruf0GRKRVk7cI8QwTX2x0BKF5wqhqzn
+ Z3TU3xRhcvJLYrEYJWgAr+nbEOucBSk=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-10-14_01,2026-10-14_01,2025-10-01_01
@@ -153,62 +153,59 @@ For now, we keep the global cpu_get_note_size symbol defined.
 
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 ---
- target/arm/arch_dump.c | 10 ++++++++--
- target/arm/cpu.c       |  1 +
- target/arm/internals.h |  2 ++
- 3 files changed, 11 insertions(+), 2 deletions(-)
+ target/s390x/arch_dump.c      | 8 +++++++-
+ target/s390x/cpu-system.c     | 1 +
+ target/s390x/s390x-internal.h | 2 ++
+ 3 files changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/target/arm/arch_dump.c b/target/arm/arch_dump.c
-index 181691b81c6..60456e81bf8 100644
---- a/target/arm/arch_dump.c
-+++ b/target/arm/arch_dump.c
-@@ -432,9 +432,10 @@ int arm_get_dump_info(const CPUState *cs, ArchDumpInfo *info,
+diff --git a/target/s390x/arch_dump.c b/target/s390x/arch_dump.c
+index 4301cf400e4..3ca85e6b64b 100644
+--- a/target/s390x/arch_dump.c
++++ b/target/s390x/arch_dump.c
+@@ -469,7 +469,8 @@ int s390_get_dump_info(const CPUState *cs, ArchDumpInfo *info,
      return 0;
  }
  
 -ssize_t cpu_get_note_size(int class, int machine, int nr_cpus)
-+ssize_t arm_get_note_size(const CPUState *cs, int class, int machine,
-+                          int nr_cpus)
++ssize_t s390_get_note_size(const CPUState *cs, int class, int machine,
++                           int nr_cpus)
  {
--    ARMCPU *cpu = ARM_CPU(first_cpu);
-+    ARMCPU *cpu = ARM_CPU(cs);
-     size_t note_size;
+     int name_size = 8; /* "LINUX" or "CORE" + pad */
+     size_t elf_note_size = 0;
+@@ -495,3 +496,8 @@ ssize_t cpu_get_note_size(int class, int machine, int nr_cpus)
  
-     if (class == ELFCLASS64) {
-@@ -452,3 +453,8 @@ ssize_t cpu_get_note_size(int class, int machine, int nr_cpus)
- 
-     return note_size * nr_cpus;
+     return (elf_note_size) * nr_cpus;
  }
 +
 +ssize_t cpu_get_note_size(int class, int machine, int nr_cpus)
 +{
-+    return arm_get_note_size(first_cpu, class, machine, nr_cpus);
++    return s390_get_note_size(first_cpu, class, machine, nr_cpus);
 +}
-diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-index 7bf0c5e74f8..73fdc6e460f 100644
---- a/target/arm/cpu.c
-+++ b/target/arm/cpu.c
-@@ -2570,6 +2570,7 @@ static const struct SysemuCPUOps arm_sysemu_ops = {
-     .write_elf32_note = arm_cpu_write_elf32_note,
-     .write_elf64_note = arm_cpu_write_elf64_note,
-     .get_dump_info = arm_get_dump_info,
-+    .get_note_size = arm_get_note_size,
-     .internal_is_big_endian = arm_cpu_internal_is_big_endian,
-     .legacy_vmsd = &vmstate_arm_cpu,
+diff --git a/target/s390x/cpu-system.c b/target/s390x/cpu-system.c
+index 965f5cf29ae..784bf4e90b9 100644
+--- a/target/s390x/cpu-system.c
++++ b/target/s390x/cpu-system.c
+@@ -187,6 +187,7 @@ static const struct SysemuCPUOps s390_sysemu_ops = {
+     .get_crash_info = s390_cpu_get_crash_info,
+     .write_elf64_note = s390_cpu_write_elf64_note,
+     .get_dump_info = s390_get_dump_info,
++    .get_note_size = s390_get_note_size,
+     .legacy_vmsd = &vmstate_s390_cpu,
  };
-diff --git a/target/arm/internals.h b/target/arm/internals.h
-index 086d9574ced..242165f5649 100644
---- a/target/arm/internals.h
-+++ b/target/arm/internals.h
-@@ -441,6 +441,8 @@ int arm_cpu_mmu_index(CPUState *cs, bool ifetch);
- extern const struct SemihostingCPUOps arm_semihosting_ops;
- int arm_get_dump_info(const CPUState *cs, ArchDumpInfo *info,
-                       const struct GuestPhysBlockList *guest_phys_blocks);
-+ssize_t arm_get_note_size(const CPUState *cs, int class, int machine,
-+                          int nr_cpus);
  
- typedef enum ARMFPRounding {
-     FPROUNDING_TIEEVEN,
+diff --git a/target/s390x/s390x-internal.h b/target/s390x/s390x-internal.h
+index a70bab270c9..b02d976fd81 100644
+--- a/target/s390x/s390x-internal.h
++++ b/target/s390x/s390x-internal.h
+@@ -253,6 +253,8 @@ bool s390_cpu_has_work(CPUState *cs);
+ 
+ int s390_get_dump_info(const CPUState *cs, ArchDumpInfo *info,
+                        const struct GuestPhysBlockList *guest_phys_blocks);
++ssize_t s390_get_note_size(const CPUState *cs, int class, int machine,
++                           int nr_cpus);
+ #endif /* CONFIG_USER_ONLY */
+ 
+ 
 -- 
 2.43.0
 
