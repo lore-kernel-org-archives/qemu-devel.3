@@ -4,108 +4,122 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACDAFCC6B33
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FB58CC6B30
 	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 10:51:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHJ2v-0001Tl-LD; Thu, 15 Oct 2026 06:50:49 -0400
+	id 1xHJ2x-0001Uk-Rn; Thu, 15 Oct 2026 06:50:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xHJ2s-0001TS-1A
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 06:50:46 -0400
-Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xHJ2n-0007dq-BF
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 06:50:45 -0400
-Received: by mail-ej1-x629.google.com with SMTP id
- a640c23a62f3a-c2e5e090746so498693266b.0
- for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 03:50:31 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792061430; cv=none;
- d=google.com; s=arc-20260327;
- b=phKxNhjPVYoH35/jl84SmoC0AG0jhKasmv33MrVoqoB/SOlwndIAPu/gBU7PabPHuD
- R0OPR6tAmxse+LQGW/jpKvP8yJbypOI/bEG9movtpEgIjQoshSOy3B5h1IekhZqfubzg
- F7xo+5cujFWOSvy6Zl4jfPALLO6qGy9k/z0dmzFpEe5sXOJ9rqbMJH/Avbfsl4YZb14c
- L+t16IkwOGP/dJytQ05B/V73RV2wTRlaqRFBIJbX5YCIAE4FACTzZ38u54dRQb6ftc7Q
- nYFyGyaD1a2UJaQYwLXBkpEYhPU/gbwh3zMQHMdlZQjjlPN38XERzuZunLeCN60gXJvF
- jeXA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=Q4AO9bxH+tgTrPhIoG66FprxezF6tidCBv/9483EfV8=;
- fh=v5Pz5jMnFlDUzdWcGlSvnGgj7VBaTiGDEqlonFsWKGY=;
- b=Y4xXGYw5RoZu5RrtDE2obWNGMU48eFEF45iPqZrMCPLGZdU5Uzk8R9u4ToBxO/p/WO
- B1SNtBXpi9HmaMUiGYfg2a4AHDtIWJMKqK+6RNawpYvEKycIE6IElyHKEAjjWcA2zWzC
- wdct1fvztJX87pd46/ofxTn7TzGnxHIKB5NVNhYugOq3YCraMVTyCUStp1ZyiO8ncarz
- V3gX7QhzzS9Hl8qk5YRjf8yhoQ+2+Ty0j4aKjWbUtCa/DqhMdGb7XBO1Ypaojuk3baUI
- +qcNNcdcSP/uKiXZHo+GjwToWPckzG+Ety1nt1LraVxBwmXrDLhIFbmrpaWVjq7CPD9K
- qR/Q==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1792061430; x=1792666230; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=Q4AO9bxH+tgTrPhIoG66FprxezF6tidCBv/9483EfV8=;
- b=TQRo9IGqn3T0Hz0OZQGo50lo6ZANMArCbFceJ00Mb2ZFJCBcGeKFExiVwyVZJMfbpZ
- q/f6VPN2ZUJEz0nXjovMt4BdQH364QjyzcHJrHz1P2JMWR3wamUyhqsiiTasYERb9d3i
- 4uQiX7xXfC3xFFx6ARjm2nzE41z88f1HWi6bO5J2le3QddkIL0OFTFZmiC/USxg6fGzC
- z1xHb/uE6ZAe2nChlV6vHWf7mKdUhgjYp8ZJNAL1t9D0te62IywFElVIa8+Ni+jRyV5W
- TuJh3h8iJRFVPCwVqAvp4VLwl9yITi78uhTNsIgr+JmZYAOTUkAv5Cn6M+hLP8eeIuZF
- cD9Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792061430; x=1792666230;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=Q4AO9bxH+tgTrPhIoG66FprxezF6tidCBv/9483EfV8=;
- b=Eq5TsfkIqiRNsy+Xq8E7/KdvC9FY/jNcqey7EvtKhhqBKiaadig5dN3+i+1tmU3x/I
- lSpsxla2wAg6Sb4L36/LJf7Y2Qs8siUe94WIN7dMRlFJe3YfWV3zV/5oOolg5C8XrmUO
- iBwalFbVTi7EZ5tL2tOsYC5O4VnxLDPjk94nxLSUMuotkGpu2VCzIyAud7H9YvPleUyX
- Jfhs+a8E6ECzq8tpVslXiYEWWcLXfF31mQTyuqtivgwKvHd9moE5y5vzOj9gCUySgoQz
- gkU0/cyG3NwJdZjOQPQL95dFiedKz+Ub7NCbemyQwvXppXjNZuLJFZeOL6u5kHeT8/Hn
- 3j4A==
-X-Forwarded-Encrypted: i=1;
- AKwUvBzEWZtm0pRXIQW4VeCA98y3EqxlkymMqVNgWV0jrrCN2QgIvz/ddzWszhEtVt672lgUPat/AXnf5iL3@nongnu.org
-X-Gm-Message-State: AFq9FYL4TMP3edp4dC0q/RqIZAGa14o92dEkcfoHbRFQMtR7T+/OGUON
- wRU8mwIDhMjRgiDLAjeD+lB4In7F8bTsdVG6AxnKny2mzr+osLjeXxd5HR0xWqpfLPoLkDrH9OM
- INyqKJglWdNc5++Qauje+deHoBuw4NXgDBkS1htfL9Q==
-X-Gm-Gg: AYBFou2UqXF4SbYuuwYzabjG2JnzIBBuDDUuFYT0m579grlpHfYU02MPnN8SLwrIjMS
- pRiEsxjz1GXv9bNcW3uatd6CZhNef8/QWqQxAiiiY8cv0cKSBgfmf5OEujt1Bwkv56GJL1DCL0u
- HwO6VZDh4YoUjA7Yeiq22jkfL2seEBA/aO2zA7IYvInWjEYliUG0RPdu7w2WhE19afbQzhmvP0F
- 6lji0uRyZWXTa399TdDveFplsK+wfnwy3BlraZVJvfuiiZq7P+m20uyhZSjPaVkYOAPlVo/67+F
- 4UBFgk5pVE+xvsw47PREALDrY46HlQaIuz0UN9SzH7uNNxWwDJPnDMAQaRtWL4PHE7wyhrgwFtz
- zU4qAom0xI+/qY1hYZGuyvcCP1QsZDl6Tyynk8yo=
-X-Received: by 2002:a05:6938:a082:10b0:c3e:f39b:2286 with SMTP id
- a640c23a62f3a-c3ef39b2474mr118063566b.0.1792061429972; Thu, 15 Oct 2026
- 03:50:29 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <Sairaj.K@amd.com>) id 1xHJ2t-0001Tc-Tm
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 06:50:48 -0400
+Received: from mail-westus3azlp170100009.outbound.protection.outlook.com
+ ([2a01:111:f403:c107::9] helo=PH7PR06CU001.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <Sairaj.K@amd.com>) id 1xHJ2h-0007dg-1q
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 06:50:47 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=le/WwH0U/EXaE0Qw6AfN1fY/CXu4ivhb3XPQyPVxXMhEJ9MPgSr6SOALP/FDt06+jxn2VomP2rbuFIjmQrREpABCHtkZYWh9zSgQaVfbBU9HdiadbiuNPmDJaOoH7kSmFuHMSJwISMkJsHRRUvzUfXGEu6HlFKmZ5pgJ8k91zw01gnc/oSBs46wAwAWHW81IDQeuGuAndodprTt0fdLf0dMN9B/vfQgSeR81JSmFxv9d5mqPc/Ijs6EfkIp9rhzqIB4opGG1xAutj61w1WfKGpgDpgvl7eF3EmOhfPrYihQ36nCEwp5C90I/luLmz7IluIHcbMXEhmW9yKzNLqeQ3w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=Ba/SjI+XfUR6p/yK+ZLV+ZKMh7hBsgYO9tUf/BJaUl0=;
+ b=ySiXMPae1VzAMV0bpeMtxEj/VIyExI0OhK1Of0zQLUGPTCEVLJC0cCmpoyG5HI1chyfhPZk3n6WUsOJdsSYa5rK5Jjf76rGh8y7ueO1WFseW2wqT2qbGo0FDiooNSlIhwxCef7keGTnwWHbTu0c9hcDa4rsjzEs+7afN3zwBucs8AUqcmEQAz5I77tTCUtvqibavFBnlVYEbcI9Z5nqgJM6JjkwC8liEGRMgOkZ+IBO9BRKBNLGv/tCE7tH6OSzF+lDruwe8cZ+SLqBOTWegNddflB9grbq4eaPXzTIJaH2cEmFrtgMeHTjoVklA3pFM1lZVd4w8kVcec/f0Qv5g3w==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=bull.com smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Ba/SjI+XfUR6p/yK+ZLV+ZKMh7hBsgYO9tUf/BJaUl0=;
+ b=eHsYbSz1dt8ZN/Jp4UIb8OBZXAAe/Llgqk1V7HBd+Q+MGkh8yRBjvH5JNQmjQfBMweHmX3rRdBT+fbbASi8koR6bFormJE0XbFca3pWrAOeX+D0TqBUw45ciV7oF/2WJ5D8EaDTIa6PLHnXaovW2gU45tEcaGok8AkaKRQb758Y=
+Received: from SJ0PR13CA0121.namprd13.prod.outlook.com (2603:10b6:a03:2c6::6)
+ by CH3PR12MB8403.namprd12.prod.outlook.com (2603:10b6:610:133::14)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.522.13; Thu, 15 Oct
+ 2026 10:43:52 +0000
+Received: from PH4PEPF0000B60D.namprd21.prod.outlook.com
+ (2603:10b6:a03:2c6:cafe::9b) by SJ0PR13CA0121.outlook.office365.com
+ (2603:10b6:a03:2c6::6) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.522.4 via Frontend Transport; Thu, 15
+ Oct 2026 10:43:52 +0000
+X-MS-Exchange-Authentication-Results: mx.microsoft.com 1; spf=pass (sender IP
+ is 165.204.84.17) smtp.mailfrom=amd.com;
+ dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
+Received: from satlexmb07.amd.com (165.204.84.17) by
+ PH4PEPF0000B60D.mail.protection.outlook.com (10.167.243.88) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.546.0 via Frontend Transport; Thu, 15 Oct 2026 10:43:51 +0000
+Received: from [192.168.1.4] (10.180.168.240) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.53; Thu, 15 Oct
+ 2026 05:43:39 -0500
+Message-ID: <1bb1aadb-7414-4edd-9b84-5a4db33e1bce@amd.com>
+Date: Thu, 15 Oct 2026 16:13:31 +0530
 MIME-Version: 1.0
-References: <20261013083933.1024405-1-peter.maydell@linaro.org>
- <20261013083933.1024405-57-peter.maydell@linaro.org>
- <8a030bca-4697-405a-aaa8-017baed8ab55@oss.qualcomm.com>
-In-Reply-To: <8a030bca-4697-405a-aaa8-017baed8ab55@oss.qualcomm.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 15 Oct 2026 11:50:16 +0100
-X-Gm-Features: AclHuK88lg45P4EkvW9HrI8lz9zJgYYWo6jTVyjchPgx-fRU5L14eo76rAgVhK0
-Message-ID: <CAFEAcA9yv0GDLT5XTp_2_FRO_xRhPdGjhKbjkdfUfh=epaDNPQ@mail.gmail.com>
-Subject: Re: [PATCH 56/86] hw/intc/arm_gicv5: Implement IRS_VMAP_VMR
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org
+User-Agent: Mozilla Thunderbird
+CC: <sarunkod@amd.com>, "vasant.hegde@amd.com" <vasant.hegde@amd.com>,
+ "suravee.suthikulpanit@amd.com" <suravee.suthikulpanit@amd.com>
+Subject: Re: [PATCH 2/8] x86-iommu: Introduce x86_iommu_device_get() for
+ x86-iommu retrieval
+Content-Language: en-US
+To: =?UTF-8?Q?Cl=C3=A9ment_MATHIEU--DRIF?= <clement.mathieu--drif@bull.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Alejandro Jimenez
+ <alejandro.j.jimenez@oracle.com>, Ani Sinha <anisinha@redhat.com>, "Igor
+ Mammedov" <imammedo@redhat.com>, Jason Wang <jasowangio@gmail.com>, "Marcelo
+ Tosatti" <mtosatti@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, "Richard
+ Henderson" <richard.henderson@linaro.org>, Yi Liu <yi.l.liu@intel.com>,
+ "kvm@vger.kernel.org" <kvm@vger.kernel.org>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>
+References: <20261014053433.24564-1-sarunkod@amd.com>
+ <20261014053433.24564-3-sarunkod@amd.com>
+ <e9162ee926e190d1fe7962d07a7c6e0b401456db.camel@bull.com>
+From: Sairaj Kodilkar <sarunkod@amd.com>
+In-Reply-To: <e9162ee926e190d1fe7962d07a7c6e0b401456db.camel@bull.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::629;
- envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x629.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.180.168.240]
+X-ClientProxiedBy: satlexmb07.amd.com (10.181.42.216) To satlexmb07.amd.com
+ (10.181.42.216)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PH4PEPF0000B60D:EE_|CH3PR12MB8403:EE_
+X-MS-Office365-Filtering-Correlation-Id: aa7d25a5-55ea-4826-1669-08df2aa9339b
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|1800799024|376014|7416014|23010399003|82310400026|36860700016|921020|56012099006|11063799006|4143699003|261009223027099003|18002099003|10067099003|20046099003|21026099003|6133799003|5123799003|13003099007|22082099003;
+X-Microsoft-Antispam-Message-Info: Yx95fav1QwKUPqGGoOkXk6GBfXbUDIqFCy7KJjNYW+YdLjCRMptPg5CAPW8stb8cFiP1lGm+H3XneLsSwIvBRu6CqQqTTU9DI0KtENSvEzdnYa+MB0bGF+dC9ZDTna1qf0UYXL1iufLh6vT6r070cjvpSBRUtwQ1++RJGwT38h5qdukMfkPaWQQJEe6X9qgSXJKgdbxu+3OZIZ4bU+ULOhIpgFPW5i23WcD14fgn5v+S2rfoAnPaDT693XCMY30BweBvHkrPxdgxM27mKrwhJ+Q+qYONI2SMlldkRxROANR2PqGKBApm2BZm7l9xK/Q057VXtP0lzvZxFQDYhW3c3Q3xRToj6UrujhduewGqB7nqpVUJtjy8BRKXVIrBnH8LcpR0sPrOmda6a6niw2V8g1ARII1TV9yGaj+PB3JURJVF7jTMqzeuxrJM5yeLkznj8vTIK8TjTXMshjosyU+hCP8pToYaqolctq/sDmVqWlslJFRGY0cbkamFDKq1sujy1PrwNBPy/phbS/9jbaFgshp/fH1Gv6S2ds7C+pnBm8LBA48OyYE0PWLW4F6xHFD3YRY0jrm2hgF9h9QOiIYAvIhp32y/PmXJU9bDQ5oRnCf38YCIEcVcVmXYGYa/udERlJZ4RMHYN8VZS1eJc+iT9C/iIsxiBVkcx9k1ETrH72ZI0dUbNJYGdssqiwlGrWaomKl0QM1iSAVUTNUI8QvRFAsr7Ec4EMbNEJ1Vdyfdu1m0lmWW/45ylb2v4Kz4Wx2G
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(1800799024)(376014)(7416014)(23010399003)(82310400026)(36860700016)(921020)(56012099006)(11063799006)(4143699003)(261009223027099003)(18002099003)(10067099003)(20046099003)(21026099003)(6133799003)(5123799003)(13003099007)(22082099003);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: uXbgZu+zfn3b0R93F6y3b3XacdWhea2V4P5sNg1w16mcsBPIkGuSdyfc9fiQ0XiadfOtoThYo5WTLHCtNlc9h9i8igScDZxs3A6rejwhgM6DLPKIKKzF6q86e8p7WlcX7i0gKzcCKoZBf1H4SgqTFIRS/3/qSAlqHhDRjPU9TGRyROfQUuvNj60BANAgHrUsUCk0iJMUWn8slyR0ZBTxy4c8EergaacSKGBefhj/0qekfDceW8Zq1a8Dj6akn957Ggf4mUyqQCve/kzdwlA5TO4Fx7tqFU3sHcbVli6FyYPl0d9qrom/zknZkro7k5H5PofuNPWJjVvWXpWavFL9/EJWZy0at3yobv8DcYYFUm7LI6LUfL3T5RtESOfsFqMqwwU7Nk/+og7U6e7OyfGXaJTR5OgnXFcCcCU3RI1MCa7V2vTa5uaujOP9ykC44tks
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 Oct 2026 10:43:51.2411 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: aa7d25a5-55ea-4826-1669-08df2aa9339b
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[satlexmb07.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: PH4PEPF0000B60D.namprd21.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR12MB8403
+Received-SPF: permerror client-ip=2a01:111:f403:c107::9;
+ envelope-from=Sairaj.K@amd.com;
+ helo=PH7PR06CU001.outbound.protection.outlook.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,46 +135,153 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 13 Oct 2026 at 11:12, Philippe Mathieu-Daud=C3=A9
-<philmd@oss.qualcomm.com> wrote:
->
-> On 13/10/26 10:39, Peter Maydell wrote:
-> > The IRS_VMAP_VMR register lets the guest mark a VM as valid.  This is
-> > a 64-bit register similar in operation to IRS_VMAP_L2_VMTR.
 
-> > @@ -1604,6 +1679,14 @@ static bool config_writel(GICv5 *s, GICv5Domain =
-domain, hwaddr offset,
-> >                                  deposit64(cs->irs_vmap_l2_vmtr[domain]=
-,
-> >                                            32, 32, data));
-> >           return true;
-> > +    case A_IRS_VMAP_VMR:
-> > +        irs_vmap_vmr_write(s, domain,
-> > +                           deposit64(cs->irs_vmap_vmr[domain], 0, 32, =
-data));
-> > +        return true;
-> > +    case A_IRS_VMAP_VMR + 4:
-> > +        irs_vmap_vmr_write(s, domain,
-> > +                           deposit64(cs->irs_vmap_vmr[domain], 32, 32,=
- data));
-> > +        return true;
-> >       case A_IRS_SPI_SELR:
-> >           cs->irs_spi_selr[domain] =3D data;
-> >           return true;
-> > @@ -1704,6 +1787,14 @@ static bool config_readll(GICv5 *s, GICv5Domain =
-domain, hwaddr offset,
-> >               *data =3D 0;
-> >           }
-> >           return true;
-> > +    case A_IRS_VMAP_VMR:
-> > +        if (gicv5_domain_has_virt(cs, domain) && s->vmt_config[domain]=
-.valid) {
-> > +            *data =3D cs->irs_vmap_l2_vmtr[domain];
->
-> irs_vmap_l2_vmtr[] or irs_vmap_vmr[]?
 
-Should be irs_vmap_vmr[]; silly copy-paste mistake.
+On 10/15/2026 2:38 PM, Clément MATHIEU--DRIF wrote:
+> [Some people who received this message don't often get email from clement.mathieu--drif@bull.com. Learn why this is important at https://aka.ms/LearnAboutSenderIdentification ]
+> 
+> On Wed, 2026-10-14 at 11:04 +0530, Sairaj Kodilkar wrote:
+>> Caution: External email. Do not open attachments or click links, unless this email comes from a known sender and you know the content is safe.
+>>
+>>
+>> kvm_arch_fixup_msi_route() and kvm_arch_add_msi_route_post() use
+>> x86_iommu_get_default() whenever an IOMMU is present. This selects the
+>> correct unit only when a single IOMMU is attached to the system bus.
+>>
+>> The following patches allow an IOMMU to attach to a different bus and
+>> isolate the subset of devices below it. Each IOMMU then serves only part
+>> of the PCI topology, so interrupt remapping must determine the IOMMU that
+>> actually serves a given device.
+>>
+>> Add x86_iommu_device_get() to locate the IOMMU bus for a PCI device and
+>> retrieve its X86IOMMUState through a new get_x86_iommu callback.
+>>
+>> Signed-off-by: Sairaj Kodilkar <[sarunkod@amd.com](mailto:sarunkod@amd.com)>
+>> ---
+>>  hw/i386/x86-iommu-stub.c    |  5 +++++
+>>  hw/i386/x86-iommu.c         | 16 ++++++++++++++++
+>>  include/hw/i386/x86-iommu.h |  6 ++++++
+>>  include/hw/pci/pci.h        | 12 ++++++++++++
+>>  4 files changed, 39 insertions(+)
+>>
+>> diff --git a/hw/i386/x86-iommu-stub.c b/hw/i386/x86-iommu-stub.c
+>> index 781b5ff92227..b0383d2290b1 100644
+>> --- a/hw/i386/x86-iommu-stub.c
+>> +++ b/hw/i386/x86-iommu-stub.c
+>> @@ -32,6 +32,11 @@ X86IOMMUState *x86_iommu_get_default(void)
+>>      return NULL;
+>>  }
+>>
+>> +X86IOMMUState *x86_iommu_device_get(PCIDevice *dev)
+>> +{
+>> +    return NULL;
+>> +}
+>> +
+>>  bool x86_iommu_ir_supported(X86IOMMUState *s)
+>>  {
+>>      return false;
+>> diff --git a/hw/i386/x86-iommu.c b/hw/i386/x86-iommu.c
+>> index a57445404ef8..601db5cfea09 100644
+>> --- a/hw/i386/x86-iommu.c
+>> +++ b/hw/i386/x86-iommu.c
+>> @@ -26,6 +26,7 @@
+>>  #include "qemu/error-report.h"
+>>  #include "trace.h"
+>>  #include "system/kvm.h"
+>> +#include "hw/pci/pci_bus.h"
+>>
+>>  void x86_iommu_iec_register_notifier(X86IOMMUState *iommu,
+>>                                       iec_notify_fn fn, void *data)
+>> @@ -90,6 +91,21 @@ X86IOMMUState *x86_iommu_get_default(void)
+>>      return NULL;
+>>  }
+>>
+>> +X86IOMMUState *x86_iommu_device_get(PCIDevice *dev)
+>> +{
+>> +    PCIBus *iommu_bus;
+>> +    X86IOMMUState *iommu = NULL;
+>> +
+>> +    pci_device_get_iommu_bus_devfn(dev, &iommu_bus, NULL, NULL);
+>> +
+>> +    if (iommu_bus && iommu_bus->iommu_ops->get_x86_iommu) {
+>> +        iommu_bus->iommu_ops->get_x86_iommu(iommu_bus->iommu_opaque,
+>> +                                            (void **)&iommu);
+>> +    }
+>> +
+>> +    return iommu;
+>> +}
+>> +
+>>  static void x86_iommu_realize(DeviceState *dev, Error **errp)
+>>  {
+>>      X86IOMMUState *x86_iommu = X86_IOMMU_DEVICE(dev);
+>> diff --git a/include/hw/i386/x86-iommu.h b/include/hw/i386/x86-iommu.h
+>> index 0a1e1ba72571..eb575271e9d7 100644
+>> --- a/include/hw/i386/x86-iommu.h
+>> +++ b/include/hw/i386/x86-iommu.h
+>> @@ -134,6 +134,12 @@ struct X86IOMMU_MSIMessage {
+>>   */
+>>  X86IOMMUState *x86_iommu_get_default(void);
+>>
+>> +/**
+>> + * x86_iommu_device_get - get IOMMU device for given PCI device
+>> + * @return: pointer to default IOMMU device
+>> + */
+>> +X86IOMMUState *x86_iommu_device_get(PCIDevice *dev);
+>> +
+>>  /**
+>>   * x86_iommu_iec_register_notifier - register IEC (Interrupt Entry
+>>   *                                   Cache) notifiers
+>> diff --git a/include/hw/pci/pci.h b/include/hw/pci/pci.h
+>> index f2448e941a0b..f3c4c3a4db56 100644
+>> --- a/include/hw/pci/pci.h
+>> +++ b/include/hw/pci/pci.h
+>> @@ -698,6 +698,18 @@ typedef struct PCIIOMMUOps {
+>>       * Returns: the guest physical address of the MSI doorbell.
+>>       */
+>>      uint64_t (*get_msi_direct_gpa)(PCIBus *bus, void *opaque, int devfn);
+>> +
+>> +    /**
+>> +     * @get_x86_iommu: get parent x86-iommu for given hardware (AMD/Intel)
+>> +     *
+>> +     * Callback is required if IOMMU defines x86->int_remap()
+>> +     *
+>> +     * @opaque: the data passed to pci_setup_iommu()
+>> +     *
+>> +     * @x86_iommu: A pointer to store the x86-iommu object
+>> +     */
+>> +    int (*get_x86_iommu)(void *opaque, void **x86_iommu);
+> 
+> Are you using void ** because the X86 type is not defined when building for another target?
+> I'm not sure if the Qemu rules are strict about architecture isolation.
 
-thanks
--- PMM
+including x86-iommu.h inside pci.h will cause circular dependancy as
+x86-iommu.h already depends on pci.h
+
+> 
+> Do you have any idea about how acceptable this is?
+
+At this point I am not sure and dont see any other way to do this
+
+> 
+> Is there a reason why we could not expose the API in the same files as x86_iommu_get_default?
+
+x86_iommu_get_default() uses machine state to fetch the iommu device,
+because of which it does not depend on device/pci topology. Whereas, the
+goal of this series is to have a PCI device isolation, so kvm layer has
+to fetch device specific iommu by traversing pci topology using
+pci_device_get_iommu_bus_devfn(). Hence we cannot expose the API in
+x86_iommu_get_default().
+
+Thanks
+Sairaj
+
+> 
+>> +
+>>  } PCIIOMMUOps;
+>>
+>>  bool pci_device_get_iommu_bus_devfn(PCIDevice *dev, PCIBus **piommu_bus,
+>> --
+>> 2.34.1
+>>
+
 
