@@ -4,76 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0473DCC6B34
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 07:51:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B293CC6B34
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 07:54:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHGEg-0000QN-B9; Thu, 15 Oct 2026 03:50:46 -0400
+	id 1xHGHu-0000rX-OI; Thu, 15 Oct 2026 03:54:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ghoffman@redhat.com>)
- id 1xHGEe-0000Pp-77
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 03:50:44 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ghoffman@redhat.com>)
- id 1xHGEb-0004LL-OW
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 03:50:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1792050640;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=PghfsML8jnTYv8DI8s+0u/GZvRWVKuvCysJxTa3iKq4=;
- b=HYsvGL3axvZUJ8qe2J4F+JJSomINLdxlTX/aH2kCjJPu3qvFu0r97NSvVPIbI/Id8MJSOj
- GFpZVVNtklRa1degJun51AXQxv504DjlOjfSS0K8bjhvMuBLIIB1kbUJhHzCEUYWzx4vbB
- N4pYeRJOSn67nVrGbyA/0V7m0YxcSIo=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-211-NnnXRRW4P4Cm88uauV-l-g-1; Thu,
- 15 Oct 2026 07:50:36 +0000
-X-MC-Unique: NnnXRRW4P4Cm88uauV-l-g-1
-X-Mimecast-MFC-AGG-ID: NnnXRRW4P4Cm88uauV-l-g_1792050636
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E0F3D1944B19; Thu, 15 Oct 2026 07:50:35 +0000 (UTC)
-Received: from nucbdw.ghoffman.csb.home.kraxel.org
- (headnet04.pony-001.prod.iad2.dc.redhat.com [10.2.32.116])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 585361956087; Thu, 15 Oct 2026 07:50:35 +0000 (UTC)
-Received: by nucbdw.ghoffman.csb.home.kraxel.org (Postfix, from userid 11758)
- id 3B8E340785FB; Thu, 15 Oct 2026 09:50:33 +0200 (CEST)
-Date: Thu, 15 Oct 2026 09:50:32 +0200
-From: Gerd Hoffmann <kraxel@redhat.com>
-To: Luigi Leonardi <leonardi@redhat.com>
-Cc: qemu-devel@nongnu.org, Stefano Garzarella <sgarzare@redhat.com>, 
- Ani Sinha <anisinha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- Zhao Liu <zhao1.liu@intel.com>, Marcelo Tosatti <mtosatti@redhat.com>, 
- "Daniel P. Berrange" <berrange@redhat.com>, kvm@vger.kernel.org
-Subject: Re: [PATCH v2 0/5] igvm/sev: apply the IGVM guest policy before launch
-Message-ID: <atCFVaKiSIvz9uVS@nucbdw.ghoffman.csb.home.kraxel.org>
-References: <20260907-fix_igvm_policy-v2-0-c8c50f1dbfda@redhat.com>
- <as-gUPOHujXsPiWV@leonardi-redhat>
+ (Exim 4.90_1) (envelope-from <wangyang25@otcaix.iscas.ac.cn>)
+ id 1xHGHl-0000qO-Ew; Thu, 15 Oct 2026 03:53:58 -0400
+Received: from smtp81.cstnet.cn ([159.226.251.81] helo=cstnet.cn)
+ by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_CBC_SHA1:256)
+ (Exim 4.90_1) (envelope-from <wangyang25@otcaix.iscas.ac.cn>)
+ id 1xHGHi-0004Pa-Iq; Thu, 15 Oct 2026 03:53:57 -0400
+Received: from [172.17.0.2] (unknown [124.16.137.194])
+ by APP-03 (Coremail) with SMTP id rQCowAA3PjyJhtBqhd3SCg--.13579S3;
+ Thu, 15 Oct 2026 15:53:45 +0800 (CST)
+From: wangyang <wangyang25@otcaix.iscas.ac.cn>
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Weiwei Li <liweiwei@iscas.ac.cn>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@c-sky.com>
+Subject: [PATCH] target/riscv: mask inactive senvcfg.SSE on read
+Date: Thu, 15 Oct 2026 07:53:44 +0000
+Message-Id: <179205082482.38010.4219595518391444693@otcaix.iscas.ac.cn>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <as-gUPOHujXsPiWV@leonardi-redhat>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=ghoffman@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 10
-X-Spam_score: 1.0
-X-Spam_bar: +
-X-Spam_report: (1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-CM-TRANSID: rQCowAA3PjyJhtBqhd3SCg--.13579S3
+X-Coremail-Antispam: 1UD129KBjvdXoWrKrW8JrWrKrWrGF48ZF17GFg_yoWfWrc_Cr
+ 4rur97ZaykZanFkFWDZw1rAryYk3y8Ka4rKaySkrZ0gry2gFyUZ3WkWFyDury5uw48G3Z3
+ t3ZrGr4xWw17AjkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
+ 9fnUUIcSsGvfJTRUUUbakYjsxI4VWDJwAYFVCjjxCrM7AC8VAFwI0_Gr0_Xr1l1xkIjI8I
+ 6I8E6xAIw20EY4v20xvaj40_Wr0E3s1l1IIY67AEw4v_Jr0_Jr4l8cAvFVAK0II2c7xJM2
+ 8CjxkF64kEwVA0rcxSw2x7M28EF7xvwVC0I7IYx2IY67AKxVWUJVWUCwA2z4x0Y4vE2Ix0
+ cI8IcVCY1x0267AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIE14v26F4j6r4UJwA2z4x0Y4vEx4
+ A2jsIEc7CjxVAFwI0_Gr1j6F4UJwAac4AC62xK8xCEY4vEwIxC4wAS0I0E0xvYzxvE52x0
+ 82IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUXVWUAw
+ Av7VC2z280aVAFwI0_Gr0_Cr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxkF
+ 7I0En4kS14v26r126r1DMxkIecxEwVAFwVW8CwCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4
+ IE7xkEbVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1r
+ MI8E67AF67kF1VAFwI0_JF0_Jw1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJV
+ WUCwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Gr0_Cr1lIxAIcVCF04k26cxKx2IYs7xG6r1j
+ 6r1xMIIF0xvEx4A2jsIE14v26r4j6F4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr1j6F4UJb
+ IYCTnIWIevJa73UjIFyTuYvjxU4JPEUUUUU
+X-Originating-IP: [124.16.137.194]
+X-CM-SenderInfo: 5zdqw5xdqjjk46rwut1l0ox2xfdvhtffof0/
+Received-SPF: pass client-ip=159.226.251.81;
+ envelope-from=wangyang25@otcaix.iscas.ac.cn; helo=cstnet.cn
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,14 +74,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  Hi,
+The CFI rules make senvcfg.SSE read as zero when menvcfg.SSE is clear.
+In VU mode it also reads as zero when henvcfg.SSE is clear. Mask the
+readback to match those rules.
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4224
+Signed-off-by: wangyang <wangyang25@otcaix.iscas.ac.cn>
+ target/riscv/tcg/csr.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-> gentle ping :)
-
-Any update for the igvm command line patch which needs a doc update?
-My plan is to bundle them all in one PR.
-
-take care,
-  Gerd
+diff --git a/target/riscv/tcg/csr.c b/target/riscv/tcg/csr.c
+index 061bc9d..7fd148d 100644
+--- a/target/riscv/tcg/csr.c
++++ b/target/riscv/tcg/csr.c
+@@ -3322,6 +3322,14 @@ static RISCVException read_senvcfg(CPURISCVState *env,=
+ int csrno,
+     }
+=20
+     *val =3D env->senvcfg;
++
++    if (env_archcpu(env)->cfg.ext_zicfiss) {
++        if (!(env->menvcfg & MENVCFG_SSE) ||
++            (env->virt_enabled && !(env->henvcfg & HENVCFG_SSE))) {
++            *val &=3D ~SENVCFG_SSE;
++        }
++    }
++
+     return RISCV_EXCP_NONE;
+ }
+=20
+--=20
+2.43.0
 
 
