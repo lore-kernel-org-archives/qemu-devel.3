@@ -4,49 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A44EDCC6B38
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A78D3CCA464
 	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 20:03:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHRez-0002fS-2G; Thu, 15 Oct 2026 16:02:41 -0400
+	id 1xHRf0-0002fk-Rr; Thu, 15 Oct 2026 16:02:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xHReu-0002er-BI
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xHRet-0002ep-HV
  for qemu-devel@nongnu.org; Thu, 15 Oct 2026 16:02:36 -0400
-Received: from sea.source.kernel.org ([172.234.252.31])
+Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xHRer-0003B0-F0
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xHRer-0003B4-F2
  for qemu-devel@nongnu.org; Thu, 15 Oct 2026 16:02:35 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id 3DF5E4055C;
+ by tor.source.kernel.org (Postfix) with ESMTP id D1C2860A57;
+ Thu, 15 Oct 2026 20:02:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C9E71F000C4;
  Thu, 15 Oct 2026 20:02:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2240B1F000C4;
- Thu, 15 Oct 2026 20:02:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1792094550;
- bh=jUjGQqH28MHGAQPP9ihzH7f2ErPHcmQ31HIqPq4JFhE=;
+ s=k20260515; t=1792094551;
+ bh=8NoHOEY7OHaburPdA9/fquYQYbqgO+XpL7EItGlu5EM=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=UX5VRSTdmBnM+RMlhcr4ilevPFhbzSnzvdkq/+PP0GZKpt0wGNVVGbm6+3ihqlei8
- nRz6sato7S1AjaJdL/KwRpC9JfsQWTTqm8PWkny4kdRWfxAxARJa6cItmeJWw8Swkk
- a4NpPztfDDuKgkaYSBS1RKV6bd2FvyYUVPYNSwMp5fn15OZQp1tuTr95HZl6hE+Tbe
- eQVEbazsSLFVcE30CLobY5NSNc81VnEMuxQmDKILfUyPJssxZ6rfS43fIiKaZA4TWH
- SpQepaAI6WUEMqjMJSaeMbyL+th9f9HJmBH8pJ4CP6oHBvKj8CcQCpii1x+ZJQOnkv
- Wo88uk2Rvm9bw==
+ b=kDbzatrn8bz9qK8hwKBl2yPQyD1o4CkZQFMknDBuDAy52r5vNIk7geGQB9AycgC/W
+ jLN+TcgkHwWOEADHYQlbxiG5WC0z+lI1xkwG5jCklnxhAHaLFaxB3dfhfBiuH6V/Lk
+ FGO28SoTcneegZzJeR90PDwiYSf/4RArlYzySXWjTYL7MmGPocAFUh3hCXwBwu/vRW
+ cOJq46kE55YvUNWCPaUI2WLZ0b1xm4fQUGjSbyyJgMszGm6RDQMvUDrrpej/DTBlWm
+ WCATv2CNkjXakI0x7/v9yJP/sO9/vQUEQhKJIhro4gxi6TiROmQz1OuFgH3N8iYLmB
+ BIxka/id2mO1A==
 From: Helge Deller <deller@kernel.org>
 To: qemu-devel@nongnu.org
 Cc: Andreas Schwab <schwab@suse.de>, wangyang <wangyang25@otcaix.iscas.ac.cn>,
  Helge Deller <deller@gmx.de>
-Subject: [PULL 1/2] linux-user: don't print core dump message by default
-Date: Thu, 15 Oct 2026 22:02:24 +0200
-Message-ID: <20261015200225.6314-2-deller@kernel.org>
+Subject: [PULL 2/2] linux-user/riscv: preserve rs1 address for cbo.zero fault
+ reporting
+Date: Thu, 15 Oct 2026 22:02:25 +0200
+Message-ID: <20261015200225.6314-3-deller@kernel.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20261015200225.6314-1-deller@kernel.org>
 References: <20261015200225.6314-1-deller@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=172.234.252.31; envelope-from=deller@kernel.org;
- helo=sea.source.kernel.org
+Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
+ envelope-from=deller@kernel.org; helo=tor.source.kernel.org
 X-Spam_score_int: -22
 X-Spam_score: -2.3
 X-Spam_bar: --
@@ -68,34 +69,186 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Andreas Schwab <schwab@suse.de>
+From: wangyang <wangyang25@otcaix.iscas.ac.cn>
 
-When the target binary is killed by a signal with core dump print a
-message to the guest_errors log instead of stderr.  This avoids breaking
-various testsuites due to the extra output produced by the emulation.
+helper_cbo_zero() aligns the address down to the cache-block size before
+probe_write(), and accel/tcg/user-exec.c:probe_access_internal() reports
+that aligned address to cpu_loop_exit_sigsegv(), so a store fault from a
+legal cbo.zero (e.g. on a read-only page) reports the aligned block base
+as si_addr instead of the rs1 value supplied by the program. Native
+RISC-V Linux reports the exact rs1 address. Keep the original address in
+CPUState and use it when the fault is reported.
 
-Signed-off-by: Andreas Schwab <schwab@suse.de>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+The saved address must not outlive the instruction that produced it. The
+helper alone cannot guarantee that, because a store trigger or
+breakpoint on the cbo.zero access leaves through the debug path instead
+of one of the four fault consumers, and a later unrelated fault would
+then report the stale cbo.zero address. Also drop the pending override
+on every trap delivery: at the top of riscv_cpu_do_interrupt() and in
+riscv_cpu_debug_excp_handler() for system mode, and right after
+cpu_exec() returns in the linux-user cpu loop.
+
+Tested: the read-only-page reproducer reports rs1 for offsets 1, 65 and
+129; an mcontrol store-trigger reproducer reports the follow-up load's
+own access-fault address instead of the earlier cbo.zero rs1.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4151
+Suggested-by: David Harris <david.harris@gitlab.com>
+Signed-off-by: wangyang <wangyang25@otcaix.iscas.ac.cn>
 Signed-off-by: Helge Deller <deller@gmx.de>
 ---
- linux-user/signal.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ accel/tcg/user-exec.c         |  7 ++++++-
+ include/hw/core/cpu.h         |  2 ++
+ linux-user/riscv/cpu_loop.c   |  3 +++
+ target/riscv/tcg/cpu_helper.c | 27 ++++++++++++++++++++++++---
+ target/riscv/tcg/debug.c      |  3 +++
+ target/riscv/tcg/op_helper.c  |  5 +++++
+ 6 files changed, 43 insertions(+), 4 deletions(-)
 
-diff --git a/linux-user/signal.c b/linux-user/signal.c
-index f0a22577e5..cabcc2bb28 100644
---- a/linux-user/signal.c
-+++ b/linux-user/signal.c
-@@ -839,8 +839,8 @@ void dump_core_and_abort(CPUArchState *env, int target_sig)
-         getrlimit(RLIMIT_CORE, &nodump);
-         nodump.rlim_cur=0;
-         setrlimit(RLIMIT_CORE, &nodump);
--        (void) fprintf(stderr, "qemu: uncaught target signal %d (%s) - %s\n",
--            target_sig, strsignal(host_sig), "core dumped" );
-+        qemu_log_mask(LOG_GUEST_ERROR, "qemu: uncaught target signal %d (%s) - %s\n",
-+                      target_sig, strsignal(host_sig), "core dumped" );
+diff --git a/accel/tcg/user-exec.c b/accel/tcg/user-exec.c
+index a35aca7889..13c3845811 100644
+--- a/accel/tcg/user-exec.c
++++ b/accel/tcg/user-exec.c
+@@ -787,7 +787,12 @@ static int probe_access_internal(CPUArchState *env, vaddr addr,
+         return TLB_INVALID_MASK;
      }
  
-     preexit_cleanup(env, 128 + target_sig);
+-    cpu_loop_exit_sigsegv(env_cpu(env), addr, access_type, maperr, ra);
++    CPUState *cpu = env_cpu(env);
++    if (cpu->exception_addr_valid) {
++        addr = cpu->exception_addr;
++        cpu->exception_addr_valid = false;
++    }
++    cpu_loop_exit_sigsegv(cpu, addr, access_type, maperr, ra);
+ }
+ 
+ int probe_access_flags(CPUArchState *env, vaddr addr, int size,
+diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
+index ae66f5e33e..1fd68367f6 100644
+--- a/include/hw/core/cpu.h
++++ b/include/hw/core/cpu.h
+@@ -560,6 +560,8 @@ struct CPUState {
+     uint32_t tcg_cflags;
+     uint32_t halted;
+     int32_t exception_index;
++    vaddr exception_addr;
++    bool exception_addr_valid;
+ 
+     bool vcpu_dirty;
+     AccelCPUState *accel;
+diff --git a/linux-user/riscv/cpu_loop.c b/linux-user/riscv/cpu_loop.c
+index 6f27a06da4..dbf1d42d33 100644
+--- a/linux-user/riscv/cpu_loop.c
++++ b/linux-user/riscv/cpu_loop.c
+@@ -38,6 +38,9 @@ void cpu_loop(CPURISCVState *env)
+         cpu_exec_end(cs);
+         qemu_process_cpu_events(cs);
+ 
++        /* A trap ends the pending cbo.zero address override window. */
++        cs->exception_addr_valid = false;
++
+         switch (trapnr) {
+         case EXCP_INTERRUPT:
+             /* just indicate that signals should be handled asap */
+diff --git a/target/riscv/tcg/cpu_helper.c b/target/riscv/tcg/cpu_helper.c
+index 07d9222652..4513c9bdbe 100644
+--- a/target/riscv/tcg/cpu_helper.c
++++ b/target/riscv/tcg/cpu_helper.c
+@@ -1537,7 +1537,12 @@ static void raise_mmu_exception(CPURISCVState *env, target_ulong address,
+     default:
+         g_assert_not_reached();
+     }
+-    env->badaddr = address;
++    if (cs->exception_addr_valid) {
++        env->badaddr = cs->exception_addr;
++        cs->exception_addr_valid = false;
++    } else {
++        env->badaddr = address;
++    }
+     env->two_stage_lookup = two_stage;
+     env->two_stage_indirect_lookup = two_stage_indirect;
+ }
+@@ -1588,7 +1593,12 @@ void riscv_cpu_do_transaction_failed(CPUState *cs, hwaddr physaddr,
+         cs->exception_index = RISCV_EXCP_INST_ACCESS_FAULT;
+     }
+ 
+-    env->badaddr = addr;
++    if (cs->exception_addr_valid) {
++        env->badaddr = cs->exception_addr;
++        cs->exception_addr_valid = false;
++    } else {
++        env->badaddr = addr;
++    }
+     env->two_stage_lookup = mmuidx_2stage(mmu_idx);
+     env->two_stage_indirect_lookup = false;
+     cpu_loop_exit_restore(cs, retaddr);
+@@ -1621,7 +1631,12 @@ void riscv_cpu_do_unaligned_access(CPUState *cs, vaddr addr,
+     default:
+         g_assert_not_reached();
+     }
+-    env->badaddr = addr;
++    if (cs->exception_addr_valid) {
++        env->badaddr = cs->exception_addr;
++        cs->exception_addr_valid = false;
++    } else {
++        env->badaddr = addr;
++    }
+     env->two_stage_lookup = mmuidx_2stage(mmu_idx);
+     env->two_stage_indirect_lookup = false;
+     cpu_loop_exit_restore(cs, retaddr);
+@@ -2047,6 +2062,12 @@ void riscv_cpu_do_interrupt(CPUState *cs)
+ {
+     RISCVCPU *cpu = RISCV_CPU(cs);
+     CPURISCVState *env = &cpu->env;
++
++    /*
++     * A trap ends the pending cbo.zero address override window, so drop
++     * any saved rs1 that a store trigger or breakpoint left behind.
++     */
++    cs->exception_addr_valid = false;
+     bool virt = env->virt_enabled;
+     bool write_gva = false;
+     bool always_storeamo = (env->excp_uw2 & RISCV_UW2_ALWAYS_STORE_AMO);
+diff --git a/target/riscv/tcg/debug.c b/target/riscv/tcg/debug.c
+index e4d719a1da..6962557251 100644
+--- a/target/riscv/tcg/debug.c
++++ b/target/riscv/tcg/debug.c
+@@ -973,6 +973,9 @@ void riscv_cpu_debug_excp_handler(CPUState *cs)
+     RISCVCPU *cpu = RISCV_CPU(cs);
+     CPURISCVState *env = &cpu->env;
+ 
++    /* A debug exit ends the cbo.zero address override window too. */
++    cs->exception_addr_valid = false;
++
+     if (cs->watchpoint_hit) {
+         if (cs->watchpoint_hit->flags & BP_CPU) {
+             do_trigger_action(env, DBG_ACTION_BP);
+diff --git a/target/riscv/tcg/op_helper.c b/target/riscv/tcg/op_helper.c
+index b67c7718db..3fc993a207 100644
+--- a/target/riscv/tcg/op_helper.c
++++ b/target/riscv/tcg/op_helper.c
+@@ -188,9 +188,13 @@ void helper_cbo_zero(CPURISCVState *env, target_ulong address)
+     int mmu_idx = riscv_env_mmu_index(env, false);
+     uintptr_t ra = GETPC();
+     void *mem;
++    CPUState *cs = env_cpu(env);
+ 
+     check_zicbo_envcfg(env, MENVCFG_CBZE, ra);
+ 
++    cs->exception_addr = address;
++    cs->exception_addr_valid = true;
++
+     /* Mask off low-bits to align-down to the cache-block. */
+     address &= ~(cbozlen - 1);
+ 
+@@ -218,6 +222,7 @@ void helper_cbo_zero(CPURISCVState *env, target_ulong address)
+             cpu_stb_mmuidx_ra(env, address + i, 0, mmu_idx, ra);
+         }
+     }
++    cs->exception_addr_valid = false;
+ }
+ 
+ /*
 -- 
 2.54.0
 
