@@ -4,132 +4,128 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8D77CC6B38
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 17:34:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90511CC6B39
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 17:37:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHPLb-0003FD-8B; Thu, 15 Oct 2026 13:34:31 -0400
+	id 1xHPOM-00047T-2q; Thu, 15 Oct 2026 13:37:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xHPLX-00033H-Px
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 13:34:28 -0400
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xHPOL-00047D-68
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 13:37:21 -0400
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xHPLV-0006Zv-Dv
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 13:34:27 -0400
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xHPOJ-0006uI-Db
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 13:37:20 -0400
 Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69FFfYgI4077452
- for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 17:34:21 GMT
+ 69FFYQqd4077483
+ for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 17:37:16 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- gn52eERRzSHl93ujOhO8L+Fm4a7KZT0nT3Ef45VgZcE=; b=QQn6nCMRj3o4Q6bC
- dFeM/izBNAVIDoYuxWek9QpOAD8KiRNxpAEcxz13RurXAlFfCtdyeArIfGVB1XxA
- iqy7l1w3JbW9Qq0u2Was7a/xj86A4L9LW7S5Aky4EPDqOFbkUZQnKtq01hwvwFYX
- qNA8QK0cCKhcdR4K5tyHLWWGb1qXQgxnC0ZGK+Ei0xC3Xrc/MUcWV6w5Zl6bG3lU
- yGhPRbwntmprJJ7lbJ6O0hknGhPyXkaiEF7Xe6N0BI2GzjkSzRhXX6M2c+7C0G+s
- oSfHfaCHUwDR1KVmiaeIBK3che9GQbe7kymPQIOVdlTBMqW331yOSU6GEQ6h6TpV
- j4iEWA==
-Received: from mail-dy1-f198.google.com (mail-dy1-f198.google.com
- [74.125.82.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4havbc1yv7-1
+ amXLv3V4JVn3CBvgx55Mw5FLl/jev4POeyxG7G/QcmU=; b=NOv14a2iCHr9EaUS
+ ftqVzh2+aheCrfy3kyd5xluZO5toRmTo1AjAlNMgDajcPRm5nwiNz7NMCmBP6ARD
+ ARyuZBE03M79U7t/XBF6YQQErrt4FgzOSEC1P0lBcguMWvQxxK43HUeiQRbPyuFL
+ 5QfB6j8IeCj1N9crVPFSFu6l8DMEkKd6W+uoA7uN8YjyJViUAtQTWXvltBDA1Py0
+ 16h9vnQHUjq4V3QaZLgCQoN/U7unyeht0Ps67QLQpbLrC3rkkhchMHk2BjkSFPHH
+ 7ZcJBhm8+rr4gf3pfZ9H8Q/KRf/dgVw5sl02I2DLJ/3jKPxRzX97Z5N14diuvlRX
+ 3bKaZA==
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4havbc20bs-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 17:34:20 +0000 (GMT)
-Received: by mail-dy1-f198.google.com with SMTP id
- 5a478bee46e88-3510d0baf63so7065213eec.1
- for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 10:34:20 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 17:37:16 +0000 (GMT)
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-936aa34873bso360382985a.3
+ for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 10:37:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1792085660; x=1792690460; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
+ d=oss.qualcomm.com; s=google; t=1792085835; x=1792690635; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=gn52eERRzSHl93ujOhO8L+Fm4a7KZT0nT3Ef45VgZcE=;
- b=PO6d4e6fcHoYDMuPV22KfYVbzSza6WcoB1HpvgeOwvCTgLgLh4tKUPV9atti0jEe2t
- j0mL7XxeZ/4FpguGnxFTJUGCVH79qJawTdnvaDOuqrwF6c7kaiDPwI1CMl10c4WKSgx7
- T2+1VUzluVyVrnUM/2P5s1IUjpjGK/pWiptnio63joMHdC6O0wqpW+jqHsWPr4tGH3Jd
- TeRyUbL1ZgfYzMzNTlGNqF0rKas9MsypmyFMUqwts0gN9lXqoIdMa2i73P0urIJDU2iA
- rBOXaTvQQg5xed+ZotwGK+QOloJZnbe7rHesrQv3i2uUXUr50pKkRsN80MnRBtpvsnHc
- wv9w==
+ bh=amXLv3V4JVn3CBvgx55Mw5FLl/jev4POeyxG7G/QcmU=;
+ b=jiE9e7vOqg9zPM+Wi4y2QYLIw6SU7VFd0REb7T4Np7kJNVkiNuVeEz91QUBBqmh649
+ RuDNA1e8g2K1TgNrqPgHbe+6CbC52CgPzk2SKGg7sj0PVKYjJu4jRc1LLRlCzIQ1ljtX
+ kewNdvvAXpnwuRGasM56frIIjeYMMl/3vyBiSL6zP2psgJ5TXegcrNgwYznlZDNWmRR8
+ VYOAvf5V/3awSj1U17IuxR17+5wlxI+s1qAUAw6TSareF4CNlJDqrMtejxm9K/0XU11U
+ iYbXz8z8jIXSlt/7c6jPzB/RxQf/Re6KeVJZCXOpBok23343GMQjZbRnsqiqW/J0rSPe
+ ameQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792085660; x=1792690460;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
+ d=1e100.net; s=20260707; t=1792085835; x=1792690635;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=gn52eERRzSHl93ujOhO8L+Fm4a7KZT0nT3Ef45VgZcE=;
- b=KjF6x2gqKSKCIHb5y8UN4z5+fiE06UibVbtUDB1s0cN+cyAGeJTNOYes3hCXOf57rP
- V6JpdEElc6jLKPC4GrQ/vtxog44s0KZUCBvRQdv1BplNsJbMVTR8oJR67hzdVCWnzY4n
- gQ3gx1I8PwDV2PGio5zjpSLzkBbiEmkmSfxsy2EcS1YCyOehipNb1ut2OTR2l9IXxeQJ
- XwAf1XKYuC2jc9q68XpUN3hzxwj6FT6vhWNdYckYAP8lQG4FJXLRr1dh//Wv7e/asdQA
- KOGQtucQ1iI+kfB8bFAF/aT1Os4bATLFgyfuHStuLERsFbZNoPKYyXYyvkfOcetT85vZ
- 4nZA==
+ bh=amXLv3V4JVn3CBvgx55Mw5FLl/jev4POeyxG7G/QcmU=;
+ b=VNvOOSL6PRHXsFWi+wekCDnk8JllsPaPtDZ2pvO/awkIkBtcjczpwHmQCz1I0BxbMm
+ mVijMUArZo2Jrl/bSkqS/DR/vsNIs5nORjtUKwrTLlFLldFTSXFvie7n/Wbpkvzch5Lc
+ TC+LTSVNsp3YlWU08PAHIZhEhDUnyO2AUZN3XfGzdrlFJ478TDWQNIlAFdfVUnwfHZLJ
+ p4u/3DHDwhd1V5S0sCVMP6h0cIIrI4y0I/Tl4FoKt5uD0j7JkaU/CqHnuXENmnPWTl34
+ nrYDB5KRmBDf6HlAYEDHdASge9zop22PURMX3nAvv0oH3XAw75bm+wTbtQVitZhKt3yg
+ xbDg==
 X-Forwarded-Encrypted: i=1;
- AKwUvBy/Baay4GAVNnf38eDUOqSD9c3dog1GQXl7aO8n/majDgbQbdZu9Hrz3qv/lhAAfaJI/1NU2ruHhwXn@nongnu.org
-X-Gm-Message-State: AFq9FYLIAjierNmQC/taYZ4FlaQ1BknRjFrxTiY9cFVD8WG1FETdgtmr
- DfWz6dF1vu0RQlO5XvJUAfCQy5BzqsSmhD6qBOSjXAjdnyOoVeH0y2VvBs82kPAxSQWdzrTsuph
- xOFovhoSaD4rVxsTxoKE75Sf8WYabxWMFtMiSis1i0JN/l3ZgonqU1kKH8A==
-X-Gm-Gg: AYBFou3NGm7rNmzYHuvTiKOO0qhwY4wrejYzb48UWSREJ5R6TVmQjeTR2G6TZqvxXOL
- qc6gBTuE3/6DACBCIKnGUvKOCGemUjIZe7lIkIlDAZuhLAAx0HtiiV8+CTH1C4C7Lk4PdSQcll3
- V9eKlUxQyIJltlGWkMfmeWSA3+tAMcPv5l6mhNm88k2dG8zTflkwWRKTMVI43abUsvFvwdA5URA
- yt6i/xBA0UxB1IxEu9aLQx5XHJN3HntIUhlcIvlJ2KqBZutvOXJqAjcnhePYgBGPGUoVq+LIMuk
- I9dTVpgyOl98Aoaqf8mcieF4fIyV+dOhurCZ2RSX0wIGVPjD4CesF8JOvZSfixsmL7PsmtvkgtA
- FFkcw0v0bBzpu2EkzdMP1nk5uIRofbTYAD0fy/1m9Vc1or2+gvcBNILKhgxY56sEGSuCVtw==
-X-Received: by 2002:a05:7301:78c4:b0:35d:b452:902a with SMTP id
- 5a478bee46e88-35db452916emr8830179eec.34.1792085659901; 
- Thu, 15 Oct 2026 10:34:19 -0700 (PDT)
-X-Received: by 2002:a05:7301:78c4:b0:35d:b452:902a with SMTP id
- 5a478bee46e88-35db452916emr8830087eec.34.1792085658448; 
- Thu, 15 Oct 2026 10:34:18 -0700 (PDT)
-Received: from [192.168.1.199] (192-80-163-190.dyn.novuscom.net.
- [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-36057077e59sm378997eec.8.2026.10.15.10.34.15
+ AKwUvBwmdNsOsUYIGOelSPSpouvG3ezHi91pdcohz2GIBe7K6SgqUh/XRwt2m278zwnCRDthGXmy1MZpYsH+@nongnu.org
+X-Gm-Message-State: AFq9FYLZmy98pGwSa1gsp5ObtgO2iRNaL2H9h9VhSKbdHisivXPQNYdf
+ x0a/+xaoO8GfTsW9a0WggkxXpVw3UOhoQfweYshe7z5Zr7tGCraA9hHYEHJXd87BlMk8hRsPoMG
+ GBtMs9YOb1IHBv0c7ny2EbtujcJh8IHjHRwMliqFAItwTxj7MzWFO+JteUQ==
+X-Gm-Gg: AYBFou1JVvUVzEWeItGnNbWTDw92umjnjJoB7lQwCOXhQ8+LxUv/8PbnW2+bxxK9z00
+ pN93m1u6K/LwPFwgDayVTw15mslLBytRiK0+c3s64QcEI+olu7jVWJpODhNw1aw2s7ud70Wk0yh
+ n3kA0CvnSGTuGpgr0cvLiEh9DHJ+N2qVmWRHnBcCzavqM5IDHKg3DdgbUF4GXRKwKsabn8rO6pf
+ VoE8CrMyeeD8M+LgfzGSoOUWNlbiyMZVfLBKGWNWe40neQTq39S2c06MVKo3udOxa1/swOY7qk2
+ T0HRaXHkjE8qykvgzCDj973U5ONQ7E4NILIxj9wBF1M3SXvmw7Z8xLeo9ozE1fVYHZ5fZyL2kSi
+ /Vd+EhvPNaRc8tUj0I0groFgs1hgBwblEnw==
+X-Received: by 2002:a05:620a:6489:b0:939:3885:3131 with SMTP id
+ af79cd13be357-93ebd0c2fc7mr3005068685a.3.1792085835380; 
+ Thu, 15 Oct 2026 10:37:15 -0700 (PDT)
+X-Received: by 2002:a05:620a:6489:b0:939:3885:3131 with SMTP id
+ af79cd13be357-93ebd0c2fc7mr3005063685a.3.1792085834851; 
+ Thu, 15 Oct 2026 10:37:14 -0700 (PDT)
+Received: from [192.168.69.210] (pmd666.hd.free.fr. [88.187.86.199])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-48de0aaaa34sm19882332f8f.20.2026.10.15.10.37.13
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 15 Oct 2026 10:34:15 -0700 (PDT)
-Message-ID: <e965c91e-cf92-4647-bc18-d10ad39e2025@oss.qualcomm.com>
-Date: Thu, 15 Oct 2026 10:34:14 -0700
+ Thu, 15 Oct 2026 10:37:14 -0700 (PDT)
+Message-ID: <b99355a2-a424-41b2-978b-8938de06cbda@oss.qualcomm.com>
+Date: Thu, 15 Oct 2026 19:37:13 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/21] system: introduce a live data recorder facility
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Michael Roth <michael.roth@amd.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Fabiano Rosas <farosas@suse.de>,
- Richard Henderson <richard.henderson@linaro.org>,
- "Dr. David Alan Gilbert" <dave@treblig.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Eric Blake <eblake@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>
-References: <20261015112044.1999748-1-berrange@redhat.com>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Subject: Re: [PATCH v3 06/12] target/riscv/cpu: constify cpu parameter for
+ riscv_cpu_mxl
 Content-Language: en-US
-In-Reply-To: <20261015112044.1999748-1-berrange@redhat.com>
-Content-Type: text/plain; charset=UTF-8
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org
+Cc: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Anton Johansson <anjo@rev.ng>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Brian Cain <brian.cain@oss.qualcomm.com>
+References: <20261014210526.104215-1-pierrick.bouvier@oss.qualcomm.com>
+ <20261014210526.104215-7-pierrick.bouvier@oss.qualcomm.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <20261014210526.104215-7-pierrick.bouvier@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=QbvzLcbv c=1 sm=1 tr=0 ts=6ad10e9c cx=c_pps
- a=wEP8DlPgTf/vqF+yE6f9lg==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
+X-Authority-Analysis: v=2.4 cv=QbvzLcbv c=1 sm=1 tr=0 ts=6ad10f4c cx=c_pps
+ a=50t2pK5VMbmlHzFWWp8p/g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
  a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
- a=YGKwtQbzyU6DUE_ilQIA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=bBxd6f-gb0O0v-kibOvt:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDE1MDA2OSBTYWx0ZWRfX5SML0wkRCNm4
- gq28YbeAiO1BLEDVUfaoYPV6nUgFwgHCEE6rIvGQSZUlCz+pOmWE4dCiUuXD4681RkqLwDVYrwq
- cf/SQqWzmwxdfWunqUOJOUx4YxHohdk=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDE1MDA2OSBTYWx0ZWRfX+CYdT+uv8+vC
- Ow5lYZ8Y/pcUFNIS6WU5YcgKH20DTQA7hj/R34XvGRVOWxXGfXrOChSLk+pkFJwQ5aK/mk3X1Q5
- JlSVnW91l5nOxLjCGEZxO1JwmURydncCCpsgpUOKG+8y+NGg0MMGyTAiHJJwc63aYYaH/BuSxaL
- F+RlfSWKo/wXfOsZp6CApVNG9G9dDHqgi1ZIUGxdFqDcgINa+PTpp787JaOBZ7YPea/iLUZgBvK
- tgduddvsINRHzvqajvWeDQ8nx2MMhbeuiwXmh9vb3VFafWDr708xB9LrBr3bwVKrF/rjYCg43tf
- 4O7hzRZ2TaYiMhj4/p/8nHIfbZhKEccy7LMaGfVXarkoT7qUFgkqnPbwFruDyZYQNi6bj4vDXbA
- wg79v7T2fo1V/pkZDJ6c4nLvL9Avy3t/pFbGZ2fUOtf94WeQvhakHVP1EiD6E7r5tWHyNdXAsnr
- eocFBpPBaIW42jCrBiQ==
-X-Proofpoint-ORIG-GUID: Rj7gstDtTdG4_sUd8-nPfIv0vS36rvTO
-X-Proofpoint-GUID: Rj7gstDtTdG4_sUd8-nPfIv0vS36rvTO
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=cZkIkwtWA_EkRJw8LEEA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=IoWCM6iH3mJn3m4BftBB:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDE1MDA3MCBTYWx0ZWRfX890z6oQFbiBN
+ M7awmsk41VVO9Tt5Tt+064RQrqJ5PFMc4VDW/G2DKkdOJt+9AGINW7KRNx93o5qkiNl2ODLYTMI
+ qgjXCqrw/7UEgQII7EDi3SIuKl9mO8o=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDE1MDA3MCBTYWx0ZWRfXwPnteVT3JLBu
+ ESoejKm2vDESqVkASsPb4osBChnW9pSm6Y1V5dIRuK/70+DccKfS0/YafcdOd9YY4BV8+cuDefE
+ 6IyxOBuzb4gO6nNl5YMQwVSP311Uw5oZAjW4AfZzIiCjtvuBBOrBUlwQz2ZAIPBP7nQYlBRFN4N
+ GElJtec5Tp5kp4JKO7bklFUKpo2BeE8TqqIW/HwVNZXxTHGrmgBxakXBoDqNHUTcCb1fQ8ZZB/N
+ TWjnyJUOB6YcnrPj9mXkx1ryluXOMqWfRhJ5dGd65xwSwX+WlprUEqymL+Ic24gdmfeVTaGgb1s
+ y0IrMOjUCrt4HwGOLldl1+VCCEV/ziGp+t5n/5NV8IeA5nCC+dXXyOKb/XgiL9lK+sSWib1Rh6h
+ D8KeBT2fOJOqDdcvM4uoQWAOZ6XSV6iaJXPgVILVWEMvoaOoHzkDIJ5ayMr/h2oquSAfSbOCbGw
+ MbEgVkNNvx8NJew0Xqg==
+X-Proofpoint-ORIG-GUID: 5xz1vTmX8dnZ1OKMq-96kqT5cIxqBwEq
+X-Proofpoint-GUID: 5xz1vTmX8dnZ1OKMq-96kqT5cIxqBwEq
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-10-14_01,2026-10-14_01,2025-10-01_01
@@ -138,10 +134,9 @@ X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
  priorityscore=1501 spamscore=0 bulkscore=0 phishscore=0 suspectscore=0
  adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610080000
- definitions=main-2610150069
+ definitions=main-2610150070
 Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -164,89 +159,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Daniel,
+On 14/10/26 23:05, Pierrick Bouvier wrote:
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+> ---
+>   target/riscv/cpu.h | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+> index 8c8ffe94cd8..00650a66dcb 100644
+> --- a/target/riscv/cpu.h
+> +++ b/target/riscv/cpu.h
+> @@ -755,7 +755,7 @@ FIELD(EXT_TB_FLAGS, BIG_ENDIAN, 33, 1)
+>   #ifdef TARGET_RISCV32
+>   #define riscv_cpu_mxl(env)  ((void)(env), MXL_RV32)
+>   #else
+> -static inline RISCVMXL riscv_cpu_mxl(CPURISCVState *env)
+> +static inline RISCVMXL riscv_cpu_mxl(const CPURISCVState *env)
+>   {
+>       return env->misa_mxl;
+>   }
 
-On 10/15/2026 4:20 AM, Daniel P. Berrangé wrote:
-> This series introduces a new facility called 'tldr' which is a
-> live data recorder. This is intended to aid support of production
-> QEMU deployments, by providing a data collection facility that
-> can be left "always on", such that in the event of a QEMU crash
-> or guest OS crash, certain important information will be recorded.
-> 
-> The data recorder has to be enabled by adding a "tldr-config"
-> object instance with -object / object_add.
-> 
-> With this series, the data recorder collects
-> 
->  * error_report/warn_report/error_printf messages
->  * QMP events
->  * QMP errors
->  * QMP commands, which are not query-XXX/qom-list,
->    or any command associated with a QMP error.
->  * qemu_log output
-> 
-> The last item is intended primarily to be used in combination
-> with tracing and its 'log' backend, to have continuous
-> recording of certain interesting probes.
-> 
-> Each type of data is collected in a distinct circular
-> buffer, such that high volumes of one type of data, does
-> not result in overwriting other types of low volume data.
-> 
-> The data recorder is set to trigger on SIGBUS, SIGSEGV,
-> SIGILL, SIGFPE and SIGABRT, or manually via QMP 'tldr-dump'.
-> 
-> There is a open question in one of the patches about SIGBUS
-> handling, since that is already used for MCE capture and I'm
-> unclear if I'm breaking something about KVM MCE reporting.
-> 
-> This series proposes using sigaltstack() to register an
-> alternative signal handling stack. This would mainly be
-> useful if we have a crash from a stack overflow, but the
-> cost is that we have 8k extra per thread, and I'm not
-> entirely convinced that's a beneficial tradeoff. Might
-> be better to just accept stack overflows as a risk.
-> 
-> This series only captures text based info, but as a followup
-> I would like to extend this to capture statistics data from
-> relevant subsystems. For example, the BlockBackend has its
-> own "always on" stats accounting code, which can be queried
-> with QMP. Ideally I would like to figure out a way to dump
-> all the BlockBackend stats in the data recorder output.
-> Likewise perhaps capture NIC stats and/or KVM stats in an
-> "always on" manner for some interesting baseline dataset.
-> The challenge with that is making it safe to access the
-> stats data without taking any mutex locks, since this must
-> run from a signal handler.
-> 
-> A typical recommended usage would be:
-> 
->  $QEMU  -object tldr-config,id=tldr
->         -d tldr
->         -trace events=/var/lib/libvirt/qemu/trace.txt
-> 
-> This leaves dumps to go to QEMU's stderr on crash, but
-> to send them to a file
-> 
->    -object tldr-config,id=tldr,crash-target=/some/path
-> 
-> The '-d tldr' flag redirects qemu_log() to the TLDR buffer
-> instead of stdout, and the '-trace events' arg defines
-> the "always on" tracepoints we want to capture.
->
+Reviewed 6 weeks ago and in Alistair riscv-next queue IIRC:
+https://lore.kernel.org/qemu-devel/20260901095229.72018-17-philmd@oss.qualcomm.com/
 
-if I understand correctly, the goal of this new object is to provide a
-per-topic rotating log in memory that will be flushed on disk only when
-we have a specific event (exit, or any signal). That's sounds like a
-good idea!
+Anyway,
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 
-Why not refactor exisiting trace/log and provide the same feature
-directly there? This would be transparent, and user could decide to
-either dump the full file (same than before) or benefit from rotating
-memory buffered, with any custom size.
-
-$QEMU -d category,size=4M -trace events=out,max-size=16M
-
-Regards,
-Pierrick
 
