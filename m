@@ -4,64 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E293CC6B33
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 225BFCC6B38
 	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 10:27:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHIfE-0002MU-NT; Thu, 15 Oct 2026 06:26:22 -0400
+	id 1xHIdj-0000cb-6f; Thu, 15 Oct 2026 06:24:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eblot.ml@gmail.com>)
- id 1xHIeg-0001hD-Hp
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 06:25:54 -0400
-Received: from mail-wr1-f53.google.com ([209.85.221.53])
+ id 1xHIdD-0000VG-I2
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 06:24:17 -0400
+Received: from mail-wr1-f47.google.com ([209.85.221.47])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <eblot.ml@gmail.com>)
- id 1xHIec-0003nA-31
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 06:25:44 -0400
-Received: by mail-wr1-f53.google.com with SMTP id
- ffacd0b85a97d-48bbb06e746so863464f8f.3
- for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 03:25:41 -0700 (PDT)
+ id 1xHId8-0003Af-4x
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 06:24:14 -0400
+Received: by mail-wr1-f47.google.com with SMTP id
+ ffacd0b85a97d-48afcd7ba9bso2845293f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 03:24:09 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792059939; x=1792664739;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :content-type:mime-version:subject:date:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=W5PhRPYjPeVIiLmDaG68Pb9QynlP1yOMDtzh8f0rn+Q=;
- b=ZNoLSB+FLD2t/NtRY7LGHil3jaCIic1mMS0HaR2AbHV1SNO4VCUb0wj1L+SnFB+7bT
- dPslLNKg5VlQwksPrxRsDseVdgfukDID6UbtRvNzqDWuIpNJBYbNq/NDxwHK9zXp6YA0
- MTGFZmiCgTsDQ5i41vhWxET6uo3zl65YeGcAQaQ1bsB3ivR3gMN4uuawwpAwCxc5Gla8
- vglggt6j6cyGfpxPol8x+1NuT9jjdMf2/p7XMyHc86IF0Q0W8On+FXX7geB2wFZ9/6E3
- zAf3pj8/JDymUT++fNwN4Xn4IhXAACFYRYQSCPl5HgQINt0aWWemr27SrLdht8cXeVd9
- ei7Q==
-X-Gm-Message-State: AFq9FYKEGL5maGBtBcznqsbRruisj47dlAIpyFU+9doN0AHMzXPLkfZ6
- enbw2v6eqasEyGjel7GrvpwfTzMFyN7lAoE5DLOBMwJmgNcxEo8gzgS9mQmTIUwq
-X-Gm-Gg: AYBFou3WrtUOSHpXyrvE4pBaKIOFvBh6DwSkxKtdtXYWgbZ6K89miclN2l5MqZtnKvo
- 3mVDF1Af3y3j2VXeIUh1iEjw8Cg8snZO1D/IjYQTdPL/e4j1J4XBCzpOByfxxh3PrpYGkH/+d+M
- hm1o8RRHAzD8sfyWIV8Eab/hTkVQsDFuo4tFTU58bqP3nqsefHT7h1qC3EGp2FTtr4ranZUwWju
- llO4dy5FG1ZcNdPiRRbK0Rzysvds3jurKo0m4MmbgBGJRpUn3dgr6EUMxOd0EwWq154ZSV4Hkae
- 6T8M9g8dgr6xcPcsYp4jcezxPaEoWLDGNyfmadp9JllSGay/bvWh87VZjLoQtRBgeU0plHEfeAM
- uoYegGNKr9npYWimwv/L02RSEJ+QbrJ0l37bYW8Y9UhCZG3iTJaWu/u3cm3RG6PgnyQYswB27RB
- Zw32Sv4Uv31ArW+Uk8e03m8STdHcHmTRxWKFeVE+xxrG4/yeSSIelwAUIYK/LTpTRUeFb7iWlIz
- TdOaT62MdImuhFPqVgNSVpk2TlZWKl29hXNu/3Nb/DtJw==
-X-Received: by 2002:a05:6000:4694:b0:48c:67d8:abd1 with SMTP id
- ffacd0b85a97d-48dba9be288mr25519734f8f.13.1792059939384; 
- Thu, 15 Oct 2026 03:25:39 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1792059848; x=1792664648;
+ h=cc:to:content-transfer-encoding:content-type:mime-version
+ :message-id:date:subject:from:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=oEw6UwwSKrmcNxBgK/lh8jEAyNjqkAQDz3gJekN26zI=;
+ b=TUuPIqlbOVX0y35ZG87HSkGwBdNqhKg492nQmySs+WJfrCwYw9j+JVM5Yk/6+mqom5
+ TXA9CgP75P46eZTJkd4yG1WWzwEbY4r1ywcgreiNMooHPRVEhfNB2a7Qzz5/aCbFtGwL
+ XdILr6vNTGjrdgvSer8DWPmz8zZh/RYvgSDn/WZafohzxMsLC5NivoMoQIRPsDpkdxb8
+ qlMcyMG4tbS9tNum7Zy+ay/BNjN+257C73+zuOdNduzOUXj8UkDBLwhZ8dcQWGQfqzH6
+ 1wqNNozv2zDzrLC/7cFu8cmQWQFQY16ZfOUx7ZZnUBzRHTQzf9cgrnUAbp0KSlkOWowX
+ Tp4w==
+X-Gm-Message-State: AFq9FYJ/qix5mktFvmDNoCHZnKADakOaxLjF1vyc853N4mIuMcy60QGd
+ UrHIbsHo+rzAICILYUkdmHNFgjKTHlJIoeguepFeRbkIThCg7jYt2Utv9zW1zM7M
+X-Gm-Gg: AYBFou0jFQ8ai+5gkBqbYpMWr4xofc10INy64FcWfAUYLtXloo1YpQPdOG0WwxoQ9RA
+ hqB6TmtNEETs2WK+OMnxv/FvSFkzG3E5pmwMXiV+lxy9BQkJhUYyHkBmKL2TqPD98wTPH+FjvxL
+ 8iaUTo5GNcbxrJ2uwEb1deiQvkUElz6sHX2cAVLuVYCeRpB/dYDdlxCW2s6A63w0RlbuoAwyPGD
+ ngFpX+3gzAJNuUq3Ga98FixO/0rNqTgpgJysLYbSvYgZQgqXYvHKPrsznYC14AclGpetRB8AgWv
+ NqY4C03/dP4a4ttRir+wLCQPK8C0evIZcOezPDAJ9yjle3f48F52SAB59Uz9Hq1DV78rtlzPMzo
+ RfSWwUNIHrjPwUc9mGnz2mxbOTnSRN+mZVVOL0zb0J5Es7rTS0Dc4BqPayiR/Q4gERe5u2yGMx4
+ Pelh8b2hcpU/yX/yspEbuTuCVIZzhRU9W+lENWEVKmIg+3GVohoS85OFJgkbc3wbMS20Vtofo3j
+ qQhiux/0uHRDs0723B4XFraTD5md8G8HFMmz8U2G0HeFg==
+X-Received: by 2002:a05:6000:4b06:b0:48d:eb44:6510 with SMTP id
+ ffacd0b85a97d-48deb44663emr9743812f8f.47.1792059847811; 
+ Thu, 15 Oct 2026 03:24:07 -0700 (PDT)
 Received: from localhost (89-93-216-19.hfc.dyn.abo.bbox.fr. [89.93.216.19])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48de0967affsm16109509f8f.1.2026.10.15.03.25.38
+ ffacd0b85a97d-48defca4013sm7970351f8f.9.2026.10.15.03.24.07
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 Oct 2026 03:25:38 -0700 (PDT)
-Date: Thu, 15 Oct 2026 11:28:01 +0200
-Subject: [PATCH v3 14/50] hw/rtc: ds1338: implement the DS1338 clock-halt bit
+ Thu, 15 Oct 2026 03:24:07 -0700 (PDT)
+Subject: [PATCH v3 00/50] Aspeed: I2C device models and the Minerva BMC machine
+Date: Thu, 15 Oct 2026 11:27:47 +0200
+Message-Id: <20261015-bmc-minerva-v3-0-7d50c8a108e5@free.fr>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261015-bmc-minerva-v3-14-7d50c8a108e5@free.fr>
-References: <20261015-bmc-minerva-v3-0-7d50c8a108e5@free.fr>
-In-Reply-To: <20261015-bmc-minerva-v3-0-7d50c8a108e5@free.fr>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/22Oyw6CMBBFf4XM2popTXi48j8Miz4GqQmgU2g0h
+ H+3oIkbl+fmvhYIxJ4CnLIFmKIPfhwSqEMGttPDlYR3iSHHvMAaS2F6K3o/EEctrJNKl7KyNRp
+ IiTtT659726X5cJjNjey0VXwdTI85zUw/W+fDNPJr/xDlpv6fi1KgQFcp7QqJVplzy0THlqFZ1
+ /UNMA8rwssAAAA=
+X-Change-ID: 20260907-bmc-minerva-cd13a718c90b
 To: qemu-devel@nongnu.org
 Cc: =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
  Peter Maydell <peter.maydell@linaro.org>, 
@@ -73,17 +75,19 @@ Cc: =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
  Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
  qemu-ppc@nongnu.org, qemu-riscv@nongnu.org, 
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, 
- Emmanuel Blot <emmanuel.blot@free.fr>
+ Emmanuel Blot <emmanuel.blot@free.fr>, Jamin Lin <jaminlin1207@gmail.com>, 
+ =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
+ Bernhard Beschow <sgentey@gmail.com>, Glenn Miles <milesg@linux.ibm.com>
 X-Mailer: b4 0.16.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1792056475; l=4398;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1792056474; l=7505;
  i=emmanuel.blot@free.fr; s=20260602; h=from:subject:message-id;
- bh=Kzt6qfQ8xw5u2qhWKCAbs8upbxPA4Z4PtksNYulDrzo=;
- b=zIeN5UVvq13Nz2bsi2czZzqePs3GsxgGsdMwKogSUbKN2sAf7mp21XbHwLdmaLu+l9l+DVJSl
- xNaVjnGC9L9ARGqYeN1dsKxLbY7Cul0qUuzYJnF8SlYXRl8YE3WF57Z
+ bh=GqCbJjzECWo/n6o5q3sjpg3hK/D9Sj8BRvq0K+uS+GA=;
+ b=4k58PyKU6Vb0lxyK0V9B2wz3INFR+O85OHLy4OuCtXMXoYwmXewpcTxeVHnYG3tQOSMuvU5O2
+ 4tVHDCtP4V3D+TKHY8EVaq0EW8H8BlAapT4v5SwgztyWsLbpeV3/iox
 X-Developer-Key: i=emmanuel.blot@free.fr; a=ed25519;
  pk=0qFrZ21FAAN8OfVsSoVcCFTk/NMYOWzxJz4paSAVm0g=
-Received-SPF: pass client-ip=209.85.221.53; envelope-from=eblot.ml@gmail.com;
- helo=mail-wr1-f53.google.com
+Received-SPF: pass client-ip=209.85.221.47; envelope-from=eblot.ml@gmail.com;
+ helo=mail-wr1-f47.google.com
 X-Spam_score_int: -15
 X-Spam_score: -1.6
 X-Spam_bar: -
@@ -109,127 +113,152 @@ From:  Emmanuel Blot via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Bit 7 of the seconds register disables the oscillator, and the guest is
-expected to clear it before trusting the time. The bit was masked away
-on every write, so it always read back zero and the clock never
-stopped.
+Add the minerva-bmc machine and the I2C device models it needs.
 
-The reset value stays clear rather than set as on real hardware,
-keeping the model's convention that the clock comes up running and
-synchronised with the host.
+Based on master, at:
+  615ece3c40 ("Merge tag 'for-upstream' of
+  https://gitlab.com/bonzini/qemu into staging")
+
+New models:
+
+  INA230   TI 36V current-shunt and power monitor
+  INA238   TI 85V current-shunt, power and temperature monitor
+  DS1339   RTC, a DS1338 variant
+  PCA9545  4-channel I2C mux with per-channel interrupt inputs
+
+The INA devices derive current and power from the shunt voltage and
+their calibration registers. ALERT output is supported. Measurements
+come in through QOM properties; however, conversion delay is not
+modelled.
+
+Introduce a device class to manage different variants of the DS1338
+register map, such as the DS1339. Improve the DS1338 implementation
+with a Resettable reset, support for the clock-halt bit, and a
+"persist-on-reset" property keeping the registers across a reset.
+
+The minerva-bmc machine is derived from the platform device tree and
+instantiates every device that is supported in QEMU. FRU EEPROMs are
+sanitised images taken from real hardware.
+
+New qtests for the DS1339, INA230, INA238 and PCA9545, plus DS1338
+cases for the register map, and a functional test booting OpenBMC on
+minerva-bmc.
+
+The docs now mention the previously missing catalina-bmc and
+sanmiguel-bmc machines, and the title has been simplified.
+
+One thing worth a second opinion: the PCA954x muxes now have a
+VMStateDescription, which changes the migration stream for the
+existing PCA9546 and PCA9548. The DS1338 vmstate also goes from
+version 2 to 3, but older streams still load fine.
 
 Signed-off-by: Emmanuel Blot <emmanuel.blot@free.fr>
 ---
- hw/rtc/ds1338.c | 36 +++++++++++++++++++++++++++++++-----
- 1 file changed, 31 insertions(+), 5 deletions(-)
+Changes in v3:
+- ina230: drop a stray comment in the operating-modes test.
+- Link to v2: https://lore.kernel.org/qemu-devel/20261012-bmc-minerva-v2-0-4c3dff084ec9@free.fr
 
-diff --git a/hw/rtc/ds1338.c b/hw/rtc/ds1338.c
-index 862e03bd32..79bcff4599 100644
---- a/hw/rtc/ds1338.c
-+++ b/hw/rtc/ds1338.c
-@@ -14,6 +14,7 @@
-  *   so the sub-second phase of the clock is not modelled.
-  * - Leap years follow the Gregorian rule, where the parts stop at 2100: they
-  *   derive the leap year from the two-digit year alone.
-+ * - The model comes up with the clock running; real hardware comes up halted.
-  */
- 
- #include "qemu/osdep.h"
-@@ -53,6 +54,7 @@ struct DS1338State {
-     uint8_t nvram[NVRAM_SIZE];
-     int32_t ptr;
-     bool addr_byte;
-+    bool osc_stopped;   /* oscillator halted: time is frozen */
- };
- 
- struct DS1338Class {
-@@ -64,11 +66,12 @@ struct DS1338Class {
-     uint8_t osf_addr;       /* register holding the OSF flag */
-     uint8_t osf_mask;       /* OSF bit within osf_addr */
-     uint8_t ctrl_reset;     /* control-register power-on value */
-+    uint8_t ch_mask;        /* Clock-halt bit in the seconds reg */
- };
- 
- static const VMStateDescription vmstate_ds1338 = {
-     .name = "ds1338",
--    .version_id = 2,
-+    .version_id = 3,
-     .minimum_version_id = 1,
-     .fields = (const VMStateField[]) {
-         VMSTATE_I2C_SLAVE(parent_obj, DS1338State),
-@@ -77,6 +80,7 @@ static const VMStateDescription vmstate_ds1338 = {
-         VMSTATE_UINT8_ARRAY(nvram, DS1338State, NVRAM_SIZE),
-         VMSTATE_INT32(ptr, DS1338State),
-         VMSTATE_BOOL(addr_byte, DS1338State),
-+        VMSTATE_BOOL_V(osc_stopped, DS1338State, 3),
-         VMSTATE_END_OF_LIST()
-     }
- };
-@@ -122,6 +126,11 @@ static void ds1338_capture_current_time(DS1338State *s)
-      * which will be actually read by the data transfer operation.
-      */
-     struct tm now;
-+
-+    if (s->osc_stopped) {
-+        return;
-+    }
-+
-     qemu_get_timedate(&now, s->offset);
-     s->nvram[0] = to_bcd(now.tm_sec);
-     s->nvram[1] = to_bcd(now.tm_min);
-@@ -213,15 +222,30 @@ static int ds1338_send(I2CSlave *i2c, uint8_t data)
-          * is then rebuilt from it as a whole: a transfer that programs the
-          * date before the month it belongs to must not be normalised away
-          * against the month still held from the previous date.
--         *
--         * TODO: Implement CH (stop) bit.
-          */
-         static const uint8_t valid[7] = {
-             0x7f, 0x7f, 0x7f, 0x07, 0x3f, 0x1f, 0xff
-         };
-+        uint8_t mask = valid[s->ptr];
-+        bool halt = s->osc_stopped;
- 
--        s->nvram[s->ptr] = data & valid[s->ptr];
--        ds1338_resync_from_regs(s);
-+        if (s->ptr == 0) {
-+            mask |= k->ch_mask;
-+            if (k->ch_mask) {
-+                halt = data & k->ch_mask;
-+            }
-+        }
-+
-+        if (halt && !s->osc_stopped) {
-+            /* CH set: freeze the counters before the register is stored. */
-+            ds1338_capture_current_time(s);
-+            s->nvram[k->osf_addr] |= k->osf_mask;
-+        }
-+        s->nvram[s->ptr] = data & mask;
-+        s->osc_stopped = halt;
-+        if (!halt) {
-+            ds1338_resync_from_regs(s);
-+        }
-     } else {
-         if (s->ptr == k->ctrl_addr) {
-             /* Control register: reserved bits read back as zero. */
-@@ -253,6 +277,7 @@ static void ds1338_reset_hold(Object *obj, ResetType type)
-     s->nvram[k->ctrl_addr] = k->ctrl_reset;
-     s->ptr = 0;
-     s->addr_byte = false;
-+    s->osc_stopped = false;
- }
- 
- static void ds1338_class_init(ObjectClass *klass, const void *data)
-@@ -275,6 +300,7 @@ static void ds1338_class_init(ObjectClass *klass, const void *data)
-     dsc->osf_addr   = DS1338_CONTROL;
-     dsc->osf_mask   = CTRL_OSF;
-     dsc->ctrl_reset = DS1338_CTRL_RESET;
-+    dsc->ch_mask = SECONDS_CH;
- }
- 
- static const TypeInfo ds1338_types[] = {
+Changes in v2:
+- Rebase onto master, which now contains the v1 base.
+- minerva: drop ASPEED_RAM_SIZE, removed upstream.
+- No other changes; v1 received no review comments.
+- Link to v1: https://lore.kernel.org/qemu-devel/20260907-bmc-minerva-v1-0-0d83ad610c3b@free.fr
 
--- 
-2.53.0-Meta
+---
+Emmanuel Blot (50):
+      docs/system/arm/aspeed: add the catalina-bmc machine
+      docs/system/arm/aspeed: add the sanmiguel-bmc machine
+      hw/arm: sanmiguel: remove the second SPI flash controller
+      hw/i2c: pca954x: drop unused header inclusions
+      hw/i2c: pca954x: add PCA9545 4-channel mux model
+      hw/i2c: pca954x: migrate mux state
+      tests/qtest: pca9545: add mux test
+      hw/rtc: ds1338: move TYPE_DS1338 to a public header
+      hw: ds1338: use the TYPE_DS1338 constant instead of the "ds1338" string
+      hw/rtc: ds1338: implement Resettable reset
+      hw/rtc: ds1338: prefix the file-local helpers with ds1338_
+      hw/rtc: ds1338: parameterise the register map via a device class
+      hw/rtc: ds1338: program the clock from the time registers
+      hw/rtc: ds1338: implement the DS1338 clock-halt bit
+      hw/rtc: ds1338: refresh the user registers on a read rollover only
+      hw/rtc: ds1338: add a persist-on-reset property
+      tests/qtest: ds1338: cover the DS1338-specific register map
+      tests/qtest: ds1338: cover the power-on register defaults
+      tests/qtest: ds1338: cover the clock-halt bit
+      tests/qtest: ds1338: cover persist-on-reset
+      tests/qtest: ds1338: cover the reserved bits of the time registers
+      hw/rtc: ds1338: add DS1339 variant
+      tests/qtest: ds1339: add RTC test
+      tests/qtest: ds1339: cover power-on defaults and reserved-bit masking
+      tests/qtest: ds1339: cover oscillator stop/restart and time programming
+      tests/qtest: ds1339: cover the Century bit
+      tests/qtest: ds1339: cover the end-of-month rollover
+      tests/qtest: ds1339: cover the 12-hour format
+      tests/qtest: ds1339: cover the day-of-week counter
+      tests/qtest: ds1339: cover persist-on-reset
+      tests/qtest: ds1339: cover the migration round trip
+      hw/sensor: ina230: add current/voltage/power monitor
+      tests/qtest: ina230: add current/voltage/power monitor test
+      tests/qtest: ina230: cover voltage injection and power derivation
+      tests/qtest: ina230: cover the ALERT limit functions and CVRF
+      tests/qtest: ina230: cover the injection-property limits
+      tests/qtest: ina230: cover operating modes and triggered conversions
+      tests/qtest: ina230: cover ALERT latch persistence
+      tests/qtest: ina230: cover a cleared calibration per channel
+      hw/sensor: ina238: add current/voltage/power monitor
+      tests/qtest: ina238: add current/voltage/power monitor test
+      tests/qtest: ina238: cover voltage/temperature injection and derivation
+      tests/qtest: ina238: cover the ALERT path and conversion-ready flag
+      tests/qtest: ina238: cover the injection-property limits
+      tests/qtest: ina238: cover the operating modes
+      tests/qtest: ina238: cover conversion-ready and alert-latch semantics
+      tests/qtest: ina238: cover a cleared calibration per channel
+      hw/arm: minerva: add Facebook BMC machine
+      hw/arm: minerva: populate EEPROM data
+      tests/functional/arm: minerva: add BMC boot test
+
+ docs/system/arm/aspeed.rst                  |   7 +-
+ hw/arm/Kconfig                              |   2 +
+ hw/arm/aspeed_ast2400_palmetto.c            |   4 +-
+ hw/arm/aspeed_ast2400_supermicrox11.c       |   4 +-
+ hw/arm/aspeed_ast2500_romulus.c             |   4 +-
+ hw/arm/aspeed_ast2500_supermicro-x11spi.c   |   4 +-
+ hw/arm/aspeed_ast2500_witherspoon.c         |   4 +-
+ hw/arm/aspeed_ast2600_bletchley.c           |   3 +-
+ hw/arm/aspeed_ast2600_catalina.c            |   2 +-
+ hw/arm/aspeed_ast2600_minerva.c             | 856 ++++++++++++++++++++++++++++
+ hw/arm/aspeed_ast2600_sanmiguel.c           |   7 +-
+ hw/arm/meson.build                          |   1 +
+ hw/arm/realview.c                           |   3 +-
+ hw/arm/versatilepb.c                        |   3 +-
+ hw/i2c/i2c_mux_pca954x.c                    |  98 +++-
+ hw/ppc/e500.c                               |   3 +-
+ hw/riscv/tt_atlantis.c                      |   3 +-
+ hw/rtc/ds1338.c                             | 427 +++++++++++---
+ hw/sensor/Kconfig                           |   8 +
+ hw/sensor/ina230.c                          | 597 +++++++++++++++++++
+ hw/sensor/ina238.c                          | 802 ++++++++++++++++++++++++++
+ hw/sensor/meson.build                       |   2 +
+ hw/sensor/trace-events                      |  14 +
+ include/hw/i2c/i2c_mux_pca954x.h            |   1 +
+ include/hw/rtc/ds1338.h                     |  21 +
+ include/hw/sensor/ina230.h                  |  14 +
+ include/hw/sensor/ina238.h                  |  14 +
+ tests/functional/arm/meson.build            |   2 +
+ tests/functional/arm/test_aspeed_minerva.py |  30 +
+ tests/qtest/ds1338-test.c                   | 191 ++++++-
+ tests/qtest/ds1339-test.c                   | 581 +++++++++++++++++++
+ tests/qtest/ina230-test.c                   | 602 +++++++++++++++++++
+ tests/qtest/ina238-test.c                   | 806 ++++++++++++++++++++++++++
+ tests/qtest/meson.build                     |   4 +
+ tests/qtest/pca9545-test.c                  | 116 ++++
+ 35 files changed, 5125 insertions(+), 115 deletions(-)
+---
+base-commit: 615ece3c406b262996e569f29ea6eed0d81c4d8d
+change-id: 20260907-bmc-minerva-cd13a718c90b
+
+Best regards,
+--  
+Emmanuel Blot <emmanuel.blot@free.fr>
 
 
