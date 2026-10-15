@@ -4,64 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A12FCCA463
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 15:12:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6EE94CC6B3A
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 15:13:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHN88-0001JH-TU; Thu, 15 Oct 2026 11:12:28 -0400
+	id 1xHN5t-0005Zm-2P; Thu, 15 Oct 2026 11:10:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eblot.ml@gmail.com>)
- id 1xHN85-0001DE-RS
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 11:12:26 -0400
-Received: from mail-wm1-f43.google.com ([209.85.128.43])
+ id 1xHN5e-0005Ty-7N
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 11:09:56 -0400
+Received: from mail-wr1-f54.google.com ([209.85.221.54])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <eblot.ml@gmail.com>)
- id 1xHN83-0001zN-6u
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 11:12:25 -0400
-Received: by mail-wm1-f43.google.com with SMTP id
- 5b1f17b1804b1-4a02718da81so43636195e9.1
- for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 08:12:22 -0700 (PDT)
+ id 1xHN5a-0001OO-OG
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 11:09:53 -0400
+Received: by mail-wr1-f54.google.com with SMTP id
+ ffacd0b85a97d-48c45111bebso3467400f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 08:09:50 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792077142; x=1792681942;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :content-type:mime-version:subject:date:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=Wz917+uBupSyWRH1dqvy7enyaP5Nw7m4IxLZ4sXKP08=;
- b=QQSfttJvyVJVDPMmM1/Fti7GEa5ACYw8r0fFY9GUC9TeNkCleybLV2zhk6jCdA2o6G
- ujPTUZo8nva97T7laK67bHPh/edmpA3mOuZaX9Kni0vnbePBWiA+Yp6shmZ4iOXgHo2R
- ONIfXFuZfJk02BVwrpFUF7UsLSvujjlYRdwm4krSJR2XNRZqLkjuE+y0hBFjMCzjLrgm
- OpW3H2ikZwqS4CLwMfzX4UfHLbVHK445Rt0tQldyBKu/ZoqC6Gi5gC+BN+5aQ+9g9jh3
- ycJd8AdxjmTOEqPS/pHoT6LeukOniV1B9UHuWd3y0G5HXt/wNJxiXX1mPxR984ivuexB
- PNGg==
-X-Gm-Message-State: AFq9FYIcxa/yJPB54lo+MPnP0pN3TOC+NTwEpcCb6FpSFOo/oBbsowyl
- e+/8DoLbiUX+Mm5LYvHvnvESKsZLCybAqvdOeYPaJ0kJtZ0/75UMV91rxWeYDg==
-X-Gm-Gg: AYBFou1F/0fBgXyHpVl5jbHvgEs+vScV/7FVtQC/c5dGzc4YMsA3NdkdjNoOyGPcS5R
- 7TpSTF9kXOPwkEPmxl+kCzvKAIQfChBNSRNKMu14pyhG7vHwGJg+cE05X5oe4rkHaKHuS6Sz0Nh
- 4wS4Wrrmw4xyIp4kk9tmU9qhfkI8FaU3sQufMVhJogF7qf6TJukLRKCvdtsn0w0F4voJb+As4kF
- ZB3BTIeEO2vZugpPFFtaRHJqbTrVfNM9PKw4cI6o/wws65gF6+k5vhn1YIaMcfzNBa53VWvy2K5
- +YLbb7pR3Qh9XQ6xT2sNAz9Mq9AORdIfKwF7mXj4M/93M++3FOLxQfORDRQvKry9v6S9w157Ixm
- j1teEd5ut0O+8SlQ3LoGWO5EoUHEv9HOzrYaPcdNyYt9ROKnu1gAVaSj+0gR5aRjfDtcNVj7jIQ
- 7I2fGk6/POysgw8QEnAoQ/O+snbXftmO5rjZ0iZ7atrd3b569tbhvAqEkfWLkV/P5rt3S5eKGRJ
- jJf8Pi2Uchdsc4J1j4NzfmQo33zHq0QtwRK2o0kieh46Q==
-X-Received: by 2002:a05:600c:3e8c:b0:49e:6861:50f7 with SMTP id
- 5b1f17b1804b1-4a18e49d251mr364033375e9.5.1792077141562; 
- Thu, 15 Oct 2026 08:12:21 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1792076989; x=1792681789;
+ h=cc:to:content-transfer-encoding:content-type:mime-version
+ :message-id:date:subject:from:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=hZuyob+ovQFH/gM76ih2SzJ8peHZvlXMktkW8YUoZ8E=;
+ b=NxC9Pfu8oCXqXeekE2xJ6JIYKbp7Q8ImmS8KZUmuv4Fupf0iRkoDXje4eVV5+gQIjt
+ cTqoGAOM+22dwIHgkfLvAYgJTVsToPVseN+h90neiVUG3YKNKRomXzfR9hnLz3T63aKe
+ IVZwUC/cPc8Xesa2E4E79gZxg1qpNWYCKBzq151gO9PVGzDiGyUPElT7ZwkRGHm9BOQw
+ 7u1n4sMZHcSRgG+WzvUi6Sa8nWtfc0UlJ4/lO6QkTT3Ke+FnkvNrM/88kg6lQS9z5+0i
+ Y03SWgGfNUWx6czl8nM07r5W6mwhz9/5p9zyEChKUUQQ46CrCx2lGe37rTYaPXGCqFVH
+ TOJA==
+X-Gm-Message-State: AFq9FYIN6Jy/lXnPFN9AVefYHsNEZn8qjGgP7TQ9+FWfCP/2CToayxkb
+ +4mgjArQzCQQuCIFr3rBaOfdTjIBpRWuBVL+0dy0xnivq/ZTGIIN/+x04kVwbw==
+X-Gm-Gg: AYBFou3+7pv7KiqshEZIJrLUIlEWlll69giHEp90HfIfS6CFowoIMb5yQLkueqcwQEb
+ 2k8GizKC3M/p2CWRsTIyyj/4Qh/U9cngQwqnC8w6a6S+Ed6cBAyVY8n50rNyfh2JsAC57jCZsru
+ hiW/a9rb0qd3e6auD55TfAuE1swJWs2mTaikiKDr5Mxubg4Xmbq/n+GFK5CubQDZvE3V4SJLgSS
+ CzkOs9f+5Zrj22JviresDiSLh8du6+1ARfJi9Fz3nF5iaimwkOHr1r3QgI9daq0LR1vA7Fcfpq3
+ msLjFVLmdxoMwbvxu+uRmEHB1eztudIDyAFkmY5d4mxwPxCb5BKpbauMmZlInKjkK+qjrN7r19y
+ wNjDuLJyUl6Eie6IwjjGeMHPZuPqGXQKZ+lNM10Tx752Bfqp4ZuFAPpBJINNoE0GPemoNN/G9e3
+ h0Gonvmk6p302nvRt9RnX5T4qGGaqYabF03XmblIzcLZwA+Q+ZDrVBJfKq9XlQByxJmQ0sj4pQk
+ MlmKA7QQzEobJ82CVuC/thYPiCZU5hrf4GKt4xMc+J4iw==
+X-Received: by 2002:a5d:5885:0:b0:48d:f7f0:327d with SMTP id
+ ffacd0b85a97d-48df7f03308mr3494199f8f.29.1792076988777; 
+ Thu, 15 Oct 2026 08:09:48 -0700 (PDT)
 Received: from localhost (89-93-216-19.hfc.dyn.abo.bbox.fr. [89.93.216.19])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a1bdc036a4sm89459775e9.11.2026.10.15.08.12.17
+ ffacd0b85a97d-48df8f9ee47sm2435883f8f.45.2026.10.15.08.09.47
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 Oct 2026 08:12:18 -0700 (PDT)
-Date: Thu, 15 Oct 2026 13:57:55 +0200
-Subject: [PATCH 17/22] hw/sensor: tmp105: add the TMP1075 variant
+ Thu, 15 Oct 2026 08:09:48 -0700 (PDT)
+Subject: [PATCH 00/22] Aspeed: TMP421 and TMP1075 sensors, and the Clemente
+ BMC machine
+Date: Thu, 15 Oct 2026 13:57:38 +0200
+Message-Id: <20261015-bmc-clemente-v1-0-bf591886b5b6@free.fr>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261015-bmc-clemente-v1-17-bf591886b5b6@free.fr>
-References: <20261015-bmc-clemente-v1-0-bf591886b5b6@free.fr>
-In-Reply-To: <20261015-bmc-clemente-v1-0-bf591886b5b6@free.fr>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/y2NQW7DIBQFr2KxLtWHhI+xoqr3qLLA8JxQBScFx
+ 6oU5e61nS5Hem/mISpKQhVd8xAFc6rpOi6g3hoRzn48Qaa4sNCkmRxZ2ecgwwUZ4wRJZDgyW7b
+ KiuVyKxjS76b7Or643vtvhGl1/C8Kfu5LZ3rNREatfut0zWHNKFJmy+Q0osxezjtJ0kZDofWKW
+ pjPoQDvQ/lYjb2vkOGac5q6hpVBwC7siXvN2jmGYTdoB89ApNiqsI9tFMfn8w9FmWIX/AAAAA=
+ =
+X-Change-ID: 20260907-bmc-clemente-0056d6676717
 To: qemu-devel@nongnu.org
 Cc: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, 
  =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
@@ -74,15 +78,15 @@ Cc: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
  Emmanuel Blot <emmanuel.blot@free.fr>
 X-Mailer: b4 0.16.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1792065465; l=8350;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1792065464; l=7193;
  i=emmanuel.blot@free.fr; s=20260602; h=from:subject:message-id;
- bh=yuPMFyntZoIKyBRcJ/PEi8kqrviD7nEvWLABiSDbjNo=;
- b=/DA700DdktBm2jgRRZSTsxbDMloG3YmYfPNerMT57DG19YJKNpl9DW+QpjizHHP69k5VTXGJ1
- KglcVC35cvCAUOe4+pG4+d+/VPjKCThuaLhgsteQZdmlyJwqku8Df3G
+ bh=iydWwc1WObcU7xqqvK5Efg+4Nf+SqeMppXxCXaC0b3M=;
+ b=YryBHCazq2cFEHUQL7BiOfXsB7VaAsKF3A8rUUJUCQA0ZitgziWOw6BwZUEuxD9O+BXfSykU2
+ po0M/wM1cHSCMdVB8/QehX3gARdckUiWosUDW0Axboga8OHGrWknOri
 X-Developer-Key: i=emmanuel.blot@free.fr; a=ed25519;
  pk=0qFrZ21FAAN8OfVsSoVcCFTk/NMYOWzxJz4paSAVm0g=
-Received-SPF: pass client-ip=209.85.128.43; envelope-from=eblot.ml@gmail.com;
- helo=mail-wm1-f43.google.com
+Received-SPF: pass client-ip=209.85.221.54; envelope-from=eblot.ml@gmail.com;
+ helo=mail-wr1-f54.google.com
 X-Spam_score_int: 0
 X-Spam_score: -0.1
 X-Spam_bar: /
@@ -108,248 +112,134 @@ From:  Emmanuel Blot via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The TMP1075 is register-compatible with the xx75 family but widens the
-Config register to 16 bits and adds a read-only Device ID register.
-Model it as a new variant of the shared TMP105 device: the control bits
-keep the legacy layout in the upper byte, the lower byte has no function
-of its own but is writable, and single-byte access stays compatible with
-the 8-bit parts. The converter is fixed at 12 bits and the fault queue
-matches the TMP75.
+Add the clemente-bmc machine and the temperature sensors it needs.
+
+The TMP421 variants are now described by a class descriptor instead
+of a lookup table. Channel enablement, register write masks, the
+one-shot trigger and the per-channel N-factor registers are modelled,
+reset follows Resettable API, and the variant type names move to a
+header so boards stop open-coding the strings.
+
+The TMP1075 is a TMP105 with a 16-bit Config register and a read-only
+device ID.
+
+The new TMP421 state is stored in optional subsections.
+
+The clemente-bmc machine is derived from the platform device tree and
+instantiates every device that is supported in QEMU. FRU EEPROMs are
+sanitised images taken from real hardware.
+
+New qtest for the TMP421 family, plus TMP105 cases for the TMP1075.
+Both check a migration round trip.
+
+Based-on: <20261015-bmc-minerva-v3-0-7d50c8a108e5@free.fr>
 
 Signed-off-by: Emmanuel Blot <emmanuel.blot@free.fr>
 ---
- hw/sensor/tmp105.c              | 85 ++++++++++++++++++++++++++++++++++++++++-
- include/hw/sensor/tmp105.h      |  2 +
- include/hw/sensor/tmp105_regs.h |  5 +++
- 3 files changed, 91 insertions(+), 1 deletion(-)
+Emmanuel Blot (22):
+      hw/sensor: tmp421: do not report a stale errno on a parse failure
+      hw/sensor: tmp421: name the parent object field parent_obj
+      hw/sensor: tmp421: implement Resettable reset
+      hw/sensor: tmp421: model device variants with a class descriptor
+      hw/sensor: tmp421: honor per-variant channels and channel enablement
+      hw/sensor: tmp421: implement register write masks, one-shot and N-factor
+      hw/sensor: tmp421: describe the temperature properties
+      hw/sensor: tmp421: keep the measurement across a range change
+      hw/sensor: tmp421: migrate the exact measurement
+      hw/sensor: tmp421: publish the variant type names
+      hw/arm/aspeed: use the TMP421 type-name macros
+      tests/qtest: tmp421: cover device IDs and reset defaults
+      tests/qtest: tmp421: cover temperature encoding and range
+      tests/qtest: tmp421: cover per-variant channels and enablement
+      tests/qtest: tmp421: cover software reset and N-factor registers
+      tests/qtest: tmp421: cover the register form of the migration stream
+      hw/sensor: tmp105: add the TMP1075 variant
+      tests/qtest: tmp105: cover the TMP1075 device ID and reset defaults
+      tests/qtest: tmp105: cover the TMP1075 config register width
+      tests/qtest: tmp105: cover the Config low byte across a migration
+      hw/arm: clemente: add Facebook Clemente BMC machine
+      hw/arm: clemente: populate the FRU EEPROMs
 
-diff --git a/hw/sensor/tmp105.c b/hw/sensor/tmp105.c
-index ece0650d70..c5aa553d9a 100644
---- a/hw/sensor/tmp105.c
-+++ b/hw/sensor/tmp105.c
-@@ -1,5 +1,5 @@
- /*
-- * Texas Instruments TMP105/TMP75/TMP175/LM75B temperature sensor.
-+ * Texas Instruments TMP105/TMP75/TMP175/TMP1075/LM75B temperature sensor.
-  *
-  * Copyright (C) 2008 Nokia Corporation
-  * Written by Andrzej Zaborowski <andrew@openedhand.com>
-@@ -51,6 +51,7 @@ struct TMP105State {
- 
-     uint8_t pointer;
-     uint8_t config;
-+    uint8_t config_lsb;
-     int16_t temperature;
-     int16_t limit[2];
-     uint8_t faults;
-@@ -76,6 +77,12 @@ struct TMP105State {
-  * @fixed_res: converter resolution field pinned by the device, or -1 when it is
-  * software-selectable.
-  * @limit_lsb_mask: low-byte mask applied to the T_LOW/T_HIGH limit registers.
-+ * @config16: the Config register is 16 bits wide over I2C. Its control bits
-+ * occupy the upper byte (mirroring the 8-bit layout); the lower byte has no
-+ * function of its own but is writable, and comes up as 0xff. Single-byte
-+ * access stays compatible with the 8-bit parts.
-+ * @die_id: value of the read-only Device ID register, or 0 when the device has
-+ * none.
-  */
- struct TMP105Class {
-     I2CSlaveClass parent_class;
-@@ -84,6 +91,8 @@ struct TMP105Class {
-     int8_t fixed_res;
-     uint8_t limit_lsb_mask;
-     bool tm_change_clears_alert;
-+    bool config16;
-+    uint16_t die_id;
- };
- 
- FIELD(CONFIG, SHUTDOWN_MODE,        0, 1)
-@@ -185,6 +194,13 @@ static void tmp105_read(TMP105State *s)
-         tmp105_interrupt_update(s);
-     }
- 
-+    if (tc->die_id && (s->pointer & 0x0f) == TMP105_REG_DIE_ID) {
-+        s->buf[s->len++] = tc->die_id >> 8;
-+        s->buf[s->len++] = tc->die_id & 0xff;
-+        trace_tmp105_read(s->parent_obj.address, s->pointer);
-+        return;
-+    }
-+
-     switch (s->pointer & 3) {
-     case TMP105_REG_TEMPERATURE:
-         res = tc->fixed_res >= 0 ? tc->fixed_res :
-@@ -196,6 +212,9 @@ static void tmp105_read(TMP105State *s)
- 
-     case TMP105_REG_CONFIG:
-         s->buf[s->len++] = s->config;
-+        if (tc->config16) {
-+            s->buf[s->len++] = s->config_lsb;
-+        }
-         break;
- 
-     case TMP105_REG_T_LOW:
-@@ -220,11 +239,29 @@ static void tmp105_write(TMP105State *s)
- 
-     trace_tmp105_write(s->parent_obj.address, s->pointer);
- 
-+    if (tc->die_id && (s->pointer & 0x0f) == TMP105_REG_DIE_ID) {
-+        return; /* Device ID register is read-only */
-+    }
-+
-     switch (s->pointer & 3) {
-     case TMP105_REG_TEMPERATURE:
-         break;
- 
-     case TMP105_REG_CONFIG:
-+        /*
-+         * The control bits live in the first data byte for every variant (the
-+         * upper byte of the TMP1075 16-bit register); a second byte is the low
-+         * byte, which drives nothing but keeps what it is given.
-+         */
-+        if (s->len == 3) {
-+            if (tc->config16) {
-+                s->config_lsb = s->buf[1];
-+            }
-+            break;
-+        }
-+        if (s->len != 2) {
-+            break;
-+        }
-         config = s->buf[0] & tc->config_wmask;
-         if (FIELD_EX8(config & ~s->config, CONFIG, SHUTDOWN_MODE)) {
-             trace_tmp105_write_shutdown(s->parent_obj.address);
-@@ -334,6 +371,13 @@ static bool fault_count_needed(void *opaque)
-     return s->fault_count != 0;
- }
- 
-+static bool config_lsb_needed(void *opaque)
-+{
-+    TMP105State *s = opaque;
-+
-+    return TMP105_GET_CLASS(s)->config16 && s->config_lsb != 0xff;
-+}
-+
- static const VMStateDescription vmstate_tmp105_detect_falling = {
-     .name = "TMP105/detect-falling",
-     .version_id = 1,
-@@ -356,6 +400,17 @@ static const VMStateDescription vmstate_tmp105_fault_count = {
-     }
- };
- 
-+static const VMStateDescription vmstate_tmp105_config_lsb = {
-+    .name = "TMP105/config-lsb",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .needed = config_lsb_needed,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_UINT8(config_lsb, TMP105State),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
- static const VMStateDescription vmstate_tmp105 = {
-     .name = "TMP105",
-     .version_id = 0,
-@@ -375,6 +430,7 @@ static const VMStateDescription vmstate_tmp105 = {
-     .subsections = (const VMStateDescription * const []) {
-         &vmstate_tmp105_detect_falling,
-         &vmstate_tmp105_fault_count,
-+        &vmstate_tmp105_config_lsb,
-         NULL
-     }
- };
-@@ -387,6 +443,7 @@ static void tmp105_reset_hold(Object *obj, ResetType type)
-     s->temperature = 0;
-     s->pointer = 0;
-     s->config = 0;
-+    s->config_lsb = tc->config16 ? 0xff : 0;
-     s->faults = tc->faultq[FIELD_EX8(s->config, CONFIG, FAULT_QUEUE)];
-     s->fault_count = 0;
-     s->alarm = 0;
-@@ -447,6 +504,8 @@ static void tmp105_class_init(ObjectClass *klass, const void *data)
-     tc->fixed_res = -1;
-     tc->limit_lsb_mask = 0xf0;
-     tc->tm_change_clears_alert = false;
-+    tc->config16 = false;
-+    tc->die_id = 0;
- }
- 
- static void tmp175_class_init(ObjectClass *klass, const void *data)
-@@ -482,6 +541,25 @@ static void lm75b_class_init(ObjectClass *klass, const void *data)
-     tc->tm_change_clears_alert = false;
- }
- 
-+/*
-+ * The TMP1075 fixes the converter at 12 bits (its R1:R0 bits select the
-+ * conversion rate instead, which this instantaneous model does not track), uses
-+ * the TMP75 fault-queue mapping, exposes a 16-bit Config register and answers
-+ * the Device ID register with 0x7500.
-+ */
-+static void tmp1075_class_init(ObjectClass *klass, const void *data)
-+{
-+    TMP105Class *tc = TMP105_CLASS(klass);
-+
-+    tc->faultq = tmp105_faultq[1];
-+    tc->config_wmask = 0xff;
-+    tc->fixed_res = 3;
-+    tc->limit_lsb_mask = 0xf0;
-+    tc->tm_change_clears_alert = true;
-+    tc->config16 = true;
-+    tc->die_id = TMP1075_DEVICE_ID;
-+}
-+
- static const TypeInfo tmp105_types[] = {
-     {
-         .name          = TYPE_TMP105,
-@@ -506,6 +584,11 @@ static const TypeInfo tmp105_types[] = {
-         .parent        = TYPE_TMP105,
-         .class_init    = lm75b_class_init,
-     },
-+    {
-+        .name          = TYPE_TMP1075,
-+        .parent        = TYPE_TMP105,
-+        .class_init    = tmp1075_class_init,
-+    },
- };
- 
- DEFINE_TYPES(tmp105_types)
-diff --git a/include/hw/sensor/tmp105.h b/include/hw/sensor/tmp105.h
-index 0698aeead7..6a30504c7c 100644
---- a/include/hw/sensor/tmp105.h
-+++ b/include/hw/sensor/tmp105.h
-@@ -19,5 +19,7 @@
- #define TYPE_TMP175 "tmp175"
- #define TYPE_TMP75  "tmp75"
- #define TYPE_LM75B  "lm75b"
-+/* TMP1075 adds a 16-bit Config register and a Device ID register. */
-+#define TYPE_TMP1075 "tmp1075"
- 
- #endif
-diff --git a/include/hw/sensor/tmp105_regs.h b/include/hw/sensor/tmp105_regs.h
-index ef015ee5cf..ecd0510c2e 100644
---- a/include/hw/sensor/tmp105_regs.h
-+++ b/include/hw/sensor/tmp105_regs.h
-@@ -21,6 +21,7 @@
-  * @TMP105_REG_CONFIG: Configuration register
-  * @TMP105_REG_T_LOW: Low temperature register (also known as T_hyst)
-  * @TMP105_REG_T_HIGH: High temperature register (also known as T_OS)
-+ * @TMP105_REG_DIE_ID: Device ID register (TMP1075 only)
-  *
-  * The following temperature sensors are
-  * compatible with the TMP105 registers:
-@@ -46,6 +47,10 @@ typedef enum TMP105Reg {
-     TMP105_REG_CONFIG,
-     TMP105_REG_T_LOW,
-     TMP105_REG_T_HIGH,
-+    TMP105_REG_DIE_ID = 0x0f,
- } TMP105Reg;
- 
-+/* Value returned by the TMP1075 Device ID register. */
-+#define TMP1075_DEVICE_ID 0x7500
-+
- #endif
+ docs/system/arm/aspeed.rst                |    1 +
+ hw/arm/aspeed_ast2400_palmetto.c          |    3 +-
+ hw/arm/aspeed_ast2400_supermicrox11.c     |    3 +-
+ hw/arm/aspeed_ast2500_supermicro-x11spi.c |    3 +-
+ hw/arm/aspeed_ast2500_tiogapass.c         |   10 +-
+ hw/arm/aspeed_ast2500_witherspoon.c       |    7 +-
+ hw/arm/aspeed_ast2500_yosemitev2.c        |   10 +-
+ hw/arm/aspeed_ast2600_bletchley.c         |    3 +-
+ hw/arm/aspeed_ast2600_catalina.c          |    3 +-
+ hw/arm/aspeed_ast2600_clemente.c          | 1154 +++++++++++++++++++++++++++++
+ hw/arm/aspeed_ast2600_fby35.c             |    2 +-
+ hw/arm/aspeed_ast2600_fuji.c              |    3 +-
+ hw/arm/aspeed_ast2600_rainier.c           |   13 +-
+ hw/arm/meson.build                        |    1 +
+ hw/sensor/tmp105.c                        |   85 ++-
+ hw/sensor/tmp421.c                        |  429 ++++++++---
+ include/hw/sensor/tmp105.h                |    2 +
+ include/hw/sensor/tmp105_regs.h           |    5 +
+ include/hw/sensor/tmp421.h                |   19 +
+ tests/qtest/meson.build                   |    1 +
+ tests/qtest/tmp105-test.c                 |  111 +++
+ tests/qtest/tmp421-test.c                 |  326 ++++++++
+ 22 files changed, 2050 insertions(+), 144 deletions(-)
+---
+base-commit: 615ece3c406b262996e569f29ea6eed0d81c4d8d
+change-id: 20260907-bmc-clemente-0056d6676717
+prerequisite-message-id: <20261015-bmc-minerva-v3-0-7d50c8a108e5@free.fr>
+prerequisite-patch-id: 5aae2c14351eb51fea0cb307bedf21021730debd
+prerequisite-patch-id: 4d9a408b21353dda070052227302e799e4c01726
+prerequisite-patch-id: 01470b3e3d522778ea23f39f03a3b82a2a0f2d3e
+prerequisite-patch-id: 11d0a41b1b3009d95ddf51d9bde960658c924ac1
+prerequisite-patch-id: f1072c7d99e462e1c85ecace78eef33bc6e8778a
+prerequisite-patch-id: 8897466a7505261a1060243ca01572c3a8874068
+prerequisite-patch-id: f35c864317c68dd2b9ca969bec243fafd80497e6
+prerequisite-patch-id: 8b05ecb9c1191509e7e4cc76944c88f4f7891ca2
+prerequisite-patch-id: 78155b4352683ffc03826038c3d8160b788c29ff
+prerequisite-patch-id: e0af745b421c39fd47311ca21576c510bc961526
+prerequisite-patch-id: c14af0a372dcb314ef92a04a47e5bedc846281c8
+prerequisite-patch-id: 684f5ec9f4ac0640438d1eead20832c529d67508
+prerequisite-patch-id: e09c684b2002e30ae14a11bfe409869478d104bd
+prerequisite-patch-id: 09afec3682584cbda09b00c0ac87dc60835454d7
+prerequisite-patch-id: a89dfec61a795b84c3cf02927fd7c40bc6f694ae
+prerequisite-patch-id: 6a23cb3b1362aaf70fe73f554d9d5fcf2e72c3ec
+prerequisite-patch-id: 7c11c16803a5b96be5653a05acf8b46a3020e8d9
+prerequisite-patch-id: b9251deb99859cc30a9c67b5dba3066124f32033
+prerequisite-patch-id: 87291d7798b6bddde6242c651f0e03deb96ab559
+prerequisite-patch-id: caac35561ca8b2bdd86101f943e93aa7bcd3a90c
+prerequisite-patch-id: 27b0b37242fba900f982f9bcaca36f48c6a115bb
+prerequisite-patch-id: 1259c5fbfeb5d2bf1760e7b12df59f182528cee6
+prerequisite-patch-id: 2654532e955554fbae6ffcdf6ff3b38bb03fbbd5
+prerequisite-patch-id: ff0505a46b3604ba502834d3f5bf17ab85b3c5fa
+prerequisite-patch-id: 250958c152f11026aa98d334892132f9ab7467db
+prerequisite-patch-id: f3d938264fb2f0c2c292dbb4fb218e5b8d22c3d9
+prerequisite-patch-id: 06602fc849e499131998af486ae455497a4245c1
+prerequisite-patch-id: d857ee22db2d62a98f4f2054d1966cce7ed39452
+prerequisite-patch-id: 7909e49ac93573ebd56424a556d4e4872e9778eb
+prerequisite-patch-id: 53cd0411fed556e85f6557cab6fc32056c24bddc
+prerequisite-patch-id: 71752a32c10eacd296f62bcc94c09db5d54007c3
+prerequisite-patch-id: 7a21b5fabeddff9c08d6b532b2a398737f375a06
+prerequisite-patch-id: c6154dd1e7a48decd770f062fb57f32cfb2e1826
+prerequisite-patch-id: b94e4e3d83aa013ffd05267e20d48d6813ca2d7c
+prerequisite-patch-id: 23716ee3fbb2395d0fc33922433fb6d708081fae
+prerequisite-patch-id: 2e57dc2effacfdfb8adb93f5e33bfefdb7c28dc0
+prerequisite-patch-id: 2400063e36ca403574b812436fef8c38608e6005
+prerequisite-patch-id: 557a2e98bce9c59d1d4513207e021e217d9dcc59
+prerequisite-patch-id: db5ca53f9dccded71da127446b4870678640c86f
+prerequisite-patch-id: ddf5d85c6eb13a9121342263b6f0ee9902b40d06
+prerequisite-patch-id: d9e3e31b88133c8d2ffac7c931d9ab153cf20af7
+prerequisite-patch-id: 7ed25d5dc6b899645ef98cdb591344042b77c41f
+prerequisite-patch-id: 6c70cb570c5c6bfe0d61cb4c5260e6d8f195f383
+prerequisite-patch-id: 3caea8b32b51fa447ee21565594b6465d2e51670
+prerequisite-patch-id: 758236b35dcee46e176a7167e703048e11f6e634
+prerequisite-patch-id: 0521a46d473cad9f3924b4e0f86473fe237c1982
+prerequisite-patch-id: 819077eedcc252ade342c8288af2d57e0c8ece6f
+prerequisite-patch-id: 913f8260d8274a1c1706d09915cf75c0dd11061c
+prerequisite-patch-id: b0913e3e23d3bd41ffb248a3afecdbfe93b4915d
+prerequisite-patch-id: ef2e1478aad5f5722a2d021b424803d7cb2cdc4c
 
--- 
-2.53.0-Meta
+Best regards,
+--  
+Emmanuel Blot <emmanuel.blot@free.fr>
 
 
