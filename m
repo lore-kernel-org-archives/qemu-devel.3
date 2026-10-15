@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4997C2D0A6
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 18:10:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F08CCC6B33
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 18:10:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHPtI-0003ni-T6; Thu, 15 Oct 2026 14:09:20 -0400
+	id 1xHPtC-0003ld-Fy; Thu, 15 Oct 2026 14:09:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xHPtC-0003lw-Lv
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 14:09:15 -0400
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ id 1xHPt5-0003kj-UG
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 14:09:08 -0400
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xHPtA-00010h-Ke
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 14:09:14 -0400
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-48af27fe287so678970f8f.0
- for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 11:09:11 -0700 (PDT)
+ id 1xHPt3-0000zx-Gt
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 14:09:07 -0400
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-48af27fe287so678890f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 11:09:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1792087750; x=1792692550; darn=nongnu.org;
+ d=linaro.org; s=google; t=1792087744; x=1792692544; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=Xxm5+YHoURNhPUu0cajg03TE2X7qhBi4NtKKynlLpmc=;
- b=mIGu+IcIMyRFXVMMTeSNfKhU1bTTX72a1/12E510jdaymgL8duGOYeIv9qje9bnSny
- r5wblgJj5QFx3OJATr+q5Cm9yAkLXGTFq9wnOyINeljCFKlUVVNxF2cx/T85Yk6g+6gH
- 4hQgw2Z//SOd/ZHFSD3KkDdBPZ7Y+Uai/+0RJSoY7XXYsU8Gaa45vJpCdgqqVyDc+BJW
- xT8H3xx11dFvwBtxK5LPkqTlLsatnoK14UZLhXwz1O9iJVn4jiSMGphr6Ut1cWPXjzWV
- PT0O8YHPl0nUTDGIpkR+K+gQ1nLVKUPre9+gCxRGBzA/rza+dqnGcXgRnLjZCMo9CrKt
- cReg==
+ bh=lFZ5bkHT08V3lLkvwIkeipQatXkMut8mgXu9G2GSXIo=;
+ b=lf5eZbG8dv+NMPIiJJHKTeemnU6iGcav62Zn8esIm8Vcyjtw3Gf4Ne4q53utXmeOzJ
+ f3YTvgSREhiuL0Yan7FHrahjlWfhjiwwD0Bth459zw/rAE0ujII2Nu78s/baZUWGymKq
+ PdGjXzAsq308nY+pfJIJX3D+LdmRSomNOOGTrw9acqZkXwHQHOmp0hrojHSbx3v9iU8I
+ an1IrItsqmfj/zWkZbc/RywifjFIxcHhh8jH4Y6lg42+UDhB+dWRkwWvjsgctIitcvuX
+ SU3HOAOTdxjSruNoDoB27639eZAqdLGp/NS9xkjrQMu5jIhOUaVlPPjUzLXzU34xH+tQ
+ Un0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792087750; x=1792692550;
+ d=1e100.net; s=20260707; t=1792087744; x=1792692544;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to:content-type;
- bh=Xxm5+YHoURNhPUu0cajg03TE2X7qhBi4NtKKynlLpmc=;
- b=fkTWiaFa+0Fa/XBQ/AOEHMNfwSEfWyfqZ1q6OvtZH1CbxCLEYy4kXsQHSphe7rwhCw
- HPtRBYghhYr6CEgTE+8MhVOGyzZX0cA5qRk/bxAVZBouQOSdpVWJBLi56FwXOJWG9JNe
- dMawW1QiJunIE4mZ6lVAmB2KQOoOT/IrCisOh8sKLt+mfvnLkRgER5L9jSo3p+je02oR
- 7STTDgKGV2QzeN8a6P4WQ/renuSatwZlHod8X0acmm8TUSN7Kzz8dUZ56LQ3sgEpYwsB
- NVNGCspewZe+IF/q5u7zCFGvYbtllq+e1fyBfhnPVFgkrPG6I7HtHbiyAfIRAMGkcQ30
- Dbaw==
-X-Gm-Message-State: AFq9FYLlqS8456J/LCJJE0ep6ryzquRfh/vSJB+JkMZrZ0Ck4cZXtzr3
- KRTAagt2sE2EgtP743pPYt+ioG0Z5CobrSwmqelaBlcCAe3wU22JTDKfrgNA/NoNC7KiybzUZwk
- gL685AkA=
-X-Gm-Gg: AYBFou3lz5tJeJnPxbwZuCnhfSROU7UwkUNhFwcryu+5Fqj1iemjSqviz5H0GT0NTGx
- mdOvaMhGBQLgG3nGSvRjhO3rW/mMdkGTMSRQSirWoOLkhUs+SU2pDbzycPTtB/wx0U/QpRJyRvO
- 7DYYrayN4XBOfI3RB3UeJwPRQc9czc/IuFC3LlFaV5+rFONdZU5WS6XLDAqKbSuCIzZfuAYxBt4
- FVRszLxyrgYpiEnQ094e/Q3li8zRKtVWVrua5dZzzI9UsEFEmwv+AZui0jxTgLzd8dYbUlNhizM
- qj2ZDTdfIx2797d8wy9BI0BrHOBxDH8mK7DshfTT2OXpwMR08G7wsJErvDJ6JFSVRQ/DqgLb1t0
- 5SkZZa4SQtq0kiAyFjyOcyJhXysRTwtgRLiRBPoI5POm7Xfu8sQAx42YqaM00B7PjER6oBekqUm
- 23K6fFIyW7Jdu7GOCDBFZC3gVZDZOHUindYZkxM6okoLNFmQ7q5uThEUFwMy1NpWKYGinH7OAtI
- MqzGy5ND0rnhBW5bPyHq8n0qK/j2Nrv6OpuSnvktCmMNT+xGWb9cL7hpnoa3nPtrZLoAvvT3bbJ
- 1x4=
-X-Received: by 2002:a05:6000:454c:b0:487:c3e:8df8 with SMTP id
- ffacd0b85a97d-48dba77cf87mr28822920f8f.5.1792087750102; 
- Thu, 15 Oct 2026 11:09:10 -0700 (PDT)
+ bh=lFZ5bkHT08V3lLkvwIkeipQatXkMut8mgXu9G2GSXIo=;
+ b=Tlkp5wQWvOGq4Mu2nH76LaUWQlicuAOAr91LSGAqFIkfMyBmt60hwqOrYA6IwC9fUW
+ +068XX4nW5PGI5ZKHQ6FkWbihMBFLEYhtx+fWp2OidPv2MoC5OibdxN1a2a9LQ1voaeV
+ fK6vUumm6GpuE8wdAafcb8CMy9iPGX8Cdjvdrw7k9+5gp0lAPQvgJRw8Rya2i9LvO/d1
+ 4EW2fwP+lQ2OGOAue5VZ7L3zM6D24tkmo+IQNCoxJFhAaRK+RodLviYW5QQwn9mwo/JM
+ f2WTlbOpoXUasaVPt5ycshmZBjcVI0h88PDj6y7SWXTV0CYIrEIMQvPhmA8MF5DpDthr
+ gbWA==
+X-Gm-Message-State: AFq9FYKMKk4eGSHLbH8tSLhif2c0rIGnbnKqSNDUCUP+3LJCUgNAtSVu
+ 0Z1eTXapfbFgBPpsZq094hlB2cyXJJnDsZXqZTypRPvlwppO3v5XTlsEk0yhhGtwiK7tysNZAQ6
+ DSM4PNqk=
+X-Gm-Gg: AYBFou1VKsJAAn1CWN3xZxqwnep5qvs5dC0pSA0MQ1pQW2XVDrvQbVB5bGG1eNl5xOR
+ qPq4k6z4PSQyBd7jHMA3sFrwFRfus5wM2nY60Jz4PKAs2/37RrtYlnoLk5I83SSxRxIwV4RkLWS
+ yL+34TBN23B5I98bg0wA+yFSUSU0yLe0XPSeuJwxncvhSFfIkZ1TRdhTbWnvqVSdYPW5Xx4OAA8
+ 61pKWBuGoFCSkL6q1R8FgmmuywAQvb6YwUdbRvRs9X6PMo8NEp8vER8sjtxlEPX9wsP1vMHd9Qf
+ 3OPWqtjJ7QPHvbSwBMq03OG/WNCih2cvNK0WQr4fgiSqOVT8uSTl6RpeOfskS8EEV33TSmqUXnl
+ BTrti4AFX7DczxXSL2BV60JUlMKD8dYRNEGQig1hJBxvmE9zYckkq6LX0PLZ4jY3sVOgUSNzpb1
+ utIYY8BOLtz7zDcL6eIWRrh2/3NEFrAGkBdjoH4UorAhnhM8JO+mvSfAB11sI5Yro5cl/8EsCk7
+ LX0fUFXGgmvAvDGf7A1TOIUmhpClWDMdpYH2xoeWoxShm5C1PcDooJO7dOUlpATgqV9GiR4gOwx
+ 31A=
+X-Received: by 2002:a05:6000:298e:10b0:48c:7f53:9603 with SMTP id
+ ffacd0b85a97d-48dba77d033mr30756403f8f.7.1792087743158; 
+ Thu, 15 Oct 2026 11:09:03 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48de7773d02sm14692701f8f.13.2026.10.15.11.09.09
+ ffacd0b85a97d-48de7773d02sm14692701f8f.13.2026.10.15.11.09.02
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 Oct 2026 11:09:09 -0700 (PDT)
+ Thu, 15 Oct 2026 11:09:02 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 06/16] tests/tcg/aarch64: Add a test for a two-entry 52-bit
- TTBR table
-Date: Thu, 15 Oct 2026 19:08:48 +0100
-Message-ID: <20261015180858.1863407-7-peter.maydell@linaro.org>
+Subject: [PULL 03/16] hw/timer/stm32f2xx_timer: fix periodic mode and CEN
+ handling
+Date: Thu, 15 Oct 2026 19:08:45 +0100
+Message-ID: <20261015180858.1863407-4-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261015180858.1863407-1-peter.maydell@linaro.org>
 References: <20261015180858.1863407-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x429.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,197 +103,384 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Fuad Tabba <fuad.tabba@linux.dev>
+From: Manuele Conti <manuele.conti@archimede-energia.com>
 
-Add a test checking that, with a 52-bit OA, TTBR[4] of a two-entry
-level 0 table is taken only as base address bit 50, not also as bit 4.
+RM0090 timers count from 0 to ARR inclusive, with a period of ARR + 1,
+including ARR == 0. Wrap CNT while running, arm an absolute expiry, and
+delete the QEMU timer when CEN is cleared.
 
-Reviewed-by: Gustavo Romero <gromero@redhat.com>
-Signed-off-by: Fuad Tabba <fuad.tabba@linux.dev>
-Message-id: 20261009115728.1299384-3-fuad.tabba@linux.dev
+Freeze CNT in stopped_cnt while CEN is clear so TIM_CNT writes while
+stopped are preserved and resume on enable. Return a stopped CNT verbatim
+even when it is greater than ARR. Reset also deletes any pending event.
+
+Migration compatibility is not required for these machine types, so use
+version 2 as both the current and minimum VMState version and serialize
+stopped_cnt directly.
+
+Add qtests covering the timer period, prescaler, stopped CNT, ARR == 0,
+update generation, and system reset.
+
+Signed-off-by: Manuele Conti <manuele.conti@archimede-energia.com>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- tests/tcg/aarch64/system/ttbr-baddr.c | 153 ++++++++++++++++++++++++++
- tests/tcg/aarch64/system/meson.build  |   6 +
- 2 files changed, 159 insertions(+)
- create mode 100644 tests/tcg/aarch64/system/ttbr-baddr.c
+ MAINTAINERS                        |   1 +
+ include/hw/timer/stm32f2xx_timer.h |   2 +-
+ hw/timer/stm32f2xx_timer.c         |  73 ++++++++++++----
+ tests/qtest/stm32f405-timer-test.c | 136 +++++++++++++++++++++++++++++
+ tests/qtest/meson.build            |   2 +
+ 5 files changed, 195 insertions(+), 19 deletions(-)
+ create mode 100644 tests/qtest/stm32f405-timer-test.c
 
-diff --git a/tests/tcg/aarch64/system/ttbr-baddr.c b/tests/tcg/aarch64/system/ttbr-baddr.c
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 1ee661cc23a..8741ec001d7 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -1216,6 +1216,7 @@ F: hw/misc/stm32f4xx_syscfg.c
+ F: hw/misc/stm32f4xx_exti.c
+ F: hw/misc/stm32_rcc.c
+ F: include/hw/misc/stm32_rcc.h
++F: tests/qtest/stm32f405*
+ 
+ Netduino 2
+ M: Alistair Francis <alistair@alistair23.me>
+diff --git a/include/hw/timer/stm32f2xx_timer.h b/include/hw/timer/stm32f2xx_timer.h
+index 040e64d4992..6a9aeea998a 100644
+--- a/include/hw/timer/stm32f2xx_timer.h
++++ b/include/hw/timer/stm32f2xx_timer.h
+@@ -76,7 +76,6 @@ struct STM32F2XXTimerState {
+     qemu_irq irq;
+ 
+     int64_t tick_offset;
+-    uint64_t hit_time;
+     uint64_t freq_hz;
+ 
+     uint32_t tim_cr1;
+@@ -97,6 +96,7 @@ struct STM32F2XXTimerState {
+     uint32_t tim_dcr;
+     uint32_t tim_dmar;
+     uint32_t tim_or;
++    uint32_t stopped_cnt;
+ };
+ 
+ #endif /* HW_STM32F2XX_TIMER_H */
+diff --git a/hw/timer/stm32f2xx_timer.c b/hw/timer/stm32f2xx_timer.c
+index 0442ac64adc..09c30f7af16 100644
+--- a/hw/timer/stm32f2xx_timer.c
++++ b/hw/timer/stm32f2xx_timer.c
+@@ -53,7 +53,8 @@ static void stm32f2xx_timer_interrupt(void *opaque)
+     if (s->tim_dier & TIM_DIER_UIE && s->tim_cr1 & TIM_CR1_CEN) {
+         s->tim_sr |= 1;
+         qemu_irq_pulse(s->irq);
+-        stm32f2xx_timer_set_alarm(s, s->hit_time);
++        stm32f2xx_timer_set_alarm(s,
++                                  qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL));
+     }
+ 
+     if (s->tim_ccmr1 & (TIM_CCMR1_OC2M2 | TIM_CCMR1_OC2M1) &&
+@@ -71,27 +72,43 @@ static inline int64_t stm32f2xx_ns_to_ticks(STM32F2XXTimerState *s, int64_t t)
+     return muldiv64(t, s->freq_hz, 1000000000ULL) / (s->tim_psc + 1);
+ }
+ 
++static uint32_t stm32f2xx_timer_get_cnt(STM32F2XXTimerState *s, int64_t now)
++{
++    uint64_t period_ticks = (uint64_t)s->tim_arr + 1;
++
++    if (!(s->tim_cr1 & TIM_CR1_CEN)) {
++        return s->stopped_cnt;
++    }
++
++    return (stm32f2xx_ns_to_ticks(s, now) - s->tick_offset) % period_ticks;
++}
++
+ static void stm32f2xx_timer_set_alarm(STM32F2XXTimerState *s, int64_t now)
+ {
+-    uint64_t ticks;
+-    int64_t now_ticks;
++    uint64_t period_ticks;
++    uint64_t remaining_ticks;
++    uint64_t delta_ns;
++    int64_t hit_time;
+ 
+-    if (s->tim_arr == 0) {
++    if (!(s->tim_cr1 & TIM_CR1_CEN)) {
++        timer_del(s->timer);
+         return;
+     }
+ 
+     DB_PRINT("Alarm set at: 0x%x\n", s->tim_cr1);
+ 
+-    now_ticks = stm32f2xx_ns_to_ticks(s, now);
+-    ticks = s->tim_arr - (now_ticks - s->tick_offset);
++    /* STM32 timers count from 0 to ARR inclusive. */
++    period_ticks = (uint64_t)s->tim_arr + 1;
++    remaining_ticks = period_ticks - stm32f2xx_timer_get_cnt(s, now);
+ 
+-    DB_PRINT("Alarm set in %d ticks\n", (int) ticks);
++    DB_PRINT("Alarm set in %" PRIu64 " ticks\n", remaining_ticks);
+ 
+-    s->hit_time = muldiv64((ticks + (uint64_t) now_ticks) * (s->tim_psc + 1),
+-                               1000000000ULL, s->freq_hz);
++    delta_ns = muldiv64(remaining_ticks * (s->tim_psc + 1),
++                        1000000000ULL, s->freq_hz);
++    hit_time = now + delta_ns;
++    timer_mod(s->timer, hit_time);
+ 
+-    timer_mod(s->timer, qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) + s->hit_time);
+-    DB_PRINT("Wait Time: %" PRId64 " ticks\n", s->hit_time);
++    DB_PRINT("Wait Time: %" PRId64 " ticks\n", hit_time);
+ }
+ 
+ static void stm32f2xx_timer_reset(DeviceState *dev)
+@@ -117,8 +134,10 @@ static void stm32f2xx_timer_reset(DeviceState *dev)
+     s->tim_dcr = 0;
+     s->tim_dmar = 0;
+     s->tim_or = 0;
++    s->stopped_cnt = 0;
+ 
+     s->tick_offset = stm32f2xx_ns_to_ticks(s, now);
++    timer_del(s->timer);
+ }
+ 
+ static uint64_t stm32f2xx_timer_read(void *opaque, hwaddr offset,
+@@ -148,8 +167,8 @@ static uint64_t stm32f2xx_timer_read(void *opaque, hwaddr offset,
+     case TIM_CCER:
+         return s->tim_ccer;
+     case TIM_CNT:
+-        return stm32f2xx_ns_to_ticks(s, qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL)) -
+-               s->tick_offset;
++        return stm32f2xx_timer_get_cnt(s,
++                                       qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL));
+     case TIM_PSC:
+         return s->tim_psc;
+     case TIM_ARR:
+@@ -187,9 +206,23 @@ static void stm32f2xx_timer_write(void *opaque, hwaddr offset,
+     DB_PRINT("Write 0x%x, 0x%"HWADDR_PRIx"\n", value, offset);
+ 
+     switch (offset) {
+-    case TIM_CR1:
++    case TIM_CR1: {
++        bool was_enabled = s->tim_cr1 & TIM_CR1_CEN;
++        bool enable = value & TIM_CR1_CEN;
++
++        if (was_enabled && !enable) {
++            s->stopped_cnt = stm32f2xx_timer_get_cnt(s, now);
++        }
+         s->tim_cr1 = value;
++
++        if (!was_enabled && enable) {
++            s->tick_offset = stm32f2xx_ns_to_ticks(s, now) - s->stopped_cnt;
++            stm32f2xx_timer_set_alarm(s, now);
++        } else if (was_enabled && !enable) {
++            timer_del(s->timer);
++        }
+         return;
++    }
+     case TIM_CR2:
+         s->tim_cr2 = value;
+         return;
+@@ -220,7 +253,7 @@ static void stm32f2xx_timer_write(void *opaque, hwaddr offset,
+         s->tim_ccer = value;
+         return;
+     case TIM_PSC:
+-        timer_val = stm32f2xx_ns_to_ticks(s, now) - s->tick_offset;
++        timer_val = stm32f2xx_timer_get_cnt(s, now);
+         s->tim_psc = value & 0xFFFF;
+         break;
+     case TIM_CNT:
+@@ -228,7 +261,9 @@ static void stm32f2xx_timer_write(void *opaque, hwaddr offset,
+         break;
+     case TIM_ARR:
+         s->tim_arr = value;
+-        stm32f2xx_timer_set_alarm(s, now);
++        if (s->tim_cr1 & TIM_CR1_CEN) {
++            stm32f2xx_timer_set_alarm(s, now);
++        }
+         return;
+     case TIM_CCR1:
+         s->tim_ccr1 = value;
+@@ -261,6 +296,7 @@ static void stm32f2xx_timer_write(void *opaque, hwaddr offset,
+      * requires a refresh of both tick_offset and the alarm.
+      */
+     s->tick_offset = stm32f2xx_ns_to_ticks(s, now) - timer_val;
++    s->stopped_cnt = timer_val;
+     stm32f2xx_timer_set_alarm(s, now);
+ }
+ 
+@@ -272,8 +308,8 @@ static const MemoryRegionOps stm32f2xx_timer_ops = {
+ 
+ static const VMStateDescription vmstate_stm32f2xx_timer = {
+     .name = TYPE_STM32F2XX_TIMER,
+-    .version_id = 1,
+-    .minimum_version_id = 1,
++    .version_id = 2,
++    .minimum_version_id = 2,
+     .fields = (const VMStateField[]) {
+         VMSTATE_INT64(tick_offset, STM32F2XXTimerState),
+         VMSTATE_UINT32(tim_cr1, STM32F2XXTimerState),
+@@ -294,6 +330,7 @@ static const VMStateDescription vmstate_stm32f2xx_timer = {
+         VMSTATE_UINT32(tim_dcr, STM32F2XXTimerState),
+         VMSTATE_UINT32(tim_dmar, STM32F2XXTimerState),
+         VMSTATE_UINT32(tim_or, STM32F2XXTimerState),
++        VMSTATE_UINT32(stopped_cnt, STM32F2XXTimerState),
+         VMSTATE_END_OF_LIST()
+     }
+ };
+diff --git a/tests/qtest/stm32f405-timer-test.c b/tests/qtest/stm32f405-timer-test.c
 new file mode 100644
-index 00000000000..b29c9e1ab0b
+index 00000000000..f150da12357
 --- /dev/null
-+++ b/tests/tcg/aarch64/system/ttbr-baddr.c
-@@ -0,0 +1,153 @@
++++ b/tests/qtest/stm32f405-timer-test.c
+@@ -0,0 +1,136 @@
 +/*
-+ * TTBR base address with a 52-bit layout and a small initial lookup table
++ * STM32F405 timer tests
 + *
-+ * With a 52-bit OA, walk a two-entry level 0 table through an IPA with
-+ * bit 50 set, which stage 2 maps back onto the table, so the walk
-+ * succeeds only if TTBR[4] is cleared from bit 4 of the base address.
-+ *
-+ * Copyright (c) 2026 Google LLC
-+ * Author: Fuad Tabba <fuad.tabba@linux.dev>
++ * Copyright (c) 2026 Manuele Conti <manuele.conti@archimede-energia.com>
 + *
 + * SPDX-License-Identifier: GPL-2.0-or-later
 + */
 +
-+#include <stdint.h>
-+#include <minilib.h>
++#include "qemu/osdep.h"
++#include "libqtest-single.h"
 +
-+/* from Linux's include/linux/stringify.h */
-+#define __stringify_1(x...) #x
-+#define __stringify(x...)   __stringify_1(x)
++#define TIM2_BASE       0x40000000
++#define TIM_CR1         (TIM2_BASE + 0x00)
++#define TIM_DIER        (TIM2_BASE + 0x0c)
++#define TIM_SR          (TIM2_BASE + 0x10)
++#define TIM_EGR         (TIM2_BASE + 0x14)
++#define TIM_CNT         (TIM2_BASE + 0x24)
++#define TIM_PSC         (TIM2_BASE + 0x28)
++#define TIM_ARR         (TIM2_BASE + 0x2c)
 +
-+#define read_sysreg(r) ({                                           \
-+            uint64_t __val;                                         \
-+            asm volatile("mrs %0, " __stringify(r) : "=r" (__val)); \
-+            __val;                                                  \
-+})
++#define TIM_CR1_CEN     (1U << 0)
++#define TIM_DIER_UIE    (1U << 0)
++#define TIM_SR_UIF      (1U << 0)
++#define TIM_EGR_UG      (1U << 0)
 +
-+#define write_sysreg(r, v) do {                     \
-+        uint64_t __val = (uint64_t)(v);             \
-+        asm volatile("msr " __stringify(r) ", %x0"  \
-+                 : : "rZ" (__val));                 \
-+} while (0)
-+
-+/*
-+ * kernel.ld links the test at 1GB, so the tables below lie within the
-+ * blocks mapped at RAM_BASE.
-+ */
-+#define RAM_BASE    0x40000000UL
-+#define HIGH_IPA    (1UL << 50)
-+#define TEST_VA     (0xffff000000000000UL | RAM_BASE)
-+
-+/*
-+ * Stage 1: 16KB granule, 48-bit VA, so level 0 has two entries.
-+ * Stage 2: 64KB granule, 52-bit IPA, mapping RAM at its own address and
-+ * again at HIGH_IPA.
-+ */
-+static uint64_t s1_l0[2048] __attribute__((aligned(16384)));
-+static uint64_t s1_l1[2048] __attribute__((aligned(16384)));
-+static uint64_t s1_l2[2048] __attribute__((aligned(16384)));
-+static uint64_t s2_l1[1024] __attribute__((aligned(65536)));
-+static uint64_t s2_l2[8192] __attribute__((aligned(65536)));
-+static uint64_t s2_l2_high[8192] __attribute__((aligned(65536)));
-+
-+#define TCR_T0SZ(x)     ((uint64_t)(x) << 0)
-+#define TCR_T1SZ(x)     ((uint64_t)(x) << 16)
-+#define TCR_TG0_16K     (2UL << 14)
-+#define TCR_TG1_16K     (1UL << 30)
-+#define TCR_IPS_52      (6UL << 32)
-+#define TCR_DS          (1UL << 59)
-+
-+#define VTCR_T0SZ(x)    ((uint64_t)(x) << 0)
-+#define VTCR_SL0_L1     (2UL << 6)
-+#define VTCR_TG0_64K    (1UL << 14)
-+#define VTCR_PS_52      (6UL << 16)
-+#define VTCR_RES1       (1UL << 31)
-+
-+#define HCR_VM          (1UL << 0)
-+#define HCR_RW          (1UL << 31)
-+
-+#define PAR_F           (1UL << 0)
-+#define PAR_PA(par)     ((par) & 0xfffffffff000UL)
-+#define S2_BLOCK        ((1 << 10) | (3 << 6) | (0xf << 2) | 1)
-+
-+static void tlb_flush(void)
++static void timer_reset(void)
 +{
-+    asm volatile("dsb sy; tlbi alle1; dsb sy; isb" : : : "memory");
++    qtest_system_reset(global_qtest);
 +}
 +
-+static uint64_t at(uint64_t ttbr1)
++static void test_period_and_update(void)
 +{
-+    uint64_t par;
++    timer_reset();
++    writel(TIM_PSC, 0);
++    writel(TIM_ARR, 4);
++    writel(TIM_CNT, 0);
++    writel(TIM_DIER, TIM_DIER_UIE);
++    writel(TIM_CR1, TIM_CR1_CEN);
 +
-+    write_sysreg(ttbr1_el1, ttbr1);
-+    tlb_flush();
-+    asm volatile("at s12e1r, %1; isb; mrs %0, par_el1"
-+                 : "=r" (par) : "r" (TEST_VA));
-+    return par;
++    clock_step(4);
++    g_assert_cmphex(readl(TIM_CNT), ==, 4);
++    g_assert_cmphex(readl(TIM_SR), ==, 0);
++
++    clock_step(1);
++    g_assert_cmphex(readl(TIM_CNT), ==, 0);
++    g_assert_cmphex(readl(TIM_SR), ==, TIM_SR_UIF);
++
++    writel(TIM_SR, 0);
++    g_assert_cmphex(readl(TIM_SR), ==, 0);
 +}
 +
-+static void setup_tables(void)
++static void test_prescaler(void)
 +{
-+    /* Stage 1: TEST_VA -> RAM_BASE, 32MB block, AF */
-+    s1_l0[0] = (uint64_t)s1_l1 | 3;
-+    s1_l1[0] = (uint64_t)s1_l2 | 3;
-+    s1_l2[(RAM_BASE >> 25) & 0x7ff] = RAM_BASE | (1 << 10) | 1;
++    timer_reset();
++    writel(TIM_PSC, 9);
++    writel(TIM_ARR, 4);
++    writel(TIM_CNT, 0);
++    writel(TIM_CR1, TIM_CR1_CEN);
 +
-+    /* Stage 2: 512MB blocks at RAM_BASE and HIGH_IPA | RAM_BASE, AF, RW */
-+    s2_l1[0] = (uint64_t)s2_l2 | 3;
-+    s2_l1[HIGH_IPA >> 42] = (uint64_t)s2_l2_high | 3;
-+    s2_l2[RAM_BASE >> 29] = RAM_BASE | S2_BLOCK;
-+    s2_l2_high[RAM_BASE >> 29] = RAM_BASE | S2_BLOCK;
++    clock_step(40);
++    g_assert_cmphex(readl(TIM_CNT), ==, 4);
++    clock_step(10);
++    g_assert_cmphex(readl(TIM_CNT), ==, 0);
 +}
 +
-+static int check(const char *name, uint64_t par)
++static void test_stopped_counter(void)
 +{
-+    int ok = !(par & PAR_F) && PAR_PA(par) == RAM_BASE;
++    timer_reset();
++    writel(TIM_ARR, 100);
++    writel(TIM_CNT, 200);
++    g_assert_cmphex(readl(TIM_CNT), ==, 200);
 +
-+    ml_printf("%s: PAR_EL1=%lx %s\n", name, par, ok ? "ok" : "FAIL");
-+    return !ok;
++    writel(TIM_CNT, 37);
++    writel(TIM_CR1, TIM_CR1_CEN);
++    clock_step(10);
++    g_assert_cmphex(readl(TIM_CNT), ==, 47);
++
++    writel(TIM_CR1, 0);
++    clock_step(100);
++    g_assert_cmphex(readl(TIM_CNT), ==, 47);
++
++    writel(TIM_CR1, TIM_CR1_CEN);
++    clock_step(1);
++    g_assert_cmphex(readl(TIM_CNT), ==, 48);
 +}
 +
-+int main(void)
++static void test_arr_zero(void)
 +{
-+    uint64_t mmfr0 = read_sysreg(id_aa64mmfr0_el1);
-+    uint64_t tcr = TCR_T0SZ(16) | TCR_T1SZ(16) | TCR_TG0_16K | TCR_TG1_16K |
-+                   TCR_DS;
-+    uint64_t base = (uint64_t)s1_l0;
-+    int ret = 0;
++    timer_reset();
++    writel(TIM_ARR, 0);
++    writel(TIM_CNT, 0);
++    writel(TIM_DIER, TIM_DIER_UIE);
++    writel(TIM_CR1, TIM_CR1_CEN);
 +
-+    ml_printf("TTBR base address test\n");
++    clock_step(1);
++    g_assert_cmphex(readl(TIM_CNT), ==, 0);
++    g_assert_cmphex(readl(TIM_SR), ==, TIM_SR_UIF);
++}
 +
-+    /*
-+     * PARange 52 bits (FEAT_LPA) and TGran16 with 52-bit addresses
-+     * (FEAT_LPA2)
-+     */
-+    if ((mmfr0 & 0xf) != 6 || ((mmfr0 >> 20) & 0xf) != 2) {
-+        ml_printf("SKIP: no 52-bit PA or no FEAT_LPA2 with 16KB\n");
-+        return ret;
-+    }
++static void test_update_and_reset(void)
++{
++    timer_reset();
++    writel(TIM_ARR, 20);
++    writel(TIM_CNT, 12);
++    writel(TIM_EGR, TIM_EGR_UG);
++    g_assert_cmphex(readl(TIM_CNT), ==, 0);
 +
-+    /*
-+     * The test runs at EL2 (arg=2) and walks the EL1&0 regime with AT, so
-+     * the EL1 MMU settings below only affect those walks.
-+     */
-+    setup_tables();
-+    write_sysreg(mair_el1, 0xff);
-+    write_sysreg(sctlr_el1, read_sysreg(sctlr_el1) | 1);
++    writel(TIM_DIER, TIM_DIER_UIE);
++    writel(TIM_CR1, TIM_CR1_CEN);
++    qtest_system_reset(global_qtest);
++    clock_step(100);
++    g_assert_cmphex(readl(TIM_CR1), ==, 0);
++    g_assert_cmphex(readl(TIM_SR), ==, 0);
++}
 +
-+    /*
-+     * 52-bit OA: TTBR[4] is base address bit 50, so with it set the
-+     * level 0 table is at IPA HIGH_IPA | s1_l0. Stage 2 maps that IPA
-+     * onto s1_l0 (through s2_l2_high), so the walk succeeds only if
-+     * TTBR[4] does not also offset the two-entry table by 0x10.
-+     */
-+    write_sysreg(vtcr_el2, VTCR_T0SZ(12) | VTCR_SL0_L1 | VTCR_TG0_64K |
-+                 VTCR_PS_52 | VTCR_RES1);
-+    write_sysreg(vttbr_el2, (uint64_t)s2_l1);
-+    write_sysreg(hcr_el2, HCR_RW | HCR_VM);
-+    write_sysreg(tcr_el1, tcr | TCR_IPS_52);
-+    ret |= check("ips52", at(base));
-+    ret |= check("ips52 ttbr[4]", at(base | (1 << 4)));
++int main(int argc, char **argv)
++{
++    int ret;
++
++    g_test_init(&argc, &argv, NULL);
++
++    qtest_add_func("/stm32f405/timer/period-and-update",
++                   test_period_and_update);
++    qtest_add_func("/stm32f405/timer/prescaler", test_prescaler);
++    qtest_add_func("/stm32f405/timer/stopped-counter",
++                   test_stopped_counter);
++    qtest_add_func("/stm32f405/timer/arr-zero", test_arr_zero);
++    qtest_add_func("/stm32f405/timer/update-and-reset",
++                   test_update_and_reset);
++
++    qtest_start("-machine olimex-stm32-h405");
++    ret = g_test_run();
++    qtest_end();
 +
 +    return ret;
 +}
-diff --git a/tests/tcg/aarch64/system/meson.build b/tests/tcg/aarch64/system/meson.build
-index f51feb253f9..270d4d6c311 100644
---- a/tests/tcg/aarch64/system/meson.build
-+++ b/tests/tcg/aarch64/system/meson.build
-@@ -79,6 +79,12 @@ tests += {
-                   '-semihosting-config', 'enable=on,arg=2',
-                   qemu_base_args]
-   },
-+  'ttbr-baddr.c': {
-+    'cflags': cflags,
-+    'qemu_args': ['-M', 'virt,virtualization=on', '-cpu', 'max',
-+                  '-semihosting-config', 'enable=on,arg=2',
-+                  qemu_base_args]
-+  },
- }
+diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+index 200abf6f36d..69bebe5a396 100644
+--- a/tests/qtest/meson.build
++++ b/tests/qtest/meson.build
+@@ -253,6 +253,8 @@ qtests_exynos4210 = \
+   ['exynos4210_uart_fifo-test']
  
- tests += {
+ qtests_arm = \
++  (config_all_devices.has_key('CONFIG_OLIMEX_STM32_H405') ? \
++   ['stm32f405-timer-test'] : []) + \
+   (config_all_devices.has_key('CONFIG_MPS2') ? ['sse-timer-test'] : []) + \
+   (config_all_devices.has_key('CONFIG_CMSDK_APB_DUALTIMER') ? ['cmsdk-apb-dualtimer-test'] : []) + \
+   (config_all_devices.has_key('CONFIG_CMSDK_APB_TIMER') ? ['cmsdk-apb-timer-test'] : []) + \
 -- 
 2.43.0
 
