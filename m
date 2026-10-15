@@ -4,84 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DE66C2D0A6
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 18:10:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E3A7CC6B38
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 18:10:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHPtL-0003os-7M; Thu, 15 Oct 2026 14:09:23 -0400
+	id 1xHPtS-0003rM-6A; Thu, 15 Oct 2026 14:09:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xHPtG-0003n6-5H
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 14:09:18 -0400
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ id 1xHPtL-0003pJ-F3
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 14:09:23 -0400
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xHPtD-000117-B1
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 14:09:16 -0400
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-48afcd7ba9bso3156279f8f.3
- for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 11:09:14 -0700 (PDT)
+ id 1xHPtJ-00012L-Ta
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 14:09:23 -0400
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-48b0d19cf7eso176312f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 11:09:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1792087754; x=1792692554; darn=nongnu.org;
+ d=linaro.org; s=google; t=1792087760; x=1792692560; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=lAJlw2q+AfLYL9XhdvoTWLPFQHSKMTBhJwUcsLjGY/4=;
- b=MY/mp+rtTsnfm7R5GKq7FOZ8aksne4hUeSLL0nFbCASBUs7fRGiTbikxY9ZKoc9dtU
- rYt1++a2Aj/U7e3kk7V70N+XJJRS+L1M1foyokExP3L4P2GXUb0ItDL8cyZMP500HL8f
- su2UxIFHUW1S7q0C36bzrrgSGCvXlb8xb5UQaYapglbYhNBqEQzINpe+3XAWQSc5MNRG
- kFG+DJORw6IyreiGaMt4A1nTw3MQc7R7sRO8ywInGYu6QgRsyFJ+MoijKxp7p3kSHnfL
- ZjKSQQ08/+pE3xTkwCJ+ysIgxCBojhmeb7tBj0Sg7d1nzHJIsPjNa3+kSFGaJMtyZ5jm
- Z7xg==
+ bh=QlAdzDRH4L9j8iLxK2DOsfuLtCkW5/Q+25BJ+uoOAqw=;
+ b=QAkNRMg+IV5MIS6c0sLN8IVqyjTLAMRHR56d3V2m+jEnPkbI2vJjto+NOlOQzK+U7t
+ iK5H6Rfy344po282FVtKtWxE+bTFqp59aB2TrkDHUP7kpGl4GRxMRplJd8tSfdIXv5bT
+ I3PdwFa/1Gw5A8690Jrh2bPXPmLj5iDK8lAkv9ANb5QhIygqWOMWpUq3UetlC9AgA3Bd
+ GeHvTZ4PqOgzRhZfqLMZqQoX9BrzW1n4Q/ssunULwm9Er/UgDWvWBsdMBWCCDn81fsnQ
+ YyWVY9AYf+qBLJB0BvxluIBK+CzAWGnWN68SA8KZ4DuQEQExE/l0Sm1gmHdgGsfG22SG
+ 7ifQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792087754; x=1792692554;
+ d=1e100.net; s=20260707; t=1792087760; x=1792692560;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=lAJlw2q+AfLYL9XhdvoTWLPFQHSKMTBhJwUcsLjGY/4=;
- b=gaUIoEL5ECdPwBaXAjeDMW8XOiJ+2VaP3juug9U7mr2uOrTX3h+VeQ49SLR0nfT/0k
- zVYnS4ZGi7iHpGvSDTCcQq4c03DsenQX7nulGTpqTqnOqQ+WR3KT1JH1kCeW/GsShZ1Z
- 1jYZW3ueR0ZrMWpBluOFwzBvQapdnJ8JWAsWyDooglYORVQoCXokFSHbBKbVBOAJd6kd
- JaGApvNSowFNaOSYWuK77Ow0pq29SwuNEjGqDKOqSv2L7Qx9uwycIE8wL7f7DvuypiiO
- +9vYDw0VhN68hEAr5W520xJL0umAr5KcqBu6zQ0WY8G5UKbdYYKQZ4QVw2MXy5ySOvmS
- fxLQ==
-X-Gm-Message-State: AFq9FYJ7vrNxMFIeUmgyvyYQ1E6nPZAPdVITyUqQb60PJDWOyscFPgY6
- OrbjZFsh2DY22Tvxl2fIwm2+a4x4hCtFC4NYGIHqoIo5vLeiR4Yk1SmkjAOognsXB4/xCDwQUG8
- yCzHqNCE=
-X-Gm-Gg: AYBFou0QSwwWLnJA1JY5uNQpO8fKGnaDfDL33hnvzi68YsV113U3+wZozNhQPlktFcx
- pvKo2CFK+sVYxYsM41y0rQsxY9oJImxgBil1jwyoQ+FxM0jWUSaP+FnSdHEZUh0BxQ3drbfVWgb
- T689DImoe+fd7iDYoMWTiTGiv1vMNX7ufqll3frpe8CTFi0pKBx/rCsPKA2amOzWth+x+ej8aK6
- CFVzcP2xkmF5nSlg/I8akFSDERf3CdlJ8SgGJYjU/eLl05UVM4cq2XzcNorZqNgFmZKm+oC2FNq
- w+ck7E6EOpw8zetpiCdGFUpFno0b0g0VXq014axp4a2E7GJzCHIlUmPIO3lLxAkjI1Ai4xcene0
- 7FnYE2U0+daF/WrJ9gI+5N4THQay8tKMAe/kGJ9N9oZJpYonjjwD5bnpQo35uwc9aXwhN3X2499
- ZNkGFEGumP0+ovWNYGlQbUswQZJ1iGVgt9bOwf/oQ89ztd5b6P8GPPrsjA5334qsTq6WEqM/GyU
- +EFh9LAWY86isyAJvCuUo4iRCsXZU7xjT2n0/VT6Id3/Vgq7aC4XZrcYla+gQhkHoFXZZYTmO9T
- vFY=
-X-Received: by 2002:a05:6000:440e:b0:487:13f:f612 with SMTP id
- ffacd0b85a97d-48dbacdbd23mr28269322f8f.37.1792087752902; 
- Thu, 15 Oct 2026 11:09:12 -0700 (PDT)
+ bh=QlAdzDRH4L9j8iLxK2DOsfuLtCkW5/Q+25BJ+uoOAqw=;
+ b=EebORdOdQN1500hnKBIXAy5qQCpg7msXW9WK70P/uYyU8f/6HEVNyyceCL0hblv9e0
+ pU/1MQ/vCGRMpjdPYaRfuH/NM9ypEVEATy/iZFJBZy3ujv5td+NO+3DrY0wZIQ453w3w
+ 6qhzpf2tHU62N0mlZvMCzxTyGPs7NZiUxT7uqivSZqXsMT8ZAhIDNW/h6iCV3Qqviq6J
+ ZeYGyKIFmxe8/i6P7aWpYOBrLdMrQHGUl+VhrLWCdE1r3m/3nP0qKh2K9KDwUEAbgAPE
+ sw/MCcAcM5pVT3HAF8loiBzS402uD/rWG1jOWixderdshkv7NlfCFpOAOAnJiEs4liAu
+ 5ZuA==
+X-Gm-Message-State: AFq9FYK8fqeeBxrJuqy5rP3ZmQ3eyljNIr8caZ90OcnHqRntgyoH3oQT
+ pPB+hA6uGPCjyG0n4mZNV5jBwUbMoeu/bYZce+9qUwNBaSxZJDeSpcUQaRc5RkdNijpyG+uNpFn
+ RY7IdMTg=
+X-Gm-Gg: AYBFou1is9mvZEF4lcwJa1Xf6LtM4FDsY9TVlsDlkNEsdeBDnvPjBYMuxOHFQfbzJAo
+ 4mlMYxeuPLVnRtRW9Ick+GNDSCkMmBJKE2+kK/fmkxnFef85h6lxlMn/L/eaTz9x7ffFI2biMJC
+ OSklD/+EEPSIVSMVwrq1ESw6r5U+8G4O0J3suj1gj+a0OKUWNn+PUXH3X8OVSnbMpYEicw8c4fD
+ Bd5HR8WyKXI7QV1tzmbgcIlmRhxJmW2foUbEFmPW8M6P21Ki3cBy319zB+7rd7pvW1rEK24CDbP
+ JosN1GMULhEEWtt1lGNVxlyV6XLcKyM+EDrsxulCYDkaIIf6ozvDfuJBJqtB5B0R1SKy8CeOUaU
+ 4w/y7H8VwUpm46IjFCNtd3yaJsAhvnc6gR0NxiTZXoe+Vm3XqIRh9HzkIX+eviCrXcsutly3gJL
+ IUhrAXQ5DvkDZeZunpIcARVaNBE0G6WlmXlIw9nXnQmh4UNh1OyVECtN7ie6r9lb4Cdq0sx10ww
+ Pvu/JlT5iL9dLq6DNFSJaXfwRSY6Mw0ghbc+Lw/hyiNm2uGP2t8BOQrxItqCSItl30CBXVMdBJY
+ p28=
+X-Received: by 2002:a5d:56ce:0:b0:48d:faa4:af9a with SMTP id
+ ffacd0b85a97d-48dfadfab3bmr1736737f8f.9.1792087759813; 
+ Thu, 15 Oct 2026 11:09:19 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48de7773d02sm14692701f8f.13.2026.10.15.11.09.12
+ ffacd0b85a97d-48de7773d02sm14692701f8f.13.2026.10.15.11.09.18
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 Oct 2026 11:09:12 -0700 (PDT)
+ Thu, 15 Oct 2026 11:09:18 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 09/16] target/arm: Rename isar_feature_aa64_idst
-Date: Thu, 15 Oct 2026 19:08:51 +0100
-Message-ID: <20261015180858.1863407-10-peter.maydell@linaro.org>
+Subject: [PULL 15/16] hw/intc/arm_gicv5: Make IRS_IDR0 reads return actual
+ value, not 0
+Date: Thu, 15 Oct 2026 19:08:57 +0100
+Message-ID: <20261015180858.1863407-16-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261015180858.1863407-1-peter.maydell@linaro.org>
 References: <20261015180858.1863407-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x432.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,60 +105,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+IN the code for handling reads of IRS_IDR0, we carefully construct
+the correct value starting with cs->irs_idr0 and adjusting it.
+However, we never actually write the final value into *data, so
+the guest will always see zero.
 
-Rename from isar_feature_aa64_ids to match the feature name: FEAT_IDST.
+We didn't notice this before, because Linux happens to not care
+about this register value except to check for the presence of
+virtualization.
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20261010070952.323466-2-richard.henderson@linaro.org
+Cc: qemu-stable@nongnu.org
+Fixes: 405ad2e76f13254 ("hw/intc/arm_gicv5: Implement IRS ID regs")
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Reviewed-by: Jim MacArthur <jim.macarthur@linaro.org>
+Message-id: 20261008092327.4036856-1-peter.maydell@linaro.org
 ---
- target/arm/cpu-features.h      | 2 +-
- target/arm/tcg/op_helper.c     | 2 +-
- target/arm/tcg/translate-a64.c | 2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
+ hw/intc/arm_gicv5.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
-index a9eebb45564..2fc1bf02cbe 100644
---- a/target/arm/cpu-features.h
-+++ b/target/arm/cpu-features.h
-@@ -1403,7 +1403,7 @@ static inline bool isar_feature_aa64_fwb(const ARMISARegisters *id)
-     return FIELD_EX64_IDREG(id, ID_AA64MMFR2, FWB) != 0;
- }
+diff --git a/hw/intc/arm_gicv5.c b/hw/intc/arm_gicv5.c
+index 08878193dfc..ebfb0878af3 100644
+--- a/hw/intc/arm_gicv5.c
++++ b/hw/intc/arm_gicv5.c
+@@ -1433,6 +1433,7 @@ static bool config_readl(GICv5 *s, GICv5Domain domain, hwaddr offset,
+             /* ...which means VIRT_ONE_N is also RES0 */
+             v &= ~R_IRS_IDR0_VIRT_ONE_N_MASK;
+         }
++        *data = v;
+         return true;
  
--static inline bool isar_feature_aa64_ids(const ARMISARegisters *id)
-+static inline bool isar_feature_aa64_idst(const ARMISARegisters *id)
- {
-     return FIELD_EX64_IDREG(id, ID_AA64MMFR2, IDS) != 0;
- }
-diff --git a/target/arm/tcg/op_helper.c b/target/arm/tcg/op_helper.c
-index af56eff9f18..6a673e5ae6e 100644
---- a/target/arm/tcg/op_helper.c
-+++ b/target/arm/tcg/op_helper.c
-@@ -1136,7 +1136,7 @@ const void *HELPER(access_check_cp_reg)(CPUARMState *env, uint32_t key,
-         break;
-     case CP_ACCESS_UNDEFINED:
-         /* CP_ACCESS_UNDEFINED is never direct to a specified EL */
--        if (cpu_isar_feature(aa64_ids, cpu) && isread &&
-+        if (cpu_isar_feature(aa64_idst, cpu) && isread &&
-             arm_cpreg_in_idspace(ri)) {
-             /*
-              * FEAT_IDST says this should be reported as EC_SYSTEMREGISTERTRAP,
-diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index 5d5b11e2da9..0c712e7ac2e 100644
---- a/target/arm/tcg/translate-a64.c
-+++ b/target/arm/tcg/translate-a64.c
-@@ -2675,7 +2675,7 @@ static void gen_sysreg_undef(DisasContext *s, bool isread,
-      */
-     uint32_t syndrome;
- 
--    if (isread && dc_isar_feature(aa64_ids, s) &&
-+    if (isread && dc_isar_feature(aa64_idst, s) &&
-         arm_cpreg_encoding_in_idspace(op0, op1, op2, crn, crm)) {
-         syndrome = syn_aa64_sysregtrap(op0, op1, op2, crn, crm, rt, isread);
-     } else {
+     case A_IRS_IDR1:
 -- 
 2.43.0
 
