@@ -4,63 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19142CC6B3A
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 15:16:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07363CC6B33
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 15:17:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHN7y-0000mz-E5; Thu, 15 Oct 2026 11:12:18 -0400
+	id 1xHN7s-0000QL-IT; Thu, 15 Oct 2026 11:12:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eblot.ml@gmail.com>)
- id 1xHN7v-0000eQ-NR
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 11:12:15 -0400
-Received: from mail-wm1-f49.google.com ([209.85.128.49])
+ id 1xHN7p-0000Jf-HT
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 11:12:09 -0400
+Received: from mail-wm1-f42.google.com ([209.85.128.42])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <eblot.ml@gmail.com>)
- id 1xHN7t-0001y6-Rx
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 11:12:15 -0400
-Received: by mail-wm1-f49.google.com with SMTP id
- 5b1f17b1804b1-49ff680331aso25056245e9.3
- for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 08:12:13 -0700 (PDT)
+ id 1xHN7m-0001wC-Je
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 11:12:09 -0400
+Received: by mail-wm1-f42.google.com with SMTP id
+ 5b1f17b1804b1-4a1682bff3cso10304165e9.1
+ for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 08:12:06 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792077132; x=1792681932;
+ d=1e100.net; s=20260707; t=1792077125; x=1792681925;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :content-type:mime-version:subject:date:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=hRQau7jFOLMcW9cDld4PZy7QHA0r3DkmWSHU69Dv0ic=;
- b=sEAeF8fmNFaPzYJqN25wifIt0/4xXbWkAEk7IAUosQjw8eoB9NyGAf4cuPLNtAzXLd
- XBk6BCYeAtRqQbP4Jw0wpKB0RCVjJseIdA1BYA+CLD49bCmhnkpsqXLztPof4p17FGDg
- ZJiVgk0R0qptfj3dKRhYmls9UauZr4L4AOeo3ltIuhOXmtInrCotawhgfwD7+IJ7F9wT
- V8fEgcrSA61toYl9vobu3nAWdfcXL555xJptIDPGaFbVrNsjvWmj2ULfJwcwsBCvwvE2
- JsJph8+DhUKkjwRa8BuAN9/92ruKcZ7ZYZz9/m478SuCcqzUkqE7UOkzSIk3b5IRigqp
- adzw==
-X-Gm-Message-State: AFq9FYI6NM8HD3eYDPoXkcx2UYGH3Ozo4D/8o+AlGKvcX8lUFQMI4wfi
- WMdJxoJcNfB9LwveHmeAVQSDM9suE2sdZF6WNh5+HVkO49DNEnDL5vCkQ/68lA==
-X-Gm-Gg: AYBFou0FSTrsqhCwu5Ydsh+m3lV4qGOyzpR+1zxWqquIrfHqERzwi8TGqcB5ncdohW0
- eWupKpucAj9ap1zMwM55k+yazbRJuOh7V0i4/KC81FxuzkZM499Q3IZV9zzgQfXVjkTlZEVFNgs
- ImO9q5q1+MnYYIWw45adjtWC8+toFBxIkdbIWhNhT4SOEJooOdpoz74upx4lY63UC3PJj4oRAnr
- 5UbKwwAD9u42HpYibmYP/T5GaDMGilZlJNwbXpUwFddUjd23hlmIYRzzfbH7bJREIpQl97WSo9y
- k8qKjIEPWCoMAWBRAkpOI+vD+C0QR5HqHTE5mzpXQjWVDeGS6+dPVZ1vLWoDsC+CW4uM3vxNyjH
- fbevMndrqTddOEK579W8Bhu99gt6xmgN8iF716kWKHuRgTbwXAz7Kwdzx68jZK9m8cTevcKhDih
- AHStUt0ySZGj4r/rWvNpA2yvj7pEO0gdLNUeM/fPCS68Whod6FfIVrQyWpaf5qY5g2XWQpH0Qlh
- Dfuu1U9CAU5EiZbw1ynLICUIwS0gpJaq6dzJuNQz4jlGBw=
-X-Received: by 2002:a05:600c:4e89:b0:4a0:12d7:4c88 with SMTP id
- 5b1f17b1804b1-4a18e4ac77amr434246385e9.30.1792077132261; 
- Thu, 15 Oct 2026 08:12:12 -0700 (PDT)
+ bh=ElO83exPm/Nk9fwRFrC4lA4TMItjH/WcdCQDoITT8Is=;
+ b=zsse/OJnC2mzEtLDaOwTQG4Zvbsa44frfRCXpZoEUCGxXdW55EQC8cN1qazzKHuIPW
+ p1PERHX00gsDh6ZnPfKnOORVUnYJv1CMR+TJjxfLpb99ydQ1JCGloNm9hp+fqCALvmAv
+ cfkK1vX+QGgVsXgdNvj0705NdqwVNdGbiVuI/ScJ8DSb7GMda0BpQzvjZn7dpdbT+kNJ
+ cpvBHe0+lpsCyLesbV3iGDeBZIFdERPRIClW+Q+hZ4QKrlvUM/Z5e9IqKJcupXTBNV4A
+ UzaALaUwfS0ac11YW0C2wwratPROdSPf9YqVbqXTVTucfXjBy4+B1ZAAyZ5T3tWDI14V
+ NlGw==
+X-Gm-Message-State: AFq9FYIbeCOGmEQot3BZYfR1xXmcQHk3s7zaXLSSp+1asu5NwULyE65A
+ ZwfOcdtp2dBb8YNnOSqkGIONEjoMHL94A/OqkKPTe8rQJo/Cmka6zhpkt9xPBg==
+X-Gm-Gg: AYBFou3zccyaVYWCypqOlcti1y7SoYHf2s+CuAcHCKJPrEPSQx4C/6zR/Db87lY2UxB
+ JH2PwkzLyjOfUFNKUxP70bvTaaPbSdC/UXWd7iIRhG1985BdgJQbHp38j0T+41DXrpF5+pCeZ4f
+ Xq2+x2YQmAoLqnCIXTiA4qLBl0uXfv6n5fakRK/3nxwR9dXIG1L0oEg2MtzGZsjfoKrANUmH0ZL
+ 0mzsxk8pzYFHyWo/G2SCsxT6KQ2946t28JgsTBfD2yEhSQJqMMhu/o4CRag5NcB2czqtlZmVTB8
+ s4IrJwGWqg4A3FGsFYYkFY3VTBPhRUxnx2uub012VNnfqahH/QoLfLgK7+C0/Ybzx0s/6dLqjtU
+ 35VybLoKsG3zIjXf2GBGRUmnv3xQ8ksIc1t5qzn6fc3tvV7FILmthnWRFJGY8eSTcrOUISATXcM
+ 0FlSj7lYoZHV8ZRY2t09knj9jIO5uXVu9/7tnvXiWS+A2Ug/D/mCFxHycxcAPXzY7fpBjP5eYEb
+ xtsTd8tixLmqT2b73KocU83v37MJTszE9XTbX9ZG0i9og==
+X-Received: by 2002:a05:600c:e547:20b0:4a1:946c:953d with SMTP id
+ 5b1f17b1804b1-4a1946c968cmr237610795e9.27.1792077124678; 
+ Thu, 15 Oct 2026 08:12:04 -0700 (PDT)
 Received: from localhost (89-93-216-19.hfc.dyn.abo.bbox.fr. [89.93.216.19])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a1bd64b5e7sm77275735e9.2.2026.10.15.08.12.11
+ 5b1f17b1804b1-4a1bd69b2a3sm7488065e9.4.2026.10.15.08.12.02
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 Oct 2026 08:12:11 -0700 (PDT)
-Date: Thu, 15 Oct 2026 13:57:54 +0200
-Subject: [PATCH 16/22] tests/qtest: tmp421: cover the register form of the
- migration stream
+ Thu, 15 Oct 2026 08:12:03 -0700 (PDT)
+Date: Thu, 15 Oct 2026 13:57:53 +0200
+Subject: [PATCH 15/22] tests/qtest: tmp421: cover software reset and
+ N-factor registers
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261015-bmc-clemente-v1-16-bf591886b5b6@free.fr>
+Message-Id: <20261015-bmc-clemente-v1-15-bf591886b5b6@free.fr>
 References: <20261015-bmc-clemente-v1-0-bf591886b5b6@free.fr>
 In-Reply-To: <20261015-bmc-clemente-v1-0-bf591886b5b6@free.fr>
 To: qemu-devel@nongnu.org
@@ -75,15 +75,15 @@ Cc: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
  Emmanuel Blot <emmanuel.blot@free.fr>
 X-Mailer: b4 0.16.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1792065465; l=3815;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1792065465; l=2952;
  i=emmanuel.blot@free.fr; s=20260602; h=from:subject:message-id;
- bh=KCKssRn/w/mRE8Rh274RLtAfGbpNnr2ePuT78VSY79A=;
- b=Px6Rno0FU9aNGFRQDDqZEW7yiUg/GPF11gsY4AdAEFz9J6+BMnEu32N755/95aExgtsl5nHL2
- 7iX3si4AryyBgt6jBkA5QExdH963O4CoSMQ/cDBusoVseVD6i+dk7fG
+ bh=sHWJWSoGggCvrRbUN63qwoGmhhEQg3PCcE0NhyHKFWg=;
+ b=DLjlvfZDbHQTytD6VL0ThDCgH/2DbYIwU81mWZhmGNuGZM1/JxPZ8kVvU0KYiGBZp5X+xfY0V
+ I+9Nu0aOQ87Aj6FvQACjVlqqjroxrI7OIvnyW1NWZiDc0dszEZiz1wY
 X-Developer-Key: i=emmanuel.blot@free.fr; a=ed25519;
  pk=0qFrZ21FAAN8OfVsSoVcCFTk/NMYOWzxJz4paSAVm0g=
-Received-SPF: pass client-ip=209.85.128.49; envelope-from=eblot.ml@gmail.com;
- helo=mail-wm1-f49.google.com
+Received-SPF: pass client-ip=209.85.128.42; envelope-from=eblot.ml@gmail.com;
+ helo=mail-wm1-f42.google.com
 X-Spam_score_int: 0
 X-Spam_score: -0.1
 X-Spam_bar: /
@@ -109,108 +109,77 @@ From:  Emmanuel Blot via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-A stream with no measurement subsection has the shape of every stream
-written before that subsection existed; loading one exercises the
-conversion back from the register form. The temperature is picked so
-that form reproduces it exactly, and picked in the extended range,
-where the top register bit is part of the value rather than a sign.
+Check that the software-reset register restores the configuration and
+conversion-rate defaults, and that the N-factor correction registers
+are writable only on the remote channels each variant provides.
 
 Signed-off-by: Emmanuel Blot <emmanuel.blot@free.fr>
 ---
- tests/qtest/tmp421-test.c | 66 +++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 66 insertions(+)
+ tests/qtest/tmp421-test.c | 37 +++++++++++++++++++++++++++++++++++++
+ 1 file changed, 37 insertions(+)
 
 diff --git a/tests/qtest/tmp421-test.c b/tests/qtest/tmp421-test.c
-index 6c5332211b..5be2abc822 100644
+index 04f9252188..6c5332211b 100644
 --- a/tests/qtest/tmp421-test.c
 +++ b/tests/qtest/tmp421-test.c
-@@ -8,6 +8,8 @@
- 
- #include "qemu/osdep.h"
- 
-+#include <glib/gstdio.h>
-+#include "libqtest.h"
- #include "libqtest-single.h"
- #include "libqos/qgraph.h"
- #include "libqos/i2c.h"
-@@ -224,6 +226,69 @@ static void test_n_correct(void *obj, void *data, QGuestAllocator *alloc)
-     }
+@@ -25,6 +25,7 @@
+ #define    TMP421_CONFIG_REN              (1 << 4)
+ #define TMP421_CONVERSION_RATE_REG      0x0B
+ #define TMP421_TEMP_LSB0                0x10
++#define TMP421_N_CORRECT                0x21
+ #define TMP421_RESET                    0xFC
+ #define TMP421_MANUFACTURER_ID_REG      0xFE
+ #define TMP421_DEVICE_ID_REG            0xFF
+@@ -191,6 +192,38 @@ static void test_channels(void *obj, void *data, QGuestAllocator *alloc)
+     g_assert_cmphex(i2c_get16(i2cdev, TMP421_TEMP_MSB0 + 1), ==, 0x1900);
  }
  
-+static int qtest_get_temperature(QTestState *qts, const char *id,
-+                                 unsigned channel)
++static void test_soft_reset(void *obj, void *data, QGuestAllocator *alloc)
 +{
-+    g_autofree char *prop = g_strdup_printf("temperature%u", channel);
-+    QDict *response;
-+    int ret;
-+
-+    response = qtest_qmp(qts, "{ 'execute': 'qom-get', 'arguments': "
-+                         "{ 'path': %s, 'property': %s } }", id, prop);
-+    g_assert(qdict_haskey(response, "return"));
-+    ret = qdict_get_int(response, "return");
-+    qobject_unref(response);
-+    return ret;
-+}
-+
-+/*
-+ * A stream written before the measurement was held in millidegrees carries
-+ * only the register form. The subsection holding the measurement is left out
-+ * whenever that form can reproduce it, so an exactly representable extended
-+ * range temperature -- whose register value has its top bit set, and is not
-+ * a negative number -- travels the same path such a stream takes.
-+ */
-+static void test_migration(void *obj, void *data, QGuestAllocator *alloc)
-+{
++    const TMP421Variant *var = data;
 +    QI2CDevice *i2cdev = obj;
-+    g_autofree char *tmpfs = NULL;
-+    g_autofree char *mig_path = NULL;
-+    g_autofree char *uri = NULL;
-+    GString *dest_cmdline;
-+    GError *err = NULL;
-+    QTestState *to;
-+    QDict *rsp;
-+
-+    tmpfs = g_dir_make_tmp("tmp421-test-XXXXXX", &err);
-+    g_assert_no_error(err);
-+    g_assert(tmpfs);
-+
-+    mig_path = g_strdup_printf("%s/socket.mig", tmpfs);
-+    uri = g_strdup_printf("unix:%s", mig_path);
 +
 +    i2c_set8(i2cdev, TMP421_CONFIG_REG_1, TMP421_CONFIG_RANGE);
-+    set_temperature(TMP421_TEST_ID, 0, 100000);
-+    g_assert_cmphex(i2c_get16(i2cdev, TMP421_TEMP_MSB0), ==, 0xA400);
++    i2c_set8(i2cdev, TMP421_CONFIG_REG_2, 0);
++    i2c_set8(i2cdev, TMP421_CONVERSION_RATE_REG, 0);
 +
-+    dest_cmdline = g_string_new(qos_get_current_command_line());
-+    g_string_append_printf(dest_cmdline, " -incoming %s", uri);
-+    to = qtest_init(dest_cmdline->str);
++    i2c_set8(i2cdev, TMP421_RESET, 0);
 +
-+    rsp = qmp("{ 'execute': 'migrate', 'arguments': { 'uri': %s } }", uri);
-+    g_assert(qdict_haskey(rsp, "return"));
-+    qobject_unref(rsp);
++    g_assert_cmphex(i2c_get8(i2cdev, TMP421_CONFIG_REG_1), ==, 0);
++    g_assert_cmphex(i2c_get8(i2cdev, TMP421_CONFIG_REG_2), ==,
++                    var->config2_reset);
++    g_assert_cmphex(i2c_get8(i2cdev, TMP421_CONVERSION_RATE_REG), ==, 0x07);
++}
 +
-+    qmp_eventwait("STOP");
-+    qtest_qmp_eventwait(to, "RESUME");
++static void test_n_correct(void *obj, void *data, QGuestAllocator *alloc)
++{
++    const TMP421Variant *var = data;
++    QI2CDevice *i2cdev = obj;
 +
-+    g_assert_cmpint(qtest_get_temperature(to, TMP421_TEST_ID, 0), ==, 100000);
++    for (unsigned remote = 0; remote < 3; remote++) {
++        uint8_t reg = TMP421_N_CORRECT + remote;
 +
-+    qtest_quit(to);
-+    g_unlink(mig_path);
-+    g_rmdir(tmpfs);
-+    g_string_free(dest_cmdline, true);
++        i2c_set8(i2cdev, reg, 0x7f);
++        /* Registers exist only for the variant's remote channels. */
++        g_assert_cmphex(i2c_get8(i2cdev, reg), ==,
++                        remote + 1 < var->nchannels ? 0x7f : 0);
++    }
 +}
 +
  static void tmp421_register_node(const TMP421Variant *var, const char *type,
                                   uint8_t addr)
  {
-@@ -255,6 +320,7 @@ static void tmp421_register_nodes(void)
-     /* Temperature encoding is variant-independent; exercise it once. */
-     qos_add_test("temperature", "tmp421", test_temperature, NULL);
-     qos_add_test("range-saturation", "tmp421", test_range_saturation, NULL);
-+    qos_add_test("migration", "tmp421", test_migration, NULL);
+@@ -207,6 +240,10 @@ static void tmp421_register_node(const TMP421Variant *var, const char *type,
+                  &(QOSGraphTestOptions) { .arg = (void *)var });
+     qos_add_test("channels", type, test_channels,
+                  &(QOSGraphTestOptions) { .arg = (void *)var });
++    qos_add_test("soft-reset", type, test_soft_reset,
++                 &(QOSGraphTestOptions) { .arg = (void *)var });
++    qos_add_test("n-correct", type, test_n_correct,
++                 &(QOSGraphTestOptions) { .arg = (void *)var });
  }
  
- libqos_init(tmp421_register_nodes);
+ static void tmp421_register_nodes(void)
 
 -- 
 2.53.0-Meta
