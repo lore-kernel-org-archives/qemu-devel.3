@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD72ACC6B2F
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 03:20:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAE65CC6B2D
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 03:20:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHC0x-0000Ah-Ep; Wed, 14 Oct 2026 23:20:19 -0400
+	id 1xHBzo-0006oy-Iq; Wed, 14 Oct 2026 23:19:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <portias@tenstorrent.com>)
- id 1xHC0K-0007Sq-S9
- for qemu-devel@nongnu.org; Wed, 14 Oct 2026 23:19:43 -0400
-Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ id 1xHBzn-0006o7-9L
+ for qemu-devel@nongnu.org; Wed, 14 Oct 2026 23:19:07 -0400
+Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <portias@tenstorrent.com>)
- id 1xHC0J-0006rD-AU
- for qemu-devel@nongnu.org; Wed, 14 Oct 2026 23:19:40 -0400
-Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-2e83d2cc8a2so8889975ad.0
- for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 20:19:38 -0700 (PDT)
+ id 1xHBzl-0006nr-Ij
+ for qemu-devel@nongnu.org; Wed, 14 Oct 2026 23:19:07 -0400
+Received: by mail-pf1-x430.google.com with SMTP id
+ d2e1a72fcca58-89a837bf00eso394514b3a.2
+ for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 20:19:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=tenstorrent.com; s=google; t=1792034378; x=1792639178; darn=nongnu.org;
+ d=tenstorrent.com; s=google; t=1792034344; x=1792639144; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=xGayRwOwvphvAxw942c2AcE8znviMgTw5tQV3iQ4IQQ=;
- b=JMCaPB0DSaOcuYo8gg0xjhoKY7AewXohnQ8B1i79era2BZQGTZ1UGSmvbP5cH5owxw
- Qr7MslTE8qT8uFdLCk2gEEdXpeC5PYs+tF51sDpw9zicWnocDfVvn1M0vkwE8/vGVv9L
- K8lmnxpaakuG2b8r/w9HjQY/hBw792ij74+vA9Idwq44KXvAVoyuNg3kmlzB3nU10EiI
- CK8df3TDsxvf3H3KdbVPcmM/9CLAy7T/lEV+3K6HP3P/hCoM4X8vdp6JAIop5x4Fd262
- 5YK/eGcU+Yx8aiZtuGccRsdJrRXKJWuzJEXDxv45bw71m4zdAd5rfD2xDw0wwl1xuzCP
- 4x/w==
+ bh=9f2qwDesQVGTqAvTPeviHK7poyR3BmaQPfmYG/9x+2Y=;
+ b=ZChdw1EtVCxztMTGLdBjFkKB9yYrnb1k30SMM4755P4jLskcDpfaeaDyQF0GdJoUCb
+ bTCnDPapTe5jHEHTZ/C3MdPJnOIctC6B+61UwP9bRWU0cVM0BfYHhWGl8RJOGs+9Oyb4
+ rzllNL9FfnvkOzH3+ZNvpw7B+2YOvZdRYNX655MC7IuiVm6xZHyn2sMG5ElPGtaHGOxA
+ dokZ9jDgA2RIl/dr7MYQ2jVxkHdgkfhyCmenMktR5Z39p0xBQED1xHoxvjBnA/W0GkDx
+ U4rLqg9jFu5T1DbCkjBFsu6ueQvkdlR+93aMngcVhWd2kujPFZ/v92yjcJOwcKDWAoyP
+ dQMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792034378; x=1792639178;
+ d=1e100.net; s=20260707; t=1792034344; x=1792639144;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=xGayRwOwvphvAxw942c2AcE8znviMgTw5tQV3iQ4IQQ=;
- b=Dg6ITCaGN1gdnQiRwN4Z4VaQVbCOepVnpGMxw8BSKyRiNgZjOnBJpZGhJpC07D/XnB
- rhP3V4I4Q4s8rOEaXjLZ157NTGcHZrnAVkyzc71GIS7Xbkq+0hveZxEmyfZp369R1+3N
- vVl5bNRIjWz8oZb1MgyaPr09kcC7Q5k89Sq34hwdMIfl9spOcYMkEl9f9zwXRJpLSHCT
- MjqoJnGxIySflaPeizJlt7QIEVxyvDYDH9ugIfMBvBmsPsP8vjFvNsaVKTBpfZCvUoy8
- /4GQFKhkIzWTISNb7I7m5/uG1+KgnT+2NO+f5zVGideAdQ/tFtpoANEgW7n4XfT8MMlk
- qV/A==
-X-Gm-Message-State: AFq9FYKl/XBSWaUc15x9lSL6hnGmMdK7GFXUEWVlma5WFAcp13vFyWeL
- OSeMRKl6PtLFR0LVvv66u6neZMu6uY35RksTY1Px6HriTmvl4q9h8P3Ek84nIqfVGXjtMBsOXH1
- 5Z/H6NOg=
-X-Gm-Gg: AYBFou2WhgfYXY2djONsgwf9dMQ5nqzJpWq8KDf/5AQ7BYqGmvDUUILC9QciOhk8f7f
- n7NjHmQgkSGOgOfAwcVhFyMaWyYSnLHePdp5vzkNym/eYfP8Q6fWF0RFlVZzDw8iFKNAzf7S0+O
- uu4LuS5FTqhXnl34eLliMdC3xOusTV05/z/vYUzosuri1hlZImV6fuUWZn135hGGLqCKmyqzp7h
- t1P4MTKt8rTPdTF6qEb3WSoi+lnMd/Xu8vtzI3s+B9GMauzA6YcLRF+JydSYiGu97hgltArvLGy
- lCoUe4Ucdmw+jpFCqtSHneGdAt2mWdoyeNT3APDgX4OTC9z5cYs6Wfi9TMKPj08Y2S8wrcNsXOs
- 1bAo3/NpEdTecqo8d3OT3cFggE1906SFAhH/era+nN/7WCS3nYSyHMMMr4PFOUBtaywv8xpApGx
- 6o6XU7P60g73xkhvFoheRWFtkXeGFwg+qNd+2zv9JePgKqVfqUCVXnlX55empk6wrLPxV8jgLlL
- G5K8wHupIllf2doi1kRc0aiUGqTUk3WgWrtHq8MjLxYbOI=
-X-Received: by 2002:a17:90b:3a48:b0:3a6:e61f:749d with SMTP id
- 98e67ed59e1d1-3ab3a33ce37mr25574879a91.1.1792034377331; 
- Wed, 14 Oct 2026 20:19:37 -0700 (PDT)
+ bh=9f2qwDesQVGTqAvTPeviHK7poyR3BmaQPfmYG/9x+2Y=;
+ b=O8VEhad5Nfm7wGck0TUqUUBAnRLd8+zIoM0Wd5YxI/w7fhecugFDsH6QYFvMkxIjap
+ XT49y2nkMQCkks+k/IQY1z+MMLQN9GyZubk3pTJaIb9YIZtt1Qena0FxXYABMKYM2a0r
+ 9kza7W4yqmcqVhJeI8lcbJ3QIeqKwHIjSU3kNxaHo2idlVYTPwI0x4rynkYZQPf7MiCC
+ XXgoaFZWjQjHcr55eYslhHuEEDyBy/uJKE5pw1ykzX2+DndL1JgJyen19xo/49yaBUiM
+ r1yg9rHU/vxsaCrfuqd03Xab8hkzn09W1OpwhSdp6et/F0i0MqIYFKD9MDFP/PBihwRm
+ 3l+g==
+X-Gm-Message-State: AFq9FYIY+03TrnXcIxtT02eOnfTdYAL9oxo785CqE9QDk3VwKtM84Pfc
+ /n8B3NWBFK05rlIoJtujIK0dX4wMmNar7rGkjQRomG9ihC6cMdTVWVzl1+7FeTaC9HQINrAlSAM
+ JF5hf
+X-Gm-Gg: AYBFou3DaC2a1P3E/7aW4xOo4bXlMh03K6AyfbdlVqvYFOwh2iVDU8vfkylMd3fQ/Qo
+ oMsLifuuavcaK9YlG9q2rCqpxJ8Xlz9Jf+YmxTD4xg/l4iCHkGe+M/yc9m7qEEyrNONj8FBnjAr
+ 2fXv6MR8jw4BBFMu+p/5jbblS4VTMmRlp7hk8AvAH1CoM7yWU9E4AS2CCMPEiDSFj4L3Nlixjo7
+ xEarx+Fnw2qzJHNfe5dSE7U2yOxPIaBCQhzbqn5YKzssV610U7XPwAetDH6N6Z2n7GyQIvL/Vbb
+ giODoqoaTrA3/ScKKGRca/CtWS8vmuTMwf6n/mrwUJhWX/qCeFtLm4bBG4qIjAAUVye9RCg/ypt
+ dd9ONwWSNkOaq2Uz2OoxJHsk+pTuJRIk1EO2AqFfLeaG3E+naVJalG3O5MAQiF/E8QBh1kmzF/P
+ jbkdCD2/CEvx98X6RmN903cDbvKvVrWGdSih6l3J6RzEyq7OgsNWx9uaKHIWLX/5yh6QLuan7LI
+ iSfboaFCNgewt3AgL3JG6i6hvyfFInHVDlkczO2iitZ9YE=
+X-Received: by 2002:a17:90b:1d4f:b0:3a8:736e:c19b with SMTP id
+ 98e67ed59e1d1-3ab3ab31007mr24696440a91.4.1792034344035; 
+ Wed, 14 Oct 2026 20:19:04 -0700 (PDT)
 Received: from lima-default.tail89d63.ts.net ([159.196.41.205])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3ac93049ec2sm1321725a91.1.2026.10.14.20.19.31
+ 98e67ed59e1d1-3ac93049ec2sm1321725a91.1.2026.10.14.20.18.57
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 14 Oct 2026 20:19:36 -0700 (PDT)
+ Wed, 14 Oct 2026 20:19:03 -0700 (PDT)
 From: Portia Stephens <portias@oss.tenstorrent.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, Palmer Dabbelt <palmer@dabbelt.com>,
@@ -83,17 +83,16 @@ Cc: Nicholas Piggin <npiggin@gmail.com>, Palmer Dabbelt <palmer@dabbelt.com>,
  Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
  Portia Stephens <portias@oss.tenstorrent.com>,
  Michael Ellerman <mpe@kernel.org>
-Subject: [PATCH 12/12] docs/atlantis: Update Atlantis documentation to include
- the RCPU
-Date: Thu, 15 Oct 2026 13:18:04 +1000
-Message-ID: <20261015031804.2406055-13-portias@oss.tenstorrent.com>
+Subject: [PATCH 07/12] machine: Support extra board CPUs outside -smp
+Date: Thu, 15 Oct 2026 13:17:59 +1000
+Message-ID: <20261015031804.2406055-8-portias@oss.tenstorrent.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261015031804.2406055-1-portias@oss.tenstorrent.com>
 References: <20261015031804.2406055-1-portias@oss.tenstorrent.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
- envelope-from=portias@tenstorrent.com; helo=mail-pl1-x62f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
+ envelope-from=portias@tenstorrent.com; helo=mail-pf1-x430.google.com
 X-Spam_score_int: -19
 X-Spam_score: -2.0
 X-Spam_bar: --
@@ -115,77 +114,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This updates the Atlantis documentation to include new machine
-properties for running the RCPU.
+From: Joel Stanley <joel@jms.id.au>
 
+Boards may instantiate one or more CPUs that are not part of the
+user's -smp layout, for example an a management or boot core of a
+different CPU model. As TCG sizes its vCPU context from smp.max_cpus
+during init, creating more CPUState objects than smp.max_cpus trips the
+assert in tcg_register_thread().
+
+smp.max_cpus is finalized before the accelerator is initialised and the
+board's init() runs later still, so a board's initialise cannot influence
+the count TCG uses.
+
+Add a MachineClass::extra_cpus that boards set at class init time to
+declare these additional CPUs. TCG can then add it to max_threads. The
+field defaults to 0, so existing machines are unaffected.
+
+Signed-off-by: Joel Stanley <joel@jms.id.au>
 Signed-off-by: Portia Stephens <portias@oss.tenstorrent.com>
 ---
- docs/system/gdb.rst               |  2 ++
- docs/system/riscv/tt_atlantis.rst | 30 ++++++++++++++++++++++++++++++
- 2 files changed, 32 insertions(+)
+ accel/tcg/tcg-all.c      | 2 +-
+ include/hw/core/boards.h | 4 ++++
+ 2 files changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/docs/system/gdb.rst b/docs/system/gdb.rst
-index b6d8f8e77d..3777630337 100644
---- a/docs/system/gdb.rst
-+++ b/docs/system/gdb.rst
-@@ -79,6 +79,8 @@ debug some interaction between kernel and user-space you are better
- off running your guest program with gdb either in the guest or using
- a gdbserver exposed via a port to the outside world.
- 
-+.. _GDB multicore:
-+
- Debugging multicore machines
- ============================
- 
-diff --git a/docs/system/riscv/tt_atlantis.rst b/docs/system/riscv/tt_atlantis.rst
-index d94d064f4f..f7265813d1 100644
---- a/docs/system/riscv/tt_atlantis.rst
-+++ b/docs/system/riscv/tt_atlantis.rst
-@@ -12,10 +12,27 @@ tt-atlantis QEMU model features
- -------------------------------
- 
- * 8-core Ascalon-X CPU Cluster
-+* RV32 Real-time CPU (RCPU)
- * RISC-V compliant Advanced Interrupt Architecture
- * DW8250 compatible UART x5
- * 4 PRCMs (Clock and Reset Controllers)
- 
-+Boot options
-+------------
-+
-+ * ``rcpu`` enables the RCPU model to run alongside the Ascalon cluster. When
-+   the RCPU is enabled, ``UART0``, the RCPU's console, will be mapped to the second
-+   -serial on the command line.
-+ * ``bootrom`` binary to be loaded into mask ROM and run by the RCPU (no effect if the
-+   rcpu is not enabled)
-+
-+To enable the RCPU model with a custom binary and the RCPU console on stdio:
-+
-+.. code-block:: bash
-+
-+  -M tt-atlantis,rcpu=on,bootrom=../path/to/binary.bin -serial null -serial stdio
-+
-+
- Known limitations
- -----------------
- 
-@@ -39,3 +56,16 @@ and Linux with default configurations.
- The development board hardware will require some implementation
- specific setup in firmware which is being developed and may
- become a requirement or option for the tt-atlantis machine.
-+
-+Debugging
-+----------
-+
-+Ascalon and RCPU are on separate CPUClusters which allows gdb to put Ascalon
-+and RCPU on separate inferiors. This prevents issues with switching between
-+RV32 (RCPU) and RV64 (Ascalon) targets.
-+
-+By default, gdb will connect to inferior 1, the Ascalon cluster and the RCPU
-+will be on inferior 2.
-+
-+gbd does not handle multiple inferiors by default, see :ref:`gdb multicore`
-+for how to connect to inferior 2.
+diff --git a/accel/tcg/tcg-all.c b/accel/tcg/tcg-all.c
+index 767e880555..655609ebbb 100644
+--- a/accel/tcg/tcg-all.c
++++ b/accel/tcg/tcg-all.c
+@@ -126,7 +126,7 @@ static int tcg_init_machine(AccelState *as, MachineState *ms)
+          */
+         if (mttcg_supported && !icount_enabled()) {
+             s->mttcg_enabled = ON_OFF_AUTO_ON;
+-            max_threads = ms->smp.max_cpus;
++            max_threads = ms->smp.max_cpus + MACHINE_GET_CLASS(ms)->extra_cpus;
+         } else {
+             s->mttcg_enabled = ON_OFF_AUTO_OFF;
+         }
+diff --git a/include/hw/core/boards.h b/include/hw/core/boards.h
+index d0e4ad9820..575c6bcb31 100644
+--- a/include/hw/core/boards.h
++++ b/include/hw/core/boards.h
+@@ -189,6 +189,9 @@ typedef struct {
+  * @max_cpus: maximum number of CPUs supported. Default: 1
+  * @min_cpus: minimum number of CPUs supported. Default: 1
+  * @default_cpus: number of CPUs instantiated if none are specified. Default: 1
++ * @extra_cpus: number of additional CPUs the board always instantiates beyond
++ *    the -smp topology (e.g. an always-present management core). Accelerators
++ *    add this to the per-vCPU state they allocate. Default: 0
+  * @is_default:
+  *    If true QEMU will use this machine by default if no '-M' option is given.
+  * @get_hotplug_handler: this function is called during bus-less
+@@ -287,6 +290,7 @@ struct MachineClass {
+     int max_cpus;
+     int min_cpus;
+     int default_cpus;
++    int extra_cpus;
+     unsigned int no_serial:1,
+         no_parallel:1,
+         no_floppy:1,
 -- 
 2.43.0
 
