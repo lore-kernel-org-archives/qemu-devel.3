@@ -4,84 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64833CC6B33
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 18:10:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48850C2D0A6
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 18:10:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHPtC-0003lJ-EZ; Thu, 15 Oct 2026 14:09:15 -0400
+	id 1xHPtL-0003pP-VH; Thu, 15 Oct 2026 14:09:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xHPt3-0003k7-I3
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 14:09:07 -0400
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ id 1xHPtH-0003nU-KP
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 14:09:19 -0400
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xHPt1-0000zd-K5
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 14:09:05 -0400
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-48dfc0421d9so67328f8f.1
- for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 11:09:03 -0700 (PDT)
+ id 1xHPtF-00011d-U4
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 14:09:19 -0400
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-48c6955a7c3so1658233f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 11:09:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1792087741; x=1792692541; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=UMRTkQMSmypDqZd5Wb/cwRn+ckHEInKuZWNWzxQDprI=;
- b=xUpHBhLIb70Ejh+ZqYDTicTwzp8tGG6IQu6iS+L5rx+9FRZ8Bl6WvLhYaAG3J4UxSf
- 2qbADEk80lb3+eVceOJiXzRyRSKJ+mmo6ZHPcrkkppFXm+M1pSwTmzH2Zeo37ApTsoGL
- 7B93/uI0E1xzSy84x1O/RrXhYv2oVpBCExyKPjq+OdVIjFPLdf1PuCaE26/JNx+AmKUP
- iK+ekw6Ot6sr1YHTAjVaatdrrAGgzHOj+LWMgZSjAVj5nY6pWEpOoM1us3EaONUOMP33
- IPE2C7iR6qmeoUAuEcYgqlltf/g4OcdNDSRUHrIklEG+BjkaZ8378ktxH4FDcuNx8p+c
- xYmQ==
+ d=linaro.org; s=google; t=1792087756; x=1792692556; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=6RfD7QaogbN7wbHzQt8R/cTi4riXyz7aFoG02Ip6eyI=;
+ b=GT0yQQ1VbL9UK/Z+viYytzlR6x8N4JSBlx0Yslj/JyYblsOYUVYKB3YT3NivV5Y52y
+ YLeP8AOCWBXOCoXWNCa985VZeb7Fn+Pwy4RwD6yDxBKQ5TOJ6fyRqQTfaTfDrqXvbmq7
+ dOCxr3uGVEX4I8rpAbwUMtxE50gSdv5OApYpy56sZCgF2a+Lc/VXtQTuAVskJKeAslZS
+ +4/DLylCCTlRJfvSRIgxwxajdQ3s9xF8VpOooYiyPEpCLK3C8b8JrTfwiNve8pn3jfBC
+ NnW1IirrC5kQuoe8hM0/fzMyGp5Xhr/3eu+IHJo6sAY8J/HQtCOlhvsiyuEfSxiR/sc5
+ umrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792087741; x=1792692541;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=UMRTkQMSmypDqZd5Wb/cwRn+ckHEInKuZWNWzxQDprI=;
- b=ZYE4pRL0Rdu+uOA2qy02Co1UB9KLvinheEoD6fT/0yMP8MEGdEEiB7Tis9Iv8ikAo4
- E+hsMB3gVikeg4zdqg+yIYXUm7CY376kyUB7Sa51vH6dSiodEPBkLQXqWIN+R6g4n+f8
- E9uCtLillIxtVXiKG27B4l8kq+/QqUo2ZWup/m99CLryeYyYAXRW0Hqr6+LkBuis0rbv
- oAaH00d/vVSLIb3+an/S/m142EBw35Zzwe3H3sdhRGqPKuV1tGdmAbt79+RELBDOupyP
- t9wy9U29W9kXus93JZOTPC79PVg0/I4DCuWxjKZL+ZmQf5HyRc0QDUnRVl1pwU0Z4JIC
- yWAA==
-X-Gm-Message-State: AFq9FYKXa8k1vHx67dDVdIgrTiIOasWkLDh1ERykFOVjYaZGwEwPIMT4
- aHFc2oQTRxCPmireseuryaEG25dI9A4FTbhlYLHmekinrduUTavo1VfAPsZROyoz9NNtcJ3g2nu
- 97o9apQA=
-X-Gm-Gg: AYBFou1GOCpzRGVWXAFqfOeXkBfQSCNXnGyFVSVJDvfwwgjl7WvtLjLMy0aRdIntoKk
- EFMvJO1Ssa77177AV7V2Ut557DsKSRqY5OJYVs7f4I2v7mR3eV3YkzIuOQ02LAdmuKEershUHVY
- gBVgRlqlPx4sLGiWfW7x8emcrbd7ld3l2nEMWXXTA2cIWF1/PcnxKu0X+d0tosdgR9PJBNkhPEA
- 4Xt5cunaQ8H0VEE7wjvTkBQwOrwGgIu6XLDYrNMtoPsg05rQCGssRS/ot4J6UAkx8G6Bhlocrwy
- t22vYT+Z/qgIU8s5rcwAQjz7rRMJm5grANl7FMNTnyp6P25UVDdgv5a7D6bWA6RTPtQqW72G529
- yJhVQIsHSv0wFdwCsIo5RaQChxQZjrQqTqbVluw/m+QXw5bu4J7pDbnhSQ3eZjncehrOoS0KWnk
- Udpa5q65VxOyjYb4lLiHT5u1YshT5fpWpDvf9b8ekaz5GM3uTMbxb1DIrtzY7dWYlerA+EKTOgN
- Yl8+fyp8qryXcM/VK//m8bFBdr3k7S2cfdwJazFku/JvFrVNu4jsD5h6zOto32MB+1b6iDHTm4I
- THfZG0G72utqZA==
-X-Received: by 2002:a05:6000:29c3:b0:48c:58d5:30fb with SMTP id
- ffacd0b85a97d-48dba7876bemr26151549f8f.5.1792087741086; 
- Thu, 15 Oct 2026 11:09:01 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1792087756; x=1792692556;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to:content-type;
+ bh=6RfD7QaogbN7wbHzQt8R/cTi4riXyz7aFoG02Ip6eyI=;
+ b=dlCwiLBekajOf9FcX5n5SmGNhwMzat9juUv+ewUHeQJXyeDk9+9YqP6fRxPd2Pt+YK
+ Hm/D0KFD8zPQxaf9Djb6+/xgZAAArWOuRCYArP7EmpBFZC2GDZOpLQ6iWr9fDZsIAqeO
+ tkmStG1PVjurar4RbDUjV34GxQdleHOkse9yhA+MwTN8u/Wh24fojPoI5hAR4u2FdVzT
+ m1cXVDB+/1uluy9mMvyyjIdcNCCHZZihDFh9juKrBgOO3f+qMWtio5g5/SVrDIf2WPDK
+ p0a8vvPh+evPj+0TPwyL9r4kTjVe0JdCBeouoYu6J/bBCtjHgMEfNEjWioEF7hh99Tyu
+ DP5w==
+X-Gm-Message-State: AFq9FYILUQWndCGF0+Kziio5tLOHUZK0Fde33AMz5M8A7ymvUC0ComiV
+ E18mU0BrQOQv+4bLdEcmdGUdJVlZJnCyDh/76r5ZXrf9Np4GUre38DrCh/8PNgxxN9FxyXQ8hCX
+ RJljNHLc=
+X-Gm-Gg: AYBFou0sDQOvrkZVjcmusuBqfc4CURgYF7xQj8fc+rBfITwvhzKoCCzZG8JMbYQFZTB
+ d3m2tlSHUOKdUMrpOkD0VREXv4/zLdiinDBQmNFeyiHsyE31J/7ZQO5WCWgS9uWRxaJs4kAFBXf
+ 7rd9aPsoZz05VOQF3AJUxdAaKr51rJ5mCHSd2g67hHW7LJSo1J6EiH4akZuscCbG6jDsWf9/UTO
+ pBp+RyQwybTU3pjYOOva1rMTF9x9DPbjHweqgVz6hSUWVTnf9EecueIWpbEUfuWJJYfEipMvRLJ
+ NsR2SoTsK0cTbiHC18KActYfrJU38CrZ26ZRkLZeEhJVpDWx2X/3JbS4TDcngMDuholqaKsZicg
+ Db0lBYwbbu5Vz5XT5+tcEMRK99hc4x9KVR16lF7OGj7niUOO78bbmSTytz69w9GIBJziXyjRzFu
+ F6CzYQT3M2/oprDq+XRMY1TVAL16IMPxHXFhuzXhGXMLQYFM+yDx9zIDD/U2M/nma0jj790i/el
+ V5qZz+U5L0gjQgN7CbDD+mVqu04jYExL/q2JUDRAX3rdgyCUsVv3cXLW2e62OH2VxLtbMIlZQ/M
+ XNfY
+X-Received: by 2002:a05:6000:480a:b0:48d:eb44:650c with SMTP id
+ ffacd0b85a97d-48deb44661cmr10876869f8f.40.1792087755999; 
+ Thu, 15 Oct 2026 11:09:15 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48de7773d02sm14692701f8f.13.2026.10.15.11.09.00
+ ffacd0b85a97d-48de7773d02sm14692701f8f.13.2026.10.15.11.09.14
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 Oct 2026 11:09:00 -0700 (PDT)
+ Thu, 15 Oct 2026 11:09:14 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 01/16] target/arm: fix user-mode emulation of ID_AA64MMFR0_EL1
-Date: Thu, 15 Oct 2026 19:08:43 +0100
-Message-ID: <20261015180858.1863407-2-peter.maydell@linaro.org>
+Subject: [PULL 12/16] target/arm: Implement SCR_EL3.TID3
+Date: Thu, 15 Oct 2026 19:08:54 +0100
+Message-ID: <20261015180858.1863407-13-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261015180858.1863407-1-peter.maydell@linaro.org>
 References: <20261015180858.1863407-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x430.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,113 +102,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alex Bennée <alex.bennee@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-Since kernel commit b130a8f70cbbf9 (KVM: arm64: Check advertised
-Stage-2 page size capability) the relevant Stage 2 have been pegged at
-1 f(4KB granule not supported at stage 2) by the kernel. As a result
-the behaviour of the test differs when run on real HW:
-
-  id_aa64mmfr0_el1    : 0x00000111ff000000
-    !!extra bits!!    : 0x0000011100000000
-
-compared to under emulation (neoverse-n1):
-
-  id_aa64mmfr0_el1    : 0x00000000ff000000
-
-Update the test with a new helper to explicitly test for fixed bits
-and update v8_user_idregs to match real systems.
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4566
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-id: 20260930150257.408020-1-alex.bennee@linaro.org
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-[PMM: wrapped a few long lines]
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20261010070952.323466-5-richard.henderson@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/helper.c         | 12 ++++++++++--
- tests/tcg/aarch64/sysregs.c | 31 ++++++++++++++++++++++++++++---
- 2 files changed, 38 insertions(+), 5 deletions(-)
+ target/arm/helper.c | 17 +++++++++++++++--
+ 1 file changed, 15 insertions(+), 2 deletions(-)
 
 diff --git a/target/arm/helper.c b/target/arm/helper.c
-index ff0b766b73d..ff8a8fcca41 100644
+index 7974c46000b..78da51996e8 100644
 --- a/target/arm/helper.c
 +++ b/target/arm/helper.c
-@@ -7023,8 +7023,16 @@ void register_cp_regs_for_features(ARMCPU *cpu)
-                                R_ID_AA64FPFR0_F8CVT_MASK },
-             { .name = "ID_AA64MMFR0_EL1",
-               .exported_bits = R_ID_AA64MMFR0_ECV_MASK,
--              .fixed_bits = (0xfu << R_ID_AA64MMFR0_TGRAN64_SHIFT) |
--                            (0xfu << R_ID_AA64MMFR0_TGRAN4_SHIFT) },
-+              /*
-+               * Linux does not expose the  TGRAN* fields to userspace and so
-+               * they must read as the "this is not implemented" value for those
-+               * fields (which is 0, 0b0001 or 0b1111 depending on the field)
-+               */
-+              .fixed_bits = (0xfULL << R_ID_AA64MMFR0_TGRAN64_SHIFT) |
-+                            (0xfULL << R_ID_AA64MMFR0_TGRAN4_SHIFT) |
-+                            (0x1ULL << R_ID_AA64MMFR0_TGRAN4_2_SHIFT) |
-+                            (0x1ULL << R_ID_AA64MMFR0_TGRAN64_2_SHIFT) |
-+                            (0x1ULL << R_ID_AA64MMFR0_TGRAN16_2_SHIFT) },
-             { .name = "ID_AA64MMFR1_EL1",
-               .exported_bits = R_ID_AA64MMFR1_AFP_MASK },
-             { .name = "ID_AA64MMFR2_EL1",
-diff --git a/tests/tcg/aarch64/sysregs.c b/tests/tcg/aarch64/sysregs.c
-index 301e61d0dd4..8f7af6be1d9 100644
---- a/tests/tcg/aarch64/sysregs.c
-+++ b/tests/tcg/aarch64/sysregs.c
-@@ -54,6 +54,23 @@ int failed_bit_count;
-             }                                                   \
- })
- 
-+/* As above but also check that required fixed bits have expected values */
-+#define get_cpu_reg_check_fixed(id, allowed_mask, fixed_mask, expected_val) ({ \
-+            unsigned long __cval = get_cpu_reg(id);                     \
-+            unsigned long __extra = __cval & ~(allowed_mask);           \
-+            if (__extra) {                                              \
-+                printf("%-20s: 0x%016lx\n", "  !!extra bits!!", __extra);   \
-+                failed_bit_count++;                                     \
-+            }                                                           \
-+            if ((__cval & (fixed_mask)) != (expected_val)) {            \
-+                printf("%-20s: 0x%016llx (expected fixed 0x%016llx)\n",  \
-+                       "  !!fixed mismatch!!",                          \
-+                       (unsigned long long)(__cval & (fixed_mask)),     \
-+                       (unsigned long long)(expected_val));             \
-+                failed_bit_count++;                                     \
-+            }                                                           \
-+})
-+
- /* As above but check RAZ */
- #define get_cpu_reg_check_zero(id) ({                           \
-             unsigned long __val = 0xdeadbeef;                   \
-@@ -127,8 +144,16 @@ int main(void)
-     get_cpu_reg_check_mask(id_aa64isar0_el1, _m(f0ff,ffff,f0ff,fff0));
-     get_cpu_reg_check_mask(id_aa64isar1_el1, _m(00ff,f0ff,ffff,ffff));
-     get_cpu_reg_check_mask(SYS_ID_AA64ISAR2_EL1, _m(00ff,0000,00ff,ffff));
--    /* TGran4 & TGran64 as pegged to -1 */
--    get_cpu_reg_check_mask(id_aa64mmfr0_el1, _m(f000,0000,ff00,0000));
-+    /*
-+     * TGran4 & TGran64 are pegged to -1 (0xf).  Stage 2 translation
-+     * granule support (TGran4_2, TGran64_2, TGran16_2) are pegged to
-+     * safe value 1 as exposed by Linux kernel since b130a8f70cbbf9
-+     * (KVM: arm64: Check advertised Stage-2 page size capability).
-+     */
-+    get_cpu_reg_check_fixed(id_aa64mmfr0_el1,
-+                            _m(f000, 0111, ff00, 0000),
-+                            _m(0000, 0111, ff00, 0000),
-+                            _m(0000, 0111, ff00, 0000));
-     get_cpu_reg_check_mask(id_aa64mmfr1_el1, _m(0000,f000,0000,0000));
-     get_cpu_reg_check_mask(SYS_ID_AA64MMFR2_EL1, _m(0000,000f,0000,0000));
-     /* EL1/EL0 reported as AA64 only */
-@@ -179,7 +204,7 @@ int main(void)
+@@ -6078,8 +6078,21 @@ static CPAccessResult access_v7a_tid3(CPUARMState *env, const ARMCPRegInfo *ri,
+      * Any other registers in the TID3 trap space should use access_tid3(),
+      * so that they trap on v8 and above, but not on v7.
+      */
+-    if ((arm_current_el(env) < 2) && (arm_hcr_el2_eff(env) & HCR_TID3)) {
+-        return CP_ACCESS_TRAP_EL2;
++    switch (arm_current_el(env)) {
++    case 1:
++        if (arm_hcr_el2_eff(env) & HCR_TID3) {
++            return CP_ACCESS_TRAP_EL2;
++        }
++        /* fall through */
++    case 2:
++        if (env->cp15.scr_el3 & SCR_TID3) {
++            return CP_ACCESS_TRAP_EL3;
++        }
++        break;
++    case 3:
++        break;
++    default:
++        g_assert_not_reached();
      }
  
-     if (failed_bit_count > 0) {
--        printf("Extra information leaked to user-space!\n");
-+        printf("Bit check failure or extra info leaked to user-space!\n");
-         return 1;
-     }
- 
+     return CP_ACCESS_OK;
 -- 
 2.43.0
 
