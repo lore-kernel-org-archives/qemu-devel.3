@@ -4,112 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56B42CC6B34
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 13:05:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 852CACC6B33
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 13:11:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHL9G-0007O7-Vo; Thu, 15 Oct 2026 09:05:31 -0400
+	id 1xHLEB-00013v-Ae; Thu, 15 Oct 2026 09:10:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xHL9D-0007Nk-5L
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 09:05:27 -0400
-Received: from smtp-out1.suse.de ([195.135.223.130])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xHLE5-00011z-RV
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 09:10:30 -0400
+Received: from mail-yw1-x1133.google.com ([2607:f8b0:4864:20::1133])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xHL9B-00032i-6I
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 09:05:26 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 36D9821CCD;
- Thu, 15 Oct 2026 13:05:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1792069523; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=S5EHaUvK1QfPq7/DK5r0DxUAadr34MT26nAOy+M8+TY=;
- b=E8HF194ZRQs4Z4vIVJekY02A/juSf4/65xWWqVPluLfyEmysrn0MQueiau31PGOMzfJXde
- FchKnfViFfxBeBBJrFhq4MZ4AjCC90jv0Wly2ZHoSuU2Ut9oMQzr1yd6a9IVsDgnxeIG/F
- 91b/cZeFcAPZ1/90h0jRIr42HO/pgFg=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1792069523;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=S5EHaUvK1QfPq7/DK5r0DxUAadr34MT26nAOy+M8+TY=;
- b=v2Se2spfSVNAr83AQyGoRHasmtM0XjntmyYHAfZz5QM6Bu/sb94+/d/XodaY6SOsY40Akf
- hqfkwndpl9vfeRCg==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=E8HF194Z;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=v2Se2spf
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1792069523; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=S5EHaUvK1QfPq7/DK5r0DxUAadr34MT26nAOy+M8+TY=;
- b=E8HF194ZRQs4Z4vIVJekY02A/juSf4/65xWWqVPluLfyEmysrn0MQueiau31PGOMzfJXde
- FchKnfViFfxBeBBJrFhq4MZ4AjCC90jv0Wly2ZHoSuU2Ut9oMQzr1yd6a9IVsDgnxeIG/F
- 91b/cZeFcAPZ1/90h0jRIr42HO/pgFg=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1792069523;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=S5EHaUvK1QfPq7/DK5r0DxUAadr34MT26nAOy+M8+TY=;
- b=v2Se2spfSVNAr83AQyGoRHasmtM0XjntmyYHAfZz5QM6Bu/sb94+/d/XodaY6SOsY40Akf
- hqfkwndpl9vfeRCg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id CA0FD132C9;
- Thu, 15 Oct 2026 13:05:06 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id f5kMNH3P0Go5PAAAD6G6ig
- (envelope-from <farosas@suse.de>); Thu, 15 Oct 2026 13:05:06 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
-Cc: peterx@redhat.com, Akash Kulhalli <akulhall@redhat.com>, Juraj Marcin
- <jmarcin@redhat.com>
-Subject: Re: [PATCH v2 4/7] migration: Split
- migration_channel_process_incoming()
-In-Reply-To: <20261006182046.3767283-5-peterx@redhat.com>
-References: <20261006182046.3767283-1-peterx@redhat.com>
- <20261006182046.3767283-5-peterx@redhat.com>
-Date: Thu, 15 Oct 2026 10:04:34 -0300
-Message-ID: <87y0bzktct.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xHLE4-0003jl-7l
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 09:10:29 -0400
+Received: by mail-yw1-x1133.google.com with SMTP id
+ 00721157ae682-8ac4806e210so37498147b3.1
+ for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 06:10:27 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792069827; cv=none;
+ d=google.com; s=arc-20260327;
+ b=QF9TBloYed4sQnsvwp+BqNM07u13fNGAW1VBtoKEfDmfeUa9ejZ3BksIs7m3b8MG4j
+ 1/mMO1tzf60rTU5ngicIsJ1ukPO1STuwrBz5gSyM7Ww8EaAhEoJ63Mn1p3LAxJe3TTvw
+ H6SF2HTHpfVghCzz0V9Eea8NWBANaBsZvl2k6E04R8EgX/Pua0Fg6k6lo6bhYPpgnJD+
+ 9AGUsv1pDBlTGSeJgkMpoJYcvzNdhst3rd11effRKYVodRdUUoPvNYy+unuu+Mdy0+Gh
+ IuQloDOpxbao13bEOx9dOnDoOFdAC6F86EY51nC4A7lwSznTNy7rTRyqL036FsKpSWdn
+ FrnA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=qyZitC/l/N/bC1ZhIb3barLRtVwsOcUSPxwAi3cmdR4=;
+ fh=zpl2ivaZaUiZaehzNBODl4resofFbSIiGtt/2SzFP/s=;
+ b=r3ZG1EdHt7wvVXOhpdhe21pSZwA6I4xrmQXnb14xg2M+r1qm5oVFzELkNTaIF2Tid5
+ d3+E/VLBg3TfexGGz769NrS0jA6u+s7QyI1OxWdSg5zWOpFy0WqDc8dsWeQ2I3MDEalB
+ MjSLOy/pQZVVKhQWoB8QMfLRCHm7/YIul/BlWzmU/YtRUNE0U3YkVA4yxZABkFE6V92A
+ Ix4EcZwt4CLw37d8RH1PiI5thCCYUVGTEsLeGNywo1bP+5EO5+urJKAXMm/9tKxnUOfq
+ WJevX+eyeGpGJoJD9NTlezVYyucPA/oioBjgqVFRA0TIq/Sf2NH13boh4FBEqKe8utct
+ /XhQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1792069827; x=1792674627; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=qyZitC/l/N/bC1ZhIb3barLRtVwsOcUSPxwAi3cmdR4=;
+ b=TEc9Ibhd+w29pGuJeHoCxuqxhYApgc9XGdSEod9nngv7f+nU7JV8//Ei+0DDzPKQ93
+ MhCFkwmUISFuBRQhf/gOJxu3VPVc5YebkN8vS44o2ZjpGwNewwxCS6fIZ+u3lPVN3vJl
+ QW0eczkLTwPb7nJZ1gPmqqfpNUBVtOstQA5p9yDV2yyJrqXoBr1RhVjvK/a75CjHa/gg
+ H6BEPiZqW8gsp/LICZ32NMPcyxW0csRTL7NFW3Gj9OFCljrSEFfKCoW4b8281f5bfFsm
+ GFExinaYI666uVvQMf2pGvvnTTWtO4r2PqqgYIPnV73gZ4gZZPnXvCYXugcAi5vghJnB
+ o5Cw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1792069827; x=1792674627;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=qyZitC/l/N/bC1ZhIb3barLRtVwsOcUSPxwAi3cmdR4=;
+ b=nwp9nLxALIpY7LYxbWlZ3e2HdhCTJnQrWgyNtj+JI7/5s8hIuCKFUdZAWTaG/R90ma
+ Mt0vIhzYnz3CTrDaXsxP87mNPJw84l9JnDvvXIm4At+cybmtUySIvF+dttBa4jhdSWuT
+ 4XHzAT5wbbEoi1hP/sTbRAwPZdbgcQNHWETQuMYmfkYkQoMZgu7zqCSps9A2ajRUzCBn
+ dTpGc9dg4WMiV6RzFoq0fHg7QLzqGTtmpYi0Y5rldm4QQPW3dZo8UuGsPz35+3SPVw02
+ VALAex3kzBIgG2169GdzuRuhgwF6KGXYUoHnNlJgs9U3UfXoU8ycN28248Knre7o5nZC
+ J6iQ==
+X-Gm-Message-State: AFq9FYIQRbpu5MtCX3GT2YiNvhwuuR3MqPU6w9h+JI1j6qrSQBji9wIu
+ 1j6JZXpdmFBRlIX6R9Wl1BmsbcmueFGUVO23BtzVpUJZz32Ba+NPh734Fel81pdCbILjO/PGWQy
+ 6DxNi785KY9t3uv3e9SKASyULeLqknjZgyG1+oY1ivA==
+X-Gm-Gg: AYBFou2wn94Gaxh0Nbl9RhtjwMADC3tQUtxsRibynTxq+2RcXkxEvEzZAZW+j2eb5aX
+ dKtM8DqiLHVh5Xjj1GocRd3sxMOjQ82//dxTBpJ4LD8dMEOrezio1ih6QgLyZYBprhc1bvbmJDi
+ hSLd1V5a7yFao8V5dVwnn/vKHO2Cnf2B8RNpDAe1lnV0csUalMOZMcVYFCapIgbvMgOWFJLgHfM
+ cebOiowT98Q0eJImGCaAsgQofegfIkUEQ8DGAeOTwEmKrcqkIN++VtzSiHVVIdxdc+0qrAynNCG
+ Y+u4rRrZcp8I3zW5yI7ScRFIuWOIQtvTkuZf58IQ+k5yxSw6GQcFLhRq1awFATuwZPIMrBYtM8C
+ vl3scMV4qWUX2ZH3/cuJ4TrSHq3ZdNHLkClkyPMY=
+X-Received: by 2002:a05:690c:d8c:b0:866:7724:3bcd with SMTP id
+ 00721157ae682-8b07ed1e667mr84520857b3.16.1792069826503; Thu, 15 Oct 2026
+ 06:10:26 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-X-Rspamd-Queue-Id: 36D9821CCD
-X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- RCVD_VIA_SMTP_AUTH(0.00)[]; RCVD_TLS_ALL(0.00)[];
- ARC_NA(0.00)[]; MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
- TO_DN_SOME(0.00)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- MID_RHS_MATCH_FROM(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- RCPT_COUNT_FIVE(0.00)[5]; RCVD_COUNT_TWO(0.00)[2];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,suse.de:email,suse.de:dkim];
- DKIM_TRACE(0.00)[suse.de:+]
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <20260725012635.4925-1-marcelomanzo@gmail.com>
+ <20260923210956.52940-1-marcelomanzo@gmail.com>
+In-Reply-To: <20260923210956.52940-1-marcelomanzo@gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 15 Oct 2026 14:10:14 +0100
+X-Gm-Features: AclHuK-C8YX7MVoxjMcMUKV7nzmKM81fNjgM8uAnDYg3SCmj27FnJswyIckI5zg
+Message-ID: <CAFEAcA--SNTzsha0GnKuL47gLy6RS3Df26TdAV7LR3hEiGR6DA@mail.gmail.com>
+Subject: Re: [PATCH 0/5] hw/arm/raspi4b: RNG200 and thermal sensor
+To: Marcelo Manzo <marcelomanzo@gmail.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1133;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1133.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -126,129 +115,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
+On Wed, 23 Sept 2026 at 22:09, Marcelo Manzo <marcelomanzo@gmail.com> wrote:
+>
+> Hi Peter,
+>
+> Gentle ping on this one too -- it's been about eight weeks with no
+> review yet. Happy to rebase/resend if anything's gone stale in the
+> meantime, just let me know.
 
-> Introduce two smaller functions for it,
->
-> - migration_incoming_channel_install(): peek at channels whenever possible,
->   and install the channel to one of the slots (main, multifd, preempt)
->
-> - migration_incoming_error_propagate(): handling an error happened during
->   channel establish phase of an incoming migration.
->
-> When at it, move the set channel tracepoint into the 1st helper, replacing
-> the existing tracepoint with trace_migration_channel_process_incoming().
-> So far, they should fire almost the same time if the channel peek worked.
-> This fact will change in follow up refactorings.
->
-> I also moved migration_ioc_register_yank() to be after identify, hopefully
-> it makes more sense: we'd better be careful on registration of yank, or we
-> should be prepared for explosions.  Previously it worked, my guess is when
-> error happens we never unregister yank but hang dest QEMU or quit,
-> depending on exit_on_error value.
->
-> No real functional change intended.
->
-> Signed-off-by: Peter Xu <peterx@redhat.com>
-> ---
->  migration/channel.c    | 57 +++++++++++++++++++++++++++++-------------
->  migration/trace-events |  1 +
->  2 files changed, 41 insertions(+), 17 deletions(-)
->
-> diff --git a/migration/channel.c b/migration/channel.c
-> index 266ae8f776..8407ea46cb 100644
-> --- a/migration/channel.c
-> +++ b/migration/channel.c
-> @@ -197,6 +197,42 @@ out:
->      return channel;
->  }
->  
-> +static void migration_incoming_error_propagate(MigrationIncomingState *mis,
-> +                                               Error *error)
-> +{
-> +    error_report_err(error);
-> +    migrate_set_state(&mis->state, mis->state, MIGRATION_STATUS_FAILED);
-> +    if (mis->exit_on_error) {
-> +        exit(EXIT_FAILURE);
-> +    }
-> +}
-> +
-> +static bool migration_incoming_channel_install(MigrationIncomingState *mis,
-> +                                               QIOChannel *ioc,
-> +                                               Error **errp)
-> +{
-> +    MigChannelType ch = migration_channel_identify(mis, ioc, errp);
-> +
-> +    if (!ch) {
-> +        assert(*errp);
-> +        return false;
-> +    }
-> +
-> +    trace_migration_set_incoming_channel(ioc,
-> +                                         object_get_typename(OBJECT(ioc)));
-> +    migration_ioc_register_yank(ioc);
-> +
-> +    if (migration_incoming_setup(ioc, ch, errp)) {
-> +        migration_start_incoming();
-> +    }
-> +
-> +    if (*errp) {
-> +        return false;
-> +    }
-> +
-> +    return true;
-> +}
-> +
->  /**
->   * @migration_channel_process_incoming - Create new incoming migration channel
->   *
-> @@ -209,31 +245,18 @@ void migration_channel_process_incoming(QIOChannel *ioc)
->  {
->      MigrationIncomingState *mis = migration_incoming_get_current();
->      Error *local_err = NULL;
-> -    MigChannelType ch;
->  
-> -    trace_migration_set_incoming_channel(
-> +    trace_migration_channel_process_incoming(
->          ioc, object_get_typename(OBJECT(ioc)));
->  
->      if (migrate_channel_requires_tls_upgrade(ioc)) {
->          migration_tls_channel_process_incoming(ioc, &local_err);
->      } else {
-> -        migration_ioc_register_yank(ioc);
-> -        ch = migration_channel_identify(mis, ioc, &local_err);
-> -        if (!ch) {
-> -            goto out;
-> -        }
-> -
-> -        if (migration_incoming_setup(ioc, ch, &local_err)) {
-> -            migration_start_incoming();
-> -        }
-> +        migration_incoming_channel_install(mis, ioc, &local_err);
->      }
-> -out:
-> +
->      if (local_err) {
-> -        error_report_err(local_err);
-> -        migrate_set_state(&mis->state, mis->state, MIGRATION_STATUS_FAILED);
-> -        if (mis->exit_on_error) {
-> -            exit(EXIT_FAILURE);
-> -        }
-> +        migration_incoming_error_propagate(mis, local_err);
->      }
->  }
->  
-> diff --git a/migration/trace-events b/migration/trace-events
-> index 68bcf12dc7..c93c9f9e75 100644
-> --- a/migration/trace-events
-> +++ b/migration/trace-events
-> @@ -207,6 +207,7 @@ migration_start_incoming(void) ""
->  migration_transferred_bytes(uint64_t qemu_file, uint64_t multifd, uint64_t rdma) "qemu_file %" PRIu64 " multifd %" PRIu64 " RDMA %" PRIu64
->  
->  # channel.c
-> +migration_channel_process_incoming(void *ioc, const char *ioctype) "ioc=%p ioctype=%s"
->  migration_set_incoming_channel(void *ioc, const char *ioctype) "ioc=%p ioctype=%s"
->  migration_set_outgoing_channel(void *ioc, const char *ioctype) "ioc=%p ioctype=%s"
+I'm afraid I have very little time for review of patchseries
+which are board/SoC model these days, hence the delay. (If
+anybody else cares to review series I'm happy to pick them up.)
+Anyway, I reviewed this one; comments all minor, but it doesn't
+apply to current head-of-git so will want a rebase I guess.
 
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
+thanks
+-- PMM
 
