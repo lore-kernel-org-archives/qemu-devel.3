@@ -4,109 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04E9FCC6B33
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 12:14:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3237CC6B33
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 12:16:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHKKn-0007VF-Bz; Thu, 15 Oct 2026 08:13:21 -0400
+	id 1xHKNa-0000Ho-Tw; Thu, 15 Oct 2026 08:16:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1xHKKk-0007UF-Hl
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 08:13:18 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1xHKNV-0000G0-AL
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 08:16:10 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1xHKKi-0003mA-Jd
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 08:13:18 -0400
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1xHKNT-0004L6-AD
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 08:16:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1792066395;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ s=mimecast20190719; t=1792066566;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=6ZS8O6pAKs14B2vAv0EVl9bnzCeWoqf8Dh1MzJORQ00=;
- b=THgLQDbEzhIo2/L38TSAvRyj0kEYoR2MooqF7J0pHYcD/sNUZrYroidzEQqlBmsmQxWxnH
- gtZX+8Jl0Ls05vNi8g6UxPhL53zO4DapwhvqCIDabaI1Kmig0hRPfljeQTUiZJZtuCM15o
- TRq/UUbQfqCu63fQHiP4/2XxZ6/E0fg=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-493-YDuxhffIOdKMXh1zcrjqvQ-1; Thu, 15 Oct 2026 12:13:11 +0000
-X-MC-Unique: YDuxhffIOdKMXh1zcrjqvQ-1
-X-Mimecast-MFC-AGG-ID: YDuxhffIOdKMXh1zcrjqvQ_1792066390
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-4a019d53f46so15855035e9.3
- for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 05:13:11 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792066390; x=1792671190;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:reply-to:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=6ZS8O6pAKs14B2vAv0EVl9bnzCeWoqf8Dh1MzJORQ00=;
- b=I3qLn3Yvbs67eoW4UBP6bTtsVPfvFHTaktk73qjr5gxiP1X096GARKz0t5EOoIJStH
- a6XDQAZo5c75vx1v2Q5vNPmoXD4QQKC2PM/7PWj5SUaJ/YeozQemZGRT8Mx3uoUkRRD3
- G3KaaHgqh0ehlDEP+2JQUTVatRM4J+PtfSOxyUyD2iJH/B34iHKfYQiPCuUOHYK3cgvh
- zgYtHJxuUtXuzfmcBzL7xzooWAtrIShyr8ZOZnsxPvlbsb4rKVlNosNjZSk7/z85Z3DT
- okt1C2WCS9vVQRWUKzhLeaTcaC9RCeczCqLf3xBA360/TplpVhb4IdRL63VI7vIlFWzT
- 9Ncw==
-X-Forwarded-Encrypted: i=1;
- AKwUvBwEXNo8m5L8fea2TgVJPc4QM0jqboi5SUdf5xsyqOyhd7nZt+vRBITUp5Wb/0F8AyQn0VmEUlZdXurs@nongnu.org
-X-Gm-Message-State: AFq9FYIu+ef1EMbKnM8WB0dDtqHlAt9/pfZc/5De0/lLxI6k8ERB85KL
- U/tV7bdOF/UU9kGHDsQ6U+LuAgJlo8hV7NBT91r7Q3iSZ2eRFpC271PlQZdxkwjXsrIsb6HZxe9
- bksXt+ys4Z4NoIYcjl9yawYXzbm7O2aGlXsKZxq3tTSn10t+Sjh0Ioeaz
-X-Gm-Gg: AYBFou3HGmE+A5aOBVN/Q+1HVUfxd0WGCp2BpUKgI8Kz6X85FMzalidS46/aAJQLVSn
- kHktGmXw5KuP3eeNsfETpPNDRvLtqKONXrDQKToo0GeD3JeO4jsZIFIYg8hkNWOJ9hXB9hI72tG
- iPwTBbmSTK+8tJFLxaO4+MlF5cQs2zFffeA3hY48QqJS6wO1DUbwqK2E/MLxoO03tZLSYQ3LdRb
- iBVWudP8OekwUfX2trkFNgGU1SbA4IScazOglzBzi1V3Y8iC9bP4PBxwoETdQPTb9X5O4EOIGTp
- MwoanEfLiuHe1IiiZRIh3i2xDJvHAKHtNN1gY6eAjbAazL1xV2SF++5Y2zDuKGbKcO2h1xoAXAH
- WCDNlBk2Fdv4KdhuFs1uNH1/IdH2zGQ9e2EyMok35NMGW0uQ3
-X-Received: by 2002:a05:600c:3b98:b0:499:79b9:e220 with SMTP id
- 5b1f17b1804b1-4a18e49886amr424421035e9.10.1792066390230; 
- Thu, 15 Oct 2026 05:13:10 -0700 (PDT)
-X-Received: by 2002:a05:600c:3b98:b0:499:79b9:e220 with SMTP id
- 5b1f17b1804b1-4a18e49886amr424420585e9.10.1792066389771; 
- Thu, 15 Oct 2026 05:13:09 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a1bd99faf3sm66449875e9.14.2026.10.15.05.13.08
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 15 Oct 2026 05:13:09 -0700 (PDT)
-Message-ID: <395b66c9-4173-401b-b469-8972b710aae2@redhat.com>
-Date: Thu, 15 Oct 2026 14:13:07 +0200
+ bh=8sTMsb3Bfql/0FLz+rxdR8x6dp5dTWCNKP8OZlMF384=;
+ b=eIF5t1Tb5awf/zqHghyLTmW28gZgwtY3BT6NJFgNSufUM2kN/RrXediqPL/MvMMz8Ro/e6
+ keGr8erGrmnv1oVlcDGO8RXope1GPkbbpLXixfZnsPye/xboYSdjds5QyP3OlsoOqezduP
+ kw1v690u6yGVcFlkI6lOu6P8q3hEudE=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-684-vFKl8_75PkitRaCx4b7Dgw-1; Thu,
+ 15 Oct 2026 12:16:03 +0000
+X-MC-Unique: vFKl8_75PkitRaCx4b7Dgw-1
+X-Mimecast-MFC-AGG-ID: vFKl8_75PkitRaCx4b7Dgw_1792066562
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B5CB1180036E; Thu, 15 Oct 2026 12:16:01 +0000 (UTC)
+Received: from localhost (headnet05.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.117])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 42D5F1956087; Thu, 15 Oct 2026 12:15:59 +0000 (UTC)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v4 14/25] target/arm: add neoverse-v2-v2 named CPU
- model
-Content-Language: en-US
-To: Khushit Shah <khushit.shah@nutanix.com>, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, kvmarm@lists.linux.dev
-Cc: cohuck@redhat.com, peter.maydell@linaro.org,
- richard.henderson@linaro.org, maz@kernel.org, oliver.upton@linux.dev,
- berrange@redhat.com, abologna@redhat.com, jdenemar@redhat.com,
- gshan@redhat.com, skolothumtho@nvidia.com, sebott@redhat.com,
- armbru@redhat.com, philmd@linaro.org, yangjinqian1@huawei.com,
- shaju.abraham@nutanix.com, mark.caveayland@nutanix.com,
- ping@khushitshah.com, sandesh.patel@nutanix.com
-References: <20260921123249.1708067-1-khushit.shah@nutanix.com>
- <20260921123249.1708067-15-khushit.shah@nutanix.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20260921123249.1708067-15-khushit.shah@nutanix.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+Subject: Re: [PATCH 00/21] system: introduce a live data recorder facility
+From: marcandre.lureau@redhat.com
+To: =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, 
+ =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
+ Michael Roth <michael.roth@amd.com>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, 
+ Fabiano Rosas <farosas@suse.de>, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ "Dr. David Alan Gilbert" <dave@treblig.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Markus Armbruster <armbru@redhat.com>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
+ Eric Blake <eblake@redhat.com>, Laurent Vivier <lvivier@redhat.com>
+In-Reply-To: <20261015112044.1999748-1-berrange@redhat.com>
+References: <20261015112044.1999748-1-berrange@redhat.com>
+Date: Thu, 15 Oct 2026 16:15:52 +0400
+Message-Id: <179206655287.744241.865023521920859070.b4-review@b4>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1729;
+ i=marcandre.lureau@redhat.com; h=from:subject:message-id;
+ bh=MM+KQis/UkweKLiF5YomJxgBt8nBi4y5nV98wrnYApc=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBq0MP8zZCcFQjk1AwUM7oofiq8jdh207ucaQcz5
+ gMspA7pRj6JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCatDD/AAKCRDa6OEJdZac
+ 5b76D/9QPYaI9aKwn7RMzAQqTAhN3Xswh2DjB0Cn5BemVlgKOJF5jqpVfgr8sCb7S1Ubrpn+Nrx
+ nTgN3g91jibkWHORDaUCNN2omDBDWJ404Iwj4jNwsrT0rSlMxfM+AxbaR0Hk1jVq1EfCENMmHcn
+ 7ZVAEbzNbavbqhDnKugb/sf0Bc2tpDwuTAEnMOJ52+05dFi74/63j+hMwGRapuyeMj3uErDZf2W
+ SIQeC1jio7DEjb++P/pVU3qFrw9Tn9R/Ow1cSFsW83BUA1ogQ6NkbfBl5HJAQwmCTuXebxXrPay
+ 4Ru8LDaS1VHJ1Alwbn9dBWOEM/P0lOZJmOUavvFJ4Qrj+L5LxzNpbi6EjGILfItYE/xEf4jXSOV
+ +AxY3U2Qqg8GEPpRnrWJbyRvbiVTd08eLD9xEdolIwzwro4lOQ7nuYPxab+U0uO6XesUTs/NvlD
+ plWnH/nSPchCJQ9AdUmQ9oLXPWqqbRabClJG/I5h4uz7xy+o87vndjg/+FtDTpNkl/jtsSa+sDA
+ DiXQDNd40p+SprNiXnh/TlhsPdw/eLXUC1bq2chTemxdDNIlgx1IGqiS/zca0ABUdKV7wOx5zCM
+ JAhKJgixnV0Fd1jHiC5K/iXGNCor2ixiFDl3qIiAxqxwHMbPlJvbEl2KBgf4Z0eWAc/1HBX4iXF
+ zZoEqIJOQy7KNmg==
+X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
+ fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=marcandre.lureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -22
 X-Spam_score: -2.3
 X-Spam_bar: --
 X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,129 +108,51 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Khushit,
+> This series introduces a new facility called 'tldr' which is a
+> live data recorder. This is intended to aid support of production
+> QEMU deployments, by providing a data collection facility that
+> can be left "always on", such that in the event of a QEMU crash
+> or guest OS crash, certain important information will be recorded.
+> 
+> The data recorder has to be enabled by adding a "tldr-config"
+> object instance with -object / object_add.
+> 
+> With this series, the data recorder collects
+> 
+>  * error_report/warn_report/error_printf messages
+>  * QMP events
 
-On 9/21/26 2:32 PM, Khushit Shah wrote:
-> Add a KVM-only named CPU model for Neoverse V2 r0p1 (TRM 102375),
-> inheriting from neoverse-v2-v1 (r0p0).
->
-> r0p1 only changes MIDR_EL1.Revision and adds FEAT_ECBHB
-> (ID_AA64MMFR1_EL1.ECBHB).
->
-> Final ID register state requested from KVM for "neoverse-v2-v2":
-> [  0] AIDR_EL1                 = 0x0000000000000000
-> [  1] CLIDR_EL1                = 0x0000000000000000
-> [  2] CTR_EL0                  = 0x000000009444c004
-> [  3] DCZID_EL0                = 0x0000000000000004
-> [  4] GMID_EL1                 = 0x0000000000000000
-> [  5] ID_AA64AFR0_EL1          = 0x0000000000000000
-> [  6] ID_AA64AFR1_EL1          = 0x0000000000000000
-> [  7] ID_AA64DFR0_EL1          = 0x000000f010305009
-> [  8] ID_AA64DFR1_EL1          = 0x0000000000000000
-> [  9] ID_AA64DFR2_EL1          = 0x0000000000000000
-> [ 10] ID_AA64FPFR0_EL1         = 0x0000000000000000
-> [ 11] ID_AA64ISAR0_EL1         = 0x0221100010210000
-> [ 12] ID_AA64ISAR1_EL1         = 0x0011111101211052
-> [ 13] ID_AA64ISAR2_EL1         = 0x0000000000000000
-> [ 14] ID_AA64ISAR3_EL1         = 0x0000000000000000
-> [ 15] ID_AA64MMFR0_EL1         = 0x0000011100101125
-> [ 16] ID_AA64MMFR1_EL1         = 0x1000000010312122
-> [ 17] ID_AA64MMFR2_EL1         = 0x1221011110001011
-> [ 18] ID_AA64MMFR3_EL1         = 0x0000000000000000
-> [ 19] ID_AA64MMFR4_EL1         = 0x0000000000000000
-> [ 20] ID_AA64PFR0_EL1          = 0x1101000120110011
-> [ 21] ID_AA64PFR1_EL1          = 0x0000000000000021
-> [ 22] ID_AA64PFR2_EL1          = 0x0000000000000000
-> [ 23] ID_AA64SMFR0_EL1         = 0x0000000000000000
-> [ 24] ID_AA64ZFR0_EL1          = 0x0000100000110001
-> [ 25] ID_AFR0_EL1              = 0x0000000000000000
-> [ 26] ID_DFR0_EL1              = 0x0000000000000000
-> [ 27] ID_DFR1_EL1              = 0x0000000000000000
-> [ 28] ID_ISAR0_EL1             = 0x0000000000000000
-> [ 29] ID_ISAR1_EL1             = 0x0000000000000000
-> [ 30] ID_ISAR2_EL1             = 0x0000000000000000
-> [ 31] ID_ISAR3_EL1             = 0x0000000000000000
-> [ 32] ID_ISAR4_EL1             = 0x0000000000000000
-> [ 33] ID_ISAR5_EL1             = 0x0000000000000000
-> [ 34] ID_ISAR6_EL1             = 0x0000000000000000
-> [ 35] ID_MMFR0_EL1             = 0x0000000000000000
-> [ 36] ID_MMFR1_EL1             = 0x0000000000000000
-> [ 37] ID_MMFR2_EL1             = 0x0000000000000000
-> [ 38] ID_MMFR3_EL1             = 0x0000000000000000
-> [ 39] ID_MMFR4_EL1             = 0x0000000000000000
-> [ 40] ID_MMFR5_EL1             = 0x0000000000000000
-> [ 41] ID_PFR0_EL1              = 0x0000000000000000
-> [ 42] ID_PFR1_EL1              = 0x0000000000000000
-> [ 43] ID_PFR2_EL1              = 0x0000000000000000
-> [ 44] MIDR_EL1                 = 0x00000000410fd4f1
-> [ 45] MPIDR_EL1                = 0x0000000080000000
-> [ 46] MVFR0_EL1                = 0x0000000000000000
-> [ 47] MVFR1_EL1                = 0x0000000000000000
-> [ 48] MVFR2_EL1                = 0x0000000000000000
-> [ 49] REVIDR_EL1               = 0x0000000000000000
-> [ 50] SMIDR_EL1                = 0x0000000000000000
->
-> Signed-off-by: Khushit Shah <khushit.shah@nutanix.com>
-> ---
->  hw/arm/virt.c           |  1 +
->  target/arm/cpu-models.c | 13 +++++++++++++
->  2 files changed, 14 insertions(+)
->
-> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-> index f5a8ea1145..90e818690c 100644
-> --- a/hw/arm/virt.c
-> +++ b/hw/arm/virt.c
-> @@ -4147,6 +4147,7 @@ static GPtrArray *virt_get_valid_cpu_types(const MachineState *ms)
->      if (kvm_enabled() && target_aarch64()) {
->          g_ptr_array_add(vct, g_strdup(ARM_CPU_TYPE_NAME("arm-v9.0-a-v1")));
->          g_ptr_array_add(vct, g_strdup(ARM_CPU_TYPE_NAME("neoverse-v2-v1")));
-> +        g_ptr_array_add(vct, g_strdup(ARM_CPU_TYPE_NAME("neoverse-v2-v2")));
->      }
->      if (target_aarch64()) {
->          g_ptr_array_add(vct, g_strdup(ARM_CPU_TYPE_NAME("cortex-a53")));
-> diff --git a/target/arm/cpu-models.c b/target/arm/cpu-models.c
-> index 2de67f353b..af60924953 100644
-> --- a/target/arm/cpu-models.c
-> +++ b/target/arm/cpu-models.c
-> @@ -16,6 +16,7 @@
->   * Current Hierarchy:
->   * arm-v9.0-a-v1
->   *   neoverse-v2-v1 (r0p0)
-> + *     neoverse-v2-v2 (r0p1)
->   * SPDX-License-Identifier: GPL-2.0-or-later
->   */
->  
-> @@ -212,9 +213,21 @@ static const ArmModelPropValue neoverse_v2_v1_props[] = {
->      MODEL_PROP_END
->  };
->  
-> +/* Neoverse V2 CPU model (TRM 102375, r0p1), inherits from neoverse-v2-v1. */
-> +static const ArmModelPropValue neoverse_v2_v2_props[] = {
-> +    /* MIDR_EL1 */
-> +    MODEL_PROP("SYSREG_MIDR_EL1_Revision", NUM, 0x1), /* r0p1 */
-> +
-> +    /* ID_AA64MMFR1_EL1 */
-> +    MODEL_PROP("SYSREG_ID_AA64MMFR1_EL1_ECBHB", NUM, 1), /* FEAT_ECBHB */
-> +
-> +    MODEL_PROP_END,
-> +};
-> +
->  static const ArmNamedCpuModel arm_cpu_models[] = {
->      {"arm-v9.0-a-v1", NULL, arm_v9_0_a_v1_props},
->      {"neoverse-v2-v1", "arm-v9.0-a-v1", neoverse_v2_v1_props},
-> +    {"neoverse-v2-v2", "neoverse-v2-v1", neoverse_v2_v2_props},
-nit I would call it directly neoverse-v2-r0p1 and leave the -v<n> suffix
-for potential fixes. Same for r0p0 obviously.
+It should probably be recorded at emission, not per monitor
 
-Thanks
+>  * QMP errors
+>  * QMP commands, which are not query-XXX/qom-list,
+>    or any command associated with a QMP error.
+>  * qemu_log output
+> 
+> The last item is intended primarily to be used in combination
+> with tracing and its 'log' backend, to have continuous
+> recording of certain interesting probes.
+> 
+> Each type of data is collected in a distinct circular
+> buffer, such that high volumes of one type of data, does
+> not result in overwriting other types of low volume data.
+> 
+> The data recorder is set to trigger on SIGBUS, SIGSEGV,
+> SIGILL, SIGFPE and SIGABRT, or manually via QMP 'tldr-dump'.
 
-Eric
->      {NULL, NULL, NULL}
->  };
->  
+Instead of allocating and dumping by a signal handler, why not use a file-backed
+mmap or a memfd? We would need to define a small fixed header for the file
+layout/buckets.  This would avoid all the issues with signal handlers.
+
+There would be a small window for consistency on crash, but that's probably
+acceptable.
+
+Plain ASCII section markers would probably be easier to deal with than emojis
+
+-- 
+Marc-André Lureau <marcandre.lureau@redhat.com>
 
 
