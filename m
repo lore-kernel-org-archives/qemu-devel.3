@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82FADCC6B3C
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 10:30:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4DB6CC6B3E
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 10:30:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHIgu-0006le-BK; Thu, 15 Oct 2026 06:28:04 -0400
+	id 1xHIg2-0003LU-O4; Thu, 15 Oct 2026 06:27:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eblot.ml@gmail.com>)
- id 1xHIg6-0003gA-Lo
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 06:27:17 -0400
-Received: from mail-wr1-f45.google.com ([209.85.221.45])
+ id 1xHIet-0001oN-QQ
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 06:25:59 -0400
+Received: from mail-wm1-f48.google.com ([209.85.128.48])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <eblot.ml@gmail.com>)
- id 1xHIg5-00042w-0S
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 06:27:14 -0400
-Received: by mail-wr1-f45.google.com with SMTP id
- ffacd0b85a97d-48de6a62a4cso2186404f8f.2
- for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 03:27:12 -0700 (PDT)
+ id 1xHIep-0003oo-Tb
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 06:25:59 -0400
+Received: by mail-wm1-f48.google.com with SMTP id
+ 5b1f17b1804b1-49fbb2acc90so43210165e9.2
+ for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 03:25:53 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792060031; x=1792664831;
+ d=1e100.net; s=20260707; t=1792059952; x=1792664752;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :content-type:mime-version:subject:date:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=Adz/rIkVxKmnpzPklQqKGWWgHGHy0e2h5cr4SvKWE0I=;
- b=dG6l+fHy33qXFV/DQf6kWiy5JZ9k0KwOy99bldZBbL+wbydunwYj2o2wv5Qnk52kTH
- W4MoTEsqHRNibu3SZ6k7DNNtAEFQTQbxSiDXP8l1m5+ELqUQEzO6rMtjEJ4sJ5GYBStD
- rWVPyISLzFFIIjUaW2reeq1Sxs+L4k8Qzg3FYSJg2AnPbZ5fa18zvDKO1l29D+NtYprA
- 5gvRDNfZz4CE36WZZ6Sl+9mtosq2UEymRfyQFOSw/OXWACm0MUUrDIGD6sCexMgJEAd3
- b47fpeMiz0PBndWfKUwGiMYf4iqctqs9/k4yyrJWsGNWoX7g6ioHEgmTzpl25chHNxV+
- npNA==
-X-Gm-Message-State: AFq9FYI7NZqX9BBKAsNEtP+iFLAhDrki4kTlsGNbqlyM/jco3wJXJfzA
- XI6rR+jq+MfqaAmg8J66huVCLH9LPauztv49HAp3FhWwdsIUOpGscuL5YScsxQ==
-X-Gm-Gg: AYBFou2XlJ8FmdCNQw50cTX3GOFo/HM3K0dCbWpIhkkMigVN3xUm+kL0YMSE7I+SpbC
- A5KmBkA1AsXQaRVjx+yWtOZwVHKzmPxI11ydgyhf4IPnIApZHoV+khjLLkv7ahF3uQJjcOdVH9o
- NsLR/NRwgr43ntCb6yl/UnP64wLyNqpOMrsG9/pRXMgl45FHbB/KT2SXYhQjATzs5vYAFLF3OyH
- j1whIKC3+1uvNd7/IvNapHKJqOMAHoKArAlG7f3YhcrsTSf+YEHzh+4gWGWx4JnituyiVtad36u
- MnoUVeiWjhvyrdkD6XKGO9RjJCNPVXstVSzjEsyrUWUsPogIe/icazfaU55I9amADthY7bmNHkD
- +grSknbZYqUszoCU0IlkZch6Y5whEPuAoBpXXXh6sqw/d+uHI+krNPgP74fBuwJa30fnJ5SmOya
- oXuLKQ8GQrJgOX8MdePAU1Rh/jHVJmeXN+vIxGeTdVfsiD8bUEAH/xQz/Ot+vSKKLx4Bv5e2rU1
- laqbr9WUuyxAKRUexOa2noxIsfmBGt2dJOjvW9PR+q58qohjmZAPod+
-X-Received: by 2002:a05:6000:29c3:b0:48c:58d5:30fb with SMTP id
- ffacd0b85a97d-48dba7876bemr24188526f8f.5.1792060031108; 
- Thu, 15 Oct 2026 03:27:11 -0700 (PDT)
+ bh=9jZpvK/2JIYvTgChmDwtU9W+dxG3f61FuvNfLFka24M=;
+ b=Qm+bfiYjjvIxol4kSrIzmMMm+ioyfz7A6QORSj2IFHEsqf00HNSJiT9iRFq8jj3cza
+ 5Qgc5xALRnhAEo7guZA7zkyKgeqiznCeSa9RG21V5o+h0F6AbtvI8tcGYzlcu/ESa48X
+ zmHaKp7SJ+GRQqxGi8ZSEoqGkys5q2vy9uDD8umOrUVv1gemvFBPGu023igYPO/LYSAm
+ Sjj22LCftQXdNYZmGEXjnSdf/hT3F2p/7L5+olUKOzGkQCMCaWg8yExD1x69GxgJjjJX
+ WV3XsnxI8U+BRyWsG3L36ghz3ybP7eTAz/42bPOaHcczFidW3TOs/T1s8WLeS3aNQI3S
+ z/uQ==
+X-Gm-Message-State: AFq9FYKVS8GbHGpdm1g3q8/HQoVoxE+8T+xLn1yUgqG6FnB1raSZBG1z
+ LluBb2nn8MJP4J7TtQ6/6dVANaJvqCbRDlK+G426hDrAXRbO6ROfGbn+AkvGn313
+X-Gm-Gg: AYBFou1H5zEczIdhgWmbhQrSDGjRrSx1jkopqG7BfJi57nKKUjJ46Ard8/nJoNKTO5y
+ r7ZrSQRxog0OAzHs23Q0MG6PXTLYAjWP4r9VBMaL8RQ5/hiEtCuAnXqYm4WMFnLXknHmNtmUEWJ
+ 8F17NKUuUzR9t2C0EJgy4t1hugXZPndbSgwk/CzbtUMuhgkLZ6YpIJDUA5GKjqTaaXxDh/r3H60
+ svR/0MH+teY8t2Ku3Ee4ZKDmSrkJy2nyrxhHh4ZQ8Kkt6uQLDbrF8elKNY86BbuSItPEH/8b9fd
+ xt6iYySpcJ0jhRDi0YKCJdDJgKuElCngOk5XfjuE36iEpMGvYetrOeRBi0l8iphWqDgoyV6LK+c
+ 97+YDGEEJOSn/MSFKpOB/N9eXB6sO5NRXQ5cSIEfIYfD3jLg6xLaluO2Qr8CpkIyQzjBE/cBCjT
+ xRgxwnt5RQc1miPibP9kzABRzSO5WkMp4/qgJFMh2JwEhtNUZvU7dJ3iNIm716lDHN61HMMlRJd
+ pP8AzztbbHsnGWPlXpEm0K6AMmbGw3hfDUdz8HlkWqPvISNPBY8gQvg
+X-Received: by 2002:a05:600c:8b04:b0:4a0:1e37:ae41 with SMTP id
+ 5b1f17b1804b1-4a18e4d67edmr363874445e9.24.1792059952345; 
+ Thu, 15 Oct 2026 03:25:52 -0700 (PDT)
 Received: from localhost (89-93-216-19.hfc.dyn.abo.bbox.fr. [89.93.216.19])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48de77606fbsm10342203f8f.53.2026.10.15.03.27.09
+ ffacd0b85a97d-48de0bc5e0asm17920485f8f.50.2026.10.15.03.25.51
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 Oct 2026 03:27:10 -0700 (PDT)
-Date: Thu, 15 Oct 2026 11:28:14 +0200
-Subject: [PATCH v3 27/50] tests/qtest: ds1339: cover the end-of-month rollover
+ Thu, 15 Oct 2026 03:25:51 -0700 (PDT)
+Date: Thu, 15 Oct 2026 11:28:03 +0200
+Subject: [PATCH v3 16/50] hw/rtc: ds1338: add a persist-on-reset property
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261015-bmc-minerva-v3-27-7d50c8a108e5@free.fr>
+Message-Id: <20261015-bmc-minerva-v3-16-7d50c8a108e5@free.fr>
 References: <20261015-bmc-minerva-v3-0-7d50c8a108e5@free.fr>
 In-Reply-To: <20261015-bmc-minerva-v3-0-7d50c8a108e5@free.fr>
 To: qemu-devel@nongnu.org
@@ -75,15 +75,15 @@ Cc: =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, 
  Emmanuel Blot <emmanuel.blot@free.fr>
 X-Mailer: b4 0.16.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1792056476; l=3758;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1792056475; l=2773;
  i=emmanuel.blot@free.fr; s=20260602; h=from:subject:message-id;
- bh=iOwmzyJ4hd6oW//GUNriTfBTlQKKZhGGR+JckreHq5Q=;
- b=uxSFlsTndJWAU+VPfl1yjgl8aVtXUmBtubp9+4Jp1uqFi1hFBfQRZpUH9kBOP8Xnwc2ij/lVJ
- cCNMQq/lYArBN1yCWGlW+Y29XlcdyLB/ttRNr8of89Ecp+8nDh71DoG
+ bh=qmvk0g/rmD++ZnSC5okHJqYVp2DjqufV612HoOi6RBE=;
+ b=dwE/4Q2/CUvFtqKLHH7o8EFa7qQ5VKWJ+ctn1qFAqAxtw4IOBiJEAjPvC8K2k1fmU62nf7XXD
+ ILQtL24fiaMCe5mj/heFDtFSW3dJ+OlYCSblM3jEQj+ZsBxGsqaxBC1
 X-Developer-Key: i=emmanuel.blot@free.fr; a=ed25519;
  pk=0qFrZ21FAAN8OfVsSoVcCFTk/NMYOWzxJz4paSAVm0g=
-Received-SPF: pass client-ip=209.85.221.45; envelope-from=eblot.ml@gmail.com;
- helo=mail-wr1-f45.google.com
+Received-SPF: pass client-ip=209.85.128.48; envelope-from=eblot.ml@gmail.com;
+ helo=mail-wm1-f48.google.com
 X-Spam_score_int: -15
 X-Spam_score: -1.6
 X-Spam_bar: -
@@ -109,99 +109,91 @@ From:  Emmanuel Blot via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The end-of-month rollover was untested, for any of the lengths the
-calendar gives a month.
+A real RTC keeps counting across a reboot of the machine it sits in,
+and its register file comes back with it. The model instead wiped the
+registers on every reset and resynchronised the clock with the host.
+
+Add a property selecting between the two. It defaults off, leaving
+every board as it was.
 
 Signed-off-by: Emmanuel Blot <emmanuel.blot@free.fr>
 ---
- tests/qtest/ds1339-test.c | 60 +++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 60 insertions(+)
+ hw/rtc/ds1338.c | 29 +++++++++++++++++++++++++----
+ 1 file changed, 25 insertions(+), 4 deletions(-)
 
-diff --git a/tests/qtest/ds1339-test.c b/tests/qtest/ds1339-test.c
-index 8c144579e6..7eec163049 100644
---- a/tests/qtest/ds1339-test.c
-+++ b/tests/qtest/ds1339-test.c
-@@ -14,6 +14,7 @@
+diff --git a/hw/rtc/ds1338.c b/hw/rtc/ds1338.c
+index c5fc74e6ca..21deb94689 100644
+--- a/hw/rtc/ds1338.c
++++ b/hw/rtc/ds1338.c
+@@ -22,6 +22,7 @@
+ #include "qemu/osdep.h"
+ #include "hw/i2c/i2c.h"
+ #include "hw/rtc/ds1338.h"
++#include "hw/core/qdev-properties.h"
+ #include "migration/vmstate.h"
+ #include "qemu/bcd.h"
+ #include "qom/object.h"
+@@ -56,7 +57,8 @@ struct DS1338State {
+     uint8_t nvram[NVRAM_SIZE];
+     int32_t ptr;
+     bool addr_byte;
+-    bool osc_stopped;   /* oscillator halted: time is frozen */
++    bool osc_stopped;      /* oscillator halted: time is frozen */
++    bool persist_on_reset; /* keep the registers across a reset */
+ };
  
- /* DS1339 register map */
- #define DS1339_SECONDS   0x00
-+#define DS1339_DATE      0x04
- #define DS1339_MONTH     0x05
- #define DS1339_YEAR      0x06
- #define DS1339_ALARM1    0x07
-@@ -169,6 +170,61 @@ static void test_eosc_restart(void *obj, void *data, QGuestAllocator *alloc)
-     g_assert_cmphex(resp[6], ==, 0x31);
+ struct DS1338Class {
+@@ -263,9 +265,8 @@ static int ds1338_send(I2CSlave *i2c, uint8_t data)
+     return 0;
  }
  
-+/* Program 23:59:59 on the last day of a month and run the clock past it. */
-+static void check_month_rollover(QI2CDevice *i2cdev,
-+                                 uint8_t date, uint8_t month, uint8_t year,
-+                                 uint8_t next_date, uint8_t next_month,
-+                                 uint8_t next_year)
-+{
-+    const uint8_t tod[7] = { 0x59, 0x59, 0x23, 0x01, date, month, year };
-+    uint8_t resp[7];
-+    unsigned idx;
-+
-+    i2c_write_block(i2cdev, DS1339_SECONDS, tod, sizeof(tod));
-+
-+    for (idx = 0; idx < 50; idx++) {
-+        if (i2c_get8(i2cdev, DS1339_DATE) != date) {
-+            break;
-+        }
-+        g_usleep(100 * 1000);
-+    }
-+
-+    i2c_read_block(i2cdev, DS1339_SECONDS, resp, sizeof(resp));
-+    g_assert_cmphex(resp[4], ==, next_date);
-+    g_assert_cmphex(resp[5] & 0x1f, ==, next_month);
-+    g_assert_cmphex(resp[6], ==, next_year);
-+}
-+
-+/* A 31-day month rolls over to the first of the next. */
-+static void test_month_31_days(void *obj, void *data, QGuestAllocator *alloc)
-+{
-+    check_month_rollover((QI2CDevice *)obj,
-+                         0x31, 0x01, 0x23, 0x01, 0x02, 0x23);
-+}
-+
-+/* A 30-day month rolls over to the first of the next. */
-+static void test_month_30_days(void *obj, void *data, QGuestAllocator *alloc)
-+{
-+    check_month_rollover((QI2CDevice *)obj,
-+                         0x30, 0x04, 0x23, 0x01, 0x05, 0x23);
-+}
-+
-+/* Outside a leap year, February rolls over after the 28th. */
-+static void test_month_28_days(void *obj, void *data, QGuestAllocator *alloc)
-+{
-+    check_month_rollover((QI2CDevice *)obj,
-+                         0x28, 0x02, 0x23, 0x01, 0x03, 0x23);
-+}
-+
-+/* In a leap year the 28th is not the last day of February. */
-+static void test_month_29_days(void *obj, void *data, QGuestAllocator *alloc)
-+{
-+    QI2CDevice *i2cdev = (QI2CDevice *)obj;
-+
-+    check_month_rollover(i2cdev, 0x28, 0x02, 0x24, 0x29, 0x02, 0x24);
-+    check_month_rollover(i2cdev, 0x29, 0x02, 0x24, 0x01, 0x03, 0x24);
-+}
-+
- /* The Century bit is guest-writable and survives an oscillator restart. */
- static void test_century_bit(void *obj, void *data, QGuestAllocator *alloc)
+-static void ds1338_reset_hold(Object *obj, ResetType type)
++static void ds1338_power_on(DS1338State *s)
  {
-@@ -314,6 +370,10 @@ static void ds1339_register_nodes(void)
-     qos_add_test("eosc-restart", "ds1339", test_eosc_restart, NULL);
-     qos_add_test("stopped-reserved-bits", "ds1339",
-                  test_stopped_reserved_bits, NULL);
-+    qos_add_test("month-28-days", "ds1339", test_month_28_days, NULL);
-+    qos_add_test("month-29-days", "ds1339", test_month_29_days, NULL);
-+    qos_add_test("month-30-days", "ds1339", test_month_30_days, NULL);
-+    qos_add_test("month-31-days", "ds1339", test_month_31_days, NULL);
-     qos_add_test("century-bit", "ds1339", test_century_bit, NULL);
-     qos_add_test("century-write-no-toggle", "ds1339",
-                  test_century_write_no_toggle, NULL);
+-    DS1338State *s = DS1338(obj);
+     DS1338Class *k = DS1338_GET_CLASS(s);
+ 
+     /* The clock is running and synchronized with the host */
+@@ -273,11 +274,29 @@ static void ds1338_reset_hold(Object *obj, ResetType type)
+     s->wday_offset = 0;
+     memset(s->nvram, 0, NVRAM_SIZE);
+     s->nvram[k->ctrl_addr] = k->ctrl_reset;
++    s->osc_stopped = false;
++}
++
++static void ds1338_realize(DeviceState *dev, Error **errp)
++{
++    ds1338_power_on(DS1338(dev));
++}
++
++static void ds1338_reset_hold(Object *obj, ResetType type)
++{
++    DS1338State *s = DS1338(obj);
++
++    if (!s->persist_on_reset) {
++        ds1338_power_on(s);
++    }
+     s->ptr = 0;
+     s->addr_byte = false;
+-    s->osc_stopped = false;
+ }
+ 
++static const Property ds1338_properties[] = {
++    DEFINE_PROP_BOOL("persist-on-reset", DS1338State, persist_on_reset, false),
++};
++
+ static void ds1338_class_init(ObjectClass *klass, const void *data)
+ {
+     DeviceClass *dc = DEVICE_CLASS(klass);
+@@ -289,6 +308,8 @@ static void ds1338_class_init(ObjectClass *klass, const void *data)
+     k->recv = ds1338_recv;
+     k->send = ds1338_send;
+     rc->phases.hold = ds1338_reset_hold;
++    dc->realize = ds1338_realize;
++    device_class_set_props(dc, ds1338_properties);
+     dc->desc = "DS1338 I2C RTC with 56-byte NV RAM";
+     dc->vmsd = &vmstate_ds1338;
+ 
 
 -- 
 2.53.0-Meta
