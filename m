@@ -4,73 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70691CC6B34
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 12:24:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06765CC6B34
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 12:24:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHKU2-0006uz-DH; Thu, 15 Oct 2026 08:22:54 -0400
+	id 1xHKU7-0007PK-02; Thu, 15 Oct 2026 08:22:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1xHKTl-0006U5-Sf
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 08:22:40 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1xHKTh-0005fN-0P
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xHKTj-0006Qo-ER
  for qemu-devel@nongnu.org; Thu, 15 Oct 2026 08:22:36 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1792066952;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=YFIBgtDCaNxYpIAuZmZT+o2i8lKi8DgRaHj9/8zUWsY=;
- b=AXsJaHI/plkdRk/uvaRXzRFGbGEmGpi+rBgp+5MXJPLBcbVMxAvvy0Nzy+RKamKE5oVLRd
- bCIlPJaszDTijCVMtEhAWAPxAG/A5aKaoDUshP1RHhPbj4fW8QHIM7DmEReSkC4kZhS+6H
- +e0Cf7YzabfKa7YptqIXt99eDGoA9rg=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-12-NNSOfFDjP2eg45-Fih47LQ-1; Thu,
- 15 Oct 2026 12:22:28 +0000
-X-MC-Unique: NNSOfFDjP2eg45-Fih47LQ-1
-X-Mimecast-MFC-AGG-ID: NNSOfFDjP2eg45-Fih47LQ_1792066947
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CE2351955E95; Thu, 15 Oct 2026 12:22:27 +0000 (UTC)
-Received: from corto.redhat.com (unknown [10.44.48.67])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 026637D8; Thu, 15 Oct 2026 12:22:25 +0000 (UTC)
-From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-To: qemu-arm@nongnu.org,
-	qemu-devel@nongnu.org
-Cc: Jamin Lin <jamin_lin@aspeedtech.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 16/21] hw/arm/aspeed_ast27x0: Use a table for unimplemented
- devices for SSP/TSP
-Date: Thu, 15 Oct 2026 14:21:46 +0200
-Message-ID: <20261015122151.889017-17-clg@redhat.com>
-In-Reply-To: <20261015122151.889017-1-clg@redhat.com>
-References: <20261015122151.889017-1-clg@redhat.com>
+Received: from mail-yw1-x112a.google.com ([2607:f8b0:4864:20::112a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xHKTf-0005eO-4A
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 08:22:33 -0400
+Received: by mail-yw1-x112a.google.com with SMTP id
+ 00721157ae682-8ab43af5e97so51659907b3.1
+ for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 05:22:30 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792066949; cv=none;
+ d=google.com; s=arc-20260327;
+ b=CyRJUEdl4J3CRn7L6oRREdAosMnPdi9vCgv/vU7b8NFqQyfUNG7rxVdmG7ulnfUrm9
+ KNN5EF8yxk5GpDc6q2UKAs8ReVSZ9W/5wj2kaN1r7bRbZEaDBsg9sXLEI3zAZr5i0Nom
+ TNF0sCgtkpwGg8xeqptXZR4bWhocKmzUCzYCiHGVgWWI6MdlQMj/BiK6O8WVG2ar2h6Q
+ NNa9GMzDO4rGye9GrhOGAZg03TP33F1fVnoR4MT0I44BNAC76mEKQiUTo05J1IjF/Nyy
+ c7lL6N5jDfadelplRbeiOMgfZH54FbbWbMUUzn/1RI5efYjWihvN/TevVMFRbrky0bko
+ LOsA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=U92CGQXLWP/g3pVsOzf+GbrF6oRwn/h4Pu4vLDCB2+g=;
+ fh=znyq16sJXNTFYCTTu/8IvkEIs4tLovEoMKjKJd7A6IY=;
+ b=Y+Bdbcd85HNjl0H89s/BM21sN+figPBK/ReUjAlP5Szyl6yuHBegGO8xsco9SC+o1v
+ Z+klY892f6S9eTucpO0BJ+017GLXZNyT9w5s03Jsqsi/NomXf3eKQXvSgoftHN4RI4xZ
+ bXHf7o4KTixgHY9PjWqYA2F+6jyoYymg7XVSKA93lXBEcex070qKIydgEp1Q52Uk/trw
+ MOGpsNn74+hzcVslO2e7QV/vrpWBVsE//0DdmJkgCE+UbmDCcUGC0FViUMoF0eiJJMtm
+ Lhd+MCYBwKdsqP9CZYMhG45VJNih92QJ8fcnCV4Xix52KkyVoKgNMc5HAnl4wpW5Ia0l
+ PT0w==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1792066949; x=1792671749; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=U92CGQXLWP/g3pVsOzf+GbrF6oRwn/h4Pu4vLDCB2+g=;
+ b=a0LoPnyYqhYxBX0kE4C/Hq+k0uLEJ1dBG1mHHstIyiPNtMriLQKsmGEbbyIzOoydgg
+ XDRh5d/gYd/kIrexMx6mSlQSxKCYP73D7H7u2Gc0Ew2z3qEHNARsgjwBoEGCRwNXL04v
+ e6qUfVU0pE/K6GpJIZ0wkff7H++Vz2TaGi02v/4lR4ddzD3NVQJ0u3OnqXIn24wc5q9Q
+ NTMKkKpFPIywKuzfW9/4w8tX3i/41XbCgbhfdV3dkjfe05XyUD28SLd9VlxRrwkYrO0+
+ ja1X9Fs7JltzA00kvwSlXbswGojTQix4GKwnTUSP3X3q+VzT1kiZ8t/3/j0p87HDbymS
+ iQGw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1792066949; x=1792671749;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=U92CGQXLWP/g3pVsOzf+GbrF6oRwn/h4Pu4vLDCB2+g=;
+ b=q3FCHbiwN9w73S8vQ3Bysk4nuwc+iCY1rbLLQ6l9vLy4KUXvjFn/G5lGwfJZtrOxM7
+ 6vY344BVd/AusdRjqxn1EXpsjrAziKbmx0AWPSyDB+mqsfk2SzGIiJNJy7rJU2sUiKDz
+ 27GnMD4/3pCsQB38X+3LJeA0CGQtczvjIwpU1A10kL5j5sZrr+mBx4ZLFypj6hIO5HpD
+ J7OMMVWBokiJ2gxvthO0AKvYzUxxgmDZnzBAvnzl9zq5hn6UxIiWkLOVVEnlZYqYMdno
+ Np3dvuOfMRbHV7Q65dcuJq8vxQQ9HhaPaqt8jx8b6YNRz64Q59/TfpBRcofK4K7pqI0z
+ AzhA==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBwpr+ttFwzdsgYM+8StYIqFWEJ3EMxH49V/f6Kk9TmS9SCbJsg2XMjDJoxzxad20YE32BtfdiUWlqaH@nongnu.org
+X-Gm-Message-State: AFq9FYL3a/cKfhm9HqSd0aEoPWjEVCKQcp17Z3nkbqxC6Is5wbXjiVKE
+ hP/BFG9ZhPpi5Jp6KOt5t2E4HbclAiRi+CsR2BnUhCtVcOLHgZ5vCd1iBZEnF9bMVjOW43L087n
+ hMrwyzM/9J1NYXslnEyIM0XcdbrzW3NgKA0Uh5keaGg==
+X-Gm-Gg: AYBFou3fRtuZMScCnPUGvguyhjSIUsGSz062qM62GTC3rqm7Yfaq3DrMecc0sQilz06
+ xXCAn5FKHzaMOqZvtYL9uH36iwl3/mzqZikrrWIklPIMTFYz5FuAj7LfD9rxhpfiupRpJlMTAz3
+ HulWOiB7COYbUhTtB5G1SrJFFqXcMMn78ZM4FhTIJ66Bbd3vI42ZnHJytH+6ASksQkwB2wq9DhB
+ cGb0cod6tAOQrM/hbYhGqNBkrKdO2jJDEQsKiyL9OWar6wo/dSD9wkJDDa6KYJMRVS+hLwsuV05
+ jfMr1w5ww7pC+VQrSaXi77TYQa3kuG9/4QWZCiQnC0cK1p1jiSX72l0Q+vkKybHwLlF1UA2kAJP
+ oKI/g1ataPSUCeWdlbc+foOuMQRUIP5SPv/eUHbA=
+X-Received: by 2002:a05:690c:9e:b0:8a9:a1e9:2665 with SMTP id
+ 00721157ae682-8b07d3c4195mr64805667b3.6.1792066949108; Thu, 15 Oct 2026
+ 05:22:29 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 10
-X-Spam_score: 1.0
-X-Spam_bar: +
-X-Spam_report: (1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20260921123249.1708067-1-khushit.shah@nutanix.com>
+ <20260921123249.1708067-15-khushit.shah@nutanix.com>
+ <395b66c9-4173-401b-b469-8972b710aae2@redhat.com>
+In-Reply-To: <395b66c9-4173-401b-b469-8972b710aae2@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 15 Oct 2026 13:22:15 +0100
+X-Gm-Features: AclHuK8Tght3x1FGlR6vM-L7TqSFJaoIQpJthPwaxOxww4lF0LHqC4u2oGFG92Y
+Message-ID: <CAFEAcA8DcLLYJeE_NUKrFTKfYvHp+6YYAmCdZnBfz2AjRNDnzw@mail.gmail.com>
+Subject: Re: [RFC PATCH v4 14/25] target/arm: add neoverse-v2-v2 named CPU
+ model
+To: eric.auger@redhat.com
+Cc: Khushit Shah <khushit.shah@nutanix.com>, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, 
+ kvmarm@lists.linux.dev, cohuck@redhat.com, richard.henderson@linaro.org, 
+ maz@kernel.org, oliver.upton@linux.dev, berrange@redhat.com, 
+ abologna@redhat.com, jdenemar@redhat.com, gshan@redhat.com, 
+ skolothumtho@nvidia.com, sebott@redhat.com, armbru@redhat.com, 
+ philmd@linaro.org, yangjinqian1@huawei.com, shaju.abraham@nutanix.com, 
+ mark.caveayland@nutanix.com, ping@khushitshah.com, sandesh.patel@nutanix.com
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,198 +126,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jamin Lin <jamin_lin@aspeedtech.com>
+On Thu, 15 Oct 2026 at 13:13, Eric Auger <eric.auger@redhat.com> wrote:
+>
+> Hi Khushit,
+>
+> On 9/21/26 2:32 PM, Khushit Shah wrote:
+> > Add a KVM-only named CPU model for Neoverse V2 r0p1 (TRM 102375),
+> > inheriting from neoverse-v2-v1 (r0p0).
+> >
+> > r0p1 only changes MIDR_EL1.Revision and adds FEAT_ECBHB
+> > (ID_AA64MMFR1_EL1.ECBHB).
 
-Before this change, each unimplemented device needed its own field in
-the coprocessor state. This made the code hard to maintain.
+> >  static const ArmNamedCpuModel arm_cpu_models[] = {
+> >      {"arm-v9.0-a-v1", NULL, arm_v9_0_a_v1_props},
+> >      {"neoverse-v2-v1", "arm-v9.0-a-v1", neoverse_v2_v1_props},
+> > +    {"neoverse-v2-v2", "neoverse-v2-v1", neoverse_v2_v2_props},
+> nit I would call it directly neoverse-v2-r0p1 and leave the -v<n> suffix
+> for potential fixes. Same for r0p0 obviously.
 
-Add an unimp_devs table in AspeedCoprocessorClass to describe the
-unimplemented devices, and use create_unimplemented_devices() to create
-and map them. This makes the code easier to maintain and read. Convert
-AST2700 SSP and TSP to use them.
+I'm not very enthusiastic about accumulating different CPU models
+for all the different rXpY variations that appear. We used to have
+a ton of basically identical pxa720 variants and I was glad to be
+able to drop those when we deprecated-and-dropped the pxa support.
 
-This also fixes a type mismatch. SSP and TSP used the "timerctrl"
-field (AspeedTimerCtrlState) to create an unimplemented device. It is
-not used for that anymore.
+Is any user actually going to care about the difference between
+r0p0 and r0p1 ? In particular pX changes are just hardware
+bugfixes that QEMU was unlikely to be modelling in the first place.
 
-No functional change.
-
-Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20261012064445.2571633-9-jamin_lin@aspeedtech.com
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
----
- include/hw/arm/aspeed_coprocessor.h |  1 +
- hw/arm/aspeed_ast27x0-ssp.c         | 44 +++++++++--------------------
- hw/arm/aspeed_ast27x0-tsp.c         | 44 +++++++++--------------------
- 3 files changed, 27 insertions(+), 62 deletions(-)
-
-diff --git a/include/hw/arm/aspeed_coprocessor.h b/include/hw/arm/aspeed_coprocessor.h
-index acb8b0645777..39209d2579f7 100644
---- a/include/hw/arm/aspeed_coprocessor.h
-+++ b/include/hw/arm/aspeed_coprocessor.h
-@@ -37,6 +37,7 @@ struct AspeedCoprocessorClass {
-     /** valid_cpu_types: NULL terminated array of a single CPU type. */
-     const char * const *valid_cpu_types;
-     const hwaddr *memmap;
-+    const UnimplementedDeviceConfig *unimp_devs;
-     const int *irqmap;
- };
- 
-diff --git a/hw/arm/aspeed_ast27x0-ssp.c b/hw/arm/aspeed_ast27x0-ssp.c
-index e03653086c88..0238dc36725f 100644
---- a/hw/arm/aspeed_ast27x0-ssp.c
-+++ b/hw/arm/aspeed_ast27x0-ssp.c
-@@ -101,6 +101,16 @@ static struct nvic_intc_irq_info ast2700_ssp_intcmap[] = {
-     {169, 1, 9, NULL},
- };
- 
-+static const UnimplementedDeviceConfig aspeed_soc_ast27x0ssp_unimp_devs[] = {
-+    { "timerctrl", "aspeed.timerctrl", 0x72C10000, 0x200, -1000 },
-+    { "ipc0", "aspeed.ipc0", 0x72C1C000, 0x1000, -1000 },
-+    { "ipc1", "aspeed.ipc1", 0x74C39000, 0x1000, -1000 },
-+    { "pric0", "aspeed.pric0", 0x72140000, 0x1000, -1000 },
-+    { "pric1", "aspeed.pric1", 0x74100000, 0x1000, -1000 },
-+    { "otp", "aspeed.otp", 0x74C07000, 0x800, -1000 },
-+    { }
-+};
-+
- static qemu_irq aspeed_soc_ast27x0ssp_get_irq(AspeedCoprocessorState *s,
-                                               int dev)
- {
-@@ -136,19 +146,6 @@ static void aspeed_soc_ast27x0ssp_init(Object *obj)
-                             TYPE_ASPEED_2700SSP_INTC);
-     object_initialize_child(obj, "intc1", &a->intc[1],
-                             TYPE_ASPEED_2700SSP_INTCIO);
--
--    object_initialize_child(obj, "timerctrl", &s->timerctrl,
--                            TYPE_UNIMPLEMENTED_DEVICE);
--    object_initialize_child(obj, "ipc0", &a->ipc[0],
--                            TYPE_UNIMPLEMENTED_DEVICE);
--    object_initialize_child(obj, "ipc1", &a->ipc[1],
--                            TYPE_UNIMPLEMENTED_DEVICE);
--    object_initialize_child(obj, "pric0", &a->pric[0],
--                            TYPE_UNIMPLEMENTED_DEVICE);
--    object_initialize_child(obj, "pric1", &a->pric[1],
--                            TYPE_UNIMPLEMENTED_DEVICE);
--    object_initialize_child(obj, "otp", &a->otp,
--                            TYPE_UNIMPLEMENTED_DEVICE);
- }
- 
- static void aspeed_soc_ast27x0ssp_realize(DeviceState *dev_soc, Error **errp)
-@@ -283,24 +280,8 @@ static void aspeed_soc_ast27x0ssp_realize(DeviceState *dev_soc, Error **errp)
-     memory_region_add_subregion(s->memory, sc->memmap[ASPEED_DEV_FMC],
-                                 &a->fmc_alias);
- 
--    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&s->timerctrl),
--                                  "aspeed.timerctrl",
--                                  sc->memmap[ASPEED_DEV_TIMER1], 0x200);
--    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&a->ipc[0]),
--                                  "aspeed.ipc0",
--                                  sc->memmap[ASPEED_DEV_IPC0], 0x1000);
--    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&a->ipc[1]),
--                                  "aspeed.ipc1",
--                                  sc->memmap[ASPEED_DEV_IPC1], 0x1000);
--    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&a->pric[0]),
--                                  "aspeed.pric0",
--                                  sc->memmap[ASPEED_DEV_PRIC0], 0x1000);
--    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&a->pric[1]),
--                                  "aspeed.pric1",
--                                  sc->memmap[ASPEED_DEV_PRIC1], 0x1000);
--    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&a->otp),
--                                  "aspeed.otp",
--                                  sc->memmap[ASPEED_DEV_OTP], 0x800);
-+    /* Unimplemented devices */
-+    create_unimplemented_devices(OBJECT(s), s->memory, sc->unimp_devs);
- }
- 
- static const Property aspeed_27x0_coprocessor_properties[] = {
-@@ -330,6 +311,7 @@ static void aspeed_soc_ast27x0ssp_class_init(ObjectClass *klass,
-     sc->valid_cpu_types = valid_cpu_types;
-     sc->irqmap = aspeed_soc_ast27x0ssp_irqmap;
-     sc->memmap = aspeed_soc_ast27x0ssp_memmap;
-+    sc->unimp_devs = aspeed_soc_ast27x0ssp_unimp_devs;
- }
- 
- static const TypeInfo aspeed_soc_ast27x0ssp_types[] = {
-diff --git a/hw/arm/aspeed_ast27x0-tsp.c b/hw/arm/aspeed_ast27x0-tsp.c
-index 39ba062a20f7..7f057ff1357d 100644
---- a/hw/arm/aspeed_ast27x0-tsp.c
-+++ b/hw/arm/aspeed_ast27x0-tsp.c
-@@ -101,6 +101,16 @@ static struct nvic_intc_irq_info ast2700_tsp_intcmap[] = {
-     {169, 1, 9, NULL},
- };
- 
-+static const UnimplementedDeviceConfig aspeed_soc_ast27x0tsp_unimp_devs[] = {
-+    { "timerctrl", "aspeed.timerctrl", 0x72C10000, 0x200, -1000 },
-+    { "ipc0", "aspeed.ipc0", 0x72C1C000, 0x1000, -1000 },
-+    { "ipc1", "aspeed.ipc1", 0x74C39000, 0x1000, -1000 },
-+    { "pric0", "aspeed.pric0", 0x72140000, 0x1000, -1000 },
-+    { "pric1", "aspeed.pric1", 0x74100000, 0x1000, -1000 },
-+    { "otp", "aspeed.otp", 0x74C07000, 0x800, -1000 },
-+    { }
-+};
-+
- static qemu_irq aspeed_soc_ast27x0tsp_get_irq(AspeedCoprocessorState *s,
-                                               int dev)
- {
-@@ -136,19 +146,6 @@ static void aspeed_soc_ast27x0tsp_init(Object *obj)
-                             TYPE_ASPEED_2700TSP_INTC);
-     object_initialize_child(obj, "intc1", &a->intc[1],
-                             TYPE_ASPEED_2700TSP_INTCIO);
--
--    object_initialize_child(obj, "timerctrl", &s->timerctrl,
--                            TYPE_UNIMPLEMENTED_DEVICE);
--    object_initialize_child(obj, "ipc0", &a->ipc[0],
--                            TYPE_UNIMPLEMENTED_DEVICE);
--    object_initialize_child(obj, "ipc1", &a->ipc[1],
--                            TYPE_UNIMPLEMENTED_DEVICE);
--    object_initialize_child(obj, "pric0", &a->pric[0],
--                            TYPE_UNIMPLEMENTED_DEVICE);
--    object_initialize_child(obj, "pric1", &a->pric[1],
--                            TYPE_UNIMPLEMENTED_DEVICE);
--    object_initialize_child(obj, "otp", &a->otp,
--                            TYPE_UNIMPLEMENTED_DEVICE);
- }
- 
- static void aspeed_soc_ast27x0tsp_realize(DeviceState *dev_soc, Error **errp)
-@@ -283,24 +280,8 @@ static void aspeed_soc_ast27x0tsp_realize(DeviceState *dev_soc, Error **errp)
-     memory_region_add_subregion(s->memory, sc->memmap[ASPEED_DEV_FMC],
-                                 &a->fmc_alias);
- 
--    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&s->timerctrl),
--                                  "aspeed.timerctrl",
--                                  sc->memmap[ASPEED_DEV_TIMER1], 0x200);
--    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&a->ipc[0]),
--                                  "aspeed.ipc0",
--                                  sc->memmap[ASPEED_DEV_IPC0], 0x1000);
--    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&a->ipc[1]),
--                                  "aspeed.ipc1",
--                                  sc->memmap[ASPEED_DEV_IPC1], 0x1000);
--    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&a->pric[0]),
--                                  "aspeed.pric0",
--                                  sc->memmap[ASPEED_DEV_PRIC0], 0x1000);
--    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&a->pric[1]),
--                                  "aspeed.pric1",
--                                  sc->memmap[ASPEED_DEV_PRIC1], 0x1000);
--    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&a->otp),
--                                  "aspeed.otp",
--                                  sc->memmap[ASPEED_DEV_OTP], 0x800);
-+    /* Unimplemented devices */
-+    create_unimplemented_devices(OBJECT(s), s->memory, sc->unimp_devs);
- }
- 
- static const Property aspeed_27x0_coprocessor_properties[] = {
-@@ -330,6 +311,7 @@ static void aspeed_soc_ast27x0tsp_class_init(ObjectClass *klass,
-     sc->valid_cpu_types = valid_cpu_types;
-     sc->irqmap = aspeed_soc_ast27x0tsp_irqmap;
-     sc->memmap = aspeed_soc_ast27x0tsp_memmap;
-+    sc->unimp_devs = aspeed_soc_ast27x0tsp_unimp_devs;
- }
- 
- static const TypeInfo aspeed_soc_ast27x0tsp_types[] = {
--- 
-2.56.0
-
+thanks
+-- PMM
 
