@@ -4,70 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB45BCC6B3D
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 12:22:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45B22CC6B33
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 12:22:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHKSh-00033V-1R; Thu, 15 Oct 2026 08:21:31 -0400
+	id 1xHKST-0002tr-PT; Thu, 15 Oct 2026 08:21:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1xHKSZ-00031X-Ew
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 08:21:23 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1xHKSR-0002qH-9t
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 08:21:15 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1xHKSV-0005KY-Eu
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 08:21:22 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1xHKSN-0005Ir-8S
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 08:21:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1792066878;
+ s=mimecast20190719; t=1792066870;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=zZKOYC/lQ7Latj9cIvjvvB3GgFXd31lG/RDxcK2Y5XQ=;
- b=iWLnELBhSjlDnbvP/rDWjpmT+nBXAeALZnq1I38VL4OTl/b9MPZ5xN4QQD04hI7g1393B7
- dBLkQOmoF176kJsH49hJC4B9POWYrNIxGejMNRRuMM9I9/6c0uyuL+AEIwNAWak7gzsNtU
- k5MY2Y+gI1YlYS8iAg0d5HDMOfVj4vg=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=zjetcz5cxb4TTuuZEteF5VZxBDAYnVbJTCoPEJlR3hQ=;
+ b=KFe8+Oza2stj/HywH+1XIv5foeP8Im8QTNjRGFwu7g/VomWtpXoXsUjP/QgzLILnKUjBOn
+ XEqg0uRRpjF938Vt18yJCdepIJtjMHgCOVafbmoPaTcWD6Sx6hsR5e10iVg8uOLAh/cE23
+ SqVOXKdNt77EeXLQb0G8jqArv0i91lk=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-511-GeBEtQP3N2iVb-GdUnJ4SQ-1; Thu,
- 15 Oct 2026 12:21:15 +0000
-X-MC-Unique: GeBEtQP3N2iVb-GdUnJ4SQ-1
-X-Mimecast-MFC-AGG-ID: GeBEtQP3N2iVb-GdUnJ4SQ_1792066874
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-622-9gWTLlQONTm2S6CIwE3j6w-1; Thu,
+ 15 Oct 2026 12:21:07 +0000
+X-MC-Unique: 9gWTLlQONTm2S6CIwE3j6w-1
+X-Mimecast-MFC-AGG-ID: 9gWTLlQONTm2S6CIwE3j6w_1792066866
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 65AE7195606E; Thu, 15 Oct 2026 12:21:14 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 287C11955BC5; Thu, 15 Oct 2026 12:21:06 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.44.48.67])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D613518004D2; Thu, 15 Oct 2026 12:21:12 +0000 (UTC)
+ id B65C718004D2; Thu, 15 Oct 2026 12:21:04 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Pankaj Kumar <pshit@nvidia.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>
-Subject: [PULL 8/8] vfio/migration: Don't reset a device on a declined stop
- transition
-Date: Thu, 15 Oct 2026 14:20:55 +0200
-Message-ID: <20261015122055.888209-9-clg@redhat.com>
+Cc: Mikhail Malyshev <mike.malyshev@gmail.com>,
+ Tomita Moeko <tomitamoeko@gmail.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PULL 4/8] vfio/igd: sanitize DBUF_CTL POWER_STATE for iGPU
+ passthrough
+Date: Thu, 15 Oct 2026 14:20:51 +0200
+Message-ID: <20261015122055.888209-5-clg@redhat.com>
 In-Reply-To: <20261015122055.888209-1-clg@redhat.com>
 References: <20261015122055.888209-1-clg@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 10
 X-Spam_score: 1.0
 X-Spam_bar: +
 X-Spam_report: (1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -84,124 +85,189 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Pankaj Kumar <pshit@nvidia.com>
+From: Mikhail Malyshev <mike.malyshev@gmail.com>
 
-QEMU resets a VFIO device whenever a migration state transition it requests
-fails. This is done by vfio_migration_set_state_or_reset(), which passes
-VFIO_DEVICE_STATE_ERROR as the recover state, forcing an immediate
-VFIO_DEVICE_RESET.
+On some hosts the firmware POST modeset leaves the display data buffer
+(DBUF) powered, so the passed-through iGPU's DBUF_CTL registers read
+back POWER_STATE=1 while POWER_REQUEST=0 -- an inconsistent leftover that
+never occurs under GVT-g, which emulates the register so POWER_STATE
+follows POWER_REQUEST.
 
-However, a device may legitimately decline a state transition, e.g. a vGPU
-that refuses to stop while a profiling/debug session is active in the guest.
-Such a device is still healthy and running the guest, so resetting it destroys
-a perfectly good VM.
+This was observed with a Windows guest (Intel KMD) on QEMU 9.1; a
+Linux/i915 guest was not tested.  On the first-boot modeset the guest
+driver samples POWER_STATE to decide which DBUF slices are already
+enabled, sees the stale "powered" bit, and therefore never issues
+POWER_REQUEST.  DBUF then powers down, the plane FIFO underruns, and
+scanout is corrupted (vertical stripes) until a full modeset (e.g. a
+display sleep/wake) re-requests power.
 
-Instead of resetting on a declined stop, recover the device to its current
-state. The current device state is always a valid, already-reached state, so
-recovering to it is effectively a no-op transition that cannot itself fail and
-trigger a reset.
+The programming is a single inconsistent read-modify-write.  Traced with
+x-no-mmap=on so every BAR0 access is visible:
 
-Introduce a helper, vfio_migration_set_state_or_recover(), that selects the
-recover state based on the transition direction, and route the vmstate change
-and save-completion paths through it:
+  read  0x45008 = 0x4040c000   STATE=1, REQUEST=0 (stale leftover)
+  write 0x45008 = 0x4043c000   RMW: tracker bits only; REQUEST still 0
+  read  0x45008 = 0x0043c000   STATE=0: DBUF powered down -> underrun
 
- - vfio_vmstate_change() and vfio_vmstate_change_prepare() recover to the
-   current device state for the stop direction. The resume direction keeps
-   ERROR as the recover state, since a device that cannot resume is genuinely
-   broken.
+The driver sees STATE=1, assumes the slice is already powered, and leaves
+REQUEST clear.  Only after a display sleep/wake does it set REQUEST, which
+is why sleep/wake repairs the display:
 
- - vfio_save_complete_precopy() recovers to the current device state rather
-   than STOP. If it runs after an earlier stop was declined (the device still
-   in a running state), the stop-copy attempt is then rolled back instead of
-   resetting the device.
+  write 0x45008 = 0x8043c000   REQUEST=1
+  read  0x45008 = 0xc043c000   STATE follows -> powered, scanout clean
 
-The existing vfio_migration_set_state_or_reset() is retained for the paths
-that must still reset on failure (save cleanup and the migration-failed
-notifier).
+The same pattern occurs on the other slice registers (0x44fe8, 0x44300,
+0x44304).
 
-This lets vendor drivers decline a stop as a matter of policy without losing
-the guest, and lets such drivers drop their own workarounds that swallowed the
-spurious reset.
+Present a consistent view like GVT-g: trap the DBUF_CTL slice registers
+(S1..S4, only as many as the generation exposes) in BAR0 and clear
+POWER_STATE on read whenever POWER_REQUEST is not set.  Writes pass
+straight through to the device.
 
-Signed-off-by: Pankaj Kumar <pshit@nvidia.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20261013044520.2439021-1-pshit@nvidia.com
-Reviewed-by: Avihai Horon <avihaih@nvidia.com>
+Signed-off-by: Mikhail Malyshev <mike.malyshev@gmail.com>
+Reviewed-by: Tomita Moeko <tomitamoeko@gmail.com>
+Link: https://lore.kernel.org/qemu-devel/20260724102959.1043264-1-mike.malyshev@gmail.com
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/vfio/migration.c | 38 +++++++++++++++++++++++++++++++++-----
- 1 file changed, 33 insertions(+), 5 deletions(-)
+ hw/vfio/igd.c | 119 ++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 119 insertions(+)
 
-diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
-index 73c49d8c24f21803de7c8615da63abecfd76b882..69d50cebdd5f1636a1f8b03967b6b01e7979e532 100644
---- a/hw/vfio/migration.c
-+++ b/hw/vfio/migration.c
-@@ -246,6 +246,25 @@ vfio_migration_set_state_or_reset(VFIODevice *vbasedev,
-                                     VFIO_DEVICE_STATE_ERROR, errp);
- }
+diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
+index 413a49aae9163c6500bc50f29e5454f698addaa4..5e6160763cefb9d9739dd0a6462137c49109e81a 100644
+--- a/hw/vfio/igd.c
++++ b/hw/vfio/igd.c
+@@ -455,6 +455,96 @@ static bool vfio_pci_igd_override_gms(int gen, uint32_t gms, uint32_t *gmch)
+ #define IGD_GGC_MMIO_OFFSET     0x108040
+ #define IGD_BDSM_MMIO_OFFSET    0x1080C0
  
 +/*
-+ * On a stop-direction transition failure, recover the device to its current
-+ * state instead of resetting it: the current state is valid and already
-+ * reached, so recovering to it is effectively a no-op that cannot itself fail.
-+ * On a resume-direction (running) failure, the device is genuinely broken, so
-+ * reset it by using ERROR as the recover state.
++ * IGD BAR0 DBUF_CTL sanitize quirk.
++ *
++ * On hosts where the firmware POST modeset left the display engine powered,
++ * DBUF_CTL reads back POWER_STATE=1 while POWER_REQUEST=0 -- an inconsistent
++ * leftover that never occurs under GVT-g (which emulates the register so
++ * STATE follows REQUEST).  A passed-through guest driver samples POWER_STATE
++ * to decide which DBUF slices are already enabled, sees this stale "powered"
++ * bit, and therefore never issues POWER_REQUEST.  DBUF then powers down, the
++ * plane FIFO underruns, and scanout is corrupted until a full modeset (e.g.
++ * a display sleep/wake) re-requests power.
++ *
++ * Present a consistent view like GVT-g: intercept DBUF_CTL reads and clear
++ * POWER_STATE whenever POWER_REQUEST is not set.  Writes pass straight
++ * through to the device.
 + */
-+static int
-+vfio_migration_set_state_or_recover(VFIODevice *vbasedev,
-+                                    enum vfio_device_mig_state new_state,
-+                                    bool running, Error **errp)
-+{
-+    VFIOMigration *migration = vbasedev->migration;
-+    enum vfio_device_mig_state recover_state =
-+        running ? VFIO_DEVICE_STATE_ERROR : migration->device_state;
++#define IGD_DBUF_POWER_REQUEST  (1u << 31)
++#define IGD_DBUF_POWER_STATE    (1u << 30)
 +
-+    return vfio_migration_set_state(vbasedev, new_state, recover_state, errp);
++/*
++ * DBUF_CTL slice registers within BAR0, in slice order (i915 numbers these
++ * S1..S4).  How many slices exist is generation-dependent, so only the first
++ * igd_dbuf_ctl_nslices(gen) entries are real DBUF_CTL registers on a given
++ * part; the rest are unrelated registers and must not be trapped.
++ */
++static const uint32_t igd_dbuf_ctl_offsets[] = {
++    0x45008, /* S1 */ 0x44FE8, /* S2 */ 0x44300, /* S3 */ 0x44304, /* S4 */
++};
++
++/*
++ * DBUF slice count by generation, matching i915 dbuf.slice_mask:
++ * gen9/10 = 1 (S1), gen11 = 2 (S1-S2), gen12+ = 4 (S1-S4).
++ *
++ * Within gen12 the slice count is actually per-platform, not per-gen: ADL-P /
++ * RPL-P / DG2 expose 4 slices, but TGL / RKL / ADL-S have only 2.  We return 4
++ * for all gen12+ (igd_gen() can't distinguish them), so on a <4-slice gen12
++ * part S3/S4 (0x44300/0x44304) are over-trapped.  This is harmless in practice:
++ * the read handler only mutates a value when POWER_REQUEST=0 && POWER_STATE=1,
++ * which whatever register lives at those offsets is very unlikely to present.
++ * A fully-correct count would have to key off the PCI device ID.
++ */
++static int igd_dbuf_ctl_nslices(int gen)
++{
++    if (gen <= 10) {
++        return 1;
++    }
++    if (gen == 11) {
++        return 2;
++    }
++    return 4;
 +}
 +
- static int vfio_load_buffer(QEMUFile *f, VFIODevice *vbasedev,
-                             uint64_t data_size)
++typedef struct IGDDbufCtlQuirk {
++    VFIOPCIDevice *vdev;
++    uint32_t bar_offset;    /* offset within BAR0 MMIO */
++    uint8_t bar;
++} IGDDbufCtlQuirk;
++
++static uint64_t igd_dbuf_ctl_read(void *opaque, hwaddr addr, unsigned size)
++{
++    IGDDbufCtlQuirk *q = opaque;
++    VFIOPCIDevice *vdev = q->vdev;
++    uint64_t val = vfio_region_read(&vdev->bars[q->bar].region,
++                                    addr + q->bar_offset, size);
++
++    if (size == 4 && !(val & IGD_DBUF_POWER_REQUEST) &&
++        (val & IGD_DBUF_POWER_STATE)) {
++        val &= ~(uint64_t)IGD_DBUF_POWER_STATE;
++        error_report_once("IGD quirk: DBUF_CTL@0x%x cleared stale "
++                          "POWER_STATE (POWER_REQUEST=0)", q->bar_offset);
++    }
++    return val;
++}
++
++static void igd_dbuf_ctl_write(void *opaque, hwaddr addr,
++                               uint64_t data, unsigned size)
++{
++    IGDDbufCtlQuirk *q = opaque;
++    VFIOPCIDevice *vdev = q->vdev;
++
++    vfio_region_write(&vdev->bars[q->bar].region,
++                      addr + q->bar_offset, data, size);
++}
++
++static const MemoryRegionOps igd_dbuf_ctl_ops = {
++    .read = igd_dbuf_ctl_read,
++    .write = igd_dbuf_ctl_write,
++    .endianness = DEVICE_LITTLE_ENDIAN,
++};
++
+ void vfio_probe_igd_bar0_quirk(VFIOPCIDevice *vdev, int nr)
  {
-@@ -771,9 +790,16 @@ static int vfio_save_complete_precopy(QEMUFile *f, void *opaque)
+     VFIOQuirk *ggc_quirk, *bdsm_quirk;
+@@ -507,6 +597,35 @@ void vfio_probe_igd_bar0_quirk(VFIOPCIDevice *vdev, int nr)
+                                         1);
  
-     trace_vfio_save_complete_precopy_start(vbasedev->name);
- 
--    /* We reach here with device state STOP or STOP_COPY only */
--    ret = vfio_migration_set_state(vbasedev, VFIO_DEVICE_STATE_STOP_COPY,
--                                   VFIO_DEVICE_STATE_STOP, &local_err);
+     QLIST_INSERT_HEAD(&vdev->bars[nr].quirks, bdsm_quirk, next);
++
 +    /*
-+     * We normally reach here with the device in STOP or STOP_COPY. However, if
-+     * an earlier stop transition was declined by the device, it may still be in
-+     * a running state. Recover to the current device state rather than STOP, so
-+     * a device that declines the stop-copy transition is rolled back to its
-+     * current state instead of being reset out from under the guest.
++     * DBUF_CTL sanitize quirk (gen9+): trap the DBUF_CTL slice registers so
++     * POWER_STATE is reported consistently with POWER_REQUEST (see
++     * igd_dbuf_ctl_read()).  Only trap slices that actually exist on this
++     * generation -- the remaining offsets are unrelated registers.
 +     */
-+    ret = vfio_migration_set_state_or_recover(vbasedev,
-+                                              VFIO_DEVICE_STATE_STOP_COPY,
-+                                              false, &local_err);
-     if (ret) {
-         error_report_err(local_err);
-         return ret;
-@@ -1009,7 +1035,8 @@ static void vfio_vmstate_change_prepare(void *opaque, bool running,
-         vfio_final_precopy_reinit_check(vbasedev);
-     }
++    if (gen >= 9) {
++        int i, nslices = igd_dbuf_ctl_nslices(gen);
++        VFIOQuirk *dbuf_quirk = vfio_quirk_alloc(nslices);
++        IGDDbufCtlQuirk *dq;
++
++        dq = g_new0(IGDDbufCtlQuirk, nslices);
++        dbuf_quirk->data = dq;
++
++        for (i = 0; i < nslices; i++) {
++            dq[i].vdev = vdev;
++            dq[i].bar = nr;
++            dq[i].bar_offset = igd_dbuf_ctl_offsets[i];
++            memory_region_init_io(&dbuf_quirk->mem[i], OBJECT(vdev),
++                                  &igd_dbuf_ctl_ops, &dq[i],
++                                  "vfio-igd-dbuf-ctl-quirk", 4);
++            memory_region_add_subregion_overlap(vdev->bars[nr].region.mem,
++                                                igd_dbuf_ctl_offsets[i],
++                                                &dbuf_quirk->mem[i], 1);
++        }
++
++        QLIST_INSERT_HEAD(&vdev->bars[nr].quirks, dbuf_quirk, next);
++    }
+ }
  
--    ret = vfio_migration_set_state_or_reset(vbasedev, new_state, &local_err);
-+    ret = vfio_migration_set_state_or_recover(vbasedev, new_state, running,
-+                                              &local_err);
-     if (ret) {
-         /*
-          * Migration should be aborted in this case, but vm_state_notify()
-@@ -1040,7 +1067,8 @@ static void vfio_vmstate_change(void *opaque, bool running, RunState state)
-                 VFIO_DEVICE_STATE_STOP;
-     }
- 
--    ret = vfio_migration_set_state_or_reset(vbasedev, new_state, &local_err);
-+    ret = vfio_migration_set_state_or_recover(vbasedev, new_state, running,
-+                                              &local_err);
-     if (ret) {
-         /*
-          * Migration should be aborted in this case, but vm_state_notify()
+ static bool vfio_pci_igd_config_quirk(VFIOPCIDevice *vdev, Error **errp)
 -- 
 2.56.0
 
