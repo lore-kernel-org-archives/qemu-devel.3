@@ -4,63 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A9E9CC6B33
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 15:16:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19142CC6B3A
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 15:16:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHN8T-0002Cb-DA; Thu, 15 Oct 2026 11:12:49 -0400
+	id 1xHN7y-0000mz-E5; Thu, 15 Oct 2026 11:12:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eblot.ml@gmail.com>)
- id 1xHN8R-0002AA-Ek
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 11:12:47 -0400
-Received: from mail-wr1-f48.google.com ([209.85.221.48])
+ id 1xHN7v-0000eQ-NR
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 11:12:15 -0400
+Received: from mail-wm1-f49.google.com ([209.85.128.49])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <eblot.ml@gmail.com>)
- id 1xHN8O-00022X-QS
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 11:12:47 -0400
-Received: by mail-wr1-f48.google.com with SMTP id
- ffacd0b85a97d-48c5358fc28so472990f8f.0
- for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 08:12:44 -0700 (PDT)
+ id 1xHN7t-0001y6-Rx
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 11:12:15 -0400
+Received: by mail-wm1-f49.google.com with SMTP id
+ 5b1f17b1804b1-49ff680331aso25056245e9.3
+ for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 08:12:13 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792077163; x=1792681963;
+ d=1e100.net; s=20260707; t=1792077132; x=1792681932;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :content-type:mime-version:subject:date:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=TAKWq5OaS0dmrW3Pgr9SxuBdpwdzx7tYDqztdgweZoA=;
- b=0r1SEvMMUBa2+s1wjV66Ohy/stAYXgQSmfYlK0QIXTF5nAaV7CydHX/nyMXjTpCwd4
- bxG3QOI/E3e/HYdcQPJr16oTCPFo++DtIbLGfH2o0GtvjZDxba8UrpDdzji1ZovONTIo
- 04Ryh49FE7Ruu3K3Xusa8I/d11u6aFFB/9u+gC8ENG8OSpDohay48YlQ7aWJOzBZfoXh
- T8xgIeEOoGgjUwY0goIaXVqHcfAzBwZXQ5Hh7WELrrcUkWVOmnNtVsRkCiQ1D6TkWCVP
- ZXdRjXRadYqJav6ztnlTWbAd+VaSA+DFawG4+1XLK7V+o8XqSMssGESGVYs/SNZxUb4C
- 1z0g==
-X-Gm-Message-State: AFq9FYLjxxvqc2tyZ55tr2p5qO9QTva7hbm/XTKFs60jH+2h+3YevJ73
- vuCpyjPciDDQiPHQQIjDxlTo1NLAGjkz34rNMQjb8VUY1CGlmbEMjCVQ6NzonQ==
-X-Gm-Gg: AYBFou1z5Bq8TYaPBuR+boq7VRMTSlVZdMdiRa3PIKysuktE96MeRzESgg6UuFbKloH
- 8ZsgSldS0/6HSz+5dVT8GVrr1KJpo+u8UFRuAM/iGgphwGa2p+6eJbd5SHQH611mgGNqIdEX0qy
- b0k5YqBxKQYla3cfzWLKPBf7wKZ5/T8gx9w91PkWPxg3hV9ZmOJRS12yH9sNdo6YxZewe895jMT
- MZ5V5MdNnflru4jTxqTmNQXMolQFzrseTh+XfJRXxypEOTYWyuPZXOVrl4Pq1FWVKPvtls9mTIh
- DsvUCzkr9lWFZUpL2to83+ylrFRh0XccbLzd43viCgzYTlB14MwmlaIbn+no0HoLdLXi3+Twaiq
- j4V1HeKyCjDGCR5QOckV/GUHbX3CNTduUitEITBCFYDzyXVQgEtZYCDpRxwIQ0fL4Dqtq4w/A8c
- i4l7DYZiIjfCcKGzMipnquRL5YcsCX1BoCepIB3KiUwP4HMPCfdMwDFDEldyfPJr4aQCaC/Iby4
- 469DPF4RrZwXNsrdHY1/9oLYxhPF6rzc6ByZgFa7AZz33N2fKDSZzJQ
-X-Received: by 2002:a05:6000:25ca:b0:48d:f69e:9cfd with SMTP id
- ffacd0b85a97d-48df69e9e8emr4135417f8f.27.1792077162491; 
- Thu, 15 Oct 2026 08:12:42 -0700 (PDT)
+ bh=hRQau7jFOLMcW9cDld4PZy7QHA0r3DkmWSHU69Dv0ic=;
+ b=sEAeF8fmNFaPzYJqN25wifIt0/4xXbWkAEk7IAUosQjw8eoB9NyGAf4cuPLNtAzXLd
+ XBk6BCYeAtRqQbP4Jw0wpKB0RCVjJseIdA1BYA+CLD49bCmhnkpsqXLztPof4p17FGDg
+ ZJiVgk0R0qptfj3dKRhYmls9UauZr4L4AOeo3ltIuhOXmtInrCotawhgfwD7+IJ7F9wT
+ V8fEgcrSA61toYl9vobu3nAWdfcXL555xJptIDPGaFbVrNsjvWmj2ULfJwcwsBCvwvE2
+ JsJph8+DhUKkjwRa8BuAN9/92ruKcZ7ZYZz9/m478SuCcqzUkqE7UOkzSIk3b5IRigqp
+ adzw==
+X-Gm-Message-State: AFq9FYI6NM8HD3eYDPoXkcx2UYGH3Ozo4D/8o+AlGKvcX8lUFQMI4wfi
+ WMdJxoJcNfB9LwveHmeAVQSDM9suE2sdZF6WNh5+HVkO49DNEnDL5vCkQ/68lA==
+X-Gm-Gg: AYBFou0FSTrsqhCwu5Ydsh+m3lV4qGOyzpR+1zxWqquIrfHqERzwi8TGqcB5ncdohW0
+ eWupKpucAj9ap1zMwM55k+yazbRJuOh7V0i4/KC81FxuzkZM499Q3IZV9zzgQfXVjkTlZEVFNgs
+ ImO9q5q1+MnYYIWw45adjtWC8+toFBxIkdbIWhNhT4SOEJooOdpoz74upx4lY63UC3PJj4oRAnr
+ 5UbKwwAD9u42HpYibmYP/T5GaDMGilZlJNwbXpUwFddUjd23hlmIYRzzfbH7bJREIpQl97WSo9y
+ k8qKjIEPWCoMAWBRAkpOI+vD+C0QR5HqHTE5mzpXQjWVDeGS6+dPVZ1vLWoDsC+CW4uM3vxNyjH
+ fbevMndrqTddOEK579W8Bhu99gt6xmgN8iF716kWKHuRgTbwXAz7Kwdzx68jZK9m8cTevcKhDih
+ AHStUt0ySZGj4r/rWvNpA2yvj7pEO0gdLNUeM/fPCS68Whod6FfIVrQyWpaf5qY5g2XWQpH0Qlh
+ Dfuu1U9CAU5EiZbw1ynLICUIwS0gpJaq6dzJuNQz4jlGBw=
+X-Received: by 2002:a05:600c:4e89:b0:4a0:12d7:4c88 with SMTP id
+ 5b1f17b1804b1-4a18e4ac77amr434246385e9.30.1792077132261; 
+ Thu, 15 Oct 2026 08:12:12 -0700 (PDT)
 Received: from localhost (89-93-216-19.hfc.dyn.abo.bbox.fr. [89.93.216.19])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48df3cbb78asm5888592f8f.48.2026.10.15.08.12.36
+ 5b1f17b1804b1-4a1bd64b5e7sm77275735e9.2.2026.10.15.08.12.11
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 Oct 2026 08:12:37 -0700 (PDT)
-Date: Thu, 15 Oct 2026 13:57:57 +0200
-Subject: [PATCH 19/22] tests/qtest: tmp105: cover the TMP1075 config
- register width
+ Thu, 15 Oct 2026 08:12:11 -0700 (PDT)
+Date: Thu, 15 Oct 2026 13:57:54 +0200
+Subject: [PATCH 16/22] tests/qtest: tmp421: cover the register form of the
+ migration stream
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261015-bmc-clemente-v1-19-bf591886b5b6@free.fr>
+Message-Id: <20261015-bmc-clemente-v1-16-bf591886b5b6@free.fr>
 References: <20261015-bmc-clemente-v1-0-bf591886b5b6@free.fr>
 In-Reply-To: <20261015-bmc-clemente-v1-0-bf591886b5b6@free.fr>
 To: qemu-devel@nongnu.org
@@ -75,15 +75,15 @@ Cc: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
  Emmanuel Blot <emmanuel.blot@free.fr>
 X-Mailer: b4 0.16.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1792065465; l=2217;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1792065465; l=3815;
  i=emmanuel.blot@free.fr; s=20260602; h=from:subject:message-id;
- bh=eKNsPNpZHCrr7lt5jUn9ATmHMoMqISDae/0HeUQWVVY=;
- b=Xcnz4/tCybsk3M59LoRaorgPeZA/vcFX24JqOolZuEe8iBs41X1FYNu1z00bcD8Q2SZG6WaSB
- EwpuoU8e7hUBIJCu1hUPosekvvjYsHwe3ZW+0st3NnS0T0pYjqqazqD
+ bh=KCKssRn/w/mRE8Rh274RLtAfGbpNnr2ePuT78VSY79A=;
+ b=Px6Rno0FU9aNGFRQDDqZEW7yiUg/GPF11gsY4AdAEFz9J6+BMnEu32N755/95aExgtsl5nHL2
+ 7iX3si4AryyBgt6jBkA5QExdH963O4CoSMQ/cDBusoVseVD6i+dk7fG
 X-Developer-Key: i=emmanuel.blot@free.fr; a=ed25519;
  pk=0qFrZ21FAAN8OfVsSoVcCFTk/NMYOWzxJz4paSAVm0g=
-Received-SPF: pass client-ip=209.85.221.48; envelope-from=eblot.ml@gmail.com;
- helo=mail-wr1-f48.google.com
+Received-SPF: pass client-ip=209.85.128.49; envelope-from=eblot.ml@gmail.com;
+ helo=mail-wm1-f49.google.com
 X-Spam_score_int: 0
 X-Spam_score: -0.1
 X-Spam_bar: /
@@ -109,60 +109,108 @@ From:  Emmanuel Blot via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Nothing pinned the 16-bit Config register: neither its single-byte
-compatibility nor the low byte, which drives nothing but keeps what it
-is given.
+A stream with no measurement subsection has the shape of every stream
+written before that subsection existed; loading one exercises the
+conversion back from the register form. The temperature is picked so
+that form reproduces it exactly, and picked in the extended range,
+where the top register bit is part of the value rather than a sign.
 
 Signed-off-by: Emmanuel Blot <emmanuel.blot@free.fr>
 ---
- tests/qtest/tmp105-test.c | 28 ++++++++++++++++++++++++++++
- 1 file changed, 28 insertions(+)
+ tests/qtest/tmp421-test.c | 66 +++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 66 insertions(+)
 
-diff --git a/tests/qtest/tmp105-test.c b/tests/qtest/tmp105-test.c
-index 426c4f9ae7..b21deb1128 100644
---- a/tests/qtest/tmp105-test.c
-+++ b/tests/qtest/tmp105-test.c
-@@ -441,6 +441,33 @@ static void test_tmp1075_device_id(void *obj, void *data,
-                     TMP1075_DEVICE_ID);
+diff --git a/tests/qtest/tmp421-test.c b/tests/qtest/tmp421-test.c
+index 6c5332211b..5be2abc822 100644
+--- a/tests/qtest/tmp421-test.c
++++ b/tests/qtest/tmp421-test.c
+@@ -8,6 +8,8 @@
+ 
+ #include "qemu/osdep.h"
+ 
++#include <glib/gstdio.h>
++#include "libqtest.h"
+ #include "libqtest-single.h"
+ #include "libqos/qgraph.h"
+ #include "libqos/i2c.h"
+@@ -224,6 +226,69 @@ static void test_n_correct(void *obj, void *data, QGuestAllocator *alloc)
+     }
  }
  
-+/*
-+ * The Config register is 16 bits wide but stays compatible with 8-bit access:
-+ * the control bits are the upper byte, the lower byte drives nothing.
-+ */
-+static void test_tmp1075_config_width(void *obj, void *data,
-+                                      QGuestAllocator *alloc)
++static int qtest_get_temperature(QTestState *qts, const char *id,
++                                 unsigned channel)
 +{
-+    QI2CDevice *i2cdev = (QI2CDevice *)obj;
++    g_autofree char *prop = g_strdup_printf("temperature%u", channel);
++    QDict *response;
++    int ret;
 +
-+    /* A single-byte write reaches the control byte and leaves the rest. */
-+    i2c_set8(i2cdev, TMP105_REG_CONFIG, 0x60);
-+    g_assert_cmphex(i2c_get8(i2cdev, TMP105_REG_CONFIG), ==, 0x60);
-+    g_assert_cmphex(i2c_get16(i2cdev, TMP105_REG_CONFIG), ==, 0x60ff);
-+
-+    /* A word write keeps both bytes. */
-+    i2c_set16(i2cdev, TMP105_REG_CONFIG, 0x6200);
-+    g_assert_cmphex(i2c_get16(i2cdev, TMP105_REG_CONFIG), ==, 0x6200);
-+
-+    /* The low byte survives a single-byte write to the control byte. */
-+    i2c_set8(i2cdev, TMP105_REG_CONFIG, 0x60);
-+    g_assert_cmphex(i2c_get16(i2cdev, TMP105_REG_CONFIG), ==, 0x6000);
-+
-+    /* The one-shot bit always reads back as zero. */
-+    i2c_set8(i2cdev, TMP105_REG_CONFIG, TMP105_CONFIG_OS);
-+    g_assert_cmphex(i2c_get8(i2cdev, TMP105_REG_CONFIG), ==, 0x00);
++    response = qtest_qmp(qts, "{ 'execute': 'qom-get', 'arguments': "
++                         "{ 'path': %s, 'property': %s } }", id, prop);
++    g_assert(qdict_haskey(response, "return"));
++    ret = qdict_get_int(response, "return");
++    qobject_unref(response);
++    return ret;
 +}
 +
- static void tmp105_register_nodes(void)
++/*
++ * A stream written before the measurement was held in millidegrees carries
++ * only the register form. The subsection holding the measurement is left out
++ * whenever that form can reproduce it, so an exactly representable extended
++ * range temperature -- whose register value has its top bit set, and is not
++ * a negative number -- travels the same path such a stream takes.
++ */
++static void test_migration(void *obj, void *data, QGuestAllocator *alloc)
++{
++    QI2CDevice *i2cdev = obj;
++    g_autofree char *tmpfs = NULL;
++    g_autofree char *mig_path = NULL;
++    g_autofree char *uri = NULL;
++    GString *dest_cmdline;
++    GError *err = NULL;
++    QTestState *to;
++    QDict *rsp;
++
++    tmpfs = g_dir_make_tmp("tmp421-test-XXXXXX", &err);
++    g_assert_no_error(err);
++    g_assert(tmpfs);
++
++    mig_path = g_strdup_printf("%s/socket.mig", tmpfs);
++    uri = g_strdup_printf("unix:%s", mig_path);
++
++    i2c_set8(i2cdev, TMP421_CONFIG_REG_1, TMP421_CONFIG_RANGE);
++    set_temperature(TMP421_TEST_ID, 0, 100000);
++    g_assert_cmphex(i2c_get16(i2cdev, TMP421_TEMP_MSB0), ==, 0xA400);
++
++    dest_cmdline = g_string_new(qos_get_current_command_line());
++    g_string_append_printf(dest_cmdline, " -incoming %s", uri);
++    to = qtest_init(dest_cmdline->str);
++
++    rsp = qmp("{ 'execute': 'migrate', 'arguments': { 'uri': %s } }", uri);
++    g_assert(qdict_haskey(rsp, "return"));
++    qobject_unref(rsp);
++
++    qmp_eventwait("STOP");
++    qtest_qmp_eventwait(to, "RESUME");
++
++    g_assert_cmpint(qtest_get_temperature(to, TMP421_TEST_ID, 0), ==, 100000);
++
++    qtest_quit(to);
++    g_unlink(mig_path);
++    g_rmdir(tmpfs);
++    g_string_free(dest_cmdline, true);
++}
++
+ static void tmp421_register_node(const TMP421Variant *var, const char *type,
+                                  uint8_t addr)
  {
-     QOSGraphEdgeOptions opts = {
-@@ -508,5 +535,6 @@ static void tmp105_register_nodes(void)
-     qos_node_consumes("tmp1075", "i2c-bus", &tmp1075_opts);
- 
-     qos_add_test("device-id", "tmp1075", test_tmp1075_device_id, NULL);
-+    qos_add_test("config-width", "tmp1075", test_tmp1075_config_width, NULL);
+@@ -255,6 +320,7 @@ static void tmp421_register_nodes(void)
+     /* Temperature encoding is variant-independent; exercise it once. */
+     qos_add_test("temperature", "tmp421", test_temperature, NULL);
+     qos_add_test("range-saturation", "tmp421", test_range_saturation, NULL);
++    qos_add_test("migration", "tmp421", test_migration, NULL);
  }
- libqos_init(tmp105_register_nodes);
+ 
+ libqos_init(tmp421_register_nodes);
 
 -- 
 2.53.0-Meta
