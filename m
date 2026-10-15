@@ -4,92 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3977ACC6B34
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 10:54:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6838FCC6B34
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 10:54:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHJ4R-0002EX-Et; Thu, 15 Oct 2026 06:52:23 -0400
+	id 1xHJ6b-0006zi-12; Thu, 15 Oct 2026 06:54:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xHJ4Q-0002Dy-3w
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 06:52:22 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xHJ4O-0007oT-KY
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 06:52:21 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-4a01933b584so44117125e9.0
- for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 03:52:20 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1xHJ6Z-0006tb-DD
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 06:54:35 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1xHJ6X-00080T-Ld
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 06:54:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1792061672;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=CNQIM553HblX0RjcBNbRHiKZc77ue8B1S/rjP1vEA/s=;
+ b=PCIZx7Bu7ZwyW9wgTmoFMMX0J4V3Utd1h3gSLZLDScRlxrMpxM6IZ2UaRXOw+B7YRipm+z
+ 4oszvjHXtROhFS4QuRIOT/sWV55ndIpZxKjMWZJDP97C6+QxTi/wyfJcb58xU/Nu0C8dlJ
+ wGh+4GReSAer9dhDc3RfGTjh4TmSWR0=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-330-mS_0QZNpOwa_1fNjvZTJnw-1; Thu, 15 Oct 2026 10:54:31 +0000
+X-MC-Unique: mS_0QZNpOwa_1fNjvZTJnw-1
+X-Mimecast-MFC-AGG-ID: mS_0QZNpOwa_1fNjvZTJnw_1792061670
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-48af5a07314so3258900f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 03:54:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1792061539; x=1792666339; darn=nongnu.org;
+ d=redhat.com; s=google; t=1792061670; x=1792666470; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=DeUFO6MgpKEQ6ouT8Jfz1t+piLPyNtVDq5lkQ5lejBw=;
- b=hXroj/rA8wvc8cvq9AH/NdEj04+lx25JhQNbW6rfUUIyWIgQ+5dBcBmJP0FBxpB958
- VOzrk+WchuTkYWgmRdNXvErIMsSnHl5rSLKUBL3ZG+IKNlpwphbOR1BE37zUMkNAYTE9
- FDe2b5aurIsdBU6MUAbh9dTJkjdi+mw4OC7Ky+w3pSVDygWP7GqhvCU9myTlE4oI68Zs
- CqqG/ia4313nSGdYisu6Bq9rSUnASUo1fEJeV6f0UyhhZJkSeliS8KY/5B54Ho+M8IOZ
- d1b3ZW7gg/OUdJkpFrpozLeMX8KfVgiGdRMQrcwRK2BC4Z2mRppqpEnneWaMO9XE34Z+
- gjrg==
+ bh=CNQIM553HblX0RjcBNbRHiKZc77ue8B1S/rjP1vEA/s=;
+ b=SoSB1uwKFF+HcBjlde6IwfxaE6ITQ5jSpxgo13ct5B/bwCtkQBZ+Kzwy7ji28ewZUv
+ xytfMFvmvYumat+EoDE2i+Y7gXi80UrzHV85CyzuGPiw7Ldy0ld7Q9/hws1FAkj1YDZf
+ Fd9jU/CmXfMC3e+O9dimsasrI4EKH1C9uIMpzKKxKX4n52n+1qPabwjUG42xAQutl0mo
+ 4U930rQMNW3RdyVUgFdJgOD2GwZZwl8o7PkWlAI4u7il+r+yW8KJwH4tbl7RLJBIcRcZ
+ CKcNdNtosBPt3buy/BWytI46axO/53dtWUHMoDWqgKirrJg1M485kUnRoJAcTq4onIgV
+ drog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792061539; x=1792666339;
+ d=1e100.net; s=20260707; t=1792061670; x=1792666470;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=DeUFO6MgpKEQ6ouT8Jfz1t+piLPyNtVDq5lkQ5lejBw=;
- b=jmsSVAPrCX22wiR3d7GNNWz4Eqh/FgrPY4HFocBIt6ZOCKpYp/Ado+8yyHWxBmsfuW
- ybtga1PcNv+LE33p4KW2NUT36O/DvuCK33OD78uvlFu0MrQB0u9eBqv6iwf/34g2i2Or
- 3iQI1W6hq5Q/uV942yhimxDXUEyAXTQ2a5Bw+n0oMQKu4dILQMXSnGzr4CpdWrtBMTw1
- rXiF1NSh4jjExjqrJgMVBp6CTnRco3ehQXNv8nI0Q8ieLTd6qQzqCgHSZJovwcFSaLE3
- aVZ0WcmYIyzAPQqoXHut1cENncKFaOi+UBfNIt5ilVDnsXT4pCTg7JkwPsKU3e27xJP6
- i7gw==
-X-Gm-Message-State: AFq9FYKwWg9+A33FKtz03/w+21T2k8fNFW+H71mNMTzlrnJtu8WvKN74
- t4Xw4vF5z7D4YO2RNFFe9lItOZNDE4UPWlkwcA9DOX3hh4dd/CMhxyJQVrGnMNe1z6gQqUFtXLw
- Bze+Q0wk=
-X-Gm-Gg: AYBFou34KrfAE6teTC6XsQZtLfMNQSC10sY6PbOskb69BT6kwZEgzBSMcCfe4g/5kSR
- SV0v3blIdTCgotVI7PHk2kTdnjzA8APpfecVupQiDJP8dCb3HB4ZZ3BkMdnRjd/Gcyk83FiGCyQ
- HZel9zlnfYVx5pC+SCdmkPU72ZQrlosYtmkwxCBhJtl2chl316xEaxei5+pt2fVRhSMBqvetj5S
- 0WLLDpeYUz+tUB3R8YAMiVwV94mBhiwwmnb5cxLy7/1pZm3flbmhc1bvIhsFKsb5nlTmmQ/fbIA
- if0/pYGFr5LCOnqcaJe6WObzu8h4k/B/Vdw3gyruR//rv2cZHsUxKey0aj9btK+qHQzl3yByf41
- AJbzPL961Q7o1lsbRXDzUfajXWYdTPkFZq1l2Vl1nJToVO+8Ulm6JSVAcwe7sVGroT9IXx1YmIu
- Huyv7P7Eiq3MM/5qbZb8tpQpOn0W3Ab9Ohxpq8emTTqQOjzHpGt1mRXkmfUnGuLrAA3GMPN89bN
- Es866kihgChDE8hsa3Rwg+xVzPL1j8dvCuGjRC4alqwbBciB2Q+Xja0Tg8sKaE4inUmim1psJ95
- 9+8W
-X-Received: by 2002:a05:600c:609b:b0:49f:ce78:356d with SMTP id
- 5b1f17b1804b1-4a18e4c9944mr372039995e9.30.1792061538334; 
- Thu, 15 Oct 2026 03:52:18 -0700 (PDT)
-Received: from stoup.fritz.box
- (p200300ca3f0f8b006e0ed1a687ab6860.dip0.t-ipconnect.de.
- [2003:ca:3f0f:8b00:6e0e:d1a6:87ab:6860])
+ bh=CNQIM553HblX0RjcBNbRHiKZc77ue8B1S/rjP1vEA/s=;
+ b=LfOVeiHQ0XAIbMa4w69aVARofQCGjELqO2++gdxUgcTZkF3Rq7fmN0sGe/4sqcmetO
+ fYW43kh5WClnoj2YXGQW7XlWkpdTRYi505mXgauMV4g6n8bS0zWyOjisCUMZ+Xim7kMq
+ PY+kL23jTW9jfS8FVNM3AbLwUBvnFi0DqY08y43iwtAaRn17baSI9Pyn+bXIjCBKi+jX
+ 0NgqW8Xu7NoEZnvISel2AuMMnpu9Sj6AFMdNz946+5c75T0vzpMFn9MffDMX1P72Atah
+ peu33jrQIeO3dwtIoCOy2n0R+K0m8qAg/GlMEOGtAw/67wUdcgPzFhQFGPhjVnbnHOyN
+ nKeg==
+X-Gm-Message-State: AFq9FYJeMuJ+X3LIMD5pt3RaK7NXNAOJoh5iKS70sn5UqbRd990qAb5u
+ d6pNvOKN0v/Mi7xBvFaiIo7JMfZlNfGAoHAS7e46Krrf5uBbTUjVLy+uQd/hZu7atqOmNYkgILZ
+ ZE6G3bFV/zH52+Df2wR8NuxjShuqa4EEwGy9iEyVtWjFe4mHyzOa3vG9Ituy2R7XEryRVY4pVwR
+ PwM8Lo/X4rju8LfXyUyNhW/bGPhcU1/2y2ERrvqFtS
+X-Gm-Gg: AYBFou0V82ztD0YDI3FZ0E3Y5liKxpjJE/XPxhGUDpyzny8Y/JMSn9O4g1o5T5TPHFh
+ 5FNmL2hjJlV0j20M5+qf0xxKfp96Y4lEqvewbdfNNJDHHqBdQjWqP9jliC2qiP2pYmPpKp54Eq9
+ IoT1o+5gsYVBfMiJ6mhlJ5wUbam82dS5KSNDbXOwluM/hsvKxEScCAyRkQNrdDRFmSXcGmoQWPJ
+ wzLSzHuwMB21fHEUr1ySFBwATEC0aXs6og2p2kBg463cSf/mluCEfOQNS8esb8XqCzEu6NCyZEn
+ 0AOvFw0eP3fvJXY4pZZ7O9bSEL8EooQYuZpOl/SWnJFB7txKj8BeiGe56KppGx2D9LZbJt3S3Nf
+ fbRsof3Tf+WUF4jFwu+H9Dk5Q8aACbIp3vPpt+VvSj2AjIXxMcVqgU1XLOtVmfZT0ap5Mh+aNHL
+ FiNG1K
+X-Received: by 2002:a05:600c:8184:b0:4a0:1c17:4fb2 with SMTP id
+ 5b1f17b1804b1-4a18e4d854cmr348939245e9.31.1792061669954; 
+ Thu, 15 Oct 2026 03:54:29 -0700 (PDT)
+X-Received: by 2002:a05:600c:8184:b0:4a0:1c17:4fb2 with SMTP id
+ 5b1f17b1804b1-4a18e4d854cmr348938885e9.31.1792061669524; 
+ Thu, 15 Oct 2026 03:54:29 -0700 (PDT)
+Received: from [192.168.10.48] ([176.206.82.153])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48df5b88207sm3075949f8f.59.2026.10.15.03.52.15
+ 5b1f17b1804b1-4a1bd99febesm71189935e9.15.2026.10.15.03.54.27
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 Oct 2026 03:52:16 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
+ Thu, 15 Oct 2026 03:54:27 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Dominic P <gcc@gcc.dp11.uk>,
-	qemu-stable@nongnu.org
-Subject: [PULL 01/16] tcg/optimize: Do not derive s_mask from rotated s_mask
-Date: Thu, 15 Oct 2026 12:51:53 +0200
-Message-ID: <20261015105212.356392-2-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20261015105212.356392-1-richard.henderson@linaro.org>
-References: <20261015105212.356392-1-richard.henderson@linaro.org>
+Cc: Stefan Hajnoczi <stefanha@redhat.com>,
+	Eric Blake <eblake@redhat.com>
+Subject: [PULL 06/13] scsi: increase sense buffer size in scsi_SG_IO()
+Date: Thu, 15 Oct 2026 12:53:40 +0200
+Message-ID: <20261015105347.827029-7-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.56.0
+In-Reply-To: <20261015105347.827029-1-pbonzini@redhat.com>
+References: <20261015105347.827029-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x32c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,80 +121,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Dominic P <gcc@gcc.dp11.uk>
+From: Stefan Hajnoczi <stefanha@redhat.com>
 
-fold_shift computes s_mask for a rotate by a constant by rotating the
-input s_mask.  The result is not a sign mask.  For TCG_TYPE_I32,
-fold_masks_zosa_int then ORs in INT32_MIN, which can make it look like
-one: after sextract_i32 x,0,8 (s_mask ...ffffff80), rotr_i32 by 1 gives
-0x7fffffc0, which becomes ...ffffffc0.  A following sextract_i32 0,8
-is then folded to a mov.  rotl_i32 by 31 fails the same way.
+There are different SCSI sense formats. Increase the size so we can get
+more detailed sense data.
 
-ARM, qemu-arm exits 255 instead of 7 (correct with -one-insn-per-tb):
-
-    ldr   r1, [r2]        @ *r2 == 3
-    sxtb  r1, r1
-    ror   r1, r1, #1
-    sxtb  r1, r1          @ dropped
-    cmp   r1, #0
-    movle r0, #255
-    movgt r0, #7
-
-i386, the same with rotl_i32:
-
-    movsbl %al, %eax
-    roll   $31, %eax
-    movsbl %al, %eax      # dropped
-
-Handle rotates like the logical right shift and let fold_masks_zo
-recompute s_mask from z_mask and o_mask.
-
-Cc: qemu-stable@nongnu.org
-Fixes: 93a967fbb57 ("tcg/optimize: Propagate sign info for shifting")
-Signed-off-by: Dominic P <gcc@gcc.dp11.uk>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20260930185124.3036980-2-gcc@gcc.dp11.uk>
+Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+Reviewed-by: Eric Blake <eblake@redhat.com>
+Link: https://lore.kernel.org/r/20261013181752.1299456-3-stefanha@redhat.com
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- tcg/optimize.c | 19 ++++++++++++++-----
- 1 file changed, 14 insertions(+), 5 deletions(-)
+ hw/scsi/scsi-generic.c | 23 +++++++++++++----------
+ 1 file changed, 13 insertions(+), 10 deletions(-)
 
-diff --git a/tcg/optimize.c b/tcg/optimize.c
-index 1e4d2a0a425..c631f690afb 100644
---- a/tcg/optimize.c
-+++ b/tcg/optimize.c
-@@ -2703,17 +2703,26 @@ static bool fold_shift(OptContext *ctx, TCGOp *op)
-         z_mask = do_constant_folding(op->opc, ctx->type, z_mask, sh);
-         o_mask = do_constant_folding(op->opc, ctx->type, o_mask, sh);
+diff --git a/hw/scsi/scsi-generic.c b/hw/scsi/scsi-generic.c
+index 8999f3b7200..153a5275567 100644
+--- a/hw/scsi/scsi-generic.c
++++ b/hw/scsi/scsi-generic.c
+@@ -923,7 +923,7 @@ int scsi_SG_IO(BlockBackend *blk, int direction, uint8_t *cmd,
+                uint32_t timeout, Error **errp)
+ {
+     sg_io_hdr_t io_header;
+-    uint8_t sensebuf[8] = {};
++    uint8_t sensebuf[SCSI_SENSE_LEN] = {};
+     int ret;
  
--        if (op->opc == INDEX_op_shr) {
-+        switch (op->opc) {
-+        case INDEX_op_shr:
-+        case INDEX_op_rotl:
-+        case INDEX_op_rotr:
-             /*
--             * Logical right shift will force the sign bit zero.
-+             * Logical right shift will force the sign bit zero, and
-+             * a rotate may move bits unrelated to the sign into it.
-              * Don't bother computing s_mask and let fold_masks
-              * recompute from z_mask.
-              */
-             return fold_masks_zo(ctx, op, z_mask, o_mask);
--        }
+     memset(&io_header, 0, sizeof(io_header));
+@@ -947,15 +947,18 @@ int scsi_SG_IO(BlockBackend *blk, int direction, uint8_t *cmd,
+             error_setg_errno(errp, -ret, "SG_IO ioctl failed");
+         } else {
+             g_autofree char *sensebuf_hex =
+-                g_strdup_printf("%02x%02x%02x%02x%02x%02x%02x%02x",
+-                                sensebuf[0],
+-                                sensebuf[1],
+-                                sensebuf[2],
+-                                sensebuf[3],
+-                                sensebuf[4],
+-                                sensebuf[5],
+-                                sensebuf[6],
+-                                sensebuf[7]);
++                g_strdup_printf("%02x%02x%02x%02x%02x%02x%02x%02x"
++                                "%02x%02x%02x%02x%02x%02x%02x%02x"
++                                "%02x%02x",
++                                sensebuf[0], sensebuf[1],
++                                sensebuf[2], sensebuf[3],
++                                sensebuf[4], sensebuf[5],
++                                sensebuf[6], sensebuf[7],
++                                sensebuf[8], sensebuf[9],
++                                sensebuf[10], sensebuf[11],
++                                sensebuf[12], sensebuf[13],
++                                sensebuf[14], sensebuf[15],
++                                sensebuf[16], sensebuf[17]);
  
--        s_mask = do_constant_folding(op->opc, ctx->type, s_mask, sh);
--        return fold_masks_zos(ctx, op, z_mask, o_mask, s_mask);
-+        case INDEX_op_sar:
-+        case INDEX_op_shl:
-+            s_mask = do_constant_folding(op->opc, ctx->type, s_mask, sh);
-+            return fold_masks_zos(ctx, op, z_mask, o_mask, s_mask);
-+
-+        default:
-+            g_assert_not_reached();
-+        }
-     }
- 
-     switch (op->opc) {
+             error_setg(errp, "SG_IO SCSI command failed with status=0x%x "
+                     "driver_status=0x%x host_status=0x%x sensebuf=%s "
 -- 
-2.53.0
+2.56.0
 
 
