@@ -4,77 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFA20CC6B34
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 08:38:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 747D0CC6B2F
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 08:40:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHGyt-0003H2-1D; Thu, 15 Oct 2026 04:38:31 -0400
+	id 1xHH10-000450-KJ; Thu, 15 Oct 2026 04:40:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xHGyr-0003GW-Nx
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 04:38:29 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1xHH0n-0003xY-Ls; Thu, 15 Oct 2026 04:40:32 -0400
+Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xHGyq-0008UL-4h
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 04:38:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1792053506;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=PMQ8e3Uy3eOUp60U4FGWrOdw2OUEHe+oSPtGO1XJ6go=;
- b=P1XQVo1Pxk2Fx2PKSI+V1e4sLgeAR6gTJpHa02jQk508//yK8Z1aro+R6WZ0CID5gVPX0n
- CGP15MTt6KZ7x4D7bNRTtc4LXBipaQrIh7azPduL+nlV8KH1CwMuNgITTnVC4rxU8S93xx
- q3a4C1Y/WULI9jdWHIcEb+Uy8Y+qBjY=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-675-PU7e93TINvGH7Kb4UY8w3Q-1; Thu,
- 15 Oct 2026 08:38:18 +0000
-X-MC-Unique: PU7e93TINvGH7Kb4UY8w3Q-1
-X-Mimecast-MFC-AGG-ID: PU7e93TINvGH7Kb4UY8w3Q_1792053498
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C638B18007ED; Thu, 15 Oct 2026 08:38:17 +0000 (UTC)
-Received: from redhat.com (headnet04.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.116])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D66FF3000735; Thu, 15 Oct 2026 08:38:15 +0000 (UTC)
-Date: Thu, 15 Oct 2026 09:38:12 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Gerd Hoffmann <kraxel@redhat.com>
-Cc: qemu-devel@nongnu.org,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- =?utf-8?B?xJDhuqF0IE5nw7QgUXXhu5Fj?= <datlechin@gmail.com>
-Subject: Re: [PATCH 2/2] pci id: assign pci subsystem id for osmates
-Message-ID: <atCQ9CMEDtEBosr3@redhat.com>
-References: <20261015081544.40310-1-kraxel@redhat.com>
- <20261015081544.40310-3-kraxel@redhat.com>
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1xHH0j-0000MX-QK; Thu, 15 Oct 2026 04:40:27 -0400
+Received: from mail-nwsmtp-smtp-corp-main-16.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-16.yp-c.yandex.net
+ [IPv6:2a02:6b8:c0c:4d0c:0:640:10b6:0])
+ by forwardcorp1d.mail.yandex.net (postfix) with ESMTPS id B34DE805EB;
+ Thu, 15 Oct 2026 11:40:21 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:d5a::1:34] (unknown
+ [2a02:6bf:8080:d5a::1:34])
+ by mail-nwsmtp-smtp-corp-main-16.iva.yp-c.yandex.net (smtpcorp) with ESMTPSA
+ id KeQxjX02AiE0-wkFVmDhx; Thu, 15 Oct 2026 11:40:21 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1792053621;
+ bh=L0LfsFXaHpNZXobf3VFtajIVaKG7Cg4xiVEhUNV1UhI=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=fCt6WEDVp2KEyMWUlkessPAi3PshvsDk5ske7KrfEiJCvREUdJtw0U4zvag5BwgWZ
+ pJM7UzRe+wsFT6PmYlxHM6e4QKP4vnsymhgbS1qTreDBmdWok71lySlpcbYaDNKK46
+ ddYF+bWzOTAPIUSH5ma4FdV1i2KHcv7kFBKr4zgQ=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-16.iva.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <ca33ede3-3303-4fe7-a3f1-2c02d8661c86@yandex-team.ru>
+Date: Thu, 15 Oct 2026 11:40:20 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20261015081544.40310-3-kraxel@redhat.com>
-User-Agent: Mutt/2.4.2 (2026-08-30)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 5/9] block/block-copy: don't reserve memory for zero
+ tasks
+To: "Denis V. Lunev" <den@openvz.org>, qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>, 
+ John Snow <jsnow@redhat.com>
+References: <20260929155125.3151111-1-den@openvz.org>
+ <20260929155125.3151111-6-den@openvz.org>
+Content-Language: en-US
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <20260929155125.3151111-6-den@openvz.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=178.154.239.200;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -88,41 +73,81 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Oct 15, 2026 at 10:15:44AM +0200, Gerd Hoffmann wrote:
-> Allows the guest driver to identify the host implementation,
-> useful to be more specific when applying quirks etc.
+On 29.09.26 18:51, Denis V. Lunev wrote:
+> From: Denis V. Lunev <den@openvz.org>
 > 
-> Cc: Đạt Ngô Quốc <datlechin@gmail.com>
-> Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+> block_copy_dirty_clusters() charges task->req.bytes to the shared memory
+> pool for every task, but a COPY_WRITE_ZEROES task allocates no bounce
+> buffer, so there is nothing to account for. Add
+> block_copy_task_shres_bytes() and use it at all three call sites.
+> 
+> Zero tasks lose the throttling the pool gave them incidentally and are
+> bounded only by BLOCK_COPY_MAX_WORKERS (64).
+> 
+> Reviewed-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+> Signed-off-by: Denis V. Lunev <den@openvz.org>
+> CC: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+> CC: John Snow <jsnow@redhat.com>
+> CC: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+
+Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+
+Still, this commit leaves extra mutex locking for accounting zero bytes
+in shres. Worth checking for n==0 in co_*_shres functions.
+
 > ---
->  docs/specs/pci-ids.rst | 4 ++++
->  1 file changed, 4 insertions(+)
+>   block/block-copy.c | 11 ++++++++---
+>   1 file changed, 8 insertions(+), 3 deletions(-)
 > 
-> diff --git a/docs/specs/pci-ids.rst b/docs/specs/pci-ids.rst
-> index 832f8bd1b802..45e0d22e71bd 100644
-> --- a/docs/specs/pci-ids.rst
-> +++ b/docs/specs/pci-ids.rst
-> @@ -50,6 +50,10 @@ maintained as part of the virtio specification.
->    QEMU, such as the intel chipset devices.  Also used for virtio
->    devices and generic pci class devices (1b36:00xx, see below).
->  
-> +1af4:1101
-> +  PCI Subsystem ID for OSMates (github.com/osmates), will be used
-> +  for virtio devices and pci class devices (xhci, nvme).
+> diff --git a/block/block-copy.c b/block/block-copy.c
+> index 1826c2e1c7..21ebe8aec2 100644
+> --- a/block/block-copy.c
+> +++ b/block/block-copy.c
+> @@ -453,6 +453,11 @@ void block_copy_set_progress_meter(BlockCopyState *s, ProgressMeter *pm)
+>       s->progress = pm;
+>   }
+>   
+> +static uint64_t block_copy_task_shres_bytes(BlockCopyTask *task)
+> +{
+> +    return task->method == COPY_WRITE_ZEROES ? 0 : task->req.bytes;
+> +}
+> +
+>   /*
+>    * Takes ownership of @task
+>    *
+> @@ -474,7 +479,7 @@ static coroutine_fn int block_copy_task_run(AioTaskPool *pool,
+>   
+>       aio_task_pool_wait_slot(pool);
+>       if (aio_task_pool_status(pool) < 0) {
+> -        co_put_to_shres(task->s->mem, task->req.bytes);
+> +        co_put_to_shres(task->s->mem, block_copy_task_shres_bytes(task));
+>           block_copy_task_end(task, -ECANCELED);
+>           g_free(task);
+>           return -ECANCELED;
+> @@ -605,7 +610,7 @@ static coroutine_fn int block_copy_task_entry(AioTask *task)
+>               progress_work_done(s->progress, t->req.bytes);
+>           }
+>       }
+> -    co_put_to_shres(s->mem, t->req.bytes);
+> +    co_put_to_shres(s->mem, block_copy_task_shres_bytes(t));
+>       block_copy_task_end(t, ret);
+>   
+>       if (s->discard_source && ret == 0) {
+> @@ -816,7 +821,7 @@ block_copy_dirty_clusters(BlockCopyCallState *call_state)
+>   
+>           trace_block_copy_process(s, task->req.offset);
+>   
+> -        co_get_from_shres(s->mem, task->req.bytes);
+> +        co_get_from_shres(s->mem, block_copy_task_shres_bytes(task));
+>   
+>           offset = task_end(task);
+>           bytes = end - offset;
 
-github.com/osmates appears to have no repositories, and the
-website linked from that profile has no A records. Does this
-even exist ? 
 
-With regards,
-Daniel
 -- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
-
+Best regards,
+Vladimir
 
