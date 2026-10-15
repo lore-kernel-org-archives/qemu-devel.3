@@ -4,89 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D954CCA464
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 18:17:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3689CC6B38
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 18:17:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHPvi-0001fD-Rt; Thu, 15 Oct 2026 14:11:50 -0400
+	id 1xHQ17-0007A9-50; Thu, 15 Oct 2026 14:17:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcelomanzo@gmail.com>)
- id 1xHPvg-0001ck-FD
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 14:11:48 -0400
-Received: from mail-qt1-x834.google.com ([2607:f8b0:4864:20::834])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xHQ0x-0006qR-8A
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 14:17:19 -0400
+Received: from mail-yw1-x1133.google.com ([2607:f8b0:4864:20::1133])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcelomanzo@gmail.com>)
- id 1xHPvd-0001XM-VQ
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 14:11:47 -0400
-Received: by mail-qt1-x834.google.com with SMTP id
- d75a77b69052e-53397325663so16455091cf.1
- for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 11:11:45 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xHQ0v-000245-72
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 14:17:14 -0400
+Received: by mail-yw1-x1133.google.com with SMTP id
+ 00721157ae682-8b0d126f631so16034127b3.2
+ for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 11:17:10 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792088230; cv=none;
+ d=google.com; s=arc-20260327;
+ b=V9NvvYYbvwQvWxUC9N0XN1lciVfGyMHUGUYz1Gqc5AWzHG0dZg6iFuTsWsZBHD7dSQ
+ pSLs9CFOwFAquOA+wyINSAJDKN1hal3fuT0OMfu1bwXav9qaaWw6C/EOLzcg76ulZ1i3
+ rpDC3/i0FZNPd9dO5DWGnIrO8CbHDllY4g7M6jyLqln4XlLRWgwuXFJhthnFNd78Ua3c
+ KULTDyYTZT7t5vALvyNPKWLPUqxZl5Q9JUxVUcC/ePgIhFDLMZkZo2rtLp+Nr6UMIktn
+ C9c/d6996DwU9HkPSNf2pOVgcL6QZJqxvLsN9vq+0HNCR0h3g5a+ga8PawOxN0nhgbWd
+ rfGA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=7CwE7f/YNKXWSR3ShZsT/nFCuFAw+1Nclzgc4s6rzvE=;
+ fh=W/JhvAlf9kvTQdSfT2vqiKAkNO4YiRVg8H2M8w9SXbQ=;
+ b=TNGSVjvAOPtGWYg2ZFBHoYHePCkipX/xCG9pSuJDBz/eiLUvqzvSUe31IDHZHYr4C1
+ /nkudsfrc4WmJ+XOD2h6kzU3G60WlTjtULMhNvfJSeKn2dQa9KxsRp9wyfeD75nGj+Jz
+ xRk5TWeX1kZEcBtiw1DZhDunjolFQpZi5UDbkJWzPIkBTdMt4IDFsz4uyvhDwx7XRH9/
+ SLtNVhqPObUs2kWwY7dCpveI11YEltZzM+6fSlZacgQEV8R8Szg9bi30+bxK4u5E1fNg
+ gzkj2ZUwmuwtiSXwDYJa4kKwLSsZnwbqwUP3rDcom11VVwf4/t/HNjLoycsLLms+8R2j
+ LSxQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1792087905; x=1792692705; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=enGY8Mg8CmhgNg4I2/M1BECJVg3BBS7XEPbL+hW9bwo=;
- b=NoNn1XbIvwhgzUHdaLp9OgHKUx/y5pZar8gbQZp36FUfOK+xdej19qWei4I7xCjYEi
- tKx29rxBPHnfK640Tv/YCAlnkI++TUtjWNH5FqEPCl2dSiCXxkBFqSqqiKZsFDs6Krzn
- 2VnOmQrkz1QggodnrQPKi5y6FM5Q25kpMz8utrSja82tOeG93/fcwQd8/bBlvDiN3tms
- zZaUeSilmaHJ9uNbSogl3GOs53b7HHIVLgGwOYd8cCPT2JcTf86cOkSYlyYX+o2K4D2y
- S4mMYl+JTjhNWYd5u5hvCp43ntVWceVIHsSbOCjt/Vv9bs/uqYTQja+WjYZxKyFIyZD1
- RnCw==
+ d=linaro.org; s=google; t=1792088230; x=1792693030; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=7CwE7f/YNKXWSR3ShZsT/nFCuFAw+1Nclzgc4s6rzvE=;
+ b=dWGPW/zA/vCRoBDYoVFTMwS7TGs+nC9EmZjX5NUaYQxNRak57fLgRRuupk6tfMdmR/
+ Hz/kBmlW5Qvs9rOm9Kp6ZAhdG4InbBy2Xc8O2fHZ48LVD/UOrc7f15bDs+TMk2U7X7MQ
+ zwER2VhxasGeSPuUCvET/dA+hS98OZAgOdabsylJ8pZtL79yS211/x/ALU2jNUCBTumH
+ dp/SDW3iQxw9pK10aGA0MCKeaYzoRE6jZ5Z2ctpDQVYUoO3/18UCxQUTBUmCKWGZoeBR
+ sE5z3Ymw6j5dbP4lqXhjklJucAXY6QXRHK7tDa/dzW8cczL2F1xWo1cVD6SKVasdVB6v
+ am6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792087905; x=1792692705;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=enGY8Mg8CmhgNg4I2/M1BECJVg3BBS7XEPbL+hW9bwo=;
- b=ugNwDIx4Z7AlVSFbaz3zl7Rzu/HAO+k3/4rB5CyRSpPbMstFrcZ/oe918qW2hLy83T
- 3dQ86mBwiEb3IDE6fth2nJ2MU77FI+oJDnMeCZCRljJHb3O3OBdZR8D6oZMiHW5U8a7R
- eAZZcew2Z8Won++6MMcB8zjh9+ODuiqrLX8yan4GGnoTHzLk9WO0gfyz4DIzA2vBEKyS
- gffHjWHMSd9/mYeZUAD3EUbyutOs4obWgGKajDI7FWPgSs+C/3sRRsc9C+zEm6qPbB0E
- hqucWET/aD8fQMMYUP9bRlGnYyjKZx95kEhb9QiuZMhqvsJWC+lN7GLro/PSU/CdX9rZ
- L9jQ==
-X-Gm-Message-State: AFq9FYInXstZIpbn5qg8+bYvHwOpUXllplfipM9j2MkVZusSfNeGylbe
- 4au4oPu42i+icx1o9GMmldpM1gbHdIznjqySNMzEaWETIwk05xxmUB2c3SlmyX38
-X-Gm-Gg: AYBFou33qD7uOSGwQIFmh1jxyI12om37ygMdkqSy7ua6qSqhaqu3MQH9InpOEHK+FkO
- zNBlkuWKmOXd+fzpP8serH2b6NQu5wNblB3AmEPbpQXmAf96KBFGPp6Oa+/zXAW2OWigMsBJrp8
- 65AlaIPITmBUeV8K0r2rgY9v44TI1WdefN7gKm6UAESAF0fouVTiedG89lDgQcd53deFzG/FV3M
- XjltB5gewYHO883Gvl1kcJEFbqmg3y28hmoorXziwiJkA04TVidbI4k4yvwnEKU+QdNM/ayIPhr
- CZT+FmDUTF9g1as4UZL8wipceIjgh7HYIRIoI+Yfo0GMb7QolGTuCHZDJXqFJ5tqL+/dR2i+f1U
- 6dmj+R6KyR/9ByQoEgGfJHNxTvdjBAMuzXd5MOyQWDQ5pZKXzTrHAdEEzmIgw2DIe+WYYCEUnB/
- xwqfyMKmMyMnEfhxND0LHqEVNX58A+A0htoMDM9ojoSW7/WTqoeMLZfYmrmeGfsMr4rSvoaoyJK
- /2ee3UcwpTVGRVxKL8DMesdSC00YRBSasvKpS79MxlX5ibJnguApRhlSoKsSDZwrtWowA==
-X-Received: by 2002:a05:622a:98e:b0:530:ea8c:1b6b with SMTP id
- d75a77b69052e-5359f498093mr317451441cf.3.1792087904887; 
- Thu, 15 Oct 2026 11:11:44 -0700 (PDT)
-Received: from localhost.localdomain ([2606:6d00:159:2900:919:5388:4e10:5949])
- by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-536127efe4asm32130611cf.19.2026.10.15.11.11.44
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 15 Oct 2026 11:11:44 -0700 (PDT)
-From: Marcelo Manzo <marcelomanzo@gmail.com>
-To: qemu-devel@nongnu.org,
-	qemu-arm@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Marcelo Manzo <marcelomanzo@gmail.com>
-Subject: [PATCH v3 16/16] tests/functional/aarch64: add raspi4b GENET
- networking test
-Date: Thu, 15 Oct 2026 14:11:21 -0400
-Message-ID: <20261015181122.60608-17-marcelomanzo@gmail.com>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20261015181122.60608-1-marcelomanzo@gmail.com>
-References: <20261015181122.60608-1-marcelomanzo@gmail.com>
+ d=1e100.net; s=20260707; t=1792088230; x=1792693030;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=7CwE7f/YNKXWSR3ShZsT/nFCuFAw+1Nclzgc4s6rzvE=;
+ b=wlJL9rzzygpEEt0jiKgQmfHEnCb2/6PU8Cq679BNCOfDmz96KhAGhCKVFeYJYB38Uf
+ SjPP63hf5TvBGdy+kRaI3rRcmTab+fnnMCcQzVdSbtXvHEpKTGWh3SRK9cuDnaClaNN/
+ uKtgJqN8T9Jd9wA/RbMwSuem8AF1DNSwD/bHODukkNVlBMnFaEwrWPTr0u7XUpW8ml/P
+ DY7Z027FkzY0hLnrmvtiXJbARXAnD3SL3sr5ya5ZqfRtn0aJs/mizrxHEnTHy5LBtne3
+ Xbzrro3w75MvvyfOB28GXrx4d2mn5rwtc4OUyFXcF6aVye/Uq7XPAkYYQK8mKtfCR+hi
+ XpYw==
+X-Gm-Message-State: AFq9FYKoh8+5Ot3RAYKjLA6FH+Ec8TQfktqiRGhohVmZISMak5pFs5GF
+ O3+DkbeQRPtlF729f45WxFNuprzWjc8/iJbaOd1CCihSQ0S0G7/7KD8gFAIo4ZCWu+6P3iRD491
+ MFxnsTyxx6zSHWHcbkwhFXi6EYKScliUlDXHo3rWV4Q==
+X-Gm-Gg: AYBFou216Tu/dTKuC1XBQ0GBmuYYbxbgbRnYTbCOGxiRmZibdTrqghyao2x8EAQmHEM
+ aR6Lda8fKd9Rhs42Lk4ocz6HNsXiXtUSOqFkM/BtHnKOqCgZbNv/nJsSMmvDE70ARdK4GCsUbRF
+ 3B1uCE1KUTNI8Q5dGxkbM5C1WEpsSywY3XH7Zw2JqkQ1/2/qAfukl6XvUozr2a0PD5udg59OfOC
+ 9SllNlgyuT1EO/7LbNc75EmsR7cTtEvF7OQDD/54CF0aiSqejF6qCS9nSJ6YhCoC/6i878r5vDN
+ +dy9azmAiZYii3JapZR3KE1hdFiAF+83NCGsF67PBXX7YBq8Y2yQnp5iRax+C0eryiiBreDnVQR
+ SIZnJyZU4Hf9cVfqfaF7PMj3tg3CeNZmKl5IKAJw=
+X-Received: by 2002:a05:690c:4f89:b0:8b0:ccc3:27d2 with SMTP id
+ 00721157ae682-8b0ccc3303fmr13955287b3.29.1792088229601; Thu, 15 Oct 2026
+ 11:17:09 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::834;
- envelope-from=marcelomanzo@gmail.com; helo=mail-qt1-x834.google.com
+References: <20261015163352.1751191-1-peter.maydell@linaro.org>
+ <atEC-pIGhLYLXVmC@redhat.com>
+In-Reply-To: <atEC-pIGhLYLXVmC@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 15 Oct 2026 19:16:58 +0100
+X-Gm-Features: AclHuK9D2GmlMxylJU6DEN1cXhtTGabHjX96stEfAkOtxavRWQGHySqK_Otu9X4
+Message-ID: <CAFEAcA-wEB15afO4Na8+8cF_Ja3v-8ewd8EdPavxJbfTmrL9GA@mail.gmail.com>
+Subject: Re: [PATCH] include/hw/core/qdev.h: Fix where
+ device_class_set_parent_realize docs suggest putting parent_realize
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
+ Mark Cave-Ayland <mark.caveayland@nutanix.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1133;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1133.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -104,67 +120,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add test_arm_raspi4_genet, exercising the raspi4b GENET controller
-end to end: boot with a -nic bcm2838-genet device attached, confirm
-the guest driver probes it ("GENET 5.0 EPHY" in the kernel log),
-reach a shell, and confirm the link actually comes up
-("ip link show eth0" reports LOWER_UP) rather than just that the
-device exists.
+On Thu, 15 Oct 2026 at 17:44, Daniel P. Berrang=C3=A9 <berrange@redhat.com>=
+ wrote:
+>
+> On Thu, Oct 15, 2026 at 05:33:52PM +0100, Peter Maydell wrote:
+> > The documentation for device_class_set_parent_realize() suggests that
+> > the parent realize function pointer is "usually in the instance
+> > structure".  This is definitely wrong, because the function pointer
+> > is a class thing, and should live in a class struct, not an instance
+> > struct.  Update the documentation to correct this, instead
+> > recommending that it should be placed in the class struct for the
+> > child class.
+> >
+> > At time of writing, of the 75 or so uses of this function, about 50
+> > put the parent_realize pointer in the child class struct, and about
+> > 25 in the parent class struct.  We recommend the former both because
+> > it is the more common choice, and also because it makes more logical
+> > sense: it's the child that knows (a) that it exists at all and that
+> > (b) it wants to have a realize method that will mean it needs to
+> > chain back to the parent, and we shouldn't need to edit the parent's
+> > class struct because we want to add a child class that chains to its
+> > realize method.
+>
+> I'm confused why we need to store a copy of the parent's
+> realize method at all, when we can just reference it from
+> the parent class struct ?
+>
+> Taking one example
+>
+>   static void pl050_kbd_realize(DeviceState *dev, Error **errp)
+>   {
+>       PL050DeviceClass *pdc =3D PL050_GET_CLASS(dev);
+>       PL050KbdState *s =3D PL050_KBD_DEVICE(dev);
+>       PL050State *ps =3D PL050(dev);
+>
+>       if (!sysbus_realize(SYS_BUS_DEVICE(&s->kbd), errp)) {
+>           return;
+>       }
+>
+>       ps->ps2dev =3D PS2_DEVICE(&s->kbd);
+>       pdc->parent_realize(dev, errp);
+>   }
+>
+> why wouldn't we rewrite that as
+>
+>   static void pl050_kbd_realize(DeviceState *dev, Error **errp)
+>   {
+>       PL050DeviceClass *pdc =3D PL050_GET_CLASS(dev);
+>       DeviceClass *parent =3D DEVICE_CLASS(object_class_get_parent(OBJECT=
+_CLASS(pdc)));
+>       PL050KbdState *s =3D PL050_KBD_DEVICE(dev);
+>       PL050State *ps =3D PL050(dev);
+>
+>       if (!sysbus_realize(SYS_BUS_DEVICE(&s->kbd), errp)) {
+>           return;
+>       }
+>
+>       ps->ps2dev =3D PS2_DEVICE(&s->kbd);
+>       parent->realize(dev, errp);
+>   }
+>
+> am I missing a reason we need to store the parent's
+> realize method pointer ?
 
-Verified locally against this series with the exact kernel/initrd
-assets this file already pins (raspberrypi-kernel_1.20230106-1 /
-groeck linux-build-test rootfs). The link only comes up because the
-MDIO patch handles the PHY autonegotiation-restart request (BMCR
-ANRESTART) correctly; without that the link never comes up and this
-test would hang at the "ip link show eth0" step, so it also serves
-as a regression test for it.
+Because the parent class's struct doesn't have a pointer to
+its realize method. pl050_class_init() does this to set
+up its realize method:
 
-Signed-off-by: Marcelo Manzo <marcelomanzo@gmail.com>
----
- tests/functional/aarch64/test_raspi4.py | 30 +++++++++++++++++++++++++
- 1 file changed, 30 insertions(+)
+    DeviceClass *dc =3D DEVICE_CLASS(oc);
 
-diff --git a/tests/functional/aarch64/test_raspi4.py b/tests/functional/aarch64/test_raspi4.py
-index bacecbbe9c..f703fc69ae 100755
---- a/tests/functional/aarch64/test_raspi4.py
-+++ b/tests/functional/aarch64/test_raspi4.py
-@@ -109,5 +109,35 @@ def test_arm_raspi4_initrd(self):
-         #self.vm.wait()
- 
- 
-+    def test_arm_raspi4_genet(self):
-+        kernel_path = self.archive_extract(self.ASSET_KERNEL_20190215,
-+                                           member='boot/kernel8.img')
-+        dtb_path = self.archive_extract(self.ASSET_KERNEL_20190215,
-+                                        member='boot/bcm2711-rpi-4-b.dtb')
-+        initrd_path = self.uncompress(self.ASSET_INITRD)
-+
-+        self.set_machine('raspi4b')
-+        self.vm.set_console()
-+        kernel_command_line = (self.KERNEL_COMMON_COMMAND_LINE +
-+                               'earlycon=pl011,mmio32,0xfe201000 ' +
-+                               'console=ttyAMA0,115200 ' +
-+                               'panic=-1 noreboot ' +
-+                               'dwc_otg.fiq_fsm_enable=0')
-+        self.vm.add_args('-kernel', kernel_path,
-+                         '-dtb', dtb_path,
-+                         '-initrd', initrd_path,
-+                         '-append', kernel_command_line,
-+                         '-no-reboot',
-+                         '-nic', 'user,model=bcm2838-genet')
-+        self.vm.launch()
-+        self.wait_for_console_pattern(
-+            'bcmgenet fd580000.ethernet: GENET 5.0 EPHY')
-+        self.wait_for_console_pattern('Boot successful.')
-+
-+        exec_command_and_wait_for_pattern(self, 'ip link show eth0',
-+                                                'LOWER_UP')
-+        exec_command_and_wait_for_pattern(self, 'halt', 'reboot: System halted')
-+
-+
- if __name__ == '__main__':
-     LinuxKernelTest.main()
--- 
-2.55.0
+    dc->realize =3D pl050_realize;
 
+and that's the only place where pl050_realize is pointed to.
+
+To put the child class's realize method into place we need
+to overwrite the DeviceClass::realize field, which means we
+need somewhere to put the old value.
+
+We could alternatively solve this by saying:
+ (a) every class struct must have a "realize" field,
+     and the class init sets both DeviceClass::realize and
+     MyClass::realize (perhaps restrict this to only "every
+     class that has or might need to have subclasses")
+ (b) to chain to the superclass realize, get the MyParentClass
+     class pointer and call MyParentClass::realize
+
+The support (or lack thereof) in QOM for methods like realize,
+unrealize and reset which should pretty much always chain to
+their parent class implementation is pretty terrible, so if
+we can come up with something more ergonomic I'd be happy to
+throw out the hacks we have today.
+
+thanks
+-- PMM
 
