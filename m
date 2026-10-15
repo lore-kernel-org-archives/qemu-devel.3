@@ -4,62 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17199CC6B33
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 09:50:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7E3BCC6B33
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 10:04:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHI5e-0000v0-Io; Thu, 15 Oct 2026 05:49:34 -0400
+	id 1xHIJW-0002xr-0C; Thu, 15 Oct 2026 06:03:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1xHI5Y-0000rd-Qx; Thu, 15 Oct 2026 05:49:29 -0400
-Received: from forwardcorp1d.mail.yandex.net
- ([2a02:6b8:c41:1300:1:45:d181:df01])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1xHI5W-0007i1-Ns; Thu, 15 Oct 2026 05:49:28 -0400
-Received: from mail-nwsmtp-smtp-corp-main-80.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-80.yp-c.yandex.net)
- by forwardcorp1d.mail.yandex.net (postfix) with ESMTPS id 851488102C;
- Thu, 15 Oct 2026 12:49:21 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:d5a::1:34] (unknown
- [2a02:6bf:8080:d5a::1:34])
- by mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net (smtpcorp) with ESMTPSA
- id KnRw6M2ZOKo0-9nmH0HRi; Thu, 15 Oct 2026 12:49:20 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1792057760;
- bh=C7+fwRMIxsO902iFunvX1plN7GmnwEaMXOu+ove2GaY=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=SjBYtBcv2Zf/MgngFnYQ/jPNgVt5wsMcTKHODIst9ob1/InD926FsqMZgycRnZPYQ
- rEaqbrHs2RcKOTuKlwZUpDL67Kva4fifvFzbnLqBtqjgDwofacysC/v+yVnZaa00Jq
- rUz2E4nS+dg3b0T1IOG8fWbPyBHn+R9YEAhMLoc8=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <7e0fc64f-b734-46e8-a0db-7eae69b76196@yandex-team.ru>
-Date: Thu, 15 Oct 2026 12:49:20 +0300
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1xHIJT-0002xg-0R
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 06:03:51 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1xHIJQ-0000lk-9a
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 06:03:50 -0400
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8BxrtL3pNBqoRQWAA--.64482S3;
+ Thu, 15 Oct 2026 18:03:35 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by front1 (Coremail) with SMTP id qMiowJAxlMz0pNBqlZ8sAA--.1036S2;
+ Thu, 15 Oct 2026 18:03:34 +0800 (CST)
+Subject: Re: [PATCH 2/3] hw/loongarch/virt: Fix clock property name typo and
+ order
+From: Bibo Mao <maobibo@loongson.cn>
+To: pillow <waysorrypub@gmail.com>, qemu-devel@nongnu.org
+Cc: 17746591750@163.com, lixianglai@loongson.cn, jiaxun.yang@flygoat.com,
+ mst@redhat.com, imammedo@redhat.com, anisinha@redhat.com
+References: <cover.1791803914.git.waysorrypub@gmail.com>
+ <8e36ee3baff3e6abef94cda37d564aeb690b161b.1791803914.git.waysorrypub@gmail.com>
+ <7a2c2a6c-7ece-7e94-7216-6918558cda74@loongson.cn>
+Message-ID: <3c7bb90f-7b94-5d88-4f92-1b0d99c3d0e6@loongson.cn>
+Date: Thu, 15 Oct 2026 18:04:54 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 7/9] block/block-copy: track known-zero source clusters
-To: "Denis V. Lunev" <den@openvz.org>, qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>, 
- John Snow <jsnow@redhat.com>
-References: <20260929155125.3151111-1-den@openvz.org>
- <20260929155125.3151111-8-den@openvz.org>
+In-Reply-To: <7a2c2a6c-7ece-7e94-7216-6918558cda74@loongson.cn>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <20260929155125.3151111-8-den@openvz.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a02:6b8:c41:1300:1:45:d181:df01;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qMiowJAxlMz0pNBqlZ8sAA--.1036S2
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoW7Ar45Xw1kArWDZryfWF45Jwc_yoW8ZF15pr
+ sYyrWjyryDWr97J34UJ3W5GryYyr1DAw4jqw12yFyUZ347Gr1jqFyjvrsFgry7Aw4rA398
+ ArnYgFyv9FyUArcCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUvIb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
+ xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
+ 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r106r15McIj6I8E87Iv
+ 67AKxVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
+ AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02
+ F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jw0_GF
+ ylIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7Cj
+ xVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r
+ 1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x07jn
+ UUUUUUUU=
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -36
+X-Spam_score: -3.7
+X-Spam_bar: ---
+X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.783,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -75,52 +84,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 29.09.26 18:51, Denis V. Lunev wrote:
-> From: Denis V. Lunev<den@openvz.org>
-> 
-> block_copy_reset_unallocated()'s up-front scan already queries the
-> source, and the same query reports zero-ness. The copy loop re-queries
-> per task and, having no answer up front, can only size a task by the
-> copy buffer, so a mostly-zero image is cut into thousands of pieces
-> that each turn out to read as zero.
-> 
-> Cache the answer in zero_bitmap, published by zero_bitmap_valid once
-> the scan is done. block_copy_task_create() then picks the method from
-> the bitmap and ends the task where the answer changes, so a zero task
-> never reaches into data and a copy task never swallows a zero run. The
-> per-task query stays as the fallback until the flag is set, since CBW
-> intercepts guest writes while the scan is still running.
-> 
-> The scan and the query it replaces must resolve BDRV_BLOCK_ZERO against
-> the same part of the chain, so the scan moves from bdrv_co_is_allocated()
-> to bdrv_co_block_status_above() and the base selection is factored out
-> into block_copy_status_base().
-> 
-> zero_bitmap is a plain HBitmap, not a BdrvDirtyBitmap: an internal cache
-> has no business in query-named-block-nodes. One writer and readers gated
-> by the flag need no mutex, but the publish needs ordering, hence
-> store-release and load-acquire. It is allocated on demand, so sync=none
-> and a standalone copy-before-write filter do not pay for it.
-> 
-> Reviewed-by: Andrey Drobyshev<andrey.drobyshev@virtuozzo.com>
-> Signed-off-by: Denis V. Lunev<den@openvz.org>
-> CC: Vladimir Sementsov-Ogievskiy<vsementsov@yandex-team.ru>
-> CC: John Snow<jsnow@redhat.com>
-> CC: Andrey Drobyshev<andrey.drobyshev@virtuozzo.com>
 
-Not a show stopper (I'm not against Eric queueing/already queued this). still,
-some things I don't like here:
 
-- block_copy_is_cluster_allocated() not only check for allocated, but also cache information about zeroes
-- zero_bitmap_valid - is not only about zero_bitmap, but also say that initial scan was finished, and
-we don't need to recheck allocation status of clusters to copy (we use this bit of information in
-block_copy_set_task_method())
-- .zero_bitmap_valid and .skip_unallocated partly share same function, saying that initial scan was finished,
-which is obvious by calling both setters at the end of scan.
+On 2026/10/15 下午2:57, Bibo Mao wrote:
+> 
+> 
+> On 2026/10/12 下午7:39, pillow wrote:
+>> The original code had a typo in the clock preperty name, and the
+>> property name and frequency value were in reversed order.
+>> According to the _DSD format rules, the property name string comes
+>> first, followed by the property value:
+>> https://github.com/UEFI/DSD-Guide/blob/main/src/dsd-guide.adoc#data-format-definition 
+>>
+>>
+>> Signed-off-by: pillow <waysorrypub@gmail.com>
+>> ---
+>>   hw/loongarch/virt-acpi-build.c | 2 +-
+>>   1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/hw/loongarch/virt-acpi-build.c 
+>> b/hw/loongarch/virt-acpi-build.c
+>> index 54965f0..4081730 100644
+>> --- a/hw/loongarch/virt-acpi-build.c
+>> +++ b/hw/loongarch/virt-acpi-build.c
+>> @@ -336,8 +336,8 @@ static void build_uart_device_aml(Aml *table, int 
+>> index)
+>>                                     AML_SHARED, &uart_irq, 1));
+>>       aml_append(dev, aml_name_decl("_CRS", crs));
+>>       pkg0 = aml_package(0x2);
+>> +    aml_append(pkg0, aml_string("clock-frequency"));
+>>       aml_append(pkg0, aml_int(0x05F5E100));
+>> -    aml_append(pkg0, aml_string("clock-frenquency"));
+>>       pkg1 = aml_package(0x1);
+>>       aml_append(pkg1, pkg0);
+>>       pkg2 = aml_package(0x2);
+>>
+> Hi,
+> 
+> yes, there is spelling issue with LoongArch virt machine UART acpi 
+> table. It seems that clock-frequency is not used by serial port. is it 
+> possible to remove pkg0/pkg1/pkg2 property like ISA serial acpi table 
+> defined in function serial_isa_build_aml()?
+> 
+> Also "_CCA" property should be removed since the emulated serial port 
+> does not support DMA, and add "_STA" property.
+Also maybe property clock-frequency of uart fdt table in 
+fdt_add_uart_node() can be removed.
 
-This worth small follow-up refactoring.
+Regards
+Bibo Mao
+> 
+> Regards
+> Bibo Mao
 
--- 
-Best regards,
-Vladimir
 
