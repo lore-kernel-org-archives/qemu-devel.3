@@ -4,96 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0FA6CC6B3A
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 13:53:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CBCE7CC6B3A
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 13:56:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHLtG-0003AI-4x; Thu, 15 Oct 2026 09:53:02 -0400
+	id 1xHLw9-0003xv-BL; Thu, 15 Oct 2026 09:56:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xHLtC-00039d-A8
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 09:52:58 -0400
-Received: from mail-yx1-xb12c.google.com ([2607:f8b0:4864:20::b12c])
+ id 1xHLvy-0003tr-6m
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 09:55:51 -0400
+Received: from mail-yw1-x1129.google.com ([2607:f8b0:4864:20::1129])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xHLtA-0000t3-2V
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 09:52:57 -0400
-Received: by mail-yx1-xb12c.google.com with SMTP id
- 956f58d0204a3-67489c8202cso1610752d50.3
- for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 06:52:55 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792072374; cv=none;
+ id 1xHLvw-0001FM-JE
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 09:55:49 -0400
+Received: by mail-yw1-x1129.google.com with SMTP id
+ 00721157ae682-8a83d2706fdso20924407b3.0
+ for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 06:55:47 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792072547; cv=none;
  d=google.com; s=arc-20260327;
- b=ra98ibWFpFgiRcYzsO0o3rEomHoHrRaH3rkbQxy0V9G4J916qhKnaeMdYTKm+MSD6U
- uPsSrRLXvmf//skOIRxUr1oKK8zl6e/8lwqlqER31wOEol6hzLElHpS052cVfzH8e3+F
- GyuMgXkVkSlp2TG04UXpwLY27cDXdtxLVLOyXSiga/swXoUTdVnBJwSlK8IRvxc2nOnV
- 19V80gP5qUhfyEFVaS8Ce+Ox7TUowh3OD98u85NCtVGiJE8xJPz3GPVDL9ugJvc6PGPZ
- 9NkhmtX3jnVIeUWmsrqeILX/juATO9BN2vH3hYkPll8p+cydHbZqszeCDxrgqt2ba68C
- d2vg==
+ b=QSGzRyUHbp6/TlzxpOdLKSVQMFFWiw/MnXbIf8rLje+64Bp58aNaDs0c3miqzoe+Fv
+ X1087YMmTrqZDOGPw9FXSMwJQ3Sep8kdYxNJMIsBfB3pJE45nWHI8NVpmiA5GWWA3N6O
+ oqdypcYLZ4I8KqdNsA7SapS8KHls9zVhZmZC5He6kTjHIkqJhxmv30bsfMx9wFP+GrOp
+ 03xNfcYNDTdOCLtso6My5KJv031QAtUshSTLj5g1hCQIVdzZay9/GqQWc77Qiaw5EGWM
+ LV46DMXTNG0TWibCZuf9oHeCiCADZ7WK4yQu80GGCb+kveMGnLVcc8sa0bcr0GSq8uIk
+ YlFQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=O7JkgtDkYtCpH/IHPCFXlR9XOjdOiZKLbNmL2c7SnNc=;
+ bh=M0gpN+JJF2TYnnPqlU+Vv4DSdt+bcp5pdt9jGNK5vkU=;
  fh=ltWIwVsWDzxKvEG7jBnlBXPrQvIjQc+HOgvPossf/dc=;
- b=WQSMZGLRv9eq3I8WKJOcq8NmW2dmLiskg3752+0hk1v5IxvHPEwLo6gRNiNkyME/Om
- hCRRll/Yrq2Nw7AeGm7ZDsHK4v36DZycnAyLPKuKPxf5tseUCdrA7NWcEqlgKpbIrdYa
- b4VgO4GhU1/QXGiiCv5D7VtuxYl+ILZkNq9lIkqKg/4L4P2k0gOGpUQTWEZpbj3gWR4w
- tT5lEq5bWzRQin5gZeWX2Www6y7fASpLn1HDAWN73R/W1DvTiTAPanXGzYhNMnMkxK/F
- QPjVMot8PxS3TFQO4fNj69hc/24MkiBWJCjvdhUpBEKYfbTMVsa+/CgTxO9PL7YSqSjN
- /YRg==; darn=nongnu.org
+ b=rykTaWta8T9R1atjjjAxzoHfYh5hLCxpar1A0POshHudxf/C+FdGJZXFU4FR1rU/XO
+ kdAUA4POD4MQ0zz21wB9NAjToWWCG/RJl4W/t7Nbt3M/djPAUas+UhRg4tTqFoXqwtxX
+ 5hw8A5SkixitWiq69VJUwhjVBWMin+X+FjcGJ0B5odszseDfBhHtiZIw9V/gTAofhOOp
+ UTCAQdL44WKA5U+5tn+D11Pt/0w96cmgXPdo8pNhGZlkqWAahfoU0MQbmbMgyEQSJDfo
+ 1N2mi7JljmefQBVaJyZ09PEta8XJqX/x88GUXs3K3vU0GlZE2b1KB77bVBeWmRPaY+Ph
+ k82g==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1792072374; x=1792677174; darn=nongnu.org;
+ d=linaro.org; s=google; t=1792072547; x=1792677347; darn=nongnu.org;
  h=content-type:cc:to:subject:message-id:date:from:in-reply-to
  :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=O7JkgtDkYtCpH/IHPCFXlR9XOjdOiZKLbNmL2c7SnNc=;
- b=DsJavWRgw01d8Z3MYfkmClwkPe6c480IKbuPvqFfWwZ6tL02HNWi/pPa3K785jjXy2
- ezVgnX+3e5UnnvHLjshnqYpjZ8Ck399Brs2sNfQ7F2s2af0ZcayhJz+VsgAyNYLsx5Aj
- w/M/38e5FhWmqrUa2TjVrQrg+1T+vWqOlZUMd5Q4jNWB3iiEfaLsD47PkhfivZY9Y288
- v50V5feqrWGUVbxuAR3mFzQBgDLcd4ZHw593okVWq35EytgTO0hvrXDDu6mGiSm67zp9
- h2l7ZUctaN8//iFv9aES3Pdp1NFH0SHWd2VtZPAUw3SlgSUs46z7qw+LbKEH3JZoDNqy
- QnZA==
+ :content-type; bh=M0gpN+JJF2TYnnPqlU+Vv4DSdt+bcp5pdt9jGNK5vkU=;
+ b=mNF2krjVyavyp3fYz6LPRktcTYNscm35hI1JVODqH2Xlj5wYcodTqDsxjnF+MiwWPB
+ ftPUJSS9FNrzFrmr5CjI3qf5+pOpDqK8sWkDqcfoHw0x1A3iuGkt89Pj3n43YBLpR43L
+ wKpF3GtQbX9FwcUNut63bDiQjMMgUdQO/wTT/2rIb70FnC7tnOUUl1fAZ/DDaaWATflQ
+ vCHk5xMdN1G4LV10NUlF1k2RCogcVwjQljXBHYP1IIU4rQqSiA8zVj2/Gbs9rjiMyuod
+ o1waYDVTmF7giVaaQaPdLrBRQX/mliXoc6YdGA4Hb9dwSYx+xrK+FTodUHnweL/qBumD
+ 9m/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792072374; x=1792677174;
+ d=1e100.net; s=20260707; t=1792072547; x=1792677347;
  h=content-type:cc:to:subject:message-id:date:from:in-reply-to
  :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to:content-type;
- bh=O7JkgtDkYtCpH/IHPCFXlR9XOjdOiZKLbNmL2c7SnNc=;
- b=Vy1X1WhKc8z17lnw4iPpc8jf+AqpOhDKd7d7eSh83fnfJOdDNq/mdthY2wpupja3O7
- 2oDU0+roBOyhdEqWEsdVC7QSQkgDvObFZvY/Bsgyeih6Y1Nf43vP34Gl0OOXPKGkoeXT
- BFYOFggpi70IorEUPn8Xda6qLSpDAEekPAPr7dqmmJE8d/rXsvbgcxPCNgkfJpH0I+Iw
- MSR6p6J/Xr5vAbmqbpjdX6YpqDTuMyTOznM+dEDwSuiGRKC2z3HqFuZR2kzXLxIqWGXU
- FpuVbfKv8yZ5HE5P9xS5e/kgVEvwZYn5nl+Ne18WhdQ17lT1U4geJlYbDfhPIwpeD/4L
- FsyA==
-X-Gm-Message-State: AFq9FYJMqI6Sm5kj3PEVZE9UynszbF1IRHVGXlL5rgfsj2Ai0Bk5Yjp1
- Zaik8i0DIwh50NIZj5hYP+1AvozYKtlGMTwBlL/TOYjvgck/k+HtFOTXtmnp2/V9bQxoqPK1H0J
- +OXU0gZorW0snn03SjZHn2+V52hKDK0fZhhigBOAdiA==
-X-Gm-Gg: AYBFou3hxX6DjGr4gfN75Z/rsa2sgrDEmg9JepVzZ95Ib1jJjAqVY8XzHOKsYdHp+z9
- J5+Pl00LrLb1lZIZGPagmP0hVeC52gjT0DQ9lN09Q/MZVsH8O+jZGkvAdNUD1FcochsrvbDwFUe
- yQ9OG+V4wFtz95SXVrLWG09esNchQRRytrDIFtB1V518bQz/94PE3MZDUohS87JTAsvll1NneY1
- /7debReSAyyobd0nFae7sesNItiGq0wbP8zwmXJKjXxdayP7aALY/Tg6vAYC6ZLjrseAj2n4r22
- G5MbBoUfiGYgz7kaQg2z2DF77WYt2i/qgN/II2oWZHLFEDokxVM+tjm5NPPYQwzrEY7jRPN3PU3
- zjjBCNUJYeRlH4Lew/TcYr3SRPDw5f4fvjze/uVbqwjytVo0qnQ==
-X-Received: by 2002:a05:690e:4148:b0:676:99af:e646 with SMTP id
- 956f58d0204a3-679362b7d42mr7584407d50.54.1792072374157; Thu, 15 Oct 2026
- 06:52:54 -0700 (PDT)
+ bh=M0gpN+JJF2TYnnPqlU+Vv4DSdt+bcp5pdt9jGNK5vkU=;
+ b=JHOBzXBP6BmtcMFdUNWNR6LAY5Zjiy/6+yOJMBlaTCxh7MyvC9r2yL1Xcr9uHDw+I+
+ 9V8jI8smsEeQYTjNeP3YUvDb7xTPGEJeF6qH0l5cX7V9BQZ+61j6kqdItH2L3rg93Lhl
+ TNuFIMcCjgrMVm0edWjS5HgeYRwJxI7AeltidakyGjejsgfGDG9cq+aIKZDrwGhmEZUE
+ AbeIvRIY5yU2FeaJti8IWifxNVsvKdoRyPA6pJL6PrAqrKgnz5tTx5UGb4tcmJsXK5JW
+ M9A6WNc4wNU53BlHm3JGlsI6DxdE6VUewBvGwocybHBtTlVdMoBxOz8OHHp0e/TUB8cA
+ gt/A==
+X-Gm-Message-State: AFq9FYKgpg8gGHqMSwBx6vP4DsoBei8Ou02TeMVUkB2kG5qYIBTAVxhX
+ ajA/YlFiTrYdGzBUj8XQw2ffENrcqG8ixERUske2+4uovnjqmDxx9oNVy5nuHjM9rvfldC5E5W/
+ lpx5HyCnPd1JZTocKNNboohqWlY+4PgxdKIWbXlXKvQ==
+X-Gm-Gg: AYBFou2dJYHbRenbyTaSWJxEFGmF79PIzgkGgUQHsOUnDza3SWDHELZpOisNfkPNDnj
+ YHk537FNHi10ohtukjGxWwERU/Kx7GsRBA4n3IWnlORo+/2GLagqOda37XYlb5BZAPAp9GSXMgY
+ Vh1229RPIceFocxIdx7GRl4XiSrxJ+O6MxYkdpWIe9Xn5dzIg+pa5xadEgBS78NehDS4/Vpc4Q3
+ qYJTP35o71uSIAz5egrLNvFe2cWm8fHgZ2PAoJ56YL+FgksMekYp8puRcD3sl5oMRmgKOqY74lH
+ UUJacXgVwCNuiqtszVPsaQBwwc4aWT/sc8mghJF+F6Qkivyx5lsAIj+qrF33Ao2MeGQ5gznM8NY
+ XzYjxcIDV/ghHKH7EpHtP52RU6pRGaSHr1uvWHGw=
+X-Received: by 2002:a05:690c:7447:b0:883:b158:49e7 with SMTP id
+ 00721157ae682-8b07edb8f64mr63710757b3.24.1792072546632; Thu, 15 Oct 2026
+ 06:55:46 -0700 (PDT)
 MIME-Version: 1.0
 References: <20260811143557.7862-1-marcelomanzo@gmail.com>
 In-Reply-To: <20260811143557.7862-1-marcelomanzo@gmail.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 15 Oct 2026 14:52:39 +0100
-X-Gm-Features: AclHuK-9lECR760g3eKsTDuIlURgRpl9uyOddwPszydf1CfBzNbGOxOrHNymY48
-Message-ID: <CAFEAcA9i+MgsmSMR-mn1rLPQdhOxKGSgEnsDc5=En8yrtnia_g@mail.gmail.com>
+Date: Thu, 15 Oct 2026 14:55:34 +0100
+X-Gm-Features: AclHuK9725igU50cCxm947ufpQXnYLIptKQMBhaQ8cS6EWuDU6ZauTOTTQ8FQVE
+Message-ID: <CAFEAcA8Jj=+Lh1vkk9Zytst06cwD72EPy0VQ5759OG2xhx8Vww@mail.gmail.com>
 Subject: Re: [PATCH v2 00/19] hw/arm/raspi4b: working PCIe and GENET (real
  networking)
 To: Marcelo Manzo <marcelomanzo@gmail.com>
 Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
  =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12c;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1129;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1129.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -122,124 +122,20 @@ On Tue, 11 Aug 2026 at 15:35, Marcelo Manzo <marcelomanzo@gmail.com> wrote:
 > controller working end to end: the PCIe link comes up and devices on
 > it actually enumerate, and GENET passes real network traffic (DHCP,
 > SSH) under both older and newer guest kernels.
->
 
-If you run "make check-functional" on a build that's been built
-with the clang sanitizers, i.e.
+> Marcelo Manzo (10):
+>   hw/arm/bcm2838_pcie: add BCM2838 PCIe Root Complex
+>   hw/arm/bcm2838_pcie: add BCM2838 PCIe host
+>   hw/arm/bcm2838: enable BCM2838 PCIe host bridge
+>   hw/net/bcm2838_genet: add GENET stub device
+>   hw/arm/bcm2838: enable BCM2838 GENET controller
+>   hw/net/bcm2838_genet: fix PHY autonegotiation-restart deadlock
+>   hw/net/bcm2838_genet: fix bogus RX checksum reporting
+>   hw/net/bcm2838_genet: fix TX ring activation check
 
-'../../configure' '--cc=clang' '--cxx=clang++' '--enable-ubsan'
-'--target-list=arm-softmmu,arm-linux-user,aarch64-softmmu,aarch64-linux-user'
-
-then it fails because it hits a UB case due to a misaligned address:
-
-../../hw/net/bcm2838_genet.c:878:22: runtime error: member access
-within misaligned address 0x73754ab7d70f for type
-'BCM2838GenetXmitStatus' (aka 'struct BCM2838GenetXmitStatus'), which
-requires 4 byte alignment
-0x73754ab7d70f: note: pointer points here
- 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00
-00 00 00 00 00 00 00  00 00 00
-             ^
-    #0 0x5b07158bf9d7 in bcm2838_genet_rdma
-/home/pm215/qemu/build/arm-clang/../../hw/net/bcm2838_genet.c:878:22
-    #1 0x5b07158bf9d7 in bcm2838_genet_receive
-/home/pm215/qemu/build/arm-clang/../../hw/net/bcm2838_genet.c:949:30
-    #2 0x5b07151ee119 in nc_sendv_compat
-/home/pm215/qemu/build/arm-clang/../../net/net.c:823:11
-    #3 0x5b07151ee119 in qemu_deliver_packet_iov
-/home/pm215/qemu/build/arm-clang/../../net/net.c:870:15
-    #4 0x5b07151fdf91 in qemu_net_queue_deliver_iov
-/home/pm215/qemu/build/arm-clang/../../net/queue.c:179:11
-    #5 0x5b07151fdf91 in qemu_net_queue_send_iov
-/home/pm215/qemu/build/arm-clang/../../net/queue.c:235:11
-    #6 0x5b07151ebfa3 in net_hub_receive_iov
-/home/pm215/qemu/build/arm-clang/../../net/hub.c:75:9
-    #7 0x5b07151ebfa3 in net_hub_port_receive_iov
-/home/pm215/qemu/build/arm-clang/../../net/hub.c:126:12
-    #8 0x5b07151edfe0 in qemu_deliver_packet_iov
-/home/pm215/qemu/build/arm-clang/../../net/net.c:868:15
-    #9 0x5b07151fc820 in qemu_net_queue_deliver
-/home/pm215/qemu/build/arm-clang/../../net/queue.c:164:11
-    #10 0x5b07151fc956 in qemu_net_queue_send
-/home/pm215/qemu/build/arm-clang/../../net/queue.c:210:11
-    #11 0x5b07151f3129 in qemu_send_packet_async_with_flags
-/home/pm215/qemu/build/arm-clang/../../net/net.c:761:12
-    #12 0x5b0715226901 in net_slirp_send_packet
-/home/pm215/qemu/build/arm-clang/../../net/slirp.c:133:12
-    #13 0x737552c98f9d  (/lib/x86_64-linux-gnu/libslirp.so.0+0x19f9d)
-(BuildId: 025218e04d3a070185822fbfa2a72d2054796c61)
-    #14 0x737552c86dd0  (/lib/x86_64-linux-gnu/libslirp.so.0+0x7dd0)
-(BuildId: 025218e04d3a070185822fbfa2a72d2054796c61)
-    #15 0x737552c8757a  (/lib/x86_64-linux-gnu/libslirp.so.0+0x857a)
-(BuildId: 025218e04d3a070185822fbfa2a72d2054796c61)
-    #16 0x737552c87d56  (/lib/x86_64-linux-gnu/libslirp.so.0+0x8d56)
-(BuildId: 025218e04d3a070185822fbfa2a72d2054796c61)
-    #17 0x737552c972ed  (/lib/x86_64-linux-gnu/libslirp.so.0+0x182ed)
-(BuildId: 025218e04d3a070185822fbfa2a72d2054796c61)
-    #18 0x737552c8b2ef  (/lib/x86_64-linux-gnu/libslirp.so.0+0xc2ef)
-(BuildId: 025218e04d3a070185822fbfa2a72d2054796c61)
-    #19 0x737552c9055e in slirp_input
-(/lib/x86_64-linux-gnu/libslirp.so.0+0x1155e) (BuildId:
-025218e04d3a070185822fbfa2a72d2054796c61)
-    #20 0x5b0715225f3a in net_slirp_receive
-/home/pm215/qemu/build/arm-clang/../../net/slirp.c:140:5
-    #21 0x5b07151ee119 in nc_sendv_compat
-/home/pm215/qemu/build/arm-clang/../../net/net.c:823:11
-    #22 0x5b07151ee119 in qemu_deliver_packet_iov
-/home/pm215/qemu/build/arm-clang/../../net/net.c:870:15
-    #23 0x5b07151fdf91 in qemu_net_queue_deliver_iov
-/home/pm215/qemu/build/arm-clang/../../net/queue.c:179:11
-    #24 0x5b07151fdf91 in qemu_net_queue_send_iov
-/home/pm215/qemu/build/arm-clang/../../net/queue.c:235:11
-    #25 0x5b07151ebfa3 in net_hub_receive_iov
-/home/pm215/qemu/build/arm-clang/../../net/hub.c:75:9
-    #26 0x5b07151ebfa3 in net_hub_port_receive_iov
-/home/pm215/qemu/build/arm-clang/../../net/hub.c:126:12
-    #27 0x5b07151edfe0 in qemu_deliver_packet_iov
-/home/pm215/qemu/build/arm-clang/../../net/net.c:868:15
-    #28 0x5b07151fc820 in qemu_net_queue_deliver
-/home/pm215/qemu/build/arm-clang/../../net/queue.c:164:11
-    #29 0x5b07151fc956 in qemu_net_queue_send
-/home/pm215/qemu/build/arm-clang/../../net/queue.c:210:11
-    #30 0x5b07151f3129 in qemu_send_packet_async_with_flags
-/home/pm215/qemu/build/arm-clang/../../net/net.c:761:12
-    #31 0x5b07158bc247 in bcm2838_genet_xmit_packet
-/home/pm215/qemu/build/arm-clang/../../hw/net/bcm2838_genet.c:431:5
-    #32 0x5b07158bc247 in bcm2838_genet_tx
-/home/pm215/qemu/build/arm-clang/../../hw/net/bcm2838_genet.c:492:13
-    #33 0x5b07158bc247 in bcm2838_genet_tdma
-/home/pm215/qemu/build/arm-clang/../../hw/net/bcm2838_genet.c:593:36
-    #34 0x5b07158ba981 in bcm2838_genet_write
-/home/pm215/qemu/build/arm-clang/../../hw/net/bcm2838_genet.c:735:13
-    #35 0x5b0715dec5d6 in memory_region_write_accessor
-/home/pm215/qemu/build/arm-clang/../../system/memory.c:492:5
-    #36 0x5b0715debb5d in access_with_adjusted_size
-/home/pm215/qemu/build/arm-clang/../../system/memory.c:568:18
-    #37 0x5b0715deb622 in memory_region_dispatch_write
-/home/pm215/qemu/build/arm-clang/../../system/memory.c
-    #38 0x5b07151074b0 in int_st_mmio_leN
-/home/pm215/qemu/build/arm-clang/../../accel/tcg/cputlb.c:2462:13
-    #39 0x5b07151073ad in do_st_mmio_leN
-/home/pm215/qemu/build/arm-clang/../../accel/tcg/cputlb.c:2495:12
-    #40 0x5b07150f4dd6 in do_st_4
-/home/pm215/qemu/build/arm-clang/../../accel/tcg/cputlb.c:2657:9
-    #41 0x5b07150f4dd6 in do_st4_mmu
-/home/pm215/qemu/build/arm-clang/../../accel/tcg/cputlb.c:2733:9
-
-In bcm2838_genet_rdma(), doing this:
-        BCM2838GenetXmitStatus *xmit_status = (BCM2838GenetXmitStatus *)dma_buf;
-
-is casting an arbitrary byte pointer into the received
-packet data to a struct that's a set of uint32_t fields.
-This is UB for misaligned pointers, and also will do the
-wrong thing on big-endian hosts.
-
-Generally trying to operate on in-guest-memory or
-in-packet-data structures with host C structs is awkward;
-I usually find it's better to do explicit "load a 4 byte
-little-endian word from this address" accesses with
-ldl_le_p() or similar, so there's a clear distinction
-between the in-memory representation and the C struct.
+These three patches are all bugfixes to the code introduced
+in the previous patches -- you should fold those in instead
+of having them be separate commits.
 
 thanks
 -- PMM
