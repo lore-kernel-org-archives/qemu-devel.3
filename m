@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78D05CC6B38
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64833CC6B33
 	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 18:10:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHPtC-0003lY-FL; Thu, 15 Oct 2026 14:09:15 -0400
+	id 1xHPtC-0003lJ-EZ; Thu, 15 Oct 2026 14:09:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xHPt3-0003k6-71
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 14:09:05 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ id 1xHPt3-0003k7-I3
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 14:09:07 -0400
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xHPt1-0000zh-Nc
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 14:09:04 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-4a17baef589so21968815e9.0
+ id 1xHPt1-0000zd-K5
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 14:09:05 -0400
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-48dfc0421d9so67328f8f.1
  for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 11:09:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1792087742; x=1792692542; darn=nongnu.org;
+ d=linaro.org; s=google; t=1792087741; x=1792692541; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=J8Og+Tt471TfOsQyGsjnZ4DFD7n2DfoB/3flIOgIsX8=;
- b=DPC0zwU8bwzVwpY/1M3F1s/Wgd5+j56uYDY15VZBO0pyb10s/R7YgxYCOWHKTzR3nd
- z8u8r5/SNabcH/mT18koDZgPSG8Eg8I29UkPFVv46FYnuxyi7DT/AAGAM+FR/INr3AFm
- 4truoPXVHLWI44BlolY3mRQXdANw3aehwhm6JevRt0iUGdWptxQvZGAUCwtgZb9ZjgPu
- BrU4qVbf/U4bavSweYmatHlVWq6qXqkEx3Nfo1XvtHY4iLSrcCC8Dpynb9UMTn2PcCjA
- crkRJiW239VZlyqO7WueJuiCRoblZGYR5nsw925I66LtLThpBGOSlZsRdwp9jlyY3Y7z
- PXNw==
+ bh=UMRTkQMSmypDqZd5Wb/cwRn+ckHEInKuZWNWzxQDprI=;
+ b=xUpHBhLIb70Ejh+ZqYDTicTwzp8tGG6IQu6iS+L5rx+9FRZ8Bl6WvLhYaAG3J4UxSf
+ 2qbADEk80lb3+eVceOJiXzRyRSKJ+mmo6ZHPcrkkppFXm+M1pSwTmzH2Zeo37ApTsoGL
+ 7B93/uI0E1xzSy84x1O/RrXhYv2oVpBCExyKPjq+OdVIjFPLdf1PuCaE26/JNx+AmKUP
+ iK+ekw6Ot6sr1YHTAjVaatdrrAGgzHOj+LWMgZSjAVj5nY6pWEpOoM1us3EaONUOMP33
+ IPE2C7iR6qmeoUAuEcYgqlltf/g4OcdNDSRUHrIklEG+BjkaZ8378ktxH4FDcuNx8p+c
+ xYmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792087742; x=1792692542;
+ d=1e100.net; s=20260707; t=1792087741; x=1792692541;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=J8Og+Tt471TfOsQyGsjnZ4DFD7n2DfoB/3flIOgIsX8=;
- b=Rg+dQUPMvVNlBRSTTEbbHobXmbPVuiyBqUY0EZKJAxIKQUwRAN0AKRLyoqMts6gmJu
- /mSZ81ReBc9Anwhyu5+2EDOk61HSFwHRzyT5MOOhH0Zikg0QKyWQN2a6s21LldiF8o7F
- XCIpLDyhy2cPBW7Bp7TVb6RIt6YwWWn/w/5XtcHLM49TvnmA79LQrrDP4gfrHaaX48QU
- rJlbp6JOkMcf1URiDWdGaViUE9XIjJzoFM5x9VJaS6mst+I6Mfel7TF13rsGPUs/N43+
- 6UVc6j1Bz9XRbTL5iSVtNGEcC0AvbmZb5oAELk+sU2TEYHbXHBfencO+Oi7W7PEltC8y
- 52aA==
-X-Gm-Message-State: AFq9FYLIZ+3yMJs+/ZTMH3flwlJwQciPYHc+QZKTas03foCc9T1t1dfw
- Nzfd/9NyH74L5FfyuuES1AIT9aW0rr0qoMIeGcQHXHzOswr9Wre/PggGx4z+UcjStzds1QpbCQL
- CIvY28Ec=
-X-Gm-Gg: AYBFou1GCvrl+gHDVRJfAA0cYauRsxix9OyKD0NYfxUExz4frt4GNaYQrt1wlIdiVSe
- h3KI4KHLqBEhLlAXjiU0tyio+26bTGM3lY398HuAoOgVLC4yEDloTsVbFwMwhYYU1iEnS6td4Um
- EjYdwtCBlpQHQilk55mnfuoEs0dbr2UXyLZfrpTat5emHGwBoKbOyFIhkMGKZOR2V2JXGHCY0X6
- tP8rrb717r9h10qxeS7w9fmxRG89LzeA7u2OQOuEfILwy53O1mlaGeWz4ucLpvPd/+WHYTMQ7Ln
- 0d6hwGF8U6yEtyzTJxvxMrNMDgC1nbEmt6MTy04a0zv8oMHrPkt0x/O2TLjdycpnPVEF/S69FHQ
- 6PfLTHhSJcA63xVHBHYKTKPlZXcW1jeAOI4iIHTg0BBWj/RpwlzME9dtRExEppo+bTcDHACQfCg
- u4bZPy6HEdMO2YVw4B7EDfFAyPzRqrPVpqVy2fiBJAGz1g5jceE15yEzDgRMmNufzkz4sC/f5KD
- LS+Nwg+uv1CUccANhqzcqCi8eghs46xD/YL6b/YjszqqlHjqX7Bet7Ex/73NM7B4vXIX5j+yHqN
- 6E4=
-X-Received: by 2002:a05:600c:1d11:b0:4a0:25db:4591 with SMTP id
- 5b1f17b1804b1-4a18e4a4c33mr427166775e9.23.1792087742206; 
- Thu, 15 Oct 2026 11:09:02 -0700 (PDT)
+ bh=UMRTkQMSmypDqZd5Wb/cwRn+ckHEInKuZWNWzxQDprI=;
+ b=ZYE4pRL0Rdu+uOA2qy02Co1UB9KLvinheEoD6fT/0yMP8MEGdEEiB7Tis9Iv8ikAo4
+ E+hsMB3gVikeg4zdqg+yIYXUm7CY376kyUB7Sa51vH6dSiodEPBkLQXqWIN+R6g4n+f8
+ E9uCtLillIxtVXiKG27B4l8kq+/QqUo2ZWup/m99CLryeYyYAXRW0Hqr6+LkBuis0rbv
+ oAaH00d/vVSLIb3+an/S/m142EBw35Zzwe3H3sdhRGqPKuV1tGdmAbt79+RELBDOupyP
+ t9wy9U29W9kXus93JZOTPC79PVg0/I4DCuWxjKZL+ZmQf5HyRc0QDUnRVl1pwU0Z4JIC
+ yWAA==
+X-Gm-Message-State: AFq9FYKXa8k1vHx67dDVdIgrTiIOasWkLDh1ERykFOVjYaZGwEwPIMT4
+ aHFc2oQTRxCPmireseuryaEG25dI9A4FTbhlYLHmekinrduUTavo1VfAPsZROyoz9NNtcJ3g2nu
+ 97o9apQA=
+X-Gm-Gg: AYBFou1GOCpzRGVWXAFqfOeXkBfQSCNXnGyFVSVJDvfwwgjl7WvtLjLMy0aRdIntoKk
+ EFMvJO1Ssa77177AV7V2Ut557DsKSRqY5OJYVs7f4I2v7mR3eV3YkzIuOQ02LAdmuKEershUHVY
+ gBVgRlqlPx4sLGiWfW7x8emcrbd7ld3l2nEMWXXTA2cIWF1/PcnxKu0X+d0tosdgR9PJBNkhPEA
+ 4Xt5cunaQ8H0VEE7wjvTkBQwOrwGgIu6XLDYrNMtoPsg05rQCGssRS/ot4J6UAkx8G6Bhlocrwy
+ t22vYT+Z/qgIU8s5rcwAQjz7rRMJm5grANl7FMNTnyp6P25UVDdgv5a7D6bWA6RTPtQqW72G529
+ yJhVQIsHSv0wFdwCsIo5RaQChxQZjrQqTqbVluw/m+QXw5bu4J7pDbnhSQ3eZjncehrOoS0KWnk
+ Udpa5q65VxOyjYb4lLiHT5u1YshT5fpWpDvf9b8ekaz5GM3uTMbxb1DIrtzY7dWYlerA+EKTOgN
+ Yl8+fyp8qryXcM/VK//m8bFBdr3k7S2cfdwJazFku/JvFrVNu4jsD5h6zOto32MB+1b6iDHTm4I
+ THfZG0G72utqZA==
+X-Received: by 2002:a05:6000:29c3:b0:48c:58d5:30fb with SMTP id
+ ffacd0b85a97d-48dba7876bemr26151549f8f.5.1792087741086; 
+ Thu, 15 Oct 2026 11:09:01 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48de7773d02sm14692701f8f.13.2026.10.15.11.09.01
+ ffacd0b85a97d-48de7773d02sm14692701f8f.13.2026.10.15.11.09.00
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 Oct 2026 11:09:01 -0700 (PDT)
+ Thu, 15 Oct 2026 11:09:00 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 02/16] hw/arm/virt: Use TAG_GRANULE when creating tag memory
-Date: Thu, 15 Oct 2026 19:08:44 +0100
-Message-ID: <20261015180858.1863407-3-peter.maydell@linaro.org>
+Subject: [PULL 01/16] target/arm: fix user-mode emulation of ID_AA64MMFR0_EL1
+Date: Thu, 15 Oct 2026 19:08:43 +0100
+Message-ID: <20261015180858.1863407-2-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261015180858.1863407-1-peter.maydell@linaro.org>
 References: <20261015180858.1863407-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,36 +104,113 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Gustavo Romero <gromero@redhat.com>
+From: Alex Bennée <alex.bennee@linaro.org>
 
-Use TAG_GRANULE definition when creating the memory region where the
-FEAT_MTE tags are stored.
+Since kernel commit b130a8f70cbbf9 (KVM: arm64: Check advertised
+Stage-2 page size capability) the relevant Stage 2 have been pegged at
+1 f(4KB granule not supported at stage 2) by the kernel. As a result
+the behaviour of the test differs when run on real HW:
 
-Signed-off-by: Gustavo Romero <gromero@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Message-id: 20261009121545.241772-1-gromero@redhat.com
+  id_aa64mmfr0_el1    : 0x00000111ff000000
+    !!extra bits!!    : 0x0000011100000000
+
+compared to under emulation (neoverse-n1):
+
+  id_aa64mmfr0_el1    : 0x00000000ff000000
+
+Update the test with a new helper to explicitly test for fixed bits
+and update v8_user_idregs to match real systems.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4566
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Message-id: 20260930150257.408020-1-alex.bennee@linaro.org
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+[PMM: wrapped a few long lines]
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/arm/virt.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ target/arm/helper.c         | 12 ++++++++++--
+ tests/tcg/aarch64/sysregs.c | 31 ++++++++++++++++++++++++++++---
+ 2 files changed, 38 insertions(+), 5 deletions(-)
 
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index 9d192515d85..0d56197dace 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -2308,8 +2308,10 @@ static void create_tag_ram(MemoryRegion *tag_sysmem,
- {
-     MemoryRegion *tagram = g_new(MemoryRegion, 1);
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index ff0b766b73d..ff8a8fcca41 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -7023,8 +7023,16 @@ void register_cp_regs_for_features(ARMCPU *cpu)
+                                R_ID_AA64FPFR0_F8CVT_MASK },
+             { .name = "ID_AA64MMFR0_EL1",
+               .exported_bits = R_ID_AA64MMFR0_ECV_MASK,
+-              .fixed_bits = (0xfu << R_ID_AA64MMFR0_TGRAN64_SHIFT) |
+-                            (0xfu << R_ID_AA64MMFR0_TGRAN4_SHIFT) },
++              /*
++               * Linux does not expose the  TGRAN* fields to userspace and so
++               * they must read as the "this is not implemented" value for those
++               * fields (which is 0, 0b0001 or 0b1111 depending on the field)
++               */
++              .fixed_bits = (0xfULL << R_ID_AA64MMFR0_TGRAN64_SHIFT) |
++                            (0xfULL << R_ID_AA64MMFR0_TGRAN4_SHIFT) |
++                            (0x1ULL << R_ID_AA64MMFR0_TGRAN4_2_SHIFT) |
++                            (0x1ULL << R_ID_AA64MMFR0_TGRAN64_2_SHIFT) |
++                            (0x1ULL << R_ID_AA64MMFR0_TGRAN16_2_SHIFT) },
+             { .name = "ID_AA64MMFR1_EL1",
+               .exported_bits = R_ID_AA64MMFR1_AFP_MASK },
+             { .name = "ID_AA64MMFR2_EL1",
+diff --git a/tests/tcg/aarch64/sysregs.c b/tests/tcg/aarch64/sysregs.c
+index 301e61d0dd4..8f7af6be1d9 100644
+--- a/tests/tcg/aarch64/sysregs.c
++++ b/tests/tcg/aarch64/sysregs.c
+@@ -54,6 +54,23 @@ int failed_bit_count;
+             }                                                   \
+ })
  
--    memory_region_init_ram(tagram, NULL, name, size / 32, &error_fatal);
--    memory_region_add_subregion(tag_sysmem, base / 32, tagram);
-+    /* We store 2 granules in 1 byte. */
-+    memory_region_init_ram(tagram, NULL, name, size / (2 * TAG_GRANULE),
-+                           &error_fatal);
-+    memory_region_add_subregion(tag_sysmem, base / (2 * TAG_GRANULE), tagram);
- }
++/* As above but also check that required fixed bits have expected values */
++#define get_cpu_reg_check_fixed(id, allowed_mask, fixed_mask, expected_val) ({ \
++            unsigned long __cval = get_cpu_reg(id);                     \
++            unsigned long __extra = __cval & ~(allowed_mask);           \
++            if (__extra) {                                              \
++                printf("%-20s: 0x%016lx\n", "  !!extra bits!!", __extra);   \
++                failed_bit_count++;                                     \
++            }                                                           \
++            if ((__cval & (fixed_mask)) != (expected_val)) {            \
++                printf("%-20s: 0x%016llx (expected fixed 0x%016llx)\n",  \
++                       "  !!fixed mismatch!!",                          \
++                       (unsigned long long)(__cval & (fixed_mask)),     \
++                       (unsigned long long)(expected_val));             \
++                failed_bit_count++;                                     \
++            }                                                           \
++})
++
+ /* As above but check RAZ */
+ #define get_cpu_reg_check_zero(id) ({                           \
+             unsigned long __val = 0xdeadbeef;                   \
+@@ -127,8 +144,16 @@ int main(void)
+     get_cpu_reg_check_mask(id_aa64isar0_el1, _m(f0ff,ffff,f0ff,fff0));
+     get_cpu_reg_check_mask(id_aa64isar1_el1, _m(00ff,f0ff,ffff,ffff));
+     get_cpu_reg_check_mask(SYS_ID_AA64ISAR2_EL1, _m(00ff,0000,00ff,ffff));
+-    /* TGran4 & TGran64 as pegged to -1 */
+-    get_cpu_reg_check_mask(id_aa64mmfr0_el1, _m(f000,0000,ff00,0000));
++    /*
++     * TGran4 & TGran64 are pegged to -1 (0xf).  Stage 2 translation
++     * granule support (TGran4_2, TGran64_2, TGran16_2) are pegged to
++     * safe value 1 as exposed by Linux kernel since b130a8f70cbbf9
++     * (KVM: arm64: Check advertised Stage-2 page size capability).
++     */
++    get_cpu_reg_check_fixed(id_aa64mmfr0_el1,
++                            _m(f000, 0111, ff00, 0000),
++                            _m(0000, 0111, ff00, 0000),
++                            _m(0000, 0111, ff00, 0000));
+     get_cpu_reg_check_mask(id_aa64mmfr1_el1, _m(0000,f000,0000,0000));
+     get_cpu_reg_check_mask(SYS_ID_AA64MMFR2_EL1, _m(0000,000f,0000,0000));
+     /* EL1/EL0 reported as AA64 only */
+@@ -179,7 +204,7 @@ int main(void)
+     }
  
- static void create_secure_ram(VirtMachineState *vms,
+     if (failed_bit_count > 0) {
+-        printf("Extra information leaked to user-space!\n");
++        printf("Bit check failure or extra info leaked to user-space!\n");
+         return 1;
+     }
+ 
 -- 
 2.43.0
 
