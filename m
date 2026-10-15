@@ -4,94 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6838FCC6B34
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 10:54:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F7FFCC6B34
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 10:55:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHJ6b-0006zi-12; Thu, 15 Oct 2026 06:54:37 -0400
+	id 1xHJ6b-0006zT-0H; Thu, 15 Oct 2026 06:54:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1xHJ6Z-0006tb-DD
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 06:54:35 -0400
+ id 1xHJ6W-0006lt-Ss
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 06:54:33 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1xHJ6X-00080T-Ld
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 06:54:35 -0400
+ id 1xHJ6U-00080B-IB
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 06:54:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1792061672;
+ s=mimecast20190719; t=1792061669;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=CNQIM553HblX0RjcBNbRHiKZc77ue8B1S/rjP1vEA/s=;
- b=PCIZx7Bu7ZwyW9wgTmoFMMX0J4V3Utd1h3gSLZLDScRlxrMpxM6IZ2UaRXOw+B7YRipm+z
- 4oszvjHXtROhFS4QuRIOT/sWV55ndIpZxKjMWZJDP97C6+QxTi/wyfJcb58xU/Nu0C8dlJ
- wGh+4GReSAer9dhDc3RfGTjh4TmSWR0=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=hxr0z/y4/tXxPDnG01KOZoiuFmwPosLlrBpWrd5hotg=;
+ b=FfNWpeTIkyCV03vMdkCxVWynuzyIqsYvMK5+lnVdiK2FUHqK7ASTVgpMxlaPHv02CZfN9H
+ 3GnndX/vuVgOawLsB3fDgZ/NsDjLhJ1tUNwVZF1Adcs4mJKlP3N8/Y02d0OJEVJKgFEsiV
+ aj+koTa1wf5fopYHYZ4BN97JX4Tib2Y=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-330-mS_0QZNpOwa_1fNjvZTJnw-1; Thu, 15 Oct 2026 10:54:31 +0000
-X-MC-Unique: mS_0QZNpOwa_1fNjvZTJnw-1
-X-Mimecast-MFC-AGG-ID: mS_0QZNpOwa_1fNjvZTJnw_1792061670
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-48af5a07314so3258900f8f.2
- for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 03:54:30 -0700 (PDT)
+ us-mta-482-Arf7_9fnPSyZYYrrDhilpw-1; Thu, 15 Oct 2026 10:54:28 +0000
+X-MC-Unique: Arf7_9fnPSyZYYrrDhilpw-1
+X-Mimecast-MFC-AGG-ID: Arf7_9fnPSyZYYrrDhilpw_1792061667
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-486f9d150c3so3233532f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 03:54:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1792061670; x=1792666470; darn=nongnu.org;
+ d=redhat.com; s=google; t=1792061667; x=1792666467; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=CNQIM553HblX0RjcBNbRHiKZc77ue8B1S/rjP1vEA/s=;
- b=SoSB1uwKFF+HcBjlde6IwfxaE6ITQ5jSpxgo13ct5B/bwCtkQBZ+Kzwy7ji28ewZUv
- xytfMFvmvYumat+EoDE2i+Y7gXi80UrzHV85CyzuGPiw7Ldy0ld7Q9/hws1FAkj1YDZf
- Fd9jU/CmXfMC3e+O9dimsasrI4EKH1C9uIMpzKKxKX4n52n+1qPabwjUG42xAQutl0mo
- 4U930rQMNW3RdyVUgFdJgOD2GwZZwl8o7PkWlAI4u7il+r+yW8KJwH4tbl7RLJBIcRcZ
- CKcNdNtosBPt3buy/BWytI46axO/53dtWUHMoDWqgKirrJg1M485kUnRoJAcTq4onIgV
- drog==
+ bh=hxr0z/y4/tXxPDnG01KOZoiuFmwPosLlrBpWrd5hotg=;
+ b=l9qOqDKI46/scH35o1phaP8d79OTzOHjAwcCDhlDMVCejsLl6mP51hpMWz9qE5es2b
+ KXw6HgpWrjN2fEb7IRusPBejvavYEOwrI9sNfpPm8sO6FuF1Q7Q1CNSFH/Gt79z6Lpzb
+ 3HtSl283uc5UjyjTGmmprfA55holtHWpkCX7cbGT2KPCQGXNFgDx+xSQOfyMsj7Drfu9
+ Pt7TTkeNCYmwWn/I3k6GdyjBb9C6i108Xn3yTZ6KJ0cSQi3F8+rSLpEVKEtyWRwkXjTK
+ I6aEGn4uyyLwN00B09N489LUIUpfNTC4s4VjDnZJYNJlVZW6X19hCFJ7bjPk8tHVQor9
+ k4dg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792061670; x=1792666470;
+ d=1e100.net; s=20260707; t=1792061667; x=1792666467;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=CNQIM553HblX0RjcBNbRHiKZc77ue8B1S/rjP1vEA/s=;
- b=LfOVeiHQ0XAIbMa4w69aVARofQCGjELqO2++gdxUgcTZkF3Rq7fmN0sGe/4sqcmetO
- fYW43kh5WClnoj2YXGQW7XlWkpdTRYi505mXgauMV4g6n8bS0zWyOjisCUMZ+Xim7kMq
- PY+kL23jTW9jfS8FVNM3AbLwUBvnFi0DqY08y43iwtAaRn17baSI9Pyn+bXIjCBKi+jX
- 0NgqW8Xu7NoEZnvISel2AuMMnpu9Sj6AFMdNz946+5c75T0vzpMFn9MffDMX1P72Atah
- peu33jrQIeO3dwtIoCOy2n0R+K0m8qAg/GlMEOGtAw/67wUdcgPzFhQFGPhjVnbnHOyN
- nKeg==
-X-Gm-Message-State: AFq9FYJeMuJ+X3LIMD5pt3RaK7NXNAOJoh5iKS70sn5UqbRd990qAb5u
- d6pNvOKN0v/Mi7xBvFaiIo7JMfZlNfGAoHAS7e46Krrf5uBbTUjVLy+uQd/hZu7atqOmNYkgILZ
- ZE6G3bFV/zH52+Df2wR8NuxjShuqa4EEwGy9iEyVtWjFe4mHyzOa3vG9Ituy2R7XEryRVY4pVwR
- PwM8Lo/X4rju8LfXyUyNhW/bGPhcU1/2y2ERrvqFtS
-X-Gm-Gg: AYBFou0V82ztD0YDI3FZ0E3Y5liKxpjJE/XPxhGUDpyzny8Y/JMSn9O4g1o5T5TPHFh
- 5FNmL2hjJlV0j20M5+qf0xxKfp96Y4lEqvewbdfNNJDHHqBdQjWqP9jliC2qiP2pYmPpKp54Eq9
- IoT1o+5gsYVBfMiJ6mhlJ5wUbam82dS5KSNDbXOwluM/hsvKxEScCAyRkQNrdDRFmSXcGmoQWPJ
- wzLSzHuwMB21fHEUr1ySFBwATEC0aXs6og2p2kBg463cSf/mluCEfOQNS8esb8XqCzEu6NCyZEn
- 0AOvFw0eP3fvJXY4pZZ7O9bSEL8EooQYuZpOl/SWnJFB7txKj8BeiGe56KppGx2D9LZbJt3S3Nf
- fbRsof3Tf+WUF4jFwu+H9Dk5Q8aACbIp3vPpt+VvSj2AjIXxMcVqgU1XLOtVmfZT0ap5Mh+aNHL
- FiNG1K
-X-Received: by 2002:a05:600c:8184:b0:4a0:1c17:4fb2 with SMTP id
- 5b1f17b1804b1-4a18e4d854cmr348939245e9.31.1792061669954; 
- Thu, 15 Oct 2026 03:54:29 -0700 (PDT)
-X-Received: by 2002:a05:600c:8184:b0:4a0:1c17:4fb2 with SMTP id
- 5b1f17b1804b1-4a18e4d854cmr348938885e9.31.1792061669524; 
- Thu, 15 Oct 2026 03:54:29 -0700 (PDT)
+ bh=hxr0z/y4/tXxPDnG01KOZoiuFmwPosLlrBpWrd5hotg=;
+ b=M/3AVQ59BKkmQT57CesHtmAKmaRtpBFqAVqiQ04MHFOHfMbFyh2UsLAmI+TQleDCIQ
+ ZLxpVE86+QELHbl2LdFbQ1NGVJ9b6fz/d/atwWqiKuFo45AfqSrxSoApjOsDoL9i4KFX
+ FKpqXIFJ7aFS1hDu3jb8D/9gxr5lQvNfwSHpRyV9FwlCmRmIchayrob1l+DjwLppq7KH
+ bbCuuqqVjNybjLj1YfuHhHz07cp/dc23XKNnyAq2HW1tNsjtYa4DDFGNQabHt6XnwvSJ
+ +4ATbJYyUf2vWiAR4KjIMyAw0dQyAQcCE9u+q0ERx+cVdiT9FZvRN5y+hAotkrMb5ZXR
+ rSPQ==
+X-Gm-Message-State: AFq9FYKnQ3VOsT/QU2K732XnmNN6c3suLKtpKjWLJ+SyoUhrl7BFN4YD
+ MMb46qGpS/IE2+UDjB4qXQXe24iS5svcBT7K84tmAZBPX1V/KeOWenOD56xFo0AtMf6zGp0lZik
+ YWPtbCTh147GafH8Msgc6GxSsel1zknPZgXYrDZQhiQsJBeokXxE6gxxCZlo4KOy7FBFfaEaj1x
+ VM/il9dcHr2UKA2z3jD7WH4PSvYsL5TT69o6MWdDdt
+X-Gm-Gg: AYBFou0BpuORr15eW/QyeBgwF+CvOyi5bd/zn9iYLngkszs2cVStYl9CWVv0XxuvJZy
+ oKpH8sKJnIh+GF25gRKM/bStyUBDfzAvn8lOXxXCiZ6KY1fMIHcckIfuUYTO87I74XAzTOvCuDL
+ SCvQpxabovsQ09QKDaTWQb8k+DkfVrt3Q8owAWpPGILr+SOHMTE078QnXqVlIOXM1Wvc5o+994h
+ 5DmTEFL6iJoeFPIUTHiaDAKyUbtQu8ncfW83s5YYIaen1Y5F6FGT9SN95RzCUjvU4lhSWfw36I0
+ 1NRNxmBsUrZS8VZiL/nbfRV+H4WA1iDH+si03Bak1X7bMf/28tw1V4xph3wC5xVuWWt+D1Bj4Me
+ MC3e/6NP/GvhSbSsCxWHZwDU64XYmJepkbB8SZ0Fg5W1d5O3/ocSvo0XPqn8Vb8LwWZpzZZECeb
+ Z+qQsb
+X-Received: by 2002:adf:e185:0:b0:48d:f56d:be56 with SMTP id
+ ffacd0b85a97d-48df56dc2c4mr3669252f8f.13.1792061667028; 
+ Thu, 15 Oct 2026 03:54:27 -0700 (PDT)
+X-Received: by 2002:adf:e185:0:b0:48d:f56d:be56 with SMTP id
+ ffacd0b85a97d-48df56dc2c4mr3669207f8f.13.1792061666621; 
+ Thu, 15 Oct 2026 03:54:26 -0700 (PDT)
 Received: from [192.168.10.48] ([176.206.82.153])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a1bd99febesm71189935e9.15.2026.10.15.03.54.27
+ ffacd0b85a97d-48de72c7e36sm12025282f8f.37.2026.10.15.03.54.14
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 Oct 2026 03:54:27 -0700 (PDT)
+ Thu, 15 Oct 2026 03:54:14 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Stefan Hajnoczi <stefanha@redhat.com>,
 	Eric Blake <eblake@redhat.com>
-Subject: [PULL 06/13] scsi: increase sense buffer size in scsi_SG_IO()
-Date: Thu, 15 Oct 2026 12:53:40 +0200
-Message-ID: <20261015105347.827029-7-pbonzini@redhat.com>
+Subject: [PULL 05/13] pr-manager-helper: fix sense buffer overflow
+Date: Thu, 15 Oct 2026 12:53:39 +0200
+Message-ID: <20261015105347.827029-6-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261015105347.827029-1-pbonzini@redhat.com>
 References: <20261015105347.827029-1-pbonzini@redhat.com>
@@ -123,58 +123,42 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Stefan Hajnoczi <stefanha@redhat.com>
 
-There are different SCSI sense formats. Increase the size so we can get
-more detailed sense data.
+scsi_build_sense() assumes the sense buffer is SCSI_SENSE_LEN (18) bytes
+long, so the caller's buffer with an arbitrary size cannot be used. Use
+our own sense buffer (resp.sense) as an intermediate buffer and honor
+the caller's sense buffer size (io_hdr->mx_sb_len).
 
+This is triggered when scsi-generic.c:scsi_SG_IO() calls blk_ioctl()
+with an 8-byte sense buffer. There does not appear to be a way for the
+guest to trigger this buffer overflow directly since
+SCSIRequest->sense[] is 252 bytes long.
+
+Fixes: 9bad2a6b9d0a ("scsi: add persistent reservation manager using qemu-pr-helper")
 Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
 Reviewed-by: Eric Blake <eblake@redhat.com>
-Link: https://lore.kernel.org/r/20261013181752.1299456-3-stefanha@redhat.com
+Link: https://lore.kernel.org/r/20261013181752.1299456-2-stefanha@redhat.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- hw/scsi/scsi-generic.c | 23 +++++++++++++----------
- 1 file changed, 13 insertions(+), 10 deletions(-)
+ scsi/pr-manager-helper.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/hw/scsi/scsi-generic.c b/hw/scsi/scsi-generic.c
-index 8999f3b7200..153a5275567 100644
---- a/hw/scsi/scsi-generic.c
-+++ b/hw/scsi/scsi-generic.c
-@@ -923,7 +923,7 @@ int scsi_SG_IO(BlockBackend *blk, int direction, uint8_t *cmd,
-                uint32_t timeout, Error **errp)
- {
-     sg_io_hdr_t io_header;
--    uint8_t sensebuf[8] = {};
-+    uint8_t sensebuf[SCSI_SENSE_LEN] = {};
-     int ret;
+diff --git a/scsi/pr-manager-helper.c b/scsi/pr-manager-helper.c
+index 53432e6d606..26ef3876f0e 100644
+--- a/scsi/pr-manager-helper.c
++++ b/scsi/pr-manager-helper.c
+@@ -234,10 +234,11 @@ static int pr_manager_helper_run(PRManager *p,
  
-     memset(&io_header, 0, sizeof(io_header));
-@@ -947,15 +947,18 @@ int scsi_SG_IO(BlockBackend *blk, int direction, uint8_t *cmd,
-             error_setg_errno(errp, -ret, "SG_IO ioctl failed");
-         } else {
-             g_autofree char *sensebuf_hex =
--                g_strdup_printf("%02x%02x%02x%02x%02x%02x%02x%02x",
--                                sensebuf[0],
--                                sensebuf[1],
--                                sensebuf[2],
--                                sensebuf[3],
--                                sensebuf[4],
--                                sensebuf[5],
--                                sensebuf[6],
--                                sensebuf[7]);
-+                g_strdup_printf("%02x%02x%02x%02x%02x%02x%02x%02x"
-+                                "%02x%02x%02x%02x%02x%02x%02x%02x"
-+                                "%02x%02x",
-+                                sensebuf[0], sensebuf[1],
-+                                sensebuf[2], sensebuf[3],
-+                                sensebuf[4], sensebuf[5],
-+                                sensebuf[6], sensebuf[7],
-+                                sensebuf[8], sensebuf[9],
-+                                sensebuf[10], sensebuf[11],
-+                                sensebuf[12], sensebuf[13],
-+                                sensebuf[14], sensebuf[15],
-+                                sensebuf[16], sensebuf[17]);
- 
-             error_setg(errp, "SG_IO SCSI command failed with status=0x%x "
-                     "driver_status=0x%x host_status=0x%x sensebuf=%s "
+ out:
+     if (ret < 0) {
+-        int sense_len = scsi_build_sense(io_hdr->sbp,
++        int sense_len = scsi_build_sense(resp.sense,
+                                          SENSE_CODE(LUN_COMM_FAILURE));
+         io_hdr->driver_status = SG_ERR_DRIVER_SENSE;
+         io_hdr->sb_len_wr = MIN(io_hdr->mx_sb_len, sense_len);
++        memcpy(io_hdr->sbp, resp.sense, io_hdr->sb_len_wr);
+         io_hdr->status = CHECK_CONDITION;
+     }
+     qemu_mutex_unlock(&pr_mgr->lock);
 -- 
 2.56.0
 
