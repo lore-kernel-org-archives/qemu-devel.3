@@ -4,68 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 035F0CC6B2F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3827CC6B1C
 	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 03:38:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHCHr-00053V-NL; Wed, 14 Oct 2026 23:37:47 -0400
+	id 1xHCI4-00055g-5o; Wed, 14 Oct 2026 23:38:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jay.chang@sifive.com>)
- id 1xHCHp-00052s-Vk
- for qemu-devel@nongnu.org; Wed, 14 Oct 2026 23:37:45 -0400
+ id 1xHCI0-00055D-ND
+ for qemu-devel@nongnu.org; Wed, 14 Oct 2026 23:37:56 -0400
 Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <jay.chang@sifive.com>)
- id 1xHCHo-0008Jy-Dh
- for qemu-devel@nongnu.org; Wed, 14 Oct 2026 23:37:45 -0400
+ id 1xHCHy-0008KT-TR
+ for qemu-devel@nongnu.org; Wed, 14 Oct 2026 23:37:56 -0400
 Received: by mail-pf1-x42f.google.com with SMTP id
- d2e1a72fcca58-88d48da248eso3460908b3a.1
- for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 20:37:42 -0700 (PDT)
+ d2e1a72fcca58-881269371acso3349709b3a.0
+ for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 20:37:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1792035461; x=1792640261; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=odqEaUh7f60I3OiDEsMS+R3AbpE42KkGMAJEvO3ZAOE=;
- b=MY6NfCvdtj9QMgFMnLHZQhzM8xPEIN7tBn2N4TVziuGPHoOh9TbCCa8MPVr7Mg+u7X
- c40lUl6ZnxG5EFabC3Oo7uHKQ6lCQR6CDvYbiUdib73yVzZDUt9Trct/ECURI6KU0+mr
- iZfqdBfURBfkMn4yuY8TcjFsOVbR2VmF62WbwwFYdEscZCo6tjVschAGfBhpSp7x5Z+Q
- KabDbg98sEsrunLgl5NS7NG40TJzko11KAAhlr8AB1SycpREwMdUw17jJfyZY2+Ix2U5
- a9WfZjSBBKzKm72zOw+20OZPAiTDTAWO6Kjhl6PyCV3+iy6YiWcisHsq6Y7OI6t77lxM
- r4/g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792035461; x=1792640261;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=sifive.com; s=google; t=1792035474; x=1792640274; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=odqEaUh7f60I3OiDEsMS+R3AbpE42KkGMAJEvO3ZAOE=;
- b=yODab/Si2B1GjJ64Qoag4T0/89USl8mJV92BD8GKS5MDoIbb8m1oZ/wSiyZWdraoIA
- tR6dWNFDxSm9tH8Jj+2zqxJiWH0HAOwBp7kkwLonqrY3rdGEbybVuVNe4vy8CMzaqc4U
- L+71WI4ohTjOFuq4vhuW+sOYYps/rcBiRTZ4/c0IgRn7H/4UDu7+NNKtwdXCEHM0KhbT
- MGP1pOGYrmZsvsPI1fZCCytgOcNkgk303FbmR+I2mXewboa/Jl5Y1iR3/ZLwkjbSFsJx
- D/BLGwcLsqpEzdziIIrDV3bRFQEH05zJIzJ1xFUGNFd660/dPofb2KREP7zAw4sFtvi/
- fkkw==
-X-Gm-Message-State: AFq9FYIiIgpuST9tf+J0XD/M6g2m2QbGrmueypqFLZgsyr28ZuHL0+9/
- nD6t8e3kDh9fYUN0htW0zD5p+zzsRl38z08Xhs72oAHclViA4wRJ5Fb/nYaPBTe6oiHNSsSK51J
- VJ1kA9iwumpI+E9oPqcVRZWAOrMzFa13MUpoq6QTaIBULmZf/gcmtJU5QQtmstHR/qWOnCkyygx
- qOpiUI+rUTkfvI8Yjh9SbOseMStC/3vm+3S0sUQcPzhDS0Qg==
-X-Gm-Gg: AYBFou3oWVBiOV2xQMF3lla6IM2Y7UC5aSQBii7A61ixUeOyfLafaavZu6znSE24gsy
- uIvAU7L2HylY+n7jsnDLx2CCaCYU+PoCaECHhd+MGxL8aR+95eTWZbFnkuuvT/qTyi7JSzb0Nrc
- kV2amYqtGwHV0pCQRdZhOgsku1ezqPVgIylZFYFFhZ8Ogl7UX+WGE30vncGHbidI/SXoIHkac9/
- +pLb3VvQr4ezP56IeTrK46LT2ua1NtVBOdywEdF9vwo/nwg7s85z4JiP7bEsyoC4W49BOJv++qD
- XTo8jj8PKEFUa4xgdmP5ffv4MHUQmhgpNjRro3akuxlfj8R7Ojob4LadK1ShInHnAnsuRdLREFL
- L1Nm/M/LEOBeHugnJns2+NXZdqsakG8kMjETtvitEZF2EuEwkZKOB8D/CXEs7bLSdSwTTenOs9l
- N8WAPwquvn1mO7RTJ63AkzXYbQVjgXK5MvKR465QD/iCq0cKGBTXFbOXxyEraKKrzunv7R8NbBa
- 0Jp2b7aHutUhem4oygSBkNKB1vNfmD+zcqe
-X-Received: by 2002:a05:6a21:70cb:b0:3c3:6f6c:aa21 with SMTP id
- adf61e73a8af0-3e16bd857e3mr16235041637.11.1792035461295; 
- Wed, 14 Oct 2026 20:37:41 -0700 (PDT)
+ bh=Cel5+2eqrSaSNQE0/ea7lfr60XbLmvN5Ji76fJ0qJK0=;
+ b=ItJJLWo9LHcBUaio8Yt2B1N6c01RzJCVRcbgEapZ7mziyxa1eLxoZLt5gHgwm/gPJ0
+ AwiOrhwxxbwqKRfvnUSCsGj9vxSdVo4xfp0x2+GtfEjEaC21UGsu9YioQGKReXsVjO4l
+ LmcUn4K+Jesb01HHcLxoNFb4NReIvYxk+/xNVyY0earaWw4t53SsH09l72ov34mCfwmK
+ KB7pS4vgtLNs00PyRYO35MEy+UBGvYaUrE9+dxyrqSSon7BpeseanTl5W5zoJWaKrgMO
+ LczeS/p+DcPzUVlg9GlfmijGVfKt70YSkl7IfDhKRnU/vmSNH6i70lJT2xBK/Zi67kbd
+ SGNQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1792035474; x=1792640274;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=Cel5+2eqrSaSNQE0/ea7lfr60XbLmvN5Ji76fJ0qJK0=;
+ b=DlCjw+oSgEj7bhxE6d05F9Ji99tlbCxcbE2eeHRMPfW6MWFAgZsM0WJMg0A13AUqAr
+ xpMIjlVmXxKDW8MPisG3do9Uky3r0wJxtQiNO9GIHLZg9SRxNcTnlv7UPhH1eC+Zskvv
+ JZpkMJ/TDbh54iPf1Z+9abgZq1nfxXpdlABVb7c4A4u4Qu01WH0f1b72/kLjzYCCDNUG
+ i4hpD7tzDR1nMeBzjHULBG/O1UH9d4RTppev9PUq5U3QHdkoZ9lfNJBtjgExxMlMpqFr
+ Ibeq8KxFg7RMbAnPgwCzPMWwLOFtUm262vcmJrWzUZTUmkg9Lg0XuGZ3d/DU9Nx/pUmY
+ 6D8Q==
+X-Gm-Message-State: AFq9FYIBxX27SvmNZrYjtckl31pvfcnGeoBpVtCJpOYaEDstTa3ciyjt
+ oUaJERomz9UmBT/gwwvbcwM6bA35ZIikRpWRkttFeVir3gDna7KROZgmvZXWOaggwMldkCB2gQv
+ yPndXQiE3RzA9PkyspUHmcetxRi7Z3oRsK2RVtRvEORfWCEHEUOiDaAzlfqX/rNiRbke6acgM+9
+ WMlvm8pMMHq0BxuKRt6Ne409RBAIdJ7gOTsQIhwUAvIgXk2w==
+X-Gm-Gg: AYBFou2pK4c6XcI1Q+Qdhc8ef8Dk18oWJuvDE2ov87p+X3jl2fkR990LYlowdOZDgp5
+ x9Ya2BshUjObH+LCbUa1SFXRhIjOuGKRGZTBPmluzu/tDs1d+vC+ngANFxwdxXXG0fexGbdO8RK
+ ienhRS5K/l3vgrtXTCq2lb0IM4XF8/zj3AdQLtlEoVDjjQ2KGL877AK5mh3QEYn3BP1XtVXBYNj
+ fbMzKOpxwgpg8l9zUSfWLzYbRulaYj2K8sDFtvwNsUHfj/lWFrL6fYagYmB9c3GHUcuW03VmSiz
+ wnOFr5CcQ9l9aCCuGpMj4PJPKu3l+d4xWOOmUgj15ZTafbfl5EQx8etP0OIQ4AKcKpXvTQ4nCCd
+ C1OHax6oi0bZf79Gmdr/wsbatV/oq0jBrceM4vxhrpp7OaRb8Eu70UxtX2SnA4zT8C+oq2raYT+
+ Nmeo1ZpgtnT+P7y9mVQeF4xM0sX+PXtVpsSUNdUnTQNXkUJFAPaxuF6uN9+Wi3oPXxqiryb8VZR
+ Tm1+EN7AHpf8ivA5/Sn6xW7JAlWnVe0bk8n
+X-Received: by 2002:a05:6a20:a10e:b0:3e1:37c9:5ca2 with SMTP id
+ adf61e73a8af0-3e164f2cb92mr11336303637.19.1792035473338; 
+ Wed, 14 Oct 2026 20:37:53 -0700 (PDT)
 Received: from jchang-1875.internal.sifive.com ([136.226.240.181])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-cd635c612a9sm559188a12.17.2026.10.14.20.37.38
+ 41be03b00d2f7-cd635c612a9sm559188a12.17.2026.10.14.20.37.50
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 14 Oct 2026 20:37:40 -0700 (PDT)
+ Wed, 14 Oct 2026 20:37:52 -0700 (PDT)
 From: Jay Chang <jay.chang@sifive.com>
 To: qemu-devel@nongnu.org
 Cc: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
@@ -73,11 +74,15 @@ Cc: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Jason Wang <jasowangio@gmail.com>,
  qemu-arm@nongnu.org (open list:Xilinx Zynq),
- Jay Chang <jay.chang@sifive.com>
-Subject: [PATCH 0/6] hw/dma,net: Fix Xilinx AXI DMA and Ethernet
-Date: Thu, 15 Oct 2026 11:37:27 +0800
-Message-ID: <20261015033733.35116-1-jay.chang@sifive.com>
+ Jay Chang <jay.chang@sifive.com>, Frank Chang <frank.chang@sifive.com>,
+ Jim Shu <jim.shu@sifive.com>
+Subject: [PATCH 1/6] hw/dma/xilinx_axidma: Support 64-bit descriptor
+ addressing in stream processing
+Date: Thu, 15 Oct 2026 11:37:28 +0800
+Message-ID: <20261015033733.35116-2-jay.chang@sifive.com>
 X-Mailer: git-send-email 2.48.1
+In-Reply-To: <20261015033733.35116-1-jay.chang@sifive.com>
+References: <20261015033733.35116-1-jay.chang@sifive.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
@@ -104,42 +109,140 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The Xilinx AXI DMA controller supports 64-bit descriptor addresses,
-but the QEMU model only handled the low 32 bits during stream
-processing.  This causes descriptor accesses to use incorrect
-addresses when descriptors are located above 4 GiB.
+The Xilinx AXI DMA controller supports both 32-bit and 64-bit descriptor
+addressing through register pairs (e.g., CURDESC/CURDESC_MSB and
+TAILDESC/TAILDESC_MSB). However, the original implementation only handled
+32-bit addresses correctly in the stream processing functions.
 
-This series updates the descriptor and MMIO handling and fixes related
-AXI DMA and AXI Ethernet behavior.
+This resulted in MEMTX_DECODE_ERROR when the DMA engine attempted to
+access buffer descriptors at invalid addresses, breaking network operations
+like DHCP and ping.
 
-The series:
+Signed-off-by: Jay Chang <jay.chang@sifive.com>
+Reviewed-by: Frank Chang <frank.chang@sifive.com>
+Reviewed-by: Jim Shu <jim.shu@sifive.com>
+---
+ hw/dma/xilinx_axidma.c | 42 ++++++++++++++++++++++++++++++------------
+ 1 file changed, 30 insertions(+), 12 deletions(-)
 
-- Add 64-bit descriptor address handling to stream processing.
-- Add separate 32-bit and 64-bit MMIO access helpers.
-- Fix DMASR W1C and DMACR start processing behavior.
-- Reset both DMA channels when DMACR_RESET is written.
-- Do not start a transfer when TAILDESC is written while the channel
-  is halted.
-- Fix AXI Ethernet RX packet double-buffering.
-
-Testing:
-- Tested Xilinx AXI Ethernet networking with U-Boot.
-- Tested DHCP and ping.
-
-Jay Chang (6):
-  hw/dma/xilinx_axidma: Support 64-bit descriptor addressing in stream
-    processing
-  hw/dma/xilinx_axidma: Add 64-bit MMIO access support
-  hw/dma/xilinx_axidma: Fix DMASR register handling
-  hw/dma/xilinx_axidma: Reset both channels on DMACR_RESET
-  hw/dma/xilinx_axidma: Don't start transfer on TAILDESC write when
-    halted
-  hw/net/xilinx_axienet: Fix packet double-buffering issue
-
- hw/dma/xilinx_axidma.c  | 249 +++++++++++++++++++++++++++++-----------
- hw/net/xilinx_axienet.c |  12 ++
- 2 files changed, 193 insertions(+), 68 deletions(-)
-
+diff --git a/hw/dma/xilinx_axidma.c b/hw/dma/xilinx_axidma.c
+index 22dec8b3eb..45fd2e45c1 100644
+--- a/hw/dma/xilinx_axidma.c
++++ b/hw/dma/xilinx_axidma.c
+@@ -181,6 +181,11 @@ static void stream_reset(struct Stream *s)
+ {
+     s->regs[R_DMASR] = DMASR_HALTED;  /* starts up halted.  */
+     s->regs[R_DMACR] = 1 << 16; /* Starts with one in compl threshold.  */
++    /* Initialize descriptor registers to zero for both 32 and 64 bit */
++    s->regs[R_CURDESC] = 0;
++    s->regs[R_CURDESC + 1] = 0; /* CURDESC_MSB */
++    s->regs[R_TAILDESC] = 0;
++    s->regs[R_TAILDESC + 1] = 0; /* TAILDESC_MSB */
+     s->sof = true;
+ }
+ 
+@@ -194,6 +199,16 @@ static inline int streamid_from_addr(hwaddr addr)
+     return sid;
+ }
+ 
++static inline hwaddr stream_desc_addr(struct Stream *s)
++{
++    return s->regs[R_CURDESC] | ((uint64_t)s->regs[R_CURDESC + 1] << 32);
++}
++
++static inline hwaddr stream_tail_addr(struct Stream *s)
++{
++    return s->regs[R_TAILDESC] | ((uint64_t)s->regs[R_TAILDESC + 1] << 32);
++}
++
+ static MemTxResult stream_desc_load(struct Stream *s, hwaddr addr)
+ {
+     struct SDesc *d = &s->desc;
+@@ -290,9 +305,9 @@ static void stream_complete(struct Stream *s)
+ static void stream_process_mem2s(struct Stream *s, StreamSink *tx_data_dev,
+                                  StreamSink *tx_control_dev)
+ {
+-    uint32_t prev_d;
+-    uint32_t txlen;
++    uint32_t txlen, origin_txlen;
+     uint64_t addr;
++    hwaddr curdesc;
+     bool eop;
+ 
+     if (!stream_running(s) || stream_idle(s) || stream_halted(s)) {
+@@ -300,7 +315,8 @@ static void stream_process_mem2s(struct Stream *s, StreamSink *tx_data_dev,
+     }
+ 
+     while (1) {
+-        if (MEMTX_OK != stream_desc_load(s, s->regs[R_CURDESC])) {
++        curdesc = stream_desc_addr(s);
++        if (MEMTX_OK != stream_desc_load(s, curdesc)) {
+             break;
+         }
+ 
+@@ -314,6 +330,7 @@ static void stream_process_mem2s(struct Stream *s, StreamSink *tx_data_dev,
+         }
+ 
+         txlen = s->desc.control & SDESC_CTRL_LEN_MASK;
++        origin_txlen = txlen;
+ 
+         eop = stream_desc_eof(&s->desc);
+         addr = s->desc.buffer_address;
+@@ -334,13 +351,13 @@ static void stream_process_mem2s(struct Stream *s, StreamSink *tx_data_dev,
+         }
+ 
+         /* Update the descriptor.  */
+-        s->desc.status = txlen | SDESC_STATUS_COMPLETE;
+-        stream_desc_store(s, s->regs[R_CURDESC]);
++        s->desc.status = origin_txlen | SDESC_STATUS_COMPLETE;
++        stream_desc_store(s, curdesc);
+ 
+         /* Advance.  */
+-        prev_d = s->regs[R_CURDESC];
+         s->regs[R_CURDESC] = s->desc.nxtdesc;
+-        if (prev_d == s->regs[R_TAILDESC]) {
++        s->regs[R_CURDESC + 1] = s->desc.nxtdesc >> 32;
++        if (curdesc == stream_tail_addr(s)) {
+             s->regs[R_DMASR] |= DMASR_IDLE;
+             break;
+         }
+@@ -350,16 +367,17 @@ static void stream_process_mem2s(struct Stream *s, StreamSink *tx_data_dev,
+ static size_t stream_process_s2mem(struct Stream *s, unsigned char *buf,
+                                    size_t len, bool eop)
+ {
+-    uint32_t prev_d;
+     unsigned int rxlen;
+     size_t pos = 0;
++    hwaddr curdesc;
+ 
+     if (!stream_running(s) || stream_idle(s) || stream_halted(s)) {
+         return 0;
+     }
+ 
+     while (len) {
+-        if (MEMTX_OK != stream_desc_load(s, s->regs[R_CURDESC])) {
++        curdesc = stream_desc_addr(s);
++        if (MEMTX_OK != stream_desc_load(s, curdesc)) {
+             break;
+         }
+ 
+@@ -388,13 +406,13 @@ static size_t stream_process_s2mem(struct Stream *s, unsigned char *buf,
+ 
+         s->desc.status |= s->sof << SDESC_STATUS_SOF_BIT;
+         s->desc.status |= SDESC_STATUS_COMPLETE;
+-        stream_desc_store(s, s->regs[R_CURDESC]);
++        stream_desc_store(s, curdesc);
+         s->sof = eop;
+ 
+         /* Advance.  */
+-        prev_d = s->regs[R_CURDESC];
+         s->regs[R_CURDESC] = s->desc.nxtdesc;
+-        if (prev_d == s->regs[R_TAILDESC]) {
++        s->regs[R_CURDESC + 1] = s->desc.nxtdesc >> 32;
++        if (curdesc == stream_tail_addr(s)) {
+             s->regs[R_DMASR] |= DMASR_IDLE;
+             break;
+         }
 -- 
 2.48.1
 
