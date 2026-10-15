@@ -4,62 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CED4ECC6B34
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 08:37:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFA20CC6B34
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 08:38:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHGxZ-0000Ek-05; Thu, 15 Oct 2026 04:37:09 -0400
+	id 1xHGyt-0003H2-1D; Thu, 15 Oct 2026 04:38:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1xHGxP-00009x-0O; Thu, 15 Oct 2026 04:36:59 -0400
-Received: from forwardcorp1d.mail.yandex.net
- ([2a02:6b8:c41:1300:1:45:d181:df01])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1xHGyr-0003GW-Nx
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 04:38:29 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1xHGxN-0008Ky-GB; Thu, 15 Oct 2026 04:36:58 -0400
-Received: from mail-nwsmtp-smtp-corp-main-80.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-80.yp-c.yandex.net
- [IPv6:2a02:6b8:c0c:bd2d:0:640:e9de:0])
- by forwardcorp1d.mail.yandex.net (postfix) with ESMTPS id 35EDC81029;
- Thu, 15 Oct 2026 11:36:54 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:d5a::1:34] (unknown
- [2a02:6bf:8080:d5a::1:34])
- by mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net (smtpcorp) with ESMTPSA
- id raQXVJ2ZQW20-Gq8nKBi9; Thu, 15 Oct 2026 11:36:53 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1792053413;
- bh=KHTEPFmiEwQ0yQsrs6tGyYV+2aoH9M4EgoCDXN68RFc=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=qww3J+x4V177Stj0VqyiRahDODtX9UNaD517SbLY5MgclQexNL6n2vgDPahHwzqPG
- TWXxZuE13QkwHM2cUXySEXsvARnp9oLXyFPmtPbXv4kYJTnEZWPEQWvPxrFEjqY5qW
- ABPAFJiFWBced81hgX3pbMSxLHTkHeykqUWgBzYY=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <45219cf8-9f77-4f31-802e-f9f95e722b05@yandex-team.ru>
-Date: Thu, 15 Oct 2026 11:36:53 +0300
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1xHGyq-0008UL-4h
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 04:38:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1792053506;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=PMQ8e3Uy3eOUp60U4FGWrOdw2OUEHe+oSPtGO1XJ6go=;
+ b=P1XQVo1Pxk2Fx2PKSI+V1e4sLgeAR6gTJpHa02jQk508//yK8Z1aro+R6WZ0CID5gVPX0n
+ CGP15MTt6KZ7x4D7bNRTtc4LXBipaQrIh7azPduL+nlV8KH1CwMuNgITTnVC4rxU8S93xx
+ q3a4C1Y/WULI9jdWHIcEb+Uy8Y+qBjY=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-675-PU7e93TINvGH7Kb4UY8w3Q-1; Thu,
+ 15 Oct 2026 08:38:18 +0000
+X-MC-Unique: PU7e93TINvGH7Kb4UY8w3Q-1
+X-Mimecast-MFC-AGG-ID: PU7e93TINvGH7Kb4UY8w3Q_1792053498
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C638B18007ED; Thu, 15 Oct 2026 08:38:17 +0000 (UTC)
+Received: from redhat.com (headnet04.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.116])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D66FF3000735; Thu, 15 Oct 2026 08:38:15 +0000 (UTC)
+Date: Thu, 15 Oct 2026 09:38:12 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Gerd Hoffmann <kraxel@redhat.com>
+Cc: qemu-devel@nongnu.org,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ =?utf-8?B?xJDhuqF0IE5nw7QgUXXhu5Fj?= <datlechin@gmail.com>
+Subject: Re: [PATCH 2/2] pci id: assign pci subsystem id for osmates
+Message-ID: <atCQ9CMEDtEBosr3@redhat.com>
+References: <20261015081544.40310-1-kraxel@redhat.com>
+ <20261015081544.40310-3-kraxel@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 3/9] block/commit: batch block-status queries
-To: "Denis V. Lunev" <den@openvz.org>, qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>, 
- John Snow <jsnow@redhat.com>
-References: <20260929155125.3151111-1-den@openvz.org>
- <20260929155125.3151111-4-den@openvz.org>
-Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <20260929155125.3151111-4-den@openvz.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a02:6b8:c41:1300:1:45:d181:df01;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20261015081544.40310-3-kraxel@redhat.com>
+User-Agent: Mutt/2.4.2 (2026-08-30)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -73,39 +88,41 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 29.09.26 18:51, Denis V. Lunev wrote:
-> From: Denis V. Lunev<den@openvz.org>
+On Thu, Oct 15, 2026 at 10:15:44AM +0200, Gerd Hoffmann wrote:
+> Allows the guest driver to identify the host implementation,
+> useful to be more specific when applying quirks etc.
 > 
-> commit_iteration() asks for block status COMMIT_BUFFER_SIZE (512K) at a
-> time, so a long run above base pays one query per 512K for an answer
-> the whole run shares.
+> Cc: Đạt Ngô Quốc <datlechin@gmail.com>
+> Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+> ---
+>  docs/specs/pci-ids.rst | 4 ++++
+>  1 file changed, 4 insertions(+)
 > 
-> Query the remainder of the image instead and keep the answer in a
-> CommitStatus owned by commit_run(). No device or export writes top
-> above base_overlay while the job runs: they ask for
-> BLK_PERM_CONSISTENT_READ along with BLK_PERM_WRITE, and the job
-> withholds CONSISTENT_READ there, having to share WRITE or it would
-> block its own writes to base through the backing chain. A job target
-> asks for WRITE alone and is refused by the op blocker instead. From
-> filtered_base downwards CONSISTENT_READ is shared again, and there only
-> the job writes.
-> 
-> Copying is still bounded by the read buffer. Zeroes need no buffer, so
-> COMMIT_ZERO_CHUNK bounds them, keeping a cancel from waiting on a huge
-> write-zeroes, and an unallocated span is crossed in one step.
-> 
-> Reviewed-by: Andrey Drobyshev<andrey.drobyshev@virtuozzo.com>
-> Signed-off-by: Denis V. Lunev<den@openvz.org>
-> CC: Vladimir Sementsov-Ogievskiy<vsementsov@yandex-team.ru>
-> CC: John Snow<jsnow@redhat.com>
-> CC: Andrey Drobyshev<andrey.drobyshev@virtuozzo.com>
+> diff --git a/docs/specs/pci-ids.rst b/docs/specs/pci-ids.rst
+> index 832f8bd1b802..45e0d22e71bd 100644
+> --- a/docs/specs/pci-ids.rst
+> +++ b/docs/specs/pci-ids.rst
+> @@ -50,6 +50,10 @@ maintained as part of the virtio specification.
+>    QEMU, such as the intel chipset devices.  Also used for virtio
+>    devices and generic pci class devices (1b36:00xx, see below).
+>  
+> +1af4:1101
+> +  PCI Subsystem ID for OSMates (github.com/osmates), will be used
+> +  for virtio devices and pci class devices (xhci, nvme).
 
-Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+github.com/osmates appears to have no repositories, and the
+website linked from that profile has no A records. Does this
+even exist ? 
 
+With regards,
+Daniel
 -- 
-Best regards,
-Vladimir
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+
 
