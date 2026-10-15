@@ -4,76 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2289CC6B2D
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 02:00:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04729CC6B2D
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 02:00:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHAkp-0008W9-AV; Wed, 14 Oct 2026 21:59:35 -0400
+	id 1xHAkm-0008VF-A1; Wed, 14 Oct 2026 21:59:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <filip.hejsek@gmail.com>)
- id 1xHAkm-0008Vc-UY
- for qemu-devel@nongnu.org; Wed, 14 Oct 2026 21:59:33 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ id 1xHAkl-0008Uc-93
+ for qemu-devel@nongnu.org; Wed, 14 Oct 2026 21:59:31 -0400
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <filip.hejsek@gmail.com>)
- id 1xHAkl-0000Aq-Gk
- for qemu-devel@nongnu.org; Wed, 14 Oct 2026 21:59:32 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-4a161d9b8c7so33243745e9.3
- for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 18:59:31 -0700 (PDT)
+ id 1xHAkj-0000Ae-KO
+ for qemu-devel@nongnu.org; Wed, 14 Oct 2026 21:59:31 -0400
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-48b02b1b4cfso4274337f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 14 Oct 2026 18:59:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1792029570; x=1792634370; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1792029568; x=1792634368; darn=nongnu.org;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :content-type:mime-version:subject:date:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=1gQ6D8/o+rGh/blUQpo+uNlD0tAWG4kIPjgB+m2W6UA=;
- b=QsDsmRaqMOHlElRwUp1MUdqVZ43bEl7fH5eABwaLATUwfDGXY3VhkEAfC+8c5vjJ8K
- MD9ldTFEa0K5uaIZre1M6FF4sQs09IarqolrfMQ+MrML1Sl/Cis5znhU2Nn7v7t4GwQT
- x+cxLMzOanancjmq295CZaYjfFoJVomqo2qPPyDh4e2jnEsv9aAldt0aonYnBZ3G+dcN
- fR4RWRHDgr+s93OC1JhH66aWTY9flCRgD/hKOP2kh8M8ora/D134KDCnxj8WGNnNdx3v
- mkWf8Cu7kZR6PR95gdBujhvUq4VWaD6vuuYbrjOM78ZC5GMCDRwzo2B+ZzxtpWCzrUPb
- IRKQ==
+ bh=bJEDJqn+RcXzns9wteQUg6pjdFBNbHjn/ja5BU37btc=;
+ b=GCXaB8y2XRM2RruEyB+grUUYPgmE624AUb8O9TA5/sflvEymt8Q6DGIsWfyV2DP/rh
+ 4eTN7HBnL49NgbKRE+2c8t5Nr5VW6GQBiccpoj3PQxaLrkHe7pUuIrnc36cHcRdDbipT
+ 1C/AGfSwaCZwalfLffw8S/w/u4B6GX75U6KTKMWWEN/JYmzd2CMnfOKueQYGiz8nZtzU
+ H7b1h9vv4eKx87ol9tclbzRTVMDEyPnIIQWMQMVFKuOsr5hCvkv2LAQ+twd2xb5Wh445
+ G+Hk/iSdzTy2sXlPK+TcudkFiF1xnMroQd9PUqRMtIz5Ov/xWIaXfJjPYpe89v1b+Oi/
+ RJoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792029570; x=1792634370;
+ d=1e100.net; s=20260707; t=1792029568; x=1792634368;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :content-type:mime-version:subject:date:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=1gQ6D8/o+rGh/blUQpo+uNlD0tAWG4kIPjgB+m2W6UA=;
- b=xpTEhorvU2iMMGSxMWdm8OCC2UKhg20jo18wwT7CW3ryRh+iCeHduJbrwSr9dN1KIl
- HdH3jzJLXRqbUc9/xNgZqrOyx5YKI4x8+aKaRpgMuEGZ2xbyFNa2+ugWm9H+FNO2zJ+B
- zc1R+KaLOEry1Mi4W6OTB0WZPNwWDDocpRjSqWj7VvZk5P6rUVubcRkiVWsiTo9ZstQ1
- lnpBl9Rc/r0RXtWUZfRXSV6DqSC8oSNvojLEJ1AJR7RxNUdMoYkCIHByK/SDc/1yrUj/
- VfmteAcf44yySVDuo03fGCk5bPPjxRbdg6oXs9WAl9emjjRicfmsGdZQAXBmIl9sNT24
- PgOw==
-X-Gm-Message-State: AFq9FYLJ3hh3e+v4dfeoK11tMuSO2XiSA/7Sd4jmMP+Dis9d3AeDQ0B+
- 6lOtz4AgH1H3gJeIrIhiSrlWlCTgtnjMiXpU0u9n67q9ezgi46vKb+hihUU+qiJO
-X-Gm-Gg: AYBFou0QWTHe/epQaPkkfzw1KFLDBc3joxiChAHwZba0moOFhnUag0HkMTjbH9xAqVR
- tMQCAYe5ca3MGvlOAR9jPMw4TuBYAhdSqMWHxqaz4JwW9x0BY4KqVoh9R6Mw9tUOlvF2CgrE42c
- aUy+N7woZNYkuk3nqT3tew9KHOXxmR/YJHafReQsbQmZsHCPWkxTP5sUuaKj07M+WKse0hORs+9
- 7bAQONIbZRWTiR5hgDDDCpvxVeLYto1+JNTyPTs9Zp+cBAklRkeel0tprNrvp25rs/9ref2l7n6
- ryfjlMEq4KfSyF+TLeiJIex9Ek9JPVnKAU+lyCZmIlWmTwZJtdvi7iLdtxlcz5FiNNbiqVm1J/E
- c0u0aevHc3XAsiXffuRT5ZGftMkk+hNEjxxYTYfhPMw5skXGVOeKA3jLCzXN7Uoi51Z5bHxCRvu
- SrGHcJZNHHw8CbXYM0qI8z3y5tFkudgTyVDrsBW2RQZb1VI5Mm//LCvCHiO75y+b59xE1IUnLBr
- 0uqRKG8Ymjg+3QSgxQ5j29IvJs=
-X-Received: by 2002:a05:600c:6990:b0:4a0:1ea1:477a with SMTP id
- 5b1f17b1804b1-4a18e4d8bbamr308500875e9.27.1792029570113; 
- Wed, 14 Oct 2026 18:59:30 -0700 (PDT)
+ bh=bJEDJqn+RcXzns9wteQUg6pjdFBNbHjn/ja5BU37btc=;
+ b=xj1mqlZsal0IEXpC8Wa5HIJE5jBMW/oPMkrXw6oeleCG3fGfHD8atC4vTY11IerQZr
+ ue0g3i+sfAHhqJnFETd5CXL0mLhTnyeIeAOjvJq5mKyYxqMRwTepmzaqiOwnURek4AI5
+ ISBwuCbpK7TEcKrp6egX9uzWHhTJS05RlVoU2c4nBXMHya210Bnv/LE6yNmNXERrcZFS
+ cdYi1Vln02w9t2swWGN7XmGSu0cxAePCqGOD3D6Ir9U/uEhECJ2DFGfmfab9LfyXdOGB
+ UO0sVsnWsfGXFmPCFHVnyTuySwz/HIUCwluxgonYXvYh6AzJdagXBSjUOMVidzTtc9Ol
+ CjCg==
+X-Gm-Message-State: AFq9FYKIRj0yzed66JMr/rgBzFZBLKGgg2rVrw7xTS5CHtQSfURrYd1H
+ Gux4u9yRxBFogWb1JWNWdlWXfadT9JXVkkDXiLF/fTAHHn+GYff4Bn5El8EBRZv9
+X-Gm-Gg: AYBFou1f8aOBfN4LVN9OvL6ZAtMlOTbceM+zF0LguQhS2RK/+69AKgp/xmofnpb1YMu
+ 5cuhCjoEHHjuQxCiVft2iIfdxNh5wFutqfzUOl45YASSCIQig0GOi4Na9PHrnIkPSfGU1REyhSt
+ O/wYYKSR8JYwdpy7/bh4YFZ7axWZayQFlgbWDfOyOIZecGitUxS4W79zeQkFgKeQAUxoSyOdjdG
+ yCUjNQ6XuO1oDXSjUvUlxJhGwQ6hb8wJsRxL0s2XZ+S+3NWMfdYwXowyMJTeyF1mxmmOK6W5TtG
+ DfoSOiIAO7vZQq8v0EbCFhqqK19Dubg8E13icg8wRnKKQAWojt9RJYlwBVjAj5sPkrOYmf0hWGk
+ h8nhPXmg8a3e+kHcNudVC/ysw9E3VrLYXIwqoSd1RZUPStcpWDaNgsaQDHlnKvtItlwACaJpuWd
+ swALlGmkteQgmNz1EBjgFPe83x8ovLjxU3mU1sr6AW/kqTTWs4ba0IRgF2HN6UbZ1PTUeIV0i3M
+ SdS7+VJluJH4UYhBWMF6h0JVKs=
+X-Received: by 2002:a5d:6f08:0:b0:48d:bae5:41c with SMTP id
+ ffacd0b85a97d-48dbae50634mr33889907f8f.17.1792029568139; 
+ Wed, 14 Oct 2026 18:59:28 -0700 (PDT)
 Received: from localhost (mem-185.47.220.165.jmnet.cz. [185.47.220.165])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48de0ab4f34sm15901010f8f.28.2026.10.14.18.59.29
+ ffacd0b85a97d-48de0ab4f34sm15900886f8f.28.2026.10.14.18.59.27
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 14 Oct 2026 18:59:29 -0700 (PDT)
+ Wed, 14 Oct 2026 18:59:27 -0700 (PDT)
 From: Filip Hejsek <filip.hejsek@gmail.com>
-Date: Thu, 15 Oct 2026 03:58:25 +0200
-Subject: [PATCH v2 2/2] io: report a warning when a file channel is created
- from a stdio fd
+Date: Thu, 15 Oct 2026 03:58:24 +0200
+Subject: [PATCH v2 1/2] char-stdio: avoid closing stdio fds
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261015-fix-stdio-close-v2-2-0f01e6580e24@gmail.com>
+Message-Id: <20261015-fix-stdio-close-v2-1-0f01e6580e24@gmail.com>
 References: <20261015-fix-stdio-close-v2-0-0f01e6580e24@gmail.com>
 In-Reply-To: <20261015-fix-stdio-close-v2-0-0f01e6580e24@gmail.com>
 To: qemu-devel@nongnu.org
@@ -81,22 +80,22 @@ Cc: =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
  Paolo Bonzini <pbonzini@redhat.com>
 X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1792029564; l=1045;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1792029564; l=1413;
  i=filip.hejsek@gmail.com; s=20250912; h=from:subject:message-id;
- bh=VLJXStDZV7IrZEpabPG5MYtk+x/LemCkbj7PCvn/55Y=;
- b=4RfG7Cp21bzAeV0Yz4md/DsqZc4ag5DVLLkzRFC1gEO3mTxqhqvkqEL/xJi7gX1qrtaaN5A6I
- TQLa3hPGdZpAQg+CUUIocxwO58JZ4wBh1FUwRmFdzZgVGA034fqwfvN
+ bh=69Gk2in8CGCJqPY5epdNvHxcT6nKbIw1hANRw2L/9vQ=;
+ b=rK72/iDi0o3IxX59P86AO9wi7M+OTYdsOMAeBokA/LqX6KxUSHeRN7TGN0K1vB7nfbuPNXyML
+ jYlI1VuDkgWA0nJz46a73iGhW145t5iL0nRKHUXGgVzNMs1mO5BpWek
 X-Developer-Key: i=filip.hejsek@gmail.com; a=ed25519;
  pk=nakB8gEK3oi+Q/5dBTMCy/LgZL47NP60z1jeDR6O/WU=
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=filip.hejsek@gmail.com; helo=mail-wm1-x330.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=filip.hejsek@gmail.com; helo=mail-wr1-x42a.google.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
+ FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,39 +111,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-A channel closes its fd when the last reference to it is dropped.
-Closing stdio fds is typically unwanted, so warn when they are passed to
-qio_channel_file_new_fd().
+Use a duplicate of stdin and stdout fds to avoid closing the standard
+descriptors when the stdio chardev is destroyed.
 
 Signed-off-by: Filip Hejsek <filip.hejsek@gmail.com>
 ---
- io/channel-file.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ chardev/char-stdio.c | 16 +++++++++++++++-
+ 1 file changed, 15 insertions(+), 1 deletion(-)
 
-diff --git a/io/channel-file.c b/io/channel-file.c
-index 5cef75a67c..4c9da6619b 100644
---- a/io/channel-file.c
-+++ b/io/channel-file.c
-@@ -23,6 +23,7 @@
- #include "io/channel-util.h"
- #include "io/channel-watch.h"
- #include "qapi/error.h"
-+#include "qemu/error-report.h"
- #include "qemu/module.h"
- #include "qemu/sockets.h"
- #include "trace.h"
-@@ -32,6 +33,11 @@ qio_channel_file_new_fd(int fd)
+diff --git a/chardev/char-stdio.c b/chardev/char-stdio.c
+index fe1cbb2d88..19860e960d 100644
+--- a/chardev/char-stdio.c
++++ b/chardev/char-stdio.c
+@@ -89,6 +89,7 @@ static bool stdio_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
  {
-     QIOChannelFile *ioc;
+     ChardevStdio *opts = backend->u.stdio.data;
+     struct sigaction act;
++    int fd_in, fd_out;
  
-+    if (fd <= STDERR_FILENO) {
-+        warn_report("potential bug: creating a channel from stdio fd %d; "
-+                    "the fd will be closed when the channel is destroyed", fd);
+     if (is_daemonized()) {
+         error_setg(errp, "cannot use stdio with -daemonize");
+@@ -108,7 +109,20 @@ static bool stdio_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
+         return false;
+     }
+ 
+-    if (!qemu_chr_open_fd(chr, 0, 1, errp)) {
++    fd_in = qemu_dup(0);
++    if (fd_in < 0) {
++        error_setg_errno(errp, errno, "Failed to dup stdin fd");
++        return false;
 +    }
-+
-     ioc = QIO_CHANNEL_FILE(object_new(TYPE_QIO_CHANNEL_FILE));
++    fd_out = qemu_dup(1);
++    if (fd_out < 0) {
++        error_setg_errno(errp, errno, "Failed to dup stdout fd");
++        qemu_close(fd_in);
++        return false;
++    }
++    if (!qemu_chr_open_fd(chr, fd_in, fd_out, errp)) {
++        qemu_close(fd_in);
++        qemu_close(fd_out);
+         return false;
+     }
  
-     ioc->fd = fd;
 
 -- 
 2.56.0
