@@ -4,62 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1F51CC6B3F
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 10:33:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD2E8CC6B33
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 10:33:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHIha-0007hk-C4; Thu, 15 Oct 2026 06:28:49 -0400
+	id 1xHIlS-00042C-SN; Thu, 15 Oct 2026 06:32:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eblot.ml@gmail.com>)
- id 1xHIg0-0003X5-Nf
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 06:27:10 -0400
-Received: from mail-wm1-f42.google.com ([209.85.128.42])
+ id 1xHIhF-0007eN-Em
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 06:28:29 -0400
+Received: from mail-wm1-f46.google.com ([209.85.128.46])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <eblot.ml@gmail.com>)
- id 1xHIfx-00041w-Rf
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 06:27:08 -0400
-Received: by mail-wm1-f42.google.com with SMTP id
- 5b1f17b1804b1-4a01933b584so43907045e9.0
- for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 03:27:05 -0700 (PDT)
+ id 1xHIhB-0004KP-UP
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 06:28:25 -0400
+Received: by mail-wm1-f46.google.com with SMTP id
+ 5b1f17b1804b1-4a018dc1f98so41128845e9.3
+ for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 03:28:21 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792060024; x=1792664824;
+ d=1e100.net; s=20260707; t=1792060100; x=1792664900;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :content-type:mime-version:subject:date:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=Zzjq066d1DK9BL6AffnijbYCb4eLXuskQFLQ8zYtsCk=;
- b=tNNOmF6I1xGFKlNcIoKyIqdb53qNL24ZiCD9+XnWHK12WWdITL8g0Zmu+gd+xcYKGh
- vANDjEvvWGOVi64QM2mW4/ca+W+VMjcxWu3p65yTc5VnlYOqjdw+Zlz1Xiv7ygGxBr6Q
- KI3c96paXskL0Z7i+97zRcNOpDwZAll4KhL0lpB+buiMZPZFQ+R+uFMfFBUtD8y0x0bO
- 1KQ8cKnNr8nGu1tnzR9W/i/4pV4028hdA563ALWJSFQbTyLlc2opPoufkaXfpRffvkAA
- tOByzjS14kKLM+8TBF/nq7Mq+z4KRbXe0qwjxHfXQbMQLzufHcBCKcoN75LHi+DdSbI0
- sfuQ==
-X-Gm-Message-State: AFq9FYI3RM9fa9fKj0fzSevEPzjxuENFgHufPjwPA9mu8oDRffjyiuR/
- JzGSlk3lKb3rFIMg44Qki4cA/qY+IzcLkglhUv3MEGzHzEYzgj7FPSp7ze3qWA==
-X-Gm-Gg: AYBFou3CIhXcb2Fh0AJJUSkEtPxtIy34QIcDEZmzEc40HLR+ydcu3FR7aD1+7aMEPhX
- nZnHgcgSs/8ddEtDGEtczHemNlCsfyGKtTKAqIA+7SL5LatkmQpLja4eFJ8s7+BZhnS+MePJIdQ
- LP3mPSLJP2BAxcdSXf852mqLrHOJjOt0AFpPziNnZwHp1rDY5MfdI5HJMwy5xTF8Ywv2uoIhTtC
- KIhZ025Z0GVigTSAH56nK74huFnk3hytMrVbYRzShGgNbudY2p8ml6CcYqgWlyRBb2fAskof2Ih
- 4ufisZNRmP+NUUiix34SAqzVLHkZFa1usbnn54VzfOUD1KIs0KgSrwz9CfMjxK+BhphJk38uwcP
- lbVRqg51LzhdUo+M2A/9Ry2r9WEBYMVTh0tzED3EfPP0g7uncgGyjJrlIBSlAg1NuwcwLu4DYPq
- LhmhMo2m+bguToWfph2kUahx039ZQL+ipXDAktXK2fBfAz39IIvrFq/iD6M9van23f/rlhx9hE1
- dUEJziiAguwo7r/D4EaRoGu30nDkgSizF//SqRxiPd3/Q==
-X-Received: by 2002:a05:600c:154c:b0:49f:ce78:3562 with SMTP id
- 5b1f17b1804b1-4a18e4a9159mr394581205e9.19.1792060024134; 
- Thu, 15 Oct 2026 03:27:04 -0700 (PDT)
+ bh=OOFmzhwngATj5QXbK6+ilaV21N6JVdHVnASw6Lr12jc=;
+ b=TaB3DHUit8S2l7kZI4p5BN+QV6KdPAkewDVbXrRDZJxXT4FIP0eslODNd4PUZ+1dUr
+ 02JHpOvyg4xW3MaQX2jga/qTfoCMpTWBuf+hjcWzOH8w0A6c45dN3/FHR22FIgf2sVcb
+ HkXwkGgsURyTzfrDcM/HDF4Vwxkd0gllVkilCSGxztktkzKQiMzR1/dH+qLsazf0UESN
+ PsNzoExi9L0QRGgVSlNkLEgZf7hl5qwgLeaf1w9xEm84ow9/iPvxKiTAfkySpCsygPF8
+ X2RW/WJipj6IhyUoohwVFzdhZbVFiVTk/zN+FaV4xPkflaRugTWmiTCdHEbt88m9N5Tf
+ gKPw==
+X-Gm-Message-State: AFq9FYIwwjyHWIOvxfQHU+FfKOI5phL3K1RFD/a9hGTHo4+Oh1Z64xMJ
+ S3k8mRjUCFNDtw02s8iBOnmcH3E8viAH3g31HwO+2uVbNYa+boMpsopLjH11GA==
+X-Gm-Gg: AYBFou319nvbTkEyH/P15wPEV94ug4i96VrHzyVNEzE2mOYhSHIyVLm5jO2lSmEjAZu
+ QwcEZidKzMyPZh33VA/2Kj8FnXKARVshvszkf1fEMO1FCRYfn7GrGe3El/2lJkvr2yufbWRV+Ma
+ A8RC81AXKUxCDzR9ooWQpPQ2pnPrBQg4G3sWi1qgFQKdU4gzv5VixCgAqqKTHUWaTILsZInSf8V
+ +3q2DKFdLEu+4JsuIgBR5/gQwq51GlZgm+pK/7tncXxsTnjcfavVEXByo33PKIgwMLL/MFTPXx/
+ wqj/FBdiN9HOPqeTeKWfJKoFZDq4kA0brLwe6D5Yc3mSw8z9tL7X8GjXNSL2RdpQVUgpJFJwiqJ
+ Cm64P5rAwfNm42t8+Ls06T02Wqlma/M2e19lZYsOsvPYID/qbSr0W83gRfK6e1Orr6EV3xj8FVf
+ X+2wWq2iIJYs+aHVvfhd59NKzNkrl2i16QnaPLlfROp6qp40HRcsguNtIEwrAl1hPcVqJR79Mj0
+ TtwbJAVsExWAWYgWwhCSFMvqEyZvfbrRRhyQKwFO5lf1Qo=
+X-Received: by 2002:a05:600d:1b:b0:4a1:9661:14b7 with SMTP id
+ 5b1f17b1804b1-4a196611b9amr267914405e9.32.1792060100051; 
+ Thu, 15 Oct 2026 03:28:20 -0700 (PDT)
 Received: from localhost (89-93-216-19.hfc.dyn.abo.bbox.fr. [89.93.216.19])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a1c1eb3907sm38605165e9.7.2026.10.15.03.27.01
+ 5b1f17b1804b1-4a1bd66c5e6sm40366255e9.2.2026.10.15.03.28.19
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 Oct 2026 03:27:03 -0700 (PDT)
-Date: Thu, 15 Oct 2026 11:28:13 +0200
-Subject: [PATCH v3 26/50] tests/qtest: ds1339: cover the Century bit
+ Thu, 15 Oct 2026 03:28:19 -0700 (PDT)
+Date: Thu, 15 Oct 2026 11:28:24 +0200
+Subject: [PATCH v3 37/50] tests/qtest: ina230: cover operating modes and
+ triggered conversions
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261015-bmc-minerva-v3-26-7d50c8a108e5@free.fr>
+Message-Id: <20261015-bmc-minerva-v3-37-7d50c8a108e5@free.fr>
 References: <20261015-bmc-minerva-v3-0-7d50c8a108e5@free.fr>
 In-Reply-To: <20261015-bmc-minerva-v3-0-7d50c8a108e5@free.fr>
 To: qemu-devel@nongnu.org
@@ -75,15 +76,15 @@ Cc: =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, 
  Emmanuel Blot <emmanuel.blot@free.fr>
 X-Mailer: b4 0.16.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1792056476; l=3691;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1792056476; l=5268;
  i=emmanuel.blot@free.fr; s=20260602; h=from:subject:message-id;
- bh=a51PVO883sS5BmzswPWqVtyHVJ/pN81H084v6xEIBwk=;
- b=DjlpsYHB2et3L4f5LHVoFOtXHc+eZ1C8rXyAtVcsY7BqfmEmXTTDq0vTZ1m56jqEA2azplSrn
- rDqZMvBqHqHC/8p6NpfoaOyyNjjvN7tBE7M3qTfJf1+RhPLhGwXJxc3
+ bh=M/AP87tzHPyKIB2/isqSVgsUBIucUWr9P38+NmmmCT4=;
+ b=Yg5mzoaTRKUYOwLQCo+DrFpSzZQ/xsxjaSNkp9VVBeOdH8mjTi6omkFfwMDnOncs48DVluoXG
+ 7BNCbFgGVXOAb22pR0PGra4CZsXz52fJQINZOtClEjyUXgkAKe3SUGH
 X-Developer-Key: i=emmanuel.blot@free.fr; a=ed25519;
  pk=0qFrZ21FAAN8OfVsSoVcCFTk/NMYOWzxJz4paSAVm0g=
-Received-SPF: pass client-ip=209.85.128.42; envelope-from=eblot.ml@gmail.com;
- helo=mail-wm1-f42.google.com
+Received-SPF: pass client-ip=209.85.128.46; envelope-from=eblot.ml@gmail.com;
+ helo=mail-wm1-f46.google.com
 X-Spam_score_int: -15
 X-Spam_score: -1.6
 X-Spam_bar: -
@@ -109,92 +110,129 @@ From:  Emmanuel Blot via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The Century bit had no coverage: neither its guest read/write
-behaviour, nor the rule that only an elapsed rollover toggles it.
+Add coverage for the MODE field: power-down retains the last results,
+the shunt/bus channel-enable bits gate which registers track new inputs,
+triggered modes convert once per Config write, and bus-only mode still
+derives power from the retained current.
 
 Signed-off-by: Emmanuel Blot <emmanuel.blot@free.fr>
 ---
- tests/qtest/ds1339-test.c | 60 +++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 60 insertions(+)
+ tests/qtest/ina230-test.c | 95 ++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 94 insertions(+), 1 deletion(-)
 
-diff --git a/tests/qtest/ds1339-test.c b/tests/qtest/ds1339-test.c
-index ac19ebd71d..8c144579e6 100644
---- a/tests/qtest/ds1339-test.c
-+++ b/tests/qtest/ds1339-test.c
-@@ -169,6 +169,62 @@ static void test_eosc_restart(void *obj, void *data, QGuestAllocator *alloc)
-     g_assert_cmphex(resp[6], ==, 0x31);
+diff --git a/tests/qtest/ina230-test.c b/tests/qtest/ina230-test.c
+index 36c899efee..4d601c74b5 100644
+--- a/tests/qtest/ina230-test.c
++++ b/tests/qtest/ina230-test.c
+@@ -142,7 +142,97 @@ static void test_config_wmask(void *obj, void *data, QGuestAllocator *alloc)
+     g_assert_cmphex(i2c_get16(dev, REG_CONFIG), ==, 0x7FFF);
  }
  
-+/* The Century bit is guest-writable and survives an oscillator restart. */
-+static void test_century_bit(void *obj, void *data, QGuestAllocator *alloc)
+-/* Shunt voltage register, including two's-complement negatives */
++/* Operating modes */
++static void test_modes(void *obj, void *data, QGuestAllocator *alloc)
 +{
-+    QI2CDevice *i2cdev = (QI2CDevice *)obj;
++    QI2CDevice *dev = (QI2CDevice *)obj;
++    static const struct {
++        uint8_t mode;
++        uint16_t shunt, bus, current, power;
++    } cases[] = {
++        /* Power-down: no conversion, every register retains the baseline */
++        { 0x0, 0x1F40, 0x2570, 0x2710, 0x12B8 },
++        { 0x4, 0x1F40, 0x2570, 0x2710, 0x12B8 },
++        /* Shunt only (continuous): shunt and current track the probe */
++        { 0x5, 0x0FA0, 0x2570, 0x1388, 0x12B8 },
++        /* Shunt and bus (continuous): every register tracks the probe */
++        { 0x7, 0x0FA0, 0x12C0, 0x1388, 0x04B0 },
++    };
++    size_t idx;
 +
-+    i2c_set8(i2cdev, DS1339_MONTH, 0x86); /* Century | June */
-+    g_assert_cmphex(i2c_get8(i2cdev, DS1339_MONTH) & 0x80, ==, 0x80);
++    for (idx = 0; idx < ARRAY_SIZE(cases); idx++) {
++        i2c_set16(dev, REG_CONFIG, CONFIG_RST);
++        i2c_set16(dev, REG_CALIBRATION, 0x0A00);
++        qmp_ina230_set("shunt-voltage", 20000000);
++        qmp_ina230_set("bus-voltage", 11980000);
 +
-+    i2c_set8(i2cdev, DS1339_CONTROL, 0x18 | 0x80);
-+    i2c_set8(i2cdev, DS1339_CONTROL, 0x18);
-+    g_assert_cmphex(i2c_get8(i2cdev, DS1339_MONTH) & 0x80, ==, 0x80);
++        i2c_set16(dev, REG_CONFIG, cases[idx].mode);
++        qmp_ina230_set("shunt-voltage", 10000000);
++        qmp_ina230_set("bus-voltage", 6000000);
 +
-+    i2c_set8(i2cdev, DS1339_MONTH, 0x06); /* June, century clear */
-+    g_assert_cmphex(i2c_get8(i2cdev, DS1339_MONTH) & 0x80, ==, 0x00);
-+}
-+
-+/* A guest write never toggles the Century bit. */
-+static void test_century_write_no_toggle(void *obj, void *data,
-+                                         QGuestAllocator *alloc)
-+{
-+    QI2CDevice *i2cdev = (QI2CDevice *)obj;
-+
-+    i2c_set8(i2cdev, DS1339_MONTH, 0x86);
-+    i2c_set8(i2cdev, DS1339_YEAR, 0x99);
-+    g_assert_cmphex(i2c_get8(i2cdev, DS1339_MONTH) & 0x80, ==, 0x80);
-+    i2c_set8(i2cdev, DS1339_YEAR, 0x00);
-+    g_assert_cmphex(i2c_get8(i2cdev, DS1339_MONTH) & 0x80, ==, 0x80);
-+
-+    i2c_set8(i2cdev, DS1339_MONTH, 0x06);
-+    i2c_set8(i2cdev, DS1339_YEAR, 0x99);
-+    g_assert_cmphex(i2c_get8(i2cdev, DS1339_MONTH) & 0x80, ==, 0x00);
-+    i2c_set8(i2cdev, DS1339_YEAR, 0x00);
-+    g_assert_cmphex(i2c_get8(i2cdev, DS1339_MONTH) & 0x80, ==, 0x00);
-+}
-+
-+/* A clock-driven year rollover from 99 to 00 toggles the Century bit. */
-+static void test_century_rollover(void *obj, void *data,
-+                                  QGuestAllocator *alloc)
-+{
-+    QI2CDevice *i2cdev = (QI2CDevice *)obj;
-+    const uint8_t tod[7] = { 0x59, 0x59, 0x23, 0x01, 0x31, 0x12, 0x99 };
-+    unsigned idx;
-+
-+    i2c_write_block(i2cdev, DS1339_SECONDS, tod, sizeof(tod));
-+
-+    for (idx = 0; idx < 50; idx++) {
-+        if (i2c_get8(i2cdev, DS1339_YEAR) == 0x00) {
-+            break;
-+        }
-+        g_usleep(100 * 1000);
++        g_assert_cmphex(i2c_get16(dev, REG_SHUNT), ==, cases[idx].shunt);
++        g_assert_cmphex(i2c_get16(dev, REG_BUS), ==, cases[idx].bus);
++        g_assert_cmphex(i2c_get16(dev, REG_CURRENT), ==, cases[idx].current);
++        g_assert_cmphex(i2c_get16(dev, REG_POWER), ==, cases[idx].power);
 +    }
-+
-+    g_assert_cmphex(i2c_get8(i2cdev, DS1339_YEAR), ==, 0x00);
-+    g_assert_cmphex(i2c_get8(i2cdev, DS1339_MONTH) & 0x80, ==, 0x80);
 +}
 +
- /* The register pointer wraps at the end of the map. */
- static void test_address_wrap(void *obj, void *data, QGuestAllocator *alloc)
++/*
++ * Triggered modes perform exactly one conversion per trigger, where the
++ * trigger is a Configuration-register write. Injected input changes
++ * between triggers are ignored until the next write.
++ */
++static void test_triggered(void *obj, void *data, QGuestAllocator *alloc)
++{
++    QI2CDevice *dev = (QI2CDevice *)obj;
++
++    i2c_set16(dev, REG_CONFIG, CONFIG_RST);
++    i2c_set16(dev, REG_CALIBRATION, 0x0A00);
++
++    qmp_ina230_set("shunt-voltage", 20000000);
++    qmp_ina230_set("bus-voltage", 11980000);
++
++    i2c_set16(dev, REG_CONFIG, 0x03);
++    g_assert_cmphex(i2c_get16(dev, REG_SHUNT), ==, 0x1F40);
++    g_assert_cmphex(i2c_get16(dev, REG_BUS), ==, 0x2570);
++
++    qmp_ina230_set("shunt-voltage", 10000000);
++    qmp_ina230_set("bus-voltage", 6000000);
++    g_assert_cmphex(i2c_get16(dev, REG_SHUNT), ==, 0x1F40);
++    g_assert_cmphex(i2c_get16(dev, REG_BUS), ==, 0x2570);
++
++    i2c_set16(dev, REG_CONFIG, 0x03);
++    g_assert_cmphex(i2c_get16(dev, REG_SHUNT), ==, 0x0FA0);
++    g_assert_cmphex(i2c_get16(dev, REG_BUS), ==, 0x12C0);
++
++    i2c_set16(dev, REG_CONFIG, 0x07);
++    qmp_ina230_set("shunt-voltage", 20000000);
++    g_assert_cmphex(i2c_get16(dev, REG_SHUNT), ==, 0x1F40);
++}
++
++/*
++ * In a bus-only mode the current register is retained, but the power register
++ * is still refreshed on each bus conversion from that retained current.
++ */
++static void test_bus_only_power(void *obj, void *data, QGuestAllocator *alloc)
++{
++    QI2CDevice *dev = (QI2CDevice *)obj;
++
++    i2c_set16(dev, REG_CONFIG, CONFIG_RST);
++    i2c_set16(dev, REG_CALIBRATION, 0x0A00);
++    qmp_ina230_set("shunt-voltage", 20000000);
++    qmp_ina230_set("bus-voltage", 11980000);
++    g_assert_cmphex(i2c_get16(dev, REG_CURRENT), ==, 0x2710);
++
++    i2c_set16(dev, REG_CONFIG, 0x06);
++    qmp_ina230_set("bus-voltage", 6000000);
++
++    g_assert_cmphex(i2c_get16(dev, REG_CURRENT), ==, 0x2710);
++    g_assert_cmphex(i2c_get16(dev, REG_BUS), ==, 0x12C0);
++    g_assert_cmphex(i2c_get16(dev, REG_POWER), ==, 0x0960);
++}
++
++/* Shunt voltage register */
+ static void test_shunt_injection(void *obj, void *data, QGuestAllocator *alloc)
  {
-@@ -258,6 +314,10 @@ static void ds1339_register_nodes(void)
-     qos_add_test("eosc-restart", "ds1339", test_eosc_restart, NULL);
-     qos_add_test("stopped-reserved-bits", "ds1339",
-                  test_stopped_reserved_bits, NULL);
-+    qos_add_test("century-bit", "ds1339", test_century_bit, NULL);
-+    qos_add_test("century-write-no-toggle", "ds1339",
-+                 test_century_write_no_toggle, NULL);
-+    qos_add_test("century-rollover", "ds1339", test_century_rollover, NULL);
-     qos_add_test("address-wrap", "ds1339", test_address_wrap, NULL);
-     qos_add_test("block-wrap", "ds1339", test_block_wrap, NULL);
-     qos_add_test("alarm-registers", "ds1339", test_alarm_registers,
+     QI2CDevice *dev = (QI2CDevice *)obj;
+@@ -377,6 +467,9 @@ static void ina230_register_nodes(void)
+     qos_add_test("defaults", "ina230", test_defaults, NULL);
+     qos_add_test("soft-reset", "ina230", test_soft_reset, NULL);
+     qos_add_test("config-wmask", "ina230", test_config_wmask, NULL);
++    qos_add_test("modes", "ina230", test_modes, NULL);
++    qos_add_test("triggered", "ina230", test_triggered, NULL);
++    qos_add_test("bus-only-power", "ina230", test_bus_only_power, NULL);
+     qos_add_test("shunt-injection", "ina230", test_shunt_injection, NULL);
+     qos_add_test("bus-injection", "ina230", test_bus_injection, NULL);
+     qos_add_test("shunt-limits", "ina230", test_shunt_limits, NULL);
 
 -- 
 2.53.0-Meta
