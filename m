@@ -4,73 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83826CC6B39
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 16:45:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CA15CC6B38
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 16:55:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHOZd-0004Bs-4Z; Thu, 15 Oct 2026 12:44:57 -0400
+	id 1xHOiv-0005fa-Rs; Thu, 15 Oct 2026 12:54:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xHOZb-0004Bk-RS
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 12:44:55 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
+ id 1xHOit-0005fL-Me; Thu, 15 Oct 2026 12:54:32 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xHOZZ-0002G4-H8
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 12:44:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1792082692;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=PZ9pyrQrnee46RKeI3S/lfT/EkCioyWD9rXLJWW1d2s=;
- b=BA1jzUvYTSu1ZF/prC5D1L4uWqOlENBqYQpGuXNQSG9E4gGhFkLDCzEbU2wjY7cNZp8PWU
- opz1hNrsgYuUnqCE3BnGuSNHD8baidcpsid+x5vk6D3RwKm++mIfiMoJUN13sLTaV7Y+gg
- NlTVcElYhewkrgdvI/lFmvPjkcNGhA4=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-582-vzhQ_zUaP8KIyTFTRYFiEA-1; Thu,
- 15 Oct 2026 16:44:49 +0000
-X-MC-Unique: vzhQ_zUaP8KIyTFTRYFiEA-1
-X-Mimecast-MFC-AGG-ID: vzhQ_zUaP8KIyTFTRYFiEA_1792082688
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E519B1800635; Thu, 15 Oct 2026 16:44:47 +0000 (UTC)
-Received: from redhat.com (headnet04.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.116])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4EAE81800677; Thu, 15 Oct 2026 16:44:46 +0000 (UTC)
-Date: Thu, 15 Oct 2026 17:44:42 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Mark Cave-Ayland <mark.caveayland@nutanix.com>
-Subject: Re: [PATCH] include/hw/core/qdev.h: Fix where
- device_class_set_parent_realize docs suggest putting parent_realize
-Message-ID: <atEC-pIGhLYLXVmC@redhat.com>
-References: <20261015163352.1751191-1-peter.maydell@linaro.org>
+ (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
+ id 1xHOiq-00039S-Vr; Thu, 15 Oct 2026 12:54:31 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 69F9kopI3001265; Thu, 15 Oct 2026 16:54:25 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=5zrU5f
+ Z3PiqUFF8RwssqFwnlKJtToTrlJzD4b5BESak=; b=h19IxVCBYG2oyXzdkY0nzT
+ y74Lk4zVMmG6bwI2oJOUsE0Lpct7vXUJ/qbD4EhyR9KPxvKddz7uVdoD/WaqS4CO
+ uYbRWaMqWRe2FjbhKdXqTIvoTi+eXOUdovAKxGW0DVklewu9EdZdznJ6dyMOfnOo
+ BOazLtIjqMTI+TmmgR83Oy6GeE+dgsAJwU992VJlCIpp9kVnQaHdMe+1w/S8pg39
+ wVEC55fXoOBL8ehj+4W9VDbysoUdBbzWOv1Vm1UlYQgfPYIu7Pzk5AZjnVaixWID
+ 0elpwW5iu9WBqZE04tmEaV1FdCOggIbtQaPGyUsaEmsboK7USNM6U2HxoQSaWvgQ
+ ==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4h7dwhu54u-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Thu, 15 Oct 2026 16:54:25 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 69FG85uc2352089; Thu, 15 Oct 2026 16:54:24 GMT
+Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4hb23905kp-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 15 Oct 2026 16:54:24 +0000 (GMT)
+Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com
+ [10.241.53.100])
+ by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 69FGraJV8782382
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 15 Oct 2026 16:53:36 GMT
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7345E58057;
+ Thu, 15 Oct 2026 16:54:22 +0000 (GMT)
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E165E5805D;
+ Thu, 15 Oct 2026 16:54:21 +0000 (GMT)
+Received: from [9.61.99.49] (unknown [9.61.99.49])
+ by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 15 Oct 2026 16:54:21 +0000 (GMT)
+Message-ID: <b6ee502d-5749-439f-92f5-13110e5b85b8@linux.ibm.com>
+Date: Thu, 15 Oct 2026 12:54:21 -0400
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20261015163352.1751191-1-peter.maydell@linaro.org>
-User-Agent: Mutt/2.4.2 (2026-08-30)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1] s390x/pci: re-fetch DMA slot shadow count from VFIO
+ upon IOMMU disable
+To: Omar Elghoul <oelghoul@linux.ibm.com>, qemu-devel@nongnu.org,
+ qemu-s390x@nongnu.org
+Cc: alifm@linux.ibm.com, cam@linux.ibm.com, farman@linux.ibm.com,
+ qemu-stable@nongnu.org
+References: <20261007150416.13220-1-oelghoul@linux.ibm.com>
+Content-Language: en-US
+From: Matthew Rosato <mjrosato@linux.ibm.com>
+In-Reply-To: <20261007150416.13220-1-oelghoul@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDE1MDA2NiBTYWx0ZWRfX4y1FkTGsPy2O
+ /KtXRXgZsAPCciLtRxJobKkxsMqiY1jhb49Fs47PdfttUlCm3Z+8M7inBjr0Sh8Em9cH3sXExRb
+ 8lTvF/VU0sOxxqSwXXYtbn4ghHIHopE=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDE1MDA2NiBTYWx0ZWRfX10H8ll0Zbq6F
+ Gnlp+60wyZZt4yTE/mKWXhcxfovtMug/luVK/dceBllD+65jxlOv215nMmZk85kzlTeJsMsdVFH
+ KtSZAj0JFK/i3Oe8XXmDVnutje6APbJ1HwwREUHp+DKpzr/t5hc6H7KuxJYs1j4GDGJGuiEiKu8
+ ZigRgFondZYCwWzm0303djtKi44SRg0xq0Hc+MvfCxvRufoPvYCevYsIiZJTMJHLTw4vnfcB/lG
+ Bimd26YUOR2DNHdTxpuDhd9GABmGXlZXkgjYVZwj2PoLIfI65vjsVSGBJXETPBFpq39ujLEFYY6
+ 4TgfjOcYg/1a9M2yu8fJ5M81321iiJAUV5rwPPqaj6BqOv4xMWWVRAC7bsT0SjafeZgiGzN6kZM
+ oARabCJfZu1Ojnop9JLQE4ZSMSp0ovZpYpWR2WZf9RKO90TlQgVLzF8fwLkxRgcRtN7s0NPFrdb
+ B6jbDI4OqxS51OhytUA==
+X-Proofpoint-GUID: I5ulTX-lsOJ_gDk8SYwfov-_aeaSS0C0
+X-Authority-Analysis: v=2.4 cv=RoFQvymK c=1 sm=1 tr=0 ts=6ad10541 cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=BLj5troBGk9AIOoPf2YA:9
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: I5ulTX-lsOJ_gDk8SYwfov-_aeaSS0C0
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-10-14_01,2026-10-14_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 spamscore=0 phishscore=0 adultscore=0 bulkscore=0
+ impostorscore=0 suspectscore=0 malwarescore=0 clxscore=1015
+ lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610080000
+ definitions=main-2610150066
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=mjrosato@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,111 +123,53 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Oct 15, 2026 at 05:33:52PM +0100, Peter Maydell wrote:
-> The documentation for device_class_set_parent_realize() suggests that
-> the parent realize function pointer is "usually in the instance
-> structure".  This is definitely wrong, because the function pointer
-> is a class thing, and should live in a class struct, not an instance
-> struct.  Update the documentation to correct this, instead
-> recommending that it should be placed in the class struct for the
-> child class.
+On 10/7/26 11:04 AM, Omar Elghoul wrote:
+> s390_pci_iommu_disable() destroys the I/O TLB and unpins the host's
+> mappings, but it doesn't reset the available DMA slot counter back to
+> the VFIO-advertised limit. This is problematic when an IOMMU is disabled
+> and re-enabled while reusing the container (e.g. during a guest reboot),
+> which may cause the RPCIT path to fail with DMA slot exhaustion errors,
+> manifesting as unexplained ENOMEMs in the guest.
 > 
-> At time of writing, of the 75 or so uses of this function, about 50
-> put the parent_realize pointer in the child class struct, and about
-> 25 in the parent class struct.  We recommend the former both because
-> it is the more common choice, and also because it makes more logical
-> sense: it's the child that knows (a) that it exists at all and that
-> (b) it wants to have a realize method that will mean it needs to
-> chain back to the parent, and we shouldn't need to edit the parent's
-> class struct because we want to add a child class that chains to its
-> realize method.
-
-I'm confused why we need to store a copy of the parent's
-realize method at all, when we can just reference it from
-the parent class struct ?
-
-Taking one example
-
-  static void pl050_kbd_realize(DeviceState *dev, Error **errp)
-  {
-      PL050DeviceClass *pdc = PL050_GET_CLASS(dev);
-      PL050KbdState *s = PL050_KBD_DEVICE(dev);
-      PL050State *ps = PL050(dev);
-
-      if (!sysbus_realize(SYS_BUS_DEVICE(&s->kbd), errp)) {
-          return;
-      }
-
-      ps->ps2dev = PS2_DEVICE(&s->kbd);
-      pdc->parent_realize(dev, errp);
-  }
-
-why wouldn't we rewrite that as
-
-  static void pl050_kbd_realize(DeviceState *dev, Error **errp)
-  {
-      PL050DeviceClass *pdc = PL050_GET_CLASS(dev);
-      DeviceClass *parent = DEVICE_CLASS(object_class_get_parent(OBJECT_CLASS(pdc)));
-      PL050KbdState *s = PL050_KBD_DEVICE(dev);
-      PL050State *ps = PL050(dev);
-
-      if (!sysbus_realize(SYS_BUS_DEVICE(&s->kbd), errp)) {
-          return;
-      }
-
-      ps->ps2dev = PS2_DEVICE(&s->kbd);
-      parent->realize(dev, errp);
-  }
-
-am I missing a reason we need to store the parent's
-realize method pointer ?
-
-
+> Fix it by refactoring s390_pci_update_dma_avail() to take a pointer to
+> S390PCIBusDevice instead of the plain file descriptor. Call it in
+> s390_pci_iommu_disable() after the host mappings have been unpinned.
 > 
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
->  include/hw/core/qdev.h | 15 ++++++++++++---
->  1 file changed, 12 insertions(+), 3 deletions(-)
-> 
-> diff --git a/include/hw/core/qdev.h b/include/hw/core/qdev.h
-> index 8e91e2fcb08..1330e0153d4 100644
-> --- a/include/hw/core/qdev.h
-> +++ b/include/hw/core/qdev.h
-> @@ -953,9 +953,18 @@ void device_class_set_props_n(DeviceClass *dc, const Property *props, size_t n);
->   *
->   * This is intended to be used when the new realize function will
->   * eventually call its parent realization function during creation.
-> - * This requires storing the function call somewhere (usually in the
-> - * instance structure) so you can eventually call
-> - * dc->parent_realize(dev, errp)
-> + * @parent_realize should be where you want to save the pointer to
-> + * the parent class realize function; the recommended location is a
-> + * field named "parent_realize" in your class's class struct.
-> + * (Some existing code puts the field in the parent class's class
-> + * struct; this will work but is not the preferred thing for new code.)
-> + *
-> + * In your realize function you should chain to your parent's
-> + * realize function using something like::
-> + *
-> + *    MyThingClass *mc = MY_THING_GET_CLASS(dev);
-> + *    (do your child class realize actions here)
-> + *    mc->parent_realize(dev, errp);
->   */
->  void device_class_set_parent_realize(DeviceClass *dc,
->                                       DeviceRealize dev_realize,
-> -- 
-> 2.43.0
+> Further print a warning if the VFIO-advertised counter doesn't match the
+> in-use shadow counter, to reduce the likelihood of introducing new
+> similar DMA accounting bugs in the future.
 > 
 
-With regards,
-Daniel
--- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+Thanks for digging into this.  Unfortunately it looks like this won't
+apply after recent merges into master, can you please rebase for v2?
 
+Also, one issue...
+
+[...]
+
+> -bool s390_pci_update_dma_avail(int fd, unsigned int *avail)
+> +bool s390_pci_update_dma_avail(S390PCIBusDevice *pbdev, unsigned int *avail)
+>  {
+> +    VFIOPCIDevice *vpdev;
+>      uint32_t argsz = sizeof(struct vfio_iommu_type1_info);
+>      g_autofree struct vfio_iommu_type1_info *info = g_malloc0(argsz);
+> +    int fd;
+>  
+> +    assert(pbdev);
+>      assert(avail);
+>  
+> +    vpdev = VFIO_PCI_DEVICE(pbdev->pdev);
+
+We can reach this for devices that are not associated with a vfio-pci
+device (e.g. virtio-pci) and results in
+
+/usr/src/qemu/hw/vfio/pci.h:123:VFIO_PCI_DEVICE: Object 0x2aa2d8a1410 is
+not an instance of type vfio-pci-device
+2026-10-15 16:44:18.851+0000: shutting down, reason=crashed
+
+Thanks,
+Matt
 
