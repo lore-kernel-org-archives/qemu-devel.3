@@ -4,62 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 555E9CC6B33
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 10:26:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A165CC6B38
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Oct 2026 10:26:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHIdx-0000mf-7q; Thu, 15 Oct 2026 06:25:01 -0400
+	id 1xHIea-0001Us-Cy; Thu, 15 Oct 2026 06:25:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eblot.ml@gmail.com>)
- id 1xHIdv-0000lH-D8
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 06:24:59 -0400
-Received: from mail-wr1-f48.google.com ([209.85.221.48])
+ id 1xHIeS-0001Ox-Rl
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 06:25:33 -0400
+Received: from mail-wm1-f54.google.com ([209.85.128.54])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <eblot.ml@gmail.com>)
- id 1xHIds-0003KZ-FC
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 06:24:59 -0400
-Received: by mail-wr1-f48.google.com with SMTP id
- ffacd0b85a97d-48c4649b35bso258772f8f.3
- for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 03:24:56 -0700 (PDT)
+ id 1xHIeO-0003kQ-Hp
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 06:25:32 -0400
+Received: by mail-wm1-f54.google.com with SMTP id
+ 5b1f17b1804b1-4a01933b584so43891425e9.0
+ for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 03:25:28 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792059895; x=1792664695;
+ d=1e100.net; s=20260707; t=1792059927; x=1792664727;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :content-type:mime-version:subject:date:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=61NEYluxRsQGvtMueBIKvSSCDkn5fQLszcxox8Hk6CM=;
- b=HkYkiF7IgrUI3LewkZgLlGgOFMyj8JciU/Nb2ju3Dg8M9l4R8Nv5uarb5aRi/Iydd1
- 1/9kHgZr4xUNtwdTjEf83Zbd6dNamC0F2yLRrG+GjPa5f5Tv3gL7thAhHb3ucyW/px42
- jgix4YO6Pjo5oqNsotHoQGjA3eAIKCBFAa+TeLyXcLMiOFNPW8RpXgwAigZ5cFlwffPD
- RHw5SFPdFsBD3abnOW92xYyEwSp/IBEQlIW25Ke04ICI6qXHISj5SdBWr1/f1e87lyTD
- 06ko2UPlcITQf8fNXjGwlu0diep0tGz5mPItHIixYXre+xzwfbGLfovJ3joqHmV1NDeT
- 6vRA==
-X-Gm-Message-State: AFq9FYLTUH08ZEGnadp3fOAwwFNVDwaYa8/dIn17Zy1x551VvKAjsh9r
- ovjfMT4GXCCvfOJWgWKY80Bw4NcjGzZ2+xvXoiu6nVt2Cvq/Ly5xfd51kdcreAmF
-X-Gm-Gg: AYBFou01xwb/PPJqTk1GnFs6zrUyYIDx1rH/9SyBJSDmbW3YPxQpUubWJT743d0kWnA
- H1tVak9nsGbydQl0K6D/xgN00IOiIkwigdIOgteYAogUylipdzOnRv+UdJNd4cq/sUedGoxNELY
- XA+q3iokqTMq60Dm67B617eC+I5wN38hfekZW8KQQtQwFJPqyORp4ksWyGNO7oqE15rqjfSSTmh
- mpOcovyZBbPDsxPNU3WTuEATxyAkDCRn2I1xrNastRZdiNAIm979fH0W9bXOzemGh3RyzuN4uUf
- RDL0GNwVasGYd8H3dSgVjuX9q8weOfMYcvmPGxAK0plfIuHY1kzItvxP3IAK8ttWebYb6C3WckY
- pDUx2SGjfQfUwoILe7UKTg6Sx4i6tKR6Px5tnsiOryDV+lbrniPEm2Z314sQywjC+sXoj3Ubcol
- q4dEw8BtWha6N2SrHBcPBJqZLnFy7mRbcwJF+rLUxAFNNYJjPQXIciYrReQkP8BKuFe0fiEnmWY
- SKHpYEcGh6q/67nKBcNNfs0Dc12oO3Xgj6lp4bdnJ9DSohN6MajD+ab
-X-Received: by 2002:a5d:588e:0:b0:48d:c186:dcc6 with SMTP id
- ffacd0b85a97d-48dc186dd62mr31665477f8f.57.1792059894704; 
- Thu, 15 Oct 2026 03:24:54 -0700 (PDT)
+ bh=HXzz1QMMzZ/n/bvN4ExUkbI8aUO54r3IoptKCcv3x0M=;
+ b=rLfmbcSpEttKbKbY5FrvhsERyMP66euVECgL2w51Q20qE692fHDA6MLkcVcpdyKiBh
+ PwKxrC5VoDspQAr2z0c4Z4sIhzu+ikieppOIxDelYXgnbedKg96whoGvXCw/g8OAbbjo
+ qbJ0isCcGQ/RCtwHo7NAoq2aA8DnYkGKW80XsFOuMjZAw3DizLNyO5k00k3BXGPChJUq
+ HwVGFwWVXFrbiHvhl+Qfr6JMFReAVGSjhgEeFizMkyJQQXbemSytlaWj2VTdov0TBbXX
+ 1TQ39geudqDzlS1DqmdSf+Fgl0b9uvOr6T72qEqN2iC3gYNMQSaxMwmrzZ/8yF4/T48S
+ F7wg==
+X-Gm-Message-State: AFq9FYLoLZjje4KVEztNcr6LgZhzlKVc8eSYQVENskyJs3ZzOSYkDwH6
+ MHJtPJ00aIEAu0Sp7URnqkhMXN9Jt8qCuV8m3UWnCzESyElWPKXdEZ8XNYOOEay1
+X-Gm-Gg: AYBFou2lnkukDLvLrDRQgVoFlarAM1uUuQHuS1RXBYrRyogovvmuw4JZrjNlD9z3R8j
+ yh6kfIZT8BNvGm96iMAmeqUqvojMG6WIHWZ8T1D33mz/NxOXO8vefu/n1N57o/oTkadnhohd7Yr
+ TcRp2g2daxoLGCiWyhowGLefOQHNHgKi0GOVh/RYxqwomjLU7t9xcGvVg8KK9DrXNwOPTqBS1O5
+ tQhnqyI/rdOEKIOJvV5WfKdc2/ITH43puCNeuAtth3/qf/s+8IZ68mRBg3kYmZGjsjYRfA/hewo
+ 8ccQxEISXdaYSkXlERmZu7rQh9iaifEIm0p0+MflIXWtNE4TLJ9cNFCrVFmk8ekgbEZZfygJoNG
+ RyWxgwNzQOqBJggsvlxGFqKZHl/mX92fEf2nDdWHHxftfxmERdNFeE1MtgksWexyo8lpa95TTPP
+ vZ1pKAVNjLXX2jgQ+XyJCLhJyUlREpwNIqzfeK+tbt5JQR4I4dZ7RTMHXTrSIY8EpiJlabp39Ss
+ UXnoSqKjtqRa6X8Ev9DzYtPVW8+EeUH0Z7NEGQvdGwq+Q==
+X-Received: by 2002:a05:600c:4e01:b0:49f:ce78:3567 with SMTP id
+ 5b1f17b1804b1-4a18e4afc3amr359952785e9.24.1792059926852; 
+ Thu, 15 Oct 2026 03:25:26 -0700 (PDT)
 Received: from localhost (89-93-216-19.hfc.dyn.abo.bbox.fr. [89.93.216.19])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48df2619703sm5102749f8f.24.2026.10.15.03.24.53
+ 5b1f17b1804b1-4a1bd9b8b5fsm64707865e9.9.2026.10.15.03.25.26
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 Oct 2026 03:24:54 -0700 (PDT)
-Date: Thu, 15 Oct 2026 11:27:54 +0200
-Subject: [PATCH v3 07/50] tests/qtest: pca9545: add mux test
+ Thu, 15 Oct 2026 03:25:26 -0700 (PDT)
+Date: Thu, 15 Oct 2026 11:27:59 +0200
+Subject: [PATCH v3 12/50] hw/rtc: ds1338: parameterise the register map via
+ a device class
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20261015-bmc-minerva-v3-7-7d50c8a108e5@free.fr>
+Message-Id: <20261015-bmc-minerva-v3-12-7d50c8a108e5@free.fr>
 References: <20261015-bmc-minerva-v3-0-7d50c8a108e5@free.fr>
 In-Reply-To: <20261015-bmc-minerva-v3-0-7d50c8a108e5@free.fr>
 To: qemu-devel@nongnu.org
@@ -76,15 +77,15 @@ Cc: =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
  Emmanuel Blot <emmanuel.blot@free.fr>, 
  =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 X-Mailer: b4 0.16.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1792056475; l=4698;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1792056475; l=6152;
  i=emmanuel.blot@free.fr; s=20260602; h=from:subject:message-id;
- bh=S5zD/fm1r3791LPnF7SwePv3pZV1UgFsCAKYoq/MMy0=;
- b=D06H95TZpEWtZTJY2jHv1rHgRCeRKLnJMvF0BfvIcge9GV0TDdyGcT3qsW/h9x8Dun/zRvfeY
- XrOcj4q3PW7ANte8TVHHSIBJoY80SrcK2F+5GnYiyY8b+ghIXR82+tO
+ bh=niz1W2ft4OO1YofOLf1Lxh2AyTzJFOItAAqnZjDIB4k=;
+ b=Ygv8bDxOTK8E2FKEGjhcxFe1cli3Hv7JzkKuV83w69/LRJK2KU397QdXlLiZqN4SEJPN3kdlc
+ ajqbL2f8hXVBNFKf7c7DKHXg0vsRlmGnz0a7Mi6dcb/svx806mrTCck
 X-Developer-Key: i=emmanuel.blot@free.fr; a=ed25519;
  pk=0qFrZ21FAAN8OfVsSoVcCFTk/NMYOWzxJz4paSAVm0g=
-Received-SPF: pass client-ip=209.85.221.48; envelope-from=eblot.ml@gmail.com;
- helo=mail-wr1-f48.google.com
+Received-SPF: pass client-ip=209.85.128.54; envelope-from=eblot.ml@gmail.com;
+ helo=mail-wm1-f54.google.com
 X-Spam_score_int: -15
 X-Spam_score: -1.6
 X-Spam_bar: -
@@ -110,150 +111,177 @@ From:  Emmanuel Blot via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Exercise the PCA9545 4-channel I2C mux: channel selection through the
-control byte, upper-nibble read-back, and interrupt logic.
+In preparation for a register-compatible variant, refactor DS1338
+register map. Introduce DS1338Class, carrying the register-pointer wrap
+boundary and the control/OSF register location and masks, and drive
+inc_regptr() and the control-register handling.
+
+The control-register power-on value is parameterised along with them,
+so the part comes up holding the contents its datasheet specifies
+rather than zero, and its oscillator-stop flag now reads set at
+power-on.
+
+Encode the year register modulo 100 (tm_year % 100) instead of
+tm_year - 100.
 
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
 Signed-off-by: Emmanuel Blot <emmanuel.blot@free.fr>
 ---
- tests/qtest/meson.build    |   1 +
- tests/qtest/pca9545-test.c | 116 +++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 117 insertions(+)
+ hw/rtc/ds1338.c | 71 ++++++++++++++++++++++++++++++++++++++++++---------------
+ 1 file changed, 53 insertions(+), 18 deletions(-)
 
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index 200abf6f36..e05d8a07b9 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -336,6 +336,7 @@ qos_test_ss.add(
-   'ne2000-test.c',
-   'tulip-test.c',
-   'nvme-test.c',
-+  'pca9545-test.c',
-   'pca9552-test.c',
-   'pca9554-test.c',
-   'pca9555-test.c',
-diff --git a/tests/qtest/pca9545-test.c b/tests/qtest/pca9545-test.c
-new file mode 100644
-index 0000000000..91f56db92f
---- /dev/null
-+++ b/tests/qtest/pca9545-test.c
-@@ -0,0 +1,116 @@
-+/*
-+ * QTest testcase for the PCA9545 4-channel I2C switch with interrupt logic
-+ *
-+ * Copyright (c) 2026 Meta Platforms, Inc. and affiliates.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
+diff --git a/hw/rtc/ds1338.c b/hw/rtc/ds1338.c
+index 1755a3a37c..7eaa663113 100644
+--- a/hw/rtc/ds1338.c
++++ b/hw/rtc/ds1338.c
+@@ -30,7 +30,14 @@
+ #define HOURS_PM   0x20
+ #define CTRL_OSF   0x20
+ 
+-OBJECT_DECLARE_SIMPLE_TYPE(DS1338State, DS1338)
++/* DS1338 register map */
++#define DS1338_NUM_REGS    NVRAM_SIZE   /* 0x00..0x3f, then wraps */
++#define DS1338_CONTROL     0x07
++#define DS1338_CTRL_MASK   0xb3         /* bits 2, 3 and 6 read back as zero */
++/* POR: OUT, OSF, SQWE and both rate-select bits come up set. */
++#define DS1338_CTRL_RESET  0xb3
 +
-+#include "qemu/osdep.h"
-+#include "libqtest-single.h"
-+#include "libqos/qgraph.h"
-+#include "libqos/i2c.h"
++OBJECT_DECLARE_TYPE(DS1338State, DS1338Class, DS1338)
+ 
+ struct DS1338State {
+     I2CSlave parent_obj;
+@@ -42,6 +49,17 @@ struct DS1338State {
+     bool addr_byte;
+ };
+ 
++struct DS1338Class {
++    I2CSlaveClass parent_class;
 +
-+#define PCA9545_TEST_ID   "pca9545-test"
-+#define PCA9545_TEST_ADDR 0x70
-+#define PCA9545_TEST_PATH "/machine/peripheral/" PCA9545_TEST_ID
++    uint8_t num_regs;       /* register-pointer wrap boundary */
++    uint8_t ctrl_addr;      /* control register address */
++    uint8_t ctrl_mask;      /* writable/read-back bits of the control reg */
++    uint8_t osf_addr;       /* register holding the OSF flag */
++    uint8_t osf_mask;       /* OSF bit within osf_addr */
++    uint8_t ctrl_reset;     /* control-register power-on value */
++};
 +
-+/* INTn and INT are active low: level 0 is asserted. */
-+#define INT_ASSERTED   0
-+#define INT_RELEASED   1
-+
-+/* The mux has no register pointer: a read/write moves a single control byte. */
-+static uint8_t pca9545_get(QI2CDevice *dev)
-+{
-+    uint8_t val;
-+
-+    qi2c_recv(dev, &val, 1);
-+    return val;
-+}
-+
-+static void pca9545_set(QI2CDevice *dev, uint8_t val)
-+{
-+    qi2c_send(dev, &val, 1);
-+}
-+
-+static void pca9545_set_int(unsigned chan, int level)
-+{
-+    qtest_set_irq_in(global_qtest, PCA9545_TEST_PATH, "interrupt", chan, level);
-+}
-+
-+/* Channel selection is the lower nibble; the upper nibble reads back 0. */
-+static void test_channel_select(void *obj, void *data, QGuestAllocator *alloc)
-+{
-+    QI2CDevice *dev = (QI2CDevice *)obj;
-+
-+    g_assert_cmphex(pca9545_get(dev), ==, 0x00);
-+
-+    pca9545_set(dev, 0x05); /* channels 0 and 2 */
-+    g_assert_cmphex(pca9545_get(dev), ==, 0x05);
-+
-+    pca9545_set(dev, 0x0f); /* all channels */
-+    g_assert_cmphex(pca9545_get(dev), ==, 0x0f);
-+
-+    pca9545_set(dev, 0x00);
-+    g_assert_cmphex(pca9545_get(dev), ==, 0x00);
-+}
-+
-+/*
-+ * The interrupt status is reported in the upper nibble (INT3..INT0) and is
-+ * latched regardless of which channels are selected (PCA9545A Table 5).
-+ */
-+static void test_interrupt_status(void *obj, void *data, QGuestAllocator *alloc)
-+{
-+    QI2CDevice *dev = (QI2CDevice *)obj;
-+
-+    pca9545_set_int(1, INT_ASSERTED);
-+    g_assert_cmphex(pca9545_get(dev), ==, 0x20);
-+
-+    pca9545_set(dev, 0x01);
-+    pca9545_set_int(3, INT_ASSERTED);
-+    g_assert_cmphex(pca9545_get(dev), ==, 0xa1); /* INT3 | INT1 | channel 0 */
-+
-+    pca9545_set_int(1, INT_RELEASED);
-+    g_assert_cmphex(pca9545_get(dev), ==, 0x81); /* INT3 | channel 0 */
-+}
-+
-+/* The INT output is pulled low while any channel interrupt is active. */
-+static void test_interrupt_output(void *obj, void *data, QGuestAllocator *alloc)
-+{
-+    qtest_irq_intercept_out_named(global_qtest, PCA9545_TEST_PATH,
-+                                  "interrupt-out");
+ static const VMStateDescription vmstate_ds1338 = {
+     .name = "ds1338",
+     .version_id = 2,
+@@ -82,16 +100,19 @@ static void ds1338_capture_current_time(DS1338State *s)
+     s->nvram[3] = (now.tm_wday + s->wday_offset) % 7 + 1;
+     s->nvram[4] = to_bcd(now.tm_mday);
+     s->nvram[5] = to_bcd(now.tm_mon + 1);
+-    s->nvram[6] = to_bcd(now.tm_year - 100);
++    s->nvram[6] = to_bcd(now.tm_year % 100);
+ }
+ 
+ static void ds1338_inc_regptr(DS1338State *s)
+ {
+-    /* The register pointer wraps around after 0x3F; wraparound
+-     * causes the current time/date to be retransferred into
+-     * the secondary registers.
++    DS1338Class *k = DS1338_GET_CLASS(s);
 +
 +    /*
-+     * Interception starts with no recorded level, so drive an idle input
-+     * first to make the mux publish the released state of its output.
-+     */
-+    pca9545_set_int(0, INT_RELEASED);
-+    g_assert_true(get_irq(0));
++     * The register pointer wraps around after the last register; wraparound
++     * causes the current time/date to be retransferred into the secondary
++     * registers.
+      */
+-    s->ptr = (s->ptr + 1) & (NVRAM_SIZE - 1);
++    s->ptr = (s->ptr + 1) % k->num_regs;
+     if (!s->ptr) {
+         ds1338_capture_current_time(s);
+     }
+@@ -136,11 +157,12 @@ static uint8_t ds1338_recv(I2CSlave *i2c)
+ static int ds1338_send(I2CSlave *i2c, uint8_t data)
+ {
+     DS1338State *s = DS1338(i2c);
++    DS1338Class *k = DS1338_GET_CLASS(i2c);
+ 
+     trace_ds1338_send(s->ptr, data);
+ 
+     if (s->addr_byte) {
+-        s->ptr = data & (NVRAM_SIZE - 1);
++        s->ptr = data % k->num_regs;
+         s->addr_byte = false;
+         return 0;
+     }
+@@ -190,18 +212,19 @@ static int ds1338_send(I2CSlave *i2c, uint8_t data)
+             break;
+         }
+         s->offset = qemu_timedate_diff(&now);
+-    } else if (s->ptr == 7) {
+-        /* Control register. */
+-
+-        /* Ensure bits 2, 3 and 6 will read back as zero. */
+-        data &= 0xB3;
+-
+-        /* Attempting to write the OSF flag to logic 1 leaves the
+-           value unchanged. */
+-        data = (data & ~CTRL_OSF) | (data & s->nvram[s->ptr] & CTRL_OSF);
+-
+-        s->nvram[s->ptr] = data;
+     } else {
++        if (s->ptr == k->ctrl_addr) {
++            /* Control register: reserved bits read back as zero. */
++            data &= k->ctrl_mask;
++        }
++        if (s->ptr == k->osf_addr) {
++            /*
++             * Attempting to write the OSF flag to logic 1 leaves the
++             * value unchanged.
++             */
++            data = (data & ~k->osf_mask) |
++                   (data & s->nvram[s->ptr] & k->osf_mask);
++        }
+         s->nvram[s->ptr] = data;
+     }
+     ds1338_inc_regptr(s);
+@@ -211,11 +234,13 @@ static int ds1338_send(I2CSlave *i2c, uint8_t data)
+ static void ds1338_reset_hold(Object *obj, ResetType type)
+ {
+     DS1338State *s = DS1338(obj);
++    DS1338Class *k = DS1338_GET_CLASS(s);
+ 
+     /* The clock is running and synchronized with the host */
+     s->offset = 0;
+     s->wday_offset = 0;
+     memset(s->nvram, 0, NVRAM_SIZE);
++    s->nvram[k->ctrl_addr] = k->ctrl_reset;
+     s->ptr = 0;
+     s->addr_byte = false;
+ }
+@@ -225,12 +250,21 @@ static void ds1338_class_init(ObjectClass *klass, const void *data)
+     DeviceClass *dc = DEVICE_CLASS(klass);
+     I2CSlaveClass *k = I2C_SLAVE_CLASS(klass);
+     ResettableClass *rc = RESETTABLE_CLASS(klass);
++    DS1338Class *dsc = DS1338_CLASS(klass);
+ 
+     k->event = ds1338_event;
+     k->recv = ds1338_recv;
+     k->send = ds1338_send;
+     rc->phases.hold = ds1338_reset_hold;
++    dc->desc = "DS1338 I2C RTC with 56-byte NV RAM";
+     dc->vmsd = &vmstate_ds1338;
 +
-+    pca9545_set_int(0, INT_ASSERTED);
-+    g_assert_false(get_irq(0));
-+
-+    pca9545_set_int(2, INT_ASSERTED);
-+    g_assert_false(get_irq(0));
-+
-+    pca9545_set_int(0, INT_RELEASED);
-+    g_assert_false(get_irq(0));
-+    pca9545_set_int(2, INT_RELEASED);
-+    g_assert_true(get_irq(0));
-+}
-+
-+static void pca9545_register_nodes(void)
-+{
-+    QOSGraphEdgeOptions opts = {
-+        .extra_device_opts = "id=" PCA9545_TEST_ID ",address=0x70"
-+    };
-+    add_qi2c_address(&opts, &(QI2CAddress) { PCA9545_TEST_ADDR });
-+
-+    qos_node_create_driver("pca9545", i2c_device_create);
-+    qos_node_consumes("pca9545", "i2c-bus", &opts);
-+
-+    qos_add_test("channel-select", "pca9545", test_channel_select, NULL);
-+    qos_add_test("interrupt-status", "pca9545", test_interrupt_status, NULL);
-+    qos_add_test("interrupt-output", "pca9545", test_interrupt_output, NULL);
-+}
-+libqos_init(pca9545_register_nodes);
++    dsc->num_regs   = DS1338_NUM_REGS;
++    dsc->ctrl_addr  = DS1338_CONTROL;
++    dsc->ctrl_mask  = DS1338_CTRL_MASK;
++    dsc->osf_addr   = DS1338_CONTROL;
++    dsc->osf_mask   = CTRL_OSF;
++    dsc->ctrl_reset = DS1338_CTRL_RESET;
+ }
+ 
+ static const TypeInfo ds1338_types[] = {
+@@ -238,6 +272,7 @@ static const TypeInfo ds1338_types[] = {
+         .name          = TYPE_DS1338,
+         .parent        = TYPE_I2C_SLAVE,
+         .instance_size = sizeof(DS1338State),
++        .class_size    = sizeof(DS1338Class),
+         .class_init    = ds1338_class_init,
+     },
+ };
 
 -- 
 2.53.0-Meta
