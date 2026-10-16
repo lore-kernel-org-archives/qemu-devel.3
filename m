@@ -4,92 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B8E6CCF2C1
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 23:10:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 015B9CCA490
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 23:10:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHr3X-0000po-KU; Fri, 16 Oct 2026 19:09:44 -0400
+	id 1xHr3b-0000pp-JK; Fri, 16 Oct 2026 19:09:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <filip.hejsek@gmail.com>)
- id 1xHr3S-0000pT-1s
- for qemu-devel@nongnu.org; Fri, 16 Oct 2026 19:09:38 -0400
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ id 1xHr3Q-0000pC-C1
+ for qemu-devel@nongnu.org; Fri, 16 Oct 2026 19:09:36 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <filip.hejsek@gmail.com>)
- id 1xHr3Q-0008K6-FX
- for qemu-devel@nongnu.org; Fri, 16 Oct 2026 19:09:37 -0400
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-48de72fc832so241891f8f.1
- for <qemu-devel@nongnu.org>; Fri, 16 Oct 2026 16:09:36 -0700 (PDT)
+ id 1xHr3O-0008Ji-HS
+ for qemu-devel@nongnu.org; Fri, 16 Oct 2026 19:09:36 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-4a180fbeef5so3274625e9.1
+ for <qemu-devel@nongnu.org>; Fri, 16 Oct 2026 16:09:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1792192175; x=1792796975; darn=nongnu.org;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :content-type:mime-version:subject:date:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=PilHsZjcEqFGHnD62Vrw08iZjdj9emsAmAEgEd76DEM=;
- b=QWP1AGVs3k5gzuTtWMBQRk4Vy6YJdi35QFwEOeeOGtceFE7ePESbZG42LsKdItQXOI
- cjYlyNC/KFj9mzJgo1FwxK2AN+/gDffs1b9oqJCkJQSYbw9eKze005FleqXyaOQ+cVqg
- UvDwStYcTF8sIyuJoR5gawq1bwg4slgbZGreNR3jbjeA4tfOaf6Py9rXaUuT1l73tH97
- C3mv2rfIUHj0Sf/mpfz6NhzVVqAM91FvQgy9CfNvQdrS2KExBQ50/mPdDhpGlVRsKKCp
- NAo3l1E90bEeL45u/KkKBttr14+XLFqrIBB/lpZi9mglJoPaE+iDTqNi8FFyQASjIYXC
- j3NA==
+ d=gmail.com; s=20251104; t=1792192172; x=1792796972; darn=nongnu.org;
+ h=cc:to:content-transfer-encoding:content-type:mime-version
+ :message-id:date:subject:from:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=np56ev6ZrXUUDJyT55I+NxWEm0VSZfVRUYQG3R+fPFw=;
+ b=KXkkXBla9nNOj1mB6xufWb9p7oqRS3dCeKbFMKbBF364vkQ74/dYdcK1/DwcbjLJfi
+ bjy7/bv9OjZu6TfftXXoa4waeTkZu+BV6rmgjj+PlCrjAkHCFShFtnJByxoOfCm0qa/G
+ d0iwmZilE/fxYzZOiv8/lj0pQG7u/AxuhvG2slDTFCVgmQYR0F4jmVTKrqfCY8oHe9gm
+ NoQhoZGOXsWVqU6yBsXBvszRwMrx5CUmGcZ0TjqiMbCyQI2E5Zu11x0Lt6nnsOGEl74q
+ hW0Egm+R2Bm6OPC1UyxO6dyCXjbjZXULNsYVGIB5jOpNlv0KmSUn8WreIvOUp04g+lFh
+ UC6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792192175; x=1792796975;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :content-type:mime-version:subject:date:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=PilHsZjcEqFGHnD62Vrw08iZjdj9emsAmAEgEd76DEM=;
- b=y+gPavgAAH1Wkg+9+07SkEmWWPa3mzGrdXp4jES5fUX0ah9rGTU9Lrlij3Xzy+8r1j
- 8fPy1iEPri7bfP5yX98NEaNY8PQh4dgr8UnQtGPCn3IcvJZ7mv1ipG6YfWbN3amDd2bZ
- /YaOUBfqF2uVyyaPF16SLz+QeupmZX3Uuwtrx23OMdDj0GlCkhXBVGZozO5OON9HDwFl
- ojHOk6F72Y1eSYLVEm7dgl9/b32KWpANE6jhF9edRb8PIfW9Rb8hrW2YBaM5yAJnGaOV
- D5vIDeWnMOoobveXa33loJQB5kNHYjou/64vYph/6sf3c4EHa7AivYTZ75N0vhIGs5ly
- fVbw==
-X-Gm-Message-State: AFq9FYL/uXOfO3pNbEstJ1t/5tJuz8Gb7QQo2dxH+fMFzp6yq7WhyOil
- AFF13emGsmc8obVNbKp6VgHSyNxZdSs5fyIP79agA++C4h4z3UunuDezsbh/Aw==
-X-Gm-Gg: AYBFou3UugSli83nSGjjcyWiZfkENNOFuVAfyTR7FD9bz6LMhdbs0xe/TENXHs+tT7+
- iTXZOzSFgWsFaeAmmqPFmnBuLIBZfudvepe7KMHntCaGZGQoRfOXIYi+InFrpfIyILRLssUH0uq
- Sv/sF/LcX1Ukdv9GOcSrZC9NtIutgohgh3lanc5UqKDuZyr4kvWoQNrhLiuKX5bHOHYXg5FPH8y
- L80AmJsdMeSE6XJ1r1MFBP1nNTq18qP7J25/dQ5B5t5VdEGF9+05yHZAlK9gSv0kGpHITkfbCBI
- NDX3A6LKqV17AugV64+ZmLJLxjHRnSf0UcXfP7SNFrc1z6o1f5ntc7gLu+7UewkOMwXSA1KYmiT
- R8rwfu/6Sa4oWursxHCHwqVSonG6SAFPd1id+58TFgmEBf7mDrMQQHQHFS4rMq4aoeJ9uI5N++p
- hs8bFZ+ijW9zrpqQRW4BTbTkmWTqC07xZ/Rrer2X6KU5JMn0chdDzw/tBunMSn8FSgPjRLdFJDP
- qGIGT/lvSEwftKwWhk1gRp0PzST
-X-Received: by 2002:a05:6000:260d:b0:48c:7f18:c85e with SMTP id
- ffacd0b85a97d-48e07fabbb0mr2099720f8f.45.1792192175040; 
- Fri, 16 Oct 2026 16:09:35 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1792192172; x=1792796972;
+ h=cc:to:content-transfer-encoding:content-type:mime-version
+ :message-id:date:subject:from:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=np56ev6ZrXUUDJyT55I+NxWEm0VSZfVRUYQG3R+fPFw=;
+ b=brsYq5IN2zJzeT7ylsieHY7rM+4gEVUz3UMlQ3x+iMSyd8I1RbYzR4eiamS6lI35ge
+ gv3HRV6RXZM64u2nE7RwmMvIL6uVvCPu0W2t/BG2QTUWQK7kZBNcbOlmvr8NlOeCI5vE
+ FrcPg41EWGdwNLXkda8GOdM3gnBM7kM0TCxvRCd7GyCc/9d1Qs5atrvQ1Rf1EodCh+g3
+ PYlutevnBGRFtVUarcZC+T361AMcDOCC8lo80tu/CwKRANztv3HqUdUt+dmeQdZfRyjS
+ n67V355aG4ulO1mrnyVOWKdgKMaf/paqiS1anMMRfbahqjGU+jIBzvSeC2Er+1HIZrL+
+ YF7w==
+X-Gm-Message-State: AFq9FYJHSfWUWrlB6aBiYYqOTZJ3OpOeqLJrzY2Xy+SpyCPVka8JtWOP
+ x+Gc0N1q6/udsHVmj8V8gko0/NXzeeqDxD9CkhzJw0PKVTTpn3+P41yF
+X-Gm-Gg: AYBFou2bQmCuHubL/5hDGbALIaOfc/bmL4gjIYJJix4a5VuwoIhU/6mbphdI0+nCJ9x
+ KgDcZfZCGR6AOl2xKulGyIhf4c8b6Vzu1mQfMEq4jWGOI5PIPyChQsghiwgGSXrEzAzu2xjnk06
+ fQoOkKOEUQf6cIIP7DK5z/qFTHSiAr3hQ7zRVbnfTsCtXT7hJ9GeH6zuKDy5ZkSr2eZTtYgMifw
+ X9OJYxo8ztA5fTHA1WHIctcSdwIxC2HFZlZV5LzSp3BV7zW7wYycjAEBU3tUbWJ9fxnprZWntFj
+ zBNKu13CSiebNYXeRSyUeh5X6uqvsFBZ79EPsTGzaJKjLle0Gq6MgEFl7Ws1HoxkHNwZiLp6ZU4
+ ZiLNsJijyhbKdFRP80l/eDNPT7OoavgjLpp3xaEv0w1WRtgmHzP/9CW7a8625NDkZlPMwhGSoZO
+ XY7dSq1gF4MMLYN04B3FTua58f6tW5lIMcPdHxZrrpxhibpVzoj2l2WS356w/MUJMb0caJyEX45
+ Qm8JdedMuTJnoizivDV41TLXRCdWAmfSBhagA==
+X-Received: by 2002:a05:600c:34d2:b0:4a0:1c10:1372 with SMTP id
+ 5b1f17b1804b1-4a1d7614d3amr26885595e9.27.1792192171920; 
+ Fri, 16 Oct 2026 16:09:31 -0700 (PDT)
 Received: from localhost (mem-185.47.220.165.jmnet.cz. [185.47.220.165])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48dfdeb18f8sm7096091f8f.20.2026.10.16.16.09.34
+ 5b1f17b1804b1-4a1bd96f9a0sm179876155e9.1.2026.10.16.16.09.31
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 16 Oct 2026 16:09:34 -0700 (PDT)
+ Fri, 16 Oct 2026 16:09:31 -0700 (PDT)
 From: Filip Hejsek <filip.hejsek@gmail.com>
-Date: Sat, 17 Oct 2026 01:09:09 +0200
-Subject: [PATCH v3 2/2] io: report a warning when a file channel is created
- from a stdio fd
+Subject: [PATCH v3 0/2] io: make sure we don't close stdio fds
+Date: Sat, 17 Oct 2026 01:09:07 +0200
+Message-Id: <20261017-fix-stdio-close-v3-0-cfff0122a2a4@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261017-fix-stdio-close-v3-2-cfff0122a2a4@gmail.com>
-References: <20261017-fix-stdio-close-v3-0-cfff0122a2a4@gmail.com>
-In-Reply-To: <20261017-fix-stdio-close-v3-0-cfff0122a2a4@gmail.com>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/2WN0Q6CIBhGX8VxHQ0Q0LrqPVoXir/6N5MGxmrOd
+ w9sbW5enu0755uJB4fgyTmbiYOAHu0YIT9kxPTV2AHFJjIRTGjOuKAtvqmfGrTUDNYDPZWllky
+ pRhY5idbTQZysxevtx/5V38FMKZMWPfrJus96GXja/ev5rh44ZVSCaSvJtSlqc+keFQ5HYx8k1
+ YPY+mrvi+izlnHQqmQg5NZfluUL7sejIwABAAA=
+X-Change-ID: 20261012-fix-stdio-close-98864055d473
 To: qemu-devel@nongnu.org
 Cc: =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
  Paolo Bonzini <pbonzini@redhat.com>
 X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1792192170; l=2300;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1792192170; l=1715;
  i=filip.hejsek@gmail.com; s=20250912; h=from:subject:message-id;
- bh=ImrpDK3H4/c3AIiT6aboGHS/WPcNusQTjY0EvxWUaPg=;
- b=XqmYPnhHsxtBUQSlq6umfyGBF9PQTumpNO0R81YMKY0aw6YxOgvrZVR2uB9oJpSJkSBD6uFW8
- bIvqfUR1YEADXRCLyUSS9jv8jULN5MpmZ0vgCxPe+o4pfSU9V1ckZJu
+ bh=IxoUqjGMEYnmTUe3ybtkcVdXuy1ipY+LkiX7fgZ/l98=;
+ b=GAOQ7/aymYDAorYH22Z/hP8BfX37PNn8judntLLGXbucwPFz9eysnOrM6P/RTsE7i2u9k90Sg
+ isQPkws3uPGCOl6n71I0BMvRZ5IcKZpB6voj/+IirBo8RgSgtOsalrZ
 X-Developer-Key: i=filip.hejsek@gmail.com; a=ed25519;
  pk=nakB8gEK3oi+Q/5dBTMCy/LgZL47NP60z1jeDR6O/WU=
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=filip.hejsek@gmail.com; helo=mail-wr1-x430.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=filip.hejsek@gmail.com; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,68 +113,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-A channel closes its fd when the last reference to it is dropped.
-Closing stdio fds is typically unwanted, so warn when they are passed to
-qio_channel_file_new_fd().
+The stdio chardev currently closes the stdin and stdout fds when it is
+destroyed. This means that, assuming char0 is a stdio chardev, invoking
+the HMP command
 
-Change the documentation of qio_channel_file_new_fd() to explicitly say
-that passing stdio descriptors is incorrect.
+    chardev-change char0 null
+
+will cause QEMU to run with descriptors 0 and 1 closed. That's not a
+great situation, as:
+  - the stdio chardev cannot be recreated
+  - code assuming fds 0 and 1 are open will misbehave
+  - the fds 0 and 1 will get assigned to newly opened files, possibly
+    causing them to be confused for actual stdin/stdout
+
+The fist patch fixes the problem by duplicating the fds before they get
+passed to qio_channel_file_new_fd(), the second patch adds a warning
+that is printed when qio_channel_file_new_fd() is called with a stdio
+fd and modifies the documentation of that function to say that passing
+stdio descriptors is incorrect.
+
+Changes in v3:
+- Add documentation changes
+- Link to v2: https://lore.kernel.org/qemu-devel/20261015-fix-stdio-close-v2-0-0f01e6580e24@gmail.com
+
+Changes in v2:
+- Code style fixes
+- Set *errp when dup fails
+- Link to v1: https://lore.kernel.org/qemu-devel/20261013-fix-stdio-close-v1-0-4ecfa416c7bc@gmail.com
 
 Signed-off-by: Filip Hejsek <filip.hejsek@gmail.com>
 ---
+Filip Hejsek (2):
+      char-stdio: avoid closing stdio fds
+      io: report a warning when a file channel is created from a stdio fd
+
+ chardev/char-stdio.c      | 16 +++++++++++++++-
  include/io/channel-file.h | 12 ++++++++----
  io/channel-file.c         |  6 ++++++
- 2 files changed, 14 insertions(+), 4 deletions(-)
+ 3 files changed, 29 insertions(+), 5 deletions(-)
+---
+base-commit: 7e8d3c7fc460fe7cd28a3e423d7466fa292bc269
+change-id: 20261012-fix-stdio-close-98864055d473
 
-diff --git a/include/io/channel-file.h b/include/io/channel-file.h
-index d373a4e44d..6a6776ff8e 100644
---- a/include/io/channel-file.h
-+++ b/include/io/channel-file.h
-@@ -58,10 +58,14 @@ struct QIOChannelFile {
-  * should be used instead, as this provides greater
-  * functionality and cross platform portability.
-  *
-- * The channel will own the passed in file descriptor
-- * and will take responsibility for closing it, so the
-- * caller must not close it. If appropriate the caller
-- * should dup() its FD before opening the channel.
-+ * The channel will own the file descriptor that was
-+ * passed to it and will take responsibility for closing
-+ * it. This means the caller must not close it, and must
-+ * not pass in descriptors that will remain in use after
-+ * the channel is destroyed. In particular, @fd must
-+ * not be one of the stdin/stdout/stderr descriptors. If
-+ * requiring a channel to wrap a descriptor that should
-+ * remain open, use qio_channel_file_new_dupfd() instead.
-  *
-  * Returns: the new channel object
-  */
-diff --git a/io/channel-file.c b/io/channel-file.c
-index 5cef75a67c..4c9da6619b 100644
---- a/io/channel-file.c
-+++ b/io/channel-file.c
-@@ -23,6 +23,7 @@
- #include "io/channel-util.h"
- #include "io/channel-watch.h"
- #include "qapi/error.h"
-+#include "qemu/error-report.h"
- #include "qemu/module.h"
- #include "qemu/sockets.h"
- #include "trace.h"
-@@ -32,6 +33,11 @@ qio_channel_file_new_fd(int fd)
- {
-     QIOChannelFile *ioc;
- 
-+    if (fd <= STDERR_FILENO) {
-+        warn_report("potential bug: creating a channel from stdio fd %d; "
-+                    "the fd will be closed when the channel is destroyed", fd);
-+    }
-+
-     ioc = QIO_CHANNEL_FILE(object_new(TYPE_QIO_CHANNEL_FILE));
- 
-     ioc->fd = fd;
-
--- 
-2.56.0
+Best regards,
+--  
+Filip Hejsek <filip.hejsek@gmail.com>
 
 
