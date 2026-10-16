@@ -4,170 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0E3FCC6B38
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 02:06:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65CF3CC6B38
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 03:49:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHXLG-0004RO-8x; Thu, 15 Oct 2026 22:06:42 -0400
+	id 1xHYva-0000zH-G9; Thu, 15 Oct 2026 23:48:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <prvs=742cbab99=Alistair.Francis@wdc.com>)
- id 1xHXLC-0004My-6C; Thu, 15 Oct 2026 22:06:38 -0400
-Received: from esa1.hgst.iphmx.com ([68.232.141.245])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <prvs=742cbab99=Alistair.Francis@wdc.com>)
- id 1xHXLA-0001ws-GC; Thu, 15 Oct 2026 22:06:37 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
- d=wdc.com; i=@wdc.com; q=dns/txt; s=dkim.wdc.com;
- t=1792116396; x=1823652396;
- h=from:to:cc:subject:date:message-id:references:
- in-reply-to:content-id:content-transfer-encoding: mime-version;
- bh=REecohs+FYAhbs+0ZOrn7y8l0BUr8nGE+psF0feBwy4=;
- b=acmXPe54pgS2wmNtx5BqZKi/kriUoULzs8UPu1oC9dmjWhNwSn3gEAXK
- irXJflLgHIlNDlOENzRXkDNMIm8xrKoB3qJt+GUKadyP0m4rAjcRmN9ID
- 6OwfF7G2SECj4THkB4d0ZCNzH9bU5TvB+Dtd3VqOmhb9POqKJ4d9C9jnp
- PaBBjHMdUnzN/W39gyQxQhpw4uS4aZTFMdyV7TzI+Tz6XGUY88RnpsX70
- zpBjdIqnch+8PXfUf0V0rTvGSHuiA274hGQTdTkdab7TKM/3JqWjOWlFC
- J6SbPfqhT0aCW01/CikumGvdS6drY5spq2fk4kJvr+bpf0QVBGvRTfrlw g==;
-X-CSE-ConnectionGUID: epJG6gPQSESKQbFyHR8e2w==
-X-CSE-MsgGUID: j6I67EfvQt+NpKppalHOAA==
-X-IronPort-AV: E=Sophos;i="6.27,160,1786982400"; d="scan'208";a="158114658"
-Received: from mail-northcentralusazon11012034.outbound.protection.outlook.com
- (HELO CH5PR02CU005.outbound.protection.outlook.com) ([40.107.200.34])
- by ob1.hgst.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES128-GCM-SHA256;
- 16 Oct 2026 10:06:33 +0800
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=mQMwigSCF0O6osVPKx6EltuIviZG7L/wJONn5CHq+YF3JwNhw/M6CFEaH8cLjLYz2ZJWIwdiT+kzOrvy9oMu9n9Pp64UUlASj1BKKzmPL4u5a5ltgv6Ys/5X2pAKsC+V4ClL/sqBe3X6/f/qee1W51sKtbTSrMpM0ABwk/xMatk8vFx9DEW+VATaqlZqWtu3Xx3gfMb2jpGOeZp0TBQFNpnBY+2ZauCZ0wd/YdH9JDa7lB4PWun1YKUC55PaP7yaqd/0gpWG8hw7TjPzMAPwlXDJCft00cmTvslum5CYpMmM/EESBc5iOLg4j7LrxgSvXweve/CgY6tySYxbAWbQkQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=REecohs+FYAhbs+0ZOrn7y8l0BUr8nGE+psF0feBwy4=;
- b=pn54J7k/bToD9agDoC1McCsiSRpETj52A8vqMcKhuUOj3Vadux3PpePCFQH6oc31RybUfFWnX/tCRy7033ovpUpyIkpOtDT7nF+OnwIMSGAANoTjrjevuE5O1693QphL9zHB3QKmkZhEy/fB0hIMqfuRu7rD8MCm13ql2buZfKjJLtK1jvoclt2e9I9JY8BsjLc3SDAtuR7f0lfGrDubqgwadLTRia0istN6RbIHFk/jxf5TZPoimRhntem5BqedDoy7R5H22N2hMs2ZZ8CxXftEoOuOsiAlNxAUY1ot0O1XYgw5Vq8s57enJhzotA+O29DEhZbuCapxIzbGKRjrMQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=wdc.com; dmarc=pass action=none header.from=wdc.com; dkim=pass
- header.d=wdc.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sharedspace.onmicrosoft.com; s=selector2-sharedspace-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=REecohs+FYAhbs+0ZOrn7y8l0BUr8nGE+psF0feBwy4=;
- b=ZZO+0O9qenXoNJQBKhSDg6i6FuLFJmD8ZvYjBzQtWrEI1zY0KmHSmfVNfAh1CxWqe056HwGwTmhqzqnvnbFeP4cggca8nQoOsDJ3pErv2mA9ICIGTSIK1Cd370RtEXoizZY/0MF+fgi18Q/vml4dvXnN3kAEmI4bXWBh5XyJk2o=
-Received: from MN6PR04MB9359.namprd04.prod.outlook.com (2603:10b6:208:4f2::13)
- by CH8PR04MB994670.namprd04.prod.outlook.com (2603:10b6:610:35d::10)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.522.14; Fri, 16 Oct
- 2026 02:06:31 +0000
-Received: from MN6PR04MB9359.namprd04.prod.outlook.com
- ([fe80::e729:bbef:5a37:2e77]) by MN6PR04MB9359.namprd04.prod.outlook.com
- ([fe80::e729:bbef:5a37:2e77%4]) with mapi id 15.21.0522.013; Fri, 16 Oct 2026
- 02:06:31 +0000
-From: Alistair Francis <Alistair.Francis@wdc.com>
-To: "dingtaodtdt@gmail.com" <dingtaodtdt@gmail.com>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>
-CC: "dingtao0430@163.com" <dingtao0430@163.com>, "qemu-riscv@nongnu.org"
- <qemu-riscv@nongnu.org>, "pbonzini@redhat.com" <pbonzini@redhat.com>,
- "farosas@suse.de" <farosas@suse.de>, "chao.liu@processmission.com"
- <chao.liu@processmission.com>, "lvivier@redhat.com" <lvivier@redhat.com>
-Subject: Re: [PATCH v2 0/5] Fix integer handling issues in k230_gsdma and
- k230_decomp_gzip
-Thread-Topic: [PATCH v2 0/5] Fix integer handling issues in k230_gsdma and
- k230_decomp_gzip
-Thread-Index: AQHdUna9MVsemS0paEiMBk7qsSp0cLb/gP0A
-Date: Fri, 16 Oct 2026 02:06:31 +0000
-Message-ID: <e0d56fe8e8d4286bfead76189dad550ed5b7db7b.camel@wdc.com>
-References: <20261002140245.30214-1-dingtao0430@163.com>
-In-Reply-To: <20261002140245.30214-1-dingtao0430@163.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-user-agent: Evolution 3.62.0 (by Flathub.org) 
-authentication-results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=wdc.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: MN6PR04MB9359:EE_|CH8PR04MB994670:EE_
-x-ms-office365-filtering-correlation-id: 5c8ab32d-6d0d-4eb3-d41a-08df2b2a1899
-wdcipoutbound: EOP-TRUE
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|19092799006|1800799024|23010399003|376014|10070799003|366016|18002099003|22082099003|10067099003|3023799007|38070700021|11063799006|261009223027099003|56012099006;
-x-microsoft-antispam-message-info: iTr5TPHDWAWTBiV24We03X3CSWJezpGCj4nNXJNsFxkXzH/VHpkrbxUMmUzZDrEOgMR2AqwoiHqFRWttGPgeB8W8CAzT5zTe2GiL+OVkJ1eL+IyhkjR78fSFnvF3E5A4WqlIvvTnEmNkHpXna8o7UU037qhf+lVuOvmK/K7+HhOxhRPrpa4Vs5+Sgu1jufFatedcyT1d+iW8EJg6iq82/TiVtQNtfKsoUTYabyRSk42tMgVxze0k5w3WDiK7rDreYKcoB7IfszW40E9BoJ6aywS2J/OuTcNCQ7QpdScGVupsmM0oIOk70UvSnw+/Mhm8KvPNp3ly77T7tihcfpjgQ95x99KH8r8Utzv7wHB+20QNADa8a4ehNFSmCIZ4AKHbZamUNncoq1ReFM96M2Mviou23PHMLXlYKs4iGecdqVWgeToE+Pt4n2r7kukbYulL6lgjL6DC42UXrWPwYffurJgWF2x5zQhKAd6HdZJAeFwrJroQPHkYdGllTYZkWKEMnxG7KLTE6VSEVJIe4vW7oQLLPYoCRqVZSHHlxjRCCu6L1Kgh8QAucKC6fHERbJ6eU5BE8qSnSpoYtIto4ZfyazFYJFdcgnYznn+P10OJYv4ZA8e6SypgjTRD5J6w4mLCeTvjhl9r05kYV/OStmvVGkpmJOYVhcVHyIoMYI/A4o0=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:MN6PR04MB9359.namprd04.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(19092799006)(1800799024)(23010399003)(376014)(10070799003)(366016)(18002099003)(22082099003)(10067099003)(3023799007)(38070700021)(11063799006)(261009223027099003)(56012099006);
- DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 2
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?R0UxbW5HOFh1WjU3SDNoMThMU0IvenZuTGFxU2VYc1p4YVRMcnU5MFhiL1lD?=
- =?utf-8?B?TlNGVnhzRXQwMnBDVG02d0FUcUMwQ3FkNVRsaU1teUoxSW9MWEJrZlNmbkVZ?=
- =?utf-8?B?YjJKVlorYm8xMmYweXdDRFp1WTlHa1ZFTHZoU3RTV28xUlljWG0rUExUdVhr?=
- =?utf-8?B?aWxpYnFUQ2phVy9vb05UcnVEQ3FyWXhHZnBNS3hZbVVHTVB5NGJ2YWg5UFh2?=
- =?utf-8?B?SVlweHprQTltMjBWcVZwcVBGVVc3SmZpYzNRZE4yUXpNelBqd01SblpmRFBx?=
- =?utf-8?B?aTkvZ3ZrMTdMOVNFMTBkYkhtOVRZaCt1RWpFa3Z1RFk1YkJiR0dPbmtaRUlj?=
- =?utf-8?B?eElwQk5Ed28ySS8rUzVwNGRRSWpPeXVDL1JEUisxTHFPQXJmU1pHRkVXMEM4?=
- =?utf-8?B?OFpmeXR4VTQ3akM3TGJHUlpadWpyUTRpK0lsUU9Ga1RTUk9aTTNVdHE2Nkky?=
- =?utf-8?B?REpSdW5rTGdPcXVSRTFLNXFPZkdpWG02ODlwNVI1Qi9PODFnMTlIbzNrRGt0?=
- =?utf-8?B?NGdSL292a2gxNlBVamdxSjYwLzI1U3A2NFd0bEc0RUltcllPNThuWkMvLzhZ?=
- =?utf-8?B?cERVYkZvSFY0bFU0N0Jack1Zd1NURGlPdTNSaFN6a3Y3TW1uQW0yTDk0ZUZt?=
- =?utf-8?B?c2w5OWZndGk3WFBJWG1ZVW9HK1FmckdxdlNhN3J0SXhpSFlpYkV0OUFJM2xn?=
- =?utf-8?B?Mkd0RmNSVzFsVFhJdU8zcG1lanUycXdwL1MxQ2xMbFowVGxvank5Tm5NWHA2?=
- =?utf-8?B?SGRkYXJ0Q2syMFlza1U3c1RxY1pDdFdLcW1aUHZ1VU41UzIxeUc1WVROQ3ZL?=
- =?utf-8?B?YVRSTm5ncGkwUVBGdXBTcG1pTWZhU2NsR0FhV2NBeXZDWkRqZjZ2Skk2WU1u?=
- =?utf-8?B?L2M2QkRkQUw3WnFkeCt2cTY1YUg3eUgrcmxISDZKNEtpUGlDbFovNFNiTUt6?=
- =?utf-8?B?UTh1RWN6VHpjOFc0K3h1UlcrZ0o4NGVPTXQ1clBLUFRMNFBYL3ZnOWJjWTVs?=
- =?utf-8?B?VG4yVlkwdngvWkRISlV0bmNUWUhxVlAvRnk2NW9uQW1tQVA1aVd4cGdUZlkw?=
- =?utf-8?B?Y2dnRDRPbE92SFE5UWxRTy9xWXFDWGlYSFAxTXM5WW1Vc2dsNVpFNXd3RHVS?=
- =?utf-8?B?djZVVSt4ODlWTnZKQUszYVUzYm1hMlpoVkFJSnhWY1Q4cDlQQVpzOWxRQlo3?=
- =?utf-8?B?ZzVqU1lSQU44YVFHNG9XRUNUVlhPMGFQTG02NGwzdTNWZzJPVUk3emw5azY2?=
- =?utf-8?B?VFdneHJPYTlBcGRCQ0d5VGNtWUx5Vlh0OXhQdEJSY0IrQ0RMVDBuTDIxZUts?=
- =?utf-8?B?U012K0V0SnlGQ3NSUFIzQnpBZXRDVlNOd3pUcklUVTJlRkJ1eHBVS0FkMkti?=
- =?utf-8?B?SzhLOS9nZ0pFdERuUGx6TExDaS9MVW1nUnkvKzZjRWRtVkpoUnRud211eWRl?=
- =?utf-8?B?QktONGhtSnNXTzZ5QXEwQ21rUGR4b0ZXWkZPK2FoVERYellacHYvZnBtblBT?=
- =?utf-8?B?MEtoai84S2QyeHV0b3BxM3VOTzVTYlk0dVkrYjR2UVUwdFUrOXFBRlhadFYx?=
- =?utf-8?B?KzAxV0EwclQ2QWZ5VmExSXFibTFEMWNtYmlBTjl2cktRVTRkWklHSnQ0OEpx?=
- =?utf-8?B?eDFWMDNBcXlHeUU5NVZHRDVuWGN4MmQ0ekxMYlBjQzlMeEFreWUwOHRlT0xa?=
- =?utf-8?B?WkxQb093T3lua3VTMUJuSW9zZjI3cUIxWVFoak4wNHVWeGxvbU9Ec21BL29o?=
- =?utf-8?B?Q1ZGb1hHUVZlN25pdHMxQ1VZNklSL3BCZHk2M0lqYm5DRm0xZ1ZIb2FxMjdI?=
- =?utf-8?B?bU8xNnhVN0JtY0UxS2hRTVpnZFR4R1U4SndnLzNVSlpHdFdud05IMU9oNE54?=
- =?utf-8?B?dmgxdWgvTzhRODF0NWdzem5YL3R2Mm14cGNEOTNmZ1dpVFo2YjUrVjF5TWF1?=
- =?utf-8?B?b285cTllVjhzS25pOWJ1Y2hDL1lRb1RiTDU0RXVoV2ROOVQrbzlQdngyMFhX?=
- =?utf-8?B?RG11WlZwbHEyMmJOWVFlVWo2dDY5RUlHZ1U3WXhNVkkvQXIxc09XOURpaGwx?=
- =?utf-8?B?WnZGTVhJUXlqd25TTWJhUWlHSVVkNmtHeldTQmhvMnJXeE56OWdBYmJFd0dB?=
- =?utf-8?B?dlNWRkM1RG1hL05veDZoajlCNERSY1JScDVRblgweUV3L0kvZDJTSHdTeW00?=
- =?utf-8?B?T1NNUWpoUnJZZU1aRC9VOWp4czkzQ1dOdlM0djAxU0Nwek5zaUF3Q3NmZnZr?=
- =?utf-8?B?akU3UmMyTEk0ZTZMTndDdC92MnphR05HckgxVStsMFd4TGRIYndMSkFDNFEw?=
- =?utf-8?B?OFdUMWs4OFZ5U1VLRWs5SzFUZHFyK1hnQXVkbjlSZCthTG4rNVJiNGxNNWZV?=
- =?utf-8?Q?2lJ7cplZhm8gyPH9dZr3iu+JpRfcC/7U9IGp8dAVj7eTE?=
-x-ms-exchange-antispam-messagedata-1: EGTCzVR7H/8VWUb5mV8egSMJIoeg+fH9vl8=
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <D88842B75B35C2449BA6A2710A0BB27A@namprd04.prod.outlook.com>
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <wangyang25@otcaix.iscas.ac.cn>)
+ id 1xHYvX-0000yw-JX; Thu, 15 Oct 2026 23:48:15 -0400
+Received: from smtp21.cstnet.cn ([159.226.251.21] helo=cstnet.cn)
+ by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_CBC_SHA1:256)
+ (Exim 4.90_1) (envelope-from <wangyang25@otcaix.iscas.ac.cn>)
+ id 1xHYvU-0001Py-73; Thu, 15 Oct 2026 23:48:15 -0400
+Received: from DESKTOP-7FLBREN (unknown [124.16.137.194])
+ by APP-01 (Coremail) with SMTP id qwCowACne+9untFqwwMBCw--.14381S2;
+ Fri, 16 Oct 2026 11:47:59 +0800 (CST)
+From: wangyang <wangyang25@otcaix.iscas.ac.cn>
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
+ liwei1518@gmail.com, daniel.barboza@oss.qualcomm.com,
+ zhiwei_liu@linux.alibaba.com, chao.liu@processmission.com,
+ alex.bennee@linaro.org, pierrick.bouvier@oss.qualcomm.com
+Subject: [PATCH v4] target/riscv: normalize Zcmt jvt.mode on writes
+Date: Fri, 16 Oct 2026 11:47:59 +0800
+Message-ID: <20261016034759.54-1-wangyang25@otcaix.iscas.ac.cn>
+X-Mailer: git-send-email 2.55.0.windows.2
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked: rnoU20btMEm6+3wZWucHjkK9EB0Tbv90aaJxoMTQnoCACo0LxoVy0Mfx760NhL1dBwm2PaZPlLLH1/wGT4KJyh0zY0yYlSF91n9ASEi4CqAhM7MpfYkRak955u6O79iOi7cckoLZ08dZjuXzRHTpNTYVbqPpltbPWlVjRpe2k1ilQotFWb+DZOETbzPOCfUGrPo3DFfpCJ/JKJT0f9y//xRcdpNJRy4l0T/KPDn1qti27V/VPw1aqZZCXWWpxtOypll17LtMQqM1w1FmOAVabt2/87pJmUJ8NtfghaUi049r6Uj+1DbtqqGB+0iaZgz+iemAjM+K04Laokt/6CF4Ow==
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: XLKl2OrGRmyjDyeZc6RSeCR7knzE05orai44mMMebn3g2yoXzuJ9R1hCgeORJMFnzG2NmJpiDF7rSGIRQze89//fxv9ZZWEA/OGkkhqq/VAw5Gp31oiETL1L23Cipwwkc6Tx86S1visaxISMb7t0c8CofA/drYUVdcRbBgIWsbXuB9+bF+oSPCul+AdB6DAQj7MjQJoa8WTJ2Xc6kIM7ok/aKoUyhqxc2Q1oWj8ES2AdJuTRJ8JWiFBy06UHy27w0TDI3riJ6qodRPKbptapDWAhKV3gkeu7RDQCSdRthmHSPp1zVg28QPZwgjYy5JtQF3xe0NUczNq5WgnBMUWD82tkEKo2ZkWd9sdLUYgPsItm/+UBK1PLV1uWvaBchYtSi9w2wWz0OOLs2VFxIW3vayGh4sMBePHyYho90waZqcRaakWO7ti6NpvHufiYj//yWUqiC80oddPvBVX2dmS1pijqRPEXlaTRlvR6Sbz3xhTNJVGfG+WrgZlcVKNzfwQ+KOiHVuYCygJE2D1sO1hhCUfRsfOlOVqMegmJJabWx8+zVEU1ii3kErKMrpQN6GapjsqfRLI4gKDqinAVwuH89NUV0PfbVa1FJCyHhZ3UkiueWSsk6nkzw9XvUIKwyjLr
-X-OriginatorOrg: wdc.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: MN6PR04MB9359.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 5c8ab32d-6d0d-4eb3-d41a-08df2b2a1899
-X-MS-Exchange-CrossTenant-originalarrivaltime: 16 Oct 2026 02:06:31.0992 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: b61c8803-16f3-4c35-9b17-6f65f441df86
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: fCYP86LIh1tGkP0iNqQ2/kyaoGNsxxIHWEl61QVmihAr/cF9MeQ9wzRP/smhhLpOLqQ6QDtD/YaFmE926LWHxjAdUdqzXhBFjjKwBI8/J/U=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH8PR04MB994670
-Received-SPF: pass client-ip=68.232.141.245;
- envelope-from=prvs=742cbab99=Alistair.Francis@wdc.com;
- helo=esa1.hgst.iphmx.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
+Content-Transfer-Encoding: quoted-printable
+X-CM-TRANSID: qwCowACne+9untFqwwMBCw--.14381S2
+X-Coremail-Antispam: 1UD129KBjvJXoW3XryxGry5Kw4kZr1kAw1kKrg_yoWxZF45pw
+ 4UGwnIkrWfXF1xtw13GF17GF4rWw4ru3W5A397Cw4rZrW7JryUZFnxK3y7tr13JFWj9ryS
+ 93Za9r1Fkr4UJa7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+ 9KBjDU0xBIdaVrnRJUUUBmb7Iv0xC_Kw4lb4IE77IF4wAFF20E14v26r4j6ryUM7CY07I2
+ 0VC2zVCF04k26cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rw
+ A2F7IY1VAKz4vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xII
+ jxv20xvEc7CjxVAFwI0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4
+ A2jsIEc7CjxVAFwI0_Gr0_Gr1UM2vYz4IE04k24VAvwVAKI4IrM2AIxVAIcxkEcVAq07x2
+ 0xvEncxIr21l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r126r1DMc
+ Ij6I8E87Iv67AKxVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IYc2Ij64vIr41l
+ FIxGxcIEc7CjxVA2Y2ka0xkIwI1lc7CjxVAaw2AFwI0_Jw0_GFylc2xSY4AK67AK6r48Mx
+ AIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_
+ Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUtVW8ZwCIc40Y0x0EwI
+ xGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AKxVWUJVW8
+ JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcV
+ C2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxUyAnYDUUUU
+X-Originating-IP: [124.16.137.194]
+X-CM-SenderInfo: 5zdqw5xdqjjk46rwut1l0ox2xfdvhtffof0/
+Received-SPF: pass client-ip=159.226.251.21;
+ envelope-from=wangyang25@otcaix.iscas.ac.cn; helo=cstnet.cn
+X-Spam_score_int: -41
+X-Spam_score: -4.2
 X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -183,28 +74,278 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gRnJpLCAyMDI2LTEwLTAyIGF0IDIyOjAyICswODAwLCBUYW8gRGluZyB3cm90ZToNCj4gSGks
-IGFsbA0KPiANCj4gVGhpcyBzZXJpZXMgZml4ZXMgaW50ZWdlciBvdmVyZmxvdywgdHJ1bmNhdGlv
-biwgYW5kIHVuZGVyZmxvdyBpc3N1ZXMNCj4gcmVwb3J0ZWQgYnkgQ292ZXJpdHkgaW4gdGhlIEsy
-MzAgR1pJUCBkZWNvbXByZXNzb3IsIGl0cyBxdGVzdCwgYW5kDQo+IEdTRE1BLg0KPiBodHRwczov
-L2xvcmUua2VybmVsLm9yZy9xZW11LWRldmVsLzVmYzU3ZjQ5Y2VhMGFjMzU0MjEyOGQwZTIyMDhl
-ZGQ2ZDc0ODRmN2UuY2FtZWxAd2RjLmNvbS8NCg0KV2hhdCBhYm91dCAxNjg1NTEzPw0KDQpBbGlz
-dGFpcg0KDQo+IA0KPiBUaGFua3MuDQo+IA0KPiBUaGUgcGF0Y2h2MSBzZXJpZXMgaXMgcG9zdGVk
-IGluOg0KPiBodHRwczovL2xvcmUua2VybmVsLm9yZy9xZW11LWRldmVsLzIwMjYxMDAxMDIyMjIz
-Ljg2MzMtMS1kaW5ndGFvMDQzMEAxNjMuY29tL1QNCj4gDQo+IENoYW5nZXMgaW4gdjEtPnYyOg0K
-PiAtIFNwbGl0IHRoZSBvcmlnaW5hbCBrMjMwX2RlY29tcF9nemlwIHBhdGNoIGludG8gdGhyZWUg
-cGF0Y2hlcywgb25lDQo+IGZvcg0KPiDCoCBlYWNoIGludGVnZXIgaGFuZGxpbmcgaXNzdWUuDQo+
-IC0gUmVtb3ZlIHRoZSBtb2RpZmljYXRpb25zICJjaCIgaW4gcGF0Y2h2MSAzLzMsIHdoaWNoIGlz
-IG5vdyBwYXRjaHYyDQo+IDUvNS4NCj4gDQo+IFRhbyBEaW5nICg1KToNCj4gwqAgaHcvbWlzYzog
-Zml4IGNhbGN1bGF0aW5nIG91dHB1dCBhZGRyZXNzIG92ZXJmbG93IGluDQo+IGsyMzBfZGVjb21w
-X2d6aXANCj4gwqAgaHcvbWlzYzogZml4IGNhbGN1bGF0aW5nIGlucHV0IGFkZHJlc3Mgb3ZlcmZs
-b3cgaW4gazIzMF9kZWNvbXBfZ3ppcA0KPiDCoCBody9taXNjOiB1c2UgaHdhZGRyIGZvciB0aGUg
-azIzMF9kZWNvbXBfZ3ppcCBpbnB1dCBhZGRyZXNzDQo+IMKgIHF0ZXN0OiBmaXggazIzMF9kZWNv
-bXBfZ3ppcCB0ZXN0IGludGVnZXIgaGFuZGxpbmcgaXNzdWVzDQo+IMKgIGh3L2RtYTogZml4IGsy
-MzBfZ3NkbWEgaW50ZWdlciBoYW5kbGluZyBpc3N1ZXMNCj4gDQo+IMKgaHcvZG1hL2syMzBfZ3Nk
-bWEuY8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHwgNCArKysrDQo+IMKgaHcvbWlz
-Yy9rMjMwX2RlY29tcF9nemlwLmPCoMKgwqDCoMKgwqDCoMKgwqAgfCA2ICsrKy0tLQ0KPiDCoHRl
-c3RzL3F0ZXN0L2syMzAtZGVjb21wLWd6aXAtdGVzdC5jIHwgMiArLQ0KPiDCoDMgZmlsZXMgY2hh
-bmdlZCwgOCBpbnNlcnRpb25zKCspLCA0IGRlbGV0aW9ucygtKQ0KPiANCj4gDQo+IGJhc2UtY29t
-bWl0OiAwYTFlYmQ0NDhiMzhhZmFhMTE4NTk3Y2JiNjMzZGJlYzI0ZWY3NGQzDQo=
+Only jvt.mode=3D0 is implemented, and jvt.mode is a WARL field, so a
+software write of a reserved mode encoding must read back with the
+implemented mode. write_jvt() currently stores the raw value, so a
+subsequent cm.jt traps. Mask the written value with JVT_BASE.
+
+Add TCG system tests for normalized readback and cm.jt dispatch on
+RV32 and RV64.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4408
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Signed-off-by: wangyang <wangyang25@otcaix.iscas.ac.cn>
+---
+Changes since v3:=0D
+  - Add actual cm.jt dispatch coverage after the WARL readback check.=0D
+  - Add RV32 system-mode tests alongside the RV64 test.=0D
+=0D
+ MAINTAINERS                          |  2 ++
+ target/riscv/tcg/csr.c               |  6 +++-
+ tests/tcg/meson.build                |  1 +
+ tests/tcg/riscv32/meson.build        |  5 +++
+ tests/tcg/riscv32/system/meson.build | 38 +++++++++++++++++++++
+ tests/tcg/riscv32/test-jvt-warl.S    | 49 ++++++++++++++++++++++++++++
+ tests/tcg/riscv64/system/meson.build |  7 ++++
+ tests/tcg/riscv64/test-jvt-warl.S    | 49 ++++++++++++++++++++++++++++
+ 8 files changed, 156 insertions(+), 1 deletion(-)
+ create mode 100644 tests/tcg/riscv32/meson.build
+ create mode 100644 tests/tcg/riscv32/system/meson.build
+ create mode 100644 tests/tcg/riscv32/test-jvt-warl.S
+ create mode 100644 tests/tcg/riscv64/test-jvt-warl.S
+
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 1ee661cc23..4f2b6e882d 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -377,6 +377,7 @@ F: include/hw/riscv/
+ F: common-user/host/riscv*
+ F: tests/functional/riscv32
+ F: tests/functional/riscv64
++F: tests/tcg/riscv32/
+ F: tests/tcg/riscv64/
+ F: tests/qtest/iommu-riscv-test.c
+=20
+@@ -1786,6 +1787,7 @@ F: include/hw/riscv/opentitan.h
+ F: include/hw/*/ibex_*.h
+ F: target/riscv/insn_trans/trans_xthead.c.inc
+ F: target/riscv/xlrbr.decode
++F: tests/tcg/riscv32/
+ F: tests/tcg/riscv64/test-crc32.S
+=20
+ Microchip PolarFire SoC Icicle Kit
+diff --git a/target/riscv/tcg/csr.c b/target/riscv/tcg/csr.c
+index 061bc9db77..d16c9cd3c7 100644
+--- a/target/riscv/tcg/csr.c
++++ b/target/riscv/tcg/csr.c
+@@ -5904,7 +5904,11 @@ static RISCVException read_jvt(CPURISCVState *env, i=
+nt csrno,
+ static RISCVException write_jvt(CPURISCVState *env, int csrno,
+                                 target_ulong val, uintptr_t ra)
+ {
+-    env->jvt =3D val;
++    /*
++     * jvt.mode is WARL and only mode 0 is implemented, so drop the
++     * reserved mode encodings instead of storing them.
++     */
++    env->jvt =3D val & JVT_BASE;
+     return RISCV_EXCP_NONE;
+ }
+=20
+diff --git a/tests/tcg/meson.build b/tests/tcg/meson.build
+index 4c0e30756d..184edcdbbc 100644
+--- a/tests/tcg/meson.build
++++ b/tests/tcg/meson.build
+@@ -186,6 +186,7 @@ subdir('mips64el')
+ subdir('or1k')
+ subdir('ppc64')
+ subdir('ppc64le')
++subdir('riscv32')
+ subdir('riscv64')
+ subdir('s390x')
+ subdir('sh4')
+diff --git a/tests/tcg/riscv32/meson.build b/tests/tcg/riscv32/meson.build
+new file mode 100644
+index 0000000000..5557157c34
+--- /dev/null
++++ b/tests/tcg/riscv32/meson.build
+@@ -0,0 +1,5 @@
++# SPDX-License-Identifier: GPL-2.0-or-later
++
++cc =3D 'riscv64-linux-gnu-gcc'
++cc_dockerfile =3D 'debian-all-test-cross'
++subdir('system')
+diff --git a/tests/tcg/riscv32/system/meson.build b/tests/tcg/riscv32/syste=
+m/meson.build
+new file mode 100644
+index 0000000000..2ea397b3a2
+--- /dev/null
++++ b/tests/tcg/riscv32/system/meson.build
+@@ -0,0 +1,38 @@
++# SPDX-License-Identifier: GPL-2.0-or-later
++
++tests =3D []
++
++link_script =3D files('../../riscv64/semihost.ld')[0]
++cflags =3D ['-march=3Drv32i_zicsr',
++          '-mabi=3Dilp32',
++          '-nostdlib',
++          '-ffreestanding',
++          '-Wa,--noexecstack',
++          '-Wl,-T', link_script]
++qemu_args =3D ['-M', 'virt',
++             '-display', 'none',
++             '-serial', 'stdio',
++             '-semihosting',
++             '-bios']
++
++tests +=3D {
++  'test-jvt-warl.S': {
++    'cflags': cflags,
++    'qemu_args': [
++      '-cpu', 'rv32i,h=3Dfalse,zcd=3Dfalse,zca=3Dtrue,zcmt=3Dtrue,zicsr=3D=
+true', qemu_args,
++    ],
++  },
++}
++
++if 'qemu-system-riscv32' in emulators
++  tcg_tests +=3D {
++    'riscv32-softmmu': {
++      'cc': cc,
++      'cc_dockerfile': cc_dockerfile,
++      'folder': 'riscv32',
++      'gdb_arch': 'riscv32',
++      'qemu': emulators['qemu-system-riscv32'],
++      'tests': tests,
++    }
++  }
++endif
+diff --git a/tests/tcg/riscv32/test-jvt-warl.S b/tests/tcg/riscv32/test-jvt=
+-warl.S
+new file mode 100644
+index 0000000000..b9e42bc7a0
+--- /dev/null
++++ b/tests/tcg/riscv32/test-jvt-warl.S
+@@ -0,0 +1,49 @@
++/*
++ * Verify jvt.mode WARL normalization and cm.jt dispatch.
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++	.option norvc
++	.text
++	.global _start
++_start:
++	lla	t0, trap
++	csrw	mtvec, t0
++	lla	t0, jvt_table
++	ori	t1, t0, 0x3f
++	csrw	0x017, t1
++	csrr	t2, 0x017
++	bne	t0, t2, fail
++	.2byte	0xa002		/* cm.jt index 0 */
++
++fail:
++	li	a0, 1
++	j	_exit
++
++target:
++	li	a0, 0
++
++_exit:
++	lla	a1, semiargs
++	li	t0, 0x20026		/* ADP_Stopped_ApplicationExit */
++	sw	t0, 0(a1)
++	sw	a0, 4(a1)
++	li	a0, 0x20		/* TARGET_SYS_EXIT_EXTENDED */
++	.balign	16
++	slli	zero, zero, 0x1f
++	ebreak
++	srai	zero, zero, 0x7
++	j	.
++
++trap:
++	li	a0, 1
++	j	_exit
++
++	.balign	64
++jvt_table:
++	.word	target
++
++	.data
++	.balign	8
++semiargs:
++	.space	8
+diff --git a/tests/tcg/riscv64/system/meson.build b/tests/tcg/riscv64/syste=
+m/meson.build
+index c2d7d09887..62f0ffe1ea 100644
+--- a/tests/tcg/riscv64/system/meson.build
++++ b/tests/tcg/riscv64/system/meson.build
+@@ -26,6 +26,13 @@ tests +=3D {
+   'test-misa-w.S': setup + {'qemu_args': ['-cpu', 'rv64,x-misa-w=3Dtrue,c=
+=3Dtrue,v=3Dtrue', qemu_args]},
+ }
+=20
++tests +=3D {
++  'test-jvt-warl.S': {
++    'cflags': cflags + ['-march=3Drv64gc_zicsr'],
++    'qemu_args': ['-cpu', 'rv64,zcmt=3Dtrue,zcd=3Dfalse', qemu_args],
++  }
++}
++
+ tests +=3D {
+   'test-rv128-mstatus.S': {
+     'cflags': cflags,
+diff --git a/tests/tcg/riscv64/test-jvt-warl.S b/tests/tcg/riscv64/test-jvt=
+-warl.S
+new file mode 100644
+index 0000000000..2ac28e6951
+--- /dev/null
++++ b/tests/tcg/riscv64/test-jvt-warl.S
+@@ -0,0 +1,49 @@
++/*
++ * Verify jvt.mode WARL normalization and cm.jt dispatch.
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++	.option norvc
++	.text
++	.global _start
++_start:
++	lla	t0, trap
++	csrw	mtvec, t0
++	lla	t0, jvt_table
++	ori	t1, t0, 0x3f
++	csrw	0x017, t1
++	csrr	t2, 0x017
++	bne	t0, t2, fail
++	.2byte	0xa002		/* cm.jt index 0 */
++
++fail:
++	li	a0, 1
++	j	_exit
++
++target:
++	li	a0, 0
++
++_exit:
++	lla	a1, semiargs
++	li	t0, 0x20026		/* ADP_Stopped_ApplicationExit */
++	sd	t0, 0(a1)
++	sd	a0, 8(a1)
++	li	a0, 0x20		/* TARGET_SYS_EXIT_EXTENDED */
++	.balign	16
++	slli	zero, zero, 0x1f
++	ebreak
++	srai	zero, zero, 0x7
++	j	.
++
++trap:
++	li	a0, 1
++	j	_exit
++
++	.balign	64
++jvt_table:
++	.dword	target
++
++	.data
++	.balign	16
++semiargs:
++	.space	16
+
+base-commit: 7e8d3c7fc460fe7cd28a3e423d7466fa292bc269
+--=20
+2.55.0.windows.2
+
 
