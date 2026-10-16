@@ -4,83 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3334CC6B38
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 09:35:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94251CCA462
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 09:41:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHeLt-0005Ht-4y; Fri, 16 Oct 2026 05:35:49 -0400
+	id 1xHeRU-00084v-SQ; Fri, 16 Oct 2026 05:41:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daejun7.park@samsung.com>)
- id 1xHeLm-00058t-CW
- for qemu-devel@nongnu.org; Fri, 16 Oct 2026 05:35:42 -0400
-Received: from mailout4.samsung.com ([203.254.224.34])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daejun7.park@samsung.com>)
- id 1xHeLe-0006U9-Vs
- for qemu-devel@nongnu.org; Fri, 16 Oct 2026 05:35:41 -0400
-Received: from epcas2p3.samsung.com (unknown [182.195.41.55])
- by mailout4.samsung.com (KnoxPortal) with ESMTP id
- 20261016093530epoutp04eee02dc2000afd426773c658ed10686d~e_N0LYMIw3039230392epoutp04X
- for <qemu-devel@nongnu.org>; Fri, 16 Oct 2026 09:35:30 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout4.samsung.com
- 20261016093530epoutp04eee02dc2000afd426773c658ed10686d~e_N0LYMIw3039230392epoutp04X
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
- s=mail20170921; t=1792143330;
- bh=OceVVUGjs0RrwDx66uQH2XhSVhUMq1g4mq0H+qkuTqo=;
- h=Subject:Reply-To:From:To:CC:In-Reply-To:Date:References:From;
- b=HobePQgZ6ScYfiBqDUdNA9MspjWi7r6v24PPGa/accm9EZ1D8h3JrLO29ToN74q9g
- tFdmClNH+iGzndIFtLaHuf1gX6PwtQ0auJvqjgwFNrBdFIP17QMa1O+nPj0Istaek5
- wpJE1oCKUlqbjfo7Utck56I8E7fEhTt4bQioPo+4=
-Received: from epsnrtp03.localdomain (unknown [182.195.42.155]) by
- epcas2p2.samsung.com (KnoxPortal) with ESMTPS id
- 20261016093529epcas2p2332b52b0457afcb6428f53c5af609b8a~e_NzmLFI82854328543epcas2p2p;
- Fri, 16 Oct 2026 09:35:29 +0000 (GMT)
-Received: from epcas2p1.samsung.com (unknown [182.195.38.205]) by
- epsnrtp03.localdomain (Postfix) with ESMTP id 4j5ftn056Yz3hhT3; Fri, 16 Oct
- 2026 09:35:29 +0000 (GMT)
-Mime-Version: 1.0
-Subject: [PATCH v2 6/6] tests/qtest: Add tests for Zoned UFS
-From: Daejun Park <daejun7.park@samsung.com>
-To: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-CC: Jeuk Kim <jeuk20.kim@samsung.com>, "farosas@suse.de" <farosas@suse.de>,
- "lvivier@redhat.com" <lvivier@redhat.com>, "pbonzini@redhat.com"
- <pbonzini@redhat.com>, "kwolf@redhat.com" <kwolf@redhat.com>,
- "hreitz@redhat.com" <hreitz@redhat.com>, "qemu-block@nongnu.org"
- <qemu-block@nongnu.org>, "pierrick.bouvier@oss.qualcomm.com"
- <pierrick.bouvier@oss.qualcomm.com>, Daejun Park <daejun7.park@samsung.com>
-X-Priority: 3
-X-Content-Kind-Code: NORMAL
-In-Reply-To: <20261016092423epcms2p83f80a8dd8f7c1ddc3a94541e0771c306@epcms2p8>
-X-CPGS-Detection: blocking_info_exchange
-X-Drm-Type: N,general
-X-Msg-Generator: Mail
-X-Msg-Type: PERSONAL
-X-Reply-Demand: N
-Message-ID: <20261016093528epcms2p456d7c535220a0c6a2a63e880e30c75ba@epcms2p4>
-Date: Fri, 16 Oct 2026 18:35:28 +0900
-X-CMS-MailID: 20261016093528epcms2p456d7c535220a0c6a2a63e880e30c75ba
-Content-Transfer-Encoding: 7bit
+ (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
+ id 1xHeRS-00083w-OJ
+ for qemu-devel@nongnu.org; Fri, 16 Oct 2026 05:41:34 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
+ id 1xHeRQ-00071j-JX
+ for qemu-devel@nongnu.org; Fri, 16 Oct 2026 05:41:34 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-4a018792ab3so49144115e9.0
+ for <qemu-devel@nongnu.org>; Fri, 16 Oct 2026 02:41:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1792143690; x=1792748490; darn=nongnu.org;
+ h=cc:to:content-transfer-encoding:content-type:mime-version
+ :message-id:date:subject:from:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=66EECe90o14dw0yTOpJUJ+OjrObtLrPJ5Zqjapy5tkc=;
+ b=BTcAXJeU+lYhg7XobWIbFjGwHuKY0lLFLVJBFbuSWh9wTRQD/scgwja+Ecji9U9Eat
+ m/pnIsYNz6jx3sqJM+OWukYyHisPzGoli2xlWgwqSvrmvsKNY4PwquOvtVGDnxW2cMGM
+ +QUOZHRamSlRRWntGD3m6J3nZJEGiQPIv5WF3gUZxW/bzuFiygJkNGA7XcLLFB8LGTD0
+ qrAClT7SwqQDluWzgY2Doo2rjMcSg7NzDnDChKabx5HA/9cOuj/fWUgFaDekoH/C9GX4
+ qu3OE5tql4NtMfvMyu53gyvCLpCQNx/iPnyOb/m4SpR5IUy2cgEbS14lwFlLMZIAZfol
+ 5/sA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1792143690; x=1792748490;
+ h=cc:to:content-transfer-encoding:content-type:mime-version
+ :message-id:date:subject:from:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=66EECe90o14dw0yTOpJUJ+OjrObtLrPJ5Zqjapy5tkc=;
+ b=TYMr82gBttrlGWiC/mAztOxyIUOoBSDEiNGViz9zgR8ji6IOD7MngvmWoCYXIPDGih
+ 7KRP8h3CoGQdNEdlCCiNeb5hzQeI+omeUO6mMY8T5BwmfECIhgpSDY+b0Chd9Tlin0nJ
+ 1oTF31r2eoGWm/BZ3P83jBVuIMGktRghzmrZlhVZzOpob4wmlfnEgBJl0I0/VG6YmMaW
+ EE3SLYEhz66s7cNKJ5+pElmYj/me/8N6XiXaC/frvDDhkJZl/H7mMRszfhZ3h9iOwkez
+ PQ6ArXYW04PKn4C6OlHVXAYZwDemb2Ch6Nt+efLsra6ZO2WrglWq7K8hj1BTAB0Wyq/z
+ 9Lqg==
+X-Gm-Message-State: AFq9FYIqYq7XnxG3znLegvAVUSU4WqNiMCskXD01ThU2U7vVe7usWih/
+ 1+RutizZN115HoYunxeH1+aQFEtHA7+4dod2lL2XdMusJsXN4tHIEVC8Td0syHbjemRhg5pOI6R
+ NG8jSCqI=
+X-Gm-Gg: AYBFou0XRRUWv+xHw4p4xFcwAq/A1iNNWo6YBybyHWT5aUDCor9Qv2F1PAjMtU0G8/i
+ //r89yeeRWWheh8kAm6fg7hUaYm5GLb64YHPWze1/k6uNDB+YXVUjcvg99DN1W//MFUs0A52c5E
+ Lq6G/MIj7eU63VU7YfK4wYDEmRz3HY3R1ilucZDwY/MMyLtrvH0rBRDmkxqzUdoVzz2B9OZgqXa
+ cYqIfqjZRXlh6bGR5BbFkW/yhBQMQs7Tkzziw8mfHqwo8JjmSEpPwKFC1XhG/JbQYCqZyAj/W7R
+ 1GRpRo+efurtOBp//7p1rHQHpWUikv1Fi2M5tNScYa9Iafxsly6rRLu8iAuRztHqlBorqTpa+rV
+ tTuu1DFFj60USUwWXAmdf0+YrUW1/7kArw2qjHcwixfCvv235N+j1i91d/x14akJ3Iha7fc0RT2
+ DecKX0h/TJbi3AVnwsuYc2MR5lP8xF94NWyfSCNU3TTz2GtvdQncCJCNDRxWU1FQormmjaSQ+SF
+ Q==
+X-Received: by 2002:a05:600c:4e8a:b0:4a1:78dd:dd28 with SMTP id
+ 5b1f17b1804b1-4a18e4d2b31mr446516035e9.27.1792143690239; 
+ Fri, 16 Oct 2026 02:41:30 -0700 (PDT)
+Received: from [127.0.1.1] ([2a10:d582:31e:0:8f73:128f:8f43:e3ec])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4a1cf05009csm28649385e9.10.2026.10.16.02.41.29
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 16 Oct 2026 02:41:29 -0700 (PDT)
+From: Jim MacArthur <jim.macarthur@linaro.org>
+Subject: [PATCH 0/2] Add SMMUv3 Root registers
+Date: Fri, 16 Oct 2026 10:40:50 +0100
+Message-Id: <20261016-jmac-smmu-root-registers-v1-0-e78e8879d347@linaro.org>
+MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-X-Sendblock-Type: AUTO_CONFIDENTIAL
-CMS-TYPE: 102P
-X-CPGSPASS: Y
-X-CPGSPASS: Y
-cpgsPolicy: CPGSC10-223,Y
-X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20261016092423epcms2p83f80a8dd8f7c1ddc3a94541e0771c306
-References: <20261016092423epcms2p83f80a8dd8f7c1ddc3a94541e0771c306@epcms2p8>
- <CGME20261016092423epcms2p83f80a8dd8f7c1ddc3a94541e0771c306@epcms2p4>
-Received-SPF: pass client-ip=203.254.224.34;
- envelope-from=daejun7.park@samsung.com; helo=mailout4.samsung.com
-X-Spam_score_int: -45
-X-Spam_score: -4.6
-X-Spam_bar: ----
-X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIACfx0WoC/yXMQQ6CMBBG4auQWTsJrcLCqxgXpfzgkJSamWJMC
+ He36vJbvLeTQQVG12YnxUtM8lrhTg3FR1hnsIzV5Fvfu9Z1vKQQ2VLaWHMurJjFCtR4jJfJwYf
+ +PHRU86dikvdvfbv/bduwIJbvj47jA9DsA1Z8AAAA
+X-Change-ID: 20261015-jmac-smmu-root-registers-dc4f1e2a63b5
+To: qemu-devel@nongnu.org
+Cc: Eric Auger <eric.auger@redhat.com>, 
+ Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org, 
+ Leif Lindholm <leif.lindholm@oss.qualcomm.com>, 
+ Jim MacArthur <jim.macarthur@linaro.org>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+X-Mailer: b4 0.17-dev-6be7c
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=jim.macarthur@linaro.org; helo=mail-wm1-x333.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,1070 +105,36 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: daejun7.park@samsung.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add ten qtests for zoned logical units. They use four zoned logical
-units: one with 2 MiB zones, one whose capacity is not a multiple of its
-3 MiB zones, one on blkdebug with a single open zone, where the first
-write at LBA 0 and the first write at the start of zone 2 fail with an
-I/O error, and one on null-co that is larger than 8 TiB.
+This is preparatory work for further SMMUv3.3 features including RME-DA.
+We are adding in patches originally authored by Pierrick Bouvier 
+<pierrick.bouvier@linaro.org> and Gustavo Romero <gustavo.romero@linaro.org>
+in a way that will avoid conflicts with Tao Tang's upcoming SMMUv3 Secure
+state patches. Since Root registers do not use the banking system, this
+should only conflict around the offset check near smmu_write_mmio and
+smmu_read_mmio.
 
-zufs-init checks the INQUIRY device type, the supported VPD pages with
-full and short allocation lengths, the ZBC device characteristics page,
-that UNMAP is advertised nowhere, the caching mode page, REPORT ZONES,
-and an INQUIRY without a PRDT.
-
-zufs-write, also run with MCQ as zufs-mcq-write, checks write pointer
-handling, SYNCHRONIZE CACHE(16), resets of open zones, finishing an
-empty zone, writing to more zones than max_open allows, LBAs past the
-end of the logical unit, and a REPORT ZONES allocation length larger
-than the data buffer. Without the bound on that length, QEMU writes past
-its own buffer; a debug build without sanitizers aborted with "double
-free or corruption".
-
-zufs-write-cmds checks that WRITE(6), WRITE(10) and WRITE SAME(16) move
-the write pointer, a zero length WRITE SAME, the sense codes for writes
-crossing a zone and writes to a full zone, and that a WRITE(10) at an
-LBA above 2^31 is checked against the zone it addresses.
-
-zufs-open-zones checks explicit opens up to the limit, closing an
-implicitly open zone to make room, OPEN ALL with and without enough
-resources, FINISH ALL and RESET ALL.
-
-zufs-unit-attention checks that a zone operation is not performed while
-a unit attention is pending. zufs-io-error checks that a write failed
-by the drive moves the write pointer back.
-
-zufs-write-in-flight, with MCQ, holds writes in flight with a blkdebug
-breakpoint. It checks that a failed write moves the write pointer back
-also when a write to another zone closed its zone implicitly in the
-meantime, and that a zone stays full when FINISH ZONE completed while a
-write that filled it was in flight and then failed.
-
-zufs-report-zones checks a start LBA inside a zone, PARTIAL, the
-reporting options 3Eh, 06h and 3Fh, and the smaller last zone.
-
-zufs-more-cmds checks WRITE(12), WRITE AND VERIFY(16), CLOSE ALL,
-finishing a closed zone, ZONE COUNT with and without the ALL bit, zone
-IDs that do not start a zone, a write without a PRDT, and UNMAP.
-
-Signed-off-by: Daejun Park <daejun7.park@samsung.com>
+Signed-off-by: Jim MacArthur <jim.macarthur@linaro.org>
 ---
- tests/qtest/ufs-test.c | 984 +++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 984 insertions(+)
+Jim MacArthur (1):
+      hw/arm/sbsa-ref.c: Increase SMMU space for Root registers
 
-diff --git a/tests/qtest/ufs-test.c b/tests/qtest/ufs-test.c
-index 4e0c2aee5f..0b3e764b19 100644
---- a/tests/qtest/ufs-test.c
-+++ b/tests/qtest/ufs-test.c
-@@ -1832,6 +1832,966 @@ static void ufstest_hid(void *obj, void *data, QGuestAllocator *alloc)
-     ufs_exit(ufs, alloc);
- }
- 
-+#define ZONE_SIZE (2 * 1024 * 1024)
-+#define ZONE_BLOCKS (ZONE_SIZE / 4096)
-+#define MAX_OPEN_ZONE 6
-+#define NUM_ZONES (TEST_IMAGE_SIZE / ZONE_SIZE)
-+#define REPORT_ZONES_DESC_SIZE 64
-+#define ZONED_TEST_LUN 2
-+/* A second zoned LU whose capacity is not a multiple of the zone size */
-+#define ODD_ZONED_TEST_LUN 3
-+#define ODD_ZONE_SIZE (3 * 1024 * 1024)
-+#define ODD_NUM_ZONES DIV_ROUND_UP(TEST_IMAGE_SIZE, ODD_ZONE_SIZE)
-+/*
-+ * A zoned LU on blkdebug with one open zone: the first write at LBA 0 and the
-+ * first write at the start of zone 2 fail with an I/O error, and a breakpoint
-+ * can hold a write in flight. It is a -drive with an id because
-+ * qtest_qemu_io() needs a BlockBackend name: for a node name, x-qemu-io
-+ * attaches a temporary BlockBackend, and detaching it drains the node, which
-+ * never returns while a breakpoint holds a write.
-+ */
-+#define EIO_ZONED_TEST_LUN 4
-+#define EIO_ZONED_TEST_DRIVE "drv4"
-+#define EIO_ZONE2_SECTOR (2 * ZONE_SIZE / 512)
-+/* A zoned LU of more than 8 TiB with 128 MiB zones, for LBAs of 2^31 and up */
-+#define BIG_ZONED_TEST_LUN 5
-+#define BIG_ZONED_TEST_SIZE ((8ULL << 40) + 128 * 1024 * 1024)
-+
-+static void ufs_zufs_build_write16(uint8_t *cdb, uint64_t lba, uint32_t blocks)
-+{
-+    memset(cdb, 0, UFS_CDB_SIZE);
-+    cdb[0] = WRITE_16;
-+    stq_be_p(&cdb[2], lba);
-+    stl_be_p(&cdb[10], blocks);
-+}
-+
-+static void ufs_zufs_build_zbc_out(uint8_t *cdb, uint8_t action, uint64_t lba,
-+                                   bool all)
-+{
-+    memset(cdb, 0, UFS_CDB_SIZE);
-+    cdb[0] = UFS_ZBC_OUT;
-+    cdb[1] = action;
-+    stq_be_p(&cdb[2], lba);
-+    cdb[14] = all ? 0x01 : 0x00;
-+}
-+
-+static void ufs_zufs_build_report_zones(uint8_t *cdb, uint8_t rep_opts,
-+                                        uint32_t alloc_len)
-+{
-+    memset(cdb, 0, UFS_CDB_SIZE);
-+    cdb[0] = UFS_ZBC_IN;
-+    cdb[1] = UFS_ZBC_REPORT_ZONES;
-+    stl_be_p(&cdb[10], alloc_len);
-+    cdb[14] = rep_opts;
-+}
-+
-+static void ufs_zufs_clear_unit_attention(QUfs *ufs)
-+{
-+    const uint8_t request_sense_cdb[UFS_CDB_SIZE] = {
-+        REQUEST_SENSE,
-+    };
-+    uint8_t buf[4096];
-+    UtpUpiuRsp rsp_upiu;
-+    enum UtpOcsCodes ocs;
-+
-+    ocs = ufs_send_scsi_command(ufs, ZONED_TEST_LUN, request_sense_cdb, NULL, 0,
-+                                buf, sizeof(buf), &rsp_upiu);
-+    g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
-+    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, CHECK_CONDITION);
-+}
-+
-+static uint8_t ufs_zufs_send(QUfs *ufs, const uint8_t *cdb,
-+                             const uint8_t *data_in, size_t data_in_len,
-+                             uint8_t *data_out, size_t data_out_len,
-+                             UtpUpiuRsp *rsp_upiu)
-+{
-+    enum UtpOcsCodes ocs;
-+
-+    ocs = ufs_send_scsi_command(ufs, ZONED_TEST_LUN, cdb, data_in, data_in_len,
-+                                data_out, data_out_len, rsp_upiu);
-+    g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
-+    return rsp_upiu->header.scsi_status;
-+}
-+
-+static void ufs_zufs_assert_sense(UtpUpiuRsp *rsp_upiu, uint8_t key,
-+                                  uint8_t asc, uint8_t ascq)
-+{
-+    g_assert_cmpuint(rsp_upiu->header.scsi_status, ==, CHECK_CONDITION);
-+    g_assert_cmpuint(rsp_upiu->sr.sense_data[2] & 0xf, ==, key);
-+    g_assert_cmpuint(rsp_upiu->sr.sense_data[12], ==, asc);
-+    g_assert_cmpuint(rsp_upiu->sr.sense_data[13], ==, ascq);
-+}
-+
-+static uint32_t ufs_zufs_count_zones(QUfs *ufs, uint8_t rep_opts)
-+{
-+    uint8_t buf[4096];
-+    uint8_t cdb[UFS_CDB_SIZE];
-+    UtpUpiuRsp rsp_upiu;
-+
-+    ufs_zufs_build_report_zones(cdb, rep_opts, sizeof(buf));
-+    g_assert_cmpuint(ufs_zufs_send(ufs, cdb, NULL, 0, buf, sizeof(buf),
-+                                   &rsp_upiu), ==, GOOD);
-+    return ldl_be_p(&buf[0]) / REPORT_ZONES_DESC_SIZE;
-+}
-+
-+static uint64_t ufs_zufs_write_pointer(QUfs *ufs, uint64_t zone_start)
-+{
-+    uint8_t buf[4096];
-+    uint8_t cdb[UFS_CDB_SIZE];
-+    UtpUpiuRsp rsp_upiu;
-+
-+    ufs_zufs_build_report_zones(cdb, 0x00, sizeof(buf));
-+    stq_be_p(&cdb[2], zone_start);
-+    g_assert_cmpuint(ufs_zufs_send(ufs, cdb, NULL, 0, buf, sizeof(buf),
-+                                   &rsp_upiu), ==, GOOD);
-+    g_assert_cmpuint(ldq_be_p(&buf[64 + 16]), ==, zone_start);
-+    return ldq_be_p(&buf[64 + 24]);
-+}
-+
-+static void ufstest_zufs_init(void *obj, void *data, QGuestAllocator *alloc)
-+{
-+    QUfs *ufs = obj;
-+    uint8_t buf[4096] = { 0 };
-+    const uint8_t inquiry_cdb[UFS_CDB_SIZE] = {
-+        INQUIRY, 0x00, 0x00, 0x00, 0x60,
-+    };
-+    const uint8_t inquiry_vpd_00_cdb[UFS_CDB_SIZE] = {
-+        INQUIRY, 0x01 /* EVPD */, 0x00 /* page code */, 0x00, 0x40,
-+    };
-+    const uint8_t inquiry_vpd_b6_cdb[UFS_CDB_SIZE] = {
-+        INQUIRY, 0x01 /* EVPD */, 0xb6 /* page code */, 0x00, 0x40,
-+    };
-+    const uint8_t mode_sense_caching_cdb[UFS_CDB_SIZE] = {
-+        MODE_SENSE_10, 0x08 /* DBD */, MODE_PAGE_CACHING, 0x00, 0x00,
-+        0x00, 0x00, 0x00, 0xff,
-+    };
-+    const uint8_t read_capacity_cdb[UFS_CDB_SIZE] = {
-+        SERVICE_ACTION_IN_16, SAI_READ_CAPACITY_16, 0x00, 0x00, 0x00, 0x00,
-+        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x20,
-+    };
-+    uint8_t report_zones_cdb[UFS_CDB_SIZE];
-+    uint8_t cdb[UFS_CDB_SIZE];
-+    UtpUpiuRsp rsp_upiu;
-+    uint32_t zone_list_len;
-+    uint8_t vpd_00_len;
-+
-+    ufs_init(ufs, alloc);
-+    ufs_zufs_clear_unit_attention(ufs);
-+
-+    /* Standard INQUIRY: host-managed zoned block device */
-+    g_assert_cmpuint(ufs_zufs_send(ufs, inquiry_cdb, NULL, 0, buf, 0x60,
-+                                   &rsp_upiu), ==, GOOD);
-+    g_assert_cmpuint(buf[0] & 0x1f, ==, TYPE_ZBC);
-+
-+    /* Supported VPD pages include the ZBC device characteristics page */
-+    g_assert_cmpuint(ufs_zufs_send(ufs, inquiry_vpd_00_cdb, NULL, 0, buf, 0x40,
-+                                   &rsp_upiu), ==, GOOD);
-+    g_assert_cmpuint(buf[0], ==, TYPE_ZBC);
-+    g_assert_nonnull(memchr(&buf[4], 0xb6, buf[3]));
-+    g_assert_cmpuint(buf[4 + buf[3] - 1], ==, 0xb6);
-+    vpd_00_len = buf[3];
-+
-+    /* ZBC device characteristics VPD page */
-+    g_assert_cmpuint(ufs_zufs_send(ufs, inquiry_vpd_b6_cdb, NULL, 0, buf, 0x40,
-+                                   &rsp_upiu), ==, GOOD);
-+    g_assert_cmpuint(buf[0], ==, TYPE_ZBC);
-+    g_assert_cmpuint(buf[1], ==, 0xb6);
-+    g_assert_cmpuint(lduw_be_p(&buf[2]), ==, 0x3c);
-+    /* URSWRZ */
-+    g_assert_cmpuint(buf[4] & 0x1, ==, 1);
-+    g_assert_cmpuint(ldl_be_p(&buf[16]), ==, MAX_OPEN_ZONE);
-+
-+    /* Allocation length 4: only the header, whose page length counts 0xb6 */
-+    memset(cdb, 0, sizeof(cdb));
-+    memcpy(cdb, inquiry_vpd_00_cdb, 5);
-+    cdb[4] = 4;
-+    memset(buf, 0, sizeof(buf));
-+    g_assert_cmpuint(ufs_zufs_send(ufs, cdb, NULL, 0, buf, sizeof(buf),
-+                                   &rsp_upiu), ==, GOOD);
-+    g_assert_cmpuint(buf[0], ==, TYPE_ZBC);
-+    g_assert_cmpuint(buf[3], ==, vpd_00_len);
-+    g_assert_cmpuint(buf[4], ==, 0);
-+
-+    /* Allocation length of the scsi-hd list: 0xb6 does not fit */
-+    cdb[4] = 4 + vpd_00_len - 1;
-+    g_assert_cmpuint(ufs_zufs_send(ufs, cdb, NULL, 0, buf, sizeof(buf),
-+                                   &rsp_upiu), ==, GOOD);
-+    g_assert_cmpuint(buf[3], ==, vpd_00_len);
-+    g_assert_cmpuint(buf[4 + vpd_00_len - 2], !=, 0xb6);
-+    g_assert_cmpuint(buf[4 + vpd_00_len - 2], !=, 0);
-+    g_assert_cmpuint(buf[4 + vpd_00_len - 1], ==, 0);
-+
-+    /* UNMAP is not advertised in the Block Limits and LBP pages */
-+    cdb[2] = 0xb0;
-+    cdb[4] = 0x40;
-+    g_assert_cmpuint(ufs_zufs_send(ufs, cdb, NULL, 0, buf, sizeof(buf),
-+                                   &rsp_upiu), ==, GOOD);
-+    g_assert_cmpuint(buf[0], ==, TYPE_ZBC);
-+    g_assert_cmpuint(ldl_be_p(&buf[20]), ==, 0);
-+    g_assert_cmpuint(ldl_be_p(&buf[24]), ==, 0);
-+    cdb[2] = 0xb2;
-+    g_assert_cmpuint(ufs_zufs_send(ufs, cdb, NULL, 0, buf, sizeof(buf),
-+                                   &rsp_upiu), ==, GOOD);
-+    g_assert_cmpuint(buf[5] & 0x80, ==, 0);
-+
-+    /* An INQUIRY without a PRDT fails like on a regular LU */
-+    g_assert_cmpuint(ufs_send_scsi_command(ufs, ZONED_TEST_LUN, inquiry_cdb,
-+                                           NULL, 0, NULL, 0, &rsp_upiu), ==,
-+                     UFS_OCS_INVALID_CMD_TABLE_ATTR);
-+
-+    /* No logical block provisioning: the guest gets no UNMAP */
-+    g_assert_cmpuint(ufs_zufs_send(ufs, read_capacity_cdb, NULL, 0, buf,
-+                                   sizeof(buf), &rsp_upiu), ==, GOOD);
-+    g_assert_cmpuint(buf[14] & 0x80, ==, 0);
-+
-+    /* MODE SENSE takes the scsi-hd disk path: caching page, WCE and DPOFUA */
-+    g_assert_cmpuint(ufs_zufs_send(ufs, mode_sense_caching_cdb, NULL, 0, buf,
-+                                   0xff, &rsp_upiu), ==, GOOD);
-+    g_assert_cmpuint(buf[3] & 0x10, ==, 0x10);
-+    g_assert_cmpuint(buf[8] & 0x3f, ==, MODE_PAGE_CACHING);
-+    g_assert_cmpuint(buf[10] & 0x04, ==, 0x04);
-+
-+    /* Report zones */
-+    ufs_zufs_build_report_zones(report_zones_cdb, 0x00, sizeof(buf));
-+    g_assert_cmpuint(ufs_zufs_send(ufs, report_zones_cdb, NULL, 0, buf,
-+                                   sizeof(buf), &rsp_upiu), ==, GOOD);
-+    zone_list_len = ldl_be_p(&buf[0]);
-+    g_assert_cmpuint(zone_list_len, ==, REPORT_ZONES_DESC_SIZE * NUM_ZONES);
-+    g_assert_cmpuint(ldq_be_p(&buf[8]), ==, TEST_IMAGE_SIZE / 4096 - 1);
-+    /* First zone: sequential write required, empty */
-+    g_assert_cmpuint(buf[64] & 0xf, ==, 0x2);
-+    g_assert_cmpuint(buf[65] >> 4, ==, 0x1);
-+    g_assert_cmpuint(ldq_be_p(&buf[64 + 8]), ==, ZONE_BLOCKS);
-+
-+    ufs_exit(ufs, alloc);
-+}
-+
-+static void ufstest_zufs_write(void *obj, void *data, QGuestAllocator *alloc)
-+{
-+    QUfs *ufs = obj;
-+    uint8_t read_buf[4096] = { 0 };
-+    uint8_t write_buf[4096];
-+    uint8_t cdb[UFS_CDB_SIZE];
-+    UtpUpiuRsp rsp_upiu;
-+    int i;
-+
-+    ufs_init(ufs, alloc);
-+    ufs_zufs_clear_unit_attention(ufs);
-+    memset(write_buf, 0xab, sizeof(write_buf));
-+
-+    /* Write at the write pointer of zone 0 */
-+    ufs_zufs_build_write16(cdb, 0, 1);
-+    g_assert_cmpuint(ufs_zufs_send(ufs, cdb, write_buf, sizeof(write_buf),
-+                                   NULL, 0, &rsp_upiu), ==, GOOD);
-+
-+    /* Unaligned write error */
-+    g_assert_cmpuint(ufs_zufs_send(ufs, cdb, write_buf, sizeof(write_buf),
-+                                   NULL, 0, &rsp_upiu), ==, CHECK_CONDITION);
-+    g_assert_cmpint(rsp_upiu.sr.sense_data[12], ==, 0x21);
-+    g_assert_cmpint(rsp_upiu.sr.sense_data[13], ==, 0x04);
-+
-+    /* Linux flushes zoned disks with SYNCHRONIZE CACHE(16) */
-+    memset(cdb, 0, sizeof(cdb));
-+    cdb[0] = SYNCHRONIZE_CACHE_16;
-+    g_assert_cmpuint(ufs_zufs_send(ufs, cdb, NULL, 0, NULL, 0, &rsp_upiu), ==,
-+                     GOOD);
-+
-+    /* Zone 0 is implicitly open */
-+    ufs_zufs_build_report_zones(cdb, 0x02, sizeof(read_buf));
-+    g_assert_cmpuint(ufs_zufs_send(ufs, cdb, NULL, 0, read_buf,
-+                                   sizeof(read_buf), &rsp_upiu), ==, GOOD);
-+    g_assert_cmpuint(ldl_be_p(&read_buf[0]), ==, REPORT_ZONES_DESC_SIZE);
-+    g_assert_cmpuint(ldq_be_p(&read_buf[64 + 24]), ==, 1);
-+
-+    /* Resetting an open zone empties it */
-+    ufs_zufs_build_zbc_out(cdb, UFS_ZBC_RESET_WRITE_POINTER, 0, false);
-+    g_assert_cmpuint(ufs_zufs_send(ufs, cdb, NULL, 0, NULL, 0, &rsp_upiu), ==,
-+                     GOOD);
-+    ufs_zufs_build_write16(cdb, 0, 1);
-+    g_assert_cmpuint(ufs_zufs_send(ufs, cdb, write_buf, sizeof(write_buf),
-+                                   NULL, 0, &rsp_upiu), ==, GOOD);
-+
-+    /*
-+     * Writing to one zone more than MAX_OPEN_ZONE closes an implicitly open
-+     * zone instead of failing.
-+     */
-+    for (i = 1; i <= MAX_OPEN_ZONE; i++) {
-+        ufs_zufs_build_write16(cdb, (uint64_t)i * ZONE_BLOCKS, 1);
-+        g_assert_cmpuint(ufs_zufs_send(ufs, cdb, write_buf, sizeof(write_buf),
-+                                       NULL, 0, &rsp_upiu), ==, GOOD);
-+    }
-+    ufs_zufs_build_report_zones(cdb, 0x04, sizeof(read_buf));
-+    g_assert_cmpuint(ufs_zufs_send(ufs, cdb, NULL, 0, read_buf,
-+                                   sizeof(read_buf), &rsp_upiu), ==, GOOD);
-+    g_assert_cmpuint(ldl_be_p(&read_buf[0]), ==, REPORT_ZONES_DESC_SIZE);
-+
-+    /* Finishing an empty zone makes it full */
-+    ufs_zufs_build_zbc_out(cdb, UFS_ZBC_FINISH_ZONE,
-+                           (uint64_t)(NUM_ZONES - 1) * ZONE_BLOCKS, false);
-+    g_assert_cmpuint(ufs_zufs_send(ufs, cdb, NULL, 0, NULL, 0, &rsp_upiu), ==,
-+                     GOOD);
-+    ufs_zufs_build_report_zones(cdb, 0x05, sizeof(read_buf));
-+    g_assert_cmpuint(ufs_zufs_send(ufs, cdb, NULL, 0, read_buf,
-+                                   sizeof(read_buf), &rsp_upiu), ==, GOOD);
-+    g_assert_cmpuint(ldl_be_p(&read_buf[0]), ==, REPORT_ZONES_DESC_SIZE);
-+
-+    /* Write and zone management beyond the last LBA: LBA OUT OF RANGE */
-+    ufs_zufs_build_write16(cdb, TEST_IMAGE_SIZE / 4096, 1);
-+    ufs_zufs_send(ufs, cdb, write_buf, sizeof(write_buf), NULL, 0, &rsp_upiu);
-+    ufs_zufs_assert_sense(&rsp_upiu, ILLEGAL_REQUEST, 0x21, 0x00);
-+    ufs_zufs_build_zbc_out(cdb, UFS_ZBC_FINISH_ZONE, TEST_IMAGE_SIZE / 4096,
-+                           false);
-+    ufs_zufs_send(ufs, cdb, NULL, 0, NULL, 0, &rsp_upiu);
-+    ufs_zufs_assert_sense(&rsp_upiu, ILLEGAL_REQUEST, 0x21, 0x00);
-+    ufs_zufs_build_zbc_out(cdb, UFS_ZBC_RESET_WRITE_POINTER,
-+                           TEST_IMAGE_SIZE / 4096, false);
-+    ufs_zufs_send(ufs, cdb, NULL, 0, NULL, 0, &rsp_upiu);
-+    ufs_zufs_assert_sense(&rsp_upiu, ILLEGAL_REQUEST, 0x21, 0x00);
-+    ufs_zufs_build_report_zones(cdb, 0x00, sizeof(read_buf));
-+    stq_be_p(&cdb[2], TEST_IMAGE_SIZE / 4096);
-+    ufs_zufs_send(ufs, cdb, NULL, 0, read_buf, sizeof(read_buf), &rsp_upiu);
-+    ufs_zufs_assert_sense(&rsp_upiu, ILLEGAL_REQUEST, 0x21, 0x00);
-+
-+    /* Unknown reporting option and zone operation: INVALID FIELD IN CDB */
-+    ufs_zufs_build_report_zones(cdb, 0x08, sizeof(read_buf));
-+    ufs_zufs_send(ufs, cdb, NULL, 0, read_buf, sizeof(read_buf), &rsp_upiu);
-+    ufs_zufs_assert_sense(&rsp_upiu, ILLEGAL_REQUEST, 0x24, 0x00);
-+    ufs_zufs_build_zbc_out(cdb, 0x05, 0, false);
-+    ufs_zufs_send(ufs, cdb, NULL, 0, NULL, 0, &rsp_upiu);
-+    ufs_zufs_assert_sense(&rsp_upiu, ILLEGAL_REQUEST, 0x24, 0x00);
-+
-+    /*
-+     * An allocation length above the data buffer stays in bounds: QEMU must
-+     * not fill its buffer beyond the data buffer size.
-+     */
-+    ufs_zufs_build_report_zones(cdb, 0x00, 1024 * 1024);
-+    g_assert_cmpuint(ufs_zufs_send(ufs, cdb, NULL, 0, read_buf, 256,
-+                                   &rsp_upiu), ==, GOOD);
-+    g_assert_cmpuint(ldl_be_p(&read_buf[0]), ==,
-+                     REPORT_ZONES_DESC_SIZE * NUM_ZONES);
-+
-+    /* Reset all zones */
-+    ufs_zufs_build_zbc_out(cdb, UFS_ZBC_RESET_WRITE_POINTER, 0, true);
-+    g_assert_cmpuint(ufs_zufs_send(ufs, cdb, NULL, 0, NULL, 0, &rsp_upiu), ==,
-+                     GOOD);
-+    ufs_zufs_build_report_zones(cdb, 0x01, sizeof(read_buf));
-+    g_assert_cmpuint(ufs_zufs_send(ufs, cdb, NULL, 0, read_buf,
-+                                   sizeof(read_buf), &rsp_upiu), ==, GOOD);
-+    g_assert_cmpuint(ldl_be_p(&read_buf[0]), ==,
-+                     REPORT_ZONES_DESC_SIZE * NUM_ZONES);
-+
-+    ufs_exit(ufs, alloc);
-+}
-+
-+static void ufstest_zufs_write_cmds(void *obj, void *data,
-+                                   QGuestAllocator *alloc)
-+{
-+    QUfs *ufs = obj;
-+    uint8_t read_buf[4096];
-+    uint8_t write_buf[4096];
-+    uint8_t cdb[UFS_CDB_SIZE];
-+    UtpUpiuRsp rsp_upiu;
-+    const uint64_t zone1 = ZONE_BLOCKS, zone2 = 2 * ZONE_BLOCKS,
-+                   zone3 = 3 * ZONE_BLOCKS;
-+
-+    ufs_init(ufs, alloc);
-+    ufs_zufs_clear_unit_attention(ufs);
-+    memset(write_buf, 0xcd, sizeof(write_buf));
-+
-+    /* WRITE(10) and WRITE(6) move the write pointer like WRITE(16) */
-+    memset(cdb, 0, sizeof(cdb));
-+    cdb[0] = WRITE_10;
-+    stl_be_p(&cdb[2], 0);
-+    stw_be_p(&cdb[7], 1);
-+    g_assert_cmpuint(ufs_zufs_send(ufs, cdb, write_buf, sizeof(write_buf),
-+                                   NULL, 0, &rsp_upiu), ==, GOOD);
-+    g_assert_cmpuint(ufs_zufs_write_pointer(ufs, 0), ==, 1);
-+
-+    memset(cdb, 0, sizeof(cdb));
-+    cdb[0] = WRITE_6;
-+    cdb[1] = (zone3 >> 16) & 0x1f;
-+    cdb[2] = (zone3 >> 8) & 0xff;
-+    cdb[3] = zone3 & 0xff;
-+    cdb[4] = 1;
-+    g_assert_cmpuint(ufs_zufs_send(ufs, cdb, write_buf, sizeof(write_buf),
-+                                   NULL, 0, &rsp_upiu), ==, GOOD);
-+    g_assert_cmpuint(ufs_zufs_write_pointer(ufs, zone3), ==, zone3 + 1);
-+
-+    /* WRITE SAME(16) of two blocks at the write pointer */
-+    memset(cdb, 0, sizeof(cdb));
-+    cdb[0] = WRITE_SAME_16;
-+    stq_be_p(&cdb[2], 1);
-+    stl_be_p(&cdb[10], 2);
-+    g_assert_cmpuint(ufs_zufs_send(ufs, cdb, write_buf, sizeof(write_buf),
-+                                   NULL, 0, &rsp_upiu), ==, GOOD);
-+    g_assert_cmpuint(ufs_zufs_write_pointer(ufs, 0), ==, 3);
-+
-+    /* scsi-hd reports WSNZ=1 and fails a zero length WRITE SAME */
-+    stq_be_p(&cdb[2], 3);
-+    stl_be_p(&cdb[10], 0);
-+    ufs_zufs_send(ufs, cdb, write_buf, sizeof(write_buf), NULL, 0, &rsp_upiu);
-+    ufs_zufs_assert_sense(&rsp_upiu, ILLEGAL_REQUEST, 0x24, 0x00);
-+    g_assert_cmpuint(ufs_zufs_write_pointer(ufs, 0), ==, 3);
-+
-+    /* A write crossing the end of its zone: WRITE BOUNDARY VIOLATION */
-+    ufs_zufs_build_write16(cdb, zone1, ZONE_BLOCKS + 1);
-+    ufs_zufs_send(ufs, cdb, write_buf, sizeof(write_buf), NULL, 0, &rsp_upiu);
-+    ufs_zufs_assert_sense(&rsp_upiu, ILLEGAL_REQUEST, 0x21, 0x05);
-+    g_assert_cmpuint(ufs_zufs_write_pointer(ufs, zone1), ==, zone1);
-+
-+    /* A write to a full zone: INVALID FIELD IN CDB */
-+    ufs_zufs_build_zbc_out(cdb, UFS_ZBC_FINISH_ZONE, zone2, false);
-+    g_assert_cmpuint(ufs_zufs_send(ufs, cdb, NULL, 0, NULL, 0, &rsp_upiu), ==,
-+                     GOOD);
-+    ufs_zufs_build_write16(cdb, zone2, 1);
-+    ufs_zufs_send(ufs, cdb, write_buf, sizeof(write_buf), NULL, 0, &rsp_upiu);
-+    ufs_zufs_assert_sense(&rsp_upiu, ILLEGAL_REQUEST, 0x24, 0x00);
-+
-+    /* A WRITE(10) at an LBA above 2^31 is checked like a WRITE(16) */
-+    memset(cdb, 0, sizeof(cdb));
-+    cdb[0] = REQUEST_SENSE;
-+    g_assert_cmpuint(ufs_send_scsi_command(ufs, BIG_ZONED_TEST_LUN, cdb, NULL,
-+                                           0, read_buf, sizeof(read_buf),
-+                                           &rsp_upiu), ==, UFS_OCS_SUCCESS);
-+    cdb[0] = WRITE_10;
-+    stl_be_p(&cdb[2], 0x80000001);
-+    stw_be_p(&cdb[7], 1);
-+    g_assert_cmpuint(ufs_send_scsi_command(ufs, BIG_ZONED_TEST_LUN, cdb,
-+                                           write_buf, sizeof(write_buf), NULL,
-+                                           0, &rsp_upiu), ==, UFS_OCS_SUCCESS);
-+    ufs_zufs_assert_sense(&rsp_upiu, ILLEGAL_REQUEST, 0x21, 0x04);
-+    /* ... and one at the zone start moves that zone's write pointer */
-+    stl_be_p(&cdb[2], 0x80000000);
-+    g_assert_cmpuint(ufs_send_scsi_command(ufs, BIG_ZONED_TEST_LUN, cdb,
-+                                           write_buf, sizeof(write_buf), NULL,
-+                                           0, &rsp_upiu), ==, UFS_OCS_SUCCESS);
-+    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, GOOD);
-+    ufs_zufs_build_report_zones(cdb, 0x00, sizeof(read_buf));
-+    stq_be_p(&cdb[2], 0x80000000);
-+    g_assert_cmpuint(ufs_send_scsi_command(ufs, BIG_ZONED_TEST_LUN, cdb, NULL,
-+                                           0, read_buf, sizeof(read_buf),
-+                                           &rsp_upiu), ==, UFS_OCS_SUCCESS);
-+    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, GOOD);
-+    g_assert_cmpuint(ldq_be_p(&read_buf[64 + 16]), ==, 0x80000000);
-+    g_assert_cmpuint(ldq_be_p(&read_buf[64 + 24]), ==, 0x80000001);
-+
-+    ufs_exit(ufs, alloc);
-+}
-+
-+static void ufstest_zufs_open_zones(void *obj, void *data,
-+                                    QGuestAllocator *alloc)
-+{
-+    QUfs *ufs = obj;
-+    uint8_t write_buf[4096];
-+    uint8_t cdb[UFS_CDB_SIZE];
-+    UtpUpiuRsp rsp_upiu;
-+    int i;
-+
-+    ufs_init(ufs, alloc);
-+    ufs_zufs_clear_unit_attention(ufs);
-+    memset(write_buf, 0xef, sizeof(write_buf));
-+
-+    /* Open MAX_OPEN_ZONE zones explicitly */
-+    for (i = 0; i < MAX_OPEN_ZONE; i++) {
-+        ufs_zufs_build_zbc_out(cdb, UFS_ZBC_OPEN_ZONE,
-+                               (uint64_t)i * ZONE_BLOCKS, false);
-+        g_assert_cmpuint(ufs_zufs_send(ufs, cdb, NULL, 0, NULL, 0, &rsp_upiu),
-+                         ==, GOOD);
-+    }
-+    g_assert_cmpuint(ufs_zufs_count_zones(ufs, 0x03), ==, MAX_OPEN_ZONE);
-+
-+    /* No implicitly open zone to close: INSUFFICIENT ZONE RESOURCES */
-+    ufs_zufs_build_write16(cdb, (uint64_t)MAX_OPEN_ZONE * ZONE_BLOCKS, 1);
-+    ufs_zufs_send(ufs, cdb, write_buf, sizeof(write_buf), NULL, 0, &rsp_upiu);
-+    ufs_zufs_assert_sense(&rsp_upiu, DATA_PROTECT, 0x55, 0x0e);
-+    ufs_zufs_build_zbc_out(cdb, UFS_ZBC_OPEN_ZONE,
-+                           (uint64_t)MAX_OPEN_ZONE * ZONE_BLOCKS, false);
-+    ufs_zufs_send(ufs, cdb, NULL, 0, NULL, 0, &rsp_upiu);
-+    ufs_zufs_assert_sense(&rsp_upiu, DATA_PROTECT, 0x55, 0x0e);
-+
-+    /* Closing an open zone with nothing written empties it */
-+    ufs_zufs_build_zbc_out(cdb, UFS_ZBC_CLOSE_ZONE, 0, false);
-+    g_assert_cmpuint(ufs_zufs_send(ufs, cdb, NULL, 0, NULL, 0, &rsp_upiu), ==,
-+                     GOOD);
-+    g_assert_cmpuint(ufs_zufs_count_zones(ufs, 0x01), ==, NUM_ZONES - 5);
-+
-+    /*
-+     * Fill the freed resource with an implicitly open zone, then write to
-+     * one more zone: the implicitly open zone is closed.
-+     */
-+    ufs_zufs_build_write16(cdb, (uint64_t)MAX_OPEN_ZONE * ZONE_BLOCKS, 1);
-+    g_assert_cmpuint(ufs_zufs_send(ufs, cdb, write_buf, sizeof(write_buf),
-+                                   NULL, 0, &rsp_upiu), ==, GOOD);
-+    ufs_zufs_build_write16(cdb, (uint64_t)(MAX_OPEN_ZONE + 1) * ZONE_BLOCKS,
-+                           1);
-+    g_assert_cmpuint(ufs_zufs_send(ufs, cdb, write_buf, sizeof(write_buf),
-+                                   NULL, 0, &rsp_upiu), ==, GOOD);
-+    g_assert_cmpuint(ufs_zufs_count_zones(ufs, 0x04), ==, 1);
-+    g_assert_cmpuint(ufs_zufs_count_zones(ufs, 0x02), ==, 1);
-+
-+    /* OPEN ALL: 5 explicit + 1 closed fit, the implicit one is closed */
-+    ufs_zufs_build_zbc_out(cdb, UFS_ZBC_OPEN_ZONE, 0, true);
-+    g_assert_cmpuint(ufs_zufs_send(ufs, cdb, NULL, 0, NULL, 0, &rsp_upiu), ==,
-+                     GOOD);
-+    g_assert_cmpuint(ufs_zufs_count_zones(ufs, 0x03), ==, MAX_OPEN_ZONE);
-+    g_assert_cmpuint(ufs_zufs_count_zones(ufs, 0x04), ==, 1);
-+    g_assert_cmpuint(ufs_zufs_count_zones(ufs, 0x02), ==, 0);
-+
-+    /* OPEN ALL again: 6 explicit + 1 closed do not fit, nothing changes */
-+    ufs_zufs_send(ufs, cdb, NULL, 0, NULL, 0, &rsp_upiu);
-+    ufs_zufs_assert_sense(&rsp_upiu, DATA_PROTECT, 0x55, 0x0e);
-+    g_assert_cmpuint(ufs_zufs_count_zones(ufs, 0x04), ==, 1);
-+
-+    /* FINISH ALL fills open and closed zones, empty ones stay empty */
-+    ufs_zufs_build_zbc_out(cdb, UFS_ZBC_FINISH_ZONE, 0, true);
-+    g_assert_cmpuint(ufs_zufs_send(ufs, cdb, NULL, 0, NULL, 0, &rsp_upiu), ==,
-+                     GOOD);
-+    g_assert_cmpuint(ufs_zufs_count_zones(ufs, 0x05), ==, MAX_OPEN_ZONE + 1);
-+    g_assert_cmpuint(ufs_zufs_count_zones(ufs, 0x01), ==,
-+                     NUM_ZONES - MAX_OPEN_ZONE - 1);
-+
-+    /* RESET ALL */
-+    ufs_zufs_build_zbc_out(cdb, UFS_ZBC_RESET_WRITE_POINTER, 0, true);
-+    g_assert_cmpuint(ufs_zufs_send(ufs, cdb, NULL, 0, NULL, 0, &rsp_upiu), ==,
-+                     GOOD);
-+    g_assert_cmpuint(ufs_zufs_count_zones(ufs, 0x01), ==, NUM_ZONES);
-+
-+    ufs_exit(ufs, alloc);
-+}
-+
-+static void ufstest_zufs_unit_attention(void *obj, void *data,
-+                                        QGuestAllocator *alloc)
-+{
-+    QUfs *ufs = obj;
-+    uint8_t write_buf[4096];
-+    uint8_t cdb[UFS_CDB_SIZE];
-+    UtpUpiuRsp rsp_upiu;
-+
-+    ufs_init(ufs, alloc);
-+    memset(write_buf, 0x5a, sizeof(write_buf));
-+
-+    /*
-+     * After the reset in ufs_init(), the first command that scsi-hd does not
-+     * exempt gets UNIT ATTENTION and is not performed, zone commands too:
-+     * the zone stays empty and the write pointer stays put, so that the
-+     * guest can retry.
-+     */
-+    ufs_zufs_build_zbc_out(cdb, UFS_ZBC_FINISH_ZONE, 0, false);
-+    ufs_zufs_send(ufs, cdb, NULL, 0, NULL, 0, &rsp_upiu);
-+    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, CHECK_CONDITION);
-+    g_assert_cmpuint(rsp_upiu.sr.sense_data[2] & 0xf, ==, UNIT_ATTENTION);
-+    ufs_zufs_build_write16(cdb, 0, 1);
-+    g_assert_cmpuint(ufs_zufs_send(ufs, cdb, write_buf, sizeof(write_buf),
-+                                   NULL, 0, &rsp_upiu), ==, GOOD);
-+    g_assert_cmpuint(ufs_zufs_write_pointer(ufs, 0), ==, 1);
-+
-+    ufs_exit(ufs, alloc);
-+}
-+
-+static void ufstest_zufs_io_error(void *obj, void *data,
-+                                  QGuestAllocator *alloc)
-+{
-+    QUfs *ufs = obj;
-+    const uint8_t request_sense_cdb[UFS_CDB_SIZE] = {
-+        REQUEST_SENSE,
-+    };
-+    uint8_t buf[4096];
-+    uint8_t write_buf[4096];
-+    uint8_t cdb[UFS_CDB_SIZE];
-+    UtpUpiuRsp rsp_upiu;
-+    enum UtpOcsCodes ocs;
-+
-+    ufs_init(ufs, alloc);
-+    memset(write_buf, 0xa5, sizeof(write_buf));
-+    ocs = ufs_send_scsi_command(ufs, EIO_ZONED_TEST_LUN, request_sense_cdb,
-+                                NULL, 0, buf, sizeof(buf), &rsp_upiu);
-+    g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
-+
-+    /* scsi-hd fails the first write at LBA 0: the write pointer moves back */
-+    ufs_zufs_build_write16(cdb, 0, 1);
-+    ocs = ufs_send_scsi_command(ufs, EIO_ZONED_TEST_LUN, cdb, write_buf,
-+                                sizeof(write_buf), NULL, 0, &rsp_upiu);
-+    g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
-+    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, CHECK_CONDITION);
-+
-+    ufs_zufs_build_report_zones(cdb, 0x00, sizeof(buf));
-+    ocs = ufs_send_scsi_command(ufs, EIO_ZONED_TEST_LUN, cdb, NULL, 0, buf,
-+                                sizeof(buf), &rsp_upiu);
-+    g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
-+    g_assert_cmpuint(buf[64 + 1] >> 4, ==, 0x1);
-+    g_assert_cmpuint(ldq_be_p(&buf[64 + 24]), ==, 0);
-+
-+    /* The retry succeeds */
-+    ufs_zufs_build_write16(cdb, 0, 1);
-+    ocs = ufs_send_scsi_command(ufs, EIO_ZONED_TEST_LUN, cdb, write_buf,
-+                                sizeof(write_buf), NULL, 0, &rsp_upiu);
-+    g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
-+    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, GOOD);
-+
-+    ufs_zufs_build_report_zones(cdb, 0x00, sizeof(buf));
-+    ocs = ufs_send_scsi_command(ufs, EIO_ZONED_TEST_LUN, cdb, NULL, 0, buf,
-+                                sizeof(buf), &rsp_upiu);
-+    g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
-+    g_assert_cmpuint(ldq_be_p(&buf[64 + 24]), ==, 1);
-+
-+    ufs_exit(ufs, alloc);
-+}
-+
-+/* Submit a SCSI command that writes data_in through MCQ, without waiting */
-+static int ufs_zufs_send_write_async(QUfs *ufs, uint8_t lun,
-+                                     const uint8_t *cdb,
-+                                     const uint8_t *data_in,
-+                                     size_t data_in_len)
-+{
-+    QTestState *qts = ufs->dev.bus->qts;
-+    int cmd_desc_slot = alloc_cmd_desc_slot(ufs);
-+    uint64_t req_upiu_addr =
-+        ufs->cmd_desc_addr + cmd_desc_slot * UTP_COMMAND_DESCRIPTOR_SIZE;
-+    UfshcdSgEntry entry = { 0 };
-+    UtpUpiuReq req_upiu = { 0 };
-+    UtpTransferReqDesc utrd;
-+
-+    g_assert_true(ufs->support_mcq);
-+    g_assert_cmpuint(data_in_len, <=, PRD_ENTRY_DATA_SIZE);
-+    qtest_memwrite(qts, ufs->data_buffer_addr, data_in, data_in_len);
-+    entry.addr = cpu_to_le64(ufs->data_buffer_addr);
-+    entry.size = cpu_to_le32(data_in_len - 1);
-+    qtest_memwrite(qts, req_upiu_addr + UTP_PRDT_UPIU_OFFSET, &entry,
-+                   sizeof(entry));
-+
-+    req_upiu.header.trans_type = UFS_UPIU_TRANSACTION_COMMAND;
-+    req_upiu.header.flags = UFS_UPIU_CMD_FLAGS_WRITE;
-+    req_upiu.header.lun = lun;
-+    req_upiu.header.task_tag = cmd_desc_slot;
-+    req_upiu.sc.exp_data_transfer_len = cpu_to_be32(data_in_len);
-+    memcpy(req_upiu.sc.cdb, cdb, UFS_CDB_SIZE);
-+    qtest_memwrite(qts, req_upiu_addr, &req_upiu, sizeof(req_upiu));
-+
-+    utrd = ufs_build_req_utrd(req_upiu_addr, UFS_UTP_HOST_TO_DEVICE, 1);
-+    __ufs_send_transfer_request_mcq_async(ufs, lun, &utrd);
-+    return cmd_desc_slot;
-+}
-+
-+/* Wait for the request of ufs_zufs_send_write_async(); returns its status */
-+static uint8_t ufs_zufs_wait_async(QUfs *ufs, int cmd_desc_slot,
-+                                   UtpUpiuRsp *rsp_upiu)
-+{
-+    uint64_t rsp_upiu_addr = ufs->cmd_desc_addr +
-+                             cmd_desc_slot * UTP_COMMAND_DESCRIPTOR_SIZE +
-+                             UTP_RESPONSE_UPIU_OFFSET;
-+    uint64_t end_time;
-+    UfsCqEntry cqe;
-+    int n_cqe;
-+
-+    end_time = g_get_monotonic_time() + TIMEOUT_SECONDS * G_TIME_SPAN_SECOND;
-+    do {
-+        qtest_clock_step(ufs->dev.bus->qts, 100);
-+        n_cqe = ufs_mcq_poll_cq(ufs, &cqe, 1);
-+    } while (!n_cqe && g_get_monotonic_time() < end_time);
-+    g_assert_cmpint(n_cqe, ==, 1);
-+    g_assert_cmpuint(cqe.status, ==, UFS_OCS_SUCCESS);
-+    ufs_wreg(ufs, A_IS, FIELD_DP32(0, IS, CQES, 1));
-+
-+    qtest_memread(ufs->dev.bus->qts, rsp_upiu_addr, rsp_upiu,
-+                  sizeof(*rsp_upiu));
-+    g_assert_cmpuint(rsp_upiu->header.task_tag, ==, cmd_desc_slot);
-+    release_cmd_desc_slot(ufs, cmd_desc_slot);
-+    return rsp_upiu->header.scsi_status;
-+}
-+
-+/* Condition and write pointer of the zone at zone_start of the EIO LU */
-+static uint8_t ufs_zufs_eio_zone(QUfs *ufs, uint64_t zone_start, uint64_t *wp)
-+{
-+    uint8_t buf[4096];
-+    uint8_t cdb[UFS_CDB_SIZE];
-+    UtpUpiuRsp rsp_upiu;
-+    enum UtpOcsCodes ocs;
-+
-+    ufs_zufs_build_report_zones(cdb, 0x00, sizeof(buf));
-+    stq_be_p(&cdb[2], zone_start);
-+    ocs = ufs_send_scsi_command(ufs, EIO_ZONED_TEST_LUN, cdb, NULL, 0, buf,
-+                                sizeof(buf), &rsp_upiu);
-+    g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
-+    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, GOOD);
-+    g_assert_cmpuint(ldq_be_p(&buf[64 + 16]), ==, zone_start);
-+    *wp = ldq_be_p(&buf[64 + 24]);
-+    return buf[64 + 1] >> 4;
-+}
-+
-+static void ufstest_zufs_write_in_flight(void *obj, void *data,
-+                                         QGuestAllocator *alloc)
-+{
-+    QUfs *ufs = obj;
-+    QTestState *qts = ufs->dev.bus->qts;
-+    const uint8_t request_sense_cdb[UFS_CDB_SIZE] = {
-+        REQUEST_SENSE,
-+    };
-+    const uint64_t zone1 = ZONE_BLOCKS, zone2 = 2 * ZONE_BLOCKS;
-+    uint8_t buf[4096];
-+    uint8_t write_buf[4096];
-+    uint8_t cdb[UFS_CDB_SIZE];
-+    UtpUpiuRsp rsp_upiu;
-+    enum UtpOcsCodes ocs;
-+    uint64_t wp;
-+    int slot;
-+
-+    ufs_init(ufs, alloc);
-+    g_assert_true(ufs->support_mcq);
-+    memset(write_buf, 0x5a, sizeof(write_buf));
-+    ocs = ufs_send_scsi_command(ufs, EIO_ZONED_TEST_LUN, request_sense_cdb,
-+                                NULL, 0, buf, sizeof(buf), &rsp_upiu);
-+    g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
-+
-+    /*
-+     * A write to zone 1 takes the only open resource and closes zone 0,
-+     * which a write in flight opened. That write fails and still moves the
-+     * write pointer back.
-+     */
-+    qtest_qemu_io(qts, EIO_ZONED_TEST_DRIVE, "break write_aio A");
-+    ufs_zufs_build_write16(cdb, 0, 1);
-+    slot = ufs_zufs_send_write_async(ufs, EIO_ZONED_TEST_LUN, cdb, write_buf,
-+                                     sizeof(write_buf));
-+    g_assert_cmpuint(ufs_zufs_eio_zone(ufs, 0, &wp), ==, 0x2);
-+    g_assert_cmpuint(wp, ==, 1);
-+
-+    ufs_zufs_build_write16(cdb, zone1, 1);
-+    ocs = ufs_send_scsi_command(ufs, EIO_ZONED_TEST_LUN, cdb, write_buf,
-+                                sizeof(write_buf), NULL, 0, &rsp_upiu);
-+    g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
-+    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, GOOD);
-+    g_assert_cmpuint(ufs_zufs_eio_zone(ufs, 0, &wp), ==, 0x4);
-+    g_assert_cmpuint(wp, ==, 1);
-+
-+    qtest_qemu_io(qts, EIO_ZONED_TEST_DRIVE, "resume A");
-+    g_assert_cmpuint(ufs_zufs_wait_async(ufs, slot, &rsp_upiu), ==,
-+                     CHECK_CONDITION);
-+    g_assert_cmpuint(ufs_zufs_eio_zone(ufs, 0, &wp), ==, 0x1);
-+    g_assert_cmpuint(wp, ==, 0);
-+
-+    ufs_zufs_build_write16(cdb, 0, 1);
-+    ocs = ufs_send_scsi_command(ufs, EIO_ZONED_TEST_LUN, cdb, write_buf,
-+                                sizeof(write_buf), NULL, 0, &rsp_upiu);
-+    g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
-+    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, GOOD);
-+
-+    /*
-+     * FINISH ZONE completes while a write that filled zone 2 is in flight.
-+     * When the write fails, the zone stays full.
-+     */
-+    qtest_qemu_io(qts, EIO_ZONED_TEST_DRIVE, "break write_aio B");
-+    memset(cdb, 0, sizeof(cdb));
-+    cdb[0] = WRITE_SAME_16;
-+    stq_be_p(&cdb[2], zone2);
-+    stl_be_p(&cdb[10], ZONE_BLOCKS);
-+    slot = ufs_zufs_send_write_async(ufs, EIO_ZONED_TEST_LUN, cdb, write_buf,
-+                                     sizeof(write_buf));
-+    g_assert_cmpuint(ufs_zufs_eio_zone(ufs, zone2, &wp), ==, 0xe);
-+
-+    ufs_zufs_build_zbc_out(cdb, UFS_ZBC_FINISH_ZONE, zone2, false);
-+    ocs = ufs_send_scsi_command(ufs, EIO_ZONED_TEST_LUN, cdb, NULL, 0, NULL, 0,
-+                                &rsp_upiu);
-+    g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
-+    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, GOOD);
-+
-+    qtest_qemu_io(qts, EIO_ZONED_TEST_DRIVE, "resume B");
-+    g_assert_cmpuint(ufs_zufs_wait_async(ufs, slot, &rsp_upiu), ==,
-+                     CHECK_CONDITION);
-+    g_assert_cmpuint(ufs_zufs_eio_zone(ufs, zone2, &wp), ==, 0xe);
-+
-+    ufs_exit(ufs, alloc);
-+}
-+
-+static void ufstest_zufs_report_zones(void *obj, void *data,
-+                                      QGuestAllocator *alloc)
-+{
-+    QUfs *ufs = obj;
-+    const uint8_t request_sense_cdb[UFS_CDB_SIZE] = {
-+        REQUEST_SENSE,
-+    };
-+    uint8_t buf[4096];
-+    uint8_t write_buf[4096];
-+    uint8_t cdb[UFS_CDB_SIZE];
-+    UtpUpiuRsp rsp_upiu;
-+    uint64_t last_start;
-+    enum UtpOcsCodes ocs;
-+
-+    ufs_init(ufs, alloc);
-+    ufs_zufs_clear_unit_attention(ufs);
-+    memset(write_buf, 0x3c, sizeof(write_buf));
-+
-+    /* A start LBA inside a zone reports from that zone on */
-+    ufs_zufs_build_report_zones(cdb, 0x00, sizeof(buf));
-+    stq_be_p(&cdb[2], 2 * ZONE_BLOCKS + 5);
-+    g_assert_cmpuint(ufs_zufs_send(ufs, cdb, NULL, 0, buf, sizeof(buf),
-+                                   &rsp_upiu), ==, GOOD);
-+    g_assert_cmpuint(ldl_be_p(&buf[0]), ==,
-+                     (NUM_ZONES - 2) * REPORT_ZONES_DESC_SIZE);
-+    g_assert_cmpuint(ldq_be_p(&buf[64 + 16]), ==, 2 * ZONE_BLOCKS);
-+
-+    /* PARTIAL: the zone list length counts only the returned zones */
-+    ufs_zufs_build_report_zones(cdb, 0x80, 64 + 3 * REPORT_ZONES_DESC_SIZE);
-+    g_assert_cmpuint(ufs_zufs_send(ufs, cdb, NULL, 0, buf, sizeof(buf),
-+                                   &rsp_upiu), ==, GOOD);
-+    g_assert_cmpuint(ldl_be_p(&buf[0]), ==, 3 * REPORT_ZONES_DESC_SIZE);
-+    ufs_zufs_build_report_zones(cdb, 0x00, 64 + 3 * REPORT_ZONES_DESC_SIZE);
-+    g_assert_cmpuint(ufs_zufs_send(ufs, cdb, NULL, 0, buf, sizeof(buf),
-+                                   &rsp_upiu), ==, GOOD);
-+    g_assert_cmpuint(ldl_be_p(&buf[0]), ==, NUM_ZONES * REPORT_ZONES_DESC_SIZE);
-+
-+    /* All zones except gap zones; no read-only or conventional zones */
-+    g_assert_cmpuint(ufs_zufs_count_zones(ufs, 0x3e), ==, NUM_ZONES);
-+    g_assert_cmpuint(ufs_zufs_count_zones(ufs, 0x06), ==, 0);
-+    g_assert_cmpuint(ufs_zufs_count_zones(ufs, 0x3f), ==, 0);
-+
-+    /* A capacity that is not a multiple of the zone size: a smaller zone */
-+    ocs = ufs_send_scsi_command(ufs, ODD_ZONED_TEST_LUN, request_sense_cdb,
-+                                NULL, 0, buf, sizeof(buf), &rsp_upiu);
-+    g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
-+    last_start = (uint64_t)(ODD_NUM_ZONES - 1) * (ODD_ZONE_SIZE / 4096);
-+    ufs_zufs_build_report_zones(cdb, 0x00, sizeof(buf));
-+    stq_be_p(&cdb[2], last_start);
-+    ocs = ufs_send_scsi_command(ufs, ODD_ZONED_TEST_LUN, cdb, NULL, 0, buf,
-+                                sizeof(buf), &rsp_upiu);
-+    g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
-+    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, GOOD);
-+    g_assert_cmpuint(ldl_be_p(&buf[0]), ==, REPORT_ZONES_DESC_SIZE);
-+    g_assert_cmpuint(ldq_be_p(&buf[64 + 8]), ==,
-+                     TEST_IMAGE_SIZE / 4096 - last_start);
-+
-+    /* A write crossing the end of that zone and of the logical unit */
-+    ufs_zufs_build_write16(cdb, last_start, 1);
-+    ocs = ufs_send_scsi_command(ufs, ODD_ZONED_TEST_LUN, cdb, write_buf,
-+                                sizeof(write_buf), NULL, 0, &rsp_upiu);
-+    g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
-+    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, GOOD);
-+    ufs_zufs_build_write16(cdb, last_start + 1,
-+                           TEST_IMAGE_SIZE / 4096 - last_start);
-+    ocs = ufs_send_scsi_command(ufs, ODD_ZONED_TEST_LUN, cdb, write_buf,
-+                                sizeof(write_buf), NULL, 0, &rsp_upiu);
-+    g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
-+    ufs_zufs_assert_sense(&rsp_upiu, ILLEGAL_REQUEST, 0x21, 0x00);
-+
-+    ufs_exit(ufs, alloc);
-+}
-+
-+static void ufstest_zufs_more_cmds(void *obj, void *data,
-+                                   QGuestAllocator *alloc)
-+{
-+    QUfs *ufs = obj;
-+    uint8_t write_buf[4096];
-+    uint8_t cdb[UFS_CDB_SIZE];
-+    UtpUpiuRsp rsp_upiu;
-+    const uint64_t zone4 = 4 * ZONE_BLOCKS, zone5 = 5 * ZONE_BLOCKS;
-+
-+    ufs_init(ufs, alloc);
-+    ufs_zufs_clear_unit_attention(ufs);
-+    memset(write_buf, 0x96, sizeof(write_buf));
-+
-+    /* WRITE(12) and WRITE AND VERIFY(16) move the write pointer */
-+    memset(cdb, 0, sizeof(cdb));
-+    cdb[0] = WRITE_12;
-+    stl_be_p(&cdb[2], zone4);
-+    stl_be_p(&cdb[6], 1);
-+    g_assert_cmpuint(ufs_zufs_send(ufs, cdb, write_buf, sizeof(write_buf),
-+                                   NULL, 0, &rsp_upiu), ==, GOOD);
-+    memset(cdb, 0, sizeof(cdb));
-+    cdb[0] = WRITE_VERIFY_16;
-+    stq_be_p(&cdb[2], zone4 + 1);
-+    stl_be_p(&cdb[10], 1);
-+    g_assert_cmpuint(ufs_zufs_send(ufs, cdb, write_buf, sizeof(write_buf),
-+                                   NULL, 0, &rsp_upiu), ==, GOOD);
-+    g_assert_cmpuint(ufs_zufs_write_pointer(ufs, zone4), ==, zone4 + 2);
-+
-+    /* CLOSE ALL closes it, FINISH ZONE fills the closed zone */
-+    ufs_zufs_build_zbc_out(cdb, UFS_ZBC_CLOSE_ZONE, 0, true);
-+    g_assert_cmpuint(ufs_zufs_send(ufs, cdb, NULL, 0, NULL, 0, &rsp_upiu), ==,
-+                     GOOD);
-+    g_assert_cmpuint(ufs_zufs_count_zones(ufs, 0x04), ==, 1);
-+    ufs_zufs_build_zbc_out(cdb, UFS_ZBC_FINISH_ZONE, zone4, false);
-+    g_assert_cmpuint(ufs_zufs_send(ufs, cdb, NULL, 0, NULL, 0, &rsp_upiu), ==,
-+                     GOOD);
-+    g_assert_cmpuint(ufs_zufs_count_zones(ufs, 0x05), ==, 1);
-+
-+    /* A zone operation on a range of zones is not supported */
-+    ufs_zufs_build_zbc_out(cdb, UFS_ZBC_FINISH_ZONE, zone5, false);
-+    stw_be_p(&cdb[12], 2);
-+    ufs_zufs_send(ufs, cdb, NULL, 0, NULL, 0, &rsp_upiu);
-+    ufs_zufs_assert_sense(&rsp_upiu, ILLEGAL_REQUEST, 0x24, 0x00);
-+
-+    /* With the ALL bit, ZONE COUNT does not matter */
-+    ufs_zufs_build_zbc_out(cdb, UFS_ZBC_CLOSE_ZONE, 0, true);
-+    stw_be_p(&cdb[12], 2);
-+    g_assert_cmpuint(ufs_zufs_send(ufs, cdb, NULL, 0, NULL, 0, &rsp_upiu), ==,
-+                     GOOD);
-+
-+    /* A zone ID that is not the start of a zone */
-+    ufs_zufs_build_zbc_out(cdb, UFS_ZBC_RESET_WRITE_POINTER, zone5 + 1, false);
-+    ufs_zufs_send(ufs, cdb, NULL, 0, NULL, 0, &rsp_upiu);
-+    ufs_zufs_assert_sense(&rsp_upiu, ILLEGAL_REQUEST, 0x24, 0x00);
-+
-+    /* A write without a PRDT fails and leaves the write pointer alone */
-+    ufs_zufs_build_write16(cdb, zone5, 1);
-+    g_assert_cmpuint(ufs_send_scsi_command(ufs, ZONED_TEST_LUN, cdb, NULL, 0,
-+                                           NULL, 0, &rsp_upiu), ==,
-+                     UFS_OCS_INVALID_CMD_TABLE_ATTR);
-+    g_assert_cmpuint(ufs_zufs_write_pointer(ufs, zone5), ==, zone5);
-+    g_assert_cmpuint(ufs_zufs_count_zones(ufs, 0x02), ==, 0);
-+
-+    /* UNMAP would bypass the write pointers */
-+    memset(cdb, 0, sizeof(cdb));
-+    cdb[0] = UNMAP;
-+    stw_be_p(&cdb[7], 24);
-+    memset(write_buf, 0, 24);
-+    stw_be_p(&write_buf[0], 22);
-+    stw_be_p(&write_buf[2], 16);
-+    stq_be_p(&write_buf[8], zone4);
-+    stl_be_p(&write_buf[16], 1);
-+    ufs_zufs_send(ufs, cdb, write_buf, 24, NULL, 0, &rsp_upiu);
-+    ufs_zufs_assert_sense(&rsp_upiu, ILLEGAL_REQUEST, 0x20, 0x00);
-+
-+    ufs_exit(ufs, alloc);
-+}
-+
-+static void *ufs_zufs_test_setup(GString *cmd_line, void *arg)
-+{
-+    char *tmp_path = drive_create();
-+    char *odd_path = drive_create();
-+    char *eio_path = drive_create();
-+
-+    g_string_append_printf(cmd_line,
-+                           " -blockdev file,filename=%s,node-name=drv2 "
-+                           "-device ufs-lu,bus=ufs0,drive=drv2,lun=%d,"
-+                           "zoned=on,zoned.max_open=%d,zoned.zone_size=%d "
-+                           "-blockdev file,filename=%s,node-name=drv3 "
-+                           "-device ufs-lu,bus=ufs0,drive=drv3,lun=%d,"
-+                           "zoned=on,zoned.zone_size=%d "
-+                           "-drive if=none,id=%s,driver=raw,"
-+                           "file.driver=blkdebug,file.image.filename=%s,"
-+                           "file.inject-error.0.event=none,"
-+                           "file.inject-error.0.iotype=write,"
-+                           "file.inject-error.0.errno=5,"
-+                           "file.inject-error.0.sector=0,"
-+                           "file.inject-error.0.once=on,"
-+                           "file.inject-error.1.event=none,"
-+                           "file.inject-error.1.iotype=write,"
-+                           "file.inject-error.1.errno=5,"
-+                           "file.inject-error.1.sector=%d,"
-+                           "file.inject-error.1.once=on "
-+                           "-device ufs-lu,bus=ufs0,drive=%s,lun=%d,"
-+                           "zoned=on,zoned.zone_size=%d,zoned.max_open=1 "
-+                           "-blockdev null-co,node-name=drv5,read-zeroes=on,"
-+                           "size=%" PRIu64 " "
-+                           "-device ufs-lu,bus=ufs0,drive=drv5,lun=%d,"
-+                           "zoned=on ",
-+                           tmp_path, ZONED_TEST_LUN, MAX_OPEN_ZONE, ZONE_SIZE,
-+                           odd_path, ODD_ZONED_TEST_LUN, ODD_ZONE_SIZE,
-+                           EIO_ZONED_TEST_DRIVE, eio_path, EIO_ZONE2_SECTOR,
-+                           EIO_ZONED_TEST_DRIVE, EIO_ZONED_TEST_LUN, ZONE_SIZE,
-+                           (uint64_t)BIG_ZONED_TEST_SIZE, BIG_ZONED_TEST_LUN);
-+
-+    return arg;
-+}
-+
- static void ufs_register_nodes(void)
- {
-     const char *arch;
-@@ -1854,6 +2814,12 @@ static void ufs_register_nodes(void)
-                                              "mcq=false,nutrs=32,nutmrs=8,"
-                                              "wb-max-size=1024,"
-                                              "wb-min-size=256" };
-+    QOSGraphTestOptions zufs_test_opts = { .before = ufs_zufs_test_setup,
-+                                           .edge.extra_device_opts =
-+                                               "mcq=false,nutrs=32,nutmrs=8" };
-+    QOSGraphTestOptions zufs_mcq_test_opts = { .before = ufs_zufs_test_setup,
-+                                               .edge.extra_device_opts =
-+                                                   "mcq=true,mcq-maxq=1" };
-     QOSGraphTestOptions acpi_eject_test_opts = { .subprocess = true };
- 
-     add_qpci_address(&edge_opts, &(QPCIAddress){ .devfn = QPCI_DEVFN(4, 0) });
-@@ -1894,6 +2860,24 @@ static void ufs_register_nodes(void)
-     qos_add_test("wb-init", "ufs", ufstest_wb_init, &wb_test_opts);
-     qos_add_test("wb-read-write", "ufs", ufstest_wb_read_write, &wb_test_opts);
-     qos_add_test("hid", "ufs", ufstest_hid, &io_test_opts);
-+    qos_add_test("zufs-init", "ufs", ufstest_zufs_init, &zufs_test_opts);
-+    qos_add_test("zufs-write", "ufs", ufstest_zufs_write, &zufs_test_opts);
-+    qos_add_test("zufs-mcq-write", "ufs", ufstest_zufs_write,
-+                 &zufs_mcq_test_opts);
-+    qos_add_test("zufs-write-cmds", "ufs", ufstest_zufs_write_cmds,
-+                 &zufs_test_opts);
-+    qos_add_test("zufs-open-zones", "ufs", ufstest_zufs_open_zones,
-+                 &zufs_test_opts);
-+    qos_add_test("zufs-unit-attention", "ufs", ufstest_zufs_unit_attention,
-+                 &zufs_test_opts);
-+    qos_add_test("zufs-io-error", "ufs", ufstest_zufs_io_error,
-+                 &zufs_test_opts);
-+    qos_add_test("zufs-write-in-flight", "ufs", ufstest_zufs_write_in_flight,
-+                 &zufs_mcq_test_opts);
-+    qos_add_test("zufs-report-zones", "ufs", ufstest_zufs_report_zones,
-+                 &zufs_test_opts);
-+    qos_add_test("zufs-more-cmds", "ufs", ufstest_zufs_more_cmds,
-+                 &zufs_test_opts);
- }
- 
- libqos_init(ufs_register_nodes);
+Pierrick Bouvier (1):
+      hw/arm/smmuv3: define Root registers
 
--- 
-2.43.0
+ hw/arm/sbsa-ref.c              |   2 +-
+ hw/arm/smmuv3.c                | 229 +++++++++++++++++++++++++++++++++++++++++
+ include/hw/arm/smmuv3-common.h |  22 ++++
+ include/hw/arm/smmuv3.h        |  13 +++
+ 4 files changed, 265 insertions(+), 1 deletion(-)
+---
+base-commit: 5acdfee7f068d88813c989c52f76bb64a06121ca
+change-id: 20261015-jmac-smmu-root-registers-dc4f1e2a63b5
+
+Best regards,
+--  
+Jim MacArthur <jim.macarthur@linaro.org>
+
 
