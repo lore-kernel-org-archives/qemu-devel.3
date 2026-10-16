@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05E2ECCA462
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 01:03:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30075CC6B38
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 01:04:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHWLX-0000G3-Jp; Thu, 15 Oct 2026 21:02:55 -0400
+	id 1xHWMl-0000n4-At; Thu, 15 Oct 2026 21:04:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1xHWLT-0000Ew-II
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 21:02:51 -0400
-Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
+ id 1xHWLu-0000KR-3j
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 21:03:21 -0400
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1xHWLR-0004C2-Q0
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 21:02:51 -0400
-Received: by mail-pj1-x1030.google.com with SMTP id
- 98e67ed59e1d1-3ab41538192so4168927a91.0
- for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 18:02:49 -0700 (PDT)
+ id 1xHWLs-0004Fa-5V
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 21:03:17 -0400
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-2e901e114fdso25571105ad.2
+ for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 18:03:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1792112568; x=1792717368; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1792112595; x=1792717395; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=Sfx1HIlYACatyDIWreyR3Kawd11D1y/HMQNShWOnHhU=;
- b=rgPd7xMLV0nhhuJqpqVhfXU6zgpLDUReNy2WCG4RqTydZDHtsP61sFIABR8NTcn9RM
- Y6pVYxaU7hVpAKK0HhZEbtr7zUORfeuqxpEd9n1Ag1v3+AHi8/dwbUJDRL0MZc2YGQ+L
- 6PJW57YHUuHroiKwFTwJnwvMXxMTDtLpFtLI443R/BppBxawoH3IEAcvLmy+OY3ZaGIh
- s4sGcnlNF+mk4Y28ft9Z4dAgKSiPG/S5d7d2WhUZ8U3AqDAwmogZvmiOQbi5bslOXP9l
- AfuRfXDjzN1mZ5U13WwFjV3ZE3ES/kY2qXQwBb5Vpp+Vk6F79J1sSoJ2KLjPZ1g9BxD4
- VyXA==
+ bh=iQPAGyk/nm9VQjMk8UPhdVAI9U2BURPPGABZtifKqV8=;
+ b=QcFaT3Oi451vpjV5vSKFUTykzsZGDxjsE2ps6S2HNdsF3A/z0GjljxrLMhskNVsuus
+ TqNoLXwL6gCa2Lhx9lgsK1/vpGu/mqs1qMup8JnzcEFLz86byOCH9KyFqq63QQfRX8Ks
+ hEF6AsNPfUxET4wtUlaK235YGWy9ovy1MbU5H93Rk8TSGOAAday/nGoIP6Xc3RTwv8k/
+ o/UexkMc6TcAFZg6rl0wXg9uNv4PXjkY7zpGTeaPJL3xDA3qszRyeWjVB2wHLndfjU9z
+ wbOBrH09umLecctHuAqr7rBlzjnb782CP82G5hhox7EpAsMLvJVHRROEKLmAv5ZbhKw0
+ Wkvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792112568; x=1792717368;
+ d=1e100.net; s=20260707; t=1792112595; x=1792717395;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=Sfx1HIlYACatyDIWreyR3Kawd11D1y/HMQNShWOnHhU=;
- b=n1+s8Olar1mNtWoZJk8Qj6sdS+0llhgS/r0nyMy2Wja+65S1dM8IeyckbVK0h7U6iq
- 638SqZyaj8imbkMG2cWu4/xol/bgpG26NYiNYjRl0YOI1iGjt3WmYNi2u20xt0Gd9McS
- Uc9sfwWn+uHX8o00MvZ9uaPmfKRdIBcsR03YX4AJio8zJ94FdQV8cfkO2Bc1WYFPTXPd
- pktbSmKJL4qLbBcGBhOrBbWwA1excYVVQpme8H9A5xoGRmG3wzpN6rRvUDtHVAWN8/FM
- Ifj5/V242iVH/sPxNu7N5Xii4C2Sbb+qI4cDl0KREzp4zTe706ROu413Efuf8bcNVLSm
- l/BA==
-X-Gm-Message-State: AFq9FYLe02FtHd5m6E08Mkq7FwBf5DkSnlJqHhskXJNELysFfx5YtFQJ
- QoVfOGuYXt1dtQtF0NiKeL4Tib/qiXQotF+rOg+Ys01CXNMPNOON3T770sbvBg==
-X-Gm-Gg: AYBFou2+X2+vN0g4ALQ5ohFvfzOX9Imc+RqdPORaI+7tsIF7meX3UMcG0AzeBcVkSO8
- OCygifGO0xWhG5fsbhZwKLGMqV1upOafYtJBNdBF1UuoWNYtXDM7Iz4VQMfsMr2X8iVH3WrZ6QG
- gUxBs89Pi9mvIYwO7OPyuxMCKA2QROGImPVsOEV451NzV4C4vqUO3ykeG76nmXBC77kpLKxALo1
- CkEcLfBLlf2dIecMqW2zTSFChTccE/Np0nbDtCU/pmVUUjyLTf6QlxAdwKdUPLym4dZbSkmomK4
- oEI/ikb9yskXdVk0PQJBzKJ4He15LM3OE8mG9v+ssbFlsZyzj3EL69r4wmx5zf68pnPEDZQ1RXS
- vuEDVzL3RaRATeRcz8doTdADQSNSB/4/JmUEpxDcbSgJKNaPyy2eGRyz4jPFPvL3TWXizRezM+6
- Q6p/ZIjnFwVA4KL67LQQ0y65sjTz3uzVHQaxn+C64EMT0/Mk+kkaRlv3cwvA46pwghs4intT9iq
- UUI+fu7H2q7fpV1Rw==
-X-Received: by 2002:a17:90b:48c5:b0:3a4:b418:94cf with SMTP id
- 98e67ed59e1d1-3ab3a7366bfmr19069765a91.14.1792112568113; 
- Thu, 15 Oct 2026 18:02:48 -0700 (PDT)
+ bh=iQPAGyk/nm9VQjMk8UPhdVAI9U2BURPPGABZtifKqV8=;
+ b=Sxdm87e29j67GjlDRqHN592ZgCOoyODHkekB0twgn/k8M5DsYqUaKviIayrgi1JV4a
+ K+hx98uY129vGeZ/2YH/B1olGupbuHS8U9a75FdNowI9/+2DhuzxFdoqX2vUgYtxTDLu
+ wiGFAtziq+nCxWkXdxTnC00cOhG4EgnB2jdDGRGE/ZtMoPEzINsY8ZqMTq0QwfA/yQxe
+ ttVm2jwOM2oUB0Rj6PBLt2nwaJaaRWvPruVO1lvW8tT/2U19PJXtpMNq/o5h5sVm8jKl
+ brK+fPKHX2ofQ0Iz4lBzPhvaaRrIDXOSIoFhOqjHp2ZucslHFb0xvbXoEzLjoJZyL/BA
+ p3LA==
+X-Gm-Message-State: AFq9FYLi5NyOm/nuJwcpk08WZgGwot7O239hbrFlew8dfWHwFiIY55k7
+ 7aMpgPRDeuvRx5dC58XVehcoxfr843lRvi8bTCGPkQTR8jpfbqGmVlftJUkZFw==
+X-Gm-Gg: AYBFou0Ll7BSQjcDTLMq3OXKspG81EtbN7s1N4+YTFrmWIcgEVPoyvNOI1nKuJU82Rm
+ 5KpD+tZGW9phf5K8Yqq+OFCitt/s1IIg+HL+p5VShaj6G+9bzraJs7EnTkXc6tr+y+EMjNBmSvc
+ LThA9YpnucZpaq4jtV6r1AaIEfmYH47cOdqMqFA5a19G7P0pr4tC1McrEuo+kyRQsBCDOepa4Gc
+ Jjxf8WgrdPH/G4/ERL/ldMjEiYfK9B9NjcFrVaexBSQ6Wg4e3mAQI5GzfK+dSpIZQX15c5nj+if
+ qPrGtSfy8BKgFdpl7k0oC99Vr5m9mVd9ivimj+mrFDPXtASlKy3YL6DARuiejAu0E8zPf6qQlmY
+ un3GgSm6F4Wzvh95m0Ccr09QeX+Tq83LVoxK8XUeRs7cIZrxlyHJt5uZg2hoWC6Rwp8u1+vErzO
+ zPHR+LR1bOqkNNKUZCyly2h3zM1/HUKifNPLib2HQhYknMORzvJcslltw8A3CEy1SR/O4nRJkjY
+ Gt0nR3S55UIwXlt
+X-Received: by 2002:a17:903:19e7:b0:2e6:1a6c:abcd with SMTP id
+ d9443c01a7336-2e84280a68fmr206247305ad.3.1792112594634; 
+ Thu, 15 Oct 2026 18:03:14 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2e97e833f1asm2513995ad.43.2026.10.15.18.02.45
+ d9443c01a7336-2e97e833f1asm2513995ad.43.2026.10.15.18.03.11
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 Oct 2026 18:02:47 -0700 (PDT)
+ Thu, 15 Oct 2026 18:03:13 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: imaginos <imaginos32@gmail.com>, qemu-stable@nongnu.org,
- Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL v2 01/50] target/riscv: check G-stage write permission for
- VS-stage A/D updates
-Date: Fri, 16 Oct 2026 11:01:48 +1000
-Message-ID: <20261016010237.1102834-2-alistair.francis@wdc.com>
+Cc: Kuan-Wei Chiu <visitorckw@gmail.com>, Chao Liu <chao.liu.zevorn@gmail.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Portia Stephens <portias@oss.tenstorrent.com>
+Subject: [PULL v2 09/50] hw/char: Add dw8250 UART
+Date: Fri, 16 Oct 2026 11:01:56 +1000
+Message-ID: <20261016010237.1102834-10-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20261016010237.1102834-1-alistair.francis@wdc.com>
 References: <20261016010237.1102834-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
- envelope-from=alistair23@gmail.com; helo=mail-pj1-x1030.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x62b.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -104,90 +104,245 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: imaginos <imaginos32@gmail.com>
+From: Kuan-Wei Chiu <visitorckw@gmail.com>
 
-During a two-stage (VS-stage + G-stage) page-table walk with hardware
-A/D updating enabled (Svadu / menvcfg.ADUE), a store that reaches a
-VS-stage leaf PTE whose accessed or dirty bit is clear triggers a
-hardware write-back of those bits into the PTE. That write-back is an
-implicit store to the PTE's guest-physical address, so it must be
-permitted by G-stage.
+Add the dw8250 uart support. This hardware is a widely used 16550A
+derivative that includes additional registers.
 
-Fix this by re-running the G-stage translation of the guest PTE's
-address with store semantics. get_physical_address() then also checks
-that G-stage permits the guest PTE to be written, and raises a
-guest-page store fault when it does not.
+Without this specific device support, the Linux 8250_dw driver fails to
+probe the extended registers (UCV, CPR, etc.), which are essential for
+correct feature detection.
 
-Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3426
-Signed-off-by: imaginos <imaginos32@gmail.com>
+Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
+Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260705140508.17692-1-imaginos32@gmail.com>
+Message-ID: <20260927201326.650943-2-visitorckw@gmail.com>
+[ Changes by Portia Stephens <portias@oss.tenstorrent.com>:
+ - hw/char/dw8250: Fix leak when creating child device
+]
+Signed-off-by: Portia Stephens <portias@oss.tenstorrent.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/tcg/cpu_helper.c | 28 ++++++++++++++++++++++++++++
- 1 file changed, 28 insertions(+)
+ MAINTAINERS              |   6 ++
+ include/hw/char/dw8250.h |  28 +++++++++
+ hw/char/dw8250.c         | 130 +++++++++++++++++++++++++++++++++++++++
+ hw/char/Kconfig          |   4 ++
+ hw/char/meson.build      |   1 +
+ 5 files changed, 169 insertions(+)
+ create mode 100644 include/hw/char/dw8250.h
+ create mode 100644 hw/char/dw8250.c
 
-diff --git a/target/riscv/tcg/cpu_helper.c b/target/riscv/tcg/cpu_helper.c
-index 07d9222652..6115f65adb 100644
---- a/target/riscv/tcg/cpu_helper.c
-+++ b/target/riscv/tcg/cpu_helper.c
-@@ -1133,6 +1133,7 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
-     int ptshift;
-     target_ulong pte;
-     hwaddr pte_addr;
-+    hwaddr pte_gpa = 0;
-     const hwaddr base_root = base;
-     const bool be = mo_endian_env(env) == MO_BE;
-     int i;
-@@ -1170,6 +1171,7 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
-             }
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 1ee661cc23..3a3c3701a5 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -2848,6 +2848,12 @@ S: Maintained
+ F: hw/i2c/designware_i2c.c
+ F: include/hw/i2c/designware_i2c.h
  
-             pte_addr = vbase + idx * ptesize;
-+            pte_gpa = base + idx * ptesize;
-         } else {
-             pte_addr = base + idx * ptesize;
-         }
-@@ -1424,6 +1426,28 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
-             return TRANSLATE_FAIL;
-         }
- 
++DesignWare 8250 UART
++M: Kuan-Wei Chiu <visitorckw@gmail.com>
++S: Maintained
++F: hw/char/dw8250.c
++F: include/hw/char/dw8250.h
++
+ Generic Loader
+ M: Alistair Francis <alistair@alistair23.me>
+ S: Maintained
+diff --git a/include/hw/char/dw8250.h b/include/hw/char/dw8250.h
+new file mode 100644
+index 0000000000..ce0b97715b
+--- /dev/null
++++ b/include/hw/char/dw8250.h
+@@ -0,0 +1,28 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++/*
++ * Synopsys DesignWare APB UART (DW 8250)
++ *
++ * Copyright (c) 2026 Kuan-Wei Chiu <visitorckw@gmail.com>
++ */
++
++#ifndef HW_CHAR_DW8250_H
++#define HW_CHAR_DW8250_H
++
++#include "hw/core/sysbus.h"
++#include "qom/object.h"
++#include "hw/char/serial-mm.h"
++
++#define TYPE_DW8250 "dw8250"
++OBJECT_DECLARE_SIMPLE_TYPE(DW8250State, DW8250)
++
++struct DW8250State {
++    SysBusDevice parent_obj;
++
++    MemoryRegion container;
++    MemoryRegion ext_iomem;
++    SerialMM serial_mm;
++
++    uint8_t regshift;
++};
++
++#endif
+diff --git a/hw/char/dw8250.c b/hw/char/dw8250.c
+new file mode 100644
+index 0000000000..50baeae62c
+--- /dev/null
++++ b/hw/char/dw8250.c
+@@ -0,0 +1,130 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++/*
++ * Synopsys DesignWare APB UART (DW 8250)
++ *
++ * Copyright (c) 2026 Kuan-Wei Chiu <visitorckw@gmail.com>
++ */
++
++#include "qemu/osdep.h"
++#include "qemu/log.h"
++#include "qapi/error.h"
++#include "hw/char/dw8250.h"
++#include "hw/core/qdev-properties.h"
++#include "hw/core/qdev-properties-system.h"
++
++#define DW_UART_REGION_SIZE 0x100
++
++#define DW_UART_RE_EN (0xB4 >> 2) /* Receiver Output Enable Register */
++#define DW_UART_DLF   (0xC0 >> 2) /* Divisor Latch Fraction Register */
++#define DW_UART_CPR   (0xF4 >> 2) /* Component Parameter Register */
++#define DW_UART_UCV   (0xF8 >> 2) /* UART Component Version */
++#define DW_UART_CTR   (0xFC >> 2) /* Component Type Register */
++
++#define DW_UART_UCV_VALUE 0x3332332A /* "323*" -> v3.23a */
++#define DW_UART_CTR_VALUE 0x44570110 /* "DW" */
++
++static uint64_t dw8250_ext_read(void *opaque, hwaddr addr, unsigned int size)
++{
++    DW8250State *s = opaque;
++
++    switch (addr >> s->regshift) {
++    case DW_UART_UCV:
++        return DW_UART_UCV_VALUE;
++    case DW_UART_CPR:
++        return 0x00000000; /* No advanced features (DMA, extra FIFOs) */
++    case DW_UART_CTR:
++        return DW_UART_CTR_VALUE;
++
++    case DW_UART_RE_EN:
++    case DW_UART_DLF:
 +        /*
-+         * The implicit store that writes updated A/D bits back to a VS-stage
-+         * (first-stage) PTE must itself be permitted by G-stage. Re-run the
-+         * second-stage translation of the PTE's guest-physical address with
-+         * store semantics. If G-stage denies write, raise G-stage store fault
-+         * against the PTE address.
++         * Return 0 to indicate these optional features
++         * (RS485 and Fractional Divisor) are not implemented.
 +         */
-+        if (two_stage && first_stage) {
-+            int gpa_prot;
-+            hwaddr gpa_paddr;
-+            int gpa_ret = get_physical_address(env, &gpa_paddr, &gpa_prot,
-+                                               pte_gpa, NULL, MMU_DATA_STORE,
-+                                               MMUIdx_U, false, true,
-+                                               is_debug, false);
-+            if (gpa_ret != TRANSLATE_SUCCESS) {
-+                if (fault_pte_addr) {
-+                    *fault_pte_addr = pte_gpa >> 2;
-+                }
-+                return TRANSLATE_G_STAGE_FAIL;
-+            }
-+        }
++        return 0x00000000;
 +
-         pmp_ret = get_physical_address_pmp(env, &pmp_prot, pte_addr,
-                                            sxlen_bytes, MMU_DATA_STORE, PRV_S);
-         if (pmp_ret != TRANSLATE_SUCCESS) {
-@@ -2114,6 +2138,10 @@ void riscv_cpu_do_interrupt(CPUState *cs)
-                  * doing VS-stage page table walk.
-                  */
-                 tinst = (riscv_cpu_xlen(env) == 32) ? 0x00002000 : 0x00003000;
++    default:
++        return 0;
++    }
++}
 +
-+                if (cause == RISCV_EXCP_STORE_GUEST_AMO_ACCESS_FAULT) {
-+                    tinst |= 0x20;
-+                }
-             } else {
-                 /*
-                  * The "Addr. Offset" field in transformed instruction is
++static void dw8250_ext_write(void *opaque, hwaddr addr, uint64_t val, unsigned int size)
++{
++    qemu_log_mask(LOG_UNIMP, "%s: Unimplemented write to address 0x%" HWADDR_PRIx "\n",
++                  __func__, addr);
++}
++
++static const MemoryRegionOps dw8250_ext_ops = {
++    .read = dw8250_ext_read,
++    .write = dw8250_ext_write,
++    .endianness = DEVICE_LITTLE_ENDIAN,
++    .impl = {
++        .min_access_size = 4,
++        .max_access_size = 4,
++    },
++    .valid = {
++        .min_access_size = 1,
++        .max_access_size = 4,
++    },
++};
++
++static void dw8250_instance_init(Object *obj)
++{
++    DW8250State *s = DW8250(obj);
++
++    object_initialize_child(obj, "serial-mm", &s->serial_mm, TYPE_SERIAL_MM);
++    object_property_add_alias(obj, "chardev", OBJECT(&s->serial_mm), "chardev");
++}
++
++static void dw8250_realize(DeviceState *dev, Error **errp)
++{
++    DW8250State *s = DW8250(dev);
++    SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
++    SysBusDevice *serial_sbd = SYS_BUS_DEVICE(&s->serial_mm);
++
++    memory_region_init(&s->container, OBJECT(dev), "dw8250-container",
++                       DW_UART_REGION_SIZE);
++    sysbus_init_mmio(sbd, &s->container);
++
++    qdev_prop_set_uint8(DEVICE(&s->serial_mm), "regshift", s->regshift);
++    qdev_prop_set_uint8(DEVICE(&s->serial_mm), "endianness", DEVICE_LITTLE_ENDIAN);
++    if (!sysbus_realize(serial_sbd, errp)) {
++        return;
++    }
++
++    memory_region_init_io(&s->ext_iomem, OBJECT(dev), &dw8250_ext_ops, s,
++                          "dw8250-ext", DW_UART_REGION_SIZE);
++    memory_region_add_subregion(&s->container, 0, &s->ext_iomem);
++
++    memory_region_add_subregion_overlap(&s->container, 0,
++                                        sysbus_mmio_get_region(serial_sbd, 0), 1);
++
++    sysbus_pass_irq(sbd, serial_sbd);
++}
++
++static const Property dw8250_properties[] = {
++    DEFINE_PROP_UINT8("regshift", DW8250State, regshift, 2),
++};
++
++static void dw8250_class_init(ObjectClass *klass, const void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
++
++    dc->realize = dw8250_realize;
++    device_class_set_props(dc, dw8250_properties);
++}
++
++static const TypeInfo dw8250_info = {
++    .name          = TYPE_DW8250,
++    .parent        = TYPE_SYS_BUS_DEVICE,
++    .instance_size = sizeof(DW8250State),
++    .instance_init = dw8250_instance_init,
++    .class_init    = dw8250_class_init,
++};
++
++static void dw8250_register_types(void)
++{
++    type_register_static(&dw8250_info);
++}
++
++type_init(dw8250_register_types)
+diff --git a/hw/char/Kconfig b/hw/char/Kconfig
+index 020c0a84bb..7040040641 100644
+--- a/hw/char/Kconfig
++++ b/hw/char/Kconfig
+@@ -95,3 +95,7 @@ config IP_OCTAL_232
+     bool
+     default y
+     depends on IPACK
++
++config DW8250
++    bool
++    select SERIAL_MM
+diff --git a/hw/char/meson.build b/hw/char/meson.build
+index fc3d7ee506..b2250ee6ae 100644
+--- a/hw/char/meson.build
++++ b/hw/char/meson.build
+@@ -38,6 +38,7 @@ system_ss.add(when: 'CONFIG_STM32L4X5_USART', if_true: files('stm32l4x5_usart.c'
+ system_ss.add(when: 'CONFIG_MCHP_PFSOC_MMUART', if_true: files('mchp_pfsoc_mmuart.c'))
+ system_ss.add(when: 'CONFIG_HTIF', if_true: files('riscv_htif.c'))
+ system_ss.add(when: 'CONFIG_GOLDFISH_TTY', if_true: files('goldfish_tty.c'))
++system_ss.add(when: 'CONFIG_DW8250', if_true: files('dw8250.c'))
+ 
+ specific_ss.add(when: 'CONFIG_TERMINAL3270', if_true: files('terminal3270.c'))
+ specific_ss.add(when: 'CONFIG_PSERIES', if_true: files('spapr_vty.c'))
 -- 
 2.55.0
 
