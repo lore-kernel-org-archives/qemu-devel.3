@@ -4,83 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E46CFCCA46C
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 14:26:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FD1CCCF2C1
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 14:28:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHitF-0002rD-S2; Fri, 16 Oct 2026 10:26:33 -0400
+	id 1xHiv5-00043A-1r; Fri, 16 Oct 2026 10:28:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xHitD-0002qc-LI
- for qemu-devel@nongnu.org; Fri, 16 Oct 2026 10:26:31 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xHitB-0007GG-Jh
- for qemu-devel@nongnu.org; Fri, 16 Oct 2026 10:26:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1792160787;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=7n4iZ4ComhfcCVp1PkEGP1+7z4EwMMCEz02WurFs1qo=;
- b=akeHGtcuwnDXYv+ilalQhPhi4Jd5AGnmuidszc1sjmqGvY+5Hx6MZPorMJPrr7ILo8f0U1
- NKGYeemHD8rNVJPWgPnCle2f60hcmIhE9O0OjdHppqMsvc5QkWLynjTksRlcAM6nKi4Qz9
- hCGEeKE2ja6LH4ElTbOZJM112R80Pgk=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-458-XGRp31ypM1C1a-v6MRZv5Q-1; Fri,
- 16 Oct 2026 14:26:23 +0000
-X-MC-Unique: XGRp31ypM1C1a-v6MRZv5Q-1
-X-Mimecast-MFC-AGG-ID: XGRp31ypM1C1a-v6MRZv5Q_1792160781
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3B9991956094; Fri, 16 Oct 2026 14:26:21 +0000 (UTC)
-Received: from redhat.com (headnet03.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.114])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id ADB4C26C; Fri, 16 Oct 2026 14:26:19 +0000 (UTC)
-Date: Fri, 16 Oct 2026 15:26:16 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Mark Cave-Ayland <mark.caveayland@nutanix.com>
-Subject: Re: [PATCH] include/hw/core/qdev.h: Fix where
- device_class_set_parent_realize docs suggest putting parent_realize
-Message-ID: <atI0CCfUsBR2kqkB@redhat.com>
-References: <20261015163352.1751191-1-peter.maydell@linaro.org>
- <atEC-pIGhLYLXVmC@redhat.com>
- <CAFEAcA-wEB15afO4Na8+8cF_Ja3v-8ewd8EdPavxJbfTmrL9GA@mail.gmail.com>
- <atHrFXxyIl3Nbvht@redhat.com> <atHu0kCSQTD9E34p@redhat.com>
- <CAFEAcA9PTB=1V_hV1P0xpEW4aY+4LajYyzKzyTOJj=bb9=oPvA@mail.gmail.com>
- <atICMoFG2gkoHWJ-@redhat.com>
- <CAFEAcA8hJ_WK+4itRtQiJBtDnd5TfA5jrtrcF2qPAj0cnJ+U9Q@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xHiv3-0003zh-D5
+ for qemu-devel@nongnu.org; Fri, 16 Oct 2026 10:28:25 -0400
+Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xHiv1-0007LL-CC
+ for qemu-devel@nongnu.org; Fri, 16 Oct 2026 10:28:25 -0400
+Received: by mail-ed1-x532.google.com with SMTP id
+ 4fb4d7f45d1cf-6acb57c2b88so4161315a12.2
+ for <qemu-devel@nongnu.org>; Fri, 16 Oct 2026 07:28:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1792160901; x=1792765701; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id
+ :references:in-reply-to:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=uNQPCq9l8r4XiSGCtjVwZ/7otkxiiZTgxRrkorrj56o=;
+ b=fe0p+sMFvdmzKvtXApQeXf3ehle5cihWDyPx5KQmU7PXMbL9rNZ6NaIoy7JdvRWMOP
+ wxbTg312QpzZB1XPGjib/N6cpElImcTwtIxfjjAwp5eFLw7mpFCJRO902wiqbLHIIafb
+ uQd1DeCPBZ5/2w84cgQ6bKCfm11DQrT+qerAmikMHRmZbIZmcl23ZfF49/RDNiIghlCF
+ JsefBmb2RpXeNjAQN+lXFlMBpF7pKwFElndrQsziNPltA2MQViCgjG3VA3yEBQYHduBO
+ 8SPBaZC+4kQ1boau2q5IiOferYcCjFI6+CgN+NZPA2QX33QlNEbklI+CqaYWbKZY/IuN
+ Lgxw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1792160901; x=1792765701;
+ h=content-transfer-encoding:content-type:mime-version:message-id
+ :references:in-reply-to:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=uNQPCq9l8r4XiSGCtjVwZ/7otkxiiZTgxRrkorrj56o=;
+ b=cZkRSvos6UMDGFMC0Jb+MMA5cepV+KAvd4zwhU1pKKAu6NhVRAO3ZtZK3Iw/PrJSUQ
+ PPNYp9viOxyITFCaBaKps/QUpaOXXuAER+2EEAXgGyZPWxBGtQEt75FAGw4CDuaM5Ew0
+ K1fXXqDJziGAN/1M8FzxYbCP6b2y8lxsmvQdIjXg0SerSZe8n9IehJBkEoTq4T+hGASV
+ xpZudL6X301aNe0ay5rk5f7l5MfrOXG88e0plaz8S8fePfGxWKmRlNDxI6fD5HA/PBHy
+ ubuY+iaEVp1OQycq4/r40DjxtSJfaKPwk9Cq5xPLFdjgQAlRrj9BprzrRij0hg3LflAF
+ XOdA==
+X-Gm-Message-State: AFq9FYLMMuSq9Laow3UqTLzeDFx3occerbUrQEDoXZuK/KUuirJeoavV
+ KXP3T2+9OL2jXa/JoaTR9Aam9iR2OhKnTUgJy00/1+TQNxjsGOCBuCDFhdVRTg==
+X-Gm-Gg: AYBFou0Ob0U4LRiSs3yOm6oV7DKCmuuc5df8DeljaLQ0q7TQ23RCi9tpZ6pJ9ZTDEiZ
+ RuqMGidmBhspdKrQhcqjk9GxQSiLYRoS1Od54yHXiBu7SbPVE+CzZZks9ze+Kcj2Lv+dDhwOwKI
+ Nb2MgQgqXGldbxpSJdMsxgkM40d708y27xZuvGjSBu9Uw1nr0afMLXqVNispiJXINn/nQ4LqwCy
+ EG0i1REGPLGSMi09j+whk9Dsycx6GEQeoPbqIBX0/WSW6LgCAVW6DVVgcZ1ggqJRW36VBg/8FMC
+ NlAGkh5mwGlN13qLUQUda2sIgDbE4J2y+uDhVLnxBsZV+L/FApxEMC4Wae9y8nM33jH3ZP6+ZYH
+ XSrGxH43MZO5Sgt/krek/LPCuMrr3oQnOZ7LVOzq/422iD48fEB+C8HTs5/1pTYPegbchjnxYko
+ Of2pn/jx6KFP/TA29BLX49qgpCjh9L3Ugj7S+Eb3QRSuOfHHsmaY67I/Msgp1FAO39HJvkgt3I/
+ yvNcsl4ZsElb2bowXjVXvR0s3YTLfcH98u8c2VJxR/Ng3QPpGUqOaUJhqUEobEJOXn9Idk=
+X-Received: by 2002:a05:6402:2748:b0:6b1:b17a:de82 with SMTP id
+ 4fb4d7f45d1cf-6b1b17aed7emr14225345a12.38.1792160901374; 
+ Fri, 16 Oct 2026 07:28:21 -0700 (PDT)
+Received: from ehlo.thunderbird.net
+ (p200300faaf35e000b58d2e94ae5e9ab7.dip0.t-ipconnect.de.
+ [2003:fa:af35:e000:b58d:2e94:ae5e:9ab7])
+ by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-6b38a1ea1ddsm887077a12.34.2026.10.16.07.28.20
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 16 Oct 2026 07:28:20 -0700 (PDT)
+Date: Fri, 16 Oct 2026 14:28:18 +0000
+From: Bernhard Beschow <shentey@gmail.com>
+To: qemu-devel@nongnu.org
+CC: Zhao Liu <zhao1.liu@intel.com>,
+ =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@oss.qualcomm.com>,
+ Christian Speich <c.speich@avm.de>, Bin Meng <bmeng.cn@gmail.com>,
+ qemu-block@nongnu.org
+Subject: Re: [PATCH v5 0/8] hw/sd: Improve performance of read/write/erase
+In-Reply-To: <20261006094447.43491-1-shentey@gmail.com>
+References: <20261006094447.43491-1-shentey@gmail.com>
+Message-ID: <C4ABBCFA-97E9-4C0D-A132-25B2A816E4B7@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAFEAcA8hJ_WK+4itRtQiJBtDnd5TfA5jrtrcF2qPAj0cnJ+U9Q@mail.gmail.com>
-User-Agent: Mutt/2.4.2 (2026-08-30)
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 10
-X-Spam_score: 1.0
-X-Spam_bar: +
-X-Spam_report: (1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::532;
+ envelope-from=shentey@gmail.com; helo=mail-ed1-x532.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,89 +102,226 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Oct 16, 2026 at 03:09:55PM +0100, Peter Maydell wrote:
-> On Fri, 16 Oct 2026 at 11:53, Daniel P. Berrangé <berrange@redhat.com> wrote:
-> >
-> > On Fri, Oct 16, 2026 at 11:14:16AM +0100, Peter Maydell wrote:
-> > > On Fri, 16 Oct 2026 at 10:31, Daniel P. Berrangé <berrange@redhat.com> wrote:
-> 
-> > > > +#define qdev_realize_chain_parent(dev, dc, errp) \
-> > > > +    DEVICE_CLASS(object_class_get_parent(OBJECT_CLASS(dc)))->realize(dev, errp)
-> > >
-> > > I'm tempted to suggest that we drop the 'dc' argument here and
-> > > have the macro get the class from the dev:
-> > >     DEVICE_CLASS(object_class_get_parent(object_get_class(OBJECT(dev))))->realize(dev,
-> > > errp)
-> > >
-> > > because I think almost all realize methods wanting to chain back up
-> > > won't have the class pointer to hand.
-> > >
-> > > We could maybe have an extra layer of abstraction here such that
-> > > you write something like:
-> > >
-> > >    parent_invoke(DEVICE_CLASS, dev)->realize(dev, errp);
-> > >
-> > > Or is that trying to be too clever?
-> >
-> > This won't work if we have multiple levels in the class hierarchy
-> > that need chaining up, as object_class_get_parent(object_get_class(dev))
-> > will always just get the first level parent class of 'dev'.
-> 
-> Isn't that always what you want, though? In a class hierarchy
-> Object->Device->A->B->C, C's realize method always wants to
-> chain to B's realize method, and more generally "invoke the
-> superclass method" from C wants B's implementation, not A's
-> (assuming B actually implemented it).
 
-Yes, C wants to invoke B's realize method, but then B also
-wants to invoke A's realize method.
 
-> > Somewhere/how we need to identify the current class level we're
-> > calling from, so we know what parent to ask for.
-> >
-> > Another option is to do what GObject does and provide a simple
-> > helper for getting the parent class, from OBJECT_DEFINE_TYPE*
-> > macros:
-> >
-> >     ...
-> >     static inline ObjectClass * \
-> >     module_obj_name##_parent_class() { \
-> >         return object_class_by_name(TYPE_##PARENT_MODULE_OBJ_NAME); \
-> >     } \
-> >     ...
-> >
-> > which would be used
-> >
-> >     DeviceClass *dc = DEVICE_CLASS(pl050_kbd_parent_class());
-> >
-> >     dc->realize(dev, errp);
-> >
-> > but many (most) of qdev impls don't use the relatively new
-> > OBJECT_DEFINE_TYPE macros. They would have to instead explicitly
-> > reference the parent type name:
-> >
-> >     DeviceClass *dc = DEVICE_CLASS(object_class_by_name(TYPE_PL050));
-> >     dc->realize(dev, errp);
-> 
-> I still don't understand why we need to get the parent's
-> object class by name here, rather than saying "give me
-> the parent class of this object's class".
+Am 6=2E Oktober 2026 09:44:39 UTC schrieb Bernhard Beschow <shentey@gmail=
+=2Ecom>:
+>This patch series improves the performance of read/write/erase operations=
 
-No matter which realize() method we are executing in, the "dev"
-object parameter will always be an instance of the leaf class "C"
-and thus the result of object_class_get_parent(objct_get_class(dev))
-will always be B. That is only correct if executgnig "C"s realize
-method, so breaks if we need to chain up realize many times.
+>
+>on sdcards=2E
+>
+>
+>
+>This is done by increasing the maximum buffer size that is worked on=2E
+>
+>From 1 byte (master) to 512 bytes (commit 1-3) to larger than 512
+>
+>(adma commit)=2E
+>
+>
+>
+>Testing on my system with fio I see the following rough performance
+>
+>values in MiB/s=2E
+>
+>
+>
+>              read write readwrite
+>
+>       master:   6     6     3/  3
+>
+> first commit:  51    43    23/ 23
+>
+>second commit: 392   180   144/143
+>
+>
+>
+>Tested on a 2GiB raw image with:
+>
+>  fio --filename=3D/dev/mmcblk0 --direct=3D1 --runtime=3D60 --time_based =
+--bs=3D128k --rw=3D{mode}
+>
+>
+>
+>The adma values are somewhat unstable but always >100MiB/s, I'm not sure
+=
+>
+>why but I guess it has something to do with the host side caching=2E
+>
+>
+>
+>The fifth commit fixes the DATA_STAT_AFTER_ERASE bit in SCR and
+>
+>introduces an option to allow to erase blocks to 0x00=2E
+>
+>
+>
+>The sixth commit optimizes block erase when erase-blocks-as-zero=3Dtrue
+>
+>is used, by passing the zeroing request down the to the block device=2E
+>
+>Erasing 2GiB now takes 0=2E1s instead of 26s=2E
+>
+>
+>
+>Signed-off-by: Christian Speich <c=2Espeich@avm=2Ede>
+>
+>
+>
+>I'm picking up this series with the changes indicated in v5 below=2E Plea=
+se let
+>
+>me know how I could improve attribution to Christian in case I missed som=
+ething=2E
+>
+>
+>
+>The last two patches are new and are small cleanups=2E
+>
+>
+>
+>---
+>
+>Changes in v5:
+>
+>- Rebase onto master
+>
+>- Split patch "hw/sd/sd: Use multi-byte/block writes for block path" into=
+ three
+>
+>  (first three patches)
+>
+>- Use sd_blk_{read,write} with additional parameter directly rather than =
+having
+>
+>  sd_blk_{read,write}_bounce_buffer
+>
+>- Drive limits and write protect groups are preserved to be checked on bl=
+ock
+>
+>  boundaries only since these checks are redundant in case the SD host
+>
+>  transfers one byte at a time=2E
+>
+>- WP_VIOLATION is only raised once the first protected block shall be wri=
+tten,
+>
+>  rather than immediately at the beginning of a multiple block write whic=
+h
+>
+>  starts with allowed blocks=2E
+>
+>- An off-by-one error has been fixed in the same case where one bye too l=
+ess
+>
+>  had been written if a write protected block had been detected=2E
+>
+>- There are only two rather than three code paths each handling the multi=
+ple
+>
+>  block optimization=2E
+>
 
-With regards,
-Daniel
--- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+Ping
 
+>
+>
+>Changes in v4:
+>
+>- Rebase onto master, no changes needed=2E
+>
+>- Renames:
+>
+>  - sd_blk_{read,write} -> sd_blk_{read,write}_bounce_buffer
+>
+>  - sd_blk_{read,write}_direct -> sd_blk_{read,write}
+>
+>  - to_erase -> erase_len
+>
+>- Extract erase logic into sd_blk_erase helper
+>
+>- Enable erase-blocks-as-zero by default=2E Add compat for 11=2E0 and bel=
+ow
+>
+>  to keep it disabled=2E
+>
+>- Add cleanup commit to update trace events=2E
+>
+>- Link to v3: https://lore=2Ekernel=2Eorg/qemu-devel/20260204-sdcard-perf=
+ormance-b4-v3-0-dc1cf172ee57@avm=2Ede
+>
+>
+>
+>Changes in v3:
+>
+>- Rebase onto master, updating read/write path for newly added RBMP
+>
+>- Split up commit 1 into multiple commits
+>
+>  - change interface to allow "short" read/writes that are continued
+>
+>    by the core later by calling again
+>
+>- Link to v2: https://lore=2Ekernel=2Eorg/qemu-devel/20251202-sdcard-perf=
+ormance-b4-v2-0-d42490b11322@avm=2Ede
+>
+>
+>
+>Changes in v2:
+>
+>- Properly set DATA_STAT_AFTER_ERASE in SCR
+>
+>- Add erase-blocks-as-zero option to allow the user to switch between
+>
+>  0x00 and 0xFF for erased blocks=2E
+>
+>- Link to v1: https://lore=2Ekernel=2Eorg/qemu-devel/20250919-sdcard-perf=
+ormance-b4-v1-0-e1037e481a19@avm=2Ede
+>
+>
+>
+>Bernhard Beschow (5):
+>
+>  hw/sd/sd: Transfer up to one block in case of multi-block commands
+>
+>  hw/sd/sd: Add buffer argument to sd_blk_{read,write}
+>
+>  hw/sd/sd: Use multi-byte/block writes for block path
+>
+>  hw/sd/sd: Retype state attribute to SDCardStates
+>
+>  hw/sd/sd: Remove unneeded forward declaration
+>
+>
+>
+>Christian Speich (3):
+>
+>  hw/sd/sdhci: Don't use bounce buffer for ADMA
+>
+>  hw/sd/sd: Add erase-blocks-as-zero option=2E
+>
+>  hw/sd/sd: Optimize erase blocks as zero=2E
+>
+>
+>
+> hw/core/machine=2Ec |   1 +
+>
+> hw/sd/sd=2Ec        | 230 ++++++++++++++++++++++++++++++++++------------=
+
+>
+> hw/sd/sdhci=2Ec     | 102 ++++++++++----------
+>
+> 3 files changed, 225 insertions(+), 108 deletions(-)
+>
+>
+>
+>-- >
+>2=2E56=2E0
+>
+>
+>
 
