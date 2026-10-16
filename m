@@ -4,86 +4,131 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49D6FCCA462
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 07:40:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE1C8CCA462
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 07:46:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHcXd-00051T-TW; Fri, 16 Oct 2026 03:39:57 -0400
+	id 1xHcdz-0007Bm-B5; Fri, 16 Oct 2026 03:46:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sundayjiang@tencent.com>)
- id 1xHcXD-0004u2-Uv; Fri, 16 Oct 2026 03:39:29 -0400
-Received: from smtpbguseast3.qq.com ([54.243.244.52])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sundayjiang@tencent.com>)
- id 1xHcX9-0003L2-8D; Fri, 16 Oct 2026 03:39:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=tencent.com;
- s=s201512; t=1792136354;
- bh=pwdWyLfxl1kbkUB5VoBIksaPfZ29kr98k2w4eF1w+xA=;
- h=From:To:Subject:Mime-Version:Date:Message-ID;
- b=H0yRtfjDUMzeWKkhf73ZpeSlLt+c76ZLCFcP+yhwWSfW8h/EEHHsHdXyN4tH1ERKC
- QczE4CVh+jsNEUoS2Hju+H/dsPDTOOjEm4YDDk6PA9GCtD3eNJT8Bo/hN6bl2aQNnP
- DVULTcRUja8Rhkn2e9zlFoZv3vdhmU7N1H19nkB4=
-EX-QQ-RecipientCnt: 2
-X-QQ-GoodBg: 2
-X-QQ-SSF: 00400000000000F0
-X-QQ-FEAT: D4aqtcRDiqRqrX+K4iacs0xqT5EmEgiZplhhR7/61LU=
-X-QQ-BUSINESS-ORIGIN: 2
-X-QQ-Originating-IP: 0U7g66oHn4U3PC8EQL4EDTEftJtX3VcO1RITApPLLqY=
-X-Originating-IP: 14.22.245.79
-X-QQ-STYLE: 
-X-QQ-mid: lv5gz3a-0t1792136352t9b999956
-From: "=?utf-8?B?c3VuZGF5amlhbmcoc3VuZGF5amlhbmcp?=" <sundayjiang@tencent.com>
-To: "=?utf-8?B?cWVtdS1kZXZlbA==?=" <qemu-devel@nongnu.org>
-Cc: "=?utf-8?B?cWVtdS1zdGFibGU=?=" <qemu-stable@nongnu.org>
-Subject: [PATCH 2/2] usb-host: delete bottom halves during unrealize
-Mime-Version: 1.0
-Content-Type: multipart/alternative;
- boundary="----=_NextPart_6AD1D4A0_C234AA00_07CE9031"
-Content-Transfer-Encoding: 8Bit
-Date: Fri, 16 Oct 2026 15:39:12 +0800
-X-Priority: 3
-Message-ID: <tencent_4C5A0D0877C53C4C74EE4701@qq.com>
-X-QQ-MIME: TCMime 1.0 by Tencent
-X-Mailer: QQMail 2.x
-X-QQ-Mailer: QQMail 2.x
-X-BIZMAIL-ID: 7747730140592634632
-X-Address-Ticket: version=; type=; ticket_id=; id_list=; display_name=;
- session_id=; 
-X-QQ-SENDSIZE: 520
-Received: from qq.com (unknown [127.0.0.1]) by smtp.qq.com (ESMTP) with SMTP
- id ; Fri, 16 Oct 2026 15:39:12 +0800 (CST)
-Feedback-ID: lv:tencent.com:qybglogicsvrgz:qybglogicsvrgz3a-1
-X-QQ-XMAILINFO: NHSWdkTggiw4ZVO0QIM2SeILcZYQaWLgB2pJ/DHl/xAtwiyFySGJ6pm1
- sD6CcAHlGdJBWvtmT6FMoBNQY12WQtthTtt55lkwVJjoCZIjLPxncZI5peADqmFh0yN0ox/
- VIBxM/jHb5HQLEElY+d1RCr+tMBPBvGKYuVtA6ObviGfPtHNpI0yEMYlY9WpcAcqlvAfzCu
- /TL+nInWwVehAerHD1CuJtuO8HN0Rp4Y9kfzaC7aHtWTiN0edT5/NiVTC2hFfBpdkjrIQAG
- OPTiffR/7ZiLHPU8tLy8KFueeuSSxX6x95yNwxdE/97l0pizyAcKIWC3r9SrKzRrkuBOUA4
- Fw7QpVdAJjKLmh5I3Cl0LKlQBBsLZHyCY+k4spflQLlV9JIZGDVdbzIjNYRFCSV0IvL8nEj
- caL4ilNQBZRgJLSRHzggmkMKUCdslKLeZNaMWKzSdAC7emGlbghn7PgHvw9M+rJCPdCwJHw
- PKaKUqlTNT61+hywKwKv96A0WJcbGywmcqStKb1HnrZazOe9uOYD0EEJzhoURf47Y0FeK7K
- dPhfARwN4iSAnQSPgoW+/ON8I5i1D/msnCPBw6RIj9qbtBJLuPAy7CaDJIJ55xr8JiMSKgO
- wCw40OY9ErZCiRKTe94G2n21l7HrLnv/bKxYZBgECL2t8tit7qOd/uu9Fo2K9pQ2Np34/MU
- D9cCmfW/SrKF5NaU1zFKxAgVCAt71x68gsYhk6j7WG0t7oed9fgpPeRRKfJizDsFzRZKnPe
- 9J2Opo9B2m19DvBYsb4954bKZEKwlG2HaKtHyDvx2oFe9xm9Z7VdWX10uioIJSTZjSNir3u
- SNbNrZIjj1dwR7Zq0YvW4jh8WVhVY9Rfv0Ue0K6F5Ofbhr1mx9XrIav8Sg0lQeyspLcaxMl
- sMGi5wxN54Z+lse3l8z1sDCL7xF7tsZ3ayAB665AtZ6w0f69/QyQwicGN9syGn4HWjDYpro
- sHLWyaGIsrLriCdCfffQtEcwKFjxHugFqhy8ka+O95fhUOcfoOUnilaVke/HO34ruDQW1yx
- JbL/uoQUY1arqZaOKwI/9q9s1WngNdrk0jNCxjqTGB0S4GMa/WTI9tc40XA+8MF22FGvL80
- K2KIHSm/w4asqEDm85DdwXqT1sRiTQYwM1QaKRgbF10QKnFpx6EMgk=
-X-QQ-XMRINFO: M/715EihBoGS47X28/vv4NpnfpeBLnr4Qg==
-X-QQ-RECHKSPAM: 0
-Received-SPF: pass client-ip=54.243.244.52;
- envelope-from=sundayjiang@tencent.com; helo=smtpbguseast3.qq.com
+ (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
+ id 1xHcdp-00079j-2T
+ for qemu-devel@nongnu.org; Fri, 16 Oct 2026 03:46:13 -0400
+Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
+ id 1xHcdn-00047J-3K
+ for qemu-devel@nongnu.org; Fri, 16 Oct 2026 03:46:12 -0400
+Received: by mail-ed1-x536.google.com with SMTP id
+ 4fb4d7f45d1cf-6b1aa377c61so7489787a12.3
+ for <qemu-devel@nongnu.org>; Fri, 16 Oct 2026 00:46:09 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792136767; cv=none;
+ d=google.com; s=arc-20260327;
+ b=Bl1RITTs21OAPIf1yO0edGhqMgL0GjDbyJPMn9MDYnRlHl6dSjh4O45AigyLS74isl
+ 7xCui1VLdblhaGE9VTmAPulNV3nIFBtFn5wNVfBosIg4dE6RE/NHiPKgfD6UANWDshZR
+ NBdm+/BR3AUVnXhqVx3PcqkVrjeiVMpXqBYIRDU9DYaI/S6/eN+temq0ikuVwba4m9h8
+ 3j6fxgygq9xjNnYEwxIFlRImQlWt22Jb22qIgCOUgNH1dyBHFg+bvfGVLzXHsxdsBw51
+ UO9bCcVh6B5+0CLFZVAnVZzjr4gpUutR+YUCsm3u/EqdcfX4vLnDvXSy2ZYPewuhKG+U
+ 7pqg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :reply-to:in-reply-to:references:mime-version:dkim-signature;
+ bh=dWshOP8vnrAxbyRS/QN38SaLQ7rjqxT4inF1al0mW7E=;
+ fh=CVGpmR9kGStmGjkZNzUi0dwX6VeM01tVLIBWEMjFAsA=;
+ b=Y5yn3Bu+FG4FpnuiXJIKfDk6NLMEjtmc1xxwBUDwTHVh3mn/fk1A+nQweSpPRUvGak
+ NcRXrCPJeqIBnsBLg64x+to80iFD8AkrS9PuUK6Z1bJ+u7hkM/oxrA/QnTEMJqUynyG4
+ ru3iZa1HzzXOOVo2Ws4X57CTMttwvWLwi+j4PAexID7BFIaCukp3e36Hd0hBse54gZ0x
+ 1nZNdBFCz7siGjWBBn1PdxnOwy1De3Ww04Sh1PhlE3MRyJM/Bax5YnEBeO5uj1hAqcts
+ /RDa64mPdIPvOABeM83Q0p/svhJg6GTM3M26jZoBorWcB0Z7rIx60AiTY1DXwYR3s0iE
+ CLnQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1792136767; x=1792741567; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:reply-to:in-reply-to:references:mime-version:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=dWshOP8vnrAxbyRS/QN38SaLQ7rjqxT4inF1al0mW7E=;
+ b=AAnWMq/gK/z3bqcgNglCeSyjwGMKK+pSZYsyCIj74yKi3xsLOiVc35EEx2em6Q7uoo
+ 57zzaecn5aGflyISOjZdwMCzfMxdHv4yD40M1ezseaqevoxqGvXKG7bCUwOv/n4jZMsK
+ pcH3Y81Swy0c3Ujqm2v0rb6Aaiqd21V0Eo/1deMIWER5XKOwNNiq0ILtKJH4piXk+flI
+ wdyuPKPT7iiPczNSyRKFuEBdbhpGF4IausyXtQpEEYCIoB2w4BsKVGU1FupmFeKMoaE8
+ APIwgRHk8FkkCFXenceRWFjo1cFkT8xlVanXO8cbxK0xCBjDu781AO0uHq4nlm+LwfiY
+ 6tRg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1792136767; x=1792741567;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:reply-to:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=dWshOP8vnrAxbyRS/QN38SaLQ7rjqxT4inF1al0mW7E=;
+ b=A42cNgMj5QXNzJxCWfl+upI+P5vR0GKKvXl3XKd3GzwwCbSBvGtepgUDPaAtrtnSCX
+ CRZrEe311i0CZCq+Ule0brjZJtJyP0vIQ/mkHXyTHP7nUMypRxfCiJLhGiBNslpLiXsz
+ 5epe91HjJIlGT4LFALV/30+PoVOr1JSh+Nn8dVMeFsAJl3noxJnMeRB2lrL5y54rCEz4
+ F2F/nDLrZxOYe7WJjyYIi71BzZnEAYvZQdntIr7f6fz2JLbOQdxl2xZJIC2z4HqdjnKj
+ fCBNYdieoNNNZ4Kw3AnFMymUnxHyyyuhtWEvlQwRbAKxzmiIWLkOh+A+PR4fxiJF8eV/
+ WZRQ==
+X-Gm-Message-State: AFq9FYI6aUW5wJ+JbhsfyuxzgSA2zqJB1w2zOEJUtMjcMVCFxD90pLhI
+ KALjJePVlMT74CyKeYDvUEh9gfEVi8YRorlC0BsQwlhs+eQfXoXxrhlkcRQR4IPU2OpbCU8znD9
+ aVWVNkBG1lVw2TBtIJmBs1bi/H2eVhbI=
+X-Gm-Gg: AYBFou2hR0behBLFxeRhUHlzaj3VWYYWhMF/5eQxCHEsQ26jL5sZdBN45kAyRoO25cF
+ q5vqXnq7EfuxXFVK6LCAhtceVterd0+0XLwaJ9cshspEr1u5cc2+yiXOKHUAV3J0HRbgl1joIWo
+ RudJH3jhNRrQB96DTIU0Jz6EBBg5bWsANGpIwRXkUalKIiYgQKqGEiIvzVmAKwH7j11cAMnrnuq
+ negWcKIZnsPwKQXZpX3h3Z52cerUkOr7FrTuzEHKRtcdJN0ps8LqPS/RTVPf4SGRUvBMnRoPjiN
+ 8pi+Ny/m9KVxpMj6s9R7ULAUiyPO4Ps+w5babB/wqSptdJDalp5T/BE=
+X-Received: by 2002:a05:6402:21d2:b0:6af:e26c:f6ad with SMTP id
+ 4fb4d7f45d1cf-6b17c27d33amr13141437a12.39.1792136766714; Fri, 16 Oct 2026
+ 00:46:06 -0700 (PDT)
+MIME-Version: 1.0
+References: <20261014094224.1976-1-luoyonggang@gmail.com>
+ <6da8ceed-7ff4-497b-9499-a0d5d3925e15@kernel.org>
+In-Reply-To: <6da8ceed-7ff4-497b-9499-a0d5d3925e15@kernel.org>
+From: Yonggang Luo <luoyonggang@gmail.com>
+Date: Fri, 16 Oct 2026 15:45:53 +0800
+X-Gm-Features: AclHuK_kKqMANioqEfV05t7_Ls7bgGJG-gMqc2WRcSVav3Ha0Uuqpc9uQpe_ty8
+Message-ID: <CAE2XoE8qJ7baHd_2xsUc4jQF8OUu0_epDc2GMLUH1YtVAA0=XQ@mail.gmail.com>
+Subject: Re: [PATCH 16/34] hw/virtio/virtio-mem: Avoid call to target_info()
+ in class_init
+To: David Hildenbrand <david@kernel.org>
+Cc: qemu-devel@nongnu.org, Alistair Francis <alistair.francis@wdc.com>, 
+ Cornelia Huck <cohuck@redhat.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
+ Philippe Mathieu-Daude <philmd@mailo.com>, Eric Blake <eblake@redhat.com>,
+ Eric Farman <farman@linux.ibm.com>, 
+ Ani Sinha <anisinha@redhat.com>, qemu-s390x@nongnu.org, 
+ Gerd Hoffmann <kraxel@redhat.com>, Stefano Garzarella <sgarzare@redhat.com>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Alexander Bulekov <alxndr@bu.edu>, Laurent Vivier <lvivier@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
+ qemu-arm@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, Zhao Liu <zhao1.liu@intel.com>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Stefan Hajnoczi <stefanha@redhat.com>, qemu-riscv@nongnu.org, 
+ Peter Maydell <peter.maydell@linaro.org>, Laurent Vivier <laurent@vivier.eu>, 
+ Fabiano Rosas <farosas@suse.de>, Song Gao <17746591750@163.com>,
+ Fam Zheng <fam@euphon.net>, 
+ Markus Armbruster <armbru@redhat.com>, Jiaxun Yang <jiaxun.yang@flygoat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Matthew Rosato <mjrosato@linux.ibm.com>, 
+ Chao Liu <chao.liu@processmission.com>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Max Filippov <jcmvbkbc@gmail.com>, Weiwei Li <liwei1518@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Brian Cain <brian.cain@oss.qualcomm.com>,
+ Darren Kenny <darren.kenny@oracle.com>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Stafford Horne <shorne@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::536;
+ envelope-from=luoyonggang@gmail.com; helo=mail-ed1-x536.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FROM_EXCESS_BASE64=0.001, HTML_MESSAGE=0.001, MSGID_FROM_MTA_HEADER=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,142 +141,98 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: luoyonggang@gmail.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is a multi-part message in MIME format.
+On Fri, Oct 16, 2026 at 3:37=E2=80=AFPM David Hildenbrand <david@kernel.org=
+> wrote:
+>
+> On 10/14/26 11:41, Yonggang Luo wrote:
+> > Done by merge virtio_mem_legacy_guests_properties into virtio_mem_prope=
+rties.
+> > As we already have vmem->unplugged_inaccessible handle in virtio_mem_de=
+vice_realize
+> > So we can reject the wrong option in virtio_mem_device_realize, then th=
+e call
+> > target_info() in class_init no need anymore.
+> >
+> > Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
+> > ---
+> >  hw/virtio/virtio-mem.c | 12 +++++-------
+> >  1 file changed, 5 insertions(+), 7 deletions(-)
+> >
+> > diff --git a/hw/virtio/virtio-mem.c b/hw/virtio/virtio-mem.c
+> > index a4110d61312..81e2192c2fb 100644
+> > --- a/hw/virtio/virtio-mem.c
+> > +++ b/hw/virtio/virtio-mem.c
+> > @@ -879,7 +879,11 @@ static void virtio_mem_device_realize(DeviceState =
+*dev, Error **errp)
+> >              break;
+> >          }
+> >      } else {
+> > -        vmem->unplugged_inaccessible =3D ON_OFF_AUTO_ON;
+> > +        if (vmem->unplugged_inaccessible !=3D ON_OFF_AUTO_ON) {
+> > +            error_setg(errp, "'%s' must be 'on' on non-x86 targets",
+> > +                       VIRTIO_MEM_UNPLUGGED_INACCESSIBLE_PROP);
+> > +            return;
+> > +        }
+> >      }
+> >
+> >      if (vmem->dynamic_memslots &&
+> > @@ -1568,9 +1572,6 @@ static const Property virtio_mem_properties[] =3D=
+ {
+> >                       early_migration, true),
+> >      DEFINE_PROP_BOOL(VIRTIO_MEM_DYNAMIC_MEMSLOTS_PROP, VirtIOMEM,
+> >                       dynamic_memslots, false),
+> > -};
+> > -
+> > -static const Property virtio_mem_legacy_guests_properties[] =3D {
+> >      DEFINE_PROP_ON_OFF_AUTO(VIRTIO_MEM_UNPLUGGED_INACCESSIBLE_PROP, Vi=
+rtIOMEM,
+> >                              unplugged_inaccessible, ON_OFF_AUTO_ON),
+> >  };
+> > @@ -1635,9 +1636,6 @@ static void virtio_mem_class_init(ObjectClass *kl=
+ass, const void *data)
+> >      RamDiscardSourceClass *rdsc =3D RAM_DISCARD_SOURCE_CLASS(klass);
+> >
+> >      device_class_set_props(dc, virtio_mem_properties);
+> > -    if (virtio_mem_has_legacy_guests()) {
+> > -        device_class_set_props(dc, virtio_mem_legacy_guests_properties=
+);
+> > -    }
+> >      dc->vmsd =3D &vmstate_virtio_mem;
+> >
+> >      set_bit(DEVICE_CATEGORY_MISC, dc->categories);
+>
+> Now a property introspection shows properties that don't make any sense f=
+or
+> other targets.
+>
+> I don't see the value, really.
 
-------=_NextPart_6AD1D4A0_C234AA00_07CE9031
-Content-Type: text/plain;
-	charset="utf-8"
-Content-Transfer-Encoding: base64
+This is the only way I can get a usable qemu-system(single-binary),
+looks ugly but I have already tried other means.
 
-dXNiX2hvc3Rfbm9kZXYoKSBsYXppbHkgY3JlYXRlcyBzLSZndDtiaF9ub2RldiBhbmR1c2Jf
-aG9zdF9wb3N0X2xvYWQoKSBsYXppbHkgY3JlYXRlcyBzLSZndDtiaF9wb3N0bGQsIGJ1dA0K
-dXNiX2hvc3RfdW5yZWFsaXplKCkgbmV2ZXIgY2FsbHMgcWVtdV9iaF9kZWxldGUoKSBvbiBl
-aXRoZXIuICZuYnNwO0lmIGEgQkgNCmlzIHN0aWxsIHBlbmRpbmcgd2hlbiB1bnJlYWxpemUg
-cmV0dXJucywgaXRzIGNhbGxiYWNrIGRlcmVmZXJlbmNlcyB0aGUNCmZyZWVkIFVTQkhvc3RE
-ZXZpY2UuDQoNCg0KRGVsZXRlIGJvdGggQkhzIGluIHVzYl9ob3N0X3VucmVhbGl6ZSgpIGFm
-dGVyIHVzYl9ob3N0X2Nsb3NlKCkNCnJldHVybnMuICZuYnNwO1RoZXkgbXVzdCBiZSBkZWxl
-dGVkIGFmdGVyIGNsb3NlIGJlY2F1c2UgdXNiX2hvc3RfY2xvc2UoKQ0KY2FuIHByb2Nlc3Mg
-bGlidXNiIGNhbGxiYWNrcyB0aGF0IGNhbGwgdXNiX2hvc3Rfbm9kZXYoKSwgd2hpY2ggbGF6
-aWx5DQpyZWNyZWF0ZXMgYmhfbm9kZXYuICZuYnNwO0RlbGV0aW5nIGl0IGJlZm9yZSBjbG9z
-ZSBjb3VsZCB0aGVyZWZvcmUgbGVhdmUgYQ0KcmVjcmVhdGVkIEJIIGFsaXZlIGFmdGVyIHVu
-cmVhbGl6ZS4NCg0KDQpCdWdsaW5rOiBodHRwczovL2dpdGxhYi5jb20vcWVtdS1wcm9qZWN0
-L3FlbXUvLS93b3JrX2l0ZW1zLzM1OTUNCkZpeGVzOiA5NWVmYjIwYzcxNDggKCJ1c2ItaG9z
-dDogbGl2ZSBtaWdyYXRpb24gc3VwcG9ydCBmb3IgbGlidXNiIikNClJlcG9ydGVkLWJ5OiBI
-YW90aWFuIEppYW5nIG9mIFRlbmNlbnQgU2VjdXJpdHkgKFl1bmRpbmcgTGFiKSA8c3VuZGF5
-amlhbmdAdGVuY2VudC5jb20mZ3Q7DQpTaWduZWQtb2ZmLWJ5OiBIYW90aWFuIEppYW5nIDxz
-dW5kYXlqaWFuZ0B0ZW5jZW50LmNvbSZndDsNCkNjOiBxZW11LXN0YWJsZUBub25nbnUub3Jn
-DQotLS0NCiZuYnNwO2h3L3VzYi9ob3N0LWxpYnVzYi5jIHwgMTUgKysrKysrKysrKysrKysr
-DQombmJzcDsxIGZpbGUgY2hhbmdlZCwgMTUgaW5zZXJ0aW9ucygrKQ0KDQoNCmRpZmYgLS1n
-aXQgYS9ody91c2IvaG9zdC1saWJ1c2IuYyBiL2h3L3VzYi9ob3N0LWxpYnVzYi5jDQotLS0g
-YS9ody91c2IvaG9zdC1saWJ1c2IuYw0KKysrIGIvaHcvdXNiL2hvc3QtbGlidXNiLmMNCkBA
-IC0xMjcxLDYgKzEyNzEsMjEgQEAgc3RhdGljIHZvaWQgdXNiX2hvc3RfdW5yZWFsaXplKFVT
-QkRldmljZSAqdWRldikNCiZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDtRVEFJ
-TFFfUkVNT1ZFKCZhbXA7aG9zdGRldnMsIHMsIG5leHQpOw0KJm5ic3A7ICZuYnNwOyAmbmJz
-cDt9DQombmJzcDsgJm5ic3A7ICZuYnNwO3VzYl9ob3N0X2Nsb3NlKHMpOw0KKyAmbmJzcDsg
-Jm5ic3A7LyoNCisgJm5ic3A7ICZuYnNwOyAqIERlbGV0ZSBib3R0b20gaGFsdmVzIGFmdGVy
-IHVzYl9ob3N0X2Nsb3NlKCkuICZuYnNwO0R1cmluZyBjbG9zZSwNCisgJm5ic3A7ICZuYnNw
-OyAqIGxpYnVzYiBjYWxsYmFja3MgKHVzYl9ob3N0X3JlcV9jb21wbGV0ZV9jdHJsL2RhdGEp
-IGNhbiBjYWxsDQorICZuYnNwOyAmbmJzcDsgKiB1c2JfaG9zdF9ub2RldigpIHdoaWNoIGxh
-emlseSBjcmVhdGVzIGJoX25vZGV2LiAmbmJzcDtJZiB3ZQ0KKyAmbmJzcDsgJm5ic3A7ICog
-ZGVsZXRlZCB0aGVtIGJlZm9yZSBjbG9zZSwgYSBuZXdseSBjcmVhdGVkIEJIIHdvdWxkIGxl
-YWsgYW5kDQorICZuYnNwOyAmbmJzcDsgKiBmaXJlIGFmdGVyIHVucmVhbGl6ZSwgZGVyZWZl
-cmVuY2luZyBmcmVlZCBVU0JIb3N0RGV2aWNlLg0KKyAmbmJzcDsgJm5ic3A7ICovDQorICZu
-YnNwOyAmbmJzcDtpZiAocy0mZ3Q7Ymhfbm9kZXYpIHsNCisgJm5ic3A7ICZuYnNwOyAmbmJz
-cDsgJm5ic3A7cWVtdV9iaF9kZWxldGUocy0mZ3Q7Ymhfbm9kZXYpOw0KKyAmbmJzcDsgJm5i
-c3A7ICZuYnNwOyAmbmJzcDtzLSZndDtiaF9ub2RldiA9IE5VTEw7DQorICZuYnNwOyAmbmJz
-cDt9DQorICZuYnNwOyAmbmJzcDtpZiAocy0mZ3Q7YmhfcG9zdGxkKSB7DQorICZuYnNwOyAm
-bmJzcDsgJm5ic3A7ICZuYnNwO3FlbXVfYmhfZGVsZXRlKHMtJmd0O2JoX3Bvc3RsZCk7DQor
-ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwO3MtJmd0O2JoX3Bvc3RsZCA9IE5VTEw7DQor
-ICZuYnNwOyAmbmJzcDt9DQombmJzcDt9DQoNCg0KJm5ic3A7c3RhdGljIHZvaWQgdXNiX2hv
-c3RfY2FuY2VsX3BhY2tldChVU0JEZXZpY2UgKnVkZXYsIFVTQlBhY2tldCAqcCkNCi0tDQoy
-LjM0LjENCg0KDQoNCg0KDQrlj5Hoh6rmiJHnmoTkvIHkuJrlvq7kv6E=
+Using "is_avaiable" basically has the same effect like the one before
+this change.
+And renaming the QOM name would cause much more issues. I'll wait for
+others to do these.
+I've tried my best, sorry.
 
-------=_NextPart_6AD1D4A0_C234AA00_07CE9031
-Content-Type: text/html;
-	charset="utf-8"
-Content-Transfer-Encoding: base64
+>
+> --
+> Cheers,
+>
+> David
+>
 
-PGRpdiBzdHlsZT0iZm9udC1zaXplOiAxNC42NjY3cHg7IGZvbnQtZmFtaWx5OiAtYXBwbGUt
-c3lzdGVtLCBCbGlua01hY1N5c3RlbUZvbnQsICZxdW90O1BpbmdGYW5nIFNDJnF1b3Q7LCAm
-cXVvdDtNaWNyb3NvZnQgWWFIZWkmcXVvdDs7IiBkYXRhLW1haWwtZnJvbT0id2VtYWlsLXBj
-Ij48ZGl2IGlkPSJ3ZW1haWxfcGxhY2Vob2xkZXJfc3BhY2UiPjxkaXY+dXNiX2hvc3Rfbm9k
-ZXYoKSBsYXppbHkgY3JlYXRlcyBzLSZndDtiaF9ub2RldiBhbmQ8ZGl2PnVzYl9ob3N0X3Bv
-c3RfbG9hZCgpIGxhemlseSBjcmVhdGVzIHMtJmd0O2JoX3Bvc3RsZCwgYnV0PC9kaXY+PGRp
-dj51c2JfaG9zdF91bnJlYWxpemUoKSBuZXZlciBjYWxscyBxZW11X2JoX2RlbGV0ZSgpIG9u
-IGVpdGhlci4gJm5ic3A7SWYgYSBCSDwvZGl2PjxkaXY+aXMgc3RpbGwgcGVuZGluZyB3aGVu
-IHVucmVhbGl6ZSByZXR1cm5zLCBpdHMgY2FsbGJhY2sgZGVyZWZlcmVuY2VzIHRoZTwvZGl2
-PjxkaXY+ZnJlZWQgVVNCSG9zdERldmljZS48L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2PkRl
-bGV0ZSBib3RoIEJIcyBpbiB1c2JfaG9zdF91bnJlYWxpemUoKSBhZnRlciB1c2JfaG9zdF9j
-bG9zZSgpPC9kaXY+PGRpdj5yZXR1cm5zLiAmbmJzcDtUaGV5IG11c3QgYmUgZGVsZXRlZCBh
-ZnRlciBjbG9zZSBiZWNhdXNlIHVzYl9ob3N0X2Nsb3NlKCk8L2Rpdj48ZGl2PmNhbiBwcm9j
-ZXNzIGxpYnVzYiBjYWxsYmFja3MgdGhhdCBjYWxsIHVzYl9ob3N0X25vZGV2KCksIHdoaWNo
-IGxhemlseTwvZGl2PjxkaXY+cmVjcmVhdGVzIGJoX25vZGV2LiAmbmJzcDtEZWxldGluZyBp
-dCBiZWZvcmUgY2xvc2UgY291bGQgdGhlcmVmb3JlIGxlYXZlIGE8L2Rpdj48ZGl2PnJlY3Jl
-YXRlZCBCSCBhbGl2ZSBhZnRlciB1bnJlYWxpemUuPC9kaXY+PGRpdj48YnI+PC9kaXY+PGRp
-dj5CdWdsaW5rOiA8YSBpbnNlcnQtbGluaz0idHJ1ZSIgZHJhZ2dhYmxlPSJmYWxzZSIgaHJl
-Zj0iaHR0cHM6Ly9naXRsYWIuY29tL3FlbXUtcHJvamVjdC9xZW11Ly0vd29ya19pdGVtcy8z
-NTk1IiBkYXRhLXNpbXBsZS1saW5rPSJ0cnVlIiBkYXRhLXBsdWdpbi11cmx0eXBlPSJkZWZh
-dWx0IiBzdHlsZT0iY29sb3I6IHJnYigzOCwgMTI2LCAyNDApO3RleHQtZGVjb3JhdGlvbjog
-bm9uZTsgb3V0bGluZTogbm9uZTtkaXNwbGF5OiBpbmxpbmU7IGN1cnNvcjogcG9pbnRlcjsg
-dGV4dC1kZWNvcmF0aW9uOiB1bmRlcmxpbmU7IGNvbG9yOiByZ2IoMzgsIDEyNiwgMjQwKTsi
-Pmh0dHBzOi8vZ2l0bGFiLmNvbS9xZW11LXByb2plY3QvcWVtdS8tL3dvcmtfaXRlbXMvMzU5
-NTwvYT48L2Rpdj48ZGl2PkZpeGVzOiA5NWVmYjIwYzcxNDggKCJ1c2ItaG9zdDogbGl2ZSBt
-aWdyYXRpb24gc3VwcG9ydCBmb3IgbGlidXNiIik8L2Rpdj48ZGl2PlJlcG9ydGVkLWJ5OiBI
-YW90aWFuIEppYW5nIG9mIFRlbmNlbnQgU2VjdXJpdHkgKFl1bmRpbmcgTGFiKSAmbHQ7c3Vu
-ZGF5amlhbmdAdGVuY2VudC5jb20mZ3Q7PC9kaXY+PGRpdj5TaWduZWQtb2ZmLWJ5OiBIYW90
-aWFuIEppYW5nICZsdDtzdW5kYXlqaWFuZ0B0ZW5jZW50LmNvbSZndDs8L2Rpdj48ZGl2PkNj
-OiBxZW11LXN0YWJsZUBub25nbnUub3JnPC9kaXY+PGRpdj4tLS08L2Rpdj48ZGl2PiZuYnNw
-O2h3L3VzYi9ob3N0LWxpYnVzYi5jIHwgMTUgKysrKysrKysrKysrKysrPC9kaXY+PGRpdj4m
-bmJzcDsxIGZpbGUgY2hhbmdlZCwgMTUgaW5zZXJ0aW9ucygrKTwvZGl2PjxkaXY+PGJyPjwv
-ZGl2PjxkaXY+ZGlmZiAtLWdpdCBhL2h3L3VzYi9ob3N0LWxpYnVzYi5jIGIvaHcvdXNiL2hv
-c3QtbGlidXNiLmM8L2Rpdj48ZGl2Pi0tLSBhL2h3L3VzYi9ob3N0LWxpYnVzYi5jPC9kaXY+
-PGRpdj4rKysgYi9ody91c2IvaG9zdC1saWJ1c2IuYzwvZGl2PjxkaXY+QEAgLTEyNzEsNiAr
-MTI3MSwyMSBAQCBzdGF0aWMgdm9pZCB1c2JfaG9zdF91bnJlYWxpemUoVVNCRGV2aWNlICp1
-ZGV2KTwvZGl2PjxkaXY+Jm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwO1FUQUlM
-UV9SRU1PVkUoJmFtcDtob3N0ZGV2cywgcywgbmV4dCk7PC9kaXY+PGRpdj4mbmJzcDsgJm5i
-c3A7ICZuYnNwO308L2Rpdj48ZGl2PiZuYnNwOyAmbmJzcDsgJm5ic3A7dXNiX2hvc3RfY2xv
-c2Uocyk7PC9kaXY+PGRpdj4rICZuYnNwOyAmbmJzcDsvKjwvZGl2PjxkaXY+KyAmbmJzcDsg
-Jm5ic3A7ICogRGVsZXRlIGJvdHRvbSBoYWx2ZXMgYWZ0ZXIgdXNiX2hvc3RfY2xvc2UoKS4g
-Jm5ic3A7RHVyaW5nIGNsb3NlLDwvZGl2PjxkaXY+KyAmbmJzcDsgJm5ic3A7ICogbGlidXNi
-IGNhbGxiYWNrcyAodXNiX2hvc3RfcmVxX2NvbXBsZXRlX2N0cmwvZGF0YSkgY2FuIGNhbGw8
-L2Rpdj48ZGl2PisgJm5ic3A7ICZuYnNwOyAqIHVzYl9ob3N0X25vZGV2KCkgd2hpY2ggbGF6
-aWx5IGNyZWF0ZXMgYmhfbm9kZXYuICZuYnNwO0lmIHdlPC9kaXY+PGRpdj4rICZuYnNwOyAm
-bmJzcDsgKiBkZWxldGVkIHRoZW0gYmVmb3JlIGNsb3NlLCBhIG5ld2x5IGNyZWF0ZWQgQkgg
-d291bGQgbGVhayBhbmQ8L2Rpdj48ZGl2PisgJm5ic3A7ICZuYnNwOyAqIGZpcmUgYWZ0ZXIg
-dW5yZWFsaXplLCBkZXJlZmVyZW5jaW5nIGZyZWVkIFVTQkhvc3REZXZpY2UuPC9kaXY+PGRp
-dj4rICZuYnNwOyAmbmJzcDsgKi88L2Rpdj48ZGl2PisgJm5ic3A7ICZuYnNwO2lmIChzLSZn
-dDtiaF9ub2RldikgezwvZGl2PjxkaXY+KyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDtx
-ZW11X2JoX2RlbGV0ZShzLSZndDtiaF9ub2Rldik7PC9kaXY+PGRpdj4rICZuYnNwOyAmbmJz
-cDsgJm5ic3A7ICZuYnNwO3MtJmd0O2JoX25vZGV2ID0gTlVMTDs8L2Rpdj48ZGl2PisgJm5i
-c3A7ICZuYnNwO308L2Rpdj48ZGl2PisgJm5ic3A7ICZuYnNwO2lmIChzLSZndDtiaF9wb3N0
-bGQpIHs8L2Rpdj48ZGl2PisgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7cWVtdV9iaF9k
-ZWxldGUocy0mZ3Q7YmhfcG9zdGxkKTs8L2Rpdj48ZGl2PisgJm5ic3A7ICZuYnNwOyAmbmJz
-cDsgJm5ic3A7cy0mZ3Q7YmhfcG9zdGxkID0gTlVMTDs8L2Rpdj48ZGl2PisgJm5ic3A7ICZu
-YnNwO308L2Rpdj48ZGl2PiZuYnNwO308L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2PiZuYnNw
-O3N0YXRpYyB2b2lkIHVzYl9ob3N0X2NhbmNlbF9wYWNrZXQoVVNCRGV2aWNlICp1ZGV2LCBV
-U0JQYWNrZXQgKnApPC9kaXY+PGRpdj4tLTwvZGl2PjIuMzQuMTwvZGl2PjwvZGl2PjxkaXY+
-PGJyPjwvZGl2PjxkaXYgY2xhc3M9InFxbWFpbF9zaWduIiBpZD0id2VtYWlsc2lnY29udGVu
-dCIgc2lnbmlkPSI1MDEiPjxzcGFuIGlkPSJkZWZhdWx0X3dlbWFpbF9zaWdfbGluZV93cmFw
-Ij48aHIgY2xhc3M9ImRlZmF1bHRfd2VtYWlsX3NpZ19saW5lIiB3aWR0aD0iMTAwIiBzdHls
-ZT0ibWFyZ2luOiA3cHggMHB4OyBib3JkZXItd2lkdGg6IDBweCAwcHggMXB4OyBib3JkZXIt
-dG9wLWNvbG9yOiBpbml0aWFsOyBib3JkZXItcmlnaHQtY29sb3I6IGluaXRpYWw7IGJvcmRl
-ci1sZWZ0LWNvbG9yOiBpbml0aWFsOyBib3JkZXItaW1hZ2U6IGluaXRpYWw7IGJvcmRlci1i
-b3R0b20tc3R5bGU6IHNvbGlkOyBib3JkZXItYm90dG9tLWNvbG9yOiByZ2IoMjMwLCAyMzIs
-IDIzNSk7IGhlaWdodDogMHB4OyBsaW5lLWhlaWdodDogdW5zZXQ7IGZvbnQtc2l6ZTogMHB4
-OyBwYWRkaW5nOiAwcHg7IHdpZHRoOiA0MHB4ICFpbXBvcnRhbnQ7IiBhbGlnbj0ibGVmdCIg
-Y29udGVudGVkaXRhYmxlPSJmYWxzZSI+PC9zcGFuPjxkaXYgaWQ9IndlbWFpbHNpZ2NvbnRl
-bnRfcHJlIj48L2Rpdj48YSBzdHlsZT0iY29sb3I6IHJnYigzOCwgMTI2LCAyNDApO3RleHQt
-ZGVjb3JhdGlvbjogbm9uZTsgb3V0bGluZTogbm9uZTt0ZXh0LWRlY29yYXRpb246bm9uZTsg
-b3V0bGluZTpub25lOyBjb2xvcjojMjY3RUYwIiBjbGFzcz0iY3Vyc29yLXBvaW50ZXIgZGVm
-YXVsdC1zaWcgaWdub3JlLWRhcmsiIGNvbnRlbnRlZGl0YWJsZT0iZmFsc2UiIGhyZWY9Imh0
-dHBzOi8vd29yay53ZWl4aW4ucXEuY29tL3dld29ya19hZG1pbi91c2VyL2g1L3FxbWFpbF91
-c2VyX2NhcmQvdmM5MjUzODBhYWM0ZWZkYTA2P2Zyb209bXlwcm9maWxlIiB0YXJnZXQ9Il9i
-bGFuayI+5Y+R6Ieq5oiR55qE5LyB5Lia5b6u5L+hPC9hPjxicj48ZGl2Pjxicj48L2Rpdj48
-ZGl2Pjxicj48L2Rpdj48L2Rpdj48ZGl2PjwvZGl2PjwvZGl2Pg==
 
-------=_NextPart_6AD1D4A0_C234AA00_07CE9031--
-
+--=20
+         =E6=AD=A4=E8=87=B4
+=E7=A4=BC
+=E7=BD=97=E5=8B=87=E5=88=9A
+Yours
+    sincerely,
+Yonggang Luo
 
