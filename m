@@ -4,111 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B008CCA464
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 12:39:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EA07CCF2C1
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 13:03:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHhCR-0001EH-UI; Fri, 16 Oct 2026 08:38:15 -0400
+	id 1xHhaF-0007QI-1c; Fri, 16 Oct 2026 09:02:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sraymaek@redhat.com>)
- id 1xHhCO-0001AK-JF
- for qemu-devel@nongnu.org; Fri, 16 Oct 2026 08:38:12 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <2118537295@qq.com>)
+ id 1xHex5-0001vU-3C; Fri, 16 Oct 2026 06:14:15 -0400
+Received: from out162-62-57-252.mail.qq.com ([162.62.57.252])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sraymaek@redhat.com>)
- id 1xHhCM-0002rC-BB
- for qemu-devel@nongnu.org; Fri, 16 Oct 2026 08:38:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1792154289;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=wtswtFKfaEl7o67qsBWJaX7OMz7kmTugzIXPWuRcxZo=;
- b=HMZd0Yk3uH9GLwRab7fUNJ6w4juMFqCW68Qgs51FfNVVowudEUwTI2f4t/4XuUouKGABcG
- 0uaPzFIyPpaAV1Rsmexj7G5rMHXVQRLS8Ug8GQDJoSowDZsuuuDmuTFVMT9dqXcCkdDBg0
- vIqcvWwi7vzl+yhnY/KmQmGcONh4GeA=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-617-J5pN0dIQMLWmMyFHfbd4DQ-1; Fri, 16 Oct 2026 12:38:06 +0000
-X-MC-Unique: J5pN0dIQMLWmMyFHfbd4DQ-1
-X-Mimecast-MFC-AGG-ID: J5pN0dIQMLWmMyFHfbd4DQ_1792154285
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4a0284121c6so23991285e9.3
- for <qemu-devel@nongnu.org>; Fri, 16 Oct 2026 05:38:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1792154285; x=1792759085; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=wtswtFKfaEl7o67qsBWJaX7OMz7kmTugzIXPWuRcxZo=;
- b=IcQaFSC0crfHcuwqf2e4hsehepf+JM3hfoV71hgyjHiDLOcY6EldZeChtwwFQWZ8mV
- HxpdbmQWMrJjNh8/I+0wMGBlU++62u7ySorvgE/QRgTQvPACih15wM8Yt8z8Yt2Y/e/U
- 3mwmN8JZDc43Wx+o8gDedHw2qL1HgFEiN5idmgfZJz+YnXOurua9aw48RlrHeZ/TWl73
- E6wDTdu7Q5Vg/EY4TWyhHAmy7kbZZZ6I3S6iwaGUFzwQZG0N5suuIqk1B7boE4laoaF2
- fdwrTPnxFXXPwSZbSn4xkb/YdKJdZQMDJZQjpkWDh7kDQnBbFAEQbXRJyddcClChvIC8
- EPMQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792154285; x=1792759085;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=wtswtFKfaEl7o67qsBWJaX7OMz7kmTugzIXPWuRcxZo=;
- b=Zzic4+1+91Kzbg4+DmEdcoMdB17RtDk1tQ7ry8eYeOinIEACCYMKlet5mnVZ3i6dpD
- wr75SK0JVH0q9tT2vPo3RtcPOFDjHZz8u/AkzyyoyT6xa0wACtkiiCKiIsNjNtg9cI8D
- IWklfYd5p4q7kHK3CqG3OHOJbBp4bDowFlWsxDtmJJ/rnuuHhbyhVJHeP8AOIRA+fas6
- fq9idcsgNLxZgD1eMe1flJQMzkJtErRZI3s77341LFCZDxBHnA268/ha3H26/VGNGuto
- QthltO5pYn/IRy2BSnIRhEYb7V1YaTbrPM2R1j3j1YEzDI2xc/YEaXEeeOLmPCSkckAW
- seaQ==
-X-Gm-Message-State: AFq9FYLLGoBoeC/JPZobhcTjZrND9i+t5o4+f74DC/EhhXlh0ybb84aj
- qYe52IX7ox8TtAGcpzbS9wFTzdBy/L2jzkK9JxhSY8Td0J5m3K1NPKnYFeDGYNBO8tNLWQrC6Dh
- dbyehT8K2Dnlpqe+CCy7sG50SEB3XsEE6pcM5ovwmlIqHTwTJJZj5mtgFtuuYQf1xr+FD0LCdPN
- 0zxbwjPRxxCQ2Tw+fqQQMk4obBy+o7qdQT/3Ma4NGB
-X-Gm-Gg: AYBFou3R5dzOTWetnfRCLbwOZ0dgab3zsNMY394gTextH64r2CHkUBccdfY45Eht5p+
- D3En92rPFJyZ1Y+YQI+UWwNpoye1MF98ZsmOgxobSKRu1u8xohj++WfzDqAnoySxZzKf+tq6pNO
- llK/j3+SA5BmKBYzI0xClkM88Bi5+rOycvMDbd+iYDj51XBlFPjGhpU6y5+Pnfo84kEs8z4BLzL
- dZLnie/VBnkTrhUROlPFz0PxB1qGXNey50D1Im4i64v5H7IJ7GIbjL84Kly5D31n9cgxBjlEDrL
- QS9oHR5BXwIh/XtIqRuMZoELMtq+0mk9MBbjlGMimAf80bepDhDoIM3jb0odq7E/qT195R7HZr0
- VrewiMGBCaBPeRX/8IjO3EUPCC30pH4U3ApJcthZOaFtqPEbFW6yDn4H/YqWXfi8fFyT5SgzipJ
- sgUw7OhWxGySFV9a0YyqdEGYhf8Er3slja
-X-Received: by 2002:a05:600c:1389:b0:4a1:d307:b526 with SMTP id
- 5b1f17b1804b1-4a1d307b5d9mr15447225e9.0.1792154284736; 
- Fri, 16 Oct 2026 05:38:04 -0700 (PDT)
-X-Received: by 2002:a05:600c:1389:b0:4a1:d307:b526 with SMTP id
- 5b1f17b1804b1-4a1d307b5d9mr15446685e9.0.1792154284341; 
- Fri, 16 Oct 2026 05:38:04 -0700 (PDT)
-Received: from sraymaek-thinkpadx1nanogen2.rmtbe.csb
- (2a02-1811-d30-6f00-217b-1d12-f4f3-7e56.ip6.access.telenet.be.
- [2a02:1811:d30:6f00:217b:1d12:f4f3:7e56])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48dfd4e7889sm4730097f8f.24.2026.10.16.05.38.03
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 16 Oct 2026 05:38:03 -0700 (PDT)
-From: Sanne Raymaekers <sraymaek@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, fam@euphon.net, kwolf@redhat.com, hreitz@redhat.com,
- Sanne Raymaekers <sraymaek@redhat.com>
-Subject: [PATCH v3 2/3] block/vmdk: skip RGD for stream optimized disks
-Date: Fri, 16 Oct 2026 14:37:49 +0200
-Message-ID: <20261016123750.94769-3-sraymaek@redhat.com>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20261016123750.94769-1-sraymaek@redhat.com>
-References: <20261016123750.94769-1-sraymaek@redhat.com>
+ (Exim 4.90_1) (envelope-from <2118537295@qq.com>)
+ id 1xHex2-00025D-Pt; Fri, 16 Oct 2026 06:14:14 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
+ t=1792145647; bh=Ya5tqjBgZhnAuHGiFuAXbgQ5Ff0e+cdVNdUEh01SWZU=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References;
+ b=FMj5ADnooz+ay653PAnKBpKsv9uIPyYMYq7p8cafI2soqiD+MfDot0K2U7gq2MDkH
+ 1uPSS7ENTfBdtovA8P64VbY1R7LYQInEGZmQe3WkwJeJWUJ3lkHYr7zkSR64bQ2vN3
+ xaLf5a6yw+ZllvInasC3tHD00lCncjF7N7GLF7XU=
+Received: from r00799764-ThinkCentre-M920t-N000.. ([139.159.170.67])
+ by newxmesmtplogicsvrszc43-0.qq.com (NewEsmtp) with SMTP
+ id 38486EEC; Fri, 16 Oct 2026 18:14:04 +0800
+X-QQ-mid: xmsmtpt1792145644tnpmj9yw6
+Message-ID: <tencent_48E88E1B57F8D2D027AA10AB6E9FA4486609@qq.com>
+X-QQ-XMAILINFO: NCvoIAqeA6m0+p6EOexeD+ZoFb0l6Dpkj6gJEBKXrxsU5DRvGRe/Vo4xAVViZ0
+ FKrgpD/7KamHtbt5olWNVAyUaAcebJRE2PYdEc3ooT2xHM1Ym7PHl+WicX/TXS7Xk09GNlM0Jyhr
+ t2AYJb/+v2CPR2gWUWjwYVoZWDYgR/yB0udJQpAOoIHdf8Cz/FtmNu+q5awUHCIKY2FtB6otUG3y
+ 09SIzPLJqMBqmUAZZZwUTQFN14s8T8V8nTdLr6Avi7B8+6k5n+wStrsNlqS4CdInqevrbh7Zma2B
+ yWZVMcLtDcIxMj7Pb1s+vqHgVy9XF0VrHUquKS4iO7XrGvQCyUBfc8RkjAw9Lhz5WLx/kU9vdSKy
+ d72jaf30kpr2KKxpmWEQIJnVnVoZRdKvLRB9DokOwGpSWr0MKb7bZ6AdB75K+yZFOEZdvr+6AfMe
+ Ah2Ty2jFaiDkCpZguznK81Njuxq5UuOF17BuR7/uEIfsY+lGNzaHfHpih+6cnoU+lSKWt0COP1BZ
+ A/wvQS7wd5M7B12yIfOcSm+8ehAUXaWzAHBsKcF6g08juPRuUSguxg2Jr1ItRBWB/hCDi3/grfwm
+ XLI03vBEmSPQkkbSIB96o3xdhBsTW3VnUL9jvWzVr8y8AP2F9shPo2zuHsfwTiaYjtWfyzeQ0cqx
+ UQBc8PYrLg8FqtSWKF1lsBtfZv2EICjeJ8d/YGzM5i20CnMW9VcfVosG3urE6YV5pww5v8Bo/g/g
+ JhZ37VeQ0+TDycC4qH3ZBnCZJl/Ibq5hg+PlQfVRoisVHcFTpCeG0s53hYnZuJwFM/TmNzCpPNJt
+ Smx9E+HmF6aCSwMInfj33+/YX/FEEzuWumSOiwNQoZNVWeUmx9ycPvGMJCMcqB/BzQslWWyhIyuS
+ /Ccdf7G5PZgCe3Ofvb0DTyWBSvw8XKbDkQpH5XklCS1o89dpMiKbIzSou0YJ9t5qTAxTYrtnKAMh
+ SfjeQyU0dhsOvruOSrAY5J16vAJjVtmRiN9f3PEFvQ0P/5o6u/UB7cL5f3jyYfd6YTkcxEaxnO8I
+ AJc6H1rqMG6NuoHy3jkX0BsZuLUYX3zbZZjmNZDCrX+FZJJBqiLtgQw0i3Mrh/9o+/uhzQ1pZ/Qp
+ c6c41OrOc9R7teEnLEEk4mHXhPNg==
+X-QQ-XMRINFO: OD9hHCdaPRBwH5bRRRw8tsiH4UAatJqXfg==
+From: Jinjie Ruan <2118537295@qq.com>
+To: anisinha@redhat.com, armbru@redhat.com, eblake@redhat.com,
+ imammedo@redhat.com, michael.roth@amd.com, mst@redhat.com,
+ pbonzini@redhat.com, peter.maydell@linaro.org, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org
+Cc: ruanjinjie@huawei.com
+Subject: [PATCH 18/37] hw/arm/virt: Reserve the MPAM MSC MMIO window
+Date: Fri, 16 Oct 2026 18:10:38 +0800
+X-OQ-MSGID: <20261016101058.1900808-4-2118537295@qq.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20261016101058.1900808-1-2118537295@qq.com>
+References: <20261016101058.1900808-1-2118537295@qq.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=sraymaek@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
-X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=162.62.57.252; envelope-from=2118537295@qq.com;
+ helo=out162-62-57-252.mail.qq.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HELO_STATIC_HOST=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Fri, 16 Oct 2026 09:02:43 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -123,107 +86,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-For stream optimized disks the spec notes: "The rgdOffset should be
-ignored because bit 1 of the flags field is not set." Where bit 1 of the
-flags field indicates a redundant grain directory (RGD).[^1]
+From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-In short, stream optimized disks should have the RGD offset set to 0,
-and only write the main grain directory.
+Reserve a 1 MiB MMIO window at 0x0b006000 for the MPAM MSCs
+(MPAM_SIZE * 256 slots, right above the virtio MMIO transports)
+and add the VIRT_MPAM_MSC memmap entry the creation code uses.
 
-This patch also corrects the comments around the code writing the grain
-directories, and it makes the error thrown when it fails to write the
-backup grain directory more explicit.
-
-[^1] Virtual Disk Format 5.0 Technical Note.
-
-Signed-off-by: Sanne Raymaekers <sraymaek@redhat.com>
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
 ---
- block/vmdk.c | 46 ++++++++++++++++++++++++++++++----------------
- 1 file changed, 30 insertions(+), 16 deletions(-)
+ hw/arm/virt.c         | 3 +++
+ include/hw/arm/virt.h | 1 +
+ 2 files changed, 4 insertions(+)
 
-diff --git a/block/vmdk.c b/block/vmdk.c
-index 7ca030c5fe..e090e122f1 100644
---- a/block/vmdk.c
-+++ b/block/vmdk.c
-@@ -2246,8 +2246,9 @@ vmdk_init_extent(BlockBackend *blk, int64_t filesize, bool flat, bool compress,
-     } else {
-         header.version = 1;
-     }
--    header.flags = VMDK4_FLAG_RGD | VMDK4_FLAG_NL_DETECT
--                   | (compress ? VMDK4_FLAG_COMPRESS | VMDK4_FLAG_MARKER : 0)
-+    header.flags =  VMDK4_FLAG_NL_DETECT
-+                   | (compress ?
-+                      VMDK4_FLAG_COMPRESS | VMDK4_FLAG_MARKER : VMDK4_FLAG_RGD)
-                    | (zeroed_grain ? VMDK4_FLAG_ZERO_GRAIN : 0);
-     header.compressAlgorithm = compress ? VMDK4_COMPRESSION_DEFLATE : 0;
-     header.capacity = filesize / BDRV_SECTOR_SIZE;
-@@ -2262,8 +2263,16 @@ vmdk_init_extent(BlockBackend *blk, int64_t filesize, bool flat, bool compress,
- 
-     header.desc_offset = 1;
-     header.desc_size = 20;
--    header.rgd_offset = header.desc_offset + header.desc_size;
--    header.gd_offset = header.rgd_offset + gd_sectors + (gt_size * gt_count);
-+
-+    if (compress) {
-+        header.rgd_offset = 0;
-+        header.gd_offset = header.desc_offset + header.desc_size;
-+    } else {
-+        header.rgd_offset = header.desc_offset + header.desc_size;
-+        header.gd_offset =
-+            header.rgd_offset + gd_sectors + (gt_size * gt_count);
-+    }
-+
-     header.grain_offset =
-         ROUND_UP(header.gd_offset + gd_sectors + (gt_size * gt_count),
-                  header.granularity);
-@@ -2303,21 +2312,26 @@ vmdk_init_extent(BlockBackend *blk, int64_t filesize, bool flat, bool compress,
-         goto exit;
-     }
- 
--    /* write grain directory */
-+    /* write backup grain directory */
-     gd_buf_size = gd_sectors * BDRV_SECTOR_SIZE;
-     gd_buf = g_malloc0(gd_buf_size);
--    for (i = 0, tmp = le64_to_cpu(header.rgd_offset) + gd_sectors;
--         i < gt_count; i++, tmp += gt_size) {
--        gd_buf[i] = cpu_to_le32(tmp);
--    }
--    ret = blk_co_pwrite(blk, le64_to_cpu(header.rgd_offset) * BDRV_SECTOR_SIZE,
--                        gd_buf_size, gd_buf, 0);
--    if (ret < 0) {
--        error_setg_errno(errp, -ret, "failed to write VMDK grain directory");
--        goto exit;
-+
-+    if (!compress) {
-+        for (i = 0, tmp = le64_to_cpu(header.rgd_offset) + gd_sectors;
-+             i < gt_count; i++, tmp += gt_size) {
-+            gd_buf[i] = cpu_to_le32(tmp);
-+        }
-+        ret = blk_co_pwrite(blk,
-+                            le64_to_cpu(header.rgd_offset) * BDRV_SECTOR_SIZE,
-+                            gd_buf_size, gd_buf, 0);
-+        if (ret < 0) {
-+            error_setg_errno(errp, -ret,
-+                             "failed to write VMDK backup grain directory");
-+            goto exit;
-+        }
-     }
- 
--    /* write backup grain directory */
-+    /* write grain directory */
-     for (i = 0, tmp = le64_to_cpu(header.gd_offset) + gd_sectors;
-          i < gt_count; i++, tmp += gt_size) {
-         gd_buf[i] = cpu_to_le32(tmp);
-@@ -2326,7 +2340,7 @@ vmdk_init_extent(BlockBackend *blk, int64_t filesize, bool flat, bool compress,
-                         gd_buf_size, gd_buf, 0);
-     if (ret < 0) {
-         error_setg_errno(errp, -ret,
--                         "failed to write VMDK backup grain directory");
-+                         "failed to write VMDK grain directory");
-     }
- 
-     ret = 0;
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index aaadff6..3ad7de8 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -90,6 +90,7 @@
+ #include "hw/virtio/virtio-md-pci.h"
+ #include "hw/virtio/virtio-iommu.h"
+ #include "hw/char/pl011.h"
++#include "hw/arm/mpam.h"
+ #include "hw/core/cpu.h"
+ #include "hw/cxl/cxl.h"
+ #include "hw/cxl/cxl_host.h"
+@@ -211,6 +212,8 @@ static const MemMapEntry base_memmap[] = {
+     [VIRT_SECURE_GPIO] =        { 0x090b0000, 0x00001000 },
+     [VIRT_ACPI_PCIHP] =         { 0x090c0000, ACPI_PCIHP_SIZE },
+     [VIRT_MMIO] =               { 0x0a000000, 0x00000200 },
++    /* MPAM MSC MMIO windows: MPAM_SIZE (16 KiB) each, 256 slots (1 MiB). */
++    [VIRT_MPAM_MSC] =           { 0x0b006000, MPAM_SIZE * 256 },
+     /* ...repeating for a total of NUM_VIRTIO_TRANSPORTS, each of that size */
+     [VIRT_PLATFORM_BUS] =       { 0x0c000000, 0x02000000 },
+     [VIRT_SECURE_MEM] =         { 0x0e000000, 0x01000000 },
+diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
+index c847136..56bee15 100644
+--- a/include/hw/arm/virt.h
++++ b/include/hw/arm/virt.h
+@@ -81,6 +81,7 @@ enum {
+     VIRT_SMMU,
+     VIRT_UART0,
+     VIRT_MMIO,
++    VIRT_MPAM_MSC,
+     VIRT_RTC,
+     VIRT_FW_CFG,
+     VIRT_PCIE,
 -- 
-2.55.0
+2.43.0
 
 
