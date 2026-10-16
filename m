@@ -4,111 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D1B3CCA46C
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 14:10:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0007CCA462
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 14:14:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHidU-0008AS-3r; Fri, 16 Oct 2026 10:10:16 -0400
+	id 1xHihH-0000My-Sd; Fri, 16 Oct 2026 10:14:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xHidP-0008A9-Ek
- for qemu-devel@nongnu.org; Fri, 16 Oct 2026 10:10:11 -0400
-Received: from mail-yw1-x112e.google.com ([2607:f8b0:4864:20::112e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xHidN-0005TW-TG
- for qemu-devel@nongnu.org; Fri, 16 Oct 2026 10:10:11 -0400
-Received: by mail-yw1-x112e.google.com with SMTP id
- 00721157ae682-8565d77c277so50339367b3.0
- for <qemu-devel@nongnu.org>; Fri, 16 Oct 2026 07:10:08 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792159807; cv=none;
- d=google.com; s=arc-20260327;
- b=EYw6zslbdkEbDzxx87hHcPeHEIOHt/oRICV8+frZ46+wFxazXWWefn5vhexMMAX5s5
- uFPVo1Zjdk59heLxOO/7elOzYe5/uX2MOU9w2F4R+heyoqHgxrXYeE/8XLbZwbTerhJs
- 2H4EiFBg7ig0IxBMzU71E4iH8rqpO1XA9XSkDXrbkqa+MY/qpDtJibA2A1KRJvw+HT/Q
- 4IG6rP6pGGXuK4mLZM+TbVWaRS4PKc9aQR/FkstTtjZlYdyicOc8a3aWYUvT29R4MzOb
- DzIP42sImu9UUCHhbjEqb/ogjqnxTnwo4eaDYO2MXwRGhQFA6attJwYIjiY1Ucv5v4NP
- ox6Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=ugz2s4+8GXJV9icY9SJ1KjWat3hJ+B/MkHwGm3qoxTM=;
- fh=W/JhvAlf9kvTQdSfT2vqiKAkNO4YiRVg8H2M8w9SXbQ=;
- b=h1vpxqG7VPUeYRYZjRHzuZkDUWmRjwzu0vbYwIfqgB2p6iVkHteJRn5njVIMwUXg3l
- VKQ3PntHxK5txO569QgMh49RsqJHIEXa6ZN8p7qWo0RH4XsIwcL1nIXBtf5mD0B/meZD
- 5co//ldHPxZDMV6kAAw1zXAwP54E1aXh3C/VSv2v9yxEFT8TyWroQLMfYtEULKadSErb
- Mcek+VHsQOc0B4s1kwiKig2T4IqzPmVqPe8F4ELiWp3aagm69cuKRMIxeGPM1ugeNycn
- q7mHfC07UsIIR5+3NA1lPPOccgdh1VoRn21AhG8RO4BQFqSwXdc1svfoFKL742Nlz8Ep
- h+ww==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1792159807; x=1792764607; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=ugz2s4+8GXJV9icY9SJ1KjWat3hJ+B/MkHwGm3qoxTM=;
- b=VHUZpAGjFk1cwJIoQTZbP+KRbUFndKc8vusFFHcxWKd6QGBuhFvn8rly4mJTiMoGFB
- dxLZuBruX6lq3mzOeE/HEEWIOp6AlrawtgMgdASnaIaDSO/1km6ijgWbstPaYNX+xMDe
- hJCf3+wP2QETgW9avt/phyYwh4/Eo7AD65dT1bKIHCG7YL/H+qrvCIcwZvH1Dla4O2oC
- prIEG+Qo84IBe/CarWN1yNctoBeLYVm5ZjYs0n/lNGak1RtqMpocNR7JR/zd5qulgy1R
- NIjbc9Q6UKpVVpfhO3F+Y8my7D74w4anwaF9rnbGgsyTPI0s4B7AYn6nPzDfaAf/P0YX
- d4xg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792159807; x=1792764607;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=ugz2s4+8GXJV9icY9SJ1KjWat3hJ+B/MkHwGm3qoxTM=;
- b=XIo+bsYj6BOdXcPdtVL1L4rL0g6vyn080P3NOZhqfhvdhOHtUkJmTABonHIfoFMFDy
- 06V6suYlFbEEgm1I8AZR4+KR/jSwUJCMbbUZQg/7zB8qb+6SFbi0He++3igBY3SzCjKQ
- KheY8ySqizK5sEo6rcvbLiMezFrWuMpMr/7jQlyGCQEpKfLDMTod/osWbsCzdzyXbubV
- /pJGqKvlPClaRWQXya39xahNtcCIw+wjzS5pXvz4Nm8quH+zIaaiL+9vbdNmCb7aaEPr
- YCjc8RkLT3nCPSEFfvWUFAhwqLoravODoq759zjxQWOzDdhRl4n58JdPe7arWPnwRUkC
- 8oLg==
-X-Gm-Message-State: AFq9FYIjdTiCKj8kT1RWCviAzmqtcOhkLFqNRbTH9bOnafeIHD4ctJiB
- 6/4768gD87GhlBeJpDO7V4XKlZFNrWRXKs6m/2K+XALjePkF/WVqOmoFVAzBbeeKWaImV2R4jd/
- aElQjHOlWUzDmmVV1WThwtrp4Pofvrxh8MKSs8XjsxQ==
-X-Gm-Gg: AYBFou1Bvz8gb6kO/UJJWXxsMeV1sxX3MQgGGXYcrRzIZeIxJxbSklTkV5NCnOHTTIT
- xWr9x3S1aSsAqqgEhwk0j2OSbQuGg11wCbtCwo6HfOo1GO69nVb0wlZMd7qzMW9RuGImeUv4ckI
- 7/lRjmoSbO/vXSJkxXRD+OW+6AkrYQdOYv/QkT1FrQ7mv3/qDfLWEUXEGuvUxcjGVp7xustq5by
- 07DEtTig0hzUQ2mVgp0esTeoS0dKNQ5esAw1sCBUPC4mn6pdS71lgUUVzg0cKsPxZsBkR0vUsSV
- nT6sxu4cCPIhGODzZIFJ4iqhUbL6Dfh3fiifuli5Euvia/9JCeUNkp7Vb11PloqM1uJiQQsAGPD
- Tty8gxFRQnxpmVwpzheLoQGEad9w5zkUwoZjFdpG4yIE9Y0rjGw==
-X-Received: by 2002:a05:690c:4006:b0:8b0:eb21:e762 with SMTP id
- 00721157ae682-8b0f22024f6mr285217b3.65.1792159807167; Fri, 16 Oct 2026
- 07:10:07 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1xHihC-0000MU-42
+ for qemu-devel@nongnu.org; Fri, 16 Oct 2026 10:14:07 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1xHihA-0005lz-5s
+ for qemu-devel@nongnu.org; Fri, 16 Oct 2026 10:14:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1792160042;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=xJuEEWt2sMrjRemjFk2WWfHqZaaP6fHIKw/txvPFo+I=;
+ b=DG3tHi2F/DAYEqbfVtuCXkdVJRNcER3tpkGZpXgro9CJISNxrjSN9ekrxZsaS9no00xodI
+ TTU7p9Kh0AMlJA/vZqcyQ1dZ0ZZRDLAQmd7QJ18Izh87p/HTDHceGCFYaw5/r+YEthyLSJ
+ SCep8VfwGcr0N6CfVqDxrp3Im83Xj+I=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-434-J3jajnK5OEahoA1AL1nV1w-1; Fri,
+ 16 Oct 2026 14:13:59 +0000
+X-MC-Unique: J3jajnK5OEahoA1AL1nV1w-1
+X-Mimecast-MFC-AGG-ID: J3jajnK5OEahoA1AL1nV1w_1792160037
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2F6DB18005A5; Fri, 16 Oct 2026 14:13:57 +0000 (UTC)
+Received: from redhat.com (headnet04.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.116])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8A5DC18004D2; Fri, 16 Oct 2026 14:13:54 +0000 (UTC)
+Date: Fri, 16 Oct 2026 09:13:52 -0500
+From: Eric Blake <eblake@redhat.com>
+To: Guillaume Vincke <guillaume.vincke@ovhcloud.com>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, 
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>
+Subject: Re: [PATCH v2 2/2] iotests: Add coverage for NBD connect thread
+ start delay
+Message-ID: <atIvl0e9VddTigCO@redhat.com>
+References: <20261016084136.233836-1-guillaume.vincke@ovhcloud.com>
+ <20261016084136.233836-3-guillaume.vincke@ovhcloud.com>
 MIME-Version: 1.0
-References: <20261015163352.1751191-1-peter.maydell@linaro.org>
- <atEC-pIGhLYLXVmC@redhat.com>
- <CAFEAcA-wEB15afO4Na8+8cF_Ja3v-8ewd8EdPavxJbfTmrL9GA@mail.gmail.com>
- <atHrFXxyIl3Nbvht@redhat.com> <atHu0kCSQTD9E34p@redhat.com>
- <CAFEAcA9PTB=1V_hV1P0xpEW4aY+4LajYyzKzyTOJj=bb9=oPvA@mail.gmail.com>
- <atICMoFG2gkoHWJ-@redhat.com>
-In-Reply-To: <atICMoFG2gkoHWJ-@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 16 Oct 2026 15:09:55 +0100
-X-Gm-Features: AclHuK-mwJ0hkB9nSRWo73LLt1WyfFFZKkOPiEgQdiNxT7lDLPvT-a4jLC3HEgo
-Message-ID: <CAFEAcA8hJ_WK+4itRtQiJBtDnd5TfA5jrtrcF2qPAj0cnJ+U9Q@mail.gmail.com>
-Subject: Re: [PATCH] include/hw/core/qdev.h: Fix where
- device_class_set_parent_realize docs suggest putting parent_realize
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
- Mark Cave-Ayland <mark.caveayland@nutanix.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112e;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20261016084136.233836-3-guillaume.vincke@ovhcloud.com>
+User-Agent: NeoMutt/20260616
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=eblake@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,74 +86,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 16 Oct 2026 at 11:53, Daniel P. Berrang=C3=A9 <berrange@redhat.com>=
- wrote:
->
-> On Fri, Oct 16, 2026 at 11:14:16AM +0100, Peter Maydell wrote:
-> > On Fri, 16 Oct 2026 at 10:31, Daniel P. Berrang=C3=A9 <berrange@redhat.=
-com> wrote:
+On Fri, Oct 16, 2026 at 10:41:36AM +0200, Guillaume Vincke wrote:
+> Test the connect thread starting condition with reconnect-delay=0 when
+> the server disconnects after a successful handshake but before running
+> operations. Prior to the change to nbd_co_establish_connection(), this
+> test would demonstrate two I/O errors. The tests 264 and 277 covering
+> reconnection do not use reconnect-delay=0 so this case is not exercised.
+> 
+> Add a test that provokes multiple errors in order to put an NBD client
+> in the above-mentioned situation and shows that the first operation
+> starts the connect thread and leads to successful subsequent I/O.
+> 
+> Signed-off-by: Guillaume Vincke <guillaume.vincke@ovhcloud.com>
+> ---
+>  tests/qemu-iotests/tests/nbd-stale-connection | 60 +++++++++++++++++++
+>  .../tests/nbd-stale-connection.out            | 17 ++++++
+>  2 files changed, 77 insertions(+)
+>  create mode 100755 tests/qemu-iotests/tests/nbd-stale-connection
+>  create mode 100644 tests/qemu-iotests/tests/nbd-stale-connection.out
 
-> > > +#define qdev_realize_chain_parent(dev, dc, errp) \
-> > > +    DEVICE_CLASS(object_class_get_parent(OBJECT_CLASS(dc)))->realize=
-(dev, errp)
-> >
-> > I'm tempted to suggest that we drop the 'dc' argument here and
-> > have the macro get the class from the dev:
-> >     DEVICE_CLASS(object_class_get_parent(object_get_class(OBJECT(dev)))=
-)->realize(dev,
-> > errp)
-> >
-> > because I think almost all realize methods wanting to chain back up
-> > won't have the class pointer to hand.
-> >
-> > We could maybe have an extra layer of abstraction here such that
-> > you write something like:
-> >
-> >    parent_invoke(DEVICE_CLASS, dev)->realize(dev, errp);
-> >
-> > Or is that trying to be too clever?
->
-> This won't work if we have multiple levels in the class hierarchy
-> that need chaining up, as object_class_get_parent(object_get_class(dev))
-> will always just get the first level parent class of 'dev'.
+> +
+> +# estimated duration required by the connect thread to reach a running server
+> +MAX_NBD_CONNECT_DURATION = 1
+> +
 
-Isn't that always what you want, though? In a class hierarchy
-Object->Device->A->B->C, C's realize method always wants to
-chain to B's realize method, and more generally "invoke the
-superclass method" from C wants B's implementation, not A's
-(assuming B actually implemented it).
+> +
+> +    with qemu_nbd_popen('-k', nbd_sock, '-f', iotests.imgfmt, disk):
+> +        iotests.log('=== NBD server up. Wait for the connect thread to park '
+> +                    'the channel ===')
+> +        # in CONNECTING, the operation starts the connect thread
+> +        log(vm.qmp('x-qemu-io', device='nbd0', command='write -P 0x5a 0 64k'))
+> +        # wait for the connect thread to get a new channel and stop
+> +        time.sleep(MAX_NBD_CONNECT_DURATION)
 
-> Somewhere/how we need to identify the current class level we're
-> calling from, so we know what parent to ask for.
->
-> Another option is to do what GObject does and provide a simple
-> helper for getting the parent class, from OBJECT_DEFINE_TYPE*
-> macros:
->
->     ...
->     static inline ObjectClass * \
->     module_obj_name##_parent_class() { \
->         return object_class_by_name(TYPE_##PARENT_MODULE_OBJ_NAME); \
->     } \
->     ...
->
-> which would be used
->
->     DeviceClass *dc =3D DEVICE_CLASS(pl050_kbd_parent_class());
->
->     dc->realize(dev, errp);
->
-> but many (most) of qdev impls don't use the relatively new
-> OBJECT_DEFINE_TYPE macros. They would have to instead explicitly
-> reference the parent type name:
->
->     DeviceClass *dc =3D DEVICE_CLASS(object_class_by_name(TYPE_PL050));
->     dc->realize(dev, errp);
+Timeout-based tests are always risky for false negatives when the CI
+system has more load than the development system.  But comparing this
+version of the patch to v1, it looks like you managed to get much more
+reliable witness points.  I'll be running this through testing on my
+own branch of gitlab several times to see if I can tease out any more
+failures, but hopefully it is ready to use. I'll reply again once I've
+made a decision on whether to include it in my current pull request or
+defer it to my next batch of patches.
 
-I still don't understand why we need to get the parent's
-object class by name here, rather than saying "give me
-the parent class of this object's class".
+> +
+> +    iotests.log('=== NBD server down. The parked channel is closed ===')
+> +
+> +    with qemu_nbd_popen('-k', nbd_sock, '-f', iotests.imgfmt, disk):
+> +        iotests.log('=== NBD server up. Restart the connect thread ===')
+> +        # operation will determine that the channel got closed and restart the
+> +        # connect thread
+> +        log(vm.qmp('x-qemu-io', device='nbd0', command='write -P 0x5a 0 64k'))
+> +        # Wait for it to succeed
+> +        iotests.log('=== Wait for the connect thread to park the new channel. '
+> +                    'Subsequent operations are successful ===')
+> +        time.sleep(MAX_NBD_CONNECT_DURATION)
+> +        log(vm.qmp('x-qemu-io', device='nbd0', command='write -P 0x5a 0 64k'))
+> diff --git a/tests/qemu-iotests/tests/nbd-stale-connection.out b/tests/qemu-iotests/tests/nbd-stale-connection.out
+> new file mode 100644
+> index 0000000000..065ba329e9
+> --- /dev/null
+> +++ b/tests/qemu-iotests/tests/nbd-stale-connection.out
+> @@ -0,0 +1,17 @@
+> +Start NBD server
+> +=== NBD Device connected ===
+> +{"return": {}}
+> +Kill NBD server
+> +=== NBD server down. Detect the break and start the connect thread ===
+> +{"error": {"class": "GenericError", "desc": "write failed: Input/output error"}}
+> +Start NBD server
+> +=== NBD server up. Wait for the connect thread to park the channel ===
+> +{"error": {"class": "GenericError", "desc": "write failed: Input/output error"}}
+> +Kill NBD server
+> +=== NBD server down. The parked channel is closed ===
+> +Start NBD server
+> +=== NBD server up. Restart the connect thread ===
+> +{"error": {"class": "GenericError", "desc": "write failed: Input/output error"}}
+> +=== Wait for the connect thread to park the new channel. Subsequent operations are successful ===
+> +{"return": {}}
+> +Kill NBD server
+> -- 
+> 2.43.0
+> 
 
-thanks
--- PMM
+-- 
+Eric Blake, Principal Software Engineer
+Red Hat, Inc.
+Virtualization:  qemu.org | libguestfs.org
+
 
