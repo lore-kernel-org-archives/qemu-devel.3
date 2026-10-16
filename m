@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EA07CCF2C1
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D249CCF2C2
 	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 13:03:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHhaF-0007QI-1c; Fri, 16 Oct 2026 09:02:51 -0400
+	id 1xHhaU-0007kS-6A; Fri, 16 Oct 2026 09:03:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <2118537295@qq.com>)
- id 1xHex5-0001vU-3C; Fri, 16 Oct 2026 06:14:15 -0400
-Received: from out162-62-57-252.mail.qq.com ([162.62.57.252])
+ id 1xHeXu-00061w-Fl; Fri, 16 Oct 2026 05:48:14 -0400
+Received: from xmbghk7.mail.qq.com ([43.163.128.44])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <2118537295@qq.com>)
- id 1xHex2-00025D-Pt; Fri, 16 Oct 2026 06:14:14 -0400
+ id 1xHeXq-0007l0-5i; Fri, 16 Oct 2026 05:48:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
- t=1792145647; bh=Ya5tqjBgZhnAuHGiFuAXbgQ5Ff0e+cdVNdUEh01SWZU=;
+ t=1792144086; bh=2d+4Rsau3NiT1beS6m9afp36KQFEo9wEHKrVLrDK18I=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=FMj5ADnooz+ay653PAnKBpKsv9uIPyYMYq7p8cafI2soqiD+MfDot0K2U7gq2MDkH
- 1uPSS7ENTfBdtovA8P64VbY1R7LYQInEGZmQe3WkwJeJWUJ3lkHYr7zkSR64bQ2vN3
- xaLf5a6yw+ZllvInasC3tHD00lCncjF7N7GLF7XU=
+ b=CvsDotn8ZUJcoDhzE2c/3qU8E9YAq9mBCdjMd1fwv31xBQp1AFHIuCvrwdDem5v3Q
+ KG7Qs0jSWgCL+6tIUoGhMKT6WZAB1a2JdtqXu9cGWpp3FyB/mk9EKTDmoUBw61e+UV
+ Xs4LpxM0NoArxPzptfg4WLhbcvjQZN+ARmtvurTQ=
 Received: from r00799764-ThinkCentre-M920t-N000.. ([139.159.170.67])
  by newxmesmtplogicsvrszc43-0.qq.com (NewEsmtp) with SMTP
- id 38486EEC; Fri, 16 Oct 2026 18:14:04 +0800
-X-QQ-mid: xmsmtpt1792145644tnpmj9yw6
-Message-ID: <tencent_48E88E1B57F8D2D027AA10AB6E9FA4486609@qq.com>
-X-QQ-XMAILINFO: NCvoIAqeA6m0+p6EOexeD+ZoFb0l6Dpkj6gJEBKXrxsU5DRvGRe/Vo4xAVViZ0
- FKrgpD/7KamHtbt5olWNVAyUaAcebJRE2PYdEc3ooT2xHM1Ym7PHl+WicX/TXS7Xk09GNlM0Jyhr
- t2AYJb/+v2CPR2gWUWjwYVoZWDYgR/yB0udJQpAOoIHdf8Cz/FtmNu+q5awUHCIKY2FtB6otUG3y
- 09SIzPLJqMBqmUAZZZwUTQFN14s8T8V8nTdLr6Avi7B8+6k5n+wStrsNlqS4CdInqevrbh7Zma2B
- yWZVMcLtDcIxMj7Pb1s+vqHgVy9XF0VrHUquKS4iO7XrGvQCyUBfc8RkjAw9Lhz5WLx/kU9vdSKy
- d72jaf30kpr2KKxpmWEQIJnVnVoZRdKvLRB9DokOwGpSWr0MKb7bZ6AdB75K+yZFOEZdvr+6AfMe
- Ah2Ty2jFaiDkCpZguznK81Njuxq5UuOF17BuR7/uEIfsY+lGNzaHfHpih+6cnoU+lSKWt0COP1BZ
- A/wvQS7wd5M7B12yIfOcSm+8ehAUXaWzAHBsKcF6g08juPRuUSguxg2Jr1ItRBWB/hCDi3/grfwm
- XLI03vBEmSPQkkbSIB96o3xdhBsTW3VnUL9jvWzVr8y8AP2F9shPo2zuHsfwTiaYjtWfyzeQ0cqx
- UQBc8PYrLg8FqtSWKF1lsBtfZv2EICjeJ8d/YGzM5i20CnMW9VcfVosG3urE6YV5pww5v8Bo/g/g
- JhZ37VeQ0+TDycC4qH3ZBnCZJl/Ibq5hg+PlQfVRoisVHcFTpCeG0s53hYnZuJwFM/TmNzCpPNJt
- Smx9E+HmF6aCSwMInfj33+/YX/FEEzuWumSOiwNQoZNVWeUmx9ycPvGMJCMcqB/BzQslWWyhIyuS
- /Ccdf7G5PZgCe3Ofvb0DTyWBSvw8XKbDkQpH5XklCS1o89dpMiKbIzSou0YJ9t5qTAxTYrtnKAMh
- SfjeQyU0dhsOvruOSrAY5J16vAJjVtmRiN9f3PEFvQ0P/5o6u/UB7cL5f3jyYfd6YTkcxEaxnO8I
- AJc6H1rqMG6NuoHy3jkX0BsZuLUYX3zbZZjmNZDCrX+FZJJBqiLtgQw0i3Mrh/9o+/uhzQ1pZ/Qp
- c6c41OrOc9R7teEnLEEk4mHXhPNg==
-X-QQ-XMRINFO: OD9hHCdaPRBwH5bRRRw8tsiH4UAatJqXfg==
+ id BF4A1837; Fri, 16 Oct 2026 17:47:52 +0800
+X-QQ-mid: xmsmtpt1792144084tfvy8cyil
+Message-ID: <tencent_EC6CDAD1841362E72DB694D10CF7B1D80A06@qq.com>
+X-QQ-XMAILINFO: Mfa2ogpi8We7cvXCLKLfTzyMbSr86/MUUZW4af9u79jplB08K7gn2b5lVA60o9
+ oi2jU4xQuMhtkOdkmnf0rwFXzK7G2cdJ3z2WVonQGwxlt9hj2saCqEB4ejYh3GRDo21OGsp/cWvX
+ hWf2MwItrIZl4ipWbKx1ga41+g7TgMCY1GwHLiDT9qmbLAjKD8MXWBRG3e6NNhQaks8VU5vjcZS6
+ QPehvekoQf0Nm9zehcFnPx3fvY8dnkf9hMphXytQFU+7rTk3D3eVM0J1At6eam2jSgWvpPkPK5/r
+ 8j9SCBbU+iDIViCyNYxcWZXXwDz4tSeev+sZkwuA60r8tR4h5guGzQaaje+66qRiFyTiaWEZbAvM
+ /EcwqX4S7/cVBtQHqDwxs2DvL9PWu4eZXrxk4wuNT403FMUB7fJH10JXo+uPpMpifCmg5+zW5PTE
+ VZWEvWN613/HGf77Qz9PwwGsPg/25348esB6NnBHDqx6HSBGcwPoQmQ91oR7xR6pyXzZZxKT0C3y
+ l5slrmRjw4K0lsveGKBSGqXh0YcewxQs23ZJr7dgV1NHkpv+3Tq0eNfp0ac8pKOGxjzw31H3PBzE
+ Irex22IwLJFVkjVdjp3HpgbJ3J5SHIvWJj2XfSyJy6JRWWi5q0F1yWP+FlxOcsz9VMd3B2YyJIT2
+ 3/KVbPNJTiqR9GRTDQMkcKSd0Pi8/vrQAfQPo9tR68c5zIRMWPtYVrD5QCJZgV57vYmg5NKqS/13
+ vi0JzU+gwcsKs9yOvrBT3bLL78lhWKzJNzwEdDLF4X22OwKf/H6N8Zg/QBvb+fM680VineIb6Kuz
+ UTFRW2bglIU1Afoqj88iRnjbYA1s0jhFZ7QTiBv2mw9AgtWAgZA5bUZFi7FB+CYC1cQxn8RCHByl
+ Hi3q3Bvk0MDtmlzFPerw7ctYosVbfdSeJH0zqmhFZy3EUI3W57tcoyz+bhCLF9IIu4FPnSzBHiQd
+ S0pZbnzhTgoqw3h3XJfeD8lYLjWxBY+xv6w1aAHXkQ9rgy08ZH2D2nLuGTyAu8f/CvKh53SSSCAl
+ jt/2AcyxcfR2LheDmXIf2MXzo99fvPKF3N1IMXGzDhKe6gH9G1rWzGhyCvz2aKL07YDKUvuwNLgh
+ bPvihs
+X-QQ-XMRINFO: NyFYKkN4Ny6FuXrnB5Ye7Aabb3ujjtK+gg==
 From: Jinjie Ruan <2118537295@qq.com>
 To: anisinha@redhat.com, armbru@redhat.com, eblake@redhat.com,
  imammedo@redhat.com, michael.roth@amd.com, mst@redhat.com,
  pbonzini@redhat.com, peter.maydell@linaro.org, qemu-devel@nongnu.org,
  qemu-arm@nongnu.org
 Cc: ruanjinjie@huawei.com
-Subject: [PATCH 18/37] hw/arm/virt: Reserve the MPAM MSC MMIO window
-Date: Fri, 16 Oct 2026 18:10:38 +0800
-X-OQ-MSGID: <20261016101058.1900808-4-2118537295@qq.com>
+Subject: [PATCH 10/37] hw/arm/mpam: Add per-RIS partition config storage
+Date: Fri, 16 Oct 2026 17:47:04 +0800
+X-OQ-MSGID: <20261016094733.1898485-11-2118537295@qq.com>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20261016101058.1900808-1-2118537295@qq.com>
-References: <20261016101058.1900808-1-2118537295@qq.com>
+In-Reply-To: <20261016094733.1898485-1-2118537295@qq.com>
+References: <20261016094733.1898485-1-2118537295@qq.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=162.62.57.252; envelope-from=2118537295@qq.com;
- helo=out162-62-57-252.mail.qq.com
+Received-SPF: pass client-ip=43.163.128.44; envelope-from=2118537295@qq.com;
+ helo=xmbghk7.mail.qq.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
 X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HELO_STATIC_HOST=-0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Fri, 16 Oct 2026 09:02:43 -0400
+X-Mailman-Approved-At: Fri, 16 Oct 2026 09:02:27 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -88,49 +88,117 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-Reserve a 1 MiB MMIO window at 0x0b006000 for the MPAM MSCs
-(MPAM_SIZE * 256 slots, right above the virtio MMIO transports)
-and add the VIRT_MPAM_MSC memmap entry the creation code uses.
+Add the per-internal-PARTID configuration storage: MpamfPerNrwId
+holds every partition's CPBM bitmap, bandwidth, priority and
+capacity settings, allocated per RIS at realize together with the
+request-to-internal PARTID indirection table.  mpam_get_nrw_id()
+resolves the currently selected partition for the configuration
+register accesses: with INTERNAL selection the selector addresses
+the internal PARTID space directly, otherwise the indirection
+table maps the request PARTID.
 
 Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
 ---
- hw/arm/virt.c         | 3 +++
- include/hw/arm/virt.h | 1 +
- 2 files changed, 4 insertions(+)
+ hw/arm/mpam.c | 44 ++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 44 insertions(+)
 
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index aaadff6..3ad7de8 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -90,6 +90,7 @@
- #include "hw/virtio/virtio-md-pci.h"
- #include "hw/virtio/virtio-iommu.h"
- #include "hw/char/pl011.h"
-+#include "hw/arm/mpam.h"
- #include "hw/core/cpu.h"
- #include "hw/cxl/cxl.h"
- #include "hw/cxl/cxl_host.h"
-@@ -211,6 +212,8 @@ static const MemMapEntry base_memmap[] = {
-     [VIRT_SECURE_GPIO] =        { 0x090b0000, 0x00001000 },
-     [VIRT_ACPI_PCIHP] =         { 0x090c0000, ACPI_PCIHP_SIZE },
-     [VIRT_MMIO] =               { 0x0a000000, 0x00000200 },
-+    /* MPAM MSC MMIO windows: MPAM_SIZE (16 KiB) each, 256 slots (1 MiB). */
-+    [VIRT_MPAM_MSC] =           { 0x0b006000, MPAM_SIZE * 256 },
-     /* ...repeating for a total of NUM_VIRTIO_TRANSPORTS, each of that size */
-     [VIRT_PLATFORM_BUS] =       { 0x0c000000, 0x02000000 },
-     [VIRT_SECURE_MEM] =         { 0x0e000000, 0x01000000 },
-diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
-index c847136..56bee15 100644
---- a/include/hw/arm/virt.h
-+++ b/include/hw/arm/virt.h
-@@ -81,6 +81,7 @@ enum {
-     VIRT_SMMU,
-     VIRT_UART0,
-     VIRT_MMIO,
-+    VIRT_MPAM_MSC,
-     VIRT_RTC,
-     VIRT_FW_CFG,
-     VIRT_PCIE,
+diff --git a/hw/arm/mpam.c b/hw/arm/mpam.c
+index c21a737..cce9355 100644
+--- a/hw/arm/mpam.c
++++ b/hw/arm/mpam.c
+@@ -222,6 +222,16 @@ REG32(MPAMF_MPAMCFG_MBW_PBM0, 0x2000)
+ /* MPAMF_IIDR.IMPLEMENTER: ARM JEP106 code for Huawei (0x736). */
+ #define MPAM_IIDR_IMPLEMENTER 0x736
+ 
++typedef struct MpamfPerNrwId {
++        uint32_t cfg_cpbm[(MPAM_CACHE_PART + 31) / 32];
++        uint32_t cfg_mbw_pbm[(MPAM_MBW_PART + 31) / 32];
++        uint32_t cfg_pri;
++        uint32_t cfg_cmax;
++        uint32_t cfg_mbw_min;
++        uint32_t cfg_mbw_max;
++        uint32_t cfg_mbw_prop;
++} MpamfPerNrwId;
++
+ typedef struct Mpamf {
+     uint64_t idr;
+     uint32_t iidr;
+@@ -243,6 +253,10 @@ typedef struct Mpamf {
+     uint32_t ecr;
+     uint32_t esr;
+     uint32_t cfg_part_sel;
++    uint32_t *cfg_intpartid;
++
++    MpamfPerNrwId *per_nrw_id;
++
+ } Mpamf;
+ 
+ typedef struct MPAMMSCState {
+@@ -260,6 +274,27 @@ typedef struct MPAMMSCState {
+ 
+ } MPAMMSCState;
+ 
++/*
++ * ID narrowing may be in effect.  If it is there is an indirection
++ * table per RIS mapping from part_sel to the internal ID. To make things
++ * more complex, the Partition selection register can directly address
++ * internal IDs. That works for everything other than the ID map itself.
++ * This function pulls the right internal ID out of this complexity
++ * for use in accessing the per_nrw_id structures.
++ */
++static uint32_t mpam_get_nrw_id(MPAMMSCState *s)
++{
++    Mpamf *mpamf = &s->mpamf[s->ris];
++
++    if (!FIELD_EX32(mpamf->idr, MPAMF_IDR, HAS_PARTID_NRW)) {
++        return s->part_sel;
++    }
++    if (s->internal_part_sel) {
++        return s->part_sel;
++    }
++    return mpamf->cfg_intpartid[s->part_sel];
++}
++
+ typedef struct MPAMMSCMemState {
+     MPAMMSCState parent;
+ } MPAMMSCMemState;
+@@ -285,6 +320,7 @@ static uint64_t mpam_msc_read_reg(void *opaque, hwaddr offset,
+ {
+     MPAMMSCState *s = MPAM_MSC_DEVICE(opaque);
+     Mpamf *mpamf = &s->mpamf[s->ris];
++    uint32_t nrw_part_sel = mpam_get_nrw_id(s);
+ 
+     switch (offset) {
+     case A_MPAMF_IDR:
+@@ -344,6 +380,8 @@ static void mpam_msc_write_reg(void *opaque, hwaddr offset, uint64_t value,
+     MPAMMSCState *s = MPAM_MSC_DEVICE(opaque);
+     /* Update in the ris setting path */
+     Mpamf *mpamf = &s->mpamf[s->ris];
++    /* Update if cfg_intpartid being touched */
++    uint32_t nrw_part_sel = mpam_get_nrw_id(s);
+ 
+     switch (offset) {
+     case A_MPAMF_CFG_PART_SEL:
+@@ -397,6 +435,7 @@ static const MemoryRegionOps mpam_msc_ops = {
+ static void mpam_msc_realize(DeviceState *dev, Error **errp)
+ {
+     MPAMMSCState *s = MPAM_MSC_DEVICE(dev);
++    int i;
+ 
+     /* IHI 0099: MPAMF_CFG_PART_SEL.RIS is 4 bits, so at most 16 RIS. */
+     if (s->num_ris > 16) {
+@@ -412,6 +451,11 @@ static void mpam_msc_realize(DeviceState *dev, Error **errp)
+     }
+ 
+     s->mpamf = g_new0(Mpamf, s->num_ris);
++    for (i = 0; i < s->num_ris; i++) {
++        s->mpamf[i].per_nrw_id = g_new0(MpamfPerNrwId, s->num_int_partid);
++        s->mpamf[i].cfg_intpartid = g_new0(uint32_t, s->num_partid);
++    }
++
+     memory_region_init_io(&s->mr, OBJECT(s), &mpam_msc_ops, s, "mpam_msc",
+                           MPAM_SIZE);
+     sysbus_init_mmio(SYS_BUS_DEVICE(dev), &s->mr);
 -- 
 2.43.0
 
