@@ -4,93 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D1BDCCA462
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 09:46:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6EFC9CCA464
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 09:58:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHeW7-0004oa-E4; Fri, 16 Oct 2026 05:46:23 -0400
+	id 1xHegp-0007SZ-LF; Fri, 16 Oct 2026 05:57:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xHeVy-0004jD-6f
- for qemu-devel@nongnu.org; Fri, 16 Oct 2026 05:46:14 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <anirudh@anirudhrb.com>)
+ id 1xHegU-0007Ri-GC; Fri, 16 Oct 2026 05:57:08 -0400
+Received: from sender6-of-o54.zoho.com ([165.173.180.54])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xHeVw-0007f6-Ec
- for qemu-devel@nongnu.org; Fri, 16 Oct 2026 05:46:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1792143971;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=aqn+Mz+/fva33QkNZ/gRO9EobFMyE/KYph8cQqL2mtc=;
- b=OGzk8dN4NOZ2SPDhRPKuJ/dW0mNyCWpjM4/W5DTTc33iHpmrQwjIumcuUB2P6UKk6mFfn2
- VIYmuwzzeZwAxCc6GhTeHVHiJLDD27QjdAEXFKUtxyL7kkfBBd0wZ2BwVUHoT24Tsanv7L
- Imx8aXTTcEQVnkW659woZj1E5tfRuu0=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-439-t-Bj7EItPueItfXFHzAzXQ-1; Fri,
- 16 Oct 2026 09:46:10 +0000
-X-MC-Unique: t-Bj7EItPueItfXFHzAzXQ-1
-X-Mimecast-MFC-AGG-ID: t-Bj7EItPueItfXFHzAzXQ_1792143969
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 67B1A1955F3B; Fri, 16 Oct 2026 09:46:09 +0000 (UTC)
-Received: from localhost (headnet05.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.117])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 744C81956089; Fri, 16 Oct 2026 09:46:08 +0000 (UTC)
+ (Exim 4.90_1) (envelope-from <anirudh@anirudhrb.com>)
+ id 1xHegQ-0000Wf-Nk; Fri, 16 Oct 2026 05:57:06 -0400
+ARC-Seal: i=1; a=rsa-sha256; t=1792144576; cv=none; 
+ d=zohomail.com; s=zohoarc; 
+ b=B6Eul7ZIGHe/GzN4pDyEj+HBZR2lWEqGz53THOKxS+hzjT4deYsT8xQjYMRjMA3KiphrrgNpmItBjtaWc26TgqYPP9IuQmh7iRKMYxW7MLO8o1snOB0XKMbJpDADL4yMzDdsxVDFuUygn8o9Qi1QfqF9duVvudpdq3RDQfrLDWM=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
+ s=zohoarc; t=1792144576;
+ h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To;
+ bh=c0WsNYJz56dq7mul1SOpEcLPMZo+1/7AwrdNNoV+PGc=; 
+ b=CHQtfSG1EeofnCgRkdJ3C+aFfBJFPaq/PC3KGqQjrcmL+UVIei7s2Q3bT9zeho0ElYJVx1Lz2jpe0Y7MZMdaM1knFXenwceUdCs8xU3PdniQfPZirmhrgQr8sul8soeTB2+Y794BY3tyqPCLYeFyWDeNfoi7cieDHxvXkojubO0=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+ dkim=pass  header.i=anirudhrb.com;
+ spf=pass  smtp.mailfrom=anirudh@anirudhrb.com;
+ dmarc=pass header.from=<anirudh@anirudhrb.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1792144576; 
+ s=zoho; d=anirudhrb.com; i=anirudh@anirudhrb.com;
+ h=Date:Date:From:From:To:To:Cc:Cc:Subject:Subject:Message-ID:MIME-Version:Content-Type:In-Reply-To:Message-Id:Reply-To;
+ bh=c0WsNYJz56dq7mul1SOpEcLPMZo+1/7AwrdNNoV+PGc=;
+ b=l3e8jfwzPXdf2UX3CH82Q7TbXWX/VML/hHkDB0bqWXDWf9YaqWwHlloonEJZxXNw
+ YPvyJ2S5M9lekKeSZ2LnuB2HBgxtieWWm9BkbtWnEuG6EnaTJFgPDFFcosLWIIYm/dK
+ TY9AG5s9ZxeF+p6MLHBjA6nJH2tWvneBd3PF1nvI=
+Received: by smtp.zohomail.com with SMTPS id 1792144572614344.79024324113675; 
+ Fri, 16 Oct 2026 02:56:12 -0700 (PDT)
+Date: Fri, 16 Oct 2026 09:56:05 +0000
+From: Anirudh Rayabharam <anirudh@anirudhrb.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Aastha Rawat <aastharawat@linux.microsoft.com>, qemu-devel@nongnu.org,
+ Magnus Kulke <magnuskulke@linux.microsoft.com>,
+ Wei Liu <wei.liu@kernel.org>,
+ Doru =?iso-8859-1?Q?Bl=E2nzeanu?= <dblanzeanu@linux.microsoft.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ qemu-arm@nongnu.org, Alexander Graf <agraf@csgraf.de>,
+ Pedro Barbuda <pbarbuda@microsoft.com>,
+ Mohamed Mediouni <mohamed@unpredictable.fr>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@oss.qualcomm.com>
+Subject: Re: [PATCH v6 11/14] target/arm/mshv: add vCPU run loop
+Message-ID: <20261016-adamant-modest-caterpillar-4dadbb@anirudhrb>
+References: <20261001-mshv_accel_arm64_supp-v6-0-aefe5e76a0e3@linux.microsoft.com>
+ <20261001-mshv_accel_arm64_supp-v6-11-aefe5e76a0e3@linux.microsoft.com>
+ <CAFEAcA9xPn2MRjC_d9Gdb=d4-GHmcXPpsLP+WUOgCUhaPbZ2BQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v2 11/19] hw/core/sysemu-cpu-ops: add get_note_size
-From: marcandre.lureau@redhat.com
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, 
- =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, 
- anjo@rev.ng
-In-Reply-To: <20261015213236.157767-12-pierrick.bouvier@oss.qualcomm.com>
-References: <20261015213236.157767-1-pierrick.bouvier@oss.qualcomm.com>
- <20261015213236.157767-12-pierrick.bouvier@oss.qualcomm.com>
-Date: Fri, 16 Oct 2026 13:45:51 +0400
-Message-Id: <179214395193.1157317.14271435744444195371.b4-review@b4>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1174;
- i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=gOKM4BkQiI+IoXNvRVIkFuKGT3VxQXpS8MeH08TpSdQ=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBq0fJSbikeM1Y1LG12fSqG7GEMuqEzlJu+J5Yjc
- Bi5Qrad3/WJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCatHyUgAKCRDa6OEJdZac
- 5XQ1D/wJNpq876G0Kf94K08at+Lhw6ZqfLsV4ah1u7EFIVOCKN5E9DjrbrBZqdoNFnuuHOGrUgE
- VW3hPqohbmuFFdjt5xpEKjJOZ7BOvNc1BO4LnGXqlqB2xbRHpFbwp13TOj9IYkGKQWV7wad2qP8
- BsoeV67cQsNRqwemsMrpRrbu5aiR0DgBSQMvitd1YpoV+wW1sF3X6nFDS0KeGZGumozpMQ/NmS0
- O25MzqfLBPESQxONu5uyM8ReupncwTHvZqRI9pnL5rjxnBdya/8hKYI40m/UVRxlPHkQjFSyX8i
- nA9scY0ZN2ud9VQ0YB6wG9UbNsUwJAx7lxXYdFnFKjutHtW/vma4uMr5ijRuEyIzHoevOV/nNXX
- KDTmqnHaBONeS4hJLnvjKpoq78n80cxEFlYinn9QREsOdy3vbizWNwRpU/uFHwglG8pN0DXyd0K
- d6Zp9Nxze06T7u1a0Mht9jH0P5G7WlExe0u/s6O6tjKNTFSez7z31mBkzCQv3v+WCDiu0nbjN8S
- BwfHa5QFUIGBVi8PnDbj4BnA44+/kgqIkA9jpeVNsavDu9KeOKgdsrW2lhLy77cCLgXGJ/rcOxH
- TotwvqZhDRS9/7gA3XnJeOcak6R47e19a245DOJqKlS8jOyEKn40mzbm8IkbxMqWH96dSrYrWhX
- TZhWcZFXIE3wPkw==
-X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
- fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=marcandre.lureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 10
-X-Spam_score: 1.0
-X-Spam_bar: +
-X-Spam_report: (1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAFEAcA9xPn2MRjC_d9Gdb=d4-GHmcXPpsLP+WUOgCUhaPbZ2BQ@mail.gmail.com>
+X-Zoho-Virus-Status: 1
+X-Zoho-AV-Stamp: zmail-av-0.2.13.1.5.4/292.122.61
+X-ZohoMailClient: External
+Received-SPF: pass client-ip=165.173.180.54;
+ envelope-from=anirudh@anirudhrb.com; helo=sender6-of-o54.zoho.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,30 +92,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> This allows a specific cpu to report the size of the ELF notes it needs
-> to dump its state, alongside get_dump_info.
+On Tue, Oct 13, 2026 at 05:50:03PM +0100, Peter Maydell wrote:
+> On Thu, 1 Oct 2026 at 11:52, Aastha Rawat
+> <aastharawat@linux.microsoft.com> wrote:
+> >
+> > From: "Anirudh Rayabharam (Microsoft)" <anirudh@anirudhrb.com>
+> >
+> > Add the main vCPU run loop for MSHV using the MSHV_RUN_VP_IOCTL.
+> >
+> > Handle MMIO exits by emulating the instruction using the syndrome
+> > information from ESR_EL2.
+> >
+> > Signed-off-by: Anirudh Rayabharam (Microsoft) <anirudh@anirudhrb.com>
+> > ---
+> >  include/hw/hyperv/hvgdk_mini.h |  44 +++++++++++++++++
+> >  target/arm/mshv/mshv-all.c     | 107 +++++++++++++++++++++++++++++++++++++++++
+> >  2 files changed, 151 insertions(+)
+> >
+> > diff --git a/include/hw/hyperv/hvgdk_mini.h b/include/hw/hyperv/hvgdk_mini.h
+> > index 33c9e4f3e0..53dc58813e 100644
+> > --- a/include/hw/hyperv/hvgdk_mini.h
+> > +++ b/include/hw/hyperv/hvgdk_mini.h
+> > @@ -896,6 +896,50 @@ struct hv_x64_memory_intercept_message {
+> >      uint8_t instruction_bytes[16];
+> >  } QEMU_PACKED;
+> >
+> > +union hv_arm64_vp_execution_state {
+> > +    uint16_t as_uint16;
+> > +    struct {
+> > +        uint16_t cpl:2;
+> > +        uint16_t debug_active:1;
+> > +        uint16_t interruption_pending:1;
+> > +        uint16_t vtl:4;
+> > +        uint16_t virtualization_fault_active:1;
+> > +        uint16_t reserved:7;
+> > +    };
+> > +};
 > 
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-> Message-ID: <20261015213236.157767-12-pierrick.bouvier@oss.qualcomm.com>
->
-> diff --git a/include/hw/core/sysemu-cpu-ops.h b/include/hw/core/sysemu-cpu-ops.h
-> index 0b6bb42dc2cb..31f1674d3247 100644
-> --- a/include/hw/core/sysemu-cpu-ops.h
-> +++ b/include/hw/core/sysemu-cpu-ops.h
-> @@ -101,6 +101,13 @@ typedef struct SysemuCPUOps {
->       */
->      int (*get_dump_info)(const CPUState *cpu, ArchDumpInfo *info,
->                           const struct GuestPhysBlockList *guest_phys_blocks);
-> +    /**
-> +     * @get_note_size: returns the size of the ELF notes needed to dump
-> +     * @nr_cpus cpus, for the ELF @class and @machine reported by
-> +     * @get_dump_info, or -1 if this is not supported.
+> This is an mshv specific file, but I would still recommend against
+> bitfields-in-a-union as generally bad style.
 
-dump_init() asserts the result is never negative and implementation don't. Let's
-have "... for the ELF @class and @machine reported by @get_dump_info. Must be
-set if @get_dump_info is set."
+Hi Peter,
 
--- 
-Marc-André Lureau <marcandre.lureau@redhat.com>
+We source these definitions pretty much verbatim from the hypervisor
+headers. Having them as close as possible to the hypervisor headers
+would it make it easier to maintain. We do make some cosmetic changes
+w.r.t naming style and QEMU_PACKED instead of __packed__ etc but that's
+about it.
+
+Alsoe, there are existing definitions in this file using the same style.
+
+Thanks,
+Anirudh.
 
 
