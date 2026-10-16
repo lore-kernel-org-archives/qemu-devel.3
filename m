@@ -4,102 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CBCA5CCA464
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 12:33:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B95FCCA464
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 12:38:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHh7a-0008C9-H4; Fri, 16 Oct 2026 08:33:14 -0400
+	id 1xHhCS-0001EJ-0e; Fri, 16 Oct 2026 08:38:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1xHh7Z-0008Bj-3E
- for qemu-devel@nongnu.org; Fri, 16 Oct 2026 08:33:13 -0400
+ (Exim 4.90_1) (envelope-from <sraymaek@redhat.com>)
+ id 1xHhCP-0001DF-6t
+ for qemu-devel@nongnu.org; Fri, 16 Oct 2026 08:38:13 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1xHh7X-0002Er-LT
- for qemu-devel@nongnu.org; Fri, 16 Oct 2026 08:33:12 -0400
+ (Exim 4.90_1) (envelope-from <sraymaek@redhat.com>)
+ id 1xHhCN-0002ra-Gt
+ for qemu-devel@nongnu.org; Fri, 16 Oct 2026 08:38:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1792153990;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=/Zwror2p8KN+DkhwJz1nlrN5PC2zqCKnxg3U809RTV4=;
- b=ViBNEsded+41nrQcR9gG0YTVVBsdbVebkcP7BI9ukaabohKbBLkRFCLCw7MQH9hvcSZCTz
- G3bg8+xvFZ7yrXTZtYVAStiPGaksqIhja7WN6nde/3xPgTGRWsVSuCxzGVWH0Aikmjxdw1
- o1a6rmn3q+EULrL/0j84V23N/GcjfAQ=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ s=mimecast20190719; t=1792154290;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=5Ane+JbrhMd5Cs/gyF03KLLpFRYIIc3QhlZkY3uEwVU=;
+ b=FiJkxIlB2b83oTSdhLXGZ6Urej2ZuwegKrDP4ZldEZKuAPzLfbKjsOX29w9N7pGiNdgST0
+ c7PnCj9PXqJinHKpsLA6cb+2wrAuNIWBACB42oOW8uPu1HgkBlU+g714b9PRVNeCU0bHxX
+ B+7C/eURrVWcom3iXQriwAaUdHlP3JQ=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-116-S2ezIF_MPP-WzLz0wI6pSA-1; Fri, 16 Oct 2026 12:32:39 +0000
-X-MC-Unique: S2ezIF_MPP-WzLz0wI6pSA-1
-X-Mimecast-MFC-AGG-ID: S2ezIF_MPP-WzLz0wI6pSA_1792153958
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-48dea677afcso746756f8f.1
- for <qemu-devel@nongnu.org>; Fri, 16 Oct 2026 05:32:39 -0700 (PDT)
+ us-mta-116-RTPcDEcRORqq3lVWH2HCzQ-1; Fri, 16 Oct 2026 12:38:03 +0000
+X-MC-Unique: RTPcDEcRORqq3lVWH2HCzQ-1
+X-Mimecast-MFC-AGG-ID: RTPcDEcRORqq3lVWH2HCzQ_1792154282
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4a16fefb7acso48994325e9.0
+ for <qemu-devel@nongnu.org>; Fri, 16 Oct 2026 05:38:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1792154282; x=1792759082; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=5Ane+JbrhMd5Cs/gyF03KLLpFRYIIc3QhlZkY3uEwVU=;
+ b=mbX9kBa4BmqhkqTNJqV9cN927Gvz31X6UvolmuB3s+rcr2be4qEswGYKUeEFT+V5HC
+ w+caGlUoh7iNyWkMXfXrMd1BbqlJ1w0VZ6uFH8yLrTYvSYquY7Au9tM7t7phSvEWXpvD
+ 5zqeoB+1H8/0jHX1DbCa02lmzHGpSzKJlrbDc3bwu+bPcQ992sv2cXNvMIn1MzTa8kcw
+ MSYhC/Q342YJzBrSjlm51s/GxhCxbeK1gJJbCOk4275tArDgGSfUVT8jlcJBOYQlKIMC
+ ppTYtDAe+7BEnpbjoOE9tfbL6lyUsNM8jluG3uzEDKW626pKuQL21mUrsXgqTvYvIiHq
+ +riw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792153958; x=1792758758;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:reply-to:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=/Zwror2p8KN+DkhwJz1nlrN5PC2zqCKnxg3U809RTV4=;
- b=LsRH007Y1Oq57gm1b//K5T4dyp6cENACrjg/NmNhLVF4S7Mk4bUg4t6C6L1TdYtlKt
- lOaZptPQVb/usOyZs9PgRQjqWLwUsUUkuD6WjX27Vrs3kCKfhyCgnszxeXvSKBs12peu
- 0dwMWSIDv05niNmwDWKwLMi2tCzXbk5//T7grsGalP3E8PPcyMMgc6ln6uHOjRCbsGcB
- bjFqGObx8PJyqlCe07Z/1YJHSsajI5nWHFDDgN8E/AbTrDfZ48LqOSsLS5HfMQcJ6HTM
- LO0lTjQ9vvkkf1bsATGinpBowHHygvVXM6pqH86x4atnxYLeh6Cxed05OmgkIwv5ML9y
- XXdQ==
-X-Forwarded-Encrypted: i=1;
- AKwUvBw3/fnkGW4tiSISZH4wSuvd2Ai32/NYh5o3sOOiF2xIrwrwfXH7rBQFJi+aEjJ+iU5Rs+BcZx6aRHjm@nongnu.org
-X-Gm-Message-State: AFq9FYKTxn2vcrHyJQxqf59TbX6LnRIWqSpZiC3E4R0w0NhLhVKo1Neh
- jJW9UV5bcHFiUnXP21c/ZKSxG84WdytLzOBVkd0fkumxdb2IYXJbTEvs+0yNaqozwi70VePoCr7
- 6iSpIRm0aIW1na9tD6Emp+/udcyjSLCynxhjKbfz8Qxs5hxRoBUP9LQSF
-X-Gm-Gg: AYBFou3p21n2XjWj+r1JUH5iIlCVm3MlAQzs9wMyJBf7j9hDRytwDKvvX1nVu7PJP3p
- rfLGHlQDY0tVVbkxow2BxCAdBrXIbus8/8fLTxnPrVLgrK6uHmAdL/kRmGiPhhKHuQ5DEuFlfst
- CZcCdcVuV6kTaTHfY2Qh9DGGkPwvLf7/Vcp5CXrQ5g8tm8hZI1CvQHSV8ego258Q/EPx7BJb2jc
- DoMR6Kkh/mfpBEgV+ECo+ZbgQHc6PAO4cU5wf4g9/V/XzL7AUEAXmSL5ot3Pb1li42vKh2jiEsu
- PJuV9YEYZNM2Vlvbbsai8Pl9ZMU1Kn8SHZVHb7Csux/XC0bKraJDkgkq3dCg24tapB1I0Ub4roF
- i87fJlpUXXVZMCpmNVsOLcu3Smj+h14fR0eYwzGyhJ5rV8OVd
-X-Received: by 2002:a05:6000:469b:b0:48a:f4b7:25c4 with SMTP id
- ffacd0b85a97d-48dfacf5408mr4857820f8f.1.1792153958273; 
- Fri, 16 Oct 2026 05:32:38 -0700 (PDT)
-X-Received: by 2002:a05:6000:469b:b0:48a:f4b7:25c4 with SMTP id
- ffacd0b85a97d-48dfacf5408mr4857781f8f.1.1792153957862; 
- Fri, 16 Oct 2026 05:32:37 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ d=1e100.net; s=20260707; t=1792154282; x=1792759082;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=5Ane+JbrhMd5Cs/gyF03KLLpFRYIIc3QhlZkY3uEwVU=;
+ b=12og4kwQwI9j0O/u+wp4MywH7ZdaP9n3UJh49C7V1lPLFOHChkuQg5tOUvdHBxWsYk
+ e5imFuC3ltOFKWYWPRmmHjihSWFVxSgm5IieGmB4Bmc7e8z8gZJxoJwet3aBwbAdNkM2
+ WzM5U2E4mBHtnI8VMCjbtT8idtFwS9vTCsLdzVeC96uiZW9JgWdd3A04t5+5l7jshSsZ
+ ofv9c8mbZMLvVmIDo31iN9sU+EtAiA5KU7FH4GclhQt5tSl3HqNhyFkvk6xzW8Q9fzne
+ bxlNkkLEK1o4t+aIXr1VuFPdSDJqJcFkd/P9rZ/AuOgt98Lx/aaVLYpAymBqSUtO5QKB
+ UHqw==
+X-Gm-Message-State: AFq9FYIjxnVrhXA9VpK4KtG6kiBta5n9N+Hx/nli0IiK8UMFXttSGHdP
+ FJAf3jkLTjyZLRxusOh7rbNAmsZmdmQzNHuR9/U/NlthBhHjyugMQ+myJ4rlFVAkxXKNnxB26SW
+ 1Dnrk+CxnFsvzwDgK4hllKyVyGjpcbbf3kBO6QTNs8jDEfSqf4rgvIUnlLZWdRdtSq9xlVwLnhT
+ MJRLfXyS3gDkmSqoc5PqukjxE10OTfHsDx41wCzDt8
+X-Gm-Gg: AYBFou3smGNv6WReVMLumTebcnDRHPuLHMtmXGCQXrHn0VTlqPs04Oo3SkWH6zcMYBV
+ TGwOnzkc+TEN+Xkk+dHYDsVpcruSwo2a7ejlUfN6ljzeSoAKIwHSc8myNkhaxZY63S73D5WsqM6
+ nON8tXz/ony4mbe+1kIRR5By4CKSyWxBat6pmlpbtBjPg5JYl67ZV9Coax4DE9LeXJHrZ1BPGxN
+ vJPENbqQiLgy3CqRC6q4YQJwjSjrEf/0uFlHrOBIAUc54BQY/AiuU70X/5DjYL0v+KdFU8+lyUD
+ TN4gG5hTK3ZxwTLKhJc++J8ln+2bR+7k6sxF3Y26am3G9ay6s15eEu9q0lG+37tw2hQ8BX4b8Te
+ 18LskCha1EwjSO8zNrbvfjDSkoMsoipB3rnfv2ylsoM/LxR30Z+PKBUmTQT0AGxdgLIjXcQaLQN
+ y34hglV5tYMeexAee6Hmso+bnKjXAW44aF
+X-Received: by 2002:a05:600c:19ca:b0:4a0:2484:2800 with SMTP id
+ 5b1f17b1804b1-4a18e4464famr432576675e9.3.1792154282441; 
+ Fri, 16 Oct 2026 05:38:02 -0700 (PDT)
+X-Received: by 2002:a05:600c:19ca:b0:4a0:2484:2800 with SMTP id
+ 5b1f17b1804b1-4a18e4464famr432575965e9.3.1792154282037; 
+ Fri, 16 Oct 2026 05:38:02 -0700 (PDT)
+Received: from sraymaek-thinkpadx1nanogen2.rmtbe.csb
+ (2a02-1811-d30-6f00-217b-1d12-f4f3-7e56.ip6.access.telenet.be.
+ [2a02:1811:d30:6f00:217b:1d12:f4f3:7e56])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48dfd4f9c41sm5130048f8f.38.2026.10.16.05.32.36
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 16 Oct 2026 05:32:37 -0700 (PDT)
-Message-ID: <fc9f71e8-7b5e-44ea-97a3-895ea050f8ef@redhat.com>
-Date: Fri, 16 Oct 2026 14:32:35 +0200
+ ffacd0b85a97d-48dfd4e7889sm4730097f8f.24.2026.10.16.05.38.00
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 16 Oct 2026 05:38:01 -0700 (PDT)
+From: Sanne Raymaekers <sraymaek@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, fam@euphon.net, kwolf@redhat.com, hreitz@redhat.com,
+ Sanne Raymaekers <sraymaek@redhat.com>
+Subject: [PATCH v3 0/3] block/vmdk: fixes for stream optimized disks
+Date: Fri, 16 Oct 2026 14:37:47 +0200
+Message-ID: <20261016123750.94769-1-sraymaek@redhat.com>
+X-Mailer: git-send-email 2.55.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v4 19/25] target/arm/qmp: allow named CPU models on
- cpu-model-expansion
-Content-Language: en-US
-To: Khushit Shah <khushit.shah@nutanix.com>, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, kvmarm@lists.linux.dev
-Cc: cohuck@redhat.com, peter.maydell@linaro.org,
- richard.henderson@linaro.org, maz@kernel.org, oliver.upton@linux.dev,
- berrange@redhat.com, abologna@redhat.com, jdenemar@redhat.com,
- gshan@redhat.com, skolothumtho@nvidia.com, sebott@redhat.com,
- armbru@redhat.com, philmd@linaro.org, yangjinqian1@huawei.com,
- shaju.abraham@nutanix.com, mark.caveayland@nutanix.com,
- ping@khushitshah.com, sandesh.patel@nutanix.com
-References: <20260921123249.1708067-1-khushit.shah@nutanix.com>
- <20260921123249.1708067-20-khushit.shah@nutanix.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20260921123249.1708067-20-khushit.shah@nutanix.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=sraymaek@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -22
 X-Spam_score: -2.3
 X-Spam_bar: --
@@ -119,66 +117,41 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+The stream optimized disks produced by qemu-img did not quite adhere to
+the specification. This could trip up other software consuming these
+disks. The goal of these patches is to get the VMDKs produced by QEMU to
+better match the specification, the Virtual Disk Format 5.0 Technical
+Note.
 
+For instance, when packaging the VMDK up in an OVA archive (a ustar
+archive containing an OVF, a manifest and a VMDK), errors occur when
+importing that OVA into VMWare Workstation. Specifically the digest in
+the manifest does not match the digest of the VMDK, because Workstation
+reads (and parses) the disk contents and then makes a digest, rather
+than making a digest of the whole VMDK file. Extra null bytes at the
+very end will trip it up, as they are ignored in the digest made by
+Workstation, but are included in the digest produced by something like
+shasum.
 
-On 9/21/26 2:32 PM, Khushit Shah wrote:
-> Allow expansion of the new KVM-only named CPU models through the
-> cpu-model-expansion QMP query.
->
-> Signed-off-by: Khushit Shah <khushit.shah@nutanix.com>
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
+Note that stream optimized disks, while not adhering to the
+specification fully, are still useable by VMWare tooling, with some
+workarounds where needed. For instance, VSphere does not have the same
+issue as Workstation.
 
-we might need to add some new tests in tests/qtest/arm-cpu-features.c too
+V3 cleans up some formatting and makes the commit messages clearer.
 
-Eric
-> ---
->  target/arm/arm-qmp-cmds.c | 9 +++++++++
->  1 file changed, 9 insertions(+)
->
-> diff --git a/target/arm/arm-qmp-cmds.c b/target/arm/arm-qmp-cmds.c
-> index 5fbdca3253..0940285af1 100644
-> --- a/target/arm/arm-qmp-cmds.c
-> +++ b/target/arm/arm-qmp-cmds.c
-> @@ -36,6 +36,7 @@
->  #include <linux/kvm.h>
->  #include "system/kvm.h"
->  #include "cpu.h"
-> +#include "cpu-models.h"
->  
->  static GICCapability *gic_cap_new(int version)
->  {
-> @@ -96,6 +97,7 @@ CpuModelExpansionInfo *qmp_query_cpu_model_expansion(CpuModelExpansionType type,
->      Object *obj;
->      const char *name;
->      int fdarray[3];
-> +    bool named_model = (arm_find_model(model->name) != NULL);
->      int i;
->  
->      if (type != CPU_MODEL_EXPANSION_TYPE_FULL) {
-> @@ -108,6 +110,11 @@ CpuModelExpansionInfo *qmp_query_cpu_model_expansion(CpuModelExpansionType type,
->          return NULL;
->      }
->  
-> +    if (!kvm_enabled() && named_model) {
-> +        error_setg(errp, "The CPU type '%s' requires KVM", model->name);
-> +        return NULL;
-> +    }
-> +
->      oc = cpu_class_by_name(TYPE_ARM_CPU, model->name);
->      if (!oc) {
->          error_setg(errp, "The CPU type '%s' is not a recognized ARM CPU type",
-> @@ -121,6 +128,8 @@ CpuModelExpansionInfo *qmp_query_cpu_model_expansion(CpuModelExpansionType type,
->          if (!strcmp(model->name, "host") || !strcmp(model->name, "max")) {
->              /* These are kvmarm's recommended cpu types */
->              supported = true;
-> +        } else if (named_model) {
-> +            supported = true;
->          } else if (current_machine->cpu_type) {
->              const char *cpu_type = current_machine->cpu_type;
->              int len = strlen(cpu_type) - strlen(ARM_CPU_TYPE_SUFFIX);
+Sanne Raymaekers (3):
+  block/vmdk: align stream optimized data grains on 512 byte chunks
+  block/vmdk: skip RGD for stream optimized disks
+  block/vmdk: add eos marker for stream optimized disks
+
+ block/vmdk.c | 121 ++++++++++++++++++++++++++++++++-------------------
+ 1 file changed, 76 insertions(+), 45 deletions(-)
+
+-- 
+2.55.0
 
 
