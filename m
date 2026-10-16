@@ -4,107 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B95FCCA464
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 12:38:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A271CCA462
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 12:38:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHhCS-0001EJ-0e; Fri, 16 Oct 2026 08:38:16 -0400
+	id 1xHhCQ-0001Ds-8J; Fri, 16 Oct 2026 08:38:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <sraymaek@redhat.com>)
- id 1xHhCP-0001DF-6t
- for qemu-devel@nongnu.org; Fri, 16 Oct 2026 08:38:13 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1xHhCN-00019E-9N
+ for qemu-devel@nongnu.org; Fri, 16 Oct 2026 08:38:11 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <sraymaek@redhat.com>)
- id 1xHhCN-0002ra-Gt
- for qemu-devel@nongnu.org; Fri, 16 Oct 2026 08:38:12 -0400
+ id 1xHhCK-0002qy-V9
+ for qemu-devel@nongnu.org; Fri, 16 Oct 2026 08:38:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1792154290;
+ s=mimecast20190719; t=1792154288;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=5Ane+JbrhMd5Cs/gyF03KLLpFRYIIc3QhlZkY3uEwVU=;
- b=FiJkxIlB2b83oTSdhLXGZ6Urej2ZuwegKrDP4ZldEZKuAPzLfbKjsOX29w9N7pGiNdgST0
- c7PnCj9PXqJinHKpsLA6cb+2wrAuNIWBACB42oOW8uPu1HgkBlU+g714b9PRVNeCU0bHxX
- B+7C/eURrVWcom3iXQriwAaUdHlP3JQ=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=EKmKgMlZApsWKcc9hg4+3tc9ELpN6tg2AkDxth/Mr0Q=;
+ b=MIqU8Am2nZeJ+k+yw2rE/ogRv5ae867oqsGqr96BbCsWQxCHmIEaoiLr/s1GzQmJ91CZP4
+ MeYaULQg9yjqCqxkChNpbRFof6sdi9IKtomZ7UbAleFhR2mmPGnP5k6enQhWYtlADZvt8e
+ 3ywLFglyqllYBD7sskPsW8bBo9X8c6s=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-116-RTPcDEcRORqq3lVWH2HCzQ-1; Fri, 16 Oct 2026 12:38:03 +0000
-X-MC-Unique: RTPcDEcRORqq3lVWH2HCzQ-1
-X-Mimecast-MFC-AGG-ID: RTPcDEcRORqq3lVWH2HCzQ_1792154282
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4a16fefb7acso48994325e9.0
- for <qemu-devel@nongnu.org>; Fri, 16 Oct 2026 05:38:03 -0700 (PDT)
+ us-mta-595-l8x4oIIxOPCG5OwN3Jp5xw-1; Fri, 16 Oct 2026 12:38:04 +0000
+X-MC-Unique: l8x4oIIxOPCG5OwN3Jp5xw-1
+X-Mimecast-MFC-AGG-ID: l8x4oIIxOPCG5OwN3Jp5xw_1792154284
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-48df02b91f9so594443f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 16 Oct 2026 05:38:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1792154282; x=1792759082; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=5Ane+JbrhMd5Cs/gyF03KLLpFRYIIc3QhlZkY3uEwVU=;
- b=mbX9kBa4BmqhkqTNJqV9cN927Gvz31X6UvolmuB3s+rcr2be4qEswGYKUeEFT+V5HC
- w+caGlUoh7iNyWkMXfXrMd1BbqlJ1w0VZ6uFH8yLrTYvSYquY7Au9tM7t7phSvEWXpvD
- 5zqeoB+1H8/0jHX1DbCa02lmzHGpSzKJlrbDc3bwu+bPcQ992sv2cXNvMIn1MzTa8kcw
- MSYhC/Q342YJzBrSjlm51s/GxhCxbeK1gJJbCOk4275tArDgGSfUVT8jlcJBOYQlKIMC
- ppTYtDAe+7BEnpbjoOE9tfbL6lyUsNM8jluG3uzEDKW626pKuQL21mUrsXgqTvYvIiHq
- +riw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792154282; x=1792759082;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ d=redhat.com; s=google; t=1792154283; x=1792759083; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=5Ane+JbrhMd5Cs/gyF03KLLpFRYIIc3QhlZkY3uEwVU=;
- b=12og4kwQwI9j0O/u+wp4MywH7ZdaP9n3UJh49C7V1lPLFOHChkuQg5tOUvdHBxWsYk
- e5imFuC3ltOFKWYWPRmmHjihSWFVxSgm5IieGmB4Bmc7e8z8gZJxoJwet3aBwbAdNkM2
- WzM5U2E4mBHtnI8VMCjbtT8idtFwS9vTCsLdzVeC96uiZW9JgWdd3A04t5+5l7jshSsZ
- ofv9c8mbZMLvVmIDo31iN9sU+EtAiA5KU7FH4GclhQt5tSl3HqNhyFkvk6xzW8Q9fzne
- bxlNkkLEK1o4t+aIXr1VuFPdSDJqJcFkd/P9rZ/AuOgt98Lx/aaVLYpAymBqSUtO5QKB
- UHqw==
-X-Gm-Message-State: AFq9FYIjxnVrhXA9VpK4KtG6kiBta5n9N+Hx/nli0IiK8UMFXttSGHdP
- FJAf3jkLTjyZLRxusOh7rbNAmsZmdmQzNHuR9/U/NlthBhHjyugMQ+myJ4rlFVAkxXKNnxB26SW
- 1Dnrk+CxnFsvzwDgK4hllKyVyGjpcbbf3kBO6QTNs8jDEfSqf4rgvIUnlLZWdRdtSq9xlVwLnhT
- MJRLfXyS3gDkmSqoc5PqukjxE10OTfHsDx41wCzDt8
-X-Gm-Gg: AYBFou3smGNv6WReVMLumTebcnDRHPuLHMtmXGCQXrHn0VTlqPs04Oo3SkWH6zcMYBV
- TGwOnzkc+TEN+Xkk+dHYDsVpcruSwo2a7ejlUfN6ljzeSoAKIwHSc8myNkhaxZY63S73D5WsqM6
- nON8tXz/ony4mbe+1kIRR5By4CKSyWxBat6pmlpbtBjPg5JYl67ZV9Coax4DE9LeXJHrZ1BPGxN
- vJPENbqQiLgy3CqRC6q4YQJwjSjrEf/0uFlHrOBIAUc54BQY/AiuU70X/5DjYL0v+KdFU8+lyUD
- TN4gG5hTK3ZxwTLKhJc++J8ln+2bR+7k6sxF3Y26am3G9ay6s15eEu9q0lG+37tw2hQ8BX4b8Te
- 18LskCha1EwjSO8zNrbvfjDSkoMsoipB3rnfv2ylsoM/LxR30Z+PKBUmTQT0AGxdgLIjXcQaLQN
- y34hglV5tYMeexAee6Hmso+bnKjXAW44aF
-X-Received: by 2002:a05:600c:19ca:b0:4a0:2484:2800 with SMTP id
- 5b1f17b1804b1-4a18e4464famr432576675e9.3.1792154282441; 
- Fri, 16 Oct 2026 05:38:02 -0700 (PDT)
-X-Received: by 2002:a05:600c:19ca:b0:4a0:2484:2800 with SMTP id
- 5b1f17b1804b1-4a18e4464famr432575965e9.3.1792154282037; 
- Fri, 16 Oct 2026 05:38:02 -0700 (PDT)
+ bh=EKmKgMlZApsWKcc9hg4+3tc9ELpN6tg2AkDxth/Mr0Q=;
+ b=RAob65rcruNgaobPbxHC64XffhM6hDyg4uZmMmDeWqCkqBxoLszqa0R8wj1OiGs6Yk
+ 3NXBavh0aq4suSdmJenENI3k2bi0rzk85NhuuMjJz7/2SrIVjHGAk7rDwKIcs/0/XXWa
+ KndsIuYOoCAxjtRfqu3fblNrUw4AQrKJLWQWDL8/4v6TmdQvbJZHB5PZX8XqunwglZoO
+ vEAaaI8G2Y9pKxei07qmqyeh4O7YgSZw8bOxBnq4u3qzXc4zjMC0QoSuuIMAvjlrt0Wp
+ 3T0M/c5ePkmmMbqpLK7lG/KBpHCSxYAtjp8Vb+6A+QU4t4v2M8pJO/DSza5gB08+waa4
+ lRgg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1792154283; x=1792759083;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=EKmKgMlZApsWKcc9hg4+3tc9ELpN6tg2AkDxth/Mr0Q=;
+ b=DkkqvML3mtnfsKCmnhn1XsOT/OOW51WdSrp3x1xW7RhLDniAD4+40m8Ex0k77mgqKL
+ i5Q6Uf1RK3YKHhMzvQhwk25o7loo3LO3QhdnwHrJE7z3WTXxr2BGBRBfR1echTCc6Ihe
+ NjukK2zrUccNzjuobIlI3xkzYxuYvkebjw6qSoMo0ZyudnGd75sBc+5HCzoSFfVccT8u
+ rqbhr+r3nYD1GhXU5/5ZiKuq7wQwch9R2al9sEuo17W5lF6DYgCvzK5JCOAu/dJrzBcB
+ y5deAGBtUsmYvLB7v/d3zElSCNFUFPvbMMdGs3C3UbNvLJPHN6D4xNVNJHc/p3Agsf1f
+ g0Sg==
+X-Gm-Message-State: AFq9FYLs1nux/vrghi5p2vyAdDgjOvdQNb1OG+DyhPRoMWCiYFJ5tRcQ
+ pomATu1xC5gWzb7bBzkIbona538T+iZkVYScsVhLiOOW90bxT7X2Nc63rjqflVLYegfGDFmNv33
+ Ya48NTCjLR/ZquX49NlLVQoMbNXuXh3l1WYia/yCFDQLVCbDKEOHKg3gt+hqdHzNjbg6KiLAqlD
+ QPYIjDz9N74ihMDxyIV58OEZFQvw6OK8KALf9w9iwU
+X-Gm-Gg: AYBFou2dMIc2cA0WP14mrk7zGoD0IRddrafsQ/Phy3rAZF1lXXT2YBW+zxR3g+d4y4Z
+ d6tXdwKJcA+HqayLoFKkMGW+7PF84uOStfJx0EvF5i88RGpHJ4iS0RxmxGHeSEKTt0jih5hJqP/
+ /ZQMdEFNgKPvBPJ8WgFV66xtpSkagYff+KoWtSBjL+Oq2cNaSBOA96njqVgrFQDfHBdpQ6cV54N
+ iEYOdjAAQ5HNTAI/hNYbuyt27a2SRxMFTlUUDHybNbjdnlE2S1+sHgdqRfvmPzF//rjPyr7nBdW
+ iWI8VkGt8ndDwB5KGxg85XJLX2/OvyZoAcV3ALjKOypovhK3jLzkwl3PSPonfNT5UsZZB7f7Pfy
+ L0q3ZzWwOq8TaiLZJUSaPURR8AN+coa3boDib94AZ99nVIv428XCVT7HY6HRasdHdhgkVZLi1Xw
+ o7Bqq7gdNa5ylWgmtIbT+uWxpPMKsr12G6
+X-Received: by 2002:a5d:64eb:0:b0:48d:f852:c66b with SMTP id
+ ffacd0b85a97d-48dfae7f70emr7039054f8f.22.1792154283604; 
+ Fri, 16 Oct 2026 05:38:03 -0700 (PDT)
+X-Received: by 2002:a5d:64eb:0:b0:48d:f852:c66b with SMTP id
+ ffacd0b85a97d-48dfae7f70emr7038998f8f.22.1792154283239; 
+ Fri, 16 Oct 2026 05:38:03 -0700 (PDT)
 Received: from sraymaek-thinkpadx1nanogen2.rmtbe.csb
  (2a02-1811-d30-6f00-217b-1d12-f4f3-7e56.ip6.access.telenet.be.
  [2a02:1811:d30:6f00:217b:1d12:f4f3:7e56])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48dfd4e7889sm4730097f8f.24.2026.10.16.05.38.00
+ ffacd0b85a97d-48dfd4e7889sm4730097f8f.24.2026.10.16.05.38.02
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 16 Oct 2026 05:38:01 -0700 (PDT)
+ Fri, 16 Oct 2026 05:38:02 -0700 (PDT)
 From: Sanne Raymaekers <sraymaek@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, fam@euphon.net, kwolf@redhat.com, hreitz@redhat.com,
  Sanne Raymaekers <sraymaek@redhat.com>
-Subject: [PATCH v3 0/3] block/vmdk: fixes for stream optimized disks
-Date: Fri, 16 Oct 2026 14:37:47 +0200
-Message-ID: <20261016123750.94769-1-sraymaek@redhat.com>
+Subject: [PATCH v3 1/3] block/vmdk: align stream optimized data grains on 512
+ byte chunks
+Date: Fri, 16 Oct 2026 14:37:48 +0200
+Message-ID: <20261016123750.94769-2-sraymaek@redhat.com>
 X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20261016123750.94769-1-sraymaek@redhat.com>
+References: <20261016123750.94769-1-sraymaek@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=sraymaek@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=sraymaek@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -22
 X-Spam_score: -2.3
 X-Spam_bar: --
 X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,37 +126,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The stream optimized disks produced by qemu-img did not quite adhere to
-the specification. This could trip up other software consuming these
-disks. The goal of these patches is to get the VMDKs produced by QEMU to
-better match the specification, the Virtual Disk Format 5.0 Technical
-Note.
+For stream optimized disks the spec notes: "Each marker and its
+associated block begin on a sector or 512‐byte boundary... There are
+five types of markers: compressed grain markers,..." [^1]
 
-For instance, when packaging the VMDK up in an OVA archive (a ustar
-archive containing an OVF, a manifest and a VMDK), errors occur when
-importing that OVA into VMWare Workstation. Specifically the digest in
-the manifest does not match the digest of the VMDK, because Workstation
-reads (and parses) the disk contents and then makes a digest, rather
-than making a digest of the whole VMDK file. Extra null bytes at the
-very end will trip it up, as they are ignored in the digest made by
-Workstation, but are included in the digest produced by something like
-shasum.
+This means that instead of aligning grains on their typical size (64K),
+in stream optimized disks, grains should be aligned on 512 byte chunks.
 
-Note that stream optimized disks, while not adhering to the
-specification fully, are still useable by VMWare tooling, with some
-workarounds where needed. For instance, VSphere does not have the same
-issue as Workstation.
+[^1] Virtual Disk Format 5.0 Technical Note.
 
-V3 cleans up some formatting and makes the commit messages clearer.
+Signed-off-by: Sanne Raymaekers <sraymaek@redhat.com>
+---
+ block/vmdk.c | 27 ++++++++++++++++++---------
+ 1 file changed, 18 insertions(+), 9 deletions(-)
 
-Sanne Raymaekers (3):
-  block/vmdk: align stream optimized data grains on 512 byte chunks
-  block/vmdk: skip RGD for stream optimized disks
-  block/vmdk: add eos marker for stream optimized disks
-
- block/vmdk.c | 121 ++++++++++++++++++++++++++++++++-------------------
- 1 file changed, 76 insertions(+), 45 deletions(-)
-
+diff --git a/block/vmdk.c b/block/vmdk.c
+index cd8b4ec7c8..7ca030c5fe 100644
+--- a/block/vmdk.c
++++ b/block/vmdk.c
+@@ -1730,16 +1730,25 @@ get_cluster_offset(BlockDriverState *bs, VmdkExtent *extent,
+         cluster_sector = extent->next_cluster_sector;
+         extent->next_cluster_sector += extent->cluster_sectors;
+ 
+-        /* First of all we write grain itself, to avoid race condition
+-         * that may to corrupt the image.
+-         * This problem may occur because of insufficient space on host disk
+-         * or inappropriate VM shutdown.
++        /*
++         * Stream optimized (compressed) extents do not have to be
++         * pre-allocated, as compressed writes always cover the whole
++         * cluster, and will align on 512 byte chunks.
+          */
+-        ret = get_whole_cluster(bs, extent, cluster_sector * BDRV_SECTOR_SIZE,
+-                                offset, skip_start_bytes, skip_end_bytes,
+-                                zeroed);
+-        if (ret) {
+-            return ret;
++        if (!extent->compressed) {
++            /*
++             * First of all we write grain itself, to avoid race condition
++             * that may to corrupt the image.
++             * This problem may occur because of insufficient space on host disk
++             * or inappropriate VM shutdown.
++             */
++            ret = get_whole_cluster(bs, extent,
++                                    cluster_sector * BDRV_SECTOR_SIZE,
++                                    offset, skip_start_bytes, skip_end_bytes,
++                                    zeroed);
++            if (ret) {
++                return ret;
++            }
+         }
+         if (m_data) {
+             m_data->new_allocation = true;
 -- 
 2.55.0
 
