@@ -4,99 +4,137 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 015B9CCA490
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 23:10:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B47E3CCF2C3
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 23:23:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHr3b-0000pp-JK; Fri, 16 Oct 2026 19:09:47 -0400
+	id 1xHrGh-0002rz-TI; Fri, 16 Oct 2026 19:23:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <filip.hejsek@gmail.com>)
- id 1xHr3Q-0000pC-C1
- for qemu-devel@nongnu.org; Fri, 16 Oct 2026 19:09:36 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <filip.hejsek@gmail.com>)
- id 1xHr3O-0008Ji-HS
- for qemu-devel@nongnu.org; Fri, 16 Oct 2026 19:09:36 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-4a180fbeef5so3274625e9.1
- for <qemu-devel@nongnu.org>; Fri, 16 Oct 2026 16:09:33 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1xHrGf-0002rW-P5
+ for qemu-devel@nongnu.org; Fri, 16 Oct 2026 19:23:17 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1xHrGc-0001RN-NV
+ for qemu-devel@nongnu.org; Fri, 16 Oct 2026 19:23:17 -0400
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 69GNFW0a4085814
+ for <qemu-devel@nongnu.org>; Fri, 16 Oct 2026 23:23:13 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=qcppdkim1; bh=blRMGvTOcfB
+ T+89QQAnDx2pij/y/JnY0geKSp8umcQ8=; b=Q44oHzPYfDNwwOJ87pVhwyeYroR
+ +LbHHe+diuatilJngF6QdBpco51bUjM2iDbqxSOiOY2cGcdn5SaMXCs+sgAvYMNU
+ hLBmWwdK3v4AL9GYcOMcZYXqAreP5DAHNy3T6ma4A0fuXzRkdoyZd2S0nTdUrxs9
+ fc/09NLCF8Da25tc4YMXEz1tINsCAUT2xKHI+rjw7ecMN6NcuvQVz5WvDb/NCEOg
+ P/k4+M/HTdFw3mfAPsbU2rBIjTtYQT8rI7ReNGNtJJJRtIOT8fRZjq18afNNRRUV
+ mWxaWpXQ+4j2kjMhRGBuV4/75vyn90jPKJCoG+fYXPjb9cRfYp0Ex20yR6w==
+Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
+ [209.85.216.71])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hbmmq22qd-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Fri, 16 Oct 2026 23:23:13 +0000 (GMT)
+Received: by mail-pj1-f71.google.com with SMTP id
+ 98e67ed59e1d1-3abfcf726dcso672536a91.2
+ for <qemu-devel@nongnu.org>; Fri, 16 Oct 2026 16:23:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1792192172; x=1792796972; darn=nongnu.org;
- h=cc:to:content-transfer-encoding:content-type:mime-version
- :message-id:date:subject:from:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=np56ev6ZrXUUDJyT55I+NxWEm0VSZfVRUYQG3R+fPFw=;
- b=KXkkXBla9nNOj1mB6xufWb9p7oqRS3dCeKbFMKbBF364vkQ74/dYdcK1/DwcbjLJfi
- bjy7/bv9OjZu6TfftXXoa4waeTkZu+BV6rmgjj+PlCrjAkHCFShFtnJByxoOfCm0qa/G
- d0iwmZilE/fxYzZOiv8/lj0pQG7u/AxuhvG2slDTFCVgmQYR0F4jmVTKrqfCY8oHe9gm
- NoQhoZGOXsWVqU6yBsXBvszRwMrx5CUmGcZ0TjqiMbCyQI2E5Zu11x0Lt6nnsOGEl74q
- hW0Egm+R2Bm6OPC1UyxO6dyCXjbjZXULNsYVGIB5jOpNlv0KmSUn8WreIvOUp04g+lFh
- UC6g==
+ d=oss.qualcomm.com; s=google; t=1792192993; x=1792797793; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=blRMGvTOcfBT+89QQAnDx2pij/y/JnY0geKSp8umcQ8=;
+ b=Yb7G6FEiW9FiPVM91eGb97LuTOqrGRDTiLq6E0Ct/AdoQpi4oPQEsU3fwtoJLdskqa
+ 62EgClGjhg5ObXDQ8cxMnVAFaKq013tIEWOmJqqtEahguFacy1IFuX1VEFyczWUggSCk
+ ZMSs/B/jUpRg/uPaub/vXVlNRbp2y6Mw2KmBPfladLO+PjRwcI9B4L49sQBvIKh3gY/L
+ KJvc2riSA3NNMkkl3+40F5xWIHeWlRSx67YbWovWKfNXkUC1hS7q513hKpOBsqknmXNj
+ ddvOupYtP9UEbcH+8Herqv9kJF2pQ9SEJyWNsqHAcDxqGKZlO5Qg6ZO2/Wwtj4ifPCd9
+ 59Ng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792192172; x=1792796972;
- h=cc:to:content-transfer-encoding:content-type:mime-version
- :message-id:date:subject:from:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=np56ev6ZrXUUDJyT55I+NxWEm0VSZfVRUYQG3R+fPFw=;
- b=brsYq5IN2zJzeT7ylsieHY7rM+4gEVUz3UMlQ3x+iMSyd8I1RbYzR4eiamS6lI35ge
- gv3HRV6RXZM64u2nE7RwmMvIL6uVvCPu0W2t/BG2QTUWQK7kZBNcbOlmvr8NlOeCI5vE
- FrcPg41EWGdwNLXkda8GOdM3gnBM7kM0TCxvRCd7GyCc/9d1Qs5atrvQ1Rf1EodCh+g3
- PYlutevnBGRFtVUarcZC+T361AMcDOCC8lo80tu/CwKRANztv3HqUdUt+dmeQdZfRyjS
- n67V355aG4ulO1mrnyVOWKdgKMaf/paqiS1anMMRfbahqjGU+jIBzvSeC2Er+1HIZrL+
- YF7w==
-X-Gm-Message-State: AFq9FYJHSfWUWrlB6aBiYYqOTZJ3OpOeqLJrzY2Xy+SpyCPVka8JtWOP
- x+Gc0N1q6/udsHVmj8V8gko0/NXzeeqDxD9CkhzJw0PKVTTpn3+P41yF
-X-Gm-Gg: AYBFou2bQmCuHubL/5hDGbALIaOfc/bmL4gjIYJJix4a5VuwoIhU/6mbphdI0+nCJ9x
- KgDcZfZCGR6AOl2xKulGyIhf4c8b6Vzu1mQfMEq4jWGOI5PIPyChQsghiwgGSXrEzAzu2xjnk06
- fQoOkKOEUQf6cIIP7DK5z/qFTHSiAr3hQ7zRVbnfTsCtXT7hJ9GeH6zuKDy5ZkSr2eZTtYgMifw
- X9OJYxo8ztA5fTHA1WHIctcSdwIxC2HFZlZV5LzSp3BV7zW7wYycjAEBU3tUbWJ9fxnprZWntFj
- zBNKu13CSiebNYXeRSyUeh5X6uqvsFBZ79EPsTGzaJKjLle0Gq6MgEFl7Ws1HoxkHNwZiLp6ZU4
- ZiLNsJijyhbKdFRP80l/eDNPT7OoavgjLpp3xaEv0w1WRtgmHzP/9CW7a8625NDkZlPMwhGSoZO
- XY7dSq1gF4MMLYN04B3FTua58f6tW5lIMcPdHxZrrpxhibpVzoj2l2WS356w/MUJMb0caJyEX45
- Qm8JdedMuTJnoizivDV41TLXRCdWAmfSBhagA==
-X-Received: by 2002:a05:600c:34d2:b0:4a0:1c10:1372 with SMTP id
- 5b1f17b1804b1-4a1d7614d3amr26885595e9.27.1792192171920; 
- Fri, 16 Oct 2026 16:09:31 -0700 (PDT)
-Received: from localhost (mem-185.47.220.165.jmnet.cz. [185.47.220.165])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a1bd96f9a0sm179876155e9.1.2026.10.16.16.09.31
+ d=1e100.net; s=20260707; t=1792192993; x=1792797793;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=blRMGvTOcfBT+89QQAnDx2pij/y/JnY0geKSp8umcQ8=;
+ b=npVMhrNbMkD8tEX63xYH6ArywQNCE2Zg4k4L7WnJlwm2aYMaERg9x/ntt3Sm7p/31M
+ acjSMiaoamjU8PdiDeq71ZV1AXFFAMEInQD+8/gVshDx1R/6OflpQyQ8XMkRs3Km49U0
+ KSENqAEJm/r1kCX2b+V5mHrCPxfgMsohazFK8TnahQA802EPCfLQM0DhQCdgcoy4CAxb
+ P7AES8x94wHlv6NsVodl4Yzw1X8TaGSXUmyAYwaItyaJKu1xUVGzJBSrzHnte+1arS4+
+ j/XdNegh+4FTHqJdO7TzeI8KQ6VGoCiaWtBz9LN5mdUTSlI4hRZOLAYCs1DjoakfHQ3/
+ TGiQ==
+X-Gm-Message-State: AFq9FYItfL33OUJA59MONbe26M6GNeRiffUoO+VP0SP9R0MB5afi1LWk
+ pz29uD0tfhhIWcEYfpw8nnzU5sBhbmKfQnpB8EUH1JZ69486/gxXHBQYvaCPUQiRedN6e7HRUeZ
+ +ZRHfp0wWIopBl0i9e1RcC4A9hCXDeerjd2j5DsKCXyXJ5b1tnuEUhyyvTRUHlL3nEw==
+X-Gm-Gg: AYBFou1nBadjYANe/9uhtk279csB4xQ4LQizLDCpXHoKMzh0vWNPW9tUoDwhVKC8ImV
+ j2tTeEVjoH5IRm4oph6G7hoBgldjc35XZSAmeJQwz00pcBSXaDD0g5bqQu2+j1Y3Xg4ct6+JEt1
+ vBd05/IEgCjG9EdglKjWMc8CUEFTv6b5F62wGmvbaIFcKqoy83dGJ7MfSylK4Qp9ks1S5wa0d86
+ YqiwsgCqiVEqP5oqfufQ9BisCdPi8Rc1LB2EMtMhvvil/uPv97k9qVA9VPVbFPUu0cMQvcZEI3F
+ wzRZ4ZvNDCkXc4upmZeDzdr2Nyq6krRnARKq6su6mDNRGUmVqneZzsiz2p8jw3aToIdDIewWum1
+ oXgeWAuVz1JtmZlk/iFDtCfVp/TdLgRlY8HSSeMKCvtV8bIf/PC0fhpyAmQy2As0=
+X-Received: by 2002:a17:90b:2644:b0:3ac:80de:44f0 with SMTP id
+ 98e67ed59e1d1-3acee277611mr1179849a91.4.1792192992825; 
+ Fri, 16 Oct 2026 16:23:12 -0700 (PDT)
+X-Received: by 2002:a17:90b:2644:b0:3ac:80de:44f0 with SMTP id
+ 98e67ed59e1d1-3acee277611mr1179834a91.4.1792192992278; 
+ Fri, 16 Oct 2026 16:23:12 -0700 (PDT)
+Received: from pc.taild8403c.ts.net (192-80-163-190.dyn.novuscom.net.
+ [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-3acd0cde4fdsm2829304a91.4.2026.10.16.16.23.11
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 16 Oct 2026 16:09:31 -0700 (PDT)
-From: Filip Hejsek <filip.hejsek@gmail.com>
-Subject: [PATCH v3 0/2] io: make sure we don't close stdio fds
-Date: Sat, 17 Oct 2026 01:09:07 +0200
-Message-Id: <20261017-fix-stdio-close-v3-0-cfff0122a2a4@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/2WN0Q6CIBhGX8VxHQ0Q0LrqPVoXir/6N5MGxmrOd
- w9sbW5enu0755uJB4fgyTmbiYOAHu0YIT9kxPTV2AHFJjIRTGjOuKAtvqmfGrTUDNYDPZWllky
- pRhY5idbTQZysxevtx/5V38FMKZMWPfrJus96GXja/ev5rh44ZVSCaSvJtSlqc+keFQ5HYx8k1
- YPY+mrvi+izlnHQqmQg5NZfluUL7sejIwABAAA=
-X-Change-ID: 20261012-fix-stdio-close-98864055d473
+ Fri, 16 Oct 2026 16:23:11 -0700 (PDT)
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
-Cc: =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>
-X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1792192170; l=1715;
- i=filip.hejsek@gmail.com; s=20250912; h=from:subject:message-id;
- bh=IxoUqjGMEYnmTUe3ybtkcVdXuy1ipY+LkiX7fgZ/l98=;
- b=GAOQ7/aymYDAorYH22Z/hP8BfX37PNn8judntLLGXbucwPFz9eysnOrM6P/RTsE7i2u9k90Sg
- isQPkws3uPGCOl6n71I0BMvRZ5IcKZpB6voj/+IirBo8RgSgtOsalrZ
-X-Developer-Key: i=filip.hejsek@gmail.com; a=ed25519;
- pk=nakB8gEK3oi+Q/5dBTMCy/LgZL47NP60z1jeDR6O/WU=
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=filip.hejsek@gmail.com; helo=mail-wm1-x32c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Anton Johansson <anjo@rev.ng>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Subject: [PATCH v2 2/9] hw/riscv/virt: make machine available for riscv
+ targets only
+Date: Fri, 16 Oct 2026 16:22:57 -0700
+Message-ID: <20261016232304.1215119-3-pierrick.bouvier@oss.qualcomm.com>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20261016232304.1215119-1-pierrick.bouvier@oss.qualcomm.com>
+References: <20261016232304.1215119-1-pierrick.bouvier@oss.qualcomm.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDE2MDA5MyBTYWx0ZWRfX646dzDHdsizd
+ pimEzzvPlQw0fx3+pn5tbmO3Q7r37CsgHyzdRyvoR8W+/YxCN82Yx11y5lezuXWWcWZgtsk2ZPE
+ 6mYM/He92GB7wNX4sGZH6SBU+Ohz5ZI=
+X-Authority-Analysis: v=2.4 cv=P9uvFSAu c=1 sm=1 tr=0 ts=6ad2b1e1 cx=c_pps
+ a=UNFcQwm+pnOIJct1K4W+Mw==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
+ a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22 a=EUspDBNiAAAA:8
+ a=DBNBiUfQWWGXfxp0DDwA:9 a=uKXjsCUrEbL0IQVhDsJ9:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDE2MDA5MyBTYWx0ZWRfX35UnDdZxPsXT
+ Ywyyb64TDhono7InEyZwYOFFrO9/pOTKAcmrTitU89DUzh5IZ95GqHf5nchNZhEx5y0I6t8cmfN
+ sghBAaW7YxV23zrOGP6MaFP15pU1y8Mm5cc2XGMFiOe5dEuWzEzXR2PEk0JhvbzJOBMYsnXYcsi
+ Osl6xbywaf7lTla2Q6v3BlTwfhk8g3A5LmsEDeapP3mYm+wRjrvvpJwZPbOTPfhg6LV9CTC13BS
+ rcOYrBYWHyH6j3gO+cXmHwnSqeLlXrWILV4vLGYOUlnpQ4br4kWU5k6rD0Ot4+z0NCyv30BPLmz
+ j/AqGipFtSjSGSftPi6RAaB1Qn6sD7IoowUPjcpUR9YfsHecuChUwKhHWn33AVx34iVF+UVIuj6
+ o2ezj1WV7XYPPNQAxQhaIjzdnQAcgNeUt2faaFmQEfyVSFD96gxkfdKjPq6z5dK8vp5KTuxIT6Y
+ bfuW3Zf48Xos1M9dvgw==
+X-Proofpoint-GUID: 0_0sF9B3HmAyIhKT7df7wzoSNUrc7iYT
+X-Proofpoint-ORIG-GUID: 0_0sF9B3HmAyIhKT7df7wzoSNUrc7iYT
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-10-16_04,2026-10-14_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 suspectscore=0 phishscore=0 adultscore=0 lowpriorityscore=0
+ clxscore=1015 priorityscore=1501 bulkscore=0 impostorscore=0 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2610080000 definitions=main-2610160093
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -113,50 +151,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The stdio chardev currently closes the stdin and stdout fds when it is
-destroyed. This means that, assuming char0 is a stdio chardev, invoking
-the HMP command
-
-    chardev-change char0 null
-
-will cause QEMU to run with descriptors 0 and 1 closed. That's not a
-great situation, as:
-  - the stdio chardev cannot be recreated
-  - code assuming fds 0 and 1 are open will misbehave
-  - the fds 0 and 1 will get assigned to newly opened files, possibly
-    causing them to be confused for actual stdin/stdout
-
-The fist patch fixes the problem by duplicating the fds before they get
-passed to qio_channel_file_new_fd(), the second patch adds a warning
-that is printed when qio_channel_file_new_fd() is called with a stdio
-fd and modifies the documentation of that function to say that passing
-stdio descriptors is incorrect.
-
-Changes in v3:
-- Add documentation changes
-- Link to v2: https://lore.kernel.org/qemu-devel/20261015-fix-stdio-close-v2-0-0f01e6580e24@gmail.com
-
-Changes in v2:
-- Code style fixes
-- Set *errp when dup fails
-- Link to v1: https://lore.kernel.org/qemu-devel/20261013-fix-stdio-close-v1-0-4ecfa416c7bc@gmail.com
-
-Signed-off-by: Filip Hejsek <filip.hejsek@gmail.com>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 ---
-Filip Hejsek (2):
-      char-stdio: avoid closing stdio fds
-      io: report a warning when a file channel is created from a stdio fd
+ hw/riscv/virt.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
- chardev/char-stdio.c      | 16 +++++++++++++++-
- include/io/channel-file.h | 12 ++++++++----
- io/channel-file.c         |  6 ++++++
- 3 files changed, 29 insertions(+), 5 deletions(-)
----
-base-commit: 7e8d3c7fc460fe7cd28a3e423d7466fa292bc269
-change-id: 20261012-fix-stdio-close-98864055d473
-
-Best regards,
---  
-Filip Hejsek <filip.hejsek@gmail.com>
+diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+index d4b501802f6..894cdd97976 100644
+--- a/hw/riscv/virt.c
++++ b/hw/riscv/virt.c
+@@ -22,6 +22,7 @@
+ #include "qemu/units.h"
+ #include "qemu/error-report.h"
+ #include "qemu/guest-random.h"
++#include "qemu/target-info.h"
+ #include "qapi/error.h"
+ #include "hw/core/boards.h"
+ #include "hw/core/loader.h"
+@@ -1203,6 +1204,7 @@ static const TypeInfo virt_machine_typeinfo = {
+     .instance_init = virt_machine_instance_init,
+     .instance_finalize = virt_machine_instance_finalize,
+     .instance_size = sizeof(RISCVVirtState),
++    .is_available = target_base_riscv,
+     .interfaces = (const InterfaceInfo[]) {
+          { TYPE_HOTPLUG_HANDLER },
+          { }
+-- 
+2.47.3
 
 
