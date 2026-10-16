@@ -4,87 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C091CCCF2C3
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 18:29:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B08A2CCF2C3
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 18:29:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHmfU-0007iy-JC; Fri, 16 Oct 2026 14:28:38 -0400
+	id 1xHmfP-0007f4-0O; Fri, 16 Oct 2026 14:28:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xHmey-0007dD-5f
+ id 1xHmey-0007dB-4C
  for qemu-devel@nongnu.org; Fri, 16 Oct 2026 14:28:05 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xHmeu-0002x0-So
+ id 1xHmev-0002xQ-KQ
  for qemu-devel@nongnu.org; Fri, 16 Oct 2026 14:28:03 -0400
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69GE65VW1451773
- for <qemu-devel@nongnu.org>; Fri, 16 Oct 2026 18:27:59 GMT
+ 69GE5qQ82153852
+ for <qemu-devel@nongnu.org>; Fri, 16 Oct 2026 18:28:00 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=Xn5yLlAal5E
- dekAgD06heSprBaA9iowyGv1vatdfD5o=; b=N01RYkpr5MF+rORcI/6/li8PmFV
- u1OXwo06vvzorqKc2s9WkV3fJFhrmsU3tShuTogSBIVj5nKDAi8z45FCKegmv79h
- WBxSjg1VkzDQNbBtOYlKZIO9kHEpRS5SNUO09zUMEru0Enus0YOOLo43SjvqiFrK
- YNBkKA+6YNjp+6q0szG25pjDg7RoXYK454C/VsPtEPhpViQSH6fYnpDjdISfebli
- TLFMgm+ROoOHiWeNERBOemh/wdOvySzoKTLxogeUT0Qi97WVJm5EsxbTrrYM71Tg
- tIroaCAs2QBjBv1EXYrJHFq3SVEymBOpzwicQShx7WoCzvvyLcWc7DudAjg==
-Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com
- [209.85.215.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hbhur1uxf-1
+ :mime-version:references:subject:to; s=qcppdkim1; bh=Fmoo2AqCklW
+ PRSbErIJkWPctmc/1mRQ78pftTrEVuC4=; b=dkK+DEGaxv0g1RrymGcp2pf9zci
+ lH8Odnmk6f2O+26Drbh1OBlNcY99SXvfLe+f5JpliGTP7lcYFqaAMXDIeZ/tRvEQ
+ B5/GEcjCocyJAG7kq1y5YcXIG2tpMdZ4HX+nY1niqtZBArS5Vu7cLrTFUlc5FKGq
+ L3RfJLTneSvCfXNgTjiLgszfFgw4ju0tMa1xspKdDsHFU2HOrhHTmqBDfd5BnEdn
+ RGdlUJ+aMDSLmsj2G75vpL50tqINqmiyvErhBjL10FCVA/+/mGw8xMMTb5PS0F4e
+ DR3cG4WH+Lv7Y8wieYVACJNVorpOgk8BIX6sD4ldsYSv0AgTsue45n4bL4g==
+Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
+ [209.85.216.70])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hbhumsue9-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 16 Oct 2026 18:27:59 +0000 (GMT)
-Received: by mail-pg1-f198.google.com with SMTP id
- 41be03b00d2f7-cd1e45a268cso135307a12.1
- for <qemu-devel@nongnu.org>; Fri, 16 Oct 2026 11:27:59 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Fri, 16 Oct 2026 18:28:00 +0000 (GMT)
+Received: by mail-pj1-f70.google.com with SMTP id
+ 98e67ed59e1d1-3ab1e771632so1259663a91.1
+ for <qemu-devel@nongnu.org>; Fri, 16 Oct 2026 11:28:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1792175279; x=1792780079; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1792175280; x=1792780080; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=Xn5yLlAal5EdekAgD06heSprBaA9iowyGv1vatdfD5o=;
- b=EF7BpqcIBXUHQOxibuEgt0BhtUuhSAB22pKkaBa3KJQkbpmALiOt+aizECx12DVYMD
- FrbroE0Yzk4F/a8tIwVIUQoM76yS9DilpoEQyMf2WJlDCHwDJmsfs8FcAOSEl+rrVLiN
- 2uvRGhOWYbqx3kfws7PA40a4s0HH4K4GERUHtAu0rElYJqFCIk0e//1XyaVNFo3za8DR
- jOI5TSDng/liPjCjdfHKimC1z8welULl/PI8LOA+MujDUceHhkko6UxrhdR4QaeVrPLh
- D/bz59+Z1atH1WiSHv284rc9u60Q0fTE3kyFtarGgBI2j3j9IVsmbaTo88QkGUdF6ZZX
- D6vQ==
+ bh=Fmoo2AqCklWPRSbErIJkWPctmc/1mRQ78pftTrEVuC4=;
+ b=CfqHUWnk4Y/2OGK0mguEM+r1UtgSP1+bfZ1uls0nrM4N7oYq8hO0ilRzfFJi8S81uR
+ O5RLdsvfBwTSn0++qK0k2Rg6mvYPOVxG4cIIY88q8N3mhSR0tCFF+21Ox0rUD/w1hQxa
+ 45ANTpdnevUQ7MoMPqPvbd+La5DYyLdTemDbKOxP5YtT6gDN3EPKT7YbfJ2e0vn/ayiV
+ qyTiUQmnsdJWxdn756qpEE2Q5PaUk2DZRSGeA/zUbppIXMtxddN3V+TfEcXGVwTMidpy
+ GOuvOUxf71ye4LVCUOmUc/vXzXRE30u+VgpbNF1+K03sP1MjNYnoe22Bb2lf8slf8pot
+ mF9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792175279; x=1792780079;
+ d=1e100.net; s=20260707; t=1792175280; x=1792780080;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=Xn5yLlAal5EdekAgD06heSprBaA9iowyGv1vatdfD5o=;
- b=rmwl7Qy0rlClkh4fXZR/IkqSo7c4vN8lVnhG6eKl7J0pHvp7ZphQx8x453xLoOy34t
- bn0jSHM7aEP4tgG1OQHSg+BfTBbC0Q3/OAudnhtzpSiGaUjly0hEk7W66g4TUfSDL4eK
- 0OG/jhujVSgNrE+S2CL2wrPLx9ZLVY8513ax4nGA00G3JOMuvrhv9163B3TnuScze7Ii
- Hnefw5eS0ZN992iTP3RgGWWGsgbbABtnZtyIRJ8b1OoZE0FGKBr3cmeptsjrHvy93bly
- PQCvVzmGsoYvOa8E3YEN1I3ul5brRBqXvub4sgLFEfTTtSkKtlZ4rloEzsQ0NhsZXtCG
- dE3Q==
-X-Gm-Message-State: AFq9FYLn9G6lSQamaRaqGSt/7wM9yKiDOH0wW6uWKp42hV6xsRfd30Eb
- 5PBzNZiyWeJcZmW1MoVBaXJpnmMSE7LWRYcfb8BYLq9FmhiYaCpnmpwBQ2Y6Q2zL8gubhfY4Tn8
- ENla+lZ/s0vL+bCIxOEmzY2Hvnu1icSfi6AQ6vSEV747dGR9sgopsmQvSxqGOEeJtqg==
-X-Gm-Gg: AYBFou0CgP+oF80qsFjtsj9OpEhCd4M4hdJwMfojC1SDO0BExv2XAauHvSUO1ixkTWx
- ZniLDeS3a+6OP/kNquSjDBtZVCDAfwAT3ouySDn5zOe/lLUkNpGWeNkqzvhXk5F6+lQLNoGmi5s
- hejn+rqxHPLmLZSsefWEHFiGkXPV/VMVaCWbA0AeEgXyFE1nvHy5cjS70IXaVFbZ1M0ACojI7/D
- wHYpQh+J23ltjHJX34xnop51gP7Mq2CuyyuxEybFL+d6ZEEVBztPHhZMOuJYL8z1ZScOIjwvmvn
- UPVjbWY77FXe94UZNsKZ3jhcXDYEd82NTLl9OO59TkYlReVh1X2ktO/BbQ78ndemuP8dO/y5/XG
- DmxCrzZypweXBF4XYFfvBCzeBIgO9EwsMO0tZOJUO1XYAukukmcf6qhz4pMAVXCU=
-X-Received: by 2002:a05:6a20:c5aa:b0:3dd:a195:fa22 with SMTP id
- adf61e73a8af0-3e22606feebmr160676637.71.1792175278518; 
- Fri, 16 Oct 2026 11:27:58 -0700 (PDT)
-X-Received: by 2002:a05:6a20:c5aa:b0:3dd:a195:fa22 with SMTP id
- adf61e73a8af0-3e22606feebmr160603637.71.1792175277220; 
- Fri, 16 Oct 2026 11:27:57 -0700 (PDT)
+ bh=Fmoo2AqCklWPRSbErIJkWPctmc/1mRQ78pftTrEVuC4=;
+ b=HAY9afxZN4/JkNdjeOhXRqo/qKgGXtvOxuny5hCOZEVwONBKwUw8jmg9XzrP2v7j0V
+ S4h3BDkff7N37yu5e28QE/DWpejnNMY3+JqN8S2rcx2whIwEY46q/juwJjZO3YopQ7ms
+ nRYOPqeZlPY19rdiWoGVrtsgftJW5/V5ELeCrDw8E45EiddoBK5C7eEQ7dvzfe5y1UqV
+ Nleug9hJcoLyybXd+cPRa9ZGwi+etvoJrHdDbRSljhci5wY8wLrWC4V6CMArnu6H8MX9
+ /5LvHj9ZAkBzbvu2qivUgqY7DoCPLWxQcR2yTcI4CFETOBE9bssOQ1NB58kGxSJfizjN
+ J/SQ==
+X-Gm-Message-State: AFq9FYIlUFsqAbX/l1fXK4LpQg3+2vDcRN1wD5j2C8hXhD0cuaQ3FKZk
+ Ib7NARYAP+VNLL5d3Sj4zA4UNYjDPUq0aNeFdd9MhLDqEbAzmtV3LrqJ9W4EDKe/xamQz4eDoRo
+ 8XYwCI4Pb1SSiumGTcW9EPKR3tPcbxBT4ktIgOnEYO1Ao1P6sKJZMaZNu3Nt8j9X+Zw==
+X-Gm-Gg: AYBFou0GbLDhLiLFus7TOG72fqZ/9u3Ui8ir/9oIylZjgpbcOxAdENyTShhYoHkxs4f
+ /Fn14x316wjqDYbnwgSBjEy2Ij7q6/VC4tQusEdIZ2XLaCK394x1kozc83t41ZC4/uZvmrj4173
+ snCFlVY/ZzrhBT3AI9tZ/e+f3IzYEX0d/xQEg762IOfJN8pde5Rs4vZR1G2e4d2W9c16mgsFM+/
+ vSrtDUXwFbvz+2ZmMyebItWp/Jl8V4wqN4s3bGzvBY9X9SH5cE1u0FlL0TxUR5j5KrggAbqSOX6
+ SoYNfU5jRsD/lMFh4Bu+kXrucs+XffD/wbEJYELNu8ohP2N4cmGAAfzJXpQeUTe8OxuuVx4+VwU
+ QVAA64gzhzoLU8rz2APXGOtFznGRfvKCRqDwCpIk8L1JAStPGvEMPHp9FRNxJisg=
+X-Received: by 2002:a17:90b:1a92:b0:3a8:c3b9:4b38 with SMTP id
+ 98e67ed59e1d1-3acbb87b554mr3335239a91.14.1792175279742; 
+ Fri, 16 Oct 2026 11:27:59 -0700 (PDT)
+X-Received: by 2002:a17:90b:1a92:b0:3a8:c3b9:4b38 with SMTP id
+ 98e67ed59e1d1-3acbb87b554mr3335217a91.14.1792175279260; 
+ Fri, 16 Oct 2026 11:27:59 -0700 (PDT)
 Received: from pc.taild8403c.ts.net (192-80-163-190.dyn.novuscom.net.
  [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-cd6549c7034sm1557291a12.16.2026.10.16.11.27.56
+ 41be03b00d2f7-cd6549c7034sm1557291a12.16.2026.10.16.11.27.58
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 16 Oct 2026 11:27:56 -0700 (PDT)
+ Fri, 16 Oct 2026 11:27:58 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
@@ -92,38 +92,39 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
  Anton Johansson <anjo@rev.ng>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: [PATCH 3/6] target/riscv: prefix helpers conflicting with other arch
-Date: Fri, 16 Oct 2026 11:27:48 -0700
-Message-ID: <20261016182751.264704-4-pierrick.bouvier@oss.qualcomm.com>
+Subject: [PATCH 5/6] target/riscv/tcg: restrict tcg-accel-riscv-cpu to riscv
+ targets
+Date: Fri, 16 Oct 2026 11:27:50 -0700
+Message-ID: <20261016182751.264704-6-pierrick.bouvier@oss.qualcomm.com>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20261016182751.264704-1-pierrick.bouvier@oss.qualcomm.com>
 References: <20261016182751.264704-1-pierrick.bouvier@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDE2MDA3MyBTYWx0ZWRfX3U7SoJm06loq
- ZWEkwvihMA0DfGyU1TzKm4ChvbgA8UTrGr0R2hJ1FSMNIbq9nk7+lPRuyncMn/JAYMF2JHa330o
- OML+d4tLc4exDclM7i68GHmeUVmKrTPBpy+o9yim8M165VEC798r5X3xLecdLcMVfhwqccw2Ca+
- WuPQbiZfYxRtp0RyEvhwuz0uM2DCTLjLcHF3EhgwIFt+oEzkKPJKZ93XVcGPXgF5XWHoKVwK4Yt
- +EvSdGQzq6p4GFUJYCfBzetxL76wrflIfrL+u6WdThS7unjii3OF3K1gFSlqpgbpYqgbUEx9KF5
- DpRF1pIkLlOSfVqQQoDLuL4MhHNoR646zdHAMnFRk/jWeYQUG0ekWKKIgFD3Xiq9/55Nhn753ME
- 7fmV7PcllZ9kzwss3jQj6v9AglUBAfN8/ovI4WwThEdCwz3QFr15a2xBnTSUMQJP4JDF7HWJAR5
- cTJEmpQqzNhBsUw6i2Q==
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDE2MDA3MyBTYWx0ZWRfX11BR/0V7ZMoc
- MSC6PhURwvCqvSJbf4v4jAtoovQh4BILwlg2Rgrn1sVqTYwi0XrwITvHEYMcxANnb6mQ/NIYzhn
- WtYpmgECzo+i/h8bc4P7ncDIwvtMCnE=
-X-Authority-Analysis: v=2.4 cv=PqsG/AM3 c=1 sm=1 tr=0 ts=6ad26caf cx=c_pps
- a=Qgeoaf8Lrialg5Z894R3/Q==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDE2MDA3MyBTYWx0ZWRfX9aDStljc3EzU
+ wKzzHsYUDZULhA1XHwshQ9T5ey21hbwRieo7a7saX1kzSX6t0ZiP9lylQduYBMGXjyDrdFsEots
+ XwnDDo3cvYyWAmus/D93eLKCZY5Bd8E=
+X-Authority-Analysis: v=2.4 cv=H+BOUOYi c=1 sm=1 tr=0 ts=6ad26cb0 cx=c_pps
+ a=0uOsjrqzRL749jD1oC5vDA==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
  a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22 a=EUspDBNiAAAA:8
- a=xvrvNg-cL0jB7nB0D5MA:9 a=x9snwWr2DeNwDh03kgHS:22
-X-Proofpoint-ORIG-GUID: mY3V1lPA8zJkioEIweViC5TXjv4D368Z
-X-Proofpoint-GUID: mY3V1lPA8zJkioEIweViC5TXjv4D368Z
+ a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22 a=EUspDBNiAAAA:8
+ a=DwCSbAth9W79kPmtiZMA:9 a=mQ_c8vxmzFEMiUWkPHU9:22
+X-Proofpoint-GUID: nDfydzwEW4S58z_4l168BlpELiJ8cg7l
+X-Proofpoint-ORIG-GUID: nDfydzwEW4S58z_4l168BlpELiJ8cg7l
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDE2MDA3MyBTYWx0ZWRfX9owT3XavLKV7
+ py+PcwahXAkKthvIvk8wjvimzS1nXJmZUgasRbWkqSGDgsDgZoa4ba0c1pXaW1/HSGnCPh1xiJR
+ LVGbfPkyuT7r8PUivLrAE6JKzSkUA2meFpAo9XDWp4k6yzsgLTxS2M6Z+1XbfXPOSRXUWPCGGhw
+ E0vn2Yzpo5xlJ885mvq5XeXze6uWdKNGB94VJT8VvWa/RpcoiA7/sQ2H0ooTJT8mrCv9rVOdVrn
+ UhHmoqtB9kGPeaObFXoZONs8Ivccqd36iZHpPnbx6ixGl5qY8lK98OJnQgTfEg7S0lljRty60fA
+ Zgp+SyKORQCbjuCR9vxoeKHhmVyq/XFFnwITgtA2fxQTQ5Rd2qMx3/wR5VujhVF6jlbR5RGEGz0
+ S+Pn61hQ4fqtQwE56yGQKsUAlrbaIDKYreFU8S+IkC2LT6LHscsHTqOShEreBsEHVAO3qqMltld
+ fXk1JlZw0Tz2ZaB2qOA==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-10-16_02,2026-10-14_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 bulkscore=0 priorityscore=1501 lowpriorityscore=0 impostorscore=0
- phishscore=0 clxscore=1015 malwarescore=0 suspectscore=0 adultscore=0
+ spamscore=0 malwarescore=0 bulkscore=0 phishscore=0 priorityscore=1501
+ adultscore=0 clxscore=1015 lowpriorityscore=0 impostorscore=0 suspectscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2610080000 definitions=main-2610160073
 Received-SPF: pass client-ip=205.220.180.131;
@@ -151,392 +152,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-List of helpers:
-- fadd_s
-- fsub_s
-- fdiv_s
-- fsqrt_s
-- fadd_d
-- fsub_d
-- fdiv_d
-- fsqrt_d
-- crc32
-- crc32c
-- raise_exception
-- wfi
+$ ./build/tests/unit/test-multi-target
+Type 'tcg-accel-riscv-cpu' is missing its parent 'accel-riscv-cpu'
+Aborted
+
+Parent type is conditionally registered from current target:
+register_accel_target_type uses '"accel-" + target_cpu_type()' as type
+name. Multi-target test takes the first target available, which is not
+riscv in current state.
 
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 ---
- target/riscv/helper.h                         | 24 +++++++++----------
- target/riscv/tcg/bitmanip_helper.c            |  4 ++--
- target/riscv/tcg/fpu_helper.c                 | 16 ++++++-------
- .../tcg/insn_trans/trans_privileged.c.inc     |  2 +-
- target/riscv/tcg/insn_trans/trans_rvd.c.inc   |  8 +++----
- target/riscv/tcg/insn_trans/trans_rvf.c.inc   |  8 +++----
- target/riscv/tcg/insn_trans/trans_rvi.c.inc   |  4 ++--
- .../tcg/insn_trans/trans_rvzicfiss.c.inc      |  2 +-
- target/riscv/tcg/insn_trans/trans_xlrbr.c.inc |  4 ++--
- target/riscv/tcg/op_helper.c                  |  4 ++--
- target/riscv/tcg/translate.c                  |  4 ++--
- 11 files changed, 40 insertions(+), 40 deletions(-)
+ target/riscv/tcg/tcg-cpu.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/target/riscv/helper.h b/target/riscv/helper.h
-index 372f1049726..6aae192112a 100644
---- a/target/riscv/helper.h
-+++ b/target/riscv/helper.h
-@@ -1,5 +1,5 @@
- /* Exceptions */
--DEF_HELPER_2(raise_exception, noreturn, env, i32)
-+DEF_HELPER_2(riscv_raise_exception, noreturn, env, i32)
+diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+index e07ca95e49b..be913602489 100644
+--- a/target/riscv/tcg/tcg-cpu.c
++++ b/target/riscv/tcg/tcg-cpu.c
+@@ -1749,6 +1749,7 @@ static const TypeInfo riscv_tcg_cpu_accel_type_info = {
  
- /* Floating Point - rounding mode */
- DEF_HELPER_FLAGS_2(set_rounding_mode, TCG_CALL_NO_WG, void, env, i32)
-@@ -20,15 +20,15 @@ DEF_HELPER_FLAGS_4(fnmadd_d, TCG_CALL_NO_RWG, i64, env, i64, i64, i64)
- DEF_HELPER_FLAGS_4(fnmadd_h, TCG_CALL_NO_RWG, i64, env, i64, i64, i64)
+     .parent = TYPE_ACCEL_CPU,
+     .class_init = riscv_tcg_cpu_accel_class_init,
++    .is_available = target_base_riscv,
+     .abstract = true,
+ };
  
- /* Floating Point - Single Precision */
--DEF_HELPER_FLAGS_3(fadd_s, TCG_CALL_NO_RWG, i64, env, i64, i64)
--DEF_HELPER_FLAGS_3(fsub_s, TCG_CALL_NO_RWG, i64, env, i64, i64)
-+DEF_HELPER_FLAGS_3(riscv_fadd_s, TCG_CALL_NO_RWG, i64, env, i64, i64)
-+DEF_HELPER_FLAGS_3(riscv_fsub_s, TCG_CALL_NO_RWG, i64, env, i64, i64)
- DEF_HELPER_FLAGS_3(fmul_s, TCG_CALL_NO_RWG, i64, env, i64, i64)
--DEF_HELPER_FLAGS_3(fdiv_s, TCG_CALL_NO_RWG, i64, env, i64, i64)
-+DEF_HELPER_FLAGS_3(riscv_fdiv_s, TCG_CALL_NO_RWG, i64, env, i64, i64)
- DEF_HELPER_FLAGS_3(fmin_s, TCG_CALL_NO_RWG, i64, env, i64, i64)
- DEF_HELPER_FLAGS_3(fminm_s, TCG_CALL_NO_RWG, i64, env, i64, i64)
- DEF_HELPER_FLAGS_3(fmax_s, TCG_CALL_NO_RWG, i64, env, i64, i64)
- DEF_HELPER_FLAGS_3(fmaxm_s, TCG_CALL_NO_RWG, i64, env, i64, i64)
--DEF_HELPER_FLAGS_2(fsqrt_s, TCG_CALL_NO_RWG, i64, env, i64)
-+DEF_HELPER_FLAGS_2(riscv_fsqrt_s, TCG_CALL_NO_RWG, i64, env, i64)
- DEF_HELPER_FLAGS_3(fle_s, TCG_CALL_NO_RWG, tl, env, i64, i64)
- DEF_HELPER_FLAGS_3(fleq_s, TCG_CALL_NO_RWG, tl, env, i64, i64)
- DEF_HELPER_FLAGS_3(flt_s, TCG_CALL_NO_RWG, tl, env, i64, i64)
-@@ -47,17 +47,17 @@ DEF_HELPER_FLAGS_2(fround_s, TCG_CALL_NO_RWG_SE, i64, env, i64)
- DEF_HELPER_FLAGS_2(froundnx_s, TCG_CALL_NO_RWG_SE, i64, env, i64)
- 
- /* Floating Point - Double Precision */
--DEF_HELPER_FLAGS_3(fadd_d, TCG_CALL_NO_RWG, i64, env, i64, i64)
--DEF_HELPER_FLAGS_3(fsub_d, TCG_CALL_NO_RWG, i64, env, i64, i64)
-+DEF_HELPER_FLAGS_3(riscv_fadd_d, TCG_CALL_NO_RWG, i64, env, i64, i64)
-+DEF_HELPER_FLAGS_3(riscv_fsub_d, TCG_CALL_NO_RWG, i64, env, i64, i64)
- DEF_HELPER_FLAGS_3(fmul_d, TCG_CALL_NO_RWG, i64, env, i64, i64)
--DEF_HELPER_FLAGS_3(fdiv_d, TCG_CALL_NO_RWG, i64, env, i64, i64)
-+DEF_HELPER_FLAGS_3(riscv_fdiv_d, TCG_CALL_NO_RWG, i64, env, i64, i64)
- DEF_HELPER_FLAGS_3(fmin_d, TCG_CALL_NO_RWG, i64, env, i64, i64)
- DEF_HELPER_FLAGS_3(fminm_d, TCG_CALL_NO_RWG, i64, env, i64, i64)
- DEF_HELPER_FLAGS_3(fmax_d, TCG_CALL_NO_RWG, i64, env, i64, i64)
- DEF_HELPER_FLAGS_3(fmaxm_d, TCG_CALL_NO_RWG, i64, env, i64, i64)
- DEF_HELPER_FLAGS_2(fcvt_s_d, TCG_CALL_NO_RWG, i64, env, i64)
- DEF_HELPER_FLAGS_2(fcvt_d_s, TCG_CALL_NO_RWG, i64, env, i64)
--DEF_HELPER_FLAGS_2(fsqrt_d, TCG_CALL_NO_RWG, i64, env, i64)
-+DEF_HELPER_FLAGS_2(riscv_fsqrt_d, TCG_CALL_NO_RWG, i64, env, i64)
- DEF_HELPER_FLAGS_3(fle_d, TCG_CALL_NO_RWG, tl, env, i64, i64)
- DEF_HELPER_FLAGS_3(fleq_d, TCG_CALL_NO_RWG, tl, env, i64, i64)
- DEF_HELPER_FLAGS_3(flt_d, TCG_CALL_NO_RWG, tl, env, i64, i64)
-@@ -83,8 +83,8 @@ DEF_HELPER_FLAGS_1(unzip, TCG_CALL_NO_RWG_SE, tl, tl)
- DEF_HELPER_FLAGS_1(zip, TCG_CALL_NO_RWG_SE, tl, tl)
- DEF_HELPER_FLAGS_2(xperm4, TCG_CALL_NO_RWG_SE, tl, tl, tl)
- DEF_HELPER_FLAGS_2(xperm8, TCG_CALL_NO_RWG_SE, tl, tl, tl)
--DEF_HELPER_FLAGS_2(crc32, TCG_CALL_NO_RWG_SE, tl, tl, tl)
--DEF_HELPER_FLAGS_2(crc32c, TCG_CALL_NO_RWG_SE, tl, tl, tl)
-+DEF_HELPER_FLAGS_2(riscv_crc32, TCG_CALL_NO_RWG_SE, tl, tl, tl)
-+DEF_HELPER_FLAGS_2(riscv_crc32c, TCG_CALL_NO_RWG_SE, tl, tl, tl)
- 
- /* Floating Point - Half Precision */
- DEF_HELPER_FLAGS_3(fadd_h, TCG_CALL_NO_RWG, i64, env, i64, i64)
-@@ -135,7 +135,7 @@ DEF_HELPER_1(mret, tl, env)
- DEF_HELPER_1(dret, tl, env)
- DEF_HELPER_1(mnret, tl, env)
- DEF_HELPER_1(ctr_clear, void, env)
--DEF_HELPER_1(wfi, void, env)
-+DEF_HELPER_1(riscv_wfi, void, env)
- DEF_HELPER_1(wrs_nto, void, env)
- DEF_HELPER_1(tlb_flush, void, env)
- DEF_HELPER_1(tlb_flush_all, void, env)
-diff --git a/target/riscv/tcg/bitmanip_helper.c b/target/riscv/tcg/bitmanip_helper.c
-index d8d94bca7ba..5af3efe194d 100644
---- a/target/riscv/tcg/bitmanip_helper.c
-+++ b/target/riscv/tcg/bitmanip_helper.c
-@@ -117,7 +117,7 @@ target_ulong HELPER(xperm8)(target_ulong rs1, target_ulong rs2)
-     return do_xperm(rs1, rs2, 3);
- }
- 
--target_ulong HELPER(crc32)(target_ulong rs1, target_ulong sz)
-+target_ulong HELPER(riscv_crc32)(target_ulong rs1, target_ulong sz)
- {
-     for (target_ulong i = 0; i < sz; i++) {
-         rs1 = crc32_table[rs1 & 0xFF] ^ (rs1 >> 8);
-@@ -126,7 +126,7 @@ target_ulong HELPER(crc32)(target_ulong rs1, target_ulong sz)
-     return rs1;
- }
- 
--target_ulong HELPER(crc32c)(target_ulong rs1, target_ulong sz)
-+target_ulong HELPER(riscv_crc32c)(target_ulong rs1, target_ulong sz)
- {
-     for (target_ulong i = 0; i < sz; i++) {
-         rs1 = crc32c_table[rs1 & 0xFF] ^ (rs1 >> 8);
-diff --git a/target/riscv/tcg/fpu_helper.c b/target/riscv/tcg/fpu_helper.c
-index db1475271b6..85fc419eb95 100644
---- a/target/riscv/tcg/fpu_helper.c
-+++ b/target/riscv/tcg/fpu_helper.c
-@@ -230,14 +230,14 @@ uint64_t helper_fnmadd_h(CPURISCVState *env, uint64_t frs1, uint64_t frs2,
-                       float_muladd_negate_c | float_muladd_negate_product);
- }
- 
--uint64_t helper_fadd_s(CPURISCVState *env, uint64_t rs1, uint64_t rs2)
-+uint64_t helper_riscv_fadd_s(CPURISCVState *env, uint64_t rs1, uint64_t rs2)
- {
-     float32 frs1 = check_nanbox_s(env, rs1);
-     float32 frs2 = check_nanbox_s(env, rs2);
-     return nanbox_s(env, float32_add(frs1, frs2, &env->fp_status));
- }
- 
--uint64_t helper_fsub_s(CPURISCVState *env, uint64_t rs1, uint64_t rs2)
-+uint64_t helper_riscv_fsub_s(CPURISCVState *env, uint64_t rs1, uint64_t rs2)
- {
-     float32 frs1 = check_nanbox_s(env, rs1);
-     float32 frs2 = check_nanbox_s(env, rs2);
-@@ -251,7 +251,7 @@ uint64_t helper_fmul_s(CPURISCVState *env, uint64_t rs1, uint64_t rs2)
-     return nanbox_s(env, float32_mul(frs1, frs2, &env->fp_status));
- }
- 
--uint64_t helper_fdiv_s(CPURISCVState *env, uint64_t rs1, uint64_t rs2)
-+uint64_t helper_riscv_fdiv_s(CPURISCVState *env, uint64_t rs1, uint64_t rs2)
- {
-     float32 frs1 = check_nanbox_s(env, rs1);
-     float32 frs2 = check_nanbox_s(env, rs2);
-@@ -292,7 +292,7 @@ uint64_t helper_fmaxm_s(CPURISCVState *env, uint64_t rs1, uint64_t rs2)
-     return nanbox_s(env, ret);
- }
- 
--uint64_t helper_fsqrt_s(CPURISCVState *env, uint64_t rs1)
-+uint64_t helper_riscv_fsqrt_s(CPURISCVState *env, uint64_t rs1)
- {
-     float32 frs1 = check_nanbox_s(env, rs1);
-     return nanbox_s(env, float32_sqrt(frs1, &env->fp_status));
-@@ -434,12 +434,12 @@ uint64_t helper_froundnx_s(CPURISCVState *env, uint64_t rs1)
-     return nanbox_s(env, frs1);
- }
- 
--uint64_t helper_fadd_d(CPURISCVState *env, uint64_t frs1, uint64_t frs2)
-+uint64_t helper_riscv_fadd_d(CPURISCVState *env, uint64_t frs1, uint64_t frs2)
- {
-     return float64_add(frs1, frs2, &env->fp_status);
- }
- 
--uint64_t helper_fsub_d(CPURISCVState *env, uint64_t frs1, uint64_t frs2)
-+uint64_t helper_riscv_fsub_d(CPURISCVState *env, uint64_t frs1, uint64_t frs2)
- {
-     return float64_sub(frs1, frs2, &env->fp_status);
- }
-@@ -449,7 +449,7 @@ uint64_t helper_fmul_d(CPURISCVState *env, uint64_t frs1, uint64_t frs2)
-     return float64_mul(frs1, frs2, &env->fp_status);
- }
- 
--uint64_t helper_fdiv_d(CPURISCVState *env, uint64_t frs1, uint64_t frs2)
-+uint64_t helper_riscv_fdiv_d(CPURISCVState *env, uint64_t frs1, uint64_t frs2)
- {
-     return float64_div(frs1, frs2, &env->fp_status);
- }
-@@ -489,7 +489,7 @@ uint64_t helper_fcvt_d_s(CPURISCVState *env, uint64_t rs1)
-     return float32_to_float64(frs1, &env->fp_status);
- }
- 
--uint64_t helper_fsqrt_d(CPURISCVState *env, uint64_t frs1)
-+uint64_t helper_riscv_fsqrt_d(CPURISCVState *env, uint64_t frs1)
- {
-     return float64_sqrt(frs1, &env->fp_status);
- }
-diff --git a/target/riscv/tcg/insn_trans/trans_privileged.c.inc b/target/riscv/tcg/insn_trans/trans_privileged.c.inc
-index e22df6fbe71..4f18b6c3fa4 100644
---- a/target/riscv/tcg/insn_trans/trans_privileged.c.inc
-+++ b/target/riscv/tcg/insn_trans/trans_privileged.c.inc
-@@ -168,7 +168,7 @@ static bool trans_wfi(DisasContext *ctx, arg_wfi *a)
- #ifndef CONFIG_USER_ONLY
-     decode_save_opc(ctx, 0);
-     gen_update_pc(ctx, ctx->cur_insn_len);
--    gen_helper_wfi(tcg_env);
-+    gen_helper_riscv_wfi(tcg_env);
-     ctx->base.is_jmp = DISAS_NORETURN;
-     return true;
- #else
-diff --git a/target/riscv/tcg/insn_trans/trans_rvd.c.inc b/target/riscv/tcg/insn_trans/trans_rvd.c.inc
-index 1be2bee9465..596a4ad888e 100644
---- a/target/riscv/tcg/insn_trans/trans_rvd.c.inc
-+++ b/target/riscv/tcg/insn_trans/trans_rvd.c.inc
-@@ -194,7 +194,7 @@ static bool trans_fadd_d(DisasContext *ctx, arg_fadd_d *a)
-     TCGv_i64 src2 = get_fpr_d(ctx, a->rs2);
- 
-     gen_set_rm(ctx, a->rm);
--    gen_helper_fadd_d(dest, tcg_env, src1, src2);
-+    gen_helper_riscv_fadd_d(dest, tcg_env, src1, src2);
-     gen_set_fpr_d(ctx, a->rd, dest);
-     mark_fs_dirty(ctx);
-     return true;
-@@ -211,7 +211,7 @@ static bool trans_fsub_d(DisasContext *ctx, arg_fsub_d *a)
-     TCGv_i64 src2 = get_fpr_d(ctx, a->rs2);
- 
-     gen_set_rm(ctx, a->rm);
--    gen_helper_fsub_d(dest, tcg_env, src1, src2);
-+    gen_helper_riscv_fsub_d(dest, tcg_env, src1, src2);
-     gen_set_fpr_d(ctx, a->rd, dest);
-     mark_fs_dirty(ctx);
-     return true;
-@@ -245,7 +245,7 @@ static bool trans_fdiv_d(DisasContext *ctx, arg_fdiv_d *a)
-     TCGv_i64 src2 = get_fpr_d(ctx, a->rs2);
- 
-     gen_set_rm(ctx, a->rm);
--    gen_helper_fdiv_d(dest, tcg_env, src1, src2);
-+    gen_helper_riscv_fdiv_d(dest, tcg_env, src1, src2);
-     gen_set_fpr_d(ctx, a->rd, dest);
-     mark_fs_dirty(ctx);
-     return true;
-@@ -261,7 +261,7 @@ static bool trans_fsqrt_d(DisasContext *ctx, arg_fsqrt_d *a)
-     TCGv_i64 src1 = get_fpr_d(ctx, a->rs1);
- 
-     gen_set_rm(ctx, a->rm);
--    gen_helper_fsqrt_d(dest, tcg_env, src1);
-+    gen_helper_riscv_fsqrt_d(dest, tcg_env, src1);
-     gen_set_fpr_d(ctx, a->rd, dest);
-     mark_fs_dirty(ctx);
-     return true;
-diff --git a/target/riscv/tcg/insn_trans/trans_rvf.c.inc b/target/riscv/tcg/insn_trans/trans_rvf.c.inc
-index 636dec1664d..551c9b39861 100644
---- a/target/riscv/tcg/insn_trans/trans_rvf.c.inc
-+++ b/target/riscv/tcg/insn_trans/trans_rvf.c.inc
-@@ -178,7 +178,7 @@ static bool trans_fadd_s(DisasContext *ctx, arg_fadd_s *a)
-     TCGv_i64 src2 = get_fpr_hs(ctx, a->rs2);
- 
-     gen_set_rm(ctx, a->rm);
--    gen_helper_fadd_s(dest, tcg_env, src1, src2);
-+    gen_helper_riscv_fadd_s(dest, tcg_env, src1, src2);
-     gen_set_fpr_hs(ctx, a->rd, dest);
-     mark_fs_dirty(ctx);
-     return true;
-@@ -194,7 +194,7 @@ static bool trans_fsub_s(DisasContext *ctx, arg_fsub_s *a)
-     TCGv_i64 src2 = get_fpr_hs(ctx, a->rs2);
- 
-     gen_set_rm(ctx, a->rm);
--    gen_helper_fsub_s(dest, tcg_env, src1, src2);
-+    gen_helper_riscv_fsub_s(dest, tcg_env, src1, src2);
-     gen_set_fpr_hs(ctx, a->rd, dest);
-     mark_fs_dirty(ctx);
-     return true;
-@@ -226,7 +226,7 @@ static bool trans_fdiv_s(DisasContext *ctx, arg_fdiv_s *a)
-     TCGv_i64 src2 = get_fpr_hs(ctx, a->rs2);
- 
-     gen_set_rm(ctx, a->rm);
--    gen_helper_fdiv_s(dest, tcg_env, src1, src2);
-+    gen_helper_riscv_fdiv_s(dest, tcg_env, src1, src2);
-     gen_set_fpr_hs(ctx, a->rd, dest);
-     mark_fs_dirty(ctx);
-     return true;
-@@ -241,7 +241,7 @@ static bool trans_fsqrt_s(DisasContext *ctx, arg_fsqrt_s *a)
-     TCGv_i64 src1 = get_fpr_hs(ctx, a->rs1);
- 
-     gen_set_rm(ctx, a->rm);
--    gen_helper_fsqrt_s(dest, tcg_env, src1);
-+    gen_helper_riscv_fsqrt_s(dest, tcg_env, src1);
-     gen_set_fpr_hs(ctx, a->rd, dest);
-     mark_fs_dirty(ctx);
-     return true;
-diff --git a/target/riscv/tcg/insn_trans/trans_rvi.c.inc b/target/riscv/tcg/insn_trans/trans_rvi.c.inc
-index cc1b5dbbadc..8d63efe09b5 100644
---- a/target/riscv/tcg/insn_trans/trans_rvi.c.inc
-+++ b/target/riscv/tcg/insn_trans/trans_rvi.c.inc
-@@ -55,7 +55,7 @@ static bool trans_lpad(DisasContext *ctx, arg_lpad *a)
-          */
-         tcg_gen_st8_i32(tcg_constant_i32(RISCV_EXCP_SW_CHECK_FCFI_TVAL),
-                         tcg_env, offsetof(CPURISCVState, sw_check_code));
--        gen_helper_raise_exception(tcg_env,
-+        gen_helper_riscv_raise_exception(tcg_env,
-                       tcg_constant_i32(RISCV_EXCP_SW_CHECK));
-         return true;
-     }
-@@ -68,7 +68,7 @@ static bool trans_lpad(DisasContext *ctx, arg_lpad *a)
-         tcg_gen_brcondi_tl(TCG_COND_EQ, tmp, a->label, skip);
-         tcg_gen_st8_i32(tcg_constant_i32(RISCV_EXCP_SW_CHECK_FCFI_TVAL),
-                         tcg_env, offsetof(CPURISCVState, sw_check_code));
--        gen_helper_raise_exception(tcg_env,
-+        gen_helper_riscv_raise_exception(tcg_env,
-                       tcg_constant_i32(RISCV_EXCP_SW_CHECK));
-         gen_set_label(skip);
-     }
-diff --git a/target/riscv/tcg/insn_trans/trans_rvzicfiss.c.inc b/target/riscv/tcg/insn_trans/trans_rvzicfiss.c.inc
-index d47a9f9c7d2..0556f37805a 100644
---- a/target/riscv/tcg/insn_trans/trans_rvzicfiss.c.inc
-+++ b/target/riscv/tcg/insn_trans/trans_rvzicfiss.c.inc
-@@ -43,7 +43,7 @@ static bool trans_sspopchk(DisasContext *ctx, arg_sspopchk *a)
-     tcg_gen_brcond_tl(TCG_COND_EQ, data, rs1, skip);
-     tcg_gen_st8_i32(tcg_constant_i32(RISCV_EXCP_SW_CHECK_BCFI_TVAL),
-                     tcg_env, offsetof(CPURISCVState, sw_check_code));
--    gen_helper_raise_exception(tcg_env,
-+    gen_helper_riscv_raise_exception(tcg_env,
-                   tcg_constant_i32(RISCV_EXCP_SW_CHECK));
-     gen_set_label(skip);
-     tcg_gen_addi_tl(addr, addr, tmp);
-diff --git a/target/riscv/tcg/insn_trans/trans_xlrbr.c.inc b/target/riscv/tcg/insn_trans/trans_xlrbr.c.inc
-index 01da2b6ce1d..795231f0839 100644
---- a/target/riscv/tcg/insn_trans/trans_xlrbr.c.inc
-+++ b/target/riscv/tcg/insn_trans/trans_xlrbr.c.inc
-@@ -29,11 +29,11 @@ static bool gen_crc(DisasContext *ctx, arg_r2 *a,
- #define TRANS_CRC32(NAME, SIZE) \
-     static bool trans_crc32_##NAME(DisasContext *ctx, arg_r2 *a) \
-     { if (SIZE == 8) { REQUIRE_64BIT(ctx); }; \
--      return gen_crc(ctx, a, gen_helper_crc32, tcg_constant_tl(SIZE)); }
-+      return gen_crc(ctx, a, gen_helper_riscv_crc32, tcg_constant_tl(SIZE)); }
- #define TRANS_CRC32C(NAME, SIZE) \
-     static bool trans_crc32c_##NAME(DisasContext *ctx, arg_r2 *a) \
-     { if (SIZE == 8) { REQUIRE_64BIT(ctx); }; \
--      return gen_crc(ctx, a, gen_helper_crc32c, tcg_constant_tl(SIZE)); }
-+      return gen_crc(ctx, a, gen_helper_riscv_crc32c, tcg_constant_tl(SIZE)); }
- 
- TRANS_CRC32(b, 1);
- TRANS_CRC32(h, 2);
-diff --git a/target/riscv/tcg/op_helper.c b/target/riscv/tcg/op_helper.c
-index b8b3e43ccd5..3df01016dfa 100644
---- a/target/riscv/tcg/op_helper.c
-+++ b/target/riscv/tcg/op_helper.c
-@@ -48,7 +48,7 @@ G_NORETURN void riscv_raise_exception(CPURISCVState *env,
-     cpu_loop_exit_restore(cs, pc);
- }
- 
--void helper_raise_exception(CPURISCVState *env, uint32_t exception)
-+void helper_riscv_raise_exception(CPURISCVState *env, uint32_t exception)
- {
- #ifndef CONFIG_USER_ONLY
-     riscv_pmu_decr_instret(env);
-@@ -625,7 +625,7 @@ void helper_ctr_clear(CPURISCVState *env)
-     riscv_ctr_clear(env);
- }
- 
--void helper_wfi(CPURISCVState *env)
-+void helper_riscv_wfi(CPURISCVState *env)
- {
-     CPUState *cs = env_cpu(env);
-     bool rvs = riscv_has_ext(env, RVS);
-diff --git a/target/riscv/tcg/translate.c b/target/riscv/tcg/translate.c
-index ede9c2563f7..2ffbf26bb19 100644
---- a/target/riscv/tcg/translate.c
-+++ b/target/riscv/tcg/translate.c
-@@ -259,7 +259,7 @@ static void gen_update_pc(DisasContext *ctx, target_long diff)
- static void generate_exception(DisasContext *ctx, RISCVException excp)
- {
-     gen_update_pc(ctx, 0);
--    gen_helper_raise_exception(tcg_env, tcg_constant_i32(excp));
-+    gen_helper_riscv_raise_exception(tcg_env, tcg_constant_i32(excp));
-     ctx->base.is_jmp = DISAS_NORETURN;
- }
- 
-@@ -1407,7 +1407,7 @@ static void riscv_tr_translate_insn(DisasContextBase *dcbase, CPUState *cpu)
-         tcg_ctx->emit_before_op = QTAILQ_NEXT(ctx->base.insn_start, link);
-         tcg_gen_st8_i32(tcg_constant_i32(RISCV_EXCP_SW_CHECK_FCFI_TVAL),
-                         tcg_env, offsetof(CPURISCVState, sw_check_code));
--        gen_helper_raise_exception(tcg_env,
-+        gen_helper_riscv_raise_exception(tcg_env,
-                       tcg_constant_i32(RISCV_EXCP_SW_CHECK));
-         tcg_ctx->emit_before_op = NULL;
-         ctx->base.is_jmp = DISAS_NORETURN;
 -- 
 2.47.3
 
