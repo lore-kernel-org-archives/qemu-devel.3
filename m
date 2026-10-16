@@ -4,89 +4,127 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEA58CCA462
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 23:41:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BE21CCA490
+	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 00:14:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHrXj-0008I9-Gn; Fri, 16 Oct 2026 19:40:55 -0400
+	id 1xHs3Q-0003Xt-16; Fri, 16 Oct 2026 20:13:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <oliveriandrea@gmail.com>)
- id 1xHrXZ-0008HL-QY
- for qemu-devel@nongnu.org; Fri, 16 Oct 2026 19:40:47 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <oliveriandrea@gmail.com>)
- id 1xHrXX-00033b-6T
- for qemu-devel@nongnu.org; Fri, 16 Oct 2026 19:40:44 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-4a16aaf2067so5528585e9.0
- for <qemu-devel@nongnu.org>; Fri, 16 Oct 2026 16:40:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1792194041; x=1792798841; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=r1UFcyolx2df8n1PgORmj6GbMSmQ7olQG3p8HzmWRdU=;
- b=N/72F84L2X7RLwftPpsaj5CGvKZoUa83a95WsdgiSSfKXNl2BjX4hSOa4cYWPlAN9n
- mPHPNZnI4ytuFovPJdDy10NqILzi+DpKnsPCMMULgB1RWDJblVrz6aiPQoc8gawzE9bq
- WgMp95MOYyQVZmoX1fYib2sOQMK9KrdaigPOccxqelvdlFU8IspZ1f4zHHp/EQ32K3D2
- Y/ROtI7mXRp9QXO3GXPv6Csdb7A8C9AhVQSm37opF5ba9y6lyoz0ftevtw681/344enX
- ogE/Ya89RHPbSOM3JnUlPNsjn2XbH6DVo2y29bA9Fm5p5yv5RdgwnJW9g0qrr6Nt9YJZ
- QxMA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792194041; x=1792798841;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=r1UFcyolx2df8n1PgORmj6GbMSmQ7olQG3p8HzmWRdU=;
- b=q2wQJI+lvHy3LaBfO/R5HqNgVQ44GTplS5E+Lr+sQwwmwWln0Zh7eZAxG1Ibl2ak9T
- rw+MoJnEaHFvchWbWoMhtR3BZETy+OFfkJLHw0Rcbk7TG2f8keEoVrKhmXcPYIIzCTwC
- hrD82M4e2JVNjtT3G4C4L8YoGILqiIdx649w0h0Dd5ZEDppxmJSGlGRMZEnTR/5XyF80
- cgkD0bXnaTANsD2qALMpixOLg3KaOjwGjUJBH8yWrtjXWNMgj07f67I2X9qoNO84XimF
- y6bje2o4sooDuhZg7S8/sgSLiuusFdmNOQEuMx0rBsekFeQl2ldjR1rMw8Pbezcq/7fm
- VVKg==
-X-Gm-Message-State: AFq9FYIxWTobVVaFoJFZXR52fkyLwik9PnNkg38LBNr41OrIXWKPJ260
- b5mipBsRsGCgttdtnHRYrWKMTX+CAtQZf6gLn4FGK+ZJQS+idlQk7UArYOMZXOVk9NE=
-X-Gm-Gg: AYBFou1hx97paVusu8itzNZbrpUXRHsVWzyBt7NEk57yaNhczzCipUIN5qN8VWBIuLf
- 0MTj18uiUu0D/U66uVERhiOkfM+Zm82o9DCC8g/vzncU4XDADcmaMD8doTb4eDVL62/ppn56ujh
- IC9P76sxfl14GuuEk3ZRBeOWkRW/1PN9b7cGRfIr8r2vNURR1+wWOZAYnvKWebcO1vYleGM3+ND
- 5UwULEbRb9rwKa2rj7U4qCMGiQpeTmAupOQMkSd+5EYHx3+XWAzbTBxymqSJ9vpVO5HfJGnjh/a
- BST+hxTYFdhO99pnHQ35wFW3bWH5lGhCKVaeqK/8lyW1INIws1+ucNFFAkkcCt7bVJYYtJ5H2tL
- dKj7esrfTPXpKHygULuHytYB4AoLFmHasIqM+JNAkpugZpS2giz439KeZ7vloJWu9B4mP7BlIWE
- LZ0ASGu99HbmwkygFmmFAhRaha5K3KKOg3t/6ifvFg5iQx9kk+ez41MO4TzxBM3dpg0+PG3hp94
- nzz3fXAx9hDb1jItAQ=
-X-Received: by 2002:a05:600c:4ec8:b0:49b:9202:6f80 with SMTP id
- 5b1f17b1804b1-4a1d76001acmr30283065e9.6.1792194040695; 
- Fri, 16 Oct 2026 16:40:40 -0700 (PDT)
-Received: from rio (145.176.116.78.rev.sfr.net. [78.116.176.145])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48dfd4c0894sm7172224f8f.12.2026.10.16.16.40.40
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 16 Oct 2026 16:40:40 -0700 (PDT)
-From: Andrea Oliveri <oliveriandrea@gmail.com>
+ (Exim 4.90_1) (envelope-from <deepagupta@nvidia.com>)
+ id 1xHr01-0000Uv-2M; Fri, 16 Oct 2026 19:06:05 -0400
+Received: from mail-southcentralusazlp170120001.outbound.protection.outlook.com
+ ([2a01:111:f403:c10d::1] helo=SN4PR2101CU001.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <deepagupta@nvidia.com>)
+ id 1xHqzz-00083P-Fr; Fri, 16 Oct 2026 19:06:04 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=ZC1/HwhkWiefHwFgBjC8Pw34fUk64BHknHP4e6sCQxnqjrJnkYAIZIFBlAloNotq+FnsFgh6A/3NUovFq8hzpmvjjBzWqV0PsrqaOfc4vDsvjKuRBa9wRuXU44/zJbcpdJzoMLeO553nHtqap0lX8VsU3v335b4ufd1tarRGUZNFKZCKYxRUTToCvG0WxAj2nXPHUreRVGYdnYkNEqdxtcHSGnsq1XCmSnc1oTeath1avcokZffd/AenODIdCWSwECaBykW5DxXVy9KxIBZqpUrSbJiEZV5s4dDOPi5IYMRn//xeLev8EZjWm5OmWpjP4j8g7uwNsWjLnGhhcIOOyg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=mQiwG3l/lMKHybtHjCIhCA8ZE99dp+VVT9vCu+Ln+fc=;
+ b=um9oB9rg2Ep4ampWo4806MSLjPMqbiZ9iCTpAgsOsRZ9YwvekyCgEHXHfRiOR5HCzLHg6Lolt8Dx5qzT6UcWUOwpFbqQb1AqZW3LANxIi4G8pGGN6apsmBzy9/EEzWqVvqZpgDS/Pgwpew2+ydgj5jR7rMNi/M3asUZTyAinywj3f30MwV3ccDTbPV+T3CHUqbEnLGEf8/EMX9veevfc2+FBKyLeO8Wcv5Yyz2UWegHm/uh9vXN00uasTWZx2+lXDXgC0ZUE0ZE+gcbAMJgt0SYALcueNVu57XOu8TyMfGSZucPW/j0AppaKT47bIlBrP9+AjCYlPmvAti1B/QmQyQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=mQiwG3l/lMKHybtHjCIhCA8ZE99dp+VVT9vCu+Ln+fc=;
+ b=grlSIrx5xmsbqATTw9k75BMAVLk8gz42a7P/+LIY41UNCGniQ5b+zpMIEOviKLlDswAeqKOouOUOpjhIKdYuY7e4Ytk3vdtr3FvhEKACpUcoxoQ09yAFVUOO5t/anuX+kauXvVTs4VWXI4sQVE7omcnyv8zkVRdUybvr698114jhFthu5zwH+FWYqwCaPRS4rxShKvZnpe9yeLy1aYnFoHvoqXgNht8xg2hIYQwDnIpj75KMZ4XSgCJRxnfWQmQHbdL1GZ5csq9XjZwgw1dnCR23gFTe9IYEdooj5LrL/OXqlWMXij4Qvrx3LNKGlJRftXporo4GBN2nOcyKpNA2IA==
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from CH0PR12MB5201.namprd12.prod.outlook.com (2603:10b6:610:b8::21)
+ by CH9PR12MB167381.namprd12.prod.outlook.com (2603:10b6:610:314::6)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.522.14; Fri, 16 Oct
+ 2026 23:05:51 +0000
+Received: from CH0PR12MB5201.namprd12.prod.outlook.com
+ ([fe80::fa53:495c:c3d5:243]) by CH0PR12MB5201.namprd12.prod.outlook.com
+ ([fe80::fa53:495c:c3d5:243%4]) with mapi id 15.21.0522.012; Fri, 16 Oct 2026
+ 23:05:50 +0000
+From: Deepak Gupta <deepagupta@nvidia.com>
 To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- Marcelo Tosatti <mtosatti@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Vitaly Kuznetsov <vkuznets@redhat.com>, kvm@vger.kernel.org,
- Andrea Oliveri <oliveriandrea@gmail.com>
-Subject: [PATCH] i386: Hyper-V nested sleep states enlightenment
-Date: Sat, 17 Oct 2026 01:40:27 +0200
-Message-ID: <20261016234027.1002275-1-oliveriandrea@gmail.com>
-X-Mailer: git-send-email 2.56.0
-MIME-Version: 1.0
+Cc: qemu-arm@nongnu.org, kvm@vger.kernel.org, kvmarm@lists.linux.dev,
+ peter.maydell@linaro.org, pbonzini@redhat.com, mchehab+huawei@kernel.org,
+ jiaqiyan@google.com, oliver.upton@linux.dev
+Subject: [PATCH 0/1] target/arm/kvm: handle KVM_EXIT_ARM_SEA
+Date: Fri, 16 Oct 2026 23:05:40 +0000
+Message-ID: <cover.1792191544.git.deepagupta@nvidia.com>
+X-Mailer: git-send-email 2.53.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=oliveriandrea@gmail.com; helo=mail-wm1-x32d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-ClientProxiedBy: SA9PR13CA0062.namprd13.prod.outlook.com
+ (2603:10b6:806:23::7) To CH0PR12MB5201.namprd12.prod.outlook.com
+ (2603:10b6:610:b8::21)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH0PR12MB5201:EE_|CH9PR12MB167381:EE_
+X-MS-Office365-Filtering-Correlation-Id: 0919bbf4-a07d-4b0c-4fe3-08df2bda0574
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|1800799024|376014|366016|23010399003|56012099006|11063799006|261009223027099003|10067099003|18002099003;
+X-Microsoft-Antispam-Message-Info: IkiZ4pvuzYv7/G/vrJuBChwckQ+aBYxNLSnBryPA6xHn+/axESqKOo5T97DZIdnKozyyLJP9Uh1thGHBD/Mio9nvv4jVijykD5vpzIK92Jzf+Z+rUV1kc9+8DXB5Ab9kJEBGo7bprzQ4S0bgKSbaw6hFm34I5jl8UfWYiok3UoGBx0whaFgw69WW17/63jY+Pw4HOXzG/imxdAngpvx6fyS6sDkCo8SfethtCexSn71CDSiKadTjPumjwmhv9E9P7EXnnIfUlXOUgt8o6970IA/TuoJKIwhhSal2L1P4VnXO+bFK5cZH9fbizZybMjeQAuzhdXuQAIyt90+SxmKTWF8vQsVJT03nKIpxfHh5x952cQYJcAKeGhtXRd+A9delf9lodINAG1FHc2bL44kmGZfPepqypGsSj5K96jvpXIbY5irfRarnx3MGqPTDPN49/DqMCC3d+DV8Lh0ZDbp4PxYUZ18FNOqAnw5THKiKvxqPbf/PY0CHtKz7rHR41qy0uTMee8Uk6KNzOnkR/ZA5KhonA6vSfus77QXiO1dY0MwLxnjGmAnvZLdzoY9ihaRAGyspW/kCV3MhG+T58l72+pQK2eupBlCq9lq4F81NHUaG6/JmM6N2CJNxfvjl5jvQ3badIdrfoAHrqftXKnlPcybyo70H0SK/bPBxFYs/tj8=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:CH0PR12MB5201.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(376014)(366016)(23010399003)(56012099006)(11063799006)(261009223027099003)(10067099003)(18002099003);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?b73gkxGDSgEhYRmTGn+XlnMkpp/wgtyctdBexf4qH6KtrCUhC9YbpbYBZiXH?=
+ =?us-ascii?Q?Vt+9wiHyxaKXXIhobYMNOSCpVx8J+qQ0iw+orlll0lDqlBE56tMcQvaxScH0?=
+ =?us-ascii?Q?3S9sRCeTh58jXBSx3gP7X4O8NHGKvrH8cDXaybTLk4MQvBDU+X8KqperSpqt?=
+ =?us-ascii?Q?dZ4g2p8c5YyPRE6CMFpoFR0ldMdQiIupbi5pzIE9Owxyd6xV5w68qKbBYJPv?=
+ =?us-ascii?Q?ymvh/ZudhA0Xh9NQdwQ5QGWRE8cvtuM7IgXMVX/mrkQuN4nhjA+fZl2PLGeH?=
+ =?us-ascii?Q?c3ExKSb/b+8oTstyRplZcssBJJ3AdO+IWdLjwlO+R3IiGIoZs0jbPYSB7A09?=
+ =?us-ascii?Q?w84/O5OY7QJe0wdp2GXY9CQvh3CfzJzjAQ236aJ6NlRjLeBcOYAIjSgLo2gr?=
+ =?us-ascii?Q?/ZcZTeX9j0S33xK7H7BxFlzp1CdFi/yrtPdyOG7o0o51cOdbVywrNzFmNN9Y?=
+ =?us-ascii?Q?X26t+n2b1Z6rinaGz+S6R3nPCO6KKdW6aqqI0GFH9H2685/JAlnb2Y5FqRQA?=
+ =?us-ascii?Q?+w74oXl3kzSr/TIPCmXh/pf3FP7lNH7OQ+fH8OcKDHA/Jw9i/f0HrsqUCGp8?=
+ =?us-ascii?Q?n16gZzUc22djLR6kFCOS/8rh4SCkBamKe5oJDUx3Qa/7X+7kUuqMpeF3F59S?=
+ =?us-ascii?Q?mKAwtODSeRDfrRQoFsSbHYJ8osBIFzo1ZFoVK8Px0hraZTpf6gr5Hq8JgXrJ?=
+ =?us-ascii?Q?UGUoAUZwv6e/PQuVSalu28z5nNRb38Ilf3cFVNUJat0y2BmYwNqcfkqLu6+J?=
+ =?us-ascii?Q?FP6CBGLdwHmCx2bg1rVEnJwPvEsOEvZx6KF3dnZNjg3tocsqFJriPOPIFB1B?=
+ =?us-ascii?Q?zvebkr1CCtbliHnZc0Ue3fjmGaPwWIVZTLu35un/97QDngls8ocxu4oO0KZk?=
+ =?us-ascii?Q?AfjIyH37THv0mOJ4wEJOxm219EeKQFz6kORSsaqiGjmJNWrCVeupD70TLP/e?=
+ =?us-ascii?Q?o0MGbfjC8L1hvuOI9Yy5eLEuP9FAxIzocR3Txa7XQIzZUe55vaZZEWeCKkkV?=
+ =?us-ascii?Q?GNJWLFLx0YolH6OCoUrbwg6sFoHKgfAKniTpcIg9k58axsVpk0540nnD7rVO?=
+ =?us-ascii?Q?qHX3+QLuPqWRNVctpBuWXBSlBhgdNMgS/fVP5RbEDDJ86izFiMTCiRB7gBTm?=
+ =?us-ascii?Q?DUpN7hy2u0ublRiiNS4uzqYT+6pbP+CFpl6kZZ/B1yOGpaOLJaklneizhEXW?=
+ =?us-ascii?Q?qVQ07/YNaSn5Wpqk+1NpLJqvVs0oPcdllRl40speduVnIAR1ZsxURy+2hL0q?=
+ =?us-ascii?Q?J3vgW/ehiw/VfVwAqSA/LqsedykpNP+kEGxwp2RCD0srj56LU+S0py2HLoQ6?=
+ =?us-ascii?Q?y1R+qxYCuQSV3qJr/i8+FpDy/iB4XG0mdUSxV+xm7ARybF8ePbJddnaK9qd8?=
+ =?us-ascii?Q?E2RiU3pznJP2U30+a9rXqzDvevmZ3WUwTbHTxQwshezlA/jXC6kp62jgCmzW?=
+ =?us-ascii?Q?wRq5qhjVcQe07CMQBXpAYiX0O4DjVJNdP3dqv4RrOcaisK0Z1uGZ2OjvUWE+?=
+ =?us-ascii?Q?o8HEeuOtjHjsH4ut6jA/eiSso+KrOWnFl7BPoj1+bJlUoivUP8/kRZCDciM6?=
+ =?us-ascii?Q?FGsoZBxrcGvzm5WmQgsAMwX4OgIeibsiFRpZbzY8IfYFPKXyH4bPqqqdfzZa?=
+ =?us-ascii?Q?SlzXjvklkLXBWYm3dx7TPtgLMAWLTHh1MpuHmFjhBtTdJtqFTPI9cW+ilc9E?=
+ =?us-ascii?Q?K5M5gPjkDqHxKWMzhmSlCKPMD0KlPtMHzXt3aJiA6tm3g+9kv1IUu1X5PuB8?=
+ =?us-ascii?Q?4D/h/xweXA=3D=3D?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 0919bbf4-a07d-4b0c-4fe3-08df2bda0574
+X-MS-Exchange-CrossTenant-AuthSource: CH0PR12MB5201.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Oct 2026 23:05:50.5643 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 4iRV1/xyUqdczX0t81bTG2g+1ZabXNeQrLSnOwFJDaBa4tx8cdZmZ1Tbbwz8rHXpBt5fuJrvp/Tj2+Lj02Otjw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH9PR12MB167381
+Received-SPF: permerror client-ip=2a01:111:f403:c10d::1;
+ envelope-from=deepagupta@nvidia.com;
+ helo=SN4PR2101CU001.outbound.protection.outlook.com
+X-Spam_score_int: -12
+X-Spam_score: -1.3
+X-Spam_bar: -
+X-Spam_report: (-1.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FORGED_SPF_HELO=1, SPF_HELO_PASS=-0.001,
+ SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Fri, 16 Oct 2026 20:12:23 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -101,105 +139,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hyper-V running nested on KVM (e.g. Windows with Virtualization-Based
-Security) allows hibernation of its root partition only if the parent
-hypervisor sets bit 20 of HV_CPUID_ENLIGHTMENT_INFO.EAX. KVM never sets
-it, so such guests report "The hypervisor does not support hibernation".
+Hi,
 
-Add a "hv-nested-sleep" property that sets the bit. It is a hint
-only and needs no KVM support. With it, Windows 11 26H2 with VBS,
-HVCI and Credential Guard hibernates and resumes.
+Linux 6.19 added KVM_CAP_ARM_SEA_TO_USER [1]: with the capability
+enabled, KVM returns a guest synchronous external abort that the host
+could not claim through APEI to userspace as KVM_EXIT_ARM_SEA, instead
+of injecting a virtual SError. QEMU does not consume the exit yet, so on
+a host whose HEST has no SEA-notified GHES source every guest-consumed
+memory error still ends in a guest "Asynchronous SError Interrupt"
+panic.
 
-The nested hypervisor uses the bit for one more thing, on resume:
-instead of writing IA32_TSC itself, it issues hypercall 0x103 with the
-TSC and the parent reference time saved at suspend, asking the parent
-to restore its TSC. KVM returns HV_STATUS_INVALID_HYPERCALL_CODE;
-the nested hypervisor ignores the status and already compensates the
-TSC jump in software, so the guest clock stays correct.
+This patch enables the capability, handles the exit by recording a GHES
+memory error (when the exit carries an address backed by guest RAM) and
+injecting a synchronous external abort that mirrors the original one,
+and wires up the BUS_MCEERR_AO SIGBUS case so the guest learns about the
+poisoned page asynchronously when the exit itself carried no address.
 
-Signed-off-by: Andrea Oliveri <oliveriandrea@gmail.com>
----
- docs/system/i386/hyperv.rst    | 10 ++++++++++
- target/i386/cpu.c              |  1 +
- target/i386/cpu.h              |  1 +
- target/i386/kvm/hyperv-proto.h |  1 +
- target/i386/kvm/kvm.c          |  5 +++++
- 5 files changed, 18 insertions(+)
+Points I would like feedback on:
 
-diff --git a/docs/system/i386/hyperv.rst b/docs/system/i386/hyperv.rst
-index e1babffb0f..4b37d5536b 100644
---- a/docs/system/i386/hyperv.rst
-+++ b/docs/system/i386/hyperv.rst
-@@ -187,6 +187,16 @@ Existing enlightenments
-   Note: enabling this feature on old hardware (without APICv/AVIC support) may
-   have negative effect on guest's performance.
- 
-+``hv-nested-sleep``
-+  Tells a guest that runs its own Hyper-V (Windows with Virtualization-Based
-+  Security, or with the Hyper-V role) that sleep states are supported for a
-+  nested hypervisor (CPUID 0x40000004.EAX bit 20). Without it, Hyper-V running
-+  on top of KVM disables hibernation (S4) for its root partition: Windows
-+  reports "The hypervisor does not support hibernation", and an S4 attempt
-+  makes the nested hypervisor reset the machine. No KVM support is needed: the
-+  bit is a hint only. On resume the nested hypervisor issues a hypercall that
-+  KVM does not implement; the nested hypervisor ignores the failure.
-+
- ``hv-no-nonarch-coresharing`` = on/off/auto
-   This enlightenment tells guest OS that virtual processors will never share a
-   physical core unless they are reported as sibling SMT threads. This information
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 5da80ade70..9df628ed2a 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -10797,6 +10797,7 @@ static const Property x86_cpu_properties[] = {
-                       HYPERV_FEAT_TLBFLUSH_DIRECT, 0),
-     DEFINE_PROP_ON_OFF_AUTO("hv-no-nonarch-coresharing", X86CPU,
-                             hyperv_no_nonarch_cs, ON_OFF_AUTO_OFF),
-+    DEFINE_PROP_BOOL("hv-nested-sleep", X86CPU, hyperv_nested_sleep, false),
- #ifdef CONFIG_SYNDBG
-     DEFINE_PROP_BIT64("hv-syndbg", X86CPU, hyperv_features,
-                       HYPERV_FEAT_SYNDBG, 0),
-diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index e7a88074c0..bff8b1d192 100644
---- a/target/i386/cpu.h
-+++ b/target/i386/cpu.h
-@@ -2374,6 +2374,7 @@ struct ArchCPU {
-     uint64_t hyperv_features;
-     bool hyperv_passthrough;
-     OnOffAuto hyperv_no_nonarch_cs;
-+    bool hyperv_nested_sleep;
-     uint32_t hyperv_vendor_id[3];
-     uint32_t hyperv_interface_id[4];
-     uint32_t hyperv_limits[3];
-diff --git a/target/i386/kvm/hyperv-proto.h b/target/i386/kvm/hyperv-proto.h
-index a9f056f2f3..df6ce6ae42 100644
---- a/target/i386/kvm/hyperv-proto.h
-+++ b/target/i386/kvm/hyperv-proto.h
-@@ -81,6 +81,7 @@
- #define HV_EX_PROCESSOR_MASKS_RECOMMENDED   (1u << 11)
- #define HV_ENLIGHTENED_VMCS_RECOMMENDED     (1u << 14)
- #define HV_NO_NONARCH_CORESHARING           (1u << 18)
-+#define HV_NESTED_SLEEP_SUPPORTED           (1u << 20)
- 
- /*
-  * HV_CPUID_SYNDBG_PLATFORM_CAPABILITIES.EAX bits
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index da922f72d7..76f1a37ea5 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -1630,6 +1630,11 @@ static int hyperv_fill_cpuids(CPUState *cs,
-             HV_NO_NONARCH_CORESHARING;
-     }
- 
-+    /* Only a hint for a nested Hyper-V: no KVM support is needed */
-+    if (cpu->hyperv_nested_sleep) {
-+        c->eax |= HV_NESTED_SLEEP_SUPPORTED;
-+    }
-+
-     c = &cpuid_ent[cpuid_i++];
-     c->function = HV_CPUID_IMPLEMENT_LIMITS;
-     c->eax = cpu->hv_max_vps;
+ * Injection: I reuse the existing kvm_inject_arm_sea() route
+   (arm_cpu_do_interrupt() after kvm_cpu_synchronize_state()) and let it
+   pass the sanitised ESR fields (EC, IL, FnV, EA, CM, WnR, xFSC, SET)
+   and the FAR through to the guest. KVM_SET_VCPU_EVENTS with
+   ext_dabt_pending can only produce a data abort with FAR taken from
+   the last exit, and the documentation restricts it to MMIO/NISV/
+   LDST64B exits, so it did not seem a good fit; happy to switch if that
+   is preferred.
+
+ * The BUS_MCEERR_AO record goes on ACPI_HEST_SRC_ID_QMP, which ghes.h
+   documents as being for QMP-injected errors, because it is the only
+   GED-notified source the virt machine has. If a dedicated source id
+   for host-originated asynchronous records is preferred I can add one.
+
+ * With the pre-10.1 single-block HEST layout (no GED-notified source)
+   the AO record is dropped with a warning rather than written into the
+   synchronous source's block.
+
+Testing: arm64 host whose HEST has only GSIV/SDEI-notified sources,
+EINJ uncorrectable memory error into a page mapped by a guest, consumed
+by a guest process (-machine virt,ras=on). Before: guest panic. After:
+SIGBUS to the process, GHES record and hwpoison in the guest, guest
+stays up. Also checked: the pre-existing BUS_MCEERR_AR SIGBUS path still
+works (it is taken when the host's memory_failure() wins the race),
+ras=off (bare external abort to the guest, no record), -machine
+virt-10.0 (the AR path still delivers the synchronous record, the AO
+record is dropped with the warning),
+check-unit and check-qtest-aarch64 on the host.
+
+[1] https://lore.kernel.org/r/20251013185903.1372553-1-jiaqiyan@google.com
+
+
+Deepak Gupta (1):
+  target/arm/kvm: handle KVM_EXIT_ARM_SEA and report BUS_MCEERR_AO
+
+ target/arm/kvm.c        | 164 +++++++++++++++++++++++++++++++++++-----
+ target/arm/trace-events |   1 +
+ 2 files changed, 146 insertions(+), 19 deletions(-)
+
 -- 
-2.56.0
+2.53.0
 
 
