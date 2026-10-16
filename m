@@ -4,148 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A229BCCF2C1
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 13:14:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A2AACC6B38
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 13:22:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHhli-0000aa-NY; Fri, 16 Oct 2026 09:14:42 -0400
+	id 1xHhsk-000265-9C; Fri, 16 Oct 2026 09:21:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1xHhlc-0000a9-Qj
- for qemu-devel@nongnu.org; Fri, 16 Oct 2026 09:14:37 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1xHhsg-00025P-Pc
+ for qemu-devel@nongnu.org; Fri, 16 Oct 2026 09:21:55 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1xHhlb-0006yi-4W
- for qemu-devel@nongnu.org; Fri, 16 Oct 2026 09:14:36 -0400
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1xHhse-0007mS-Ef
+ for qemu-devel@nongnu.org; Fri, 16 Oct 2026 09:21:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1792156474;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1792156910;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=cnO4Wg8vQU/yK/TG7plWtl6Ci/8TUrfJJ+HL0fgZK3k=;
- b=GnR4yR3VG1gVlb14WbxVHHCh6ux5ru+DgkToR4ObI//5LhL+GBrisXT/1PflOPfO2ddp5h
- ns9VfEK+my56GGvyJxfq/HXEYyqgIeBV7aKPQ9i9yvKnzKy3O7R0Fq/4AY5rvvU91q/VXd
- l7M/1pkggYCLp7FFUJtGCp3Yrqadi6A=
+ in-reply-to:in-reply-to:references:references;
+ bh=nvNMJKy5hEsNmX3h2yw6AJYeXfgIvjlosnD74UtrqYM=;
+ b=BrYRlfG7yJWVI5E0AdZYF550nXh/arP88upDLRpoRC4iunxcw+wtFHbPGqQoW3D1qWqKM7
+ gFEWjm2zpJog2LAU5YLEgb7ETQTv2zF7P97dbqbIVqvBf4MPblumu77pI8W5ELM8m3aQEb
+ L1AU/XYxHCrDJ69mGQ4A+UCJqvTgZVc=
 Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
  [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-629-zmO3AG_AMbeF8J5zGO2mkw-1; Fri, 16 Oct 2026 13:14:32 +0000
-X-MC-Unique: zmO3AG_AMbeF8J5zGO2mkw-1
-X-Mimecast-MFC-AGG-ID: zmO3AG_AMbeF8J5zGO2mkw_1792156470
+ us-mta-486-jFkG6yp2PT-tnB862yAp3w-1; Fri, 16 Oct 2026 13:21:48 +0000
+X-MC-Unique: jFkG6yp2PT-tnB862yAp3w-1
+X-Mimecast-MFC-AGG-ID: jFkG6yp2PT-tnB862yAp3w_1792156908
 Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-487038bc9b8so5141893f8f.2
- for <qemu-devel@nongnu.org>; Fri, 16 Oct 2026 06:14:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1792156470; x=1792761270; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=cnO4Wg8vQU/yK/TG7plWtl6Ci/8TUrfJJ+HL0fgZK3k=;
- b=e8QWYqmA1k4rHrnyUzpfL3yTIR5JlRhuL1xU4MMnrubexaj2m1ZmTA4X+DAX0lwgYI
- +3NJh/Q8hUuJX+KpO5s6RrJjyPZHdotxvohcsaxzVQSx3VTlaq9M5CDljSPjnDZwKP91
- LyfKPDG7RAkKjuHqF4rL/KNq/659AXAA1fFq1AQzF8WETdCLM9ZhbdYzz1OmdfoDFZd4
- B+G8pFHiBhVhfcdOpHan/4GoBWDQwPgo3I8uBUYXdc//weVXu8jmem3h2FbIZZ58nhsY
- UwnTfz+HKjuBX6Ynr+tV+BY6h+CaSZRI2CPLjNRwmlkUA+Xq7L2wKetYWUVvDDTMQIm+
- yVSA==
+ ffacd0b85a97d-48dfdc0f491so364873f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 16 Oct 2026 06:21:48 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792156470; x=1792761270;
- h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
+ d=1e100.net; s=20260707; t=1792156907; x=1792761707;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:reply-to:user-agent:mime-version
  :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=cnO4Wg8vQU/yK/TG7plWtl6Ci/8TUrfJJ+HL0fgZK3k=;
- b=mQcJYdsOFd6b5KK2l9jw9gpa+k39RhjimceVbjtpj3UiAJNrwMhJl1uVbBQYtE79f/
- HECKKCWmZO4hDN4HD8HaGSEfG+kxbVL2W/LdEvFWjU1I6fy90Dv4gEWnOPvVSQqggF77
- k9aVktZyOqu2MwrwWizgvdGiFwesWlZrCV1Xlpc+OhfiLZ+kAePTz+R8jpuJuOeNR3nV
- 3JI+0qqB5nnkJ6b9OVKPTXs/k5IKfIy5fVkrJFOwORjGCmsiLzhPNrfRmaxm+attAAO0
- dEScBPwg0PAD/ICRGrbJZuqa3SUYC+OCqTygle6zyZvrJrb8oaOV/qUti/on2jTaHu2i
- 5qlw==
-X-Gm-Message-State: AFq9FYI6Nphzv5Tv7jSQ/Cl5YVIM7FvJ24kGjrQdiuK8vVtEnTg5D0om
- UhBZ04U5bWUGpUs80Ji5ke2BjxFRZjK0JULVjHS/jWBgQV69snQbFoxW1Sc3pE/v30HErV+PoNp
- hrFGt+2mF16AUpiFWWyZbp9fhVqVYZdDRXljqrbxMKG3IZOBHyGOp9SZ4QNaLTWsf
-X-Gm-Gg: AYBFou39ZhgENSW4l+EoNaVDC6f8+2ET3CyIyNXuLSegKEuFiArC3XlRO2a6OM1SHUK
- SLtXM83du4NsdoeXbuVnYHqmK1L6x3ezmSqTogWCc5X3xHakz2cDBPusFCxz8HGrHo/54r82gC+
- jZ357VtUNvNyYoIy/wZwS7rUJwGYuiptEiiu7lmTH/9i/3Y+/mf7SW5eMr5OR/IQuapAw5Yzq/Y
- oIbqHZf6rg70jPf0+WS3ySD8OpCmpj7xH6XgffVG6sLvSoCz47bM9t73E6gAS9bY4TlKgMw1EPX
- h7AmvVgWz1fz6nhRLHQX0wgja5lX56DIaUOKZu4buHzJ7rBPEPx91qNQ4eTpXZOi8o7rYLL68g=
- =
-X-Received: by 2002:a5d:64ee:0:b0:48d:f877:3349 with SMTP id
- ffacd0b85a97d-48e019e9d97mr2618875f8f.42.1792156470406; 
- Fri, 16 Oct 2026 06:14:30 -0700 (PDT)
-X-Received: by 2002:a5d:64ee:0:b0:48d:f877:3349 with SMTP id
- ffacd0b85a97d-48e019e9d97mr2618819f8f.42.1792156469979; 
- Fri, 16 Oct 2026 06:14:29 -0700 (PDT)
-Received: from [192.168.0.9] ([47.64.114.244])
+ bh=nvNMJKy5hEsNmX3h2yw6AJYeXfgIvjlosnD74UtrqYM=;
+ b=san3YykmE2w/GMA1tXaW4JtD9pAcE8sXZU/H0GBz87XLhIO2+r8RDchtORuVNYYcSn
+ s19LK/d3PDdU6wuKKW+6LaPcVVvMWRSWuOh3rdNK/thpuSuBpjwpYGRfZRmg/YIJwFPs
+ COxVy7A/KsTspzTLg3uesdsdAbE+gd5VQ62F5GiN9cktqpzI8fFAwhCc8awfLc2/N6mM
+ ORCFGF0/PuOJcx3cBK8iWVVzWnPnMa4bvxxBnGoc9jpP2sSyQbsH7xJe588JnNHyefWw
+ XGeIa0cujNAuE7eESnel7JI/C1W0/ACPUYXAdtsusOCMnk/CuKi2nmTyeS46Ty5iGB7C
+ P5pg==
+X-Forwarded-Encrypted: i=1;
+ AKwUvByQxxXmRm87ldljtG+hXWPixACyqg0ipQHtAGotiuGu7tLnBoDzL9homPx0/o45Mu01ADfoi2TJ/UgT@nongnu.org
+X-Gm-Message-State: AFq9FYLXQtcqgeZ9nVQHBACSgkcqb3drgABrqV6Ww1Hn3H++tKNWRr5U
+ aY+CtTSRP0VnZUAff6l/1RTake9zZZXYvauDGvxvECrEQw/zV2kcX7FqjWVn+OjWZR+LdCmLzvV
+ ATh7wQK/0FoD6M8r9pjGxTc3GSemWTzE7WWaOBPZEVWDHHsXbGq2KyqF4
+X-Gm-Gg: AYBFou3zf6OmvU4l4Q7bboYEQu1Zrsf2p2rL9X979wxK6SUF4ynGz+UnHFHXT0PeuY3
+ SsTn66InK+j1nwwrv0XaMhO/eKTMfwQaE9cjc0k8I2qNduSkyN8+mEcPbuSXmNwxrw+OGmsFFlY
+ kVYo2OdR/ilFchR1datBV8Fc6mi2p0W5jrOFAG8fnq+p09+hLyhZ7vYoDDH80f7xEcGgEyYwAs5
+ XslnAWnIdbQ9Ak0ueIfQCWLT6BWXJdQrWfdyJ7jP9OgmljDs9kzh9iv2LzbgsKjaU9N8LypnPtE
+ 5k1QNucgjfOXl1McT17sfNswYI6AmVA8unKr8/J3F/zazLl5FKy4ULQyy2XVQ1hZsG3ZDtyGsWi
+ eagwrR59ckkmRUnpto8/nveGayvfRq1AQPpXSrZbxY7o1sxDX
+X-Received: by 2002:a05:6000:4b15:b0:48d:fbee:3dec with SMTP id
+ ffacd0b85a97d-48dfbee3fa9mr5402019f8f.29.1792156907527; 
+ Fri, 16 Oct 2026 06:21:47 -0700 (PDT)
+X-Received: by 2002:a05:6000:4b15:b0:48d:fbee:3dec with SMTP id
+ ffacd0b85a97d-48dfbee3fa9mr5401985f8f.29.1792156907098; 
+ Fri, 16 Oct 2026 06:21:47 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48dfd503d78sm4805007f8f.50.2026.10.16.06.14.28
+ ffacd0b85a97d-48dfe4d2321sm5067555f8f.19.2026.10.16.06.21.45
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 16 Oct 2026 06:14:29 -0700 (PDT)
-Message-ID: <1fa765e7-064a-4d50-bdb7-893e52557857@redhat.com>
-Date: Fri, 16 Oct 2026 15:14:28 +0200
+ Fri, 16 Oct 2026 06:21:46 -0700 (PDT)
+Message-ID: <4c9d85b0-4dac-40f8-8541-d79bb3670f12@redhat.com>
+Date: Fri, 16 Oct 2026 15:21:44 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] usb-host: fix use-after-free issues
-To: "sundayjiang(sundayjiang)" <sundayjiang@tencent.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>
-References: <tencent_05C1CBE16E1B8D920F523A75@qq.com>
+Subject: Re: [RFC PATCH v4 24/25] target/arm/qmp: implement
+ query-cpu-props-info for KVM
 Content-Language: en-US
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <tencent_05C1CBE16E1B8D920F523A75@qq.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+To: Khushit Shah <khushit.shah@nutanix.com>, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, kvmarm@lists.linux.dev
+Cc: cohuck@redhat.com, peter.maydell@linaro.org,
+ richard.henderson@linaro.org, maz@kernel.org, oliver.upton@linux.dev,
+ berrange@redhat.com, abologna@redhat.com, jdenemar@redhat.com,
+ gshan@redhat.com, skolothumtho@nvidia.com, sebott@redhat.com,
+ armbru@redhat.com, philmd@linaro.org, yangjinqian1@huawei.com,
+ shaju.abraham@nutanix.com, mark.caveayland@nutanix.com,
+ ping@khushitshah.com, sandesh.patel@nutanix.com
+References: <20260921123249.1708067-1-khushit.shah@nutanix.com>
+ <20260921123249.1708067-25-khushit.shah@nutanix.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20260921123249.1708067-25-khushit.shah@nutanix.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -22
 X-Spam_score: -2.3
 X-Spam_bar: --
 X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -158,39 +119,132 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 16/10/2026 09.37, sundayjiang(sundayjiang) wrote:
-> Fix two independent use-after-free issues in the libusb usb-host
-> backend.
-> 
-> The first patch frees USBHostRequest objects when
-> libusb_submit_transfer() fails, preventing stale USBPacket pointers
-> from remaining on the request queue.
-> 
-> The second patch deletes the lazily allocated bottom halves during
-> device unrealize, preventing callbacks from accessing a freed
-> USBHostDevice.
-> 
-> Tommaso Califano tested the original combined patch and reported that
-> it looks correct.  This series splits the two fixes so that each change
-> has its own logical scope and Fixes tag.
-> 
-> Haotian Jiang (2):
->    usb-host: free request on libusb submit failure
->    usb-host: delete bottom halves during unrealize
-> 
->   hw/usb/host-libusb.c | 29 +++++++++++++++++++++++++++++
->   1 file changed, 29 insertions(+)
-Thanks for the fixes. I'll queue these for my next pull request.
+Hi Khushit,
 
-But if you could do me a favor: The next time you send patches, please don't 
-send them as mime-encoded e-mails. I had to apply these patches manually 
-since "git am" refused to parse your mail. I.e. try to use "git send-email" 
-the next time, this will make sure that your patches can be processed more 
-easily. Thanks!
+On 9/21/26 2:32 PM, Khushit Shah wrote:
+> Implement query-cpu-props-info for ARM64/KVM by creating and finalizing
+> a temporary "host" CPU object and then walking its QOM properties.
+>
+> For numeric SYSREG_ properties, report the host-supported value ranges
+> computed by kvm_arm_field_get_supported_values(). For boolean
+> properties, report false as always supported and true as supported when
+I am not sure false shall be always permitted. for instance iirc
+aarch64=off requires a special KVM capability which is not tested here.
 
-  Thomas
+it is worth to emphasize those are the theoretical values that can be
+easily guessed, this does not check cross feature consistency which can
+only be tested when applying the values at KVM level I guess. So let's
+do not pretend that this is fully reliable. I think the only way to
+double check the chosen values is to do a full expansion for this models
+featuring the new values
+> the QOM property value is true.
+>
+> Signed-off-by: Khushit Shah <khushit.shah@nutanix.com>
+> ---
+>  target/arm/arm-qmp-cmds.c | 84 +++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 84 insertions(+)
+>
+> diff --git a/target/arm/arm-qmp-cmds.c b/target/arm/arm-qmp-cmds.c
+> index 0940285af1..ba488d5c01 100644
+> --- a/target/arm/arm-qmp-cmds.c
+> +++ b/target/arm/arm-qmp-cmds.c
+> @@ -84,6 +84,90 @@ static const char *cpu_model_advertised_features[] = {
+>      NULL
+>  };
+>  
+> +CpuPropertyInfoList *qmp_query_cpu_props_info(Error **errp)
+> +{
+> +    CpuPropertyInfoList *head = NULL;
+> +    const ARMISARegisters *host_isar;
+> +    ObjectPropertyIterator iter;
+> +    ObjectProperty *prop;
+> +    Error *err = NULL;
+> +    ObjectClass *oc;
+> +    Object *obj;
+> +
+> +    if (!kvm_enabled()) {
+> +        error_setg(errp, "query-cpu-props-info requires KVM");
+> +        return NULL;
+> +    }
+> +
+> +    oc = cpu_class_by_name(TYPE_ARM_CPU, "host");
+> +    if (!oc) {
+> +        error_setg(errp, "The 'host' CPU type is not available");
+> +        return NULL;
+> +    }
+> +
+> +    host_isar = kvm_arm_get_host_isar();
+> +
+> +    /* Spin up a scratch "host" vCPU object and walk its QOM properties. */
+> +    obj = object_new_with_class(oc);
+> +    arm_cpu_finalize_features(ARM_CPU(obj), &err);
+> +    if (err) {
+> +        error_propagate(errp, err);
+> +        object_unref(obj);
+> +        return NULL;
+> +    }
+> +
+> +    object_property_iter_init(&iter, obj);
+> +    while ((prop = object_property_iter_next(&iter))) {
+> +        CpuPropertyInfo *info;
+> +
+> +        if (g_str_has_prefix(prop->name, "SYSREG_")) {
+> +            const ARM64SysRegField *field = prop->opaque;
+> +            CpuPropertyValueRangeList *ranges = NULL;
+> +            ArmFieldValueSet *vs = NULL;
+> +
+> +            info = g_new0(CpuPropertyInfo, 1);
+> +            info->name = g_strdup(prop->name);
+> +            info->type = CPU_PROPERTY_TYPE_NUMBER;
+> +
+> +            kvm_arm_field_get_supported_values(field, host_isar, &vs);
+> +            for (size_t k = 0; k < vs->n_ranges; k++) {
+> +                CpuPropertyValueRange *r = g_new0(CpuPropertyValueRange, 1);
+> +                r->min = vs->ranges[k].min;
+> +                r->max = vs->ranges[k].max;
+> +                QAPI_LIST_PREPEND(ranges, r);
+> +            }
+> +            info->u.number.supported_values = ranges;
+> +
+> +            g_free(vs->ranges);
+> +            g_free(vs);
+> +        } else if (g_strv_contains(cpu_model_advertised_features, prop->name)) {
+> +            bool cur = object_property_get_bool(obj, prop->name, &error_abort);
+> +            boolList *values = NULL;
+> +
+> +            info = g_new0(CpuPropertyInfo, 1);
+> +            info->name = g_strdup(prop->name);
+> +            info->type = CPU_PROPERTY_TYPE_BOOLEAN;
+> +
+> +            /*
+> +             * "off" is always supported. "on" is only supported when the
+> +             * host already has the feature enabled.
+> +             */
+> +            QAPI_LIST_PREPEND(values, false);
+> +            if (cur) {
+> +                QAPI_LIST_PREPEND(values, true);
+> +            }
+> +            info->u.boolean.supported_values = values;
+> +        } else {
+> +            continue;
+> +        }
+> +
+> +        QAPI_LIST_PREPEND(head, info);
+> +    }
+> +
+> +    object_unref(obj);
+> +    return head;
+> +}
+> +
+>  CpuModelExpansionInfo *qmp_query_cpu_model_expansion(CpuModelExpansionType type,
+>                                                       CpuModelInfo *model,
+>                                                       Error **errp)
+Thanks
+
+Eric
 
 
