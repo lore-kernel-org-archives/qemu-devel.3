@@ -4,80 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 584D5CC6B38
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 09:31:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85F73CCA462
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 09:31:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHeHQ-0000yh-Vz; Fri, 16 Oct 2026 05:31:13 -0400
+	id 1xHeHO-0000xc-IV; Fri, 16 Oct 2026 05:31:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xHeHP-0000y7-DK
- for qemu-devel@nongnu.org; Fri, 16 Oct 2026 05:31:11 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xHeHM-0005NI-Tw
- for qemu-devel@nongnu.org; Fri, 16 Oct 2026 05:31:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1792143066;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=LMfn7NvvZIVwC55HyfXbXcSAjkVcuSNp2L/fNtLYZs0=;
- b=PXV8huga45imkR4BuDHSxnEhdwGC0vQ5xIt4B8j/4SbZ9lZMvF5/XbqO//0wDkrzs7wSwG
- FJjFeO/jwPsbINdazlJ8QB+Ui2gg3u0Vg/7QDtwy71mSBZmBKU/dMtTrgx5hmDrQg5Mh+r
- RpCpUF/GnW156uL5yy0ztc14VfLUi5A=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-160-bo3uSIlyNB6cCWpBmUHS_Q-1; Fri,
- 16 Oct 2026 09:31:04 +0000
-X-MC-Unique: bo3uSIlyNB6cCWpBmUHS_Q-1
-X-Mimecast-MFC-AGG-ID: bo3uSIlyNB6cCWpBmUHS_Q_1792143063
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 188781954B04; Fri, 16 Oct 2026 09:31:03 +0000 (UTC)
-Received: from redhat.com (headnet03.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.114])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 97D5B1800677; Fri, 16 Oct 2026 09:31:01 +0000 (UTC)
-Date: Fri, 16 Oct 2026 10:30:58 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>,
- Mark Cave-Ayland <mark.caveayland@nutanix.com>
-Subject: Re: [PATCH] include/hw/core/qdev.h: Fix where
- device_class_set_parent_realize docs suggest putting parent_realize
-Message-ID: <atHu0kCSQTD9E34p@redhat.com>
-References: <20261015163352.1751191-1-peter.maydell@linaro.org>
- <atEC-pIGhLYLXVmC@redhat.com>
- <CAFEAcA-wEB15afO4Na8+8cF_Ja3v-8ewd8EdPavxJbfTmrL9GA@mail.gmail.com>
- <atHrFXxyIl3Nbvht@redhat.com>
+ (Exim 4.90_1) (envelope-from <junjie.cao@linux.dev>)
+ id 1xHeH5-0000wZ-Jj
+ for qemu-devel@nongnu.org; Fri, 16 Oct 2026 05:30:55 -0400
+Received: from out-121.mta0.migadu.com ([2001:41d0:1004:224b::79]
+ helo=mta0.migadu.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <junjie.cao@linux.dev>)
+ id 1xHeH1-0005K1-Vg
+ for qemu-devel@nongnu.org; Fri, 16 Oct 2026 05:30:51 -0400
+X-Envelope-To: qemu-devel@nongnu.org
+DKIM-Signature: a=rsa-sha256; bh=+ouZvViFRPAMYG8sfRKAN15h1mI3jDib316AVfl8buc=; 
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1792143045; v=1; x=1792747845;
+ b=cA6OhjinP8ArDG1hLTubhb7WbJqaRBl6AdHyM1cUvO8gtQDMJwJ94FnMAr45zQHlcwm/1IzR
+ dGbgDThdSa8xjw4tcbx2fZ+oDJ/4+zI8DBIYjxN7qOl+pqGNx0UddedTCO03eGPjK80pAXq8G6T
+ yhBmr/dioLoEFPPO9VKlZZRw=
+X-Envelope-To: qemu-devel@nongnu.org
+Received: by smtp.migadu.com with ESMTPS id 5eabafc878108516;
+ Fri, 16 Oct 2026 09:30:29 +0000
+X-Mizu-Trace-ID: 5eabafc878108516
+X-Migadu-Flow: FLOW_OUT
+From: Junjie Cao <junjie.cao@linux.dev>
+To: peter.maydell@linaro.org
+Cc: farosas@suse.de, lvivier@redhat.com, pbonzini@redhat.com,
+ philmd@oss.qualcomm.com, thuth@redhat.com, qemu-devel@nongnu.org,
+ junjie.cao@intel.com
+Subject: [PATCH] tests/qtest: Cover OHCI endpoint type mismatches
+Date: Fri, 16 Oct 2026 09:30:11 +0000
+Message-ID: <20261016093011.521951-1-junjie.cao@linux.dev>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <atHrFXxyIl3Nbvht@redhat.com>
-User-Agent: Mutt/2.4.2 (2026-08-30)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 10
-X-Spam_score: 1.0
-X-Spam_bar: +
-X-Spam_report: (1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2001:41d0:1004:224b::79;
+ envelope-from=junjie.cao@linux.dev; helo=mta0.migadu.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,215 +65,476 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Oct 16, 2026 at 10:15:01AM +0100, Daniel P. Berrangé wrote:
-> On Thu, Oct 15, 2026 at 07:16:58PM +0100, Peter Maydell wrote:
-> > On Thu, 15 Oct 2026 at 17:44, Daniel P. Berrangé <berrange@redhat.com> wrote:
-> > >
-> > > On Thu, Oct 15, 2026 at 05:33:52PM +0100, Peter Maydell wrote:
-> > > > The documentation for device_class_set_parent_realize() suggests that
-> > > > the parent realize function pointer is "usually in the instance
-> > > > structure".  This is definitely wrong, because the function pointer
-> > > > is a class thing, and should live in a class struct, not an instance
-> > > > struct.  Update the documentation to correct this, instead
-> > > > recommending that it should be placed in the class struct for the
-> > > > child class.
-> > > >
-> > > > At time of writing, of the 75 or so uses of this function, about 50
-> > > > put the parent_realize pointer in the child class struct, and about
-> > > > 25 in the parent class struct.  We recommend the former both because
-> > > > it is the more common choice, and also because it makes more logical
-> > > > sense: it's the child that knows (a) that it exists at all and that
-> > > > (b) it wants to have a realize method that will mean it needs to
-> > > > chain back to the parent, and we shouldn't need to edit the parent's
-> > > > class struct because we want to add a child class that chains to its
-> > > > realize method.
-> > >
-> > > I'm confused why we need to store a copy of the parent's
-> > > realize method at all, when we can just reference it from
-> > > the parent class struct ?
-> > >
-> > > Taking one example
-> > >
-> > >   static void pl050_kbd_realize(DeviceState *dev, Error **errp)
-> > >   {
-> > >       PL050DeviceClass *pdc = PL050_GET_CLASS(dev);
-> > >       PL050KbdState *s = PL050_KBD_DEVICE(dev);
-> > >       PL050State *ps = PL050(dev);
-> > >
-> > >       if (!sysbus_realize(SYS_BUS_DEVICE(&s->kbd), errp)) {
-> > >           return;
-> > >       }
-> > >
-> > >       ps->ps2dev = PS2_DEVICE(&s->kbd);
-> > >       pdc->parent_realize(dev, errp);
-> > >   }
-> > >
-> > > why wouldn't we rewrite that as
-> > >
-> > >   static void pl050_kbd_realize(DeviceState *dev, Error **errp)
-> > >   {
-> > >       PL050DeviceClass *pdc = PL050_GET_CLASS(dev);
-> > >       DeviceClass *parent = DEVICE_CLASS(object_class_get_parent(OBJECT_CLASS(pdc)));
-> > >       PL050KbdState *s = PL050_KBD_DEVICE(dev);
-> > >       PL050State *ps = PL050(dev);
-> > >
-> > >       if (!sysbus_realize(SYS_BUS_DEVICE(&s->kbd), errp)) {
-> > >           return;
-> > >       }
-> > >
-> > >       ps->ps2dev = PS2_DEVICE(&s->kbd);
-> > >       parent->realize(dev, errp);
-> > >   }
-> > >
-> > > am I missing a reason we need to store the parent's
-> > > realize method pointer ?
-> > 
-> > Because the parent class's struct doesn't have a pointer to
-> > its realize method. pl050_class_init() does this to set
-> > up its realize method:
-> > 
-> >     DeviceClass *dc = DEVICE_CLASS(oc);
-> > 
-> >     dc->realize = pl050_realize;
-> > 
-> > and that's the only place where pl050_realize is pointed to.
-> > 
-> > To put the child class's realize method into place we need
-> > to overwrite the DeviceClass::realize field, which means we
-> > need somewhere to put the old value.
-> 
-> We're overwriting the DeviceClass::realize field in the class
-> struct instance for "pl050_keyboard". We still have the completely
-> independent class struct instance for "pl050" (which is what
-> object_class_get_parent() returns) that contains the 'realize'
-> field value set by the parent class.
-> 
-> eg if I put a break on pl050_kbd_realize():
-> 
->   (gdb) print pdc->parent_class->parent_class->parent_class->type->name
->   $5 = 0x555557de40a0 "pl050_keyboard"
->   (gdb) print pdc->parent_class->parent_class->realize
->   $6 = (DeviceRealize) 0x55555585db67 <pl050_kbd_realize>
-> 
-> and separately
-> 
->   (gdb) print ((DeviceClass*)(object_class_get_parent(pdc)))->parent_class->type->name
->   $7 = 0x555557de3ee0 "pl050"
->   (gdb) print ((DeviceClass*)(object_class_get_parent(pdc)))->realize
->   $8 = (DeviceRealize) 0x55555585daf4 <pl050_realize>
-> 
-> > We could alternatively solve this by saying:
-> >  (a) every class struct must have a "realize" field,
-> >      and the class init sets both DeviceClass::realize and
-> >      MyClass::realize (perhaps restrict this to only "every
-> >      class that has or might need to have subclasses")
-> >  (b) to chain to the superclass realize, get the MyParentClass
-> >      class pointer and call MyParentClass::realize
-> > 
-> > The support (or lack thereof) in QOM for methods like realize,
-> > unrealize and reset which should pretty much always chain to
-> > their parent class implementation is pretty terrible, so if
-> > we can come up with something more ergonomic I'd be happy to
-> > throw out the hacks we have today.
-> 
-> AFAICT, we can already do everything we need with the parent class
-> to chain up parent virtual methods without having  to keep extra
-> pointers around.
+From: Junjie Cao <junjie.cao@intel.com>
 
-We can make it a little less ugly in the callers with a macro in
-qdev.h thus:
+Check guest-visible state for OHCI transfers whose ED type disagrees with
+the endpoint type. Successful control and isochronous transfers exercise
+the same endpoint paths, ruling out inactive endpoints or an idle schedule.
 
-diff --git a/include/hw/core/qdev.h b/include/hw/core/qdev.h
-index 8e91e2fcb08..18e85850c31 100644
---- a/include/hw/core/qdev.h
-+++ b/include/hw/core/qdev.h
-@@ -461,6 +461,9 @@ static inline bool qdev_is_realized(const DeviceState *dev)
-  */
- bool qdev_realize(DeviceState *dev, BusState *bus, Error **errp);
- 
-+#define qdev_realize_chain_parent(dev, dc, errp) \
-+    DEVICE_CLASS(object_class_get_parent(OBJECT_CLASS(dc)))->realize(dev, errp)
-+
- /**
-  * qdev_realize_and_unref: Realize @dev and drop a reference
-  * @dev: device to realize
+Signed-off-by: Junjie Cao <junjie.cao@intel.com>
+---
+Depends-on: <20261001194756.3003085-1-peter.maydell@linaro.org>
+https://lore.kernel.org/qemu-devel/20261001194756.3003085-1-peter.maydell@linaro.org/
 
+Based on origin/master a19f59a72d96 plus the above OHCI fix.
+Tested on x86_64-softmmu and i386-softmmu with usb-audio and -audiodev none.
+On x86_64, both mismatches fail on that master and pass with the
+prerequisite; the normal cases pass in both. All four cases pass together
+for three rounds on both targets with the fix. OHCI hotplug and
+UHCI/EHCI/xHCI tests also pass.
+These cases check transfer state, not the original USB_RET_ASYNC assert.
 
-which would be used thus:
+ tests/qtest/usb-hcd-ohci-test.c | 415 ++++++++++++++++++++++++++++++++
+ 1 file changed, 415 insertions(+)
 
-
-diff --git a/hw/input/pl050.c b/hw/input/pl050.c
-index 48df2734e26..abe939171f2 100644
---- a/hw/input/pl050.c
-+++ b/hw/input/pl050.c
-@@ -168,7 +168,7 @@ static void pl050_kbd_realize(DeviceState *dev, Error **errp)
-     }
- 
-     ps->ps2dev = PS2_DEVICE(&s->kbd);
--    pdc->parent_realize(dev, errp);
-+    qdev_realize_chain_parent(dev, pdc, errp);
- }
- 
- static void pl050_kbd_init(Object *obj)
-@@ -191,7 +191,8 @@ static void pl050_mouse_realize(DeviceState *dev, Error **errp)
-     }
- 
-     ps->ps2dev = PS2_DEVICE(&s->mouse);
--    pdc->parent_realize(dev, errp);
-+
-+    qdev_realize_chain_parent(dev, pdc, errp);
- }
- 
- static void pl050_mouse_init(Object *obj)
-@@ -206,10 +207,8 @@ static void pl050_mouse_init(Object *obj)
- static void pl050_kbd_class_init(ObjectClass *oc, const void *data)
- {
-     DeviceClass *dc = DEVICE_CLASS(oc);
--    PL050DeviceClass *pdc = PL050_CLASS(oc);
- 
--    device_class_set_parent_realize(dc, pl050_kbd_realize,
--                                    &pdc->parent_realize);
-+    dc->realize = pl050_kbd_realize;
- }
- 
- static const TypeInfo pl050_kbd_info = {
-@@ -223,10 +222,8 @@ static const TypeInfo pl050_kbd_info = {
- static void pl050_mouse_class_init(ObjectClass *oc, const void *data)
- {
-     DeviceClass *dc = DEVICE_CLASS(oc);
--    PL050DeviceClass *pdc = PL050_CLASS(oc);
- 
--    device_class_set_parent_realize(dc, pl050_mouse_realize,
--                                    &pdc->parent_realize);
-+    dc->realize = pl050_mouse_realize;
- }
- 
- static const TypeInfo pl050_mouse_info = {
-diff --git a/include/hw/input/pl050.h b/include/hw/input/pl050.h
-index 2cdfa74f73c..7169afc151f 100644
---- a/include/hw/input/pl050.h
-+++ b/include/hw/input/pl050.h
-@@ -17,8 +17,6 @@
- 
- struct PL050DeviceClass {
-     SysBusDeviceClass parent_class;
--
--    DeviceRealize parent_realize;
+diff --git a/tests/qtest/usb-hcd-ohci-test.c b/tests/qtest/usb-hcd-ohci-test.c
+index 19d760f3fb..5647717b29 100644
+--- a/tests/qtest/usb-hcd-ohci-test.c
++++ b/tests/qtest/usb-hcd-ohci-test.c
+@@ -21,6 +21,397 @@ struct QOHCI_PCI {
+     QPCIDevice dev;
  };
  
- #define TYPE_PL050 "pl050"
++#define HC_CONTROL          0x04
++#define HC_COMMAND_STATUS   0x08
++#define HC_INTERRUPT_STATUS 0x0c
++#define HC_HCCA             0x18
++#define HC_CONTROL_HEAD_ED  0x20
++#define HC_DONE_HEAD        0x30
++#define HC_FM_NUMBER        0x3c
++#define HC_RH_PORT_STATUS   0x54
++#define HC_CONTROL_PLE      (1 << 2)
++#define HC_CONTROL_IE       (1 << 3)
++#define HC_CONTROL_CLE      (1 << 4)
++#define HC_CONTROL_STATE    (3 << 6)
++#define HC_OPERATIONAL      (2 << 6)
++#define HC_CLF              (1 << 1)
++#define HC_UE               (1 << 4)
++#define HC_WD               (1 << 1)
++#define PORT_CCS            (1 << 0)
++#define PORT_PES            (1 << 1)
++#define PORT_RESET          (1 << 4)
++#define TD_CC_NA            (15U << 28)
++#define TD_CC(flags)        ((flags) >> 28)
++#define TD_DP_SETUP         (0 << 19)
++#define TD_DP_OUT           (1 << 19)
++#define TD_DP_IN            (2 << 19)
++#define ED_DIR_OUT          (1 << 11)
++#define ED_DIR_IN           (2 << 11)
++#define ED_ISO              (1 << 15)
++#define ED_HEAD_HALT        (1 << 0)
++#define CC_NOERROR          0
++#define CC_STALL            4
++#define CC_NOTACCESSED      15
++#define FRAME_NS            1000000
++
++typedef struct OHCITransferTest {
++    QTestState *qts;
++    QPCIDevice *pci;
++    QPCIBar bar;
++    uint64_t hcca;
++    uint64_t desc;
++    uint64_t data;
++} OHCITransferTest;
++
++enum OHCITransferScenario {
++    OHCI_TEST_CONTROL,
++    OHCI_TEST_ISO,
++    OHCI_TEST_ISO_TO_CONTROL,
++    OHCI_TEST_GENERAL_TO_ISO,
++};
++
++#define CTRL_ED(t)          ((t)->desc)
++#define CTRL_SETUP_TD(t)    ((t)->desc + 0x20)
++#define CTRL_DATA_TD(t)     ((t)->desc + 0x40)
++#define CTRL_STATUS_TD(t)   ((t)->desc + 0x60)
++#define CTRL_TAIL_TD(t)     ((t)->desc + 0x80)
++#define PERIODIC_ED(t)      ((t)->desc + 0x100)
++#define PERIODIC_TD(t)      ((t)->desc + 0x120)
++#define PERIODIC_TAIL(t)    ((t)->desc + 0x140)
++#define SETUP_BUF(t)        ((t)->data)
++#define CTRL_BUF(t)         ((t)->data + 0x100)
++#define ISO_BUF(t)          ((t)->data + 0x200)
++
++static uint32_t ohci_readl(OHCITransferTest *t, unsigned int reg)
++{
++    return qpci_io_readl(t->pci, t->bar, reg);
++}
++
++static void ohci_writel(OHCITransferTest *t, unsigned int reg, uint32_t val)
++{
++    qpci_io_writel(t->pci, t->bar, reg, val);
++}
++
++static void ohci_write_td(OHCITransferTest *t, uint64_t addr, uint32_t flags,
++                          uint32_t cbp, uint32_t next, uint32_t be)
++{
++    qtest_writel(t->qts, addr, flags | TD_CC_NA);
++    qtest_writel(t->qts, addr + 4, cbp);
++    qtest_writel(t->qts, addr + 8, next);
++    qtest_writel(t->qts, addr + 12, be);
++}
++
++static void ohci_write_ed(OHCITransferTest *t, uint64_t addr, uint32_t flags,
++                          uint32_t head, uint32_t tail)
++{
++    qtest_writel(t->qts, addr, flags);
++    qtest_writel(t->qts, addr + 4, tail);
++    qtest_writel(t->qts, addr + 8, head);
++    qtest_writel(t->qts, addr + 12, 0);
++}
++
++static void ohci_step(OHCITransferTest *t)
++{
++    qtest_clock_step(t->qts, FRAME_NS);
++    g_assert_cmphex(ohci_readl(t, HC_INTERRUPT_STATUS) & HC_UE, ==, 0);
++}
++
++static void ohci_drain_done(OHCITransferTest *t, const uint32_t *expected,
++                            unsigned int expected_count)
++{
++    bool seen[3] = { false };
++    unsigned int seen_count = 0;
++    unsigned int i;
++
++    g_assert_cmpuint(expected_count, <=, G_N_ELEMENTS(seen));
++    for (i = 0; i < 10; i++) {
++        uint32_t done = qtest_readl(t->qts, t->hcca + 0x84);
++
++        if (expected_count == 1 && (done & ~0xfU)) {
++            g_assert_cmphex(done & ~0xfU, ==, expected[0]);
++        }
++
++        while (done & ~0xfU) {
++            uint32_t td = done & ~0xfU;
++            unsigned int j;
++
++            for (j = 0; j < expected_count; j++) {
++                if (expected[j] == td) {
++                    break;
++                }
++            }
++            g_assert_cmpuint(j, <, expected_count);
++            g_assert_false(seen[j]);
++            seen[j] = true;
++            seen_count++;
++            done = qtest_readl(t->qts, td + 8);
++        }
++
++        if (seen_count == expected_count &&
++            qtest_readl(t->qts, t->hcca + 0x84) == 0 &&
++            !(ohci_readl(t, HC_INTERRUPT_STATUS) & HC_WD) &&
++            ohci_readl(t, HC_DONE_HEAD) == 0) {
++            break;
++        }
++
++        /* Consume this HCCA batch before allowing another writeback. */
++        qtest_writel(t->qts, t->hcca + 0x84, 0);
++        ohci_writel(t, HC_INTERRUPT_STATUS, HC_WD);
++        ohci_step(t);
++    }
++
++    g_assert_cmpuint(i, <, 10);
++    g_assert_cmpuint(seen_count, ==, expected_count);
++    g_assert_cmphex(qtest_readl(t->qts, t->hcca + 0x84), ==, 0);
++    g_assert_cmphex(ohci_readl(t, HC_DONE_HEAD), ==, 0);
++    g_assert_cmphex(ohci_readl(t, HC_INTERRUPT_STATUS) & HC_WD, ==, 0);
++}
++
++static void ohci_transfer_init(OHCITransferTest *t, QOHCI_PCI *obj,
++                               QGuestAllocator *alloc)
++{
++    unsigned int i;
++
++    t->qts = global_qtest;
++    t->pci = &obj->dev;
++    qpci_device_enable(t->pci);
++    t->bar = qpci_iomap(t->pci, 0, NULL);
++    t->hcca = guest_alloc(alloc, 0x1000);
++    t->desc = guest_alloc(alloc, 0x1000);
++    t->data = guest_alloc(alloc, 0x1000);
++    qtest_memset(t->qts, t->hcca, 0, 0x1000);
++    qtest_memset(t->qts, t->desc, 0, 0x1000);
++    qtest_memset(t->qts, t->data, 0, 0x1000);
++
++    g_assert_cmphex(ohci_readl(t, HC_RH_PORT_STATUS) & PORT_CCS, ==,
++                    PORT_CCS);
++    ohci_writel(t, HC_RH_PORT_STATUS, PORT_RESET);
++    g_assert_cmphex(ohci_readl(t, HC_RH_PORT_STATUS) & PORT_PES, ==,
++                    PORT_PES);
++    ohci_writel(t, HC_HCCA, t->hcca);
++    ohci_writel(t, HC_CONTROL_HEAD_ED, CTRL_ED(t));
++    ohci_writel(t, HC_CONTROL,
++                HC_OPERATIONAL | HC_CONTROL_CLE | HC_CONTROL_PLE |
++                HC_CONTROL_IE);
++    g_assert_cmphex(ohci_readl(t, HC_CONTROL) &
++                    (HC_CONTROL_STATE | HC_CONTROL_CLE | HC_CONTROL_PLE |
++                     HC_CONTROL_IE), ==,
++                    HC_OPERATIONAL | HC_CONTROL_CLE | HC_CONTROL_PLE |
++                    HC_CONTROL_IE);
++
++    for (i = 0; i < 32; i++) {
++        qtest_writel(t->qts, t->hcca + 4 * i, 0);
++    }
++}
++
++static void ohci_control(OHCITransferTest *t, const uint8_t setup[8],
++                         unsigned int data_len)
++{
++    uint64_t status = data_len ? CTRL_STATUS_TD(t) : CTRL_DATA_TD(t);
++    uint32_t done[3] = { CTRL_SETUP_TD(t), CTRL_DATA_TD(t), status };
++    unsigned int done_count = data_len ? 3 : 2;
++    unsigned int i;
++
++    qtest_memwrite(t->qts, SETUP_BUF(t), setup, 8);
++    qtest_memset(t->qts, CTRL_BUF(t), 0xa5, 64);
++    ohci_write_td(t, CTRL_SETUP_TD(t), TD_DP_SETUP,
++                  SETUP_BUF(t), data_len ? CTRL_DATA_TD(t) : status,
++                  SETUP_BUF(t) + 7);
++    if (data_len) {
++        ohci_write_td(t, CTRL_DATA_TD(t), TD_DP_IN | (3 << 24),
++                      CTRL_BUF(t), status, CTRL_BUF(t) + data_len - 1);
++    }
++    ohci_write_td(t, status, (data_len ? TD_DP_OUT : TD_DP_IN) | (3 << 24),
++                  0, CTRL_TAIL_TD(t), 0);
++    ohci_write_ed(t, CTRL_ED(t), 64 << 16, CTRL_SETUP_TD(t),
++                  CTRL_TAIL_TD(t));
++    ohci_writel(t, HC_COMMAND_STATUS, HC_CLF);
++
++    for (i = 0; i < 10; i++) {
++        ohci_step(t);
++        if ((qtest_readl(t->qts, CTRL_ED(t) + 8) & ~15U) ==
++            CTRL_TAIL_TD(t)) {
++            break;
++        }
++    }
++    g_assert_cmpuint(i, <, 10);
++    g_assert_cmphex(qtest_readl(t->qts, CTRL_ED(t) + 8) & ED_HEAD_HALT,
++                    ==, 0);
++    g_assert_cmpuint(TD_CC(qtest_readl(t->qts, CTRL_SETUP_TD(t))), ==,
++                     CC_NOERROR);
++    if (data_len) {
++        g_assert_cmpuint(TD_CC(qtest_readl(t->qts, CTRL_DATA_TD(t))), ==,
++                         CC_NOERROR);
++    }
++    g_assert_cmpuint(TD_CC(qtest_readl(t->qts, status)), ==, CC_NOERROR);
++    /* Do not reuse a TD while its NextTD still links the done queue. */
++    ohci_drain_done(t, done, done_count);
++}
++
++static void ohci_get_device_descriptor(OHCITransferTest *t)
++{
++    const uint8_t setup[8] = { 0x80, 6, 0, 1, 0, 0, 18, 0 };
++    uint8_t desc[18];
++
++    ohci_control(t, setup, sizeof(desc));
++    qtest_memread(t->qts, CTRL_BUF(t), desc, sizeof(desc));
++    g_assert_cmpuint(desc[0], ==, 18);
++    g_assert_cmpuint(desc[1], ==, 1);
++    g_assert_cmpuint(desc[7], ==, 64);
++    g_assert_cmpuint(desc[17], ==, 1);
++}
++
++static void ohci_enable_audio_stream(OHCITransferTest *t)
++{
++    const uint8_t configure[8] = { 0, 9, 1, 0, 0, 0, 0, 0 };
++    const uint8_t interface[8] = { 1, 11, 1, 0, 1, 0, 0, 0 };
++
++    ohci_control(t, configure, 0);
++    ohci_control(t, interface, 0);
++}
++
++static void ohci_periodic(OHCITransferTest *t, bool iso, unsigned int ep,
++                          bool in, unsigned int len)
++{
++    uint32_t flags = ep << 7 | len << 16 |
++                     (in ? ED_DIR_IN : ED_DIR_OUT) | (iso ? ED_ISO : 0);
++    uint32_t td = PERIODIC_TD(t);
++    uint32_t buf = ISO_BUF(t);
++    unsigned int i;
++
++    qtest_memset(t->qts, buf, 0, len);
++    if (iso) {
++        uint16_t frame = (ohci_readl(t, HC_FM_NUMBER) + 2) & 0xffff;
++
++        qtest_writel(t->qts, td, TD_CC_NA | frame);
++        qtest_writel(t->qts, td + 4, buf);
++        qtest_writel(t->qts, td + 8, PERIODIC_TAIL(t));
++        qtest_writel(t->qts, td + 12, buf + len - 1);
++        qtest_writew(t->qts, td + 16, 0xe000 | (buf & 0xfff));
++        for (i = 1; i < 8; i++) {
++            qtest_writew(t->qts, td + 16 + 2 * i, 0xe000);
++        }
++    } else {
++        ohci_write_td(t, td, in ? TD_DP_IN : TD_DP_OUT,
++                      buf, PERIODIC_TAIL(t), buf + len - 1);
++    }
++    ohci_write_ed(t, PERIODIC_ED(t), flags, td, PERIODIC_TAIL(t));
++    for (i = 0; i < 32; i++) {
++        qtest_writel(t->qts, t->hcca + 4 * i, PERIODIC_ED(t));
++    }
++}
++
++static void ohci_run_valid_iso(OHCITransferTest *t)
++{
++    uint32_t expected[] = { PERIODIC_TD(t) };
++    uint32_t frame;
++    uint32_t head;
++    uint32_t td_flags;
++    uint16_t psw;
++    unsigned int i;
++
++    ohci_periodic(t, true, 1, false, 192);
++    frame = ohci_readl(t, HC_FM_NUMBER) & 0xffff;
++    for (i = 0; i < 5; i++) {
++        ohci_step(t);
++    }
++    g_assert_cmpuint((ohci_readl(t, HC_FM_NUMBER) - frame) & 0xffff, >=, 5);
++    head = qtest_readl(t->qts, PERIODIC_ED(t) + 8);
++    td_flags = qtest_readl(t->qts, PERIODIC_TD(t));
++    g_assert_cmphex(head & ~15U, ==, PERIODIC_TAIL(t));
++    g_assert_cmpuint(TD_CC(td_flags), ==, CC_NOERROR);
++    psw = qtest_readw(t->qts, PERIODIC_TD(t) + 16);
++    g_assert_cmpuint(psw >> 12, ==, CC_NOERROR);
++    g_assert_cmpuint(psw & 0xfff, ==, 0);
++    ohci_drain_done(t, expected, G_N_ELEMENTS(expected));
++}
++
++static void test_ohci_transfer(void *obj, void *data, QGuestAllocator *alloc)
++{
++    OHCITransferTest t;
++    unsigned int scenario = GPOINTER_TO_UINT(data);
++    uint32_t head, td_flags, psw, frame, done;
++    unsigned int i;
++
++    ohci_transfer_init(&t, obj, alloc);
++    ohci_get_device_descriptor(&t);
++    if (scenario == OHCI_TEST_CONTROL) {
++        qpci_iounmap(t.pci, t.bar);
++        guest_free(alloc, t.data);
++        guest_free(alloc, t.desc);
++        guest_free(alloc, t.hcca);
++        return;
++    }
++    if (scenario == OHCI_TEST_ISO_TO_CONTROL) {
++        const uint8_t setup[8] = { 0x80, 6, 0, 1, 0, 0, 18, 0 };
++        uint32_t expected[] = { CTRL_SETUP_TD(&t) };
++
++        qtest_memwrite(t.qts, SETUP_BUF(&t), setup, 8);
++        ohci_write_td(&t, CTRL_SETUP_TD(&t), TD_DP_SETUP,
++                      SETUP_BUF(&t), CTRL_TAIL_TD(&t), SETUP_BUF(&t) + 7);
++        ohci_write_ed(&t, CTRL_ED(&t), 64 << 16, CTRL_SETUP_TD(&t),
++                      CTRL_TAIL_TD(&t));
++        ohci_writel(&t, HC_COMMAND_STATUS, HC_CLF);
++        ohci_step(&t);
++        g_assert_cmpuint(TD_CC(qtest_readl(t.qts, CTRL_SETUP_TD(&t))), ==,
++                         CC_NOERROR);
++        ohci_drain_done(&t, expected, G_N_ELEMENTS(expected));
++        ohci_periodic(&t, true, 0, true, 18);
++    } else {
++        ohci_enable_audio_stream(&t);
++        if (scenario == OHCI_TEST_GENERAL_TO_ISO) {
++            /* Prove this configured endpoint and periodic schedule work. */
++            ohci_run_valid_iso(&t);
++            g_assert_cmphex(qtest_readl(t.qts, t.hcca + 0x84), ==, 0);
++            g_assert_cmphex(ohci_readl(&t, HC_DONE_HEAD), ==, 0);
++            g_assert_cmphex(ohci_readl(&t, HC_INTERRUPT_STATUS) & HC_WD, ==,
++                            0);
++        }
++        if (scenario != OHCI_TEST_GENERAL_TO_ISO) {
++            ohci_periodic(&t, true, 1, false, 192);
++        } else {
++            ohci_periodic(&t, false, 1, false, 192);
++        }
++    }
++
++    frame = ohci_readl(&t, HC_FM_NUMBER) & 0xffff;
++    done = qtest_readl(t.qts, t.hcca + 0x84);
++    for (i = 0; i < 5; i++) {
++        ohci_step(&t);
++    }
++    g_assert_cmpuint((ohci_readl(&t, HC_FM_NUMBER) - frame) & 0xffff, >=, 5);
++    head = qtest_readl(t.qts, PERIODIC_ED(&t) + 8);
++    td_flags = qtest_readl(t.qts, PERIODIC_TD(&t));
++    if (scenario == OHCI_TEST_GENERAL_TO_ISO) {
++        g_assert_cmphex(qtest_readl(t.qts, t.hcca + 0x84), ==, done);
++        g_assert_cmphex(ohci_readl(&t, HC_DONE_HEAD), ==, 0);
++        g_assert_cmphex(ohci_readl(&t, HC_INTERRUPT_STATUS) & HC_WD, ==, 0);
++        g_assert_cmphex(head & ~15U, ==, PERIODIC_TD(&t));
++        g_assert_cmphex(head & ED_HEAD_HALT, ==, 0);
++        g_assert_cmpuint(TD_CC(td_flags), ==, CC_NOTACCESSED);
++        g_assert_cmphex(qtest_readl(t.qts, PERIODIC_TD(&t) + 4), ==,
++                        ISO_BUF(&t));
++    } else {
++        g_assert_cmphex(head & ~15U, ==, PERIODIC_TAIL(&t));
++        /* The iTD CC does not report a packet-level STALL. */
++        g_assert_cmpuint(TD_CC(td_flags), ==, CC_NOERROR);
++        psw = qtest_readw(t.qts, PERIODIC_TD(&t) + 16);
++        g_assert_cmpuint(psw >> 12, ==,
++                         scenario == OHCI_TEST_ISO_TO_CONTROL ? CC_STALL :
++                         CC_NOERROR);
++        g_assert_cmpuint(psw & 0xfff, ==, 0);
++        {
++            uint32_t expected[] = { PERIODIC_TD(&t) };
++
++            ohci_drain_done(&t, expected, G_N_ELEMENTS(expected));
++        }
++    }
++    qpci_iounmap(t.pci, t.bar);
++    guest_free(alloc, t.data);
++    guest_free(alloc, t.desc);
++    guest_free(alloc, t.hcca);
++}
++
+ static void test_ohci_hotplug(void *obj, void *data, QGuestAllocator *alloc)
+ {
+     usb_test_hotplug(global_qtest, "ohci", "1", NULL);
+@@ -41,6 +432,7 @@ static void *ohci_pci_get_driver(void *obj, const char *interface)
+ static void *ohci_pci_create(void *pci_bus, QGuestAllocator *alloc, void *addr)
+ {
+     QOHCI_PCI *ohci_pci = g_new0(QOHCI_PCI, 1);
++    qpci_device_init(&ohci_pci->dev, pci_bus, addr);
+     ohci_pci->obj.get_driver = ohci_pci_get_driver;
+ 
+     return &ohci_pci->obj;
+@@ -62,7 +454,30 @@ libqos_init(ohci_pci_register_nodes);
+ 
+ static void register_ohci_pci_test(void)
+ {
++    QOSGraphTestOptions opts = {
++        .edge.after_cmd_line = "-audiodev none,id=snd0 "
++                               "-device usb-audio,audiodev=snd0,"
++                               "bus=ohci.0,port=1",
++    };
++
+     qos_add_test("ohci_pci-test-hotplug", "pci-ohci", test_ohci_hotplug, NULL);
++    if (strcmp(qtest_get_arch(), "i386") &&
++        strcmp(qtest_get_arch(), "x86_64")) {
++        return;
++    }
++    if (!qtest_has_device("usb-audio")) {
++        return;
++    }
++    opts.arg = GUINT_TO_POINTER(OHCI_TEST_CONTROL);
++    qos_add_test("ohci_pci-control", "pci-ohci", test_ohci_transfer, &opts);
++    opts.arg = GUINT_TO_POINTER(OHCI_TEST_ISO);
++    qos_add_test("ohci_pci-iso", "pci-ohci", test_ohci_transfer, &opts);
++    opts.arg = GUINT_TO_POINTER(OHCI_TEST_ISO_TO_CONTROL);
++    qos_add_test("ohci_pci-iso-to-control", "pci-ohci", test_ohci_transfer,
++                 &opts);
++    opts.arg = GUINT_TO_POINTER(OHCI_TEST_GENERAL_TO_ISO);
++    qos_add_test("ohci_pci-general-to-iso", "pci-ohci", test_ohci_transfer,
++                 &opts);
+ }
+ 
+ libqos_init(register_ohci_pci_test);
 
-
-
-With regards,
-Daniel
+base-commit: a19f59a72d96056d9a8f48cf6c77f5787491e414
+prerequisite-patch-id: 3ed922e3f93cb343f72e1f54ad2b87e4381ce0b9
 -- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+2.43.0
 
 
