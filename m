@@ -4,78 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9720FCCA462
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 09:16:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73A47CCA462
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 09:25:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHe22-0004qi-3z; Fri, 16 Oct 2026 05:15:18 -0400
+	id 1xHeBD-0005oS-Ev; Fri, 16 Oct 2026 05:24:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xHe20-0004qU-6O
- for qemu-devel@nongnu.org; Fri, 16 Oct 2026 05:15:16 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <daejun7.park@samsung.com>)
+ id 1xHeB5-0005nw-TM
+ for qemu-devel@nongnu.org; Fri, 16 Oct 2026 05:24:41 -0400
+Received: from mailout1.samsung.com ([203.254.224.24])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xHe1x-0003sF-Ar
- for qemu-devel@nongnu.org; Fri, 16 Oct 2026 05:15:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1792142111;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=oMy0Rc3tuPqcCewSjrGUjopxLy77KxdcAAWyUvHlNvA=;
- b=WamUySjUAmUNRaULfnUIp86RRH6dziay7LHcnm1jYhpiVMmoFFEIy3ZdU3d9rDW6Urn5m+
- JUNVYDM/uHd2HeHVYYPAEBfvg0BmdEFta1PCdWgx2K2rNhZpY7rwzduBFrQEPwXYf0RzOZ
- u3gdgqvrH/GFyBscv85Nfzd5nV3fNfA=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-532-aWoZZOziO6e9jKXFGMODcA-1; Fri,
- 16 Oct 2026 09:15:07 +0000
-X-MC-Unique: aWoZZOziO6e9jKXFGMODcA-1
-X-Mimecast-MFC-AGG-ID: aWoZZOziO6e9jKXFGMODcA_1792142106
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6912E180059C; Fri, 16 Oct 2026 09:15:06 +0000 (UTC)
-Received: from redhat.com (headnet03.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.114])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BE79D195608A; Fri, 16 Oct 2026 09:15:04 +0000 (UTC)
-Date: Fri, 16 Oct 2026 10:15:01 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Mark Cave-Ayland <mark.caveayland@nutanix.com>
-Subject: Re: [PATCH] include/hw/core/qdev.h: Fix where
- device_class_set_parent_realize docs suggest putting parent_realize
-Message-ID: <atHrFXxyIl3Nbvht@redhat.com>
-References: <20261015163352.1751191-1-peter.maydell@linaro.org>
- <atEC-pIGhLYLXVmC@redhat.com>
- <CAFEAcA-wEB15afO4Na8+8cF_Ja3v-8ewd8EdPavxJbfTmrL9GA@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAFEAcA-wEB15afO4Na8+8cF_Ja3v-8ewd8EdPavxJbfTmrL9GA@mail.gmail.com>
-User-Agent: Mutt/2.4.2 (2026-08-30)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
-X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
+ (Exim 4.90_1) (envelope-from <daejun7.park@samsung.com>)
+ id 1xHeB2-0004cS-BZ
+ for qemu-devel@nongnu.org; Fri, 16 Oct 2026 05:24:39 -0400
+Received: from epcas2p4.samsung.com (unknown [182.195.41.56])
+ by mailout1.samsung.com (KnoxPortal) with ESMTP id
+ 20261016092425epoutp010d9f8bc68fdacd103db5b438fb94b8ce~e_EJsKCK50523405234epoutp01v
+ for <qemu-devel@nongnu.org>; Fri, 16 Oct 2026 09:24:25 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.samsung.com
+ 20261016092425epoutp010d9f8bc68fdacd103db5b438fb94b8ce~e_EJsKCK50523405234epoutp01v
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+ s=mail20170921; t=1792142665;
+ bh=Q8z30ThILf3z5sZb5cYHWaLVlH0oHhHC8PlCYQ4ofWc=;
+ h=Subject:Reply-To:From:To:CC:Date:References:From;
+ b=SXN04qzUNvosX18nqiocT1Q0WaDZ2Ctfsmg7HzporipC5sizCpRPa/HqHSP0hFzJ5
+ IlYzSAeq3Q7jxB64YExPWSe28IDj+Pxulvj3d5GKEQSbNivf8G2PYtJlMJe73+jy53
+ rpstmGAiKEHN5Byhxb9i2w5TYUVWpYpB3CpEDUHM=
+Received: from epsnrtp04.localdomain (unknown [182.195.42.156]) by
+ epcas2p2.samsung.com (KnoxPortal) with ESMTPS id
+ 20261016092425epcas2p25c1cfac165f4d08a403b886d5b011dce~e_EI4BH0O0311903119epcas2p27;
+ Fri, 16 Oct 2026 09:24:25 +0000 (GMT)
+Received: from epcas2p1.samsung.com (unknown [182.195.38.204]) by
+ epsnrtp04.localdomain (Postfix) with ESMTP id 4j5ff05hv8z6B9mF; Fri, 16 Oct
+ 2026 09:24:24 +0000 (GMT)
+Mime-Version: 1.0
+Subject: [PATCH v2 0/6] Support for Zoned UFS
+From: Daejun Park <daejun7.park@samsung.com>
+To: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+CC: Jeuk Kim <jeuk20.kim@samsung.com>, "farosas@suse.de" <farosas@suse.de>,
+ "lvivier@redhat.com" <lvivier@redhat.com>, "pbonzini@redhat.com"
+ <pbonzini@redhat.com>, "kwolf@redhat.com" <kwolf@redhat.com>,
+ "hreitz@redhat.com" <hreitz@redhat.com>, "qemu-block@nongnu.org"
+ <qemu-block@nongnu.org>, "pierrick.bouvier@oss.qualcomm.com"
+ <pierrick.bouvier@oss.qualcomm.com>, Daejun Park <daejun7.park@samsung.com>,
+ "qemu-stable@nongnu.org" <qemu-stable@nongnu.org>
+X-Priority: 3
+X-Content-Kind-Code: NORMAL
+X-CPGS-Detection: blocking_info_exchange
+X-Drm-Type: N,general
+X-Msg-Generator: Mail
+X-Msg-Type: PERSONAL
+X-Reply-Demand: N
+Message-ID: <20261016092423epcms2p83f80a8dd8f7c1ddc3a94541e0771c306@epcms2p8>
+Date: Fri, 16 Oct 2026 18:24:23 +0900
+X-CMS-MailID: 20261016092423epcms2p83f80a8dd8f7c1ddc3a94541e0771c306
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="utf-8"
+X-Sendblock-Type: AUTO_CONFIDENTIAL
+CMS-TYPE: 102P
+X-CPGSPASS: Y
+X-CPGSPASS: Y
+cpgsPolicy: CPGSC10-223,Y
+X-CFilter-Loop: Reflected
+X-CMS-RootMailID: 20261016092423epcms2p83f80a8dd8f7c1ddc3a94541e0771c306
+References: <CGME20261016092423epcms2p83f80a8dd8f7c1ddc3a94541e0771c306@epcms2p8>
+Received-SPF: pass client-ip=203.254.224.24;
+ envelope-from=daejun7.park@samsung.com; helo=mailout1.samsung.com
+X-Spam_score_int: -45
+X-Spam_score: -4.6
+X-Spam_bar: ----
+X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_NONE=0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,129 +92,61 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+Reply-To: daejun7.park@samsung.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Oct 15, 2026 at 07:16:58PM +0100, Peter Maydell wrote:
-> On Thu, 15 Oct 2026 at 17:44, Daniel P. Berrangé <berrange@redhat.com> wrote:
-> >
-> > On Thu, Oct 15, 2026 at 05:33:52PM +0100, Peter Maydell wrote:
-> > > The documentation for device_class_set_parent_realize() suggests that
-> > > the parent realize function pointer is "usually in the instance
-> > > structure".  This is definitely wrong, because the function pointer
-> > > is a class thing, and should live in a class struct, not an instance
-> > > struct.  Update the documentation to correct this, instead
-> > > recommending that it should be placed in the class struct for the
-> > > child class.
-> > >
-> > > At time of writing, of the 75 or so uses of this function, about 50
-> > > put the parent_realize pointer in the child class struct, and about
-> > > 25 in the parent class struct.  We recommend the former both because
-> > > it is the more common choice, and also because it makes more logical
-> > > sense: it's the child that knows (a) that it exists at all and that
-> > > (b) it wants to have a realize method that will mean it needs to
-> > > chain back to the parent, and we shouldn't need to edit the parent's
-> > > class struct because we want to add a child class that chains to its
-> > > realize method.
-> >
-> > I'm confused why we need to store a copy of the parent's
-> > realize method at all, when we can just reference it from
-> > the parent class struct ?
-> >
-> > Taking one example
-> >
-> >   static void pl050_kbd_realize(DeviceState *dev, Error **errp)
-> >   {
-> >       PL050DeviceClass *pdc = PL050_GET_CLASS(dev);
-> >       PL050KbdState *s = PL050_KBD_DEVICE(dev);
-> >       PL050State *ps = PL050(dev);
-> >
-> >       if (!sysbus_realize(SYS_BUS_DEVICE(&s->kbd), errp)) {
-> >           return;
-> >       }
-> >
-> >       ps->ps2dev = PS2_DEVICE(&s->kbd);
-> >       pdc->parent_realize(dev, errp);
-> >   }
-> >
-> > why wouldn't we rewrite that as
-> >
-> >   static void pl050_kbd_realize(DeviceState *dev, Error **errp)
-> >   {
-> >       PL050DeviceClass *pdc = PL050_GET_CLASS(dev);
-> >       DeviceClass *parent = DEVICE_CLASS(object_class_get_parent(OBJECT_CLASS(pdc)));
-> >       PL050KbdState *s = PL050_KBD_DEVICE(dev);
-> >       PL050State *ps = PL050(dev);
-> >
-> >       if (!sysbus_realize(SYS_BUS_DEVICE(&s->kbd), errp)) {
-> >           return;
-> >       }
-> >
-> >       ps->ps2dev = PS2_DEVICE(&s->kbd);
-> >       parent->realize(dev, errp);
-> >   }
-> >
-> > am I missing a reason we need to store the parent's
-> > realize method pointer ?
-> 
-> Because the parent class's struct doesn't have a pointer to
-> its realize method. pl050_class_init() does this to set
-> up its realize method:
-> 
->     DeviceClass *dc = DEVICE_CLASS(oc);
-> 
->     dc->realize = pl050_realize;
-> 
-> and that's the only place where pl050_realize is pointed to.
-> 
-> To put the child class's realize method into place we need
-> to overwrite the DeviceClass::realize field, which means we
-> need somewhere to put the old value.
+This series lets a ufs-lu be a host-managed zoned block device (ZBC)
+with zoned=on, so that the zoned storage stack, for example f2fs on
+host-managed zones, can be tested on UFS without zoned UFS hardware.
+Patches 1-3 fix the command path that the zoned code relies on and can
+be merged first; patch 4 documents zoned logical units, patch 5 adds
+them and patch 6 the tests.
 
-We're overwriting the DeviceClass::realize field in the class
-struct instance for "pl050_keyboard". We still have the completely
-independent class struct instance for "pl050" (which is what
-object_class_get_parent() returns) that contains the 'realize'
-field value set by the parent class.
+Not modelled: persistent zone state, conventional and gap zones, and the
+zoned UFS descriptor bits.
 
-eg if I put a break on pl050_kbd_realize():
+Tested with the UFS qtests (also under ASan and UBSan) and with Linux
+7.3-rc7 and android17-6.18 guests, legacy doorbell and MCQ: fio
+--zonemode=zbd with verification, blkzone, and f2fs on android17-6.18.
 
-  (gdb) print pdc->parent_class->parent_class->parent_class->type->name
-  $5 = 0x555557de40a0 "pl050_keyboard"
-  (gdb) print pdc->parent_class->parent_class->realize
-  $6 = (DeviceRealize) 0x55555585db67 <pl050_kbd_realize>
+Changes in v2:
+- Drop the hw/scsi patch: scsi-hd stays TYPE_DISK and ufs-lu reports
+  TYPE_ZBC itself. With v1's TYPE_ZBC scsi-hd, MODE SENSE failed and the
+  guest never sent a flush.
+- New patches 1-3: a crash on commands without a PRDT, SYNCHRONIZE
+  CACHE(16), and PRDTs longer than the CDB transfer length.
+- Fix v1's REPORT ZONES buffer overflow, NULL zone dereference past the
+  last zone, division by zero with zoned.zone_size=0, and its zone state
+  handling.
+- Move the write pointer back when a write fails or is aborted, reject
+  UNMAP, drop zoned.zone_capacity.
+- Add trace events, tests and documentation.
+- Jeuk's Reviewed-by on v1 is not carried over, since both patches
+  changed substantially.
+- Link to v1: https://lore.kernel.org/qemu-devel/20231208060902epcms2p3810b29fefbddaf16a7f3f2758cf218ba@epcms2p3
 
-and separately
+---
+Daejun Park (6):
+      hw/ufs: Fail SCSI commands that move data without a PRDT
+      hw/ufs: Pass SYNCHRONIZE CACHE(16) to scsi-hd as SYNCHRONIZE CACHE(10)
+      hw/ufs: Limit data transfers to the transfer length of the CDB
+      docs/system: Document zoned UFS logical units
+      hw/ufs: Support for Zoned UFS
+      tests/qtest: Add tests for Zoned UFS
 
-  (gdb) print ((DeviceClass*)(object_class_get_parent(pdc)))->parent_class->type->name
-  $7 = 0x555557de3ee0 "pl050"
-  (gdb) print ((DeviceClass*)(object_class_get_parent(pdc)))->realize
-  $8 = (DeviceRealize) 0x55555585daf4 <pl050_realize>
+ docs/system/devices/ufs.rst |   55 +++
+ hw/ufs/lu.c                 |  886 ++++++++++++++++++++++++++++++++-
+ hw/ufs/trace-events         |    6 +
+ hw/ufs/ufs.h                |   36 ++
+ include/block/ufs.h         |   27 +
+ tests/qtest/ufs-test.c      | 1146 +++++++++++++++++++++++++++++++++++++++++++
+ 6 files changed, 2151 insertions(+), 5 deletions(-)
+---
+base-commit: 7e8d3c7fc460fe7cd28a3e423d7466fa292bc269
+change-id: 20261016-zoned-ufs-0a6c741446a9
 
-> We could alternatively solve this by saying:
->  (a) every class struct must have a "realize" field,
->      and the class init sets both DeviceClass::realize and
->      MyClass::realize (perhaps restrict this to only "every
->      class that has or might need to have subclasses")
->  (b) to chain to the superclass realize, get the MyParentClass
->      class pointer and call MyParentClass::realize
-> 
-> The support (or lack thereof) in QOM for methods like realize,
-> unrealize and reset which should pretty much always chain to
-> their parent class implementation is pretty terrible, so if
-> we can come up with something more ergonomic I'd be happy to
-> throw out the hacks we have today.
-
-AFAICT, we can already do everything we need with the parent class
-to chain up parent virtual methods without having  to keep extra
-pointers around.
-
-With regards,
-Daniel
+Best regards,
 -- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
-
+Daejun Park <daejun7.park@samsung.com>
 
