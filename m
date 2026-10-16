@@ -4,73 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF826CCA462
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 09:44:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1581ACC6B38
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 09:44:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHeUC-000175-23; Fri, 16 Oct 2026 05:44:25 -0400
+	id 1xHeUA-00013z-1m; Fri, 16 Oct 2026 05:44:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xHeTo-0000wY-MJ
- for qemu-devel@nongnu.org; Fri, 16 Oct 2026 05:44:02 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1xHeTz-0000y3-EJ
+ for qemu-devel@nongnu.org; Fri, 16 Oct 2026 05:44:18 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xHeTm-0007K1-LQ
- for qemu-devel@nongnu.org; Fri, 16 Oct 2026 05:43:59 -0400
+ id 1xHeTx-0007LD-Ne
+ for qemu-devel@nongnu.org; Fri, 16 Oct 2026 05:44:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1792143837;
+ s=mimecast20190719; t=1792143849;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=/alU1FOVtQDtrfm2izDGqKUn26NeShLQ0co9p+UnUT4=;
- b=Pf+jnu3VOr8Qr7mkqTU5pjT2Twky/STI1JGO4fYPqmX17mY3lNXulF+smComEYe5XFVwMC
- PhSCXzV+JHpZGdPOELrUVe1I6dTse7F26PqkPQhnmBoxwmz3DSRW9fThvZ65WjZLumrCF1
- jT09HHJw+VuRlCi2iPyVg7uR1SRYdKI=
+ bh=c1P7wup21MEqIPiv1Q/cTpVzJ4nDRuegAEr/nbgt6DI=;
+ b=fTTWXvcI61X4kF1Ku06b19mRDwSiIW3HDMnC4o9PvZX6AC06RDkyKb+MJRK3j8tMpAExg2
+ 2wHOFcYaTJU/UBM06sARwjrNMR2eUa3U/C5CpzobeyhcWyajmF9OVOPgcTfidzKCinz9P5
+ iBwW/GJDYJOsneQEeZpR2MNJbaMR67s=
 Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-278-8hl8pu_iP5iRom_4kjBXzA-1; Fri,
- 16 Oct 2026 09:43:55 +0000
-X-MC-Unique: 8hl8pu_iP5iRom_4kjBXzA-1
-X-Mimecast-MFC-AGG-ID: 8hl8pu_iP5iRom_4kjBXzA_1792143835
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-235-cEhlLCoGMuWSbbajTc6Jhw-1; Fri,
+ 16 Oct 2026 09:44:05 +0000
+X-MC-Unique: cEhlLCoGMuWSbbajTc6Jhw-1
+X-Mimecast-MFC-AGG-ID: cEhlLCoGMuWSbbajTc6Jhw_1792143844
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E42C31955F1E
- for <qemu-devel@nongnu.org>; Fri, 16 Oct 2026 09:43:54 +0000 (UTC)
+ id B23561955E9C; Fri, 16 Oct 2026 09:44:04 +0000 (UTC)
 Received: from berrange.csb (headnet03.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.114])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C0E823000735; Fri, 16 Oct 2026 09:43:53 +0000 (UTC)
+ id 0F1B73000B4E; Fri, 16 Oct 2026 09:44:02 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PULL 2/8] seccomp: drop redundant match for clone() flags == 0
-Date: Fri, 16 Oct 2026 10:43:42 +0100
-Message-ID: <20261016094348.2616374-3-berrange@redhat.com>
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
+Subject: [PULL 7/8] Revert "crypto: add tracing & warning about GNUTLS
+ countermeasures"
+Date: Fri, 16 Oct 2026 10:43:47 +0100
+Message-ID: <20261016094348.2616374-8-berrange@redhat.com>
 In-Reply-To: <20261016094348.2616374-1-berrange@redhat.com>
 References: <20261016094348.2616374-1-berrange@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 10
 X-Spam_score: 1.0
 X-Spam_bar: +
 X-Spam_report: (1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -87,101 +86,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We have seccomp matches for clone() which mandate the presence of
-several flags, in order to permit pthreads_create:
+This reverts commit 0db6f798024ea6f57ecf2020209b761b50a01d71.
 
-  REQUIRE_CLONE_FLAG(CLONE_VM);
-  REQUIRE_CLONE_FLAG(CLONE_FS);
-  ...
+The workaround for the GNUTLS bug was not correct and it was
+decided to rely on GNUTLS being patched by distros instead,
+or users manually disabling use of the problematic ciphers.
 
-Given those mandatory matches, it is impossible for flags == 0 to
-pass the filter. This is fortunate, since the explicit match on
-flags == 0 is in fact broken, as it has a silent size extension
-from 32-bits to 64-bits.
-
-This results in seccomp generating pseudo code of:
-
-    if ($arch == 3221225534)
-      # filter for syscall "clone" (56) [priority: 65531]
-      if ($syscall == 56)
-        if ($a0.hi32 & 0xffffffff == 0)
-          if ($a0.lo32 & 0xffffff00 == 0)
-            action ERRNO(1);
-      # default action
-      action ALLOW;
-    # invalid architecture action
-    action KILL;
-
-Since the clone() flag is passed as a 32-bit value in the syscall,
-the high 32-bits are liable to be undefined/uninitialized garbage
-
-The desired match for flags == 0 was
-
-    if ($arch == 3221225534)
-      # filter for syscall "clone" (56) [priority: 65532]
-      if ($syscall == 56)
-        if ($a0.hi32 & 0x00000000 == 0)
-          if ($a0.lo32 & 0xffffff00 == 0)
-            action ERRNO(1);
-      # default action
-      action ALLOW;
-    # invalid architecture action
-    action KILL;
-
-That is redundant, however, as can be seen if we look at the
-(fixed) program with the CLONE_THREAD rule also present:
-
-    if ($arch == 3221225534)
-      # filter for syscall "clone" (56) [priority: 65532]
-      if ($syscall == 56)
-        if ($a0.hi32 & 0x00000000 == 0)
-          if ($a0.lo32 & 0xffffff00 == 0)
-            action ERRNO(1);
-          if ($a0.lo32 & 0x00010000 == 0)
-            action ERRNO(1);
-      # default action
-      action ALLOW;
-    # invalid architecture action
-    action KILL;
-
-That "($a0.lo32 & 0x00010000 == 0)" match will catch the case
-of flags == 0 and do the right thing.
-
-Reported-by: Ricardo Branco (https://gitlab.com/ricardobranco777)
-Related: https://gitlab.com/qemu-project/qemu/-/work_items/4671
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Acked-by: Peter Xu <peterx@redhat.com>
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- system/qemu-seccomp.c | 9 ---------
- 1 file changed, 9 deletions(-)
+ crypto/tlssession.c | 11 -----------
+ crypto/trace-events |  1 -
+ 2 files changed, 12 deletions(-)
 
-diff --git a/system/qemu-seccomp.c b/system/qemu-seccomp.c
-index cd2c1b0b747..a71cf66028d 100644
---- a/system/qemu-seccomp.c
-+++ b/system/qemu-seccomp.c
-@@ -76,13 +76,6 @@ const struct scmp_arg_cmp sched_setscheduler_arg[] = {
-     { SCMP_SYS(clone),                  QEMU_SECCOMP_SET_SPAWN, \
-       ARRAY_SIZE(clone_arg ## flag), clone_arg ## flag, SCMP_ACT_ERRNO(EPERM) }
- 
--/* If no CLONE_* flags are set, except CSIGNAL, deny */
--const struct scmp_arg_cmp clone_arg_none[] = {
--    { .arg = CLONE_FLAGS_ARG,
--      .op = SCMP_CMP_MASKED_EQ,
--      .datum_a = ~(CSIGNAL), .datum_b = 0 }
--};
--
- /*
-  * pthread_create should always set all of these.
+diff --git a/crypto/tlssession.c b/crypto/tlssession.c
+index b343d1a5956..9450c83d9c3 100644
+--- a/crypto/tlssession.c
++++ b/crypto/tlssession.c
+@@ -19,7 +19,6 @@
   */
-@@ -219,8 +212,6 @@ static const struct QemuSeccompSyscall denylist[] = {
-       0, NULL, SCMP_ACT_ERRNO(EPERM) },
-     { SCMP_SYS(execve),                 QEMU_SECCOMP_SET_SPAWN,
-       0, NULL, SCMP_ACT_ERRNO(EPERM) },
--    { SCMP_SYS(clone),                  QEMU_SECCOMP_SET_SPAWN,
--      ARRAY_SIZE(clone_arg_none), clone_arg_none, SCMP_ACT_ERRNO(EPERM) },
-     RULE_CLONE_FLAG(CLONE_VM),
-     RULE_CLONE_FLAG(CLONE_FS),
-     RULE_CLONE_FLAG(CLONE_FILES),
+ 
+ #include "qemu/osdep.h"
+-#include "qemu/error-report.h"
+ #include "qemu/thread.h"
+ #include "crypto/tlssession.h"
+ #include "crypto/tlscredsanon.h"
+@@ -572,20 +571,10 @@ qcrypto_tls_session_handshake(QCryptoTLSSession *session,
+          * only have to protect against automatic rekeying
+          * which doesn't trigger with CHACHA20
+          */
+-        trace_qcrypto_tls_session_parameters(
+-            session,
+-            session->requireThreadSafety,
+-            gnutls_protocol_get_version(session->handle),
+-            cipher);
+-
+         if (session->requireThreadSafety &&
+             gnutls_protocol_get_version(session->handle) ==
+             GNUTLS_TLS1_3 &&
+             cipher != GNUTLS_CIPHER_CHACHA20_POLY1305) {
+-            warn_report("WARNING: activating thread safety countermeasures "
+-                        "for potentially broken GNUTLS with TLS1.3 cipher=%d",
+-                        cipher);
+-            trace_qcrypto_tls_session_bug1717_workaround(session);
+             session->lockEnabled = true;
+         }
+ #endif
+diff --git a/crypto/trace-events b/crypto/trace-events
+index 771f9b8a6e8..9905ea261a9 100644
+--- a/crypto/trace-events
++++ b/crypto/trace-events
+@@ -23,7 +23,6 @@ qcrypto_tls_session_new(void *session, void *creds, const char *hostname, const
+ qcrypto_tls_session_check_creds(void *session, const char *status) "TLS session check creds session=%p status=%s"
+ qcrypto_tls_session_check_x509_dn(void *session, const char *dname) "TLS session check x509 distinguished name session=%p dname=%s"
+ qcrypto_tls_session_parameters(void *session, int threadSafety, int protocol, int cipher) "TLS session parameters session=%p threadSafety=%d protocol=%d cipher=%d"
+-qcrypto_tls_session_bug1717_workaround(void *session) "TLS session bug1717 workaround session=%p"
+ 
+ # tls-cipher-suites.c
+ qcrypto_tls_cipher_suite_priority(const char *name) "priority: %s"
 -- 
 2.56.0
 
