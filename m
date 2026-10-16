@@ -4,88 +4,183 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAD3FCCA462
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 09:09:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3F28CCA464
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 09:10:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHdw2-0002Ia-7H; Fri, 16 Oct 2026 05:09:07 -0400
+	id 1xHdwz-0002yN-FM; Fri, 16 Oct 2026 05:10:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <fritchleybohrer@gmail.com>)
- id 1xHdvs-0002IC-VV
- for qemu-devel@nongnu.org; Fri, 16 Oct 2026 05:08:57 -0400
-Received: from mail-pj2-x0b.google.com ([2607:f8b0:4864:39::b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <fritchleybohrer@gmail.com>)
- id 1xHdvn-00039r-Re
- for qemu-devel@nongnu.org; Fri, 16 Oct 2026 05:08:53 -0400
-Received: by mail-pj2-x0b.google.com with SMTP id
- d9443c01a7336-2e609985789so23289895ad.1
- for <qemu-devel@nongnu.org>; Fri, 16 Oct 2026 02:08:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1792141729; x=1792746529; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=qaRD/4q9PGRUjXYuBhoz03xHv+WwWzOxZlY6uZE5R9A=;
- b=nqyJrWrGdXxv7BMJ/fJUFSxziM3HopVqxBTZq8PUc0vmtjPyucENolqx7sJtyRaVOA
- gOuGHrsJlufsep4X98VGRzzHknCXuDwzdBTeKUMn1Wz79dC3tgeVPiG3fOjl1/FBKWBu
- FIHWc6HHAFzAqIy34D4zAW+PUv7C/nxFyEdS/iMPpcG/18bNSvMm1Qb+YU+dqPtP0AqZ
- ZkYl7q+clBAC21q1jxnKuMzey8rVb3S8LC5JKuRMgyjcnm9S4/ZhYnMZyrOFrfOBmycX
- LPJhqXZbYaPbeuTaQWNOx0u2EmVFTiTu3UZ2jP2Ma0+1n0mgsgzaTr/9vrcfasuec0ml
- +9QQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792141729; x=1792746529;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=qaRD/4q9PGRUjXYuBhoz03xHv+WwWzOxZlY6uZE5R9A=;
- b=kfJZuk09I9QNAtjQhIID3FovU1+cr8m6P0TtJeMJYQD0SMg7TeXzko6k71gPjG9boo
- JGjZ0V+lC5DHvcsMipVOBOO9Qpvs0+96SM4j1ub5fscfoWOw8mCkgv/q9l80VUsZOeJo
- hleT8i1Ihki/tczMHXKTvRoGmjAfRJwXwREZYPheWkeC/P8AaHHjV2RmU54JPsPvndh3
- AC01+PzeSHI9PnTZG4pqaMB3sIdrpbdKCpX+2SztYLvuHPLkXzRzthIumwiYQUAyEKdg
- agxN4FnpGrhK5jYmk+kYElO6eEZGlTExbEZIr1k9c9avkFk1pm5yWi0fLr8AdFIjQls1
- XC4g==
-X-Gm-Message-State: AFq9FYLyfb2Hx7Ct8ullYTkIKVyas+75PyjknBRFn4B8bybljtzDmSNI
- 9A7qV1cRCAlmgylJCC+YbPPMv+VmL8xXI9wOpfw0+RNNwdlmUEYcRR3L
-X-Gm-Gg: AYBFou1nqhz5dro9/b15ItjpTBbTFa/CBO3mBW5wT/JkoKX4suy3WhjLgcxxT+Gtg4Z
- cExt8N7Ewx8VC6jVtEmzvZguSdskDPVuXEfi2uviFvrLsHloJA+e1EISilgGeU84Xq5d3CieFtv
- bMggfVF1s95jK13A4xUm2SufDD4hi4xSx576FDMD6BSaYMUPfayKAFHG+MF7u7HKdiBwBny4UM9
- GRFK8tso0doNDhKF5BVAUU+R6r1Iy3/edZ10tXUxbTNys/c30umeWwPzUq2APYutjBUTZlx0wO9
- MwYpWb7yo/vfwM89xQo9J3LfA6p+iRGvOEekN0C4sTIRd/B0E6ZkuzH7Y4EFNzSF5YpjyMlJhOa
- CT2AbVwWYTA5o++eKiOOR/cbB0hNAfKlkAubDfWGTw9gmc/LinHp0fLtBdp7KdZS65GNChjL/7Y
- 2LYqAbQwwT0kx9eXuAJzw5STFzM7LhP8qJm9GDTKNRZF8r/Bf47NOzsjd7+o+NAER2EFhnsxnYh
- LqJcrW8UUc2sSwOjE4LGN7l+Q==
-X-Received: by 2002:a17:903:40c5:b0:2df:8382:918b with SMTP id
- d9443c01a7336-2e8427156c6mr189417185ad.0.1792141728259; 
- Fri, 16 Oct 2026 02:08:48 -0700 (PDT)
-Received: from Dell-WorkStation.localdomain ([152.175.67.81])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2e97e5d51b5sm6914525ad.8.2026.10.16.02.08.43
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 16 Oct 2026 02:08:47 -0700 (PDT)
-From: Zephyr Li <fritchleybohrer@gmail.com>
-To: alistair.francis@wdc.com
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, palmer@dabbelt.com,
- daniel.barboza@oss.qualcomm.com, liwei1518@gmail.com,
- zhiwei_liu@linux.alibaba.com, chao.liu@processmission.com, farosas@suse.de,
- lvivier@redhat.com, pbonzini@redhat.com,
- Zephyr Li <fritchleybohrer@gmail.com>
-Subject: [PATCH] hw/riscv/riscv-iommu: encode debug translation ranges
-Date: Fri, 16 Oct 2026 17:08:32 +0800
-Message-ID: <20261016090832.38530-1-fritchleybohrer@gmail.com>
-X-Mailer: git-send-email 2.43.0
+ (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
+ id 1xHdwx-0002tB-Aw
+ for qemu-devel@nongnu.org; Fri, 16 Oct 2026 05:10:03 -0400
+Received: from mx0b-002c1b01.pphosted.com ([148.163.155.12])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
+ id 1xHdwv-0003Cc-7Y
+ for qemu-devel@nongnu.org; Fri, 16 Oct 2026 05:10:02 -0400
+Received: from pps.filterd (m0127841.ppops.net [127.0.0.1])
+ by mx0b-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 69FMoXX3087465; Fri, 16 Oct 2026 02:09:59 -0700
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=
+ proofpoint20171006; bh=Ma3MZobNVFeM2VDAXgMiQCNSahNXpoNNIrebSd+TI
+ Zk=; b=zrcG4S4AsR4TaP/0x1UZWpCtTJFJFJkBEVCcC3TT41EowtyTQp9Vjivri
+ wVnUxrGQEPPut/dbUT4qN3vaF1g9qq9R8T1mjMJGG9gl3rKuT4olmM04ZRb5hiAK
+ QbgAjS/F8CcsrJRmwPTOe/R/ME+p6P4W/NDpk1RCHc5QelsFrX01B4xJfUQhPIts
+ wGfgCurastxu6a5Fd6iuUlz+L4nNTnoHpRCqzznaRI3VmF7DWXj230mupikZWrEo
+ STPaJHJ4MFQK0jwWeQtNLLylEQyzl2aSzWYDza7atkayRycnxDZNCec248NjojrG
+ TRmGIjOkF9Y3lfoxzduQVq6X2aLdA==
+Received: from sa9pr02cu001.outbound.protection.outlook.com
+ (mail-southcentralusazon11023087.outbound.protection.outlook.com
+ [40.93.196.87])
+ by mx0b-002c1b01.pphosted.com (PPS) with ESMTPS id 4hb045jc48-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Fri, 16 Oct 2026 02:09:59 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=SSafwWLZ3Ps1SwMkWh5oyRgCwQLJOdmsDpBi7i4jexsfhrWvdKUowazRTRYmHsVeHnOMMAuq4YgjvWhDLKJdbk/e7PRkW+i6CS+OdCr6SQga0PJsPtD+QlfsM3SqXXyewHBP2TLFUePfGdQo6xeWUwXdRyYyXRJEpb0tLppBAjq6E9L7PUToSYoVIDepdgcr9ibdFPTsfuBJEAtpB019YZxTjim6hzVo3/S9LM9x1riRlpERwIJ0TS9mA/xQWa3biW/xxGZ5upb1oMer6+rwA5AAC/tOITeTuePMIhB6LYJtzkHth0NGg6N9lraL8H6+EX9t8UDne6igHcCF7iaCcQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=Ma3MZobNVFeM2VDAXgMiQCNSahNXpoNNIrebSd+TIZk=;
+ b=rCkQzqlaUbRdQ19f7jDd9i5T37iYo1e2RraSVJ24Hf1cOw6SFVk1AesgDm702pHke4D0DU9GAepaq52VLf/HIKm2HBtBIX9kEo3PnO53Ptvq8+LAO6eBADw4rOUVH3XAw4oTdMBWzK2wmyqBZ+ByF5BOV3kMcII8YdTBKZJso6q9fSmYXW1lgZgny7UB5bxa9KAByxfrX9Gm5hV8QcRuQo4aEDV4QsMaWiiKsZbhBmxjl7noxDFjQLrqisrSHvYp9ei3i0s0AlN+PSGbgVqlCKeKAu/6G460BcTv6Nvh6qWtRbxZyCu0ZWgPpG96yGYCXGakU5g++M6Ie4fceCeqcA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
+ dkim=pass header.d=nutanix.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Ma3MZobNVFeM2VDAXgMiQCNSahNXpoNNIrebSd+TIZk=;
+ b=dcR0nqtCZtNmpBxAb8Zp6e0By1qTvwGQV7tRpNcf7Vwr0Ko7vrELxA94xTi6YW718ZZZxJ+dDMxIhkTCTLeBs5W5PJnvVcCy0VAR4H36kKoDn53Msu5PFCXJ5ESSwJiEvOL3ymXU/eQMGqwXcseGXNmI+2xk1lYvpM5QnMNdIdC8ngtKcz2QPW+QFwU1UCWKREzEinJ9Q5xWYjVZHthCqNXTtsic2vDnAwyR4xZlYI3y/2zc+6yVhDKGZ4Ezy7ntKNbjxJcHT9FPSlY4EKzthxqAEopy0cu4Cqr3nKdZUYRttO7faDarV76G0ZxCliCgGWJSwp82F6GrXphTBxEJnw==
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nutanix.com;
+Received: from PH0PR02MB7159.namprd02.prod.outlook.com (2603:10b6:510:16::8)
+ by BL0PR02MB6529.namprd02.prod.outlook.com (2603:10b6:208:1c3::18) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.522.13; Fri, 16 Oct
+ 2026 09:09:57 +0000
+Received: from PH0PR02MB7159.namprd02.prod.outlook.com
+ ([fe80::8e97:bc32:822c:b250]) by PH0PR02MB7159.namprd02.prod.outlook.com
+ ([fe80::8e97:bc32:822c:b250%4]) with mapi id 15.21.0522.016; Fri, 16 Oct 2026
+ 09:09:57 +0000
+Message-ID: <bdf28ad1-a8ec-4e13-b49c-34b12d7580cc@nutanix.com>
+Date: Fri, 16 Oct 2026 10:09:53 +0100
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] include/hw/core/qdev.h: Fix where
+ device_class_set_parent_realize docs suggest putting parent_realize
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+References: <20261015163352.1751191-1-peter.maydell@linaro.org>
+Content-Language: en-US
+From: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+In-Reply-To: <20261015163352.1751191-1-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: SJ0PR13CA0157.namprd13.prod.outlook.com
+ (2603:10b6:a03:2c7::12) To PH0PR02MB7159.namprd02.prod.outlook.com
+ (2603:10b6:510:16::8)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:39::b;
- envelope-from=fritchleybohrer@gmail.com; helo=mail-pj2-x0b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PH0PR02MB7159:EE_|BL0PR02MB6529:EE_
+X-MS-Office365-Filtering-Correlation-Id: 9f2cae50-041a-4ab7-c784-08df2b653f9c
+x-proofpoint-crosstenant: true
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|376014|1800799024|366016|23010399003|56012099006|261009223027099003|22082099003|18002099003|10067099003;
+X-Microsoft-Antispam-Message-Info: WH4LxRCKx+TWEH0uoHTXUeBQPh1yfg0q65VlioLFwuZBAiaChnwypYQ9KWVvA0bKZT4N0HlUPl/B5N+wz0pi9pA4JXk3B3gpMtQNyC+vQxJWTTKH9JWcItubw36iWrdjKfGz0xRPt/mk5rs/Boh8C6gQ5IPJuiPE4dYuvgI40O5PY7mtQEmA8siRsE8yKjjU5p8e41aZo38nKYXsD0023LszjNDdCzgq3K/12IROyr4z0q80attYiIvDoZiZb51URofl4MMkLj6xGATAZwHZgHhryYZ36TXLenA/491u6fzCw5gqcpkU5u7WzTeiIOJ2p3kdqmy7MOtxvDQOCKU9k28pLIHKbxP99ZFELg5HdrRyBQdv8cWKmoQa4bFu+qO5hJ3Yntd2C3O0q9lTSnQ9btd5qT/5GyCuDqLt7V+bRHG3AdGG5ZuzBY0Xpg3iPQUUwgWBVNLdevah1HcbH88L0+Q/xN0m6IAEc6hG87TPL4boNA5bQbJfiNWyUDuYkh83Pl+VUMNlthvrGmwHenzBsJDMZQs9EQmaCa384XNwx6Xv4MNHd3Dw8Jl763GwQDeo9TPVc+WeXncXNPHfQoyq+BYCCnK+jOlFJLU2pB4gszOmytuwHqUNgR3dTJDKnhwf5u0hcmWIW9zp1mshab/zKSV0mK7+VpJThoUtbbAPXq8=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:PH0PR02MB7159.namprd02.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(1800799024)(366016)(23010399003)(56012099006)(261009223027099003)(22082099003)(18002099003)(10067099003);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?MUFzOXh1ZmxRUXh0ZFVPSy9LWExnbXZ4elArNFZjOWx1NmUzbDRVQm5wUDhk?=
+ =?utf-8?B?SGdoc2JqaE8zVTlUK3lzb05lSlNBZzRQQnB3a2dOeUM1Unk3RUladEJDZlA4?=
+ =?utf-8?B?WDN2dERaVXpXdWNSRlBTMk4rOUtCOUg0N2NFSE16MVdCSTlKM0hvM2xaZUhx?=
+ =?utf-8?B?bGxvSHJRWTBIeUdpcTkxTGVka0xpaWZGOGk3dGhkcDBNVUd3a3l5ZklONExT?=
+ =?utf-8?B?bFVpZFpxS1RlU016dU5ITkF1TitlbWdGK3hWbGpUeWxmNEdmZWtkRGRzVGRR?=
+ =?utf-8?B?QnJoZVJMdkhLN25MSC8wSzVvODQxYjBXRitxOUxjS3dPVStCVmxZU1JtRGRQ?=
+ =?utf-8?B?NjhrcEFsQmh1YnROREd0am1zRGpObEY2SDYzL0R2K01qVVBJSEE2QW5UUDVt?=
+ =?utf-8?B?Lzl2ZWdVZ01Wb3ZXU1krdDBuakR4UytNQ2N6cC9pQVdJZTM4Q2NCQkRma0hT?=
+ =?utf-8?B?Nk5rbTF1MkwrQmhEYkF3V2YrL3YvaDB2RjViL29UcTllVTZYRmxDSVVPK0Rp?=
+ =?utf-8?B?RVAyOU5TcFUzU3Y2Zkovb0VRb1VYR1lpcGwvNXlkUmpRT1VyT3hkYWdiMjVq?=
+ =?utf-8?B?L21qQVVIOXROdXF3alRBdjNHcGRzeTRhZmV6cm5QMEptWUlCQWFwNVk3UXRu?=
+ =?utf-8?B?cHJsTU9KYjZCZlgwOVAxcTVIb3h1WGhQdHRNWVBZRWtCRDVBNDZCNGhxTm1V?=
+ =?utf-8?B?YlVNbkFxUVRVY2hzeHpiZzZlSTBkOXVhNzBFUWhvTXE1Yk1rM0l6bkRYUUNO?=
+ =?utf-8?B?ZnU0SERPcHZBRnBhUWoyZ0RoZ1IweENRTFgwSWo4a2hqQXhtVkFZZWdmSFNY?=
+ =?utf-8?B?a0VxaVJaVjk3UTJUMW1HTWk3UVBCZGkrS3BVdmdmMm1ScTdUZmNHUTRlOExR?=
+ =?utf-8?B?QXJVdnQ0U3VVZ2FXWDhjeFV0US8yM1VBVjMySHJqVytQVGd3Q09xamhISjVx?=
+ =?utf-8?B?ZFRRNDRWMndMTnNKWjRlNGpNak1mREx5eXRmQkpRKzIvMHJudE94elBXQUNN?=
+ =?utf-8?B?cVJNcHphTmh0RWczWS9rZThQdno3UklpVVpncHBsUHFkamJTa0FjaDY3SWU4?=
+ =?utf-8?B?V21kZnBXR3NVN1NtdzI3RWMzSFBIK052Q0tIVGR2YitiYmZlSEdWODE0NlBN?=
+ =?utf-8?B?TzlrWE5QRjE0WDVsWHBiVUFaaWJkVUZnRmtrY3BGaGcrK2MrQXpkckFGNUZV?=
+ =?utf-8?B?OHVnRjdKdk0xOURFRTFRZ0hwSXI0QzNjRSswTFZjajRRMUcyYjNXalRwOTRl?=
+ =?utf-8?B?cEJKaStHYnVxaGx1OE1LTG5qc1lDcW1MZDJxbDhYZEkybHIwS0V6OWo5YlRD?=
+ =?utf-8?B?ZVo1UEFtRFpXL0UxeEFDaTJ1RHllU2wvaUY1ZmhSQkhiY0VPQU15VjVBeFRM?=
+ =?utf-8?B?b0ZqZnJhWXpGUkdZVHRUUldVdUt2aEg1VTJpNDVRcUN4SitRQmhnMGlyRHJJ?=
+ =?utf-8?B?aFU2aGZiaCtpbnc0RlBjSnJqSDlRandmdW15ZEtpdVB5ZzJ0UjhrSUEyY2ZG?=
+ =?utf-8?B?MFlULzlyY3lsQnJ2Y3lycHgySklZUk8vUXVNSTVNYWczQ2YyMXdyY0s1QjBJ?=
+ =?utf-8?B?OVdQNEEwTVdBZUZiVEtzMVFIUWJleHBmWFBhTDJWMXBURGFMY3ViU3I5QThi?=
+ =?utf-8?B?WWJYV2FhSmlRTVRIKzRTUFRRWTZoRDI1a2lQT05EU3JaNnNyL3JTTWJOL0pV?=
+ =?utf-8?B?SGUyRkNFYnV6S1JwYTJwUHVnTXBGR0w4bUVObFFOQ01mSXNZY3FyWG1jRjE5?=
+ =?utf-8?B?d3lSRytTblhMemNwQjNqeXlrcWJ3NlpqTDNnZlFVQVkyU09yZ0Z2Ukw2em40?=
+ =?utf-8?B?bzR1T3AvOER6N0ZRMEp2ODQxYUU4VDBiQjFpOGpZNnlURUVTbHU1aGUwRUl4?=
+ =?utf-8?B?ZnhLd29KN1ljVTliUEl5cTlxVk9rVjM3eG5zbHlNVFZWTG8zQTV2ZXAzMTEw?=
+ =?utf-8?B?am5URjBuTVhyK3czeTVUSzhPV0lkNE54cUhWWWxka09Hc0xLcGlxclM5UzRU?=
+ =?utf-8?B?MFJXQVZiWFllWm1zcXRHTTA5WWxacndud2lKWTZrRVdLL3dkT1Jmc2JRWkgw?=
+ =?utf-8?B?eUZnVVd5bjlKWmRDeWNzMWF4N202U2NVT0VzWTJ2OEY1aENiRllyR1BHQ2FL?=
+ =?utf-8?B?Zi9QM1VNQTJZSXRXckFoVU05dFgvSXdkQ21Ta3RuZk01OGJZME1XK0VQc2dU?=
+ =?utf-8?B?dGUvTGw3ZkRYb2J2S2lYR3oveXVMU2xnSlVFcXJLR3FLcUdpZ0x2Y05remhl?=
+ =?utf-8?B?TnJMVys5ODRZbmt2eWJYdEdtbEREY3Fta0ZVTWcwU1NDbDh4eHgvUktLY2RW?=
+ =?utf-8?B?eEhKVm5iL0xGQVJNN1FRWExuL09XS3pzbVAvMWJSQ1ZuenBUdGdNNmsxak5x?=
+ =?utf-8?Q?sYqpcEA4mD5U57w4=3D?=
+X-Exchange-RoutingPolicyChecked: nbQUvI+XPAkoTsKeo4/0q+fRbp5UXUZW38E5mLQ9l5lx0uX6l1LZeonTRFKDJVN+DBkGvS7383bfl6EAQOO0KfBZvNikup7pnNBMuChx/Abvxux7drq2un+sX7jHpNDsnEgyLI6Y4t3i+q/oq7wA6aCRnNPDuZyKpcdv9f8Xr7UpkEuPyKiHuG4AE26f/Q6Dk6RkIL2aPt559jGYyb9uaxXsCSkkKXiICexnMzuJLUTfqYLXRCflOiJDC2gWMizZoTO7Ep3FOj1++lmjZtb1g0KNizUr+tnIKb9iA3F2UeEsIWkJzvN5eBAVjUzRHJo62ghtENcr4wuJxkAcqIK9hw==
+X-OriginatorOrg: nutanix.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 9f2cae50-041a-4ab7-c784-08df2b653f9c
+X-MS-Exchange-CrossTenant-AuthSource: PH0PR02MB7159.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Oct 2026 09:09:57.1478 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: xSNSEaal+iyLZbgV4yJF1g3/oqSmQ+bS1IBzLiTuioV6fWbPiX1gJRL4C0rnanvqwxKbb6lzMEwDiHc1/33vERGnTij85c8A4Nbu5ZX7Iuk=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL0PR02MB6529
+X-Proofpoint-ORIG-GUID: z7un18V0-_NXw-PBYdWhq2QBa8XvjTNN
+X-Proofpoint-GUID: z7un18V0-_NXw-PBYdWhq2QBa8XvjTNN
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDE2MDAzNiBTYWx0ZWRfX5R7mFLW8vDiV
+ wTV/+NQ9mC8G00MvrfNEBtuWwoiXsMS4Y4kCi0VmfoMKb0IejTvrURIJan/dL4Vcpx0rbuFa/cs
+ A8f/4C9oe68cbKa6e7oG9nTT+UJ7YNw/+ZBgEYImboeeKJ7q170psanp/UPhetOfa/Uc7sL8BOT
+ IUjrMX9IbpVMH+VSsXA53Oolm1ekAcYi4sY8g+KLUSpFodZZwPPn3BeXtfCZCZ7L9ej+ZMxyrb4
+ NZZc1aXHYx+giPXsZIA+ogAVxyydkNkl0FSIebs+hswKhwNaOMJ+e6PavC+ehMhWHKXNOfKdXJJ
+ zPC62m7p4ueSJBaKkY9sBnR2KQZoi982iTdZ0loMNcrIf6wfrT+lYnUqG4CGtThaD/smP4EDM/N
+ +UrYH70+RrLrLybT88kY4unCskK+cxoCOugB6f8fSkGqZwBCUtPUz1NTQpaMG8VLwOiOb3e9p6V
+ OcBdSVsglAaCNXlxu8g==
+X-Authority-Analysis: v=2.4 cv=V/ToQuni c=1 sm=1 tr=0 ts=6ad1e9e7 cx=c_pps
+ a=DH6uOP27q4GouF/df79YRQ==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
+ a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
+ a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=0kUYKlekyDsA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=VofLwUrZ8Iiv6rRUPXIb:22 a=jxMXjlTPpCISP5mWtjnE:22
+ a=KKAkSRfTAAAA:8 a=64Cc0HZtAAAA:8 a=MK5WDSJ5LuLbvcpWtJ8A:9 a=QEXdDO2ut3YA:10
+ a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDE2MDAzNiBTYWx0ZWRfX8HgoqfQM/MJk
+ vEG5o+WnWY5RZK/0wjj1BXzWJbAMv71O+c4YTK6UFRHEmylMcSC5MwulYxLyGFiup0XSHrudULh
+ tcBLxsj+Ne/4c0bGOYzJwo3TNXTnXA0=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-10-14_01,2026-10-14_01,2025-10-01_01
+X-Proofpoint-Spam-Reason: safe
+Received-SPF: pass client-ip=148.163.155.12;
+ envelope-from=mark.caveayland@nutanix.com; helo=mx0b-002c1b01.pphosted.com
+X-Spam_score_int: -29
+X-Spam_score: -3.0
+X-Spam_bar: ---
+X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,284 +196,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The debug translation response aligns the translated physical address to
-the effective translation range, but always reports S=0. For a request
-inside a superpage, the response therefore identifies the wrong 4 KiB
-physical page.
+On 15/10/2026 17:33, Peter Maydell wrote:
 
-For effective ranges larger than 4 KiB, set S and encode the range size
-using trailing ones in the PPN field. Keep the existing response format
-for 4 KiB translations.
+> The documentation for device_class_set_parent_realize() suggests that
+> the parent realize function pointer is "usually in the instance
+> structure".  This is definitely wrong, because the function pointer
+> is a class thing, and should live in a class struct, not an instance
+> struct.  Update the documentation to correct this, instead
+> recommending that it should be placed in the class struct for the
+> child class.
+> 
+> At time of writing, of the 75 or so uses of this function, about 50
+> put the parent_realize pointer in the child class struct, and about
+> 25 in the parent class struct.  We recommend the former both because
+> it is the more common choice, and also because it makes more logical
+> sense: it's the child that knows (a) that it exists at all and that
+> (b) it wants to have a realize method that will mean it needs to
+> chain back to the parent, and we shouldn't need to edit the parent's
+> class struct because we want to add a child class that chains to its
+> realize method.
+> 
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+>   include/hw/core/qdev.h | 15 ++++++++++++---
+>   1 file changed, 12 insertions(+), 3 deletions(-)
+> 
+> diff --git a/include/hw/core/qdev.h b/include/hw/core/qdev.h
+> index 8e91e2fcb08..1330e0153d4 100644
+> --- a/include/hw/core/qdev.h
+> +++ b/include/hw/core/qdev.h
+> @@ -953,9 +953,18 @@ void device_class_set_props_n(DeviceClass *dc, const Property *props, size_t n);
+>    *
+>    * This is intended to be used when the new realize function will
+>    * eventually call its parent realization function during creation.
+> - * This requires storing the function call somewhere (usually in the
+> - * instance structure) so you can eventually call
+> - * dc->parent_realize(dev, errp)
+> + * @parent_realize should be where you want to save the pointer to
+> + * the parent class realize function; the recommended location is a
 
-The RISC-V IOMMU specification permits reporting a 4 KiB translation even
-when the page tables use superpages. Reporting the effective range is an
-implementation choice; this change does not claim that S=1 is mandatory
-for every translation through a superpage mapping.
+Do we need something stronger than "recommended location" if we want to 
+encourage people to always do it this way in future?
 
-Add debug-response tests for S-stage-only 4 KiB, 64 KiB NAPOT, and 2 MiB
-translations, G-stage-only 2 MiB translations, and nested S4K/G2M,
-S2M/G4K, and S2M/G2M mappings. Check requests inside large ranges and at
-both ends. The mixed nested cases verify that the response uses the
-smaller effective translation granularity.
+> + * field named "parent_realize" in your class's class struct.
+> + * (Some existing code puts the field in the parent class's class
+> + * struct; this will work but is not the preferred thing for new code.)
+> + *
+> + * In your realize function you should chain to your parent's
+> + * realize function using something like::
+> + *
+> + *    MyThingClass *mc = MY_THING_GET_CLASS(dev);
+> + *    (do your child class realize actions here)
+> + *    mc->parent_realize(dev, errp);
+>    */
+>   void device_class_set_parent_realize(DeviceClass *dc,
+>                                        DeviceRealize dev_realize,
 
-Fixes: a7aa525b93c3 ("hw/riscv/riscv-iommu: add DBG support")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3552
-Signed-off-by: Zephyr Li <fritchleybohrer@gmail.com>
----
- hw/riscv/riscv-iommu.c         |  14 ++-
- tests/qtest/iommu-riscv-test.c | 193 +++++++++++++++++++++++++++++++++
- 2 files changed, 206 insertions(+), 1 deletion(-)
+Otherwise:
 
-diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-index 323a041b4a558136819b1cd41452e96481ba164a..67d8456b9d3ed34308ca794e8d700664ebacce0f 100644
---- a/hw/riscv/riscv-iommu.c
-+++ b/hw/riscv/riscv-iommu.c
-@@ -2281,8 +2281,20 @@ static void riscv_iommu_process_dbg(RISCVIOMMUState *s)
-         if (fault) {
-             iova = RISCV_IOMMU_TR_RESPONSE_FAULT | (((uint64_t) fault) << 10);
-         } else {
-+            uint64_t ppn;
-+
-             iova = iotlb.translated_addr & ~iotlb.addr_mask;
--            iova = set_field(0, RISCV_IOMMU_TR_RESPONSE_PPN, PPN_DOWN(iova));
-+            ppn = PPN_DOWN(iova);
-+
-+            if (iotlb.addr_mask > TARGET_PAGE_SIZE - 1) {
-+                /* Encode the translation range as trailing ones in the PPN. */
-+                ppn |= PPN_DOWN(iotlb.addr_mask) >> 1;
-+                iova = RISCV_IOMMU_TR_RESPONSE_S;
-+            } else {
-+                iova = 0;
-+            }
-+
-+            iova = set_field(iova, RISCV_IOMMU_TR_RESPONSE_PPN, ppn);
-         }
-         riscv_iommu_reg_set64(s, RISCV_IOMMU_REG_TR_RESPONSE, iova);
-     }
-diff --git a/tests/qtest/iommu-riscv-test.c b/tests/qtest/iommu-riscv-test.c
-index 26380248912cc281e313e20a3daf1831be1eded3..1cd753c4f243f207dc34b7acbe41ef0d55772cba 100644
---- a/tests/qtest/iommu-riscv-test.c
-+++ b/tests/qtest/iommu-riscv-test.c
-@@ -19,6 +19,12 @@
- 
- #define DMA_LEN           4
- 
-+#define DBG_PAGE_SIZE           0x1000ull
-+#define DBG_NAPOT_SIZE          0x10000ull
-+#define DBG_SUPERPAGE_SIZE      0x200000ull
-+#define DBG_TRANSLATED_PA       0x90000000ull
-+#define DBG_NESTED_GPA          0x200000ull
-+
- /* RISC-V virt machine PCI configuration */
- #define RISCV_GPEX_PIO_BASE        0x3000000
- #define RISCV_BUS_PIO_LIMIT        0x10000
-@@ -35,6 +41,64 @@ typedef struct RiscvIommuTestState {
-     uint64_t iommu_base;
- } RiscvIommuTestState;
- 
-+typedef struct RiscvIommuDbgTest {
-+    const char *name;
-+    QRIOMMUTransMode mode;
-+    uint64_t s_page_size;
-+    uint64_t g_page_size;
-+    uint64_t pa;
-+    uint64_t expected_response;
-+} RiscvIommuDbgTest;
-+
-+static const RiscvIommuDbgTest debug_tests[] = {
-+    {
-+        .name = "page-4k",
-+        .mode = QRIOMMU_TM_S_STAGE_ONLY,
-+        .s_page_size = DBG_PAGE_SIZE,
-+        .pa = DBG_TRANSLATED_PA + DBG_PAGE_SIZE,
-+        .expected_response = 0x24000400ull,
-+    }, {
-+        .name = "napot-64k",
-+        .mode = QRIOMMU_TM_S_STAGE_ONLY,
-+        .s_page_size = DBG_NAPOT_SIZE,
-+        .pa = DBG_TRANSLATED_PA,
-+        .expected_response = 0x24001e00ull,
-+    }, {
-+        .name = "superpage",
-+        .mode = QRIOMMU_TM_S_STAGE_ONLY,
-+        .s_page_size = DBG_SUPERPAGE_SIZE,
-+        .pa = DBG_TRANSLATED_PA,
-+        .expected_response = 0x2403fe00ull,
-+    }, {
-+        .name = "g-stage-superpage",
-+        .mode = QRIOMMU_TM_G_STAGE_ONLY,
-+        .g_page_size = DBG_SUPERPAGE_SIZE,
-+        .pa = DBG_TRANSLATED_PA,
-+        .expected_response = 0x2403fe00ull,
-+    }, {
-+        .name = "nested-s4k-g2m",
-+        .mode = QRIOMMU_TM_NESTED,
-+        .s_page_size = DBG_PAGE_SIZE,
-+        .g_page_size = DBG_SUPERPAGE_SIZE,
-+        .pa = DBG_TRANSLATED_PA,
-+        .expected_response = 0x24001000ull,
-+    }, {
-+        .name = "nested-s2m-g4k",
-+        .mode = QRIOMMU_TM_NESTED,
-+        .s_page_size = DBG_SUPERPAGE_SIZE,
-+        .g_page_size = DBG_PAGE_SIZE,
-+        .pa = DBG_TRANSLATED_PA,
-+        .expected_response = 0x24001000ull,
-+    }, {
-+        .name = "nested-s2m-g2m",
-+        .mode = QRIOMMU_TM_NESTED,
-+        .s_page_size = DBG_SUPERPAGE_SIZE,
-+        .g_page_size = DBG_SUPERPAGE_SIZE,
-+        .pa = DBG_TRANSLATED_PA,
-+        .expected_response = 0x2403fe00ull,
-+    },
-+};
-+
- static void riscv_config_qpci_bus(QGenericPCIBus *qpci)
- {
-     qpci->gpex_pio_base = RISCV_GPEX_PIO_BASE;
-@@ -264,6 +328,129 @@ static void test_riscv_iommu_nested(void)
-     run_riscv_iommu_translation(&cfg);
- }
- 
-+static void riscv_iommu_dbg_map_leaf(QTestState *qts, uint64_t l1_pa,
-+                                    uint64_t l2_pa, uint64_t va, uint64_t pa,
-+                                    uint64_t page_size)
-+{
-+    uint64_t pte = ((pa >> 12) << 10) | QRIOMMU_LEAF_PTE_RW_MASK;
-+    uint64_t pte_addr;
-+
-+    g_assert_cmphex(pa & (page_size - 1), ==, 0);
-+
-+    if (page_size == DBG_SUPERPAGE_SIZE) {
-+        pte_addr = l1_pa + (((va >> 21) & 0x1ff) * sizeof(uint64_t));
-+        qtest_writeq(qts, pte_addr, pte);
-+    } else if (page_size == DBG_NAPOT_SIZE) {
-+        /* A 64 KiB NAPOT PTE has N=1 and PPN[3:0]=1000. */
-+        pte |= BIT_ULL(63) | (8ull << 10);
-+        va &= ~(DBG_NAPOT_SIZE - 1);
-+        for (unsigned i = 0; i < DBG_NAPOT_SIZE / DBG_PAGE_SIZE; i++) {
-+            pte_addr = l2_pa + ((((va >> 12) + i) & 0x1ff) *
-+                                sizeof(uint64_t));
-+            qtest_writeq(qts, pte_addr, pte);
-+        }
-+    } else {
-+        g_assert_cmphex(page_size, ==, DBG_PAGE_SIZE);
-+        pte_addr = l2_pa + (((va >> 12) & 0x1ff) * sizeof(uint64_t));
-+        qtest_writeq(qts, pte_addr, pte);
-+    }
-+}
-+
-+static uint64_t riscv_iommu_dbg_translate(RiscvIommuTestState *state,
-+                                         uint64_t iova)
-+{
-+    uint64_t request;
-+
-+    qtest_writeq(state->qts,
-+                 state->iommu_base + RISCV_IOMMU_REG_TR_REQ_IOVA, iova);
-+    request = ((uint64_t)state->testdev->devfn << 40) |
-+              RISCV_IOMMU_TR_REQ_CTL_GO_BUSY;
-+    qtest_writeq(state->qts,
-+                 state->iommu_base + RISCV_IOMMU_REG_TR_REQ_CTL, request);
-+
-+    request = qtest_readq(state->qts,
-+                          state->iommu_base + RISCV_IOMMU_REG_TR_REQ_CTL);
-+    g_assert_cmpuint(request & RISCV_IOMMU_TR_REQ_CTL_GO_BUSY, ==, 0);
-+
-+    return qtest_readq(state->qts,
-+                       state->iommu_base + RISCV_IOMMU_REG_TR_RESPONSE);
-+}
-+
-+static void test_riscv_iommu_dbg(gconstpointer data)
-+{
-+    const RiscvIommuDbgTest *cfg = data;
-+    RiscvIommuTestState state = { 0 };
-+    uint64_t iova = QRIOMMU_IOVA & ~(DBG_PAGE_SIZE - 1);
-+    uint64_t s_pa = cfg->pa;
-+    uint64_t page_size = cfg->mode == QRIOMMU_TM_G_STAGE_ONLY ?
-+                         cfg->g_page_size : cfg->s_page_size;
-+    uint64_t response;
-+
-+    if (!riscv_iommu_test_setup(&state)) {
-+        return;
-+    }
-+
-+    riscv_iommu_check(state.qts, state.iommu_base, cfg->mode);
-+    qriommu_build_translation(state.qts, cfg->mode, state.testdev->devfn);
-+
-+    if (cfg->mode == QRIOMMU_TM_NESTED) {
-+        uint64_t g_l1_pa = QRIOMMU_SPACE_OFFS + QRIOMMU_G_L0_PTE_VAL;
-+        uint64_t g_l2_pa = QRIOMMU_SPACE_OFFS + QRIOMMU_G_L1_PTE_VAL;
-+        uint64_t offset = iova & (DBG_SUPERPAGE_SIZE - 1);
-+        uint64_t gpa = DBG_NESTED_GPA + offset;
-+        uint64_t pte_addr;
-+        uint64_t pte;
-+
-+        /* Map all S-stage page tables through one 2 MiB G-stage leaf. */
-+        riscv_iommu_dbg_map_leaf(state.qts, g_l1_pa, g_l2_pa, 0,
-+                                 QRIOMMU_SPACE_OFFS, DBG_SUPERPAGE_SIZE);
-+
-+        if (cfg->g_page_size == DBG_PAGE_SIZE) {
-+            pte_addr = g_l1_pa + (((gpa >> 21) & 0x1ff) * sizeof(uint64_t));
-+            pte = ((g_l2_pa >> 12) << 10) | QRIOMMU_NON_LEAF_PTE_MASK;
-+            qtest_writeq(state.qts, pte_addr, pte);
-+        }
-+        riscv_iommu_dbg_map_leaf(state.qts, g_l1_pa, g_l2_pa, gpa,
-+                                 cfg->pa + (offset & ~(cfg->g_page_size - 1)),
-+                                 cfg->g_page_size);
-+        s_pa = gpa & ~(cfg->s_page_size - 1);
-+        page_size = MIN(page_size, cfg->g_page_size);
-+    }
-+
-+    if (cfg->mode == QRIOMMU_TM_G_STAGE_ONLY) {
-+        riscv_iommu_dbg_map_leaf(state.qts,
-+                                 QRIOMMU_SPACE_OFFS + QRIOMMU_G_L0_PTE_VAL,
-+                                 QRIOMMU_SPACE_OFFS + QRIOMMU_G_L1_PTE_VAL,
-+                                 iova, cfg->pa, cfg->g_page_size);
-+    } else {
-+        riscv_iommu_dbg_map_leaf(state.qts,
-+                                 QRIOMMU_SPACE_OFFS + QRIOMMU_L0_PTE_VAL,
-+                                 QRIOMMU_SPACE_OFFS + QRIOMMU_L1_PTE_VAL,
-+                                 iova, s_pa, cfg->s_page_size);
-+    }
-+    qriommu_program_regs(state.qts, state.iommu_base);
-+
-+    /*
-+     * The specification permits reporting a smaller range. These tests
-+     * verify QEMU's choice to report the effective translation range.
-+     */
-+    response = riscv_iommu_dbg_translate(&state, iova);
-+    g_assert_cmphex(response, ==, cfg->expected_response);
-+
-+    if (page_size > DBG_PAGE_SIZE) {
-+        /* Check the first and last pages, in addition to the interior. */
-+        iova &= ~(page_size - 1);
-+        response = riscv_iommu_dbg_translate(&state, iova);
-+        g_assert_cmphex(response, ==, cfg->expected_response);
-+        response = riscv_iommu_dbg_translate(&state,
-+                                            iova + page_size - DBG_PAGE_SIZE);
-+        g_assert_cmphex(response, ==, cfg->expected_response);
-+    }
-+
-+    riscv_iommu_test_teardown(&state);
-+}
-+
- int main(int argc, char **argv)
- {
-     g_test_init(&argc, &argv, NULL);
-@@ -275,5 +462,11 @@ int main(int argc, char **argv)
-                    test_riscv_iommu_g_stage_only);
-     qtest_add_func("/iommu-testdev/translation/ns-nested",
-                    test_riscv_iommu_nested);
-+    for (unsigned i = 0; i < G_N_ELEMENTS(debug_tests); i++) {
-+        g_autofree char *path = g_strdup_printf("/iommu-testdev/debug/%s",
-+                                               debug_tests[i].name);
-+
-+        qtest_add_data_func(path, &debug_tests[i], test_riscv_iommu_dbg);
-+    }
-     return g_test_run();
- }
--- 
-2.43.0
+Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+
+
+ATB,
+
+Mark.
 
 
