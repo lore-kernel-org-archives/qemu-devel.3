@@ -4,109 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3E36CCA464
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 10:15:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59507CCA462
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 10:21:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHexN-0001zt-QK; Fri, 16 Oct 2026 06:14:33 -0400
+	id 1xHf3Z-00048S-NN; Fri, 16 Oct 2026 06:20:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xHexM-0001yC-0P
- for qemu-devel@nongnu.org; Fri, 16 Oct 2026 06:14:32 -0400
-Received: from mail-yw1-x112f.google.com ([2607:f8b0:4864:20::112f])
+ id 1xHf3X-00047h-VC
+ for qemu-devel@nongnu.org; Fri, 16 Oct 2026 06:20:56 -0400
+Received: from mail-yw1-x1136.google.com ([2607:f8b0:4864:20::1136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xHexK-00025l-9D
- for qemu-devel@nongnu.org; Fri, 16 Oct 2026 06:14:31 -0400
-Received: by mail-yw1-x112f.google.com with SMTP id
- 00721157ae682-8ab37e44643so23564297b3.0
- for <qemu-devel@nongnu.org>; Fri, 16 Oct 2026 03:14:28 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792145667; cv=none;
+ id 1xHf3V-0002rs-8C
+ for qemu-devel@nongnu.org; Fri, 16 Oct 2026 06:20:55 -0400
+Received: by mail-yw1-x1136.google.com with SMTP id
+ 00721157ae682-8ad98c3fb15so53145317b3.2
+ for <qemu-devel@nongnu.org>; Fri, 16 Oct 2026 03:20:52 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792146051; cv=none;
  d=google.com; s=arc-20260327;
- b=pu9knriFSr36ZE+TvCrgsnU5m1Rbk+5ZoOy3mGAqTcScPU1h16r+uBHQC8xrF5W566
- fTpcNiPJF3iO2rPA6S1NdTn/AB5yaBOg9Zw3+jSaF0KEk4M8fRR+lEEZm/YLwz3i2thi
- I/1btacliJ3OJ2axVj5ZGo489x33MwL/1cKjYSw+Q3ybDrumqkfeTQhTMJ4PuPVeEixU
- Taq9LaaLs3wWlEuoubZSARS3PzSeGcFd7fkhY1f6XmpNeDK7xMnpcSyxtiwE2UVxHq74
- jV4OTy4AX8MavViuSL3fzq9R2EwnQHLGClQ/5mdWf2AoS51nY78ATjzqM1pQto/b8wyO
- 6NMA==
+ b=X7xhUlgd7RwCWDMX6uMDnLcfiqLAL40FPohA5PJrn7EnEwzjPBk2x+4KQO3JHCbijc
+ eoY+MlpFFAdVXebFZjDaP8kQnH9lDw3gtYp36U484CzV84pI45bD35tWW3buAbKVT9NA
+ vTiBnWuju5GR33RIXaZSllCD/Pc5lK7dh1W0UcyKh1PdasUZ+dmRDtPwe2zxEr8Sr6N1
+ cE8hP8YTZee1zoe8NIDBs5gD3W0k1ozaRry44fkn7bi0hu6zSxZoIfqgHARyGQTjeoBj
+ tUuN6pkajiTLAq60ZbatyRUkchUZM2BHNNgGwirLTj7ZDKcrXV9oL9gmdhEvCJhPpUwJ
+ W0AQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=VvZcWaEOtfKFRQ8xBYWK9IzKT7vm+Yd3RrHeYl3ROFo=;
- fh=W/JhvAlf9kvTQdSfT2vqiKAkNO4YiRVg8H2M8w9SXbQ=;
- b=DJsHJJzax9KbRD3BXtJfxXuIqV0kuwZQmHOZyLkohj7KWOhKkt6tDI062ZS8J8p4+A
- S6oxy1spg/JAzl3BHdLjyK4IfNuj2maNPeRqpHmTNxCDXK58AzzbAGJtpaHAsyaQ6e56
- v5ej4AimQgVNsCE4X3IRTH50tgFNvoWpn3X+zC7rYi0o3B65jgQbomSPNL4kMvMmNvaK
- rfgjSB0RE+K7QXpxfH1id/pDs9rfICMVpTslhd0uK4gAhL4Pv2EPkjn7yvi/WA4bX7Qj
- uTGI/IXNOApTgSNzGcsgi6e3k2qWLuXD0vqY94asUuQpfMsfYZL8z7+y1vKk7R7LR71k
- mcow==; darn=nongnu.org
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=+lR+yCq7Sj2LV7d8680iILAoFQX7r0VH1tOrFRtbZ7g=;
+ fh=VCK6kK/ffHwyx1hgstXUggCNBAgfH55deGh+EG/9DGQ=;
+ b=enm0wQlm5cnsx5I9gBKwfzUF2n6r9jJwprQVoqKW29ncO8LsgmNcoqkbYR6JT2A3Gq
+ pB6QNucD41aqnlzrhk8TwReLqdHnKBiRur3/QhNzvVroUYYF7yVse69JF9pIiQsL1KKK
+ u4C2JagmC6t2OrdjLgO82JN4vbXTTDAXr4j8OaNw6k92R0RdiyMqNCpDaQOD6/Yp33QK
+ ern35Xz9NSr7vN62h7ziRkwd05B3mbzs2pQ+IAV3ypqSc0lZQNaiXSew13Gb2jbKYg45
+ jaXIYV9sTkau93md2hqDlfGsJmTBopHGCV8d4Dal7zBhrxJTpmAs9CwnW4/Bu15AJGpL
+ 1tcA==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1792145667; x=1792750467; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=VvZcWaEOtfKFRQ8xBYWK9IzKT7vm+Yd3RrHeYl3ROFo=;
- b=s1pdXEgEIuu9JfLCLC0//e6gzW5B9wAW9UMN440Mqi/ONb0al3ZmgL2ibT8+1o7HQr
- 8Q8Pshfn0AvIRzPw6bqWsoKfh/bl3cFmZWaExp81EWWWvlDfaFF69h2BLMF5eowuGF9a
- 4GlRR03Pi60TcrLQCtdXrh8ZXQ9KJUd8jRyJd2S0uKIfvSg3XqA2mDZCmX7hsU3+YGAV
- bmFx1LojPG4gdE5FUorO51UKrJewcVpFsh+OKeVFNg+TPnoP2THUDt9D+Jv/8MXpya6z
- CyGgSqTAXRUa7qADYtLeWPibrpauNJ3MstKPjBSbcn4jJpVM4n1nRCGkDFHfbL6rUahB
- 5qKg==
+ d=linaro.org; s=google; t=1792146051; x=1792750851; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=+lR+yCq7Sj2LV7d8680iILAoFQX7r0VH1tOrFRtbZ7g=;
+ b=rnl2EoNq34uDqmATu80EhNE0EkgAfyvuZPc0cK9q6s52yYOZ4hy6TfsNhq4xos54SJ
+ r/1+G091HWsihX8ztnglawe1XRWyagkGHbglBtZWWjUFQrYKnvSPoHdO/01U1J8FMAjQ
+ S2LS157V84f/fwNAVygKBSjt+SP7kzXoAgee71wUTvIRsfVSBvO7+JYBNgR9dYogc9Ti
+ Go+cU1sAXclloK9kYsnaKr2j6tomikstNA3hU99AZKGPtqjO5oYtznTXQuAfrCR9yOhA
+ YgW0dTXbApBLBNvua6qMFIkxMqGF/vGdj4ibYU6NkNl4a5C+IguGmM73kbbktQn/WnVF
+ ZpNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792145667; x=1792750467;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=VvZcWaEOtfKFRQ8xBYWK9IzKT7vm+Yd3RrHeYl3ROFo=;
- b=vk2CV3t5Ydz03layW+q00BfJOxRsoGkGrEqMQln3J5dEbc7CP0SPiGpTVdzvVtWNpN
- WDOh4B5vmP9S261oLTTzBfBzrkNAwXXNLKYPNM1C77/DNg+QQIuMDX8gkeBsbZ0CvTvH
- zWFegjwzvUtu6eBsEwPtngkgIAjZcDEF+sCH9eaNpU4+3WV43lWOMnQY1vgFeHla2FBt
- +gMoZDAtvPt0hJ3nJHSJNM0ztklJ3olYxEiHfy9afAx+lpJcD82A2jCy7QbL85C6Qegi
- pu2+7B8zjOtV1Lhx2oiTL8FplIFQnsOuZFRNSB19qN3GwK2C4lYn44MrspsnwfnLSB9b
- QjCQ==
-X-Gm-Message-State: AFq9FYKJX8xocUE1g+5dCf42NrrOGkHtb1dUcPIKm+rcsewaWYTLjFZg
- YVCYeEWpwVVOG/UQ0kaIEovriNILxYkidlkvUMmnYdrcii3mKLs7MSFyL1H8/T06v9D7aJ/816E
- 2zMrytPLuo8b8WLvmNtqgvAuJRlSSICrROljuQhm4JQ==
-X-Gm-Gg: AYBFou13jfzstXAAt0WIQDbRHeDxinNHzKQRHaUaUqlGB0cCiIYqs1D8t/BE8Sin39o
- ++xtxtlgr/j58kOhEETMkFk3MOWjD/wb8Y84ArMDZgF4c+kT9OCekdwiwz8D7r6PCxxxLCqCCCx
- GgTS+afR7D6mP1ut7vxmCmcDQKoHHC4RLHTNc0Craw106AuKAY62ZVX2oqWIW56yjuNpY1l0Ina
- 8JeIoVIBHTWXzRBBhmslt/ZSVECKoJWF/jtd3boe3VkH8QAdZnmmTIub4143ZNafwqiru5sdr2u
- pjTf6e+DLd+0amJg7QjqOTpjxAvUaH8jyrfSXODDfw7LAxRKicNAiJUXL95YbDABR4AmSUuTPLv
- KyvDeyxn0lqKgsCGBDPgvMKS8CG10CQpc38FIeMw=
-X-Received: by 2002:a05:690c:309:b0:8b0:dabc:a6fb with SMTP id
- 00721157ae682-8b0dabca7f5mr16084517b3.31.1792145667449; Fri, 16 Oct 2026
- 03:14:27 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1792146051; x=1792750851;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=+lR+yCq7Sj2LV7d8680iILAoFQX7r0VH1tOrFRtbZ7g=;
+ b=tmpUGvAcdZgjPn7rT5J3CWYMGp5xoIfWkTZ/673FXJ9Tww5FFVPg6JYJDBdMTCdOiH
+ jpy1Gm4F/cnmypgZXZElNGYbZFVIgsZWNPUmVJMFMr1hSNhA4qS3PsChJMTkWnab2d/D
+ 2RFU9RhnkTLVlTPTL0g/8ege1xqS6k//KYtORfADjwy1Vu/nApXdHZ7c4h/ZdTAvnG3w
+ FHQeWaQgOCGlgmP9P1RVUPAoA62PMnBFODWXxoDmQ4krXbPsNvj2nVwP47RtKx0l1M2l
+ FYisdX257j5/bdLS+4DPMvZaA1pKVFG3VRaum0O42BJLe7BGD68pHbSPFNhOWITESI4i
+ splw==
+X-Forwarded-Encrypted: i=1;
+ AKwUvByvoWCcwpeNCBmE/VY82dt7ftBpSsNYa9zbtITbgPZYqncv6aCC7EcolqKRUWWJNG8LRzIOdJDUCjRT@nongnu.org
+X-Gm-Message-State: AFq9FYJtYHhimApVFZ/W5Xcho3bBQHRyAUWdPkU0Dy+2aqZlz1bGVbHd
+ xDXd2D0eeo+8UAVdZ+1jWWnVNNwmFjBcu2Gs7irF6q5Hx7F+oPa7V/ZohNeuKvSan68Usovj8l8
+ Vw00aSUHLcDdarsEtNsQ2Pa1UsBQEh8O4xC1HsxUs+g==
+X-Gm-Gg: AYBFou2Vk2H2yu2FaBTJ4u3FpbOs+tiTwek9FP0JyATVfco0aKlK4/qna/S6g08kLA9
+ OcFhSeMYx9HHghyxTLCxzuEEdp0wbskZ38spN+p5rQwF4t2RsMC65hJ6OyuORU4yy5vCPqp+GVP
+ EjhOKkxE4b0E3HkFQ50iR5H3+jsZsuarVsGfBb+CcXEjfEsCA5ILr/3tMH9ykFY8X0BpnJsSNwU
+ 0tyUte6eDRi0uO/I1SG8hFDFoAQqC4G3TfJkjw+BRYvXwFMrlwFWt6fJSSgFMmGeF8zhyhfYbay
+ IJlbPfksbGEY4/hEzYz3rWVH6GTB+e607qiSlTfOUoWFq4+GBOQTdv5gPycLn1TDq59kojolVqU
+ rJtjmOGAGAaqiD4c7hhcnOGZrgDPY03QjD1ufnUA=
+X-Received: by 2002:a05:690c:6e87:b0:8b0:76e5:ecf0 with SMTP id
+ 00721157ae682-8b07eca01c7mr85352197b3.4.1792146051284; Fri, 16 Oct 2026
+ 03:20:51 -0700 (PDT)
 MIME-Version: 1.0
-References: <20261015163352.1751191-1-peter.maydell@linaro.org>
- <atEC-pIGhLYLXVmC@redhat.com>
- <CAFEAcA-wEB15afO4Na8+8cF_Ja3v-8ewd8EdPavxJbfTmrL9GA@mail.gmail.com>
- <atHrFXxyIl3Nbvht@redhat.com> <atHu0kCSQTD9E34p@redhat.com>
-In-Reply-To: <atHu0kCSQTD9E34p@redhat.com>
+References: <tencent_22E95650AA60C6E59860452C0D61A21F1105@qq.com>
+In-Reply-To: <tencent_22E95650AA60C6E59860452C0D61A21F1105@qq.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 16 Oct 2026 11:14:16 +0100
-X-Gm-Features: AclHuK8uswMqZ5BSA5O7JvRn54OW6h-Ynv9l_siOiGm0K17FfoHnAR3TxoPPqFg
-Message-ID: <CAFEAcA9PTB=1V_hV1P0xpEW4aY+4LajYyzKzyTOJj=bb9=oPvA@mail.gmail.com>
-Subject: Re: [PATCH] include/hw/core/qdev.h: Fix where
- device_class_set_parent_realize docs suggest putting parent_realize
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
- Mark Cave-Ayland <mark.caveayland@nutanix.com>
+Date: Fri, 16 Oct 2026 11:20:39 +0100
+X-Gm-Features: AclHuK8ndLRSRJrGsRvAby9xi6rLxv6SVuahyYs5pcQX4zLAV6e0Eey50G4DPd4
+Message-ID: <CAFEAcA8MyrqWC7=A5Bw0G5G-2J64iTLmfY33dNDLm0jvmRb+Eg@mail.gmail.com>
+Subject: Re: [PATCH 00/37] Add Arm MPAM emulation
+To: Jinjie Ruan <2118537295@qq.com>
+Cc: anisinha@redhat.com, armbru@redhat.com, eblake@redhat.com, 
+ imammedo@redhat.com, michael.roth@amd.com, mst@redhat.com, 
+ pbonzini@redhat.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
+ ruanjinjie@huawei.com
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112f;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1136;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1136.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,143 +119,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 16 Oct 2026 at 10:31, Daniel P. Berrang=C3=A9 <berrange@redhat.com>=
- wrote:
+On Fri, 16 Oct 2026 at 10:47, Jinjie Ruan <2118537295@qq.com> wrote:
 >
-> On Fri, Oct 16, 2026 at 10:15:01AM +0100, Daniel P. Berrang=C3=A9 wrote:
-> > We're overwriting the DeviceClass::realize field in the class
-> > struct instance for "pl050_keyboard". We still have the completely
-> > independent class struct instance for "pl050" (which is what
-> > object_class_get_parent() returns) that contains the 'realize'
-> > field value set by the parent class.
-> >
-> > eg if I put a break on pl050_kbd_realize():
-> >
-> >   (gdb) print pdc->parent_class->parent_class->parent_class->type->name
-> >   $5 =3D 0x555557de40a0 "pl050_keyboard"
-> >   (gdb) print pdc->parent_class->parent_class->realize
-> >   $6 =3D (DeviceRealize) 0x55555585db67 <pl050_kbd_realize>
-> >
-> > and separately
-> >
-> >   (gdb) print ((DeviceClass*)(object_class_get_parent(pdc)))->parent_cl=
-ass->type->name
-> >   $7 =3D 0x555557de3ee0 "pl050"
-> >   (gdb) print ((DeviceClass*)(object_class_get_parent(pdc)))->realize
-> >   $8 =3D (DeviceRealize) 0x55555585daf4 <pl050_realize>
+> From: Jinjie Ruan <ruanjinjie@huawei.com>
+>
+> MPAM (Memory System Resource Partitioning and Monitoring) is Arm's
+> architecture for partitioning and monitoring system memory resources
+> - Cache portions
+> - Capacity limits
+> - Memory bandwidth and priority
+>
+> And MPAM is the Arm counterpart of x86 RDT, which Linux exposes to user
+> space via resctrl.
+>
+> QEMU so far has no MPAM support at all: the CPU-side system registers
+> are missing (a guest kernel that probes FEAT_MPAM takes an UNDEFINED
+> exception), and there are no Memory System Components (MSCs), so a virt
+> guest cannot exercise resctrl on Arm.
+>
+> This series adds MPAM 1.1 emulation for the virt machine,
+> and the structure is as below:
 
-Ah. I didn't realize you could get at the parent's class
-struct like this.
+> With this, a Linux guest booted with -M virt,mpam=on (plus NUMA nodes)
+> mounts resctrl with the full schemata set (L2/L3 CAT, capacity, MBA,
+> priority), and MBM bandwidth and L2/L3 occupancy counters track the
+> configured controls.
 
-> We can make it a little less ugly in the callers with a macro in
-> qdev.h thus:
->
-> diff --git a/include/hw/core/qdev.h b/include/hw/core/qdev.h
-> index 8e91e2fcb08..18e85850c31 100644
-> --- a/include/hw/core/qdev.h
-> +++ b/include/hw/core/qdev.h
-> @@ -461,6 +461,9 @@ static inline bool qdev_is_realized(const DeviceState=
- *dev)
->   */
->  bool qdev_realize(DeviceState *dev, BusState *bus, Error **errp);
->
-> +#define qdev_realize_chain_parent(dev, dc, errp) \
-> +    DEVICE_CLASS(object_class_get_parent(OBJECT_CLASS(dc)))->realize(dev=
-, errp)
-
-I'm tempted to suggest that we drop the 'dc' argument here and
-have the macro get the class from the dev:
-    DEVICE_CLASS(object_class_get_parent(object_get_class(OBJECT(dev))))->r=
-ealize(dev,
-errp)
-
-because I think almost all realize methods wanting to chain back up
-won't have the class pointer to hand.
-
-We could maybe have an extra layer of abstraction here such that
-you write something like:
-
-   parent_invoke(DEVICE_CLASS, dev)->realize(dev, errp);
-
-Or is that trying to be too clever?
-
-> +
->  /**
->   * qdev_realize_and_unref: Realize @dev and drop a reference
->   * @dev: device to realize
->
->
-> which would be used thus:
->
->
-> diff --git a/hw/input/pl050.c b/hw/input/pl050.c
-> index 48df2734e26..abe939171f2 100644
-> --- a/hw/input/pl050.c
-> +++ b/hw/input/pl050.c
-> @@ -168,7 +168,7 @@ static void pl050_kbd_realize(DeviceState *dev, Error=
- **errp)
->      }
->
->      ps->ps2dev =3D PS2_DEVICE(&s->kbd);
-> -    pdc->parent_realize(dev, errp);
-> +    qdev_realize_chain_parent(dev, pdc, errp);
->  }
->
->  static void pl050_kbd_init(Object *obj)
-> @@ -191,7 +191,8 @@ static void pl050_mouse_realize(DeviceState *dev, Err=
-or **errp)
->      }
->
->      ps->ps2dev =3D PS2_DEVICE(&s->mouse);
-> -    pdc->parent_realize(dev, errp);
-> +
-> +    qdev_realize_chain_parent(dev, pdc, errp);
->  }
->
->  static void pl050_mouse_init(Object *obj)
-> @@ -206,10 +207,8 @@ static void pl050_mouse_init(Object *obj)
->  static void pl050_kbd_class_init(ObjectClass *oc, const void *data)
->  {
->      DeviceClass *dc =3D DEVICE_CLASS(oc);
-> -    PL050DeviceClass *pdc =3D PL050_CLASS(oc);
->
-> -    device_class_set_parent_realize(dc, pl050_kbd_realize,
-> -                                    &pdc->parent_realize);
-> +    dc->realize =3D pl050_kbd_realize;
->  }
->
->  static const TypeInfo pl050_kbd_info =3D {
-> @@ -223,10 +222,8 @@ static const TypeInfo pl050_kbd_info =3D {
->  static void pl050_mouse_class_init(ObjectClass *oc, const void *data)
->  {
->      DeviceClass *dc =3D DEVICE_CLASS(oc);
-> -    PL050DeviceClass *pdc =3D PL050_CLASS(oc);
->
-> -    device_class_set_parent_realize(dc, pl050_mouse_realize,
-> -                                    &pdc->parent_realize);
-> +    dc->realize =3D pl050_mouse_realize;
->  }
->
->  static const TypeInfo pl050_mouse_info =3D {
-> diff --git a/include/hw/input/pl050.h b/include/hw/input/pl050.h
-> index 2cdfa74f73c..7169afc151f 100644
-> --- a/include/hw/input/pl050.h
-> +++ b/include/hw/input/pl050.h
-> @@ -17,8 +17,6 @@
->
->  struct PL050DeviceClass {
->      SysBusDeviceClass parent_class;
-> -
-> -    DeviceRealize parent_realize;
->  };
-
-Yes, this is clearly vastly better than we have at the moment.
-device_class_set_parent_unrealize() can do similarly.
-
-Does something similar work when QOM interfaces are involved?
-We have resettable_class_set_parent_phases() which deals with
-updating the methods of ResettableClass, which is an interface
-declared by TYPE_DEVICE.
+I guess my question here is "how much is this actually doing,
+and how much is it 'we provide enough software-facing interface
+to keep the guest happy'" ? My (rather shallow) understanding of
+MPAM is that it's essentially adding tags to memory transactions
+and then accounting how much bandwidth each tag is using. That
+seems obviously infeasible for emulation, but on the other hand
+this looks like it's rather larger than a minimal "we provide
+the register interface but it does nothing", so what are we doing?
 
 thanks
 -- PMM
