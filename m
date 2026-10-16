@@ -4,73 +4,154 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1581ACC6B38
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 09:44:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBEC3CCA46B
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 09:44:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHeUA-00013z-1m; Fri, 16 Oct 2026 05:44:22 -0400
+	id 1xHeTP-0000qE-18; Fri, 16 Oct 2026 05:43:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xHeTz-0000y3-EJ
- for qemu-devel@nongnu.org; Fri, 16 Oct 2026 05:44:18 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1xHeTN-0000pT-0F; Fri, 16 Oct 2026 05:43:33 -0400
+Received: from mail-japaneastazlp170120005.outbound.protection.outlook.com
+ ([2a01:111:f403:c405::5] helo=TYPPR03CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xHeTx-0007LD-Ne
- for qemu-devel@nongnu.org; Fri, 16 Oct 2026 05:44:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1792143849;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=c1P7wup21MEqIPiv1Q/cTpVzJ4nDRuegAEr/nbgt6DI=;
- b=fTTWXvcI61X4kF1Ku06b19mRDwSiIW3HDMnC4o9PvZX6AC06RDkyKb+MJRK3j8tMpAExg2
- 2wHOFcYaTJU/UBM06sARwjrNMR2eUa3U/C5CpzobeyhcWyajmF9OVOPgcTfidzKCinz9P5
- iBwW/GJDYJOsneQEeZpR2MNJbaMR67s=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-235-cEhlLCoGMuWSbbajTc6Jhw-1; Fri,
- 16 Oct 2026 09:44:05 +0000
-X-MC-Unique: cEhlLCoGMuWSbbajTc6Jhw-1
-X-Mimecast-MFC-AGG-ID: cEhlLCoGMuWSbbajTc6Jhw_1792143844
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B23561955E9C; Fri, 16 Oct 2026 09:44:04 +0000 (UTC)
-Received: from berrange.csb (headnet03.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.114])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 0F1B73000B4E; Fri, 16 Oct 2026 09:44:02 +0000 (UTC)
-From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
-Subject: [PULL 7/8] Revert "crypto: add tracing & warning about GNUTLS
- countermeasures"
-Date: Fri, 16 Oct 2026 10:43:47 +0100
-Message-ID: <20261016094348.2616374-8-berrange@redhat.com>
-In-Reply-To: <20261016094348.2616374-1-berrange@redhat.com>
-References: <20261016094348.2616374-1-berrange@redhat.com>
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1xHeTK-0007Hq-Br; Fri, 16 Oct 2026 05:43:32 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=dfOEQCI8fEsRPYA6N8Z6kpICuGClFjChex2vnJWFaMBSuUJh1Q41IJME1UASqgj9SpKhvnoHjd7XB849zsu+8J1KK3tzzontDtTX2RayV+Ool7jS4dtstr7JoCmikzuXVuLEfOfofFAwq/AV9wcQvF+UcKXOzqd6iHaf2gYLHH1USS+j+1iEtillVEBOW5b6oD13aamyFPavdzQaXpdNaa7OU565+mqqxdKKs4tbaQzMYwD1MAts/lox/7QrXwmGOzVN0rT94JtI3Z56JngCusD8Vw49s9dMchgTSVhpV0mMb0jcfh0fWEMUHat+dugmRXzE7J+3WDkcZZX/eXpi7w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=stpMrkOUCQawQ7vwvpGByilVQvYKiUrQjoX0tLC7tJ0=;
+ b=rd32cRFlsYA29IGdm8gQGT2G6QeZ6d5XX5l0NlmslW4G9IqrVV+5O7Vk3oI4J7f6bcybvmnXTnPtWkIjx8lxhwZpa1t99ez2ks76leXf5G+mkdzDmtJpZ8d8JZMG1TV0dz8hjlXfl+kbS3Hih/CtCcZuL/f8+5XnS/p+E7bWiBWhd/JfXQ5EIUPtrw6So3/R1MahTKGDlvav1ZB5eq576ZvrGJKHSa4ZH/vT3lQJ4+Ks0549STZnZZIsCTH8vl5NGLsCiGhq+HFsZ+xvepctMHHDsQWj3mZdBjl3qml19z7JvlEaV7bsacuRrSI+2dCp+N9BKFHyLZgiH4BAg8oTyg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
+ header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=stpMrkOUCQawQ7vwvpGByilVQvYKiUrQjoX0tLC7tJ0=;
+ b=WQIsS9hgPoARc+eX7Ny2swpiiq1eIbOgIxr3zW1x60l18x2S+TyQTYtaL1500ffaicDufitxjXfs72+MhSHxxRIUF7DVJV1eIUPNCVYizkfPiz/7vEt15sxFslvCnQCqHiKey+SeayNhWqye1Y6CHA6upKJ92lqYxDaQHdEDXIjhgfgAwkoc52KXhna5qyCqm1wgwFRDu7a/ZdnKmIw3ngeTAIR2ZhpNX/gw0uU2s4jPgmtjohj9KUyo36btU6ePlUqEHIQuojgDFB3SIE7CCWGoJ1dgXRFiWOPNBYpFyklwtF7X6tGK2fWXm1DspP1ZK743iBrRzXR+Ssq89gM+4g==
+Received: from SEZPR06MB7362.apcprd06.prod.outlook.com (2603:1096:101:253::10)
+ by SEYPR06MB6664.apcprd06.prod.outlook.com (2603:1096:101:176::12)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.522.15; Fri, 16 Oct
+ 2026 09:43:21 +0000
+Received: from SEZPR06MB7362.apcprd06.prod.outlook.com
+ ([fe80::cd2d:35d2:a702:1de6]) by SEZPR06MB7362.apcprd06.prod.outlook.com
+ ([fe80::cd2d:35d2:a702:1de6%4]) with mapi id 15.21.0522.013; Fri, 16 Oct 2026
+ 09:43:20 +0000
+From: Jamin Lin <jamin_lin@aspeedtech.com>
+To: =?utf-8?B?Q8OpZHJpYyBMZSBHb2F0ZXI=?= <clg@kaod.org>, Emmanuel Blot
+ <emmanuel.blot@free.fr>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+CC: Peter Maydell <peter.maydell@linaro.org>, Steven Lee
+ <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>, Kane Chen
+ <kane_chen@aspeedtech.com>, Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Joel Stanley <joel@jms.id.au>, Pierrick Bouvier
+ <pierrick.bouvier@oss.qualcomm.com>, "qemu-arm@nongnu.org"
+ <qemu-arm@nongnu.org>, Patrick Leis <venture@google.com>, Fabiano Rosas
+ <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini
+ <pbonzini@redhat.com>, "qemu-ppc@nongnu.org" <qemu-ppc@nongnu.org>,
+ "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>,
+ =?utf-8?B?UGhpbGlwcGUgTWF0aGlldS1EYXVkw6k=?= <philmd@oss.qualcomm.com>, Glenn
+ Miles <milesg@linux.ibm.com>
+Subject: RE: [PATCH v2 00/50] Aspeed: I2C device models and the Minerva BMC
+ machine
+Thread-Topic: [PATCH v2 00/50] Aspeed: I2C device models and the Minerva BMC
+ machine
+Thread-Index: AQHdWttneyMnc1G7/EmpD7Pf4OOALLb7AcpQgAAD7QCABOk8wA==
+Date: Fri, 16 Oct 2026 09:43:20 +0000
+Message-ID: <SEZPR06MB73628B7F0581B8DBF62DC72DFC9B2@SEZPR06MB7362.apcprd06.prod.outlook.com>
+References: <20261012-bmc-minerva-v2-0-4c3dff084ec9@free.fr>
+ <d7da10db-04a0-4699-8a96-44e98170f863@kaod.org>
+ <TYZPR06MB73731318F235CD2797C03D2FFC9E2@TYZPR06MB7373.apcprd06.prod.outlook.com>
+ <fbead52a-4ac2-48d2-8cac-fe1f24005caf@kaod.org>
+In-Reply-To: <fbead52a-4ac2-48d2-8cac-fe1f24005caf@kaod.org>
+Accept-Language: zh-TW, en-US
+Content-Language: zh-TW
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=aspeedtech.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SEZPR06MB7362:EE_|SEYPR06MB6664:EE_
+x-ms-office365-filtering-correlation-id: d1412bfa-ab95-4e6c-49a4-08df2b69ea15
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|366016|376014|1800799024|7416014|23010399003|10067099003|22082099003|18002099003|261009223027099003|4143699003|38070700021|56012099006|41080700001;
+x-microsoft-antispam-message-info: ucjvZAz+Uvnmc7L+ICrwRsycfO0pqOefTT6Z0iJWECTUOPha+QK4JdZ/Lt0CWTKNPovx98CvhXI1MFnJXSD9XS9gvBz9utyt3bemsebQWGskylD+Hrm1lGx6hS1ULWQD9wO3KH2LFqc1k89QiOLZ7f4ketrEgtWU8WX/ileEvyfHFEBSL+3FcbWPv+I0qD8Grb/4SX7HqjZZevIJXJ1D1f5BlkpPEVYcC5j05wHHw/1ljv9dBkfxxq5bfcFalKYxepwHOtRSauSKAan5XZsKjrrDiv5BZ37u488RWvIYiR5QZ4NUq1PCZmlWSdWPdJE9u7DfO6GR8qrzU3gM+pSL5FURkJtFbV5Sglp4vQa34Okc0E0i/Z2vHIApNI+usaetqPHdnv7XvmVrAscUtXqA0yJJGdR/VBLssSjrNGF0ByPTrTnCh9s7VmksCQ7ZqW8fZJzI+EFeltkuu7gvOFmuxBxSdEoCGmd7J1mE1zbMh6vVdGm5o9hodcUe5eGevmBisTkOiawLygofzk5M8lXEC926Yyz9lXau8JZKxZBPuKNh7fQVWnTas/XbWL/n27l8npdzOSy6kop0LP7rpdJOA5s89vCwfW7ZQTnr4LZPmybjjspZjfsy+41eZXYedXaSFiwQICtC1/3qgbu43+SYcOIXyvozz0LMXpdsV3k9ZzvF6AgQzoUdZjNjhgqh7MCfsFkd5JWLwc4kUfOBvALpiw==
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:zh-tw; SCL:1;
+ SRV:; IPV:NLI; SFV:NSPM; H:SEZPR06MB7362.apcprd06.prod.outlook.com; PTR:;
+ CAT:NONE;
+ SFS:(13230040)(366016)(376014)(1800799024)(7416014)(23010399003)(10067099003)(22082099003)(18002099003)(261009223027099003)(4143699003)(38070700021)(56012099006)(41080700001);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?aGxwdmdLRGVyRlhPUHl2ZmhzRTVTdUtPN0xkenlhQVFpaWZCTjh2bGwwLzI4?=
+ =?utf-8?B?QU5jaEhMUWwwMGk1TlVFMDhkQTlkZzN0ZEY1clRnZkI3VFB3NGJQTnR6U3FE?=
+ =?utf-8?B?Tm1ybUlRbnU1SWZYTVlnR2pIMjhZdTdlbndORXhMZHlTVXFybHFjekNjQUhP?=
+ =?utf-8?B?cVF4OEVsK05CMEZma29GdGRjTld6ajl1U1lxaHAxT3pPNFBzWEptWUxXbHJz?=
+ =?utf-8?B?Y1h1Q0o5T0ZucnR1eGZUUzB1Ym5jQXZnS0RJakZONDlTd0hWMkZ2bXIxRlhG?=
+ =?utf-8?B?L1p3WDB6QmpUTDZ4NUU2UERoTDZidjFGSHc4MVlSTkxYNUI2dGNmeGxkbngv?=
+ =?utf-8?B?YXhUNkFPSXkyMVVxR0I3cXZBMHF0ZnNSVlZ0ZmNnZi9TTVREbTQ5dWpnbUxD?=
+ =?utf-8?B?SFB5UDdjR0ZkRnV5TGlMVElVNTBsTjRzSTNzTHF3SjJZQWdIcVZ4K0k3aGZy?=
+ =?utf-8?B?N3ErUjR0bS9aVWJaZG9IcXlMelEvTk5NNDE4TGd1L1dEYXM2STJqVVZvcmQw?=
+ =?utf-8?B?cENWSmYxTENDZWNKaE5IVlpPYngyZ2p0SGFmVjhUd1d0YlNRK20vQ0YvZ0xR?=
+ =?utf-8?B?dWZpWTNCUTNnL1NOOXY0eU1obU9HVlhQaFhJMVBQSThPWjZScXlBK3lQeDEz?=
+ =?utf-8?B?YTdBdUkySkxwcldISXhDZk5nY1piZ1RsZnFEZnJmMEFVZ0kvclNSd2hvbmV4?=
+ =?utf-8?B?RkxRTWNSVmozWG9YOTFvZzlLQkwwdFBvYUQ1ZjV4MmpyUXN6a1kxdkdWM2hP?=
+ =?utf-8?B?emFmN0ZpWDFCd0ZSSUYyVGdTNGtjamtJS0ErbVl5R2pwbDJEeG94ZUg2b2dU?=
+ =?utf-8?B?bWpyRGlqeFJmSko0TkVmWVE1THh0QVRqUWRRUHdvV0lnRjJMUmswMVpwbVJi?=
+ =?utf-8?B?RVlPSHNPVGZyTkk0blJucTRkZC9XT2tESjVPb3Jpb042MFJiNUZvL2RkQ2tB?=
+ =?utf-8?B?eWdUdUZqUEtsQXhPTTBLRnBUN3p0SXhvb01sUUNiQk5nWURiZUxGOUxvZTZV?=
+ =?utf-8?B?MndLemlNOUhGKzJEMzVTdEN6dWhicjVZdTBFSTJxZk05SThGWkwxN0dBeXhr?=
+ =?utf-8?B?b2ZtNE8xeXdaOHBLdkt3MW81TFhFaTV1dTlBWnBOelJRdm9yNnZDU2pFMVh4?=
+ =?utf-8?B?S21wME4vbnJkVGhvc292UzdYMncvcUUyZ0o0d1drOGNsT3V5TkxlWmRiTDky?=
+ =?utf-8?B?emhUSnBta2N0b3EzMGdlbWlwU2tXRUhwNHRwUld3WUZFa3dSbGZtME5ranFy?=
+ =?utf-8?B?b0QxS1RaR05OcDJoeDJuUGtTQlpXd244Y3kyVzNXM0o1ckkzZHFSMmw5ZnND?=
+ =?utf-8?B?TFVxUjZDZ1hUMjNDb3cwNGJiOWIyYjhEWHRHY1g1S3lUOWo2Unh1ZGx4QWFn?=
+ =?utf-8?B?c0xyNW0yMmFtY0dyOVo3SHVTbllPa0xwbHFMbm1pTXZ1UFJ1aVVLT1IwVVFH?=
+ =?utf-8?B?SVF6dkZSOTdzdFJNUVRzL2poeCtDelFHZkdYd1RZK01QODhPMXNVNENmQzFs?=
+ =?utf-8?B?VGpoQUFGM0o4VUxQMndHU1BuaE9ZaUwrTlV2T2poa1R4V2trNHR1OEkyeGZ4?=
+ =?utf-8?B?WmtPWHNsY3hkejd4aXdORnE0Q3ZWdE5IUnVhSUJHZEgxdFpGK1JURVdXOUZt?=
+ =?utf-8?B?bDQ0dVgzMXliWlVacmp6alhVc0FOeGJ0SUgrYmMrc2k0SjRKNjNmK1J4MllE?=
+ =?utf-8?B?Z1RCMFg5eVMwVUJXeWMyeTVwQVNrSFJPWitkc2NmYTJNSllQRlZuV0xjTkpu?=
+ =?utf-8?B?S3pudUhCVGFDVGFhVkRWTThWYTl1eGVlc05UcHRvTTJYMTMrSk1GVmZTVENp?=
+ =?utf-8?B?YWVNYllqZ1hjRERKTjUrbkNNK21SQ2hBcjVaQXhPRE9IcHVONExWbUpjYUlR?=
+ =?utf-8?B?YzBRT0sxTmxyaXE1ZVFHcUJiWFVPbHk3RERHMzhiZ1N4eFBvdlVxZU94d3BQ?=
+ =?utf-8?B?akZ5OU9BQjZBVTlLRGd6R2Vhb3hpYWtaRklXRHd1MmdSR0F6YnpKaCtEcmRK?=
+ =?utf-8?B?SExkNzZVbDFDNHVaVG1BWjh3VURRZXNOL2JLYXFjTDFBaHNxcElhOUpaSW1z?=
+ =?utf-8?B?ZXZQNmo5bS9jclBETUZaY3N1K3ZNT0ZiMWR1QjBvbkVIRkVRU0pzNXdYNmI4?=
+ =?utf-8?B?d1BkS3AzZ1cxOUdkM0hEdDNjaW5KWmJLdytvRDh4Mld1WExMNS8veGQ1TmRU?=
+ =?utf-8?B?a3lnUE56cWRmendQTEZhZ2ZjNjJ0NkowVVJheVdOZTl3YmttRCtyeXhoUnQ3?=
+ =?utf-8?B?d0NrUHhyd29OazJha0ZNc3VSZ3pseVZPblIrZVh0VFFpcEQwMWY3RkZJS1Ja?=
+ =?utf-8?B?S1Y1ZVZhek41b0hvaVBrdjRZejBRaFZCTmdVR3lkY2xnc3JIVmRIZz09?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 10
-X-Spam_score: 1.0
-X-Spam_bar: +
-X-Spam_report: (1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Exchange-RoutingPolicyChecked: e8XtIHQf5dzShx4Zdz54GNIfjQ96oWwlsgII7g8ebfNVdGPofNWBK4mHoA9aDGr41ITN9ffjlrERzZhUFbR6L08YZmSf7mzKyYDfOwkMeDLqFJ7WoOFAhWf3t8izbo3eSh8VH6q6IZuAPLHLjGDt740CYUrVuHq5p7bsJZL+9gRoJI4lDvo0XshR95ppXNmgZ901uxL4KaxQcpGCz44EzIpeIRPcdFRsxFDQQuFHjXFfilscJ++oMgukbXGzASp1geFp2Cr0XUK4QfXFIXf3cAdg6SdLuzvmk9Sa8EH+cKFnlqYcaMuOvXn7gXLgXdaD8JYKYhq25IoeWWEIB0/PNg==
+X-OriginatorOrg: aspeedtech.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SEZPR06MB7362.apcprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: d1412bfa-ab95-4e6c-49a4-08df2b69ea15
+X-MS-Exchange-CrossTenant-originalarrivaltime: 16 Oct 2026 09:43:20.8387 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 9Weyu+wxiNahdbDDW+sZzxk3SbJizHnuZuTTtUd9zSO+KTP2hWak8eeTQDheqTkXlHtROh0eG8/SY7WmcNsEGxYG3aGEi/mPcKbdr0BAu0E=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEYPR06MB6664
+Received-SPF: pass client-ip=2a01:111:f403:c405::5;
+ envelope-from=jamin_lin@aspeedtech.com;
+ helo=TYPPR03CU001.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,66 +167,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This reverts commit 0db6f798024ea6f57ecf2020209b761b50a01d71.
-
-The workaround for the GNUTLS bug was not correct and it was
-decided to rely on GNUTLS being patched by distros instead,
-or users manually disabling use of the problematic ciphers.
-
-Acked-by: Peter Xu <peterx@redhat.com>
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
----
- crypto/tlssession.c | 11 -----------
- crypto/trace-events |  1 -
- 2 files changed, 12 deletions(-)
-
-diff --git a/crypto/tlssession.c b/crypto/tlssession.c
-index b343d1a5956..9450c83d9c3 100644
---- a/crypto/tlssession.c
-+++ b/crypto/tlssession.c
-@@ -19,7 +19,6 @@
-  */
- 
- #include "qemu/osdep.h"
--#include "qemu/error-report.h"
- #include "qemu/thread.h"
- #include "crypto/tlssession.h"
- #include "crypto/tlscredsanon.h"
-@@ -572,20 +571,10 @@ qcrypto_tls_session_handshake(QCryptoTLSSession *session,
-          * only have to protect against automatic rekeying
-          * which doesn't trigger with CHACHA20
-          */
--        trace_qcrypto_tls_session_parameters(
--            session,
--            session->requireThreadSafety,
--            gnutls_protocol_get_version(session->handle),
--            cipher);
--
-         if (session->requireThreadSafety &&
-             gnutls_protocol_get_version(session->handle) ==
-             GNUTLS_TLS1_3 &&
-             cipher != GNUTLS_CIPHER_CHACHA20_POLY1305) {
--            warn_report("WARNING: activating thread safety countermeasures "
--                        "for potentially broken GNUTLS with TLS1.3 cipher=%d",
--                        cipher);
--            trace_qcrypto_tls_session_bug1717_workaround(session);
-             session->lockEnabled = true;
-         }
- #endif
-diff --git a/crypto/trace-events b/crypto/trace-events
-index 771f9b8a6e8..9905ea261a9 100644
---- a/crypto/trace-events
-+++ b/crypto/trace-events
-@@ -23,7 +23,6 @@ qcrypto_tls_session_new(void *session, void *creds, const char *hostname, const
- qcrypto_tls_session_check_creds(void *session, const char *status) "TLS session check creds session=%p status=%s"
- qcrypto_tls_session_check_x509_dn(void *session, const char *dname) "TLS session check x509 distinguished name session=%p dname=%s"
- qcrypto_tls_session_parameters(void *session, int threadSafety, int protocol, int cipher) "TLS session parameters session=%p threadSafety=%d protocol=%d cipher=%d"
--qcrypto_tls_session_bug1717_workaround(void *session) "TLS session bug1717 workaround session=%p"
- 
- # tls-cipher-suites.c
- qcrypto_tls_cipher_suite_priority(const char *name) "priority: %s"
--- 
-2.56.0
-
+SGkgQ8OpZHJpYw0KDQo+IFN1YmplY3Q6IFJlOiBbUEFUQ0ggdjIgMDAvNTBdIEFzcGVlZDogSTJD
+IGRldmljZSBtb2RlbHMgYW5kIHRoZSBNaW5lcnZhDQo+IEJNQyBtYWNoaW5lDQo+IA0KPiBPbiAx
+MC8xMy8yNiAwODozMiwgSmFtaW4gTGluIHdyb3RlOg0KPiA+IEhpIEPDqWRyaWMsIEVtbWFudWVs
+DQo+ID4NCj4gPiBEdWUgdG8gYW4gaXNzdWUgd2l0aCB0aGUgQVNQRUVEIG1haWwgc2VydmVyLCB3
+ZSBjYW5ub3QgcmVjZWl2ZSBwYXRjaGVzDQo+IGRpc3RyaWJ1dGVkIHRocm91Z2ggdGhlIFFFTVUg
+bWFpbGluZyBsaXN0LiBXZSBjYW4gb25seSByZWNlaXZlIGVtYWlscyBzZW50DQo+IGRpcmVjdGx5
+IHRvIG91ciBBU1BFRUQgYWRkcmVzc2VzLA0KPiANCj4gVGFrZSBhIGxvb2sgYXQgbGVpIDoNCj4g
+DQo+ICAgIGh0dHBzOi8vcGVvcGxlLmtlcm5lbC5vcmcvbW9uc2lldXJpY29uL2xvcmUtbGVpLXBh
+cnQtMS1nZXR0aW5nLXN0YXJ0ZWQNCj4gDQo+IEl0J3MgYSB2ZXJ5IHVzZWZ1bCB0b29sIHRvIGNv
+bGxlY3QgbWFpbGluZyBsaXN0IGRpc2N1c3Npb25zLg0KPiANClRoYW5rcyBmb3IgeW91ciBzdWdn
+ZXN0aW9ucyBhbmQgaGVscC4NCg0KSSBub3RpY2VkIHRoYXQgbXkgcGVyc29uYWwgR21haWwgYWNj
+b3VudCBzb21ldGltZXMgbWlzc2VzIGVtYWlscyBmcm9tIHRoZSBRRU1VIG1haWxpbmcgbGlzdC4N
+CkkgY2FuIG5vdyB1c2UgbGVpIHRvIHJldHJpZXZlIFFFTVUgcGF0Y2hlcyByZWxhdGVkIHRvIEFT
+UEVFRCBpbiBteSBsb2NhbCBWTSBhbmQgbXV0dCB3aXRoIG15IHBlcnNvbmFsIEdtYWlsIGFjY291
+bnQgdG8gcmVwbHkgdG8gcGF0Y2ggcmV2aWV3cy4NCg0KVGhhbmtzIGFnYWluLCBKYW1pbg0KDQo+
+ID4gZm9yIGV4YW1wbGUsIGJ5IGluY2x1ZGluZyAtLXRvIGphbWluX2xpbkBhc3BlZWR0ZWNoLmNv
+bSwgLS1jYw0KPiBqYW1pbl9saW5AYXNwZWVkdGVjaC5jb20gb3IgLS10by1jbWQgIi4vc2NyaXB0
+cy9nZXRfbWFpbnRhaW5lci5wbCAqLnBhdGNoIg0KPiBpbiB0aGUgZ2l0IHNlbmQtZW1haWwgY29t
+bWFuZC4NCj4gPiBJIHdpbGwgdXNlIG15IHBlcnNvbmFsIEdNQUlMIHRvIHJlcGx5IHRoaXMgcGF0
+Y2ggc2VyaWVzLg0KPiA+IGphbWlubGluMTIwN0BnbWFpbC5jb20NCj4gDQo+IFRoYW5rcyBhIGxv
+dCwNCj4gDQo+IEMuDQo=
 
