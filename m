@@ -4,120 +4,144 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEB31CCF2C2
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 16:59:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DBD7CCA46C
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 17:06:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHlGg-00085Q-RK; Fri, 16 Oct 2026 12:58:54 -0400
+	id 1xHlMv-0001in-Tb; Fri, 16 Oct 2026 13:05:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wesley.hershberger@canonical.com>)
- id 1xHlGX-00083A-Lb
- for qemu-devel@nongnu.org; Fri, 16 Oct 2026 12:58:47 -0400
-Received: from smtp-relay-internal-1.canonical.com ([185.125.188.123])
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1xHlMt-0001iN-UQ
+ for qemu-devel@nongnu.org; Fri, 16 Oct 2026 13:05:20 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wesley.hershberger@canonical.com>)
- id 1xHlGT-0005k6-Np
- for qemu-devel@nongnu.org; Fri, 16 Oct 2026 12:58:44 -0400
-Received: from mail-yw1-f197.google.com (mail-yw1-f197.google.com
- [209.85.128.197])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id 92DE13F982
- for <qemu-devel@nongnu.org>; Fri, 16 Oct 2026 16:58:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
- s=20251003; t=1792169920;
- bh=Uxep4lAMFTJMpmjQLfgum4WJqUhVTQg6C/p5qA8d+B0=;
- h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
- In-Reply-To:To:Cc;
- b=AJa5xkK1IfMQObbMZjP2gaTSitpYUtxtxFOzjfnOfe+mIPRwKTwkvqTmUbOyhKpEi
- RNEUa+KvtaKhHyCG6ojkePYmxPV78M7gEjPy2/LhW2wI2aLNfoU9hLvDGweVUOSx8k
- FmZ1vY2pIiMlFsV+FqxMxgYEU2mzsvQ4Oas3+s5TeHP/RD6qUf+gtlQaUxd/jw3/9b
- ODXV/cL00aD5uR6N8qtzW+dxZ9tTL4SCfzssCuIPUh18U6l9hq16sIbAxl0NRDNQEL
- CKcFUsRTR4d/cld0CNjz0ktCzRn5DXuWgI9o/qKLxRaV/W3hDTvhMRyAeYokjQZK0F
- ejFOgEGtZodzA31zE/gL55WVIW1Q6orG/dwXpFwfS3o7Hy5OKD5T+1eoszr4RKb5aW
- WpEui8wNVeMow5ZzkgchtEnbuGA5TK+InXRV2gKQPcHxTAd653fmsnHZMG4cnTM3Gv
- YsnQmWJiqMz9Syyqbje26m4c59YAcVhgVATkWXuT8wbTM+R5vYwpJZTKrRX6zyu4OF
- zl5vkPvyJvHtRa71RlSNCHCaDi+fDy7EvN6BoNWxp8FBpXAVxNWDRSoGiCesZut3jo
- 3T9KYD8nnTs5PkXNAN9++gAfJJ6ZWUmMneOf8/D8rPQgxoOL/IpRdKUb0oXeC0NW0I
- iNXvNk4YxOutAb0c43zp6fmc=
-Received: by mail-yw1-f197.google.com with SMTP id
- 00721157ae682-8acc7fe346cso1336957b3.3
- for <qemu-devel@nongnu.org>; Fri, 16 Oct 2026 09:58:40 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1xHlMq-0006ek-Hz
+ for qemu-devel@nongnu.org; Fri, 16 Oct 2026 13:05:19 -0400
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 69GE5i0d1910949
+ for <qemu-devel@nongnu.org>; Fri, 16 Oct 2026 17:05:13 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ 9/+/5B99LVZods7wXwBR/VwDMp6mCTH8e6O/1mnbAfA=; b=CY4Q7JeT/04o6gb6
+ GH8Zdhx7/ROJFepgvuzPUCjy1s7AixxsTZO9NgzgxcKMxpS4uDkI1wclwjI7Gc3Q
+ hJ51USrW34bbvHSueAQvhvsS0BL6VH7C7ogURZBzM1AhobQ77QX2fESfnjlmwl/X
+ KlBZmy6QfN5tdvZpMEbokF0nUnI04NCbyGQH+Llb3s6sRy3SrcpaKxMa8HQa/Voy
+ GWl6ZltGavA+wSwG+IM87HHukqx/QPPRXcATs4rJJRVAXcT+LTJO7Nm2vsBnxCwm
+ P5NDBmImKwI8hMZ4XYV8ohl1FTNzePxGzLciDgpn7YpPobJhYefWK5O8pb31ErZW
+ nDUrYQ==
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
+ [209.85.160.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hbjmf9d3w-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Fri, 16 Oct 2026 17:05:12 +0000 (GMT)
+Received: by mail-qt1-f200.google.com with SMTP id
+ d75a77b69052e-5363b06bcb2so2566571cf.2
+ for <qemu-devel@nongnu.org>; Fri, 16 Oct 2026 10:05:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1792170311; x=1792775111; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=9/+/5B99LVZods7wXwBR/VwDMp6mCTH8e6O/1mnbAfA=;
+ b=GEaAp4JFUo/x1OVczJiZ9gVbHEFE7DjJdmx8rV3YLqMv7YacCZf6FDfAYdpYSOxgYN
+ 8OS/y0N5l46HbHamGt6S2xa+4C1SHj0BIRxSm9t4drmnd8p7AddhWKLzuQStckpiJLsy
+ mXK4i+XsWe/vM/x+QIUzAu8KvljqXX1KsgDRCIEGB6T5DcX0zluuwjvzKZKxB4hazG1m
+ Cr+TcJkNap2U5yIKH00qpQvm8rXlv3/cy4Qe7oWcyk2ocibfS1immJxSqft8C/2p7Zjq
+ PVd/tAMe427Vvvujech7ZofMYdm4Q1CdAJ8z/AyBg2xNnKD9mcsX25zBto/207s5GX99
+ 36tA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792169919; x=1792774719;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :content-type:mime-version:subject:date:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=Uxep4lAMFTJMpmjQLfgum4WJqUhVTQg6C/p5qA8d+B0=;
- b=GCXbufFn0GumY6y0fskY4mt2uouH1LMfnecmaBwqGRHMBSqVmXEQKVFfmXu78UVnay
- C7V6EWYv/PXY5f+4JYTraDDjKTsPkVhUf/4t9/NGyj+YrEzzQhhwwuUYdoIi689iWgsQ
- tBdqRPIt31E7G5esyroCzBbPDaW735eefcr5qhUFTmd2o7zTtcjrpS62fjenXuvxrIeb
- h0sNxEpjX5x2d5JBSVCvWDqhlryZbFtT4Ejr3pKqHITNjLIFetAQxQMm5+43gft/dSJf
- tmhozZGwhvuEjmr3GhR5yAkKyRyP+9aFEK23b2r30SMfVRwNznqhAfYb2yoQS67De1X/
- sgvQ==
-X-Gm-Message-State: AFq9FYJjdpHH20Zi5g/n7ShePkvg82V92I5ereRIxngnsNeodTMqlKlL
- ZfZQHJgHzjyW8UAzDNd/KKtUef8rLsbAyd6jto4LeoTyQ2pA+ducl8/nQgi/Y337lC/gc6w8oKc
- S/HfkKmH6NWGiO3XhM/UGh020Ma4fu97w3SzD6C7NjNUWtcbuTUUea4IzHU0bkMElChNHrM7V
-X-Gm-Gg: AYBFou0PMYNKXOyAlhiu/0pqmYTL97cCOqJcY1LvWSSl/NOk7Uj2RavlujR1I4DKbzZ
- hEIWspwnChA5BaEyghWu/OQGAbhuOmQz8RZIIvoOjimwi46QaEdoUX61Uzf9Iv3hQ1xwbdnKmMU
- 0TXCkfcxDo4NtVEHQ8BPJ97/i/Z62N1XSdPXpGnXm1oaQmDzlzXs0V5TOdKcloI4df0Rj9spx36
- DX6WdClOKlqiE2hnsnWq8heee924FhGZyrhm9BwiTEzPFBNAx5kKMOVCY0oi1yZYe+AsAlaPBey
- cUFBFgrf9eq4OIM4T0MUV4AggfRtyZKfNIzutDgHhcNXaDi4WRXUBZRCYevsvwLphCF1vWylxnh
- 4NLX8rK4LOock/cO7yu/ZN2uhUvEp7ATzhIBbzt2w1POlfAmKII2yGw==
-X-Received: by 2002:a05:690c:6604:b0:88a:4770:c2e9 with SMTP id
- 00721157ae682-8b0f214735dmr2952187b3.14.1792169919192; 
- Fri, 16 Oct 2026 09:58:39 -0700 (PDT)
-X-Received: by 2002:a05:690c:6604:b0:88a:4770:c2e9 with SMTP id
- 00721157ae682-8b0f214735dmr2952077b3.14.1792169918771; 
- Fri, 16 Oct 2026 09:58:38 -0700 (PDT)
-Received: from [127.0.1.1] ([2600:6c45:3000:1420:26da:25ea:7a28:6e4d])
- by smtp.gmail.com with ESMTPSA id
- 00721157ae682-8b0e58ad1b4sm12193167b3.18.2026.10.16.09.58.37
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 16 Oct 2026 09:58:37 -0700 (PDT)
-From: Wesley Hershberger <wesley.hershberger@canonical.com>
-Date: Fri, 16 Oct 2026 11:57:52 -0500
-Subject: [PATCH v5 2/2] util/coroutine: Reduce default idle pool max size
+ d=1e100.net; s=20260707; t=1792170311; x=1792775111;
+ h=content-transfer-encoding:content-type:in-reply-to:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=9/+/5B99LVZods7wXwBR/VwDMp6mCTH8e6O/1mnbAfA=;
+ b=F0za75koMIDwEZieJwfyuxyD1388fP6uZfWK7PbplEHfDU5COKO7dRnn/6ATzYMmpa
+ a3mV/uP6PCfDoLKlaen6JEV9zLhf5YApiJiXyrNIvnWVCZIPNSCwXkO578sN4Z9WCrxP
+ ErCt/GYcUoUTRmrTXIcFVesUmuKcciTd4OVQXRGKpgrwrlDizWkHXf7nsIvmhcaGxAMZ
+ 5IRVLWvHW7uURF7CpoJVZ5EM5nu8oXPPMBOgRyVZbirxnUgb1U19raBMqOQQdZ88YveR
+ bkfJpXFUOnGIancrq/z8J2dlEmXv1bj/c5dRLbbnRfwkkuN9j6KdgaSSfXXZOGrfBTVo
+ Sz4g==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBzQ/p1xBK9DLc9fvGb6CM97jY5EK8TzIsHPwwTYbyxwzchhur0CrkPPjgpsRQux+rbQEaxKeYi1sdgp@nongnu.org
+X-Gm-Message-State: AFq9FYKU9rUXDFCIeeDj8ybtrPssOBgYdplNfUv3av43rNiP3E0Z7iL1
+ kpP9MXEWgdl1Yrz+/vSgDlEhWm1Vmx+dhD/xD73gOWbTOx7xLJVPOWJAn1Y2VIclbdsKS2EEo14
+ ExuVBTym6YFY3pMiyEfOgmJnT4Q7FT+XxwMQT3H5Il8Tf/9+4HMRAtZi0Ig==
+X-Gm-Gg: AYBFou1xk/h7GxWXXLWluaJCRgvNNpjHvEbwYZWw00GE9wXThxGksAECygIcMH7OQXU
+ iEp46Iv7CCgwvHltvy9yJBbeUs6NVCKwxv7kpWT3A8Rfs2N7Mf+piaWrEefAdDlz4oSRDxJW5YI
+ N8YhfW5nW67fiDAPgm0xTfkYR+iallShRyVJMdvAeUqGUAA6dZQtTTJrGgvLA/C63hOoRmisO5Q
+ K89D0b8iJJQUzlPkXg4g6Ow7qsX8+Y07xogozf2gcQE+ZjPUeV7mh1pbF9w76ez2Y0NyKAo1mOT
+ bLgMj57QloqH0aDuFZacoIuYeCzxrPQb9U3AGRAisGi/sPvouLy4Cqwuw/IPBgGwFFEqqV4TFyM
+ r8HF8sdMnvXSaSCU20E8s7iFt5GREEeSdGmjEkT/Zqmj/HsuPhOtoRP9va5c/3rc6
+X-Received: by 2002:a05:622a:4cc8:b0:536:41de:9c9a with SMTP id
+ d75a77b69052e-53646022963mr754481cf.62.1792170310898; 
+ Fri, 16 Oct 2026 10:05:10 -0700 (PDT)
+X-Received: by 2002:a05:622a:4cc8:b0:536:41de:9c9a with SMTP id
+ d75a77b69052e-53646022963mr753691cf.62.1792170310202; 
+ Fri, 16 Oct 2026 10:05:10 -0700 (PDT)
+Received: from [10.222.168.219] (Global_NAT1_IAD_FW.qualcomm.com.
+ [129.46.232.65]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-91bcbab3716sm27409306d6.22.2026.10.16.10.05.07
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 16 Oct 2026 10:05:09 -0700 (PDT)
+Message-ID: <1c6f9535-a29e-4470-8456-549ac6281b50@oss.qualcomm.com>
+Date: Fri, 16 Oct 2026 12:05:06 -0500
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 12/12] tests/tcg/hexagon: add v85 scalar tests
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org
+Cc: Alessandro Di Federico <ale@rev.ng>, Anton Johansson <anjo@rev.ng>,
+ Laurent Vivier <laurent@vivier.eu>,
+ Marco Liebel <marco.liebel@oss.qualcomm.com>, Helge Deller <deller@gmx.de>
+References: <20261014195223.3233623-1-brian.cain@oss.qualcomm.com>
+ <20261014195223.3233623-13-brian.cain@oss.qualcomm.com>
+ <14457301-e847-4d71-b4cc-3405e29b744d@oss.qualcomm.com>
+Content-Language: en-US
+From: Brian Cain <brian.cain@oss.qualcomm.com>
+In-Reply-To: <14457301-e847-4d71-b4cc-3405e29b744d@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Message-Id: <20261016-set-default-pool-size-v5-2-719e9e4d3f9c@canonical.com>
-References: <20261016-set-default-pool-size-v5-0-719e9e4d3f9c@canonical.com>
-In-Reply-To: <20261016-set-default-pool-size-v5-0-719e9e4d3f9c@canonical.com>
-To: qemu-devel@nongnu.org
-Cc: Stefan Hajnoczi <stefanha@redhat.com>, 
- =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Kevin Wolf <kwolf@redhat.com>, Hector Cao <hector.cao@canonical.com>, 
- =?utf-8?q?Alex_Ram=C3=ADrez?= <alex.ramirez@canonical.com>, 
- Wesley Hershberger <wesley.hershberger@canonical.com>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4042;
- i=wesley.hershberger@canonical.com; h=from:subject:message-id;
- bh=7S4rtSqSrMu1r94QRHzeGQHLhS2L8aSAcTCaxlCaCjM=;
- b=owEB7QES/pANAwAKAfkogKziOh25AcsmYgBq0le6TRvLrfeLPZLMIo4vdq+LzfsokrgbCPjmU
- 1u3pol+PzGJAbMEAAEKAB0WIQQsIHxFLwpehxEbQ8r5KICs4joduQUCatJXugAKCRD5KICs4jod
- uUNxDACGkrxMRIY3zID/Sjo0NxBUGMjzZDqmhTQVIfyNxTf74pp42qHwmccvpF6O9o7plwCbkfz
- QwlUetUVo5VVVjKEmPs9EP+U2Csd3gH6yleqVYzJ78tYlcXkHsKYM3fDHK4rqxhufkwMP29zl88
- Qusxky+M0k2sO+p5iTcOpW/4eMXXFGi3rUVYY+TKGkRXOo1F82F0HsqbcZCtLBbKoL60IZDYp+0
- BQ2RSvvkQI7Yzhz32qCufX9pvETsQCWMABIv8FQDFjicr9WCV8VRGwDP+qUotUdeIPHO7ltH3rW
- Q/SyPrUSWmD2p2bkJ8IymwfD1/EdnH+HvhCAubpzmR2+51p0FfboAJUR0b9SlM9QamAyabXhUYy
- EYBNGKsQy6aoxqla373Wxcl0tqfH4iKXZumMpcfyNdvK/wh0utC8SH2CC9J3sxIrsthD1eEGzkq
- 9TfQciiy3g4eaeuFnqINYC/TI3yvEGfEtGdgzTWjDIf05BXlcICOcrtjbkrXUBP6KpL0o=
-X-Developer-Key: i=wesley.hershberger@canonical.com; a=openpgp;
- fpr=2C207C452F0A5E87111B43CAF92880ACE23A1DB9
-Received-SPF: pass client-ip=185.125.188.123;
- envelope-from=wesley.hershberger@canonical.com;
- helo=smtp-relay-internal-1.canonical.com
-X-Spam_score_int: -45
-X-Spam_score: -4.6
-X-Spam_bar: ----
-X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+X-Proofpoint-GUID: 1VpuOXowZ1CmevfPqixJ1JcMV-a0qlkH
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDE2MDA2OCBTYWx0ZWRfX6/X5m83OQyvF
+ gS9c7rxhIep7KhR476wfmG8OOA0n9IUrqMJOvLoIJBIqTFdl6bHuBpIqLPpIbSZ37K+GbOAkR+o
+ VSQ39/LE2FA3qDUXBdDiYC9nk3SSikE=
+X-Authority-Analysis: v=2.4 cv=SrAFe/O0 c=1 sm=1 tr=0 ts=6ad25948 cx=c_pps
+ a=JbAStetqSzwMeJznSMzCyw==:117 a=C3Dk8TwHQYyIj7nOf9RCJw==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
+ a=EUspDBNiAAAA:8 a=2EszZil2-8S7u7c10B4A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=uxP6HrT_eTzRwkO_Te1X:22
+X-Proofpoint-ORIG-GUID: 1VpuOXowZ1CmevfPqixJ1JcMV-a0qlkH
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDE2MDA2OCBTYWx0ZWRfX7HjFFOTofKcI
+ h2NnhAVQDG05HqHdT2azfaI5aocvOqjok0KkQ9M9T9LXmkhPqbstakxQAUzKmlXabBV0xxARwR0
+ NNI+V6HwMORM6YGqtB05dwb1SzFnSQJhzHawPHujmdtiz0qP0brqCgu/3MDKNJn1JFJTDJzGLqQ
+ iMAXuXtoLCocmmVBjoNsX7VT/HsDsB0b2fQKYo+BOi8Kw+S2YW+dKyQkqihNzBERXriUKqn/Dip
+ xAFenTMRK/7gj0WwDygZRiEBeaWsmt70dkNzDGz8y94nFb8GfApv4v2PpW6TVDi7ECpmWYj9Hlr
+ 4GljeZVjktqEc3hvzxs2k1gd0uxvEro1Y1RZ/pDAogXl7yRgTX2qeGNybPO9G7kzQRqATMhyIWC
+ iWkh14E/NzBCQvzMikT26y8i7ayst0F2VAT1cztu1cIvDfCflYuaKQ77U6deWNbZs7aXk1TguPi
+ ItEkyyot00lJAv5vM8g==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-10-16_02,2026-10-14_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 suspectscore=0 bulkscore=0 spamscore=0 phishscore=0
+ clxscore=1015 malwarescore=0 priorityscore=1501 adultscore=0
+ lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610080000
+ definitions=main-2610160068
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=brian.cain@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -134,119 +158,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-If g_file_get_contents fails (AppArmor, etc), use a more conservative
-default max size for the idle coroutine pool.
 
-This avoids any possibility of the failure described in 86a637e48104
-unless the host kernel is configured with a lower-than-default
-vm.max_map_count.
+On 10/14/2026 4:24 PM, Pierrick Bouvier wrote:
+> On 10/14/2026 12:52 PM, Brian Cain wrote:
+>> Add tests for: vallocframe, atomics, trap2, CFI/restricted branches, and
+>> scalar fp instructions.
+>>
+>> New instructions not yet supported by the toolchain are manually encoded
+>> with .word directives.
+>>
+>> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+>> ---
+>>   tests/tcg/hexagon/cfi_tgts.h         |  16 +++
+>>   tests/tcg/hexagon/atomics.c          | 102 +++++++++++++++++
+>>   tests/tcg/hexagon/cfi_user.c         |  63 +++++++++++
+>>   tests/tcg/hexagon/check_rev_gating.c |  10 ++
+>>   tests/tcg/hexagon/invalid-encoding.c |  20 ++++
+>>   tests/tcg/hexagon/trap2.c            |  34 ++++++
+>>   tests/tcg/hexagon/v83_scalar_fp.c    |  98 +++++++++++++++++
+>>   tests/tcg/hexagon/vallocframe.c      | 111 +++++++++++++++++++
+>>   tests/tcg/hexagon/cfi_tgts.S         | 157 +++++++++++++++++++++++++++
+>>   tests/tcg/hexagon/meson.build        |  19 +++-
+>>   10 files changed, 628 insertions(+), 2 deletions(-)
+>>   create mode 100644 tests/tcg/hexagon/cfi_tgts.h
+>>   create mode 100644 tests/tcg/hexagon/cfi_user.c
+>>   create mode 100644 tests/tcg/hexagon/trap2.c
+>>   create mode 100644 tests/tcg/hexagon/v83_scalar_fp.c
+>>   create mode 100644 tests/tcg/hexagon/vallocframe.c
+>>   create mode 100644 tests/tcg/hexagon/cfi_tgts.S
+>>
+> ...
+>
+>> diff --git a/tests/tcg/hexagon/invalid-encoding.c b/tests/tcg/hexagon/invalid-encoding.c
+>> index 639d7f24959..7c4dd244559 100644
+>> --- a/tests/tcg/hexagon/invalid-encoding.c
+>> +++ b/tests/tcg/hexagon/invalid-encoding.c
+>> @@ -89,6 +89,25 @@ static int test_invalid_nonduplex(void)
+>>       return sig;
+>>   }
+>>   
+>> +/* L4_loadw_phys bit 7 was reserved beginning with v83. */
+>> +static int test_v83_loadw_phys_reserved_bit(void)
+>> +{
+>> +    int sig;
+>> +
+>> +    asm volatile(
+>> +        "r0 = #0\n"
+>> +        "r1 = ##1f\n"
+>> +        "memw(%1) = r1\n"
+>> +        ".word 0x9200e080\n"
+> Please add a comments saying which instruction this is encoding.
+>
+> ...
+>>   
+>>   tests += {
+>> -  'atomics.c': {'cflags': cflags},
+>> +  # The cross assembler does not know v85; v85 instructions in atomics.c
+>> +  # are encoded with .word directives.
+>> +  'atomics.c': {'cflags': cflags, 'qemu_args': ['-cpu', 'v85']},
+>>     'brev.c': {'cflags': cflags},
+>> +  # The cross assembler does not know v83; cfi_tgts.S uses raw encodings.
+>> +  'cfi_user.c': {
+>> +    'cflags': [cflags, '-O0', files('cfi_tgts.S')],
+> -O0 is part of default flags for tcg tests, no need to set it here.
+>
+> ---
 
-This change is motivated by a discussion of backport risk:
-https://bugs.launchpad.net/ubuntu/+source/qemu/+bug/2168803/comments/8
+^^ will fix these in v2.
 
-Fixes: 86a637e48104 ("coroutine: cap per-thread local pool size")
-Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-Signed-off-by: Wesley Hershberger <wesley.hershberger@canonical.com>
----
- util/qemu-coroutine.c | 73 ++++++++++++++++++++++++++++++++-------------------
- 1 file changed, 46 insertions(+), 27 deletions(-)
+>
+> Overall, looks good to me.
+> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+>
+> I guess we don't have yet a public toolchain available yet, but if there
+> is one (even without source code available), it would be better,
+> especially for cfi_tgts.S.
 
-diff --git a/util/qemu-coroutine.c b/util/qemu-coroutine.c
-index 5af61995437..fc9ed66f475 100644
---- a/util/qemu-coroutine.c
-+++ b/util/qemu-coroutine.c
-@@ -361,42 +361,61 @@ void qemu_coroutine_dec_pool_size(unsigned int removing_pool_size)
-     global_pool_max_size -= removing_pool_size;
- }
- 
--static unsigned int get_global_pool_hard_max_size(void)
--{
- #ifdef __linux__
--    g_autofree char *contents = NULL;
--    int max_map_count;
-+/*
-+ * include/linux/mm.h
-+ */
-+#define DEFAULT_MAX_MAP_COUNT 65530
- 
--    /*
--     * Linux processes can have up to max_map_count virtual memory areas
--     * (VMAs). mmap(2), mprotect(2), etc fail with ENOMEM beyond this limit. We
--     * must limit the coroutine pool to a safe size to avoid running out of
--     * VMAs.
--     */
--    if (g_file_get_contents("/proc/sys/vm/max_map_count", &contents, NULL,
--                            NULL)) {
-+static unsigned int get_max_map_count(void)
-+{
-+    g_autofree char *contents = NULL;
-+    unsigned int max_map_count = 0;
-+    if (g_file_get_contents("/proc/sys/vm/max_map_count", &contents,
-+                            NULL, NULL)) {
-         /* contents has trailing newline, remove it before conversion */
-         g_strchomp(contents);
--        if (qemu_strtoi(contents, NULL, 10, &max_map_count) != 0) {
--            return UINT_MAX;
--        }
--        /*
--         * This is an upper bound that avoids exceeding max_map_count. Leave a
--         * fixed amount for non-coroutine users like library dependencies,
--         * vhost-user, etc. Each coroutine takes up 2 VMAs so halve the
--         * remaining amount.
--         */
--        if (max_map_count > 5000) {
--            return (max_map_count - 5000) / 2;
--        } else {
--            /* Disable the global pool but threads still have local pools */
--            return 0;
-+        if (qemu_strtoui(contents, NULL, 10, &max_map_count) == 0) {
-+            return max_map_count;
-         }
-     }
--#endif
- 
-+    /*
-+     * Read from /proc might fail due to mandatory access control (AppArmor,
-+     * SELinux, etc). Use the kernel's default in that case.
-+     */
-+    return DEFAULT_MAX_MAP_COUNT;
-+}
-+
-+/*
-+ * Linux processes can have up to max_map_count virtual memory areas
-+ * (VMAs). mmap(2), mprotect(2), etc fail with ENOMEM beyond this limit. We
-+ * must limit the coroutine pool to a safe size to avoid running out of
-+ * VMAs.
-+ */
-+static unsigned int get_global_pool_hard_max_size(void)
-+{
-+    unsigned int max_map_count = get_max_map_count();
-+
-+    /*
-+     * This is an upper bound that avoids exceeding max_map_count. Leave a
-+     * fixed amount for non-coroutine users like library dependencies,
-+     * vhost-user, etc. Each coroutine takes up 2 VMAs so halve the
-+     * remaining amount.
-+     */
-+    if (max_map_count > 5000) {
-+        return (max_map_count - 5000) / 2;
-+    } else {
-+        /* Disable the global pool but threads still have local pools */
-+        return 0;
-+    }
-+}
-+#else
-+static unsigned int get_global_pool_hard_max_size(void)
-+{
-     return UINT_MAX;
- }
-+#endif
- 
- static void __attribute__((constructor)) qemu_coroutine_init(void)
- {
 
--- 
-2.53.0
+Yeah it's unfortunate - these instruction encodings haven't landed in 
+upstream LLVM yet.  When it lands, we can replace these encodings with 
+the real mnemonics.
 
+
+> If there is a v85 toolchain available somewhere, feel free to update the
+> hexagon dockerfile as part of this series.
+>
+> Regards,
+> Pierrick
 
