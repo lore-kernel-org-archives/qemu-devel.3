@@ -4,72 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B704CCA46C
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 13:07:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0433CCA462
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 13:07:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHhaQ-0007iz-6y; Fri, 16 Oct 2026 09:03:02 -0400
+	id 1xHhaJ-0007Xf-1P; Fri, 16 Oct 2026 09:02:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <2118537295@qq.com>)
- id 1xHeXq-00060j-Uq; Fri, 16 Oct 2026 05:48:12 -0400
-Received: from xmbghk7.mail.qq.com ([43.163.128.52])
+ id 1xHeuD-0001Ne-N2; Fri, 16 Oct 2026 06:11:17 -0400
+Received: from out162-62-57-210.mail.qq.com ([162.62.57.210])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <2118537295@qq.com>)
- id 1xHeXl-0007js-FM; Fri, 16 Oct 2026 05:48:10 -0400
+ id 1xHeu9-0001xu-Dc; Fri, 16 Oct 2026 06:11:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
- t=1792144075; bh=hciyqH3zcXaXlAIuQQ0lLA4m9O2NDYlOQwSxBgW/Y3Y=;
+ t=1792145463; bh=T2aVuixcbXg2L63BOa+6sJHS5UVg7DPyy+uwZi5T7tw=;
  h=From:To:Cc:Subject:Date;
- b=JVkrJMe+UYOTM7U+4nrky7KPsrv7jmFtNK34wMM+D47rNE2U3Y9abuHP8lhfGV3ot
- sKwnOsgy3dsB3yKwzOkmchJNO6sOYIP4u5azuis8Myah+WFo2drhXFi6zjT02EcmIA
- A1z3ffp1ZXbNX09Mu0hAZs52TKCH+DL4fG+msz2g=
+ b=m8zu7lsQjRasg2JZv0cMoqgydKGKIOcxtZ5YQz3ZSBGj8LmTa5jGgXmFzilaO1dVe
+ F133nHeLgLPztb8H/ZMNopFPQ0VDmD/DoceGtVvjWRFgz8Np4+/qrzMECKPpcUFIMC
+ 48J9lS/bL2CncnUgEN2C8ba4feVUIG48lWMLkYks=
 Received: from r00799764-ThinkCentre-M920t-N000.. ([139.159.170.67])
  by newxmesmtplogicsvrszc43-0.qq.com (NewEsmtp) with SMTP
- id BF4A1837; Fri, 16 Oct 2026 17:47:52 +0800
-X-QQ-mid: xmsmtpt1792144072tc0bou4ek
-Message-ID: <tencent_22E95650AA60C6E59860452C0D61A21F1105@qq.com>
-X-QQ-XMAILINFO: OQac6g2KrvnWbasep5Jh8q59WYO/o213hhNKO1n9gzni+BrO9zHU6Zy17UZqkR
- VlnIp5xWFgI2SU7iizNExI+PoYzpsqV/1ljpPsuoKDBadjis4AK+VKorji/wDgW/llJAqoR4saK/
- p02XuPhn5tLDmv5t8LsJe2BLIR0wTKd2dkqmPrv13mYjal1r+jmwlgzCHZDjiRjfzeEBBMShVXWq
- b4AbCWkdxrVA4oPYV9LvUHI8bUgEFaNeVekETUZhQNn5IyjPntM5zIWZFrdaFawYAbJXjxrv3Z11
- hjYlonDV7ZpmgMoM02ZxiUxuwUO7yjP++8vZqo/Wp2i1JtQx5rNR46TFNBrczt+0ZmZJDjMzrGlw
- x+gFwDBqEdDusIzq1LFV0smCyNuGHiCOVimYvOSF19dftJ7Ln382yseg30sEtTKJ4myx/BxtzOOa
- cHWCkdTzES+UGjnPRxfPWvbjenrvI/Hzqgz22VMdmVV//dKCJWWxuD8vhLUkBfLfz8ylqCUfmCF/
- lkSmlTAckl+40+dR3BxBRr8OLlgjVA5uZS7Z0vN8/Jmibj1qUay4rhabn/qte2KP6q14Uix0FIQv
- 2SVPlMddBJ0OULxT82HDba4R9j1JVd7P3dgb9LAXkqIiJ7WOwqTeIhEKZeRokINzT//v0rpFdTOe
- bbBVfnBWc68s2CmwST/KtLlJ92pAaxOBHtrYqBl+pKqSNlHJpFkJyBX81pZlDOlG55AhLVBJ+C7A
- nXi6/52eEq4ueYfch9aKEKWW4rDdsNQSfGIbbV3ohAzxii21SCg4+G5UnNeoRC5cs6qRBfqcJ6yX
- o0GAUscXS2e1wbEtGuD/Oo67qGyHrk8qRs5K/yMlyHnIEgGtp7HLFwzrmJVf7AnBf0lWsFJ6xTer
- lFGUB9n29RpAbluqu38Rd0DnJ5wVPxu8F5FD6T7m3VwVNzwt0MIFRzg8Xn5vRYUHlcKftIUT5dJe
- iWXDnIwUSUf4WOLrwWFYhbfU+NTS3y+7R7VnbBgBBfgua+rU7CX3zbCU6xnw/QKJwShuq1jTDyOt
- dvmMcJUoGJ8TqJahAMsZ3ZucBqKiUz5DszALkwZxiQ4NIyrwrxp4hhUSU3C22h8C9jKZV1/YYPvI
- 4VWGnqRcqzbOqQy8lDTT+LRJNYzQ==
-X-QQ-XMRINFO: Nq+8W0+stu50tPAe92KXseR0ZZmBTk3gLg==
+ id 2C0284B1; Fri, 16 Oct 2026 18:11:00 +0800
+X-QQ-mid: xmsmtpt1792145460tm1jwu9wu
+Message-ID: <tencent_4A73E52B4D6BC21D11E7564A8A6EA6EF5805@qq.com>
+X-QQ-XMAILINFO: NIcblQ53mXmRU7jMe/h99tZu6vaGF/hsDxYqX7mbb62Wrx4/E6yV6MT3HNuY3C
+ qSFZB3iYN8m7kSRWCprmmuVrbSEKZYQ/CoPPdAmdRtjt8cGZ5EsI28SgjceifIwSudqrSd1vbFRt
+ qykoERulsgRNKszc1tZXtdMgDj3KFzUIOWrzPXOxx3Hbf498v46TZww7gOJ6/wv1bsgDnYxj8M1L
+ ByNSHhWosc8Wp4CHDxdvyfY8tZv5Qib38cV2eS/6sb94P/I5FQpp544NBrk2bax9xVucngTvpQ7z
+ 5o0pXfhIN3z19On+NzncjHorKxjF6vtJksmxgPjA7jGbMqKTGPTqXHqtDdZF0Wbx15cOTxR8WgIM
+ uYa2NaZ+X35e8ROR7O3PUjHr8WmR2018etrbx/sxpsvlZqAIOrd61U9aD+VTThhVdh61mqSKaxBJ
+ itoVLJoapcZ5m1GRJtxzfJARN0HZ8RYTNb9mL6oIn1Nl1O311ZJ4DBI/8d9ZyYRTkp9t/yAhN8wY
+ 85lxPNqQFqklagbD7O8X9ro7CfjFAlRMS5DDa/UJ7unJRfILoomzxdetsZC+hpt3w6Jm6XjsfcU1
+ PNNhfysenXVheNAiut0qyP/+w3wl/65OXtMz0cuMUt4KX2Fk06V+Y4uUQ1V4IntwznMQWkTNPjVf
+ 8GuNTEGZ6bB60l7bd02bPsV/gh7ijbDsqE4A/1njkywMH7GHpMSQ4abpTHMMIPM6BjG9RZ20nROD
+ qhKJ6IFEBQmyC4MWISYA2kMxWr5X9BfNjECUVpwvtIxxLRTnQruRPb+wCkPBX9Ib9MXrTN+S3C7H
+ TO2jiaMiLXFRURXWf8UoEH3bwhDNjjl7mux3ggMm6b7RH7sW6mi5FdKBXr/E0xv6v/pwRmByfrEx
+ NVZF1ePScmYhrpwjI49Gy7SvUr+hpVyUR8A8+Iye0cqwmuhL0AvCPvxK4YcoryZoOz9cI7oXZI0z
+ xNQlsWRgH9i/qBTZcusJ6j1o2+BSWrs7+4odlceij/9RmG0PEs5EyjWQQlBXfgXtMV8T+Ty+DV5k
+ CYGhoYziUwfXa400sSYCPU9cZhLtoHnL0OWUQKyaqtt+Afh1zCl/SDxnybyT63hp4qkleiJ6IKCv
+ DBtV7OsOMxG1kTwgKjZrddJrXyC+xZCiJvgseOgzO88hp4OJk=
+X-QQ-XMRINFO: OWPUhxQsoeAVwkVaQIEGSKwwgKCxK/fD5g==
 From: Jinjie Ruan <2118537295@qq.com>
 To: anisinha@redhat.com, armbru@redhat.com, eblake@redhat.com,
  imammedo@redhat.com, michael.roth@amd.com, mst@redhat.com,
  pbonzini@redhat.com, peter.maydell@linaro.org, qemu-devel@nongnu.org,
  qemu-arm@nongnu.org
 Cc: ruanjinjie@huawei.com
-Subject: [PATCH 00/37] Add Arm MPAM emulation
-Date: Fri, 16 Oct 2026 17:46:54 +0800
-X-OQ-MSGID: <20261016094733.1898485-1-2118537295@qq.com>
+Subject: [PATCH 17/37] hw/arm/virt: Add mpam and mpam-min-msc machine
+ properties
+Date: Fri, 16 Oct 2026 18:10:35 +0800
+X-OQ-MSGID: <20261016101058.1900808-1-2118537295@qq.com>
 X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=43.163.128.52; envelope-from=2118537295@qq.com;
- helo=xmbghk7.mail.qq.com
-X-Spam_score_int: -1
-X-Spam_score: -0.2
-X-Spam_bar: /
-X-Spam_report: (-0.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=162.62.57.210; envelope-from=2118537295@qq.com;
+ helo=out162-62-57-210.mail.qq.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- URIBL_SBL=1.623 autolearn=no autolearn_force=no
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HELO_STATIC_HOST=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Fri, 16 Oct 2026 09:02:22 -0400
+X-Mailman-Approved-At: Fri, 16 Oct 2026 09:02:41 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -86,177 +87,103 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-MPAM (Memory System Resource Partitioning and Monitoring) is Arm's
-architecture for partitioning and monitoring system memory resources
-- Cache portions
-- Capacity limits
-- Memory bandwidth and priority
+Add the two MPAM machine properties: mpam=on enables MSC emulation
+for the virt board, and mpam-min-msc=on collapses the per-node
+memory MSCs into a single MSC with one RIS per node.  The state
+fields and the property accessors only; MSC creation arrives with
+the later patches.
 
-And MPAM is the Arm counterpart of x86 RDT, which Linux exposes to user
-space via resctrl.
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+---
+ hw/arm/virt.c         | 47 +++++++++++++++++++++++++++++++++++++++++++
+ include/hw/arm/virt.h |  2 ++
+ 2 files changed, 49 insertions(+)
 
-QEMU so far has no MPAM support at all: the CPU-side system registers
-are missing (a guest kernel that probes FEAT_MPAM takes an UNDEFINED
-exception), and there are no Memory System Components (MSCs), so a virt
-guest cannot exercise resctrl on Arm.
-
-This series adds MPAM 1.1 emulation for the virt machine,
-and the structure is as below:
-
-* target/arm (patches 1-3): the CPU registers:
-    - MPAMIDR_EL1 and MPAM0_EL1/MPAM1_EL1
-    - MPAM2_EL2/MPAMHCR_EL2
-    - MPAMSM_EL1 for FEAT_MPAM_SMS
-
-* hw/acpi (patch 4): PPTT revision 3 with Cache IDs, which the kernel
-  needs to resolve the MPAM table's cache references to PPTT cache
-  nodes.
-
-* hw/arm/mpam device model (patches 5-15): built up layer by layer
-    - The register map as pure registerfields declarations
-    - The base MSC device with MMIO access
-    - The mpam-msc-mem and mpam-msc-cache subtypes
-    - MPAMCFG_PART_SEL selection
-    - Per-RIS partition config storage
-    - The partitioning features one at a time (CPOR cache portions, MBW
-      bandwidth, PRI priority, CCAP capacity)
-    - The ECR/ESR register surface
-
-* hw/arm/mpam (patch 16): PARTID narrowing via MPAMCFG_INTPARTID with
-  the identity-wrap default map
-   - The linux mainline driver exercises it by default and resctrl
-     reports num_closids=32.
-
-* hw/arm/virt + hw/acpi (patches 17-23): the board wiring, one concern
-  per patch
-    - Machine properties
-    - The MMIO window reservation
-    - Device locator/irq properties
-    - Memory-side MSC creation
-    - Cache MSC creation derived from the smp cache topology
-    - The ACPI MPAM table, split into the DEN0065 MSC node builders
-      and the table assembly
-
-* Monitoring (patches 24-29):
-    - The MSMON selection/window infrastructure
-    - The MBWU bandwidth monitor whose counters track the configured
-      bandwidth control (MBW_MAX or MBW_PBM, whichever the guest drives)
-    - CMIN/CASSOC storage
-    - PRI advertised on the memory side (backing the driver's MBPRI
-      pseudo-resource)
-    - The CSU occupancy monitor (a snapshot of the capacity scaled by
-      the CPBM fraction)
-    - The board sizing of that capacity per cache level
-
-*Error reporting (patches 30-33):
-    - ECR/ESR as MSC-global registers (IHI 0099 4.3)
-    - Device reset with power-on state initialisation
-    - The two level-held interrupt outputs (8.2/8.3)
-    - Table 7-1 error recording injected on the invalid-configuration
-      write paths.
-
-* patch 34: the board wiring of the MSC interrupts to free SPIs on the
-  GIC, with the assigned GSIVs reported in the ACPI MPAM table.
-
-* patch 35: defaulting to a single node when none is specified.
-
-* patches 36-37: the query-mpam-cache QMP introspection, split into
-  schema+stub and implementation.
-
-With this, a Linux guest booted with -M virt,mpam=on (plus NUMA nodes)
-mounts resctrl with the full schemata set (L2/L3 CAT, capacity, MBA,
-priority), and MBM bandwidth and L2/L3 occupancy counters track the
-configured controls.
-
-Verified with a Linux 7.3-rc6 guest on gic-v3: the arm_mpam driver probes
-cleanly, the resctrl regression suite passes and no MPAM error interrupt
-fires during normal boot.
-
-Patches 1, 5-8 and 36-37 carry Jonathan Cameron's authorship, being
-derived from his RFC series and its QMP face.  Compared to that RFC [1],
-this series completes most of its TODO list and tracks what the
-mainline arm_mpam driver now requires:
-    - Monitoring
-    - The MSC interrupts
-    - Error reporting on invalid parameters
-    - PARTID narrowing
-    - The missing CPU registers
-    - PPTT rev 3 with Cache IDs
-    - CMIN/CASSOC
-    - Memory-side
-    - CSU monitoring
-
-Still open from the RFC's TODO list: ACPI table unit tests.  Like the
-RFC, this is ACPI-only; the DT binding remains unimplemented.
-
-[1] https://patchew.org/QEMU/20230808115713.2613-1-Jonathan.Cameron@huawei.com/
-
-Jinjie Ruan (30):
-  target/arm: Add MPAM2_EL2 and MPAMHCR_EL2 registers
-  target/arm: Add MPAMSM_EL1 register
-  hw/acpi: Build PPTT rev 3 with cache IDs for MPAM cross-references
-  hw/arm/mpam: Handle MPAMCFG_PART_SEL selection
-  hw/arm/mpam: Add per-RIS partition config storage
-  hw/arm/mpam: Implement CPOR cache portion partitioning
-  hw/arm/mpam: Implement MBW bandwidth partitioning
-  hw/arm/mpam: Implement PRI priority partitioning
-  hw/arm/mpam: Implement CCAP capacity partitioning
-  hw/arm/mpam: Add ECR/ESR and error MSI register storage
-  hw/arm/mpam: Implement PARTID narrowing
-  hw/arm/virt: Add mpam and mpam-min-msc machine properties
-  hw/arm/virt: Reserve the MPAM MSC MMIO window
-  hw/arm/mpam: Add node and interrupt GSIV properties
-  hw/arm/virt: Create memory-side MPAM MSCs
-  hw/arm/virt: Create L2/L3 cache MPAM MSCs
-  hw/acpi: Add MPAM table MSC node builders
-  hw/acpi: Build the MPAM ACPI table
-  hw/arm/mpam: Add MSMON monitor selection and window configuration
-  hw/arm/mpam: Emulate MBWU bandwidth monitoring
-  hw/arm/mpam: Implement CMIN/CASSOC storage
-  hw/arm/mpam: Advertise PRI on memory-side MSCs
-  hw/arm/mpam: Emulate CSU cache-usage monitoring
-  hw/arm/virt: Size the cache MSC occupancy model by level
-  hw/arm/mpam: Handle ECR/ESR as MSC-global registers
-  hw/arm/mpam: Add device reset and power-on state initialisation
-  hw/arm/mpam: Add error and overflow interrupt outputs
-  hw/arm/mpam: Record errors and reject invalid configuration writes
-  hw/arm/virt: Wire MSC error and overflow interrupts to the GIC
-  hw/arm/virt: Default to implicit node 0 for MPAM without -numa
-
-Jonathan Cameron (7):
-  target/arm: Add support for MPAM CPU registers
-  hw/arm/mpam: Add MPAM MSC register map
-  hw/arm/mpam: Add MPAM MSC base device
-  hw/arm/mpam: Add mpam-msc-mem memory-side MSC subtype
-  hw/arm/mpam: Add mpam-msc-cache MSC subtype
-  qapi: Add MPAM cache introspection schema and stub
-  hw/arm/mpam: Implement query-mpam-cache
-
- hw/acpi/aml-build.c         |   31 +-
- hw/arm/Kconfig              |    4 +
- hw/arm/meson.build          |    3 +
- hw/arm/mpam-qapi-stubs.c    |   14 +
- hw/arm/mpam-qapi.c          |   62 ++
- hw/arm/mpam.c               | 1620 +++++++++++++++++++++++++++++++++++
- hw/arm/virt-acpi-build.c    |  231 +++++
- hw/arm/virt.c               |  239 ++++++
- include/hw/acpi/aml-build.h |    8 +
- include/hw/arm/mpam.h       |   23 +
- include/hw/arm/virt.h       |    3 +
- qapi/meson.build            |    1 +
- qapi/mpam.json              |  120 +++
- qapi/qapi-schema.json       |    1 +
- target/arm/cpu-features.h   |   11 +
- target/arm/cpu.c            |   10 +-
- target/arm/cpu.h            |    6 +
- target/arm/helper.c         |   33 +
- 18 files changed, 2410 insertions(+), 10 deletions(-)
- create mode 100644 hw/arm/mpam-qapi-stubs.c
- create mode 100644 hw/arm/mpam-qapi.c
- create mode 100644 hw/arm/mpam.c
- create mode 100644 include/hw/arm/mpam.h
- create mode 100644 qapi/mpam.json
-
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index 9d19251..aaadff6 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -2133,6 +2133,14 @@ static void create_virtio_iommu_dt_bindings(VirtMachineState *vms)
+     }
+ }
+ 
++/*
++ * Partitioning geometry for board-created MSCs: 256 request PARTIDs
++ * narrowed to 32 internal PARTIDs (enables HAS_PARTID_NRW, so resctrl
++ * reports num_closids=32).
++ */
++#define MPAM_VIRT_NUM_PARTID     256
++#define MPAM_VIRT_NUM_INTPARTID  32
++
+ static void create_pcie(VirtMachineState *vms)
+ {
+     hwaddr base_mmio = vms->memmap[VIRT_PCIE_MMIO].base;
+@@ -3498,6 +3506,34 @@ static void virt_set_virtio_transports(Object *obj, Visitor *v,
+     vms->virtio_transports = transports;
+ }
+ 
++static bool virt_get_mpam(Object *obj, Error **errp)
++{
++    VirtMachineState *vms = VIRT_MACHINE(obj);
++
++    return vms->mpam;
++}
++
++static void virt_set_mpam(Object *obj, bool value, Error **errp)
++{
++    VirtMachineState *vms = VIRT_MACHINE(obj);
++
++    vms->mpam = value;
++}
++
++static bool virt_get_mpam_min_msc(Object *obj, Error **errp)
++{
++    VirtMachineState *vms = VIRT_MACHINE(obj);
++
++    return vms->mpam_min_msc;
++}
++
++static void virt_set_mpam_min_msc(Object *obj, bool value, Error **errp)
++{
++    VirtMachineState *vms = VIRT_MACHINE(obj);
++
++    vms->mpam_min_msc = value;
++}
++
+ static bool virt_get_dtb_randomness(Object *obj, Error **errp)
+ {
+     VirtMachineState *vms = VIRT_MACHINE(obj);
+@@ -4303,6 +4339,17 @@ static void virt_machine_class_init(ObjectClass *oc, const void *data)
+                                           "guest CPU which implements the ARM "
+                                           "Memory Tagging Extension");
+ 
++    object_class_property_add_bool(oc, "mpam", virt_get_mpam, virt_set_mpam);
++    object_class_property_set_description(oc, "mpam",
++                                          "Set on/off to enable/disable "
++                                          "emulation of MPAM MSCs");
++
++    object_class_property_add_bool(oc, "mpam-min-msc", virt_get_mpam_min_msc,
++                                   virt_set_mpam_min_msc);
++    object_class_property_set_description(oc, "mpam-min-msc",
++                                          "Use RIS to reduce the number of "
++                                          "MSCs exposed");
++
+     object_class_property_add_bool(oc, "its", virt_get_its,
+                                    virt_set_its);
+     object_class_property_set_description(oc, "its",
+diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
+index 22e66d1..c847136 100644
+--- a/include/hw/arm/virt.h
++++ b/include/hw/arm/virt.h
+@@ -177,6 +177,8 @@ struct VirtMachineState {
+     bool ras;
+     bool mte;
+     bool dtb_randomness;
++    bool mpam;
++    bool mpam_min_msc;
+     bool second_ns_uart_present;
+     OnOffAuto acpi;
+     VirtGICType gic_version;
 -- 
 2.43.0
 
