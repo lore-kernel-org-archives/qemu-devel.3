@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75CBACCA46C
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 13:07:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE1FACCF2C2
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 13:07:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHhb2-0008F1-6P; Fri, 16 Oct 2026 09:03:40 -0400
+	id 1xHhb4-0008QY-Eu; Fri, 16 Oct 2026 09:03:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <2118537295@qq.com>)
- id 1xHf33-0003xp-3p; Fri, 16 Oct 2026 06:20:28 -0400
-Received: from out162-62-57-210.mail.qq.com ([162.62.57.210])
+ id 1xHew5-0001jy-Mu; Fri, 16 Oct 2026 06:13:14 -0400
+Received: from out203-205-221-155.mail.qq.com ([203.205.221.155])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <2118537295@qq.com>)
- id 1xHf2y-0002pT-Ko; Fri, 16 Oct 2026 06:20:24 -0400
+ id 1xHew2-000222-Ps; Fri, 16 Oct 2026 06:13:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
- t=1792146016; bh=hasM4qISt0I505+dv42KMRg8udNIIEWtAwOtD3ndGHQ=;
+ t=1792145586; bh=T2aVuixcbXg2L63BOa+6sJHS5UVg7DPyy+uwZi5T7tw=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=rIEFzwLEuz5YQSwgFb45djI84/XSejK983O4A4vxaLVvHI45tix4lHEul4U06AM9X
- V6dsYUSvzCG1eVD+NgFXTJYLMS63k8IvspG0Rp/4r/D8W/lZ52L/C4QDeRLkI58SgV
- +TjPzfIW75ySOh+aInXvQuQ2XV9YFBqV6zAOdfos=
+ b=wSn4XXs0W1mySK9lgAPN0KnFNCU57/K0/Pao598cATXb8bgJdz5ztebOJeTx4oOD+
+ qJ2257yyLlJn9HDI3iRVdY6ABoh2FBCMt4eir+GhfMAxmeoWZFc++tQzPGzCLTe/Qq
+ DCYyfolgHtqvdfe8bNAm/lglpPJLYCDNgMuMhFVo=
 Received: from r00799764-ThinkCentre-M920t-N000.. ([139.159.170.67])
- by newxmesmtplogicsvrszc43-0.qq.com (NewEsmtp) with SMTP
- id 50D12A89; Fri, 16 Oct 2026 18:20:13 +0800
-X-QQ-mid: xmsmtpt1792146013ti4q2y21z
-Message-ID: <tencent_A8F7986545254D664209D1EB165DCA754605@qq.com>
-X-QQ-XMAILINFO: M84Ob7gbJGBWMc0Oew/NOfDYraViwqM6gGgHKlr8jJdskabr/3ShCjHTKK2yvD
- arEq6bNtdBz2Q/f5//VUprLZpBrKdqBUux8d3D9/W+ZRBZTN8hRZLM8UDbkFvK9xLYrR9pjhnngH
- fJKi62IATlEw4nejusoHKy1liPFgzcT7QBngqBbYBZOZ+GnjYY2Pky/Fn7rnNvn8O2LcBerGk1f6
- 9vmk6QAm3BAK6TKkoJJRDJQQiVUIPhrrimBuS4efYk232l2aWBaJJjXz6LK5W8nJPCAnX2uFLYNU
- SKZ9BSZYN2iLDFBLVGvFGb+kPRhbVeKz7HgnI/k2234BvYfewYJBhPGXjVAnvm9ZBYpkKz9SLqsc
- QYOJLvsauzWs9WOZmgNL+IM8rBgpqxeikYUGZNLO9T0UmxZ7IJgfthFl71fxG8EefFNrv257qLfS
- OUUdjISNol/qY9m9PLjxQIeKOVBHuFv2qk2G3qTxw1S9QKy9+TxFirngzVfmNBtXINUwMGQ8j/EO
- h4l7zPhtKFCCanxRINviJ5mEblfnQvEs/vliE8YpTed99isH9IAN/jxYreP3EQBx6kSmA/ZlvgYr
- ld6V30OSRmP016IKURLDxcTSR+2V4atJF0WLHIkakEQSXwFiV4FGG9NpatYGAibd90MdE77kglU5
- 3J5G5065g5ld7ZY4jn5IFesdnkJ5FFWfbybyTyYXXzQnecjDY5LvCNdxutltadu4lo3GNAJOwtGd
- KzzgtPFc5GK+rvNno0qv6jZ7VgXhzy7e/GIyuhXTv3+oKPqCVUC6wzNvEZNx1l2uSmkqZCxiUSZo
- bri0+byqMXqG2kuMIhrLaI68sEORSqW5XodP478HG8KigykruqWXsQQ+lhFjCbRxLw1W8pL7pdcS
- 0LS64gxwNfdouYr7CaeEzfnIHgqtw2czGTGy1mx0y02zQyxLXRF4uTvcIO9qgMrcMTjIUy+bwT40
- kIKkl2UVJnoGmp5qr0txxPSszdgeXyknUsQQFD3Be5XSEZ4n6JmpLbdiG1S23+o41WfaxySDGSi2
- mO2723y4y7gZ88EVwbw7phZSqrbOUEFPbZsm80W0VEiLm1goPLnqQH1YQQc7z0bGXed/lFiqCsuG
- P0kLYkVc4KUQy+hi8=
-X-QQ-XMRINFO: NV153Ut7BKVGEBPxNGBppa2DJCr1urzIPw==
+ by newxmesmtplogicsvrszb51-1.qq.com (NewEsmtp) with SMTP
+ id 343008B3; Fri, 16 Oct 2026 18:13:03 +0800
+X-QQ-mid: xmsmtpt1792145583t6pns1ewc
+Message-ID: <tencent_88B063FC15FDB4BD89164484DB67A9B61907@qq.com>
+X-QQ-XMAILINFO: Mpk1SqVBRfAQ6JqY3QMRRJ5HkzCkyYB4xjUI95uJg/3U3QYE9USr+HDeOLn8xq
+ uGtP2TE1LaTm96Trj1SQ5NY+dVEny56lLa3+xjkhjw5cLtSs0wx/SEEigkWsWlGluLyIRQ+KcRF1
+ HRJHRSZIp5CPb35EjDs0I9audG4ohQpuRZEaK8N6edcrtWKyxMitJLA3ozYXbknZowrq6PLmx13w
+ 3eswCz2nnLb0Ff4fVuo+1VnwlnWY3ZeAn2+kWa0DK5xRBqy3LKRqXHWEgzO1gQNeT7zSLc/G7XXD
+ N2YKtvO/5pROpjSUwohdpQ7fMbo/p0Or+jqu2lAwBHhvU7GUwTV7NvK0bI03cLzMYWGgmEOAU+AO
+ JPfpRHvMeyu+/iYFNSIZhbDvdFxsZIR8FpajeGEIqAqYE5yLF1ozNnQ0EpDfmKjqNOS+TTVxs6bq
+ GQ3ToNATpVznV7D5RxDA2khw1y2C+q6iZ446BVhWXQZVYyZsVRb10qNkvsT5NcVVRv83ED6W0/5Q
+ +8NEop/9ulySebocRlq8fgDX2XsWT6j+LvDK70EnS2R9ZehgI1/c9d2oZ+15LUSEvgicDsdZ1d8F
+ CZxgom0Uo9uFaIUMVQgRzJHs5aOOrjeLYjbIXu+XZhawBjIwUGxM7NAbZwy0kKqeciJuRuO+5mVm
+ KJ54Rwd2cJgMhqyEperLRwYmFS17yK2RxtOJ/Et7mivTtIBoKajUHKSsjSmcbHi7IoIqI1L3wGP4
+ zGm2H1Jz08lInMc9r/qdmxSgkOXGg3wwt4UPH7bH5ivzWx1LTtMoysNfQreuwl2K6He2kb3lwKaq
+ rCa5J5n6d4FQEuTnMAKKp5zBmEcOOSGIHSQjRQvUqebYdVm0Y4iivumQ3OtY2o5NFmpbgcYCAvDu
+ BHsyrwrTwu44ZIfZR81yjX/+4hMhtNIvk+aRIFnX8jGYmDnsbyUfNQuYRvk3ChcadORtO9Qbq/67
+ dvpF6fWMJc/3bXt4bginoPfV1mAvAq5wFdAcS3IvMPUCfC7gwfqDkCb1A3XzTLsGQludCFhA1cWC
+ lGO16Oi7XXdzh2tHOifnqUNVEqnciDJsG273mjGdpkR3+zgurs2Ulv65+F5QX+wosMPvvuVFig2V
+ GLZ+GADYeCatSR6xaeFADCXAjgaA3TTTRm2Unt6hzk1DYaYtaxBD9DjSP/KA==
+X-QQ-XMRINFO: N+gupeqCsbX2VDY1MJ80Zvm2Nd9q8sTYww==
 From: Jinjie Ruan <2118537295@qq.com>
 To: anisinha@redhat.com, armbru@redhat.com, eblake@redhat.com,
  imammedo@redhat.com, michael.roth@amd.com, mst@redhat.com,
  pbonzini@redhat.com, peter.maydell@linaro.org, qemu-devel@nongnu.org,
  qemu-arm@nongnu.org
 Cc: ruanjinjie@huawei.com
-Subject: [PATCH 24/37] hw/arm/mpam: Add MSMON monitor selection and window
- configuration
-Date: Fri, 16 Oct 2026 18:10:44 +0800
-X-OQ-MSGID: <20261016101058.1900808-10-2118537295@qq.com>
+Subject: [PATCH 17/37] hw/arm/virt: Add mpam and mpam-min-msc machine
+ properties
+Date: Fri, 16 Oct 2026 18:10:37 +0800
+X-OQ-MSGID: <20261016101058.1900808-3-2118537295@qq.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261016101058.1900808-1-2118537295@qq.com>
 References: <20261016101058.1900808-1-2118537295@qq.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=162.62.57.210; envelope-from=2118537295@qq.com;
- helo=out162-62-57-210.mail.qq.com
+Received-SPF: pass client-ip=203.205.221.155; envelope-from=2118537295@qq.com;
+ helo=out203-205-221-155.mail.qq.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -72,7 +72,7 @@ X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Fri, 16 Oct 2026 09:02:44 -0400
+X-Mailman-Approved-At: Fri, 16 Oct 2026 09:02:42 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -89,229 +89,103 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-Add the monitor-side plumbing shared by the monitor types: the
-MSMON register definitions (MON_SEL, MBWU_FLT/CTL), the per-RIS
-monitor instance array with the num-mbwu-mon and bw-nominal-bps
-properties, and the read/write handling of the selection and
-window registers (monitor/RIS selection with range clamping,
-filter and control storage, write-one-to-clear overflow status).
-
-The monitor selection resolves a (RIS, monitor) pair through
-mpam_mon_ris()/mpam_mbwu_mon(), and mpam_nrw_id_for() maps a
-filter PARTID onto the internal PARTID whose configuration
-governs it.  No monitor type is advertised yet; the MBWU counter
-model arrives with the next patch.
+Add the two MPAM machine properties: mpam=on enables MSC emulation
+for the virt board, and mpam-min-msc=on collapses the per-node
+memory MSCs into a single MSC with one RIS per node.  The state
+fields and the property accessors only; MSC creation arrives with
+the later patches.
 
 Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
 ---
- hw/arm/mpam.c | 134 ++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 134 insertions(+)
+ hw/arm/virt.c         | 47 +++++++++++++++++++++++++++++++++++++++++++
+ include/hw/arm/virt.h |  2 ++
+ 2 files changed, 49 insertions(+)
 
-diff --git a/hw/arm/mpam.c b/hw/arm/mpam.c
-index b484509..77e0277 100644
---- a/hw/arm/mpam.c
-+++ b/hw/arm/mpam.c
-@@ -109,6 +109,36 @@ REG32(MPAMF_MBWUMON_IDR, 0x0090)
-     FIELD(MPAMF_MBWUMON_IDR, HAS_LONG, 30, 1)
-     FIELD(MPAMF_MBWUMON_IDR, HAS_CAPTURE, 31, 1)
- 
-+REG32(MSMON_CFG_MON_SEL, 0x0800)
-+    FIELD(MSMON_CFG_MON_SEL, MON_SEL, 0, 8)
-+    FIELD(MSMON_CFG_MON_SEL, RIS, 24, 4)
-+
-+REG32(MSMON_CFG_MBWU_FLT, 0x0820)
-+    FIELD(MSMON_CFG_MBWU_FLT, PARTID, 0, 16)
-+    FIELD(MSMON_CFG_MBWU_FLT, PMG, 16, 8)
-+    FIELD(MSMON_CFG_MBWU_FLT, RWBW, 30, 2)
-+
-+REG32(MSMON_CFG_MBWU_CTL, 0x0828)
-+    FIELD(MSMON_CFG_MBWU_CTL, TYPE, 0, 8)
-+    FIELD(MSMON_CFG_MBWU_CTL, MATCH_PARTID, 16, 1)
-+    FIELD(MSMON_CFG_MBWU_CTL, MATCH_PMG, 17, 1)
-+    FIELD(MSMON_CFG_MBWU_CTL, SCLEN, 19, 1)
-+    FIELD(MSMON_CFG_MBWU_CTL, SUBTYPE, 20, 4)
-+    FIELD(MSMON_CFG_MBWU_CTL, OFLOW_FRZ, 24, 1)
-+    FIELD(MSMON_CFG_MBWU_CTL, OFLOW_INTR, 25, 1)
-+    FIELD(MSMON_CFG_MBWU_CTL, OFLOW_STATUS, 26, 1)
-+    FIELD(MSMON_CFG_MBWU_CTL, CAPT_RESET, 27, 1)
-+    FIELD(MSMON_CFG_MBWU_CTL, CAPT_EVNT, 28, 3)
-+    FIELD(MSMON_CFG_MBWU_CTL, EN, 31, 1)
-+
-+REG32(MSMON_MBWU, 0x0860)           /* 31-bit counter, bit31 NRDY */
-+REG32(MSMON_MBWU_L, 0x0880)         /* 64-bit counter */
-+REG32(MSMON_MBWU_CAPTURE, 0x0868)
-+REG32(MSMON_MBWU_CAPTURE_L, 0x0890)
-+REG32(MSMON_CAPT_EVNT, 0x0808)
-+REG32(MSMON_CFG_CSU_FLT, 0x0810)
-+REG32(MSMON_CFG_CSU_CTL, 0x0818)
-+
- REG32(MPAMF_ERR_MSI_MPAM, 0x00dc)
- REG32(MPAMF_ERR_MSI_ADDR_L, 0x00e0)
- REG32(MPAMF_ERR_MSI_ADDR_H, 0x00e4)
-@@ -232,6 +262,21 @@ typedef struct MpamfPerNrwId {
-         uint32_t cfg_mbw_prop;
- } MpamfPerNrwId;
- 
-+/*
-+ * One MBWU monitor instance.  The counter is lazily advanced on
-+ * access: value = base + rate x (now - t0), where rate is the
-+ * nominal bandwidth scaled by the MBW_MAX fraction of the filtered
-+ * PARTID.  Monitoring therefore reads back values that track the
-+ * configured bandwidth control.
-+ */
-+typedef struct MpamMbwuMon {
-+    uint32_t flt;
-+    uint32_t ctl;
-+    uint64_t base;
-+    int64_t t0;
-+    bool oflow;
-+} MpamMbwuMon;
-+
- typedef struct Mpamf {
-     uint64_t idr;
-     uint32_t iidr;
-@@ -257,6 +302,8 @@ typedef struct Mpamf {
- 
-     MpamfPerNrwId *per_nrw_id;
- 
-+    MpamMbwuMon *mbwu_mons;
-+
- } Mpamf;
- 
- typedef struct MPAMMSCState {
-@@ -267,10 +314,13 @@ typedef struct MPAMMSCState {
-     uint8_t ris;
-     uint16_t part_sel; /* Technically per ris, but in same reg */
-     bool internal_part_sel;
-+    uint32_t mon_sel;
-     struct MemoryRegion mr;
-     uint32_t num_partid;
-     uint32_t num_int_partid;
-     uint8_t num_ris;
-+    uint32_t num_mbwu_mon;
-+    uint64_t bw_nominal_bps;
- 
-     /*
-      * Wired-interrupt GSIVs the board assigned (INTID = SPI + 32).  Zero
-@@ -312,6 +362,48 @@ static uint32_t mpam_get_nrw_id(MPAMMSCState *s)
-     return intpartid % s->num_int_partid;
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index 9d19251..aaadff6 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -2133,6 +2133,14 @@ static void create_virtio_iommu_dt_bindings(VirtMachineState *vms)
+     }
  }
  
 +/*
-+ * Resolve a request PARTID from a monitor filter onto the internal
-+ * PARTID whose configuration governs it.
++ * Partitioning geometry for board-created MSCs: 256 request PARTIDs
++ * narrowed to 32 internal PARTIDs (enables HAS_PARTID_NRW, so resctrl
++ * reports num_closids=32).
 + */
-+static uint32_t mpam_nrw_id_for(MPAMMSCState *s, Mpamf *mf, uint32_t partid)
-+{
-+    uint32_t intpartid;
++#define MPAM_VIRT_NUM_PARTID     256
++#define MPAM_VIRT_NUM_INTPARTID  32
 +
-+    if (!FIELD_EX32(mf->idr, MPAMF_IDR, HAS_PARTID_NRW)) {
-+        return partid;
-+    }
-+
-+    intpartid = mf->cfg_intpartid[partid % s->num_partid];
-+    return intpartid % s->num_int_partid;
-+}
-+
-+static Mpamf *mpam_mon_ris(MPAMMSCState *s)
-+{
-+    unsigned ris = FIELD_EX32(s->mon_sel, MSMON_CFG_MON_SEL, RIS);
-+
-+    if (ris >= s->num_ris) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "MPAM: MON_SEL RIS %d out of range (num-ris %d)\n",
-+                      ris, s->num_ris);
-+        ris = 0;
-+    }
-+    return &s->mpamf[ris];
-+}
-+
-+static MpamMbwuMon *mpam_mbwu_mon(MPAMMSCState *s, Mpamf *mf)
-+{
-+    unsigned mon = FIELD_EX32(s->mon_sel, MSMON_CFG_MON_SEL, MON_SEL);
-+
-+    if (mon >= s->num_mbwu_mon) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "MPAM: MON_SEL %d out of range (num-mbwu-mon %d)\n",
-+                      mon, s->num_mbwu_mon);
-+        mon = 0;
-+    }
-+    return &mf->mbwu_mons[mon];
-+}
-+
- typedef struct MPAMMSCMemState {
-     MPAMMSCState parent;
- } MPAMMSCMemState;
-@@ -405,6 +497,20 @@ static uint64_t mpam_msc_read_reg(void *opaque, hwaddr offset,
-         return mpamf->csumon_idr;
-     case A_MPAMF_MBWUMON_IDR:
-         return mpamf->mbwumon_idr;
-+    case A_MSMON_CFG_MON_SEL:
-+        return s->mon_sel;
-+    case A_MSMON_CFG_MBWU_FLT:
-+        return mpam_mbwu_mon(s, mpam_mon_ris(s))->flt;
-+    case A_MSMON_CFG_MBWU_CTL:
-+    {
-+        MpamMbwuMon *m = mpam_mbwu_mon(s, mpam_mon_ris(s));
-+        uint32_t ctl = m->ctl;
-+
-+        if (m->oflow) {
-+            ctl |= R_MSMON_CFG_MBWU_CTL_OFLOW_STATUS_MASK;
-+        }
-+        return ctl;
-+    }
-     case A_MPAMF_ERR_MSI_MPAM:
-         return mpamf->err_msi_mpam;
-     case A_MPAMF_ERR_MSI_ADDR_L:
-@@ -623,6 +729,30 @@ static void mpam_msc_write_reg(void *opaque, hwaddr offset, uint64_t value,
-         mpamf->per_nrw_id[nrw_part_sel].cfg_mbw_pbm[array_offset] = value;
-         return;
-     }
-+    case A_MSMON_CFG_MON_SEL:
-+        s->mon_sel = value & (R_MSMON_CFG_MON_SEL_MON_SEL_MASK |
-+                              R_MSMON_CFG_MON_SEL_RIS_MASK);
-+        return;
-+    case A_MSMON_CFG_MBWU_FLT:
-+        mpam_mbwu_mon(s, mpam_mon_ris(s))->flt = value;
-+        return;
-+    case A_MSMON_CFG_MBWU_CTL:
-+    {
-+        MpamMbwuMon *m = mpam_mbwu_mon(s, mpam_mon_ris(s));
-+
-+        m->ctl = value;
-+        if (value & R_MSMON_CFG_MBWU_CTL_OFLOW_STATUS_MASK) {
-+            m->oflow = false;               /* write-one-to-clear */
-+        }
-+        return;
-+    }
-+    case A_MSMON_CAPT_EVNT:
-+    case A_MSMON_CFG_CSU_FLT:
-+    case A_MSMON_CFG_CSU_CTL:
-+        qemu_log_mask(LOG_UNIMP,
-+                      "MPAM: cache-usage monitoring not implemented (write %lx)\n",
-+                      offset);
-+        return;
-     case A_MPAMF_ECR:
-         if (value & ~MPAMF_ECR_WRITE_MASK) {
-             qemu_log_mask(LOG_UNIMP,
-@@ -677,6 +807,7 @@ static void mpam_msc_realize(DeviceState *dev, Error **errp)
+ static void create_pcie(VirtMachineState *vms)
+ {
+     hwaddr base_mmio = vms->memmap[VIRT_PCIE_MMIO].base;
+@@ -3498,6 +3506,34 @@ static void virt_set_virtio_transports(Object *obj, Visitor *v,
+     vms->virtio_transports = transports;
+ }
  
-         s->mpamf[i].per_nrw_id = g_new0(MpamfPerNrwId, s->num_int_partid);
-         s->mpamf[i].cfg_intpartid = g_new0(uint32_t, s->num_partid);
-+        s->mpamf[i].mbwu_mons = g_new0(MpamMbwuMon, s->num_mbwu_mon);
-         /*
-          * Until resctrl programs the map, wrap each request PARTID onto an
-          * internal PARTID so the narrowing indirection is always in range.
-@@ -845,6 +976,9 @@ static const Property mpam_msc_props[] = {
-     DEFINE_PROP_UINT8("num-ris", MPAMMSCState, num_ris, 1),
-     DEFINE_PROP_UINT32("num-partid", MPAMMSCState, num_partid, 1),
-     DEFINE_PROP_UINT32("num-int-partid", MPAMMSCState, num_int_partid, 0),
-+    DEFINE_PROP_UINT32("num-mbwu-mon", MPAMMSCState, num_mbwu_mon, 8),
-+    DEFINE_PROP_UINT64("bw-nominal-bps", MPAMMSCState, bw_nominal_bps,
-+                       10000000000ULL),  /* 10 GB/s default bandwidth */
-     DEFINE_PROP_UINT32("err-gsiv", MPAMMSCState, err_gsiv, 0),
-     DEFINE_PROP_UINT32("oflow-gsiv", MPAMMSCState, oflow_gsiv, 0),
-     DEFINE_PROP_UINT16("node", MPAMMSCState, node, UINT16_MAX),
++static bool virt_get_mpam(Object *obj, Error **errp)
++{
++    VirtMachineState *vms = VIRT_MACHINE(obj);
++
++    return vms->mpam;
++}
++
++static void virt_set_mpam(Object *obj, bool value, Error **errp)
++{
++    VirtMachineState *vms = VIRT_MACHINE(obj);
++
++    vms->mpam = value;
++}
++
++static bool virt_get_mpam_min_msc(Object *obj, Error **errp)
++{
++    VirtMachineState *vms = VIRT_MACHINE(obj);
++
++    return vms->mpam_min_msc;
++}
++
++static void virt_set_mpam_min_msc(Object *obj, bool value, Error **errp)
++{
++    VirtMachineState *vms = VIRT_MACHINE(obj);
++
++    vms->mpam_min_msc = value;
++}
++
+ static bool virt_get_dtb_randomness(Object *obj, Error **errp)
+ {
+     VirtMachineState *vms = VIRT_MACHINE(obj);
+@@ -4303,6 +4339,17 @@ static void virt_machine_class_init(ObjectClass *oc, const void *data)
+                                           "guest CPU which implements the ARM "
+                                           "Memory Tagging Extension");
+ 
++    object_class_property_add_bool(oc, "mpam", virt_get_mpam, virt_set_mpam);
++    object_class_property_set_description(oc, "mpam",
++                                          "Set on/off to enable/disable "
++                                          "emulation of MPAM MSCs");
++
++    object_class_property_add_bool(oc, "mpam-min-msc", virt_get_mpam_min_msc,
++                                   virt_set_mpam_min_msc);
++    object_class_property_set_description(oc, "mpam-min-msc",
++                                          "Use RIS to reduce the number of "
++                                          "MSCs exposed");
++
+     object_class_property_add_bool(oc, "its", virt_get_its,
+                                    virt_set_its);
+     object_class_property_set_description(oc, "its",
+diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
+index 22e66d1..c847136 100644
+--- a/include/hw/arm/virt.h
++++ b/include/hw/arm/virt.h
+@@ -177,6 +177,8 @@ struct VirtMachineState {
+     bool ras;
+     bool mte;
+     bool dtb_randomness;
++    bool mpam;
++    bool mpam_min_msc;
+     bool second_ns_uart_present;
+     OnOffAuto acpi;
+     VirtGICType gic_version;
 -- 
 2.43.0
 
